@@ -70,7 +70,7 @@ class pts_ResultFileTable extends pts_Table
 				//$result_tests[$result_counter][0] .= ': ' . $result_tests[$result_counter][1];
 			}
 
-			switch($result_object->test_profile->get_result_format())
+			switch($result_object->test_profile->get_display_format())
 			{
 				case "BAR_GRAPH":
 					$best_value = 0;

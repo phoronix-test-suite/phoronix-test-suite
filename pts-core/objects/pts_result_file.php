@@ -62,9 +62,9 @@ class pts_result_file
 	{
 		return $this->xml_parser->getXMLArrayValues(P_RESULTS_SYSTEM_SOFTWARE);
 	}
-	public function get_system_author()
+	public function get_system_user()
 	{
-		return $this->xml_parser->getXMLArrayValues(P_RESULTS_SYSTEM_AUTHOR);
+		return $this->xml_parser->getXMLArrayValues(P_RESULTS_SYSTEM_USER);
 	}
 	public function get_system_notes()
 	{
@@ -84,19 +84,19 @@ class pts_result_file
 	}
 	public function get_title()
 	{
-		return $this->xml_parser->getXMLValue(P_RESULTS_SUITE_TITLE);
+		return $this->xml_parser->getXMLValue(P_RESULTS_GENERATED_TITLE);
 	}
-	public function get_suite_description()
+	public function get_description()
 	{
-		return $this->xml_parser->getXMLValue(P_RESULTS_SUITE_DESCRIPTION);
+		return $this->xml_parser->getXMLValue(P_RESULTS_GENERATED_DESCRIPTION);
 	}
-	public function get_suite_extensions()
+	public function get_notes()
 	{
-		return $this->xml_parser->getXMLValue(P_RESULTS_SUITE_EXTENSIONS);
+		return $this->xml_parser->getXMLValue(P_RESULTS_GENERATED_NOTES);
 	}
-	public function get_suite_properties()
+	public function get_preset_environment_variables()
 	{
-		return $this->xml_parser->getXMLValue(P_RESULTS_SUITE_PROPERTIES);
+		return $this->xml_parser->getXMLValue(P_RESULTS_GENERATED_PRESET_ENV_VARS);
 	}
 	public function get_test_titles()
 	{
@@ -124,8 +124,8 @@ class pts_result_file
 		else
 		{
 			$results_name = $this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_TITLE);
-			$results_arguments = $this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_ARGUMENTS);
-			$results_attributes = $this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_ATTRIBUTES);
+			$results_arguments = $this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_ARGS);
+			$results_attributes = $this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_ARGS_DESCRIPTION);
 			$results_version = $this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_VERSION);
 
 			for($i = 0; $i < count($results_name); $i++)
@@ -193,12 +193,12 @@ class pts_result_file
 			$results_name = $this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_TITLE);
 			$results_version = $this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_VERSION);
 			$results_profile_version = $this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_PROFILE_VERSION);
-			$results_attributes = $this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_ATTRIBUTES);
+			$results_attributes = $this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_ARGS_DESCRIPTION);
 			$results_scale = $this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_SCALE);
-			$results_test_name = $this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_TESTNAME);
-			$results_arguments = $this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_ARGUMENTS);
+			$results_test_name = $this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_IDENTIFIER);
+			$results_arguments = $this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_ARGS);
 			$results_proportion = $this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_PROPORTION);
-			$results_format = $this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_RESULTFORMAT);
+			$results_format = $this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_DISPLAY_FORMAT);
 			$results_raw = $this->xml_parser->getXMLArrayValues(P_RESULTS_RESULTS_GROUP);
 
 			$result_buffers = array();
@@ -232,7 +232,7 @@ class pts_result_file
 				$test_profile->set_test_profile_version($results_profile_version[$i]);
 				$test_profile->set_result_scale($results_scale[$i]);
 				$test_profile->set_result_proportion($results_proportion[$i]);
-				$test_profile->set_result_format($results_format[$i]);
+				$test_profile->set_display_format($results_format[$i]);
 
 				$test_result = new pts_test_result($test_profile);
 				$test_result->set_used_arguments_description($results_attributes[$i]);

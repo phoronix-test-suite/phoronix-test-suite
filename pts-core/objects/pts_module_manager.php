@@ -82,16 +82,15 @@ class pts_module_manager
 		}
 		pts_module_manager::set_current_module(null);
 	}
-	public static function process_extensions_string($extensions)
+	public static function process_environment_variables_string_to_set($env_var_string)
 	{
-		// Process extensions for modules
-		if(!empty($extensions))
+		if(!empty($env_var_string))
 		{
-			foreach(explode(';', $extensions) as $ev)
+			foreach(explode(';', $env_var_string) as $ev)
 			{
 				list($var, $value) = pts_strings::trim_explode('=', $ev);
 				pts_client::set_environmental_variable($var, $value);
-				pts_module_maanager::var_store_add($var, $value);
+				pts_module_manager::var_store_add($var, $value);
 			}
 
 			pts_module_manager::detect_modules_to_load();

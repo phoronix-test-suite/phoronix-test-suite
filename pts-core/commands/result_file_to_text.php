@@ -34,7 +34,7 @@ class result_file_to_text implements pts_option_interface
 		$result_output = null;
 
 		$result_output .= $result_file->get_title() . "\n";
-		$result_output .= $result_file->get_suite_description() . "\n\n\n";
+		$result_output .= $result_file->get_description() . "\n\n\n";
 
 		$system_identifiers = $result_file->get_system_identifiers();
 		$system_hardware = $result_file->get_system_hardware();
@@ -52,9 +52,10 @@ class result_file_to_text implements pts_option_interface
 
 			foreach($result_object->test_result_buffer->get_buffer_items() as $buffer_item)
 			{
-				$result_output .= $buffer_item->get_result_identifier() . ": " . $buffer_item->get_result_value() . "\n";
+				$result_output .= "\n" . $buffer_item->get_result_identifier() . ": " . $buffer_item->get_result_value();
 			}
 
+			$result_output .= "\n";
 			for($i = 0; $i < count($test_identifiers); $i++)
 			{
 				$result_output .= $test_identifiers[$i] . ": " . $test_values[$i] . "\n";

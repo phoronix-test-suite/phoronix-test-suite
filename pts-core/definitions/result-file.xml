@@ -3,12 +3,28 @@
 <PhoronixTestSuite>
 	<Definitions>
 		<Define>
+			<Name>P_RESULTS_GENERATED_TITLE</Name>
+			<Value>PhoronixTestSuite/Generated/Title</Value>
+		</Define>
+		<Define>
+			<Name>P_RESULTS_GENERATED_DESCRIPTION</Name>
+			<Value>PhoronixTestSuite/Generated/Description</Value>
+		</Define>
+		<Define>
+			<Name>P_RESULTS_GENERATED_NOTES</Name>
+			<Value>PhoronixTestSuite/Generated/Notes</Value>
+		</Define>
+		<Define>
 			<Name>P_RESULTS_GENERATED_TIMESTAMP</Name>
-			<Value>PhoronixTestSuite/Generated/TimeStamp</Value>
+			<Value>PhoronixTestSuite/Generated/LastModified</Value>
 		</Define>
 		<Define>
 			<Name>P_RESULTS_GENERATED_CLIENT_STRING</Name>
-			<Value>PhoronixTestSuite/Generated/TestClientString</Value>
+			<Value>PhoronixTestSuite/Generated/TestClient</Value>
+		</Define>
+		<Define>
+			<Name>P_RESULTS_GENERATED_PRESET_ENV_VARS</Name>
+			<Value>PhoronixTestSuite/Generated/PreSetEnvironmentVariables</Value>
 		</Define>
 		<Define>
 			<Name>P_RESULTS_SYSTEM_HARDWARE</Name>
@@ -19,92 +35,76 @@
 			<Value>PhoronixTestSuite/System/Software</Value>
 		</Define>
 		<Define>
-			<Name>P_RESULTS_SYSTEM_AUTHOR</Name>
-			<Value>PhoronixTestSuite/System/Author</Value>
+			<Name>P_RESULTS_SYSTEM_USER</Name>
+			<Value>PhoronixTestSuite/System/User</Value>
 		</Define>
 		<Define>
 			<Name>P_RESULTS_SYSTEM_DATE</Name>
-			<Value>PhoronixTestSuite/System/TestDate</Value>
+			<Value>PhoronixTestSuite/System/TimeStamp</Value>
 		</Define>
 		<Define>
 			<Name>P_RESULTS_SYSTEM_NOTES</Name>
-			<Value>PhoronixTestSuite/System/TestNotes</Value>
+			<Value>PhoronixTestSuite/System/Notes</Value>
 		</Define>
 		<Define>
 			<Name>P_RESULTS_SYSTEM_PTSVERSION</Name>
-			<Value>PhoronixTestSuite/System/Version</Value>
+			<Value>PhoronixTestSuite/System/TestClientVersion</Value>
 		</Define>
 		<Define>
 			<Name>P_RESULTS_SYSTEM_IDENTIFIERS</Name>
-			<Value>PhoronixTestSuite/System/AssociatedIdentifiers</Value>
+			<Value>PhoronixTestSuite/System/Identifier</Value>
 		</Define>
 		<Define>
-			<Name>P_RESULTS_SUITE_TITLE</Name>
-			<Value>PhoronixTestSuite/Suite/Title</Value>
-		</Define>
-		<Define>
-			<Name>P_RESULTS_SUITE_DESCRIPTION</Name>
-			<Value>PhoronixTestSuite/Suite/Description</Value>
-		</Define>
-		<Define>
-			<Name>P_RESULTS_SUITE_EXTENSIONS</Name>
-			<Value>PhoronixTestSuite/Suite/Extensions</Value>
-		</Define>
-		<Define>
-			<Name>P_RESULTS_SUITE_PROPERTIES</Name>
-			<Value>PhoronixTestSuite/Suite/TestProperties</Value>
-		</Define>
-		<Define>
-			<Name>P_RESULTS_TEST_TESTNAME</Name>
-			<Value>PhoronixTestSuite/Benchmark/TestName</Value>
-		</Define>
-		<Define>
-			<Name>P_RESULTS_TEST_TITLE</Name>
-			<Value>PhoronixTestSuite/Benchmark/Name</Value>
-		</Define>
-		<Define>
-			<Name>P_RESULTS_TEST_SCALE</Name>
-			<Value>PhoronixTestSuite/Benchmark/Scale</Value>
-		</Define>
-		<Define>
-			<Name>P_RESULTS_TEST_PROPORTION</Name>
-			<Value>PhoronixTestSuite/Benchmark/Proportion</Value>
-		</Define>
-		<Define>
-			<Name>P_RESULTS_TEST_RESULTFORMAT</Name>
-			<Value>PhoronixTestSuite/Benchmark/ResultFormat</Value>
-		</Define>
-		<Define>
-			<Name>P_RESULTS_TEST_VERSION</Name>
-			<Value>PhoronixTestSuite/Benchmark/Version</Value>
+			<Name>P_RESULTS_TEST_IDENTIFIER</Name>
+			<Value>PhoronixTestSuite/Result/Identifier</Value>
 		</Define>
 		<Define>
 			<Name>P_RESULTS_TEST_PROFILE_VERSION</Name>
-			<Value>PhoronixTestSuite/Benchmark/ProfileVersion</Value>
+			<Value>PhoronixTestSuite/Result/ProfileVersion</Value>
 		</Define>
 		<Define>
-			<Name>P_RESULTS_TEST_ARGUMENTS</Name>
-			<Value>PhoronixTestSuite/Benchmark/TestArguments</Value>
+			<Name>P_RESULTS_TEST_TITLE</Name>
+			<Value>PhoronixTestSuite/Result/Title</Value>
 		</Define>
 		<Define>
-			<Name>P_RESULTS_TEST_ATTRIBUTES</Name>
-			<Value>PhoronixTestSuite/Benchmark/Attributes</Value>
+			<Name>P_RESULTS_TEST_VERSION</Name>
+			<Value>PhoronixTestSuite/Result/AppVersion</Value>
+		</Define>
+		<Define>
+			<Name>P_RESULTS_TEST_ARGS</Name>
+			<Value>PhoronixTestSuite/Result/Arguments</Value>
+		</Define>
+		<Define>
+			<Name>P_RESULTS_TEST_ARGS_DESCRIPTION</Name>
+			<Value>PhoronixTestSuite/Result/ArgumentsDescription</Value>
+		</Define>
+		<Define>
+			<Name>P_RESULTS_TEST_PROPORTION</Name>
+			<Value>PhoronixTestSuite/Result/Proportion</Value>
+		</Define>
+		<Define>
+			<Name>P_RESULTS_TEST_SCALE</Name>
+			<Value>PhoronixTestSuite/Result/Scale</Value>
+		</Define>
+		<Define>
+			<Name>P_RESULTS_TEST_DISPLAY_FORMAT</Name>
+			<Value>PhoronixTestSuite/Result/DisplayFormat</Value>
 		</Define>
 		<Define>
 			<Name>P_RESULTS_RESULTS_GROUP</Name>
-			<Value>PhoronixTestSuite/Benchmark/Results</Value>
+			<Value>PhoronixTestSuite/Result/Data</Value>
 		</Define>
 		<Define>
 			<Name>P_RESULTS_RESULTS_GROUP_IDENTIFIER</Name>
-			<Value>PhoronixTestSuite/Benchmark/Results/Group/Entry/Identifier</Value>
+			<Value>PhoronixTestSuite/Result/Data/Entry/Identifier</Value>
 		</Define>
 		<Define>
 			<Name>P_RESULTS_RESULTS_GROUP_VALUE</Name>
-			<Value>PhoronixTestSuite/Benchmark/Results/Group/Entry/Value</Value>
+			<Value>PhoronixTestSuite/Result/Data/Entry/Value</Value>
 		</Define>
 		<Define>
 			<Name>P_RESULTS_RESULTS_GROUP_RAW</Name>
-			<Value>PhoronixTestSuite/Benchmark/Results/Group/Entry/RawString</Value>
+			<Value>PhoronixTestSuite/Result/Data/Entry/RawString</Value>
 		</Define>
 	</Definitions>
 </PhoronixTestSuite>

@@ -24,7 +24,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 <xsl:template match="/">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
-		<title>Phoronix Test Suite - <xsl:value-of select="PhoronixTestSuite/Suite/Title" /> - Results</title>
+		<title>Phoronix Test Suite - <xsl:value-of select="PhoronixTestSuite/Generated/Title" /> - Results</title>
 		<link href="../pts-results-viewer/phoronix-test-suite.css" rel="stylesheet" type="text/css" />
 		<link rel="shortcut icon" href="../pts-results-viewer/favicon.ico" />
 		<script src="../pts-results-viewer/pts.js" type="text/javascript"></script>
@@ -33,19 +33,20 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 		<div id="pts_header_top">
 			<div class="pts_header_center">
 				<div id="pts_header_top_logo"></div>
-				<div class="pts_header_links"><em><strong><xsl:value-of select="PhoronixTestSuite/Generated/TestClientString" /></strong><br /><xsl:if test="PhoronixTestSuite/Generated/TimeStamp != ''"><strong>Generated:</strong>&#160;<xsl:value-of select="PhoronixTestSuite/Generated/TimeStamp" /><br /></xsl:if></em></div>
+				<div class="pts_header_links"><em><strong><xsl:value-of select="PhoronixTestSuite/Generated/TestClient" /></strong><br /><strong>Generated:</strong>&#160;<xsl:value-of select="PhoronixTestSuite/Generated/LastModified" /><br /></em></div>
 			</div>
 		</div>
 		<div id="pts_container">
 		<div id="pts_banner_nav"><a href="#result-overview">Results Table</a> <a href="#test-results">Test Results</a> <a href="installation-logs/">Installation Logs</a> <a href="system-logs/">System Logs</a> <a href="test-logs/">Test Logs</a></div>
 
-		<h1><xsl:value-of select="PhoronixTestSuite/Suite/Title" /></h1>
-		<p><xsl:value-of select="PhoronixTestSuite/Suite/Description"/></p>
+		<h1><xsl:value-of select="PhoronixTestSuite/Generated/Title" /></h1>
+		<p><xsl:value-of select="PhoronixTestSuite/Generated/Description"/></p>
+		<p><em><xsl:value-of select="PhoronixTestSuite/Generated/Notes"/></em></p>
 
 		<h1>System Information</h1>
 		<div class="pts_table_box_out"><table border="0">
 		<tr class="pts_column_head"> 
-		<xsl:for-each select="PhoronixTestSuite/System"><td><xsl:value-of select="AssociatedIdentifiers" /></td></xsl:for-each>
+		<xsl:for-each select="PhoronixTestSuite/System"><td><xsl:value-of select="Identifier" /></td></xsl:for-each>
 		</tr>
 		<tr> 
 		<xsl:for-each select="PhoronixTestSuite/System"><td><xsl:value-of select="Hardware" /></td></xsl:for-each>
@@ -60,7 +61,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 		<xsl:for-each select="PhoronixTestSuite/System"><td><xsl:value-of select="AssociatedIdentifiers" /></td></xsl:for-each>
 		</tr>
 		<tr>
-		<xsl:for-each select="PhoronixTestSuite/System"><td><strong>Administrator:</strong>&#160;<xsl:value-of select="Author" /><br /><strong>Date:</strong>&#160;<xsl:value-of select="TestDate" /><br /><strong>PTS Version:</strong>&#160;<xsl:value-of select="Version" /><br /><strong>Test Notes:</strong>&#160;<xsl:value-of select="TestNotes" /></td></xsl:for-each>
+		<xsl:for-each select="PhoronixTestSuite/System"><td><strong>Administrator:</strong>&#160;<xsl:value-of select="User" /><br /><strong>Date:</strong>&#160;<xsl:value-of select="TimeStamp" /><br /><strong>PTS Version:</strong>&#160;<xsl:value-of select="TestClientVersion" /><br /><strong>Test Notes:</strong>&#160;<xsl:value-of select="Notes" /></td></xsl:for-each>
 		</tr>
 		</table></div>
 
@@ -70,9 +71,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 		<a name="test-results"></a><h1>Test Results</h1>
 		<div id="pts_benchmark_area">
-			<xsl:for-each select="PhoronixTestSuite/Benchmark">
+			<xsl:for-each select="PhoronixTestSuite/Result">
 				<xsl:variable name="this_test_pos" select="position()" />
-				<div class="pts_benchmark_bar"><div style="float: left;"><a><xsl:attribute name="name">test-<xsl:value-of select="$this_test_pos" /></xsl:attribute></a><a><xsl:attribute name="name">b-<xsl:value-of select="$this_test_pos" /></xsl:attribute></a><span class="pts_benchmark_bar_header"><xsl:value-of select="Name"/></span> <span class="pts_benchmark_bar_version"><xsl:value-of select="Version"/></span><br /><strong><xsl:value-of select="Attributes"/></strong></div><div style="float: right;"><a style="text-decoration: none;"><xsl:attribute name="href">test-logs/<xsl:value-of select="$this_test_pos" />/</xsl:attribute>View Test Logs</a></div></div>
+				<div class="pts_benchmark_bar"><div style="float: left;"><a><xsl:attribute name="name">test-<xsl:value-of select="$this_test_pos" /></xsl:attribute></a><a><xsl:attribute name="name">b-<xsl:value-of select="$this_test_pos" /></xsl:attribute></a><span class="pts_benchmark_bar_header"><xsl:value-of select="Title"/></span> <span class="pts_benchmark_bar_version"><xsl:value-of select="AppVersion"/></span><br /><strong><xsl:value-of select="ArgumentsDescription"/></strong></div><div style="float: right;"><a style="text-decoration: none;"><xsl:attribute name="href">test-logs/<xsl:value-of select="$this_test_pos" />/</xsl:attribute>View Test Logs</a></div></div>
 				<!--
 				<div class="pts_benchmark_text">
 					<xsl:if test="not(contains(ResultFormat,'MULTI_'))">

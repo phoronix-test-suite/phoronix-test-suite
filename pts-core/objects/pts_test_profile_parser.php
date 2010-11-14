@@ -159,7 +159,7 @@ class pts_test_profile_parser
 	{
 		return $this->xml_parser->getXMLValue(P_TEST_PROPORTION);
 	}
-	public function get_result_format()
+	public function get_display_format()
 	{
 		$format = $this->xml_parser->getXMLValue(P_TEST_RESULTFORMAT);
 
@@ -277,7 +277,7 @@ class pts_test_profile_parser
 	{
 		$this->xml_parser->overrideXMLValue(P_TEST_PROPORTION, $proportion);
 	}
-	public function set_result_format($format)
+	public function set_display_format($format)
 	{
 		$this->xml_parser->overrideXMLValue(P_TEST_RESULTFORMAT, $format);
 	}

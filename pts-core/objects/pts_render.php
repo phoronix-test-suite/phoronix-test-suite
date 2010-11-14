@@ -62,7 +62,7 @@ class pts_render
 	{
 		if($result_file != null && ($result_file->is_multi_way_comparison() || $result_file->is_results_tracker()))
 		{
-			if($result_file->is_multi_way_comparison() && $result_object->test_profile->get_result_format() == "LINE_GRAPH")
+			if($result_file->is_multi_way_comparison() && $result_object->test_profile->get_display_format() == "LINE_GRAPH")
 			{
 				// Turn a multi-way line graph into an averaged bar graph
 				$buffer_items = $result_object->test_result_buffer->get_buffer_items();
@@ -75,18 +75,18 @@ class pts_render
 					$result_object->test_result_buffer->add_test_result($buffer_item->get_result_identifier(), $avg_value, $avg_value);
 				}
 
-				$result_object->test_profile->set_result_format("BAR_GRAPH");
+				$result_object->test_profile->set_display_format("BAR_GRAPH");
 			}
 
 			$result_table = false;
 
-			if($result_object->test_profile->get_result_format() != "PIE_CHART")
+			if($result_object->test_profile->get_display_format() != "PIE_CHART")
 			{
 				pts_render::compact_result_file_test_object($result_object, $result_table, $result_file->is_multi_way_inverted());
 			}
 		}
 
-		$result_format = $result_object->test_profile->get_result_format();
+		$display_format = $result_object->test_profile->get_display_format();
 		static $bar_orientation = null;
 
 		if($bar_orientation == null)
@@ -103,7 +103,7 @@ class pts_render
 			}
 		}
 
-		switch($result_format)
+		switch($display_format)
 		{
 			case "LINE_GRAPH":
 				$graph_type = "pts_LineGraph";
@@ -165,7 +165,7 @@ class pts_render
 			$graph->markResultRegressions($extra_attributes["regression_marker_threshold"]);
 		}
 
-		switch($result_format)
+		switch($display_format)
 		{
 			case "LINE_GRAPH":
 				if(isset($extra_attributes["no_overview_text"]) && $graph instanceof pts_LineGraph)
@@ -398,7 +398,7 @@ class pts_render
 		$test_profile = new pts_test_profile(null);
 		$test_profile->set_test_title("Results Overview");
 		$test_profile->set_result_scale($title . " | " . implode(',', $days_keys));
-		$test_profile->set_result_format("LINE_GRAPH");
+		$test_profile->set_display_format("LINE_GRAPH");
 
 		$test_result = new pts_test_result();
 		$test_result->set_used_arguments_description("Phoromatic Tracker: " . $title);
@@ -510,7 +510,7 @@ class pts_render
 		}
 
 		$mto->test_profile->set_result_scale($mto->test_profile->get_result_scale() . ' | ' . implode(',', array_keys($days)));
-		$mto->test_profile->set_result_format((count($days) < 5 || $is_tracking == false ? "BAR_ANALYZE_GRAPH" : "LINE_GRAPH"));
+		$mto->test_profile->set_display_format((count($days) < 5 || $is_tracking == false ? "BAR_ANALYZE_GRAPH" : "LINE_GRAPH"));
 		$mto->test_result_buffer = new pts_test_result_buffer();
 
 		$day_keys = array_keys($days);

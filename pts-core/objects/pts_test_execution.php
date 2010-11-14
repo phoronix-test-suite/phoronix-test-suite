@@ -47,7 +47,6 @@ class pts_test_execution
 		$execute_binary = $test_run_request->test_profile->get_test_executable();
 		$times_to_run = $test_run_request->test_profile->get_times_to_run();
 		$ignore_runs = $test_run_request->test_profile->get_runs_to_ignore();
-		$result_format = $test_run_request->test_profile->get_result_format();
 		$test_type = $test_run_request->test_profile->get_test_hardware_type();
 		$allow_cache_share = $test_run_request->test_profile->allow_cache_share();
 		$min_length = $test_run_request->test_profile->get_min_length();

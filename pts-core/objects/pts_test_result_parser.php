@@ -202,7 +202,7 @@ class pts_test_result_parser
 		$extra_arguments = $test_run_request->get_arguments();
 		$pts_test_arguments = trim($test_run_request->test_profile->get_default_arguments() . " " . str_replace($test_run_request->test_profile->get_default_arguments(), "", $extra_arguments) . " " . $test_run_request->test_profile->get_default_post_arguments());
 
-		switch($test_run_request->test_profile->get_result_format())
+		switch($test_run_request->test_profile->get_display_format())
 		{
 			case "IMAGE_COMPARISON":
 				$test_result = self::parse_iqc_result($test_run_request->test_profile, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments);
@@ -230,7 +230,7 @@ class pts_test_result_parser
 
 		$END_RESULT = 0;
 
-		switch($test_result->test_profile->get_result_format())
+		switch($test_result->test_profile->get_display_format())
 		{
 			case "NO_RESULT":
 				// Nothing to do, there are no results

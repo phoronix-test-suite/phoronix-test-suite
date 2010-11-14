@@ -34,7 +34,7 @@ class result_file_to_csv implements pts_option_interface
 		$result_output = null;
 
 		$result_output .= $result_file->get_title() . "\n";
-		$result_output .= $result_file->get_suite_description() . "\n\n";
+		$result_output .= $result_file->get_description() . "\n\n";
 
 		$system_identifiers = $result_file->get_system_identifiers();
 		$system_hardware = $result_file->get_system_hardware();

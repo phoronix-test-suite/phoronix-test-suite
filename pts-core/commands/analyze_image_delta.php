@@ -61,7 +61,7 @@ class analyze_image_delta implements pts_option_interface
 
 		foreach($compare_file->get_result_objects() as $result_object)
 		{
-			if($result_object->test_profile->get_result_format() != "IMAGE_COMPARISON")
+			if($result_object->test_profile->get_display_format() != "IMAGE_COMPARISON")
 			{
 				continue;
 			}

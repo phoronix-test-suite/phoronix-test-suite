@@ -192,7 +192,7 @@ class tandem_XmlReader
 	{
 		return $this->tag_fallback_value;
 	}
-	function handleXmlZeroTagArrayFallback($xml_tag)
+	function handleXmlZeroTagArrayFallback($xml_tag, $current_value)
 	{
 		return $this->tag_fallback_array_value;
 	}
@@ -200,7 +200,7 @@ class tandem_XmlReader
 	{
 		return $this->getArrayValues($xml_tag, $this->xml_data);
 	}
-	function getArrayValues($xml_tag, $xml_match)
+	function getArrayValues($xml_tag, $xml_match, $consider_fallback = true)
 	{
 		$return_r = array();
 		$xml_steps = explode("/", $xml_tag);
@@ -228,9 +228,9 @@ class tandem_XmlReader
 			}
 		}
 
-		if(count($return_r) == 0)
+		if($consider_fallback && (!isset($return_r[0]) || ($return_r[0] == false && $return_r[(count($return_r) - 1)] == false)))
 		{
-			$return_r = $this->handleXmlZeroTagArrayFallback($xml_tag);
+			$return_r = $this->handleXmlZeroTagArrayFallback($xml_tag, $return_r);
 		}
 
 		return $return_r;

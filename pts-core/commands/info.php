@@ -79,7 +79,7 @@ class info implements pts_option_interface
 
 			if($args["object"]->is_test_installed())
 			{
-				$installed_test = new pts_installed_test($to_info);
+				$installed_test = new pts_installed_test($args["object"]->get_identifier());
 				$last_run = $installed_test->get_last_run_date();
 				$last_run = $last_run == "0000-00-00" ? "Never" : $last_run;
 
@@ -117,7 +117,7 @@ class info implements pts_option_interface
 		}
 		else if($args["object"] instanceof pts_result_file)
 		{
-			echo "Title: " . $args["object"]->get_title() . "\nIdentifier: " . $to_info . "\n";
+			echo "Title: " . $args["object"]->get_title() . "\nIdentifier: " . $args["object"]->get_identifier() . "\n";
 			echo "\nTest Result Identifiers:\n";
 			echo pts_user_io::display_text_list($args["object"]->get_system_identifiers());
 

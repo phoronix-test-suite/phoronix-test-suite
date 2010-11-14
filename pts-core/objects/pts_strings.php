@@ -240,9 +240,9 @@ class pts_strings
 
 		return $compare;	
 	}
-	public static function result_format_to_string($result_format)
+	public static function result_quantifier_to_string($result_quantifier)
 	{
-		switch($result_format)
+		switch($result_quantifier)
 		{
 			case "MAX":
 				$return_str = "Maximum";

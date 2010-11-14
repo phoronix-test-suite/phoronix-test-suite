@@ -38,25 +38,67 @@ class pts_results_tandem_XmlReader extends tandem_XmlReader
 
 		parent::__construct($read_xml);
 	}
-	/*
+
 	function handleXmlZeroTagFallback($xml_tag)
 	{
-		// XXX: implement support for checking the legacy result XML support if needed
 		$legacy_spec = array(
+			/* New Tag => Old Tag */
+			// The below tags were changed during Phoronix Test Suite 3.0 Iveland
+			"PhoronixTestSuite/Generated/Title" => "PhoronixTestSuite/Suite/Title",
+			"PhoronixTestSuite/Generated/Description" => "PhoronixTestSuite/Suite/Description"
+			);
 
-		);
+		if(isset($legacy_spec[$xml_tag]))
+		{
+			$value = $this->getXMLValue($legacy_spec[$xml_tag]);
+		}
+		else
+		{
+			$value = $this->tag_fallback_value;
+		}
 
-		return $this->tag_fallback_value;
-	}
-	function handleXmlZeroTagArrayFallback($xml_tag)
+		return $value;
+	}	
+	function handleXmlZeroTagArrayFallback($xml_tag, $fallback)
 	{
-		// XXX: implement support for checking the legacy result XML support if needed
 		$legacy_spec = array(
+			/* New Tag => Old Tag */
+			// The below tags were changed during Phoronix Test Suite 3.0 Iveland
+			"PhoronixTestSuite/System/User" => "PhoronixTestSuite/System/Author",
+			"PhoronixTestSuite/System/Identifier" => "PhoronixTestSuite/System/AssociatedIdentifiers",
+			"PhoronixTestSuite/System/TimeStamp" => "PhoronixTestSuite/System/TestDate",
+			"PhoronixTestSuite/System/Notes" => "PhoronixTestSuite/System/TestNotes",
+			"PhoronixTestSuite/System/TestClientVersion" => "PhoronixTestSuite/System/Version",
+			"PhoronixTestSuite/Result/Identifier" => "PhoronixTestSuite/Benchmark/TestName",
+			"PhoronixTestSuite/Result/Title" => "PhoronixTestSuite/Benchmark/Name",
+			"PhoronixTestSuite/Result/Scale" => "PhoronixTestSuite/Benchmark/Scale",
+			"PhoronixTestSuite/Result/AppVersion" => "PhoronixTestSuite/Benchmark/Version",
+			"PhoronixTestSuite/Result/ProfileVersion" => "PhoronixTestSuite/Benchmark/ProfileVersion",
+			"PhoronixTestSuite/Result/DisplayFormat" => "PhoronixTestSuite/Benchmark/ResultFormat",
+			"PhoronixTestSuite/Result/Proportion" => "PhoronixTestSuite/Benchmark/Proportion",
+			"PhoronixTestSuite/Result/Arguments" => "PhoronixTestSuite/Benchmark/TestArguments",
+			"PhoronixTestSuite/Result/ArgumentsDescription" => "PhoronixTestSuite/Benchmark/Attributes",
+			"PhoronixTestSuite/Result/Data" => "PhoronixTestSuite/Benchmark/Results",
+			"PhoronixTestSuite/Result/Data/Entry/Identifier" => "PhoronixTestSuite/Benchmark/Results/Group/Entry/Identifier",
+			"PhoronixTestSuite/Result/Data/Entry/Value" =>  "PhoronixTestSuite/Benchmark/Results/Group/Entry/Value",
+			"PhoronixTestSuite/Result/Data/Entry/RawString" =>  "PhoronixTestSuite/Benchmark/Results/Group/Entry/RawString"
+			);
 
-		);
+		if(isset($legacy_spec[$xml_tag]))
+		{
+			$value = $this->getArrayValues($legacy_spec[$xml_tag], $this->xml_data, false);
 
-		return $this->tag_fallback_array_value;
+			if(empty($value))
+			{
+				$value = $fallback;
+			}
+		}
+		else
+		{
+			$value = $fallback;
+		}
+
+		return $value;
 	}
-	*/
 }
 ?>

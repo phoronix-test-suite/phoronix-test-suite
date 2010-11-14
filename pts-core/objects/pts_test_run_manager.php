@@ -223,6 +223,10 @@ class pts_test_run_manager
 	{
 		return $this->run_description;
 	}
+	public function get_run_notes()
+	{
+		return null; // TODO: Not Yet Implemented
+	}
 	public function result_already_contains_identifier()
 	{
 		$result_file = new pts_result_file($this->file_name);
@@ -526,7 +530,7 @@ class pts_test_run_manager
 		}
 
 		$test_successful = false;
-		if($test_run_request->test_profile->get_result_format() == "NO_RESULT")
+		if($test_run_request->test_profile->get_display_format() == "NO_RESULT")
 		{
 			$test_successful = true;
 		}
@@ -626,22 +630,12 @@ class pts_test_run_manager
 	{
 		if($this->do_save_results())
 		{
-			$test_properties = array();
 			$this->result_file_setup();
 			$this->results_directory = pts_client::setup_test_result_directory($this->get_file_name()) . '/';
 
-			if((pts_c::$test_flags & pts_c::batch_mode))
-			{
-				pts_arrays::unique_push($test_properties, "PTS_BATCH_MODE");
-			}
-			else if((pts_c::$test_flags & pts_c::defaults_mode))
-			{
-				pts_arrays::unique_push($test_properties, "PTS_DEFAULTS_MODE");
-			}
-
 			if((pts_c::$test_flags ^ pts_c::is_recovering) && (!pts_result_file::is_test_result_file($this->get_file_name()) || $this->result_already_contains_identifier() == false))
 			{
-				$this->result_file_writer->add_result_file_meta_data($this, $test_properties);
+				$this->result_file_writer->add_result_file_meta_data($this);
 				$this->result_file_writer->add_current_system_information();
 				$this->wrote_system_xml = true;
 			}
@@ -907,7 +901,7 @@ class pts_test_run_manager
 	{
 		// Determine what to run
 		$this->auto_save_results($save_name, $result_identifier);
-		$this->run_description = $result_file->get_suite_description();
+		$this->run_description = $result_file->get_description();
 		$result_objects = $result_file->get_result_objects();
 
 		// Unset result objects that shouldn't be run
@@ -930,7 +924,7 @@ class pts_test_run_manager
 
 		foreach($result_objects as &$result_object)
 		{
-			$test_result = new pts_test_result($result_object->test_profile->get_identifier());
+			$test_result = new pts_test_result($result_object->test_profile);
 			$test_result->set_used_arguments($result_object->get_arguments());
 			$test_result->set_used_arguments_description($result_object->get_arguments_description());
 			$this->add_test_result_object($test_result);
@@ -946,7 +940,7 @@ class pts_test_run_manager
 	{
 		// Determine what to run
 		$this->auto_save_results($save_name, $result_identifier);
-		$this->run_description = $result_file->get_suite_description();
+		$this->run_description = $result_file->get_description();
 
 		if(count($test_run_requests) == 0)
 		{
@@ -983,7 +977,7 @@ class pts_test_run_manager
 			// TODO: determine whether to print the titles of what's being run?
 			if($run_object instanceof pts_test_profile)
 			{
-				if($run_contains_a_no_result_type == false && $run_object->get_result_format() == "NO_RESULT")
+				if($run_contains_a_no_result_type == false && $run_object->get_display_format() == "NO_RESULT")
 				{
 					$run_contains_a_no_result_type = true;
 				}
@@ -1031,20 +1025,13 @@ class pts_test_run_manager
 			else if($run_object instanceof pts_result_file)
 			{
 				// Print the $to_run ?
-				$this->run_description = $run_object->get_suite_description();
-				$test_extensions = $run_object->get_suite_extensions();
-				$test_previous_properties = $run_object->get_suite_properties();
+				$this->run_description = $run_object->get_description();
+				$preset_vars = $run_object->get_preset_environment_variables();
 				$result_objects = $run_object->get_result_objects();
 
 				$this->set_save_name($run_object->get_identifier());
 
-				foreach(explode(";", $test_previous_properties) as $test_prop)
-				{
-					// TODO: hook into PTS3 arch
-					//pts_arrays::unique_push($test_properties, $test_prop);
-				}
-
-				pts_module_manager::process_extensions_string($test_extensions);
+				pts_module_manager::process_environment_variables_string_to_set($preset_vars);
 
 				foreach($result_objects as &$result_object)
 				{

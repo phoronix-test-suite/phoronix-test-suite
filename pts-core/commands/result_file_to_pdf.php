@@ -53,7 +53,7 @@ class result_file_to_pdf implements pts_option_interface
 		$pdf->WriteStatementCenter("www.phoronix-test-suite.com");
 		$pdf->Ln(15);
 		$pdf->WriteBigHeaderCenter($result_file->get_title());
-		$pdf->WriteText($result_file->get_suite_description());
+		$pdf->WriteText($result_file->get_description());
 
 
 		$pdf->AddPage();

@@ -126,11 +126,11 @@ class pts_basic_display_mode implements pts_display_mode_interface
 		$end_print = $test_result->test_profile->get_title() . ":\n" . $test_result->get_arguments_description();
 		$end_print .= "\n" . ($test_result->get_arguments_description() != null ? "\n" : null);
 
-		if(in_array($test_result->test_profile->get_result_format(), array("NO_RESULT", "LINE_GRAPH", "IMAGE_COMPARISON")))
+		if(in_array($test_result->test_profile->get_display_format(), array("NO_RESULT", "LINE_GRAPH", "IMAGE_COMPARISON")))
 		{
 			return;
 		}
-		else if(in_array($test_result->test_profile->get_result_format(), array("PASS_FAIL", "MULTI_PASS_FAIL")))
+		else if(in_array($test_result->test_profile->get_display_format(), array("PASS_FAIL", "MULTI_PASS_FAIL")))
 		{
 			$end_print .= "\nFinal: " . $test_result->get_result() . " (" . $test_result->test_profile->get_result_scale() . ")\n";
 		}
@@ -141,7 +141,7 @@ class pts_basic_display_mode implements pts_display_mode_interface
 				$end_print .= $result . " " . $test_result->test_profile->get_result_scale() . "\n";
 			}
 
-			$end_print .= "\n" . pts_strings::result_format_to_string($test_result->test_profile->get_result_format()) . ": " . $test_result->get_result() . " " . $test_result->test_profile->get_result_scale();
+			$end_print .= "\n" . pts_strings::result_quantifier_to_string($test_result->test_profile->get_result_quantifier()) . ": " . $test_result->get_result() . " " . $test_result->test_profile->get_result_scale();
 		}
 
 		echo self::string_header($end_print, "#");

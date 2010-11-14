@@ -315,11 +315,11 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	{
 		echo "\n";
 
-		if(in_array($test_result->test_profile->get_result_format(), array("NO_RESULT", "LINE_GRAPH", "IMAGE_COMPARISON")))
+		if(in_array($test_result->test_profile->get_display_format(), array("NO_RESULT", "LINE_GRAPH", "IMAGE_COMPARISON")))
 		{
 			$end_print = null;
 		}
-		else if(in_array($test_result->test_profile->get_result_format(), array("PASS_FAIL", "MULTI_PASS_FAIL")))
+		else if(in_array($test_result->test_profile->get_display_format(), array("PASS_FAIL", "MULTI_PASS_FAIL")))
 		{
 			$end_print = $this->tab . $this->tab . "Final: " . $test_result->get_result() . " (" . $test_result->test_profile->get_result_scale() . ")\n";
 		}
@@ -332,7 +332,8 @@ class pts_concise_display_mode implements pts_display_mode_interface
 				$end_print .= $this->tab . $this->tab . $result . "\n";
 			}
 
-			$end_print .= "\n" . $this->tab . pts_strings::result_format_to_string($test_result->test_profile->get_result_format()) . ": " . $test_result->get_result() . " " . $test_result->test_profile->get_result_scale();
+			// TODO: below I don't think is what we want....
+			$end_print .= "\n" . $this->tab . pts_strings::result_quantifier_to_string($test_result->test_profile->get_result_quantifier()) . ": " . $test_result->get_result() . " " . $test_result->test_profile->get_result_scale();
 
 			if($test_result->get_result() == 0)
 			{

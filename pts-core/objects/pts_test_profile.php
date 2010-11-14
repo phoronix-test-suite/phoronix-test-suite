@@ -146,8 +146,8 @@ class pts_test_profile extends pts_test_profile_parser
 			$times_to_run = $force_runs;
 		}
 
-		$result_format = $this->get_result_format();
-		if($times_to_run < 1 || (strlen($result_format) > 6 && substr($result_format, 0, 6) == "MULTI_" || substr($result_format, 0, 6) == "IMAGE_"))
+		$display_format = $this->get_display_format();
+		if($times_to_run < 1 || (strlen($display_format) > 6 && substr($display_format, 0, 6) == "MULTI_" || substr($display_format, 0, 6) == "IMAGE_"))
 		{
 			// Currently tests that output multiple results in one run can only be run once
 			$times_to_run = 1;
