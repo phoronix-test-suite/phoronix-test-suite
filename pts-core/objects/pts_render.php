@@ -48,6 +48,9 @@ class pts_render
 				$conts = base64_encode($buffer);
 				$graph = "<img src=\"data:image/png;base64,$conts\" />";
 				break;
+			case "SVG":
+				$graph = "<object width=\"auto\" height=\"auto\">" . $graph->render_graph_finish() . "</object>";
+				break;
 			default:
 				$graph = $graph->render_graph_finish();
 				break;

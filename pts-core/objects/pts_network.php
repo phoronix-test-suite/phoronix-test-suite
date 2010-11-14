@@ -44,8 +44,8 @@ class pts_network
 		$upload_data = http_build_query($to_post_data);
 		$http_parameters = array("http" => array("method" => "POST", "content" => $upload_data));
 		$stream_context = pts_network::stream_context_create($http_parameters);
-		$opened_url = @fopen($url, "rb", false, $stream_context);
-		$response = @stream_get_contents($opened_url);
+		$opened_url = fopen($url, "rb", false, $stream_context);
+		$response = stream_get_contents($opened_url);
 
 		return $response;
 	}
@@ -77,16 +77,29 @@ class pts_network
 
 		// with curl_multi_init we could do multiple downloads at once...
 		$cr = curl_init();
-		$fh = @fopen($download_to, 'w');
+		$fh = fopen($download_to, 'w');
 
 		curl_setopt($cr, CURLOPT_FILE, $fh);
 		curl_setopt($cr, CURLOPT_URL, $download);
 		curl_setopt($cr, CURLOPT_HEADER, false);
-		curl_setopt($cr, CURLOPT_USERAGENT, pts_codename(true));
-		//curl_setopt($cr, CURLOPT_REFERER, "http://www.phoronix-test-suite.com/"); // Setting the referer causes problems for SourceForge downloads
 		curl_setopt($cr, CURLOPT_FOLLOWLOCATION, true);
 		curl_setopt($cr, CURLOPT_CONNECTTIMEOUT, (defined("NETWORK_TIMEOUT") ? NETWORK_TIMEOUT : 20));
 		curl_setopt($cr, CURLOPT_BUFFERSIZE, 64000);
+		curl_setopt($cr, CURLOPT_CAPATH, PTS_CORE_STATIC_PATH . "certificates/");
+		curl_setopt($cr, CURLOPT_USERAGENT, pts_codename(true));
+
+		if(stripos($download, "sourceforge") === false)
+		{
+			// Setting the referer causes problems for SourceForge downloads
+			curl_setopt($cr, CURLOPT_REFERER, "http://www.phoronix-test-suite.com/");
+		}
+
+		if(strpos($download, "https://www.openbenchmarking.org/") !== false)
+		{
+			curl_setopt($cr, CURLOPT_SSL_VERIFYPEER, true);
+			curl_setopt($cr, CURLOPT_SSL_VERIFYHOST, 2);
+			curl_setopt($cr, CURLOPT_CAINFO, PTS_CORE_STATIC_PATH . "certificates/openbenchmarking-org.crt");
+		}
 
 		if(PHP_VERSION_ID >= 50300)
 		{
@@ -110,6 +123,13 @@ class pts_network
 	{
 		$stream_context = pts_network::stream_context_create($stream_context_parameters);
 		stream_context_set_params($stream_context, array("notification" => $callback_function));
+
+		/*
+		if(strpos($download, "https://www.openbenchmarking.org/") !== false)
+		{
+			stream_context_set_option($stream_context, 'ssl', 'local_cert', PTS_CORE_STATIC_PATH . "certificates/openbenchmarking-org.crt");
+		}
+		*/
 
 		$file_pointer = @fopen($download, 'r', false, $stream_context);
 
@@ -141,6 +161,7 @@ class pts_network
 
 		$parameters["http"]["timeout"] = defined("NETWORK_TIMEOUT") ? NETWORK_TIMEOUT : 20;
 		$parameters["http"]["user_agent"] = pts_codename(true);
+		$parameters["http"]["header"] = "Content-Type: application/x-www-form-urlencoded\r\n";
 
 		$stream_context = stream_context_create($parameters);
 

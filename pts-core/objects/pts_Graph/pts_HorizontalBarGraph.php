@@ -79,7 +79,7 @@ class pts_HorizontalBarGraph extends pts_Graph
 
 			foreach(array_keys($this->graph_data[$i_o]) as $i)
 			{
-				$value = pts_math::set_precision($this->graph_data[$i_o][$i], 2);
+				$value = $this->graph_data[$i_o][$i];
 				$graph_size = round(($value / $this->graph_maximum_value) * ($this->graph_left_end - $this->graph_left_start));
 				$value_end_left = $this->graph_left_start + $graph_size;
 

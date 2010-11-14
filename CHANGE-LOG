@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+- pts-core: Add the OpenBenchmarking.org HTTPS certificate
 - pts: Add initial support for the Angstrom (OpenEmbedded) Linux distribution with external dependencies
 - pts_Graph: Add SVGZ renderer back-end that Gzip compresses the SVG renderer output
 

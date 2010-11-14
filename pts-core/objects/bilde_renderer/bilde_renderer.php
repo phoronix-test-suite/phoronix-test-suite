@@ -183,10 +183,15 @@ abstract class bilde_renderer
 				$webkit_ver = substr($browser, ($p + 12));
 				$webkit_ver = substr($webkit_ver, 0, strpos($webkit_ver, ' '));
 
-				if($webkit_ver >= 532.0)
+				if($webkit_ver >= 530)
 				{
 					$selected_renderer = "SVG";
 				}
+			}
+
+			if(isset($_REQUEST['force_svg']))
+			{
+				$selected_renderer = "SVG";
 			}
 		}
 
