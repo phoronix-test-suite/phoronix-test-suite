@@ -74,9 +74,12 @@ class nye_XmlReader
 
 			if($i == $break_depth)
 			{
-				for($j = 0; $j < $narrow->length; $j++)
+				for($x = 0; $x < $break_depth || $x == 0; $x++)
 				{
-					array_push($values, $this->processXMLArraySteps($steps, $narrow->item($j)->getElementsByTagName($steps[$i + 1]), $i + 2));
+					for($j = 0; $j < $narrow->length; $j++)
+					{
+						array_push($values, $this->processXMLArraySteps($steps, $narrow->item($j)->getElementsByTagName($steps[$i + 1]), $i + 2));
+					}
 				}
 				break;
 			}

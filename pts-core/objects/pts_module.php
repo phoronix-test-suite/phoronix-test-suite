@@ -60,14 +60,12 @@ class pts_module
 			$settings_to_write[$identifier] = $value;
 		}
 
-		$config = new tandem_XmlWriter();
-		$i = 0;
+		$config = new nye_XmlWriter();
 
 		foreach($settings_to_write as $identifier => $value)
 		{
-			$config->addXmlObject(P_MODULE_OPTION_IDENTIFIER, $i, $identifier);
-			$config->addXmlObject(P_MODULE_OPTION_VALUE, $i, $value);
-			$i++;
+			$config->addXmlNode(P_MODULE_OPTION_IDENTIFIER, $identifier);
+			$config->addXmlNode(P_MODULE_OPTION_VALUE, $value);
 		}
 
 		$config->saveXMLFile(PTS_MODULE_DATA_PATH . $module_name . "/module-settings.xml");

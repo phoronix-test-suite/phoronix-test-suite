@@ -228,25 +228,25 @@ class pts_test_profile_parser
 		$settings_argument_postfix = $this->xml_parser->getXMLArrayValues(P_TEST_OPTIONS_ARGPOSTFIX);
 		$settings_identifier = $this->xml_parser->getXMLArrayValues(P_TEST_OPTIONS_IDENTIFIER);
 		$settings_default = $this->xml_parser->getXMLArrayValues(P_TEST_OPTIONS_DEFAULTENTRY);
-		$option_names = $this->xml_parser->getXMLArrayValues(P_TEST_OPTIONS_MENU_GROUP_NAME, 0);
-		$option_messages = $this->xml_parser->getXMLArrayValues(P_TEST_OPTIONS_MENU_GROUP_MESSAGE, 0);
-		$option_values = $this->xml_parser->getXMLArrayValues(P_TEST_OPTIONS_MENU_GROUP_VALUE, 0);
+		$option_names = $this->xml_parser->getXMLArrayValues(P_TEST_OPTIONS_MENU_GROUP_NAME, 1);
+		$option_messages = $this->xml_parser->getXMLArrayValues(P_TEST_OPTIONS_MENU_GROUP_MESSAGE, 1);
+		$option_values = $this->xml_parser->getXMLArrayValues(P_TEST_OPTIONS_MENU_GROUP_VALUE, 1);
 		$test_options = array();
 
 		foreach(array_keys($settings_name) as $option_count)
 		{
-			$option_names = $option_names[$option_count];
-			$option_messages = $option_messages[$option_count];
-			$option_values = $option_values[$option_count];
-			pts_test_run_options::auto_process_test_option($this->identifier, $settings_identifier[$option_count], $option_names, $option_values, $option_messages);
+			$names = $option_names[$option_count];
+			$messages = $option_messages[$option_count];
+			$values = $option_values[$option_count];
+			pts_test_run_options::auto_process_test_option($this->identifier, $settings_identifier[$option_count], $names, $values, $messages);
 
 			$user_option = new pts_test_option($settings_identifier[$option_count], $settings_name[$option_count]);
 			$user_option->set_option_prefix($settings_argument_prefix[$option_count]);
 			$user_option->set_option_postfix($settings_argument_postfix[$option_count]);
 
-			foreach(array_keys($option_names) as $i)
+			for($i = 0; $i < count($names); $i++)
 			{
-				$user_option->add_option($option_names[$i], $option_values[$i], (isset($option_messages[$i]) ? $option_messages[$i] : null));
+				$user_option->add_option($names[$i], $values[$i], $messages[$i]);
 			}
 
 			$user_option->set_option_default($settings_default[$option_count]);
