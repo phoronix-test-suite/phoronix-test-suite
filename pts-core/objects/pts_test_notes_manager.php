@@ -127,7 +127,7 @@ class pts_test_notes_manager
 			}
 		}
 
-		$notes_string = trim(implode(". \n", self::$notes)) . '.';
+		$notes_string = trim(implode(". ", self::$notes)) . '.';
 		self::$notes = array();
 
 		return $notes_string;

@@ -550,8 +550,9 @@ abstract class pts_Graph
 			$this->graph_top_heading_height = 16 + $this->graph_font_size_heading + (count($this->graph_sub_titles) * ($this->graph_font_size_sub_heading + 4));
 
 			$key_height = $this->graph_key_height();
-			if($key_height > ($this->graph_key_line_height * 2))
+			if($key_height > $this->graph_key_line_height)
 			{
+				// Increase height so key doesn't take up too much room
 				$this->graph_attr_height += $key_height;
 				$this->graph_top_end += $key_height;
 			}

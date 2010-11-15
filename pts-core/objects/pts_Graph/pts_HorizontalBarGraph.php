@@ -52,7 +52,7 @@ class pts_HorizontalBarGraph extends pts_Graph
 
 		foreach(array_keys($this->graph_identifiers) as $i)
 		{
-			$middle_of_vert = $this->graph_top_start + ($multi_way ? 10 : 0) + ($this->identifier_height * ($i + 1)) - ($this->identifier_height * 0.5);
+			$middle_of_vert = $this->graph_top_start + ($multi_way ? 10 : 0) + ($this->identifier_height * ($i + 1)) - ($this->identifier_height * 0.5) - 2;
 
 			if($multi_way)
 			{
@@ -109,7 +109,7 @@ class pts_HorizontalBarGraph extends pts_Graph
 						$this->graph_image->draw_line(($value_end_left - $std_error_rel_size), $px_bound_top, ($value_end_left + $std_error_rel_size), $px_bound_top, $this->graph_color_notches, 1);
 					}
 
-					$bar_offset_34 = $middle_of_bar + ($multi_way ? 0 : ($bar_height / 5) + 1);
+					$bar_offset_34 = $middle_of_bar + ($multi_way ? 0 : ($bar_height / 5) + 4);
 					$this->graph_image->write_text_right("SE +/- " . pts_math::set_precision($std_error, 2), $this->graph_font, $this->graph_font_size_identifiers - 2, $this->graph_color_text, ($this->graph_left_start - 5), $bar_offset_34, ($this->graph_left_start - 5), $bar_offset_34);
 				}
 

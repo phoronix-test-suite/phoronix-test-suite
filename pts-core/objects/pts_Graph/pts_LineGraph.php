@@ -126,8 +126,9 @@ class pts_LineGraph extends pts_Graph
 			for($i = 0; $i < $point_counter; $i++)
 			{
 				$value = $this->graph_data[$i_o][$i];
+				$identifier = isset($this->graph_identifiers[$i]) ? $this->graph_identifiers[$i] : null;
 				$std_error = isset($this->graph_data_raw[$i_o][$i]) ? pts_math::standard_error(pts_strings::colon_explode($this->graph_data_raw[$i_o][$i])) : 0;
-				$data_string = isset($this->graph_data_title[$i_o]) ? $this->graph_data_title[$i_o] . ' @ ' . $this->graph_identifiers[$i] . ": " . $value : null;
+				$data_string = isset($this->graph_data_title[$i_o]) ? $this->graph_data_title[$i_o] . ($identifier ? ' @ ' . $identifier : null) . ": " . $value : null;
 
 				if($value == 0 && !$has_hit_non_zero)
 				{
@@ -194,12 +195,12 @@ class pts_LineGraph extends pts_Graph
 				if($this->regression_marker_threshold > 0 && $i > 0 && abs(1 - ($value / $prev_value)) > $this->regression_marker_threshold)
 				{
 					$regression_plots[($i - 1)] = $prev_identifier . ": " . $prev_value;
-					$regression_plots[$i] = $this->graph_identifiers[$i] . ": " . $value;
+					$regression_plots[$i] = $identifier . ": " . $value;
 				}
 
 				//array_push($poly_tips, array($value, $this->graph_identifiers[$i]));
 				array_push($calculations_r[$paint_color], $value);
-				$prev_identifier = $this->graph_identifiers[$i];
+				$prev_identifier = $identifier;
 				$prev_value = $value;
 			}
 
