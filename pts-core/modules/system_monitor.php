@@ -115,7 +115,8 @@ class system_monitor extends pts_module_interface
 				self::$individual_test_run_request->test_profile->set_result_scale(phodevi::read_sensor_unit($sensor));
 				self::$individual_test_run_request->set_used_arguments_description(phodevi::sensor_name($sensor) . " Monitor");
 				self::$individual_test_run_request->set_used_arguments(phodevi::sensor_name($sensor) . self::$individual_test_run_request->get_arguments());
-				$result_file_writer->add_result_from_result_object(self::$individual_test_run_request, implode(',', $sensor_results), implode(',', $sensor_results));
+
+				$result_file_writer->add_result_from_result_object_with_value_string(self::$individual_test_run_request, implode(',', $sensor_results), implode(',', $sensor_results));
 			}
 		}
 
@@ -143,7 +144,7 @@ class system_monitor extends pts_module_interface
 				$test_result->test_profile->set_result_scale(phodevi::read_sensor_unit($sensor));
 				$test_result->set_used_arguments_description("System Monitor Module");
 				$test_result->set_used_arguments(phodevi::sensor_name($sensor));
-				$test_run_manager->result_file_writer->add_result_from_result_object($test_result, implode(',', $sensor_results), implode(',', $sensor_results));
+				$test_run_manager->result_file_writer->add_result_from_result_object_with_value_string($test_result, implode(',', $sensor_results), implode(',', $sensor_results));
 			}
 		}
 	}

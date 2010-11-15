@@ -211,7 +211,7 @@ class pts_test_run_manager
 	{
 		return $this->file_name;
 	}
-	public function get_file_name_title()
+	public function get_title()
 	{
 		return $this->file_name_title;
 	}
@@ -219,13 +219,17 @@ class pts_test_run_manager
 	{
 		return $this->results_identifier;
 	}
-	public function get_run_description()
+	public function get_description()
 	{
 		return $this->run_description;
 	}
-	public function get_run_notes()
+	public function get_notes()
 	{
 		return null; // TODO: Not Yet Implemented
+	}
+	public function get_preset_environment_variables()
+	{
+		return pts_module_manager::var_store_string();
 	}
 	public function result_already_contains_identifier()
 	{
@@ -546,7 +550,7 @@ class pts_test_run_manager
 
 				if(!empty($test_identifier))
 				{
-					$this->result_file_writer->add_result_from_result_object($test_run_request, $test_run_request->get_result(), $test_run_request->test_result_buffer->get_values_as_string());
+					$this->result_file_writer->add_result_from_result_object_with_value_string($test_run_request, $test_run_request->get_result(), $test_run_request->test_result_buffer->get_values_as_string());
 					$this->completed_runs += 1;
 
 					static $xml_write_pos = 1;
@@ -691,7 +695,7 @@ class pts_test_run_manager
 
 				if($upload_results)
 				{
-					$tags_input = pts_global::prompt_user_result_tags(array($this->get_results_identifier(), $this->get_file_name_title()));
+					$tags_input = pts_global::prompt_user_result_tags(array($this->get_results_identifier(), $this->get_title()));
 					$upload_url = pts_global::upload_test_result(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . "/composite.xml", $tags_input);
 
 					if(!empty($upload_url))

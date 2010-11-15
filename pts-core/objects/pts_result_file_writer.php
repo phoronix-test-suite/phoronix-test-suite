@@ -33,44 +33,40 @@ class pts_result_file_writer
 		$this->result_identifier = $result_identifier;
 		$this->added_hashes = array();
 
-		$this->xml_writer = new tandem_XmlWriter("pts-results-viewer.xsl");
-
-		if(PTS_IS_CLIENT)
-		{
-			$this->xml_writer->addXmlObject(P_RESULTS_GENERATED_TIMESTAMP, -2, date("Y-m-d H:i:s"));
-			$this->xml_writer->addXmlObject(P_RESULTS_GENERATED_CLIENT_STRING, -2, pts_title(true));
-		}
-	}
-	public function save_xml($to_save)
-	{
-		$this->xml_writer->saveXMLFile($to_save);
+		$this->xml_writer = new nye_XmlWriter("pts-results-viewer.xsl");
+		$this->xml_writer->addXmlNode(P_RESULTS_GENERATED_TIMESTAMP, date("Y-m-d H:i:s"));
+		$this->xml_writer->addXmlNode(P_RESULTS_GENERATED_CLIENT_STRING, pts_title(true));
 	}
 	public function get_xml()
 	{
 		return $this->xml_writer->getXML();
 	}
-	public function add_result_from_result_object(&$result_object, $result_value, $result_value_raw = null)
+	public function save_xml($to_save)
 	{
-		$tandem_id = $this->xml_writer->request_unique_id();
+		return $this->xml_writer->saveXMLFile($to_save);
+	}
+	protected function add_result_from_result_object(&$result_object)
+	{
+		$this->xml_writer->addXmlNode(P_RESULTS_TEST_IDENTIFIER, $result_object->test_profile->get_identifier());
+		$this->xml_writer->addXmlNode(P_RESULTS_TEST_PROFILE_VERSION, $result_object->test_profile->get_test_profile_version());
+		$this->xml_writer->addXmlNode(P_RESULTS_TEST_TITLE, $result_object->test_profile->get_title());
+		$this->xml_writer->addXmlNode(P_RESULTS_TEST_ARGS, $result_object->get_arguments());
+		$this->xml_writer->addXmlNode(P_RESULTS_TEST_DESCRIPTION, $result_object->get_arguments_description());
+		$this->xml_writer->addXmlNode(P_RESULTS_TEST_VERSION, $result_object->test_profile->get_app_version());
+		$this->xml_writer->addXmlNode(P_RESULTS_TEST_SCALE, $result_object->test_profile->get_result_scale());
+		$this->xml_writer->addXmlNode(P_RESULTS_TEST_PROPORTION, $result_object->test_profile->get_result_proportion());
+		$this->xml_writer->addXmlNode(P_RESULTS_TEST_DISPLAY_FORMAT, $result_object->test_profile->get_display_format());
+	}
+	public function add_result_from_result_object_with_value_string(&$result_object, $result_value, $result_value_raw = null)
+	{
+		$this->add_result_from_result_object($result_object);
 
-		$this->xml_writer->addXmlObject(P_RESULTS_TEST_IDENTIFIER, $tandem_id, $result_object->test_profile->get_identifier());
-		$this->xml_writer->addXmlObject(P_RESULTS_TEST_PROFILE_VERSION, $tandem_id, $result_object->test_profile->get_test_profile_version());
-		$this->xml_writer->addXmlObject(P_RESULTS_TEST_TITLE, $tandem_id, $result_object->test_profile->get_title());
-		$this->xml_writer->addXmlObject(P_RESULTS_TEST_ARGS, $tandem_id, $result_object->get_arguments());
-		$this->xml_writer->addXmlObject(P_RESULTS_TEST_DESCRIPTION, $tandem_id, $result_object->get_arguments_description());
-		$this->xml_writer->addXmlObject(P_RESULTS_TEST_VERSION, $tandem_id, $result_object->test_profile->get_app_version());
-		$this->xml_writer->addXmlObject(P_RESULTS_TEST_SCALE, $tandem_id, $result_object->test_profile->get_result_scale());
-		$this->xml_writer->addXmlObject(P_RESULTS_TEST_PROPORTION, $tandem_id, $result_object->test_profile->get_result_proportion());
-		$this->xml_writer->addXmlObject(P_RESULTS_TEST_DISPLAY_FORMAT, $tandem_id, $result_object->test_profile->get_display_format());
-
-		$this->xml_writer->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $tandem_id, $this->result_identifier, 4);
-		$this->xml_writer->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $tandem_id, $result_value, 4);
-		$this->xml_writer->addXmlObject(P_RESULTS_RESULTS_GROUP_RAW, $tandem_id, $result_value_raw, 4);
+		$this->xml_writer->addXmlNode(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $this->result_identifier);
+		$this->xml_writer->addXmlNode(P_RESULTS_RESULTS_GROUP_VALUE, $result_value);
+		$this->xml_writer->addXmlNode(P_RESULTS_RESULTS_GROUP_RAW, $result_value_raw);
 	}
 	public function add_results_from_result_file(&$result_manager)
 	{
-		$results_added = 0;
-
 		foreach($result_manager->get_results() as $result_object)
 		{
 			$buffer_items = $result_object->test_result_buffer->get_buffer_items();
@@ -80,54 +76,36 @@ class pts_result_file_writer
 				continue;
 			}
 
-			$use_id = $this->xml_writer->request_unique_id();
-			$this->xml_writer->addXmlObject(P_RESULTS_TEST_TITLE, $use_id, $result_object->test_profile->get_title());
-			$this->xml_writer->addXmlObject(P_RESULTS_TEST_VERSION, $use_id, $result_object->test_profile->get_app_version());
-			$this->xml_writer->addXmlObject(P_RESULTS_TEST_PROFILE_VERSION, $use_id, $result_object->test_profile->get_test_profile_version());
-			$this->xml_writer->addXmlObject(P_RESULTS_TEST_ARGS, $use_id, $result_object->get_arguments());
-			$this->xml_writer->addXmlObject(P_RESULTS_TEST_DESCRIPTION, $use_id, $result_object->get_arguments_description());
-			$this->xml_writer->addXmlObject(P_RESULTS_TEST_SCALE, $use_id, $result_object->test_profile->get_result_scale());
-			$this->xml_writer->addXmlObject(P_RESULTS_TEST_PROPORTION, $use_id, $result_object->test_profile->get_result_proportion());
-			$this->xml_writer->addXmlObject(P_RESULTS_TEST_IDENTIFIER, $use_id, $result_object->test_profile->get_identifier());
-			$this->xml_writer->addXmlObject(P_RESULTS_TEST_DISPLAY_FORMAT, $use_id, $result_object->test_profile->get_display_format());
+			$this->add_result_from_result_object($result_object);
 
 			foreach($buffer_items as $i => &$buffer_item)
 			{
-				$this->xml_writer->addXmlObject(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $use_id, $buffer_item->get_result_identifier(), 4, "o-$i-$results_added-r");
-				$this->xml_writer->addXmlObject(P_RESULTS_RESULTS_GROUP_VALUE, $use_id, $buffer_item->get_result_value(), 4, "o-$i-$results_added-r");
-				$this->xml_writer->addXmlObject(P_RESULTS_RESULTS_GROUP_RAW, $use_id, $buffer_item->get_result_raw(), 4, "o-$i-$results_added-r");
+				$this->xml_writer->addXmlNode(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $buffer_item->get_result_identifier());
+				$this->xml_writer->addXmlNode(P_RESULTS_RESULTS_GROUP_VALUE, $buffer_item->get_result_value());
+				$this->xml_writer->addXmlNode(P_RESULTS_RESULTS_GROUP_RAW, $buffer_item->get_result_raw());
 			}
-
-			$results_added++;
 		}
 	}
 	public function add_test_notes($test_notes)
 	{
-		$this->xml_writer->addXmlObject(P_RESULTS_SYSTEM_NOTES, 0, $test_notes, 0);
+		$this->xml_writer->addXmlNode(P_RESULTS_SYSTEM_NOTES, $test_notes);
 	}
-	public function add_result_file_meta_data(&$test_run_manager)
+	public function add_result_file_meta_data(&$object)
 	{
-		$this->xml_writer->addXmlObject(P_RESULTS_GENERATED_TITLE, -2, $test_run_manager->get_file_name_title());
-		$this->xml_writer->addXmlObject(P_RESULTS_GENERATED_DESCRIPTION, -2, $test_run_manager->get_run_description());
-		$this->xml_writer->addXmlObject(P_RESULTS_GENERATED_NOTES, -2, $test_run_manager->get_run_notes());
-		$this->xml_writer->addXmlObject(P_RESULTS_GENERATED_PRESET_ENV_VARS, -2, pts_module_manager::var_store_string());
-	}
-	public function add_result_file_meta_data_from_result_file(&$result_file)
-	{
-		$this->xml_writer->addXmlObject(P_RESULTS_GENERATED_TITLE, -2, $result_file->get_title());
-		$this->xml_writer->addXmlObject(P_RESULTS_GENERATED_DESCRIPTION, -2, $result_file->get_description());
-		$this->xml_writer->addXmlObject(P_RESULTS_GENERATED_NOTES, -2, $result_file->get_notes());
-		$this->xml_writer->addXmlObject(P_RESULTS_GENERATED_PRESET_ENV_VARS, -2, $result_file->get_preset_environment_variables());
+		$this->xml_writer->addXmlNode(P_RESULTS_GENERATED_TITLE, $object->get_title());
+		$this->xml_writer->addXmlNode(P_RESULTS_GENERATED_DESCRIPTION, $object->get_description());
+		$this->xml_writer->addXmlNode(P_RESULTS_GENERATED_NOTES, $object->get_notes());
+		$this->xml_writer->addXmlNode(P_RESULTS_GENERATED_PRESET_ENV_VARS, $object->get_preset_environment_variables());
 	}
 	public function add_current_system_information()
 	{
-		$this->xml_writer->addXmlObject(P_RESULTS_SYSTEM_IDENTIFIERS, 0, $this->result_identifier);
-		$this->xml_writer->addXmlObject(P_RESULTS_SYSTEM_HARDWARE, 0, phodevi::system_hardware(true));
-		$this->xml_writer->addXmlObject(P_RESULTS_SYSTEM_SOFTWARE, 0, phodevi::system_software(true));
-		$this->xml_writer->addXmlObject(P_RESULTS_SYSTEM_USER, 0, pts_client::current_user());
-		$this->xml_writer->addXmlObject(P_RESULTS_SYSTEM_DATE, 0, date("Y-m-d H:i:s"));
-		//$this->xml_writer->addXmlObject(P_RESULTS_SYSTEM_NOTES, 0, pts_test_notes_manager::generate_test_notes($test_type));
-		$this->xml_writer->addXmlObject(P_RESULTS_SYSTEM_PTSVERSION, 0, PTS_VERSION);
+		$this->xml_writer->addXmlNode(P_RESULTS_SYSTEM_IDENTIFIERS, $this->result_identifier);
+		$this->xml_writer->addXmlNode(P_RESULTS_SYSTEM_HARDWARE, phodevi::system_hardware(true));
+		$this->xml_writer->addXmlNode(P_RESULTS_SYSTEM_SOFTWARE, phodevi::system_software(true));
+		$this->xml_writer->addXmlNode(P_RESULTS_SYSTEM_USER, pts_client::current_user());
+		$this->xml_writer->addXmlNode(P_RESULTS_SYSTEM_DATE, date("Y-m-d H:i:s"));
+		//$this->xml_writer->addXmlNode(P_RESULTS_SYSTEM_NOTES, pts_test_notes_manager::generate_test_notes($test_type));
+		$this->xml_writer->addXmlNode(P_RESULTS_SYSTEM_PTSVERSION, PTS_VERSION);
 	}
 	public function add_system_information_from_result_file(&$result_file, $result_merge_select = null)
 	{
@@ -140,7 +118,6 @@ class pts_result_file_writer
 		$associated_identifiers = $result_file->get_system_identifiers();
 
 		// Write the system hardware/software information
-
 		foreach(array_keys($system_hardware) as $i)
 		{
 			if(!($is_pts_rms = ($result_merge_select instanceOf pts_result_merge_select)) || $result_merge_select->get_selected_identifiers() == null || in_array($associated_identifiers[$i], $result_merge_select->get_selected_identifiers()))
@@ -155,14 +132,13 @@ class pts_result_file_writer
 						$associated_identifiers[$i] = $renamed;
 					}
 
-					$use_id = $this->xml_writer->request_unique_id();
-					$this->xml_writer->addXmlObject(P_RESULTS_SYSTEM_IDENTIFIERS, $use_id, $associated_identifiers[$i]);
-					$this->xml_writer->addXmlObject(P_RESULTS_SYSTEM_PTSVERSION, $use_id, $pts_version[$i]);
-					$this->xml_writer->addXmlObject(P_RESULTS_SYSTEM_HARDWARE, $use_id, $system_hardware[$i]);
-					$this->xml_writer->addXmlObject(P_RESULTS_SYSTEM_SOFTWARE, $use_id, $system_software[$i]);
-					$this->xml_writer->addXmlObject(P_RESULTS_SYSTEM_USER, $use_id, $system_user[$i]);
-					$this->xml_writer->addXmlObject(P_RESULTS_SYSTEM_DATE, $use_id, $system_date[$i]);
-					$this->xml_writer->addXmlObject(P_RESULTS_SYSTEM_NOTES, $use_id, $system_notes[$i]);
+					$this->xml_writer->addXmlNode(P_RESULTS_SYSTEM_IDENTIFIERS, $associated_identifiers[$i]);
+					$this->xml_writer->addXmlNode(P_RESULTS_SYSTEM_PTSVERSION, $pts_version[$i]);
+					$this->xml_writer->addXmlNode(P_RESULTS_SYSTEM_HARDWARE, $system_hardware[$i]);
+					$this->xml_writer->addXmlNode(P_RESULTS_SYSTEM_SOFTWARE, $system_software[$i]);
+					$this->xml_writer->addXmlNode(P_RESULTS_SYSTEM_USER, $system_user[$i]);
+					$this->xml_writer->addXmlNode(P_RESULTS_SYSTEM_DATE, $system_date[$i]);
+					$this->xml_writer->addXmlNode(P_RESULTS_SYSTEM_NOTES, $system_notes[$i]);
 
 					array_push($this->added_hashes, $this_hash);
 				}

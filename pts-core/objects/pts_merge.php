@@ -80,7 +80,7 @@ class pts_merge
 			{
 				if($has_written_suite_info == false)
 				{
-					$result_file_writer->add_result_file_meta_data_from_result_file($this_result_file);
+					$result_file_writer->add_result_file_meta_data($this_result_file);
 					$has_written_suite_info = true;
 				}
 
@@ -101,7 +101,7 @@ class pts_merge
 		$result_file = new pts_result_file($analyze_file);
 		$added_systems_hash = array();
 
-		$result_file_writer->add_result_file_meta_data_from_result_file($result_file);
+		$result_file_writer->add_result_file_meta_data($result_file);
 		$result_file_writer->add_system_information_from_result_file($result_file);
 
 		$test_result_manager->add_test_result_set($result_file->get_result_objects());

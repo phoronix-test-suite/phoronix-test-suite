@@ -123,7 +123,7 @@ class analyze_image_delta implements pts_option_interface
 				imagepng($delta_img, PTS_SAVE_RESULTS_PATH . $extract_to . "/scratch.png");
 				$result_value = base64_encode(file_get_contents(PTS_SAVE_RESULTS_PATH . $extract_to . "/scratch.png", FILE_BINARY));
 				pts_file_io::unlink(PTS_SAVE_RESULTS_PATH . $extract_to . "/scratch.png");
-				$result_file_writer->add_result_from_result_object($result_object, $result_value);
+				$result_file_writer->add_result_from_result_object_with_value_string($result_object, $result_value);
 			}
 		}
 
