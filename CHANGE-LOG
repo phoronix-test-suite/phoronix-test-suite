@@ -6,6 +6,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add the OpenBenchmarking.org HTTPS certificate
 - pts-core: Replace tandem_XmlReader with nye_XmlReader as a new PTS DOM-based XML parser
 - pts-core: Replace tandem_XmlWriter with nye_XmlWriter as a new PTS DOM-based XML parser
+- bilde_renderer: Begin work on a new DOM-based back-end renderer that will eventually form the new rendering interface; currently it's producing suitable SVG
 - pts: Add initial support for the Angstrom (OpenEmbedded) Linux distribution with external dependencies
 - pts_Graph: Add SVGZ renderer back-end that Gzip compresses the SVG renderer output
 
