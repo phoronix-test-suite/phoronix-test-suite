@@ -30,7 +30,7 @@ class pts_OverviewGraph extends pts_Graph
 	protected $graphs_per_row;
 	protected $graph_item_width;
 
-	protected $graph_row_height = 200;
+	protected $graph_row_height = 100;
 	protected $graph_row_count;
 
 	public $skip_graph = false;
@@ -65,24 +65,24 @@ class pts_OverviewGraph extends pts_Graph
 			return;
 		}
 
-		$this->graph_font_size_identifiers = 7;
+		$this->graph_font_size_identifiers = 6.5;
+		$this->graph_attr_width = 1000;
 
-		$width = 1000;
 		list($longest_title_width, $longest_title_height) = $this->text_string_dimensions($this->find_longest_string($this->test_titles), $this->graph_font, $this->graph_font_size_identifiers);
 
 		$this->graph_left_start += 20;
-		$this->graphs_per_row = floor(($width - $this->graph_left_start - $this->graph_left_end_opp) / ($longest_title_width + 10));
-		$this->graph_item_width = floor(($width - $this->graph_left_start - $this->graph_left_end_opp) / $this->graphs_per_row);
+		$this->graphs_per_row = floor(($this->graph_attr_width - $this->graph_left_start - $this->graph_left_end_opp) / ($longest_title_width + 6));
+		$this->graph_item_width = floor(($this->graph_attr_width - $this->graph_left_start - $this->graph_left_end_opp) / $this->graphs_per_row);
 		$this->graph_row_count = ceil(count($this->test_titles) / $this->graphs_per_row);
 
-		$height = $this->graph_top_start + ($this->graph_row_count * ($this->graph_row_height + 30));
+		$height = $this->graph_top_start + ($this->graph_row_count * ($this->graph_row_height + 15));
 
 		$this->graph_title = $result_file->get_title();
 		$this->graph_y_title = null;
 		$this->graph_proportion = "HIB";
 		$this->graph_background_lines = true;
 
-		$this->update_graph_dimensions($width, $height, true);
+		$this->update_graph_dimensions($this->graph_attr_width, $height, true);
 		$this->result_file = $result_file;
 
 		return true;
@@ -97,6 +97,7 @@ class pts_OverviewGraph extends pts_Graph
 		$this->graph_data_title = &$this->system_identifiers;
 		$this->graph_attr_marks = 6;
 		$this->graph_maximum_value = 1.2;
+		$l_height = 15;
 
 		if(($key_count = count($this->graph_data_title)) > 8)
 		{
@@ -109,8 +110,8 @@ class pts_OverviewGraph extends pts_Graph
 
 		for($i = 0; $i < $this->graph_row_count; $i++)
 		{
-			$this->render_graph_base($this->graph_left_start, $this->graph_top_start + ($i * ($this->graph_row_height + 25)), $this->graph_left_end, $this->graph_top_start + ($i * ($this->graph_row_height + 25)) + $this->graph_row_height);
-			$this->render_graph_value_ticks($this->graph_left_start, $this->graph_top_start + ($i * ($this->graph_row_height + 25)), $this->graph_left_end, $this->graph_top_start + ($i * ($this->graph_row_height + 25)) + $this->graph_row_height);
+			$this->render_graph_base($this->graph_left_start, $this->graph_top_start + ($i * ($this->graph_row_height + $l_height)), $this->graph_left_end, $this->graph_top_start + ($i * ($this->graph_row_height + $l_height)) + $this->graph_row_height);
+			$this->render_graph_value_ticks($this->graph_left_start, $this->graph_top_start + ($i * ($this->graph_row_height + $l_height)), $this->graph_left_end, $this->graph_top_start + ($i * ($this->graph_row_height + $l_height)) + $this->graph_row_height);
 		}
 
 		$row = 0;
@@ -123,12 +124,12 @@ class pts_OverviewGraph extends pts_Graph
 
 		foreach($this->result_file->get_result_objects() as $i => $result_object)
 		{
-			$top_start = $this->graph_top_start + ($row * ($this->graph_row_height + 25));
-			$top_end = $this->graph_top_start + ($row * ($this->graph_row_height + 25)) + $this->graph_row_height;
+			$top_start = $this->graph_top_start + ($row * ($this->graph_row_height + $l_height));
+			$top_end = $this->graph_top_start + ($row * ($this->graph_row_height + $l_height)) + $this->graph_row_height;
 			$px_bound_left = $this->graph_left_start + ($this->graph_item_width * ($col % $this->graphs_per_row));
 			$px_bound_right = $px_bound_left + $this->graph_item_width;
 
-			$this->graph_image->write_text_center($result_object->test_profile->get_title(), $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_headers, $px_bound_left, $top_end + 5, $px_bound_right, $top_end + 5, false);
+			$this->graph_image->write_text_center($result_object->test_profile->get_title(), $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_headers, $px_bound_left, $top_end + 3, $px_bound_right, $top_end + 3, false);
 
 			if($result_object->test_profile->get_display_format() == "BAR_GRAPH")
 			{
