@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 - pts-core: THE RESULT FILE XML SCHEMA HAS CHANGED. PTS-CORE SHOULD AUTOMATICALLY BE BACKWARDS-COMPATIBLE IN READING OLD XML FILES, BUT IF YOU EXTERNALLY ACCESS THIS XML DATA IT WILL NEED TO BE UPDATED.
 - pts-core: Add the OpenBenchmarking.org HTTPS certificate
 - pts-core: Replace tandem_XmlReader with nye_XmlReader as a new PTS DOM-based XML parser
+- pts-core: Replace tandem_XmlWriter with nye_XmlWriter as a new PTS DOM-based XML parser
 - pts: Add initial support for the Angstrom (OpenEmbedded) Linux distribution with external dependencies
 - pts_Graph: Add SVGZ renderer back-end that Gzip compresses the SVG renderer output
 

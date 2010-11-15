@@ -30,7 +30,7 @@ class bilde_svg_renderer extends bilde_renderer
 
 	public function __construct($width, $height, $embed_identifiers = null)
 	{
-		// TODO: In the future when tandem_XmlWriter is ready, use that for rendering all of the SVG XML
+		// TODO: Possibly use nye_Xml for rendering all of the SVG XML
 		$this->image_width = $width;
 		$this->image_height = $height;
 		$this->embed_identifiers = $embed_identifiers;

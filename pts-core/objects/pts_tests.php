@@ -182,7 +182,7 @@ class pts_tests
 	{
 		// Refresh/generate an install XML for pts-install.xml
 		$installed_test = new pts_installed_test($test_profile->get_install_dir() . "pts-install.xml");
-		$xml_writer = new tandem_XmlWriter("file://" . PTS_USER_PATH . "xsl/" . "pts-test-installation-viewer.xsl");
+		$xml_writer = new nye_XmlWriter("file://" . PTS_USER_PATH . "xsl/" . "pts-test-installation-viewer.xsl");
 
 		$test_duration = $installed_test->get_average_run_time();
 		if(!is_numeric($test_duration) && !$is_install)
@@ -218,16 +218,16 @@ class pts_tests
 			$times_run++;
 		}
 
-		$xml_writer->addXmlObject(P_INSTALL_TEST_NAME, 1, $test_profile->get_identifier());
-		$xml_writer->addXmlObject(P_INSTALL_TEST_VERSION, 1, $test_version);
-		$xml_writer->addXmlObject(P_INSTALL_TEST_CHECKSUM, 1, $test_checksum);
-		$xml_writer->addXmlObject(P_INSTALL_TEST_SYSIDENTIFY, 1, $sys_identifier);
-		$xml_writer->addXmlObject(P_INSTALL_TEST_INSTALLTIME, 2, $install_time);
-		$xml_writer->addXmlObject(P_INSTALL_TEST_INSTALLTIME_LENGTH, 2, $install_time_length);
-		$xml_writer->addXmlObject(P_INSTALL_TEST_LASTRUNTIME, 2, $last_run);
-		$xml_writer->addXmlObject(P_INSTALL_TEST_TIMESRUN, 2, $times_run);
-		$xml_writer->addXmlObject(P_INSTALL_TEST_AVG_RUNTIME, 2, $test_duration);
-		$xml_writer->addXmlObject(P_INSTALL_TEST_LATEST_RUNTIME, 2, $latest_run_time);
+		$xml_writer->addXmlNode(P_INSTALL_TEST_NAME, $test_profile->get_identifier());
+		$xml_writer->addXmlNode(P_INSTALL_TEST_VERSION, $test_version);
+		$xml_writer->addXmlNode(P_INSTALL_TEST_CHECKSUM, $test_checksum);
+		$xml_writer->addXmlNode(P_INSTALL_TEST_SYSIDENTIFY, $sys_identifier);
+		$xml_writer->addXmlNode(P_INSTALL_TEST_INSTALLTIME, $install_time);
+		$xml_writer->addXmlNode(P_INSTALL_TEST_INSTALLTIME_LENGTH, $install_time_length);
+		$xml_writer->addXmlNode(P_INSTALL_TEST_LASTRUNTIME, $last_run);
+		$xml_writer->addXmlNode(P_INSTALL_TEST_TIMESRUN, $times_run);
+		$xml_writer->addXmlNode(P_INSTALL_TEST_AVG_RUNTIME, $test_duration);
+		$xml_writer->addXmlNode(P_INSTALL_TEST_LATEST_RUNTIME, $latest_run_time);
 
 		$xml_writer->saveXMLFile($test_profile->get_install_dir() . "pts-install.xml");
 	}

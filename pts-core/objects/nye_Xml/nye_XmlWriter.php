@@ -74,6 +74,11 @@ class nye_XmlWriter
 			$pointer = &$pointer[$nodes[$i]];
 		}
 	}
+	public function addXmlNodeFromReader($xml_location, &$xml, $default_value = null)
+	{
+		$value = $xml->getXmlValue($xml_location);
+		$this->addXmlNode($xml_location, (empty($value) ? $default_value : $value));
+	}
 	public function saveXMLFile($to_file)
 	{
 		return file_put_contents($to_file, $this->getXML());
