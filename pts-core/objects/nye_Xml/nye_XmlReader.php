@@ -34,7 +34,7 @@ class nye_XmlReader
 		{
 			$this->dom->load($xml_file);
 		}
-		else
+		else if($xml_file != null)
 		{
 			$this->dom->loadXML($xml_file);
 		}

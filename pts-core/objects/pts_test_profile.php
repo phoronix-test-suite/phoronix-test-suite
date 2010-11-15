@@ -22,10 +22,6 @@
 
 class pts_test_profile extends pts_test_profile_parser
 {
-	public static function is_test_profile($identifier)
-	{
-		return is_file(PTS_TEST_PROFILE_PATH . $identifier . "/test-definition.xml");
-	}
 	public function __construct($identifier = null, $override_values = null)
 	{
 		parent::__construct($identifier);
@@ -34,6 +30,10 @@ class pts_test_profile extends pts_test_profile_parser
 		{
 			$this->xml_parser->overrideXMLValues($override_values);
 		}
+	}
+	public static function is_test_profile($identifier)
+	{
+		return is_file(PTS_TEST_PROFILE_PATH . $identifier . "/test-definition.xml");
 	}
 	public function get_override_values()
 	{
