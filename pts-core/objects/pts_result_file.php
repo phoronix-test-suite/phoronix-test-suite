@@ -125,7 +125,7 @@ class pts_result_file
 		{
 			$results_name = $this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_TITLE);
 			$results_arguments = $this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_ARGS);
-			$results_attributes = $this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_ARGS_DESCRIPTION);
+			$results_attributes = $this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_DESCRIPTION);
 			$results_version = $this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_VERSION);
 
 			for($i = 0; $i < count($results_name); $i++)
@@ -193,7 +193,7 @@ class pts_result_file
 			$results_name = $this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_TITLE);
 			$results_version = $this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_VERSION);
 			$results_profile_version = $this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_PROFILE_VERSION);
-			$results_attributes = $this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_ARGS_DESCRIPTION);
+			$results_attributes = $this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_DESCRIPTION);
 			$results_scale = $this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_SCALE);
 			$results_test_name = $this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_IDENTIFIER);
 			$results_arguments = $this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_ARGS);

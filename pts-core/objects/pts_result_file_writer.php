@@ -33,8 +33,7 @@ class pts_result_file_writer
 		$this->result_identifier = $result_identifier;
 		$this->added_hashes = array();
 
-		$this->xml_writer = new tandem_XmlWriter();
-		$this->xml_writer->setXslBinding("pts-results-viewer.xsl");
+		$this->xml_writer = new tandem_XmlWriter("pts-results-viewer.xsl");
 
 		if(PTS_IS_CLIENT)
 		{
@@ -58,7 +57,7 @@ class pts_result_file_writer
 		$this->xml_writer->addXmlObject(P_RESULTS_TEST_PROFILE_VERSION, $tandem_id, $result_object->test_profile->get_test_profile_version());
 		$this->xml_writer->addXmlObject(P_RESULTS_TEST_TITLE, $tandem_id, $result_object->test_profile->get_title());
 		$this->xml_writer->addXmlObject(P_RESULTS_TEST_ARGS, $tandem_id, $result_object->get_arguments());
-		$this->xml_writer->addXmlObject(P_RESULTS_TEST_ARGS_DESCRIPTION, $tandem_id, $result_object->get_arguments_description());
+		$this->xml_writer->addXmlObject(P_RESULTS_TEST_DESCRIPTION, $tandem_id, $result_object->get_arguments_description());
 		$this->xml_writer->addXmlObject(P_RESULTS_TEST_VERSION, $tandem_id, $result_object->test_profile->get_app_version());
 		$this->xml_writer->addXmlObject(P_RESULTS_TEST_SCALE, $tandem_id, $result_object->test_profile->get_result_scale());
 		$this->xml_writer->addXmlObject(P_RESULTS_TEST_PROPORTION, $tandem_id, $result_object->test_profile->get_result_proportion());
@@ -86,7 +85,7 @@ class pts_result_file_writer
 			$this->xml_writer->addXmlObject(P_RESULTS_TEST_VERSION, $use_id, $result_object->test_profile->get_app_version());
 			$this->xml_writer->addXmlObject(P_RESULTS_TEST_PROFILE_VERSION, $use_id, $result_object->test_profile->get_test_profile_version());
 			$this->xml_writer->addXmlObject(P_RESULTS_TEST_ARGS, $use_id, $result_object->get_arguments());
-			$this->xml_writer->addXmlObject(P_RESULTS_TEST_ARGS_DESCRIPTION, $use_id, $result_object->get_arguments_description());
+			$this->xml_writer->addXmlObject(P_RESULTS_TEST_DESCRIPTION, $use_id, $result_object->get_arguments_description());
 			$this->xml_writer->addXmlObject(P_RESULTS_TEST_SCALE, $use_id, $result_object->test_profile->get_result_scale());
 			$this->xml_writer->addXmlObject(P_RESULTS_TEST_PROPORTION, $use_id, $result_object->test_profile->get_result_proportion());
 			$this->xml_writer->addXmlObject(P_RESULTS_TEST_IDENTIFIER, $use_id, $result_object->test_profile->get_identifier());

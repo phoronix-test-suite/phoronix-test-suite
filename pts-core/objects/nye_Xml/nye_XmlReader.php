@@ -24,7 +24,7 @@
 class nye_XmlReader
 {
 	protected $tag_fallback = false; // Fallback value if tag is not present
-	protected $dom; // The DOM
+	public $dom; // The DOM
 
 	public function __construct($xml_file)
 	{

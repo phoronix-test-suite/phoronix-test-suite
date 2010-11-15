@@ -44,24 +44,24 @@ class result_file_to_suite implements pts_option_interface
 		$suite_maintainer = pts_user_io::prompt_user_input("Enter suite maintainer name");
 		$suite_description = pts_user_io::prompt_user_input("Enter suite description");
 
-		$xml_writer = new tandem_XmlWriter();
-		$xml_writer->addXmlObject(P_SUITE_TITLE, 0, $suite_name);
-		$xml_writer->addXmlObject(P_SUITE_VERSION, 0, "1.0.0");
-		$xml_writer->addXmlObject(P_SUITE_MAINTAINER, 0, $suite_maintainer);
-		$xml_writer->addXmlObject(P_SUITE_TYPE, 0, $suite_test_type);
-		$xml_writer->addXmlObject(P_SUITE_DESCRIPTION, 0, $suite_description);
+		$xml_writer = new nye_XmlWriter();
+		$xml_writer->addXmlNode(P_SUITE_TITLE, $suite_name);
+		$xml_writer->addXmlNode(P_SUITE_VERSION, "1.0.0");
+		$xml_writer->addXmlNode(P_SUITE_MAINTAINER, $suite_maintainer);
+		$xml_writer->addXmlNode(P_SUITE_TYPE, $suite_test_type);
+		$xml_writer->addXmlNode(P_SUITE_DESCRIPTION, $suite_description);
 
 		// Read results file
 		$result_file = new pts_result_file($result_file);
 
-		foreach($result_file->get_result_objects() as $i => $result_object)
+		foreach($result_file->get_result_objects() as $result_object)
 		{
-			$xml_writer->addXmlObject(P_SUITE_TEST_NAME, $i, $result_object->test_profile->get_identifier());
+			$xml_writer->addXmlNode(P_SUITE_TEST_NAME, $result_object->test_profile->get_identifier());
 
 			if($result_object->get_arguments() != null && $result_object->get_arguments_description() != null)
 			{
-				$xml_writer->addXmlObject(P_SUITE_TEST_ARGUMENTS, $i, $result_object->get_arguments());
-				$xml_writer->addXmlObject(P_SUITE_TEST_DESCRIPTION, $i, $result_object->get_arguments_description());
+				$xml_writer->addXmlNode(P_SUITE_TEST_ARGUMENTS, $result_object->get_arguments());
+				$xml_writer->addXmlNode(P_SUITE_TEST_DESCRIPTION, $result_object->get_arguments_description());
 			}
 		}
 

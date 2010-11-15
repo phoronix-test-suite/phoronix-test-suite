@@ -36,8 +36,7 @@ class pts_config
 
 		$read_config = new pts_config_nye_XmlReader($new_config_values);
 
-		$config = new tandem_XmlWriter();
-		$config->setXslBinding("xsl/pts-user-config-viewer.xsl");
+		$config = new tandem_XmlWriter("xsl/pts-user-config-viewer.xsl");
 		$config->addXmlObjectFromReader(P_OPTION_GLOBAL_USERNAME, 0, $read_config);
 		$config->addXmlObjectFromReader(P_OPTION_GLOBAL_UPLOADKEY, 0, $read_config);
 

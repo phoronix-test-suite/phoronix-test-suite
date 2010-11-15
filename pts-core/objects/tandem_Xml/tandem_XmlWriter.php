@@ -35,13 +35,10 @@ class tandem_XmlWriter
 	protected $format_xml = true;
 	protected $xsl_binding = null;
 
-	function __construct($nice_formatting = true)
+	function __construct($xsl_binding_url = null, $nice_formatting = true)
 	{
+		$this->xsl_binding = $xsl_binding_url;
 		$this->format_xml = ($nice_formatting == true);
-	}
-	function setXslBinding($url)
-	{
-		$this->xsl_binding = $url;
 	}
 	function writeXmlCheckSum()
 	{

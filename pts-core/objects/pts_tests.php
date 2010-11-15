@@ -182,8 +182,7 @@ class pts_tests
 	{
 		// Refresh/generate an install XML for pts-install.xml
 		$installed_test = new pts_installed_test($test_profile->get_install_dir() . "pts-install.xml");
-		$xml_writer = new tandem_XmlWriter();
-		$xml_writer->setXslBinding("file://" . PTS_USER_PATH . "xsl/" . "pts-test-installation-viewer.xsl");
+		$xml_writer = new tandem_XmlWriter("file://" . PTS_USER_PATH . "xsl/" . "pts-test-installation-viewer.xsl");
 
 		$test_duration = $installed_test->get_average_run_time();
 		if(!is_numeric($test_duration) && !$is_install)

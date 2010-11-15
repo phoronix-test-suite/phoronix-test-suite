@@ -75,8 +75,8 @@
 			<Value>PhoronixTestSuite/Result/Arguments</Value>
 		</Define>
 		<Define>
-			<Name>P_RESULTS_TEST_ARGS_DESCRIPTION</Name>
-			<Value>PhoronixTestSuite/Result/ArgumentsDescription</Value>
+			<Name>P_RESULTS_TEST_DESCRIPTION</Name>
+			<Value>PhoronixTestSuite/Result/Description</Value>
 		</Define>
 		<Define>
 			<Name>P_RESULTS_TEST_PROPORTION</Name>

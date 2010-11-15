@@ -20,13 +20,18 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+pts_load_xml_definitions("test-installation.xml");
+
 class pts_installed_test
 {
 	private $xml_parser;
+	private $identifier;
 
 	public function __construct($identifier)
 	{
-		$this->xml_parser = new pts_installed_test_nye_XmlReader($identifier);
+		$this->identifier = $identifier;
+		$read_xml = is_file(PTS_TEST_INSTALL_PATH . $identifier . "/pts-install.xml") ? PTS_TEST_INSTALL_PATH . $identifier . "/pts-install.xml" : null;
+		$this->xml_parser = new nye_XmlReader($read_xml);
 	}
 	public function get_install_date_time()
 	{

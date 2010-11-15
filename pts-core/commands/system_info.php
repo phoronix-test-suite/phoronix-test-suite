@@ -28,8 +28,24 @@ class system_info implements pts_option_interface
 		echo "Hardware:\n" . phodevi::system_hardware(true) . "\n\n";
 		echo "Software:\n" . phodevi::system_software(true) . "\n\n";
 
-		$rf = new pts_test_profile("doom3");
-		print_r($rf->get_test_option_objects());
+		$writer = new nye_XmlWriter(1111);
+pts_load_xml_definitions("test-suite.xml");
+		$writer->addXmlObject("PhoronixTestSuite/SuiteInformation/Title", "Testing");
+		$writer->addXmlObject("PhoronixTestSuite/SuiteInformation/Version", "2e2g");
+
+
+		$writer->addXmlObject(P_SUITE_TEST_NAME, "EEEE");
+		$writer->addXmlObject(P_SUITE_TEST_ARGUMENTS, "FFFFF");
+		$writer->addXmlObject(P_SUITE_TEST_DESCRIPTION, "GGGGGG");
+
+		$writer->addXmlObject(P_SUITE_TEST_NAME, "JJJJJJ");
+		$writer->addXmlObject(P_SUITE_TEST_ARGUMENTS, "KKKKKK");
+		$writer->addXmlObject(P_SUITE_TEST_DESCRIPTION, "LLLLL");
+
+		$writer->addXmlObject(P_SUITE_MAINTAINER, "XXXXX");
+
+
+		echo $writer->getXML();
 	}
 }
 
