@@ -33,9 +33,12 @@ class nye_XmlWriter
 	public function __construct($xsl_binding = null, $nice_formatting = true)
 	{
 		$this->dom = new DOMDocument('1.0');
-		$this->dom->formatOutput = $nice_formatting;
+		$this->dom->formatOutput = PTS_IS_CLIENT && $nice_formatting;
 		//$this->dom->preserveWhiteSpace = false;
 		$this->items = array();
+
+		$pts_comment = $this->dom->createComment(pts_title(true) . " [ http://www.phoronix-test-suite.com/ ]");
+		$this->dom->appendChild($pts_comment);
 
 		if($xsl_binding != null)
 		{

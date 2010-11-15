@@ -157,7 +157,7 @@ abstract class bilde_renderer
 	public static function setup_renderer($requested_renderer, $width, $height, $embed_identifiers = null, $special_attributes = null)
 	{
 		bilde_renderer::setup_font_directory();
-		$available_renderers = array("PNG", "JPG", "GIF", "SWF", "SVG", "SVGZ", "DOM");
+		$available_renderers = array("PNG", "JPG", "GIF", "SWF", "SVG", "SVGZ", "SVGOLD");
 		$selected_renderer = "SVG";
 		$use_renderer = false;
 
