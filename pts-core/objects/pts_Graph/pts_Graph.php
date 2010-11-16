@@ -806,15 +806,10 @@ abstract class pts_Graph
 			{
 				$px_from_left = $left_start + ($tick_width * $i);
 
-				if($display_value != 0)
-				{
-					$this->graph_image->write_text_center($display_value, $this->graph_font, $this->graph_font_size_tick_mark, $this->graph_color_text, $px_from_left, ($top_end + 5), $px_from_left, ($top_end + 5));
-				}
-
 				if($i != 0)
 				{
-					$line_width = 6;
-					$this->graph_image->draw_dashed_line($px_from_left, $top_start, $px_from_left + 1, $top_end - 5, $this->graph_color_body, 1, 5, 5);
+					$this->graph_image->write_text_center($display_value, $this->graph_font, $this->graph_font_size_tick_mark, $this->graph_color_text, $px_from_left, ($top_end + 5), $px_from_left, ($top_end + 5));
+					$this->graph_image->draw_dashed_line($px_from_left + 2, $top_start, $px_from_left + 2, $top_end - 5, $this->graph_color_body, 1, 5, 5);
 				}
 
 				$display_value += $increment;
@@ -835,17 +830,14 @@ abstract class pts_Graph
 			{
 				$px_from_top = $top_end - ($tick_width * $i);
 
-				//$this->graph_image->draw_line($px_from_left_start, $px_from_top, $px_from_left_end, $px_from_top, $this->graph_color_notches);
-
-				if($display_value != 0)
+				if($i != 0)
 				{
 					$this->graph_image->write_text_right($display_value, $this->graph_font, $this->graph_font_size_tick_mark, $this->graph_color_text, $px_from_left_start - 4, $px_from_top, $px_from_left_start - 4, $px_from_top);
-				}
 
-				if($i != 0 && $this->graph_background_lines)
-				{
-					$line_width = 6;
-					$this->graph_image->draw_dashed_line($px_from_left_end + 6, $px_from_top + 1, $this->graph_left_end, $px_from_top + 1, $this->graph_color_body_light, 1, 5, 5);
+					if($this->graph_background_lines)
+					{
+						$this->graph_image->draw_dashed_line($px_from_left_end + 6, $px_from_top + 1, $this->graph_left_end, $px_from_top + 1, $this->graph_color_body_light, 1, 5, 5);
+					}
 				}
 
 				$display_value += $increment;

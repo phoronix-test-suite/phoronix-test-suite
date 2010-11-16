@@ -259,7 +259,7 @@ class bilde_svg_renderer extends bilde_renderer
 		$p2_y = round(sin(deg2rad($offset_deg + $deg)) * $radius) + $center_y;
 
 		$path = $this->image->createElement("path");
-		$path->setAttribute('d'. "M$center_x,$center_y L$p1_x,$p1_y A$radius,$radius 0 $arc,1 $p2_x$p2_y Z");
+		$path->setAttribute('d', "M$center_x,$center_y L$p1_x,$p1_y A$radius,$radius 0 $arc,1 $p2_x,$p2_y Z");
 		$path->setAttribute("fill", $body_color);
 		$path->setAttribute("stroke", $border_color);
 		$path->setAttribute("stroke-width", $border_width);

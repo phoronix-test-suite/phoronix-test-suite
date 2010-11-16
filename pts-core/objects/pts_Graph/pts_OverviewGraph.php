@@ -71,7 +71,7 @@ class pts_OverviewGraph extends pts_Graph
 		list($longest_title_width, $longest_title_height) = $this->text_string_dimensions($this->find_longest_string($this->test_titles), $this->graph_font, $this->graph_font_size_identifiers);
 
 		$this->graph_left_start += 20;
-		$this->graphs_per_row = floor(($this->graph_attr_width - $this->graph_left_start - $this->graph_left_end_opp) / ($longest_title_width + 6));
+		$this->graphs_per_row = floor(($this->graph_attr_width - $this->graph_left_start - $this->graph_left_end_opp) / ($longest_title_width + 2));
 		$this->graph_item_width = floor(($this->graph_attr_width - $this->graph_left_start - $this->graph_left_end_opp) / $this->graphs_per_row);
 		$this->graph_row_count = ceil(count($this->test_titles) / $this->graphs_per_row);
 

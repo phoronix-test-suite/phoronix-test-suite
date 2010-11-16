@@ -176,8 +176,9 @@ abstract class bilde_renderer
 					$gecko_date = substr($browser, ($p + 6));
 					$gecko_date = substr($gecko_date, 0, 6);
 
-					// Around Firefox 3.0 era
-					if($gecko_date >= 200804)
+					// Around Firefox 3.0 era is best
+					// Firefox 2.0 mostly works except text might not show...
+					if($gecko_date >= 200702)
 					{
 						$http_selected_renderer = "SVG";
 					}
@@ -195,11 +196,12 @@ abstract class bilde_renderer
 				}
 				else if(($p = strpos($browser, "Opera/")) !== false)
 				{
-					// Safari, Google Chrome, Google Chromium, etc
+					// Opera
 					$ver = substr($browser, ($p + 6));
 					$ver = substr($ver, 0, strpos($ver, ' '));
 
-					if($ver >= 9.80)
+					// 9.27, 9.64 displays most everything okay
+					if($ver >= 9.27)
 					{
 						$http_selected_renderer = "SVG";
 					}

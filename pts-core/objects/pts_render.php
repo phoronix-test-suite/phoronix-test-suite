@@ -49,7 +49,14 @@ class pts_render
 				$graph = "<img src=\"data:image/png;base64,$conts\" />";
 				break;
 			case "SVG":
-				$graph = "<object width=\"auto\" height=\"auto\">" . $graph->render_graph_finish() . "</object>";
+				$svg = $graph->render_graph_finish();
+				$svg = substr($svg, strpos($svg, "<svg")); // strip out any DOCTYPE and other crud that would be redundant, so start at SVG tag
+
+
+				$graph = $svg; // Safari seems to have problems when embedding the SVG in object/embed and all other browsers seem to handle it fine straight up, so do it this way now
+				// TODO: what to do for the width and height whether leave them empty, set to auto, or fill in from $graph data
+				//$graph = "<object type=\"image/svg+xml\">" . $svg . "</object>";
+				//$graph = "<embed type=\"image/svg+xml\" width=\"" . $graph->graphWidth() . "\" height=\"" . $graph->graphHeight() . "\">" . $svg . "</embed>";
 				break;
 			default:
 				$graph = $graph->render_graph_finish();

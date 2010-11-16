@@ -215,7 +215,7 @@ class pts_test_execution
 				// Should we increase the run count?
 				$increase_run_count = false;
 
-				if($defined_times_to_run == ($i + 1) && $test_run_request->test_result_buffer->get_count() > 0 && $test_run_request->test_result_buffer->get_count() < $defined_times_to_run)
+				if($defined_times_to_run == ($i + 1) && $test_run_request->test_result_buffer->get_count() > 0 && $test_run_request->test_result_buffer->get_count() < $defined_times_to_run && $i < 64)
 				{
 					// At least one run passed, but at least one run failed to produce a result. Increase count to try to get more successful runs
 					$increase_run_count = $defined_times_to_run - $test_run_request->test_result_buffer->get_count();
