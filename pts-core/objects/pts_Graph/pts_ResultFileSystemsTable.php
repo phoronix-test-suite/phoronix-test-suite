@@ -23,15 +23,17 @@
 
 class pts_ResultFileSystemsTable extends pts_Table
 {
-	public function __construct(&$result_file)
+	private function component_to_table_data(&$table_data, &$rows, $add_components)
 	{
-		$columns = $result_file->get_system_identifiers();
-		$rows = array();
-		$table_data = array();
+		$col_pos = 0;
 
-		foreach($result_file->get_system_hardware() as $info_string)
+		foreach($add_components as $info_string)
 		{
-			$col = array();
+			if(!isset($table_data[$col_pos]))
+			{
+				$table_data[$col_pos] = array();
+			}
+
 			foreach(explode(', ', $info_string) as $component)
 			{
 				$c_pos = strpos($component, ': ');
@@ -41,14 +43,59 @@ class pts_ResultFileSystemsTable extends pts_Table
 					$index = substr($component, 0, $c_pos);
 					$value = substr($component, ($c_pos + 2));
 
-					if(isset($rows[$index]) == false)
+					if(($r_i = array_search($index, $rows)) === false)
 					{
-						$rows[$index] = $index;
+						array_push($rows, $index);
+						$r_i = count($rows) - 1;
 					}
-					array_push($col, $value);				
+					$table_data[$col_pos][$r_i] = new pts_table_value($value);				
 				}
 			}
-			array_push($table_data, $col);
+			$col_pos++;
+		}
+	}
+	public function __construct(&$result_file)
+	{
+		$columns = $result_file->get_system_identifiers();
+		$rows = array();
+		$table_data = array();
+
+		$this->component_to_table_data($table_data, $rows, $result_file->get_system_hardware());
+		$this->component_to_table_data($table_data, $rows, $result_file->get_system_software());
+
+		// Let's try to compact the data
+		for($c = 0, $c_count = count($table_data); $c < ($c_count - 1); $c++)
+		{
+			for($r = 0, $r_count = count($table_data[$c]); $r < $r_count; $r++)
+			{
+				// Find next-to duplicates
+				$match_to = &$table_data[$c][$r];
+
+				if(($match_to instanceof pts_table_value) == false)
+				{
+					continue;
+				}
+
+				$spans = 1;
+				for($i = ($c + 1); $i < $c_count; $i++)
+				{
+					if(isset($table_data[$i][$r]) && $match_to == $table_data[$i][$r])
+					{
+						//echo $match_to . ' ' . $table_data[$i][$r] . ' ' . $i . "\n";
+						$spans++;
+						$table_data[$i][$r] = null;
+					}
+					else
+					{
+						break;
+					}
+				}
+
+				if($spans > 1)
+				{
+					$match_to->set_attribute('spans_col', $spans);
+				}
+			}
 		}
 
 		parent::__construct($rows, $columns, $table_data);

@@ -23,62 +23,32 @@
 class pts_table_value
 {
 	private $value_string;
-	private $std_percent;
-	private $std_error;
-	private $delta;
-	private $highlight;
+	private $attributes;
 
-	public function __construct($value_string = 0, $std_percent = 0, $std_error = 0, $delta = 0, $highlight = false)
+	public function __construct($value_string = 0, $attributes = array())
 	{
 		$this->value_string = $value_string;
-		$this->std_percent = $std_percent;
-		$this->std_error = $std_error;
-		$this->delta = $delta;
-		$this->highlight = $highlight;
+		$this->attributes = $attributes;
 	}
 	public function __toString()
 	{
 		return $this->value_string;
 	}
+	public function set_attribute($attribute, $value)
+	{
+		$this->attributes[$attribute] = $value;
+	}
+	public function get_attribute($attribute)
+	{
+		return isset($this->attributes[$attribute]) ? $this->attributes[$attribute] : false;
+	}
 	public function get_value()
 	{
 		return $this->value_string;
 	}
-	public function get_standard_deviation_percent()
-	{
-		return $this->std_percent;
-	}
-	public function get_standard_error()
-	{
-		return $this->std_error;
-	}
-	public function get_delta()
-	{
-		return $this->delta;
-	}
-	public function get_highlight()
-	{
-		return $this->highlight;
-	}
 	public function set_value_string($value)
 	{
 		$this->value_string = $value;
-	}
-	public function set_standard_deviation_percent($value)
-	{
-		$this->std_percent = $value;
-	}
-	public function set_standard_error($value)
-	{
-		$this->std_error = $value;
-	}
-	public function set_delta($value)
-	{
-		$this->delta = $value;
-	}
-	public function set_highlight($value)
-	{
-		$this->highlight = $value;
 	}
 }
 

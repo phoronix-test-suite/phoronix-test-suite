@@ -31,6 +31,41 @@ class pts_Table extends pts_Graph
 	protected $result_object_index = -1;
 	protected $column_heading_vertical = true;
 
+	protected function find_longest_string_in_table_data(&$table_data)
+	{
+		$longest_string = null;
+		$longest_string_length = 0;
+
+		foreach($table_data as &$column)
+		{
+			if($column == null) continue;
+			foreach($column as &$row)
+			{
+				if($row instanceof pts_table_value)
+				{
+					$value = $row->get_value();
+
+					if(($spans_col = $row->get_attribute('spans_col')) > 1)
+					{
+						// Since the txt will be spread over multiple columns, it doesn't need to all fit into one
+						$value = substr($value, 0, ceil(strlen($value) / $spans_col));
+					}
+				}
+				else
+				{
+					$value = $row;
+				}
+
+				if(($new_length = strlen($value)) > $longest_string_length)
+				{
+					$longest_string = $value;
+					$longest_string_length = $new_length;
+				}
+			}
+		}
+
+		return $longest_string;
+	}
 	public function __construct($rows, $columns, $table_data)
 	{
 		parent::__construct();
@@ -42,7 +77,7 @@ class pts_Table extends pts_Graph
 		// Do some calculations
 		$this->longest_column_identifier = $this->find_longest_string($this->columns);
 		$this->longest_row_identifier = $this->find_longest_string($this->rows);
-		$this->graph_maximum_value = $this->find_longest_string($this->table_data);
+		$this->graph_maximum_value = $this->find_longest_string_in_table_data($this->table_data);
 	}
 	public function renderChart($file = null)
 	{
@@ -68,7 +103,7 @@ class pts_Table extends pts_Graph
 
 		$table_max_value_width = $this->text_string_width($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_identifiers);
 
-		$table_item_width = max($table_max_value_width, $table_identifier_width) + 8;
+		$table_item_width = max($table_max_value_width, $table_identifier_width);
 		$table_width = $table_item_width * count($this->columns);
 		$table_line_height = $this->text_string_height($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_identifiers) + 8;
 		$table_line_height_half = ($table_line_height / 2);
@@ -166,45 +201,69 @@ class pts_Table extends pts_Graph
 				$text_color = $this->graph_color_text;
 				$bold = false;
 
+				if($result_table_value == null)
+				{
+					continue;
+				}
+
 				if($result_table_value instanceof pts_table_value)
 				{
-					if($result_table_value->get_standard_deviation_percent() > 0)
+					if(($t = $result_table_value->get_attribute('std_percent')) > 0)
 					{
-						array_push($hover, "STD Dev: " . $result_table_value->get_standard_deviation_percent() . "%");
+						array_push($hover, "STD Dev: " . $t . "%");
 					}
-					if($result_table_value->get_standard_error() != 0)
+					if(($t = $result_table_value->get_attribute('std_error')) != 0)
 					{
-						array_push($hover, " STD Error: " . $result_table_value->get_standard_error());
+						array_push($hover, " STD Error: " . $t);
 					}
 
-					if(defined("PHOROMATIC_TRACKER") && $result_table_value->get_delta() != 0)
+					if(defined("PHOROMATIC_TRACKER") &&($t = $result_table_value->get_attribute('delta')) != 0)
 					{
 						$bold = true;
-						if($result_table_value->get_delta() < 0)
-						{
-							$text_color = $this->graph_color_alert;
-						}
-						else
-						{
-							$text_color = $this->graph_color_headers;
-						}
-
-						array_push($hover, " Change: " . pts_math::set_precision(100 * $result_table_value->get_delta(), 2) . "%");
+						$text_color = $t < 0 ? $this->graph_color_alert : $this->graph_color_headers;
+						array_push($hover, " Change: " . pts_math::set_precision(100 * $t, 2) . "%");
 					}
-					else if($result_table_value->get_highlight() == true)
+					else if($result_table_value->get_attribute('highlight') == true)
 					{
 						$text_color = $this->graph_color_headers;
 						$bold = true;
 					}
 
 					$value = $result_table_value->get_value();
+					$spans_col = $result_table_value->get_attribute('spans_col');
 				}
 				else
 				{
 					$value = $result_table_value;
+					$spans_col = 1;
 				}
 
-				$this->graph_image->write_text_right($value, $this->graph_font, $this->graph_font_size_identifiers, $text_color, $this->graph_left_start + ($col * $table_item_width) - 3, $identifier_height + ($row * $table_line_height) + $table_line_height_half, $this->graph_left_start + (($col + 1) * $table_item_width) - 3, $identifier_height + (($row + 1) * $table_line_height) + $table_line_height_half, false, null, implode("; ", $hover), $bold);
+				$left_bounds = $this->graph_left_start + ($col * $table_item_width);
+				$right_bounds = $this->graph_left_start + (($col + max(1, $spans_col)) * $table_item_width);
+				$top_bounds = $identifier_height + ($row * $table_line_height) + ($table_line_height_half * 2.5);
+
+				if($spans_col > 1)
+				{
+
+					if($col == 1)
+					{
+						$background_paint = $i % 2 == 1 ? $this->graph_color_background : $this->graph_color_body;
+					}
+					else
+					{
+						$background_paint = $i % 2 == 0 ? $this->graph_color_body_light : $this->graph_color_body;
+					}
+
+					$bold = true;
+
+					$this->graph_image->draw_rectangle($left_bounds + 1, $identifier_height + (($row + 1) * $table_line_height) + 1, $right_bounds, $identifier_height + (($row + 2) * $table_line_height), $background_paint);
+				}
+				else
+				{
+					//$this->graph_image->write_text_right($value, $this->graph_font, $this->graph_font_size_identifiers, $text_color, $this->graph_left_start + ($col * $table_item_width) - 3, $identifier_height + ($row * $table_line_height) + $table_line_height_half, $this->graph_left_start + (($col + 1) * $table_item_width) - 3, $identifier_height + (($row + 1) * $table_line_height) + $table_line_height_half, false, null, implode("; ", $hover), $bold);
+				}
+
+				$this->graph_image->write_text_center($value, $this->graph_font, $this->graph_font_size_identifiers, $text_color, $left_bounds, $top_bounds, $right_bounds, $top_bounds, false, null, implode('; ', $hover), $bold);
 				//$row++;
 			}
 			$col++;

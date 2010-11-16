@@ -117,6 +117,11 @@ class bilde_svg_renderer extends bilde_renderer
 			$text->setAttribute("transform", "rotate($rotate $bound_x1 $bound_y1)");
 		}
 
+		if($bold)
+		{
+			$text->setAttribute("font-weight", 800);
+		}
+
 		$text->setAttribute("text-anchor", "start");
 		$text->setAttribute("dominant-baseline", "middle");
 		$text->setAttribute("fill", $font_color);
@@ -143,6 +148,11 @@ class bilde_svg_renderer extends bilde_renderer
 		{
 			$rotate = ($rotate === true ? 90 : $rotate);
 			$text->setAttribute("transform", "rotate($rotate $bound_x1 $bound_y1)");
+		}
+
+		if($bold)
+		{
+			$text->setAttribute("font-weight", 800);
 		}
 
 		$text->setAttribute("text-anchor", "end");
@@ -175,6 +185,11 @@ class bilde_svg_renderer extends bilde_renderer
 		{
 			$rotate = ($rotate === true ? 90 : $rotate);
 			$text->setAttribute("transform", "rotate($rotate $bound_x1 $bound_y1)");
+		}
+
+		if($bold)
+		{
+			$text->setAttribute("font-weight", 800);
 		}
 
 		$text->setAttribute("dominant-baseline", "text-before-edge");

@@ -159,8 +159,8 @@ class pts_ResultFileTable extends pts_Table
 											}
 											else
 											{
-												$result_table[$prev_identifier][$result_counter]->set_highlight(true);
-												$result_table[$prev_identifier][$result_counter]->set_delta(-1);
+												$result_table[$prev_identifier][$result_counter]->set_attribute('highlight', true);
+												$result_table[$prev_identifier][$result_counter]->set_attribute('delta', -1);
 											}
 											break;
 										case "LIB":
@@ -170,8 +170,8 @@ class pts_ResultFileTable extends pts_Table
 											}
 											else
 											{
-												$result_table[$prev_identifier][$result_counter]->set_highlight(true);
-												$result_table[$prev_identifier][$result_counter]->set_delta(-1);
+												$result_table[$prev_identifier][$result_counter]->set_attribute('highlight', true);
+												$result_table[$prev_identifier][$result_counter]->set_attribute('delta', -1);
 											}
 											break;
 									}
@@ -196,7 +196,14 @@ class pts_ResultFileTable extends pts_Table
 							}
 						}
 
-						$result_table[$identifier][$result_counter] = new pts_table_value($value, $percent_std, $std_error, $delta, $highlight);
+						$attributes = array(
+							"std_percent" => $percent_std,
+							"std_error" => $std_error,
+							"delta" => $delta,
+							"highlight" => $highlight
+							);
+
+						$result_table[$identifier][$result_counter] = new pts_table_value($value, $attributes);
 						$prev_identifier = $identifier;
 						$prev_value = $value;
 					}
@@ -232,9 +239,9 @@ class pts_ResultFileTable extends pts_Table
 					continue;
 				}
 
-				$std_percent = $info[($result_counter - 1)]->get_standard_deviation_percent();
-				$std_error = $info[($result_counter - 1)]->get_standard_error();
-				$delta = $info[($result_counter - 1)]->get_delta();
+				$std_percent = $info[($result_counter - 1)]->get_attribute('std_percent');
+				$std_error = $info[($result_counter - 1)]->get_attribute('std_error');
+				$delta = $info[($result_counter - 1)]->get_attribute('delta');
 
 				if($delta != 0)
 				{
