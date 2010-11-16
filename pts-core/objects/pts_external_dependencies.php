@@ -201,7 +201,7 @@ class pts_external_dependencies
 	}
 	private static function check_dependencies_missing_from_system(&$required_test_dependencies, &$generic_names_of_packages_needed = false)
 	{
-		$distro_vendor_xml = PTS_EXDEP_PATH . "xml/" . self::vendor_identifier() . "-packages.xml";
+		$distro_vendor_xml = PTS_EXDEP_PATH . "xml/" . self::vendor_identifier("package-list") . "-packages.xml";
 		$needed_os_packages = array();
 
 		if(is_file($distro_vendor_xml))
@@ -301,7 +301,7 @@ class pts_external_dependencies
 	private static function install_packages_on_system($os_packages_to_install)
 	{
 		// Do the actual installing process of packages using the distribution's package management system
-		$vendor_install_file = PTS_EXDEP_PATH . "scripts/install-" . self::vendor_identifier() . "-packages.sh";
+		$vendor_install_file = PTS_EXDEP_PATH . "scripts/install-" . self::vendor_identifier("installer") . "-packages.sh";
 
 		// Rebuild the array index since some OS package XML tags provide multiple package names in a single string
 		$os_packages_to_install = explode(' ', implode(' ', $os_packages_to_install));
@@ -323,11 +323,23 @@ class pts_external_dependencies
 			}
 		}
 	}
-	private static function vendor_identifier()
+	private static function vendor_identifier($type)
 	{
 		$os_vendor = phodevi::read_property("system", "vendor-identifier");
 
-		if(!is_file(PTS_EXDEP_PATH . "xml/" . $os_vendor . "-packages.xml") && !is_file(PTS_EXDEP_PATH . "scripts/install-" . $os_vendor . "-packages.sh"))
+		switch($type)
+		{
+			case "package-list":
+				$file_check_success = is_file(PTS_EXDEP_PATH . "xml/" . $os_vendor . "-packages.xml");
+				break;
+			case "installer":
+				$file_check_success = is_file(PTS_EXDEP_PATH . "scripts/install-" . $os_vendor . "-packages.sh");
+				break;
+			default:
+				return false;
+		}
+
+		if($file_check_success == false)
 		{
 			$vendors_alias_file = pts_file_io::file_get_contents(PTS_CORE_STATIC_PATH . "lists/software-vendor-aliases.list");
 			$vendors_r = explode("\n", $vendors_alias_file);
