@@ -64,6 +64,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 		<xsl:for-each select="PhoronixTestSuite/System"><td><strong>Administrator:</strong>&#160;<xsl:value-of select="User" /><br /><strong>Date:</strong>&#160;<xsl:value-of select="TimeStamp" /><br /><strong>PTS Version:</strong>&#160;<xsl:value-of select="TestClientVersion" /><br /><strong>Test Notes:</strong>&#160;<xsl:value-of select="Notes" /></td></xsl:for-each>
 		</tr>
 		</table></div>
+		<div align="center" style="width: 100%; overflow: auto;"><!-- SYSTEMS TAG --><object type="image/svg+xml" data="result-graphs/systems.svg"></object></div>
 
 		<a name="result-overview"></a><h1>Results Overview</h1>
 		<div align="center" style="width: 100%; overflow: auto;"><!-- OVERVIEW TAG --><object type="image/svg+xml" data="result-graphs/overview.svg"></object></div>

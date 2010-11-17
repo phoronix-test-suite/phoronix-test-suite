@@ -11,6 +11,7 @@ Phoronix Test Suite (Git)
 - bilde_renderer: Begin work on a new DOM-based back-end renderer that will eventually form the new rendering interface; currently it's producing suitable SVG
 - pts: Add initial support for the Angstrom (OpenEmbedded) Linux distribution with external dependencies
 - pts_Graph: Add SVGZ renderer back-end that Gzip compresses the SVG renderer output
+- pts_Graph: Various improvements
 
 Phoronix Test Suite 3.0 Alpha 1
 November 9, 2010

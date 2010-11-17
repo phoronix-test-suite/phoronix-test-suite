@@ -23,48 +23,19 @@
 
 class pts_ResultFileSystemsTable extends pts_Table
 {
-	private function component_to_table_data(&$table_data, &$rows, $add_components)
-	{
-		$col_pos = 0;
-
-		foreach($add_components as $info_string)
-		{
-			if(!isset($table_data[$col_pos]))
-			{
-				$table_data[$col_pos] = array();
-			}
-
-			foreach(explode(', ', $info_string) as $component)
-			{
-				$c_pos = strpos($component, ': ');
-
-				if($c_pos !== false)
-				{
-					$index = substr($component, 0, $c_pos);
-					$value = substr($component, ($c_pos + 2));
-
-					if(($r_i = array_search($index, $rows)) === false)
-					{
-						array_push($rows, $index);
-						$r_i = count($rows) - 1;
-					}
-					$table_data[$col_pos][$r_i] = new pts_table_value($value);				
-				}
-			}
-			$col_pos++;
-		}
-	}
 	public function __construct(&$result_file)
 	{
 		$columns = $result_file->get_system_identifiers();
 		$rows = array();
 		$table_data = array();
 
-		$this->component_to_table_data($table_data, $rows, $result_file->get_system_hardware());
-		$this->component_to_table_data($table_data, $rows, $result_file->get_system_software());
+		$this->component_to_table_data($table_data, $columns, $rows, $result_file->get_system_hardware());
+		$this->component_to_table_data($table_data, $columns, $rows, $result_file->get_system_software());
 
 		// Let's try to compact the data
-		for($c = 0, $c_count = count($table_data); $c < ($c_count - 1); $c++)
+		$c_count = count($table_data);
+		$c_index = 0;
+		foreach(array_keys($table_data) as $c)
 		{
 			for($r = 0, $r_count = count($table_data[$c]); $r < $r_count; $r++)
 			{
@@ -77,7 +48,7 @@ class pts_ResultFileSystemsTable extends pts_Table
 				}
 
 				$spans = 1;
-				for($i = ($c + 1); $i < $c_count; $i++)
+				for($i = ($c_index + 1); $i < $c_count; $i++)
 				{
 					if(isset($table_data[$i][$r]) && $match_to == $table_data[$i][$r])
 					{
@@ -96,11 +67,44 @@ class pts_ResultFileSystemsTable extends pts_Table
 					$match_to->set_attribute('spans_col', $spans);
 				}
 			}
+
+			$c_index++;
 		}
 
-		parent::__construct($rows, $columns, $table_data);
+		parent::__construct($rows, $columns, $table_data, $result_file);
 		$this->graph_font_size_identifiers *= 0.8;
 		$this->column_heading_vertical = false;
+	}
+	private function component_to_table_data(&$table_data, &$columns, &$rows, $add_components)
+	{
+		$col_pos = 0;
+
+		foreach($add_components as $info_string)
+		{
+			if(!isset($table_data[$columns[$col_pos]]))
+			{
+				$table_data[$columns[$col_pos]] = array();
+			}
+
+			foreach(explode(', ', $info_string) as $component)
+			{
+				$c_pos = strpos($component, ': ');
+
+				if($c_pos !== false)
+				{
+					$index = substr($component, 0, $c_pos);
+					$value = substr($component, ($c_pos + 2));
+
+					if(($r_i = array_search($index, $rows)) === false)
+					{
+						array_push($rows, $index);
+						$r_i = count($rows) - 1;
+					}
+					$table_data[$columns[$col_pos]][$r_i] = new pts_table_value($value);				
+				}
+			}
+			$col_pos++;
+		}
 	}
 }
 

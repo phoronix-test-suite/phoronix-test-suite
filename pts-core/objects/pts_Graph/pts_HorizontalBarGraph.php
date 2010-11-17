@@ -52,11 +52,11 @@ class pts_HorizontalBarGraph extends pts_Graph
 
 		foreach(array_keys($this->graph_identifiers) as $i)
 		{
-			$middle_of_vert = $this->graph_top_start + ($multi_way ? 10 : 0) + ($this->identifier_height * ($i + 1)) - ($this->identifier_height * 0.5) - 2;
+			$middle_of_vert = $this->graph_top_start + ($multi_way ? 5 : 0) + ($this->identifier_height * ($i + 1)) - ($this->identifier_height * 0.5) - 2;
 
 			if($multi_way)
 			{
-				$font_size = $this->text_size_bounds($this->graph_identifiers[$i], $this->graph_font, $this->graph_font_size_identifiers, 4, ($this->identifier_height * count($this->graph_data[$i])));
+				$font_size = $this->text_size_bounds($this->graph_identifiers[$i], $this->graph_font, $this->graph_font_size_identifiers - 1, 4, ($this->identifier_height * count($this->graph_data[$i])));
 				$this->graph_image->write_text_center($this->graph_identifiers[$i], $this->graph_font, $font_size, $this->graph_color_headers, 20, $middle_of_vert, 20, $middle_of_vert, true);
 			}
 			else
@@ -68,9 +68,9 @@ class pts_HorizontalBarGraph extends pts_Graph
 	protected function render_graph_bars()
 	{
 		$bar_count = count($this->graph_data);
-		$separator_height = ($a = (8 - (floor($bar_count / 2) * 2))) > 0 ? $a : 0;
+		$separator_height = ($a = (6 - (floor($bar_count / 2) * 2))) > 0 ? $a : 0;
 		$multi_way = $this->is_multi_way_comparison && count($this->graph_data) > 1;
-		$bar_height = floor(($this->identifier_height - ($multi_way ? 20 : 0) - $separator_height - ($bar_count * $separator_height)) / $bar_count);
+		$bar_height = floor(($this->identifier_height - ($multi_way ? 4 : 0) - $separator_height - ($bar_count * $separator_height)) / $bar_count);
 		$highlight_bar = PTS_IS_CLIENT ? pts_strings::comma_explode(pts_client::read_env("GRAPH_HIGHLIGHT")) : array();
 
 		for($i_o = 0; $i_o < $bar_count; $i_o++)
@@ -83,7 +83,7 @@ class pts_HorizontalBarGraph extends pts_Graph
 				$graph_size = round(($value / $this->graph_maximum_value) * ($this->graph_left_end - $this->graph_left_start));
 				$value_end_left = $this->graph_left_start + $graph_size;
 
-				$px_bound_top = $this->graph_top_start + ($multi_way ? 10 : 0) + ($this->identifier_height * $i) + ($bar_height * $i_o) + ($separator_height * ($i_o + 1));
+				$px_bound_top = $this->graph_top_start + ($multi_way ? 5 : 0) + ($this->identifier_height * $i) + ($bar_height * $i_o) + ($separator_height * ($i_o + 1));
 				$px_bound_bottom = $px_bound_top + $bar_height;
 				$middle_of_bar = $px_bound_top + ($bar_height / 2);
 

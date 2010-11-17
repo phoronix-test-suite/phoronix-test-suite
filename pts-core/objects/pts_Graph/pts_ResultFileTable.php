@@ -26,7 +26,7 @@ class pts_ResultFileTable extends pts_Table
 	public function __construct(&$result_file, $system_id_keys = null, $result_object_index = -1)
 	{
 		list($rows, $columns, $table_data) = self::result_file_to_result_table($result_file, $system_id_keys, $result_object_index);
-		parent::__construct($rows, $columns, $table_data);
+		parent::__construct($rows, $columns, $table_data, $result_file);
 		$this->result_object_index = $result_object_index;
 
 		// where to start the table values
@@ -302,7 +302,7 @@ class pts_ResultFileTable extends pts_Table
 					$result_table[$identifier] = $table;
 
 					$identifier = pts_strings::colon_explode($identifier);
-					$show_id = isset($identifier[1]) ? $identifier[1] : $identifier[0];
+					$show_id = isset($identifier[1]) ? $identifier[1] : $identifier[0];/*
 
 					if($system_id_keys != null && ($s = array_search($identifier[0], $system_id_keys)) !== false)
 					{
@@ -311,9 +311,9 @@ class pts_ResultFileTable extends pts_Table
 					else
 					{
 						$system_id = null;
-					}
+					}*/
 
-					array_push($result_systems, array($show_id, $system_id));
+					array_push($result_systems, $show_id);
 				}
 			}
 		}
@@ -323,7 +323,7 @@ class pts_ResultFileTable extends pts_Table
 
 			foreach(array_keys($result_table) as $id)
 			{
-				array_push($result_systems, array($id, null));
+				array_push($result_systems, $id);
 			}
 		}
 

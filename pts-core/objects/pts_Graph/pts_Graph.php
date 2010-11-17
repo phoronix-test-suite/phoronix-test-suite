@@ -565,11 +565,11 @@ abstract class pts_Graph
 			{
 				if($this->is_multi_way_comparison && count($this->graph_data) > 1)
 				{
-					$per_identifier_height = 20 + (18 * count($this->graph_data));
+					$per_identifier_height = 20 + (22 * count($this->graph_data));
 				}
 				else if(count($this->graph_data_title) > 3)
 				{
-					$per_identifier_height = count($this->graph_data_title) * 14;
+					$per_identifier_height = count($this->graph_data_title) * 18;
 				}
 				else
 				{

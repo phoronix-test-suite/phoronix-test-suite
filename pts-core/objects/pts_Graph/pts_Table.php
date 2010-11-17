@@ -28,9 +28,41 @@ class pts_Table extends pts_Graph
 	protected $table_data;
 	protected $longest_column_identifier;
 	protected $longest_row_identifier;
+	protected $is_multi_way = false;
 	protected $result_object_index = -1;
 	protected $column_heading_vertical = true;
 
+	public function __construct($rows, $columns, $table_data, &$result_file)
+	{
+		parent::__construct();
+
+		if($result_file instanceof pts_result_file)
+		{
+			$this->is_multi_way = $result_file->is_multi_way_comparison();
+		}
+
+		if($this->is_multi_way)
+		{
+			foreach($columns as &$c_str)
+			{
+				// in multi-way comparisons this will be reported above, so don't need to report it in the column header as it kills space
+				if(($c = strpos($c_str, ':')) !== false)
+				{
+					$c_str = substr($c_str, $c + 1);
+				}
+			}
+		}
+
+		$this->graph_attr_big_border = false;
+		$this->rows = $rows;
+		$this->columns = $columns;
+		$this->table_data = $table_data;
+
+		// Do some calculations
+		$this->longest_column_identifier = $this->find_longest_string($this->columns);
+		$this->longest_row_identifier = $this->find_longest_string($this->rows);
+		$this->graph_maximum_value = $this->find_longest_string_in_table_data($this->table_data);
+	}
 	protected function find_longest_string_in_table_data(&$table_data)
 	{
 		$longest_string = null;
@@ -39,6 +71,7 @@ class pts_Table extends pts_Graph
 		foreach($table_data as &$column)
 		{
 			if($column == null) continue;
+
 			foreach($column as &$row)
 			{
 				if($row instanceof pts_table_value)
@@ -66,23 +99,10 @@ class pts_Table extends pts_Graph
 
 		return $longest_string;
 	}
-	public function __construct($rows, $columns, $table_data)
-	{
-		parent::__construct();
-		$this->graph_attr_big_border = false;
-		$this->rows = $rows;
-		$this->columns = $columns;
-		$this->table_data = $table_data;
-
-		// Do some calculations
-		$this->longest_column_identifier = $this->find_longest_string($this->columns);
-		$this->longest_row_identifier = $this->find_longest_string($this->rows);
-		$this->graph_maximum_value = $this->find_longest_string_in_table_data($this->table_data);
-	}
 	public function renderChart($file = null)
 	{
-		// Needs to be at least 170px wide for the PTS logo
-		$this->graph_left_start = max(170, $this->text_string_width($this->longest_row_identifier, $this->graph_font, $this->graph_font_size_identifiers) + 10);
+		// Needs to be at least 86px wide for the PTS logo
+		$this->graph_left_start = max(86, $this->text_string_width($this->longest_row_identifier, $this->graph_font, $this->graph_font_size_identifiers) + 10);
 
 		if($this->column_heading_vertical)
 		{
@@ -96,10 +116,10 @@ class pts_Table extends pts_Graph
 		}
 
 		// $this->graph_maximum_value isn't actually correct to use, but it works
-		$extra_heading_height = $this->text_string_height($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_heading) * 2;
+		$extra_heading_height = $this->text_string_height($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_heading) * 1;
 
-		// Needs to be at least 90px tall for the PTS logo
-		$identifier_height = max($identifier_height, 90);
+		// Needs to be at least 46px tall for the PTS logo
+		$identifier_height = max($identifier_height, 48);
 
 		$table_max_value_width = $this->text_string_width($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_identifiers);
 
@@ -121,7 +141,15 @@ class pts_Table extends pts_Graph
 		$this->render_graph_init(array("cache_font_size" => true));
 
 		// Start drawing
-		$this->graph_image->image_copy_merge($this->graph_image->png_image_to_type("http://www.phoronix-test-suite.com/external/pts-logo-160x83.png"), ($this->graph_left_start / 2 - 80), ($identifier_height / 2 - 41.5), 0, 0, 160, 83);
+		if($this->graph_left_start >= 170 && $identifier_height >= 90)
+		{
+			$this->graph_image->image_copy_merge($this->graph_image->png_image_to_type("http://www.phoronix-test-suite.com/external/pts-logo-160x83.png"), ($this->graph_left_start / 2 - 80), ($identifier_height / 2 - 41.5), 0, 0, 160, 83);
+		}
+		else
+		{
+			$this->graph_image->image_copy_merge($this->graph_image->png_image_to_type("http://www.phoronix-test-suite.com/external/pts-logo-80x42.png"), ($this->graph_left_start / 2 - 40), ($identifier_height / 2 - 21), 0, 0, 80, 42);
+
+		}
 
 		// Draw the vertical table lines
 		$this->graph_image->draw_dashed_line($this->graph_left_start, ($table_proper_height / 2), $this->graph_attr_width, ($table_proper_height / 2), $this->graph_color_body, $table_proper_height, $table_item_width, $table_item_width);
@@ -163,15 +191,7 @@ class pts_Table extends pts_Graph
 		$table_identifier_offset = ($table_item_width / 2) + ($table_identifier_width / 2) - 1;
 		foreach($this->columns as $i => $col_string)
 		{
-			if(is_array($col_string))
-			{
-				$link = $col_string[1] != null ? "?k=system_logs&u=" . $col_string[1] . "&ts=" . $col_string[0] : null;
-				$col_string = $col_string[0];
-			}
-			else
-			{
-				$link = null;
-			}
+			$link = null;
 
 			if($this->column_heading_vertical)
 			{
@@ -184,14 +204,29 @@ class pts_Table extends pts_Graph
 		}
 
 		// Write the values
-		$col = 0;
-
-		foreach($this->table_data as &$table_values)
+		foreach($this->table_data as $index => &$table_values)
 		{
 			if(!is_array($table_values))
 			{
 				// TODO: determine why sometimes $table_values is empty or not an array
 				continue;
+			}
+
+			if($this->is_multi_way && ($c = strpos($index, ':')) !== false)
+			{
+				$index = substr($index, $c + 1);
+			}
+
+			$col = array_search($index, $this->columns);
+
+			if($col === false)
+			{
+				continue;
+			}
+			else
+			{
+				// unset this since it shouldn't be needed anymore and will then wipe out it from where multiple results have same name
+				unset($this->columns[$col]);
 			}
 
 			foreach($table_values as $i => &$result_table_value)
@@ -240,11 +275,10 @@ class pts_Table extends pts_Graph
 
 				$left_bounds = $this->graph_left_start + ($col * $table_item_width);
 				$right_bounds = $this->graph_left_start + (($col + max(1, $spans_col)) * $table_item_width);
-				$top_bounds = $identifier_height + ($row * $table_line_height) + ($table_line_height_half * 2.5);
+				$top_bounds = $identifier_height + (($row + 1.2) * $table_line_height);
 
 				if($spans_col > 1)
 				{
-
 					if($col == 1)
 					{
 						$background_paint = $i % 2 == 1 ? $this->graph_color_background : $this->graph_color_body;
@@ -258,15 +292,10 @@ class pts_Table extends pts_Graph
 
 					$this->graph_image->draw_rectangle($left_bounds + 1, $identifier_height + (($row + 1) * $table_line_height) + 1, $right_bounds, $identifier_height + (($row + 2) * $table_line_height), $background_paint);
 				}
-				else
-				{
-					//$this->graph_image->write_text_right($value, $this->graph_font, $this->graph_font_size_identifiers, $text_color, $this->graph_left_start + ($col * $table_item_width) - 3, $identifier_height + ($row * $table_line_height) + $table_line_height_half, $this->graph_left_start + (($col + 1) * $table_item_width) - 3, $identifier_height + (($row + 1) * $table_line_height) + $table_line_height_half, false, null, implode("; ", $hover), $bold);
-				}
 
 				$this->graph_image->write_text_center($value, $this->graph_font, $this->graph_font_size_identifiers, $text_color, $left_bounds, $top_bounds, $right_bounds, $top_bounds, false, null, implode('; ', $hover), $bold);
 				//$row++;
 			}
-			$col++;
 		}
 
 		if($row == 0 && $this->result_object_index != -1 && !is_array($this->result_object_index))
@@ -277,7 +306,7 @@ class pts_Table extends pts_Graph
 			return $this->return_graph_image();
 		}
 
-		if(defined("PHOROMATIC_TRACKER"))
+		if(defined("PHOROMATIC_TRACKER") || $this->is_multi_way)
 		{
 			$last_identifier = null;
 			$last_changed_col = 0;
@@ -298,14 +327,14 @@ class pts_Table extends pts_Graph
 
 					$paint_color = $this->get_paint_color($identifier[0]);
 
-					$this->graph_image->draw_rectangle_with_border(($this->graph_left_start + ($last_changed_col * $table_item_width)), 0, ($this->graph_left_start + ($last_changed_col * $table_item_width)) + ($table_item_width * ($current_col - $last_changed_col)), $extra_heading_height, $paint_color, $this->graph_color_border);
+					$this->graph_image->draw_rectangle_with_border(($this->graph_left_start + 1 + ($last_changed_col * $table_item_width)), 2, ($this->graph_left_start + ($last_changed_col * $table_item_width)) + ($table_item_width * ($current_col - $last_changed_col)), $extra_heading_height, $paint_color, $this->graph_color_border);
 
 					if($identifier[0] != "Temp")
 					{
 						$this->graph_image->draw_line(($this->graph_left_start + ($current_col * $table_item_width) + 1), 1, ($this->graph_left_start + ($current_col * $table_item_width) + 1), $this->graph_attr_height, $paint_color, 1);
 					}
 
-					$this->graph_image->write_text_center($last_identifier, $this->graph_font, $this->graph_font_size_axis_heading, $this->graph_color_background, $this->graph_left_start + ($last_changed_col * $table_item_width), 4, $this->graph_left_start + ($current_col * $table_item_width), $extra_heading_height, false, null, null, true);
+					$this->graph_image->write_text_center($last_identifier, $this->graph_font, $this->graph_font_size_axis_heading, $this->graph_color_background, $this->graph_left_start + ($last_changed_col * $table_item_width), 4, $this->graph_left_start + ($current_col * $table_item_width), 4, false, null, null, true);
 
 					$last_identifier = $identifier[0];
 					$last_changed_col = $current_col;
