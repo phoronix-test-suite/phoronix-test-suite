@@ -143,12 +143,13 @@ class pts_ResultFileTable extends pts_Table
 						}
 						else
 						{
-							if(PTS_IS_CLIENT && $result_file->is_multi_way_comparison())
+							if($result_file->is_multi_way_comparison())
 							{
 								// TODO: make it work better for highlighting multiple winners in multi-way comparisons
 								$highlight = false;
 
-								if($index % 2 == 1 && $prev_value != 0)
+								// TODO: get this working right
+								if(false && $index % 2 == 1 && $prev_value != 0)
 								{
 									switch($result_object->test_profile->get_result_proportion())
 									{

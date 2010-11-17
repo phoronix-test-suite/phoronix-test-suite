@@ -78,30 +78,29 @@ class pts_test_result_buffer
 			$this->append_to_test_result("Other", $other_value);
 		}
 	}
-	public function add_composite_result($force = null)
+	public function add_composite_result($force = false)
 	{
-		list($is_multi_way, $is_multi_way_inverted) = is_array($force) ? $force : pts_render::multi_way_identifier_check($this->get_identifiers());
+		$is_multi_way = $force ? $force : pts_render::multi_way_identifier_check($this->get_identifiers());
 
 		if($is_multi_way)
 		{
 			$group_values = array();
-			$offset_pos = $is_multi_way_inverted ? 0 : 1;
 
 			foreach($this->buffer_items as &$buffer_item)
 			{
 				$identifier_r = pts_strings::trim_explode(': ', $buffer_item->get_result_identifier());
 
-				if(!isset($group_values[$identifier_r[$offset_pos]]))
+				if(!isset($group_values[$identifier_r[1]]))
 				{
-					$group_values[$identifier_r[$offset_pos]] = 0;
+					$group_values[$identifier_r[1]] = 0;
 				}
 
-				$group_values[$identifier_r[$offset_pos]] += $buffer_item->get_result_value();
+				$group_values[$identifier_r[1]] += $buffer_item->get_result_value();
 			}
 
 			foreach($group_values as $key => $value)
 			{
-				if($offset_pos == 0)
+				if(1 == 0)
 				{
 					$title = $key . ": Composite";
 				}
@@ -121,30 +120,29 @@ class pts_test_result_buffer
 	}
 	public function buffer_values_to_percent()
 	{
-		list($is_multi_way, $is_multi_way_inverted) = pts_render::multi_way_identifier_check($this->get_identifiers());
+		$is_multi_way = pts_render::multi_way_identifier_check($this->get_identifiers());
 
 		if($is_multi_way)
 		{
 			$group_values = array();
-			$offset_pos = $is_multi_way_inverted ? 0 : 1;
 
 			foreach($this->buffer_items as &$buffer_item)
 			{
 				$identifier_r = pts_strings::trim_explode(': ', $buffer_item->get_result_identifier());
 
-				if(!isset($group_values[$identifier_r[$offset_pos]]))
+				if(!isset($group_values[$identifier_r[1]]))
 				{
-					$group_values[$identifier_r[$offset_pos]] = 0;
+					$group_values[$identifier_r[1]] = 0;
 				}
 
-				$group_values[$identifier_r[$offset_pos]] += $buffer_item->get_result_value();
+				$group_values[$identifier_r[1]] += $buffer_item->get_result_value();
 			}
 
 			foreach($this->buffer_items as &$buffer_item)
 			{
 				$identifier_r = pts_strings::trim_explode(': ', $buffer_item->get_result_identifier());
 
-				$percent = pts_math::set_precision(($buffer_item->get_result_value() / $group_values[$identifier_r[$offset_pos]] * 100), 3);
+				$percent = pts_math::set_precision(($buffer_item->get_result_value() / $group_values[$identifier_r[1]] * 100), 3);
 				$buffer_item->reset_result_value($percent);
 			}
 		}

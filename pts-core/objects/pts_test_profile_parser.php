@@ -246,7 +246,7 @@ class pts_test_profile_parser
 
 			for($i = 0; $i < count($names); $i++)
 			{
-				$user_option->add_option($names[$i], $values[$i], $messages[$i]);
+				$user_option->add_option($names[$i], (isset($values[$i]) ? $values[$i] : null), (isset($messages[$i]) ? $messages[$i] : null));
 			}
 
 			$user_option->set_option_default($settings_default[$option_count]);

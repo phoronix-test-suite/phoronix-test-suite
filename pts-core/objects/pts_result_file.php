@@ -164,7 +164,8 @@ class pts_result_file
 		if($is_multi_way === -1)
 		{
 			$hw = $this->get_system_hardware();
-			list($is_multi_way, $this->is_multi_way_inverted) = pts_render::multi_way_identifier_check($this->get_system_identifiers(), $hw);
+			$is_multi_way = pts_render::multi_way_identifier_check($this->get_system_identifiers(), $hw);
+			$this->is_multi_way_inverted = $is_multi_way && $is_multi_way[1] ;
 		}
 
 		return $is_multi_way;

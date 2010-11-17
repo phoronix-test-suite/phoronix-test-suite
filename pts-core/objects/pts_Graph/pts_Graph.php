@@ -179,6 +179,7 @@ abstract class pts_Graph
 		{
 			//$this->addInternalIdentifier("Identifier", null); // TODO: result file name
 			$pts_version = pts_arrays::last_element($result_file->get_system_pts_version());
+			$this->is_multi_way_comparison = $result_file->is_multi_way_comparison();
 		}
 
 		if(!isset($pts_version) || empty($pts_version))
@@ -565,7 +566,8 @@ abstract class pts_Graph
 			{
 				if($this->is_multi_way_comparison && count($this->graph_data) > 1)
 				{
-					$per_identifier_height = 20 + (22 * count($this->graph_data));
+					$rotated_text = $this->text_string_width($this->find_longest_string($this->graph_identifiers), $this->graph_font, $this->graph_font_size_identifiers);
+					$per_identifier_height = max((20 + (22 * count($this->graph_data))), $rotated_text);
 				}
 				else if(count($this->graph_data_title) > 3)
 				{

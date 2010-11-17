@@ -28,12 +28,6 @@ class pts_HorizontalBarGraph extends pts_Graph
 	public function __construct(&$result_object, &$result_file = null)
 	{
 		parent::__construct($result_object, $result_file);
-
-		if($result_file != null && $result_file instanceOf pts_result_file)
-		{
-			$this->is_multi_way_comparison = $result_file->is_multi_way_comparison();
-		}
-
 		$this->iveland_view = true;
 		$this->graph_orientation = "HORIZONTAL";
 	}
@@ -56,8 +50,7 @@ class pts_HorizontalBarGraph extends pts_Graph
 
 			if($multi_way)
 			{
-				$font_size = $this->text_size_bounds($this->graph_identifiers[$i], $this->graph_font, $this->graph_font_size_identifiers - 1, 4, ($this->identifier_height * count($this->graph_data[$i])));
-				$this->graph_image->write_text_center($this->graph_identifiers[$i], $this->graph_font, $font_size, $this->graph_color_headers, 20, $middle_of_vert, 20, $middle_of_vert, true);
+				$this->graph_image->write_text_center($this->graph_identifiers[$i], $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_headers, 20, $middle_of_vert, 20, $middle_of_vert, true);
 			}
 			else
 			{

@@ -430,13 +430,13 @@ class pts_render
 
 		if($identifiers_inverted)
 		{
-			$system_index = 1;
-			$date_index = 0;
+			$system_index = 0;
+			$date_index = 1;
 		}
 		else
 		{
-			$system_index = 0;
-			$date_index = 1;
+			$system_index = 1;
+			$date_index = 0;
 		}
 
 		foreach($mto->test_result_buffer->get_buffer_items() as $buffer_item)
@@ -626,12 +626,6 @@ class pts_render
 
 		foreach($identifiers as $identifier)
 		{
-			if(strpos($identifier, ": ") == false)
-			{
-				$is_multi_way = false;
-				break;
-			}
-
 			$identifier_r = pts_strings::trim_explode(': ', $identifier);
 
 			if(count($identifier_r) != 2)
@@ -646,8 +640,8 @@ class pts_render
 				$is_multi_way = false;
 				break;
 			}
-			$prev_system = $identifier_r[0];
 
+			$prev_system = $identifier_r[0];
 			$systems[$identifier_r[0]] = !isset($systems[$identifier_r[0]]) ? 1 : $systems[$identifier_r[0]] + 1;
 			$targets[$identifier_r[1]] = !isset($targets[$identifier_r[1]]) ? 1 : $targets[$identifier_r[1]] + 1;	
 		}
@@ -662,6 +656,8 @@ class pts_render
 		}
 		*/
 
+		// TODO XXX: for now temporarily disable inverted multi-way check to decide how to rework it appropriately
+		/*
 		if($is_multi_way)
 		{
 			$targets_count = count($targets);
@@ -686,10 +682,11 @@ class pts_render
 				}
 			}
 		}
+		*/
 
 		// TODO: figure out what else is needed to reasonably determine if the result file is a multi-way comparison
 
-		return array($is_multi_way, $is_multi_way_inverted);
+		return $is_multi_way ? array($is_multi_way, $is_multi_way_inverted) : false;
 	}
 }
 

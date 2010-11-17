@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>1.5.0</Version>
+		<Version>1.6.0</Version>
 		<TestType>Graphics</TestType>
 		<SoftwareType>Game</SoftwareType>
 		<License>FREE</License>
@@ -24,7 +24,7 @@
 	</TestInformation>
 	<TestSettings>
 		<Default>
-			<Arguments>-nohome -benchmark demos/demo2</Arguments>
+			<Arguments>-nohome -benchmark demos/demo2 +r_glsl 1</Arguments>
 		</Default>
 		<Option>
 			<DisplayName>Resolution</DisplayName>

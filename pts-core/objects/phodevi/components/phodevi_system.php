@@ -640,7 +640,7 @@ class phodevi_system extends phodevi_device_interface
 
 			if($info != "Unknown")
 			{
-				$info = "X.Org Server " . $info;
+				$info = "X Server " . $info;
 			}
 		}
 
