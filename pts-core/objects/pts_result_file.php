@@ -94,6 +94,10 @@ class pts_result_file
 	{
 		return $this->xml_parser->getXMLValue(P_RESULTS_GENERATED_NOTES);
 	}
+	public function get_internal_tags()
+	{
+		return $this->xml_parser->getXMLValue(P_RESULTS_GENERATED_INTERNAL_TAGS);
+	}
 	public function get_preset_environment_variables()
 	{
 		return $this->xml_parser->getXMLValue(P_RESULTS_GENERATED_PRESET_ENV_VARS);
