@@ -50,11 +50,13 @@ class pts_ResultFileSystemsTable extends pts_Table
 				$spans = 1;
 				for($i = ($c_index + 1); $i < $c_count; $i++)
 				{
-					if(isset($table_data[$i][$r]) && $match_to == $table_data[$i][$r])
+					$id = $columns[$i];
+
+					if(isset($table_data[$id][$r]) && $match_to == $table_data[$id][$r])
 					{
 						//echo $match_to . ' ' . $table_data[$i][$r] . ' ' . $i . "\n";
 						$spans++;
-						$table_data[$i][$r] = null;
+						$table_data[$id][$r] = null;
 					}
 					else
 					{
