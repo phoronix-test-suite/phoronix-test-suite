@@ -227,6 +227,10 @@ class pts_test_run_manager
 	{
 		return null; // TODO: Not Yet Implemented
 	}
+	public function get_internal_tags()
+	{
+		return null;
+	}
 	public function get_preset_environment_variables()
 	{
 		return pts_module_manager::var_store_string();

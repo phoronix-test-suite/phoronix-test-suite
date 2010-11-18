@@ -54,7 +54,6 @@ class pts_ResultFileSystemsTable extends pts_Table
 
 					if(isset($table_data[$id][$r]) && $match_to == $table_data[$id][$r])
 					{
-						//echo $match_to . ' ' . $table_data[$i][$r] . ' ' . $i . "\n";
 						$spans++;
 						$table_data[$id][$r] = null;
 					}
