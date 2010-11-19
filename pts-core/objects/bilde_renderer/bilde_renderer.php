@@ -217,6 +217,11 @@ abstract class bilde_renderer
 						$http_selected_renderer = "SVG";
 					}
 				}
+				else if(($p = strpos($browser, "MSIE 9")) !== false)
+				{
+					// Microsoft Internet Explorer 9.0 finally seems to do SVG right
+					$http_selected_renderer = "SVG";
+				}
 			}
 
 			$selected_renderer = $http_selected_renderer;
