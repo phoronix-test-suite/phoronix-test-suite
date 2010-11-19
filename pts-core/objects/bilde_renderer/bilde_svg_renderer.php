@@ -380,7 +380,7 @@ class bilde_svg_renderer extends bilde_renderer
 		$line->setAttribute("y2", round($end_y));
 		$line->setAttribute("stroke", $color);
 		$line->setAttribute("stroke-width", $line_width);
-		$line->setAttribute("stroke-dasharray", $dash_length . ',' . round($blank_length));
+		$line->setAttribute("stroke-dasharray", $dash_length . ',' . $blank_length);
 
 		$this->svg->appendChild($line);
 	}
