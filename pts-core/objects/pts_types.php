@@ -40,18 +40,18 @@ class pts_types
 
 		foreach(pts_types::identifiers_to_objects($identifiers) as $object)
 		{
-			if($object instanceOf pts_test_profile)
+			if($object instanceof pts_test_profile)
 			{
 				array_push($test_profiles, $object);
 			}
-			else if($object instanceOf pts_test_suite)
+			else if($object instanceof pts_test_suite)
 			{
 				foreach($object->get_contained_test_profiles() as $test_profile)
 				{
 					array_push($test_profiles, $test_profile);
 				}
 			}
-			else if($object instanceOf pts_result_file)
+			else if($object instanceof pts_result_file)
 			{
 				foreach($object->get_contained_test_profiles() as $test_profile)
 				{

@@ -27,8 +27,13 @@ class pts_test_suite_parser
 
 	public function __construct($identifier)
 	{
-		$this->xml_parser = new pts_suite_nye_XmlReader($identifier);
 		$this->identifier = $identifier;
+		if(!is_file($identifier) && is_file(PTS_TEST_SUITE_PATH . $identifier . ".xml"))
+		{
+			$identifier = PTS_TEST_SUITE_PATH . $identifier . ".xml";
+		}
+
+		$this->xml_parser = new pts_suite_nye_XmlReader($identifier);
 	}
 	public function __toString()
 	{
