@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 3.0 Alpha 2
+18 November 2010
 
 - pts-core: THE RESULT FILE XML SCHEMA HAS CHANGED. PTS-CORE SHOULD AUTOMATICALLY BE BACKWARDS-COMPATIBLE IN READING OLD XML FILES, BUT IF YOU EXTERNALLY ACCESS THIS XML DATA IT WILL NEED TO BE UPDATED.
 - pts-core: Add the OpenBenchmarking.org HTTPS certificate
@@ -15,7 +16,7 @@ Phoronix Test Suite (Git)
 - pts_Graph: Various improvements
 
 Phoronix Test Suite 3.0 Alpha 1
-November 9, 2010
+9 November 2010
 
 - pts-core: Split part of pts_test_profile into pts_test_profile_parser as the lighter-weight profile parsing parent for use where applicable
 - pts-core: Drop option support for required_function_sets as everything is now modularized to objects
