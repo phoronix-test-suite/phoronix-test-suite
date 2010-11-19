@@ -115,11 +115,17 @@ class pts_Table extends pts_Graph
 			$table_identifier_width = $this->text_string_width($this->longest_column_identifier, $this->graph_font, $this->graph_font_size_identifiers);
 		}
 
+
 		// $this->graph_maximum_value isn't actually correct to use, but it works
 		$extra_heading_height = $this->text_string_height($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_heading) * 1;
 
 		// Needs to be at least 46px tall for the PTS logo
 		$identifier_height = max($identifier_height, 48);
+
+		if(defined("PHOROMATIC_TRACKER") || $this->is_multi_way)
+		{
+			$identifier_height += 20;
+		}
 
 		$table_max_value_width = $this->text_string_width($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_identifiers);
 
@@ -188,6 +194,43 @@ class pts_Table extends pts_Graph
 		}
 
 		// Write the identifiers
+
+		if(defined("PHOROMATIC_TRACKER") || $this->is_multi_way)
+		{
+			$last_identifier = null;
+			$last_changed_col = 0;
+			$show_keys = array_keys($this->table_data);
+			array_push($show_keys, "Temp: Temp");
+
+			foreach($show_keys as $current_col => $system_identifier)
+			{
+				$identifier = pts_strings::colon_explode($system_identifier);
+
+				if($identifier[0] != $last_identifier)
+				{
+					if($current_col == $last_changed_col)
+					{
+						$last_identifier = $identifier[0];
+						continue;
+					}
+
+					$paint_color = $this->get_paint_color($identifier[0]);
+
+					$this->graph_image->draw_rectangle_with_border(($this->graph_left_start + 1 + ($last_changed_col * $table_item_width)), 2, ($this->graph_left_start + ($last_changed_col * $table_item_width)) + ($table_item_width * ($current_col - $last_changed_col)), $extra_heading_height, $paint_color, $this->graph_color_border);
+
+					if($identifier[0] != "Temp")
+					{
+						$this->graph_image->draw_line(($this->graph_left_start + ($current_col * $table_item_width) + 1), 1, ($this->graph_left_start + ($current_col * $table_item_width) + 1), $this->graph_attr_height, $paint_color, 1);
+					}
+
+					$this->graph_image->write_text_center($last_identifier, $this->graph_font, $this->graph_font_size_axis_heading, $this->graph_color_background, $this->graph_left_start + ($last_changed_col * $table_item_width), 4, $this->graph_left_start + ($current_col * $table_item_width), 4, false, null, null, true);
+
+					$last_identifier = $identifier[0];
+					$last_changed_col = $current_col;
+				}
+			}
+		}
+
 		$table_identifier_offset = ($table_item_width / 2) + ($table_identifier_width / 2) - 1;
 		foreach($this->columns as $i => $col_string)
 		{
@@ -304,42 +347,6 @@ class pts_Table extends pts_Graph
 			$this->graph_image->destroy_image();
 			$this->saveGraphToFile($file);
 			return $this->return_graph_image();
-		}
-
-		if(defined("PHOROMATIC_TRACKER") || $this->is_multi_way)
-		{
-			$last_identifier = null;
-			$last_changed_col = 0;
-			$show_keys = array_keys($this->table_data);
-			array_push($show_keys, "Temp: Temp");
-
-			foreach($show_keys as $current_col => $system_identifier)
-			{
-				$identifier = pts_strings::colon_explode($system_identifier);
-
-				if($identifier[0] != $last_identifier)
-				{
-					if($current_col == $last_changed_col)
-					{
-						$last_identifier = $identifier[0];
-						continue;
-					}
-
-					$paint_color = $this->get_paint_color($identifier[0]);
-
-					$this->graph_image->draw_rectangle_with_border(($this->graph_left_start + 1 + ($last_changed_col * $table_item_width)), 2, ($this->graph_left_start + ($last_changed_col * $table_item_width)) + ($table_item_width * ($current_col - $last_changed_col)), $extra_heading_height, $paint_color, $this->graph_color_border);
-
-					if($identifier[0] != "Temp")
-					{
-						$this->graph_image->draw_line(($this->graph_left_start + ($current_col * $table_item_width) + 1), 1, ($this->graph_left_start + ($current_col * $table_item_width) + 1), $this->graph_attr_height, $paint_color, 1);
-					}
-
-					$this->graph_image->write_text_center($last_identifier, $this->graph_font, $this->graph_font_size_axis_heading, $this->graph_color_background, $this->graph_left_start + ($last_changed_col * $table_item_width), 4, $this->graph_left_start + ($current_col * $table_item_width), 4, false, null, null, true);
-
-					$last_identifier = $identifier[0];
-					$last_changed_col = $current_col;
-				}
-			}
 		}
 
 		$this->graph_image->draw_rectangle_border(1, 1, $this->graph_attr_width, $this->graph_attr_height, $this->graph_color_border);
