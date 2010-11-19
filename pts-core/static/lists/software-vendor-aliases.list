@@ -17,3 +17,4 @@ centos = fedora
 palm = optware
 suselinux = opensuse
 meego = fedora
+openindiana = opensolaris
