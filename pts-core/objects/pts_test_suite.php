@@ -78,11 +78,11 @@ class pts_test_suite extends pts_test_suite_parser
 	public function get_contained_test_result_objects()
 	{
 		$test_result_objects = array();
-		$test_names = $xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME);
-		$sub_modes = $xml_parser->getXMLArrayValues(P_SUITE_TEST_MODE);
-		$sub_arguments = $xml_parser->getXMLArrayValues(P_SUITE_TEST_ARGUMENTS);
-		$sub_arguments_description = $xml_parser->getXMLArrayValues(P_SUITE_TEST_DESCRIPTION);
-		$override_test_options = $xml_parser->getXMLArrayValues(P_SUITE_TEST_OVERRIDE_OPTIONS);
+		$test_names = $this->xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME);
+		$sub_modes = $this->xml_parser->getXMLArrayValues(P_SUITE_TEST_MODE);
+		$sub_arguments = $this->xml_parser->getXMLArrayValues(P_SUITE_TEST_ARGUMENTS);
+		$sub_arguments_description = $this->xml_parser->getXMLArrayValues(P_SUITE_TEST_DESCRIPTION);
+		$override_test_options = $this->xml_parser->getXMLArrayValues(P_SUITE_TEST_OVERRIDE_OPTIONS);
 
 		for($i = 0; $i < count($test_names); $i++)
 		{
