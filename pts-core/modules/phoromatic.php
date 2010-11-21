@@ -41,7 +41,7 @@ class phoromatic extends pts_module_interface
 	public static function module_setup()
 	{
 		return array(
-		new pts_module_option("remote_host", "Enter the URL to host", "HTTP_URL", "http://www.phoromatic.com/"),
+		new pts_module_option("remote_host", "Enter the URL to host", "HTTP_URL", "https://www.phoromatic.com/"),
 		new pts_module_option("remote_account", "Enter the account code", "ALPHA_NUMERIC"),
 		new pts_module_option("remote_verifier", "Enter the verification code", "ALPHA_NUMERIC"),
 		new pts_module_option("system_description", "Enter a short (optional) description for this system", null, null, null, false)
@@ -633,6 +633,12 @@ class phoromatic extends pts_module_interface
 		self::$phoromatic_account = pts_module::read_option("remote_account");
 		self::$phoromatic_verifier = pts_module::read_option("remote_verifier");
 		self::$phoromatic_system = pts_module::read_option("remote_system");
+
+		if(extension_loaded("openssl") == false)
+		{
+			// OpenSSL is not supported therefore no HTTPS support
+			self::$phoromatic_host = str_replace("https://", "http://", self::$phoromatic_host);
+		}
 
 		$phoromatic = "phoromatic";
 		pts_module_manager::attach_module($phoromatic);

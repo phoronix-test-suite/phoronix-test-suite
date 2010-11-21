@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- phoromatic: HTTPS connection support, install the Phoromatic.com SSL certificate
+
 Phoronix Test Suite 3.0 Alpha 2
 18 November 2010
 
