@@ -1,9 +1,9 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>http://internode.dl.sourceforge.net/sourceforge/p7zip/p7zip_9.04_src_all.tar.bz2, http://ovh.dl.sourceforge.net/sourceforge/p7zip/p7zip_9.04_src_all.tar.bz2, http://voxel.dl.sourceforge.net/sourceforge/p7zip/p7zip_9.04_src_all.tar.bz2</URL>
-			<MD5>9194ebf9a2b3735d236aed001de5f6f8</MD5>
-			<FileSize>3759021</FileSize>
+			<URL>http://internode.dl.sourceforge.net/sourceforge/p7zip/p7zip_9.13_src_all.tar.bz2, http://ovh.dl.sourceforge.net/sourceforge/p7zip/p7zip_9.13_src_all.tar.bz2, http://voxel.dl.sourceforge.net/sourceforge/p7zip/p7zip_9.13_src_all.tar.bz2</URL>
+			<MD5>8ddb5053db3b1f2696407d01be145779</MD5>
+			<FileSize>3753579</FileSize>
 		</Package>
 	</Downloads>
 </PhoronixTestSuite>
