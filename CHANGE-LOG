@@ -12,6 +12,7 @@ Phoronix Test Suite (Git)
 - pts: Update compress-7zip test profile against upstream p7zip 9.13
 - pts: Update ffmpeg test profile against upstream FFmpeg 0.6.1
 - pts: Update graphics-magick test profile against GraphicsMagick 1.3.12
+- pts: Update pgbench test profile against PostgreSQL 9.0.1
 
 Phoronix Test Suite 3.0 Alpha 2
 18 November 2010
