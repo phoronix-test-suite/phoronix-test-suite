@@ -3,15 +3,15 @@
 mkdir $HOME/httpd_
 
 tar -zxvf apache-ab-test-files-1.tar.gz
-tar -zxvf httpd-2.2.11.tar.gz
+tar -zxvf httpd-2.2.17.tar.gz
 
-cd httpd-2.2.11/
+cd httpd-2.2.17/
 ./configure --prefix=$HOME/httpd_
 make -j $NUM_CPU_JOBS
 echo $? > ~/install-exit-status
 make install
 cd ..
-rm -rf httpd-2.2.11/
+rm -rf httpd-2.2.17/
 rm -rf httpd_/manual/
 
 patch -p0 < CHANGE-APACHE-PORT.patch

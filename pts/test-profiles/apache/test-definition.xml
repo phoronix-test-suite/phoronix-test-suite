@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>1.1.0</Version>
+		<Version>1.2.0</Version>
 		<TestType>System</TestType>
 		<SoftwareType>Utility</SoftwareType>
 		<License>FREE</License>
@@ -15,12 +15,12 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>Apache Benchmark</Title>
-		<Version>2.2.11</Version>
+		<Version>2.2.17</Version>
 		<SubTitle>Static Web Page Serving</SubTitle>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Requests Per Second</ResultScale>
 		<Proportion>HIB</Proportion>
-		<Description>This is a test of ab, which is the Apache Benchmark program. This test profile measures how many requests per second a given system can sustain when carrying out 500,000 requests with 100 requests being carried out concurrently.</Description>
+		<Description>This is a test of ab, which is the Apache benchmark program. This test profile measures how many requests per second a given system can sustain when carrying out 500,000 requests with 100 requests being carried out concurrently.</Description>
 	</TestInformation>
 	<TestSettings>
 		<Default>
