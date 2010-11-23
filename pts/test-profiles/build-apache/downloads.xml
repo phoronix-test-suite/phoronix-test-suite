@@ -1,9 +1,9 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>http://archive.apache.org/dist/httpd/httpd-2.2.11.tar.gz, ftp://ftp.bit.nl/mirror/apache/httpd-2.2.11.tar.gz, ftp://ftp.sunfreeware.com/pub/freeware/SOURCES/httpd-2.2.11.tar.gz</URL>
-			<MD5>03e0a99a5de0f3f568a0087fb9993af9</MD5>
-			<FileSize>6806786</FileSize>
+			<URL>http://archive.apache.org/dist/httpd/httpd-2.2.17.tar.gz, ftp://ftp.bit.nl/mirror/apache/httpd-2.2.17s.tar.gz, ftp://ftp.sunfreeware.com/pub/freeware/SOURCES/httpd-2.2.17.tar.gz, http://apache.mirrors.pair.com//httpd/httpd-2.2.17.tar.gz</URL>
+			<MD5>66d8e107f85acc039fd5e624e85728a9</MD5>
+			<FileSize>6597991</FileSize>
 		</Package>
 	</Downloads>
 </PhoronixTestSuite>
