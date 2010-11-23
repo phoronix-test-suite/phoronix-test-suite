@@ -1,9 +1,9 @@
 <PhoronixTestSuite>
 	<Downloads>
 		<Package>
-			<URL>http://www.ffmpeg.org/releases/ffmpeg-0.5.tar.bz2</URL>
-			<MD5>be8503f15c3b81ba00eb8379ca8dcf33</MD5>
-			<FileSize>2744768</FileSize>
+			<URL>http://ffmpeg.org/releases/ffmpeg-0.6.1.tar.bz2</URL>
+			<MD5>4f5d732d25eedfb072251b5314ba2093</MD5>
+			<FileSize>3644146</FileSize>
 		</Package>
 	</Downloads>
 </PhoronixTestSuite>

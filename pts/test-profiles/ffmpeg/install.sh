@@ -1,15 +1,15 @@
 #!/bin/sh
 
-tar -xjf ffmpeg-0.5.tar.bz2
+tar -xjf ffmpeg-0.6.1.tar.bz2
 mkdir ffmpeg_/
 
-cd ffmpeg-0.5/
+cd ffmpeg-0.6.1/
 ./configure --disable-zlib --prefix=$HOME/ffmpeg_/
 make
 echo $? > ~/install-exit-status
 make install
 cd ..
-rm -rf ffmpeg-0.5/
+rm -rf ffmpeg-0.6.1/
 rm -rf ffmpeg_/lib/
 
 echo "#!/bin/sh
