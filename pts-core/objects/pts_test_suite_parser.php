@@ -95,7 +95,19 @@ class pts_test_suite_parser
 
 		foreach(array_keys($test_names) as $i)
 		{
-			array_push($test_profiles, new pts_test_profile($test_names[$i]));
+			$obj = pts_types::identifier_to_object($test_names[$i]);
+
+			if($obj instanceof pts_test_profile)
+			{
+				array_push($test_profiles, $obj);
+			}
+			else if($obj instanceof pts_test_suite)
+			{
+				foreach($obj->get_contained_test_profiles() as $obj)
+				{
+					array_push($test_profiles, $obj);
+				}
+			}
 		}
 
 		return $test_profiles;
