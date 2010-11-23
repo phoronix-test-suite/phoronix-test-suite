@@ -88,7 +88,7 @@ class pts_test_suite extends pts_test_suite_parser
 		{
 			$obj = pts_types::identifier_to_object($test_names[$i]);
 
-			if($obj instanceOf pts_test_profile)
+			if($obj instanceof pts_test_profile)
 			{
 				// Check for test profile values to override
 				$override_options = array();
@@ -118,7 +118,7 @@ class pts_test_suite extends pts_test_suite_parser
 						break;
 				}
 
-				foreach(array_keys($option_output[0]) as $i)
+				foreach(array_keys($option_output[0]) as $x)
 				{
 					if($override_options != null)
 					{
@@ -126,13 +126,13 @@ class pts_test_suite extends pts_test_suite_parser
 					}
 
 					$test_result = new pts_test_result($obj);
-					$test_result->set_used_arguments($option_output[0][$i]);
-					$test_result->set_used_arguments_description($option_output[1][$i]);
+					$test_result->set_used_arguments($option_output[0][$x]);
+					$test_result->set_used_arguments_description($option_output[1][$x]);
 
 					array_push($test_result_objects, $test_result);
 				}
 			}
-			else if($obj instanceOf pts_test_suite)
+			else if($obj instanceof pts_test_suite)
 			{
 				foreach($obj->get_contained_objects() as $test_result)
 				{

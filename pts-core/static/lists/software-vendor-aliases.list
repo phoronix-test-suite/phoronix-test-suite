@@ -13,6 +13,7 @@ gnukfreebsd = ubuntu
 dragonfly = netbsd
 moblin = fedora
 redhatenterprise = fedora
+redhatenterpriseserver = fedora
 centos = fedora
 palm = optware
 suselinux = opensuse

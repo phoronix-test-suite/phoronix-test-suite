@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+- pts-core: Fix test suites failing to run where it'd get caught in an infinite loop
 - phoromatic: HTTPS connection support, install the Phoromatic.com SSL certificate
 
 Phoronix Test Suite 3.0 Alpha 2
