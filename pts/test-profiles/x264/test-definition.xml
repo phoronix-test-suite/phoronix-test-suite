@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<TestProfile>
-		<Version>1.1.0</Version>
+		<Version>1.2.0</Version>
 		<TestType>Processor</TestType>
 		<SoftwareType>Utility</SoftwareType>
 		<License>FREE</License>
@@ -14,7 +14,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>x264</Title>
-		<Version>2009-11-18</Version>
+		<Version>2010-11-22</Version>
 		<SubTitle>H.264 Video Encoding</SubTitle>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Frames Per Second</ResultScale>

@@ -1,15 +1,15 @@
 #!/bin/sh
 
-tar -xjf x264-snapshot-20091118-2245.tar.bz2
+tar -xjf x264-snapshot-20101122-2245.tar.bz2
 mkdir x264_/
 
-cd x264-snapshot-20091118-2245/
+cd x264-snapshot-20101122-2245/
 ./configure --prefix=$HOME/x264_/
 make -j $NUM_CPU_JOBS
 echo $? > ~/install-exit-status
 make install
 cd ..
-rm -rf x264-snapshot-20091118-2245/
+rm -rf x264-snapshot-20101122-2245/
 
 echo "#!/bin/sh
 ./x264_/bin/x264 -o /dev/null --threads \$NUM_CPU_CORES soccer_4cif.y4m > \$LOG_FILE 2>&1
