@@ -19,6 +19,10 @@
 			<Value>PhoronixTestSuite/Generated/InternalTags</Value>
 		</Define>
 		<Define>
+			<Name>P_RESULTS_GENERATED_REFERENCE_ID</Name>
+			<Value>PhoronixTestSuite/Generated/ReferenceID</Value>
+		</Define>
+		<Define>
 			<Name>P_RESULTS_GENERATED_TIMESTAMP</Name>
 			<Value>PhoronixTestSuite/Generated/LastModified</Value>
 		</Define>

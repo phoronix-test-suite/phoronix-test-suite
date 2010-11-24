@@ -98,6 +98,10 @@ class pts_result_file
 	{
 		return $this->xml_parser->getXMLValue(P_RESULTS_GENERATED_INTERNAL_TAGS);
 	}
+	public function get_reference_id()
+	{
+		return $this->xml_parser->getXMLValue(P_RESULTS_GENERATED_REFERENCE_ID);
+	}
 	public function get_preset_environment_variables()
 	{
 		return $this->xml_parser->getXMLValue(P_RESULTS_GENERATED_PRESET_ENV_VARS);

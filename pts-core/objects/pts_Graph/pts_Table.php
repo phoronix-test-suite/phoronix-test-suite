@@ -117,14 +117,14 @@ class pts_Table extends pts_Graph
 
 
 		// $this->graph_maximum_value isn't actually correct to use, but it works
-		$extra_heading_height = $this->text_string_height($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_heading) * 1;
+		$extra_heading_height = $this->text_string_height($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_heading) * 1.2;
 
 		// Needs to be at least 46px tall for the PTS logo
 		$identifier_height = max($identifier_height, 48);
 
 		if(defined("PHOROMATIC_TRACKER") || $this->is_multi_way)
 		{
-			$identifier_height += 20;
+			$identifier_height += 6 + $extra_heading_height;
 		}
 
 		$table_max_value_width = $this->text_string_width($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_identifiers);

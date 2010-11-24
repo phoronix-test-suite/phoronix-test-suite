@@ -51,6 +51,11 @@ class pts_network
 	}
 	public static function download_file($download, $to)
 	{
+		if(defined("NO_NETWORK_COMMUNICATION"))
+		{
+			return false;
+		}
+
 		if(function_exists("curl_init"))
 		{
 			$return_state = pts_network::curl_download($download, $to);

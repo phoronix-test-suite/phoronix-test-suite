@@ -231,6 +231,10 @@ class pts_test_run_manager
 	{
 		return null;
 	}
+	public function get_reference_id()
+	{
+		return null;
+	}
 	public function get_preset_environment_variables()
 	{
 		return pts_module_manager::var_store_string();
