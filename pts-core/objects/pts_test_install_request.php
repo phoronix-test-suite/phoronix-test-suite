@@ -105,6 +105,7 @@ class pts_test_install_request
 	public function scan_download_caches($local_download_caches, $remote_files)
 	{
 		$download_location = $this->test_profile->get_install_dir();
+		$main_download_cache = pts_strings::append_trailing_slash(pts_config::read_user_config(P_OPTION_CACHE_DIRECTORY, PTS_DOWNLOAD_CACHE_PATH));
 
 		foreach($this->test_files as &$download_package)
 		{
@@ -122,6 +123,16 @@ class pts_test_install_request
 				}
 
 				$download_package->set_download_location("IN_DESTINATION_DIR");
+			}
+			else if(is_file($main_download_cache . $package_filename))
+			{
+				// In main download cache
+				if($download_package->get_filesize() == 0)
+				{
+					$download_package->set_filesize(filesize($main_download_cache . $package_filename));
+				}
+
+				$download_package->set_download_location("MAIN_DOWNLOAD_CACHE", array($main_download_cache . $package_filename));
 			}
 			else
 			{

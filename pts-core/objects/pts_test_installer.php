@@ -160,6 +160,7 @@ class pts_test_installer
 							pts_file_io::unlink($download_destination_temp);
 						}
 					}
+				case "MAIN_DOWNLOAD_CACHE":
 				case "LOCAL_DOWNLOAD_CACHE":
 					$download_cache_file = pts_arrays::last_element($download_package->get_download_location_path());
 

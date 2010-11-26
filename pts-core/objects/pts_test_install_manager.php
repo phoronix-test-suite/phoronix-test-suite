@@ -147,8 +147,7 @@ class pts_test_install_manager
 			}
 
 			// User Defined Directory Checking
-			$dir_string = ($dir = pts_client::read_env("PTS_DOWNLOAD_CACHE")) != false ? $dir . ':' : null;
-			$dir_string .= pts_config::read_user_config(P_OPTION_CACHE_DIRECTORY, PTS_DOWNLOAD_CACHE_PATH);
+			$dir_string = ($dir = pts_client::read_env("PTS_DOWNLOAD_CACHE")) != false ? $dir : null;
 
 			foreach(pts_strings::colon_explode($dir_string) as $dir_check)
 			{
