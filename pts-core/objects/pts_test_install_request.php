@@ -102,7 +102,7 @@ class pts_test_install_request
 			}
 		}
 	}
-	public function scan_download_caches($local_download_caches, $remote_files)
+	public function scan_download_caches($local_download_caches, $remote_download_caches, $remote_files)
 	{
 		$download_location = $this->test_profile->get_install_dir();
 		$main_download_cache = pts_strings::append_trailing_slash(pts_config::read_user_config(P_OPTION_CACHE_DIRECTORY, PTS_DOWNLOAD_CACHE_PATH));
@@ -157,6 +157,22 @@ class pts_test_install_request
 					if(!empty($package_md5) && isset($remote_files[$package_md5]))
 					{
 						$download_package->set_download_location("REMOTE_DOWNLOAD_CACHE", $remote_files[$package_md5]);
+					}
+					else
+					{
+						// Check for files manually
+						foreach($remote_download_caches as $remote_dir)
+						{
+							$remote_file = $remote_dir . $package_filename;
+							$stream_context = pts_network::stream_context_create();
+							$file_pointer = @fopen($remote_file, 'r', false, $stream_context);
+
+							if($file_pointer !== false)
+							{
+								$download_package->set_download_location("REMOTE_DOWNLOAD_CACHE", $remote_file);
+								break;
+							}
+						}
 					}
 				}
 			}

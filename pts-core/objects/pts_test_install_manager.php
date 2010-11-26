@@ -66,10 +66,11 @@ class pts_test_install_manager
 
 		$remote_files = self::remote_files_available_in_download_caches();
 		$local_download_caches = self::local_download_caches();
+		$remote_download_caches = self::remote_download_caches();
 
 		foreach($this->tests_to_install as $i => &$test_install_request)
 		{
-			$test_install_request->scan_download_caches($local_download_caches, $remote_files);
+			$test_install_request->scan_download_caches($local_download_caches, $remote_download_caches, $remote_files);
 			pts_client::$display->test_install_progress_update(($i / $test_count));
 		}
 		pts_client::$display->test_install_progress_completed();
@@ -79,9 +80,9 @@ class pts_test_install_manager
 		pts_load_xml_definitions("download-cache.xml");
 		$remote_download_files = array();
 
-		foreach(self::download_cache_locations() as $dc_directory)
+		foreach(self::remote_download_caches() as $dc_directory)
 		{
-			if(pts_strings::is_url($dc_directory) && ($xml_dc_file = pts_network::http_get_contents($dc_directory . "pts-download-cache.xml")) != false)
+			if(($xml_dc_file = pts_network::http_get_contents($dc_directory . "pts-download-cache.xml")) != false)
 			{
 				$xml_dc_parser = new nye_XmlReader($xml_dc_file);
 				$dc_file = $xml_dc_parser->getXMLArrayValues(P_CACHE_PACKAGE_FILENAME);
@@ -100,6 +101,20 @@ class pts_test_install_manager
 		}
 
 		return $remote_download_files;
+	}
+	public function remote_download_caches()
+	{
+		$cache_directories = array();
+
+		foreach(self::download_cache_locations() as $dc_directory)
+		{
+			if(pts_strings::is_url($dc_directory))
+			{
+				array_push($cache_directories, $dc_directory);
+			}
+		}
+
+		return $cache_directories;
 	}
 	public function local_download_caches()
 	{
