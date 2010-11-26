@@ -561,21 +561,24 @@ class pts_test_run_manager
 					$this->result_file_writer->add_result_from_result_object_with_value_string($test_run_request, $test_run_request->get_result(), $test_run_request->test_result_buffer->get_values_as_string());
 					$this->completed_runs += 1;
 
-					static $xml_write_pos = 1;
-					pts_file_io::mkdir(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . "/test-logs/" . $xml_write_pos . "/");
-
-					if(is_dir(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . "/test-logs/active/" . $this->get_results_identifier()))
+					if($this->get_results_identifier() != null && $this->get_file_name() != null && pts_config::read_bool_config(P_OPTION_LOG_TEST_OUTPUT, "FALSE"))
 					{
-						$test_log_write_dir = PTS_SAVE_RESULTS_PATH . $this->get_file_name() . "/test-logs/" . $xml_write_pos . '/' . $this->get_results_identifier() . '/';
+						static $xml_write_pos = 1;
+						pts_file_io::mkdir(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . "/test-logs/" . $xml_write_pos . "/");
 
-						if(is_dir($test_log_write_dir))
+						if(is_dir(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . "/test-logs/active/" . $this->get_results_identifier()))
 						{
-							pts_file_io::delete($test_log_write_dir, null, true);
-						}
+							$test_log_write_dir = PTS_SAVE_RESULTS_PATH . $this->get_file_name() . "/test-logs/" . $xml_write_pos . '/' . $this->get_results_identifier() . '/';
 
-						rename(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . "/test-logs/active/" . $this->get_results_identifier() . '/', $test_log_write_dir);
+							if(is_dir($test_log_write_dir))
+							{
+								pts_file_io::delete($test_log_write_dir, null, true);
+							}
+
+							rename(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . "/test-logs/active/" . $this->get_results_identifier() . '/', $test_log_write_dir);
+						}
+						$xml_write_pos++;
 					}
-					$xml_write_pos++;
 				}
 			}
 

@@ -92,7 +92,7 @@ class pts_test_execution
 			$cache_share = new pts_storage_object(false, false);
 		}
 
-		if($test_run_manager->get_results_identifier() != null && $test_run_manager->get_file_name() != null)
+		if($test_run_manager->get_results_identifier() != null && $test_run_manager->get_file_name() != null && pts_config::read_bool_config(P_OPTION_LOG_TEST_OUTPUT, "FALSE"))
 		{
 			$backup_test_log_dir = PTS_SAVE_RESULTS_PATH . $test_run_manager->get_file_name() . "/test-logs/active/" . $test_run_manager->get_results_identifier() . '/';
 			pts_file_io::delete($backup_test_log_dir);
@@ -320,11 +320,11 @@ class pts_test_execution
 			unset($cache_share);
 		}
 
-		if($test_run_manager->get_results_identifier() != null && (pts_config::read_bool_config(P_OPTION_LOG_INSTALLATION, "FALSE") || $test_run_manager->is_pcqs() || (pts_c::$test_flags & pts_c::batch_mode)))
+		if($test_run_manager->get_results_identifier() != null && (pts_config::read_bool_config(P_OPTION_LOG_INSTALLATION, "FALSE")))
 		{
 			if(is_file($test_run_request->test_profile->get_install_dir() . "install.log"))
 			{
-				$backup_log_dir = PTS_SAVE_RESULTS_PATH . $test_run_manager->get_file_name() . "/installation-logs/" . $test_run_manager->get_results_identifier() . "/";
+				$backup_log_dir = PTS_SAVE_RESULTS_PATH . $test_run_manager->get_file_name() . "/installation-logs/" . $test_run_manager->get_results_identifier() . '/';
 				pts_file_io::mkdir($backup_log_dir, 0777, true);
 				copy($test_run_request->test_profile->get_install_dir() . "install.log", $backup_log_dir . $test_identifier . ".log");
 			}

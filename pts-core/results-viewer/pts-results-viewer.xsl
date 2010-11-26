@@ -37,7 +37,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 			</div>
 		</div>
 		<div id="pts_container">
-		<div id="pts_banner_nav"><a href="#result-overview">Results Table</a> <a href="#test-results">Test Results</a> <a href="installation-logs/">Installation Logs</a> <a href="system-logs/">System Logs</a> <a href="test-logs/">Test Logs</a></div>
+		<div id="pts_banner_nav"><a href="#result-overview">Results Table</a> <a href="#test-results">Test Results</a> <a href="system-logs/">System Logs</a> <a href="test-logs/">Test Logs</a></div>
 
 		<h1><xsl:value-of select="PhoronixTestSuite/Generated/Title" /></h1>
 		<p><xsl:value-of select="PhoronixTestSuite/Generated/Description"/></p>

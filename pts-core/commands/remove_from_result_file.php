@@ -52,7 +52,7 @@ class remove_from_result_file implements pts_option_interface
 			}
 		}
 
-		foreach(array("benchmark-logs", "system-logs", "installation-logs") as $dir_name)
+		foreach(array("test-logs", "system-logs", "installation-logs") as $dir_name)
 		{
 			if(is_dir(PTS_SAVE_RESULTS_PATH . $r[0] . "/" . $dir_name . "/" . $remove_identifier))
 			{

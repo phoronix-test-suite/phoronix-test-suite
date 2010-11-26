@@ -568,7 +568,8 @@ class pts_client
 			if($result_identifier != null && (pts_config::read_bool_config(P_OPTION_LOG_VSYSDETAILS, "TRUE") || (pts_c::$test_flags & pts_c::batch_mode) || (pts_c::$test_flags & pts_c::auto_mode)))
 			{
 				// Save verbose system information here
-				pts_file_io::mkdir(($system_log_dir = $save_to_dir . "/system-logs/" . $result_identifier), 0777, true);
+				$system_log_dir = $save_to_dir . "/system-logs/" . $result_identifier . '/';
+				pts_file_io::mkdir($system_log_dir, 0777, true);
 
 				// Backup system files
 				// TODO: move out these files/commands to log out to respective Phodevi components so only what's relevant will be logged
@@ -579,7 +580,7 @@ class pts_client
 					if(is_file($file))
 					{
 						// copy() can't be used in this case since it will result in a blank file for /proc/ file-system
-						file_put_contents($system_log_dir . "/" . basename($file), file_get_contents($file));
+						file_put_contents($system_log_dir . basename($file), file_get_contents($file));
 					}
 				}
 
@@ -593,7 +594,7 @@ class pts_client
 					if(($command_bin = pts_client::executable_in_path($command[0])))
 					{
 						$cmd_output = shell_exec("cd " . dirname($command_bin) . " && ./" . $command_string . " 2>&1");
-						file_put_contents($system_log_dir . "/" . $command[0], $cmd_output);
+						file_put_contents($system_log_dir . $command[0], $cmd_output);
 					}
 				}
 			}

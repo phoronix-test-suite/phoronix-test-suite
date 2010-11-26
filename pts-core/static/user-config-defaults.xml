@@ -30,6 +30,7 @@
 			<SleepTimeBetweenTests>10</SleepTimeBetweenTests>
 			<SaveSystemLogs>TRUE</SaveSystemLogs>
 			<SaveInstallationLogs>FALSE</SaveInstallationLogs>
+			<SaveTestLogs>FALSE</SaveTestLogs>
 			<ResultsDirectory>~/.phoronix-test-suite/test-results/</ResultsDirectory>
 		</Testing>
 		<Statistics>

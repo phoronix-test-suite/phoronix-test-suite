@@ -51,6 +51,10 @@
 			<Value>PhoronixTestSuite/Options/Testing/SaveSystemLogs</Value>
 		</Define>
 		<Define>
+			<Name>P_OPTION_LOG_TEST_OUTPUT</Name>
+			<Value>PhoronixTestSuite/Options/Testing/SaveTestLogs</Value>
+		</Define>
+		<Define>
 			<Name>P_OPTION_LOG_INSTALLATION</Name>
 			<Value>PhoronixTestSuite/Options/Testing/SaveInstallationLogs</Value>
 		</Define>

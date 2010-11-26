@@ -61,6 +61,7 @@ class pts_config
 		$config->addXmlNodeFromReader(P_OPTION_TEST_SLEEPTIME, $read_config);
 		$config->addXmlNodeFromReader(P_OPTION_LOG_VSYSDETAILS, $read_config);
 		$config->addXmlNodeFromReader(P_OPTION_LOG_INSTALLATION, $read_config);
+		$config->addXmlNodeFromReader(P_OPTION_LOG_TEST_OUTPUT, $read_config);
 		$config->addXmlNodeFromReader(P_OPTION_RESULTS_DIRECTORY, $read_config);
 
 		$config->addXmlNodeFromReader(P_OPTION_STATS_DYNAMIC_RUN_COUNT, $read_config);
