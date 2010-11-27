@@ -2,7 +2,7 @@
 <PhoronixTestSuite>
 	<ResultsParser>
 		<StripFromResult>ms</StripFromResult>
-		<DivideResultValueBy>1000</DivideResultValueBy>
+		<DivideResultBy>1000</DivideResultBy>
 		<OutputTemplate>BENCH  info  : Benchmark results:
 BENCH  info  :   * Iterations: 10
 BENCH  info  :   * Average:    #_RESULT_#

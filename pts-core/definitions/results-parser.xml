@@ -54,12 +54,12 @@
 		</Define>
 		<Define>
 			<Name>P_RESULTS_PARSER_DIVIDE_BY</Name>
-			<Value>PhoronixTestSuite/ResultsParser/DivideResultValueBy</Value>
+			<Value>PhoronixTestSuite/ResultsParser/DivideResultBy</Value>
 			<Description>If the result value should be divided by some constant (to convert the result to a different unit), the value should be supplied in this tag.</Description>
 		</Define>
 		<Define>
 			<Name>P_RESULTS_PARSER_MULTIPLY_BY</Name>
-			<Value>PhoronixTestSuite/ResultsParser/MultiplyResultValueBy</Value>
+			<Value>PhoronixTestSuite/ResultsParser/MultiplyResultBy</Value>
 			<Description>If the result value should be multiplied by some constant (to convert the result to a different unit), the value should be supplied in this tag.</Description>
 		</Define>
 		<Define>

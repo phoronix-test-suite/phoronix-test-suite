@@ -28,5 +28,9 @@ class pts_parse_results_nye_XmlReader extends nye_XmlReader
 	{
 		parent::__construct($read_xml);
 	}
+	public function validate()
+	{
+		return $this->dom->validateSchema(PTS_CORE_PATH . "definitions/results-parser.xsd");
+	}
 }
 ?>

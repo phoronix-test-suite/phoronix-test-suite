@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+<xs:element name="PhoronixTestSuite">
+<xs:complexType>
+<xs:sequence>
+		<xs:element name="ResultsParser" minOccurs="1" maxOccurs="unbounded">
+		<xs:complexType>
+		<xs:sequence>
+			<xs:element name="MatchToTestArguments" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="OutputTemplate" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="ResultKey" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="LineHint" type="xs:integer" minOccurs="0" maxOccurs="1" />
+			<xs:element name="LineBeforeHint" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="LineAfterHint" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="ResultBeforeString" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="StripFromResult" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="StripResultPostfix" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="MultiMatch" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="DivideResultBy" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="MultiplyResultBy" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="SourceImage" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="ImageX" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="ImageY" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="ImageWidth" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="ImageHeight" type="xs:string" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+		</xs:complexType>
+		</xs:element>
+
+		<xs:element name="SystemMonitor" minOccurs="1" maxOccurs="unbounded">
+		<xs:complexType>
+		<xs:sequence>
+			<xs:element name="Sensor" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="PollingFrequency" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="ImageY" type="xs:string" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+		</xs:complexType>
+		</xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:schema>

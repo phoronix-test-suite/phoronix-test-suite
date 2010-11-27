@@ -2,6 +2,6 @@
 <PhoronixTestSuite>
 	<ResultsParser>
 		<OutputTemplate>Rendering took: 86 seconds (#_RESULT_# milliseconds)</OutputTemplate>
-		<DivideResultValueBy>1000</DivideResultValueBy>
+		<DivideResultBy>1000</DivideResultBy>
 	</ResultsParser>
 </PhoronixTestSuite>
