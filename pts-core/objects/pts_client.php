@@ -281,6 +281,50 @@ class pts_client
 
 		pts_client::init_display_mode();
 	}
+	public static function program_requirement_checks($only_show_required = false)
+	{
+		$extension_checks = pts_needed_extensions();
+
+		$printed_required_header = false;
+		$printed_optional_header = false;
+		foreach($extension_checks as $extension)
+		{
+			if($extension[1] == false)
+			{
+				if($extension[0] == 1)
+				{
+					// Oops, this extension is required
+					if($printed_required_header == false)
+					{
+						echo "\nThe following PHP extensions are REQUIRED by the Phoronix Test Suite:\n\n";
+						$printed_required_header = true;
+					}
+				}
+				else
+				{
+					if($only_show_required && $printed_required_header == false)
+					{
+						continue;
+					}
+
+					// This extension is missing but optional
+					if($printed_optional_header == false)
+					{
+						echo "\nThe following PHP extensions are optional but recommended by the Phoronix Test Suite:\n\n";
+						$printed_optional_header = true;
+					}
+				}
+
+				echo sprintf("%-8ls %-30ls\n", $extension[2], $extension[3]);
+			}
+		}
+
+		if($printed_required_header)
+		{
+			echo "\n";
+			exit;
+		}
+	}
 	private static function core_storage_init_process()
 	{
 		$pso = pts_storage_object::recover_from_file(PTS_CORE_STORAGE);
@@ -291,8 +335,12 @@ class pts_client
 		}
 
 		// Last Run Processing
-		//$last_core_version = $pso->read_object("last_core_version");
-		// do something here with $last_core_version if you want that information
+		$last_core_version = $pso->read_object("last_core_version");
+		if($last_core_version != PTS_CORE_VERSION)
+		{
+			// Report any missing/recommended extensions
+			self::program_requirement_checks();
+		}
 		$pso->add_object("last_core_version", PTS_CORE_VERSION); // PTS version last run
 
 		//$last_pts_version = $pso->read_object("last_pts_version");

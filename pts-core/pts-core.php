@@ -96,6 +96,26 @@ function pts_load_xml_definitions($definition_file)
 
 	return true;
 }
+function pts_needed_extensions()
+{
+	return array(
+		// Required? - The Check If In Place - Name - Description
+
+		// Required extesnions denoted by 1 at [0]
+		array(1, extension_loaded("dom"), "DOM", "The PHP Document Object Model (DOM) is required."),
+		array(1, extension_loaded("zip"), "ZIP", "PHP Zip support is required."),
+
+		// Optional but recommended extensions
+		array(0, extension_loaded("openssl"), "OpenSSL", "PHP OpenSSL support is recommended to support HTTPS traffic."),
+		array(0, extension_loaded("gd"), "GD", "The PHP GD library is recommended for improved graph rendering."),
+		array(0, extension_loaded("zlib"), "Zlib", "The PHP Zlib extension can be used for greater file compression."),
+		array(0, function_exists("pcntl_fork"), "PCNTL", "PHP PCNTL is highly recommended as it is required by some tests."),
+		array(0, function_exists("posix_getpwuid"), "POSIX", "PHP POSIX support is highly recommended."),
+		array(0, function_exists("curl_init"), "CURL", "PHP CURL is recommended for a better download experience.")
+
+		// PHP FPDF could be added here too...
+		);
+}
 
 if(PTS_IS_CLIENT || defined("PTS_AUTO_LOAD_OBJECTS"))
 {
