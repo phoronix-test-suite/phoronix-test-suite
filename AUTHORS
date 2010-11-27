@@ -1,37 +1,8 @@
 Copyright 2008 - 2010 by Phoronix Media.
 
-Lead Developers:
+Lead Architects:
 
 - Michael Larabel <michael@phoronix.com>
 - Matthew Tippett <matthew@phoronix.com>
 
-Special Thanks To:
-
-- Andrew Schofield
-- Pekka Panula
-- Stefan Doesinger
-- Jörg Schirottke
-- Stéphane Teletchéa
-- Laminar Research / Ben Supnik
-- Peter Kraus
-- Nils Kneuper
-- Apaige
-- Vadim Peretokin
-- Dean Hilkewich
-- Lightsmark / Stepan Hrbek
-- Sun Microsystems / Chris Campbell
-- Sun Microsystems / Tao Zhang
-- Unigine Corp / Denis Shergin
-- SOMA Networks, Inc. / Michael Ploujnikov
-- Hans Ulrich Niedermann
-- Juan Aguado
-- Thomas Klausner
-- Fujitsu / Rainer König
-- Kim Bisgaard
-- Zachary Powers
-- Ben Kero
-- Achim Lange
-- Achim Gottinger
-- Kenney Phillis
-- Michael Opdenacker
-- Johannes Obermayr
+There's also other individuals and organizations who have contributed patches, ideas, and other contributions to the Phoronix Test Suite. These names are mentioned in documentation/credits.html.

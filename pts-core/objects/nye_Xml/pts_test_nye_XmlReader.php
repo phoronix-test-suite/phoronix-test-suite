@@ -36,6 +36,10 @@ class pts_test_nye_XmlReader extends nye_XmlReader
 		$this->override_values = array();
 		parent::__construct($read_xml);
 	}
+	public function validate()
+	{
+		return $this->dom->validateSchema(PTS_CORE_PATH . "definitions/test-profile.xsd");
+	}
 	public function overrideXMLValues($test_options)
 	{
 		foreach($test_options as $xml_tag => $value)

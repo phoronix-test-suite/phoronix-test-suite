@@ -24,7 +24,7 @@
 			<Name>P_TEST_DESCRIPTION</Name>
 			<Value>PhoronixTestSuite/TestInformation/Description</Value>
 			<Description>A few sentence description of the test.</Description>
-			<Required>RECOMMENDED</Required>
+			<Required>YES</Required>
 		</Define>
 		<Define>
 			<Name>P_TEST_SCALE</Name>
@@ -110,13 +110,13 @@ is then displayed prior to the test being installed. Once the text has been show
 			<Name>P_TEST_HARDWARE_TYPE</Name>
 			<Value>PhoronixTestSuite/TestProfile/TestType</Value>
 			<Description>The hardware area of the system that this test is designed to test. Example values include System, Processor, Graphics, Disk, Memory, and Motherboard.</Description>
-			<Required>RECOMMENDED</Required>
+			<Required>YES</Required>
 		</Define>
 		<Define>
 			<Name>P_TEST_SOFTWARE_TYPE</Name>
 			<Value>PhoronixTestSuite/TestProfile/SoftwareType</Value>
 			<Description>The type of software that this test consists of. Examples could include Game, Utility, Simulator, and Other.</Description>
-			<Required>RECOMMENDED</Required>
+			<Required>YES</Required>
 		</Define>
 		<Define>
 			<Name>P_TEST_MAINTAINER</Name>

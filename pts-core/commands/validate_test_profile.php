@@ -4,7 +4,7 @@
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
 	Copyright (C) 2009 - 2010, Phoronix Media
-	Copyright (C) 2009, Michael Larabel
+	Copyright (C) 2009 - 2010, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -55,6 +55,8 @@ class validate_test_profile implements pts_option_interface
 				pts_validation::print_issue("WARNING", $validation_warnings);
 				echo "\n";
 			}
+
+			// TODO: hook in validate() call from pts_test_nye_XmlReader
 		}
 	}
 }

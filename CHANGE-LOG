@@ -10,6 +10,8 @@ Phoronix Test Suite (Git)
 - pts-core: Add an XML Schema XSD covering the result-file
 - pts-core: Add an XML Schema XSD covering the test-suite
 - pts-core: Add an XML Schema XSD covering the test-profile-downloads
+- pts-core: Add an XML Schema XSD covering the results-parser
+- pts-core: Add an XML Schema XSD covering the test-profile
 - phoromatic: HTTPS connection support, install the Phoromatic.com SSL certificate
 - pts: Update apache test profile against upstream Apache 2.2.17
 - pts: Update build-apache test profile against upstream Apache 2.2.17

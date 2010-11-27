@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+<xs:element name="PhoronixTestSuite">
+<xs:complexType>
+<xs:sequence>
+		<xs:element name="TestInformation">
+		<xs:complexType>
+		<xs:sequence>
+			<xs:element name="Title" type="xs:string" />
+			<xs:element name="Description" type="xs:string" />
+			<xs:element name="ResultScale" type="xs:string" />
+			<xs:element name="ResultQuantifier" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="Version" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="SubTitle" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="DisplayFormat" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="Proportion" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="Executable" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="TimesToRun" type="xs:integer" minOccurs="0" maxOccurs="1" />
+			<xs:element name="IgnoreRuns" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="InstallationAgreement" type="xs:string" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+		</xs:complexType>
+		</xs:element>
+
+		<xs:element name="TestProfile">
+		<xs:complexType>
+		<xs:sequence>
+			<xs:element name="Version" type="xs:string" />
+			<xs:element name="TestType" type="xs:string" />
+			<xs:element name="SoftwareType" type="xs:string" />
+			<xs:element name="Maintainer" type="xs:string" />
+			<xs:element name="License" type="xs:string" />
+			<xs:element name="Status" type="xs:string" />
+			<xs:element name="License" type="xs:string" />
+			<xs:element name="License" type="xs:string" />
+			<xs:element name="License" type="xs:string" />
+			<xs:element name="SupportedArchitectures" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="SupportedPlatforms" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="ExternalDependencies" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="Extends" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="RequiresRoot" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="EnvironmentSize" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="EnvironmentTestingSize" type="xs:integer" minOccurs="0" maxOccurs="1" />
+			<xs:element name="EstimatedLength" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="ProjectURL" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="RequiresCoreVersion" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="ReferenceSystems" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="AllowResultsSharing" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="AutoSaveResults" type="xs:string" minOccurs="0" maxOccurs="1" />
+
+		</xs:sequence>
+		</xs:complexType>
+		</xs:element>
+
+		<xs:element name="TestSettings" minOccurs="0" maxOccurs="1">
+		<xs:complexType>
+		<xs:sequence>
+			<xs:element name="Default" minOccurs="0" maxOccurs="1">
+			<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Arguments" type="xs:string" minOccurs="0" maxOccurs="1" />
+				<xs:element name="PostArguments" type="xs:string" minOccurs="0" maxOccurs="1" />
+				<xs:element name="AllowCacheShare" type="xs:string" minOccurs="0" maxOccurs="1" />
+				<xs:element name="MinimumLength" type="xs:string" minOccurs="0" maxOccurs="1" />
+				<xs:element name="MaximumLength" type="xs:string" minOccurs="0" maxOccurs="1" />
+			</xs:sequence>
+			</xs:complexType>
+			</xs:element>
+
+			<xs:element name="Option" minOccurs="0" maxOccurs="unbounded">
+			<xs:complexType>
+			<xs:sequence>
+				<xs:element name="DisplayName" type="xs:string" />
+				<xs:element name="Identifier" type="xs:string" minOccurs="0" maxOccurs="1" />
+				<xs:element name="ArgumentPrefix" type="xs:string" minOccurs="0" maxOccurs="1" />
+				<xs:element name="ArgumentPostfix" type="xs:string" minOccurs="0" maxOccurs="1" />
+				<xs:element name="DefaultEntry" type="xs:string" minOccurs="0" maxOccurs="1" />
+
+				<xs:element name="Menu" minOccurs="0" maxOccurs="1">
+				<xs:complexType>
+				<xs:sequence>
+
+					<xs:element name="Entry" maxOccurs="unbounded" minOccurs="1">
+					<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Name" type="xs:string" minOccurs="0" maxOccurs="1" />
+						<xs:element name="Message" type="xs:string" minOccurs="0" maxOccurs="1" />
+						<xs:element name="Value" type="xs:string" minOccurs="0" maxOccurs="1" />
+					</xs:sequence>
+					</xs:complexType>
+					</xs:element>
+
+				</xs:sequence>
+				</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		</xs:complexType>
+		</xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:schema>
