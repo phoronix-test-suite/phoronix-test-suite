@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+<xs:element name="PhoronixTestSuite">
+<xs:complexType>
+<xs:sequence>
+		<xs:element name="Downloads">
+		<xs:complexType>
+		<xs:sequence>
+			<xs:element name="Package" minOccurs="1" maxOccurs="unbounded">
+			<xs:complexType>
+			<xs:sequence>
+				<xs:element name="URL" type="xs:string" />
+				<xs:element name="MD5" type="xs:string" minOccurs="0" maxOccurs="1" />
+				<xs:element name="FileName" type="xs:string" minOccurs="0" maxOccurs="1" />
+				<xs:element name="FileSize" type="xs:integer" minOccurs="0" maxOccurs="1" />
+				<xs:element name="PlatformSpecific" type="xs:string" minOccurs="0" maxOccurs="1" />
+				<xs:element name="ArchitectureSpecific" type="xs:string" minOccurs="0" maxOccurs="1" />
+			</xs:sequence>
+			</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		</xs:complexType>
+		</xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:schema>

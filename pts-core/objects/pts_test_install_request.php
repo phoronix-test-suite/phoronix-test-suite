@@ -64,9 +64,7 @@ class pts_test_install_request
 
 		if($download_xml_file != null)
 		{
-			pts_load_xml_definitions("test-profile-downloads.xml");
-
-			$xml_parser = new nye_XmlReader($download_xml_file);
+			$xml_parser = new pts_test_downloads_nye_XmlReader($download_xml_file);
 			$package_url = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_URL);
 			$package_md5 = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_MD5);
 			$package_filename = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_FILENAME);
