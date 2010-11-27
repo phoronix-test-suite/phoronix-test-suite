@@ -90,7 +90,11 @@ class module_setup implements pts_option_interface
 			}
 
 			$set_options = pts_module_manager::module_call($module, "module_setup_validate", $set_options);
-			pts_module::module_config_save($module, $set_options);
+
+			if(!empty($set_options))
+			{
+				pts_module::module_config_save($module, $set_options);
+			}
 		}
 		echo "\n";
 	}
