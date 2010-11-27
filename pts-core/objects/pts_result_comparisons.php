@@ -36,12 +36,7 @@ class pts_result_comparisons
 		$ref_systems_xml_strings[$result_test] = array();
 		/*if(!isset($ref_systems_xml_strings[$result_test]))
 		{
-			if($result_test instanceof pts_test_suite)
-			{
-				$test_suite = new pts_test_suite($result_test);
-				$ref_systems_xml_strings[$result_test] = $test_suite->get_reference_systems();
-			}
-			else if($result_test instanceof pts_test_profile)
+			if($result_test instanceof pts_test_profile)
 			{
 				$test_profile = new pts_test_profile($result_test);
 				$ref_systems_xml_strings[$result_test] = $test_profile->get_reference_systems();

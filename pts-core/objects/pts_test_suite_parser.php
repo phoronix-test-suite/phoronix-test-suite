@@ -43,10 +43,6 @@ class pts_test_suite_parser
 	{
 		return $this->identifier;
 	}
-	public function get_reference_systems()
-	{
-		return pts_strings::comma_explode($this->xml_parser->getXMLValue(P_SUITE_REFERENCE_SYSTEMS));
-	}
 	public function get_core_version_requirement()
 	{
 		return $this->xml_parser->getXMLValue(P_SUITE_REQUIRES_COREVERSION);

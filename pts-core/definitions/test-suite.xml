@@ -51,12 +51,6 @@
 			<Required>NO</Required>
 		</Define>
 		<Define>
-			<Name>P_SUITE_REFERENCE_SYSTEMS</Name>
-			<Value>PhoronixTestSuite/SuiteInformation/ReferenceSystems</Value>
-			<Description>To provide reference test results for comparison purposes, supply Phoronix Global IDs to this tag. Values must be valid Phoronix Global IDs and multiple IDs can be delimited by a comma.</Description>
-			<Required>NO</Required>
-		</Define>
-		<Define>
 			<Name>P_SUITE_REQUIRES_COREVERSION</Name>
 			<Value>PhoronixTestSuite/SuiteInformation/RequiresCoreVersion</Value>
 			<Description>If the test suite relies upon versions of the Phoronix Test Suite for specific functionality, the beginning (and ending, if applicable) versions should be supplied. The PTS_CORE_VERSION value should be used (e.g. Phoronix Test Suite 2.4.0 had a PTS_CORE_VERSION of 2400). If a test suite is only compatible with Phoronix Test Suite 2.4 to 2.6, inclusive, the string should be written as 2400 - 2600. If only one value is supplied, the Phoronix Test Suite assumes that is the starting version of support and that the suite remains compatible with the latest upstream code.</Description>

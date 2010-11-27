@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+<xs:element name="PhoronixTestSuite">
+<xs:complexType>
+<xs:sequence>
+		<xs:element name="SuiteInformation">
+		<xs:complexType>
+		<xs:sequence>
+			<xs:element name="Title" type="xs:string" />
+			<xs:element name="Version" type="xs:string" />
+			<xs:element name="Maintainer" type="xs:string" />
+			<xs:element name="TestType" type="xs:string" />
+			<xs:element name="Description" type="xs:string" />
+			<xs:element name="PreRunMessage" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="PostRunMessage" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="RunMode" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="RequiresCoreVersion" type="xs:string" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+		</xs:complexType>
+		</xs:element>
+
+		<xs:element name="RunTest" minOccurs="1" maxOccurs="unbounded">
+		<xs:complexType>
+		<xs:sequence>
+			<xs:element name="Test" type="xs:string" />
+			<xs:element name="Arguments" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="Description" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="ProfileVersion" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="Mode" type="xs:string" minOccurs="0" maxOccurs="1">
+				<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="BATCH" />
+					<xs:enumeration value="DEFAULTS" />
+					<xs:enumeration value="" />
+				</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="OverrideTestOptions" type="xs:string" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+		</xs:complexType>
+		</xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:schema>

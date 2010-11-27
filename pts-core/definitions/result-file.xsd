@@ -24,7 +24,7 @@
 		</xs:complexType>
 		</xs:element>
 
-		<xs:element name="System" maxOccurs="unbounded" minOccurs="1">
+		<xs:element name="System" minOccurs="1" maxOccurs="unbounded">
 		<xs:complexType>
 		<xs:sequence>
 			<xs:element name="Identifier" type="xs:string" />

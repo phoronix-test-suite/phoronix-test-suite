@@ -75,6 +75,8 @@ class validate_test_suite implements pts_option_interface
 				pts_validation::print_issue("WARNING", $validation_warnings);
 				echo "\n";
 			}
+
+			// TODO: hook in validate() call from pts_suite_nye_XmlReader
 		}
 		else
 		{
