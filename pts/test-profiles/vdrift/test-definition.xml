@@ -17,7 +17,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>VDrift</Title>
-		<Version>2010-06-30</Version>
+		<AppVersion>2010-06-30</AppVersion>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Frames Per Second</ResultScale>
 		<Proportion>HIB</Proportion>

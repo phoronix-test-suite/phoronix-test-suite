@@ -15,7 +15,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>eSpeak Speech Engine</Title>
-		<Version>1.40.02</Version>
+		<AppVersion>1.40.02</AppVersion>
 		<SubTitle>Text-To-Speech Synthesis</SubTitle>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Seconds</ResultScale>

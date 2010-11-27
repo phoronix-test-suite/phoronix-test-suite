@@ -15,7 +15,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>FS-Mark</Title>
-		<Version>3.3</Version>
+		<AppVersion>3.3</AppVersion>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Files/s</ResultScale>
 		<Proportion>HIB</Proportion>

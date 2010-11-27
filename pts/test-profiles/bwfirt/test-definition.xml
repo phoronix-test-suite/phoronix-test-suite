@@ -15,7 +15,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>Bwfirt</Title>
-		<Version>0.666</Version>
+		<AppVersion>0.666</AppVersion>
 		<SubTitle>Total Time</SubTitle>
 		<TimesToRun>3</TimesToRun>
 		<Executable>bwfirt-benchmark</Executable>

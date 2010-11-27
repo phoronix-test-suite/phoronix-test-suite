@@ -28,6 +28,7 @@ class nye_XmlReader
 
 	public function __construct($xml_file)
 	{
+		libxml_use_internal_errors(true);
 		$this->dom = new DOMDocument();
 
 		// TODO: investigate whether using the LIBXML_COMPACT option on loading actually increases performance

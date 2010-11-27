@@ -16,7 +16,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>World of Padman</Title>
-		<Version>1.2</Version>
+		<AppVersion>1.2</AppVersion>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Frames Per Second</ResultScale>
 		<Proportion>HIB</Proportion>

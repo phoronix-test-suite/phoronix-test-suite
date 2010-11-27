@@ -14,7 +14,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>Minion</Title>
-		<Version>0.9</Version>
+		<AppVersion>0.9</AppVersion>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Seconds</ResultScale>
 		<Proportion>LIB</Proportion>

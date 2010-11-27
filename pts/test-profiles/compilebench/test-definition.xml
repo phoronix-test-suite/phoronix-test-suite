@@ -14,7 +14,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>Compile Bench</Title>
-		<Version>0.6</Version>
+		<AppVersion>0.6</AppVersion>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>MB/s</ResultScale>
 		<Proportion>HIB</Proportion>

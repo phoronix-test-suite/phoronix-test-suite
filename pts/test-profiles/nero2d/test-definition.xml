@@ -15,7 +15,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>Open FMM Nero2D</Title>
-		<Version>2.0.2</Version>
+		<AppVersion>2.0.2</AppVersion>
 		<SubTitle>Total Time</SubTitle>
 		<TimesToRun>1</TimesToRun>
 		<ResultScale>Seconds</ResultScale>

@@ -15,7 +15,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>Apache Benchmark</Title>
-		<Version>2.2.17</Version>
+		<AppVersion>2.2.17</AppVersion>
 		<SubTitle>Static Web Page Serving</SubTitle>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Requests Per Second</ResultScale>

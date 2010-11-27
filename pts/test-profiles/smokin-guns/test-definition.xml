@@ -16,7 +16,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>Smokin Guns</Title>
-		<Version>1.1b4</Version>
+		<AppVersion>1.1b4</AppVersion>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Frames Per Second</ResultScale>
 		<Proportion>HIB</Proportion>

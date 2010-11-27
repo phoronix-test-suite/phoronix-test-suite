@@ -15,7 +15,7 @@
 	<TestInformation>
 		<Title>PHPBench</Title>
 		<SubTitle>PHP Benchmark Suite</SubTitle>
-		<Version>0.8.1</Version>
+		<AppVersion>0.8.1</AppVersion>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Score</ResultScale>
 		<Proportion>HIB</Proportion>

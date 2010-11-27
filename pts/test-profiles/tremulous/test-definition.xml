@@ -16,7 +16,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>Tremulous</Title>
-		<Version>1.1.0</Version>
+		<AppVersion>1.1.0</AppVersion>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Frames Per Second</ResultScale>
 		<Proportion>HIB</Proportion>

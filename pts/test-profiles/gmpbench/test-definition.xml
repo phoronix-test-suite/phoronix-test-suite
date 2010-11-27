@@ -15,7 +15,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>GMPbench</Title>
-		<Version>0.1</Version>
+		<AppVersion>0.1</AppVersion>
 		<SubTitle>Total Time</SubTitle>
 		<TimesToRun>2</TimesToRun>
 		<ResultScale>GMPbench Score</ResultScale>

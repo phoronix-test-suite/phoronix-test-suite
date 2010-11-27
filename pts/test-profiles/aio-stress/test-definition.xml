@@ -15,7 +15,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>AIO-Stress</Title>
-		<Version>0.21</Version>
+		<AppVersion>0.21</AppVersion>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>MB/s</ResultScale>
 		<Proportion>HIB</Proportion>

@@ -15,7 +15,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>TTSIOD 3D Renderer</Title>
-		<Version>2.1v</Version>
+		<AppVersion>2.1v</AppVersion>
 		<SubTitle>Phong Rendering With Soft-Shadow Mapping</SubTitle>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>FPS</ResultScale>

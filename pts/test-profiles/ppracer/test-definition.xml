@@ -16,7 +16,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>Planet Penguin Racer</Title>
-		<Version>0.5 Alpha</Version>
+		<AppVersion>0.5 Alpha</AppVersion>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Frames Per Second</ResultScale>
 		<Proportion>HIB</Proportion>

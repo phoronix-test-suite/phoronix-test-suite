@@ -14,7 +14,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>Sudokut</Title>
-		<Version>0.4</Version>
+		<AppVersion>0.4</AppVersion>
 		<SubTitle>Total Time</SubTitle>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Seconds</ResultScale>

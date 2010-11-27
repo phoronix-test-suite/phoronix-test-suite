@@ -10,7 +10,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>Timed MPlayer Compilation</Title>
-		<Version>1.0-rc3</Version>
+		<AppVersion>1.0-rc3</AppVersion>
 		<Executable>time-compile-mplayer</Executable>
 		<Description>This test times how long it takes to build the MPlayer media player program.</Description>
 	</TestInformation>

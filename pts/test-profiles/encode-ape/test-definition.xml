@@ -11,7 +11,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>Monkey Audio Encoding</Title>
-		<Version>3.99u4b5s6</Version>
+		<AppVersion>3.99u4b5s6</AppVersion>
 		<SubTitle>WAV To APE</SubTitle>
 		<Executable>encode-ape</Executable>
 		<Description>This test times how long it takes to encode a sample WAV file to APE format.</Description>

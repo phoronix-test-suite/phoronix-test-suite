@@ -16,7 +16,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>Unigine Sanctuary</Title>
-		<Version>2.3</Version>
+		<AppVersion>2.3</AppVersion>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Frames Per Second</ResultScale>
 		<Proportion>HIB</Proportion>

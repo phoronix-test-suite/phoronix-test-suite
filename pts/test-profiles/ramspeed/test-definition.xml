@@ -15,7 +15,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>RAMspeed</Title>
-		<Version>2.6.0</Version>
+		<AppVersion>2.6.0</AppVersion>
 		<TimesToRun>1</TimesToRun>
 		<ResultScale>MB/s</ResultScale>
 		<Proportion>HIB</Proportion>

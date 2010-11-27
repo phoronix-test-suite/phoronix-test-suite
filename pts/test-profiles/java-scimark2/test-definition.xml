@@ -14,7 +14,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>Java SciMark</Title>
-		<Version>2.0</Version>
+		<AppVersion>2.0</AppVersion>
 		<TimesToRun>4</TimesToRun>
 		<ResultScale>Mflops</ResultScale>
 		<Proportion>HIB</Proportion>

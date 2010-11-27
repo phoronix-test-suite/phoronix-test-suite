@@ -14,7 +14,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>SQLite</Title>
-		<Version>3.7.3</Version>
+		<AppVersion>3.7.3</AppVersion>
 		<TimesToRun>3</TimesToRun>
 		<Executable>sqlite-benchmark</Executable>
 		<SubTitle>12,500 INSERTs</SubTitle>

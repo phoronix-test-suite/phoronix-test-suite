@@ -15,7 +15,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>Bork File Encrypter</Title>
-		<Version>1.4</Version>
+		<AppVersion>1.4</AppVersion>
 		<SubTitle>File Encryption Time</SubTitle>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Seconds</ResultScale>

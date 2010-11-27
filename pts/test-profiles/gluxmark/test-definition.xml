@@ -16,7 +16,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>gluxMark</Title>
-		<Version>2.2</Version>
+		<AppVersion>2.2</AppVersion>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Total Score</ResultScale>
 		<Proportion>HIB</Proportion>

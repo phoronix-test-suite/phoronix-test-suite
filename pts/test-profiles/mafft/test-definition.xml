@@ -15,7 +15,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>Timed MAFFT Alignment</Title>
-		<Version>6.706</Version>
+		<AppVersion>6.706</AppVersion>
 		<SubTitle>Multiple Sequence Alignment</SubTitle>
 		<ResultScale>Seconds</ResultScale>
 		<TimesToRun>3</TimesToRun>

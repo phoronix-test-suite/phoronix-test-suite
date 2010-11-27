@@ -14,7 +14,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>NAS Parallel Benchmarks</Title>
-		<Version>3.3</Version>
+		<AppVersion>3.3</AppVersion>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Total Mop/s</ResultScale>
 		<Proportion>HIB</Proportion>

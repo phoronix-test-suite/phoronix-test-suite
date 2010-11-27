@@ -9,8 +9,16 @@
 			<xs:element name="Title" type="xs:string" />
 			<xs:element name="Description" type="xs:string" />
 			<xs:element name="ResultScale" type="xs:string" />
-			<xs:element name="ResultQuantifier" type="xs:string" minOccurs="0" maxOccurs="1" />
-			<xs:element name="Version" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="ResultQuantifier" type="xs:string" minOccurs="0" maxOccurs="1">
+				<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="AVG" />
+					<xs:enumeration value="MIN" />
+					<xs:enumeration value="MAX" />
+				</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="AppVersion" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="SubTitle" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="DisplayFormat" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="Proportion" type="xs:string" minOccurs="0" maxOccurs="1" />

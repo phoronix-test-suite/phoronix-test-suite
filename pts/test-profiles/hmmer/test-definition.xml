@@ -15,7 +15,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>Timed HMMer Search</Title>
-		<Version>2.3.2</Version>
+		<AppVersion>2.3.2</AppVersion>
 		<SubTitle>Pfam Database Search</SubTitle>
 		<ResultScale>Seconds</ResultScale>
 		<TimesToRun>3</TimesToRun>

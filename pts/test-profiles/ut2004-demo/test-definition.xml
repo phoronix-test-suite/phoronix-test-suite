@@ -16,7 +16,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>Unreal Tournament 2004 Demo</Title>
-		<Version>3334</Version>
+		<AppVersion>3334</AppVersion>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Frames Per Second</ResultScale>
 		<Proportion>HIB</Proportion>

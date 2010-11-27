@@ -14,7 +14,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>Stream</Title>
-		<Version>2009-04-11</Version>
+		<AppVersion>2009-04-11</AppVersion>
 		<TimesToRun>10</TimesToRun>
 		<ResultScale>MB/s</ResultScale>
 		<Proportion>HIB</Proportion>

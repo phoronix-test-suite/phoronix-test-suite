@@ -14,7 +14,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>Bullet Physics Engine</Title>
-		<Version>2.77</Version>
+		<AppVersion>2.77</AppVersion>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Seconds</ResultScale>
 		<Proportion>LIB</Proportion>

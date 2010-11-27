@@ -16,7 +16,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>Urban Terror</Title>
-		<Version>4.1</Version>
+		<AppVersion>4.1</AppVersion>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Frames Per Second</ResultScale>
 		<Proportion>HIB</Proportion>

@@ -16,7 +16,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>SuperTuxKart</Title>
-		<Version>0.6</Version>
+		<AppVersion>0.6</AppVersion>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Frames Per Second</ResultScale>
 		<Proportion>HIB</Proportion>

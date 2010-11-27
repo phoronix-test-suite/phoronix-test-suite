@@ -15,7 +15,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>Dbench</Title>
-		<Version>4.0</Version>
+		<AppVersion>4.0</AppVersion>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>MB/s</ResultScale>
 		<Proportion>HIB</Proportion>

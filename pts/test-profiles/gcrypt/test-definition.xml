@@ -15,7 +15,7 @@
 	<TestInformation>
 		<Title>Gcrypt Library</Title>
 		<SubTitle>CAMELLIA256-ECB Cipher</SubTitle>
-		<Version>1.4.4</Version>
+		<AppVersion>1.4.4</AppVersion>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Microseconds</ResultScale>
 		<Proportion>LIB</Proportion>

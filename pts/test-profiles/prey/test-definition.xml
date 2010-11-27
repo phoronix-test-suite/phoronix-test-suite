@@ -16,7 +16,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>Prey</Title>
-		<Version>1.4.119</Version>
+		<AppVersion>1.4.119</AppVersion>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Frames Per Second</ResultScale>
 		<Proportion>HIB</Proportion>

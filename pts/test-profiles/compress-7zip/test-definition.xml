@@ -14,7 +14,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>7-Zip Compression</Title>
-		<Version>9.13</Version>
+		<AppVersion>9.13</AppVersion>
 		<SubTitle>Compress Speed Test</SubTitle>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>MIPS</ResultScale>

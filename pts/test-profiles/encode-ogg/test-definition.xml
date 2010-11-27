@@ -11,7 +11,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>Ogg Encoding</Title>
-		<Version>1.2.0</Version>
+		<AppVersion>1.2.0</AppVersion>
 		<SubTitle>WAV To Ogg</SubTitle>
 		<Executable>oggenc</Executable>
 		<Description>This test times how long it takes to encode a sample WAV file to Ogg format.</Description>

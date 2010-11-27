@@ -16,7 +16,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>X-Plane</Title>
-		<Version>9.45</Version>
+		<AppVersion>9.45</AppVersion>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Frames Per Second</ResultScale>
 		<Proportion>HIB</Proportion>

@@ -14,7 +14,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>TSCP</Title>
-		<Version>1.81</Version>
+		<AppVersion>1.81</AppVersion>
 		<SubTitle>AI Chess Performance</SubTitle>
 		<TimesToRun>5</TimesToRun>
 		<ResultScale>Nodes Per Second</ResultScale>

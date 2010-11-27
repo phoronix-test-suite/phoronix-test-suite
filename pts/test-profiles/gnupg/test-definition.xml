@@ -15,7 +15,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>GnuPG</Title>
-		<Version>1.4.10</Version>
+		<AppVersion>1.4.10</AppVersion>
 		<SubTitle>1GB File Encryption</SubTitle>
 		<TimesToRun>4</TimesToRun>
 		<ResultScale>Seconds</ResultScale>

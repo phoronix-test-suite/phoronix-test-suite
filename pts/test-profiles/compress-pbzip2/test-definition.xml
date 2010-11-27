@@ -16,7 +16,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>Parallel BZIP2 Compression</Title>
-		<Version>1.0.5</Version>
+		<AppVersion>1.0.5</AppVersion>
 		<SubTitle>256MB File Compression</SubTitle>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Seconds</ResultScale>

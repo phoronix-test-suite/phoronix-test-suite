@@ -292,6 +292,7 @@ class pts_test_result_parser
 					case "MIN":
 						$END_RESULT = min($trial_results);
 						break;
+					case "AVG":
 					default:
 						// assume AVG (average)
 						$is_float = false;

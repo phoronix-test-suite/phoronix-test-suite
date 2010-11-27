@@ -11,7 +11,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>Timed PHP Compilation</Title>
-		<Version>5.2.9</Version>
+		<AppVersion>5.2.9</AppVersion>
 		<Executable>time-compile-php</Executable>
 		<Description>This test times how long it takes to build PHP 5 with the Zend engine.</Description>
 	</TestInformation>

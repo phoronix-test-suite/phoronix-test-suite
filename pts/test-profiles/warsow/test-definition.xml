@@ -16,7 +16,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>Warsow</Title>
-		<Version>0.5</Version>
+		<AppVersion>0.5</AppVersion>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Frames Per Second</ResultScale>
 		<Proportion>HIB</Proportion>

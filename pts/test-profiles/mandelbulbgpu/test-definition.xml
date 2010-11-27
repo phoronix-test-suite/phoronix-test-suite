@@ -15,7 +15,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>MandelbulbGPU</Title>
-		<Version>1.0pts</Version>
+		<AppVersion>1.0pts</AppVersion>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Samples/sec</ResultScale>
 		<Proportion>HIB</Proportion>

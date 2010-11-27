@@ -15,7 +15,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>SysTester</Title>
-		<Version>1.1.0</Version>
+		<AppVersion>1.1.0</AppVersion>
 		<Executable>systester-cli</Executable>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Seconds</ResultScale>

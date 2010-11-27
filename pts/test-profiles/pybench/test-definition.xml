@@ -14,7 +14,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>PyBench</Title>
-		<Version>2008-08-14</Version>
+		<AppVersion>2008-08-14</AppVersion>
 		<SubTitle>Total For Average Test Times</SubTitle>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Milliseconds</ResultScale>

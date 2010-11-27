@@ -13,7 +13,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>PostMark</Title>
-		<Version>1.51</Version>
+		<AppVersion>1.51</AppVersion>
 		<SubTitle>Disk Transaction Performance</SubTitle>
 		<TimesToRun>5</TimesToRun>
 		<ResultScale>TPS</ResultScale>

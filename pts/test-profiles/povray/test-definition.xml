@@ -14,7 +14,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>POV-Ray</Title>
-		<Version>3.6.1</Version>
+		<AppVersion>3.6.1</AppVersion>
 		<SubTitle>Total Time</SubTitle>
 		<TimesToRun>1</TimesToRun>
 		<ResultScale>Seconds</ResultScale>

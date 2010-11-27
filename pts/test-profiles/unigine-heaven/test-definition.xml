@@ -15,7 +15,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>Unigine Heaven</Title>
-		<Version>2.1</Version>
+		<AppVersion>2.1</AppVersion>
 		<ResultScale>Frames Per Second</ResultScale>
 		<TimesToRun>3</TimesToRun>
 		<Proportion>HIB</Proportion>

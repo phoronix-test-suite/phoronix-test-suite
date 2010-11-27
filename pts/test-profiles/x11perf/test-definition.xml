@@ -16,7 +16,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>x11perf</Title>
-		<Version>1.5</Version>
+		<AppVersion>1.5</AppVersion>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Operations / Second</ResultScale>
 		<Proportion>HIB</Proportion>

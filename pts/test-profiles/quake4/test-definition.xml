@@ -15,7 +15,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>Quake 4</Title>
-		<Version>1.4.2</Version>
+		<AppVersion>1.4.2</AppVersion>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Frames Per Second</ResultScale>
 		<Proportion>HIB</Proportion>

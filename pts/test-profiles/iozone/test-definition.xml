@@ -15,7 +15,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>IOzone</Title>
-		<Version>3.347</Version>
+		<AppVersion>3.347</AppVersion>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>MB/s</ResultScale>
 		<Proportion>HIB</Proportion>

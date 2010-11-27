@@ -13,7 +13,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>Mencoder</Title>
-		<Version>2009-06-04</Version>
+		<AppVersion>2009-06-04</AppVersion>
 		<SubTitle>AVI To LAVC</SubTitle>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Seconds</ResultScale>

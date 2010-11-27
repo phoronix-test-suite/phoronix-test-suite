@@ -15,7 +15,7 @@
 	<TestInformation>
 		<Title>StressCPU2 Stress-Test</Title>
 		<SubTitle>Tight GROMACS Inner-Loops</SubTitle>
-		<Version>2</Version>
+		<AppVersion>2</AppVersion>
 		<TimesToRun>1</TimesToRun>
 		<Executable>launch</Executable>
 		<ResultScale>Stress Test</ResultScale>

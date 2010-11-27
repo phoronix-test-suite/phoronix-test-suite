@@ -16,7 +16,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>GtkPerf</Title>
-		<Version>0.40</Version>
+		<AppVersion>0.40</AppVersion>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Seconds</ResultScale>
 		<Proportion>LIB</Proportion>

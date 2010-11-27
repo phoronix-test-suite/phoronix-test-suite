@@ -10,7 +10,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>Timed Linux Kernel Compilation</Title>
-		<Version>2.6.25</Version>
+		<AppVersion>2.6.25</AppVersion>
 		<Executable>time-compile-kernel</Executable>
 		<Description>This test times how long it takes to build the Linux kernel.</Description>
 	</TestInformation>

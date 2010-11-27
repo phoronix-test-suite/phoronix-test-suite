@@ -14,7 +14,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>Smallpt</Title>
-		<Version>1.0</Version>
+		<AppVersion>1.0</AppVersion>
 		<SubTitle>Global Illumination Renderer; 100 Samples</SubTitle>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Seconds</ResultScale>

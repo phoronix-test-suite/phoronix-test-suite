@@ -14,7 +14,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>Java 2D Microbenchmark</Title>
-		<Version>1.0</Version>
+		<AppVersion>1.0</AppVersion>
 		<TimesToRun>4</TimesToRun>
 		<ResultScale>Units Per Second</ResultScale>
 		<Proportion>HIB</Proportion>

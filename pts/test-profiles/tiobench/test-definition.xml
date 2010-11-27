@@ -14,7 +14,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>Threaded I/O Tester</Title>
-		<Version>0.3.3</Version>
+		<AppVersion>0.3.3</AppVersion>
 		<TimesToRun>4</TimesToRun>
 		<ResultScale>MB/s</ResultScale>
 		<Proportion>HIB</Proportion>

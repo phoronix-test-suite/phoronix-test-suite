@@ -14,7 +14,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>John The Ripper</Title>
-		<Version>1.7.3.1</Version>
+		<AppVersion>1.7.3.1</AppVersion>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Real C/S</ResultScale>
 		<Proportion>HIB</Proportion>

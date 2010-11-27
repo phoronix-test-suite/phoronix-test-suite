@@ -9,7 +9,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>Timed Apache Compilation</Title>
-		<Version>2.2.17</Version>
+		<AppVersion>2.2.17</AppVersion>
 		<Executable>time-compile-apache</Executable>
 		<Description>This test times how long it takes to build the Apache HTTP Server.</Description>
 	</TestInformation>

@@ -16,7 +16,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>Enemy Territory</Title>
-		<Version>2.60</Version>
+		<AppVersion>2.60</AppVersion>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Frames Per Second</ResultScale>
 		<Proportion>HIB</Proportion>

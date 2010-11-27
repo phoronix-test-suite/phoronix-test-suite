@@ -15,7 +15,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>NGINX Benchmark</Title>
-		<Version>0.8.53</Version>
+		<AppVersion>0.8.53</AppVersion>
 		<SubTitle>Static Web Page Serving</SubTitle>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Requests Per Second</ResultScale>

@@ -13,7 +13,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>BYTE Unix Benchmark</Title>
-		<Version>3.6</Version>
+		<AppVersion>3.6</AppVersion>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>LPS</ResultScale>
 		<Proportion>HIB</Proportion>

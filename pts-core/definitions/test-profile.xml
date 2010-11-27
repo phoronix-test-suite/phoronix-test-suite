@@ -16,7 +16,7 @@
 		</Define>
 		<Define>
 			<Name>P_TEST_VERSION</Name>
-			<Value>PhoronixTestSuite/TestInformation/Version</Value>
+			<Value>PhoronixTestSuite/TestInformation/AppVersion</Value>
 			<Description>The version of the software game/application/program itself. This is not to be confused with the test profile's version.</Description>
 			<Required>RECOMMENDED</Required>
 		</Define>
@@ -29,7 +29,7 @@
 		<Define>
 			<Name>P_TEST_SCALE</Name>
 			<Value>PhoronixTestSuite/TestInformation/ResultScale</Value>
-			<Description>The scale the results are reported in. Examples include Seconds, Average FPS, and Mflops. This value can also be supplied by having the test execution process itself write the value to ~/pts-result-scale during the testing process.</Description>
+			<Description>The scale the results are reported in. Examples include Seconds, FPS, and Mflops. This value can also be supplied by having the test execution process itself write the value to ~/pts-result-scale during the testing process.</Description>
 			<Required>YES</Required>
 		</Define>
 		<Define>

@@ -16,7 +16,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>Nexuiz</Title>
-		<Version>2.5.2</Version>
+		<AppVersion>2.5.2</AppVersion>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Frames Per Second</ResultScale>
 		<Proportion>HIB</Proportion>

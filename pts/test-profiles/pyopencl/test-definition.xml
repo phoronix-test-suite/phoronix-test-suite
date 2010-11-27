@@ -16,7 +16,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>PyOpenCL</Title>
-		<Version>0.91.3</Version>
+		<AppVersion>0.91.3</AppVersion>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>GB/s</ResultScale>
 		<Proportion>HIB</Proportion>

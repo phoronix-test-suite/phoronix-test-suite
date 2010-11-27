@@ -14,7 +14,7 @@
 	<TestInformation>
 		<Title>Himeno Benchmark</Title>
 		<SubTitle>Poisson Pressure Solver</SubTitle>
-		<Version>3.0</Version>
+		<AppVersion>3.0</AppVersion>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>MFLOPS</ResultScale>
 		<Proportion>HIB</Proportion>

@@ -14,7 +14,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>Sunflow Rendering System</Title>
-		<Version>0.07.2</Version>
+		<AppVersion>0.07.2</AppVersion>
 		<SubTitle>Global Illumination + Image Synthesis</SubTitle>
 		<Executable>sunflow-benchmark</Executable>
 		<TimesToRun>2</TimesToRun>

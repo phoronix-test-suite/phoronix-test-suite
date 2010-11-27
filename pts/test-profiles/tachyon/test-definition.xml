@@ -15,7 +15,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>Tachyon</Title>
-		<Version>0.98.7</Version>
+		<AppVersion>0.98.7</AppVersion>
 		<SubTitle>Total Time</SubTitle>
 		<TimesToRun>3</TimesToRun>
 		<Executable>tachyon-benchmark</Executable>

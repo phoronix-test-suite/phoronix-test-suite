@@ -15,7 +15,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>BlogBench</Title>
-		<Version>1.0</Version>
+		<AppVersion>1.0</AppVersion>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Final Score</ResultScale>
 		<Proportion>HIB</Proportion>

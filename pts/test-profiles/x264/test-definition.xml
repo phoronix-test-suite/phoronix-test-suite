@@ -14,7 +14,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>x264</Title>
-		<Version>2010-11-22</Version>
+		<AppVersion>2010-11-22</AppVersion>
 		<SubTitle>H.264 Video Encoding</SubTitle>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Frames Per Second</ResultScale>

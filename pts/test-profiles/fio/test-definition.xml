@@ -15,7 +15,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>Flexible IO Tester</Title>
-		<Version>1.21</Version>
+		<AppVersion>1.21</AppVersion>
 		<Executable>fio-run</Executable>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Seconds (Run Time)</ResultScale>

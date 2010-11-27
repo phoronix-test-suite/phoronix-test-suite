@@ -14,7 +14,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>Geekbench</Title>
-		<Version>2.1</Version>
+		<AppVersion>2.1</AppVersion>
 		<TimesToRun>1</TimesToRun>
 		<ResultScale>Geekbench Score</ResultScale>
 		<Proportion>HIB</Proportion>

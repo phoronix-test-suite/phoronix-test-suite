@@ -15,7 +15,6 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>Triangle Slammer</Title>
-		<Version></Version>
 		<SubTitle>Perl OpenGL Benchmark</SubTitle>
 		<Executable>trislam-run</Executable>
 		<TimesToRun>1</TimesToRun>

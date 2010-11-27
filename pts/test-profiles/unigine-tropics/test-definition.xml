@@ -16,7 +16,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>Unigine Tropics</Title>
-		<Version>1.3</Version>
+		<AppVersion>1.3</AppVersion>
 		<ResultScale>Frames Per Second</ResultScale>
 		<TimesToRun>3</TimesToRun>
 		<Proportion>HIB</Proportion>

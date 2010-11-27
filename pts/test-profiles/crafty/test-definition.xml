@@ -15,7 +15,7 @@
 	</TestProfile>
 	<TestInformation>
 		<Title>Crafty</Title>
-		<Version>23.3</Version>
+		<AppVersion>23.3</AppVersion>
 		<SubTitle>Elapsed Time</SubTitle>
 		<TimesToRun>3</TimesToRun>
 		<ResultScale>Seconds</ResultScale>
