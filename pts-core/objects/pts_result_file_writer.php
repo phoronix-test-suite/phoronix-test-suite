@@ -34,8 +34,6 @@ class pts_result_file_writer
 		$this->added_hashes = array();
 
 		$this->xml_writer = new nye_XmlWriter("pts-results-viewer.xsl");
-		$this->xml_writer->addXmlNode(P_RESULTS_GENERATED_TIMESTAMP, date("Y-m-d H:i:s"));
-		$this->xml_writer->addXmlNode(P_RESULTS_GENERATED_CLIENT_STRING, pts_title(true));
 	}
 	public function get_xml()
 	{
@@ -50,9 +48,9 @@ class pts_result_file_writer
 		$this->xml_writer->addXmlNode(P_RESULTS_TEST_IDENTIFIER, $result_object->test_profile->get_identifier());
 		$this->xml_writer->addXmlNode(P_RESULTS_TEST_PROFILE_VERSION, $result_object->test_profile->get_test_profile_version());
 		$this->xml_writer->addXmlNode(P_RESULTS_TEST_TITLE, $result_object->test_profile->get_title());
+		$this->xml_writer->addXmlNode(P_RESULTS_TEST_VERSION, $result_object->test_profile->get_app_version());
 		$this->xml_writer->addXmlNode(P_RESULTS_TEST_ARGS, $result_object->get_arguments());
 		$this->xml_writer->addXmlNode(P_RESULTS_TEST_DESCRIPTION, $result_object->get_arguments_description());
-		$this->xml_writer->addXmlNode(P_RESULTS_TEST_VERSION, $result_object->test_profile->get_app_version());
 		$this->xml_writer->addXmlNode(P_RESULTS_TEST_SCALE, $result_object->test_profile->get_result_scale());
 		$this->xml_writer->addXmlNode(P_RESULTS_TEST_PROPORTION, $result_object->test_profile->get_result_proportion());
 		$this->xml_writer->addXmlNode(P_RESULTS_TEST_DISPLAY_FORMAT, $result_object->test_profile->get_display_format());
@@ -95,6 +93,8 @@ class pts_result_file_writer
 		$this->xml_writer->addXmlNode(P_RESULTS_GENERATED_TITLE, $object->get_title());
 		$this->xml_writer->addXmlNode(P_RESULTS_GENERATED_DESCRIPTION, $object->get_description());
 		$this->xml_writer->addXmlNode(P_RESULTS_GENERATED_NOTES, $object->get_notes());
+		$this->xml_writer->addXmlNode(P_RESULTS_GENERATED_TIMESTAMP, date("Y-m-d H:i:s"));
+		$this->xml_writer->addXmlNode(P_RESULTS_GENERATED_CLIENT_STRING, pts_title(true));
 		$this->xml_writer->addXmlNode(P_RESULTS_GENERATED_INTERNAL_TAGS, $object->get_internal_tags());
 		$this->xml_writer->addXmlNode(P_RESULTS_GENERATED_REFERENCE_ID, $object->get_reference_id());
 		$this->xml_writer->addXmlNode(P_RESULTS_GENERATED_PRESET_ENV_VARS, $object->get_preset_environment_variables());

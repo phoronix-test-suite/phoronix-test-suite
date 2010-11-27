@@ -33,6 +33,10 @@ class pts_results_nye_XmlReader extends nye_XmlReader
 
 		parent::__construct($read_xml);
 	}
+	public function validate()
+	{
+		return $this->dom->validateSchema(PTS_CORE_PATH . "definitions/result-file.xsd");
+	}
 	protected function handleXmlZeroTagFallback($xml_tag, $value)
 	{
 		$legacy_spec = array(

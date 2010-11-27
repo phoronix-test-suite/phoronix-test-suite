@@ -134,6 +134,8 @@ class pts_global
 	{
 		return false; // TODO: block Iveland result uploads
 
+		// TODO: use the pts_results_nye_XmlReader->validate() to ensure it fits the XML Schema
+
 		if(pts_global::result_upload_supported($result_file) == false)
 		{
 			return false;
