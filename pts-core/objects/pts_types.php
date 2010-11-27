@@ -24,7 +24,7 @@ class pts_types
 {
 	public static function subsystem_targets()
 	{
-		return array("System", "Processor", "Disk", "Graphics", "Memory", "Network");
+		return array("System", "Processor", "Disk", "Graphics", "Memory", "Network", "Other");
 	}
 	public static function software_license_types()
 	{

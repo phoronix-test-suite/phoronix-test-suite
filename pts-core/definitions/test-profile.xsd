@@ -9,7 +9,7 @@
 			<xs:element name="Title" type="xs:string" />
 			<xs:element name="Description" type="xs:string" />
 			<xs:element name="ResultScale" type="xs:string" />
-			<xs:element name="ResultQuantifier" type="xs:string" minOccurs="0" maxOccurs="1">
+			<xs:element name="ResultQuantifier" minOccurs="0" maxOccurs="1">
 				<xs:simpleType>
 				<xs:restriction base="xs:string">
 					<xs:enumeration value="AVG" />
@@ -20,10 +20,29 @@
 			</xs:element>
 			<xs:element name="AppVersion" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="SubTitle" type="xs:string" minOccurs="0" maxOccurs="1" />
-			<xs:element name="DisplayFormat" type="xs:string" minOccurs="0" maxOccurs="1" />
-			<xs:element name="Proportion" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="DisplayFormat" minOccurs="0" maxOccurs="1">
+				<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="NO_RESULT" />
+					<xs:enumeration value="BAR_GRAPH" />
+					<xs:enumeration value="PIE_CHART" />
+					<xs:enumeration value="LINE_GRAPH" />
+					<xs:enumeration value="PASS_FAIL" />
+					<xs:enumeration value="MULTI_PASS_FAIL" />
+					<xs:enumeration value="IMAGE_COMPARISON" />
+				</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Proportion" minOccurs="0" maxOccurs="1">
+				<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="LIB" />
+					<xs:enumeration value="HIB" />
+				</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
 			<xs:element name="Executable" type="xs:string" minOccurs="0" maxOccurs="1" />
-			<xs:element name="TimesToRun" type="xs:integer" minOccurs="0" maxOccurs="1" />
+			<xs:element name="TimesToRun" type="xs:integer" minExclusive="1" minOccurs="0" maxOccurs="1" />
 			<xs:element name="IgnoreRuns" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="InstallationAgreement" type="xs:string" minOccurs="0" maxOccurs="1" />
 		</xs:sequence>
@@ -33,29 +52,71 @@
 		<xs:element name="TestProfile">
 		<xs:complexType>
 		<xs:sequence>
-			<xs:element name="Version" type="xs:string" />
-			<xs:element name="TestType" type="xs:string" />
-			<xs:element name="SoftwareType" type="xs:string" />
+			<xs:element name="Version">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+					<xs:pattern value="[0-9].[0-99].[0-99]" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="TestType">
+				<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="System" />
+					<xs:enumeration value="Processor" />
+					<xs:enumeration value="Disk" />
+					<xs:enumeration value="Graphics" />
+					<xs:enumeration value="Memory" />
+					<xs:enumeration value="Network" />
+					<xs:enumeration value="Other" />
+				</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="SoftwareType">
+				<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Utility" />
+					<xs:enumeration value="Simulator" />
+					<xs:enumeration value="Benchmark" />
+					<xs:enumeration value="Application" />
+					<xs:enumeration value="Game" />
+				</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
 			<xs:element name="Maintainer" type="xs:string" />
-			<xs:element name="License" type="xs:string" />
-			<xs:element name="Status" type="xs:string" />
-			<xs:element name="License" type="xs:string" />
-			<xs:element name="License" type="xs:string" />
-			<xs:element name="License" type="xs:string" />
+			<xs:element name="License">
+				<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Free" />
+					<xs:enumeration value="Non-Free" />
+					<xs:enumeration value="Retail" />
+					<xs:enumeration value="Restricted" />
+				</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Status">
+				<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Private" />
+					<xs:enumeration value="Broken" />
+					<xs:enumeration value="Experimental" />
+					<xs:enumeration value="Unverified" />
+				</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
 			<xs:element name="SupportedArchitectures" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="SupportedPlatforms" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="ExternalDependencies" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="Extends" type="xs:string" minOccurs="0" maxOccurs="1" />
-			<xs:element name="RequiresRoot" type="xs:string" minOccurs="0" maxOccurs="1" />
-			<xs:element name="EnvironmentSize" type="xs:string" minOccurs="0" maxOccurs="1" />
-			<xs:element name="EnvironmentTestingSize" type="xs:integer" minOccurs="0" maxOccurs="1" />
-			<xs:element name="EstimatedLength" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="RequiresRoot" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+			<xs:element name="EnvironmentSize" type="xs:decimal" minOccurs="0" maxOccurs="1" />
+			<xs:element name="EnvironmentTestingSize" type="xs:decimal" minOccurs="0" maxOccurs="1" />
+			<xs:element name="EstimatedLength" type="xs:decimal" minOccurs="0" maxOccurs="1" />
 			<xs:element name="ProjectURL" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="RequiresCoreVersion" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="ReferenceSystems" type="xs:string" minOccurs="0" maxOccurs="1" />
-			<xs:element name="AllowResultsSharing" type="xs:string" minOccurs="0" maxOccurs="1" />
-			<xs:element name="AutoSaveResults" type="xs:string" minOccurs="0" maxOccurs="1" />
-
+			<xs:element name="AllowResultsSharing" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+			<xs:element name="AutoSaveResults" type="xs:boolean" minOccurs="0" maxOccurs="1" />
 		</xs:sequence>
 		</xs:complexType>
 		</xs:element>
@@ -68,9 +129,9 @@
 			<xs:sequence>
 				<xs:element name="Arguments" type="xs:string" minOccurs="0" maxOccurs="1" />
 				<xs:element name="PostArguments" type="xs:string" minOccurs="0" maxOccurs="1" />
-				<xs:element name="AllowCacheShare" type="xs:string" minOccurs="0" maxOccurs="1" />
-				<xs:element name="MinimumLength" type="xs:string" minOccurs="0" maxOccurs="1" />
-				<xs:element name="MaximumLength" type="xs:string" minOccurs="0" maxOccurs="1" />
+				<xs:element name="AllowCacheShare" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+				<xs:element name="MinimumLength" type="xs:decimal" minOccurs="0" maxOccurs="1" />
+				<xs:element name="MaximumLength" type="xs:decimal" minOccurs="0" maxOccurs="1" />
 			</xs:sequence>
 			</xs:complexType>
 			</xs:element>
