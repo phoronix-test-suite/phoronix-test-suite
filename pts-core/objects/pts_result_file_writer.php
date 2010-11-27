@@ -28,12 +28,19 @@ class pts_result_file_writer
 	private $added_hashes = null;
 	private $result_identifier = null;
 
-	public function __construct($result_identifier = null)
+	public function __construct($result_identifier = null, &$xml_writer = null)
 	{
 		$this->result_identifier = $result_identifier;
 		$this->added_hashes = array();
 
-		$this->xml_writer = new nye_XmlWriter("pts-results-viewer.xsl");
+		if($xml_writer instanceof nye_XmlWriter)
+		{
+			$this->xml_writer = $xml_writer;
+		}
+		else
+		{
+			$this->xml_writer = new nye_XmlWriter("pts-results-viewer.xsl");
+		}
 	}
 	public function get_xml()
 	{

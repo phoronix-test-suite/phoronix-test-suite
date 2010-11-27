@@ -517,9 +517,8 @@ class pts_render
 		}
 
 		$mto->test_profile->set_result_scale($mto->test_profile->get_result_scale() . ' | ' . implode(',', array_keys($days)));
-		$mto->test_profile->set_display_format((count($days) < 5 || $is_tracking == false ? "BAR_ANALYZE_GRAPH" : "LINE_GRAPH"));
+		$mto->test_profile->set_display_format((count($days) <= 5 || $is_tracking == false ? "BAR_ANALYZE_GRAPH" : "LINE_GRAPH"));
 		$mto->test_result_buffer = new pts_test_result_buffer();
-
 		$day_keys = array_keys($days);
 
 		foreach(array_keys($systems) as $system_key)

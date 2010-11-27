@@ -31,7 +31,7 @@ define("PTS_PATH", dirname(dirname(__FILE__)) . '/');
 define("PTS_MODE", in_array(($m = getenv("PTS_MODE")), array("CLIENT", "LIB", "SILENT")) ? $m : "CLIENT");
 
 // Any PHP default memory limit should be fine for PTS, until you run image quality comparison tests that begins to consume memory
-ini_set("memory_limit", "128M");
+ini_set("memory_limit", "256M");
 
 if(PTS_MODE == "CLIENT" && ($open_basedir = ini_get("open_basedir")))
 {

@@ -26,9 +26,16 @@ class pts_results_nye_XmlReader extends nye_XmlReader
 {
 	public function __construct($read_xml)
 	{
-		if(is_file(PTS_SAVE_RESULTS_PATH . $read_xml . "/composite.xml"))
+		if(!isset($read_xml[1024]) && is_file(PTS_SAVE_RESULTS_PATH . $read_xml . "/composite.xml"))
 		{
 			$read_xml = PTS_SAVE_RESULTS_PATH . $read_xml . "/composite.xml";
+		}
+
+		if(defined("PHOROMATIC_BUILD") && !isset($read_xml[1024]) && is_file($read_xml))
+		{
+			// Work around a nye_XmlReader parsing bug with early Phoromatic versions where \" was done
+			$read_xml = file_get_contents($read_xml);
+			$read_xml = substr($read_xml, strpos($read_xml, "<PhoronixTestSuite>"));
 		}
 
 		parent::__construct($read_xml);

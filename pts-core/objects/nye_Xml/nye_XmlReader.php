@@ -31,7 +31,7 @@ class nye_XmlReader
 		$this->dom = new DOMDocument();
 
 		// TODO: investigate whether using the LIBXML_COMPACT option on loading actually increases performance
-		if(is_file($xml_file))
+		if(!isset($xml_file[1024]) && is_file($xml_file))
 		{
 			$this->dom->load($xml_file);
 		}
