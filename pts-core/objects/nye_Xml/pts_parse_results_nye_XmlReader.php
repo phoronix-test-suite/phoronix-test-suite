@@ -30,7 +30,7 @@ class pts_parse_results_nye_XmlReader extends nye_XmlReader
 	}
 	public function validate()
 	{
-		return $this->dom->validateSchema(PTS_CORE_PATH . "definitions/results-parser.xsd");
+		return $this->dom->schemaValidate(PTS_OPENBENCHMARKING_PATH . "schemas/results-parser.xsd");
 	}
 }
 ?>

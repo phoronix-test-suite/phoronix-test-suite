@@ -61,6 +61,7 @@ function pts_define_directories()
 	define("PTS_COMMAND_PATH", PTS_CORE_PATH . "commands/");
 	define("PTS_EXDEP_PATH", PTS_CORE_PATH . "external-test-dependencies/");
 	define("PTS_RESULTS_VIEWER_PATH", PTS_CORE_PATH . "results-viewer/");
+	define("PTS_OPENBENCHMARKING_PATH", PTS_CORE_PATH . "openbenchmarking.org/");
 
 	// Test & Suite Locations
 	define("PTS_TEST_PROFILE_PATH", PTS_PATH . "pts/test-profiles/");

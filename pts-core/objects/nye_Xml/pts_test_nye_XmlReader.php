@@ -38,7 +38,7 @@ class pts_test_nye_XmlReader extends nye_XmlReader
 	}
 	public function validate()
 	{
-		return $this->dom->schemaValidate(PTS_CORE_PATH . "definitions/test-profile.xsd");
+		return $this->dom->schemaValidate(PTS_OPENBENCHMARKING_PATH . "schemas/test-profile.xsd");
 	}
 	public function overrideXMLValues($test_options)
 	{

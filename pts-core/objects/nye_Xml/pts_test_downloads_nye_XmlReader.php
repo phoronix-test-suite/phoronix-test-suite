@@ -30,7 +30,7 @@ class pts_test_downloads_nye_XmlReader extends nye_XmlReader
 	}
 	public function validate()
 	{
-		return $this->dom->validateSchema(PTS_CORE_PATH . "definitions/test-profile-downloads.xsd");
+		return $this->dom->schemaValidate(PTS_OPENBENCHMARKING_PATH . "schemas/test-profile-downloads.xsd");
 	}
 }
 ?>
