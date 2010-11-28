@@ -14,6 +14,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add an XML Schema XSD covering the test-profile
 - pts-core: On client program startup, report any missing PHP extensions that are required or recommended
 - pts-core: TEST PROFILE XML SPEC CHANGE: TestInformation/Version -> TestInformation/AppVersion
+- pts-core: TEST PROFILE/SUITE XML SPEC CHANGE: Split RequiresCoreVersion tag into RequiresCoreVersionMin and RequiresCoreVersionMax
 - phoromatic: HTTPS connection support, install the Phoromatic.com SSL certificate
 - pts: Update apache test profile against upstream Apache 2.2.17
 - pts: Update build-apache test profile against upstream Apache 2.2.17

@@ -43,7 +43,7 @@ class pts_results_nye_XmlReader extends nye_XmlReader
 	public function validate()
 	{
 		// on failure get errors from libxml_get_errors();
-		return $this->dom->validateSchema(PTS_CORE_PATH . "definitions/result-file.xsd");
+		return $this->dom->schemaValidate(PTS_CORE_PATH . "definitions/result-file.xsd");
 	}
 	protected function handleXmlZeroTagFallback($xml_tag, $value)
 	{

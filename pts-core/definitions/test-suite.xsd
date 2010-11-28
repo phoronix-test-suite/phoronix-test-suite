@@ -6,11 +6,31 @@
 		<xs:element name="SuiteInformation">
 		<xs:complexType>
 		<xs:sequence>
-			<xs:element name="Title" type="xs:string" />
-			<xs:element name="Version" type="xs:string" />
+			<xs:element name="Title" type="xs:string" minLength="2" maxLength="48" />
+			<xs:element name="Version">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+					<xs:pattern value="[0-9].[0-99].[0-99]" />
+					<xs:minLength value="5" />
+					<xs:maxLength value="8" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Description" type="xs:string" minLength="8" maxLength="2048" />
 			<xs:element name="Maintainer" type="xs:string" />
-			<xs:element name="TestType" type="xs:string" />
-			<xs:element name="Description" type="xs:string" />
+			<xs:element name="TestType" maxLength="15">
+				<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="System" />
+					<xs:enumeration value="Processor" />
+					<xs:enumeration value="Disk" />
+					<xs:enumeration value="Graphics" />
+					<xs:enumeration value="Memory" />
+					<xs:enumeration value="Network" />
+					<xs:enumeration value="Other" />
+				</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
 			<xs:element name="PreRunMessage" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="PostRunMessage" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="RunMode" type="xs:string" minOccurs="0" maxOccurs="1" />
@@ -23,7 +43,7 @@
 		<xs:element name="RunTest" minOccurs="1" maxOccurs="unbounded">
 		<xs:complexType>
 		<xs:sequence>
-			<xs:element name="Test" type="xs:string" />
+			<xs:element name="Test" type="xs:string" maxLength="64" />
 			<xs:element name="Arguments" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="Description" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="ProfileVersion" type="xs:string" minOccurs="0" maxOccurs="1" />

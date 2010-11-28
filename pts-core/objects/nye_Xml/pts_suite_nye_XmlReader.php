@@ -35,7 +35,7 @@ class pts_suite_nye_XmlReader extends nye_XmlReader
 	}
 	public function validate()
 	{
-		return $this->dom->validateSchema(PTS_CORE_PATH . "definitions/test-suite.xsd");
+		return $this->dom->schemaValidate(PTS_CORE_PATH . "definitions/test-suite.xsd");
 	}
 }
 ?>
