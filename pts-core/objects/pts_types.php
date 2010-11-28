@@ -34,6 +34,18 @@ class pts_types
 	{
 		return self::parse_xsd_types("ProfileStatus");
 	}
+	public static function test_profile_software_types()
+	{
+		return self::parse_xsd_types("SoftwareType");
+	}
+	public static function test_profile_display_formats()
+	{
+		return self::parse_xsd_types("DisplayFormat");
+	}
+	public static function test_profile_quantifiers()
+	{
+		return self::parse_xsd_types("ResultQuantifier");
+	}
 	public static function identifiers_to_test_profile_objects($identifiers, $include_extensions = false, $remove_duplicates = true)
 	{
 		$test_profiles = array();

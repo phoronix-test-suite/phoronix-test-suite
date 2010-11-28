@@ -30,11 +30,11 @@
 		<xs:complexType>
 		<xs:sequence>
 			<xs:element name="Identifier" type="xs:string" />
-			<xs:element name="TestClientVersion" type="xs:string" />
 			<xs:element name="Hardware" type="xs:string" />
 			<xs:element name="Software" type="xs:string" />
 			<xs:element name="User" type="xs:string" />
 			<xs:element name="TimeStamp" type="TimeStamp" />
+			<xs:element name="TestClientVersion" type="xs:string" />
 			<xs:element name="Notes" type="xs:string" />
 		</xs:sequence>
 		</xs:complexType>
@@ -50,9 +50,8 @@
 			<xs:element name="Arguments" type="xs:string" />
 			<xs:element name="Description" type="xs:string" />
 			<xs:element name="Scale" type="xs:string" />
-			<xs:element name="Proportion" type="xs:string" />
-			<xs:element name="DisplayFormat" type="xs:string" />
-
+			<xs:element name="Proportion" type="Proportion" />
+			<xs:element name="DisplayFormat" type="DisplayFormat" />
 			<xs:element name="Data">
 			<xs:complexType>
 			<xs:sequence>

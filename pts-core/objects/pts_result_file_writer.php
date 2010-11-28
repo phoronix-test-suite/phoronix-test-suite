@@ -113,8 +113,8 @@ class pts_result_file_writer
 		$this->xml_writer->addXmlNode(P_RESULTS_SYSTEM_SOFTWARE, phodevi::system_software(true));
 		$this->xml_writer->addXmlNode(P_RESULTS_SYSTEM_USER, pts_client::current_user());
 		$this->xml_writer->addXmlNode(P_RESULTS_SYSTEM_DATE, date("Y-m-d H:i:s"));
-		//$this->xml_writer->addXmlNode(P_RESULTS_SYSTEM_NOTES, pts_test_notes_manager::generate_test_notes($test_type));
 		$this->xml_writer->addXmlNode(P_RESULTS_SYSTEM_PTSVERSION, PTS_VERSION);
+		//$this->xml_writer->addXmlNode(P_RESULTS_SYSTEM_NOTES, pts_test_notes_manager::generate_test_notes($test_type));
 	}
 	public function add_system_information_from_result_file(&$result_file, $result_merge_select = null)
 	{
@@ -142,11 +142,11 @@ class pts_result_file_writer
 					}
 
 					$this->xml_writer->addXmlNode(P_RESULTS_SYSTEM_IDENTIFIERS, $associated_identifiers[$i]);
-					$this->xml_writer->addXmlNode(P_RESULTS_SYSTEM_PTSVERSION, $pts_version[$i]);
 					$this->xml_writer->addXmlNode(P_RESULTS_SYSTEM_HARDWARE, $system_hardware[$i]);
 					$this->xml_writer->addXmlNode(P_RESULTS_SYSTEM_SOFTWARE, $system_software[$i]);
 					$this->xml_writer->addXmlNode(P_RESULTS_SYSTEM_USER, $system_user[$i]);
 					$this->xml_writer->addXmlNode(P_RESULTS_SYSTEM_DATE, $system_date[$i]);
+					$this->xml_writer->addXmlNode(P_RESULTS_SYSTEM_PTSVERSION, $pts_version[$i]);
 					$this->xml_writer->addXmlNode(P_RESULTS_SYSTEM_NOTES, $system_notes[$i]);
 
 					array_push($this->added_hashes, $this_hash);
