@@ -43,9 +43,13 @@ class pts_test_suite_parser
 	{
 		return $this->identifier;
 	}
-	public function get_core_version_requirement()
+	public function get_core_version_requirement_min()
 	{
-		return $this->xml_parser->getXMLValue(P_SUITE_REQUIRES_COREVERSION);
+		return $this->xml_parser->getXMLValue(P_SUITE_REQUIRES_COREVERSION_MIN, 2950);
+	}
+	public function get_core_version_requirement_max()
+	{
+		return $this->xml_parser->getXMLValue(P_SUITE_REQUIRES_COREVERSION_MAX, 9999);
 	}
 	public function get_description()
 	{

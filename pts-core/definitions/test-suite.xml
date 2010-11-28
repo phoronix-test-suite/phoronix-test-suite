@@ -51,9 +51,15 @@
 			<Required>NO</Required>
 		</Define>
 		<Define>
-			<Name>P_SUITE_REQUIRES_COREVERSION</Name>
-			<Value>PhoronixTestSuite/SuiteInformation/RequiresCoreVersion</Value>
-			<Description>If the test suite relies upon versions of the Phoronix Test Suite for specific functionality, the beginning (and ending, if applicable) versions should be supplied. The PTS_CORE_VERSION value should be used (e.g. Phoronix Test Suite 2.4.0 had a PTS_CORE_VERSION of 2400). If a test suite is only compatible with Phoronix Test Suite 2.4 to 2.6, inclusive, the string should be written as 2400 - 2600. If only one value is supplied, the Phoronix Test Suite assumes that is the starting version of support and that the suite remains compatible with the latest upstream code.</Description>
+			<Name>P_SUITE_REQUIRES_COREVERSION_MIN</Name>
+			<Value>PhoronixTestSuite/SuiteInformation/RequiresCoreVersionMin</Value>
+			<Description>If this test suite will only work with specific versions of the Phoronix Test Suite, the minimum version supported should be specified in this tag. Values must be the PTS core version [PTS_CORE_VERSION]. If this test profile requires version 2.4.0 of the Phoronix Test Suite or later, the value would simply be <em>2400</em>. The value is inclusive of the support level.</Description>
+			<Required>NO</Required>
+		</Define>
+		<Define>
+			<Name>P_SUITE_REQUIRES_COREVERSION_MAX</Name>
+			<Value>PhoronixTestSuite/SuiteInformation/RequiresCoreVersionMax</Value>
+			<Description>If this test suite will only work with specific versions of the Phoronix Test Suite, the maximum version supported should be specified in this tag. Values must be the PTS core version [PTS_CORE_VERSION]. If this test profile requires version 2.4.0 of the Phoronix Test Suite or later, the value would simply be <em>2400</em>. The value is exclusive of the support level.</Description>
 			<Required>NO</Required>
 		</Define>
 		<Define>

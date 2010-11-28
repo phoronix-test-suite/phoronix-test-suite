@@ -217,9 +217,13 @@ class pts_test_profile_parser
 	{
 		return $this->xml_parser->getXMLValue(P_TEST_ESTIMATEDTIME, 0);
 	}
-	public function requires_core_version()
+	public function requires_core_version_min()
 	{
-		return $this->xml_parser->getXMLValue(P_TEST_REQUIRES_COREVERSION);
+		return $this->xml_parser->getXMLValue(P_TEST_REQUIRES_COREVERSION_MIN, 2950);
+	}
+	public function requires_core_version_max()
+	{
+		return $this->xml_parser->getXMLValue(P_TEST_REQUIRES_COREVERSION_MAX, 9999);
 	}
 	public function get_test_option_objects()
 	{

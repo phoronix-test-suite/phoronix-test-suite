@@ -201,18 +201,10 @@ class pts_test_profile extends pts_test_profile_parser
 	public function is_core_version_supported()
 	{
 		// Check if the test profile's version is compatible with pts-core
-		$supported = true;
-		$requires_core_version = parent::requires_core_version();
+		$core_version_min = parent::requires_core_version_min();
+		$core_version_max = parent::requires_core_version_max();
 
-		if(!empty($requires_core_version))
-		{
-			$core_check = pts_strings::trim_explode('-', $requires_core_version);	
-			$support_begins = $core_check[0];
-			$support_ends = isset($core_check[1]) ? $core_check[1] : PTS_CORE_VERSION;
-			$supported = PTS_CORE_VERSION >= $support_begins && PTS_CORE_VERSION <= $support_ends;
-		}
-
-		return $supported;
+		return $core_version_min <= PTS_CORE_VERSION && $core_version_max > PTS_CORE_VERSION;
 	}
 	public function is_test_platform_supported()
 	{

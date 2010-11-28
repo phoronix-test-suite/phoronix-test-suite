@@ -14,7 +14,8 @@
 			<xs:element name="PreRunMessage" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="PostRunMessage" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="RunMode" type="xs:string" minOccurs="0" maxOccurs="1" />
-			<xs:element name="RequiresCoreVersion" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="RequiresCoreVersionMin" type="xs:integer" minInclusive="2950" maxInclusive="9999" minOccurs="0" maxOccurs="1" />
+			<xs:element name="RequiresCoreVersionMax" type="xs:integer" minInclusive="2950" maxInclusive="9999" minOccurs="0" maxOccurs="1" />
 		</xs:sequence>
 		</xs:complexType>
 		</xs:element>

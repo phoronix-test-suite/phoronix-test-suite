@@ -46,7 +46,7 @@ class pts_test_suite extends pts_test_suite_parser
 	}
 	public function is_supported()
 	{
-		$supported_size = $original_size = count($tests);
+		$supported_size = $original_size = count($this->get_contained_test_profiles());
 
 		foreach(pts_types::identifiers_to_test_profile_objects($this->identifier, false, true) as $test_profile)
 		{
@@ -153,19 +153,10 @@ class pts_test_suite extends pts_test_suite_parser
 	public function is_core_version_supported()
 	{
 		// Check if the test suite's version is compatible with pts-core
-		$supported = true;
+		$core_version_min = parent::requires_core_version_min();
+		$core_version_max = parent::requires_core_version_max();
 
-		$requires_core_version = $this->get_core_version_requirement();
-
-		if(!empty($requires_core_version))
-		{
-			$core_check = pts_strings::trim_explode('-', $requires_core_version);	
-			$support_begins = $core_check[0];
-			$support_ends = isset($core_check[1]) ? $core_check[1] : PTS_CORE_VERSION;
-			$supported = PTS_CORE_VERSION >= $support_begins && PTS_CORE_VERSION <= $support_ends;
-		}
-
-		return $supported;
+		return $core_version_min <= PTS_CORE_VERSION && $core_version_max > PTS_CORE_VERSION;
 	}
 	public function pts_print_format_tests($object, &$write_buffer, $steps = -1)
 	{
