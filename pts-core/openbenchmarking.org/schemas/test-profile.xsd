@@ -89,8 +89,8 @@
 					<xs:complexType>
 					<xs:sequence>
 						<xs:element name="Name" type="xs:string" minOccurs="0" maxOccurs="1" />
-						<xs:element name="Message" type="xs:string" minOccurs="0" maxOccurs="1" />
 						<xs:element name="Value" type="xs:string" minOccurs="0" maxOccurs="1" />
+						<xs:element name="Message" type="xs:string" minOccurs="0" maxOccurs="1" />
 					</xs:sequence>
 					</xs:complexType>
 					</xs:element>

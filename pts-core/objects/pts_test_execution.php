@@ -52,7 +52,7 @@ class pts_test_execution
 		$min_length = $test_run_request->test_profile->get_min_length();
 		$max_length = $test_run_request->test_profile->get_max_length();
 
-		if($test_run_request->test_profile->get_environment_testing_size() != -1 && ceil(disk_free_space($test_directory) / 1048576) < $test_run_request->test_profile->get_environment_testing_size())
+		if($test_run_request->test_profile->get_environment_testing_size() > 1 && ceil(disk_free_space($test_directory) / 1048576) < $test_run_request->test_profile->get_environment_testing_size())
 		{
 			// Ensure enough space is available on disk during testing process
 			pts_client::$display->test_run_error("There is not enough space (at " . $test_directory . ") for this test to run.");
