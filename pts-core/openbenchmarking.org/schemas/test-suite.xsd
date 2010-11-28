@@ -1,41 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+<xs:annotation>
+	<xs:documentation xml:lang="en">
+		Phoronix Test Suite / OpenBenchmarking.org XML Result File Specification
+		Copyright (C) 2008 - 2010, Phoronix Media
+		Copyright (C) 2008 - 2010, Michael Larabel
+	</xs:documentation>
+</xs:annotation>
+<xs:include schemaLocation="types.xsd" />
 <xs:element name="PhoronixTestSuite">
 <xs:complexType>
 <xs:sequence>
 		<xs:element name="SuiteInformation">
 		<xs:complexType>
 		<xs:sequence>
-			<xs:element name="Title" type="xs:string" minLength="2" maxLength="48" />
-			<xs:element name="Version">
-				<xs:simpleType>
-					<xs:restriction base="xs:string">
-					<xs:pattern value="[0-9].[0-99].[0-99]" />
-					<xs:minLength value="5" />
-					<xs:maxLength value="8" />
-					</xs:restriction>
-				</xs:simpleType>
-			</xs:element>
-			<xs:element name="Description" type="xs:string" minLength="8" maxLength="2048" />
+			<xs:element name="Title" type="TitleString" />
+			<xs:element name="Version" type="VersionString" />
+			<xs:element name="Description" type="DescriptionString" />
 			<xs:element name="Maintainer" type="xs:string" />
-			<xs:element name="TestType" maxLength="15">
-				<xs:simpleType>
-				<xs:restriction base="xs:string">
-					<xs:enumeration value="System" />
-					<xs:enumeration value="Processor" />
-					<xs:enumeration value="Disk" />
-					<xs:enumeration value="Graphics" />
-					<xs:enumeration value="Memory" />
-					<xs:enumeration value="Network" />
-					<xs:enumeration value="Other" />
-				</xs:restriction>
-				</xs:simpleType>
-			</xs:element>
+			<xs:element name="TestType" type="TestType" />
 			<xs:element name="PreRunMessage" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="PostRunMessage" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="RunMode" type="xs:string" minOccurs="0" maxOccurs="1" />
-			<xs:element name="RequiresCoreVersionMin" type="xs:integer" minInclusive="2950" maxInclusive="9999" minOccurs="0" maxOccurs="1" />
-			<xs:element name="RequiresCoreVersionMax" type="xs:integer" minInclusive="2950" maxInclusive="9999" minOccurs="0" maxOccurs="1" />
+			<xs:element name="RequiresCoreVersionMin" type="CoreVersion" minOccurs="0" maxOccurs="1" />
+			<xs:element name="RequiresCoreVersionMax" type="CoreVersion" minOccurs="0" maxOccurs="1" />
 		</xs:sequence>
 		</xs:complexType>
 		</xs:element>
@@ -47,15 +35,7 @@
 			<xs:element name="Arguments" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="Description" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="ProfileVersion" type="xs:string" minOccurs="0" maxOccurs="1" />
-			<xs:element name="Mode" type="xs:string" minOccurs="0" maxOccurs="1">
-				<xs:simpleType>
-				<xs:restriction base="xs:string">
-					<xs:enumeration value="BATCH" />
-					<xs:enumeration value="DEFAULTS" />
-					<xs:enumeration value="" />
-				</xs:restriction>
-				</xs:simpleType>
-			</xs:element>
+			<xs:element name="Mode" type="RunModes" minOccurs="0" maxOccurs="1" />
 			<xs:element name="OverrideTestOptions" type="xs:string" minOccurs="0" maxOccurs="1" />
 		</xs:sequence>
 		</xs:complexType>

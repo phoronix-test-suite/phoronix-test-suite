@@ -7,47 +7,21 @@
 		Copyright (C) 2008 - 2010, Michael Larabel
 	</xs:documentation>
 </xs:annotation>
+<xs:include schemaLocation="types.xsd" />
 <xs:element name="PhoronixTestSuite">
 <xs:complexType>
 <xs:sequence>
 		<xs:element name="TestInformation">
 		<xs:complexType>
 		<xs:sequence>
-			<xs:element name="Title" type="xs:string" minLength="2" maxLength="48" />
-			<xs:element name="Description" type="xs:string" minLength="8" maxLength="2048" />
+			<xs:element name="Title" type="TitleString" />
+			<xs:element name="Description" type="DescriptionString" />
 			<xs:element name="ResultScale" type="xs:string" />
-			<xs:element name="ResultQuantifier" minOccurs="0" maxOccurs="1">
-				<xs:simpleType>
-				<xs:restriction base="xs:string">
-					<xs:enumeration value="AVG" />
-					<xs:enumeration value="MIN" />
-					<xs:enumeration value="MAX" />
-				</xs:restriction>
-				</xs:simpleType>
-			</xs:element>
+			<xs:element name="ResultQuantifier" type="ResultQuantifier" minOccurs="0" maxOccurs="1" />
 			<xs:element name="AppVersion" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="SubTitle" type="xs:string" minOccurs="0" maxOccurs="1" />
-			<xs:element name="DisplayFormat" minOccurs="0" maxOccurs="1">
-				<xs:simpleType>
-				<xs:restriction base="xs:string">
-					<xs:enumeration value="NO_RESULT" />
-					<xs:enumeration value="BAR_GRAPH" />
-					<xs:enumeration value="PIE_CHART" />
-					<xs:enumeration value="LINE_GRAPH" />
-					<xs:enumeration value="PASS_FAIL" />
-					<xs:enumeration value="MULTI_PASS_FAIL" />
-					<xs:enumeration value="IMAGE_COMPARISON" />
-				</xs:restriction>
-				</xs:simpleType>
-			</xs:element>
-			<xs:element name="Proportion" minOccurs="0" maxOccurs="1">
-				<xs:simpleType>
-				<xs:restriction base="xs:string">
-					<xs:enumeration value="LIB" />
-					<xs:enumeration value="HIB" />
-				</xs:restriction>
-				</xs:simpleType>
-			</xs:element>
+			<xs:element name="DisplayFormat" type="DisplayFormat" minOccurs="0" maxOccurs="1" />
+			<xs:element name="Proportion" type="Proportion" minOccurs="0" maxOccurs="1" />
 			<xs:element name="Executable" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="TimesToRun" type="xs:integer" minExclusive="1" minOccurs="0" maxOccurs="1" />
 			<xs:element name="IgnoreRuns" type="xs:string" minOccurs="0" maxOccurs="1" />
@@ -59,60 +33,12 @@
 		<xs:element name="TestProfile">
 		<xs:complexType>
 		<xs:sequence>
-			<xs:element name="Version">
-				<xs:simpleType>
-					<xs:restriction base="xs:string">
-					<xs:pattern value="[0-9].[0-99].[0-99]" />
-					<xs:minLength value="5" />
-					<xs:maxLength value="8" />
-					</xs:restriction>
-				</xs:simpleType>
-			</xs:element>
-			<xs:element name="TestType" maxLength="15">
-				<xs:simpleType>
-				<xs:restriction base="xs:string">
-					<xs:enumeration value="System" />
-					<xs:enumeration value="Processor" />
-					<xs:enumeration value="Disk" />
-					<xs:enumeration value="Graphics" />
-					<xs:enumeration value="Memory" />
-					<xs:enumeration value="Network" />
-					<xs:enumeration value="Other" />
-				</xs:restriction>
-				</xs:simpleType>
-			</xs:element>
-			<xs:element name="SoftwareType">
-				<xs:simpleType>
-				<xs:restriction base="xs:string">
-					<xs:enumeration value="Utility" />
-					<xs:enumeration value="Simulator" />
-					<xs:enumeration value="Benchmark" />
-					<xs:enumeration value="Application" />
-					<xs:enumeration value="Game" />
-				</xs:restriction>
-				</xs:simpleType>
-			</xs:element>
+			<xs:element name="Version" type="VersionString" />
+			<xs:element name="TestType" type="TestType" />
+			<xs:element name="SoftwareType" type="SoftwareType" />
 			<xs:element name="Maintainer" type="xs:string" />
-			<xs:element name="License">
-				<xs:simpleType>
-				<xs:restriction base="xs:string">
-					<xs:enumeration value="Free" />
-					<xs:enumeration value="Non-Free" />
-					<xs:enumeration value="Retail" />
-					<xs:enumeration value="Restricted" />
-				</xs:restriction>
-				</xs:simpleType>
-			</xs:element>
-			<xs:element name="Status">
-				<xs:simpleType>
-				<xs:restriction base="xs:string">
-					<xs:enumeration value="Private" />
-					<xs:enumeration value="Broken" />
-					<xs:enumeration value="Experimental" />
-					<xs:enumeration value="Unverified" />
-				</xs:restriction>
-				</xs:simpleType>
-			</xs:element>
+			<xs:element name="License" type="License" />
+			<xs:element name="Status" type="ProfileStatus" />
 			<xs:element name="SupportedArchitectures" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="SupportedPlatforms" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="ExternalDependencies" type="xs:string" minOccurs="0" maxOccurs="1" />
@@ -121,15 +47,9 @@
 			<xs:element name="EnvironmentSize" type="xs:decimal" minOccurs="0" maxOccurs="1" />
 			<xs:element name="EnvironmentTestingSize" type="xs:decimal" minOccurs="0" maxOccurs="1" />
 			<xs:element name="EstimatedLength" type="xs:decimal" minOccurs="0" maxOccurs="1" />
-			<xs:element name="ProjectURL" minOccurs="0" maxOccurs="1">
-				<xs:simpleType>
-				<xs:restriction base="xs:string">
-					<xs:pattern value="http://*" />
-				</xs:restriction>
-				</xs:simpleType>
-			</xs:element>
-			<xs:element name="RequiresCoreVersionMin" type="xs:integer" minInclusive="2950" maxInclusive="9999" minOccurs="0" maxOccurs="1" />
-			<xs:element name="RequiresCoreVersionMax" type="xs:integer" minInclusive="2950" maxInclusive="9999" minOccurs="0" maxOccurs="1" />
+			<xs:element name="ProjectURL" type="URLString" minOccurs="0" maxOccurs="1" />
+			<xs:element name="RequiresCoreVersionMin" type="CoreVersion" minOccurs="0" maxOccurs="1" />
+			<xs:element name="RequiresCoreVersionMax" type="CoreVersion" minOccurs="0" maxOccurs="1" />
 			<xs:element name="ReferenceSystems" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="AllowResultsSharing" type="xs:boolean" minOccurs="0" maxOccurs="1" />
 			<xs:element name="AutoSaveResults" type="xs:boolean" minOccurs="0" maxOccurs="1" />

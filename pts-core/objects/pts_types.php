@@ -24,15 +24,15 @@ class pts_types
 {
 	public static function subsystem_targets()
 	{
-		return array("System", "Processor", "Disk", "Graphics", "Memory", "Network", "Other");
+		return self::parse_xsd_types("TestType");
 	}
 	public static function software_license_types()
 	{
-		return array("Free", "Non-Free", "Retail", "Restricted");
+		return self::parse_xsd_types("License");
 	}
 	public static function test_profile_state_types()
 	{
-		return array("PRIVATE", "BROKEN", "EXPERIMENTAL", "UNVERIFIED");
+		return self::parse_xsd_types("ProfileStatus");
 	}
 	public static function identifiers_to_test_profile_objects($identifiers, $include_extensions = false, $remove_duplicates = true)
 	{
@@ -149,6 +149,29 @@ class pts_types
 	{
 		$object = pts_types::identifier_to_object($identifier);
 		return $object instanceof pts_test_profile || $object instanceof pts_test_suite;
+	}
+	private static function parse_xsd_types($type_name)
+	{
+		$values = array();
+		$dom = new DOMDocument();
+		$dom->load(PTS_OPENBENCHMARKING_PATH . "schemas/types.xsd");
+		$types = $dom->getElementsByTagName("schema")->item(0)->getElementsByTagName("simpleType");
+
+		for($i = 0; $i < $types->length; $i++)
+		{
+			if($types->item($i)->attributes->getNamedItem("name")->nodeValue == $type_name)
+			{
+				$enumerations = $types->item($i)->getElementsByTagName("restriction")->item(0)->getElementsByTagName("enumeration");
+
+				for($j = 0; $j < $enumerations->length; $j++)
+				{
+					array_push($values, $enumerations->item($j)->attributes->getNamedItem("value")->nodeValue);
+				}
+				break;
+			}
+		}
+
+		return $values;
 	}
 }
 

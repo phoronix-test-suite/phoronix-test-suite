@@ -2,27 +2,22 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
 <xs:annotation>
 	<xs:documentation xml:lang="en">
-		Phoronix Test Suite / OpenBenchmarking.org XML Test Profile Specification
+		Phoronix Test Suite / OpenBenchmarking.org XML Result File Specification
 		Copyright (C) 2008 - 2010, Phoronix Media
 		Copyright (C) 2008 - 2010, Michael Larabel
 	</xs:documentation>
 </xs:annotation>
+<xs:include schemaLocation="types.xsd" />
 <xs:element name="PhoronixTestSuite">
 <xs:complexType>
 <xs:sequence>
 		<xs:element name="Generated">
 		<xs:complexType>
 		<xs:sequence>
-			<xs:element name="Title" type="xs:string" minLength="2" maxLength="48" />
-			<xs:element name="Description" type="xs:string" minLength="8" maxLength="2048" />
+			<xs:element name="Title" type="TitleString" />
+			<xs:element name="Description" type="DescriptionString" />
 			<xs:element name="Notes" type="xs:string" />
-			<xs:element name="LastModified">
-				<xs:simpleType>
-				<xs:restriction base="xs:string">
-					<xs:pattern value="[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}" />
-				</xs:restriction>
-				</xs:simpleType>
-			</xs:element>
+			<xs:element name="LastModified" type="TimeStamp" />
 			<xs:element name="TestClient" type="xs:string" />
 			<xs:element name="InternalTags" type="xs:string" />
 			<xs:element name="ReferenceID" type="xs:string" minOccurs="0" maxOccurs="1" />
@@ -39,13 +34,7 @@
 			<xs:element name="Hardware" type="xs:string" />
 			<xs:element name="Software" type="xs:string" />
 			<xs:element name="User" type="xs:string" />
-			<xs:element name="TimeStamp">
-				<xs:simpleType>
-				<xs:restriction base="xs:string">
-					<xs:pattern value="[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}" />
-				</xs:restriction>
-				</xs:simpleType>
-			</xs:element>
+			<xs:element name="TimeStamp" type="TimeStamp" />
 			<xs:element name="Notes" type="xs:string" />
 		</xs:sequence>
 		</xs:complexType>
