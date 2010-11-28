@@ -16,9 +16,9 @@
 		<xs:sequence>
 			<xs:element name="Title" type="TitleString" />
 			<xs:element name="Version" type="VersionString" />
+			<xs:element name="TestType" type="TestType" />
 			<xs:element name="Description" type="DescriptionString" />
 			<xs:element name="Maintainer" type="xs:string" />
-			<xs:element name="TestType" type="TestType" />
 			<xs:element name="PreRunMessage" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="PostRunMessage" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="RunMode" type="xs:string" minOccurs="0" maxOccurs="1" />
@@ -32,9 +32,9 @@
 		<xs:complexType>
 		<xs:sequence>
 			<xs:element name="Test" type="xs:string" maxLength="64" />
+			<xs:element name="ProfileVersion" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="Arguments" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="Description" type="xs:string" minOccurs="0" maxOccurs="1" />
-			<xs:element name="ProfileVersion" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="Mode" type="RunModes" minOccurs="0" maxOccurs="1" />
 			<xs:element name="OverrideTestOptions" type="xs:string" minOccurs="0" maxOccurs="1" />
 		</xs:sequence>

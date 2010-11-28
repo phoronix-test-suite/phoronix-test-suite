@@ -46,6 +46,11 @@ class nye_XmlWriter
 			$this->dom->appendChild($xslt);
 		}
 	}
+	public function addXmlNodeWNE($xml_location, $xml_value = null)
+	{
+		// When Not Empty, add the XML node
+		return empty($xml_value) ? false : $this->addXmlNode($xml_location, $xml_value);
+	}
 	public function addXmlNode($xml_location, $xml_value = null)
 	{
 		$nodes = explode('/', $xml_location);

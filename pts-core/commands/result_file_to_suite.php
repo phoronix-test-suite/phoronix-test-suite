@@ -44,25 +44,15 @@ class result_file_to_suite implements pts_option_interface
 		$suite_maintainer = pts_user_io::prompt_user_input("Enter suite maintainer name");
 		$suite_description = pts_user_io::prompt_user_input("Enter suite description");
 
-		$xml_writer = new nye_XmlWriter();
-		$xml_writer->addXmlNode(P_SUITE_TITLE, $suite_name);
-		$xml_writer->addXmlNode(P_SUITE_VERSION, "1.0.0");
-		$xml_writer->addXmlNode(P_SUITE_MAINTAINER, $suite_maintainer);
-		$xml_writer->addXmlNode(P_SUITE_TYPE, $suite_test_type);
-		$xml_writer->addXmlNode(P_SUITE_DESCRIPTION, $suite_description);
+		$suite_writer = new pts_test_suite_writer();
+		$suite_writer->add_suite_information($suite_name, "1.0.0", $suite_maintainer, $suite_test_type, $suite_description);
 
 		// Read results file
 		$result_file = new pts_result_file($result_file);
 
 		foreach($result_file->get_result_objects() as $result_object)
 		{
-			$xml_writer->addXmlNode(P_SUITE_TEST_NAME, $result_object->test_profile->get_identifier());
-
-			if($result_object->get_arguments() != null && $result_object->get_arguments_description() != null)
-			{
-				$xml_writer->addXmlNode(P_SUITE_TEST_ARGUMENTS, $result_object->get_arguments());
-				$xml_writer->addXmlNode(P_SUITE_TEST_DESCRIPTION, $result_object->get_arguments_description());
-			}
+			$suite_writer->add_to_suite_from_result_object($result_object);
 		}
 
 		// Finish it off
@@ -80,7 +70,7 @@ class result_file_to_suite implements pts_option_interface
 		}
 		$save_to = XML_SUITE_LOCAL_DIR . $suite_identifier . ".xml";
 
-		if($xml_writer->saveXMLFile($save_to) != false)
+		if($suite_writer->save_xml($save_to) != false)
 		{
 			echo "\n\nSaved To: " . $save_to . "\nTo run this suite, type: phoronix-test-suite benchmark " . $suite_identifier . "\n\n";
 		}

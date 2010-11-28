@@ -46,13 +46,8 @@ class build_suite implements pts_option_interface
 			}
 		}
 
-		$xml_writer = new nye_XmlWriter();
-		$xml_writer->addXmlNode(P_SUITE_TITLE, $suite_name);
-		$xml_writer->addXmlNode(P_SUITE_VERSION, "1.0.0");
-		$xml_writer->addXmlNode(P_SUITE_MAINTAINER, $suite_maintainer);
-		$xml_writer->addXmlNode(P_SUITE_TYPE, $suite_test_type);
-		$xml_writer->addXmlNode(P_SUITE_DESCRIPTION, $suite_description);
-		$write_position = 1;
+		$suite_writer = new pts_test_suite_writer();
+		$suite_writer->add_suite_information($suite_name, "1.0.0", $suite_maintainer, $suite_test_type, $suite_description);
 
 		foreach($r as $test_object)
 		{
@@ -64,16 +59,12 @@ class build_suite implements pts_option_interface
 
 				for($i = 0; $i < count($args); $i++)
 				{
-					$xml_writer->addXmlNode(P_SUITE_TEST_NAME, $test_object->get_identifier());
-					$xml_writer->addXmlNode(P_SUITE_TEST_ARGUMENTS, $args[$i]);
-					$xml_writer->addXmlNode(P_SUITE_TEST_DESCRIPTION, $description[$i]);
-					$write_position++;
+					$suite_writer->add_to_suite($test_object->get_identifier(), null, $args[$i], $description[$i]);
 				}
 			}
 			else if($test_object instanceof pts_test_suite)
 			{
-				$xml_writer->addXmlNode(P_SUITE_TEST_NAME, $test_object->get_identifier());
-				$write_position++;
+				$suite_writer->add_to_suite($test_object->get_identifier(), null, null, null);
 			}
 		}
 
@@ -91,17 +82,12 @@ class build_suite implements pts_option_interface
 
 					for($i = 0; $i < count($args); $i++)
 					{
-						$xml_writer->addXmlNode(P_SUITE_TEST_NAME, $test_to_add);
-						$xml_writer->addXmlNode(P_SUITE_TEST_ARGUMENTS, $args[$i]);
-						$xml_writer->addXmlNode(P_SUITE_TEST_DESCRIPTION, $description[$i]);
-						$write_position++;
+						$suite_writer->add_to_suite($test_to_add, null, $args[$i], $description[$i]);
 					}
 					break;
 				case "Add Sub-Suite":
 					$suite_to_add = pts_user_io::prompt_text_menu("Enter test suite", $possible_suites);
-
-					$xml_writer->addXmlNode(P_SUITE_TEST_NAME, $suite_to_add);
-					$write_position++;
+					$suite_writer->add_to_suite($suite_to_add, null, null, null);
 					break;
 			}
 			echo "\nAvailable Options:\n";
@@ -123,9 +109,7 @@ class build_suite implements pts_option_interface
 		}
 		$save_to = XML_SUITE_LOCAL_DIR . $suite_identifier . ".xml";
 
-		$fp = $xml_writer->saveXMLFile($save_to);
-
-		if($fp != false)
+		if($suite_writer->save_xml($save_to) != false)
 		{
 			echo "\n\nSaved To: " . $save_to . "\nTo run this suite, type: phoronix-test-suite benchmark " . $suite_identifier . "\n\n";
 		}
