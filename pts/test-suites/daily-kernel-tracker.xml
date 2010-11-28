@@ -8,211 +8,211 @@
 		<TestType>System</TestType>
 		<Description>These are the tests that are being run daily by the Phoronix Kernel Test Farm.</Description>
 	</SuiteInformation>
-	<RunTest>
+	<Execute>
 		<Test>openarena</Test>
 		<Arguments>+set r_customWidth $VIDEO_WIDTH +set r_customHeight $VIDEO_HEIGHT</Arguments>
 		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>urbanterror</Test>
 		<Arguments>+set r_customWidth $VIDEO_WIDTH +set r_customHeight $VIDEO_HEIGHT</Arguments>
 		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>apache</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>pgbench</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>sqlite</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>compress-7zip</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>compress-gzip</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>compress-lzma</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>compress-pbzip2</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>aio-stress</Test>
 		<Arguments>-o 2</Arguments>
 		<Description>Test: Random Write</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>bork</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>iozone</Test>
 		<Arguments>-r 4k -s 2048M -i0</Arguments>
 		<Description>Size: 2GB - Disk Test: Write Performance</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>iozone</Test>
 		<Arguments>-r 4k -s 2048M -i0 -i1</Arguments>
 		<Description>Size: 2GB - Disk Test: Read Performance</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>postmark</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>tiobench</Test>
 		<Arguments>-k3 -k2 -k1 -f 64 -t 32</Arguments>
 		<Description>Test: Write - Size Per Thread: 64MB - Thread Count: 32</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>tiobench</Test>
 		<Arguments>-k3 -k2 -f 64 -t 32</Arguments>
 		<Description>Test: Random Write - Size Per Thread: 64MB - Thread Count: 32</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>tiobench</Test>
 		<Arguments>-k3 -k1 -f 64 -t 32</Arguments>
 		<Description>Test: Read - Size Per Thread: 64MB - Thread Count: 32</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>tiobench</Test>
 		<Arguments>-k2 -k1 -f 64 -t 32</Arguments>
 		<Description>Test: Random Read - Size Per Thread: 64MB - Thread Count: 32</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>dbench</Test>
 		<Arguments>1</Arguments>
 		<Description>Client Count: 1</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>dbench</Test>
 		<Arguments>6</Arguments>
 		<Description>Client Count: 6</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>dbench</Test>
 		<Arguments>12</Arguments>
 		<Description>Client Count: 12</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>dbench</Test>
 		<Arguments>48</Arguments>
 		<Description>Client Count: 48</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>dbench</Test>
 		<Arguments>128</Arguments>
 		<Description>Client Count: 128</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>fs-mark</Test>
 		<Arguments>-s 1048576 -n 1000</Arguments>
 		<Description>1000 Files, 1MB Size</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>x264</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>ffmpeg</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>crafty</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>encode-flac</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>encode-mp3</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>encode-ogg</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>mafft</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>hmmer</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>bullet</Test>
 		<Arguments>3000 fall</Arguments>
 		<Description>Test: 3000 Fall</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>bullet</Test>
 		<Arguments>1000 stack</Arguments>
 		<Description>Test: 1000 Stack</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>bullet</Test>
 		<Arguments>convex-trimesh</Arguments>
 		<Description>Test: Convex Trimesh</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>bullet</Test>
 		<Arguments>raytests</Arguments>
 		<Description>Test: Raytests</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>graphics-magick</Test>
 		<Arguments>-colorspace HWB</Arguments>
 		<Description>Operation: HWB Color Space</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>graphics-magick</Test>
 		<Arguments>-lat 10x10-5%</Arguments>
 		<Description>Operation: Local Adaptive Thresholding</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>graphics-magick</Test>
 		<Arguments>-resize 50%</Arguments>
 		<Description>Operation: Resizing</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>himeno</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>npb</Test>
 		<Arguments>ft.B</Arguments>
 		<Description>Test / Class: FT.B</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>npb</Test>
 		<Arguments>is.C</Arguments>
 		<Description>Test / Class: IS.C</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>npb</Test>
 		<Arguments>lu.A</Arguments>
 		<Description>Test / Class: LU.A</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>tscp</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>dcraw</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>povray</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>c-ray</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>sunflow</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>john-the-ripper</Test>
 		<Mode>BATCH</Mode>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>gcrypt</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>gnupg</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>openssl</Test>
-	</RunTest>
+	</Execute>
 </PhoronixTestSuite>

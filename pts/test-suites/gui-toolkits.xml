@@ -8,44 +8,44 @@
 		<Maintainer>Michael Larabel</Maintainer>
 		<Description>This test suite is made up of GUI tool-kit test profiles. Currently this suite consists of tests for different GTK operations. This test suite is designed for testing your graphics card, processor (in some circumstances), and the graphics driver.</Description>
 	</SuiteInformation>
-	<RunTest>
+	<Execute>
 		<Test>gtkperf</Test>
 		<Arguments>COMBOBOX</Arguments>
 		<Description>GtkComboBox</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>gtkperf</Test>
 		<Arguments>DRAWING_PIXBUFS</Arguments>
 		<Description>GtkDrawingArea - Pixbufs</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>gtkperf</Test>
 		<Arguments>RADIO_BUTTON</Arguments>
 		<Description>GtkRadioButton</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>qgears2</Test>
 		<Arguments>-render GEARSFANCY</Arguments>
 		<Description>XRender + Gears</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>qgears2</Test>
 		<Arguments>-render TEXT</Arguments>
 		<Description>XRender + Text</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>qgears2</Test>
 		<Arguments>-render COMPO</Arguments>
 		<Description>XRender + Image Scaling</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>qgears2</Test>
 		<Arguments>-gl GEARSFANCY</Arguments>
 		<Description>OpenGL + Gears</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>qgears2</Test>
 		<Arguments>-gl COMPO</Arguments>
 		<Description>OpenGL + Image Scaling</Description>
-	</RunTest>
+	</Execute>
 </PhoronixTestSuite>

@@ -8,96 +8,96 @@
 		<Maintainer>Michael Larabel</Maintainer>
 		<Description>This test suite consists of tests that are able to take advantage of multi-core and/or multi-processor systems. This suite can be used on a single core system, however, it's intended for systems with multiple processing cores. Among the tests in this suite are encoding, compilation, and rendering tests.</Description>
 	</SuiteInformation>
-	<RunTest>
+	<Execute>
 		<Test>compress-7zip</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>compress-pbzip2</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>x264</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>openssl</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>gcrypt</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>john-the-ripper</Test>
 		<Arguments>BLOWFISH</Arguments>
 		<Description>Test: Blowfish</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>graphics-magick</Test>
 		<Arguments>-lat 10x10-5%</Arguments>
 		<Description>Operation: Local Adaptive Thresholding</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>graphics-magick</Test>
 		<Arguments>-resize 50%</Arguments>
 		<Description>Operation: Resizing</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>himeno</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>bullet</Test>
 		<Arguments>1000 convex</Arguments>
 		<Description>Test: 1000 Convex</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>c-ray</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>povray</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>smallpt</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>crafty</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>hmmer</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>mafft</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>minion</Test>
 		<Arguments>benchmarks/Quasigroup/qg-watchelement-7-10.minion</Arguments>
 		<Description>Benchmark: Quasigroup</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>minion</Test>
 		<Arguments>benchmarks/solitaire/solitaire_benchmark_8.minion</Arguments>
 		<Description>Benchmark: Solitaire</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>npb</Test>
 		<Arguments>ep.B</Arguments>
 		<Description>Test / Class: EP.B</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>npb</Test>
 		<Arguments>is.C</Arguments>
 		<Description>Test / Class: IS.C</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>npb</Test>
 		<Arguments>lu.A</Arguments>
 		<Description>Test / Class: LU.A</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>npb</Test>
 		<Arguments>ua.A</Arguments>
 		<Description>Test / Class: UA.A</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>build-apache</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>build-php</Test>
-	</RunTest>
+	</Execute>
 </PhoronixTestSuite>

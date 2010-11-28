@@ -8,29 +8,29 @@
 		<Maintainer>Michael Larabel</Maintainer>
 		<Description>The gaming test suite is made up of all games that use ioquake3, which is a GPL version of the id Software Quake 3 (id Tech 3) software engine.</Description>
 	</SuiteInformation>
-	<RunTest>
+	<Execute>
 		<Test>tremulous</Test>
 		<Arguments>+set r_customwidth $VIDEO_WIDTH +set r_customheight $VIDEO_HEIGHT</Arguments>
 		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>openarena</Test>
 		<Arguments>+set r_customWidth $VIDEO_WIDTH +set r_customHeight $VIDEO_HEIGHT</Arguments>
 		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>urbanterror</Test>
 		<Arguments>+set r_customwidth $VIDEO_WIDTH +set r_customheight $VIDEO_HEIGHT</Arguments>
 		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>padman</Test>
 		<Arguments>+set r_customwidth $VIDEO_WIDTH +set r_customheight $VIDEO_HEIGHT</Arguments>
 		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>smokin-guns</Test>
 		<Arguments>+set r_customwidth $VIDEO_WIDTH +set r_customheight $VIDEO_HEIGHT</Arguments>
 		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
-	</RunTest>
+	</Execute>
 </PhoronixTestSuite>

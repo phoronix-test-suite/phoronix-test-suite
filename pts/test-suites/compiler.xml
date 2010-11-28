@@ -8,87 +8,87 @@
 		<TestType>Processor</TestType>
 		<Description>This is a collection of compiler benchmarks.</Description>
 	</SuiteInformation>
-	<RunTest>
+	<Execute>
 		<Test>build-apache</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>build-php</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>build-imagemagick</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>apache</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>compress-7zip</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>encode-mp3</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>x264</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>gcrypt</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>openssl</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>c-ray</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>graphics-magick</Test>
 		<Arguments>-colorspace HWB</Arguments>
 		<Description>Operation: HWB Color Space</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>graphics-magick</Test>
 		<Arguments>-resize 50%</Arguments>
 		<Description>Operation: Resizing</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>graphics-magick</Test>
 		<Arguments>-sharpen 0x1.0</Arguments>
 		<Description>Operation: Sharpen</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>bullet</Test>
 		<Arguments>3000 fall</Arguments>
 		<Description>Test: 3000 Fall</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>bullet</Test>
 		<Arguments>1000 stack</Arguments>
 		<Description>Test: 1000 Stack</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>bullet</Test>
 		<Arguments>1000 convex</Arguments>
 		<Description>Test: 1000 Convex</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>bullet</Test>
 		<Arguments>convex-trimesh</Arguments>
 		<Description>Test: Convex Trimesh</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>bullet</Test>
 		<Arguments>raytests</Arguments>
 		<Description>Test: Raytests</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>john-the-ripper</Test>
 		<Arguments>BLOWFISH</Arguments>
 		<Description>Test: Blowfish</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>hmmer</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>npb</Test>
 		<Arguments>lu.A</Arguments>
 		<Description>Test / Class: LU.A</Description>
-	</RunTest>
+	</Execute>
 </PhoronixTestSuite>

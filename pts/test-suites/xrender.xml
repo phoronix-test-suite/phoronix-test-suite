@@ -8,22 +8,22 @@
 		<Maintainer>Michael Larabel</Maintainer>
 		<Description>This test suite consists of graphics tests that exercise the X11 RENDER extension.</Description>
 	</SuiteInformation>
-	<RunTest>
+	<Execute>
 		<Test>render-bench</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>qgears2</Test>
 		<Arguments>-render GEARSFANCY</Arguments>
 		<Description>XRender + Gears</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>qgears2</Test>
 		<Arguments>-render TEXT</Arguments>
 		<Description>XRender + Text</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>qgears2</Test>
 		<Arguments>-render COMPO</Arguments>
 		<Description>XRender + Image Scaling</Description>
-	</RunTest>
+	</Execute>
 </PhoronixTestSuite>

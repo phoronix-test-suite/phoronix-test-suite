@@ -28,7 +28,7 @@
 		</xs:complexType>
 		</xs:element>
 
-		<xs:element name="RunTest" minOccurs="1" maxOccurs="unbounded">
+		<xs:element name="Execute" minOccurs="1" maxOccurs="unbounded">
 		<xs:complexType>
 		<xs:sequence>
 			<xs:element name="Test" type="xs:string" maxLength="64" />

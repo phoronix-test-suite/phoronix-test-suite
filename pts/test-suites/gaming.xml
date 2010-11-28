@@ -8,10 +8,10 @@
 		<Maintainer>Michael Larabel</Maintainer>
 		<Description>The gaming test suite is made up of all game tests -- both open-source and closed-source.</Description>
 	</SuiteInformation>
-	<RunTest>
+	<Execute>
 		<Test>gaming-free</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>gaming-closed</Test>
-	</RunTest>
+	</Execute>
 </PhoronixTestSuite>

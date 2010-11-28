@@ -8,30 +8,30 @@
 		<Maintainer>Michael Larabel</Maintainer>
 		<Description>The Java test suite contains all Java-based test profiles within the Phoronix Test Suite.</Description>
 	</SuiteInformation>
-	<RunTest>
+	<Execute>
 		<Test>sunflow</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>bork</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>java-scimark2</Test>
 		<Arguments>TEST_FFT</Arguments>
 		<Description>FFT Performance</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>java-scimark2</Test>
 		<Arguments>TEST_SOR</Arguments>
 		<Description>SOR Performance</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>java-scimark2</Test>
 		<Arguments>TEST_MONTE</Arguments>
 		<Description>Monte Carlo Performance</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>java-scimark2</Test>
 		<Arguments>TEST_COMPOSITE</Arguments>
 		<Description>Composite Performance</Description>
-	</RunTest>
+	</Execute>
 </PhoronixTestSuite>

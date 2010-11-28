@@ -8,13 +8,13 @@
 		<Maintainer>Michael Larabel</Maintainer>
 		<Description>The Universe X suite contains Phoronix Test Suite tests that require an active X server / tests that are graphics-based.</Description>
 	</SuiteInformation>
-	<RunTest>
+	<Execute>
 		<Test>gui-toolkits</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>gaming</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>opengl-demos</Test>
-	</RunTest>
+	</Execute>
 </PhoronixTestSuite>

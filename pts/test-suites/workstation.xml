@@ -7,27 +7,27 @@
 		<TestType>System</TestType>
 		<Description>This is a collection of tests designed to test a system's workstation / server capabilities.</Description>
 	</SuiteInformation>
-	<RunTest>
+	<Execute>
 		<Test>specviewperf9</Test>
 		<Arguments>ensight</Arguments>
 		<Description>ensight-03</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>specviewperf9</Test>
 		<Arguments>maya</Arguments>
 		<Description>maya-02</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>specviewperf9</Test>
 		<Arguments>proe</Arguments>
 		<Description>Pro/Engineer</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>vdrift</Test>
 		<Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT</Arguments>
 		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>server</Test>
-	</RunTest>
+	</Execute>
 </PhoronixTestSuite>

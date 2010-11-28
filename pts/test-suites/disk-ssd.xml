@@ -7,55 +7,55 @@
 		<TestType>Disk</TestType>
 		<Description>This is a collection of tests that can be used for benchmarking a solid state disk.</Description>
 	</SuiteInformation>
-	<RunTest>
+	<Execute>
 		<Test>aio-stress</Test>
 		<Arguments>-o 2</Arguments>
 		<Description>Test: Random Write</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>iozone</Test>
 		<Arguments>-r 4k -s 4096M -i0</Arguments>
 		<Description>Size: 4GB - Disk Test: Write Performance</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>iozone</Test>
 		<Arguments>-r 4k -s 4096M -i0 -i1</Arguments>
 		<Description>Size: 4GB - Disk Test: Read Performance</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>dbench</Test>
 		<Arguments>6</Arguments>
 		<Description>Client Count: 6</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>dbench</Test>
 		<Arguments>12</Arguments>
 		<Description>Client Count: 12</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>dbench</Test>
 		<Arguments>48</Arguments>
 		<Description>Client Count: 48</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>dbench</Test>
 		<Arguments>128</Arguments>
 		<Description>Client Count: 128</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>pgbench</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>postmark</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>tiobench</Test>
 		<Arguments>-k3 -k2 -f 256 -t 32</Arguments>
 		<Description>Test: Random Write - Size Per Thread: 256MB - Thread Count: 32</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>tiobench</Test>
 		<Arguments>-k2 -k1 -f 256 -t 32</Arguments>
 		<Description>Test: Random Read - Size Per Thread: 256MB - Thread Count: 32</Description>
-	</RunTest>
+	</Execute>
 </PhoronixTestSuite>

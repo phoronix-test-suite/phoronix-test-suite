@@ -8,123 +8,123 @@
 		<TestType>System</TestType>
 		<Description>This suite consists of tests that look at different aspects of the system's kernel performance.</Description>
 	</SuiteInformation>
-	<RunTest>
+	<Execute>
 		<Test>tremulous</Test>
 		<Arguments>+set r_customwidth 1280 +set r_customheight 1024</Arguments>
 		<Description>1280 x 1024</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>openarena</Test>
 		<Arguments>+set r_customWidth 1280 +set r_customHeight 1024</Arguments>
 		<Description>1280 x 1024</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>urbanterror</Test>
 		<Arguments>+set r_customwidth 1280 +set r_customheight 1024</Arguments>
 		<Description>1280 x 1024</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>apache</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>pgbench</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>compress-lzma</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>compress-7zip</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>compress-pbzip2</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>encode-mp3</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>ffmpeg</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>x264</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>gnupg</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>gcrypt</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>openssl</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>bwfirt</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>c-ray</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>smallpt</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>mafft</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>byte</Test>
 		<Arguments>TEST_DHRY2</Arguments>
 		<Description>Dhrystone 2</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>byte</Test>
 		<Arguments>TEST_INT</Arguments>
 		<Description>Integer Arithmetic</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>iozone</Test>
 		<Arguments>-r 4k -s 4096M -i0</Arguments>
 		<Description>4GB Write Performance</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>iozone</Test>
 		<Arguments>-r 4k -s 4096M -i0 -i1</Arguments>
 		<Description>4GB Read Performance</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>dbench</Test>
 		<Arguments>12</Arguments>
 		<Description>12 Clients</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>fs-mark</Test>
 		<Arguments>-s 1048576 -n 1000</Arguments>
 		<Description>1000 Files, 1MB Size</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>graphics-magick</Test>
 		<Arguments>-colorspace HWB </Arguments>
 		<Description>HWB Color Space</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>graphics-magick</Test>
 		<Arguments>-lat 10x10-5% </Arguments>
 		<Description>Local Adaptive Thresholding</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>bullet</Test>
 		<Arguments>convex-trimesh</Arguments>
 		<Description>Test: Convex Trimesh</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>himeno</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>john-the-ripper</Test>
 		<Arguments>BLOWFISH</Arguments>
 		<Description>Blowfish</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>nero2d</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>dcraw</Test>
-	</RunTest>
+	</Execute>
 </PhoronixTestSuite>

@@ -8,10 +8,10 @@
 		<Maintainer>Michael Larabel</Maintainer>
 		<Description>The Universe Phoronix Test Suite contains all benchmark profiles that are known to be in a working and good overall state. Among the profiles are encoding, compilation, graphics, and other system tests. The Universe test suite may take many minutes to complete.</Description>
 	</SuiteInformation>
-	<RunTest>
+	<Execute>
 		<Test>universe-cli</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>universe-x</Test>
-	</RunTest>
+	</Execute>
 </PhoronixTestSuite>

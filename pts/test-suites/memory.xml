@@ -8,49 +8,49 @@
 		<Maintainer>Michael Larabel</Maintainer>
 		<Description>The system memory test suite consists of tests designed to test the computer's system memory (RAM) performance. Among these tests are RAMspeed and Bandwidth.</Description>
 	</SuiteInformation>
-	<RunTest>
+	<Execute>
 		<Test>ramspeed</Test>
 		<Arguments>ADD -b 3</Arguments>
 		<Description>Integer Add</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>ramspeed</Test>
 		<Arguments>COPY -b 3</Arguments>
 		<Description>Integer Copy</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>ramspeed</Test>
 		<Arguments>SCALE -b 3</Arguments>
 		<Description>Integer Scale</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>ramspeed</Test>
 		<Arguments>ADD -b 6</Arguments>
 		<Description>Floating-Point Add</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>stream</Test>
 		<Arguments>Add</Arguments>
 		<Description>Add</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>stream</Test>
 		<Arguments>Copy</Arguments>
 		<Description>Copy</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>stream</Test>
 		<Arguments>Scale</Arguments>
 		<Description>Scale</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>cachebench</Test>
 		<Arguments>-r</Arguments>
 		<Description>Read Cache</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>cachebench</Test>
 		<Arguments>-w</Arguments>
 		<Description>Write Cache</Description>
-	</RunTest>
+	</Execute>
 </PhoronixTestSuite>

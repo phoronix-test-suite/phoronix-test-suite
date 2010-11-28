@@ -8,15 +8,15 @@
 		<Maintainer>Michael Larabel</Maintainer>
 		<Description>The X testing suite contains Phoronix Test Suite tests that require an active X server / tests that are graphics-based and are designed to test the X Server, its extensions, or other synthetic testing.</Description>
 	</SuiteInformation>
-	<RunTest>
+	<Execute>
 		<Test>x11perf</Test>
 		<Arguments>-comppixwin500</Arguments>
 		<Description>500px Compositing From Pixmap To Window</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>trislam</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>xrender</Test>
-	</RunTest>
+	</Execute>
 </PhoronixTestSuite>

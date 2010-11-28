@@ -8,40 +8,40 @@
 		<Maintainer>Michael Larabel</Maintainer>
 		<Description>This test suite contains tests that deal with measuring the system's computational / arithmetic performance. Some of the included tests are of synthetic nature while others have real-world meanings.</Description>
 	</SuiteInformation>
-	<RunTest>
+	<Execute>
 		<Test>byte</Test>
 		<Arguments>TEST_DHRY2</Arguments>
 		<Description>Dhrystone 2</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>scimark2</Test>
 		<Arguments>TEST_COMPOSITE</Arguments>
 		<Description>Composite</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>fhourstones</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>gmpbench</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>chess</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>opstone</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>dcraw</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>sudokut</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>nero2d</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>minion</Test>
 		<Arguments>benchmarks/solitaire/solitaire_benchmark_8.minion</Arguments>
 		<Description>Solitaire</Description>
-	</RunTest>
+	</Execute>
 </PhoronixTestSuite>

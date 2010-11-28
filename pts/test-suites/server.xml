@@ -7,122 +7,122 @@
 		<TestType>System</TestType>
 		<Description>A collection of motherboard tests for a server environment.</Description>
 	</SuiteInformation>
-	<RunTest>
+	<Execute>
 		<Test>apache</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>pgbench</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>postmark</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>iozone</Test>
 		<Arguments>-r 4k -s 4096M -i0</Arguments>
 		<Description>Size: 4GB - Disk Test: Write Performance</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>iozone</Test>
 		<Arguments>-r 4k -s 4096M -i0 -i1</Arguments>
 		<Description>Size: 4GB - Disk Test: Read Performance</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>c-ray</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>povray</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>crafty</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>gcrypt</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>phpbench</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>graphics-magick</Test>
 		<Arguments>-colorspace HWB</Arguments>
 		<Description>Operation: HWB Color Space</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>openssl</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>john-the-ripper</Test>
 		<Arguments>BLOWFISH</Arguments>
 		<Description>Blowfish</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>mafft</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>himeno</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>hmmer</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>encode-mp3</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>ffmpeg</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>compress-lzma</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>compress-pbzip2</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>bullet</Test>
 		<Arguments>3000 fall</Arguments>
 		<Description>Test: 3000 Fall</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>bullet</Test>
 		<Arguments>convex-trimesh</Arguments>
 		<Description>Test: Convex Trimesh</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>npb</Test>
 		<Arguments>ep.B</Arguments>
 		<Description>Test / Class: EP.B</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>npb</Test>
 		<Arguments>is.C</Arguments>
 		<Description>Test / Class: IS.C</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>npb</Test>
 		<Arguments>lu.A</Arguments>
 		<Description>Test / Class: LU.A</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>npb</Test>
 		<Arguments>mg.B</Arguments>
 		<Description>Test / Class: MG.B</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>stream</Test>
 		<Arguments>Copy</Arguments>
 		<Description>Type: Copy</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>stream</Test>
 		<Arguments>Scale</Arguments>
 		<Description>Type: Scale</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>stream</Test>
 		<Arguments>Add</Arguments>
 		<Description>Type: Add</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>stream</Test>
 		<Arguments>Triad</Arguments>
 		<Description>Type: Triad</Description>
-	</RunTest>
+	</Execute>
 </PhoronixTestSuite>

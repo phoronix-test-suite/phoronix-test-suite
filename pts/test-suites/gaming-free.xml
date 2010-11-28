@@ -8,27 +8,27 @@
 		<Maintainer>Michael Larabel</Maintainer>
 		<Description>The gaming test suite is made up of all game tests that are open-source.</Description>
 	</SuiteInformation>
-	<RunTest>
+	<Execute>
 		<Test>nexuiz</Test>
 		<Arguments>+vid_width $VIDEO_WIDTH +vid_height $VIDEO_HEIGHT</Arguments>
 		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>warsow</Test>
 		<Arguments>+vid_customwidth $VIDEO_WIDTH +vid_customheight $VIDEO_HEIGHT +vid_restart</Arguments>
 		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>ppracer</Test>
 		<Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT</Arguments>
 		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>ioquake3-games</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>vdrift</Test>
 		<Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT</Arguments>
 		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
-	</RunTest>
+	</Execute>
 </PhoronixTestSuite>

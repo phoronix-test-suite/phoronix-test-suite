@@ -8,7 +8,7 @@
 		<Maintainer>Michael Larabel</Maintainer>
 		<Description>The database test suite consists of tests that are designed to represent real-world database performance in areas such as XML and SQL.</Description>
 	</SuiteInformation>
-	<RunTest>
+	<Execute>
 		<Test>sqlite</Test>
-	</RunTest>
+	</Execute>
 </PhoronixTestSuite>

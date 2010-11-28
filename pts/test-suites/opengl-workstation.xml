@@ -8,34 +8,34 @@
 		<Maintainer>Michael Larabel</Maintainer>
 		<Description>The OpenGL Workstation Test Suite consists of OpenGL-powered workstation tests, such as SPECViewPerf.</Description>
 	</SuiteInformation>
-	<RunTest>
+	<Execute>
 		<Test>specviewperf9</Test>
 		<Arguments>3dsmax</Arguments>
 		<Description>3DS Max</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>specviewperf9</Test>
 		<Arguments>ensight</Arguments>
 		<Description>Ensight</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>specviewperf9</Test>
 		<Arguments>proe</Arguments>
 		<Description>PRO Engineer</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>specviewperf10</Test>
 		<Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT maya</Arguments>
 		<Description>Maya</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>specviewperf10</Test>
 		<Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT ugnx</Arguments>
 		<Description>UGNX</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>xplane9</Test>
 		<Arguments>--fps_test=2 --pref:_x_res_req_ALL=$VIDEO_WIDTH --pref:_y_res_req_ALL=$VIDEO_HEIGHT</Arguments>
 		<Description>$VIDEO_WIDTH x $VIDEO_HEIGHT - High Quality</Description>
-	</RunTest>
+	</Execute>
 </PhoronixTestSuite>

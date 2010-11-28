@@ -9,81 +9,81 @@
 		<Description>This test suite is designed to contain real-world disk and file-system tests.</Description>
 		<RunMode>PCQS</RunMode>
 	</SuiteInformation>
-	<RunTest>
+	<Execute>
 		<Test>compress-gzip</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>sqlite</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>apache</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>pgbench</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>compilebench</Test>
 		<Mode>BATCH</Mode>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>iozone</Test>
 		<Arguments>-r 4k -s 8192M -i0</Arguments>
 		<Description>8GB Write Performance</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>iozone</Test>
 		<Arguments>-r 4k -s 8192M -i0 -i1</Arguments>
 		<Description>8GB Read Performance</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>dbench</Test>
 		<Arguments>1</Arguments>
 		<Description>1 Clients</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>dbench</Test>
 		<Arguments>12</Arguments>
 		<Description>12 Clients</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>dbench</Test>
 		<Arguments>48</Arguments>
 		<Description>48 Clients</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>dbench</Test>
 		<Arguments>128</Arguments>
 		<Description>128 Clients</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>fs-mark</Test>
 		<Arguments>-s 1048576 -n 1000</Arguments>
 		<Description>1000 Files, 1MB Size</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>fio</Test>
 		<Arguments>examples/iometer-file-access-server</Arguments>
 		<Description>Intel IOMeter File Server Access Pattern</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>tiobench</Test>
 		<Arguments>-k2 -k1 -f 64 -t 32</Arguments>
 		<Description>64MB Random Read - 32 Threads</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>tiobench</Test>
 		<Arguments>-k3 -k2 -f 64 -t 32</Arguments>
 		<Description>64MB Random Write - 32 Threads</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>postmark</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>aio-stress</Test>
 		<Arguments>-o 2</Arguments>
 		<Description>Random Write</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>unpack-linux</Test>
-	</RunTest>
+	</Execute>
 </PhoronixTestSuite>

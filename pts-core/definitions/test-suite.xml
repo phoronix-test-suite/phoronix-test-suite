@@ -64,38 +64,38 @@
 		</Define>
 		<Define>
 			<Name>P_SUITE_TEST_NAME</Name>
-			<Value>PhoronixTestSuite/RunTest/Test</Value>
+			<Value>PhoronixTestSuite/Execute/Test</Value>
 			<Description>The name (identifier) of the test to run.</Description>
 			<Required>YES</Required>
 		</Define>
 		<Define>
 			<Name>P_SUITE_TEST_PROFILE_VERSION</Name>
-			<Value>PhoronixTestSuite/RunTest/ProfileVersion</Value>
+			<Value>PhoronixTestSuite/Execute/ProfileVersion</Value>
 			<Description>The test profile version of the test to run to use, otherwise leave empty for latest.</Description>
 			<Required>YES</Required>
 		</Define>
 		<Define>
 			<Name>P_SUITE_TEST_MODE</Name>
-			<Value>PhoronixTestSuite/RunTest/Mode</Value>
+			<Value>PhoronixTestSuite/Execute/Mode</Value>
 			<Description>If this tag is set to BATCH, it will run the test mentioned in the <em>Test</em> tag in batch mode. If this tag is set to 
 DEFAULTS, it will run the test mentioned in the <em>Test</em> tag in the defaults mode. The <em>Description</em> and <em>Arguments</em> tags are ignored when setting one of these modes. This tag doesn't affect the mode for other test runs within the specified suite.</Description>
 			<Required>NO</Required>
 		</Define>
 		<Define>
 			<Name>P_SUITE_TEST_ARGUMENTS</Name>
-			<Value>PhoronixTestSuite/RunTest/Arguments</Value>
+			<Value>PhoronixTestSuite/Execute/Arguments</Value>
 			<Description>Only the default arguments are extracted from the test profile. All other arguments you wish to supply (as the end-user isn't prompted of any options when running a suite) should be supplied as a value in this tag.</Description>
 			<Required>NO</Required>
 		</Define>
 		<Define>
 			<Name>P_SUITE_TEST_DESCRIPTION</Name>
-			<Value>PhoronixTestSuite/RunTest/Description</Value>
+			<Value>PhoronixTestSuite/Execute/Description</Value>
 			<Description>A short description describing this test and its options, which is displayed on the graph in the PTS Results Viewer.</Description>
 			<Required>NO</Required>
 		</Define>
 		<Define>
 			<Name>P_SUITE_TEST_OVERRIDE_OPTIONS</Name>
-			<Value>PhoronixTestSuite/RunTest/OverrideTestOptions</Value>
+			<Value>PhoronixTestSuite/Execute/OverrideTestOptions</Value>
 			<Description>If this tag is used, it can override XML tags within a test profile, such as to change the number of times that test is run, just only for that instance within the suite. Specify either just the tag name or the entire path to that tag and then specify the forced value when it's delimited by an equal sign. Multiple tags can be forced when each forced option is delimited by a semicolon.</Description>
 			<Required>NO</Required>
 		</Define>

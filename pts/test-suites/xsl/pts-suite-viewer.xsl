@@ -20,7 +20,7 @@
 				<div style="width: 15%; float: left;"><xsl:value-of select="PhoronixTestSuite/SuiteInformation/Maintainer" /></div>
 				<div style="width: 55%; float: right;">
 
-					<xsl:for-each select="PhoronixTestSuite/RunTest">
+					<xsl:for-each select="PhoronixTestSuite/Execute">
 						<p><xsl:value-of select="Test" /><br /><em><xsl:value-of select="Description" /></em></p>
 					</xsl:for-each>
 

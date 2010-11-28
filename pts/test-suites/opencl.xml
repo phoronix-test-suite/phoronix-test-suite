@@ -8,39 +8,39 @@
 		<TestType>System</TestType>
 		<Description>A collection of OpenCL tests.</Description>
 	</SuiteInformation>
-	<RunTest>
+	<Execute>
 		<Test>juliagpu</Test>
 		<Arguments>0 1 rendering_kernel.cl $VIDEO_WIDTH $VIDEO_HEIGHT</Arguments>
 		<Description>OpenCL Device: GPU - Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>mandelgpu</Test>
 		<Arguments>0 1 rendering_kernel_float4.cl $VIDEO_WIDTH $VIDEO_HEIGHT 4096</Arguments>
 		<Description>OpenCL Device: GPU - Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>smallpt-gpu</Test>
 		<Arguments>1 256 rendering_kernel.cl $VIDEO_WIDTH $VIDEO_HEIGHT scenes/caustic.scn</Arguments>
 		<Description>OpenCL Device: GPU - Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Scene: Caustic</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>smallpt-gpu</Test>
 		<Arguments>1 256 rendering_kernel.cl $VIDEO_WIDTH $VIDEO_HEIGHT scenes/caustic3.scn</Arguments>
 		<Description>OpenCL Device: GPU - Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Scene: Caustic3</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>smallpt-gpu</Test>
 		<Arguments>1 256 rendering_kernel.cl $VIDEO_WIDTH $VIDEO_HEIGHT scenes/cornell.scn</Arguments>
 		<Description>OpenCL Device: GPU - Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Scene: Cornell</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>mandelbulbgpu</Test>
 		<Arguments>0 1 rendering_kernel.cl $VIDEO_WIDTH $VIDEO_HEIGHT</Arguments>
 		<Description>OpenCL Device: GPU - Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>gluxmark</Test>
 		<Arguments>-f $VIDEO_WIDTH $VIDEO_HEIGHT -t compute</Arguments>
 		<Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Test: Compute</Description>
-	</RunTest>
+	</Execute>
 </PhoronixTestSuite>

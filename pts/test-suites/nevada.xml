@@ -8,125 +8,125 @@
 		<Maintainer>Michael Larabel</Maintainer>
 		<Description>The Nevada test suite (named after the SXCE codename) is designed to house the most prominent tests that are compatible with Sun Microsystem's OpenSolaris / Solaris Express Community Edition operating systems.</Description>
 	</SuiteInformation>
-	<RunTest>
+	<Execute>
 		<Test>j2dbench</Test>
 		<Arguments>TEST_GRAPHICS</Arguments>
 		<Description>Vector Graphics</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>j2dbench</Test>
 		<Arguments>TEST_TEXT</Arguments>
 		<Description>Text Rendering</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>encode-mp3</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>encode-ogg</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>build-php</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>compress-7zip</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>compress-lzma</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>gnupg</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>john-the-ripper</Test>
 		<Mode>BATCH</Mode>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>openssl</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>himeno</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>mafft</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>crafty</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>dcraw</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>postmark</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>tiobench</Test>
 		<Arguments>-k3 -k2 -k1 -f 64 -t 4</Arguments>
 		<Description>64MB Write - 4 Threads</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>tiobench</Test>
 		<Arguments>-k3 -k2 -k1 -f 64 -t 32</Arguments>
 		<Description>64MB Write - 32 Threads</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>tiobench</Test>
 		<Arguments>-k3 -k1 -f 64 -t 32</Arguments>
 		<Description>64MB Read - 32 Threads</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>graphics-magick</Test>
 		<Arguments>-colorspace HWB</Arguments>
 		<Description>HWB Color Space</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>graphics-magick</Test>
 		<Arguments>-lat 10x10-5%</Arguments>
 		<Description>Local Adaptive Thresholding</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>graphics-magick</Test>
 		<Arguments>-resize 50%</Arguments>
 		<Description>Resizing</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>graphics-magick</Test>
 		<Arguments>-sharpen 0x1.0</Arguments>
 		<Description>Sharpen</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>byte</Test>
 		<Arguments>TEST_DHRY2</Arguments>
 		<Description>Dhrystone 2</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>sqlite</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>cachebench</Test>
 		<Arguments>-r</Arguments>
 		<Description>Read</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>cachebench</Test>
 		<Arguments>-w</Arguments>
 		<Description>Write</Description>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>c-ray</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>smallpt</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>povray</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>sudokut</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>unpack-linux</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>java</Test>
-	</RunTest>
+	</Execute>
 </PhoronixTestSuite>

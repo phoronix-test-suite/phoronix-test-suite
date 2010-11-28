@@ -8,13 +8,13 @@
 		<Maintainer>Andrew Schofield</Maintainer>
 		<Description>The computational biology test suite runs a series of tests relevant to the field of computational biology. This test suite may take many minutes to complete.</Description>
 	</SuiteInformation>
-	<RunTest>
+	<Execute>
 		<Test>hmmer</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>mafft</Test>
-	</RunTest>
-	<RunTest>
+	</Execute>
+	<Execute>
 		<Test>mrbayes</Test>
-	</RunTest>
+	</Execute>
 </PhoronixTestSuite>
