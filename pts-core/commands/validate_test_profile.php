@@ -112,6 +112,31 @@ class validate_test_profile implements pts_option_interface
 				}
 			}
 
+
+			// Validate the parser file
+			$parser_file = $test_profile->get_file_parser_spec();
+
+			if(empty($parser_file) == false)
+			{
+				$writer = new pts_test_result_parser_writer();
+				$writer->rebuild_parser_file($parser_file);
+				$writer->save_xml($parser_file);
+
+				$parser = new pts_parse_results_nye_XmlReader($parser_file);
+				$valid = $parser->validate();
+
+				if($valid == false)
+				{
+					echo "\nErrors occurred parsing the results parser XML.\n";
+					pts_validation::process_libxml_errors();
+					return false;
+				}
+				else
+				{
+					echo "\nTest Results Parser XML Is Valid.\n";
+				}
+			}
+
 echo "\n";
 			return;
 

@@ -63,42 +63,47 @@
 			<Description>If the result value should be multiplied by some constant (to convert the result to a different unit), the value should be supplied in this tag.</Description>
 		</Define>
 		<Define>
-			<Name>P_RESULTS_PARSER_SOURCE_IMAGE</Name>
-			<Value>PhoronixTestSuite/ResultsParser/SourceImage</Value>
+			<Name>P_IMAGE_PARSER_MATCH_TO_TEST_ARGUMENTS</Name>
+			<Value>PhoronixTestSuite/ImageParser/MatchToTestArguments</Value>
+			<Description>If there are multiple ResulsParser sections within the XML file and this tag is set, the Phoronix Test Suite will see if this string appears within the PTS_TEST_ARGUMENTS in determining if this is the ResultsParser section to use for parsing the results.</Description>
+		</Define>
+		<Define>
+			<Name>P_IMAGE_PARSER_SOURCE_IMAGE</Name>
+			<Value>PhoronixTestSuite/ImageParser/SourceImage</Value>
 			<Description>If the test profile is for an image quality comparison, the ImageFile tag should contain the file/path of the source file.</Description>
 		</Define>
 		<Define>
-			<Name>P_RESULTS_PARSER_IMAGE_X</Name>
-			<Value>PhoronixTestSuite/ResultsParser/ImageX</Value>
+			<Name>P_IMAGE_PARSER_IMAGE_X</Name>
+			<Value>PhoronixTestSuite/ImageParser/ImageX</Value>
 			<Description>If the test profile is for an image quality comparison, the ImageX should be the X coordinate of where to begin cropping the source file.</Description>
 		</Define>
 		<Define>
-			<Name>P_RESULTS_PARSER_IMAGE_Y</Name>
-			<Value>PhoronixTestSuite/ResultsParser/ImageY</Value>
+			<Name>P_IMAGE_PARSER_IMAGE_Y</Name>
+			<Value>PhoronixTestSuite/ImageParser/ImageY</Value>
 			<Description>If the test profile is for an image quality comparison, the ImageX should be the Y coordinate of where to begin cropping the source file.</Description>
 		</Define>
 		<Define>
-			<Name>P_RESULTS_PARSER_IMAGE_WIDTH</Name>
-			<Value>PhoronixTestSuite/ResultsParser/ImageWidth</Value>
+			<Name>P_IMAGE_PARSER_IMAGE_WIDTH</Name>
+			<Value>PhoronixTestSuite/ImageParser/ImageWidth</Value>
 			<Description>If the test profile is for an image quality comparison, the ImageWidth should be the produced image width.</Description>
 		</Define>
 		<Define>
-			<Name>P_RESULTS_PARSER_IMAGE_HEIGHT</Name>
-			<Value>PhoronixTestSuite/ResultsParser/ImageHeight</Value>
+			<Name>P_IMAGE_PARSER_IMAGE_HEIGHT</Name>
+			<Value>PhoronixTestSuite/ImageParser/ImageHeight</Value>
 			<Description>If the test profile is for an image quality comparison, the ImageHeight should be the produced image height.</Description>
 		</Define>
 		<Define>
-			<Name>P_RESULTS_PARSER_MONITOR_SENSOR</Name>
+			<Name>P_MONITOR_PARSER_SENSOR</Name>
 			<Value>PhoronixTestSuite/SystemMonitor/Sensor</Value>
 			<Description>If the test profile is to monitor any system sensors during the testing process, the name of the sensor (via the Phodevi name; i.e. cpu.usage) should be supplied. While not a Phodevi sensor, if passing sys.time as the sensor value, the time it takes to execute the test will be recorded.</Description>
 		</Define>
 		<Define>
-			<Name>P_RESULTS_PARSER_MONITOR_FREQUENCY</Name>
+			<Name>P_MONITOR_PARSER_FREQUENCY</Name>
 			<Value>PhoronixTestSuite/SystemMonitor/PollingFrequency</Value>
 			<Description>If the test profile is to monitor any system sensors during the testing process, how often the matched sensor is to be polled (in seconds) should be supplied. Floating values are supported.</Description>
 		</Define>
 		<Define>
-			<Name>P_RESULTS_PARSER_MONITOR_REPORT</Name>
+			<Name>P_MONITOR_PARSER_REPORT</Name>
 			<Value>PhoronixTestSuite/SystemMonitor/Report</Value>
 			<Description>If the test profile is to monitor any system sensors during the testing process, this tag provides how the monitored results should be reported. Supported values include MAX, MIN, AVG, and ALL.</Description>
 		</Define>

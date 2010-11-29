@@ -7,14 +7,15 @@
 		Copyright (C) 2008 - 2010, Michael Larabel
 	</xs:documentation>
 </xs:annotation>
+<xs:include schemaLocation="types.xsd" />
 <xs:element name="PhoronixTestSuite">
 <xs:complexType>
 <xs:sequence>
-		<xs:element name="ResultsParser" minOccurs="1" maxOccurs="unbounded">
+		<xs:element name="ResultsParser" minOccurs="0" maxOccurs="unbounded">
 		<xs:complexType>
 		<xs:sequence>
+			<xs:element name="OutputTemplate" type="xs:string" />
 			<xs:element name="MatchToTestArguments" type="xs:string" minOccurs="0" maxOccurs="1" />
-			<xs:element name="OutputTemplate" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="ResultKey" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="LineHint" type="xs:integer" minOccurs="0" maxOccurs="1" />
 			<xs:element name="LineBeforeHint" type="xs:string" minOccurs="0" maxOccurs="1" />
@@ -23,23 +24,31 @@
 			<xs:element name="StripFromResult" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="StripResultPostfix" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="MultiMatch" type="xs:string" minOccurs="0" maxOccurs="1" />
-			<xs:element name="DivideResultBy" type="xs:string" minOccurs="0" maxOccurs="1" />
-			<xs:element name="MultiplyResultBy" type="xs:string" minOccurs="0" maxOccurs="1" />
-			<xs:element name="SourceImage" type="xs:string" minOccurs="0" maxOccurs="1" />
-			<xs:element name="ImageX" type="xs:string" minOccurs="0" maxOccurs="1" />
-			<xs:element name="ImageY" type="xs:string" minOccurs="0" maxOccurs="1" />
-			<xs:element name="ImageWidth" type="xs:string" minOccurs="0" maxOccurs="1" />
-			<xs:element name="ImageHeight" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="DivideResultBy" type="PositiveInteger" minOccurs="0" maxOccurs="1" />
+			<xs:element name="MultiplyResultBy" type="PositiveInteger" minOccurs="0" maxOccurs="1" />
 		</xs:sequence>
 		</xs:complexType>
 		</xs:element>
 
-		<xs:element name="SystemMonitor" minOccurs="1" maxOccurs="unbounded">
+		<xs:element name="ImageParser" minOccurs="0" maxOccurs="unbounded">
 		<xs:complexType>
 		<xs:sequence>
-			<xs:element name="Sensor" type="xs:string" minOccurs="0" maxOccurs="1" />
-			<xs:element name="PollingFrequency" type="xs:string" minOccurs="0" maxOccurs="1" />
-			<xs:element name="ImageY" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="SourceImage" type="xs:string" />
+			<xs:element name="MatchToTestArguments" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="ImageX" type="PositiveInteger" minOccurs="0" maxOccurs="1" />
+			<xs:element name="ImageY" type="PositiveInteger" minOccurs="0" maxOccurs="1" />
+			<xs:element name="ImageWidth" type="PositiveInteger" minOccurs="0" maxOccurs="1" />
+			<xs:element name="ImageHeight" type="PositiveInteger" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+		</xs:complexType>
+		</xs:element>
+
+		<xs:element name="SystemMonitor" minOccurs="0" maxOccurs="unbounded">
+		<xs:complexType>
+		<xs:sequence>
+			<xs:element name="Sensor" type="xs:string" />
+			<xs:element name="PollingFrequency" type="PositiveInteger" />
+			<xs:element name="Report" type="xs:string" />
 		</xs:sequence>
 		</xs:complexType>
 		</xs:element>
