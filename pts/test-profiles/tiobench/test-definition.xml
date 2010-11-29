@@ -5,8 +5,8 @@
 		<Version>1.1.0</Version>
 		<TestType>Disk</TestType>
 		<SoftwareType>Utility</SoftwareType>
-		<License>FREE</License>
-		<Status>VERIFIED</Status>
+		<License>Free</License>
+		<Status>Verified</Status>
 		<Maintainer>Michael Larabel</Maintainer>
 		<EnvironmentSize>0.2</EnvironmentSize>
 		<ProjectURL>http://sourceforge.net/projects/tiobench/</ProjectURL>

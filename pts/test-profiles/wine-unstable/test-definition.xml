@@ -3,7 +3,7 @@
 	<TestProfile>
 		<TestType>System</TestType>
 		<SoftwareType>Utility</SoftwareType>
-		<License>FREE</License>
+		<License>Free</License>
 		<InternalTags>Wine</InternalTags>
 		<ExternalDependencies>glut, libpng-development, xorg-development, bison, flex, build-utilities</ExternalDependencies>
 	</TestProfile>

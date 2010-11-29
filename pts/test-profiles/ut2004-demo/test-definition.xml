@@ -5,8 +5,8 @@
 		<Version>1.2.0</Version>
 		<TestType>Graphics</TestType>
 		<SoftwareType>Game</SoftwareType>
-		<License>NON-FREE</License>
-		<Status>VERIFIED</Status>
+		<License>NON-Free</License>
+		<Status>Verified</Status>
 		<EnvironmentSize>798</EnvironmentSize>
 		<Maintainer>Michael Larabel</Maintainer>
 		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>

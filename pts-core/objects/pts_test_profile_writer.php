@@ -104,7 +104,7 @@ class pts_test_profile_writer
 		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_MIN_LENGTH, $xml_reader);
 		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_MAX_LENGTH, $xml_reader);
 
-		foreach($test_profile->get_test_option_objects() as $option)
+		foreach($test_profile->get_test_option_objects(false) as $option)
 		{
 			$this->xml_writer->addXmlNode(P_TEST_OPTIONS_DISPLAYNAME, $option->get_name());
 			$this->xml_writer->addXmlNodeWNE(P_TEST_OPTIONS_IDENTIFIER, $option->get_identifier());

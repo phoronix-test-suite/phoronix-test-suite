@@ -5,8 +5,8 @@
 		<Version>1.2.1</Version>
 		<TestType>Graphics</TestType>
 		<SoftwareType>Utility</SoftwareType>
-		<License>FREE</License>
-		<Status>VERIFIED</Status>
+		<License>Free</License>
+		<Status>Verified</Status>
 		<Maintainer>Michael Larabel</Maintainer>
 		<EnvironmentSize>0.11</EnvironmentSize>
 		<ProjectURL>http://gtkperf.sourceforge.net/</ProjectURL>

@@ -5,8 +5,8 @@
 		<Version>1.3.0</Version>
 		<TestType>Memory</TestType>
 		<SoftwareType>Utility</SoftwareType>
-		<License>FREE</License>
-		<Status>VERIFIED</Status>
+		<License>Free</License>
+		<Status>Verified</Status>
 		<Maintainer>Michael Larabel</Maintainer>
 		<EnvironmentSize>0.72</EnvironmentSize>
 		<ProjectURL>http://www.alasir.com/software/ramspeed/</ProjectURL>

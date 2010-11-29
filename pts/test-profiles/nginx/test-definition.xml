@@ -5,8 +5,8 @@
 		<Version>1.0.0</Version>
 		<TestType>System</TestType>
 		<SoftwareType>Utility</SoftwareType>
-		<License>FREE</License>
-		<Status>VERIFIED</Status>
+		<License>Free</License>
+		<Status>Verified</Status>
 		<Maintainer>Pekka Panula</Maintainer>
 		<EnvironmentSize>61</EnvironmentSize>
 		<ExternalDependencies>build-utilities, zlib-development</ExternalDependencies>

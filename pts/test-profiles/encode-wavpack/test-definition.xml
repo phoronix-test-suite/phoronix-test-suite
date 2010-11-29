@@ -1,20 +1,18 @@
 <?xml version="1.0"?>
-<?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<TestProfile>
-		<Version>1.2.0</Version>
-		<Maintainer>apaige</Maintainer>
-		<EnvironmentSize>5</EnvironmentSize>
-		<ProjectURL>http://www.wavpack.com/</ProjectURL>
-		<Extends>timed-audio-encode</Extends>
-		<EnvironmentSize>1.1</EnvironmentSize>
-		<SupportedPlatforms>Linux, MacOSX, Solaris</SupportedPlatforms>
-	</TestProfile>
-	<TestInformation>
-		<Title>WavPack Audio Encoding</Title>
-		<AppVersion>4.41.0</AppVersion>
-		<SubTitle>WAV To WavPack</SubTitle>
-		<Executable>encode-wavpack</Executable>
-		<Description>This test times how long it takes to encode a sample WAV file to WavPack format.</Description>
-	</TestInformation>
+  <TestInformation>
+    <Title>WavPack Audio Encoding</Title>
+    <Description>This test times how long it takes to encode a sample WAV file to WavPack format.</Description>
+    <AppVersion>4.41.0</AppVersion>
+    <SubTitle>WAV To WavPack</SubTitle>
+    <Executable>encode-wavpack</Executable>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.2.0</Version>
+    <SupportedPlatforms>Linux, MacOSX, Solaris</SupportedPlatforms>
+    <Extends>timed-audio-encode</Extends>
+    <ProjectURL>http://www.wavpack.com/</ProjectURL>
+    <Maintainer>apaige</Maintainer>
+  </TestProfile>
 </PhoronixTestSuite>

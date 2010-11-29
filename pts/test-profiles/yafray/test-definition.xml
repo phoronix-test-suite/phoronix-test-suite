@@ -5,8 +5,8 @@
 		<Version>1.1.0</Version>
 		<TestType>System</TestType>
 		<SoftwareType>Utility</SoftwareType>
-		<License>FREE</License>
-		<Status>VERIFIED</Status>
+		<License>Free</License>
+		<Status>Verified</Status>
 		<Maintainer>Michael Larabel</Maintainer>
 		<EnvironmentSize>28.9</EnvironmentSize>
 		<ProjectURL>http://www.yafray.org/</ProjectURL>

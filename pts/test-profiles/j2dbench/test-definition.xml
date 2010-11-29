@@ -5,8 +5,8 @@
 		<Version>1.1.0</Version>
 		<TestType>Graphics</TestType>
 		<SoftwareType>Utility</SoftwareType>
-		<License>FREE</License>
-		<Status>VERIFIED</Status>
+		<License>Free</License>
+		<Status>Verified</Status>
 		<EnvironmentSize>0.4</EnvironmentSize>
 		<Maintainer>Tao Zhang</Maintainer>
 		<ProjectURL>http://www.java.net/</ProjectURL>

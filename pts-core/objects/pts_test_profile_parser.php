@@ -227,7 +227,7 @@ class pts_test_profile_parser
 	{
 		return $this->xml_parser->getXMLValue(P_TEST_REQUIRES_COREVERSION_MAX, 9999);
 	}
-	public function get_test_option_objects()
+	public function get_test_option_objects($auto_process = true)
 	{
 		$settings_name = $this->xml_parser->getXMLArrayValues(P_TEST_OPTIONS_DISPLAYNAME);
 		$settings_argument_prefix = $this->xml_parser->getXMLArrayValues(P_TEST_OPTIONS_ARGPREFIX);
@@ -244,7 +244,11 @@ class pts_test_profile_parser
 			$names = $option_names[$option_count];
 			$messages = $option_messages[$option_count];
 			$values = $option_values[$option_count];
-			pts_test_run_options::auto_process_test_option($this->identifier, $settings_identifier[$option_count], $names, $values, $messages);
+
+			if($auto_process)
+			{
+				pts_test_run_options::auto_process_test_option($this->identifier, $settings_identifier[$option_count], $names, $values, $messages);
+			}
 
 			$user_option = new pts_test_option($settings_identifier[$option_count], $settings_name[$option_count]);
 			$user_option->set_option_prefix($settings_argument_prefix[$option_count]);

@@ -1,18 +1,18 @@
 <?xml version="1.0"?>
-<?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<TestProfile>
-		<Version>1.3.1</Version>
-		<Maintainer>Michael Larabel</Maintainer>
-		<ProjectURL>http://lame.sourceforge.net/</ProjectURL>
-		<Extends>timed-audio-encode</Extends>
-		<EnvironmentSize>1.3</EnvironmentSize>
-	</TestProfile>
-	<TestInformation>
-		<Title>LAME MP3 Encoding</Title>
-		<AppVersion>3.98.2</AppVersion>
-		<SubTitle>WAV To MP3</SubTitle>
-		<Executable>lame</Executable>
-		<Description>LAME is an MP3 encoder licensed under the LGPL. This test measures the time required to encode a WAV file to MP3 format.</Description>
-	</TestInformation>
+  <TestInformation>
+    <Title>LAME MP3 Encoding</Title>
+    <Description>LAME is an MP3 encoder licensed under the LGPL. This test measures the time required to encode a WAV file to MP3 format.</Description>
+    <AppVersion>3.98.2</AppVersion>
+    <SubTitle>WAV To MP3</SubTitle>
+    <Executable>lame</Executable>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.3.1</Version>
+    <Extends>timed-audio-encode</Extends>
+    <EnvironmentSize>1.3</EnvironmentSize>
+    <ProjectURL>http://lame.sourceforge.net/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
 </PhoronixTestSuite>

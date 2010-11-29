@@ -5,8 +5,8 @@
 		<Version>1.1.0</Version>
 		<TestType>Graphics</TestType>
 		<SoftwareType>Game</SoftwareType>
-		<License>RETAIL</License>
-		<Status>VERIFIED</Status>
+		<License>Retail</License>
+		<Status>Verified</Status>
 		<Maintainer>Michael Larabel</Maintainer>
 		<EnvironmentSize>4500</EnvironmentSize>
 		<ExternalDependencies>32bit-compatibility</ExternalDependencies>

@@ -5,8 +5,8 @@
 		<Version>1.3.0</Version>
 		<TestType>Graphics</TestType>
 		<SoftwareType>Simulator</SoftwareType>
-		<License>FREE</License>
-		<Status>VERIFIED</Status>
+		<License>Free</License>
+		<Status>Verified</Status>
 		<Maintainer>Michael Larabel</Maintainer>
 		<EnvironmentSize>855</EnvironmentSize>
 		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>

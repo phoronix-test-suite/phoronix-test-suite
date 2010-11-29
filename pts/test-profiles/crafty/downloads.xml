@@ -1,17 +1,18 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<Downloads>
-		<Package>
-			<URL>ftp://ftp.cis.uab.edu/pub/hyatt/source/crafty-23.3.zip</URL>
-			<PlatformSpecific>Linux, Solaris, BSD, MacOSX</PlatformSpecific>
-			<MD5>eff7b03fade8ac70eb94240853a04821</MD5>
-			<FileSize>425519</FileSize>
-		</Package>
-		<Package>
-			<URL>http://www.webkikr.com/files/crafty-23.3-win64.exe.zip</URL>
-			<PlatformSpecific>Windows</PlatformSpecific>
-			<MD5>9a5002a58829807cf547a31ba2543888</MD5>
-			<FileSize>300954</FileSize>
-		</Package>
-	</Downloads>
+  <Downloads>
+    <Package>
+      <URL>ftp://ftp.cis.uab.edu/pub/hyatt/source/crafty-23.3.zip</URL>
+      <MD5>eff7b03fade8ac70eb94240853a04821</MD5>
+      <FileSize>425519</FileSize>
+      <PlatformSpecific>Linux, Solaris, BSD, MacOSX</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://www.webkikr.com/files/crafty-23.3-win64.exe.zip</URL>
+      <MD5>9a5002a58829807cf547a31ba2543888</MD5>
+      <FileSize>300954</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
 </PhoronixTestSuite>
-

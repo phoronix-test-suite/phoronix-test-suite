@@ -4,7 +4,7 @@
 		<ProjectURL>http://www.humus.name/</ProjectURL>
 		<TestType>Graphics</TestType>
 		<Extends>wine-unstable</Extends>
-		<Status>VERIFIED</Status>
+		<Status>Verified</Status>
 		<SupportedPlatforms>Linux</SupportedPlatforms>
 	</TestProfile>
 	<TestInformation>

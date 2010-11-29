@@ -5,8 +5,8 @@
 		<Version>1.2.0</Version>
 		<TestType>Processor</TestType>
 		<SoftwareType>Scientific</SoftwareType>
-		<License>FREE</License>
-		<Status>VERIFIED</Status>
+		<License>Free</License>
+		<Status>Verified</Status>
 		<Maintainer>Andrew Schofield</Maintainer>
 		<EnvironmentSize>22</EnvironmentSize>
 		<ProjectURL>http://mrbayes.csit.fsu.edu/</ProjectURL>

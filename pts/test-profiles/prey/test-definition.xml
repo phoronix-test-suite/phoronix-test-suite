@@ -5,8 +5,8 @@
 		<Version>1.1.1</Version>
 		<TestType>Graphics</TestType>
 		<SoftwareType>Game</SoftwareType>
-		<License>RETAIL</License>
-		<Status>VERIFIED</Status>
+		<License>Retail</License>
+		<Status>Verified</Status>
 		<EnvironmentSize>1700</EnvironmentSize>
 		<Maintainer>Michael Larabel</Maintainer>
 		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>

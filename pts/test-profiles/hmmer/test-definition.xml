@@ -5,8 +5,8 @@
 		<Version>1.1.0</Version>
 		<TestType>Processor</TestType>
 		<SoftwareType>Scientific</SoftwareType>
-		<License>FREE</License>
-		<Status>VERIFIED</Status>
+		<License>Free</License>
+		<Status>Verified</Status>
 		<Maintainer>Andrew Schofield</Maintainer>
 		<ExternalDependencies>build-utilities</ExternalDependencies>
 		<EnvironmentSize>707</EnvironmentSize>

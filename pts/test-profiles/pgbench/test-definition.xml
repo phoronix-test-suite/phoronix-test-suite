@@ -5,8 +5,8 @@
 		<Version>1.2.0</Version>
 		<TestType>System</TestType>
 		<SoftwareType>Benchmark</SoftwareType>
-		<License>FREE</License>
-		<Status>VERIFIED</Status>
+		<License>Free</License>
+		<Status>Verified</Status>
 		<Maintainer>Kim Bisgaard</Maintainer>
 		<EnvironmentSize>230</EnvironmentSize>
 		<ProjectURL>http://www.postgresql.org/</ProjectURL>

@@ -1,30 +1,30 @@
 <?xml version="1.0"?>
-<?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<TestProfile>
-		<Version>1.2.0</Version>
-		<TestType>Processor</TestType>
-		<SoftwareType>Utility</SoftwareType>
-		<License>FREE</License>
-		<Status>VERIFIED</Status>
-		<Maintainer>Michael Larabel</Maintainer>
-		<EnvironmentSize>5.9</EnvironmentSize>
-		<ExternalDependencies>build-utilities, numa-development</ExternalDependencies>
-		<ProjectURL>http://www.cis.uab.edu/info/faculty/hyatt/hyatt.html</ProjectURL>
-		<SupportedPlatforms>Linux, MacOSX, Solaris, BSD, Windows</SupportedPlatforms>
-	</TestProfile>
-	<TestInformation>
-		<Title>Crafty</Title>
-		<AppVersion>23.3</AppVersion>
-		<SubTitle>Elapsed Time</SubTitle>
-		<TimesToRun>3</TimesToRun>
-		<ResultScale>Seconds</ResultScale>
-		<Proportion>LIB</Proportion>
-		<Description>This is a performance test of Crafty, an advanced open-source chess engine.</Description>
-	</TestInformation>
-	<TestSettings>
-		<Default>
-			<Arguments>bench quit</Arguments>
-		</Default>
-	</TestSettings>
+  <TestInformation>
+    <Title>Crafty</Title>
+    <Description>This is a performance test of Crafty, an advanced open-source chess engine.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <AppVersion>23.3</AppVersion>
+    <SubTitle>Elapsed Time</SubTitle>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.2.0</Version>
+    <TestType>Processor</TestType>
+    <SoftwareType>Utility</SoftwareType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <SupportedPlatforms>Linux, MacOSX, Solaris, BSD, Windows</SupportedPlatforms>
+    <ExternalDependencies>build-utilities, numa-development</ExternalDependencies>
+    <EnvironmentSize>5.9</EnvironmentSize>
+    <ProjectURL>http://www.cis.uab.edu/info/faculty/hyatt/hyatt.html</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>bench quit</Arguments>
+    </Default>
+  </TestSettings>
 </PhoronixTestSuite>

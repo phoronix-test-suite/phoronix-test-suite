@@ -1,25 +1,25 @@
 <?xml version="1.0"?>
-<?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<TestProfile>
-		<Version>1.3.0</Version>
-		<TestType>Processor</TestType>
-		<SoftwareType>Utility</SoftwareType>
-		<License>FREE</License>
-		<Status>VERIFIED</Status>
-		<Maintainer>Michael Larabel</Maintainer>
-		<EnvironmentSize>2.2</EnvironmentSize>
-		<ProjectURL>http://espeak.sourceforge.net/</ProjectURL>
-		<ExternalDependencies>portaudio-development, build-utilities</ExternalDependencies>
-		<SupportedPlatforms>Linux</SupportedPlatforms>
-	</TestProfile>
-	<TestInformation>
-		<Title>eSpeak Speech Engine</Title>
-		<AppVersion>1.40.02</AppVersion>
-		<SubTitle>Text-To-Speech Synthesis</SubTitle>
-		<TimesToRun>3</TimesToRun>
-		<ResultScale>Seconds</ResultScale>
-		<Proportion>LIB</Proportion>
-		<Description>This test times how long it takes the eSpeak speech synthesizer to read Project Gutenberg's The Outline of Science and output to a WAV file.</Description>
-	</TestInformation>
+  <TestInformation>
+    <Title>eSpeak Speech Engine</Title>
+    <Description>This test times how long it takes the eSpeak speech synthesizer to read Project Gutenberg's The Outline of Science and output to a WAV file.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <AppVersion>1.40.02</AppVersion>
+    <SubTitle>Text-To-Speech Synthesis</SubTitle>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.3.0</Version>
+    <TestType>Processor</TestType>
+    <SoftwareType>Utility</SoftwareType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <ExternalDependencies>portaudio-development, build-utilities</ExternalDependencies>
+    <EnvironmentSize>2.2</EnvironmentSize>
+    <ProjectURL>http://espeak.sourceforge.net/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
 </PhoronixTestSuite>

@@ -1,20 +1,18 @@
 <?xml version="1.0"?>
-<?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<TestProfile>
-		<Version>1.2.0</Version>
-		<Maintainer>Michael Larabel</Maintainer>
-		<EnvironmentSize>9</EnvironmentSize>
-		<ProjectURL>http://flac.sourceforge.net/</ProjectURL>
-		<Extends>timed-audio-encode</Extends>
-		<EnvironmentSize>8.1</EnvironmentSize>
-		<SupportedPlatforms>Linux, Solaris</SupportedPlatforms>
-	</TestProfile>
-	<TestInformation>
-		<Title>FLAC Audio Encoding</Title>
-		<AppVersion>1.2.1</AppVersion>
-		<SubTitle>WAV To FLAC</SubTitle>
-		<Executable>flac</Executable>
-		<Description>This test times how long it takes to encode a sample WAV file to FLAC format.</Description>
-	</TestInformation>
+  <TestInformation>
+    <Title>FLAC Audio Encoding</Title>
+    <Description>This test times how long it takes to encode a sample WAV file to FLAC format.</Description>
+    <AppVersion>1.2.1</AppVersion>
+    <SubTitle>WAV To FLAC</SubTitle>
+    <Executable>flac</Executable>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.2.0</Version>
+    <SupportedPlatforms>Linux, Solaris</SupportedPlatforms>
+    <Extends>timed-audio-encode</Extends>
+    <ProjectURL>http://flac.sourceforge.net/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
 </PhoronixTestSuite>

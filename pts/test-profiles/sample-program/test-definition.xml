@@ -5,7 +5,7 @@
 		<Version>1.1.0</Version>
 		<TestType>Processor</TestType>
 		<SoftwareType>Utility</SoftwareType>
-		<License>FREE</License>
+		<License>Free</License>
 		<Status>EXPERIMENTAL</Status>
 		<Maintainer>Phoronix Media</Maintainer>
 		<ProjectURL>http://www.phoronix-test-suite.com/</ProjectURL>

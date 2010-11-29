@@ -1,24 +1,24 @@
 <?xml version="1.0"?>
-<?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<TestProfile>
-		<Version>1.0.0</Version>
-		<TestType>Processor</TestType>
-		<SoftwareType>Utility</SoftwareType>
-		<License>FREE</License>
-		<Status>VERIFIED</Status>
-		<Maintainer>Michael Larabel</Maintainer>
-		<EnvironmentSize>6.0</EnvironmentSize>
-		<ExternalDependencies>build-utilities</ExternalDependencies>
-		<ProjectURL>http://www.futuretech.blinkenlights.nl/c-ray.html</ProjectURL>
-	</TestProfile>
-	<TestInformation>
-		<Title>C-Ray</Title>
-		<AppVersion>1.1</AppVersion>
-		<SubTitle>Total Time</SubTitle>
-		<TimesToRun>3</TimesToRun>
-		<ResultScale>Seconds</ResultScale>
-		<Proportion>LIB</Proportion>
-		<Description>This is a test of C-Ray, a simple raytracer designed to test the floating-point CPU performance. This test is multi-threaded (16 threads per core), will shoot 8 rays per pixel for anti-aliasing, and will generate a 1600 x 1200 image.</Description>
-	</TestInformation>
+  <TestInformation>
+    <Title>C-Ray</Title>
+    <Description>This is a test of C-Ray, a simple raytracer designed to test the floating-point CPU performance. This test is multi-threaded (16 threads per core), will shoot 8 rays per pixel for anti-aliasing, and will generate a 1600 x 1200 image.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <AppVersion>1.1</AppVersion>
+    <SubTitle>Total Time</SubTitle>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <TestType>Processor</TestType>
+    <SoftwareType>Utility</SoftwareType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities</ExternalDependencies>
+    <EnvironmentSize>6.0</EnvironmentSize>
+    <ProjectURL>http://www.futuretech.blinkenlights.nl/c-ray.html</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
 </PhoronixTestSuite>

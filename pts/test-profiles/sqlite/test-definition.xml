@@ -5,8 +5,8 @@
 		<Version>1.8.0</Version>
 		<TestType>Disk</TestType>
 		<SoftwareType>Benchmark</SoftwareType>
-		<License>FREE</License>
-		<Status>VERIFIED</Status>
+		<License>Free</License>
+		<Status>Verified</Status>
 		<Maintainer>Michael Larabel</Maintainer>
 		<EnvironmentSize>18.4</EnvironmentSize>
 		<ExternalDependencies>build-utilities</ExternalDependencies>

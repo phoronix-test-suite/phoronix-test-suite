@@ -5,8 +5,8 @@
 		<Version>1.0.1</Version>
 		<TestType>Processor</TestType>
 		<SoftwareType>Other</SoftwareType>
-		<License>FREE</License>
-		<Status>VERIFIED</Status>
+		<License>Free</License>
+		<Status>Verified</Status>
 		<Maintainer>Andrew Schofield</Maintainer>
 		<EnvironmentSize>2</EnvironmentSize>
 		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>

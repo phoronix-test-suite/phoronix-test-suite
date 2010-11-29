@@ -5,9 +5,9 @@
 		<Version>1.1.0</Version>
 		<TestType>Graphics</TestType>
 		<SoftwareType>Benchmark</SoftwareType>
-		<License>FREE</License>
+		<License>Free</License>
 		<EnvironmentSize>0.1</EnvironmentSize>
-		<Status>VERIFIED</Status>
+		<Status>Verified</Status>
 		<ExternalDependencies>build-utilities</ExternalDependencies>
 		<Maintainer>Michael Larabel</Maintainer>
 		<SupportedPlatforms>Linux</SupportedPlatforms>

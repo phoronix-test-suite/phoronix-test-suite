@@ -5,8 +5,8 @@
 		<Version>1.0.0</Version>
 		<TestType>Processor</TestType>
 		<SoftwareType>Utility</SoftwareType>
-		<License>FREE</License>
-		<Status>VERIFIED</Status>
+		<License>Free</License>
+		<Status>Verified</Status>
 		<Maintainer>Michael Larabel</Maintainer>
 		<EnvironmentSize>1.4</EnvironmentSize>
 		<ExternalDependencies>build-utilities</ExternalDependencies>

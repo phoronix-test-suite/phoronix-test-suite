@@ -5,8 +5,8 @@
 		<Version>1.6.0</Version>
 		<TestType>Graphics</TestType>
 		<SoftwareType>Game</SoftwareType>
-		<License>FREE</License>
-		<Status>VERIFIED</Status>
+		<License>Free</License>
+		<Status>Verified</Status>
 		<Maintainer>Michael Larabel</Maintainer>
 		<EnvironmentSize>715</EnvironmentSize>
 		<ProjectURL>http://www.nexuiz.com/</ProjectURL>

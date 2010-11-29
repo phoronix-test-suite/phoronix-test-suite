@@ -1,8 +1,9 @@
 <?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<ResultsParser>
-		<OutputTemplate>Total nodes: 110718194
+  <ResultsParser>
+    <OutputTemplate>Total nodes: 110718194
 Raw nodes per second: 3248773
 Total elapsed time: #_RESULT_#</OutputTemplate>
-	</ResultsParser>
+  </ResultsParser>
 </PhoronixTestSuite>

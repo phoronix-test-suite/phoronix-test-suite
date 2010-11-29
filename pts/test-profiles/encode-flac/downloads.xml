@@ -1,9 +1,11 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<Downloads>
-		<Package>
-			<URL>http://voxel.dl.sourceforge.net/sourceforge/flac/flac-1.2.1.tar.gz, http://softlayer.dl.sourceforge.net/sourceforge/flac/flac-1.2.1.tar.gz, http://heanet.dl.sourceforge.net/sourceforge/flac/flac-1.2.1.tar.gz, http://internode.dl.sourceforge.net/sourceforge/flac/flac-1.2.1.tar.gz</URL>
-			<MD5>153c8b15a54da428d1f0fadc756c22c7</MD5>
-			<FileSize>2009217</FileSize>
-		</Package>
-	</Downloads>
+  <Downloads>
+    <Package>
+      <URL>http://voxel.dl.sourceforge.net/sourceforge/flac/flac-1.2.1.tar.gz, http://softlayer.dl.sourceforge.net/sourceforge/flac/flac-1.2.1.tar.gz, http://heanet.dl.sourceforge.net/sourceforge/flac/flac-1.2.1.tar.gz, http://internode.dl.sourceforge.net/sourceforge/flac/flac-1.2.1.tar.gz</URL>
+      <MD5>153c8b15a54da428d1f0fadc756c22c7</MD5>
+      <FileSize>2009217</FileSize>
+    </Package>
+  </Downloads>
 </PhoronixTestSuite>
