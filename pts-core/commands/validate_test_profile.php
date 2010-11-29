@@ -138,7 +138,7 @@ class validate_test_profile implements pts_option_interface
 			}
 
 echo "\n";
-			return;
+			continue;
 
 			$validation_errors = array();
 			$validation_warnings = array();

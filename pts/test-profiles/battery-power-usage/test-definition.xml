@@ -1,23 +1,25 @@
 <?xml version="1.0"?>
-<?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<TestProfile>
-		<Version>1.0.0</Version>
-		<TestType>System</TestType>
-		<SoftwareType>Utility</SoftwareType>
-		<License>FREE</License>
-		<Status>VERIFIED</Status>
-		<Maintainer>Michael Larabel</Maintainer>
-		<EnvironmentSize>1.0</EnvironmentSize>
-		<SupportedPlatforms>Linux, BSD, Solaris</SupportedPlatforms>
-		<Extends>mplayer-base</Extends>
-	</TestProfile>
-	<TestInformation>
-		<Title>Battery Power Usage</Title>
-		<SubTitle>Idle, DPMS Off, Video Playback</SubTitle>
-		<TimesToRun>1</TimesToRun>
-		<ResultScale>Milliwatts</ResultScale>
-		<DisplayFormat>LINE_GRAPH</DisplayFormat>
-		<Description>This test is designed for notebooks and netbooks and monitor's the system's battery consumption as it idles for 60 seconds, then turns off the monitor for 60 seconds via DPMS, then turns the display back on and plays back a sample H.264 1080p video file using mplayer with the X-Video output adapter. A line graph showing the power usage is then rendered.</Description>
-	</TestInformation>
+  <TestInformation>
+    <Title>Battery Power Usage</Title>
+    <Description>This test is designed for notebooks and netbooks and monitor's the system's battery consumption as it idles for 60 seconds, then turns off the monitor for 60 seconds via DPMS, then turns the display back on and plays back a sample H.264 1080p video file using mplayer with the X-Video output adapter. A line graph showing the power usage is then rendered.</Description>
+    <ResultScale>Milliwatts</ResultScale>
+    <SubTitle>Idle, DPMS Off, Video Playback</SubTitle>
+    <DisplayFormat>LINE_GRAPH</DisplayFormat>
+    <TimesToRun>1</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <TestType>System</TestType>
+    <SoftwareType>Utility</SoftwareType>
+    <Maintainer>Michael Larabel</Maintainer>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <SupportedPlatforms>Linux, BSD, Solaris</SupportedPlatforms>
+    <ExternalDependencies>build-utilities, xorg-development, xorg-video, zlib-development</ExternalDependencies>
+    <Extends>mplayer-base</Extends>
+    <EnvironmentSize>1.0</EnvironmentSize>
+    <ProjectURL>http://www.mplayerhq.hu/</ProjectURL>
+  </TestProfile>
 </PhoronixTestSuite>

@@ -1,14 +1,20 @@
 <?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<TestProfile>
-		<Version>1.1.0</Version>
-		<TestType>Graphics</TestType>
-		<License>FREE</License>
-		<Status>VERIFIED</Status>
-		<Maintainer>Michael Larabel</Maintainer>
-		<EnvironmentSize>30.0</EnvironmentSize>
-		<ProjectURL>http://www.mplayerhq.hu/</ProjectURL>
-		<ExternalDependencies>build-utilities, xorg-development, xorg-video, zlib-development</ExternalDependencies>
-		<Extends>video-sample</Extends>
-	</TestProfile>
+  <TestInformation>
+    <ResultScale>Seconds</ResultScale>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.0</Version>
+    <TestType>Graphics</TestType>
+    <SoftwareType>Utility</SoftwareType>
+    <Maintainer>Michael Larabel</Maintainer>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, xorg-development, xorg-video, zlib-development</ExternalDependencies>
+    <Extends>video-sample</Extends>
+    <EnvironmentSize>30.0</EnvironmentSize>
+    <ProjectURL>http://www.mplayerhq.hu/</ProjectURL>
+  </TestProfile>
 </PhoronixTestSuite>

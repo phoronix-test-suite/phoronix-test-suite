@@ -14,9 +14,9 @@
 		<xs:element name="TestInformation">
 		<xs:complexType>
 		<xs:sequence>
-			<xs:element name="Title" type="TitleString" />
-			<xs:element name="Description" type="DescriptionString" />
-			<xs:element name="ResultScale" type="xs:string" />
+			<xs:element name="Title" type="TitleString" minOccurs="0" maxOccurs="1" />
+			<xs:element name="Description" type="DescriptionString" minOccurs="0" maxOccurs="1" />
+			<xs:element name="ResultScale" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="ResultQuantifier" type="ResultQuantifier" minOccurs="0" maxOccurs="1" />
 			<xs:element name="AppVersion" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="SubTitle" type="xs:string" minOccurs="0" maxOccurs="1" />

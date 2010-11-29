@@ -1,10 +1,11 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<Downloads>
-		<Package>
-			<URL>http://www.splitted-desktop.com/~gbeauchesne/mplayer-vaapi/mplayer-vaapi-20100602-FULL.tar.bz2</URL>
-			<MD5>566ecc2b0d8a2c57d9072763efc76c87</MD5>
-			<FileSize>16206640</FileSize>
-		</Package>
-	</Downloads>
+  <Downloads>
+    <Package>
+      <URL>http://www.splitted-desktop.com/~gbeauchesne/mplayer-vaapi/mplayer-vaapi-20100602-FULL.tar.bz2</URL>
+      <MD5>566ecc2b0d8a2c57d9072763efc76c87</MD5>
+      <FileSize>16206640</FileSize>
+    </Package>
+  </Downloads>
 </PhoronixTestSuite>
-

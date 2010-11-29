@@ -39,6 +39,14 @@
 		<xs:enumeration value="MAX" />
 	</xs:restriction>
 </xs:simpleType>
+<xs:simpleType name="MonitorReporting">
+	<xs:restriction base="xs:string">
+		<xs:enumeration value="AVG" />
+		<xs:enumeration value="MIN" />
+		<xs:enumeration value="MAX" />
+		<xs:enumeration value="ALL" />
+	</xs:restriction>
+</xs:simpleType>
 <xs:simpleType name="DisplayFormat">
 	<xs:restriction base="xs:string">
 		<xs:enumeration value="NO_RESULT" />

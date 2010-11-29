@@ -48,7 +48,7 @@
 		<xs:sequence>
 			<xs:element name="Sensor" type="xs:string" />
 			<xs:element name="PollingFrequency" type="PositiveInteger" />
-			<xs:element name="Report" type="xs:string" />
+			<xs:element name="Report" type="MonitorReporting" />
 		</xs:sequence>
 		</xs:complexType>
 		</xs:element>
