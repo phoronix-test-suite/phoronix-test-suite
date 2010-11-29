@@ -23,7 +23,7 @@
 class pts_test_profile_parser
 {
 	protected $identifier;
-	protected $xml_parser;
+	public $xml_parser;
 
 	public function __construct($identifier = null)
 	{

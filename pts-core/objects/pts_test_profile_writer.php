@@ -102,7 +102,6 @@ class pts_test_profile_writer
 		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_ALLOW_CACHE_SHARE, $xml_reader);
 		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_MIN_LENGTH, $xml_reader);
 		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_MAX_LENGTH, $xml_reader);
-		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_PTSVERSION, $xml_reader);
 
 		foreach($test_profile->get_test_option_objects() as $option)
 		{
@@ -112,7 +111,7 @@ class pts_test_profile_writer
 			$this->xml_writer->addXmlNodeWNE(P_TEST_OPTIONS_ARGPOSTFIX, $option->get_option_postfix());
 			$this->xml_writer->addXmlNodeWNE(P_TEST_OPTIONS_DEFAULTENTRY, $option->get_option_default_raw());
 
-			foreach($object->get_options_array() as $item)
+			foreach($option->get_options_array() as $item)
 			{
 				$this->xml_writer->addXmlNode(P_TEST_OPTIONS_MENU_GROUP_NAME, $item[0]);
 				$this->xml_writer->addXmlNodeWNE(P_TEST_OPTIONS_MENU_GROUP_VALUE, $item[1]);

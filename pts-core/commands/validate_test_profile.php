@@ -27,6 +27,94 @@ class validate_test_profile implements pts_option_interface
 		foreach(pts_types::identifiers_to_test_profile_objects($r, true, true) as $test_profile)
 		{
 			pts_client::$display->generic_heading($test_profile);
+
+			if($test_profile->xml_parser->getFileLocation() == null)
+			{
+				echo "\nERROR: The file location of the XML test profile source could not be determined.\n";
+				return false;
+			}
+
+			// Validate the XML against the XSD Schemas
+			libxml_clear_errors();
+
+			// First rewrite the main XML file to ensure it is properly formatted, elements are ordered according to the schema, etc...
+			$test_profile_writer = new pts_test_profile_writer();
+			$test_profile_writer->rebuild_test_profile($test_profile);
+			$test_profile_writer->save_xml($test_profile->xml_parser->getFileLocation());
+
+			// Now re-create the pts_test_profile object around the rewritten XML
+			$test_profile = new pts_test_profile($test_profile->get_identifier());
+			$valid = $test_profile->xml_parser->validate();
+
+			if($valid == false)
+			{
+				echo "\nErrors occurred parsing the main XML.\n";
+				pts_validation::process_libxml_errors();
+				return false;
+			}
+			else
+			{
+				echo "\nTest Profile XML Is Valid.\n";
+			}
+
+			// Validate the downloads file
+			$download_xml_file = $test_profile->get_file_download_spec();
+
+			if(empty($download_xml_file) == false)
+			{
+				$writer = new pts_test_profile_downloads_writer();
+				$writer->rebuild_download_file($download_xml_file);
+				$writer->save_xml($download_xml_file);
+
+				$downloads_parser = new pts_test_downloads_nye_XmlReader($download_xml_file);
+				$valid = $downloads_parser->validate();
+
+				if($valid == false)
+				{
+					echo "\nErrors occurred parsing the downloads XML.\n";
+					pts_validation::process_libxml_errors();
+					return false;
+				}
+				else
+				{
+					echo "\nTest Downloads XML Is Valid.\n";
+				}
+
+
+				// Validate the individual download files
+				echo "\nTesting File Download URLs.\n";
+				$files_missing = 0;
+
+				foreach(pts_test_install_request::read_download_object_list($test_profile) as $download)
+				{
+					foreach($download->get_download_url_array() as $url)
+					{
+						$stream_context = pts_network::stream_context_create();
+						stream_context_set_params($stream_context, array("notification" => "pts_stream_status_callback"));
+						$file_pointer = @fopen($url, 'r', false, $stream_context);
+
+						if($file_pointer == false)
+						{
+							echo "\File Missing: " . $download->get_filename() . " / " . $url . "\n";
+							$files_missing++;
+						}
+						else
+						{
+							@fclose($file_pointer);
+						}
+
+					}
+				}
+
+				if($files_missing > 0)
+				{
+					return false;
+				}
+			}
+
+echo "\n";
+			return;
+
 			$validation_errors = array();
 			$validation_warnings = array();
 

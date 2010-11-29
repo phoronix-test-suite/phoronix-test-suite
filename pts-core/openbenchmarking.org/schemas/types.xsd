@@ -13,6 +13,14 @@
 		<xs:maxLength value="48" />
 	</xs:restriction>
 </xs:simpleType>
+<xs:simpleType name="Boolean">
+	<xs:restriction base="xs:string">
+		<xs:enumeration value="True" />
+		<xs:enumeration value="False" />
+		<xs:enumeration value="TRUE" />
+		<xs:enumeration value="FALSE" />
+	</xs:restriction>
+</xs:simpleType>
 <xs:simpleType name="DescriptionString">
 	<xs:restriction base="xs:string">
 		<xs:minLength value="4" />
@@ -87,6 +95,7 @@
 </xs:simpleType>
 <xs:simpleType name="ProfileStatus">
 	<xs:restriction base="xs:string">
+		<xs:enumeration value="Verified" />
 		<xs:enumeration value="Private" />
 		<xs:enumeration value="Broken" />
 		<xs:enumeration value="Experimental" />
@@ -95,8 +104,24 @@
 </xs:simpleType>
 <xs:simpleType name="URLString">
 	<xs:restriction base="xs:string">
-		<xs:pattern value="http://*" />
+		<xs:pattern value="http://.*" />
 		<xs:minLength value="12" />
+	</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="TestExtends">
+	<xs:restriction base="xs:string">
+		<xs:minLength value="3" />
+		<xs:maxLength value="64" />
+	</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="TimesToRun">
+	<xs:restriction base="xs:integer">
+		<xs:minInclusive value="1" />
+	</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="FileSize">
+	<xs:restriction base="xs:integer">
+		<xs:minInclusive value="1" />
 	</xs:restriction>
 </xs:simpleType>
 <xs:simpleType name="CoreVersion">

@@ -23,7 +23,7 @@
 			<xs:element name="DisplayFormat" type="DisplayFormat" minOccurs="0" maxOccurs="1" />
 			<xs:element name="Proportion" type="Proportion" minOccurs="0" maxOccurs="1" />
 			<xs:element name="Executable" type="xs:string" minOccurs="0" maxOccurs="1" />
-			<xs:element name="TimesToRun" type="xs:integer" minExclusive="1" minOccurs="0" maxOccurs="1" />
+			<xs:element name="TimesToRun" type="TimesToRun" minOccurs="0" maxOccurs="1" />
 			<xs:element name="IgnoreRuns" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="InstallationAgreement" type="xs:string" minOccurs="0" maxOccurs="1" />
 		</xs:sequence>
@@ -42,8 +42,8 @@
 			<xs:element name="SupportedArchitectures" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="SupportedPlatforms" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="ExternalDependencies" type="xs:string" minOccurs="0" maxOccurs="1" />
-			<xs:element name="Extends" type="xs:string" minOccurs="0" maxOccurs="1" minLength="3" maxLength="64" />
-			<xs:element name="RequiresRoot" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+			<xs:element name="Extends" type="TestExtends" minOccurs="0" maxOccurs="1" />
+			<xs:element name="RequiresRoot" type="Boolean" minOccurs="0" maxOccurs="1" />
 			<xs:element name="EnvironmentSize" type="xs:decimal" minOccurs="0" maxOccurs="1" />
 			<xs:element name="EnvironmentTestingSize" type="xs:decimal" minOccurs="0" maxOccurs="1" />
 			<xs:element name="EstimatedLength" type="xs:decimal" minOccurs="0" maxOccurs="1" />
@@ -51,8 +51,8 @@
 			<xs:element name="RequiresCoreVersionMin" type="CoreVersion" minOccurs="0" maxOccurs="1" />
 			<xs:element name="RequiresCoreVersionMax" type="CoreVersion" minOccurs="0" maxOccurs="1" />
 			<xs:element name="ReferenceSystems" type="xs:string" minOccurs="0" maxOccurs="1" />
-			<xs:element name="AllowResultsSharing" type="xs:boolean" minOccurs="0" maxOccurs="1" />
-			<xs:element name="AutoSaveResults" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+			<xs:element name="AllowResultsSharing" type="Boolean" minOccurs="0" maxOccurs="1" />
+			<xs:element name="AutoSaveResults" type="Boolean" minOccurs="0" maxOccurs="1" />
 		</xs:sequence>
 		</xs:complexType>
 		</xs:element>
@@ -65,7 +65,7 @@
 			<xs:sequence>
 				<xs:element name="Arguments" type="xs:string" minOccurs="0" maxOccurs="1" />
 				<xs:element name="PostArguments" type="xs:string" minOccurs="0" maxOccurs="1" />
-				<xs:element name="AllowCacheShare" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+				<xs:element name="AllowCacheShare" type="Boolean" minOccurs="0" maxOccurs="1" />
 				<xs:element name="MinimumLength" type="xs:decimal" minOccurs="0" maxOccurs="1" />
 				<xs:element name="MaximumLength" type="xs:decimal" minOccurs="0" maxOccurs="1" />
 			</xs:sequence>

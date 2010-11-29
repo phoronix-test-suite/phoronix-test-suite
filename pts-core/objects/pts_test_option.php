@@ -69,7 +69,7 @@ class pts_test_option
 	}
 	public function get_option_default_raw()
 	{
-		return $this->default_entry;
+		return $this->default_entry == -1 ? 0 : $this->default_entry;
 	}
 	public function get_option_default()
 	{		

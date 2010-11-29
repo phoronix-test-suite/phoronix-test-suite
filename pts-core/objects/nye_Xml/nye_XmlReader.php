@@ -24,6 +24,7 @@
 class nye_XmlReader
 {
 	protected $tag_fallback = false; // Fallback value if tag is not present
+	protected $file_location = false;
 	public $dom; // The DOM
 
 	public function __construct($xml_file)
@@ -35,11 +36,16 @@ class nye_XmlReader
 		if(!isset($xml_file[1024]) && is_file($xml_file))
 		{
 			$this->dom->load($xml_file);
+			$this->file_location = $xml_file;
 		}
 		else if($xml_file != null)
 		{
 			$this->dom->loadXML($xml_file);
 		}
+	}
+	public function getFileLocation()
+	{
+		return $this->file_location;
 	}
 	public function getXMLValue($xml_tag, $fallback_value = -1)
 	{

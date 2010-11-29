@@ -22,6 +22,36 @@
 
 class pts_validation
 {
+	public static function process_libxml_errors()
+	{
+		$error_queue = array();
+		$errors = libxml_get_errors();
+
+		foreach($errors as $i => &$error)
+		{
+			if(isset($error_queue[$error->line]))
+			{
+				// There's already been an error reported for this line
+				unset($errors[$i]);
+			}
+
+			switch($error->code)
+			{
+				case 1840: // Not in enumeration
+				case 1839: // Not in pattern
+				case 1871: // Missing / invalid element
+				case 1833: // Below the minInclusive value
+					echo "\n" . $error->message;
+					echo "Line " . $error->line . ": " . $error->file . "\n";
+					$error_queue[$error->line] = true;
+					unset($errors[$i]);
+					break;
+			}
+		}
+
+		print_r($errors);
+		libxml_clear_errors();
+	}
 	public static function check_xml_tags(&$obj, &$tags_to_check, &$append_missing_to)
 	{
 		foreach($tags_to_check as $tag_check)
