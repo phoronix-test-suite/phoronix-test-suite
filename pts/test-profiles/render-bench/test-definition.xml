@@ -12,7 +12,6 @@
 		<ProjectURL>http://www.freedesktop.org/</ProjectURL>
 		<ExternalDependencies>build-utilities, imlib2-development, xorg-development</ExternalDependencies>
 		<SupportedPlatforms>Linux</SupportedPlatforms>
-		<Extends>2d-test</Extends>
 	</TestProfile>
 	<TestInformation>
 		<Title>Render Bench</Title>

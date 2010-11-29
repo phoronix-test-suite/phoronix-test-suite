@@ -12,7 +12,6 @@
 		<Maintainer>Michael Larabel</Maintainer>
 		<SupportedPlatforms>Linux</SupportedPlatforms>
 		<ProjectURL>http://78.31.67.79:8080/jxrender/RenderMark.html</ProjectURL>
-		<Extends>2d-test</Extends>
 	</TestProfile>
 	<TestInformation>
 		<Title>JXRenderMark</Title>
