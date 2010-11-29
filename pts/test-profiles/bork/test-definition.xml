@@ -11,7 +11,8 @@
 		<EnvironmentSize>0.93</EnvironmentSize>
 		<EnvironmentTestingSize>2048</EnvironmentTestingSize>
 		<ProjectURL>http://www.sourceforge.net/projects/bork</ProjectURL>
-		<Extends>java-environment</Extends>
+		<ExternalDependencies>java</ExternalDependencies>
+		<InternalTags>Java</InternalTags>
 	</TestProfile>
 	<TestInformation>
 		<Title>Bork File Encrypter</Title>

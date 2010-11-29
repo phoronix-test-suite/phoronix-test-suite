@@ -30,9 +30,6 @@ class pts_test_notes_manager
 
 		switch($note)
 		{
-			case "JAVA_VERSION":
-				$note = phodevi::read_property("system", "java-version");
-				break;
 			case "PYTHON_VERSION":
 				$note = phodevi::read_property("system", "python-version");
 				break;
@@ -48,9 +45,21 @@ class pts_test_notes_manager
 		static $check_processes = null;
 
 		$test_types = array();
+		$test_tags = array();
+
 		foreach($test_result_objects as $test_result)
 		{
 			pts_arrays::unique_push($test_types, $test_result->test_profile->get_test_hardware_type());
+
+			foreach($test_result->test_profile->get_internal_tags() as $tag)
+			{
+				pts_arrays::unique_push($test_tags, $tag);
+			}
+		}
+
+		if(in_array("Java", $test_tags))
+		{
+			self::add_note(phodevi::read_property("system", "java-version"));
 		}
 
 		if(empty($check_processes))

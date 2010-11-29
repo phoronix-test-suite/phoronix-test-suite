@@ -1,6 +1,0 @@
-<?xml version="1.0"?>
-<PhoronixTestSuite>
-	<TestProfile>
-		<ExternalDependencies>java</ExternalDependencies>
-	</TestProfile>
-</PhoronixTestSuite>

@@ -1,13 +1,14 @@
 <?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<ResultsParser>
-		<MatchToTestArguments>READ</MatchToTestArguments>
-		<LineHint>reads</LineHint>
-		<OutputTemplate>Final score for reads :        #_RESULT_#</OutputTemplate>
-	</ResultsParser>
-	<ResultsParser>
-		<MatchToTestArguments>WRITE</MatchToTestArguments>
-		<LineHint>writes</LineHint>
-		<OutputTemplate>Final score for writes:          #_RESULT_#</OutputTemplate>
-	</ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Final score for reads :        #_RESULT_#</OutputTemplate>
+    <MatchToTestArguments>READ</MatchToTestArguments>
+    <LineHint>reads</LineHint>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Final score for writes:          #_RESULT_#</OutputTemplate>
+    <MatchToTestArguments>WRITE</MatchToTestArguments>
+    <LineHint>writes</LineHint>
+  </ResultsParser>
 </PhoronixTestSuite>

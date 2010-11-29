@@ -109,6 +109,10 @@ class pts_test_profile_parser
 	{
 		return !in_array($this->get_status(), pts_types::test_profile_state_types());
 	}
+	public function get_internal_tags()
+	{
+		return pts_strings::comma_explode($this->xml_parser->getXMLValue(P_TEST_INTERNAL_TAGS));
+	}
 	public function get_reference_systems()
 	{
 		return pts_strings::comma_explode($this->xml_parser->getXMLValue(P_TEST_REFERENCE_SYSTEMS));

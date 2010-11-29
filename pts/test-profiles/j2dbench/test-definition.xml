@@ -10,7 +10,8 @@
 		<EnvironmentSize>0.4</EnvironmentSize>
 		<Maintainer>Tao Zhang</Maintainer>
 		<ProjectURL>http://www.java.net/</ProjectURL>
-		<Extends>java-environment</Extends>
+		<ExternalDependencies>java</ExternalDependencies>
+		<InternalTags>Java</InternalTags>
 	</TestProfile>
 	<TestInformation>
 		<Title>Java 2D Microbenchmark</Title>
