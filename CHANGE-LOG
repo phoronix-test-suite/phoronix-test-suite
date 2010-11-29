@@ -16,6 +16,7 @@ Phoronix Test Suite (Git)
 - pts-core: TEST PROFILE XML SPEC CHANGE: TestInformation/Version -> TestInformation/AppVersion
 - pts-core: TEST PROFILE/SUITE XML SPEC CHANGE: Split RequiresCoreVersion tag into RequiresCoreVersionMin and RequiresCoreVersionMax
 - pts-core: Add InternalTags to XML test profile schema
+- pts-core: Drop support for ~/pts-test-note as the capabilities are now found within InternalTags using a cleaner method
 - phoromatic: HTTPS connection support, install the Phoromatic.com SSL certificate
 - pts: Update apache test profile against upstream Apache 2.2.17
 - pts: Update build-apache test profile against upstream Apache 2.2.17

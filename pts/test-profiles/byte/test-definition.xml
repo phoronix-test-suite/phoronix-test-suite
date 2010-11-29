@@ -1,47 +1,47 @@
 <?xml version="1.0"?>
-<?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<TestProfile>
-		<Version>1.1.0</Version>
-		<TestType>Processor</TestType>
-		<SoftwareType>Utility</SoftwareType>
-		<License>FREE</License>
-		<Status>VERIFIED</Status>
-		<Maintainer>Michael Larabel</Maintainer>
-		<EnvironmentSize>0.5</EnvironmentSize>
-                <ExternalDependencies>build-utilities</ExternalDependencies>
-	</TestProfile>
-	<TestInformation>
-		<Title>BYTE Unix Benchmark</Title>
-		<AppVersion>3.6</AppVersion>
-		<TimesToRun>3</TimesToRun>
-		<ResultScale>LPS</ResultScale>
-		<Proportion>HIB</Proportion>
-		<Description>This is a test of BYTE.</Description>
-	</TestInformation>
-	<TestSettings>
-		<Option>
-			<DisplayName>Computational Test</DisplayName>
-			<Identifier>compute-test</Identifier>
-			<ArgumentPrefix>TEST_</ArgumentPrefix>
-			<Menu>
-				<Entry>
-					<Name>Dhrystone 2</Name>
-					<Value>DHRY2</Value>
-				</Entry>
-				<Entry>
-					<Name>Register Arithmetic</Name>
-					<Value>REGISTER</Value>
-				</Entry>
-				<Entry>
-					<Name>Integer Arithmetic</Name>
-					<Value>INT</Value>
-				</Entry>
-				<Entry>
-					<Name>Floating-Point Arithmetic</Name>
-					<Value>FLOAT</Value>
-				</Entry>
-			</Menu>
-		</Option>
-	</TestSettings>
+  <TestInformation>
+    <Title>BYTE Unix Benchmark</Title>
+    <Description>This is a test of BYTE.</Description>
+    <ResultScale>LPS</ResultScale>
+    <AppVersion>3.6</AppVersion>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.0</Version>
+    <TestType>Processor</TestType>
+    <SoftwareType>Utility</SoftwareType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities</ExternalDependencies>
+    <EnvironmentSize>0.5</EnvironmentSize>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Computational Test</DisplayName>
+      <Identifier>compute-test</Identifier>
+      <ArgumentPrefix>TEST_</ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>Dhrystone 2</Name>
+          <Value>DHRY2</Value>
+        </Entry>
+        <Entry>
+          <Name>Register Arithmetic</Name>
+          <Value>REGISTER</Value>
+        </Entry>
+        <Entry>
+          <Name>Integer Arithmetic</Name>
+          <Value>INT</Value>
+        </Entry>
+        <Entry>
+          <Name>Floating-Point Arithmetic</Name>
+          <Value>FLOAT</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
 </PhoronixTestSuite>

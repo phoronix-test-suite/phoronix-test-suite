@@ -48,6 +48,9 @@ class phodevi_system extends phodevi_device_interface
 			case "python-version":
 				$property = new phodevi_device_property("sw_python_version", PHODEVI_STAND_CACHE);
 				break;
+			case "wine-version":
+				$property = new phodevi_device_property("sw_wine_version", PHODEVI_STAND_CACHE);
+				break;
 			case "display-server":
 				$property = new phodevi_device_property("sw_display_server", PHODEVI_SMART_CACHE);
 				break;
@@ -873,6 +876,17 @@ class phodevi_system extends phodevi_device_interface
 		}
 
 		return $python_version;
+	}
+	public static function sw_wine_version()
+	{
+		$wine_version = null;
+
+		if(pts_client::executable_in_path("wine") != false)
+		{
+			$wine_version = trim(shell_exec("wine --version 2>&1"));
+		}
+
+		return $wine_version;
 	}
 }
 

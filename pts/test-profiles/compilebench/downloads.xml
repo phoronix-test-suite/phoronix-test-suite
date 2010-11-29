@@ -1,9 +1,11 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<Downloads>
-		<Package>
-			<URL>http://oss.oracle.com/~mason/compilebench/compilebench-0.6.tar.bz2</URL>
-			<MD5>88907091223df4af78b1b2bfd150400e</MD5>
-			<FileSize>591224</FileSize>
-		</Package>
-	</Downloads>
+  <Downloads>
+    <Package>
+      <URL>http://oss.oracle.com/~mason/compilebench/compilebench-0.6.tar.bz2</URL>
+      <MD5>88907091223df4af78b1b2bfd150400e</MD5>
+      <FileSize>591224</FileSize>
+    </Package>
+  </Downloads>
 </PhoronixTestSuite>

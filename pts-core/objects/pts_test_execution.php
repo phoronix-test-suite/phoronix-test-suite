@@ -330,12 +330,6 @@ class pts_test_execution
 			}
 		}
 
-		if(is_file($test_directory . "/pts-test-note"))
-		{
-			pts_test_notes_manager::add_note(pts_file_io::file_get_contents($test_directory . "/pts-test-note"));
-			unlink($test_directory . "pts-test-note");
-		}
-
 		// Fill in missing test details
 
 		if(empty($arguments_description))

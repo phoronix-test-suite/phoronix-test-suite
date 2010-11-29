@@ -28,13 +28,6 @@ class pts_test_notes_manager
 	{
 		$note = trim($note);
 
-		switch($note)
-		{
-			case "PYTHON_VERSION":
-				$note = phodevi::read_property("system", "python-version");
-				break;
-		}
-
 		if(!empty($note) && !in_array($note, self::$notes))
 		{
 			array_push(self::$notes, $note);
@@ -60,6 +53,14 @@ class pts_test_notes_manager
 		if(in_array("Java", $test_tags))
 		{
 			self::add_note(phodevi::read_property("system", "java-version"));
+		}
+		if(in_array("Python", $test_tags))
+		{
+			self::add_note(phodevi::read_property("system", "python-version"));
+		}
+		if(in_array("Wine", $test_tags))
+		{
+			self::add_note(phodevi::read_property("system", "wine-version"));
 		}
 
 		if(empty($check_processes))

@@ -9,7 +9,8 @@
 		<Status>VERIFIED</Status>
 		<Maintainer>Michael Larabel</Maintainer>
 		<EnvironmentSize>0.5</EnvironmentSize>
-		<Extends>python-environment</Extends>
+    <ExternalDependencies>python</ExternalDependencies>
+    <InternalTags>Python</InternalTags>
 		<ProjectURL>http://svn.python.org/projects/python/trunk/Tools/pybench/</ProjectURL>
 	</TestProfile>
 	<TestInformation>
