@@ -1,17 +1,24 @@
 <?xml version="1.0"?>
-<?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<TestProfile>
-		<Version>1.2.0</Version>
-		<Maintainer>Michael Larabel</Maintainer>
-		<ProjectURL>http://www.kernel.org/</ProjectURL>
-		<Extends>timed-build</Extends>
-		<SupportedPlatforms>Linux</SupportedPlatforms>
-	</TestProfile>
-	<TestInformation>
-		<Title>Timed Linux Kernel Compilation</Title>
-		<AppVersion>2.6.25</AppVersion>
-		<Executable>time-compile-kernel</Executable>
-		<Description>This test times how long it takes to build the Linux kernel.</Description>
-	</TestInformation>
+  <TestInformation>
+    <Title>Timed Linux Kernel Compilation</Title>
+    <Description>This test times how long it takes to build the Linux kernel.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <AppVersion>2.6.25</AppVersion>
+    <SubTitle>Time To Compile</SubTitle>
+    <Proportion>LIB</Proportion>
+    <Executable>time-compile-kernel</Executable>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.2.0</Version>
+    <TestType>Processor</TestType>
+    <SoftwareType>Utility</SoftwareType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <ExternalDependencies>build-utilities</ExternalDependencies>
+    <ProjectURL>http://www.kernel.org/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
 </PhoronixTestSuite>

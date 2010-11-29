@@ -14,10 +14,6 @@
     <TestType>System</TestType>
     <SoftwareType>Utility</SoftwareType>
     <Maintainer>Michael Larabel</Maintainer>
-    <License>Free</License>
-    <Status>Verified</Status>
-    <SupportedPlatforms>Linux, BSD, Solaris</SupportedPlatforms>
-    <ExternalDependencies>build-utilities, xorg-development, xorg-video, zlib-development</ExternalDependencies>
     <Extends>mplayer-base</Extends>
     <EnvironmentSize>1.0</EnvironmentSize>
     <ProjectURL>http://www.mplayerhq.hu/</ProjectURL>

@@ -1,9 +1,11 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<Downloads>
-		<Package>
-			<URL>http://download.openpkg.org/components/cache/imagemagick/ImageMagick-6.6.3-4.tar.bz2, http://image_magick.veidrodis.com/image_magick/ImageMagick-6.6.3-4.tar.bz2, http://ftp.vim.org/ImageMagick/ImageMagick-6.6.3-4.tar.bz2</URL>
-			<MD5>94b9d2379c870e9d216955e338d214f2</MD5>
-			<FileSize>8681316</FileSize>
-		</Package>
-	</Downloads>
+  <Downloads>
+    <Package>
+      <URL>http://download.openpkg.org/components/cache/imagemagick/ImageMagick-6.6.3-4.tar.bz2, http://image_magick.veidrodis.com/image_magick/ImageMagick-6.6.3-4.tar.bz2, http://ftp.vim.org/ImageMagick/ImageMagick-6.6.3-4.tar.bz2</URL>
+      <MD5>94b9d2379c870e9d216955e338d214f2</MD5>
+      <FileSize>8681316</FileSize>
+    </Package>
+  </Downloads>
 </PhoronixTestSuite>

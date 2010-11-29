@@ -25,6 +25,7 @@ pts_load_xml_definitions("test-profile.xml");
 class pts_test_nye_XmlReader extends nye_XmlReader
 {
 	protected $override_values;
+	protected $block_test_extension_support = false;
 
 	public function __construct($read_xml)
 	{
@@ -39,6 +40,10 @@ class pts_test_nye_XmlReader extends nye_XmlReader
 	public function validate()
 	{
 		return $this->dom->schemaValidate(PTS_OPENBENCHMARKING_PATH . "schemas/test-profile.xsd");
+	}
+	public function block_test_extension_support()
+	{
+		$this->block_test_extension_support = true;
 	}
 	public function overrideXMLValues($test_options)
 	{
@@ -75,7 +80,7 @@ class pts_test_nye_XmlReader extends nye_XmlReader
 	public function handleXmlZeroTagFallback($xml_tag, $fallback_value)
 	{
 		// Cascading Test Profiles for finding a tag within an XML file being extended by another XML file
-		if($xml_tag == P_TEST_CTPEXTENDS)
+		if($xml_tag == P_TEST_CTPEXTENDS || $this->block_test_extension_support)
 		{
 			// Otherwise we'd have an infinite loop
 			return $fallback_value;

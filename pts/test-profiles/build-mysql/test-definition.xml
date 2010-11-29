@@ -1,17 +1,23 @@
 <?xml version="1.0"?>
-<?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<TestProfile>
-		<Version>1.0.0</Version>
-		<Maintainer>Michael Larabel</Maintainer>
-		<EnvironmentSize>180.4</EnvironmentSize>
-		<ProjectURL>http://www.mysql.com/</ProjectURL>
-		<Extends>timed-build</Extends>
-		<ExternalDependencies>build-utilities, ncurses-development</ExternalDependencies>
-	</TestProfile>
-	<TestInformation>
-		<Title>Timed MySQL Compilation</Title>
-		<AppVersion>5.1.30</AppVersion>
-		<Description>This test times how long it takes to build MySQL 5.1.</Description>
-	</TestInformation>
+  <TestInformation>
+    <Title>Timed MySQL Compilation</Title>
+    <Description>This test times how long it takes to build MySQL 5.1.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <AppVersion>5.1.30</AppVersion>
+    <SubTitle>Time To Compile</SubTitle>
+    <Proportion>LIB</Proportion>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <TestType>Processor</TestType>
+    <SoftwareType>Utility</SoftwareType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, ncurses-development</ExternalDependencies>
+    <EnvironmentSize>180.4</EnvironmentSize>
+    <ProjectURL>http://www.mysql.com/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
 </PhoronixTestSuite>

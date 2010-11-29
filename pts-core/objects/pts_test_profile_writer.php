@@ -48,8 +48,10 @@ class pts_test_profile_writer
 	{
 		return $this->xml_writer->saveXMLFile($to_save);
 	}
-	public function rebuild_test_profile(&$test_profile)
+	public function rebuild_test_profile($test_profile)
 	{
+		$test_profile->xml_parser->block_test_extension_support();
+
 		$this->add_test_information($test_profile->xml_parser);
 		$this->add_test_data_section($test_profile->xml_parser);
 		$this->add_test_settings($test_profile);
@@ -74,16 +76,13 @@ class pts_test_profile_writer
 		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_PTSVERSION, $xml_reader);
 		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_HARDWARE_TYPE, $xml_reader);
 		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_SOFTWARE_TYPE, $xml_reader);
-		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_MAINTAINER, $xml_reader);
 		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_LICENSE, $xml_reader);
 		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_STATUS, $xml_reader);
-		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_SUPPORTEDARCHS, $xml_reader);
 		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_SUPPORTEDPLATFORMS, $xml_reader);
+		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_SUPPORTEDARCHS, $xml_reader);
 		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_EXDEP, $xml_reader);
 		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_CTPEXTENDS, $xml_reader);
 		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_ROOTNEEDED, $xml_reader);
-		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_INSTALLAGREEMENT, $xml_reader);
-
 		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_ENVIRONMENTSIZE, $xml_reader);
 		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_ENVIRONMENT_TESTING_SIZE, $xml_reader);
 		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_ESTIMATEDTIME, $xml_reader);
@@ -92,6 +91,7 @@ class pts_test_profile_writer
 		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_REQUIRES_COREVERSION_MAX, $xml_reader);
 		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_REFERENCE_SYSTEMS, $xml_reader);
 		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_INTERNAL_TAGS, $xml_reader);
+		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_MAINTAINER, $xml_reader);
 		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_ALLOW_RESULTS_SHARING, $xml_reader);
 		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_AUTO_SAVE_RESULTS, $xml_reader);
 	}

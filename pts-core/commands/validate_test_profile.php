@@ -95,7 +95,7 @@ class validate_test_profile implements pts_option_interface
 
 						if($file_pointer == false)
 						{
-							echo "\File Missing: " . $download->get_filename() . " / " . $url . "\n";
+							echo "File Missing: " . $download->get_filename() . " / " . $url . "\n";
 							$files_missing++;
 						}
 						else

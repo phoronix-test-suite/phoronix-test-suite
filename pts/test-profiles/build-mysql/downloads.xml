@@ -1,9 +1,11 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<Downloads>
-		<Package>
-			<URL>ftp://ftp.uni-hannover.de/pub/mirror/bsd/FreeBSD/ports/distfiles/mysql-5.1.30.tar.gz, ftp://ftp.ussg.iu.edu/pub/FreeBSD/ports/distfiles/mysql-5.1.30.tar.gz</URL>
-			<MD5>b658e58887a74dce65224ae0fc8ee06a</MD5>
-			<FileSize>29050568</FileSize>
-		</Package>
-	</Downloads>
+  <Downloads>
+    <Package>
+      <URL>ftp://ftp.uni-hannover.de/pub/mirror/bsd/FreeBSD/ports/distfiles/mysql-5.1.30.tar.gz, ftp://ftp.ussg.iu.edu/pub/FreeBSD/ports/distfiles/mysql-5.1.30.tar.gz</URL>
+      <MD5>b658e58887a74dce65224ae0fc8ee06a</MD5>
+      <FileSize>29050568</FileSize>
+    </Package>
+  </Downloads>
 </PhoronixTestSuite>

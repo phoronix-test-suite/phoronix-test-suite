@@ -1,16 +1,23 @@
 <?xml version="1.0"?>
-<?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<TestProfile>
-		<Version>1.4.0</Version>
-		<Maintainer>Michael Larabel</Maintainer>
-		<ProjectURL>http://www.apache.org/</ProjectURL>
-		<Extends>timed-build</Extends>
-	</TestProfile>
-	<TestInformation>
-		<Title>Timed Apache Compilation</Title>
-		<AppVersion>2.2.17</AppVersion>
-		<Executable>time-compile-apache</Executable>
-		<Description>This test times how long it takes to build the Apache HTTP Server.</Description>
-	</TestInformation>
+  <TestInformation>
+    <Title>Timed Apache Compilation</Title>
+    <Description>This test times how long it takes to build the Apache HTTP Server.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <AppVersion>2.2.17</AppVersion>
+    <SubTitle>Time To Compile</SubTitle>
+    <Proportion>LIB</Proportion>
+    <Executable>time-compile-apache</Executable>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.4.0</Version>
+    <TestType>Processor</TestType>
+    <SoftwareType>Utility</SoftwareType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities</ExternalDependencies>
+    <ProjectURL>http://www.apache.org/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
 </PhoronixTestSuite>
