@@ -1,20 +1,21 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<Downloads>
-		<Package>
-			<URL>ftp://ftp.swin.edu.au/gnu/gmp/gmp-4.3.0.tar.gz, ftp://ftp.am-utils.org/mirrors/gnu/gmp/gmp-4.3.0.tar.gz, ftp://ftp.muug.mb.ca/mirror/mit/gnu/gmp/gmp-4.3.0.tar.gz, ftp://ftp.gnu.org/gnu/gmp/gmp-4.3.0.tar.gz</URL>
-			<MD5>2cc4a7bf899907e84849d1be77f5a579</MD5>
-			<FileSize>2488749</FileSize>
-		</Package>
-		<Package>
-			<URL>http://gmplib.org/gmpbench-0.1.tar.gz</URL>
-			<MD5>131a5e8e2009a3cb1a92506b0e720068</MD5>
-			<FileSize>4464</FileSize>
-		</Package>
-		<Package>
-			<URL>http://www.phoronix-test-suite.com/benchmark-files/gexpr.c.tar.gz, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/gexpr.c.tar.gz</URL>
-			<MD5>ee936a79be9f00de7e8ea2b55171167d</MD5>
-			<FileSize>2367</FileSize>
-		</Package>
-	</Downloads>
+  <Downloads>
+    <Package>
+      <URL>ftp://ftp.swin.edu.au/gnu/gmp/gmp-4.3.0.tar.gz, ftp://ftp.am-utils.org/mirrors/gnu/gmp/gmp-4.3.0.tar.gz, ftp://ftp.muug.mb.ca/mirror/mit/gnu/gmp/gmp-4.3.0.tar.gz, ftp://ftp.gnu.org/gnu/gmp/gmp-4.3.0.tar.gz</URL>
+      <MD5>2cc4a7bf899907e84849d1be77f5a579</MD5>
+      <FileSize>2488749</FileSize>
+    </Package>
+    <Package>
+      <URL>http://gmplib.org/gmpbench-0.1.tar.gz</URL>
+      <MD5>131a5e8e2009a3cb1a92506b0e720068</MD5>
+      <FileSize>4464</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/gexpr.c.tar.gz, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/gexpr.c.tar.gz</URL>
+      <MD5>ee936a79be9f00de7e8ea2b55171167d</MD5>
+      <FileSize>2367</FileSize>
+    </Package>
+  </Downloads>
 </PhoronixTestSuite>
-

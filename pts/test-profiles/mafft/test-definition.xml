@@ -1,26 +1,25 @@
 <?xml version="1.0"?>
-<?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<TestProfile>
-		<Version>1.2.0</Version>
-		<TestType>Processor</TestType>
-		<SoftwareType>Scientific</SoftwareType>
-		<License>Free</License>
-		<Status>Verified</Status>
-		<EnvironmentSize>17.1</EnvironmentSize>
-		<Maintainer>Andrew Schofield</Maintainer>
-		<ProjectURL>http://align.bmr.kyushu-u.ac.jp/mafft/software/</ProjectURL>
-		<ExternalDependencies>build-utilities</ExternalDependencies>
-		<SupportedPlatforms>Linux, MacOSX, BSD</SupportedPlatforms>
-	</TestProfile>
-	<TestInformation>
-		<Title>Timed MAFFT Alignment</Title>
-		<AppVersion>6.706</AppVersion>
-		<SubTitle>Multiple Sequence Alignment</SubTitle>
-		<ResultScale>Seconds</ResultScale>
-		<TimesToRun>3</TimesToRun>
-		<Description>This test performs an alignment of 100 pyruvate decarboxylase sequences.</Description>
-		<Proportion>LIB</Proportion>
-	</TestInformation>
+  <TestInformation>
+    <Title>Timed MAFFT Alignment</Title>
+    <Description>This test performs an alignment of 100 pyruvate decarboxylase sequences.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <AppVersion>6.706</AppVersion>
+    <SubTitle>Multiple Sequence Alignment</SubTitle>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.2.0</Version>
+    <TestType>Processor</TestType>
+    <SoftwareType>Scientific</SoftwareType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <SupportedPlatforms>Linux, MacOSX, BSD</SupportedPlatforms>
+    <ExternalDependencies>build-utilities</ExternalDependencies>
+    <EnvironmentSize>17.1</EnvironmentSize>
+    <ProjectURL>http://align.bmr.kyushu-u.ac.jp/mafft/software/</ProjectURL>
+    <Maintainer>Andrew Schofield</Maintainer>
+  </TestProfile>
 </PhoronixTestSuite>
-

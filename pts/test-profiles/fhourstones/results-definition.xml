@@ -1,7 +1,8 @@
 <?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<ResultsParser>
-		<LineHint>Kpos/sec</LineHint>
-		<OutputTemplate>1479113766 pos / 168441 msec = #_RESULT_# Kpos/sec</OutputTemplate>
-	</ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>1479113766 pos / 168441 msec = #_RESULT_# Kpos/sec</OutputTemplate>
+    <LineHint>Kpos/sec</LineHint>
+  </ResultsParser>
 </PhoronixTestSuite>

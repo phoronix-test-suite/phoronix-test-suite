@@ -1,25 +1,25 @@
 <?xml version="1.0"?>
-<?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<TestProfile>
-		<Version>1.0.1</Version>
-		<TestType>Processor</TestType>
-		<SoftwareType>Utility</SoftwareType>
-		<License>Free</License>
-		<Status>Verified</Status>
-		<Maintainer>Michael Larabel</Maintainer>
-		<EnvironmentSize>2.1</EnvironmentSize>
-		<ExternalDependencies>build-utilities</ExternalDependencies>
-		<SupportedPlatforms>Linux</SupportedPlatforms>
-		<ProjectURL>http://www.gmplib.org/gmpbench.html</ProjectURL>
-	</TestProfile>
-	<TestInformation>
-		<Title>GMPbench</Title>
-		<AppVersion>0.1</AppVersion>
-		<SubTitle>Total Time</SubTitle>
-		<TimesToRun>2</TimesToRun>
-		<ResultScale>GMPbench Score</ResultScale>
-		<Proportion>HIB</Proportion>
-		<Description>GMPbench is a test of the GMP 4.3.0 math library.</Description>
-	</TestInformation>
+  <TestInformation>
+    <Title>GMPbench</Title>
+    <Description>GMPbench is a test of the GMP 4.3.0 math library.</Description>
+    <ResultScale>GMPbench Score</ResultScale>
+    <AppVersion>0.1</AppVersion>
+    <SubTitle>Total Time</SubTitle>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>2</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.1</Version>
+    <TestType>Processor</TestType>
+    <SoftwareType>Utility</SoftwareType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <ExternalDependencies>build-utilities</ExternalDependencies>
+    <EnvironmentSize>2.1</EnvironmentSize>
+    <ProjectURL>http://www.gmplib.org/gmpbench.html</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
 </PhoronixTestSuite>

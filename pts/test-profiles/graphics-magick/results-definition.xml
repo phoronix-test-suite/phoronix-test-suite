@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<ResultsParser>
-		<OutputTemplate>Results: #_RESULT_# iter 191.44s user 60.12s total 0.582 iter/s (0.183 iter/s cpu)</OutputTemplate>
-	</ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Results: #_RESULT_# iter 191.44s user 60.12s total 0.582 iter/s (0.183 iter/s cpu)</OutputTemplate>
+  </ResultsParser>
 </PhoronixTestSuite>

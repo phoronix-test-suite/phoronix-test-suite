@@ -1,47 +1,47 @@
 <?xml version="1.0"?>
-<?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<TestProfile>
-		<Version>1.1.0</Version>
-		<TestType>System</TestType>
-		<SoftwareType>Utility</SoftwareType>
-		<License>Free</License>
-		<Status>Verified</Status>
-		<Maintainer>Michael Larabel</Maintainer>
-		<EnvironmentSize>0.1</EnvironmentSize>
-		<ExternalDependencies>build-utilities, glut, opencl</ExternalDependencies>
-		<SupportedPlatforms>Linux, BSD, MacOSX</SupportedPlatforms>
-		<ProjectURL>http://davibu.interfree.it/opencl/juliagpu/juliaGPU.html</ProjectURL>
-	</TestProfile>
-	<TestInformation>
-		<Title>JuliaGPU</Title>
-		<AppVersion>1.2pts</AppVersion>
-		<TimesToRun>3</TimesToRun>
-		<ResultScale>Samples/sec</ResultScale>
-		<Proportion>HIB</Proportion>
-		<Description>JuliaGPU is an OpenCL benchmark. The test is ran with 2x2 sampling size, fast rendering, and shadow support.</Description>
-	</TestInformation>
-	<TestSettings>
-		<Default>
-			<PostArguments>preprocessed_rendering_kernel.cl 1024 768</PostArguments>
-		</Default>
-		<Option>
-			<DisplayName>OpenCL Device</DisplayName>
-			<Identifier>cl-device</Identifier>
-			<Menu>
-				<Entry>
-					<Name>CPU</Name>
-					<Value>1 0</Value>
-				</Entry>
-				<Entry>
-					<Name>GPU</Name>
-					<Value>0 1</Value>
-				</Entry>
-				<Entry>
-					<Name>CPU+GPU</Name>
-					<Value>1 1</Value>
-				</Entry>
-			</Menu>
-		</Option>
-	</TestSettings>
+  <TestInformation>
+    <Title>JuliaGPU</Title>
+    <Description>JuliaGPU is an OpenCL benchmark. The test is ran with 2x2 sampling size, fast rendering, and shadow support.</Description>
+    <ResultScale>Samples/sec</ResultScale>
+    <AppVersion>1.2pts</AppVersion>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.0</Version>
+    <TestType>System</TestType>
+    <SoftwareType>Utility</SoftwareType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <SupportedPlatforms>Linux, BSD, MacOSX</SupportedPlatforms>
+    <ExternalDependencies>build-utilities, glut, opencl</ExternalDependencies>
+    <EnvironmentSize>0.1</EnvironmentSize>
+    <ProjectURL>http://davibu.interfree.it/opencl/juliagpu/juliaGPU.html</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <PostArguments>preprocessed_rendering_kernel.cl 1024 768</PostArguments>
+    </Default>
+    <Option>
+      <DisplayName>OpenCL Device</DisplayName>
+      <Identifier>cl-device</Identifier>
+      <Menu>
+        <Entry>
+          <Name>CPU</Name>
+          <Value>1 0</Value>
+        </Entry>
+        <Entry>
+          <Name>GPU</Name>
+          <Value>0 1</Value>
+        </Entry>
+        <Entry>
+          <Name>CPU+GPU</Name>
+          <Value>1 1</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
 </PhoronixTestSuite>

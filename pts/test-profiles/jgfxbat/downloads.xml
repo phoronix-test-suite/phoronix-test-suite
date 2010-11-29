@@ -1,8 +1,10 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<Downloads>
-		<Package>
-			<URL>http://download.java.net/javadesktop/jgfxbat/2.0/GfxBAT.zip</URL>
-			<FileSize>360167</FileSize>
-		</Package>
-	</Downloads>
+  <Downloads>
+    <Package>
+      <URL>http://download.java.net/javadesktop/jgfxbat/2.0/GfxBAT.zip</URL>
+      <FileSize>360167</FileSize>
+    </Package>
+  </Downloads>
 </PhoronixTestSuite>

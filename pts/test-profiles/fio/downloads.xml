@@ -1,9 +1,11 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<Downloads>
-		<Package>
-			<URL>http://brick.kernel.dk/snaps/fio-1.21.tar.bz2, ftp://ftp.uni-kassel.de/Mirrors/ftp.fhh.opensource-mirror.de/gentoo/distfiles/fio-1.21.tar.bz2, ftp://ftp.li.kernel.org/pub/.5/gentoo/distfiles/fio-1.21.tar.bz2</URL>
-			<MD5>129b20d20868bc482b7316f0e327c930</MD5>
-			<FileSize>1353714</FileSize>
-		</Package>
-	</Downloads>
+  <Downloads>
+    <Package>
+      <URL>http://brick.kernel.dk/snaps/fio-1.21.tar.bz2, ftp://ftp.uni-kassel.de/Mirrors/ftp.fhh.opensource-mirror.de/gentoo/distfiles/fio-1.21.tar.bz2, ftp://ftp.li.kernel.org/pub/.5/gentoo/distfiles/fio-1.21.tar.bz2</URL>
+      <MD5>129b20d20868bc482b7316f0e327c930</MD5>
+      <FileSize>1353714</FileSize>
+    </Package>
+  </Downloads>
 </PhoronixTestSuite>

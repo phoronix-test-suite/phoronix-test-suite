@@ -1,25 +1,25 @@
 <?xml version="1.0"?>
-<?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<TestProfile>
-		<Version>1.5.0</Version>
-		<TestType>Processor</TestType>
-		<SoftwareType>Utility</SoftwareType>
-		<License>Free</License>
-		<Status>Verified</Status>
-		<Maintainer>Michael Larabel</Maintainer>
-		<EnvironmentSize>127</EnvironmentSize>
-		<ProjectURL>http://ffmpeg.mplayerhq.hu/</ProjectURL>
-		<Extends>video-sample</Extends>
-		<ExternalDependencies>build-utilities</ExternalDependencies>
-	</TestProfile>
-	<TestInformation>
-		<Title>FFmpeg</Title>
-		<AppVersion>0.6.1</AppVersion>
-		<SubTitle>AVI To NTSC VCD</SubTitle>
-		<TimesToRun>3</TimesToRun>
-		<ResultScale>Seconds</ResultScale>
-		<Proportion>LIB</Proportion>
-		<Description>This test uses FFmpeg for testing the system's audio/video encoding performance.</Description>
-	</TestInformation>
+  <TestInformation>
+    <Title>FFmpeg</Title>
+    <Description>This test uses FFmpeg for testing the system's audio/video encoding performance.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <AppVersion>0.6.1</AppVersion>
+    <SubTitle>AVI To NTSC VCD</SubTitle>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.5.0</Version>
+    <TestType>Processor</TestType>
+    <SoftwareType>Utility</SoftwareType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities</ExternalDependencies>
+    <Extends>video-sample</Extends>
+    <EnvironmentSize>127</EnvironmentSize>
+    <ProjectURL>http://ffmpeg.mplayerhq.hu/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
 </PhoronixTestSuite>

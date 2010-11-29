@@ -1,95 +1,94 @@
 <?xml version="1.0"?>
-<?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<TestProfile>
-		<Version>1.1.0</Version>
-		<TestType>Graphics</TestType>
-		<SoftwareType>Benchmark</SoftwareType>
-		<License>Free</License>
-		<EnvironmentSize>0.1</EnvironmentSize>
-		<Status>Verified</Status>
-		<ExternalDependencies>build-utilities</ExternalDependencies>
-		<Maintainer>Michael Larabel</Maintainer>
-		<SupportedPlatforms>Linux</SupportedPlatforms>
-		<ProjectURL>http://78.31.67.79:8080/jxrender/RenderMark.html</ProjectURL>
-	</TestProfile>
-	<TestInformation>
-		<Title>JXRenderMark</Title>
-		<AppVersion>1.0.1</AppVersion>
-		<TimesToRun>6</TimesToRun>
-		<Executable>jxrender-run</Executable>
-		<ResultScale>Operations Per Second</ResultScale>
-		<Proportion>HIB</Proportion>
-		<Description>JXRenderMark is an open-source benchmark of the X Render extension for X.Org. Currently all tests are rendering to the backbuffer and not directly to the screen.</Description>
-	</TestInformation>
-	<TestSettings>
-		<Option>
-			<DisplayName>Test</DisplayName>
-			<Identifier>rendering-test</Identifier>
-			<Menu>
-				<Entry>
-					<Name>Rects</Name>
-					<Value>0</Value>
-				</Entry>
-				<Entry>
-					<Name>Rects Composition</Name>
-					<Value>2</Value>
-				</Entry>
-				<Entry>
-					<Name>Put Composition</Name>
-					<Value>3</Value>
-				</Entry>
-				<Entry>
-					<Name>Simple Blit</Name>
-					<Value>8</Value>
-				</Entry>
-				<Entry>
-					<Name>Transformed Blit Linear</Name>
-					<Value>9</Value>
-				</Entry>
-				<Entry>
-					<Name>Transformed Blit Bilinear</Name>
-					<Value>10</Value>
-				</Entry>
-				<Entry>
-					<Name>Transformed Texture Paint</Name>
-					<Value>11</Value>
-				</Entry>
-				<Entry>
-					<Name>Linear Gradient Blend</Name>
-					<Value>12</Value>
-				</Entry>
-				<Entry>
-					<Name>Radial Gradient Paint</Name>
-					<Value>13</Value>
-				</Entry>
-				<Entry>
-					<Name>Gradient+Temp Texture</Name>
-					<Value>14</Value>
-				</Entry>
-				<Entry>
-					<Name>12pt Text Grayscale</Name>
-					<Value>15</Value>
-				</Entry>
-				<Entry>
-					<Name>12pt Text LCD</Name>
-					<Value>16</Value>
-				</Entry>
-			</Menu>
-		</Option>
-		<Option>
-			<DisplayName>Size</DisplayName>
-			<Identifier>rendering-size</Identifier>
-			<Menu>
-				<Entry>
-					<Name>32x32</Name>
-					<Value>32</Value>
-				</Entry>
-				<Entry>
-					<Name>128x128</Name>
-					<Value>128</Value>
-				</Entry>
-			</Menu>
-		</Option>
-	</TestSettings>
+  <TestInformation>
+    <Title>JXRenderMark</Title>
+    <Description>JXRenderMark is an open-source benchmark of the X Render extension for X.Org. Currently all tests are rendering to the backbuffer and not directly to the screen.</Description>
+    <ResultScale>Operations Per Second</ResultScale>
+    <AppVersion>1.0.1</AppVersion>
+    <Proportion>HIB</Proportion>
+    <Executable>jxrender-run</Executable>
+    <TimesToRun>6</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.0</Version>
+    <TestType>Graphics</TestType>
+    <SoftwareType>Benchmark</SoftwareType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <ExternalDependencies>build-utilities</ExternalDependencies>
+    <EnvironmentSize>0.1</EnvironmentSize>
+    <ProjectURL>http://78.31.67.79:8080/jxrender/RenderMark.html</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Test</DisplayName>
+      <Identifier>rendering-test</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Rects</Name>
+        </Entry>
+        <Entry>
+          <Name>Rects Composition</Name>
+          <Value>2</Value>
+        </Entry>
+        <Entry>
+          <Name>Put Composition</Name>
+          <Value>3</Value>
+        </Entry>
+        <Entry>
+          <Name>Simple Blit</Name>
+          <Value>8</Value>
+        </Entry>
+        <Entry>
+          <Name>Transformed Blit Linear</Name>
+          <Value>9</Value>
+        </Entry>
+        <Entry>
+          <Name>Transformed Blit Bilinear</Name>
+          <Value>10</Value>
+        </Entry>
+        <Entry>
+          <Name>Transformed Texture Paint</Name>
+          <Value>11</Value>
+        </Entry>
+        <Entry>
+          <Name>Linear Gradient Blend</Name>
+          <Value>12</Value>
+        </Entry>
+        <Entry>
+          <Name>Radial Gradient Paint</Name>
+          <Value>13</Value>
+        </Entry>
+        <Entry>
+          <Name>Gradient+Temp Texture</Name>
+          <Value>14</Value>
+        </Entry>
+        <Entry>
+          <Name>12pt Text Grayscale</Name>
+          <Value>15</Value>
+        </Entry>
+        <Entry>
+          <Name>12pt Text LCD</Name>
+          <Value>16</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Size</DisplayName>
+      <Identifier>rendering-size</Identifier>
+      <Menu>
+        <Entry>
+          <Name>32x32</Name>
+          <Value>32</Value>
+        </Entry>
+        <Entry>
+          <Name>128x128</Name>
+          <Value>128</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
 </PhoronixTestSuite>

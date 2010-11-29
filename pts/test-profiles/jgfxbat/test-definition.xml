@@ -1,23 +1,23 @@
 <?xml version="1.0"?>
-<?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<TestProfile>
-		<Version>1.1.0</Version>
-		<TestType>Processor</TestType>
-		<SoftwareType>Utility</SoftwareType>
-		<License>Free</License>
-		<Status>Verified</Status>
-		<EnvironmentSize>0.4</EnvironmentSize>
-		<Maintainer>Tao Zhang</Maintainer>
-		<ExternalDependencies>java</ExternalDependencies>
-		<InternalTags>Java</InternalTags>
-		<ProjectURL>http://www.java.net/</ProjectURL>
-	</TestProfile>
-	<TestInformation>
-		<Title>Java Graphics Basic Acceptance Test</Title>
-		<AppVersion>2.0</AppVersion>
-		<TimesToRun>1</TimesToRun>
-		<DisplayFormat>PASS_FAIL</DisplayFormat>
-		<Description>This test runs a series of automated performance/quality sub-tests that exercise the OpenGL-based Java 2D pipeline in order to verify the quality of OpenGL drivers.</Description>
-	</TestInformation>
+  <TestInformation>
+    <Title>Java Graphics Basic Acceptance Test</Title>
+    <Description>This test runs a series of automated performance/quality sub-tests that exercise the OpenGL-based Java 2D pipeline in order to verify the quality of OpenGL drivers.</Description>
+    <AppVersion>2.0</AppVersion>
+    <DisplayFormat>PASS_FAIL</DisplayFormat>
+    <TimesToRun>1</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.0</Version>
+    <TestType>Processor</TestType>
+    <SoftwareType>Utility</SoftwareType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>java</ExternalDependencies>
+    <EnvironmentSize>0.4</EnvironmentSize>
+    <ProjectURL>http://www.java.net/</ProjectURL>
+    <InternalTags>Java</InternalTags>
+    <Maintainer>Tao Zhang</Maintainer>
+  </TestProfile>
 </PhoronixTestSuite>

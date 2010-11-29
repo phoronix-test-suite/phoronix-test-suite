@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<ResultsParser>
-		<OutputTemplate> MFLOPS measured : #_RESULT_#	cpu : 59.868463</OutputTemplate>
-	</ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> MFLOPS measured : #_RESULT_#	cpu : 59.868463</OutputTemplate>
+  </ResultsParser>
 </PhoronixTestSuite>

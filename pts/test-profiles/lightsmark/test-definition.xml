@@ -1,40 +1,40 @@
 <?xml version="1.0"?>
-<?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<TestProfile>
-		<Version>1.2.0</Version>
-		<TestType>Graphics</TestType>
-		<SoftwareType>Game</SoftwareType>
-		<License>NON-Free</License>
-		<Status>Verified</Status>
-		<Maintainer>Michael Larabel</Maintainer>
-		<EnvironmentSize>54</EnvironmentSize>
-		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
-		<ExternalDependencies>glut, glew, freeimage</ExternalDependencies>
-		<ProjectURL>http://www.dee.cz/lightsmark/</ProjectURL>
-		<SupportedPlatforms>Linux, Windows</SupportedPlatforms>
-	</TestProfile>
-	<TestInformation>
-		<Title>Lightsmark</Title>
-		<AppVersion>2008</AppVersion>
-		<TimesToRun>3</TimesToRun>
-		<ResultScale>Frames Per Second</ResultScale>
-		<Proportion>HIB</Proportion>
-		<Description>This test calculates the average frame-rate within the Lightsmark 2008. Lightsmark is an OpenGL real-time global illumination and penumbra shadow benchmark.</Description>
-	</TestInformation>
-	<TestSettings>
-		<Default>
-			<Arguments>silent</Arguments>
-		</Default>
-		<Option>
-			<DisplayName>Resolution</DisplayName>
-			<Identifier>auto-resolution</Identifier>
-			<Menu>
-				<Entry>
-					<Name>$VIDEO_WIDTH x $VIDEO_HEIGHT</Name>
-					<Value>$VIDEO_WIDTHx$VIDEO_HEIGHT</Value>
-				</Entry>
-			</Menu>
-		</Option>
-	</TestSettings>
+  <TestInformation>
+    <Title>Lightsmark</Title>
+    <Description>This test calculates the average frame-rate within the Lightsmark 2008. Lightsmark is an OpenGL real-time global illumination and penumbra shadow benchmark.</Description>
+    <ResultScale>Frames Per Second</ResultScale>
+    <AppVersion>2008</AppVersion>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.2.0</Version>
+    <TestType>Graphics</TestType>
+    <SoftwareType>Game</SoftwareType>
+    <License>Non-Free</License>
+    <Status>Verified</Status>
+    <SupportedPlatforms>Linux, Windows</SupportedPlatforms>
+    <SupportedArchitectures>x86, x86_64</SupportedArchitectures>
+    <ExternalDependencies>glut, glew, freeimage</ExternalDependencies>
+    <EnvironmentSize>54</EnvironmentSize>
+    <ProjectURL>http://www.dee.cz/lightsmark/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>silent</Arguments>
+    </Default>
+    <Option>
+      <DisplayName>Resolution</DisplayName>
+      <Identifier>auto-resolution</Identifier>
+      <Menu>
+        <Entry>
+          <Name>$VIDEO_WIDTH x $VIDEO_HEIGHT</Name>
+          <Value>$VIDEO_WIDTHx$VIDEO_HEIGHT</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
 </PhoronixTestSuite>

@@ -1,14 +1,16 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<Downloads>
-		<Package>
-			<URL>http://align.bmr.kyushu-u.ac.jp/mafft/software/mafft-6.706-without-extensions-src.tgz</URL>
-			<MD5>209064fe817c84e1228272244d78ca21</MD5>
-			<FileSize>452729</FileSize>
-		</Package>
-		<Package>
-			<URL>http://fire-salamander.co.uk/pts-tests/pyruvate_decarboxylase.fasta.bz2</URL>
-			<MD5>22cd5efc1199a72fbb3f19960f56010d</MD5>
-			<FileSize>13847</FileSize>
-		</Package>
-	</Downloads>
+  <Downloads>
+    <Package>
+      <URL>http://align.bmr.kyushu-u.ac.jp/mafft/software/mafft-6.706-without-extensions-src.tgz</URL>
+      <MD5>209064fe817c84e1228272244d78ca21</MD5>
+      <FileSize>452729</FileSize>
+    </Package>
+    <Package>
+      <URL>http://fire-salamander.co.uk/pts-tests/pyruvate_decarboxylase.fasta.bz2</URL>
+      <MD5>22cd5efc1199a72fbb3f19960f56010d</MD5>
+      <FileSize>13847</FileSize>
+    </Package>
+  </Downloads>
 </PhoronixTestSuite>

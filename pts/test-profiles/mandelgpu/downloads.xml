@@ -1,10 +1,11 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<Downloads>
-		<Package>
-			<URL>http://www.phoronix-test-suite.com/benchmark-files/MandelGPU-v1.3pts.zip, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/MandelGPU-v1.3pts.zip</URL>
-			<MD5>5769af86f08af9e0407981756a4d00b5</MD5>
-			<FileSize>16583</FileSize>
-		</Package>
-	</Downloads>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/MandelGPU-v1.3pts.zip, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/MandelGPU-v1.3pts.zip</URL>
+      <MD5>5769af86f08af9e0407981756a4d00b5</MD5>
+      <FileSize>16583</FileSize>
+    </Package>
+  </Downloads>
 </PhoronixTestSuite>
-

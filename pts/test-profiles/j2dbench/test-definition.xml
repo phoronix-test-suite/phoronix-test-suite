@@ -1,49 +1,49 @@
 <?xml version="1.0"?>
-<?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<TestProfile>
-		<Version>1.1.0</Version>
-		<TestType>Graphics</TestType>
-		<SoftwareType>Utility</SoftwareType>
-		<License>Free</License>
-		<Status>Verified</Status>
-		<EnvironmentSize>0.4</EnvironmentSize>
-		<Maintainer>Tao Zhang</Maintainer>
-		<ProjectURL>http://www.java.net/</ProjectURL>
-		<ExternalDependencies>java</ExternalDependencies>
-		<InternalTags>Java</InternalTags>
-	</TestProfile>
-	<TestInformation>
-		<Title>Java 2D Microbenchmark</Title>
-		<AppVersion>1.0</AppVersion>
-		<TimesToRun>4</TimesToRun>
-		<ResultScale>Units Per Second</ResultScale>
-		<Proportion>HIB</Proportion>
-		<Description>This test runs a series of microbenchmarks to check the performance of the OpenGL-based Java 2D pipeline and the underlying OpenGL drivers.</Description>
-	</TestInformation>
-	<TestSettings>
-		<Option>
-			<DisplayName>Rendering Test</DisplayName>
-			<Identifier>rendering-test</Identifier>
-			<ArgumentPrefix>TEST_</ArgumentPrefix>
-			<Menu>
-				<Entry>
-					<Name>All Rendering Tests</Name>
-					<Value>ALL</Value>
-				</Entry>
-				<Entry>
-					<Name>Vector Graphics Rendering</Name>
-					<Value>GRAPHICS</Value>
-				</Entry>
-				<Entry>
-					<Name>Image Rendering</Name>
-					<Value>IMAGES</Value>
-				</Entry>
-				<Entry>
-					<Name>Text Rendering</Name>
-					<Value>TEXT</Value>
-				</Entry>
-			</Menu>
-		</Option>
-	</TestSettings>
+  <TestInformation>
+    <Title>Java 2D Microbenchmark</Title>
+    <Description>This test runs a series of microbenchmarks to check the performance of the OpenGL-based Java 2D pipeline and the underlying OpenGL drivers.</Description>
+    <ResultScale>Units Per Second</ResultScale>
+    <AppVersion>1.0</AppVersion>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>4</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.0</Version>
+    <TestType>Graphics</TestType>
+    <SoftwareType>Utility</SoftwareType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>java</ExternalDependencies>
+    <EnvironmentSize>0.4</EnvironmentSize>
+    <ProjectURL>http://www.java.net/</ProjectURL>
+    <InternalTags>Java</InternalTags>
+    <Maintainer>Tao Zhang</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Rendering Test</DisplayName>
+      <Identifier>rendering-test</Identifier>
+      <ArgumentPrefix>TEST_</ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>All Rendering Tests</Name>
+          <Value>ALL</Value>
+        </Entry>
+        <Entry>
+          <Name>Vector Graphics Rendering</Name>
+          <Value>GRAPHICS</Value>
+        </Entry>
+        <Entry>
+          <Name>Image Rendering</Name>
+          <Value>IMAGES</Value>
+        </Entry>
+        <Entry>
+          <Name>Text Rendering</Name>
+          <Value>TEXT</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
 </PhoronixTestSuite>

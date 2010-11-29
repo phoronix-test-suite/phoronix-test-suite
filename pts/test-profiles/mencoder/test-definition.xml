@@ -1,23 +1,23 @@
 <?xml version="1.0"?>
-<?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<TestProfile>
-		<Version>1.3.0</Version>
-		<TestType>Processor</TestType>
-		<SoftwareType>Utility</SoftwareType>
-		<License>Free</License>
-		<Status>Verified</Status>
-		<Maintainer>Michael Larabel</Maintainer>
-		<EnvironmentSize>1.0</EnvironmentSize>
-		<Extends>mplayer-base</Extends>
-	</TestProfile>
-	<TestInformation>
-		<Title>Mencoder</Title>
-		<AppVersion>2009-06-04</AppVersion>
-		<SubTitle>AVI To LAVC</SubTitle>
-		<TimesToRun>3</TimesToRun>
-		<ResultScale>Seconds</ResultScale>
-		<Proportion>LIB</Proportion>
-		<Description>This test uses mplayer's mencoder utility and the libavcodec family for testing the system's audio/video encoding performance.</Description>
-	</TestInformation>
+  <TestInformation>
+    <Title>Mencoder</Title>
+    <Description>This test uses mplayer's mencoder utility and the libavcodec family for testing the system's audio/video encoding performance.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <AppVersion>2009-06-04</AppVersion>
+    <SubTitle>AVI To LAVC</SubTitle>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.3.0</Version>
+    <TestType>Processor</TestType>
+    <SoftwareType>Utility</SoftwareType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <Extends>mplayer-base</Extends>
+    <EnvironmentSize>1.0</EnvironmentSize>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
 </PhoronixTestSuite>

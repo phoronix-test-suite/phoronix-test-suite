@@ -1,8 +1,9 @@
 <?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<ResultsParser>
-		<LineHint>average fps</LineHint>
-		<StripResultPostfix>.</StripResultPostfix>
-		<OutputTemplate>Finished, average fps = #_RESULT_#</OutputTemplate>
-	</ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Finished, average fps = #_RESULT_#</OutputTemplate>
+    <LineHint>average fps</LineHint>
+    <StripResultPostfix>.</StripResultPostfix>
+  </ResultsParser>
 </PhoronixTestSuite>

@@ -84,6 +84,7 @@ class validate_test_profile implements pts_option_interface
 				// Validate the individual download files
 				echo "\nTesting File Download URLs.\n";
 				$files_missing = 0;
+				$file_count = 0;
 
 				foreach(pts_test_install_request::read_download_object_list($test_profile) as $download)
 				{
@@ -102,11 +103,11 @@ class validate_test_profile implements pts_option_interface
 						{
 							@fclose($file_pointer);
 						}
-
+						$file_count++;
 					}
 				}
 
-				if($files_missing > 0)
+				if($files_missing > 0 && $file_count == $files_missing)
 				{
 					return false;
 				}

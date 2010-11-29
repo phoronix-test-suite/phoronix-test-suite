@@ -1,29 +1,29 @@
 <?xml version="1.0"?>
-<?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<TestProfile>
-		<Version>1.0.0</Version>
-		<TestType>Processor</TestType>
-		<SoftwareType>Utility</SoftwareType>
-		<License>Free</License>
-		<Status>Verified</Status>
-		<Maintainer>Michael Larabel</Maintainer>
-		<EnvironmentSize>16</EnvironmentSize>
-		<ExternalDependencies>build-utilities</ExternalDependencies>
-		<ProjectURL>http://www.gnupg.org/</ProjectURL>
-	</TestProfile>
-	<TestInformation>
-		<Title>Gcrypt Library</Title>
-		<SubTitle>CAMELLIA256-ECB Cipher</SubTitle>
-		<AppVersion>1.4.4</AppVersion>
-		<TimesToRun>3</TimesToRun>
-		<ResultScale>Microseconds</ResultScale>
-		<Proportion>LIB</Proportion>
-		<Description>This is a benchmark of libgcrypt's integrated benchmark with the CAMELLIA256-ECB cipher and 100 repetitions.</Description>
-	</TestInformation>
-	<TestSettings>
-		<Default>
-			<Arguments>--cipher-repetition 100 cipher camellia256</Arguments>
-		</Default>
-	</TestSettings>
+  <TestInformation>
+    <Title>Gcrypt Library</Title>
+    <Description>This is a benchmark of libgcrypt's integrated benchmark with the CAMELLIA256-ECB cipher and 100 repetitions.</Description>
+    <ResultScale>Microseconds</ResultScale>
+    <AppVersion>1.4.4</AppVersion>
+    <SubTitle>CAMELLIA256-ECB Cipher</SubTitle>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <TestType>Processor</TestType>
+    <SoftwareType>Utility</SoftwareType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities</ExternalDependencies>
+    <EnvironmentSize>16</EnvironmentSize>
+    <ProjectURL>http://www.gnupg.org/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>--cipher-repetition 100 cipher camellia256</Arguments>
+    </Default>
+  </TestSettings>
 </PhoronixTestSuite>

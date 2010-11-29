@@ -1,30 +1,30 @@
 <?xml version="1.0"?>
-<?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<TestProfile>
-		<Version>1.0.0</Version>
-		<TestType>Processor</TestType>
-		<SoftwareType>Utility</SoftwareType>
-		<License>Free</License>
-		<Status>Verified</Status>
-		<Maintainer>Michael Larabel</Maintainer>
-		<EnvironmentSize>46.4</EnvironmentSize>
-		<ExternalDependencies>build-utilities, fortran-compiler, fftw3-development, blas-development, lapack-development</ExternalDependencies>
-		<SupportedPlatforms>Linux</SupportedPlatforms>
-		<ProjectURL>http://openfmm.sourceforge.net/</ProjectURL>
-	</TestProfile>
-	<TestInformation>
-		<Title>Open FMM Nero2D</Title>
-		<AppVersion>2.0.2</AppVersion>
-		<SubTitle>Total Time</SubTitle>
-		<TimesToRun>1</TimesToRun>
-		<ResultScale>Seconds</ResultScale>
-		<Proportion>LIB</Proportion>
-		<Description>This is a test of Nero2D, which is a two-dimensional TM/TE solver for Open FMM. Open FMM is a free collection of electromagnetic software for scattering at very large objects. This test profile times how long it takes to solve one of the included 2D examples.</Description>
-	</TestInformation>
-	<TestSettings>
-		<Default>
-			<Arguments>nero2d_/share/examples/example2/example2.igf</Arguments>
-		</Default>
-	</TestSettings>
+  <TestInformation>
+    <Title>Open FMM Nero2D</Title>
+    <Description>This is a test of Nero2D, which is a two-dimensional TM/TE solver for Open FMM. Open FMM is a free collection of electromagnetic software for scattering at very large objects. This test profile times how long it takes to solve one of the included 2D examples.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <AppVersion>2.0.2</AppVersion>
+    <SubTitle>Total Time</SubTitle>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>1</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <TestType>Processor</TestType>
+    <SoftwareType>Utility</SoftwareType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <ExternalDependencies>build-utilities, fortran-compiler, fftw3-development, blas-development, lapack-development</ExternalDependencies>
+    <EnvironmentSize>46.4</EnvironmentSize>
+    <ProjectURL>http://openfmm.sourceforge.net/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>nero2d_/share/examples/example2/example2.igf</Arguments>
+    </Default>
+  </TestSettings>
 </PhoronixTestSuite>

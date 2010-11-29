@@ -1,7 +1,9 @@
 <?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<TestProfile>
-		<License>Free</License>
-		<Status>Verified</Status>
-	</TestProfile>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <License>Free</License>
+    <Status>Verified</Status>
+  </TestProfile>
 </PhoronixTestSuite>

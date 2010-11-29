@@ -1,26 +1,25 @@
 <?xml version="1.0"?>
-<?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<TestProfile>
-		<Version>1.1.0</Version>
-		<TestType>Processor</TestType>
-		<SoftwareType>Scientific</SoftwareType>
-		<License>Free</License>
-		<Status>Verified</Status>
-		<Maintainer>Andrew Schofield</Maintainer>
-		<ExternalDependencies>build-utilities</ExternalDependencies>
-		<EnvironmentSize>707</EnvironmentSize>
-		<ProjectURL>http://hmmer.janelia.org/</ProjectURL>
-		<SupportedPlatforms>Linux, MacOSX, Solaris</SupportedPlatforms>
-	</TestProfile>
-	<TestInformation>
-		<Title>Timed HMMer Search</Title>
-		<AppVersion>2.3.2</AppVersion>
-		<SubTitle>Pfam Database Search</SubTitle>
-		<ResultScale>Seconds</ResultScale>
-		<TimesToRun>3</TimesToRun>
-		<Description>This test searches through the Pfam database of profile hidden markov models. The search finds the domain structure of Drosophila Sevenless protein.</Description>
-		<Proportion>LIB</Proportion>
-	</TestInformation>
+  <TestInformation>
+    <Title>Timed HMMer Search</Title>
+    <Description>This test searches through the Pfam database of profile hidden markov models. The search finds the domain structure of Drosophila Sevenless protein.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <AppVersion>2.3.2</AppVersion>
+    <SubTitle>Pfam Database Search</SubTitle>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.0</Version>
+    <TestType>Processor</TestType>
+    <SoftwareType>Scientific</SoftwareType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <SupportedPlatforms>Linux, MacOSX, Solaris</SupportedPlatforms>
+    <ExternalDependencies>build-utilities</ExternalDependencies>
+    <EnvironmentSize>707</EnvironmentSize>
+    <ProjectURL>http://hmmer.janelia.org/</ProjectURL>
+    <Maintainer>Andrew Schofield</Maintainer>
+  </TestProfile>
 </PhoronixTestSuite>
-

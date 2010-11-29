@@ -11,7 +11,7 @@
 <xs:element name="PhoronixTestSuite">
 <xs:complexType>
 <xs:sequence>
-		<xs:element name="TestInformation">
+		<xs:element name="TestInformation" minOccurs="0" maxOccurs="1">
 		<xs:complexType>
 		<xs:sequence>
 			<xs:element name="Title" type="TitleString" minOccurs="0" maxOccurs="1" />

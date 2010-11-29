@@ -9,12 +9,12 @@
     <Version>1.1.0</Version>
     <TestType>Graphics</TestType>
     <SoftwareType>Utility</SoftwareType>
-    <Maintainer>Michael Larabel</Maintainer>
     <License>Free</License>
     <Status>Verified</Status>
     <ExternalDependencies>build-utilities, xorg-development, xorg-video, zlib-development</ExternalDependencies>
     <Extends>video-sample</Extends>
     <EnvironmentSize>30.0</EnvironmentSize>
     <ProjectURL>http://www.mplayerhq.hu/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
   </TestProfile>
 </PhoronixTestSuite>

@@ -1,14 +1,16 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<Downloads>
-		<Package>
-			<URL>http://dfn.dl.sourceforge.net/sourceforge/mrbayes/mrbayes-3.1.2.tar.gz, http://kent.dl.sourceforge.net/sourceforge/mrbayes/mrbayes-3.1.2.tar.gz, http://voxel.dl.sourceforge.net/sourceforge/mrbayes/mrbayes-3.1.2.tar.gz</URL>
-			<MD5>942e4e0a90fa23481bb1f2e0fa0e0d66</MD5>
-			<FileSize>545968</FileSize>
-		</Package>
-		<Package>
-			<URL>http://www.mcs.anl.gov/research/projects/mpich2/downloads/tarballs/1.0.8p1/mpich2-1.0.8p1.tar.gz</URL>
-			<MD5>8ff91187e264e75b5f9307018983ba2b</MD5>
-			<FileSize>16883298</FileSize>
-		</Package>
-	</Downloads>
+  <Downloads>
+    <Package>
+      <URL>http://dfn.dl.sourceforge.net/sourceforge/mrbayes/mrbayes-3.1.2.tar.gz, http://kent.dl.sourceforge.net/sourceforge/mrbayes/mrbayes-3.1.2.tar.gz, http://voxel.dl.sourceforge.net/sourceforge/mrbayes/mrbayes-3.1.2.tar.gz</URL>
+      <MD5>942e4e0a90fa23481bb1f2e0fa0e0d66</MD5>
+      <FileSize>545968</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.mcs.anl.gov/research/projects/mpich2/downloads/tarballs/1.0.8p1/mpich2-1.0.8p1.tar.gz</URL>
+      <MD5>8ff91187e264e75b5f9307018983ba2b</MD5>
+      <FileSize>16883298</FileSize>
+    </Package>
+  </Downloads>
 </PhoronixTestSuite>
