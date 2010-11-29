@@ -1,24 +1,24 @@
 <?xml version="1.0"?>
-<?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<TestProfile>
-		<Version>1.5.0</Version>
-		<TestType>Processor</TestType>
-		<SoftwareType>Utility</SoftwareType>
-		<License>FREE</License>
-		<Status>VERIFIED</Status>
-		<Maintainer>Michael Larabel</Maintainer>
-		<EnvironmentSize>9.3</EnvironmentSize>
-		<ExternalDependencies>build-utilities</ExternalDependencies>
-		<ProjectURL>http://www.7-zip.org/</ProjectURL>
-	</TestProfile>
-	<TestInformation>
-		<Title>7-Zip Compression</Title>
-		<AppVersion>9.13</AppVersion>
-		<SubTitle>Compress Speed Test</SubTitle>
-		<TimesToRun>3</TimesToRun>
-		<ResultScale>MIPS</ResultScale>
-		<Proportion>HIB</Proportion>
-		<Description>This is a test of 7-Zip using p7zip with its integrated benchmark feature.</Description>
-	</TestInformation>
+  <TestInformation>
+    <Title>7-Zip Compression</Title>
+    <Description>This is a test of 7-Zip using p7zip with its integrated benchmark feature.</Description>
+    <ResultScale>MIPS</ResultScale>
+    <AppVersion>9.13</AppVersion>
+    <SubTitle>Compress Speed Test</SubTitle>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.5.0</Version>
+    <TestType>Processor</TestType>
+    <SoftwareType>Utility</SoftwareType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities</ExternalDependencies>
+    <EnvironmentSize>9.3</EnvironmentSize>
+    <ProjectURL>http://www.7-zip.org/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
 </PhoronixTestSuite>

@@ -1,9 +1,11 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<Downloads>
-		<Package>
-			<URL>http://internode.dl.sourceforge.net/sourceforge/p7zip/p7zip_9.13_src_all.tar.bz2, http://ovh.dl.sourceforge.net/sourceforge/p7zip/p7zip_9.13_src_all.tar.bz2, http://voxel.dl.sourceforge.net/sourceforge/p7zip/p7zip_9.13_src_all.tar.bz2</URL>
-			<MD5>8ddb5053db3b1f2696407d01be145779</MD5>
-			<FileSize>3753579</FileSize>
-		</Package>
-	</Downloads>
+  <Downloads>
+    <Package>
+      <URL>http://internode.dl.sourceforge.net/sourceforge/p7zip/p7zip_9.13_src_all.tar.bz2, http://ovh.dl.sourceforge.net/sourceforge/p7zip/p7zip_9.13_src_all.tar.bz2, http://voxel.dl.sourceforge.net/sourceforge/p7zip/p7zip_9.13_src_all.tar.bz2</URL>
+      <MD5>8ddb5053db3b1f2696407d01be145779</MD5>
+      <FileSize>3753579</FileSize>
+    </Package>
+  </Downloads>
 </PhoronixTestSuite>

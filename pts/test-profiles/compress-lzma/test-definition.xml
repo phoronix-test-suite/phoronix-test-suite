@@ -5,8 +5,8 @@
 		<Version>1.2.0</Version>
 		<TestType>Processor</TestType>
 		<SoftwareType>Utility</SoftwareType>
-		<License>FREE</License>
-		<Status>VERIFIED</Status>
+		<License>Free</License>
+		<Status>Verified</Status>
 		<EnvironmentSize>0.7</EnvironmentSize>
 		<EnvironmentTestingSize>256</EnvironmentTestingSize>
 		<ExternalDependencies>build-utilities</ExternalDependencies>

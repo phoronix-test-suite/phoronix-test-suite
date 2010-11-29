@@ -1,22 +1,22 @@
 <?xml version="1.0"?>
-<?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<TestProfile>
-		<Version>1.1.0</Version>
-		<TestType>Processor</TestType>
-		<SoftwareType>Utility</SoftwareType>
-		<License>FREE</License>
-		<Status>VERIFIED</Status>
-		<Maintainer>Michael Larabel</Maintainer>
-		<EnvironmentTestingSize>2048</EnvironmentTestingSize>
-		<ProjectURL>http://www.gzip.org/</ProjectURL>
-	</TestProfile>
-	<TestInformation>
-		<Title>Gzip Compression</Title>
-		<TimesToRun>3</TimesToRun>
-		<SubTitle>2GB File Compression</SubTitle>
-		<ResultScale>Seconds</ResultScale>
-		<Proportion>LIB</Proportion>
-		<Description>This test measures the time needed to compress a file using Gzip compression.</Description>
-	</TestInformation>
+  <TestInformation>
+    <Title>Gzip Compression</Title>
+    <Description>This test measures the time needed to compress a file using Gzip compression.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <SubTitle>2GB File Compression</SubTitle>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.0</Version>
+    <TestType>Processor</TestType>
+    <SoftwareType>Utility</SoftwareType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <EnvironmentTestingSize>2048</EnvironmentTestingSize>
+    <ProjectURL>http://www.gzip.org/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
 </PhoronixTestSuite>

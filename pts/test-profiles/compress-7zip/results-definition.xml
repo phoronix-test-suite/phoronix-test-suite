@@ -1,7 +1,8 @@
 <?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<ResultsParser>
-		<OutputTemplate>RAM size:    3828 MB,  # CPU hardware threads:   4
+  <ResultsParser>
+    <OutputTemplate>RAM size:    3828 MB,  # CPU hardware threads:   4
 RAM usage:    850 MB,  # Benchmark threads:      4
 
 Dict        Compressing          |        Decompressing
@@ -15,5 +16,5 @@ Dict        Compressing          |        Decompressing
 ----------------------------------------------------------------
 Avr:          261   2984   #_RESULT_#               341   2372   8085
 Tot:          301   2678   7938</OutputTemplate>
-	</ResultsParser>
+  </ResultsParser>
 </PhoronixTestSuite>
