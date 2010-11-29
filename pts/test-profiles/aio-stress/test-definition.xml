@@ -1,40 +1,40 @@
 <?xml version="1.0"?>
-<?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<TestProfile>
-		<Version>1.0.0</Version>
-		<TestType>Disk</TestType>
-		<SoftwareType>Benchmark</SoftwareType>
-		<License>FREE</License>
-		<Status>VERIFIED</Status>
-		<Maintainer>Michael Larabel</Maintainer>
-		<EnvironmentSize>0.5</EnvironmentSize>
-		<EnvironmentTestingSize>1024</EnvironmentTestingSize>
-		<ExternalDependencies>build-utilities, libaio-development</ExternalDependencies>
-		<SupportedPlatforms>Linux</SupportedPlatforms>
-	</TestProfile>
-	<TestInformation>
-		<Title>AIO-Stress</Title>
-		<AppVersion>0.21</AppVersion>
-		<TimesToRun>3</TimesToRun>
-		<ResultScale>MB/s</ResultScale>
-		<Proportion>HIB</Proportion>
-		<Description>AIO-Stress is an a-synchronous I/O benchmark created by SuSE. Current this profile uses a single thread, a 1024MB test file, a 64KB record size, </Description>
-	</TestInformation>
-	<TestSettings>
-		<Default>
-			<Arguments>-s 1g -r 64k -t 3</Arguments>
-		</Default>
-		<Option>
-			<DisplayName>Test</DisplayName>
-			<Identifier>test</Identifier>
-			<ArgumentPrefix>-o </ArgumentPrefix>
-			<Menu>
-				<Entry>
-					<Name>Random Write</Name>
-					<Value>2</Value>
-				</Entry>
-			</Menu>
-		</Option>
-	</TestSettings>
+  <TestInformation>
+    <Title>AIO-Stress</Title>
+    <Description>AIO-Stress is an a-synchronous I/O benchmark created by SuSE. Current this profile uses a single thread, a 1024MB test file, a 64KB record size, </Description>
+    <ResultScale>MB/s</ResultScale>
+    <AppVersion>0.21</AppVersion>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <TestType>Disk</TestType>
+    <SoftwareType>Benchmark</SoftwareType>
+    <Maintainer>Michael Larabel</Maintainer>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <ExternalDependencies>build-utilities, libaio-development</ExternalDependencies>
+    <EnvironmentSize>0.5</EnvironmentSize>
+    <EnvironmentTestingSize>1024</EnvironmentTestingSize>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>-s 1g -r 64k -t 3</Arguments>
+    </Default>
+    <Option>
+      <DisplayName>Test</DisplayName>
+      <Identifier>test</Identifier>
+      <ArgumentPrefix>-o </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>Random Write</Name>
+          <Value>2</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
 </PhoronixTestSuite>

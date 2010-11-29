@@ -17,7 +17,7 @@
 			<xs:element name="OutputTemplate" type="xs:string" />
 			<xs:element name="MatchToTestArguments" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="ResultKey" type="xs:string" minOccurs="0" maxOccurs="1" />
-			<xs:element name="LineHint" type="xs:integer" minOccurs="0" maxOccurs="1" />
+			<xs:element name="LineHint" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="LineBeforeHint" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="LineAfterHint" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="ResultBeforeString" type="xs:string" minOccurs="0" maxOccurs="1" />
