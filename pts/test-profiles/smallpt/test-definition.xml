@@ -17,6 +17,7 @@
     <License>Free</License>
     <Status>Verified</Status>
     <ExternalDependencies>build-utilities</ExternalDependencies>
+	<SupportedPlatforms>Linux</SupportedPlatforms>
     <EnvironmentSize>0.1</EnvironmentSize>
     <ProjectURL>http://kevinbeason.com/smallpt/</ProjectURL>
     <Maintainer>Michael Larabel</Maintainer>

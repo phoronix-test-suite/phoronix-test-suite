@@ -14,6 +14,7 @@
     <SoftwareType>Utility</SoftwareType>
     <License>Free</License>
     <Status>Experimental</Status>
+	<SupportedPlatforms>Linux, Solaris, MacOSX, BSD</SupportedPlatforms>
     <ProjectURL>http://www.phoronix-test-suite.com/</ProjectURL>
     <Maintainer>Phoronix Media</Maintainer>
   </TestProfile>

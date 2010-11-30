@@ -14,7 +14,7 @@
     <SoftwareType>Utility</SoftwareType>
     <License>Free</License>
     <Status>Verified</Status>
-    <SupportedPlatforms>Linux, Solaris, Windows</SupportedPlatforms>
+    <SupportedPlatforms>Linux, Windows</SupportedPlatforms>
     <ExternalDependencies>build-utilities, glut, csh, libpng-development</ExternalDependencies>
     <EnvironmentSize>1600</EnvironmentSize>
     <ProjectURL>http://www.spec.org/</ProjectURL>

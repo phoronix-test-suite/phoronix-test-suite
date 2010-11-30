@@ -17,6 +17,7 @@
     <SoftwareType>Benchmark</SoftwareType>
     <License>Free</License>
     <Status>Verified</Status>
+	<SupportedPlatforms>Linux, Solaris</SupportedPlatforms>
     <ExternalDependencies>build-utilities</ExternalDependencies>
     <EnvironmentSize>18.4</EnvironmentSize>
     <ProjectURL>http://www.sqlite.org/</ProjectURL>
