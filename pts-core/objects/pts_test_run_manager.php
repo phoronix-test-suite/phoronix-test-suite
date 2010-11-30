@@ -875,10 +875,7 @@ class pts_test_run_manager
 
 				if(count($unique_tests_r) > 1 || $this->run_description == null)
 				{
-					$last = array_pop($unique_tests_r);
-					array_push($unique_tests_r, "and " . $last);
-
-					$this->run_description = "Running " . implode((count($unique_tests_r) > 2 ? ' ' : ", "), $unique_tests_r) . ".";
+					$this->run_description = "Running " . implode(", ", $unique_tests_r) . ".";
 				}
 
 				// Prompt Description

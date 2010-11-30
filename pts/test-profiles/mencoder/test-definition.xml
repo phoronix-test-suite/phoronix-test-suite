@@ -15,6 +15,7 @@
     <TestType>Processor</TestType>
     <SoftwareType>Utility</SoftwareType>
     <License>Free</License>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
     <Status>Verified</Status>
     <Extends>mplayer-base</Extends>
     <EnvironmentSize>1.0</EnvironmentSize>

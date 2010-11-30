@@ -15,6 +15,7 @@
     <SoftwareType>Utility</SoftwareType>
     <License>Free</License>
     <Status>Verified</Status>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
     <ExternalDependencies>build-utilities, cmake, boost-development, bzip2-development</ExternalDependencies>
     <EnvironmentSize>196</EnvironmentSize>
     <ProjectURL>http://minion.sourceforge.net/</ProjectURL>

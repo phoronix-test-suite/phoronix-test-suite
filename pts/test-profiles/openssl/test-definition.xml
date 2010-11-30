@@ -17,6 +17,7 @@
     <License>Free</License>
     <Status>Verified</Status>
     <ExternalDependencies>build-utilities</ExternalDependencies>
+    <SupportedPlatforms>Linux, Solaris, BSD, MacOSX</SupportedPlatforms>
     <EnvironmentSize>37</EnvironmentSize>
     <ProjectURL>http://www.openssl.org/</ProjectURL>
     <Maintainer>Michael Larabel</Maintainer>

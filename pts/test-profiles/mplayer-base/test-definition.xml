@@ -11,6 +11,7 @@
     <SoftwareType>Utility</SoftwareType>
     <License>Free</License>
     <Status>Verified</Status>
+    <SupportedPlatforms>Linux, Solaris, BSD, MacOSX</SupportedPlatforms>
     <ExternalDependencies>build-utilities, xorg-development, xorg-video, zlib-development</ExternalDependencies>
     <Extends>video-sample</Extends>
     <EnvironmentSize>30.0</EnvironmentSize>

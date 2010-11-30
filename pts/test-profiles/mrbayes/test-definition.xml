@@ -16,7 +16,7 @@
     <SoftwareType>Scientific</SoftwareType>
     <License>Free</License>
     <Status>Verified</Status>
-    <SupportedPlatforms>Linux, BSD</SupportedPlatforms>
+    <SupportedPlatforms>Linux, BSD, Solaris</SupportedPlatforms>
     <EnvironmentSize>22</EnvironmentSize>
     <ProjectURL>http://mrbayes.csit.fsu.edu/</ProjectURL>
     <Maintainer>Andrew Schofield</Maintainer>
