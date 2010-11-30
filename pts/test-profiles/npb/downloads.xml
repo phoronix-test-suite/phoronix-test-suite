@@ -1,14 +1,16 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<Downloads>
-		<Package>
-			<URL>http://www.phoronix-test-suite.com/benchmark-files/NPB3.3.tar.gz, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/NPB3.3.tar.gz</URL>
-			<MD5>fe65de7ff54709a0266301e0d38c7777</MD5>
-			<FileSize>615658</FileSize>
-		</Package>
-		<Package>
-			<URL>http://www.phoronix-test-suite.com/benchmark-files/npb-omp-make-def-1.tar.gz, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/npb-omp-make-def-1.tar.gz</URL>
-			<MD5>063a05392876dee20215106923545a2d</MD5>
-			<FileSize>1627</FileSize>
-		</Package>
-	</Downloads>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/NPB3.3.tar.gz, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/NPB3.3.tar.gz</URL>
+      <MD5>fe65de7ff54709a0266301e0d38c7777</MD5>
+      <FileSize>615658</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/npb-omp-make-def-1.tar.gz, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/npb-omp-make-def-1.tar.gz</URL>
+      <MD5>063a05392876dee20215106923545a2d</MD5>
+      <FileSize>1627</FileSize>
+    </Package>
+  </Downloads>
 </PhoronixTestSuite>

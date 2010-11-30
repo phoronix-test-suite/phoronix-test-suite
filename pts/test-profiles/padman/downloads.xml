@@ -1,20 +1,21 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<Downloads>
-		<Package>
-			<URL>http://thilo.kickchat.com/download/worldofpadman.run, ftp://ftp.snt.utwente.nl/pub/games/worldofpadman/linux/worldofpadman.run, ftp://ftp.bm.kernel.org/pub/mirrors/gentoo/source/distfiles/worldofpadman.run</URL>
-			<MD5>c7650414d7865ddac26ada6b3f7b8cc9</MD5>
-			<FileSize>576952895</FileSize>
-		</Package>
-		<Package>
-			<URL>ftp://ftp.kickchat.com/wop/wop_patch_1_2.run, ftp://ftp.snt.utwente.nl/pub/games/worldofpadman/linux/wop_patch_1_2.run</URL>
-			<MD5>3468fc91889795471bc68e35ea334614</MD5>
-			<FileSize>72187892</FileSize>
-		</Package>
-		<Package>
-			<URL>http://www.phoronix-test-suite.com/benchmark-files/wop-benchmark-1.tar.gz, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/wop-benchmark-1.tar.gz</URL>
-			<MD5>8a7f8a1dd3b23d0b2147e7af3c8e146e</MD5>
-			<FileSize>799842</FileSize>
-		</Package>
-	</Downloads>
+  <Downloads>
+    <Package>
+      <URL>http://thilo.kickchat.com/download/worldofpadman.run, ftp://ftp.snt.utwente.nl/pub/games/worldofpadman/linux/worldofpadman.run, ftp://ftp.bm.kernel.org/pub/mirrors/gentoo/source/distfiles/worldofpadman.run</URL>
+      <MD5>c7650414d7865ddac26ada6b3f7b8cc9</MD5>
+      <FileSize>576952895</FileSize>
+    </Package>
+    <Package>
+      <URL>ftp://ftp.kickchat.com/wop/wop_patch_1_2.run, ftp://ftp.snt.utwente.nl/pub/games/worldofpadman/linux/wop_patch_1_2.run</URL>
+      <MD5>3468fc91889795471bc68e35ea334614</MD5>
+      <FileSize>72187892</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/wop-benchmark-1.tar.gz, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/wop-benchmark-1.tar.gz</URL>
+      <MD5>8a7f8a1dd3b23d0b2147e7af3c8e146e</MD5>
+      <FileSize>799842</FileSize>
+    </Package>
+  </Downloads>
 </PhoronixTestSuite>
-

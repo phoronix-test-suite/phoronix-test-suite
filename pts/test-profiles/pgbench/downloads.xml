@@ -1,9 +1,11 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<Downloads>
-		<Package>
-			<URL>http://wwwmaster.postgresql.org/redir/412/h/source/v9.0.1/postgresql-9.0.1.tar.bz2, http://wwwmaster.postgresql.org/redir/56/h/source/v9.0.1/postgresql-9.0.1.tar.bz2, http://wwwmaster.postgresql.org/redir/180/f/source/v9.0.1/postgresql-9.0.1.tar.bz2, http://wwwmaster.postgresql.org/redir/118/h/source/v9.0.1/postgresql-9.0.1.tar.bz2</URL>
-			<MD5>57ba57e43cfe29e16dacbf5789be98d1</MD5>
-			<FileSize>13773951</FileSize>
-		</Package>
-	</Downloads>
+  <Downloads>
+    <Package>
+      <URL>http://wwwmaster.postgresql.org/redir/412/h/source/v9.0.1/postgresql-9.0.1.tar.bz2, http://wwwmaster.postgresql.org/redir/56/h/source/v9.0.1/postgresql-9.0.1.tar.bz2, http://wwwmaster.postgresql.org/redir/180/f/source/v9.0.1/postgresql-9.0.1.tar.bz2, http://wwwmaster.postgresql.org/redir/118/h/source/v9.0.1/postgresql-9.0.1.tar.bz2</URL>
+      <MD5>57ba57e43cfe29e16dacbf5789be98d1</MD5>
+      <FileSize>13773951</FileSize>
+    </Package>
+  </Downloads>
 </PhoronixTestSuite>

@@ -1,11 +1,12 @@
 <?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<ResultsParser>
-		<LineHint>Total Time</LineHint>
-		<OutputTemplate>Total Scene Processing Times
+  <ResultsParser>
+    <OutputTemplate>Total Scene Processing Times
   Parse Time:    0 hours  0 minutes  0 seconds (0 seconds)
   Photon Time:   0 hours  0 minutes 22 seconds (22 seconds)
   Render Time:   0 hours 16 minutes 48 seconds (1008 seconds)
   Total Time:    0 hours 17 minutes 10 seconds #_RESULT_# seconds)</OutputTemplate>
-	</ResultsParser>
+    <LineHint>Total Time</LineHint>
+  </ResultsParser>
 </PhoronixTestSuite>

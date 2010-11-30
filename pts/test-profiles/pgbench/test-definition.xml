@@ -1,26 +1,26 @@
 <?xml version="1.0"?>
-<?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<TestProfile>
-		<Version>1.2.0</Version>
-		<TestType>System</TestType>
-		<SoftwareType>Benchmark</SoftwareType>
-		<License>Free</License>
-		<Status>Verified</Status>
-		<Maintainer>Kim Bisgaard</Maintainer>
-		<EnvironmentSize>230</EnvironmentSize>
-		<ProjectURL>http://www.postgresql.org/</ProjectURL>
-		<ExternalDependencies>build-utilities</ExternalDependencies>
-		<SupportedPlatforms>Linux, MacOSX, Solaris</SupportedPlatforms>
-	</TestProfile>
-	<TestInformation>
-		<Title>PostgreSQL pgbench</Title>
-		<SubTitle>TPC-B Transactions Per Second</SubTitle>
-		<TimesToRun>3</TimesToRun>
-		<Executable>pgbench</Executable>
-		<AppVersion>9.0.1</AppVersion>
-		<ResultScale>TPS</ResultScale>
-		<Proportion>HIB</Proportion>
-		<Description>This is a simple TPC-B like benchmark of PostgreSQL.</Description>
-	</TestInformation>
+  <TestInformation>
+    <Title>PostgreSQL pgbench</Title>
+    <Description>This is a simple TPC-B like benchmark of PostgreSQL.</Description>
+    <ResultScale>TPS</ResultScale>
+    <AppVersion>9.0.1</AppVersion>
+    <SubTitle>TPC-B Transactions Per Second</SubTitle>
+    <Proportion>HIB</Proportion>
+    <Executable>pgbench</Executable>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.2.0</Version>
+    <TestType>System</TestType>
+    <SoftwareType>Benchmark</SoftwareType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <SupportedPlatforms>Linux, MacOSX, Solaris</SupportedPlatforms>
+    <ExternalDependencies>build-utilities</ExternalDependencies>
+    <EnvironmentSize>230</EnvironmentSize>
+    <ProjectURL>http://www.postgresql.org/</ProjectURL>
+    <Maintainer>Kim Bisgaard</Maintainer>
+  </TestProfile>
 </PhoronixTestSuite>

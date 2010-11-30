@@ -1,29 +1,29 @@
 <?xml version="1.0"?>
-<?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<TestProfile>
-		<Version>1.0.0</Version>
-		<TestType>System</TestType>
-		<SoftwareType>Utility</SoftwareType>
-		<License>Free</License>
-		<Status>Verified</Status>
-		<Maintainer>Michael Larabel</Maintainer>
-		<EnvironmentSize>1</EnvironmentSize>
-		<ProjectURL>http://www.pureftpd.org/project/phpbench</ProjectURL>
-		<SupportedPlatforms>Linux</SupportedPlatforms>
-	</TestProfile>
-	<TestInformation>
-		<Title>PHPBench</Title>
-		<SubTitle>PHP Benchmark Suite</SubTitle>
-		<AppVersion>0.8.1</AppVersion>
-		<TimesToRun>3</TimesToRun>
-		<ResultScale>Score</ResultScale>
-		<Proportion>HIB</Proportion>
-		<Description>PHPBench is a benchmark suite for PHP. It performs a large number of simple tests in order to bench various aspects of the PHP interpreter. PHPBench can be used to compare hardware, operating systems, PHP versions, PHP accelerators and caches, compiler options, etc.</Description>
-	</TestInformation>
-	<TestSettings>
-		<Default>
-			<Arguments>-i 100000</Arguments>
-		</Default>
-	</TestSettings>
+  <TestInformation>
+    <Title>PHPBench</Title>
+    <Description>PHPBench is a benchmark suite for PHP. It performs a large number of simple tests in order to bench various aspects of the PHP interpreter. PHPBench can be used to compare hardware, operating systems, PHP versions, PHP accelerators and caches, compiler options, etc.</Description>
+    <ResultScale>Score</ResultScale>
+    <AppVersion>0.8.1</AppVersion>
+    <SubTitle>PHP Benchmark Suite</SubTitle>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <TestType>System</TestType>
+    <SoftwareType>Utility</SoftwareType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <EnvironmentSize>1</EnvironmentSize>
+    <ProjectURL>http://www.pureftpd.org/project/phpbench</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>-i 100000</Arguments>
+    </Default>
+  </TestSettings>
 </PhoronixTestSuite>
