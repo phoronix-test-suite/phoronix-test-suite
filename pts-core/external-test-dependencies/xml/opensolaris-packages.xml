@@ -33,7 +33,7 @@
 		<Package>
 			<GenericName>build-utilities</GenericName>
 			<PackageName>developer/gcc/gcc-43 developer/build/gnu-make</PackageName>
-			<FileCheck>/usr/bin/gcc OR /opt/csw/gcc4/bin/gcc, /usr/bin/gmake</FileCheck>
+			<FileCheck>/usr/bin/gcc OR /usr/gcc/ OR /opt/csw/gcc4/bin/gcc, /usr/bin/gmake</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>xorg-development</GenericName>
