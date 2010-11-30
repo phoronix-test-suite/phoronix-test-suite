@@ -74,11 +74,11 @@ class pts_test_profile_writer
 	public function add_test_data_section(&$xml_reader)
 	{
 		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_PTSVERSION, $xml_reader);
+		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_SUPPORTEDPLATFORMS, $xml_reader);
 		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_HARDWARE_TYPE, $xml_reader);
 		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_SOFTWARE_TYPE, $xml_reader);
 		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_LICENSE, $xml_reader);
 		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_STATUS, $xml_reader);
-		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_SUPPORTEDPLATFORMS, $xml_reader);
 		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_SUPPORTEDARCHS, $xml_reader);
 		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_EXDEP, $xml_reader);
 		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_CTPEXTENDS, $xml_reader);

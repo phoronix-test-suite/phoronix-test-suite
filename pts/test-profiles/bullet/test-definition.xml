@@ -5,12 +5,13 @@
     <Title>Bullet Physics Engine</Title>
     <Description>This is a benchmark of the Bullet Physics Engine.</Description>
     <ResultScale>Seconds</ResultScale>
-    <AppVersion>2.77</AppVersion>
+    <AppVersion>2.75</AppVersion>
     <Proportion>LIB</Proportion>
     <TimesToRun>3</TimesToRun>
   </TestInformation>
   <TestProfile>
-    <Version>1.1.0</Version>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
     <TestType>Processor</TestType>
     <SoftwareType>Utility</SoftwareType>
     <License>Free</License>

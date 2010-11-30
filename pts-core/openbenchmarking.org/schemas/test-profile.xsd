@@ -34,11 +34,11 @@
 		<xs:complexType>
 		<xs:sequence>
 			<xs:element name="Version" type="VersionString" />
+			<xs:element name="SupportedPlatforms" type="xs:string" />
 			<xs:element name="TestType" type="TestType" minOccurs="0" maxOccurs="1" />
 			<xs:element name="SoftwareType" type="SoftwareType" minOccurs="0" maxOccurs="1" />
 			<xs:element name="License" type="License" minOccurs="0" maxOccurs="1" />
 			<xs:element name="Status" type="ProfileStatus" minOccurs="0" maxOccurs="1" />
-			<xs:element name="SupportedPlatforms" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="SupportedArchitectures" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="ExternalDependencies" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="Extends" type="TestExtends" minOccurs="0" maxOccurs="1" />

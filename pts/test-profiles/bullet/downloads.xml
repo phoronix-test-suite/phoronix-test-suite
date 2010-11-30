@@ -3,9 +3,9 @@
 <PhoronixTestSuite>
   <Downloads>
     <Package>
-      <URL>http://bullet.googlecode.com/files/bullet-2.77.tgz</URL>
-      <MD5>2f5074a1a29b618c672f1da4748e374b</MD5>
-      <FileSize>6444239</FileSize>
+      <URL>http://bullet.googlecode.com/files/bullet-2.75.tgz, http://cdnetworks-us-2.dl.sourceforge.net/project/bullet/bullet-2.75.tgz, http://freefr.dl.sourceforge.net/project/bullet/bullet-2.75.tgz, http://internode.dl.sourceforge.net/project/bullet/bullet-2.75.tgz</URL>
+      <MD5>8a10e9043961c62c36eebf65c2ec3b16</MD5>
+      <FileSize>8926562</FileSize>
     </Package>
   </Downloads>
 </PhoronixTestSuite>
