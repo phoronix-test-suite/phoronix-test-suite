@@ -15,13 +15,13 @@
 		<xs:complexType>
 		<xs:sequence>
 			<xs:element name="Title" type="TitleString" minOccurs="0" maxOccurs="1" />
+			<xs:element name="AppVersion" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="Description" type="DescriptionString" minOccurs="0" maxOccurs="1" />
 			<xs:element name="ResultScale" type="xs:string" minOccurs="0" maxOccurs="1" />
-			<xs:element name="ResultQuantifier" type="ResultQuantifier" minOccurs="0" maxOccurs="1" />
-			<xs:element name="AppVersion" type="xs:string" minOccurs="0" maxOccurs="1" />
-			<xs:element name="SubTitle" type="xs:string" minOccurs="0" maxOccurs="1" />
-			<xs:element name="DisplayFormat" type="DisplayFormat" minOccurs="0" maxOccurs="1" />
 			<xs:element name="Proportion" type="Proportion" minOccurs="0" maxOccurs="1" />
+			<xs:element name="ResultQuantifier" type="ResultQuantifier" minOccurs="0" maxOccurs="1" />
+			<xs:element name="DisplayFormat" type="DisplayFormat" minOccurs="0" maxOccurs="1" />
+			<xs:element name="SubTitle" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="Executable" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="TimesToRun" type="TimesToRun" minOccurs="0" maxOccurs="1" />
 			<xs:element name="IgnoreRuns" type="xs:string" minOccurs="0" maxOccurs="1" />

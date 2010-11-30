@@ -59,13 +59,13 @@ class pts_test_profile_writer
 	public function add_test_information(&$xml_reader)
 	{
 		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_TITLE, $xml_reader);
+		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_VERSION, $xml_reader);
 		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_DESCRIPTION, $xml_reader);
 		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_SCALE, $xml_reader);
-		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_QUANTIFIER, $xml_reader);
-		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_VERSION, $xml_reader);
-		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_SUBTITLE, $xml_reader);
-		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_DISPLAY_FORMAT, $xml_reader);
 		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_PROPORTION, $xml_reader);
+		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_QUANTIFIER, $xml_reader);
+		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_DISPLAY_FORMAT, $xml_reader);
+		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_SUBTITLE, $xml_reader);
 		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_EXECUTABLE, $xml_reader);
 		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_RUNCOUNT, $xml_reader);
 		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_IGNORERUNS, $xml_reader);

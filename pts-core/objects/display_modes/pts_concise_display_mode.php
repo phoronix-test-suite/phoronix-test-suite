@@ -307,8 +307,12 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	{
 		if($this->expected_trial_run_count > 1 && $this->trial_run_count_current >= $this->expected_trial_run_count)
 		{
-			// The run count must have been dynamically increased, so show the standard deviation
-			echo ($this->trial_run_count_current < 10 ? ' ' : null) . " [Std. Dev: " . pts_math::set_precision(pts_math::percent_standard_deviation($test_result->test_result_buffer->get_values()), 2) . "%]";
+			$values = $test_result->test_result_buffer->get_values();
+
+			if(count($values) > 1)
+			{
+				echo ($this->trial_run_count_current < 10 ? ' ' : null) . " [Std. Dev: " . pts_math::set_precision(pts_math::percent_standard_deviation($values), 2) . "%]";
+			}
 		}
 	}
 	public function test_run_end(&$test_result)

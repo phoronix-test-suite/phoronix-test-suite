@@ -3,7 +3,7 @@
 <PhoronixTestSuite>
   <TestInformation>
     <Title>Apache Benchmark</Title>
-    <Description>This is a test of ab, which is the Apache benchmark program. This test profile measures how many requests per second a given system can sustain when carrying out 900,000 requests with 100 requests being carried out concurrently.</Description>
+    <Description>This is a test of ab, which is the Apache benchmark program. This test profile measures how many requests per second a given system can sustain when carrying out 700,000 requests with 100 requests being carried out concurrently.</Description>
     <ResultScale>Requests Per Second</ResultScale>
     <AppVersion>2.2.17</AppVersion>
     <SubTitle>Static Web Page Serving</SubTitle>
@@ -24,7 +24,7 @@
   </TestProfile>
   <TestSettings>
     <Default>
-      <Arguments>-n 900000 -c 100 http://localhost:8088/test.html</Arguments>
+      <Arguments>-n 700000 -c 100 http://localhost:8088/test.html</Arguments>
     </Default>
   </TestSettings>
 </PhoronixTestSuite>

@@ -13,6 +13,7 @@
     <Version>1.0.0</Version>
     <TestType>System</TestType>
     <SoftwareType>Utility</SoftwareType>
+	<SupportedPlatforms>Linux</SupportedPlatforms>
     <Maintainer>Michael Larabel</Maintainer>
     <Extends>mplayer-base</Extends>
     <EnvironmentSize>1.0</EnvironmentSize>
