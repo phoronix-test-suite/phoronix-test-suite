@@ -3,9 +3,9 @@
 <PhoronixTestSuite>
   <Downloads>
     <Package>
-      <URL>http://www.alasir.com/software/ramspeed/ramspeed-2.6.0.tar.gz</URL>
-      <MD5>546394131a1467a8651e0b8a218970c0</MD5>
-      <FileSize>77531</FileSize>
+      <URL>http://www.alasir.com/software/ramspeed/ramsmp-3.5.0.tar.gz</URL>
+      <MD5>c26b32c752c603e17c28a1cab4348682</MD5>
+      <FileSize>79481</FileSize>
     </Package>
   </Downloads>
 </PhoronixTestSuite>

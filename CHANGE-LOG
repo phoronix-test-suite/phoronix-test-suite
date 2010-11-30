@@ -27,6 +27,7 @@ Phoronix Test Suite (Git)
 - pts: Update pgbench test profile against PostgreSQL 9.0.1
 - pts: Update sqlite test profile against SQLite 3.7.3
 - pts: Update x264 test profile against upstream x264 2010-11-22
+- pts: Update ramspeed test profile against RAMspeed SMP (RAMSMP) 3.5.0
 - pts: First pass at validating all test profiles
 
 Phoronix Test Suite 3.0 Alpha 2
