@@ -16,6 +16,7 @@
     <SoftwareType>Utility</SoftwareType>
     <License>Free</License>
     <Status>Verified</Status>
+    <SupportedPlatforms>Linux, Solaris</SupportedPlatforms>
     <ExternalDependencies>build-utilities</ExternalDependencies>
     <EnvironmentSize>16</EnvironmentSize>
     <ProjectURL>http://www.gnupg.org/</ProjectURL>

@@ -16,7 +16,7 @@
     <SoftwareType>Utility</SoftwareType>
     <License>Free</License>
     <Status>Verified</Status>
-    <SupportedPlatforms>Linux, MacOSX, Solaris, BSD, Windows</SupportedPlatforms>
+    <SupportedPlatforms>Linux, MacOSX, BSD, Windows</SupportedPlatforms>
     <ExternalDependencies>build-utilities, numa-development</ExternalDependencies>
     <EnvironmentSize>5.9</EnvironmentSize>
     <ProjectURL>http://www.cis.uab.edu/info/faculty/hyatt/hyatt.html</ProjectURL>

@@ -258,7 +258,7 @@ class pts_client
 		// Setup PTS Results Viewer
 		pts_file_io::mkdir(PTS_SAVE_RESULTS_PATH . "pts-results-viewer");
 
-		foreach(pts_file_io::glob(PTS_RESULTS_VIEWER_PATH . "*.*") as $result_viewer_file)
+		foreach(pts_file_io::glob(PTS_RESULTS_VIEWER_PATH . '*') as $result_viewer_file)
 		{
 			copy($result_viewer_file, PTS_SAVE_RESULTS_PATH . "pts-results-viewer/" . basename($result_viewer_file));
 		}
