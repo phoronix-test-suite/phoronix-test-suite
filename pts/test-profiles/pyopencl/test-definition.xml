@@ -1,46 +1,46 @@
 <?xml version="1.0"?>
-<?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<TestProfile>
-		<Version>1.0.0</Version>
-		<TestType>System</TestType>
-		<SoftwareType>Utility</SoftwareType>
-		<License>Free</License>
-		<Status>Verified</Status>
-		<Maintainer>Achim Gottinger</Maintainer>
-		<EnvironmentSize>4.8</EnvironmentSize>
-		<ProjectURL>http://mathema.tician.de/software/pyopencl</ProjectURL>
-		<ExternalDependencies>build-utilities, boost-thread-development, python, python-boost-development, python-numpy</ExternalDependencies>
+  <TestInformation>
+    <Title>PyOpenCL</Title>
+    <Description>Bandwidth Tests</Description>
+    <ResultScale>GB/s</ResultScale>
+    <AppVersion>0.91.3</AppVersion>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <TestType>System</TestType>
+    <SoftwareType>Utility</SoftwareType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SupportedArchitectures>x86_64</SupportedArchitectures>
+    <ExternalDependencies>build-utilities, boost-thread-development, python, python-boost-development, python-numpy</ExternalDependencies>
+    <EnvironmentSize>4.8</EnvironmentSize>
+    <ProjectURL>http://mathema.tician.de/software/pyopencl</ProjectURL>
     <InternalTags>Python</InternalTags>
-		<SupportedPlatforms>Linux</SupportedPlatforms>
-		<SupportedArchitectures>x86_64</SupportedArchitectures>
-	</TestProfile>
-	<TestInformation>
-		<Title>PyOpenCL</Title>
-		<AppVersion>0.91.3</AppVersion>
-		<TimesToRun>3</TimesToRun>
-		<ResultScale>GB/s</ResultScale>
-		<Proportion>HIB</Proportion>
-		<Description>Bandwidth Tests</Description>
-	</TestInformation>
-	<TestSettings>
-		<Option>
-			<DisplayName>Type</DisplayName>
-			<Identifier>type</Identifier>
-			<Menu>
-				<Entry>
-					<Name>Silly</Name>
-					<Value>Silly</Value>
-				</Entry>
-				<Entry>
-					<Name>Naive</Name>
-					<Value>Naive</Value>
-				</Entry>
-				<Entry>	
-					<Name>Local</Name>
-					<Value>Local</Value>
-				</Entry>					
-			</Menu>			
-		</Option>
-	</TestSettings>
+    <Maintainer>Achim Gottinger</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Type</DisplayName>
+      <Identifier>type</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Silly</Name>
+          <Value>Silly</Value>
+        </Entry>
+        <Entry>
+          <Name>Naive</Name>
+          <Value>Naive</Value>
+        </Entry>
+        <Entry>
+          <Name>Local</Name>
+          <Value>Local</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
 </PhoronixTestSuite>

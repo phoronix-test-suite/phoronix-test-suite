@@ -1,36 +1,36 @@
 <?xml version="1.0"?>
-<?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<TestProfile>
-		<Version>1.2.0</Version>
-		<TestType>Graphics</TestType>
-		<SoftwareType>Game</SoftwareType>
-		<License>Non-Free</License>
-		<Status>Verified</Status>
-		<Maintainer>Michael Larabel</Maintainer>
-		<EnvironmentSize>260</EnvironmentSize>
-		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
-		<ProjectURL>http://www.unigine.com/</ProjectURL>
-		<SupportedPlatforms>Linux, Windows</SupportedPlatforms>
-	</TestProfile>
-	<TestInformation>
-		<Title>Unigine Heaven</Title>
-		<AppVersion>2.1</AppVersion>
-		<ResultScale>Frames Per Second</ResultScale>
-		<TimesToRun>3</TimesToRun>
-		<Proportion>HIB</Proportion>
-		<Description>This test calculates the average frame-rate within the Heaven demo for the Unigine engine. This engine is extremely demanding on the system's graphics card.</Description>
-	</TestInformation>
-	<TestSettings>
-		<Option>
-			<DisplayName>Resolution</DisplayName>
-			<Identifier>auto-resolution</Identifier>
-			<Menu>
-				<Entry>
-					<Name>$VIDEO_WIDTH x $VIDEO_HEIGHT</Name>
-					<Value>-video_width $VIDEO_WIDTH -video_height $VIDEO_HEIGHT</Value>
-				</Entry>
-			</Menu>
-		</Option>
-	</TestSettings>
+  <TestInformation>
+    <Title>Unigine Heaven</Title>
+    <Description>This test calculates the average frame-rate within the Heaven demo for the Unigine engine. This engine is extremely demanding on the system's graphics card.</Description>
+    <ResultScale>Frames Per Second</ResultScale>
+    <AppVersion>2.1</AppVersion>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.2.0</Version>
+    <TestType>Graphics</TestType>
+    <SoftwareType>Game</SoftwareType>
+    <License>Non-Free</License>
+    <Status>Verified</Status>
+    <SupportedPlatforms>Linux, Windows</SupportedPlatforms>
+    <SupportedArchitectures>x86, x86_64</SupportedArchitectures>
+    <EnvironmentSize>260</EnvironmentSize>
+    <ProjectURL>http://www.unigine.com/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Resolution</DisplayName>
+      <Identifier>auto-resolution</Identifier>
+      <Menu>
+        <Entry>
+          <Name>$VIDEO_WIDTH x $VIDEO_HEIGHT</Name>
+          <Value>-video_width $VIDEO_WIDTH -video_height $VIDEO_HEIGHT</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
 </PhoronixTestSuite>

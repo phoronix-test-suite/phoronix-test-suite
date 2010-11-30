@@ -1,30 +1,30 @@
 <?xml version="1.0"?>
-<?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<TestProfile>
-		<Version>1.2.0</Version>
-		<TestType>Processor</TestType>
-		<SoftwareType>Utility</SoftwareType>
-		<License>Free</License>
-		<Status>Verified</Status>
-		<Maintainer>Michael Larabel</Maintainer>
-		<EnvironmentSize>15.0</EnvironmentSize>
-		<SupportedPlatforms>Linux, MacOSX, BSD, Solaris</SupportedPlatforms>
-		<ExternalDependencies>build-utilities, sdl-development</ExternalDependencies>
-		<ProjectURL>http://users.softlab.ntua.gr/~ttsiod/renderer.html</ProjectURL>
-	</TestProfile>
-	<TestInformation>
-		<Title>TTSIOD 3D Renderer</Title>
-		<AppVersion>2.1v</AppVersion>
-		<SubTitle>Phong Rendering With Soft-Shadow Mapping</SubTitle>
-		<TimesToRun>3</TimesToRun>
-		<ResultScale>FPS</ResultScale>
-		<Proportion>HIB</Proportion>
-		<Description>A portable GPL 3D software renderer that supports OpenMP and Intel Threading Building Blocks with many different rendering modes. This version does not use OpenGL but is entirely CPU/software based.</Description>
-	</TestInformation>
-	<TestSettings>
-		<Default>
-			<Arguments>-b -n 5000 statue.ply</Arguments>
-		</Default>
-	</TestSettings>
+  <TestInformation>
+    <Title>TTSIOD 3D Renderer</Title>
+    <Description>A portable GPL 3D software renderer that supports OpenMP and Intel Threading Building Blocks with many different rendering modes. This version does not use OpenGL but is entirely CPU/software based.</Description>
+    <ResultScale>FPS</ResultScale>
+    <AppVersion>2.1v</AppVersion>
+    <SubTitle>Phong Rendering With Soft-Shadow Mapping</SubTitle>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.2.0</Version>
+    <TestType>Processor</TestType>
+    <SoftwareType>Utility</SoftwareType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <SupportedPlatforms>Linux, MacOSX, BSD, Solaris</SupportedPlatforms>
+    <ExternalDependencies>build-utilities, sdl-development</ExternalDependencies>
+    <EnvironmentSize>15.0</EnvironmentSize>
+    <ProjectURL>http://users.softlab.ntua.gr/~ttsiod/renderer.html</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>-b -n 5000 statue.ply</Arguments>
+    </Default>
+  </TestSettings>
 </PhoronixTestSuite>

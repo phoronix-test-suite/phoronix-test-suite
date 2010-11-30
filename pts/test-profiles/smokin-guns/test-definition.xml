@@ -1,37 +1,37 @@
 <?xml version="1.0"?>
-<?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<TestProfile>
-		<Version>1.1.0</Version>
-		<TestType>Graphics</TestType>
-		<SoftwareType>Game</SoftwareType>
-		<License>Free</License>
-		<Status>Verified</Status>
-		<Maintainer>Michael Larabel</Maintainer>
-		<EnvironmentSize>348</EnvironmentSize>
-		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
-		<ProjectURL>http://www.smokin-guns.net/</ProjectURL>
-		<ExternalDependencies>openal-development</ExternalDependencies>
-		<SupportedPlatforms>Linux, Windows</SupportedPlatforms>
-	</TestProfile>
-	<TestInformation>
-		<Title>Smokin Guns</Title>
-		<AppVersion>1.1b4</AppVersion>
-		<TimesToRun>3</TimesToRun>
-		<ResultScale>Frames Per Second</ResultScale>
-		<Proportion>HIB</Proportion>
-		<Description>Smokin Guns is an open-source game based on the Quake 3 engine that is a western-themed first person shooter.</Description>
-	</TestInformation>
-	<TestSettings>
-		<Option>
-			<DisplayName>Resolution</DisplayName>
-			<Identifier>auto-resolution</Identifier>
-			<Menu>
-				<Entry>
-					<Name>$VIDEO_WIDTH x $VIDEO_HEIGHT</Name>
-					<Value>+set r_customwidth $VIDEO_WIDTH +set r_customheight $VIDEO_HEIGHT</Value>
-				</Entry>
-			</Menu>
-		</Option>
-	</TestSettings>
+  <TestInformation>
+    <Title>Smokin Guns</Title>
+    <Description>Smokin Guns is an open-source game based on the Quake 3 engine that is a western-themed first person shooter.</Description>
+    <ResultScale>Frames Per Second</ResultScale>
+    <AppVersion>1.1b4</AppVersion>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.0</Version>
+    <TestType>Graphics</TestType>
+    <SoftwareType>Game</SoftwareType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <SupportedPlatforms>Linux, Windows</SupportedPlatforms>
+    <SupportedArchitectures>x86, x86_64</SupportedArchitectures>
+    <ExternalDependencies>openal-development</ExternalDependencies>
+    <EnvironmentSize>348</EnvironmentSize>
+    <ProjectURL>http://www.smokin-guns.net/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Resolution</DisplayName>
+      <Identifier>auto-resolution</Identifier>
+      <Menu>
+        <Entry>
+          <Name>$VIDEO_WIDTH x $VIDEO_HEIGHT</Name>
+          <Value>+set r_customwidth $VIDEO_WIDTH +set r_customheight $VIDEO_HEIGHT</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
 </PhoronixTestSuite>

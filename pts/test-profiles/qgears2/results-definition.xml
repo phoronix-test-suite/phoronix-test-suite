@@ -1,8 +1,9 @@
 <?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<ResultsParser>
-		<LineHint>FPS</LineHint>
-		<OutputTemplate>100 frames in 429 ms = #_RESULT_# FPS</OutputTemplate>
-		<MultiMatch>AVERAGE</MultiMatch>
-	</ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>100 frames in 429 ms = #_RESULT_# FPS</OutputTemplate>
+    <LineHint>FPS</LineHint>
+    <MultiMatch>AVERAGE</MultiMatch>
+  </ResultsParser>
 </PhoronixTestSuite>

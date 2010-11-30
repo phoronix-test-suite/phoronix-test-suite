@@ -1,9 +1,11 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<Downloads>
-		<Package>
-			<URL>http://www.phoronix-test-suite.com/benchmark-files/pybench-2009-08-14.tar.gz, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/pybench-2009-08-14.tar.gz</URL>
-			<MD5>3a3490b69fd3a2ec55f8de65fd72dd95</MD5>
-			<FileSize>88259</FileSize>
-		</Package>
-	</Downloads>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/pybench-2009-08-14.tar.gz, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/pybench-2009-08-14.tar.gz</URL>
+      <MD5>3a3490b69fd3a2ec55f8de65fd72dd95</MD5>
+      <FileSize>88259</FileSize>
+    </Package>
+  </Downloads>
 </PhoronixTestSuite>

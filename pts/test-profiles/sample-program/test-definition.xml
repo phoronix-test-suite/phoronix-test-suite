@@ -1,20 +1,20 @@
 <?xml version="1.0"?>
-<?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<TestProfile>
-		<Version>1.1.0</Version>
-		<TestType>Processor</TestType>
-		<SoftwareType>Utility</SoftwareType>
-		<License>Free</License>
-		<Status>EXPERIMENTAL</Status>
-		<Maintainer>Phoronix Media</Maintainer>
-		<ProjectURL>http://www.phoronix-test-suite.com/</ProjectURL>
-	</TestProfile>
-	<TestInformation>
-		<Title>Sample Pi Program</Title>
-		<TimesToRun>3</TimesToRun>
-		<ResultScale>Seconds</ResultScale>
-		<Proportion>LIB</Proportion>
-		<Description>A simple C++ program that calculates Pi to 8,765,4321 digits using the Leibniz formula. This test can be used for showcasing how to write a basic test profile.</Description>
-	</TestInformation>
+  <TestInformation>
+    <Title>Sample Pi Program</Title>
+    <Description>A simple C++ program that calculates Pi to 8,765,4321 digits using the Leibniz formula. This test can be used for showcasing how to write a basic test profile.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.0</Version>
+    <TestType>Processor</TestType>
+    <SoftwareType>Utility</SoftwareType>
+    <License>Free</License>
+    <Status>Experimental</Status>
+    <ProjectURL>http://www.phoronix-test-suite.com/</ProjectURL>
+    <Maintainer>Phoronix Media</Maintainer>
+  </TestProfile>
 </PhoronixTestSuite>

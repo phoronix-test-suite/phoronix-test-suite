@@ -1,20 +1,21 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<Downloads>
-		<Package>
-			<URL>http://ftp.jeuxlinux.fr/files/Smokin_Guns_1.0.zip</URL>
-			<MD5>6e6a980bd057e9241c66b7324729c7b9</MD5>
-			<FileSize>359156581</FileSize>
-		</Package>
-		<Package>
-			<URL>http://www.smokinguns.fr/download/SmokinGuns-1.1b4-update.zip</URL>
-			<MD5>f8d39d27343256ccc6915e304b9e132e</MD5>
-			<FileSize>55759760</FileSize>
-		</Package>
-		<Package>
-			<URL>http://www.phoronix-test-suite.com/benchmark-files/smokinguns-benchmark-2.tar.gz, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/smokinguns-benchmark-2.tar.gz</URL>
-			<MD5>936a01f829e5149c97b3f976bf915d68</MD5>
-			<FileSize>1165158</FileSize>
-		</Package>
-	</Downloads>
+  <Downloads>
+    <Package>
+      <URL>http://ftp.jeuxlinux.fr/files/Smokin_Guns_1.0.zip</URL>
+      <MD5>6e6a980bd057e9241c66b7324729c7b9</MD5>
+      <FileSize>359156581</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.smokinguns.fr/download/SmokinGuns-1.1b4-update.zip</URL>
+      <MD5>f8d39d27343256ccc6915e304b9e132e</MD5>
+      <FileSize>55759760</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/smokinguns-benchmark-2.tar.gz, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/smokinguns-benchmark-2.tar.gz</URL>
+      <MD5>936a01f829e5149c97b3f976bf915d68</MD5>
+      <FileSize>1165158</FileSize>
+    </Package>
+  </Downloads>
 </PhoronixTestSuite>
-

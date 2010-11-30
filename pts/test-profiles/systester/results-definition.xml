@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<ResultsParser>
-		<LineBeforeHint>Checksum validation...</LineBeforeHint>
-		<OutputTemplate>22     4M  N/A   #_RESULT_#</OutputTemplate>
-		<StripResultPostfix>s</StripResultPostfix>
-	</ResultsParser>
-	<ResultsParser>
-		<LineBeforeHint>Checksum validation...</LineBeforeHint>
-		<OutputTemplate>21     4M  N/A   #_RESULT_#</OutputTemplate>
-		<StripResultPostfix>s</StripResultPostfix>
-	</ResultsParser>	
+  <ResultsParser>
+    <OutputTemplate>22     4M  N/A   #_RESULT_#</OutputTemplate>
+    <LineBeforeHint>Checksum validation...</LineBeforeHint>
+    <StripResultPostfix>s</StripResultPostfix>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>21     4M  N/A   #_RESULT_#</OutputTemplate>
+    <LineBeforeHint>Checksum validation...</LineBeforeHint>
+    <StripResultPostfix>s</StripResultPostfix>
+  </ResultsParser>
 </PhoronixTestSuite>
-

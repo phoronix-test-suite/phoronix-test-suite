@@ -13,12 +13,12 @@
     <Version>1.1.0</Version>
     <TestType>Memory</TestType>
     <SoftwareType>Utility</SoftwareType>
-    <Maintainer>Michael Larabel</Maintainer>
     <License>Free</License>
     <Status>Verified</Status>
     <ExternalDependencies>build-utilities</ExternalDependencies>
     <EnvironmentSize>0.1</EnvironmentSize>
     <ProjectURL>http://www.cs.virginia.edu/stream/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
   </TestProfile>
   <TestSettings>
     <Default>

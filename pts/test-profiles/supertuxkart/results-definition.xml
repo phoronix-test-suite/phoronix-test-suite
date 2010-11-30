@@ -1,7 +1,8 @@
 <?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<ResultsParser>
-		<LineHint>Average FPS</LineHint>
-		<OutputTemplate>Number of frames: 3601 time 177.499000, Average FPS: #_RESULT_#</OutputTemplate>
-	</ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Number of frames: 3601 time 177.499000, Average FPS: #_RESULT_#</OutputTemplate>
+    <LineHint>Average FPS</LineHint>
+  </ResultsParser>
 </PhoronixTestSuite>

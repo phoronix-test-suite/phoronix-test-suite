@@ -1,15 +1,16 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<Downloads>
-		<Package>
-			<URL>http://www.sqlite.org/sqlite-amalgamation-3.7.3.tar.gz</URL>
-			<MD5>74fe78b264f1c434c4b159d45b78e9b7</MD5>
-			<FileSize>1512409</FileSize>
-		</Package>
-		<Package>
-			<URL>http://www.phoronix-test-suite.com/benchmark-files/pts-sqlite-tests-1.tar.gz, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/pts-sqlite-tests-1.tar.gz</URL>
-			<MD5>153e725642619e38766ddf8359f65cfe</MD5>
-			<FileSize>42835</FileSize>
-		</Package>
-	</Downloads>
+  <Downloads>
+    <Package>
+      <URL>http://www.sqlite.org/sqlite-amalgamation-3.7.3.tar.gz</URL>
+      <MD5>74fe78b264f1c434c4b159d45b78e9b7</MD5>
+      <FileSize>1512409</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/pts-sqlite-tests-1.tar.gz, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/pts-sqlite-tests-1.tar.gz</URL>
+      <MD5>153e725642619e38766ddf8359f65cfe</MD5>
+      <FileSize>42835</FileSize>
+    </Package>
+  </Downloads>
 </PhoronixTestSuite>
-
