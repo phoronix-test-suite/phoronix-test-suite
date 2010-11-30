@@ -18,6 +18,7 @@
     <License>Free</License>
     <Status>Verified</Status>
     <ExternalDependencies>java</ExternalDependencies>
+    <SupportedPlatforms>Linux, MacOSX, Solaris, BSD</SupportedPlatforms>
     <EnvironmentSize>0.93</EnvironmentSize>
     <EnvironmentTestingSize>2048</EnvironmentTestingSize>
     <ProjectURL>http://www.sourceforge.net/projects/bork</ProjectURL>

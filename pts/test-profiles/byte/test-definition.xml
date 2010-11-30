@@ -11,6 +11,7 @@
   </TestInformation>
   <TestProfile>
     <Version>1.1.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
     <TestType>Processor</TestType>
     <SoftwareType>Utility</SoftwareType>
     <License>Free</License>

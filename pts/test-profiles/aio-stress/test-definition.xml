@@ -3,14 +3,14 @@
 <PhoronixTestSuite>
   <TestInformation>
     <Title>AIO-Stress</Title>
-    <Description>AIO-Stress is an a-synchronous I/O benchmark created by SuSE. Current this profile uses a single thread, a 1024MB test file, a 64KB record size, </Description>
+    <Description>AIO-Stress is an a-synchronous I/O benchmark created by SuSE. Current this profile uses a 2048MB test file and a 64KB record size.</Description>
     <ResultScale>MB/s</ResultScale>
     <AppVersion>0.21</AppVersion>
     <Proportion>HIB</Proportion>
     <TimesToRun>3</TimesToRun>
   </TestInformation>
   <TestProfile>
-    <Version>1.0.0</Version>
+    <Version>1.1.0</Version>
     <TestType>Disk</TestType>
     <SoftwareType>Benchmark</SoftwareType>
     <Maintainer>Michael Larabel</Maintainer>
@@ -23,7 +23,7 @@
   </TestProfile>
   <TestSettings>
     <Default>
-      <Arguments>-s 1g -r 64k -t 3</Arguments>
+      <Arguments>-s 2g -r 64k -t 3</Arguments>
     </Default>
     <Option>
       <DisplayName>Test</DisplayName>
