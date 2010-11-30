@@ -51,8 +51,8 @@ class gpu_freq implements phodevi_sensor
 			$nv_freq = phodevi_parser::read_nvidia_extension("GPUCurrentClockFreqs");
 
 			$nv_freq = pts_strings::comma_explode($nv_freq);
-			$core_freq = $nv_freq[0];
-			$mem_freq = $nv_freq[1];
+			$core_freq = isset($nv_freq[0]) ? $nv_freq[0] : 0;
+			$mem_freq = isset($nv_freq[1]) ? $nv_freq[1] : 0;
 		}
 		else if(IS_ATI_GRAPHICS && IS_LINUX) // ATI GPU
 		{

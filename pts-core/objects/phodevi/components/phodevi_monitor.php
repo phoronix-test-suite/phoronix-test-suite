@@ -51,6 +51,11 @@ class phodevi_monitor extends phodevi_device_interface
 			$system_profiler = substr($system_profiler, strrpos($system_profiler, "Displays:"));
 			$system_profiler = substr($system_profiler, strpos($system_profiler, "\n"));
 			$monitor = trim(substr($system_profiler, 0, strpos($system_profiler, ":")));
+
+			if($monitor == "Display Connector")
+			{
+				$monitor = null;
+			}
 		}
 		else
 		{

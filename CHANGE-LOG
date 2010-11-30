@@ -18,6 +18,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add InternalTags to XML test profile schema
 - pts-core: Drop support for ~/pts-test-note as the capabilities are now found within InternalTags using a cleaner method
 - pts-core: Better the support for Illumos OpenIndiana b147
+- phodevi: Few Mac OS X support improvements
 - phoromatic: HTTPS connection support, install the Phoromatic.com SSL certificate
 - pts: Update apache test profile against upstream Apache 2.2.17
 - pts: Update build-apache test profile against upstream Apache 2.2.17
