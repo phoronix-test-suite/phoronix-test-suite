@@ -16,6 +16,7 @@
     <License>Free</License>
     <Status>Verified</Status>
     <SupportedPlatforms>Linux</SupportedPlatforms>
+<InternalTags>OpenCL</InternalTags>
     <SupportedArchitectures>x86, x86_64</SupportedArchitectures>
     <ExternalDependencies>glut, glew, build-utilities, sdl-development, lib3ds</ExternalDependencies>
     <EnvironmentSize>87.4</EnvironmentSize>

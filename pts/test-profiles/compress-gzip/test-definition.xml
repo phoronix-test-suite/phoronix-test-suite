@@ -13,6 +13,7 @@
     <Version>1.1.0</Version>
     <TestType>Processor</TestType>
     <SoftwareType>Utility</SoftwareType>
+<SupportedPlatforms>Linux, BSD, Solaris, MacOSX</SupportedPlatforms>
     <License>Free</License>
     <Status>Verified</Status>
     <EnvironmentTestingSize>2048</EnvironmentTestingSize>

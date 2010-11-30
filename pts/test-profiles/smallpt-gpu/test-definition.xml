@@ -13,6 +13,7 @@
     <Version>1.1.0</Version>
     <TestType>System</TestType>
     <SoftwareType>Utility</SoftwareType>
+<InternalTags>OpenCL</InternalTags>
     <License>Free</License>
     <Status>Verified</Status>
     <SupportedPlatforms>Linux, BSD, MacOSX</SupportedPlatforms>

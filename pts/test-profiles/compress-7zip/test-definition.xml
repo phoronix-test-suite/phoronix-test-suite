@@ -14,6 +14,7 @@
     <Version>1.5.0</Version>
     <TestType>Processor</TestType>
     <SoftwareType>Utility</SoftwareType>
+<SupportedPlatforms>Linux, BSD, Solaris, MacOSX</SupportedPlatforms>
     <License>Free</License>
     <Status>Verified</Status>
     <ExternalDependencies>build-utilities</ExternalDependencies>

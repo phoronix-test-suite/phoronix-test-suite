@@ -62,6 +62,15 @@ class pts_test_notes_manager
 		{
 			self::add_note(phodevi::read_property("system", "wine-version"));
 		}
+		if(in_array("OpenCL", $test_tags))
+		{
+			$cores = phodevi::read_property("gpu", "compute-cores");
+
+			if($cores > 0)
+			{
+				self::add_note("GPU Compute Cores: " . $cores);
+			}
+		}
 
 		if(empty($check_processes))
 		{

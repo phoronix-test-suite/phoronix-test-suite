@@ -12,6 +12,7 @@
   <TestProfile>
     <Version>1.1.0</Version>
     <TestType>System</TestType>
+<InternalTags>OpenCL</InternalTags>
     <SoftwareType>Utility</SoftwareType>
     <License>Free</License>
     <Status>Verified</Status>

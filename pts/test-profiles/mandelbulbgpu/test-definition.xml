@@ -15,6 +15,7 @@
     <SoftwareType>Utility</SoftwareType>
     <License>Free</License>
     <Status>Verified</Status>
+<InternalTags>OpenCL</InternalTags>
     <SupportedPlatforms>Linux, BSD, MacOSX</SupportedPlatforms>
     <ExternalDependencies>build-utilities, glut, opencl</ExternalDependencies>
     <EnvironmentSize>0.1</EnvironmentSize>

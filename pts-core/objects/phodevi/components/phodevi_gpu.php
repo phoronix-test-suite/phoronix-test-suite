@@ -51,6 +51,9 @@ class phodevi_gpu extends phodevi_device_interface
 			case "af-level":
 				$property = new phodevi_device_property("gpu_af_level", PHODEVI_AVOID_CACHE);
 				break;
+			case "compute-cores":
+				$property = new phodevi_device_property("gpu_compute_cores", PHODEVI_STAND_CACHE);
+				break;
 			case "available-modes":
 				$property = new phodevi_device_property("gpu_available_modes", PHODEVI_SMART_CACHE);
 				break;
@@ -267,6 +270,18 @@ class phodevi_gpu extends phodevi_device_interface
 		}
 
 		return $af_level;
+	}
+	public static function gpu_compute_cores()
+	{
+		// Determine AF level if over-rode
+		$cores = 0;
+
+		if(IS_NVIDIA_GRAPHICS)
+		{
+			$cores = phodevi_parser::read_nvidia_extension("CUDACores");
+		}
+
+		return $cores;
 	}
 	public static function gpu_screen_resolution()
 	{
