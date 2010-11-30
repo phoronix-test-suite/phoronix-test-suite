@@ -13,6 +13,7 @@
     <SoftwareType>Utility</SoftwareType>
     <License>Free</License>
     <Status>Verified</Status>
+    <SupportedPlatforms>Linux, Solaris, BSD, MacOSX</SupportedPlatforms>
     <EnvironmentSize>0.01</EnvironmentSize>
     <Maintainer>Michael Larabel</Maintainer>
   </TestProfile>

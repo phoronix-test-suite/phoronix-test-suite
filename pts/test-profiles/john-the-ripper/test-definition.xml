@@ -16,6 +16,7 @@
     <License>Free</License>
     <Status>Verified</Status>
     <ExternalDependencies>build-utilities</ExternalDependencies>
+    <SupportedPlatforms>Linux, Solaris, BSD, MacOSX</SupportedPlatforms>
     <EnvironmentSize>2.3</EnvironmentSize>
     <ProjectURL>http://www.openwall.com/john/</ProjectURL>
     <Maintainer>Michael Larabel</Maintainer>

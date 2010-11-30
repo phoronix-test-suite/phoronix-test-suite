@@ -27,10 +27,11 @@ class pts_installed_test
 	private $xml_parser;
 	private $identifier;
 
-	public function __construct($identifier)
+	public function __construct(&$test_profile)
 	{
-		$this->identifier = $identifier;
-		$read_xml = is_file(PTS_TEST_INSTALL_PATH . $identifier . "/pts-install.xml") ? PTS_TEST_INSTALL_PATH . $identifier . "/pts-install.xml" : null;
+		$this->identifier = $test_profile->get_identifier();
+		$install_path = $test_profile->get_install_dir();
+		$read_xml = is_file($install_path . "pts-install.xml") ? $install_path . "pts-install.xml" : null;
 		$this->xml_parser = new nye_XmlReader($read_xml);
 	}
 	public function get_install_date_time()

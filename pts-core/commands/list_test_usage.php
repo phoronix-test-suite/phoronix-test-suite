@@ -32,7 +32,7 @@ class list_test_usage implements pts_option_interface
 			printf("%-18ls   %-8ls %-13ls %-11ls %-13ls %-10ls\n", "TEST", "VERSION", "INSTALL DATE", "LAST RUN", "AVG RUN-TIME", "TIMES RUN");
 			foreach($installed_tests as $identifier)
 			{
-				$installed_test = new pts_installed_test($identifier);
+				$installed_test = new pts_installed_test(($tp = new pts_test_profile($identifier)));
 
 				if($installed_test->get_installed_version() != null)
 				{

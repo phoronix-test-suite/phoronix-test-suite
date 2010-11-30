@@ -14,6 +14,7 @@
     <SoftwareType>Utility</SoftwareType>
     <License>Free</License>
     <Status>Verified</Status>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
     <EnvironmentSize>1.0</EnvironmentSize>
     <Maintainer>Michael Larabel</Maintainer>
   </TestProfile>

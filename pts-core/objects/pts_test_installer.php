@@ -72,7 +72,7 @@ class pts_test_installer
 			}
 			else
 			{
-				$installed_test = new pts_installed_test($test_profile->get_identifier());
+				$installed_test = new pts_installed_test($test_profile);
 				pts_client::$display->generic_sub_heading("Installed: " . $test_profile->get_identifier() . ($installed_test->get_installed_version() != null ? " [v" . $installed_test->get_installed_version() . "]" : null));
 			}
 		}

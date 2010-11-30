@@ -158,7 +158,7 @@ class pts_test_profile extends pts_test_profile_parser
 	public function get_estimated_run_time()
 	{
 		// get estimated run-time (in seconds)
-		$installed_test = new pts_installed_test($this->identifier);
+		$installed_test = new pts_installed_test($this);
 		$this_length = $installed_test->get_average_run_time();
 
 		return (is_numeric($this_length) && $this_length > 0 ? $this_length : parent::get_estimated_run_time());
@@ -311,7 +311,7 @@ class pts_test_profile extends pts_test_profile_parser
 	}
 	public function needs_updated_install()
 	{
-		$installed_test = new pts_installed_test($this->get_identifier());
+		$installed_test = new pts_installed_test($this);
 
 		// Checks if test needs updating
 		// || $installed_test->get_installed_system_identifier() != phodevi::system_id_string()

@@ -181,7 +181,7 @@ class pts_tests
 	public static function update_test_install_xml(&$test_profile, $this_duration = 0, $is_install = false)
 	{
 		// Refresh/generate an install XML for pts-install.xml
-		$installed_test = new pts_installed_test($test_profile->get_install_dir() . "pts-install.xml");
+		$installed_test = new pts_installed_test($test_profile);
 		$xml_writer = new nye_XmlWriter("file://" . PTS_USER_PATH . "xsl/" . "pts-test-installation-viewer.xsl");
 
 		$test_duration = $installed_test->get_average_run_time();

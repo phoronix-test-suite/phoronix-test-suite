@@ -79,7 +79,7 @@ class info implements pts_option_interface
 
 			if($args["object"]->is_test_installed())
 			{
-				$installed_test = new pts_installed_test($args["object"]->get_identifier());
+				$installed_test = new pts_installed_test($args["object"]);
 				$last_run = $installed_test->get_last_run_date();
 				$last_run = $last_run == "0000-00-00" ? "Never" : $last_run;
 

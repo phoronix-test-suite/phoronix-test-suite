@@ -16,7 +16,7 @@
     <SoftwareType>Benchmark</SoftwareType>
     <License>Free</License>
     <Status>Verified</Status>
-    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SupportedPlatforms>Linux, Solaris</SupportedPlatforms>
     <ExternalDependencies>build-utilities</ExternalDependencies>
     <EnvironmentSize>0.1</EnvironmentSize>
     <ProjectURL>http://78.31.67.79:8080/jxrender/RenderMark.html</ProjectURL>
