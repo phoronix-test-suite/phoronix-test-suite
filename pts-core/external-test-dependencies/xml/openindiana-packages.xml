@@ -3,140 +3,149 @@
 <PhoronixTestSuite>
 	<ExternalDependencies>
 		<Information>
-			<Name>OpenSolaris</Name>
+			<Name>OpenIndiana</Name>
 		</Information>
 		<Package>
 			<GenericName>gtk-development</GenericName>
-			<PackageName>SUNWgnome-base-libs SUNWGtk</PackageName>
+			<PackageName>library/desktop/gtk2</PackageName>
 			<FileCheck>/usr/include/gtk-2.0, /usr/lib/libgtk.so</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>sdl-development</GenericName>
-			<PackageName>SUNWlibsdl</PackageName>
+			<PackageName>library/sdl</PackageName>
 			<FileCheck>/usr/include/SDL/SDL.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>glut</GenericName>
-			<PackageName>SUNWxorg-mesa</PackageName>
+			<PackageName>x11/library/mesa</PackageName>
 			<FileCheck>/usr/X11/include/GL/gl.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>csh</GenericName>
-			<PackageName>SUNWtcsh</PackageName>
+			<PackageName>SUNWcs</PackageName>
 			<FileCheck>/usr/bin/tcsh</FileCheck>
 		</Package>
 		<Package>
-			<GenericName>libpng-development</GenericName>
-			<PackageName>SUNWpng</PackageName>
-			<FileCheck>/usr/include/png.h</FileCheck>
-		</Package>
-		<Package>
 			<GenericName>build-utilities</GenericName>
-			<PackageName>gcc-432 SUNWgmake gcc-dev-4</PackageName>
-			<FileCheck>/usr/bin/gcc OR /opt/csw/gcc4/bin/gcc, /usr/bin/gmake</FileCheck>
+			<PackageName>developer/gcc/gcc-43 developer/build/gnu-make</PackageName>
+			<FileCheck>/usr/bin/gcc OR /usr/gcc/ OR /opt/csw/gcc4/bin/gcc, /usr/bin/gmake</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>xorg-development</GenericName>
-			<PackageName>SUNWxorg-headers</PackageName>
+			<PackageName>FSWxorg-headers x11/server/xorg</PackageName>
 			<FileCheck>/usr/X11/include/X11/</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>xorg-video</GenericName>
-			<PackageName>SUNWxorg-headers</PackageName>
+			<PackageName>FSWxorg-headers</PackageName>
 			<FileCheck>/usr/X11/include/X11/extensions/Xvlib.h, /usr/X11/include/X11/extensions/XvMClib.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>bison</GenericName>
-			<PackageName>SUNWbison</PackageName>
+			<PackageName>developer/parser/bison</PackageName>
 			<FileCheck>/usr/sfw/bin/bison</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>flex</GenericName>
-			<PackageName>SUNWflexlex</PackageName>
+			<PackageName>developer/lexer/flex</PackageName>
 			<FileCheck>/usr/sfw/bin/flex</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>java</GenericName>
-			<PackageName>SUNWj6rt</PackageName>
+			<PackageName>openjdk7-dev developer/openjdk7/tools</PackageName>
 			<FileCheck>/usr/bin/java</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>zlib-development</GenericName>
-			<PackageName>SUNWzlib</PackageName>
+			<PackageName>library/zlib</PackageName>
 			<FileCheck>/usr/include/zlib.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>jpeg-development</GenericName>
-			<PackageName>SUNWjpg</PackageName>
+			<PackageName>image/library/libjpeg</PackageName>
 			<FileCheck>/usr/include/jpeglib.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>perl</GenericName>
-			<PackageName>SUNWperl584core</PackageName>
+			<PackageName>runtime/perl-584</PackageName>
 			<FileCheck>/usr/bin/perl</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>libstdcpp5</GenericName>
-			<PackageName>SUNWgccruntime</PackageName>
+			<PackageName>system/library/gcc-3-runtime</PackageName>
 			<FileCheck>/usr/sfw/lib/libstdc++.so</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>vorbis-development</GenericName>
-			<PackageName>SUNWogg-vorbis</PackageName>
+			<PackageName>codec/ogg-vorbis</PackageName>
 			<FileCheck>/usr/include/vorbis/vorbisfile.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>autoconf</GenericName>
-			<PackageName>SUNWaconf</PackageName>
+			<PackageName>developer/build/autoconf</PackageName>
 			<FileCheck>/usr/bin/autoconf</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>libtool</GenericName>
-			<PackageName>SUNWlibtool</PackageName>
+			<PackageName>developer/build/libtool</PackageName>
 			<FileCheck>/usr/bin/libtool</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>ncurses-development</GenericName>
-			<PackageName>SUNWncurses</PackageName>
+			<PackageName>library/ncurses</PackageName>
 			<FileCheck>/usr/gnu/include/ncurses/curses.h OR /usr/include/ncurses/curses.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>popt</GenericName>
-			<PackageName>SUNWlibpopt</PackageName>
+			<PackageName>library/popt</PackageName>
 			<FileCheck>/usr/include/popt.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>curl</GenericName>
-			<PackageName>SUNWcurl</PackageName>
+			<PackageName>web/curl</PackageName>
 			<FileCheck>/usr/lib/libcurl.so.3</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>tcl</GenericName>
-			<PackageName>SUNWTcl</PackageName>
+			<PackageName>runtime/tcl-8</PackageName>
 			<FileCheck>/usr/bin/tclsh</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>cmake</GenericName>
-			<PackageName>SUNWcmake</PackageName>
+			<PackageName>developer/build/cmake</PackageName>
 			<FileCheck>/usr/bin/cmake</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>bzip2-development</GenericName>
-			<PackageName>SUNWbzip</PackageName>
+			<PackageName>compress/bzip2</PackageName>
 			<FileCheck>/usr/include/bzlib.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>glibc-development</GenericName>
-			<PackageName>SUNWlibC</PackageName>
+			<PackageName>system/library</PackageName>
 			<FileCheck>/usr/lib/libC.so.5</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>python</GenericName>
-			<PackageName>SUNWPython</PackageName>
+			<PackageName>runtime/python-26</PackageName>
 			<FileCheck>/usr/bin/python</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>gmp-library</GenericName>
+			<PackageName>library/gmp</PackageName>
+			<FileCheck>/usr/include/gmp.h</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>python-numpy</GenericName>
+			<PackageName>library/python-2/python-extra-26</PackageName>
+			<FileCheck>/usr/share/pyshared/numpy/version.py</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>openmpi-development</GenericName>
+			<PackageName>developer/clustertools-821</PackageName>
+			<FileCheck>/opt/SUNWhpc/</FileCheck>
 		</Package>
 		<!-- Check on yasm support for OpenSolaris -->
 		<!-- Check on lib3ds support for OpenSolaris -->
-		<!-- Check on libgmp support for OpenSolaris -->
 	</ExternalDependencies>
 </PhoronixTestSuite>
