@@ -1,43 +1,43 @@
 <?xml version="1.0"?>
-<?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<TestProfile>
-		<Version>1.0.0</Version>
-		<TestType>System</TestType> <!-- By making it of type System instead of Graphics it will be possible to directly compare overridden AA / AF levels -->
-		<EnvironmentSize>1</EnvironmentSize>
-		<Extends>xplane9</Extends>
-		<AllowResultsSharing>FALSE</AllowResultsSharing>
-		<AutoSaveResults>TRUE</AutoSaveResults>
-	</TestProfile>
-	<TestInformation>
-		<Title>X-Plane Image Quality</Title>
-		<TimesToRun>1</TimesToRun>
-		<ResultScale>NULL</ResultScale>
-		<Proportion>ABSTRACT</Proportion>
-		<DisplayFormat>IMAGE_COMPARISON</DisplayFormat>
-	</TestInformation>
-	<TestSettings>
-		<Default>
-			<AllowCacheShare>TRUE</AllowCacheShare>
-			<Arguments>--no_workarounds --no_sound --pref:_prefs_found=1 --pref:_tex_res=5 --pref:_draw_objs_06=6 --pref:_draw_vecs_03=3 --pref:_draw_reflect_water05=5 --pref:_draw_volume_fog01=1 --pref:_draw_shaders=1 --pref:_draw_for_05=5 --pref:_is_full_ALL=1 --pref:_x_res_full_ALL=1280 --pref:_y_res_full_ALL=1024 --fps_test=3 --qa_script=conformance.txt</Arguments>
-		</Default>
-		<Option>
-			<DisplayName>Scene</DisplayName>
-			<Identifier>scene</Identifier>
-			<Menu>
-				<Entry>
-					<Name>Control Tower</Name>
-					<Value>CONTROL_TOWER</Value>
-				</Entry>
-				<Entry>
-					<Name>City</Name>
-					<Value>CITY</Value>
-				</Entry>
-				<Entry>
-					<Name>Water</Name>
-					<Value>WATER</Value>
-				</Entry>
-			</Menu>
-		</Option>
-	</TestSettings>
+  <TestInformation>
+    <Title>X-Plane Image Quality</Title>
+    <ResultScale>NULL</ResultScale>
+    <DisplayFormat>IMAGE_COMPARISON</DisplayFormat>
+    <Proportion>ABSTRACT</Proportion>
+    <TimesToRun>1</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <TestType>System</TestType>
+    <Extends>xplane9</Extends>
+    <EnvironmentSize>1</EnvironmentSize>
+    <AllowResultsSharing>FALSE</AllowResultsSharing>
+    <AutoSaveResults>TRUE</AutoSaveResults>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>--no_workarounds --no_sound --pref:_prefs_found=1 --pref:_tex_res=5 --pref:_draw_objs_06=6 --pref:_draw_vecs_03=3 --pref:_draw_reflect_water05=5 --pref:_draw_volume_fog01=1 --pref:_draw_shaders=1 --pref:_draw_for_05=5 --pref:_is_full_ALL=1 --pref:_x_res_full_ALL=1280 --pref:_y_res_full_ALL=1024 --fps_test=3 --qa_script=conformance.txt</Arguments>
+      <AllowCacheShare>TRUE</AllowCacheShare>
+    </Default>
+    <Option>
+      <DisplayName>Scene</DisplayName>
+      <Identifier>scene</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Control Tower</Name>
+          <Value>CONTROL_TOWER</Value>
+        </Entry>
+        <Entry>
+          <Name>City</Name>
+          <Value>CITY</Value>
+        </Entry>
+        <Entry>
+          <Name>Water</Name>
+          <Value>WATER</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
 </PhoronixTestSuite>

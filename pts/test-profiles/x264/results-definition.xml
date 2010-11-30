@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<ResultsParser>
-		<OutputTemplate>encoded 600 frames, #_RESULT_# fps, 4221.95 kb/s</OutputTemplate>
-	</ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>encoded 600 frames, #_RESULT_# fps, 4221.95 kb/s</OutputTemplate>
+  </ResultsParser>
 </PhoronixTestSuite>

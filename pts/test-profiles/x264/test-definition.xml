@@ -1,24 +1,24 @@
 <?xml version="1.0"?>
-<?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<TestProfile>
-		<Version>1.2.0</Version>
-		<TestType>Processor</TestType>
-		<SoftwareType>Utility</SoftwareType>
-		<License>Free</License>
-		<Status>Verified</Status>
-		<Maintainer>Michael Larabel</Maintainer>
-		<EnvironmentSize>353</EnvironmentSize>
-		<ProjectURL>http://www.videolan.org/developers/x264.html</ProjectURL>
-		<ExternalDependencies>build-utilities, yasm</ExternalDependencies>
-	</TestProfile>
-	<TestInformation>
-		<Title>x264</Title>
-		<AppVersion>2010-11-22</AppVersion>
-		<SubTitle>H.264 Video Encoding</SubTitle>
-		<TimesToRun>3</TimesToRun>
-		<ResultScale>Frames Per Second</ResultScale>
-		<Proportion>HIB</Proportion>
-		<Description>This is a simple test of the x264 H.264/AVC encoder.</Description>
-	</TestInformation>
+  <TestInformation>
+    <Title>x264</Title>
+    <Description>This is a simple test of the x264 H.264/AVC encoder.</Description>
+    <ResultScale>Frames Per Second</ResultScale>
+    <AppVersion>2010-11-22</AppVersion>
+    <SubTitle>H.264 Video Encoding</SubTitle>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.2.0</Version>
+    <TestType>Processor</TestType>
+    <SoftwareType>Utility</SoftwareType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, yasm</ExternalDependencies>
+    <EnvironmentSize>353</EnvironmentSize>
+    <ProjectURL>http://www.videolan.org/developers/x264.html</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
 </PhoronixTestSuite>

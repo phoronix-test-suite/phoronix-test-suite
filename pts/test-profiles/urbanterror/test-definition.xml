@@ -1,40 +1,40 @@
 <?xml version="1.0"?>
-<?xml-stylesheet type="text/xsl" href="xsl/pts-test-profile-viewer.xsl" ?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<TestProfile>
-		<Version>1.1.0</Version>
-		<TestType>Graphics</TestType>
-		<SoftwareType>Game</SoftwareType>
-		<License>Free</License>
-		<Status>Verified</Status>
-		<Maintainer>Michael Larabel</Maintainer>
-		<EnvironmentSize>740</EnvironmentSize>
-		<SupportedArchitectures>x86, x86_64</SupportedArchitectures>
-		<ProjectURL>http://www.urbanterror.net/</ProjectURL>
-		<SupportedPlatforms>Linux, MacOSX, Windows</SupportedPlatforms>
-		<ExternalDependencies>sdl-development</ExternalDependencies>
-	</TestProfile>
-	<TestInformation>
-		<Title>Urban Terror</Title>
-		<AppVersion>4.1</AppVersion>
-		<TimesToRun>3</TimesToRun>
-		<ResultScale>Frames Per Second</ResultScale>
-		<Proportion>HIB</Proportion>
-		<Description>Urban Terror is an open-source game that uses the ioquake3 engine. Urban Terror is a tactical first-person shooter.</Description>
-	</TestInformation>
-	<TestSettings>
-		<Default>
-			<Arguments>+timedemo 1 +set demodone "quit" +set demoloop1 "demo pts1; set nextdemo vstr demodone" +vstr demoloop1</Arguments>
-		</Default>
-		<Option>
-			<DisplayName>Resolution</DisplayName>
-			<Identifier>auto-resolution</Identifier>
-			<Menu>
-				<Entry>
-					<Name>$VIDEO_WIDTH x $VIDEO_HEIGHT</Name>
-					<Value>+set r_customwidth $VIDEO_WIDTH +set r_customheight $VIDEO_HEIGHT</Value>
-				</Entry>
-			</Menu>
-		</Option>
-	</TestSettings>
+  <TestInformation>
+    <Title>Urban Terror</Title>
+    <Description>Urban Terror is an open-source game that uses the ioquake3 engine. Urban Terror is a tactical first-person shooter.</Description>
+    <ResultScale>Frames Per Second</ResultScale>
+    <AppVersion>4.1</AppVersion>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.0</Version>
+    <TestType>Graphics</TestType>
+    <SoftwareType>Game</SoftwareType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <SupportedPlatforms>Linux, MacOSX, Windows</SupportedPlatforms>
+    <SupportedArchitectures>x86, x86_64</SupportedArchitectures>
+    <ExternalDependencies>sdl-development</ExternalDependencies>
+    <EnvironmentSize>740</EnvironmentSize>
+    <ProjectURL>http://www.urbanterror.net/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>+timedemo 1 +set demodone "quit" +set demoloop1 "demo pts1; set nextdemo vstr demodone" +vstr demoloop1</Arguments>
+    </Default>
+    <Option>
+      <DisplayName>Resolution</DisplayName>
+      <Identifier>auto-resolution</Identifier>
+      <Menu>
+        <Entry>
+          <Name>$VIDEO_WIDTH x $VIDEO_HEIGHT</Name>
+          <Value>+set r_customwidth $VIDEO_WIDTH +set r_customheight $VIDEO_HEIGHT</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
 </PhoronixTestSuite>

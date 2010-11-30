@@ -1,14 +1,16 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
-	<Downloads>
-		<Package>
-			<URL>http://update.x-plane.com/xplane_945_timedemo.tar.bz2</URL>
-			<MD5>e9b26a61de3e8125b4fd423b6a92d4f5</MD5>
-			<FileSize>544758306</FileSize>
-			<PlatformSpecific>Linux, MacOSX</PlatformSpecific>
-		</Package>
-		<Package>
-			<URL>xplane_945_timedemo.zip</URL>
-			<PlatformSpecific>Windows</PlatformSpecific>
-		</Package>
-	</Downloads>
+  <Downloads>
+    <Package>
+      <URL>http://update.x-plane.com/xplane_945_timedemo.tar.bz2</URL>
+      <MD5>e9b26a61de3e8125b4fd423b6a92d4f5</MD5>
+      <FileSize>544758306</FileSize>
+      <PlatformSpecific>Linux, MacOSX</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>xplane_945_timedemo.zip</URL>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
 </PhoronixTestSuite>
