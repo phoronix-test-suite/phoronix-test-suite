@@ -13,7 +13,7 @@
     <Version>1.2.0</Version>
     <TestType>Processor</TestType>
     <SoftwareType>Utility</SoftwareType>
-<SupportedPlatforms>Linux, BSD, Solaris, MacOSX</SupportedPlatforms>
+<SupportedPlatforms>Linux, BSD, Solaris</SupportedPlatforms>
     <License>Free</License>
     <Status>Verified</Status>
     <ExternalDependencies>build-utilities</ExternalDependencies>

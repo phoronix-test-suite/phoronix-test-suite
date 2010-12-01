@@ -19,6 +19,7 @@
     <Status>Verified</Status>
     <ExternalDependencies>java</ExternalDependencies>
     <EnvironmentSize>1.3</EnvironmentSize>
+	<SupportedPlatforms>Linux, Solaris, BSD, MacOSX</SupportedPlatforms>
     <ProjectURL>http://sunflow.sourceforge.net/</ProjectURL>
     <InternalTags>Java</InternalTags>
     <Maintainer>Michael Larabel</Maintainer>

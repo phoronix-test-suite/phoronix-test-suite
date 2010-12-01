@@ -10,7 +10,7 @@
   </TestInformation>
   <TestProfile>
     <Version>1.2.0</Version>
-    <SupportedPlatforms>Linux, MacOSX, Solaris</SupportedPlatforms>
+    <SupportedPlatforms>Linux, Solaris</SupportedPlatforms>
     <Extends>timed-audio-encode</Extends>
     <EnvironmentSize>6</EnvironmentSize>
     <ProjectURL>http://www.vorbis.com/</ProjectURL>

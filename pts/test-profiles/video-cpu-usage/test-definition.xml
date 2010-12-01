@@ -16,6 +16,7 @@
     <License>Free</License>
     <Status>Verified</Status>
     <Extends>mplayer-base</Extends>
+	<SupportedPlatforms>Linux</SupportedPlatforms>
     <EnvironmentSize>692</EnvironmentSize>
     <Maintainer>Michael Larabel</Maintainer>
     <AutoSaveResults>TRUE</AutoSaveResults>

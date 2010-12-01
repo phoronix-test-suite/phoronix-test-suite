@@ -16,7 +16,7 @@
     <SoftwareType>Utility</SoftwareType>
     <License>Free</License>
     <Status>Verified</Status>
-    <SupportedPlatforms>Linux, MacOSX, BSD, Solaris</SupportedPlatforms>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
     <ExternalDependencies>build-utilities, sdl-development</ExternalDependencies>
     <EnvironmentSize>15.0</EnvironmentSize>
     <ProjectURL>http://users.softlab.ntua.gr/~ttsiod/renderer.html</ProjectURL>

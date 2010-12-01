@@ -16,7 +16,7 @@
     <SoftwareType>Scientific</SoftwareType>
     <License>Free</License>
     <Status>Verified</Status>
-    <SupportedPlatforms>Linux, MacOSX, Solaris</SupportedPlatforms>
+    <SupportedPlatforms>Linux, Solaris</SupportedPlatforms>
     <ExternalDependencies>build-utilities</ExternalDependencies>
     <EnvironmentSize>707</EnvironmentSize>
     <ProjectURL>http://hmmer.janelia.org/</ProjectURL>

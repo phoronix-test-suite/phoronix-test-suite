@@ -3,7 +3,7 @@
 <PhoronixTestSuite>
   <TestInformation>
     <Title>Tachyon</Title>
-    <Description>This is a test of the threaded Tachryon, a parallel ray-tracing system.</Description>
+    <Description>This is a test of the threaded Tachyon, a parallel ray-tracing system.</Description>
     <ResultScale>Seconds</ResultScale>
     <AppVersion>0.98.7</AppVersion>
     <SubTitle>Total Time</SubTitle>
@@ -17,7 +17,7 @@
     <SoftwareType>Utility</SoftwareType>
     <License>Free</License>
     <Status>Verified</Status>
-    <SupportedPlatforms>Linux, MacOSX</SupportedPlatforms>
+    <SupportedPlatforms>Linux, MacOSX, Solaris</SupportedPlatforms>
     <ExternalDependencies>build-utilities, glibc-development</ExternalDependencies>
     <EnvironmentSize>28.0</EnvironmentSize>
     <ProjectURL>http://jedi.ks.uiuc.edu/~johns/raytracer/</ProjectURL>

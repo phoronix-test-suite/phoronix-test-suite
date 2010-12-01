@@ -16,7 +16,8 @@
     <SoftwareType>Scientific</SoftwareType>
     <License>Free</License>
     <Status>Verified</Status>
-    <SupportedPlatforms>Linux, BSD, Solaris</SupportedPlatforms>
+	<ExternalDependencies>build-essential</ExternalDependencies>
+    <SupportedPlatforms>Linux, BSD, Solaris, MacOSX</SupportedPlatforms>
     <EnvironmentSize>22</EnvironmentSize>
     <ProjectURL>http://mrbayes.csit.fsu.edu/</ProjectURL>
     <Maintainer>Andrew Schofield</Maintainer>

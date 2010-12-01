@@ -15,6 +15,7 @@
     <TestType>Processor</TestType>
     <SoftwareType>Utility</SoftwareType>
     <License>Free</License>
+	<SupportedPlatforms>Linux</SupportedPlatforms>
     <Status>Verified</Status>
     <ExternalDependencies>build-utilities, yasm</ExternalDependencies>
     <EnvironmentSize>353</EnvironmentSize>

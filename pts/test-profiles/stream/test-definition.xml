@@ -15,6 +15,7 @@
     <SoftwareType>Utility</SoftwareType>
     <License>Free</License>
     <Status>Verified</Status>
+	<SupportedPlatforms>Linux, Solaris, MacOSX</SupportedPlatforms>
     <ExternalDependencies>build-utilities</ExternalDependencies>
     <EnvironmentSize>0.1</EnvironmentSize>
     <ProjectURL>http://www.cs.virginia.edu/stream/</ProjectURL>

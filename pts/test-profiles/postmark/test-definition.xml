@@ -17,7 +17,7 @@
     <License>Free</License>
     <Status>Verified</Status>
     <ExternalDependencies>build-utilities</ExternalDependencies>
-    <SupportedPlatforms>Linux, Solaris</SupportedPlatforms>
+    <SupportedPlatforms>Linux, Solaris, MacOSX</SupportedPlatforms>
     <EnvironmentSize>0.1</EnvironmentSize>
     <Maintainer>Michael Larabel</Maintainer>
   </TestProfile>

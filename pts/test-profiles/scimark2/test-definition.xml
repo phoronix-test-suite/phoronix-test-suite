@@ -16,7 +16,7 @@
     <SoftwareType>Utility</SoftwareType>
     <License>Free</License>
     <Status>Verified</Status>
-	<SupportedPlatforms>Linux, Solaris, BSD</SupportedPlatforms>
+	<SupportedPlatforms>Linux, Solaris, BSD, MacOSX</SupportedPlatforms>
     <ExternalDependencies>build-utilities</ExternalDependencies>
     <EnvironmentSize>0.04</EnvironmentSize>
     <ProjectURL>http://math.nist.gov/scimark2/</ProjectURL>

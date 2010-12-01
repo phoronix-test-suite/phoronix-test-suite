@@ -15,6 +15,7 @@
     <TestType>Processor</TestType>
     <SoftwareType>Benchmark</SoftwareType>
     <License>Free</License>
+	<SupportedPlatforms>Linux, MacOSX</SupportedPlatforms>
     <InternalTags>OpenMP</InternalTags>
     <Status>Verified</Status>
     <ExternalDependencies>build-utilities, openmpi-development</ExternalDependencies>

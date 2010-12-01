@@ -16,6 +16,7 @@
     <SoftwareType>Utility</SoftwareType>
     <License>Free</License>
     <Status>Verified</Status>
+	<SupportedPlatforms>Linux, Solaris, MacOSX</SupportedPlatforms>
     <ExternalDependencies>tcl</ExternalDependencies>
     <EnvironmentSize>0.1</EnvironmentSize>
     <ProjectURL>http://sourceforge.net/projects/sudokut/</ProjectURL>

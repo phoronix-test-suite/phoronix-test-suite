@@ -16,7 +16,7 @@
     <SoftwareType>Utility</SoftwareType>
     <License>Free</License>
     <Status>Verified</Status>
-    <SupportedPlatforms>Linux, MacOSX</SupportedPlatforms>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
     <ExternalDependencies>build-utilities</ExternalDependencies>
     <ProjectURL>http://www.mplayerhq.hu/</ProjectURL>
     <Maintainer>Michael Larabel</Maintainer>

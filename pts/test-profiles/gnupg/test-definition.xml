@@ -17,7 +17,7 @@
     <License>Free</License>
     <Status>Verified</Status>
     <ExternalDependencies>build-utilities</ExternalDependencies>
-    <SupportedPlatforms>Linux, Solaris, BSD, MacOSX</SupportedPlatforms>
+    <SupportedPlatforms>Linux, Solaris, BSD</SupportedPlatforms>
     <EnvironmentSize>8.4</EnvironmentSize>
     <EnvironmentTestingSize>2048</EnvironmentTestingSize>
     <ProjectURL>http://www.gnupg.org/</ProjectURL>
