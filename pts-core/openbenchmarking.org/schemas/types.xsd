@@ -13,6 +13,12 @@
 		<xs:maxLength value="48" />
 	</xs:restriction>
 </xs:simpleType>
+<xs:simpleType name="SystemIdentifier">
+	<xs:restriction base="xs:string">
+		<xs:minLength value="1" />
+		<xs:maxLength value="36" />
+	</xs:restriction>
+</xs:simpleType>
 <xs:simpleType name="Boolean">
 	<xs:restriction base="xs:string">
 		<xs:enumeration value="True" />

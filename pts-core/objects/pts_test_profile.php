@@ -237,7 +237,7 @@ class pts_test_profile extends pts_test_profile_parser
 		$version
 		);
 
-		return base64_encode(implode(',', $hash_table));
+		return sha1(implode(',', $hash_table), true);
 	}
 	public function get_test_executable_dir()
 	{
