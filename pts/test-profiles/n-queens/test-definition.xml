@@ -16,7 +16,7 @@
     <SoftwareType>Utility</SoftwareType>
     <License>Free</License>
     <Status>Verified</Status>
-    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SupportedPlatforms>Linux, BSD</SupportedPlatforms>
     <ExternalDependencies>build-utilities</ExternalDependencies>
     <EnvironmentSize>1.4</EnvironmentSize>
     <ProjectURL>http://www.arch.cs.titech.ac.jp/~kise/nq/index.htm</ProjectURL>

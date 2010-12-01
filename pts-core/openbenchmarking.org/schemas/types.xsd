@@ -27,6 +27,11 @@
 		<xs:maxLength value="2048" />
 	</xs:restriction>
 </xs:simpleType>
+<xs:simpleType name="PlatformString">
+	<xs:restriction base="xs:string">
+		<xs:maxLength value="95" />
+	</xs:restriction>
+</xs:simpleType>
 <xs:simpleType name="TimeStamp">
 	<xs:restriction base="xs:string">
 		<xs:pattern value="[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}" />
@@ -87,6 +92,8 @@
 </xs:simpleType>
 <xs:simpleType name="SoftwareType">
 	<xs:restriction base="xs:string">
+		<xs:maxLength value="15" />
+		<xs:enumeration value="BaseTestProfile" />
 		<xs:enumeration value="Utility" />
 		<xs:enumeration value="Simulator" />
 		<xs:enumeration value="Scientific" />

@@ -17,7 +17,7 @@
     <Maintainer>Michael Larabel</Maintainer>
     <License>Free</License>
     <Status>Verified</Status>
-    <SupportedPlatforms>Linux, BSD, Solaris</SupportedPlatforms>
+    <SupportedPlatforms>Linux, Solaris</SupportedPlatforms>
     <ExternalDependencies>build-utilities</ExternalDependencies>
     <EnvironmentSize>365</EnvironmentSize>
     <ProjectURL>http://www.apache.org/</ProjectURL>

@@ -16,7 +16,7 @@
     <SoftwareType>Utility</SoftwareType>
     <License>Free</License>
     <Status>Verified</Status>
-    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SupportedPlatforms>Linux, BSD</SupportedPlatforms>
     <EnvironmentSize>1</EnvironmentSize>
     <ProjectURL>http://www.pureftpd.org/project/phpbench</ProjectURL>
     <Maintainer>Michael Larabel</Maintainer>

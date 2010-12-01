@@ -15,7 +15,7 @@
     <TestType>Processor</TestType>
     <SoftwareType>Utility</SoftwareType>
     <License>Free</License>
-    <SupportedPlatforms>Linux, Solaris, MacOSX</SupportedPlatforms>
+    <SupportedPlatforms>Linux, Solaris, MacOSX, BSD</SupportedPlatforms>
     <Status>Verified</Status>
     <ExternalDependencies>build-utilities</ExternalDependencies>
     <EnvironmentSize>0.05</EnvironmentSize>

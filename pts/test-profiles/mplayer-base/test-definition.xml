@@ -8,7 +8,7 @@
   <TestProfile>
     <Version>1.1.0</Version>
     <TestType>Graphics</TestType>
-    <SoftwareType>Utility</SoftwareType>
+    <SoftwareType>BaseTestProfile</SoftwareType>
     <License>Free</License>
     <Status>Verified</Status>
     <SupportedPlatforms>Linux, Solaris, BSD, MacOSX</SupportedPlatforms>

@@ -32,6 +32,7 @@ Phoronix Test Suite (Git)
 - pts: Update ramspeed test profile against RAMspeed SMP (RAMSMP) 3.5.0
 - pts: Add the CLOMP OpenMP LLNL benchmark
 - pts: First pass at validating all test profiles
+- pts: Verify each upstream test profile's compatibility on Solaris, BSD, and MacOSX
 
 Phoronix Test Suite 3.0 Alpha 2
 18 November 2010

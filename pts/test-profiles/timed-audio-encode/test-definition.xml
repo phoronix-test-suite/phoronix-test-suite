@@ -9,7 +9,7 @@
   <TestProfile>
     <Version>1.0.0</Version>
     <TestType>Processor</TestType>
-    <SoftwareType>Utility</SoftwareType>
+    <SoftwareType>BaseTestProfile</SoftwareType>
     <License>Free</License>
     <Status>Verified</Status>
     <ExternalDependencies>build-utilities</ExternalDependencies>

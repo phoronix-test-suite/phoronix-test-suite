@@ -11,7 +11,7 @@
   <TestProfile>
     <Version>1.3.0</Version>
     <Extends>timed-audio-encode</Extends>
-<SupportedPlatforms>Linux, MacOSX</SupportedPlatforms>
+<SupportedPlatforms>Linux, MacOSX, BSD</SupportedPlatforms>
     <ProjectURL>http://www.monkeysaudio.com/</ProjectURL>
     <Maintainer>apaige</Maintainer>
   </TestProfile>

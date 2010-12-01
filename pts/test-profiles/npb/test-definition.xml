@@ -15,7 +15,7 @@
     <SoftwareType>Benchmark</SoftwareType>
     <License>Free</License>
     <Status>Verified</Status>
-    <SupportedPlatforms>Linux, Solaris</SupportedPlatforms>
+    <SupportedPlatforms>Linux, Solaris, BSD</SupportedPlatforms>
     <ExternalDependencies>build-utilities, fortran-compiler</ExternalDependencies>
     <EnvironmentSize>8</EnvironmentSize>
     <ProjectURL>http://www.nas.nasa.gov/Resources/Software/npb.html</ProjectURL>

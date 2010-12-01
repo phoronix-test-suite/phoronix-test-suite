@@ -16,7 +16,7 @@
     <SoftwareType>Utility</SoftwareType>
     <License>Free</License>
     <Status>Verified</Status>
-	<SupportedPlatforms>Linux, Solaris, MacOSX</SupportedPlatforms>
+	<SupportedPlatforms>Linux, Solaris, MacOSX, BSD</SupportedPlatforms>
     <ExternalDependencies>python</ExternalDependencies>
     <EnvironmentSize>0.5</EnvironmentSize>
     <ProjectURL>http://svn.python.org/projects/python/trunk/Tools/pybench/</ProjectURL>
