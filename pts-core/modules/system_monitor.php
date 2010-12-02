@@ -30,6 +30,7 @@ class system_monitor extends pts_module_interface
 
 	static $result_identifier = null;
 	static $to_monitor = array();
+	static $monitor_test_count = 0;
 
 	static $individual_test_run_request = null;
 	static $individual_test_run_offsets = null;
@@ -106,7 +107,7 @@ class system_monitor extends pts_module_interface
 		{
 			$sensor_results = self::parse_monitor_log("logs/" . phodevi::sensor_identifier($sensor), self::$individual_test_run_offsets[$id_point]);
 
-			if(count($sensor_results) > 2)
+			if(count($sensor_results) > 2 )
 			{
 				self::$individual_test_run_request->test_profile->set_identifier(null);
 				self::$individual_test_run_request->test_profile->set_test_profile_version(null);
@@ -122,6 +123,7 @@ class system_monitor extends pts_module_interface
 
 		self::$individual_test_run_request = null;
 		self::$individual_test_run_offsets[$id_point] = array();
+		self::$monitor_test_count++;
 	}
 	public static function __event_results_process(&$test_run_manager)
 	{
@@ -130,7 +132,7 @@ class system_monitor extends pts_module_interface
 			$sensor_results = self::parse_monitor_log("logs/" . phodevi::sensor_identifier($sensor));
 			pts_module::remove_file("logs/" . phodevi::sensor_identifier($sensor));
 
-			if(count($sensor_results) > 2)
+			if(count($sensor_results) > 2 && self::$monitor_test_count > 1)
 			{
 				$test_profile = new pts_test_profile();
 				$test_result = new pts_test_result($test_profile);
