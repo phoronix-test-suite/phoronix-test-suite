@@ -27,6 +27,7 @@ class pts_result_file_writer
 	private $xml_writer = null;
 	private $added_hashes = null;
 	private $result_identifier = null;
+	private $result_count = 0;
 
 	public function __construct($result_identifier = null, &$xml_writer = null)
 	{
@@ -50,6 +51,10 @@ class pts_result_file_writer
 	{
 		return $this->xml_writer->saveXMLFile($to_save);
 	}
+	public function get_result_count()
+	{
+		return $this->result_count;
+	}
 	protected function add_result_from_result_object(&$result_object)
 	{
 		$this->xml_writer->addXmlNode(P_RESULTS_TEST_IDENTIFIER, $result_object->test_profile->get_identifier());
@@ -61,6 +66,7 @@ class pts_result_file_writer
 		$this->xml_writer->addXmlNode(P_RESULTS_TEST_SCALE, $result_object->test_profile->get_result_scale());
 		$this->xml_writer->addXmlNode(P_RESULTS_TEST_PROPORTION, $result_object->test_profile->get_result_proportion());
 		$this->xml_writer->addXmlNode(P_RESULTS_TEST_DISPLAY_FORMAT, $result_object->test_profile->get_display_format());
+		$this->result_count++;
 	}
 	public function add_result_from_result_object_with_value_string(&$result_object, $result_value, $result_value_raw = null)
 	{

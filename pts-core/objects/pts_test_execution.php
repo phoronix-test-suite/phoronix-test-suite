@@ -197,7 +197,7 @@ class pts_test_execution
 				{
 					$test_run_request->test_result_buffer->add_test_result(null, $test_result, null);
 				}
-				else
+				else if($test_run_request->test_profile->get_display_format() != "NO_RESULT")
 				{
 					pts_client::$display->test_run_instance_error("The test did not produce a result.");
 				}

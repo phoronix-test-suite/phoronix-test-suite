@@ -271,7 +271,7 @@ class pts_module
 					$start_id = pts_unique_runtime_identifier();
 					 && ($start_id == pts_unique_runtime_identifier() || $start_id == PTS_INIT_TIME)
 					*/
-					while(pts_test_run_manager::test_run_process_active() != -1 && is_file(PTS_USER_LOCK) && $loop_continue)
+					while(pts_test_run_manager::test_run_process_active() !== -1 && is_file(PTS_USER_LOCK) && $loop_continue)
 					{
 						call_user_func(array(self::module_name(), $function));
 

@@ -27,7 +27,6 @@ class pts_test_run_manager
 	private $tests_to_run = array();
 	private $failed_tests_to_run = array();
 	private $last_test_run_index = 0;
-	private $completed_runs = 0;
 	private $test_run_pos = 0;
 	private $test_run_count = 0;
 
@@ -559,7 +558,6 @@ class pts_test_run_manager
 				if(!empty($test_identifier))
 				{
 					$this->result_file_writer->add_result_from_result_object_with_value_string($test_run_request, $test_run_request->get_result(), $test_run_request->test_result_buffer->get_values_as_string());
-					$this->completed_runs += 1;
 
 					if($this->get_results_identifier() != null && $this->get_file_name() != null && pts_config::read_bool_config(P_OPTION_LOG_TEST_OUTPUT, "FALSE"))
 					{
@@ -673,7 +671,7 @@ class pts_test_run_manager
 	{
 		if($this->do_save_results())
 		{
-			if($this->completed_runs == 0 && !pts_result_file::is_test_result_file($this->get_file_name()) && (pts_c::$test_flags ^ pts_c::is_recovering) && (pts_c::$test_flags ^ pts_c::remote_mode))
+			if($this->result_file_writer->get_result_count() == 0 && !pts_result_file::is_test_result_file($this->get_file_name()) && (pts_c::$test_flags ^ pts_c::is_recovering) && (pts_c::$test_flags ^ pts_c::remote_mode))
 			{
 				pts_file_io::delete(PTS_SAVE_RESULTS_PATH . $this->get_file_name());
 				return false;

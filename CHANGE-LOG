@@ -18,6 +18,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add InternalTags to XML test profile schema
 - pts-core: Drop support for ~/pts-test-note as the capabilities are now found within InternalTags using a cleaner method
 - pts-core: Better the support for Illumos OpenIndiana b147
+- pts-core: Support still saving test results when using the system_monitor module even when all tests being run are of NO_RESULT type
 - phodevi: Few Mac OS X support improvements
 - phodevi: Support NVIDIA GPU core usage monitoring via nvidia-smi
 - phoromatic: HTTPS connection support, install the Phoromatic.com SSL certificate
