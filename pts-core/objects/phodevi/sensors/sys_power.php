@@ -92,7 +92,7 @@ class sys_power implements phodevi_sensor
 		}
 		else if(IS_MACOSX)
 		{
-			$current = phodevi_osx_parser::read_osx_system_profiler("SPPowerDataType", "Amperage"); // in mA
+			$current = abs(phodevi_osx_parser::read_osx_system_profiler("SPPowerDataType", "Amperage")); // in mA
 		}
 
 		return $current;
@@ -143,7 +143,7 @@ class sys_power implements phodevi_sensor
 		}
 		else if(IS_MACOSX)
 		{
-			$amperage = phodevi_osx_parser::read_osx_system_profiler("SPPowerDataType", "Amperage"); // in mA
+			$amperage = abs(phodevi_osx_parser::read_osx_system_profiler("SPPowerDataType", "Amperage")); // in mA
 			$voltage = phodevi_osx_parser::read_osx_system_profiler("SPPowerDataType", "Voltage"); // in mV
 			$rate = round(($amperage * $voltage) / 1000);
 		}
