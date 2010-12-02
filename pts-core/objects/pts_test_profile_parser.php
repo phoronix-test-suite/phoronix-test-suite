@@ -105,10 +105,6 @@ class pts_test_profile_parser
 	{
 		return $this->xml_parser->getXMLValue(P_TEST_INSTALLAGREEMENT);
 	}
-	public function is_verified_state()
-	{
-		return !in_array($this->get_status(), pts_types::test_profile_state_types());
-	}
 	public function get_internal_tags()
 	{
 		return pts_strings::comma_explode($this->xml_parser->getXMLValue(P_TEST_INTERNAL_TAGS));
