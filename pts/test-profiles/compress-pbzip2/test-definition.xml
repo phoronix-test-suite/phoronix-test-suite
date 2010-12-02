@@ -18,6 +18,7 @@
     <Status>Verified</Status>
     <SupportedPlatforms>Linux, Solaris</SupportedPlatforms>
     <ExternalDependencies>build-utilities</ExternalDependencies>
+	<InternalTags>SMP</InternalTags>
     <EnvironmentSize>4.5</EnvironmentSize>
     <EnvironmentTestingSize>256</EnvironmentTestingSize>
     <ProjectURL>http://compression.ca/pbzip2/</ProjectURL>

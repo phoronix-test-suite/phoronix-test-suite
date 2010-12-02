@@ -18,6 +18,7 @@
     <License>Free</License>
     <Status>Verified</Status>
     <ExternalDependencies>build-utilities</ExternalDependencies>
+	<InternalTags>SMP</InternalTags>
     <EnvironmentSize>9.3</EnvironmentSize>
     <ProjectURL>http://www.7-zip.org/</ProjectURL>
     <Maintainer>Michael Larabel</Maintainer>

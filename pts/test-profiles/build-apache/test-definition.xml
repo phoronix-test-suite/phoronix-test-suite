@@ -17,6 +17,7 @@
     <License>Free</License>
     <Status>Verified</Status>
     <ExternalDependencies>build-utilities</ExternalDependencies>
+	<InternalTags>SMP</InternalTags>
     <SupportedPlatforms>Linux, MacOSX, Solaris, BSD</SupportedPlatforms>
     <ProjectURL>http://www.apache.org/</ProjectURL>
     <Maintainer>Michael Larabel</Maintainer>

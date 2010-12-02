@@ -18,6 +18,7 @@
     <License>Free</License>
     <Status>Verified</Status>
     <SupportedPlatforms>Linux, MacOSX, Solaris</SupportedPlatforms>
+	<InternalTags>SMP</InternalTags>
     <ExternalDependencies>build-utilities</ExternalDependencies>
     <EnvironmentSize>230</EnvironmentSize>
     <ProjectURL>http://www.postgresql.org/</ProjectURL>

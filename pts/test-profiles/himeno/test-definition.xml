@@ -17,6 +17,7 @@
     <License>Free</License>
     <SupportedPlatforms>Linux, Solaris, MacOSX, BSD</SupportedPlatforms>
     <Status>Verified</Status>
+	<InternalTags>SMP</InternalTags>
     <ExternalDependencies>build-utilities</ExternalDependencies>
     <EnvironmentSize>0.05</EnvironmentSize>
     <Maintainer>Michael Larabel</Maintainer>

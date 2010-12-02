@@ -16,7 +16,7 @@
     <SoftwareType>Benchmark</SoftwareType>
     <License>Free</License>
 	<SupportedPlatforms>Linux, MacOSX</SupportedPlatforms>
-    <InternalTags>OpenMP</InternalTags>
+    <InternalTags>SMP</InternalTags>
     <Status>Verified</Status>
     <ExternalDependencies>build-utilities, openmpi-development</ExternalDependencies>
     <EnvironmentSize>1</EnvironmentSize>

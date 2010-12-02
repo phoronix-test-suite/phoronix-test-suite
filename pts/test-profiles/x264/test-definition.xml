@@ -18,6 +18,7 @@
 	<SupportedPlatforms>Linux</SupportedPlatforms>
     <Status>Verified</Status>
     <ExternalDependencies>build-utilities, yasm</ExternalDependencies>
+	<InternalTags>SMP</InternalTags>
     <EnvironmentSize>353</EnvironmentSize>
     <ProjectURL>http://www.videolan.org/developers/x264.html</ProjectURL>
     <Maintainer>Michael Larabel</Maintainer>

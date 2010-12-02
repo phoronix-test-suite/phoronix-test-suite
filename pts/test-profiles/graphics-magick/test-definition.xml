@@ -17,7 +17,7 @@
     <Status>Verified</Status>
     <ExternalDependencies>build-utilities, zlib-development</ExternalDependencies>
     <Extends>photo-sample</Extends>
-    <InternalTags>OpenMP</InternalTags>
+    <InternalTags>SMP</InternalTags>
     <SupportedPlatforms>Linux, Solaris, BSD, MacOSX</SupportedPlatforms>
     <EnvironmentSize>22</EnvironmentSize>
     <ProjectURL>http://www.graphicsmagick.org/</ProjectURL>

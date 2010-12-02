@@ -18,6 +18,7 @@
     <Status>Verified</Status>
     <ExternalDependencies>build-utilities</ExternalDependencies>
 	<SupportedPlatforms>Linux</SupportedPlatforms>
+	<InternalTags>SMP</InternalTags>
     <EnvironmentSize>0.1</EnvironmentSize>
     <ProjectURL>http://kevinbeason.com/smallpt/</ProjectURL>
     <Maintainer>Michael Larabel</Maintainer>

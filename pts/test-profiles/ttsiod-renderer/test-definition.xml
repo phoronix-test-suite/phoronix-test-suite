@@ -18,6 +18,7 @@
     <Status>Verified</Status>
     <SupportedPlatforms>Linux</SupportedPlatforms>
     <ExternalDependencies>build-utilities, sdl-development</ExternalDependencies>
+	<InternalTags>SMP</InternalTags>
     <EnvironmentSize>15.0</EnvironmentSize>
     <ProjectURL>http://users.softlab.ntua.gr/~ttsiod/renderer.html</ProjectURL>
     <Maintainer>Michael Larabel</Maintainer>

@@ -17,6 +17,7 @@
     <License>Free</License>
     <Status>Verified</Status>
     <SupportedPlatforms>Linux, MacOSX, BSD</SupportedPlatforms>
+	<InternalTags>SMP</InternalTags>
     <ExternalDependencies>build-utilities, perl</ExternalDependencies>
     <ProjectURL>http://www.imagemagick.org/</ProjectURL>
     <Maintainer>Michael Larabel</Maintainer>

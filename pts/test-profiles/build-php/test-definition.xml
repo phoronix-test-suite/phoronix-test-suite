@@ -18,6 +18,7 @@
     <Status>Verified</Status>
     <SupportedPlatforms>Linux, MacOSX, Solaris, BSD</SupportedPlatforms>
     <ExternalDependencies>build-utilities</ExternalDependencies>
+	<InternalTags>SMP</InternalTags>
     <EnvironmentSize>49.3</EnvironmentSize>
     <ProjectURL>http://www.php.net/</ProjectURL>
     <Maintainer>Michael Larabel</Maintainer>
