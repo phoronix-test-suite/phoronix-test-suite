@@ -81,7 +81,7 @@ class pts_external_dependencies
 		}
 
 		// There were some dependencies not supported on this OS or are missing from the distro's XML file
-		if(count($required_test_dependencies) > 0)
+		if(count($required_test_dependencies) > 0 && count($dependencies_to_install) == 0)
 		{
 			echo "\nSome additional dependencies are required, but they could not be installed automatically for your operating system.\nBelow are the software packages that must be installed.\n\n";
 
@@ -100,10 +100,9 @@ class pts_external_dependencies
 				}
 			}
 
-			echo "The above dependencies should be installed before proceeding. Press any key when you're ready to continue.";
-
 			if((pts_c::$test_flags ^ pts_c::batch_mode) && (pts_c::$test_flags ^ pts_c::auto_mode))
-			{		
+			{
+				echo "The above dependencies should be installed before proceeding. Press any key when you're ready to continue.";
 				pts_user_io::read_user_input();
 			}
 		}
