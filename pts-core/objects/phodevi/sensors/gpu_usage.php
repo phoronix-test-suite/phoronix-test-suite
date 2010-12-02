@@ -24,6 +24,7 @@ class gpu_usage implements phodevi_sensor
 {
 	static $probe_ati_overdrive = false;
 	static $probe_radeon_fences = false;
+	static $probe_nvidia_smi = false;
 
 	public static function get_type()
 	{
@@ -35,9 +36,9 @@ class gpu_usage implements phodevi_sensor
 	}
 	public static function get_unit()
 	{
-		if(self::$probe_ati_overdrive)
+		if(self::$probe_ati_overdrive || self::$probe_nvidia_smi)
 		{
-			$unit = "Megahertz";
+			$unit = "Percent";
 		}
 		else if(self::$probe_radeon_fences)
 		{
@@ -68,6 +69,19 @@ class gpu_usage implements phodevi_sensor
 				return true;
 			}
 		}
+		else if(IS_NVIDIA_GRAPHICS)
+		{
+			if(pts_client::executable_in_path("nvidia-smi"))
+			{
+				$usage = self::nvidia_core_usage();
+
+				if(is_numeric($usage) && $usage >= 0 && $usage <= 100)
+				{
+					self::$probe_nvidia_smi = true;
+					return true;
+				}
+			}
+		}
 
 		return false;
 	}
@@ -77,6 +91,10 @@ class gpu_usage implements phodevi_sensor
 		{
 			return self::ati_overdrive_core_usage();
 		}
+		else if(self::$probe_nvidia_smi)
+		{
+			return self::nvidia_core_usage();
+		}
 		else if(self::$probe_radeon_fences)
 		{
 			return self::radeon_fence_speed();
@@ -85,6 +103,17 @@ class gpu_usage implements phodevi_sensor
 	public static function ati_overdrive_core_usage()
 	{
 		return phodevi_linux_parser::read_ati_overdrive("GPUload");
+	}
+	public static function nvidia_core_usage()
+	{
+		$nvidia_smi = shell_exec("nvidia-smi -a");
+
+		$util = substr($nvidia_smi, strpos($nvidia_smi, "Utilization"));
+		$util = substr($util, strpos($util, "GPU"));
+		$util = substr($util, strpos($util, ':') + 1);
+		$util = trim(substr($util, 0, strpos($util, '%')));
+
+		return $util;
 	}
 	public static function radeon_fence_speed()
 	{
