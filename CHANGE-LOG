@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 3.0 Alpha 3
+2 December 2010
 
 - pts-core: Fix test suites failing to run where it'd get caught in an infinite loop
 - pts-core: Fix for suite support on Iveland

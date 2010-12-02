@@ -50,7 +50,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 		<xsl:for-each select="PhoronixTestSuite/System"><td><xsl:value-of select="Identifier" /></td></xsl:for-each>
 		</tr>
 		<tr>
-		<xsl:for-each select="PhoronixTestSuite/System"><td><strong>Administrator:</strong>&#160;<xsl:value-of select="User" /><br /><strong>Date:</strong>&#160;<xsl:value-of select="TimeStamp" /><br /><strong>PTS Version:</strong>&#160;<xsl:value-of select="TestClientVersion" /><br /><strong>Test Notes:</strong>&#160;<xsl:value-of select="Notes" /></td></xsl:for-each>
+		<xsl:for-each select="PhoronixTestSuite/System"><td><strong>Administrator:</strong>&#160;<xsl:value-of select="User" /><br /><strong>Date:</strong>&#160;<xsl:value-of select="TimeStamp" /><br /><strong>Test Client Version:</strong>&#160;<xsl:value-of select="TestClientVersion" /><br /><strong>Test Notes:</strong>&#160;<xsl:value-of select="Notes" /></td></xsl:for-each>
 		</tr>
 		</table></div>
 
