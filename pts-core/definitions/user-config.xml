@@ -35,10 +35,6 @@
 			<Value>PhoronixTestSuite/Options/General/DefaultDisplayMode</Value>
 		</Define>
 		<Define>
-			<Name>P_OPTION_EXTRA_REFERENCE_SYSTEMS</Name>
-			<Value>PhoronixTestSuite/Options/General/ReferenceSystems</Value>
-		</Define>
-		<Define>
 			<Name>P_OPTION_LOAD_MODULES</Name>
 			<Value>PhoronixTestSuite/Options/Modules/LoadModules</Value>
 		</Define>

@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- pts-core: Drop support for reference-comparison as its superseded by OpenBenchmarking.org implementation
+
 Phoronix Test Suite 3.0 Alpha 3
 2 December 2010
 

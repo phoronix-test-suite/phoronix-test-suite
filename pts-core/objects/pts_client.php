@@ -1074,33 +1074,6 @@ class pts_client
 	{
 		phodevi::system_software(true);
 	}
-	public static function cache_generic_reference_systems()
-	{
-		$original_test_hashes = array();
-		$reference_tests = array();
-		pts_result_comparisons::process_reference_comparison_hashes(pts_client::generic_reference_system_comparison_ids(), array(), $original_test_hashes, $reference_tests, true);
-	}
-	public static function cache_generic_reference_systems_results()
-	{
-		$reference_cache_dir = is_dir("/var/cache/phoronix-test-suite/reference-comparisons/") ? "/var/cache/phoronix-test-suite/reference-comparisons/" : false;
-
-		foreach(pts_client::generic_reference_system_comparison_ids() as $comparison_id)
-		{
-			if(pts_result_file::is_test_result_file($comparison_id) == false)
-			{
-				if($reference_cache_dir && is_readable($reference_cache_dir . $comparison_id . ".xml"))
-				{
-					// A cache is already available locally (likely from a PTS Live OS)
-					pts_client::save_test_result($comparison_id . "/composite.xml", file_get_contents($reference_cache_dir . $comparison_id . ".xml"), false);
-				}
-				else
-				{
-					// Fetch from Phoronix Global
-					pts_global::clone_global_result($comparison_id, false);
-				}
-			}
-		}
-	}
 	public static function remove_saved_result_file($identifier)
 	{
 		pts_file_io::delete(PTS_SAVE_RESULTS_PATH . $identifier, null, true);
@@ -1108,7 +1081,7 @@ class pts_client
 	public static function saved_test_results()
 	{
 		$results = array();
-		$ignore_ids = pts_client::generic_reference_system_comparison_ids();
+		$ignore_ids = array();
 
 		foreach(pts_file_io::glob(PTS_SAVE_RESULTS_PATH . "*/composite.xml") as $result_file)
 		{
@@ -1121,25 +1094,6 @@ class pts_client
 		}
 
 		return $results;
-	}
-	public static function generic_reference_system_comparison_ids()
-	{
-		static $comparison_ids = null;
-
-		if($comparison_ids == null)
-		{
-			$comparison_ids = pts_strings::trim_explode("\n", pts_file_io::file_get_contents(PTS_CORE_STATIC_PATH . "lists/reference-system-comparisons.list"));
-
-			foreach(explode(' ', pts_config::read_user_config(P_OPTION_EXTRA_REFERENCE_SYSTEMS, null)) as $reference_check)
-			{
-				if(pts_global::is_global_id($reference_check))
-				{
-					array_push($comparison_ids, $reference_check);
-				}
-			}
-		}
-
-		return $comparison_ids;
 	}
 	public static function process_user_config_external_hook_process($xml_tag, $description_string = null, &$passed_obj = null)
 	{

@@ -89,7 +89,6 @@ class pts_test_profile_writer
 		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_PROJECTURL, $xml_reader);
 		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_REQUIRES_COREVERSION_MIN, $xml_reader);
 		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_REQUIRES_COREVERSION_MAX, $xml_reader);
-		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_REFERENCE_SYSTEMS, $xml_reader);
 		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_INTERNAL_TAGS, $xml_reader);
 		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_MAINTAINER, $xml_reader);
 		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_ALLOW_RESULTS_SHARING, $xml_reader);

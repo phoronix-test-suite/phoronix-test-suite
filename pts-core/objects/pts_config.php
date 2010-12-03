@@ -47,7 +47,6 @@ class pts_config
 		$config->addXmlNodeFromReader(P_OPTION_DEFAULT_BROWSER, $read_config);
 		$config->addXmlNodeFromReader(P_OPTION_PHODEVI_CACHE, $read_config);
 		$config->addXmlNodeFromReader(P_OPTION_DISPLAY_MODE, $read_config);
-		$config->addXmlNodeFromReader(P_OPTION_EXTRA_REFERENCE_SYSTEMS, $read_config);
 
 		$config->addXmlNodeFromReader(P_OPTION_LOAD_MODULES, $read_config);
 

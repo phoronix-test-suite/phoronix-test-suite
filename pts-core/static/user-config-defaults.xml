@@ -13,7 +13,6 @@
 			<DefaultBrowser></DefaultBrowser>
 			<UsePhodeviCache>TRUE</UsePhodeviCache>
 			<DefaultDisplayMode>DEFAULT</DefaultDisplayMode>
-			<ReferenceSystems></ReferenceSystems>
 		</General>
 		<Modules>
 			<LoadModules>toggle_screensaver, update_checker</LoadModules>

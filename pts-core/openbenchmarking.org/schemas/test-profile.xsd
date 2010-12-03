@@ -49,7 +49,6 @@
 			<xs:element name="ProjectURL" type="URLString" minOccurs="0" maxOccurs="1" />
 			<xs:element name="RequiresCoreVersionMin" type="CoreVersion" minOccurs="0" maxOccurs="1" />
 			<xs:element name="RequiresCoreVersionMax" type="CoreVersion" minOccurs="0" maxOccurs="1" />
-			<xs:element name="ReferenceSystems" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="InternalTags" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="Maintainer" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="AllowResultsSharing" type="Boolean" minOccurs="0" maxOccurs="1" />

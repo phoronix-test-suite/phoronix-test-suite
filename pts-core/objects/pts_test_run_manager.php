@@ -734,7 +734,7 @@ class pts_test_run_manager
 				echo "Skipping: " . $run_object->get_identifier() . "\n";
 				continue;
 			}
-			else if($run_object instanceOf pts_test_profile)
+			else if($run_object instanceof pts_test_profile)
 			{
 				if($run_object->get_title() == null)
 				{
@@ -755,14 +755,14 @@ class pts_test_run_manager
 					}
 				}
 			}
-			else if($run_object instanceOf pts_result_file)
+			else if($run_object instanceof pts_result_file)
 			{
 				$num_installed = 0;
 				foreach($run_object->get_contained_test_profiles() as $test_profile)
 				{
 					if($test_profile->is_test_installed() == false)
 					{
-						array_push($tests_missing, $run_object);
+						array_push($tests_missing, $test_profile);
 					}
 					else
 					{
@@ -775,7 +775,7 @@ class pts_test_run_manager
 					continue;
 				}
 			}
-			else if($run_object instanceOf pts_test_suite)
+			else if($run_object instanceof pts_test_suite)
 			{
 				if($run_object->is_core_version_supported() == false)
 				{
@@ -987,6 +987,11 @@ class pts_test_run_manager
 			// TODO: determine whether to print the titles of what's being run?
 			if($run_object instanceof pts_test_profile)
 			{
+				if($run_object->get_title() == null)
+				{
+					continue;
+				}
+
 				if($run_contains_a_no_result_type == false && $run_object->get_display_format() == "NO_RESULT")
 				{
 					$run_contains_a_no_result_type = true;

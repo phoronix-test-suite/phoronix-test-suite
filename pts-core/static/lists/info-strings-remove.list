@@ -9,8 +9,9 @@ host bridge
 dram controller
 electronics
 memory controller
-northbridge only dual slot pci-e_gfx and ht3 k8 part
-northbridge only dual slot pci-e_gfx and ht1 k8 part
+pci-e_gfx and ht3 k8 part
+pci-e_gfx and ht1 k8 part
+Northbridge only dual slot
 genuine
 unknown device
 express hub

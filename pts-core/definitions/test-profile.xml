@@ -204,12 +204,6 @@ PATH environment variable will contain each of the test directories below this t
 			<Required>NO</Required>
 		</Define>
 		<Define>
-			<Name>P_TEST_REFERENCE_SYSTEMS</Name>
-			<Value>PhoronixTestSuite/TestProfile/ReferenceSystems</Value>
-			<Description>To provide reference test results for comparison purposes, supply Phoronix Global IDs to this tag. For optimal comparisons, the reference IDs should be results generated when running in the Phoronix Test Suite batch mode. Values must be valid Phoronix Global IDs. Multiple IDs can be delimited by a comma.</Description>
-			<Required>NO</Required>
-		</Define>
-		<Define>
 			<Name>P_TEST_INTERNAL_TAGS</Name>
 			<Value>PhoronixTestSuite/TestProfile/InternalTags</Value>
 			<Description>To provide various internal tags to expose different functionality.</Description>
