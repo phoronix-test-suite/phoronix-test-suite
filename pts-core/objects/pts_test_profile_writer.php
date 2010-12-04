@@ -85,7 +85,7 @@ class pts_test_profile_writer
 		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_ROOTNEEDED, $xml_reader);
 		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_ENVIRONMENTSIZE, $xml_reader);
 		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_ENVIRONMENT_TESTING_SIZE, $xml_reader);
-		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_ESTIMATEDTIME, $xml_reader);
+		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_EST_TIME_PER_RUN, $xml_reader);
 		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_PROJECTURL, $xml_reader);
 		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_REQUIRES_COREVERSION_MIN, $xml_reader);
 		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_REQUIRES_COREVERSION_MAX, $xml_reader);

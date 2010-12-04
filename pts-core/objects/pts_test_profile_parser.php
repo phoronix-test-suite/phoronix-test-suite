@@ -209,7 +209,7 @@ class pts_test_profile_parser
 	}
 	public function get_estimated_run_time()
 	{
-		return $this->xml_parser->getXMLValue(P_TEST_ESTIMATEDTIME, 0);
+		return $this->xml_parser->getXMLValue(P_TEST_EST_TIME_PER_RUN, 0) * $this->get_times_to_run();
 	}
 	public function requires_core_version_min()
 	{

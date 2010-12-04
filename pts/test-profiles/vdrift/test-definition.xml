@@ -19,7 +19,7 @@
     <SupportedArchitectures>x86, x86_64</SupportedArchitectures>
     <ExternalDependencies>sdl-development, build-utilities, glew, glut, jam, scons, vorbis-development, autoconf, libtool, boost-development</ExternalDependencies>
     <EnvironmentSize>1100</EnvironmentSize>
-    <EstimatedLength>6</EstimatedLength>
+    <EstimatedTimePerRun>120</EstimatedTimePerRun>
     <ProjectURL>http://www.vdrift.net/</ProjectURL>
     <Maintainer>Michael Larabel</Maintainer>
   </TestProfile>

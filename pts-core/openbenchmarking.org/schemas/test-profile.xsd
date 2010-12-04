@@ -45,7 +45,7 @@
 			<xs:element name="RequiresRoot" type="Boolean" minOccurs="0" maxOccurs="1" />
 			<xs:element name="EnvironmentSize" type="xs:decimal" minOccurs="0" maxOccurs="1" />
 			<xs:element name="EnvironmentTestingSize" type="xs:decimal" minOccurs="0" maxOccurs="1" />
-			<xs:element name="EstimatedLength" type="xs:decimal" minOccurs="0" maxOccurs="1" />
+			<xs:element name="EstimatedTimePerRun" type="PositiveInteger" minOccurs="0" maxOccurs="1" />
 			<xs:element name="ProjectURL" type="URLString" minOccurs="0" maxOccurs="1" />
 			<xs:element name="RequiresCoreVersionMin" type="CoreVersion" minOccurs="0" maxOccurs="1" />
 			<xs:element name="RequiresCoreVersionMax" type="CoreVersion" minOccurs="0" maxOccurs="1" />
