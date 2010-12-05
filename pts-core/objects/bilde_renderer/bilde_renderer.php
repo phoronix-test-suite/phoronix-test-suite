@@ -407,7 +407,7 @@ abstract class bilde_renderer
 		{
 			// Basic calculation
 			$box_height = 0.75 * $font_size;
-			$box_width = 0.8 * strlen($text_string) * $font_size; // 0.8 now but should be about 1.18
+			$box_width = 0.9 * strlen($text_string) * $font_size; // 0.8 now but should be about 1.18
 		}
 
 		// Width x Height

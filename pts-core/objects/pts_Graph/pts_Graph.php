@@ -526,14 +526,14 @@ abstract class pts_Graph
 		{
 			if($this->graph_orientation == "HORIZONTAL")
 			{
-				if($this->is_multi_way_comparison)
+				if($this->is_multi_way_comparison && count($this->graph_data_title) > 1)
 				{
 					// TODO: verify this is good and covered for all scenarios
 					$longest_identifier_width = $this->text_string_width($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_identifiers) + 65;
 				}
 				else
 				{
-					$longest_identifier_width = $this->text_string_width($this->find_longest_string($this->graph_identifiers), $this->graph_font, $this->graph_font_size_identifiers) + 6;
+					$longest_identifier_width = $this->text_string_width($this->find_longest_string($this->graph_identifiers), $this->graph_font, $this->graph_font_size_identifiers) + 8;
 				}
 
 				$longest_identifier_max = $this->graph_attr_width * 0.5;
