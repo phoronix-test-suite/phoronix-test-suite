@@ -75,8 +75,8 @@ class pts_test_profile_writer
 	{
 		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_PTSVERSION, $xml_reader);
 		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_SUPPORTEDPLATFORMS, $xml_reader);
-		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_HARDWARE_TYPE, $xml_reader);
 		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_SOFTWARE_TYPE, $xml_reader);
+		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_HARDWARE_TYPE, $xml_reader);
 		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_LICENSE, $xml_reader);
 		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_STATUS, $xml_reader);
 		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_SUPPORTEDARCHS, $xml_reader);

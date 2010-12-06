@@ -138,39 +138,41 @@ class validate_test_profile implements pts_option_interface
 				}
 			}
 
-echo "\n";
-			continue;
+			// Make sure no extra files are in there
+			$allowed_files = array("downloads.xml", "test-definition.xml", "results-definition.xml", "install.sh", "pre.sh", "post.sh", "interim.sh");
 
-			$validation_errors = array();
-			$validation_warnings = array();
-
-			// Checks for missing tag errors and warnings
-			pts_validation::check_xml_tags($test_profile, pts_validation::required_test_tags(), $validation_errors);
-			pts_validation::check_xml_tags($test_profile, pts_validation::recommended_test_tags(), $validation_warnings);
-
-			// Check for other test profile problems
-			foreach(pts_test_install_request::read_download_object_list($test_profile->get_identifier()) as $package_download)
+			foreach(pts_types::operating_systems() as $os)
 			{
-				$download_urls = $package_download->get_download_url_array();
+				$os = strtolower($os[0]);
+				array_push($allowed_files, "install_" . $os . ".sh");
+				array_push($allowed_files, "pre_" . $os . ".sh");
+				array_push($allowed_files, "post_" . $os . ".sh");
+				array_push($allowed_files, "interim_" . $os . ".sh");
+			}
 
-				if(count($download_urls) < 2)
+			foreach(pts_file_io::glob($test_profile->get_resource_dir() . '*') as $tp_file)
+			{
+				if(!is_file($tp_file) || !in_array(basename($tp_file), $allowed_files))
 				{
-					array_push($validation_warnings, array($package_download->get_filename(), "Multiple file mirrors (delimited in the downloads.xml tag by a comma) are recommended for redundancy purposes."));
+					echo "\n" . basename($tp_file) . " is not allowed in the test package.\n";
+					return false;
 				}
 			}
 
-			if(count($validation_errors) == 0 && count($validation_warnings) == 0)
+			$zip_file = PTS_OPENBENCHMARKING_SCRATCH_PATH . $test_profile->get_identifier() . '-' . $test_profile->get_test_profile_version() . ".zip";
+			$zip_created = pts_compression::zip_archive_create($zip_file, pts_file_io::glob($test_profile->get_resource_dir() . '*'));
+
+			if($zip_created == false)
 			{
-				echo "\nNo errors or warnings found with this test profile.\n\n";
-			}
-			else
-			{
-				pts_validation::print_issue("ERROR", $validation_errors);
-				pts_validation::print_issue("WARNING", $validation_warnings);
-				echo "\n";
+				echo "\nFailed to create zip file.\n";
+				return false;
 			}
 
-			// TODO: hook in validate() call from pts_test_nye_XmlReader
+			if(filesize($zip_file) > 104857)
+			{
+				echo "\nThe test profile package is too big.\n";
+				return false;
+			}
 		}
 	}
 }

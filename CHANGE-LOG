@@ -4,6 +4,7 @@ Phoronix Test Suite 3.0 Alpha 4 (Git)
 
 - pts-core: Drop support for reference-comparison as its superseded by OpenBenchmarking.org implementation
 - pts-core: TEST PROFILE XML SPEC CHANGE: EstimatedLength -> EstimatedTimePerRun
+- pts-core: Further work on OpenBenchmarking.org-supported validate-test-profile command
 
 Phoronix Test Suite 3.0 Alpha 3
 2 December 2010

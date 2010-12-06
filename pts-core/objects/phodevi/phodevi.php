@@ -305,16 +305,11 @@ class phodevi
 	public static function initial_setup()
 	{
 		// Operating System Detection
-		$supported_operating_systems = array("Linux", array("Solaris", "Sun"), array("BSD", "DragonFly"), array("MacOSX", "Darwin"), "Windows");
-		$uname_s = strtolower(php_uname("s"));
+		$supported_operating_systems = pts_types::operating_systems();
+		$uname_s = strtolower(php_uname('s'));
 
 		foreach($supported_operating_systems as $os_check)
 		{
-			if(!is_array($os_check))
-			{
-				$os_check = array($os_check);
-			}
-
 			$is_os = false;
 			$os_title = $os_check[0];
 

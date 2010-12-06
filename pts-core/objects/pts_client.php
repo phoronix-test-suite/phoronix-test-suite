@@ -248,7 +248,7 @@ class pts_client
 	private static function extended_init_process()
 	{
 		// Extended Initalization Process
-		$directory_check = array(PTS_TEST_INSTALL_PATH, PTS_SAVE_RESULTS_PATH, PTS_MODULE_LOCAL_PATH, PTS_MODULE_DATA_PATH, PTS_DOWNLOAD_CACHE_PATH, XML_SUITE_LOCAL_DIR);
+		$directory_check = array(PTS_TEST_INSTALL_PATH, PTS_SAVE_RESULTS_PATH, PTS_MODULE_LOCAL_PATH, PTS_MODULE_DATA_PATH, PTS_DOWNLOAD_CACHE_PATH, XML_SUITE_LOCAL_DIR, PTS_OPENBENCHMARKING_SCRATCH_PATH);
 
 		foreach($directory_check as $dir)
 		{

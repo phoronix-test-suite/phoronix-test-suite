@@ -22,7 +22,7 @@
 */
 
 define("PTS_VERSION", "3.0.0a3");
-define("PTS_CORE_VERSION", 2951);
+define("PTS_CORE_VERSION", 2952);
 define("PTS_CODENAME", "IVELAND");
 define("PTS_IS_CLIENT", PTS_MODE == "CLIENT");
 
@@ -62,6 +62,7 @@ function pts_define_directories()
 	define("PTS_EXDEP_PATH", PTS_CORE_PATH . "external-test-dependencies/");
 	define("PTS_RESULTS_VIEWER_PATH", PTS_CORE_PATH . "results-viewer/");
 	define("PTS_OPENBENCHMARKING_PATH", PTS_CORE_PATH . "openbenchmarking.org/");
+	define("PTS_OPENBENCHMARKING_SCRATCH_PATH", PTS_USER_PATH . "openbenchmarking.org/");
 
 	// Test & Suite Locations
 	define("PTS_TEST_PROFILE_PATH", PTS_PATH . "pts/test-profiles/");

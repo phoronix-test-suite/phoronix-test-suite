@@ -46,6 +46,10 @@ class pts_types
 	{
 		return self::parse_xsd_types("ResultQuantifier");
 	}
+	public static function operating_systems()
+	{
+		return array(array("Linux"), array("Solaris", "Sun"), array("BSD", "DragonFly"), array("MacOSX", "Darwin"), array("Windows"));
+	}
 	public static function identifiers_to_test_profile_objects($identifiers, $include_extensions = false, $remove_duplicates = true)
 	{
 		$test_profiles = array();
