@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
-<PhoronixTestSuite>
-  <ResultsParser>
-    <OutputTemplate>rsa 4096 bits 0.006641s 0.000100s    #_RESULT_#  9994.5</OutputTemplate>
-    <LineHint>4096 bits</LineHint>
-  </ResultsParser>
-</PhoronixTestSuite>
