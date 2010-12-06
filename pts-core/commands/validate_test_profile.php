@@ -139,16 +139,7 @@ class validate_test_profile implements pts_option_interface
 			}
 
 			// Make sure no extra files are in there
-			$allowed_files = array("downloads.xml", "test-definition.xml", "results-definition.xml", "install.sh", "pre.sh", "post.sh", "interim.sh");
-
-			foreach(pts_types::operating_systems() as $os)
-			{
-				$os = strtolower($os[0]);
-				array_push($allowed_files, "install_" . $os . ".sh");
-				array_push($allowed_files, "pre_" . $os . ".sh");
-				array_push($allowed_files, "post_" . $os . ".sh");
-				array_push($allowed_files, "interim_" . $os . ".sh");
-			}
+			$allowed_files = pts_validation::test_profile_permitted_files();
 
 			foreach(pts_file_io::glob($test_profile->get_resource_dir() . '*') as $tp_file)
 			{

@@ -29,7 +29,7 @@ class pts_test_nye_XmlReader extends nye_XmlReader
 
 	public function __construct($read_xml)
 	{
-		if(is_file(PTS_TEST_PROFILE_PATH . $read_xml . "/test-definition.xml"))
+		if(!isset($xml_file[512]) && is_file(PTS_TEST_PROFILE_PATH . $read_xml . "/test-definition.xml"))
 		{
 			$read_xml = PTS_TEST_PROFILE_PATH . $read_xml . "/test-definition.xml";
 		}

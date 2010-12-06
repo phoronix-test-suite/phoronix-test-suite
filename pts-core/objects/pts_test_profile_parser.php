@@ -28,7 +28,12 @@ class pts_test_profile_parser
 	public function __construct($identifier = null)
 	{
 		$this->xml_parser = new pts_test_nye_XmlReader($identifier);
-		$this->identifier = $identifier;
+
+		if(!isset($identifier[64]))
+		{
+			// Passed is not an identifier since it's too long
+			$this->identifier = $identifier;
+		}
 	}
 	public function __toString()
 	{
@@ -105,9 +110,13 @@ class pts_test_profile_parser
 	{
 		return $this->xml_parser->getXMLValue(P_TEST_INSTALLAGREEMENT);
 	}
+	public function get_internal_tags_raw()
+	{
+		return $this->xml_parser->getXMLValue(P_TEST_INTERNAL_TAGS);
+	}
 	public function get_internal_tags()
 	{
-		return pts_strings::comma_explode($this->xml_parser->getXMLValue(P_TEST_INTERNAL_TAGS));
+		return pts_strings::comma_explode($this->get_internal_tags_raw());
 	}
 	public function get_default_arguments()
 	{
@@ -191,9 +200,13 @@ class pts_test_profile_parser
 	{
 		return $this->xml_parser->getXMLValue(P_TEST_SUBTITLE);
 	}
+	public function get_supported_platforms_raw()
+	{
+		return $this->xml_parser->getXMLValue(P_TEST_SUPPORTEDPLATFORMS);
+	}
 	public function get_supported_platforms()
 	{
-		return pts_strings::comma_explode($this->xml_parser->getXMLValue(P_TEST_SUPPORTEDPLATFORMS));
+		return pts_strings::comma_explode($this->get_supported_platforms_raw());
 	}
 	public function get_supported_architectures()
 	{
@@ -202,6 +215,10 @@ class pts_test_profile_parser
 	public function get_environment_size()
 	{
 		return $this->xml_parser->getXMLValue(P_TEST_ENVIRONMENTSIZE, 0);
+	}
+	public function get_test_extension()
+	{
+		return $this->xml_parser->getXMLValue(P_TEST_CTPEXTENDS);
 	}
 	public function get_environment_testing_size()
 	{
@@ -217,7 +234,7 @@ class pts_test_profile_parser
 	}
 	public function requires_core_version_max()
 	{
-		return $this->xml_parser->getXMLValue(P_TEST_REQUIRES_COREVERSION_MAX, 9999);
+		return $this->xml_parser->getXMLValue(P_TEST_REQUIRES_COREVERSION_MAX, 9190);
 	}
 	public function get_test_option_objects($auto_process = true)
 	{

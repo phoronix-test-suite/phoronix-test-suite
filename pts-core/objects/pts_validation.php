@@ -57,6 +57,21 @@ class pts_validation
 
 		libxml_clear_errors();
 	}
+	public static function test_profile_permitted_files()
+	{
+		$allowed_files = array("downloads.xml", "test-definition.xml", "results-definition.xml", "install.sh", "pre.sh", "post.sh", "interim.sh");
+
+		foreach(pts_types::operating_systems() as $os)
+		{
+			$os = strtolower($os[0]);
+			array_push($allowed_files, "install_" . $os . ".sh");
+			array_push($allowed_files, "pre_" . $os . ".sh");
+			array_push($allowed_files, "post_" . $os . ".sh");
+			array_push($allowed_files, "interim_" . $os . ".sh");
+		}
+
+		return $allowed_files;
+	}
 	public static function check_xml_tags(&$obj, &$tags_to_check, &$append_missing_to)
 	{
 		foreach($tags_to_check as $tag_check)

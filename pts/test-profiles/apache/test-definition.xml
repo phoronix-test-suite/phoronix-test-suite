@@ -1,27 +1,27 @@
 <?xml version="1.0"?>
-<!--Phoronix Test Suite v3.0.0a2 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
+<!--Phoronix Test Suite v3.0.0a3 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
 <PhoronixTestSuite>
   <TestInformation>
     <Title>Apache Benchmark</Title>
+    <AppVersion>2.2.17</AppVersion>
     <Description>This is a test of ab, which is the Apache benchmark program. This test profile measures how many requests per second a given system can sustain when carrying out 700,000 requests with 100 requests being carried out concurrently.</Description>
     <ResultScale>Requests Per Second</ResultScale>
-    <AppVersion>2.2.17</AppVersion>
-    <SubTitle>Static Web Page Serving</SubTitle>
     <Proportion>HIB</Proportion>
+    <SubTitle>Static Web Page Serving</SubTitle>
     <TimesToRun>3</TimesToRun>
   </TestInformation>
   <TestProfile>
     <Version>1.3.0</Version>
-    <TestType>System</TestType>
+    <SupportedPlatforms>Linux, Solaris</SupportedPlatforms>
     <SoftwareType>Utility</SoftwareType>
-    <Maintainer>Michael Larabel</Maintainer>
+    <TestType>System</TestType>
     <License>Free</License>
     <Status>Verified</Status>
-    <SupportedPlatforms>Linux, Solaris</SupportedPlatforms>
     <ExternalDependencies>build-utilities</ExternalDependencies>
-	<InternalTags>SMP</InternalTags>
     <EnvironmentSize>365</EnvironmentSize>
     <ProjectURL>http://www.apache.org/</ProjectURL>
+    <InternalTags>SMP</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
   </TestProfile>
   <TestSettings>
     <Default>
