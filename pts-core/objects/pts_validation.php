@@ -59,7 +59,7 @@ class pts_validation
 	}
 	public static function test_profile_permitted_files()
 	{
-		$allowed_files = array("downloads.xml", "test-definition.xml", "results-definition.xml", "install.sh", "pre.sh", "post.sh", "interim.sh");
+		$allowed_files = array("downloads.xml", "test-definition.xml", "results-definition.xml", "install.sh", "pre.sh", "post.sh", "interim.sh", "post-cache-share.sh");
 
 		foreach(pts_types::operating_systems() as $os)
 		{

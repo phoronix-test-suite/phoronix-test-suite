@@ -82,10 +82,6 @@ class pts_test_profile_parser
 	{
 		return $this->xml_parser->getXMLValue(P_TEST_PROJECTURL);
 	}
-	public function get_test_extension()
-	{
-		return $this->xml_parser->getXMLValue(P_TEST_CTPEXTENDS);
-	}
 	public function get_description()
 	{
 		return $this->xml_parser->getXMLValue(P_TEST_DESCRIPTION);

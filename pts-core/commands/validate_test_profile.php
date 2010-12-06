@@ -107,7 +107,7 @@ class validate_test_profile implements pts_option_interface
 					}
 				}
 
-				if($files_missing > 0 && $file_count == $files_missing)
+				if($files_missing > 0) // && $file_count == $files_missing
 				{
 					return false;
 				}
@@ -164,6 +164,10 @@ class validate_test_profile implements pts_option_interface
 				echo "\nThe test profile package is too big.\n";
 				return false;
 			}
+
+
+			// TODO: chmod +x the .sh files, appropriate permissions elsewhere
+			unlink($zip_file);
 		}
 	}
 }
