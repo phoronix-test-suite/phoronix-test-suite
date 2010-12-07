@@ -27,60 +27,53 @@ class validate_test_suite implements pts_option_interface
 		if(($test_suite = pts_types::identifier_to_object($r[0])) != false)
 		{
 			pts_client::$display->generic_heading($r[0]);
-			$validation_errors = array();
-			$validation_warnings = array();
-
-			$error_empty_tags = array(
-			array(P_SUITE_TITLE, "A title tag for the suite is required."),
-			array(P_SUITE_VERSION, "A version tag for the suite is required."),
-			array(P_SUITE_DESCRIPTION, "A description tag for the suite is required."),
-			array(P_SUITE_MAINTAINER, "A maintainer tag for the suite is required."),
-			array(P_SUITE_TYPE, "A type tag for the suite is required."),
-			);
-
-			$warning_empty_tags = array(
-
-			);
-
-			// Checks for missing tag errors and warnings
-			pts_validation::check_xml_tags($test_suite, $error_empty_tags, $validation_errors);
-			pts_validation::check_xml_tags($test_suite, $warning_empty_tags, $validation_warnings);
-
-			// Other checks
-			$contained_tests = $test_suite->get_test_names();
-
-			if(count($contained_tests) == 0)
+			if($test_suite->xml_parser->getFileLocation() == null)
 			{
-				array_push($validation_errors, array(P_SUITE_TEST_NAME, "No tags of tests to run in this suite were found."));
+				echo "\nERROR: The file location of the XML test suite source could not be determined.\n";
+				return false;
+			}
+
+
+			// Validate the XML against the XSD Schemas
+			libxml_clear_errors();
+
+			// First rewrite the main XML file to ensure it is properly formatted, elements are ordered according to the schema, etc...
+			$test_suite_writer = new pts_test_suite_writer();
+			$test_suite_writer->add_suite_information_from_reader($test_suite->xml_parser);
+			$test_suite_writer->add_to_suite_from_reader($test_suite->xml_parser);
+
+			$test_suite_new = new pts_test_suite($test_suite_writer->get_xml());
+			$valid = $test_suite_new->xml_parser->validate();
+
+			if($valid == false)
+			{
+				echo "\nErrors occurred parsing the main XML.\n";
+				pts_validation::process_libxml_errors();
+				return false;
 			}
 			else
 			{
-				foreach($contained_tests as $test)
-				{
-					if(pts_types::identifier_to_object($test) == false)
-					{
-						array_push($validation_errors, array($test, $test . " is not a recognized test or suite."));
-					}
-				}
+				echo "\nTest Profile XML Is Valid.\n";
 			}
 
+			$test_suite_writer->save_xml($test_suite->xml_parser->getFileLocation());
+			$suite_identifier = basename($test_suite->xml_parser->getFileLocation(), ".xml");
 
-			if(count($validation_errors) == 0 && count($validation_warnings) == 0)
+			$zip_file = PTS_OPENBENCHMARKING_SCRATCH_PATH . $suite_identifier . '-' . $test_suite_new->get_version() . ".zip";
+			$zip_created = pts_compression::zip_archive_create($zip_file, $test_suite->xml_parser->getFileLocation());
+
+			if($zip_created == false)
 			{
-				echo "\nNo errors or warnings found with this suite.\n\n";
-			}
-			else
-			{
-				pts_validation::print_issue("ERROR", $validation_errors);
-				pts_validation::print_issue("WARNING", $validation_warnings);
-				echo "\n";
+				echo "\nFailed to create zip file.\n";
+				return false;
 			}
 
-			// TODO: hook in validate() call from pts_suite_nye_XmlReader
-		}
-		else
-		{
-			echo "\n" . $r[0] . " is not a suite.\n\n";
+
+			// TODO: chmod +x the .sh files, appropriate permissions elsewhere
+			//unlink($zip_file);
+
+
+
 		}
 	}
 }
