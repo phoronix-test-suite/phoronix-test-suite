@@ -7,6 +7,7 @@ Phoronix Test Suite 3.0 Alpha 4 (Git)
 - pts-core: Further work on OpenBenchmarking.org-supported validate-test-profile command
 - pts-core: Support new test identifier syntax from OpenBenchmarking.org
 - pts: Move test profiles out of the phoronix-test-suite client and into the OpenBenchmarking.org cloud
+- pts: Move test suites out of the phoronix-test-suite client and into the OpenBenchmarking.org cloud
 
 Phoronix Test Suite 3.0 Alpha 3
 2 December 2010
