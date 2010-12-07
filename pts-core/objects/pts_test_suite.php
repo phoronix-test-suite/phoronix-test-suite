@@ -135,7 +135,7 @@ class pts_test_suite extends pts_test_suite_parser
 			}
 			else if($obj instanceof pts_test_suite)
 			{
-				foreach($obj->get_contained_objects() as $test_result)
+				foreach($obj->get_contained_test_result_objects() as $test_result)
 				{
 					array_push($test_result_objects, $test_result);
 				}
