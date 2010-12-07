@@ -127,7 +127,7 @@ class pts_test_profile_parser
 	{
 		// TODO: clean this up
 		$identifier = basename($this->identifier);
-		$identifier = substr($identifier, 0, strpos($identifier, '-'));
+		$identifier = substr($identifier, 0, strrpos($identifier, '-'));
 
 		return $identifier;
 	}
