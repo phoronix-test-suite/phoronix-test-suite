@@ -165,7 +165,6 @@ class validate_test_profile implements pts_option_interface
 				return false;
 			}
 
-
 			// TODO: chmod +x the .sh files, appropriate permissions elsewhere
 			unlink($zip_file);
 		}

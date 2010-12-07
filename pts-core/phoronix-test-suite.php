@@ -176,6 +176,9 @@ if(!QUICK_START)
 	pts_client::user_agreement_check($sent_command);
 	pts_client::user_hardware_software_reporting();
 	pts_client::program_requirement_checks(true);
+
+	// OpenBenchmarking.org
+	pts_openbenchmarking::refresh_repository_lists();
 }
 
 pts_client::execute_command($sent_command, $pass_args); // Run command

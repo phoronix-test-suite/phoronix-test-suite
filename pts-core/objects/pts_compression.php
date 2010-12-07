@@ -90,9 +90,9 @@ class pts_compression
 
 		if($res === true && is_writable($extract_to))
 		{
-			$zip->extractTo($extract_to);
+			$t = $zip->extractTo($extract_to);
 			$zip->close();
-			$success = true;
+			$success = $t;
 		}
 		else
 		{

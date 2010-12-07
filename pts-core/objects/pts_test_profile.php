@@ -24,6 +24,7 @@ class pts_test_profile extends pts_test_profile_parser
 {
 	public function __construct($identifier = null, $override_values = null)
 	{
+		$identifier = pts_openbenchmarking::evaluate_string_to_qualifier($identifier);
 		parent::__construct($identifier);
 
 		if($override_values != null && is_array($override_values))
@@ -33,7 +34,12 @@ class pts_test_profile extends pts_test_profile_parser
 	}
 	public static function is_test_profile($identifier)
 	{
-		return is_file(PTS_TEST_PROFILE_PATH . $identifier . "/test-definition.xml");
+		$identifier = pts_openbenchmarking::evaluate_string_to_qualifier($identifier);
+		return $identifier != false && is_file(PTS_TEST_PROFILE_PATH . $identifier . "/test-definition.xml");
+	}
+	public function get_resource_dir()
+	{
+		return PTS_TEST_PROFILE_PATH . $this->identifier . '/';
 	}
 	public function get_override_values()
 	{
@@ -263,10 +269,6 @@ class pts_test_profile extends pts_test_profile_parser
 	public function get_installer_checksum()
 	{
 		return $this->get_file_installer() != false ? md5_file($this->get_file_installer()) : false;
-	}
-	public function get_resource_dir()
-	{
-		return PTS_TEST_PROFILE_PATH . $this->identifier . '/';
 	}
 	public function get_file_installer()
 	{
