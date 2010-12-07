@@ -123,7 +123,7 @@ class pts_tests
 			if(is_dir($this_test_profile->get_install_dir()))
 			{
 				$extra_vars["PATH"] = $this_test_profile->get_install_dir() . ":" . $extra_vars["PATH"];
-				$extra_vars["TEST_" . strtoupper(str_replace("-", "_", $this_test_profile->get_identifier()))] = $this_test_profile->get_install_dir();
+				$extra_vars["TEST_" . strtoupper(str_replace("-", "_", $this_test_profile->get_identifier_base_name()))] = $this_test_profile->get_install_dir();
 			}
 		}
 

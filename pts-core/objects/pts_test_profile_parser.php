@@ -27,6 +27,7 @@ class pts_test_profile_parser
 
 	public function __construct($identifier = null)
 	{
+		$identifier = pts_openbenchmarking::evaluate_string_to_qualifier($identifier);
 		$this->xml_parser = new pts_test_nye_XmlReader($identifier);
 
 		if(!isset($identifier[64]))
@@ -122,9 +123,17 @@ class pts_test_profile_parser
 	{
 		return $this->xml_parser->getXMLValue(P_TEST_DEFAULT_POST_ARGUMENTS);
 	}
+	public function get_identifier_base_name()
+	{
+		// TODO: clean this up
+		$identifier = basename($this->identifier);
+		$identifier = substr($identifier, 0, strpos($identifier, '-'));
+
+		return $identifier;
+	}
 	public function get_test_executable()
 	{
-		return $this->xml_parser->getXMLValue(P_TEST_EXECUTABLE, $this->identifier);
+		return $this->xml_parser->getXMLValue(P_TEST_EXECUTABLE, $this->get_identifier_base_name());
 	}
 	public function get_times_to_run()
 	{

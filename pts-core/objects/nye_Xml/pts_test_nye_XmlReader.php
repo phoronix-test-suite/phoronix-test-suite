@@ -89,6 +89,7 @@ class pts_test_nye_XmlReader extends nye_XmlReader
 
 		if(!empty($test_extends))
 		{
+			$test_extends = pts_openbenchmarking::evaluate_string_to_qualifier($test_extends);
 			$test_below_parser = new pts_test_nye_XmlReader($test_extends);
 			$test_below_tag = $test_below_parser->getXMLValue($xml_tag);
 

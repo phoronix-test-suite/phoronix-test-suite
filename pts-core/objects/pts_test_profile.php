@@ -24,7 +24,6 @@ class pts_test_profile extends pts_test_profile_parser
 {
 	public function __construct($identifier = null, $override_values = null)
 	{
-		$identifier = pts_openbenchmarking::evaluate_string_to_qualifier($identifier);
 		parent::__construct($identifier);
 
 		if($override_values != null && is_array($override_values))

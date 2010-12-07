@@ -106,7 +106,7 @@ class pts_test_execution
 		for($i = 0, $abort_testing = false, $time_test_start_actual = time(), $defined_times_to_run = $times_to_run; $i < $times_to_run && $i < 512 && !$abort_testing; $i++)
 		{
 			pts_client::$display->test_run_instance_header($test_run_request);
-			$test_log_file = $test_directory . $test_identifier . "-" . $runtime_identifier . "-" . ($i + 1) . ".log";
+			$test_log_file = $test_directory . basename($test_identifier) . "-" . $runtime_identifier . "-" . ($i + 1) . ".log";
 
 			$test_extra_runtime_variables = array_merge($extra_runtime_variables, array(
 			"LOG_FILE" => $test_log_file
@@ -258,7 +258,7 @@ class pts_test_execution
 			{
 				if($backup_test_log_dir)
 				{
-					copy($test_log_file, $backup_test_log_dir . $test_identifier . "-" . ($i + 1) . ".log");
+					copy($test_log_file, $backup_test_log_dir . basename($test_log_file));
 				}
 
 				if(pts_client::test_profile_debug_message("Log File At: " . $test_log_file) == false)
@@ -326,7 +326,7 @@ class pts_test_execution
 			{
 				$backup_log_dir = PTS_SAVE_RESULTS_PATH . $test_run_manager->get_file_name() . "/installation-logs/" . $test_run_manager->get_results_identifier() . '/';
 				pts_file_io::mkdir($backup_log_dir, 0777, true);
-				copy($test_run_request->test_profile->get_install_dir() . "install.log", $backup_log_dir . $test_identifier . ".log");
+				copy($test_run_request->test_profile->get_install_dir() . "install.log", $backup_log_dir . basename($test_identifier) . ".log");
 			}
 		}
 

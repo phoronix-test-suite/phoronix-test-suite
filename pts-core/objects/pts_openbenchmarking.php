@@ -125,7 +125,7 @@ class pts_openbenchmarking
 			// TODO: functionalize this and read against types.xsd
 			if($version_length >= 5 && $version_length <= 8 && strlen(pts_strings::keep_in_string($version, (pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DECIMAL))) == $version_length)
 			{
-				$test = substr($test, $c);
+				$test = substr($test, 0, $c);
 			}
 			else
 			{

@@ -61,19 +61,20 @@ class pts_test_installer
 
 		// Setup the install manager and add the tests
 		$test_install_manager = new pts_test_install_manager();
+
 		foreach($test_profiles as &$test_profile)
 		{
 			if($test_profile->needs_updated_install())
 			{
 				if($test_install_manager->add_test_profile($test_profile) != false)
 				{
-					pts_client::$display->generic_sub_heading("To Install: " . $test_profile);
+					pts_client::$display->generic_sub_heading("To Install: " . $test_profile->get_identifier());
 				}
 			}
 			else
 			{
 				$installed_test = new pts_installed_test($test_profile);
-				pts_client::$display->generic_sub_heading("Installed: " . $test_profile->get_identifier() . ($installed_test->get_installed_version() != null ? " [v" . $installed_test->get_installed_version() . "]" : null));
+				pts_client::$display->generic_sub_heading("Installed: " . $test_profile->get_identifier());
 			}
 		}
 
@@ -330,6 +331,7 @@ class pts_test_installer
 		// Install a test
 		$identifier = $test_install_request->test_profile->get_identifier();
 		$test_install_directory = $test_install_request->test_profile->get_install_dir();
+		pts_file_io::mkdir(dirname($test_install_directory));
 		pts_file_io::mkdir($test_install_directory);
 		$installed = false;
 
