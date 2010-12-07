@@ -26,9 +26,9 @@ class pts_suite_nye_XmlReader extends nye_XmlReader
 {
 	public function __construct($read_xml)
 	{
-		if(is_file(PTS_TEST_SUITE_PATH . $read_xml . ".xml"))
+		if(!isset($xml_file[512]) && is_file(PTS_TEST_SUITE_PATH . $read_xml . "/suite-definition.xml"))
 		{
-			$read_xml = PTS_TEST_SUITE_PATH . $read_xml . ".xml";
+			$read_xml = PTS_TEST_SUITE_PATH . $read_xml . "/suite-definition.xml";
 		}
 
 		parent::__construct($read_xml);

@@ -27,6 +27,7 @@ class build_suite implements pts_option_interface
 {
 	public static function run($r)
 	{
+		return false; // TODO XXX: Fix to work with new test suite format
 		pts_client::$display->generic_heading("Test Suite Creation");
 
 		$suite_name = pts_user_io::prompt_user_input("Enter name of suite");
@@ -98,17 +99,17 @@ class build_suite implements pts_option_interface
 
 		$suite_identifier = pts_test_run_manager::clean_save_name_string($suite_name);
 
-		if(is_file(XML_SUITE_LOCAL_DIR . $suite_identifier . ".xml"))
+		if(is_file(PTS_TEST_SUITE_PATH . $suite_identifier . ".xml"))
 		{
 			$suite_append = 1;
 			do
 			{
 				$suite_append++;
 			}
-			while(is_file(XML_SUITE_LOCAL_DIR . $suite_identifier . "-" . $suite_append . ".xml"));
+			while(is_file(PTS_TEST_SUITE_PATH . $suite_identifier . "-" . $suite_append . ".xml"));
 			$suite_identifier .= "-" . $suite_append;
 		}
-		$save_to = XML_SUITE_LOCAL_DIR . $suite_identifier . ".xml";
+		$save_to = PTS_TEST_SUITE_PATH . $suite_identifier . ".xml";
 
 		if($suite_writer->save_xml($save_to) != false)
 		{

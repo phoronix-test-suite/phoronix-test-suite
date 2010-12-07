@@ -27,12 +27,8 @@ class pts_test_suite_parser
 
 	public function __construct($identifier)
 	{
+		$identifier = pts_openbenchmarking::evaluate_string_to_qualifier($identifier);
 		$this->identifier = $identifier;
-		if(!is_file($identifier) && is_file(PTS_TEST_SUITE_PATH . $identifier . ".xml"))
-		{
-			$identifier = PTS_TEST_SUITE_PATH . $identifier . ".xml";
-		}
-
 		$this->xml_parser = new pts_suite_nye_XmlReader($identifier);
 	}
 	public function __toString()
@@ -49,7 +45,7 @@ class pts_test_suite_parser
 	}
 	public function get_core_version_requirement_max()
 	{
-		return $this->xml_parser->getXMLValue(P_SUITE_REQUIRES_COREVERSION_MAX, 9999);
+		return $this->xml_parser->getXMLValue(P_SUITE_REQUIRES_COREVERSION_MAX, 9190);
 	}
 	public function get_description()
 	{
@@ -86,6 +82,10 @@ class pts_test_suite_parser
 	public function get_test_names()
 	{
 		return $this->xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME);
+	}
+	public function get_unique_test_names()
+	{
+		return array_unique($this->get_test_names());
 	}
 	public function get_contained_test_profiles()
 	{

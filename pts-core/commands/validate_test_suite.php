@@ -53,7 +53,7 @@ class validate_test_suite implements pts_option_interface
 			}
 			else
 			{
-				echo "\nTest Profile XML Is Valid.\n";
+				echo "\nTest Suite XML Is Valid.\n";
 			}
 
 			$test_suite_writer->save_xml($test_suite->xml_parser->getFileLocation());
@@ -68,12 +68,13 @@ class validate_test_suite implements pts_option_interface
 				return false;
 			}
 
+			$zip = new ZipArchive();
+			$zip->open($zip_file);
+			$zip->renameName(basename($test_suite->xml_parser->getFileLocation()), 'suite-definition.xml');
+			$zip->close();
 
 			// TODO: chmod +x the .sh files, appropriate permissions elsewhere
 			//unlink($zip_file);
-
-
-
 		}
 	}
 }

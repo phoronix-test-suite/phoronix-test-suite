@@ -92,6 +92,37 @@ class pts_openbenchmarking
 
 		return false;
 	}
+	public static function download_test_suite($qualified_identifier, $hash_check = null)
+	{
+		if(is_file(PTS_TEST_SUITE_PATH . $qualified_identifier . '/suite-definition.xml'))
+		{
+			return true;
+		}
+
+		$file = PTS_OPENBENCHMARKING_SCRATCH_PATH . $qualified_identifier . ".zip";
+
+		if(!is_file($file))
+		{
+			$test_profile = self::make_openbenchmarking_request('download_suite', array('i' => $qualified_identifier));
+
+			if($hash_check == null || $hash_check = sha1($test_profile))
+			{
+				// save it
+				file_put_contents($file, $test_profile);
+				$hash_check = null;
+			}
+		}
+
+		if(!is_file(PTS_TEST_SUITE_PATH . $qualified_identifier . '/suite-definition.xml') && ($hash_check == null || sha1_file($file) == $hash_check))
+		{
+			// extract it
+			pts_file_io::mkdir(PTS_TEST_SUITE_PATH . dirname($qualified_identifier));
+			pts_file_io::mkdir(PTS_TEST_SUITE_PATH . $qualified_identifier);
+			return pts_compression::zip_archive_extract($file, PTS_TEST_SUITE_PATH . $qualified_identifier);
+		}
+
+		return false;
+	}
 	public static function evaluate_string_to_qualifier($supplied, $bind_version = true)
 	{
 		$qualified = false;
@@ -148,7 +179,7 @@ class pts_openbenchmarking
 				// Looking for a particular test profile version?
 				if($version != null)
 				{
-					if(in_array($version, $repo_index['tests'][$test]['profile_versions']))
+					if(in_array($version, $repo_index['tests'][$test]['versions']))
 					{
 						self::download_test_profile("$repo/$test-$version", $repo_index['tests'][$test]['package_hash']);
 						return $repo . '/' . $test . ($bind_version ? '-' . $version : null);
@@ -157,8 +188,29 @@ class pts_openbenchmarking
 				else
 				{
 					// Assume to use the latest version
-					$version = array_shift($repo_index['tests'][$test]['profile_versions']);
+					$version = array_shift($repo_index['tests'][$test]['versions']);
 					self::download_test_profile("$repo/$test-$version", $repo_index['tests'][$test]['package_hash']);
+					return $repo . '/' . $test . ($bind_version ? '-' . $version : null);
+				}
+			}
+			if(is_array($repo_index) && isset($repo_index['suites'][$test]))
+			{
+				// The test profile at least exists
+
+				// Looking for a particular test profile version?
+				if($version != null)
+				{
+					if(in_array($version, $repo_index['suites'][$test]['versions']))
+					{
+						self::download_test_suite("$repo/$test-$version", $repo_index['suites'][$test]['package_hash']);
+						return $repo . '/' . $test . ($bind_version ? '-' . $version : null);
+					}
+				}
+				else
+				{
+					// Assume to use the latest version
+					$version = array_shift($repo_index['suites'][$test]['versions']);
+					self::download_test_suite("$repo/$test-$version", $repo_index['suites'][$test]['package_hash']);
 					return $repo . '/' . $test . ($bind_version ? '-' . $version : null);
 				}
 			}
@@ -168,7 +220,7 @@ class pts_openbenchmarking
 	}
 	public static function read_repository_index($repo_name)
 	{
-		$index_file = PTS_OPENBENCHMARKING_SCRATCH_PATH . $repo_name . ".tests";
+		$index_file = PTS_OPENBENCHMARKING_SCRATCH_PATH . $repo_name . ".index";
 
 		if(is_file($index_file))
 		{
@@ -192,12 +244,12 @@ class pts_openbenchmarking
 
 		foreach($repos as $repo_name)
 		{
-			$index_file = PTS_OPENBENCHMARKING_SCRATCH_PATH . $repo_name . ".tests";
+			$index_file = PTS_OPENBENCHMARKING_SCRATCH_PATH . $repo_name . ".index";
 
 			if(is_file($index_file))
 			{
-				$test_index = json_decode(file_get_contents($index_file), true);
-				$generated_time = $test_index['main']['generated'];
+				$repo_index = json_decode(file_get_contents($index_file), true);
+				$generated_time = $repo_index['main']['generated'];
 
 				// TODO: time zone differences causes this not to be exact if not on server time
 				// Refreshing the indexes once a day should be suffice
@@ -208,7 +260,7 @@ class pts_openbenchmarking
 				}
 			}
 
-			$server_index = self::make_openbenchmarking_request('test_index', array('repo' => $repo_name));
+			$server_index = self::make_openbenchmarking_request('repo_index', array('repo' => $repo_name));
 
 			if(json_decode($server_index) != false)
 			{

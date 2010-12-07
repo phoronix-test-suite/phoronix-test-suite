@@ -66,9 +66,7 @@ function pts_define_directories()
 
 	// Test & Suite Locations
 	define("PTS_TEST_PROFILE_PATH", PTS_USER_PATH . "test-profiles/");
-	define("PTS_TEST_SUITE_PATH", PTS_PATH . "pts/test-suites/");
-	//define("XML_PROFILE_LOCAL_DIR", PTS_USER_PATH . "test-profiles/");
-	define("XML_SUITE_LOCAL_DIR", PTS_USER_PATH . "test-suites/");
+	define("PTS_TEST_SUITE_PATH", PTS_USER_PATH . "test-suites/");
 }
 function pts_load_xml_definitions($definition_file)
 {
