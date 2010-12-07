@@ -110,7 +110,6 @@ class system_monitor extends pts_module_interface
 			if(count($sensor_results) > 2 )
 			{
 				self::$individual_test_run_request->test_profile->set_identifier(null);
-				self::$individual_test_run_request->test_profile->set_test_profile_version(null);
 				self::$individual_test_run_request->test_profile->set_result_proportion(null);
 				self::$individual_test_run_request->test_profile->set_proportion("LIB");
 				self::$individual_test_run_request->test_profile->set_display_format("LINE_GRAPH");
@@ -141,7 +140,6 @@ class system_monitor extends pts_module_interface
 				$test_result->test_profile->set_test_title(phodevi::sensor_name($sensor) . " Monitor");
 				$test_result->test_profile->set_identifier(null);
 				$test_result->test_profile->set_version(null);
-				$test_result->test_profile->set_test_profile_version(null);
 				$test_result->test_profile->set_result_proportion(null);
 				$test_result->test_profile->set_display_format("LINE_GRAPH");
 				$test_result->test_profile->set_result_scale(phodevi::read_sensor_unit($sensor));

@@ -69,12 +69,6 @@
 			<Required>YES</Required>
 		</Define>
 		<Define>
-			<Name>P_SUITE_TEST_PROFILE_VERSION</Name>
-			<Value>PhoronixTestSuite/Execute/ProfileVersion</Value>
-			<Description>The test profile version of the test to run to use, otherwise leave empty for latest.</Description>
-			<Required>YES</Required>
-		</Define>
-		<Define>
 			<Name>P_SUITE_TEST_MODE</Name>
 			<Value>PhoronixTestSuite/Execute/Mode</Value>
 			<Description>If this tag is set to BATCH, it will run the test mentioned in the <em>Test</em> tag in batch mode. If this tag is set to 

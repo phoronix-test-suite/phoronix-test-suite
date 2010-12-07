@@ -90,7 +90,6 @@ class pts_test_suite_parser
 	public function get_contained_test_profiles()
 	{
 		$test_names = $this->xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME);
-		$test_versions = $this->xml_parser->getXMLArrayValues(P_SUITE_TEST_PROFILE_VERSION);
 		$test_profiles = array();
 
 		foreach(array_keys($test_names) as $i)

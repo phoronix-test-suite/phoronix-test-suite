@@ -201,7 +201,6 @@ class pts_result_file
 
 			$results_name = $this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_TITLE);
 			$results_version = $this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_VERSION);
-			$results_profile_version = $this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_PROFILE_VERSION);
 			$results_attributes = $this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_DESCRIPTION);
 			$results_scale = $this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_SCALE);
 			$results_test_name = $this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_IDENTIFIER);
@@ -218,7 +217,6 @@ class pts_result_file
 				$test_profile = new pts_test_profile($results_test_name[$i]);
 				$test_profile->set_test_title($results_name[$i]);
 				$test_profile->set_version($results_version[$i]);
-				$test_profile->set_test_profile_version($results_profile_version[$i]);
 				$test_profile->set_result_scale($results_scale[$i]);
 				$test_profile->set_result_proportion($results_proportion[$i]);
 				$test_profile->set_display_format($results_format[$i]);

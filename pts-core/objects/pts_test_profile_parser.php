@@ -37,18 +37,18 @@ class pts_test_profile_parser
 	}
 	public function __toString()
 	{
-		$version = $this->get_test_profile_version();
+		return $this->get_identifier();
+	}
+	public function get_identifier($bind_version = true)
+	{
+		$identifier = $this->identifier;
 
-		if(!empty($version))
+		if($bind_version == false && ($c = strrpos($identifier, '-')))
 		{
-			$version = " [v" . $version . ']';
+			$identifier = substr($identifier, 0, $c);
 		}
 
-		return $this->get_identifier() . $version;
-	}
-	public function get_identifier()
-	{
-		return $this->identifier;
+		return $identifier;
 	}
 	public function get_maintainer()
 	{
@@ -303,10 +303,6 @@ class pts_test_profile_parser
 	public function set_test_title($title)
 	{
 		$this->xml_parser->overrideXMLValue(P_TEST_TITLE, $title);
-	}
-	public function set_test_profile_version($version)
-	{
-		$this->xml_parser->overrideXMLValue(P_TEST_PTSVERSION, $version);
 	}
 	public function set_identifier($identifier)
 	{

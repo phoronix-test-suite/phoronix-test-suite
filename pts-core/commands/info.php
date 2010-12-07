@@ -35,6 +35,7 @@ class info implements pts_option_interface
 		if($args["object"] instanceof pts_test_suite)
 		{
 			pts_client::$display->generic_heading($args["object"]->get_title());
+			echo "Run Identifier: " . $args["object"]->get_identifier() . "\n";
 			echo "Suite Version: " . $args["object"]->get_version() . "\n";
 			echo "Maintainer: " . $args["object"]->get_maintainer() . "\n";
 			echo "Suite Type: " . $args["object"]->get_suite_type() . "\n";
@@ -54,7 +55,7 @@ class info implements pts_option_interface
 			}
 
 			pts_client::$display->generic_heading($test_title);
-
+			echo "Run Identifier: " . $args["object"]->get_identifier() . "\n";
 			echo "Profile Version: " . $args["object"]->get_test_profile_version() . "\n";
 			echo "Maintainer: " . $args["object"]->get_maintainer() . "\n";
 			echo "Test Type: " . $args["object"]->get_test_hardware_type() . "\n";

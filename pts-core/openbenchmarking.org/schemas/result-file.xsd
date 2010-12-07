@@ -44,7 +44,6 @@
 		<xs:complexType>
 		<xs:sequence>
 			<xs:element name="Identifier" type="xs:string" />
-			<xs:element name="ProfileVersion" type="VersionString" />
 			<xs:element name="Title" type="TitleString" />
 			<xs:element name="AppVersion" type="xs:string" />
 			<xs:element name="Arguments" type="xs:string" />

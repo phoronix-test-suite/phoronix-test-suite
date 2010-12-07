@@ -36,7 +36,7 @@ class pts_test_install_manager
 		{
 			//pts_client::$display->test_install_error($test_profile->get_identifier() . " is not supported by this system.");
 		}
-		else if(($e = pts_client::read_env("SKIP_TESTS")) != false && in_array($test_profile->get_identifier(), pts_strings::comma_explode($e)))
+		else if(($e = pts_client::read_env("SKIP_TESTS")) != false && in_array($test_profile->get_identifier(false), pts_strings::comma_explode($e)))
 		{
 			pts_client::$display->test_install_error($test_profile->get_identifier() . " is being skipped from installation.");
 		}

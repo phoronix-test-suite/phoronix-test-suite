@@ -729,7 +729,7 @@ class pts_test_run_manager
 
 		foreach($to_run_objects as &$run_object)
 		{
-			if($skip_tests && in_array($run_object->get_identifier(), $skip_tests))
+			if($skip_tests && in_array($run_object->get_identifier(false), $skip_tests))
 			{
 				echo "Skipping: " . $run_object->get_identifier() . "\n";
 				continue;

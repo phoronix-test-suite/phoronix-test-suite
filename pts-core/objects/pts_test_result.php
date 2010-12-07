@@ -66,11 +66,11 @@ class pts_test_result
 	}
 	public function get_comparison_hash($show_version_and_attributes = true)
 	{
-		return $show_version_and_attributes ? pts_test_profile::generate_comparison_hash($this->test_profile->get_identifier(), $this->get_arguments(), $this->get_arguments_description(), $this->test_profile->get_app_version()) : pts_test_profile::generate_comparison_hash($this->test_profile->get_identifier(), $this->get_arguments());
+		return $show_version_and_attributes ? pts_test_profile::generate_comparison_hash($this->test_profile->get_identifier(false), $this->get_arguments(), $this->get_arguments_description(), $this->test_profile->get_app_version()) : pts_test_profile::generate_comparison_hash($this->test_profile->get_identifier(false), $this->get_arguments());
 	}
 	public function __toString()
 	{
-		return $this->test_profile->get_identifier() . " " . $this->get_arguments() . " " . $this->get_arguments_description() . " " . $this->test_profile->get_override_values();
+		return $this->test_profile->get_identifier(false) . " " . $this->get_arguments() . " " . $this->get_arguments_description() . " " . $this->test_profile->get_override_values();
 	}
 }
 

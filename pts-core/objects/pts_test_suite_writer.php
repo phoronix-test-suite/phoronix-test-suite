@@ -56,10 +56,9 @@ class pts_test_suite_writer
 		$this->xml_writer->addXmlNode(P_SUITE_DESCRIPTION, $description);
 		$this->xml_writer->addXmlNode(P_SUITE_MAINTAINER, $maintainer);
 	}
-	public function add_to_suite($identifier, $version, $arguments, $description)
+	public function add_to_suite($identifier, $arguments, $description)
 	{
 		$this->xml_writer->addXmlNodeWNE(P_SUITE_TEST_NAME, $identifier);
-		$this->xml_writer->addXmlNodeWNE(P_SUITE_TEST_PROFILE_VERSION, $version);
 		$this->xml_writer->addXmlNodeWNE(P_SUITE_TEST_ARGUMENTS, $arguments);
 		$this->xml_writer->addXmlNodeWNE(P_SUITE_TEST_DESCRIPTION, $description);
 		//$this->xml_writer->addXmlNodeWNE(P_SUITE_TEST_MODE, $description);
@@ -67,7 +66,7 @@ class pts_test_suite_writer
 	}
 	public function add_to_suite_from_result_object(&$r_o)
 	{
-		$this->add_to_suite($r_o->test_profile->get_identifier(), $r_o->test_profile->get_test_profile_version(), $r_o->get_arguments(), $r_o->get_arguments_description());
+		$this->add_to_suite($r_o->test_profile->get_identifier(), $r_o->get_arguments(), $r_o->get_arguments_description());
 	}
 }
 

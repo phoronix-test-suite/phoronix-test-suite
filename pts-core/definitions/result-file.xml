@@ -67,10 +67,6 @@
 			<Value>PhoronixTestSuite/Result/Identifier</Value>
 		</Define>
 		<Define>
-			<Name>P_RESULTS_TEST_PROFILE_VERSION</Name>
-			<Value>PhoronixTestSuite/Result/ProfileVersion</Value>
-		</Define>
-		<Define>
 			<Name>P_RESULTS_TEST_TITLE</Name>
 			<Value>PhoronixTestSuite/Result/Title</Value>
 		</Define>

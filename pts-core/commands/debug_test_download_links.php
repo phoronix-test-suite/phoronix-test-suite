@@ -34,7 +34,7 @@ class debug_test_download_links implements pts_option_interface
 		{
 			echo "Checking: " . $test_profile . "\n";
 
-			foreach(pts_test_install_request::read_download_object_list($test_profile->get_identifier()) as $test_file_download)
+			foreach(pts_test_install_request::read_download_object_list($test_profile) as $test_file_download)
 			{
 				foreach($test_file_download->get_download_url_array() as $url)
 				{

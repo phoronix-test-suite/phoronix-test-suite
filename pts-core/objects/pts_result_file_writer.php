@@ -58,7 +58,6 @@ class pts_result_file_writer
 	protected function add_result_from_result_object(&$result_object)
 	{
 		$this->xml_writer->addXmlNode(P_RESULTS_TEST_IDENTIFIER, $result_object->test_profile->get_identifier());
-		$this->xml_writer->addXmlNode(P_RESULTS_TEST_PROFILE_VERSION, $result_object->test_profile->get_test_profile_version());
 		$this->xml_writer->addXmlNode(P_RESULTS_TEST_TITLE, $result_object->test_profile->get_title());
 		$this->xml_writer->addXmlNode(P_RESULTS_TEST_VERSION, $result_object->test_profile->get_app_version());
 		$this->xml_writer->addXmlNode(P_RESULTS_TEST_ARGS, $result_object->get_arguments());

@@ -59,7 +59,8 @@ class build_suite implements pts_option_interface
 
 				for($i = 0; $i < count($args); $i++)
 				{
-					$suite_writer->add_to_suite($test_object->get_identifier(), null, $args[$i], $description[$i]);
+					// Not binding the test profile version to this suite, otherwise change false to true
+					$suite_writer->add_to_suite($test_object->get_identifier(false), null, $args[$i], $description[$i]);
 				}
 			}
 			else if($test_object instanceof pts_test_suite)

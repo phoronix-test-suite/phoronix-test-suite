@@ -70,7 +70,6 @@ class pts_results_nye_XmlReader extends nye_XmlReader
 			"PhoronixTestSuite/Result/Title" => "PhoronixTestSuite/Benchmark/Name",
 			"PhoronixTestSuite/Result/Scale" => "PhoronixTestSuite/Benchmark/Scale",
 			"PhoronixTestSuite/Result/AppVersion" => "PhoronixTestSuite/Benchmark/Version",
-			"PhoronixTestSuite/Result/ProfileVersion" => "PhoronixTestSuite/Benchmark/ProfileVersion",
 			"PhoronixTestSuite/Result/DisplayFormat" => "PhoronixTestSuite/Benchmark/ResultFormat",
 			"PhoronixTestSuite/Result/Proportion" => "PhoronixTestSuite/Benchmark/Proportion",
 			"PhoronixTestSuite/Result/Arguments" => "PhoronixTestSuite/Benchmark/TestArguments",
