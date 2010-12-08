@@ -40,7 +40,7 @@ class pts_test_run_manager
 	private $post_run_message = null;
 	private $pre_run_message = null;
 	private $allow_sharing_of_results = true;
-	private $auto_upload_to_global = false;
+	private $auto_upload_to_openbenchmarking = false;
 	private $is_pcqs = false;
 
 	private $do_dynamic_run_count = false;
@@ -73,9 +73,9 @@ class pts_test_run_manager
 	{
 		return $this->do_dynamic_run_count;
 	}
-	public function auto_upload_to_global($do = true)
+	public function auto_upload_to_openbenchmarking($do = true)
 	{
-		$this->auto_upload_to_global = ($do == true);
+		$this->auto_upload_to_openbenchmarking = ($do == true);
 	}
 	public function increase_run_count_check(&$test_results, $scheduled_times_to_run, $latest_test_run_time)
 	{
@@ -693,19 +693,18 @@ class pts_test_run_manager
 
 			if($this->allow_sharing_of_results && !defined("NO_NETWORK_COMMUNICATION"))
 			{
-				if($this->auto_upload_to_global)
+				if($this->auto_upload_to_openbenchmarking)
 				{
 					$upload_results = true;
 				}
 				else
 				{
-					$upload_results = pts_user_io::prompt_bool_input("Would you like to upload these results to Phoronix Global", true, "UPLOAD_RESULTS");
+					$upload_results = pts_user_io::prompt_bool_input("Would you like to upload these results to OpenBenchmarking.org", true, "UPLOAD_RESULTS");
 				}
 
 				if($upload_results)
 				{
-					$tags_input = pts_global::prompt_user_result_tags(array($this->get_results_identifier(), $this->get_title()));
-					$upload_url = pts_global::upload_test_result(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . "/composite.xml", $tags_input);
+					$upload_url = pts_openbenchmarking::upload_test_result($this);
 
 					if(!empty($upload_url))
 					{

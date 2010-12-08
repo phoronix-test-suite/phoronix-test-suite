@@ -46,17 +46,55 @@ class pts_openbenchmarking
 			"screen_resolution" => array("gpu", "screen-resolution-string")
 			);
 	}
+	public static function request_gsid()
+	{
+		$upload_data = array(
+			"client_version" => PTS_VERSION,
+			"client_os" => phodevi::read_property("system", "vendor-identifier")
+			);
+		$gsid = pts_network::http_upload_via_post(pts_openbenchmarking::openbenchmarking_host() . "extern/request-gsid.php", $upload_data);
+
+		return self::is_valid_gsid_format($gsid) ? $gsid : false;
+	}
+	public static function is_valid_gsid_format($gsid)
+	{
+		$gsid_valid = false;
+
+		if(strlen($gsid) == 9)
+		{
+			if(strlen(pts_strings::keep_in_string(substr($gsid, 0, 6), pts_strings::CHAR_LETTER)) == 6 &&
+			strlen(pts_strings::keep_in_string(substr($gsid, 6, 3), pts_strings::CHAR_NUMERIC)) == 3)
+			{
+				$gsid_valid = true;
+			}
+		}
+
+		return $gsid_valid;
+	}
 	public static function linked_repositories()
 	{
 		return array("pts");
 	}
+	public static function openbenchmarking_host()
+	{
+		static $host = null;
+
+		if($host == null)
+		{
+			// Use HTTPS if OpenSSL is available as a check to see if HTTPS can be handled
+			$host = (extension_loaded("openssl") ? "https://" : "http://") . "www.openbenchmarking.org/";
+		}
+
+		return $host;
+	}
 	public static function make_openbenchmarking_request($request, $post = array())
 	{
-		$url = "http://www.openbenchmarking.org/f/client.php";
+		$url = openbenchmarking_host() . "f/client.php";
 		$to_post = array_merge(array(
 			"r" => $request,
-			"user" => null,
-			"client_version" => PTS_CORE_VERSION
+			"client_version" => PTS_CORE_VERSION,
+			"gsid" => PTS_GSID,
+			"user" => null
 			), $post);
 
 		return pts_network::http_upload_via_post($url, $to_post);
@@ -268,6 +306,69 @@ class pts_openbenchmarking
 				file_put_contents($index_file, $server_index);
 			}
 		}
+	}
+	public static function result_upload_supported(&$result_file)
+	{
+		foreach($result_file->get_result_objects() as $result_object)
+		{
+			$test_profile = new pts_test_profile($result_object->test_profile->get_identifier());
+
+			if($test_profile->allow_results_sharing() == false)
+			{
+				echo "\n" . $result_object->test_profile->get_identifier() . " does not allow test results to be uploaded.\n\n";
+				return false;
+			}
+		}
+
+		return true;
+	}
+	public static function upload_test_result(&$object)
+	{
+		if($object instanceof pts_test_run_manager)
+		{
+			$result_file = new pts_result_file($object->get_file_name());
+			$local_file_name = $object->get_file_name();
+			$results_identifier = $object->get_results_identifier();
+		}
+		else if($object instanceof pts_result_file)
+		{
+			$result_file = &$object;
+			$local_file_name = $object->get_identifier();
+			$results_identifier = null;
+		}
+
+		// Validate the XML
+		if($result_file->xml_parser->validate() == false)
+		{
+			echo "\nErrors occurred parsing the result file XML.\n";
+			return false;
+		}
+
+		// Ensure the results can be shared
+		if(self::result_upload_supported($result_file) == false)
+		{
+			return false;
+		}
+
+		/*
+		$GlobalUser = pts_global::account_user_name();
+		$GlobalKey = pts_config::read_user_config(P_OPTION_GLOBAL_UPLOADKEY, null);
+		$return_stream = "";
+
+		$upload_data = array("result_xml" => $ToUpload, "global_user" => $GlobalUser, "global_key" => $GlobalKey, "tags" => $tags, "gsid" => PTS_GSID);
+		*/
+
+		// TODO: support for uploading test result logs here, etc
+		$composite_xml = $result_file->xml_parser->getXML(false);
+		$to_post = array(
+			'composite_xml' => base64_encode($composite_xml),
+			'composite_xml_hash' => null,
+			'local_file_name' => $local_file_name,
+			'this_results_identifier' => $results_identifier
+			);
+
+		$openbenchmarking = self::make_openbenchmarking_request('upload_result', $to_post);
+		// TODO: handle what to do now...
 	}
 }
 

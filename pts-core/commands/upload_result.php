@@ -30,21 +30,8 @@ class upload_result implements pts_option_interface
 	}
 	public static function run($r)
 	{
-		$use_file = $r[0];
-
-		if(pts_global::result_upload_supported($use_file) == false)
-		{
-			return false;
-		}
-
-		pts_client::set_test_flags();
-		if((pts_c::$test_flags ^ pts_c::auto_mode))
-		{
-			$tags_input = pts_global::prompt_user_result_tags();
-			echo "\n";
-		}
-
-		$upload_url = pts_global::upload_test_result($use_file, $tags_input);
+		$result_file = pts_types::identifier_to_object($r[0]);
+		$upload_url = pts_openbenchmarking::upload_test_result($result_file);
 
 		if(!empty($upload_url))
 		{

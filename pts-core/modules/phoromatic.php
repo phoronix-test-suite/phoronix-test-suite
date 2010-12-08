@@ -360,7 +360,7 @@ class phoromatic extends pts_module_interface
 
 							if(pts_strings::string_bool($xml_parser->getXMLValue(M_PHOROMATIC_UPLOAD_TO_GLOBAL, "FALSE")))
 							{
-								$test_run_manager->auto_upload_to_global();
+								$test_run_manager->auto_upload_to_openbenchmarking();
 							}
 
 							// Save results?

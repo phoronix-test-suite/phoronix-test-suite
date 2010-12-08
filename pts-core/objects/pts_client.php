@@ -355,10 +355,10 @@ class pts_client
 
 		// Phoronix Global - GSID
 		$global_gsid = $pso->read_object("global_system_id");
-		if(empty($global_gsid) || pts_global::is_valid_gsid_format($global_gsid) == false)
+		if(empty($global_gsid) || pts_openbenchmarking::is_valid_gsid_format($global_gsid) == false)
 		{
 			// Global System ID for anonymous uploads, etc
-			$global_gsid = pts_global::request_gsid();
+			$global_gsid = pts_openbenchmarking::request_gsid();
 		}
 
 		define("PTS_GSID", $global_gsid);

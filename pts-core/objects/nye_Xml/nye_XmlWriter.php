@@ -37,7 +37,7 @@ class nye_XmlWriter
 		//$this->dom->preserveWhiteSpace = false;
 		$this->items = array();
 
-		$pts_comment = $this->dom->createComment(pts_title(true) . " [ http://www.phoronix-test-suite.com/ ]");
+		$pts_comment = $this->dom->createComment(pts_title(true));
 		$this->dom->appendChild($pts_comment);
 
 		if($xsl_binding != null)
@@ -94,7 +94,7 @@ class nye_XmlWriter
 	}
 	public function saveXMLFile($to_file)
 	{
-		return file_put_contents($to_file, $this->getXML());
+		return $this->dom->save($to_file);
 	}
 	public function getXML()
 	{

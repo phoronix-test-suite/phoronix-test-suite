@@ -40,7 +40,7 @@ class validate_result_file implements pts_option_interface
 			{
 				echo "\nThe result file is Valid.\n";
 			}
-		} else echo 11111;
+		}
 	}
 }
 

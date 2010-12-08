@@ -120,6 +120,10 @@ class nye_XmlReader
 	{
 		return $fallback_value;
 	}
+	public function getXML()
+	{
+		return $this->dom->saveXML();
+	}
 }
 
 ?>
