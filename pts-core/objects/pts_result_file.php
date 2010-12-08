@@ -24,9 +24,9 @@ class pts_result_file
 {
 	private $save_identifier = null;
 	private $result_objects = null;
-	private $xml_parser = null;
 	private $extra_attributes = null;
 	private $is_multi_way_inverted = false;
+	public $xml_parser = null;
 
 	public function __construct($result_file)
 	{

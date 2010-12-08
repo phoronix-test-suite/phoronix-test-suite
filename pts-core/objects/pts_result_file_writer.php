@@ -103,12 +103,13 @@ class pts_result_file_writer
 	public function add_result_file_meta_data(&$object)
 	{
 		$this->xml_writer->addXmlNode(P_RESULTS_GENERATED_TITLE, $object->get_title());
-		$this->xml_writer->addXmlNode(P_RESULTS_GENERATED_DESCRIPTION, $object->get_description());
-		$this->xml_writer->addXmlNode(P_RESULTS_GENERATED_NOTES, $object->get_notes());
 		$this->xml_writer->addXmlNode(P_RESULTS_GENERATED_TIMESTAMP, date("Y-m-d H:i:s"));
 		$this->xml_writer->addXmlNode(P_RESULTS_GENERATED_CLIENT_STRING, pts_title(true));
-		$this->xml_writer->addXmlNode(P_RESULTS_GENERATED_INTERNAL_TAGS, $object->get_internal_tags());
-		$this->xml_writer->addXmlNode(P_RESULTS_GENERATED_PRESET_ENV_VARS, $object->get_preset_environment_variables());
+		$this->xml_writer->addXmlNode(P_RESULTS_GENERATED_DESCRIPTION, $object->get_description());
+		$this->xml_writer->addXmlNodeWNE(P_RESULTS_GENERATED_NOTES, $object->get_notes());
+		$this->xml_writer->addXmlNodeWNE(P_RESULTS_GENERATED_INTERNAL_TAGS, $object->get_internal_tags());
+		$this->xml_writer->addXmlNodeWNE(P_RESULTS_GENERATED_REFERENCE_ID, null);
+		$this->xml_writer->addXmlNodeWNE(P_RESULTS_GENERATED_PRESET_ENV_VARS, $object->get_preset_environment_variables());
 	}
 	public function add_current_system_information()
 	{
