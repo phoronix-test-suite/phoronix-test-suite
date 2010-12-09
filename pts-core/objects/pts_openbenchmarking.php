@@ -71,6 +71,47 @@ class pts_openbenchmarking
 
 		return $gsid_valid;
 	}
+	public static function is_public_id($id)
+	{
+		$valid = false;
+
+		if(strlen($id) == 22)
+		{
+			$segments = explode('-', $id);
+
+			if(count($segments) == 3)
+			{
+				if(strlen($segments[0]) == 7 && is_numeric($segments[0]))
+				{
+					$us = strlen($segments[1]);
+
+					if($us > 1 && $us < 9)
+					{
+						if(pts_strings::string_only_contains($segments[2], pts_strings::CHAR_LETTER | pts_strings::CHAR_NUMERIC))
+						{
+							$valid = true;
+						}
+					}
+				}
+			}
+		}
+
+		return $valid;
+	}
+	public static function is_abstract_id($id)
+	{
+		$valid = false;
+
+		if(strlen($id) == 4)
+		{
+			if(pts_strings::string_only_contains($id, pts_strings::CHAR_LETTER))
+			{
+				$valid = true;
+			}
+		}
+
+		return $valid;
+	}
 	public static function linked_repositories()
 	{
 		return array("pts");

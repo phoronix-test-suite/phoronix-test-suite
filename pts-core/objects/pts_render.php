@@ -29,7 +29,7 @@ class pts_render
 		$graph = self::render_graph_process($result_object, $result_file, $save_as, $extra_attributes);
 		return $graph->renderGraph();
 	}
-	public static function render_graph_inline_embed(&$result_object, &$result_file = null, $extra_attributes = null)
+	public static function render_graph_inline_embed(&$result_object, &$result_file = null, $extra_attributes = null, $nested = true)
 	{
 		$graph = self::render_graph_process($result_object, $result_file, false, $extra_attributes);
 
@@ -41,16 +41,32 @@ class pts_render
 				$save_as = tempnam('/tmp', 'pts_gd_render');
 				$graph->saveGraphToFile($save_as);
 				$graph->render_graph_finish();
-				$fp = fopen($save_as, 'rb');
-				$buffer = fread($fp, 10240);
-				fclose($fp);
+				$buffer = file_get_contents($save_as);
 				unlink($save_as);
 				$conts = base64_encode($buffer);
-				$graph = "<img src=\"data:image/png;base64,$conts\" />";
+
+				if($nested)
+				{
+					$graph = "<img src=\"data:image/png;base64,$conts\" />";
+				}
+				else
+				{
+					header("Content-Type: image/" . strtolower($graph->graph_image->get_renderer()));
+					$graph = $buffer;
+				}
 				break;
 			case "SVG":
 				$svg = $graph->render_graph_finish();
-				$svg = substr($svg, strpos($svg, "<svg")); // strip out any DOCTYPE and other crud that would be redundant, so start at SVG tag
+
+				if($nested)
+				{
+					// strip out any DOCTYPE and other crud that would be redundant, so start at SVG tag
+					$svg = substr($svg, strpos($svg, "<svg"));
+				}
+				else
+				{
+					header("Content-type: image/svg+xml");
+				}
 
 
 				$graph = $svg; // Safari seems to have problems when embedding the SVG in object/embed and all other browsers seem to handle it fine straight up, so do it this way now

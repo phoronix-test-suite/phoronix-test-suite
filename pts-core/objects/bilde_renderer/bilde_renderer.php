@@ -226,9 +226,9 @@ abstract class bilde_renderer
 
 			$selected_renderer = $http_selected_renderer;
 
-			if(isset($_REQUEST['force_svg']))
+			if(isset($_REQUEST['force_format']) && in_array($_REQUEST['force_format'], $available_renderers))
 			{
-				$selected_renderer = "SVG";
+				$selected_renderer = $_REQUEST['force_format'];
 			}
 		}
 
