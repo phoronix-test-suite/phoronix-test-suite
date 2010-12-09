@@ -40,7 +40,7 @@ class pts_result_file_writer
 		}
 		else
 		{
-			$this->xml_writer = new nye_XmlWriter("pts-results-viewer.xsl");
+			$this->xml_writer = new nye_XmlWriter((PTS_IS_CLIENT ? "pts-results-viewer.xsl" : null));
 		}
 	}
 	public function get_xml()
@@ -75,25 +75,31 @@ class pts_result_file_writer
 		$this->xml_writer->addXmlNode(P_RESULTS_RESULTS_GROUP_VALUE, $result_value);
 		$this->xml_writer->addXmlNode(P_RESULTS_RESULTS_GROUP_RAW, $result_value_raw);
 	}
+	public function add_result_from_result_object_with_value(&$result_object)
+	{
+		$buffer_items = $result_object->test_result_buffer->get_buffer_items();
+
+		if(count($buffer_items) == 0)
+		{
+			return false;
+		}
+
+		$this->add_result_from_result_object($result_object);
+
+		foreach($buffer_items as $i => &$buffer_item)
+		{
+			$this->xml_writer->addXmlNode(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $buffer_item->get_result_identifier());
+			$this->xml_writer->addXmlNode(P_RESULTS_RESULTS_GROUP_VALUE, $buffer_item->get_result_value());
+			$this->xml_writer->addXmlNode(P_RESULTS_RESULTS_GROUP_RAW, $buffer_item->get_result_raw());
+		}
+
+		return true;
+	}
 	public function add_results_from_result_file(&$result_manager)
 	{
 		foreach($result_manager->get_results() as $result_object)
 		{
-			$buffer_items = $result_object->test_result_buffer->get_buffer_items();
-
-			if(count($buffer_items) == 0)
-			{
-				continue;
-			}
-
-			$this->add_result_from_result_object($result_object);
-
-			foreach($buffer_items as $i => &$buffer_item)
-			{
-				$this->xml_writer->addXmlNode(P_RESULTS_RESULTS_GROUP_IDENTIFIER, $buffer_item->get_result_identifier());
-				$this->xml_writer->addXmlNode(P_RESULTS_RESULTS_GROUP_VALUE, $buffer_item->get_result_value());
-				$this->xml_writer->addXmlNode(P_RESULTS_RESULTS_GROUP_RAW, $buffer_item->get_result_raw());
-			}
+			$this->add_result_from_result_object_with_value($result_object);
 		}
 	}
 	public function add_test_notes($test_notes)

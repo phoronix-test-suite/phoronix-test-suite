@@ -73,6 +73,17 @@ class pts_strings
 		$string = explode($delimited_by, $string);
 		return array_pop($string);
 	}
+	public static function random_characters($length)
+	{
+		$random = null;
+
+		for($i = 0; $i < $length; $i++)
+		{
+			$random .= chr(rand(65, 90));
+		}
+
+		return $random;
+	}
 	public static function char_is_of_type($char, $attributes)
 	{
 		$i = ord($char);

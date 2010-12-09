@@ -708,8 +708,6 @@ class pts_test_run_manager
 
 					if(!empty($upload_url))
 					{
-						echo "\nResults Uploaded To: " . $upload_url . "\n";
-						pts_module_manager::module_process("__event_global_upload", $upload_url);
 						pts_client::display_web_page($upload_url, "Do you want to launch Phoronix Global", true);
 					}
 					else

@@ -89,7 +89,7 @@ class pts_openbenchmarking
 	}
 	public static function make_openbenchmarking_request($request, $post = array())
 	{
-		$url = openbenchmarking_host() . "f/client.php";
+		$url = self::openbenchmarking_host() . "f/client.php";
 		$to_post = array_merge(array(
 			"r" => $request,
 			"client_version" => PTS_CORE_VERSION,
@@ -333,7 +333,7 @@ class pts_openbenchmarking
 		else if($object instanceof pts_result_file)
 		{
 			$result_file = &$object;
-			$local_file_name = $object->get_identifier();
+			$local_file_name = $result_file->get_identifier();
 			$results_identifier = null;
 		}
 
@@ -359,16 +359,29 @@ class pts_openbenchmarking
 		*/
 
 		// TODO: support for uploading test result logs here, etc
-		$composite_xml = $result_file->xml_parser->getXML(false);
+		$composite_xml = $result_file->xml_parser->getXML();
 		$to_post = array(
 			'composite_xml' => base64_encode($composite_xml),
-			'composite_xml_hash' => null,
+			'composite_xml_hash' => sha1($composite_xml),
 			'local_file_name' => $local_file_name,
 			'this_results_identifier' => $results_identifier
 			);
 
-		$openbenchmarking = self::make_openbenchmarking_request('upload_result', $to_post);
-		// TODO: handle what to do now...
+		$json_response = self::make_openbenchmarking_request('upload_test_result', $to_post);
+		$json_response = json_decode($json_response);
+
+		if(isset($json_response['openbenchmarking']['upload']['error']))
+		{
+			echo "\nERROR:" . $json_response . "\n";
+		}
+		if(isset($json_response['openbenchmarking']['upload']['url']))
+		{
+			echo "\nResults Uploaded To: " . $json_response['openbenchmarking']['upload']['url'] . "\n";
+			pts_module_manager::module_process("__event_openbenchmarking_upload", $json_response);
+		}
+		//$json['openbenchmarking']['upload']['id']
+
+		return isset($json_response['openbenchmarking']['upload']['url']) ? $json_response['openbenchmarking']['upload']['url'] : false;
 	}
 }
 

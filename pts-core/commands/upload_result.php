@@ -33,12 +33,7 @@ class upload_result implements pts_option_interface
 		$result_file = pts_types::identifier_to_object($r[0]);
 		$upload_url = pts_openbenchmarking::upload_test_result($result_file);
 
-		if(!empty($upload_url))
-		{
-			echo "\nResults Uploaded To: " . $upload_url . "\n\n";
-			pts_module_manager::module_process("__event_global_upload", $upload_url);
-		}
-		else
+		if($upload_url == false)
 		{
 			echo "\nResults Failed To Upload.\n";
 		}

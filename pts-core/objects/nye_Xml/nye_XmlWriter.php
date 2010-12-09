@@ -37,8 +37,11 @@ class nye_XmlWriter
 		//$this->dom->preserveWhiteSpace = false;
 		$this->items = array();
 
-		$pts_comment = $this->dom->createComment(pts_title(true));
-		$this->dom->appendChild($pts_comment);
+		if(PTS_IS_CLIENT)
+		{
+			$pts_comment = $this->dom->createComment(pts_title(true));
+			$this->dom->appendChild($pts_comment);
+		}
 
 		if($xsl_binding != null)
 		{

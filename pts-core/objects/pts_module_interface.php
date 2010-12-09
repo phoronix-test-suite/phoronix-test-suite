@@ -167,9 +167,9 @@ class pts_module_interface
 	// Event-driven Functions
 	//
 
-	public static function __event_global_upload($obj = null)
+	public static function __event_openbenchmarking_upload($obj = null)
 	{
-		// Passed is a string of the URL for the test results uploaded to Phoronix Global
+		// Passed is the decoded JSON response from OpenBenchmarking.org
 		return;
 	}
 	public static function __event_results_process($obj = null)
