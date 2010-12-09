@@ -368,7 +368,7 @@ class pts_openbenchmarking
 			);
 
 		$json_response = self::make_openbenchmarking_request('upload_test_result', $to_post);
-		$json_response = json_decode($json_response);
+		$json_response = json_decode($json_response, true);
 
 		if(isset($json_response['openbenchmarking']['upload']['error']))
 		{
