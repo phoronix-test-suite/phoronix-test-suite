@@ -33,7 +33,6 @@ class result_file_to_suite implements pts_option_interface
 	}
 	public static function run($r)
 	{
-		return false; // TODO XXX: Fix to work with new test suite format
 		$result_file = false;
 		if(count($r) != 0)
 		{
@@ -58,18 +57,7 @@ class result_file_to_suite implements pts_option_interface
 
 		// Finish it off
 		$suite_identifier = pts_test_run_manager::clean_save_name_string($suite_name);
-
-		if(is_file(PTS_TEST_SUITE_PATH . $suite_identifier . ".xml"))
-		{
-			$suite_append = 1;
-			do
-			{
-				$suite_append++;
-			}
-			while(is_file(PTS_TEST_SUITE_PATH . $suite_identifier . "-" . $suite_append . ".xml"));
-			$suite_identifier .= "-" . $suite_append;
-		}
-		$save_to = PTS_TEST_SUITE_PATH . $suite_identifier . ".xml";
+		$save_to = PTS_TEST_SUITE_PATH . "local/" . $suite_identifier . "/suite-definition.xml";
 
 		if($suite_writer->save_xml($save_to) != false)
 		{

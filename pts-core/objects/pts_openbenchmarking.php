@@ -33,6 +33,11 @@ class pts_openbenchmarking
 			"gpu" => array("gpu", "model")
 			);
 	}
+	public static function valid_user_name()
+	{
+		$invalid_users = array("pts", "phoronix", "local");
+		// TODO: finish function
+	}
 	public static function stats_software_list()
 	{
 		return array(

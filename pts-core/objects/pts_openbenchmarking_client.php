@@ -112,6 +112,14 @@ class pts_openbenchmarking_client
 
 		foreach($repos as $repo_name)
 		{
+			pts_file_io::mkdir(PTS_OPENBENCHMARKING_SCRATCH_PATH . $repo_name);
+
+			if($repo_name == "local")
+			{
+				// Local is a special case, not actually a real repository
+				continue;
+			}
+
 			$index_file = PTS_OPENBENCHMARKING_SCRATCH_PATH . $repo_name . ".index";
 
 			if(is_file($index_file))
@@ -132,7 +140,6 @@ class pts_openbenchmarking_client
 
 			if(json_decode($server_index) != false)
 			{
-				pts_file_io::mkdir(PTS_OPENBENCHMARKING_SCRATCH_PATH . $repo_name);
 				file_put_contents($index_file, $server_index);
 			}
 		}
@@ -246,6 +253,18 @@ class pts_openbenchmarking_client
 
 		foreach($repos as $repo)
 		{
+			if($repo == "local")
+			{
+				if(is_file(PTS_TEST_PROFILE_PATH . $qualified_identifier . '/test-definition.xml'))
+				{
+					return $repo . '/' . $test . ($bind_version ? '-' . $version : null);
+				}
+				else if(is_file(PTS_TEST_SUITE_PATH . $qualified_identifier . '/suite-definition.xml'))
+				{
+					return $repo . '/' . $test . ($bind_version ? '-' . $version : null);
+				}
+			}
+
 			$repo_index = self::read_repository_index($repo);
 
 			if(is_array($repo_index) && isset($repo_index['tests'][$test]))
@@ -306,7 +325,7 @@ class pts_openbenchmarking_client
 	}
 	public static function linked_repositories()
 	{
-		return array("pts");
+		return array("local", "pts");
 	}
 }
 

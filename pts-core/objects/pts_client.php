@@ -540,12 +540,6 @@ class pts_client
 
 		if($graph_object->getRenderer() == "SVG")
 		{
-			// Hackish way to try to get all browsers to show the entire SVG graph when the graphs may be different size, etc
-			$height += 50;
-			$width = 600 > $width ? 600 : $width;
-			$height = 400 > $height ? 400 : $height;
-
-			// TODO XXX: see if auto works in all browsers
 			$width = "auto";
 			$height = "auto";
 		}

@@ -257,7 +257,6 @@ class phoromatic extends pts_module_interface
 
 	public static function user_system_process()
 	{
-		return false; // TODO XXX: Fix this to work with new test suite specification
 		$last_communication_minute = date("i");
 		$communication_attempts = 0;
 		static $current_hw = null;
@@ -331,9 +330,9 @@ class phoromatic extends pts_module_interface
 					{
 						$suite_identifier = "phoromatic-" . rand(1000, 9999);
 					}
-					while(is_file(PTS_TEST_SUITE_PATH . $suite_identifier . ".xml"));
+					while(is_file(PTS_TEST_SUITE_PATH . "local/" . $suite_identifier . "/suite-definition.xml"));
 
-					file_put_contents(PTS_TEST_SUITE_PATH . $suite_identifier . ".xml", $server_response);
+					file_put_contents(PTS_TEST_SUITE_PATH . "local/" . $suite_identifier . "/suite-definition.xml", $server_response);
 
 					$phoromatic_schedule_id = $xml_parser->getXMLValue(M_PHOROMATIC_ID);
 					$phoromatic_results_identifier = $xml_parser->getXMLValue(M_PHOROMATIC_SYS_NAME);
@@ -372,7 +371,7 @@ class phoromatic extends pts_module_interface
 							$test_run_manager->post_execution_process();
 
 							// Upload to Phoromatic
-							pts_file_io::unlink(PTS_TEST_SUITE_PATH . $suite_identifier . ".xml");
+							pts_file_io::unlink(PTS_TEST_SUITE_PATH . "local/" . $suite_identifier . "/suite-definition.xml");
 
 							// Upload test results
 
