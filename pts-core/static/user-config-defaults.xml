@@ -8,8 +8,8 @@
 	<Options>
 		<General>
 			<AnonymousUsageReporting>TRUE</AnonymousUsageReporting>
-			<AnonymousHardwareReporting>FALSE</AnonymousHardwareReporting>
-			<AnonymousSoftwareReporting>FALSE</AnonymousSoftwareReporting>
+			<AnonymousHardwareReporting>TRUE</AnonymousHardwareReporting>
+			<AnonymousSoftwareReporting>TRUE</AnonymousSoftwareReporting>
 			<DefaultBrowser></DefaultBrowser>
 			<UsePhodeviCache>TRUE</UsePhodeviCache>
 			<DefaultDisplayMode>DEFAULT</DefaultDisplayMode>

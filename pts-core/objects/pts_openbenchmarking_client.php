@@ -359,7 +359,7 @@ class pts_openbenchmarking_client
 			);
 		$gsid = pts_network::http_upload_via_post(pts_openbenchmarking::openbenchmarking_host() . "extern/request-gsid.php", $upload_data);
 
-		return self::is_valid_gsid_format($gsid) ? $gsid : false;
+		return pts_openbenchmarking::is_valid_gsid_format($gsid) ? $gsid : false;
 	}
 	public static function linked_repositories()
 	{
