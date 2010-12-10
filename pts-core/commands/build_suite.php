@@ -36,7 +36,7 @@ class build_suite implements pts_option_interface
 
 		$possible_suites = pts_suites::available_suites();
 		$possible_tests = array();
-		foreach(pts_tests::available_tests() as $identifier)
+		foreach(pts_openbenchmarking_client::available_tests() as $identifier)
 		{
 			$test_profile = new pts_test_profile($identifier);
 

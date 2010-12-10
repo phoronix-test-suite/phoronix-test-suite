@@ -1178,14 +1178,6 @@ class pts_client
 			}
 		}
 	}
-	public static function cache_suite_calls()
-	{
-		pts_suites::supported_suites();
-	}
-	public static function cache_test_calls()
-	{
-		pts_tests::supported_tests();
-	}
 	public static function cache_hardware_calls()
 	{
 		phodevi::system_hardware(true);

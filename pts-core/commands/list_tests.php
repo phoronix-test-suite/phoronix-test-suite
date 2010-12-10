@@ -24,35 +24,22 @@ class list_tests implements pts_option_interface
 {
 	public static function run($r)
 	{
-		$tests_to_display = array();
-		foreach(pts_tests::available_tests() as $identifier)
+		pts_client::$display->generic_heading("Available Tests");
+		foreach(pts_openbenchmarking_client::available_tests() as $identifier)
 		{
-			$test_profile = new pts_test_profile($identifier);
+			$repo = substr($identifier, 0, strpos($identifier, '/'));
+			$id = substr($identifier, strlen($repo) + 1);
+			$repo_index = pts_openbenchmarking::read_repository_index($repo);
 
-			if($test_profile->is_supported())
+			if(!in_array(OPERATING_SYSTEM, $repo_index['tests'][$id]['supported_platforms']) || empty($repo_index['tests'][$id]['title']))
 			{
-				array_push($tests_to_display, $test_profile);
+				// Don't show unsupported tests
+				continue;
 			}
+
+			echo sprintf("%-28ls - %-35ls %-9ls\n", $identifier, $repo_index['tests'][$id]['title'], $repo_index['tests'][$id]['test_type']);
 		}
-
-		pts_client::$display->generic_heading(count($tests_to_display) . " Tests");
-
-		if(count($tests_to_display) > 0)
-		{
-			foreach($tests_to_display as $tp)
-			{
-
-				if(pts_client::read_env("PTS_DEBUG"))
-				{
-					echo sprintf("%-20ls %-6ls %-10ls %-12ls %-12ls %-4ls %-4ls %-22ls\n", $tp->get_identifier(), $tp->get_test_profile_version(), $tp->get_app_version(), $tp->get_status(), $tp->get_license(), $tp->get_download_size(), $tp->get_environment_size(), $tp->get_maintainer());
-				}
-				else if($tp->get_title() != null)
-				{
-					echo sprintf("%-20ls - %-36ls [%s, %10ls]\n", $tp->get_identifier(), $tp->get_title(), $tp->get_status(), $tp->get_license());
-				}
-			}
-			echo "\n";
-		}
+		echo "\n";
 	}
 }
 

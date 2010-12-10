@@ -22,69 +22,25 @@
 
 class pts_tests
 {
-	public static function available_tests()
-	{
-		static $cache = null;
-
-		if($cache == null)
-		{
-			$tests = glob(PTS_TEST_PROFILE_PATH . "*/test-definition.xml");
-
-			if($tests == false)
-			{
-				$tests = array();
-			}
-
-			asort($tests);
-
-			foreach($tests as &$test)
-			{
-				$test = basename(dirname($test));
-			}
-
-			$cache = $tests;
-		}
-
-		return $cache;
-	}
 	public static function installed_tests()
 	{
 		$cleaned_tests = array();
 
-		foreach(pts_file_io::glob(PTS_TEST_INSTALL_PATH . "*/pts-install.xml") as $test)
+		foreach(pts_file_io::glob(PTS_TEST_INSTALL_PATH . "*/") as $repo_path)
 		{
-			$test = basename(dirname($test));
-
-			if(pts_test_profile::is_test_profile($test))
+			$repo = basename($repo_path);
+			foreach(pts_file_io::glob($repo . "/*") as $identifier_path)
 			{
-				array_push($cleaned_tests, $test);
+				if(is_file($identifier_path . "/test-definition.xml"))
+				{
+					$identifier = basename($identifier_path);
+
+					array_push($cleaned_tests, $repo . '/' . $identifier);
+				}
 			}
 		}
 
 		return $cleaned_tests;
-	}
-	public static function supported_tests()
-	{
-		static $cache = null;
-
-		if($cache == null)
-		{
-			$supported_tests = array();
-
-			foreach(pts_tests::available_tests() as $identifier)
-			{
-				$test_profile = new pts_test_profile($identifier);
-
-				if($test_profile->is_supported())
-				{
-					array_push($supported_tests, $identifier);
-				}
-			}
-
-			$cache = $supported_tests;
-		}
-
-		return $cache;
 	}
 	public static function test_hardware_type($test_identifier)
 	{

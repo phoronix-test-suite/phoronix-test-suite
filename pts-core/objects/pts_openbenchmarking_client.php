@@ -67,7 +67,7 @@ class pts_openbenchmarking_client
 			'this_results_identifier' => $results_identifier
 			);
 
-		$json_response = self::make_openbenchmarking_request('upload_test_result', $to_post);
+		$json_response = pts_openbenchmarking::make_openbenchmarking_request('upload_test_result', $to_post);
 		$json_response = json_decode($json_response, true);
 
 		if(isset($json_response['openbenchmarking']['upload']['error']))
@@ -136,7 +136,7 @@ class pts_openbenchmarking_client
 				}
 			}
 
-			$server_index = self::make_openbenchmarking_request('repo_index', array('repo' => $repo_name));
+			$server_index = pts_openbenchmarking::make_openbenchmarking_request('repo_index', array('repo' => $repo_name));
 
 			if(json_decode($server_index) != false)
 			{
@@ -155,7 +155,7 @@ class pts_openbenchmarking_client
 
 		if(!is_file($file))
 		{
-			$test_profile = self::make_openbenchmarking_request('download_test', array('i' => $qualified_identifier));
+			$test_profile = pts_openbenchmarking::make_openbenchmarking_request('download_test', array('i' => $qualified_identifier));
 
 			if($hash_check == null || $hash_check = sha1($test_profile))
 			{
@@ -186,7 +186,7 @@ class pts_openbenchmarking_client
 
 		if(!is_file($file))
 		{
-			$test_profile = self::make_openbenchmarking_request('download_suite', array('i' => $qualified_identifier));
+			$test_profile = pts_openbenchmarking::make_openbenchmarking_request('download_suite', array('i' => $qualified_identifier));
 
 			if($hash_check == null || $hash_check = sha1($test_profile))
 			{
@@ -255,17 +255,17 @@ class pts_openbenchmarking_client
 		{
 			if($repo == "local")
 			{
-				if(is_file(PTS_TEST_PROFILE_PATH . $qualified_identifier . '/test-definition.xml'))
+				if(is_file(PTS_TEST_PROFILE_PATH . $test . '/test-definition.xml'))
 				{
 					return $repo . '/' . $test . ($bind_version ? '-' . $version : null);
 				}
-				else if(is_file(PTS_TEST_SUITE_PATH . $qualified_identifier . '/suite-definition.xml'))
+				else if(is_file(PTS_TEST_SUITE_PATH . $test . '/suite-definition.xml'))
 				{
 					return $repo . '/' . $test . ($bind_version ? '-' . $version : null);
 				}
 			}
 
-			$repo_index = self::read_repository_index($repo);
+			$repo_index = pts_openbenchmarking::read_repository_index($repo);
 
 			if(is_array($repo_index) && isset($repo_index['tests'][$test]))
 			{
@@ -312,6 +312,25 @@ class pts_openbenchmarking_client
 		}
 
 		return false;
+	}
+	public static function available_tests()
+	{
+		$available_tests = array();
+
+		foreach(self::linked_repositories() as $repo)
+		{
+			$repo_index = pts_openbenchmarking::read_repository_index($repo);
+
+			if(isset($repo_index['tests']) && is_array($repo_index['tests']))
+			{
+				foreach(array_keys($repo_index['tests']) as $identifier)
+				{
+					array_push($available_tests, $repo . '/' . $identifier);
+				}
+			}
+		}
+
+		return $available_tests;
 	}
 	public static function request_gsid()
 	{
