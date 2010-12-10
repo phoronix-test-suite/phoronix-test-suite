@@ -157,78 +157,17 @@ abstract class bilde_renderer
 	public static function setup_renderer($requested_renderer, $width, $height, $embed_identifiers = null, $special_attributes = null)
 	{
 		bilde_renderer::setup_font_directory();
-		$available_renderers = array("PNG", "JPG", "GIF", "SWF", "SVG", "SVGZ", "SVGOLD");
+		$available_renderers = array("PNG", "JPG", "GIF", "SWF", "SVG", "SVGZ");
 		$selected_renderer = "SVG";
 		$use_renderer = false;
 
 		if(isset($_SERVER['HTTP_USER_AGENT']))
 		{
-			static $http_selected_renderer = null;
+			static $selected_renderer = null;
 
-			if($http_selected_renderer == null)
+			if($selected_renderer == null)
 			{
-				$browser = $_SERVER['HTTP_USER_AGENT'] . ' ';
-				$http_selected_renderer = "PNG";
-
-				if(($p = strpos($browser, "Gecko/")) !== false)
-				{
-					// Mozilla Gecko-based browser (Firefox, etc)
-					$gecko_date = substr($browser, ($p + 6));
-					$gecko_date = substr($gecko_date, 0, 6);
-
-					// Around Firefox 3.0 era is best
-					// Firefox 2.0 mostly works except text might not show...
-					if($gecko_date >= 200702)
-					{
-						$http_selected_renderer = "SVG";
-					}
-				}
-				else if(($p = strpos($browser, "AppleWebKit/")) !== false)
-				{
-					// Safari, Google Chrome, Google Chromium, etc
-					$webkit_ver = substr($browser, ($p + 12));
-					$webkit_ver = substr($webkit_ver, 0, strpos($webkit_ver, ' '));
-
-					if($webkit_ver >= 530)
-					{
-						$http_selected_renderer = "SVG";
-					}
-				}
-				else if(($p = strpos($browser, "Opera/")) !== false)
-				{
-					// Opera
-					$ver = substr($browser, ($p + 6));
-					$ver = substr($ver, 0, strpos($ver, ' '));
-
-					// 9.27, 9.64 displays most everything okay
-					if($ver >= 9.27)
-					{
-						$http_selected_renderer = "SVG";
-					}
-				}
-				else if(($p = strpos($browser, "Epiphany/")) !== false)
-				{
-					// Older versions of Epiphany. Newer versions should report their Gecko or WebKit appropriately
-					$ver = substr($browser, ($p + 9));
-					$ver = substr($ver, 0, 4);
-
-					if($ver >= 2.22)
-					{
-						$http_selected_renderer = "SVG";
-					}
-				}
-				else if(($p = strpos($browser, "MSIE 9")) !== false)
-				{
-					// Microsoft Internet Explorer 9.0 finally seems to do SVG right
-					$http_selected_renderer = "SVG";
-				}
-			}
-
-			$selected_renderer = $http_selected_renderer;
-
-			if(isset($_REQUEST['force_format']) && in_array($_REQUEST['force_format'], $available_renderers))
-			{
-				$selected_renderer = $_REQUEST['force_format'];
+				$selected_renderer = self::browser_compatibility_check($_SERVER['HTTP_USER_AGENT']);
 			}
 		}
 
@@ -286,6 +225,71 @@ abstract class bilde_renderer
 	// Generic Functions
 	//
 
+	public static function browser_compatibility_check($user_agent)
+	{
+		if(isset($_REQUEST['force_format']))
+		{
+			return $_REQUEST['force_format'];
+		}
+
+		$user_agent .= ' ';
+		$selected_renderer = "PNG";
+
+		if(($p = strpos($user_agent, "Gecko/")) !== false)
+		{
+			// Mozilla Gecko-based browser (Firefox, etc)
+			$gecko_date = substr($user_agent, ($p + 6));
+			$gecko_date = substr($gecko_date, 0, 6);
+
+			// Around Firefox 3.0 era is best
+			// Firefox 2.0 mostly works except text might not show...
+			if($gecko_date >= 200702)
+			{
+				$selected_renderer = "SVG";
+			}
+		}
+		else if(($p = strpos($user_agent, "AppleWebKit/")) !== false)
+		{
+			// Safari, Google Chrome, Google Chromium, etc
+			$webkit_ver = substr($user_agent, ($p + 12));
+			$webkit_ver = substr($webkit_ver, 0, strpos($webkit_ver, ' '));
+
+			if($webkit_ver >= 530)
+			{
+				$selected_renderer = "SVG";
+			}
+		}
+		else if(($p = strpos($user_agent, "Opera/")) !== false)
+		{
+			// Opera
+			$ver = substr($user_agent, ($p + 6));
+			$ver = substr($ver, 0, strpos($ver, ' '));
+
+			// 9.27, 9.64 displays most everything okay
+			if($ver >= 9.27)
+			{
+				$selected_renderer = "SVG";
+			}
+		}
+		else if(($p = strpos($user_agent, "Epiphany/")) !== false)
+		{
+			// Older versions of Epiphany. Newer versions should report their Gecko or WebKit appropriately
+			$ver = substr($user_agent, ($p + 9));
+			$ver = substr($ver, 0, 4);
+
+			if($ver >= 2.22)
+			{
+				$selected_renderer = "SVG";
+			}
+		}
+		else if(($p = strpos($user_agent, "MSIE 9")) !== false)
+		{
+			// Microsoft Internet Explorer 9.0 finally seems to do SVG right
+			$selected_renderer = "SVG";
+		}
+
+		return $selected_renderer;
+	}
 	public static function setup_font_directory()
 	{
 		// Setup directory for TTF Fonts

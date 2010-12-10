@@ -42,7 +42,7 @@ class result_file_to_pdf implements pts_option_interface
 
 		define("BILDE_RENDERER", "PNG"); // Force to PNG renderer
 		define("BILDE_IMAGE_INTERLACING", false); // Otherwise FPDF will fail
-		pts_render::generate_result_file_graphs($r[0], PTS_SAVE_RESULTS_PATH . $r[0] . "/");
+		pts_client::generate_result_file_graphs($r[0], PTS_SAVE_RESULTS_PATH . $r[0] . "/");
 
 		$result_file = new pts_result_file($r[0]);
 		$pdf = new pts_pdf_template($result_file->get_title(), null);

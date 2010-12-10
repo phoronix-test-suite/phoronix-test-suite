@@ -532,6 +532,134 @@ class pts_client
 
 		return pts_strings::add_trailing_slash($path);
 	}
+	public static function xsl_results_viewer_graph_template($matching_graph_tables = false)
+	{
+		$graph_object = pts_render::previous_graph_object();
+		$width = $graph_object->graphWidth();
+		$height = $graph_object->graphHeight();
+
+		if($graph_object->getRenderer() == "SVG")
+		{
+			// Hackish way to try to get all browsers to show the entire SVG graph when the graphs may be different size, etc
+			$height += 50;
+			$width = 600 > $width ? 600 : $width;
+			$height = 400 > $height ? 400 : $height;
+
+			// TODO XXX: see if auto works in all browsers
+			$width = "auto";
+			$height = "auto";
+		}
+
+		$raw_xsl = file_get_contents(PTS_RESULTS_VIEWER_PATH . "pts-results-viewer.xsl");
+		$graph_string = $graph_object->htmlEmbedCode("result-graphs/<xsl:number value=\"position()\" />.BILDE_EXTENSION", $width, $height);
+
+		$raw_xsl = str_replace("<!-- GRAPH TAG -->", $graph_string, $raw_xsl);
+
+		if($matching_graph_tables)
+		{
+			$bilde_svg = new bilde_svg_renderer(1, 1);
+			$table_string = $bilde_svg->html_embed_code("result-graphs/<xsl:number value=\"position()\" />_table.BILDE_EXTENSION", array("width" => "auto", "height" => "auto"), true);
+			$raw_xsl = str_replace("<!-- GRAPH TABLE TAG -->", $table_string, $raw_xsl);
+		}
+
+		return $raw_xsl;
+	}
+	public static function generate_result_file_graphs($test_results_identifier, $save_to_dir = false)
+	{
+		if($save_to_dir)
+		{
+			if(pts_file_io::mkdir($save_to_dir . "/result-graphs") == false)
+			{
+				// Directory must exist, so remove any old graph files first
+				foreach(pts_file_io::glob($save_to_dir . "/result-graphs/*") as $old_file)
+				{
+					unlink($old_file);
+				}
+			}
+		}
+
+		$result_file = new pts_result_file($test_results_identifier);
+
+		$generated_graphs = array();
+		$generated_graph_tables = false;
+
+		// Render overview chart
+		if($save_to_dir)
+		{
+			$chart = new pts_ResultFileTable($result_file);
+			$chart->renderChart($save_to_dir . "/result-graphs/overview.BILDE_EXTENSION");
+
+			$chart = new pts_ResultFileSystemsTable($result_file);
+			$chart->renderChart($save_to_dir . "/result-graphs/systems.BILDE_EXTENSION");
+			unset($chart);
+		}
+
+		foreach($result_file->get_result_objects() as $key => $result_object)
+		{
+			$save_to = $save_to_dir;
+
+			if($save_to_dir && is_dir($save_to_dir))
+			{
+				$save_to .= "/result-graphs/" . ($key + 1) . ".BILDE_EXTENSION";
+
+				if(PTS_IS_CLIENT)
+				{
+					if($result_file->is_multi_way_comparison() || pts_client::read_env("GRAPH_GROUP_SIMILAR"))
+					{
+						$table_keys = array();
+						$titles = $result_file->get_test_titles();
+
+						foreach($titles as $this_title_index => $this_title)
+						{
+							if($this_title == $titles[$key])
+							{
+								array_push($table_keys, $this_title_index);
+							}
+						}
+					}
+					else
+					{
+						$table_keys = $key;
+					}
+
+					$chart = new pts_ResultFileTable($result_file, null, $table_keys);
+					$chart->renderChart($save_to_dir . "/result-graphs/" . ($key + 1) . "_table.BILDE_EXTENSION");
+					unset($chart);
+					$generated_graph_tables = true;
+				}
+			}
+
+			$graph = pts_render::render_graph($result_object, $result_file, $save_to);
+			array_push($generated_graphs, $graph);
+		}
+
+		// Generate mini / overview graphs
+		if($save_to_dir)
+		{
+			$graph = new pts_OverviewGraph($result_file);
+
+			if($graph->doSkipGraph() == false)
+			{
+				$graph->saveGraphToFile($save_to_dir . "/result-graphs/visualize.BILDE_EXTENSION");
+				$graph->renderGraph();
+
+				// Check to see if skip_graph was realized during the rendering process
+				if($graph->doSkipGraph() == true)
+				{
+					pts_file_io::unlink($save_to_dir . "/result-graphs/visualize.svg");
+				}
+			}
+			unset($graph);
+		}
+
+		// Save XSL
+		if(count($generated_graphs) > 0 && $save_to_dir)
+		{
+			file_put_contents($save_to_dir . "/pts-results-viewer.xsl", pts_client::xsl_results_viewer_graph_template($generated_graph_tables));
+		}
+
+		return $generated_graphs;
+	}
 	public static function process_shutdown_tasks()
 	{
 		// TODO: possibly do something like posix_getpid() != pts_client::$startup_pid in case shutdown function is called from a child process
@@ -608,7 +736,7 @@ class pts_client
 
 			if($save_name == "composite" && $render_graphs)
 			{
-				pts_render::generate_result_file_graphs($save_results, $save_to_dir);
+				pts_client::generate_result_file_graphs($save_results, $save_to_dir);
 			}
 
 			$bool = file_put_contents(PTS_SAVE_RESULTS_PATH . $save_to, $save_results);
@@ -653,7 +781,7 @@ class pts_client
 	public static function regenerate_graphs($result_file_identifier, $full_process_string = false, $extra_graph_attributes = null)
 	{
 		$save_to_dir = pts_client::setup_test_result_directory($result_file_identifier);
-		$generated_graphs = pts_render::generate_result_file_graphs($result_file_identifier, $save_to_dir, false, $extra_graph_attributes);
+		$generated_graphs = pts_client::generate_result_file_graphs($result_file_identifier, $save_to_dir, false, $extra_graph_attributes);
 		$generated = count($generated_graphs) > 0;
 
 		if($generated && $full_process_string)

@@ -22,8 +22,6 @@
 
 class pts_render
 {
-	private static $previous_graph_object = null;
-
 	public static function render_graph(&$result_object, &$result_file = null, $save_as = false, $extra_attributes = null)
 	{
 		$graph = self::render_graph_process($result_object, $result_file, $save_as, $extra_attributes);
@@ -41,38 +39,35 @@ class pts_render
 				$save_as = tempnam('/tmp', 'pts_gd_render');
 				$graph->saveGraphToFile($save_as);
 				$graph->render_graph_finish();
-				$buffer = file_get_contents($save_as);
+				$graph = file_get_contents($save_as);
 				unlink($save_as);
-				$conts = base64_encode($buffer);
 
 				if($nested)
 				{
+					$graph = base64_encode($graph);
 					$graph = "<img src=\"data:image/png;base64,$conts\" />";
 				}
 				else
 				{
 					header("Content-Type: image/" . strtolower($graph->graph_image->get_renderer()));
-					$graph = $buffer;
 				}
 				break;
 			case "SVG":
-				$svg = $graph->render_graph_finish();
+				$graph = $graph->render_graph_finish();
 
 				if($nested)
 				{
 					// strip out any DOCTYPE and other crud that would be redundant, so start at SVG tag
-					$svg = substr($svg, strpos($svg, "<svg"));
+					$graph = substr($graph, strpos($graph, "<svg"));
 				}
 				else
 				{
 					header("Content-type: image/svg+xml");
 				}
 
-
-				$graph = $svg; // Safari seems to have problems when embedding the SVG in object/embed and all other browsers seem to handle it fine straight up, so do it this way now
-				// TODO: what to do for the width and height whether leave them empty, set to auto, or fill in from $graph data
 				//$graph = "<object type=\"image/svg+xml\">" . $svg . "</object>";
 				//$graph = "<embed type=\"image/svg+xml\" width=\"" . $graph->graphWidth() . "\" height=\"" . $graph->graphHeight() . "\">" . $svg . "</embed>";
+				// or in WebKit / Chrome / Safari right now we need to embed in <img> if wanting to use auto width/height
 				break;
 			default:
 				$graph = $graph->render_graph_finish();
@@ -233,144 +228,7 @@ class pts_render
 			$graph->saveGraphToFile($save_as);
 		}
 
-		if(PTS_IS_CLIENT)
-		{
-			self::$previous_graph_object = $graph;
-		}
-
 		return $graph;
-	}
-	public static function generate_result_file_graphs($test_results_identifier, $save_to_dir = false)
-	{
-		if($save_to_dir)
-		{
-			if(pts_file_io::mkdir($save_to_dir . "/result-graphs", 0777, true) == false)
-			{
-				// Directory must exist, so remove any old graph files first
-				foreach(pts_file_io::glob($save_to_dir . "/result-graphs/*") as $old_file)
-				{
-					unlink($old_file);
-				}
-			}
-		}
-
-		$result_file = new pts_result_file($test_results_identifier);
-
-		$generated_graphs = array();
-		$generated_graph_tables = false;
-
-		// Render overview chart
-		if($save_to_dir)
-		{
-			$chart = new pts_ResultFileTable($result_file);
-			$chart->renderChart($save_to_dir . "/result-graphs/overview.BILDE_EXTENSION");
-
-			$chart = new pts_ResultFileSystemsTable($result_file);
-			$chart->renderChart($save_to_dir . "/result-graphs/systems.BILDE_EXTENSION");
-			unset($chart);
-		}
-
-		foreach($result_file->get_result_objects() as $key => $result_object)
-		{
-			$save_to = $save_to_dir;
-
-			if($save_to_dir && is_dir($save_to_dir))
-			{
-				$save_to .= "/result-graphs/" . ($key + 1) . ".BILDE_EXTENSION";
-
-				if(PTS_IS_CLIENT)
-				{
-					if($result_file->is_multi_way_comparison() || pts_client::read_env("GRAPH_GROUP_SIMILAR"))
-					{
-						$table_keys = array();
-						$titles = $result_file->get_test_titles();
-
-						foreach($titles as $this_title_index => $this_title)
-						{
-							if($this_title == $titles[$key])
-							{
-								array_push($table_keys, $this_title_index);
-							}
-						}
-					}
-					else
-					{
-						$table_keys = $key;
-					}
-
-					$chart = new pts_ResultFileTable($result_file, null, $table_keys);
-					$chart->renderChart($save_to_dir . "/result-graphs/" . ($key + 1) . "_table.BILDE_EXTENSION");
-					unset($chart);
-					$generated_graph_tables = true;
-				}
-			}
-
-			$graph = pts_render::render_graph($result_object, $result_file, $save_to);
-			array_push($generated_graphs, $graph);
-		}
-
-		// Generate mini / overview graphs
-		if($save_to_dir)
-		{
-			$graph = new pts_OverviewGraph($result_file);
-
-			if($graph->doSkipGraph() == false)
-			{
-				$graph->saveGraphToFile($save_to_dir . "/result-graphs/visualize.BILDE_EXTENSION");
-				$graph->renderGraph();
-
-				// Check to see if skip_graph was realized during the rendering process
-				if($graph->doSkipGraph() == true)
-				{
-					pts_file_io::unlink($save_to_dir . "/result-graphs/visualize.svg");
-				}
-			}
-			unset($graph);
-		}
-
-		// Save XSL
-		if(count($generated_graphs) > 0 && $save_to_dir)
-		{
-			file_put_contents($save_to_dir . "/pts-results-viewer.xsl", pts_render::xsl_results_viewer_graph_template($generated_graph_tables));
-		}
-
-		return $generated_graphs;
-	}
-	public static function previous_graph_object()
-	{
-		return self::$previous_graph_object;
-	}
-	public static function xsl_results_viewer_graph_template($matching_graph_tables = false)
-	{
-		$graph_object = pts_render::previous_graph_object();
-		$width = $graph_object->graphWidth();
-		$height = $graph_object->graphHeight();
-
-		if($graph_object->getRenderer() == "SVG")
-		{
-			// Hackish way to try to get all browsers to show the entire SVG graph when the graphs may be different size, etc
-			$height += 50;
-			$width = 600 > $width ? 600 : $width;
-			$height = 400 > $height ? 400 : $height;
-
-			// TODO XXX: see if auto works in all browsers
-			$width = "auto";
-			$height = "auto";
-		}
-
-		$raw_xsl = file_get_contents(PTS_RESULTS_VIEWER_PATH . "pts-results-viewer.xsl");
-		$graph_string = $graph_object->htmlEmbedCode("result-graphs/<xsl:number value=\"position()\" />.BILDE_EXTENSION", $width, $height);
-
-		$raw_xsl = str_replace("<!-- GRAPH TAG -->", $graph_string, $raw_xsl);
-
-		if($matching_graph_tables)
-		{
-			$bilde_svg = new bilde_svg_renderer(1, 1);
-			$table_string = $bilde_svg->html_embed_code("result-graphs/<xsl:number value=\"position()\" />_table.BILDE_EXTENSION", array("width" => "auto", "height" => "auto"), true);
-			$raw_xsl = str_replace("<!-- GRAPH TABLE TAG -->", $table_string, $raw_xsl);
-		}
-
-		return $raw_xsl;
 	}
 	public static function generate_overview_object(&$overview_table, $overview_type)
 	{
@@ -566,70 +424,6 @@ class pts_render
 				}
 			}
 		}
-	}
-	public static function list_regressions_linear(&$result_file, $threshold = 0.05, $show_only_active_regressions = true)
-	{
-		$regressions = array();
-
-		foreach($result_file->get_result_objects() as $test_index => $result_object)
-		{
-			$prev_buffer_item = null;
-			$this_test_regressions = array();
-
-			foreach($result_object->test_result_buffer->get_buffer_items() as $buffer_item)
-			{
-				if(!is_numeric($buffer_item->get_result_value()))
-				{
-					break;
-				}
-
-				if($prev_buffer_item != null && abs(1 - ($buffer_item->get_result_value() / $prev_buffer_item->get_result_value())) > $threshold)
-				{
-					if(defined("PHOROMATIC_TRACKER"))
-					{
-						$explode_r = explode(': ', $buffer_item->get_result_identifier());
-						$explode_r_prev = explode(': ', $prev_buffer_item->get_result_identifier());
-
-						if(count($explode_r) > 1 && $explode_r[0] != $explode_r_prev[0])
-						{
-							// This case wards against it looking like a regression between multiple systems on a Phoromatic Tracker
-							// The premise is the format is "SYSTEM NAME: DATE" so match up SYSTEM NAME's
-							continue;
-						}
-					}
-
-					$this_regression_marker = new pts_test_result_regression_marker($result_object, $prev_buffer_item, $buffer_item, $test_index);
-
-					if($show_only_active_regressions)
-					{
-						foreach($this_test_regressions as $index => &$regression_marker)
-						{
-							if(abs(1 - ($regression_marker->get_base_value() / $this_regression_marker->get_regressed_value())) < 0.04)
-							{
-								// 1% tolerance, regression seems to be corrected
-								unset($this_test_regressions[$index]);
-								$this_regression_marker = null;
-								break;
-							}
-						}
-					}
-
-					if($this_regression_marker != null)
-					{
-						array_push($this_test_regressions, $this_regression_marker);
-					}
-				}
-
-				$prev_buffer_item = $buffer_item;
-			}
-
-			foreach($this_test_regressions as &$regression_marker)
-			{
-				array_push($regressions, $regression_marker);
-			}
-		}
-
-		return $regressions;
 	}
 	public static function multi_way_identifier_check($identifiers, &$system_hardware = null)
 	{
