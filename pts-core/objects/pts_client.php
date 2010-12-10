@@ -358,7 +358,7 @@ class pts_client
 		if(empty($global_gsid) || pts_openbenchmarking::is_valid_gsid_format($global_gsid) == false)
 		{
 			// Global System ID for anonymous uploads, etc
-			$global_gsid = pts_openbenchmarking::request_gsid();
+			$global_gsid = pts_openbenchmarking_client::request_gsid();
 		}
 
 		define("PTS_GSID", $global_gsid);
