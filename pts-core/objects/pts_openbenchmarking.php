@@ -45,6 +45,7 @@ class pts_openbenchmarking
 			"os_architecture" => array("system", "kernel-architecture"),
 			"display_server" => array("system", "display-server"),
 			"display_driver" => array("system", "display-driver-string"),
+			"opengl" => array("system", "opengl-driver"),
 			"desktop" => array("system", "desktop-environment"),
 			"compiler" => array("system", "compiler"),
 			"file_system" => array("system", "filesystem"),

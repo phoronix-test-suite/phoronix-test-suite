@@ -946,7 +946,7 @@ class pts_client
 		if($sw_reporting)
 		{
 			$sw = array();
-			foreach(pts_openbenchmarking::stats_hardware_list() as $key => $value)
+			foreach(pts_openbenchmarking::stats_software_list() as $key => $value)
 			{
 				if(count($value) == 2)
 				{
