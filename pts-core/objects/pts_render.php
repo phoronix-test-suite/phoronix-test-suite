@@ -22,6 +22,8 @@
 
 class pts_render
 {
+	public static $last_graph_object = null;
+
 	public static function render_graph(&$result_object, &$result_file = null, $save_as = false, $extra_attributes = null)
 	{
 		$graph = self::render_graph_process($result_object, $result_file, $save_as, $extra_attributes);
@@ -226,6 +228,11 @@ class pts_render
 		if($save_as)
 		{
 			$graph->saveGraphToFile($save_as);
+		}
+
+		if(PTS_IS_CLIENT)
+		{
+			self::$last_graph_object = $graph;
 		}
 
 		return $graph;

@@ -534,18 +534,17 @@ class pts_client
 	}
 	public static function xsl_results_viewer_graph_template($matching_graph_tables = false)
 	{
-		$graph_object = pts_render::previous_graph_object();
-		$width = $graph_object->graphWidth();
-		$height = $graph_object->graphHeight();
+		$width = pts_render::$last_graph_object->graphWidth();
+		$height = pts_render::$last_graph_object->graphHeight();
 
-		if($graph_object->getRenderer() == "SVG")
+		if(pts_render::$last_graph_object->getRenderer() == "SVG")
 		{
 			$width = "auto";
 			$height = "auto";
 		}
 
 		$raw_xsl = file_get_contents(PTS_RESULTS_VIEWER_PATH . "pts-results-viewer.xsl");
-		$graph_string = $graph_object->htmlEmbedCode("result-graphs/<xsl:number value=\"position()\" />.BILDE_EXTENSION", $width, $height);
+		$graph_string = pts_render::$last_graph_object->htmlEmbedCode("result-graphs/<xsl:number value=\"position()\" />.BILDE_EXTENSION", $width, $height);
 
 		$raw_xsl = str_replace("<!-- GRAPH TAG -->", $graph_string, $raw_xsl);
 
