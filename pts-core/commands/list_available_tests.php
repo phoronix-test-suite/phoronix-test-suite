@@ -20,7 +20,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class list_tests implements pts_option_interface
+class list_available_tests implements pts_option_interface
 {
 	public static function run($r)
 	{
