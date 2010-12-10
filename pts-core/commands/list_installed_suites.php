@@ -24,7 +24,17 @@ class list_installed_suites implements pts_option_interface
 {
 	public static function run($r)
 	{
-		$installed_suites = pts_suites::installed_suites();
+		$installed_suites = array();
+
+		foreach(pts_openbenchmarking_client::available_suites() as $suite)
+		{
+			$suite = new pts_test_suite($suite);
+			if($suite->needs_updated_install() == false)
+			{
+				array_push($installed_suites, $suite);
+			}
+		}
+
 		pts_client::$display->generic_heading(count($installed_suites) . " Suites Installed");
 
 		if(count($installed_suites) > 0)

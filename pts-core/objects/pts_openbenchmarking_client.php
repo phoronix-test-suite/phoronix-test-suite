@@ -332,6 +332,25 @@ class pts_openbenchmarking_client
 
 		return $available_tests;
 	}
+	public static function available_suites()
+	{
+		$available_suites = array();
+
+		foreach(self::linked_repositories() as $repo)
+		{
+			$repo_index = pts_openbenchmarking::read_repository_index($repo);
+
+			if(isset($repo_index['suites']) && is_array($repo_index['suites']))
+			{
+				foreach(array_keys($repo_index['suites']) as $identifier)
+				{
+					array_push($available_suites, $repo . '/' . $identifier);
+				}
+			}
+		}
+
+		return $available_suites;
+	}
 	public static function request_gsid()
 	{
 		$upload_data = array(

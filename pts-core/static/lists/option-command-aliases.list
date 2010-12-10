@@ -16,6 +16,7 @@ suite_info = info
 test_info = info
 sensors = removed_option
 analyze = removed_option
+list_suites = list_available_suites
 analyze_results = removed_option
 list_supported_tests = list_available_tests
 initial_config = user_config_reset

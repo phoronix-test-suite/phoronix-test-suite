@@ -20,12 +20,12 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class list_suites implements pts_option_interface
+class list_available_suites implements pts_option_interface
 {
 	public static function run($r)
 	{
-		$available_suites = pts_suites::available_suites();
-		pts_client::$display->generic_heading(count($available_suites) . " Suites");
+		$available_suites = pts_openbenchmarking_client::available_suites();
+		pts_client::$display->generic_heading("Available Suites");
 
 		if(count($available_suites) > 0)
 		{
@@ -44,13 +44,9 @@ class list_suites implements pts_option_interface
 				{
 					$identifier_prefix = $partially_supported ? '*' : ' ';
 
-					if(pts_client::read_env("PTS_DEBUG"))
+					if($suite_info->get_title() != null)
 					{
-						echo sprintf("%-26ls - %-32ls %-4ls  %-12ls\n", $identifier_prefix . " " . $identifier, $suite_info->get_title(), $suite_info->get_version(), $suite_info->get_suite_type());
-					}
-					else if($suite_info->get_title() != null)
-					{
-						echo sprintf("%-24ls - %-32ls [Type: %s]\n", $identifier_prefix . " " . $identifier, $suite_info->get_title(), $suite_info->get_suite_type());
+						echo sprintf("%-34ls - %-32ls %s\n", $identifier_prefix . " " . $identifier, $suite_info->get_title(), $suite_info->get_suite_type());
 					}
 				}
 			}
