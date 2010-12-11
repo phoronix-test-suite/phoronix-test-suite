@@ -26,6 +26,10 @@ class pts_virtual_test_suite
 	private $repo;
 	private $virtual;
 
+	private $is_virtual_os_selector = false;
+	private $is_virtual_subsystem_selector = false;
+	private $is_virtual_software_type = false;
+
 	public function __construct($identifier)
 	{
 		$this->identifier = $identifier;
@@ -33,6 +37,10 @@ class pts_virtual_test_suite
 		$identifier = explode('/', $identifier);
 		$this->repo = $identifier[0];
 		$this->virtual = $identifier[1];
+
+		$this->is_virtual_os_selector = self::is_selector_os($identifier[1]);
+		$this->is_virtual_subsystem_selector = self::is_selector_subsystem($identifier[1]);
+		$this->is_virtual_software_type = self::is_selector_software_type($identifier[1]);
 	}
 	public function __toString()
 	{
@@ -56,9 +64,19 @@ class pts_virtual_test_suite
 					// virtual suite of all supported tests
 					$is_virtual_suite = true;
 				}
-				else if(self::is_virtual_os_suite($identifier[1]))
+				else if(self::is_selector_os($identifier[1]))
 				{
 					// virtual suite of all supported tests by a given operating system
+					$is_virtual_suite = true;
+				}
+				else if(self::is_selector_subsystem($identifier[1]))
+				{
+					// virtual suite of all supported tests by a given TestType / subsystem
+					$is_virtual_suite = true;
+				}
+				else if(self::is_selector_software_type($identifier[1]))
+				{
+					// virtual suite of all supported tests by a given SoftwareType
 					$is_virtual_suite = true;
 				}
 			}
@@ -66,28 +84,53 @@ class pts_virtual_test_suite
 
 		return $is_virtual_suite;
 	}
-	private static function is_virtual_os_suite($id)
+	private static function is_selector_os($id)
 	{
-		static $cache = null;
+		$yes = false;
 
-		if(!isset($cache[$id]))
+		foreach(pts_types::operating_systems() as $os_r)
 		{
-			$yes = false;
-
-			foreach(pts_types::operating_systems() as $os_r)
+			if(strtolower($os_r[0]) === $id)
 			{
-				if(strtolower($os_r[0]) === $id)
-				{
-					// virtual suite of all supported tests by a given operating system
-					$yes = true;
-					break;
-				}
+				// virtual suite of all supported tests by a given operating system
+				$yes = true;
+				break;
 			}
-
-			$cache[$id] = $yes;
 		}
 
-		return $cache[$id];
+		return $yes;
+	}
+	private static function is_selector_subsystem($id)
+	{
+		$yes = false;
+
+		foreach(pts_types::subsystem_targets() as $subsystem)
+		{
+			if(strtolower($subsystem) === $id)
+			{
+				// virtual suite of all supported tests by a given TestType / subsystem
+				$yes = true;
+				break;
+			}
+		}
+
+		return $yes;
+	}
+	private static function is_selector_software_type($id)
+	{
+		$yes = false;
+
+		foreach(pts_types::test_profile_software_types() as $subsystem)
+		{
+			if(strtolower($subsystem) === $id)
+			{
+				// virtual suite of all supported tests by a given SoftwareType
+				$yes = true;
+				break;
+			}
+		}
+
+		return $yes;
 	}
 	public function get_contained_test_profiles()
 	{
@@ -106,18 +149,28 @@ class pts_virtual_test_suite
 					continue;
 				}
 
+				if($this->is_virtual_os_selector && !in_array($this->virtual, array_map('strtolower', $test['supported_platforms'])))
+				{
+					// Doing a virtual suite of all tests specific to an OS, but this test profile is not supported there
+					continue;
+				}
+				else if($this->is_virtual_subsystem_selector && $this->virtual != strtolower($test['test_type']))
+				{
+					// Doing a virtual suite of all tests specific to a test_type, but this test profile is not supported there
+					continue;
+				}
+				else if($this->is_virtual_software_type && $this->virtual != strtolower($test['software_type']))
+				{
+					// Doing a virtual suite of all tests specific to a software_type, but this test profile is not supported there
+					continue;
+				}
+
 				$test_version = array_shift($test['versions']);
 				$test_profile = new pts_test_profile($this->repo . '/' . $test_identifier . '-' . $test_version);
 
 				if($test_profile->get_display_format() != "BAR_GRAPH" || !in_array($test_profile->get_license(), array("Free", "Non-Free")))
 				{
 					// Also ignore these tests
-					continue;
-				}
-
-				if(self::is_virtual_os_suite($this->virtual) && !in_array($this->virtual, array_map('strtolower', $test['supported_platforms'])))
-				{
-					// Doing a virtual suite of all tests specific to an OS, but this test profile is not supported there
 					continue;
 				}
 
