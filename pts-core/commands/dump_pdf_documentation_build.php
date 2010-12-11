@@ -99,15 +99,6 @@ class dump_pdf_documentation_build implements pts_option_interface
 			}
 		}
 
-		/*
-		if(count($identifiers) > 1 && is_file(PTS_SAVE_RESULTS_PATH . $r[0] . "/result-graphs/overview.jpg"))
-		{
-			$pdf->AddPage();
-			$pdf->Ln(100);
-			$pdf->Image(PTS_SAVE_RESULTS_PATH . $r[0] . "/result-graphs/overview.jpg", 15, 40, 180);
-		}
-		*/
-
 		$pdf_file = pts_client::user_home_directory() . "documentation.pdf";
 
 		$pdf->Output($pdf_file);
