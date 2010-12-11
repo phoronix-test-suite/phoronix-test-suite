@@ -22,6 +22,9 @@
 
 class list_modules implements pts_option_interface
 {
+	const doc_section = 'Modules';
+	const doc_description = "This option will list all of the available Phoronix Test Suite modules on this system.";
+
 	public static function run($r)
 	{
 		pts_client::$display->generic_heading(count(pts_module_manager::available_modules()) . " Modules");

@@ -22,6 +22,9 @@
 
 class list_available_tests implements pts_option_interface
 {
+	const doc_section = 'Information';
+	const doc_description = "This option will list all available test profiles that are available from the enabled OpenBenchmarking.org repositories.";
+
 	public static function run($r)
 	{
 		pts_client::$display->generic_heading("Available Tests");

@@ -22,6 +22,9 @@
 
 class module_info implements pts_option_interface
 {
+	const doc_section = 'Modules';
+	const doc_description = "This option will show detailed information on a Phoronix Test Suite module such as the version, developer, and a description of its purpose.";
+
 	public static function argument_checks()
 	{
 		return array(

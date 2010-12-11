@@ -24,6 +24,9 @@
 
 class recover_run implements pts_option_interface
 {
+	const doc_section = 'Testing';
+	const doc_description = "This option is similar to finish-run and can be used to finish running a set of tests that were started but never finished. Using this option when specifying a saved results file where all tests had not completed will attempt to finish testing on the remaining tests where there are missing results. Differing from <em>finish-run</em>, <em>recover-run</em> can be used if the system had crashed during the testing process and the test results from before the crash happened can generally be recovered.";
+
 	public static function argument_checks()
 	{
 		return array(

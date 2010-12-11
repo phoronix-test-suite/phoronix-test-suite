@@ -22,6 +22,9 @@
 
 class rename_identifier_in_result_file implements pts_option_interface
 {
+	const doc_section = 'Result Management';
+	const doc_description = "This option is used if you wish to change the name of the identifier in a test results file that is shown in the Phoronix Test Suite Results Viewer and the contained graphs.";
+
 	public static function argument_checks()
 	{
 		return array(

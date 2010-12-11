@@ -22,6 +22,9 @@
 
 class list_test_usage implements pts_option_interface
 {
+	const doc_section = 'Information';
+	const doc_description = "This option will list various details about installed tests and their usage.";
+
 	public static function run($r)
 	{
 		$installed_tests = pts_tests::installed_tests();

@@ -22,6 +22,9 @@
 
 class copy_run_in_result_file implements pts_option_interface
 {
+	const doc_section = 'Result Management';
+	const doc_description = "This option is used if you wish to change an existing test run within a saved results file.";
+
 	public static function argument_checks()
 	{
 		return array(

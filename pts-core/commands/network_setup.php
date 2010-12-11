@@ -22,6 +22,9 @@
 
 class network_setup implements pts_option_interface
 {
+	const doc_section = 'Other';
+	const doc_description = "This option allows the user to configure how the Phoronix Test Suite connects to Phoronix Global and other web-services. Connecting through an HTTP proxy can be configured through this option.";
+
 	public static function run($r)
 	{
 		pts_client::$display->generic_heading("Network Setup");

@@ -25,6 +25,9 @@ pts_load_xml_definitions("test-suite.xml");
 
 class build_suite implements pts_option_interface
 {
+	const doc_section = 'Other';
+	const doc_description = "This option will guide the user through the process of generating their own test suite, which they can then run. Optionally, passed as arguments can be the test(s) or suite(s) to add to the suite to be created, instead of being prompted through the process.";
+
 	public static function run($r)
 	{
 		pts_client::$display->generic_heading("Test Suite Creation");

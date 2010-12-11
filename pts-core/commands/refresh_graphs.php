@@ -22,6 +22,9 @@
 
 class refresh_graphs implements pts_option_interface
 {
+	const doc_section = 'Result Management';
+	const doc_description = "This option will re-render and save all result graphs within a saved file. This option can be used when making modifications to the graphing code or its color/option configuration file and testing the changes.";
+
 	public static function argument_checks()
 	{
 		return array(

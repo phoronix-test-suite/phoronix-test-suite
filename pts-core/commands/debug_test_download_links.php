@@ -22,10 +22,13 @@
 
 class debug_test_download_links implements pts_option_interface
 {
+	const doc_section = 'Asset Creation';
+	const doc_description = "This option will check all download links within the specified test profile(s) to ensure there are no broken URLs.";
+
 	public static function argument_checks()
 	{
 		return array(
-		new pts_argument_check(0, "!empty", null, "The name of a test or suite must be entered.")
+		new pts_argument_check(0, array('pts_types', 'is_test_or_suite'), null, "The name of a test or suite must be entered.")
 		);
 	}
 	public static function run($r)

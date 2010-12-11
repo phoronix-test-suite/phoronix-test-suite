@@ -837,7 +837,25 @@ class pts_client
 					continue;
 				}
 
-				$return_value = call_user_func_array($function_check, array((isset($pass_args[$argument_check->get_argument_index()]) ? $pass_args[$argument_check->get_argument_index()] : null)));
+				if($argument_check->get_argument_index() == 'VARIABLE_LENGTH')
+				{
+					$return_value = null;
+
+					foreach($pass_args as $arg)
+					{
+						$return_value = call_user_func_array($function_check, array($arg));
+
+						if($return_value == true)
+						{
+							break;
+						}
+					}
+
+				}
+				else
+				{
+					$return_value = call_user_func_array($function_check, array((isset($pass_args[$argument_check->get_argument_index()]) ? $pass_args[$argument_check->get_argument_index()] : null)));
+				}
 
 				if($return_value == $return_fails_on)
 				{

@@ -22,6 +22,9 @@
 
 class analyze_image_delta implements pts_option_interface
 {
+	const doc_section = 'Result Analytics';
+	const doc_description = "This option will analyze a test result file if it contains any test results that produced an image quality comparison (IQC) and will render image deltas illustrating the difference between images from two test results.";
+
 	public static function argument_checks()
 	{
 		return array(

@@ -22,6 +22,9 @@
 
 class user_config_set implements pts_option_interface
 {
+	const doc_section = 'Other';
+	const doc_description = "This option can be used for setting an XML value in the Phoronix Test Suite user configuration file.";
+
 	public static function run($r)
 	{
 		if(count($r) == 0)

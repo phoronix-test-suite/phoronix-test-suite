@@ -22,6 +22,9 @@
 
 class clone_global_result implements pts_option_interface
 {
+	const doc_section = 'OpenBenchmarking.org';
+	const doc_description = "This option will download a local copy of a file that was saved to OpenBenchmarking.org, as long as a valid public ID is supplied.";
+
 	public static function argument_checks()
 	{
 		return array(

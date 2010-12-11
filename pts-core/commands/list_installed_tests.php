@@ -22,6 +22,9 @@
 
 class list_installed_tests implements pts_option_interface
 {
+	const doc_section = 'Information';
+	const doc_description = "This option will list all test profiles that are currently installed on the system.";
+
 	public static function run($r)
 	{
 		$installed_tests = pts_tests::installed_tests();

@@ -20,8 +20,12 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class core_version implements pts_option_interface
+class pts_version implements pts_option_interface
 {
+	const doc_section = 'Other';
+	const doc_use_alias = 'version';
+	const doc_description = "This option will display the Phoronix Test Suite client version.";
+
 	public static function run($r)
 	{
 		echo "\n" . pts_title(true) . "\n\n";

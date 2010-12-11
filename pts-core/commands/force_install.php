@@ -22,6 +22,15 @@
 
 class force_install implements pts_option_interface
 {
+	const doc_section = 'Asset Creation';
+	const doc_description = "This option will force the installation (or re-installation) of a test or suite. The arguments and process is similar to the install option but even if the test is installed, the entire installation process will automatically be executed. This option is generally used when debugging a test installation problem.";
+
+	public static function argument_checks()
+	{
+		return array(
+		new pts_argument_check('VARIABLE_LENGTH', array('pts_types', 'identifier_to_object'), null, "Nothing was found to benchmark.")
+		);
+	}
 	public static function run($r)
 	{
 		pts_test_installer::standard_install($r, pts_c::force_install);

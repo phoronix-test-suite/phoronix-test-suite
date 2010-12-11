@@ -22,6 +22,9 @@
 
 class upload_result implements pts_option_interface
 {
+	const doc_section = 'OpenBenchmarking.org';
+	const doc_description = "This option is used for uploading a test result to OpenBenchmarking.org.";
+
 	public static function argument_checks()
 	{
 		return array(

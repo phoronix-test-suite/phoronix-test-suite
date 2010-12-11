@@ -22,6 +22,16 @@
 
 class run_test implements pts_option_interface
 {
+	const doc_section = 'Testing';
+	const doc_use_alias = 'run';
+	const doc_description = "This option will run the selected test(s).";
+
+	public static function argument_checks()
+	{
+		return array(
+		new pts_argument_check('VARIABLE_LENGTH', array('pts_types', 'identifier_to_object'), null, "Nothing was found to benchmark.")
+		);
+	}
 	public static function run($to_run)
 	{
 		pts_test_run_manager::standard_run($to_run);

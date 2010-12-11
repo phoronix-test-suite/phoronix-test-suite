@@ -25,6 +25,9 @@ pts_load_xml_definitions("test-suite.xml");
 
 class result_file_to_suite implements pts_option_interface
 {
+	const doc_section = 'Asset Creation';
+	const doc_description = "This option will guide the user through the process of generating their own test suite, which they can then run, that's based upon an existing test results file.";
+
 	public static function argument_checks()
 	{
 		return array(

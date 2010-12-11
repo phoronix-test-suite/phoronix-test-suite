@@ -22,6 +22,9 @@
 
 class rebuild_composite_xml implements pts_option_interface
 {
+	const doc_section = 'Other';
+	const doc_description = "This option can be used to rebuild your composite XML file in the event that the main result file was corrupted and the test-X.xml files are still present in the result file directory.";
+
 	public static function argument_checks()
 	{
 		return array(

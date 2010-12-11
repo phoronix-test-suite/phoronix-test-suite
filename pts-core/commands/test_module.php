@@ -22,6 +22,9 @@
 
 class test_module implements pts_option_interface
 {
+	const doc_section = 'Modules';
+	const doc_description = "This option can be used for debugging a Phoronix Test Suite module.";
+
 	public static function argument_checks()
 	{
 		return array(

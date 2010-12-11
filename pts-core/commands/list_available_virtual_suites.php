@@ -22,6 +22,9 @@
 
 class list_available_virtual_suites implements pts_option_interface
 {
+	const doc_section = 'Information';
+	const doc_description = "This option will list all available virtual test suites that can be dynamically created based upon the available tests from enabled OpenBenchmarking.org repositories.";
+
 	public static function run($r)
 	{
 		pts_client::$display->generic_heading("Available Virtual Suites");

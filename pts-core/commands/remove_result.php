@@ -22,6 +22,9 @@
 
 class remove_result implements pts_option_interface
 {
+	const doc_section = 'Result Management';
+	const doc_description = "This option will permanently remove the saved file set that is set as the first argument.";
+
 	public static function argument_checks()
 	{
 		return array(

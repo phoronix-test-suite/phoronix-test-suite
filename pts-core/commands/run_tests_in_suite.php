@@ -22,6 +22,9 @@
 
 class run_tests_in_suite implements pts_option_interface
 {
+	const doc_section = 'Testing';
+	const doc_description = "This option can be used if you wish to run all of the tests found in a supplied suite, but you wish to re-configure each of the test's options rather than using the defaults supplied by the suite.";
+
 	public static function run($r)
 	{
 		$to_run = array();

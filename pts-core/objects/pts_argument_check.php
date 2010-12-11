@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009, Phoronix Media
-	Copyright (C) 2009, Michael Larabel
+	Copyright (C) 2009 - 2010, Phoronix Media
+	Copyright (C) 2009 - 2010, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -49,6 +49,49 @@ class pts_argument_check
 	public function get_error_string()
 	{
 		return $this->error_string;
+	}
+	public function __toString()
+	{
+		if($this->get_function_check() == array('pts_types', 'is_result_file'))
+		{
+			$type = 'Test Result';
+		}
+		else if($this->get_function_check() == array('pts_types', 'identifier_to_object'))
+		{
+			$type = 'Test | Suite | Global ID | Test Result';
+		}
+		else if($this->get_function_check() == array('pts_types', 'is_test_or_suite'))
+		{
+			$type = 'Test | Suite';
+		}
+		else if($this->get_function_check() == array("pts_test_profile", 'is_test_profile'))
+		{
+			$type = 'Test';
+		}
+		else if($this->get_function_check() == array('pts_test_suite', 'is_suite'))
+		{
+			$type = 'Suite';
+		}
+		else if($this->get_function_check() == array('pts_global', 'is_global_id'))
+		{
+			$type = 'Global ID';
+		}
+		else if($this->get_function_check() == array('pts_result_file', 'is_test_result_file'))
+		{
+			$type = 'Test Result';
+		}
+		else if($this->get_function_check() == array("pts_module", "is_module"))
+		{
+			$type = 'Phoronix Test Suite Module';
+		}
+		else
+		{
+			$type = 'Unknown Object';
+		}
+
+		$type = '<' . $type . '>' . (($this->get_argument_index() === 'VARIABLE_LENGTH') ? ' ....' : null);
+
+		return $type;
 	}
 }
 

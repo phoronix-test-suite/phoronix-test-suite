@@ -22,6 +22,9 @@
 
 class user_config_get implements pts_option_interface
 {
+	const doc_section = 'Other';
+	const doc_description = "This option can be used for reading an XML value of the Phoronix Test Suite user configuration file.";
+
 	public static function run($r)
 	{
 		if(count($r) == 0)

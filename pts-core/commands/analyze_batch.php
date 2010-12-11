@@ -22,6 +22,9 @@
 
 class analyze_batch implements pts_option_interface
 {
+	const doc_section = 'Result Analytics';
+	const doc_description = "This option will analyze a batch results file and plot out the performance impact from the different options onto a line graph (i.e. to see the impact that changing the video resolution has on the system's performance).";
+
 	public static function argument_checks()
 	{
 		return array(

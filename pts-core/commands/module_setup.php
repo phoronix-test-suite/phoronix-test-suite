@@ -22,6 +22,9 @@
 
 class module_setup implements pts_option_interface
 {
+	const doc_section = 'Modules';
+	const doc_description = "This option will allow you to configure all available end-user options for a Phoronix Test Suite module. These options are then stored within the user's configuration file. Not all modules may have options that can be configured by the end-user.";
+
 	public static function argument_checks()
 	{
 		return array(

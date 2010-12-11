@@ -22,6 +22,15 @@
 
 class default_benchmark implements pts_option_interface
 {
+	const doc_section = 'Batch Testing';
+	const doc_description = "This option will install the selected test(s) (if needed) and will proceed to run the test(s) in the defaults mode. This option is equivalent to running phoronix-test-suite with the install option followed by the default-run option.";
+
+	public static function argument_checks()
+	{
+		return array(
+		new pts_argument_check('VARIABLE_LENGTH', array('pts_types', 'identifier_to_object'), null, "Nothing was found to benchmark.")
+		);
+	}
 	public static function run($r)
 	{
 		pts_test_installer::standard_install($r);

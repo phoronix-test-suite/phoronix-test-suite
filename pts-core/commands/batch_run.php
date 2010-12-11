@@ -22,6 +22,15 @@
 
 class batch_run implements pts_option_interface
 {
+	const doc_section = 'Batch Testing';
+	const doc_description = "This option and its arguments are equivalent to the run option, but the process will be run in the Phoronix Test Suite batch mode.";
+
+	public static function argument_checks()
+	{
+		return array(
+		new pts_argument_check('VARIABLE_LENGTH', array('pts_types', 'identifier_to_object'), null, "Nothing was found to run.")
+		);
+	}
 	public static function run($r)
 	{
 		pts_test_run_manager::standard_run($r, pts_c::batch_mode);

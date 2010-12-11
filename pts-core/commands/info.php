@@ -22,6 +22,9 @@
 
 class info implements pts_option_interface
 {
+	const doc_section = 'Information';
+	const doc_description = "This option will show details about the supplied test, suite, virtual suite, or result file.";
+
 	public static function argument_checks()
 	{
 		return array(

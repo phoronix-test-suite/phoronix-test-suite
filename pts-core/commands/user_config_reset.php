@@ -22,6 +22,9 @@
 
 class user_config_reset implements pts_option_interface
 {
+	const doc_section = 'Other';
+	const doc_description = "This option can be used for resetting the Phoronix Test Suite user configuration file to its default state.";
+
 	public static function run($r)
 	{
 		if(is_file(PTS_USER_PATH . "user-config.xml"))

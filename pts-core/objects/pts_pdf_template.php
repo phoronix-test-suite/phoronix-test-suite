@@ -56,7 +56,7 @@ class pts_pdf_template extends FPDF
 		$this->Ln(6);
 		$this->SetFont("Arial", "B", 10);
 		$this->Cell(0, 10, $this->pts_sub_title, 0, 0, "C");
-		$this->Ln(10);
+		$this->Ln(15);
 	}
 	function Footer()
 	{
@@ -109,6 +109,26 @@ class pts_pdf_template extends FPDF
 		$this->SetFillColor(255, 255, 255);
 		$this->Cell(0, 2, $Header, 0, 0, "L", true);
 		$this->Ln(10);
+	}
+	function WriteDocHeader($Header, $Options = null)
+	{
+		$this->SetFont("Arial", "B", 12);
+		$this->SetFillColor(255, 255, 255);
+		$this->Write(12, $Header);
+
+		if(is_array($Options))
+		{
+			$this->Write(12, '  ');
+			$this->SetFont('Arial', 'I', 10);
+			$this->Write(12, implode(' ', $Options));
+		}
+
+		$this->Ln(10);
+	}
+	function WriteDocText($Text)
+	{
+		$this->SetFont("Arial", "", 10);
+		$this->MultiCell(0, 5, $Text);
 	}
 	function WriteText($Text)
 	{

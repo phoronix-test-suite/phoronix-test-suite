@@ -22,6 +22,9 @@
 
 class list_installed_suites implements pts_option_interface
 {
+	const doc_section = 'Information';
+	const doc_description = "This option will list all suites that are currently installed on the system.";
+
 	public static function run($r)
 	{
 		$installed_suites = array();
