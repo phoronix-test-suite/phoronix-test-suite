@@ -81,6 +81,8 @@ class dump_pdf_documentation_build implements pts_option_interface
 			}
 		}
 
+		$pdf->WriteBigHeader("User Options");
+
 		foreach($pts_options as $section => &$contents)
 		{
 			if(empty($contents))

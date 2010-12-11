@@ -24,8 +24,10 @@ class pts_pdf_template extends FPDF
 {
 	private $pts_title = "";
 	private $pts_sub_title = "";
+	private $pdf_bookmarks = array();
+	private $pdf_bookmarks_outline_object_n = 0;
 
-	function __construct($Title = "", $SubTitle = "")
+	public function __construct($Title = "", $SubTitle = "")
 	{
 		parent::__construct();
 
@@ -37,8 +39,7 @@ class pts_pdf_template extends FPDF
 		$this->SetCreator(pts_codename(true));
 		$this->SetCompression(false);
 	}
-
-	function Header()
+	public function Header()
 	{
 		if($this->PageNo() == 1)
 		{
@@ -58,7 +59,7 @@ class pts_pdf_template extends FPDF
 		$this->Cell(0, 10, $this->pts_sub_title, 0, 0, "C");
 		$this->Ln(15);
 	}
-	function Footer()
+	public function Footer()
 	{
 		if($this->PageNo() == 1)
 		{
@@ -70,47 +71,57 @@ class pts_pdf_template extends FPDF
 		$this->Cell(0, 0, pts_title(), 0, 0, "L");
 		$this->Cell(0, 0, "www.phoronix-test-suite.com", 0, 0, "R");
 	}
-	function WriteBigHeaderCenter($Header)
+	public function WriteBigHeaderCenter($Header)
 	{
 		$this->WriteBigHeader($Header, "C");
 	}
-	function WriteBigHeader($Header, $Align = "L")
+	public function WriteBigHeader($Header, $Align = "L")
 	{
+		if($Align == 'L')
+		{
+			$this->CreateBookmark($Header, 0);
+		}
+
 		$this->SetFont("Arial", "B", 21);
 		$this->SetFillColor(255, 255, 255);
 		$this->Cell(0, 6, $Header, 0, 0, $Align, true);
 		$this->Ln(15);
 	}
-	function WriteHeaderCenter($Header)
+	public function WriteHeaderCenter($Header)
 	{
 		$this->WriteHeader($Header, "C");
 	}
-	function WriteHeader($Header, $Align = "L")
+	public function WriteHeader($Header, $Align = "L")
 	{
+		if($Align == 'L')
+		{
+			$this->CreateBookmark($Header, 1);
+		}
+
 		$this->SetFont("Arial", "B", 16);
 		$this->SetFillColor(255, 255, 255);
 		$this->Cell(0, 6, $Header, 0, 0, $Align, true);
 		$this->Ln(15);
 	}
-	function WriteStatementCenter($Header)
+	public function WriteStatementCenter($Header)
 	{
 		$this->WriteStatement($Header, "C");
 	}
-	function WriteStatement($Header, $Align = "L")
+	public function WriteStatement($Header, $Align = "L")
 	{
 		$this->SetFont("Arial", "B", 14);
 		$this->SetFillColor(255, 255, 255);
 		$this->Cell(0, 2, $Header, 0, 0, $Align, true);
 		$this->Ln(10);
 	}
-	function WriteMiniHeader($Header)
+	public function WriteMiniHeader($Header)
 	{
 		$this->SetFont("Arial", "B", 13);
 		$this->SetFillColor(255, 255, 255);
 		$this->Cell(0, 2, $Header, 0, 0, "L", true);
 		$this->Ln(10);
 	}
-	function WriteDocHeader($Header, $Options = null)
+	public function WriteDocHeader($Header, $Options = null)
 	{
 		$this->SetFont("Arial", "B", 12);
 		$this->SetFillColor(255, 255, 255);
@@ -125,18 +136,18 @@ class pts_pdf_template extends FPDF
 
 		$this->Ln(10);
 	}
-	function WriteDocText($Text)
+	public function WriteDocText($Text)
 	{
 		$this->SetFont("Arial", "", 10);
 		$this->MultiCell(0, 5, $Text);
 	}
-	function WriteText($Text)
+	public function WriteText($Text)
 	{
 		$this->SetFont("Arial", "", 11);
 		$this->MultiCell(0, 5, $Text);
 		$this->Ln();
 	}
-	function ResultTable($headers, $data, $left_headers = "")
+	public function ResultTable($headers, $data, $left_headers = "")
 	{
 		$this->Ln(20);
 		$this->SetFillColor(0, 0, 0);
@@ -188,6 +199,104 @@ class pts_pdf_template extends FPDF
 			$fill = !$fill;
 		}
 		$this->Cell($table_width + (count($data[0]) * $cell_width), 0, "", "T");
+	}
+
+
+	// PDF Bookmarking Support
+	// Example: http://www.fpdf.org/en/script/script1.php
+
+	public function CreateBookmark($bookmark, $level = 0)
+	{
+		array_push($this->pdf_bookmarks, array(
+			't' => $bookmark,
+			'l' => $level,
+			'y' => (($this->h - $this->getY()) * $this->k),
+			'p' => $this->PageNo()
+			));
+	}
+	protected function insert_pdf_bookmarks()
+	{
+		$bookmark_count = count($this->pdf_bookmarks);
+		$level = 0;
+		$ls = array();
+
+		foreach($this->pdf_bookmarks as $i => &$o)
+		{
+			if($o['l'] > 0)
+			{
+				$this->pdf_bookmarks[$i]['parent'] = $ls[($o['l'] - 1)];
+				$this->pdf_bookmarks[$ls[($o['l'] - 1)]]['last'] = $i;
+
+				if($o['l'] > $level)
+				{
+					$this->pdf_bookmarks[$ls[($o['l'] - 1)]]['first'] = $i;
+				}
+			}
+			else
+			{
+				$this->pdf_bookmarks[$i]['parent'] = $bookmark_count;
+			}
+
+			if($o['l'] <= $level && $i > 0)
+			{
+				$this->pdf_bookmarks[$ls[$o['l']]]['next'] = $i;
+				$this->pdf_bookmarks[$i]['prev'] = $ls[$o['l']];
+			}
+
+			$ls[$o['l']] = $i;
+			$level = $o['l'];
+		}
+
+		$n = $this->n + 1;
+
+		foreach($this->pdf_bookmarks as $i => &$o)
+		{
+			$this->_newobj();
+			$this->_out('<</Title ' . $this->_textstring($o['t']));
+			$this->_out('/Parent ' . ($n + $o['parent']) . ' 0 R');
+
+			if(isset($o['prev']))
+			{
+				$this->_out('/Prev '. ($n + $o['prev']) . ' 0 R');
+			}
+			if(isset($o['next']))
+			{
+				$this->_out('/Next ' . ($n + $o['next']) . ' 0 R');
+			}
+			if(isset($o['first']))
+			{
+				$this->_out('/First ' . ($n + $o['first']) . ' 0 R');
+			}
+			if(isset($o['last']))
+			{
+				$this->_out('/Last ' . ($n + $o['last']) . ' 0 R');
+			}
+
+			$this->_out(sprintf('/Dest [%d 0 R /XYZ 0 %.2F null]', (1 + 2 * $o['p']), $o['y']));
+			$this->_out('/Count 0>>');
+			$this->_out('endobj');
+		}
+
+		$this->_newobj();
+		$this->pdf_bookmarks_outline_object_n = $this->n;
+		$this->_out('<</Type /Outlines /First ' . $n . ' 0 R');
+		$this->_out('/Last ' . ($n + $ls[0]) . ' 0 R>>');
+		$this->_out('endobj');
+	}
+	public function _putresources()
+	{
+		parent::_putresources();
+		$this->insert_pdf_bookmarks();
+	}
+	public function _putcatalog()
+	{
+		parent::_putcatalog();
+
+		if(count($this->pdf_bookmarks) > 0)
+		{
+			$this->_out('/Outlines ' . $this->pdf_bookmarks_outline_object_n . ' 0 R');
+			$this->_out('/PageMode /UseOutlines');
+		}
 	}
 }
 
