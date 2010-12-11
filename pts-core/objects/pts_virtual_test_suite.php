@@ -53,12 +53,41 @@ class pts_virtual_test_suite
 				// figure out virtual suites //TODO: add free, local, installed, internal_tags
 				if($identifier[1] == "all")
 				{
+					// virtual suite of all supported tests
+					$is_virtual_suite = true;
+				}
+				else if(self::is_virtual_os_suite($identifier[1]))
+				{
+					// virtual suite of all supported tests by a given operating system
 					$is_virtual_suite = true;
 				}
 			}
 		}
 
 		return $is_virtual_suite;
+	}
+	private static function is_virtual_os_suite($id)
+	{
+		static $cache = null;
+
+		if(!isset($cache[$id]))
+		{
+			$yes = false;
+
+			foreach(pts_types::operating_systems() as $os_r)
+			{
+				if(strtolower($os_r[0]) === $id)
+				{
+					// virtual suite of all supported tests by a given operating system
+					$yes = true;
+					break;
+				}
+			}
+
+			$cache[$id] = $yes;
+		}
+
+		return $cache[$id];
 	}
 	public function get_contained_test_profiles()
 	{
@@ -86,12 +115,17 @@ class pts_virtual_test_suite
 					continue;
 				}
 
-				if($this->virtual == "all")
+				if(self::is_virtual_os_suite($this->virtual) && !in_array($this->virtual, array_map('strtolower', $test['supported_platforms'])))
 				{
-					if($test_profile->is_supported(false))
-					{
-						array_push($contained, $test_profile);
-					}
+					// Doing a virtual suite of all tests specific to an OS, but this test profile is not supported there
+					continue;
+				}
+
+				if($test_profile->is_supported(false))
+				{
+					// All checks passed, add to virtual suite
+					array_push($contained, $test_profile);
+					continue;
 				}
 			}
 		}
