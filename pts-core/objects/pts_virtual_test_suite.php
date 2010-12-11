@@ -71,12 +71,16 @@ class pts_virtual_test_suite
 
 				if(self::is_virtual_suite($virt_suite))
 				{
-					$virtual_suite = new pts_virtual_test_suite($virt_suite);
-					$size = count($virtual_suite->get_contained_test_profiles());
+					$virtual_suite = pts_types::identifier_to_object($virt_suite);
 
-					if($size > 0)
+					if($virtual_suite instanceof pts_virtual_test_suite)
 					{
-						array_push($virtual_suites, array($virt_suite, $size));
+						$size = count($virtual_suite->get_contained_test_profiles());
+
+						if($size > 0)
+						{
+							array_push($virtual_suites, array($virt_suite, $size));
+						}
 					}
 				}
 			}
