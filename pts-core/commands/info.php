@@ -129,6 +129,17 @@ class info implements pts_option_interface
 			}
 			echo "\n";
 		}
+		else if($args["object"] instanceof pts_virtual_test_suite)
+		{
+			pts_client::$display->generic_heading($args["object"]->get_title());
+			echo "Virtual Suite Description: " . $args["object"]->get_description() . "\n\n";
+
+			foreach($args["object"]->get_contained_test_profiles() as $test_profile)
+			{
+				echo '- ' . $test_profile . "\n";
+			}
+			echo "\n";
+		}
 	}
 }
 

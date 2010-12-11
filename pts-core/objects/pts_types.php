@@ -60,7 +60,7 @@ class pts_types
 			{
 				array_push($test_profiles, $object);
 			}
-			else if($object instanceof pts_test_suite)
+			else if($object instanceof pts_test_suite || $object instanceof pts_virtual_test_suite)
 			{
 				foreach($object->get_contained_test_profiles() as $test_profile)
 				{
@@ -134,19 +134,10 @@ class pts_types
 				pts_global::clone_global_result($identifier_item);
 				array_push($objects, new pts_result_file($identifier_item));
 			}
-			// add support for virtual suites: free, all, local, installed-tests
-			// TODO XXX: Restore support for virtual suites
-			/*
-			else if(pts_is_virtual_suite($identifier_item))
+			else if(PTS_IS_CLIENT && pts_virtual_test_suite::is_virtual_suite($identifier_item)) // Object is suite
 			{
-				foreach(pts_virtual_suite_tests($object) as $test)
-				{
-					foreach(pts_contained_tests($test, $include_extensions) as $sub_test)
-					{
-						array_push($objects, $sub_test);
-					}
-				}
-			}*/
+				array_push($objects, new pts_virtual_test_suite($identifier_item));
+			}
 		}
 
 		return $objects;

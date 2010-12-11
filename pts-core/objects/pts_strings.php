@@ -73,6 +73,26 @@ class pts_strings
 		$string = explode($delimited_by, $string);
 		return array_pop($string);
 	}
+	public static function array_list_to_string($array, $bold_items = false, $append_to_end = null)
+	{
+		$count = count($array);
+
+		if($bold_items)
+		{
+			foreach($array as &$item)
+			{
+				$item = '<strong>' . $item . '</strong>';
+			}
+		}
+
+		if($count > 1)
+		{
+			$temp = array_pop($array);
+			array_push($array, 'and ' . $temp);
+		}
+
+		return implode(($count > 2 ? ', ' : ' ') . ' ', $array) . ($append_to_end != null ? ' ' .  $append_to_end . ($count > 1 ? 's' : null) : null);
+	}
 	public static function random_characters($length)
 	{
 		$random = null;

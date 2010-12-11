@@ -772,7 +772,7 @@ class pts_test_run_manager
 					continue;
 				}
 			}
-			else if($run_object instanceof pts_test_suite)
+			else if($run_object instanceof pts_test_suite || $run_object instanceof pts_virtual_test_suite)
 			{
 				if($run_object->is_core_version_supported() == false)
 				{
@@ -973,6 +973,33 @@ class pts_test_run_manager
 		// Is there something to run?
 		return $this->get_test_count() > 0;
 	}
+	protected function test_prompts_to_result_objects(&$test_profile)
+	{
+		$result_objects = array();
+
+		if((pts_c::$test_flags & pts_c::batch_mode) && pts_config::read_bool_config(P_OPTION_BATCH_TESTALLOPTIONS, "TRUE"))
+		{
+			list($test_arguments, $test_arguments_description) = pts_test_run_options::batch_user_options($test_profile);
+		}
+		else if((pts_c::$test_flags & pts_c::defaults_mode))
+		{
+			list($test_arguments, $test_arguments_description) = pts_test_run_options::default_user_options($test_profile);
+		}
+		else
+		{
+			list($test_arguments, $test_arguments_description) = pts_test_run_options::prompt_user_options($test_profile);
+		}
+
+		foreach(array_keys($test_arguments) as $i)
+		{
+			$test_result = new pts_test_result($run_object);
+			$test_result->set_used_arguments($test_arguments[$i]);
+			$test_result->set_used_arguments_description($test_arguments_description[$i]);
+			array_push($result_objects, $test_result);
+		}
+
+		return $result_objects;
+	}
 	public function determine_tests_to_run(&$to_run_objects)
 	{
 		$unique_test_count = count(array_unique($to_run_objects));
@@ -998,25 +1025,9 @@ class pts_test_run_manager
 					$request_results_save = true;
 				}
 
-				if((pts_c::$test_flags & pts_c::batch_mode) && pts_config::read_bool_config(P_OPTION_BATCH_TESTALLOPTIONS, "TRUE"))
+				foreach(self::test_prompts_to_result_objects($run_object) as $result_object)
 				{
-					list($test_arguments, $test_arguments_description) = pts_test_run_options::batch_user_options($run_object);
-				}
-				else if((pts_c::$test_flags & pts_c::defaults_mode))
-				{
-					list($test_arguments, $test_arguments_description) = pts_test_run_options::default_user_options($run_object);
-				}
-				else
-				{
-					list($test_arguments, $test_arguments_description) = pts_test_run_options::prompt_user_options($run_object);
-				}
-
-				foreach(array_keys($test_arguments) as $i)
-				{
-					$test_result = new pts_test_result($run_object);
-					$test_result->set_used_arguments($test_arguments[$i]);
-					$test_result->set_used_arguments_description($test_arguments_description[$i]);
-					$this->add_test_result_object($test_result);
+					$this->add_test_result_object($result_object);
 				}
 			}
 			else if($run_object instanceof pts_test_suite)
@@ -1051,6 +1062,17 @@ class pts_test_run_manager
 					$test_result->set_used_arguments($result_object->get_arguments());
 					$test_result->set_used_arguments_description($result_object->get_arguments_description());
 					$this->add_test_result_object($test_result);
+				}
+			}
+			else if($run_object instanceof pts_virtual_test_suite)
+			{
+				foreach($run_object->get_contained_test_profiles() as $test_profile)
+				{
+					// The user is to configure virtual suites manually
+					foreach(self::test_prompts_to_result_objects($test_profile) as $result_object)
+					{
+						$this->add_test_result_object($result_object);
+					}
 				}
 			}
 			else
