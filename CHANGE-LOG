@@ -9,6 +9,7 @@ Phoronix Test Suite 3.0 Alpha 4 (Git)
 - pts-core: Support for uploading test results to OpenBenchmarking.org
 - pts-core: Add a local repository for test profiles and test suites that aren't on OpenBenchmarking.org
 - pts-core: Restore support for virtual suites using a new design that is supportive of OpenBenchmarking.org architecture
+- pts-core: Add list-available-virtual-suites command
 - pts: Move test profiles out of the phoronix-test-suite client and into the OpenBenchmarking.org cloud
 - pts: Move test suites out of the phoronix-test-suite client and into the OpenBenchmarking.org cloud
 

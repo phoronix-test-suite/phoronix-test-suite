@@ -29,6 +29,8 @@ class pts_virtual_test_suite
 	private $is_virtual_os_selector = false;
 	private $is_virtual_subsystem_selector = false;
 	private $is_virtual_software_type = false;
+	private $is_virtual_internal_tag = false;
+	private $is_virtual_installed = false;
 
 	public function __construct($identifier)
 	{
@@ -41,10 +43,46 @@ class pts_virtual_test_suite
 		$this->is_virtual_os_selector = self::is_selector_os($identifier[1]);
 		$this->is_virtual_subsystem_selector = self::is_selector_subsystem($identifier[1]);
 		$this->is_virtual_software_type = self::is_selector_software_type($identifier[1]);
+		$this->is_virtual_internal_tag = self::is_selector_internal_tag($this->repo, $this->virtual);
+		$this->is_virtual_installed = ($this->virtual == "installed");
 	}
 	public function __toString()
 	{
 		return $this->identifier;
+	}
+	public static function available_virtual_suites()
+	{
+		$virtual_suites = array();
+
+		$possible_identifiers = array_merge(
+			array('all', 'installed'),
+			array_map('strtolower', self::available_operating_systems()),
+			array_map('strtolower', pts_types::subsystem_targets()),
+			array_map('strtolower', pts_types::test_profile_software_types())
+			);
+
+		foreach(pts_openbenchmarking_client::linked_repositories() as $repo)
+		{
+			$repo_identifiers = array_merge($possible_identifiers, self::tags_in_repo($repo));
+
+			foreach($repo_identifiers as $id)
+			{
+				$virt_suite = $repo . '/' . $id;
+
+				if(self::is_virtual_suite($virt_suite))
+				{
+					$virtual_suite = new pts_virtual_test_suite($virt_suite);
+					$size = count($virtual_suite->get_contained_test_profiles());
+
+					if($size > 0)
+					{
+						array_push($virtual_suites, array($virt_suite, $size));
+					}
+				}
+			}
+		}
+
+		return $virtual_suites;
 	}
 	public static function is_virtual_suite($identifier)
 	{
@@ -58,10 +96,15 @@ class pts_virtual_test_suite
 
 			if(isset($repo_index['tests']) && is_array($repo_index['tests']))
 			{
-				// figure out virtual suites //TODO: add free, local, installed, internal_tags
+				// figure out virtual suites
 				if($identifier[1] == "all")
 				{
 					// virtual suite of all supported tests
+					$is_virtual_suite = true;
+				}
+				else if($identifier[1] == "installed")
+				{
+					// virtual suite of all installed tests
 					$is_virtual_suite = true;
 				}
 				else if(self::is_selector_os($identifier[1]))
@@ -79,6 +122,11 @@ class pts_virtual_test_suite
 					// virtual suite of all supported tests by a given SoftwareType
 					$is_virtual_suite = true;
 				}
+				else if(self::is_selector_internal_tag($identifier[0], $identifier[1]))
+				{
+					// virtual suite of all supported tests by a given SoftwareType
+					$is_virtual_suite = true;
+				}
 			}
 		}
 
@@ -88,9 +136,9 @@ class pts_virtual_test_suite
 	{
 		$yes = false;
 
-		foreach(pts_types::operating_systems() as $os_r)
+		foreach(self::available_operating_systems() as $os)
 		{
-			if(strtolower($os_r[0]) === $id)
+			if($os === $id)
 			{
 				// virtual suite of all supported tests by a given operating system
 				$yes = true;
@@ -99,6 +147,17 @@ class pts_virtual_test_suite
 		}
 
 		return $yes;
+	}
+	private static function available_operating_systems()
+	{
+		$os = array();
+
+		foreach(pts_types::operating_systems() as $os_r)
+		{
+			array_push($os, strtolower($os_r[0]));
+		}
+
+		return $os;
 	}
 	private static function is_selector_subsystem($id)
 	{
@@ -132,6 +191,38 @@ class pts_virtual_test_suite
 
 		return $yes;
 	}
+	private static function is_selector_internal_tag($repo, $id)
+	{
+		$yes = false;
+
+		if(in_array(strtolower($id), self::tags_in_repo($repo)))
+		{
+			// virtual suite of all test profiles matching an internal tag
+			$yes = true;
+		}
+
+		return $yes;
+	}
+	public static function tags_in_repo($repo)
+	{
+		$tags = array();
+
+		// read the repo
+		$repo_index = pts_openbenchmarking::read_repository_index($repo);
+
+		if(isset($repo_index['tests']) && is_array($repo_index['tests']))
+		{
+			foreach($repo_index['tests'] as &$test)
+			{
+				foreach($test['internal_tags'] as $tag)
+				{
+					pts_arrays::unique_push($tags, strtolower($tag));
+				}
+			}
+		}
+
+		return $tags;
+	}
 	public function get_contained_test_profiles()
 	{
 		$contained = array();
@@ -164,6 +255,11 @@ class pts_virtual_test_suite
 					// Doing a virtual suite of all tests specific to a software_type, but this test profile is not supported there
 					continue;
 				}
+				else if($this->is_virtual_internal_tag && !in_array($this->virtual, array_map('strtolower', $test['internal_tags'])))
+				{
+					// Doing a virtual suite of all tests matching an internal tag
+					continue;
+				}
 
 				$test_version = array_shift($test['versions']);
 				$test_profile = new pts_test_profile($this->repo . '/' . $test_identifier . '-' . $test_version);
@@ -171,6 +267,12 @@ class pts_virtual_test_suite
 				if($test_profile->get_display_format() != "BAR_GRAPH" || !in_array($test_profile->get_license(), array("Free", "Non-Free")))
 				{
 					// Also ignore these tests
+					continue;
+				}
+
+				if($this->is_virtual_installed && $test_profile->is_test_installed() == false)
+				{
+					// Test is not installed
 					continue;
 				}
 
@@ -191,7 +293,7 @@ class pts_virtual_test_suite
 	}
 	public function get_description()
 	{
-		return "N/A";
+		return "N/A"; // TODO: auto-generate description
 	}
 	public function is_core_version_supported()
 	{
