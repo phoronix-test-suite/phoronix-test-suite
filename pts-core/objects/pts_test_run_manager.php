@@ -992,7 +992,7 @@ class pts_test_run_manager
 
 		foreach(array_keys($test_arguments) as $i)
 		{
-			$test_result = new pts_test_result($run_object);
+			$test_result = new pts_test_result($test_profile);
 			$test_result->set_used_arguments($test_arguments[$i]);
 			$test_result->set_used_arguments_description($test_arguments_description[$i]);
 			array_push($result_objects, $test_result);
