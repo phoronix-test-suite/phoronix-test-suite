@@ -278,11 +278,7 @@ class phodevi_cpu extends phodevi_device_interface
 			}
 		}
 
-		if(!empty($info))
-		{
-			$info = phodevi::clean_info_string($info);
-		}
-		else
+		if(empty($info))
 		{
 			$info = "Unknown";
 		}

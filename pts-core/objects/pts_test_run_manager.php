@@ -1143,7 +1143,7 @@ class pts_test_run_manager
 
 			if($test_run_request->test_profile->get_test_executable_dir() == null)
 			{
-				pts_client::$display->test_run_error("The test executable for " . $test_identifier . " could not be found.");
+				pts_client::$display->test_run_error("The test executable for " . $test_identifier . " could not be located.");
 				array_push($failed_tests, $test_identifier);
 				continue;
 			}

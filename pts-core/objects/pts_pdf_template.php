@@ -319,6 +319,17 @@ class pts_pdf_template extends FPDF
 		}
 		$this->Cell($table_width + (count($data[0]) * $cell_width), 0, "", "T");
 	}
+	public function _putinfo()
+	{
+		$this->_out('/Producer ' . $this->_textstring('Phoronix Media'));
+		$this->_out('/Subject ' . $this->_textstring('Phoronix-Test-Suite.com'));
+		$this->_out('/Title ' . $this->_textstring($this->title));
+		$this->_out('/Subject ' . $this->_textstring($this->subject));
+		$this->_out('/Author ' . $this->_textstring($this->author));
+		$this->_out('/Keywords ' . $this->_textstring($this->keywords));
+		$this->_out('/Creator ' . $this->_textstring($this->creator));
+		$this->_out('/CreationDate ' . $this->_textstring('D:' . date('YmdHis')));
+	}
 
 
 	// PDF Bookmarking Support

@@ -4,25 +4,37 @@ technologies
 technology
 version
 computer
+chipset integrated
+community
 processor
 host bridge
+adapter
+CPU
+international
+controller
+express
+graphics
 dram controller
 electronics
+serverengines
+x86/mmx/sse2
 memory controller
+(extreme graphics innovation)
 pci-e_gfx and ht3 k8 part
 pci-e_gfx and ht1 k8 part
-Northbridge only dual slot
+Northbridge only
+dual slot
+single slot
 genuine
 unknown device
 systemberatung
 gmbh
 graphics adapter
-express hub
 video device
 http://
 www.
 .com
-.tw
+.tw/
 /pci/sse2/3dnow!
 /pci/sse2
 memory balloon

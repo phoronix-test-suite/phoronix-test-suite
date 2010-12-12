@@ -275,6 +275,11 @@ class phodevi
 				{
 					$value = call_user_func_array(array("phodevi_" . $device, $dev_function), $function_pass);
 
+					if(!is_array($value))
+					{
+						$value = self::clean_info_string($value);
+					}
+
 					if($cache_code != PHODEVI_AVOID_CACHE)
 					{
 						self::$device_cache[$device][$read_property] = $value;
@@ -459,12 +464,12 @@ class phodevi
 			}
 		}
 
-		$str = str_ireplace($remove_phrases, ' ', $str);
-
 		foreach($change_phrases as $new_phrase => $original_phrase)
 		{
 			$str = str_ireplace($original_phrase, $new_phrase, $str);
 		}
+
+		$str = str_ireplace($remove_phrases, ' ', $str);
 
 		return pts_strings::trim_spaces($str);
 	}

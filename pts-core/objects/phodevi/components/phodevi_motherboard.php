@@ -174,13 +174,16 @@ class phodevi_motherboard extends phodevi_device_interface
 					}
 				}
 			}
+
+			if(empty($info))
+			{
+				$info = phodevi_linux_parser::read_sys_dmi("product_name");
+			}
 		}
 		else if(IS_WINDOWS)
 		{
 			$info = phodevi_windows_parser::read_cpuz("Mainboard Model", null);
 		}
-
-		$info = phodevi::clean_info_string($info);
 
 		if(empty($info))
 		{

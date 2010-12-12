@@ -3,3 +3,6 @@ Advanced Micro Devices = AMD
 MICRO-STAR INTERNATIONAL = MSI
 Silicon Integrated Systems = SiS
 Integrated Graphics Controller = IGP
+Express Graphics Controller = IGP
+Integrated Graphics Device = IGP
+Chipset Integrated = IGP
