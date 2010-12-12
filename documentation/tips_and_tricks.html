@@ -10,20 +10,12 @@
 <div class="pts_doc_main">
 <!-- PTS AREA -->
 <h1>Tips &amp; Tricks</h1>
-<p>This page shares some tips and tricks about the Phoronix Test Suite as well 
-as some random information that some users may find useful.</p>
+<p>This page shares some tips and tricks about the Phoronix Test Suite as well as some random information that some users may find useful.</p>
 <h2>General</h2>
-<p>- The desktop's screensaver will automatically be 
-shutdown when a test is running and will be restored to its previous state upon 
-the test's completion. This should work for GNOME, KDE, and other XDG-supportive desktop environments.</p>
-<p>- How do I find tests that are in a suite? Run <em>phoronix-test-suite info NAME-OF-SUITE</em> and (along with other information) a tree will be displayed that recursively shows the tests (along with any sub-suites) inside. To find suites that utilize a particular test, run <em>phoronix-test-suite info NAME-OF-TEST</em> and it will show that information too.</p>
+<p>- The desktop's screensaver will automatically be shutdown when a test is running and will be restored to its previous state upon the test's completion. This should work for GNOME, KDE, and other XDG-supportive desktop environments.</p>
 <p>- If you have many computers you wish to benchmark, once all of your tests have been downloaded, run <em>phoronix-test-suite make-download-cache</em> to generate a copy of these files at <em>~/.phoronix-test-suite/download-cache/</em>. A download cache is used for conserving time and bandwidth by eliminating the need for the Phoronix Test Suite to download files that have already been downloaded once. Copy this folder to the other systems or copy it to a DVD or USB hard drive, connect it to the next test system, and the Phoronix Test Suite will automatically use this local download cache. Or store these files on a local HTTP/FTP server and then update your <em>~/.phoronix-test-suite/user-config.xml</em> file to reflect the location of this download cache directory.</p>
-<p>- For developers, documentation on many of the Phoronix Test Suite interfaces can be found within <em>phoronix-test-suite/pts-core/definitions/</em>.</p>
 <h2>Running</h2>
-<p>- When running a test in batch mode (through the use of the <em>batch-run</em> 
-or <em>batch-benchmark</em> options) that normally has end-user options (such 
-as the sub-test to run or resolution), the Phoronix Test Suite will run the test 
-with each unique combination of options possible.</p>
+<p>- When running a test in batch mode (through the use of the <em>batch-run</em> or <em>batch-benchmark</em> options) that normally has end-user options (such as the sub-test to run or resolution), the Phoronix Test Suite will run the test with each unique combination of options possible, if configured appropriately.</p>
 <p>- When running a test where you are prompted to enter any test options, multiple selections can be performed -- which will result in multiple test runs for each combination of the selected option(s) -- by separating each intended test option / number with a comma.</p>
 <p>- When being prompted for the test identifier or the file name for saving the results, several user variables are supported. These include 
 <em>$VIDEO_RESOLUTION</em>, <em>$VIDEO_CARD</em>, <em>$OPERATING_SYSTEM</em>, <em>$PROCESSOR</em>, <em>$MOTHERBOARD</em>, <em>$CHIPSET</em>, and <em>$KERNEL_VERSION</em>. 

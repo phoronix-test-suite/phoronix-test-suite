@@ -66,10 +66,11 @@ class pts_pdf_template extends FPDF
 
 		for($i = 0; $i < $tags->length; $i++)
 		{
+			$name = $tags->item($i)->nodeName;
 			$value = $tags->item($i)->nodeValue;
 			$dom_item = $tags->item($i);
 
-			switch($tags->item($i)->nodeName)
+			switch($name)
 			{
 				case 'h1':
 					$this->CreateBookmark($value, 1);
@@ -95,14 +96,22 @@ class pts_pdf_template extends FPDF
 					$this->Ln();
 					$this->html_text_interpret('h3', $dom_item);
 					break;
+				case 'ol':
 				case 'ul':
 					$this->SetFont("Arial", null, 11);
 					$this->SetLeftMargin(30);
 					$this->SetTextColor(0, 0, 0);
 
 					$this->Ln();
-					foreach($tags->item($i)->childNodes as $li)
+					foreach($tags->item($i)->childNodes as $j => $li)
 					{
+						if($name == 'ol' && ($j % 2) == 0)
+						{
+							$this->SetFont(null, 'B');
+							$this->Write(5, ceil($j / 2) + 1 . '. ', null);
+							$this->SetFont(null, null);
+						}
+
 						$this->html_text_interpret('p', $li);
 						$this->Ln();
 					}
