@@ -139,7 +139,11 @@ class dump_generate_documentation implements pts_option_interface
 			echo "\nSaved To: " . $pdf_file . "\n\n";
 
 			// Also re-generate the man page
-			$man_page = '.TH phoronix-test-suite 1  "www.phoronix-test-suite.com" "' . PTS_VERSION . '"\\n.SH NAME\\n'
+			$man_page = ".TH phoronix-test-suite 1  \"www.phoronix-test-suite.com\" \"" . PTS_VERSION . "\"\n.SH NAME\n";
+			$man_page .= "phoronix-test-suite \- The Phoronix Test Suite is an extensible open-source platform for performing testing and performance evaluation.\n";
+			$man_page .= ".SH SYNOPSIS\n.B phoronix-test-suite [options]\n.br\n.B phoronix-test-suite benchmark [test | suite]\n";
+			$man_page .= ".SH DESCRIPTION\nThe Phoronix Test Suite is the most comprehensive testing and benchmarking platform available that provides an extensible framework for which new tests can be easily added. The software is designed to effectively carry out both qualitative and quantitative benchmarks in a clean, reproducible, and easy-to-use manner.\n";
+			$man_page .= ".SH OPTIONS\n.TP\n";
 
 			foreach($pts_options as $section => &$contents)
 			{
@@ -148,23 +152,18 @@ class dump_generate_documentation implements pts_option_interface
 					continue;
 				}
 
-				$header = $dom->createElement('h1', $section);
-				$body->appendChild($header);
+				$man_page .= '.SH ' . strtoupper($section) . "\n";
 
 				sort($contents);
 				foreach($contents as &$option)
 				{
-					$sub_header = $dom->createElement('h3', $option[0]);
-					$em = $dom->CreateElement('em', '  ' . implode(' ', $option[1]));
-					$sub_header->appendChild($em);
-
-					$body->appendChild($sub_header);
-
-					$p = $dom->createElement('p', $option[2]);
-					$body->appendChild($p);
+					$man_page .= '.B ' . trim($option[0] . ' ' . implode(' ', $option[1])) . "\n" . $option[2] . "\n.TP\n";
 				}
 			}
-			
+			$man_page .= ".SH SEE ALSO\n.B Websites:\n.br\nhttp://www.phoronix-test-suite.com/\n.br\nhttp://commercial.phoronix-test-suite.com/\n.br\nhttp://www.openbenchmarking.org/\n.br\nhttp://www.phoronix.com/\n.br\nhttp://www.phoronix.com/forums/\n";
+			$man_page .= ".SH AUTHORS\nCopyright 2008 - " . date('Y') . " by Phoronix Media, Michael Larabel.\n.TP\n";
+
+			file_put_contents(PTS_PATH . "documentation/man-pages/phoronix-test-suite.1", $man_page);
 		}
 	}
 }

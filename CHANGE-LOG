@@ -12,6 +12,7 @@ Phoronix Test Suite 3.0 Alpha 4 (Git)
 - pts-core: Add list-available-virtual-suites command
 - pts-core: Begin revamping the Phoronix Test Suite documentation, add PDF documentation
 - pts-core: Improve validation of tests to run in queue, do so earlier in process
+- pts-core: Auto-generate the man page from the new documentation system
 - phodevi: Improved hardware/software string reporting
 - phodevi: More concise GPU string reporting
 - pts: Move test profiles out of the phoronix-test-suite client and into the OpenBenchmarking.org cloud

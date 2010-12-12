@@ -743,7 +743,7 @@ class pts_test_run_manager
 				}
 				else
 				{
-					if($run_object->is_supported() == false)
+					if($run_object->is_supported(false) == false)
 					{
 						continue;
 					}
@@ -956,7 +956,7 @@ class pts_test_run_manager
 
 		foreach($test_run_requests as &$test_run_request)
 		{
-			if($this->validate_test_to_run($test_run_request->test_profile))
+			if($this->validate_test_to_run($test_run_request->test_profile) == false)
 			{
 				continue;
 			}
@@ -1013,7 +1013,7 @@ class pts_test_run_manager
 			// TODO: determine whether to print the titles of what's being run?
 			if($run_object instanceof pts_test_profile)
 			{
-				if($run_object->get_title() == null || $this->validate_test_to_run($run_object))
+				if($run_object->get_title() == null || $this->validate_test_to_run($run_object) == false)
 				{
 					continue;
 				}
