@@ -594,7 +594,7 @@ class phodevi_gpu extends phodevi_device_interface
 					$info = shell_exec("cat /var/log/Xorg.0.log | grep \"Video RAM\"");
 				}
 
-				if(($pos = strpos($info, "RAM:") + 5) > 5 || ($pos = strpos($info, "Ram:") + 5) > 5 || ($pos = strpos($info, "RAM=") + 4) > 4)
+				if(($pos = stripos($info, "RAM:") + 5) > 5 || ($pos = strpos($info, "RAM=") + 4) > 4)
 				{
 					$info = substr($info, $pos);
 					$info = substr($info, 0, strpos($info, " "));
@@ -616,7 +616,7 @@ class phodevi_gpu extends phodevi_device_interface
 	}
 	public static function gpu_string()
 	{
-		return phodevi::read_property("gpu", "model") . phodevi::read_property("gpu", "frequency");
+		return phodevi::read_property("gpu", "model") . ' ' . phodevi::read_property("gpu", "frequency");
 	}
 	public static function gpu_frequency_string()
 	{
@@ -869,6 +869,36 @@ class phodevi_gpu extends phodevi_device_interface
 					if($to_check == "rev")
 					{
 						$info = substr($info, 0, $open_p - 1);
+					}
+				}
+			}
+		}
+
+		if(($bracket_open = strpos($info, '[')) !== false)
+		{
+			// Report only the information inside the brackets if it's more relevant...
+			// Mainly with Linux systems where the PCI information is reported like "nVidia GF104 [GeForce GTX 460]"
+
+			if(($bracket_close = strpos($info, ']', ($bracket_open + 1)) !== false)
+			{
+				$inside_bracket = substr($info, ($bracket_open + 1), ($bracket_close - $bracket_open - 1));
+
+				if(stripos($inside_bracket, 'Quadro') !== false || stripos($inside_bracket, 'GeForce') !== false)
+				{
+					$info = $inside_bracket . ' ' . substr($info, ($bracket_close + 1));
+
+					if(stripos($info, 'NVIDIA') === false)
+					{
+						$info = 'NVIDIA' . ' ' . $info;
+					}
+				}
+				else if(stripos($inside_bracket, 'Radeon') !== false || stripos($inside_bracket, 'FirePro') !== false || stripos($inside_bracket, 'FireGL') !== false)
+				{
+					$info = $inside_bracket . ' ' . substr($info, ($bracket_close + 1));
+
+					if(stripos($info, 'ATI') === false && stripos($info, 'AMD') === false)
+					{
+						$info = 'ATI/AMD' . ' ' . $info;
 					}
 				}
 			}
