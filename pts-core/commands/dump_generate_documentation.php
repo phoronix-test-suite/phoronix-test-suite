@@ -20,7 +20,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class dump_pdf_documentation_build implements pts_option_interface
+class dump_generate_documentation implements pts_option_interface
 {
 	public static function run($r)
 	{
@@ -128,10 +128,44 @@ class dump_pdf_documentation_build implements pts_option_interface
 			$pdf->html_to_pdf($html_file);
 		}
 
+		if(!is_writable(PTS_PATH . 'documentation/'))
+		{
+			echo "\nNot writable: " . PTS_PATH . 'documentation/';
+		}
+		else
+		{
+			$pdf_file = PTS_PATH . 'documentation/phoronix-test-suite.pdf';
+			$pdf->Output($pdf_file);
+			echo "\nSaved To: " . $pdf_file . "\n\n";
 
-		$pdf_file = pts_client::user_home_directory() . "documentation.pdf";
-		$pdf->Output($pdf_file);
-		echo "\nSaved To: " . $pdf_file . "\n\n";
+			// Also re-generate the man page
+			$man_page = '.TH phoronix-test-suite 1  "www.phoronix-test-suite.com" "' . PTS_VERSION . '"\\n.SH NAME\\n'
+
+			foreach($pts_options as $section => &$contents)
+			{
+				if(empty($contents))
+				{
+					continue;
+				}
+
+				$header = $dom->createElement('h1', $section);
+				$body->appendChild($header);
+
+				sort($contents);
+				foreach($contents as &$option)
+				{
+					$sub_header = $dom->createElement('h3', $option[0]);
+					$em = $dom->CreateElement('em', '  ' . implode(' ', $option[1]));
+					$sub_header->appendChild($em);
+
+					$body->appendChild($sub_header);
+
+					$p = $dom->createElement('p', $option[2]);
+					$body->appendChild($p);
+				}
+			}
+			
+		}
 	}
 }
 

@@ -789,7 +789,7 @@ class pts_test_run_manager
 				{
 					if($test_profile->is_test_installed() == false)
 					{
-						array_push($tests_missing, $run_object);
+						array_push($tests_missing, $test_profile);
 					}
 					else
 					{
@@ -1091,7 +1091,7 @@ class pts_test_run_manager
 	{
 		static $test_checks = null;
 
-		if(!isset($test_checks[$test_profile]))
+		if(!isset($test_checks[$test_profile->get_identifier()]))
 		{
 			$valid_test_profile = true;
 			$allow_results_sharing = $this->allow_sharing_of_results;
@@ -1132,10 +1132,10 @@ class pts_test_run_manager
 				$this->allow_sharing_of_results = false;
 			}
 
-			$test_checks[$test_profile] = $valid_test_profile;
+			$test_checks[$test_profile->get_identifier()] = $valid_test_profile;
 		}
 
-		return $test_checks[$test_profile];
+		return $test_checks[$test_profile->get_identifier()];
 	}
 	public static function standard_run($to_run, $test_flags = 0)
 	{
