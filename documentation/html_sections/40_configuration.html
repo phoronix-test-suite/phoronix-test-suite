@@ -1,14 +1,25 @@
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 <head>
-<Title>Phoronix Test Suite - Environmental Variables</Title>
-<link href="includes/pts-documentation.css" rel="stylesheet" type="text/css" />
+<Title>Configuration</Title>
 </head>
 <body>
-<div id="pts_doc_header"><div class="pts_doc_fixed"><a href="http://www.phoronix-test-suite.com/"><div id="pts_doc_logo"></div></a></div></div>
-<div class="pts_doc_fixed">
-<div class="pts_doc_notice"><div style="float: left"><a href="index.html">&lt;&lt; Documentation Home</a></div><div style="float: right;">Environmental Variables</div></div>
-<div class="pts_doc_main">
-<!-- PTS AREA -->
+<h1>User Files &amp; Folders</h1>
+<p><strong>~/.phoronix-test-suite/user-config.xml</strong></p>
+<p>This is a per-user configuration file. Among the information stored here is the test options, locations for storing files, and batch mode options. This file is formatted in XML.</p>
+<p><strong>~/.phoronix-test-suite/graph-config.xml</strong></p>
+<p>This is a per-user configuration file for storing graph attributes. The adjustable options include HTML hex color codes for different areas of the graph, dimensions of the graph, and font sizes. This file is formatted in XML.</p>
+<p><strong>~/.phoronix-test-suite/download-cache/</strong></p>
+<p>This directory contains test packages that have been downloaded for test profiles. For more information on the download cache.</p>
+<p><strong>~/.phoronix-test-suite/installed-tests/</strong></p>
+<p>This directory is where tests are installed by default. Each test has its own directory within a sub-directory of <em>installed-tests/</em> based upon its OpenBenchmarking.org repository. In the test's folder is a <em>pts-install.xml</em> file used for managing the installation.</p>
+<p><strong>~/.phoronix-test-suite/test-results/</strong></p>
+<p>This directory is where tests results are saved by default. Each saved file has its own directory. In the saved directory is then a <em>composite.xml</em> file containing the useful results while in the <em>test-X.xml</em> files are back-ups of the results.</p>
+<p><strong>~/.phoronix-test-suite/modules-data/</strong></p>
+<p>This is the directory where any Phoronix Test Suite modules should save any files to, within a sub-directory of the module's name. The module configuration settings are also stored within this directory.</p>
+<p><strong>~/.phoronix-test-suite/test-profiles/</strong></p>
+<p>This is the directory where test profiles are stored.</p>
+<p><strong>~/.phoronix-test-suite/test-suites/</strong></p>
+<p>This is the directory where test suites are stored.</p>
 <h1>Environmental Variables</h1>
 <p><strong>TEST_RESULTS_NAME</strong></p>
 <p>When this variable is set, the value will be used as the name for automatically saving the test results.</p>
@@ -18,8 +29,6 @@
 <p>For setting any test option(s) from an environmental variable rather than being prompted for the options when running a test. Example: <em>PRESET_OPTIONS=&quot;stream.run-type=Add&quot; ./phoronix-test-suite benchmark stream</em></p>
 <p><strong>SKIP_TESTS</strong></p>
 <p>If there are any test(s) to exempt from the testing process, specify them in this variable. Multiple tests can be waived by delimiting each test identifier by a comma. A test hardware type (i.e. Graphics) can also be supplied for skipping a range of tests.</p>
-<p><strong>PTS_DEBUG</strong></p>
-<p>When this variable is set, some additional debugging information will be printed when running some Phoronix Test Suite commands.</p>
 <p><strong>PTS_MODULE_SETUP</strong></p>
 <p>This variable can be used to load Phoronix Test Suite module settings automatically when using the <em>module-setup</em> option. An example would be: <em>PTS_MODULE_SETUP=&quot;phoromatic.remote_host=http://www.phoromatic.com/; phoromatic.remote_account=123456; phoromatic.remote_verifier=ABCD&quot; phoronix-test-suite module-setup phoromatic</em>.</p>
 <p><strong>PTS_MODULES</strong></p>
@@ -50,8 +59,5 @@
 <p>If Phodevi fails to detect the system's monitor standard / default resolution, the mode can be specified in this variable. Example: <em>DEFAULT_VIDEO_MODE=1680x1050 phoronix-test-suite benchmark nexuiz</em>.</p>
 <p><strong>SKIP_EXTERNAL_DEPENDENCIES_CHECK</strong></p>
 <p>To skip the Phoronix Test Suite external dependency checking/installation when installing a test, set this environmental variable to <em>1</em>.</p>
-
-<!-- END OF PTS AREA -->
-</div></div><div class="pts_doc_fixed"><div class="pts_doc_bottom"><div style="float: left;"><a href="http://www.phoronix-test-suite.com/">Phoronix-Test-Suite.com</a></div><div style="float: right;">Copyright &copy; 2008 - 2010 by <a href="http://www.phoronix-media.com/">Phoronix Media</a>.</div></div></div>
 </body>
 </html>

@@ -659,7 +659,8 @@ abstract class pts_Graph
 		// Background Color
 		if($this->iveland_view)
 		{
-			$this->graph_image->draw_rectangle_with_border(1, 1, $this->graph_attr_width, ($this->graph_attr_height - 1), $this->graph_color_background, $this->graph_color_border);
+			//$this->graph_image->draw_rectangle_with_border(0, 0, $this->graph_attr_width, $this->graph_attr_height, $this->graph_color_background, $this->graph_color_border);
+			$this->graph_image->draw_rectangle_with_border(1, 1, ($this->graph_attr_width - 1), ($this->graph_attr_height - 1), $this->graph_color_background, $this->graph_color_border);
 		}
 		else if($this->graph_attr_big_border)
 		{
