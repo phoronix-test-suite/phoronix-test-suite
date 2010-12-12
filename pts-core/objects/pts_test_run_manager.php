@@ -148,7 +148,10 @@ class pts_test_run_manager
 	}
 	protected function add_test_result_object(&$test_result)
 	{
-		pts_arrays::unique_push($this->tests_to_run, $test_result);
+		if($this->validate_test_to_run($test_result->test_profile))
+		{
+			pts_arrays::unique_push($this->tests_to_run, $test_result);
+		}
 	}
 	public function get_tests_to_run()
 	{
@@ -898,9 +901,6 @@ class pts_test_run_manager
 		// Determine what to run
 		$this->determine_tests_to_run($to_run_objects);
 
-		// Run the test process
-		$this->validate_tests_to_run();
-
 		// Is there something to run?
 		return $this->get_test_count() > 0;
 	}
@@ -931,14 +931,14 @@ class pts_test_run_manager
 
 		foreach($result_objects as &$result_object)
 		{
-			$test_result = new pts_test_result($result_object->test_profile);
-			$test_result->set_used_arguments($result_object->get_arguments());
-			$test_result->set_used_arguments_description($result_object->get_arguments_description());
-			$this->add_test_result_object($test_result);
+			if($this->validate_test_to_run($result_object->test_profile))
+			{
+				$test_result = new pts_test_result($result_object->test_profile);
+				$test_result->set_used_arguments($result_object->get_arguments());
+				$test_result->set_used_arguments_description($result_object->get_arguments_description());
+				$this->add_test_result_object($test_result);
+			}
 		}
-	
-		// Run the test process
-		$this->validate_tests_to_run();
 
 		// Is there something to run?
 		return $this->get_test_count() > 0;
@@ -956,6 +956,11 @@ class pts_test_run_manager
 
 		foreach($test_run_requests as &$test_run_request)
 		{
+			if($this->validate_test_to_run($test_run_request->test_profile))
+			{
+				continue;
+			}
+
 			if($test_run_request->test_profile->get_override_values() != null)
 			{
 				$test_run_request->test_profile->set_override_values($test_run_request->test_profile->get_override_values());
@@ -966,9 +971,6 @@ class pts_test_run_manager
 			$test_result->set_used_arguments_description($test_run_request->get_arguments_description());
 			$this->add_test_result_object($test_result);
 		}
-	
-		// Run the test process
-		$this->validate_tests_to_run();
 
 		// Is there something to run?
 		return $this->get_test_count() > 0;
@@ -1011,7 +1013,7 @@ class pts_test_run_manager
 			// TODO: determine whether to print the titles of what's being run?
 			if($run_object instanceof pts_test_profile)
 			{
-				if($run_object->get_title() == null)
+				if($run_object->get_title() == null || $this->validate_test_to_run($run_object))
 				{
 					continue;
 				}
@@ -1085,84 +1087,55 @@ class pts_test_run_manager
 		$this->prompt_save_results = $run_contains_a_no_result_type == false || $unique_test_count > 1;
 		$this->force_save_results = $this->force_save_results || $request_results_save;
 	}
-	public function validate_tests_to_run()
+	protected function validate_test_to_run(&$test_profile)
 	{
-		$failed_tests = array();
-		$validated_run_requests = array();
-		$allow_results_sharing = true;
-		$display_driver = phodevi::read_property("system", "display-driver");
+		static $test_checks = null;
 
-		foreach($this->get_tests_to_run() as $test_run_request)
+		if(!isset($test_checks[$test_profile]))
 		{
-			if(!($test_run_request instanceof pts_test_result))
-			{
-				array_push($validated_run_requests, $test_run_request);
-				continue;
-			}
+			$valid_test_profile = true;
+			$allow_results_sharing = $this->allow_sharing_of_results;
+			$display_driver = phodevi::read_property('system', 'display-driver');
+			$skip_tests = pts_client::read_env('SKIP_TESTS');
 
 			// Validate the empty pts_test_result
-			$test_identifier = $test_run_request->test_profile->get_identifier();
+			$test_type = $test_profile->get_test_hardware_type();
 
-			if(in_array($test_identifier, $failed_tests))
+			if($test_type == 'Graphics' && pts_client::read_env('DISPLAY') == false && IS_WINDOWS == false)
 			{
-				// The test has already been determined to not be installed right or other issue
-				continue;
+				pts_client::$display->test_run_error("No display server was found, cannot run " . $test_profile);
+				$valid_test_profile = false;
+			}
+			else if($test_type == 'Graphics' && in_array($display_driver, array('vesa', 'nv', 'cirrus')))
+			{
+				pts_client::$display->test_run_error("A display driver without 3D acceleration was found, cannot run " . $test_profile);
+				$valid_test_profile = false;
+			}
+			else if(pts_client::read_env('NO_' . strtoupper($test_type) . '_TESTS') || ($skip_tests && in_array($test_profile, pts_strings::comma_explode($skip_tests))) || ($skip_tests && in_array($test_type, pts_strings::comma_explode($skip_tests))))
+			{
+				pts_client::$display->test_run_error("Due to a pre-set environmental variable, skipping " . $test_profile);
+				$valid_test_profile = false;
+			}
+			else if($test_profile->is_root_required() && (pts_c::$test_flags & pts_c::batch_mode) && phodevi::read_property("system", "username") != "root")
+			{
+				pts_client::$display->test_run_error("Cannot run " . $test_profile . " in batch mode as root access is required.");
+				$valid_test_profile = false;
+			}
+			else if($test_profile->get_test_executable_dir() == null)
+			{
+				pts_client::$display->test_run_error("The test executable for " . $test_profile . " could not be located.");
+				$valid_test_profile = false;
 			}
 
-			$test_type = $test_run_request->test_profile->get_test_hardware_type();
-
-			if($test_type == "Graphics")
+			if($valid_test_profile && $this->allow_sharing_of_results && $test_profile->allow_results_sharing() == false)
 			{
-				if(pts_client::read_env("DISPLAY") == false && !IS_WINDOWS)
-				{
-					pts_client::$display->test_run_error("No display server was found, cannot run " . $test_identifier);
-					array_push($failed_tests, $test_identifier);
-					continue;
-				}
-				else if(in_array($display_driver, array("vesa", "nv", "cirrus")))
-				{
-					pts_client::$display->test_run_error("A display driver without 3D acceleration was found, cannot run " . $test_identifier);
-					array_push($failed_tests, $test_identifier);
-					continue;
-				}
+				$this->allow_sharing_of_results = false;
 			}
 
-			$skip_tests = pts_client::read_env("SKIP_TESTS");
-			if(pts_client::read_env("NO_" . strtoupper($test_type) . "_TESTS") || ($skip_tests && in_array($test_identifier, pts_strings::comma_explode($skip_tests))) || ($skip_tests && in_array($test_type, pts_strings::comma_explode($skip_tests))))
-			{
-				array_push($failed_tests, $test_identifier);
-				continue;
-			}
-
-			if($test_run_request->test_profile->is_root_required() && (pts_c::$test_flags & pts_c::batch_mode) && phodevi::read_property("system", "username") != "root")
-			{
-				pts_client::$display->test_run_error("Cannot run " . $test_identifier . " in batch mode as root access is required.");
-				array_push($failed_tests, $test_identifier);
-				continue;
-			}
-
-			if($test_run_request->test_profile->get_test_executable_dir() == null)
-			{
-				pts_client::$display->test_run_error("The test executable for " . $test_identifier . " could not be located.");
-				array_push($failed_tests, $test_identifier);
-				continue;
-			}
-
-			if($allow_results_sharing && $test_run_request->test_profile->allow_results_sharing() == false)
-			{
-				// One of the contained test profiles does not allow Global uploads, so block it
-				$allow_results_sharing = false;
-			}
-
-			array_push($validated_run_requests, $test_run_request);
+			$test_checks[$test_profile] = $valid_test_profile;
 		}
 
-		if($allow_results_sharing == false)
-		{
-			$this->allow_sharing_of_results = false;
-		}
-
-		$this->tests_to_run = $validated_run_requests;
+		return $test_checks[$test_profile];
 	}
 	public static function standard_run($to_run, $test_flags = 0)
 	{
