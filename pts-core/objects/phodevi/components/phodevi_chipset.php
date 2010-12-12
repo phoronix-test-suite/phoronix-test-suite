@@ -123,13 +123,13 @@ class phodevi_chipset extends phodevi_device_interface
 						$southbridge_clean = substr($southbridge_extract, 0, strpos($southbridge_extract, " "));
 					}
 				}
-				else if(($start_cut = strpos($southbridge, "SB")) > 0)
+				else if(($start_cut = strpos($southbridge, "SB")) !== false)
 				{
 					$southbridge_extract = substr($southbridge, $start_cut);
 					$southbridge_clean = substr($southbridge_extract, 0, strpos($southbridge_extract, " "));
 				}
 
-				if(!empty($southbridge_clean))
+				if(!empty($southbridge_clean) && $southbridge_clean != 'SB')
 				{
 					$info .= " + " . $southbridge_clean;
 				}

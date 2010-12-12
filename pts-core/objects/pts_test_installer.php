@@ -66,7 +66,11 @@ class pts_test_installer
 		{
 			if($test_profile->needs_updated_install())
 			{
-				if($test_install_manager->add_test_profile($test_profile) != false)
+				if($test_profile->is_supported(false) == false)
+				{
+					pts_client::$display->generic_sub_heading("Not Supported: " . $test_profile->get_identifier());
+				}
+				else if($test_install_manager->add_test_profile($test_profile) != false)
 				{
 					pts_client::$display->generic_sub_heading("To Install: " . $test_profile->get_identifier());
 				}
