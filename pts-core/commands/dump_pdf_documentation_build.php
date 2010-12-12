@@ -37,9 +37,9 @@ class dump_pdf_documentation_build implements pts_option_interface
 		$pdf = new pts_pdf_template(pts_title(false), "Client Documentation");
 
 		$pdf->AddPage();
-		$pdf->Image(PTS_CORE_STATIC_PATH . "images/pts-308x160.png", 69, 85, 73, 38);
+		$pdf->Image(PTS_CORE_STATIC_PATH . "images/pts-308x160.png", 69, 85, 73, 38, 'PNG', 'http://www.phoronix-test-suite.com/');
 		$pdf->Ln(120);
-		$pdf->WriteStatementCenter("www.phoronix-test-suite.com");
+		$pdf->WriteStatement("www.phoronix-test-suite.com", 'C', 'http://www.phoronix-test-suite.com/');
 		$pdf->Ln(15);
 		$pdf->WriteBigHeaderCenter(pts_title(true));
 		$pdf->WriteHeaderCenter("User Manual");
@@ -101,8 +101,72 @@ class dump_pdf_documentation_build implements pts_option_interface
 			}
 		}
 
-		$pdf_file = pts_client::user_home_directory() . "documentation.pdf";
+		// Load the HTML documentation
+		foreach(pts_file_io::glob(PTS_PATH . "documentation/html/*_*.html") as $html_file)
+		{
+			$dom = new DOMDocument();
+			$dom->loadHTMLFile($html_file);
+			$html_file = $dom->getElementsByTagName('html')->item(0)->getElementsByTagName("head")->item(0)->nodeValue;
+			$tags = $dom->getElementsByTagName('html')->item(0)->getElementsByTagName("body")->item(0)->childNodes;
 
+			$pdf->AddPage();
+			$pdf->WriteBigHeader($html_file);
+			for($i = 0; $i < $tags->length; $i++)
+			{
+				$value = $tags->item($i)->nodeValue;
+
+				switch($tags->item($i)->nodeName)
+				{
+					case 'h1':
+						$pdf->WriteHeader($value);
+						break;
+					case 'h2':
+						$pdf->Ln();
+						$pdf->WriteMiniHeader($value);
+						break;
+					case 'p':
+						$pdf->SetFont("Arial", null, 11);
+						for($j = 0; $j < $tags->item($i)->childNodes->length; $j++)
+						{
+							$value = $tags->item($i)->childNodes->item($j)->nodeValue;
+							$name = $tags->item($i)->childNodes->item($j)->nodeName;
+
+							switch($name)
+							{
+								case 'em':
+									$pdf->SetFont(null, 'I');
+									break;
+								case 'strong':
+									$pdf->SetFont(null, 'B');
+									break;
+								case '#text':
+									$pdf->SetFont(null, null);
+									break;
+								case 'a':
+									$pdf->SetTextColor(0, 0, 255);
+									$pdf->SetFont(null, 'BU');
+									$pdf->Write(5, $value, $tags->item($i)->childNodes->item($j)->attributes->getNamedItem('href')->nodeValue);
+									$pdf->SetTextColor(0, 0, 0);
+									break;
+								default:
+									echo "UNSUPPORTED: $name\n";
+									break;
+							}
+
+							if($name != 'a')
+							{
+								$pdf->Write(5, $value, null);
+							}
+							//$pdf->Ln();
+						}
+						$pdf->Ln(7);
+						break;
+				}
+			}
+		}
+
+
+		$pdf_file = pts_client::user_home_directory() . "documentation.pdf";
 		$pdf->Output($pdf_file);
 		echo "\nSaved To: " . $pdf_file . "\n\n";
 	}

@@ -69,7 +69,7 @@ class pts_pdf_template extends FPDF
 		$this->SetY(-10);
 		$this->SetFont("Arial", "B", 7);
 		$this->Cell(0, 0, pts_title(), 0, 0, "L");
-		$this->Cell(0, 0, "www.phoronix-test-suite.com", 0, 0, "R");
+		$this->Cell(0, 0, "www.phoronix-test-suite.com", 0, 0, "R", true, 'http://www.phoronix-test-suite.com/');
 	}
 	public function WriteBigHeaderCenter($Header)
 	{
@@ -101,25 +101,26 @@ class pts_pdf_template extends FPDF
 		$this->SetFont("Arial", "B", 16);
 		$this->SetFillColor(255, 255, 255);
 		$this->Cell(0, 6, $Header, 0, 0, $Align, true);
-		$this->Ln(15);
+		$this->Ln(10);
 	}
 	public function WriteStatementCenter($Header)
 	{
 		$this->WriteStatement($Header, "C");
 	}
-	public function WriteStatement($Header, $Align = "L")
+	public function WriteStatement($Header, $Align = "L", $Link = null)
 	{
 		$this->SetFont("Arial", "B", 14);
 		$this->SetFillColor(255, 255, 255);
-		$this->Cell(0, 2, $Header, 0, 0, $Align, true);
+		$this->Cell(0, 2, $Header, 0, 0, $Align, true, $Link);
 		$this->Ln(10);
 	}
 	public function WriteMiniHeader($Header)
 	{
+		$this->CreateBookmark($Header, 2);
 		$this->SetFont("Arial", "B", 13);
 		$this->SetFillColor(255, 255, 255);
 		$this->Cell(0, 2, $Header, 0, 0, "L", true);
-		$this->Ln(10);
+		$this->Ln(5);
 	}
 	public function WriteDocHeader($Header, $Options = null)
 	{
