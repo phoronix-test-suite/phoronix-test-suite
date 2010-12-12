@@ -100,9 +100,8 @@ if(is_file(PTS_PATH . "pts-core/commands/" . $sent_command . ".php") == false)
 
 	if($replaced == false)
 	{
-		// Show general options, since there are no valid commands
-		echo file_get_contents(PTS_CORE_STATIC_PATH . "general-options.txt");
-		exit;
+		// Show help command, since there are no valid commands
+		$sent_command = 'help';
 	}
 }
 

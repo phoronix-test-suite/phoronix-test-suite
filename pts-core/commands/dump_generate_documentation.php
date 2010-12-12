@@ -45,38 +45,7 @@ class dump_generate_documentation implements pts_option_interface
 		$pdf->WriteHeaderCenter("User Manual");
 		//$pdf->WriteText($result_file->get_description());
 
-		$pts_options = array("Test Installation" => array(), "Testing" => array(), "Batch Testing" => array(), "OpenBenchmarking.org" => array(), "System" => array(), "Information" => array(), "Asset Creation" => array(), "Result Management" => array(), "Result Analytics" => array(), "Other" => array());
-
-		foreach(pts_file_io::glob(PTS_COMMAND_PATH . "*.php") as $option_php_file)
-		{
-			$option_php = basename($option_php_file, ".php");
-			$name = str_replace("_", "-", $option_php);
-
-			if(!in_array(pts_strings::first_in_string($name, '-'), array("dump", "task")))
-			{
-				include_once($option_php_file);
-
-				$reflect = new ReflectionClass($option_php);
-				$constants = $reflect->getConstants();
-
-				$doc_description = isset($constants['doc_description']) ? constant($option_php . '::doc_description') : 'No summary is available.';
-				$doc_section = isset($constants['doc_section']) ? constant($option_php . '::doc_section') : 'Other';
-				$name = isset($constants['doc_use_alias']) ? constant($option_php . '::doc_use_alias') : $name;
-				$doc_args = array();
-
-				if(method_exists($option_php, 'argument_checks'))
-				{
-					$doc_args = call_user_func(array($option_php, 'argument_checks'));
-				}
-
-				if(!empty($doc_section) && !isset($pts_options[$doc_section]))
-				{
-					$pts_options[$doc_section] = array();
-				}
-
-				array_push($pts_options[$doc_section], array($name, $doc_args, $doc_description));
-			}
-		}
+		$pts_options = pts_documentation::client_commands_array();
 
 		// Write the test options HTML
 		$dom = new DOMDocument();
@@ -142,7 +111,7 @@ class dump_generate_documentation implements pts_option_interface
 			$man_page = ".TH phoronix-test-suite 1  \"www.phoronix-test-suite.com\" \"" . PTS_VERSION . "\"\n.SH NAME\n";
 			$man_page .= "phoronix-test-suite \- The Phoronix Test Suite is an extensible open-source platform for performing testing and performance evaluation.\n";
 			$man_page .= ".SH SYNOPSIS\n.B phoronix-test-suite [options]\n.br\n.B phoronix-test-suite benchmark [test | suite]\n";
-			$man_page .= ".SH DESCRIPTION\nThe Phoronix Test Suite is the most comprehensive testing and benchmarking platform available that provides an extensible framework for which new tests can be easily added. The software is designed to effectively carry out both qualitative and quantitative benchmarks in a clean, reproducible, and easy-to-use manner.\n";
+			$man_page .= ".SH DESCRIPTION\n" . pts_documentation::basic_description() . "\n";
 			$man_page .= ".SH OPTIONS\n.TP\n";
 
 			foreach($pts_options as $section => &$contents)

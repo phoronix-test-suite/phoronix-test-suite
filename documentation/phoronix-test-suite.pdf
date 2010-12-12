@@ -32,7 +32,7 @@ endobj
 /Contents 6 0 R>>
 endobj
 6 0 obj
-<</Length 5836>>
+<</Length 5833>>
 stream
 2 J
 0.57 w
@@ -57,7 +57,7 @@ q 0.196 0.200 0.192 rg BT 26.93 631.57 Td (Test Installation) Tj ET Q
 BT /F1 13.00 Tf ET
 q 0.380 0.388 0.376 rg BT 31.18 604.13 Td (install) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 68.75 604.43 Td (  [Test | Suite | Global ID | Test Result]  ....) Tj ET Q
+q 0.380 0.388 0.376 rg BT 68.75 604.43 Td (  [Test | Suite | Global ID | Test Result]  ...) Tj ET Q
 BT /F2 11.00 Tf ET
 q 0.000 g BT 59.53 590.55 Td (This option will install the selected test\(s\) inside the testing environment directory\). The install process) Tj ET Q
 q 0.000 g BT 59.53 576.38 Td (from downloading of the test files to the installation is fully automated. The install option needs to be) Tj ET Q
@@ -69,7 +69,7 @@ q 0.000 g BT 59.53 505.52 Td (same time.) Tj ET Q
 BT /F1 13.00 Tf ET
 q 0.380 0.388 0.376 rg BT 31.18 476.57 Td (install-dependencies) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 159.78 476.87 Td (  [Test | Suite | Global ID | Test Result]  ....) Tj ET Q
+q 0.380 0.388 0.376 rg BT 159.78 476.87 Td (  [Test | Suite | Global ID | Test Result]  ...) Tj ET Q
 BT /F2 11.00 Tf ET
 q 0.000 g BT 59.53 463.00 Td (This option will install the external dependencies needed by the selected test\(s\) using the distribution's) Tj ET Q
 q 0.000 g BT 59.53 448.82 Td (package management system. For example, some tests depend upon GCC for compiling code. If GCC) Tj ET Q
@@ -90,7 +90,7 @@ q 0.196 0.200 0.192 rg BT 26.93 291.42 Td (Testing) Tj ET Q
 BT /F1 13.00 Tf ET
 q 0.380 0.388 0.376 rg BT 31.18 263.97 Td (benchmark) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 100.54 264.27 Td (  [Test | Suite | Global ID | Test Result]  ....) Tj ET Q
+q 0.380 0.388 0.376 rg BT 100.54 264.27 Td (  [Test | Suite | Global ID | Test Result]  ...) Tj ET Q
 BT /F2 11.00 Tf ET
 q 0.000 g BT 59.53 250.40 Td (This option will install the selected test\(s\) \(if needed\) and will proceed to run the test\(s\). This option is) Tj ET Q
 q 0.000 g BT 59.53 236.22 Td (equivalent to running phoronix-test-suite with the install option followed by the run option. Multiple) Tj ET Q
@@ -126,7 +126,7 @@ endobj
 /Contents 8 0 R>>
 endobj
 8 0 obj
-<</Length 5778>>
+<</Length 5772>>
 stream
 2 J
 0.57 w
@@ -142,7 +142,7 @@ q 0.000 g BT 59.53 743.63 Td (testing process and the test results from before t
 BT /F1 13.00 Tf ET
 q 0.380 0.388 0.376 rg BT 31.18 714.68 Td (run) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 52.12 714.98 Td (  [Test | Suite | Global ID | Test Result]  ....) Tj ET Q
+q 0.380 0.388 0.376 rg BT 52.12 714.98 Td (  [Test | Suite | Global ID | Test Result]  ...) Tj ET Q
 BT /F2 11.00 Tf ET
 q 0.000 g BT 59.53 701.11 Td (This option will run the selected test\(s\).) Tj ET Q
 BT /F1 13.00 Tf ET
@@ -157,14 +157,14 @@ q 0.196 0.200 0.192 rg BT 26.93 614.57 Td (Batch Testing) Tj ET Q
 BT /F1 13.00 Tf ET
 q 0.380 0.388 0.376 rg BT 31.18 587.12 Td (batch-benchmark) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 139.54 587.42 Td (  [Test | Suite | Global ID | Test Result]  ....) Tj ET Q
+q 0.380 0.388 0.376 rg BT 139.54 587.42 Td (  [Test | Suite | Global ID | Test Result]  ...) Tj ET Q
 BT /F2 11.00 Tf ET
 q 0.000 g BT 59.53 573.55 Td (This option and its arguments are equivalent to the benchmark option, but the process will be run in the) Tj ET Q
 q 0.000 g BT 59.53 559.37 Td (Phoronix Test Suite batch mode.) Tj ET Q
 BT /F1 13.00 Tf ET
 q 0.380 0.388 0.376 rg BT 31.18 530.43 Td (batch-install) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 107.75 530.73 Td (  [Test | Suite | Global ID | Test Result]  ....) Tj ET Q
+q 0.380 0.388 0.376 rg BT 107.75 530.73 Td (  [Test | Suite | Global ID | Test Result]  ...) Tj ET Q
 BT /F2 11.00 Tf ET
 q 0.000 g BT 59.53 516.85 Td (If you wish to run the install process in the Phoronix Test Suite batch mode but do not wish to run any) Tj ET Q
 q 0.000 g BT 59.53 502.68 Td (tests at this time. Running the install process in the batch mode will use the default values and not) Tj ET Q
@@ -172,7 +172,7 @@ q 0.000 g BT 59.53 488.51 Td (prompt the user of any possible options, to ensure
 BT /F1 13.00 Tf ET
 q 0.380 0.388 0.376 rg BT 31.18 459.56 Td (batch-run) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 91.12 459.86 Td (  [Test | Suite | Global ID | Test Result]  ....) Tj ET Q
+q 0.380 0.388 0.376 rg BT 91.12 459.86 Td (  [Test | Suite | Global ID | Test Result]  ...) Tj ET Q
 BT /F2 11.00 Tf ET
 q 0.000 g BT 59.53 445.99 Td (This option and its arguments are equivalent to the run option, but the process will be run in the) Tj ET Q
 q 0.000 g BT 59.53 431.81 Td (Phoronix Test Suite batch mode.) Tj ET Q
@@ -187,7 +187,7 @@ q 0.000 g BT 59.53 360.95 Td (upload the test results to Phoronix Global and pro
 BT /F1 13.00 Tf ET
 q 0.380 0.388 0.376 rg BT 31.18 332.00 Td (default-benchmark) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 147.48 332.30 Td (  [Test | Suite | Global ID | Test Result]  ....) Tj ET Q
+q 0.380 0.388 0.376 rg BT 147.48 332.30 Td (  [Test | Suite | Global ID | Test Result]  ...) Tj ET Q
 BT /F2 11.00 Tf ET
 q 0.000 g BT 59.53 318.43 Td (This option will install the selected test\(s\) \(if needed\) and will proceed to run the test\(s\) in the defaults) Tj ET Q
 q 0.000 g BT 59.53 304.26 Td (mode. This option is equivalent to running phoronix-test-suite with the install option followed by the) Tj ET Q
@@ -195,7 +195,7 @@ q 0.000 g BT 59.53 290.08 Td (default-run option.) Tj ET Q
 BT /F1 13.00 Tf ET
 q 0.380 0.388 0.376 rg BT 31.18 261.14 Td (default-run) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 99.07 261.44 Td (  [Test | Suite | Global ID | Test Result]  ....) Tj ET Q
+q 0.380 0.388 0.376 rg BT 99.07 261.44 Td (  [Test | Suite | Global ID | Test Result]  ...) Tj ET Q
 BT /F2 11.00 Tf ET
 q 0.000 g BT 59.53 247.56 Td (This option will run the selected test\(s\). The name of the test or suite must be supplied or the Phoronix) Tj ET Q
 q 0.000 g BT 59.53 233.39 Td (Global ID or saved local file name. Multiple arguments can be supplied to run additional tests at the) Tj ET Q
@@ -342,7 +342,7 @@ endobj
 /Contents 12 0 R>>
 endobj
 12 0 obj
-<</Length 5621>>
+<</Length 5618>>
 stream
 2 J
 0.57 w
@@ -379,7 +379,7 @@ q 0.196 0.200 0.192 rg BT 26.93 572.05 Td (Asset Creation) Tj ET Q
 BT /F1 13.00 Tf ET
 q 0.380 0.388 0.376 rg BT 31.18 544.60 Td (debug-install) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 112.08 544.90 Td (  [Test | Suite | Global ID | Test Result]  ....) Tj ET Q
+q 0.380 0.388 0.376 rg BT 112.08 544.90 Td (  [Test | Suite | Global ID | Test Result]  ...) Tj ET Q
 BT /F2 11.00 Tf ET
 q 0.000 g BT 59.53 531.03 Td (This option is intended for use by test profile writers and is identical to the install option but will yield) Tj ET Q
 q 0.000 g BT 59.53 516.85 Td (more information during the run process that can be used to debug issues with a test profile installer or) Tj ET Q
@@ -387,7 +387,7 @@ q 0.000 g BT 59.53 502.68 Td (to verify the test profile is functioning correctl
 BT /F1 13.00 Tf ET
 q 0.380 0.388 0.376 rg BT 31.18 473.73 Td (debug-run) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 95.45 474.03 Td (  [Test | Suite | Global ID | Test Result]  ....) Tj ET Q
+q 0.380 0.388 0.376 rg BT 95.45 474.03 Td (  [Test | Suite | Global ID | Test Result]  ...) Tj ET Q
 BT /F2 11.00 Tf ET
 q 0.000 g BT 59.53 460.16 Td (This option is intended for use by test profile writers and is identical to the <em>run</em> option but) Tj ET Q
 q 0.000 g BT 59.53 445.99 Td (will yield more information during the run process that can be used to debug issues with a test profile or) Tj ET Q
@@ -402,7 +402,7 @@ q 0.000 g BT 59.53 375.12 Td (URLs.) Tj ET Q
 BT /F1 13.00 Tf ET
 q 0.380 0.388 0.376 rg BT 31.18 346.18 Td (force-install) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 104.87 346.48 Td (  [Test | Suite | Global ID | Test Result]  ....) Tj ET Q
+q 0.380 0.388 0.376 rg BT 104.87 346.48 Td (  [Test | Suite | Global ID | Test Result]  ...) Tj ET Q
 BT /F2 11.00 Tf ET
 q 0.000 g BT 59.53 332.60 Td (This option will force the installation \(or re-installation\) of a test or suite. The arguments and process is) Tj ET Q
 q 0.000 g BT 59.53 318.43 Td (similar to the install option but even if the test is installed, the entire installation process will) Tj ET Q
@@ -450,7 +450,7 @@ endobj
 /Contents 14 0 R>>
 endobj
 14 0 obj
-<</Length 5912>>
+<</Length 5911>>
 stream
 2 J
 0.57 w
@@ -480,7 +480,7 @@ q 0.000 g BT 59.53 630.24 Td (which result identifier to extract.) Tj ET Q
 BT /F1 13.00 Tf ET
 q 0.380 0.388 0.376 rg BT 31.18 601.29 Td (merge-results) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 117.15 601.59 Td (  [Test Result]  ....) Tj ET Q
+q 0.380 0.388 0.376 rg BT 117.15 601.59 Td (  [Test Result]  ...) Tj ET Q
 BT /F2 11.00 Tf ET
 q 0.000 g BT 59.53 587.72 Td (This option will manually merge multiple sets of test results generated by the Phoronix Test Suite.) Tj ET Q
 BT /F1 13.00 Tf ET
@@ -558,7 +558,7 @@ endobj
 /Contents 16 0 R>>
 endobj
 16 0 obj
-<</Length 5556>>
+<</Length 5529>>
 stream
 2 J
 0.57 w
@@ -602,54 +602,54 @@ q 0.000 g BT 59.53 460.16 Td (This option will guide the user through the proces
 q 0.000 g BT 59.53 445.99 Td (then run. Optionally, passed as arguments can be the test\(s\) or suite\(s\) to add to the suite to be) Tj ET Q
 q 0.000 g BT 59.53 431.81 Td (created, instead of being prompted through the process.) Tj ET Q
 BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 402.87 Td (network-setup) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 402.87 Td (help) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 120.02 403.17 Td (  ) Tj ET Q
+q 0.380 0.388 0.376 rg BT 57.91 403.17 Td (  ) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 389.30 Td (This option allows the user to configure how the Phoronix Test Suite connects to Phoronix Global and) Tj ET Q
-q 0.000 g BT 59.53 375.12 Td (other web-services. Connecting through an HTTP proxy can be configured through this option.) Tj ET Q
+q 0.000 g BT 59.53 389.30 Td (This option will display the list of available Phoronix Test Suite commands.) Tj ET Q
 BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 346.18 Td (rebuild-composite-xml) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 360.35 Td (network-setup) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 170.59 346.48 Td (  [Test Result]) Tj ET Q
+q 0.380 0.388 0.376 rg BT 120.02 360.65 Td (  ) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 332.60 Td (This option can be used to rebuild your composite XML file in the event that the main result file was) Tj ET Q
-q 0.000 g BT 59.53 318.43 Td (corrupted and the test-X.xml files are still present in the result file directory.) Tj ET Q
+q 0.000 g BT 59.53 346.78 Td (This option allows the user to configure how the Phoronix Test Suite connects to Phoronix Global and) Tj ET Q
+q 0.000 g BT 59.53 332.60 Td (other web-services. Connecting through an HTTP proxy can be configured through this option.) Tj ET Q
 BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 289.48 Td (result-file-to-pdf) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 303.66 Td (rebuild-composite-xml) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 130.84 289.78 Td (  [Test Result]) Tj ET Q
+q 0.380 0.388 0.376 rg BT 170.59 303.96 Td (  [Test Result]) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 275.91 Td (No summary is available.) Tj ET Q
+q 0.000 g BT 59.53 290.08 Td (This option can be used to rebuild your composite XML file in the event that the main result file was) Tj ET Q
+q 0.000 g BT 59.53 275.91 Td (corrupted and the test-X.xml files are still present in the result file directory.) Tj ET Q
 BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 246.96 Td (result-file-to-text) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 246.96 Td (result-file-to-pdf) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 133.74 247.26 Td (  [Test Result]) Tj ET Q
+q 0.380 0.388 0.376 rg BT 130.84 247.26 Td (  [Test Result]) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 233.39 Td (This option will read a saved test results file and output the system hardware and software information) Tj ET Q
-q 0.000 g BT 59.53 219.22 Td (to the terminal. The test results are also outputted.) Tj ET Q
+q 0.000 g BT 59.53 233.39 Td (No summary is available.) Tj ET Q
 BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 190.27 Td (user-config-get) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 204.44 Td (result-file-to-text) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 125.80 190.57 Td (  ) Tj ET Q
+q 0.380 0.388 0.376 rg BT 133.74 204.74 Td (  [Test Result]) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 176.70 Td (This option can be used for reading an XML value of the Phoronix Test Suite user configuration file.) Tj ET Q
+q 0.000 g BT 59.53 190.87 Td (This option will read a saved test results file and output the system hardware and software information) Tj ET Q
+q 0.000 g BT 59.53 176.70 Td (to the terminal. The test results are also outputted.) Tj ET Q
 BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 147.75 Td (user-config-reset) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 147.75 Td (user-config-get) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 137.37 148.05 Td (  ) Tj ET Q
+q 0.380 0.388 0.376 rg BT 125.80 148.05 Td (  ) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 134.18 Td (This option can be used for resetting the Phoronix Test Suite user configuration file to its default state.) Tj ET Q
+q 0.000 g BT 59.53 134.18 Td (This option can be used for reading an XML value of the Phoronix Test Suite user configuration file.) Tj ET Q
 BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 105.23 Td (user-config-set) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 105.23 Td (user-config-reset) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 125.08 105.53 Td (  ) Tj ET Q
+q 0.380 0.388 0.376 rg BT 137.37 105.53 Td (  ) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 91.66 Td (This option can be used for setting an XML value in the Phoronix Test Suite user configuration file.) Tj ET Q
+q 0.000 g BT 59.53 91.66 Td (This option can be used for resetting the Phoronix Test Suite user configuration file to its default state.) Tj ET Q
 BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 62.71 Td (version) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 62.71 Td (user-config-set) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 77.42 63.01 Td (  ) Tj ET Q
+q 0.380 0.388 0.376 rg BT 125.08 63.01 Td (  ) Tj ET Q
 BT /F2 11.00 Tf ET
 BT /F1 7.00 Tf ET
 q 0.000 g BT 59.53 26.25 Td (Phoronix Test Suite v3.0.0a4) Tj ET Q
@@ -665,7 +665,7 @@ endobj
 /Contents 18 0 R>>
 endobj
 18 0 obj
-<</Length 2258>>
+<</Length 2570>>
 stream
 2 J
 0.57 w
@@ -677,36 +677,42 @@ q 0.000 g BT 231.06 795.17 Td (Phoronix Test Suite v3.0.0a4) Tj ET Q
 BT /F1 10.00 Tf ET
 q 0.000 g BT 248.47 779.36 Td (Test Client Documentation) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 743.63 Td (This option will display the Phoronix Test Suite client version.) Tj ET Q
+q 0.000 g BT 59.53 743.63 Td (This option can be used for setting an XML value in the Phoronix Test Suite user configuration file.) Tj ET Q
+BT /F1 13.00 Tf ET
+q 0.380 0.388 0.376 rg BT 31.18 714.68 Td (version) Tj ET Q
+BT /F3 12.00 Tf ET
+q 0.380 0.388 0.376 rg BT 77.42 714.98 Td (  ) Tj ET Q
+BT /F2 11.00 Tf ET
+q 0.000 g BT 59.53 701.11 Td (This option will display the Phoronix Test Suite client version.) Tj ET Q
 BT /F1 16.00 Tf ET
-q 0.196 0.200 0.192 rg BT 26.93 713.78 Td (Modules) Tj ET Q
+q 0.196 0.200 0.192 rg BT 26.93 671.26 Td (Modules) Tj ET Q
 BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 686.33 Td (list-modules) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 643.81 Td (list-modules) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 107.75 686.63 Td (  ) Tj ET Q
+q 0.380 0.388 0.376 rg BT 107.75 644.11 Td (  ) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 672.76 Td (This option will list all of the available Phoronix Test Suite modules on this system.) Tj ET Q
+q 0.000 g BT 59.53 630.24 Td (This option will list all of the available Phoronix Test Suite modules on this system.) Tj ET Q
 BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 643.81 Td (module-info) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 601.29 Td (module-info) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 105.57 644.11 Td (  [Phoronix Test Suite Module]) Tj ET Q
+q 0.380 0.388 0.376 rg BT 105.57 601.59 Td (  [Phoronix Test Suite Module]) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 630.24 Td (This option will show detailed information on a Phoronix Test Suite module such as the version,) Tj ET Q
-q 0.000 g BT 59.53 616.07 Td (developer, and a description of its purpose.) Tj ET Q
+q 0.000 g BT 59.53 587.72 Td (This option will show detailed information on a Phoronix Test Suite module such as the version,) Tj ET Q
+q 0.000 g BT 59.53 573.55 Td (developer, and a description of its purpose.) Tj ET Q
 BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 587.12 Td (module-setup) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 544.60 Td (module-setup) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 116.41 587.42 Td (  [Phoronix Test Suite Module]) Tj ET Q
+q 0.380 0.388 0.376 rg BT 116.41 544.90 Td (  [Phoronix Test Suite Module]) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 573.55 Td (This option will allow you to configure all available end-user options for a Phoronix Test Suite module.) Tj ET Q
-q 0.000 g BT 59.53 559.37 Td (These options are then stored within the user's configuration file. Not all modules may have options that) Tj ET Q
-q 0.000 g BT 59.53 545.20 Td (can be configured by the end-user.) Tj ET Q
+q 0.000 g BT 59.53 531.03 Td (This option will allow you to configure all available end-user options for a Phoronix Test Suite module.) Tj ET Q
+q 0.000 g BT 59.53 516.85 Td (These options are then stored within the user's configuration file. Not all modules may have options that) Tj ET Q
+q 0.000 g BT 59.53 502.68 Td (can be configured by the end-user.) Tj ET Q
 BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 516.25 Td (test-module) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 473.73 Td (test-module) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 104.85 516.55 Td (  [Phoronix Test Suite Module]) Tj ET Q
+q 0.380 0.388 0.376 rg BT 104.85 474.03 Td (  [Phoronix Test Suite Module]) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 502.68 Td (This option can be used for debugging a Phoronix Test Suite module.) Tj ET Q
+q 0.000 g BT 59.53 460.16 Td (This option can be used for debugging a Phoronix Test Suite module.) Tj ET Q
 BT /F1 7.00 Tf ET
 q 0.000 g BT 26.93 26.25 Td (Phoronix Test Suite v3.0.0a4) Tj ET Q
 566.93 28.35 0.00 0.00 re f q 0.000 g BT 466.08 26.25 Td (www.phoronix-test-suite.com) Tj ET Q
@@ -2509,7 +2515,7 @@ endobj
 <</Title (Modules)
 /Parent 57 0 R
 /Prev 67 0 R
-/Dest [17 0 R /XYZ 0 739.84 null]
+/Dest [17 0 R /XYZ 0 697.32 null]
 /Count 0>>
 endobj
 69 0 obj
@@ -2796,7 +2802,7 @@ endobj
 /Author (Phoronix Test Suite)
 /Keywords ()
 /Creator (PhoronixTestSuite/Iveland)
-/CreationDate (D:20101212192209)
+/CreationDate (D:20101212194011)
 >>
 endobj
 105 0 obj
@@ -2812,111 +2818,111 @@ endobj
 xref
 0 106
 0000000000 65535 f 
-0000124697 00000 n 
-0000136545 00000 n 
+0000124969 00000 n 
+0000136817 00000 n 
 0000000009 00000 n 
 0000000380 00000 n 
 0000000890 00000 n 
 0000001118 00000 n 
-0000007004 00000 n 
-0000007232 00000 n 
-0000013060 00000 n 
-0000013289 00000 n 
-0000018610 00000 n 
-0000018840 00000 n 
-0000024512 00000 n 
-0000024742 00000 n 
-0000030705 00000 n 
-0000030935 00000 n 
-0000036542 00000 n 
-0000036772 00000 n 
-0000039081 00000 n 
-0000039311 00000 n 
-0000044779 00000 n 
-0000045449 00000 n 
-0000053706 00000 n 
-0000054086 00000 n 
-0000060443 00000 n 
-0000060808 00000 n 
-0000062379 00000 n 
-0000062609 00000 n 
-0000066953 00000 n 
-0000067183 00000 n 
-0000071494 00000 n 
-0000071724 00000 n 
-0000075970 00000 n 
-0000076200 00000 n 
-0000077557 00000 n 
-0000079123 00000 n 
-0000086390 00000 n 
-0000086900 00000 n 
-0000094182 00000 n 
-0000094412 00000 n 
-0000101714 00000 n 
-0000102369 00000 n 
-0000107092 00000 n 
-0000107462 00000 n 
-0000113159 00000 n 
-0000113917 00000 n 
-0000119431 00000 n 
-0000120062 00000 n 
-0000123078 00000 n 
-0000123308 00000 n 
-0000124943 00000 n 
-0000125045 00000 n 
-0000125142 00000 n 
-0000125247 00000 n 
-0000129406 00000 n 
-0000130185 00000 n 
-0000136694 00000 n 
-0000136834 00000 n 
-0000136951 00000 n 
-0000137071 00000 n 
-0000137197 00000 n 
-0000137330 00000 n 
-0000137449 00000 n 
-0000137573 00000 n 
-0000137701 00000 n 
-0000137831 00000 n 
-0000137961 00000 n 
-0000138080 00000 n 
-0000138188 00000 n 
-0000138355 00000 n 
-0000138464 00000 n 
-0000138590 00000 n 
-0000138723 00000 n 
-0000138831 00000 n 
-0000138959 00000 n 
-0000139088 00000 n 
-0000139222 00000 n 
-0000139361 00000 n 
-0000139504 00000 n 
-0000139637 00000 n 
-0000139772 00000 n 
-0000139910 00000 n 
-0000140040 00000 n 
-0000140175 00000 n 
-0000140296 00000 n 
-0000140451 00000 n 
-0000140572 00000 n 
-0000140695 00000 n 
-0000140856 00000 n 
-0000140983 00000 n 
-0000141124 00000 n 
-0000141232 00000 n 
-0000141353 00000 n 
-0000141480 00000 n 
-0000141614 00000 n 
-0000141729 00000 n 
-0000141881 00000 n 
-0000141990 00000 n 
-0000142109 00000 n 
-0000142270 00000 n 
-0000142422 00000 n 
-0000142529 00000 n 
-0000142651 00000 n 
-0000142716 00000 n 
-0000142964 00000 n 
+0000007001 00000 n 
+0000007229 00000 n 
+0000013051 00000 n 
+0000013280 00000 n 
+0000018601 00000 n 
+0000018831 00000 n 
+0000024500 00000 n 
+0000024730 00000 n 
+0000030692 00000 n 
+0000030922 00000 n 
+0000036502 00000 n 
+0000036732 00000 n 
+0000039353 00000 n 
+0000039583 00000 n 
+0000045051 00000 n 
+0000045721 00000 n 
+0000053978 00000 n 
+0000054358 00000 n 
+0000060715 00000 n 
+0000061080 00000 n 
+0000062651 00000 n 
+0000062881 00000 n 
+0000067225 00000 n 
+0000067455 00000 n 
+0000071766 00000 n 
+0000071996 00000 n 
+0000076242 00000 n 
+0000076472 00000 n 
+0000077829 00000 n 
+0000079395 00000 n 
+0000086662 00000 n 
+0000087172 00000 n 
+0000094454 00000 n 
+0000094684 00000 n 
+0000101986 00000 n 
+0000102641 00000 n 
+0000107364 00000 n 
+0000107734 00000 n 
+0000113431 00000 n 
+0000114189 00000 n 
+0000119703 00000 n 
+0000120334 00000 n 
+0000123350 00000 n 
+0000123580 00000 n 
+0000125215 00000 n 
+0000125317 00000 n 
+0000125414 00000 n 
+0000125519 00000 n 
+0000129678 00000 n 
+0000130457 00000 n 
+0000136966 00000 n 
+0000137106 00000 n 
+0000137223 00000 n 
+0000137343 00000 n 
+0000137469 00000 n 
+0000137602 00000 n 
+0000137721 00000 n 
+0000137845 00000 n 
+0000137973 00000 n 
+0000138103 00000 n 
+0000138233 00000 n 
+0000138352 00000 n 
+0000138460 00000 n 
+0000138627 00000 n 
+0000138736 00000 n 
+0000138862 00000 n 
+0000138995 00000 n 
+0000139103 00000 n 
+0000139231 00000 n 
+0000139360 00000 n 
+0000139494 00000 n 
+0000139633 00000 n 
+0000139776 00000 n 
+0000139909 00000 n 
+0000140044 00000 n 
+0000140182 00000 n 
+0000140312 00000 n 
+0000140447 00000 n 
+0000140568 00000 n 
+0000140723 00000 n 
+0000140844 00000 n 
+0000140967 00000 n 
+0000141128 00000 n 
+0000141255 00000 n 
+0000141396 00000 n 
+0000141504 00000 n 
+0000141625 00000 n 
+0000141752 00000 n 
+0000141886 00000 n 
+0000142001 00000 n 
+0000142153 00000 n 
+0000142262 00000 n 
+0000142381 00000 n 
+0000142542 00000 n 
+0000142694 00000 n 
+0000142801 00000 n 
+0000142923 00000 n 
+0000142988 00000 n 
+0000143236 00000 n 
 trailer
 <<
 /Size 106
@@ -2924,5 +2930,5 @@ trailer
 /Info 104 0 R
 >>
 startxref
-143110
+143382
 %%EOF

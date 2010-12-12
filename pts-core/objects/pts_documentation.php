@@ -1,0 +1,68 @@
+<?php
+
+/*
+	Phoronix Test Suite
+	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
+	Copyright (C) 2009 - 2010, Phoronix Media
+	Copyright (C) 2009 - 2010, Michael Larabel
+
+	This program is free software; you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation; either version 3 of the License, or
+	(at your option) any later version.
+
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+	GNU General Public License for more details.
+
+	You should have received a copy of the GNU General Public License
+	along with this program. If not, see <http://www.gnu.org/licenses/>.
+*/
+
+class pts_documentation
+{
+	public static function client_commands_array()
+	{
+		$options = array("Test Installation" => array(), "Testing" => array(), "Batch Testing" => array(), "OpenBenchmarking.org" => array(), "System" => array(), "Information" => array(), "Asset Creation" => array(), "Result Management" => array(), "Result Analytics" => array(), "Other" => array());
+
+		foreach(pts_file_io::glob(PTS_COMMAND_PATH . "*.php") as $option_php_file)
+		{
+			$option_php = basename($option_php_file, ".php");
+			$name = str_replace("_", "-", $option_php);
+
+			if(!in_array(pts_strings::first_in_string($name, '-'), array("dump", "task")))
+			{
+				include_once($option_php_file);
+
+				$reflect = new ReflectionClass($option_php);
+				$constants = $reflect->getConstants();
+
+				$doc_description = isset($constants['doc_description']) ? constant($option_php . '::doc_description') : 'No summary is available.';
+				$doc_section = isset($constants['doc_section']) ? constant($option_php . '::doc_section') : 'Other';
+				$name = isset($constants['doc_use_alias']) ? constant($option_php . '::doc_use_alias') : $name;
+				$doc_args = array();
+
+				if(method_exists($option_php, 'argument_checks'))
+				{
+					$doc_args = call_user_func(array($option_php, 'argument_checks'));
+				}
+
+				if(!empty($doc_section) && !isset($options[$doc_section]))
+				{
+					$options[$doc_section] = array();
+				}
+
+				array_push($options[$doc_section], array($name, $doc_args, $doc_description));
+			}
+		}
+
+		return $options;
+	}
+	public static function basic_description()
+	{
+		return "The Phoronix Test Suite is the most comprehensive testing and benchmarking platform available that provides an extensible framework for which new tests can be easily added. The software is designed to effectively carry out both qualitative and quantitative benchmarks in a clean, reproducible, and easy-to-use manner.";
+	}
+}
+
+?>
