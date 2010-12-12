@@ -89,7 +89,7 @@ class pts_argument_check
 			$type = 'Unknown Object';
 		}
 
-		$type = '<' . $type . '>' . (($this->get_argument_index() === 'VARIABLE_LENGTH') ? ' ....' : null);
+		$type = '[' . $type . ']' . (($this->get_argument_index() === 'VARIABLE_LENGTH') ? '  ....' : null);
 
 		return $type;
 	}

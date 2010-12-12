@@ -39,6 +39,126 @@ class pts_pdf_template extends FPDF
 		$this->SetCreator(pts_codename(true));
 		$this->SetCompression(false);
 	}
+	public function html_to_pdf($html)
+	{
+		$dom = new DOMDocument();
+
+		if(is_file($html))
+		{
+			$dom->loadHTMLFile($html);
+		}
+		else
+		{
+			$dom->loadHTML($html);
+		}
+
+		$section_title = $dom->getElementsByTagName('html')->item(0)->getElementsByTagName('head')->item(0)->nodeValue;
+		$tags = $dom->getElementsByTagName('html')->item(0)->getElementsByTagName('body')->item(0)->childNodes;
+
+		$this->SetLeftMargin(8.5);
+		$this->AddPage();
+		$this->CreateBookmark($section_title, 0);
+		$this->SetFont('Arial', 'B', 21);
+		$this->SetTextColor(50, 51, 49);
+		$this->SetFillColor(255, 255, 255);
+		$this->Cell(0, 6, $section_title, 0, 0, 'L', true);
+		$this->Ln(10);
+
+		for($i = 0; $i < $tags->length; $i++)
+		{
+			$value = $tags->item($i)->nodeValue;
+			$dom_item = $tags->item($i);
+
+			switch($tags->item($i)->nodeName)
+			{
+				case 'h1':
+					$this->CreateBookmark($value, 1);
+					$this->SetFont('Arial', 'B', 16);
+					$this->SetLeftMargin(8.5);
+					$this->SetTextColor(50, 51, 49);
+					$this->Ln();
+					$this->html_text_interpret('h1', $dom_item);
+					$this->Ln();
+					break;
+				case 'h2':
+					$this->CreateBookmark($value, 2);
+					$this->SetLeftMargin(10);
+					$this->SetFont('Arial', 'B', 13);
+					$this->SetTextColor(50, 51, 49);
+					$this->Ln();
+					$this->html_text_interpret('h2', $dom_item);
+					break;
+				case 'h3':
+					$this->SetLeftMargin(10);
+					$this->SetFont('Arial', 'B', 13);
+					$this->SetTextColor(97, 99, 96);
+					$this->Ln();
+					$this->html_text_interpret('h3', $dom_item);
+					break;
+				case 'ul':
+					$this->SetFont("Arial", null, 11);
+					$this->SetLeftMargin(30);
+					$this->SetTextColor(0, 0, 0);
+
+					$this->Ln();
+					foreach($tags->item($i)->childNodes as $li)
+					{
+						$this->html_text_interpret('p', $li);
+						$this->Ln();
+					}
+					$this->SetLeftMargin(10);
+					$this->Ln();
+					break;
+				case 'p':
+					$this->SetFont("Arial", null, 11);
+					$this->SetLeftMargin(20);
+					$this->SetTextColor(0, 0, 0);
+					$this->Ln();
+					$this->html_text_interpret('p', $dom_item);
+					$this->SetLeftMargin(10);
+					$this->Ln();
+					break;
+				case 'hr':
+					$this->Ln(8);
+					break;
+			}
+		}
+	}
+	protected function html_text_interpret($apply_as_tag, &$dom_item)
+	{
+		for($j = 0; property_exists($dom_item, 'length') == false && $j < $dom_item->childNodes->length; $j++)
+		{
+			$value = $dom_item->childNodes->item($j)->nodeValue;
+			$name = $dom_item->childNodes->item($j)->nodeName;
+
+			switch($name)
+			{
+				case 'em':
+					$this->SetFont(null, 'I', (substr($apply_as_tag, 0, 1) == 'h' ? '12' : null));
+					break;
+				case 'strong':
+					$this->SetFont(null, 'B');
+					break;
+				case '#text':
+					$this->SetFont(null, (substr($apply_as_tag, 0, 1) == 'h' ? 'B' : null));
+					break;
+				case 'a':
+					$this->SetTextColor(0, 0, 116);
+					$this->SetFont(null, 'BU');
+					$this->Write(5, $value, $dom_item->childNodes->item($j)->attributes->getNamedItem('href')->nodeValue);
+					$this->SetTextColor(0, 0, 0);
+					break;
+				default:
+					echo "UNSUPPORTED: $name\n";
+					break;
+			}
+
+			if($name != 'a')
+			{
+				$this->Write(5, $value, null);
+			}
+		}
+	}
 	public function Header()
 	{
 		if($this->PageNo() == 1)
@@ -77,11 +197,6 @@ class pts_pdf_template extends FPDF
 	}
 	public function WriteBigHeader($Header, $Align = "L")
 	{
-		if($Align == 'L')
-		{
-			$this->CreateBookmark($Header, 0);
-		}
-
 		$this->SetFont("Arial", "B", 21);
 		$this->SetFillColor(255, 255, 255);
 		$this->Cell(0, 6, $Header, 0, 0, $Align, true);
@@ -93,11 +208,6 @@ class pts_pdf_template extends FPDF
 	}
 	public function WriteHeader($Header, $Align = "L")
 	{
-		if($Align == 'L')
-		{
-			$this->CreateBookmark($Header, 1);
-		}
-
 		$this->SetFont("Arial", "B", 16);
 		$this->SetFillColor(255, 255, 255);
 		$this->Cell(0, 6, $Header, 0, 0, $Align, true);
@@ -116,7 +226,6 @@ class pts_pdf_template extends FPDF
 	}
 	public function WriteMiniHeader($Header)
 	{
-		$this->CreateBookmark($Header, 2);
 		$this->SetFont("Arial", "B", 13);
 		$this->SetFillColor(255, 255, 255);
 		$this->Cell(0, 2, $Header, 0, 0, "L", true);

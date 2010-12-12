@@ -34,7 +34,7 @@ class dump_pdf_documentation_build implements pts_option_interface
 			return;
 		}
 
-		$pdf = new pts_pdf_template(pts_title(false), "Client Documentation");
+		$pdf = new pts_pdf_template(pts_title(false), "Test Client Documentation");
 
 		$pdf->AddPage();
 		$pdf->Image(PTS_CORE_STATIC_PATH . "images/pts-308x160.png", 69, 85, 73, 38, 'PNG', 'http://www.phoronix-test-suite.com/');
@@ -44,9 +44,6 @@ class dump_pdf_documentation_build implements pts_option_interface
 		$pdf->WriteBigHeaderCenter(pts_title(true));
 		$pdf->WriteHeaderCenter("User Manual");
 		//$pdf->WriteText($result_file->get_description());
-
-
-		$pdf->AddPage();
 
 		$pts_options = array("Test Installation" => array(), "Testing" => array(), "Batch Testing" => array(), "OpenBenchmarking.org" => array(), "System" => array(), "Information" => array(), "Asset Creation" => array(), "Result Management" => array(), "Result Analytics" => array(), "Other" => array());
 
@@ -81,7 +78,23 @@ class dump_pdf_documentation_build implements pts_option_interface
 			}
 		}
 
-		$pdf->WriteBigHeader("User Options");
+		// Write the test options HTML
+		$dom = new DOMDocument();
+		$html = $dom->createElement('html');
+		$dom->appendChild($html);
+		$head = $dom->createElement('head');
+		$title = $dom->createElement('title', "User Options");
+		$head->appendChild($title);
+		$html->appendChild($head);
+		$body = $dom->createElement('body');
+		$html->appendChild($body);
+
+		$p = $dom->createElement('p', "The following options are currently supported by the Phoronix Test Suite client. A list of available options can also be found by running ");
+		$em = $dom->createElement('em', 'phoronix-test-suite help.');
+		$p->appendChild($em);
+		$phr = $dom->createElement('hr');
+		$p->appendChild($phr);
+		$body->appendChild($p);
 
 		foreach($pts_options as $section => &$contents)
 		{
@@ -90,79 +103,29 @@ class dump_pdf_documentation_build implements pts_option_interface
 				continue;
 			}
 
-			$pdf->Ln(7);
-			$pdf->WriteHeader($section);
-			sort($contents);
+			$header = $dom->createElement('h1', $section);
+			$body->appendChild($header);
 
+			sort($contents);
 			foreach($contents as &$option)
 			{
-				$pdf->WriteDocHeader($option[0], $option[1]);
-				$pdf->WriteDocText($option[2]);
+				$sub_header = $dom->createElement('h3', $option[0]);
+				$em = $dom->CreateElement('em', '  ' . implode(' ', $option[1]));
+				$sub_header->appendChild($em);
+
+				$body->appendChild($sub_header);
+
+				$p = $dom->createElement('p', $option[2]);
+				$body->appendChild($p);
 			}
 		}
 
+		echo $dom->saveHTMLFile(PTS_PATH . "documentation/html_sections/00_user_options.html");
+
 		// Load the HTML documentation
-		foreach(pts_file_io::glob(PTS_PATH . "documentation/html/*_*.html") as $html_file)
+		foreach(pts_file_io::glob(PTS_PATH . "documentation/html_sections/*_*.html") as $html_file)
 		{
-			$dom = new DOMDocument();
-			$dom->loadHTMLFile($html_file);
-			$html_file = $dom->getElementsByTagName('html')->item(0)->getElementsByTagName("head")->item(0)->nodeValue;
-			$tags = $dom->getElementsByTagName('html')->item(0)->getElementsByTagName("body")->item(0)->childNodes;
-
-			$pdf->AddPage();
-			$pdf->WriteBigHeader($html_file);
-			for($i = 0; $i < $tags->length; $i++)
-			{
-				$value = $tags->item($i)->nodeValue;
-
-				switch($tags->item($i)->nodeName)
-				{
-					case 'h1':
-						$pdf->WriteHeader($value);
-						break;
-					case 'h2':
-						$pdf->Ln();
-						$pdf->WriteMiniHeader($value);
-						break;
-					case 'p':
-						$pdf->SetFont("Arial", null, 11);
-						for($j = 0; $j < $tags->item($i)->childNodes->length; $j++)
-						{
-							$value = $tags->item($i)->childNodes->item($j)->nodeValue;
-							$name = $tags->item($i)->childNodes->item($j)->nodeName;
-
-							switch($name)
-							{
-								case 'em':
-									$pdf->SetFont(null, 'I');
-									break;
-								case 'strong':
-									$pdf->SetFont(null, 'B');
-									break;
-								case '#text':
-									$pdf->SetFont(null, null);
-									break;
-								case 'a':
-									$pdf->SetTextColor(0, 0, 255);
-									$pdf->SetFont(null, 'BU');
-									$pdf->Write(5, $value, $tags->item($i)->childNodes->item($j)->attributes->getNamedItem('href')->nodeValue);
-									$pdf->SetTextColor(0, 0, 0);
-									break;
-								default:
-									echo "UNSUPPORTED: $name\n";
-									break;
-							}
-
-							if($name != 'a')
-							{
-								$pdf->Write(5, $value, null);
-							}
-							//$pdf->Ln();
-						}
-						$pdf->Ln(7);
-						break;
-				}
-			}
+			$pdf->html_to_pdf($html_file);
 		}
 
 

@@ -7,16 +7,18 @@
 <p>The Phoronix Test Suite can run on almost any Linux distribution along with Apple Mac OS X, Microsoft Windows, OpenSolaris, BSD (FreeBSD/PC-BSD/OpenBSD/NetBSD), webOS / Optware, and other operating systems. The only Linux distribution-specific code deals with the external dependencies support feature that are set by individual test profiles. If you are not running one of the supported Linux distributions (currently Ubuntu, Fedora, Mandriva, Gentoo, PCLinuxOS, Arch Linux, Pardus, OpenSuSE, Zenwalk, and CentOS), OpenSolaris, FreeBSD, NetBSD, or Mac OS X, you may need to install a package manually (as instructed by the Phoronix Test Suite) in order for a test to run. An example of an external dependency would be GCC and the OpenGL Utility Toolkit being needed for test profiles that build an OpenGL benchmark from source-code.</p>
 <h1>Dependencies</h1>
 <p>The only required dependency for the Phoronix Test Suite is PHP 5.x CLI (packages for it are commonly called <em>php5-cli</em> or <em>php-cli</em> or just <em>php</em>). It's important to note that only PHP for the command-line is needed and not a web server (Apache) or other packages commonly associated with PHP and its usage by web-sites. The PHP5 version required is PHP 5.2 or newer.</p>
-<p>As part of the PHP requirement, the following PHP extensions are required and/or highly recommended in order to take advantage of the Phoronix Test Suite capabilities.</p>
-<p>- <strong>PHP DOM</strong> is needed for XML operations and must be installed for the Phoronix Test Suite to function.</p>
-<p>- <strong>PHP ZIP</strong> is needed for file compression and decompression and specifically dealing with test profiles and suites obtained via OpenBenchmarking.org or when uploading such tests and suites.</p>
-<p>- <strong>PHP OpenSSL</strong> is used for enabling HTTPS communication with Phoronix Test Suite / OpenBenchmarking.org servers.</p>
-<p>- <strong>PHP GD</strong> is highly recommended for rendering of test data to JPEG and PNG image formats and is selectively used in other image operations.</p>
-<p>- <strong>PHP Zlib</strong> is highly recommended for greater data compression when dealing with remote OpenBenchmarking.org assets.</p>
-<p>- <strong>PHP PCNTL</strong> is used for multi-threaded system sensor monitoring support during the testing process and other threaded tasks by the Phoronix Test Suite module framework.</p>
-<p>- <strong>PHP POSIX</strong> is used for reliably obtaining more system information in an efficient manner.</p>
-<p>- <strong>PHP CURL</strong> is supported as an alternative networking library for improved network performance in downloading test files and other operations.</p>
-<p>- <strong>PHP FPDF</strong> is used to generate PDF reports of test data.</p>
+<p>As part of the PHP requirement, the following PHP extensions are required and/or highly recommended in order to take advantage of the Phoronix Test Suite capabilities:</p>
+<ul>
+<li><strong>PHP DOM</strong> is needed for XML operations and must be installed for the Phoronix Test Suite to function.</li>
+<li><strong>PHP ZIP</strong> is needed for file compression and decompression and specifically dealing with test profiles and suites obtained via OpenBenchmarking.org or when uploading such tests and suites.</li>
+<li><strong>PHP OpenSSL</strong> is used for enabling HTTPS communication with Phoronix Test Suite / OpenBenchmarking.org servers.</li>
+<li><strong>PHP GD</strong> is highly recommended for rendering of test data to JPEG and PNG image formats and is selectively used in other image operations.</li>
+<li><strong>PHP Zlib</strong> is highly recommended for greater data compression when dealing with remote OpenBenchmarking.org assets.</li>
+<li><strong>PHP PCNTL</strong> is used for multi-threaded system sensor monitoring support during the testing process and other threaded tasks by the Phoronix Test Suite module framework.</li>
+<li><strong>PHP POSIX</strong> is used for reliably obtaining more system information in an efficient manner.</li>
+<li><strong>PHP CURL</strong> is supported as an alternative networking library for improved network performance in downloading test files and other operations.</li>
+<li><strong>PHP FPDF</strong> is used to generate PDF reports of test data.</li>
+</ul>
 <p>Without all of these extensions, some capabilities of the Phoronix Test Suite will not be available. Many of these packages are enabled by default and do not require any additional installation steps on most Linux distributions, otherwise they are often found in the package vendor's repository.</p>
 <h1>Notes</h1>
 <h2>General</h2>
