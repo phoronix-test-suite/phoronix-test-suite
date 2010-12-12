@@ -879,7 +879,7 @@ class phodevi_gpu extends phodevi_device_interface
 			// Report only the information inside the brackets if it's more relevant...
 			// Mainly with Linux systems where the PCI information is reported like "nVidia GF104 [GeForce GTX 460]"
 
-			if(($bracket_close = strpos($info, ']', ($bracket_open + 1)) !== false)
+			if(($bracket_close = strpos($info, ']', ($bracket_open + 1))) !== false)
 			{
 				$inside_bracket = substr($info, ($bracket_open + 1), ($bracket_close - $bracket_open - 1));
 
