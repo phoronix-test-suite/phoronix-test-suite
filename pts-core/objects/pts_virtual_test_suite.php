@@ -75,12 +75,7 @@ class pts_virtual_test_suite
 
 					if($virtual_suite instanceof pts_virtual_test_suite)
 					{
-						$size = count($virtual_suite->get_contained_test_profiles());
-
-						if($size > 0)
-						{
-							array_push($virtual_suites, array($virt_suite, $size));
-						}
+						array_push($virtual_suites, $virtual_suite);
 					}
 				}
 			}
@@ -136,16 +131,91 @@ class pts_virtual_test_suite
 
 		return $is_virtual_suite;
 	}
+	public function get_identifier()
+	{
+		return $this->identifier;
+	}
+	public function get_title()
+	{
+		if($this->is_virtual_os_selector)
+		{
+			$title = $this->is_virtual_os_selector . ' Operating System Tests';
+		}
+		else if($this->is_virtual_subsystem_selector)
+		{
+			$title = $this->is_virtual_subsystem_selector . ' Subsystem Tests';
+		}
+		else if($this->is_virtual_software_type)
+		{
+			$title = $this->is_virtual_software_type . ' Tests';
+		}
+		else if($this->is_virtual_internal_tag)
+		{
+			$title = ucwords($this->is_virtual_internal_tag) . ' Tests';
+		}
+		else if($this->is_virtual_installed)
+		{
+			$title = 'Installed Tests';
+		}
+		else if(substr($this->identifier, strrpos($this->identifier, '/') + 1) == 'all')
+		{
+			$title = 'All ' . strtoupper(substr($this->identifier, 0,  strpos($this->identifier, '/'))) . ' Tests';
+		}
+		else
+		{
+			$title = "Virtual Suite";
+		}
+
+		return $title;
+	}
+	public function get_description()
+	{
+		if($this->is_virtual_os_selector)
+		{
+			$description = 'This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the ' . $this->is_virtual_os_selector . ' Operating System.';
+		}
+		else if($this->is_virtual_subsystem_selector)
+		{
+			$description = 'This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the ' . $this->is_virtual_subsystem_selector . ' sub-system.';
+		}
+		else if($this->is_virtual_software_type)
+		{
+			$description = 'This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a ' . $this->is_virtual_software_type . ' software test.';
+		}
+		else if($this->is_virtual_internal_tag)
+		{
+			$description = 'This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing ' . $this->is_virtual_internal_tag . '.';
+		}
+		else if($this->is_virtual_installed)
+		{
+			$description = 'This is a collection of test profiles found within the specified OpenBenchmarking.org repository that are already installed on the system under test.';
+		}
+		else if(substr($this->identifier, strrpos($this->identifier, '/') + 1) == 'all')
+		{
+			$description = 'This is a collection of all test profiles found within the specified OpenBenchmarking.org repository.';
+		}
+		else
+		{
+			$description = "Virtual Suite";
+		}
+
+		return $description;
+	}
+	public function is_core_version_supported()
+	{
+		// It's virtual and created by pts-core so it's always supported
+		return true;
+	}
 	private static function is_selector_os($id)
 	{
 		$yes = false;
 
-		foreach(self::available_operating_systems() as $os)
+		foreach(self::available_operating_systems() as $name => $os)
 		{
 			if($os === $id)
 			{
 				// virtual suite of all supported tests by a given operating system
-				$yes = true;
+				$yes = $name;
 				break;
 			}
 		}
@@ -158,7 +228,7 @@ class pts_virtual_test_suite
 
 		foreach(pts_types::operating_systems() as $os_r)
 		{
-			array_push($os, strtolower($os_r[0]));
+			$os[$os_r[0]] = strtolower($os_r[0]);
 		}
 
 		return $os;
@@ -172,7 +242,7 @@ class pts_virtual_test_suite
 			if(strtolower($subsystem) === $id)
 			{
 				// virtual suite of all supported tests by a given TestType / subsystem
-				$yes = true;
+				$yes = $subsystem;
 				break;
 			}
 		}
@@ -185,10 +255,10 @@ class pts_virtual_test_suite
 
 		foreach(pts_types::test_profile_software_types() as $subsystem)
 		{
-			if(strtolower($subsystem) === $id)
+			if(strtolower($subsystem) === $id && $subsystem != 'BaseTestProfile')
 			{
 				// virtual suite of all supported tests by a given SoftwareType
-				$yes = true;
+				$yes = $subsystem;
 				break;
 			}
 		}
@@ -199,10 +269,11 @@ class pts_virtual_test_suite
 	{
 		$yes = false;
 
-		if(in_array(strtolower($id), self::tags_in_repo($repo)))
+		if(($i = array_search(strtolower($id), self::tags_in_repo($repo))) !== false)
 		{
 			// virtual suite of all test profiles matching an internal tag
-			$yes = true;
+			$tags = self::tags_in_repo($repo);
+			$yes = $tags[$i];
 		}
 
 		return $yes;
@@ -220,7 +291,7 @@ class pts_virtual_test_suite
 			{
 				foreach($test['internal_tags'] as $tag)
 				{
-					pts_arrays::unique_push($tags, strtolower($tag));
+					$tags[$tag] = strtolower($tag);
 				}
 			}
 		}
@@ -290,19 +361,6 @@ class pts_virtual_test_suite
 		}
 
 		return $contained;
-	}
-	public function get_title()
-	{
-		return "Virtual Suite";
-	}
-	public function get_description()
-	{
-		return "N/A"; // TODO: auto-generate description
-	}
-	public function is_core_version_supported()
-	{
-		// It's virtual and created by pts-core so it's always supported
-		return true;
 	}
 }
 

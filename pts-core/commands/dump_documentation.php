@@ -20,7 +20,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class dump_generate_documentation implements pts_option_interface
+class dump_documentation implements pts_option_interface
 {
 	public static function run($r)
 	{
@@ -52,13 +52,13 @@ class dump_generate_documentation implements pts_option_interface
 		$html = $dom->createElement('html');
 		$dom->appendChild($html);
 		$head = $dom->createElement('head');
-		$title = $dom->createElement('title', "User Options");
+		$title = $dom->createElement('title', 'User Options');
 		$head->appendChild($title);
 		$html->appendChild($head);
 		$body = $dom->createElement('body');
 		$html->appendChild($body);
 
-		$p = $dom->createElement('p', "The following options are currently supported by the Phoronix Test Suite client. A list of available options can also be found by running ");
+		$p = $dom->createElement('p', 'The following options are currently supported by the Phoronix Test Suite client. A list of available options can also be found by running ');
 		$em = $dom->createElement('em', 'phoronix-test-suite help.');
 		$p->appendChild($em);
 		$phr = $dom->createElement('hr');
@@ -89,7 +89,39 @@ class dump_generate_documentation implements pts_option_interface
 			}
 		}
 
-		echo $dom->saveHTMLFile(PTS_PATH . "documentation/html_sections/00_user_options.html");
+		// Write the virtual suites HTML
+		$dom = new DOMDocument();
+		$html = $dom->createElement('html');
+		$dom->appendChild($html);
+		$head = $dom->createElement('head');
+		$title = $dom->createElement('title', 'Virtual Test Suites');
+		$head->appendChild($title);
+		$html->appendChild($head);
+		$body = $dom->createElement('body');
+		$html->appendChild($body);
+
+		$p = $dom->createElement('p', 'Virtual test suites are not like a traditional test suite defined by the XML suite specification. Virtual test suites are dynamically generated in real-time by the Phoronix Test Suite client based upon the specified test critera. Virtual test suites can automatically consist of all test profiles that are compatible with a particular operating system or test profiles that meet other critera. When running a virtual suite, the OpenBenchmarking.org repository of the test profiles to use for generating the dynamic suite must be prefixed. ');
+		$body->appendChild($p);
+
+		$p = $dom->createElement('p', 'Virtual test suites can be installed and run just like a normal XML test suite and shares nearly all of the same capabilities. However, when running a virtual suite, the user will be prompted to input any user-configuration options for needed test profiles just as they would need to do if running the test individually. Virtual test suites are also only supported for an OpenBenchmarking.org repository if there is no test profile or test suite of the same name in the repository. Below is a list of common virtual test suites for the main Phoronix Test Suite repository, but the dynamic list of available virtual test suites based upon the enabled repositories is available by running ');
+		$em = $dom->createElement('em', 'phoronix-test-suite list-available-virtual-suites.');
+		$p->appendChild($em);
+		$phr = $dom->createElement('hr');
+		$p->appendChild($phr);
+		$body->appendChild($p);
+
+		foreach(pts_virtual_test_suite::available_virtual_suites() as $virtual_suite)
+		{
+			$sub_header = $dom->createElement('h3', $virtual_suite->get_title());
+			$em = $dom->CreateElement('em', '  ' . $virtual_suite->get_identifier());
+			$sub_header->appendChild($em);
+			$body->appendChild($sub_header);
+
+			$p = $dom->createElement('p', $virtual_suite->get_description());
+			$body->appendChild($p);
+		}
+
+		echo $dom->saveHTMLFile(PTS_PATH . "documentation/html_sections/55_virtual_suites.html");
 
 		// Load the HTML documentation
 		foreach(pts_file_io::glob(PTS_PATH . "documentation/html_sections/*_*.html") as $html_file)

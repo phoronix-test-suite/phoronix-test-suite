@@ -787,6 +787,11 @@ class pts_test_run_manager
 
 				foreach($run_object->get_contained_test_profiles() as $test_profile)
 				{
+					if($test_profile->is_supported(false) == false)
+					{
+						continue;
+					}
+
 					if($test_profile->is_test_installed() == false)
 					{
 						array_push($tests_missing, $test_profile);
@@ -1101,7 +1106,12 @@ class pts_test_run_manager
 			// Validate the empty pts_test_result
 			$test_type = $test_profile->get_test_hardware_type();
 
-			if($test_type == 'Graphics' && pts_client::read_env('DISPLAY') == false && IS_WINDOWS == false)
+
+			if($test_profile->is_supported(false) == false)
+			{
+				$valid_test_profile = false;
+			}
+			else if($test_type == 'Graphics' && pts_client::read_env('DISPLAY') == false && IS_WINDOWS == false)
 			{
 				pts_client::$display->test_run_error("No display server was found, cannot run " . $test_profile);
 				$valid_test_profile = false;

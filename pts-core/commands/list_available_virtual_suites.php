@@ -29,9 +29,14 @@ class list_available_virtual_suites implements pts_option_interface
 	{
 		pts_client::$display->generic_heading("Available Virtual Suites");
 
-		foreach(pts_virtual_test_suite::available_virtual_suites() as $identifier)
+		foreach(pts_virtual_test_suite::available_virtual_suites() as $virtual_suite)
 		{
-			echo sprintf("%-22ls - %-15ls\n", $identifier[0], $identifier[1] . ' Tests');
+			$size = count($virtual_suite->get_contained_test_profiles());
+
+			if($size > 0)
+			{
+				echo sprintf("%-22ls - %-32ls %-9ls\n", $virtual_suite->get_identifier(), $virtual_suite->get_title(), $size . ' Tests');
+			}
 		}
 		echo "\n";
 	}
