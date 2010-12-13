@@ -91,7 +91,7 @@ class pts_virtual_test_suite
 		if(count($identifier) == 2)
 		{
 			// read the repo
-			pts_openbenchmarking::refresh_repository_list(array($identifier[0]));
+			pts_openbenchmarking::refresh_repository_lists(array($identifier[0]));
 			$repo_index = pts_openbenchmarking::read_repository_index($identifier[0]);
 
 			if(isset($repo_index['tests']) && is_array($repo_index['tests']))

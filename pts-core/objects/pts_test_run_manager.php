@@ -368,7 +368,8 @@ class pts_test_run_manager
 				else
 				{
 					pts_client::$display->generic_prompt("Enter a unique name for this test run: ");
-					$results_identifier = trim(str_replace(array('/'), "", pts_user_io::read_user_input()));
+					$input = trim(pts_user_io::read_user_input());
+					$results_identifier = pts_strings::keep_in_string($input, pts_strings::CHAR_LETTER | pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DASH | pts_strings::CHAR_UNDERSCORE | pts_strings::CHAR_COLON | pts_strings::CHAR_COMMA | pts_strings::CHAR_SLASH | pts_strings::CHAR_SPACE);
 				}
 				$times_tried++;
 
@@ -602,7 +603,7 @@ class pts_test_run_manager
 	public static function clean_save_name_string($input)
 	{
 		$input = pts_strings::swap_variables($input, array("pts_client", "user_run_save_variables"));
-		$input = trim(str_replace(array(' ', '/', '&', '?', ':', '$', '~', '\''), null, str_replace(" ", "-", strtolower($input))));
+		$input = pts_strings::keep_in_string(str_replace(' ', '-', trim(strtolower($input))), pts_strings::CHAR_LETTER | pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DASH | pts_strings::CHAR_UNDERSCORE);
 
 		return $input;
 	}
@@ -1084,7 +1085,7 @@ class pts_test_run_manager
 				{
 					foreach(array_keys($virtual_suite_tests) as $i)
 					{
-						if(!in_array(($i + 1), $run_index))
+						if(!in_array(($i + 1), $run_index) || $virtual_suite_tests[$i]->is_supported(false) == false)
 						{
 							unset($virtual_suite_tests[$i]);
 						}
