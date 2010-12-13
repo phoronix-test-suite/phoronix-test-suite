@@ -1074,11 +1074,11 @@ class pts_test_run_manager
 			else if($run_object instanceof pts_virtual_test_suite)
 			{
 				$virtual_suite_tests = $run_object->get_contained_test_profiles();
-				$run_index = pts_user_io::prompt_text_menu('Select the tests in the virtual suite to run', array($virtual_suite_tests, 'All Tests In Suite'), true, true);
+				$run_index = explode(',', pts_user_io::prompt_text_menu('Select the tests in the virtual suite to run', array_merge($virtual_suite_tests, array('All Tests In Suite')), true, true));
 
 				if(in_array(count($virtual_suite_tests), $run_index))
 				{
-					// The appended 'All Tests In Suite' was selected
+					// The appended 'All Tests In Suite' was selected, so run all
 				}
 				else
 				{
