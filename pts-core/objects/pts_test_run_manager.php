@@ -379,7 +379,7 @@ class pts_test_run_manager
 
 		if(empty($results_identifier))
 		{
-			$results_identifier = date("Y-m-d H:i");
+			$results_identifier = date('Y-m-d H:i');
 		}
 		else
 		{
@@ -1073,7 +1073,25 @@ class pts_test_run_manager
 			}
 			else if($run_object instanceof pts_virtual_test_suite)
 			{
-				foreach($run_object->get_contained_test_profiles() as $test_profile)
+				$virtual_suite_tests = $run_object->get_contained_test_profiles();
+				$run_index = pts_user_io::prompt_text_menu('Select the tests in the virtual suite to run', array($virtual_suite_tests, 'All Tests In Suite'), true, true);
+
+				if(in_array(count($virtual_suite_tests), $run_index))
+				{
+					// The appended 'All Tests In Suite' was selected
+				}
+				else
+				{
+					foreach(array_keys($virtual_suite_tests) as $i)
+					{
+						if(!in_array($i, $run_index))
+						{
+							unset($virtual_suite_tests[$i]);
+						}
+					}
+				}
+
+				foreach($virtual_suite_tests as &$test_profile)
 				{
 					// The user is to configure virtual suites manually
 					foreach(self::test_prompts_to_result_objects($test_profile) as $result_object)

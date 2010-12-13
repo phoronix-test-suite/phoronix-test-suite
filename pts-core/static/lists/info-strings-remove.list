@@ -16,6 +16,7 @@ express
 graphics
 dram controller
 electronics
+integrated
 serverengines
 x86/mmx/sse2
 memory controller

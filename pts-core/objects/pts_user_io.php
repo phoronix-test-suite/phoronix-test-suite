@@ -148,7 +148,7 @@ class pts_user_io
 				if(count($multi_select) > 0)
 				{
 					$multi_select_pass = true;
-					$select_choice = implode(",", $multi_select);
+					$select_choice = implode(',', $multi_select);
 				
 				}
 			}
