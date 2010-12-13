@@ -17,6 +17,7 @@ graphics
 dram controller
 electronics
 integrated
+alternate
 serverengines
 x86/mmx/sse2
 memory controller
