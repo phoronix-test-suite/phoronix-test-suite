@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite 3.0 Alpha 4 (Git)
+Phoronix Test Suite 3.0 Alpha 4
+14 December 2010
 
 - pts-core: Drop support for reference-comparison as its superseded by OpenBenchmarking.org implementation
 - pts-core: TEST PROFILE XML SPEC CHANGE: EstimatedLength -> EstimatedTimePerRun
