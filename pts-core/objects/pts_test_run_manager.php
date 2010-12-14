@@ -254,13 +254,13 @@ class pts_test_run_manager
 			$save_name = date("Y-m-d-Hi");
 		}
 
-		$this->file_name = self::clean_save_name_string($save_name);
+		$this->file_name = self::clean_save_name($save_name);
 		$this->file_name_title = $save_name;
 		$this->force_save_results = true;
 	}
 	public function set_results_identifier($identifier)
 	{
-		$this->results_identifier = $identifier;
+		$this->results_identifier = self::clean_results_identifier($identifier);
 	}
 	public function prompt_save_name()
 	{
@@ -276,7 +276,7 @@ class pts_test_run_manager
 		if(($env = pts_client::read_env("TEST_RESULTS_NAME")))
 		{
 			$custom_title = $enc;
-			$proposed_name = self::clean_save_name_string($env);
+			$proposed_name = self::clean_save_name($env);
 			//echo "Saving Results To: " . $proposed_name . "\n";
 		}
 
@@ -295,7 +295,7 @@ class pts_test_run_manager
 				pts_client::$display->generic_prompt("Enter a name to save these results: ");
 				$proposed_name = pts_user_io::read_user_input();
 				$custom_title = $proposed_name;
-				$proposed_name = self::clean_save_name_string($proposed_name);
+				$proposed_name = self::clean_save_name($proposed_name);
 			}
 		}
 
@@ -368,8 +368,7 @@ class pts_test_run_manager
 				else
 				{
 					pts_client::$display->generic_prompt("Enter a unique name for this test run: ");
-					$input = trim(pts_user_io::read_user_input());
-					$results_identifier = pts_strings::keep_in_string($input, pts_strings::CHAR_LETTER | pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DASH | pts_strings::CHAR_UNDERSCORE | pts_strings::CHAR_COLON | pts_strings::CHAR_COMMA | pts_strings::CHAR_SLASH | pts_strings::CHAR_SPACE | pts_strings::CHAR_DECIMAL);
+					$results_identifier = self::clean_results_identifier(pts_user_io::read_user_input());
 				}
 				$times_tried++;
 
@@ -388,6 +387,13 @@ class pts_test_run_manager
 		}
 
 		$this->results_identifier = $results_identifier;
+	}
+	public static function clean_results_identifier($results_identifier)
+	{
+		$results_identifier = trim($results_identifier);
+		$results_identifier = pts_strings::keep_in_string($results_identifier, pts_strings::CHAR_LETTER | pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DASH | pts_strings::CHAR_UNDERSCORE | pts_strings::CHAR_COLON | pts_strings::CHAR_COMMA | pts_strings::CHAR_SLASH | pts_strings::CHAR_SPACE | pts_strings::CHAR_DECIMAL);
+
+		return $results_identifier;
 	}
 	public function result_file_setup()
 	{
@@ -600,9 +606,9 @@ class pts_test_run_manager
 
 		return true;
 	}
-	public static function clean_save_name_string($input)
+	public static function clean_save_name($input)
 	{
-		$input = pts_strings::swap_variables($input, array("pts_client", "user_run_save_variables"));
+		$input = pts_strings::swap_variables($input, array('pts_client', 'user_run_save_variables'));
 		$input = pts_strings::keep_in_string(str_replace(' ', '-', trim(strtolower($input))), pts_strings::CHAR_LETTER | pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DASH | pts_strings::CHAR_UNDERSCORE);
 
 		return $input;
