@@ -102,9 +102,9 @@ class pts_result_file_writer
 			$this->add_result_from_result_object_with_value($result_object);
 		}
 	}
-	public function add_results_from_result_file(&$result_manager)
+	public function add_results_from_result_file(&$result_file)
 	{
-		foreach($result_manager->get_result_objects() as $result_object)
+		foreach($result_file->get_result_objects() as $result_object)
 		{
 			$this->add_result_from_result_object_with_value($result_object);
 		}

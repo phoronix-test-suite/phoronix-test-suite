@@ -284,6 +284,11 @@ class pts_test_profile_parser
 
 		return $test_options;
 	}
+	public function get_reference_id()
+	{
+		// This isn't needed for test profiles, but keep this here for compatibility when passing a test_profile to pts_result_file_writer
+		return null;
+	}
 
 	//
 	// Set Functions
