@@ -120,9 +120,11 @@ class pts_external_dependencies
 				echo "\nThere are dependencies still missing from the system:\n";
 				echo pts_user_io::display_text_list(self::generic_names_to_titles($generic_packages_needed));
 
-				$actions = array("Ignore missing dependencies and proceed with installation.",
-				"Skip installing the tests with missing dependencies.",
-				"Re-attempt to install the missing dependencies.");
+				$actions = array('Ignore missing dependencies and proceed with installation.',
+					'Skip installing the tests with missing dependencies.',
+					'Re-attempt to install the missing dependencies.',
+					'Quit the current Phoronix Test Suite process.'
+					);
 
 				$selected_action = pts_user_io::prompt_text_menu("Missing dependencies action", $actions, false, true);
 
@@ -149,6 +151,8 @@ class pts_external_dependencies
 					case 3:
 						self::install_packages_on_system($dependencies_to_install);
 						break;
+					case 4:
+						exit(0);
 				}
 			}
 		}
