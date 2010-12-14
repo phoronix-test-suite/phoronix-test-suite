@@ -70,9 +70,15 @@ class pts_openbenchmarking_client
 		$json_response = pts_openbenchmarking::make_openbenchmarking_request('upload_test_result', $to_post);
 		$json_response = json_decode($json_response, true);
 
+		if(!is_array($json_response))
+		{
+			echo "\nERROR: Unhandled Exception\n";
+			return false;
+		}
+
 		if(isset($json_response['openbenchmarking']['upload']['error']))
 		{
-			echo "\nERROR:" . $json_response . "\n";
+			echo "\nERROR: " . $json_response['openbenchmarking']['upload']['error'] . "\n";
 		}
 		if(isset($json_response['openbenchmarking']['upload']['url']))
 		{
