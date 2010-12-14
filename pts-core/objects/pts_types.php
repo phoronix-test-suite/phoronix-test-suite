@@ -116,26 +116,35 @@ class pts_types
 			{
 				array_push($objects, $identifier_item);
 			}
-			else if(pts_test_profile::is_test_profile($identifier_item)) // Object is a test
+			else if(pts_test_profile::is_test_profile($identifier_item))
 			{
+				// Object is a test
 				array_push($objects, new pts_test_profile($identifier_item));
 			}
-			else if(pts_test_suite::is_suite($identifier_item)) // Object is suite
+			else if(pts_test_suite::is_suite($identifier_item))
 			{
+				// Object is a suite
 				array_push($objects, new pts_test_suite($identifier_item));
 			}
-			else if(pts_result_file::is_test_result_file($identifier_item)) // Object is a saved results file
+			else if(pts_result_file::is_test_result_file($identifier_item))
 			{
+				// Object is a saved results file
 				array_push($objects, new pts_result_file($identifier_item));
 			}
-			else if(pts_global::is_global_id($identifier_item)) // Object is a Phoronix Global file
+			else if(pts_openbenchmarking::is_openbenchmarking_result_id($identifier_item))
 			{
+				// Object is an OpenBenchmarking.org result
 				// Clone it locally so it's just handled like a pts_result_file
-				pts_global::clone_global_result($identifier_item);
-				array_push($objects, new pts_result_file($identifier_item));
+				$success = pts_openbenchmarking::clone_openbenchmarking_result($identifier_item);
+
+				if($success)
+				{
+					array_push($objects, new pts_result_file($identifier_item));
+				}
 			}
-			else if(PTS_IS_CLIENT && pts_virtual_test_suite::is_virtual_suite($identifier_item)) // Object is suite
+			else if(PTS_IS_CLIENT && pts_virtual_test_suite::is_virtual_suite($identifier_item))
 			{
+				// Object is a virtual suite
 				array_push($objects, new pts_virtual_test_suite($identifier_item));
 			}
 		}

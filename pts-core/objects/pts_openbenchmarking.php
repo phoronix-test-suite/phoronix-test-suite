@@ -68,7 +68,49 @@ class pts_openbenchmarking
 
 		return $gsid_valid;
 	}
-	public static function is_public_id($id)
+	public static function is_openbenchmarking_result_id($id)
+	{
+		$is_id = false;
+
+		if(self::is_string_openbenchmarking_result_id_compliant($id))
+		{
+			$json_response = pts_openbenchmarking::make_openbenchmarking_request('is_openbenchmarking_result', array('i' => $id));
+			$json_response = json_decode($json_response, true);
+
+			if(is_array($json_response) && isset($json_response['openbenchmarking']['result']['valid']) && $json_response['openbenchmarking']['result']['valid'] == 'TRUE')
+			{
+				$is_id = true;
+			}
+		}
+
+		return $is_id;
+	}
+	public static function clone_openbenchmarking_result($id)
+	{
+		$json_response = pts_openbenchmarking::make_openbenchmarking_request('clone_openbenchmarking_result', array('i' => $id));
+		$json_response = json_decode($json_response, true);
+		$valid = false;
+
+		if(is_array($json_response) && isset($json_response['openbenchmarking']['result']['composite_xml']))
+		{
+			$composite_xml = $json_response['openbenchmarking']['result']['composite_xml'];
+
+			$result_file = new pts_result_file($composite_xml);
+
+			if($result_file->xml_parser->validate())
+			{
+				$result_file_writer = new pts_result_file_writer();
+				$result_file_writer->add_result_file_meta_data($result_file, $id);
+				$result_file_writer->add_system_information_from_result_file($result_file);
+				$result_file_writer->add_results_from_result_file($result_file);
+
+				$valid = pts_client::save_test_result($id . '/composite.xml', $result_file_writer->get_xml(), true);
+			}
+		}
+
+		return $valid;
+	}
+	public static function is_string_openbenchmarking_result_id_compliant($id)
 	{
 		$valid = false;
 

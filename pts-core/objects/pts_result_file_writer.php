@@ -95,9 +95,16 @@ class pts_result_file_writer
 
 		return true;
 	}
-	public function add_results_from_result_file(&$result_manager)
+	public function add_results_from_result_manager(&$result_manager)
 	{
 		foreach($result_manager->get_results() as $result_object)
+		{
+			$this->add_result_from_result_object_with_value($result_object);
+		}
+	}
+	public function add_results_from_result_file(&$result_manager)
+	{
+		foreach($result_manager->get_result_objects() as $result_object)
 		{
 			$this->add_result_from_result_object_with_value($result_object);
 		}
@@ -106,7 +113,7 @@ class pts_result_file_writer
 	{
 		$this->xml_writer->addXmlNode(P_RESULTS_SYSTEM_NOTES, $test_notes);
 	}
-	public function add_result_file_meta_data(&$object)
+	public function add_result_file_meta_data(&$object, $reference_id = null)
 	{
 		$this->xml_writer->addXmlNode(P_RESULTS_GENERATED_TITLE, $object->get_title());
 		$this->xml_writer->addXmlNode(P_RESULTS_GENERATED_TIMESTAMP, date("Y-m-d H:i:s"));
@@ -114,7 +121,7 @@ class pts_result_file_writer
 		$this->xml_writer->addXmlNode(P_RESULTS_GENERATED_DESCRIPTION, $object->get_description());
 		$this->xml_writer->addXmlNodeWNE(P_RESULTS_GENERATED_NOTES, $object->get_notes());
 		$this->xml_writer->addXmlNodeWNE(P_RESULTS_GENERATED_INTERNAL_TAGS, $object->get_internal_tags());
-		$this->xml_writer->addXmlNodeWNE(P_RESULTS_GENERATED_REFERENCE_ID, null);
+		$this->xml_writer->addXmlNodeWNE(P_RESULTS_GENERATED_REFERENCE_ID, ($reference_id != null ? $reference_id : $object->get_reference_id()));
 		$this->xml_writer->addXmlNodeWNE(P_RESULTS_GENERATED_PRESET_ENV_VARS, $object->get_preset_environment_variables());
 	}
 	public function add_current_system_information()

@@ -25,41 +25,6 @@ class pts_global
 	private static $result_xml_download_base_url = "http://www.phoronix-test-suite.com/global/pts-results-viewer.php?id=";
 	private static $result_xml_public_base_url = "http://global.phoronix-test-suite.com/index.php?k=profile&u=";
 
-	public static function is_global_id($global_id)
-	{
-		// Checks if a string is a valid Phoronix Global ID
-		return pts_global::is_valid_global_id_format($global_id) && pts_network::http_get_contents("http://www.phoronix-test-suite.com/global/profile-check.php?id=" . $global_id) == "REMOTE_FILE";
-	}
-	public static function is_valid_global_id_format($global_id)
-	{
-		// Basic checking to see if the string is possibly a Global ID
-		$is_valid = true;
-
-		if(!isset($global_id[12])) // Shortest Possible ID would be X-000-000-000, needs to be at least 13 chars
-		{
-			$is_valid = false;
-		}
-
-		if($is_valid && count(explode("-", $global_id)) < 3) // Global IDs should have three (or more) dashes
-		{
-			$is_valid = false;
-		}
-
-		return $is_valid;
-	}
-	public static function download_result_xml($global_id)
-	{
-		// Download a saved test result from Phoronix Global
-		return pts_network::http_get_contents((strpos($global_id, self::$result_xml_download_base_url) === 0 ? null : self::$result_xml_download_base_url) . $global_id);
-	}
-	public static function clone_global_result($global_id, $render_graphs = true)
-	{
-		return pts_client::save_test_result($global_id . "/composite.xml", pts_global::download_result_xml($global_id), $render_graphs);
-	}
-	public static function get_public_result_url($global_id)
-	{
-		return self::$result_xml_public_base_url . $global_id;
-	}
 	public static function create_account($username, $password)
 	{
 		$uploadkey = pts_network::http_get_contents("http://www.phoronix-test-suite.com/global/account-verify.php?user_name=" . $username . "&user_md5_pass=" . $password);

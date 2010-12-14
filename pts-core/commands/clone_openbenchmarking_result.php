@@ -20,23 +20,26 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class clone_global_result implements pts_option_interface
+class clone_openbenchmarking_result implements pts_option_interface
 {
 	const doc_section = 'OpenBenchmarking.org';
+	const doc_use_alias = 'clone-result';
 	const doc_description = "This option will download a local copy of a file that was saved to OpenBenchmarking.org, as long as a valid public ID is supplied.";
 
 	public static function argument_checks()
 	{
 		return array(
-		new pts_argument_check(0, array("pts_global", "is_global_id"), null, "No Phoronix Global result found.")
+		new pts_argument_check(0, array('pts_openbenchmarking', 'is_openbenchmarking_result_id'), null, "No OpenBenchmarking.org result found.")
 		);
 	}
 	public static function run($args)
 	{
-		$identifier = $args[0];
-		pts_global::clone_global_result($identifier);
-		echo "\nResult Saved To: " . PTS_SAVE_RESULTS_PATH . $identifier . "/composite.xml\n\n";
-		//pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . $ARG_1 . "/index.html");
+		$saved = pts_openbenchmarking::clone_openbenchmarking_result($args[0]);
+
+		if($saved)
+		{
+			echo "\nResult Saved To: " . PTS_SAVE_RESULTS_PATH . $args[0] . "/composite.xml\n\n";
+		}
 	}
 }
 

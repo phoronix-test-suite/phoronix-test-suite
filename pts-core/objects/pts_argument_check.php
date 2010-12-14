@@ -72,9 +72,9 @@ class pts_argument_check
 		{
 			$type = 'Suite';
 		}
-		else if($this->get_function_check() == array('pts_global', 'is_global_id'))
+		else if($this->get_function_check() == array('pts_openbenchmarking', 'is_openbenchmarking_result_id'))
 		{
-			$type = 'Global ID';
+			$type = 'OpenBenchmarking.org ID';
 		}
 		else if($this->get_function_check() == array('pts_result_file', 'is_test_result_file'))
 		{

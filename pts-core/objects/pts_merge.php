@@ -91,7 +91,7 @@ class pts_merge
 		}
 
 		// Write the actual test results
-		$result_file_writer->add_results_from_result_file($test_result_manager);
+		$result_file_writer->add_results_from_result_manager($test_result_manager);
 	}
 	public static function generate_analytical_batch_xml($analyze_file)
 	{
@@ -105,7 +105,7 @@ class pts_merge
 		$result_file_writer->add_system_information_from_result_file($result_file);
 
 		$test_result_manager->add_test_result_set($result_file->get_result_objects());
-		$result_file_writer->add_results_from_result_file($test_result_manager);
+		$result_file_writer->add_results_from_result_manager($test_result_manager);
 
 		return $result_file_writer->get_xml();
 	}
