@@ -85,7 +85,7 @@ class pts_openbenchmarking
 
 		return $is_id;
 	}
-	public static function clone_openbenchmarking_result($id)
+	public static function clone_openbenchmarking_result(&$id)
 	{
 		$json_response = pts_openbenchmarking::make_openbenchmarking_request('clone_openbenchmarking_result', array('i' => $id));
 		$json_response = json_decode($json_response, true);
@@ -103,6 +103,7 @@ class pts_openbenchmarking
 				$result_file_writer->add_result_file_meta_data($result_file, $id);
 				$result_file_writer->add_system_information_from_result_file($result_file);
 				$result_file_writer->add_results_from_result_file($result_file);
+				$id = strtolower($id);
 
 				$valid = pts_client::save_test_result($id . '/composite.xml', $result_file_writer->get_xml(), true);
 			}
@@ -158,7 +159,7 @@ class pts_openbenchmarking
 		if($host == null)
 		{
 			// Use HTTPS if OpenSSL is available as a check to see if HTTPS can be handled
-			$host = (extension_loaded("openssl") ? "https://" : "http://") . "www.openbenchmarking.org/";
+			$host = (extension_loaded("openssl") ? "https://" : "http://") . "openbenchmarking.org/";
 		}
 
 		return $host;
