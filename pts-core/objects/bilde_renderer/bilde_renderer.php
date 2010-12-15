@@ -233,9 +233,11 @@ abstract class bilde_renderer
 		}
 
 		$user_agent .= ' ';
-		$selected_renderer = "PNG";
+		$selected_renderer = 'SVG';
 
-		if(($p = strpos($user_agent, "Gecko/")) !== false)
+		// Yahoo Slurp, msnbot, and googlebot should always be served SVG so no problems there
+
+		if(($p = strpos($user_agent, 'Gecko/')) !== false)
 		{
 			// Mozilla Gecko-based browser (Firefox, etc)
 			$gecko_date = substr($user_agent, ($p + 6));
@@ -243,49 +245,49 @@ abstract class bilde_renderer
 
 			// Around Firefox 3.0 era is best
 			// Firefox 2.0 mostly works except text might not show...
-			if($gecko_date >= 200702)
+			if($gecko_date < 200702)
 			{
-				$selected_renderer = "SVG";
+				$selected_renderer = 'PNG';
 			}
 		}
-		else if(($p = strpos($user_agent, "AppleWebKit/")) !== false)
+		else if(($p = strpos($user_agent, 'AppleWebKit/')) !== false)
 		{
 			// Safari, Google Chrome, Google Chromium, etc
 			$webkit_ver = substr($user_agent, ($p + 12));
 			$webkit_ver = substr($webkit_ver, 0, strpos($webkit_ver, ' '));
 
-			if($webkit_ver >= 530)
+			if($webkit_ver < 530)
 			{
-				$selected_renderer = "SVG";
+				$selected_renderer = 'PNG';
 			}
 		}
-		else if(($p = strpos($user_agent, "Opera/")) !== false)
+		else if(($p = strpos($user_agent, 'Opera/')) !== false)
 		{
 			// Opera
 			$ver = substr($user_agent, ($p + 6));
 			$ver = substr($ver, 0, strpos($ver, ' '));
 
 			// 9.27, 9.64 displays most everything okay
-			if($ver >= 9.27)
+			if($ver < 9.27)
 			{
-				$selected_renderer = "SVG";
+				$selected_renderer = 'PNG';
 			}
 		}
-		else if(($p = strpos($user_agent, "Epiphany/")) !== false)
+		else if(($p = strpos($user_agent, 'Epiphany/')) !== false)
 		{
 			// Older versions of Epiphany. Newer versions should report their Gecko or WebKit appropriately
 			$ver = substr($user_agent, ($p + 9));
 			$ver = substr($ver, 0, 4);
 
-			if($ver >= 2.22)
+			if($ver < 2.22)
 			{
-				$selected_renderer = "SVG";
+				$selected_renderer = 'PNG';
 			}
 		}
-		else if(($p = strpos($user_agent, "MSIE 9")) !== false)
+		else if(($p = strpos($user_agent, 'MSIE 8')) !== false || ($p = strpos($user_agent, 'MSIE 7')) !== false || ($p = strpos($user_agent, 'MSIE 6')) !== false)
 		{
 			// Microsoft Internet Explorer 9.0 finally seems to do SVG right
-			$selected_renderer = "SVG";
+			$selected_renderer = 'PNG';
 		}
 
 		return $selected_renderer;
