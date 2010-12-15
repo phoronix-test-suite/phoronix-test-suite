@@ -36,8 +36,8 @@ class pts_render
 		$graph->render_graph_start();
 		switch($graph->graph_image->get_renderer())
 		{
-			case "PNG":
-			case "JPG":
+			case 'PNG':
+			case 'JPG':
 				$save_as = tempnam('/tmp', 'pts_gd_render');
 				$graph->saveGraphToFile($save_as);
 				$graph->render_graph_finish();
@@ -54,7 +54,7 @@ class pts_render
 					header("Content-Type: image/" . strtolower($graph->graph_image->get_renderer()));
 				}
 				break;
-			case "SVG":
+			case 'SVG':
 				$graph = $graph->render_graph_finish();
 
 				if($nested)
@@ -398,7 +398,7 @@ class pts_render
 		}
 
 		$mto->test_profile->set_result_scale($mto->test_profile->get_result_scale() . ' | ' . implode(',', array_keys($days)));
-		$mto->test_profile->set_display_format((count($days) <= 5 || $is_tracking == false ? "BAR_ANALYZE_GRAPH" : "LINE_GRAPH"));
+		$mto->test_profile->set_display_format((count($days) < 5 || $is_tracking == false ? "BAR_ANALYZE_GRAPH" : "LINE_GRAPH"));
 		$mto->test_result_buffer = new pts_test_result_buffer();
 		$day_keys = array_keys($days);
 
@@ -461,6 +461,8 @@ class pts_render
 			$systems[$identifier_r[0]] = !isset($systems[$identifier_r[0]]) ? 1 : $systems[$identifier_r[0]] + 1;
 			$targets[$identifier_r[1]] = !isset($targets[$identifier_r[1]]) ? 1 : $targets[$identifier_r[1]] + 1;	
 		}
+
+		$is_multi_way_inverted = count($targets) > count($systems);
 
 		/*
 		if($is_multi_way)
