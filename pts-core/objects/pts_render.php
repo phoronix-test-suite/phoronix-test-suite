@@ -29,9 +29,20 @@ class pts_render
 		$graph = self::render_graph_process($result_object, $result_file, $save_as, $extra_attributes);
 		return $graph->renderGraph();
 	}
-	public static function render_graph_inline_embed(&$result_object, &$result_file = null, $extra_attributes = null, $nested = true)
+	public static function render_graph_inline_embed(&$object, &$result_file = null, $extra_attributes = null, $nested = true)
 	{
-		$graph = self::render_graph_process($result_object, $result_file, false, $extra_attributes);
+		if($object instanceof pts_test_result)
+		{
+			$graph = self::render_graph_process($object, $result_file, false, $extra_attributes);
+		}
+		else if($object instanceof pts_Graph)
+		{
+			$graph = $object;
+		}
+		else
+		{
+			return null;
+		}
 
 		$graph->render_graph_start();
 		switch($graph->graph_image->get_renderer())

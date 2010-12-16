@@ -24,6 +24,7 @@
 class pts_Table extends pts_Graph
 {
 	protected $rows;
+	protected $rendered_rows;
 	protected $columns;
 	protected $table_data;
 	protected $longest_column_identifier;
@@ -100,6 +101,12 @@ class pts_Table extends pts_Graph
 		return $longest_string;
 	}
 	public function renderChart($file = null)
+	{
+		$graph->saveGraphToFile($file);
+		$this->render_graph_start();
+		return $this->render_graph_finish();
+	}
+	public function render_graph_start()
 	{
 		// Needs to be at least 86px wide for the PTS logo
 		$this->graph_left_start = max(86, $this->text_string_width($this->longest_row_identifier, $this->graph_font, $this->graph_font_size_identifiers) + 10);
@@ -341,16 +348,18 @@ class pts_Table extends pts_Graph
 			}
 		}
 
-		if($row == 0 && $this->result_object_index != -1 && !is_array($this->result_object_index))
+		$this->rendered_rows = $row;
+	}
+	public function render_graph_finish()
+	{
+		if($this->rendered_rows == 0 && $this->result_object_index != -1 && !is_array($this->result_object_index))
 		{
 			// No results were to be reported, so don't report the individualized graphs
 			$this->graph_image->destroy_image();
-			$this->saveGraphToFile($file);
 			return $this->return_graph_image();
 		}
 
 		$this->graph_image->draw_rectangle_border(1, 1, $this->graph_attr_width, $this->graph_attr_height, $this->graph_color_border);
-		$this->saveGraphToFile($file);
 		return $this->return_graph_image();
 	}
 }
