@@ -33,6 +33,7 @@ class finish_run implements pts_option_interface
 	}
 	public static function run($args)
 	{
+		$save_name = $args[0];
 		$result_file = new pts_result_file($args[0]);
 
 		$system_identifiers = $result_file->get_system_identifiers();
@@ -78,7 +79,7 @@ class finish_run implements pts_option_interface
 		$test_run_manager = new pts_test_run_manager(pts_c::is_recovering);
 
 		// Load the tests to run
-		if($test_run_manager->load_result_file_to_run($args[0], $selected, $result_file, $test_positions[$selected]) == false)
+		if($test_run_manager->load_result_file_to_run($save_name, $selected, $result_file, $test_positions[$selected]) == false)
 		{
 			return false;
 		}

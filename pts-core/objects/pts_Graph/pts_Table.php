@@ -102,7 +102,7 @@ class pts_Table extends pts_Graph
 	}
 	public function renderChart($file = null)
 	{
-		$graph->saveGraphToFile($file);
+		$this->saveGraphToFile($file);
 		$this->render_graph_start();
 		return $this->render_graph_finish();
 	}
