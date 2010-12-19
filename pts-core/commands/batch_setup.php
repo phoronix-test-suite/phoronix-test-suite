@@ -23,7 +23,7 @@
 class batch_setup implements pts_option_interface
 {
 	const doc_section = 'Batch Testing';
-	const doc_description = "This option is used to configure the batch mode options for the Phoronix Test Suite, which is subsequently written to the user configuration file. Among the options are whether to automatically upload the test results to Phoronix Global and prompting for the saved file name.";
+	const doc_description = 'This option is used to configure the batch mode options for the Phoronix Test Suite, which is subsequently written to the user configuration file. Among the options are whether to automatically upload the test results to OpenBenchmarking.org and prompting for the saved file name.';
 
 	public static function run($r)
 	{
@@ -34,7 +34,7 @@ class batch_setup implements pts_option_interface
 		if($batch_options[P_OPTION_BATCH_SAVERESULTS] == "TRUE")
 		{
 			$batch_options[P_OPTION_BATCH_LAUNCHBROWSER] = pts_config::bool_to_string(pts_user_io::prompt_bool_input("Open the web browser automatically when in batch mode", false));
-			$batch_options[P_OPTION_BATCH_UPLOADRESULTS] = pts_config::bool_to_string(pts_user_io::prompt_bool_input("Auto upload the results to Phoronix Global", true));
+			$batch_options[P_OPTION_BATCH_UPLOADRESULTS] = pts_config::bool_to_string(pts_user_io::prompt_bool_input("Auto upload the results to OpenBenchmarking.org", true));
 			$batch_options[P_OPTION_BATCH_PROMPTIDENTIFIER] = pts_config::bool_to_string(pts_user_io::prompt_bool_input("Prompt for test identifier", true));
 			$batch_options[P_OPTION_BATCH_PROMPTDESCRIPTION] = pts_config::bool_to_string(pts_user_io::prompt_bool_input("Prompt for test description", true));
 			$batch_options[P_OPTION_BATCH_PROMPTSAVENAME] = pts_config::bool_to_string(pts_user_io::prompt_bool_input("Prompt for saved results file-name", true));

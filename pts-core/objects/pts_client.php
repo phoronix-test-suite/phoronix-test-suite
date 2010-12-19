@@ -353,7 +353,7 @@ class pts_client
 
 		$pso->add_object("last_run_time", date("Y-m-d H:i:s")); // Time PTS was last run
 
-		// Phoronix Global - GSID
+		// OpenBenchmarking.org - GSID
 		$global_gsid = $pso->read_object("global_system_id");
 		if(empty($global_gsid) || pts_openbenchmarking::is_valid_gsid_format($global_gsid) == false)
 		{

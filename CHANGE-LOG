@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 - pts-core: OpenBenchmarking.org result upload fixes under select conditions
 - pts-core: Add support for cloning/grabbing test results from OpenBenchmarking.org
 - pts-core: Fix uninitialized pts_result_file_writer on using finish-run command
+- pts-core: Change more Phoronix Global references to OpenBenchmarking.org
 - bilde_renderer: Blacklist unsupported SVG browsers rather than whitelist supported ones, should be saner this way
 
 Phoronix Test Suite 3.0 Alpha 4

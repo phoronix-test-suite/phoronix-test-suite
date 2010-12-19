@@ -11,7 +11,6 @@ clone = clone_openbenchmarking_result
 clone_result = clone_openbenchmarking_result
 force_install_all = install_all
 version = pts_version
-login = global_login
 refresh_graph = refresh_graphs
 suite_info = info
 test_info = info

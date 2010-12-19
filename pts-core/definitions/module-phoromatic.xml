@@ -35,7 +35,7 @@
 		<Define>
 			<Name>M_PHOROMATIC_UPLOAD_TO_GLOBAL</Name>
 			<Value>PhoronixTestSuite/Phoromatic/General/UploadToGlobal</Value>
-			<Description>A string bool whether to upload the test results to Phoronix Global upon completion.</Description>
+			<Description>A string bool whether to upload the test results to OpenBenchmarking.org upon completion.</Description>
 		</Define>
 		<Define>
 			<Name>M_PHOROMATIC_UPLOAD_TEST_LOGS</Name>

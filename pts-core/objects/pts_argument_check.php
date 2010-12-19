@@ -58,7 +58,7 @@ class pts_argument_check
 		}
 		else if($this->get_function_check() == array('pts_types', 'identifier_to_object'))
 		{
-			$type = 'Test | Suite | Global ID | Test Result';
+			$type = 'Test | Suite | OpenBenchmarking.org ID | Test Result';
 		}
 		else if($this->get_function_check() == array('pts_types', 'is_test_or_suite'))
 		{

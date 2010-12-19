@@ -86,7 +86,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 		<div id="pts_header_bottom">
 			<div class="pts_header_center">
 				<div class="pts_header_links_left"><a href="http://www.phoronix.com/">Phoronix</a><br /><a href="http://www.phoronix.com/forums/">Phoronix Forums</a><br /><a href="http://commercial.phoronix-test-suite.com/">PTS Commercial</a></div>
-				<div class="pts_header_links"><a href="http://www.phoronix-test-suite.com/">Phoronix Test Suite</a><br /><a href="http://global.phoronix.com/">Phoronix Global</a><br /><a href="http://www.phoromatic.com/">Phoromatic</a></div>
+				<div class="pts_header_links"><a href="http://www.phoronix-test-suite.com/">Phoronix Test Suite</a><br /><a href="http://www.openbenchmarking.org/">OpenBenchmarking.org</a><br /><a href="http://www.phoromatic.com/">Phoromatic</a></div>
 			</div>
 		</div>
 

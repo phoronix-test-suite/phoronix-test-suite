@@ -709,7 +709,7 @@ class pts_test_run_manager
 				}
 				else
 				{
-					$upload_results = pts_user_io::prompt_bool_input("Would you like to upload these results to OpenBenchmarking.org", true, "UPLOAD_RESULTS");
+					$upload_results = pts_user_io::prompt_bool_input('Would you like to upload these results to OpenBenchmarking.org', true, 'UPLOAD_RESULTS');
 				}
 
 				if($upload_results)
@@ -718,7 +718,7 @@ class pts_test_run_manager
 
 					if(!empty($upload_url))
 					{
-						pts_client::display_web_page($upload_url, "Do you want to launch Phoronix Global", true);
+						pts_client::display_web_page($upload_url, 'Do you want to launch OpenBenchmarkng.org', true);
 					}
 					else
 					{

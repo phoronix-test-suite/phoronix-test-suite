@@ -23,7 +23,7 @@
 class debug_run implements pts_option_interface
 {
 	const doc_section = 'Asset Creation';
-	const doc_description = "This option is intended for use by test profile writers and is identical to the <em>run</em> option but will yield more information during the run process that can be used to debug issues with a test profile or to verify the test profile is functioning correctly.";
+	const doc_description = 'This option is intended for use by test profile writers and is identical to the <em>run</em> option but will yield more information during the run process that can be used to debug issues with a test profile or to verify the test profile is functioning correctly.';
 
 	public static function argument_checks()
 	{
