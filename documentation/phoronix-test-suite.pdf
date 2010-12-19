@@ -829,7 +829,7 @@ endobj
 /Contents 22 0 R>>
 endobj
 22 0 obj
-<</Length 8206>>
+<</Length 8211>>
 stream
 2 J
 0.57 w
@@ -857,11 +857,11 @@ BT /F3 11.00 Tf ET
 q 0.000 g BT 199.55 587.72 Td (php.ini) Tj ET Q
 BT /F2 11.00 Tf ET
 q 0.000 g BT 231.95 587.72 Td ( file on your system in order to support uploading results to) Tj ET Q
-q 0.000 g BT 59.53 573.55 Td (OpenBenchmarking.org or logging into your Phoronix Global account. The ) Tj ET Q
+q 0.000 g BT 59.53 573.55 Td (OpenBenchmarking.org or logging into your OpenBenchmarking.org account. The ) Tj ET Q
 BT /F3 11.00 Tf ET
-q 0.000 g BT 423.31 573.55 Td (allow_url_fopen) Tj ET Q
+q 0.000 g BT 461.21 573.55 Td (allow_url_fopen) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 500.34 573.55 Td (, ) Tj ET Q
+q 0.000 g BT 538.25 573.55 Td (, ) Tj ET Q
 BT /F3 11.00 Tf ET
 q 0.000 g BT 59.53 559.37 Td (file_uploads) Tj ET Q
 BT /F2 11.00 Tf ET
@@ -1452,11 +1452,11 @@ endobj
 <</Type /Page
 /Parent 1 0 R
 /Resources 2 0 R
-/Annots [<</Type /Annot /Subtype /Link /Rect [112.10 607.86 185.44 596.86] /Border [0 0 0] /A <</S /URI /URI (http://www.phoronix.com/)>>>><</Type /Annot /Subtype /Link /Rect [137.78 565.34 291.80 554.34] /Border [0 0 0] /A <</S /URI /URI (http://www.phoronix-test-suite.com/)>>>><</Type /Annot /Subtype /Link /Rect [107.21 536.99 192.18 525.99] /Border [0 0 0] /A <</S /URI /URI (http://www.openbenchmarking.org/)>>>><</Type /Annot /Subtype /Link /Rect [445.95 423.61 536.40 412.61] /Border [0 0 0] /A <</S /URI /URI (http://www.phoronix.com/forums/showthread.php?t=12925)>>>><</Type /Annot /Subtype /Link /Rect [477.73 196.84 545.56 185.84] /Border [0 0 0] /A <</S /URI /URI (http://www.phoronix.com/forums/showthread.php?t=16180)>>>><</Type /Annot /Subtype /Link /Rect [338.93 140.14 467.94 129.14] /Border [0 0 0] /A <</S /URI /URI (http://commercial.phoronix-test-suite.com/)>>>><</Type /Annot /Subtype /Link /Rect [183.64 111.80 241.10 100.80] /Border [0 0 0] /A <</S /URI /URI (http://phoronix-test-suite.com/mailman/listinfo/trondheim-pts_phoronix-test-suite.com)>>>><</Type /Annot /Subtype /Link /Rect [494.24 111.80 541.91 100.80] /Border [0 0 0] /A <</S /URI /URI (http://www.phoronix.com/forums/)>>>><</Type /Annot /Subtype /Link /Rect [59.53 97.62 99.86 86.62] /Border [0 0 0] /A <</S /URI /URI (http://www.phoronix.com/forums/)>>>><</Type /Annot /Subtype /Link /Rect [466.08 31.85 564.09 24.85] /Border [0 0 0] /A <</S /URI /URI (http://www.phoronix-test-suite.com/)>>>>]
+/Annots [<</Type /Annot /Subtype /Link /Rect [112.10 607.86 185.44 596.86] /Border [0 0 0] /A <</S /URI /URI (http://www.phoronix.com/)>>>><</Type /Annot /Subtype /Link /Rect [137.78 565.34 291.80 554.34] /Border [0 0 0] /A <</S /URI /URI (http://www.phoronix-test-suite.com/)>>>><</Type /Annot /Subtype /Link /Rect [107.21 536.99 232.51 525.99] /Border [0 0 0] /A <</S /URI /URI (http://www.openbenchmarking.org/)>>>><</Type /Annot /Subtype /Link /Rect [445.95 409.43 536.40 398.43] /Border [0 0 0] /A <</S /URI /URI (http://www.phoronix.com/forums/showthread.php?t=12925)>>>><</Type /Annot /Subtype /Link /Rect [477.73 182.66 545.56 171.66] /Border [0 0 0] /A <</S /URI /URI (http://www.phoronix.com/forums/showthread.php?t=16180)>>>><</Type /Annot /Subtype /Link /Rect [338.93 125.97 467.94 114.97] /Border [0 0 0] /A <</S /URI /URI (http://commercial.phoronix-test-suite.com/)>>>><</Type /Annot /Subtype /Link /Rect [183.64 97.62 241.10 86.62] /Border [0 0 0] /A <</S /URI /URI (http://phoronix-test-suite.com/mailman/listinfo/trondheim-pts_phoronix-test-suite.com)>>>><</Type /Annot /Subtype /Link /Rect [494.24 97.62 541.91 86.62] /Border [0 0 0] /A <</S /URI /URI (http://www.phoronix.com/forums/)>>>><</Type /Annot /Subtype /Link /Rect [59.53 83.45 99.86 72.45] /Border [0 0 0] /A <</S /URI /URI (http://www.phoronix.com/forums/)>>>><</Type /Annot /Subtype /Link /Rect [466.08 31.85 564.09 24.85] /Border [0 0 0] /A <</S /URI /URI (http://www.phoronix-test-suite.com/)>>>>]
 /Contents 36 0 R>>
 endobj
 36 0 obj
-<</Length 7216>>
+<</Length 7251>>
 stream
 2 J
 0.57 w
@@ -1502,79 +1502,80 @@ q 0.000 g BT 291.80 556.54 Td ( so that your readers will know where to obtain t
 q 0.000 g BT 59.53 542.37 Td (software if they are interested in running the tests. You are also more than welcome to upload your) Tj ET Q
 q 0.000 g BT 59.53 528.19 Td (results to ) Tj ET Q
 BT /F1 11.00 Tf ET
-q 0.000 0.000 0.455 rg BT 107.21 528.19 Td (Phoronix Global) Tj ET 107.21 527.09 84.96 -0.55 re f Q
+q 0.000 0.000 0.455 rg BT 107.21 528.19 Td (OpenBenchmarking.org) Tj ET 107.21 527.09 125.30 -0.55 re f Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 192.18 528.19 Td ( so that others may compare their results against yours in an easy manner.) Tj ET Q
-q 0.000 g BT 59.53 499.85 Td (We also try to make the Phoronix Test Suite easy-to-use by independent publications. For example, if) Tj ET Q
-q 0.000 g BT 59.53 485.67 Td (you would like to watermark your web-site's URL into the graphs containing your test results, that can) Tj ET Q
-q 0.000 g BT 59.53 471.50 Td (be easily modified in ) Tj ET Q
+q 0.000 g BT 232.51 528.19 Td ( so that others may compare their results against yours in an easy) Tj ET Q
+q 0.000 g BT 59.53 514.02 Td (manner.) Tj ET Q
+q 0.000 g BT 59.53 485.67 Td (We also try to make the Phoronix Test Suite easy-to-use by independent publications. For example, if) Tj ET Q
+q 0.000 g BT 59.53 471.50 Td (you would like to watermark your web-site's URL into the graphs containing your test results, that can) Tj ET Q
+q 0.000 g BT 59.53 457.33 Td (be easily modified in ) Tj ET Q
 BT /F3 11.00 Tf ET
-q 0.000 g BT 162.23 471.50 Td (~/.phoronix-test-suite/graph-config.xml) Tj ET Q
+q 0.000 g BT 162.23 457.33 Td (~/.phoronix-test-suite/graph-config.xml) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 349.61 471.50 Td (. The colors and other graph settings are) Tj ET Q
-q 0.000 g BT 59.53 457.33 Td (also stored in this XML file. If you are a publication and run into any issues with the Phoronix Test Suite) Tj ET Q
-q 0.000 g BT 59.53 443.15 Td (or have a feature request, please let us know.) Tj ET Q
-q 0.000 g BT 59.53 414.81 Td (A partial list of other publications using the Phoronix Test Suite can be found in ) Tj ET Q
+q 0.000 g BT 349.61 457.33 Td (. The colors and other graph settings are) Tj ET Q
+q 0.000 g BT 59.53 443.15 Td (also stored in this XML file. If you are a publication and run into any issues with the Phoronix Test Suite) Tj ET Q
+q 0.000 g BT 59.53 428.98 Td (or have a feature request, please let us know.) Tj ET Q
+q 0.000 g BT 59.53 400.63 Td (A partial list of other publications using the Phoronix Test Suite can be found in ) Tj ET Q
 BT /F1 11.00 Tf ET
-q 0.000 0.000 0.455 rg BT 445.95 414.81 Td (this forum thread) Tj ET 445.95 413.71 90.45 -0.55 re f Q
+q 0.000 0.000 0.455 rg BT 445.95 400.63 Td (this forum thread) Tj ET 445.95 399.53 90.45 -0.55 re f Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 536.40 414.81 Td (.) Tj ET Q
+q 0.000 g BT 536.40 400.63 Td (.) Tj ET Q
 BT /F1 11.00 Tf ET
-q 0.000 g BT 59.53 386.46 Td (Q: Why does the Phoronix Test Suite not use my distribution's package management system for) Tj ET Q
-q 0.000 g BT 59.53 372.29 Td (acquiring all needed packages?) Tj ET Q
-BT /F2 11.00 Tf ET
-BT /F1 11.00 Tf ET
-q 0.000 g BT 59.53 343.94 Td (A:) Tj ET Q
-BT /F2 11.00 Tf ET
-q 0.000 g BT 71.13 343.94 Td ( The tests themselves are generally downloaded from source and built locally on the machine, rather) Tj ET Q
-q 0.000 g BT 59.53 329.77 Td (than fetching any distribution-specific packages. This is done to ensure more comparable results across) Tj ET Q
-q 0.000 g BT 59.53 315.59 Td (operating systems / releases, etc. The distribution packager could be applying a number of unknown) Tj ET Q
-q 0.000 g BT 59.53 301.42 Td (patches to the software, building the software with unique build options, or making other changes to the) Tj ET Q
-q 0.000 g BT 59.53 287.25 Td (software that could skew the results.) Tj ET Q
-BT /F1 11.00 Tf ET
-q 0.000 g BT 59.53 258.90 Td (Q: Besides being a developer, documentation writer, or having any other unique technical) Tj ET Q
-q 0.000 g BT 59.53 244.73 Td (abilities, how else can I contribute to the Phoronix Test Suite?) Tj ET Q
+q 0.000 g BT 59.53 372.29 Td (Q: Why does the Phoronix Test Suite not use my distribution's package management system for) Tj ET Q
+q 0.000 g BT 59.53 358.11 Td (acquiring all needed packages?) Tj ET Q
 BT /F2 11.00 Tf ET
 BT /F1 11.00 Tf ET
-q 0.000 g BT 59.53 216.38 Td (A:) Tj ET Q
+q 0.000 g BT 59.53 329.77 Td (A:) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 71.13 216.38 Td ( Independent code contributions are very welcome as well as creating your own test profiles and) Tj ET Q
-q 0.000 g BT 59.53 202.21 Td (suites. We also appreciate any feedback, comments, or other ideas either by emailing us, posting on) Tj ET Q
-q 0.000 g BT 59.53 188.04 Td (the forums, or sending a message to the mailing list. You can also see this \(outdated\) ) Tj ET Q
+q 0.000 g BT 71.13 329.77 Td ( The tests themselves are generally downloaded from source and built locally on the machine, rather) Tj ET Q
+q 0.000 g BT 59.53 315.59 Td (than fetching any distribution-specific packages. This is done to ensure more comparable results across) Tj ET Q
+q 0.000 g BT 59.53 301.42 Td (operating systems / releases, etc. The distribution packager could be applying a number of unknown) Tj ET Q
+q 0.000 g BT 59.53 287.25 Td (patches to the software, building the software with unique build options, or making other changes to the) Tj ET Q
+q 0.000 g BT 59.53 273.07 Td (software that could skew the results.) Tj ET Q
 BT /F1 11.00 Tf ET
-q 0.000 0.000 0.455 rg BT 477.73 188.04 Td (forum thread) Tj ET 477.73 186.94 67.84 -0.55 re f Q
-BT /F2 11.00 Tf ET
-q 0.000 g BT 545.56 188.04 Td (.) Tj ET Q
-BT /F1 11.00 Tf ET
-q 0.000 g BT 59.53 159.69 Td (Q: Do you offer technical support for the Phoronix Test Suite) Tj ET Q
+q 0.000 g BT 59.53 244.73 Td (Q: Besides being a developer, documentation writer, or having any other unique technical) Tj ET Q
+q 0.000 g BT 59.53 230.55 Td (abilities, how else can I contribute to the Phoronix Test Suite?) Tj ET Q
 BT /F2 11.00 Tf ET
 BT /F1 11.00 Tf ET
-q 0.000 g BT 59.53 131.34 Td (A:) Tj ET Q
+q 0.000 g BT 59.53 202.21 Td (A:) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 71.13 131.34 Td ( Paid, professional support is available and is done via ) Tj ET Q
+q 0.000 g BT 71.13 202.21 Td ( Independent code contributions are very welcome as well as creating your own test profiles and) Tj ET Q
+q 0.000 g BT 59.53 188.04 Td (suites. We also appreciate any feedback, comments, or other ideas either by emailing us, posting on) Tj ET Q
+q 0.000 g BT 59.53 173.86 Td (the forums, or sending a message to the mailing list. You can also see this \(outdated\) ) Tj ET Q
 BT /F1 11.00 Tf ET
-q 0.000 0.000 0.455 rg BT 338.93 131.34 Td (our commercial services) Tj ET 338.93 130.24 129.01 -0.55 re f Q
+q 0.000 0.000 0.455 rg BT 477.73 173.86 Td (forum thread) Tj ET 477.73 172.76 67.84 -0.55 re f Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 467.94 131.34 Td (. We also offer) Tj ET Q
-q 0.000 g BT 59.53 117.17 Td (Phoromatic licenses for use within a corporate intranet and other custom services. Free, community) Tj ET Q
-q 0.000 g BT 59.53 103.00 Td (support is offered via our ) Tj ET Q
+q 0.000 g BT 545.56 173.86 Td (.) Tj ET Q
 BT /F1 11.00 Tf ET
-q 0.000 0.000 0.455 rg BT 183.64 103.00 Td (mailing list) Tj ET 183.64 101.90 57.46 -0.55 re f Q
+q 0.000 g BT 59.53 145.52 Td (Q: Do you offer technical support for the Phoronix Test Suite) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 241.10 103.00 Td (, IRC channel \() Tj ET Q
+BT /F1 11.00 Tf ET
+q 0.000 g BT 59.53 117.17 Td (A:) Tj ET Q
+BT /F2 11.00 Tf ET
+q 0.000 g BT 71.13 117.17 Td ( Paid, professional support is available and is done via ) Tj ET Q
+BT /F1 11.00 Tf ET
+q 0.000 0.000 0.455 rg BT 338.93 117.17 Td (our commercial services) Tj ET 338.93 116.07 129.01 -0.55 re f Q
+BT /F2 11.00 Tf ET
+q 0.000 g BT 467.94 117.17 Td (. We also offer) Tj ET Q
+q 0.000 g BT 59.53 103.00 Td (Phoromatic licenses for use within a corporate intranet and other custom services. Free, community) Tj ET Q
+q 0.000 g BT 59.53 88.82 Td (support is offered via our ) Tj ET Q
+BT /F1 11.00 Tf ET
+q 0.000 0.000 0.455 rg BT 183.64 88.82 Td (mailing list) Tj ET 183.64 87.72 57.46 -0.55 re f Q
+BT /F2 11.00 Tf ET
+q 0.000 g BT 241.10 88.82 Td (, IRC channel \() Tj ET Q
 BT /F3 11.00 Tf ET
-q 0.000 g BT 314.46 103.00 Td (#phoronix) Tj ET Q
+q 0.000 g BT 314.46 88.82 Td (#phoronix) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 362.76 103.00 Td ( on ) Tj ET Q
+q 0.000 g BT 362.76 88.82 Td ( on ) Tj ET Q
 BT /F3 11.00 Tf ET
-q 0.000 g BT 381.11 103.00 Td (FreeNode.net) Tj ET Q
+q 0.000 g BT 381.11 88.82 Td (FreeNode.net) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 448.37 103.00 Td (, and the ) Tj ET Q
+q 0.000 g BT 448.37 88.82 Td (, and the ) Tj ET Q
 BT /F1 11.00 Tf ET
-q 0.000 0.000 0.455 rg BT 494.24 103.00 Td (Phoronix) Tj ET 494.24 101.90 47.67 -0.55 re f Q
-q 0.000 0.000 0.455 rg BT 59.53 88.82 Td (Forums) Tj ET 59.53 87.72 40.34 -0.55 re f Q
+q 0.000 0.000 0.455 rg BT 494.24 88.82 Td (Phoronix) Tj ET 494.24 87.72 47.67 -0.55 re f Q
+q 0.000 0.000 0.455 rg BT 59.53 74.65 Td (Forums) Tj ET 59.53 73.55 40.34 -0.55 re f Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 99.86 88.82 Td (.) Tj ET Q
+q 0.000 g BT 99.86 74.65 Td (.) Tj ET Q
 BT /F1 11.00 Tf ET
 BT /F1 7.00 Tf ET
 q 0.000 g BT 59.53 26.25 Td (Phoronix Test Suite v3.0.0a4) Tj ET Q
@@ -2178,7 +2179,7 @@ endobj
 /Contents 48 0 R>>
 endobj
 48 0 obj
-<</Length 5646>>
+<</Length 5651>>
 stream
 2 J
 0.57 w
@@ -2232,8 +2233,8 @@ q 0.000 g BT 59.53 216.38 Td (recommended along with a modern CPU and graphics p
 q 0.000 g BT 59.53 202.21 Td (shipped with PTS Desktop Live at this time, so depending upon the hardware you may not have) Tj ET Q
 q 0.000 g BT 59.53 188.04 Td (OpenGL acceleration to run the few graphics-related tests that are included with this release. Only) Tj ET Q
 q 0.000 g BT 59.53 173.86 Td (graphics drivers are provided for ATI/AMD, NVIDIA, and Intel hardware. An Internet connection is not) Tj ET Q
-q 0.000 g BT 59.53 159.69 Td (required but is needed for communication with Phoronix Global and for utilizing some of the other) Tj ET Q
-q 0.000 g BT 59.53 145.52 Td (Phoronix Test Suite features.) Tj ET Q
+q 0.000 g BT 59.53 159.69 Td (required but is needed for communication with OpenBenchmarking.org and for utilizing some of the) Tj ET Q
+q 0.000 g BT 59.53 145.52 Td (other Phoronix Test Suite features.) Tj ET Q
 q 0.000 g BT 59.53 117.17 Td (PTS Netbook Live is designed for netbooks and nettop computers with an Intel Atom processor.) Tj ET Q
 BT /F1 13.00 Tf ET
 q 0.196 0.200 0.192 rg BT 31.18 88.22 Td (Quick Start Guide) Tj ET Q
@@ -2249,11 +2250,11 @@ endobj
 <</Type /Page
 /Parent 1 0 R
 /Resources 2 0 R
-/Annots [<</Type /Annot /Subtype /Link /Rect [487.54 582.35 535.21 571.35] /Border [0 0 0] /A <</S /URI /URI (http://global.phoronix.com/)>>>><</Type /Annot /Subtype /Link /Rect [59.53 568.17 93.76 557.17] /Border [0 0 0] /A <</S /URI /URI (http://global.phoronix.com/)>>>><</Type /Annot /Subtype /Link /Rect [486.88 383.92 534.55 372.92] /Border [0 0 0] /A <</S /URI /URI (http://global.phoronix.com/)>>>><</Type /Annot /Subtype /Link /Rect [59.53 369.75 93.76 358.75] /Border [0 0 0] /A <</S /URI /URI (http://global.phoronix.com/)>>>><</Type /Annot /Subtype /Link /Rect [466.08 31.85 564.09 24.85] /Border [0 0 0] /A <</S /URI /URI (http://www.phoronix-test-suite.com/)>>>>]
+/Annots [<</Type /Annot /Subtype /Link /Rect [59.53 568.17 184.83 557.17] /Border [0 0 0] /A <</S /URI /URI (http://www.openbenchmarking.org/)>>>><</Type /Annot /Subtype /Link /Rect [466.08 31.85 564.09 24.85] /Border [0 0 0] /A <</S /URI /URI (http://www.phoronix-test-suite.com/)>>>>]
 /Contents 50 0 R>>
 endobj
 50 0 obj
-<</Length 5463>>
+<</Length 5149>>
 stream
 2 J
 0.57 w
@@ -2286,43 +2287,37 @@ q 0.000 g BT 181.18 601.89 Td ( tab, any test/suite can be selected to view more
 q 0.000 g BT 59.53 587.72 Td (install the test, simply click on the install button while waiting shortly for it to install. Afterwards, the test) Tj ET Q
 q 0.000 g BT 59.53 573.55 Td (can be run by selecting it again and clicking on the run/benchmark button. If you have a ) Tj ET Q
 BT /F1 11.00 Tf ET
-q 0.000 0.000 0.455 rg BT 487.54 573.55 Td (Phoronix) Tj ET 487.54 572.45 47.67 -0.55 re f Q
-q 0.000 0.000 0.455 rg BT 59.53 559.37 Td (Global) Tj ET 59.53 558.27 34.23 -0.55 re f Q
+q 0.000 0.000 0.455 rg BT 59.53 559.37 Td (OpenBenchmarking.org) Tj ET 59.53 558.27 125.30 -0.55 re f Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 93.76 559.37 Td ( account, you can login from the ) Tj ET Q
+q 0.000 g BT 184.83 559.37 Td ( account, you can login from the ) Tj ET Q
 BT /F3 11.00 Tf ET
-q 0.000 g BT 252.73 559.37 Td (File) Tj ET Q
+q 0.000 g BT 343.80 559.37 Td (File) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 270.45 559.37 Td ( menu while Phoronix Test Suite settings are adjustable) Tj ET Q
-q 0.000 g BT 59.53 545.20 Td (from the ) Tj ET Q
+q 0.000 g BT 361.52 559.37 Td ( menu while Phoronix Test Suite settings) Tj ET Q
+q 0.000 g BT 59.53 545.20 Td (are adjustable from the ) Tj ET Q
 BT /F3 11.00 Tf ET
-q 0.000 g BT 102.93 545.20 Td (Edit) Tj ET Q
+q 0.000 g BT 175.08 545.20 Td (Edit) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 121.89 545.20 Td ( menu.) Tj ET Q
+q 0.000 g BT 194.04 545.20 Td ( menu.) Tj ET Q
 q 0.000 g BT 59.53 516.85 Td (When the testing has completed, the graphical user interface will reappear. Via the buttons that appear) Tj ET Q
 q 0.000 g BT 59.53 502.68 Td (at the top of the interface, the test results can then be opened within the web browser. Depending upon) Tj ET Q
 q 0.000 g BT 59.53 488.51 Td (the test profile, it may also be possible to immediately compare the test result\(s\) against a set of) Tj ET Q
 q 0.000 g BT 59.53 474.33 Td (reference systems. If the completed test\(s\) do have reference results available, a list of the comparable) Tj ET Q
 q 0.000 g BT 59.53 460.16 Td (systems are shown, so that you can click on one or more of these reference systems to see how the) Tj ET Q
-q 0.000 g BT 59.53 445.99 Td (given system performs in comparison. Results from Phoronix Global can also be compared with any of) Tj ET Q
-q 0.000 g BT 59.53 431.81 Td (the test results.) Tj ET Q
+q 0.000 g BT 59.53 445.99 Td (given system performs in comparison. Results from OpenBenchmarking.org can also be compared with) Tj ET Q
+q 0.000 g BT 59.53 431.81 Td (any of the test results.) Tj ET Q
 q 0.000 g BT 59.53 403.47 Td (Assuming you did not launch any commands from the terminal to alter the disk\(s\) or its contents or) Tj ET Q
 q 0.000 g BT 59.53 389.30 Td (carry out any other changes; PTS Desktop Live will have not touched your data or the installed) Tj ET Q
-q 0.000 g BT 59.53 375.12 Td (operating system\(s\). If you wish to archive any of your test results, upload the results to ) Tj ET Q
-BT /F1 11.00 Tf ET
-q 0.000 0.000 0.455 rg BT 486.88 375.12 Td (Phoronix) Tj ET 486.88 374.02 47.67 -0.55 re f Q
-q 0.000 0.000 0.455 rg BT 59.53 360.95 Td (Global) Tj ET 59.53 359.85 34.23 -0.55 re f Q
-BT /F2 11.00 Tf ET
-q 0.000 g BT 93.76 360.95 Td (. Alternatively, when going to the ) Tj ET Q
+q 0.000 g BT 59.53 375.12 Td (operating system\(s\). If you wish to archive any of your test results, upload the results to) Tj ET Q
+q 0.000 g BT 59.53 360.95 Td (OpenBenchmarking.org. Alternatively, when going to the ) Tj ET Q
 BT /F3 11.00 Tf ET
-q 0.000 g BT 255.79 360.95 Td (Test Results) Tj ET Q
+q 0.000 g BT 337.72 360.95 Td (Test Results) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 316.92 360.95 Td ( tab and selecting a test, the ) Tj ET Q
+q 0.000 g BT 398.84 360.95 Td ( tab and selecting a test, the ) Tj ET Q
 BT /F3 11.00 Tf ET
-q 0.000 g BT 457.56 360.95 Td (File) Tj ET Q
+q 0.000 g BT 539.49 360.95 Td (File) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 475.28 360.95 Td ( menu presents) Tj ET Q
-q 0.000 g BT 59.53 346.78 Td (options for exporting results to text, CSV, and PDF files. The contents of the ) Tj ET Q
+q 0.000 g BT 59.53 346.78 Td (menu presents options for exporting results to text, CSV, and PDF files. The contents of the ) Tj ET Q
 BT /F3 11.00 Tf ET
 q 0.000 g BT 59.53 332.60 Td (~/.phoronix-test-suite/test-results/) Tj ET Q
 BT /F2 11.00 Tf ET
@@ -3015,7 +3010,7 @@ endobj
 /Author (Phoronix Test Suite)
 /Keywords ()
 /Creator (PhoronixTestSuite/Iveland)
-/CreationDate (D:20101213140334)
+/CreationDate (D:20101219163808)
 >>
 endobj
 110 0 obj
@@ -3031,8 +3026,8 @@ endobj
 xref
 0 111
 0000000000 65535 f 
-0000137163 00000 n 
-0000149025 00000 n 
+0000136499 00000 n 
+0000148361 00000 n 
 0000000009 00000 n 
 0000000380 00000 n 
 0000000890 00000 n 
@@ -3053,94 +3048,94 @@ xref
 0000039583 00000 n 
 0000045051 00000 n 
 0000045721 00000 n 
-0000053978 00000 n 
-0000054358 00000 n 
-0000060715 00000 n 
-0000061080 00000 n 
-0000062651 00000 n 
-0000062881 00000 n 
-0000067225 00000 n 
-0000067455 00000 n 
-0000071766 00000 n 
-0000071996 00000 n 
-0000076242 00000 n 
-0000076472 00000 n 
-0000077829 00000 n 
-0000079395 00000 n 
-0000086662 00000 n 
-0000087172 00000 n 
-0000094454 00000 n 
-0000094684 00000 n 
-0000101986 00000 n 
-0000102216 00000 n 
-0000108111 00000 n 
-0000108341 00000 n 
-0000114180 00000 n 
-0000114835 00000 n 
-0000119558 00000 n 
-0000119928 00000 n 
-0000125625 00000 n 
-0000126383 00000 n 
-0000131897 00000 n 
-0000132528 00000 n 
-0000135544 00000 n 
-0000135774 00000 n 
-0000137423 00000 n 
-0000137525 00000 n 
-0000137622 00000 n 
-0000137727 00000 n 
-0000141886 00000 n 
-0000142665 00000 n 
-0000149174 00000 n 
-0000149314 00000 n 
-0000149431 00000 n 
-0000149551 00000 n 
-0000149677 00000 n 
-0000149810 00000 n 
-0000149929 00000 n 
-0000150053 00000 n 
-0000150181 00000 n 
-0000150311 00000 n 
-0000150441 00000 n 
-0000150560 00000 n 
-0000150668 00000 n 
-0000150835 00000 n 
-0000150944 00000 n 
-0000151070 00000 n 
-0000151203 00000 n 
-0000151311 00000 n 
-0000151439 00000 n 
-0000151568 00000 n 
-0000151702 00000 n 
-0000151841 00000 n 
-0000151984 00000 n 
-0000152117 00000 n 
-0000152252 00000 n 
-0000152390 00000 n 
-0000152520 00000 n 
-0000152655 00000 n 
-0000152776 00000 n 
-0000152931 00000 n 
-0000153052 00000 n 
-0000153175 00000 n 
-0000153337 00000 n 
-0000153464 00000 n 
-0000153605 00000 n 
-0000153713 00000 n 
-0000153834 00000 n 
-0000153961 00000 n 
-0000154095 00000 n 
-0000154210 00000 n 
-0000154346 00000 n 
-0000154503 00000 n 
-0000154615 00000 n 
-0000154737 00000 n 
-0000154900 00000 n 
-0000155053 00000 n 
-0000155160 00000 n 
-0000155283 00000 n 
-0000155348 00000 n 
-0000155596 00000 n 
+0000053983 00000 n 
+0000054363 00000 n 
+0000060720 00000 n 
+0000061085 00000 n 
+0000062656 00000 n 
+0000062886 00000 n 
+0000067230 00000 n 
+0000067460 00000 n 
+0000071771 00000 n 
+0000072001 00000 n 
+0000076247 00000 n 
+0000076477 00000 n 
+0000077834 00000 n 
+0000079396 00000 n 
+0000086698 00000 n 
+0000087208 00000 n 
+0000094490 00000 n 
+0000094720 00000 n 
+0000102022 00000 n 
+0000102252 00000 n 
+0000108147 00000 n 
+0000108377 00000 n 
+0000114216 00000 n 
+0000114871 00000 n 
+0000119594 00000 n 
+0000119964 00000 n 
+0000125666 00000 n 
+0000126033 00000 n 
+0000131233 00000 n 
+0000131864 00000 n 
+0000134880 00000 n 
+0000135110 00000 n 
+0000136759 00000 n 
+0000136861 00000 n 
+0000136958 00000 n 
+0000137063 00000 n 
+0000141222 00000 n 
+0000142001 00000 n 
+0000148510 00000 n 
+0000148650 00000 n 
+0000148767 00000 n 
+0000148887 00000 n 
+0000149013 00000 n 
+0000149146 00000 n 
+0000149265 00000 n 
+0000149389 00000 n 
+0000149517 00000 n 
+0000149647 00000 n 
+0000149777 00000 n 
+0000149896 00000 n 
+0000150004 00000 n 
+0000150171 00000 n 
+0000150280 00000 n 
+0000150406 00000 n 
+0000150539 00000 n 
+0000150647 00000 n 
+0000150775 00000 n 
+0000150904 00000 n 
+0000151038 00000 n 
+0000151177 00000 n 
+0000151320 00000 n 
+0000151453 00000 n 
+0000151588 00000 n 
+0000151726 00000 n 
+0000151856 00000 n 
+0000151991 00000 n 
+0000152112 00000 n 
+0000152267 00000 n 
+0000152388 00000 n 
+0000152511 00000 n 
+0000152673 00000 n 
+0000152800 00000 n 
+0000152941 00000 n 
+0000153049 00000 n 
+0000153170 00000 n 
+0000153297 00000 n 
+0000153431 00000 n 
+0000153546 00000 n 
+0000153682 00000 n 
+0000153839 00000 n 
+0000153951 00000 n 
+0000154073 00000 n 
+0000154236 00000 n 
+0000154389 00000 n 
+0000154496 00000 n 
+0000154619 00000 n 
+0000154684 00000 n 
+0000154932 00000 n 
 trailer
 <<
 /Size 111
@@ -3148,5 +3143,5 @@ trailer
 /Info 109 0 R
 >>
 startxref
-155742
+155078
 %%EOF
