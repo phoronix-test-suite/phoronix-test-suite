@@ -4,7 +4,7 @@ technologies
 technology
 version
 computer
-chipset integrated
+chipset
 community
 processor
 host bridge
@@ -14,13 +14,16 @@ international
 controller
 express
 graphics
-dram controller
+dram
 electronics
 integrated
 alternate
+quad-core
+memory
+series
 serverengines
 x86/mmx/sse2
-memory controller
+controller
 (extreme graphics innovation)
 pci-e_gfx and ht3 k8 part
 pci-e_gfx and ht1 k8 part
@@ -39,7 +42,7 @@ www.
 .tw/
 /pci/sse2/3dnow!
 /pci/sse2
-memory balloon
+balloon
 limited.
 co. ltd.
 co. ltd

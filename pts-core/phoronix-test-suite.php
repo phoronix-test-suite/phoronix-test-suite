@@ -71,6 +71,7 @@ $quick_start_options = array("dump_possible_options");
 define("QUICK_START", in_array($sent_command, $quick_start_options));
 
 pts_client::init(); // Initalize the Phoronix Test Suite (pts-core) client
+$pass_args = array();
 //stream_wrapper_register("phoronix", "pts_phoronix_stream") or die("Failed To Initialize The Phoronix Stream");
 
 if(is_file(PTS_PATH . "pts-core/commands/" . $sent_command . ".php") == false)
@@ -79,6 +80,16 @@ if(is_file(PTS_PATH . "pts-core/commands/" . $sent_command . ".php") == false)
 
 	if(pts_module::valid_run_command($sent_command))
 	{
+		$replaced = true;
+	}
+	else if(strpos($argv[1], '.openbenchmarking') !== false && is_readable($argv[1]))
+	{
+		// OpenBenchmarking.org launcher
+		$dom = new DOMDocument();
+		$dom->loadHTMLFile($argv[1]);
+		$openbenchmarking_id = $dom->getElementsByTagName('html')->item(0)->getElementsByTagName('body')->item(0)->getElementsByTagName('h1')->item(0)->nodeValue;
+		$sent_command = 'benchmark';
+		array_push($pass_args, $openbenchmarking_id);
 		$replaced = true;
 	}
 	else
@@ -164,7 +175,6 @@ if(!QUICK_START)
 }
 
 // Read passed arguments
-$pass_args = array();
 for($i = 2; $i < $argc && isset($argv[$i]); $i++)
 {
 	array_push($pass_args, $argv[$i]);
