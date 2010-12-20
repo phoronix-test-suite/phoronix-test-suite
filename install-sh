@@ -74,10 +74,15 @@ rm -f $DESTDIR$INSTALL_PREFIX/share/phoronix-test-suite/pts/etc/scripts/package-
 cp -r pts-core/ $DESTDIR$INSTALL_PREFIX/share/phoronix-test-suite/
 rm -f $DESTDIR$INSTALL_PREFIX/share/phoronix-test-suite/pts-core/static/phoronix-test-suite.desktop
 
-sed 's:PTS_DIR=`pwd`:PTS_DIR='"$INSTALL_PREFIX"'\/share\/phoronix-test-suite:g' phoronix-test-suite > $DESTDIR$INSTALL_PREFIX/bin/phoronix-test-suite
+sed 's:PTS_DIR=$(readlink -f `dirname $0`):PTS_DIR='"$INSTALL_PREFIX"'\/share\/phoronix-test-suite:g' phoronix-test-suite > $DESTDIR$INSTALL_PREFIX/bin/phoronix-test-suite
 chmod +x $DESTDIR$INSTALL_PREFIX/bin/phoronix-test-suite
 
 # sed 's:\$url = PTS_PATH . \"documentation\/index.html\";:\$url = \"'"$INSTALL_PREFIX"'\/share\/doc\/packages\/phoronix-test-suite\/index.html\";:g' pts-core/commands/gui_gtk.php > $DESTDIR$INSTALL_PREFIX/share/phoronix-test-suite/pts-core/commands/gui_gtk.php
+
+# XDG MIME OpenBenchmarking support
+xdg-mime install pts-core/openbenchmarking.org/openbenchmarking-mime.xml
+xdg-mime default phoronix-test-suite.desktop application/x-openbenchmarking
+xdg-icon-resource install --context mimetypes --size 64 pts-core/static/images/openbenchmarking.png application-x-openbenchmarking
 
 echo -e "\nPhoronix Test Suite Installation Completed\n
 Executable File: $INSTALL_PREFIX/bin/phoronix-test-suite

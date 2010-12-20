@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+	<mime-type type="application/x-openbenchmarking">
+		<comment>An OpenBenchmarking.org launcher for test profiles, suites, and stored results.</comment>
+		<glob pattern="*.openbenchmarking"/>
+	</mime-type>
+</mime-info>
+
