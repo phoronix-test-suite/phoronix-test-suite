@@ -28,7 +28,7 @@ class finish_run implements pts_option_interface
 	public static function argument_checks()
 	{
 		return array(
-		new pts_argument_check(0, array("pts_result_file", "is_test_result_file"), null, "The name of a test result file must be entered.")
+		new pts_argument_check(0, array("pts_result_file", "is_test_result_file"), null)
 		);
 	}
 	public static function run($args)

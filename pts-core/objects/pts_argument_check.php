@@ -25,14 +25,12 @@ class pts_argument_check
 	private $argument_index;
 	private $function_check;
 	private $function_return_key;
-	private $error_string;
 
-	public function __construct($index, $function, $return_key = null, $error_string = null)
+	public function __construct($index, $function, $return_key = null)
 	{
 		$this->argument_index = $index;
 		$this->function_check = $function;
 		$this->function_return_key = $return_key; // set to null when you don't want it to be set
-		$this->error_string = $error_string;
 	}
 	public function get_argument_index()
 	{
@@ -45,10 +43,6 @@ class pts_argument_check
 	public function get_function_return_key()
 	{
 		return $this->function_return_key;
-	}
-	public function get_error_string()
-	{
-		return $this->error_string;
 	}
 	public function __toString()
 	{

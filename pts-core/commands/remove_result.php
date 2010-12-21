@@ -28,7 +28,7 @@ class remove_result implements pts_option_interface
 	public static function argument_checks()
 	{
 		return array(
-		new pts_argument_check(0, array("pts_result_file", "is_test_result_file"), null, "No result file found.")
+		new pts_argument_check(0, array("pts_result_file", "is_test_result_file"), null)
 		);
 	}
 	public static function run($r)

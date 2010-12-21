@@ -859,7 +859,8 @@ class pts_client
 
 				if($return_value == $return_fails_on)
 				{
-					pts_client::$display->generic_error($argument_check->get_error_string());
+					pts_client::$display->generic_error("Argument Missing.");
+					echo "CORRECT SYNTAX\nphoronix-test-suite $command " . implode(' ', $argument_checks) . "\n\n";
 					return false;
 				}
 				else

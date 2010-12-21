@@ -29,7 +29,7 @@ class install_test implements pts_option_interface
 	public static function argument_checks()
 	{
 		return array(
-		new pts_argument_check('VARIABLE_LENGTH', array('pts_types', 'identifier_to_object'), null, "Nothing was found to install.")
+		new pts_argument_check('VARIABLE_LENGTH', array('pts_types', 'identifier_to_object'), null)
 		);
 	}
 	public static function run($items_to_install)

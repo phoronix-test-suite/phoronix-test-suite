@@ -28,7 +28,7 @@ class module_info implements pts_option_interface
 	public static function argument_checks()
 	{
 		return array(
-		new pts_argument_check(0, array("pts_module", "is_module"), null, "No module found.")
+		new pts_argument_check(0, array("pts_module", "is_module"), null)
 		);
 	}
 	public static function run($args)

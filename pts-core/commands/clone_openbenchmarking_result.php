@@ -29,7 +29,7 @@ class clone_openbenchmarking_result implements pts_option_interface
 	public static function argument_checks()
 	{
 		return array(
-		new pts_argument_check('VARIABLE_LENGTH', array('pts_openbenchmarking', 'is_openbenchmarking_result_id'), null, "No OpenBenchmarking.org result found.")
+		new pts_argument_check('VARIABLE_LENGTH', array('pts_openbenchmarking', 'is_openbenchmarking_result_id'), null)
 		);
 	}
 	public static function run($args)

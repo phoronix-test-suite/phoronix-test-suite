@@ -28,7 +28,7 @@ class info implements pts_option_interface
 	public static function argument_checks()
 	{
 		return array(
-		new pts_argument_check(0, array("pts_types", "identifier_to_object"), "object", "No test, suite, global upload, or result file was found.")
+		new pts_argument_check(0, array("pts_types", "identifier_to_object"), "object")
 		);
 	}
 	public static function run($args)

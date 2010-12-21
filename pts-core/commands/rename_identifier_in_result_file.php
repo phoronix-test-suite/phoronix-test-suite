@@ -28,7 +28,7 @@ class rename_identifier_in_result_file implements pts_option_interface
 	public static function argument_checks()
 	{
 		return array(
-		new pts_argument_check(0, array("pts_types", "is_result_file"), null, "No result file was found.")
+		new pts_argument_check(0, array("pts_types", "is_result_file"), null)
 		);
 	}
 	public static function run($r)

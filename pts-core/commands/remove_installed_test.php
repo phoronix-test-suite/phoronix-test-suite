@@ -28,7 +28,7 @@ class remove_installed_test implements pts_option_interface
 	public static function argument_checks()
 	{
 		return array(
-		new pts_argument_check(0, array("pts_test_profile", "is_test_profile"), null, "No test found.")
+		new pts_argument_check(0, array("pts_test_profile", "is_test_profile"), null)
 		);
 	}
 	public static function run($r)

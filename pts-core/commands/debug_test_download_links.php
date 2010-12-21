@@ -28,7 +28,7 @@ class debug_test_download_links implements pts_option_interface
 	public static function argument_checks()
 	{
 		return array(
-		new pts_argument_check(0, array('pts_types', 'is_test_or_suite'), null, "The name of a test or suite must be entered.")
+		new pts_argument_check(0, array('pts_types', 'is_test_or_suite'), null)
 		);
 	}
 	public static function run($r)
