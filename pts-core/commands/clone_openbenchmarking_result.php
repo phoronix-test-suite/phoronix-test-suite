@@ -24,22 +24,28 @@ class clone_openbenchmarking_result implements pts_option_interface
 {
 	const doc_section = 'OpenBenchmarking.org';
 	const doc_use_alias = 'clone-result';
-	const doc_description = "This option will download a local copy of a file that was saved to OpenBenchmarking.org, as long as a valid public ID is supplied.";
+	const doc_description = "This option will download a local copy of a file that was saved to OpenBenchmarking.org, as long as a valid public ID is supplied. More than one ID can be specified and the results will then be merged.";
 
 	public static function argument_checks()
 	{
 		return array(
-		new pts_argument_check(0, array('pts_openbenchmarking', 'is_openbenchmarking_result_id'), null, "No OpenBenchmarking.org result found.")
+		new pts_argument_check('VARIABLE_LENGTH', array('pts_openbenchmarking', 'is_openbenchmarking_result_id'), null, "No OpenBenchmarking.org result found.")
 		);
 	}
 	public static function run($args)
 	{
-		$saved = pts_openbenchmarking::clone_openbenchmarking_result($args[0]);
-
-		if($saved)
+		$result_files = array();
+		foreach($args as $id)
 		{
-			echo "\nResult Saved To: " . PTS_SAVE_RESULTS_PATH . $args[0] . "/composite.xml\n\n";
+			$xml = pts_openbenchmarking::clone_openbenchmarking_result($id, true);
+			array_push($result_files, new pts_result_file($xml));
 		}
+
+		$writer = new pts_result_file_writer(null);
+		pts_merge::merge_test_results_process($writer, $result_files);
+		pts_client::save_test_result($args[0] . '/composite.xml', $writer->get_xml(), true);
+
+		echo "\nResult Saved To: " . PTS_SAVE_RESULTS_PATH . $args[0] . "/composite.xml\n\n";
 	}
 }
 

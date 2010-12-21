@@ -85,7 +85,7 @@ class pts_openbenchmarking
 
 		return $is_id;
 	}
-	public static function clone_openbenchmarking_result(&$id)
+	public static function clone_openbenchmarking_result(&$id, $return_xml = false)
 	{
 		$json_response = pts_openbenchmarking::make_openbenchmarking_request('clone_openbenchmarking_result', array('i' => $id));
 		$json_response = json_decode($json_response, true);
@@ -105,7 +105,7 @@ class pts_openbenchmarking
 				$result_file_writer->add_results_from_result_file($result_file);
 				$id = strtolower($id);
 
-				$valid = pts_client::save_test_result($id . '/composite.xml', $result_file_writer->get_xml(), true);
+				$valid = $return_xml ? $result_file_writer->get_xml() : pts_client::save_test_result($id . '/composite.xml', $result_file_writer->get_xml(), true);
 			}
 		}
 

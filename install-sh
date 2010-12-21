@@ -67,6 +67,7 @@ rm -rf $DESTDIR$INSTALL_PREFIX/share/doc/phoronix-test-suite/man-pages/
 cp documentation/man-pages/*.1 $DESTDIR$INSTALL_PREFIX/share/man/man1/
 cp pts-core/static/bash_completion $DESTDIR$INSTALL_PREFIX/../etc/bash_completion.d/phoronix-test-suite
 cp pts-core/static/images/phoronix-test-suite.png $DESTDIR$INSTALL_PREFIX/share/icons/hicolor/48x48/apps/phoronix-test-suite.png
+cp pts-core/static/images/openbenchmarking.png $DESTDIR$INSTALL_PREFIX/share/icons/hicolor/64x64/apps/openbenchmarking.png
 cp pts-core/static/phoronix-test-suite.desktop $DESTDIR$INSTALL_PREFIX/share/applications/
 
 cp -r pts/ $DESTDIR$INSTALL_PREFIX/share/phoronix-test-suite/

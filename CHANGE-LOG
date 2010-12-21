@@ -8,6 +8,7 @@ Phoronix Test Suite (Git)
 - pts-core: Change more Phoronix Global references to OpenBenchmarking.org
 - pts-core: OpenBenchmarking.org launcher support by passing the .openbenchmarking file as the argument
 - pts-core: OpenBenchmarking.org MIME support
+- pts-core: Support specifying multple OpenBenchmarking.org IDs to the clone-result command and the results will then be merged
 - bilde_renderer: Blacklist unsupported SVG browsers rather than whitelist supported ones, should be saner this way
 
 Phoronix Test Suite 3.0 Alpha 4
