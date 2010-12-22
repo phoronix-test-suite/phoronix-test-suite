@@ -4,12 +4,19 @@ technologies
 technology
 version
 computer
+To Be Filled By ODM
+To Be Filled By O.E.M.
+Desktop Reference Platform
+small form factor
+convertible
 chipset
 community
+reference
 processor
 host bridge
 adapter
 CPU
+platform
 international
 controller
 express
@@ -21,14 +28,20 @@ alternate
 quad-core
 memory
 series
+motherboard
 serverengines
 x86/mmx/sse2
+/AGP/SSE/3DNOW!
+/AGP/SSE2
 controller
 (extreme graphics innovation)
 pci-e_gfx and ht3 k8 part
 pci-e_gfx and ht1 k8 part
 Northbridge only
 dual slot
+dual-core
+dual core
+microsystems
 single slot
 genuine
 unknown device
