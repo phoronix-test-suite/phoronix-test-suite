@@ -29,83 +29,14 @@ class pts_ResultFileSystemsTable extends pts_Table
 		$rows = array();
 		$table_data = array();
 
-		$this->component_to_table_data($table_data, $columns, $rows, $result_file->get_system_hardware());
-		$this->component_to_table_data($table_data, $columns, $rows, $result_file->get_system_software());
+		pts_result_file_analyzer::system_components_to_table($table_data, $columns, $rows, $result_file->get_system_hardware());
+		pts_result_file_analyzer::system_components_to_table($table_data, $columns, $rows, $result_file->get_system_software());
 
-		// Let's try to compact the data
-		$c_count = count($table_data);
-		$c_index = 0;
-		foreach(array_keys($table_data) as $c)
-		{
-			for($r = 0, $r_count = count($table_data[$c]); $r < $r_count; $r++)
-			{
-				// Find next-to duplicates
-				$match_to = &$table_data[$c][$r];
-
-				if(($match_to instanceof pts_table_value) == false)
-				{
-					continue;
-				}
-
-				$spans = 1;
-				for($i = ($c_index + 1); $i < $c_count; $i++)
-				{
-					$id = $columns[$i];
-
-					if(isset($table_data[$id][$r]) && $match_to == $table_data[$id][$r])
-					{
-						$spans++;
-						$table_data[$id][$r] = null;
-					}
-					else
-					{
-						break;
-					}
-				}
-
-				if($spans > 1)
-				{
-					$match_to->set_attribute('spans_col', $spans);
-				}
-			}
-
-			$c_index++;
-		}
+		pts_result_file_analyzer::compact_result_table_data($table_data, $columns, true); // TODO: see if this true value works fine but if rendering starts messing up, disable it
 
 		parent::__construct($rows, $columns, $table_data, $result_file);
 		$this->graph_font_size_identifiers *= 0.8;
 		$this->column_heading_vertical = false;
-	}
-	private function component_to_table_data(&$table_data, &$columns, &$rows, $add_components)
-	{
-		$col_pos = 0;
-
-		foreach($add_components as $info_string)
-		{
-			if(!isset($table_data[$columns[$col_pos]]))
-			{
-				$table_data[$columns[$col_pos]] = array();
-			}
-
-			foreach(explode(', ', $info_string) as $component)
-			{
-				$c_pos = strpos($component, ': ');
-
-				if($c_pos !== false)
-				{
-					$index = substr($component, 0, $c_pos);
-					$value = substr($component, ($c_pos + 2));
-
-					if(($r_i = array_search($index, $rows)) === false)
-					{
-						array_push($rows, $index);
-						$r_i = count($rows) - 1;
-					}
-					$table_data[$columns[$col_pos]][$r_i] = new pts_table_value($value);				
-				}
-			}
-			$col_pos++;
-		}
 	}
 }
 
