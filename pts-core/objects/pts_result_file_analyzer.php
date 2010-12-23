@@ -45,12 +45,14 @@ class pts_result_file_analyzer
 		$hw_unique = array_unique($hw);
 		$sw = $result_file->get_system_software();
 		$sw_unique = array_unique($sw);
+		$desc = null;
 
 		//print_r($table_data);
 
 		if(count($hw_unique) == 1 && count($sw_unique) == 1)
 		{
 			// The hardware and software is maintained throughout the testing, so if there's a change in results its something we aren't monitoring
+			$desc = 'Testing of: ' . implode(', ', $identifiers);
 		}
 		else if(count($sw_unique) == 1)
 		{
@@ -60,9 +62,9 @@ class pts_result_file_analyzer
 			pts_result_file_analyzer::system_components_to_table($data, $identifiers, $rows, $hw);
 			pts_result_file_analyzer::compact_result_table_data($data, $identifiers, true);
 
-			echo pts_result_file_analyzer::analyse_system_component_changes('hardware', $data, $rows, array(array('Motherboard', 'Chipset')));
+			$desc = pts_result_file_analyzer::analyse_system_component_changes('hardware', $data, $rows, array(array('Motherboard', 'Chipset')));
 		}
-		else if(true || count($hw_unique) == 1)
+		else if(count($hw_unique) == 1)
 		{
 			// The hardware is being maintained, but the software is being flipped out
 			$rows = array();
@@ -70,8 +72,43 @@ class pts_result_file_analyzer
 			pts_result_file_analyzer::system_components_to_table($data, $identifiers, $rows, $sw);
 			pts_result_file_analyzer::compact_result_table_data($data, $identifiers, true);
 
-			echo pts_result_file_analyzer::analyse_system_component_changes('software', $data, $rows, array(array('Display Driver', 'OpenGL'), array('OpenGL'), array('Display Driver')));
+			$desc = pts_result_file_analyzer::analyse_system_component_changes('software', $data, $rows, array(array('Display Driver', 'OpenGL'), array('OpenGL'), array('Display Driver')));
 		}
+
+		if($desc)
+		{
+			$mark_results = self::locate_interesting_results($result_file);
+
+			if(count($mark_results) > 0)
+			{
+				return array($desc, $mark_results);
+			}
+		}
+
+		return false;
+	}
+	public static function locate_interesting_results(&$result_file)
+	{
+		$result_objects = array();
+		$flag_delta_results = array();
+		$system_id_keys = null;
+		$result_object_index = -1;
+		pts_ResultFileTable::result_file_to_result_table($result_file, $system_id_keys, $result_object_index, $flag_delta_results);
+
+		if(count($flag_delta_results) > 0)
+		{
+			asort($flag_delta_results);
+			$flag_delta_results = array_slice(array_keys($flag_delta_results), -6);
+			$flag_delta_objects = $result_file->get_result_objects($flag_delta_results);
+
+			for($i = 0; $i < count($flag_delta_results); $i++)
+			{
+				$result_objects[$flag_delta_results[$i]] = $flag_delta_objects[$i];
+				unset($flag_delta_objects[$i]);
+			}
+		}
+
+		return $result_objects;
 	}
 	public static function analyse_system_component_changes($type, $data, $rows, $supported_combos = array())
 	{

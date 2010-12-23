@@ -41,7 +41,7 @@ class pts_ResultFileTable extends pts_Table
 			}
 		}
 	}
-	protected static function result_file_to_result_table(&$result_file, &$system_id_keys = null, &$result_object_index = -1)
+	public static function result_file_to_result_table(&$result_file, &$system_id_keys = null, &$result_object_index = -1, &$flag_delta_results = false)
 	{
 		$result_table = array();
 		$result_tests = array();
@@ -52,7 +52,7 @@ class pts_ResultFileTable extends pts_Table
 			$result_table[$sys_identifier] = null;
 		}
 
-		foreach($result_file->get_result_objects($result_object_index) as $result_object)
+		foreach($result_file->get_result_objects($result_object_index) as $ri => $result_object)
 		{
 			$result_tests[$result_counter][0] = $result_object->test_profile->get_title();
 			$result_tests[$result_counter][1] = $result_object->get_arguments_description();
@@ -203,6 +203,11 @@ class pts_ResultFileTable extends pts_Table
 							"delta" => $delta,
 							"highlight" => $highlight
 							);
+
+						if($delta > $percent_std && $flag_delta_results !== false)
+						{
+							$flag_delta_results[$ri] = $delta;
+						}
 
 						$result_table[$identifier][$result_counter] = new pts_table_value($value, $attributes);
 						$prev_identifier = $identifier;
