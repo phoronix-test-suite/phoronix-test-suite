@@ -157,7 +157,7 @@
 		</Package>
 		<Package>
 			<GenericName>curl</GenericName>
-			<PackageName>libcurl3 curl</PackageName>
+			<PackageName>libcurl4 curl</PackageName>
 			<FileCheck>/usr/lib/libcurl.so.3, /usr/bin/curl</FileCheck>
 		</Package>
 		<Package>

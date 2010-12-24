@@ -23,9 +23,11 @@
 
 class pts_ResultFileTable extends pts_Table
 {
+	public $flagged_results = array();
+
 	public function __construct(&$result_file, $system_id_keys = null, $result_object_index = -1)
 	{
-		list($rows, $columns, $table_data) = self::result_file_to_result_table($result_file, $system_id_keys, $result_object_index);
+		list($rows, $columns, $table_data) = self::result_file_to_result_table($result_file, $system_id_keys, $result_object_index, $this->flagged_results);
 		parent::__construct($rows, $columns, $table_data, $result_file);
 		$this->result_object_index = $result_object_index;
 

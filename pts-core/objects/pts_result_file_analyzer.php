@@ -22,7 +22,7 @@
 
 class pts_result_file_analyzer
 {
-	public static function analzye_result_file_intent(&$result_file)
+	public static function analzye_result_file_intent(&$result_file, &$flagged_results = null)
 	{
 		$identifiers = $result_file->get_system_identifiers();
 
@@ -77,33 +77,40 @@ class pts_result_file_analyzer
 
 		if($desc)
 		{
-			$mark_results = self::locate_interesting_results($result_file);
-
-			if(count($mark_results) > 0)
+			if($flagged_results === -1)
 			{
+				return $desc;
+			}
+			else
+			{
+				$mark_results = self::locate_interesting_results($result_file, $flagged_results);
 				return array($desc, $mark_results);
 			}
 		}
 
 		return false;
 	}
-	public static function locate_interesting_results(&$result_file)
+	public static function locate_interesting_results(&$result_file, &$flagged_results = null)
 	{
 		$result_objects = array();
-		$flag_delta_results = array();
-		$system_id_keys = null;
-		$result_object_index = -1;
-		pts_ResultFileTable::result_file_to_result_table($result_file, $system_id_keys, $result_object_index, $flag_delta_results);
 
-		if(count($flag_delta_results) > 0)
+		if(!is_array($flagged_results))
 		{
-			asort($flag_delta_results);
-			$flag_delta_results = array_slice(array_keys($flag_delta_results), -6);
-			$flag_delta_objects = $result_file->get_result_objects($flag_delta_results);
+			$flagged_results = array();
+			$system_id_keys = null;
+			$result_object_index = -1;
+			pts_ResultFileTable::result_file_to_result_table($result_file, $system_id_keys, $result_object_index, $flagged_results);
+		}
 
-			for($i = 0; $i < count($flag_delta_results); $i++)
+		if(count($flagged_results) > 0)
+		{
+			asort($flagged_results);
+			$flagged_results = array_slice(array_keys($flagged_results), -6);
+			$flag_delta_objects = $result_file->get_result_objects($flagged_results);
+
+			for($i = 0; $i < count($flagged_results); $i++)
 			{
-				$result_objects[$flag_delta_results[$i]] = $flag_delta_objects[$i];
+				$result_objects[$flagged_results[$i]] = $flag_delta_objects[$i];
 				unset($flag_delta_objects[$i]);
 			}
 		}
