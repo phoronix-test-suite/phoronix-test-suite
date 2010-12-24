@@ -24,7 +24,9 @@ class pts_result_file_merge_manager
 {
 	private $test_results = null;
 	private $skip_subsystems = null;
+	private $sets_added = 0;
 	private $is_reference_comparison;
+	private $skip_adding_on_extra_sets;
 
 	public function __construct($pass_attributes = null)
 	{
@@ -36,6 +38,8 @@ class pts_result_file_merge_manager
 		}
 
 		$this->is_reference_comparison = isset($pass_attributes["is_reference_comparison"]);
+		$this->skip_adding_on_extra_sets = isset($pass_attributes['skip_adding_on_extra_sets']);
+
 	}
 	public function add_test_result_set($merge_test_objects_array, &$result_merge_select)
 	{
@@ -43,6 +47,7 @@ class pts_result_file_merge_manager
 		{
 			$this->add_test_result($merge_test_object, $result_merge_select);
 		}
+		$this->sets_added += 1;
 	}
 	public function add_test_result($merge_test_object, &$result_merge_select)
 	{
@@ -123,6 +128,13 @@ class pts_result_file_merge_manager
 
 						$merge_test_object->test_result_buffer->add_test_result($this_identifier, $buffer_item->get_result_value(), $buffer_item->get_result_raw());
 					}
+				}
+			}
+			else
+			{
+				if($this->skip_adding_on_extra_sets && $this->sets_added > 0)
+				{
+					$skip_adding = true;
 				}
 			}
 

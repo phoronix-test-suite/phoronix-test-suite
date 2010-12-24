@@ -22,7 +22,7 @@
 
 class pts_result_file_analyzer
 {
-	public static function analzye_result_file_intent(&$result_file, &$flagged_results = null)
+	public static function analyze_result_file_intent(&$result_file, &$flagged_results = null)
 	{
 		$identifiers = $result_file->get_system_identifiers();
 
@@ -52,7 +52,7 @@ class pts_result_file_analyzer
 		if(count($hw_unique) == 1 && count($sw_unique) == 1)
 		{
 			// The hardware and software is maintained throughout the testing, so if there's a change in results its something we aren't monitoring
-			$desc = 'Testing of: ' . implode(', ', $identifiers);
+			$desc = array('Unknown', implode(', ', $identifiers));
 		}
 		else if(count($sw_unique) == 1)
 		{
@@ -62,7 +62,7 @@ class pts_result_file_analyzer
 			pts_result_file_analyzer::system_components_to_table($data, $identifiers, $rows, $hw);
 			pts_result_file_analyzer::compact_result_table_data($data, $identifiers, true);
 
-			$desc = pts_result_file_analyzer::analyse_system_component_changes('hardware', $data, $rows, array(array('Motherboard', 'Chipset')));
+			$desc = pts_result_file_analyzer::analyze_system_component_changes('hardware', $data, $rows, array(array('Motherboard', 'Chipset')));
 		}
 		else if(count($hw_unique) == 1)
 		{
@@ -72,7 +72,7 @@ class pts_result_file_analyzer
 			pts_result_file_analyzer::system_components_to_table($data, $identifiers, $rows, $sw);
 			pts_result_file_analyzer::compact_result_table_data($data, $identifiers, true);
 
-			$desc = pts_result_file_analyzer::analyse_system_component_changes('software', $data, $rows, array(array('Display Driver', 'OpenGL'), array('OpenGL'), array('Display Driver')));
+			$desc = pts_result_file_analyzer::analyze_system_component_changes('software', $data, $rows, array(array('Display Driver', 'OpenGL'), array('OpenGL'), array('Display Driver')));
 		}
 
 		if($desc)
@@ -84,7 +84,7 @@ class pts_result_file_analyzer
 			else
 			{
 				$mark_results = self::locate_interesting_results($result_file, $flagged_results);
-				return array($desc, $mark_results);
+				return array($desc[0], $desc[1], $mark_results);
 			}
 		}
 
@@ -117,7 +117,7 @@ class pts_result_file_analyzer
 
 		return $result_objects;
 	}
-	public static function analyse_system_component_changes($type, $data, $rows, $supported_combos = array())
+	public static function analyze_system_component_changes($type, $data, $rows, $supported_combos = array())
 	{
 		$max_combo_count = 2;
 		foreach($supported_combos as $combo)
@@ -186,10 +186,10 @@ class pts_result_file_analyzer
 
 				if(count($changed_indexes) == 1 || in_array($changed_indexes, $supported_combos))
 				{
-					$r = 'A comparison of ' . implode('/', $changed_indexes) . ' ' . $type . ': ';
-					$r .= implode(', ', $comparison_objects);
+					$r = implode(', ', $comparison_objects);
+					$category = array_shift($changed_indexes);
 
-					return $r;
+					return array($category, $r);
 				}
 			}
 		}
