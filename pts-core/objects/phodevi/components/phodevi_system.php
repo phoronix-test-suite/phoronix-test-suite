@@ -741,6 +741,16 @@ class phodevi_system extends phodevi_device_interface
 			if(!empty($driver_version) && $with_version)
 			{
 				$display_driver .= ' ' . $driver_version;
+
+				if(IS_ATI_GRAPHICS && strpos($display_driver, 'fglrx') !== false)
+				{
+					$catalyst_version = phodevi_linux_parser::read_amd_pcsdb('AMDPCSROOT/SYSTEM/LDC,Catalyst_Version');
+
+					if($catalyst_version != null && $catalyst_version > 10)
+					{
+						$display_driver .= ' (Catalyst ' . $catalyst_version . ')';
+					}
+				}
 			}
 		}
 

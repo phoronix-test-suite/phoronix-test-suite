@@ -10,6 +10,7 @@ Phoronix Test Suite (Git)
 - pts-core: OpenBenchmarking.org MIME support
 - pts-core: Support specifying multple OpenBenchmarking.org IDs to the clone-result command and the results will then be merged
 - pts-core: Improve error output when a command doesn't have the necessary arguments rather than using pre-defined user error strings
+- phodevi: Support appending the Catalyst driver version when the fglrx display driver is loaded
 - bilde_renderer: Blacklist unsupported SVG browsers rather than whitelist supported ones, should be saner this way
 
 Phoronix Test Suite 3.0 Alpha 4
