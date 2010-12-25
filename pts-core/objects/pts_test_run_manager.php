@@ -1081,6 +1081,16 @@ class pts_test_run_manager
 			else if($run_object instanceof pts_virtual_test_suite)
 			{
 				$virtual_suite_tests = $run_object->get_contained_test_profiles();
+
+				foreach(array_keys($virtual_suite_tests) as $i)
+				{
+					if($virtual_suite_tests[$i]->is_supported(false) == false || $this->validate_test_to_run($virtual_suite_tests[$i]))
+					{
+						unset($virtual_suite_tests[$i]);
+					}
+				}
+				sort($virtual_suite_tests);
+
 				$run_index = explode(',', pts_user_io::prompt_text_menu('Select the tests in the virtual suite to run', array_merge($virtual_suite_tests, array('All Tests In Suite')), true, true));
 
 				if(in_array((count($virtual_suite_tests) + 1), $run_index))
@@ -1091,7 +1101,7 @@ class pts_test_run_manager
 				{
 					foreach(array_keys($virtual_suite_tests) as $i)
 					{
-						if(!in_array(($i + 1), $run_index) || $virtual_suite_tests[$i]->is_supported(false) == false)
+						if(!in_array(($i + 1), $run_index))
 						{
 							unset($virtual_suite_tests[$i]);
 						}
