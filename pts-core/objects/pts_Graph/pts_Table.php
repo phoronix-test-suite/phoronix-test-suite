@@ -186,17 +186,12 @@ class pts_Table extends pts_Graph
 		$row = 0;
 		foreach($this->rows as $i => $row_string)
 		{
-			if(is_array($row_string))
+			if(($row_string instanceof pts_table_value) == false)
 			{
-				$hover = $row_string[1];
-				$row_string = $row_string[0];
-			}
-			else
-			{
-				$hover = null;
+				$row_string = new pts_table_value($row_string);
 			}
 
-			$this->graph_image->write_text_right($row_string, $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_text, 2, $identifier_height + ($row * $table_line_height) + $table_line_height_half, $this->graph_left_start - 2, $identifier_height + ($row * $table_line_height) + $table_line_height_half, false, '#b-' . $row, $hover, true);
+			$this->graph_image->write_text_right($row_string->get_value(), $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_text, 2, $identifier_height + ($row * $table_line_height) + $table_line_height_half, $this->graph_left_start - 2, $identifier_height + ($row * $table_line_height) + $table_line_height_half, false, $row_string->get_attribute('onclick'), $row_string->get_attribute('hover'), true);
 			$row++;
 		}
 

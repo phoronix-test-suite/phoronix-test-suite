@@ -36,9 +36,9 @@ class pts_ResultFileTable extends pts_Table
 		$longest_row_title_length = 0;
 		foreach($this->rows as $result_test)
 		{
-			if(($len = strlen($result_test[0])) > $longest_row_title_length)
+			if(($len = strlen($result_test)) > $longest_row_title_length)
 			{
-				$this->longest_row_identifier = $result_test[0];
+				$this->longest_row_identifier = $result_test;
 				$longest_row_title_length = $len;
 			}
 		}
@@ -56,21 +56,23 @@ class pts_ResultFileTable extends pts_Table
 
 		foreach($result_file->get_result_objects($result_object_index) as $ri => $result_object)
 		{
-			$result_tests[$result_counter][0] = $result_object->test_profile->get_title();
-			$result_tests[$result_counter][1] = $result_object->get_arguments_description();
-
 			if($result_object_index != -1)
 			{
 				if(is_array($result_object_index))
 				{
-					$result_tests[$result_counter][0] = $result_tests[$result_counter][1];
+					$result_tests[$result_counter] = new pts_table_value($result_object->get_arguments_description());
 				}
 				else
 				{
-					$result_tests[$result_counter][0] = 'Results';
+					$result_tests[$result_counter] = new pts_table_value('Results');
 				}
-				//$result_tests[$result_counter][0] .= ': ' . $result_tests[$result_counter][1];
 			}
+			else
+			{
+				$result_tests[$result_counter] = new pts_table_value($result_object->test_profile->get_title());
+				$result_tests[$result_counter]->set_attribute('hover', $result_object->get_arguments_description());
+			}
+
 
 			switch($result_object->test_profile->get_display_format())
 			{
@@ -217,8 +219,7 @@ class pts_ResultFileTable extends pts_Table
 					}
 					break;
 				case 'LINE_GRAPH':
-					$result_tests[$result_counter][0] = $result_object->test_profile->get_title() . ' (Avg)';
-					$result_tests[$result_counter][1] = null;
+					$result_tests[$result_counter] = new pts_table_value($result_object->test_profile->get_title() . ' (Avg)');
 
 					foreach($result_object->test_result_buffer->get_buffer_items() as $index => $buffer_item)
 					{
@@ -270,15 +271,15 @@ class pts_ResultFileTable extends pts_Table
 
 			if($has_written_diff)
 			{
-				array_push($result_tests, array('Difference', null));
+				array_push($result_tests, new pts_table_value('Difference'));
 			}
 			if($has_written_error)
 			{
-				array_push($result_tests, array('Standard Error', null));
+				array_push($result_tests, new pts_table_value('Standard Error'));
 			}
 			if($has_written_std)
 			{
-				array_push($result_tests, array('Standard Deviation', null));
+				array_push($result_tests, new pts_table_value('Standard Deviation'));
 			}
 		}
 
