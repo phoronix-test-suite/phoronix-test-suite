@@ -230,7 +230,7 @@ class pts_Table extends pts_Graph
 						$this->graph_image->draw_line(($this->graph_left_start + ($current_col * $table_item_width) + 1), 1, ($this->graph_left_start + ($current_col * $table_item_width) + 1), $this->graph_attr_height, $paint_color, 1);
 					}
 
-					$this->graph_image->write_text_center($last_identifier, $this->graph_font, $this->graph_font_size_axis_heading, $this->graph_color_background, $this->graph_left_start + ($last_changed_col * $table_item_width), 4, $this->graph_left_start + ($current_col * $table_item_width), 4, false, null, null, true);
+					$this->graph_image->write_text_center($last_identifier, $this->graph_font, $this->graph_font_size_axis_heading, $this->graph_color_background, $this->graph_left_start + ($last_changed_col * $table_item_width), 4, $this->graph_left_start + ($current_col * $table_item_width), 4, false, $last_identifier->get_attribute('onclick'), null, true);
 
 					$last_identifier = $identifier[0];
 					$last_changed_col = $current_col;
@@ -341,7 +341,7 @@ class pts_Table extends pts_Graph
 					$this->graph_image->draw_rectangle($left_bounds + 1, $identifier_height + (($row + 1) * $table_line_height) + 1, $right_bounds, $identifier_height + (($row + 2) * $table_line_height), $background_paint);
 				}
 
-				$this->graph_image->write_text_center($value, $this->graph_font, $this->graph_font_size_identifiers, $text_color, $left_bounds, $top_bounds, $right_bounds, $top_bounds, false, null, implode('; ', $hover), $bold);
+				$this->graph_image->write_text_center($value, $this->graph_font, $this->graph_font_size_identifiers, $text_color, $left_bounds, $top_bounds, $right_bounds, $top_bounds, false, $result_table_value->get_attribute('onclick'), implode('; ', $hover), $bold);
 				//$row++;
 			}
 		}

@@ -38,6 +38,10 @@ class pts_strings
 
 		return $components != false && isset($components["scheme"]) && isset($components["host"]);
 	}
+	public static function trim_search_query($value)
+	{
+		return trim(($s = strpos($value, '@')) || ($s = strpos($value, '(')) || ($s = strpos($value, '/')) ? substr($value, 0, $s) : $value);
+	}
 	public static function string_bool($string)
 	{
 		// Used for evaluating if the user inputted a string that evaluates to true

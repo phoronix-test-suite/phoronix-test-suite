@@ -222,6 +222,11 @@ class pts_result_file_analyzer
 						$r_i = count($rows) - 1;
 					}
 					$table_data[$columns[$col_pos]][$r_i] = new pts_table_value($value);
+
+					if(!in_array($index, array('Memory', 'Desktop', 'Screen Resolution')))
+					{
+						$table_data[$columns[$col_pos]][$r_i]->set_attribute('onclick', 'http://openbenchmarking.org/s/' . pts_strings::trim_search_query($value));
+					}
 				}
 			}
 			$col_pos++;
