@@ -220,9 +220,9 @@ class bilde_swf_renderer extends bilde_renderer
 	{
 		return new SWFBitmap(fopen($file, "rb"));
 	}
-	public function image_copy_merge($source_image_object, $to_x, $to_y, $source_x = 0, $source_y = 0, $width = -1, $height = -1)
+	public function image_copy_merge($source_image_object, $to_x, $to_y, $source_x = 0, $source_y = 0, $width = -1, $height = -1, $onclick = null)
 	{
-		// TODO: $source_x, $source_y, $width, $height need to be implemented
+		// TODO: $source_x, $source_y, $width, $height, $onclick need to be implemented
 		$added = $this->image->add($source_image_object);
 		$added->moveTo($to_x, $to_y);
 	}

@@ -682,7 +682,7 @@ abstract class pts_Graph
 		if($this->iveland_view)
 		{
 			$this->graph_image->draw_rectangle(0, 0, $this->graph_attr_width, $this->graph_top_heading_height, $this->graph_color_main_headers);
-			$this->graph_image->write_text_left($this->graph_title, $this->graph_font, $this->graph_font_size_heading, $this->graph_color_background, 5, 12, $this->graph_left_end, 12, false, "http://global.phoronix-test-suite.com/?k=category&u=" . $this->test_identifier);
+			$this->graph_image->write_text_left($this->graph_title, $this->graph_font, $this->graph_font_size_heading, $this->graph_color_background, 5, 12, $this->graph_left_end, 12, false, 'http://openbenchmarking.org/test/' . $this->test_identifier);
 
 			foreach($this->graph_sub_titles as $i => $sub_title)
 			{
@@ -690,11 +690,11 @@ abstract class pts_Graph
 				$this->graph_image->write_text_left($sub_title, $this->graph_font, $this->graph_font_size_sub_heading, $this->graph_color_background, 5, $vertical_offset, $this->graph_left_end, $vertical_offset, false);
 			}
 		
-			$this->graph_image->image_copy_merge($this->graph_image->png_image_to_type("http://www.phoronix-test-suite.com/external/pts-logo-77x40-white.png"), $this->graph_left_end - 77, ($this->graph_top_heading_height / 40 + 2), 0, 0, 77, 40);
+			$this->graph_image->image_copy_merge($this->graph_image->png_image_to_type("http://www.phoronix-test-suite.com/external/pts-logo-77x40-white.png"), $this->graph_left_end - 77, ($this->graph_top_heading_height / 40 + 2), 0, 0, 77, 40, 'http://www.phoronix-test-suite.com/');
 		}
 		else
 		{
-			$this->graph_image->write_text_center($this->graph_title, $this->graph_font, $this->graph_font_size_heading, $this->graph_color_main_headers, $this->graph_left_start, 3, $this->graph_left_end, 3, false, "http://global.phoronix-test-suite.com/?k=category&u=" . $this->test_identifier);
+			$this->graph_image->write_text_center($this->graph_title, $this->graph_font, $this->graph_font_size_heading, $this->graph_color_main_headers, $this->graph_left_start, 3, $this->graph_left_end, 3, false, 'http://openbenchmarking.org/test/' . $this->test_identifier);
 
 			foreach($this->graph_sub_titles as $i => $sub_title)
 			{

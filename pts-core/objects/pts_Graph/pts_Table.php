@@ -338,8 +338,6 @@ class pts_Table extends pts_Graph
 						$background_paint = $i % 2 == 0 ? $this->graph_color_body_light : $this->graph_color_body;
 					}
 
-					$bold = true;
-
 					$this->graph_image->draw_rectangle($left_bounds + 1, $identifier_height + (($row + 1) * $table_line_height) + 1, $right_bounds, $identifier_height + (($row + 2) * $table_line_height), $background_paint);
 				}
 

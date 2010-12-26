@@ -219,7 +219,7 @@ abstract class bilde_gd_renderer extends bilde_renderer
 	{
 		return imagecreatefromjpeg($file);
 	}
-	public function image_copy_merge($source_image_object, $to_x, $to_y, $source_x = 0, $source_y = 0, $width = -1, $height = -1)
+	public function image_copy_merge($source_image_object, $to_x, $to_y, $source_x = 0, $source_y = 0, $width = -1, $height = -1, $onclick = null)
 	{
 		if($width == -1)
 		{

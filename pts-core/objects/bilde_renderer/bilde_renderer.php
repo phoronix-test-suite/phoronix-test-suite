@@ -52,7 +52,7 @@ abstract class bilde_renderer
 
 	abstract function png_image_to_type($file);
 	abstract function jpg_image_to_type($file);
-	abstract function image_copy_merge($source_image_object, $to_x, $to_y, $source_x = 0, $source_y = 0, $width = -1, $height = -1);
+	abstract function image_copy_merge($source_image_object, $to_x, $to_y, $source_x = 0, $source_y = 0, $width = -1, $height = -1, $onclick = null);
 	abstract function convert_hex_to_type($hex);
 	abstract function convert_type_to_hex($type);
 	abstract function text_string_dimensions($string, $font_type, $font_size, $predefined_string = false);

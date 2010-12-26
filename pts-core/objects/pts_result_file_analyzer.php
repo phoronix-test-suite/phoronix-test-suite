@@ -277,6 +277,7 @@ class pts_result_file_analyzer
 				if($spans > 1)
 				{
 					$match_to->set_attribute('spans_col', $spans);
+					$match_to->set_attribute('highlight', $spans < count($columns));
 				}
 			}
 

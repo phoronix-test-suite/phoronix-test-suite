@@ -23,7 +23,7 @@
 
 class bilde_svg_renderer extends bilde_renderer
 {
-	public $renderer = "SVG";
+	public $renderer = 'SVG';
 	private $svg = null;
 
 	public function __construct($width, $height, $embed_identifiers = null)
@@ -33,17 +33,17 @@ class bilde_svg_renderer extends bilde_renderer
 		$this->embed_identifiers = $embed_identifiers;
 
 		$dom = new DOMImplementation();
-		$dtd = $dom->createDocumentType("svg", "-//W3C//DTD SVG 1.1//EN", "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd");
+		$dtd = $dom->createDocumentType('svg', '-//W3C//DTD SVG 1.1//EN', 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd');
 		$this->image = $dom->createDocument(null, null, $dtd);
 		$this->image->formatOutput = PTS_IS_CLIENT;
 
-		$pts_comment = $this->image->createComment(pts_title(true) . " [ http://www.phoronix-test-suite.com/ ]");
+		$pts_comment = $this->image->createComment(pts_title(true) . ' [ http://www.phoronix-test-suite.com/ ]');
 		$this->image->appendChild($pts_comment);
 
-		$this->svg = $this->image->createElementNS("http://www.w3.org/2000/svg", "svg");
-		$this->svg->setAttribute("xmlns:xlink", "http://www.w3.org/1999/xlink");
-		$this->svg->setAttribute("version", "1.1");
-		$this->svg->setAttribute("font-family", "sans-serif");
+		$this->svg = $this->image->createElementNS('http://www.w3.org/2000/svg', 'svg');
+		$this->svg->setAttribute('xmlns:xlink', 'http://www.w3.org/1999/xlink');
+		$this->svg->setAttribute('version', '1.1');
+		$this->svg->setAttribute('font-family', 'sans-serif');
 		$this->image->appendChild($this->svg);
 	}
 	public static function renderer_supported()
@@ -52,29 +52,29 @@ class bilde_svg_renderer extends bilde_renderer
 	}
 	public function html_embed_code($file_name, $attributes = null, $is_xsl = false)
 	{
-		$file_name = str_replace("BILDE_EXTENSION", "svg", $file_name);
+		$file_name = str_replace('BILDE_EXTENSION', 'svg', $file_name);
 		$attributes = pts_arrays::to_array($attributes);
-		$attributes["data"] = $file_name;
+		$attributes['data'] = $file_name;
 
 		if($is_xsl)
 		{
-			$html = "<object type=\"image/svg+xml\">";
+			$html = '<object type="image/svg+xml">';
 
 			foreach($attributes as $option => $value)
 			{
-				$html .= "<xsl:attribute name=\"" . $option . "\">" . $value . "</xsl:attribute>";
+				$html .= '<xsl:attribute name="' . $option . '">' . $value . '</xsl:attribute>';
 			}
-			$html .= "</object>";
+			$html .= '</object>';
 		}
 		else
 		{
-			$html = "<object type=\"image/svg+xml\"";
+			$html = '<object type="image/svg+xml"';
 
 			foreach($attributes as $option => $value)
 			{
-				$html .= $option . "=\"" . $value . "\" ";
+				$html .= $option . '="' . $value . '" ';
 			}
-			$html .= "/>";
+			$html .= '/>';
 		}
 
 		return $html;
@@ -91,9 +91,9 @@ class bilde_svg_renderer extends bilde_renderer
 			return false;
 		}
 
-		$this->svg->setAttribute("viewbox", "0 0 " . $this->image_width . " " . $this->image_height);
-		$this->svg->setAttribute("width", $this->image_width);
-		$this->svg->setAttribute("height", $this->image_height);
+		$this->svg->setAttribute('viewbox', '0 0 ' . $this->image_width . ' ' . $this->image_height);
+		$this->svg->setAttribute('width', $this->image_width);
+		$this->svg->setAttribute('height', $this->image_height);
 
 		$svg_image = $this->image->saveXML();
 
@@ -106,7 +106,7 @@ class bilde_svg_renderer extends bilde_renderer
 	public function write_text_left($text_string, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate = false, $onclick = null, $title = null, $bold = false)
 	{
 		$font_size += 1;
-		$text = $this->image->createElement("text");
+		$text = $this->image->createElement('text');
 		$text->setAttribute('x', round($bound_x1));
 		$text->setAttribute('y', round($bound_y1));
 		$text->setAttribute('font-size', $font_size);
@@ -114,32 +114,37 @@ class bilde_svg_renderer extends bilde_renderer
 		if($rotate != false)
 		{
 			$rotate = ($rotate === true ? 90 : $rotate);
-			$text->setAttribute("transform", "rotate($rotate $bound_x1 $bound_y1)");
+			$text->setAttribute('transform', "rotate($rotate $bound_x1 $bound_y1)");
 		}
 
 		if($bold)
 		{
-			$text->setAttribute("font-weight", 800);
+			$text->setAttribute('font-weight', 800);
 		}
 
-		$text->setAttribute("text-anchor", "start");
-		$text->setAttribute("dominant-baseline", "middle");
-		$text->setAttribute("fill", $font_color);
+		$text->setAttribute('text-anchor', 'start');
+		$text->setAttribute('dominant-baseline', 'middle');
+		$text->setAttribute('fill', $font_color);
 		$string = $this->image->createTextNode($text_string);
 		$text->appendChild($string);
 
 		if($onclick != null)
 		{
-			$onclick = str_replace("&", "&amp;", $onclick);
-			$text->setAttribute("xlink:href", $onclick);
+			$link = $this->image->createElement('a');
+			$link->setAttribute('xlink:href', $onclick);
+			$link->setAttribute('xlink:show', 'new');
+			$link->appendChild($text);
+			$this->svg->appendChild($link);
 		}
-
-		$this->svg->appendChild($text);
+		else
+		{
+			$this->svg->appendChild($text);
+		}
 	}
 	public function write_text_right($text_string, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate = false, $onclick = null, $title = null, $bold = false)
 	{
 		$font_size += 1;
-		$text = $this->image->createElement("text");
+		$text = $this->image->createElement('text');
 		$text->setAttribute('x', round($bound_x2));
 		$text->setAttribute('y', round($bound_y2));
 		$text->setAttribute('font-size', $font_size);
@@ -147,27 +152,32 @@ class bilde_svg_renderer extends bilde_renderer
 		if($rotate != false)
 		{
 			$rotate = ($rotate === true ? 90 : $rotate);
-			$text->setAttribute("transform", "rotate($rotate $bound_x1 $bound_y1)");
+			$text->setAttribute('transform', "rotate($rotate $bound_x1 $bound_y1)");
 		}
 
 		if($bold)
 		{
-			$text->setAttribute("font-weight", 800);
+			$text->setAttribute('font-weight', 800);
 		}
 
-		$text->setAttribute("text-anchor", "end");
-		$text->setAttribute("dominant-baseline", "middle");
-		$text->setAttribute("fill", $font_color);
+		$text->setAttribute('text-anchor', 'end');
+		$text->setAttribute('dominant-baseline', 'middle');
+		$text->setAttribute('fill', $font_color);
 		$string = $this->image->createTextNode($text_string);
 		$text->appendChild($string);
 
 		if($onclick != null)
 		{
-			$onclick = str_replace("&", "&amp;", $onclick);
-			$text->setAttribute("xlink:href", $onclick);
+			$link = $this->image->createElement('a');
+			$link->setAttribute('xlink:href', $onclick);
+			$link->setAttribute('xlink:show', 'new');
+			$link->appendChild($text);
+			$this->svg->appendChild($link);
 		}
-
-		$this->svg->appendChild($text);
+		else
+		{
+			$this->svg->appendChild($text);
+		}
 	}
 	public function write_text_center($text_string, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate = false, $onclick = null, $title = null, $bold = false)
 	{
@@ -175,35 +185,40 @@ class bilde_svg_renderer extends bilde_renderer
 		$bound_x1 = round(($bound_x1 != $bound_x2) ? abs($bound_x2 - $bound_x1) / 2 + $bound_x1 : $bound_x1);
 		$bound_y1 = round(($bound_y1 != $bound_y2) ? abs($bound_y2 - $bound_y1) / 2 + $bound_y1 : $bound_y1);
 
-		$text = $this->image->createElement("text");
+		$text = $this->image->createElement('text');
 		$text->setAttribute('x', $bound_x1);
 		$text->setAttribute('y', $bound_y1);
 		$text->setAttribute('font-size', $font_size);
-		$text->setAttribute("text-anchor", "middle");
+		$text->setAttribute('text-anchor', 'middle');
 
 		if($rotate != false)
 		{
 			$rotate = ($rotate === true ? 90 : $rotate);
-			$text->setAttribute("transform", "rotate($rotate $bound_x1 $bound_y1)");
+			$text->setAttribute('transform', "rotate($rotate $bound_x1 $bound_y1)");
 		}
 
 		if($bold)
 		{
-			$text->setAttribute("font-weight", 800);
+			$text->setAttribute('font-weight', 800);
 		}
 
-		$text->setAttribute("dominant-baseline", "text-before-edge");
-		$text->setAttribute("fill", $font_color);
+		$text->setAttribute('dominant-baseline', 'text-before-edge');
+		$text->setAttribute('fill', $font_color);
 		$string = $this->image->createTextNode($text_string);
 		$text->appendChild($string);
 
 		if($onclick != null)
 		{
-			$onclick = str_replace("&", "&amp;", $onclick);
-			$text->setAttribute("xlink:href", $onclick);
+			$link = $this->image->createElement('a');
+			$link->setAttribute('xlink:href', $onclick);
+			$link->setAttribute('xlink:show', 'new');
+			$link->appendChild($text);
+			$this->svg->appendChild($link);
 		}
-
-		$this->svg->appendChild($text);
+		else
+		{
+			$this->svg->appendChild($text);
+		}
 	}
 	public function draw_rectangle_with_border($x1, $y1, $width, $height, $background_color, $border_color, $title = null)
 	{
@@ -212,18 +227,18 @@ class bilde_svg_renderer extends bilde_renderer
 		$x1 += $width < 0 ? $width : 0;
 		$y1 += $height < 0 ? $height : 0;
 
-		$rect = $this->image->createElement("rect");
+		$rect = $this->image->createElement('rect');
 		$rect->setAttribute('x', $x1);
 		$rect->setAttribute('y', $y1);
-		$rect->setAttribute("width", $width);
-		$rect->setAttribute("height", $height);
-		$rect->setAttribute("fill", $background_color);
-		$rect->setAttribute("stroke", $border_color);
-		$rect->setAttribute("stroke-width", 1);
+		$rect->setAttribute('width', $width);
+		$rect->setAttribute('height', $height);
+		$rect->setAttribute('fill', $background_color);
+		$rect->setAttribute('stroke', $border_color);
+		$rect->setAttribute('stroke-width', 1);
 
 		if($title != null)
 		{
-			$rect->setAttribute("xlink:title", $title);
+			$rect->setAttribute('xlink:title', $title);
 		}
 
 		$this->svg->appendChild($rect);
@@ -235,12 +250,12 @@ class bilde_svg_renderer extends bilde_renderer
 		$x1 += $width < 0 ? $width : 0;
 		$y1 += $height < 0 ? $height : 0;
 
-		$rect = $this->image->createElement("rect");
+		$rect = $this->image->createElement('rect');
 		$rect->setAttribute('x', $x1);
 		$rect->setAttribute('y', $y1);
-		$rect->setAttribute("width", $width);
-		$rect->setAttribute("height", $height);
-		$rect->setAttribute("fill", $background_color);
+		$rect->setAttribute('width', $width);
+		$rect->setAttribute('height', $height);
+		$rect->setAttribute('fill', $background_color);
 
 		$this->svg->appendChild($rect);
 	}
@@ -251,14 +266,14 @@ class bilde_svg_renderer extends bilde_renderer
 		$x1 += $width < 0 ? $width : 0;
 		$y1 += $height < 0 ? $height : 0;
 
-		$rect = $this->image->createElement("rect");
+		$rect = $this->image->createElement('rect');
 		$rect->setAttribute('x', $x1);
 		$rect->setAttribute('y', $y1);
-		$rect->setAttribute("width", $width);
-		$rect->setAttribute("height", $height);
-		$rect->setAttribute("fill", "none");
-		$rect->setAttribute("stroke", $border_color);
-		$rect->setAttribute("stroke-width", 1);
+		$rect->setAttribute('width', $width);
+		$rect->setAttribute('height', $height);
+		$rect->setAttribute('fill', 'none');
+		$rect->setAttribute('stroke', $border_color);
+		$rect->setAttribute('stroke-width', 1);
 
 		$this->svg->appendChild($rect);
 	}
@@ -273,16 +288,16 @@ class bilde_svg_renderer extends bilde_renderer
 		$p2_x = round(cos(deg2rad($offset_deg + $deg)) * $radius) + $center_x;
 		$p2_y = round(sin(deg2rad($offset_deg + $deg)) * $radius) + $center_y;
 
-		$path = $this->image->createElement("path");
+		$path = $this->image->createElement('path');
 		$path->setAttribute('d', "M$center_x,$center_y L$p1_x,$p1_y A$radius,$radius 0 $arc,1 $p2_x,$p2_y Z");
-		$path->setAttribute("fill", $body_color);
-		$path->setAttribute("stroke", $border_color);
-		$path->setAttribute("stroke-width", $border_width);
-		$path->setAttribute("stroke-linejoin", "round");
+		$path->setAttribute('fill', $body_color);
+		$path->setAttribute('stroke', $border_color);
+		$path->setAttribute('stroke-width', $border_width);
+		$path->setAttribute('stroke-linejoin', 'round');
 
 		if($title != null)
 		{
-			$path->setAttribute("xlink:title", $title);
+			$path->setAttribute('xlink:title', $title);
 		}
 
 		$this->svg->appendChild($path);
@@ -304,14 +319,14 @@ class bilde_svg_renderer extends bilde_renderer
 			} 
 		}
 
-		$polygon = $this->image->createElement("polygon");
-		$polygon->setAttribute("fill", $body_color);
+		$polygon = $this->image->createElement('polygon');
+		$polygon->setAttribute('fill', $body_color);
 
 		if($border_width > 0)
 		{
-			$polygon->setAttribute("stroke", $border_color);
-			$polygon->setAttribute("stroke-width", $border_width);
-			$polygon->setAttribute("points", implode(' ', $point_pairs));
+			$polygon->setAttribute('stroke', $border_color);
+			$polygon->setAttribute('stroke-width', $border_width);
+			$polygon->setAttribute('points', implode(' ', $point_pairs));
 		}
 
 		$this->svg->appendChild($polygon);
@@ -319,36 +334,36 @@ class bilde_svg_renderer extends bilde_renderer
 	public function draw_ellipse($center_x, $center_y, $width, $height, $body_color, $border_color = null, $border_width = 0, $default_hide = false, $title = null)
 	{
 
-		$ellipse = $this->image->createElement("ellipse");
-		$ellipse->setAttribute("cx", $center_x);
-		$ellipse->setAttribute("cy", $center_y);
-		$ellipse->setAttribute("rx", floor($width / 2));
-		$ellipse->setAttribute("ry", floor($height / 2));
-		$ellipse->setAttribute("stroke", $border_color);
-		$ellipse->setAttribute("fill", $body_color);
-		$ellipse->setAttribute("stroke-width", $border_width);
+		$ellipse = $this->image->createElement('ellipse');
+		$ellipse->setAttribute('cx', $center_x);
+		$ellipse->setAttribute('cy', $center_y);
+		$ellipse->setAttribute('rx', floor($width / 2));
+		$ellipse->setAttribute('ry', floor($height / 2));
+		$ellipse->setAttribute('stroke', $border_color);
+		$ellipse->setAttribute('fill', $body_color);
+		$ellipse->setAttribute('stroke-width', $border_width);
 
 		if($title != null)
 		{
-			$ellipse->setAttribute("xlink:title", $title);
+			$ellipse->setAttribute('xlink:title', $title);
 		}
 
 		if($default_hide)
 		{ return; // TODO: get working correctly
-			$in = $this->image->createElement("set");
-			$in->setAttribute("attributeName", "stroke-opacity");
-			$in->setAttribute("from", 0);
-			$in->setAttribute("to", "1");
-			$in->setAttribute("begin", "mouseover");
-			$in->setAttribute("end", "mouseout");
+			$in = $this->image->createElement('set');
+			$in->setAttribute('attributeName', 'stroke-opacity');
+			$in->setAttribute('from', 0);
+			$in->setAttribute('to', '1');
+			$in->setAttribute('begin', 'mouseover');
+			$in->setAttribute('end', 'mouseout');
 			$ellipse->appendChild($in);
 
-			$out = $this->image->createElement("set");
-			$out->setAttribute("attributeName", "fill-opacity");
-			$out->setAttribute("from", 0);
-			$out->setAttribute("to", "1");
-			$out->setAttribute("begin", "mouseover");
-			$out->setAttribute("end", "mouseout");
+			$out = $this->image->createElement('set');
+			$out->setAttribute('attributeName', 'fill-opacity');
+			$out->setAttribute('from', 0);
+			$out->setAttribute('to', 1);
+			$out->setAttribute('begin', 'mouseover');
+			$out->setAttribute('end', 'mouseout');
 			$ellipse->appendChild($out);
 		}
 
@@ -356,31 +371,31 @@ class bilde_svg_renderer extends bilde_renderer
 	}
 	public function draw_line($start_x, $start_y, $end_x, $end_y, $color, $line_width = 1, $title = null)
 	{
-		$line = $this->image->createElement("line");
-		$line->setAttribute("x1", $start_x);
-		$line->setAttribute("y1", $start_y);
-		$line->setAttribute("x2", $end_x);
-		$line->setAttribute("y2", $end_y);
-		$line->setAttribute("stroke", $color);
-		$line->setAttribute("stroke-width", $line_width);
+		$line = $this->image->createElement('line');
+		$line->setAttribute('x1', $start_x);
+		$line->setAttribute('y1', $start_y);
+		$line->setAttribute('x2', $end_x);
+		$line->setAttribute('y2', $end_y);
+		$line->setAttribute('stroke', $color);
+		$line->setAttribute('stroke-width', $line_width);
 
 		if($title != null)
 		{
-			$line->setAttribute("xlink:title", $title);
+			$line->setAttribute('xlink:title', $title);
 		}
 
 		$this->svg->appendChild($line);
 	}
 	public function draw_dashed_line($start_x, $start_y, $end_x, $end_y, $color, $line_width, $dash_length, $blank_length)
 	{
-		$line = $this->image->createElement("line");
-		$line->setAttribute("x1", round($start_x));
-		$line->setAttribute("y1", round($start_y));
-		$line->setAttribute("x2", round($end_x));
-		$line->setAttribute("y2", round($end_y));
-		$line->setAttribute("stroke", $color);
-		$line->setAttribute("stroke-width", $line_width);
-		$line->setAttribute("stroke-dasharray", $dash_length . ',' . $blank_length);
+		$line = $this->image->createElement('line');
+		$line->setAttribute('x1', round($start_x));
+		$line->setAttribute('y1', round($start_y));
+		$line->setAttribute('x2', round($end_x));
+		$line->setAttribute('y2', round($end_y));
+		$line->setAttribute('stroke', $color);
+		$line->setAttribute('stroke-width', $line_width);
+		$line->setAttribute('stroke-dasharray', $dash_length . ',' . $blank_length);
 
 		$this->svg->appendChild($line);
 	}
@@ -392,11 +407,11 @@ class bilde_svg_renderer extends bilde_renderer
 		}
 		$poly_points = implode(' ', $x_y_pair_array);
 
-		$polyline = $this->image->createElement("polyline");
-		$polyline->setAttribute("stroke", $color);
-		$polyline->setAttribute("stroke-width", $line_width);
-		$polyline->setAttribute("fill", "none");
-		$polyline->setAttribute("points", implode(' ', $x_y_pair_array));
+		$polyline = $this->image->createElement('polyline');
+		$polyline->setAttribute('stroke', $color);
+		$polyline->setAttribute('stroke-width', $line_width);
+		$polyline->setAttribute('fill', 'none');
+		$polyline->setAttribute('points', implode(' ', $x_y_pair_array));
 
 		$this->svg->appendChild($polyline);
 	}
@@ -408,22 +423,34 @@ class bilde_svg_renderer extends bilde_renderer
 	{
 		return $file;
 	}
-	public function image_copy_merge($source_image_object, $to_x, $to_y, $source_x = 0, $source_y = 0, $width = -1, $height = -1)
+	public function image_copy_merge($source_image_object, $to_x, $to_y, $source_x = 0, $source_y = 0, $width = -1, $height = -1, $onclick = null)
 	{
-		$image = $this->image->createElement("image");
+		$image = $this->image->createElement('image');
 		$image->setAttribute('x', $to_x);
 		$image->setAttribute('y', $to_y);
-		$image->setAttribute("width", $width);
-		$image->setAttribute("height", $height);
-		$image->setAttribute("xlink:href", $source_image_object);
-		$this->svg->appendChild($image);
+		$image->setAttribute('width', $width);
+		$image->setAttribute('height', $height);
+		$image->setAttribute('xlink:href', $source_image_object);
+
+		if($onclick != null)
+		{
+			$link = $this->image->createElement('a');
+			$link->setAttribute('xlink:href', $onclick);
+			$link->setAttribute('xlink:show', 'new');
+			$link->appendChild($image);
+			$this->svg->appendChild($link);
+		}
+		else
+		{
+			$this->svg->appendChild($image);
+		}
 	}
 	public function convert_hex_to_type($hex)
 	{
 		if(($short = substr($hex, 1, 3)) == substr($hex, 4, 3))
 		{
 			// very basic shortening, but could do it more properly to find #XXYYZZ collapsing to #XYZ
-			$hex = "#" . $short;
+			$hex = '#' . $short;
 		}
 
 		return $hex;
