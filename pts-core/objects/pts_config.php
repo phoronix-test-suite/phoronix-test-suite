@@ -120,6 +120,7 @@ class pts_config
 		$config->addXmlNodeFromReader(P_GRAPH_COLOR_MAINHEADERS, $read_config);
 		$config->addXmlNodeFromReader(P_GRAPH_COLOR_TEXT, $read_config);
 		$config->addXmlNodeFromReader(P_GRAPH_COLOR_BODYTEXT, $read_config);
+		$config->addXmlNodeFromReader(P_GRAPH_COLOR_HIGHLIGHT, $read_config);
 		$config->addXmlNodeFromReader(P_GRAPH_COLOR_ALERT, $read_config);
 
 		$config->addXmlNodeFromReader(P_GRAPH_FONT_TYPE, $read_config);

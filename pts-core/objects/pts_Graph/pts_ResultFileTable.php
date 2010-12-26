@@ -78,6 +78,7 @@ class pts_ResultFileTable extends pts_Table
 			{
 				case 'BAR_GRAPH':
 					$best_value = 0;
+					$worst_value = 0;
 
 					if(!defined('PHOROMATIC_TRACKER') && count($result_object->test_result_buffer->get_values()) > 1)
 					{
@@ -85,9 +86,11 @@ class pts_ResultFileTable extends pts_Table
 						{
 							case 'HIB':
 								$best_value = max($result_object->test_result_buffer->get_values());
+								$worst_value = min($result_object->test_result_buffer->get_values());
 								break;
 							case 'LIB':
 								$best_value = min($result_object->test_result_buffer->get_values());
+								$worst_value = max($result_object->test_result_buffer->get_values());
 								break;
 						}
 					}
@@ -144,6 +147,7 @@ class pts_ResultFileTable extends pts_Table
 
 							$prev_identifier_0 = $identifier_r[0];
 							$highlight = false;
+							$alert = false;
 						}
 						else
 						{
@@ -151,6 +155,7 @@ class pts_ResultFileTable extends pts_Table
 							{
 								// TODO: make it work better for highlighting multiple winners in multi-way comparisons
 								$highlight = false;
+								$alert = false;
 
 								// TODO: get this working right
 								if(false && $index % 2 == 1 && $prev_value != 0)
@@ -184,6 +189,7 @@ class pts_ResultFileTable extends pts_Table
 							}
 							else
 							{
+								$alert = $worst_value == $value;
 								$highlight = $best_value == $value;
 							}
 
@@ -205,7 +211,8 @@ class pts_ResultFileTable extends pts_Table
 							'std_percent' => $percent_std,
 							'std_error' => $std_error,
 							'delta' => $delta,
-							'highlight' => $highlight
+							'highlight' => $highlight,
+							'alert' => $alert
 							);
 
 						if($delta > $percent_std && $flag_delta_results !== false)

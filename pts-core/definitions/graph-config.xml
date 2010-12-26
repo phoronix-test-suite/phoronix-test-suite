@@ -75,6 +75,10 @@
 			<Value>PhoronixTestSuite/Graphs/Colors/MainHeaders</Value>
 		</Define>
 		<Define>
+			<Name>P_GRAPH_COLOR_HIGHLIGHT</Name>
+			<Value>PhoronixTestSuite/Graphs/Colors/Highlight</Value>
+		</Define>
+		<Define>
 			<Name>P_GRAPH_COLOR_ALERT</Name>
 			<Value>PhoronixTestSuite/Graphs/Colors/Alert</Value>
 		</Define>

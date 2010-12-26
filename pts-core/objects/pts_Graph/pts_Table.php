@@ -305,8 +305,11 @@ class pts_Table extends pts_Graph
 					}
 					else if($result_table_value->get_attribute('highlight') == true)
 					{
-						$text_color = $this->graph_color_headers;
-						$bold = true;
+						$text_color = $this->graph_color_highlight;
+					}
+					else if($result_table_value->get_attribute('alert') == true)
+					{
+						$text_color = $this->graph_color_alert;
 					}
 
 					$value = $result_table_value->get_value();

@@ -53,6 +53,7 @@ abstract class pts_Graph
 	protected $graph_color_body_text; // Color of graph body text
 	protected $graph_color_body_light; // Color of the border around graph bars (if doing a bar graph)
 	protected $graph_color_alert; // Color of any alerts
+	protected $graph_color_highlight; // Color of any highlights
 	protected $graph_color_paint; // Colors to use for the bars / lines, one color for each key
 
 	// Text
@@ -125,6 +126,7 @@ abstract class pts_Graph
 		$this->graph_color_body = $this->read_graph_config(P_GRAPH_COLOR_BODY); // Color of graph body
 		$this->graph_color_body_text = $this->read_graph_config(P_GRAPH_COLOR_BODYTEXT); // Color of graph body text
 		$this->graph_color_body_light = $this->read_graph_config(P_GRAPH_COLOR_ALTERNATE); // Color of the border around graph bars (if doing a bar graph)
+		$this->graph_color_highlight = $this->read_graph_config(P_GRAPH_COLOR_HIGHLIGHT); // Color for highlight
 		$this->graph_color_alert = $this->read_graph_config(P_GRAPH_COLOR_ALERT); // Color for alerts
 		$this->graph_color_paint = pts_strings::comma_explode($this->read_graph_config(P_GRAPH_COLOR_PAINT)); // Colors to use for the bars / lines, one color for each key
 
@@ -649,6 +651,7 @@ abstract class pts_Graph
 		$this->graph_color_body = $this->graph_image->convert_hex_to_type($this->graph_color_body);
 		$this->graph_color_body_text = $this->graph_image->convert_hex_to_type($this->graph_color_body_text);
 		$this->graph_color_body_light = $this->graph_image->convert_hex_to_type($this->graph_color_body_light);
+		$this->graph_color_highlight = $this->graph_image->convert_hex_to_type($this->graph_color_highlight);
 		$this->graph_color_alert = $this->graph_image->convert_hex_to_type($this->graph_color_alert);
 
 		foreach($this->graph_color_paint as &$paint_color)
