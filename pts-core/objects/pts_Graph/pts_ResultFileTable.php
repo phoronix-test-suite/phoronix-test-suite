@@ -67,24 +67,24 @@ class pts_ResultFileTable extends pts_Table
 				}
 				else
 				{
-					$result_tests[$result_counter][0] = "Results";
+					$result_tests[$result_counter][0] = 'Results';
 				}
 				//$result_tests[$result_counter][0] .= ': ' . $result_tests[$result_counter][1];
 			}
 
 			switch($result_object->test_profile->get_display_format())
 			{
-				case "BAR_GRAPH":
+				case 'BAR_GRAPH':
 					$best_value = 0;
 
-					if(!defined("PHOROMATIC_TRACKER") && count($result_object->test_result_buffer->get_values()) > 1)
+					if(!defined('PHOROMATIC_TRACKER') && count($result_object->test_result_buffer->get_values()) > 1)
 					{
 						switch($result_object->test_profile->get_result_proportion())
 						{
-							case "HIB":
+							case 'HIB':
 								$best_value = max($result_object->test_result_buffer->get_values());
 								break;
-							case "LIB":
+							case 'LIB':
 								$best_value = min($result_object->test_result_buffer->get_values());
 								break;
 						}
@@ -108,7 +108,7 @@ class pts_ResultFileTable extends pts_Table
 						$std_error = pts_math::set_precision(pts_math::standard_error($raw_values), 2);
 						$delta = 0;
 
-						if(defined("PHOROMATIC_TRACKER"))
+						if(defined('PHOROMATIC_TRACKER'))
 						{
 							$identifier_r = pts_strings::colon_explode($identifier);
 
@@ -120,13 +120,13 @@ class pts_ResultFileTable extends pts_Table
 								{
 									switch($result_object->test_profile->get_result_proportion())
 									{
-										case "HIB":
+										case 'HIB':
 											if($value < $prev_value)
 											{
 												$delta = 0 - $delta;
 											}
 											break;
-										case "LIB":
+										case 'LIB':
 											if($value > $prev_value)
 											{
 												$delta = 0 - $delta;
@@ -155,7 +155,7 @@ class pts_ResultFileTable extends pts_Table
 								{
 									switch($result_object->test_profile->get_result_proportion())
 									{
-										case "HIB":
+										case 'HIB':
 											if($value > $prev_value)
 											{
 												$highlight = true;
@@ -166,7 +166,7 @@ class pts_ResultFileTable extends pts_Table
 												$result_table[$prev_identifier][$result_counter]->set_attribute('delta', -1);
 											}
 											break;
-										case "LIB":
+										case 'LIB':
 											if($value < $prev_value)
 											{
 												$highlight = true;
@@ -189,10 +189,10 @@ class pts_ResultFileTable extends pts_Table
 							{
 								switch($result_object->test_profile->get_result_proportion())
 								{
-									case "HIB":
+									case 'HIB':
 										$delta = pts_math::set_precision($value / $min_value_in_buffer, 2);
 										break;
-									case "LIB":
+									case 'LIB':
 										$delta = pts_math::set_precision(1 - ($value / $max_value_in_buffer) + 1, 2);
 										break;
 								}
@@ -200,10 +200,10 @@ class pts_ResultFileTable extends pts_Table
 						}
 
 						$attributes = array(
-							"std_percent" => $percent_std,
-							"std_error" => $std_error,
-							"delta" => $delta,
-							"highlight" => $highlight
+							'std_percent' => $percent_std,
+							'std_error' => $std_error,
+							'delta' => $delta,
+							'highlight' => $highlight
 							);
 
 						if($delta > $percent_std && $flag_delta_results !== false)
@@ -216,8 +216,8 @@ class pts_ResultFileTable extends pts_Table
 						$prev_value = $value;
 					}
 					break;
-				case "LINE_GRAPH":
-					$result_tests[$result_counter][0] = $result_object->test_profile->get_title() . " (Avg)";
+				case 'LINE_GRAPH':
+					$result_tests[$result_counter][0] = $result_object->test_profile->get_title() . ' (Avg)';
 					$result_tests[$result_counter][1] = null;
 
 					foreach($result_object->test_result_buffer->get_buffer_items() as $index => $buffer_item)
@@ -263,26 +263,26 @@ class pts_ResultFileTable extends pts_Table
 				}
 				if($std_percent != 0)
 				{
-					array_push($result_table[$identifier], new pts_table_value($std_percent . "%"));
+					array_push($result_table[$identifier], new pts_table_value($std_percent . '%'));
 					$has_written_std = true;
 				}
 			}
 
 			if($has_written_diff)
 			{
-				array_push($result_tests, array("Difference", null));
+				array_push($result_tests, array('Difference', null));
 			}
 			if($has_written_error)
 			{
-				array_push($result_tests, array("Standard Error", null));
+				array_push($result_tests, array('Standard Error', null));
 			}
 			if($has_written_std)
 			{
-				array_push($result_tests, array("Standard Deviation", null));
+				array_push($result_tests, array('Standard Deviation', null));
 			}
 		}
 
-		if(defined("PHOROMATIC_TRACKER"))
+		if(defined('PHOROMATIC_TRACKER'))
 		{
 			// Resort the results by SYSTEM, then date
 			$systems_table = array();

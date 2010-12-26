@@ -29,7 +29,7 @@ class pts_HorizontalBarGraph extends pts_Graph
 	{
 		parent::__construct($result_object, $result_file);
 		$this->iveland_view = true;
-		$this->graph_orientation = "HORIZONTAL";
+		$this->graph_orientation = 'HORIZONTAL';
 	}
 	protected function render_graph_pre_init()
 	{
@@ -64,7 +64,7 @@ class pts_HorizontalBarGraph extends pts_Graph
 		$separator_height = ($a = (6 - (floor($bar_count / 2) * 2))) > 0 ? $a : 0;
 		$multi_way = $this->is_multi_way_comparison && count($this->graph_data) > 1;
 		$bar_height = floor(($this->identifier_height - ($multi_way ? 4 : 0) - $separator_height - ($bar_count * $separator_height)) / $bar_count);
-		$highlight_bar = PTS_IS_CLIENT ? pts_strings::comma_explode(pts_client::read_env("GRAPH_HIGHLIGHT")) : array();
+		$highlight_bar = PTS_IS_CLIENT ? pts_strings::comma_explode(pts_client::read_env('GRAPH_HIGHLIGHT')) : array();
 
 		for($i_o = 0; $i_o < $bar_count; $i_o++)
 		{
@@ -85,7 +85,7 @@ class pts_HorizontalBarGraph extends pts_Graph
 					$value_end_left = 1;
 				}
 
-				$title_tooltip = $this->graph_identifiers[$i] . ": " . $value;
+				$title_tooltip = $this->graph_identifiers[$i] . ': ' . $value;
 				$std_error = isset($this->graph_data_raw[$i_o][$i]) ? pts_math::standard_error(pts_strings::colon_explode($this->graph_data_raw[$i_o][$i])) : 0;
 
 				$this->graph_image->draw_rectangle_with_border($this->graph_left_start, $px_bound_top, $value_end_left, $px_bound_bottom, in_array($this->graph_identifiers[$i], $highlight_bar) ? $this->graph_color_alert : $paint_color, $this->graph_color_body_light, $title_tooltip);
@@ -103,7 +103,7 @@ class pts_HorizontalBarGraph extends pts_Graph
 					}
 
 					$bar_offset_34 = $middle_of_bar + ($multi_way ? 0 : ($bar_height / 5) + 4);
-					$this->graph_image->write_text_right("SE +/- " . pts_math::set_precision($std_error, 2), $this->graph_font, $this->graph_font_size_identifiers - 2, $this->graph_color_text, ($this->graph_left_start - 5), $bar_offset_34, ($this->graph_left_start - 5), $bar_offset_34);
+					$this->graph_image->write_text_right('SE +/- ' . pts_math::set_precision($std_error, 2), $this->graph_font, $this->graph_font_size_identifiers - 2, $this->graph_color_text, ($this->graph_left_start - 5), $bar_offset_34, ($this->graph_left_start - 5), $bar_offset_34);
 				}
 
 				if($this->text_string_width($value, $this->graph_font, $this->graph_font_size_identifiers) < $graph_size)

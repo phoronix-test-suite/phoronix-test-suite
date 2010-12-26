@@ -22,7 +22,7 @@
 */
 
 // Since the graph_config should be the same for the duration, only create it once rather than creating it everytime a graph is made
-//if(PTS_IS_CLIENT || (defined("PTS_LIB_GRAPH_CONFIG_XML") && is_file(PTS_LIB_GRAPH_CONFIG_XML)))
+//if(PTS_IS_CLIENT || (defined('PTS_LIB_GRAPH_CONFIG_XML') && is_file(PTS_LIB_GRAPH_CONFIG_XML)))
 pts_Graph::$graph_config = new pts_graph_config_nye_XmlReader();
 
 abstract class pts_Graph
@@ -70,12 +70,12 @@ abstract class pts_Graph
 	protected $graph_proportion = null;
 
 	// Not user-friendly changes below this line
-	protected $graph_orientation = "VERTICAL";
+	protected $graph_orientation = 'VERTICAL';
 	protected $graph_body_image = false;
 	protected $graph_hide_identifiers = false;
 	protected $graph_show_key = false;
 	protected $graph_background_lines = false;
-	protected $graph_value_type = "NUMERICAL";
+	protected $graph_value_type = 'NUMERICAL';
 	protected $graph_maximum_value;
 
 	protected $graph_output = null;
@@ -113,7 +113,7 @@ abstract class pts_Graph
 		// Setup config values
 		$this->graph_attr_width = $this->read_graph_config(P_GRAPH_SIZE_WIDTH); // Graph width
 		$this->graph_attr_height = $this->read_graph_config(P_GRAPH_SIZE_HEIGHT); // Graph height
-		$this->graph_attr_big_border = $this->read_graph_config(P_GRAPH_BORDER) == "TRUE"; // Graph border
+		$this->graph_attr_big_border = $this->read_graph_config(P_GRAPH_BORDER) == 'TRUE'; // Graph border
 
 		// Colors
 		$this->graph_color_notches = $this->read_graph_config(P_GRAPH_COLOR_NOTCHES); // Color for notches
@@ -145,13 +145,13 @@ abstract class pts_Graph
 		if($result_object != null)
 		{
 			$test_version = $result_object->test_profile->get_app_version();
-			$this->graph_title = $result_object->test_profile->get_title() . (isset($test_version[2]) ? " v" . $test_version : null);
+			$this->graph_title = $result_object->test_profile->get_title() . (isset($test_version[2]) ? ' v' . $test_version : null);
 
 			$this->graph_y_title = $result_object->test_profile->get_result_scale_formatted();
 			$this->test_identifier = $result_object->test_profile->get_identifier();
 			$this->graph_proportion = $result_object->test_profile->get_result_proportion();
 			$this->addSubTitle($result_object->get_arguments_description());
-			$this->addInternalIdentifier("Test", $result_object->test_profile->get_identifier());
+			$this->addInternalIdentifier('Test', $result_object->test_profile->get_identifier());
 		}
 
 		$this->update_graph_dimensions(-1, -1, true);
@@ -160,24 +160,24 @@ abstract class pts_Graph
 
 		if($default_font == false)
 		{
-			$this->requestRenderer("SVG");
+			$this->requestRenderer('SVG');
 			$font_type = null;
 		}
 		else
 		{
 			$font_type = basename($default_font);
 
-			if($default_font != $font_type && !defined("CUSTOM_FONT_DIR"))
+			if($default_font != $font_type && !defined('CUSTOM_FONT_DIR'))
 			{
 				$font_path = substr($default_font, 0, 0 - (strlen($font_type)));
-				define("CUSTOM_FONT_DIR", $font_path);
+				define('CUSTOM_FONT_DIR', $font_path);
 				bilde_renderer::setup_font_directory();
 			}
 		}
 
 		if($result_file != null && $result_file instanceOf pts_result_file)
 		{
-			//$this->addInternalIdentifier("Identifier", null); // TODO: result file name
+			//$this->addInternalIdentifier('Identifier', null); // TODO: result file name
 			$pts_version = pts_arrays::last_element($result_file->get_system_pts_version());
 			$this->is_multi_way_comparison = $result_file->is_multi_way_comparison();
 		}
@@ -187,7 +187,7 @@ abstract class pts_Graph
 			$pts_version = PTS_VERSION;
 		}
 
-		$this->graph_version = "Phoronix Test Suite " . $pts_version;
+		$this->graph_version = 'Phoronix Test Suite ' . $pts_version;
 		$this->graph_font = $font_type;
 	}
 	public function read_graph_config($xml_path)
@@ -266,7 +266,7 @@ abstract class pts_Graph
 	}
 	public function addSubTitle($sub_title)
 	{
-		$sub_titles = array_map("trim", explode('|', $sub_title));
+		$sub_titles = array_map('trim', explode('|', $sub_title));
 
 		foreach($sub_titles as $sub_title)
 		{
@@ -288,10 +288,10 @@ abstract class pts_Graph
 	{
 		$attributes = array();
 
-		if(in_array($this->graph_renderer, array("SWF", "SVG")))
+		if(in_array($this->graph_renderer, array('SWF', 'SVG')))
 		{
-			$attributes["width"] = $width;
-			$attributes["height"] = $height;
+			$attributes['width'] = $width;
+			$attributes['height'] = $height;
 		}
 
 		return $this->graph_image->html_embed_code($file, $attributes, true);
@@ -357,7 +357,7 @@ abstract class pts_Graph
 	{
 		if(!isset(self::$used_paint_colors[$identifier]))
 		{
-			if(PTS_IS_CLIENT && pts_client::read_env("GRAPH_GROUP_SIMILAR"))
+			if(PTS_IS_CLIENT && pts_client::read_env('GRAPH_GROUP_SIMILAR'))
 			{
 				static $groups;
 
@@ -510,7 +510,7 @@ abstract class pts_Graph
 		// Make room for tick markings, left hand side
 		if($this->iveland_view == false)
 		{
-			if($this->graph_value_type == "NUMERICAL")
+			if($this->graph_value_type == 'NUMERICAL')
 			{
 				$this->graph_left_start += $this->text_string_width($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_tick_mark) + 2;
 			}
@@ -524,7 +524,7 @@ abstract class pts_Graph
 		}
 		else
 		{
-			if($this->graph_orientation == "HORIZONTAL")
+			if($this->graph_orientation == 'HORIZONTAL')
 			{
 				if($this->is_multi_way_comparison && count($this->graph_data_title) > 1)
 				{
@@ -542,7 +542,7 @@ abstract class pts_Graph
 				$this->graph_left_end_opp = 15;
 				$this->graph_left_end = $this->graph_attr_width - $this->graph_left_end_opp;
 			}
-			else if($this->graph_value_type == "NUMERICAL")
+			else if($this->graph_value_type == 'NUMERICAL')
 			{
 				$this->graph_left_start += $this->text_string_width($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_tick_mark) + 2;
 			}
@@ -562,7 +562,7 @@ abstract class pts_Graph
 
 			$bottom_heading = 14;
 
-			if($this->graph_orientation == "HORIZONTAL")
+			if($this->graph_orientation == 'HORIZONTAL')
 			{
 				if($this->is_multi_way_comparison && count($this->graph_data) > 1)
 				{
@@ -614,7 +614,7 @@ abstract class pts_Graph
 			$this->render_graph_identifiers();
 		}
 
-		if($this->graph_value_type == "NUMERICAL")
+		if($this->graph_value_type == 'NUMERICAL')
 		{
 			$this->render_graph_value_ticks($this->graph_left_start, $this->graph_top_start, $this->graph_left_end, $this->graph_top_end);
 		}
@@ -630,9 +630,9 @@ abstract class pts_Graph
 	}
 	protected function render_graph_init($bilde_attributes = null)
 	{
-		if(defined("PHOROMATIC_TRACKER"))
+		if(defined('PHOROMATIC_TRACKER'))
 		{
-			$bilde_attributes["cache_font_size"] = true;
+			$bilde_attributes['cache_font_size'] = true;
 		}
 
 		$this->update_graph_dimensions();
@@ -690,7 +690,7 @@ abstract class pts_Graph
 				$this->graph_image->write_text_left($sub_title, $this->graph_font, $this->graph_font_size_sub_heading, $this->graph_color_background, 5, $vertical_offset, $this->graph_left_end, $vertical_offset, false);
 			}
 		
-			$this->graph_image->image_copy_merge($this->graph_image->png_image_to_type("http://www.phoronix-test-suite.com/external/pts-logo-77x40-white.png"), $this->graph_left_end - 77, ($this->graph_top_heading_height / 40 + 2), 0, 0, 77, 40, 'http://www.phoronix-test-suite.com/');
+			$this->graph_image->image_copy_merge($this->graph_image->png_image_to_type('http://www.phoronix-test-suite.com/external/pts-logo-77x40-white.png'), $this->graph_left_end - 77, ($this->graph_top_heading_height / 40 + 2), 0, 0, 77, 40, 'http://www.phoronix-test-suite.com/');
 		}
 		else
 		{
@@ -703,7 +703,7 @@ abstract class pts_Graph
 
 			if($with_version)
 			{
-				$this->graph_image->write_text_right($this->graph_version, $this->graph_font, 7, $this->graph_color_body_light, $this->graph_left_end, $this->graph_top_start - 9, $this->graph_left_end, $this->graph_top_start - 9, false, "http://www.phoronix-test-suite.com/");
+				$this->graph_image->write_text_right($this->graph_version, $this->graph_font, 7, $this->graph_color_body_light, $this->graph_left_end, $this->graph_top_start - 9, $this->graph_left_end, $this->graph_top_start - 9, false, 'http://www.phoronix-test-suite.com/');
 			}
 		}
 	}
@@ -713,12 +713,12 @@ abstract class pts_Graph
 		{
 			$bottom_heading_start = $this->graph_top_end + $this->graph_bottom_offset + 25;
 			$this->graph_image->draw_rectangle(0, $bottom_heading_start, $this->graph_attr_width, $this->graph_attr_height, $this->graph_color_main_headers);
-			$this->graph_image->write_text_right("Powered By " . $this->graph_version, $this->graph_font, 7, $this->graph_color_background, $this->graph_left_end, $bottom_heading_start + 7, $this->graph_left_end, $bottom_heading_start + 7, false, "http://www.phoronix-test-suite.com/");
+			$this->graph_image->write_text_right('Powered By ' . $this->graph_version, $this->graph_font, 7, $this->graph_color_background, $this->graph_left_end, $bottom_heading_start + 7, $this->graph_left_end, $bottom_heading_start + 7, false, 'http://www.phoronix-test-suite.com/');
 		}
 	}
 	protected function render_graph_base($left_start, $top_start, $left_end, $top_end)
 	{
-		if($this->graph_orientation == "HORIZONTAL" || $this->iveland_view)
+		if($this->graph_orientation == 'HORIZONTAL' || $this->iveland_view)
 		{
 			$this->graph_image->draw_line($left_start, $top_start, $left_start, $top_end, $this->graph_color_notches, 1);
 			$this->graph_image->draw_line($left_start, $top_end, $left_end, $top_end, $this->graph_color_notches, 1);
@@ -754,11 +754,11 @@ abstract class pts_Graph
  
 				switch($this->graph_proportion)
 				{
-					case "LIB":
-						$proportion = "Less Is Better";
+					case 'LIB':
+						$proportion = 'Less Are Better';
 						$offset += 12;
 
-						if($this->graph_orientation == "HORIZONTAL")
+						if($this->graph_orientation == 'HORIZONTAL')
 						{
 							$this->graph_image->draw_arrow($left_start, $top_start - 8, $left_start + 9, $top_start - 8, $this->graph_color_text, $this->graph_color_body_light, 1);
 						}
@@ -767,10 +767,10 @@ abstract class pts_Graph
 							$this->graph_image->draw_arrow($left_start + 4, $top_start - 4, $left_start + 4, $top_start - 11, $this->graph_color_text, $this->graph_color_body_light, 1);
 						}
 						break;
-					case "HIB":
-						$proportion = "Higher Is Better";
+					case 'HIB':
+						$proportion = 'Higher Is Better';
 						$offset += 12;
-						if($this->graph_orientation == "HORIZONTAL")
+						if($this->graph_orientation == 'HORIZONTAL')
 						{
 							$this->graph_image->draw_arrow($left_start + 9, $top_start - 8, $left_start, $top_start - 8, $this->graph_color_text, $this->graph_color_body_light, 1);
 						}
@@ -785,7 +785,7 @@ abstract class pts_Graph
 				{
 					if(!empty($str))
 					{
-						$str .= ", ";
+						$str .= ', ';
 					}
 					$str .= $proportion;
 				}
@@ -798,7 +798,7 @@ abstract class pts_Graph
 	{
 		$increment = round($this->graph_maximum_value / $this->graph_attr_marks, 2);
 
-		if($this->graph_orientation == "HORIZONTAL")
+		if($this->graph_orientation == 'HORIZONTAL')
 		{
 			$tick_width = ($left_end - $left_start) / $this->graph_attr_marks;
 			$display_value = 0;
@@ -896,7 +896,7 @@ abstract class pts_Graph
 				}
 				else if($this->is_multi_way_comparison)
 				{
-					$this_key_way = substr($this->graph_data_title[$i], 0, strpos($this->graph_data_title[$i], ": "));
+					$this_key_way = substr($this->graph_data_title[$i], 0, strpos($this->graph_data_title[$i], ': '));
 
 					if($i != 0 && $this_key_way != $prev_key_way)
 					{

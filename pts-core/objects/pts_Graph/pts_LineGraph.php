@@ -128,11 +128,11 @@ class pts_LineGraph extends pts_Graph
 				$value = $this->graph_data[$i_o][$i];
 				$identifier = isset($this->graph_identifiers[$i]) ? $this->graph_identifiers[$i] : null;
 				$std_error = isset($this->graph_data_raw[$i_o][$i]) ? pts_math::standard_error(pts_strings::colon_explode($this->graph_data_raw[$i_o][$i])) : 0;
-				$data_string = isset($this->graph_data_title[$i_o]) ? $this->graph_data_title[$i_o] . ($identifier ? ' @ ' . $identifier : null) . ": " . $value : null;
+				$data_string = isset($this->graph_data_title[$i_o]) ? $this->graph_data_title[$i_o] . ($identifier ? ' @ ' . $identifier : null) . ': ' . $value : null;
 
 				if($value == 0 && !$has_hit_non_zero)
 				{
-					if(defined("PHOROMATIC_TRACKER"))
+					if(defined('PHOROMATIC_TRACKER'))
 					{
 						continue;
 					}
@@ -194,8 +194,8 @@ class pts_LineGraph extends pts_Graph
 
 				if($this->regression_marker_threshold > 0 && $i > 0 && abs(1 - ($value / $prev_value)) > $this->regression_marker_threshold)
 				{
-					$regression_plots[($i - 1)] = $prev_identifier . ": " . $prev_value;
-					$regression_plots[$i] = $identifier . ": " . $value;
+					$regression_plots[($i - 1)] = $prev_identifier . ': ' . $prev_value;
+					$regression_plots[$i] = $identifier . ': ' . $value;
 				}
 
 				//array_push($poly_tips, array($value, $this->graph_identifiers[$i]));
@@ -249,20 +249,20 @@ class pts_LineGraph extends pts_Graph
 				$to_display[$color] = array();
 			}
 
-			// in_array($this->graph_y_title, array("Percent", "Milliwatts", "Megabytes", "Celsius", "MB/s", "Frames Per Second", "Seconds", "Iterations Per Minute"))
+			// in_array($this->graph_y_title, array('Percent', 'Milliwatts', 'Megabytes', 'Celsius', 'MB/s', 'Frames Per Second', 'Seconds', 'Iterations Per Minute'))
 			if(count($calculations_r) > 0)
 			{
-				array_push($to_display[$this->graph_color_text], "Average:");
+				array_push($to_display[$this->graph_color_text], 'Average:');
 
 				foreach($calculations_r as $color => &$values)
 				{
 					array_push($to_display[$color], array_sum($values) / count($values));
 				}
 			}
-			// in_array($this->graph_y_title, array("Megabytes", "Milliwatts", "Celsius", "MB/s", "Frames Per Second", "Seconds", "Iterations Per Minute"))
-			if(($this->graph_y_title != "Percent" || $max_value < 100) && $max_value != $min_value)
+			// in_array($this->graph_y_title, array('Megabytes', 'Milliwatts', 'Celsius', 'MB/s', 'Frames Per Second', 'Seconds', 'Iterations Per Minute'))
+			if(($this->graph_y_title != 'Percent' || $max_value < 100) && $max_value != $min_value)
 			{
-				array_push($to_display[$this->graph_color_text], "Peak:");
+				array_push($to_display[$this->graph_color_text], 'Peak:');
 
 				foreach($calculations_r as $color => &$values)
 				{
@@ -271,16 +271,16 @@ class pts_LineGraph extends pts_Graph
 			}
 			if($min_value > 0 && $max_value != $min_value)
 			{
-				array_push($to_display[$this->graph_color_text], "Low:");
+				array_push($to_display[$this->graph_color_text], 'Low:');
 
 				foreach($calculations_r as $color => &$values)
 				{
 					array_push($to_display[$color], min($values));
 				}
 			}
-			/*if($point_counter > 9 && !in_array($this->graph_y_title, array("Percent")))
+			/*if($point_counter > 9 && !in_array($this->graph_y_title, array('Percent')))
 			{
-				array_push($to_display[$this->graph_color_text], "Last:");
+				array_push($to_display[$this->graph_color_text], 'Last:');
 
 				foreach($calculations_r as $color => &$values)
 				{
@@ -293,7 +293,7 @@ class pts_LineGraph extends pts_Graph
 
 			foreach($to_display as $color_key => &$column)
 			{
-				// removed "|| $this->graph_image->get_renderer() == "SVG"" from line below
+				// removed '|| $this->graph_image->get_renderer() == 'SVG'' from line below
 				$from_top = $this->graph_top_start + 4;
 				$longest_string_width = 0;
 

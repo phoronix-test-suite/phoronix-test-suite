@@ -129,7 +129,7 @@ class pts_Table extends pts_Graph
 		// Needs to be at least 46px tall for the PTS logo
 		$identifier_height = max($identifier_height, 48);
 
-		if(defined("PHOROMATIC_TRACKER") || $this->is_multi_way)
+		if(defined('PHOROMATIC_TRACKER') || $this->is_multi_way)
 		{
 			$identifier_height += 6 + $extra_heading_height;
 		}
@@ -149,18 +149,18 @@ class pts_Table extends pts_Graph
 		$this->graph_attr_height = $table_proper_height + $table_line_height;
 
 		// Do the actual work
-		$this->requestRenderer("SVG");
+		$this->requestRenderer('SVG');
 		$this->render_graph_pre_init();
-		$this->render_graph_init(array("cache_font_size" => true));
+		$this->render_graph_init(array('cache_font_size' => true));
 
 		// Start drawing
 		if($this->graph_left_start >= 170 && $identifier_height >= 90)
 		{
-			$this->graph_image->image_copy_merge($this->graph_image->png_image_to_type("http://www.phoronix-test-suite.com/external/pts-logo-160x83.png"), ($this->graph_left_start / 2 - 80), ($identifier_height / 2 - 41.5), 0, 0, 160, 83);
+			$this->graph_image->image_copy_merge($this->graph_image->png_image_to_type('http://www.phoronix-test-suite.com/external/pts-logo-160x83.png'), ($this->graph_left_start / 2 - 80), ($identifier_height / 2 - 41.5), 0, 0, 160, 83, 'http://www.phoronix-test-suite.com/');
 		}
 		else
 		{
-			$this->graph_image->image_copy_merge($this->graph_image->png_image_to_type("http://www.phoronix-test-suite.com/external/pts-logo-80x42.png"), ($this->graph_left_start / 2 - 40), ($identifier_height / 2 - 21), 0, 0, 80, 42);
+			$this->graph_image->image_copy_merge($this->graph_image->png_image_to_type('http://www.phoronix-test-suite.com/external/pts-logo-80x42.png'), ($this->graph_left_start / 2 - 40), ($identifier_height / 2 - 21), 0, 0, 80, 42, 'http://www.phoronix-test-suite.com/');
 
 		}
 
@@ -179,7 +179,7 @@ class pts_Table extends pts_Graph
 
 		if($this->graph_attr_width > 300)
 		{
-			$this->graph_image->write_text_left($this->graph_version, $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_body_text, 2, $table_proper_height + $table_line_height_half, 2, $table_proper_height + $table_line_height_half, false, "http://www.phoronix-test-suite.com/");
+			$this->graph_image->write_text_left($this->graph_version, $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_body_text, 2, $table_proper_height + $table_line_height_half, 2, $table_proper_height + $table_line_height_half, false, 'http://www.phoronix-test-suite.com/');
 		}
 
 		// Write the test names
@@ -196,18 +196,18 @@ class pts_Table extends pts_Graph
 				$hover = null;
 			}
 
-			$this->graph_image->write_text_right($row_string, $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_text, 2, $identifier_height + ($row * $table_line_height) + $table_line_height_half, $this->graph_left_start - 2, $identifier_height + ($row * $table_line_height) + $table_line_height_half, false, "#b-" . $row, $hover, true);
+			$this->graph_image->write_text_right($row_string, $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_text, 2, $identifier_height + ($row * $table_line_height) + $table_line_height_half, $this->graph_left_start - 2, $identifier_height + ($row * $table_line_height) + $table_line_height_half, false, '#b-' . $row, $hover, true);
 			$row++;
 		}
 
 		// Write the identifiers
 
-		if(defined("PHOROMATIC_TRACKER") || $this->is_multi_way)
+		if(defined('PHOROMATIC_TRACKER') || $this->is_multi_way)
 		{
 			$last_identifier = null;
 			$last_changed_col = 0;
 			$show_keys = array_keys($this->table_data);
-			array_push($show_keys, "Temp: Temp");
+			array_push($show_keys, 'Temp: Temp');
 
 			foreach($show_keys as $current_col => $system_identifier)
 			{
@@ -225,7 +225,7 @@ class pts_Table extends pts_Graph
 
 					$this->graph_image->draw_rectangle_with_border(($this->graph_left_start + 1 + ($last_changed_col * $table_item_width)), 2, ($this->graph_left_start + ($last_changed_col * $table_item_width)) + ($table_item_width * ($current_col - $last_changed_col)), $extra_heading_height, $paint_color, $this->graph_color_border);
 
-					if($identifier[0] != "Temp")
+					if($identifier[0] != 'Temp')
 					{
 						$this->graph_image->draw_line(($this->graph_left_start + ($current_col * $table_item_width) + 1), 1, ($this->graph_left_start + ($current_col * $table_item_width) + 1), $this->graph_attr_height, $paint_color, 1);
 					}
@@ -295,18 +295,18 @@ class pts_Table extends pts_Graph
 				{
 					if(($t = $result_table_value->get_attribute('std_percent')) > 0)
 					{
-						array_push($hover, "STD Dev: " . $t . "%");
+						array_push($hover, 'STD Dev: ' . $t . '%');
 					}
 					if(($t = $result_table_value->get_attribute('std_error')) != 0)
 					{
-						array_push($hover, " STD Error: " . $t);
+						array_push($hover, ' STD Error: ' . $t);
 					}
 
-					if(defined("PHOROMATIC_TRACKER") &&($t = $result_table_value->get_attribute('delta')) != 0)
+					if(defined('PHOROMATIC_TRACKER') &&($t = $result_table_value->get_attribute('delta')) != 0)
 					{
 						$bold = true;
 						$text_color = $t < 0 ? $this->graph_color_alert : $this->graph_color_headers;
-						array_push($hover, " Change: " . pts_math::set_precision(100 * $t, 2) . "%");
+						array_push($hover, ' Change: ' . pts_math::set_precision(100 * $t, 2) . '%');
 					}
 					else if($result_table_value->get_attribute('highlight') == true)
 					{
