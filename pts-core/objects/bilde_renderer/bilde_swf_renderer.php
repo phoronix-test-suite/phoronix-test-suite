@@ -100,7 +100,7 @@ class bilde_swf_renderer extends bilde_renderer
 		$this->image = null;
 	}
 
-	public function write_text_left($text_string, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate_text = false, $onclick = null)
+	public function write_text_left($text_string, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate_text = false)
 	{
 		$this->write_swf_text($text_string, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate_text, "LEFT");
 	}
@@ -108,11 +108,11 @@ class bilde_swf_renderer extends bilde_renderer
 	{
 		return false; // TODO: implement
 	}
-	public function write_text_right($text_string, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate_text = false, $onclick = null)
+	public function write_text_right($text_string, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate_text = false)
 	{
 		$this->write_swf_text($text_string, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate_text, "RIGHT");
 	}
-	public function write_text_center($text_string, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate_text = false, $onclick = null)
+	public function write_text_center($text_string, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate_text = false)
 	{
 		$this->write_swf_text($text_string, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate_text, "CENTER");
 	}
@@ -220,9 +220,9 @@ class bilde_swf_renderer extends bilde_renderer
 	{
 		return new SWFBitmap(fopen($file, "rb"));
 	}
-	public function image_copy_merge($source_image_object, $to_x, $to_y, $source_x = 0, $source_y = 0, $width = -1, $height = -1, $onclick = null)
+	public function image_copy_merge($source_image_object, $to_x, $to_y, $source_x = 0, $source_y = 0, $width = -1, $height = -1)
 	{
-		// TODO: $source_x, $source_y, $width, $height, $onclick need to be implemented
+		// TODO: $source_x, $source_y, $width, $height need to be implemented
 		$added = $this->image->add($source_image_object);
 		$added->moveTo($to_x, $to_y);
 	}

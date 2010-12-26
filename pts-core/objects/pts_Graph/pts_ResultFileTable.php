@@ -71,17 +71,17 @@ class pts_ResultFileTable extends pts_Table
 			{
 				if(is_array($result_object_index))
 				{
-					$result_tests[$result_counter] = new pts_table_value($result_object->get_arguments_description());
+					$result_tests[$result_counter] = new pts_graph_ir_value($result_object->get_arguments_description());
 				}
 				else
 				{
-					$result_tests[$result_counter] = new pts_table_value('Results');
+					$result_tests[$result_counter] = new pts_graph_ir_value('Results');
 				}
 			}
 			else
 			{
-				$result_tests[$result_counter] = new pts_table_value($result_object->test_profile->get_title());
-				$result_tests[$result_counter]->set_attribute('hover', $result_object->get_arguments_description());
+				$result_tests[$result_counter] = new pts_graph_ir_value($result_object->test_profile->get_title());
+				$result_tests[$result_counter]->set_attribute('title', $result_object->get_arguments_description());
 			}
 
 
@@ -231,20 +231,20 @@ class pts_ResultFileTable extends pts_Table
 							$flag_delta_results[$ri] = $delta;
 						}
 
-						$result_table[$identifier][$result_counter] = new pts_table_value($value, $attributes);
+						$result_table[$identifier][$result_counter] = new pts_graph_ir_value($value, $attributes);
 						$prev_identifier = $identifier;
 						$prev_value = $value;
 					}
 					break;
 				case 'LINE_GRAPH':
-					$result_tests[$result_counter] = new pts_table_value($result_object->test_profile->get_title() . ' (Avg)');
+					$result_tests[$result_counter] = new pts_graph_ir_value($result_object->test_profile->get_title() . ' (Avg)');
 
 					foreach($result_object->test_result_buffer->get_buffer_items() as $index => $buffer_item)
 					{
 						$identifier = $buffer_item->get_result_identifier();
 						$values = pts_strings::comma_explode($buffer_item->get_result_value());
 						$avg_value = pts_math::set_precision(array_sum($values) / count($values), 2);
-						$result_table[$identifier][$result_counter] = new pts_table_value($avg_value);
+						$result_table[$identifier][$result_counter] = new pts_graph_ir_value($avg_value);
 					}
 					break;
 			}
@@ -272,32 +272,32 @@ class pts_ResultFileTable extends pts_Table
 
 				if($delta != 0)
 				{
-					array_push($result_table[$identifier], new pts_table_value($delta . 'x'));
+					array_push($result_table[$identifier], new pts_graph_ir_value($delta . 'x'));
 					$has_written_diff = true;
 				}
 				if($std_error != 0)
 				{
-					array_push($result_table[$identifier], new pts_table_value($std_error));
+					array_push($result_table[$identifier], new pts_graph_ir_value($std_error));
 					$has_written_error = true;
 				}
 				if($std_percent != 0)
 				{
-					array_push($result_table[$identifier], new pts_table_value($std_percent . '%'));
+					array_push($result_table[$identifier], new pts_graph_ir_value($std_percent . '%'));
 					$has_written_std = true;
 				}
 			}
 
 			if($has_written_diff)
 			{
-				array_push($result_tests, new pts_table_value('Difference'));
+				array_push($result_tests, new pts_graph_ir_value('Difference'));
 			}
 			if($has_written_error)
 			{
-				array_push($result_tests, new pts_table_value('Standard Error'));
+				array_push($result_tests, new pts_graph_ir_value('Standard Error'));
 			}
 			if($has_written_std)
 			{
-				array_push($result_tests, new pts_table_value('Standard Deviation'));
+				array_push($result_tests, new pts_graph_ir_value('Standard Deviation'));
 			}
 		}
 

@@ -221,11 +221,11 @@ class pts_result_file_analyzer
 						array_push($rows, $index);
 						$r_i = count($rows) - 1;
 					}
-					$table_data[$columns[$col_pos]][$r_i] = new pts_table_value($value);
+					$table_data[$columns[$col_pos]][$r_i] = new pts_graph_ir_value($value);
 
 					if(!in_array($index, array('Memory', 'Desktop', 'Screen Resolution')))
 					{
-						$table_data[$columns[$col_pos]][$r_i]->set_attribute('onclick', 'http://openbenchmarking.org/s/' . pts_strings::trim_search_query($value));
+						$table_data[$columns[$col_pos]][$r_i]->set_attribute('href', 'http://openbenchmarking.org/s/' . pts_strings::trim_search_query($value));
 					}
 				}
 			}
@@ -245,7 +245,7 @@ class pts_result_file_analyzer
 				// Find next-to duplicates
 				$match_to = &$table_data[$c][$r];
 
-				if(($match_to instanceof pts_table_value) == false)
+				if(($match_to instanceof pts_graph_ir_value) == false)
 				{
 					if($unset_emptied_values)
 					{

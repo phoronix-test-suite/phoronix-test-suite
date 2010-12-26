@@ -39,9 +39,9 @@ abstract class bilde_renderer
 	abstract function resize_image($width, $height);
 	abstract function destroy_image();
 
-	abstract function write_text_left($text_string, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate_text = false, $onclick = null);
-	abstract function write_text_right($text_string, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate_text = false, $onclick = null);
-	abstract function write_text_center($text_string, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate_text = false, $onclick = null);
+	abstract function write_text_left($text_string, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate_text = false);
+	abstract function write_text_right($text_string, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate_text = false);
+	abstract function write_text_center($text_string, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate_text = false);
 
 	abstract function draw_rectangle($x1, $y1, $width, $height, $background_color);
 	abstract function draw_rectangle_border($x1, $y1, $width, $height, $border_color);
@@ -52,7 +52,7 @@ abstract class bilde_renderer
 
 	abstract function png_image_to_type($file);
 	abstract function jpg_image_to_type($file);
-	abstract function image_copy_merge($source_image_object, $to_x, $to_y, $source_x = 0, $source_y = 0, $width = -1, $height = -1, $onclick = null);
+	abstract function image_copy_merge($source_image_object, $to_x, $to_y, $source_x = 0, $source_y = 0, $width = -1, $height = -1);
 	abstract function convert_hex_to_type($hex);
 	abstract function convert_type_to_hex($type);
 	abstract function text_string_dimensions($string, $font_type, $font_size, $predefined_string = false);

@@ -63,6 +63,14 @@ class pts_Table extends pts_Graph
 		$this->longest_column_identifier = $this->find_longest_string($this->columns);
 		$this->longest_row_identifier = $this->find_longest_string($this->rows);
 		$this->graph_maximum_value = $this->find_longest_string_in_table_data($this->table_data);
+
+		foreach($this->columns as &$column)
+		{
+			if(($column instanceof pts_graph_ir_value) == false)
+			{
+				$column = new pts_graph_ir_value($column);
+			}
+		}
 	}
 	protected function find_longest_string_in_table_data(&$table_data)
 	{
@@ -75,7 +83,7 @@ class pts_Table extends pts_Graph
 
 			foreach($column as &$row)
 			{
-				if($row instanceof pts_table_value)
+				if($row instanceof pts_graph_ir_value)
 				{
 					$value = $row->get_value();
 
@@ -160,11 +168,11 @@ class pts_Table extends pts_Graph
 		// Start drawing
 		if($this->graph_left_start >= 170 && $identifier_height >= 90)
 		{
-			$this->graph_image->image_copy_merge($this->graph_image->png_image_to_type('http://www.phoronix-test-suite.com/external/pts-logo-160x83.png'), ($this->graph_left_start / 2 - 80), ($identifier_height / 2 - 41.5) + $this->graph_top_heading_height, 0, 0, 160, 83, 'http://www.phoronix-test-suite.com/');
+			$this->graph_image->image_copy_merge(new pts_graph_ir_value($this->graph_image->png_image_to_type('http://www.phoronix-test-suite.com/external/pts-logo-160x83.png'), array('href' => 'http://www.phoronix-test-suite.com/')), ($this->graph_left_start / 2 - 80), ($identifier_height / 2 - 41.5) + $this->graph_top_heading_height, 0, 0, 160, 83);
 		}
 		else
 		{
-			$this->graph_image->image_copy_merge($this->graph_image->png_image_to_type('http://www.phoronix-test-suite.com/external/pts-logo-80x42.png'), ($this->graph_left_start / 2 - 40), ($identifier_height / 2 - 21) + $this->graph_top_heading_height, 0, 0, 80, 42, 'http://www.phoronix-test-suite.com/');
+			$this->graph_image->image_copy_merge(new pts_graph_ir_value($this->graph_image->png_image_to_type('http://www.phoronix-test-suite.com/external/pts-logo-80x42.png'), array('href' => 'http://www.phoronix-test-suite.com/')), ($this->graph_left_start / 2 - 40), ($identifier_height / 2 - 21) + $this->graph_top_heading_height, 0, 0, 80, 42);
 
 		}
 
@@ -180,23 +188,23 @@ class pts_Table extends pts_Graph
 		$this->graph_image->draw_dashed_line($this->graph_left_start, $v, $this->graph_attr_width, $v, $this->graph_color_border, $table_height + $identifier_height, 1, ($table_item_width - 1));
 
 		$this->graph_image->draw_rectangle(0, $table_proper_height, $this->graph_attr_width, $this->graph_attr_height, $this->graph_color_headers);
-		$this->graph_image->write_text_right($this->graph_watermark_text, $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_body_text, $this->graph_attr_width - 2, $table_proper_height + $table_line_height_half, $this->graph_attr_width - 2, $table_proper_height + $table_line_height_half, false, $this->graph_watermark_url);
+		$this->graph_image->write_text_right(new pts_graph_ir_value($this->graph_watermark_text, array('href' => $this->graph_watermark_url)), $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_body_text, $this->graph_attr_width - 2, $table_proper_height + $table_line_height_half, $this->graph_attr_width - 2, $table_proper_height + $table_line_height_half);
 
 		if($this->graph_attr_width > 300)
 		{
-			$this->graph_image->write_text_left($this->graph_version, $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_body_text, 2, $table_proper_height + $table_line_height_half, 2, $table_proper_height + $table_line_height_half, false, 'http://www.phoronix-test-suite.com/');
+			$this->graph_image->write_text_left(new pts_graph_ir_value($this->graph_version, array('href' => 'http://www.phoronix-test-suite.com/')), $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_body_text, 2, $table_proper_height + $table_line_height_half, 2, $table_proper_height + $table_line_height_half);
 		}
 
 		// Heading
 		if($this->graph_title != null)
 		{
 			$this->graph_image->draw_rectangle(1, 1, $this->graph_attr_width - 1, $this->graph_top_heading_height, $this->graph_color_main_headers);
-			$this->graph_image->write_text_left($this->graph_title, $this->graph_font, $this->graph_font_size_heading, $this->graph_color_background, 5, 12, $this->graph_left_end, 12, false);
+			$this->graph_image->write_text_left($this->graph_title, $this->graph_font, $this->graph_font_size_heading, $this->graph_color_background, 5, 12, $this->graph_left_end, 12);
 
 			foreach($this->graph_sub_titles as $i => $sub_title)
 			{
 				$vertical_offset = 16 + $this->graph_font_size_heading + ($i * ($this->graph_font_size_sub_heading + 3));
-				$this->graph_image->write_text_left($sub_title, $this->graph_font, $this->graph_font_size_sub_heading, $this->graph_color_background, 5, $vertical_offset, $this->graph_left_end, $vertical_offset, false);
+				$this->graph_image->write_text_left($sub_title, $this->graph_font, $this->graph_font_size_sub_heading, $this->graph_color_background, 5, $vertical_offset, $this->graph_left_end, $vertical_offset);
 			}
 
 			$this->graph_image->draw_line(1, $this->graph_top_heading_height, $this->graph_attr_width - 1, $this->graph_top_heading_height, $this->graph_color_border, 1);
@@ -207,13 +215,15 @@ class pts_Table extends pts_Graph
 		$row = 0;
 		foreach($this->rows as $i => $row_string)
 		{
-			if(($row_string instanceof pts_table_value) == false)
+			if(($row_string instanceof pts_graph_ir_value) == false)
 			{
-				$row_string = new pts_table_value($row_string);
+				$row_string = new pts_graph_ir_value($row_string);
 			}
 
+			$row_string->set_attribute('font-weight', 'bold');
+
 			$v = $identifier_height + $this->graph_top_heading_height + ($row * $table_line_height) + $table_line_height_half;
-			$this->graph_image->write_text_right($row_string->get_value(), $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_text, 2, $v, $this->graph_left_start - 2, $v, false, $row_string->get_attribute('onclick'), $row_string->get_attribute('hover'), true);
+			$this->graph_image->write_text_right($row_string, $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_text, 2, $v, $this->graph_left_start - 2, $v);
 			$row++;
 		}
 
@@ -247,7 +257,8 @@ class pts_Table extends pts_Graph
 						$this->graph_image->draw_line(($this->graph_left_start + ($current_col * $table_item_width) + 1), 1, ($this->graph_left_start + ($current_col * $table_item_width) + 1), $this->graph_attr_height, $paint_color, 1);
 					}
 
-					$this->graph_image->write_text_center($last_identifier, $this->graph_font, $this->graph_font_size_axis_heading, $this->graph_color_background, $this->graph_left_start + ($last_changed_col * $table_item_width), 4, $this->graph_left_start + ($current_col * $table_item_width), 4, false, $last_identifier->get_attribute('onclick'), null, true);
+					$last_identifier->set_attribute('font-weight', 'bold');
+					$this->graph_image->write_text_center($last_identifier, $this->graph_font, $this->graph_font_size_axis_heading, $this->graph_color_background, $this->graph_left_start + ($last_changed_col * $table_item_width), 4, $this->graph_left_start + ($current_col * $table_item_width), 4);
 
 					$last_identifier = $identifier[0];
 					$last_changed_col = $current_col;
@@ -258,15 +269,15 @@ class pts_Table extends pts_Graph
 		$table_identifier_offset = ($table_item_width / 2) + ($table_identifier_width / 2) - 1;
 		foreach($this->columns as $i => $col_string)
 		{
-			$link = null;
+			$col_string->set_attribute('font-weight', 'bold');
 
 			if($this->column_heading_vertical)
 			{
-				$this->graph_image->write_text_right($col_string, $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_text, $this->graph_left_start + ($i * $table_item_width) + $table_identifier_offset, $this->graph_top_heading_height + $identifier_height - 10, $this->graph_left_start + ($i * $table_item_width) + $table_identifier_offset, $this->graph_top_heading_height + $identifier_height - 10, 90, $link, null, true);
+				$this->graph_image->write_text_right($col_string, $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_text, $this->graph_left_start + ($i * $table_item_width) + $table_identifier_offset, $this->graph_top_heading_height + $identifier_height - 10, $this->graph_left_start + ($i * $table_item_width) + $table_identifier_offset, $this->graph_top_heading_height + $identifier_height - 10, 90);
 			}
 			else
 			{
-				$this->graph_image->write_text_center($col_string, $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_text, $this->graph_left_start + ($i * $table_item_width), $this->graph_top_heading_height + ($identifier_height / 2), $this->graph_left_start + (($i + 1) * $table_item_width), $this->graph_top_heading_height + ($identifier_height / 2), false, $link, null, true);
+				$this->graph_image->write_text_center($col_string, $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_text, $this->graph_left_start + ($i * $table_item_width), $this->graph_top_heading_height + ($identifier_height / 2), $this->graph_left_start + (($i + 1) * $table_item_width), $this->graph_top_heading_height + ($identifier_height / 2));
 			}
 		}
 
@@ -308,7 +319,7 @@ class pts_Table extends pts_Graph
 					continue;
 				}
 
-				if($result_table_value instanceof pts_table_value)
+				if($result_table_value instanceof pts_graph_ir_value)
 				{
 					if(($t = $result_table_value->get_attribute('std_percent')) > 0)
 					{
@@ -361,7 +372,8 @@ class pts_Table extends pts_Graph
 					$this->graph_image->draw_rectangle($left_bounds + 1, $this->graph_top_heading_height + $identifier_height + (($row + 1) * $table_line_height) + 1, $right_bounds, $this->graph_top_heading_height + $identifier_height + (($row + 2) * $table_line_height), $background_paint);
 				}
 
-				$this->graph_image->write_text_center($value, $this->graph_font, $this->graph_font_size_identifiers, $text_color, $left_bounds, $top_bounds, $right_bounds, $top_bounds, false, $result_table_value->get_attribute('onclick'), implode('; ', $hover), $bold);
+				$result_table_value->set_attribute('title', implode('; ', $hover));
+				$this->graph_image->write_text_center($result_table_value, $this->graph_font, $this->graph_font_size_identifiers, $text_color, $left_bounds, $top_bounds, $right_bounds, $top_bounds);
 				//$row++;
 			}
 		}

@@ -685,28 +685,28 @@ abstract class pts_Graph
 		if($this->iveland_view)
 		{
 			$this->graph_image->draw_rectangle(0, 0, $this->graph_attr_width, $this->graph_top_heading_height, $this->graph_color_main_headers);
-			$this->graph_image->write_text_left($this->graph_title, $this->graph_font, $this->graph_font_size_heading, $this->graph_color_background, 5, 12, $this->graph_left_end, 12, false, 'http://openbenchmarking.org/test/' . $this->test_identifier);
+			$this->graph_image->write_text_left(new pts_graph_ir_value($this->graph_title, array('href' => 'http://openbenchmarking.org/test/' . $this->test_identifier)), $this->graph_font, $this->graph_font_size_heading, $this->graph_color_background, 5, 12, $this->graph_left_end, 12);
 
 			foreach($this->graph_sub_titles as $i => $sub_title)
 			{
 				$vertical_offset = 12 + 4 + $this->graph_font_size_heading + ($i * ($this->graph_font_size_sub_heading + 3));
-				$this->graph_image->write_text_left($sub_title, $this->graph_font, $this->graph_font_size_sub_heading, $this->graph_color_background, 5, $vertical_offset, $this->graph_left_end, $vertical_offset, false);
+				$this->graph_image->write_text_left($sub_title, $this->graph_font, $this->graph_font_size_sub_heading, $this->graph_color_background, 5, $vertical_offset, $this->graph_left_end, $vertical_offset);
 			}
 		
-			$this->graph_image->image_copy_merge($this->graph_image->png_image_to_type('http://www.phoronix-test-suite.com/external/pts-logo-77x40-white.png'), $this->graph_left_end - 77, ($this->graph_top_heading_height / 40 + 2), 0, 0, 77, 40, 'http://www.phoronix-test-suite.com/');
+			$this->graph_image->image_copy_merge(new pts_graph_ir_value($this->graph_image->png_image_to_type('http://www.phoronix-test-suite.com/external/pts-logo-77x40-white.png'), array('href' => 'http://www.phoronix-test-suite.com/')), $this->graph_left_end - 77, ($this->graph_top_heading_height / 40 + 2), 0, 0, 77, 40);
 		}
 		else
 		{
-			$this->graph_image->write_text_center($this->graph_title, $this->graph_font, $this->graph_font_size_heading, $this->graph_color_main_headers, $this->graph_left_start, 3, $this->graph_left_end, 3, false, 'http://openbenchmarking.org/test/' . $this->test_identifier);
+			$this->graph_image->write_text_center(new pts_graph_ir_value($this->graph_title, array('href' => 'http://openbenchmarking.org/test/' . $this->test_identifier)), $this->graph_font, $this->graph_font_size_heading, $this->graph_color_main_headers, $this->graph_left_start, 3, $this->graph_left_end, 3);
 
 			foreach($this->graph_sub_titles as $i => $sub_title)
 			{
-				$this->graph_image->write_text_center($sub_title, $this->graph_font, $this->graph_font_size_sub_heading, $this->graph_color_main_headers, $this->graph_left_start, (31 + ($i * 18)), $this->graph_left_end, (31 + ($i * 18)), false);
+				$this->graph_image->write_text_center($sub_title, $this->graph_font, $this->graph_font_size_sub_heading, $this->graph_color_main_headers, $this->graph_left_start, (31 + ($i * 18)), $this->graph_left_end, (31 + ($i * 18)));
 			}
 
 			if($with_version)
 			{
-				$this->graph_image->write_text_right($this->graph_version, $this->graph_font, 7, $this->graph_color_body_light, $this->graph_left_end, $this->graph_top_start - 9, $this->graph_left_end, $this->graph_top_start - 9, false, 'http://www.phoronix-test-suite.com/');
+				$this->graph_image->write_text_right(new pts_graph_ir_value($this->graph_version, array('href' => 'http://www.phoronix-test-suite.com/')), $this->graph_font, 7, $this->graph_color_body_light, $this->graph_left_end, $this->graph_top_start - 9, $this->graph_left_end, $this->graph_top_start - 9);
 			}
 		}
 	}
@@ -716,7 +716,7 @@ abstract class pts_Graph
 		{
 			$bottom_heading_start = $this->graph_top_end + $this->graph_bottom_offset + 25;
 			$this->graph_image->draw_rectangle(0, $bottom_heading_start, $this->graph_attr_width, $this->graph_attr_height, $this->graph_color_main_headers);
-			$this->graph_image->write_text_right('Powered By ' . $this->graph_version, $this->graph_font, 7, $this->graph_color_background, $this->graph_left_end, $bottom_heading_start + 7, $this->graph_left_end, $bottom_heading_start + 7, false, 'http://www.phoronix-test-suite.com/');
+			$this->graph_image->write_text_right(new pts_graph_ir_value('Powered By ' . $this->graph_version, array('href', 'http://www.phoronix-test-suite.com/')), $this->graph_font, 7, $this->graph_color_background, $this->graph_left_end, $bottom_heading_start + 7, $this->graph_left_end, $bottom_heading_start + 7);
 		}
 	}
 	protected function render_graph_base($left_start, $top_start, $left_end, $top_end)
@@ -728,7 +728,7 @@ abstract class pts_Graph
 
 			if(!empty($this->graph_watermark_text))
 			{
-				$this->graph_image->write_text_right($this->graph_watermark_text, $this->graph_font, 7, $this->graph_color_text, $left_end, $top_start - 7, $left_end, $top_start - 7, false, $this->graph_watermark_url);
+				$this->graph_image->write_text_right(new pts_graph_ir_value($this->graph_watermark_text, array('href' => $this->graph_watermark_url)), $this->graph_font, 7, $this->graph_color_text, $left_end, $top_start - 7, $left_end, $top_start - 7);
 			}
 		}
 		else
@@ -742,7 +742,7 @@ abstract class pts_Graph
 
 			if(!empty($this->graph_watermark_text))
 			{
-				$this->graph_image->write_text_right($this->graph_watermark_text, $this->graph_font, 10, $this->graph_color_text, $left_end - 2, $top_start + 8, $left_end - 2, $top_start + 8, false, $this->graph_watermark_url);
+				$this->graph_image->write_text_right(new pts_graph_ir_value($this->graph_watermark_text, array('href' => $this->graph_watermark_url)), $this->graph_font, 10, $this->graph_color_text, $left_end - 2, $top_start + 8, $left_end - 2, $top_start + 8);
 			}
 		}
 

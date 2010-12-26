@@ -103,122 +103,140 @@ class bilde_svg_renderer extends bilde_renderer
 	{
 		$this->image = null;
 	}
-	public function write_text_left($text_string, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate = false, $onclick = null, $title = null, $bold = false)
+	public function write_text_left($text, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate = false)
 	{
 		$font_size += 1;
-		$text = $this->image->createElement('text');
-		$text->setAttribute('x', round($bound_x1));
-		$text->setAttribute('y', round($bound_y1));
-		$text->setAttribute('font-size', $font_size);
+		$text_element = $this->image->createElement('text');
+		$text_element->setAttribute('x', round($bound_x1));
+		$text_element->setAttribute('y', round($bound_y1));
+		$text_element->setAttribute('font-size', $font_size);
 
 		if($rotate != false)
 		{
 			$rotate = ($rotate === true ? 90 : $rotate);
-			$text->setAttribute('transform', "rotate($rotate $bound_x1 $bound_y1)");
+			$text_element->setAttribute('transform', "rotate($rotate $bound_x1 $bound_y1)");
 		}
 
-		if($bold)
+		$text_element->setAttribute('text-anchor', 'start');
+		$text_element->setAttribute('dominant-baseline', 'middle');
+		$text_element->setAttribute('fill', $font_color);
+		$string = $this->image->createTextNode($text);
+		$text_element->appendChild($string);
+
+		if($text instanceof pts_graph_ir_value)
 		{
-			$text->setAttribute('font-weight', 800);
+			if($text->get_attribute('title') != null)
+			{
+				$text_element->setAttribute('xlink:title', $text->get_attribute('title'));
+			}
+			if($text->get_attribute('font-weight') != null)
+			{
+				$text_element->setAttribute('font-weight', $text->get_attribute('font-weight'));
+			}
+
+			if($text->get_attribute('href') != null)
+			{
+				$link = $this->image->createElement('a');
+				$link->setAttribute('xlink:href', $text->get_attribute('href'));
+				$link->setAttribute('xlink:show', 'new');
+				$link->appendChild($text_element);
+				$this->svg->appendChild($link);
+				return;
+			}
 		}
 
-		$text->setAttribute('text-anchor', 'start');
-		$text->setAttribute('dominant-baseline', 'middle');
-		$text->setAttribute('fill', $font_color);
-		$string = $this->image->createTextNode($text_string);
-		$text->appendChild($string);
-
-		if($onclick != null)
-		{
-			$link = $this->image->createElement('a');
-			$link->setAttribute('xlink:href', $onclick);
-			$link->setAttribute('xlink:show', 'new');
-			$link->appendChild($text);
-			$this->svg->appendChild($link);
-		}
-		else
-		{
-			$this->svg->appendChild($text);
-		}
+		$this->svg->appendChild($text_element);
 	}
-	public function write_text_right($text_string, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate = false, $onclick = null, $title = null, $bold = false)
+	public function write_text_right($text, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate = false)
 	{
 		$font_size += 1;
-		$text = $this->image->createElement('text');
-		$text->setAttribute('x', round($bound_x2));
-		$text->setAttribute('y', round($bound_y2));
-		$text->setAttribute('font-size', $font_size);
+		$text_element = $this->image->createElement('text');
+		$text_element->setAttribute('x', round($bound_x2));
+		$text_element->setAttribute('y', round($bound_y2));
+		$text_element->setAttribute('font-size', $font_size);
 
 		if($rotate != false)
 		{
 			$rotate = ($rotate === true ? 90 : $rotate);
-			$text->setAttribute('transform', "rotate($rotate $bound_x1 $bound_y1)");
+			$text_element->setAttribute('transform', "rotate($rotate $bound_x1 $bound_y1)");
 		}
 
-		if($bold)
+		$text_element->setAttribute('text-anchor', 'end');
+		$text_element->setAttribute('dominant-baseline', 'middle');
+		$text_element->setAttribute('fill', $font_color);
+		$string = $this->image->createTextNode($text);
+		$text_element->appendChild($string);
+
+		if($text instanceof pts_graph_ir_value)
 		{
-			$text->setAttribute('font-weight', 800);
+			if($text->get_attribute('title') != null)
+			{
+				$text_element->setAttribute('xlink:title', $text->get_attribute('title'));
+			}
+			if($text->get_attribute('font-weight') != null)
+			{
+				$text_element->setAttribute('font-weight', $text->get_attribute('font-weight'));
+			}
+
+			if($text->get_attribute('href') != null)
+			{
+				$link = $this->image->createElement('a');
+				$link->setAttribute('xlink:href', $text->get_attribute('href'));
+				$link->setAttribute('xlink:show', 'new');
+				$link->appendChild($text_element);
+				$this->svg->appendChild($link);
+				return;
+			}
 		}
 
-		$text->setAttribute('text-anchor', 'end');
-		$text->setAttribute('dominant-baseline', 'middle');
-		$text->setAttribute('fill', $font_color);
-		$string = $this->image->createTextNode($text_string);
-		$text->appendChild($string);
-
-		if($onclick != null)
-		{
-			$link = $this->image->createElement('a');
-			$link->setAttribute('xlink:href', $onclick);
-			$link->setAttribute('xlink:show', 'new');
-			$link->appendChild($text);
-			$this->svg->appendChild($link);
-		}
-		else
-		{
-			$this->svg->appendChild($text);
-		}
+		$this->svg->appendChild($text_element);
 	}
-	public function write_text_center($text_string, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate = false, $onclick = null, $title = null, $bold = false)
+	public function write_text_center($text, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate = false)
 	{
 		$font_size += 1;
 		$bound_x1 = round(($bound_x1 != $bound_x2) ? abs($bound_x2 - $bound_x1) / 2 + $bound_x1 : $bound_x1);
 		$bound_y1 = round(($bound_y1 != $bound_y2) ? abs($bound_y2 - $bound_y1) / 2 + $bound_y1 : $bound_y1);
 
-		$text = $this->image->createElement('text');
-		$text->setAttribute('x', $bound_x1);
-		$text->setAttribute('y', $bound_y1);
-		$text->setAttribute('font-size', $font_size);
-		$text->setAttribute('text-anchor', 'middle');
+		$text_element = $this->image->createElement('text');
+		$text_element->setAttribute('x', $bound_x1);
+		$text_element->setAttribute('y', $bound_y1);
+		$text_element->setAttribute('font-size', $font_size);
+		$text_element->setAttribute('text-anchor', 'middle');
 
 		if($rotate != false)
 		{
 			$rotate = ($rotate === true ? 90 : $rotate);
-			$text->setAttribute('transform', "rotate($rotate $bound_x1 $bound_y1)");
+			$text_element->setAttribute('transform', "rotate($rotate $bound_x1 $bound_y1)");
 		}
 
-		if($bold)
+		$text_element->setAttribute('dominant-baseline', 'text-before-edge');
+		$text_element->setAttribute('fill', $font_color);
+		$string = $this->image->createTextNode($text);
+		$text_element->appendChild($string);
+
+		if($text instanceof pts_graph_ir_value)
 		{
-			$text->setAttribute('font-weight', 800);
+			if($text->get_attribute('title') != null)
+			{
+				$text_element->setAttribute('xlink:title', $text->get_attribute('title'));
+			}
+			if($text->get_attribute('font-weight') != null)
+			{
+				$text_element->setAttribute('font-weight', $text->get_attribute('font-weight'));
+			}
+
+			if($text->get_attribute('href') != null)
+			{
+				$link = $this->image->createElement('a');
+				$link->setAttribute('xlink:href', $text->get_attribute('href'));
+				$link->setAttribute('xlink:show', 'new');
+				$link->appendChild($text_element);
+				$this->svg->appendChild($link);
+				return;
+			}
 		}
 
-		$text->setAttribute('dominant-baseline', 'text-before-edge');
-		$text->setAttribute('fill', $font_color);
-		$string = $this->image->createTextNode($text_string);
-		$text->appendChild($string);
-
-		if($onclick != null)
-		{
-			$link = $this->image->createElement('a');
-			$link->setAttribute('xlink:href', $onclick);
-			$link->setAttribute('xlink:show', 'new');
-			$link->appendChild($text);
-			$this->svg->appendChild($link);
-		}
-		else
-		{
-			$this->svg->appendChild($text);
-		}
+		$this->svg->appendChild($text_element);
 	}
 	public function draw_rectangle_with_border($x1, $y1, $width, $height, $background_color, $border_color, $title = null)
 	{
@@ -423,7 +441,7 @@ class bilde_svg_renderer extends bilde_renderer
 	{
 		return $file;
 	}
-	public function image_copy_merge($source_image_object, $to_x, $to_y, $source_x = 0, $source_y = 0, $width = -1, $height = -1, $onclick = null)
+	public function image_copy_merge($source_image_object, $to_x, $to_y, $source_x = 0, $source_y = 0, $width = -1, $height = -1)
 	{
 		$image = $this->image->createElement('image');
 		$image->setAttribute('x', $to_x);
@@ -432,10 +450,11 @@ class bilde_svg_renderer extends bilde_renderer
 		$image->setAttribute('height', $height);
 		$image->setAttribute('xlink:href', $source_image_object);
 
-		if($onclick != null)
+
+		if($source_image_object instanceof pts_graph_ir_value && $source_image_object->get_attribute('href') != null)
 		{
 			$link = $this->image->createElement('a');
-			$link->setAttribute('xlink:href', $onclick);
+			$link->setAttribute('xlink:href', $source_image_object->get_attribute('href'));
 			$link->setAttribute('xlink:show', 'new');
 			$link->appendChild($image);
 			$this->svg->appendChild($link);
