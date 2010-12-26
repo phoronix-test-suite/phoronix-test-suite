@@ -12,6 +12,8 @@ Phoronix Test Suite (Git)
 - pts-core: Improve error output when a command doesn't have the necessary arguments rather than using pre-defined user error strings
 - pts-core: Don't force loading uninstalled tests from a virtual suite into the pts_test_run_manager
 - phodevi: Support appending the Catalyst driver version when the fglrx display driver is loaded
+- pts_Graph: With result tables, highlight not only the best values, but the worst values too
+- pts_Graph: Support headers/titles on pts_Table objects
 - bilde_renderer: Blacklist unsupported SVG browsers rather than whitelist supported ones, should be saner this way
 
 Phoronix Test Suite 3.0 Alpha 4

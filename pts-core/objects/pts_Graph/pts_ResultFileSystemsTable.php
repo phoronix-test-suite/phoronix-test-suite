@@ -37,6 +37,7 @@ class pts_ResultFileSystemsTable extends pts_Table
 		parent::__construct($rows, $columns, $table_data, $result_file);
 		$this->graph_font_size_identifiers *= 0.8;
 		$this->column_heading_vertical = false;
+		$this->graph_title = $result_file->get_title();
 	}
 }
 

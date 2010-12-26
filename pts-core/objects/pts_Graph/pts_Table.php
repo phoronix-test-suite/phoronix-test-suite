@@ -134,6 +134,11 @@ class pts_Table extends pts_Graph
 			$identifier_height += 6 + $extra_heading_height;
 		}
 
+		if($this->graph_title != null)
+		{
+			$this->graph_top_heading_height = 8 + $this->graph_font_size_heading + (count($this->graph_sub_titles) * ($this->graph_font_size_sub_heading + 4));
+		}
+
 		$table_max_value_width = $this->text_string_width($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_identifiers);
 
 		$table_item_width = max($table_max_value_width, $table_identifier_width);
@@ -142,8 +147,7 @@ class pts_Table extends pts_Graph
 		$table_line_height_half = ($table_line_height / 2);
 		$table_height = $table_line_height * count($this->rows);
 
-		// The identifer_height needs to be at least 90px for the PTS logo
-		$table_proper_height = $table_height + $identifier_height;
+		$table_proper_height = $this->graph_top_heading_height + $table_height + $identifier_height;
 
 		$this->graph_attr_width = $table_width + $this->graph_left_start;
 		$this->graph_attr_height = $table_proper_height + $table_line_height;
@@ -156,23 +160,24 @@ class pts_Table extends pts_Graph
 		// Start drawing
 		if($this->graph_left_start >= 170 && $identifier_height >= 90)
 		{
-			$this->graph_image->image_copy_merge($this->graph_image->png_image_to_type('http://www.phoronix-test-suite.com/external/pts-logo-160x83.png'), ($this->graph_left_start / 2 - 80), ($identifier_height / 2 - 41.5), 0, 0, 160, 83, 'http://www.phoronix-test-suite.com/');
+			$this->graph_image->image_copy_merge($this->graph_image->png_image_to_type('http://www.phoronix-test-suite.com/external/pts-logo-160x83.png'), ($this->graph_left_start / 2 - 80), ($identifier_height / 2 - 41.5) + $this->graph_top_heading_height, 0, 0, 160, 83, 'http://www.phoronix-test-suite.com/');
 		}
 		else
 		{
-			$this->graph_image->image_copy_merge($this->graph_image->png_image_to_type('http://www.phoronix-test-suite.com/external/pts-logo-80x42.png'), ($this->graph_left_start / 2 - 40), ($identifier_height / 2 - 21), 0, 0, 80, 42, 'http://www.phoronix-test-suite.com/');
+			$this->graph_image->image_copy_merge($this->graph_image->png_image_to_type('http://www.phoronix-test-suite.com/external/pts-logo-80x42.png'), ($this->graph_left_start / 2 - 40), ($identifier_height / 2 - 21) + $this->graph_top_heading_height, 0, 0, 80, 42, 'http://www.phoronix-test-suite.com/');
 
 		}
 
 		// Draw the vertical table lines
-		$this->graph_image->draw_dashed_line($this->graph_left_start, ($table_proper_height / 2), $this->graph_attr_width, ($table_proper_height / 2), $this->graph_color_body, $table_proper_height, $table_item_width, $table_item_width);
+		$v = (($identifier_height + $table_height) / 2) + $this->graph_top_heading_height;
+		$this->graph_image->draw_dashed_line($this->graph_left_start, $v, $this->graph_attr_width, $v, $this->graph_color_body, $table_height + $identifier_height, $table_item_width, $table_item_width);
 
 		// Background horizontal
-		$this->graph_image->draw_dashed_line(($this->graph_attr_width / 2), $identifier_height, ($this->graph_attr_width / 2), $table_proper_height, $this->graph_color_body_light, $this->graph_attr_width, $table_line_height, $table_line_height);
+		$this->graph_image->draw_dashed_line(($this->graph_attr_width / 2), ($identifier_height + $this->graph_top_heading_height), ($this->graph_attr_width / 2), $table_proper_height, $this->graph_color_body_light, $this->graph_attr_width, $table_line_height, $table_line_height);
 
 		// Draw the borders
-		$this->graph_image->draw_dashed_line($this->graph_left_start, ($table_proper_height / 2), $this->graph_attr_width, ($table_proper_height / 2), $this->graph_color_border, $table_proper_height, 1, ($table_item_width - 1));
-		$this->graph_image->draw_dashed_line(($this->graph_attr_width / 2), $identifier_height, ($this->graph_attr_width / 2), $this->graph_attr_height, $this->graph_color_border, $this->graph_attr_width, 1, ($table_line_height - 1));
+		$this->graph_image->draw_dashed_line(($this->graph_attr_width / 2), ($identifier_height + $this->graph_top_heading_height), ($this->graph_attr_width / 2), $this->graph_attr_height, $this->graph_color_border, $this->graph_attr_width, 1, ($table_line_height - 1));
+		$this->graph_image->draw_dashed_line($this->graph_left_start, $v, $this->graph_attr_width, $v, $this->graph_color_border, $table_height + $identifier_height, 1, ($table_item_width - 1));
 
 		$this->graph_image->draw_rectangle(0, $table_proper_height, $this->graph_attr_width, $this->graph_attr_height, $this->graph_color_headers);
 		$this->graph_image->write_text_right($this->graph_watermark_text, $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_body_text, $this->graph_attr_width - 2, $table_proper_height + $table_line_height_half, $this->graph_attr_width - 2, $table_proper_height + $table_line_height_half, false, $this->graph_watermark_url);
@@ -180,6 +185,22 @@ class pts_Table extends pts_Graph
 		if($this->graph_attr_width > 300)
 		{
 			$this->graph_image->write_text_left($this->graph_version, $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_body_text, 2, $table_proper_height + $table_line_height_half, 2, $table_proper_height + $table_line_height_half, false, 'http://www.phoronix-test-suite.com/');
+		}
+
+		// Heading
+		if($this->graph_title != null)
+		{
+			$this->graph_image->draw_rectangle(1, 1, $this->graph_attr_width - 1, $this->graph_top_heading_height, $this->graph_color_main_headers);
+			$this->graph_image->write_text_left($this->graph_title, $this->graph_font, $this->graph_font_size_heading, $this->graph_color_background, 5, 12, $this->graph_left_end, 12, false);
+
+			foreach($this->graph_sub_titles as $i => $sub_title)
+			{
+				$vertical_offset = 16 + $this->graph_font_size_heading + ($i * ($this->graph_font_size_sub_heading + 3));
+				$this->graph_image->write_text_left($sub_title, $this->graph_font, $this->graph_font_size_sub_heading, $this->graph_color_background, 5, $vertical_offset, $this->graph_left_end, $vertical_offset, false);
+			}
+
+			$this->graph_image->draw_line(1, $this->graph_top_heading_height, $this->graph_attr_width - 1, $this->graph_top_heading_height, $this->graph_color_border, 1);
+
 		}
 
 		// Write the test names
@@ -191,7 +212,8 @@ class pts_Table extends pts_Graph
 				$row_string = new pts_table_value($row_string);
 			}
 
-			$this->graph_image->write_text_right($row_string->get_value(), $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_text, 2, $identifier_height + ($row * $table_line_height) + $table_line_height_half, $this->graph_left_start - 2, $identifier_height + ($row * $table_line_height) + $table_line_height_half, false, $row_string->get_attribute('onclick'), $row_string->get_attribute('hover'), true);
+			$v = $identifier_height + $this->graph_top_heading_height + ($row * $table_line_height) + $table_line_height_half;
+			$this->graph_image->write_text_right($row_string->get_value(), $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_text, 2, $v, $this->graph_left_start - 2, $v, false, $row_string->get_attribute('onclick'), $row_string->get_attribute('hover'), true);
 			$row++;
 		}
 
@@ -240,11 +262,11 @@ class pts_Table extends pts_Graph
 
 			if($this->column_heading_vertical)
 			{
-				$this->graph_image->write_text_right($col_string, $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_text, $this->graph_left_start + ($i * $table_item_width) + $table_identifier_offset, $identifier_height - 10, $this->graph_left_start + ($i * $table_item_width) + $table_identifier_offset, $identifier_height - 10, 90, $link, null, true);
+				$this->graph_image->write_text_right($col_string, $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_text, $this->graph_left_start + ($i * $table_item_width) + $table_identifier_offset, $this->graph_top_heading_height + $identifier_height - 10, $this->graph_left_start + ($i * $table_item_width) + $table_identifier_offset, $this->graph_top_heading_height + $identifier_height - 10, 90, $link, null, true);
 			}
 			else
 			{
-				$this->graph_image->write_text_center($col_string, $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_text, $this->graph_left_start + ($i * $table_item_width), ($identifier_height / 2), $this->graph_left_start + (($i + 1) * $table_item_width), ($identifier_height / 2), false, $link, null, true);
+				$this->graph_image->write_text_center($col_string, $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_text, $this->graph_left_start + ($i * $table_item_width), $this->graph_top_heading_height + ($identifier_height / 2), $this->graph_left_start + (($i + 1) * $table_item_width), $this->graph_top_heading_height + ($identifier_height / 2), false, $link, null, true);
 			}
 		}
 
@@ -323,7 +345,7 @@ class pts_Table extends pts_Graph
 
 				$left_bounds = $this->graph_left_start + ($col * $table_item_width);
 				$right_bounds = $this->graph_left_start + (($col + max(1, $spans_col)) * $table_item_width);
-				$top_bounds = $identifier_height + (($row + 1.2) * $table_line_height);
+				$top_bounds = $this->graph_top_heading_height + $identifier_height + (($row + 1.2) * $table_line_height);
 
 				if($spans_col > 1)
 				{
@@ -336,7 +358,7 @@ class pts_Table extends pts_Graph
 						$background_paint = $i % 2 == 0 ? $this->graph_color_body_light : $this->graph_color_body;
 					}
 
-					$this->graph_image->draw_rectangle($left_bounds + 1, $identifier_height + (($row + 1) * $table_line_height) + 1, $right_bounds, $identifier_height + (($row + 2) * $table_line_height), $background_paint);
+					$this->graph_image->draw_rectangle($left_bounds + 1, $this->graph_top_heading_height + $identifier_height + (($row + 1) * $table_line_height) + 1, $right_bounds, $this->graph_top_heading_height + $identifier_height + (($row + 2) * $table_line_height), $background_paint);
 				}
 
 				$this->graph_image->write_text_center($value, $this->graph_font, $this->graph_font_size_identifiers, $text_color, $left_bounds, $top_bounds, $right_bounds, $top_bounds, false, $result_table_value->get_attribute('onclick'), implode('; ', $hover), $bold);

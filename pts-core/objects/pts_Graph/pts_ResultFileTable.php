@@ -31,6 +31,17 @@ class pts_ResultFileTable extends pts_Table
 		parent::__construct($rows, $columns, $table_data, $result_file);
 		$this->result_object_index = $result_object_index;
 
+		if($result_object_index == -1)
+		{
+			$this->graph_title = $result_file->get_title();
+		}
+		else
+		{
+			$result_object = $result_file->get_result_objects($result_object_index);
+			$this->graph_title = $result_object[0]->test_profile->get_title();
+			array_push($this->graph_sub_titles, $result_object[0]->get_arguments_description());
+		}
+
 		// where to start the table values
 		$this->longest_row_identifier = null;
 		$longest_row_title_length = 0;

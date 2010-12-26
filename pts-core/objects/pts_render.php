@@ -57,12 +57,11 @@ class pts_render
 
 				if($nested)
 				{
-					$graph = base64_encode($graph);
-					$graph = "<img src=\"data:image/png;base64,$conts\" />";
+					$graph = '<img src="data:image/png;base64,' . base64_encode($graph) . '" />';
 				}
 				else
 				{
-					header("Content-Type: image/" . strtolower($graph->graph_image->get_renderer()));
+					header('Content-Type: image/' . strtolower($graph->graph_image->get_renderer()));
 				}
 				break;
 			case 'SVG':
@@ -71,11 +70,11 @@ class pts_render
 				if($nested)
 				{
 					// strip out any DOCTYPE and other crud that would be redundant, so start at SVG tag
-					$graph = substr($graph, strpos($graph, "<svg"));
+					$graph = substr($graph, strpos($graph, '<svg'));
 				}
 				else
 				{
-					header("Content-type: image/svg+xml");
+					header('Content-type: image/svg+xml');
 				}
 
 				//$graph = "<object type=\"image/svg+xml\">" . $svg . "</object>";
@@ -93,7 +92,7 @@ class pts_render
 	{
 		if($result_file != null && ($result_file->is_multi_way_comparison() || $result_file->is_results_tracker()))
 		{
-			if($result_file->is_multi_way_comparison() && $result_object->test_profile->get_display_format() == "LINE_GRAPH")
+			if($result_file->is_multi_way_comparison() && $result_object->test_profile->get_display_format() == 'LINE_GRAPH')
 			{
 				// Turn a multi-way line graph into an averaged bar graph
 				$buffer_items = $result_object->test_result_buffer->get_buffer_items();
@@ -106,12 +105,12 @@ class pts_render
 					$result_object->test_result_buffer->add_test_result($buffer_item->get_result_identifier(), $avg_value, $avg_value);
 				}
 
-				$result_object->test_profile->set_display_format("BAR_GRAPH");
+				$result_object->test_profile->set_display_format('BAR_GRAPH');
 			}
 
 			$result_table = false;
 
-			if($result_object->test_profile->get_display_format() != "PIE_CHART")
+			if($result_object->test_profile->get_display_format() != 'PIE_CHART')
 			{
 				pts_render::compact_result_file_test_object($result_object, $result_table, $result_file->is_multi_way_inverted());
 			}
@@ -124,46 +123,46 @@ class pts_render
 		{
 			switch(pts_Graph::$graph_config->getXmlValue(P_GRAPH_BAR_ORIENTATION))
 			{
-				case "VERTICAL":
-					$preferred_bar_graph_type = "pts_VerticalBarGraph";
+				case 'VERTICAL':
+					$preferred_bar_graph_type = 'pts_VerticalBarGraph';
 					break;
-				case "HORIZONTAL":
+				case 'HORIZONTAL':
 				default:
-					$preferred_bar_graph_type = "pts_HorizontalBarGraph";
+					$preferred_bar_graph_type = 'pts_HorizontalBarGraph';
 					break;
 			}
 		}
 
 		switch($display_format)
 		{
-			case "LINE_GRAPH":
-				$graph_type = "pts_LineGraph";
+			case 'LINE_GRAPH':
+				$graph_type = 'pts_LineGraph';
 				break;
-			case "BAR_ANALYZE_GRAPH":
-			case "BAR_GRAPH":
+			case 'BAR_ANALYZE_GRAPH':
+			case 'BAR_GRAPH':
 				$graph_type = $preferred_bar_graph_type;
 				break;
-			case "PASS_FAIL":
-				$graph_type = "pts_PassFailGraph";
+			case 'PASS_FAIL':
+				$graph_type = 'pts_PassFailGraph';
 				break;
-			case "MULTI_PASS_FAIL":
-				$graph_type = "pts_MultiPassFailGraph";
+			case 'MULTI_PASS_FAIL':
+				$graph_type = 'pts_MultiPassFailGraph';
 				break;
-			case "TEST_COUNT_PASS":
-				$graph_type = "pts_TestCountPassGraph";
+			case 'TEST_COUNT_PASS':
+				$graph_type = 'pts_TestCountPassGraph';
 				break;
-			case "PIE_CHART":
-				$graph_type = "pts_PieChart";
+			case 'PIE_CHART':
+				$graph_type = 'pts_PieChart';
 				break;
-			case "IMAGE_COMPARISON":
-				$graph_type = "pts_ImageComparisonGraph";
+			case 'IMAGE_COMPARISON':
+				$graph_type = 'pts_ImageComparisonGraph';
 				break;
 			default:
-				if(isset($extra_attributes["graph_render_type"]))
+				if(isset($extra_attributes['graph_render_type']))
 				{
-					$requested_graph_type = $extra_attributes["graph_render_type"];
+					$requested_graph_type = $extra_attributes['graph_render_type'];
 				}
-				else if(defined("GRAPH_RENDER_TYPE"))
+				else if(defined('GRAPH_RENDER_TYPE'))
 				{
 					$requested_graph_type = GRAPH_RENDER_TYPE;
 				}
@@ -174,11 +173,11 @@ class pts_render
 
 				switch($requested_graph_type)
 				{
-					case "CANDLESTICK":
-						$graph_type = "pts_CandleStickGraph";
+					case 'CANDLESTICK':
+						$graph_type = 'pts_CandleStickGraph';
 						break;
-					case "LINE_GRAPH":
-						$graph_type = "pts_LineGraph";
+					case 'LINE_GRAPH':
+						$graph_type = 'pts_LineGraph';
 						break;
 					default:
 						$graph_type = $preferred_bar_graph_type;
@@ -191,19 +190,19 @@ class pts_render
 		eval("\$graph = new " . $graph_type . "(\$result_object, \$result_file);");
 
 
-		if(isset($extra_attributes["regression_marker_threshold"]))
+		if(isset($extra_attributes['regression_marker_threshold']))
 		{
-			$graph->markResultRegressions($extra_attributes["regression_marker_threshold"]);
+			$graph->markResultRegressions($extra_attributes['regression_marker_threshold']);
 		}
 
 		switch($display_format)
 		{
-			case "LINE_GRAPH":
-				if(isset($extra_attributes["no_overview_text"]) && $graph instanceof pts_LineGraph)
+			case 'LINE_GRAPH':
+				if(isset($extra_attributes['no_overview_text']) && $graph instanceof pts_LineGraph)
 				{
 					$graph->plot_overview_text = false;
 				}
-			case "BAR_ANALYZE_GRAPH":
+			case 'BAR_ANALYZE_GRAPH':
 				//$graph->hideGraphIdentifiers();
 				foreach($result_object->test_result_buffer->get_buffer_items() as $buffer_item)
 				{
@@ -265,17 +264,17 @@ class pts_render
 
 		switch($overview_type)
 		{
-			case "GEOMETRIC_MEAN":
-				$title = "Geometric Mean";
-				$math_call = array("pts_math", "geometric_mean");
+			case 'GEOMETRIC_MEAN':
+				$title = 'Geometric Mean';
+				$math_call = array('pts_math', 'geometric_mean');
 				break;
-			case "HARMONIC_MEAN":
-				$title = "Harmonic Mean";
-				$math_call = array("pts_math", "harmonic_mean");
+			case 'HARMONIC_MEAN':
+				$title = 'Harmonic Mean';
+				$math_call = array('pts_math', 'harmonic_mean');
 				break;
-			case "AGGREGATE_SUM":
-				$title = "Aggregate Sum";
-				$math_call = "array_sum";
+			case 'AGGREGATE_SUM':
+				$title = 'Aggregate Sum';
+				$math_call = 'array_sum';
 				break;
 			default:
 				return false;
@@ -295,12 +294,12 @@ class pts_render
 		}
 
 		$test_profile = new pts_test_profile(null);
-		$test_profile->set_test_title("Results Overview");
-		$test_profile->set_result_scale($title . " | " . implode(',', $days_keys));
-		$test_profile->set_display_format("LINE_GRAPH");
+		$test_profile->set_test_title('Results Overview');
+		$test_profile->set_result_scale($title . ' | ' . implode(',', $days_keys));
+		$test_profile->set_display_format('LINE_GRAPH');
 
 		$test_result = new pts_test_result();
-		$test_result->set_used_arguments_description("Phoromatic Tracker: " . $title);
+		$test_result->set_used_arguments_description('Phoromatic Tracker: ' . $title);
 		$test_result->set_test_result_buffer($result_buffer);
 
 		return $test_result;
@@ -333,7 +332,7 @@ class pts_render
 
 		foreach($mto->test_result_buffer->get_buffer_items() as $buffer_item)
 		{
-			$identifier = pts_strings::trim_explode(": ", $buffer_item->get_result_identifier());
+			$identifier = pts_strings::trim_explode(': ', $buffer_item->get_result_identifier());
 
 			switch(count($identifier))
 			{
@@ -382,7 +381,7 @@ class pts_render
 
 		foreach($mto->test_result_buffer->get_buffer_items() as $buffer_item)
 		{
-			$identifier = pts_strings::trim_explode(": ", $buffer_item->get_result_identifier());
+			$identifier = pts_strings::trim_explode(': ', $buffer_item->get_result_identifier());
 
 			switch(count($identifier))
 			{
@@ -409,7 +408,7 @@ class pts_render
 		}
 
 		$mto->test_profile->set_result_scale($mto->test_profile->get_result_scale() . ' | ' . implode(',', array_keys($days)));
-		$mto->test_profile->set_display_format((count($days) < 5 || $is_tracking == false ? "BAR_ANALYZE_GRAPH" : "LINE_GRAPH"));
+		$mto->test_profile->set_display_format((count($days) < 5 || $is_tracking == false ? 'BAR_ANALYZE_GRAPH' : 'LINE_GRAPH'));
 		$mto->test_result_buffer = new pts_test_result_buffer();
 		$day_keys = array_keys($days);
 
