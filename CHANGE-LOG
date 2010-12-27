@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- pts-core: Fixes for using the local test profile/suite repository
+
 Phoronix Test Suite 3.0 Alpha 5
 27 December 2010
 

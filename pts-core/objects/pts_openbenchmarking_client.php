@@ -261,13 +261,13 @@ class pts_openbenchmarking_client
 		{
 			if($repo == "local")
 			{
-				if(is_file(PTS_TEST_PROFILE_PATH . $test . '/test-definition.xml'))
+				if(is_file(PTS_TEST_PROFILE_PATH . $repo . '/' . $test . '/test-definition.xml'))
 				{
-					return $repo . '/' . $test . ($bind_version ? '-' . $version : null);
+					return $repo . '/' . $test; // ($bind_version ? '-' . $version : null)
 				}
-				else if(is_file(PTS_TEST_SUITE_PATH . $test . '/suite-definition.xml'))
+				else if(is_file(PTS_TEST_SUITE_PATH . $repo . '/' . $test . '/suite-definition.xml'))
 				{
-					return $repo . '/' . $test . ($bind_version ? '-' . $version : null);
+					return $repo . '/' . $test; // ($bind_version ? '-' . $version : null)
 				}
 			}
 
