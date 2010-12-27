@@ -686,11 +686,18 @@ abstract class pts_Graph
 	}
 	protected function render_graph_heading($with_version = true)
 	{
+		$ir_value_attributes = array();
+
+		if($this->test_identifier != null)
+		{
+			$ir_value_attributes['href'] = 'http://openbenchmarking.org/test/' . $this->test_identifier;
+		}
+
 		// Default to NORMAL
 		if($this->iveland_view)
 		{
 			$this->graph_image->draw_rectangle(0, 0, $this->graph_attr_width, $this->graph_top_heading_height, $this->graph_color_main_headers);
-			$this->graph_image->write_text_left(new pts_graph_ir_value($this->graph_title, array('href' => 'http://openbenchmarking.org/test/' . $this->test_identifier)), $this->graph_font, $this->graph_font_size_heading, $this->graph_color_background, 5, 12, $this->graph_left_end, 12);
+			$this->graph_image->write_text_left(new pts_graph_ir_value($this->graph_title, $ir_value_attributes), $this->graph_font, $this->graph_font_size_heading, $this->graph_color_background, 5, 12, $this->graph_left_end, 12);
 
 			foreach($this->graph_sub_titles as $i => $sub_title)
 			{
@@ -702,7 +709,7 @@ abstract class pts_Graph
 		}
 		else
 		{
-			$this->graph_image->write_text_center(new pts_graph_ir_value($this->graph_title, array('href' => 'http://openbenchmarking.org/test/' . $this->test_identifier)), $this->graph_font, $this->graph_font_size_heading, $this->graph_color_main_headers, $this->graph_left_start, 3, $this->graph_left_end, 3);
+			$this->graph_image->write_text_center(new pts_graph_ir_value($this->graph_title, $ir_value_attributes), $this->graph_font, $this->graph_font_size_heading, $this->graph_color_main_headers, $this->graph_left_start, 3, $this->graph_left_end, 3);
 
 			foreach($this->graph_sub_titles as $i => $sub_title)
 			{

@@ -227,9 +227,10 @@ class pts_Table extends pts_Graph
 			}
 
 			$row_string->set_attribute('font-weight', 'bold');
+			$text_color = $row_string->get_attribute('alert') ? $this->graph_color_alert : $this->graph_color_text;
 
 			$v = $identifier_height + $this->graph_top_heading_height + ($row * $table_line_height) + $table_line_height_half;
-			$this->graph_image->write_text_right($row_string, $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_text, 2, $v, $this->graph_left_start - 2, $v);
+			$this->graph_image->write_text_right($row_string, $this->graph_font, $this->graph_font_size_identifiers, $text_color, 2, $v, $this->graph_left_start - 2, $v);
 			$row++;
 		}
 

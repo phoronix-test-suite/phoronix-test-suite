@@ -84,6 +84,18 @@ class pts_ResultFileTable extends pts_Table
 				$result_tests[$result_counter]->set_attribute('title', $result_object->get_arguments_description());
 			}
 
+			if($result_object->test_profile->get_identifier() == null)
+			{
+				$result_tests[$result_counter]->set_attribute('alert', true);
+				foreach($result_object->test_result_buffer->get_buffer_items() as $index => $buffer_item)
+				{
+					$identifier = $buffer_item->get_result_identifier();
+					$value = $buffer_item->get_result_value();
+					$result_table[$identifier][$result_counter] = new pts_graph_ir_value($value, array('alert' => true));
+				}
+				$result_counter++;
+				continue;
+			}
 
 			switch($result_object->test_profile->get_display_format())
 			{

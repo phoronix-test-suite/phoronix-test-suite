@@ -263,19 +263,6 @@ class pts_render
 	}
 	public static function generate_overview_object(&$overview_table, $overview_type)
 	{
-		$result_buffer = new pts_test_result_buffer();
-		$days_keys = null;
-
-		foreach($overview_table as $system_key => &$system)
-		{
-			if($days_keys == null)
-			{
-				// TODO: Rather messy and inappropriate way of getting the days keys
-				$days_keys = array_keys($system);
-				break;
-			}
-		}
-
 		switch($overview_type)
 		{
 			case 'GEOMETRIC_MEAN':
@@ -294,26 +281,58 @@ class pts_render
 				return false;
 
 		}
+		$result_buffer = new pts_test_result_buffer();
 
-		foreach($overview_table as $system_key => &$system)
+		if($overview_table instanceof pts_result_file)
 		{
-			$to_show = array();
+			list($days_keys1, $days_keys, $shred) = pts_ResultFileTable::result_file_to_result_table($overview_table);
 
-			foreach($system as &$days)
+			foreach($shred as $system_key => &$system)
 			{
-				array_push($to_show, call_user_func($math_call, $days));
+				$to_show = array();
+
+				foreach($system as &$days)
+				{
+					$days = $days->get_value();
+				}
+
+				array_push($to_show, pts_math::set_precision(call_user_func($math_call, $system), 2));
+				$result_buffer->add_test_result($system_key, implode(',', $to_show), null);
+			}
+		}
+		else
+		{
+			$days_keys = null;
+			foreach($overview_table as $system_key => &$system)
+			{
+				if($days_keys == null)
+				{
+					// TODO: Rather messy and inappropriate way of getting the days keys
+					$days_keys = array_keys($system);
+					break;
+				}
 			}
 
-			$result_buffer->add_test_result($system_key, implode(',', $to_show), null);
+			foreach($overview_table as $system_key => &$system)
+			{
+				$to_show = array();
+
+				foreach($system as &$days)
+				{
+					array_push($to_show, call_user_func($math_call, $days));
+				}
+
+				$result_buffer->add_test_result($system_key, implode(',', $to_show), null);
+			}
 		}
 
 		$test_profile = new pts_test_profile(null);
-		$test_profile->set_test_title('Results Overview');
+		$test_profile->set_test_title($title);
 		$test_profile->set_result_scale($title . ' | ' . implode(',', $days_keys));
-		$test_profile->set_display_format('LINE_GRAPH');
+		$test_profile->set_display_format('BAR_GRAPH');
 
-		$test_result = new pts_test_result();
-		$test_result->set_used_arguments_description('Phoromatic Tracker: ' . $title);
+		$test_result = new pts_test_result($test_profile);
+		$test_result->set_used_arguments_description('Analytical Overview');
 		$test_result->set_test_result_buffer($result_buffer);
 
 		return $test_result;
