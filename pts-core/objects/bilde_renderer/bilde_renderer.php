@@ -24,7 +24,7 @@
 abstract class bilde_renderer
 {
 	// TODO: rework the entire bilde_renderer drawing API by PTS3, see michaellarabel for details. Right now it's getting a messy with the additions
-	public $renderer = "bilde_renderer";
+	public $renderer = 'bilde_renderer';
 	protected $image;
 	protected $image_width = -1;
 	protected $image_height = -1;
@@ -32,7 +32,7 @@ abstract class bilde_renderer
 	protected $uid_count = 1;
 	protected $special_attributes = null;
 
-	abstract function __construct($width, $height, $embed_identifiers = ""); // create the object
+	abstract function __construct($width, $height, $embed_identifiers = null); // create the object
 
 	abstract function html_embed_code($file_name, $attributes = null, $is_xsl = false);
 	abstract function render_image($output_file = null, $quality = 100);
@@ -157,8 +157,8 @@ abstract class bilde_renderer
 	public static function setup_renderer($requested_renderer, $width, $height, $embed_identifiers = null, $special_attributes = null)
 	{
 		bilde_renderer::setup_font_directory();
-		$available_renderers = array("PNG", "JPG", "GIF", "SWF", "SVG", "SVGZ");
-		$selected_renderer = "SVG";
+		$available_renderers = array('PNG', 'JPG', 'GIF', 'SWF', 'SVG', 'SVGZ');
+		$selected_renderer = 'SVG';
 		$use_renderer = false;
 
 		if(isset($_SERVER['HTTP_USER_AGENT']))
@@ -171,9 +171,9 @@ abstract class bilde_renderer
 			}
 		}
 
-		if((($this_renderer = getenv("BILDE_RENDERER")) != false || defined("BILDE_RENDERER") && ($this_renderer = BILDE_RENDERER) || ($this_renderer = $requested_renderer) != null) && in_array($this_renderer, $available_renderers))
+		if((($this_renderer = getenv('BILDE_RENDERER')) != false || defined('BILDE_RENDERER') && ($this_renderer = BILDE_RENDERER) || ($this_renderer = $requested_renderer) != null) && in_array($this_renderer, $available_renderers))
 		{
-			$is_supported = call_user_func(array("bilde_" . strtolower($this_renderer) . "_renderer", "renderer_supported"));
+			$is_supported = call_user_func(array('bilde_' . strtolower($this_renderer) . '_renderer', 'renderer_supported'));
 
 			if($is_supported)
 			{
@@ -187,7 +187,7 @@ abstract class bilde_renderer
 			/*
 			foreach($available_renderers as $this_renderer)
 			{
-				$is_supported = call_user_func(array("bilde_" . strtolower($this_renderer) . "_renderer", "renderer_supported"));
+				$is_supported = call_user_func(array('bilde_' . strtolower($this_renderer) . '_renderer', 'renderer_supported'));
 
 				if($is_supported)
 				{
@@ -217,7 +217,7 @@ abstract class bilde_renderer
 	}
 	public function render_to_file($output_file = null, $quality = 100)
 	{
-		$output_file = str_replace("BILDE_EXTENSION", strtolower($this->get_renderer()), $output_file);
+		$output_file = str_replace('BILDE_EXTENSION', strtolower($this->get_renderer()), $output_file);
 		return $this->render_image($output_file, $quality);
 	}
 
@@ -295,35 +295,35 @@ abstract class bilde_renderer
 	public static function setup_font_directory()
 	{
 		// Setup directory for TTF Fonts
-		if(getenv("GDFONTPATH") == false)
+		if(getenv('GDFONTPATH') == false)
 		{
-			if(defined("CUSTOM_FONT_DIR"))
+			if(defined('CUSTOM_FONT_DIR'))
 			{
-				putenv("GDFONTPATH=" . CUSTOM_FONT_DIR);
+				putenv('GDFONTPATH=' . CUSTOM_FONT_DIR);
 			}
-			else if(defined("FONT_DIR"))
+			else if(defined('FONT_DIR'))
 			{
-				putenv("GDFONTPATH=" . FONT_DIR);
+				putenv('GDFONTPATH=' . FONT_DIR);
 			}
-			else if(($font_env = getenv("FONT_DIR")) != false)
+			else if(($font_env = getenv('FONT_DIR')) != false)
 			{
-				putenv("GDFONTPATH=" . $font_env);
+				putenv('GDFONTPATH=' . $font_env);
 			}
 			else
 			{
-				putenv("GDFONTPATH=" . getcwd());
+				putenv('GDFONTPATH=' . getcwd());
 			}
 		}
 	}
 	public static function find_default_ttf_font($find_font = null)
 	{
-		if(!defined("BILDE_DEFAULT_FONT"))
+		if(!defined('BILDE_DEFAULT_FONT'))
 		{
 			if(is_readable($find_font))
 			{
 				$default_font = $find_font;
 			}
-			else if(ini_get("open_basedir"))
+			else if(ini_get('open_basedir'))
 			{
 				$default_font = false;
 			}
@@ -331,17 +331,17 @@ abstract class bilde_renderer
 			{
 				$default_font = false;
 				$possible_fonts = array(
-				"/usr/share/fonts/truetype/ttf-dejavu/DejaVuSans.ttf",
-				"/usr/share/fonts/truetype/freefont/FreeSans.ttf",
-				"/usr/share/fonts/truetype/ttf-bitstream-vera/Vera.ttf",
-				"/usr/share/fonts/dejavu/DejaVuSans.ttf",
-				"/usr/share/fonts/liberation/LiberationSans-Regular.ttf",
-				"/usr/share/fonts/truetype/DejaVuSans.ttf",
-				"/usr/share/fonts/truetype/LiberationSans-Regular.ttf",
-				"/usr/share/fonts/TTF/dejavu/DejaVuSans.ttf",
-				"/usr/share/fonts/TTF/liberation/LiberationSans-Regular.ttf",
-				"/usr/X11/lib/X11/fonts/TrueType/arphic/uming.ttf",
-				"/usr/local/lib/X11/fonts/bitstream-vera/Vera.ttf"
+				'/usr/share/fonts/truetype/ttf-dejavu/DejaVuSans.ttf',
+				'/usr/share/fonts/truetype/freefont/FreeSans.ttf',
+				'/usr/share/fonts/truetype/ttf-bitstream-vera/Vera.ttf',
+				'/usr/share/fonts/dejavu/DejaVuSans.ttf',
+				'/usr/share/fonts/liberation/LiberationSans-Regular.ttf',
+				'/usr/share/fonts/truetype/DejaVuSans.ttf',
+				'/usr/share/fonts/truetype/LiberationSans-Regular.ttf',
+				'/usr/share/fonts/TTF/dejavu/DejaVuSans.ttf',
+				'/usr/share/fonts/TTF/liberation/LiberationSans-Regular.ttf',
+				'/usr/X11/lib/X11/fonts/TrueType/arphic/uming.ttf',
+				'/usr/local/lib/X11/fonts/bitstream-vera/Vera.ttf'
 				);
 
 				foreach($possible_fonts as $font_file)
@@ -354,7 +354,7 @@ abstract class bilde_renderer
 				}
 			}
 
-			define("BILDE_DEFAULT_FONT", $default_font);
+			define('BILDE_DEFAULT_FONT', $default_font);
 		}
 
 		return BILDE_DEFAULT_FONT;
@@ -377,15 +377,15 @@ abstract class bilde_renderer
 
 		if(is_readable($file))
 		{
-			$file_extension = strtoupper(substr($file, strrpos($file, ".") + 1));
+			$file_extension = strtoupper(substr($file, strrpos($file, '.') + 1));
 
 			switch($file_extension)
 			{
-				case "PNG":
+				case 'PNG':
 					$return_type = $this->png_image_to_type($file);
 					break;
-				case "JPG":
-				case "JPEG":
+				case 'JPG':
+				case 'JPEG':
 					$return_type = $this->jpg_image_to_type($file);
 					break;
 			}
@@ -397,14 +397,14 @@ abstract class bilde_renderer
 	{
 		bilde_renderer::setup_font_directory();
 
-		if(function_exists("imagettfbbox") && $font_type != false)
+		if(function_exists('imagettfbbox') && $font_type != false)
 		{
 			$box_array = imagettfbbox($font_size, 0, $font_type, $text_string);
 			$box_width = $box_array[4] - $box_array[6];
 
 			if($predefined_string)
 			{
-				$box_array = imagettfbbox($font_size, 0, $font_type, "JAZ@![]()@|_qy");
+				$box_array = imagettfbbox($font_size, 0, $font_type, 'JAZ@![]()@|_qy');
 			}
 
 			$box_height = $box_array[1] - $box_array[7];

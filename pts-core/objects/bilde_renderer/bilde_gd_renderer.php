@@ -23,7 +23,7 @@
 
 abstract class bilde_gd_renderer extends bilde_renderer
 {
-	public function __construct($width, $height, $embed_identifiers = "")
+	public function __construct($width, $height, $embed_identifiers = null)
 	{
 		$this->image = $this->init_new_gd_image($width, $height);
 		$this->image_width = $width;
@@ -31,33 +31,33 @@ abstract class bilde_gd_renderer extends bilde_renderer
 	}
 	public static function renderer_supported()
 	{
-		return extension_loaded("gd") && function_exists("imagettftext") && self::find_default_ttf_font();
+		return extension_loaded('gd') && function_exists('imagettftext') && self::find_default_ttf_font();
 	}
 	public function html_embed_code($file_name, $attributes = null, $is_xsl = false)
 	{
-		$file_name = str_replace("BILDE_EXTENSION", strtolower($this->get_renderer()), $file_name);
+		$file_name = str_replace('BILDE_EXTENSION', strtolower($this->get_renderer()), $file_name);
 		$attributes = pts_arrays::to_array($attributes);
-		$attributes["src"] = $file_name;
+		$attributes['src'] = $file_name;
 
 		if($is_xsl)
 		{
-			$html = "<img>";
+			$html = '<img>';
 
 			foreach($attributes as $option => $value)
 			{
-				$html .= "<xsl:attribute name=\"" . $option . "\">" . $value . "</xsl:attribute>";
+				$html .= '<xsl:attribute name="' . $option . '">' . $value . '</xsl:attribute>';
 			}
-			$html .= "</img>";
+			$html .= '</img>';
 		}
 		else
 		{
-			$html = "<img ";
+			$html = '<img ';
 
 			foreach($attributes as $option => $value)
 			{
-				$html .= $option . "=\"" . $value . "\" ";
+				$html .= $option . '="' . $value . '" ';
 			}
-			$html .= "/>";
+			$html .= '/>';
 		}
 
 		return $html;
@@ -253,7 +253,7 @@ abstract class bilde_gd_renderer extends bilde_renderer
 
 		imageinterlace($img, true);
 
-		if(function_exists("imageantialias"))
+		if(function_exists('imageantialias'))
 		{
 			imageantialias($img, true);
 		}

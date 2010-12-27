@@ -45,7 +45,7 @@ class nye_XmlWriter
 
 		if($xsl_binding != null)
 		{
-			$xslt = $this->dom->createProcessingInstruction("xml-stylesheet", "type=\"text/xsl\" href=\"" . $xsl_binding . "\"");
+			$xslt = $this->dom->createProcessingInstruction('xml-stylesheet', 'type="text/xsl" href="' . $xsl_binding . '"');
 			$this->dom->appendChild($xslt);
 		}
 	}

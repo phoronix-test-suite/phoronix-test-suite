@@ -32,12 +32,12 @@ class pts_result_file_merge_manager
 	{
 		$this->test_results = array();
 
-		if(isset($pass_attributes["subsystem_targets_to_skip"]) && is_array($pass_attributes["subsystem_targets_to_skip"]))
+		if(isset($pass_attributes['subsystem_targets_to_skip']) && is_array($pass_attributes['subsystem_targets_to_skip']))
 		{
-			$this->skip_subsystems = $pass_attributes["subsystem_targets_to_skip"];
+			$this->skip_subsystems = $pass_attributes['subsystem_targets_to_skip'];
 		}
 
-		$this->is_reference_comparison = isset($pass_attributes["is_reference_comparison"]);
+		$this->is_reference_comparison = isset($pass_attributes['is_reference_comparison']);
 		$this->skip_adding_on_extra_sets = isset($pass_attributes['skip_adding_on_extra_sets']);
 
 	}

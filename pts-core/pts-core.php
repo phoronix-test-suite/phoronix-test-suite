@@ -21,10 +21,10 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-define("PTS_VERSION", "3.0.0a5");
-define("PTS_CORE_VERSION", 2962);
-define("PTS_CODENAME", "IVELAND");
-define("PTS_IS_CLIENT", PTS_MODE == "CLIENT");
+define('PTS_VERSION', '3.0.0a5');
+define('PTS_CORE_VERSION', 2962);
+define('PTS_CODENAME', 'IVELAND');
+define('PTS_IS_CLIENT', PTS_MODE == 'CLIENT');
 
 if(PTS_IS_CLIENT)
 {
@@ -35,38 +35,38 @@ function pts_codename($full_string = false)
 {
 	$codename = ucwords(strtolower(PTS_CODENAME));
 
-	return ($full_string ? "PhoronixTestSuite/" : null) . $codename;
+	return ($full_string ? 'PhoronixTestSuite/' : null) . $codename;
 }
 function pts_title($show_both = false)
 {
-	return "Phoronix Test Suite" . (PTS_VERSION != null ? " v" . PTS_VERSION : null) . (PTS_CODENAME != null && (PTS_VERSION == null || $show_both ) ? " (" . ucwords(strtolower(PTS_CODENAME)) . ")" : null);
+	return 'Phoronix Test Suite' . (PTS_VERSION != null ? ' v' . PTS_VERSION : null) . (PTS_CODENAME != null && (PTS_VERSION == null || $show_both ) ? ' (' . ucwords(strtolower(PTS_CODENAME)) . ')' : null);
 }
 function pts_define_directories()
 {
 	// User's home directory for storing results, module files, test installations, etc.
-	define("PTS_CORE_PATH", PTS_PATH . "pts-core/");
+	define('PTS_CORE_PATH', PTS_PATH . 'pts-core/');
 
 	if(PTS_IS_CLIENT)
 	{
-		define("PTS_USER_PATH", pts_client::user_home_directory() . ".phoronix-test-suite/");
-		define("PTS_CORE_STORAGE", PTS_USER_PATH . "core.pt2so");
+		define('PTS_USER_PATH', pts_client::user_home_directory() . '.phoronix-test-suite/');
+		define('PTS_CORE_STORAGE', PTS_USER_PATH . 'core.pt2so');
 	}
 
 	// Misc Locations
-	define("PTS_MODULE_PATH", PTS_CORE_PATH . "modules/");
-	define("PTS_MODULE_LOCAL_PATH", PTS_USER_PATH . "modules/");
-	define("PTS_MODULE_DATA_PATH", PTS_USER_PATH . "modules-data/");
-	define("PTS_DOWNLOAD_CACHE_PATH", PTS_USER_PATH . "download-cache/");
-	define("PTS_CORE_STATIC_PATH", PTS_CORE_PATH . "static/");
-	define("PTS_COMMAND_PATH", PTS_CORE_PATH . "commands/");
-	define("PTS_EXDEP_PATH", PTS_CORE_PATH . "external-test-dependencies/");
-	define("PTS_RESULTS_VIEWER_PATH", PTS_CORE_PATH . "results-viewer/");
-	define("PTS_OPENBENCHMARKING_PATH", PTS_CORE_PATH . "openbenchmarking.org/");
-	define("PTS_OPENBENCHMARKING_SCRATCH_PATH", PTS_USER_PATH . "openbenchmarking.org/");
+	define('PTS_MODULE_PATH', PTS_CORE_PATH . 'modules/');
+	define('PTS_MODULE_LOCAL_PATH', PTS_USER_PATH . 'modules/');
+	define('PTS_MODULE_DATA_PATH', PTS_USER_PATH . 'modules-data/');
+	define('PTS_DOWNLOAD_CACHE_PATH', PTS_USER_PATH . 'download-cache/');
+	define('PTS_CORE_STATIC_PATH', PTS_CORE_PATH . 'static/');
+	define('PTS_COMMAND_PATH', PTS_CORE_PATH . 'commands/');
+	define('PTS_EXDEP_PATH', PTS_CORE_PATH . 'external-test-dependencies/');
+	define('PTS_RESULTS_VIEWER_PATH', PTS_CORE_PATH . 'results-viewer/');
+	define('PTS_OPENBENCHMARKING_PATH', PTS_CORE_PATH . 'openbenchmarking.org/');
+	define('PTS_OPENBENCHMARKING_SCRATCH_PATH', PTS_USER_PATH . 'openbenchmarking.org/');
 
 	// Test & Suite Locations
-	define("PTS_TEST_PROFILE_PATH", PTS_USER_PATH . "test-profiles/");
-	define("PTS_TEST_SUITE_PATH", PTS_USER_PATH . "test-suites/");
+	define('PTS_TEST_PROFILE_PATH', PTS_USER_PATH . 'test-profiles/');
+	define('PTS_TEST_SUITE_PATH', PTS_USER_PATH . 'test-suites/');
 }
 function pts_load_xml_definitions($definition_file)
 {
@@ -78,7 +78,7 @@ function pts_load_xml_definitions($definition_file)
 	}
 
 	$loaded_definition_files[$definition_file] = true;
-	$definition_file = PTS_CORE_PATH . "definitions/" . $definition_file;
+	$definition_file = PTS_CORE_PATH . 'definitions/' . $definition_file;
 
 	if(!is_file($definition_file))
 	{
@@ -86,8 +86,8 @@ function pts_load_xml_definitions($definition_file)
 	}
 
 	$xml_reader = new nye_XmlReader($definition_file);
-	$definitions_names = $xml_reader->getXMLArrayValues("PhoronixTestSuite/Definitions/Define/Name");
-	$definitions_values = $xml_reader->getXMLArrayValues("PhoronixTestSuite/Definitions/Define/Value");
+	$definitions_names = $xml_reader->getXMLArrayValues('PhoronixTestSuite/Definitions/Define/Name');
+	$definitions_values = $xml_reader->getXMLArrayValues('PhoronixTestSuite/Definitions/Define/Value');
 
 	for($i = 0; $i < count($definitions_names); $i++)
 	{
@@ -102,22 +102,22 @@ function pts_needed_extensions()
 		// Required? - The Check If In Place - Name - Description
 
 		// Required extesnions denoted by 1 at [0]
-		array(1, extension_loaded("dom"), "DOM", "The PHP Document Object Model (DOM) is required."),
-		array(1, extension_loaded("zip"), "ZIP", "PHP Zip support is required."),
+		array(1, extension_loaded('dom'), 'DOM', 'The PHP Document Object Model (DOM) is required.'),
+		array(1, extension_loaded('zip'), 'ZIP', 'PHP Zip support is required.'),
 
 		// Optional but recommended extensions
-		array(0, extension_loaded("openssl"), "OpenSSL", "PHP OpenSSL support is recommended to support HTTPS traffic."),
-		array(0, extension_loaded("gd"), "GD", "The PHP GD library is recommended for improved graph rendering."),
-		array(0, extension_loaded("zlib"), "Zlib", "The PHP Zlib extension can be used for greater file compression."),
-		array(0, function_exists("pcntl_fork"), "PCNTL", "PHP PCNTL is highly recommended as it is required by some tests."),
-		array(0, function_exists("posix_getpwuid"), "POSIX", "PHP POSIX support is highly recommended."),
-		array(0, function_exists("curl_init"), "CURL", "PHP CURL is recommended for a better download experience.")
+		array(0, extension_loaded('openssl'), 'OpenSSL', 'PHP OpenSSL support is recommended to support HTTPS traffic.'),
+		array(0, extension_loaded('gd'), 'GD', 'The PHP GD library is recommended for improved graph rendering.'),
+		array(0, extension_loaded('zlib'), 'Zlib', 'The PHP Zlib extension can be used for greater file compression.'),
+		array(0, function_exists('pcntl_fork'), 'PCNTL', 'PHP PCNTL is highly recommended as it is required by some tests.'),
+		array(0, function_exists('posix_getpwuid'), 'POSIX', 'PHP POSIX support is highly recommended.'),
+		array(0, function_exists('curl_init'), 'CURL', 'PHP CURL is recommended for a better download experience.')
 
 		// PHP FPDF could be added here too...
 		);
 }
 
-if(PTS_IS_CLIENT || defined("PTS_AUTO_LOAD_OBJECTS"))
+if(PTS_IS_CLIENT || defined('PTS_AUTO_LOAD_OBJECTS'))
 {
 	function __autoload($to_load)
 	{
@@ -127,16 +127,16 @@ if(PTS_IS_CLIENT || defined("PTS_AUTO_LOAD_OBJECTS"))
 		{
 			$sub_objects = array();
 
-			foreach(array_merge(glob(PTS_PATH . "pts-core/objects/*/*.php"), glob(PTS_PATH . "pts-core/objects/*/*/*.php")) as $file)
+			foreach(array_merge(glob(PTS_PATH . 'pts-core/objects/*/*.php'), glob(PTS_PATH . 'pts-core/objects/*/*/*.php')) as $file)
 			{
-				$object_name = basename($file, ".php");
+				$object_name = basename($file, '.php');
 				$sub_objects[$object_name] = $file;
 			}
 		}
 
-		if(is_file(PTS_PATH . "pts-core/objects/" . $to_load . ".php"))
+		if(is_file(PTS_PATH . 'pts-core/objects/' . $to_load . '.php'))
 		{
-			include(PTS_PATH . "pts-core/objects/" . $to_load . ".php");
+			include(PTS_PATH . 'pts-core/objects/' . $to_load . '.php');
 		}
 		else if(isset($sub_objects[$to_load]))
 		{

@@ -40,7 +40,7 @@ class pts_result_file
 	}
 	public static function is_test_result_file($identifier)
 	{
-		return is_file(PTS_SAVE_RESULTS_PATH . $identifier . "/composite.xml");
+		return is_file(PTS_SAVE_RESULTS_PATH . $identifier . '/composite.xml');
 	}
 	public function get_identifier()
 	{

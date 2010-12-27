@@ -34,7 +34,7 @@ class pts_test_profile extends pts_test_profile_parser
 	public static function is_test_profile($identifier)
 	{
 		$identifier = pts_openbenchmarking::evaluate_string_to_qualifier($identifier);
-		return $identifier != false && is_file(PTS_TEST_PROFILE_PATH . $identifier . "/test-definition.xml");
+		return $identifier != false && is_file(PTS_TEST_PROFILE_PATH . $identifier . '/test-definition.xml');
 	}
 	public function get_resource_dir()
 	{
@@ -119,7 +119,7 @@ class pts_test_profile extends pts_test_profile_parser
 	{
 		$dependency_names = array();
 
-		$xml_parser = new pts_external_dependencies_nye_XmlReader(PTS_EXDEP_PATH . "xml/generic-packages.xml");
+		$xml_parser = new pts_external_dependencies_nye_XmlReader(PTS_EXDEP_PATH . 'xml/generic-packages.xml');
 		$package_name = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_GENERIC);
 		$title = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_TITLE);
 
@@ -141,18 +141,18 @@ class pts_test_profile extends pts_test_profile_parser
 	{
 		$times_to_run = parent::get_times_to_run();
 
-		if(($force_runs = pts_client::read_env("FORCE_TIMES_TO_RUN")) && is_numeric($force_runs))
+		if(($force_runs = pts_client::read_env('FORCE_TIMES_TO_RUN')) && is_numeric($force_runs))
 		{
 			$times_to_run = $force_runs;
 		}
 
-		if(($force_runs = pts_client::read_env("FORCE_MIN_TIMES_TO_RUN")) && is_numeric($force_runs) && $force_runs > $times_to_run)
+		if(($force_runs = pts_client::read_env('FORCE_MIN_TIMES_TO_RUN')) && is_numeric($force_runs) && $force_runs > $times_to_run)
 		{
 			$times_to_run = $force_runs;
 		}
 
 		$display_format = $this->get_display_format();
-		if($times_to_run < 1 || (strlen($display_format) > 6 && substr($display_format, 0, 6) == "MULTI_" || substr($display_format, 0, 6) == "IMAGE_"))
+		if($times_to_run < 1 || (strlen($display_format) > 6 && substr($display_format, 0, 6) == 'MULTI_' || substr($display_format, 0, 6) == 'IMAGE_'))
 		{
 			// Currently tests that output multiple results in one run can only be run once
 			$times_to_run = 1;
@@ -174,17 +174,17 @@ class pts_test_profile extends pts_test_profile_parser
 
 		if($this->is_test_architecture_supported() == false)
 		{
-			PTS_IS_CLIENT && $report_warnings && pts_client::$display->test_run_error($this->get_identifier() . " is not supported on this architecture: " . phodevi::read_property("system", "kernel-architecture"));
+			PTS_IS_CLIENT && $report_warnings && pts_client::$display->test_run_error($this->get_identifier() . ' is not supported on this architecture: ' . phodevi::read_property('system', 'kernel-architecture'));
 			$test_supported = false;
 		}
 		else if($this->is_test_platform_supported() == false)
 		{
-			PTS_IS_CLIENT && $report_warnings && pts_client::$display->test_run_error($this->get_identifier() . " is not supported by this operating system: " . OPERATING_SYSTEM);
+			PTS_IS_CLIENT && $report_warnings && pts_client::$display->test_run_error($this->get_identifier() . ' is not supported by this operating system: ' . OPERATING_SYSTEM);
 			$test_supported = false;
 		}
 		else if($this->is_core_version_supported() == false)
 		{
-			PTS_IS_CLIENT && $report_warnings && pts_client::$display->test_run_error($this->get_identifier() . " is not supported by this version of the Phoronix Test Suite: " . PTS_VERSION);
+			PTS_IS_CLIENT && $report_warnings && pts_client::$display->test_run_error($this->get_identifier() . ' is not supported by this version of the Phoronix Test Suite: ' . PTS_VERSION);
 			$test_supported = false;
 		}
 
@@ -220,7 +220,7 @@ class pts_test_profile extends pts_test_profile_parser
 
 		if(!empty($platforms) && !in_array(OPERATING_SYSTEM, $platforms))
 		{
-			if(IS_BSD && BSD_LINUX_COMPATIBLE && in_array("Linux", $platforms))
+			if(IS_BSD && BSD_LINUX_COMPATIBLE && in_array('Linux', $platforms))
 			{
 				// The OS is BSD but there is Linux API/ABI compatibility support loaded
 				$supported = true;
@@ -259,7 +259,7 @@ class pts_test_profile extends pts_test_profile_parser
 	}
 	public function is_test_installed()
 	{
-		return is_file($this->get_install_dir() . "pts-install.xml");
+		return is_file($this->get_install_dir() . 'pts-install.xml');
 	}
 	public function get_install_dir()
 	{
@@ -274,13 +274,13 @@ class pts_test_profile extends pts_test_profile_parser
 		$test_resources_location = $this->get_resource_dir();
 		$os_postfix = '_' . strtolower(OPERATING_SYSTEM);
 
-		if(is_file($test_resources_location . "install" . $os_postfix . ".sh"))
+		if(is_file($test_resources_location . 'install' . $os_postfix . '.sh'))
 		{
-			$installer = $test_resources_location . "install" . $os_postfix . ".sh";
+			$installer = $test_resources_location . 'install' . $os_postfix . '.sh';
 		}
-		else if(is_file($test_resources_location . "install.sh"))
+		else if(is_file($test_resources_location . 'install.sh'))
 		{
-			$installer = $test_resources_location . "install.sh";
+			$installer = $test_resources_location . 'install.sh';
 		}
 		else
 		{
@@ -291,11 +291,11 @@ class pts_test_profile extends pts_test_profile_parser
 	}
 	public function get_file_download_spec()
 	{
-		return is_file($this->get_resource_dir() . "downloads.xml") ? $this->get_resource_dir() . "downloads.xml" : false;
+		return is_file($this->get_resource_dir() . 'downloads.xml') ? $this->get_resource_dir() . 'downloads.xml' : false;
 	}
 	public function get_file_parser_spec()
 	{
-		return is_file($this->get_resource_dir() . "results-definition.xml") ? $this->get_resource_dir() . "results-definition.xml" : false;
+		return is_file($this->get_resource_dir() . 'results-definition.xml') ? $this->get_resource_dir() . 'results-definition.xml' : false;
 	}
 	public function extended_test_profiles()
 	{

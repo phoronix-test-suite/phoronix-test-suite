@@ -51,7 +51,7 @@ class pts_merge
 			}
 			else if(is_object($file) && $file instanceOf pts_result_file)
 			{
-				if(($t = $file->read_extra_attribute("rename_result_identifier")) != false)
+				if(($t = $file->read_extra_attribute('rename_result_identifier')) != false)
 				{
 					// This code path is currently used by Phoromatic
 					$result_merge_select = new pts_result_merge_select(null, null);
@@ -76,7 +76,7 @@ class pts_merge
 				continue;
 			}
 
-			if(!isset($pass_attributes["only_render_results_xml"]))
+			if(!isset($pass_attributes['only_render_results_xml']))
 			{
 				if($has_written_suite_info == false)
 				{

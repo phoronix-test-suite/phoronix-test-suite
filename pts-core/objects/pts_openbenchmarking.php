@@ -25,32 +25,32 @@ class pts_openbenchmarking
 	public static function stats_hardware_list()
 	{
 		return array(
-			"cpu" => array("cpu", "model"),
-			"cpu_count" => array("cpu", "core-count"),
-			"cpu_speed" => array("cpu", "mhz-default-frequency"),
-			"chipset" => array("chipset"),
-			"motherboard" => array("motherboard"),
-			"gpu" => array("gpu", "model")
+			'cpu' => array('cpu', 'model'),
+			'cpu_count' => array('cpu', 'core-count'),
+			'cpu_speed' => array('cpu', 'mhz-default-frequency'),
+			'chipset' => array('chipset'),
+			'motherboard' => array('motherboard'),
+			'gpu' => array('gpu', 'model')
 			);
 	}
 	public static function valid_user_name()
 	{
-		$invalid_users = array("pts", "phoronix", "local");
+		$invalid_users = array('pts', 'phoronix', 'local');
 		// TODO: finish function
 	}
 	public static function stats_software_list()
 	{
 		return array(
-			"os" => array("system", "operating-system"),
-			"os_architecture" => array("system", "kernel-architecture"),
-			"kernel" => array("system", "kernel"),
-			"display_server" => array("system", "display-server"),
-			"display_driver" => array("system", "display-driver-string"),
-			"opengl" => array("system", "opengl-driver"),
-			"desktop" => array("system", "desktop-environment"),
-			"compiler" => array("system", "compiler"),
-			"file_system" => array("system", "filesystem"),
-			"screen_resolution" => array("gpu", "screen-resolution-string")
+			'os' => array('system', 'operating-system'),
+			'os_architecture' => array('system', 'kernel-architecture'),
+			'kernel' => array('system', 'kernel'),
+			'display_server' => array('system', 'display-server'),
+			'display_driver' => array('system', 'display-driver-string'),
+			'opengl' => array('system', 'opengl-driver'),
+			'desktop' => array('system', 'desktop-environment'),
+			'compiler' => array('system', 'compiler'),
+			'file_system' => array('system', 'filesystem'),
+			'screen_resolution' => array('gpu', 'screen-resolution-string')
 			);
 	}
 	public static function is_valid_gsid_format($gsid)
@@ -159,26 +159,26 @@ class pts_openbenchmarking
 		if($host == null)
 		{
 			// Use HTTPS if OpenSSL is available as a check to see if HTTPS can be handled
-			$host = (extension_loaded("openssl") ? "https://" : "http://") . "openbenchmarking.org/";
+			$host = (extension_loaded('openssl') ? 'https://' : 'http://') . 'openbenchmarking.org/';
 		}
 
 		return $host;
 	}
 	public static function make_openbenchmarking_request($request, $post = array())
 	{
-		$url = self::openbenchmarking_host() . "f/client.php";
+		$url = self::openbenchmarking_host() . 'f/client.php';
 		$to_post = array_merge(array(
-			"r" => $request,
-			"client_version" => PTS_CORE_VERSION,
-			"gsid" => PTS_GSID,
-			"user" => null
+			'r' => $request,
+			'client_version' => PTS_CORE_VERSION,
+			'gsid' => PTS_GSID,
+			'user' => null
 			), $post);
 
 		return pts_network::http_upload_via_post($url, $to_post);
 	}
 	public static function read_repository_index($repo_name)
 	{
-		$index_file = PTS_OPENBENCHMARKING_SCRATCH_PATH . $repo_name . ".index";
+		$index_file = PTS_OPENBENCHMARKING_SCRATCH_PATH . $repo_name . '.index';
 
 		if(is_file($index_file))
 		{

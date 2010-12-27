@@ -20,7 +20,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-pts_load_xml_definitions("result-file.xml");
+pts_load_xml_definitions('result-file.xml');
 
 class pts_result_file_writer
 {
@@ -40,7 +40,7 @@ class pts_result_file_writer
 		}
 		else
 		{
-			$this->xml_writer = new nye_XmlWriter((PTS_IS_CLIENT ? "pts-results-viewer.xsl" : null));
+			$this->xml_writer = new nye_XmlWriter((PTS_IS_CLIENT ? 'pts-results-viewer.xsl' : null));
 		}
 	}
 	public function get_xml()
@@ -116,7 +116,7 @@ class pts_result_file_writer
 	public function add_result_file_meta_data(&$object, $reference_id = null)
 	{
 		$this->xml_writer->addXmlNode(P_RESULTS_GENERATED_TITLE, $object->get_title());
-		$this->xml_writer->addXmlNode(P_RESULTS_GENERATED_TIMESTAMP, date("Y-m-d H:i:s"));
+		$this->xml_writer->addXmlNode(P_RESULTS_GENERATED_TIMESTAMP, date('Y-m-d H:i:s'));
 		$this->xml_writer->addXmlNode(P_RESULTS_GENERATED_CLIENT_STRING, pts_title(true));
 		$this->xml_writer->addXmlNode(P_RESULTS_GENERATED_DESCRIPTION, $object->get_description());
 		$this->xml_writer->addXmlNodeWNE(P_RESULTS_GENERATED_NOTES, $object->get_notes());
@@ -130,7 +130,7 @@ class pts_result_file_writer
 		$this->xml_writer->addXmlNode(P_RESULTS_SYSTEM_HARDWARE, phodevi::system_hardware(true));
 		$this->xml_writer->addXmlNode(P_RESULTS_SYSTEM_SOFTWARE, phodevi::system_software(true));
 		$this->xml_writer->addXmlNode(P_RESULTS_SYSTEM_USER, pts_client::current_user());
-		$this->xml_writer->addXmlNode(P_RESULTS_SYSTEM_DATE, date("Y-m-d H:i:s"));
+		$this->xml_writer->addXmlNode(P_RESULTS_SYSTEM_DATE, date('Y-m-d H:i:s'));
 		$this->xml_writer->addXmlNode(P_RESULTS_SYSTEM_PTSVERSION, PTS_VERSION);
 		//$this->xml_writer->addXmlNode(P_RESULTS_SYSTEM_NOTES, pts_test_notes_manager::generate_test_notes($test_type));
 	}
@@ -150,7 +150,7 @@ class pts_result_file_writer
 			if(!($is_pts_rms = ($result_merge_select instanceOf pts_result_merge_select)) || $result_merge_select->get_selected_identifiers() == null || in_array($associated_identifiers[$i], $result_merge_select->get_selected_identifiers()))
 			{
 				// Prevents any information from being repeated
-				$this_hash = md5($associated_identifiers[$i] . ";" . $system_hardware[$i] . ";" . $system_software[$i] . ";" . $system_date[$i]);
+				$this_hash = md5($associated_identifiers[$i] . ';' . $system_hardware[$i] . ';' . $system_software[$i] . ';' . $system_date[$i]);
 
 				if(!in_array($this_hash, $this->added_hashes))
 				{
@@ -177,24 +177,24 @@ class pts_result_file_writer
 		// Save the test file
 		// TODO: clean this up with pts_client::save_test_result
 		$j = 1;
-		while(is_file(PTS_SAVE_RESULTS_PATH . $save_name . "/test-" . $j . ".xml"))
+		while(is_file(PTS_SAVE_RESULTS_PATH . $save_name . '/test-' . $j . '.xml'))
 		{
 			$j++;
 		}
 
-		$real_name = $save_name . "/test-" . $j . ".xml";
+		$real_name = $save_name . '/test-' . $j . '.xml';
 
 		pts_client::save_test_result($real_name, $this->xml_writer->getXML());
 
-		if(!is_file(PTS_SAVE_RESULTS_PATH . $save_name . "/composite.xml"))
+		if(!is_file(PTS_SAVE_RESULTS_PATH . $save_name . '/composite.xml'))
 		{
-			pts_client::save_test_result($save_name . "/composite.xml", file_get_contents(PTS_SAVE_RESULTS_PATH . $real_name), true, $this->result_identifier);
+			pts_client::save_test_result($save_name . '/composite.xml', file_get_contents(PTS_SAVE_RESULTS_PATH . $real_name), true, $this->result_identifier);
 		}
 		else
 		{
 			// Merge Results
-			$merged_results = pts_merge::merge_test_results(file_get_contents(PTS_SAVE_RESULTS_PATH . $save_name . "/composite.xml"), file_get_contents(PTS_SAVE_RESULTS_PATH . $real_name));
-			pts_client::save_test_result($save_name . "/composite.xml", $merged_results, true, $this->result_identifier);
+			$merged_results = pts_merge::merge_test_results(file_get_contents(PTS_SAVE_RESULTS_PATH . $save_name . '/composite.xml'), file_get_contents(PTS_SAVE_RESULTS_PATH . $real_name));
+			pts_client::save_test_result($save_name . '/composite.xml', $merged_results, true, $this->result_identifier);
 		}
 
 		return $real_name;

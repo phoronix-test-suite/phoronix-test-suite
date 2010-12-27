@@ -175,11 +175,11 @@ class pts_test_profile_parser
 	}
 	public function get_display_format()
 	{
-		return $this->xml_parser->getXMLValue(P_TEST_DISPLAY_FORMAT, "BAR_GRAPH");
+		return $this->xml_parser->getXMLValue(P_TEST_DISPLAY_FORMAT, 'BAR_GRAPH');
 	}
 	public function do_auto_save_results()
 	{
-		return pts_strings::string_bool($this->xml_parser->getXMLValue(P_TEST_AUTO_SAVE_RESULTS, "FALSE"));
+		return pts_strings::string_bool($this->xml_parser->getXMLValue(P_TEST_AUTO_SAVE_RESULTS, 'FALSE'));
 	}
 	public function get_result_quantifier()
 	{
@@ -187,15 +187,15 @@ class pts_test_profile_parser
 	}
 	public function is_root_required()
 	{
-		return pts_strings::string_bool($this->xml_parser->getXMLValue(P_TEST_ROOTNEEDED, "FALSE"));
+		return pts_strings::string_bool($this->xml_parser->getXMLValue(P_TEST_ROOTNEEDED, 'FALSE'));
 	}
 	public function allow_cache_share()
 	{
-		return pts_strings::string_bool($this->xml_parser->getXMLValue(P_TEST_ALLOW_CACHE_SHARE, "FALSE"));
+		return pts_strings::string_bool($this->xml_parser->getXMLValue(P_TEST_ALLOW_CACHE_SHARE, 'FALSE'));
 	}
 	public function allow_results_sharing()
 	{
-		return pts_strings::string_bool($this->xml_parser->getXMLValue(P_TEST_ALLOW_RESULTS_SHARING, "TRUE"));
+		return pts_strings::string_bool($this->xml_parser->getXMLValue(P_TEST_ALLOW_RESULTS_SHARING, 'TRUE'));
 	}
 	public function get_min_length()
 	{
