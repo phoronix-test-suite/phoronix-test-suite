@@ -444,6 +444,51 @@ class pts_client
 				));
 		}
 	}
+	public static function swap_variables($user_str, $replace_call)
+	{
+		if(is_array($replace_call))
+		{
+			if(count($replace_call) != 2 || method_exists($replace_call[0], $replace_call[1]) == false)
+			{
+				echo "\nVar Swap With Method Failed.\n";
+				return $user_str;
+			}
+		}
+		else if(!function_exists($replace_call))
+		{
+			echo "\nVar Swap With Function Failed.\n";
+			return $user_str;
+		}
+
+		$offset = 0;
+		$replace_call_return = false;
+
+		while($offset < strlen($user_str) && ($s = strpos($user_str, '$', $offset)) !== false)
+		{
+			$s++;
+			$var_name = substr($user_str, $s, (($e = strpos($user_str, ' ', $s)) == false ? strlen($user_str) : $e) - $s);
+
+			if($replace_call_return === false)
+			{
+				$replace_call_return = call_user_func($replace_call);
+			}
+
+			$var_replacement = isset($replace_call_return[$var_name]) ? $replace_call_return[$var_name] : null;
+
+			if($var_replacement != null)
+			{
+				$user_str = str_replace("$" . $var_name, $var_replacement, $user_str);
+			}
+			else
+			{
+				// echo "\nVariable Swap For $var_name Failed.\n";
+			}
+
+			$offset = $s + strlen($var_replacement);
+		}
+
+		return $user_str;
+	}
 	public static function setup_test_result_directory($save_to)
 	{
 		$save_to_dir = PTS_SAVE_RESULTS_PATH . $save_to;

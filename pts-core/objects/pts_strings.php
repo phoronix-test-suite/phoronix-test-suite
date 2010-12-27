@@ -36,7 +36,7 @@ class pts_strings
 	{
 		$components = parse_url($string);
 
-		return $components != false && isset($components["scheme"]) && isset($components["host"]);
+		return $components != false && isset($components['scheme']) && isset($components['host']);
 	}
 	public static function trim_search_query($value)
 	{
@@ -45,7 +45,7 @@ class pts_strings
 	public static function string_bool($string)
 	{
 		// Used for evaluating if the user inputted a string that evaluates to true
-		return in_array(strtolower($string), array("true", "1"));
+		return in_array(strtolower($string), array('true', '1'));
 	}
 	public static function add_trailing_slash($path)
 	{
@@ -53,15 +53,15 @@ class pts_strings
 	}
 	public static function trim_explode($delimiter, $to_explode)
 	{
-		return empty($to_explode) ? array() : array_map("trim", explode($delimiter, $to_explode));
+		return empty($to_explode) ? array() : array_map('trim', explode($delimiter, $to_explode));
 	}
 	public static function comma_explode($to_explode)
 	{
-		return empty($to_explode) ? array() : array_map("trim", explode(',', $to_explode));
+		return empty($to_explode) ? array() : array_map('trim', explode(',', $to_explode));
 	}
 	public static function colon_explode($to_explode)
 	{
-		return empty($to_explode) ? array() : array_map("trim", explode(':', $to_explode));
+		return empty($to_explode) ? array() : array_map('trim', explode(':', $to_explode));
 	}
 	public static function first_in_string($string, $delimited_by = ' ')
 	{
@@ -70,7 +70,7 @@ class pts_strings
 		$string = explode($delimited_by, $string);
 		return array_shift($string);
 	}
-	public static function last_in_string($string, $delimited_by = " ")
+	public static function last_in_string($string, $delimited_by = ' ')
 	{
 		// This function returns the last word/phrase/string on the end of a string that's separated by a space or something else
 		// Using this helper function will avoid a PHP E_STRICT warning if just using the code directly from the output of a function/object
@@ -160,7 +160,7 @@ class pts_strings
 		do
 		{
 			$string_copy = $string;
-			$string = str_replace("  ", " ", $string);
+			$string = str_replace('  ', ' ', $string);
 		}
 		while($string_copy != $string);
 
@@ -171,18 +171,18 @@ class pts_strings
 		$version = substr($version, 0, 3);
 
 		$codenames = array(
-			"1.0" => "Trondheim",
-			"1.2" => "Malvik",
-			"1.4" => "Orkdal",
-			"1.6" => "Tydal",
-			"1.8" => "Selbu",
-			"2.0" => "Sandtorg",
-			"2.2" => "Bardu",
-			"2.4" => "Lenvik",
-			"2.6" => "Lyngen",
-			"2.8" => "Torsken",
-			"2.9" => "Iveland", // early development work
-			"3.0" => "Iveland",
+			'1.0' => 'Trondheim',
+			'1.2' => 'Malvik',
+			'1.4' => 'Orkdal',
+			'1.6' => 'Tydal',
+			'1.8' => 'Selbu',
+			'2.0' => 'Sandtorg',
+			'2.2' => 'Bardu',
+			'2.4' => 'Lenvik',
+			'2.6' => 'Lyngen',
+			'2.8' => 'Torsken',
+			'2.9' => 'Iveland', // early PTS3 development work
+			'3.0' => 'Iveland',
 			);
 
 		return isset($codenames[$version]) ? $codenames[$version] : null;
@@ -307,76 +307,31 @@ class pts_strings
 	{
 		switch($result_quantifier)
 		{
-			case "MAX":
-				$return_str = "Maximum";
+			case 'MAX':
+				$return_str = 'Maximum';
 				break;
-			case "MIN":
-				$return_str = "Minimum";
+			case 'MIN':
+				$return_str = 'Minimum';
 				break;
-			case "NULL":
+			case 'NULL':
 				$return_str = null;
 				break;
-			case "AVG":
+			case 'AVG':
 			default:
-				$return_str = "Average";
+				$return_str = 'Average';
 				break;
 		}
 
 		return $return_str;
 	}
-	public static function swap_variables($user_str, $replace_call)
-	{
-		if(is_array($replace_call))
-		{
-			if(count($replace_call) != 2 || method_exists($replace_call[0], $replace_call[1]) == false)
-			{
-				echo "\nVar Swap With Method Failed.\n";
-				return $user_str;
-			}
-		}
-		else if(!function_exists($replace_call))
-		{
-			echo "\nVar Swap With Function Failed.\n";
-			return $user_str;
-		}
-
-		$offset = 0;
-		$replace_call_return = false;
-
-		while($offset < strlen($user_str) && ($s = strpos($user_str, '$', $offset)) !== false)
-		{
-			$s++;
-			$var_name = substr($user_str, $s, (($e = strpos($user_str, ' ', $s)) == false ? strlen($user_str) : $e) - $s);
-
-			if($replace_call_return === false)
-			{
-				$replace_call_return = call_user_func($replace_call);
-			}
-
-			$var_replacement = isset($replace_call_return[$var_name]) ? $replace_call_return[$var_name] : null;
-
-			if($var_replacement != null)
-			{
-				$user_str = str_replace("$" . $var_name, $var_replacement, $user_str);
-			}
-			else
-			{
-				// echo "\nVariable Swap For $var_name Failed.\n";
-			}
-
-			$offset = $s + strlen($var_replacement);
-		}
-
-		return $user_str;
-	}
-	public static function format_time($time, $input_format = "SECONDS", $standard_version = true, $round_to = 0)
+	public static function format_time($time, $input_format = 'SECONDS', $standard_version = true, $round_to = 0)
 	{
 		switch($input_format)
 		{
-			case "MINUTES":
+			case 'MINUTES':
 				$time_in_seconds = $time * 60;
 				break;
-			case "SECONDS":
+			case 'SECONDS':
 			default:
 				$time_in_seconds = $time;
 				break;
@@ -392,9 +347,9 @@ class pts_strings
 		if($time_in_seconds > 0)
 		{
 			$time_r = array();
-			$time_r[0] = array(floor($time_in_seconds / 3600), "Hour");
-			$time_r[1] = array(floor(($time_in_seconds % 3600) / 60), "Minute");
-			$time_r[2] = array($time_in_seconds % 60, "Second");
+			$time_r[0] = array(floor($time_in_seconds / 3600), 'Hour');
+			$time_r[1] = array(floor(($time_in_seconds % 3600) / 60), 'Minute');
+			$time_r[2] = array($time_in_seconds % 60, 'Second');
 
 			foreach($time_r as $time_segment)
 			{
@@ -404,11 +359,11 @@ class pts_strings
 
 					if($standard_version)
 					{
-						$formatted_part .= " " . $time_segment[1];
+						$formatted_part .= ' ' . $time_segment[1];
 
 						if($time_segment[0] > 1)
 						{
-							$formatted_part .= "s";
+							$formatted_part .= 's';
 						}
 					}
 					else
@@ -421,7 +376,7 @@ class pts_strings
 			}
 		}
 
-		return implode(($standard_version ? ", " : null), $formatted_time);
+		return implode(($standard_version ? ', ' : null), $formatted_time);
 	}
 }
 
