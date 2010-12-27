@@ -65,17 +65,28 @@ class pts_render
 				}
 				break;
 			case 'SVG':
-				$graph = $graph->render_graph_finish();
+				$svg_graph = $graph->render_graph_finish();
 
 				if($nested)
 				{
 					// strip out any DOCTYPE and other crud that would be redundant, so start at SVG tag
-					$graph = substr($graph, strpos($graph, '<svg'));
+					$svg_graph = substr($svg_graph, strpos($svg_graph, '<svg'));
 				}
 				else
 				{
 					header('Content-type: image/svg+xml');
 				}
+
+				/*if(false && isset($_SERVER['HTTP_USER_AGENT']) && strpos($_SERVER['HTTP_USER_AGENT'], 'WebKit/') !== false)
+				{
+					$svg_graph = '<img>' . $svg_graph . '</img>';
+				}
+				else
+				{
+					$svg_graph = '<object width="' . $graph->graphWidth() . '" height="' . $graph->graphHeight() . '">' . $svg_graph . '</object>';
+				}*/
+
+				$graph = $svg_graph;
 
 				//$graph = "<object type=\"image/svg+xml\">" . $svg . "</object>";
 				//$graph = "<embed type=\"image/svg+xml\" width=\"" . $graph->graphWidth() . "\" height=\"" . $graph->graphHeight() . "\">" . $svg . "</embed>";
@@ -189,10 +200,13 @@ class pts_render
 		// creation code
 		eval("\$graph = new " . $graph_type . "(\$result_object, \$result_file);");
 
-
 		if(isset($extra_attributes['regression_marker_threshold']))
 		{
 			$graph->markResultRegressions($extra_attributes['regression_marker_threshold']);
+		}
+		if(isset($extra_attributes['set_alternate_location']))
+		{
+			$graph->setAlternateLocation($extra_attributes['set_alternate_location']);
 		}
 
 		switch($display_format)

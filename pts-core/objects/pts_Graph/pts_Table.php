@@ -196,13 +196,9 @@ class pts_Table extends pts_Graph
 			$this->graph_image->write_text_left(new pts_graph_ir_value($this->graph_version, array('href' => 'http://www.phoronix-test-suite.com/')), $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_body_text, 2, $table_proper_height + $table_line_height_half, 2, $table_proper_height + $table_line_height_half);
 		}
 		*/
-		if(PTS_IS_CLIENT && $this->graph_output != null)
+		if($this->link_alternate_table != null)
 		{
-			$extension = strtolower($this->graph_image->get_renderer());
-			$file = basename($this->graph_output, '.BILDE_EXTENSION');
-			$file = str_replace('_table', null, $file . '.' . $extension);
-
-			$this->graph_image->write_text_left(new pts_graph_ir_value('G', array('href' => $file, 'show' => 'replace', 'font-weight' => 'bold')), $this->graph_font, 7, $this->graph_color_background, 6, $table_proper_height + $table_line_height_half, 6, $table_proper_height + $table_line_height_half);
+			$this->graph_image->write_text_left(new pts_graph_ir_value('G', array('href' => $this->link_alternate_table, 'show' => 'replace', 'font-weight' => 'bold')), $this->graph_font, 7, $this->graph_color_background, 6, $table_proper_height + $table_line_height_half, 6, $table_proper_height + $table_line_height_half);
 		}
 
 		// Heading
@@ -267,7 +263,7 @@ class pts_Table extends pts_Graph
 						$this->graph_image->draw_line(($this->graph_left_start + ($current_col * $table_item_width) + 1), 1, ($this->graph_left_start + ($current_col * $table_item_width) + 1), $this->graph_attr_height, $paint_color, 1);
 					}
 
-					$last_identifier->set_attribute('font-weight', 'bold');
+					//$last_identifier->set_attribute('font-weight', 'bold');
 					$this->graph_image->write_text_center($last_identifier, $this->graph_font, $this->graph_font_size_axis_heading, $this->graph_color_background, $this->graph_left_start + ($last_changed_col * $table_item_width), 4, $this->graph_left_start + ($current_col * $table_item_width), 4);
 
 					$last_identifier = $identifier[0];
