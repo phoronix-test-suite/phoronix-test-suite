@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 3.0 Alpha 5
+27 December 2010
 
 - pts-core: OpenBenchmarking.org result upload fixes under select conditions
 - pts-core: Add support for cloning/grabbing test results from OpenBenchmarking.org
