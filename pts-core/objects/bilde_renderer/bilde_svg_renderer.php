@@ -138,7 +138,7 @@ class bilde_svg_renderer extends bilde_renderer
 			{
 				$link = $this->image->createElement('a');
 				$link->setAttribute('xlink:href', $text->get_attribute('href'));
-				$link->setAttribute('xlink:show', 'new');
+				$link->setAttribute('xlink:show', ($text->get_attribute('show') ? $text->get_attribute('show') : 'new'));
 				$link->appendChild($text_element);
 				$this->svg->appendChild($link);
 				return;

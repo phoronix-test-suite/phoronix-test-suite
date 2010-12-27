@@ -716,7 +716,16 @@ abstract class pts_Graph
 		{
 			$bottom_heading_start = $this->graph_top_end + $this->graph_bottom_offset + 25;
 			$this->graph_image->draw_rectangle(0, $bottom_heading_start, $this->graph_attr_width, $this->graph_attr_height, $this->graph_color_main_headers);
-			$this->graph_image->write_text_right(new pts_graph_ir_value('Powered By ' . $this->graph_version, array('href', 'http://www.phoronix-test-suite.com/')), $this->graph_font, 7, $this->graph_color_background, $this->graph_left_end, $bottom_heading_start + 7, $this->graph_left_end, $bottom_heading_start + 7);
+			$this->graph_image->write_text_right(new pts_graph_ir_value('Powered By ' . $this->graph_version, array('href' => 'http://www.phoronix-test-suite.com/')), $this->graph_font, 7, $this->graph_color_background, $this->graph_left_end, $bottom_heading_start + 7, $this->graph_left_end, $bottom_heading_start + 7);
+
+			if(PTS_IS_CLIENT && $this->graph_output != null)
+			{
+				$extension = strtolower($this->graph_image->get_renderer());
+				$file = basename($this->graph_output, '.BILDE_EXTENSION');
+				$file .= '_table.' . $extension;
+
+				$this->graph_image->write_text_left(new pts_graph_ir_value('T', array('href' => $file, 'show' => 'replace', 'font-weight' => 'bold')), $this->graph_font, 7, $this->graph_color_background, 6, $bottom_heading_start + 7, 6, $bottom_heading_start + 7);
+			}
 		}
 	}
 	protected function render_graph_base($left_start, $top_start, $left_end, $top_end)

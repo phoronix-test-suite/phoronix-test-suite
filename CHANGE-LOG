@@ -14,6 +14,7 @@ Phoronix Test Suite (Git)
 - phodevi: Support appending the Catalyst driver version when the fglrx display driver is loaded
 - pts_Graph: With result tables, highlight not only the best values, but the worst values too
 - pts_Graph: Support headers/titles on pts_Table objects
+- pts_Graph: Support hot-switching between graphs and tables
 - bilde_renderer: Blacklist unsupported SVG browsers rather than whitelist supported ones, should be saner this way
 - bilde_renderer: Interactive API clean-up
 

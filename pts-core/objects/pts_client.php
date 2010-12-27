@@ -548,12 +548,14 @@ class pts_client
 
 		$raw_xsl = str_replace("<!-- GRAPH TAG -->", $graph_string, $raw_xsl);
 
+		/*
 		if($matching_graph_tables)
 		{
 			$bilde_svg = new bilde_svg_renderer(1, 1);
 			$table_string = $bilde_svg->html_embed_code("result-graphs/<xsl:number value=\"position()\" />_table.BILDE_EXTENSION", array("width" => "auto", "height" => "auto"), true);
 			$raw_xsl = str_replace("<!-- GRAPH TABLE TAG -->", $table_string, $raw_xsl);
 		}
+		*/
 
 		return $raw_xsl;
 	}

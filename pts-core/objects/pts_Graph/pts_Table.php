@@ -190,9 +190,19 @@ class pts_Table extends pts_Graph
 		$this->graph_image->draw_rectangle(0, $table_proper_height, $this->graph_attr_width, $this->graph_attr_height, $this->graph_color_headers);
 		$this->graph_image->write_text_right(new pts_graph_ir_value($this->graph_watermark_text, array('href' => $this->graph_watermark_url)), $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_body_text, $this->graph_attr_width - 2, $table_proper_height + $table_line_height_half, $this->graph_attr_width - 2, $table_proper_height + $table_line_height_half);
 
+		/*
 		if($this->graph_attr_width > 300)
 		{
 			$this->graph_image->write_text_left(new pts_graph_ir_value($this->graph_version, array('href' => 'http://www.phoronix-test-suite.com/')), $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_body_text, 2, $table_proper_height + $table_line_height_half, 2, $table_proper_height + $table_line_height_half);
+		}
+		*/
+		if(PTS_IS_CLIENT && $this->graph_output != null)
+		{
+			$extension = strtolower($this->graph_image->get_renderer());
+			$file = basename($this->graph_output, '.BILDE_EXTENSION');
+			$file = str_replace('_table', null, $file . '.' . $extension);
+
+			$this->graph_image->write_text_left(new pts_graph_ir_value('G', array('href' => $file, 'show' => 'replace', 'font-weight' => 'bold')), $this->graph_font, 7, $this->graph_color_background, 6, $table_proper_height + $table_line_height_half, 6, $table_proper_height + $table_line_height_half);
 		}
 
 		// Heading
