@@ -42,7 +42,7 @@ class pts_validation
 				case 1871: // Missing / invalid element
 				case 1833: // Below the minInclusive value
 					echo "\n" . $error->message;
-					echo "Line " . $error->line . ": " . $error->file . "\n";
+					echo 'Line ' . $error->line . ': ' . $error->file . "\n";
 					$error_queue[$error->line] = true;
 					unset($errors[$i]);
 					break;
@@ -59,15 +59,15 @@ class pts_validation
 	}
 	public static function test_profile_permitted_files()
 	{
-		$allowed_files = array("downloads.xml", "test-definition.xml", "results-definition.xml", "install.sh", "pre.sh", "post.sh", "interim.sh", "post-cache-share.sh");
+		$allowed_files = array('downloads.xml', 'test-definition.xml', 'results-definition.xml', 'install.sh', 'pre.sh', 'post.sh', 'interim.sh', 'post-cache-share.sh');
 
 		foreach(pts_types::operating_systems() as $os)
 		{
 			$os = strtolower($os[0]);
-			array_push($allowed_files, "install_" . $os . ".sh");
-			array_push($allowed_files, "pre_" . $os . ".sh");
-			array_push($allowed_files, "post_" . $os . ".sh");
-			array_push($allowed_files, "interim_" . $os . ".sh");
+			array_push($allowed_files, 'install_' . $os . '.sh');
+			array_push($allowed_files, 'pre_' . $os . '.sh');
+			array_push($allowed_files, 'post_' . $os . '.sh');
+			array_push($allowed_files, 'interim_' . $os . '.sh');
 		}
 
 		return $allowed_files;
@@ -90,11 +90,11 @@ class pts_validation
 		{
 			list($target, $description) = $error;
 
-			echo "\n" . $type . ": " . $description . "\n";
+			echo "\n" . $type . ': ' . $description . "\n";
 
 			if(!empty($target))
 			{
-				echo "TARGET: " . $target . "\n";
+				echo 'TARGET: ' . $target . "\n";
 			}
 		}
 	}

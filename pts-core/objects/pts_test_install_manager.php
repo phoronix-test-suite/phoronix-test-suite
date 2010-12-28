@@ -32,9 +32,9 @@ class pts_test_install_manager
 	{
 		$added = false;
 
-		if(($e = pts_client::read_env("SKIP_TESTS")) != false && in_array($test_profile->get_identifier(false), pts_strings::comma_explode($e)))
+		if(($e = pts_client::read_env('SKIP_TESTS')) != false && in_array($test_profile->get_identifier(false), pts_strings::comma_explode($e)))
 		{
-			//pts_client::$display->test_install_error($test_profile->get_identifier() . " is being skipped from installation.");
+			//pts_client::$display->test_install_error($test_profile->get_identifier() . ' is being skipped from installation.');
 		}
 		else
 		{
@@ -45,7 +45,7 @@ class pts_test_install_manager
 	}
 	public function generate_download_file_lists()
 	{
-		pts_client::$display->test_install_progress_start("Determining File Requirements");
+		pts_client::$display->test_install_progress_start('Determining File Requirements');
 		$test_count = count($this->tests_to_install);
 
 		foreach($this->tests_to_install as $i => &$test_install_request)
@@ -57,7 +57,7 @@ class pts_test_install_manager
 	}
 	public function check_download_caches_for_files()
 	{
-		pts_client::$display->test_install_progress_start("Searching Download Caches");
+		pts_client::$display->test_install_progress_start('Searching Download Caches');
 		$test_count = count($this->tests_to_install);
 
 		$remote_files = self::remote_files_available_in_download_caches();
@@ -73,12 +73,12 @@ class pts_test_install_manager
 	}
 	public function remote_files_available_in_download_caches()
 	{
-		pts_load_xml_definitions("download-cache.xml");
+		pts_load_xml_definitions('download-cache.xml');
 		$remote_download_files = array();
 
 		foreach(self::remote_download_caches() as $dc_directory)
 		{
-			if(($xml_dc_file = pts_network::http_get_contents($dc_directory . "pts-download-cache.xml")) != false)
+			if(($xml_dc_file = pts_network::http_get_contents($dc_directory . 'pts-download-cache.xml')) != false)
 			{
 				$xml_dc_parser = new nye_XmlReader($xml_dc_file);
 				$dc_file = $xml_dc_parser->getXMLArrayValues(P_CACHE_PACKAGE_FILENAME);
@@ -147,7 +147,7 @@ class pts_test_install_manager
 			$cache_directories = array();
 
 			// Phoronix Test Suite System Cache Directories
-			$additional_dir_checks = array("/var/cache/phoronix-test-suite/download-cache/", "/var/cache/phoronix-test-suite/");
+			$additional_dir_checks = array('/var/cache/phoronix-test-suite/download-cache/', '/var/cache/phoronix-test-suite/');
 			foreach($additional_dir_checks as $dir_check)
 			{
 				if(is_dir($dir_check))
@@ -158,7 +158,7 @@ class pts_test_install_manager
 			}
 
 			// User Defined Directory Checking
-			$dir_string = ($dir = pts_client::read_env("PTS_DOWNLOAD_CACHE")) != false ? $dir : null;
+			$dir_string = ($dir = pts_client::read_env('PTS_DOWNLOAD_CACHE')) != false ? $dir : null;
 
 			foreach(pts_strings::colon_explode($dir_string) as $dir_check)
 			{
@@ -177,11 +177,11 @@ class pts_test_install_manager
 				array_push($cache_directories, pts_strings::add_trailing_slash($dir_check));
 			}
 
-			if(pts_config::read_bool_config(P_OPTION_CACHE_SEARCHMEDIA, "TRUE"))
+			if(pts_config::read_bool_config(P_OPTION_CACHE_SEARCHMEDIA, 'TRUE'))
 			{
 				$download_cache_dirs = array_merge(
-				pts_file_io::glob("/media/*/download-cache/"),
-				pts_file_io::glob("/Volumes/*/download-cache/")
+				pts_file_io::glob('/media/*/download-cache/'),
+				pts_file_io::glob('/Volumes/*/download-cache/')
 				);
 
 				foreach($download_cache_dirs as $dir)

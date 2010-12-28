@@ -68,15 +68,15 @@ class pts_test_result_regression_marker
 	}
 	public function get_change_formatted()
 	{
-		$direction = "-";
+		$direction = '-';
 
-		if($this->test_proportion == "HIB" && $this->get_regressed_value() > $this->get_base_value())
+		if($this->test_proportion == 'HIB' && $this->get_regressed_value() > $this->get_base_value())
 		{
-			$direction = "+";
+			$direction = '+';
 		}
-		else if($this->test_proportion == "LIB" && $this->get_regressed_value() < $this->get_base_value())
+		else if($this->test_proportion == 'LIB' && $this->get_regressed_value() < $this->get_base_value())
 		{
-			$direction = "+";
+			$direction = '+';
 		}
 
 		return $direction . pts_math::set_precision($this->get_change() * 100, 2);

@@ -194,6 +194,33 @@ class pts_client
 
 		return $runtime_variables;
 	}
+	public static function save_result_file(&$result_file_writer, $save_name)
+	{
+		// Save the test file
+		// TODO: clean this up with pts_client::save_test_result
+		$j = 1;
+		while(is_file(PTS_SAVE_RESULTS_PATH . $save_name . '/test-' . $j . '.xml'))
+		{
+			$j++;
+		}
+
+		$real_name = $save_name . '/test-' . $j . '.xml';
+
+		pts_client::save_test_result($real_name, $result_file_writer->get_xml());
+
+		if(!is_file(PTS_SAVE_RESULTS_PATH . $save_name . '/composite.xml'))
+		{
+			pts_client::save_test_result($save_name . '/composite.xml', file_get_contents(PTS_SAVE_RESULTS_PATH . $real_name), true, $result_file_writer->get_result_identifier());
+		}
+		else
+		{
+			// Merge Results
+			$merged_results = pts_merge::merge_test_results(file_get_contents(PTS_SAVE_RESULTS_PATH . $save_name . '/composite.xml'), file_get_contents(PTS_SAVE_RESULTS_PATH . $real_name));
+			pts_client::save_test_result($save_name . '/composite.xml', $merged_results, true, $result_file_writer->get_result_identifier());
+		}
+
+		return $real_name;
+	}
 	private static function basic_init_process()
 	{
 		// Initialize The Phoronix Test Suite

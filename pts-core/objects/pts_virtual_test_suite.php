@@ -44,7 +44,7 @@ class pts_virtual_test_suite
 		$this->is_virtual_subsystem_selector = self::is_selector_subsystem($identifier[1]);
 		$this->is_virtual_software_type = self::is_selector_software_type($identifier[1]);
 		$this->is_virtual_internal_tag = self::is_selector_internal_tag($this->repo, $this->virtual);
-		$this->is_virtual_installed = ($this->virtual == "installed");
+		$this->is_virtual_installed = ($this->virtual == 'installed');
 	}
 	public function __toString()
 	{
@@ -97,12 +97,12 @@ class pts_virtual_test_suite
 			if(isset($repo_index['tests']) && is_array($repo_index['tests']))
 			{
 				// figure out virtual suites
-				if($identifier[1] == "all")
+				if($identifier[1] == 'all')
 				{
 					// virtual suite of all supported tests
 					$is_virtual_suite = true;
 				}
-				else if($identifier[1] == "installed")
+				else if($identifier[1] == 'installed')
 				{
 					// virtual suite of all installed tests
 					$is_virtual_suite = true;
@@ -164,7 +164,7 @@ class pts_virtual_test_suite
 		}
 		else
 		{
-			$title = "Virtual Suite";
+			$title = 'Virtual Suite';
 		}
 
 		return $title;
@@ -197,7 +197,7 @@ class pts_virtual_test_suite
 		}
 		else
 		{
-			$description = "Virtual Suite";
+			$description = 'Virtual Suite';
 		}
 
 		return $description;
@@ -340,7 +340,7 @@ class pts_virtual_test_suite
 				$test_version = array_shift($test['versions']);
 				$test_profile = new pts_test_profile($this->repo . '/' . $test_identifier . '-' . $test_version);
 
-				if($test_profile->get_display_format() != "BAR_GRAPH" || !in_array($test_profile->get_license(), array("Free", "Non-Free")))
+				if($test_profile->get_display_format() != 'BAR_GRAPH' || !in_array($test_profile->get_license(), array('Free', 'Non-Free')))
 				{
 					// Also ignore these tests
 					continue;

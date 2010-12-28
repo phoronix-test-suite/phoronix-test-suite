@@ -70,7 +70,7 @@ class pts_test_result
 	}
 	public function __toString()
 	{
-		return $this->test_profile->get_identifier(false) . " " . $this->get_arguments() . " " . $this->get_arguments_description() . " " . $this->test_profile->get_override_values();
+		return $this->test_profile->get_identifier(false) . ' ' . $this->get_arguments() . ' ' . $this->get_arguments_description() . ' ' . $this->test_profile->get_override_values();
 	}
 }
 

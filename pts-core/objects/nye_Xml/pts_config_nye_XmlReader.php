@@ -20,7 +20,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-pts_load_xml_definitions("user-config.xml");
+pts_load_xml_definitions('user-config.xml');
 
 class pts_config_nye_XmlReader extends nye_XmlReader
 {
@@ -28,13 +28,13 @@ class pts_config_nye_XmlReader extends nye_XmlReader
 
 	public function __construct($new_values = null)
 	{
-		if(is_file(PTS_USER_PATH . "user-config.xml"))
+		if(is_file(PTS_USER_PATH . 'user-config.xml'))
 		{
-			$file = PTS_USER_PATH . "user-config.xml";
+			$file = PTS_USER_PATH . 'user-config.xml';
 		}
-		else if(is_file(PTS_CORE_STATIC_PATH . "user-config-template.xml"))
+		else if(is_file(PTS_CORE_STATIC_PATH . 'user-config-template.xml'))
 		{
-			$file = PTS_CORE_STATIC_PATH . "user-config-template.xml";
+			$file = PTS_CORE_STATIC_PATH . 'user-config-template.xml';
 		}
 		else
 		{
@@ -49,11 +49,11 @@ class pts_config_nye_XmlReader extends nye_XmlReader
 	{
 		static $fallback_reader = null;
 
-		if($fallback_reader != null || is_file(PTS_CORE_STATIC_PATH . "user-config-defaults.xml"))
+		if($fallback_reader != null || is_file(PTS_CORE_STATIC_PATH . 'user-config-defaults.xml'))
 		{
 			if($fallback_reader == null)
 			{
-				$fallback_reader = new nye_XmlReader(PTS_CORE_STATIC_PATH . "user-config-defaults.xml");
+				$fallback_reader = new nye_XmlReader(PTS_CORE_STATIC_PATH . 'user-config-defaults.xml');
 			}
 
 			$fallback_value = $fallback_reader->getXMLValue($xml_tag);

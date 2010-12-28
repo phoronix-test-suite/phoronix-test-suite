@@ -20,7 +20,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-pts_load_xml_definitions("test-profile-downloads.xml");
+pts_load_xml_definitions('test-profile-downloads.xml');
 
 class pts_test_profile_downloads_writer
 {

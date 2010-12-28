@@ -30,7 +30,7 @@ class pts_user_io
 	{
 		do
 		{
-			echo "\n" . $question . ": ";
+			echo PHP_EOL . $question . ': ';
 			$answer = pts_user_io::read_user_input();
 		}
 		while(!$allow_null && empty($answer));
@@ -41,44 +41,44 @@ class pts_user_io
 	{
 		if(!empty($message))
 		{
-			echo $message . "\n";
+			echo $message . PHP_EOL;
 
 			if((pts_c::$test_flags ^ pts_c::batch_mode) && (pts_c::$test_flags ^ pts_c::auto_mode))
 			{
-				echo "\nHit Any Key To Continue...\n";
+				echo PHP_EOL . 'Hit Any Key To Continue...' . PHP_EOL;
 				pts_user_io::read_user_input();
 			}
 		}
 	}
-	public static function display_text_list($list_items, $line_start = "- ")
+	public static function display_text_list($list_items, $line_start = '- ')
 	{
 		$list = null;
 
 		foreach($list_items as &$item)
 		{
-			$list .= $line_start . $item . "\n";
+			$list .= $line_start . $item . PHP_EOL;
 		}
 
 		return $list;
 	}
-	public static function prompt_bool_input($question, $default = true, $question_id = "UNKNOWN")
+	public static function prompt_bool_input($question, $default = true, $question_id = 'UNKNOWN')
 	{
 		// Prompt user for yes/no question
 		if((pts_c::$test_flags & pts_c::batch_mode))
 		{
 			switch($question_id)
 			{
-				case "SAVE_RESULTS":
-					$auto_answer = pts_config::read_user_config(P_OPTION_BATCH_SAVERESULTS, "TRUE");
+				case 'SAVE_RESULTS':
+					$auto_answer = pts_config::read_user_config(P_OPTION_BATCH_SAVERESULTS, 'TRUE');
 					break;
-				case "OPEN_BROWSER":
-					$auto_answer = pts_config::read_user_config(P_OPTION_BATCH_LAUNCHBROWSER, "FALSE");
+				case 'OPEN_BROWSER':
+					$auto_answer = pts_config::read_user_config(P_OPTION_BATCH_LAUNCHBROWSER, 'FALSE');
 					break;
-				case "UPLOAD_RESULTS":
-					$auto_answer = pts_config::read_user_config(P_OPTION_BATCH_UPLOADRESULTS, "TRUE");
+				case 'UPLOAD_RESULTS':
+					$auto_answer = pts_config::read_user_config(P_OPTION_BATCH_UPLOADRESULTS, 'TRUE');
 					break;
 				default:
-					$auto_answer = "true";
+					$auto_answer = 'true';
 					break;
 			}
 
@@ -86,21 +86,21 @@ class pts_user_io
 		}
 		else
 		{
-			$question .= " (" . ($default == true ? "Y/n" : "y/N") . "): ";
+			$question .= ' (' . ($default == true ? 'Y/n' : 'y/N') . '): ';
 
 			do
 			{
 				pts_client::$display->generic_prompt($question);
 				$input = strtolower(pts_user_io::read_user_input());
 			}
-			while($input != "y" && $input != "n" && $input != "");
+			while($input != 'y' && $input != 'n' && $input != '');
 
 			switch($input)
 			{
-				case "y":
+				case 'y':
 					$answer = true;
 					break;
-				case "n":
+				case 'n':
 					$answer = false;
 					break;
 				default:
@@ -122,12 +122,12 @@ class pts_user_io
 
 		do
 		{
-			echo "\n";
+			echo PHP_EOL;
 			for($i = 0; $i < $option_count; $i++)
 			{
-				echo ($i + 1) . ": " . str_repeat(' ', strlen($option_count) - strlen(($i + 1))) . $options_r[$i] . "\n";
+				echo ($i + 1) . ': ' . str_repeat(' ', strlen($option_count) - strlen(($i + 1))) . $options_r[$i] . PHP_EOL;
 			}
-			echo "\n" . $user_string . ": ";
+			echo PHP_EOL . $user_string . ': ';
 			$select_choice = pts_user_io::read_user_input();
 
 			// Validate possible multi-select

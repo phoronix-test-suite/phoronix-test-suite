@@ -20,7 +20,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-pts_load_xml_definitions("graph-config.xml");
+pts_load_xml_definitions('graph-config.xml');
 
 class pts_graph_config_nye_XmlReader extends nye_XmlReader
 {
@@ -32,16 +32,16 @@ class pts_graph_config_nye_XmlReader extends nye_XmlReader
 
 		if(PTS_IS_CLIENT)
 		{
-			if(is_file(PTS_USER_PATH . "graph-config.xml"))
+			if(is_file(PTS_USER_PATH . 'graph-config.xml'))
 			{
-				$file = PTS_USER_PATH . "graph-config.xml";
+				$file = PTS_USER_PATH . 'graph-config.xml';
 			}
-			else if(is_file(PTS_RESULTS_VIEWER_PATH . "graph-config-template.xml"))
+			else if(is_file(PTS_RESULTS_VIEWER_PATH . 'graph-config-template.xml'))
 			{
-				$file = PTS_RESULTS_VIEWER_PATH . "graph-config-template.xml";
+				$file = PTS_RESULTS_VIEWER_PATH . 'graph-config-template.xml';
 			}
 		}
-		else if(defined("PTS_LIB_GRAPH_CONFIG_XML") && is_file(PTS_LIB_GRAPH_CONFIG_XML))
+		else if(defined('PTS_LIB_GRAPH_CONFIG_XML') && is_file(PTS_LIB_GRAPH_CONFIG_XML))
 		{
 			$file = PTS_LIB_GRAPH_CONFIG_XML;
 		}
@@ -68,11 +68,11 @@ class pts_graph_config_nye_XmlReader extends nye_XmlReader
 		static $fallback_reader = null;
 		$fallback_value = false;
 
-		if($fallback_reader != null || is_file(PTS_CORE_STATIC_PATH . "graph-config-defaults.xml"))
+		if($fallback_reader != null || is_file(PTS_CORE_STATIC_PATH . 'graph-config-defaults.xml'))
 		{
 			if($fallback_reader == null)
 			{
-				$fallback_reader = new nye_XmlReader(PTS_CORE_STATIC_PATH . "graph-config-defaults.xml");
+				$fallback_reader = new nye_XmlReader(PTS_CORE_STATIC_PATH . 'graph-config-defaults.xml');
 			}
 
 			$fallback_value = $fallback_reader->getXMLValue($xml_tag, $fallback_value);

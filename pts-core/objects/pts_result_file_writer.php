@@ -24,7 +24,7 @@ pts_load_xml_definitions('result-file.xml');
 
 class pts_result_file_writer
 {
-	private $xml_writer = null;
+	public $xml_writer = null;
 	private $added_hashes = null;
 	private $result_identifier = null;
 	private $result_count = 0;
@@ -46,6 +46,10 @@ class pts_result_file_writer
 	public function get_xml()
 	{
 		return $this->xml_writer->getXML();
+	}
+	public function get_result_identifier()
+	{
+		return $this->result_identifier;
 	}
 	public function save_xml($to_save)
 	{
@@ -171,33 +175,6 @@ class pts_result_file_writer
 				}
 			}
 		}
-	}
-	public function save_result_file($save_name)
-	{
-		// Save the test file
-		// TODO: clean this up with pts_client::save_test_result
-		$j = 1;
-		while(is_file(PTS_SAVE_RESULTS_PATH . $save_name . '/test-' . $j . '.xml'))
-		{
-			$j++;
-		}
-
-		$real_name = $save_name . '/test-' . $j . '.xml';
-
-		pts_client::save_test_result($real_name, $this->xml_writer->getXML());
-
-		if(!is_file(PTS_SAVE_RESULTS_PATH . $save_name . '/composite.xml'))
-		{
-			pts_client::save_test_result($save_name . '/composite.xml', file_get_contents(PTS_SAVE_RESULTS_PATH . $real_name), true, $this->result_identifier);
-		}
-		else
-		{
-			// Merge Results
-			$merged_results = pts_merge::merge_test_results(file_get_contents(PTS_SAVE_RESULTS_PATH . $save_name . '/composite.xml'), file_get_contents(PTS_SAVE_RESULTS_PATH . $real_name));
-			pts_client::save_test_result($save_name . '/composite.xml', $merged_results, true, $this->result_identifier);
-		}
-
-		return $real_name;
 	}
 }
 

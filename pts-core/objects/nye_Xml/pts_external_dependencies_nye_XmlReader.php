@@ -23,7 +23,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-pts_load_xml_definitions("external-dependencies.xml");
+pts_load_xml_definitions('external-dependencies.xml');
 
 class pts_external_dependencies_nye_XmlReader extends nye_XmlReader
 {

@@ -20,7 +20,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-pts_load_xml_definitions("test-profile.xml");
+pts_load_xml_definitions('test-profile.xml');
 
 class pts_test_nye_XmlReader extends nye_XmlReader
 {
@@ -29,9 +29,9 @@ class pts_test_nye_XmlReader extends nye_XmlReader
 
 	public function __construct($read_xml)
 	{
-		if(!isset($read_xml[512]) && is_file(PTS_TEST_PROFILE_PATH . $read_xml . "/test-definition.xml"))
+		if(!isset($read_xml[512]) && is_file(PTS_TEST_PROFILE_PATH . $read_xml . '/test-definition.xml'))
 		{
-			$read_xml = PTS_TEST_PROFILE_PATH . $read_xml . "/test-definition.xml";
+			$read_xml = PTS_TEST_PROFILE_PATH . $read_xml . '/test-definition.xml';
 		}
 
 		$this->override_values = array();
@@ -39,7 +39,7 @@ class pts_test_nye_XmlReader extends nye_XmlReader
 	}
 	public function validate()
 	{
-		return $this->dom->schemaValidate(PTS_OPENBENCHMARKING_PATH . "schemas/test-profile.xsd");
+		return $this->dom->schemaValidate(PTS_OPENBENCHMARKING_PATH . 'schemas/test-profile.xsd');
 	}
 	public function block_test_extension_support()
 	{

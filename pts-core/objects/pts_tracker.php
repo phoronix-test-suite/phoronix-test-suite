@@ -40,7 +40,7 @@ class pts_tracker
 
 				if($prev_buffer_item != null && abs(1 - ($buffer_item->get_result_value() / $prev_buffer_item->get_result_value())) > $threshold)
 				{
-					if(defined("PHOROMATIC_TRACKER"))
+					if(defined('PHOROMATIC_TRACKER'))
 					{
 						$explode_r = explode(': ', $buffer_item->get_result_identifier());
 						$explode_r_prev = explode(': ', $prev_buffer_item->get_result_identifier());
@@ -48,7 +48,7 @@ class pts_tracker
 						if(count($explode_r) > 1 && $explode_r[0] != $explode_r_prev[0])
 						{
 							// This case wards against it looking like a regression between multiple systems on a Phoromatic Tracker
-							// The premise is the format is "SYSTEM NAME: DATE" so match up SYSTEM NAME's
+							// The premise is the format is 'SYSTEM NAME: DATE' so match up SYSTEM NAME's
 							continue;
 						}
 					}

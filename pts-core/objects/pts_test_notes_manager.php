@@ -50,37 +50,37 @@ class pts_test_notes_manager
 			}
 		}
 
-		if(in_array("Java", $test_tags))
+		if(in_array('Java', $test_tags))
 		{
-			self::add_note(phodevi::read_property("system", "java-version"));
+			self::add_note(phodevi::read_property('system', 'java-version'));
 		}
-		if(in_array("Python", $test_tags))
+		if(in_array('Python', $test_tags))
 		{
-			self::add_note(phodevi::read_property("system", "python-version"));
+			self::add_note(phodevi::read_property('system', 'python-version'));
 		}
-		if(in_array("Wine", $test_tags))
+		if(in_array('Wine', $test_tags))
 		{
-			self::add_note(phodevi::read_property("system", "wine-version"));
+			self::add_note(phodevi::read_property('system', 'wine-version'));
 		}
-		if(in_array("OpenCL", $test_tags))
+		if(in_array('OpenCL', $test_tags))
 		{
-			$cores = phodevi::read_property("gpu", "compute-cores");
+			$cores = phodevi::read_property('gpu', 'compute-cores');
 
 			if($cores > 0)
 			{
-				self::add_note("GPU Compute Cores: " . $cores);
+				self::add_note('GPU Compute Cores: ' . $cores);
 			}
 		}
 
 		if(empty($check_processes))
 		{
-			$word_file = pts_file_io::file_get_contents(PTS_CORE_STATIC_PATH . "lists/process-reporting-checks.list");
+			$word_file = pts_file_io::file_get_contents(PTS_CORE_STATIC_PATH . 'lists/process-reporting-checks.list');
 			$processes_r = pts_strings::trim_explode("\n", $word_file);
 			$check_processes = array();
 
 			foreach($processes_r as $p)
 			{
-				$p = explode("=", $p);
+				$p = explode('=', $p);
 				$p_title = trim($p[0]);
 				$p_names = pts_strings::comma_explode($p[1]);
 
@@ -99,55 +99,55 @@ class pts_test_notes_manager
 		}
 
 		// Check if Security Enhanced Linux was enforcing, permissive, or disabled
-		if(is_readable("/etc/sysconfig/selinux"))
+		if(is_readable('/etc/sysconfig/selinux'))
 		{
-			if(stripos(file_get_contents("/etc/sysconfig/selinux"), "selinux=disabled") === false)
+			if(stripos(file_get_contents('/etc/sysconfig/selinux'), 'selinux=disabled') === false)
 			{
-				self::add_note("SELinux was enabled.");
+				self::add_note('SELinux was enabled.');
 			}
 		}
-		else if(is_readable("/proc/cmdline"))
+		else if(is_readable('/proc/cmdline'))
 		{
-			if(stripos(file_get_contents("/proc/cmdline"), "selinux=1") != false)
+			if(stripos(file_get_contents('/proc/cmdline'), 'selinux=1') != false)
 			{
-				self::add_note("SELinux was enabled.");
+				self::add_note('SELinux was enabled.');
 			}
 		}
 
 		/*
 		// Encrypted file-system?
-		if(IS_LINUX && is_readable("/sys/fs/ecryptfs/version"))
+		if(IS_LINUX && is_readable('/sys/fs/ecryptfs/version'))
 		{
-			self::add_note("eCryptfs was active.");
+			self::add_note('eCryptfs was active.');
 		}
 		*/
 
 		// Power Saving Technologies?
-		self::add_note(phodevi::read_property("cpu", "power-savings-mode"));
-		self::add_note(phodevi::read_property("motherboard", "power-mode"));
-		self::add_note(phodevi::read_property("system", "virtualized-mode"));
+		self::add_note(phodevi::read_property('cpu', 'power-savings-mode'));
+		self::add_note(phodevi::read_property('motherboard', 'power-mode'));
+		self::add_note(phodevi::read_property('system', 'virtualized-mode'));
 
-		if(in_array("Graphics", $test_types) || in_array("System", $test_types))
+		if(in_array('Graphics', $test_types) || in_array('System', $test_types))
 		{
-			$aa_level = phodevi::read_property("gpu", "aa-level");
-			$af_level = phodevi::read_property("gpu", "af-level");
-			$twod_accel = phodevi::read_property("gpu", "2d-accel-method");
+			$aa_level = phodevi::read_property('gpu', 'aa-level');
+			$af_level = phodevi::read_property('gpu', 'af-level');
+			$twod_accel = phodevi::read_property('gpu', '2d-accel-method');
 
 			if(!empty($aa_level))
 			{
-				self::add_note("Antialiasing: " . $aa_level);
+				self::add_note('Antialiasing: ' . $aa_level);
 			}
 			if(!empty($af_level))
 			{
-				self::add_note("Anisotropic Filtering: " . $af_level);
+				self::add_note('Anisotropic Filtering: ' . $af_level);
 			}
 			if(!empty($twod_accel))
 			{
-				self::add_note("2D Acceleration: " . $twod_accel);
+				self::add_note('2D Acceleration: ' . $twod_accel);
 			}
 		}
 
-		$notes_string = trim(implode(". ", self::$notes)) . '.';
+		$notes_string = trim(implode('. ', self::$notes)) . '.';
 		self::$notes = array();
 
 		return $notes_string;
@@ -156,7 +156,7 @@ class pts_test_notes_manager
 	{
 		// Format a nice string that shows processes running
 		$p = array();
-		$p_string = "";
+		$p_string = null;
 
 		$process_arr = pts_arrays::to_array($process_arr);
 
@@ -183,18 +183,18 @@ class pts_test_notes_manager
 
 				if($i != ($p_count - 1) && $p_count > 2)
 				{
-					$p_string .= ",";
+					$p_string .= ',';
 				}
-				$p_string .= " ";
+				$p_string .= ' ';
 
 				if($i == ($p_count - 2))
 				{
-					$p_string .= "and ";
+					$p_string .= 'and ';
 				}
 			}
 
-			$p_string .= $p_count == 1 ? "was" : "were";
-			$p_string .= " running on this system";
+			$p_string .= $p_count == 1 ? 'was' : 'were';
+			$p_string .= ' running on this system';
 		}
 
 		return $p_string;

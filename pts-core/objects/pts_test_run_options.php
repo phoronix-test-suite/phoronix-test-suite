@@ -28,10 +28,10 @@ class pts_test_run_options
 		$text_args = array();
 
 		// Rather than using AUTO_TEST_OPTION_SELECTIONS, pass it to the $preset_selections argument
-		if(($cli_presets_env = pts_client::read_env("PRESET_OPTIONS")) != false)
+		if(($cli_presets_env = pts_client::read_env('PRESET_OPTIONS')) != false)
 		{
 			// To specify test options externally from an environment variable
-			// i.e. PRESET_OPTIONS="stream.run-type=Add" ./phoronix-test-suite benchmark stream
+			// i.e. PRESET_OPTIONS='stream.run-type=Add' ./phoronix-test-suite benchmark stream
 			$preset_selections = pts_client::parse_value_string_double_identifier($cli_presets_env);
 		}
 
@@ -41,7 +41,7 @@ class pts_test_run_options
 		{
 			if($i == 0)
 			{
-				pts_client::$display->generic_heading($test_profile->get_title() . " Test Configuration");
+				pts_client::$display->generic_heading($test_profile->get_title() . ' Test Configuration');
 			}
 
 			$option_identifier = $o->get_identifier();
@@ -55,8 +55,8 @@ class pts_test_run_options
 				}
 				else
 				{
-					echo "\n" . $o->get_name() . "\n";
-					$value = pts_user_io::prompt_user_input("Enter Value");
+					echo PHP_EOL . $o->get_name() . PHP_EOL;
+					$value = pts_user_io::prompt_user_input('Enter Value');
 				}
 
 				array_push($text_args, array($o->format_option_display_from_input($value)));
@@ -75,11 +75,11 @@ class pts_test_run_options
 
 					if(count($option_names) > 1)
 					{
-						echo "\n" . $o->get_name() . ":\n";
-						array_push($option_names, "Test All Options");
+						echo PHP_EOL . $o->get_name() . ':' . PHP_EOL;
+						array_push($option_names, 'Test All Options');
 					}
 
-					$bench_choice = pts_user_io::prompt_text_menu("Enter Your Choice", $option_names, true, true);
+					$bench_choice = pts_user_io::prompt_text_menu('Enter Your Choice', $option_names, true, true);
 				}
 
 				$bench_choice = $o->parse_selection_choice_input($bench_choice);
@@ -102,8 +102,8 @@ class pts_test_run_options
 		$test_args = array();
 		$test_args_description = array();
 
-		self::compute_all_combinations($test_args, "", $user_args, 0);
-		self::compute_all_combinations($test_args_description, "", $text_args, 0, " - ");
+		self::compute_all_combinations($test_args, null, $user_args, 0);
+		self::compute_all_combinations($test_args_description, null, $text_args, 0, ' - ');
 
 		return array($test_args, $test_args_description);
 	}
@@ -141,8 +141,8 @@ class pts_test_run_options
 		$test_args = array();
 		$test_args_description = array();
 
-		self::compute_all_combinations($test_args, "", $all_args_real, 0);
-		self::compute_all_combinations($test_args_description, "", $all_args_description, 0, " - ");
+		self::compute_all_combinations($test_args, null, $all_args_real, 0);
+		self::compute_all_combinations($test_args_description, null, $all_args_description, 0, ' - ');
 
 		return array($test_args, $test_args_description);
 	}
@@ -171,12 +171,12 @@ class pts_test_run_options
 		$test_args = array();
 		$test_args_description = array();
 
-		self::compute_all_combinations($test_args, "", $batch_all_args_real, 0);
-		self::compute_all_combinations($test_args_description, "", $batch_all_args_description, 0, " - ");
+		self::compute_all_combinations($test_args, null, $batch_all_args_real, 0);
+		self::compute_all_combinations($test_args_description, null, $batch_all_args_description, 0, ' - ');
 
 		return array($test_args, $test_args_description);
 	}
-	protected static function compute_all_combinations(&$return_arr, $current_string, $options, $counter, $delimiter = " ")
+	protected static function compute_all_combinations(&$return_arr, $current_string, $options, $counter, $delimiter = ' ')
 	{
 		// In batch mode, find all possible combinations for test options
 		if(count($options) <= $counter)
@@ -205,11 +205,11 @@ class pts_test_run_options
 		// Some test items have options that are dynamically built
 		switch($option_identifier)
 		{
-			case "auto-resolution":
+			case 'auto-resolution':
 				// Base options off available screen resolutions
 				if(count($option_names) == 1 && count($option_values) == 1)
 				{
-					$available_video_modes = PTS_IS_CLIENT ? phodevi::read_property("gpu", "available-modes") : null;
+					$available_video_modes = PTS_IS_CLIENT ? phodevi::read_property('gpu', 'available-modes') : null;
 
 					if(empty($available_video_modes))
 					{
@@ -225,39 +225,39 @@ class pts_test_run_options
 
 					foreach($available_video_modes as $video_mode)
 					{
-						$this_name = str_replace("\$VIDEO_WIDTH", $video_mode[0], $format_name);
-						$this_name = str_replace("\$VIDEO_HEIGHT", $video_mode[1], $this_name);
+						$this_name = str_replace('$VIDEO_WIDTH', $video_mode[0], $format_name);
+						$this_name = str_replace('$VIDEO_HEIGHT', $video_mode[1], $this_name);
 
-						$this_value = str_replace("\$VIDEO_WIDTH", $video_mode[0], $format_value);
-						$this_value = str_replace("\$VIDEO_HEIGHT", $video_mode[1], $this_value);
+						$this_value = str_replace('$VIDEO_WIDTH', $video_mode[0], $format_value);
+						$this_value = str_replace('$VIDEO_HEIGHT', $video_mode[1], $this_value);
 
 						array_push($option_names, $this_name);
 						array_push($option_values, $this_value);
 					}
 				}
 				break;
-			case "auto-disk-partitions":
-			case "auto-disk-mount-points":
+			case 'auto-disk-partitions':
+			case 'auto-disk-mount-points':
 				// Base options off available disk partitions
 				if(PTS_IS_CLIENT == false)
 				{
-					echo "ERROR: This option is not supported in this configuration.";
+					echo 'ERROR: This option is not supported in this configuration.';
 					return;
 				}
 
 				/*if(IS_LINUX)
 				{
-					$all_devices = array_merge(pts_file_io::glob("/dev/hd*"), pts_file_io::glob("/dev/sd*"));
+					$all_devices = array_merge(pts_file_io::glob('/dev/hd*'), pts_file_io::glob('/dev/sd*'));
 				}
 				else if(IS_BSD)
 				{
-					$all_devices = array_merge(pts_file_io::glob("/dev/ad*"), pts_file_io::glob("/dev/ada*"));
+					$all_devices = array_merge(pts_file_io::glob('/dev/ad*'), pts_file_io::glob('/dev/ada*'));
 				}
 				else
 				{
 					$all_devices = array();
 				}*/
-				$all_devices = array_merge(pts_file_io::glob("/dev/hd*"), pts_file_io::glob("/dev/sd*"));
+				$all_devices = array_merge(pts_file_io::glob('/dev/hd*'), pts_file_io::glob('/dev/sd*'));
 
 				foreach($all_devices as &$device)
 				{
@@ -273,25 +273,25 @@ class pts_test_run_options
 					array_push($option_values, $partition);
 				}
 
-				if($option_identifier == "auto-disk-mount-points")
+				if($option_identifier == 'auto-disk-mount-points')
 				{
 					$partitions_d = $option_values;
 					$option_values = array();
 					$option_names = array();
 
-					$mounts = is_file("/proc/mounts") ? file_get_contents("/proc/mounts") : null;
+					$mounts = is_file('/proc/mounts') ? file_get_contents('/proc/mounts') : null;
 
-					array_push($option_values, "");
-					array_push($option_names, "Default Test Directory");
+					array_push($option_values, '');
+					array_push($option_names, 'Default Test Directory');
 
 					foreach($partitions_d as $partition_d)
 					{
-						$mount_point = substr(($a = substr($mounts, strpos($mounts, $partition_d) + strlen($partition_d) + 1)), 0, strpos($a, " "));
+						$mount_point = substr(($a = substr($mounts, strpos($mounts, $partition_d) + strlen($partition_d) + 1)), 0, strpos($a, ' '));
 
-						if(is_dir($mount_point) && is_writable($mount_point) && $mount_point != "/boot")
+						if(is_dir($mount_point) && is_writable($mount_point) && $mount_point != '/boot')
 						{
 							array_push($option_values, $mount_point);
-							array_push($option_names, $mount_point . " [" . $partition_d . "]");
+							array_push($option_names, $mount_point . ' [' . $partition_d . ']');
 						}
 					}
 				}
@@ -301,15 +301,15 @@ class pts_test_run_options
 				}
 
 				break;
-			case "auto-disks":
+			case 'auto-disks':
 				// Base options off attached disks
 				if(PTS_IS_CLIENT == false)
 				{
-					echo "ERROR: This option is not supported in this configuration.";
+					echo 'ERROR: This option is not supported in this configuration.';
 					return;
 				}
 
-				$all_devices = array_merge(pts_file_io::glob("/dev/hd*"), pts_file_io::glob("/dev/sd*"));
+				$all_devices = array_merge(pts_file_io::glob('/dev/hd*'), pts_file_io::glob('/dev/sd*'));
 
 				foreach($all_devices as &$device)
 				{
@@ -326,14 +326,14 @@ class pts_test_run_options
 				}
 				$option_names = $option_values;
 				break;
-			case "auto-removable-media":
+			case 'auto-removable-media':
 				if(PTS_IS_CLIENT == false)
 				{
-					echo "ERROR: This option is not supported in this configuration.";
+					echo 'ERROR: This option is not supported in this configuration.';
 					return;
 				}
 
-				foreach(array_merge(pts_file_io::glob("/media/*/"), pts_file_io::glob("/Volumes/*/")) as $media_check)
+				foreach(array_merge(pts_file_io::glob('/media/*/'), pts_file_io::glob('/Volumes/*/')) as $media_check)
 				{
 					if(is_dir($media_check) && is_writable($media_check)) // add more checks later on
 					{
@@ -342,10 +342,10 @@ class pts_test_run_options
 					}
 				}
 				break;
-			case "auto-file-select":
+			case 'auto-file-select':
 				if(PTS_IS_CLIENT == false)
 				{
-					echo "ERROR: This option is not supported in this configuration.";
+					echo 'ERROR: This option is not supported in this configuration.';
 					return;
 				}
 
@@ -363,10 +363,10 @@ class pts_test_run_options
 					}
 				}
 				break;
-			case "auto-directory-select":
+			case 'auto-directory-select':
 				if(PTS_IS_CLIENT == false)
 				{
-					echo "ERROR: This option is not supported in this configuration.";
+					echo 'ERROR: This option is not supported in this configuration.';
 					return;
 				}
 

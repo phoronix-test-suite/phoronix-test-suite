@@ -20,22 +20,22 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-pts_load_xml_definitions("test-suite.xml");
+pts_load_xml_definitions('test-suite.xml');
 
 class pts_suite_nye_XmlReader extends nye_XmlReader
 {
 	public function __construct($read_xml)
 	{
-		if(!isset($xml_file[512]) && is_file(PTS_TEST_SUITE_PATH . $read_xml . "/suite-definition.xml"))
+		if(!isset($xml_file[512]) && is_file(PTS_TEST_SUITE_PATH . $read_xml . '/suite-definition.xml'))
 		{
-			$read_xml = PTS_TEST_SUITE_PATH . $read_xml . "/suite-definition.xml";
+			$read_xml = PTS_TEST_SUITE_PATH . $read_xml . '/suite-definition.xml';
 		}
 
 		parent::__construct($read_xml);
 	}
 	public function validate()
 	{
-		return $this->dom->schemaValidate(PTS_OPENBENCHMARKING_PATH . "schemas/test-suite.xsd");
+		return $this->dom->schemaValidate(PTS_OPENBENCHMARKING_PATH . 'schemas/test-suite.xsd');
 	}
 }
 ?>

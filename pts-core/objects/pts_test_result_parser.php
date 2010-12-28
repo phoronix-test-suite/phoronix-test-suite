@@ -58,7 +58,7 @@ class pts_test_result_parser
 			// TODO: Right now we are looping through SystemMonitor tags, but right now pts-core only supports providing one monitor sensor as the result
 			$sensor = explode('.', $monitor_sensor[$i]);
 
-			if($sensor == array("sys", "time"))
+			if($sensor == array('sys', 'time'))
 			{
 				// sys.time is a special case since we are just timing the test length and thus don't need to fork the thread
 				$start_time = microtime(true);
@@ -80,19 +80,19 @@ class pts_test_result_parser
 
 			$monitor_frequency[$i] *= 1000000; // Convert from seconds to micro-seconds
 
-			if(!in_array($monitor_report_as[$i], array("ALL", "MAX", "MIN", "AVG")))
+			if(!in_array($monitor_report_as[$i], array('ALL', 'MAX', 'MIN', 'AVG')))
 			{
 				// Not a valid reporting type
 				continue;
 			}
 
-			if(!function_exists("pcntl_fork"))
+			if(!function_exists('pcntl_fork'))
 			{
-				pts_client::$display->test_run_instance_error("PHP with PCNTL support enabled is required for this test.");
+				pts_client::$display->test_run_instance_error('PHP with PCNTL support enabled is required for this test.');
 				return false;
 			}
 
-			$monitor_file = tempnam($test_directory, ".monitor");
+			$monitor_file = tempnam($test_directory, '.monitor');
 			$pid = pcntl_fork();
 
 			if($pid != -1)
@@ -110,7 +110,7 @@ class pts_test_result_parser
 					while(is_file(PTS_USER_LOCK)) // TODO: or perhaps it may be okay to just do while(true) since posix_kill() is used when needed
 					{
 						array_push($sensor_values, phodevi::read_sensor($sensor));
-						file_put_contents($monitor_file, implode($sensor_values, "\n"));
+						file_put_contents($monitor_file, implode("\n", $sensor_values));
 						usleep($monitor_frequency[$i]);
 					}
 
@@ -127,7 +127,7 @@ class pts_test_result_parser
 
 		foreach(self::$monitoring_sensors as $sensor_r)
 		{
-			if($sensor_r[1] == array("sys", "time"))
+			if($sensor_r[1] == array('sys', 'time'))
 			{
 				// sys.time is a special case
 				$end_time = microtime(true);
@@ -144,9 +144,9 @@ class pts_test_result_parser
 			else
 			{
 				// Kill the sensor monitoring thread
-				if(function_exists("posix_kill") == false)
+				if(function_exists('posix_kill') == false)
 				{
-					pts_client::$display->test_run_error("The PHP POSIX extension is required for this test.");
+					pts_client::$display->test_run_error('The PHP POSIX extension is required for this test.');
 					return false;
 				}
 
@@ -162,16 +162,16 @@ class pts_test_result_parser
 
 				switch($sensor_r[2])
 				{
-					case "MAX":
+					case 'MAX':
 						$result_value = max($sensor_values);
 						break;
-					case "MIN":
+					case 'MIN':
 						$result_value = min($sensor_values);
 						break;
-					case "AVG":
+					case 'AVG':
 						$result_value = array_sum($sensor_values) / count($sensor_values);
 						break;
-					case "ALL":
+					case 'ALL':
 						$result_value = implode(',', $sensor_values);
 						break;
 					default:
@@ -200,15 +200,15 @@ class pts_test_result_parser
 
 		$test_identifier = $test_run_request->test_profile->get_identifier();
 		$extra_arguments = $test_run_request->get_arguments();
-		$pts_test_arguments = trim($test_run_request->test_profile->get_default_arguments() . " " . str_replace($test_run_request->test_profile->get_default_arguments(), "", $extra_arguments) . " " . $test_run_request->test_profile->get_default_post_arguments());
+		$pts_test_arguments = trim($test_run_request->test_profile->get_default_arguments() . ' ' . str_replace($test_run_request->test_profile->get_default_arguments(), '', $extra_arguments) . ' ' . $test_run_request->test_profile->get_default_post_arguments());
 
 		switch($test_run_request->test_profile->get_display_format())
 		{
-			case "IMAGE_COMPARISON":
+			case 'IMAGE_COMPARISON':
 				$test_result = self::parse_iqc_result($test_run_request->test_profile, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments);
 				break;
-			case "PASS_FAIL":
-			case "MULTI_PASS_FAIL":
+			case 'PASS_FAIL':
+			case 'MULTI_PASS_FAIL':
 				$test_result = self::parse_generic_result($test_identifier, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments);
 				break;
 			default:
@@ -232,15 +232,15 @@ class pts_test_result_parser
 
 		switch($test_result->test_profile->get_display_format())
 		{
-			case "NO_RESULT":
+			case 'NO_RESULT':
 				// Nothing to do, there are no results
 				break;
-			case "LINE_GRAPH":
-			case "TEST_COUNT_PASS":
+			case 'LINE_GRAPH':
+			case 'TEST_COUNT_PASS':
 				// Just take the first result
 				$END_RESULT = $trial_results[0];
 				break;
-			case "IMAGE_COMPARISON":
+			case 'IMAGE_COMPARISON':
 				// Capture the image
 				$iqc_image_png = $trial_results[0];
 
@@ -251,8 +251,8 @@ class pts_test_result_parser
 					unlink($iqc_image_png);				
 				}
 				break;
-			case "PASS_FAIL":
-			case "MULTI_PASS_FAIL":
+			case 'PASS_FAIL':
+			case 'MULTI_PASS_FAIL':
 				// Calculate pass/fail type
 				$END_RESULT = -1;
 
@@ -264,35 +264,35 @@ class pts_test_result_parser
 				{
 					foreach($trial_results as $result)
 					{
-						if($result == "FALSE" || $result == "0" || $result == "FAIL")
+						if($result == 'FALSE' || $result == '0' || $result == 'FAIL')
 						{
-							if($END_RESULT == -1 || $END_RESULT == "PASS")
+							if($END_RESULT == -1 || $END_RESULT == 'PASS')
 							{
-								$END_RESULT = "FAIL";
+								$END_RESULT = 'FAIL';
 							}
 						}
 						else
 						{
 							if($END_RESULT == -1)
 							{
-								$END_RESULT = "PASS";
+								$END_RESULT = 'PASS';
 							}
 						}
 					}
 				}
 				break;
-			case "BAR_GRAPH":
+			case 'BAR_GRAPH':
 			default:
 				// Result is of a normal numerical type
 				switch($test_result->test_profile->get_result_quantifier())
 				{
-					case "MAX":
+					case 'MAX':
 						$END_RESULT = max($trial_results);
 						break;
-					case "MIN":
+					case 'MIN':
 						$END_RESULT = min($trial_results);
 						break;
-					case "AVG":
+					case 'AVG':
 					default:
 						// assume AVG (average)
 						$is_float = false;
@@ -340,7 +340,7 @@ class pts_test_result_parser
 
 		$test_result = false;
 
-		if(!extension_loaded("gd"))
+		if(!extension_loaded('gd'))
 		{
 			// Needs GD library to work
 			return false;
@@ -372,7 +372,7 @@ class pts_test_result_parser
 
 			$img_sliced = imagecreatetruecolor($result_iqc_image_width[$i], $result_iqc_image_height[$i]);
 			imagecopyresampled($img_sliced, $img, 0, 0, $result_iqc_image_x[$i], $result_iqc_image_y[$i], $result_iqc_image_width[$i], $result_iqc_image_height[$i], $result_iqc_image_width[$i], $result_iqc_image_height[$i]);
-			$test_result = $test_profile->get_install_dir() . "iqc.png";
+			$test_result = $test_profile->get_install_dir() . 'iqc.png';
 			imagepng($img_sliced, $test_result);
 
 			if($test_result != false)
@@ -418,17 +418,17 @@ class pts_test_result_parser
 
 			if($result_key[$i] == null)
 			{
-				$result_key[$i] = "#_RESULT_#";
+				$result_key[$i] = '#_RESULT_#';
 			}
 			else
 			{
 				switch($result_key[$i])
 				{
-					case "PTS_TEST_ARGUMENTS":
-						$result_key[$i] = "#_" . str_replace(' ', '', $pts_test_arguments) . "_#";
+					case 'PTS_TEST_ARGUMENTS':
+						$result_key[$i] = '#_' . str_replace(' ', '', $pts_test_arguments) . '_#';
 						break;
-					case "PTS_USER_SET_ARGUMENTS":
-						$result_key[$i] = "#_" . str_replace(' ', '', $extra_arguments) . "_#";
+					case 'PTS_USER_SET_ARGUMENTS':
+						$result_key[$i] = '#_' . str_replace(' ', '', $extra_arguments) . '_#';
 						break;
 				}
 			}
@@ -511,7 +511,7 @@ class pts_test_result_parser
 
 			if($search_key != null || $result_line_before_hint[$i] != null || $result_line_after_hint[$i] != null || $result_template_r[0] == $result_key[$i])
 			{
-				$is_multi_match = !empty($multi_match[$i]) && $multi_match[$i] != "NONE";
+				$is_multi_match = !empty($multi_match[$i]) && $multi_match[$i] != 'NONE';
 
 				do
 				{
@@ -519,21 +519,21 @@ class pts_test_result_parser
 
 					if($result_line_before_hint[$i] != null)
 					{
-						pts_client::test_profile_debug_message("Result Parsing Line Before Hint: " . $result_line_before_hint[$i]);
+						pts_client::test_profile_debug_message('Result Parsing Line Before Hint: ' . $result_line_before_hint[$i]);
 						$result_line = substr($result_output, strpos($result_output, "\n", strrpos($result_output, $result_line_before_hint[$i])));
 						$result_line = substr($result_line, 0, strpos($result_line, "\n", 1));
 						$result_output = substr($result_output, 0, strrpos($result_output, "\n", strrpos($result_output, $result_line_before_hint[$i]))) . "\n";
 					}
 					else if($result_line_after_hint[$i] != null)
 					{
-						pts_client::test_profile_debug_message("Result Parsing Line After Hint: " . $result_line_after_hint[$i]);
+						pts_client::test_profile_debug_message('Result Parsing Line After Hint: ' . $result_line_after_hint[$i]);
 						$result_line = substr($result_output, 0, strrpos($result_output, "\n", strrpos($result_output, $result_line_before_hint[$i])));
 						$result_line = substr($result_line, strrpos($result_line, "\n", 1) + 1);
 						$result_output = null;
 					}
 					else if($search_key != null)
 					{
-						pts_client::test_profile_debug_message("Result Parsing Search Key: " . $search_key);
+						pts_client::test_profile_debug_message('Result Parsing Search Key: ' . $search_key);
 						$result_line = substr($result_output, 0, strpos($result_output, "\n", strrpos($result_output, $search_key)));
 						$start_of_line = strrpos($result_line, "\n");
 						$result_output = substr($result_line, 0, $start_of_line) . "\n";
@@ -542,11 +542,11 @@ class pts_test_result_parser
 					else
 					{
 						// Condition $result_template_r[0] == $result_key[$i], include entire file since there is nothing to search
-						pts_client::test_profile_debug_message("No Result Parsing Hint, Including Entire Result Output");
+						pts_client::test_profile_debug_message('No Result Parsing Hint, Including Entire Result Output');
 						$result_line = trim($result_output);
 					}
 
-					pts_client::test_profile_debug_message("Result Line: " . $result_line);
+					pts_client::test_profile_debug_message('Result Line: ' . $result_line);
 
 					$result_r = explode(' ', pts_strings::trim_spaces(str_replace(array('(', ')', "\t"), ' ', str_replace('=', ' = ', $result_line))));
 					$result_r_pos = array_search($result_key[$i], $result_r);
@@ -604,10 +604,10 @@ class pts_test_result_parser
 
 			switch($multi_match[$i])
 			{
-				case "REPORT_ALL":
+				case 'REPORT_ALL':
 					$test_result = implode(',', $test_results);
 					break;
-				case "AVERAGE":
+				case 'AVERAGE':
 				default:
 					$test_result = array_sum($test_results) / count($test_results);
 					break;

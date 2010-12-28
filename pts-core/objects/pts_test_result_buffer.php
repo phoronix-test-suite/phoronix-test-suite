@@ -75,7 +75,7 @@ class pts_test_result_buffer
 
 		if($add_to_other && $other_value > 0)
 		{
-			$this->append_to_test_result("Other", $other_value);
+			$this->append_to_test_result('Other', $other_value);
 		}
 	}
 	public function add_composite_result($force = false)
@@ -102,11 +102,11 @@ class pts_test_result_buffer
 			{
 				if(1 == 0)
 				{
-					$title = $key . ": Composite";
+					$title = $key . ': Composite';
 				}
 				else
 				{
-					$title = "Composite: " . $key;
+					$title = 'Composite: ' . $key;
 				}
 
 				$this->add_test_result($title, $value);
@@ -115,7 +115,7 @@ class pts_test_result_buffer
 		else
 		{
 			$total_value = array_sum($this->get_values());
-			$this->add_test_result("Composite", $total_value);
+			$this->add_test_result('Composite', $total_value);
 		}
 	}
 	public function buffer_values_to_percent()

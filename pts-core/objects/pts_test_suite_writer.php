@@ -20,7 +20,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-pts_load_xml_definitions("test-suite.xml");
+pts_load_xml_definitions('test-suite.xml');
 
 class pts_test_suite_writer
 {
@@ -83,7 +83,7 @@ class pts_test_suite_writer
 
 			if(empty($identifier))
 			{
-				echo "\n" . $test_names[$i] . " fails.\n";
+				echo PHP_EOL . $test_names[$i] . ' fails.' . PHP_EOL;
 				exit;
 			}
 			$identifier = substr($identifier, 0, strrpos($identifier, '-')); // strip the version for now

@@ -20,7 +20,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-pts_load_xml_definitions("results-parser.xml");
+pts_load_xml_definitions('results-parser.xml');
 
 class pts_parse_results_nye_XmlReader extends nye_XmlReader
 {
@@ -30,7 +30,7 @@ class pts_parse_results_nye_XmlReader extends nye_XmlReader
 	}
 	public function validate()
 	{
-		return $this->dom->schemaValidate(PTS_OPENBENCHMARKING_PATH . "schemas/results-parser.xsd");
+		return $this->dom->schemaValidate(PTS_OPENBENCHMARKING_PATH . 'schemas/results-parser.xsd');
 	}
 }
 ?>

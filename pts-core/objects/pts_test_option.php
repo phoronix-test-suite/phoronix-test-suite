@@ -102,7 +102,7 @@ class pts_test_option
 		{
 			$user_msg = $this->get_option_message($i);
 
-			array_push($names, $this->get_option_name($i) . (!empty($user_msg) ? " [" . $user_msg . ']' : null));
+			array_push($names, $this->get_option_name($i) . (!empty($user_msg) ? ' [' . $user_msg . ']' : null));
 		}
 
 		return $names;
@@ -131,7 +131,7 @@ class pts_test_option
 	{
 		$name = $this->get_name();
 
-		return $name != null && $input != null ? $name . ": " . $input : null;
+		return $name != null && $input != null ? $name . ': ' . $input : null;
 	}
 	public function format_option_value_from_select($select_pos)
 	{
@@ -143,7 +143,7 @@ class pts_test_option
 	{
 		$display_name = $this->get_option_name($select_pos);
 
-		if(($cut_point = strpos($display_name, "(")) > 1 && strpos($display_name, ")") > $cut_point)
+		if(($cut_point = strpos($display_name, '(')) > 1 && strpos($display_name, ')') > $cut_point)
 		{
 			$display_name = trim(substr($display_name, 0, $cut_point));
 		}
@@ -180,7 +180,7 @@ class pts_test_option
 
 		foreach(pts_strings::comma_explode($input) as $input_choice)
 		{
-			if($input_choice == ($this->option_count() + 1) || $input_choice == "Test All Options")
+			if($input_choice == ($this->option_count() + 1) || $input_choice == 'Test All Options')
 			{
 				// Add all options
 				foreach(array_keys($this->options) as $i)

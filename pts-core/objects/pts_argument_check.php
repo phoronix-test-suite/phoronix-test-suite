@@ -58,7 +58,7 @@ class pts_argument_check
 		{
 			$type = 'Test | Suite';
 		}
-		else if($this->get_function_check() == array("pts_test_profile", 'is_test_profile'))
+		else if($this->get_function_check() == array('pts_test_profile', 'is_test_profile'))
 		{
 			$type = 'Test';
 		}
@@ -74,7 +74,7 @@ class pts_argument_check
 		{
 			$type = 'Test Result';
 		}
-		else if($this->get_function_check() == array("pts_module", "is_module"))
+		else if($this->get_function_check() == array('pts_module', 'is_module'))
 		{
 			$type = 'Phoronix Test Suite Module';
 		}

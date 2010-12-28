@@ -78,7 +78,7 @@ class pts_test_install_request
 				{
 					$platforms = pts_strings::comma_explode($package_platform[$i]);
 
-					if(!in_array(OPERATING_SYSTEM, $platforms) && !(IS_BSD && BSD_LINUX_COMPATIBLE && in_array("Linux", $platforms)))
+					if(!in_array(OPERATING_SYSTEM, $platforms) && !(IS_BSD && BSD_LINUX_COMPATIBLE && in_array('Linux', $platforms)))
 					{
 						// This download does not match the operating system
 						continue;
@@ -120,7 +120,7 @@ class pts_test_install_request
 					$download_package->set_filesize(filesize($download_location . $package_filename));
 				}
 
-				$download_package->set_download_location("IN_DESTINATION_DIR");
+				$download_package->set_download_location('IN_DESTINATION_DIR');
 			}
 			else if(is_file($main_download_cache . $package_filename))
 			{
@@ -130,7 +130,7 @@ class pts_test_install_request
 					$download_package->set_filesize(filesize($main_download_cache . $package_filename));
 				}
 
-				$download_package->set_download_location("MAIN_DOWNLOAD_CACHE", array($main_download_cache . $package_filename));
+				$download_package->set_download_location('MAIN_DOWNLOAD_CACHE', array($main_download_cache . $package_filename));
 			}
 			else
 			{
@@ -144,7 +144,7 @@ class pts_test_install_request
 							$download_package->set_filesize(filesize($cache_directory . $package_filename));
 						}
 
-						$download_package->set_download_location("LOCAL_DOWNLOAD_CACHE", array($cache_directory . $package_filename));
+						$download_package->set_download_location('LOCAL_DOWNLOAD_CACHE', array($cache_directory . $package_filename));
 						break;
 					}
 				}
@@ -154,7 +154,7 @@ class pts_test_install_request
 				{
 					if(!empty($package_md5) && isset($remote_files[$package_md5]))
 					{
-						$download_package->set_download_location("REMOTE_DOWNLOAD_CACHE", $remote_files[$package_md5]);
+						$download_package->set_download_location('REMOTE_DOWNLOAD_CACHE', $remote_files[$package_md5]);
 					}
 					else
 					{
@@ -167,7 +167,7 @@ class pts_test_install_request
 
 							if($file_pointer !== false)
 							{
-								$download_package->set_download_location("REMOTE_DOWNLOAD_CACHE", $remote_file);
+								$download_package->set_download_location('REMOTE_DOWNLOAD_CACHE', $remote_file);
 								break;
 							}
 						}

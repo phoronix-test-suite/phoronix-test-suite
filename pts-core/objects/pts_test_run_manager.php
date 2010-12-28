@@ -58,12 +58,12 @@ class pts_test_run_manager
 	{
 		pts_client::set_test_flags($test_flags);
 
-		$this->do_dynamic_run_count = pts_config::read_bool_config(P_OPTION_STATS_DYNAMIC_RUN_COUNT, "TRUE");
+		$this->do_dynamic_run_count = pts_config::read_bool_config(P_OPTION_STATS_DYNAMIC_RUN_COUNT, 'TRUE');
 		$this->dynamic_roun_count_on_length_or_less = pts_config::read_user_config(P_OPTION_STATS_NO_DYNAMIC_ON_LENGTH, 20);
 		$this->dynamic_run_count_std_deviation_threshold = pts_config::read_user_config(P_OPTION_STATS_STD_DEVIATION_THRESHOLD, 3.50);
 		$this->dynamic_run_count_export_script = pts_config::read_user_config(P_OPTION_STATS_EXPORT_RESULTS_TO, null);
 
-		pts_module_manager::module_process("__run_manager_setup", $this);
+		pts_module_manager::module_process('__run_manager_setup', $this);
 	}
 	public function is_pcqs()
 	{
@@ -126,7 +126,7 @@ class pts_test_run_manager
 		// Check to see if there is an external/custom script to export the results to in determining whether results are valid
 		if(($ex_file = $this->dynamic_run_count_export_script) != null && is_executable($ex_file) || is_executable(($ex_file = PTS_USER_PATH . $this->dynamic_run_count_export_script)))
 		{
-			$exit_status = trim(shell_exec($ex_file . " " . $test_results->test_result_buffer->get_values_as_string() . " > /dev/null 2>&1; echo $?"));
+			$exit_status = trim(shell_exec($ex_file . ' ' . $test_results->test_result_buffer->get_values_as_string() . ' > /dev/null 2>&1; echo $?'));
 
 			switch($exit_status)
 			{
@@ -251,7 +251,7 @@ class pts_test_run_manager
 	{
 		if(empty($save_name))
 		{
-			$save_name = date("Y-m-d-Hi");
+			$save_name = date('Y-m-d-Hi');
 		}
 
 		$this->file_name = self::clean_save_name($save_name);
@@ -273,14 +273,14 @@ class pts_test_run_manager
 		$proposed_name = null;
 		$custom_title = null;
 
-		if(($env = pts_client::read_env("TEST_RESULTS_NAME")))
+		if(($env = pts_client::read_env('TEST_RESULTS_NAME')))
 		{
 			$custom_title = $enc;
 			$proposed_name = self::clean_save_name($env);
-			//echo "Saving Results To: " . $proposed_name . "\n";
+			//echo 'Saving Results To: ' . $proposed_name . PHP_EOL;
 		}
 
-		if((pts_c::$test_flags ^ pts_c::batch_mode) || pts_config::read_bool_config(P_OPTION_BATCH_PROMPTSAVENAME, "FALSE"))
+		if((pts_c::$test_flags ^ pts_c::batch_mode) || pts_config::read_bool_config(P_OPTION_BATCH_PROMPTSAVENAME, 'FALSE'))
 		{
 			$is_reserved_word = false;
 
@@ -288,11 +288,11 @@ class pts_test_run_manager
 			{
 				if($is_reserved_word)
 				{
-					echo "\n\nThe name of the saved file cannot be the same as a test/suite: " . $proposed_name . "\n";
+					echo PHP_EOL . 'The name of the saved file cannot be the same as a test/suite: ' . $proposed_name . PHP_EOL;
 					$is_reserved_word = false;
 				}
 
-				pts_client::$display->generic_prompt("Enter a name to save these results: ");
+				pts_client::$display->generic_prompt('Enter a name to save these results: ');
 				$proposed_name = pts_user_io::read_user_input();
 				$custom_title = $proposed_name;
 				$proposed_name = self::clean_save_name($proposed_name);
@@ -301,7 +301,7 @@ class pts_test_run_manager
 
 		if(empty($proposed_name))
 		{
-			$proposed_name = date("Y-m-d-Hi");
+			$proposed_name = date('Y-m-d-Hi');
 		}
 		if(empty($custom_title))
 		{
@@ -348,26 +348,26 @@ class pts_test_run_manager
 			$current_software = array();
 		}
 
-		if((pts_c::$test_flags ^ pts_c::batch_mode) || pts_config::read_bool_config(P_OPTION_BATCH_PROMPTIDENTIFIER, "TRUE") && (pts_c::$test_flags ^ pts_c::auto_mode) && (pts_c::$test_flags ^ pts_c::is_recovering))
+		if((pts_c::$test_flags ^ pts_c::batch_mode) || pts_config::read_bool_config(P_OPTION_BATCH_PROMPTIDENTIFIER, 'TRUE') && (pts_c::$test_flags ^ pts_c::auto_mode) && (pts_c::$test_flags ^ pts_c::is_recovering))
 		{
 			if(count($current_identifiers) > 0)
 			{
-				echo "\nCurrent Test Identifiers:\n";
+				echo PHP_EOL . 'Current Test Identifiers:' . PHP_EOL;
 				echo pts_user_io::display_text_list($current_identifiers);
-				echo "\n";
+				echo PHP_EOL;
 			}
 
 			$times_tried = 0;
 			do
 			{
-				if($times_tried == 0 && (($env_identifier = pts_client::read_env("TEST_RESULTS_IDENTIFIER")) || (pts_c::$test_flags & pts_c::auto_mode)))
+				if($times_tried == 0 && (($env_identifier = pts_client::read_env('TEST_RESULTS_IDENTIFIER')) || (pts_c::$test_flags & pts_c::auto_mode)))
 				{
 					$results_identifier = isset($env_identifier) ? $env_identifier : null;
-					echo "Test Identifier: " . $results_identifier . "\n";
+					echo 'Test Identifier: ' . $results_identifier . PHP_EOL;
 				}
 				else
 				{
-					pts_client::$display->generic_prompt("Enter a unique name for this test run: ");
+					pts_client::$display->generic_prompt('Enter a unique name for this test run: ');
 					$results_identifier = self::clean_results_identifier(pts_user_io::read_user_input());
 				}
 				$times_tried++;
@@ -383,7 +383,7 @@ class pts_test_run_manager
 		}
 		else
 		{
-			$results_identifier = pts_client::swap_variables($results_identifier, array("pts_client", "user_run_save_variables"));
+			$results_identifier = pts_client::swap_variables($results_identifier, array('pts_client', 'user_run_save_variables'));
 		}
 
 		$this->results_identifier = $results_identifier;
@@ -410,7 +410,7 @@ class pts_test_run_manager
 	public function call_test_runs()
 	{
 		// Create a lock
-		$lock_path = pts_client::temporary_directory() . "/phoronix-test-suite.active";
+		$lock_path = pts_client::temporary_directory() . '/phoronix-test-suite.active';
 		pts_client::create_lock($lock_path);
 
 		if($this->pre_run_message != null)
@@ -420,22 +420,22 @@ class pts_test_run_manager
 
 		// Hook into the module framework
 		self::$test_run_process_active = true;
-		pts_module_manager::module_process("__pre_run_process", $this);
-		pts_client::process_user_config_external_hook_process(P_OPTION_EXTERNAL_HOOKS_PRE_TESTING, "Running the pre-test external hook.");
+		pts_module_manager::module_process('__pre_run_process', $this);
+		pts_client::process_user_config_external_hook_process(P_OPTION_EXTERNAL_HOOKS_PRE_TESTING, 'Running the pre-test external hook.');
 
-		pts_file_io::unlink(PTS_USER_PATH . "halt-testing");
-		pts_file_io::unlink(PTS_USER_PATH . "skip-test");
+		pts_file_io::unlink(PTS_USER_PATH . 'halt-testing');
+		pts_file_io::unlink(PTS_USER_PATH . 'skip-test');
 
 		$test_flag = true;
 		$tests_to_run_count = $this->get_test_count();
 		pts_client::$display->test_run_process_start($this);
 
-		if(($total_loop_time_minutes = pts_client::read_env("TOTAL_LOOP_TIME")) && is_numeric($total_loop_time_minutes) && $total_loop_time_minutes > 0)
+		if(($total_loop_time_minutes = pts_client::read_env('TOTAL_LOOP_TIME')) && is_numeric($total_loop_time_minutes) && $total_loop_time_minutes > 0)
 		{
 			$total_loop_time_seconds = $total_loop_time_minutes * 60;
 			$loop_end_time = time() + $total_loop_time_seconds;
 
-			pts_client::$display->generic_heading("Estimated Run-Time: " . pts_strings::format_time($total_loop_time_seconds, "SECONDS", true, 60));
+			pts_client::$display->generic_heading('Estimated Run-Time: ' . pts_strings::format_time($total_loop_time_seconds, 'SECONDS', true, 60));
 			$this->test_run_count = $tests_to_run_count;
 
 			do
@@ -448,11 +448,11 @@ class pts_test_run_manager
 			}
 			while(time() < $loop_end_time && $test_flag);
 		}
-		else if(($total_loop_count = pts_client::read_env("TOTAL_LOOP_COUNT")) && is_numeric($total_loop_count))
+		else if(($total_loop_count = pts_client::read_env('TOTAL_LOOP_COUNT')) && is_numeric($total_loop_count))
 		{
 			if(($estimated_length = $this->get_estimated_run_time()) > 1)
 			{
-				pts_client::$display->generic_heading("Estimated Run-Time: " . pts_strings::format_time(($estimated_length * $total_loop_count), "SECONDS", true, 60));
+				pts_client::$display->generic_heading('Estimated Run-Time: ' . pts_strings::format_time(($estimated_length * $total_loop_count), 'SECONDS', true, 60));
 			}
 
 			$this->test_run_count = ($total_loop_count * $tests_to_run_count);
@@ -470,7 +470,7 @@ class pts_test_run_manager
 		{
 			if(($estimated_length = $this->get_estimated_run_time()) > 1)
 			{
-				pts_client::$display->generic_heading("Estimated Run-Time: " . pts_strings::format_time($estimated_length, "SECONDS", true, 60));
+				pts_client::$display->generic_heading('Estimated Run-Time: ' . pts_strings::format_time($estimated_length, 'SECONDS', true, 60));
 			}
 
 			$this->test_run_count = $tests_to_run_count;
@@ -482,12 +482,12 @@ class pts_test_run_manager
 			}
 		}
 
-		pts_file_io::unlink(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . "/active.xml");
+		pts_file_io::unlink(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . '/active.xml');
 
 		foreach($this->tests_to_run as &$run_request)
 		{
 			// Remove cache shares
-			foreach(pts_file_io::glob($run_request->test_profile->get_install_dir() . "cache-share-*.pt2so") as $cache_share_file)
+			foreach(pts_file_io::glob($run_request->test_profile->get_install_dir() . 'cache-share-*.pt2so') as $cache_share_file)
 			{
 				unlink($cache_share_file);
 			}
@@ -499,8 +499,8 @@ class pts_test_run_manager
 		}
 
 		self::$test_run_process_active = -1;
-		pts_module_manager::module_process("__post_run_process", $this);
-		pts_client::process_user_config_external_hook_process(P_OPTION_EXTERNAL_HOOKS_POST_TESTING, "Running the post-test external hook.");
+		pts_module_manager::module_process('__post_run_process', $this);
+		pts_client::process_user_config_external_hook_process(P_OPTION_EXTERNAL_HOOKS_POST_TESTING, 'Running the post-test external hook.');
 		pts_client::release_lock($lock_path);
 
 		// Report any tests that failed to properly run
@@ -513,7 +513,7 @@ class pts_test_run_manager
 				{
 					echo "\t- " . $run_request->test_profile->get_identifier() . ($run_request->get_arguments_description() != null ? ": " . $run_request->get_arguments_description() : null) . "\n";
 				}
-				echo "\n";
+				echo PHP_EOL;
 			}
 		}
 	}
@@ -527,31 +527,31 @@ class pts_test_run_manager
 
 		if($this->get_file_name() != null)
 		{
-			$this->result_file_writer->save_xml(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . "/active.xml");
+			$this->result_file_writer->save_xml(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . '/active.xml');
 		}
 
 		$test_run_request = $this->get_test_to_run($run_index);
 
-		if(($run_index != 0 && count(pts_file_io::glob($test_run_request->test_profile->get_install_dir() . "cache-share-*.pt2so")) == 0))
+		if(($run_index != 0 && count(pts_file_io::glob($test_run_request->test_profile->get_install_dir() . 'cache-share-*.pt2so')) == 0))
 		{
 			sleep(pts_config::read_user_config(P_OPTION_TEST_SLEEPTIME, 5));
 		}
 
 		pts_test_execution::run_test($this, $test_run_request);
 
-		if(pts_file_io::unlink(PTS_USER_PATH . "halt-testing"))
+		if(pts_file_io::unlink(PTS_USER_PATH . 'halt-testing'))
 		{
 			// Stop the testing process entirely
 			return false;
 		}
-		else if(pts_file_io::unlink(PTS_USER_PATH . "skip-test"))
+		else if(pts_file_io::unlink(PTS_USER_PATH . 'skip-test'))
 		{
 			// Just skip the current test and do not save the results, but continue testing
 			continue;
 		}
 
 		$test_successful = false;
-		if($test_run_request->test_profile->get_display_format() == "NO_RESULT")
+		if($test_run_request->test_profile->get_display_format() == 'NO_RESULT')
 		{
 			$test_successful = true;
 		}
@@ -569,28 +569,28 @@ class pts_test_run_manager
 				{
 					$this->result_file_writer->add_result_from_result_object_with_value_string($test_run_request, $test_run_request->get_result(), $test_run_request->test_result_buffer->get_values_as_string());
 
-					if($this->get_results_identifier() != null && $this->get_file_name() != null && pts_config::read_bool_config(P_OPTION_LOG_TEST_OUTPUT, "FALSE"))
+					if($this->get_results_identifier() != null && $this->get_file_name() != null && pts_config::read_bool_config(P_OPTION_LOG_TEST_OUTPUT, 'FALSE'))
 					{
 						static $xml_write_pos = 1;
-						pts_file_io::mkdir(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . "/test-logs/" . $xml_write_pos . "/");
+						pts_file_io::mkdir(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . '/test-logs/' . $xml_write_pos . '/');
 
-						if(is_dir(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . "/test-logs/active/" . $this->get_results_identifier()))
+						if(is_dir(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . '/test-logs/active/' . $this->get_results_identifier()))
 						{
-							$test_log_write_dir = PTS_SAVE_RESULTS_PATH . $this->get_file_name() . "/test-logs/" . $xml_write_pos . '/' . $this->get_results_identifier() . '/';
+							$test_log_write_dir = PTS_SAVE_RESULTS_PATH . $this->get_file_name() . '/test-logs/' . $xml_write_pos . '/' . $this->get_results_identifier() . '/';
 
 							if(is_dir($test_log_write_dir))
 							{
 								pts_file_io::delete($test_log_write_dir, null, true);
 							}
 
-							rename(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . "/test-logs/active/" . $this->get_results_identifier() . '/', $test_log_write_dir);
+							rename(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . '/test-logs/active/' . $this->get_results_identifier() . '/', $test_log_write_dir);
 						}
 						$xml_write_pos++;
 					}
 				}
 			}
 
-			pts_file_io::unlink(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . "/test-logs/active/");
+			pts_file_io::unlink(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . '/test-logs/active/');
 		}
 
 		if($test_successful == false && $test_run_request->test_profile->get_identifier() != null)
@@ -598,11 +598,11 @@ class pts_test_run_manager
 			array_push($this->failed_tests_to_run, $test_run_request);
 
 			// For now delete the failed test log files, but it may be a good idea to keep them
-			pts_file_io::delete(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . "/test-logs/active/" . $this->get_results_identifier() . "/", null, true);
+			pts_file_io::delete(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . '/test-logs/active/' . $this->get_results_identifier() . '/', null, true);
 		}
 
-		pts_module_manager::module_process("__post_test_run_process", $this->result_file_writer);
-		pts_client::process_user_config_external_hook_process(P_OPTION_EXTERNAL_HOOKS_INTERIM_TESTING, "Running the interim-test external hook.", $test_run_request);
+		pts_module_manager::module_process('__post_test_run_process', $this->result_file_writer);
+		pts_client::process_user_config_external_hook_process(P_OPTION_EXTERNAL_HOOKS_INTERIM_TESTING, 'Running the interim-test external hook.', $test_run_request);
 
 		return true;
 	}
@@ -622,16 +622,16 @@ class pts_test_run_manager
 
 		if((pts_c::$test_flags & pts_c::batch_mode))
 		{
-			if(pts_config::read_bool_config(P_OPTION_BATCH_CONFIGURED, "FALSE") == false && (pts_c::$test_flags ^ pts_c::auto_mode))
+			if(pts_config::read_bool_config(P_OPTION_BATCH_CONFIGURED, 'FALSE') == false && (pts_c::$test_flags ^ pts_c::auto_mode))
 			{
-				pts_client::$display->generic_error("The batch mode must first be configured.\nTo configure, run phoronix-test-suite batch-setup");
+				pts_client::$display->generic_error('The batch mode must first be configured.\nTo configure, run phoronix-test-suite batch-setup');
 				return false;
 			}
 		}
 
 		if(!is_writable(PTS_TEST_INSTALL_PATH))
 		{
-			pts_client::$display->generic_error("The test installation directory is not writable.\nLocation: " . PTS_TEST_INSTALL_PATH);
+			pts_client::$display->generic_error('The test installation directory is not writable.\nLocation: ' . PTS_TEST_INSTALL_PATH);
 			return false;
 		}
 
@@ -642,7 +642,7 @@ class pts_test_run_manager
 		}
 		else if(count($to_run) == 0)
 		{
-			pts_client::$display->generic_error("You must enter at least one test, suite, or result identifier to run.");
+			pts_client::$display->generic_error('You must enter at least one test, suite, or result identifier to run.');
 
 			return false;
 		}
@@ -668,12 +668,12 @@ class pts_test_run_manager
 			}
 
 			$pso = new pts_storage_object(true, false);
-			$pso->add_object("test_run_manager", $this);
-			$pso->add_object("batch_mode", (pts_c::$test_flags & pts_c::batch_mode));
-			$pso->add_object("system_hardware", phodevi::system_hardware(false));
-			$pso->add_object("system_software", phodevi::system_software(false));
+			$pso->add_object('test_run_manager', $this);
+			$pso->add_object('batch_mode', (pts_c::$test_flags & pts_c::batch_mode));
+			$pso->add_object('system_hardware', phodevi::system_hardware(false));
+			$pso->add_object('system_software', phodevi::system_software(false));
 
-			$pso->save_to_file($this->results_directory . "objects.pt2so");
+			$pso->save_to_file($this->results_directory . 'objects.pt2so');
 			unset($pso);
 		}
 	}
@@ -687,21 +687,21 @@ class pts_test_run_manager
 				return false;
 			}
 
-			pts_file_io::unlink($this->results_directory . "objects.pt2so");
-			pts_file_io::delete(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . "/test-logs/active/", null, true);
+			pts_file_io::unlink($this->results_directory . 'objects.pt2so');
+			pts_file_io::delete(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . '/test-logs/active/', null, true);
 
 			if($this->wrote_system_xml)
 			{
 				$this->result_file_writer->add_test_notes(pts_test_notes_manager::generate_test_notes($this->tests_to_run));
 			}
 
-			pts_module_manager::module_process("__event_results_process", $this);
-			$this->result_file_writer->save_result_file($this->get_file_name());
-			pts_module_manager::module_process("__event_results_saved", $this);
+			pts_module_manager::module_process('__event_results_process', $this);
+			pts_client::save_result_file($this->result_file_writer, $this->get_file_name());
+			pts_module_manager::module_process('__event_results_saved', $this);
 			//echo "\nResults Saved To: " . PTS_SAVE_RESULTS_PATH . $this->get_file_name() . "/composite.xml\n";
-			pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . "/index.html");
+			pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . '/index.html');
 
-			if($this->allow_sharing_of_results && !defined("NO_NETWORK_COMMUNICATION"))
+			if($this->allow_sharing_of_results && !defined('NO_NETWORK_COMMUNICATION'))
 			{
 				if($this->auto_upload_to_openbenchmarking)
 				{
@@ -722,7 +722,7 @@ class pts_test_run_manager
 					}
 					else
 					{
-						echo "\nResults Failed To Upload.\n";
+						echo PHP_EOL . 'Results Failed To Upload.' . PHP_EOL;
 					}
 				}
 			}
@@ -730,7 +730,7 @@ class pts_test_run_manager
 	}
 	public static function cleanup_tests_to_run(&$to_run_objects)
 	{
-		$skip_tests = ($e = pts_client::read_env("SKIP_TESTS")) ? pts_strings::comma_explode($e) : false;
+		$skip_tests = ($e = pts_client::read_env('SKIP_TESTS')) ? pts_strings::comma_explode($e) : false;
 		$tests_verified = array();
 		$tests_missing = array();
 
@@ -738,14 +738,14 @@ class pts_test_run_manager
 		{
 			if($skip_tests && in_array($run_object->get_identifier(false), $skip_tests))
 			{
-				echo "Skipping: " . $run_object->get_identifier() . "\n";
+				echo 'Skipping: ' . $run_object->get_identifier() . PHP_EOL;
 				continue;
 			}
 			else if($run_object instanceof pts_test_profile)
 			{
 				if($run_object->get_title() == null)
 				{
-					echo "Not A Test: " . $run_object . "\n";
+					echo 'Not A Test: ' . $run_object . PHP_EOL;
 					continue;
 				}
 				else
@@ -786,7 +786,7 @@ class pts_test_run_manager
 			{
 				if($run_object->is_core_version_supported() == false)
 				{
-					echo $run_object->get_title() . " is a suite not supported by this version of the Phoronix Test Suite.\n";
+					echo $run_object->get_title() . ' is a suite not supported by this version of the Phoronix Test Suite.' . PHP_EOL;
 					continue;
 				}
 
@@ -816,7 +816,7 @@ class pts_test_run_manager
 			}
 			else
 			{
-				echo "Not Recognized: " . $run_object . "\n";
+				echo 'Not Recognized: ' . $run_object . PHP_EOL;
 				continue;
 			}
 
@@ -831,19 +831,19 @@ class pts_test_run_manager
 
 			if(count($tests_missing) == 1)
 			{
-				pts_client::$display->generic_error($tests_missing[0] . " is not installed.\nTo install, run: phoronix-test-suite install " . $tests_missing[0]);
+				pts_client::$display->generic_error($tests_missing[0] . ' is not installed.' . PHP_EOL . 'To install, run: phoronix-test-suite install ' . $tests_missing[0]);
 			}
 			else
 			{
-				$message = "\n\nMultiple tests are not installed:\n\n";
+				$message = PHP_EOL . PHP_EOL . 'Multiple tests are not installed:' . PHP_EOL . PHP_EOL;
 				$message .= pts_user_io::display_text_list($tests_missing);
-				$message .= "\nTo install, run: phoronix-test-suite install " . implode(' ', $tests_missing) . "\n\n";
+				$message .= PHP_EOL . 'To install, run: phoronix-test-suite install ' . implode(' ', $tests_missing) . PHP_EOL . PHP_EOL;
 				echo $message;
 			}
 
 			if((pts_c::$test_flags ^ pts_c::auto_mode) && (pts_c::$test_flags ^ pts_c::batch_mode))
 			{
-				$stop_and_install = pts_user_io::prompt_bool_input("Would you like to stop and install these tests now", true);
+				$stop_and_install = pts_user_io::prompt_bool_input('Would you like to stop and install these tests now', true);
 
 				if($stop_and_install)
 				{
@@ -865,13 +865,13 @@ class pts_test_run_manager
 	{
 		if(($this->prompt_save_results || $this->force_save_results) && count($this->tests_to_run) > 0) // or check for DO_NOT_SAVE_RESULTS == false
 		{
-			if($this->force_save_results || pts_client::read_env("TEST_RESULTS_NAME"))
+			if($this->force_save_results || pts_client::read_env('TEST_RESULTS_NAME'))
 			{
 				$save_results = true;
 			}
 			else
 			{
-				$save_results = pts_user_io::prompt_bool_input("Would you like to save these test results", true, "SAVE_RESULTS");
+				$save_results = pts_user_io::prompt_bool_input('Would you like to save these test results', true, 'SAVE_RESULTS');
 			}
 
 			if($save_results)
@@ -885,19 +885,19 @@ class pts_test_run_manager
 
 				if(count($unique_tests_r) > 1 || $this->run_description == null)
 				{
-					$this->run_description = "Running " . implode(", ", $unique_tests_r) . ".";
+					$this->run_description = 'Running ' . implode(', ', $unique_tests_r) . '.';
 				}
 
 				// Prompt Description
-				if((pts_c::$test_flags ^ pts_c::auto_mode) && ((pts_c::$test_flags ^ pts_c::batch_mode) || pts_config::read_bool_config(P_OPTION_BATCH_PROMPTDESCRIPTION, "FALSE")))
+				if((pts_c::$test_flags ^ pts_c::auto_mode) && ((pts_c::$test_flags ^ pts_c::batch_mode) || pts_config::read_bool_config(P_OPTION_BATCH_PROMPTDESCRIPTION, 'FALSE')))
 				{
 					if($this->run_description == null)
 					{
-						$this->run_description = "N/A";
+						$this->run_description = 'N/A';
 					}
 
-					pts_client::$display->generic_heading("If you wish, enter a new description below.\nPress ENTER to proceed without changes.");
-					echo "Current Description: " . $this->run_description . "\n\nNew Description: ";
+					pts_client::$display->generic_heading('If you wish, enter a new description below.\nPress ENTER to proceed without changes.');
+					echo 'Current Description: ' . $this->run_description . PHP_EOL . PHP_EOL . 'New Description: ';
 					$new_test_description = pts_user_io::read_user_input();
 
 					if(!empty($new_test_description))
@@ -991,7 +991,7 @@ class pts_test_run_manager
 	{
 		$result_objects = array();
 
-		if((pts_c::$test_flags & pts_c::batch_mode) && pts_config::read_bool_config(P_OPTION_BATCH_TESTALLOPTIONS, "TRUE"))
+		if((pts_c::$test_flags & pts_c::batch_mode) && pts_config::read_bool_config(P_OPTION_BATCH_TESTALLOPTIONS, 'TRUE'))
 		{
 			list($test_arguments, $test_arguments_description) = pts_test_run_options::batch_user_options($test_profile);
 		}
@@ -1030,7 +1030,7 @@ class pts_test_run_manager
 					continue;
 				}
 
-				if($run_contains_a_no_result_type == false && $run_object->get_display_format() == "NO_RESULT")
+				if($run_contains_a_no_result_type == false && $run_object->get_display_format() == 'NO_RESULT')
 				{
 					$run_contains_a_no_result_type = true;
 				}
@@ -1049,7 +1049,7 @@ class pts_test_run_manager
 				$this->pre_run_message = $run_object->get_pre_run_message();
 				$this->post_run_message = $run_object->get_post_run_message();
 
-				if($run_object->get_run_mode() == "PCQS")
+				if($run_object->get_run_mode() == 'PCQS')
 				{
 					$this->is_pcqs = true;
 				}
@@ -1119,7 +1119,7 @@ class pts_test_run_manager
 			}
 			else
 			{
-				pts_client::$display->generic_error($to_run . " is not recognized.");
+				pts_client::$display->generic_error($to_run . ' is not recognized.');
 				continue;
 			}
 		}
@@ -1148,27 +1148,27 @@ class pts_test_run_manager
 			}
 			else if($test_type == 'Graphics' && pts_client::read_env('DISPLAY') == false && IS_WINDOWS == false)
 			{
-				pts_client::$display->test_run_error("No display server was found, cannot run " . $test_profile);
+				pts_client::$display->test_run_error('No display server was found, cannot run ' . $test_profile);
 				$valid_test_profile = false;
 			}
 			else if($test_type == 'Graphics' && in_array($display_driver, array('vesa', 'nv', 'cirrus')))
 			{
-				pts_client::$display->test_run_error("A display driver without 3D acceleration was found, cannot run " . $test_profile);
+				pts_client::$display->test_run_error('A display driver without 3D acceleration was found, cannot run ' . $test_profile);
 				$valid_test_profile = false;
 			}
 			else if(pts_client::read_env('NO_' . strtoupper($test_type) . '_TESTS') || ($skip_tests && in_array($test_profile, pts_strings::comma_explode($skip_tests))) || ($skip_tests && in_array($test_type, pts_strings::comma_explode($skip_tests))))
 			{
-				pts_client::$display->test_run_error("Due to a pre-set environmental variable, skipping " . $test_profile);
+				pts_client::$display->test_run_error('Due to a pre-set environmental variable, skipping ' . $test_profile);
 				$valid_test_profile = false;
 			}
-			else if($test_profile->is_root_required() && (pts_c::$test_flags & pts_c::batch_mode) && phodevi::read_property("system", "username") != "root")
+			else if($test_profile->is_root_required() && (pts_c::$test_flags & pts_c::batch_mode) && phodevi::read_property('system', 'username') != 'root')
 			{
-				pts_client::$display->test_run_error("Cannot run " . $test_profile . " in batch mode as root access is required.");
+				pts_client::$display->test_run_error('Cannot run ' . $test_profile . ' in batch mode as root access is required.');
 				$valid_test_profile = false;
 			}
 			else if($test_profile->get_test_executable_dir() == null)
 			{
-				pts_client::$display->test_run_error("The test executable for " . $test_profile . " could not be located.");
+				pts_client::$display->test_run_error('The test executable for ' . $test_profile . ' could not be located.');
 				$valid_test_profile = false;
 			}
 
@@ -1204,7 +1204,7 @@ class pts_test_run_manager
 		$test_run_manager->pre_execution_process();
 		$test_run_manager->call_test_runs();
 		$test_run_manager->post_execution_process();
-		echo "\n";
+		echo PHP_EOL;
 	}
 }
 

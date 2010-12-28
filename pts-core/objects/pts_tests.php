@@ -26,12 +26,12 @@ class pts_tests
 	{
 		$cleaned_tests = array();
 
-		foreach(pts_file_io::glob(PTS_TEST_INSTALL_PATH . "*/") as $repo_path)
+		foreach(pts_file_io::glob(PTS_TEST_INSTALL_PATH . '*/') as $repo_path)
 		{
 			$repo = basename($repo_path);
-			foreach(pts_file_io::glob($repo . "/*") as $identifier_path)
+			foreach(pts_file_io::glob($repo . '/*') as $identifier_path)
 			{
-				if(is_file($identifier_path . "/test-definition.xml"))
+				if(is_file($identifier_path . '/test-definition.xml'))
 				{
 					$identifier = basename($identifier_path);
 
@@ -59,27 +59,27 @@ class pts_tests
 	public static function extra_environmental_variables(&$test_profile)
 	{
 		$extra_vars = array();
-		$extra_vars["HOME"] = $test_profile->get_install_dir();
-		$extra_vars["PATH"] = "\$PATH";
-		$extra_vars["LC_ALL"] = "";
-		$extra_vars["LC_NUMERIC"] = "";
-		$extra_vars["LC_CTYPE"] = "";
-		$extra_vars["LC_MESSAGES"] = "";
-		$extra_vars["LANG"] = "";
-		$extra_vars["vblank_mode"] = '0';
-		$extra_vars["PHP_BIN"] = PHP_BIN;
+		$extra_vars['HOME'] = $test_profile->get_install_dir();
+		$extra_vars['PATH'] = "\$PATH";
+		$extra_vars['LC_ALL'] = '';
+		$extra_vars['LC_NUMERIC'] = '';
+		$extra_vars['LC_CTYPE'] = '';
+		$extra_vars['LC_MESSAGES'] = '';
+		$extra_vars['LANG'] = '';
+		$extra_vars['vblank_mode'] = '0';
+		$extra_vars['PHP_BIN'] = PHP_BIN;
 
 		foreach($test_profile->extended_test_profiles() as $i => $this_test_profile)
 		{
 			if($i == 0)
 			{
-				$extra_vars["TEST_EXTENDS"] = $this_test_profile->get_install_dir();
+				$extra_vars['TEST_EXTENDS'] = $this_test_profile->get_install_dir();
 			}
 
 			if(is_dir($this_test_profile->get_install_dir()))
 			{
-				$extra_vars["PATH"] = $this_test_profile->get_install_dir() . ":" . $extra_vars["PATH"];
-				$extra_vars["TEST_" . strtoupper(str_replace("-", "_", $this_test_profile->get_identifier_base_name()))] = $this_test_profile->get_install_dir();
+				$extra_vars['PATH'] = $this_test_profile->get_install_dir() . ':' . $extra_vars['PATH'];
+				$extra_vars['TEST_' . strtoupper(str_replace('-', '_', $this_test_profile->get_identifier_base_name()))] = $this_test_profile->get_install_dir();
 			}
 		}
 
@@ -108,24 +108,24 @@ class pts_tests
 		{
 			$test_resources_location = $this_test_profile->get_resource_dir();
 
-			if(is_file(($run_file = $test_resources_location . $script_name . $os_postfix . ".sh")) || is_file(($run_file = $test_resources_location . $script_name . ".sh")))
+			if(is_file(($run_file = $test_resources_location . $script_name . $os_postfix . '.sh')) || is_file(($run_file = $test_resources_location . $script_name . '.sh')))
 			{
 				if(!empty($print_string))
 				{
 					pts_client::$display->test_run_message($print_string);
 				}
 
-				if(IS_WINDOWS || pts_client::read_env("USE_PHOROSCRIPT_INTERPRETER") != false)
+				if(IS_WINDOWS || pts_client::read_env('USE_PHOROSCRIPT_INTERPRETER') != false)
 				{
 					$phoroscript = new pts_phoroscript_interpreter($run_file, $extra_vars, $test_directory);
 					$phoroscript->execute_script($pass_argument);
 				}
 				else
 				{
-					$this_result = pts_client::shell_exec("cd " .  $test_directory . " && sh " . $run_file . " \"" . $pass_argument . "\" 2>&1", $extra_vars);
+					$this_result = pts_client::shell_exec('cd ' .  $test_directory . ' && sh ' . $run_file . ' "' . $pass_argument . '" 2>&1', $extra_vars);
 				}
 
-				if(trim($this_result) != "")
+				if(trim($this_result) != null)
 				{
 					$result = $this_result;
 				}
@@ -138,7 +138,7 @@ class pts_tests
 	{
 		// Refresh/generate an install XML for pts-install.xml
 		$installed_test = new pts_installed_test($test_profile);
-		$xml_writer = new nye_XmlWriter("file://" . PTS_USER_PATH . "xsl/" . "pts-test-installation-viewer.xsl");
+		$xml_writer = new nye_XmlWriter('file://' . PTS_USER_PATH . 'xsl/' . 'pts-test-installation-viewer.xsl');
 
 		$test_duration = $installed_test->get_average_run_time();
 		if(!is_numeric($test_duration) && !$is_install)
@@ -153,7 +153,7 @@ class pts_tests
 		$test_version = $is_install ? $test_profile->get_test_profile_version() : $installed_test->get_installed_version();
 		$test_checksum = $is_install ? $test_profile->get_installer_checksum() : $installed_test->get_installed_checksum();
 		$sys_identifier = $is_install ? phodevi::system_id_string() : $installed_test->get_installed_system_identifier();
-		$install_time = $is_install ? date("Y-m-d H:i:s") : $installed_test->get_install_date_time();
+		$install_time = $is_install ? date('Y-m-d H:i:s') : $installed_test->get_install_date_time();
 		$install_time_length = $is_install ? $this_duration : $installed_test->get_latest_install_time();
 		$latest_run_time = $is_install || $this_duration == 0 ? $installed_test->get_latest_run_time() : $this_duration;
 
@@ -165,12 +165,12 @@ class pts_tests
 
 			if(empty($last_run))
 			{
-				$last_run = "0000-00-00 00:00:00";
+				$last_run = '0000-00-00 00:00:00';
 			}
 		}
 		else
 		{
-			$last_run = date("Y-m-d H:i:s");
+			$last_run = date('Y-m-d H:i:s');
 			$times_run++;
 		}
 
@@ -185,7 +185,7 @@ class pts_tests
 		$xml_writer->addXmlNode(P_INSTALL_TEST_AVG_RUNTIME, $test_duration);
 		$xml_writer->addXmlNode(P_INSTALL_TEST_LATEST_RUNTIME, $latest_run_time);
 
-		$xml_writer->saveXMLFile($test_profile->get_install_dir() . "pts-install.xml");
+		$xml_writer->saveXMLFile($test_profile->get_install_dir() . 'pts-install.xml');
 	}
 }
 

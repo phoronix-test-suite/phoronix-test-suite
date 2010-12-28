@@ -29,7 +29,7 @@ class pts_test_suite extends pts_test_suite_parser
 	public static function is_suite($identifier)
 	{
 		$identifier = pts_openbenchmarking::evaluate_string_to_qualifier($identifier);
-		return is_file(PTS_TEST_SUITE_PATH . $identifier . "/suite-definition.xml");
+		return is_file(PTS_TEST_SUITE_PATH . $identifier . '/suite-definition.xml');
 	}
 	public function needs_updated_install()
 	{
@@ -108,10 +108,10 @@ class pts_test_suite extends pts_test_suite_parser
 
 				switch($sub_modes[$i])
 				{
-					case "BATCH":
+					case 'BATCH':
 						$option_output = pts_test_run_options::batch_user_options($obj);
 						break;
-					case "DEFAULTS":
+					case 'DEFAULTS':
 						$option_output = pts_test_run_options::default_user_options($obj);
 						break;
 					default:
@@ -175,11 +175,11 @@ class pts_test_suite extends pts_test_suite_parser
 
 			if($steps == 0)
 			{
-				$write_buffer .= $object . "\n";
+				$write_buffer .= $object . PHP_EOL;
 			}
 			else
 			{
-				$write_buffer .= str_repeat("  ", $steps) . "+ " . $object . "\n";
+				$write_buffer .= str_repeat('  ', $steps) . '+ ' . $object . PHP_EOL;
 			}
 
 			foreach($test_names as $test)
@@ -189,7 +189,7 @@ class pts_test_suite extends pts_test_suite_parser
 		}
 		else
 		{
-			$write_buffer .= str_repeat("  ", $steps) . "* " . $object . "\n";
+			$write_buffer .= str_repeat('  ', $steps) . '* ' . $object . PHP_EOL;
 		}
 	}
 	public static function pts_format_tests_to_array($object)

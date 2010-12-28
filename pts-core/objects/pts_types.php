@@ -24,31 +24,31 @@ class pts_types
 {
 	public static function subsystem_targets()
 	{
-		return self::parse_xsd_types("TestType");
+		return self::parse_xsd_types('TestType');
 	}
 	public static function software_license_types()
 	{
-		return self::parse_xsd_types("License");
+		return self::parse_xsd_types('License');
 	}
 	public static function test_profile_state_types()
 	{
-		return self::parse_xsd_types("ProfileStatus");
+		return self::parse_xsd_types('ProfileStatus');
 	}
 	public static function test_profile_software_types()
 	{
-		return self::parse_xsd_types("SoftwareType");
+		return self::parse_xsd_types('SoftwareType');
 	}
 	public static function test_profile_display_formats()
 	{
-		return self::parse_xsd_types("DisplayFormat");
+		return self::parse_xsd_types('DisplayFormat');
 	}
 	public static function test_profile_quantifiers()
 	{
-		return self::parse_xsd_types("ResultQuantifier");
+		return self::parse_xsd_types('ResultQuantifier');
 	}
 	public static function operating_systems()
 	{
-		return array(array("Linux"), array("Solaris", "Sun"), array("BSD", "DragonFly"), array("MacOSX", "Darwin"), array("Windows"));
+		return array(array('Linux'), array('Solaris', 'Sun'), array('BSD', 'DragonFly'), array('MacOSX', 'Darwin'), array('Windows'));
 	}
 	public static function identifiers_to_test_profile_objects($identifiers, $include_extensions = false, $remove_duplicates = true)
 	{
@@ -170,18 +170,18 @@ class pts_types
 	{
 		$values = array();
 		$dom = new DOMDocument();
-		$dom->load(PTS_OPENBENCHMARKING_PATH . "schemas/types.xsd");
-		$types = $dom->getElementsByTagName("schema")->item(0)->getElementsByTagName("simpleType");
+		$dom->load(PTS_OPENBENCHMARKING_PATH . 'schemas/types.xsd');
+		$types = $dom->getElementsByTagName('schema')->item(0)->getElementsByTagName('simpleType');
 
 		for($i = 0; $i < $types->length; $i++)
 		{
-			if($types->item($i)->attributes->getNamedItem("name")->nodeValue == $type_name)
+			if($types->item($i)->attributes->getNamedItem('name')->nodeValue == $type_name)
 			{
-				$enumerations = $types->item($i)->getElementsByTagName("restriction")->item(0)->getElementsByTagName("enumeration");
+				$enumerations = $types->item($i)->getElementsByTagName('restriction')->item(0)->getElementsByTagName('enumeration');
 
 				for($j = 0; $j < $enumerations->length; $j++)
 				{
-					array_push($values, $enumerations->item($j)->attributes->getNamedItem("value")->nodeValue);
+					array_push($values, $enumerations->item($j)->attributes->getNamedItem('value')->nodeValue);
 				}
 				break;
 			}
