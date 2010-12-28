@@ -61,13 +61,13 @@ class pts_download_speed_manager
 	}
 	private static function load_download_speed_averages()
 	{
-		self::$average_count = pts_storage_object::read_from_file(PTS_CORE_STORAGE, "download_average_count");
-		self::$average_speed = pts_storage_object::read_from_file(PTS_CORE_STORAGE, "download_average_speed");
+		self::$average_count = pts_storage_object::read_from_file(PTS_CORE_STORAGE, 'download_average_count');
+		self::$average_speed = pts_storage_object::read_from_file(PTS_CORE_STORAGE, 'download_average_speed');
 	}
 	private static function save_download_speed_averages()
 	{
-		pts_storage_object::set_in_file(PTS_CORE_STORAGE, "download_average_count", self::$average_count);
-		pts_storage_object::set_in_file(PTS_CORE_STORAGE, "download_average_speed", self::$average_speed);
+		pts_storage_object::set_in_file(PTS_CORE_STORAGE, 'download_average_count', self::$average_count);
+		pts_storage_object::set_in_file(PTS_CORE_STORAGE, 'download_average_speed', self::$average_speed);
 	}
 
 }

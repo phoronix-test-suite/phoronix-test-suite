@@ -28,19 +28,19 @@ class pts_compression
 		$compress_base_dir = dirname($to_compress);
 		$compress_base_name = basename($to_compress);
 
-		switch(substr($compress_to_file, strpos($compress_to_file, ".") + 1))
+		switch(substr($compress_to_file, strpos($compress_to_file, '.') + 1))
 		{
-			case "tar":
-				$extract_cmd = "tar -cf " . $compress_to . " " . $compress_base_name;
+			case 'tar':
+				$extract_cmd = 'tar -cf ' . $compress_to . ' ' . $compress_base_name;
 				break;
-			case "tar.gz":
-				$extract_cmd = "tar -czf " . $compress_to . " " . $compress_base_name;
+			case 'tar.gz':
+				$extract_cmd = 'tar -czf ' . $compress_to . ' ' . $compress_base_name;
 				break;
-			case "tar.bz2":
-				$extract_cmd = "tar -cjf " . $compress_to . " " . $compress_base_name;
+			case 'tar.bz2':
+				$extract_cmd = 'tar -cjf ' . $compress_to . ' ' . $compress_base_name;
 				break;
-			case "zip":
-				$extract_cmd = "zip -r " . $compress_to . " " . $compress_base_name;
+			case 'zip':
+				$extract_cmd = 'zip -r ' . $compress_to . ' ' . $compress_base_name;
 				break;
 			default:
 				$extract_cmd = null;
@@ -49,7 +49,7 @@ class pts_compression
 
 		if($extract_cmd != null)
 		{
-			shell_exec("cd " . $compress_base_dir . " && " . $extract_cmd . " 2>&1");
+			shell_exec('cd ' . $compress_base_dir . ' && ' . $extract_cmd . ' 2>&1');
 		}
 	}
 	public static function archive_extract($file)
@@ -57,30 +57,30 @@ class pts_compression
 		$file_name = basename($file);
 		$file_path = dirname($file);
 
-		switch(substr($file_name, strpos($file_name, ".") + 1))
+		switch(substr($file_name, strpos($file_name, '.') + 1))
 		{
-			case "tar":
-				$extract_cmd = "tar -xf";
+			case 'tar':
+				$extract_cmd = 'tar -xf';
 				break;
-			case "tar.gz":
-				$extract_cmd = "tar -zxf";
+			case 'tar.gz':
+				$extract_cmd = 'tar -zxf';
 				break;
-			case "tar.bz2":
-				$extract_cmd = "tar -jxf";
+			case 'tar.bz2':
+				$extract_cmd = 'tar -jxf';
 				break;
-			case "zip":
-				$extract_cmd = "unzip -o";
+			case 'zip':
+				$extract_cmd = 'unzip -o';
 				break;
 			default:
-				$extract_cmd = "";
+				$extract_cmd = '';
 				break;
 		}
 
-		shell_exec("cd " . $file_path . " && " . $extract_cmd . " " . $file_name . " 2>&1");
+		shell_exec('cd ' . $file_path . ' && ' . $extract_cmd . ' ' . $file_name . ' 2>&1');
 	}
 	public static function zip_archive_extract($zip_file, $extract_to)
 	{
-		if(!class_exists("ZipArchive") || !is_readable($zip_file))
+		if(!class_exists('ZipArchive') || !is_readable($zip_file))
 		{
 			return false;
 		}
@@ -103,7 +103,7 @@ class pts_compression
 	}
 	public static function zip_archive_create($zip_file, $add_files)
 	{
-		if(!class_exists("ZipArchive"))
+		if(!class_exists('ZipArchive'))
 		{
 			return false;
 		}
@@ -144,7 +144,7 @@ class pts_compression
 	}
 	public static function zip_archive_read_all_files($zip_file)
 	{
-		if(!class_exists("ZipArchive") || !is_readable($zip_file))
+		if(!class_exists('ZipArchive') || !is_readable($zip_file))
 		{
 			return false;
 		}

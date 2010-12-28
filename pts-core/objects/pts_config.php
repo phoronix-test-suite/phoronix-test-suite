@@ -36,7 +36,7 @@ class pts_config
 
 		$read_config = new pts_config_nye_XmlReader($new_config_values);
 
-		$config = new nye_XmlWriter("xsl/pts-user-config-viewer.xsl");
+		$config = new nye_XmlWriter('xsl/pts-user-config-viewer.xsl');
 		$config->addXmlNodeFromReader(P_OPTION_GLOBAL_USERNAME, $read_config);
 		$config->addXmlNodeFromReader(P_OPTION_GLOBAL_UPLOADKEY, $read_config);
 
@@ -90,7 +90,7 @@ class pts_config
 		$config->addXmlNodeFromReader(P_OPTION_UI_SELECT_DEPENDENCIES, $read_config);
 		$config->addXmlNodeFromReader(P_OPTION_UI_SELECT_DOWNLOADS, $read_config);
 
-		$config->saveXMLFile(PTS_USER_PATH . "user-config.xml");
+		$config->saveXMLFile(PTS_USER_PATH . 'user-config.xml');
 	}
 	public static function graph_config_generate($new_config_values = null)
 	{
@@ -130,11 +130,11 @@ class pts_config
 		$config->addXmlNodeFromReader(P_GRAPH_FONT_SIZE_IDENTIFIERS, $read_config);
 		$config->addXmlNodeFromReader(P_GRAPH_FONT_SIZE_AXIS, $read_config);
 
-		$config->saveXMLFile(PTS_USER_PATH . "graph-config.xml");
+		$config->saveXMLFile(PTS_USER_PATH . 'graph-config.xml');
 	}
 	public static function bool_to_string($bool)
 	{
-		return $bool ? "TRUE" : "FALSE";
+		return $bool ? 'TRUE' : 'FALSE';
 	}
 	public static function read_user_config($xml_pointer, $predefined_value = false, &$nye_xml = null)
 	{

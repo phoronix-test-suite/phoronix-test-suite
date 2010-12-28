@@ -24,14 +24,14 @@ class pts_documentation
 {
 	public static function client_commands_array()
 	{
-		$options = array("Test Installation" => array(), "Testing" => array(), "Batch Testing" => array(), "OpenBenchmarking.org" => array(), "System" => array(), "Information" => array(), "Asset Creation" => array(), "Result Management" => array(), "Result Analytics" => array(), "Other" => array());
+		$options = array('Test Installation' => array(), 'Testing' => array(), 'Batch Testing' => array(), 'OpenBenchmarking.org' => array(), 'System' => array(), 'Information' => array(), 'Asset Creation' => array(), 'Result Management' => array(), 'Result Analytics' => array(), 'Other' => array());
 
-		foreach(pts_file_io::glob(PTS_COMMAND_PATH . "*.php") as $option_php_file)
+		foreach(pts_file_io::glob(PTS_COMMAND_PATH . '*.php') as $option_php_file)
 		{
-			$option_php = basename($option_php_file, ".php");
-			$name = str_replace("_", "-", $option_php);
+			$option_php = basename($option_php_file, '.php');
+			$name = str_replace('_', '-', $option_php);
 
-			if(!in_array(pts_strings::first_in_string($name, '-'), array("dump", "task")))
+			if(!in_array(pts_strings::first_in_string($name, '-'), array('dump', 'task')))
 			{
 				include_once($option_php_file);
 
@@ -61,7 +61,7 @@ class pts_documentation
 	}
 	public static function basic_description()
 	{
-		return "The Phoronix Test Suite is the most comprehensive testing and benchmarking platform available that provides an extensible framework for which new tests can be easily added. The software is designed to effectively carry out both qualitative and quantitative benchmarks in a clean, reproducible, and easy-to-use manner.";
+		return 'The Phoronix Test Suite is the most comprehensive testing and benchmarking platform available that provides an extensible framework for which new tests can be easily added. The software is designed to effectively carry out both qualitative and quantitative benchmarks in a clean, reproducible, and easy-to-use manner.';
 	}
 }
 

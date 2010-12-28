@@ -26,7 +26,7 @@ class pts_external_dependencies
 	{
 		// PTS External Dependencies install on distribution
 
-		if(IS_WINDOWS || IS_MACOSX || pts_client::read_env("SKIP_EXTERNAL_DEPENDENCIES_CHECK"))
+		if(IS_WINDOWS || IS_MACOSX || pts_client::read_env('SKIP_EXTERNAL_DEPENDENCIES_CHECK'))
 		{
 			// Windows doesn't use any external dependencies
 			return true;
@@ -69,7 +69,7 @@ class pts_external_dependencies
 		$dependencies_to_install = self::check_dependencies_missing_from_system($required_test_dependencies);
 
 		// If it's automated and can't install without root, return true if there are no dependencies to do otherwise false
-		if((pts_c::$test_flags & pts_c::auto_mode) && phodevi::read_property("system", "username") != "root")
+		if((pts_c::$test_flags & pts_c::auto_mode) && phodevi::read_property('system', 'username') != 'root')
 		{
 			return count($dependencies_to_install) == 0;
 		}

@@ -32,7 +32,7 @@ class pts_client
 			return false;
 		}
 
-		self::$lock_pointers[$lock_file] = fopen($lock_file, "w");
+		self::$lock_pointers[$lock_file] = fopen($lock_file, 'w');
 		chmod($lock_file, 0644);
 		return self::$lock_pointers[$lock_file] != false && flock(self::$lock_pointers[$lock_file], LOCK_EX | LOCK_NB);
 	}
@@ -49,8 +49,8 @@ class pts_client
 		self::core_storage_init_process();
 
 		pts_config::init_files();
-		define("PTS_TEST_INSTALL_PATH", pts_client::parse_home_directory(pts_config::read_user_config(P_OPTION_TEST_ENVIRONMENT, "~/.phoronix-test-suite/installed-tests/")));
-		define("PTS_SAVE_RESULTS_PATH", pts_client::parse_home_directory(pts_config::read_user_config(P_OPTION_RESULTS_DIRECTORY, "~/.phoronix-test-suite/test-results/")));
+		define('PTS_TEST_INSTALL_PATH', pts_client::parse_home_directory(pts_config::read_user_config(P_OPTION_TEST_ENVIRONMENT, '~/.phoronix-test-suite/installed-tests/')));
+		define('PTS_SAVE_RESULTS_PATH', pts_client::parse_home_directory(pts_config::read_user_config(P_OPTION_RESULTS_DIRECTORY, '~/.phoronix-test-suite/test-results/')));
 		self::extended_init_process();
 
 		return true;
@@ -81,7 +81,7 @@ class pts_client
 		}
 
 		// Check for modules to load manually in PTS_MODULES
-		if(($load_modules = pts_client::read_env("PTS_MODULES")) !== false)
+		if(($load_modules = pts_client::read_env('PTS_MODULES')) !== false)
 		{
 			foreach(pts_strings::comma_explode($load_modules) as $module)
 			{
@@ -130,9 +130,9 @@ class pts_client
 			}
 		}
 
-		pts_module_manager::module_process("__startup");
-		define("PTS_STARTUP_TASK_PERFORMED", true);
-		register_shutdown_function(array("pts_module_manager", "module_process"), "__shutdown");
+		pts_module_manager::module_process('__startup');
+		define('PTS_STARTUP_TASK_PERFORMED', true);
+		register_shutdown_function(array('pts_module_manager', 'module_process'), '__shutdown');
 	}
 	public static function environmental_variables()
 	{
@@ -142,31 +142,31 @@ class pts_client
 		if($env_variables == null)
 		{
 			$env_variables = array(
-			"PTS_VERSION" => PTS_VERSION,
-			"PTS_CODENAME" => PTS_CODENAME,
-			"PTS_DIR" => PTS_PATH,
-			"PHP_BIN" => PHP_BIN,
-			"NUM_CPU_CORES" => phodevi::read_property("cpu", "core-count"),
-			"NUM_CPU_JOBS" => (phodevi::read_property("cpu", "core-count") * 2),
-			"SYS_MEMORY" => phodevi::read_property("memory", "capacity"),
-			"VIDEO_MEMORY" => phodevi::read_property("gpu", "memory-capacity"),
-			"VIDEO_WIDTH" => pts_arrays::first_element(phodevi::read_property("gpu", "screen-resolution")),
-			"VIDEO_HEIGHT" => pts_arrays::last_element(phodevi::read_property("gpu", "screen-resolution")),
-			"VIDEO_MONITOR_COUNT" => phodevi::read_property("monitor", "count"),
-			"VIDEO_MONITOR_LAYOUT" => phodevi::read_property("monitor", "layout"),
-			"VIDEO_MONITOR_SIZES" => phodevi::read_property("monitor", "modes"),
-			"OPERATING_SYSTEM" => phodevi::read_property("system", "vendor-identifier"),
-			"OS_VERSION" => phodevi::read_property("system", "os-version"),
-			"OS_ARCH" => phodevi::read_property("system", "kernel-architecture"),
-			"OS_TYPE" => OPERATING_SYSTEM,
-			"THIS_RUN_TIME" => PTS_INIT_TIME,
-			"DEBUG_REAL_HOME" => pts_client::user_home_directory()
+			'PTS_VERSION' => PTS_VERSION,
+			'PTS_CODENAME' => PTS_CODENAME,
+			'PTS_DIR' => PTS_PATH,
+			'PHP_BIN' => PHP_BIN,
+			'NUM_CPU_CORES' => phodevi::read_property('cpu', 'core-count'),
+			'NUM_CPU_JOBS' => (phodevi::read_property('cpu', 'core-count') * 2),
+			'SYS_MEMORY' => phodevi::read_property('memory', 'capacity'),
+			'VIDEO_MEMORY' => phodevi::read_property('gpu', 'memory-capacity'),
+			'VIDEO_WIDTH' => pts_arrays::first_element(phodevi::read_property('gpu', 'screen-resolution')),
+			'VIDEO_HEIGHT' => pts_arrays::last_element(phodevi::read_property('gpu', 'screen-resolution')),
+			'VIDEO_MONITOR_COUNT' => phodevi::read_property('monitor', 'count'),
+			'VIDEO_MONITOR_LAYOUT' => phodevi::read_property('monitor', 'layout'),
+			'VIDEO_MONITOR_SIZES' => phodevi::read_property('monitor', 'modes'),
+			'OPERATING_SYSTEM' => phodevi::read_property('system', 'vendor-identifier'),
+			'OS_VERSION' => phodevi::read_property('system', 'os-version'),
+			'OS_ARCH' => phodevi::read_property('system', 'kernel-architecture'),
+			'OS_TYPE' => OPERATING_SYSTEM,
+			'THIS_RUN_TIME' => PTS_INIT_TIME,
+			'DEBUG_REAL_HOME' => pts_client::user_home_directory()
 			);
 
-			if(!pts_client::executable_in_path("cc") && pts_client::executable_in_path("gcc"))
+			if(!pts_client::executable_in_path('cc') && pts_client::executable_in_path('gcc'))
 			{
 				// This helps some test profiles build correctly if they don't do a cc check internally
-				$env_variables["CC"] = "gcc";
+				$env_variables['CC'] = 'gcc';
 			}
 		}
 
@@ -179,16 +179,16 @@ class pts_client
 		if($runtime_variables == null)
 		{
 			$runtime_variables = array(
-			"VIDEO_RESOLUTION" => phodevi::read_property("gpu", "screen-resolution-string"),
-			"VIDEO_CARD" => phodevi::read_name("gpu"),
-			"VIDEO_DRIVER" => phodevi::read_property("system", "display-driver-string"),
-			"OPERATING_SYSTEM" => phodevi::read_property("system", "operating-system"),
-			"PROCESSOR" => phodevi::read_name("cpu"),
-			"MOTHERBOARD" => phodevi::read_name("motherboard"),
-			"CHIPSET" => phodevi::read_name("chipset"),
-			"KERNEL_VERSION" => phodevi::read_property("system", "kernel"),
-			"COMPILER" => phodevi::read_property("system", "compiler"),
-			"HOSTNAME" => phodevi::read_property("system", "hostname")
+			'VIDEO_RESOLUTION' => phodevi::read_property('gpu', 'screen-resolution-string'),
+			'VIDEO_CARD' => phodevi::read_name('gpu'),
+			'VIDEO_DRIVER' => phodevi::read_property('system', 'display-driver-string'),
+			'OPERATING_SYSTEM' => phodevi::read_property('system', 'operating-system'),
+			'PROCESSOR' => phodevi::read_name('cpu'),
+			'MOTHERBOARD' => phodevi::read_name('motherboard'),
+			'CHIPSET' => phodevi::read_name('chipset'),
+			'KERNEL_VERSION' => phodevi::read_property('system', 'kernel'),
+			'COMPILER' => phodevi::read_property('system', 'compiler'),
+			'HOSTNAME' => phodevi::read_property('system', 'hostname')
 			);
 		}
 
@@ -226,14 +226,14 @@ class pts_client
 		// Initialize The Phoronix Test Suite
 
 		// PTS Defines
-		define("PHP_BIN", pts_client::read_env("PHP_BIN"));
-		define("PTS_INIT_TIME", time());
+		define('PHP_BIN', pts_client::read_env('PHP_BIN'));
+		define('PTS_INIT_TIME', time());
 
-		if(!defined("PHP_VERSION_ID"))
+		if(!defined('PHP_VERSION_ID'))
 		{
 			// PHP_VERSION_ID is only available in PHP 5.2.6 and later
 			$php_version = explode('.', PHP_VERSION);
-			define("PHP_VERSION_ID", ($php_version[0] * 10000 + $php_version[1] * 100 + $php_version[2]));
+			define('PHP_VERSION_ID', ($php_version[0] * 10000 + $php_version[1] * 100 + $php_version[2]));
 		}
 
 		$dir_init = array(PTS_USER_PATH);
@@ -244,29 +244,29 @@ class pts_client
 
 		phodevi::initial_setup();
 
-		//define("IS_PTS_LIVE", phodevi::read_property("system", "username") == "ptslive");
+		//define('IS_PTS_LIVE', phodevi::read_property('system', 'username') == 'ptslive');
 	}
 	public static function init_display_mode($flags = 0)
 	{
 		if(($flags & pts_c::debug_mode))
 		{
-			$env_mode = "BASIC";
+			$env_mode = 'BASIC';
 		}
 		else
 		{
 			$env_mode = false;
 		}
 
-		switch(($env_mode != false || ($env_mode = pts_client::read_env("PTS_DISPLAY_MODE")) != false ? $env_mode : pts_config::read_user_config(P_OPTION_DISPLAY_MODE, "DEFAULT")))
+		switch(($env_mode != false || ($env_mode = pts_client::read_env('PTS_DISPLAY_MODE')) != false ? $env_mode : pts_config::read_user_config(P_OPTION_DISPLAY_MODE, 'DEFAULT')))
 		{
-			case "BASIC":
+			case 'BASIC':
 				self::$display = new pts_basic_display_mode();
 				break;
-			case "BATCH":
-			case "CONCISE":
+			case 'BATCH':
+			case 'CONCISE':
 				self::$display = new pts_concise_display_mode();
 				break;
-			case "DEFAULT":
+			case 'DEFAULT':
 			default:
 				self::$display = new pts_concise_display_mode();
 				break;
@@ -283,25 +283,25 @@ class pts_client
 		}
 
 		// Setup PTS Results Viewer
-		pts_file_io::mkdir(PTS_SAVE_RESULTS_PATH . "pts-results-viewer");
+		pts_file_io::mkdir(PTS_SAVE_RESULTS_PATH . 'pts-results-viewer');
 
 		foreach(pts_file_io::glob(PTS_RESULTS_VIEWER_PATH . '*') as $result_viewer_file)
 		{
-			copy($result_viewer_file, PTS_SAVE_RESULTS_PATH . "pts-results-viewer/" . basename($result_viewer_file));
+			copy($result_viewer_file, PTS_SAVE_RESULTS_PATH . 'pts-results-viewer/' . basename($result_viewer_file));
 		}
 
-		copy(PTS_CORE_STATIC_PATH . "images/pts-106x55.png", PTS_SAVE_RESULTS_PATH . "pts-results-viewer/pts-106x55.png");
+		copy(PTS_CORE_STATIC_PATH . 'images/pts-106x55.png', PTS_SAVE_RESULTS_PATH . 'pts-results-viewer/pts-106x55.png');
 
 		// Setup ~/.phoronix-test-suite/xsl/
-		pts_file_io::mkdir(PTS_USER_PATH . "xsl/");
-		copy(PTS_CORE_STATIC_PATH . "xsl/pts-test-installation-viewer.xsl", PTS_USER_PATH . "xsl/" . "pts-test-installation-viewer.xsl");
-		copy(PTS_CORE_STATIC_PATH . "xsl/pts-user-config-viewer.xsl", PTS_USER_PATH . "xsl/" . "pts-user-config-viewer.xsl");
-		copy(PTS_CORE_STATIC_PATH . "images/pts-308x160.png", PTS_USER_PATH . "xsl/" . "pts-logo.png");
+		pts_file_io::mkdir(PTS_USER_PATH . 'xsl/');
+		copy(PTS_CORE_STATIC_PATH . 'xsl/pts-test-installation-viewer.xsl', PTS_USER_PATH . 'xsl/' . 'pts-test-installation-viewer.xsl');
+		copy(PTS_CORE_STATIC_PATH . 'xsl/pts-user-config-viewer.xsl', PTS_USER_PATH . 'xsl/' . 'pts-user-config-viewer.xsl');
+		copy(PTS_CORE_STATIC_PATH . 'images/pts-308x160.png', PTS_USER_PATH . 'xsl/' . 'pts-logo.png');
 
-		pts_load_xml_definitions("module-settings.xml"); // TODO: make it only load this definition when actually needed
+		pts_load_xml_definitions('module-settings.xml'); // TODO: make it only load this definition when actually needed
 
 		// Compatibility for importing old module configuration settings from pre PTS 2.6 into new structures
-		if(is_file(PTS_USER_PATH . "modules-config.xml"))
+		if(is_file(PTS_USER_PATH . 'modules-config.xml'))
 		{
 			pts_compatibility::pts_convert_pre_pts_26_module_settings();
 		}
@@ -362,44 +362,44 @@ class pts_client
 		}
 
 		// Last Run Processing
-		$last_core_version = $pso->read_object("last_core_version");
+		$last_core_version = $pso->read_object('last_core_version');
 		if($last_core_version != PTS_CORE_VERSION)
 		{
 			// Report any missing/recommended extensions
 			self::program_requirement_checks();
 		}
-		$pso->add_object("last_core_version", PTS_CORE_VERSION); // PTS version last run
+		$pso->add_object('last_core_version', PTS_CORE_VERSION); // PTS version last run
 
-		//$last_pts_version = $pso->read_object("last_pts_version");
+		//$last_pts_version = $pso->read_object('last_pts_version');
 		// do something here with $last_pts_version if you want that information
-		$pso->add_object("last_pts_version", PTS_VERSION); // PTS version last run
+		$pso->add_object('last_pts_version', PTS_VERSION); // PTS version last run
 
 		// Last Run Processing
-		$last_run = $pso->read_object("last_run_time");
-		define("IS_FIRST_RUN_TODAY", (substr($last_run, 0, 10) != date("Y-m-d")));
+		$last_run = $pso->read_object('last_run_time');
+		define('IS_FIRST_RUN_TODAY', (substr($last_run, 0, 10) != date('Y-m-d')));
 
-		$pso->add_object("last_run_time", date("Y-m-d H:i:s")); // Time PTS was last run
+		$pso->add_object('last_run_time', date('Y-m-d H:i:s')); // Time PTS was last run
 
 		// OpenBenchmarking.org - GSID
-		$global_gsid = $pso->read_object("global_system_id");
+		$global_gsid = $pso->read_object('global_system_id');
 		if(empty($global_gsid) || pts_openbenchmarking::is_valid_gsid_format($global_gsid) == false)
 		{
 			// Global System ID for anonymous uploads, etc
 			$global_gsid = pts_openbenchmarking_client::request_gsid();
 		}
 
-		define("PTS_GSID", $global_gsid);
-		$pso->add_object("global_system_id", $global_gsid); // GSID
+		define('PTS_GSID', $global_gsid);
+		$pso->add_object('global_system_id', $global_gsid); // GSID
 
 		// User Agreement Checking
-		$agreement_cs = $pso->read_object("user_agreement_cs");
+		$agreement_cs = $pso->read_object('user_agreement_cs');
 
-		$pso->add_object("user_agreement_cs", $agreement_cs); // User agreement check-sum
+		$pso->add_object('user_agreement_cs', $agreement_cs); // User agreement check-sum
 
 		// Phodevi Cache Handling
-		$phodevi_cache = $pso->read_object("phodevi_smart_cache");
+		$phodevi_cache = $pso->read_object('phodevi_smart_cache');
 
-		if($phodevi_cache instanceOf phodevi_cache && pts_client::read_env("NO_PHODEVI_CACHE") != 1)
+		if($phodevi_cache instanceOf phodevi_cache && pts_client::read_env('NO_PHODEVI_CACHE') != 1)
 		{
 			$phodevi_cache = $phodevi_cache->restore_cache(PTS_USER_PATH, PTS_CORE_VERSION);
 			phodevi::set_device_cache($phodevi_cache);
@@ -411,17 +411,17 @@ class pts_client
 	public static function user_agreement_check($command)
 	{
 		$pso = pts_storage_object::recover_from_file(PTS_CORE_STORAGE);
-		$config_md5 = $pso->read_object("user_agreement_cs");
-		$current_md5 = md5_file(PTS_PATH . "pts-core/user-agreement.txt");
+		$config_md5 = $pso->read_object('user_agreement_cs');
+		$current_md5 = md5_file(PTS_PATH . 'pts-core/user-agreement.txt');
 
-		if($config_md5 != $current_md5 || pts_config::read_user_config(P_OPTION_USAGE_REPORTING, "UNKNOWN") == "UNKNOWN")
+		if($config_md5 != $current_md5 || pts_config::read_user_config(P_OPTION_USAGE_REPORTING, 'UNKNOWN') == 'UNKNOWN')
 		{
-			$prompt_in_method = pts_client::check_command_for_function($command, "pts_user_agreement_prompt");
-			$user_agreement = file_get_contents(PTS_PATH . "pts-core/user-agreement.txt");
+			$prompt_in_method = pts_client::check_command_for_function($command, 'pts_user_agreement_prompt');
+			$user_agreement = file_get_contents(PTS_PATH . 'pts-core/user-agreement.txt');
 
 			if($prompt_in_method)
 			{
-				$user_agreement_return = call_user_func(array($command, "pts_user_agreement_prompt"), $user_agreement);
+				$user_agreement_return = call_user_func(array($command, 'pts_user_agreement_prompt'), $user_agreement);
 
 				if(is_array($user_agreement_return))
 				{
@@ -446,22 +446,22 @@ class pts_client
 
 			if($prompt_in_method == false || $usage_reporting == -1 || $hwsw_reporting == -1)
 			{
-				pts_client::$display->generic_heading("User Agreement");
+				pts_client::$display->generic_heading('User Agreement');
 				echo wordwrap($user_agreement, 65);
-				$agree = pts_user_io::prompt_bool_input("Do you agree to these terms and wish to proceed", true);
-				$usage_reporting = $agree ? pts_user_io::prompt_bool_input("Enable anonymous usage / statistics reporting", true) : -1;
-				$hwsw_reporting = $agree ? pts_user_io::prompt_bool_input("Enable anonymous statistical reporting of installed software / hardware", true) : -1;
+				$agree = pts_user_io::prompt_bool_input('Do you agree to these terms and wish to proceed', true);
+				$usage_reporting = $agree ? pts_user_io::prompt_bool_input('Enable anonymous usage / statistics reporting', true) : -1;
+				$hwsw_reporting = $agree ? pts_user_io::prompt_bool_input('Enable anonymous statistical reporting of installed software / hardware', true) : -1;
 			}
 
 			if($agree)
 			{
 				echo "\n";
-				$pso->add_object("user_agreement_cs", $current_md5);
+				$pso->add_object('user_agreement_cs', $current_md5);
 				$pso->save_to_file(PTS_CORE_STORAGE);
 			}
 			else
 			{
-				pts_client::exit_client("In order to run the Phoronix Test Suite, you must agree to the listed terms.");
+				pts_client::exit_client('In order to run the Phoronix Test Suite, you must agree to the listed terms.');
 			}
 
 			pts_config::user_config_generate(array(
@@ -504,7 +504,7 @@ class pts_client
 
 			if($var_replacement != null)
 			{
-				$user_str = str_replace("$" . $var_name, $var_replacement, $user_str);
+				$user_str = str_replace('$' . $var_name, $var_replacement, $user_str);
 			}
 			else
 			{
@@ -525,7 +525,7 @@ class pts_client
 			$save_to_dir = dirname($save_to_dir);
 		}
 
-		if($save_to_dir != ".")
+		if($save_to_dir != '.')
 		{
 			pts_file_io::mkdir($save_to_dir);
 		}
@@ -541,7 +541,7 @@ class pts_client
 	public static function exit_client($string = null, $exit_status = 0)
 	{
 		// Exit the Phoronix Test Suite client
-		define("PTS_EXIT", 1);
+		define('PTS_EXIT', 1);
 
 		if($string != null)
 		{
@@ -553,7 +553,7 @@ class pts_client
 	public static function current_user()
 	{
 		// Current system user
-		return ($pts_user = pts_global::account_user_name()) != "Default User" && !empty($pts_user) ? $pts_user : phodevi::read_property("system", "username");
+		return ($pts_user = pts_global::account_user_name()) != 'Default User' && !empty($pts_user) ? $pts_user : phodevi::read_property('system', 'username');
 	}
 	public static function user_home_directory()
 	{
@@ -562,12 +562,12 @@ class pts_client
 
 		if($userhome == null)
 		{
-			if(function_exists("posix_getpwuid") && function_exists("posix_getuid"))
+			if(function_exists('posix_getpwuid') && function_exists('posix_getuid'))
 			{
 				$userinfo = posix_getpwuid(posix_getuid());
-				$userhome = $userinfo["dir"];
+				$userhome = $userinfo['dir'];
 			}
-			else if(($home = pts_client::read_env("HOME")) || ($home = pts_client::read_env("HOMEPATH")))
+			else if(($home = pts_client::read_env('HOME')) || ($home = pts_client::read_env('HOMEPATH')))
 			{
 				$userhome = $home;
 			}
@@ -597,9 +597,9 @@ class pts_client
 	public static function parse_home_directory($path)
 	{
 		// Find home directory if needed
-		if(strpos($path, "~/") !== false)
+		if(strpos($path, '~/') !== false)
 		{
-			$path = str_replace("~/", pts_client::user_home_directory(), $path);
+			$path = str_replace('~/', pts_client::user_home_directory(), $path);
 		}
 
 		return pts_strings::add_trailing_slash($path);
@@ -609,23 +609,23 @@ class pts_client
 		$width = pts_render::$last_graph_object->graphWidth();
 		$height = pts_render::$last_graph_object->graphHeight();
 
-		if(pts_render::$last_graph_object->getRenderer() == "SVG")
+		if(pts_render::$last_graph_object->getRenderer() == 'SVG')
 		{
-			$width = "auto";
-			$height = "auto";
+			$width = 'auto';
+			$height = 'auto';
 		}
 
-		$raw_xsl = file_get_contents(PTS_RESULTS_VIEWER_PATH . "pts-results-viewer.xsl");
-		$graph_string = pts_render::$last_graph_object->htmlEmbedCode("result-graphs/<xsl:number value=\"position()\" />.BILDE_EXTENSION", $width, $height);
+		$raw_xsl = file_get_contents(PTS_RESULTS_VIEWER_PATH . 'pts-results-viewer.xsl');
+		$graph_string = pts_render::$last_graph_object->htmlEmbedCode('result-graphs/<xsl:number value="position()" />.BILDE_EXTENSION', $width, $height);
 
-		$raw_xsl = str_replace("<!-- GRAPH TAG -->", $graph_string, $raw_xsl);
+		$raw_xsl = str_replace('<!-- GRAPH TAG -->', $graph_string, $raw_xsl);
 
 		/*
 		if($matching_graph_tables)
 		{
 			$bilde_svg = new bilde_svg_renderer(1, 1);
-			$table_string = $bilde_svg->html_embed_code("result-graphs/<xsl:number value=\"position()\" />_table.BILDE_EXTENSION", array("width" => "auto", "height" => "auto"), true);
-			$raw_xsl = str_replace("<!-- GRAPH TABLE TAG -->", $table_string, $raw_xsl);
+			$table_string = $bilde_svg->html_embed_code('result-graphs/<xsl:number value="position()" />_table.BILDE_EXTENSION', array('width' => 'auto', 'height' => 'auto'), true);
+			$raw_xsl = str_replace('<!-- GRAPH TABLE TAG -->', $table_string, $raw_xsl);
 		}
 		*/
 
@@ -635,10 +635,10 @@ class pts_client
 	{
 		if($save_to_dir)
 		{
-			if(pts_file_io::mkdir($save_to_dir . "/result-graphs") == false)
+			if(pts_file_io::mkdir($save_to_dir . '/result-graphs') == false)
 			{
 				// Directory must exist, so remove any old graph files first
-				foreach(pts_file_io::glob($save_to_dir . "/result-graphs/*") as $old_file)
+				foreach(pts_file_io::glob($save_to_dir . '/result-graphs/*') as $old_file)
 				{
 					unlink($old_file);
 				}
@@ -654,10 +654,10 @@ class pts_client
 		if($save_to_dir)
 		{
 			$chart = new pts_ResultFileTable($result_file);
-			$chart->renderChart($save_to_dir . "/result-graphs/overview.BILDE_EXTENSION");
+			$chart->renderChart($save_to_dir . '/result-graphs/overview.BILDE_EXTENSION');
 
 			$chart = new pts_ResultFileSystemsTable($result_file);
-			$chart->renderChart($save_to_dir . "/result-graphs/systems.BILDE_EXTENSION");
+			$chart->renderChart($save_to_dir . '/result-graphs/systems.BILDE_EXTENSION');
 			unset($chart);
 		}
 
@@ -667,11 +667,11 @@ class pts_client
 
 			if($save_to_dir && is_dir($save_to_dir))
 			{
-				$save_to .= "/result-graphs/" . ($key + 1) . ".BILDE_EXTENSION";
+				$save_to .= '/result-graphs/' . ($key + 1) . '.BILDE_EXTENSION';
 
 				if(PTS_IS_CLIENT)
 				{
-					if($result_file->is_multi_way_comparison() || pts_client::read_env("GRAPH_GROUP_SIMILAR"))
+					if($result_file->is_multi_way_comparison() || pts_client::read_env('GRAPH_GROUP_SIMILAR'))
 					{
 						$table_keys = array();
 						$titles = $result_file->get_test_titles();
@@ -690,14 +690,14 @@ class pts_client
 					}
 
 					$chart = new pts_ResultFileTable($result_file, null, $table_keys);
-					$chart->setAlternateLocation($save_to_dir . "/result-graphs/" . ($key + 1) . '.svg');
-					$chart->renderChart($save_to_dir . "/result-graphs/" . ($key + 1) . '_table.BILDE_EXTENSION');
+					$chart->setAlternateLocation($save_to_dir . '/result-graphs/' . ($key + 1) . '.svg');
+					$chart->renderChart($save_to_dir . '/result-graphs/' . ($key + 1) . '_table.BILDE_EXTENSION');
 					unset($chart);
 					$generated_graph_tables = true;
 				}
 			}
 
-			$graph = pts_render::render_graph($result_object, $result_file, $save_to, array('set_alternate_location' => $save_to_dir . "/result-graphs/" . ($key + 1) . '_table.svg'));
+			$graph = pts_render::render_graph($result_object, $result_file, $save_to, array('set_alternate_location' => $save_to_dir . '/result-graphs/' . ($key + 1) . '_table.svg'));
 			array_push($generated_graphs, $graph);
 		}
 
@@ -708,13 +708,13 @@ class pts_client
 
 			if($graph->doSkipGraph() == false)
 			{
-				$graph->saveGraphToFile($save_to_dir . "/result-graphs/visualize.BILDE_EXTENSION");
+				$graph->saveGraphToFile($save_to_dir . '/result-graphs/visualize.BILDE_EXTENSION');
 				$graph->renderGraph();
 
 				// Check to see if skip_graph was realized during the rendering process
 				if($graph->doSkipGraph() == true)
 				{
-					pts_file_io::unlink($save_to_dir . "/result-graphs/visualize.svg");
+					pts_file_io::unlink($save_to_dir . '/result-graphs/visualize.svg');
 				}
 			}
 			unset($graph);
@@ -723,7 +723,7 @@ class pts_client
 		// Save XSL
 		if(count($generated_graphs) > 0 && $save_to_dir)
 		{
-			file_put_contents($save_to_dir . "/pts-results-viewer.xsl", pts_client::xsl_results_viewer_graph_template($generated_graph_tables));
+			file_put_contents($save_to_dir . '/pts-results-viewer.xsl', pts_client::xsl_results_viewer_graph_template($generated_graph_tables));
 		}
 
 		return $generated_graphs;
@@ -733,15 +733,15 @@ class pts_client
 		// TODO: possibly do something like posix_getpid() != pts_client::$startup_pid in case shutdown function is called from a child process
 
 		// Generate Phodevi Smart Cache
-		if(pts_client::read_env("NO_PHODEVI_CACHE") != 1)
+		if(pts_client::read_env('NO_PHODEVI_CACHE') != 1)
 		{
-			if(pts_config::read_bool_config(P_OPTION_PHODEVI_CACHE, "TRUE"))
+			if(pts_config::read_bool_config(P_OPTION_PHODEVI_CACHE, 'TRUE'))
 			{
-				pts_storage_object::set_in_file(PTS_CORE_STORAGE, "phodevi_smart_cache", phodevi::get_phodevi_cache_object(PTS_USER_PATH, PTS_CORE_VERSION));
+				pts_storage_object::set_in_file(PTS_CORE_STORAGE, 'phodevi_smart_cache', phodevi::get_phodevi_cache_object(PTS_USER_PATH, PTS_CORE_VERSION));
 			}
 			else
 			{
-				pts_storage_object::set_in_file(PTS_CORE_STORAGE, "phodevi_smart_cache", null);
+				pts_storage_object::set_in_file(PTS_CORE_STORAGE, 'phodevi_smart_cache', null);
 			}
 		}
 	}
@@ -769,11 +769,11 @@ class pts_client
 	{
 		$in_option = false;
 
-		if(is_file(PTS_COMMAND_PATH . $option . ".php"))
+		if(is_file(PTS_COMMAND_PATH . $option . '.php'))
 		{
-			if(!class_exists($option, false) && is_file(PTS_COMMAND_PATH . $option . ".php"))
+			if(!class_exists($option, false) && is_file(PTS_COMMAND_PATH . $option . '.php'))
 			{
-				include(PTS_COMMAND_PATH . $option . ".php");
+				include(PTS_COMMAND_PATH . $option . '.php');
 			}
 
 			if(method_exists($option, $check_function))
@@ -787,9 +787,9 @@ class pts_client
 	public static function save_test_result($save_to = null, $save_results = null, $render_graphs = true, $result_identifier = null)
 	{
 		// Saves PTS result file
-		if(substr($save_to, -4) != ".xml")
+		if(substr($save_to, -4) != '.xml')
 		{
-			$save_to .= ".xml";
+			$save_to .= '.xml';
 		}
 
 		$save_to_dir = pts_client::setup_test_result_directory($save_to);
@@ -800,24 +800,24 @@ class pts_client
 		}
 		else
 		{
-			$save_name = basename($save_to, ".xml");
+			$save_name = basename($save_to, '.xml');
 
-			if($save_name == "composite" && $render_graphs)
+			if($save_name == 'composite' && $render_graphs)
 			{
 				pts_client::generate_result_file_graphs($save_results, $save_to_dir);
 			}
 
 			$bool = file_put_contents(PTS_SAVE_RESULTS_PATH . $save_to, $save_results);
 
-			if($result_identifier != null && (pts_config::read_bool_config(P_OPTION_LOG_VSYSDETAILS, "TRUE") || (pts_c::$test_flags & pts_c::batch_mode) || (pts_c::$test_flags & pts_c::auto_mode)))
+			if($result_identifier != null && (pts_config::read_bool_config(P_OPTION_LOG_VSYSDETAILS, 'TRUE') || (pts_c::$test_flags & pts_c::batch_mode) || (pts_c::$test_flags & pts_c::auto_mode)))
 			{
 				// Save verbose system information here
-				$system_log_dir = $save_to_dir . "/system-logs/" . $result_identifier . '/';
+				$system_log_dir = $save_to_dir . '/system-logs/' . $result_identifier . '/';
 				pts_file_io::mkdir($system_log_dir, 0777, true);
 
 				// Backup system files
 				// TODO: move out these files/commands to log out to respective Phodevi components so only what's relevant will be logged
-				$system_log_files = array("/var/log/Xorg.0.log", "/proc/cpuinfo", "/proc/modules", "/etc/X11/xorg.conf");
+				$system_log_files = array('/var/log/Xorg.0.log', '/proc/cpuinfo', '/proc/modules', '/etc/X11/xorg.conf');
 
 				foreach($system_log_files as $file)
 				{
@@ -829,7 +829,7 @@ class pts_client
 				}
 
 				// Generate logs from system commands to backup
-				$system_log_commands = array("lspci -vvnn", "sensors", "dmesg", "glxinfo", "system_profiler", "dpkg --list");
+				$system_log_commands = array('lspci -vvnn', 'sensors', 'dmesg', 'glxinfo', 'system_profiler', 'dpkg --list');
 
 				foreach($system_log_commands as $command_string)
 				{
@@ -837,7 +837,7 @@ class pts_client
 
 					if(($command_bin = pts_client::executable_in_path($command[0])))
 					{
-						$cmd_output = shell_exec("cd " . dirname($command_bin) . " && ./" . $command_string . " 2>&1");
+						$cmd_output = shell_exec('cd ' . dirname($command_bin) . ' && ./' . $command_string . ' 2>&1');
 						file_put_contents($system_log_dir . $command[0], $cmd_output);
 					}
 				}
@@ -855,7 +855,7 @@ class pts_client
 		if($generated && $full_process_string)
 		{
 			echo "\n" . $full_process_string . "\n";
-			pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . $result_file_identifier . "/index.html");
+			pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . $result_file_identifier . '/index.html');
 		}
 
 		return $generated;
@@ -866,14 +866,14 @@ class pts_client
 	}
 	public static function execute_command($command, $pass_args = null)
 	{
-		if(!class_exists($command, false) && is_file(PTS_COMMAND_PATH . $command . ".php"))
+		if(!class_exists($command, false) && is_file(PTS_COMMAND_PATH . $command . '.php'))
 		{
-			include(PTS_COMMAND_PATH . $command . ".php");
+			include(PTS_COMMAND_PATH . $command . '.php');
 		}
 
-		if(is_file(PTS_COMMAND_PATH . $command . ".php") && method_exists($command, "argument_checks"))
+		if(is_file(PTS_COMMAND_PATH . $command . '.php') && method_exists($command, 'argument_checks'))
 		{
-			$argument_checks = call_user_func(array($command, "argument_checks"));
+			$argument_checks = call_user_func(array($command, 'argument_checks'));
 
 			foreach($argument_checks as &$argument_check)
 			{
@@ -934,7 +934,7 @@ class pts_client
 
 				if($return_value == $return_fails_on)
 				{
-					pts_client::$display->generic_error("Argument Missing.");
+					pts_client::$display->generic_error('Argument Missing.');
 					echo "CORRECT SYNTAX\nphoronix-test-suite $command " . implode(' ', $argument_checks) . "\n\n";
 					return false;
 				}
@@ -948,13 +948,13 @@ class pts_client
 			}
 		}
 
-		pts_module_manager::module_process("__pre_option_process", $command);
+		pts_module_manager::module_process('__pre_option_process', $command);
 
-		if(is_file(PTS_COMMAND_PATH . $command . ".php"))
+		if(is_file(PTS_COMMAND_PATH . $command . '.php'))
 		{
-			if(method_exists($command, "run"))
+			if(method_exists($command, 'run'))
 			{
-				call_user_func(array($command, "run"), $pass_args);
+				call_user_func(array($command, 'run'), $pass_args);
 			}
 			else
 			{
@@ -963,14 +963,14 @@ class pts_client
 		}
 		else if(pts_module::valid_run_command($command))
 		{
-			list($module, $module_command) = explode(".", $command);
+			list($module, $module_command) = explode('.', $command);
 
 			pts_module_manager::set_current_module($module);
 			pts_module_manager::run_command($module, $module_command, $pass_args);
 			pts_module_manager::set_current_module(null);
 		}
 
-		pts_module_manager::module_process("__post_option_process", $command);
+		pts_module_manager::module_process('__post_option_process', $command);
 	}
 	public static function terminal_width()
 	{
@@ -980,9 +980,9 @@ class pts_client
 		{
 			$chars = -1;
 
-			if(pts_client::executable_in_path("tput"))
+			if(pts_client::executable_in_path('tput'))
 			{
-				$terminal_width = trim(shell_exec("tput cols 2>&1"));
+				$terminal_width = trim(shell_exec('tput cols 2>&1'));
 
 				if(is_numeric($terminal_width) && $terminal_width > 1)
 				{
@@ -1002,8 +1002,8 @@ class pts_client
 	}
 	public static function user_hardware_software_reporting()
 	{
-		$hw_reporting = pts_config::read_bool_config(P_OPTION_HARDWARE_REPORTING, "FALSE");
-		$sw_reporting = pts_config::read_bool_config(P_OPTION_SOFTWARE_REPORTING, "FALSE");
+		$hw_reporting = pts_config::read_bool_config(P_OPTION_HARDWARE_REPORTING, 'FALSE');
+		$sw_reporting = pts_config::read_bool_config(P_OPTION_SOFTWARE_REPORTING, 'FALSE');
 
 		if($hw_reporting == false && $sw_reporting == false)
 		{
@@ -1029,8 +1029,8 @@ class pts_client
 				}
 			}
 
-			$hw_prev = $pso->read_object("global_reported_hw");
-			$pso->add_object("global_reported_hw", $hw); 
+			$hw_prev = $pso->read_object('global_reported_hw');
+			$pso->add_object('global_reported_hw', $hw);
 
 			if(is_array($hw_prev))
 			{
@@ -1051,8 +1051,8 @@ class pts_client
 					$sw[$key] = phodevi::read_name($value[0]);
 				}
 			}
-			$sw_prev = $pso->read_object("global_reported_sw");
-			$pso->add_object("global_reported_sw", $sw); 
+			$sw_prev = $pso->read_object('global_reported_sw');
+			$pso->add_object('global_reported_sw', $sw);
 
 			if(is_array($sw_prev))
 			{
@@ -1073,20 +1073,20 @@ class pts_client
 		if(IS_LINUX)
 		{
 			// Checks if process is running on the system
-			$running = shell_exec("ps -C " . strtolower($process) . " 2>&1");
-			$running = trim(str_replace(array("PID", "TTY", "TIME", "CMD"), "", $running));
+			$running = shell_exec('ps -C ' . strtolower($process) . ' 2>&1');
+			$running = trim(str_replace(array('PID', 'TTY', 'TIME', 'CMD'), '', $running));
 		}
 		else if(IS_SOLARIS)
 		{
 			// Checks if process is running on the system
-			$ps = shell_exec("ps -ef 2>&1");
-			$running = strpos($ps, " " . strtolower($process)) != false ? "TRUE" : null;
+			$ps = shell_exec('ps -ef 2>&1');
+			$running = strpos($ps, ' ' . strtolower($process)) != false ? 'TRUE' : null;
 		}
-		else if(pts_client::executable_in_path("ps") != false)
+		else if(pts_client::executable_in_path('ps') != false)
 		{
 			// Checks if process is running on the system
-			$ps = shell_exec("ps -ax 2>&1");
-			$running = strpos($ps, " " . strtolower($process)) != false ? "TRUE" : null;
+			$ps = shell_exec('ps -ax 2>&1');
+			$running = strpos($ps, ' ' . strtolower($process)) != false ? 'TRUE' : null;
 		}
 		else
 		{
@@ -1097,7 +1097,7 @@ class pts_client
 	}
 	public static function parse_value_string_double_identifier($value_string)
 	{
-		// i.e. with PRESET_OPTIONS="stream.run-type=Add"
+		// i.e. with PRESET_OPTIONS='stream.run-type=Add'
 		$values = array();
 
 		foreach(explode(';', $value_string) as $preset)
@@ -1125,7 +1125,7 @@ class pts_client
 		}
 		else
 		{
-			$dir = "/tmp"; // Assume /tmp
+			$dir = '/tmp'; // Assume /tmp
 		}
 
 		return $dir;
@@ -1144,22 +1144,22 @@ class pts_client
 	public static function pts_set_environmental_variable($name, $value)
 	{
 		// Sets an environmental variable
-		return getenv($name) == false && putenv($name . "=" . $value);
+		return getenv($name) == false && putenv($name . '=' . $value);
 	}
 	public static function shell_exec($exec, $extra_vars = null)
 	{
 		// Same as shell_exec() but with the PTS env variables added in
 		// Convert pts_client::environmental_variables() into shell export variable syntax
 
-		$var_string = "";
+		$var_string = '';
 		$extra_vars = ($extra_vars == null ? pts_client::environmental_variables() : array_merge(pts_client::environmental_variables(), $extra_vars));
 
 		foreach(array_keys($extra_vars) as $key)
 		{
-			$var_string .= "export " . $key . "=" . $extra_vars[$key] . ";";
+			$var_string .= 'export ' . $key . '=' . $extra_vars[$key] . ';';
 		}
 
-		$var_string .= " ";
+		$var_string .= ' ';
 
 		return shell_exec($var_string . $exec);
 	}
@@ -1169,7 +1169,7 @@ class pts_client
 
 		if(!isset($cache[$executable]))
 		{
-			$paths = pts_strings::colon_explode((($path = pts_client::read_env("PATH")) == false ? "/usr/bin:/usr/local/bin" : $path));
+			$paths = pts_strings::colon_explode((($path = pts_client::read_env('PATH')) == false ? '/usr/bin:/usr/local/bin' : $path));
 			$executable_path = false;
 
 			foreach($paths as $path)
@@ -1190,17 +1190,17 @@ class pts_client
 	}
 	public static function display_web_page($URL, $alt_text = null, $default_open = false, $auto_open = false)
 	{
-		if((pts_c::$test_flags & pts_c::auto_mode) || (pts_client::read_env("DISPLAY") == false && !IS_WINDOWS))
+		if((pts_c::$test_flags & pts_c::auto_mode) || (pts_client::read_env('DISPLAY') == false && !IS_WINDOWS))
 		{
 			return;
 		}
 
 		// Launch the web browser
-		$text = $alt_text == null ? "Do you want to view the results in your web browser" : $alt_text;
+		$text = $alt_text == null ? 'Do you want to view the results in your web browser' : $alt_text;
 
 		if($auto_open == false)
 		{
-			$view_results = pts_user_io::prompt_bool_input($text, $default_open, "OPEN_BROWSER");
+			$view_results = pts_user_io::prompt_bool_input($text, $default_open, 'OPEN_BROWSER');
 		}
 		else
 		{
@@ -1242,12 +1242,12 @@ class pts_client
 				}
 				else
 				{
-					$possible_browsers = array("epiphany", "firefox", "mozilla", "x-www-browser", "open");
+					$possible_browsers = array('epiphany', 'firefox', 'mozilla', 'x-www-browser', 'open');
 
-					if(pts_client::executable_in_path("kfmclient") == false)
+					if(pts_client::executable_in_path('kfmclient') == false)
 					{
 						// Konqueror is bad with XSL, so if it looks like we are using KDE, don't use XDG
-						array_unshift($possible_browsers, "xdg-open");
+						array_unshift($possible_browsers, 'xdg-open');
 					}
 
 					foreach($possible_browsers as &$b)
@@ -1290,7 +1290,7 @@ class pts_client
 		$results = array();
 		$ignore_ids = array();
 
-		foreach(pts_file_io::glob(PTS_SAVE_RESULTS_PATH . "*/composite.xml") as $result_file)
+		foreach(pts_file_io::glob(PTS_SAVE_RESULTS_PATH . '*/composite.xml') as $result_file)
 		{
 			$identifier = basename(dirname($result_file));
 
@@ -1309,19 +1309,19 @@ class pts_client
 		if(!empty($cmd_value) && (is_executable($cmd_value) || ($cmd_value = pts_client::executable_in_path($cmd_value))))
 		{
 			$descriptor_spec = array(
-				0 => array("pipe", 'r'),
-				1 => array("pipe", 'w'),
-				2 => array("pipe", 'w')
+				0 => array('pipe', 'r'),
+				1 => array('pipe', 'w'),
+				2 => array('pipe', 'w')
 				);
 
 			$env_vars = array();
 
 			if($passed_obj instanceof pts_test_result)
 			{
-				$env_vars["PTS_EXTERNAL_TEST_IDENTIFIER"] = $passed_obj->test_profile->get_identifier();
-				$env_vars["PTS_EXTERNAL_TEST_INSTALL_PATH"] = $passed_obj->test_profile->get_install_dir();
-				$env_vars["PTS_EXTERNAL_TEST_RESULT"] = $passed_obj->get_result();
-				$env_vars["PTS_EXTERNAL_TEST_STD_DEV_PERCENT"] = pts_math::percent_standard_deviation($passed_obj->test_result_buffer->get_values());
+				$env_vars['PTS_EXTERNAL_TEST_IDENTIFIER'] = $passed_obj->test_profile->get_identifier();
+				$env_vars['PTS_EXTERNAL_TEST_INSTALL_PATH'] = $passed_obj->test_profile->get_install_dir();
+				$env_vars['PTS_EXTERNAL_TEST_RESULT'] = $passed_obj->get_result();
+				$env_vars['PTS_EXTERNAL_TEST_STD_DEV_PERCENT'] = pts_math::percent_standard_deviation($passed_obj->test_result_buffer->get_values());
 			}
 
 			$description_string != null && pts_client::$display->generic_heading($description_string);

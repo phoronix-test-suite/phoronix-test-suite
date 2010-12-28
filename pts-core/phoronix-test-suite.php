@@ -21,19 +21,19 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-setlocale(LC_NUMERIC, "C");
-define("PTS_PATH", dirname(dirname(__FILE__)) . '/');
+setlocale(LC_NUMERIC, 'C');
+define('PTS_PATH', dirname(dirname(__FILE__)) . '/');
 
 // PTS_MODE types
 // CLIENT = Standard Phoronix Test Suite Client
 // LIB = Only load select PTS files
 // SILENT = Load all normal pts-core files, but don't run client code
-define("PTS_MODE", in_array(($m = getenv("PTS_MODE")), array("CLIENT", "LIB", "SILENT")) ? $m : "CLIENT");
+define('PTS_MODE', in_array(($m = getenv('PTS_MODE')), array('CLIENT', 'LIB', 'SILENT')) ? $m : 'CLIENT');
 
 // Any PHP default memory limit should be fine for PTS, until you run image quality comparison tests that begins to consume memory
-ini_set("memory_limit", "256M");
+ini_set('memory_limit', '256M');
 
-if(PTS_MODE == "CLIENT" && ($open_basedir = ini_get("open_basedir")))
+if(PTS_MODE == 'CLIENT' && ($open_basedir = ini_get('open_basedir')))
 {
 	$is_in_allowed_dir = false;
 
@@ -48,33 +48,33 @@ if(PTS_MODE == "CLIENT" && ($open_basedir = ini_get("open_basedir")))
 
 	if($is_in_allowed_dir == false)
 	{
-		echo "\nERROR: Your php.ini configuration's open_basedir setting is preventing " . PTS_PATH . " from loading.\n\n";
+		echo PHP_EOL . 'ERROR: Your php.ini configuration open_basedir setting is preventing ' . PTS_PATH . ' from loading.' . PHP_EOL;
 		return false;
 	}
 }
 
-require(PTS_PATH . "pts-core/pts-core.php");
+require(PTS_PATH . 'pts-core/pts-core.php');
 
-if(PTS_MODE != "CLIENT")
+if(PTS_MODE != 'CLIENT')
 {
 	// pts-core is acting as a library, return now since no need to run client code
 	return;
 }
 
-if(ini_get("date.timezone") == null)
+if(ini_get('date.timezone') == null)
 {
-	date_default_timezone_set("UTC");
+	date_default_timezone_set('UTC');
 }
 
-$sent_command = strtolower(str_replace("-", "_", (isset($argv[1]) ? $argv[1] : null)));
-$quick_start_options = array("dump_possible_options");
-define("QUICK_START", in_array($sent_command, $quick_start_options));
+$sent_command = strtolower(str_replace('-', '_', (isset($argv[1]) ? $argv[1] : null)));
+$quick_start_options = array('dump_possible_options');
+define('QUICK_START', in_array($sent_command, $quick_start_options));
 
 pts_client::init(); // Initalize the Phoronix Test Suite (pts-core) client
 $pass_args = array();
-//stream_wrapper_register("phoronix", "pts_phoronix_stream") or die("Failed To Initialize The Phoronix Stream");
+//stream_wrapper_register('phoronix', 'pts_phoronix_stream') or die('Failed To Initialize The Phoronix Stream');
 
-if(is_file(PTS_PATH . "pts-core/commands/" . $sent_command . ".php") == false)
+if(is_file(PTS_PATH . 'pts-core/commands/' . $sent_command . '.php') == false)
 {
 	$replaced = false;
 
@@ -94,7 +94,7 @@ if(is_file(PTS_PATH . "pts-core/commands/" . $sent_command . ".php") == false)
 	}
 	else
 	{
-		$alias_file = pts_file_io::file_get_contents(PTS_CORE_STATIC_PATH . "lists/option-command-aliases.list");
+		$alias_file = pts_file_io::file_get_contents(PTS_CORE_STATIC_PATH . 'lists/option-command-aliases.list');
 
 		foreach(pts_strings::trim_explode("\n", $alias_file) as $alias_line)
 		{
@@ -116,59 +116,58 @@ if(is_file(PTS_PATH . "pts-core/commands/" . $sent_command . ".php") == false)
 	}
 }
 
-define("PTS_USER_LOCK", PTS_USER_PATH . "run_lock");
+define('PTS_USER_LOCK', PTS_USER_PATH . 'run_lock');
 
 if(!QUICK_START)
 {
 	if(pts_client::create_lock(PTS_USER_LOCK) == false)
 	{
-		pts_client::$display->generic_warning("It appears that the Phoronix Test Suite is already running.\nFor proper results, only run one instance at a time.");
+		pts_client::$display->generic_warning('It appears that the Phoronix Test Suite is already running.\nFor proper results, only run one instance at a time.');
 	}
 
-	register_shutdown_function(array("pts_client", "process_shutdown_tasks"));
+	register_shutdown_function(array('pts_client', 'process_shutdown_tasks'));
 
 	if(($proxy_address = pts_config::read_user_config(P_OPTION_NET_PROXY_ADDRESS, false)) && ($proxy_port = pts_config::read_user_config(P_OPTION_NET_PROXY_PORT, false)))
 	{
-		define("NETWORK_PROXY", $proxy_address . ":" . $proxy_port);
-		define("NETWORK_PROXY_ADDRESS", $proxy_address);
-		define("NETWORK_PROXY_PORT", $proxy_port);
+		define('NETWORK_PROXY', $proxy_address . ':' . $proxy_port);
+		define('NETWORK_PROXY_ADDRESS', $proxy_address);
+		define('NETWORK_PROXY_PORT', $proxy_port);
 	}
-	else if(($env_proxy = getenv("http_proxy")) != false && count($env_proxy = pts_strings::colon_explode($env_proxy)) == 2)
+	else if(($env_proxy = getenv('http_proxy')) != false && count($env_proxy = pts_strings::colon_explode($env_proxy)) == 2)
 	{
-		define("NETWORK_PROXY", $env_proxy[0] . ":" . $env_proxy[1]);
-		define("NETWORK_PROXY_ADDRESS", $env_proxy[0]);
-		define("NETWORK_PROXY_PORT", $env_proxy[1]);
+		define('NETWORK_PROXY', $env_proxy[0] . ':' . $env_proxy[1]);
+		define('NETWORK_PROXY_ADDRESS', $env_proxy[0]);
+		define('NETWORK_PROXY_PORT', $env_proxy[1]);
 	}
 
-	define("NETWORK_TIMEOUT", pts_config::read_user_config(P_OPTION_NET_TIMEOUT, 20));
+	define('NETWORK_TIMEOUT', pts_config::read_user_config(P_OPTION_NET_TIMEOUT, 20));
 
-	if(ini_get("allow_url_fopen") == "Off")
+	if(ini_get('allow_url_fopen') == 'Off')
 	{
-		echo "\nThe allow_url_fopen option in your PHP configuration must be enabled for network support.\n\n";
-		define("NO_NETWORK_COMMUNICATION", true);
+		echo PHP_EOL . 'The allow_url_fopen option in your PHP configuration must be enabled for network support.' . PHP_EOL . PHP_EOL;
+		define('NO_NETWORK_COMMUNICATION', true);
 	}
-	else if(pts_config::read_bool_config(P_OPTION_NET_NO_NETWORK, "FALSE"))
+	else if(pts_config::read_bool_config(P_OPTION_NET_NO_NETWORK, 'FALSE'))
 	{
-		define("NO_NETWORK_COMMUNICATION", true);
-		echo "\nNetwork Communication Is Disabled For Your User Configuration.\n\n";
+		define('NO_NETWORK_COMMUNICATION', true);
+		echo PHP_EOL . 'Network Communication Is Disabled For Your User Configuration.' . PHP_EOL . PHP_EOL;
 	}
 	/* else
 	{
-		$server_response = pts_network::http_get_contents("http://www.phoronix-test-suite.com/PTS", false, false);
+		$server_response = pts_network::http_get_contents('http://www.phoronix-test-suite.com/PTS', false, false);
 
-		if($server_response != "PTS")
+		if($server_response != 'PTS')
 		{
-			define("NO_NETWORK_COMMUNICATION", true);
-			echo "\nNetwork Communication Failed.\n\n";
+			define('NO_NETWORK_COMMUNICATION', true);
 		}
 	}*/
 
-	if(!defined("NO_NETWORK_COMMUNICATION") && ini_get("file_uploads") == "Off")
+	if(!defined('NO_NETWORK_COMMUNICATION') && ini_get('file_uploads') == 'Off')
 	{
-		echo "\nThe file_uploads option in your PHP configuration must be enabled for network support.\n\n";
+		echo PHP_EOL . 'The file_uploads option in your PHP configuration must be enabled for network support.' . PHP_EOL . PHP_EOL;
 	}
 
-	if(pts_client::read_env("PTS_IGNORE_MODULES") == false)
+	if(pts_client::read_env('PTS_IGNORE_MODULES') == false)
 	{
 		pts_client::module_framework_init(); // Initialize the PTS module system
 	}
