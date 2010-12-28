@@ -28,13 +28,13 @@ class phodevi_parser
 		// Read NVIDIA's NV Extension
 		$nv_info = false;
 
-		if(pts_client::executable_in_path("nvidia-settings"))
+		if(pts_client::executable_in_path('nvidia-settings'))
 		{
-			$info = shell_exec("nvidia-settings --query " . $attribute . " 2>&1");
+			$info = shell_exec('nvidia-settings --query ' . $attribute . ' 2>&1');
 
-			if(($pos = strpos($info, pts_strings::last_in_string($attribute, '/'))) > 0 && strpos($info, "ERROR:") === false)
+			if(($pos = strpos($info, pts_strings::last_in_string($attribute, '/'))) > 0 && strpos($info, 'ERROR:') === false)
 			{
-				$nv_info = substr($info, strpos($info, "):") + 3);
+				$nv_info = substr($info, strpos($info, '):') + 3);
 				$nv_info = trim(substr($nv_info, 0, strpos($nv_info, "\n")));
 
 				if(substr($nv_info, -1) == '.')
@@ -55,13 +55,13 @@ class phodevi_parser
 		{
 			$monitor_info = array();
 
-			if(pts_client::executable_in_path("xdpyinfo"))
+			if(pts_client::executable_in_path('xdpyinfo'))
 			{
-				$info = trim(shell_exec("xdpyinfo -ext XINERAMA 2>&1 | grep head"));
+				$info = trim(shell_exec('xdpyinfo -ext XINERAMA 2>&1 | grep head'));
 
 				foreach(explode("\n", $info) as $xdpyinfo_line)
 				{
-					if(!empty($xdpyinfo_line) && strpos($xdpyinfo_line, "0x0") == false)
+					if(!empty($xdpyinfo_line) && strpos($xdpyinfo_line, '0x0') == false)
 					{
 						array_push($monitor_info, $xdpyinfo_line);
 					}
@@ -76,11 +76,11 @@ class phodevi_parser
 		// Read hard drive temperature using hddtemp
 		$hdd_temperature = -1;
 
-		if(pts_client::executable_in_path("hddtemp"))
+		if(pts_client::executable_in_path('hddtemp'))
 		{
 			if(empty($disk))
 			{
-				$disks = glob("/dev/sd*");
+				$disks = glob('/dev/sd*');
 
 				if(count($disks) > 0)
 				{
@@ -89,16 +89,16 @@ class phodevi_parser
 			}
 
 			// For most situations this won't work since hddtemp usually requires root access
-			$info = trim(shell_exec("hddtemp " . $disk . " 2>&1"));
+			$info = trim(shell_exec('hddtemp ' . $disk . ' 2>&1'));
 
-			if(($start_pos = strrpos($info, ": ")) > 0 && ($end_pos = strrpos($info, "°")) > $start_pos)
+			if(($start_pos = strrpos($info, ': ')) > 0 && ($end_pos = strrpos($info, '°')) > $start_pos)
 			{
 				$temperature = substr($info, ($start_pos + 2), ($end_pos - $start_pos - 2));
 
 				if(is_numeric($temperature))
 				{
 					$unit = substr($info, $end_pos + 2, 1);
-					if($unit == "F")
+					if($unit == 'F')
 					{
 						$temperature = round((($temperature - 32) * 5 / 9), 2);
 					}
@@ -113,17 +113,17 @@ class phodevi_parser
 	public static function read_xorg_module_version($module)
 	{
 		$module_version = false;
-		if(is_file("/var/log/Xorg.0.log"))
+		if(is_file('/var/log/Xorg.0.log'))
 		{
-			$xorg_log = file_get_contents("/var/log/Xorg.0.log");
+			$xorg_log = file_get_contents('/var/log/Xorg.0.log');
 
 			if(($module_start = strpos($xorg_log, $module)) > 0)
 			{
 				$xorg_log = substr($xorg_log, $module_start);
-				$temp_version = substr($xorg_log, strpos($xorg_log, "module version =") + 17);
+				$temp_version = substr($xorg_log, strpos($xorg_log, 'module version =') + 17);
 				$temp_version = substr($temp_version, 0, strpos($temp_version, "\n"));
 
-				if(is_numeric(str_replace(".", "", $temp_version)))
+				if(is_numeric(str_replace('.', null, $temp_version)))
 				{
 					$module_version = $temp_version;
 				}
@@ -138,7 +138,7 @@ class phodevi_parser
 
 		foreach(explode("\n", pts_file_io::file_get_contents($file)) as $build_line)
 		{
-			list($descriptor, $value) = pts_strings::trim_explode("=", $build_line);
+			list($descriptor, $value) = pts_strings::trim_explode('=', $build_line);
 
 			if($descriptor == $key)
 			{
@@ -153,9 +153,9 @@ class phodevi_parser
 	{
 		static $remove_words = null;
 
-		if($remove_words == null && is_file(PTS_CORE_STATIC_PATH . "lists/hal-values-remove.list"))
+		if($remove_words == null && is_file(PTS_CORE_STATIC_PATH . 'lists/hal-values-remove.list'))
 		{
-			$word_file = pts_file_io::file_get_contents(PTS_CORE_STATIC_PATH . "lists/hal-values-remove.list");
+			$word_file = pts_file_io::file_get_contents(PTS_CORE_STATIC_PATH . 'lists/hal-values-remove.list');
 			$remove_words = pts_strings::trim_explode("\n", $word_file);
 		}
 
@@ -168,13 +168,13 @@ class phodevi_parser
 		if($info == -1)
 		{
 			$info = null;
-			$glxinfo = shell_exec("glxinfo 2> /dev/null");
+			$glxinfo = shell_exec('glxinfo 2> /dev/null');
 
-			if(($pos = strpos($glxinfo, "OpenGL version string:")) !== false)
+			if(($pos = strpos($glxinfo, 'OpenGL version string:')) !== false)
 			{
 				$info = substr($glxinfo, $pos + 23);
 				$info = substr($info, 0, strpos($info, "\n"));
-				$info = trim(str_replace(array(" Release"), "", $info));
+				$info = trim(str_replace(array(' Release'), null, $info));
 			}
 		}
 

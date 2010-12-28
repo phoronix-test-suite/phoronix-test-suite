@@ -24,15 +24,15 @@ class cpu_voltage implements phodevi_sensor
 {
 	public static function get_type()
 	{
-		return "cpu";
+		return 'cpu';
 	}
 	public static function get_sensor()
 	{
-		return "voltage";
+		return 'voltage';
 	}
 	public static function get_unit()
 	{
-		return "Volts";
+		return 'Volts';
 	}
 	public static function support_check()
 	{
@@ -43,7 +43,7 @@ class cpu_voltage implements phodevi_sensor
 	{
 		if(IS_LINUX)
 		{
-			$sensor = phodevi_linux_parser::read_sensors("VCore");
+			$sensor = phodevi_linux_parser::read_sensors('VCore');
 		}
 		else
 		{

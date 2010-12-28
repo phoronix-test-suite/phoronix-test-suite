@@ -23,7 +23,7 @@
 
 class phodevi_linux_parser
 {
-	public static function read_sysfs_node($search, $type = "NUMERIC", $node_dir_check = null, $find_position = 1)
+	public static function read_sysfs_node($search, $type = 'NUMERIC', $node_dir_check = null, $find_position = 1)
 	{
 		static $sysfs_file_cache = null;
 		$arg_hash = crc32(serialize(func_get_args()));
@@ -76,25 +76,25 @@ class phodevi_linux_parser
 
 				switch($type)
 				{
-					case "NUMERIC":
+					case 'NUMERIC':
 						if(is_numeric($sysfs_value))
 						{
 							$sysfs_file_cache[$arg_hash] = $sysfs_file;
 						}
 						break;
-					case "POSITIVE_NUMERIC":
+					case 'POSITIVE_NUMERIC':
 						if(is_numeric($sysfs_value) && $sysfs_value > 0)
 						{
 							$sysfs_file_cache[$arg_hash] = $sysfs_file;
 						}
 						break;
-					case "NOT_EMPTY":
+					case 'NOT_EMPTY':
 						if(!empty($sysfs_value))
 						{
 							$sysfs_file_cache[$arg_hash] = $sysfs_file;
 						}
 						break;
-					case "NO_CHECK":
+					case 'NO_CHECK':
 						$sysfs_file_cache[$arg_hash] = $sysfs_file;
 						break;
 				}
@@ -124,11 +124,11 @@ class phodevi_linux_parser
 		// Read Linux dmidecode
 		$value = array();
 
-		if(is_readable("/dev/mem") && pts_client::executable_in_path("dmidecode"))
+		if(is_readable('/dev/mem') && pts_client::executable_in_path('dmidecode'))
 		{
 			$ignore = pts_arrays::to_array($ignore);
 
-			$dmidecode = shell_exec("dmidecode --type " . $type . " 2>&1");
+			$dmidecode = shell_exec('dmidecode --type ' . $type . ' 2>&1');
 			$sub_type = "\n" . $sub_type . "\n";
 
 			do
@@ -177,11 +177,11 @@ class phodevi_linux_parser
 		{
 			switch($to_read)
 			{
-				case "WRITE":
+				case 'WRITE':
 					$sector = 6;
 					$time = 7;
 					break;
-				case "READ":
+				case 'READ':
 					$sector = 2;
 					$time = 3;
 					break;
@@ -194,8 +194,8 @@ class phodevi_linux_parser
 			usleep(500000);
 			$end_stat = pts_strings::trim_spaces(file_get_contents($path));
 
-			$start_stat = explode(" ", $start_stat);
-			$end_stat = explode(" ", $end_stat);
+			$start_stat = explode(' ', $start_stat);
+			$end_stat = explode(' ', $end_stat);
 
 			$delta_sectors = $end_stat[$sector] - $start_stat[$sector];
 			$delta_ms_spent = $end_stat[$time] - $start_stat[$time];
@@ -213,15 +213,15 @@ class phodevi_linux_parser
 	{
 		$dmi = false;
 
-		if(is_dir("/sys/class/dmi/id/"))
+		if(is_dir('/sys/class/dmi/id/'))
 		{
 			$ignore_words = phodevi_parser::hardware_values_to_remove();
 
 			foreach(pts_arrays::to_array($identifier) as $id)
 			{
-				if(is_readable("/sys/class/dmi/id/" . $id))
+				if(is_readable('/sys/class/dmi/id/' . $id))
 				{
-					$dmi_file = pts_file_io::file_get_contents("/sys/class/dmi/id/" . $id);
+					$dmi_file = pts_file_io::file_get_contents('/sys/class/dmi/id/' . $id);
 
 					if(!empty($dmi_file) && !in_array(strtolower($dmi_file), $ignore_words))
 					{
@@ -240,27 +240,27 @@ class phodevi_linux_parser
 		// OverDrive supported in fglrx 8.52+ drivers
 		$value = false;
 
-		if(pts_client::executable_in_path("aticonfig"))
+		if(pts_client::executable_in_path('aticonfig'))
 		{
-			if($attribute == "Temperature")
+			if($attribute == 'Temperature')
 			{
-				$info = shell_exec("aticonfig --adapter=" . $adapter . " --od-gettemperature 2>&1");
+				$info = shell_exec('aticonfig --adapter=' . $adapter . ' --od-gettemperature 2>&1');
 
-				if(($start = strpos($info, "Temperature -")) !== false)
+				if(($start = strpos($info, 'Temperature -')) !== false)
 				{
 					$info = substr($info, $start + 14);
-					$value = substr($info, 0, strpos($info, " C"));
+					$value = substr($info, 0, strpos($info, ' C'));
 				}
 			}
-			else if($attribute == "FanSpeed")
+			else if($attribute == 'FanSpeed')
 			{
 				// Right now there is no standardized interface to get the fan speed through besides the pplib command
-				$info = shell_exec("aticonfig --adapter=" . $adapter . " --pplib-cmd \"get fanspeed 0\" 2>&1");
+				$info = shell_exec('aticonfig --adapter=' . $adapter . ' --pplib-cmd \'get fanspeed 0\' 2>&1');
 
-				if(($start = strpos($info, "Fan Speed:")) !== false)
+				if(($start = strpos($info, 'Fan Speed:')) !== false)
 				{
 					$info = substr($info, $start + 11);
-					$info = substr($info, 0, strpos($info, "%"));
+					$info = substr($info, 0, strpos($info, '%'));
 
 					if(is_numeric($info))
 					{
@@ -270,9 +270,9 @@ class phodevi_linux_parser
 			}
 			else
 			{
-				$info = shell_exec("aticonfig --adapter=" . $adapter . " --od-getclocks 2>&1");
+				$info = shell_exec('aticonfig --adapter=' . $adapter . ' --od-getclocks 2>&1');
 
-				if(strpos($info, "GPU") !== false)
+				if(strpos($info, 'GPU') !== false)
 				{
 					foreach(explode("\n", $info) as $line)
 					{
@@ -280,13 +280,13 @@ class phodevi_linux_parser
 
 						if(count($line_r) == 2)
 						{
-							$od_option = str_replace(" ", "", $line_r[0]);
+							$od_option = str_replace(' ', null, $line_r[0]);
 
 							if($od_option == $attribute)
 							{
 								$od_value = pts_strings::trim_spaces($line_r[1]);
-								$od_value = str_replace(array("%"), "", $od_value);
-								$od_value_r = explode(" ", $od_value);
+								$od_value = str_replace(array('%'), null, $od_value);
+								$od_value_r = explode(' ', $od_value);
 
 								$value = (count($od_value_r) == 1 ? $od_value_r[0] : $od_value_r);			
 							}
@@ -307,20 +307,20 @@ class phodevi_linux_parser
 
 		if($try_aticonfig)
 		{
-			if(pts_client::executable_in_path("aticonfig"))
+			if(pts_client::executable_in_path('aticonfig'))
 			{
-				$info = shell_exec("aticonfig --get-pcs-key=" . $attribute . " 2>&1");
+				$info = shell_exec('aticonfig --get-pcs-key=' . $attribute . ' 2>&1');
 
-				if($is_first_read && strpos($info, "No supported adapters") != false)
+				if($is_first_read && strpos($info, 'No supported adapters') != false)
 				{
 					$try_aticonfig = false;
 				}
 				else
 				{
-					if(($pos = strpos($info, ":")) > 0 && strpos($info, "Error") === false)
+					if(($pos = strpos($info, ':')) > 0 && strpos($info, 'Error') === false)
 					{
 						$ati_info = substr($info, $pos + 2);
-						$ati_info = substr($ati_info, 0, strpos($ati_info, " "));
+						$ati_info = substr($ati_info, 0, strpos($ati_info, ' '));
 					}
 				}
 			}
@@ -332,7 +332,7 @@ class phodevi_linux_parser
 			$is_first_read = false;
 		}
 
-		if($ati_info == null && is_file("/etc/ati/amdpcsdb"))
+		if($ati_info == null && is_file('/etc/ati/amdpcsdb'))
 		{
 			// Using aticonfig --get-pcs-key failed, switch to the PTS direct parser of AMDPCSDB
 			$ati_info = phodevi_linux_parser::read_amd_pcsdb_direct_parser($attribute);
@@ -343,7 +343,7 @@ class phodevi_linux_parser
 	public static function read_amd_pcsdb_direct_parser($attribute, $find_once = false)
 	{
 		// Read AMD's AMDPCSDB, AMD Persistent Configuration Store Database but using our own internal parser instead of relying upon aticonfig
-		$amdpcsdb_file = "";
+		$amdpcsdb_file = null;
 		$last_found_section_count = -1;
 		$this_section_count = 0;
 		$attribute_values = array();
@@ -351,24 +351,24 @@ class phodevi_linux_parser
 
 		if(count($attribute) == 2)
 		{
-			$attribute_prefix = array_reverse(explode("/", $attribute[0]));
+			$attribute_prefix = array_reverse(explode('/', $attribute[0]));
 			$attribute_key = $attribute[1];
 			$is_in_prefix = false;
 
-			if(is_file("/etc/ati/amdpcsdb"))
+			if(is_file('/etc/ati/amdpcsdb'))
 			{
-				$amdpcsdb_file = explode("\n", file_get_contents("/etc/ati/amdpcsdb"));
+				$amdpcsdb_file = explode("\n", file_get_contents('/etc/ati/amdpcsdb'));
 			}
 
 			for($l = 0; $l < count($amdpcsdb_file) && ($find_once == false || $last_found_section_count == -1); $l++)
 			{
 				$line = trim($amdpcsdb_file[$l]);
 
-				if(substr($line, 0, 1) == "[" && substr($line, -1) == "]")
+				if(substr($line, 0, 1) == '[' && substr($line, -1) == ']')
 				{
 					// AMDPCSDB Header
 					$prefix_matches = true;
-					$header = array_reverse(explode("/", substr($line, 1, -1)));
+					$header = array_reverse(explode('/', substr($line, 1, -1)));
 
 					for($i = 0; $i < count($attribute_prefix) && $i < count($header) && $prefix_matches; $i++)
 					{
@@ -388,7 +388,7 @@ class phodevi_linux_parser
 						$is_in_prefix = false;
 					}
 				}
-				else if($is_in_prefix && $this_section_count != $last_found_section_count && count(($key_components = explode("=", $line))) == 2)
+				else if($is_in_prefix && $this_section_count != $last_found_section_count && count(($key_components = explode('=', $line))) == 2)
 				{
 					// AMDPCSDB Value
 					if($key_components[0] == $attribute_key)
@@ -398,18 +398,18 @@ class phodevi_linux_parser
 
 						switch($value_type)
 						{
-							case "V":
+							case 'V':
 								// Value
 								if(is_numeric($value) && strlen($value) < 9)
 								{
 									$value = dechex($value);
-									$value = "0x" . str_repeat(0, 8 - strlen($value)) . strtoupper($value);						
+									$value = '0x' . str_repeat(0, 8 - strlen($value)) . strtoupper($value);
 								}
 							break;
-							case "R":
+							case 'R':
 								// Raw
 							break;
-							case "S":
+							case 'S':
 								// String
 							break;
 
@@ -423,7 +423,7 @@ class phodevi_linux_parser
 
 		if(count($attribute_values) == 0)
 		{
-			$attribute_values = "";
+			$attribute_values = null;
 		}
 		else if(count($attribute_values) == 1)
 		{
@@ -437,13 +437,13 @@ class phodevi_linux_parser
 		// Read ATI/AMD graphics hardware using aticonfig
 		$adapters = array();
 
-		if(pts_client::executable_in_path("aticonfig"))
+		if(pts_client::executable_in_path('aticonfig'))
 		{
-			$info = trim(shell_exec("aticonfig --list-adapters 2>&1"));
+			$info = trim(shell_exec('aticonfig --list-adapters 2>&1'));
 
 			foreach(explode("\n", $info) as $line)
 			{
-				if(($last_point = strrpos($line, ".")) > 0)
+				if(($last_point = strrpos($line, '.')) > 0)
 				{
 					array_push($adapters, substr($line, $last_point + 3));
 				}
@@ -459,13 +459,13 @@ class phodevi_linux_parser
 
 		foreach(pts_arrays::to_array($attribute) as $attribute_check)
 		{
-			if(is_file("/proc/cpuinfo"))
+			if(is_file('/proc/cpuinfo'))
 			{
-				$cpuinfo_lines = explode("\n", file_get_contents("/proc/cpuinfo"));
+				$cpuinfo_lines = explode("\n", file_get_contents('/proc/cpuinfo'));
 
 				foreach($cpuinfo_lines as $line)
 				{
-					$line = pts_strings::trim_explode(": ", $line);
+					$line = pts_strings::trim_explode(': ', $line);
 
 					if(!isset($line[0]))
 					{
@@ -473,7 +473,7 @@ class phodevi_linux_parser
 					}
 
 					$this_attribute = $line[0];
-					$this_value = (count($line) > 1 ? $line[1] : "");
+					$this_value = (count($line) > 1 ? $line[1] : null);
 
 					if($this_attribute == $attribute_check)
 					{
@@ -492,10 +492,10 @@ class phodevi_linux_parser
 	}
 	public static function read_lsb_distributor_id()
 	{
-		$vendor = phodevi_linux_parser::read_lsb("Distributor ID");
+		$vendor = phodevi_linux_parser::read_lsb('Distributor ID');
 
 		// Quirks for derivative distributions that don't know how to handle themselves properly
-		if($vendor == "MandrivaLinux" && phodevi_linux_parser::read_lsb("Description") == "PCLinuxOS")
+		if($vendor == 'MandrivaLinux' && phodevi_linux_parser::read_lsb('Description') == 'PCLinuxOS')
 		{
 			// PC Linux OS only stores its info in /etc/pclinuxos-release
 			$vendor = false;
@@ -508,16 +508,16 @@ class phodevi_linux_parser
 		// Read LSB Release information, Linux Standards Base
 		$info = false;
 
-		if(pts_client::executable_in_path("lsb_release"))
+		if(pts_client::executable_in_path('lsb_release'))
 		{
 			static $output = null;
 
 			if($output == null)
 			{
-				$output = shell_exec("lsb_release -a 2>&1");
+				$output = shell_exec('lsb_release -a 2>&1');
 			}
 
-			if(($pos = strrpos($output, $desc . ":")) !== false)
+			if(($pos = strrpos($output, $desc . ':')) !== false)
 			{
 				$info = substr($output, $pos + strlen($desc) + 1);
 				$info = trim(substr($info, 0, strpos($info, "\n")));
@@ -531,14 +531,14 @@ class phodevi_linux_parser
 		// Read HAL - Hardware Abstraction Layer
 		$info = false;
 
-		if(pts_client::executable_in_path("lshal"))
+		if(pts_client::executable_in_path('lshal'))
 		{
 			$name = pts_arrays::to_array($name);
 			$remove_words = phodevi_parser::hardware_values_to_remove();
 
 			for($i = 0; $i < count($name) && empty($info); $i++)
 			{
-				$info = shell_exec("lshal " . (!empty($UDI) ? "-u " . $UDI : "") . " 2>&1 | grep \"" . $name[$i] . "\"");
+				$info = shell_exec('lshal ' . (!empty($UDI) ? '-u ' . $UDI : null) . ' 2>&1 | grep "' . $name[$i] . '"');
 
 				if(($pos = strpos($info, $name[$i] . " = '")) !== false)
 				{
@@ -558,7 +558,7 @@ class phodevi_linux_parser
 	public static function read_system_hal($name)
 	{
 		// Read system HAL
-		$hal = phodevi_linux_parser::read_hal($name, "/org/freedesktop/Hal/devices/computer");
+		$hal = phodevi_linux_parser::read_hal($name, '/org/freedesktop/Hal/devices/computer');
 
 		if($hal == false)
 		{
@@ -575,13 +575,13 @@ class phodevi_linux_parser
 
 		for($i = 0; $i < count($point) && empty($value); $i++)
 		{
-			if(is_file("/proc/acpi" . $point[$i]))
+			if(is_file('/proc/acpi' . $point[$i]))
 			{
-				$acpi_lines = explode("\n", file_get_contents("/proc/acpi" . $point[$i]));
+				$acpi_lines = explode("\n", file_get_contents('/proc/acpi' . $point[$i]));
 
 				for($i = 0; $i < count($acpi_lines) && $value == false; $i++)
 				{
-					$line = pts_strings::trim_explode(": ", $acpi_lines[$i]);
+					$line = pts_strings::trim_explode(': ', $acpi_lines[$i]);
 					$this_attribute = $line[0];
 					$this_value = (count($line) > 1 ? $line[1] : null);
 
@@ -604,11 +604,11 @@ class phodevi_linux_parser
 
 		if($pci_info == null)
 		{
-			if(!is_executable("/usr/bin/lspci") && is_executable("/sbin/lspci"))
+			if(!is_executable('/usr/bin/lspci') && is_executable('/sbin/lspci'))
 			{
-				$lspci_cmd = "/sbin/lspci";
+				$lspci_cmd = '/sbin/lspci';
 			}
-			else if(($lspci = pts_client::executable_in_path("lspci")))
+			else if(($lspci = pts_client::executable_in_path('lspci')))
 			{
 				$lspci_cmd = $lspci;
 			}
@@ -617,19 +617,19 @@ class phodevi_linux_parser
 				return false;
 			}
 
-			$pci_info = shell_exec($lspci_cmd . " 2>&1");
+			$pci_info = shell_exec($lspci_cmd . ' 2>&1');
 		}
 
 		for($i = 0; $i < count($desc) && empty($info); $i++)
 		{
-			if(substr($desc[$i], -1) != ":")
+			if(substr($desc[$i], -1) != ':')
 			{
-				$desc[$i] .= ":";
+				$desc[$i] .= ':';
 			}
 
 			if(($pos = strpos($pci_info, $desc[$i])) !== false)
 			{
-				$sub_pci_info = str_replace(array("[AMD]"), "", substr($pci_info, $pos + strlen($desc[$i])));
+				$sub_pci_info = str_replace(array('[AMD]'), null, substr($pci_info, $pos + strlen($desc[$i])));
 				$EOL = strpos($sub_pci_info, "\n");
 
 				if($clean_string)
@@ -669,9 +669,9 @@ class phodevi_linux_parser
 		// Read LM_Sensors
 		$value = false;
 
-		if(pts_client::executable_in_path("sensors"))
+		if(pts_client::executable_in_path('sensors'))
 		{
-			$sensors = shell_exec("sensors 2>&1");
+			$sensors = shell_exec('sensors 2>&1');
 			$sensors_lines = explode("\n", $sensors);
 			$attributes = pts_arrays::to_array($attributes);
 
@@ -680,7 +680,7 @@ class phodevi_linux_parser
 				$attribute = $attributes[$j];
 				for($i = 0; $i < count($sensors_lines) && $value == false; $i++)
 				{
-					$line = pts_strings::trim_explode(": ", $sensors_lines[$i]);
+					$line = pts_strings::trim_explode(': ', $sensors_lines[$i]);
 
 					if(!isset($line[0]))
 					{

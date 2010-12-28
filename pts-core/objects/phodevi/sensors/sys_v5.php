@@ -24,15 +24,15 @@ class sys_v5 implements phodevi_sensor
 {
 	public static function get_type()
 	{
-		return "sys";
+		return 'sys';
 	}
 	public static function get_sensor()
 	{
-		return "v5-voltage";
+		return 'v5-voltage';
 	}
 	public static function get_unit()
 	{
-		return "Volts";
+		return 'Volts';
 	}
 	public static function support_check()
 	{
@@ -43,7 +43,7 @@ class sys_v5 implements phodevi_sensor
 	{
 		if(IS_LINUX)
 		{
-			$sensor = phodevi_linux_parser::read_sensors(array("V5", "+5V"));
+			$sensor = phodevi_linux_parser::read_sensors(array('V5', '+5V'));
 		}
 		else
 		{

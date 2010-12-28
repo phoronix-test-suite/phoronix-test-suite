@@ -27,8 +27,8 @@ class phodevi_chipset extends phodevi_device_interface
 	{
 		switch($identifier)
 		{
-			case "identifier":
-				$property = new phodevi_device_property("chipset_string", PHODEVI_SMART_CACHE);
+			case 'identifier':
+				$property = new phodevi_device_property('chipset_string', PHODEVI_SMART_CACHE);
 				break;
 		}
 
@@ -40,24 +40,24 @@ class phodevi_chipset extends phodevi_device_interface
 
 		if(IS_MACOSX)
 		{
-			$sb_vendor = phodevi_osx_parser::read_osx_system_profiler("SPSerialATADataType", "Vendor");
-			$sb_product = phodevi_osx_parser::read_osx_system_profiler("SPSerialATADataType", "Product");
+			$sb_vendor = phodevi_osx_parser::read_osx_system_profiler('SPSerialATADataType', 'Vendor');
+			$sb_product = phodevi_osx_parser::read_osx_system_profiler('SPSerialATADataType', 'Product');
 		
-			if(($cut_point = strpos($sb_product, " ")) > 0)
+			if(($cut_point = strpos($sb_product, ' ')) > 0)
 			{
 				$sb_product = substr($sb_product, 0, $cut_point);
 			}
 			
 			// TODO: Can't find Northbridge
-			$info = $sb_vendor . " " . $sb_product;
+			$info = $sb_vendor . ' ' . $sb_product;
 		}
 		else if(IS_WINDOWS)
 		{
-			$info = phodevi_windows_parser::read_cpuz("Northbridge", null);
+			$info = phodevi_windows_parser::read_cpuz('Northbridge', null);
 
 			if($info != null)
 			{
-				if(($e = strpos($info, "rev")) !== false)
+				if(($e = strpos($info, 'rev')) !== false)
 				{
 					$info = substr($info, 0, $e);
 				}
@@ -69,26 +69,26 @@ class phodevi_chipset extends phodevi_device_interface
 		{
 			// Vendor Detection
 			$vendor_possible_udis = array(
-				"/org/freedesktop/Hal/devices/pci_0_0/pci_ide_3_2_0",
-				"/org/freedesktop/Hal/devices/pci_0_0/pci_ide_1f_1_1",
+				'/org/freedesktop/Hal/devices/pci_0_0/pci_ide_3_2_0',
+				'/org/freedesktop/Hal/devices/pci_0_0/pci_ide_1f_1_1',
 				);
 
-			$info = phodevi_solaris_parser::read_hal_property($vendor_possible_udis, "info.vendor");
+			$info = phodevi_solaris_parser::read_hal_property($vendor_possible_udis, 'info.vendor');
 
 			// TODO: Northbridge and Southbridge Detection For Solaris
 		}
 		else if(IS_LINUX)
 		{
-			$info = phodevi_linux_parser::read_pci(array("RAM memory", "Host bridge"));
+			$info = phodevi_linux_parser::read_pci(array('RAM memory', 'Host bridge'));
 
-			if(count(explode(" ", $info)) == 1)
+			if(count(explode(' ', $info)) == 1)
 			{
-				$bridge = phodevi_linux_parser::read_pci(array("Bridge", "PCI bridge"));
+				$bridge = phodevi_linux_parser::read_pci(array('Bridge', 'PCI bridge'));
 
 				if(!empty($bridge))
 				{
 					$match = false;
-					$break_words = array("Ethernet", "PCI", "High", "USB");
+					$break_words = array('Ethernet', 'PCI', 'High', 'USB');
 
 					for($i = 0; $i < count($break_words) && !$match; $i++)
 					{
@@ -105,33 +105,33 @@ class phodevi_chipset extends phodevi_device_interface
 			if(!isset($bridge) || !empty($bridge))
 			{
 				// Attempt to detect Southbridge (if applicable)
-				$southbridge = phodevi_linux_parser::read_pci(array("ISA bridge", "SATA controller"), false);
+				$southbridge = phodevi_linux_parser::read_pci(array('ISA bridge', 'SATA controller'), false);
 				$southbridge_clean = null;
 
-				if(($start_cut = strpos($southbridge, "(")) > 0 && ($end_cut = strpos($southbridge, ")", $start_cut + 1)) > 0)
+				if(($start_cut = strpos($southbridge, '(')) > 0 && ($end_cut = strpos($southbridge, ')', $start_cut + 1)) > 0)
 				{
 					$southbridge_extract = substr($southbridge, $start_cut + 1, $end_cut - $start_cut - 1);
 
-					if(strpos($southbridge_extract, "rev") === false)
+					if(strpos($southbridge_extract, 'rev') === false)
 					{
-						$southbridge_extract = explode(" ", $southbridge_extract);
+						$southbridge_extract = explode(' ', $southbridge_extract);
 						$southbridge_clean = $southbridge_extract[0];
 					}
-					else if(($s = strpos($southbridge, "ICH")) > 0)
+					else if(($s = strpos($southbridge, 'ICH')) > 0)
 					{
 						$southbridge_extract = substr($southbridge, $s);
-						$southbridge_clean = substr($southbridge_extract, 0, strpos($southbridge_extract, " "));
+						$southbridge_clean = substr($southbridge_extract, 0, strpos($southbridge_extract, ' '));
 					}
 				}
-				else if(($start_cut = strpos($southbridge, "SB")) !== false)
+				else if(($start_cut = strpos($southbridge, 'SB')) !== false)
 				{
 					$southbridge_extract = substr($southbridge, $start_cut);
-					$southbridge_clean = substr($southbridge_extract, 0, strpos($southbridge_extract, " "));
+					$southbridge_clean = substr($southbridge_extract, 0, strpos($southbridge_extract, ' '));
 				}
 
 				if(!empty($southbridge_clean) && $southbridge_clean != 'SB')
 				{
-					$info .= " + " . $southbridge_clean;
+					$info .= ' + ' . $southbridge_clean;
 				}
 			}
 		}

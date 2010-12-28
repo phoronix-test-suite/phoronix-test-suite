@@ -27,23 +27,23 @@ class phodevi_cpu extends phodevi_device_interface
 	{
 		switch($identifier)
 		{
-			case "identifier":
-				$property = new phodevi_device_property("cpu_string", PHODEVI_SMART_CACHE);
+			case 'identifier':
+				$property = new phodevi_device_property('cpu_string', PHODEVI_SMART_CACHE);
 				break;
-			case "model":
-				$property = new phodevi_device_property("cpu_model", PHODEVI_SMART_CACHE);
+			case 'model':
+				$property = new phodevi_device_property('cpu_model', PHODEVI_SMART_CACHE);
 				break;
-			case "mhz-default-frequency":
-				$property = new phodevi_device_property("cpu_default_frequency_mhz", PHODEVI_SMART_CACHE);
+			case 'mhz-default-frequency':
+				$property = new phodevi_device_property('cpu_default_frequency_mhz', PHODEVI_SMART_CACHE);
 				break;
-			case "default-frequency":
-				$property = new phodevi_device_property(array("cpu_default_frequency", 0), PHODEVI_SMART_CACHE);
+			case 'default-frequency':
+				$property = new phodevi_device_property(array('cpu_default_frequency', 0), PHODEVI_SMART_CACHE);
 				break;
-			case "core-count":
-				$property = new phodevi_device_property("cpu_core_count", PHODEVI_SMART_CACHE);
+			case 'core-count':
+				$property = new phodevi_device_property('cpu_core_count', PHODEVI_SMART_CACHE);
 				break;
-			case "power-savings-mode":
-				$property = new phodevi_device_property("cpu_power_savings_mode", PHODEVI_SMART_CACHE);
+			case 'power-savings-mode':
+				$property = new phodevi_device_property('cpu_power_savings_mode', PHODEVI_SMART_CACHE);
 				break;
 		}
 
@@ -51,39 +51,39 @@ class phodevi_cpu extends phodevi_device_interface
 	}
 	public static function cpu_string()
 	{
-		$model = phodevi::read_property("cpu", "model");
+		$model = phodevi::read_property('cpu', 'model');
 
 		// Append the processor frequency to string
-		if(($freq = phodevi::read_property("cpu", "default-frequency")) > 0)
+		if(($freq = phodevi::read_property('cpu', 'default-frequency')) > 0)
 		{
-			$model .= " @ " . $freq . "GHz";
+			$model .= ' @ ' . $freq . 'GHz';
 		}
 
-		$core_count = phodevi::read_property("cpu", "core-count");
+		$core_count = phodevi::read_property('cpu', 'core-count');
 
-		return $model . " (" . $core_count . " Core" . ($core_count > 1 ? 's' : null) . ')';
+		return $model . ' (' . $core_count . ' Core' . ($core_count > 1 ? 's' : null) . ')';
 	}
 	public static function cpu_core_count()
 	{
 		if(IS_LINUX)
 		{
-			$info = count(phodevi_linux_parser::read_cpuinfo("processor"));
+			$info = count(phodevi_linux_parser::read_cpuinfo('processor'));
 		}
 		else if(IS_SOLARIS)
 		{
-			$info = count(explode("\n", trim(shell_exec("psrinfo"))));
+			$info = count(explode("\n", trim(shell_exec('psrinfo'))));
 		}
 		else if(IS_BSD)
 		{
-			$info = intval(phodevi_bsd_parser::read_sysctl("hw.ncpu"));
+			$info = intval(phodevi_bsd_parser::read_sysctl('hw.ncpu'));
 		}
 		else if(IS_MACOSX)
 		{
-			$info = phodevi_osx_parser::read_osx_system_profiler("SPHardwareDataType", "TotalNumberOfCores");	
+			$info = phodevi_osx_parser::read_osx_system_profiler('SPHardwareDataType', 'TotalNumberOfCores');
 		}
 		else if(IS_WINDOWS)
 		{
-			$info = getenv("NUMBER_OF_PROCESSORS");
+			$info = getenv('NUMBER_OF_PROCESSORS');
 		}
 		else
 		{
@@ -103,24 +103,24 @@ class phodevi_cpu extends phodevi_device_interface
 		if(IS_LINUX)
 		{
 			// First, the ideal way, with modern CPUs using CnQ or EIST and cpuinfo reporting the current
-			if(is_file("/sys/devices/system/cpu/cpu" . $cpu_core . "/cpufreq/scaling_max_freq"))
+			if(is_file('/sys/devices/system/cpu/cpu' . $cpu_core . '/cpufreq/scaling_max_freq'))
 			{
-				$info = pts_file_io::file_get_contents("/sys/devices/system/cpu/cpu" . $cpu_core . "/cpufreq/scaling_max_freq");
+				$info = pts_file_io::file_get_contents('/sys/devices/system/cpu/cpu' . $cpu_core . '/cpufreq/scaling_max_freq');
 				$info = intval($info) / 1000000;
 			}
-			else if(is_file("/proc/cpuinfo")) // fall back for those without cpufreq
+			else if(is_file('/proc/cpuinfo')) // fall back for those without cpufreq
 			{
-				$cpu_speeds = phodevi_linux_parser::read_cpuinfo("cpu MHz");
+				$cpu_speeds = phodevi_linux_parser::read_cpuinfo('cpu MHz');
 				$cpu_core = isset($cpu_speeds[$cpu_core]) ? $cpu_core : 0;
 				$info = isset($cpu_speeds[$cpu_core]) ? ($cpu_speeds[$cpu_core] / 1000) : 0;
 			}
 		}
 		else if(IS_WINDOWS)
 		{
-			$info = phodevi_windows_parser::read_cpuz("Processor 1", "Stock frequency");
+			$info = phodevi_windows_parser::read_cpuz('Processor 1', 'Stock frequency');
 			if($info != null)
 			{
-				if(($e = strpos($info, " MHz")) !== false)
+				if(($e = strpos($info, ' MHz')) !== false)
 				{
 					$info = substr($info, 0, $e);
 				}
@@ -130,7 +130,7 @@ class phodevi_cpu extends phodevi_device_interface
 		}
 		else
 		{
-			$info = phodevi::read_sensor(array("cpu", "freq"));
+			$info = phodevi::read_sensor(array('cpu', 'freq'));
 
 			if($info > 1000)
 			{
@@ -144,29 +144,29 @@ class phodevi_cpu extends phodevi_device_interface
 	public static function cpu_power_savings_mode()
 	{
 		// Report string if CPU power savings feature is enabled
-		$return_string = "";
+		$return_string = null;
 
-		if(IS_LINUX && is_file("/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq") && is_file("/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq"))
+		if(IS_LINUX && is_file('/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq') && is_file('/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq'))
 		{
 			// if EIST / CnQ is disabled, the cpufreq folder shoudln't be present, but double check by comparing the min and max frequencies
-			$min = pts_file_io::file_get_contents("/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq");
-			$max = pts_file_io::file_get_contents("/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq");
+			$min = pts_file_io::file_get_contents('/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq');
+			$max = pts_file_io::file_get_contents('/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq');
 
 			if($min < $max)
 			{
-				$cpu = phodevi::read_property("cpu", "model");
+				$cpu = phodevi::read_property('cpu', 'model');
 
-				if(strpos($cpu, "AMD") !== false)
+				if(strpos($cpu, 'AMD') !== false)
 				{
-					$return_string = "AMD CnQ was enabled";
+					$return_string = 'AMD CnQ was enabled';
 				}
-				else if(strpos($cpu, "Intel") !== false)
+				else if(strpos($cpu, 'Intel') !== false)
 				{
-					$return_string = "Intel SpeedStep Technology was enabled";
+					$return_string = 'Intel SpeedStep Technology was enabled';
 				}
 				else
 				{
-					$return_string = "The CPU was in a power-savings mode";
+					$return_string = 'The CPU was in a power-savings mode';
 				}
 			}
 		}
@@ -176,20 +176,20 @@ class phodevi_cpu extends phodevi_device_interface
 	public static function cpu_model()
 	{
 		// Returns the processor name / frequency information
-		$info = "";
+		$info = null;
 
 		if(IS_LINUX)
 		{
-			$physical_cpu_ids = phodevi_linux_parser::read_cpuinfo("physical id");
+			$physical_cpu_ids = phodevi_linux_parser::read_cpuinfo('physical id');
 			$physical_cpu_count = count(array_unique($physical_cpu_ids));
 
-			$cpu_strings = phodevi_linux_parser::read_cpuinfo(array("model name", "Processor"));
+			$cpu_strings = phodevi_linux_parser::read_cpuinfo(array('model name', 'Processor'));
 			$cpu_strings_unique = array_unique($cpu_strings);
 
 			if($physical_cpu_count == 1 || empty($physical_cpu_count))
 			{
 				// Just one processor
-				if(($cut = strpos($cpu_strings[0], " (")) !== false)
+				if(($cut = strpos($cpu_strings[0], ' (')) !== false)
 				{
 					$cpu_strings[0] = substr($cpu_strings[0], 0, $cut);
 				}
@@ -199,7 +199,7 @@ class phodevi_cpu extends phodevi_device_interface
 			else if($physical_cpu_count > 1 && count($cpu_strings_unique) == 1)
 			{
 				// Multiple processors, same model
-				$info = $physical_cpu_count . " x " . $cpu_strings[0];
+				$info = $physical_cpu_count . ' x ' . $cpu_strings[0];
 			}
 			else if($physical_cpu_count > 1 && count($cpu_strings_unique) > 1)
 			{
@@ -213,7 +213,7 @@ class phodevi_cpu extends phodevi_device_interface
 				{
 					if($current_string != $cpu_strings[$i] || $i == (count($physical_cpu_ids) - 1))
 					{
-						array_push($cpus, $current_count . " x " . $current_string);
+						array_push($cpus, $current_count . ' x ' . $current_string);
 
 						$current_string = $cpu_strings[$i];
 						$current_count = 0;
@@ -225,16 +225,16 @@ class phodevi_cpu extends phodevi_device_interface
 						$current_id = $physical_cpu_ids[$i];
 					}
 				}
-				$info = implode(", ", $cpus);
+				$info = implode(', ', $cpus);
 			}
 		}
 		else if(IS_SOLARIS)
 		{
-			$dmi_cpu = phodevi_solaris_parser::read_sun_ddu_dmi_info("CPUType", "-C");
+			$dmi_cpu = phodevi_solaris_parser::read_sun_ddu_dmi_info('CPUType', '-C');
 
 			if(count($dmi_cpu) == 0)
 			{
-				$dmi_cpu = phodevi_solaris_parser::read_sun_ddu_dmi_info("ProcessorName");
+				$dmi_cpu = phodevi_solaris_parser::read_sun_ddu_dmi_info('ProcessorName');
 			}
 
 			if(count($dmi_cpu) > 0)
@@ -243,44 +243,44 @@ class phodevi_cpu extends phodevi_device_interface
 			}
 			else
 			{
-				$info = trim(shell_exec("dmesg 2>&1 | grep cpu0"));
-				$info = trim(substr($info, strrpos($info, "cpu0:") + 6));
+				$info = trim(shell_exec('dmesg 2>&1 | grep cpu0'));
+				$info = trim(substr($info, strrpos($info, 'cpu0:') + 6));
 
 				if(empty($info))
 				{
-					$info = array_pop(phodevi_solaris_parser::read_sun_ddu_dmi_info("ProcessorManufacturer"));
+					$info = array_pop(phodevi_solaris_parser::read_sun_ddu_dmi_info('ProcessorManufacturer'));
 				}
 			}
 
 			//TODO: Add in proper support for reading multiple CPUs, similar to the code from above
-			$physical_cpu_count = count(phodevi_solaris_parser::read_sun_ddu_dmi_info("ProcessorSocketType"));
+			$physical_cpu_count = count(phodevi_solaris_parser::read_sun_ddu_dmi_info('ProcessorSocketType'));
 			if($physical_cpu_count > 1 && !empty($info))
 			{
 				// TODO: For now assuming when multiple CPUs are installed, that they are of the same type
-				$info = $physical_cpu_count . " x " . $info;
+				$info = $physical_cpu_count . ' x ' . $info;
 			}
 		}
 		else if(IS_BSD)
 		{
-			$info = phodevi_bsd_parser::read_sysctl("hw.model");
+			$info = phodevi_bsd_parser::read_sysctl('hw.model');
 		}
 		else if(IS_MACOSX)
 		{
-			$info = phodevi_osx_parser::read_osx_system_profiler("SPHardwareDataType", "ProcessorName");
+			$info = phodevi_osx_parser::read_osx_system_profiler('SPHardwareDataType', 'ProcessorName');
 		}
 		else if(IS_WINDOWS)
 		{
-			$info = phodevi_windows_parser::read_cpuz("Processor 1", "Name");
+			$info = phodevi_windows_parser::read_cpuz('Processor 1', 'Name');
 
 			if(!$info)
 			{
-				$info = getenv("PROCESSOR_IDENTIFIER");
+				$info = getenv('PROCESSOR_IDENTIFIER');
 			}
 		}
 
 		if(empty($info))
 		{
-			$info = "Unknown";
+			$info = 'Unknown';
 		}
 
 		if(($strip_point = strpos($info, '@')) > 0)

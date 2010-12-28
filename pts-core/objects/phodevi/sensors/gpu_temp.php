@@ -24,15 +24,15 @@ class gpu_temp implements phodevi_sensor
 {
 	public static function get_type()
 	{
-		return "gpu";
+		return 'gpu';
 	}
 	public static function get_sensor()
 	{
-		return "temp";
+		return 'temp';
 	}
 	public static function get_unit()
 	{
-		return "Celsius";
+		return 'Celsius';
 	}
 	public static function support_check()
 	{
@@ -46,11 +46,11 @@ class gpu_temp implements phodevi_sensor
 
 		if(IS_NVIDIA_GRAPHICS)
 		{
-			$temp_c = phodevi_parser::read_nvidia_extension("GPUCoreTemp");
+			$temp_c = phodevi_parser::read_nvidia_extension('GPUCoreTemp');
 		}
 		else if(IS_ATI_GRAPHICS && IS_LINUX)
 		{
-			$temp_c = phodevi_linux_parser::read_ati_overdrive("Temperature");
+			$temp_c = phodevi_linux_parser::read_ati_overdrive('Temperature');
 		}
 
 		return $temp_c;

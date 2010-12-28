@@ -27,11 +27,11 @@ class phodevi_disk extends phodevi_device_interface
 	{
 		switch($identifier)
 		{
-			case "identifier":
-				$property = new phodevi_device_property("hdd_string", PHODEVI_SMART_CACHE);
+			case 'identifier':
+				$property = new phodevi_device_property('hdd_string', PHODEVI_SMART_CACHE);
 				break;
-			case "scheduler":
-				$property = new phodevi_device_property("hdd_scheduler", PHODEVI_SMART_CACHE);
+			case 'scheduler':
+				$property = new phodevi_device_property('hdd_scheduler', PHODEVI_SMART_CACHE);
 				break;
 		}
 
@@ -41,9 +41,9 @@ class phodevi_disk extends phodevi_device_interface
 	{
 		$notes = array();
 
-		if(($disk_scheduler = phodevi::read_property("disk", "scheduler")) != null)
+		if(($disk_scheduler = phodevi::read_property('disk', 'scheduler')) != null)
 		{
-			array_push($notes, "Disk Scheduler: " . $disk_scheduler);
+			array_push($notes, 'Disk Scheduler: ' . $disk_scheduler);
 		}
 
 		return $notes;
@@ -55,17 +55,17 @@ class phodevi_disk extends phodevi_device_interface
 		if(IS_MACOSX)
 		{
 			// TODO: Support reading non-SATA drives and more than one drive
-			$capacity = phodevi_osx_parser::read_osx_system_profiler("SPSerialATADataType", "Capacity");
-			$model = phodevi_osx_parser::read_osx_system_profiler("SPSerialATADataType", "Model");
+			$capacity = phodevi_osx_parser::read_osx_system_profiler('SPSerialATADataType', 'Capacity');
+			$model = phodevi_osx_parser::read_osx_system_profiler('SPSerialATADataType', 'Model');
 
-			if(($cut = strpos($capacity, " (")) !== false)
+			if(($cut = strpos($capacity, ' (')) !== false)
 			{
 				$capacity = substr($capacity, 0, $cut);
 			}
 
 			if(!empty($capacity) && !empty($model))
 			{
-				$disks = array($capacity . " " . $model);
+				$disks = array($capacity . ' ' . $model);
 			}
 		}
 		else if(IS_BSD)
@@ -74,7 +74,7 @@ class phodevi_disk extends phodevi_device_interface
 
 			do
 			{
-				$disk = phodevi_bsd_parser::read_sysctl("dev.ad." . $i . ".%desc");
+				$disk = phodevi_bsd_parser::read_sysctl('dev.ad.' . $i . '.%desc');
 
 				if($disk != false)
 				{
@@ -90,14 +90,14 @@ class phodevi_disk extends phodevi_device_interface
 			$disks_formatted = array();
 			$disks = array();
 
-			foreach(pts_file_io::glob("/sys/block/sd*") as $sdx)
+			foreach(pts_file_io::glob('/sys/block/sd*') as $sdx)
 			{
-				if(is_file($sdx . "/device/model") && is_file($sdx . "/size"))
+				if(is_file($sdx . '/device/model') && is_file($sdx . '/size'))
 				{
-					$disk_size = pts_file_io::file_get_contents($sdx . "/size");
-					$disk_model = pts_file_io::file_get_contents($sdx . "/device/model");
+					$disk_size = pts_file_io::file_get_contents($sdx . '/size');
+					$disk_model = pts_file_io::file_get_contents($sdx . '/device/model');
 
-					$disk_size = round($disk_size * 512 / 1000000000) . "GB";
+					$disk_size = round($disk_size * 512 / 1000000000) . 'GB';
 
 
 					if(isset($disk_model[4]))
@@ -107,24 +107,24 @@ class phodevi_disk extends phodevi_device_interface
 
 						switch(substr($disk_model, 0, 2))
 						{
-							case "WD":
-								$disk_manufacturer = "Western Digital";
+							case 'WD':
+								$disk_manufacturer = 'Western Digital';
 								break;
-							case "MK":
-								$disk_manufacturer = "Toshiba";
+							case 'MK':
+								$disk_manufacturer = 'Toshiba';
 								break;
-							case "HT":
-								// "HD" might be some Hitachi disk drives, but that prefix seems too common
-								$disk_manufacturer = "Hitachi";
+							case 'HT':
+								// 'HD' might be some Hitachi disk drives, but that prefix seems too common
+								$disk_manufacturer = 'Hitachi';
 								break;
-							case "ST":
+							case 'ST':
 								if($third_char == 'T')
 								{
-									$disk_manufacturer = "Super Talent";
+									$disk_manufacturer = 'Super Talent';
 								}
-								else
+								else if($third_char != 'E')
 								{
-									$disk_manufacturer = "Seagate";
+									$disk_manufacturer = 'Seagate';
 								}
 								break;
 						}
@@ -135,9 +135,9 @@ class phodevi_disk extends phodevi_device_interface
 						}
 					}
 
-					if(strpos($disk_model, $disk_size . " ") === false && strpos($disk_model, " " . $disk_size) === false && $disk_size != "1GB")
+					if(strpos($disk_model, $disk_size . ' ') === false && strpos($disk_model, ' ' . $disk_size) === false && $disk_size != '1GB')
 					{
-						$disk_model = $disk_size . " " . $disk_model;
+						$disk_model = $disk_size . ' ' . $disk_model;
 					}
 
 					if($disk_size > 0)
@@ -158,11 +158,11 @@ class phodevi_disk extends phodevi_device_interface
 						if($disks_formatted[$i] == $disks_formatted[$j])
 						{
 							$times_found++;
-							$disks_formatted[$j] = "";
+							$disks_formatted[$j] = '';
 						}
 					}
 
-					$disk = ($times_found > 1 ? $times_found . " x "  : "") . $disks_formatted[$i];
+					$disk = ($times_found > 1 ? $times_found . ' x '  : null) . $disks_formatted[$i];
 					array_push($disks, $disk);
 				}
 			}
@@ -180,16 +180,16 @@ class phodevi_disk extends phodevi_device_interface
 
 			if($root_disk_size > 1)
 			{
-				$disks = $root_disk_size . "GB";
+				$disks = $root_disk_size . 'GB';
 			}
 			else
 			{
-				$disks = "Unknown";
+				$disks = 'Unknown';
 			}
 		}
 		else
 		{
-			$disks = implode(" + ", $disks);
+			$disks = implode(' + ', $disks);
 		}
 
 		return $disks;
@@ -198,11 +198,11 @@ class phodevi_disk extends phodevi_device_interface
 	{
 		$scheduler = null;
 
-		if(is_readable("/sys/block/sda/queue/scheduler"))
+		if(is_readable('/sys/block/sda/queue/scheduler'))
 		{
-			$scheduler = pts_file_io::file_get_contents("/sys/block/sda/queue/scheduler");
+			$scheduler = pts_file_io::file_get_contents('/sys/block/sda/queue/scheduler');
 
-			if(($s = strpos($scheduler, "[")) !== false && ($e = strpos($scheduler, "]", $s)) !== false)
+			if(($s = strpos($scheduler, '[')) !== false && ($e = strpos($scheduler, ']', $s)) !== false)
 			{
 				$scheduler = strtoupper(substr($scheduler, $s + 1, $e - $s - 1));
 			}

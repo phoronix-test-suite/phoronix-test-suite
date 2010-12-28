@@ -24,15 +24,15 @@ class sys_v3 implements phodevi_sensor
 {
 	public static function get_type()
 	{
-		return "sys";
+		return 'sys';
 	}
 	public static function get_sensor()
 	{
-		return "v3-voltage";
+		return 'v3-voltage';
 	}
 	public static function get_unit()
 	{
-		return "Volts";
+		return 'Volts';
 	}
 	public static function support_check()
 	{
@@ -43,7 +43,7 @@ class sys_v3 implements phodevi_sensor
 	{
 		if(IS_LINUX)
 		{
-			$sensor = phodevi_linux_parser::read_sensors(array("V3.3", "+3.3V"));
+			$sensor = phodevi_linux_parser::read_sensors(array('V3.3', '+3.3V'));
 		}
 		else
 		{

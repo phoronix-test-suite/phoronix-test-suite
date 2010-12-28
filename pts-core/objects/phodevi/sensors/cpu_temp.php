@@ -24,15 +24,15 @@ class cpu_temp implements phodevi_sensor
 {
 	public static function get_type()
 	{
-		return "cpu";
+		return 'cpu';
 	}
 	public static function get_sensor()
 	{
-		return "temp";
+		return 'temp';
 	}
 	public static function get_unit()
 	{
-		return "Celsius";
+		return 'Celsius';
 	}
 	public static function support_check()
 	{
@@ -47,11 +47,11 @@ class cpu_temp implements phodevi_sensor
 		if(IS_BSD)
 		{
 
-			$cpu_temp = phodevi_bsd_parser::read_sysctl(array("dev.cpu.0.temperature", "hw.sensors.cpu0.temp0"));
+			$cpu_temp = phodevi_bsd_parser::read_sysctl(array('dev.cpu.0.temperature', 'hw.sensors.cpu0.temp0'));
 
 			if($cpu_temp != false)
 			{
-				if(($end = strpos($cpu_temp, 'C')) > 0 || ($end = strpos($cpu_temp, "degC")))
+				if(($end = strpos($cpu_temp, 'C')) > 0 || ($end = strpos($cpu_temp, 'degC')))
 				{
 					$cpu_temp = substr($cpu_temp, 0, $end);
 				}
@@ -63,7 +63,7 @@ class cpu_temp implements phodevi_sensor
 			}
 			else
 			{
-				$acpi = phodevi_bsd_parser::read_sysctl("hw.acpi.thermal.tz0.temperature");
+				$acpi = phodevi_bsd_parser::read_sysctl('hw.acpi.thermal.tz0.temperature');
 
 				if(($end = strpos($acpi, 'C')) > 0)
 				{
@@ -79,14 +79,14 @@ class cpu_temp implements phodevi_sensor
 		else if(IS_LINUX)
 		{
 			// Try hwmon interface
-			$raw_temp = phodevi_linux_parser::read_sysfs_node("/sys/class/hwmon/hwmon*/device/temp1_input", "POSITIVE_NUMERIC", array("name" => "coretemp"));
+			$raw_temp = phodevi_linux_parser::read_sysfs_node('/sys/class/hwmon/hwmon*/device/temp1_input', 'POSITIVE_NUMERIC', array('name' => 'coretemp'));
 
 			if($raw_temp == -1)
 			{
 				// Try ACPI thermal
 				// Assuming the system thermal sensor comes 2nd to the ACPI CPU temperature
 				// It appears that way on a ThinkPad T60, but TODO find a better way to validate
-				$raw_temp = phodevi_linux_parser::read_sysfs_node("/sys/class/thermal/thermal_zone*/temp", "POSITIVE_NUMERIC", null, 2);
+				$raw_temp = phodevi_linux_parser::read_sysfs_node('/sys/class/thermal/thermal_zone*/temp', 'POSITIVE_NUMERIC', null, 2);
 			}
 
 			if($raw_temp != -1)
@@ -102,7 +102,7 @@ class cpu_temp implements phodevi_sensor
 			if($temp_c == -1)
 			{
 				// Try LM_Sensors
-				$sensors = phodevi_linux_parser::read_sensors(array("CPU Temp", "Core 0", "Core0 Temp", "Core1 Temp"));
+				$sensors = phodevi_linux_parser::read_sensors(array('CPU Temp', 'Core 0', 'Core0 Temp', 'Core1 Temp'));
 
 				if($sensors != false && is_numeric($sensors) && $sensors > 0)
 				{

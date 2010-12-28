@@ -24,15 +24,15 @@ class cpu_usage implements phodevi_sensor
 {
 	public static function get_type()
 	{
-		return "cpu";
+		return 'cpu';
 	}
 	public static function get_sensor()
 	{
-		return "usage";
+		return 'usage';
 	}
 	public static function get_unit()
 	{
-		return "Percent";
+		return 'Percent';
 	}
 	public static function support_check()
 	{
@@ -58,15 +58,15 @@ class cpu_usage implements phodevi_sensor
 		else if(IS_SOLARIS)
 		{
 			// TODO: Add support for monitoring load on a per-core basis (through mpstat maybe?)
-			$info = explode(' ', pts_strings::trim_spaces(pts_arrays::last_element(explode("\n", trim(shell_exec("sar -u 1 1 2>&1"))))));
+			$info = explode(' ', pts_strings::trim_spaces(pts_arrays::last_element(explode("\n", trim(shell_exec('sar -u 1 1 2>&1'))))));
 			$percent = $info[1] + $info[2];
 		}
 		else if(IS_MACOSX)
 		{
 			// CPU usage for user
-			$top = shell_exec("top -n 1 -l 1 2>&1");
-			$top = substr($top, strpos($top, "CPU usage: ") + 11);
-			$percent = substr($top, 0, strpos($top, "%"));
+			$top = shell_exec('top -n 1 -l 1 2>&1');
+			$top = substr($top, strpos($top, 'CPU usage: ') + 11);
+			$percent = substr($top, 0, strpos($top, '%'));
 		}
 		else
 		{
@@ -85,11 +85,11 @@ class cpu_usage implements phodevi_sensor
 		// CPU load array
 		$load = array();
 
-		if(IS_LINUX && is_file("/proc/stat"))
+		if(IS_LINUX && is_file('/proc/stat'))
 		{
-			$stat = file_get_contents("/proc/stat");
+			$stat = file_get_contents('/proc/stat');
 
-			if($read_core > -1 && ($l = strpos($stat, "cpu" . $read_core)) !== false)
+			if($read_core > -1 && ($l = strpos($stat, 'cpu' . $read_core)) !== false)
 			{
 				$start_line = $l;
 			}
@@ -99,7 +99,7 @@ class cpu_usage implements phodevi_sensor
 			}
 
 			$stat = substr($stat, $start_line, strpos($stat, "\n"));
-			$stat_break = explode(" ", $stat);
+			$stat_break = explode(' ', $stat);
 
 			for($i = 1; $i < 6; $i++)
 			{
@@ -108,7 +108,7 @@ class cpu_usage implements phodevi_sensor
 		}
 		else if(IS_BSD)
 		{
-			$load = explode(" ", phodevi_bsd_parser::read_sysctl("kern.cp_time"));
+			$load = explode(' ', phodevi_bsd_parser::read_sysctl('kern.cp_time'));
 		}
 	
 

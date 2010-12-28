@@ -24,15 +24,15 @@ class gpu_freq implements phodevi_sensor
 {
 	public static function get_type()
 	{
-		return "gpu";
+		return 'gpu';
 	}
 	public static function get_sensor()
 	{
-		return "freq";
+		return 'freq';
 	}
 	public static function get_unit()
 	{
-		return "Megahertz";
+		return 'Megahertz';
 	}
 	public static function support_check()
 	{
@@ -48,7 +48,7 @@ class gpu_freq implements phodevi_sensor
 
 		if(IS_NVIDIA_GRAPHICS) // NVIDIA GPU
 		{
-			$nv_freq = phodevi_parser::read_nvidia_extension("GPUCurrentClockFreqs");
+			$nv_freq = phodevi_parser::read_nvidia_extension('GPUCurrentClockFreqs');
 
 			$nv_freq = pts_strings::comma_explode($nv_freq);
 			$core_freq = isset($nv_freq[0]) ? $nv_freq[0] : 0;
@@ -56,7 +56,7 @@ class gpu_freq implements phodevi_sensor
 		}
 		else if(IS_ATI_GRAPHICS && IS_LINUX) // ATI GPU
 		{
-			$od_clocks = phodevi_linux_parser::read_ati_overdrive("CurrentClocks");
+			$od_clocks = phodevi_linux_parser::read_ati_overdrive('CurrentClocks');
 
 			if(is_array($od_clocks) && count($od_clocks) >= 2) // ATI OverDrive
 			{
@@ -66,19 +66,19 @@ class gpu_freq implements phodevi_sensor
 		}
 		else if(IS_LINUX)
 		{
-			if(is_file("/sys/kernel/debug/dri/0/radeon_pm_info"))
+			if(is_file('/sys/kernel/debug/dri/0/radeon_pm_info'))
 			{
 				// radeon_pm_info should be present with Linux 2.6.34+
-				foreach(pts_strings::trim_explode("\n", pts_file_io::file_get_contents("/sys/kernel/debug/dri/0/radeon_pm_info")) as $pm_line)
+				foreach(pts_strings::trim_explode("\n", pts_file_io::file_get_contents('/sys/kernel/debug/dri/0/radeon_pm_info')) as $pm_line)
 				{
 					list($descriptor, $value) = pts_strings::colon_explode($pm_line);
 
 					switch($descriptor)
 					{
-						case "current engine clock":
+						case 'current engine clock':
 							$core_freq = pts_arrays::first_element(explode(' ', $value)) / 1000;
 							break;
-						case "current memory clock":
+						case 'current memory clock':
 							$mem_freq = pts_arrays::first_element(explode(' ', $value)) / 1000;
 							break;
 					}

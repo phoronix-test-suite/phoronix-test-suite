@@ -24,15 +24,15 @@ class hdd_temp implements phodevi_sensor
 {
 	public static function get_type()
 	{
-		return "hdd";
+		return 'hdd';
 	}
 	public static function get_sensor()
 	{
-		return "temp";
+		return 'temp';
 	}
 	public static function get_unit()
 	{
-		return "Celsius";
+		return 'Celsius';
 	}
 	public static function support_check()
 	{

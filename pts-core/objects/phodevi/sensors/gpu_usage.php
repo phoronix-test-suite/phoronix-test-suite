@@ -28,21 +28,21 @@ class gpu_usage implements phodevi_sensor
 
 	public static function get_type()
 	{
-		return "gpu";
+		return 'gpu';
 	}
 	public static function get_sensor()
 	{
-		return "usage";
+		return 'usage';
 	}
 	public static function get_unit()
 	{
 		if(self::$probe_ati_overdrive || self::$probe_nvidia_smi)
 		{
-			$unit = "Percent";
+			$unit = 'Percent';
 		}
 		else if(self::$probe_radeon_fences)
 		{
-			$unit = "Fences/s";
+			$unit = 'Fences/s';
 		}
 
 		return $unit;
@@ -59,7 +59,7 @@ class gpu_usage implements phodevi_sensor
 				return true;
 			}
 		}
-		else if(IS_MESA_GRAPHICS && is_readable("/sys/kernel/debug/dri/0/radeon_fence_info"))
+		else if(IS_MESA_GRAPHICS && is_readable('/sys/kernel/debug/dri/0/radeon_fence_info'))
 		{
 			$fence_speed = self::radeon_fence_speed();
 
@@ -71,7 +71,7 @@ class gpu_usage implements phodevi_sensor
 		}
 		else if(IS_NVIDIA_GRAPHICS)
 		{
-			if(pts_client::executable_in_path("nvidia-smi"))
+			if(pts_client::executable_in_path('nvidia-smi'))
 			{
 				$usage = self::nvidia_core_usage();
 
@@ -102,14 +102,14 @@ class gpu_usage implements phodevi_sensor
 	}
 	public static function ati_overdrive_core_usage()
 	{
-		return phodevi_linux_parser::read_ati_overdrive("GPUload");
+		return phodevi_linux_parser::read_ati_overdrive('GPUload');
 	}
 	public static function nvidia_core_usage()
 	{
-		$nvidia_smi = shell_exec("nvidia-smi -a");
+		$nvidia_smi = shell_exec('nvidia-smi -a');
 
-		$util = substr($nvidia_smi, strpos($nvidia_smi, "Utilization"));
-		$util = substr($util, strpos($util, "GPU"));
+		$util = substr($nvidia_smi, strpos($nvidia_smi, 'Utilization'));
+		$util = substr($util, strpos($util, 'GPU'));
 		$util = substr($util, strpos($util, ':') + 1);
 		$util = trim(substr($util, 0, strpos($util, '%')));
 
@@ -125,15 +125,15 @@ class gpu_usage implements phodevi_sensor
 			Last emited fence ffff8800ac0e2080 with 0x00AF9AF1
 		*/
 
-		$fence_info = file_get_contents("/sys/kernel/debug/dri/0/radeon_fence_info");
-		$start_signaled_fence = substr($fence_info, strpos("Last signaled fence", $fence_info));
+		$fence_info = file_get_contents('/sys/kernel/debug/dri/0/radeon_fence_info');
+		$start_signaled_fence = substr($fence_info, strpos('Last signaled fence', $fence_info));
 		$start_signaled_fence = substr($start_signaled_fence, 0, strpos($start_signaled_fence, "\n"));
 		$start_signaled_fence = substr($start_signaled_fence, strrpos($start_signaled_fence, ' '));
 
 		sleep(1);
 
-		$fence_info = file_get_contents("/sys/kernel/debug/dri/0/radeon_fence_info");
-		$end_signaled_fence = substr($fence_info, strpos("Last signaled fence", $fence_info));
+		$fence_info = file_get_contents('/sys/kernel/debug/dri/0/radeon_fence_info');
+		$end_signaled_fence = substr($fence_info, strpos('Last signaled fence', $fence_info));
 		$end_signaled_fence = substr($end_signaled_fence, 0, strpos($end_signaled_fence, "\n"));
 		$end_signaled_fence = substr($end_signaled_fence, strrpos($end_signaled_fence, ' '));
 

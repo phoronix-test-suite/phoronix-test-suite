@@ -27,9 +27,9 @@ class phodevi_osx_parser
 	{
 		$value = ($multiple_objects ? array() : false);
 
-		if(pts_client::executable_in_path("system_profiler"))
+		if(pts_client::executable_in_path('system_profiler'))
 		{
-			$info = trim(shell_exec("system_profiler " . $data_type . " 2>&1"));
+			$info = trim(shell_exec('system_profiler ' . $data_type . ' 2>&1'));
 			$lines = explode("\n", $info);
 
 			for($i = 0; $i < count($lines) && ($value == false || $multiple_objects); $i++)
@@ -41,9 +41,9 @@ class phodevi_osx_parser
 					continue;
 				}
 
-				$line_object = str_replace(" ", "", $line[0]);
+				$line_object = str_replace(' ', null, $line[0]);
 		
-				if(($cut_point = strpos($line_object, "(")) > 0)
+				if(($cut_point = strpos($line_object, '(')) > 0)
 				{
 					$line_object = substr($line_object, 0, $cut_point);
 				}

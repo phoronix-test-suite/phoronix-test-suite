@@ -21,10 +21,10 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-define("PHODEVI_AVOID_CACHE", 0); // No caching
-define("PHODEVI_STAND_CACHE", 1); // Standard caching
-define("PHODEVI_SMART_CACHE", 2); // Smart caching
-define("PHODEVI_PATH", dirname(__FILE__) . '/');
+define('PHODEVI_AVOID_CACHE', 0); // No caching
+define('PHODEVI_STAND_CACHE', 1); // Standard caching
+define('PHODEVI_SMART_CACHE', 2); // Smart caching
+define('PHODEVI_PATH', dirname(__FILE__) . '/');
 
 class phodevi
 {
@@ -34,48 +34,48 @@ class phodevi
 
 	public static function read_name($device)
 	{
-		return phodevi::read_property($device, "identifier");
+		return phodevi::read_property($device, 'identifier');
 	}
 	public static function available_hardware_devices()
 	{
 		return array(
-		"Processor" => "cpu",
-		"Motherboard" => "motherboard",
-		"Chipset" => "chipset",
-		"Memory" => "memory",
-		"Disk" => "disk",
-		"Graphics" => "gpu",
-		"Audio" => "audio",
-		"Monitor" => "monitor"
+		'Processor' => 'cpu',
+		'Motherboard' => 'motherboard',
+		'Chipset' => 'chipset',
+		'Memory' => 'memory',
+		'Disk' => 'disk',
+		'Graphics' => 'gpu',
+		'Audio' => 'audio',
+		'Monitor' => 'monitor'
 		);
 	}
 	public static function available_software_components()
 	{
 		return array(
-		"OS" => array("system", "operating-system"),
-		"Kernel" => array("system", "kernel-string"),
-		"Desktop" => array("system", "desktop-environment"),
-		"Display Server" => array("system", "display-server"),
-		"Display Driver" => array("system", "display-driver-string"),
-		"OpenGL" => array("system", "opengl-driver"),
-		"Compiler" => array("system", "compiler"),
-		"File-System" => array("system", "filesystem"),
-		"Screen Resolution" => array("gpu", "screen-resolution-string")
+		'OS' => array('system', 'operating-system'),
+		'Kernel' => array('system', 'kernel-string'),
+		'Desktop' => array('system', 'desktop-environment'),
+		'Display Server' => array('system', 'display-server'),
+		'Display Driver' => array('system', 'display-driver-string'),
+		'OpenGL' => array('system', 'opengl-driver'),
+		'Compiler' => array('system', 'compiler'),
+		'File-System' => array('system', 'filesystem'),
+		'Screen Resolution' => array('gpu', 'screen-resolution-string')
 		);
 	}
 	public static function load_sensors()
 	{
-		foreach(glob(PHODEVI_PATH . "sensors/*") as $sensor_obj_file)
+		foreach(glob(PHODEVI_PATH . 'sensors/*') as $sensor_obj_file)
 		{
-			$sensor_obj_name = basename($sensor_obj_file, ".php");
+			$sensor_obj_name = basename($sensor_obj_file, '.php');
 
 			if(!class_exists($sensor_obj_name, false))
 			{
 				include($sensor_obj_file);
 			}
 
-			$type = call_user_func(array($sensor_obj_name, "get_type"));
-			$sensor = call_user_func(array($sensor_obj_name, "get_sensor"));
+			$type = call_user_func(array($sensor_obj_name, 'get_type'));
+			$sensor = call_user_func(array($sensor_obj_name, 'get_sensor'));
 
 			if($type != null && $sensor != null)
 			{
@@ -147,18 +147,18 @@ class phodevi
 
 		if(isset(self::$sensors[$sensor[0]][$sensor[1]]))
 		{
-			$value = call_user_func(array(self::$sensors[$sensor[0]][$sensor[1]], "read_sensor"));
+			$value = call_user_func(array(self::$sensors[$sensor[0]][$sensor[1]], 'read_sensor'));
 		}
 
 		return $value;
 	}
 	public static function read_sensor_unit($sensor)
 	{
-		return call_user_func(array(self::$sensors[$sensor[0]][$sensor[1]], "get_unit"));
+		return call_user_func(array(self::$sensors[$sensor[0]][$sensor[1]], 'get_unit'));
 	}
 	public static function sensor_supported($sensor)
 	{
-		return isset(self::$sensors[$sensor[0]][$sensor[1]]) && call_user_func(array(self::$sensors[$sensor[0]][$sensor[1]], "support_check"));
+		return isset(self::$sensors[$sensor[0]][$sensor[1]]) && call_user_func(array(self::$sensors[$sensor[0]][$sensor[1]], 'support_check'));
 	}
 	public static function sensor_identifier($sensor)
 	{
@@ -166,8 +166,8 @@ class phodevi
 	}
 	public static function sensor_name($sensor)
 	{
-		$type = call_user_func(array(self::$sensors[$sensor[0]][$sensor[1]], "get_type"));
-		$sensor = call_user_func(array(self::$sensors[$sensor[0]][$sensor[1]], "get_sensor"));
+		$type = call_user_func(array(self::$sensors[$sensor[0]][$sensor[1]], 'get_type'));
+		$sensor = call_user_func(array(self::$sensors[$sensor[0]][$sensor[1]], 'get_sensor'));
 
 		if(strlen($type) < 4)
 		{
@@ -182,14 +182,14 @@ class phodevi
 
 		switch($sensor)
 		{
-			case "temp":
-				$formatted .= "Temperature";
+			case 'temp':
+				$formatted .= 'Temperature';
 				break;
-			case "freq":
-				$formatted .= "Frequency";
+			case 'freq':
+				$formatted .= 'Frequency';
 				break;
-			case "memory":
-				$formatted .= "Memory Usage";
+			case 'memory':
+				$formatted .= 'Memory Usage';
 				break;
 			default:
 				$formatted .= ucwords(str_replace('-', ' ', $sensor));
@@ -208,8 +208,8 @@ class phodevi
 	}
 	public static function system_id_string()
 	{
-		$components = array(phodevi::read_property("cpu", "model"), phodevi::read_name("motherboard"), phodevi::read_property("system", "operating-system"), phodevi::read_property("system", "compiler"));
-		return base64_encode(implode("__", $components));
+		$components = array(phodevi::read_property('cpu', 'model'), phodevi::read_name('motherboard'), phodevi::read_property('system', 'operating-system'), phodevi::read_property('system', 'compiler'));
+		return base64_encode(implode('__', $components));
 	}
 	public static function read_device_notes($device)
 	{
@@ -217,7 +217,7 @@ class phodevi
 
 		if(isset($devices[$device]))
 		{
-			$notes_r = call_user_func(array("phodevi_" . $devices[$device], "device_notes"));
+			$notes_r = call_user_func(array('phodevi_' . $devices[$device], 'device_notes'));
 		}
 		else
 		{
@@ -232,7 +232,7 @@ class phodevi
 
 		if(isset($devices[$device]))
 		{
-			$settings_special = call_user_func(array("phodevi_" . $devices[$device], "special_settings_string"));
+			$settings_special = call_user_func(array('phodevi_' . $devices[$device], 'special_settings_string'));
 		}
 		else
 		{
@@ -245,9 +245,9 @@ class phodevi
 	{
 		$value = false;
 
-		if(method_exists("phodevi_" . $device, "read_property"))
+		if(method_exists('phodevi_' . $device, 'read_property'))
 		{
-			$property = call_user_func(array("phodevi_" . $device, "read_property"), $read_property);
+			$property = call_user_func(array('phodevi_' . $device, 'read_property'), $read_property);
 
 			if(!($property instanceOf phodevi_device_property))
 			{
@@ -271,9 +271,9 @@ class phodevi
 					array_push($function_pass, $dev_function_r[$i]);
 				}
 
-				if(method_exists("phodevi_" . $device, $dev_function))
+				if(method_exists('phodevi_' . $device, $dev_function))
 				{
-					$value = call_user_func_array(array("phodevi_" . $device, $dev_function), $function_pass);
+					$value = call_user_func_array(array('phodevi_' . $device, $dev_function), $function_pass);
 
 					if(!is_array($value))
 					{
@@ -300,9 +300,9 @@ class phodevi
 	{
 		$return_value = false;
 
-		if(method_exists("phodevi_" . $device, "set_property"))
+		if(method_exists('phodevi_' . $device, 'set_property'))
 		{
-			$return_value = call_user_func(array("phodevi_" . $device, "set_property"), $set_property, $pass_args);
+			$return_value = call_user_func(array('phodevi_' . $device, 'set_property'), $set_property, $pass_args);
 		}
 
 		return $return_value;
@@ -322,41 +322,41 @@ class phodevi
 			{
 				if(strpos($uname_s, strtolower($os_check[$i])) !== false) // Check for OS
 				{
-					define("OPERATING_SYSTEM", $os_title);
-					define("IS_" . strtoupper($os_title), true);
+					define('OPERATING_SYSTEM', $os_title);
+					define('IS_' . strtoupper($os_title), true);
 					$is_os = true;
 				}
 			}
 
 			if(!$is_os)
 			{
-				define("IS_" . strtoupper($os_title), false);
+				define('IS_' . strtoupper($os_title), false);
 			}
 		}
 
-		if(!defined("OPERATING_SYSTEM"))
+		if(!defined('OPERATING_SYSTEM'))
 		{
-			define("OPERATING_SYSTEM", "Unknown");
-			define("IS_UNKNOWN", true);
+			define('OPERATING_SYSTEM', 'Unknown');
+			define('IS_UNKNOWN', true);
 		}
 		else
 		{
-			define("IS_UNKNOWN", false);
+			define('IS_UNKNOWN', false);
 		}
 
-		define("OS_PREFIX", strtolower(OPERATING_SYSTEM) . "_");
+		define('OS_PREFIX', strtolower(OPERATING_SYSTEM) . '_');
 
 		switch(OPERATING_SYSTEM)
 		{
-			case "BSD":
-				define("BSD_LINUX_COMPATIBLE", pts_client::executable_in_path("kldstat") && strpos(shell_exec("kldstat -n linux 2>&1"), "linux.ko") != false);
+			case 'BSD':
+				define('BSD_LINUX_COMPATIBLE', pts_client::executable_in_path('kldstat') && strpos(shell_exec('kldstat -n linux 2>&1'), 'linux.ko') != false);
 				break;
 		}
 
 		// OpenGL / graphics detection
-		$graphics_detection = array("NVIDIA", array("ATI", "fglrx"), array("Mesa", "SGI"));
-		$opengl_driver = phodevi::read_property("system", "opengl-vendor") . " " . phodevi::read_property("system", "opengl-driver") . " " . phodevi::read_property("system", "dri-display-driver");
-		$opengl_driver = trim(str_replace("Corporation", "", $opengl_driver)); // Prevents a possible false positive for ATI being in CorporATIon
+		$graphics_detection = array('NVIDIA', array('ATI', 'fglrx'), array('Mesa', 'SGI'));
+		$opengl_driver = phodevi::read_property('system', 'opengl-vendor') . ' ' . phodevi::read_property('system', 'opengl-driver') . ' ' . phodevi::read_property('system', 'dri-display-driver');
+		$opengl_driver = trim(str_replace('Corporation', null, $opengl_driver)); // Prevents a possible false positive for ATI being in CorporATIon
 		$found_gpu_match = false;
 
 		foreach($graphics_detection as $gpu_check)
@@ -373,7 +373,7 @@ class phodevi
 			{
 				if(stripos($opengl_driver, $gpu_check[$i]) !== false) // Check for GPU
 				{
-					define("IS_" . strtoupper($gpu_title) . "_GRAPHICS", true);
+					define('IS_' . strtoupper($gpu_title) . '_GRAPHICS', true);
 					$is_this = true;
 					$found_gpu_match = true;
 				}
@@ -381,11 +381,11 @@ class phodevi
 
 			if(!$is_this)
 			{
-				define("IS_" . strtoupper($gpu_title) . "_GRAPHICS", false);
+				define('IS_' . strtoupper($gpu_title) . '_GRAPHICS', false);
 			}
 		}
 
-		define("IS_UNKNOWN_GRAPHICS", ($found_gpu_match == false));
+		define('IS_UNKNOWN_GRAPHICS', ($found_gpu_match == false));
 		self::load_sensors();
 	}
 	public static function set_device_cache($cache_array)
@@ -425,16 +425,16 @@ class phodevi
 		if($return_as_string)
 		{
 			$info_array = $info;
-			$info = "";
+			$info = null;
 
 			foreach($info_array as $type => $value)
 			{
-				if($info != "")
+				if($info != null)
 				{
-					$info .= ", ";
+					$info .= ', ';
 				}
 
-				$info .= $type . ": " . $value;
+				$info .= $type . ': ' . $value;
 			}
 		}
 
@@ -448,12 +448,12 @@ class phodevi
 
 		if($remove_phrases == null)
 		{
-			$word_file = pts_file_io::file_get_contents(PTS_CORE_STATIC_PATH . "lists/info-strings-remove.list");
+			$word_file = pts_file_io::file_get_contents(PTS_CORE_STATIC_PATH . 'lists/info-strings-remove.list');
 			$remove_phrases = pts_strings::trim_explode("\n", $word_file);
 		}
 		if($change_phrases == null)
 		{
-			$word_file = pts_file_io::file_get_contents(PTS_CORE_STATIC_PATH . "lists/info-strings-replace.list");
+			$word_file = pts_file_io::file_get_contents(PTS_CORE_STATIC_PATH . 'lists/info-strings-replace.list');
 			$phrases_r = pts_strings::trim_explode("\n", $word_file);
 			$change_phrases = array();
 
@@ -478,22 +478,22 @@ class phodevi
 		// Returns the system's uptime in seconds
 		$uptime = 1;
 
-		if(is_file("/proc/uptime"))
+		if(is_file('/proc/uptime'))
 		{
-			$uptime = pts_strings::first_in_string(pts_file_io::file_get_contents("/proc/uptime"));
+			$uptime = pts_strings::first_in_string(pts_file_io::file_get_contents('/proc/uptime'));
 		}
-		else if(($uptime_cmd = pts_client::executable_in_path("uptime")) != false)
+		else if(($uptime_cmd = pts_client::executable_in_path('uptime')) != false)
 		{
 			$uptime_counter = 0;
-			$uptime_output = shell_exec($uptime_cmd . " 2>&1");
-			$uptime_output = substr($uptime_output, strpos($uptime_output, " up") + 3);
-			$uptime_output = substr($uptime_output, 0, strpos($uptime_output, " user"));
-			$uptime_output = substr($uptime_output, 0, strrpos($uptime_output, ",")) . " ";
+			$uptime_output = shell_exec($uptime_cmd . ' 2>&1');
+			$uptime_output = substr($uptime_output, strpos($uptime_output, ' up') + 3);
+			$uptime_output = substr($uptime_output, 0, strpos($uptime_output, ' user'));
+			$uptime_output = substr($uptime_output, 0, strrpos($uptime_output, ',')) . ' ';
 
-			if(($day_end_pos = strpos($uptime_output, " day")) !== false)
+			if(($day_end_pos = strpos($uptime_output, ' day')) !== false)
 			{
 				$day_output = substr($uptime_output, 0, $day_end_pos);
-				$day_output = substr($day_output, strrpos($day_output, " ") + 1);
+				$day_output = substr($day_output, strrpos($day_output, ' ') + 1);
 
 				if(is_numeric($day_output))
 				{
@@ -501,10 +501,10 @@ class phodevi
 				}
 			}
 
-			if(($mins_end_pos = strpos($uptime_output, " mins")) !== false)
+			if(($mins_end_pos = strpos($uptime_output, ' mins')) !== false)
 			{
 				$mins_output = substr($uptime_output, 0, $day_end_pos);
-				$mins_output = substr($mins_output, strrpos($mins_output, " ") + 1);
+				$mins_output = substr($mins_output, strrpos($mins_output, ' ') + 1);
 
 				if(is_numeric($mins_output))
 				{
@@ -512,12 +512,12 @@ class phodevi
 				}
 			}
 
-			if(($time_split_pos = strpos($uptime_output, ":")) !== false)
+			if(($time_split_pos = strpos($uptime_output, ':')) !== false)
 			{
 				$hours_output = substr($uptime_output, 0, $time_split_pos);
-				$hours_output = substr($hours_output, strrpos($hours_output, " ") + 1);
+				$hours_output = substr($hours_output, strrpos($hours_output, ' ') + 1);
 				$mins_output = substr($uptime_output, $time_split_pos + 1);
-				$mins_output = substr($mins_output, 0, strpos($mins_output, " "));
+				$mins_output = substr($mins_output, 0, strpos($mins_output, ' '));
 
 				if(is_numeric($hours_output))
 				{
@@ -540,12 +540,12 @@ class phodevi
 	public static function cpu_arch_compatible($check_against)
 	{
 		$compatible = true;
-		$this_arch = phodevi::read_property("system", "kernel-architecture");
+		$this_arch = phodevi::read_property('system', 'kernel-architecture');
 		$check_against = pts_arrays::to_array($check_against);
 
-		if(isset($this_arch[2]) && substr($this_arch, -2) == "86")
+		if(isset($this_arch[2]) && substr($this_arch, -2) == '86')
 		{
-			$this_arch = "x86";
+			$this_arch = 'x86';
 		}
 		if(!in_array($this_arch, $check_against))
 		{

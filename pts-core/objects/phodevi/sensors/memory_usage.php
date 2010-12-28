@@ -24,15 +24,15 @@ class memory_usage implements phodevi_sensor
 {
 	public static function get_type()
 	{
-		return "memory";
+		return 'memory';
 	}
 	public static function get_sensor()
 	{
-		return "usage";
+		return 'usage';
 	}
 	public static function get_unit()
 	{
-		return "Megabytes";
+		return 'Megabytes';
 	}
 	public static function support_check()
 	{
@@ -41,16 +41,16 @@ class memory_usage implements phodevi_sensor
 	}
 	public static function read_sensor()
 	{
-		return memory_usage::mem_usage("MEMORY", "USED");		
+		return memory_usage::mem_usage('MEMORY', 'USED');
 	}
-	public static function mem_usage($TYPE = "TOTAL", $READ = "USED")
+	public static function mem_usage($TYPE = 'TOTAL', $READ = 'USED')
 	{
 		// Reads system memory usage
 		$mem_usage = -1;
 
-		if(pts_client::executable_in_path("free") != false)
+		if(pts_client::executable_in_path('free') != false)
 		{
-			$mem = explode("\n", shell_exec("free -t -m 2>&1"));
+			$mem = explode("\n", shell_exec('free -t -m 2>&1'));
 			$grab_line = null;
 			$buffers_and_cache = 0;
 
@@ -62,19 +62,19 @@ class memory_usage implements phodevi_sensor
 				{
 					$line_type = $line_parts[0];
 
-					if($TYPE == "MEMORY" && $line_type == "Mem")
+					if($TYPE == 'MEMORY' && $line_type == 'Mem')
 					{
 						$grab_line = $line_parts[1];
 					}
-					else if($TYPE == "SWAP" && $line_type == "Swap")
+					else if($TYPE == 'SWAP' && $line_type == 'Swap')
 					{
 						$grab_line = $line_parts[1];
 					}
-					else if($TYPE == "TOTAL" && $line_type == "Total")
+					else if($TYPE == 'TOTAL' && $line_type == 'Total')
 					{
 						$grab_line = $line_parts[1];
 					}
-					else if($line_type == "-/+ buffers/cache" && $TYPE != "SWAP")
+					else if($line_type == '-/+ buffers/cache' && $TYPE != 'SWAP')
 					{
 						$buffers_and_cache = pts_arrays::first_element(explode(' ', pts_strings::trim_spaces($line_parts[1])));						
 					}
@@ -84,23 +84,23 @@ class memory_usage implements phodevi_sensor
 			if(!empty($grab_line))
 			{
 				$grab_line = pts_strings::trim_spaces($grab_line);
-				$mem_parts = explode(" ", $grab_line);
+				$mem_parts = explode(' ', $grab_line);
 
-				if($READ == "USED")
+				if($READ == 'USED')
 				{
 					if(count($mem_parts) >= 2 && is_numeric($mem_parts[1]))
 					{
 						$mem_usage = $mem_parts[1] - $buffers_and_cache;
 					}
 				}
-				else if($READ == "TOTAL")
+				else if($READ == 'TOTAL')
 				{
 					if(count($mem_parts) >= 1 && is_numeric($mem_parts[0]))
 					{
 						$mem_usage = $mem_parts[0];
 					}
 				}
-				else if($READ == "FREE")
+				else if($READ == 'FREE')
 				{
 					if(count($mem_parts) >= 3 && is_numeric($mem_parts[2]))
 					{

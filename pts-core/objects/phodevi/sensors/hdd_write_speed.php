@@ -24,15 +24,15 @@ class hdd_write_speed implements phodevi_sensor
 {
 	public static function get_type()
 	{
-		return "hdd";
+		return 'hdd';
 	}
 	public static function get_sensor()
 	{
-		return "write-speed";
+		return 'write-speed';
 	}
 	public static function get_unit()
 	{
-		return "MB/s";
+		return 'MB/s';
 	}
 	public static function support_check()
 	{
@@ -50,7 +50,7 @@ class hdd_write_speed implements phodevi_sensor
 
 			if($sys_disk == null)
 			{
-				foreach(pts_file_io::glob("/sys/class/block/sd*/stat") as $check_disk)
+				foreach(pts_file_io::glob('/sys/class/block/sd*/stat') as $check_disk)
 				{
 					if(pts_file_io::file_get_contents($check_disk) != null)
 					{
@@ -60,7 +60,7 @@ class hdd_write_speed implements phodevi_sensor
 				}
 			}
 
-			$speed = phodevi_linux_parser::read_sys_disk_speed($sys_disk, "WRITE");
+			$speed = phodevi_linux_parser::read_sys_disk_speed($sys_disk, 'WRITE');
 		}
 
 		return $speed;

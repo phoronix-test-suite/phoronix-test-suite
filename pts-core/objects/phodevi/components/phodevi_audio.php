@@ -27,8 +27,8 @@ class phodevi_audio extends phodevi_device_interface
 	{
 		switch($identifier)
 		{
-			case "identifier":
-				$property = new phodevi_device_property("audio_processor_string", PHODEVI_SMART_CACHE);
+			case 'identifier':
+				$property = new phodevi_device_property('audio_processor_string', PHODEVI_SMART_CACHE);
 				break;
 		}
 
@@ -52,18 +52,18 @@ class phodevi_audio extends phodevi_device_interface
 		}
 		else if(IS_LINUX)
 		{
-			foreach(pts_file_io::glob("/sys/class/sound/card*/hwC0D0/vendor_name") as $vendor_name)
+			foreach(pts_file_io::glob('/sys/class/sound/card*/hwC0D0/vendor_name') as $vendor_name)
 			{
 				$card_dir = dirname($vendor_name) . '/';
 
-				if(!is_readable($card_dir . "chip_name"))
+				if(!is_readable($card_dir . 'chip_name'))
 				{
 					continue;
 				}
 
 
 				$vendor_name = pts_file_io::file_get_contents($vendor_name);
-				$chip_name = pts_file_io::file_get_contents($card_dir . "chip_name");
+				$chip_name = pts_file_io::file_get_contents($card_dir . 'chip_name');
 
 				$audio = $vendor_name . ' '. $chip_name;
 				break;

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009, Phoronix Media
-	Copyright (C) 2009, Michael Larabel
+	Copyright (C) 2009 - 2010, Phoronix Media
+	Copyright (C) 2009 - 2010, Michael Larabel
 	phodevi_solaris_parser.php: General parsing functions specific to the Windows OS
 
 	This program is free software; you can redistribute it and/or modify
@@ -23,30 +23,30 @@
 
 class phodevi_solaris_parser
 {
-	public static function read_sun_ddu_dmi_info($find_objects, $args = "")
+	public static function read_sun_ddu_dmi_info($find_objects, $args = null)
 	{
 		// Read Sun's Device Driver Utility for OpenSolaris
 		$values = array();
 
-		if(in_array(phodevi::read_property("system", "kernel-architecture"), array("i686", "x86_64")))
+		if(in_array(phodevi::read_property('system', 'kernel-architecture'), array('i686', 'x86_64')))
 		{
-			$dmi_info = "/usr/ddu/bin/i386/dmi_info";
+			$dmi_info = '/usr/ddu/bin/i386/dmi_info';
 		}
 		else
 		{
-			$dmi_info = "/usr/ddu/bin/sparc/dmi_info";
+			$dmi_info = '/usr/ddu/bin/sparc/dmi_info';
 		}
 
-		if(is_executable($dmi_info) || is_executable(($dmi_info = "/usr/ddu/bin/dmi_info")))
+		if(is_executable($dmi_info) || is_executable(($dmi_info = '/usr/ddu/bin/dmi_info')))
 		{
-			$info = shell_exec($dmi_info . " " . $args . " 2>&1");
+			$info = shell_exec($dmi_info . ' ' . $args . ' 2>&1');
 			$lines = explode("\n", $info);
 
 			$find_objects = pts_arrays::to_array($find_objects);
 			for($i = 0; $i < count($find_objects) && count($values) == 0; $i++)
 			{
 				$objects = pts_strings::comma_explode($find_objects[$i]);
-				$this_section = "";
+				$this_section = null;
 
 				if(count($objects) == 2)
 				{
@@ -62,7 +62,7 @@ class phodevi_solaris_parser
 				foreach($lines as $line)
 				{
 					$line = pts_strings::colon_explode($line);
-					$line_object = isset($line[0]) ? str_replace(" ", "", $line[0]) : null;
+					$line_object = isset($line[0]) ? str_replace(' ', null, $line[0]) : null;
 					$this_value = count($line) > 1 ? $line[1] : null;
 
 					if(empty($this_value) && !empty($section))
@@ -70,7 +70,7 @@ class phodevi_solaris_parser
 						$this_section = $line_object;
 					}
 
-					if($line_object == $object && ($this_section == $section || pts_strings::proximity_match($section, $this_section)) && !empty($this_value) && $this_value != "Unknown")
+					if($line_object == $object && ($this_section == $section || pts_strings::proximity_match($section, $this_section)) && !empty($this_value) && $this_value != 'Unknown')
 					{
 						array_push($values, $this_value);
 					}
@@ -84,12 +84,12 @@ class phodevi_solaris_parser
 	{
 		$value = false;
 
-		if(pts_client::executable_in_path("hal-get-property"))
+		if(pts_client::executable_in_path('hal-get-property'))
 		{
 
 			foreach(pts_arrays::to_array($udi) as $udi_check)
 			{
-				$value = trim(shell_exec("hal-get-property --udi " . $udi_check . " --key " . $key . " 2> /dev/null"));
+				$value = trim(shell_exec('hal-get-property --udi ' . $udi_check . ' --key ' . $key . ' 2> /dev/null'));
 
 				if($value != false)
 				{

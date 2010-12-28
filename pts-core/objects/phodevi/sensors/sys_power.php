@@ -27,21 +27,21 @@ class sys_power implements phodevi_sensor
 
 	public static function get_type()
 	{
-		return "sys";
+		return 'sys';
 	}
 	public static function get_sensor()
 	{
-		return "power";
+		return 'power';
 	}
 	public static function get_unit()
 	{
 		if(self::$battery_sys)
 		{
-			$unit = "Milliwatts";
+			$unit = 'Milliwatts';
 		}
 		else if(self::$battery_cur)
 		{
-			$unit = "microAmps";
+			$unit = 'microAmps';
 		}
 
 		return $unit;
@@ -80,11 +80,11 @@ class sys_power implements phodevi_sensor
 
 		if(IS_LINUX)
 		{
-			$raw_current = phodevi_linux_parser::read_sysfs_node("/sys/devices/w1_bus_master1/*/getcurrent", "NO_CHECK");
+			$raw_current = phodevi_linux_parser::read_sysfs_node('/sys/devices/w1_bus_master1/*/getcurrent', 'NO_CHECK');
 
 			if($raw_current != -1)
 			{
-				if(substr($raw_current, 0, 1) == "-")
+				if(substr($raw_current, 0, 1) == '-')
 				{
 					$current = substr($raw_current, 1);
 				}
@@ -92,7 +92,7 @@ class sys_power implements phodevi_sensor
 		}
 		else if(IS_MACOSX)
 		{
-			$current = abs(phodevi_osx_parser::read_osx_system_profiler("SPPowerDataType", "Amperage")); // in mA
+			$current = abs(phodevi_osx_parser::read_osx_system_profiler('SPPowerDataType', 'Amperage')); // in mA
 		}
 
 		return $current;
@@ -104,7 +104,7 @@ class sys_power implements phodevi_sensor
 
 		if(IS_LINUX)
 		{
-			$power_now = phodevi_linux_parser::read_sysfs_node("/sys/class/power_supply/*/power_now", "POSITIVE_NUMERIC", array("status" => "Discharging"));
+			$power_now = phodevi_linux_parser::read_sysfs_node('/sys/class/power_supply/*/power_now', 'POSITIVE_NUMERIC', array('status' => 'Discharging'));
 
 			if($power_now != -1)
 			{
@@ -114,27 +114,27 @@ class sys_power implements phodevi_sensor
 
 			if($rate == -1)
 			{
-				$battery = array("/battery/BAT0/state", "/battery/BAT1/state");
-				$state = phodevi_linux_parser::read_acpi($battery, "charging state");
-				$power = phodevi_linux_parser::read_acpi($battery, "present rate");
-				$voltage = phodevi_linux_parser::read_acpi($battery, "present voltage");
+				$battery = array('/battery/BAT0/state', '/battery/BAT1/state');
+				$state = phodevi_linux_parser::read_acpi($battery, 'charging state');
+				$power = phodevi_linux_parser::read_acpi($battery, 'present rate');
+				$voltage = phodevi_linux_parser::read_acpi($battery, 'present voltage');
 
-				if($state == "discharging")
+				if($state == 'discharging')
 				{
-					$power_unit = substr($power, strrpos($power, " ") + 1);
-					$power = substr($power, 0, strpos($power, " "));
+					$power_unit = substr($power, strrpos($power, ' ') + 1);
+					$power = substr($power, 0, strpos($power, ' '));
 
-					if($power_unit == "mA")
+					if($power_unit == 'mA')
 					{
-						$voltage_unit = substr($voltage, strrpos($voltage, " ") + 1);
-						$voltage = substr($voltage, 0, strpos($voltage, " "));
+						$voltage_unit = substr($voltage, strrpos($voltage, ' ') + 1);
+						$voltage = substr($voltage, 0, strpos($voltage, ' '));
 
-						if($voltage_unit == "mV")
+						if($voltage_unit == 'mV')
 						{
 							$rate = round(($power * $voltage) / 1000);
 						}				
 					}
-					else if($power_unit == "mW")
+					else if($power_unit == 'mW')
 					{
 						$rate = $power;
 					}
@@ -143,13 +143,13 @@ class sys_power implements phodevi_sensor
 		}
 		else if(IS_MACOSX)
 		{
-			$amperage = abs(phodevi_osx_parser::read_osx_system_profiler("SPPowerDataType", "Amperage")); // in mA
-			$voltage = phodevi_osx_parser::read_osx_system_profiler("SPPowerDataType", "Voltage"); // in mV
+			$amperage = abs(phodevi_osx_parser::read_osx_system_profiler('SPPowerDataType', 'Amperage')); // in mA
+			$voltage = phodevi_osx_parser::read_osx_system_profiler('SPPowerDataType', 'Voltage'); // in mV
 			$rate = round(($amperage * $voltage) / 1000);
 		}
 		else if(IS_SOLARIS)
 		{
-			$battery = phodevi_solaris_parser::read_hal_property("/org/freedesktop/Hal/devices/pseudo/acpi_drv_0_battery0_0", "battery.reporting.rate");
+			$battery = phodevi_solaris_parser::read_hal_property('/org/freedesktop/Hal/devices/pseudo/acpi_drv_0_battery0_0', 'battery.reporting.rate');
 
 			if(is_numeric($battery))
 			{
@@ -158,11 +158,11 @@ class sys_power implements phodevi_sensor
 		}
 		else if(IS_BSD)
 		{
-			$battery = phodevi_bsd_parser::read_acpiconf("Present rate");
+			$battery = phodevi_bsd_parser::read_acpiconf('Present rate');
 
-			if($battery && substr($battery, -2) == "mW")
+			if($battery && substr($battery, -2) == 'mW')
 			{
-				$rate = substr($battery, 0, strpos($battery, " "));
+				$rate = substr($battery, 0, strpos($battery, ' '));
 			}
 		}
 

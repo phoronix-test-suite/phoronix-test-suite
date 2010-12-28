@@ -24,15 +24,15 @@ class gpu_fanspeed implements phodevi_sensor
 {
 	public static function get_type()
 	{
-		return "gpu";
+		return 'gpu';
 	}
 	public static function get_sensor()
 	{
-		return "fan-speed";
+		return 'fan-speed';
 	}
 	public static function get_unit()
 	{
-		return "Percent";
+		return 'Percent';
 	}
 	public static function support_check()
 	{
@@ -49,11 +49,11 @@ class gpu_fanspeed implements phodevi_sensor
 			// NVIDIA fan speed reading support in NVIDIA 190.xx and newer
 			// TODO: support for multiple fans, also for reading GPUFanTarget to get appropriate fan
 			// nvidia-settings --describe GPUFanTarget 
-			$fan_speed = phodevi_parser::read_nvidia_extension("[fan:0]/GPUCurrentFanSpeed");
+			$fan_speed = phodevi_parser::read_nvidia_extension('[fan:0]/GPUCurrentFanSpeed');
 		}
 		else if(IS_ATI_GRAPHICS && IS_LINUX)
 		{
-			$fan_speed = phodevi_linux_parser::read_ati_overdrive("FanSpeed");
+			$fan_speed = phodevi_linux_parser::read_ati_overdrive('FanSpeed');
 		}
 
 		return $fan_speed;

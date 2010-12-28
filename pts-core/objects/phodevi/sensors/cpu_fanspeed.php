@@ -24,15 +24,15 @@ class cpu_fanspeed implements phodevi_sensor
 {
 	public static function get_type()
 	{
-		return "cpu";
+		return 'cpu';
 	}
 	public static function get_sensor()
 	{
-		return "fan-speed";
+		return 'fan-speed';
 	}
 	public static function get_unit()
 	{
-		return "RPM";
+		return 'RPM';
 	}
 	public static function support_check()
 	{
@@ -45,11 +45,11 @@ class cpu_fanspeed implements phodevi_sensor
 
 		if(IS_LINUX)
 		{
-			$raw_fan = phodevi_linux_parser::read_sysfs_node("/sys/class/hwmon/hwmon*/device/fan1_input", "POSITIVE_NUMERIC");
+			$raw_fan = phodevi_linux_parser::read_sysfs_node('/sys/class/hwmon/hwmon*/device/fan1_input', 'POSITIVE_NUMERIC');
 
 			if($raw_fan == -1)
 			{
-				$raw_fan = phodevi_linux_parser::read_sysfs_node("/sys/class/hwmon/hwmon*/fan1_input", "POSITIVE_NUMERIC");
+				$raw_fan = phodevi_linux_parser::read_sysfs_node('/sys/class/hwmon/hwmon*/fan1_input', 'POSITIVE_NUMERIC');
 			}
 
 			if($raw_fan != -1)

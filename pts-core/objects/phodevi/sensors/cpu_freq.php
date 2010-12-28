@@ -24,15 +24,15 @@ class cpu_freq implements phodevi_sensor
 {
 	public static function get_type()
 	{
-		return "cpu";
+		return 'cpu';
 	}
 	public static function get_sensor()
 	{
-		return "freq";
+		return 'freq';
 	}
 	public static function get_unit()
 	{
-		return "Megahertz";
+		return 'Megahertz';
 	}
 	public static function support_check()
 	{
@@ -48,14 +48,14 @@ class cpu_freq implements phodevi_sensor
 		if(IS_LINUX)
 		{
 			// First, the ideal way, with modern CPUs using CnQ or EIST and cpuinfo reporting the current
-			if(is_file("/sys/devices/system/cpu/cpu" . $cpu_core . "/cpufreq/scaling_cur_freq"))
+			if(is_file('/sys/devices/system/cpu/cpu' . $cpu_core . '/cpufreq/scaling_cur_freq'))
 			{
-				$info = pts_file_io::file_get_contents("/sys/devices/system/cpu/cpu" . $cpu_core . "/cpufreq/scaling_cur_freq");
+				$info = pts_file_io::file_get_contents('/sys/devices/system/cpu/cpu' . $cpu_core . '/cpufreq/scaling_cur_freq');
 				$info = intval($info) / 1000;
 			}
-			else if(is_file("/proc/cpuinfo")) // fall back for those without cpufreq
+			else if(is_file('/proc/cpuinfo')) // fall back for those without cpufreq
 			{
-				$cpu_speeds = phodevi_linux_parser::read_cpuinfo("cpu MHz");
+				$cpu_speeds = phodevi_linux_parser::read_cpuinfo('cpu MHz');
 
 				if(isset($cpu_speeds[0]))
 				{
@@ -66,19 +66,19 @@ class cpu_freq implements phodevi_sensor
 		}
 		else if(IS_SOLARIS)
 		{
-			$info = shell_exec("psrinfo -v | grep MHz");
-			$info = substr($info, strrpos($info, "at") + 3);
-			$info = trim(substr($info, 0, strpos($info, "MHz")));
+			$info = shell_exec('psrinfo -v | grep MHz');
+			$info = substr($info, strrpos($info, 'at') + 3);
+			$info = trim(substr($info, 0, strpos($info, 'MHz')));
 		}
 		else if(IS_BSD)
 		{
-			$info = phodevi_bsd_parser::read_sysctl("dev.cpu.0.freq");
+			$info = phodevi_bsd_parser::read_sysctl('dev.cpu.0.freq');
 		}
 		else if(IS_MACOSX)
 		{
-			$info = phodevi_osx_parser::read_osx_system_profiler("SPHardwareDataType", "ProcessorSpeed");
+			$info = phodevi_osx_parser::read_osx_system_profiler('SPHardwareDataType', 'ProcessorSpeed');
 		
-			if(($cut_point = strpos($info, " ")) > 0)
+			if(($cut_point = strpos($info, ' ')) > 0)
 			{
 				$info = substr($info, 0, $cut_point);
 			}

@@ -24,15 +24,15 @@ class sys_iowait implements phodevi_sensor
 {
 	public static function get_type()
 	{
-		return "sys";
+		return 'sys';
 	}
 	public static function get_sensor()
 	{
-		return "iowait";
+		return 'iowait';
 	}
 	public static function get_unit()
 	{
-		return "Percent";
+		return 'Percent';
 	}
 	public static function support_check()
 	{
@@ -42,14 +42,14 @@ class sys_iowait implements phodevi_sensor
 	public static function read_sensor()
 	{		$iowait = -1;
 
-		if(IS_LINUX && is_file("/proc/stat"))
+		if(IS_LINUX && is_file('/proc/stat'))
 		{
-			$start_stat = pts_file_io::file_get_contents("/proc/stat");
+			$start_stat = pts_file_io::file_get_contents('/proc/stat');
 			sleep(1);
-			$end_stat = pts_file_io::file_get_contents("/proc/stat");
+			$end_stat = pts_file_io::file_get_contents('/proc/stat');
 
-			$start_stat = explode(" ", substr($start_stat, 0, strpos($start_stat, "\n")));
-			$end_stat = explode(" ", substr($end_stat, 0, strpos($end_stat, "\n")));
+			$start_stat = explode(' ', substr($start_stat, 0, strpos($start_stat, "\n")));
+			$end_stat = explode(' ', substr($end_stat, 0, strpos($end_stat, "\n")));
 
 			for($i = 2, $diff_cpu_total = 0; $i < 9; $i++)
 			{

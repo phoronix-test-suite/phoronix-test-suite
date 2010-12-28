@@ -24,15 +24,15 @@ class sys_fanspeed implements phodevi_sensor
 {
 	public static function get_type()
 	{
-		return "sys";
+		return 'sys';
 	}
 	public static function get_sensor()
 	{
-		return "fan-speed";
+		return 'fan-speed';
 	}
 	public static function get_unit()
 	{
-		return "RPMs";
+		return 'RPMs';
 	}
 	public static function support_check()
 	{
@@ -45,16 +45,16 @@ class sys_fanspeed implements phodevi_sensor
 
 		if(IS_LINUX)
 		{
-			$raw_fan = phodevi_linux_parser::read_sysfs_node("/sys/class/hwmon/hwmon*/device/fan2_input", "POSITIVE_NUMERIC");
+			$raw_fan = phodevi_linux_parser::read_sysfs_node('/sys/class/hwmon/hwmon*/device/fan2_input', 'POSITIVE_NUMERIC');
 
 			if($raw_fan == -1)
 			{
-				$raw_fan = phodevi_linux_parser::read_sysfs_node("/sys/class/hwmon/hwmon*/device/fan3_input", "POSITIVE_NUMERIC");
+				$raw_fan = phodevi_linux_parser::read_sysfs_node('/sys/class/hwmon/hwmon*/device/fan3_input', 'POSITIVE_NUMERIC');
 			}
 
 			if($raw_fan == -1)
 			{
-				$raw_fan = phodevi_linux_parser::read_sysfs_node("/sys/class/hwmon/hwmon*/device/fan4_input", "POSITIVE_NUMERIC");
+				$raw_fan = phodevi_linux_parser::read_sysfs_node('/sys/class/hwmon/hwmon*/device/fan4_input', 'POSITIVE_NUMERIC');
 			}
 
 			if($raw_fan != -1)

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009, Phoronix Media
-	Copyright (C) 2009, Michael Larabel
+	Copyright (C) 2009 - 2010, Phoronix Media
+	Copyright (C) 2009 - 2010, Michael Larabel
 	phodevi_bsd_parser.php: General parsing functions specific to BSD
 
 	This program is free software; you can redistribute it and/or modify
@@ -28,15 +28,15 @@ class phodevi_bsd_parser
 		// Read sysctl, used by *BSDs
 		$info = false;
 
-		if(pts_client::executable_in_path("sysctl"))
+		if(pts_client::executable_in_path('sysctl'))
 		{
 			$desc = pts_arrays::to_array($desc);
 
 			for($i = 0; $i < count($desc) && empty($info); $i++)
 			{
-				$output = shell_exec("sysctl " . $desc[$i] . " 2>&1");
+				$output = shell_exec('sysctl ' . $desc[$i] . ' 2>&1');
 
-				if((($point = strpos($output, ":")) > 0 || ($point = strpos($output, "=")) > 0) && strpos($output, "unknown oid") === false && strpos($output, "is invalid") === false && strpos($output, "not available") === false)
+				if((($point = strpos($output, ':')) > 0 || ($point = strpos($output, '=')) > 0) && strpos($output, 'unknown oid') === false && strpos($output, 'is invalid') === false && strpos($output, 'not available') === false)
 				{
 					$info = trim(substr($output, $point + 1));
 				}
@@ -49,11 +49,11 @@ class phodevi_bsd_parser
 	{
 		$info = false;
 
-		if(pts_client::executable_in_path("acpiconf"))
+		if(pts_client::executable_in_path('acpiconf'))
 		{
-			$output = shell_exec("acpiconf -i0");
+			$output = shell_exec('acpiconf -i0');
 
-			if(($point = strpos($output, $desc . ":")) !== false)
+			if(($point = strpos($output, $desc . ':')) !== false)
 			{
 				$info = substr($output, $point + strlen($desc) + 1);
 				$info = substr($info, 0, strpos($info, "\n"));

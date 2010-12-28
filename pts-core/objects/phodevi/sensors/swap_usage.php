@@ -24,15 +24,15 @@ class swap_usage implements phodevi_sensor
 {
 	public static function get_type()
 	{
-		return "swap";
+		return 'swap';
 	}
 	public static function get_sensor()
 	{
-		return "usage";
+		return 'usage';
 	}
 	public static function get_unit()
 	{
-		return "Megabytes";
+		return 'Megabytes';
 	}
 	public static function support_check()
 	{
@@ -41,7 +41,7 @@ class swap_usage implements phodevi_sensor
 	}
 	public static function read_sensor()
 	{
-		return memory_usage::mem_usage("SWAP", "USED");		
+		return memory_usage::mem_usage('SWAP', 'USED');
 	}
 }
 
