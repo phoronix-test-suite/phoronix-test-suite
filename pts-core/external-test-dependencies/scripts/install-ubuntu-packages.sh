@@ -8,7 +8,7 @@ if [ `whoami` != "root" ]; then
 		ROOT="/usr/bin/sudo"
 	fi
 else
-	su -c "aptitude -y install $*"
+	su -c "apt-get -y install $*"
 	exit
 fi
 

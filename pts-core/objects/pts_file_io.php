@@ -57,7 +57,7 @@ class pts_file_io
 			$object = pts_strings::add_trailing_slash($object);
 		}
 
-		foreach(pts_file_io::glob($object . "*") as $to_remove)
+		foreach(pts_file_io::glob($object . '*') as $to_remove)
 		{
 			if(is_file($to_remove))
 			{
@@ -76,7 +76,7 @@ class pts_file_io
 			}
 		}
 
-		if($remove_root_directory && is_dir($object) && count(pts_file_io::glob($object . "/*")) == 0)
+		if($remove_root_directory && is_dir($object) && count(pts_file_io::glob($object . '/*')) == 0)
 		{
 			@rmdir($object);
 		}

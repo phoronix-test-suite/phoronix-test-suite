@@ -61,10 +61,10 @@ class pts_module_option
 
 		if($this->get_default_value() != null)
 		{
-			$question_string .= " [" . $this->get_default_value() . "]";
+			$question_string .= ' [' . $this->get_default_value() . ']';
 		}
 
-		$question_string .= ": ";
+		$question_string .= ': ';
 
 		return $question_string;
 	}
@@ -87,69 +87,69 @@ class pts_module_option
 		{
 			switch($this->option_supported_values)
 			{
-				case "NUMERIC":
+				case 'NUMERIC':
 					if(is_numeric($input))
 					{
 						$supported = true;
 					}
 					break;
-				case "NUMERIC_DASH":
+				case 'NUMERIC_DASH':
 					if(!empty($input) && strlen(pts_strings::keep_in_string($identifier, pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DASH)) == strlen($input))
 					{
 						$supported = true;
 					}
 					break;
-				case "ALPHA_NUMERIC":
+				case 'ALPHA_NUMERIC':
 					if(!empty($input) && strlen(pts_strings::keep_in_string($input, pts_strings::CHAR_NUMERIC | pts_strings::CHAR_LETTER)) == strlen($input))
 					{
 						$supported = true;
 					}
 					break;
-				case "HTTP_URL":
-					if(substr($input, 0, 7) == "http://")
+				case 'HTTP_URL':
+					if(substr($input, 0, 7) == 'http://')
 					{
 						$supported = true;
 					}
 					break;
-				case "LOCAL_DIRECTORY":
+				case 'LOCAL_DIRECTORY':
 					if(is_dir($input))
 					{
 						$supported = true;
 					}
 					break;
-				case "LOCAL_FILE":
+				case 'LOCAL_FILE':
 					if(is_file($input))
 					{
 						$supported = true;
 					}
 					break;
-				case "LOCAL_EXECUTABLE":
+				case 'LOCAL_EXECUTABLE':
 					if(is_executable($input))
 					{
 						$supported = true;
 					}
 					break;
-				case "PTS_TEST_RESULT":
+				case 'PTS_TEST_RESULT':
 					if(pts_result_file::is_test_result_file($input))
 					{
 						$supported = true;
 					}
-				case "INSTALLED_TEST":
+				case 'INSTALLED_TEST':
 					if(in_array($input, pts_tests::installed_tests()))
 					{
 						$supported = true;
 					}
-				case "VALID_SAVE_NAME":
+				case 'VALID_SAVE_NAME':
 					if(!empty($input) && pts_types::identifier_to_object($input) == false)
 					{
 						$supported = true;
 					}
-				case "NOT_EMPTY":
+				case 'NOT_EMPTY':
 					if(!empty($input))
 					{
 						$supported = true;
 					}
-				case "":
+				case '':
 					$supported = true;
 					break;
 			}

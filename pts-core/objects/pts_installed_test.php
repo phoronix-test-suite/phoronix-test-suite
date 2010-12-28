@@ -20,7 +20,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-pts_load_xml_definitions("test-installation.xml");
+pts_load_xml_definitions('test-installation.xml');
 
 class pts_installed_test
 {
@@ -31,7 +31,7 @@ class pts_installed_test
 	{
 		$this->identifier = $test_profile->get_identifier();
 		$install_path = $test_profile->get_install_dir();
-		$read_xml = is_file($install_path . "pts-install.xml") ? $install_path . "pts-install.xml" : null;
+		$read_xml = is_file($install_path . 'pts-install.xml') ? $install_path . 'pts-install.xml' : null;
 		$this->xml_parser = new nye_XmlReader($read_xml);
 	}
 	public function get_install_date_time()

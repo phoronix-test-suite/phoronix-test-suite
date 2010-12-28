@@ -108,7 +108,7 @@ class pts_openbenchmarking_client
 	{
 		if($repos == null)
 		{
-			if(define("HAS_REFRESHED_OBO_LIST", true) == false)
+			if(define('HAS_REFRESHED_OBO_LIST', true) == false)
 			{
 				return true;
 			}
@@ -120,13 +120,13 @@ class pts_openbenchmarking_client
 		{
 			pts_file_io::mkdir(PTS_OPENBENCHMARKING_SCRATCH_PATH . $repo_name);
 
-			if($repo_name == "local")
+			if($repo_name == 'local')
 			{
 				// Local is a special case, not actually a real repository
 				continue;
 			}
 
-			$index_file = PTS_OPENBENCHMARKING_SCRATCH_PATH . $repo_name . ".index";
+			$index_file = PTS_OPENBENCHMARKING_SCRATCH_PATH . $repo_name . '.index';
 
 			if(is_file($index_file))
 			{
@@ -157,7 +157,7 @@ class pts_openbenchmarking_client
 			return true;
 		}
 
-		$file = PTS_OPENBENCHMARKING_SCRATCH_PATH . $qualified_identifier . ".zip";
+		$file = PTS_OPENBENCHMARKING_SCRATCH_PATH . $qualified_identifier . '.zip';
 
 		if(!is_file($file))
 		{
@@ -188,7 +188,7 @@ class pts_openbenchmarking_client
 			return true;
 		}
 
-		$file = PTS_OPENBENCHMARKING_SCRATCH_PATH . $qualified_identifier . ".zip";
+		$file = PTS_OPENBENCHMARKING_SCRATCH_PATH . $qualified_identifier . '.zip';
 
 		if(!is_file($file))
 		{
@@ -259,7 +259,7 @@ class pts_openbenchmarking_client
 
 		foreach($repos as $repo)
 		{
-			if($repo == "local")
+			if($repo == 'local')
 			{
 				if(is_file(PTS_TEST_PROFILE_PATH . $repo . '/' . $test . '/test-definition.xml'))
 				{
@@ -360,16 +360,16 @@ class pts_openbenchmarking_client
 	public static function request_gsid()
 	{
 		$upload_data = array(
-			"client_version" => PTS_VERSION,
-			"client_os" => phodevi::read_property("system", "vendor-identifier")
+			'client_version' => PTS_VERSION,
+			'client_os' => phodevi::read_property('system', 'vendor-identifier')
 			);
-		$gsid = pts_network::http_upload_via_post(pts_openbenchmarking::openbenchmarking_host() . "extern/request-gsid.php", $upload_data);
+		$gsid = pts_network::http_upload_via_post(pts_openbenchmarking::openbenchmarking_host() . 'extern/request-gsid.php', $upload_data);
 
 		return pts_openbenchmarking::is_valid_gsid_format($gsid) ? $gsid : false;
 	}
 	public static function linked_repositories()
 	{
-		return array("local", "pts");
+		return array('local', 'pts');
 	}
 }
 

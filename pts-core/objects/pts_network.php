@@ -24,7 +24,7 @@ class pts_network
 {
 	public static function http_get_contents($url, $override_proxy = false, $override_proxy_port = false)
 	{
-		if(defined("NO_NETWORK_COMMUNICATION"))
+		if(defined('NO_NETWORK_COMMUNICATION'))
 		{
 			return false;
 		}
@@ -36,27 +36,27 @@ class pts_network
 	}
 	public static function http_upload_via_post($url, $to_post_data)
 	{
-		if(defined("NO_NETWORK_COMMUNICATION"))
+		if(defined('NO_NETWORK_COMMUNICATION'))
 		{
 			return false;
 		}
 
 		$upload_data = http_build_query($to_post_data);
-		$http_parameters = array("http" => array("method" => "POST", "content" => $upload_data));
+		$http_parameters = array('http' => array('method' => 'POST', 'content' => $upload_data));
 		$stream_context = pts_network::stream_context_create($http_parameters);
-		$opened_url = @fopen($url, "rb", false, $stream_context);
+		$opened_url = @fopen($url, 'rb', false, $stream_context);
 		$response = @stream_get_contents($opened_url);
 
 		return $response;
 	}
 	public static function download_file($download, $to)
 	{
-		if(defined("NO_NETWORK_COMMUNICATION"))
+		if(defined('NO_NETWORK_COMMUNICATION'))
 		{
 			return false;
 		}
 
-		if(function_exists("curl_init"))
+		if(function_exists('curl_init'))
 		{
 			$return_state = pts_network::curl_download($download, $to);
 		}
@@ -65,7 +65,7 @@ class pts_network
 			$return_state = pts_network::stream_download($download, $to);
 		}
 
-		//echo "\nPHP CURL must either be installed or you must adjust your PHP settings file to support opening FTP/HTTP streams.\n";
+		//echo '\nPHP CURL must either be installed or you must adjust your PHP settings file to support opening FTP/HTTP streams.\n';
 		//return false;
 
 		if($return_state == true)
@@ -75,7 +75,7 @@ class pts_network
 	}
 	public static function curl_download($download, $download_to)
 	{
-		if(!function_exists("curl_init"))
+		if(!function_exists('curl_init'))
 		{
 			return false;
 		}
@@ -88,38 +88,38 @@ class pts_network
 		curl_setopt($cr, CURLOPT_URL, $download);
 		curl_setopt($cr, CURLOPT_HEADER, false);
 		curl_setopt($cr, CURLOPT_FOLLOWLOCATION, true);
-		curl_setopt($cr, CURLOPT_CONNECTTIMEOUT, (defined("NETWORK_TIMEOUT") ? NETWORK_TIMEOUT : 20));
-		curl_setopt($cr, CURLOPT_CAPATH, PTS_CORE_STATIC_PATH . "certificates/");
+		curl_setopt($cr, CURLOPT_CONNECTTIMEOUT, (defined('NETWORK_TIMEOUT') ? NETWORK_TIMEOUT : 20));
+		curl_setopt($cr, CURLOPT_CAPATH, PTS_CORE_STATIC_PATH . 'certificates/');
 		curl_setopt($cr, CURLOPT_BUFFERSIZE, 64000);
 		curl_setopt($cr, CURLOPT_USERAGENT, pts_codename(true));
 
-		if(stripos($download, "sourceforge") === false)
+		if(stripos($download, 'sourceforge') === false)
 		{
 			// Setting the referer causes problems for SourceForge downloads
-			curl_setopt($cr, CURLOPT_REFERER, "http://www.phoronix-test-suite.com/");
+			curl_setopt($cr, CURLOPT_REFERER, 'http://www.phoronix-test-suite.com/');
 		}
 
-		if(strpos($download, "https://www.openbenchmarking.org/") !== false)
+		if(strpos($download, 'https://www.openbenchmarking.org/') !== false)
 		{
 			curl_setopt($cr, CURLOPT_SSL_VERIFYPEER, true);
 			curl_setopt($cr, CURLOPT_SSL_VERIFYHOST, 2);
-			curl_setopt($cr, CURLOPT_CAINFO, PTS_CORE_STATIC_PATH . "certificates/openbenchmarking-server.pem");
+			curl_setopt($cr, CURLOPT_CAINFO, PTS_CORE_STATIC_PATH . 'certificates/openbenchmarking-server.pem');
 		}
-		else if(strpos($download, "https://www.phoromatic.com/") !== false)
+		else if(strpos($download, 'https://www.phoromatic.com/') !== false)
 		{
 			curl_setopt($cr, CURLOPT_SSL_VERIFYPEER, true);
 			curl_setopt($cr, CURLOPT_SSL_VERIFYHOST, 2);
-			curl_setopt($cr, CURLOPT_CAINFO, PTS_CORE_STATIC_PATH . "certificates/phoromatic-com.pem");
+			curl_setopt($cr, CURLOPT_CAINFO, PTS_CORE_STATIC_PATH . 'certificates/phoromatic-com.pem');
 		}
 
 		if(PHP_VERSION_ID >= 50300)
 		{
 			// CURLOPT_PROGRESSFUNCTION only seems to work with PHP 5.3+
 			curl_setopt($cr, CURLOPT_NOPROGRESS, false);
-			curl_setopt($cr, CURLOPT_PROGRESSFUNCTION, array("pts_network", "curl_status_callback"));
+			curl_setopt($cr, CURLOPT_PROGRESSFUNCTION, array('pts_network', 'curl_status_callback'));
 		}
 
-		if(defined("NETWORK_PROXY"))
+		if(defined('NETWORK_PROXY'))
 		{
 			curl_setopt($cr, CURLOPT_PROXY, NETWORK_PROXY);
 		}
@@ -130,19 +130,19 @@ class pts_network
 
 		return true;
 	}
-	public static function stream_download($download, $download_to, $stream_context_parameters = null, $callback_function = array("pts_network", "stream_status_callback"))
+	public static function stream_download($download, $download_to, $stream_context_parameters = null, $callback_function = array('pts_network', 'stream_status_callback'))
 	{
 		$stream_context = pts_network::stream_context_create($stream_context_parameters);
-		stream_context_set_params($stream_context, array("notification" => $callback_function));
+		stream_context_set_params($stream_context, array('notification' => $callback_function));
 
 		/*
-		if(strpos($download, "https://www.openbenchmarking.org/") !== false)
+		if(strpos($download, 'https://www.openbenchmarking.org/') !== false)
 		{
-			stream_context_set_option($stream_context, 'ssl', 'local_cert', PTS_CORE_STATIC_PATH . "certificates/openbenchmarking-server.pem");
+			stream_context_set_option($stream_context, 'ssl', 'local_cert', PTS_CORE_STATIC_PATH . 'certificates/openbenchmarking-server.pem');
 		}
-		else if(strpos($download, "https://www.phoromatic.com/") !== false)
+		else if(strpos($download, 'https://www.phoromatic.com/') !== false)
 		{
-			stream_context_set_option($stream_context, 'ssl', 'local_cert', PTS_CORE_STATIC_PATH . "certificates/phoromatic-com.pem");
+			stream_context_set_option($stream_context, 'ssl', 'local_cert', PTS_CORE_STATIC_PATH . 'certificates/phoromatic-com.pem');
 		}
 		*/
 
@@ -162,7 +162,7 @@ class pts_network
 			$parameters = array();
 		}
 
-		if($proxy_address == false && $proxy_port == false && defined("NETWORK_PROXY"))
+		if($proxy_address == false && $proxy_port == false && defined('NETWORK_PROXY'))
 		{
 			$proxy_address = NETWORK_PROXY_ADDRESS;
 			$proxy_port = NETWORK_PROXY_PORT;
@@ -170,13 +170,13 @@ class pts_network
 
 		if($proxy_address != false && $proxy_port != false && is_numeric($proxy_port))
 		{
-			$parameters["http"]["proxy"] = "tcp://" . $proxy_address . ":" . $proxy_port;
-			$parameters["http"]["request_fulluri"] = true;
+			$parameters['http']['proxy'] = 'tcp://' . $proxy_address . ':' . $proxy_port;
+			$parameters['http']['request_fulluri'] = true;
 		}
 
-		$parameters["http"]["timeout"] = defined("NETWORK_TIMEOUT") ? NETWORK_TIMEOUT : 20;
-		$parameters["http"]["user_agent"] = pts_codename(true);
-		$parameters["http"]["header"] = "Content-Type: application/x-www-form-urlencoded\r\n";
+		$parameters['http']['timeout'] = defined('NETWORK_TIMEOUT') ? NETWORK_TIMEOUT : 20;
+		$parameters['http']['user_agent'] = pts_codename(true);
+		$parameters['http']['header'] = "Content-Type: application/x-www-form-urlencoded\r\n";
 
 		$stream_context = stream_context_create($parameters);
 

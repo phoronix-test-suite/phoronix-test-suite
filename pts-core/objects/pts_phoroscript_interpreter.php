@@ -28,9 +28,9 @@ class pts_phoroscript_interpreter
 
 	public function __construct($script, $env_vars = null, $set_current_path = null)
 	{
-		if(!isset($env_vars["HOME"]))
+		if(!isset($env_vars['HOME']))
 		{
-			$env_vars["HOME"] = $set_current_path;
+			$env_vars['HOME'] = $set_current_path;
 		}
 
 		$this->environmental_variables = ($env_vars == null ? pts_client::environmental_variables() : array_merge(pts_client::environmental_variables(), $env_vars));

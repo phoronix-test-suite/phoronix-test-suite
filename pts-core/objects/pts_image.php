@@ -25,7 +25,7 @@ class pts_image
 	public static function imagecreatefromtga($tga_file)
 	{
 		// There is no mainline PHP GD support for reading TGA at this time
-		$handle = fopen($tga_file, "rb");
+		$handle = fopen($tga_file, 'rb');
 		$data = fread($handle, filesize($tga_file));
 		fclose($handle);
 	   
@@ -63,14 +63,14 @@ class pts_image
 
 		switch(strtolower(pts_arrays::last_element(explode('.', $img_file))))
 		{
-			case "tga":
+			case 'tga':
 				$img = pts_image::imagecreatefromtga($img_file);
 				break;
-			case "png":
+			case 'png':
 				$img = imagecreatefrompng($img_file);
 				break;
-			case "jpg":
-			case "jpeg":
+			case 'jpg':
+			case 'jpeg':
 				$img = imagecreatefromjpeg($img_file);
 				break;
 		}

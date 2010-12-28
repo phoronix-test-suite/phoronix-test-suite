@@ -42,7 +42,7 @@ class pts_result_file_analyze_manager
 		$total_objects = count($this->test_results);
 		$this->test_results[$total_objects] = $mto;
 
-		$attributes = array_reverse(explode(" - ", $mto->get_arguments_description()));
+		$attributes = array_reverse(explode(' - ', $mto->get_arguments_description()));
 		$attributes_clean = array();
 
 		for($i = 0; $i < count($attributes); $i++)
@@ -72,7 +72,7 @@ class pts_result_file_analyze_manager
 					// Stub, no similar results to analyze
 					array_push($return_results, $this->test_results[$tests_of_same_name_and_version[0][0]]);
 				}
-				else if(in_array($this->test_results[$tests_of_same_name_and_version[0][0]]->test_profile->get_display_format(), array("IMAGE_COMPARISON", "LINE_GRAPH")))
+				else if(in_array($this->test_results[$tests_of_same_name_and_version[0][0]]->test_profile->get_display_format(), array('IMAGE_COMPARISON', 'LINE_GRAPH')))
 				{
 					foreach($tests_of_same_name_and_version as $add)
 					{
@@ -103,7 +103,7 @@ class pts_result_file_analyze_manager
 								{
 									$this_index = pts_arrays::last_element(array_keys($diff));
 									//$this_index_value = $diff[$this_index];
-									$index_id = implode(",", array($test_name, $test_version, $this_index));
+									$index_id = implode(',', array($test_name, $test_version, $this_index));
 
 									if(in_array($index_id, $compared_to_index))
 									{
@@ -157,7 +157,7 @@ class pts_result_file_analyze_manager
 							$do_line_graph = true;
 							foreach($similar_ids_names as $id_name_check)
 							{
-								if(str_ireplace(array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, "x", "M", "K", "B", " "), "", $id_name_check) != null)
+								if(str_ireplace(array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'x', 'M', 'K', 'B', ' '), null, $id_name_check) != null)
 								{
 									$do_line_graph = false;
 									break;
@@ -169,13 +169,13 @@ class pts_result_file_analyze_manager
 								$do_line_graph = false;
 							}
 
-							$mto->test_profile->set_display_format(($do_line_graph ? "LINE_GRAPH" : "BAR_ANALYZE_GRAPH"));
-							$mto->set_used_arguments_description($diff_index . " Analysis");
-							$mto->test_profile->set_result_scale($mto->test_profile->get_result_scale() . " | " . implode(",", $similar_ids_names));
+							$mto->test_profile->set_display_format(($do_line_graph ? 'LINE_GRAPH' : 'BAR_ANALYZE_GRAPH'));
+							$mto->set_used_arguments_description($diff_index . ' Analysis');
+							$mto->test_profile->set_result_scale($mto->test_profile->get_result_scale() . ' | ' . implode(',', $similar_ids_names));
 
 							foreach($results as $identifier => $values)
 							{
-								$mto->test_result_buffer->add_test_result($identifier, implode(",", $values), null);
+								$mto->test_result_buffer->add_test_result($identifier, implode(',', $values), null);
 							}
 
 							array_push($return_results, $mto);

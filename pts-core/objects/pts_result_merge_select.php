@@ -42,7 +42,7 @@ class pts_result_merge_select
 	}
 	public function __toString()
 	{
-		return $this->get_result_file() . ":" . $this->get_selected_identifiers();
+		return $this->get_result_file() . ':' . $this->get_selected_identifiers();
 	}
 	public function rename_identifier($new_name)
 	{

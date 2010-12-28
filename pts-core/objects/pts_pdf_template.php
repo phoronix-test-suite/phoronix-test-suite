@@ -22,12 +22,12 @@
 
 class pts_pdf_template extends FPDF
 {
-	private $pts_title = "";
-	private $pts_sub_title = "";
+	private $pts_title = '';
+	private $pts_sub_title = '';
 	private $pdf_bookmarks = array();
 	private $pdf_bookmarks_outline_object_n = 0;
 
-	public function __construct($Title = "", $SubTitle = "")
+	public function __construct($Title = '', $SubTitle = '')
 	{
 		parent::__construct();
 
@@ -35,7 +35,7 @@ class pts_pdf_template extends FPDF
 		$this->pts_sub_title = $SubTitle;
 
 		$this->SetTitle($Title);
-		$this->SetAuthor("Phoronix Test Suite");
+		$this->SetAuthor('Phoronix Test Suite');
 		$this->SetCreator(pts_codename(true));
 		$this->SetCompression(false);
 	}
@@ -98,7 +98,7 @@ class pts_pdf_template extends FPDF
 					break;
 				case 'ol':
 				case 'ul':
-					$this->SetFont("Arial", null, 11);
+					$this->SetFont('Arial', null, 11);
 					$this->SetLeftMargin(30);
 					$this->SetTextColor(0, 0, 0);
 
@@ -119,7 +119,7 @@ class pts_pdf_template extends FPDF
 					$this->Ln();
 					break;
 				case 'p':
-					$this->SetFont("Arial", null, 11);
+					$this->SetFont('Arial', null, 11);
 					$this->SetLeftMargin(20);
 					$this->SetTextColor(0, 0, 0);
 					$this->Ln();
@@ -175,17 +175,17 @@ class pts_pdf_template extends FPDF
 			return;
 		}
 
-		if(is_file(PTS_CORE_STATIC_PATH . "images/pts-158x82.jpg"))
+		if(is_file(PTS_CORE_STATIC_PATH . 'images/pts-158x82.jpg'))
 		{
-			$this->Image(PTS_CORE_STATIC_PATH . "images/pts-158x82.jpg", 10, 8, 30);
+			$this->Image(PTS_CORE_STATIC_PATH . 'images/pts-158x82.jpg', 10, 8, 30);
 		}
 
-		$this->SetFont("Arial", "B", 14);
+		$this->SetFont('Arial', 'B', 14);
 		$this->Cell(80);
-		$this->Cell(30, 10, $this->pts_title, 0, 0, "C");
+		$this->Cell(30, 10, $this->pts_title, 0, 0, 'C');
 		$this->Ln(6);
-		$this->SetFont("Arial", "B", 10);
-		$this->Cell(0, 10, $this->pts_sub_title, 0, 0, "C");
+		$this->SetFont('Arial', 'B', 10);
+		$this->Cell(0, 10, $this->pts_sub_title, 0, 0, 'C');
 		$this->Ln(15);
 	}
 	public function Footer()
@@ -196,53 +196,53 @@ class pts_pdf_template extends FPDF
 		}
 
 		$this->SetY(-10);
-		$this->SetFont("Arial", "B", 7);
-		$this->Cell(0, 0, pts_title(), 0, 0, "L");
-		$this->Cell(0, 0, "www.phoronix-test-suite.com", 0, 0, "R", true, 'http://www.phoronix-test-suite.com/');
+		$this->SetFont('Arial', 'B', 7);
+		$this->Cell(0, 0, pts_title(), 0, 0, 'L');
+		$this->Cell(0, 0, 'www.phoronix-test-suite.com', 0, 0, 'R', true, 'http://www.phoronix-test-suite.com/');
 	}
 	public function WriteBigHeaderCenter($Header)
 	{
-		$this->WriteBigHeader($Header, "C");
+		$this->WriteBigHeader($Header, 'C');
 	}
-	public function WriteBigHeader($Header, $Align = "L")
+	public function WriteBigHeader($Header, $Align = 'L')
 	{
-		$this->SetFont("Arial", "B", 21);
+		$this->SetFont('Arial', 'B', 21);
 		$this->SetFillColor(255, 255, 255);
 		$this->Cell(0, 6, $Header, 0, 0, $Align, true);
 		$this->Ln(15);
 	}
 	public function WriteHeaderCenter($Header)
 	{
-		$this->WriteHeader($Header, "C");
+		$this->WriteHeader($Header, 'C');
 	}
-	public function WriteHeader($Header, $Align = "L")
+	public function WriteHeader($Header, $Align = 'L')
 	{
-		$this->SetFont("Arial", "B", 16);
+		$this->SetFont('Arial', 'B', 16);
 		$this->SetFillColor(255, 255, 255);
 		$this->Cell(0, 6, $Header, 0, 0, $Align, true);
 		$this->Ln(10);
 	}
 	public function WriteStatementCenter($Header)
 	{
-		$this->WriteStatement($Header, "C");
+		$this->WriteStatement($Header, 'C');
 	}
-	public function WriteStatement($Header, $Align = "L", $Link = null)
+	public function WriteStatement($Header, $Align = 'L', $Link = null)
 	{
-		$this->SetFont("Arial", "B", 14);
+		$this->SetFont('Arial', 'B', 14);
 		$this->SetFillColor(255, 255, 255);
 		$this->Cell(0, 2, $Header, 0, 0, $Align, true, $Link);
 		$this->Ln(10);
 	}
 	public function WriteMiniHeader($Header)
 	{
-		$this->SetFont("Arial", "B", 13);
+		$this->SetFont('Arial', 'B', 13);
 		$this->SetFillColor(255, 255, 255);
-		$this->Cell(0, 2, $Header, 0, 0, "L", true);
+		$this->Cell(0, 2, $Header, 0, 0, 'L', true);
 		$this->Ln(5);
 	}
 	public function WriteDocHeader($Header, $Options = null)
 	{
-		$this->SetFont("Arial", "B", 12);
+		$this->SetFont('Arial', 'B', 12);
 		$this->SetFillColor(255, 255, 255);
 		$this->Write(12, $Header);
 
@@ -257,23 +257,23 @@ class pts_pdf_template extends FPDF
 	}
 	public function WriteDocText($Text)
 	{
-		$this->SetFont("Arial", "", 10);
+		$this->SetFont('Arial', '', 10);
 		$this->MultiCell(0, 5, $Text);
 	}
 	public function WriteText($Text)
 	{
-		$this->SetFont("Arial", "", 11);
+		$this->SetFont('Arial', '', 11);
 		$this->MultiCell(0, 5, $Text);
 		$this->Ln();
 	}
-	public function ResultTable($headers, $data, $left_headers = "")
+	public function ResultTable($headers, $data, $left_headers = '')
 	{
 		$this->Ln(20);
 		$this->SetFillColor(0, 0, 0);
 		$this->SetTextColor(255, 255, 255);
 		$this->SetDrawColor(34, 34, 34);
 		$this->SetLineWidth(0.3);
-		$this->SetFont("Arial", "B");
+		$this->SetFont('Arial', 'B');
 
 		$cell_width = 50;
 		$cell_large_width = $cell_width * 1.20;
@@ -281,27 +281,27 @@ class pts_pdf_template extends FPDF
 
 		if(is_array($left_headers) && count($left_headers) > 0)
 		{
-			$this->Cell($cell_large_width, 7, "", 1, 0, "C", true);
+			$this->Cell($cell_large_width, 7, '', 1, 0, 'C', true);
 			$table_width += $cell_large_width;
 		}
 
 		for($i = 0; $i < count($headers); $i++)
 		{
-			$this->Cell($cell_width, 7, $headers[$i], 1, 0, "C", true);
+			$this->Cell($cell_width, 7, $headers[$i], 1, 0, 'C', true);
 		}
 
 		$this->Ln();
 
 		$this->SetFillColor(139, 143, 124);
 		$this->SetTextColor(0);
-		$this->SetFont("Arial");
+		$this->SetFont('Arial');
 
 		$fill = false;
 		for($i = 0; $i < count($data) || $i < count($left_headers); $i++)
 		{
 			if(isset($left_headers[$i]))
 			{
-				$this->Cell($cell_large_width, 6, $left_headers[$i], "LR", 0, "L", $fill);
+				$this->Cell($cell_large_width, 6, $left_headers[$i], 'LR', 0, 'L', $fill);
 			}
 
 			if(!isset($data[$i]))
@@ -311,13 +311,13 @@ class pts_pdf_template extends FPDF
 
 			for($j = 0; $j < count($data[$i]); $j++)
 			{
-				$this->Cell($cell_width, 6, $data[$i][$j], "LR", 0, "L", $fill);
+				$this->Cell($cell_width, 6, $data[$i][$j], 'LR', 0, 'L', $fill);
 			}
 
 			$this->Ln();
 			$fill = !$fill;
 		}
-		$this->Cell($table_width + (count($data[0]) * $cell_width), 0, "", "T");
+		$this->Cell($table_width + (count($data[0]) * $cell_width), 0, '', 'T');
 	}
 	public function _putinfo()
 	{
