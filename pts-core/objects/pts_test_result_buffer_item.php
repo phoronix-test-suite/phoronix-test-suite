@@ -52,6 +52,18 @@ class pts_test_result_buffer_item
 	{
 		return strtolower($this->get_result_identifier());
 	}
+	public static function compare_value($a, $b)
+	{
+		$a = $a->get_result_value();
+		$b = $b->get_result_value();
+
+		if($a == $b)
+		{
+			return 0;
+		}
+
+		return $a < $b ? -1 : 1;
+	}
 }
 
 ?>

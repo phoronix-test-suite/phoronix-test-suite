@@ -208,6 +208,24 @@ class pts_render
 		{
 			$graph->setAlternateLocation($extra_attributes['set_alternate_location']);
 		}
+		if(isset($extra_attributes['sort_result_buffer_values']))
+		{
+			$result_object->test_result_buffer->buffer_values_sort();
+
+			if($result_object->test_profile->get_result_proportion() == 'HIB')
+			{
+				$result_object->test_result_buffer->buffer_values_reverse();
+			}
+		}
+
+		if(isset($extra_attributes['highlight_graph_values']))
+		{
+			$graph->highlight_values($extra_attributes['highlight_graph_values']);
+		}
+		else if(PTS_IS_CLIENT)
+		{
+			$graph->highlight_values(pts_strings::comma_explode(pts_client::read_env('GRAPH_HIGHLIGHT')));
+		}
 
 		switch($display_format)
 		{

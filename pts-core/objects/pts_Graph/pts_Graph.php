@@ -109,6 +109,7 @@ abstract class pts_Graph
 	private $test_identifier = null;
 	protected $iveland_view = false;
 	protected $link_alternate_table = null;
+	protected $value_highlights = array();
 
 	public function __construct(&$result_object = null, &$result_file = null)
 	{
@@ -450,6 +451,10 @@ abstract class pts_Graph
 		}
 
 		return $font_size;
+	}
+	public function highlight_values($values)
+	{
+		$this->value_highlights = $values;
 	}
 	protected function find_longest_string(&$string_r)
 	{

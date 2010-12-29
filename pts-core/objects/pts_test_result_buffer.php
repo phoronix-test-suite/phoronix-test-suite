@@ -157,6 +157,14 @@ class pts_test_result_buffer
 			}
 		}
 	}
+	public function buffer_values_sort()
+	{
+		usort($this->buffer_items, array('pts_test_result_buffer_item', 'compare_value'));
+	}
+	public function buffer_values_reverse()
+	{
+		$this->buffer_items = array_reverse($this->buffer_items);
+	}
 	public function get_count()
 	{
 		return count($this->buffer_items);

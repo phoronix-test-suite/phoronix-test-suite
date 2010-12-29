@@ -64,7 +64,6 @@ class pts_HorizontalBarGraph extends pts_Graph
 		$separator_height = ($a = (6 - (floor($bar_count / 2) * 2))) > 0 ? $a : 0;
 		$multi_way = $this->is_multi_way_comparison && count($this->graph_data) > 1;
 		$bar_height = floor(($this->identifier_height - ($multi_way ? 4 : 0) - $separator_height - ($bar_count * $separator_height)) / $bar_count);
-		$highlight_bar = PTS_IS_CLIENT ? pts_strings::comma_explode(pts_client::read_env('GRAPH_HIGHLIGHT')) : array();
 
 		for($i_o = 0; $i_o < $bar_count; $i_o++)
 		{
@@ -88,7 +87,7 @@ class pts_HorizontalBarGraph extends pts_Graph
 				$title_tooltip = $this->graph_identifiers[$i] . ': ' . $value;
 				$std_error = isset($this->graph_data_raw[$i_o][$i]) ? pts_math::standard_error(pts_strings::colon_explode($this->graph_data_raw[$i_o][$i])) : 0;
 
-				$this->graph_image->draw_rectangle_with_border($this->graph_left_start, $px_bound_top, $value_end_left, $px_bound_bottom, in_array($this->graph_identifiers[$i], $highlight_bar) ? $this->graph_color_alert : $paint_color, $this->graph_color_body_light, $title_tooltip);
+				$this->graph_image->draw_rectangle_with_border($this->graph_left_start, $px_bound_top, $value_end_left, $px_bound_bottom, in_array($this->graph_identifiers[$i], $this->value_highlights) ? $this->graph_color_highlight : $paint_color, $this->graph_color_body_light, $title_tooltip);
 
 				if($std_error > 0.01)
 				{
