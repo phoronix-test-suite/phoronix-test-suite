@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 - pts-core: Fixes for using the local test profile/suite repository
 - pts-core: More minor performance optimizations along common OpenBenchmarking.org code paths
 - pts_Graph: Underlying fixes for OpenBenchmarking.org
+- phodevi: Improve NVIDIA GPU model detection when missing glxinfo
 
 Phoronix Test Suite 3.0 Alpha 5
 27 December 2010

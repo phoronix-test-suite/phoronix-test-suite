@@ -770,6 +770,29 @@ class phodevi_gpu extends phodevi_device_interface
 		}
 		else if(IS_NVIDIA_GRAPHICS)
 		{
+			if($info == null)
+			{
+				if(pts_client::executable_in_path('nvidia-settings'))
+				{
+					$nv_gpus = shell_exec('nvidia-settings -q gpus 2>&1');
+
+					// TODO: search for more than one GPU
+					$nv_gpus = substr($nv_gpus, strpos($nv_gpus, '[0]'));
+					$nv_gpus = substr($nv_gpus, strpos($nv_gpus, '(') + 1);
+					$nv_gpus = substr($nv_gpus, 0, strpos($nv_gpus, ')'));
+
+					if(stripos($nv_gpus, 'GeForce') !== false || stripos($nv_gpus, 'Quadro') !== false)
+					{
+						$info = $nv_gpus;
+
+						if(stripos($info, 'NVIDIA') === false)
+						{
+							$info = 'NVIDIA' . ' ' . $info;
+						}
+					}
+				}
+			}
+
 			$sli_mode = phodevi_parser::read_nvidia_extension('SLIMode');
 
 			if(!empty($sli_mode) && $sli_mode != 'Off')
