@@ -99,7 +99,7 @@ class pts_render
 
 		return $graph;
 	}
-	public static function render_graph_process(&$result_object, &$result_file = null, $save_as = false, $extra_attributes = null)
+	public static function multi_way_compact(&$result_file, &$result_object)
 	{
 		if($result_file != null && ($result_file->is_multi_way_comparison() || $result_file->is_results_tracker()))
 		{
@@ -126,6 +126,10 @@ class pts_render
 				pts_render::compact_result_file_test_object($result_object, $result_table, $result_file->is_multi_way_inverted());
 			}
 		}
+	}
+	public static function render_graph_process(&$result_object, &$result_file = null, $save_as = false, $extra_attributes = null)
+	{
+		self::multi_way_compact($result_file, $result_object);
 
 		$display_format = $result_object->test_profile->get_display_format();
 		static $bar_orientation = null;
@@ -346,7 +350,7 @@ class pts_render
 
 		$test_profile = new pts_test_profile(null);
 		$test_profile->set_test_title($title);
-		$test_profile->set_result_scale($title . ' | ' . implode(',', $days_keys));
+		$test_profile->set_result_scale($title);
 		$test_profile->set_display_format('BAR_GRAPH');
 
 		$test_result = new pts_test_result($test_profile);
