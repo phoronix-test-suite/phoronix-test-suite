@@ -103,7 +103,7 @@ class pts_openbenchmarking
 				$result_file_writer->add_result_file_meta_data($result_file, $id);
 				$result_file_writer->add_system_information_from_result_file($result_file);
 				$result_file_writer->add_results_from_result_file($result_file);
-				$id = strtolower($id);
+				//$id = strtolower($id);
 
 				$valid = $return_xml ? $result_file_writer->get_xml() : pts_client::save_test_result($id . '/composite.xml', $result_file_writer->get_xml(), true);
 			}
