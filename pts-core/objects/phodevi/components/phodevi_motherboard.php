@@ -105,13 +105,13 @@ class phodevi_motherboard extends phodevi_device_interface
 		}
 		else if(IS_LINUX)
 		{
-			$vendor = phodevi_linux_parser::read_sys_dmi('board_vendor');
-			$name = phodevi_linux_parser::read_sys_dmi('board_name');
-			$version = phodevi_linux_parser::read_sys_dmi('board_version');
+			$vendor = phodevi_linux_parser::read_sys_dmi(array('board_vendor', 'sys_vendor'));
+			$name = phodevi_linux_parser::read_sys_dmi(array('board_name', 'product_name'));
+			$version = phodevi_linux_parser::read_sys_dmi(array('board_version', 'product_version'));
 
 			if($vendor != false && $name != false)
 			{
-				$info = strpos($name, $vendor . ' ') === false ? $vendor . ' ' : null;
+				$info = strpos($name . ' ', $vendor . ' ') === false ? $vendor . ' ' : null;
 				$info .= $name;
 
 				if($version != false && strpos($info, $version) === false && strlen(pts_strings::remove_from_string($version, pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DECIMAL)) == 0)
@@ -136,7 +136,7 @@ class phodevi_motherboard extends phodevi_device_interface
 
 				if(!empty($product))
 				{
-					if($vendor != false && strpos($product, $vendor . ' ') === false)
+					if($vendor != false && strpos($product . ' ', $vendor . ' ') === false)
 					{
 						$info .= $vendor . ' ';
 					}

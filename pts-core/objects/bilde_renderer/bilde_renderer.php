@@ -256,7 +256,9 @@ abstract class bilde_renderer
 			$webkit_ver = substr($user_agent, ($p + 12));
 			$webkit_ver = substr($webkit_ver, 0, strpos($webkit_ver, ' '));
 
-			if($webkit_ver < 530)
+			// Webkit 532.2 on WebOS is buggy
+			// iPhone OS is using 533 right now
+			if($webkit_ver < 533)
 			{
 				$selected_renderer = 'PNG';
 			}
