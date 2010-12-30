@@ -711,18 +711,8 @@ class phodevi_gpu extends phodevi_device_interface
 	public static function gpu_model()
 	{
 		// Report graphics processor string
-		$info = pts_client::executable_in_path('glxinfo') != false ? shell_exec('glxinfo 2>&1 | grep renderer') : null;
+		$info = phodevi_parser::read_glx_renderer();
 		$video_ram = phodevi::read_property('gpu', 'memory-capacity');
-
-		if(($pos = strpos($info, 'renderer string:')) > 0)
-		{
-			$info = substr($info, $pos + 16);
-			$info = trim(substr($info, 0, strpos($info, "\n")));
-		}
-		else
-		{
-			$info = null;
-		}
 
 		if(IS_ATI_GRAPHICS && IS_LINUX)
 		{
@@ -856,43 +846,44 @@ class phodevi_gpu extends phodevi_device_interface
 			$info = phodevi_windows_parser::read_cpuz('Display Adapters', 'Name');
 		}
 	
-		if(empty($info) || strpos($info, 'Mesa ') !== false || $info == 'Software Rasterizer')
+		if(empty($info) || strpos($info, 'Mesa ') !== false || strpos($info, 'Gallium ') !== false || $info == 'Software Rasterizer')
 		{
-			$log_parse = shell_exec('cat /var/log/Xorg.0.log 2>&1 | grep Chipset');
-			$log_parse = substr($log_parse, strpos($log_parse, 'Chipset') + 8);
-			$log_parse = substr($log_parse, 0, strpos($log_parse, 'found'));
-
-			if(strpos($log_parse, '(--)') === false && strlen(str_replace(array('ATI', 'NVIDIA', 'VIA', 'Intel'), '', $log_parse)) != strlen($log_parse))
+			if(IS_LINUX)
 			{
-				$info = $log_parse;
+				$info_pci = phodevi_linux_parser::read_pci('VGA compatible controller', false);
+
+				if(!empty($info_pci))
+				{
+					$info = $info_pci;
+				}
 			}
-			else
+
+			if(($start_pos = strpos($info, ' DRI ')) > 0)
 			{
-				if(IS_LINUX)
-				{
-					$info_pci = phodevi_linux_parser::read_pci('VGA compatible controller', false);
+				$info = substr($info, $start_pos + 5);
+			}
 
-					if(!empty($info_pci))
-					{
-						$info = $info_pci;
-					}
+			if(empty($info))
+			{
+				$log_parse = shell_exec('cat /var/log/Xorg.0.log 2>&1 | grep Chipset');
+				$log_parse = substr($log_parse, strpos($log_parse, 'Chipset') + 8);
+				$log_parse = substr($log_parse, 0, strpos($log_parse, 'found'));
+
+				if(strpos($log_parse, '(--)') === false && strlen(str_replace(array('ATI', 'NVIDIA', 'VIA', 'Intel'), '', $log_parse)) != strlen($log_parse))
+				{
+					$info = $log_parse;
 				}
+			}
 
-				if(($start_pos = strpos($info, ' DRI ')) > 0)
+			if(substr($info, -1) == ')' && ($open_p = strrpos($info, '(')) != false)
+			{
+				$end_check = strpos($info, ' ', $open_p);
+				$to_check = substr($info, ($open_p + 1), ($end_check - $open_p - 1));
+
+				// Don't report card revision from PCI info
+				if($to_check == 'rev')
 				{
-					$info = substr($info, $start_pos + 5);
-				}
-
-				if(substr($info, -1) == ')' && ($open_p = strrpos($info, '(')) != false)
-				{
-					$end_check = strpos($info, ' ', $open_p);
-					$to_check = substr($info, ($open_p + 1), ($end_check - $open_p - 1));
-
-					// Don't report card revision from PCI info
-					if($to_check == 'rev')
-					{
-						$info = substr($info, 0, $open_p - 1);
-					}
+					$info = substr($info, 0, $open_p - 1);
 				}
 			}
 		}

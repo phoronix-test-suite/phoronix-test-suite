@@ -71,6 +71,22 @@ class phodevi_parser
 
 		return $monitor_info;
 	}
+	public static function read_glx_renderer()
+	{
+		$info = pts_client::executable_in_path('glxinfo') != false ? shell_exec('glxinfo 2>&1 | grep renderer') : null;
+
+		if(($pos = strpos($info, 'renderer string:')) > 0)
+		{
+			$info = substr($info, $pos + 16);
+			$info = trim(substr($info, 0, strpos($info, "\n")));
+		}
+		else
+		{
+			$info = null;
+		}
+
+		return $info;
+	}
 	public static function read_hddtemp($disk = null)
 	{
 		// Read hard drive temperature using hddtemp

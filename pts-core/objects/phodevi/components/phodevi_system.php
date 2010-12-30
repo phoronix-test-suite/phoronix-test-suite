@@ -746,7 +746,7 @@ class phodevi_system extends phodevi_device_interface
 				{
 					$catalyst_version = phodevi_linux_parser::read_amd_pcsdb('AMDPCSROOT/SYSTEM/LDC,Catalyst_Version');
 
-					if($catalyst_version != null && $catalyst_version > 10)
+					if($catalyst_version != null && $catalyst_version > 10.5)
 					{
 						$display_driver .= ' (Catalyst ' . $catalyst_version . ')';
 					}
@@ -765,6 +765,10 @@ class phodevi_system extends phodevi_device_interface
 		{
 			$info = null; // TODO: Windows support
 		}
+		else if(pts_client::executable_in_path('nvidia-settings'))
+		{
+			$info = phodevi_parser::read_nvidia_extension('OpenGLVersion');
+		}
 		else if(pts_client::executable_in_path('glxinfo'))
 		{
 			$info = phodevi_parser::software_glxinfo_version();
@@ -773,10 +777,15 @@ class phodevi_system extends phodevi_device_interface
 			{
 				$info = substr($info, 0, $pos);
 			}
-		}
-		else if(pts_client::executable_in_path('nvidia-settings'))
-		{
-			$info = phodevi_parser::read_nvidia_extension('OpenGLVersion');
+
+			$renderer = phodevi_parser::read_glx_renderer();
+
+			if(($s = strpos($renderer, 'Gallium')) !== false)
+			{
+				$renderer = substr($renderer, $s);
+				$renderer = substr($renderer, 0, strpos($renderer, ' ', strpos($renderer, '.')));
+				$info .= ' (' . $renderer . ')';
+			}
 		}
 
 		return $info;

@@ -8,6 +8,8 @@ Phoronix Test Suite (Git)
 - pts-core: Fix crashes when using build-suite and result-file-to-suite commands
 - pts_Graph: Underlying fixes for OpenBenchmarking.org
 - phodevi: Improve NVIDIA GPU model detection when missing glxinfo
+- phodevi: Append Gallium3D version number to OpenGL strng
+- phodevi: Ensure more accurate GPU name reporting than codenames when using Gallum3D drivers
 
 Phoronix Test Suite 3.0 Alpha 5
 27 December 2010
