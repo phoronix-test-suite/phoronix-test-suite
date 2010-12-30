@@ -59,7 +59,8 @@ class result_file_to_suite implements pts_option_interface
 		}
 
 		// Finish it off
-		$suite_identifier = pts_test_run_manager::clean_save_name_string($suite_name);
+		$suite_identifier = pts_test_run_manager::clean_save_name($suite_name);
+		mkdir(PTS_TEST_SUITE_PATH . "local/" . $suite_identifier);
 		$save_to = PTS_TEST_SUITE_PATH . "local/" . $suite_identifier . "/suite-definition.xml";
 
 		if($suite_writer->save_xml($save_to) != false)

@@ -111,6 +111,10 @@ class pts_result_file_merge_manager
 				{
 					$skip_adding = true;
 				}
+				else if($this->skip_adding_on_extra_sets && $this->sets_added > 0)
+				{
+					$skip_adding = true;
+				}
 
 				$result_buffer = $merge_test_object->test_result_buffer;
 				$merge_test_object->test_result_buffer = new pts_test_result_buffer();

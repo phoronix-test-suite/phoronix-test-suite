@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 - pts-core: Fixes for using the local test profile/suite repository
 - pts-core: More minor performance optimizations along common OpenBenchmarking.org code paths
 - pts-core: External dependencies support for Amazon Linux AMI on EC2 Cloud Service
+- pts-core: Fix crashes when using build-suite and result-file-to-suite commands
 - pts_Graph: Underlying fixes for OpenBenchmarking.org
 - phodevi: Improve NVIDIA GPU model detection when missing glxinfo
 
