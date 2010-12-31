@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2010, Phoronix Media
-	Copyright (C) 2008 - 2010, Michael Larabel
+	Copyright (C) 2008 - 2011, Phoronix Media
+	Copyright (C) 2008 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@ class pts_tests
 	{
 		$cleaned_tests = array();
 
-		foreach(pts_file_io::glob(PTS_TEST_INSTALL_PATH . '*/') as $repo_path)
+		foreach(pts_file_io::glob(PTS_TEST_INSTALL_PATH . '*/*') as $repo_path)
 		{
 			$repo = basename($repo_path);
 			foreach(pts_file_io::glob($repo . '/*') as $identifier_path)
