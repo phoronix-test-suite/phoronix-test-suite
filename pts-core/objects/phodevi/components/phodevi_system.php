@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2010, Phoronix Media
-	Copyright (C) 2008 - 2010, Michael Larabel
+	Copyright (C) 2008 - 2011, Phoronix Media
+	Copyright (C) 2008 - 2011, Michael Larabel
 	phodevi_system.php: The PTS Device Interface object for the system software
 
 	This program is free software; you can redistribute it and/or modify
@@ -184,6 +184,30 @@ class phodevi_system extends phodevi_device_interface
 
 			switch($fs)
 			{
+				case 'ext2/ext3':
+					if(is_readable('/proc/mounts'))
+					{
+						$fstab = file_get_contents('/proc/mounts');
+						$fstab = str_replace('/boot ', 'IGNORE', $fstab);
+
+						$using_ext2 = strpos($fstab, ' ext2') !== false;
+						$using_ext3 = strpos($fstab, ' ext3') !== false;
+						$using_ext4 = strpos($fstab, ' ext4') !== false;
+
+						if(!$using_ext2 && !$using_ext3 && $using_ext4)
+						{
+							$fs = 'ext4';
+						}
+						else if(!$using_ext2 && !$using_ext4 && $using_ext3)
+						{
+							$fs = 'ext3';
+						}
+						else if(!$using_ext3 && !$using_ext4 && $using_ext2)
+						{
+							$fs = 'ext2';
+						}
+					}
+					break;
 				case 'UNKNOWN (0x9123683e)':
 					// 0x9123683e is the superblock for Btrfs
 					$fs = 'Btrfs';
@@ -212,29 +236,22 @@ class phodevi_system extends phodevi_device_interface
 					// 0x65735546 is the superblock for OpenAFS
 					$fs = 'OpenAFS';
 					break;
-				case 'ext2/ext3':
-					if(is_readable('/proc/mounts'))
-					{
-						$fstab = file_get_contents('/proc/mounts');
-						$fstab = str_replace('/boot ', 'IGNORE', $fstab);
-
-						$using_ext2 = strpos($fstab, ' ext2') !== false;
-						$using_ext3 = strpos($fstab, ' ext3') !== false;
-						$using_ext4 = strpos($fstab, ' ext4') !== false;
-
-						if(!$using_ext2 && !$using_ext3 && $using_ext4)
-						{
-							$fs = 'ext4';
-						}
-						else if(!$using_ext2 && !$using_ext4 && $using_ext3)
-						{
-							$fs = 'ext3';
-						}
-						else if(!$using_ext3 && !$using_ext4 && $using_ext2)
-						{
-							$fs = 'ext2';
-						}
-					}
+				case 'UNKNOWN (0xff534d42)':
+					// 0x65735546 is the superblock for CIFS
+					$fs = 'CIFS';
+					break;
+				case 'UNKNOWN (0x65735546)':
+					// 0x65735546 is the superblock for SSHFS
+					$fs = 'SSHFS';
+					break;
+				case 'UNKNOWN (0x5941ff53)':
+					// 0x5941ff53 is the superblock for SSHFS
+					$fs = 'YAFFS';
+					break;
+				case 'Case-sensitive Journaled HFS+':
+				case 'UNKNOWN (0x482b)':
+					// 0x482b is the superblock for HFS+
+					$fs = 'HFS+';
 					break;
 			}
 

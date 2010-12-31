@@ -14,7 +14,7 @@ Phoronix Test Suite (Git)
 - phodevi: Ensure more accurate GPU name reporting than codenames when using Gallum3D drivers
 - phodevi: More robust motherboard detection on different sysfs nodes
 - phodevi: BSD hardware detecton improvements (tested on DragonflyBSD 2.9-DEVELOPMENT)
-- phodevi: Detection support for the OpenAFS file-system
+- phodevi: Detection support for other file-systems via ther super blocks (OpenAFS, CIFS, SSHFS, etc)
 
 Phoronix Test Suite 3.0 Alpha 5
 27 December 2010
