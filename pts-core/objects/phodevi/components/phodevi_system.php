@@ -748,7 +748,7 @@ class phodevi_system extends phodevi_device_interface
 
 					if($catalyst_version != null && $catalyst_version > 10.5)
 					{
-						$display_driver .= ' (Catalyst ' . $catalyst_version . ')';
+						$display_driver .= ' Catalyst ' . $catalyst_version . '';
 					}
 				}
 			}
@@ -784,7 +784,7 @@ class phodevi_system extends phodevi_device_interface
 			{
 				$renderer = substr($renderer, $s);
 				$renderer = substr($renderer, 0, strpos($renderer, ' ', strpos($renderer, '.')));
-				$info .= ' (' . $renderer . ')';
+				$info .= ' ' . $renderer . '';
 			}
 		}
 
