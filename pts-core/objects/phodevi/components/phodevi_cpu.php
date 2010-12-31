@@ -115,6 +115,10 @@ class phodevi_cpu extends phodevi_device_interface
 				$info = isset($cpu_speeds[$cpu_core]) ? ($cpu_speeds[$cpu_core] / 1000) : 0;
 			}
 		}
+		else if(IS_BSD)
+		{
+			$info = phodevi_bsd_parser::read_sysctl(array('hw.acpi.cpu.px_global', 'machdep.est.frequency.target'));
+		}
 		else if(IS_WINDOWS)
 		{
 			$info = phodevi_windows_parser::read_cpuz('Processor 1', 'Stock frequency');

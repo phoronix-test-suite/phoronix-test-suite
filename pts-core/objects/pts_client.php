@@ -831,6 +831,11 @@ class pts_client
 				// Generate logs from system commands to backup
 				$system_log_commands = array('lspci -vvnn', 'lsusb', 'sensors', 'dmesg', 'glxinfo', 'system_profiler', 'dpkg --list');
 
+				if(IS_BSD)
+				{
+					array_push($system_log_commands, 'sysctl -a');
+				}
+
 				foreach($system_log_commands as $command_string)
 				{
 					$command = explode(' ', $command_string);

@@ -47,11 +47,11 @@ class cpu_temp implements phodevi_sensor
 		if(IS_BSD)
 		{
 
-			$cpu_temp = phodevi_bsd_parser::read_sysctl(array('dev.cpu.0.temperature', 'hw.sensors.cpu0.temp0'));
+			$cpu_temp = phodevi_bsd_parser::read_sysctl(array('hw.sensors.acpi_tz0.temp0', 'dev.cpu.0.temperature', 'hw.sensors.cpu0.temp0'));
 
 			if($cpu_temp != false)
 			{
-				if(($end = strpos($cpu_temp, 'C')) > 0 || ($end = strpos($cpu_temp, 'degC')))
+				if(($end = strpos($cpu_temp, 'degC')) || ($end = strpos($cpu_temp, 'C')) > 0)
 				{
 					$cpu_temp = substr($cpu_temp, 0, $end);
 				}

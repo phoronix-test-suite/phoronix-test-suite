@@ -98,9 +98,9 @@ class sys_temp implements phodevi_sensor
 		}
 		else if(IS_BSD)
 		{
-			$acpi = phodevi_bsd_parser::read_sysctl('hw.acpi.thermal.tz1.temperature');
+			$acpi = phodevi_bsd_parser::read_sysctl(array('hw.sensors.acpi_tz1.temp0', 'hw.acpi.thermal.tz1.temperature'));
 
-			if(($end = strpos($acpi, 'C')) > 0)
+			if(($end = strpos($acpi, ' degC')) > 0 || ($end = strpos($acpi, 'C')) > 0)
 			{
 				$acpi = substr($acpi, 0, $end);
 

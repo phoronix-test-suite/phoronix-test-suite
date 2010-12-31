@@ -22,6 +22,7 @@ controller
 express
 graphics
 dram
+none
 electronics
 integrated
 alternate
