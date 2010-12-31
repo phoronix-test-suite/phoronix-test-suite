@@ -192,6 +192,10 @@ class phodevi_system extends phodevi_device_interface
 					// 0x52345362 is the superblock for Reiser4
 					$fs = 'Reiser4';
 					break;
+				case 'UNKNOWN (0x565a4653)':
+					// 0x52345362 is the superblock for ResierFS
+					$fs = 'ReiserFS';
+					break;
 				case 'UNKNOWN (0x3434)':
 					// 0x3434 is the superblock for NILFS2
 					$fs = 'NILFS2';
@@ -203,6 +207,10 @@ class phodevi_system extends phodevi_device_interface
 				case 'UNKNOWN (0x65735546)':
 					// 0x65735546 is the superblock for the FUSE module
 					$fs = 'FUSE';
+					break;
+				case 'UNKNOWN (0x5346414f)':
+					// 0x65735546 is the superblock for OpenAFS
+					$fs = 'OpenAFS';
 					break;
 				case 'ext2/ext3':
 					if(is_readable('/proc/mounts'))
