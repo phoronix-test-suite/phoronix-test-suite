@@ -82,7 +82,7 @@ if(is_file(PTS_PATH . 'pts-core/commands/' . $sent_command . '.php') == false)
 	{
 		$replaced = true;
 	}
-	else if(strpos($argv[1], '.openbenchmarking') !== false && is_readable($argv[1]))
+	else if(isset($argv[1]) && strpos($argv[1], '.openbenchmarking') !== false && is_readable($argv[1]))
 	{
 		// OpenBenchmarking.org launcher
 		$dom = new DOMDocument();

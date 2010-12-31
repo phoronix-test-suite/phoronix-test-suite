@@ -825,10 +825,10 @@ abstract class pts_Graph
 
 		if($this->graph_orientation == 'HORIZONTAL')
 		{
-			$tick_width = ($left_end - $left_start) / $this->graph_attr_marks;
+			$tick_width = round(($left_end - $left_start) / $this->graph_attr_marks);
 			$display_value = 0;
 
-			$this->graph_image->draw_dashed_line($left_start + $tick_width, $top_end, ($left_end - 1), $top_end, $this->graph_color_notches, 10, 1, ($tick_width - 1));
+			// $this->graph_image->draw_dashed_line($left_start + $tick_width, $top_end, ($left_end - 1), $top_end, $this->graph_color_notches, 10, 1, ($tick_width));
 
 			for($i = 0; $i < $this->graph_attr_marks; $i++)
 			{
@@ -838,6 +838,8 @@ abstract class pts_Graph
 				{
 					$this->graph_image->write_text_center($display_value, $this->graph_font, $this->graph_font_size_tick_mark, $this->graph_color_text, $px_from_left, ($top_end + 5), $px_from_left, ($top_end + 5));
 					$this->graph_image->draw_dashed_line($px_from_left + 2, $top_start, $px_from_left + 2, $top_end - 5, $this->graph_color_body, 1, 5, 5);
+
+					$this->graph_image->draw_line($px_from_left + 2, $top_end - 4, $px_from_left + 2, $top_end + 4, $this->graph_color_notches, 1);
 				}
 
 				$display_value += $increment;
@@ -852,7 +854,7 @@ abstract class pts_Graph
 
 			$display_value = 0;
 
-			$this->graph_image->draw_dashed_line($left_start, $top_start + $tick_width, $left_start, ($top_end - 1), $this->graph_color_notches, 10, 1, ($tick_width - 1));
+			// $this->graph_image->draw_dashed_line($left_start, $top_start + $tick_width, $left_start, ($top_end - 1), $this->graph_color_notches, 10, 1, ($tick_width - 1));
 
 			for($i = 0; $i < $this->graph_attr_marks; $i++)
 			{
@@ -866,6 +868,8 @@ abstract class pts_Graph
 					{
 						$this->graph_image->draw_dashed_line($px_from_left_end + 6, $px_from_top + 1, $this->graph_left_end, $px_from_top + 1, $this->graph_color_body_light, 1, 5, 5);
 					}
+
+					$this->graph_image->draw_line($left_start - 4, $px_from_top + 1, $left_start + 4, $px_from_top + 1, $this->graph_color_notches, 1);
 				}
 
 				$display_value += $increment;

@@ -7,6 +7,7 @@ Phoronix Test Suite (Git)
 - pts-core: External dependencies support for Amazon Linux AMI on EC2 Cloud Service
 - pts-core: Fix crashes when using build-suite and result-file-to-suite commands
 - pts_Graph: Underlying fixes for OpenBenchmarking.org
+- pts_Graph: Properly unline background dashed lines
 - phodevi: Improve NVIDIA GPU model detection when missing glxinfo
 - phodevi: Append Gallium3D version number to OpenGL strng
 - phodevi: Ensure more accurate GPU name reporting than codenames when using Gallum3D drivers
