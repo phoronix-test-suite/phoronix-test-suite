@@ -694,6 +694,7 @@ class phodevi_gpu extends phodevi_device_interface
 							}
 						}
 					}
+					break;
 				case 'radeon':
 					if(is_file('/sys/kernel/debug/dri/0/radeon_pm_info'))
 					{
