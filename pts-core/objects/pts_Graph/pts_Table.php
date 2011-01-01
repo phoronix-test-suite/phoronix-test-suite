@@ -257,11 +257,16 @@ class pts_Table extends pts_Graph
 
 					$paint_color = $this->get_paint_color($identifier[0]);
 
+					if($this->graph_top_heading_height > 0)
+					{
+						$extra_heading_height = $this->graph_top_heading_height;
+					}
+
 					$this->graph_image->draw_rectangle_with_border(($this->graph_left_start + 1 + ($last_changed_col * $table_item_width)), 2, ($this->graph_left_start + ($last_changed_col * $table_item_width)) + ($table_item_width * ($current_col - $last_changed_col)), $extra_heading_height, $paint_color, $this->graph_color_border);
 
 					if($identifier[0] != 'Temp')
 					{
-						$this->graph_image->draw_line(($this->graph_left_start + ($current_col * $table_item_width) + 1), 1, ($this->graph_left_start + ($current_col * $table_item_width) + 1), $this->graph_attr_height, $paint_color, 1);
+						$this->graph_image->draw_line(($this->graph_left_start + ($current_col * $table_item_width) + 1), 1, ($this->graph_left_start + ($current_col * $table_item_width) + 1), $table_proper_height, $paint_color, 1);
 					}
 
 					//$last_identifier->set_attribute('font-weight', 'bold');

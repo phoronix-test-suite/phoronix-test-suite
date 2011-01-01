@@ -946,7 +946,7 @@ class phodevi_gpu extends phodevi_device_interface
 
 					if(stripos($info, 'ATI') === false && stripos($info, 'AMD') === false)
 					{
-						$info = 'ATI/AMD' . ' ' . $info;
+						$info = 'AMD ' . $info;
 					}
 				}
 			}
