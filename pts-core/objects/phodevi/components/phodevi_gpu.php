@@ -383,7 +383,7 @@ class phodevi_gpu extends phodevi_device_interface
 
 		if($resolution == '-1x-1')
 		{
-			$resolution = 'Unknown';
+			$resolution = null;
 		}
 
 		return $resolution;
@@ -661,6 +661,39 @@ class phodevi_gpu extends phodevi_device_interface
 		{
 			switch(phodevi::read_property('system', 'display-driver'))
 			{
+				case 'nouveau':
+					foreach(pts_file_io::glob('/sys/class/drm/card0/device/performance_level*') as $performance_level)
+					{
+						/*
+							EXAMPLE OUTPUTS:
+							memory 1000MHz core 500MHz voltage 1300mV fanspeed 100%
+							3: memory 333MHz core 500MHz shader 1250MHz fanspeed 100%
+							c: memory 333MHz core 500MHz shader 1250MHz
+						*/
+
+						$performance_level = pts_file_io::file_get_contents($performance_level);
+						$performance_level = explode(' ', $performance_level);
+
+						$core_string = array_search('core', $performance_level);
+						if($core_string !== false && isset($performance_level[($core_string + 1)]))
+						{
+							$core_string = str_ireplace('MHz', null, $performance_level[($core_string + 1)]);
+							if(is_numeric($core_string) && $core_string > $core_freq)
+							{
+								$core_freq = $core_string;
+							}
+						}
+
+						$mem_string = array_search('memory', $performance_level);
+						if($mem_string !== false && isset($performance_level[($mem_string + 1)]))
+						{
+							$mem_string = str_ireplace('MHz', null, $performance_level[($mem_string + 1)]);
+							if(is_numeric($mem_string) && $mem_string > $mem_freq)
+							{
+								$mem_freq = $mem_string;
+							}
+						}
+					}
 				case 'radeon':
 					if(is_file('/sys/kernel/debug/dri/0/radeon_pm_info'))
 					{

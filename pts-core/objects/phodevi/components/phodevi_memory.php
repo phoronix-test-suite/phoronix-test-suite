@@ -201,7 +201,7 @@ class phodevi_memory extends phodevi_device_interface
 		}
 		else
 		{
-			$info = 'Unknown';
+			$info = null;
 		}
 
 		return $info;

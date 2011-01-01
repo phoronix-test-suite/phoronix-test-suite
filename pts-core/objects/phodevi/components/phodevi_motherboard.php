@@ -185,11 +185,6 @@ class phodevi_motherboard extends phodevi_device_interface
 			$info = phodevi_windows_parser::read_cpuz('Mainboard Model', null);
 		}
 
-		if(empty($info))
-		{
-			$info = 'Unknown';
-		}
-
 		return $info;
 	}
 }

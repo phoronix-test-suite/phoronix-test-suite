@@ -443,11 +443,6 @@ class phodevi_system extends phodevi_device_interface
 		{
 			$os_version = php_uname('r');
 		}
-
-		if(empty($os_version))
-		{
-			$os_version = 'Unknown';
-		}	
 	
 		return $os_version;
 	}
@@ -457,7 +452,7 @@ class phodevi_system extends phodevi_device_interface
 		$vendor = IS_LINUX ? phodevi_linux_parser::read_lsb_distributor_id() : false;
 		$version = phodevi::read_property('system', 'os-version');
 
-		if(!$vendor || $version == 'Unknown')
+		if(!$vendor)
 		{
 			$os = null;
 
@@ -655,7 +650,7 @@ class phodevi_system extends phodevi_device_interface
 
 			if($pos === false || getenv('DISPLAY') == false)
 			{
-				$info = 'Unknown';
+				$info = null;
 			}
 			else if(($pos = strrpos($info, '(')) === false)
 			{
@@ -666,7 +661,7 @@ class phodevi_system extends phodevi_device_interface
 				$info = trim(substr($info, strrpos($info, 'Server') + 6));
 			}
 
-			if($info != 'Unknown')
+			if($info != null)
 			{
 				$info = 'X Server ' . $info;
 			}

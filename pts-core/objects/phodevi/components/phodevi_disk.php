@@ -184,7 +184,7 @@ class phodevi_disk extends phodevi_device_interface
 			}
 			else
 			{
-				$disks = 'Unknown';
+				$disks = null;
 			}
 		}
 		else
