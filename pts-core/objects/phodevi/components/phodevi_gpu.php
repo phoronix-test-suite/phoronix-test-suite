@@ -808,11 +808,6 @@ class phodevi_gpu extends phodevi_device_interface
 					if(stripos($nv_gpus, 'GeForce') !== false || stripos($nv_gpus, 'Quadro') !== false)
 					{
 						$info = $nv_gpus;
-
-						if(stripos($info, 'NVIDIA') === false)
-						{
-							$info = 'NVIDIA' . ' ' . $info;
-						}
 					}
 				}
 			}
@@ -843,11 +838,6 @@ class phodevi_gpu extends phodevi_device_interface
 			if(!$drm_info)
 			{
 				$drm_info = phodevi_bsd_parser::read_sysctl('dev.nvidia.0.%desc');
-
-				if($drm_info && stripos($drm_info, 'NVIDIA') === false)
-				{
-					$drm_info = 'NVIDIA ' . $drm_info;
-				}
 			}
 
 			if(!$drm_info)
@@ -934,22 +924,21 @@ class phodevi_gpu extends phodevi_device_interface
 				if(stripos($inside_bracket, 'Quadro') !== false || stripos($inside_bracket, 'GeForce') !== false)
 				{
 					$info = $inside_bracket . ' ' . substr($info, ($bracket_close + 1));
-
-					if(stripos($info, 'NVIDIA') === false)
-					{
-						$info = 'NVIDIA' . ' ' . $info;
-					}
 				}
 				else if(stripos($inside_bracket, 'Radeon') !== false || stripos($inside_bracket, 'FirePro') !== false || stripos($inside_bracket, 'FireGL') !== false)
 				{
 					$info = $inside_bracket . ' ' . substr($info, ($bracket_close + 1));
-
-					if(stripos($info, 'ATI') === false && stripos($info, 'AMD') === false)
-					{
-						$info = 'AMD ' . $info;
-					}
 				}
 			}
+		}
+
+		if(stripos($info, 'NVIDIA') === false && (stripos($info, 'Quadro') !== false || stripos($info, 'GeForce') !== false))
+		{
+			$info = 'NVIDIA' . ' ' . $info;
+		}
+		else if((stripos($info, 'ATI') === false && stripos($info, 'AMD') === false) && (stripos($info, 'Radeon') !== false || stripos($info, 'FirePro') !== false || stripos($info, 'FireGL') !== false))
+		{
+			$info = 'AMD ' . $info;
 		}
 
 		if($video_ram > 64 && strpos($info, $video_ram) == false) // assume more than 64MB of vRAM

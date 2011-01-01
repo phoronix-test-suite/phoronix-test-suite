@@ -5,7 +5,7 @@
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
 	Copyright (C) 2008 - 2010, Phoronix Media
 	Copyright (C) 2008 - 2010, Michael Larabel
-	pts_VerticalBarGraph.php: The vertical bar graph object that extends pts_Graph.php
+	pts_HorizontalBarGraph.php: The horizontal bar graph object that extends pts_Graph.php
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
