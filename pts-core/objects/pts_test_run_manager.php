@@ -848,7 +848,7 @@ class pts_test_run_manager
 				if($stop_and_install)
 				{
 					pts_test_installer::standard_install($tests_missing, pts_c::$test_flags);
-					self::cleanup_tests_to_run($tests_missing);
+					self::cleanup_tests_to_run($to_run_objects);
 				}
 			}
 		}
@@ -1084,7 +1084,7 @@ class pts_test_run_manager
 
 				foreach(array_keys($virtual_suite_tests) as $i)
 				{
-					if($virtual_suite_tests[$i]->is_supported(false) == false || $this->validate_test_to_run($virtual_suite_tests[$i]))
+					if($virtual_suite_tests[$i]->is_supported(false) == false || $this->validate_test_to_run($virtual_suite_tests[$i]) == false)
 					{
 						unset($virtual_suite_tests[$i]);
 					}
