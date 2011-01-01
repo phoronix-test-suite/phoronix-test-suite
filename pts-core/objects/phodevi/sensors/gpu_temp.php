@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2010, Phoronix Media
-	Copyright (C) 2009 - 2010, Michael Larabel
+	Copyright (C) 2009 - 2011, Phoronix Media
+	Copyright (C) 2009 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -51,6 +51,11 @@ class gpu_temp implements phodevi_sensor
 		else if(IS_ATI_GRAPHICS && IS_LINUX)
 		{
 			$temp_c = phodevi_linux_parser::read_ati_overdrive('Temperature');
+		}
+		else if(is_file('/sys/class/drm/card0/device/hwmon/hwmon0/temp1_input'))
+		{
+			// This works for at least Nouveau driver with Linux 2.6.37 era DRM
+			$temp_c = pts_file_io::file_get_contents('/sys/class/drm/card0/device/hwmon/hwmon0/temp1_input');
 		}
 
 		return $temp_c;
