@@ -105,9 +105,9 @@ class pts_HorizontalBarGraph extends pts_Graph
 					$this->graph_image->write_text_right('SE +/- ' . pts_math::set_precision($std_error, 2), $this->graph_font, $this->graph_font_size_identifiers - 2, $this->graph_color_text, ($this->graph_left_start - 5), $bar_offset_34, ($this->graph_left_start - 5), $bar_offset_34);
 				}
 
-				if($this->text_string_width($value, $this->graph_font, $this->graph_font_size_identifiers) < $graph_size)
+				if(($this->text_string_width($value, $this->graph_font, $this->graph_font_size_identifiers) + 2) < $graph_size)
 				{
-					$this->graph_image->write_text_right($value, $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_body_text, $value_end_left - 6, $middle_of_bar, $value_end_left - 6, $middle_of_bar);
+					$this->graph_image->write_text_right($value, $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_body_text, $value_end_left - 5, $middle_of_bar, $value_end_left - 5, $middle_of_bar);
 				}
 				else if($value > 0)
 				{

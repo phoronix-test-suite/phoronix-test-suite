@@ -67,7 +67,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 			</xsl:for-each>
 		</div>
 
-		<div id="pts_copyright_area">Copyright &#xA9; 2008 - 2010 by <a href="http://www.phoronix-media.com/">Phoronix Media</a>.</div>
+		<div id="pts_copyright_area">Copyright &#xA9; 2008 - 2011 by <a href="http://www.phoronix-media.com/">Phoronix Media</a>.</div>
 		</div>
 		<div id="pts_header_bottom">
 			<div class="pts_header_center">

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2010, Phoronix Media
-	Copyright (C) 2008 - 2010, Michael Larabel
+	Copyright (C) 2008 - 2011, Phoronix Media
+	Copyright (C) 2008 - 2011, Michael Larabel
 	pts-core.php: To boot-strap the Phoronix Test Suite start-up
 
 	This program is free software; you can redistribute it and/or modify
@@ -21,8 +21,8 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-define('PTS_VERSION', '3.0.0a5');
-define('PTS_CORE_VERSION', 2963);
+define('PTS_VERSION', '3.0.0b1');
+define('PTS_CORE_VERSION', 2965);
 define('PTS_CODENAME', 'IVELAND');
 define('PTS_IS_CLIENT', PTS_MODE == 'CLIENT');
 
