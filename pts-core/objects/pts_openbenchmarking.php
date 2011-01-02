@@ -32,7 +32,8 @@ class pts_openbenchmarking
 			'motherboard' => array('motherboard'),
 			'gpu' => array('gpu', 'model'),
 			'disk' => array('disk', 'identifier'),
-			'audio' => array('audio', 'identifier')
+			'audio' => array('audio', 'identifier'),
+			'monitor' => array('monitor', 'identifier')
 			);
 	}
 	public static function valid_user_name()
