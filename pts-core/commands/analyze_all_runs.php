@@ -28,12 +28,12 @@ class analyze_all_runs implements pts_option_interface
 	public static function argument_checks()
 	{
 		return array(
-		new pts_argument_check(0, array("pts_types", "is_result_file"), null)
+		new pts_argument_check(0, array('pts_types', 'is_result_file'), null)
 		);
 	}
 	public static function run($args)
 	{
-		pts_client::regenerate_graphs($args[0], "The " . $args[0] . " result file graphs have been re-rendered to show all test runs.", array("graph_render_type" => "CANDLESTICK"));
+		pts_client::regenerate_graphs($args[0], 'The ' . $args[0] . ' result file graphs have been re-rendered to show all test runs.', array('graph_render_type' => 'CANDLESTICK'));
 	}
 }
 

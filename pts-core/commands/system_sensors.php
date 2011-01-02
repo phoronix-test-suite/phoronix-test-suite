@@ -23,22 +23,22 @@
 class system_sensors implements pts_option_interface
 {
 	const doc_section = 'System';
-	const doc_description = "Display the installed system hardware and software sensors in real-time as detected by the Phoronix Test Suite Phodevi Library.";
+	const doc_description = 'Display the installed system hardware and software sensors in real-time as detected by the Phoronix Test Suite Phodevi Library.';
 
 	public static function run($r)
 	{
-		pts_client::$display->generic_heading("Supported Sensors");
+		pts_client::$display->generic_heading('Supported Sensors');
 		foreach(phodevi::supported_sensors() as $sensor)
 		{
-			echo phodevi::sensor_name($sensor) . ": " . phodevi::read_sensor($sensor) . ' ' . phodevi::read_sensor_unit($sensor) . "\n";
+			echo phodevi::sensor_name($sensor) . ': ' . phodevi::read_sensor($sensor) . ' ' . phodevi::read_sensor_unit($sensor) . PHP_EOL;
 		}
 
-		pts_client::$display->generic_heading("Unsupported Sensors");
+		pts_client::$display->generic_heading('Unsupported Sensors');
 		foreach(phodevi::unsupported_sensors() as $sensor)
 		{
-			echo "- " . phodevi::sensor_name($sensor) . "\n";
+			echo '- ' . phodevi::sensor_name($sensor) . PHP_EOL;
 		}
-		echo "\n";
+		echo PHP_EOL;
 	}
 }
 

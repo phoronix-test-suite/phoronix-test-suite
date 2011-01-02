@@ -23,7 +23,7 @@
 class validate_test_suite implements pts_option_interface
 {
 	const doc_section = 'Asset Creation';
-	const doc_description = "This option can be used for validating a Phoronix Test Suite test suite as being compliant against the OpenBenchmarking.org specification.";
+	const doc_description = 'This option can be used for validating a Phoronix Test Suite test suite as being compliant against the OpenBenchmarking.org specification.';
 
 	public static function run($r)
 	{
@@ -32,7 +32,7 @@ class validate_test_suite implements pts_option_interface
 			pts_client::$display->generic_heading($r[0]);
 			if($test_suite->xml_parser->getFileLocation() == null)
 			{
-				echo "\nERROR: The file location of the XML test suite source could not be determined.\n";
+				echo PHP_EOL . 'ERROR: The file location of the XML test suite source could not be determined.' . PHP_EOL;
 				return false;
 			}
 
@@ -50,24 +50,24 @@ class validate_test_suite implements pts_option_interface
 
 			if($valid == false)
 			{
-				echo "\nErrors occurred parsing the main XML.\n";
+				echo PHP_EOL . 'Errors occurred parsing the main XML.' . PHP_EOL;
 				pts_validation::process_libxml_errors();
 				return false;
 			}
 			else
 			{
-				echo "\nTest Suite XML Is Valid.\n";
+				echo PHP_EOL . 'Test Suite XML Is Valid.' . PHP_EOL;
 			}
 
 			$test_suite_writer->save_xml($test_suite->xml_parser->getFileLocation());
-			$suite_identifier = basename($test_suite->xml_parser->getFileLocation(), ".xml");
+			$suite_identifier = basename($test_suite->xml_parser->getFileLocation(), '.xml');
 
-			$zip_file = PTS_OPENBENCHMARKING_SCRATCH_PATH . $suite_identifier . '-' . $test_suite_new->get_version() . ".zip";
+			$zip_file = PTS_OPENBENCHMARKING_SCRATCH_PATH . $suite_identifier . '-' . $test_suite_new->get_version() . '.zip';
 			$zip_created = pts_compression::zip_archive_create($zip_file, $test_suite->xml_parser->getFileLocation());
 
 			if($zip_created == false)
 			{
-				echo "\nFailed to create zip file.\n";
+				echo PHP_EOL . 'Failed to create zip file.' . PHP_EOL;
 				return false;
 			}
 

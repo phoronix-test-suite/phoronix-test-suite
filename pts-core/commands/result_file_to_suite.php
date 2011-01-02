@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2010, Phoronix Media
-	Copyright (C) 2008 - 2010, Michael Larabel
+	Copyright (C) 2008 - 2011, Phoronix Media
+	Copyright (C) 2008 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -20,18 +20,18 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-pts_load_xml_definitions("result-file.xml");
-pts_load_xml_definitions("test-suite.xml");
+pts_load_xml_definitions('result-file.xml');
+pts_load_xml_definitions('test-suite.xml');
 
 class result_file_to_suite implements pts_option_interface
 {
 	const doc_section = 'Asset Creation';
-	const doc_description = "This option will guide the user through the process of generating their own test suite, which they can then run, that's based upon an existing test results file.";
+	const doc_description = 'This option will guide the user through the process of generating their own test suite, which they can then run, that is based upon an existing test results file.';
 
 	public static function argument_checks()
 	{
 		return array(
-		new pts_argument_check(0, array("pts_types", "is_result_file"), null)
+		new pts_argument_check(0, array('pts_types', 'is_result_file'), null)
 		);
 	}
 	public static function run($r)
@@ -42,13 +42,13 @@ class result_file_to_suite implements pts_option_interface
 			$result_file = $r[0];
 		}
 
-		$suite_name = pts_user_io::prompt_user_input("Enter name of suite");
-		$suite_test_type = pts_user_io::prompt_text_menu("Select test type", pts_types::subsystem_targets());
-		$suite_maintainer = pts_user_io::prompt_user_input("Enter suite maintainer name");
-		$suite_description = pts_user_io::prompt_user_input("Enter suite description");
+		$suite_name = pts_user_io::prompt_user_input('Enter name of suite');
+		$suite_test_type = pts_user_io::prompt_text_menu('Select test type', pts_types::subsystem_targets());
+		$suite_maintainer = pts_user_io::prompt_user_input('Enter suite maintainer name');
+		$suite_description = pts_user_io::prompt_user_input('Enter suite description');
 
 		$suite_writer = new pts_test_suite_writer();
-		$suite_writer->add_suite_information($suite_name, "1.0.0", $suite_maintainer, $suite_test_type, $suite_description);
+		$suite_writer->add_suite_information($suite_name, '1.0.0', $suite_maintainer, $suite_test_type, $suite_description);
 
 		// Read results file
 		$result_file = new pts_result_file($result_file);
@@ -60,12 +60,12 @@ class result_file_to_suite implements pts_option_interface
 
 		// Finish it off
 		$suite_identifier = pts_test_run_manager::clean_save_name($suite_name);
-		mkdir(PTS_TEST_SUITE_PATH . "local/" . $suite_identifier);
-		$save_to = PTS_TEST_SUITE_PATH . "local/" . $suite_identifier . "/suite-definition.xml";
+		mkdir(PTS_TEST_SUITE_PATH . 'local/' . $suite_identifier);
+		$save_to = PTS_TEST_SUITE_PATH . 'local/' . $suite_identifier . '/suite-definition.xml';
 
 		if($suite_writer->save_xml($save_to) != false)
 		{
-			echo "\n\nSaved To: " . $save_to . "\nTo run this suite, type: phoronix-test-suite benchmark " . $suite_identifier . "\n\n";
+			echo PHP_EOL . PHP_EOL . 'Saved To: ' . $save_to . PHP_EOL . 'To run this suite, type: phoronix-test-suite benchmark ' . $suite_identifier . PHP_EOL . PHP_EOL;
 		}
 	}
 }

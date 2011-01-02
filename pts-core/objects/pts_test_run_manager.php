@@ -624,7 +624,7 @@ class pts_test_run_manager
 		{
 			if(pts_config::read_bool_config(P_OPTION_BATCH_CONFIGURED, 'FALSE') == false && (pts_c::$test_flags ^ pts_c::auto_mode))
 			{
-				pts_client::$display->generic_error('The batch mode must first be configured.\nTo configure, run phoronix-test-suite batch-setup');
+				pts_client::$display->generic_error('The batch mode must first be configured.' . PHP_EOL . 'To configure, run phoronix-test-suite batch-setup');
 				return false;
 			}
 		}

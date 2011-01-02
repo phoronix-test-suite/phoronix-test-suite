@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2010, Phoronix Media
-	Copyright (C) 2009 - 2010, Michael Larabel
+	Copyright (C) 2009 - 2011, Phoronix Media
+	Copyright (C) 2009 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
 class validate_test_profile implements pts_option_interface
 {
 	const doc_section = 'Asset Creation';
-	const doc_description = "This option can be used for validating a Phoronix Test Suite test profile as being compliant against the OpenBenchmarking.org specification.";
+	const doc_description = 'This option can be used for validating a Phoronix Test Suite test profile as being compliant against the OpenBenchmarking.org specification.';
 
 	public static function run($r)
 	{
@@ -33,7 +33,7 @@ class validate_test_profile implements pts_option_interface
 
 			if($test_profile->xml_parser->getFileLocation() == null)
 			{
-				echo "\nERROR: The file location of the XML test profile source could not be determined.\n";
+				echo PHP_EOL . 'ERROR: The file location of the XML test profile source could not be determined.' . PHP_EOL;
 				return false;
 			}
 
@@ -51,13 +51,13 @@ class validate_test_profile implements pts_option_interface
 
 			if($valid == false)
 			{
-				echo "\nErrors occurred parsing the main XML.\n";
+				echo PHP_EOL . 'Errors occurred parsing the main XML.' . PHP_EOL;
 				pts_validation::process_libxml_errors();
 				return false;
 			}
 			else
 			{
-				echo "\nTest Profile XML Is Valid.\n";
+				echo PHP_EOL . 'Test Profile XML Is Valid.' . PHP_EOL;
 			}
 
 			// Validate the downloads file
@@ -74,18 +74,18 @@ class validate_test_profile implements pts_option_interface
 
 				if($valid == false)
 				{
-					echo "\nErrors occurred parsing the downloads XML.\n";
+					echo PHP_EOL . 'Errors occurred parsing the downloads XML.' . PHP_EOL;
 					pts_validation::process_libxml_errors();
 					return false;
 				}
 				else
 				{
-					echo "\nTest Downloads XML Is Valid.\n";
+					echo PHP_EOL . 'Test Downloads XML Is Valid.' . PHP_EOL;
 				}
 
 
 				// Validate the individual download files
-				echo "\nTesting File Download URLs.\n";
+				echo PHP_EOL . 'Testing File Download URLs.' . PHP_EOL;
 				$files_missing = 0;
 				$file_count = 0;
 
@@ -94,12 +94,12 @@ class validate_test_profile implements pts_option_interface
 					foreach($download->get_download_url_array() as $url)
 					{
 						$stream_context = pts_network::stream_context_create();
-						stream_context_set_params($stream_context, array("notification" => "pts_stream_status_callback"));
+						stream_context_set_params($stream_context, array('notification' => 'pts_stream_status_callback'));
 						$file_pointer = @fopen($url, 'r', false, $stream_context);
 
 						if($file_pointer == false)
 						{
-							echo "File Missing: " . $download->get_filename() . " / " . $url . "\n";
+							echo 'File Missing: ' . $download->get_filename() . ' / ' . $url . PHP_EOL;
 							$files_missing++;
 						}
 						else
@@ -131,13 +131,13 @@ class validate_test_profile implements pts_option_interface
 
 				if($valid == false)
 				{
-					echo "\nErrors occurred parsing the results parser XML.\n";
+					echo PHP_EOL . 'Errors occurred parsing the results parser XML.' . PHP_EOL;
 					pts_validation::process_libxml_errors();
 					return false;
 				}
 				else
 				{
-					echo "\nTest Results Parser XML Is Valid.\n";
+					echo PHP_EOL . 'Test Results Parser XML Is Valid.' . PHP_EOL;
 				}
 			}
 
@@ -148,23 +148,23 @@ class validate_test_profile implements pts_option_interface
 			{
 				if(!is_file($tp_file) || !in_array(basename($tp_file), $allowed_files))
 				{
-					echo "\n" . basename($tp_file) . " is not allowed in the test package.\n";
+					echo PHP_EOL . basename($tp_file) . ' is not allowed in the test package.' . PHP_EOL;
 					return false;
 				}
 			}
 
-			$zip_file = PTS_OPENBENCHMARKING_SCRATCH_PATH . $test_profile->get_identifier() . '-' . $test_profile->get_test_profile_version() . ".zip";
+			$zip_file = PTS_OPENBENCHMARKING_SCRATCH_PATH . $test_profile->get_identifier() . '-' . $test_profile->get_test_profile_version() . '.zip';
 			$zip_created = pts_compression::zip_archive_create($zip_file, pts_file_io::glob($test_profile->get_resource_dir() . '*'));
 
 			if($zip_created == false)
 			{
-				echo "\nFailed to create zip file.\n";
+				echo PHP_EOL . 'Failed to create zip file.' . PHP_EOL;
 				return false;
 			}
 
 			if(filesize($zip_file) > 104857)
 			{
-				echo "\nThe test profile package is too big.\n";
+				echo PHP_EOL . 'The test profile package is too big.' . PHP_EOL;
 				return false;
 			}
 

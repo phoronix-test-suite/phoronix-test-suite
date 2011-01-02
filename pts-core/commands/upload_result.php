@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2010, Phoronix Media
-	Copyright (C) 2008 - 2010, Michael Larabel
+	Copyright (C) 2008 - 2011, Phoronix Media
+	Copyright (C) 2008 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -23,12 +23,12 @@
 class upload_result implements pts_option_interface
 {
 	const doc_section = 'OpenBenchmarking.org';
-	const doc_description = "This option is used for uploading a test result to OpenBenchmarking.org.";
+	const doc_description = 'This option is used for uploading a test result to OpenBenchmarking.org.';
 
 	public static function argument_checks()
 	{
 		return array(
-		new pts_argument_check(0, array("pts_types", "is_result_file"), null)
+		new pts_argument_check(0, array('pts_types', 'is_result_file'), null)
 		);
 	}
 	public static function run($r)
@@ -38,7 +38,7 @@ class upload_result implements pts_option_interface
 
 		if($upload_url == false)
 		{
-			echo "\nResults Failed To Upload.\n";
+			echo PHP_EOL . 'Results Failed To Upload.' . PHP_EOL;
 		}
 	}
 }

@@ -23,21 +23,21 @@
 class show_result implements pts_option_interface
 {
 	const doc_section = 'Result Management';
-	const doc_description = "Open up the test results in the Phoronix Test Suite Result Viewer or on OpenBenchmarking.org.";
+	const doc_description = 'Open up the test results in the Phoronix Test Suite Result Viewer or on OpenBenchmarking.org.';
 
 	public static function argument_checks()
 	{
 		return array(
-		new pts_argument_check(0, array("pts_types", "is_result_file"), null)
+		new pts_argument_check(0, array('pts_types', 'is_result_file'), null)
 		);
 	}
 	public static function run($r)
 	{
 		$URL = $r[0];
 
-		if(!is_dir(PTS_SAVE_RESULTS_PATH . $r[0] . "/result-graphs/"))
+		if(!is_dir(PTS_SAVE_RESULTS_PATH . $r[0] . '/result-graphs/'))
 		{
-			pts_client::generate_result_file_graphs($r[0], PTS_SAVE_RESULTS_PATH . $r[0] . "/");
+			pts_client::generate_result_file_graphs($r[0], PTS_SAVE_RESULTS_PATH . $r[0] . '/');
 		}
 
 		pts_client::display_web_page($URL, null, false, true);

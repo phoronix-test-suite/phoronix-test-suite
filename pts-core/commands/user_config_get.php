@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2010, Phoronix Media
-	Copyright (C) 2009 - 2010, Michael Larabel
+	Copyright (C) 2009 - 2011, Phoronix Media
+	Copyright (C) 2009 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -23,28 +23,28 @@
 class user_config_get implements pts_option_interface
 {
 	const doc_section = 'Other';
-	const doc_description = "This option can be used for reading an XML value of the Phoronix Test Suite user configuration file.";
+	const doc_description = 'This option can be used for reading an XML value of the Phoronix Test Suite user configuration file.';
 
 	public static function run($r)
 	{
 		if(count($r) == 0)
 		{
-			echo "\nYou must specify the tag to read. Enter all to read all values.\n";
-			echo "Example: phoronix-test-suite user-config-get CacheDirectory\n\n";
+			echo PHP_EOL . 'You must specify the tag to read. Enter all to read all values.' . PHP_EOL;
+			echo PHP_EOL . 'Example: phoronix-test-suite user-config-get CacheDirectory' . PHP_EOL . PHP_EOL;
 			return false;
 		}
 
 		$defined_constants = get_defined_constants(true);
 		$value_found = false;
-		echo "\n";
+		echo PHP_EOL;
 
-		foreach($defined_constants["user"] as $c_name => $c_value)
+		foreach($defined_constants['user'] as $c_name => $c_value)
 		{
-			if(isset($c_name[10]) && substr($c_name, 0, 9) == "P_OPTION_")
+			if(isset($c_name[10]) && substr($c_name, 0, 9) == 'P_OPTION_')
 			{
-				if($r[0] == "all" || $r[0] == $c_value || $r[0] == basename($c_value))
+				if($r[0] == 'all' || $r[0] == $c_value || $r[0] == basename($c_value))
 				{
-					echo $c_value . ": " . pts_config::read_user_config($c_value) . "\n";
+					echo $c_value . ': ' . pts_config::read_user_config($c_value) . PHP_EOL;
 					$value_found = true;
 				}
 			}
@@ -52,10 +52,10 @@ class user_config_get implements pts_option_interface
 
 		if(!$value_found)
 		{
-			echo "No such options found in the user configuration file.\n";
+			echo 'No such options found in the user configuration file.' . PHP_EOL;
 		}
 
-		echo "\n";
+		echo PHP_EOL;
 	}
 }
 

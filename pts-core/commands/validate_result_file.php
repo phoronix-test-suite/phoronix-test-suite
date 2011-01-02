@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2010, Phoronix Media
-	Copyright (C) 2009 - 2010, Michael Larabel
+	Copyright (C) 2009 - 2011, Phoronix Media
+	Copyright (C) 2009 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
 class validate_result_file implements pts_option_interface
 {
 	const doc_section = 'Asset Creation';
-	const doc_description = "This option can be used for validating a Phoronix Test Suite result file as being compliant against the OpenBenchmarking.org specification.";
+	const doc_description = 'This option can be used for validating a Phoronix Test Suite result file as being compliant against the OpenBenchmarking.org specification.';
 
 	public static function run($r)
 	{
@@ -35,13 +35,13 @@ class validate_result_file implements pts_option_interface
 
 			if($valid == false)
 			{
-				echo "\nErrors occurred parsing the main XML.\n";
+				echo PHP_EOL . 'Errors occurred parsing the main XML.' . PHP_EOL;
 				pts_validation::process_libxml_errors();
 				return false;
 			}
 			else
 			{
-				echo "\nThe result file is Valid.\n";
+				echo PHP_EOL . 'The result file is Valid.' . PHP_EOL;
 			}
 		}
 	}
