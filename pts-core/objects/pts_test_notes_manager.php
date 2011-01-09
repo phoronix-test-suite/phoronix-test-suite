@@ -103,14 +103,14 @@ class pts_test_notes_manager
 		{
 			if(stripos(file_get_contents('/etc/sysconfig/selinux'), 'selinux=disabled') === false)
 			{
-				self::add_note('SELinux was enabled.');
+				self::add_note('SELinux: Enabled');
 			}
 		}
 		else if(is_readable('/proc/cmdline'))
 		{
 			if(stripos(file_get_contents('/proc/cmdline'), 'selinux=1') != false)
 			{
-				self::add_note('SELinux was enabled.');
+				self::add_note('SELinux: Enabled');
 			}
 		}
 
