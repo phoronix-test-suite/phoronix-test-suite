@@ -896,7 +896,7 @@ class pts_test_run_manager
 						$this->run_description = 'N/A';
 					}
 
-					pts_client::$display->generic_heading('If you wish, enter a new description below.\nPress ENTER to proceed without changes.');
+					pts_client::$display->generic_heading('If you wish, enter a new description below.' . PHP_EOL . 'Press ENTER to proceed without changes.');
 					echo 'Current Description: ' . $this->run_description . PHP_EOL . PHP_EOL . 'New Description: ';
 					$new_test_description = pts_user_io::read_user_input();
 

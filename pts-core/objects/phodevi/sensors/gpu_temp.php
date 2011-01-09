@@ -52,10 +52,19 @@ class gpu_temp implements phodevi_sensor
 		{
 			$temp_c = phodevi_linux_parser::read_ati_overdrive('Temperature');
 		}
-		else if(is_file('/sys/class/drm/card0/device/hwmon/hwmon0/temp1_input'))
+		else
 		{
-			// This works for at least Nouveau driver with Linux 2.6.37 era DRM
-			$temp_c = pts_file_io::file_get_contents('/sys/class/drm/card0/device/hwmon/hwmon0/temp1_input');
+			foreach(pts_file_io::glob('/sys/class/drm/card0/device/hwmon/hwmon*/temp1_input') as $temp_input)
+			{
+				// This works for at least Nouveau driver with Linux 2.6.37 era DRM
+				$temp_input = pts_file_io::file_get_contents($temp_input);
+
+				if(is_numeric($temp_input))
+				{
+					$temp_c = $temp_input;
+					break;
+				}
+			}
 		}
 
 		return $temp_c;
