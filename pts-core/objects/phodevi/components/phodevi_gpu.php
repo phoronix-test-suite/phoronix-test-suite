@@ -564,6 +564,25 @@ class phodevi_gpu extends phodevi_device_interface
 		{
 			$video_ram = $vram;
 		}
+		else if(is_file('/sys/kernel/debug/dri/0/memory'))
+		{
+			$memory = file_get_contents('/sys/kernel/debug/dri/0/memory');
+
+			if(($x = strpos($memory, 'VRAM total: ')) !== false)
+			{
+				$memory = substr($memory, ($x + 12));
+
+				if(($x = strpos($memory, 'KiB')) !== false)
+				{
+					$memory = substr($memory, 0, $x);
+
+					if(is_numeric($memory))
+					{
+						$video_ram = $memory / 1024;
+					}
+				}
+			}
+		}
 		else
 		{
 			if(IS_NVIDIA_GRAPHICS && ($NVIDIA = phodevi_parser::read_nvidia_extension('VideoRam')) > 0) // NVIDIA blob
@@ -616,7 +635,16 @@ class phodevi_gpu extends phodevi_device_interface
 	}
 	public static function gpu_string()
 	{
-		return phodevi::read_property('gpu', 'model') . ' ' . phodevi::read_property('gpu', 'frequency');
+		$info = phodevi_parser::read_glx_renderer();
+
+		if(stripos($info, 'llvmpipe'))
+		{
+			return 'LLVMpipe';
+		}
+		else
+		{
+			return phodevi::read_property('gpu', 'model') . ' ' . phodevi::read_property('gpu', 'frequency');
+		}
 	}
 	public static function gpu_frequency_string()
 	{

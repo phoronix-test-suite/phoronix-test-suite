@@ -18,6 +18,7 @@ Phoronix Test Suite (Git)
 - phodevi: Detection support for other file-systems via their super blocks (OpenAFS, CIFS, SSHFS, etc)
 - phodevi: Support for reading NVIDIA core/memory clock speeds from the Nouveau driver when using latest DRM with performance levels
 - phodevi: Support for GPU core thermal monitoring when using the recent Nouveau DRM driver
+- phodevi: Support for reading VRAM capacity with TTM drivers when the kernel sysfs debug interface is enabled
 
 Phoronix Test Suite 3.0 Alpha 5
 27 December 2010

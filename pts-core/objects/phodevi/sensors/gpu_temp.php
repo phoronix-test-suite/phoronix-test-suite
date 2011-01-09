@@ -61,6 +61,11 @@ class gpu_temp implements phodevi_sensor
 
 				if(is_numeric($temp_input))
 				{
+					if($temp_input > 1000)
+					{
+						$temp_input /= 1000;
+					}
+
 					$temp_c = $temp_input;
 					break;
 				}
