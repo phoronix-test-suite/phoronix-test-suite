@@ -26,12 +26,12 @@ class pts_tests
 	{
 		$cleaned_tests = array();
 
-		foreach(pts_file_io::glob(PTS_TEST_INSTALL_PATH . '*/*') as $repo_path)
+		foreach(pts_file_io::glob(PTS_TEST_INSTALL_PATH . '*') as $repo_path)
 		{
 			$repo = basename($repo_path);
-			foreach(pts_file_io::glob($repo . '/*') as $identifier_path)
+			foreach(pts_file_io::glob($repo_path . '/*') as $identifier_path)
 			{
-				if(is_file($identifier_path . '/test-definition.xml'))
+				if(is_file($identifier_path . '/pts-install.xml'))
 				{
 					$identifier = basename($identifier_path);
 

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2010, Phoronix Media
-	Copyright (C) 2008 - 2010, Michael Larabel
+	Copyright (C) 2008 - 2011, Phoronix Media
+	Copyright (C) 2008 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -37,7 +37,10 @@ class list_installed_tests implements pts_option_interface
 				$test_profile = new pts_test_profile($identifier);
 				$name = $test_profile->get_title();
 
-			 	echo $name != false ? sprintf("%-18ls - %-30ls\n", $identifier, $name) : null;
+				if($name != false)
+				{
+					echo sprintf('%-26ls - %-30ls' . PHP_EOL, $identifier, $name);
+				}
 			}
 			echo "\n";
 		}
