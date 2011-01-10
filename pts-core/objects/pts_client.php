@@ -977,6 +977,21 @@ class pts_client
 
 		pts_module_manager::module_process('__post_option_process', $command);
 	}
+	public static function read_openbenchmarking_dom(&$dom, $id, $fallback = false)
+	{
+		$tag = $dom->getElementById($id);
+
+		if($tag instanceof DOMElement && $tag->tagName == 'input')
+		{
+			$value = $tag->getAttribute('value');
+		}
+		else
+		{
+			$value = $fallback;
+		}
+
+		return $value;
+	}
 	public static function terminal_width()
 	{
 		static $terminal_width = null;

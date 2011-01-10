@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- pts-core: Upgrade the .openbenchmarking file support, allows multiple tests/results to be compared
+
 Phoronix Test Suite 3.0 Beta 1
 10 January 2011
 
@@ -12,10 +16,10 @@ Phoronix Test Suite 3.0 Beta 1
 - pts_Graph: Properly align background dashed lines
 - pts_Graph: Fix divide by zero error on rare cases of inserting zeros to maintain ordering index
 - phodevi: Improve NVIDIA GPU model detection when missing glxinfo
-- phodevi: Append Gallium3D version number to OpenGL strng
+- phodevi: Append Gallium3D version number to OpenGL string
 - phodevi: Ensure more accurate GPU name reporting than codenames when using Gallum3D drivers
 - phodevi: More robust motherboard detection on different sysfs nodes
-- phodevi: BSD hardware detecton improvements (tested on DragonflyBSD 2.9-DEVELOPMENT)
+- phodevi: BSD hardware detection improvements (tested on DragonflyBSD 2.9-DEVELOPMENT)
 - phodevi: Detection support for other file-systems via their super blocks (OpenAFS, CIFS, SSHFS, etc)
 - phodevi: Support for reading NVIDIA core/memory clock speeds from the Nouveau driver when using latest DRM with performance levels
 - phodevi: Support for GPU core thermal monitoring when using the recent Nouveau DRM driver

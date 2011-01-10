@@ -84,12 +84,9 @@ if(is_file(PTS_PATH . 'pts-core/commands/' . $sent_command . '.php') == false)
 	}
 	else if(isset($argv[1]) && strpos($argv[1], '.openbenchmarking') !== false && is_readable($argv[1]))
 	{
-		// OpenBenchmarking.org launcher
-		$dom = new DOMDocument();
-		$dom->loadHTMLFile($argv[1]);
-		$openbenchmarking_id = $dom->getElementsByTagName('html')->item(0)->getElementsByTagName('body')->item(0)->getElementsByTagName('h1')->item(0)->nodeValue;
-		$sent_command = 'benchmark';
-		array_push($pass_args, $openbenchmarking_id);
+		$sent_command = 'openbenchmarking_launcher';
+		$argv[2] = $argv[1];
+		$argc = 3;
 		$replaced = true;
 	}
 	else
