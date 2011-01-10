@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 3.0 Beta 1
+10 January 2011
 
 - pts-core: Fixes for using the local test profile/suite repository
 - pts-core: More minor performance optimizations along common OpenBenchmarking.org code paths
