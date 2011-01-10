@@ -232,7 +232,6 @@ class pts_result_file_analyzer
 			$col_pos++;
 		}
 	}
-
 	public static function compact_result_table_data(&$table_data, &$columns, $unset_emptied_values = false)
 	{
 		// Let's try to compact the data
@@ -288,6 +287,63 @@ class pts_result_file_analyzer
 
 			$c_index++;
 		}
+	}
+	public static function result_file_to_csv(&$result_file)
+	{
+		$csv_output = null;
+		$delimiter = ',';
+
+		$csv_output .= $result_file->get_title() . PHP_EOL . PHP_EOL;
+
+		$columns = $result_file->get_system_identifiers();
+		$rows = array();
+		$table_data = array();
+
+		pts_result_file_analyzer::system_components_to_table($table_data, $columns, $rows, $result_file->get_system_hardware());
+		pts_result_file_analyzer::system_components_to_table($table_data, $columns, $rows, $result_file->get_system_software());
+
+		$csv_output .= ' ';
+
+		foreach($columns as $column)
+		{
+			$csv_output .= $delimiter . '"' . $column . '"';
+		}
+		$csv_output .= PHP_EOL;
+
+		foreach($rows as $i => $row)
+		{
+			$csv_output .= $row;
+
+			foreach($columns as $column)
+			{
+				$csv_output .= $delimiter . $table_data[$column][$i];
+			}
+
+			$csv_output .= PHP_EOL;
+		}
+
+		$csv_output .= PHP_EOL;
+		$csv_output .= ' ';
+
+		foreach($columns as $column)
+		{
+			$csv_output .= $delimiter . '"' . $column . '"';
+		}
+		$csv_output .= PHP_EOL;
+
+		foreach($result_file->get_result_objects() as $result_object)
+		{
+			$csv_output .= '"' . $result_object->test_profile->get_title() . ' - ' . $result_object->get_arguments_description() . '"';
+
+			foreach($result_object->test_result_buffer->get_values() as $value)
+			{
+				$csv_output .= $delimiter . $value;
+			}
+			$csv_output .= PHP_EOL;
+		}
+		$csv_output .= PHP_EOL;
+
+		return $csv_output;
 	}
 }
 

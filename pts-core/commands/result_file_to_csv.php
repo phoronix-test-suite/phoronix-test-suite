@@ -34,51 +34,11 @@ class result_file_to_csv implements pts_option_interface
 	public static function run($r)
 	{
 		$result_file = new pts_result_file($r[0]);
-		$result_output = null;
-
-		$result_output .= $result_file->get_title() . PHP_EOL;
-		$result_output .= $result_file->get_description() . PHP_EOL . PHP_EOL;
-
-		$system_identifiers = $result_file->get_system_identifiers();
-		$system_hardware = $result_file->get_system_hardware();
-		$system_software = $result_file->get_system_software();
-
-		for($i = 0; $i < count($system_identifiers); $i++)
-		{
-			$result_output .= $system_identifiers[$i] . PHP_EOL;
-			$result_output .= $system_hardware[$i] . PHP_EOL . $system_software[$i] . PHP_EOL . PHP_EOL;
-		}
-
-		$test_object = array_pop($result_file->get_result_objects());
-
-		foreach($test_object->test_result_buffer->get_identifiers() as $identifier)
-		{
-			$result_output .= ',' . $identifier;
-		}
-		$result_output .= PHP_EOL;
-
-		foreach($result_file->get_result_objects() as $result_object)
-		{
-			$result_output .= $result_object->test_profile->get_title() . ' - ' . $result_object->get_arguments_description();
-
-			foreach($result_object->test_result_buffer->get_values() as $value)
-			{
-				$result_output .= ',' . $value;
-			}
-			$result_output .= PHP_EOL;
-		}
+		$result_output = pts_result_file_analyzer::result_file_to_csv($result_file);
 
 		// To save the result:
-		/*
-		$file = // the path;
-
-		if(substr($file, -4) != '.csv')
-		{
-			$file .= '.csv';
-		}
-
+		$file = pts_client::user_home_directory() . $r[0] . '.csv';
 		file_put_contents($file, $result_output);
-		*/
 
 		echo $result_output;
 	}

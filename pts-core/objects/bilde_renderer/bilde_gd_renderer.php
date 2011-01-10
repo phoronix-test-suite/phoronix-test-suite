@@ -230,7 +230,7 @@ abstract class bilde_gd_renderer extends bilde_renderer
 			$height = imagesy($source_image_object);
 		}
 
-		imagecopyresampled($this->image, $source_image_object, $to_x, $to_y, $source_x, $source_y, $width, $height, $width, $height);
+		imagecopyresampled($this->image, $source_image_object->get_value(), $to_x, $to_y, $source_x, $source_y, $width, $height, $width, $height);
 	}
 	public function convert_hex_to_type($hex)
 	{
