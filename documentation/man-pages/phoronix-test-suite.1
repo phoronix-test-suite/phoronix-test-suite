@@ -1,4 +1,4 @@
-.TH phoronix-test-suite 1  "www.phoronix-test-suite.com" "3.0.0a4"
+.TH phoronix-test-suite 1  "www.phoronix-test-suite.com" "3.0.0b1"
 .SH NAME
 phoronix-test-suite \- The Phoronix Test Suite is an extensible open-source platform for performing testing and performance evaluation.
 .SH SYNOPSIS
@@ -33,7 +33,7 @@ This option is similar to finish-run and can be used to finish running a set of 
 This option will run the selected test(s).
 .TP
 .B run-tests-in-suite
-This option can be used if you wish to run all of the tests found in a supplied suite, but you wish to re-configure each of the test's options rather than using the defaults supplied by the suite.
+This option can be used if you wish to run all of the tests found in a supplied suite, but you wish to re-configure each of the test options rather than using the defaults supplied by the suite.
 .TP
 .SH BATCH TESTING
 .B batch-benchmark [Test | Suite | OpenBenchmarking.org ID | Test Result]  ...
@@ -55,8 +55,8 @@ This option will install the selected test(s) (if needed) and will proceed to ru
 This option will run the selected test(s). The name of the test or suite must be supplied or the OpenBenchmarking.org ID or saved local file name. Multiple arguments can be supplied to run additional tests at the same time and save the results in a suite-like fashion. Unlike the normal run option, the default-run will not prompt the user to select from the available test options but will instead use the default options as automatically set by pts-core or the test profile. Use batch-run to automatically test all of the available options.
 .TP
 .SH OPENBENCHMARKING.ORG
-.B clone-result [OpenBenchmarking.org ID]
-This option will download a local copy of a file that was saved to OpenBenchmarking.org, as long as a valid public ID is supplied.
+.B clone-result [OpenBenchmarking.org ID]  ...
+This option will download a local copy of a file that was saved to OpenBenchmarking.org, as long as a valid public ID is supplied. More than one ID can be specified and the results will then be merged.
 .TP
 .B openbenchmarking-setup
 This option is used for controlling your Phoronix Test Suite client options for OpenBechmarking.org and syncing the client to your account.
@@ -122,7 +122,7 @@ This option will check all download links within the specified test profile(s) t
 This option will force the installation (or re-installation) of a test or suite. The arguments and process is similar to the install option but even if the test is installed, the entire installation process will automatically be executed. This option is generally used when debugging a test installation problem.
 .TP
 .B result-file-to-suite [Test Result]
-This option will guide the user through the process of generating their own test suite, which they can then run, that's based upon an existing test results file.
+This option will guide the user through the process of generating their own test suite, which they can then run, that is based upon an existing test results file.
 .TP
 .B validate-result-file
 This option can be used for validating a Phoronix Test Suite result file as being compliant against the OpenBenchmarking.org specification.
@@ -233,5 +233,5 @@ http://www.phoronix.com/
 .br
 http://www.phoronix.com/forums/
 .SH AUTHORS
-Copyright 2008 - 2010 by Phoronix Media, Michael Larabel.
+Copyright 2008 - 2011 by Phoronix Media, Michael Larabel.
 .TP
