@@ -103,7 +103,7 @@ class pts_test_execution
 			$backup_test_log_dir = false;
 		}
 
-		for($i = 0, $abort_testing = false, $time_test_start_actual = time(), $defined_times_to_run = $times_to_run; $i < $times_to_run && $i < 512 && !$abort_testing; $i++)
+		for($i = 0, $abort_testing = false, $time_test_start_actual = time(), $defined_times_to_run = $times_to_run; $i < $times_to_run && $i < 256 && !$abort_testing; $i++)
 		{
 			pts_client::$display->test_run_instance_header($test_run_request);
 			$test_log_file = $test_directory . basename($test_identifier) . '-' . $runtime_identifier . '-' . ($i + 1) . '.log';
@@ -210,12 +210,13 @@ class pts_test_execution
 				}
 			}
 
-			if($i == ($times_to_run - 1))
+			if($i == ($times_to_run - 1) && $test_run_request->test_result_buffer->get_count() > floor(($i - 2) / 2))
 			{
+				// The later check above ensures if the test is failing often the run count won't uselessly be increasing
 				// Should we increase the run count?
 				$increase_run_count = false;
 
-				if($defined_times_to_run == ($i + 1) && $test_run_request->test_result_buffer->get_count() > 0 && $test_run_request->test_result_buffer->get_count() < $defined_times_to_run && $test_run_request->test_result_buffer->get_count() > floor(($i - 1) / 2) && $i < 64)
+				if($defined_times_to_run == ($i + 1) && $test_run_request->test_result_buffer->get_count() > 0 && $test_run_request->test_result_buffer->get_count() < $defined_times_to_run && $i < 64)
 				{
 					// At least one run passed, but at least one run failed to produce a result. Increase count to try to get more successful runs
 					$increase_run_count = $defined_times_to_run - $test_run_request->test_result_buffer->get_count();
