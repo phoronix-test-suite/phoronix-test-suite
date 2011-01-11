@@ -111,6 +111,9 @@ class pts_openbenchmarking_client
 			if(!defined('HAS_REFRESHED_OBO_LIST') && $force_refresh == false)
 			{
 				define('HAS_REFRESHED_OBO_LIST', true);
+			}
+			else
+			{
 				return true;
 			}
 
