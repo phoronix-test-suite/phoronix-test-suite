@@ -99,7 +99,7 @@ class pts_network
 			curl_setopt($cr, CURLOPT_REFERER, 'http://www.phoronix-test-suite.com/');
 		}
 
-		if(strpos($download, 'https://www.openbenchmarking.org/') !== false)
+		if(strpos($download, 'https://openbenchmarking.org/') !== false)
 		{
 			curl_setopt($cr, CURLOPT_SSL_VERIFYPEER, true);
 			curl_setopt($cr, CURLOPT_SSL_VERIFYHOST, 2);
@@ -136,7 +136,7 @@ class pts_network
 		stream_context_set_params($stream_context, array('notification' => $callback_function));
 
 		/*
-		if(strpos($download, 'https://www.openbenchmarking.org/') !== false)
+		if(strpos($download, 'https://openbenchmarking.org/') !== false)
 		{
 			stream_context_set_option($stream_context, 'ssl', 'local_cert', PTS_CORE_STATIC_PATH . 'certificates/openbenchmarking-server.pem');
 		}
