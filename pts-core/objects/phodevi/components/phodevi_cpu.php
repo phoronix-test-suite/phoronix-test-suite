@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2010, Phoronix Media
-	Copyright (C) 2008 - 2010, Michael Larabel
+	Copyright (C) 2008 - 2011, Phoronix Media
+	Copyright (C) 2008 - 2011, Michael Larabel
 	phodevi_cpu.php: The PTS Device Interface object for the CPU / processor
 
 	This program is free software; you can redistribute it and/or modify
@@ -56,6 +56,7 @@ class phodevi_cpu extends phodevi_device_interface
 		// Append the processor frequency to string
 		if(($freq = phodevi::read_property('cpu', 'default-frequency')) > 0)
 		{
+			$model = str_replace($freq . 'GHz', null, $model); // we'll replace it if it's already in the string
 			$model .= ' @ ' . $freq . 'GHz';
 		}
 
