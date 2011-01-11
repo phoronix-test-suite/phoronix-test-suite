@@ -164,7 +164,7 @@ class pts_result_file_analyze_manager
 								}
 							}
 
-							if($do_line_graph && count($similar_ids_names) < 5)
+							if($do_line_graph && count($similar_ids_names) < 4)
 							{
 								$do_line_graph = false;
 							}

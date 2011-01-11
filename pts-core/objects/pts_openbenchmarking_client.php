@@ -104,12 +104,13 @@ class pts_openbenchmarking_client
 
 		return true;
 	}
-	public static function refresh_repository_lists($repos = null)
+	public static function refresh_repository_lists($repos = null, $force_refresh = false)
 	{
 		if($repos == null)
 		{
-			if(define('HAS_REFRESHED_OBO_LIST', true) == false)
+			if(!defined('HAS_REFRESHED_OBO_LIST') && $force_refresh == false)
 			{
+				define('HAS_REFRESHED_OBO_LIST', true);
 				return true;
 			}
 
@@ -134,8 +135,8 @@ class pts_openbenchmarking_client
 				$generated_time = $repo_index['main']['generated'];
 
 				// TODO: time zone differences causes this not to be exact if not on server time
-				// Refreshing the indexes once a day should be suffice
-				if($generated_time > (time() - (86400 * 2)))
+				// Refreshing the indexes once every few days should be suffice
+				if($generated_time > (time() - (86400 * 3)) && $force_refresh == false)
 				{
 					// The index is new enough
 					continue;

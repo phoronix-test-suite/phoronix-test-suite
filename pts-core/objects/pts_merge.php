@@ -95,17 +95,21 @@ class pts_merge
 	}
 	public static function generate_analytical_batch_xml($analyze_file)
 	{
-		$result_file_writer = new pts_result_file_writer();
+		if(($analyze_file instanceof pts_result_file) == false)
+		{
+			$analyze_file = new pts_result_file($analyze_file);
+		}
 
-		$test_result_manager = new pts_result_file_analyze_manager();
-		$result_file = new pts_result_file($analyze_file);
+		$result_file_writer = new pts_result_file_writer();
 		$added_systems_hash = array();
 
-		$result_file_writer->add_result_file_meta_data($result_file);
-		$result_file_writer->add_system_information_from_result_file($result_file);
+		$result_file_writer->add_result_file_meta_data($analyze_file);
+		$result_file_writer->add_system_information_from_result_file($analyze_file);
 
-		$test_result_manager->add_test_result_set($result_file->get_result_objects());
+		$test_result_manager = new pts_result_file_analyze_manager();
+		$test_result_manager->add_test_result_set($analyze_file->get_result_objects());
 		$result_file_writer->add_results_from_result_manager($test_result_manager);
+		unset($test_result_manager);
 
 		return $result_file_writer->get_xml();
 	}
