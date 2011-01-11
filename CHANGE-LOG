@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 - pts-core: Upgrade the .openbenchmarking file support, allows multiple tests/results to be compared
 - pts-core: Rewrite result file CSV output
 - pts-core: Add openbenchmarking-refresh command
+- pts-core: Don't keep increasing the run count when the test is failing more than half the time
 - nye_Xml: Support for reading the test-definition.xml directly from an OpenBenchmarking.org test profile ZIP package
 
 Phoronix Test Suite 3.0 Beta 1
