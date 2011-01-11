@@ -164,8 +164,6 @@ if(!QUICK_START)
 		echo PHP_EOL . 'The file_uploads option in your PHP configuration must be enabled for network support.' . PHP_EOL . PHP_EOL;
 	}
 
-	define('SUPPORTS_OPENSSL', (extension_loaded('openssl') && getenv('NO_OPENSSL') == false));
-
 	if(pts_client::read_env('PTS_IGNORE_MODULES') == false)
 	{
 		pts_client::module_framework_init(); // Initialize the PTS module system
