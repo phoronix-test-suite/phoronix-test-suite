@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2010, Phoronix Media
-	Copyright (C) 2009 - 2010, Michael Larabel
+	Copyright (C) 2009 - 2011, Phoronix Media
+	Copyright (C) 2009 - 2011, Michael Larabel
 	pts_ResultFileTable.php: The result file table object
 
 	This program is free software; you can redistribute it and/or modify
@@ -33,6 +33,15 @@ class pts_ResultFileSystemsTable extends pts_Table
 		pts_result_file_analyzer::system_components_to_table($table_data, $columns, $rows, $result_file->get_system_software());
 
 		pts_result_file_analyzer::compact_result_table_data($table_data, $columns, true); // TODO: see if this true value works fine but if rendering starts messing up, disable it
+
+		if(defined('OPENBENCHMARKING_IDS'))
+		{
+			foreach($columns as &$column)
+			{
+				$column = new pts_graph_ir_value($column);
+				$column->set_attribute('href', 'http://openbenchmarking.org/system/' . OPENBENCHMARKING_IDS . '/' . $column);
+			}
+		}
 
 		parent::__construct($rows, $columns, $table_data, $result_file);
 		$this->graph_font_size_identifiers *= 0.8;

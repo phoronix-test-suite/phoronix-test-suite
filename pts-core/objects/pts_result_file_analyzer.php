@@ -221,16 +221,50 @@ class pts_result_file_analyzer
 						array_push($rows, $index);
 						$r_i = count($rows) - 1;
 					}
-					$table_data[$columns[$col_pos]][$r_i] = new pts_graph_ir_value($value);
-
-					if(!in_array($index, array('Memory', 'Desktop', 'Screen Resolution')) && $value != 'Unknown')
-					{
-						$table_data[$columns[$col_pos]][$r_i]->set_attribute('href', 'http://openbenchmarking.org/s/' . pts_strings::system_category_to_openbenchmark_category($index) . '/' . pts_strings::trim_search_query($value));
-					}
+					$table_data[$columns[$col_pos]][$r_i] = self::system_value_to_ir_value($value, $index);
 				}
 			}
 			$col_pos++;
 		}
+	}
+	public static function system_component_string_to_html($components)
+	{
+		$components = explode(', ', $components);
+
+		foreach($components as &$component)
+		{
+			$component = explode(': ', $component);
+
+			if(count($component) == 2)
+			{
+				$component[1] = self::system_value_to_ir_value($component[1], $component[0]);
+				$component[0] = '<strong>' . $component[0] . '</strong>';
+
+				if(($href = $component[1]->get_attribute('href')) != false)
+				{
+					$component[1] = '<a href="' . $href . '">' . $component[1]->get_value() . '</a>';
+				}
+				else
+				{
+					$component[1] = $component[1]->get_value();
+				}
+			}
+
+			$component = implode(': ', $component);
+		}
+
+		return implode(', ', $components);
+	}
+	protected static function system_value_to_ir_value($value, $index)
+	{
+		$ir = new pts_graph_ir_value($value);
+
+		if(!in_array($index, array('Memory', 'Desktop', 'Screen Resolution')) && $value != 'Unknown')
+		{
+			$ir->set_attribute('href', 'http://openbenchmarking.org/s/' . pts_strings::system_category_to_openbenchmark_category($index) . '/' . pts_strings::trim_search_query($value));
+		}
+
+		return $ir;
 	}
 	public static function compact_result_table_data(&$table_data, &$columns, $unset_emptied_values = false)
 	{

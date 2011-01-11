@@ -378,6 +378,36 @@ class pts_strings
 
 		return implode(($standard_version ? ', ' : null), $formatted_time);
 	}
+	public static function days_ago_format_string($days_ago)
+	{
+		if($days_ago < 30)
+		{
+			$days_ago .= ' day' . ($days_ago > 1 ? 's': null);
+		}
+		else
+		{
+			$days_ago = floor($days_ago / 30);
+
+			if($days_ago >= 12)
+			{
+				$year = floor($days_ago / 12);
+				$months = $days_ago % 12;
+
+				$days_ago = $year . ' year' . ($year > 1 ? 's': null);
+
+				if($months > 0)
+				{
+					$days_ago .= ', ' . $months . ' month' . ($months > 1 ? 's': null);
+				}
+			}
+			else
+			{
+				$days_ago = $days_ago . ' month' . ($days_ago > 1 ? 's': null);
+			}
+		}
+
+		return $days_ago;
+	}
 	public static function system_category_to_openbenchmark_category($category)
 	{
 		switch($category)
