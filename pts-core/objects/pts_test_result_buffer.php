@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2010, Phoronix Media
-	Copyright (C) 2009 - 2010, Michael Larabel
+	Copyright (C) 2009 - 2011, Phoronix Media
+	Copyright (C) 2009 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -24,9 +24,9 @@ class pts_test_result_buffer
 {
 	private $buffer_items;
 
-	public function __construct()
+	public function __construct($buffer_items = array())
 	{
-		$this->buffer_items = array();
+		$this->buffer_items = $buffer_items;
 	}
 	public function get_buffer_items()
 	{
@@ -120,6 +120,7 @@ class pts_test_result_buffer
 	}
 	public function buffer_values_to_percent()
 	{
+		// TODO: is this function being used at all anymore?
 		$is_multi_way = pts_render::multi_way_identifier_check($this->get_identifiers());
 
 		if($is_multi_way)

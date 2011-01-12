@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2010, Phoronix Media
-	Copyright (C) 2009 - 2010, Michael Larabel
+	Copyright (C) 2009 - 2011, Phoronix Media
+	Copyright (C) 2009 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -35,6 +35,10 @@ class pts_test_result_buffer_item
 	public function reset_result_value($value)
 	{
 		$this->result_final = $value;
+	}
+	public function reset_raw_value($value)
+	{
+		$this->result_raw = $value;
 	}
 	public function get_result_identifier()
 	{

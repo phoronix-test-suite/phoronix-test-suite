@@ -129,6 +129,11 @@ class pts_render
 	}
 	public static function render_graph_process(&$result_object, &$result_file = null, $save_as = false, $extra_attributes = null)
 	{
+		if(isset($extra_attributes['normalize_result_buffer']))
+		{
+			$result_object->normalize_buffer_values();
+		}
+
 		self::multi_way_compact($result_file, $result_object);
 
 		$display_format = $result_object->test_profile->get_display_format();

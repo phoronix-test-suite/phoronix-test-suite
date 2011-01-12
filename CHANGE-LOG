@@ -7,6 +7,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add openbenchmarking-refresh command
 - pts-core: Don't keep increasing the run count when the test is failing more than half the time
 - pts-core: Fix identifier case issue from OpenBenchmarking.org
+- pts-core: Allow the result buffer to be normalized relative to the other contained results
 - phodevi: Don't report disks that are removable
 - nye_Xml: Support for reading the test-definition.xml directly from an OpenBenchmarking.org test profile ZIP package
 
