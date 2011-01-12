@@ -247,14 +247,14 @@ class pts_test_run_manager
 
 		return in_array($this->results_identifier, $result_file->get_system_identifiers());
 	}
-	public function set_save_name($save_name)
+	public function set_save_name($save_name, $is_new_save = true)
 	{
 		if(empty($save_name))
 		{
 			$save_name = date('Y-m-d-Hi');
 		}
 
-		$this->file_name = self::clean_save_name($save_name);
+		$this->file_name = self::clean_save_name($save_name, $is_new_save);
 		$this->file_name_title = $save_name;
 		$this->force_save_results = true;
 	}
@@ -606,10 +606,15 @@ class pts_test_run_manager
 
 		return true;
 	}
-	public static function clean_save_name($input)
+	public static function clean_save_name($input, $is_new_save = true)
 	{
 		$input = pts_client::swap_variables($input, array('pts_client', 'user_run_save_variables'));
-		$input = pts_strings::keep_in_string(str_replace(' ', '-', trim(strtolower($input))), pts_strings::CHAR_LETTER | pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DASH | pts_strings::CHAR_UNDERSCORE);
+		$input = pts_strings::keep_in_string(str_replace(' ', '-', trim($input)), pts_strings::CHAR_LETTER | pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DASH | pts_strings::CHAR_UNDERSCORE);
+
+		if($is_new_save)
+		{
+			$input = strtolower($input);
+		}
 
 		return $input;
 	}
@@ -857,7 +862,7 @@ class pts_test_run_manager
 	}
 	public function auto_save_results($save_name, $result_identifier, $description = null)
 	{
-		$this->set_save_name($save_name);
+		$this->set_save_name($save_name, false);
 		$this->set_results_identifier($result_identifier);
 		$this->run_description = $description;
 	}
@@ -1066,7 +1071,7 @@ class pts_test_run_manager
 				$preset_vars = $run_object->get_preset_environment_variables();
 				$result_objects = $run_object->get_result_objects();
 
-				$this->set_save_name($run_object->get_identifier());
+				$this->set_save_name($run_object->get_identifier(), false);
 
 				pts_module_manager::process_environment_variables_string_to_set($preset_vars);
 

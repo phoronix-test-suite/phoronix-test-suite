@@ -3,6 +3,7 @@ gui = gui_gtk
 install = install_test
 upload = upload_result
 upload_results = upload_result
+upload_result_file = upload_result
 list_results = list_saved_results
 list_tests = list_available_tests
 list_test_results = list_saved_results
