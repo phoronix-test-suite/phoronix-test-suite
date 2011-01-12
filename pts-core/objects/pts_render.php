@@ -131,7 +131,16 @@ class pts_render
 	{
 		if(isset($extra_attributes['normalize_result_buffer']))
 		{
-			$result_object->normalize_buffer_values();
+			if(isset($extra_attributes['highlight_graph_values']) && is_array($extra_attributes['highlight_graph_values']) && count($extra_attributes['highlight_graph_values']) == 1)
+			{
+				$normalize_against = $extra_attributes['highlight_graph_values'][0];
+			}
+			else
+			{
+				$normalize_against = false;
+			}
+
+			$result_object->normalize_buffer_values($normalize_against);
 		}
 
 		self::multi_way_compact($result_file, $result_object);

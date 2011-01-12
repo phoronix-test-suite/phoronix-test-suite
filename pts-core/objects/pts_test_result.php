@@ -72,7 +72,7 @@ class pts_test_result
 	{
 		return $this->test_profile->get_identifier(false) . ' ' . $this->get_arguments() . ' ' . $this->get_arguments_description() . ' ' . $this->test_profile->get_override_values();
 	}
-	public function normalize_buffer_values()
+	public function normalize_buffer_values($normalize_against = false)
 	{
 		if($this->test_profile->get_display_format() != 'BAR_GRAPH') // BAR_ANALYZE_GRAPH is currently unsupported
 		{
@@ -99,8 +99,19 @@ class pts_test_result
 			}
 
 			unset($all_values);
-
 			$buffer_items = $this->test_result_buffer->get_buffer_items();
+
+			if($normalize_against != false)
+			{
+				foreach($buffer_items as &$buffer_item)
+				{
+					if($buffer_item->get_result_identifier() == $normalize_against)
+					{
+						$divide_value = $buffer_item->get_result_value();
+						break;
+					}
+				}
+			}
 
 			foreach($buffer_items as &$buffer_item)
 			{
