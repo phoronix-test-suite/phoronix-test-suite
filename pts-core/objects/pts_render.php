@@ -99,7 +99,7 @@ class pts_render
 
 		return $graph;
 	}
-	public static function multi_way_compact(&$result_file, &$result_object)
+	public static function multi_way_compact(&$result_file, &$result_object, $extra_attributes = null)
 	{
 		if($result_file != null && ($result_file->is_multi_way_comparison() || $result_file->is_results_tracker()))
 		{
@@ -123,7 +123,7 @@ class pts_render
 
 			if($result_object->test_profile->get_display_format() != 'PIE_CHART')
 			{
-				pts_render::compact_result_file_test_object($result_object, $result_table, $result_file->is_multi_way_inverted());
+				pts_render::compact_result_file_test_object($result_object, $result_table, $result_file->is_multi_way_inverted(), $extra_attributes);
 			}
 		}
 	}
@@ -143,7 +143,7 @@ class pts_render
 			$result_object->normalize_buffer_values($normalize_against);
 		}
 
-		self::multi_way_compact($result_file, $result_object);
+		self::multi_way_compact($result_file, $result_object, $extra_attributes);
 
 		$display_format = $result_object->test_profile->get_display_format();
 		static $bar_orientation = null;
@@ -373,9 +373,10 @@ class pts_render
 
 		return $test_result;
 	}
-	public static function compact_result_file_test_object(&$mto, &$result_table = false, $identifiers_inverted = false)
+	public static function compact_result_file_test_object(&$mto, &$result_table = false, $identifiers_inverted = false, $extra_attributes = null)
 	{
 		// TODO: this may need to be cleaned up, its logic is rather messy
+		$condense_multi_way = isset($extra_attributes['condense_multi_way']);
 		if(count($mto->test_profile->get_result_scale_offset()) > 0)
 		{
 			// It's already doing something
@@ -476,23 +477,44 @@ class pts_render
 			}
 		}
 
-		$mto->test_profile->set_result_scale($mto->test_profile->get_result_scale() . ' | ' . implode(',', array_keys($days)));
-		$mto->test_profile->set_display_format((count($days) < 5 || $is_tracking == false ? 'BAR_ANALYZE_GRAPH' : 'LINE_GRAPH'));
 		$mto->test_result_buffer = new pts_test_result_buffer();
 		$day_keys = array_keys($days);
 
-		foreach(array_keys($systems) as $system_key)
+		if($condense_multi_way)
 		{
-			$results = array();
-			$raw_results = array();
-
-			foreach($day_keys as $day_key)
+			$mto->set_used_arguments_description($mto->get_arguments_description() . ' | Composite Of: ' . implode(' - ', array_keys($days)));
+			foreach(array_keys($systems) as $system_key)
 			{
-				array_push($results, $days[$day_key][$system_key]);
-				array_push($raw_results, $raw_days[$day_key][$system_key]);
-			}
+				$sum = 0;
+				$count = 0;
 
-			$mto->test_result_buffer->add_test_result($system_key, implode(',', $results), implode(',', $raw_results));
+				foreach($day_keys as $day_key)
+				{
+					$sum += $days[$day_key][$system_key];
+					$count++;
+				}
+
+				$mto->test_result_buffer->add_test_result($system_key, ($sum / $count));
+			}
+		}
+		else
+		{
+			$mto->test_profile->set_result_scale($mto->test_profile->get_result_scale() . ' | ' . implode(',', array_keys($days)));
+			$mto->test_profile->set_display_format((count($days) < 5 || $is_tracking == false ? 'BAR_ANALYZE_GRAPH' : 'LINE_GRAPH'));
+
+			foreach(array_keys($systems) as $system_key)
+			{
+				$results = array();
+				$raw_results = array();
+
+				foreach($day_keys as $day_key)
+				{
+					array_push($results, $days[$day_key][$system_key]);
+					array_push($raw_results, $raw_days[$day_key][$system_key]);
+				}
+
+				$mto->test_result_buffer->add_test_result($system_key, implode(',', $results), implode(',', $raw_results));
+			}
 		}
 
 		if($result_table !== false)

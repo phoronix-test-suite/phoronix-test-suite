@@ -40,7 +40,23 @@ class pts_strings
 	}
 	public static function trim_search_query($value)
 	{
-		return trim(($s = strpos($value, '@')) || ($s = strpos($value, '(')) || ($s = strpos($value, '/')) ? substr($value, 0, $s) : $value);
+		for($i = 0, $x = strlen($value); $i < $x; $i++)
+		{
+			if(in_array($value[$i], array('@', '(', '/', '+')))
+			{
+				$value = substr($value, 0, $i);
+				break;
+			}
+		}
+
+		$multiplier = strpos($value, ' x ');
+
+		if($multiplier !== false && is_numeric(substr($value, 0, $multiplier)))
+		{
+			$value = substr($value, ($multiplier + 3));
+		}
+
+		return trim($value);
 	}
 	public static function string_bool($string)
 	{
