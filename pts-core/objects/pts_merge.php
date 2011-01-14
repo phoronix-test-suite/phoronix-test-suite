@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2010, Phoronix Media
-	Copyright (C) 2008 - 2010, Michael Larabel
+	Copyright (C) 2008 - 2011, Phoronix Media
+	Copyright (C) 2008 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -43,13 +43,17 @@ class pts_merge
 
 		foreach($files_to_combine as &$file)
 		{
-			if(is_object($file) && $file instanceOf pts_result_merge_select)
+			if(is_object($file) && $file instanceof pts_result_merge_select)
 			{
 				$result_merge_select = $file;
-				$this_result_file = new pts_result_file($result_merge_select->get_result_file());
+				$this_result_file = $result_merge_select->get_result_file();
 
+				if(($this_result_file instanceof pts_result_file) == false)
+				{
+					$this_result_file = new pts_result_file($this_result_file);
+				}
 			}
-			else if(is_object($file) && $file instanceOf pts_result_file)
+			else if(is_object($file) && $file instanceof pts_result_file)
 			{
 				if(($t = $file->read_extra_attribute('rename_result_identifier')) != false)
 				{

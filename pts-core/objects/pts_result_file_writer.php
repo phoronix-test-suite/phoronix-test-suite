@@ -151,7 +151,7 @@ class pts_result_file_writer
 		// Write the system hardware/software information
 		foreach(array_keys($system_hardware) as $i)
 		{
-			if(!($is_pts_rms = ($result_merge_select instanceOf pts_result_merge_select)) || $result_merge_select->get_selected_identifiers() == null || in_array($associated_identifiers[$i], $result_merge_select->get_selected_identifiers()))
+			if(!($is_pts_rms = ($result_merge_select instanceof pts_result_merge_select)) || $result_merge_select->get_selected_identifiers() == null || in_array($associated_identifiers[$i], $result_merge_select->get_selected_identifiers()))
 			{
 				// Prevents any information from being repeated
 				$this_hash = md5($associated_identifiers[$i] . ';' . $system_hardware[$i] . ';' . $system_software[$i] . ';' . $system_date[$i]);

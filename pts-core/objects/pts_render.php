@@ -533,12 +533,13 @@ class pts_render
 			}
 		}
 	}
-	public static function multi_way_identifier_check($identifiers, &$system_hardware = null)
+	public static function multi_way_identifier_check($identifiers, &$system_hardware = null, &$result_file = null)
 	{
 		$systems = array();
 		$targets = array();
 		$is_multi_way = true;
 		$is_multi_way_inverted = false;
+		$is_ordered = true;
 		$prev_system = null;
 
 		foreach($identifiers as $identifier)
@@ -551,11 +552,16 @@ class pts_render
 				break;
 			}
 
-			if($prev_system != null && $prev_system != $identifier_r[0] && isset($systems[$identifier_r[0]]))
+			if($is_ordered && $prev_system != null && $prev_system != $identifier_r[0] && isset($systems[$identifier_r[0]]))
 			{
 				// The results aren't ordered
-				$is_multi_way = false;
-				break;
+				$is_ordered = false;
+
+				if($result_file == null)
+				{
+					$is_multi_way = false;
+					break;
+				}
 			}
 
 			$prev_system = $identifier_r[0];
@@ -563,7 +569,30 @@ class pts_render
 			$targets[$identifier_r[1]] = !isset($targets[$identifier_r[1]]) ? 1 : $targets[$identifier_r[1]] + 1;	
 		}
 
-		$is_multi_way_inverted = count($targets) > count($systems);
+		if($is_ordered == false && $is_multi_way)
+		{
+			// TODO: get the reordering code to work
+			if(false && $result_file instanceof pts_result_file)
+			{
+				// Reorder the result file
+				$to_order = array();
+				sort($identifiers);
+				foreach($identifiers as $identifier)
+				{
+					array_push($to_order, new pts_result_merge_select($result_file, $identifier));
+				}
+
+				$ordered_xml = pts_merge::merge_test_results_array($to_order);
+				$result_file = new pts_result_file($ordered_xml);
+				$is_multi_way = false;
+			}
+			else
+			{
+				$is_multi_way = false;
+			}
+		}
+
+		$is_multi_way_inverted = $is_multi_way && count($targets) > count($systems);
 
 		/*
 		if($is_multi_way)
