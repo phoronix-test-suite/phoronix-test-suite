@@ -11,6 +11,8 @@ Phoronix Test Suite (Git)
 - pts-core: Don't use OpenSSL HTTPS on non-Linux systems since it's breaking at least under OpenIndiana
 - phodevi: Don't report disks that are removable
 - nye_Xml: Support for reading the test-definition.xml directly from an OpenBenchmarking.org test profile ZIP package
+- bilde_renderer: Support stuffing grouped array point pairs to draw_polygon() rather than linearly listing them
+- pts_Graph: Add pts_FilledLineGraph object for providing a filled line graph with combined values
 
 Phoronix Test Suite 3.0 Beta 1
 10 January 2011

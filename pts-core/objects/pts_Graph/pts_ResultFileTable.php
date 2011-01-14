@@ -264,6 +264,7 @@ class pts_ResultFileTable extends pts_Table
 					}
 					break;
 				case 'LINE_GRAPH':
+				case 'FILLED_LINE_GRAPH':
 					$result_tests[$result_counter] = new pts_graph_ir_value($result_object->test_profile->get_title() . ' (Avg)');
 
 					foreach($result_object->test_result_buffer->get_buffer_items() as $index => $buffer_item)

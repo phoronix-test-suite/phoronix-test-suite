@@ -103,7 +103,7 @@ class pts_render
 	{
 		if($result_file != null && ($result_file->is_multi_way_comparison() || $result_file->is_results_tracker()))
 		{
-			if($result_file->is_multi_way_comparison() && $result_object->test_profile->get_display_format() == 'LINE_GRAPH')
+			if($result_file->is_multi_way_comparison() && in_array($result_object->test_profile->get_display_format(), array('LINE_GRAPH', 'FILLED_LINE_GRAPH')))
 			{
 				// Turn a multi-way line graph into an averaged bar graph
 				$buffer_items = $result_object->test_result_buffer->get_buffer_items();
@@ -186,6 +186,9 @@ class pts_render
 			case 'IMAGE_COMPARISON':
 				$graph_type = 'pts_ImageComparisonGraph';
 				break;
+			case 'FILLED_LINE_GRAPH':
+				$graph_type = 'pts_FilledLineGraph';
+				break;
 			default:
 				if(isset($extra_attributes['graph_render_type']))
 				{
@@ -207,6 +210,9 @@ class pts_render
 						break;
 					case 'LINE_GRAPH':
 						$graph_type = 'pts_LineGraph';
+						break;
+					case 'FILLED_LINE_GRAPH':
+						$graph_type = 'pts_FilledLineGraph';
 						break;
 					default:
 						$graph_type = $preferred_bar_graph_type;
@@ -252,6 +258,7 @@ class pts_render
 				{
 					$graph->plot_overview_text = false;
 				}
+			case 'FILLED_LINE_GRAPH':
 			case 'BAR_ANALYZE_GRAPH':
 				//$graph->hideGraphIdentifiers();
 				foreach($result_object->test_result_buffer->get_buffer_items() as $buffer_item)
