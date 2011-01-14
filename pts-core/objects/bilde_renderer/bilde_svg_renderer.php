@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2010, Phoronix Media
-	Copyright (C) 2008 - 2010, Michael Larabel
+	Copyright (C) 2008 - 2011, Phoronix Media
+	Copyright (C) 2008 - 2011, Michael Larabel
 	bilde_svg_renderer: The SVG rendering implementation for bilde_renderer
 
 	This program is free software; you can redistribute it and/or modify
@@ -325,16 +325,26 @@ class bilde_svg_renderer extends bilde_renderer
 		$point_pairs = array();
 		$this_pair = array();
 
-		foreach($points as $one_point)
+		if(isset($points[0]) && is_array($points[0]) && count($points[0]) >= 2)
 		{
-			array_push($this_pair, $one_point);
-
-			if(count($this_pair) == 2)
+			foreach($points as $point_set)
 			{
-				$pair = implode(',', $this_pair);
-				array_push($point_pairs, $pair);
-				$this_pair = array();
-			} 
+				array_push($point_pairs, implode(',', array_slice($point_set, 0, 2)));
+			}
+		}
+		else
+		{
+			foreach($points as $one_point)
+			{
+				array_push($this_pair, $one_point);
+
+				if(count($this_pair) == 2)
+				{
+					$pair = implode(',', $this_pair);
+					array_push($point_pairs, $pair);
+					$this_pair = array();
+				}
+			}
 		}
 
 		$polygon = $this->image->createElement('polygon');

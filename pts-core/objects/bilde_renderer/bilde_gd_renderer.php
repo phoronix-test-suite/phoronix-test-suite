@@ -171,8 +171,20 @@ abstract class bilde_gd_renderer extends bilde_renderer
 	}
 	public function draw_polygon($points, $body_color, $border_color = null, $border_width = 0)
 	{
-		$num_points = floor(count($points) / 2);
+		if(isset($points[0]) && is_array($points[0]) && count($points[0]) >= 2)
+		{
+			$points_r = array();
+			foreach($points as $point_set)
+			{
+				foreach(array_slice($point_set, 0, 2) as $point)
+				{
+					array_push($points_r, $point);
+				}
+			}
+			$points = $points_r;
+		}
 
+		$num_points = floor(count($points) / 2);
 		imagefilledpolygon($this->image, $points, $num_points, $body_color);
 
 		if($border_width > 0 && !empty($border_color))
