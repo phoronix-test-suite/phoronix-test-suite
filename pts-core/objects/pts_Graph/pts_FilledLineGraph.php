@@ -29,6 +29,7 @@ class pts_FilledLineGraph extends pts_LineGraph
 		$point_count = count($this->graph_data[0]);
 		$varying_lengths = false;
 		$prev_values = array();
+		$prev_poly_points = array();
 
 		foreach($this->graph_data as &$graph_r)
 		{
@@ -126,15 +127,15 @@ class pts_FilledLineGraph extends pts_LineGraph
 					array_shift($poly_points);
 					array_unshift($poly_points, $prev_poly_points[1]);
 
-					foreach(array_reverse(array_slice($prev_poly_points, 1)) as $p)
+					foreach(array_reverse($prev_poly_points) as $p)
 					{
 						array_push($poly_points, $p);
 					}
 					break;
 			}
 
-			$this->graph_image->draw_polygon($poly_points, $paint_color, $paint_color, 2);
-			$prev_poly_points = $poly_points;
+			$this->graph_image->draw_polygon($poly_points, $paint_color, $this->graph_color_main_headers, 1);
+			$prev_poly_points = array_merge($poly_points, $prev_poly_points);
 		}
 	}
 	protected function maximum_graph_value()
