@@ -3,8 +3,8 @@
 <xs:annotation>
 	<xs:documentation xml:lang="en">
 		Phoronix Test Suite / OpenBenchmarking.org XML Result File Specification
-		Copyright (C) 2008 - 2010, Phoronix Media
-		Copyright (C) 2008 - 2010, Michael Larabel
+		Copyright (C) 2008 - 2011, Phoronix Media
+		Copyright (C) 2008 - 2011, Michael Larabel
 	</xs:documentation>
 </xs:annotation>
 <xs:include schemaLocation="types.xsd" />
@@ -58,7 +58,7 @@
 				<xs:element name="Entry" maxOccurs="unbounded" minOccurs="1">
 				<xs:complexType>
 				<xs:sequence>
-					<xs:element name="Identifier" type="xs:string" />
+					<xs:element name="Identifier" type="SystemIdentifier" />
 					<xs:element name="Value" type="xs:string" />
 					<xs:element name="RawString" type="xs:string" />
 				</xs:sequence>

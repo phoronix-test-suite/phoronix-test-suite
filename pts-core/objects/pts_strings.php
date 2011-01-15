@@ -31,6 +31,7 @@ class pts_strings
 	const CHAR_COLON = 128;
 	const CHAR_COMMA = 256;
 	const CHAR_SLASH = 512;
+	const CHAR_AT = 1024;
 
 	public static function is_url($string)
 	{
@@ -157,6 +158,10 @@ class pts_strings
 			$is_of_type = true;
 		}
 		else if(($attributes & self::CHAR_COMMA) && $i == 44)
+		{
+			$is_of_type = true;
+		}
+		else if(($attributes & self::CHAR_AT) && $i == 64)
 		{
 			$is_of_type = true;
 		}
