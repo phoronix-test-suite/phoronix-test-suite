@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2010, Phoronix Media
-	Copyright (C) 2009 - 2010, Michael Larabel
+	Copyright (C) 2009 - 2011, Phoronix Media
+	Copyright (C) 2009 - 2011, Michael Larabel
 	pts_basic_display_mode.php: The basic display mode
 
 	This program is free software; you can redistribute it and/or modify
@@ -41,25 +41,25 @@ class pts_basic_display_mode implements pts_display_mode_interface
 	}
 	public function test_install_downloads($test_install_request)
 	{
-		echo self::string_header("Downloading Files: " . $test_install_request->test_profile->get_identifier());
+		echo self::string_header('Downloading Files: ' . $test_install_request->test_profile->get_identifier());
 	}
 	public function test_install_download_file($process, &$pts_test_file_download)
 	{
 		switch($process)
 		{
-			case "DOWNLOAD_FROM_CACHE":
-				echo "Downloading Cached File: " . $pts_test_file_download->get_filename() . "\n\n";
+			case 'DOWNLOAD_FROM_CACHE':
+				echo 'Downloading Cached File: ' . $pts_test_file_download->get_filename() . PHP_EOL . PHP_EOL;
 				break;
-			case "LINK_FROM_CACHE":
-				echo "Linking Cached File: " . $pts_test_file_download->get_filename() . "\n";
+			case 'LINK_FROM_CACHE':
+				echo 'Linking Cached File: ' . $pts_test_file_download->get_filename() . PHP_EOL;
 				break;
-			case "COPY_FROM_CACHE":
-				echo "Copying Cached File: " . $pts_test_file_download->get_filename() . "\n";
+			case 'COPY_FROM_CACHE':
+				echo 'Copying Cached File: ' . $pts_test_file_download->get_filename() . PHP_EOL;
 				break;
-			case "DOWNLOAD":
-				echo "\n\nDownloading File: " . $pts_test_file_download->get_filename() . "\n\n";
+			case 'DOWNLOAD':
+				echo PHP_EOL . PHP_EOL . 'Downloading File: ' . $pts_test_file_download->get_filename() . PHP_EOL . PHP_EOL;
 				break;
-			case "FILE_FOUND":
+			case 'FILE_FOUND':
 				break;
 		}
 	}
@@ -77,7 +77,7 @@ class pts_basic_display_mode implements pts_display_mode_interface
 	}
 	public function test_install_start($identifier)
 	{
-		echo self::string_header("Installing Test: " . $identifier);
+		echo self::string_header('Installing Test: ' . $identifier);
 	}
 	public function test_install_output(&$to_output)
 	{
@@ -89,11 +89,11 @@ class pts_basic_display_mode implements pts_display_mode_interface
 	}
 	public function test_install_error($error_string)
 	{
-		echo "\n" . $error_string . "\n";
+		echo PHP_EOL . $error_string . PHP_EOL;
 	}
 	public function test_install_prompt($prompt_string)
 	{
-		echo "\n" . $prompt_string;
+		echo PHP_EOL . $prompt_string;
 	}
 	public function test_run_process_start(&$test_run_manager)
 	{
@@ -101,7 +101,7 @@ class pts_basic_display_mode implements pts_display_mode_interface
 	}
 	public function test_run_message($message_string)
 	{
-		echo "\n" . $message_string . "\n";
+		echo PHP_EOL . $message_string . PHP_EOL;
 	}
 	public function test_run_start(&$test_run_manager, &$test_result)
 	{
@@ -111,7 +111,7 @@ class pts_basic_display_mode implements pts_display_mode_interface
 	public function test_run_instance_header(&$test_result)
 	{
 		$this->trial_run_count_current++;
-		echo self::string_header($test_result->test_profile->get_title() . " (Run " . $this->trial_run_count_current . " of " . $this->expected_trial_run_count . ")");
+		echo self::string_header($test_result->test_profile->get_title() . ' (Run ' . $this->trial_run_count_current . ' of ' . $this->expected_trial_run_count . ')');
 	}
 	public function test_run_instance_output(&$to_output)
 	{
@@ -123,40 +123,40 @@ class pts_basic_display_mode implements pts_display_mode_interface
 	}
 	public function test_run_end(&$test_result)
 	{
-		$end_print = $test_result->test_profile->get_title() . ":\n" . $test_result->get_arguments_description();
-		$end_print .= "\n" . ($test_result->get_arguments_description() != null ? "\n" : null);
+		$end_print = $test_result->test_profile->get_title() . ':' . PHP_EOL . $test_result->get_arguments_description();
+		$end_print .= PHP_EOL . ($test_result->get_arguments_description() != null ? PHP_EOL : null);
 
-		if(in_array($test_result->test_profile->get_display_format(), array("NO_RESULT", "LINE_GRAPH", "IMAGE_COMPARISON")))
+		if(in_array($test_result->test_profile->get_display_format(), array('NO_RESULT', 'FILLED_LINE_GRAPH', 'LINE_GRAPH', 'IMAGE_COMPARISON')))
 		{
 			return;
 		}
-		else if(in_array($test_result->test_profile->get_display_format(), array("PASS_FAIL", "MULTI_PASS_FAIL")))
+		else if(in_array($test_result->test_profile->get_display_format(), array('PASS_FAIL', 'MULTI_PASS_FAIL')))
 		{
-			$end_print .= "\nFinal: " . $test_result->get_result() . " (" . $test_result->test_profile->get_result_scale() . ")\n";
+			$end_print .= PHP_EOL . 'Final: ' . $test_result->get_result() . ' (' . $test_result->test_profile->get_result_scale() . ')' . PHP_EOL;
 		}
 		else
 		{
 			foreach($test_result->test_result_buffer->get_values() as $result)
 			{
-				$end_print .= $result . " " . $test_result->test_profile->get_result_scale() . "\n";
+				$end_print .= $result . ' ' . $test_result->test_profile->get_result_scale() . PHP_EOL;
 			}
 
-			$end_print .= "\n" . pts_strings::result_quantifier_to_string($test_result->test_profile->get_result_quantifier()) . ": " . $test_result->get_result() . " " . $test_result->test_profile->get_result_scale();
+			$end_print .= PHP_EOL . pts_strings::result_quantifier_to_string($test_result->test_profile->get_result_quantifier()) . ': ' . $test_result->get_result() . ' ' . $test_result->test_profile->get_result_scale();
 		}
 
-		echo self::string_header($end_print, "#");
+		echo self::string_header($end_print, '#');
 	}
 	public function test_run_error($error_string)
 	{
-		echo "\n" . $error_string . "\n\n";
+		echo PHP_EOL . $error_string . PHP_EOL . PHP_EOL;
 	}
 	public function test_run_instance_error($error_string)
 	{
-		echo "\n" . $error_string . "\n\n";
+		echo PHP_EOL . $error_string . PHP_EOL . PHP_EOL;
 	}
 	public function generic_prompt($prompt_string)
 	{
-		echo "\n" . $prompt_string;
+		echo PHP_EOL . $prompt_string;
 	}
 	public function generic_heading($string)
 	{
@@ -164,14 +164,14 @@ class pts_basic_display_mode implements pts_display_mode_interface
 
 		if($shown_pts == false)
 		{
-			$string = pts_title() . "\n" . $string;
+			$string = pts_title() . PHP_EOL . $string;
 		}
 
 		echo self::string_header($string, '=');
 	}
 	public function generic_sub_heading($string)
 	{
-		echo $string . "\n";
+		echo $string . PHP_EOL;
 	}
 	public function generic_error($string)
 	{
@@ -191,7 +191,7 @@ class pts_basic_display_mode implements pts_display_mode_interface
 
 		$header_size = 40;
 
-		foreach(explode("\n", $heading) as $line)
+		foreach(explode(PHP_EOL, $heading) as $line)
 		{
 			if(isset($line[($header_size + 1)])) // Line to write is longer than header size
 			{
@@ -204,7 +204,7 @@ class pts_basic_display_mode implements pts_display_mode_interface
 			$header_size = $terminal_width;
 		}
 
-		return "\n" . str_repeat($char, $header_size) . "\n" . $heading . "\n" . str_repeat($char, $header_size) . "\n\n";
+		return PHP_EOL . str_repeat($char, $header_size) . PHP_EOL . $heading . PHP_EOL . str_repeat($char, $header_size) . PHP_EOL . PHP_EOL;
 	}
 }
 

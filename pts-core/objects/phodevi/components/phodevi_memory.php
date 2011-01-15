@@ -161,6 +161,11 @@ class phodevi_memory extends phodevi_device_interface
 			$info = substr($info, strpos($info, 'MemTotal:') + 9);
 			$info = intval(trim(substr($info, 0, strpos($info, 'kB'))));
 			$info = floor($info / 1024);
+
+			if(is_numeric($info) && $info > 1024)
+			{
+				$info = round($info / 256, 0) * 256;
+			}
 		}
 		else if(IS_SOLARIS)
 		{

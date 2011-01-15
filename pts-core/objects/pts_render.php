@@ -508,7 +508,7 @@ class pts_render
 		{
 			$line_graph_type = isset($extra_attributes['filled_line_graph']) ? 'FILLED_LINE_GRAPH' : 'LINE_GRAPH';
 			$mto->test_profile->set_result_scale($mto->test_profile->get_result_scale() . ' | ' . implode(',', array_keys($days)));
-			$mto->test_profile->set_display_format((count($days) < 5 || $is_tracking == false ? 'BAR_ANALYZE_GRAPH' : $line_graph_type));
+			$mto->test_profile->set_display_format((count($days) < 5 || ($is_tracking == false && !isset($extra_attributes['force_line_graph_compact'])) ? 'BAR_ANALYZE_GRAPH' : $line_graph_type));
 
 			foreach(array_keys($systems) as $system_key)
 			{

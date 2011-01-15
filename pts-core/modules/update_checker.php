@@ -23,10 +23,10 @@
 
 class update_checker extends pts_module_interface
 {
-	const module_name = "Update Checker";
-	const module_version = "0.2.0";
-	const module_description = "This module checks to see if the Phoronix Test Suite -- and its tests and suites -- are up to date.";
-	const module_author = "Phoronix Media";
+	const module_name = 'Update Checker';
+	const module_version = '0.2.0';
+	const module_description = 'This module checks to see if the Phoronix Test Suite -- and its tests and suites -- are up to date.';
+	const module_author = 'Phoronix Media';
 
 	public static function __pre_option_process()
 	{
@@ -34,14 +34,14 @@ class update_checker extends pts_module_interface
 		if(IS_FIRST_RUN_TODAY)
 		{
 			// Check For pts-core updates
-			$latest_reported_version = pts_network::http_get_contents("http://www.phoronix-test-suite.com/LATEST");
-			$current_e = explode(".", PTS_VERSION);
-			$latest_e = explode(".", $latest_reported_version);
+			$latest_reported_version = pts_network::http_get_contents('http://www.phoronix-test-suite.com/LATEST');
+			$current_e = explode('.', PTS_VERSION);
+			$latest_e = explode('.', $latest_reported_version);
 
 			if($latest_reported_version != PTS_VERSION && $latest_e[0] >= $current_e[0] && ($latest_e[1] > $current_e[1] || ($latest_e[1] == $current_e[1] && $latest_e[2] >= $current_e[2])))
 			{
 				// New version of PTS is available
-				pts_client::$display->generic_heading("An outdated version of the Phoronix Test Suite is installed.\nThe version in use is v" . PTS_VERSION . ", but the latest is v" . $latest_reported_version . ".\nVisit http://www.phoronix-test-suite.com/ to update this software.");
+				pts_client::$display->generic_heading('An outdated version of the Phoronix Test Suite is installed.' . PHP_EOL . 'The version in use is v' . PTS_VERSION . ', but the latest is v' . $latest_reported_version . '.' . PHP_EOL . 'Visit http://www.phoronix-test-suite.com/ to update this software.');
 			}
 		}
 

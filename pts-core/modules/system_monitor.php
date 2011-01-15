@@ -23,10 +23,10 @@
 
 class system_monitor extends pts_module_interface
 {
-	const module_name = "System Monitor";
-	const module_version = "3.0.0";
-	const module_description = "This module contains sensor monitoring support.";
-	const module_author = "Michael Larabel";
+	const module_name = 'System Monitor';
+	const module_version = '3.0.0';
+	const module_description = 'This module contains sensor monitoring support.';
+	const module_author = 'Michael Larabel';
 
 	static $result_identifier = null;
 	static $to_monitor = array();
@@ -38,14 +38,14 @@ class system_monitor extends pts_module_interface
 
 	public static function module_info()
 	{
-		$info = "";
+		$info = null;
 
-		$info .= "\nMonitoring these sensors are as easy as running your normal Phoronix Test Suite commands but at the beginning of the command add: MONITOR=<selected sensors> (example: MONITOR=cpu.temp,cpu.voltage phoronix-test-suite benchmark universe). Below are all of the sensors supported by this version of the Phoronix Test Suite.\n\n";
-		$info .= "Supported Options:\n\n";
+		$info .= PHP_EOL . 'Monitoring these sensors are as easy as running your normal Phoronix Test Suite commands but at the beginning of the command add: MONITOR=<selected sensors> (example: MONITOR=cpu.temp,cpu.voltage phoronix-test-suite benchmark universe). Below are all of the sensors supported by this version of the Phoronix Test Suite.' . PHP_EOL . PHP_EOL;
+		$info .= 'Supported Options:' . PHP_EOL . PHP_EOL;
 
 		foreach(self::monitor_arguments() as $arg)
 		{
-			$info .= "  - " . $arg . "\n";
+			$info .= '  - ' . $arg . PHP_EOL;
 		}
 
 		return $info;
@@ -63,22 +63,22 @@ class system_monitor extends pts_module_interface
 	public static function __pre_run_process(&$test_run_manager)
 	{
 		self::$result_identifier = $test_run_manager->get_results_identifier();
-		self::$individual_monitoring = pts_module::read_variable("MONITOR_INDIVIDUAL") == '1';
+		self::$individual_monitoring = pts_module::read_variable('MONITOR_INDIVIDUAL') == '1';
 		self::$individual_monitoring = true;
 		self::$to_monitor = array();
-		$to_show = pts_strings::comma_explode(pts_module::read_variable("MONITOR"));
-		$monitor_all = in_array("all", $to_show);
+		$to_show = pts_strings::comma_explode(pts_module::read_variable('MONITOR'));
+		$monitor_all = in_array('all', $to_show);
 
 		foreach(phodevi::supported_sensors() as $sensor)
 		{
-			if($monitor_all || in_array(phodevi::sensor_identifier($sensor), $to_show) || in_array("all." . $sensor[0], $to_show))
+			if($monitor_all || in_array(phodevi::sensor_identifier($sensor), $to_show) || in_array('all.' . $sensor[0], $to_show))
 			{
 				array_push(self::$to_monitor, $sensor);
-				pts_module::save_file("logs/" . phodevi::sensor_identifier($sensor));
+				pts_module::save_file('logs/' . phodevi::sensor_identifier($sensor));
 			}
 		}
 
-		pts_module::pts_timed_function("pts_monitor_update", 3);
+		pts_module::pts_timed_function('pts_monitor_update', 3);
 	}
 	public static function __pre_test_run(&$test_run_request)
 	{
@@ -91,7 +91,7 @@ class system_monitor extends pts_module_interface
 
 		foreach(self::$to_monitor as $id_point => $sensor)
 		{
-			$log_f = pts_module::read_file("logs/" . phodevi::sensor_identifier($sensor));
+			$log_f = pts_module::read_file('logs/' . phodevi::sensor_identifier($sensor));
 			$offset = count(explode("\n", $log_f));
 			self::$individual_test_run_offsets[$id_point] = $offset;
 		}
@@ -105,16 +105,16 @@ class system_monitor extends pts_module_interface
 
 		foreach(self::$to_monitor as $id_point => $sensor)
 		{
-			$sensor_results = self::parse_monitor_log("logs/" . phodevi::sensor_identifier($sensor), self::$individual_test_run_offsets[$id_point]);
+			$sensor_results = self::parse_monitor_log('logs/' . phodevi::sensor_identifier($sensor), self::$individual_test_run_offsets[$id_point]);
 
 			if(count($sensor_results) > 2 )
 			{
 				self::$individual_test_run_request->test_profile->set_identifier(null);
 				self::$individual_test_run_request->test_profile->set_result_proportion(null);
-				self::$individual_test_run_request->test_profile->set_proportion("LIB");
-				self::$individual_test_run_request->test_profile->set_display_format("LINE_GRAPH");
+				self::$individual_test_run_request->test_profile->set_proportion('LIB');
+				self::$individual_test_run_request->test_profile->set_display_format('LINE_GRAPH');
 				self::$individual_test_run_request->test_profile->set_result_scale(phodevi::read_sensor_unit($sensor));
-				self::$individual_test_run_request->set_used_arguments_description(phodevi::sensor_name($sensor) . " Monitor");
+				self::$individual_test_run_request->set_used_arguments_description(phodevi::sensor_name($sensor) . ' Monitor');
 				self::$individual_test_run_request->set_used_arguments(phodevi::sensor_name($sensor) . self::$individual_test_run_request->get_arguments());
 
 				$result_file_writer->add_result_from_result_object_with_value_string(self::$individual_test_run_request, implode(',', $sensor_results), implode(',', $sensor_results));
@@ -129,21 +129,21 @@ class system_monitor extends pts_module_interface
 	{
 		foreach(self::$to_monitor as $id_point => $sensor)
 		{
-			$sensor_results = self::parse_monitor_log("logs/" . phodevi::sensor_identifier($sensor));
-			pts_module::remove_file("logs/" . phodevi::sensor_identifier($sensor));
+			$sensor_results = self::parse_monitor_log('logs/' . phodevi::sensor_identifier($sensor));
+			pts_module::remove_file('logs/' . phodevi::sensor_identifier($sensor));
 
 			if(count($sensor_results) > 2 && self::$monitor_test_count > 1)
 			{
 				$test_profile = new pts_test_profile();
 				$test_result = new pts_test_result($test_profile);
 
-				$test_result->test_profile->set_test_title(phodevi::sensor_name($sensor) . " Monitor");
+				$test_result->test_profile->set_test_title(phodevi::sensor_name($sensor) . ' Monitor');
 				$test_result->test_profile->set_identifier(null);
 				$test_result->test_profile->set_version(null);
 				$test_result->test_profile->set_result_proportion(null);
-				$test_result->test_profile->set_display_format("LINE_GRAPH");
+				$test_result->test_profile->set_display_format('LINE_GRAPH');
 				$test_result->test_profile->set_result_scale(phodevi::read_sensor_unit($sensor));
-				$test_result->set_used_arguments_description("Phoronix Test Suite System Monitoring");
+				$test_result->set_used_arguments_description('Phoronix Test Suite System Monitoring');
 				$test_result->set_used_arguments(phodevi::sensor_identifier($sensor));
 				$test_run_manager->result_file_writer->add_result_from_result_object_with_value_string($test_result, implode(',', $sensor_results), implode(',', $sensor_results));
 			}
@@ -155,9 +155,9 @@ class system_monitor extends pts_module_interface
 		{
 			$sensor_value = phodevi::read_sensor($sensor);
 
-			if($sensor_value != -1 && pts_module::is_file("logs/" . phodevi::sensor_identifier($sensor)))
+			if($sensor_value != -1 && pts_module::is_file('logs/' . phodevi::sensor_identifier($sensor)))
 			{
-				pts_module::save_file("logs/" . phodevi::sensor_identifier($sensor), $sensor_value, true);
+				pts_module::save_file('logs/' . phodevi::sensor_identifier($sensor), $sensor_value, true);
 			}
 		}
 	}
@@ -198,13 +198,13 @@ class system_monitor extends pts_module_interface
 	}
 	private static function monitor_arguments()
 	{
-		$args = array("all");
+		$args = array('all');
 
 		foreach(phodevi::available_sensors() as $sensor)
 		{
-			if(!in_array("all." . $sensor[0], $args))
+			if(!in_array('all.' . $sensor[0], $args))
 			{
-				array_push($args, "all." . $sensor[0]);
+				array_push($args, 'all.' . $sensor[0]);
 			}
 
 			array_push($args, phodevi::sensor_identifier($sensor));
