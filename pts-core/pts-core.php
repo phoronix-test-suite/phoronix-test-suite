@@ -22,7 +22,7 @@
 */
 
 define('PTS_VERSION', '3.0.0b1');
-define('PTS_CORE_VERSION', 2971);
+define('PTS_CORE_VERSION', 2972);
 define('PTS_CODENAME', 'IVELAND');
 define('PTS_IS_CLIENT', PTS_MODE == 'CLIENT');
 

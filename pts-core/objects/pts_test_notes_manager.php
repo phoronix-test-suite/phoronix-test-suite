@@ -131,7 +131,6 @@ class pts_test_notes_manager
 		{
 			$aa_level = phodevi::read_property('gpu', 'aa-level');
 			$af_level = phodevi::read_property('gpu', 'af-level');
-			$twod_accel = phodevi::read_property('gpu', '2d-accel-method');
 
 			if(!empty($aa_level))
 			{
@@ -140,10 +139,6 @@ class pts_test_notes_manager
 			if(!empty($af_level))
 			{
 				self::add_note('Anisotropic Filtering: ' . $af_level);
-			}
-			if(!empty($twod_accel))
-			{
-				self::add_note('2D Acceleration: ' . $twod_accel);
 			}
 		}
 
