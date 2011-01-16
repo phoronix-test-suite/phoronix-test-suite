@@ -391,6 +391,13 @@ class pts_client
 		define('PTS_GSID', $global_gsid);
 		$pso->add_object('global_system_id', $global_gsid); // GSID
 
+		$openbenchmarking = $pso->read_object('openbenchmarking');
+		if($openbenchmarking != null)
+		{
+			// OpenBenchmarking.org Account
+			pts_openbenchmarking_client::init_account($openbenchmarking);
+		}
+
 		// User Agreement Checking
 		$agreement_cs = $pso->read_object('user_agreement_cs');
 

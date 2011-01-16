@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010, Phoronix Media
-	Copyright (C) 2010, Michael Larabel
+	Copyright (C) 2010 - 2011, Phoronix Media
+	Copyright (C) 2010 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -22,6 +22,8 @@
 
 class pts_openbenchmarking_client
 {
+	private static $openbenchmarking_account = false;
+
 	public static function upload_test_result(&$object)
 	{
 		if($object instanceof pts_test_run_manager)
@@ -89,6 +91,44 @@ class pts_openbenchmarking_client
 
 		return isset($json_response['openbenchmarking']['upload']['url']) ? $json_response['openbenchmarking']['upload']['url'] : false;
 	}
+	public static function init_account($openbenchmarking)
+	{
+		if(isset($openbenchmarking['user_name']) && isset($openbenchmarking['communication_id']) && isset($openbenchmarking['sav']))
+		{
+			if(IS_FIRST_RUN_TODAY)
+			{
+				// Might as well make sure OpenBenchmarking.org account has the latest system info
+				// But don't do it everytime to preserve bandwidth
+				$openbenchmarking['s_s'] = base64_encode(phodevi::system_software(true));
+				$openbenchmarking['s_h'] = base64_encode(phodevi::system_hardware(true));
+			}
+
+			$return_state = pts_openbenchmarking::make_openbenchmarking_request('account_verify', $openbenchmarking);
+			$json = json_decode($return_state, true);
+
+			if(isset($json['openbenchmarking']['account']['valid']))
+			{
+				// The account is valid
+				self::$openbenchmarking_account = $openbenchmarking;
+			}
+		}
+	}
+	public static function make_openbenchmarking_request($request, $post = array())
+	{
+		$url = pts_openbenchmarking::openbenchmarking_host() . 'f/client.php';
+		$to_post = array_merge(array(
+			'r' => $request,
+			'client_version' => PTS_CORE_VERSION,
+			'gsid' => PTS_GSID
+			), $post);
+
+		if(is_array(self::$openbenchmarking_account))
+		{
+			$to_post = array_merge($to_post, self::$openbenchmarking_account);
+		}
+
+		return pts_network::http_upload_via_post($url, $to_post);
+	}
 	protected static function result_upload_supported(&$result_file)
 	{
 		foreach($result_file->get_result_objects() as $result_object)
@@ -97,7 +137,7 @@ class pts_openbenchmarking_client
 
 			if($test_profile->allow_results_sharing() == false)
 			{
-				echo "\n" . $result_object->test_profile->get_identifier() . " does not allow test results to be uploaded.\n\n";
+				echo PHP_EOL . $result_object->test_profile->get_identifier() . " does not allow test results to be uploaded.\n\n";
 				return false;
 			}
 		}

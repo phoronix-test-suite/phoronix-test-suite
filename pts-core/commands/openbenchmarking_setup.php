@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2010, Phoronix Media
-	Copyright (C) 2008 - 2010, Michael Larabel
+	Copyright (C) 2008 - 2011, Phoronix Media
+	Copyright (C) 2008 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -27,20 +27,35 @@ class openbenchmarking_setup implements pts_option_interface
 
 	public static function run($r)
 	{
-		echo "\nIf you have not already registered for your free OpenBenchmarking.org account, you can do so at http://global.phoronix-test-suite.com/\n\nOnce you have registered your account and clicked the link within the verification email, enter your log-in information below.\n\n";
+		echo "\nIf you have not already registered for your free OpenBenchmarking.org account, you can do so at http://openbenchmarking.org/\n\nOnce you have registered your account and clicked the link within the verification email, enter your log-in information below.\n\n";
 		echo "User-Name: ";
 		$username = pts_user_io::read_user_input();
 		echo "Password: ";
-		$password = md5(pts_user_io::read_user_input());
-		$global_success = pts_global::create_account($username, $password);
+		$password = pts_user_io::read_user_input();
 
-		if($global_success)
+		$login_payload = array(
+			's_u' => $username,
+			's_p' => sha1($password),
+			's_s' => base64_encode(phodevi::system_software(true)),
+			's_h' => base64_encode(phodevi::system_hardware(true))
+			);
+		$login_state = pts_openbenchmarking::make_openbenchmarking_request('account_login', $login_payload);
+		$json = json_decode($login_state, true);
+
+		if(isset($json['openbenchmarking']['response']['error']))
 		{
-			echo "\nOpenBenchmarking.org Account Setup.\nAccount information written to ~/.phoronix-test-suite/user-config.xml.\n\n";
+			echo PHP_EOL . PHP_EOL . 'ERROR: ' . $json['openbenchmarking']['response']['error'] . PHP_EOL . PHP_EOL;
+			pts_storage_object::remove_in_file(PTS_CORE_STORAGE, 'openbenchmarking');
 		}
 		else
 		{
-			echo "\nOpenBenchmarking.org Account Not Found.\n";
+			$openbenchmarking_payload = array(
+				'user_name' => $json['openbenchmarking']['account']['user_name'],
+				'communication_id' => $json['openbenchmarking']['account']['communication_id'],
+				'sav' => $json['openbenchmarking']['account']['sav'],
+				);
+			pts_storage_object::set_in_file(PTS_CORE_STORAGE, 'openbenchmarking', $openbenchmarking_payload);
+			echo PHP_EOL . PHP_EOL . 'The Account Has Been Setup.' . PHP_EOL . PHP_EOL;
 		}
 	}
 }

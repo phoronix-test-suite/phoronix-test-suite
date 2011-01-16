@@ -128,7 +128,7 @@ class pts_openbenchmarking
 				{
 					$us = strlen($segments[1]);
 
-					if($us > 1 && $us < 9)
+					if($us > 1 && $us < 9 && pts_strings::string_only_contains($segments[1], pts_strings::CHAR_LETTER | pts_strings::CHAR_NUMERIC))
 					{
 						if(pts_strings::string_only_contains($segments[2], pts_strings::CHAR_LETTER | pts_strings::CHAR_NUMERIC))
 						{
@@ -170,15 +170,7 @@ class pts_openbenchmarking
 	}
 	public static function make_openbenchmarking_request($request, $post = array())
 	{
-		$url = self::openbenchmarking_host() . 'f/client.php';
-		$to_post = array_merge(array(
-			'r' => $request,
-			'client_version' => PTS_CORE_VERSION,
-			'gsid' => PTS_GSID,
-			'user' => null
-			), $post);
-
-		return pts_network::http_upload_via_post($url, $to_post);
+		return pts_openbenchmarking_client::make_openbenchmarking_request($request, $post);
 	}
 	public static function read_repository_index($repo_name)
 	{
