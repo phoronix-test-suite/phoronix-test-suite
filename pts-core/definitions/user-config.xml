@@ -3,14 +3,6 @@
 <PhoronixTestSuite>
 	<Definitions>
 		<Define>
-			<Name>P_OPTION_GLOBAL_USERNAME</Name>
-			<Value>PhoronixTestSuite/GlobalDatabase/UserName</Value>
-		</Define>
-		<Define>
-			<Name>P_OPTION_GLOBAL_UPLOADKEY</Name>
-			<Value>PhoronixTestSuite/GlobalDatabase/UploadKey</Value>
-		</Define>
-		<Define>
 			<Name>P_OPTION_USAGE_REPORTING</Name>
 			<Value>PhoronixTestSuite/Options/General/AnonymousUsageReporting</Value>
 		</Define>

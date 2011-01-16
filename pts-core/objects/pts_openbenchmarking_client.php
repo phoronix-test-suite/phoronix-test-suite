@@ -52,14 +52,6 @@ class pts_openbenchmarking_client
 			return false;
 		}
 
-		/*
-		$GlobalUser = pts_global::account_user_name();
-		$GlobalKey = pts_config::read_user_config(P_OPTION_GLOBAL_UPLOADKEY, null);
-		$return_stream = "";
-
-		$upload_data = array("result_xml" => $ToUpload, "global_user" => $GlobalUser, "global_key" => $GlobalKey, "tags" => $tags, "gsid" => PTS_GSID);
-		*/
-
 		// TODO: support for uploading test result logs here, etc
 		$composite_xml = $result_file->xml_parser->getXML();
 		$to_post = array(
@@ -400,6 +392,37 @@ class pts_openbenchmarking_client
 		}
 
 		return $available_suites;
+	}
+	public static function user_name()
+	{
+		return isset(self::$openbenchmarking_account['user_name']) ? self::$openbenchmarking_account : null;
+	}
+	public static function upload_usage_data($task, $data)
+	{
+		switch($task)
+		{
+			case 'test_complete':
+				list($test_result, $time_elapsed) = $data;
+				$upload_data = array('test_identifier' => $test_result->test_profile->get_identifier(), 'test_version' => $test_result->test_profile->get_test_profile_version(), 'elapsed_time' => $time_elapsed);
+				pts_network::http_upload_via_post(pts_openbenchmarking::openbenchmarking_host() . 'extern/statistics/report-test-completion.php', $upload_data);
+				break;
+		}
+	}
+	public static function upload_hwsw_data($to_report)
+	{
+		foreach($to_report as $component => &$value)
+		{
+			if(empty($value))
+			{
+				unset($to_report[$component]);
+				continue;
+			}
+
+			$value = $component . '=' . $value;
+		}
+
+		$upload_data = array('report_hwsw' => implode(';', $to_report), 'gsid' => PTS_GSID);
+		pts_network::http_upload_via_post(pts_openbenchmarking::openbenchmarking_host() . 'extern/statistics/report-installed-hardware-software.php', $upload_data);
 	}
 	public static function request_gsid()
 	{

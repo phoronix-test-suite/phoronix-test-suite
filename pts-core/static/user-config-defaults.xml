@@ -1,10 +1,6 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="xsl/pts-user-config-viewer.xsl" ?>
 <PhoronixTestSuite>
-	<GlobalDatabase>
-		<UserName>Default User</UserName>
-		<UploadKey></UploadKey>
-	</GlobalDatabase>
 	<Options>
 		<General>
 			<AnonymousUsageReporting>TRUE</AnonymousUsageReporting>

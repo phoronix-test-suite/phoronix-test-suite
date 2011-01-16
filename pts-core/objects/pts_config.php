@@ -37,8 +37,6 @@ class pts_config
 		$read_config = new pts_config_nye_XmlReader($new_config_values);
 
 		$config = new nye_XmlWriter('xsl/pts-user-config-viewer.xsl');
-		$config->addXmlNodeFromReader(P_OPTION_GLOBAL_USERNAME, $read_config);
-		$config->addXmlNodeFromReader(P_OPTION_GLOBAL_UPLOADKEY, $read_config);
 
 		$config->addXmlNodeFromReader(P_OPTION_USAGE_REPORTING, $read_config);
 		$config->addXmlNodeFromReader(P_OPTION_SOFTWARE_REPORTING, $read_config);

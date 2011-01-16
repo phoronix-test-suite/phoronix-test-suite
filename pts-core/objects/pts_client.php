@@ -560,7 +560,7 @@ class pts_client
 	public static function current_user()
 	{
 		// Current system user
-		return ($pts_user = pts_global::account_user_name()) != 'Default User' && !empty($pts_user) ? $pts_user : phodevi::read_property('system', 'username');
+		return ($pts_user = pts_openbenchmarking_client::user_name()) != null ? $pts_user : phodevi::read_property('system', 'username');
 	}
 	public static function user_home_directory()
 	{
@@ -1092,7 +1092,7 @@ class pts_client
 
 		if(!empty($to_report))
 		{
-			pts_global::upload_hwsw_data($to_report);
+			pts_openbenchmarking_client::upload_hwsw_data($to_report);
 		}				
 	}
 	public static function is_process_running($process)
