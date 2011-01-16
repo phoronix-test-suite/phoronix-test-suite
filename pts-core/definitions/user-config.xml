@@ -4,15 +4,15 @@
 	<Definitions>
 		<Define>
 			<Name>P_OPTION_USAGE_REPORTING</Name>
-			<Value>PhoronixTestSuite/Options/General/AnonymousUsageReporting</Value>
+			<Value>PhoronixTestSuite/Options/OpenBenchmarking/AnonymousUsageReporting</Value>
 		</Define>
 		<Define>
 			<Name>P_OPTION_SOFTWARE_REPORTING</Name>
-			<Value>PhoronixTestSuite/Options/General/AnonymousSoftwareReporting</Value>
+			<Value>PhoronixTestSuite/Options/OpenBenchmarking/AnonymousSoftwareReporting</Value>
 		</Define>
 		<Define>
 			<Name>P_OPTION_HARDWARE_REPORTING</Name>
-			<Value>PhoronixTestSuite/Options/General/AnonymousHardwareReporting</Value>
+			<Value>PhoronixTestSuite/Options/OpenBenchmarking/AnonymousHardwareReporting</Value>
 		</Define>
 		<Define>
 			<Name>P_OPTION_DEFAULT_BROWSER</Name>
@@ -52,19 +52,19 @@
 		</Define>
 		<Define>
 			<Name>P_OPTION_STATS_DYNAMIC_RUN_COUNT</Name>
-			<Value>PhoronixTestSuite/Options/Statistics/DynamicRunCount</Value>
+			<Value>PhoronixTestSuite/Options/TestResultValidation/DynamicRunCount</Value>
 		</Define>
 		<Define>
 			<Name>P_OPTION_STATS_NO_DYNAMIC_ON_LENGTH</Name>
-			<Value>PhoronixTestSuite/Options/Statistics/LimitDynamicToTestLength</Value>
+			<Value>PhoronixTestSuite/Options/TestResultValidation/LimitDynamicToTestLength</Value>
 		</Define>
 		<Define>
 			<Name>P_OPTION_STATS_STD_DEVIATION_THRESHOLD</Name>
-			<Value>PhoronixTestSuite/Options/Statistics/StandardDeviationThreshold</Value>
+			<Value>PhoronixTestSuite/Options/TestResultValidation/StandardDeviationThreshold</Value>
 		</Define>
 		<Define>
 			<Name>P_OPTION_STATS_EXPORT_RESULTS_TO</Name>
-			<Value>PhoronixTestSuite/Options/Statistics/ExportResultsTo</Value>
+			<Value>PhoronixTestSuite/Options/TestResultValidation/ExportResultsTo</Value>
 		</Define>
 		<Define>
 			<Name>P_OPTION_EXTERNAL_HOOKS_PRE_TESTING</Name>
@@ -149,18 +149,6 @@
 		<Define>
 			<Name>P_OPTION_NET_PROXY_PORT</Name>
 			<Value>PhoronixTestSuite/Options/Networking/ProxyPort</Value>
-		</Define>
-		<Define>
-			<Name>P_OPTION_UI_SELECT_SUITESORTESTS</Name>
-			<Value>PhoronixTestSuite/Options/UserInterface/Menus/SelectSuitesOrTests</Value>
-		</Define>
-		<Define>
-			<Name>P_OPTION_UI_SELECT_DEPENDENCIES</Name>
-			<Value>PhoronixTestSuite/Options/UserInterface/Menus/SelectDependencies</Value>
-		</Define>
-		<Define>
-			<Name>P_OPTION_UI_SELECT_DOWNLOADS</Name>
-			<Value>PhoronixTestSuite/Options/UserInterface/Menus/SelectDownloads</Value>
 		</Define>
 	</Definitions>
 </PhoronixTestSuite>

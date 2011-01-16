@@ -84,10 +84,6 @@ class pts_config
 		$config->addXmlNodeFromReader(P_OPTION_NET_PROXY_ADDRESS, $read_config);
 		$config->addXmlNodeFromReader(P_OPTION_NET_PROXY_PORT, $read_config);
 
-		$config->addXmlNodeFromReader(P_OPTION_UI_SELECT_SUITESORTESTS, $read_config);
-		$config->addXmlNodeFromReader(P_OPTION_UI_SELECT_DEPENDENCIES, $read_config);
-		$config->addXmlNodeFromReader(P_OPTION_UI_SELECT_DOWNLOADS, $read_config);
-
 		$config->saveXMLFile(PTS_USER_PATH . 'user-config.xml');
 	}
 	public static function graph_config_generate($new_config_values = null)

@@ -2,10 +2,12 @@
 <?xml-stylesheet type="text/xsl" href="xsl/pts-user-config-viewer.xsl" ?>
 <PhoronixTestSuite>
 	<Options>
-		<General>
+		<OpenBenchmarking>
 			<AnonymousUsageReporting>TRUE</AnonymousUsageReporting>
 			<AnonymousHardwareReporting>TRUE</AnonymousHardwareReporting>
 			<AnonymousSoftwareReporting>TRUE</AnonymousSoftwareReporting>
+		</OpenBenchmarking>
+		<General>
 			<DefaultBrowser></DefaultBrowser>
 			<UsePhodeviCache>TRUE</UsePhodeviCache>
 			<DefaultDisplayMode>DEFAULT</DefaultDisplayMode>
@@ -28,12 +30,12 @@
 			<SaveTestLogs>FALSE</SaveTestLogs>
 			<ResultsDirectory>~/.phoronix-test-suite/test-results/</ResultsDirectory>
 		</Testing>
-		<Statistics>
+		<TestResultValidation>
 			<DynamicRunCount>TRUE</DynamicRunCount>
 			<LimitDynamicToTestLength>20</LimitDynamicToTestLength>
 			<StandardDeviationThreshold>3.50</StandardDeviationThreshold>
 			<ExportResultsTo></ExportResultsTo>
-		</Statistics>
+		</TestResultValidation>
 		<ExternalHooks>
 			<PreTestProcess></PreTestProcess>
 			<InterimTestProcess></InterimTestProcess>
@@ -55,12 +57,5 @@
 			<ProxyAddress></ProxyAddress>
 			<ProxyPort></ProxyPort>
 		</Networking>
-		<UserInterface>
-			<Menus>
-				<SelectSuitesOrTests></SelectSuitesOrTests>
-				<SelectDependencies></SelectDependencies>
-				<SelectDownloads></SelectDownloads>
-			</Menus>
-		</UserInterface>
 	</Options>
 </PhoronixTestSuite>

@@ -10,9 +10,11 @@
 			<p align="center"><img src="xsl/pts-logo.png" /></p>
 			<p>The <em>user-config.xml</em> file contains the user configuration options for the Phoronix Test Suite. To edit any option, open <em>user-config.xml</em> within your preferred text editor. Alternatively, you can use the <em>user-config-set</em> option with the Phoronix Test Suite to update settings. For example, to set the download cache with the Phoronix Test Suite, execute <em>phoronix-test-suite user-config-set CacheDirectory=~/cache-directory/</em>. For additional information, view the documentation included with the Phoronix Test Suite or visit <a href="http://www.phoronix-test-suite.com/">Phoronix-Test-Suite.com</a>.</p>
 
-			<h1>General Options</h1>
-			<h3>AnonymousUsageReporting: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/General/AnonymousUsageReporting" /></span></h3>
+			<h1>OpenBenchmarking Options</h1>
+			<h3>AnonymousUsageReporting: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/OpenBenchmarking/AnonymousUsageReporting" /></span></h3>
 			<p>If this option is set to <em>TRUE</em>, anonymous usage information and statistics, like the tests that are run and their length of run, will be reported to <a href="http://www.openbenchmarking.org/">OpenBenchmarking.org</a> for analytical reasons. All submitted information is kept anonymous. For more information on the anonymous usage reporting, read the Phoronix Test Suite documentation.</p>
+
+			<h1>General Options</h1>
 			<h3>DefaultBrowser: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/General/DefaultBrowser" /></span></h3>
 			<p>The Phoronix Test Suite will automatically attempt to launch the system's default web browser when needed. This is done first by checking for x-www-browser and then xdg-open. If neither command is available, the Phoronix Test Suite will fallback to checking for Firefox, Epiphany, Mozilla, or the open command. If you wish to override the default browser that the Phoronix Test Suite selects, set this tag to the command name of the browser you wish to use. Leaving this tag empty will have the Phoronix Test Suite determine the default web browser.</p>
 			<h3>UsePhodeviCache: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/General/UsePhodeviCache" /></span></h3>
@@ -50,14 +52,14 @@
 			<h3>ResultsDirectory: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/Testing/ResultsDirectory" /></span></h3>
 			<p>This option sets the directory where test results will be saved by the Phoronix Test Suite. The full path to the directory on the local file-system should be specified, though <em>~</em> is a valid character for denoting the user's home directory. The default value is <em>~/.phoronix-test-suite/test-results/</em>.</p>
 
-			<h1>Statistics Options</h1>
-			<h3>DynamicRunCount: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/Statistics/DynamicRunCount" /></span></h3>
+			<h1>TestResultValidation Options</h1>
+			<h3>DynamicRunCount: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/TestResultValidation/DynamicRunCount" /></span></h3>
 			<p>If this option is set to <em>TRUE</em>, the Phoronix Test Suite will automatically increase the number of times a test is to be run if the standard deviation of the test results exceeds a predefined threshold. This option is set to <em>TRUE</em> by default and is designed to ensure the statistical signifiance of the test results. The run count will increase until the standard deviation falls below the threshold or when the total number of run counts exceeds twice the amount that is set to run by default from the given test profile. Under certain conditions the run count may also increase further.</p>
-			<h3>LimitDynamicToTestLength: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/Statistics/LimitDynamicToTestLength" /></span></h3>
+			<h3>LimitDynamicToTestLength: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/TestResultValidation/LimitDynamicToTestLength" /></span></h3>
 			<p>If <em>DynamicRunCount</em> is set to <em>TRUE</em>, this option sets a limit on the maximum length per trial run that a test can execute (in minutes) for the run count to be adjusted. This option is to prevent tests that take a very long amount of time to run from consuming too much time. By default this value is set to <em>20</em> minutes.</p>
-			<h3>StandardDeviationThreshold: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/Statistics/StandardDeviationThreshold" /></span></h3>
+			<h3>StandardDeviationThreshold: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/TestResultValidation/StandardDeviationThreshold" /></span></h3>
 			<p>This option defines the overall standard deviation threshold (as a percent) for the Phoronix Test Suite to dynamically increase the run count of a test if this limit is exceeded. The default value is <em>3.50</em>.</p>
-			<h3>ExportResultsTo: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/Statistics/ExportResultsTo" /></span></h3>
+			<h3>ExportResultsTo: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/TestResultValidation/ExportResultsTo" /></span></h3>
 			<p>This option can specify a file (either the absolute path or relative if contained within <em>~/.phoronix-test-suite/</em> where a set of test results will be passed as the first argument as a string with each of the test results being delimited by a colon. If the executed script returns an exit status of <em>0</em> the results are considered valid, if the script returns an exit status of <em>1</em> the Phoronix Test Suite will request the test be run again.</p>
 
 			<h1>External Hook Options</h1>
@@ -93,14 +95,8 @@
 			<h3>ProxyPort: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/Networking/ProxyPort" /></span></h3>
 			<p>If using a proxy server, enter the TCP port in this tag.</p>
 
-			<h1>User-Interface Options</h1>
-			<h3>SelectDependencies: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/UserInterface/Menus/SelectDependencies" /></span></h3>
-			<p>This option is currently not documented. Edit with caution.</p>
-			<h3>SelectDownloads: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/UserInterface/Menus/SelectDownloads" /></span></h3>
-			<p>This option is currently not documented. Edit with caution.</p>
-
 		</div>
-		<div style="text-align: center; font-size: 12px;">Copyright &#xA9; 2008 - 2010 by <a href="http://www.phoronix-media.com/" style="text-decoration: none; color: #000;">Phoronix Media</a>.</div>
+		<div style="text-align: center; font-size: 12px;">Copyright &#xA9; 2008 - 2011 by <a href="http://www.phoronix-media.com/" style="text-decoration: none; color: #000;">Phoronix Media</a>.</div>
 	</body>
 </html>
 </xsl:template>
