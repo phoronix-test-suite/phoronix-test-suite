@@ -50,14 +50,31 @@ class pts_strings
 			}
 		}
 
+		// Remove multiplier if prepended to string
 		$multiplier = strpos($value, ' x ');
-
 		if($multiplier !== false && is_numeric(substr($value, 0, $multiplier)))
 		{
 			$value = substr($value, ($multiplier + 3));
 		}
 
-		return trim($value);
+		// Remove other beginning or ending words based upon conditions
+		$words = explode(' ', trim($value));
+		$c = count($words);
+		if($c > 1)
+		{
+			if(strpos($words[($c - 1)], 'v1') !== false || strpos($words[($c - 1)], 'MB') !== false || strpos($words[($c - 1)], 'GB') !== false)
+			{
+				// Version number being appended to product (some mobos) or the MB/GB size for GPUs
+				array_pop($words);
+			}
+			else if(strpos($words[0], 'GB') !== false)
+			{
+				// Likely disk size in front of string
+				array_shift($words);
+			}
+		}
+
+		return implode(' ', $words);
 	}
 	public static function string_bool($string)
 	{
