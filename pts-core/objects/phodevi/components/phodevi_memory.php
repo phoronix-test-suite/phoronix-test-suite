@@ -162,7 +162,7 @@ class phodevi_memory extends phodevi_device_interface
 			$info = intval(trim(substr($info, 0, strpos($info, 'kB'))));
 			$info = floor($info / 1024);
 
-			if(is_numeric($info) && $info > 1024)
+			if(is_numeric($info) && $info > 990)
 			{
 				$info = round($info / 256, 0) * 256;
 			}
