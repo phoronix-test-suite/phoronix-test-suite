@@ -53,6 +53,13 @@ class pts_client
 		define('PTS_SAVE_RESULTS_PATH', pts_client::parse_home_directory(pts_config::read_user_config(P_OPTION_RESULTS_DIRECTORY, '~/.phoronix-test-suite/test-results/')));
 		self::extended_init_process();
 
+		$openbenchmarking = pts_storage_object::read_from_file(PTS_CORE_STORAGE, 'openbenchmarking');
+		if($openbenchmarking != null)
+		{
+			// OpenBenchmarking.org Account
+			pts_openbenchmarking_client::init_account($openbenchmarking);
+		}
+
 		return true;
 	}
 	public static function module_framework_init()
@@ -390,13 +397,6 @@ class pts_client
 
 		define('PTS_GSID', $global_gsid);
 		$pso->add_object('global_system_id', $global_gsid); // GSID
-
-		$openbenchmarking = $pso->read_object('openbenchmarking');
-		if($openbenchmarking != null)
-		{
-			// OpenBenchmarking.org Account
-			pts_openbenchmarking_client::init_account($openbenchmarking);
-		}
 
 		// User Agreement Checking
 		$agreement_cs = $pso->read_object('user_agreement_cs');

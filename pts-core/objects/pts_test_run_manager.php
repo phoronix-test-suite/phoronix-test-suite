@@ -723,7 +723,7 @@ class pts_test_run_manager
 
 					if(!empty($upload_url))
 					{
-						pts_client::display_web_page($upload_url, 'Do you want to launch OpenBenchmarkng.org', true);
+						pts_client::display_web_page($upload_url, 'Do you want to launch OpenBenchmarking.org', true);
 					}
 					else
 					{
