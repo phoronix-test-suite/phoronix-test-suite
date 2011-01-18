@@ -22,7 +22,7 @@
 
 class pts_test_result_buffer
 {
-	private $buffer_items;
+	public $buffer_items;
 
 	public function __construct($buffer_items = array())
 	{
