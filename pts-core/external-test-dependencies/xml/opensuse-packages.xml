@@ -12,7 +12,7 @@
 		</Package>
 		<Package>
 			<GenericName>sdl-development</GenericName>
-			<PackageName>SDL-devel SDL_image-devel SDL_gfx-devel SDL_net-devel SDL_ttf-devel</PackageName>
+			<PackageName>libSDL-devel libSDL_image-devel libSDL_gfx-devel libSDL_net-devel libSDL_ttf-devel</PackageName>
 			<FileCheck>/usr/include/SDL/SDL.h, /usr/include/SDL/SDL_image.h, /usr/include/SDL/SDL_gfxPrimitives.h, /usr/include/SDL/SDL_net.h, /usr/include/SDL/SDL_ttf.h</FileCheck>
 		</Package>
 		<Package>
@@ -162,8 +162,8 @@
 		</Package>
 		<Package>
 			<GenericName>curl</GenericName>
-			<PackageName>libcurl3 curl</PackageName>
-			<FileCheck>/usr/lib/libcurl.so.3, /usr/bin/curl</FileCheck>
+			<PackageName>curl</PackageName>
+			<FileCheck>/usr/bin/curl</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>fftw3-development</GenericName>

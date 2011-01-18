@@ -12,6 +12,7 @@ Phoronix Test Suite (Git)
 - pts-core: Support @ sign in test result identifiers
 - pts-core: Support for logging into OpenBenchmarking.org accounts via openbenchmarking-setup
 - pts-core: Changes to the user-config.xml specification
+- pts-core: OpenSUSE external dependencies update against openSUSE 11.4
 - phodevi: Don't report disks that are removable
 - nye_Xml: Support for reading the test-definition.xml directly from an OpenBenchmarking.org test profile ZIP package
 - bilde_renderer: Support stuffing grouped array point pairs to draw_polygon() rather than linearly listing them
