@@ -43,7 +43,7 @@ class dummy_module extends pts_module_interface
 
 	public static function sample_command()
 	{
-		echo PHP_EOL . 'This is a sample function running from a module!' . ;
+		echo PHP_EOL . 'This is a sample function running from a module!' . PHP_EOL;
 	}
 
 	//
