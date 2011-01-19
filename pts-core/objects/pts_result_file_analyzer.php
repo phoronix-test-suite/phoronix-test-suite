@@ -227,30 +227,42 @@ class pts_result_file_analyzer
 			$col_pos++;
 		}
 	}
-	public static function system_component_string_to_html($components)
+	public static function system_component_string_to_array($components, $do_check = false)
 	{
+		$component_r = array();
 		$components = explode(', ', $components);
 
 		foreach($components as &$component)
 		{
 			$component = explode(': ', $component);
 
-			if(count($component) == 2)
+			if(count($component) == 2 && ($do_check == false || in_array($component[0], $do_check)))
 			{
-				$component[1] = self::system_value_to_ir_value($component[1], $component[0]);
-				$component[0] = '<strong>' . $component[0] . '</strong>';
+				$component_r[$component[0]] = $component[1];
+			}
+		}
 
-				if(($href = $component[1]->get_attribute('href')) != false)
-				{
-					$component[1] = '<a href="' . $href . '">' . $component[1]->get_value() . '</a>';
-				}
-				else
-				{
-					$component[1] = $component[1]->get_value();
-				}
+		return $component_r;
+	}
+	public static function system_component_string_to_html($components)
+	{
+		$components = self::system_component_string_to_array($components);
+
+		foreach($components as $type => &$component)
+		{
+			$component = self::system_value_to_ir_value($component, $type);
+			$type = '<strong>' . $type . '</strong>';
+
+			if(($href = $component->get_attribute('href')) != false)
+			{
+				$component = '<a href="' . $href . '">' . $component->get_value() . '</a>';
+			}
+			else
+			{
+				$component = $component->get_value();
 			}
 
-			$component = implode(': ', $component);
+			$component = $type . ': ' . $component;
 		}
 
 		return implode(', ', $components);

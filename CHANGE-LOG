@@ -2,6 +2,11 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+- pts-core: Support for uploading system logs with test results to OpenBenchmarking.org
+
+Phoronix Test Suite 3.0 Beta 2
+19 January 2011
+
 - pts-core: Upgrade the .openbenchmarking file support, allows multiple tests/results to be compared
 - pts-core: Rewrite result file CSV output
 - pts-core: Add openbenchmarking-refresh command

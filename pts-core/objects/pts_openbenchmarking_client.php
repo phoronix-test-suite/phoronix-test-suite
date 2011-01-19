@@ -52,13 +52,62 @@ class pts_openbenchmarking_client
 			return false;
 		}
 
-		// TODO: support for uploading test result logs here, etc
 		$composite_xml = $result_file->xml_parser->getXML();
+
+		$system_logs = null;
+		$system_logs_hash = null;
+		if(is_dir(($log_location = PTS_SAVE_RESULTS_PATH . $result_file->get_identifier() . '/system-logs/')))
+		{
+			$is_valid_log = true;
+			$finfo = function_exists('finfo_open') ? finfo_open(FILEINFO_MIME_TYPE) : false;
+
+			foreach(pts_file_io::glob($log_location . '*') as $log_dir)
+			{
+				if($is_valid_log == false || !is_dir($log_dir))
+				{
+					$is_valid_log = false;
+					break;
+				}
+
+				foreach(pts_file_io::glob($log_dir . '/*') as $log_file)
+				{
+					if(!is_file($log_file))
+					{
+						$is_valid_log = false;
+						break;
+					}
+
+					if($finfo && substr(finfo_file($finfo, $log_file), 0, 5) != 'text/')
+					{
+						$is_valid_log = false;
+						break;
+					}
+				}
+			}
+
+			if($is_valid_log)
+			{
+				$system_logs_zip = pts_client::create_temporary_file();
+				pts_compression::zip_archive_create($system_logs_zip, $log_location);
+
+				if(filesize($system_logs_zip) < 102400)
+				{
+					// If it's about 100kb, probably too big
+					$system_logs = base64_encode(file_get_contents($system_logs_zip));
+					$system_logs_hash = sha1($system_logs);
+				}
+
+				unlink($system_logs_zip);
+			}
+		}
+
 		$to_post = array(
 			'composite_xml' => base64_encode($composite_xml),
 			'composite_xml_hash' => sha1($composite_xml),
 			'local_file_name' => $local_file_name,
-			'this_results_identifier' => $results_identifier
+			'this_results_identifier' => $results_identifier,
+			'system_logs_zip' => $system_logs,
+			'system_logs_hash' => $system_logs_hash
 			);
 
 		$json_response = pts_openbenchmarking::make_openbenchmarking_request('upload_test_result', $to_post);
