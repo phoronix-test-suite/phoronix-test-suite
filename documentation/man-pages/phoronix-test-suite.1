@@ -1,4 +1,4 @@
-.TH phoronix-test-suite 1  "www.phoronix-test-suite.com" "3.0.0b1"
+.TH phoronix-test-suite 1  "www.phoronix-test-suite.com" "3.0.0b2"
 .SH NAME
 phoronix-test-suite \- The Phoronix Test Suite is an extensible open-source platform for performing testing and performance evaluation.
 .SH SYNOPSIS
@@ -57,6 +57,12 @@ This option will run the selected test(s). The name of the test or suite must be
 .SH OPENBENCHMARKING.ORG
 .B clone-result [OpenBenchmarking.org ID]  ...
 This option will download a local copy of a file that was saved to OpenBenchmarking.org, as long as a valid public ID is supplied. More than one ID can be specified and the results will then be merged.
+.TP
+.B openbenchmarking-launcher
+This option is called automatically with the .openbenchmarking MIME file extension support for launching OpenBenchmarking.org operations.
+.TP
+.B openbenchmarking-refresh
+This option is used for refreshing the stored OpenBenchmarking.org repostory information and other data. The Phoronix Test Suite will automatically refresh this data every three days or when other thresholds are exceeded, but this command can be used to manually refresh/updates the data.
 .TP
 .B openbenchmarking-setup
 This option is used for controlling your Phoronix Test Suite client options for OpenBechmarking.org and syncing the client to your account.
