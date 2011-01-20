@@ -253,6 +253,10 @@ class phodevi_system extends phodevi_device_interface
 					// 0x482b is the superblock for HFS+
 					$fs = 'HFS+';
 					break;
+				case 'UNKNOWN (0x2fc12fc1)':
+					// 0x2fc12fc1 is KQ Infotech ZFS
+					$fs = 'zfs';
+					break;
 			}
 
 			if(strpos($fs, 'UNKNOWN') !== false && is_readable('/proc/mounts'))

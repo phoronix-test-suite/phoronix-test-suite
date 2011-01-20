@@ -836,7 +836,7 @@ class pts_client
 				}
 
 				// Generate logs from system commands to backup
-				$system_log_commands = array('lspci -vvnn', 'lsusb', 'sensors', 'dmesg', 'glxinfo', 'system_profiler');
+				$system_log_commands = array('lspci -vvnn', 'lsusb', 'sensors', 'dmesg', 'glxinfo');
 
 				if(IS_BSD)
 				{

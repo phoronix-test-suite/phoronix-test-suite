@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Support for uploading system logs with test results to OpenBenchmarking.org
+- phodevi: File-system detection support for KQ Infotech's ZFS on Linux
 
 Phoronix Test Suite 3.0 Beta 2
 19 January 2011
