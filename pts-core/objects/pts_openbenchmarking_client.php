@@ -54,9 +54,18 @@ class pts_openbenchmarking_client
 
 		$composite_xml = $result_file->xml_parser->getXML();
 
+		if(pts_config::read_bool_config(P_OPTION_ALWAYS_UPLOAD_SYSTEM_LOGS, 'FALSE'))
+		{
+			$upload_system_logs = P_OPTION_ALWAYS_UPLOAD_SYSTEM_LOGS;
+		}
+		else
+		{
+			$upload_system_logs = pts_user_io::prompt_bool_input('Would you like to attach the system logs (lspci, dmesg, lsusb, etc) to the test result', false, 'UPLOAD_SYSTEM_LOGS');
+		}
+
 		$system_logs = null;
 		$system_logs_hash = null;
-		if(is_dir(($log_location = PTS_SAVE_RESULTS_PATH . $result_file->get_identifier() . '/system-logs/')))
+		if($upload_system_logs && is_dir(($log_location = PTS_SAVE_RESULTS_PATH . $result_file->get_identifier() . '/system-logs/')))
 		{
 			$is_valid_log = true;
 			$finfo = function_exists('finfo_open') ? finfo_open(FILEINFO_MIME_TYPE) : false;

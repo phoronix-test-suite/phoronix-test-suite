@@ -41,6 +41,7 @@ class pts_config
 		$config->addXmlNodeFromReader(P_OPTION_USAGE_REPORTING, $read_config);
 		$config->addXmlNodeFromReader(P_OPTION_SOFTWARE_REPORTING, $read_config);
 		$config->addXmlNodeFromReader(P_OPTION_HARDWARE_REPORTING, $read_config);
+		$config->addXmlNodeFromReader(P_OPTION_ALWAYS_UPLOAD_SYSTEM_LOGS, $read_config);
 
 		$config->addXmlNodeFromReader(P_OPTION_DEFAULT_BROWSER, $read_config);
 		$config->addXmlNodeFromReader(P_OPTION_PHODEVI_CACHE, $read_config);

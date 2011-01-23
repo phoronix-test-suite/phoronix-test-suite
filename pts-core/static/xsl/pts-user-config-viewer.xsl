@@ -13,6 +13,8 @@
 			<h1>OpenBenchmarking Options</h1>
 			<h3>AnonymousUsageReporting: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/OpenBenchmarking/AnonymousUsageReporting" /></span></h3>
 			<p>If this option is set to <em>TRUE</em>, anonymous usage information and statistics, like the tests that are run and their length of run, will be reported to <a href="http://www.openbenchmarking.org/">OpenBenchmarking.org</a> for analytical reasons. All submitted information is kept anonymous. For more information on the anonymous usage reporting, read the Phoronix Test Suite documentation.</p>
+			<h3>AlwaysUploadSystemLogs: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/OpenBenchmarking/AlwaysUploadSystemLogs" /></span></h3>
+			<p>If this option is set to <em>TRUE</em>, the system logs (i.e. dmesg, lspci, lsusb, Xorg.0.log) will always be uploaded to OpenBenchmarking.org when uploading your test results. Otherwise the user is prompted whether to attach the system logs with their results.</p>
 
 			<h1>General Options</h1>
 			<h3>DefaultBrowser: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/General/DefaultBrowser" /></span></h3>

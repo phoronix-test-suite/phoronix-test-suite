@@ -15,6 +15,10 @@
 			<Value>PhoronixTestSuite/Options/OpenBenchmarking/AnonymousHardwareReporting</Value>
 		</Define>
 		<Define>
+			<Name>P_OPTION_ALWAYS_UPLOAD_SYSTEM_LOGS</Name>
+			<Value>PhoronixTestSuite/Options/OpenBenchmarking/AlwaysUploadSystemLogs</Value>
+		</Define>
+		<Define>
 			<Name>P_OPTION_DEFAULT_BROWSER</Name>
 			<Value>PhoronixTestSuite/Options/General/DefaultBrowser</Value>
 		</Define>
