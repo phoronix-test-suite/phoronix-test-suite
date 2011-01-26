@@ -346,7 +346,18 @@ class phodevi_system extends phodevi_device_interface
 
 			if($tcc[1] == 'version')
 			{
-				$compilers['optccencc'] = 'TCC ' . $tcc[2];
+				$compilers['opencc'] = 'TCC ' . $tcc[2];
+			}
+		}
+
+		if(pts_client::executable_in_path('pcc'))
+		{
+			// PCC - Portable C Compiler
+			$pcc = explode(' ', trim(shell_exec('pcc -version 2>&1')));
+
+			if($pcc[0] == 'pcc')
+			{
+				$compilers['pcc'] = 'PCC ' . $pcc[1] . (is_numeric($pcc[2]) ? $pcc[2] : null);
 			}
 		}
 
