@@ -6,7 +6,8 @@ Phoronix Test Suite (Git)
 - pts-core: Add user-config.xml option for always attaching system logs to test results on uploading to OpenBenchmarking.org
 - pts-core: Prompt user whether to attach system logs when uploading results to OpenBenchmarking.org
 - phodevi: File-system detection support for KQ Infotech's ZFS on Linux
-- phodevi: Open64 compiler detection
+- phodevi: Open64 compiler detection support
+- phodevi: TCC / Tiny C Compiler detection support
 
 Phoronix Test Suite 3.0 Beta 2
 19 January 2011

@@ -339,6 +339,17 @@ class phodevi_system extends phodevi_device_interface
 			$compilers['opencc'] = 'Open64 ' . trim(shell_exec('opencc -dumpversion 2>&1'));
 		}
 
+		if(pts_client::executable_in_path('tcc'))
+		{
+			// TCC - Tiny C Compiler
+			$tcc = explode(' ', trim(shell_exec('tcc -v 2>&1')));
+
+			if($tcc[1] == 'version')
+			{
+				$compilers['optccencc'] = 'TCC ' . $tcc[2];
+			}
+		}
+
 		if(pts_client::executable_in_path('clang'))
 		{
 			// Clang
