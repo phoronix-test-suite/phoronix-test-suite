@@ -36,12 +36,45 @@ class phodevi_motherboard extends phodevi_device_interface
 			case 'pci-devices':
 				$property = new phodevi_device_property('pci_devices', PHODEVI_SMART_CACHE);
 				break;
+			case 'usb-devices':
+				$property = new phodevi_device_property('usb_devices', PHODEVI_STAND_CACHE);
+				break;
 			default:
 				$property = new phodevi_device_property(null, false);
 				break;
 		}
 
 		return $property;
+	}
+	public static function usb_devices()
+	{
+		$usb = array();
+
+		if(IS_LINUX)
+		{
+			foreach(pts_file_io::glob('/sys/bus/usb/devices/*-*/manufacturer') as $usb_dir)
+			{
+				$usb_dir = dirname($usb_dir) . '/';
+
+				if(!is_file($usb_dir . 'product') || !is_file($usb_dir . 'idProduct') || !is_file($usb_dir . 'idVendor'))
+				{
+					continue;
+				}
+
+				$vendor = pts_strings::trim_search_query(phodevi::clean_info_string(pts_file_io::file_get_contents($usb_dir . 'manufacturer')));
+				$device = pts_strings::trim_search_query(phodevi::clean_info_string(str_replace($vendor, null, pts_file_io::file_get_contents($usb_dir . 'product'))));
+
+				array_push($usb, array(
+					'Class' => pts_file_io::file_get_contents($usb_dir . 'bDeviceClass'),
+					'Vendor' => $vendor,
+					'Device' => $device,
+					'VendorID' => pts_file_io::file_get_contents($usb_dir . 'idVendor'),
+					'DeviceID' => pts_file_io::file_get_contents($usb_dir . 'idProduct')
+					));
+			}
+		}
+
+		return $usb;
 	}
 	public static function pci_devices()
 	{

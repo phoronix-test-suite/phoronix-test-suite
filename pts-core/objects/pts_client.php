@@ -1066,7 +1066,6 @@ class pts_client
 
 			// Check the PCI devices
 			$pci = phodevi::read_property('motherboard', 'pci-devices');
-
 			$pci_prev = $pso->read_object('global_reported_pci');
 			$pso->add_object('global_reported_pci', $pci);
 
@@ -1078,6 +1077,21 @@ class pts_client
 			if(!empty($pci))
 			{
 				pts_openbenchmarking_client::upload_pci_data($pci);
+			}
+
+			// Check the USB devices
+			$usb = phodevi::read_property('motherboard', 'usb-devices');
+			$usb_prev = $pso->read_object('global_reported_usb');
+			$pso->add_object('global_reported_usb', $usb);
+
+			if(is_array($usb_prev) && !empty($usb_prev))
+			{
+				$usb = array_diff($usb, $usb_prev);
+			}
+
+			if(!empty($usb))
+			{
+				pts_openbenchmarking_client::upload_usb_data($usb);
 			}
 		}
 		if($sw_reporting)
