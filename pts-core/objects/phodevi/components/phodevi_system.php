@@ -333,6 +333,12 @@ class phodevi_system extends phodevi_device_interface
 			$compilers['gcc'] = 'GCC ' . trim(shell_exec('gcc -dumpversion 2>&1'));
 		}
 
+		if(pts_client::executable_in_path('opencc'))
+		{
+			// Open64
+			$compilers['opencc'] = 'Open64 ' . trim(shell_exec('opencc -dumpversion 2>&1'));
+		}
+
 		if(pts_client::executable_in_path('clang'))
 		{
 			// Clang
