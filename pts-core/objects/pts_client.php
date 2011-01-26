@@ -1063,6 +1063,22 @@ class pts_client
 			{
 				$hw = array_diff_assoc($hw, $hw_prev);
 			}
+
+			// Check the PCI devices
+			$pci = phodevi::read_property('motherboard', 'pci-devices');
+
+			$pci_prev = $pso->read_object('global_reported_pci');
+			$pso->add_object('global_reported_pci', $pci);
+
+			if(is_array($pci_prev) && !empty($pci_prev))
+			{
+				$pci = array_diff($pci, $pci_prev);
+			}
+
+			if(!empty($pci))
+			{
+				pts_openbenchmarking_client::upload_pci_data($pci);
+			}
 		}
 		if($sw_reporting)
 		{

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2010, Phoronix Media
-	Copyright (C) 2008 - 2010, Michael Larabel
+	Copyright (C) 2008 - 2011, Phoronix Media
+	Copyright (C) 2008 - 2011, Michael Larabel
 	phodevi_motherboard.php: The PTS Device Interface object for the motherboard
 
 	This program is free software; you can redistribute it and/or modify
@@ -33,12 +33,94 @@ class phodevi_motherboard extends phodevi_device_interface
 			case 'power-mode':
 				$property = new phodevi_device_property('power_mode', PHODEVI_SMART_CACHE);
 				break;
+			case 'pci-devices':
+				$property = new phodevi_device_property('pci_devices', PHODEVI_SMART_CACHE);
+				break;
 			default:
 				$property = new phodevi_device_property(null, false);
 				break;
 		}
 
 		return $property;
+	}
+	public static function pci_devices()
+	{
+		$pci_devices = array();
+
+		if(IS_LINUX)
+		{
+			$lspci = shell_exec('lspci -mmkvnn');
+			$lspci = explode("\n\n", $lspci);
+
+			foreach($lspci as $o => &$lspci_section)
+			{
+				$lspci_section = explode("\n", $lspci_section);
+				$formatted_section = array();
+
+				foreach($lspci_section as $i => &$line)
+				{
+					$line = explode(':', $line);
+
+					if(count($line) == 2 && in_array($line[0], array('Class', 'Vendor', 'Device', 'Driver', 'Rev', 'Module')))
+					{
+						$line[1] = trim($line[1]);
+
+						if(($c = strrpos($line[1], ' [')) !== false)
+						{
+							$id = substr($line[1], ($c + 2));
+							$id = '0x' . substr($id, 0, strpos($id, ']'));
+
+							switch($line[0])
+							{
+								case 'Vendor':
+									$formatted_section['VendorID'] = $id;
+									break;
+								case 'Device':
+									$formatted_section['DeviceID'] = $id;
+									break;
+							}
+
+							$line[1] = substr($line[1], 0, $c);
+						}
+
+						if($line[0] == 'Class')
+						{
+							switch($line[1])
+							{
+								case 'Ethernet controller':
+								case 'Network controller':
+									$line[1] = 'Network';
+									break;
+								case 'VGA compatible controller':
+									$line[1] = 'GPU';
+									break;
+								case 'Audio device':
+								case 'Multimedia audio controller':
+									$line[1] = 'Audio';
+									break;
+
+								default:
+									$line[1] = null;
+									break;
+							}
+						}
+						else if($line[0] == 'Device' || $line[0] == 'Vendor')
+						{
+							$line[1] = pts_strings::trim_search_query(phodevi::clean_info_string($line[1]));
+						}
+
+						$formatted_section[$line[0]] = $line[1];
+					}
+				}
+
+				if(count($formatted_section) > 0 && $formatted_section['Class'] != null)
+				{
+					array_push($pci_devices, $formatted_section);
+				}
+			}
+		}
+
+		return $pci_devices;
 	}
 	public static function power_mode()
 	{

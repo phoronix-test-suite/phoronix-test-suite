@@ -482,6 +482,18 @@ class pts_openbenchmarking_client
 		$upload_data = array('report_hwsw' => implode(';', $to_report), 'gsid' => PTS_GSID);
 		pts_network::http_upload_via_post(pts_openbenchmarking::openbenchmarking_host() . 'extern/statistics/report-installed-hardware-software.php', $upload_data);
 	}
+	public static function upload_pci_data($to_report)
+	{
+		if(!is_array($to_report))
+		{
+			return false;
+		}
+
+		$to_report = base64_encode(serialize($to_report));
+
+		$upload_data = array('report_pci_data' => $to_report, 'gsid' => PTS_GSID);
+		pts_network::http_upload_via_post(pts_openbenchmarking::openbenchmarking_host() . 'extern/statistics/report-pci-data.php', $upload_data);
+	}
 	public static function request_gsid()
 	{
 		$upload_data = array(
