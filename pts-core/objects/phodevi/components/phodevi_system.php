@@ -357,7 +357,7 @@ class phodevi_system extends phodevi_device_interface
 
 			if($pcc[0] == 'pcc')
 			{
-				$compilers['pcc'] = 'PCC ' . $pcc[1] . (is_numeric($pcc[2]) ? $pcc[2] : null);
+				$compilers['pcc'] = 'PCC ' . $pcc[1] . (is_numeric($pcc[2]) ? ' ' . $pcc[2] : null);
 			}
 		}
 
