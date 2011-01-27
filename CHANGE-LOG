@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 3.0 Beta 3
+27 January 2011
 
 - pts-core: Support for uploading system logs with test results to OpenBenchmarking.org
 - pts-core: Add user-config.xml option for always attaching system logs to test results on uploading to OpenBenchmarking.org
