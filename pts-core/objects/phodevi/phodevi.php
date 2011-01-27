@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009, Phoronix Media
-	Copyright (C) 2009, Michael Larabel
+	Copyright (C) 2009 - 2011, Phoronix Media
+	Copyright (C) 2009 - 2011, Michael Larabel
 	phodevi.php: The object for interacting with the PTS device framework
 
 	This program is free software; you can redistribute it and/or modify
@@ -275,9 +275,9 @@ class phodevi
 				{
 					$value = call_user_func_array(array('phodevi_' . $device, $dev_function), $function_pass);
 
-					if(!is_array($value))
+					if(!is_array($value) && $value != null)
 					{
-						$value = self::clean_info_string($value);
+						$value = pts_strings::strip_string($value);
 					}
 
 					if($cache_code != PHODEVI_AVOID_CACHE)
@@ -439,39 +439,6 @@ class phodevi
 		}
 
 		return $info;
-	}
-	public static function clean_info_string($str)
-	{
-		// Clean a string containing hardware information of some common things to change/strip out
-		static $remove_phrases = null;
-		static $change_phrases = null;
-
-		if($remove_phrases == null)
-		{
-			$word_file = pts_file_io::file_get_contents(PTS_CORE_STATIC_PATH . 'lists/info-strings-remove.list');
-			$remove_phrases = pts_strings::trim_explode("\n", $word_file);
-		}
-		if($change_phrases == null)
-		{
-			$word_file = pts_file_io::file_get_contents(PTS_CORE_STATIC_PATH . 'lists/info-strings-replace.list');
-			$phrases_r = pts_strings::trim_explode("\n", $word_file);
-			$change_phrases = array();
-
-			foreach($phrases_r as &$phrase)
-			{
-				list($replace, $replace_with) = pts_strings::trim_explode('=', $phrase);
-				$change_phrases[$replace_with] = $replace;
-			}
-		}
-
-		foreach($change_phrases as $new_phrase => $original_phrase)
-		{
-			$str = str_ireplace($original_phrase, $new_phrase, $str);
-		}
-
-		$str = str_ireplace($remove_phrases, ' ', $str);
-
-		return pts_strings::trim_spaces($str);
 	}
 	public static function system_uptime()
 	{

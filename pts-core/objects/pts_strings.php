@@ -195,14 +195,48 @@ class pts_strings
 	}
 	public static function trim_spaces($string)
 	{
-		do
+		$prev_char = $string[0];
+
+		for($i = 1, $l = strlen($string); $i < $l; $i++)
 		{
-			$string_copy = $string;
-			$string = str_replace('  ', ' ', $string);
+			$this_char = $string[$i];
+
+			if($this_char == ' ' && $prev_char == ' ')
+			{
+				$string[($i - 1)] = null;
+			}
+
+			$prev_char = $this_char;
 		}
-		while($string_copy != $string);
 
 		return trim($string);
+	}
+	public static function strip_string($str)
+	{
+		// Clean a string containing hardware information of some common things to change/strip out
+		$change_phrases = array(
+			'MCH' => 'Memory Controller Hub',
+			'AMD' => 'Advanced Micro Devices',
+			'MSI' => 'MICRO-STAR INTERNATIONAL',
+			'SiS' => 'Silicon Integrated Systems',
+			'Abit' => 'http://www.abit.com.tw/',
+			'ASUS' => 'ASUSTeK',
+			'HP' => 'Hewlett-Packard',
+			'NVIDIA' => 'nVidia',
+			'HDD' => 'HARDDISK',
+			'IGP' => array('Integrated Graphics Controller', 'Express Graphics Controller', 'Integrated Graphics Device', 'Chipset Integrated')
+			);
+
+		foreach($change_phrases as $new_phrase => $original_phrase)
+		{
+			$str = str_ireplace($original_phrase, $new_phrase, $str);
+		}
+
+		$remove_phrases = array('incorporation', 'corporation', 'technologies', 'technology', 'version', 'computer', 'To Be Filled By', 'ODM', 'O.E.M.', 'Desktop Reference Platform', 'small form factor', 'convertible', 'chipset', 'community', 'reference', 'communications', 'semiconductor', 'processor', 'host bridge', 'adapter', 'CPU', 'platform', 'international', 'express', 'graphics', 'dram', 'none', 'release', 'electronics', 'integrated', 'alternate', 'quad-core', 'memory', 'series', 'motherboard', 'serverengines', 'x86/mmx/sse2', '/AGP/SSE/3DNOW!', '/AGP/SSE2', 'controller', '(extreme graphics innovation)', 'pci-e_gfx and ht3 k8 part', 'pci-e_gfx and ht1 k8 part', 'Northbridge only', 'dual slot', 'dual-core', 'dual core', 'microsystems', 'single slot', 'genuine', 'unknown device', 'systemberatung', 'gmbh', 'graphics adapter', 'video device', 'http://', 'www.', '.com', '.tw/', '/pci/sse2/3dnow!', '/pci/sse2', 'balloon', 'limited.', 'co. ltd', 'co.', 'ltd.', '®', '(r)', '(tm)', 'inc.', 'inc', '6.00 PG', ',', 'corp');
+
+		$str = str_ireplace($remove_phrases, ' ', $str);
+
+		return pts_strings::trim_spaces($str);
 	}
 	public static function pts_version_to_codename($version)
 	{

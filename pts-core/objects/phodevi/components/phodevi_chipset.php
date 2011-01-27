@@ -136,8 +136,6 @@ class phodevi_chipset extends phodevi_device_interface
 			}
 		}
 
-		$info = phodevi::clean_info_string($info);
-
 		return $info;
 	}
 }

@@ -61,8 +61,8 @@ class phodevi_motherboard extends phodevi_device_interface
 					continue;
 				}
 
-				$vendor = pts_strings::trim_search_query(phodevi::clean_info_string(pts_file_io::file_get_contents($usb_dir . 'manufacturer')));
-				$device = pts_strings::trim_search_query(phodevi::clean_info_string(str_replace($vendor, null, pts_file_io::file_get_contents($usb_dir . 'product'))));
+				$vendor = pts_strings::trim_search_query(pts_strings::strip_string(pts_file_io::file_get_contents($usb_dir . 'manufacturer')));
+				$device = pts_strings::trim_search_query(pts_strings::strip_string(str_replace($vendor, null, pts_file_io::file_get_contents($usb_dir . 'product'))));
 
 				array_push($usb, array(
 					'Class' => pts_file_io::file_get_contents($usb_dir . 'bDeviceClass'),
@@ -139,7 +139,7 @@ class phodevi_motherboard extends phodevi_device_interface
 						}
 						else if($line[0] == 'Device' || $line[0] == 'Vendor')
 						{
-							$line[1] = pts_strings::trim_search_query(phodevi::clean_info_string($line[1]));
+							$line[1] = pts_strings::trim_search_query(pts_strings::strip_string($line[1]));
 						}
 
 						$formatted_section[$line[0]] = $line[1];

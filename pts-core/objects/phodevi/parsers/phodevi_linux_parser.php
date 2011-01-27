@@ -657,7 +657,7 @@ class phodevi_linux_parser
 
 				if(($strlen = strlen($sub_pci_info)) >= 6 && $strlen < 96)
 				{
-					$info = phodevi::clean_info_string($sub_pci_info);
+					$info = pts_strings::strip_string($sub_pci_info);
 				}
 			}
 		}
