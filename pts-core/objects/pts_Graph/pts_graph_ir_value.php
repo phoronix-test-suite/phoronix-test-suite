@@ -32,7 +32,7 @@ class pts_graph_ir_value
 	}
 	public function __toString()
 	{
-		return $this->value_string;
+		return "$this->value_string";
 	}
 	public function set_attribute($attribute, $value)
 	{

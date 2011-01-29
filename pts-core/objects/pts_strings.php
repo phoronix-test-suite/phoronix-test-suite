@@ -50,6 +50,11 @@ class pts_strings
 			}
 		}
 
+		if(is_numeric($value))
+		{
+			return;
+		}
+
 		// Remove multiplier if prepended to string
 		$multiplier = strpos($value, ' x ');
 		if($multiplier !== false && is_numeric(substr($value, 0, $multiplier)))
@@ -232,7 +237,7 @@ class pts_strings
 			$str = str_ireplace($original_phrase, $new_phrase, $str);
 		}
 
-		$remove_phrases = array('incorporation', 'corporation', 'technologies', 'technology', 'version', 'computer', 'To Be Filled By', 'ODM', 'O.E.M.', 'Desktop Reference Platform', 'small form factor', 'convertible', 'chipset', 'community', 'reference', 'communications', 'semiconductor', 'processor', 'host bridge', 'adapter', 'CPU', 'platform', 'international', 'express', 'graphics', 'dram', 'none', 'release', 'electronics', 'integrated', 'alternate', 'quad-core', 'memory', 'series', 'motherboard', 'serverengines', 'x86/mmx/sse2', '/AGP/SSE/3DNOW!', '/AGP/SSE2', 'controller', '(extreme graphics innovation)', 'pci-e_gfx and ht3 k8 part', 'pci-e_gfx and ht1 k8 part', 'Northbridge only', 'dual slot', 'dual-core', 'dual core', 'microsystems', 'single slot', 'genuine', 'unknown device', 'systemberatung', 'gmbh', 'graphics adapter', 'video device', 'http://', 'www.', '.com', '.tw/', '/pci/sse2/3dnow!', '/pci/sse2', 'balloon', 'limited.', 'co. ltd', 'co.', 'ltd.', '®', '(r)', '(tm)', 'inc.', 'inc', '6.00 PG', ',', 'corp');
+		$remove_phrases = array('incorporation', 'corporation', 'technologies', 'technology', 'version', 'computer', 'To Be Filled By', 'ODM', 'O.E.M.', 'Desktop Reference Platform', 'small form factor', 'convertible', 'chipset', 'community', 'reference', 'communications', 'semiconductor', 'processor', 'host bridge', 'adapter', 'CPU', 'platform', 'international', 'express', 'graphics', 'dram', 'none', 'release', 'electronics', 'integrated', 'alternate', 'quad-core', 'memory', 'series', 'motherboard', 'serverengines', 'Manufacturer_', 'x86/mmx/sse2', '/AGP/SSE/3DNOW!', '/AGP/SSE2', 'controller', '(extreme graphics innovation)', 'pci-e_gfx and ht3 k8 part', 'pci-e_gfx and ht1 k8 part', 'Northbridge only', 'dual slot', 'dual-core', 'dual core', 'microsystems', 'single slot', 'genuine', 'unknown device', 'systemberatung', 'gmbh', 'graphics adapter', 'video device', 'http://', 'www.', '.com', '.tw/', '/pci/sse2/3dnow!', '/pci/sse2', 'balloon', 'network connection', 'limited.', 'compliant', 'co. ltd', 'co.', 'ltd.', '®', '(r)', '(tm)', 'inc.', 'inc', '6.00 PG', ',', '\'', 'corp');
 
 		$str = str_ireplace($remove_phrases, ' ', $str);
 

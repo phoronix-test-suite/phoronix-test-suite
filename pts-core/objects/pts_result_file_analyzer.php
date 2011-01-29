@@ -236,7 +236,7 @@ class pts_result_file_analyzer
 		{
 			$component = explode(': ', $component);
 
-			if(count($component) == 2 && ($do_check == false || in_array($component[0], $do_check)))
+			if(count($component) >= 2 && ($do_check == false || in_array($component[0], $do_check)))
 			{
 				$component_r[$component[0]] = $component[1];
 			}
@@ -271,9 +271,14 @@ class pts_result_file_analyzer
 	{
 		$ir = new pts_graph_ir_value($value);
 
-		if(!in_array($index, array('Memory', 'Desktop', 'Screen Resolution')) && $value != 'Unknown')
+		if(!in_array($index, array('Memory', 'System Memory', 'Desktop', 'Screen Resolution')) && $value != 'Unknown')
 		{
-			$ir->set_attribute('href', 'http://openbenchmarking.org/s/' . pts_strings::system_category_to_openbenchmark_category($index) . '/' . pts_strings::trim_search_query($value));
+			$value = pts_strings::trim_search_query($value);
+
+			if($value != null)
+			{
+				$ir->set_attribute('href', 'http://openbenchmarking.org/s/' . pts_strings::system_category_to_openbenchmark_category($index) . '/' . $value);
+			}
 		}
 
 		return $ir;
