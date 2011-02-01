@@ -53,24 +53,25 @@ class pts_openbenchmarking_client
 		}
 
 		$composite_xml = $result_file->xml_parser->getXML();
+		$system_log_location = PTS_SAVE_RESULTS_PATH . $result_file->get_identifier() . '/system-logs/';
 
 		if(pts_config::read_bool_config(P_OPTION_ALWAYS_UPLOAD_SYSTEM_LOGS, 'FALSE'))
 		{
 			$upload_system_logs = P_OPTION_ALWAYS_UPLOAD_SYSTEM_LOGS;
 		}
-		else
+		else if(is_dir($system_log_location))
 		{
 			$upload_system_logs = pts_user_io::prompt_bool_input('Would you like to attach the system logs (lspci, dmesg, lsusb, etc) to the test result', true, 'UPLOAD_SYSTEM_LOGS');
 		}
 
 		$system_logs = null;
 		$system_logs_hash = null;
-		if($upload_system_logs && is_dir(($log_location = PTS_SAVE_RESULTS_PATH . $result_file->get_identifier() . '/system-logs/')))
+		if($upload_system_logs && is_dir($system_log_location))
 		{
 			$is_valid_log = true;
 			$finfo = function_exists('finfo_open') ? finfo_open(FILEINFO_MIME_TYPE) : false;
 
-			foreach(pts_file_io::glob($log_location . '*') as $log_dir)
+			foreach(pts_file_io::glob($system_log_location . '*') as $log_dir)
 			{
 				if($is_valid_log == false || !is_dir($log_dir))
 				{
@@ -97,7 +98,7 @@ class pts_openbenchmarking_client
 			if($is_valid_log)
 			{
 				$system_logs_zip = pts_client::create_temporary_file();
-				pts_compression::zip_archive_create($system_logs_zip, $log_location);
+				pts_compression::zip_archive_create($system_logs_zip, $system_log_location);
 
 				if(filesize($system_logs_zip) < 102400)
 				{
