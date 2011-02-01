@@ -200,13 +200,17 @@ class pts_strings
 	}
 	public static function trim_spaces($string)
 	{
+		return self::remove_redundant($string, ' ');
+	}
+	public static function remove_redundant($string, $redundant_char)
+	{
 		$prev_char = $string[0];
 
 		for($i = 1, $l = strlen($string); $i < $l; $i++)
 		{
 			$this_char = $string[$i];
 
-			if($this_char == ' ' && $prev_char == ' ')
+			if($this_char == $redundant_char && $prev_char == $redundant_char)
 			{
 				$string[($i - 1)] = null;
 			}
