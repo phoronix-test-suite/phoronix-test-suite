@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Only prompt to upload system logs if there are logs available
+- pts-core: Fix build-suite writing invalid suite definitions
 
 Phoronix Test Suite 3.0 Beta 3
 27 January 2011

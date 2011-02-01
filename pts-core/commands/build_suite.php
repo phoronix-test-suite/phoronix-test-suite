@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2010, Phoronix Media
-	Copyright (C) 2008 - 2010, Michael Larabel
+	Copyright (C) 2008 - 2011, Phoronix Media
+	Copyright (C) 2008 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -54,7 +54,7 @@ class build_suite implements pts_option_interface
 				for($i = 0; $i < count($args); $i++)
 				{
 					// Not binding the test profile version to this suite, otherwise change false to true
-					$suite_writer->add_to_suite($test_object->get_identifier(false), null, $args[$i], $description[$i]);
+					$suite_writer->add_to_suite($test_object->get_identifier(false), $args[$i], $description[$i]);
 				}
 			}
 			else if($test_object instanceof pts_test_suite)
