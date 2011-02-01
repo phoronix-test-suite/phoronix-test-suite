@@ -64,6 +64,11 @@ class phodevi_motherboard extends phodevi_device_interface
 				$vendor = pts_strings::trim_search_query(pts_strings::strip_string(pts_file_io::file_get_contents($usb_dir . 'manufacturer')));
 				$device = pts_strings::trim_search_query(pts_strings::strip_string(str_replace($vendor, null, pts_file_io::file_get_contents($usb_dir . 'product'))));
 
+				if($vendor == null || $device == null || $vendor == 'Generic')
+				{
+					continue;
+				}
+
 				array_push($usb, array(
 					'Class' => pts_file_io::file_get_contents($usb_dir . 'bDeviceClass'),
 					'Vendor' => $vendor,
