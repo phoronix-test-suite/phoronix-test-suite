@@ -200,7 +200,14 @@ class pts_strings
 	}
 	public static function trim_spaces($string)
 	{
-		return self::remove_redundant($string, ' ');
+		do
+		{
+			$string_copy = $string;
+			$string = str_replace('  ', ' ', $string);
+		}
+		while($string_copy != $string);
+
+		return trim($string);
 	}
 	public static function remove_redundant($string, $redundant_char)
 	{
