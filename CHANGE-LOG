@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 3.0 Beta 4
+2 February 2011
 
 - pts-core: Only prompt to upload system logs if there are logs available
 - pts-core: Revert to older pts_strings::trim_spaces as the new method causes bad issues in some magical conditions
