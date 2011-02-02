@@ -3,7 +3,9 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Only prompt to upload system logs if there are logs available
+- pts-core: Revert to older pts_strings::trim_spaces as the new method causes bad issues in some magical conditions
 - pts-core: Fix build-suite writing invalid suite definitions
+- pts-core: Fix ~/.phoronix-test-suite/download-cache/ not being recognized as a download cache
 
 Phoronix Test Suite 3.0 Beta 3
 27 January 2011
