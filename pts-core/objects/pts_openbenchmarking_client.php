@@ -23,6 +23,7 @@
 class pts_openbenchmarking_client
 {
 	private static $openbenchmarking_account = false;
+	private static $client_settings = null;
 
 	public static function upload_test_result(&$object)
 	{
@@ -58,6 +59,10 @@ class pts_openbenchmarking_client
 		if(pts_config::read_bool_config(P_OPTION_ALWAYS_UPLOAD_SYSTEM_LOGS, 'FALSE'))
 		{
 			$upload_system_logs = P_OPTION_ALWAYS_UPLOAD_SYSTEM_LOGS;
+		}
+		else if(isset(self::$client_settings['UploadSystemLogsByDefault']) && self::$client_settings['UploadSystemLogsByDefault'])
+		{
+			$upload_system_logs = true;
 		}
 		else if(is_dir($system_log_dir))
 		{
@@ -120,6 +125,12 @@ class pts_openbenchmarking_client
 			'system_logs_hash' => $system_logs_hash
 			);
 
+		$results_public = isset(self::$client_settings['ResultUploadsPublicByDefault']) && self::$client_settings['ResultUploadsPublicByDefault'];
+		if($results_public == false)
+		{
+			$to_post['results_public'] = 'false';
+		}
+
 		$json_response = pts_openbenchmarking::make_openbenchmarking_request('upload_test_result', $to_post);
 		$json_response = json_decode($json_response, true);
 
@@ -139,6 +150,11 @@ class pts_openbenchmarking_client
 			pts_module_manager::module_process("__event_openbenchmarking_upload", $json_response);
 		}
 		//$json['openbenchmarking']['upload']['id']
+
+		if(isset(self::$client_settings['RemoveLocalResultsOnUpload']) && self::$client_settings['RemoveLocalResultsOnUpload'] && $local_file_name != null)
+		{
+			pts_client::remove_saved_result_file($local_file_name);
+		}
 
 		return isset($json_response['openbenchmarking']['upload']['url']) ? $json_response['openbenchmarking']['upload']['url'] : false;
 	}
@@ -161,8 +177,13 @@ class pts_openbenchmarking_client
 			{
 				// The account is valid
 				self::$openbenchmarking_account = $openbenchmarking;
+				self::$client_settings = $json['openbenchmarking']['account']['settings'];
 			}
 		}
+	}
+	public static function auto_upload_results()
+	{
+		return isset(self::$client_settings['AutoUploadResults']) && self::$client_settings['AutoUploadResults'];
 	}
 	public static function make_openbenchmarking_request($request, $post = array())
 	{
@@ -454,7 +475,7 @@ class pts_openbenchmarking_client
 	}
 	public static function user_name()
 	{
-		return isset(self::$openbenchmarking_account['user_name']) ? self::$openbenchmarking_account : null;
+		return isset(self::$openbenchmarking_account['user_name']) ? self::$openbenchmarking_account['user_name'] : null;
 	}
 	public static function upload_usage_data($task, $data)
 	{

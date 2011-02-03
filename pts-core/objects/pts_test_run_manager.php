@@ -708,7 +708,7 @@ class pts_test_run_manager
 
 			if($this->allow_sharing_of_results && !defined('NO_NETWORK_COMMUNICATION'))
 			{
-				if($this->auto_upload_to_openbenchmarking)
+				if($this->auto_upload_to_openbenchmarking || pts_openbenchmarking_client::auto_upload_results())
 				{
 					$upload_results = true;
 				}

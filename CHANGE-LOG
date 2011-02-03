@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+- pts-core: Read support for OpenBenchmarking.org user account client settings
 - pts-core: Really fix build-suite this time for writing correct suite-definition.xml files
 - phodevi: Support for detecting Ubuntu's Unity desktop
 
