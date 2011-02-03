@@ -59,7 +59,7 @@ class build_suite implements pts_option_interface
 			}
 			else if($test_object instanceof pts_test_suite)
 			{
-				$suite_writer->add_to_suite($test_object->get_identifier(), null, null, null);
+				$suite_writer->add_to_suite($test_object->get_identifier(), null, null);
 			}
 		}
 
@@ -77,12 +77,12 @@ class build_suite implements pts_option_interface
 
 					for($i = 0; $i < count($args); $i++)
 					{
-						$suite_writer->add_to_suite($test_to_add, null, $args[$i], $description[$i]);
+						$suite_writer->add_to_suite($test_to_add, $args[$i], $description[$i]);
 					}
 					break;
 				case "Add Sub-Suite":
 					$suite_to_add = pts_user_io::prompt_text_menu("Enter test suite", $possible_suites);
-					$suite_writer->add_to_suite($suite_to_add, null, null, null);
+					$suite_writer->add_to_suite($suite_to_add, null, null);
 					break;
 			}
 			echo "\nAvailable Options:\n";

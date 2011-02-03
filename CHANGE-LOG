@@ -1,5 +1,10 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- pts-core: Really fix build-suite this time for writing correct suite-definition.xml files
+- phodevi: Support for detecting Ubuntu's Unity desktop
+
 Phoronix Test Suite 3.0 Beta 4
 2 February 2011
 
