@@ -111,6 +111,10 @@ class pts_openbenchmarking
 				$valid = $return_xml ? $result_file_writer->get_xml() : pts_client::save_test_result($id . '/composite.xml', $result_file_writer->get_xml(), true);
 			}
 		}
+		else if(PTS_IS_CLIENT && isset($json_response['openbenchmarking']['result']['error']))
+		{
+			echo PHP_EOL . 'ERROR: ' . $json_response['openbenchmarking']['result']['error'] . PHP_EOL . PHP_EOL;
+		}
 
 		return $valid;
 	}

@@ -4,6 +4,7 @@ Phoronix Test Suite (Git)
 
 - pts-core: Read support for OpenBenchmarking.org user account client settings
 - pts-core: Really fix build-suite this time for writing correct suite-definition.xml files
+- pts-core: Support printing OpenBenchmarking.org error messages when result cloning fails
 - phodevi: Support for detecting Ubuntu's Unity desktop
 
 Phoronix Test Suite 3.0 Beta 4
