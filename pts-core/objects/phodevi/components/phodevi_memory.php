@@ -164,7 +164,14 @@ class phodevi_memory extends phodevi_device_interface
 
 			if(is_numeric($info) && $info > 990)
 			{
-				$info = round($info / 256, 0) * 256;
+				if($info > 3584)
+				{
+					$info = round($info / 512, 0) * 512;
+				}
+				else
+				{
+					$info = round($info / 256, 0) * 256;
+				}
 			}
 		}
 		else if(IS_SOLARIS)
