@@ -71,7 +71,7 @@ class pts_openbenchmarking_client
 
 		$system_logs = null;
 		$system_logs_hash = null;
-		if($upload_system_logs && is_dir($system_log_dir))
+		if(is_dir($system_log_dir) && $upload_system_logs)
 		{
 			$is_valid_log = true;
 			$finfo = function_exists('finfo_open') ? finfo_open(FILEINFO_MIME_TYPE) : false;

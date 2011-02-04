@@ -409,7 +409,7 @@ class pts_render
 
 		foreach($mto->test_result_buffer->get_buffer_items() as $buffer_item)
 		{
-			$identifier = pts_strings::trim_explode(': ', $buffer_item->get_result_identifier());
+			$identifier = pts_strings::trim_explode(':', $buffer_item->get_result_identifier());
 
 			switch(count($identifier))
 			{
@@ -458,7 +458,7 @@ class pts_render
 
 		foreach($mto->test_result_buffer->get_buffer_items() as $buffer_item)
 		{
-			$identifier = pts_strings::trim_explode(': ', $buffer_item->get_result_identifier());
+			$identifier = pts_strings::trim_explode(':', $buffer_item->get_result_identifier());
 
 			switch(count($identifier))
 			{
@@ -552,7 +552,7 @@ class pts_render
 
 		foreach($identifiers as $identifier)
 		{
-			$identifier_r = pts_strings::trim_explode(': ', $identifier);
+			$identifier_r = pts_strings::trim_explode(':', $identifier);
 
 			if(count($identifier_r) != 2)
 			{
