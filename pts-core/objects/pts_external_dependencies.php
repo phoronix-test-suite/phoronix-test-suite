@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010, Phoronix Media
-	Copyright (C) 2010, Michael Larabel
+	Copyright (C) 2010 - 2011, Phoronix Media
+	Copyright (C) 2010 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -83,8 +83,6 @@ class pts_external_dependencies
 		// There were some dependencies not supported on this OS or are missing from the distro's XML file
 		if(count($required_test_dependencies) > 0 && count($dependencies_to_install) == 0)
 		{
-			echo "\nSome additional dependencies are required, but they could not be installed automatically for your operating system.\nBelow are the software packages that must be installed.\n\n";
-
 			$xml_parser = new pts_external_dependencies_nye_XmlReader(PTS_EXDEP_PATH . "xml/generic-packages.xml");
 			$package_name = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_GENERIC);
 			$title = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_TITLE);
@@ -92,18 +90,30 @@ class pts_external_dependencies
 			$file_check = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_FILECHECK);
 			$required_test_dependencies_names = array_keys($required_test_dependencies);
 
+			$to_report = array();
+
 			foreach(array_keys($package_name) as $i)
 			{
 				if(isset($required_test_dependencies[$package_name[$i]]))
 				{
-					pts_client::$display->generic_heading($title[$i] . "\nPossible Package Names: " . $possible_packages[$i]);
+					array_push($to_report, $title[$i] . "\nPossible Package Names: " . $possible_packages[$i]);
 				}
 			}
 
-			if((pts_c::$test_flags ^ pts_c::batch_mode) && (pts_c::$test_flags ^ pts_c::auto_mode))
+			if(count($to_report) > 0)
 			{
-				echo "The above dependencies should be installed before proceeding. Press any key when you're ready to continue.";
-				pts_user_io::read_user_input();
+				echo "\nSome additional dependencies are required, but they could not be installed automatically for your operating system.\nBelow are the software packages that must be installed.\n\n";
+
+				foreach($to_report as $report)
+				{
+					pts_client::$display->generic_heading($report);
+				}
+
+				if((pts_c::$test_flags ^ pts_c::batch_mode) && (pts_c::$test_flags ^ pts_c::auto_mode))
+				{
+					echo "The above dependencies should be installed before proceeding. Press any key when you're ready to continue.";
+					pts_user_io::read_user_input();
+				}
 			}
 		}
 
