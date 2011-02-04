@@ -66,7 +66,7 @@ class pts_openbenchmarking_client
 		}
 		else if(is_dir($system_log_dir))
 		{
-			$upload_system_logs = pts_user_io::prompt_bool_input('Would you like to attach the system logs (lspci, dmesg, lsusb, etc) to the test result', true, 'UPLOAD_SYSTEM_LOGS');
+			$upload_system_logs = pts_user_io::prompt_bool_input('Would you like to attach the system logs (lspci, dmesg, lsusb, etc) to the test result', false, 'UPLOAD_SYSTEM_LOGS');
 		}
 
 		$system_logs = null;
@@ -125,10 +125,10 @@ class pts_openbenchmarking_client
 			'system_logs_hash' => $system_logs_hash
 			);
 
-		$results_public = isset(self::$client_settings['ResultUploadsPublicByDefault']) && self::$client_settings['ResultUploadsPublicByDefault'];
-		if($results_public == false)
+		if(isset(self::$client_settings['ResultUploadsDefaultDisplayStatus']) && is_numeric(self::$client_settings['ResultUploadsDefaultDisplayStatus']))
 		{
-			$to_post['results_public'] = 'false';
+
+			$to_post['display_status'] = self::$client_settings['ResultUploadsDefaultDisplayStatus'];
 		}
 
 		$json_response = pts_openbenchmarking::make_openbenchmarking_request('upload_test_result', $to_post);
