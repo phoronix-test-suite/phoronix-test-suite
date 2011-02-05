@@ -368,12 +368,52 @@ class pts_client
 			$pso = new pts_storage_object(true, true);
 		}
 
+		// OpenBenchmarking.org - GSID
+		$global_gsid = $pso->read_object('global_system_id');
+		$global_gsid_e = $pso->read_object('global_system_id_e');
+		$global_gsid_p = $pso->read_object('global_system_id_p');
+
+		if(empty($global_gsid) || pts_openbenchmarking::is_valid_gsid_format($global_gsid) == false)
+		{
+			// Global System ID for anonymous uploads, etc
+			$requested_gsid = true;
+			$global_gsid = pts_openbenchmarking_client::request_gsid();
+
+			if(is_array($global_gsid))
+			{
+				$pso->add_object('global_system_id', $global_gsid['gsid']); // GSID
+				$pso->add_object('global_system_id_p', $global_gsid['gsid_p']); // GSID_P
+				$pso->add_object('global_system_id_e', $global_gsid['gsid_e']); // GSID_E
+			}
+		}
+		else if(pts_openbenchmarking::is_valid_gsid_e_format($global_gsid_e) == false || pts_openbenchmarking::is_valid_gsid_e_format($global_gsid_p) == false)
+		{
+			define('PTS_GSID', $global_gsid);
+			$global_gsid = pts_openbenchmarking_client::retrieve_gsid();
+
+			if(is_array($global_gsid))
+			{
+				$pso->add_object('global_system_id_p', $global_gsid['gsid_p']); // GSID_P
+				$pso->add_object('global_system_id_e', $global_gsid['gsid_e']); // GSID_E
+			}
+		}
+		else
+		{
+			define('PTS_GSID', $global_gsid);
+			$requested_gsid = false;
+		}
+
 		// Last Run Processing
 		$last_core_version = $pso->read_object('last_core_version');
 		if($last_core_version != PTS_CORE_VERSION)
 		{
 			// Report any missing/recommended extensions
 			self::program_requirement_checks();
+
+			if($requested_gsid == false)
+			{
+				pts_openbenchmarking_client::update_gsid();
+			}
 		}
 		$pso->add_object('last_core_version', PTS_CORE_VERSION); // PTS version last run
 
@@ -384,19 +424,8 @@ class pts_client
 		// Last Run Processing
 		$last_run = $pso->read_object('last_run_time');
 		define('IS_FIRST_RUN_TODAY', (substr($last_run, 0, 10) != date('Y-m-d')));
-
 		$pso->add_object('last_run_time', date('Y-m-d H:i:s')); // Time PTS was last run
 
-		// OpenBenchmarking.org - GSID
-		$global_gsid = $pso->read_object('global_system_id');
-		if(empty($global_gsid) || pts_openbenchmarking::is_valid_gsid_format($global_gsid) == false)
-		{
-			// Global System ID for anonymous uploads, etc
-			$global_gsid = pts_openbenchmarking_client::request_gsid();
-		}
-
-		define('PTS_GSID', $global_gsid);
-		$pso->add_object('global_system_id', $global_gsid); // GSID
 
 		// User Agreement Checking
 		$agreement_cs = $pso->read_object('user_agreement_cs');
@@ -824,7 +853,7 @@ class pts_client
 
 				// Backup system files
 				// TODO: move out these files/commands to log out to respective Phodevi components so only what's relevant will be logged
-				$system_log_files = array('/var/log/Xorg.0.log', '/proc/cpuinfo', '/proc/modules', '/proc/mounts', '/etc/X11/xorg.conf');
+				$system_log_files = array('/var/log/Xorg.0.log', '/proc/cpuinfo', '/proc/modules', '/proc/mounts', '/proc/cmdline', '/etc/X11/xorg.conf');
 
 				foreach($system_log_files as $file)
 				{

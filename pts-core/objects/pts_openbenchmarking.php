@@ -71,6 +71,36 @@ class pts_openbenchmarking
 
 		return $gsid_valid;
 	}
+	public static function is_valid_gsid_e_format($gside)
+	{
+		$gside_valid = false;
+
+		if(strlen($gside) == 12)
+		{
+			if(strlen(pts_strings::keep_in_string(substr($gside, 0, 10), pts_strings::CHAR_LETTER)) == 10 &&
+			strlen(pts_strings::keep_in_string(substr($gside, 10, 2), pts_strings::CHAR_NUMERIC)) == 2)
+			{
+				$gside_valid = true;
+			}
+		}
+
+		return $gside_valid;
+	}
+	public static function is_valid_gsid_p_format($gsidp)
+	{
+		$gsidp_valid = false;
+
+		if(strlen($gsidp) == 10)
+		{
+			if(strlen(pts_strings::keep_in_string(substr($gsidp, 0, 9), pts_strings::CHAR_LETTER)) == 9 &&
+			strlen(pts_strings::keep_in_string(substr($gsidp, 9, 1), pts_strings::CHAR_NUMERIC)) == 1)
+			{
+				$gsidp_valid = true;
+			}
+		}
+
+		return $gsidp_valid;
+	}
 	public static function is_openbenchmarking_result_id($id)
 	{
 		$is_id = false;

@@ -530,13 +530,30 @@ class pts_openbenchmarking_client
 	}
 	public static function request_gsid()
 	{
-		$upload_data = array(
+		$payload = array(
 			'client_version' => PTS_VERSION,
 			'client_os' => phodevi::read_property('system', 'vendor-identifier')
 			);
-		$gsid = pts_network::http_upload_via_post(pts_openbenchmarking::openbenchmarking_host() . 'extern/request-gsid.php', $upload_data);
+		$json = pts_openbenchmarking::make_openbenchmarking_request('request_gsid', $payload);
+		$json = json_decode($json, true);
 
-		return pts_openbenchmarking::is_valid_gsid_format($gsid) ? $gsid : false;
+		return isset($json['openbenchmarking']['gsid']) ? $json['openbenchmarking']['gsid'] : false;
+	}
+	public static function update_gsid()
+	{
+		$payload = array(
+			'client_version' => PTS_VERSION,
+			'client_os' => phodevi::read_property('system', 'vendor-identifier')
+			);
+		pts_openbenchmarking::make_openbenchmarking_request('update_gsid', $payload);
+	}
+	public static function retrieve_gsid()
+	{
+		// If the GSID_E and GSID_P are not known due to being from an old client
+		$json = pts_openbenchmarking::make_openbenchmarking_request('retrieve_gsid', array());
+		$json = json_decode($json, true);
+
+		return isset($json['openbenchmarking']['gsid']) ? $json['openbenchmarking']['gsid'] : false;
 	}
 	public static function linked_repositories()
 	{
