@@ -389,6 +389,7 @@ class pts_client
 		else if(pts_openbenchmarking::is_valid_gsid_e_format($global_gsid_e) == false || pts_openbenchmarking::is_valid_gsid_e_format($global_gsid_p) == false)
 		{
 			define('PTS_GSID', $global_gsid);
+			$requested_gsid = false;
 			$global_gsid = pts_openbenchmarking_client::retrieve_gsid();
 
 			if(is_array($global_gsid))

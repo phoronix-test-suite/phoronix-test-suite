@@ -191,7 +191,7 @@ class pts_openbenchmarking_client
 		$to_post = array_merge(array(
 			'r' => $request,
 			'client_version' => PTS_CORE_VERSION,
-			'gsid' => PTS_GSID
+			'gsid' => (defined('PTS_GSID') ? PTS_GSID : null)
 			), $post);
 
 		if(is_array(self::$openbenchmarking_account))
