@@ -384,6 +384,8 @@ class pts_client
 				$pso->add_object('global_system_id', $global_gsid['gsid']); // GSID
 				$pso->add_object('global_system_id_p', $global_gsid['gsid_p']); // GSID_P
 				$pso->add_object('global_system_id_e', $global_gsid['gsid_e']); // GSID_E
+				define('PTS_GSID', $global_gsid['gsid']);
+				define('PTS_GSID_E', $global_gsid['gsid_e']);
 			}
 		}
 		else if(pts_openbenchmarking::is_valid_gsid_e_format($global_gsid_e) == false || pts_openbenchmarking::is_valid_gsid_e_format($global_gsid_p) == false)
@@ -396,11 +398,13 @@ class pts_client
 			{
 				$pso->add_object('global_system_id_p', $global_gsid['gsid_p']); // GSID_P
 				$pso->add_object('global_system_id_e', $global_gsid['gsid_e']); // GSID_E
+				define('PTS_GSID_E', $global_gsid['gsid_e']);
 			}
 		}
 		else
 		{
 			define('PTS_GSID', $global_gsid);
+			define('PTS_GSID_E', $global_gsid_e);
 			$requested_gsid = false;
 		}
 

@@ -50,7 +50,7 @@ class pts_strings
 			}
 		}
 
-		if(is_numeric($value))
+		if(is_numeric($value) || $value == null)
 		{
 			return;
 		}
@@ -62,21 +62,32 @@ class pts_strings
 			$value = substr($value, ($multiplier + 3));
 		}
 
+		$value = str_replace('& ', null, $value);
+
 		// Remove other beginning or ending words based upon conditions
 		$words = explode(' ', trim($value));
 		$c = count($words);
-		if($c > 1)
+		switch($c)
 		{
-			if(strpos($words[($c - 1)], 'v1') !== false || strpos($words[($c - 1)], 'MB') !== false || strpos($words[($c - 1)], 'GB') !== false)
-			{
-				// Version number being appended to product (some mobos) or the MB/GB size for GPUs
-				array_pop($words);
-			}
-			else if(strpos($words[0], 'GB') !== false)
-			{
-				// Likely disk size in front of string
-				array_shift($words);
-			}
+			case 1:
+				if(isset($words[0][2]) && in_array(substr($words[0], -2), array('MB', 'GB', '0W')))
+				{
+					// Just searching a disk / memory size or a power supply wattage
+					$words = array();
+				}
+				break;
+			default:
+				if(strpos($words[($c - 1)], 'v1') !== false || strpos($words[($c - 1)], 'MB') !== false || strpos($words[($c - 1)], 'GB') !== false)
+				{
+					// Version number being appended to product (some mobos) or the MB/GB size for GPUs
+					array_pop($words);
+				}
+				else if(strpos($words[0], 'GB') !== false)
+				{
+					// Likely disk size in front of string
+					array_shift($words);
+				}
+				break;
 		}
 
 		return implode(' ', $words);
