@@ -7,6 +7,7 @@ upload_result_file = upload_result
 list_results = list_saved_results
 list_tests = list_available_tests
 list_test_results = list_saved_results
+openbenchmarking_setup = openbenchmarking_login
 show_results = show_result
 clone = clone_openbenchmarking_result
 clone_result = clone_openbenchmarking_result
