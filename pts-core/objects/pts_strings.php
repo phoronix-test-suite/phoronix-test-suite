@@ -64,6 +64,11 @@ class pts_strings
 
 		$value = str_replace('& ', null, $value);
 
+		if(substr($value, -1) == '.')
+		{
+			$value = substr($value, 0, -1);
+		}
+
 		// Remove other beginning or ending words based upon conditions
 		$words = explode(' ', trim($value));
 		$c = count($words);
@@ -78,7 +83,7 @@ class pts_strings
 				break;
 			default:
 				$last_index = ($c - 1);
-				if(strpos($words[$last_index], 'v1') !== false || strpos($words[$last_index], 'MB') !== false || strpos($words[$last_index], 'GB') !== false || $words[$last_index] == '.')
+				if(strpos($words[$last_index], 'v1') !== false || strpos($words[$last_index], 'MB') !== false || strpos($words[$last_index], 'GB') !== false)
 				{
 					// Version number being appended to product (some mobos) or the MB/GB size for GPUs
 					array_pop($words);
@@ -260,7 +265,7 @@ class pts_strings
 			$str = str_ireplace($original_phrase, $new_phrase, $str);
 		}
 
-		$remove_phrases = array('incorporation', 'corporation', 'technologies', 'technology', 'version', 'computer', 'To Be Filled By', 'ODM', 'O.E.M.', 'Desktop Reference Platform', 'small form factor', 'convertible', 'group', 'chipset', 'community', 'reference', 'communications', 'semiconductor', 'processor', 'host bridge', 'adapter', 'CPU', 'platform', 'international', 'express', 'graphics', 'dram', 'none', 'release', 'electronics', 'integrated', 'alternate', 'quad-core', 'memory', 'series', 'motherboard', 'serverengines', 'Manufacturer_', 'x86/mmx/sse2', '/AGP/SSE/3DNOW!', '/AGP/SSE2', 'controller', '(extreme graphics innovation)', 'pci-e_gfx and ht3 k8 part', 'pci-e_gfx and ht1 k8 part', 'Northbridge only', 'dual slot', 'dual-core', 'dual core', 'microsystems', 'single slot', 'genuine', 'unknown device', 'systemberatung', 'gmbh', 'graphics adapter', 'video device', 'http://', 'www.', '.com', '.tw/', '/pci/sse2/3dnow!', '/pci/sse2', 'balloon', 'network connection', 'ethernet', 'limited.', ' system', 'compliant', 'co. ltd', 'co.', 'ltd.', '®', '(r)', '(tm)', 'inc.', 'inc', '6.00 PG', ',', '\'', 'corp');
+		$remove_phrases = array('incorporation', 'corporation', 'technologies', 'technology', 'version', 'computer', 'To Be Filled By', 'ODM', 'O.E.M.', 'Desktop Reference Platform', 'small form factor', 'convertible', 'group', 'chipset', 'community', 'reference', 'communications', 'semiconductor', 'processor', 'host bridge', 'adapter', 'CPU', 'platform', 'international', 'express', 'graphics', 'dram', 'none', 'release', 'electronics', 'integrated', 'alternate', 'quad-core', 'memory', 'series', 'motherboard', 'serverengines', 'Manufacturer_', 'x86/mmx/sse2', '/AGP/SSE/3DNOW!', '/AGP/SSE2', 'controller', '(extreme graphics innovation)', 'pci-e_gfx and ht3 k8 part', 'pci-e_gfx and ht1 k8 part', 'Northbridge only', 'dual slot', 'dual-core', 'dual core', 'microsystems', 'single slot', 'genuine', 'unknown device', 'systemberatung', 'gmbh', 'graphics adapter', 'video device', 'http://', 'www.', '.com', '.tw/', '/pci/sse2/3dnow!', '/pci/sse2', 'balloon', 'network connection', 'ethernet', 'limited.', ' system', 'generic',  'compliant', 'co. ltd', 'co.', 'ltd.', '®', '(r)', '(tm)', 'inc.', 'inc', '6.00 PG', ',', '\'', 'corp');
 
 		$str = str_ireplace($remove_phrases, ' ', $str);
 
