@@ -9,6 +9,7 @@ Phoronix Test Suite (Git)
 - pts-core: Use new code path for requesting and updating GSID from OpenBenchmarking.org
 - pts-core: Rename openbenchmarking-setup command to openbenchmarking-login
 - pts-core: Fix show-results command not actually showing the results in the PTS Results Viewer
+- pts_Graph: Begin work on scatter plot graphing support with optional trend/linear regression line
 - phodevi: Support for detecting Ubuntu's Unity desktop
 
 Phoronix Test Suite 3.0 Beta 4

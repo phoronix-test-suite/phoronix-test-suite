@@ -63,6 +63,7 @@ class phodevi_motherboard extends phodevi_device_interface
 
 				$vendor = pts_strings::trim_search_query(pts_strings::strip_string(pts_file_io::file_get_contents($usb_dir . 'manufacturer')));
 				$device = pts_strings::trim_search_query(pts_strings::strip_string(str_replace($vendor, null, pts_file_io::file_get_contents($usb_dir . 'product'))));
+				$device = pts_strings::keep_in_string($device, pts_strings::CHAR_LETTER | pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DECIMAL | pts_strings::CHAR_SPACE | pts_strings::CHAR_DASH | pts_strings::CHAR_UNDERSCORE | pts_strings::CHAR_COLON | pts_strings::CHAR_COMMA);
 
 				if($vendor == null || $device == null || $vendor == 'Generic')
 				{
@@ -145,6 +146,7 @@ class phodevi_motherboard extends phodevi_device_interface
 						else if($line[0] == 'Device' || $line[0] == 'Vendor')
 						{
 							$line[1] = pts_strings::trim_search_query(pts_strings::strip_string($line[1]));
+							$line[1] = pts_strings::keep_in_string($line[1], pts_strings::CHAR_LETTER | pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DECIMAL | pts_strings::CHAR_SPACE | pts_strings::CHAR_DASH | pts_strings::CHAR_UNDERSCORE | pts_strings::CHAR_COLON | pts_strings::CHAR_COMMA);
 						}
 
 						$formatted_section[$line[0]] = $line[1];

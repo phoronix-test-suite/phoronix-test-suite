@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2010, Phoronix Media
-	Copyright (C) 2009 - 2010, Michael Larabel
+	Copyright (C) 2009 - 2011, Phoronix Media
+	Copyright (C) 2009 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -86,6 +86,27 @@ class pts_math
 	{
 		// This is better than using round() with precision because of the $precision is > than the current value, 0s will not be appended
 		return number_format($number, $precision, '.', '');
+	}
+	public static function find_quartile($values, $quartile)
+	{
+		sort($values, SORT_NUMERIC);
+		$values_c = count($values);
+		$qr_index = $values_c * $quartile;
+		$qr = ceil($qr_index) == $qr_index ? ($values[$qr_index - 1] + $values[$qr_index] / 2) : $values[floor($qr_index)];
+
+		return $qr;
+	}
+	public static function first_quartile($values)
+	{
+		return self::find_quartile($values, 0.25);
+	}
+	public static function third_quartile($values)
+	{
+		return self::find_quartile($values, 0.75);
+	}
+	public static function inter_quartile_range($values)
+	{
+		return self::third_quartile($values) - self::first_quartile($values);
 	}
 	protected static function clean_numeric_array(&$values)
 	{

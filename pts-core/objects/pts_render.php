@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2010, Phoronix Media
-	Copyright (C) 2008 - 2010, Michael Larabel
+	Copyright (C) 2008 - 2011, Phoronix Media
+	Copyright (C) 2008 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -189,6 +189,9 @@ class pts_render
 			case 'FILLED_LINE_GRAPH':
 				$graph_type = 'pts_FilledLineGraph';
 				break;
+			case 'SCATTER_PLOT':
+				$graph_type = 'pts_ScatterPlot';
+				break;
 			default:
 				if(isset($extra_attributes['graph_render_type']))
 				{
@@ -260,6 +263,7 @@ class pts_render
 				}
 			case 'FILLED_LINE_GRAPH':
 			case 'BAR_ANALYZE_GRAPH':
+			case 'SCATTER_PLOT':
 				//$graph->hideGraphIdentifiers();
 				foreach($result_object->test_result_buffer->get_buffer_items() as $buffer_item)
 				{
@@ -506,9 +510,12 @@ class pts_render
 		}
 		else
 		{
-			$line_graph_type = isset($extra_attributes['filled_line_graph']) ? 'FILLED_LINE_GRAPH' : 'LINE_GRAPH';
 			$mto->test_profile->set_result_scale($mto->test_profile->get_result_scale() . ' | ' . implode(',', array_keys($days)));
-			$mto->test_profile->set_display_format((count($days) < 5 || ($is_tracking == false && !isset($extra_attributes['force_line_graph_compact'])) ? 'BAR_ANALYZE_GRAPH' : $line_graph_type));
+			if($mto->test_profile->get_display_format() != 'SCATTER_PLOT')
+			{
+				$line_graph_type = isset($extra_attributes['filled_line_graph']) ? 'FILLED_LINE_GRAPH' : 'LINE_GRAPH';
+				$mto->test_profile->set_display_format((count($days) < 5 || ($is_tracking == false && !isset($extra_attributes['force_line_graph_compact'])) ? 'BAR_ANALYZE_GRAPH' : $line_graph_type));
+			}
 
 			foreach(array_keys($systems) as $system_key)
 			{

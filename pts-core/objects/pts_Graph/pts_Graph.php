@@ -179,7 +179,7 @@ abstract class pts_Graph
 			}
 		}
 
-		if($result_file != null && $result_file instanceOf pts_result_file)
+		if($result_file != null && $result_file instanceof pts_result_file)
 		{
 			//$this->addInternalIdentifier('Identifier', null); // TODO: result file name
 			$pts_version = pts_arrays::last_element($result_file->get_system_pts_version());
