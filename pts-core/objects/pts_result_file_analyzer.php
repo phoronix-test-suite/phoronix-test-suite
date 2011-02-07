@@ -277,7 +277,7 @@ class pts_result_file_analyzer
 
 			if($value != null)
 			{
-				$ir->set_attribute('href', 'http://openbenchmarking.org/s/' . pts_strings::system_category_to_openbenchmark_category($index) . '/' . $value);
+				$ir->set_attribute('href', 'http://openbenchmarking.org/s/' . $value);
 			}
 		}
 
