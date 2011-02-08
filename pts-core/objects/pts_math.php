@@ -87,7 +87,7 @@ class pts_math
 		// This is better than using round() with precision because of the $precision is > than the current value, 0s will not be appended
 		return number_format($number, $precision, '.', '');
 	}
-	public static function find_quartile($values, $quartile)
+	public static function find_percentile($values, $quartile)
 	{
 		sort($values, SORT_NUMERIC);
 		$values_c = count($values);
@@ -98,11 +98,11 @@ class pts_math
 	}
 	public static function first_quartile($values)
 	{
-		return self::find_quartile($values, 0.25);
+		return self::find_percentile($values, 0.25);
 	}
 	public static function third_quartile($values)
 	{
-		return self::find_quartile($values, 0.75);
+		return self::find_percentile($values, 0.75);
 	}
 	public static function inter_quartile_range($values)
 	{

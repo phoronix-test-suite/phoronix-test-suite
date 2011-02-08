@@ -277,6 +277,47 @@ class bilde_svg_renderer extends bilde_renderer
 
 		$this->svg->appendChild($rect);
 	}
+	public function draw_rectangle_gradient($x1, $y1, $width, $height, $color, $next_color)
+	{
+		$width = $width - $x1;
+		$height = $height - $y1;
+		$x1 += $width < 0 ? $width : 0;
+		$y1 += $height < 0 ? $height : 0;
+
+		static $gradient_count = 1;
+
+		$gradient = $this->image->createElement('linearGradient');
+		$gradient->setAttribute('id', 'g_' . $gradient_count);
+		$gradient->setAttribute('x1', '0%');
+		$gradient->setAttribute('y1', '0%');
+		$gradient->setAttribute('x2', '100%');
+		$gradient->setAttribute('y2', '0%');
+
+		$stop = $this->image->createElement('stop');
+		$stop->setAttribute('offset', '0%');
+		$stop->setAttribute('style', 'stop-color: ' . $color .'; stop-opacity: 1;');
+		$gradient->appendChild($stop);
+
+		$stop = $this->image->createElement('stop');
+		$stop->setAttribute('offset', '100%');
+		$stop->setAttribute('style', 'stop-color: ' . $next_color .'; stop-opacity: 1;');
+		$gradient->appendChild($stop);
+
+		$defs = $this->image->createElement('defs');
+		$defs->appendChild($gradient);
+		$this->svg->appendChild($defs);
+
+		$rect = $this->image->createElement('rect');
+		$rect->setAttribute('x', $x1);
+		$rect->setAttribute('y', $y1);
+		$rect->setAttribute('width', $width);
+		$rect->setAttribute('height', $height);
+		$rect->setAttribute('fill', $background_color);
+		$rect->setAttribute('style', 'fill:url(#g_' .  $gradient_count . ')');
+		$gradient_count++;
+
+		$this->svg->appendChild($rect);
+	}
 	public function draw_rectangle_border($x1, $y1, $width, $height, $border_color)
 	{
 		$width = $width - $x1;

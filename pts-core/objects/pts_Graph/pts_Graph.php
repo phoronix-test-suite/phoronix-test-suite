@@ -895,8 +895,6 @@ abstract class pts_Graph
 		$this->graph_key_item_width = 16 + $this->text_string_width($this->find_longest_string($this->graph_data_title), $this->graph_font, $this->graph_font_size_key);
 		$this->graph_keys_per_line = floor(($this->graph_left_end - $this->graph_left_start) / $this->graph_key_item_width);
 
-		ceil(count($this->graph_data_title) / $this->graph_keys_per_line) . ' ' . $this->graph_keys_per_line;
-
 		return ceil(count($this->graph_data_title) / $this->graph_keys_per_line) * $this->graph_key_line_height;
 	}
 	protected function render_graph_key()

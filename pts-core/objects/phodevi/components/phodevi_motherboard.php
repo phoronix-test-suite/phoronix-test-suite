@@ -295,6 +295,13 @@ class phodevi_motherboard extends phodevi_device_interface
 						$info = $hw_string[0];
 					}
 				}
+
+				$bios_vendor = phodevi_linux_parser::read_sys_dmi('bios_vendor');
+				$bios_version = phodevi_linux_parser::read_sys_dmi('bios_version');
+				if($bios_vendor == null)
+				{
+					$info = $bios_vendor . ' ' . $bios_version;
+				}
 			}
 
 			if(empty($info))
