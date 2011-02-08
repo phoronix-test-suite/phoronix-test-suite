@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2010, Phoronix Media
-	Copyright (C) 2008 - 2010, Michael Larabel
+	Copyright (C) 2008 - 2011, Phoronix Media
+	Copyright (C) 2008 - 2011, Michael Larabel
 	bilde_renderer.php: The Phoronix Multi-Format "Bilde" Image Renderer
 
 	This program is free software; you can redistribute it and/or modify
@@ -420,6 +420,77 @@ abstract class bilde_renderer
 
 		// Width x Height
 		return array($box_width, $box_height);
+	}
+	public static function color_gradient($color1, $color2, $color_weight)
+	{
+		$color1 = self::color_hex_to_rgb($color1);
+		$color2 = self::color_hex_to_rgb($color2);
+
+		$diff_r = $color2['r'] - $color1['r'];
+		$diff_g = $color2['g'] - $color1['g'];
+		$diff_b = $color2['b'] - $color1['b'];
+
+		$r = ($color1['r'] + $diff_r * $color_weight);
+		$g = ($color1['g'] + $diff_g * $color_weight);
+		$b = ($color1['b'] + $diff_b * $color_weight);
+
+		return self::color_rgb_to_hex($r, $g, $b);
+	}
+	public static function color_shade($color, $percent, $mask)
+	{
+		$color = self::color_hex_to_rgb($color);
+
+		foreach($color as &$color_value)
+		{
+			$color_value = round($color_value * $percent) + round($mask * (1 - $percent));
+			$color_value = $color_value > 255 ? 255 : $color_value;
+		}
+
+		return self::color_rgb_to_hex($color['r'], $color['g'], $color['b']);
+	}
+	public static function color_cache($ns, $id, &$colors)
+	{
+		static $cache = null;
+		static $ns_color_pool = null;
+
+		if(!isset($cache[$ns][$id]))
+		{
+			if(!isset($ns_color_pool[$ns]) || empty($ns_color_pool[$ns]))
+			{
+				$ns_color_pool[$ns] = array(1, 0.6, -0.7);
+			}
+
+			if(empty($colors))
+			{
+				return false;
+			}
+
+			$percent = array_shift($ns_color_pool[$ns]);
+			$cache[$ns][$id] = self::color_shade($colors[0], abs($percent), ($percent < 0 ? 0 : 255));
+
+			if(empty($ns_color_pool[$ns]))
+			{
+				// We have already exhausted the cache pool once
+				array_shift($colors);
+			}
+		}
+
+		return $cache[$ns][$id];
+	}
+	public static function color_hex_to_rgb($hex)
+	{
+		$color = hexdec($hex);
+
+		return array(
+			'r' => ($color >> 16) & 0xff,
+			'g' => ($color >> 8) & 0xff,
+			'b' => $color & 0xff
+			);
+	}
+	public static function color_rgb_to_hex($r, $g, $b)
+	{
+		$color = ($r << 16) | ($g << 8) | $b;
+		return '#' . sprintf('%06x', $color);
 	}
 	protected function text_string_width($text_string, $font_type, $font_size)
 	{

@@ -11,6 +11,7 @@ Phoronix Test Suite (Git)
 - pts-core: Fix show-results command not actually showing the results in the PTS Results Viewer
 - pts_Graph: Begin work on scatter plot graphing support with optional trend/linear regression line
 - bilde_renderer: Begin work on supporting gradients for the SVG renderer
+- bilde_renderer: Initial shading, color gradient support
 - phodevi: Support for detecting Ubuntu's Unity desktop
 - phodevi: Fallback to reading BIOS information when Intel development motherboards don't report any motherboard information
 

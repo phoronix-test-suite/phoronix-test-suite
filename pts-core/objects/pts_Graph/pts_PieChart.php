@@ -72,7 +72,7 @@ class pts_PieChart extends pts_Graph
 		$key_line_height = 14;
 		$this->graph_top_start += 12;
 		$component_y = $this->graph_top_start - $key_line_height - 5;
-		$this->reset_paint_index();
+		//$this->reset_paint_index();
 
 		for($i = 0; $i < $key_count; $i++)
 		{

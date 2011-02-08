@@ -85,7 +85,6 @@ abstract class pts_Graph
 	protected $graph_data_raw = array();
 	protected $graph_data_title = array();
 	protected $graph_sub_titles = array();
-	protected $graph_color_paint_index = -1;
 	protected $graph_identifiers;
 	protected $graph_title;
 	protected $graph_y_title;
@@ -103,7 +102,6 @@ abstract class pts_Graph
 
 	// Internal Switches, Etc
 
-	protected static $used_paint_colors;
 	protected $regression_marker_threshold = 0;
 	protected $is_multi_way_comparison = false;
 	private $test_identifier = null;
@@ -319,88 +317,11 @@ abstract class pts_Graph
 
 	protected function next_paint_color()
 	{
-		if($this->graph_color_paint_index + 1 < count($this->graph_color_paint))
-		{
-			$this->graph_color_paint_index += 1;
-		}
-		else
-		{
-			$this->graph_color_paint_index = 0;
-		}
-
-		return $this->graph_color_paint[$this->graph_color_paint_index];
+		return get_paint_color(time());
 	}
-	protected function shade_color($hex_color)
+	protected function get_paint_color($identifier)
 	{
-		$stepping = 54;
-		$hex[] = hexdec(substr($hex_color, 1, 2));
-		$hex[] = hexdec(substr($hex_color, 3, 2));
-		$hex[] = hexdec(substr($hex_color, 5, 2));
-
-		foreach($hex as &$component)
-		{
-			if($component == 0)
-			{
-				continue;
-			}
-
-			if($component < $stepping)
-			{
-				$component = 255;
-			}
-
-			$component -= $stepping;
-		}
-		return '#' . str_pad(dechex($hex[0]), 2, 0) . str_pad(dechex($hex[1]), 2, 0) . str_pad(dechex($hex[2]), 2, 0);
-	}
-	public static function clear_paint_color_cache()
-	{
-		self::$used_paint_colors = null;
-	}
-	protected function get_paint_color($identifier = 0)
-	{
-		if(!isset(self::$used_paint_colors[$identifier]))
-		{
-			if(PTS_IS_CLIENT && pts_client::read_env('GRAPH_GROUP_SIMILAR'))
-			{
-				static $groups;
-
-				$group = trim(pts_arrays::last_element(pts_strings::colon_explode($identifier)));
-
-				if(!isset($groups[$group]))
-				{
-					$groups[$group] = $this->next_paint_color();
-				}
-				else
-				{
-					$color = $this->graph_image->convert_type_to_hex($groups[$group]);
-					$color = $this->shade_color($color);
-					$groups[$group] = $this->graph_image->convert_hex_to_type($color);
-				}
-
-				self::$used_paint_colors[$identifier] = $groups[$group];
-			}
-			else
-			{
-				// Use a counter to prevent possible infinite loop when running out of unique paint colors
-				$i = 0;
-
-				do
-				{
-					$i++;
-					$next_color = $this->next_paint_color();
-				}
-				while(is_array(self::$used_paint_colors) && in_array($next_color, self::$used_paint_colors) == true && $i < 10);
-
-				self::$used_paint_colors[$identifier] = $next_color;
-			}
-		}
-
-		return self::$used_paint_colors[$identifier];
-	}
-	protected function reset_paint_index()
-	{
-		$this->graph_color_paint_index = -1;
+		return $this->graph_image->convert_hex_to_type(bilde_renderer::color_cache(0, $identifier, $this->graph_color_paint));
 	}
 	protected function maximum_graph_value()
 	{
@@ -664,11 +585,6 @@ abstract class pts_Graph
 		$this->graph_color_highlight = $this->graph_image->convert_hex_to_type($this->graph_color_highlight);
 		$this->graph_color_alert = $this->graph_image->convert_hex_to_type($this->graph_color_alert);
 
-		foreach($this->graph_color_paint as &$paint_color)
-		{
-			$paint_color = $this->graph_image->convert_hex_to_type($paint_color);
-		}
-
 		// Background Color
 		if($this->iveland_view)
 		{
@@ -907,7 +823,6 @@ abstract class pts_Graph
 		$key_pos = 0;
 		$key_count = count($this->graph_data_title);
 		$component_y = $this->graph_top_start - $this->graph_key_height() - 7;
-		$this->reset_paint_index();
 
 		for($i = 0; $i < $key_count; $i++)
 		{
