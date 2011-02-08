@@ -298,7 +298,7 @@ class phodevi_motherboard extends phodevi_device_interface
 
 				$bios_vendor = phodevi_linux_parser::read_sys_dmi('bios_vendor');
 				$bios_version = phodevi_linux_parser::read_sys_dmi('bios_version');
-				if($bios_vendor == null)
+				if($bios_vendor != null)
 				{
 					$info = $bios_vendor . ' ' . $bios_version;
 				}
