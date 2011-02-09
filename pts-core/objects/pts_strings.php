@@ -513,6 +513,14 @@ class pts_strings
 
 		return $days_ago;
 	}
+	public static function time_stamp_to_string($time_stamp, $string_type)
+	{
+		$stamp_half = explode(' ', trim($time_stamp));
+		$date = explode('-', $stamp_half[0]);
+		$time = explode(':', (isset($stamp_half[1]) ? $stamp_half[1] : '00:00:00'));
+
+		return date($string_type, mktime($time[0], $time[1], $time[2], $date[1], $date[2], $date[0]));
+	}
 	public static function system_category_to_openbenchmark_category($category)
 	{
 		switch($category)

@@ -450,8 +450,9 @@ abstract class bilde_renderer
 	}
 	public static function color_cache($ns, $id, &$colors)
 	{
-		static $cache = null;
-		static $ns_color_pool = null;
+		//return array_shift($colors);
+		static $cache;
+		static $ns_color_pool;
 
 		if(!isset($cache[$ns][$id]))
 		{
