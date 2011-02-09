@@ -32,11 +32,12 @@ class pts_HeatMapBarGraph
 		$this->keys = $keys;
 		$this->last_updated = $last_updated;
 	}
-	public function add_result_bar($min_value, $max_value, $sections, $lines, $test_data, $results = array())
+	public function add_result_bar($min_value, $max_value, $bin_size, $sections, $lines, $test_data, $results = array())
 	{
 		array_push($this->bars, array(
 			'min_value' => $min_value,
 			'max_value' => $max_value,
+			'bin_size' => $bin_size,
 			'sections' => $sections,
 			'draw_lines' => $lines,
 			'test_data' => $test_data,
@@ -49,7 +50,7 @@ class pts_HeatMapBarGraph
 	}
 	public function generate_display()
 	{
-		$bar_width = 620;
+		$bar_width = 580;
 		$bar_height = 38;
 		$heading_per_bar = 16;
 		$title_bar_height = 35;
@@ -99,66 +100,82 @@ class pts_HeatMapBarGraph
 			}
 		}
 
-		foreach($this->bars as $i => &$rank)
+		foreach($this->bars as $i => &$hmap)
 		{
 			$upper_y = ($i * ($bar_height + $border + $heading_per_bar)) + $border + $title_bar_height + $title_key_offset + $heading_per_bar;
 			$lower_y = $upper_y + $bar_height;
 
-			$value_size = $bar_width / ($rank['max_value'] - $rank['min_value']);
+			$value_size = $bar_width / ($hmap['max_value'] - $hmap['min_value']);
 			$prev_color = $bilde_renderer->convert_hex_to_type('#ff');
 			$last_plot_x = $start_x;
 
-			$bilde_renderer->write_text_left($rank['test_data']['t'], '', 12, $text_color, $start_x, $upper_y - 10, $start_x + ($bar_width / 2), $upper_y - 10);
-			$bilde_renderer->write_text_right($rank['test_data']['a'], '', 10, $alt_text_color, $end_x, $upper_y - 9, $end_x, $upper_y - 9);
+			$bilde_renderer->write_text_left($hmap['test_data']['t'], '', 12, $text_color, $start_x, $upper_y - 10, $start_x + ($bar_width / 2), $upper_y - 10);
+			$bilde_renderer->write_text_right($hmap['test_data']['a'], '', 10, $alt_text_color, $end_x, $upper_y - 9, $end_x, $upper_y - 9);
 
-			if($rank['test_data']['p'] == 'LIB' && true)
+			if($hmap['test_data']['p'] == 'LIB' && true)
 			{
 				// Invert results
 				$new_sections = array();
 
-				foreach($rank['sections'] as $next_section => $next_section_value)
+				foreach($hmap['sections'] as $next_section => $next_section_value)
 				{
-					$new_sections[($rank['max_value'] - $next_section)] = $next_section_value;
+					$new_sections[($hmap['max_value'] - $next_section)] = $next_section_value;
 				}
 
 				ksort($new_sections);
-				$rank['sections'] = $new_sections;
+				$hmap['sections'] = $new_sections;
 
-				foreach($rank['draw_lines'] as &$value)
+				foreach($hmap['draw_lines'] as &$value)
 				{
-					$value = $rank['max_value'] - $value;
+					$value = $hmap['max_value'] - $value;
 				}
 
-				foreach($rank['results'] as &$value)
+				foreach($hmap['results'] as &$value)
 				{
-					$value = $rank['max_value'] - $value;
+					$value = $hmap['max_value'] - $value;
 				}
 
-				sort($rank['draw_lines']);
+				sort($hmap['draw_lines']);
 
-				$rank['max_value'] -= $rank['min_value'];
-				$rank['min_value'] = 0;
+				$hmap['max_value'] -= $hmap['min_value'];
+				$hmap['min_value'] = 0;
 			}
 
-			$prev_section = $rank['min_value'];
-			$max_section_value = max($rank['sections']);
+			$prev_section = $hmap['min_value'];
+			$max_section_value = max($hmap['sections']);
 
-			foreach($rank['sections'] as $next_section => $next_section_value)
+			/*
+			for($i = $hmap['min_value']; $i <= $hmap['max_size'] && $hmap['bin_size'] > 0; $i += $hmap['bin_size'])
+			{
+
+			}
+			*/
+
+			$color_weight = 0.61 - (0 / $max_section_value * 0.5);
+			$background_color = $bilde_renderer->convert_hex_to_type(bilde_renderer::color_gradient('FFFFFF', '000000', $color_weight));
+			$bilde_renderer->draw_rectangle($start_x, $upper_y, $end_x, $lower_y, $background_color);
+
+			foreach($hmap['sections'] as $next_section => $next_section_value)
 			{
 				$color_weight = 0.61 - ($next_section_value / $max_section_value * 0.5);
 				$color = $bilde_renderer->convert_hex_to_type(bilde_renderer::color_gradient('FFFFFF', '000000', $color_weight));
 
-				if($next_section > $rank['min_value'])
+				if($next_section > $hmap['min_value'])
 				{
-					$next_section = $next_section > $rank['max_value'] ? $rank['max_value'] : $next_section;
-
+					$next_section = $next_section > $hmap['max_value'] ? $hmap['max_value'] : $next_section;
 					$plot_x = $last_plot_x + (($next_section - $prev_section) * $value_size);
 					$plot_x = $plot_x > $end_x ? $end_x : $plot_x;
-					$bilde_renderer->draw_rectangle_gradient($last_plot_x, $upper_y, ceil($plot_x), $lower_y, $prev_color, $color);
+
+					if($prev_color != $color || ($color != $background_color))
+					{
+						// don't uselessly paint background color, it's already painted
+						$bilde_renderer->draw_rectangle_gradient($last_plot_x, $upper_y, ceil($plot_x), $lower_y, $prev_color, $color);
+					}
+
 					$last_plot_x = floor($plot_x - 0.6);
 					$prev_section = $next_section;
 
-					if($next_section > $rank['max_value'])
+					if($next_section > $hmap['max_value'])
 					{
 						break;
 					}
@@ -166,21 +183,30 @@ class pts_HeatMapBarGraph
 				$prev_color = $color;
 			}
 
+			/*
+
+			if($prev_color != $background_color && $plot_x < $end_x)
+			{
+				$plot_x = $last_plot_x + $next_section + $hmap['bin_size'];
+				$plot_x = $plot_x > $end_x ? $end_x : $plot_x;
+				$bilde_renderer->draw_rectangle_gradient($last_plot_x, $upper_y, ceil($plot_x), $lower_y, $prev_color, $background_color);
+			}
 			if($last_plot_x < $end_x)
 			{
 				// Fill in the blank
 				$bilde_renderer->draw_rectangle($last_plot_x, $upper_y, $end_x, $lower_y, $prev_color);
 			}
+			*/
 
-			foreach($rank['draw_lines'] as $line_value)
+			foreach($hmap['draw_lines'] as $line_value)
 			{
-				$line_x = $start_x + ($line_value - $rank['min_value']) * $value_size;
+				$line_x = $start_x + ($line_value - $hmap['min_value']) * $value_size;
 				$bilde_renderer->draw_line($line_x, $upper_y, $line_x, $lower_y, $border_color, 1);
 			}
 
-			foreach($rank['results'] as $identifier => $value)
+			foreach($hmap['results'] as $identifier => $value)
 			{
-				$line_x = $start_x + ($value - $rank['min_value']) * $value_size;
+				$line_x = $start_x + ($value - $hmap['min_value']) * $value_size;
 
 				if(($start_x + 10) < $line_x && $line_x < ($end_x - 10))
 				{
@@ -188,7 +214,7 @@ class pts_HeatMapBarGraph
 					$bilde_renderer->draw_arrow($line_x, $upper_y + 10, $line_x, $upper_y + 1, $key_colors[$identifier], $key_colors[$identifier], 1);
 				}
 
-				$bilde_renderer->draw_line($line_x, $lower_y, $line_x, $upper_y, $key_colors[$identifier], 2);
+				$bilde_renderer->draw_line($line_x, $lower_y, $line_x, $upper_y, $key_colors[$identifier], 1);
 			}
 
 			$bilde_renderer->draw_rectangle_border($start_x, $upper_y, $end_x, $lower_y, $border_color);
