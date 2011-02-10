@@ -458,7 +458,7 @@ abstract class bilde_renderer
 		{
 			if(!isset($ns_color_pool[$ns]) || empty($ns_color_pool[$ns]))
 			{
-				$ns_color_pool[$ns] = array(1, 0.6, -0.7);
+				$ns_color_pool[$ns] = array(1, -0.5);
 			}
 
 			if(empty($colors))

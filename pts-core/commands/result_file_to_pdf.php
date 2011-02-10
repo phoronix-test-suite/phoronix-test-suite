@@ -94,7 +94,7 @@ class result_file_to_pdf implements pts_option_interface
 			if(is_file(PTS_SAVE_RESULTS_PATH . $r[0] . "/result-graphs/" . $i . ".png"))
 			{
 				$pdf->Ln(100);
-				$pdf->Image(PTS_SAVE_RESULTS_PATH . $r[0] . "/result-graphs/" . $i . ".png", 20, 40 + (($placement - 1) * 120), 180);
+				$pdf->Image(PTS_SAVE_RESULTS_PATH . $r[0] . "/result-graphs/" . $i . ".png", 50, 40 + (($placement - 1) * 120), 120);
 			}
 
 			if($placement == 2)

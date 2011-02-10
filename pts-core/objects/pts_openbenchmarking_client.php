@@ -491,6 +491,11 @@ class pts_openbenchmarking_client
 	}
 	public static function upload_hwsw_data($to_report)
 	{
+		if(!defined('PTS_GSID'))
+		{
+			return false;
+		}
+
 		foreach($to_report as $component => &$value)
 		{
 			if(empty($value))
@@ -507,6 +512,11 @@ class pts_openbenchmarking_client
 	}
 	public static function upload_pci_data($to_report)
 	{
+		if(!defined('PTS_GSID'))
+		{
+			return false;
+		}
+
 		if(!is_array($to_report))
 		{
 			return false;
@@ -519,6 +529,11 @@ class pts_openbenchmarking_client
 	}
 	public static function upload_usb_data($to_report)
 	{
+		if(!defined('PTS_GSID'))
+		{
+			return false;
+		}
+
 		if(!is_array($to_report))
 		{
 			return false;

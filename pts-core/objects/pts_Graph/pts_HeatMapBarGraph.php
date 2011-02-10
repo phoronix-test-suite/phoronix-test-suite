@@ -222,8 +222,8 @@ class pts_HeatMapBarGraph
 
 		// Footer
 		$bilde_renderer->draw_arrow($start_x + 8, $lower_y + 8, $start_x + 1, $lower_y + 8, $alt_text_color, $border_color, 1);
-		$bilde_renderer->write_text_left('Higher Is Better;' . ($this->last_updated != null ? ' Performance Index As Of ' . pts_strings::time_stamp_to_string($this->last_updated, 'j F Y') : null), '', 7, $alt_text_color, $start_x + 13, $lower_y + 8, $start_x + 13, $lower_y + 8);
-		$bilde_renderer->write_text_right('OpenBenchmarking.org', '', 7, $alt_text_color, $end_x, $lower_y + 8, $end_x, $lower_y + 8);
+		$bilde_renderer->write_text_left('Percentile Rank' . ($this->last_updated != null ? '; Data As Of ' . pts_strings::time_stamp_to_string($this->last_updated, 'j F Y') . ' For Trailing 90 Days' : null), '', 7, $alt_text_color, $start_x + 13, $lower_y + 8, $start_x + 13, $lower_y + 8);
+		$bilde_renderer->write_text_right('OpenBenchmarking.org Performance Classification', '', 7, $alt_text_color, $end_x, $lower_y + 8, $end_x, $lower_y + 8);
 
 
 		return $bilde_renderer;
