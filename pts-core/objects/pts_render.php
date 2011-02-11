@@ -244,7 +244,6 @@ class pts_render
 				$result_object->test_result_buffer->buffer_values_reverse();
 			}
 		}
-
 		if(isset($extra_attributes['highlight_graph_values']))
 		{
 			$graph->highlight_values($extra_attributes['highlight_graph_values']);

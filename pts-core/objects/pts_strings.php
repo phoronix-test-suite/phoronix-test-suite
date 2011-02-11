@@ -50,7 +50,7 @@ class pts_strings
 			}
 		}
 
-		if(is_numeric($value) || $value == null)
+		if((is_numeric($value) && substr($value, 0, 2) != '0x') || $value == null)
 		{
 			return;
 		}

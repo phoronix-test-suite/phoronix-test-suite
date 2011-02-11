@@ -785,6 +785,14 @@ class pts_client
 				pts_storage_object::set_in_file(PTS_CORE_STORAGE, 'phodevi_smart_cache', null);
 			}
 		}
+
+		if(is_array(self::$lock_pointers))
+		{
+			foreach(array_keys(self::$lock_pointers) as $lock_file)
+			{
+				self::release_lock($lock_file);
+			}
+		}
 	}
 	public static function do_anonymous_usage_reporting()
 	{

@@ -66,6 +66,9 @@ if(ini_get('date.timezone') == null)
 	date_default_timezone_set('UTC');
 }
 
+// Needed for shutdown functions
+// declare(ticks = 1);
+
 $sent_command = strtolower(str_replace('-', '_', (isset($argv[1]) ? $argv[1] : null)));
 $quick_start_options = array('dump_possible_options');
 define('QUICK_START', in_array($sent_command, $quick_start_options));
@@ -176,7 +179,7 @@ for($i = 2; $i < $argc && isset($argv[$i]); $i++)
 	array_push($pass_args, $argv[$i]);
 }
 
-if(!QUICK_START)
+if(QUICK_START == false)
 {
 	pts_client::user_agreement_check($sent_command);
 	pts_client::user_hardware_software_reporting();
