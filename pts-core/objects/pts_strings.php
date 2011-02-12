@@ -44,7 +44,7 @@ class pts_strings
 	{
 		for($i = 0, $x = strlen($value); $i < $x; $i++)
 		{
-			if(in_array($value[$i], array('@', '(', '/', '+', '[')))
+			if(in_array($value[$i], array('@', '(', '/', '+', '[', '<')))
 			{
 				$value = substr($value, 0, $i);
 				break;

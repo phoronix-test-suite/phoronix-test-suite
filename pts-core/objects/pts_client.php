@@ -608,9 +608,13 @@ class pts_client
 				$userinfo = posix_getpwuid(posix_getuid());
 				$userhome = $userinfo['dir'];
 			}
-			else if(($home = pts_client::read_env('HOME')) || ($home = pts_client::read_env('HOMEPATH')))
+			else if(($home = pts_client::read_env('HOME')))
 			{
 				$userhome = $home;
+			}
+			else if(($home = pts_client::read_env('HOMEPATH')))
+			{
+				$userhome = pts_client::read_env('HOMEDRIVE') . $home;
 			}
 			else
 			{
