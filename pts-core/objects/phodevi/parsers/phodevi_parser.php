@@ -49,7 +49,7 @@ class phodevi_parser
 	public static function read_xdpy_monitor_info()
 	{
 		// Read xdpyinfo monitor information
-		return null;
+		return array();
 		static $monitor_info = null;
 
 		if($monitor_info == null)
