@@ -73,6 +73,7 @@ $sent_command = strtolower(str_replace('-', '_', (isset($argv[1]) ? $argv[1] : n
 $quick_start_options = array('dump_possible_options');
 define('QUICK_START', in_array($sent_command, $quick_start_options));
 
+pts_client::program_requirement_checks(true);
 pts_client::init(); // Initalize the Phoronix Test Suite (pts-core) client
 $pass_args = array();
 //stream_wrapper_register('phoronix', 'pts_phoronix_stream') or die('Failed To Initialize The Phoronix Stream');
@@ -183,7 +184,6 @@ if(QUICK_START == false)
 {
 	pts_client::user_agreement_check($sent_command);
 	pts_client::user_hardware_software_reporting();
-	pts_client::program_requirement_checks(true);
 
 	// OpenBenchmarking.org
 	pts_openbenchmarking::refresh_repository_lists();
