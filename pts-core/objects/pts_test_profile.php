@@ -235,13 +235,33 @@ class pts_test_profile extends pts_test_profile_parser
 	}
 	public static function generate_comparison_hash($test_identifier, $arguments, $attributes = null, $version = null)
 	{
+		/*
+		// The version is not currently being added to test_identifier so right now this is not needed
+		if($test_identifier != null && ($c = strrpos($test_identifier, '-')))
+		{
+			$version = substr($test_identifier, ($c + 1));
+
+			if(pts_strings::string_only_contains($version, pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DECIMAL))
+			{
+				$version = explode('.', $version);
+
+				if(count($version) >= 3)
+				{
+					// only do ZZ.YY for hash rather than ZZ.YY.XX
+					$test_identifier = substr($test_identifier, 0, ($c + 1)) . implode('.', array_slice($version, 0, 2));
+				}
+
+			}
+		}
+		*/
+
 		$hash_table = array(
 		$test_identifier,
 		trim($arguments),
 		trim($attributes),
 		$version
 		);
-
+print_r($hash_table);
 		return sha1(implode(',', $hash_table), true);
 	}
 	public function get_test_executable_dir()

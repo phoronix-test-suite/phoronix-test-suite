@@ -122,24 +122,9 @@ class pts_result_file
 	{
 		$object_hashes = array();
 
-		if($this->result_objects != null)
+		foreach($this->get_result_objects() as $result_object)
 		{
-			foreach($this->result_objects as $result_object)
-			{
-				array_push($object_hashes, $result_object->get_comparison_hash());
-			}
-		}
-		else
-		{
-			$results_name = $this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_TITLE);
-			$results_arguments = $this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_ARGS);
-			$results_attributes = $this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_DESCRIPTION);
-			$results_version = $this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_VERSION);
-
-			for($i = 0; $i < count($results_name); $i++)
-			{
-				array_push($object_hashes, pts_test_profile::generate_comparison_hash($results_name[$i], $results_arguments[$i], $results_attributes[$i], $results_version[$i]));
-			}
+			array_push($object_hashes, $result_object->get_comparison_hash());
 		}
 
 		return $object_hashes;
