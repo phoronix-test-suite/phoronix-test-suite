@@ -440,8 +440,13 @@ class pts_render
 
 			if($is_tracking)
 			{
+				if(($x = strpos($date, ' + ')) !== false)
+				{
+					$date = substr($date, 0, $x);
+				}
+
 				// Check to see if only numeric changes are being made
-				$date = pts_strings::remove_from_string($date, pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DASH | pts_strings::CHAR_DECIMAL);
+				$date = str_replace('s', null, pts_strings::remove_from_string($date, pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DASH | pts_strings::CHAR_DECIMAL));
 
 				if($prev_date != null && $date != $prev_date)
 				{
