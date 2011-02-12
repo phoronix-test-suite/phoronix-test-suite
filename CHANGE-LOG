@@ -9,6 +9,7 @@ Phoronix Test Suite (Git)
 - pts-core: Use new code path for requesting and updating GSID from OpenBenchmarking.org
 - pts-core: Rename openbenchmarking-setup command to openbenchmarking-login
 - pts-core: Fix show-results command not actually showing the results in the PTS Results Viewer
+- pts-core: Check for required PHP functions/extensions earlier on in start-up process
 - pts_Graph: Begin work on scatter plot graphing support with optional trend/linear regression line
 - pts_Graph: Add pts_HeatMapBarGraph type
 - bilde_renderer: Begin work on supporting gradients for the SVG renderer
