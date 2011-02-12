@@ -19,6 +19,7 @@ Phoronix Test Suite (Git)
 - pts_Graph: Add pts_HeatMapBarGraph type
 - bilde_renderer: Begin work on supporting gradients for the SVG renderer
 - bilde_renderer: Initial shading, color gradient support
+- bilde_renderer: Initial HSL color support
 - phodevi: Support for detecting Ubuntu's Unity desktop
 - phodevi: Fallback to reading BIOS information when Intel development motherboards don't report any motherboard information
 

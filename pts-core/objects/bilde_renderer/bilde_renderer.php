@@ -488,6 +488,111 @@ abstract class bilde_renderer
 			'b' => $color & 0xff
 			);
 	}
+	public static function color_hsl_to_hex($hsl)
+	{
+		if($hsl['s'] == 0)
+		{
+			$rgb['r'] = $hsl['l'] * 255;
+			$rgb['g'] = $hsl['l'] * 255;
+			$rgb['b'] = $hsl['l'] * 255;
+		}
+		else
+		{
+			$conv2 = $hsl['l'] < 0.5 ? $hsl['l'] * (1 + $hsl['s']) : ($hsl['l'] + $hsl['s']) - ($hsl['l'] * $hsl['s']);
+			$conv1 = 2 * $hsl['l'] - $conv2;
+			$rgb['r'] = round(255 * self::color_hue_convert($conv1, $conv2, $hsl['h'] + (1 / 3)));
+			$rgb['g'] = round(255 * self::color_hue_convert($conv1, $conv2, $hsl['h']));
+			$rgb['b'] = round(255 * self::color_hue_convert($conv1, $conv2, $hsl['h'] - (1 / 3)));
+		}
+
+		return self::color_rgb_to_hex($rgb['r'], $rgb['g'], $rgb['b']);
+	}
+	protected static function color_hue_convert($v1, $v2, $vh)
+	{
+		if($vh < 0)
+		{
+			$vh += 1;
+		}
+
+		if($vh > 1)
+		{
+			$vh -= 1;
+		}
+
+		if((6 * $vh) < 1)
+		{
+			return $v1 + ($v2 - $v1) * 6 * $vh;
+		}
+
+		if((2 * $vh) < 1)
+		{
+			return $v2;
+		}
+
+		if((3 * $vh) < 2)
+		{
+			return $v1 + ($v2 - $v1) * ((2 / 3 - $vh) * 6);
+		}
+
+		return $v1;
+	}
+	public static function color_hex_to_hsl($rgb)
+	{
+		foreach($rgb as &$value)
+		{
+			$value = $value / 255;
+		}
+
+		$min = min($rgb);
+		$max = max($rgb);
+		$delta = $max - $min;
+
+		$hsl['l'] = ($max + $min) / 2;
+
+		if($delta == 0)
+		{
+			$hsl['h'] = 0;
+			$hsl['s'] = 0;
+		}
+		else
+		{
+			$hsl['s'] = $max / ($hsl['l'] < 0.5 ? $max + $min : 2 - $max - $min);
+
+			$delta_rgb = array();
+			foreach($rgb as $color => $value)
+			{
+				$delta_rgb[$color] = ((($max - $value) / 6) + ($max / 2)) / $delta;
+			}
+
+			switch($max)
+			{
+				case $rgb['r']:
+					$hsl['h'] = $delta_rgb['b'] - $delta_rgb['g'];
+					break;
+				case $rgb['g']:
+					$hsl['h'] = (1 / 3) + $delta_rgb['r'] - $delta_rgb['b'];
+					break;
+				case $rgb['b']:
+					$hsl['h'] = (2 / 3) + $delta_rgb['g'] - $delta_rgb['r'];
+					break;
+			}
+
+			$hsl['h'] += $hsl['h'] < 0 ? 1 : 0;
+			$hsl['h'] -= $hsl['h'] > 1 ? 1 : 0;
+		}
+
+		return $hsl;
+	}
+	public static function shift_hsl($hsl, $rotate_h_degrees = 180)
+	{
+		if($rotate_h_degrees > 0)
+		{
+			$rotate_dec = $rotate_h_degrees / 360;
+			$hsl['h'] = $hsl['h'] <= $rotate_dec ? $hsl['h'] + $rotate_dec : $hsl['h'] - $rotate_dec;
+		}
+
+		return $hsl;
+	}
 	public static function color_rgb_to_hex($r, $g, $b)
 	{
 		$color = ($r << 16) | ($g << 8) | $b;
