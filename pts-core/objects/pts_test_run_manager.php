@@ -1081,6 +1081,11 @@ class pts_test_run_manager
 
 				foreach($result_objects as &$result_object)
 				{
+					if($result_object->test_profile->get_identifier() == null)
+					{
+						continue;
+					}
+
 					$test_result = new pts_test_result($result_object->test_profile);
 					$test_result->set_used_arguments($result_object->get_arguments());
 					$test_result->set_used_arguments_description($result_object->get_arguments_description());
