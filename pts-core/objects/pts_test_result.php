@@ -79,27 +79,29 @@ class pts_test_result
 			return;
 		}
 
-		$this->test_profile->set_result_proportion('HIB');
-		$this->test_profile->set_result_scale('Relative Performance');
 		$is_multi_way = pts_render::multi_way_identifier_check($this->test_result_buffer->get_identifiers());
 
 		if($is_multi_way || true) // TODO: get multi-way working
 		{
-			$proportion = $this->test_profile->get_result_proportion();
-			$all_values = $this->test_result_buffer->get_values();
+			$buffer_items = $this->test_result_buffer->get_buffer_items();
 
-			switch($proportion)
+			if($this->test_profile->get_result_proportion() == 'LIB')
 			{
-				case 'HIB':
-					$divide_value = min($all_values);
-					break;
-				case 'LIB':
-					$divide_value = max($all_values);
-					break;
+				// Invert values for LIB
+				foreach($buffer_items as &$buffer_item)
+				{
+					$buffer_item->reset_result_value((1 / $buffer_item->get_result_value()));
+				}
 			}
 
-			unset($all_values);
-			$buffer_items = $this->test_result_buffer->get_buffer_items();
+			$divide_value = $buffer_items[0]->get_result_value();
+			foreach($buffer_items as &$buffer_item)
+			{
+				if($buffer_item->get_result_value() < $divide_value)
+				{
+					$divide_value = $buffer_item->get_result_value();
+				}
+			}
 
 			if($normalize_against != false)
 			{
@@ -125,16 +127,6 @@ class pts_test_result
 
 				$group_values[$identifier_r[1]] += $buffer_item->get_result_value(); */
 
-				switch($proportion)
-				{
-					case 'HIB':
-						$value = $buffer_item->get_result_value() / $divide_value;
-						break;
-					case 'LIB':
-						$value = $divide_value / $buffer_item->get_result_value();
-						break;
-				}
-
 				$normalized = pts_math::set_precision(($buffer_item->get_result_value() / $divide_value), 2);
 				$buffer_item->reset_result_value($normalized);
 				$buffer_item->reset_raw_value(0);
@@ -142,6 +134,9 @@ class pts_test_result
 
 			$this->test_result_buffer = new pts_test_result_buffer($buffer_items);
 		}
+
+		$this->test_profile->set_result_proportion('HIB');
+		$this->test_profile->set_result_scale('Relative Performance');
 	}
 }
 
