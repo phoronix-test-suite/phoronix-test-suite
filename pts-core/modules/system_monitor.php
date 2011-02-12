@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2010, Phoronix Media
-	Copyright (C) 2008 - 2010, Michael Larabel
+	Copyright (C) 2008 - 2011, Phoronix Media
+	Copyright (C) 2008 - 2011, Michael Larabel
 	system_monitor.php: System sensor monitoring module for PTS
 
 	This program is free software; you can redistribute it and/or modify
@@ -110,8 +110,7 @@ class system_monitor extends pts_module_interface
 			if(count($sensor_results) > 2 )
 			{
 				self::$individual_test_run_request->test_profile->set_identifier(null);
-				self::$individual_test_run_request->test_profile->set_result_proportion(null);
-				self::$individual_test_run_request->test_profile->set_proportion('LIB');
+				self::$individual_test_run_request->test_profile->set_result_proportion('LIB');
 				self::$individual_test_run_request->test_profile->set_display_format('LINE_GRAPH');
 				self::$individual_test_run_request->test_profile->set_result_scale(phodevi::read_sensor_unit($sensor));
 				self::$individual_test_run_request->set_used_arguments_description(phodevi::sensor_name($sensor) . ' Monitor');

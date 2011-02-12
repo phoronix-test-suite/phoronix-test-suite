@@ -280,7 +280,7 @@ class pts_openbenchmarking_client
 		{
 			$test_profile = pts_openbenchmarking::make_openbenchmarking_request('download_test', array('i' => $qualified_identifier));
 
-			if($hash_check == null || $hash_check = sha1($test_profile))
+			if($hash_check == null || $hash_check == sha1($test_profile))
 			{
 				// save it
 				file_put_contents($file, $test_profile);
@@ -311,7 +311,7 @@ class pts_openbenchmarking_client
 		{
 			$test_profile = pts_openbenchmarking::make_openbenchmarking_request('download_suite', array('i' => $qualified_identifier));
 
-			if($hash_check == null || $hash_check = sha1($test_profile))
+			if($hash_check == null || $hash_check == sha1($test_profile))
 			{
 				// save it
 				file_put_contents($file, $test_profile);

@@ -989,7 +989,7 @@ class pts_client
 				if($return_value == $return_fails_on)
 				{
 					pts_client::$display->generic_error('Argument Missing.');
-					echo "CORRECT SYNTAX\nphoronix-test-suite $command " . implode(' ', $argument_checks) . "\n\n";
+					echo 'CORRECT SYNTAX' . PHP_EOL . 'phoronix-test-suite ' . str_replace('_', '-', $command) . implode(' ', $argument_checks) . PHP_EOL . PHP_EOL;
 					return false;
 				}
 				else
