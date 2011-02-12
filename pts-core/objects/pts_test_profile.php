@@ -261,7 +261,7 @@ class pts_test_profile extends pts_test_profile_parser
 		trim($attributes),
 		$version
 		);
-print_r($hash_table);
+
 		return sha1(implode(',', $hash_table), true);
 	}
 	public function get_test_executable_dir()
