@@ -53,7 +53,7 @@ class pts_test_profile_parser
 			$identifier = substr($identifier, 0, $c);
 		}
 
-		return $identifier;
+		return "$identifier";
 	}
 	public function get_maintainer()
 	{
