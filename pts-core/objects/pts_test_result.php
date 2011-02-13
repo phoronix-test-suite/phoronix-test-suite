@@ -80,59 +80,68 @@ class pts_test_result
 		}
 
 		$is_multi_way = pts_render::multi_way_identifier_check($this->test_result_buffer->get_identifiers());
+		$keys = array_keys($this->test_result_buffer->buffer_items);
 
-		if($is_multi_way || true) // TODO: get multi-way working
+		if($is_multi_way)
 		{
-			$buffer_items = $this->test_result_buffer->get_buffer_items();
+			$key_sets = array();
+			foreach($keys as $k)
+			{
+				$identifier_r = pts_strings::trim_explode(': ', $this->test_result_buffer->buffer_items[$k]->get_result_identifier());
 
+				if(!isset($key_sets[$identifier_r[0]]))
+				{
+					$key_sets[$identifier_r[0]] = array();
+				}
+
+				array_push($key_sets[$identifier_r[0]], $k);
+			}
+		}
+		else
+		{
+			$key_sets = array($keys);
+		}
+
+		foreach($key_sets as $keys)
+		{
 			if($this->test_profile->get_result_proportion() == 'LIB')
 			{
 				// Invert values for LIB
-				foreach($buffer_items as &$buffer_item)
+				foreach($keys as $k)
 				{
-					$buffer_item->reset_result_value((1 / $buffer_item->get_result_value()));
+					$this->test_result_buffer->buffer_items[$k]->reset_result_value((1 / $this->test_result_buffer->buffer_items[$k]->get_result_value()));
 				}
 			}
 
-			$divide_value = $buffer_items[0]->get_result_value();
-			foreach($buffer_items as &$buffer_item)
-			{
-				if($buffer_item->get_result_value() < $divide_value)
-				{
-					$divide_value = $buffer_item->get_result_value();
-				}
-			}
-
+			$divide_value = -1;
 			if($normalize_against != false)
 			{
-				foreach($buffer_items as &$buffer_item)
+				foreach($keys as $k)
 				{
-					if($buffer_item->get_result_identifier() == $normalize_against)
+					if($this->test_result_buffer->buffer_items[$k]->get_result_identifier() == $normalize_against)
 					{
-						$divide_value = $buffer_item->get_result_value();
+						$divide_value = $this->test_result_buffer->buffer_items[$k]->get_result_value();
 						break;
 					}
 				}
 			}
-
-			foreach($buffer_items as &$buffer_item)
+			if($divide_value == -1)
 			{
-				/*
-				$identifier_r = pts_strings::trim_explode(': ', $buffer_item->get_result_identifier());
-
-				if(!isset($group_values[$identifier_r[1]]))
+				foreach($keys as $k)
 				{
-					$group_values[$identifier_r[1]] = 0;
+					if($this->test_result_buffer->buffer_items[$k]->get_result_value() < $divide_value || $divide_value == -1)
+					{
+						$divide_value = $this->test_result_buffer->buffer_items[$k]->get_result_value();
+					}
 				}
-
-				$group_values[$identifier_r[1]] += $buffer_item->get_result_value(); */
-
-				$normalized = pts_math::set_precision(($buffer_item->get_result_value() / $divide_value), 2);
-				$buffer_item->reset_result_value($normalized);
-				$buffer_item->reset_raw_value(0);
 			}
 
-			$this->test_result_buffer = new pts_test_result_buffer($buffer_items);
+			foreach($keys as $k)
+			{
+				$normalized = pts_math::set_precision(($this->test_result_buffer->buffer_items[$k]->get_result_value() / $divide_value), 2);
+				$this->test_result_buffer->buffer_items[$k]->reset_result_value($normalized);
+				$this->test_result_buffer->buffer_items[$k]->reset_raw_value(0);
+			}
 		}
 
 		$this->test_profile->set_result_proportion('HIB');
