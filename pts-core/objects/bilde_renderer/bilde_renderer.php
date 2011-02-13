@@ -451,7 +451,7 @@ abstract class bilde_renderer
 	public static function color_cache($ns, $id, &$colors)
 	{
 		//return array_shift($colors);
-		static $cache;
+		static $cache = array();
 		static $color_shift = 0;
 		static $color_shift_size = 90;
 
@@ -472,7 +472,7 @@ abstract class bilde_renderer
 				if($color_shift == 270)
 				{
 					$color_shift_size *= 1.2;
-					$colors[0] = self::color_shade($colors[0], 0.5);
+					$colors[0] = self::color_shade($colors[0], 0.5, 1);
 				}
 				else if($color_shift > 600)
 				{
@@ -484,8 +484,6 @@ abstract class bilde_renderer
 			while(in_array($color, $cache));
 			$cache[$ns][$id] = $color;
 		}
-
-		print_r($cache);
 
 		return $cache[$ns][$id];
 	}
