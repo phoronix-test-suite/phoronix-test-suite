@@ -182,6 +182,11 @@ class pts_Table extends pts_Graph
 		$table_columns_end = $this->graph_left_start + ($table_item_width * count($this->columns));
 		$this->graph_image->draw_dashed_line($this->graph_left_start, $v, $table_columns_end, $v, $this->graph_color_body, $table_height + $identifier_height, $table_item_width, $table_item_width);
 
+		if($table_columns_end < $this->graph_attr_width)
+		{
+			$this->graph_image->draw_rectangle($table_columns_end, $this->graph_top_heading_height, $this->graph_attr_width, $table_proper_height, $this->graph_color_body_light);
+		}
+
 		// Background horizontal
 		$this->graph_image->draw_dashed_line(($table_columns_end / 2), ($identifier_height + $this->graph_top_heading_height), ($table_columns_end / 2), $table_proper_height, $this->graph_color_body_light, $table_columns_end, $table_line_height, $table_line_height);
 
