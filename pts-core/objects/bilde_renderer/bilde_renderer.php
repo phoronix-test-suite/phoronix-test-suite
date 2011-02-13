@@ -452,29 +452,40 @@ abstract class bilde_renderer
 	{
 		//return array_shift($colors);
 		static $cache;
-		static $ns_color_pool;
+		static $color_shift = 0;
+		static $color_shift_size = 90;
 
 		if(!isset($cache[$ns][$id]))
 		{
-			if(!isset($ns_color_pool[$ns]) || empty($ns_color_pool[$ns]))
+			do
 			{
-				$ns_color_pool[$ns] = array(1, -0.5);
-			}
+				if(empty($colors))
+				{
+					return false;
+				}
 
-			if(empty($colors))
-			{
-				return false;
-			}
+				$hsl = self::color_rgb_to_hsl($colors[0]);
+				$hsl = bilde_renderer::shift_hsl($hsl, $color_shift % 360);
+				$color = bilde_renderer::color_hsl_to_hex($hsl);
 
-			$percent = array_shift($ns_color_pool[$ns]);
-			$cache[$ns][$id] = self::color_shade($colors[0], abs($percent), ($percent < 0 ? 0 : 255));
-
-			if(empty($ns_color_pool[$ns]))
-			{
-				// We have already exhausted the cache pool once
-				array_shift($colors);
+				$color_shift += $color_shift_size;
+				if($color_shift == 270)
+				{
+					$color_shift_size *= 1.2;
+					$colors[0] = self::color_shade($colors[0], 0.5);
+				}
+				else if($color_shift > 600)
+				{
+					// We have already exhausted the cache pool once
+					array_shift($colors);
+					$color_shift = 0;
+				}
 			}
+			while(in_array($color, $cache));
+			$cache[$ns][$id] = $color;
 		}
+
+		print_r($cache);
 
 		return $cache[$ns][$id];
 	}
@@ -536,8 +547,10 @@ abstract class bilde_renderer
 
 		return $v1;
 	}
-	public static function color_hex_to_hsl($rgb)
+	public static function color_rgb_to_hsl($hex)
 	{
+		$rgb = bilde_renderer::color_hex_to_rgb($hex);
+
 		foreach($rgb as &$value)
 		{
 			$value = $value / 255;
@@ -573,6 +586,7 @@ abstract class bilde_renderer
 					$hsl['h'] = (1 / 3) + $delta_rgb['r'] - $delta_rgb['b'];
 					break;
 				case $rgb['b']:
+				default:
 					$hsl['h'] = (2 / 3) + $delta_rgb['g'] - $delta_rgb['r'];
 					break;
 			}
