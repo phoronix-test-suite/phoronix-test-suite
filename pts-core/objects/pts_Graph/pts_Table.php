@@ -149,8 +149,9 @@ class pts_Table extends pts_Graph
 
 		$table_max_value_width = $this->text_string_width($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_identifiers);
 
-		$table_item_width = max($table_max_value_width, $table_identifier_width);
-		$table_width = $table_item_width * count($this->columns);
+		$table_item_width = max($table_max_value_width, $table_identifier_width) + 2;
+		$table_width = max(($table_item_width * count($this->columns)), floor($this->text_string_width($this->graph_title, $this->graph_font, 12) / $table_item_width) * $table_item_width);
+		//$table_width = $table_item_width * count($this->columns);
 		$table_line_height = $this->text_string_height($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_identifiers) + 8;
 		$table_line_height_half = ($table_line_height / 2);
 		$table_height = $table_line_height * count($this->rows);
@@ -178,14 +179,15 @@ class pts_Table extends pts_Graph
 
 		// Draw the vertical table lines
 		$v = (($identifier_height + $table_height) / 2) + $this->graph_top_heading_height;
-		$this->graph_image->draw_dashed_line($this->graph_left_start, $v, $this->graph_attr_width, $v, $this->graph_color_body, $table_height + $identifier_height, $table_item_width, $table_item_width);
+		$table_columns_end = $this->graph_left_start + ($table_item_width * count($this->columns));
+		$this->graph_image->draw_dashed_line($this->graph_left_start, $v, $table_columns_end, $v, $this->graph_color_body, $table_height + $identifier_height, $table_item_width, $table_item_width);
 
 		// Background horizontal
-		$this->graph_image->draw_dashed_line(($this->graph_attr_width / 2), ($identifier_height + $this->graph_top_heading_height), ($this->graph_attr_width / 2), $table_proper_height, $this->graph_color_body_light, $this->graph_attr_width, $table_line_height, $table_line_height);
+		$this->graph_image->draw_dashed_line(($table_columns_end / 2), ($identifier_height + $this->graph_top_heading_height), ($table_columns_end / 2), $table_proper_height, $this->graph_color_body_light, $table_columns_end, $table_line_height, $table_line_height);
 
 		// Draw the borders
-		$this->graph_image->draw_dashed_line(($this->graph_attr_width / 2), ($identifier_height + $this->graph_top_heading_height), ($this->graph_attr_width / 2), $this->graph_attr_height, $this->graph_color_border, $this->graph_attr_width, 1, ($table_line_height - 1));
-		$this->graph_image->draw_dashed_line($this->graph_left_start, $v, $this->graph_attr_width, $v, $this->graph_color_border, $table_height + $identifier_height, 1, ($table_item_width - 1));
+		$this->graph_image->draw_dashed_line(($table_columns_end / 2), ($identifier_height + $this->graph_top_heading_height), ($table_columns_end / 2), $this->graph_attr_height, $this->graph_color_border, $table_columns_end, 1, ($table_line_height - 1));
+		$this->graph_image->draw_dashed_line($this->graph_left_start, $v, $table_columns_end + ($table_columns_end < $this->graph_attr_width ? $table_item_width : 0), $v, $this->graph_color_border, $table_height + $identifier_height, 1, ($table_item_width - 1));
 
 		$this->graph_image->draw_rectangle(0, $table_proper_height, $this->graph_attr_width, $this->graph_attr_height, $this->graph_color_headers);
 		$this->graph_image->write_text_right(new pts_graph_ir_value($this->graph_watermark_text, array('href' => $this->graph_watermark_url)), $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_body_text, $this->graph_attr_width - 2, $table_proper_height + $table_line_height_half, $this->graph_attr_width - 2, $table_proper_height + $table_line_height_half);

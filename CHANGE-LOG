@@ -20,6 +20,7 @@ Phoronix Test Suite (Git)
 - result_notifier: Add Intel result_notifier module
 - pts_Graph: Begin work on scatter plot graphing support with optional trend/linear regression line
 - pts_Graph: Add pts_HeatMapBarGraph type
+- pts_Graph: Increase width on tables when the title header is longer than the width of the table columns
 - bilde_renderer: Begin work on supporting gradients for the SVG renderer
 - bilde_renderer: Initial shading, color gradient support
 - bilde_renderer: Initial HSL color support
