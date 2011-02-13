@@ -47,8 +47,6 @@ class pts_result_file_analyzer
 		$sw_unique = array_unique($sw);
 		$desc = null;
 
-		//print_r($table_data);
-
 		if(count($hw_unique) == 1 && count($sw_unique) == 1)
 		{
 			// The hardware and software is maintained throughout the testing, so if there's a change in results its something we aren't monitoring
@@ -61,8 +59,7 @@ class pts_result_file_analyzer
 			$data = array();
 			pts_result_file_analyzer::system_components_to_table($data, $identifiers, $rows, $hw);
 			pts_result_file_analyzer::compact_result_table_data($data, $identifiers, true);
-
-			$desc = pts_result_file_analyzer::analyze_system_component_changes('hardware', $data, $rows, array(array('Motherboard', 'Chipset')));
+			$desc = pts_result_file_analyzer::analyze_system_component_changes($data, $rows, array(array('Motherboard', 'Chipset')));
 		}
 		else if(count($hw_unique) == 1)
 		{
@@ -71,8 +68,16 @@ class pts_result_file_analyzer
 			$data = array();
 			pts_result_file_analyzer::system_components_to_table($data, $identifiers, $rows, $sw);
 			pts_result_file_analyzer::compact_result_table_data($data, $identifiers, true);
-
-			$desc = pts_result_file_analyzer::analyze_system_component_changes('software', $data, $rows, array(array('Display Driver', 'OpenGL'), array('OpenGL'), array('Display Driver')));
+			$desc = pts_result_file_analyzer::analyze_system_component_changes($data, $rows, array(array('Display Driver', 'OpenGL'), array('OpenGL'), array('Display Driver')));
+		}
+		else
+		{
+			// Both software and hardware are being flipped out
+			$rows = array();
+			$data = array();
+			pts_result_file_analyzer::system_components_to_table($data, $identifiers, $rows, array_merge($hw, $sw));
+			pts_result_file_analyzer::compact_result_table_data($data, $identifiers, true);
+			$desc = pts_result_file_analyzer::analyze_system_component_changes($data, $rows, array(array('Graphics', 'Display Driver', 'OpenGL'), array('Graphics', 'Monitor', 'Display Driver', 'OpenGL'), array('Graphics', 'OpenGL')));
 		}
 
 		if($desc)
@@ -117,7 +122,7 @@ class pts_result_file_analyzer
 
 		return $result_objects;
 	}
-	public static function analyze_system_component_changes($type, $data, $rows, $supported_combos = array())
+	public static function analyze_system_component_changes($data, $rows, $supported_combos = array())
 	{
 		$max_combo_count = 2;
 		foreach($supported_combos as $combo)

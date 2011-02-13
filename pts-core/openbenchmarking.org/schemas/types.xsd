@@ -10,7 +10,7 @@
 <xs:simpleType name="TitleString">
 	<xs:restriction base="xs:string">
 		<xs:minLength value="2" />
-		<xs:maxLength value="38" />
+		<xs:maxLength value="48" />
 	</xs:restriction>
 </xs:simpleType>
 <xs:simpleType name="SystemIdentifier">
