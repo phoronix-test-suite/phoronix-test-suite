@@ -150,47 +150,45 @@ class pts_render
 
 		if($bar_orientation == null)
 		{
-			switch(pts_Graph::$graph_config->getXmlValue(P_GRAPH_BAR_ORIENTATION))
-			{
-				case 'VERTICAL':
-					$preferred_bar_graph_type = 'pts_VerticalBarGraph';
-					break;
-				case 'HORIZONTAL':
-				default:
-					$preferred_bar_graph_type = 'pts_HorizontalBarGraph';
-					break;
-			}
+			$bar_orientation = pts_Graph::$graph_config->getXmlValue(P_GRAPH_BAR_ORIENTATION);
 		}
 
 		switch($display_format)
 		{
 			case 'LINE_GRAPH':
-				$graph_type = 'pts_LineGraph';
+				$graph = new pts_LineGraph($result_object, $result_file);
 				break;
 			case 'BAR_ANALYZE_GRAPH':
 			case 'BAR_GRAPH':
-				$graph_type = $preferred_bar_graph_type;
+				if($bar_orientation == 'VERTICAL')
+				{
+					$graph = new pts_VerticalBarGraph($result_object, $result_file);
+				}
+				else
+				{
+					$graph = new pts_HorizontalBarGraph($result_object, $result_file);
+				}
 				break;
 			case 'PASS_FAIL':
-				$graph_type = 'pts_PassFailGraph';
+				$graph = new pts_PassFailGraph($result_object, $result_file);
 				break;
 			case 'MULTI_PASS_FAIL':
-				$graph_type = 'pts_MultiPassFailGraph';
+				$graph = new pts_MultiPassFailGraph($result_object, $result_file);
 				break;
 			case 'TEST_COUNT_PASS':
-				$graph_type = 'pts_TestCountPassGraph';
+				$graph = new pts_TestCountPassGraph($result_object, $result_file);
 				break;
 			case 'PIE_CHART':
-				$graph_type = 'pts_PieChart';
+				$graph = new pts_PieChart($result_object, $result_file);
 				break;
 			case 'IMAGE_COMPARISON':
-				$graph_type = 'pts_ImageComparisonGraph';
+				$graph = new pts_ImageComparisonGraph($result_object, $result_file);
 				break;
 			case 'FILLED_LINE_GRAPH':
-				$graph_type = 'pts_FilledLineGraph';
+				$graph = new pts_FilledLineGraph($result_object, $result_file);
 				break;
 			case 'SCATTER_PLOT':
-				$graph_type = 'pts_ScatterPlot';
+				$graph = new pts_ScatterPlot($result_object, $result_file);
 				break;
 			default:
 				if(isset($extra_attributes['graph_render_type']))
@@ -209,23 +207,27 @@ class pts_render
 				switch($requested_graph_type)
 				{
 					case 'CANDLESTICK':
-						$graph_type = 'pts_CandleStickGraph';
+						$graph = new pts_CandleStickGraph($result_object, $result_file);
 						break;
 					case 'LINE_GRAPH':
-						$graph_type = 'pts_LineGraph';
+						$graph = new pts_LineGraph($result_object, $result_file);
 						break;
 					case 'FILLED_LINE_GRAPH':
-						$graph_type = 'pts_FilledLineGraph';
+						$graph = new pts_FilledLineGraph($result_object, $result_file);
 						break;
 					default:
-						$graph_type = $preferred_bar_graph_type;
+						if($bar_orientation == 'VERTICAL')
+						{
+							$graph = new pts_VerticalBarGraph($result_object, $result_file);
+						}
+						else
+						{
+							$graph = new pts_HorizontalBarGraph($result_object, $result_file);
+						}
 						break;
 				}
 				break;
 		}
-
-		// creation code
-		eval("\$graph = new " . $graph_type . "(\$result_object, \$result_file);");
 
 		if(isset($extra_attributes['regression_marker_threshold']))
 		{

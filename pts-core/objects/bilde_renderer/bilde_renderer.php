@@ -159,7 +159,6 @@ abstract class bilde_renderer
 		bilde_renderer::setup_font_directory();
 		$available_renderers = array('PNG', 'JPG', 'GIF', 'SWF', 'SVG', 'SVGZ');
 		$selected_renderer = 'SVG';
-		$use_renderer = false;
 
 		if(isset($_SERVER['HTTP_USER_AGENT']))
 		{
@@ -177,32 +176,31 @@ abstract class bilde_renderer
 
 			if($is_supported)
 			{
-				$use_renderer = $this_renderer;
+				$selected_renderer = $this_renderer;
 			}
 		}
 
-		if($use_renderer == false)
+		switch(strtolower($selected_renderer))
 		{
-			// We now default to the SVG renderer which should always be supported so can probably remove this chgeck
-			/*
-			foreach($available_renderers as $this_renderer)
-			{
-				$is_supported = call_user_func(array('bilde_' . strtolower($this_renderer) . '_renderer', 'renderer_supported'));
-
-				if($is_supported)
-				{
-					$selected_renderer = $this_renderer;
-					break;
-				}
-			}
-			*/
+			case 'svg':
+				$renderer = new bilde_svg_renderer($width, $height, $embed_identifiers);
+				break;
+			case 'png':
+				$renderer = new bilde_png_renderer($width, $height, $embed_identifiers);
+				break;
+			case 'jpg':
+				$renderer = new bilde_jpg_renderer($width, $height, $embed_identifiers);
+				break;
+			case 'gif':
+				$renderer = new bilde_gif_renderer($width, $height, $embed_identifiers);
+				break;
+			case 'swf':
+				$renderer = new bilde_swf_renderer($width, $height, $embed_identifiers);
+				break;
+			case 'svgz':
+				$renderer = new bilde_svgz_renderer($width, $height, $embed_identifiers);
+				break;
 		}
-		else
-		{
-			$selected_renderer = $use_renderer;
-		}
-
-		eval("\$renderer = new bilde_" . strtolower($selected_renderer) . "_renderer(\$width, \$height, \$embed_identifiers);");
 
 		if($special_attributes != null)
 		{

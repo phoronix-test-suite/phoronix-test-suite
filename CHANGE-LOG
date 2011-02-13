@@ -14,6 +14,7 @@ Phoronix Test Suite (Git)
 - pts-core: Fix normalizing result values when the result proportion is LIB
 - pts-core: Be more liberal in evaluating multi-way tracking to accomodate extra characters
 - pts-core: More efficient merging of test result objects in result file
+- pts-core: Minor performance optimizations along graph rendering paths
 - system_monitor: Fix API breakage in system monitor module
 - result_notifier: Add Intel result_notifier module
 - pts_Graph: Begin work on scatter plot graphing support with optional trend/linear regression line
