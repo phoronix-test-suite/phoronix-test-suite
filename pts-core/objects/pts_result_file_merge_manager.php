@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2010, Phoronix Media
-	Copyright (C) 2009 - 2010, Michael Larabel
+	Copyright (C) 2009 - 2011, Phoronix Media
+	Copyright (C) 2009 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -52,14 +52,13 @@ class pts_result_file_merge_manager
 	public function add_test_result($merge_test_object, &$result_merge_select)
 	{
 		$select_identifiers = $result_merge_select instanceOf pts_result_merge_select ? $result_merge_select->get_selected_identifiers() : null;
-
+		$mto_hash = $merge_test_object->get_comparison_hash();
 		$merged = false;
-		$mto_test_name = $merge_test_object->test_profile->get_identifier();
 
 		if($this->skip_subsystems != null)
 		{
 			// Check whether to omit rendering this test if only certain subsystem test types should be merged
-			$test_subsystem = pts_tests::test_hardware_type($mto_test_name);
+			$test_subsystem = pts_tests::test_hardware_type($merge_test_object->test_profile->get_identifier());
 
 			if($test_subsystem != null && !in_array($test_subsystem, $this->skip_subsystems))
 			{
@@ -67,41 +66,29 @@ class pts_result_file_merge_manager
 			}
 		}
 
-		if(isset($this->test_results[$mto_test_name]))
+		if(isset($this->test_results[$mto_hash]))
 		{
-			foreach($this->test_results[$mto_test_name] as &$mto_compare)
+			foreach($merge_test_object->test_result_buffer->get_buffer_items() as $buffer_item)
 			{
-				if(trim($mto_compare->get_arguments()) == trim($merge_test_object->get_arguments()) && $mto_compare->get_arguments_description() == $merge_test_object->get_arguments_description() && $mto_compare->test_profile->get_app_version() == $merge_test_object->test_profile->get_app_version() && $mto_compare->test_profile->get_result_scale() == $merge_test_object->test_profile->get_result_scale() && pts_strings::version_strings_comparable($mto_compare->test_profile->get_test_profile_version(), $merge_test_object->test_profile->get_test_profile_version()))
+				$this_identifier = $buffer_item->get_result_identifier();
+
+				if($select_identifiers == null || in_array($this_identifier, $select_identifiers))
 				{
-					foreach($merge_test_object->test_result_buffer->get_buffer_items() as $buffer_item)
+					if($result_merge_select != null && ($renamed = $result_merge_select->get_rename_identifier()) != null)
 					{
-						$this_identifier = $buffer_item->get_result_identifier();
-
-						if($select_identifiers == null || in_array($this_identifier, $select_identifiers))
-						{
-							if($result_merge_select != null && ($renamed = $result_merge_select->get_rename_identifier()) != null)
-							{
-								$this_identifier = $renamed;
-							}
-
-							if(!$this->result_already_contained($mto_compare, $buffer_item))
-							{
-								$mto_compare->test_result_buffer->add_test_result($this_identifier, $buffer_item->get_result_value(), $buffer_item->get_result_raw());
-							}
-						}
+						$this_identifier = $renamed;
 					}
 
-					$merged = true;
-					break;
+					if($this->result_already_contained($this->test_results[$mto_hash], $buffer_item) == false)
+					{
+						$this->test_results[$mto_hash]->test_result_buffer->add_test_result($this_identifier, $buffer_item->get_result_value(), $buffer_item->get_result_raw());
+					}
 				}
 			}
-		}
-		else
-		{
-			$this->test_results[$mto_test_name] = array();
+			$merged = true;
 		}
 
-		if(!$merged)
+		if($merged == false)
 		{
 			$skip_adding = false;
 
@@ -145,7 +132,7 @@ class pts_result_file_merge_manager
 			// Add Result
 			if($skip_adding == false)
 			{
-				array_push($this->test_results[$mto_test_name], $merge_test_object);
+				$this->test_results[$mto_hash] = $merge_test_object;
 			}
 		}
 	}
@@ -166,17 +153,7 @@ class pts_result_file_merge_manager
 	}
 	public function get_results()
 	{
-		$linear_array = array();
-
-		foreach($this->test_results as $test_name => &$test_name_object_array)
-		{
-			foreach($test_name_object_array as $merge_object)
-			{
-				array_push($linear_array, $merge_object);
-			}
-		}
-
-		return $linear_array;
+		return $this->test_results;
 	}
 }
 

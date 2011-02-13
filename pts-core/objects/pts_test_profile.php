@@ -336,7 +336,7 @@ class pts_test_profile extends pts_test_profile_parser
 
 		// Checks if test needs updating
 		// || $installed_test->get_installed_system_identifier() != phodevi::system_id_string()
-		return $this->is_test_installed() == false || !pts_strings::version_strings_comparable($this->get_test_profile_version(), $installed_test->get_installed_version()) || $this->get_installer_checksum() != $installed_test->get_installed_checksum() || (pts_c::$test_flags & pts_c::force_install);
+		return $this->is_test_installed() == false || $this->get_test_profile_version() != $installed_test->get_installed_version() || $this->get_installer_checksum() != $installed_test->get_installed_checksum() || (pts_c::$test_flags & pts_c::force_install);
 	}
 }
 
