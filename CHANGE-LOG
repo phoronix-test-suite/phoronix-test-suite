@@ -16,6 +16,7 @@ Phoronix Test Suite (Git)
 - pts-core: More efficient merging of test result objects in result file
 - pts-core: Minor performance optimizations along graph rendering paths
 - system_monitor: Fix API breakage in system monitor module
+- system_monitor: Better handling of used arguments collection
 - result_notifier: Add Intel result_notifier module
 - pts_Graph: Begin work on scatter plot graphing support with optional trend/linear regression line
 - pts_Graph: Add pts_HeatMapBarGraph type

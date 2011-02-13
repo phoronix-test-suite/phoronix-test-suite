@@ -107,16 +107,19 @@ class system_monitor extends pts_module_interface
 		{
 			$sensor_results = self::parse_monitor_log('logs/' . phodevi::sensor_identifier($sensor), self::$individual_test_run_offsets[$id_point]);
 
-			if(count($sensor_results) > 2 )
-			{
-				self::$individual_test_run_request->test_profile->set_identifier(null);
-				self::$individual_test_run_request->test_profile->set_result_proportion('LIB');
-				self::$individual_test_run_request->test_profile->set_display_format('LINE_GRAPH');
-				self::$individual_test_run_request->test_profile->set_result_scale(phodevi::read_sensor_unit($sensor));
-				self::$individual_test_run_request->set_used_arguments_description(phodevi::sensor_name($sensor) . ' Monitor');
-				self::$individual_test_run_request->set_used_arguments(phodevi::sensor_name($sensor) . self::$individual_test_run_request->get_arguments());
+			// Copy the value each time as if you are directly writing the original data, each succeeding time in the loop the used arguments gets borked
+			$test_result = self::$individual_test_run_request;
 
-				$result_file_writer->add_result_from_result_object_with_value_string(self::$individual_test_run_request, implode(',', $sensor_results), implode(',', $sensor_results));
+			if(count($sensor_results) > 2)
+			{
+				$test_result->test_profile->set_identifier(null);
+				$test_result->test_profile->set_result_proportion('LIB');
+				$test_result->test_profile->set_display_format('LINE_GRAPH');
+				$test_result->test_profile->set_result_scale(phodevi::read_sensor_unit($sensor));
+				$test_result->set_used_arguments_description(phodevi::sensor_name($sensor) . ' Monitor');
+				$test_result->set_used_arguments(phodevi::sensor_name($sensor) . ' ' . $test_result->get_arguments());
+
+				$result_file_writer->add_result_from_result_object_with_value_string($test_result, implode(',', $sensor_results), implode(',', $sensor_results));
 			}
 		}
 
