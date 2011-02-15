@@ -700,6 +700,7 @@ class pts_test_run_manager
 				$this->result_file_writer->add_test_notes(pts_test_notes_manager::generate_test_notes($this->tests_to_run));
 			}
 
+			echo PHP_EOL;
 			pts_module_manager::module_process('__event_results_process', $this);
 			pts_client::save_result_file($this->result_file_writer, $this->get_file_name());
 			pts_module_manager::module_process('__event_results_saved', $this);

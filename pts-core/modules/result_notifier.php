@@ -62,7 +62,7 @@ class result_notifier extends pts_module_interface
 	public static function __pre_test_run(&$test_run_request)
 	{
 		$executable = pts_module::read_option('pre_test_run_process');
-		self::process_user_config_external_hook_process('pre_test_run_process', $executable, 'Running the pre-test external hook', $test_run_manager);
+		self::process_user_config_external_hook_process('pre_test_run_process', $executable, 'Running the pre-test external hook', $test_run_request);
 	}
 	public static function __interim_test_run(&$test_run_request)
 	{
@@ -72,7 +72,7 @@ class result_notifier extends pts_module_interface
 	public static function __post_test_run(&$test_run_request)
 	{
 		$executable = pts_module::read_option('post_test_run_process');
-		self::process_user_config_external_hook_process('post_test_run_process', $executable, 'Running the post-test external hook', $test_run_manager);
+		self::process_user_config_external_hook_process('post_test_run_process', $executable, 'Running the post-test external hook', $test_run_request);
 	}
 	public static function __post_run_process(&$test_run_manager)
 	{
@@ -107,7 +107,7 @@ class result_notifier extends pts_module_interface
 				$env_vars['PTS_EXTERNAL_TEST_DESCRIPTION'] = $passed_obj->get_arguments_description();
 				$env_vars['PTS_EXTERNAL_TEST_RESULT_SET'] = $passed_obj->test_result_buffer->get_values_as_string();
 				$env_vars['PTS_EXTERNAL_TEST_RESULT'] = $passed_obj->get_result();
-				$env_vars['PTS_EXTERNAL_TEST_HASH'] = $passed_obj->get_comparison_hash();
+				$env_vars['PTS_EXTERNAL_TEST_HASH'] = bin2hex($passed_obj->get_comparison_hash());
 				$env_vars['PTS_EXTERNAL_TEST_STD_DEV_PERCENT'] = pts_math::percent_standard_deviation($passed_obj->test_result_buffer->get_values());
 
 				if(is_file($passed_obj->test_profile->get_install_dir() . 'cache-share-' . PTS_INIT_TIME . '.pt2so'))
@@ -123,7 +123,7 @@ class result_notifier extends pts_module_interface
 				$env_vars['PTS_EXTERNAL_TEST_IDENTIFIER'] = $passed_obj->get_results_identifier();
 			}
 
-			$description_string != null && pts_client::$display->generic_heading($description_string);
+			$description_string != null && pts_client::$display->test_run_instance_error($description_string);
 			$proc = proc_open($cmd_value, $descriptor_spec, $pipes, null, $env_vars);
 			$std_output = stream_get_contents($pipes[1]);
 			$return_value = proc_close($proc);
