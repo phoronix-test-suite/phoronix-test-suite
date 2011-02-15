@@ -71,18 +71,6 @@
 			<Value>PhoronixTestSuite/Options/TestResultValidation/ExportResultsTo</Value>
 		</Define>
 		<Define>
-			<Name>P_OPTION_EXTERNAL_HOOKS_PRE_TESTING</Name>
-			<Value>PhoronixTestSuite/Options/ExternalHooks/PreTestProcess</Value>
-		</Define>
-		<Define>
-			<Name>P_OPTION_EXTERNAL_HOOKS_INTERIM_TESTING</Name>
-			<Value>PhoronixTestSuite/Options/ExternalHooks/InterimTestProcess</Value>
-		</Define>
-		<Define>
-			<Name>P_OPTION_EXTERNAL_HOOKS_POST_TESTING</Name>
-			<Value>PhoronixTestSuite/Options/ExternalHooks/PostTestProcess</Value>
-		</Define>
-		<Define>
 			<Name>P_OPTION_TEST_REMOVEDOWNLOADS</Name>
 			<Value>PhoronixTestSuite/Options/Installation/RemoveDownloadFiles</Value>
 		</Define>

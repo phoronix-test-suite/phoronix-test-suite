@@ -421,8 +421,6 @@ class pts_test_run_manager
 		// Hook into the module framework
 		self::$test_run_process_active = true;
 		pts_module_manager::module_process('__pre_run_process', $this);
-		pts_client::process_user_config_external_hook_process(P_OPTION_EXTERNAL_HOOKS_PRE_TESTING, 'Running the pre-test external hook.');
-
 		pts_file_io::unlink(PTS_USER_PATH . 'halt-testing');
 		pts_file_io::unlink(PTS_USER_PATH . 'skip-test');
 
@@ -500,7 +498,6 @@ class pts_test_run_manager
 
 		self::$test_run_process_active = -1;
 		pts_module_manager::module_process('__post_run_process', $this);
-		pts_client::process_user_config_external_hook_process(P_OPTION_EXTERNAL_HOOKS_POST_TESTING, 'Running the post-test external hook.');
 		pts_client::release_lock($lock_path);
 
 		// Report any tests that failed to properly run
@@ -602,7 +599,6 @@ class pts_test_run_manager
 		}
 
 		pts_module_manager::module_process('__post_test_run_process', $this->result_file_writer);
-		pts_client::process_user_config_external_hook_process(P_OPTION_EXTERNAL_HOOKS_INTERIM_TESTING, 'Running the interim-test external hook.', $test_run_request);
 
 		return true;
 	}
