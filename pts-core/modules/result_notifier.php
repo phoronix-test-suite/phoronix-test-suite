@@ -106,7 +106,7 @@ class result_notifier extends pts_module_interface
 				$env_vars['PTS_EXTERNAL_TEST_ARGS'] = $passed_obj->get_arguments();
 				$env_vars['PTS_EXTERNAL_TEST_DESCRIPTION'] = $passed_obj->get_arguments_description();
 				$env_vars['PTS_EXTERNAL_TEST_RESULT_SET'] = $passed_obj->test_result_buffer->get_values_as_string();
-				$env_vars['PTS_EXTERNAL_TEST_RESULT'] = $passed_obj->get_result();
+				$env_vars['PTS_EXTERNAL_TEST_RESULT'] = $passed_obj->get_result() != 0 ? $passed_obj->get_result() : pts_arrays::last_element($passed_obj->test_result_buffer->get_values());
 				$env_vars['PTS_EXTERNAL_TEST_HASH'] = bin2hex($passed_obj->get_comparison_hash());
 				$env_vars['PTS_EXTERNAL_TEST_STD_DEV_PERCENT'] = pts_math::percent_standard_deviation($passed_obj->test_result_buffer->get_values());
 
