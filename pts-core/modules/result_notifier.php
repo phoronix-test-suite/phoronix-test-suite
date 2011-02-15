@@ -102,7 +102,9 @@ class result_notifier extends pts_module_interface
 
 			if($passed_obj instanceof pts_test_result)
 			{
-				$env_vars['PTS_EXTERNAL_TEST_IDENTIFIER'] = $passed_obj->test_profile->get_identifier() . '-' . $passed_obj->test_result_buffer->get_count();
+				$env_vars['PTS_EXTERNAL_TEST_IDENTIFIER'] = $passed_obj->test_profile->get_identifier();
+				$env_vars['PTS_EXTERNAL_TEST_RUN_POSITION'] = $passed_obj->test_result_buffer->get_count() + 1;
+				$env_vars['PTS_EXTERNAL_TEST_RUN_COUNT'] = $passed_obj->test_profile->get_times_to_run();
 				$env_vars['PTS_EXTERNAL_TEST_ARGS'] = $passed_obj->get_arguments();
 				$env_vars['PTS_EXTERNAL_TEST_DESCRIPTION'] = $passed_obj->get_arguments_description();
 				$env_vars['PTS_EXTERNAL_TEST_RESULT_SET'] = $passed_obj->test_result_buffer->get_values_as_string();
