@@ -54,38 +54,38 @@ class result_notifier extends pts_module_interface
 		// NOTE: This will just print to the terminal when PTS has loaded this module, so you know in fact it's being loaded/should be working
 		echo PHP_EOL . 'The result_notifier module for providing external hooks has been loaded.' . PHP_EOL;
 	}
-	public static function __pre_run_process(&$test_run_manager)
+	public static function __pre_run_process(&$object)
 	{
 		$executable = pts_module::read_option('pre_test_process');
-		self::process_user_config_external_hook_process('pre_test_process', $executable, 'Running the pre-test process external hook', $test_run_manager);
+		self::process_user_config_external_hook_process('pre_test_process', $executable, 'Running the pre-test process external hook', $object);
 	}
-	public static function __pre_test_run(&$test_run_request)
+	public static function __pre_test_run(&$object)
 	{
 		$executable = pts_module::read_option('pre_test_run_process');
-		self::process_user_config_external_hook_process('pre_test_run_process', $executable, 'Running the pre-test external hook', $test_run_request);
+		self::process_user_config_external_hook_process('pre_test_run_process', $executable, 'Running the pre-test external hook', $object);
 	}
-	public static function __interim_test_run(&$test_run_request)
+	public static function __interim_test_run(&$object)
 	{
 		$executable = pts_module::read_option('interim_test_run_process');
-		self::process_user_config_external_hook_process('interim_test_run_process', $executable, 'Running the interim-test external hook', $test_run_request);
+		self::process_user_config_external_hook_process('interim_test_run_process', $executable, 'Running the interim-test external hook', $object);
 	}
-	public static function __post_test_run(&$test_run_request)
+	public static function __post_test_run(&$object)
 	{
 		$executable = pts_module::read_option('post_test_run_process');
-		self::process_user_config_external_hook_process('post_test_run_process', $executable, 'Running the post-test external hook', $test_run_request);
+		self::process_user_config_external_hook_process('post_test_run_process', $executable, 'Running the post-test external hook', $object);
 	}
-	public static function __post_run_process(&$test_run_manager)
+	public static function __post_run_process(&$object)
 	{
 		$executable = pts_module::read_option('post_test_process');
-		self::process_user_config_external_hook_process('post_test_process', $executable, 'Running the post-test process external hook', $test_run_manager);
+		self::process_user_config_external_hook_process('post_test_process', $executable, 'Running the post-test process external hook', $object);
 	}
 
 	// This is called after the XML save, but not sure Intel needs this since __post_run_process is there too...
 /*
-	public static function __post_test_run_process(&$test_run_manager)
+	public static function __post_test_run_process(&$object)
 	{
 		$executable = pts_module::read_option('post_test_process');
-		self::process_user_config_external_hook_process($executable, 'Doing external post test process', $test_run_manager);
+		self::process_user_config_external_hook_process($executable, 'Doing external post test process', $object);
 	}
 */
 	protected static function process_user_config_external_hook_process($process, $cmd_value, $description_string = null, &$passed_obj = null)
