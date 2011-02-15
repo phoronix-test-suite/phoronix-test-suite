@@ -41,9 +41,11 @@ class result_notifier extends pts_module_interface
 	public static function module_setup()
 	{
 		return array(
-			new pts_module_option("pre_test_process", "Pre test process script", null),
-			new pts_module_option("interim_test_process", "Interim test process script", null),
-			new pts_module_option("post_test_process", "Post test process script", null)
+			new pts_module_option("pre_test_process", "Pre-test process hook", null),
+			new pts_module_option("pre_test_run_process", "Pre-test run execution hook", null),
+			new pts_module_option("interim_test_run_process", "Interim-test run execution hook", null),
+			new pts_module_option("post_test_run_process", "Post-test run execution hook", null),
+			new pts_module_option("post_test_process", "Post-test process script", null)
 			);
 	}
 
@@ -55,28 +57,37 @@ class result_notifier extends pts_module_interface
 	public static function __pre_run_process(&$test_run_manager)
 	{
 		$executable = pts_module::read_option("pre_test_process");
-		self::process_user_config_external_hook_process($executable, "Doing external pre test process", $test_run_manager);
+		self::process_user_config_external_hook_process($executable, "Running the pre-test process external hook", $test_run_manager);
+	}
+	public static function __pre_test_run(&$test_run_request)
+	{
+		$executable = pts_module::read_option("pre_test_run_process");
+		self::process_user_config_external_hook_process($executable, "Running the pre-test external hook", $test_run_manager);
 	}
 	public static function __interim_test_run(&$test_run_request)
 	{
-		$executable = pts_module::read_option("interim_test_process");
-		self::process_user_config_external_hook_process($executable, "Doing external interim test process", $test_run_request);
+		$executable = pts_module::read_option("interim_test_run_process");
+		self::process_user_config_external_hook_process($executable, "Running the interim-test external hook", $test_run_request);
 	}
 	public static function __post_test_run(&$test_run_request)
 	{
-		$executable = pts_module::read_option("post_test_process");
-		self::process_user_config_external_hook_process($executable, "Doing external post test run process", $test_run_manager);
+		$executable = pts_module::read_option("post_test_run_process");
+		self::process_user_config_external_hook_process($executable, "Running the post-test external hook", $test_run_manager);
 	}
 	public static function __post_run_process(&$test_run_manager)
 	{
 		$executable = pts_module::read_option("post_test_process");
-		self::process_user_config_external_hook_process($executable, "Doing external post test process", $test_run_manager);
+		self::process_user_config_external_hook_process($executable, "Running the post-test process external hook", $test_run_manager);
 	}
+
+	// This is called after the XML save, but not sure Intel needs this since __post_run_process is there too...
+/*
 	public static function __post_test_run_process(&$test_run_manager)
 	{
 		$executable = pts_module::read_option("post_test_process");
 		self::process_user_config_external_hook_process($executable, "Doing external post test process", $test_run_manager);
 	}
+*/
 	protected static function process_user_config_external_hook_process($cmd_value, $description_string = null, &$passed_obj = null)
 	{
 		if(!empty($cmd_value) && (is_executable($cmd_value) || ($cmd_value = pts_client::executable_in_path($cmd_value))))
@@ -96,7 +107,14 @@ class result_notifier extends pts_module_interface
 				$env_vars["PTS_EXTERNAL_TEST_DESCRIPTION"] = $passed_obj->get_arguments_description();
 				$env_vars["PTS_EXTERNAL_TEST_RESULT_SET"] = $passed_obj->test_result_buffer->get_values_as_string();
 				$env_vars["PTS_EXTERNAL_TEST_RESULT"] = $passed_obj->get_result();
+				$env_vars["PTS_EXTERNAL_TEST_HASH"] = $passed_obj->get_comparison_hash();
 				$env_vars["PTS_EXTERNAL_TEST_STD_DEV_PERCENT"] = pts_math::percent_standard_deviation($passed_obj->test_result_buffer->get_values());
+
+				if(is_file($passed_obj->test_profile->get_install_dir() . 'cache-share-' . PTS_INIT_TIME . '.pt2so'))
+				{
+					// There's a cache share present
+					$env_vars["PTS_EXTERNAL_TEST_CACHE_SHARE"] = 1;
+				}
 			}
 			else if($passed_obj instanceof pts_test_run_manager)
 			{

@@ -279,7 +279,7 @@ class pts_test_execution
 
 		$time_test_end_actual = time();
 
-		if(!$cache_share_present)
+		if($cache_share_present == false)
 		{
 			pts_tests::call_test_script($test_run_request->test_profile, 'post', 'Running Post-Test Script', $test_directory, $extra_runtime_variables, true);
 		}
@@ -414,7 +414,7 @@ class pts_test_execution
 
 		pts_user_io::display_interrupt_message($test_run_request->test_profile->get_post_run_message());
 		pts_module_manager::module_process('__post_test_run', $test_run_request);
-		$report_elapsed_time = !$cache_share_present && $test_run_request->get_result() != 0;
+		$report_elapsed_time = $cache_share_present == false && $test_run_request->get_result() != 0;
 		pts_tests::update_test_install_xml($test_run_request->test_profile, ($report_elapsed_time ? $time_test_elapsed : 0));
 		pts_storage_object::add_in_file(PTS_CORE_STORAGE, 'total_testing_time', ($time_test_elapsed / 60));
 
