@@ -32,7 +32,7 @@ endobj
 /Contents 6 0 R>>
 endobj
 6 0 obj
-<</Length 5833>>
+<</Length 5880>>
 stream
 2 J
 0.57 w
@@ -57,19 +57,19 @@ q 0.196 0.200 0.192 rg BT 26.93 631.57 Td (Test Installation) Tj ET Q
 BT /F1 13.00 Tf ET
 q 0.380 0.388 0.376 rg BT 31.18 604.13 Td (install) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 68.75 604.43 Td (  [Test | Suite | Global ID | Test Result]  ...) Tj ET Q
+q 0.380 0.388 0.376 rg BT 68.75 604.43 Td (  [Test | Suite | OpenBenchmarking.org ID | Test Result]  ...) Tj ET Q
 BT /F2 11.00 Tf ET
 q 0.000 g BT 59.53 590.55 Td (This option will install the selected test\(s\) inside the testing environment directory\). The install process) Tj ET Q
 q 0.000 g BT 59.53 576.38 Td (from downloading of the test files to the installation is fully automated. The install option needs to be) Tj ET Q
-q 0.000 g BT 59.53 562.21 Td (supplied with the test name or suite as an argument. Optionally, a Phoronix Global ID or the name of a) Tj ET Q
-q 0.000 g BT 59.53 548.04 Td (saved results file can be supplied as well and the test\(s\) to install will automatically be extracted from) Tj ET Q
-q 0.000 g BT 59.53 533.86 Td (that information. If the test is already installed and was run by the latest version of the installation) Tj ET Q
-q 0.000 g BT 59.53 519.69 Td (process, no action will be taken. Multiple arguments can be supplied to install additional tests at the) Tj ET Q
-q 0.000 g BT 59.53 505.52 Td (same time.) Tj ET Q
+q 0.000 g BT 59.53 562.21 Td (supplied with the test name or suite as an argument. Optionally, a OpenBenchmarking.org ID or the) Tj ET Q
+q 0.000 g BT 59.53 548.04 Td (name of a saved results file can be supplied as well and the test\(s\) to install will automatically be) Tj ET Q
+q 0.000 g BT 59.53 533.86 Td (extracted from that information. If the test is already installed and was run by the latest version of the) Tj ET Q
+q 0.000 g BT 59.53 519.69 Td (installation process, no action will be taken. Multiple arguments can be supplied to install additional) Tj ET Q
+q 0.000 g BT 59.53 505.52 Td (tests at the same time.) Tj ET Q
 BT /F1 13.00 Tf ET
 q 0.380 0.388 0.376 rg BT 31.18 476.57 Td (install-dependencies) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 159.78 476.87 Td (  [Test | Suite | Global ID | Test Result]  ...) Tj ET Q
+q 0.380 0.388 0.376 rg BT 159.78 476.87 Td (  [Test | Suite | OpenBenchmarking.org ID | Test Result]  ...) Tj ET Q
 BT /F2 11.00 Tf ET
 q 0.000 g BT 59.53 463.00 Td (This option will install the external dependencies needed by the selected test\(s\) using the distribution's) Tj ET Q
 q 0.000 g BT 59.53 448.82 Td (package management system. For example, some tests depend upon GCC for compiling code. If GCC) Tj ET Q
@@ -90,7 +90,7 @@ q 0.196 0.200 0.192 rg BT 26.93 291.42 Td (Testing) Tj ET Q
 BT /F1 13.00 Tf ET
 q 0.380 0.388 0.376 rg BT 31.18 263.97 Td (benchmark) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 100.54 264.27 Td (  [Test | Suite | Global ID | Test Result]  ...) Tj ET Q
+q 0.380 0.388 0.376 rg BT 100.54 264.27 Td (  [Test | Suite | OpenBenchmarking.org ID | Test Result]  ...) Tj ET Q
 BT /F2 11.00 Tf ET
 q 0.000 g BT 59.53 250.40 Td (This option will install the selected test\(s\) \(if needed\) and will proceed to run the test\(s\). This option is) Tj ET Q
 q 0.000 g BT 59.53 236.22 Td (equivalent to running phoronix-test-suite with the install option followed by the run option. Multiple) Tj ET Q
@@ -126,7 +126,7 @@ endobj
 /Contents 8 0 R>>
 endobj
 8 0 obj
-<</Length 5772>>
+<</Length 5950>>
 stream
 2 J
 0.57 w
@@ -142,7 +142,7 @@ q 0.000 g BT 59.53 743.63 Td (testing process and the test results from before t
 BT /F1 13.00 Tf ET
 q 0.380 0.388 0.376 rg BT 31.18 714.68 Td (run) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 52.12 714.98 Td (  [Test | Suite | Global ID | Test Result]  ...) Tj ET Q
+q 0.380 0.388 0.376 rg BT 52.12 714.98 Td (  [Test | Suite | OpenBenchmarking.org ID | Test Result]  ...) Tj ET Q
 BT /F2 11.00 Tf ET
 q 0.000 g BT 59.53 701.11 Td (This option will run the selected test\(s\).) Tj ET Q
 BT /F1 13.00 Tf ET
@@ -151,20 +151,20 @@ BT /F3 12.00 Tf ET
 q 0.380 0.388 0.376 rg BT 137.35 672.46 Td (  ) Tj ET Q
 BT /F2 11.00 Tf ET
 q 0.000 g BT 59.53 658.59 Td (This option can be used if you wish to run all of the tests found in a supplied suite, but you wish to) Tj ET Q
-q 0.000 g BT 59.53 644.41 Td (re-configure each of the test's options rather than using the defaults supplied by the suite.) Tj ET Q
+q 0.000 g BT 59.53 644.41 Td (re-configure each of the test options rather than using the defaults supplied by the suite.) Tj ET Q
 BT /F1 16.00 Tf ET
 q 0.196 0.200 0.192 rg BT 26.93 614.57 Td (Batch Testing) Tj ET Q
 BT /F1 13.00 Tf ET
 q 0.380 0.388 0.376 rg BT 31.18 587.12 Td (batch-benchmark) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 139.54 587.42 Td (  [Test | Suite | Global ID | Test Result]  ...) Tj ET Q
+q 0.380 0.388 0.376 rg BT 139.54 587.42 Td (  [Test | Suite | OpenBenchmarking.org ID | Test Result]  ...) Tj ET Q
 BT /F2 11.00 Tf ET
 q 0.000 g BT 59.53 573.55 Td (This option and its arguments are equivalent to the benchmark option, but the process will be run in the) Tj ET Q
 q 0.000 g BT 59.53 559.37 Td (Phoronix Test Suite batch mode.) Tj ET Q
 BT /F1 13.00 Tf ET
 q 0.380 0.388 0.376 rg BT 31.18 530.43 Td (batch-install) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 107.75 530.73 Td (  [Test | Suite | Global ID | Test Result]  ...) Tj ET Q
+q 0.380 0.388 0.376 rg BT 107.75 530.73 Td (  [Test | Suite | OpenBenchmarking.org ID | Test Result]  ...) Tj ET Q
 BT /F2 11.00 Tf ET
 q 0.000 g BT 59.53 516.85 Td (If you wish to run the install process in the Phoronix Test Suite batch mode but do not wish to run any) Tj ET Q
 q 0.000 g BT 59.53 502.68 Td (tests at this time. Running the install process in the batch mode will use the default values and not) Tj ET Q
@@ -172,7 +172,7 @@ q 0.000 g BT 59.53 488.51 Td (prompt the user of any possible options, to ensure
 BT /F1 13.00 Tf ET
 q 0.380 0.388 0.376 rg BT 31.18 459.56 Td (batch-run) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 91.12 459.86 Td (  [Test | Suite | Global ID | Test Result]  ...) Tj ET Q
+q 0.380 0.388 0.376 rg BT 91.12 459.86 Td (  [Test | Suite | OpenBenchmarking.org ID | Test Result]  ...) Tj ET Q
 BT /F2 11.00 Tf ET
 q 0.000 g BT 59.53 445.99 Td (This option and its arguments are equivalent to the run option, but the process will be run in the) Tj ET Q
 q 0.000 g BT 59.53 431.81 Td (Phoronix Test Suite batch mode.) Tj ET Q
@@ -183,11 +183,11 @@ q 0.380 0.388 0.376 rg BT 104.85 403.17 Td (  ) Tj ET Q
 BT /F2 11.00 Tf ET
 q 0.000 g BT 59.53 389.30 Td (This option is used to configure the batch mode options for the Phoronix Test Suite, which is) Tj ET Q
 q 0.000 g BT 59.53 375.12 Td (subsequently written to the user configuration file. Among the options are whether to automatically) Tj ET Q
-q 0.000 g BT 59.53 360.95 Td (upload the test results to Phoronix Global and prompting for the saved file name.) Tj ET Q
+q 0.000 g BT 59.53 360.95 Td (upload the test results to OpenBenchmarking.org and prompting for the saved file name.) Tj ET Q
 BT /F1 13.00 Tf ET
 q 0.380 0.388 0.376 rg BT 31.18 332.00 Td (default-benchmark) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 147.48 332.30 Td (  [Test | Suite | Global ID | Test Result]  ...) Tj ET Q
+q 0.380 0.388 0.376 rg BT 147.48 332.30 Td (  [Test | Suite | OpenBenchmarking.org ID | Test Result]  ...) Tj ET Q
 BT /F2 11.00 Tf ET
 q 0.000 g BT 59.53 318.43 Td (This option will install the selected test\(s\) \(if needed\) and will proceed to run the test\(s\) in the defaults) Tj ET Q
 q 0.000 g BT 59.53 304.26 Td (mode. This option is equivalent to running phoronix-test-suite with the install option followed by the) Tj ET Q
@@ -195,27 +195,27 @@ q 0.000 g BT 59.53 290.08 Td (default-run option.) Tj ET Q
 BT /F1 13.00 Tf ET
 q 0.380 0.388 0.376 rg BT 31.18 261.14 Td (default-run) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 99.07 261.44 Td (  [Test | Suite | Global ID | Test Result]  ...) Tj ET Q
+q 0.380 0.388 0.376 rg BT 99.07 261.44 Td (  [Test | Suite | OpenBenchmarking.org ID | Test Result]  ...) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 247.56 Td (This option will run the selected test\(s\). The name of the test or suite must be supplied or the Phoronix) Tj ET Q
-q 0.000 g BT 59.53 233.39 Td (Global ID or saved local file name. Multiple arguments can be supplied to run additional tests at the) Tj ET Q
-q 0.000 g BT 59.53 219.22 Td (same time and save the results in a suite-like fashion. Unlike the normal run option, the default-run will) Tj ET Q
-q 0.000 g BT 59.53 205.04 Td (not prompt the user to select from the available test options but will instead use the default options as) Tj ET Q
-q 0.000 g BT 59.53 190.87 Td (automatically set by pts-core or the test profile. Use batch-run to automatically test all of the available) Tj ET Q
-q 0.000 g BT 59.53 176.70 Td (options.) Tj ET Q
+q 0.000 g BT 59.53 247.56 Td (This option will run the selected test\(s\). The name of the test or suite must be supplied or the) Tj ET Q
+q 0.000 g BT 59.53 233.39 Td (OpenBenchmarking.org ID or saved local file name. Multiple arguments can be supplied to run) Tj ET Q
+q 0.000 g BT 59.53 219.22 Td (additional tests at the same time and save the results in a suite-like fashion. Unlike the normal run) Tj ET Q
+q 0.000 g BT 59.53 205.04 Td (option, the default-run will not prompt the user to select from the available test options but will instead) Tj ET Q
+q 0.000 g BT 59.53 190.87 Td (use the default options as automatically set by pts-core or the test profile. Use batch-run to) Tj ET Q
+q 0.000 g BT 59.53 176.70 Td (automatically test all of the available options.) Tj ET Q
 BT /F1 16.00 Tf ET
 q 0.196 0.200 0.192 rg BT 26.93 146.85 Td (OpenBenchmarking.org) Tj ET Q
 BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 119.40 Td (clone-global-result) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 119.40 Td (clone-result) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 147.48 119.70 Td (  [Global ID]) Tj ET Q
+q 0.380 0.388 0.376 rg BT 104.87 119.70 Td (  [OpenBenchmarking.org ID]  ...) Tj ET Q
 BT /F2 11.00 Tf ET
 q 0.000 g BT 59.53 105.83 Td (This option will download a local copy of a file that was saved to OpenBenchmarking.org, as long as a) Tj ET Q
-q 0.000 g BT 59.53 91.66 Td (valid public ID is supplied.) Tj ET Q
+q 0.000 g BT 59.53 91.66 Td (valid public ID is supplied. More than one ID can be specified and the results will then be merged.) Tj ET Q
 BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 62.71 Td (openbenchmarking-setup) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 62.71 Td (openbenchmarking-launcher) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 190.09 63.01 Td (  ) Tj ET Q
+q 0.380 0.388 0.376 rg BT 209.61 63.01 Td (  ) Tj ET Q
 BT /F2 11.00 Tf ET
 BT /F1 7.00 Tf ET
 q 0.000 g BT 59.53 26.25 Td (Phoronix Test Suite v3.0.0r1) Tj ET Q
@@ -231,7 +231,7 @@ endobj
 /Contents 10 0 R>>
 endobj
 10 0 obj
-<</Length 5270>>
+<</Length 5382>>
 stream
 2 J
 0.57 w
@@ -243,94 +243,92 @@ q 0.000 g BT 232.23 795.17 Td (Phoronix Test Suite v3.0.0r1) Tj ET Q
 BT /F1 10.00 Tf ET
 q 0.000 g BT 248.47 779.36 Td (Test Client Documentation) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 743.63 Td (This option is used for controlling your Phoronix Test Suite client options for OpenBechmarking.org and) Tj ET Q
-q 0.000 g BT 59.53 729.45 Td (syncing the client to your account.) Tj ET Q
+q 0.000 g BT 59.53 743.63 Td (This option is called automatically with the .openbenchmarking MIME file extension support for) Tj ET Q
+q 0.000 g BT 59.53 729.45 Td (launching OpenBenchmarking.org operations.) Tj ET Q
 BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 700.51 Td (upload-result) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 700.51 Td (openbenchmarking-login) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 113.52 700.81 Td (  [Test Result]) Tj ET Q
+q 0.380 0.388 0.376 rg BT 186.48 700.81 Td (  ) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 686.93 Td (This option is used for uploading a test result to OpenBenchmarking.org.) Tj ET Q
+q 0.000 g BT 59.53 686.93 Td (This option is used for controlling your Phoronix Test Suite client options for OpenBechmarking.org and) Tj ET Q
+q 0.000 g BT 59.53 672.76 Td (syncing the client to your account.) Tj ET Q
+BT /F1 13.00 Tf ET
+q 0.380 0.388 0.376 rg BT 31.18 643.81 Td (openbenchmarking-refresh) Tj ET Q
+BT /F3 12.00 Tf ET
+q 0.380 0.388 0.376 rg BT 199.49 644.11 Td (  ) Tj ET Q
+BT /F2 11.00 Tf ET
+q 0.000 g BT 59.53 630.24 Td (This option is used for refreshing the stored OpenBenchmarking.org repostory information and other) Tj ET Q
+q 0.000 g BT 59.53 616.07 Td (data. The Phoronix Test Suite will automatically refresh this data every three days or when other) Tj ET Q
+q 0.000 g BT 59.53 601.89 Td (thresholds are exceeded, but this command can be used to manually refresh/updates the data.) Tj ET Q
+BT /F1 13.00 Tf ET
+q 0.380 0.388 0.376 rg BT 31.18 572.95 Td (upload-result) Tj ET Q
+BT /F3 12.00 Tf ET
+q 0.380 0.388 0.376 rg BT 113.52 573.25 Td (  [Test Result]) Tj ET Q
+BT /F2 11.00 Tf ET
+q 0.000 g BT 59.53 559.37 Td (This option is used for uploading a test result to OpenBenchmarking.org.) Tj ET Q
 BT /F1 16.00 Tf ET
-q 0.196 0.200 0.192 rg BT 26.93 657.09 Td (System) Tj ET Q
+q 0.196 0.200 0.192 rg BT 26.93 529.53 Td (System) Tj ET Q
 BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 629.64 Td (diagnostics) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 502.08 Td (diagnostics) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 103.42 629.94 Td (  ) Tj ET Q
+q 0.380 0.388 0.376 rg BT 103.42 502.38 Td (  ) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 616.07 Td (This option will print information that is useful to developers when debugging problems with the) Tj ET Q
-q 0.000 g BT 59.53 601.89 Td (Phoronix Test Suite and/or test profiles and test suites.) Tj ET Q
+q 0.000 g BT 59.53 488.51 Td (This option will print information that is useful to developers when debugging problems with the) Tj ET Q
+q 0.000 g BT 59.53 474.33 Td (Phoronix Test Suite and/or test profiles and test suites.) Tj ET Q
 BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 572.95 Td (system-info) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 445.39 Td (system-info) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 104.14 573.25 Td (  ) Tj ET Q
+q 0.380 0.388 0.376 rg BT 104.14 445.69 Td (  ) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 559.37 Td (Display the installed system hardware and software information as detected by the Phoronix Test Suite) Tj ET Q
-q 0.000 g BT 59.53 545.20 Td (Phodevi Library.) Tj ET Q
+q 0.000 g BT 59.53 431.81 Td (Display the installed system hardware and software information as detected by the Phoronix Test Suite) Tj ET Q
+q 0.000 g BT 59.53 417.64 Td (Phodevi Library.) Tj ET Q
 BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 516.25 Td (system-sensors) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 388.70 Td (system-sensors) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 130.16 516.55 Td (  ) Tj ET Q
+q 0.380 0.388 0.376 rg BT 130.16 389.00 Td (  ) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 502.68 Td (Display the installed system hardware and software sensors in real-time as detected by the Phoronix) Tj ET Q
-q 0.000 g BT 59.53 488.51 Td (Test Suite Phodevi Library.) Tj ET Q
+q 0.000 g BT 59.53 375.12 Td (Display the installed system hardware and software sensors in real-time as detected by the Phoronix) Tj ET Q
+q 0.000 g BT 59.53 360.95 Td (Test Suite Phodevi Library.) Tj ET Q
 BT /F1 16.00 Tf ET
-q 0.196 0.200 0.192 rg BT 26.93 458.66 Td (Information) Tj ET Q
+q 0.196 0.200 0.192 rg BT 26.93 331.10 Td (Information) Tj ET Q
 BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 431.21 Td (info) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 303.66 Td (info) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 55.01 431.51 Td (  [Test | Suite | Global ID | Test Result]) Tj ET Q
+q 0.380 0.388 0.376 rg BT 55.01 303.96 Td (  [Test | Suite | OpenBenchmarking.org ID | Test Result]) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 417.64 Td (This option will show details about the supplied test, suite, virtual suite, or result file.) Tj ET Q
+q 0.000 g BT 59.53 290.08 Td (This option will show details about the supplied test, suite, virtual suite, or result file.) Tj ET Q
 BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 388.70 Td (list-available-suites) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 261.14 Td (list-available-suites) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 151.12 389.00 Td (  ) Tj ET Q
+q 0.380 0.388 0.376 rg BT 151.12 261.44 Td (  ) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 375.12 Td (This option will list all available test suites that are available from the enabled OpenBenchmarking.org) Tj ET Q
-q 0.000 g BT 59.53 360.95 Td (repositories.) Tj ET Q
+q 0.000 g BT 59.53 247.56 Td (This option will list all available test suites that are available from the enabled OpenBenchmarking.org) Tj ET Q
+q 0.000 g BT 59.53 233.39 Td (repositories.) Tj ET Q
 BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 332.00 Td (list-available-tests) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 204.44 Td (list-available-tests) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 143.89 332.30 Td (  ) Tj ET Q
+q 0.380 0.388 0.376 rg BT 143.89 204.74 Td (  ) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 318.43 Td (This option will list all available test profiles that are available from the enabled OpenBenchmarking.org) Tj ET Q
-q 0.000 g BT 59.53 304.26 Td (repositories.) Tj ET Q
+q 0.000 g BT 59.53 190.87 Td (This option will list all available test profiles that are available from the enabled OpenBenchmarking.org) Tj ET Q
+q 0.000 g BT 59.53 176.70 Td (repositories.) Tj ET Q
 BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 275.31 Td (list-available-virtual-suites) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 147.75 Td (list-available-virtual-suites) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 194.46 275.61 Td (  ) Tj ET Q
+q 0.380 0.388 0.376 rg BT 194.46 148.05 Td (  ) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 261.74 Td (This option will list all available virtual test suites that can be dynamically created based upon the) Tj ET Q
-q 0.000 g BT 59.53 247.56 Td (available tests from enabled OpenBenchmarking.org repositories.) Tj ET Q
+q 0.000 g BT 59.53 134.18 Td (This option will list all available virtual test suites that can be dynamically created based upon the) Tj ET Q
+q 0.000 g BT 59.53 120.00 Td (available tests from enabled OpenBenchmarking.org repositories.) Tj ET Q
 BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 218.62 Td (list-installed-dependencies) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 91.06 Td (list-installed-dependencies) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 198.06 218.92 Td (  ) Tj ET Q
+q 0.380 0.388 0.376 rg BT 198.06 91.36 Td (  ) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 205.04 Td (This option will list all of the packages / external test dependencies that are already installed on the) Tj ET Q
-q 0.000 g BT 59.53 190.87 Td (system that the Phoronix Test Suite may potentially depend upon by test profiles.) Tj ET Q
+q 0.000 g BT 59.53 77.48 Td (This option will list all of the packages / external test dependencies that are already installed on the) Tj ET Q
+q 0.000 g BT 59.53 63.31 Td (system that the Phoronix Test Suite may potentially depend upon by test profiles.) Tj ET Q
 BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 161.92 Td (list-installed-suites) Tj ET Q
-BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 148.94 162.22 Td (  ) Tj ET Q
-BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 148.35 Td (This option will list all suites that are currently installed on the system.) Tj ET Q
-BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 119.40 Td (list-installed-tests) Tj ET Q
-BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 141.71 119.70 Td (  ) Tj ET Q
-BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 105.83 Td (This option will list all test profiles that are currently installed on the system.) Tj ET Q
-BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 76.88 Td (list-missing-dependencies) Tj ET Q
-BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 194.45 77.18 Td (  ) Tj ET Q
-BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 63.31 Td (This option will list all of the packages / external test dependencies that are missing from the system) Tj ET Q
 BT /F1 7.00 Tf ET
-q 0.000 g BT 59.53 26.25 Td (Phoronix Test Suite v3.0.0r1) Tj ET Q
-566.93 28.35 0.00 0.00 re f q 0.000 g BT 466.08 26.25 Td (www.phoronix-test-suite.com) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 26.25 Td (Phoronix Test Suite v3.0.0r1) Tj ET Q
+566.93 28.35 0.00 0.00 re f q 0.380 0.388 0.376 rg BT 466.08 26.25 Td (www.phoronix-test-suite.com) Tj ET Q
 
 endstream
 endobj
@@ -342,103 +340,106 @@ endobj
 /Contents 12 0 R>>
 endobj
 12 0 obj
-<</Length 5618>>
+<</Length 5806>>
 stream
 2 J
 0.57 w
-BT /F2 11.00 Tf ET
+BT /F1 13.00 Tf ET
 1.000 1.000 1.000 rg
 q 85.04 0 0 44.13 28.35 775.08 cm /I2 Do Q
 BT /F1 14.00 Tf ET
-q 0.000 g BT 232.23 795.17 Td (Phoronix Test Suite v3.0.0r1) Tj ET Q
+q 0.380 0.388 0.376 rg BT 203.88 795.17 Td (Phoronix Test Suite v3.0.0r1) Tj ET Q
 BT /F1 10.00 Tf ET
-q 0.000 g BT 248.47 779.36 Td (Test Client Documentation) Tj ET Q
-BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 743.63 Td (that the Phoronix Test Suite may potentially need by select test profiles.) Tj ET Q
+q 0.380 0.388 0.376 rg BT 234.30 779.36 Td (Test Client Documentation) Tj ET Q
 BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 714.68 Td (list-possible-dependencies) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 743.03 Td (list-installed-suites) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 198.06 714.98 Td (  ) Tj ET Q
+q 0.380 0.388 0.376 rg BT 148.94 743.33 Td (  ) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 701.11 Td (This option will list all of the packages / external test dependencies that are are potentially used by the) Tj ET Q
-q 0.000 g BT 59.53 686.93 Td (Phoronix Test Suite.) Tj ET Q
+q 0.000 g BT 59.53 729.45 Td (This option will list all suites that are currently installed on the system.) Tj ET Q
 BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 657.99 Td (list-saved-results) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 700.51 Td (list-installed-tests) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 138.11 658.29 Td (  ) Tj ET Q
+q 0.380 0.388 0.376 rg BT 141.71 700.81 Td (  ) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 644.41 Td (This option will list all of the saved test results found on the system.) Tj ET Q
+q 0.000 g BT 59.53 686.93 Td (This option will list all test profiles that are currently installed on the system.) Tj ET Q
 BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 615.47 Td (list-test-usage) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 657.99 Td (list-missing-dependencies) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 119.31 615.77 Td (  ) Tj ET Q
+q 0.380 0.388 0.376 rg BT 194.45 658.29 Td (  ) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 601.89 Td (This option will list various details about installed tests and their usage.) Tj ET Q
+q 0.000 g BT 59.53 644.41 Td (This option will list all of the packages / external test dependencies that are missing from the system) Tj ET Q
+q 0.000 g BT 59.53 630.24 Td (that the Phoronix Test Suite may potentially need by select test profiles.) Tj ET Q
+BT /F1 13.00 Tf ET
+q 0.380 0.388 0.376 rg BT 31.18 601.29 Td (list-possible-dependencies) Tj ET Q
+BT /F3 12.00 Tf ET
+q 0.380 0.388 0.376 rg BT 198.06 601.59 Td (  ) Tj ET Q
+BT /F2 11.00 Tf ET
+q 0.000 g BT 59.53 587.72 Td (This option will list all of the packages / external test dependencies that are are potentially used by the) Tj ET Q
+q 0.000 g BT 59.53 573.55 Td (Phoronix Test Suite.) Tj ET Q
+BT /F1 13.00 Tf ET
+q 0.380 0.388 0.376 rg BT 31.18 544.60 Td (list-saved-results) Tj ET Q
+BT /F3 12.00 Tf ET
+q 0.380 0.388 0.376 rg BT 138.11 544.90 Td (  ) Tj ET Q
+BT /F2 11.00 Tf ET
+q 0.000 g BT 59.53 531.03 Td (This option will list all of the saved test results found on the system.) Tj ET Q
+BT /F1 13.00 Tf ET
+q 0.380 0.388 0.376 rg BT 31.18 502.08 Td (list-test-usage) Tj ET Q
+BT /F3 12.00 Tf ET
+q 0.380 0.388 0.376 rg BT 119.31 502.38 Td (  ) Tj ET Q
+BT /F2 11.00 Tf ET
+q 0.000 g BT 59.53 488.51 Td (This option will list various details about installed tests and their usage.) Tj ET Q
 BT /F1 16.00 Tf ET
-q 0.196 0.200 0.192 rg BT 26.93 572.05 Td (Asset Creation) Tj ET Q
+q 0.196 0.200 0.192 rg BT 26.93 458.66 Td (Asset Creation) Tj ET Q
 BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 544.60 Td (debug-install) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 431.21 Td (debug-install) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 112.08 544.90 Td (  [Test | Suite | Global ID | Test Result]  ...) Tj ET Q
+q 0.380 0.388 0.376 rg BT 112.08 431.51 Td (  [Test | Suite | OpenBenchmarking.org ID | Test Result]  ...) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 531.03 Td (This option is intended for use by test profile writers and is identical to the install option but will yield) Tj ET Q
-q 0.000 g BT 59.53 516.85 Td (more information during the run process that can be used to debug issues with a test profile installer or) Tj ET Q
-q 0.000 g BT 59.53 502.68 Td (to verify the test profile is functioning correctly.) Tj ET Q
+q 0.000 g BT 59.53 417.64 Td (This option is intended for use by test profile writers and is identical to the install option but will yield) Tj ET Q
+q 0.000 g BT 59.53 403.47 Td (more information during the run process that can be used to debug issues with a test profile installer or) Tj ET Q
+q 0.000 g BT 59.53 389.30 Td (to verify the test profile is functioning correctly.) Tj ET Q
 BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 473.73 Td (debug-run) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 360.35 Td (debug-run) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 95.45 474.03 Td (  [Test | Suite | Global ID | Test Result]  ...) Tj ET Q
+q 0.380 0.388 0.376 rg BT 95.45 360.65 Td (  [Test | Suite | OpenBenchmarking.org ID | Test Result]  ...) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 460.16 Td (This option is intended for use by test profile writers and is identical to the <em>run</em> option but) Tj ET Q
-q 0.000 g BT 59.53 445.99 Td (will yield more information during the run process that can be used to debug issues with a test profile or) Tj ET Q
-q 0.000 g BT 59.53 431.81 Td (to verify the test profile is functioning correctly.) Tj ET Q
+q 0.000 g BT 59.53 346.78 Td (This option is intended for use by test profile writers and is identical to the <em>run</em> option but) Tj ET Q
+q 0.000 g BT 59.53 332.60 Td (will yield more information during the run process that can be used to debug issues with a test profile or) Tj ET Q
+q 0.000 g BT 59.53 318.43 Td (to verify the test profile is functioning correctly.) Tj ET Q
 BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 402.87 Td (debug-test-download-links) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 289.48 Td (debug-test-download-links) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 196.58 403.17 Td (  [Test | Suite]) Tj ET Q
+q 0.380 0.388 0.376 rg BT 196.58 289.78 Td (  [Test | Suite]) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 389.30 Td (This option will check all download links within the specified test profile\(s\) to ensure there are no broken) Tj ET Q
-q 0.000 g BT 59.53 375.12 Td (URLs.) Tj ET Q
+q 0.000 g BT 59.53 275.91 Td (This option will check all download links within the specified test profile\(s\) to ensure there are no broken) Tj ET Q
+q 0.000 g BT 59.53 261.74 Td (URLs.) Tj ET Q
 BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 346.18 Td (force-install) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 232.79 Td (force-install) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 104.87 346.48 Td (  [Test | Suite | Global ID | Test Result]  ...) Tj ET Q
+q 0.380 0.388 0.376 rg BT 104.87 233.09 Td (  [Test | Suite | OpenBenchmarking.org ID | Test Result]  ...) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 332.60 Td (This option will force the installation \(or re-installation\) of a test or suite. The arguments and process is) Tj ET Q
-q 0.000 g BT 59.53 318.43 Td (similar to the install option but even if the test is installed, the entire installation process will) Tj ET Q
-q 0.000 g BT 59.53 304.26 Td (automatically be executed. This option is generally used when debugging a test installation problem.) Tj ET Q
+q 0.000 g BT 59.53 219.22 Td (This option will force the installation \(or re-installation\) of a test or suite. The arguments and process is) Tj ET Q
+q 0.000 g BT 59.53 205.04 Td (similar to the install option but even if the test is installed, the entire installation process will) Tj ET Q
+q 0.000 g BT 59.53 190.87 Td (automatically be executed. This option is generally used when debugging a test installation problem.) Tj ET Q
 BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 275.31 Td (result-file-to-suite) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 161.92 Td (result-file-to-suite) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 140.97 275.61 Td (  [Test Result]) Tj ET Q
+q 0.380 0.388 0.376 rg BT 140.97 162.22 Td (  [Test Result]) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 261.74 Td (This option will guide the user through the process of generating their own test suite, which they can) Tj ET Q
-q 0.000 g BT 59.53 247.56 Td (then run, that's based upon an existing test results file.) Tj ET Q
+q 0.000 g BT 59.53 148.35 Td (This option will guide the user through the process of generating their own test suite, which they can) Tj ET Q
+q 0.000 g BT 59.53 134.18 Td (then run, that is based upon an existing test results file.) Tj ET Q
 BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 218.62 Td (validate-result-file) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 105.23 Td (validate-result-file) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 142.44 218.92 Td (  ) Tj ET Q
+q 0.380 0.388 0.376 rg BT 142.44 105.53 Td (  ) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 205.04 Td (This option can be used for validating a Phoronix Test Suite result file as being compliant against the) Tj ET Q
-q 0.000 g BT 59.53 190.87 Td (OpenBenchmarking.org specification.) Tj ET Q
-BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 161.92 Td (validate-test-profile) Tj ET Q
-BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 151.09 162.22 Td (  ) Tj ET Q
-BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 148.35 Td (This option can be used for validating a Phoronix Test Suite test profile as being compliant against the) Tj ET Q
-q 0.000 g BT 59.53 134.18 Td (OpenBenchmarking.org specification.) Tj ET Q
-BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 105.23 Td (validate-test-suite) Tj ET Q
-BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 141.71 105.53 Td (  ) Tj ET Q
-BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 91.66 Td (This option can be used for validating a Phoronix Test Suite test suite as being compliant against the) Tj ET Q
+q 0.000 g BT 59.53 91.66 Td (This option can be used for validating a Phoronix Test Suite result file as being compliant against the) Tj ET Q
 q 0.000 g BT 59.53 77.48 Td (OpenBenchmarking.org specification.) Tj ET Q
-BT /F1 16.00 Tf ET
+BT /F1 13.00 Tf ET
 BT /F1 7.00 Tf ET
-q 0.196 0.200 0.192 rg BT 26.93 26.25 Td (Phoronix Test Suite v3.0.0r1) Tj ET Q
-566.93 28.35 0.00 0.00 re f q 0.196 0.200 0.192 rg BT 466.08 26.25 Td (www.phoronix-test-suite.com) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 26.25 Td (Phoronix Test Suite v3.0.0r1) Tj ET Q
+566.93 28.35 0.00 0.00 re f q 0.380 0.388 0.376 rg BT 466.08 26.25 Td (www.phoronix-test-suite.com) Tj ET Q
 
 endstream
 endobj
@@ -450,100 +451,103 @@ endobj
 /Contents 14 0 R>>
 endobj
 14 0 obj
-<</Length 5911>>
+<</Length 5892>>
 stream
 2 J
 0.57 w
-BT /F1 16.00 Tf ET
+BT /F1 13.00 Tf ET
 1.000 1.000 1.000 rg
 q 85.04 0 0 44.13 28.35 775.08 cm /I2 Do Q
 BT /F1 14.00 Tf ET
-q 0.196 0.200 0.192 rg BT 199.63 795.17 Td (Phoronix Test Suite v3.0.0r1) Tj ET Q
+q 0.380 0.388 0.376 rg BT 203.88 795.17 Td (Phoronix Test Suite v3.0.0r1) Tj ET Q
 BT /F1 10.00 Tf ET
-q 0.196 0.200 0.192 rg BT 232.17 779.36 Td (Test Client Documentation) Tj ET Q
+q 0.380 0.388 0.376 rg BT 234.30 779.36 Td (Test Client Documentation) Tj ET Q
+BT /F1 13.00 Tf ET
+q 0.380 0.388 0.376 rg BT 31.18 743.03 Td (validate-test-profile) Tj ET Q
+BT /F3 12.00 Tf ET
+q 0.380 0.388 0.376 rg BT 151.09 743.33 Td (  ) Tj ET Q
+BT /F2 11.00 Tf ET
+q 0.000 g BT 59.53 729.45 Td (This option can be used for validating a Phoronix Test Suite test profile as being compliant against the) Tj ET Q
+q 0.000 g BT 59.53 715.28 Td (OpenBenchmarking.org specification.) Tj ET Q
+BT /F1 13.00 Tf ET
+q 0.380 0.388 0.376 rg BT 31.18 686.33 Td (validate-test-suite) Tj ET Q
+BT /F3 12.00 Tf ET
+q 0.380 0.388 0.376 rg BT 141.71 686.63 Td (  ) Tj ET Q
+BT /F2 11.00 Tf ET
+q 0.000 g BT 59.53 672.76 Td (This option can be used for validating a Phoronix Test Suite test suite as being compliant against the) Tj ET Q
+q 0.000 g BT 59.53 658.59 Td (OpenBenchmarking.org specification.) Tj ET Q
 BT /F1 16.00 Tf ET
-q 0.196 0.200 0.192 rg BT 26.93 742.13 Td (Result Management) Tj ET Q
+q 0.196 0.200 0.192 rg BT 26.93 628.74 Td (Result Management) Tj ET Q
 BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 714.68 Td (copy-run-in-result-file) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 601.29 Td (copy-run-in-result-file) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 165.52 714.98 Td (  [Test Result]) Tj ET Q
+q 0.380 0.388 0.376 rg BT 165.52 601.59 Td (  [Test Result]) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 701.11 Td (This option is used if you wish to change an existing test run within a saved results file.) Tj ET Q
+q 0.000 g BT 59.53 587.72 Td (This option is used if you wish to change an existing test run within a saved results file.) Tj ET Q
 BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 672.16 Td (extract-from-result-file) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 558.77 Td (extract-from-result-file) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 169.87 672.46 Td (  [Test Result]) Tj ET Q
+q 0.380 0.388 0.376 rg BT 169.87 559.07 Td (  [Test Result]) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 658.59 Td (This option will extract a single set of test results from a saved results file that contains multiple test) Tj ET Q
-q 0.000 g BT 59.53 644.41 Td (results that have been merged. The user is the prompted to specify a new result file name and select) Tj ET Q
-q 0.000 g BT 59.53 630.24 Td (which result identifier to extract.) Tj ET Q
+q 0.000 g BT 59.53 545.20 Td (This option will extract a single set of test results from a saved results file that contains multiple test) Tj ET Q
+q 0.000 g BT 59.53 531.03 Td (results that have been merged. The user is the prompted to specify a new result file name and select) Tj ET Q
+q 0.000 g BT 59.53 516.85 Td (which result identifier to extract.) Tj ET Q
 BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 601.29 Td (merge-results) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 487.91 Td (merge-results) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 117.15 601.59 Td (  [Test Result]  ...) Tj ET Q
+q 0.380 0.388 0.376 rg BT 117.15 488.21 Td (  [Test Result]  ...) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 587.72 Td (This option will manually merge multiple sets of test results generated by the Phoronix Test Suite.) Tj ET Q
+q 0.000 g BT 59.53 474.33 Td (This option will manually merge multiple sets of test results generated by the Phoronix Test Suite.) Tj ET Q
 BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 558.77 Td (refresh-graphs) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 445.39 Td (refresh-graphs) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 122.92 559.07 Td (  [Test Result]) Tj ET Q
+q 0.380 0.388 0.376 rg BT 122.92 445.69 Td (  [Test Result]) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 545.20 Td (This option will re-render and save all result graphs within a saved file. This option can be used when) Tj ET Q
-q 0.000 g BT 59.53 531.03 Td (making modifications to the graphing code or its color/option configuration file and testing the changes.) Tj ET Q
+q 0.000 g BT 59.53 431.81 Td (This option will re-render and save all result graphs within a saved file. This option can be used when) Tj ET Q
+q 0.000 g BT 59.53 417.64 Td (making modifications to the graphing code or its color/option configuration file and testing the changes.) Tj ET Q
 BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 502.08 Td (remove-from-result-file) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 388.70 Td (remove-from-result-file) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 173.48 502.38 Td (  [Test Result]) Tj ET Q
+q 0.380 0.388 0.376 rg BT 173.48 389.00 Td (  [Test Result]) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 488.51 Td (This option is used if there is a set of test results you wish to remove/delete from a saved results file.) Tj ET Q
-q 0.000 g BT 59.53 474.33 Td (The user must specify a saved results file and then they will be prompted to select the results identifier) Tj ET Q
-q 0.000 g BT 59.53 460.16 Td (associated with the results they wish to remove.) Tj ET Q
+q 0.000 g BT 59.53 375.12 Td (This option is used if there is a set of test results you wish to remove/delete from a saved results file.) Tj ET Q
+q 0.000 g BT 59.53 360.95 Td (The user must specify a saved results file and then they will be prompted to select the results identifier) Tj ET Q
+q 0.000 g BT 59.53 346.78 Td (associated with the results they wish to remove.) Tj ET Q
 BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 431.21 Td (remove-result) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 317.83 Td (remove-result) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 117.15 431.51 Td (  [Test Result]) Tj ET Q
+q 0.380 0.388 0.376 rg BT 117.15 318.13 Td (  [Test Result]) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 417.64 Td (This option will permanently remove the saved file set that is set as the first argument.) Tj ET Q
+q 0.000 g BT 59.53 304.26 Td (This option will permanently remove the saved file set that is set as the first argument.) Tj ET Q
 BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 388.70 Td (rename-identifier-in-result-file) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 275.31 Td (rename-identifier-in-result-file) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 215.38 389.00 Td (  [Test Result]) Tj ET Q
+q 0.380 0.388 0.376 rg BT 215.38 275.61 Td (  [Test Result]) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 375.12 Td (This option is used if you wish to change the name of the identifier in a test results file that is shown in) Tj ET Q
-q 0.000 g BT 59.53 360.95 Td (the Phoronix Test Suite Results Viewer and the contained graphs.) Tj ET Q
+q 0.000 g BT 59.53 261.74 Td (This option is used if you wish to change the name of the identifier in a test results file that is shown in) Tj ET Q
+q 0.000 g BT 59.53 247.56 Td (the Phoronix Test Suite Results Viewer and the contained graphs.) Tj ET Q
 BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 332.00 Td (reorder-result-file) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 218.62 Td (reorder-result-file) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 139.54 332.30 Td (  [Test Result]) Tj ET Q
+q 0.380 0.388 0.376 rg BT 139.54 218.92 Td (  [Test Result]) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 318.43 Td (This option is used if you wish to change the order in which test results are shown in the Phoronix Test) Tj ET Q
-q 0.000 g BT 59.53 304.26 Td (Suite Results Viewer and the contained graphs. The user must specify a saved results file and then) Tj ET Q
-q 0.000 g BT 59.53 290.08 Td (they will be prompted to select the results identifiers one at a time in the order they would like them to) Tj ET Q
-q 0.000 g BT 59.53 275.91 Td (be displayed from left to right.) Tj ET Q
+q 0.000 g BT 59.53 205.04 Td (This option is used if you wish to change the order in which test results are shown in the Phoronix Test) Tj ET Q
+q 0.000 g BT 59.53 190.87 Td (Suite Results Viewer and the contained graphs. The user must specify a saved results file and then) Tj ET Q
+q 0.000 g BT 59.53 176.70 Td (they will be prompted to select the results identifiers one at a time in the order they would like them to) Tj ET Q
+q 0.000 g BT 59.53 162.52 Td (be displayed from left to right.) Tj ET Q
 BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 246.96 Td (result-file-to-csv) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 133.58 Td (result-file-to-csv) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 132.31 247.26 Td (  [Test Result]) Tj ET Q
+q 0.380 0.388 0.376 rg BT 132.31 133.88 Td (  [Test Result]) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 233.39 Td (This option will read a saved test results file and output the system hardware and software information) Tj ET Q
-q 0.000 g BT 59.53 219.22 Td (along with the results to a CSV output. The CSV \(Comma Separated Values\) output can then be loaded) Tj ET Q
-q 0.000 g BT 59.53 205.04 Td (into a spreadsheet for easy viewing.) Tj ET Q
+q 0.000 g BT 59.53 120.00 Td (This option will read a saved test results file and output the system hardware and software information) Tj ET Q
+q 0.000 g BT 59.53 105.83 Td (along with the results to a CSV output. The CSV \(Comma Separated Values\) output can then be loaded) Tj ET Q
+q 0.000 g BT 59.53 91.66 Td (into a spreadsheet for easy viewing.) Tj ET Q
 BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 176.10 Td (show-result) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 62.71 Td (show-result) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 104.14 176.40 Td (  [Test Result]) Tj ET Q
+q 0.380 0.388 0.376 rg BT 104.14 63.01 Td (  [Test Result]) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 162.52 Td (Open up the test results in the Phoronix Test Suite Result Viewer or on OpenBenchmarking.org.) Tj ET Q
-BT /F1 16.00 Tf ET
-q 0.196 0.200 0.192 rg BT 26.93 132.68 Td (Result Analytics) Tj ET Q
-BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 105.23 Td (analyze-all-runs) Tj ET Q
-BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 129.44 105.53 Td (  [Test Result]) Tj ET Q
-BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 91.66 Td (This option will generate a candlestick graph showing the distribution of results from all trial runs. The) Tj ET Q
-q 0.000 g BT 59.53 77.48 Td (candlestick graph is similar to the Japanese candlestick charts used by the financial industry, except) Tj ET Q
-q 0.000 g BT 59.53 63.31 Td (instead of representing stock data it is numerical result data from all trial runs.) Tj ET Q
 BT /F1 7.00 Tf ET
 q 0.000 g BT 59.53 26.25 Td (Phoronix Test Suite v3.0.0r1) Tj ET Q
 566.93 28.35 0.00 0.00 re f q 0.000 g BT 466.08 26.25 Td (www.phoronix-test-suite.com) Tj ET Q
@@ -558,7 +562,7 @@ endobj
 /Contents 16 0 R>>
 endobj
 16 0 obj
-<</Length 5529>>
+<</Length 5475>>
 stream
 2 J
 0.57 w
@@ -570,87 +574,81 @@ q 0.000 g BT 232.23 795.17 Td (Phoronix Test Suite v3.0.0r1) Tj ET Q
 BT /F1 10.00 Tf ET
 q 0.000 g BT 248.47 779.36 Td (Test Client Documentation) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 729.45 Td (The tip of the upper-wick represents the highest value of the test runs with the tip of the lower-wick) Tj ET Q
-q 0.000 g BT 59.53 715.28 Td (representing the lowest value of all test runs. The upper-edge of the candle body represents the first or) Tj ET Q
-q 0.000 g BT 59.53 701.11 Td (last run value and the lower-edge represents the first or last run value. Lastly, if the last run value is) Tj ET Q
-q 0.000 g BT 59.53 686.93 Td (less than the first run value, the candle body is the same color as the graph background, otherwise the) Tj ET Q
-q 0.000 g BT 59.53 672.76 Td (last run value is greater.) Tj ET Q
-BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 643.81 Td (analyze-batch) Tj ET Q
-BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 117.15 644.11 Td (  [Test Result]) Tj ET Q
-BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 630.24 Td (This option will analyze a batch results file and plot out the performance impact from the different) Tj ET Q
-q 0.000 g BT 59.53 616.07 Td (options onto a line graph \(i.e. to see the impact that changing the video resolution has on the system's) Tj ET Q
-q 0.000 g BT 59.53 601.89 Td (performance\).) Tj ET Q
-BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 572.95 Td (analyze-image-delta) Tj ET Q
-BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 154.72 573.25 Td (  [Test Result]) Tj ET Q
-BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 559.37 Td (This option will analyze a test result file if it contains any test results that produced an image quality) Tj ET Q
-q 0.000 g BT 59.53 545.20 Td (comparison \(IQC\) and will render image deltas illustrating the difference between images from two test) Tj ET Q
-q 0.000 g BT 59.53 531.03 Td (results.) Tj ET Q
+q 0.000 g BT 59.53 743.63 Td (Open up the test results in the Phoronix Test Suite Result Viewer or on OpenBenchmarking.org.) Tj ET Q
 BT /F1 16.00 Tf ET
-q 0.196 0.200 0.192 rg BT 26.93 501.18 Td (Other) Tj ET Q
+q 0.196 0.200 0.192 rg BT 26.93 713.78 Td (Result Analytics) Tj ET Q
 BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 473.73 Td (build-suite) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 686.33 Td (analyze-all-runs) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 96.91 474.03 Td (  ) Tj ET Q
+q 0.380 0.388 0.376 rg BT 129.44 686.63 Td (  [Test Result]) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 460.16 Td (This option will guide the user through the process of generating their own test suite, which they can) Tj ET Q
-q 0.000 g BT 59.53 445.99 Td (then run. Optionally, passed as arguments can be the test\(s\) or suite\(s\) to add to the suite to be) Tj ET Q
-q 0.000 g BT 59.53 431.81 Td (created, instead of being prompted through the process.) Tj ET Q
+q 0.000 g BT 59.53 672.76 Td (This option will generate a candlestick graph showing the distribution of results from all trial runs. The) Tj ET Q
+q 0.000 g BT 59.53 658.59 Td (candlestick graph is similar to the Japanese candlestick charts used by the financial industry, except) Tj ET Q
+q 0.000 g BT 59.53 644.41 Td (instead of representing stock data it is numerical result data from all trial runs.) Tj ET Q
+q 0.000 g BT 59.53 616.07 Td (The tip of the upper-wick represents the highest value of the test runs with the tip of the lower-wick) Tj ET Q
+q 0.000 g BT 59.53 601.89 Td (representing the lowest value of all test runs. The upper-edge of the candle body represents the first or) Tj ET Q
+q 0.000 g BT 59.53 587.72 Td (last run value and the lower-edge represents the first or last run value. Lastly, if the last run value is) Tj ET Q
+q 0.000 g BT 59.53 573.55 Td (less than the first run value, the candle body is the same color as the graph background, otherwise the) Tj ET Q
+q 0.000 g BT 59.53 559.37 Td (last run value is greater.) Tj ET Q
 BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 402.87 Td (help) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 530.43 Td (analyze-batch) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 57.91 403.17 Td (  ) Tj ET Q
+q 0.380 0.388 0.376 rg BT 117.15 530.73 Td (  [Test Result]) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 389.30 Td (This option will display the list of available Phoronix Test Suite commands.) Tj ET Q
+q 0.000 g BT 59.53 516.85 Td (This option will analyze a batch results file and plot out the performance impact from the different) Tj ET Q
+q 0.000 g BT 59.53 502.68 Td (options onto a line graph \(i.e. to see the impact that changing the video resolution has on the system's) Tj ET Q
+q 0.000 g BT 59.53 488.51 Td (performance\).) Tj ET Q
 BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 360.35 Td (network-setup) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 459.56 Td (analyze-image-delta) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 120.02 360.65 Td (  ) Tj ET Q
+q 0.380 0.388 0.376 rg BT 154.72 459.86 Td (  [Test Result]) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 346.78 Td (This option allows the user to configure how the Phoronix Test Suite connects to Phoronix Global and) Tj ET Q
-q 0.000 g BT 59.53 332.60 Td (other web-services. Connecting through an HTTP proxy can be configured through this option.) Tj ET Q
+q 0.000 g BT 59.53 445.99 Td (This option will analyze a test result file if it contains any test results that produced an image quality) Tj ET Q
+q 0.000 g BT 59.53 431.81 Td (comparison \(IQC\) and will render image deltas illustrating the difference between images from two test) Tj ET Q
+q 0.000 g BT 59.53 417.64 Td (results.) Tj ET Q
+BT /F1 16.00 Tf ET
+q 0.196 0.200 0.192 rg BT 26.93 387.80 Td (Other) Tj ET Q
 BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 303.66 Td (rebuild-composite-xml) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 360.35 Td (build-suite) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 170.59 303.96 Td (  [Test Result]) Tj ET Q
+q 0.380 0.388 0.376 rg BT 96.91 360.65 Td (  ) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 290.08 Td (This option can be used to rebuild your composite XML file in the event that the main result file was) Tj ET Q
-q 0.000 g BT 59.53 275.91 Td (corrupted and the test-X.xml files are still present in the result file directory.) Tj ET Q
+q 0.000 g BT 59.53 346.78 Td (This option will guide the user through the process of generating their own test suite, which they can) Tj ET Q
+q 0.000 g BT 59.53 332.60 Td (then run. Optionally, passed as arguments can be the test\(s\) or suite\(s\) to add to the suite to be) Tj ET Q
+q 0.000 g BT 59.53 318.43 Td (created, instead of being prompted through the process.) Tj ET Q
 BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 246.96 Td (result-file-to-pdf) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 289.48 Td (help) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 130.84 247.26 Td (  [Test Result]) Tj ET Q
+q 0.380 0.388 0.376 rg BT 57.91 289.78 Td (  ) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 233.39 Td (No summary is available.) Tj ET Q
+q 0.000 g BT 59.53 275.91 Td (This option will display the list of available Phoronix Test Suite commands.) Tj ET Q
 BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 204.44 Td (result-file-to-text) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 246.96 Td (network-setup) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 133.74 204.74 Td (  [Test Result]) Tj ET Q
+q 0.380 0.388 0.376 rg BT 120.02 247.26 Td (  ) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 190.87 Td (This option will read a saved test results file and output the system hardware and software information) Tj ET Q
-q 0.000 g BT 59.53 176.70 Td (to the terminal. The test results are also outputted.) Tj ET Q
+q 0.000 g BT 59.53 233.39 Td (This option allows the user to configure how the Phoronix Test Suite connects to) Tj ET Q
+q 0.000 g BT 59.53 219.22 Td (OpenBenchmarking.org and other web-services. Connecting through an HTTP proxy can be configured) Tj ET Q
+q 0.000 g BT 59.53 205.04 Td (through this option.) Tj ET Q
 BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 147.75 Td (user-config-get) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 176.10 Td (rebuild-composite-xml) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 125.80 148.05 Td (  ) Tj ET Q
+q 0.380 0.388 0.376 rg BT 170.59 176.40 Td (  [Test Result]) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 134.18 Td (This option can be used for reading an XML value of the Phoronix Test Suite user configuration file.) Tj ET Q
+q 0.000 g BT 59.53 162.52 Td (This option can be used to rebuild your composite XML file in the event that the main result file was) Tj ET Q
+q 0.000 g BT 59.53 148.35 Td (corrupted and the test-X.xml files are still present in the result file directory.) Tj ET Q
 BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 105.23 Td (user-config-reset) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 119.40 Td (result-file-to-pdf) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 137.37 105.53 Td (  ) Tj ET Q
+q 0.380 0.388 0.376 rg BT 130.84 119.70 Td (  [Test Result]) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 91.66 Td (This option can be used for resetting the Phoronix Test Suite user configuration file to its default state.) Tj ET Q
+q 0.000 g BT 59.53 105.83 Td (No summary is available.) Tj ET Q
 BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 62.71 Td (user-config-set) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 76.88 Td (result-file-to-text) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 125.08 63.01 Td (  ) Tj ET Q
+q 0.380 0.388 0.376 rg BT 133.74 77.18 Td (  [Test Result]) Tj ET Q
 BT /F2 11.00 Tf ET
+q 0.000 g BT 59.53 63.31 Td (This option will read a saved test results file and output the system hardware and software information) Tj ET Q
 BT /F1 7.00 Tf ET
 q 0.000 g BT 59.53 26.25 Td (Phoronix Test Suite v3.0.0r1) Tj ET Q
 566.93 28.35 0.00 0.00 re f q 0.000 g BT 466.08 26.25 Td (www.phoronix-test-suite.com) Tj ET Q
@@ -665,7 +663,7 @@ endobj
 /Contents 18 0 R>>
 endobj
 18 0 obj
-<</Length 2570>>
+<</Length 3495>>
 stream
 2 J
 0.57 w
@@ -677,42 +675,60 @@ q 0.000 g BT 232.23 795.17 Td (Phoronix Test Suite v3.0.0r1) Tj ET Q
 BT /F1 10.00 Tf ET
 q 0.000 g BT 248.47 779.36 Td (Test Client Documentation) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 743.63 Td (This option can be used for setting an XML value in the Phoronix Test Suite user configuration file.) Tj ET Q
+q 0.000 g BT 59.53 743.63 Td (to the terminal. The test results are also outputted.) Tj ET Q
 BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 714.68 Td (version) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 714.68 Td (user-config-get) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 77.42 714.98 Td (  ) Tj ET Q
+q 0.380 0.388 0.376 rg BT 125.80 714.98 Td (  ) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 701.11 Td (This option will display the Phoronix Test Suite client version.) Tj ET Q
+q 0.000 g BT 59.53 701.11 Td (This option can be used for reading an XML value of the Phoronix Test Suite user configuration file.) Tj ET Q
+BT /F1 13.00 Tf ET
+q 0.380 0.388 0.376 rg BT 31.18 672.16 Td (user-config-reset) Tj ET Q
+BT /F3 12.00 Tf ET
+q 0.380 0.388 0.376 rg BT 137.37 672.46 Td (  ) Tj ET Q
+BT /F2 11.00 Tf ET
+q 0.000 g BT 59.53 658.59 Td (This option can be used for resetting the Phoronix Test Suite user configuration file to its default state.) Tj ET Q
+BT /F1 13.00 Tf ET
+q 0.380 0.388 0.376 rg BT 31.18 629.64 Td (user-config-set) Tj ET Q
+BT /F3 12.00 Tf ET
+q 0.380 0.388 0.376 rg BT 125.08 629.94 Td (  ) Tj ET Q
+BT /F2 11.00 Tf ET
+q 0.000 g BT 59.53 616.07 Td (This option can be used for setting an XML value in the Phoronix Test Suite user configuration file.) Tj ET Q
+BT /F1 13.00 Tf ET
+q 0.380 0.388 0.376 rg BT 31.18 587.12 Td (version) Tj ET Q
+BT /F3 12.00 Tf ET
+q 0.380 0.388 0.376 rg BT 77.42 587.42 Td (  ) Tj ET Q
+BT /F2 11.00 Tf ET
+q 0.000 g BT 59.53 573.55 Td (This option will display the Phoronix Test Suite client version.) Tj ET Q
 BT /F1 16.00 Tf ET
-q 0.196 0.200 0.192 rg BT 26.93 671.26 Td (Modules) Tj ET Q
+q 0.196 0.200 0.192 rg BT 26.93 543.70 Td (Modules) Tj ET Q
 BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 643.81 Td (list-modules) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 516.25 Td (list-modules) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 107.75 644.11 Td (  ) Tj ET Q
+q 0.380 0.388 0.376 rg BT 107.75 516.55 Td (  ) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 630.24 Td (This option will list all of the available Phoronix Test Suite modules on this system.) Tj ET Q
+q 0.000 g BT 59.53 502.68 Td (This option will list all of the available Phoronix Test Suite modules on this system.) Tj ET Q
 BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 601.29 Td (module-info) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 473.73 Td (module-info) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 105.57 601.59 Td (  [Phoronix Test Suite Module]) Tj ET Q
+q 0.380 0.388 0.376 rg BT 105.57 474.03 Td (  [Phoronix Test Suite Module]) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 587.72 Td (This option will show detailed information on a Phoronix Test Suite module such as the version,) Tj ET Q
-q 0.000 g BT 59.53 573.55 Td (developer, and a description of its purpose.) Tj ET Q
+q 0.000 g BT 59.53 460.16 Td (This option will show detailed information on a Phoronix Test Suite module such as the version,) Tj ET Q
+q 0.000 g BT 59.53 445.99 Td (developer, and a description of its purpose.) Tj ET Q
 BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 544.60 Td (module-setup) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 417.04 Td (module-setup) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 116.41 544.90 Td (  [Phoronix Test Suite Module]) Tj ET Q
+q 0.380 0.388 0.376 rg BT 116.41 417.34 Td (  [Phoronix Test Suite Module]) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 531.03 Td (This option will allow you to configure all available end-user options for a Phoronix Test Suite module.) Tj ET Q
-q 0.000 g BT 59.53 516.85 Td (These options are then stored within the user's configuration file. Not all modules may have options that) Tj ET Q
-q 0.000 g BT 59.53 502.68 Td (can be configured by the end-user.) Tj ET Q
+q 0.000 g BT 59.53 403.47 Td (This option will allow you to configure all available end-user options for a Phoronix Test Suite module.) Tj ET Q
+q 0.000 g BT 59.53 389.30 Td (These options are then stored within the user's configuration file. Not all modules may have options that) Tj ET Q
+q 0.000 g BT 59.53 375.12 Td (can be configured by the end-user.) Tj ET Q
 BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 473.73 Td (test-module) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 346.18 Td (test-module) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 104.85 474.03 Td (  [Phoronix Test Suite Module]) Tj ET Q
+q 0.380 0.388 0.376 rg BT 104.85 346.48 Td (  [Phoronix Test Suite Module]) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 460.16 Td (This option can be used for debugging a Phoronix Test Suite module.) Tj ET Q
+q 0.000 g BT 59.53 332.60 Td (This option can be used for debugging a Phoronix Test Suite module.) Tj ET Q
 BT /F1 7.00 Tf ET
 q 0.000 g BT 26.93 26.25 Td (Phoronix Test Suite v3.0.0r1) Tj ET Q
 566.93 28.35 0.00 0.00 re f q 0.000 g BT 466.08 26.25 Td (www.phoronix-test-suite.com) Tj ET Q
@@ -723,11 +739,11 @@ endobj
 <</Type /Page
 /Parent 1 0 R
 /Resources 2 0 R
-/Annots [<</Type /Annot /Subtype /Link /Rect [466.08 31.85 564.09 24.85] /Border [0 0 0] /A <</S /URI /URI (http://www.phoronix-test-suite.com/)>>>>]
+/Annots [<</Type /Annot /Subtype /Link /Rect [161.65 451.95 230.10 440.95] /Border [0 0 0] /A <</S /URI /URI (http://www.php.net/)>>>><</Type /Annot /Subtype /Link /Rect [466.08 31.85 564.09 24.85] /Border [0 0 0] /A <</S /URI /URI (http://www.phoronix-test-suite.com/)>>>>]
 /Contents 20 0 R>>
 endobj
 20 0 obj
-<</Length 5417>>
+<</Length 5678>>
 stream
 2 J
 0.57 w
@@ -757,63 +773,68 @@ q 0.000 g BT 59.53 556.54 Td (test profiles that build an OpenGL benchmark from 
 BT /F1 16.00 Tf ET
 q 0.196 0.200 0.192 rg BT 26.93 526.69 Td (Dependencies) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 499.85 Td (The only required dependency for the Phoronix Test Suite is PHP 5.x CLI \(packages for it are) Tj ET Q
-q 0.000 g BT 59.53 485.67 Td (commonly called ) Tj ET Q
+q 0.000 g BT 59.53 499.85 Td (The only required dependency for the Phoronix Test Suite is PHP 5.2 or newer. On Linux distributions,) Tj ET Q
+q 0.000 g BT 59.53 485.67 Td (the needed package is commonly called ) Tj ET Q
 BT /F3 11.00 Tf ET
-q 0.000 g BT 144.49 485.67 Td (php5-cli) Tj ET Q
+q 0.000 g BT 258.23 485.67 Td (php5-cli) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 183.00 485.67 Td ( or ) Tj ET Q
+q 0.000 g BT 296.74 485.67 Td ( or ) Tj ET Q
 BT /F3 11.00 Tf ET
-q 0.000 g BT 198.90 485.67 Td (php-cli) Tj ET Q
+q 0.000 g BT 312.64 485.67 Td (php-cli) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 231.29 485.67 Td ( or just ) Tj ET Q
+q 0.000 g BT 345.03 485.67 Td ( or ) Tj ET Q
 BT /F3 11.00 Tf ET
-q 0.000 g BT 267.36 485.67 Td (php) Tj ET Q
+q 0.000 g BT 360.93 485.67 Td (php) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 285.71 485.67 Td (\). It's important to note that only PHP for the) Tj ET Q
-q 0.000 g BT 59.53 471.50 Td (command-line is needed and not a web server \(Apache\) or other packages commonly associated with) Tj ET Q
-q 0.000 g BT 59.53 457.33 Td (PHP and its usage by web-sites. The PHP5 version required is PHP 5.2 or newer.) Tj ET Q
-q 0.000 g BT 59.53 428.98 Td (As part of the PHP requirement, the following PHP extensions are required and/or highly recommended) Tj ET Q
-q 0.000 g BT 59.53 414.81 Td (in order to take advantage of the Phoronix Test Suite capabilities:) Tj ET Q
+q 0.000 g BT 379.28 485.67 Td (. It's important to note that only PHP) Tj ET Q
+q 0.000 g BT 59.53 471.50 Td (for the command-line is needed and not a web server \(Apache\) or other packages commonly) Tj ET Q
+q 0.000 g BT 59.53 457.33 Td (associated with PHP and its usage by web-sites. The PHP5 version required is PHP 5.2 or newer and) Tj ET Q
+q 0.000 g BT 59.53 443.15 Td (can also be found at ) Tj ET Q
 BT /F1 11.00 Tf ET
-q 0.000 g BT 87.87 386.46 Td (PHP DOM) Tj ET Q
+q 0.000 0.000 0.455 rg BT 161.65 443.15 Td (www.php.net) Tj ET 161.65 442.05 68.45 -0.55 re f Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 139.21 386.46 Td ( is needed for XML operations and must be installed for the Phoronix Test Suite to) Tj ET Q
-q 0.000 g BT 87.87 372.29 Td (function.) Tj ET Q
+q 0.000 g BT 230.10 443.15 Td (.) Tj ET Q
+q 0.000 g BT 59.53 414.81 Td (As part of the PHP requirement, the following PHP extensions are required and/or highly recommended) Tj ET Q
+q 0.000 g BT 59.53 400.63 Td (in order to take advantage of the Phoronix Test Suite capabilities:) Tj ET Q
 BT /F1 11.00 Tf ET
-q 0.000 g BT 87.87 343.94 Td (PHP ZIP) Tj ET Q
+q 0.000 g BT 87.87 372.29 Td (PHP DOM) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 130.66 343.94 Td ( is needed for file compression and decompression and specifically dealing with test) Tj ET Q
-q 0.000 g BT 87.87 329.77 Td (profiles and suites obtained via OpenBenchmarking.org or when uploading such tests and suites.) Tj ET Q
+q 0.000 g BT 139.21 372.29 Td ( is needed for XML operations and must be installed for the Phoronix Test Suite to) Tj ET Q
+q 0.000 g BT 87.87 358.11 Td (function.) Tj ET Q
 BT /F1 11.00 Tf ET
-q 0.000 g BT 87.87 301.42 Td (PHP OpenSSL) Tj ET Q
+q 0.000 g BT 87.87 329.77 Td (PHP ZIP) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 163.06 301.42 Td ( is used for enabling HTTPS communication with Phoronix Test Suite /) Tj ET Q
-q 0.000 g BT 87.87 287.25 Td (OpenBenchmarking.org servers.) Tj ET Q
+q 0.000 g BT 130.66 329.77 Td ( is needed for file compression and decompression and specifically dealing with test) Tj ET Q
+q 0.000 g BT 87.87 315.59 Td (profiles and suites obtained via OpenBenchmarking.org or when uploading such tests and suites.) Tj ET Q
 BT /F1 11.00 Tf ET
-q 0.000 g BT 87.87 258.90 Td (PHP GD) Tj ET Q
+q 0.000 g BT 87.87 287.25 Td (PHP OpenSSL) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 130.05 258.90 Td ( is highly recommended for rendering of test data to JPEG and PNG image formats and) Tj ET Q
-q 0.000 g BT 87.87 244.73 Td (is selectively used in other image operations.) Tj ET Q
+q 0.000 g BT 163.06 287.25 Td ( is used for enabling HTTPS communication with Phoronix Test Suite /) Tj ET Q
+q 0.000 g BT 87.87 273.07 Td (OpenBenchmarking.org servers.) Tj ET Q
 BT /F1 11.00 Tf ET
-q 0.000 g BT 87.87 216.38 Td (PHP Zlib) Tj ET Q
+q 0.000 g BT 87.87 244.73 Td (PHP GD) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 133.11 216.38 Td ( is highly recommended for greater data compression when dealing with remote) Tj ET Q
-q 0.000 g BT 87.87 202.21 Td (OpenBenchmarking.org assets.) Tj ET Q
+q 0.000 g BT 130.05 244.73 Td ( is highly recommended for rendering of test data to JPEG and PNG image formats and) Tj ET Q
+q 0.000 g BT 87.87 230.55 Td (is selectively used in other image operations.) Tj ET Q
 BT /F1 11.00 Tf ET
-q 0.000 g BT 87.87 173.86 Td (PHP PCNTL) Tj ET Q
+q 0.000 g BT 87.87 202.21 Td (PHP Zlib) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 150.21 173.86 Td ( is used for multi-threaded system sensor monitoring support during the testing) Tj ET Q
-q 0.000 g BT 87.87 159.69 Td (process and other threaded tasks by the Phoronix Test Suite module framework.) Tj ET Q
+q 0.000 g BT 133.11 202.21 Td ( is highly recommended for greater data compression when dealing with remote) Tj ET Q
+q 0.000 g BT 87.87 188.04 Td (OpenBenchmarking.org assets.) Tj ET Q
 BT /F1 11.00 Tf ET
-q 0.000 g BT 87.87 131.34 Td (PHP POSIX) Tj ET Q
+q 0.000 g BT 87.87 159.69 Td (PHP PCNTL) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 147.18 131.34 Td ( is used for reliably obtaining more system information in an efficient manner.) Tj ET Q
+q 0.000 g BT 150.21 159.69 Td ( is used for multi-threaded system sensor monitoring support during the testing) Tj ET Q
+q 0.000 g BT 87.87 145.52 Td (process and other threaded tasks by the Phoronix Test Suite module framework.) Tj ET Q
 BT /F1 11.00 Tf ET
-q 0.000 g BT 87.87 103.00 Td (PHP CURL) Tj ET Q
+q 0.000 g BT 87.87 117.17 Td (PHP POSIX) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 144.10 103.00 Td ( is supported as an alternative networking library for improved network performance in) Tj ET Q
-q 0.000 g BT 87.87 88.82 Td (downloading test files and other operations.) Tj ET Q
+q 0.000 g BT 147.18 117.17 Td ( is used for reliably obtaining more system information in an efficient manner.) Tj ET Q
+BT /F1 11.00 Tf ET
+q 0.000 g BT 87.87 88.82 Td (PHP CURL) Tj ET Q
+BT /F2 11.00 Tf ET
+q 0.000 g BT 144.10 88.82 Td ( is supported as an alternative networking library for improved network performance in) Tj ET Q
+q 0.000 g BT 87.87 74.65 Td (downloading test files and other operations.) Tj ET Q
 BT /F1 11.00 Tf ET
 BT /F1 7.00 Tf ET
 q 0.000 g BT 87.87 26.25 Td (Phoronix Test Suite v3.0.0r1) Tj ET Q
@@ -2669,7 +2690,7 @@ endobj
 /Parent 61 0 R
 /Prev 65 0 R
 /Next 67 0 R
-/Dest [9 0 R /XYZ 0 683.15 null]
+/Dest [9 0 R /XYZ 0 555.59 null]
 /Count 0>>
 endobj
 67 0 obj
@@ -2677,7 +2698,7 @@ endobj
 /Parent 61 0 R
 /Prev 66 0 R
 /Next 68 0 R
-/Dest [9 0 R /XYZ 0 484.72 null]
+/Dest [9 0 R /XYZ 0 357.16 null]
 /Count 0>>
 endobj
 68 0 obj
@@ -2685,7 +2706,7 @@ endobj
 /Parent 61 0 R
 /Prev 67 0 R
 /Next 69 0 R
-/Dest [11 0 R /XYZ 0 598.11 null]
+/Dest [11 0 R /XYZ 0 484.72 null]
 /Count 0>>
 endobj
 69 0 obj
@@ -2693,7 +2714,7 @@ endobj
 /Parent 61 0 R
 /Prev 68 0 R
 /Next 70 0 R
-/Dest [11 0 R /XYZ 0 73.70 null]
+/Dest [13 0 R /XYZ 0 654.80 null]
 /Count 0>>
 endobj
 70 0 obj
@@ -2701,7 +2722,7 @@ endobj
 /Parent 61 0 R
 /Prev 69 0 R
 /Next 71 0 R
-/Dest [13 0 R /XYZ 0 158.74 null]
+/Dest [15 0 R /XYZ 0 739.84 null]
 /Count 0>>
 endobj
 71 0 obj
@@ -2709,14 +2730,14 @@ endobj
 /Parent 61 0 R
 /Prev 70 0 R
 /Next 72 0 R
-/Dest [15 0 R /XYZ 0 527.24 null]
+/Dest [15 0 R /XYZ 0 413.85 null]
 /Count 0>>
 endobj
 72 0 obj
 <</Title (Modules)
 /Parent 61 0 R
 /Prev 71 0 R
-/Dest [17 0 R /XYZ 0 697.32 null]
+/Dest [17 0 R /XYZ 0 569.76 null]
 /Count 0>>
 endobj
 73 0 obj
@@ -3011,7 +3032,7 @@ endobj
 /Author (Phoronix Test Suite)
 /Keywords ()
 /Creator (PhoronixTestSuite/Iveland)
-/CreationDate (D:20110214165918)
+/CreationDate (D:20110221132747)
 >>
 endobj
 110 0 obj
@@ -3027,116 +3048,116 @@ endobj
 xref
 0 111
 0000000000 65535 f 
-0000136554 00000 n 
-0000148416 00000 n 
+0000138317 00000 n 
+0000150179 00000 n 
 0000000009 00000 n 
 0000000380 00000 n 
 0000000890 00000 n 
 0000001118 00000 n 
-0000007001 00000 n 
-0000007229 00000 n 
-0000013051 00000 n 
-0000013280 00000 n 
-0000018601 00000 n 
-0000018831 00000 n 
-0000024500 00000 n 
-0000024730 00000 n 
-0000030692 00000 n 
-0000030922 00000 n 
-0000036502 00000 n 
-0000036732 00000 n 
-0000039353 00000 n 
-0000039583 00000 n 
-0000045051 00000 n 
-0000045721 00000 n 
-0000053983 00000 n 
-0000054363 00000 n 
-0000060720 00000 n 
-0000061085 00000 n 
-0000062656 00000 n 
-0000062886 00000 n 
-0000067230 00000 n 
-0000067460 00000 n 
-0000071771 00000 n 
-0000072001 00000 n 
-0000076247 00000 n 
-0000076477 00000 n 
-0000077834 00000 n 
-0000079396 00000 n 
-0000086698 00000 n 
-0000087208 00000 n 
-0000094490 00000 n 
-0000094720 00000 n 
-0000102022 00000 n 
-0000102252 00000 n 
-0000108147 00000 n 
-0000108377 00000 n 
-0000114216 00000 n 
-0000114871 00000 n 
-0000119594 00000 n 
-0000119964 00000 n 
-0000125666 00000 n 
-0000126033 00000 n 
-0000131233 00000 n 
-0000131864 00000 n 
-0000134880 00000 n 
-0000135110 00000 n 
-0000136814 00000 n 
-0000136916 00000 n 
-0000137013 00000 n 
-0000137118 00000 n 
-0000141277 00000 n 
-0000142056 00000 n 
-0000148565 00000 n 
-0000148705 00000 n 
-0000148822 00000 n 
-0000148942 00000 n 
-0000149068 00000 n 
-0000149201 00000 n 
-0000149320 00000 n 
-0000149444 00000 n 
-0000149572 00000 n 
-0000149702 00000 n 
-0000149832 00000 n 
-0000149951 00000 n 
-0000150059 00000 n 
-0000150226 00000 n 
-0000150335 00000 n 
-0000150461 00000 n 
-0000150594 00000 n 
-0000150702 00000 n 
-0000150830 00000 n 
-0000150959 00000 n 
-0000151093 00000 n 
-0000151232 00000 n 
-0000151375 00000 n 
-0000151508 00000 n 
-0000151643 00000 n 
-0000151781 00000 n 
-0000151911 00000 n 
-0000152046 00000 n 
-0000152167 00000 n 
-0000152322 00000 n 
-0000152443 00000 n 
-0000152566 00000 n 
-0000152728 00000 n 
-0000152855 00000 n 
+0000007048 00000 n 
+0000007276 00000 n 
+0000013276 00000 n 
+0000013505 00000 n 
+0000018938 00000 n 
+0000019168 00000 n 
+0000025025 00000 n 
+0000025255 00000 n 
+0000031198 00000 n 
+0000031428 00000 n 
+0000036954 00000 n 
+0000037184 00000 n 
+0000040730 00000 n 
+0000041085 00000 n 
+0000046814 00000 n 
+0000047484 00000 n 
+0000055746 00000 n 
+0000056126 00000 n 
+0000062483 00000 n 
+0000062848 00000 n 
+0000064419 00000 n 
+0000064649 00000 n 
+0000068993 00000 n 
+0000069223 00000 n 
+0000073534 00000 n 
+0000073764 00000 n 
+0000078010 00000 n 
+0000078240 00000 n 
+0000079597 00000 n 
+0000081159 00000 n 
+0000088461 00000 n 
+0000088971 00000 n 
+0000096253 00000 n 
+0000096483 00000 n 
+0000103785 00000 n 
+0000104015 00000 n 
+0000109910 00000 n 
+0000110140 00000 n 
+0000115979 00000 n 
+0000116634 00000 n 
+0000121357 00000 n 
+0000121727 00000 n 
+0000127429 00000 n 
+0000127796 00000 n 
+0000132996 00000 n 
+0000133627 00000 n 
+0000136643 00000 n 
+0000136873 00000 n 
+0000138577 00000 n 
+0000138679 00000 n 
+0000138776 00000 n 
+0000138881 00000 n 
+0000143040 00000 n 
+0000143819 00000 n 
+0000150328 00000 n 
+0000150468 00000 n 
+0000150585 00000 n 
+0000150705 00000 n 
+0000150831 00000 n 
+0000150964 00000 n 
+0000151083 00000 n 
+0000151207 00000 n 
+0000151335 00000 n 
+0000151466 00000 n 
+0000151596 00000 n 
+0000151715 00000 n 
+0000151823 00000 n 
+0000151990 00000 n 
+0000152099 00000 n 
+0000152225 00000 n 
+0000152358 00000 n 
+0000152466 00000 n 
+0000152594 00000 n 
+0000152723 00000 n 
+0000152857 00000 n 
 0000152996 00000 n 
-0000153104 00000 n 
-0000153225 00000 n 
-0000153352 00000 n 
-0000153486 00000 n 
-0000153601 00000 n 
-0000153737 00000 n 
-0000153894 00000 n 
-0000154006 00000 n 
-0000154128 00000 n 
-0000154291 00000 n 
-0000154444 00000 n 
-0000154551 00000 n 
-0000154674 00000 n 
-0000154739 00000 n 
-0000154987 00000 n 
+0000153139 00000 n 
+0000153272 00000 n 
+0000153407 00000 n 
+0000153545 00000 n 
+0000153675 00000 n 
+0000153810 00000 n 
+0000153931 00000 n 
+0000154086 00000 n 
+0000154207 00000 n 
+0000154330 00000 n 
+0000154492 00000 n 
+0000154619 00000 n 
+0000154760 00000 n 
+0000154868 00000 n 
+0000154989 00000 n 
+0000155116 00000 n 
+0000155250 00000 n 
+0000155365 00000 n 
+0000155501 00000 n 
+0000155658 00000 n 
+0000155770 00000 n 
+0000155892 00000 n 
+0000156055 00000 n 
+0000156208 00000 n 
+0000156315 00000 n 
+0000156438 00000 n 
+0000156503 00000 n 
+0000156751 00000 n 
 trailer
 <<
 /Size 111
@@ -3144,5 +3165,5 @@ trailer
 /Info 109 0 R
 >>
 startxref
-155133
+156897
 %%EOF

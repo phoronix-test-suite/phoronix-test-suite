@@ -50,7 +50,10 @@ class pts_result_file_analyzer
 		if(count($hw_unique) == 1 && count($sw_unique) == 1)
 		{
 			// The hardware and software is maintained throughout the testing, so if there's a change in results its something we aren't monitoring
-			$desc = array('Unknown', implode(', ', $identifiers));
+			if(count($hw) > 2)
+			{
+				$desc = array('Unknown', implode(', ', $identifiers));
+			}
 		}
 		else if(count($sw_unique) == 1)
 		{
