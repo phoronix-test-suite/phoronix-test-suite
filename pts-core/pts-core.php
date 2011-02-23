@@ -21,15 +21,17 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-define('PTS_VERSION', '3.0.0r1');
-define('PTS_CORE_VERSION', 2990);
+define('PTS_VERSION', '3.0.0r2');
+define('PTS_CORE_VERSION', 2992);
 define('PTS_CODENAME', 'IVELAND');
 define('PTS_IS_CLIENT', PTS_MODE == 'CLIENT');
 
+/*
 if(PTS_IS_CLIENT)
 {
 	error_reporting(E_ALL | E_NOTICE | E_STRICT);
 }
+*/
 
 function pts_codename($full_string = false)
 {

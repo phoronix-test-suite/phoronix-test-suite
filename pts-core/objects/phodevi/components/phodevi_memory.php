@@ -47,8 +47,6 @@ class phodevi_memory extends phodevi_device_interface
 			$mem_size = phodevi_osx_parser::read_osx_system_profiler('SPMemoryDataType', 'Size', true, array('Empty'));
 			$mem_speed = phodevi_osx_parser::read_osx_system_profiler('SPMemoryDataType', 'Speed');
 			$mem_type = phodevi_osx_parser::read_osx_system_profiler('SPMemoryDataType', 'Type');
-
-			
 		}
 		else if(IS_SOLARIS)
 		{

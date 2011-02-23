@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010, Phoronix Media
-	Copyright (C) 2010, Michael Larabel
+	Copyright (C) 2010 - 2011, Phoronix Media
+	Copyright (C) 2010 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@ class pts_results_nye_XmlReader extends nye_XmlReader
 {
 	public function __construct($read_xml)
 	{
-		if(!isset($read_xml[1024]) && is_file(PTS_SAVE_RESULTS_PATH . $read_xml . '/composite.xml'))
+		if(!isset($read_xml[1024]) && defined('PTS_SAVE_RESULTS_PATH') && is_file(PTS_SAVE_RESULTS_PATH . $read_xml . '/composite.xml'))
 		{
 			$read_xml = PTS_SAVE_RESULTS_PATH . $read_xml . '/composite.xml';
 		}
