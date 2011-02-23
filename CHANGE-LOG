@@ -1,8 +1,10 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 3.0 Release Candidate 2
+23 February 2011
 
 - pts-core: Drop dead code of the integrated external results hook since it's still in the result_notifier module with Iveland
+- pts-core: Various small fixes and tweaks
 - result_notifier: Last minute improvements
 
 Phoronix Test Suite 3.0 Release Candidate 1

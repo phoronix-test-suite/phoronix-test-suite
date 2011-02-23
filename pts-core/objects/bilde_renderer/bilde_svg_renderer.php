@@ -312,7 +312,7 @@ class bilde_svg_renderer extends bilde_renderer
 		$rect->setAttribute('y', $y1);
 		$rect->setAttribute('width', $width);
 		$rect->setAttribute('height', $height);
-		$rect->setAttribute('fill', $background_color);
+		//$rect->setAttribute('fill', $background_color);
 		$rect->setAttribute('style', 'fill:url(#g_' .  $gradient_count . ')');
 		$gradient_count++;
 
