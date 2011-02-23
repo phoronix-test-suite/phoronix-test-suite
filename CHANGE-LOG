@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- pts-core: When creating a lock, verify the directory is writable
+
 Phoronix Test Suite 3.0 Release Candidate 2
 23 February 2011
 

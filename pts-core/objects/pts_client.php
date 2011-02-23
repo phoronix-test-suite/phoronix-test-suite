@@ -27,7 +27,7 @@ class pts_client
 
 	public static function create_lock($lock_file)
 	{
-		if(isset(self::$lock_pointers[$lock_file]))
+		if(isset(self::$lock_pointers[$lock_file]) || is_writable(dirname($lock_file)) == false)
 		{
 			return false;
 		}
