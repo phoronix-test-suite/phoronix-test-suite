@@ -4,6 +4,7 @@ Phoronix Test Suite (Git)
 
 - pts-core: When creating a lock, verify the directory is writable
 - pts-core: When running a result file, don't overwrite the description
+- pts-core: External dependencies support for Scientific Linux
 
 Phoronix Test Suite 3.0 Release Candidate 2
 23 February 2011
