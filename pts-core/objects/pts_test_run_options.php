@@ -35,7 +35,7 @@ class pts_test_run_options
 			$preset_selections = pts_client::parse_value_string_double_identifier($cli_presets_env);
 		}
 
-		$identifier = $test_profile->get_identifier();
+		$identifier = $test_profile->get_identifier_base_name();
 
 		foreach($test_profile->get_test_option_objects() as $i => $o)
 		{
