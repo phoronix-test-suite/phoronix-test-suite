@@ -889,7 +889,7 @@ class pts_test_run_manager
 				$this->prompt_results_identifier();
 				$unique_tests_r = array_unique($this->get_tests_to_run_identifiers());
 
-				if(count($unique_tests_r) > 1 || $this->run_description == null)
+				if($this->run_description == null)
 				{
 					$this->run_description = 'Running ' . implode(', ', $unique_tests_r) . '.';
 				}
