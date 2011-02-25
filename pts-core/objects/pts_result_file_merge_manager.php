@@ -24,6 +24,7 @@ class pts_result_file_merge_manager
 {
 	private $test_results = null;
 	private $skip_subsystems = null;
+	private $only_show_select_tests;
 	private $sets_added = 0;
 	private $is_reference_comparison;
 	private $skip_adding_on_extra_sets;
@@ -39,7 +40,7 @@ class pts_result_file_merge_manager
 
 		$this->is_reference_comparison = isset($pass_attributes['is_reference_comparison']);
 		$this->skip_adding_on_extra_sets = isset($pass_attributes['skip_adding_on_extra_sets']);
-
+		$this->only_show_select_tests = isset($pass_attributes['select_test_profiles']) ? $pass_attributes['select_test_profiles'] : null;
 	}
 	public function add_test_result_set($merge_test_objects_array, &$result_merge_select)
 	{
@@ -61,6 +62,13 @@ class pts_result_file_merge_manager
 			$test_subsystem = pts_tests::test_hardware_type($merge_test_object->test_profile->get_identifier());
 
 			if($test_subsystem != null && !in_array($test_subsystem, $this->skip_subsystems))
+			{
+				return false;
+			}
+		}
+		if($this->only_show_select_tests != null && is_array($this->only_show_select_tests))
+		{
+			if(!in_array($merge_test_object->test_profile->get_identifier_base_name(), $this->only_show_select_tests))
 			{
 				return false;
 			}

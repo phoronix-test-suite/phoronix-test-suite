@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2010, Phoronix Media
-	Copyright (C) 2008 - 2010, Michael Larabel
+	Copyright (C) 2008 - 2011, Phoronix Media
+	Copyright (C) 2008 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -117,6 +117,10 @@ class pts_result_file
 	public function get_test_count()
 	{
 		return count($this->get_test_titles());
+	}
+	public function get_unique_test_count()
+	{
+		return count($this->get_unique_test_titles());
 	}
 	public function get_result_object_hashes()
 	{
