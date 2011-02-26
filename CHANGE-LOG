@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 3.0-Iveland
+26 February 2011
 
 - pts-core: When creating a lock, verify the directory is writable
 - pts-core: When running a result file, don't overwrite the description
