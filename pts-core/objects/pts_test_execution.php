@@ -121,9 +121,13 @@ class pts_test_execution
 				{
 					$test_result = $cache_share->read_object('test_results_output_' . $i);
 					$test_extra_runtime_variables['LOG_FILE'] = $cache_share->read_object('log_file_location_' . $i);
-					file_put_contents($test_extra_runtime_variables['LOG_FILE'], $cache_share->read_object('log_file_' . $i));
-					$test_run_time = 0; // This wouldn't be used for a cache share since it would always be the same, but declare the value so the variable is at least initialized
-					$restored_from_cache = true;
+
+					if($test_extra_runtime_variables['LOG_FILE'] != null)
+					{
+						file_put_contents($test_extra_runtime_variables['LOG_FILE'], $cache_share->read_object('log_file_' . $i));
+						$test_run_time = 0; // This wouldn't be used for a cache share since it would always be the same, but declare the value so the variable is at least initialized
+						$restored_from_cache = true;
+					}
 				}
 
 				unset($cache_share);
