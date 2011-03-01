@@ -210,26 +210,29 @@ class pts_result_file_analyzer
 
 		foreach($add_components as $info_string)
 		{
-			if(!isset($table_data[$columns[$col_pos]]))
+			if(isset($columns[$col_pos]))
 			{
-				$table_data[$columns[$col_pos]] = array();
-			}
-
-			foreach(explode(', ', $info_string) as $component)
-			{
-				$c_pos = strpos($component, ': ');
-
-				if($c_pos !== false)
+				if(!isset($table_data[$columns[$col_pos]]))
 				{
-					$index = substr($component, 0, $c_pos);
-					$value = substr($component, ($c_pos + 2));
+					$table_data[$columns[$col_pos]] = array();
+				}
 
-					if(($r_i = array_search($index, $rows)) === false)
+				foreach(explode(', ', $info_string) as $component)
+				{
+					$c_pos = strpos($component, ': ');
+
+					if($c_pos !== false)
 					{
-						array_push($rows, $index);
-						$r_i = count($rows) - 1;
+						$index = substr($component, 0, $c_pos);
+						$value = substr($component, ($c_pos + 2));
+
+						if(($r_i = array_search($index, $rows)) === false)
+						{
+							array_push($rows, $index);
+							$r_i = count($rows) - 1;
+						}
+						$table_data[$columns[$col_pos]][$r_i] = self::system_value_to_ir_value($value, $index);
 					}
-					$table_data[$columns[$col_pos]][$r_i] = self::system_value_to_ir_value($value, $index);
 				}
 			}
 			$col_pos++;
@@ -296,9 +299,10 @@ class pts_result_file_analyzer
 		// Let's try to compact the data
 		$c_count = count($table_data);
 		$c_index = 0;
+
 		foreach(array_keys($table_data) as $c)
 		{
-			for($r = 0, $r_count = count($table_data[$c]); $r < $r_count; $r++)
+			foreach(array_keys($table_data[$c]) as $r)
 			{
 				// Find next-to duplicates
 				$match_to = &$table_data[$c][$r];
