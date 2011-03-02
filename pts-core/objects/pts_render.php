@@ -567,8 +567,9 @@ class pts_render
 		{
 			$identifier_r = pts_strings::trim_explode(':', $identifier);
 
-			if(count($identifier_r) != 2)
+			if(count($identifier_r) != 2 || (isset($identifier[14]) && $identifier[4] == '-' && $identifier[13] == ':'))
 			{
+				// the later check will fix 0000-00-00 00:00 as breaking into date
 				$is_multi_way = false;
 				break;
 			}
