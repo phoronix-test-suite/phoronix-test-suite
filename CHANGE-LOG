@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+- pts-core: Restore make-download-cache option and port to PTS3 architecture
 - pts-core: Avoid PHP warning when cache share restoration fails
 - pts-core: Ensure all rows in system tables are condensed where possible
 - pts-core: Don't break dates into multi-way comparisons
