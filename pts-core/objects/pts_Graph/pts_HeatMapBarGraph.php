@@ -48,8 +48,14 @@ class pts_HeatMapBarGraph
 	{
 		return count($this->bars);
 	}
+	protected static function compare_bars_by_hardware_subsystem($a, $b)
+	{
+		return $a['test_data']['h'] == $b['test_data']['h'] ? strcmp($a['test_data']['t'], $b['test_data']['t']) : strcmp($a['test_data']['h'], $b['test_data']['h']);
+	}
 	public function generate_display()
 	{
+		usort($this->bars, array('self', 'compare_bars_by_hardware_subsystem'));
+
 		$bar_width = 580;
 		$bar_height = 38;
 		$heading_per_bar = 16;
