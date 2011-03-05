@@ -16,6 +16,9 @@ This option will install the selected test(s) inside the testing environment dir
 .B install-dependencies [Test | Suite | OpenBenchmarking.org ID | Test Result]  ...
 This option will install the external dependencies needed by the selected test(s) using the distribution's package management system. For example, some tests depend upon GCC for compiling code. If GCC is not detected on the system, the Phoronix Test Suite will attempt to install GCC using the distribution's package management system. If you're running this command as a local user, you may be prompted for the root password while the process is running. For unsupported distributions, the dependency names will be displayed along with common names for the package. The install-dependencies option needs to be supplied with the test name or suite as an argument. When using the install option, the external dependencies are automatically checked.
 .TP
+.B make-download-cache
+This option will create a download cache for use by the Phoronix Test Suite.
+.TP
 .B remove-installed-test [Test]
 This option will permanently remove a installed test by the Phoronix Test Suite.
 .TP
