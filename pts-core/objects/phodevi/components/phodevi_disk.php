@@ -61,8 +61,17 @@ class phodevi_disk extends phodevi_device_interface
 			if(($cut = strpos($capacity, ' (')) !== false)
 			{
 				$capacity = substr($capacity, 0, $cut);
-				$capacity = str_replace(' GB', 'GB', $capacity);
 			}
+
+			if(($cut = strpos($capacity, ' ')) !== false)
+			{
+				if(is_numeric(substr($capacity, 0, $cut)))
+				{
+					$capacity = round(substr($capacity, 0, $cut)) . substr($capacity, $cut);
+				}
+			}
+
+			$capacity = str_replace(' GB', 'GB', $capacity);
 
 			if(!empty($capacity) && !empty($model))
 			{
