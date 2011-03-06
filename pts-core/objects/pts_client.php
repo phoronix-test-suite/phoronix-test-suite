@@ -870,11 +870,26 @@ class pts_client
 
 				// Backup system files
 				// TODO: move out these files/commands to log out to respective Phodevi components so only what's relevant will be logged
-				$system_log_files = array('/var/log/Xorg.0.log', '/proc/cpuinfo', '/proc/modules', '/proc/mounts', '/proc/cmdline', '/etc/X11/xorg.conf');
+				$system_log_files = array(
+					'/var/log/Xorg.0.log',
+					'/proc/cpuinfo',
+					'/proc/modules',
+					'/proc/mounts',
+					'/proc/cmdline',
+					'/etc/X11/xorg.conf'
+					);
+
+				/*
+				if(IS_LINUX)
+				{
+					// the kernel config file might just be too large to upload for now
+					array_push($system_log_files, '/boot/config-' . php_uname('r'));
+				}
+				*/
 
 				foreach($system_log_files as $file)
 				{
-					if(is_file($file))
+					if(is_file($file) && is_readable($file))
 					{
 						// copy() can't be used in this case since it will result in a blank file for /proc/ file-system
 						file_put_contents($system_log_dir . basename($file), file_get_contents($file));
@@ -882,7 +897,15 @@ class pts_client
 				}
 
 				// Generate logs from system commands to backup
-				$system_log_commands = array('lspci -vvnn', 'cc -v', 'lsusb', 'sensors', 'dmesg', 'glxinfo');
+				$system_log_commands = array(
+					'lspci -vvnn',
+					'cc -v',
+					'lsusb',
+					'lsmod',
+					'sensors',
+					'dmesg',
+					'glxinfo'
+					);
 
 				if(IS_BSD)
 				{
