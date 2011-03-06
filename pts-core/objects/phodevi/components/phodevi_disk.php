@@ -67,7 +67,7 @@ class phodevi_disk extends phodevi_device_interface
 			{
 				if(is_numeric(substr($capacity, 0, $cut)))
 				{
-					$capacity = round(substr($capacity, 0, $cut)) . substr($capacity, $cut);
+					$capacity = floor(substr($capacity, 0, $cut)) . substr($capacity, $cut);
 				}
 			}
 
