@@ -346,7 +346,7 @@ abstract class pts_Graph
 		{
 			if($real_maximum < $this->graph_attr_marks)
 			{
-				$maximum = $real_maximum * 1.35;
+				$maximum = ceil($real_maximum * 1.02 / $this->graph_attr_marks) * $this->graph_attr_marks;
 			}
 			else
 			{
@@ -473,7 +473,7 @@ abstract class pts_Graph
 			}
 			else if($this->graph_value_type == 'NUMERICAL')
 			{
-				$this->graph_left_start += $this->text_string_width($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_tick_mark) + 2;
+				$this->graph_left_start += max(20, $this->text_string_width($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_tick_mark) + 2);
 			}
 
 			// Pad 8px on top and bottom + title bar + sub-headings
