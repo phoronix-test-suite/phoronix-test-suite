@@ -489,7 +489,7 @@ class phodevi_system extends phodevi_device_interface
 			$os = null;
 
 			// Try to detect distro for those not supplying lsb_release
-			$files = glob('/etc/*-version');
+			$files = pts_file_io::glob('/etc/*-version');
 			for($i = 0; $i < count($files) && $os == null; $i++)
 			{
 				$file = file_get_contents($files[$i]);
@@ -502,7 +502,7 @@ class phodevi_system extends phodevi_device_interface
 		
 			if($os == null)
 			{
-				$files = glob('/etc/*-release');
+				$files = pts_file_io::glob('/etc/*-release');
 				for($i = 0; $i < count($files) && $os == null; $i++)
 				{
 					$file = file_get_contents($files[$i]);

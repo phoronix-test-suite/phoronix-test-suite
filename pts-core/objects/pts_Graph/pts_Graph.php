@@ -709,7 +709,7 @@ abstract class pts_Graph
 						}
 						break;
 					case 'HIB':
-						$proportion = 'Higher Is Better';
+						$proportion = 'More Are Better';
 						$offset += 12;
 						if($this->graph_orientation == 'HORIZONTAL')
 						{

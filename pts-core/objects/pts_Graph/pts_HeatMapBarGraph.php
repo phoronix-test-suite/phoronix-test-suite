@@ -32,6 +32,10 @@ class pts_HeatMapBarGraph
 		$this->keys = $keys;
 		$this->last_updated = $last_updated;
 	}
+	public function set_keys($keys = array())
+	{
+		$this->keys = $keys;
+	}
 	public function add_result_bar($min_value, $max_value, $bin_size, $sections, $lines, $test_data, $results = array())
 	{
 		array_push($this->bars, array(
@@ -52,22 +56,36 @@ class pts_HeatMapBarGraph
 	{
 		return $a['test_data']['h'] == $b['test_data']['h'] ? strcmp($a['test_data']['t'], $b['test_data']['t']) : strcmp($a['test_data']['h'], $b['test_data']['h']);
 	}
-	public function generate_display()
+	public function sort_results_by_hardware_subsystem()
 	{
 		usort($this->bars, array('self', 'compare_bars_by_hardware_subsystem'));
-
+	}
+	public function generate_display()
+	{
 		$bar_width = 580;
 		$bar_height = 38;
 		$heading_per_bar = 16;
 		$title_bar_height = 35;
 		$footer_bar_height = 14;
+		$category_offsets = 0;
+		$category_heights = 30;
+		$categories = array();
 		$border = 3;
+
+		foreach($this->bars as &$bar)
+		{
+			if($bar['test_data']['h'] != null && !in_array($bar['test_data']['h'], $categories))
+			{
+				array_push($categories, $bar['test_data']['h']);
+			}
+		}
+
 
 		if(!empty($this->keys))
 		{
 			list($longest_key_width, $key_line_height) = bilde_renderer::soft_text_string_dimensions(max($this->keys), '', 10, true);
 			$key_line_height += 18;
-			$keys_per_line = floor($bar_width / ($longest_key_width + 10));
+			$keys_per_line = floor($bar_width / ($longest_key_width + 20));
 			$title_key_offset = ceil(count($this->keys) / $keys_per_line) * $key_line_height;
 		}
 		else
@@ -75,7 +93,7 @@ class pts_HeatMapBarGraph
 			$title_key_offset = 0;
 		}
 
-		$bilde_renderer = bilde_renderer::setup_renderer('SVG', $bar_width + ($border * 2), ($bar_height + $heading_per_bar + $border) * count($this->bars) + $border + $title_bar_height + $title_key_offset + $footer_bar_height);
+		$bilde_renderer = bilde_renderer::setup_renderer('SVG', $bar_width + ($border * 2), ($bar_height + $heading_per_bar + $border) * count($this->bars) + $border + (count($categories) * $category_heights) + $title_bar_height + $title_key_offset + $footer_bar_height);
 
 		$border_color = $bilde_renderer->convert_hex_to_type('#222');
 		$text_color = $bilde_renderer->convert_hex_to_type('#e12128');
@@ -106,9 +124,20 @@ class pts_HeatMapBarGraph
 			}
 		}
 
+		$previous_category = null;
+
 		foreach($this->bars as $i => &$hmap)
 		{
-			$upper_y = ($i * ($bar_height + $border + $heading_per_bar)) + $border + $title_bar_height + $title_key_offset + $heading_per_bar;
+			$upper_y = ($i * ($bar_height + $border + $heading_per_bar)) + $border + $title_bar_height + $title_key_offset + $category_offsets + $heading_per_bar;
+
+			if($hmap['test_data']['h'] != null && $hmap['test_data']['h'] != $previous_category)
+			{
+				$bilde_renderer->write_text_center($hmap['test_data']['h'] . ' Tests', '', 16, $text_color, $start_x + ($bar_width / 2), $upper_y - 10, $start_x + ($bar_width / 2), $upper_y - 10);
+				$category_offsets += $category_heights;
+				$upper_y += $category_heights;
+			}
+			$previous_category = $hmap['test_data']['h'];
+
 			$lower_y = $upper_y + $bar_height;
 
 			$value_size = $bar_width / ($hmap['max_value'] - $hmap['min_value']);
@@ -118,7 +147,7 @@ class pts_HeatMapBarGraph
 			$bilde_renderer->write_text_left($hmap['test_data']['t'], '', 12, $text_color, $start_x, $upper_y - 10, $start_x + ($bar_width / 2), $upper_y - 10);
 			$bilde_renderer->write_text_right($hmap['test_data']['a'], '', 10, $alt_text_color, $end_x, $upper_y - 9, $end_x, $upper_y - 9);
 
-			if($hmap['test_data']['p'] == 'LIB' && true)
+			if($hmap['test_data']['p'] == 'LIB')
 			{
 				// Invert results
 				$new_sections = array();

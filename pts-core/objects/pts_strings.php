@@ -262,6 +262,7 @@ class pts_strings
 			'HP' => 'Hewlett-Packard',
 			'NVIDIA' => 'nVidia',
 			'HDD' => 'HARDDISK',
+			'Intel' => 'Intel64',
 			'IGP' => array('Integrated Graphics Controller', 'Express Graphics Controller', 'Integrated Graphics Device', 'Chipset Integrated')
 			);
 

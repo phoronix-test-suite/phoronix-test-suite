@@ -294,7 +294,7 @@
 		</Package>
 		<Package>
 			<GenericName>yasm</GenericName>
-			<Title>Python Numpy</Title>
+			<Title>Yasm Assembler</Title>
 			<PossibleNames>yasm</PossibleNames>
 			<FileCheck>/usr/bin/yasm OR /usr/local/bin/yasm</FileCheck>
 		</Package>
