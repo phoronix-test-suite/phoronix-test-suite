@@ -314,6 +314,11 @@ class phodevi_motherboard extends phodevi_device_interface
 			$info = phodevi_windows_parser::read_cpuz('Mainboard Model', null);
 		}
 
+		if((strpos($info, 'Mac ') !== false || strpos($info, 'MacBook') !== false) && strpos($info, 'Apple') === false)
+		{
+			$info = 'Apple ' . $info;
+		}
+
 		return $info;
 	}
 }
