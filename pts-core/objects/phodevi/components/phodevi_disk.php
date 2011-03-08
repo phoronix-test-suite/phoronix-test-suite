@@ -149,6 +149,9 @@ class phodevi_disk extends phodevi_device_interface
 						{
 							$disk_model = $disk_manufacturer . ' ' . $disk_model;
 						}
+
+						// OCZ SSDs aren't spaced
+						$disk_model = str_replace('OCZ-', 'OCZ ', $disk_model);
 					}
 
 					if(strpos($disk_model, $disk_size . ' ') === false && strpos($disk_model, ' ' . $disk_size) === false && $disk_size != '1GB')
