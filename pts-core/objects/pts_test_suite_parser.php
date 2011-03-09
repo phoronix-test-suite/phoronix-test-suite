@@ -27,7 +27,11 @@ class pts_test_suite_parser
 
 	public function __construct($identifier)
 	{
-		$identifier = pts_openbenchmarking::evaluate_string_to_qualifier($identifier);
+		if(PTS_IS_CLIENT)
+		{
+			$identifier = pts_openbenchmarking::evaluate_string_to_qualifier($identifier);
+		}
+
 		$this->identifier = $identifier;
 		$this->xml_parser = new pts_suite_nye_XmlReader($identifier);
 	}

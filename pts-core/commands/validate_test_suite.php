@@ -41,12 +41,7 @@ class validate_test_suite implements pts_option_interface
 			libxml_clear_errors();
 
 			// First rewrite the main XML file to ensure it is properly formatted, elements are ordered according to the schema, etc...
-			$test_suite_writer = new pts_test_suite_writer();
-			$test_suite_writer->add_suite_information_from_reader($test_suite->xml_parser);
-			$test_suite_writer->add_to_suite_from_reader($test_suite->xml_parser);
-
-			$test_suite_new = new pts_test_suite($test_suite_writer->get_xml());
-			$valid = $test_suite_new->xml_parser->validate();
+			$valid = $test_suite->xml_parser->validate();
 
 			if($valid == false)
 			{
@@ -59,10 +54,9 @@ class validate_test_suite implements pts_option_interface
 				echo PHP_EOL . 'Test Suite XML Is Valid.' . PHP_EOL;
 			}
 
-			$test_suite_writer->save_xml($test_suite->xml_parser->getFileLocation());
-			$suite_identifier = basename($test_suite->xml_parser->getFileLocation(), '.xml');
+			$suite_identifier = $r[0];
 
-			$zip_file = PTS_OPENBENCHMARKING_SCRATCH_PATH . $suite_identifier . '-' . $test_suite_new->get_version() . '.zip';
+			$zip_file = PTS_OPENBENCHMARKING_SCRATCH_PATH . $suite_identifier . '-' . $test_suite->get_version() . '.zip';
 			$zip_created = pts_compression::zip_archive_create($zip_file, $test_suite->xml_parser->getFileLocation());
 
 			if($zip_created == false)
@@ -77,7 +71,7 @@ class validate_test_suite implements pts_option_interface
 			$zip->close();
 
 			// TODO: chmod +x the .sh files, appropriate permissions elsewhere
-			//unlink($zip_file);
+			unlink($zip_file);
 		}
 	}
 }

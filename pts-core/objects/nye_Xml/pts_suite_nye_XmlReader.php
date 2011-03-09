@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010, Phoronix Media
-	Copyright (C) 2010, Michael Larabel
+	Copyright (C) 2010 - 2011, Phoronix Media
+	Copyright (C) 2010 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -29,6 +29,16 @@ class pts_suite_nye_XmlReader extends nye_XmlReader
 		if(!isset($xml_file[512]) && is_file(PTS_TEST_SUITE_PATH . $read_xml . '/suite-definition.xml'))
 		{
 			$read_xml = PTS_TEST_SUITE_PATH . $read_xml . '/suite-definition.xml';
+		}
+		else if(substr($read_xml, -4) == '.zip' && is_file($read_xml))
+		{
+			$zip = new ZipArchive();
+
+			if($zip->open($read_xml) === true)
+			{
+				$read_xml = $zip->getFromName('suite-definition.xml');
+				$zip->close();
+			}
 		}
 
 		parent::__construct($read_xml);
