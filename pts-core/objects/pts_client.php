@@ -27,7 +27,7 @@ class pts_client
 
 	public static function create_lock($lock_file)
 	{
-		if(isset(self::$lock_pointers[$lock_file]) || is_writable(dirname($lock_file)) == false)
+		if(isset(self::$lock_pointers[$lock_file]) || is_writable(dirname($lock_file)) == false || disk_free_space(dirname($lock_file)) < 1024)
 		{
 			return false;
 		}
