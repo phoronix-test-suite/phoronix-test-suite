@@ -458,7 +458,16 @@ abstract class pts_Graph
 				if($this->is_multi_way_comparison && count($this->graph_data_title) > 1)
 				{
 					// TODO: verify this is good and covered for all scenarios
-					$longest_identifier_width = $this->text_string_width($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_identifiers) + 65;
+					$longest_r = $this->find_longest_string($this->graph_identifiers);
+					$longest_r = explode(' - ', $longest_r);
+					$plus_extra = 0;
+
+					if(count($longest_r) > 1)
+					{
+						$plus_extra = count($longest_r) * $this->graph_font_size_identifiers * 1.2;
+					}
+
+					$longest_identifier_width = $this->text_string_width($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_identifiers) + 60 + $plus_extra;
 				}
 				else
 				{
@@ -495,7 +504,10 @@ abstract class pts_Graph
 			{
 				if($this->is_multi_way_comparison && count($this->graph_data) > 1)
 				{
-					$rotated_text = $this->text_string_width($this->find_longest_string($this->graph_identifiers), $this->graph_font, $this->graph_font_size_identifiers);
+					$longest_string = $this->find_longest_string($this->graph_identifiers);
+					$longest_string = $this->find_longest_string(explode(' - ', $longest_string));
+
+					$rotated_text = round($this->text_string_width($longest_string, $this->graph_font, $this->graph_font_size_identifiers) * 0.96);
 					$per_identifier_height = max((14 + (22 * count($this->graph_data))), $rotated_text);
 				}
 				else if(count($this->graph_data_title) > 3)
