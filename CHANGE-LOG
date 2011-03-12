@@ -6,6 +6,7 @@ Phoronix Test Suite (Git)
 - pts-core: Avoid PHP warning when cache share restoration fails
 - pts-core: Ensure all rows in system tables are condensed where possible
 - pts-core: Don't break dates into multi-way comparisons
+- pts-core: Fix for specifying absolute repository/[suite|test] such as for local tests
 - pts_Graph: Support multiple identifier lines (delimited by ' - ') on multi-way comparisons with horizontal bar graph
 - phodevi: Ensure Apple is reported as the manufacturer on Mac computers
 

@@ -332,6 +332,7 @@ class pts_openbenchmarking_client
 	public static function evaluate_string_to_qualifier($supplied, $bind_version = true)
 	{
 		$qualified = false;
+		$c_repo = null;
 		$repos = self::linked_repositories();
 
 		if(($c = strpos($supplied, '/')) !== false)
@@ -344,9 +345,10 @@ class pts_openbenchmarking_client
 			if(!in_array($c_repo, $repos))
 			{
 				// Pull in this repository's index
-				$repos = array($c_repo);
 				pts_openbenchmarking_client::refresh_repository_lists($repos);
 			}
+
+			$repos = array($c_repo);
 		}
 		else
 		{
@@ -382,9 +384,17 @@ class pts_openbenchmarking_client
 				{
 					return $repo . '/' . $test; // ($bind_version ? '-' . $version : null)
 				}
+				else if(is_file(PTS_TEST_PROFILE_PATH . $repo . '/' . $test . '-' . $version . '/test-definition.xml'))
+				{
+					return $repo . '/' . $test . '-' . $version; // ($bind_version ? '-' . $version : null)
+				}
 				else if(is_file(PTS_TEST_SUITE_PATH . $repo . '/' . $test . '/suite-definition.xml'))
 				{
 					return $repo . '/' . $test; // ($bind_version ? '-' . $version : null)
+				}
+				else if(is_file(PTS_TEST_SUITE_PATH . $repo . '/' . $test . '-' . $version . '/suite-definition.xml'))
+				{
+					return $repo . '/' . $test . '-' . $version; // ($bind_version ? '-' . $version : null)
 				}
 			}
 
