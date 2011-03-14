@@ -288,7 +288,7 @@ class pts_openbenchmarking_client
 			}
 		}
 
-		if(!is_file(PTS_TEST_PROFILE_PATH . $qualified_identifier . '/test-definition.xml') && ($hash_check == null || sha1_file($file) == $hash_check))
+		if(!is_file(PTS_TEST_PROFILE_PATH . $qualified_identifier . '/test-definition.xml') && is_file($file) && ($hash_check == null || sha1_file($file) == $hash_check))
 		{
 			// extract it
 			pts_file_io::mkdir(PTS_TEST_PROFILE_PATH . dirname($qualified_identifier));
