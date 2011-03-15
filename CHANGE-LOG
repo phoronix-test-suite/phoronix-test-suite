@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 3.0.1
+15 March 2011
 
 - pts-core: Restore make-download-cache option and port to PTS3 architecture
 - pts-core: Avoid PHP warning when cache share restoration fails

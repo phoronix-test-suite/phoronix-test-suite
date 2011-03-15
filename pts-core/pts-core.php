@@ -21,8 +21,8 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-define('PTS_VERSION', '3.0.0');
-define('PTS_CORE_VERSION', 3002);
+define('PTS_VERSION', '3.0.1');
+define('PTS_CORE_VERSION', 3010);
 define('PTS_CODENAME', 'IVELAND');
 define('PTS_IS_CLIENT', PTS_MODE == 'CLIENT');
 

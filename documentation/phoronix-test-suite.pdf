@@ -17,7 +17,7 @@ BT /F1 14.00 Tf ET
 28.35 473.38 538.58 -5.67 re f q 0 g BT 199.63 466.35 Td (www.phoronix-test-suite.com) Tj ET Q
 BT /F1 21.00 Tf ET
 1.000 1.000 1.000 rg
-28.35 402.52 538.58 -17.01 re f q 0 g BT 120.83 387.71 Td (Phoronix Test Suite v3.0.0 \(Iveland\)) Tj ET Q
+28.35 402.52 538.58 -17.01 re f q 0 g BT 120.83 387.71 Td (Phoronix Test Suite v3.0.1 \(Iveland\)) Tj ET Q
 BT /F1 16.00 Tf ET
 1.000 1.000 1.000 rg
 28.35 360.00 538.58 -17.01 re f q 0 g BT 250.07 346.69 Td (User Manual) Tj ET Q
@@ -40,7 +40,7 @@ BT /F1 16.00 Tf ET
 1.000 1.000 1.000 rg
 q 85.04 0 0 44.13 28.35 775.08 cm /I2 Do Q
 BT /F1 14.00 Tf ET
-q 0 g BT 206.24 795.17 Td (Phoronix Test Suite v3.0.0) Tj ET Q
+q 0 g BT 206.24 795.17 Td (Phoronix Test Suite v3.0.1) Tj ET Q
 BT /F1 10.00 Tf ET
 q 0 g BT 232.17 779.36 Td (Test Client Documentation) Tj ET Q
 BT /F1 16.00 Tf ET
@@ -116,7 +116,7 @@ q 0.380 0.388 0.376 rg BT 103.42 80.02 Td (  [Unknown Object]) Tj ET Q
 BT /F2 11.00 Tf ET
 q 0.000 g BT 59.53 66.15 Td (This option is similar to finish-run and can be used to finish running a set of tests that were started but) Tj ET Q
 BT /F1 7.00 Tf ET
-q 0.000 g BT 59.53 26.25 Td (Phoronix Test Suite v3.0.0) Tj ET Q
+q 0.000 g BT 59.53 26.25 Td (Phoronix Test Suite v3.0.1) Tj ET Q
 566.93 28.35 0.00 0.00 re f q 0.000 g BT 466.08 26.25 Td (www.phoronix-test-suite.com) Tj ET Q
 
 endstream
@@ -137,7 +137,7 @@ BT /F2 11.00 Tf ET
 1.000 1.000 1.000 rg
 q 85.04 0 0 44.13 28.35 775.08 cm /I2 Do Q
 BT /F1 14.00 Tf ET
-q 0.000 g BT 238.84 795.17 Td (Phoronix Test Suite v3.0.0) Tj ET Q
+q 0.000 g BT 238.84 795.17 Td (Phoronix Test Suite v3.0.1) Tj ET Q
 BT /F1 10.00 Tf ET
 q 0.000 g BT 248.47 779.36 Td (Test Client Documentation) Tj ET Q
 BT /F2 11.00 Tf ET
@@ -218,7 +218,7 @@ q 0.380 0.388 0.376 rg BT 104.87 77.18 Td (  [OpenBenchmarking.org ID]  ...) Tj 
 BT /F2 11.00 Tf ET
 q 0.000 g BT 59.53 63.31 Td (This option will download a local copy of a file that was saved to OpenBenchmarking.org, as long as a) Tj ET Q
 BT /F1 7.00 Tf ET
-q 0.000 g BT 59.53 26.25 Td (Phoronix Test Suite v3.0.0) Tj ET Q
+q 0.000 g BT 59.53 26.25 Td (Phoronix Test Suite v3.0.1) Tj ET Q
 566.93 28.35 0.00 0.00 re f q 0.000 g BT 466.08 26.25 Td (www.phoronix-test-suite.com) Tj ET Q
 
 endstream
@@ -239,7 +239,7 @@ BT /F2 11.00 Tf ET
 1.000 1.000 1.000 rg
 q 85.04 0 0 44.13 28.35 775.08 cm /I2 Do Q
 BT /F1 14.00 Tf ET
-q 0.000 g BT 238.84 795.17 Td (Phoronix Test Suite v3.0.0) Tj ET Q
+q 0.000 g BT 238.84 795.17 Td (Phoronix Test Suite v3.0.1) Tj ET Q
 BT /F1 10.00 Tf ET
 q 0.000 g BT 248.47 779.36 Td (Test Client Documentation) Tj ET Q
 BT /F2 11.00 Tf ET
@@ -326,7 +326,7 @@ q 0.000 g BT 59.53 91.66 Td (This option will list all available virtual test su
 q 0.000 g BT 59.53 77.48 Td (available tests from enabled OpenBenchmarking.org repositories.) Tj ET Q
 BT /F1 13.00 Tf ET
 BT /F1 7.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 26.25 Td (Phoronix Test Suite v3.0.0) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 26.25 Td (Phoronix Test Suite v3.0.1) Tj ET Q
 566.93 28.35 0.00 0.00 re f q 0.380 0.388 0.376 rg BT 466.08 26.25 Td (www.phoronix-test-suite.com) Tj ET Q
 
 endstream
@@ -347,7 +347,7 @@ BT /F1 13.00 Tf ET
 1.000 1.000 1.000 rg
 q 85.04 0 0 44.13 28.35 775.08 cm /I2 Do Q
 BT /F1 14.00 Tf ET
-q 0.380 0.388 0.376 rg BT 210.49 795.17 Td (Phoronix Test Suite v3.0.0) Tj ET Q
+q 0.380 0.388 0.376 rg BT 210.49 795.17 Td (Phoronix Test Suite v3.0.1) Tj ET Q
 BT /F1 10.00 Tf ET
 q 0.380 0.388 0.376 rg BT 234.30 779.36 Td (Test Client Documentation) Tj ET Q
 BT /F1 13.00 Tf ET
@@ -437,7 +437,7 @@ q 0.000 g BT 59.53 91.66 Td (This option will guide the user through the process
 q 0.000 g BT 59.53 77.48 Td (then run, that is based upon an existing test results file.) Tj ET Q
 BT /F1 13.00 Tf ET
 BT /F1 7.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 26.25 Td (Phoronix Test Suite v3.0.0) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 26.25 Td (Phoronix Test Suite v3.0.1) Tj ET Q
 566.93 28.35 0.00 0.00 re f q 0.380 0.388 0.376 rg BT 466.08 26.25 Td (www.phoronix-test-suite.com) Tj ET Q
 
 endstream
@@ -458,7 +458,7 @@ BT /F1 13.00 Tf ET
 1.000 1.000 1.000 rg
 q 85.04 0 0 44.13 28.35 775.08 cm /I2 Do Q
 BT /F1 14.00 Tf ET
-q 0.380 0.388 0.376 rg BT 210.49 795.17 Td (Phoronix Test Suite v3.0.0) Tj ET Q
+q 0.380 0.388 0.376 rg BT 210.49 795.17 Td (Phoronix Test Suite v3.0.1) Tj ET Q
 BT /F1 10.00 Tf ET
 q 0.380 0.388 0.376 rg BT 234.30 779.36 Td (Test Client Documentation) Tj ET Q
 BT /F1 13.00 Tf ET
@@ -548,7 +548,7 @@ q 0.380 0.388 0.376 rg BT 132.31 77.18 Td (  [Test Result]) Tj ET Q
 BT /F2 11.00 Tf ET
 q 0.000 g BT 59.53 63.31 Td (This option will read a saved test results file and output the system hardware and software information) Tj ET Q
 BT /F1 7.00 Tf ET
-q 0.000 g BT 59.53 26.25 Td (Phoronix Test Suite v3.0.0) Tj ET Q
+q 0.000 g BT 59.53 26.25 Td (Phoronix Test Suite v3.0.1) Tj ET Q
 566.93 28.35 0.00 0.00 re f q 0.000 g BT 466.08 26.25 Td (www.phoronix-test-suite.com) Tj ET Q
 
 endstream
@@ -569,7 +569,7 @@ BT /F2 11.00 Tf ET
 1.000 1.000 1.000 rg
 q 85.04 0 0 44.13 28.35 775.08 cm /I2 Do Q
 BT /F1 14.00 Tf ET
-q 0.000 g BT 238.84 795.17 Td (Phoronix Test Suite v3.0.0) Tj ET Q
+q 0.000 g BT 238.84 795.17 Td (Phoronix Test Suite v3.0.1) Tj ET Q
 BT /F1 10.00 Tf ET
 q 0.000 g BT 248.47 779.36 Td (Test Client Documentation) Tj ET Q
 BT /F2 11.00 Tf ET
@@ -649,7 +649,7 @@ BT /F3 12.00 Tf ET
 q 0.380 0.388 0.376 rg BT 130.84 63.01 Td (  [Test Result]) Tj ET Q
 BT /F2 11.00 Tf ET
 BT /F1 7.00 Tf ET
-q 0.000 g BT 59.53 26.25 Td (Phoronix Test Suite v3.0.0) Tj ET Q
+q 0.000 g BT 59.53 26.25 Td (Phoronix Test Suite v3.0.1) Tj ET Q
 566.93 28.35 0.00 0.00 re f q 0.000 g BT 466.08 26.25 Td (www.phoronix-test-suite.com) Tj ET Q
 
 endstream
@@ -670,7 +670,7 @@ BT /F2 11.00 Tf ET
 1.000 1.000 1.000 rg
 q 85.04 0 0 44.13 28.35 775.08 cm /I2 Do Q
 BT /F1 14.00 Tf ET
-q 0.000 g BT 238.84 795.17 Td (Phoronix Test Suite v3.0.0) Tj ET Q
+q 0.000 g BT 238.84 795.17 Td (Phoronix Test Suite v3.0.1) Tj ET Q
 BT /F1 10.00 Tf ET
 q 0.000 g BT 248.47 779.36 Td (Test Client Documentation) Tj ET Q
 BT /F2 11.00 Tf ET
@@ -736,7 +736,7 @@ q 0.380 0.388 0.376 rg BT 104.85 289.78 Td (  [Phoronix Test Suite Module]) Tj E
 BT /F2 11.00 Tf ET
 q 0.000 g BT 59.53 275.91 Td (This option can be used for debugging a Phoronix Test Suite module.) Tj ET Q
 BT /F1 7.00 Tf ET
-q 0.000 g BT 26.93 26.25 Td (Phoronix Test Suite v3.0.0) Tj ET Q
+q 0.000 g BT 26.93 26.25 Td (Phoronix Test Suite v3.0.1) Tj ET Q
 566.93 28.35 0.00 0.00 re f q 0.000 g BT 466.08 26.25 Td (www.phoronix-test-suite.com) Tj ET Q
 
 endstream
@@ -757,7 +757,7 @@ BT /F2 11.00 Tf ET
 1.000 1.000 1.000 rg
 q 85.04 0 0 44.13 28.35 775.08 cm /I2 Do Q
 BT /F1 14.00 Tf ET
-q 0.000 g BT 206.24 795.17 Td (Phoronix Test Suite v3.0.0) Tj ET Q
+q 0.000 g BT 206.24 795.17 Td (Phoronix Test Suite v3.0.1) Tj ET Q
 BT /F1 10.00 Tf ET
 q 0.000 g BT 232.17 779.36 Td (Test Client Documentation) Tj ET Q
 BT /F2 11.00 Tf ET
@@ -834,7 +834,7 @@ q 0.000 g BT 133.11 88.82 Td ( is highly recommended for greater data compressio
 q 0.000 g BT 87.87 74.65 Td (OpenBenchmarking.org assets.) Tj ET Q
 BT /F1 11.00 Tf ET
 BT /F1 7.00 Tf ET
-q 0.000 g BT 87.87 26.25 Td (Phoronix Test Suite v3.0.0) Tj ET Q
+q 0.000 g BT 87.87 26.25 Td (Phoronix Test Suite v3.0.1) Tj ET Q
 566.93 28.35 0.00 0.00 re f q 0.000 g BT 466.08 26.25 Td (www.phoronix-test-suite.com) Tj ET Q
 
 endstream
@@ -855,7 +855,7 @@ BT /F1 11.00 Tf ET
 1.000 1.000 1.000 rg
 q 85.04 0 0 44.13 28.35 775.08 cm /I2 Do Q
 BT /F1 14.00 Tf ET
-q 0.000 g BT 267.19 795.17 Td (Phoronix Test Suite v3.0.0) Tj ET Q
+q 0.000 g BT 267.19 795.17 Td (Phoronix Test Suite v3.0.1) Tj ET Q
 BT /F1 10.00 Tf ET
 q 0.000 g BT 262.64 779.36 Td (Test Client Documentation) Tj ET Q
 BT /F1 11.00 Tf ET
@@ -985,7 +985,7 @@ BT /F2 11.00 Tf ET
 q 0.000 g BT 290.02 77.48 Td ( from the same directory.) Tj ET Q
 BT /F1 13.00 Tf ET
 BT /F1 7.00 Tf ET
-q 0.196 0.200 0.192 rg BT 31.18 26.25 Td (Phoronix Test Suite v3.0.0) Tj ET Q
+q 0.196 0.200 0.192 rg BT 31.18 26.25 Td (Phoronix Test Suite v3.0.1) Tj ET Q
 566.93 28.35 0.00 0.00 re f q 0.196 0.200 0.192 rg BT 466.08 26.25 Td (www.phoronix-test-suite.com) Tj ET Q
 
 endstream
@@ -1006,7 +1006,7 @@ BT /F1 13.00 Tf ET
 1.000 1.000 1.000 rg
 q 85.04 0 0 44.13 28.35 775.08 cm /I2 Do Q
 BT /F1 14.00 Tf ET
-q 0.196 0.200 0.192 rg BT 210.49 795.17 Td (Phoronix Test Suite v3.0.0) Tj ET Q
+q 0.196 0.200 0.192 rg BT 210.49 795.17 Td (Phoronix Test Suite v3.0.1) Tj ET Q
 BT /F1 10.00 Tf ET
 q 0.196 0.200 0.192 rg BT 234.30 779.36 Td (Test Client Documentation) Tj ET Q
 BT /F1 13.00 Tf ET
@@ -1117,7 +1117,7 @@ BT /F1 13.00 Tf ET
 q 0.196 0.200 0.192 rg BT 31.18 62.71 Td (Mac OS X Installation) Tj ET Q
 BT /F2 11.00 Tf ET
 BT /F1 7.00 Tf ET
-q 0.000 g BT 59.53 26.25 Td (Phoronix Test Suite v3.0.0) Tj ET Q
+q 0.000 g BT 59.53 26.25 Td (Phoronix Test Suite v3.0.1) Tj ET Q
 566.93 28.35 0.00 0.00 re f q 0.000 g BT 466.08 26.25 Td (www.phoronix-test-suite.com) Tj ET Q
 
 endstream
@@ -1138,7 +1138,7 @@ BT /F2 11.00 Tf ET
 1.000 1.000 1.000 rg
 q 85.04 0 0 44.13 28.35 775.08 cm /I2 Do Q
 BT /F1 14.00 Tf ET
-q 0.000 g BT 238.84 795.17 Td (Phoronix Test Suite v3.0.0) Tj ET Q
+q 0.000 g BT 238.84 795.17 Td (Phoronix Test Suite v3.0.1) Tj ET Q
 BT /F1 10.00 Tf ET
 q 0.000 g BT 248.47 779.36 Td (Test Client Documentation) Tj ET Q
 BT /F2 11.00 Tf ET
@@ -1169,7 +1169,7 @@ q 0.000 g BT 385.33 601.89 Td ( if you wish to utilize this hardware) Tj ET Q
 q 0.000 g BT 59.53 587.72 Td (reporting feature. In terms of the Microsoft Windows support, right now the Phoronix Test Suite is) Tj ET Q
 q 0.000 g BT 59.53 573.55 Td (developed and solely tested against Windows 7 x64.) Tj ET Q
 BT /F1 7.00 Tf ET
-q 0.000 g BT 26.93 26.25 Td (Phoronix Test Suite v3.0.0) Tj ET Q
+q 0.000 g BT 26.93 26.25 Td (Phoronix Test Suite v3.0.1) Tj ET Q
 566.93 28.35 0.00 0.00 re f q 0.000 g BT 466.08 26.25 Td (www.phoronix-test-suite.com) Tj ET Q
 
 endstream
@@ -1190,7 +1190,7 @@ BT /F2 11.00 Tf ET
 1.000 1.000 1.000 rg
 q 85.04 0 0 44.13 28.35 775.08 cm /I2 Do Q
 BT /F1 14.00 Tf ET
-q 0.000 g BT 206.24 795.17 Td (Phoronix Test Suite v3.0.0) Tj ET Q
+q 0.000 g BT 206.24 795.17 Td (Phoronix Test Suite v3.0.1) Tj ET Q
 BT /F1 10.00 Tf ET
 q 0.000 g BT 232.17 779.36 Td (Test Client Documentation) Tj ET Q
 BT /F2 11.00 Tf ET
@@ -1263,7 +1263,7 @@ q 0.196 0.200 0.192 rg BT 26.93 73.15 Td (Environmental Variables) Tj ET Q
 BT /F2 11.00 Tf ET
 BT /F1 11.00 Tf ET
 BT /F1 7.00 Tf ET
-q 0.000 g BT 59.53 26.25 Td (Phoronix Test Suite v3.0.0) Tj ET Q
+q 0.000 g BT 59.53 26.25 Td (Phoronix Test Suite v3.0.1) Tj ET Q
 566.93 28.35 0.00 0.00 re f q 0.000 g BT 466.08 26.25 Td (www.phoronix-test-suite.com) Tj ET Q
 
 endstream
@@ -1284,7 +1284,7 @@ BT /F1 11.00 Tf ET
 1.000 1.000 1.000 rg
 q 85.04 0 0 44.13 28.35 775.08 cm /I2 Do Q
 BT /F1 14.00 Tf ET
-q 0.000 g BT 238.84 795.17 Td (Phoronix Test Suite v3.0.0) Tj ET Q
+q 0.000 g BT 238.84 795.17 Td (Phoronix Test Suite v3.0.1) Tj ET Q
 BT /F1 10.00 Tf ET
 q 0.000 g BT 248.47 779.36 Td (Test Client Documentation) Tj ET Q
 BT /F1 11.00 Tf ET
@@ -1350,7 +1350,7 @@ q 0.000 g BT 59.53 91.66 Td (TOTAL_LOOP_TIME) Tj ET Q
 BT /F2 11.00 Tf ET
 q 0.000 g BT 59.53 63.31 Td (When running any test\(s\), if you would like the test\(s\) to continue running as a loop until a certain time) Tj ET Q
 BT /F1 7.00 Tf ET
-q 0.000 g BT 59.53 26.25 Td (Phoronix Test Suite v3.0.0) Tj ET Q
+q 0.000 g BT 59.53 26.25 Td (Phoronix Test Suite v3.0.1) Tj ET Q
 566.93 28.35 0.00 0.00 re f q 0.000 g BT 466.08 26.25 Td (www.phoronix-test-suite.com) Tj ET Q
 
 endstream
@@ -1371,7 +1371,7 @@ BT /F2 11.00 Tf ET
 1.000 1.000 1.000 rg
 q 85.04 0 0 44.13 28.35 775.08 cm /I2 Do Q
 BT /F1 14.00 Tf ET
-q 0.000 g BT 238.84 795.17 Td (Phoronix Test Suite v3.0.0) Tj ET Q
+q 0.000 g BT 238.84 795.17 Td (Phoronix Test Suite v3.0.1) Tj ET Q
 BT /F1 10.00 Tf ET
 q 0.000 g BT 248.47 779.36 Td (Test Client Documentation) Tj ET Q
 BT /F2 11.00 Tf ET
@@ -1434,7 +1434,7 @@ BT /F1 11.00 Tf ET
 q 0.000 g BT 59.53 77.48 Td (DEFAULT_VIDEO_MODE) Tj ET Q
 BT /F2 11.00 Tf ET
 BT /F1 7.00 Tf ET
-q 0.000 g BT 59.53 26.25 Td (Phoronix Test Suite v3.0.0) Tj ET Q
+q 0.000 g BT 59.53 26.25 Td (Phoronix Test Suite v3.0.1) Tj ET Q
 566.93 28.35 0.00 0.00 re f q 0.000 g BT 466.08 26.25 Td (www.phoronix-test-suite.com) Tj ET Q
 
 endstream
@@ -1455,7 +1455,7 @@ BT /F2 11.00 Tf ET
 1.000 1.000 1.000 rg
 q 85.04 0 0 44.13 28.35 775.08 cm /I2 Do Q
 BT /F1 14.00 Tf ET
-q 0.000 g BT 238.84 795.17 Td (Phoronix Test Suite v3.0.0) Tj ET Q
+q 0.000 g BT 238.84 795.17 Td (Phoronix Test Suite v3.0.1) Tj ET Q
 BT /F1 10.00 Tf ET
 q 0.000 g BT 248.47 779.36 Td (Test Client Documentation) Tj ET Q
 BT /F2 11.00 Tf ET
@@ -1475,7 +1475,7 @@ q 0.000 g BT 205.64 644.41 Td (1) Tj ET Q
 BT /F2 11.00 Tf ET
 q 0.000 g BT 211.76 644.41 Td (.) Tj ET Q
 BT /F1 7.00 Tf ET
-q 0.000 g BT 26.93 26.25 Td (Phoronix Test Suite v3.0.0) Tj ET Q
+q 0.000 g BT 26.93 26.25 Td (Phoronix Test Suite v3.0.1) Tj ET Q
 566.93 28.35 0.00 0.00 re f q 0.000 g BT 466.08 26.25 Td (www.phoronix-test-suite.com) Tj ET Q
 
 endstream
@@ -1496,7 +1496,7 @@ BT /F2 11.00 Tf ET
 1.000 1.000 1.000 rg
 q 85.04 0 0 44.13 28.35 775.08 cm /I2 Do Q
 BT /F1 14.00 Tf ET
-q 0.000 g BT 206.24 795.17 Td (Phoronix Test Suite v3.0.0) Tj ET Q
+q 0.000 g BT 206.24 795.17 Td (Phoronix Test Suite v3.0.1) Tj ET Q
 BT /F1 10.00 Tf ET
 q 0.000 g BT 232.17 779.36 Td (Test Client Documentation) Tj ET Q
 BT /F2 11.00 Tf ET
@@ -1610,7 +1610,7 @@ BT /F2 11.00 Tf ET
 q 0.000 g BT 99.86 74.65 Td (.) Tj ET Q
 BT /F1 11.00 Tf ET
 BT /F1 7.00 Tf ET
-q 0.000 g BT 59.53 26.25 Td (Phoronix Test Suite v3.0.0) Tj ET Q
+q 0.000 g BT 59.53 26.25 Td (Phoronix Test Suite v3.0.1) Tj ET Q
 566.93 28.35 0.00 0.00 re f q 0.000 g BT 466.08 26.25 Td (www.phoronix-test-suite.com) Tj ET Q
 
 endstream
@@ -1631,7 +1631,7 @@ BT /F1 11.00 Tf ET
 1.000 1.000 1.000 rg
 q 85.04 0 0 44.13 28.35 775.08 cm /I2 Do Q
 BT /F1 14.00 Tf ET
-q 0.000 g BT 238.84 795.17 Td (Phoronix Test Suite v3.0.0) Tj ET Q
+q 0.000 g BT 238.84 795.17 Td (Phoronix Test Suite v3.0.1) Tj ET Q
 BT /F1 10.00 Tf ET
 q 0.000 g BT 248.47 779.36 Td (Test Client Documentation) Tj ET Q
 BT /F1 11.00 Tf ET
@@ -1753,7 +1753,7 @@ q 0.000 g BT 59.53 105.83 Td (but will cause these files to be re-downloaded the
 q 0.000 g BT 59.53 91.66 Td (also not back up the downloaded files to the Phoronix Test Suite download cache. Enabling this option) Tj ET Q
 q 0.000 g BT 59.53 77.48 Td (is just recommended for users with very limited disk space.) Tj ET Q
 BT /F1 7.00 Tf ET
-q 0.000 g BT 59.53 26.25 Td (Phoronix Test Suite v3.0.0) Tj ET Q
+q 0.000 g BT 59.53 26.25 Td (Phoronix Test Suite v3.0.1) Tj ET Q
 566.93 28.35 0.00 0.00 re f q 0.000 g BT 466.08 26.25 Td (www.phoronix-test-suite.com) Tj ET Q
 
 endstream
@@ -1774,7 +1774,7 @@ BT /F2 11.00 Tf ET
 1.000 1.000 1.000 rg
 q 85.04 0 0 44.13 28.35 775.08 cm /I2 Do Q
 BT /F1 14.00 Tf ET
-q 0.000 g BT 238.84 795.17 Td (Phoronix Test Suite v3.0.0) Tj ET Q
+q 0.000 g BT 238.84 795.17 Td (Phoronix Test Suite v3.0.1) Tj ET Q
 BT /F1 10.00 Tf ET
 q 0.000 g BT 248.47 779.36 Td (Test Client Documentation) Tj ET Q
 BT /F2 11.00 Tf ET
@@ -1897,7 +1897,7 @@ q 0.000 g BT 59.53 120.00 Td (- By writing a Phoronix Test Suite module, you can
 q 0.000 g BT 59.53 105.83 Td (Suite. Some examples are being able to email the results upon completion, controlling the system's) Tj ET Q
 q 0.000 g BT 59.53 91.66 Td (screensaver, updating a text LCD panel with the current test status, etc.) Tj ET Q
 BT /F1 7.00 Tf ET
-q 0.000 g BT 26.93 26.25 Td (Phoronix Test Suite v3.0.0) Tj ET Q
+q 0.000 g BT 26.93 26.25 Td (Phoronix Test Suite v3.0.1) Tj ET Q
 566.93 28.35 0.00 0.00 re f q 0.000 g BT 466.08 26.25 Td (www.phoronix-test-suite.com) Tj ET Q
 
 endstream
@@ -1918,7 +1918,7 @@ BT /F2 11.00 Tf ET
 1.000 1.000 1.000 rg
 q 85.04 0 0 44.13 28.35 775.08 cm /I2 Do Q
 BT /F1 14.00 Tf ET
-q 0.000 g BT 206.24 795.17 Td (Phoronix Test Suite v3.0.0) Tj ET Q
+q 0.000 g BT 206.24 795.17 Td (Phoronix Test Suite v3.0.1) Tj ET Q
 BT /F1 10.00 Tf ET
 q 0.000 g BT 232.17 779.36 Td (Test Client Documentation) Tj ET Q
 BT /F2 11.00 Tf ET
@@ -1993,7 +1993,7 @@ q 0.000 g BT 59.53 94.49 Td (This is a collection of test profiles found within 
 q 0.000 g BT 59.53 80.32 Td (the test profile is specified as being compatible with the Windows Operating System.) Tj ET Q
 BT /F1 13.00 Tf ET
 BT /F1 7.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 26.25 Td (Phoronix Test Suite v3.0.0) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 26.25 Td (Phoronix Test Suite v3.0.1) Tj ET Q
 566.93 28.35 0.00 0.00 re f q 0.380 0.388 0.376 rg BT 466.08 26.25 Td (www.phoronix-test-suite.com) Tj ET Q
 
 endstream
@@ -2014,7 +2014,7 @@ BT /F1 13.00 Tf ET
 1.000 1.000 1.000 rg
 q 85.04 0 0 44.13 28.35 775.08 cm /I2 Do Q
 BT /F1 14.00 Tf ET
-q 0.380 0.388 0.376 rg BT 210.49 795.17 Td (Phoronix Test Suite v3.0.0) Tj ET Q
+q 0.380 0.388 0.376 rg BT 210.49 795.17 Td (Phoronix Test Suite v3.0.1) Tj ET Q
 BT /F1 10.00 Tf ET
 q 0.380 0.388 0.376 rg BT 234.30 779.36 Td (Test Client Documentation) Tj ET Q
 BT /F1 13.00 Tf ET
@@ -2102,7 +2102,7 @@ BT /F2 11.00 Tf ET
 q 0.000 g BT 59.53 105.83 Td (This is a collection of test profiles found within the specified OpenBenchmarking.org repository where) Tj ET Q
 q 0.000 g BT 59.53 91.66 Td (the test profile is specified via an internal tag as testing python.) Tj ET Q
 BT /F1 7.00 Tf ET
-q 0.000 g BT 26.93 26.25 Td (Phoronix Test Suite v3.0.0) Tj ET Q
+q 0.000 g BT 26.93 26.25 Td (Phoronix Test Suite v3.0.1) Tj ET Q
 566.93 28.35 0.00 0.00 re f q 0.000 g BT 466.08 26.25 Td (www.phoronix-test-suite.com) Tj ET Q
 
 endstream
@@ -2123,7 +2123,7 @@ BT /F2 11.00 Tf ET
 1.000 1.000 1.000 rg
 q 85.04 0 0 44.13 28.35 775.08 cm /I2 Do Q
 BT /F1 14.00 Tf ET
-q 0.000 g BT 206.24 795.17 Td (Phoronix Test Suite v3.0.0) Tj ET Q
+q 0.000 g BT 206.24 795.17 Td (Phoronix Test Suite v3.0.1) Tj ET Q
 BT /F1 10.00 Tf ET
 q 0.000 g BT 232.17 779.36 Td (Test Client Documentation) Tj ET Q
 BT /F2 11.00 Tf ET
@@ -2198,7 +2198,7 @@ q 0.000 0.000 0.455 rg BT 59.53 258.90 Td (With Phoromatic) Tj ET 59.53 257.80 8
 BT /F2 11.00 Tf ET
 q 0.000 g BT 146.92 258.90 Td (.) Tj ET Q
 BT /F1 7.00 Tf ET
-q 0.000 g BT 26.93 26.25 Td (Phoronix Test Suite v3.0.0) Tj ET Q
+q 0.000 g BT 26.93 26.25 Td (Phoronix Test Suite v3.0.1) Tj ET Q
 566.93 28.35 0.00 0.00 re f q 0.000 g BT 466.08 26.25 Td (www.phoronix-test-suite.com) Tj ET Q
 
 endstream
@@ -2219,7 +2219,7 @@ BT /F2 11.00 Tf ET
 1.000 1.000 1.000 rg
 q 85.04 0 0 44.13 28.35 775.08 cm /I2 Do Q
 BT /F1 14.00 Tf ET
-q 0.000 g BT 206.24 795.17 Td (Phoronix Test Suite v3.0.0) Tj ET Q
+q 0.000 g BT 206.24 795.17 Td (Phoronix Test Suite v3.0.1) Tj ET Q
 BT /F1 10.00 Tf ET
 q 0.000 g BT 232.17 779.36 Td (Test Client Documentation) Tj ET Q
 BT /F2 11.00 Tf ET
@@ -2273,7 +2273,7 @@ q 0.196 0.200 0.192 rg BT 31.18 88.22 Td (Quick Start Guide) Tj ET Q
 BT /F2 11.00 Tf ET
 q 0.000 g BT 59.53 74.65 Td (When the operating system has fully booted, the end-user agreement for the Phoronix Test Suite will be) Tj ET Q
 BT /F1 7.00 Tf ET
-q 0.000 g BT 59.53 26.25 Td (Phoronix Test Suite v3.0.0) Tj ET Q
+q 0.000 g BT 59.53 26.25 Td (Phoronix Test Suite v3.0.1) Tj ET Q
 566.93 28.35 0.00 0.00 re f q 0.000 g BT 466.08 26.25 Td (www.phoronix-test-suite.com) Tj ET Q
 
 endstream
@@ -2294,7 +2294,7 @@ BT /F2 11.00 Tf ET
 1.000 1.000 1.000 rg
 q 85.04 0 0 44.13 28.35 775.08 cm /I2 Do Q
 BT /F1 14.00 Tf ET
-q 0.000 g BT 238.84 795.17 Td (Phoronix Test Suite v3.0.0) Tj ET Q
+q 0.000 g BT 238.84 795.17 Td (Phoronix Test Suite v3.0.1) Tj ET Q
 BT /F1 10.00 Tf ET
 q 0.000 g BT 248.47 779.36 Td (Test Client Documentation) Tj ET Q
 BT /F2 11.00 Tf ET
@@ -2360,7 +2360,7 @@ q 0.000 g BT 59.53 290.08 Td (phoronix-test-suite) Tj ET Q
 BT /F2 11.00 Tf ET
 q 0.000 g BT 150.00 290.08 Td (.) Tj ET Q
 BT /F1 7.00 Tf ET
-q 0.000 g BT 26.93 26.25 Td (Phoronix Test Suite v3.0.0) Tj ET Q
+q 0.000 g BT 26.93 26.25 Td (Phoronix Test Suite v3.0.1) Tj ET Q
 566.93 28.35 0.00 0.00 re f q 0.000 g BT 466.08 26.25 Td (www.phoronix-test-suite.com) Tj ET Q
 
 endstream
@@ -2381,7 +2381,7 @@ BT /F2 11.00 Tf ET
 1.000 1.000 1.000 rg
 q 85.04 0 0 44.13 28.35 775.08 cm /I2 Do Q
 BT /F1 14.00 Tf ET
-q 0.000 g BT 206.24 795.17 Td (Phoronix Test Suite v3.0.0) Tj ET Q
+q 0.000 g BT 206.24 795.17 Td (Phoronix Test Suite v3.0.1) Tj ET Q
 BT /F1 10.00 Tf ET
 q 0.000 g BT 232.17 779.36 Td (Test Client Documentation) Tj ET Q
 BT /F2 11.00 Tf ET
@@ -2426,7 +2426,7 @@ q 0.000 g BT 87.87 145.52 Td (Kenney Phillis) Tj ET Q
 q 0.000 g BT 87.87 117.17 Td (Kim Bisgaard) Tj ET Q
 q 0.000 g BT 87.87 88.82 Td (Laminar Research) Tj ET Q
 BT /F1 7.00 Tf ET
-q 0.000 g BT 87.87 26.25 Td (Phoronix Test Suite v3.0.0) Tj ET Q
+q 0.000 g BT 87.87 26.25 Td (Phoronix Test Suite v3.0.1) Tj ET Q
 566.93 28.35 0.00 0.00 re f q 0.000 g BT 466.08 26.25 Td (www.phoronix-test-suite.com) Tj ET Q
 
 endstream
@@ -2447,7 +2447,7 @@ BT /F2 11.00 Tf ET
 1.000 1.000 1.000 rg
 q 85.04 0 0 44.13 28.35 775.08 cm /I2 Do Q
 BT /F1 14.00 Tf ET
-q 0.000 g BT 267.19 795.17 Td (Phoronix Test Suite v3.0.0) Tj ET Q
+q 0.000 g BT 267.19 795.17 Td (Phoronix Test Suite v3.0.1) Tj ET Q
 BT /F1 10.00 Tf ET
 q 0.000 g BT 262.64 779.36 Td (Test Client Documentation) Tj ET Q
 BT /F2 11.00 Tf ET
@@ -2470,7 +2470,7 @@ q 0.000 g BT 87.87 318.43 Td (Unigine Corp) Tj ET Q
 q 0.000 g BT 87.87 290.08 Td (Vadim Peretokin) Tj ET Q
 q 0.000 g BT 87.87 261.74 Td (Zachary Powers) Tj ET Q
 BT /F1 7.00 Tf ET
-q 0.000 g BT 31.18 26.25 Td (Phoronix Test Suite v3.0.0) Tj ET Q
+q 0.000 g BT 31.18 26.25 Td (Phoronix Test Suite v3.0.1) Tj ET Q
 566.93 28.35 0.00 0.00 re f q 0.000 g BT 466.08 26.25 Td (www.phoronix-test-suite.com) Tj ET Q
 
 endstream
@@ -3039,12 +3039,12 @@ endobj
 <<
 /Producer (Phoronix Media)
 /Subject (Phoronix-Test-Suite.com)
-/Title (Phoronix Test Suite v3.0.0)
+/Title (Phoronix Test Suite v3.0.1)
 /Subject ()
 /Author (Phoronix Test Suite)
 /Keywords ()
 /Creator (PhoronixTestSuite/Iveland)
-/CreationDate (D:20110305032230)
+/CreationDate (D:20110315143947)
 >>
 endobj
 110 0 obj
