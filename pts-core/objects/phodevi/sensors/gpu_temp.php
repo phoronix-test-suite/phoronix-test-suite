@@ -54,7 +54,7 @@ class gpu_temp implements phodevi_sensor
 		}
 		else
 		{
-			foreach(pts_file_io::glob('/sys/class/drm/card0/device/hwmon/hwmon*/temp1_input') as $temp_input)
+			foreach(array_merge(pts_file_io::glob('/sys/class/drm/card0/device/hwmon/hwmon*/temp1_input'), pts_file_io::glob('/sys/class/drm/card0/device/hwmon/hwmon*/device/temp1_input')) as $temp_input)
 			{
 				// This works for at least Nouveau driver with Linux 2.6.37 era DRM
 				$temp_input = pts_file_io::file_get_contents($temp_input);
