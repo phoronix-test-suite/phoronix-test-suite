@@ -8,7 +8,7 @@
 		<Package>
 			<GenericName>gtk-development</GenericName>
 			<PackageName>gtk2-devel</PackageName>
-			<FileCheck>/usr/include/gtk-1.2</FileCheck>
+			<FileCheck>/usr/include/gtk-2.0</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>sdl-development</GenericName>
@@ -234,6 +234,12 @@
 			<GenericName>gmp-library</GenericName>
 			<PackageName>libgmp3</PackageName>
 			<FileCheck>/usr/include/gmp.h</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>32bit-compatibility</GenericName>
+			<PackageName>ia32el</PackageName>
+			<ArchitectureSpecific>x86_64</ArchitectureSpecific>
+			<FileCheck>/usr/lib/ia32el</FileCheck>
 		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
