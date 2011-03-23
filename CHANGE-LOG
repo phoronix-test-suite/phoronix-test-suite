@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: OpenSUSE external dependencies updates
+- phodevi: Don't confuse GCC with LLVM when sym-linking one to the other
 - phodevi: Better detection of Nouveau GPU thermal sensors
 
 Phoronix Test Suite 3.0.1

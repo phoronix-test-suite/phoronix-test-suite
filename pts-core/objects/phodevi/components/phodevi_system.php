@@ -327,10 +327,14 @@ class phodevi_system extends phodevi_device_interface
 		// Returns version of the compiler (if present)
 		$compilers = array();
 
-		if(pts_client::executable_in_path('gcc'))
+		if($gcc = pts_client::executable_in_path('gcc'))
 		{
-			// GCC
-			$compilers['gcc'] = 'GCC ' . trim(shell_exec('gcc -dumpversion 2>&1'));
+			if(!is_link($gcc) || strpos(readlink($gcc), 'gcc') !== false)
+			{
+				// GCC
+				// If it's a link, ensure that it's not linking to llvm/clang or something
+				$compilers['gcc'] = 'GCC ' . trim(shell_exec('gcc -dumpversion 2>&1'));
+			}
 		}
 
 		if(pts_client::executable_in_path('opencc'))
