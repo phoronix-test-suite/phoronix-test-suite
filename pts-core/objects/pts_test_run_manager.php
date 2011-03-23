@@ -292,7 +292,7 @@ class pts_test_run_manager
 					$is_reserved_word = false;
 				}
 
-				pts_client::$display->generic_prompt('Enter a name to save these results: ');
+				pts_client::$display->generic_prompt('Enter a name to save these results under: ');
 				$proposed_name = pts_user_io::read_user_input();
 				$custom_title = $proposed_name;
 				$proposed_name = self::clean_save_name($proposed_name);
@@ -367,7 +367,7 @@ class pts_test_run_manager
 				}
 				else
 				{
-					pts_client::$display->generic_prompt('Enter a unique name for this test run: ');
+					pts_client::$display->generic_prompt('Enter a unique name to describe this test run / configuration: ');
 					$results_identifier = self::clean_results_identifier(pts_user_io::read_user_input());
 				}
 				$times_tried++;
@@ -902,7 +902,7 @@ class pts_test_run_manager
 						$this->run_description = 'N/A';
 					}
 
-					pts_client::$display->generic_heading('If you wish, enter a new description below.' . PHP_EOL . 'Press ENTER to proceed without changes.');
+					pts_client::$display->generic_heading('If you wish, enter a new description below to better describe this result set / system configuration under test.' . PHP_EOL . 'Press ENTER to proceed without changes.');
 					echo 'Current Description: ' . $this->run_description . PHP_EOL . PHP_EOL . 'New Description: ';
 					$new_test_description = pts_user_io::read_user_input();
 
