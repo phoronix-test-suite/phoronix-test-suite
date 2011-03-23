@@ -22,8 +22,8 @@
 */
 
 define('PTS_VERSION', '3.0.1');
-define('PTS_CORE_VERSION', 3010);
-define('PTS_CODENAME', 'IVELAND');
+define('PTS_CORE_VERSION', 3100);
+define('PTS_CODENAME', 'GRIMSTAD');
 define('PTS_IS_CLIENT', PTS_MODE == 'CLIENT');
 
 /*
