@@ -60,7 +60,8 @@ class phodevi
 		'OpenGL' => array('system', 'opengl-driver'),
 		'Compiler' => array('system', 'compiler'),
 		'File-System' => array('system', 'filesystem'),
-		'Screen Resolution' => array('gpu', 'screen-resolution-string')
+		'Screen Resolution' => array('gpu', 'screen-resolution-string'),
+		'System Layer' => array('system', 'system-layer')
 		);
 	}
 	public static function load_sensors()

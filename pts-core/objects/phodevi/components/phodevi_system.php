@@ -90,6 +90,9 @@ class phodevi_system extends phodevi_device_interface
 			case 'compiler':
 				$property = new phodevi_device_property('sw_compiler', PHODEVI_STAND_CACHE);
 				break;
+			case 'system-layer':
+				$property = new phodevi_device_property('sw_system_layer', PHODEVI_STAND_CACHE);
+				break;
 		}
 
 		return $property;
@@ -108,6 +111,17 @@ class phodevi_system extends phodevi_device_interface
 		}
 
 		return $username;
+	}
+	public static function sw_system_layer()
+	{
+		$layer = null;
+
+		if(IS_WINDOWS && pts_client::executable_in_path('winecfg.exe') && ($wine = phodevi::read_property('system', 'wine-version')))
+		{
+			$layer = $wine;
+		}
+
+		return $layer;
 	}
 	public static function sw_hostname()
 	{
@@ -970,6 +984,15 @@ class phodevi_system extends phodevi_device_interface
 		if(pts_client::executable_in_path('wine') != false)
 		{
 			$wine_version = trim(shell_exec('wine --version 2>&1'));
+		}
+		else if(pts_client::executable_in_path('winecfg.exe') != false && pts_client::read_env('WINE_VERSION'))
+		{
+			$wine_version = trim(pts_client::read_env('WINE_VERSION'));
+
+			if(stripos($wine_version, 'wine') === false)
+			{
+				$wine_version = 'wine-' . $wine_version;
+			}
 		}
 
 		return $wine_version;

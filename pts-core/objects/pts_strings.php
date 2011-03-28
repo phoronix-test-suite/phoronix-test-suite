@@ -106,7 +106,14 @@ class pts_strings
 	}
 	public static function add_trailing_slash($path)
 	{
-		return $path . (substr($path, -1) == '/' ? null : '/'); 
+		if(IS_WINDOWS && strpos($path, ':\\') === 1)
+		{
+			return $path . (substr($path, -1) == '\\' ? null : '\\');
+		}
+		else
+		{
+			return $path . (substr($path, -1) == '/' ? null : '/');
+		}
 	}
 	public static function trim_explode($delimiter, $to_explode)
 	{
