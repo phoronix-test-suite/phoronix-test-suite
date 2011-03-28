@@ -469,7 +469,7 @@ abstract class bilde_renderer
 				$color_shift += $color_shift_size;
 				if($color_shift == 270)
 				{
-					$color_shift_size *= 1.2;
+					$color_shift_size *= 0.8;
 					$colors[0] = self::color_shade($colors[0], 0.5, 1);
 				}
 				else if($color_shift > 600)
