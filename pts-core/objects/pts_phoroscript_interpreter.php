@@ -342,7 +342,7 @@ class pts_phoroscript_interpreter
 						$cd_dir = str_replace('\\\\', '\\', $cd_dir);
 					}
 
-					exec("cd " . $cd_dir . " && " . $cd_dir . $line . " 2>&1", $exec_output, $prev_exit_status);
+					exec("cd " . $cd_dir . " && " . $line . " 2>&1", $exec_output, $prev_exit_status);
 					break;
 			}
 		}
