@@ -106,7 +106,7 @@ class pts_strings
 	}
 	public static function add_trailing_slash($path)
 	{
-		if(IS_WINDOWS && strpos($path, ':\\') === 1)
+		if(defined('IS_WINDOWS') && IS_WINDOWS && strpos($path, ':\\') === 1)
 		{
 			return $path . (substr($path, -1) == '\\' ? null : '\\');
 		}

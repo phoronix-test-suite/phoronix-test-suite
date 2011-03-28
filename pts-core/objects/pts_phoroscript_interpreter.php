@@ -308,7 +308,7 @@ class pts_phoroscript_interpreter
 
 						// TODO: right now it's expecting the file location pipe to be relative location
 						$echo_dir = pts_strings::add_trailing_slash(str_replace('"', null, $this->var_current_directory)); // needed for IS_WINDOWS specviewperf10
-						file_put_contents($echo_dir . $to_file, $echo_contents . "\n");
+						file_put_contents($echo_dir . $to_file, $echo_contents . PHP_EOL);
 					}
 					else
 					{
@@ -336,7 +336,7 @@ class pts_phoroscript_interpreter
 					$this->parse_variables_in_string($line, $pass_arguments);
 					$cd_dir = $this->var_current_directory;
 
-					if(IS_WINDOWS)
+					if(IS_WINDOWS && strpos($cd_dir, ':\\') === 1)
 					{
 						$cd_dir = str_replace('/', '\\', $cd_dir);
 						$cd_dir = str_replace('\\\\', '\\', $cd_dir);
