@@ -4,6 +4,7 @@ Phoronix Test Suite (Git)
 
 - pts-core: Add support for EXTERNAL_PHODEVI_CACHE to load an external Phodevi cache (e.g. within Wine)
 - pts-core: Add support for reporting Wine version to the software system layer
+- pts-core: Fix for PhoroScript interpreter not running some test profiles under Wine
 - pts-core: OpenSUSE external dependencies updates
 - phodevi: Don't confuse GCC with LLVM when sym-linking one to the other
 - phodevi: Better detection of Nouveau GPU thermal sensors

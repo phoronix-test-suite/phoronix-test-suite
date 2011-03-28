@@ -282,7 +282,7 @@ class pts_result_file_analyzer
 	{
 		$ir = new pts_graph_ir_value($value);
 
-		if(!in_array($index, array('Memory', 'System Memory', 'Desktop', 'Screen Resolution')) && $value != 'Unknown')
+		if(!in_array($index, array('Memory', 'System Memory', 'Desktop', 'Screen Resolution', 'System Layer')) && $value != 'Unknown')
 		{
 			$value = pts_strings::trim_search_query($value);
 

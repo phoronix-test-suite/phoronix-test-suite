@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2010, Phoronix Media
-	Copyright (C) 2009 - 2010, Michael Larabel
+	Copyright (C) 2009 - 2011, Phoronix Media
+	Copyright (C) 2009 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -339,9 +339,10 @@ class pts_phoroscript_interpreter
 					if(IS_WINDOWS)
 					{
 						$cd_dir = str_replace('/', '\\', $cd_dir);
+						$cd_dir = str_replace('\\\\', '\\', $cd_dir);
 					}
 
-					exec("cd " . $cd_dir . " && " . $line . " 2>&1", $exec_output, $prev_exit_status);
+					exec("cd " . $cd_dir . " && " . $cd_dir . $line . " 2>&1", $exec_output, $prev_exit_status);
 					break;
 			}
 		}
