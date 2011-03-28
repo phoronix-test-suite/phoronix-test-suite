@@ -80,6 +80,22 @@ class pts_storage_object
 	{
 		return $this->creation_time;
 	}
+	public function force_recover_from_file($read_from_file)
+	{
+		$restore_obj = false;
+
+		if(is_file($read_from_file))
+		{
+			$restore = unserialize(base64_decode(file_get_contents($read_from_file)));
+
+			if($restore instanceof pts_storage_object)
+			{
+				$restore_obj = $restore;
+			}
+		}
+
+		return $restore_obj;
+	}
 	public static function recover_from_file($read_from_file)
 	{
 		$restore_obj = false;
@@ -88,11 +104,11 @@ class pts_storage_object
 		{
 			$restore = unserialize(base64_decode(file_get_contents($read_from_file)));
 
-			if($restore instanceOf pts_storage_object)
+			if($restore instanceof pts_storage_object)
 			{
 				if(($restore->get_span_versions() || $restore->get_pts_version() == PTS_VERSION) && md5(serialize($restore->get_objects())) == $restore->get_object_checksum())
 				{
-					if(!$restore->get_span_reboots())
+					if($restore->get_span_reboots() == false)
 					{
 						$continue_loading = $restore->get_creation_time() > (time() - phodevi::system_uptime());
 					}

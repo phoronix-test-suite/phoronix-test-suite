@@ -444,6 +444,32 @@ class pts_client
 		{
 			$phodevi_cache = $phodevi_cache->restore_cache(PTS_USER_PATH, PTS_CORE_VERSION);
 			phodevi::set_device_cache($phodevi_cache);
+
+			if(($external_phodevi_cache = pts_client::read_env('EXTERNAL_PHODEVI_CACHE')))
+			{
+				if(is_dir($external_phodevi_cache) && is_file($external_phodevi_cache . '/core.pt2so'))
+				{
+					$external_phodevi_cache .= '/core.pt2so';
+				}
+
+				if(is_file($external_phodevi_cache))
+				{
+					$external_phodevi_cache = pts_storage_object::force_recover_from_file($external_phodevi_cache);
+
+					if($external_phodevi_cache != false)
+					{
+						$external_phodevi_cache = $external_phodevi_cache->read_object('phodevi_smart_cache');
+						$external_phodevi_cache = $external_phodevi_cache->restore_cache(null, PTS_CORE_VERSION);
+
+						if($external_phodevi_cache != false)
+						{
+							//unset($external_phodevi_cache['system']['operating-system']);
+							//unset($external_phodevi_cache['system']['vendor-identifier']);
+							phodevi::set_device_cache($external_phodevi_cache);
+						}
+					}
+				}
+			}
 		}
 
 		// Archive to disk
@@ -778,7 +804,7 @@ class pts_client
 		// TODO: possibly do something like posix_getpid() != pts_client::$startup_pid in case shutdown function is called from a child process
 
 		// Generate Phodevi Smart Cache
-		if(pts_client::read_env('NO_PHODEVI_CACHE') != 1)
+		if(pts_client::read_env('NO_PHODEVI_CACHE') == false && pts_client::read_env('EXTERNAL_PHODEVI_CACHE') == false)
 		{
 			if(pts_config::read_bool_config(P_OPTION_PHODEVI_CACHE, 'TRUE'))
 			{

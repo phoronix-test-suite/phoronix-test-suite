@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009, Phoronix Media
-	Copyright (C) 2009, Michael Larabel
+	Copyright (C) 2009 - 2011, Phoronix Media
+	Copyright (C) 2009 - 2011, Michael Larabel
 	phodevi_cache.php: The phodevi_cache object for storing the device cache
 
 	This program is free software; you can redistribute it and/or modify
@@ -41,7 +41,7 @@ class phodevi_cache
 	{
 		$restore_cache = null;
 
-		if($this->storage_dir == $storage_dir && $this->client_version == $client_version)
+		if(($this->storage_dir == $storage_dir || $storage_dir == null) && $this->client_version == $client_version)
 		{
 			if($this->phodevi_time > (time() - phodevi::system_uptime()))
 			{

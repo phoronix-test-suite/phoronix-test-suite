@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+- pts-core: Add support for EXTERNAL_PHODEVI_CACHE to load an external Phodevi cache (e.g. within Wine)
 - pts-core: OpenSUSE external dependencies updates
 - phodevi: Don't confuse GCC with LLVM when sym-linking one to the other
 - phodevi: Better detection of Nouveau GPU thermal sensors
