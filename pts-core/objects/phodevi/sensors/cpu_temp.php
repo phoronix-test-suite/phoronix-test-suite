@@ -83,6 +83,11 @@ class cpu_temp implements phodevi_sensor
 
 			if($raw_temp == -1)
 			{
+				$raw_temp = phodevi_linux_parser::read_sysfs_node('/sys/class/hwmon/hwmon*/device/temp1_input', 'POSITIVE_NUMERIC', array('name' => 'k10temp'));
+			}
+
+			if($raw_temp == -1)
+			{
 				// Try ACPI thermal
 				// Assuming the system thermal sensor comes 2nd to the ACPI CPU temperature
 				// It appears that way on a ThinkPad T60, but TODO find a better way to validate

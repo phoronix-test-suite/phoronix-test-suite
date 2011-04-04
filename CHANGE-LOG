@@ -8,6 +8,7 @@ Phoronix Test Suite (Git)
 - pts-core: OpenSUSE external dependencies updates
 - phodevi: Don't confuse GCC with LLVM when sym-linking one to the other
 - phodevi: Better detection of Nouveau GPU thermal sensors
+- phodevi: Support monitoring the CPU temperature from the k10temp hwmon module
 
 Phoronix Test Suite 3.0.1
 15 March 2011
