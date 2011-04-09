@@ -412,7 +412,7 @@ class pts_test_installer
 					$install_exit_status = pts_file_io::file_get_contents($test_install_directory . "install-exit-status");
 					unlink($test_install_directory . "install-exit-status");
 
-					if($install_exit_status != 0 && !IS_BSD && !IS_WINDOWS)
+					if($install_exit_status != 0 && phodevi::is_bsd() == false && phodevi::is_windows() == false)
 					{
 						// TODO: perhaps better way to handle this than to remove pts-install.xml
 						pts_file_io::unlink($test_install_directory . "pts-install.xml");

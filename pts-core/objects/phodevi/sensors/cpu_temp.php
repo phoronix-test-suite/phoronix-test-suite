@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2010, Phoronix Media
-	Copyright (C) 2009 - 2010, Michael Larabel
+	Copyright (C) 2009 - 2011, Phoronix Media
+	Copyright (C) 2009 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -44,7 +44,7 @@ class cpu_temp implements phodevi_sensor
 		// Read the processor temperature
 		$temp_c = -1;
 
-		if(IS_BSD)
+		if(phodevi::is_bsd())
 		{
 
 			$cpu_temp = phodevi_bsd_parser::read_sysctl(array('hw.sensors.acpi_tz0.temp0', 'dev.cpu.0.temperature', 'hw.sensors.cpu0.temp0'));
@@ -76,7 +76,7 @@ class cpu_temp implements phodevi_sensor
 				}
 			}
 		}
-		else if(IS_LINUX)
+		else if(phodevi::is_linux())
 		{
 			// Try hwmon interface
 			$raw_temp = phodevi_linux_parser::read_sysfs_node('/sys/class/hwmon/hwmon*/device/temp1_input', 'POSITIVE_NUMERIC', array('name' => 'coretemp'));

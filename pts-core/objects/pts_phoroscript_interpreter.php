@@ -52,7 +52,7 @@ class pts_phoroscript_interpreter
 
 		if(strpos($path, '*') !== false)
 		{
-			$grep_dir = pts_strings::add_trailing_slash(str_replace('"', null, $this->var_current_directory)); // needed for IS_WINDOWS specviewperf10
+			$grep_dir = pts_strings::add_trailing_slash(str_replace('"', null, $this->var_current_directory)); // needed for phodevi::is_windows() specviewperf10
 			$glob = pts_file_io::glob($grep_dir . $path);
 
 			return count($glob) > 0 ? array_shift($glob) : $this->var_current_directory;
@@ -136,7 +136,7 @@ class pts_phoroscript_interpreter
 				$var_value = $pass_arguments_r[($var - 1)];
 			}
 
-			if(IS_WINDOWS && $var == "LOG_FILE")
+			if(phodevi::is_windows() && $var == "LOG_FILE")
 			{
 				$value = str_replace('/', '\\', $value);
 			}
@@ -307,7 +307,7 @@ class pts_phoroscript_interpreter
 						}
 
 						// TODO: right now it's expecting the file location pipe to be relative location
-						$echo_dir = pts_strings::add_trailing_slash(str_replace('"', null, $this->var_current_directory)); // needed for IS_WINDOWS specviewperf10
+						$echo_dir = pts_strings::add_trailing_slash(str_replace('"', null, $this->var_current_directory)); // needed for phodevi::is_windows() specviewperf10
 						file_put_contents($echo_dir . $to_file, $echo_contents . "\n");
 					}
 					else
@@ -328,7 +328,7 @@ class pts_phoroscript_interpreter
 				default:
 					$exec_output = array();
 
-					if(IS_WINDOWS && substr($line, 0, 2) == "./")
+					if(phodevi::is_windows() && substr($line, 0, 2) == "./")
 					{
 						$line = substr($line, 2);
 					}
@@ -336,7 +336,7 @@ class pts_phoroscript_interpreter
 					$this->parse_variables_in_string($line, $pass_arguments);
 					$cd_dir = $this->var_current_directory;
 
-					if(IS_WINDOWS && strpos($cd_dir, ':\\') === 1)
+					if(phodevi::is_windows() && strpos($cd_dir, ':\\') === 1)
 					{
 						$cd_dir = str_replace('/', '\\', $cd_dir);
 						$cd_dir = str_replace('\\\\', '\\', $cd_dir);

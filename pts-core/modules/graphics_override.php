@@ -49,7 +49,7 @@ class graphics_override extends pts_module_interface
 	public static function set_amd_pcsdb($attribute, $value)
 	{
 		// Sets a value for AMD's PCSDB, Persistent Configuration Store Database
-		if(IS_ATI_GRAPHICS && IS_LINUX && !empty($value))
+		if(IS_ATI_GRAPHICS && phodevi::is_linux() && !empty($value))
 		{
 			$DISPLAY = substr(pts_client::read_env("DISPLAY"), 1, 1);
 			$info = shell_exec("DISPLAY=:" . $DISPLAY . " aticonfig --set-pcs-val=" . $attribute . "," . $value . "  2>&1");
@@ -57,7 +57,7 @@ class graphics_override extends pts_module_interface
 	}
 	public static function __pre_run_process()
 	{
-		if(!(IS_NVIDIA_GRAPHICS || (IS_ATI_GRAPHICS && IS_LINUX)))
+		if(!(IS_NVIDIA_GRAPHICS || (IS_ATI_GRAPHICS && phodevi::is_linux())))
 		{
 			echo "\nNo supported driver found for graphics_override module!\n";
 			return pts_module::MODULE_UNLOAD; // Not using a supported driver, quit the module

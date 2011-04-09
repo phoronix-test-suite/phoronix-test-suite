@@ -116,7 +116,7 @@ class phodevi_system extends phodevi_device_interface
 	{
 		$layer = null;
 
-		if(IS_WINDOWS && pts_client::executable_in_path('winecfg.exe') && ($wine = phodevi::read_property('system', 'wine-version')))
+		if(phodevi::is_windows() && pts_client::executable_in_path('winecfg.exe') && ($wine = phodevi::read_property('system', 'wine-version')))
 		{
 			$layer = $wine;
 		}
@@ -131,7 +131,7 @@ class phodevi_system extends phodevi_device_interface
 		{
 			$hostname = trim(shell_exec($bin . ' 2>&1'));
 		}
-		else if(IS_WINDOWS)
+		else if(phodevi::is_windows())
 		{
 			$hostname = getenv('USERDOMAIN');
 		}
@@ -141,7 +141,7 @@ class phodevi_system extends phodevi_device_interface
 	public static function sw_vendor_identifier()
 	{
 		// Returns the vendor identifier used with the External Dependencies and other distro-specific features
-		$vendor = IS_LINUX ? phodevi_linux_parser::read_lsb_distributor_id() : false;
+		$vendor = phodevi::is_linux() ? phodevi_linux_parser::read_lsb_distributor_id() : false;
 
 		if(!$vendor)
 		{
@@ -160,11 +160,11 @@ class phodevi_system extends phodevi_device_interface
 		// Determine file-system type
 		$fs = null;
 
-		if(IS_MACOSX)
+		if(phodevi::is_macosx())
 		{
 			$fs = phodevi_osx_parser::read_osx_system_profiler('SPSerialATADataType', 'FileSystem');
 		}
-		else if(IS_BSD)
+		else if(phodevi::is_bsd())
 		{
 			if(pts_client::executable_in_path('mount'))
 			{
@@ -192,7 +192,7 @@ class phodevi_system extends phodevi_device_interface
 				}
 			}
 		}
-		else if(IS_LINUX || IS_SOLARIS)
+		else if(phodevi::is_linux() || phodevi::is_solaris())
 		{
 			$fs = trim(shell_exec('stat ' . PTS_TEST_INSTALL_PATH . ' -L -f -c %T 2> /dev/null'));
 
@@ -298,7 +298,7 @@ class phodevi_system extends phodevi_device_interface
 				}
 			}
 		}
-		else if(IS_WINDOWS)
+		else if(phodevi::is_windows())
 		{
 			return null;
 		}
@@ -447,7 +447,7 @@ class phodevi_system extends phodevi_device_interface
 	public static function sw_kernel_architecture()
 	{
 		// Find out the kernel archiecture
-		if(IS_WINDOWS)
+		if(phodevi::is_windows())
 		{
 			//$kernel_arch = strpos($_SERVER['PROCESSOR_ARCHITECTURE'], 64) !== false || strpos($_SERVER['PROCESSOR_ARCHITEW6432'], 64 != false) ? 'x86_64' : 'i686';
 			$kernel_arch = $_SERVER['PROCESSOR_ARCHITEW6432'] == 'AMD64' ? 'x86_64' : 'i686';
@@ -474,7 +474,7 @@ class phodevi_system extends phodevi_device_interface
 	public static function sw_os_version()
 	{
 		// Returns OS version
-		if(IS_MACOSX)
+		if(phodevi::is_macosx())
 		{
 			$os = phodevi_osx_parser::read_osx_system_profiler('SPSoftwareDataType', 'SystemVersion');
 		
@@ -485,7 +485,7 @@ class phodevi_system extends phodevi_device_interface
 		
 			$os_version = substr($os, $start_pos + 1, $end_pos - $start_pos);
 		}
-		else if(IS_LINUX)
+		else if(phodevi::is_linux())
 		{
 			$os_version = phodevi_linux_parser::read_lsb('Release');
 		}
@@ -499,7 +499,7 @@ class phodevi_system extends phodevi_device_interface
 	public static function sw_operating_system()
 	{
 		// Determine the operating system release
-		$vendor = IS_LINUX ? phodevi_linux_parser::read_lsb_distributor_id() : false;
+		$vendor = phodevi::is_linux() ? phodevi_linux_parser::read_lsb_distributor_id() : false;
 		$version = phodevi::read_property('system', 'os-version');
 
 		if(!$vendor)
@@ -555,7 +555,7 @@ class phodevi_system extends phodevi_device_interface
 
 			if($os == null)
 			{
-				if(IS_WINDOWS)
+				if(phodevi::is_windows())
 				{
 					$os = trim(exec('ver'));
 				}
@@ -575,7 +575,7 @@ class phodevi_system extends phodevi_device_interface
 			$os = substr($os, $break_point + 1);
 		}
 		
-		if(IS_MACOSX)
+		if(phodevi::is_macosx())
 		{
 			$os = phodevi_osx_parser::read_osx_system_profiler('SPSoftwareDataType', 'SystemVersion');
 		
@@ -691,7 +691,7 @@ class phodevi_system extends phodevi_device_interface
 	}
 	public static function sw_display_server()
 	{
-		if(IS_WINDOWS)
+		if(phodevi::is_windows())
 		{
 			// TODO: determine what to do for Windows support
 			$info = false;
@@ -704,7 +704,7 @@ class phodevi_system extends phodevi_device_interface
 			}
 
 			// Find graphics subsystem version
-			$info = shell_exec($x_bin . ' ' . (IS_SOLARIS ? ':0' : '') . ' -version 2>&1');
+			$info = shell_exec($x_bin . ' ' . (phodevi::is_solaris() ? ':0' : '') . ' -version 2>&1');
 			$pos = (($p = strrpos($info, 'Release Date')) !== false ? $p : strrpos($info, 'Build Date'));
 			$info = trim(substr($info, 0, $pos));
 
@@ -731,7 +731,7 @@ class phodevi_system extends phodevi_device_interface
 	}
 	public static function sw_display_driver($with_version = true)
 	{
-		if(IS_WINDOWS)
+		if(phodevi::is_windows())
 		{
 			return null;
 		}
@@ -748,7 +748,7 @@ class phodevi_system extends phodevi_device_interface
 			{
 				$display_driver = 'nvidia';
 			}
-			else if((IS_MESA_GRAPHICS || IS_BSD) && stripos(phodevi::read_property('gpu', 'model'), 'NVIDIA') !== false)
+			else if((IS_MESA_GRAPHICS || phodevi::is_bsd()) && stripos(phodevi::read_property('gpu', 'model'), 'NVIDIA') !== false)
 			{
 				if(is_file('/sys/class/drm/version'))
 				{
@@ -842,7 +842,7 @@ class phodevi_system extends phodevi_device_interface
 		// OpenGL version
 		$info = null;
 
-		if(IS_WINDOWS)
+		if(phodevi::is_windows())
 		{
 			$info = null; // TODO: Windows support
 		}
@@ -898,7 +898,7 @@ class phodevi_system extends phodevi_device_interface
 		{
 			$info = 'Mesa';
 		}
-		else if(IS_BSD && phodevi_bsd_parser::read_sysctl('dev.nvidia.0.%driver'))
+		else if(phodevi::is_bsd() && phodevi_bsd_parser::read_sysctl('dev.nvidia.0.%driver'))
 		{
 			$info = 'NVIDIA';
 		}

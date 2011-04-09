@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2010, Phoronix Media
-	Copyright (C) 2009 - 2010, Michael Larabel
+	Copyright (C) 2009 - 2011, Phoronix Media
+	Copyright (C) 2009 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -51,7 +51,7 @@ class gpu_fanspeed implements phodevi_sensor
 			// nvidia-settings --describe GPUFanTarget 
 			$fan_speed = phodevi_parser::read_nvidia_extension('[fan:0]/GPUCurrentFanSpeed');
 		}
-		else if(IS_ATI_GRAPHICS && IS_LINUX)
+		else if(IS_ATI_GRAPHICS && phodevi::is_linux())
 		{
 			$fan_speed = phodevi_linux_parser::read_ati_overdrive('FanSpeed');
 		}

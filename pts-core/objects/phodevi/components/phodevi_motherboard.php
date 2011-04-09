@@ -50,7 +50,7 @@ class phodevi_motherboard extends phodevi_device_interface
 	{
 		$usb = array();
 
-		if(IS_LINUX)
+		if(phodevi::is_linux())
 		{
 			foreach(pts_file_io::glob('/sys/bus/usb/devices/*-*/manufacturer') as $usb_dir)
 			{
@@ -86,7 +86,7 @@ class phodevi_motherboard extends phodevi_device_interface
 	{
 		$pci_devices = array();
 
-		if(IS_LINUX)
+		if(phodevi::is_linux())
 		{
 			$lspci = shell_exec('lspci -mmkvnn');
 			$lspci = explode("\n\n", $lspci);
@@ -167,7 +167,7 @@ class phodevi_motherboard extends phodevi_device_interface
 		// Returns the power mode
 		$return_status = null;
 
-		if(IS_LINUX)
+		if(phodevi::is_linux())
 		{
 			$sysfs_checked = false;
 
@@ -200,11 +200,11 @@ class phodevi_motherboard extends phodevi_device_interface
 		// Returns the motherboard / system model name or number
 		$info = null;
 
-		if(IS_MACOSX)
+		if(phodevi::is_macosx())
 		{
 			$info = phodevi_osx_parser::read_osx_system_profiler('SPHardwareDataType', 'ModelName');
 		}
-		else if(IS_SOLARIS)
+		else if(phodevi::is_solaris())
 		{
 			$manufacturer = phodevi_solaris_parser::read_sun_ddu_dmi_info(array('MotherBoardInformation,Manufacturer', 'SystemInformation,Manufacturer'));
 			$product = phodevi_solaris_parser::read_sun_ddu_dmi_info(array('MotherBoardInformation,Product', 'SystemInformation,Product', 'SystemInformation,Model'));
@@ -214,7 +214,7 @@ class phodevi_motherboard extends phodevi_device_interface
 				$info = $manufacturer[0] . ' ' . $product[0];
 			}
 		}
-		else if(IS_BSD)
+		else if(phodevi::is_bsd())
 		{
 			if(($vendor = phodevi_bsd_parser::read_sysctl('hw.vendor')) != false && ($version = phodevi_bsd_parser::read_sysctl(array('hw.version', 'hw.product'))) != false)
 			{
@@ -225,7 +225,7 @@ class phodevi_motherboard extends phodevi_device_interface
 				$info = trim($acpi);
 			}
 		}
-		else if(IS_LINUX)
+		else if(phodevi::is_linux())
 		{
 			$vendor = phodevi_linux_parser::read_sys_dmi(array('board_vendor', 'sys_vendor'));
 			$name = phodevi_linux_parser::read_sys_dmi(array('board_name', 'product_name'));
@@ -309,7 +309,7 @@ class phodevi_motherboard extends phodevi_device_interface
 				$info = phodevi_linux_parser::read_sys_dmi('product_name');
 			}
 		}
-		else if(IS_WINDOWS)
+		else if(phodevi::is_windows())
 		{
 			$info = phodevi_windows_parser::read_cpuz('Mainboard Model', null);
 		}

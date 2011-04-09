@@ -245,11 +245,11 @@ class pts_test_run_options
 					return;
 				}
 
-				/*if(IS_LINUX)
+				/*if(phodevi::is_linux())
 				{
 					$all_devices = array_merge(pts_file_io::glob('/dev/hd*'), pts_file_io::glob('/dev/sd*'));
 				}
-				else if(IS_BSD)
+				else if(phodevi::is_bsd())
 				{
 					$all_devices = array_merge(pts_file_io::glob('/dev/ad*'), pts_file_io::glob('/dev/ada*'));
 				}

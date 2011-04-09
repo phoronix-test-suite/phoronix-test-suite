@@ -100,7 +100,7 @@ class phodevi_gpu extends phodevi_device_interface
 	}
 	public static function gpu_set_resolution($args)
 	{
-		if(count($args) != 2 || IS_WINDOWS || IS_MACOSX)
+		if(count($args) != 2 || phodevi::is_windows() || phodevi::is_macosx())
 		{
 			return false;
 		}
@@ -143,7 +143,7 @@ class phodevi_gpu extends phodevi_device_interface
 					break;
 			}
 		}
-		else if(IS_ATI_GRAPHICS && IS_LINUX)
+		else if(IS_ATI_GRAPHICS && phodevi::is_linux())
 		{
 			$ati_fsaa = phodevi_linux_parser::read_amd_pcsdb('OpenGL,AntiAliasSamples');
 			$ati_fsaa_filter = phodevi_linux_parser::read_amd_pcsdb('OpenGL,AAF');
@@ -242,7 +242,7 @@ class phodevi_gpu extends phodevi_device_interface
 					break;
 			}
 		}
-		else if(IS_ATI_GRAPHICS && IS_LINUX)
+		else if(IS_ATI_GRAPHICS && phodevi::is_linux())
 		{
 			$ati_af = phodevi_linux_parser::read_amd_pcsdb('OpenGL,AnisoDegree');
 
@@ -294,16 +294,16 @@ class phodevi_gpu extends phodevi_device_interface
 			}
 		}
 
-		if(IS_MACOSX)
+		if(phodevi::is_macosx())
 		{
 			$info = pts_strings::trim_explode(' ', phodevi_osx_parser::read_osx_system_profiler('SPDisplaysDataType', 'Resolution'));
 			$resolution = array();
 			$resolution[0] = $info[0];
 			$resolution[1] = $info[2];
 		}
-		else if(IS_LINUX || IS_BSD || IS_SOLARIS)
+		else if(phodevi::is_linux() || phodevi::is_bsd() || phodevi::is_solaris())
 		{
-			if(IS_LINUX)
+			if(phodevi::is_linux())
 			{
 				// Before calling xrandr first try to get the resolution through KMS path
 				foreach(pts_file_io::glob('/sys/class/drm/card*/*/modes') as $connector_path)
@@ -415,7 +415,7 @@ class phodevi_gpu extends phodevi_device_interface
 		}
 
 		// Attempt reading available modes from xrandr
-		if(pts_client::executable_in_path('xrandr') && !IS_MACOSX) // MacOSX has xrandr but currently on at least my setup will emit a Bus Error when called
+		if(pts_client::executable_in_path('xrandr') && !phodevi::is_macosx()) // MacOSX has xrandr but currently on at least my setup will emit a Bus Error when called
 		{
 			$xrandr_lines = array_reverse(explode("\n", shell_exec('xrandr 2>&1')));
 
@@ -562,7 +562,7 @@ class phodevi_gpu extends phodevi_device_interface
 			{
 				$video_ram = $NVIDIA / 1024;
 			}
-			else if(IS_MACOSX)
+			else if(phodevi::is_macosx())
 			{
 				$info = phodevi_osx_parser::read_osx_system_profiler('SPDisplaysDataType', 'VRAM');
 				$info = explode(' ', $info);
@@ -644,12 +644,12 @@ class phodevi_gpu extends phodevi_device_interface
 		$core_freq = 0;
 		$mem_freq = 0;
 
-		if(IS_NVIDIA_GRAPHICS && !IS_MACOSX) // NVIDIA GPU
+		if(IS_NVIDIA_GRAPHICS && phodevi::is_macosx() == false) // NVIDIA GPU
 		{
 			// GPUDefault3DClockFreqs is the default and does not show under/over-clocking
 			list($core_freq, $mem_freq) = pts_strings::comma_explode(phodevi_parser::read_nvidia_extension('GPU3DClockFreqs'));
 		}
-		else if(IS_ATI_GRAPHICS && IS_LINUX) // ATI GPU
+		else if(IS_ATI_GRAPHICS && phodevi::is_linux()) // ATI GPU
 		{
 			$od_clocks = phodevi_linux_parser::read_ati_overdrive('CurrentPeak');
 
@@ -749,7 +749,7 @@ class phodevi_gpu extends phodevi_device_interface
 		$info = phodevi_parser::read_glx_renderer();
 		$video_ram = phodevi::read_property('gpu', 'memory-capacity');
 
-		if(IS_ATI_GRAPHICS && IS_LINUX)
+		if(IS_ATI_GRAPHICS && phodevi::is_linux())
 		{
 			$crossfire_status = phodevi_linux_parser::read_amd_pcsdb('SYSTEM/Crossfire/chain/*,Enable');
 			$crossfire_status = pts_arrays::to_array($crossfire_status);
@@ -821,7 +821,7 @@ class phodevi_gpu extends phodevi_device_interface
 			}
 		}
 
-		if(IS_SOLARIS)
+		if(phodevi::is_solaris())
 		{
 			if(($cut = strpos($info, 'DRI ')) !== false)
 			{
@@ -832,7 +832,7 @@ class phodevi_gpu extends phodevi_device_interface
 				$info = substr($info, 0, $cut);
 			}
 		}
-		else if(IS_BSD)
+		else if(phodevi::is_bsd())
 		{
 			$drm_info = phodevi_bsd_parser::read_sysctl('dev.drm.0.%desc');
 
@@ -866,14 +866,14 @@ class phodevi_gpu extends phodevi_device_interface
 				}
 			}
 		}
-		else if(IS_WINDOWS)
+		else if(phodevi::is_windows())
 		{
 			$info = phodevi_windows_parser::read_cpuz('Display Adapters', 'Name');
 		}
 	
 		if(empty($info) || strpos($info, 'Mesa ') !== false || strpos($info, 'Gallium ') !== false || $info == 'Software Rasterizer')
 		{
-			if(IS_LINUX)
+			if(phodevi::is_linux())
 			{
 				$info_pci = phodevi_linux_parser::read_pci('VGA compatible controller', false);
 

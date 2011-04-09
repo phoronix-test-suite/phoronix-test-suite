@@ -96,7 +96,7 @@ class pts_tests
 		// TODO: call_test_script could be better cleaned up to fit more closely with new pts_test_profile functions
 		$result = null;
 		$test_directory = $test_profile->get_install_dir();
-		$os_postfix = '_' . strtolower(OPERATING_SYSTEM);
+		$os_postfix = '_' . strtolower(phodevi::operating_system());
 		$test_profiles = array($test_profile);
 
 		if($use_ctp)
@@ -115,7 +115,7 @@ class pts_tests
 					pts_client::$display->test_run_message($print_string);
 				}
 
-				if(IS_WINDOWS || pts_client::read_env('USE_PHOROSCRIPT_INTERPRETER') != false)
+				if(phodevi::is_windows() || pts_client::read_env('USE_PHOROSCRIPT_INTERPRETER') != false)
 				{
 					$phoroscript = new pts_phoroscript_interpreter($run_file, $extra_vars, $test_directory);
 					$phoroscript->execute_script($pass_argument);

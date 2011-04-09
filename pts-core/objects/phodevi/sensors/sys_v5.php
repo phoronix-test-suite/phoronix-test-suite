@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2010, Phoronix Media
-	Copyright (C) 2009 - 2010, Michael Larabel
+	Copyright (C) 2009 - 2011, Phoronix Media
+	Copyright (C) 2009 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -41,7 +41,7 @@ class sys_v5 implements phodevi_sensor
 	}
 	public static function read_sensor()
 	{
-		if(IS_LINUX)
+		if(phodevi::is_linux())
 		{
 			$sensor = phodevi_linux_parser::read_sensors(array('V5', '+5V'));
 		}

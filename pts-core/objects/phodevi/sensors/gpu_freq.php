@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2010, Phoronix Media
-	Copyright (C) 2009 - 2010, Michael Larabel
+	Copyright (C) 2009 - 2011, Phoronix Media
+	Copyright (C) 2009 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -54,7 +54,7 @@ class gpu_freq implements phodevi_sensor
 			$core_freq = isset($nv_freq[0]) ? $nv_freq[0] : 0;
 			$mem_freq = isset($nv_freq[1]) ? $nv_freq[1] : 0;
 		}
-		else if(IS_ATI_GRAPHICS && IS_LINUX) // ATI GPU
+		else if(IS_ATI_GRAPHICS && phodevi::is_linux()) // ATI GPU
 		{
 			$od_clocks = phodevi_linux_parser::read_ati_overdrive('CurrentClocks');
 
@@ -64,7 +64,7 @@ class gpu_freq implements phodevi_sensor
 				$mem_freq = array_pop($od_clocks);
 			}
 		}
-		else if(IS_LINUX)
+		else if(phodevi::is_linux())
 		{
 			if(is_file('/sys/kernel/debug/dri/0/radeon_pm_info'))
 			{

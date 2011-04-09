@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010, Phoronix Media
-	Copyright (C) 2010, Michael Larabel
+	Copyright (C) 2010 - 2011, Phoronix Media
+	Copyright (C) 2010 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -78,7 +78,7 @@ class pts_test_install_request
 				{
 					$platforms = pts_strings::comma_explode($package_platform[$i]);
 
-					if(!in_array(OPERATING_SYSTEM, $platforms) && !(IS_BSD && BSD_LINUX_COMPATIBLE && in_array('Linux', $platforms)))
+					if(!in_array(phodevi::operating_system(), $platforms) && !(phodevi::is_bsd() && BSD_LINUX_COMPATIBLE && in_array('Linux', $platforms)))
 					{
 						// This download does not match the operating system
 						continue;

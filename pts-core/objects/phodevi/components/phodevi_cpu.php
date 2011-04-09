@@ -66,23 +66,23 @@ class phodevi_cpu extends phodevi_device_interface
 	}
 	public static function cpu_core_count()
 	{
-		if(IS_LINUX)
+		if(phodevi::is_linux())
 		{
 			$info = count(phodevi_linux_parser::read_cpuinfo('processor'));
 		}
-		else if(IS_SOLARIS)
+		else if(phodevi::is_solaris())
 		{
 			$info = count(explode("\n", trim(shell_exec('psrinfo'))));
 		}
-		else if(IS_BSD)
+		else if(phodevi::is_bsd())
 		{
 			$info = intval(phodevi_bsd_parser::read_sysctl('hw.ncpu'));
 		}
-		else if(IS_MACOSX)
+		else if(phodevi::is_macosx())
 		{
 			$info = phodevi_osx_parser::read_osx_system_profiler('SPHardwareDataType', 'TotalNumberOfCores');
 		}
-		else if(IS_WINDOWS)
+		else if(phodevi::is_windows())
 		{
 			$info = getenv('NUMBER_OF_PROCESSORS');
 		}
@@ -101,7 +101,7 @@ class phodevi_cpu extends phodevi_device_interface
 	{
 		// Find out the processor frequency
 
-		if(IS_LINUX)
+		if(phodevi::is_linux())
 		{
 			// First, the ideal way, with modern CPUs using CnQ or EIST and cpuinfo reporting the current
 			if(is_file('/sys/devices/system/cpu/cpu' . $cpu_core . '/cpufreq/scaling_max_freq'))
@@ -116,7 +116,7 @@ class phodevi_cpu extends phodevi_device_interface
 				$info = isset($cpu_speeds[$cpu_core]) ? ($cpu_speeds[$cpu_core] / 1000) : 0;
 			}
 		}
-		else if(IS_BSD)
+		else if(phodevi::is_bsd())
 		{
 			$info = phodevi_bsd_parser::read_sysctl(array('hw.acpi.cpu.px_global', 'machdep.est.frequency.target'));
 
@@ -129,7 +129,7 @@ class phodevi_cpu extends phodevi_device_interface
 				$info = null;
 			}
 		}
-		else if(IS_WINDOWS)
+		else if(phodevi::is_windows())
 		{
 			$info = phodevi_windows_parser::read_cpuz('Processor 1', 'Stock frequency');
 			if($info != null)
@@ -160,7 +160,7 @@ class phodevi_cpu extends phodevi_device_interface
 		// Report string if CPU power savings feature is enabled
 		$return_string = null;
 
-		if(IS_LINUX && is_file('/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq') && is_file('/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq'))
+		if(phodevi::is_linux() && is_file('/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq') && is_file('/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq'))
 		{
 			// if EIST / CnQ is disabled, the cpufreq folder shoudln't be present, but double check by comparing the min and max frequencies
 			$min = pts_file_io::file_get_contents('/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq');
@@ -192,7 +192,7 @@ class phodevi_cpu extends phodevi_device_interface
 		// Returns the processor name / frequency information
 		$info = null;
 
-		if(IS_LINUX)
+		if(phodevi::is_linux())
 		{
 			$physical_cpu_ids = phodevi_linux_parser::read_cpuinfo('physical id');
 			$physical_cpu_count = count(array_unique($physical_cpu_ids));
@@ -242,7 +242,7 @@ class phodevi_cpu extends phodevi_device_interface
 				$info = implode(', ', $cpus);
 			}
 		}
-		else if(IS_SOLARIS)
+		else if(phodevi::is_solaris())
 		{
 			$dmi_cpu = phodevi_solaris_parser::read_sun_ddu_dmi_info('CPUType', '-C');
 
@@ -274,15 +274,15 @@ class phodevi_cpu extends phodevi_device_interface
 				$info = $physical_cpu_count . ' x ' . $info;
 			}
 		}
-		else if(IS_BSD)
+		else if(phodevi::is_bsd())
 		{
 			$info = phodevi_bsd_parser::read_sysctl('hw.model');
 		}
-		else if(IS_MACOSX)
+		else if(phodevi::is_macosx())
 		{
 			$info = phodevi_osx_parser::read_osx_system_profiler('SPHardwareDataType', 'ProcessorName');
 		}
-		else if(IS_WINDOWS)
+		else if(phodevi::is_windows())
 		{
 			$info = phodevi_windows_parser::read_cpuz('Processor 1', 'Name');
 

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2010, Phoronix Media
-	Copyright (C) 2008 - 2010, Michael Larabel
+	Copyright (C) 2008 - 2011, Phoronix Media
+	Copyright (C) 2008 - 2011, Michael Larabel
 	phodevi_monitor.php: The PTS Device Interface object for the display monitor
 
 	This program is free software; you can redistribute it and/or modify
@@ -45,7 +45,7 @@ class phodevi_monitor extends phodevi_device_interface
 	}
 	public static function monitor_string()
 	{
-		if(IS_MACOSX)
+		if(phodevi::is_macosx())
 		{
 			$system_profiler = shell_exec('system_profiler SPDisplaysDataType 2>&1');
 			$system_profiler = substr($system_profiler, strrpos($system_profiler, 'Displays:'));
@@ -94,7 +94,7 @@ class phodevi_monitor extends phodevi_device_interface
 						break;
 				}
 			}
-			else if(IS_ATI_GRAPHICS && IS_LINUX)
+			else if(IS_ATI_GRAPHICS && phodevi::is_linux())
 			{
 				$amdpcsdb_enabled_monitors = phodevi_linux_parser::read_amd_pcsdb('SYSTEM/BUSID-*/DDX,EnableMonitor');
 				$amdpcsdb_enabled_monitors = pts_arrays::to_array($amdpcsdb_enabled_monitors);
@@ -148,7 +148,7 @@ class phodevi_monitor extends phodevi_device_interface
 			if(count($monitor_layout) == 1)
 			{
 				// Something went wrong with xdpy information, go to fallback support
-				if(IS_ATI_GRAPHICS && IS_LINUX)
+				if(IS_ATI_GRAPHICS && phodevi::is_linux())
 				{
 					$amdpcsdb_monitor_layout = phodevi_linux_parser::read_amd_pcsdb('SYSTEM/BUSID-*/DDX,DesktopSetup');
 					$amdpcsdb_monitor_layout = pts_arrays::to_array($amdpcsdb_monitor_layout);

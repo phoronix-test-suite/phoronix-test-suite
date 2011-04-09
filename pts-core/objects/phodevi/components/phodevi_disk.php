@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2010, Phoronix Media
-	Copyright (C) 2008 - 2010, Michael Larabel
+	Copyright (C) 2008 - 2011, Phoronix Media
+	Copyright (C) 2008 - 2011, Michael Larabel
 	phodevi_disk.php: The PTS Device Interface object for the system disk(s)
 
 	This program is free software; you can redistribute it and/or modify
@@ -52,7 +52,7 @@ class phodevi_disk extends phodevi_device_interface
 	{
 		$disks = array();
 
-		if(IS_MACOSX)
+		if(phodevi::is_macosx())
 		{
 			// TODO: Support reading non-SATA drives and more than one drive
 			$capacity = phodevi_osx_parser::read_osx_system_profiler('SPSerialATADataType', 'Capacity');
@@ -78,7 +78,7 @@ class phodevi_disk extends phodevi_device_interface
 				$disks = array($capacity . ' ' . $model);
 			}
 		}
-		else if(IS_BSD)
+		else if(phodevi::is_bsd())
 		{
 			$i = 0;
 
@@ -95,7 +95,7 @@ class phodevi_disk extends phodevi_device_interface
 			while(($disk != false || $i < 9) && $i < 128);
 			// On some systems, the first drive seems to be at dev.ad.8 rather than starting at dev.ad.0
 		}
-		else if(IS_LINUX)
+		else if(phodevi::is_linux())
 		{
 			$disks_formatted = array();
 			$disks = array();

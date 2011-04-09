@@ -1151,13 +1151,13 @@ class pts_test_run_manager
 
 			// Validate the empty pts_test_result
 			$test_type = $test_profile->get_test_hardware_type();
-
+s
 
 			if($test_profile->is_supported(false) == false)
 			{
 				$valid_test_profile = false;
 			}
-			else if($test_type == 'Graphics' && pts_client::read_env('DISPLAY') == false && IS_WINDOWS == false)
+			else if($test_type == 'Graphics' && pts_client::read_env('DISPLAY') == false && phodevi::is_windows() == false)
 			{
 				pts_client::$display->test_run_error('No display server was found, cannot run ' . $test_profile);
 				$valid_test_profile = false;

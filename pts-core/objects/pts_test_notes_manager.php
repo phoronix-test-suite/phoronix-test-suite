@@ -93,7 +93,7 @@ class pts_test_notes_manager
 			}
 		}
 
-		if(!IS_BSD)
+		if(phodevi::is_bsd() == false)
 		{
 			self::add_note(self::process_running_string($check_processes));
 		}
@@ -116,7 +116,7 @@ class pts_test_notes_manager
 
 		/*
 		// Encrypted file-system?
-		if(IS_LINUX && is_readable('/sys/fs/ecryptfs/version'))
+		if(phodevi::is_linux() && is_readable('/sys/fs/ecryptfs/version'))
 		{
 			self::add_note('eCryptfs was active.');
 		}

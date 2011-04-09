@@ -142,7 +142,7 @@ class pts_test_execution
 				$is_monitoring = pts_test_result_parser::system_monitor_task_check($test_run_request->test_profile);
 				$test_run_time_start = time();
 
-				if(IS_WINDOWS || pts_client::read_env('USE_PHOROSCRIPT_INTERPRETER') != false)
+				if(phodevi::is_windows() || pts_client::read_env('USE_PHOROSCRIPT_INTERPRETER') != false)
 				{
 					$phoroscript = new pts_phoroscript_interpreter($to_execute . '/' . $execute_binary, $test_extra_runtime_variables, $to_execute);
 					$phoroscript->execute_script($pts_test_arguments);
@@ -177,7 +177,7 @@ class pts_test_execution
 				$exit_status = pts_file_io::file_get_contents($test_directory . 'test-exit-status');
 				unlink($test_directory . 'test-exit-status');
 
-				if($exit_status != 0 && !IS_BSD)
+				if($exit_status != 0 && phodevi::is_bsd() == false)
 				{
 					pts_client::$display->test_run_instance_error('The test exited with a non-zero exit status.');
 					$exit_status_pass = false;

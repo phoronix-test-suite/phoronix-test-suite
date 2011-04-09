@@ -105,7 +105,7 @@ function pts_needed_extensions()
 
 		// Required extesnions denoted by 1 at [0]
 		array(1, extension_loaded('dom'), 'DOM', 'The PHP Document Object Model (DOM) is required.'),
-		array(1, extension_loaded('zip'), 'ZIP', 'PHP Zip support is required.'),
+		array(1, extension_loaded('zip') || extension_loaded('zlib'), 'ZIP', 'PHP Zip support is required.'),
 		array(1, function_exists('json_decode'), 'JSON', 'PHP JSON support is required.'),
 
 		// Optional but recommended extensions

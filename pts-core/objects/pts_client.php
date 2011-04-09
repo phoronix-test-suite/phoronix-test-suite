@@ -165,7 +165,7 @@ class pts_client
 			'OPERATING_SYSTEM' => phodevi::read_property('system', 'vendor-identifier'),
 			'OS_VERSION' => phodevi::read_property('system', 'os-version'),
 			'OS_ARCH' => phodevi::read_property('system', 'kernel-architecture'),
-			'OS_TYPE' => OPERATING_SYSTEM,
+			'OS_TYPE' => phodevi::operating_system(),
 			'THIS_RUN_TIME' => PTS_INIT_TIME,
 			'DEBUG_REAL_HOME' => pts_client::user_home_directory()
 			);
@@ -906,7 +906,7 @@ class pts_client
 					);
 
 				/*
-				if(IS_LINUX)
+				if(phodevi::is_linux())
 				{
 					// the kernel config file might just be too large to upload for now
 					array_push($system_log_files, '/boot/config-' . php_uname('r'));
@@ -933,7 +933,7 @@ class pts_client
 					'glxinfo'
 					);
 
-				if(IS_BSD)
+				if(phodevi::is_bsd())
 				{
 					array_push($system_log_commands, 'sysctl -a');
 				}
@@ -1111,7 +1111,7 @@ class pts_client
 					$chars = $terminal_width;
 				}
 			}
-			else if(IS_WINDOWS)
+			else if(phodevi::is_windows())
 			{
 				// Need a better way to handle this
 				$chars = 80;
@@ -1222,13 +1222,13 @@ class pts_client
 	}
 	public static function is_process_running($process)
 	{
-		if(IS_LINUX)
+		if(phodevi::is_linux())
 		{
 			// Checks if process is running on the system
 			$running = shell_exec('ps -C ' . strtolower($process) . ' 2>&1');
 			$running = trim(str_replace(array('PID', 'TTY', 'TIME', 'CMD'), '', $running));
 		}
-		else if(IS_SOLARIS)
+		else if(phodevi::is_solaris())
 		{
 			// Checks if process is running on the system
 			$ps = shell_exec('ps -ef 2>&1');
@@ -1321,7 +1321,7 @@ class pts_client
 
 		if(!isset($cache[$executable]))
 		{
-			$paths = pts_strings::trim_explode((IS_WINDOWS ? ';' : ':'), (($path = pts_client::read_env('PATH')) == false ? '/usr/bin:/usr/local/bin' : $path));
+			$paths = pts_strings::trim_explode((phodevi::is_windows() ? ';' : ':'), (($path = pts_client::read_env('PATH')) == false ? '/usr/bin:/usr/local/bin' : $path));
 			$executable_path = false;
 
 			foreach($paths as $path)
@@ -1342,7 +1342,7 @@ class pts_client
 	}
 	public static function display_web_page($URL, $alt_text = null, $default_open = false, $auto_open = false)
 	{
-		if((pts_c::$test_flags & pts_c::auto_mode) || (pts_client::read_env('DISPLAY') == false && !IS_WINDOWS))
+		if((pts_c::$test_flags & pts_c::auto_mode) || (pts_client::read_env('DISPLAY') == false && phodevi::is_windows() == false))
 		{
 			return;
 		}
@@ -1371,7 +1371,7 @@ class pts_client
 				{
 					$browser = $config_browser;
 				}
-				else if(IS_WINDOWS)
+				else if(phodevi::is_windows())
 				{
 					$windows_browsers = array(
 						'C:\Program Files (x86)\Mozilla Firefox\firefox.exe',

@@ -32,6 +32,15 @@ class phodevi
 	private static $smart_cache = null;
 	private static $sensors = null;
 
+	private static $operating_system = null;
+	private static $operating_systems = array(
+		'linux' => false,
+		'macosx' => false,
+		'solaris' => false,
+		'bsd' => false,
+		'windows' => false
+		);
+
 	public static function read_name($device)
 	{
 		return phodevi::read_property($device, 'identifier');
@@ -323,31 +332,20 @@ class phodevi
 			{
 				if(strpos($uname_s, strtolower($os_check[$i])) !== false) // Check for OS
 				{
-					define('OPERATING_SYSTEM', $os_title);
-					define('IS_' . strtoupper($os_title), true);
-					$is_os = true;
+					self::$operating_system = $os_title;
+					self::$operating_systems[strtolower($os_title)] = true;
 				}
 			}
-
-			if(!$is_os)
-			{
-				define('IS_' . strtoupper($os_title), false);
-			}
 		}
 
-		if(!defined('OPERATING_SYSTEM'))
+		if(self::operating_system() == false)
 		{
-			define('OPERATING_SYSTEM', 'Unknown');
-			define('IS_UNKNOWN', true);
-		}
-		else
-		{
-			define('IS_UNKNOWN', false);
+			self::$operating_system = 'Unknown';
 		}
 
-		define('OS_PREFIX', strtolower(OPERATING_SYSTEM) . '_');
+		define('OS_PREFIX', self::operating_system() . '_');
 
-		switch(OPERATING_SYSTEM)
+		switch(self::operating_system())
 		{
 			case 'BSD':
 				define('BSD_LINUX_COMPATIBLE', pts_client::executable_in_path('kldstat') && strpos(shell_exec('kldstat -n linux 2>&1'), 'linux.ko') != false);
@@ -521,6 +519,30 @@ class phodevi
 		}
 
 		return $compatible;
+	}
+	public static function operating_system()
+	{
+		return self::$operating_system;
+	}
+	public static function is_linux()
+	{
+		return self::$operating_systems['linux'];
+	}
+	public static function is_solaris()
+	{
+		return self::$operating_systems['solaris'];
+	}
+	public static function is_bsd()
+	{
+		return self::$operating_systems['bsd'];
+	}
+	public static function is_macosx()
+	{
+		return self::$operating_systems['macosx'];
+	}
+	public static function is_windows()
+	{
+		return self::$operating_systems['windows'];
 	}
 }
 

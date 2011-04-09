@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2010, Phoronix Media
-	Copyright (C) 2008 - 2010, Michael Larabel
+	Copyright (C) 2008 - 2011, Phoronix Media
+	Copyright (C) 2008 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -179,7 +179,7 @@ class pts_test_profile extends pts_test_profile_parser
 		}
 		else if($this->is_test_platform_supported() == false)
 		{
-			PTS_IS_CLIENT && $report_warnings && pts_client::$display->test_run_error($this->get_identifier() . ' is not supported by this operating system: ' . OPERATING_SYSTEM);
+			PTS_IS_CLIENT && $report_warnings && pts_client::$display->test_run_error($this->get_identifier() . ' is not supported by this operating system: ' . phodevi::operating_system());
 			$test_supported = false;
 		}
 		else if($this->is_core_version_supported() == false)
@@ -218,9 +218,9 @@ class pts_test_profile extends pts_test_profile_parser
 
 		$platforms = $this->get_supported_platforms();
 
-		if(!empty($platforms) && !in_array(OPERATING_SYSTEM, $platforms))
+		if(!empty($platforms) && !in_array(phodevi::operating_system(), $platforms))
 		{
-			if(IS_BSD && BSD_LINUX_COMPATIBLE && in_array('Linux', $platforms))
+			if(phodevi::is_bsd() && BSD_LINUX_COMPATIBLE && in_array('Linux', $platforms))
 			{
 				// The OS is BSD but there is Linux API/ABI compatibility support loaded
 				$supported = true;
@@ -270,7 +270,7 @@ class pts_test_profile extends pts_test_profile_parser
 		$test_dir = $this->get_install_dir();
 		$execute_binary = $this->get_test_executable();
 
-		if(is_executable($test_dir . $execute_binary) || (IS_WINDOWS && is_file($test_dir . $execute_binary)))
+		if(is_executable($test_dir . $execute_binary) || (phodevi::is_windows() && is_file($test_dir . $execute_binary)))
 		{
 			$to_execute = $test_dir;
 		}
@@ -292,7 +292,7 @@ class pts_test_profile extends pts_test_profile_parser
 	public function get_file_installer()
 	{
 		$test_resources_location = $this->get_resource_dir();
-		$os_postfix = '_' . strtolower(OPERATING_SYSTEM);
+		$os_postfix = '_' . strtolower(phodevi::operating_system());
 
 		if(is_file($test_resources_location . 'install' . $os_postfix . '.sh'))
 		{

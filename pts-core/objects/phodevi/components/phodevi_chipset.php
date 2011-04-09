@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2009, Phoronix Media
-	Copyright (C) 2008 - 2009, Michael Larabel
+	Copyright (C) 2008 - 2011, Phoronix Media
+	Copyright (C) 2008 - 2011, Michael Larabel
 	phodevi_chipset.php: The PTS Device Interface object for the system chipset
 
 	This program is free software; you can redistribute it and/or modify
@@ -38,7 +38,7 @@ class phodevi_chipset extends phodevi_device_interface
 	{
 		$info = false;
 
-		if(IS_MACOSX)
+		if(phodevi::is_macosx())
 		{
 			$sb_vendor = phodevi_osx_parser::read_osx_system_profiler('SPSerialATADataType', 'Vendor');
 			$sb_product = phodevi_osx_parser::read_osx_system_profiler('SPSerialATADataType', 'Product');
@@ -51,7 +51,7 @@ class phodevi_chipset extends phodevi_device_interface
 			// TODO: Can't find Northbridge
 			$info = $sb_vendor . ' ' . $sb_product;
 		}
-		else if(IS_WINDOWS)
+		else if(phodevi::is_windows())
 		{
 			$info = phodevi_windows_parser::read_cpuz('Northbridge', null);
 
@@ -65,7 +65,7 @@ class phodevi_chipset extends phodevi_device_interface
 				$info = trim($info);
 			}
 		}
-		else if(IS_SOLARIS)
+		else if(phodevi::is_solaris())
 		{
 			// Vendor Detection
 			$vendor_possible_udis = array(
@@ -77,7 +77,7 @@ class phodevi_chipset extends phodevi_device_interface
 
 			// TODO: Northbridge and Southbridge Detection For Solaris
 		}
-		else if(IS_LINUX)
+		else if(phodevi::is_linux())
 		{
 			$info = phodevi_linux_parser::read_pci(array('RAM memory', 'Host bridge'));
 

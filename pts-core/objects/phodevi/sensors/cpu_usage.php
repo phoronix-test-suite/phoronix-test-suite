@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2010, Phoronix Media
-	Copyright (C) 2009 - 2010, Michael Larabel
+	Copyright (C) 2009 - 2011, Phoronix Media
+	Copyright (C) 2009 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -42,7 +42,7 @@ class cpu_usage implements phodevi_sensor
 	public static function read_sensor()
 	{
 		// Determine current percentage for processor usage
-		if(IS_LINUX || IS_BSD)
+		if(phodevi::is_linux() || phodevi::is_bsd())
 		{
 			$start_load = self::cpu_load_array(-1);
 			sleep(1);
@@ -55,13 +55,13 @@ class cpu_usage implements phodevi_sensor
 
 			$percent = (($sum = array_sum($end_load)) == 0 ? 0 : 100 - (($end_load[(count($end_load) - 1)] * 100) / $sum));
 		}
-		else if(IS_SOLARIS)
+		else if(phodevi::is_solaris())
 		{
 			// TODO: Add support for monitoring load on a per-core basis (through mpstat maybe?)
 			$info = explode(' ', pts_strings::trim_spaces(pts_arrays::last_element(explode("\n", trim(shell_exec('sar -u 1 1 2>&1'))))));
 			$percent = $info[1] + $info[2];
 		}
-		else if(IS_MACOSX)
+		else if(phodevi::is_macosx())
 		{
 			// CPU usage for user
 			$top = shell_exec('top -n 1 -l 1 2>&1');
@@ -85,7 +85,7 @@ class cpu_usage implements phodevi_sensor
 		// CPU load array
 		$load = array();
 
-		if(IS_LINUX && is_file('/proc/stat'))
+		if(phodevi::is_linux() && is_file('/proc/stat'))
 		{
 			$stat = file_get_contents('/proc/stat');
 
@@ -106,7 +106,7 @@ class cpu_usage implements phodevi_sensor
 				array_push($load, $stat_break[$i]);
 			}
 		}
-		else if(IS_BSD)
+		else if(phodevi::is_bsd())
 		{
 			$load = explode(' ', phodevi_bsd_parser::read_sysctl('kern.cp_time'));
 		}

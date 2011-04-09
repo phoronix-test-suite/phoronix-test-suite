@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2010, Phoronix Media
-	Copyright (C) 2009 - 2010, Michael Larabel
+	Copyright (C) 2009 - 2011, Phoronix Media
+	Copyright (C) 2009 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -42,7 +42,7 @@ class sys_iowait implements phodevi_sensor
 	public static function read_sensor()
 	{		$iowait = -1;
 
-		if(IS_LINUX && is_file('/proc/stat'))
+		if(phodevi::is_linux() && is_file('/proc/stat'))
 		{
 			$start_stat = pts_file_io::file_get_contents('/proc/stat');
 			sleep(1);

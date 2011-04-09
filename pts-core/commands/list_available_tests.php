@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2010, Phoronix Media
-	Copyright (C) 2008 - 2010, Michael Larabel
+	Copyright (C) 2008 - 2011, Phoronix Media
+	Copyright (C) 2008 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -34,7 +34,7 @@ class list_available_tests implements pts_option_interface
 			$id = substr($identifier, strlen($repo) + 1);
 			$repo_index = pts_openbenchmarking::read_repository_index($repo);
 
-			if(!in_array(OPERATING_SYSTEM, $repo_index['tests'][$id]['supported_platforms']) || empty($repo_index['tests'][$id]['title']))
+			if(!in_array(phodevi::operating_system(), $repo_index['tests'][$id]['supported_platforms']) || empty($repo_index['tests'][$id]['title']))
 			{
 				// Don't show unsupported tests
 				continue;

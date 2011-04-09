@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2010, Phoronix Media
-	Copyright (C) 2009 - 2010, Michael Larabel
+	Copyright (C) 2009 - 2011, Phoronix Media
+	Copyright (C) 2009 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -49,7 +49,7 @@ class gpu_usage implements phodevi_sensor
 	}
 	public static function support_check()
 	{
-		if(IS_ATI_GRAPHICS && IS_LINUX)
+		if(IS_ATI_GRAPHICS && phodevi::is_linux())
 		{
 			$gpu_usage = self::ati_overdrive_core_usage();
 

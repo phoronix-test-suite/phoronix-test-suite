@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2010, Phoronix Media
-	Copyright (C) 2009 - 2010, Michael Larabel
+	Copyright (C) 2009 - 2011, Phoronix Media
+	Copyright (C) 2009 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -78,7 +78,7 @@ class sys_power implements phodevi_sensor
 		// Returns power consumption rate in uA
 		$current = -1;
 
-		if(IS_LINUX)
+		if(phodevi::is_linux())
 		{
 			$raw_current = phodevi_linux_parser::read_sysfs_node('/sys/devices/w1_bus_master1/*/getcurrent', 'NO_CHECK');
 
@@ -90,7 +90,7 @@ class sys_power implements phodevi_sensor
 				}
 			}
 		}
-		else if(IS_MACOSX)
+		else if(phodevi::is_macosx())
 		{
 			$current = abs(phodevi_osx_parser::read_osx_system_profiler('SPPowerDataType', 'Amperage')); // in mA
 		}
@@ -102,7 +102,7 @@ class sys_power implements phodevi_sensor
 		// Returns power consumption rate in mW
 		$rate = -1;
 
-		if(IS_LINUX)
+		if(phodevi::is_linux())
 		{
 			$power_now = phodevi_linux_parser::read_sysfs_node('/sys/class/power_supply/*/power_now', 'POSITIVE_NUMERIC', array('status' => 'Discharging'));
 
@@ -141,13 +141,13 @@ class sys_power implements phodevi_sensor
 				}
 			}
 		}
-		else if(IS_MACOSX)
+		else if(phodevi::is_macosx())
 		{
 			$amperage = abs(phodevi_osx_parser::read_osx_system_profiler('SPPowerDataType', 'Amperage')); // in mA
 			$voltage = phodevi_osx_parser::read_osx_system_profiler('SPPowerDataType', 'Voltage'); // in mV
 			$rate = round(($amperage * $voltage) / 1000);
 		}
-		else if(IS_SOLARIS)
+		else if(phodevi::is_solaris())
 		{
 			$battery = phodevi_solaris_parser::read_hal_property('/org/freedesktop/Hal/devices/pseudo/acpi_drv_0_battery0_0', 'battery.reporting.rate');
 
@@ -156,7 +156,7 @@ class sys_power implements phodevi_sensor
 				$rate = $battery;
 			}
 		}
-		else if(IS_BSD)
+		else if(phodevi::is_bsd())
 		{
 			$battery = phodevi_bsd_parser::read_acpiconf('Present rate');
 

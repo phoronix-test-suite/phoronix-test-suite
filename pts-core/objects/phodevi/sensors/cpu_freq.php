@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2010, Phoronix Media
-	Copyright (C) 2009 - 2010, Michael Larabel
+	Copyright (C) 2009 - 2011, Phoronix Media
+	Copyright (C) 2009 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -45,7 +45,7 @@ class cpu_freq implements phodevi_sensor
 		$cpu_core = 0; // TODO: for now just monitoring the first core
 		$info = 0;
 
-		if(IS_LINUX)
+		if(phodevi::is_linux())
 		{
 			// First, the ideal way, with modern CPUs using CnQ or EIST and cpuinfo reporting the current
 			if(is_file('/sys/devices/system/cpu/cpu' . $cpu_core . '/cpufreq/scaling_cur_freq'))
@@ -64,17 +64,17 @@ class cpu_freq implements phodevi_sensor
 				}
 			}
 		}
-		else if(IS_SOLARIS)
+		else if(phodevi::is_solaris())
 		{
 			$info = shell_exec('psrinfo -v | grep MHz');
 			$info = substr($info, strrpos($info, 'at') + 3);
 			$info = trim(substr($info, 0, strpos($info, 'MHz')));
 		}
-		else if(IS_BSD)
+		else if(phodevi::is_bsd())
 		{
 			$info = phodevi_bsd_parser::read_sysctl('dev.cpu.0.freq');
 		}
-		else if(IS_MACOSX)
+		else if(phodevi::is_macosx())
 		{
 			$info = phodevi_osx_parser::read_osx_system_profiler('SPHardwareDataType', 'ProcessorSpeed');
 		

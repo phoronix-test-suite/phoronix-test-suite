@@ -48,7 +48,7 @@ class gpu_temp implements phodevi_sensor
 		{
 			$temp_c = phodevi_parser::read_nvidia_extension('GPUCoreTemp');
 		}
-		else if(IS_ATI_GRAPHICS && IS_LINUX)
+		else if(IS_ATI_GRAPHICS && phodevi::is_linux())
 		{
 			$temp_c = phodevi_linux_parser::read_ati_overdrive('Temperature');
 		}
