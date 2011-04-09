@@ -49,7 +49,7 @@ class gpu_usage implements phodevi_sensor
 	}
 	public static function support_check()
 	{
-		if(IS_ATI_GRAPHICS && phodevi::is_linux())
+		if(phodevi::is_ati_graphics() && phodevi::is_linux())
 		{
 			$gpu_usage = self::ati_overdrive_core_usage();
 
@@ -59,7 +59,7 @@ class gpu_usage implements phodevi_sensor
 				return true;
 			}
 		}
-		else if(IS_MESA_GRAPHICS && is_readable('/sys/kernel/debug/dri/0/radeon_fence_info'))
+		else if(phodevi::is_mesa_graphics() && is_readable('/sys/kernel/debug/dri/0/radeon_fence_info'))
 		{
 			$fence_speed = self::radeon_fence_speed();
 
@@ -69,7 +69,7 @@ class gpu_usage implements phodevi_sensor
 				return true;
 			}
 		}
-		else if(IS_NVIDIA_GRAPHICS)
+		else if(phodevi::is_nvidia_graphics())
 		{
 			if(pts_client::executable_in_path('nvidia-smi'))
 			{

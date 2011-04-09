@@ -33,6 +33,11 @@ class phodevi
 	private static $sensors = null;
 
 	private static $operating_system = null;
+	private static $graphics = array(
+		'mesa' => false,
+		'ati' => false,
+		'nvidia' => false
+		);
 	private static $operating_systems = array(
 		'linux' => false,
 		'macosx' => false,
@@ -325,15 +330,13 @@ class phodevi
 
 		foreach($supported_operating_systems as $os_check)
 		{
-			$is_os = false;
-			$os_title = $os_check[0];
-
-			for($i = 0; $i < count($os_check) && !$is_os; $i++)
+			for($i = 0; $i < count($os_check); $i++)
 			{
 				if(strpos($uname_s, strtolower($os_check[$i])) !== false) // Check for OS
 				{
-					self::$operating_system = $os_title;
-					self::$operating_systems[strtolower($os_title)] = true;
+					self::$operating_system = $os_check[0];
+					self::$operating_systems[strtolower($os_check[0])] = true;
+					break;
 				}
 			}
 		}
@@ -343,20 +346,10 @@ class phodevi
 			self::$operating_system = 'Unknown';
 		}
 
-		define('OS_PREFIX', self::operating_system() . '_');
-
-		switch(self::operating_system())
-		{
-			case 'BSD':
-				define('BSD_LINUX_COMPATIBLE', pts_client::executable_in_path('kldstat') && strpos(shell_exec('kldstat -n linux 2>&1'), 'linux.ko') != false);
-				break;
-		}
-
 		// OpenGL / graphics detection
 		$graphics_detection = array('NVIDIA', array('ATI', 'fglrx'), array('Mesa', 'SGI'));
 		$opengl_driver = phodevi::read_property('system', 'opengl-vendor') . ' ' . phodevi::read_property('system', 'opengl-driver') . ' ' . phodevi::read_property('system', 'dri-display-driver');
 		$opengl_driver = trim(str_replace('Corporation', null, $opengl_driver)); // Prevents a possible false positive for ATI being in CorporATIon
-		$found_gpu_match = false;
 
 		foreach($graphics_detection as $gpu_check)
 		{
@@ -365,26 +358,16 @@ class phodevi
 				$gpu_check = array($gpu_check);
 			}
 
-			$is_this = false;
-			$gpu_title = $gpu_check[0];
-
-			for($i = 0; $i < count($gpu_check) && !$is_this; $i++)
+			for($i = 0; $i < count($gpu_check); $i++)
 			{
 				if(stripos($opengl_driver, $gpu_check[$i]) !== false) // Check for GPU
 				{
-					define('IS_' . strtoupper($gpu_title) . '_GRAPHICS', true);
-					$is_this = true;
-					$found_gpu_match = true;
+					self::$graphics[(strtolower($gpu_check[0]))] = true;
+					break;
 				}
-			}
-
-			if(!$is_this)
-			{
-				define('IS_' . strtoupper($gpu_title) . '_GRAPHICS', false);
 			}
 		}
 
-		define('IS_UNKNOWN_GRAPHICS', ($found_gpu_match == false));
 		self::load_sensors();
 	}
 	public static function set_device_cache($cache_array)
@@ -543,6 +526,18 @@ class phodevi
 	public static function is_windows()
 	{
 		return self::$operating_systems['windows'];
+	}
+	public static function is_mesa_graphics()
+	{
+		return self::$graphics['mesa'];
+	}
+	public static function is_ati_graphics()
+	{
+		return self::$graphics['ati'];
+	}
+	public static function is_nvidia_graphics()
+	{
+		return self::$graphics['nvidia'];
 	}
 }
 

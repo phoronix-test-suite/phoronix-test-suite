@@ -740,15 +740,15 @@ class phodevi_system extends phodevi_device_interface
 
 		if(empty($display_driver))
 		{
-			if(IS_ATI_GRAPHICS)
+			if(phodevi::is_ati_graphics())
 			{
 				$display_driver = 'fglrx';
 			}
-			else if(IS_NVIDIA_GRAPHICS)
+			else if(phodevi::is_nvidia_graphics())
 			{
 				$display_driver = 'nvidia';
 			}
-			else if((IS_MESA_GRAPHICS || phodevi::is_bsd()) && stripos(phodevi::read_property('gpu', 'model'), 'NVIDIA') !== false)
+			else if((phodevi::is_mesa_graphics() || phodevi::is_bsd()) && stripos(phodevi::read_property('gpu', 'model'), 'NVIDIA') !== false)
 			{
 				if(is_file('/sys/class/drm/version'))
 				{
@@ -822,7 +822,7 @@ class phodevi_system extends phodevi_device_interface
 			{
 				$display_driver .= ' ' . $driver_version;
 
-				if(IS_ATI_GRAPHICS && strpos($display_driver, 'fglrx') !== false)
+				if(phodevi::is_ati_graphics() && strpos($display_driver, 'fglrx') !== false)
 				{
 					$catalyst_version = phodevi_linux_parser::read_amd_pcsdb('AMDPCSROOT/SYSTEM/LDC,Catalyst_Version');
 

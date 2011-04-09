@@ -77,7 +77,7 @@ class phodevi_monitor extends phodevi_device_interface
 		if($monitor_count == 0)
 		{
 			// Fallback support for ATI and NVIDIA if phodevi_parser::read_xdpy_monitor_info() fails
-			if(IS_NVIDIA_GRAPHICS)
+			if(phodevi::is_nvidia_graphics())
 			{
 				$enabled_displays = phodevi_parser::read_nvidia_extension('EnabledDisplays');
 
@@ -94,7 +94,7 @@ class phodevi_monitor extends phodevi_device_interface
 						break;
 				}
 			}
-			else if(IS_ATI_GRAPHICS && phodevi::is_linux())
+			else if(phodevi::is_ati_graphics() && phodevi::is_linux())
 			{
 				$amdpcsdb_enabled_monitors = phodevi_linux_parser::read_amd_pcsdb('SYSTEM/BUSID-*/DDX,EnableMonitor');
 				$amdpcsdb_enabled_monitors = pts_arrays::to_array($amdpcsdb_enabled_monitors);
@@ -148,7 +148,7 @@ class phodevi_monitor extends phodevi_device_interface
 			if(count($monitor_layout) == 1)
 			{
 				// Something went wrong with xdpy information, go to fallback support
-				if(IS_ATI_GRAPHICS && phodevi::is_linux())
+				if(phodevi::is_ati_graphics() && phodevi::is_linux())
 				{
 					$amdpcsdb_monitor_layout = phodevi_linux_parser::read_amd_pcsdb('SYSTEM/BUSID-*/DDX,DesktopSetup');
 					$amdpcsdb_monitor_layout = pts_arrays::to_array($amdpcsdb_monitor_layout);

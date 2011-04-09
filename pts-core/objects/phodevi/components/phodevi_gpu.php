@@ -117,7 +117,7 @@ class phodevi_gpu extends phodevi_device_interface
 		// Determine AA level if over-rode
 		$aa_level = false;
 
-		if(IS_NVIDIA_GRAPHICS)
+		if(phodevi::is_nvidia_graphics())
 		{
 			$nvidia_fsaa = phodevi_parser::read_nvidia_extension('FSAA');
 
@@ -143,7 +143,7 @@ class phodevi_gpu extends phodevi_device_interface
 					break;
 			}
 		}
-		else if(IS_ATI_GRAPHICS && phodevi::is_linux())
+		else if(phodevi::is_ati_graphics() && phodevi::is_linux())
 		{
 			$ati_fsaa = phodevi_linux_parser::read_amd_pcsdb('OpenGL,AntiAliasSamples');
 			$ati_fsaa_filter = phodevi_linux_parser::read_amd_pcsdb('OpenGL,AAF');
@@ -222,7 +222,7 @@ class phodevi_gpu extends phodevi_device_interface
 		// Determine AF level if over-rode
 		$af_level = false;
 
-		if(IS_NVIDIA_GRAPHICS)
+		if(phodevi::is_nvidia_graphics())
 		{
 			$nvidia_af = phodevi_parser::read_nvidia_extension('LogAniso');
 
@@ -242,7 +242,7 @@ class phodevi_gpu extends phodevi_device_interface
 					break;
 			}
 		}
-		else if(IS_ATI_GRAPHICS && phodevi::is_linux())
+		else if(phodevi::is_ati_graphics() && phodevi::is_linux())
 		{
 			$ati_af = phodevi_linux_parser::read_amd_pcsdb('OpenGL,AnisoDegree');
 
@@ -273,7 +273,7 @@ class phodevi_gpu extends phodevi_device_interface
 		// Determine AF level if over-rode
 		$cores = 0;
 
-		if(IS_NVIDIA_GRAPHICS)
+		if(phodevi::is_nvidia_graphics())
 		{
 			$cores = phodevi_parser::read_nvidia_extension('CUDACores');
 		}
@@ -343,7 +343,7 @@ class phodevi_gpu extends phodevi_device_interface
 				}
 			}
 
-			if($resolution == false && IS_NVIDIA_GRAPHICS)
+			if($resolution == false && phodevi::is_nvidia_graphics())
 			{
 				// Way to find resolution through NVIDIA's NV-CONTROL extension
 				// But rely upon xrandr first since when using NVIDIA TwinView the reported FrontEndResolution may be the smaller of the two
@@ -558,7 +558,7 @@ class phodevi_gpu extends phodevi_device_interface
 		}
 		else
 		{
-			if(IS_NVIDIA_GRAPHICS && ($NVIDIA = phodevi_parser::read_nvidia_extension('VideoRam')) > 0) // NVIDIA blob
+			if(phodevi::is_nvidia_graphics() && ($NVIDIA = phodevi_parser::read_nvidia_extension('VideoRam')) > 0) // NVIDIA blob
 			{
 				$video_ram = $NVIDIA / 1024;
 			}
@@ -644,12 +644,12 @@ class phodevi_gpu extends phodevi_device_interface
 		$core_freq = 0;
 		$mem_freq = 0;
 
-		if(IS_NVIDIA_GRAPHICS && phodevi::is_macosx() == false) // NVIDIA GPU
+		if(phodevi::is_nvidia_graphics() && phodevi::is_macosx() == false) // NVIDIA GPU
 		{
 			// GPUDefault3DClockFreqs is the default and does not show under/over-clocking
 			list($core_freq, $mem_freq) = pts_strings::comma_explode(phodevi_parser::read_nvidia_extension('GPU3DClockFreqs'));
 		}
-		else if(IS_ATI_GRAPHICS && phodevi::is_linux()) // ATI GPU
+		else if(phodevi::is_ati_graphics() && phodevi::is_linux()) // ATI GPU
 		{
 			$od_clocks = phodevi_linux_parser::read_ati_overdrive('CurrentPeak');
 
@@ -658,7 +658,7 @@ class phodevi_gpu extends phodevi_device_interface
 				list($core_freq, $mem_freq) = $od_clocks;
 			}
 		}
-		else if(IS_MESA_GRAPHICS)
+		else if(phodevi::is_mesa_graphics())
 		{
 			switch(phodevi::read_property('system', 'display-driver'))
 			{
@@ -749,7 +749,7 @@ class phodevi_gpu extends phodevi_device_interface
 		$info = phodevi_parser::read_glx_renderer();
 		$video_ram = phodevi::read_property('gpu', 'memory-capacity');
 
-		if(IS_ATI_GRAPHICS && phodevi::is_linux())
+		if(phodevi::is_ati_graphics() && phodevi::is_linux())
 		{
 			$crossfire_status = phodevi_linux_parser::read_amd_pcsdb('SYSTEM/Crossfire/chain/*,Enable');
 			$crossfire_status = pts_arrays::to_array($crossfire_status);
@@ -793,7 +793,7 @@ class phodevi_gpu extends phodevi_device_interface
 				}
 			}
 		}
-		else if(IS_NVIDIA_GRAPHICS)
+		else if(phodevi::is_nvidia_graphics())
 		{
 			if($info == null)
 			{

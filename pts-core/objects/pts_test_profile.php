@@ -220,7 +220,7 @@ class pts_test_profile extends pts_test_profile_parser
 
 		if(!empty($platforms) && !in_array(phodevi::operating_system(), $platforms))
 		{
-			if(phodevi::is_bsd() && BSD_LINUX_COMPATIBLE && in_array('Linux', $platforms))
+			if(phodevi::is_bsd() && in_array('Linux', $platforms) && (pts_client::executable_in_path('kldstat') && strpos(shell_exec('kldstat -n linux 2>&1'), 'linux.ko') != false))
 			{
 				// The OS is BSD but there is Linux API/ABI compatibility support loaded
 				$supported = true;

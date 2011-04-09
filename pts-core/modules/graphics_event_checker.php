@@ -47,7 +47,7 @@ class graphics_event_checker extends pts_module_interface
 		// Store the video resolution
 		self::$start_video_resolution = phodevi::read_property("gpu", "screen-resolution");
 
-		if(IS_ATI_GRAPHICS)
+		if(phodevi::is_ati_graphics())
 		{
 			$vsync_val = phodevi_parser::read_amd_pcsdb("AMDPCSROOT/SYSTEM/BUSID-*/OpenGL,VSyncControl"); // Check for vSync
 			if($vsync_val == "0x00000002" || $vsync_val == "0x00000003")
@@ -57,7 +57,7 @@ class graphics_event_checker extends pts_module_interface
 			if($catalyst_ai_val == "0x00000001" || $catalyst_ai_val == "0x00000002")
 				echo "\nCatalyst AI is enabled, which will use driver-specific optimizations in some tests that may offer extra performance enhancements.\n";
 		}
-		else if(IS_NVIDIA_GRAPHICS)
+		else if(phodevi::is_nvidia_graphics())
 		{
 			self::$error_pointer = self::nvidia_gpu_error_count(); // Set the error pointer
 
@@ -93,7 +93,7 @@ class graphics_event_checker extends pts_module_interface
 		// Check for video resolution changes
 		self::check_video_resolution();
 
-		if(IS_NVIDIA_GRAPHICS)
+		if(phodevi::is_nvidia_graphics())
 		{
 			$current_error_position = self::nvidia_gpu_error_count();
 

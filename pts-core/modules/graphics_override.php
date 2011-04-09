@@ -41,7 +41,7 @@ class graphics_override extends pts_module_interface
 	public static function set_nvidia_extension($attribute, $value)
 	{
 		// Sets an object in NVIDIA's NV Extension
-		if(IS_NVIDIA_GRAPHICS)
+		if(phodevi::is_nvidia_graphics())
 		{
 			shell_exec("nvidia-settings --assign " . $attribute . "=" . $value . " 2>&1");
 		}
@@ -49,7 +49,7 @@ class graphics_override extends pts_module_interface
 	public static function set_amd_pcsdb($attribute, $value)
 	{
 		// Sets a value for AMD's PCSDB, Persistent Configuration Store Database
-		if(IS_ATI_GRAPHICS && phodevi::is_linux() && !empty($value))
+		if(phodevi::is_ati_graphics() && phodevi::is_linux() && !empty($value))
 		{
 			$DISPLAY = substr(pts_client::read_env("DISPLAY"), 1, 1);
 			$info = shell_exec("DISPLAY=:" . $DISPLAY . " aticonfig --set-pcs-val=" . $attribute . "," . $value . "  2>&1");
@@ -57,7 +57,7 @@ class graphics_override extends pts_module_interface
 	}
 	public static function __pre_run_process()
 	{
-		if(!(IS_NVIDIA_GRAPHICS || (IS_ATI_GRAPHICS && phodevi::is_linux())))
+		if(!(phodevi::is_nvidia_graphics() || (phodevi::is_ati_graphics() && phodevi::is_linux())))
 		{
 			echo "\nNo supported driver found for graphics_override module!\n";
 			return pts_module::MODULE_UNLOAD; // Not using a supported driver, quit the module
@@ -69,7 +69,7 @@ class graphics_override extends pts_module_interface
 		if($force_aa !== FALSE && in_array($force_aa, self::$supported_aa_levels))
 		{
 			// First backup any existing override, then set the new value
-			if(IS_NVIDIA_GRAPHICS)
+			if(phodevi::is_nvidia_graphics())
 			{
 				self::$preset_aa = phodevi_parser::read_nvidia_extension("FSAA");
 				self::$preset_aa_control = phodevi_parser::read_nvidia_extension("FSAAAppControlled");
@@ -96,7 +96,7 @@ class graphics_override extends pts_module_interface
 					self::set_nvidia_extension("FSAAAppControlled", 0);
 				}
 			}
-			else if(IS_ATI_GRAPHICS)
+			else if(phodevi::is_ati_graphics())
 			{
 				self::$preset_aa = phodevi_linux_parser::read_amd_pcsdb("OpenGL,AntiAliasSamples");
 				self::$preset_aa_control = phodevi_linux_parser::read_amd_pcsdb("OpenGL,AAF");
@@ -129,7 +129,7 @@ class graphics_override extends pts_module_interface
 		if($force_af !== FALSE && in_array($force_af, self::$supported_af_levels))
 		{
 			// First backup any existing override, then set the new value
-			if(IS_NVIDIA_GRAPHICS)
+			if(phodevi::is_nvidia_graphics())
 			{
 				self::$preset_af = phodevi_parser::read_nvidia_extension("LogAniso");
 				self::$preset_af_control = phodevi_parser::read_nvidia_extension("LogAnisoAppControlled");
@@ -156,7 +156,7 @@ class graphics_override extends pts_module_interface
 					self::set_nvidia_extension("LogAnisoAppControlled", 0);
 				}
 			}
-			else if(IS_ATI_GRAPHICS)
+			else if(phodevi::is_ati_graphics())
 			{
 				self::$preset_af = phodevi_linux_parser::read_amd_pcsdb("OpenGL,AnisoDegree");
 
@@ -185,7 +185,7 @@ class graphics_override extends pts_module_interface
 	}
 	public static function __post_option_process()
 	{
-		if(IS_NVIDIA_GRAPHICS)
+		if(phodevi::is_nvidia_graphics())
 		{
 			if(self::$preset_aa !== FALSE)
 			{
@@ -198,7 +198,7 @@ class graphics_override extends pts_module_interface
 				self::set_nvidia_extension("LogAnisoAppControlled", self::$preset_af_control);
 			}
 		}
-		else if(IS_ATI_GRAPHICS)
+		else if(phodevi::is_ati_graphics())
 		{
 			if(self::$preset_aa !== FALSE)
 			{

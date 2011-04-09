@@ -44,14 +44,14 @@ class gpu_fanspeed implements phodevi_sensor
 		// Report graphics processor fan speed as a percent
 		$fan_speed = -1;
 
-		if(IS_NVIDIA_GRAPHICS)
+		if(phodevi::is_nvidia_graphics())
 		{
 			// NVIDIA fan speed reading support in NVIDIA 190.xx and newer
 			// TODO: support for multiple fans, also for reading GPUFanTarget to get appropriate fan
 			// nvidia-settings --describe GPUFanTarget 
 			$fan_speed = phodevi_parser::read_nvidia_extension('[fan:0]/GPUCurrentFanSpeed');
 		}
-		else if(IS_ATI_GRAPHICS && phodevi::is_linux())
+		else if(phodevi::is_ati_graphics() && phodevi::is_linux())
 		{
 			$fan_speed = phodevi_linux_parser::read_ati_overdrive('FanSpeed');
 		}

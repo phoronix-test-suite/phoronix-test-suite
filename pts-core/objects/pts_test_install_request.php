@@ -78,7 +78,7 @@ class pts_test_install_request
 				{
 					$platforms = pts_strings::comma_explode($package_platform[$i]);
 
-					if(!in_array(phodevi::operating_system(), $platforms) && !(phodevi::is_bsd() && BSD_LINUX_COMPATIBLE && in_array('Linux', $platforms)))
+					if(!in_array(phodevi::operating_system(), $platforms) && !(phodevi::is_bsd() && in_array('Linux', $platforms) && (pts_client::executable_in_path('kldstat') && strpos(shell_exec('kldstat -n linux 2>&1'), 'linux.ko') != false)))
 					{
 						// This download does not match the operating system
 						continue;
