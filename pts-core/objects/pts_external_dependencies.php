@@ -83,11 +83,11 @@ class pts_external_dependencies
 		// There were some dependencies not supported on this OS or are missing from the distro's XML file
 		if(count($required_test_dependencies) > 0 && count($dependencies_to_install) == 0)
 		{
-			$xml_parser = new pts_external_dependencies_nye_XmlReader(PTS_EXDEP_PATH . "xml/generic-packages.xml");
-			$package_name = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_GENERIC);
-			$title = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_TITLE);
-			$possible_packages = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_POSSIBLENAMES);
-			$file_check = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_FILECHECK);
+			$xml_parser = new nye_XmlReader(PTS_EXDEP_PATH . "xml/generic-packages.xml");
+			$package_name = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ExternalDependencies/Package/GenericName');
+			$title = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ExternalDependencies/Package/Title');
+			$possible_packages = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ExternalDependencies/Package/PossibleNames');
+			$file_check = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ExternalDependencies/Package/FileCheck');
 			$required_test_dependencies_names = array_keys($required_test_dependencies);
 
 			$to_report = array();
@@ -171,9 +171,9 @@ class pts_external_dependencies
 	}
 	public static function all_dependency_names()
 	{
-		$xml_parser = new pts_external_dependencies_nye_XmlReader(PTS_EXDEP_PATH . "xml/generic-packages.xml");
+		$xml_parser = new nye_XmlReader(PTS_EXDEP_PATH . "xml/generic-packages.xml");
 
-		return $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_GENERIC);
+		return $xml_parser->getXMLArrayValues('PhoronixTestSuite/ExternalDependencies/Package/GenericName');
 	}
 	public static function all_dependency_titles()
 	{
@@ -219,11 +219,11 @@ class pts_external_dependencies
 
 		if(is_file($distro_vendor_xml))
 		{
-			$xml_parser = new pts_external_dependencies_nye_XmlReader($distro_vendor_xml);
-			$generic_package = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_GENERIC);
-			$distro_package = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_SPECIFIC);
-			$file_check = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_FILECHECK);
-			$arch_specific = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_ARCHSPECIFIC);
+			$xml_parser = new nye_XmlReader($distro_vendor_xml);
+			$generic_package = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ExternalDependencies/Package/GenericName');
+			$distro_package = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ExternalDependencies/Package/PackageName');
+			$file_check = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ExternalDependencies/Package/FileCheck');
+			$arch_specific = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ExternalDependencies/Package/ArchitectureSpecific');
 			$kernel_architecture = phodevi::read_property("system", "kernel-architecture");
 
 			foreach(array_keys($generic_package) as $i)
@@ -257,9 +257,9 @@ class pts_external_dependencies
 
 		if(count($required_test_dependencies) > 0)
 		{
-			$xml_parser = new pts_external_dependencies_nye_XmlReader(PTS_EXDEP_PATH . "xml/generic-packages.xml");
-			$generic_package_name = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_GENERIC);
-			$generic_file_check = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_FILECHECK);
+			$xml_parser = new nye_XmlReader(PTS_EXDEP_PATH . "xml/generic-packages.xml");
+			$generic_package_name = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ExternalDependencies/Package/GenericName');
+			$generic_file_check = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ExternalDependencies/Package/FileCheck');
 
 			foreach(array_keys($generic_package_name) as $i)
 			{
@@ -377,9 +377,9 @@ class pts_external_dependencies
 	private static function generic_names_to_titles($names)
 	{
 		$titles = array();
-		$xml_parser = new pts_external_dependencies_nye_XmlReader(PTS_EXDEP_PATH . "xml/generic-packages.xml");
-		$package_name = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_GENERIC);
-		$title = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_TITLE);
+		$xml_parser = new nye_XmlReader(PTS_EXDEP_PATH . "xml/generic-packages.xml");
+		$package_name = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ExternalDependencies/Package/GenericName');
+		$title = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ExternalDependencies/Package/Title');
 
 		foreach(array_keys($package_name) as $i)
 		{

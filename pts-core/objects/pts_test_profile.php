@@ -119,9 +119,9 @@ class pts_test_profile extends pts_test_profile_parser
 	{
 		$dependency_names = array();
 
-		$xml_parser = new pts_external_dependencies_nye_XmlReader(PTS_EXDEP_PATH . 'xml/generic-packages.xml');
-		$package_name = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_GENERIC);
-		$title = $xml_parser->getXMLArrayValues(P_EXDEP_PACKAGE_TITLE);
+		$xml_parser = new nye_XmlReader(PTS_EXDEP_PATH . 'xml/generic-packages.xml');
+		$package_name = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ExternalDependencies/Package/GenericName');
+		$title = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ExternalDependencies/Package/Title');
 
 		foreach($this->get_dependencies() as $dependency)
 		{

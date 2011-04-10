@@ -30,7 +30,6 @@ class make_download_cache implements pts_option_interface
 		// Generates a PTS Download Cache
 		$dc_write_directory = null;
 		pts_load_xml_definitions('test-profile-downloads.xml');
-		pts_load_xml_definitions('download-cache.xml');
 
 		$dc_write_directory = pts_strings::add_trailing_slash(pts_client::parse_home_directory(pts_config::read_user_config(P_OPTION_CACHE_DIRECTORY, PTS_DOWNLOAD_CACHE_PATH)));
 
@@ -103,8 +102,8 @@ class make_download_cache implements pts_option_interface
 
 				if($cached)
 				{
-					$xml_writer->addXmlNode(P_CACHE_PACKAGE_FILENAME, $package_filename[$i]);
-					$xml_writer->addXmlNode(P_CACHE_PACKAGE_MD5, $package_md5[$i]);
+					$xml_writer->addXmlNode('PhoronixTestSuite/DownloadCache/Package/FileName', $package_filename[$i]);
+					$xml_writer->addXmlNode('PhoronixTestSuite/DownloadCache/Package/MD5', $package_md5[$i]);
 				}
 			}
 		}
