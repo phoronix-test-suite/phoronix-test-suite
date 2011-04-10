@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2010, Phoronix Media
-	Copyright (C) 2008 - 2010, Michael Larabel
+	Copyright (C) 2008 - 2011, Phoronix Media
+	Copyright (C) 2008 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -79,11 +79,11 @@ class pts_test_suite extends pts_test_suite_parser
 	public function get_contained_test_result_objects()
 	{
 		$test_result_objects = array();
-		$test_names = $this->xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME);
-		$sub_modes = $this->xml_parser->getXMLArrayValues(P_SUITE_TEST_MODE);
-		$sub_arguments = $this->xml_parser->getXMLArrayValues(P_SUITE_TEST_ARGUMENTS);
-		$sub_arguments_description = $this->xml_parser->getXMLArrayValues(P_SUITE_TEST_DESCRIPTION);
-		$override_test_options = $this->xml_parser->getXMLArrayValues(P_SUITE_TEST_OVERRIDE_OPTIONS);
+		$test_names = $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/Execute/Test');
+		$sub_modes = $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/Execute/Mode');
+		$sub_arguments = $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/Execute/Arguments');
+		$sub_arguments_description = $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/Execute/Description');
+		$override_test_options = $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/Execute/OverrideTestOptions');
 
 		for($i = 0; $i < count($test_names); $i++)
 		{
@@ -166,7 +166,7 @@ class pts_test_suite extends pts_test_suite_parser
 		if(pts_test_suite::is_suite($object))
 		{
 			$xml_parser = new pts_suite_nye_XmlReader($object);
-			$test_names = array_unique($xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME));
+			$test_names = array_unique($xml_parser->getXMLArrayValues('PhoronixTestSuite/Execute/Test'));
 
 			if($steps > 0)
 			{
@@ -200,7 +200,7 @@ class pts_test_suite extends pts_test_suite_parser
 		if(pts_test_suite::is_suite($object))
 		{
 			$xml_parser = new pts_suite_nye_XmlReader($object);
-			$test_names = array_unique($xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME));
+			$test_names = array_unique($xml_parser->getXMLArrayValues('PhoronixTestSuite/Execute/Test'));
 			$contained[$object] = array();
 
 			foreach($test_names as $test)

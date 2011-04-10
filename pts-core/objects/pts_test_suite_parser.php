@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2010, Phoronix Media
-	Copyright (C) 2008 - 2010, Michael Larabel
+	Copyright (C) 2008 - 2011, Phoronix Media
+	Copyright (C) 2008 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -45,47 +45,47 @@ class pts_test_suite_parser
 	}
 	public function requires_core_version_min()
 	{
-		return $this->xml_parser->getXMLValue(P_SUITE_REQUIRES_COREVERSION_MIN, 2950);
+		return $this->xml_parser->getXMLValue('PhoronixTestSuite/SuiteInformation/RequiresCoreVersionMin', 2950);
 	}
 	public function requires_core_version_max()
 	{
-		return $this->xml_parser->getXMLValue(P_SUITE_REQUIRES_COREVERSION_MAX, 9190);
+		return $this->xml_parser->getXMLValue('PhoronixTestSuite/SuiteInformation/RequiresCoreVersionMax', 9190);
 	}
 	public function get_description()
 	{
-		return $this->xml_parser->getXMLValue(P_SUITE_DESCRIPTION);
+		return $this->xml_parser->getXMLValue('PhoronixTestSuite/SuiteInformation/Description');
 	}
 	public function get_title()
 	{
-		return $this->xml_parser->getXMLValue(P_SUITE_TITLE);
+		return $this->xml_parser->getXMLValue('PhoronixTestSuite/SuiteInformation/Title');
 	}
 	public function get_version()
 	{
-		return $this->xml_parser->getXMLValue(P_SUITE_VERSION);
+		return $this->xml_parser->getXMLValue('PhoronixTestSuite/SuiteInformation/Version');
 	}
 	public function get_maintainer()
 	{
-		return $this->xml_parser->getXMLValue(P_SUITE_MAINTAINER);
+		return $this->xml_parser->getXMLValue('PhoronixTestSuite/SuiteInformation/Maintainer');
 	}
 	public function get_suite_type()
 	{
-		return $this->xml_parser->getXMLValue(P_SUITE_TYPE);
+		return $this->xml_parser->getXMLValue('PhoronixTestSuite/SuiteInformation/TestType');
 	}
 	public function get_pre_run_message()
 	{
-		return $this->xml_parser->getXMLValue(P_SUITE_PRERUNMSG);
+		return $this->xml_parser->getXMLValue('PhoronixTestSuite/SuiteInformation/PreRunMessage');
 	}
 	public function get_post_run_message()
 	{
-		return $this->xml_parser->getXMLValue(P_SUITE_POSTRUNMSG);
+		return $this->xml_parser->getXMLValue('PhoronixTestSuite/SuiteInformation/PostRunMessage');
 	}
 	public function get_run_mode()
 	{
-		return $this->xml_parser->getXMLValue(P_SUITE_RUNMODE);
+		return $this->xml_parser->getXMLValue('PhoronixTestSuite/SuiteInformation/RunMode');
 	}
 	public function get_test_names()
 	{
-		return $this->xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME);
+		return $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/Execute/Test');
 	}
 	public function get_unique_test_names()
 	{
@@ -93,7 +93,7 @@ class pts_test_suite_parser
 	}
 	public function get_contained_test_profiles()
 	{
-		$test_names = $this->xml_parser->getXMLArrayValues(P_SUITE_TEST_NAME);
+		$test_names = $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/Execute/Test');
 		$test_profiles = array();
 
 		foreach(array_keys($test_names) as $i)

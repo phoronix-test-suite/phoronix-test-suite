@@ -21,7 +21,6 @@
 */
 
 pts_load_xml_definitions("result-file.xml");
-pts_load_xml_definitions("test-suite.xml");
 
 class build_suite implements pts_option_interface
 {

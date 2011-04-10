@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010, Phoronix Media
-	Copyright (C) 2010, Michael Larabel
+	Copyright (C) 2010 - 2011, Phoronix Media
+	Copyright (C) 2010 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -19,8 +19,6 @@
 	You should have received a copy of the GNU General Public License
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
-
-pts_load_xml_definitions('test-suite.xml');
 
 class pts_test_suite_writer
 {
@@ -50,32 +48,32 @@ class pts_test_suite_writer
 	}
 	public function add_suite_information_from_reader(&$xml_reader)
 	{
-		$this->xml_writer->addXmlNodeFromReaderWNE(P_SUITE_TITLE, $xml_reader);
-		$this->xml_writer->addXmlNodeFromReaderWNE(P_SUITE_VERSION, $xml_reader);
-		$this->xml_writer->addXmlNodeFromReaderWNE(P_SUITE_TYPE, $xml_reader);
-		$this->xml_writer->addXmlNodeFromReaderWNE(P_SUITE_DESCRIPTION, $xml_reader);
-		$this->xml_writer->addXmlNodeFromReaderWNE(P_SUITE_MAINTAINER, $xml_reader);
-		$this->xml_writer->addXmlNodeFromReaderWNE(P_SUITE_PRERUNMSG, $xml_reader);
-		$this->xml_writer->addXmlNodeFromReaderWNE(P_SUITE_POSTRUNMSG, $xml_reader);
-		$this->xml_writer->addXmlNodeFromReaderWNE(P_SUITE_RUNMODE, $xml_reader);
-		$this->xml_writer->addXmlNodeFromReaderWNE(P_SUITE_REQUIRES_COREVERSION_MIN, $xml_reader);
-		$this->xml_writer->addXmlNodeFromReaderWNE(P_SUITE_REQUIRES_COREVERSION_MAX, $xml_reader);
+		$this->xml_writer->addXmlNodeFromReaderWNE('PhoronixTestSuite/SuiteInformation/Title', $xml_reader);
+		$this->xml_writer->addXmlNodeFromReaderWNE('PhoronixTestSuite/SuiteInformation/Version', $xml_reader);
+		$this->xml_writer->addXmlNodeFromReaderWNE('PhoronixTestSuite/SuiteInformation/TestType', $xml_reader);
+		$this->xml_writer->addXmlNodeFromReaderWNE('PhoronixTestSuite/SuiteInformation/Description', $xml_reader);
+		$this->xml_writer->addXmlNodeFromReaderWNE('PhoronixTestSuite/SuiteInformation/Maintainer', $xml_reader);
+		$this->xml_writer->addXmlNodeFromReaderWNE('PhoronixTestSuite/SuiteInformation/PreRunMessage', $xml_reader);
+		$this->xml_writer->addXmlNodeFromReaderWNE('PhoronixTestSuite/SuiteInformation/PostRunMessage', $xml_reader);
+		$this->xml_writer->addXmlNodeFromReaderWNE('PhoronixTestSuite/SuiteInformation/RunMode', $xml_reader);
+		$this->xml_writer->addXmlNodeFromReaderWNE('PhoronixTestSuite/SuiteInformation/RequiresCoreVersionMin', $xml_reader);
+		$this->xml_writer->addXmlNodeFromReaderWNE('PhoronixTestSuite/SuiteInformation/RequiresCoreVersionMax', $xml_reader);
 	}
 	public function add_suite_information($name, $version, $maintainer, $type, $description)
 	{
-		$this->xml_writer->addXmlNode(P_SUITE_TITLE, $name);
-		$this->xml_writer->addXmlNode(P_SUITE_VERSION, $version);
-		$this->xml_writer->addXmlNode(P_SUITE_TYPE, $type);
-		$this->xml_writer->addXmlNode(P_SUITE_DESCRIPTION, $description);
-		$this->xml_writer->addXmlNode(P_SUITE_MAINTAINER, $maintainer);
+		$this->xml_writer->addXmlNode('PhoronixTestSuite/SuiteInformation/Title', $name);
+		$this->xml_writer->addXmlNode('PhoronixTestSuite/SuiteInformation/Version', $version);
+		$this->xml_writer->addXmlNode('PhoronixTestSuite/SuiteInformation/TestType', $type);
+		$this->xml_writer->addXmlNode('PhoronixTestSuite/SuiteInformation/Description', $description);
+		$this->xml_writer->addXmlNode('PhoronixTestSuite/SuiteInformation/Maintainer', $maintainer);
 	}
 	public function add_to_suite_from_reader(&$xml_reader)
 	{
-		$test_names = $xml_reader->getXMLArrayValues(P_SUITE_TEST_NAME);
-		$sub_arguments = $xml_reader->getXMLArrayValues(P_SUITE_TEST_ARGUMENTS);
-		$sub_arguments_description = $xml_reader->getXMLArrayValues(P_SUITE_TEST_DESCRIPTION);
-		$sub_modes = $xml_reader->getXMLArrayValues(P_SUITE_TEST_MODE);
-		$override_test_options = $xml_reader->getXMLArrayValues(P_SUITE_TEST_OVERRIDE_OPTIONS);
+		$test_names = $xml_reader->getXMLArrayValues('PhoronixTestSuite/Execute/Test');
+		$sub_arguments = $xml_reader->getXMLArrayValues('PhoronixTestSuite/Execute/Arguments');
+		$sub_arguments_description = $xml_reader->getXMLArrayValues('PhoronixTestSuite/Execute/Description');
+		$sub_modes = $xml_reader->getXMLArrayValues('PhoronixTestSuite/Execute/Mode');
+		$override_test_options = $xml_reader->getXMLArrayValues('PhoronixTestSuite/Execute/OverrideTestOptions');
 
 		for($i = 0; $i < count($test_names); $i++)
 		{
@@ -93,11 +91,11 @@ class pts_test_suite_writer
 	}
 	public function add_to_suite($identifier, $arguments, $description, $mode = null, $override = null)
 	{
-		$this->xml_writer->addXmlNodeWNE(P_SUITE_TEST_NAME, $identifier);
-		$this->xml_writer->addXmlNodeWNE(P_SUITE_TEST_ARGUMENTS, $arguments);
-		$this->xml_writer->addXmlNodeWNE(P_SUITE_TEST_DESCRIPTION, $description);
-		$this->xml_writer->addXmlNodeWNE(P_SUITE_TEST_MODE, $mode);
-		$this->xml_writer->addXmlNodeWNE(P_SUITE_TEST_OVERRIDE_OPTIONS, $override);
+		$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/Execute/Test', $identifier);
+		$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/Execute/Arguments', $arguments);
+		$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/Execute/Description', $description);
+		$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/Execute/Mode', $mode);
+		$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/Execute/OverrideTestOptions', $override);
 	}
 	public function add_to_suite_from_result_object(&$r_o)
 	{
