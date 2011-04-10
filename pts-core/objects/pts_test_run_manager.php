@@ -1151,7 +1151,6 @@ class pts_test_run_manager
 
 			// Validate the empty pts_test_result
 			$test_type = $test_profile->get_test_hardware_type();
-s
 
 			if($test_profile->is_supported(false) == false)
 			{

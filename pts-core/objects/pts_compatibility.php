@@ -20,42 +20,10 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-// Load compatibility definitions
-pts_load_xml_definitions('compatibility.xml');
-
 class pts_compatibility
 {
-	public static function pts_convert_pre_pts_26_module_settings()
-	{
-		/*
-			Prior to Phoronix Test Suite 2.6 all user module configuration options were stored in ~/.phoronix-test-suite/modules-config.xml
-			In PTS 2.6+ the settings for each module are stored in ~/.phoronix-test-suite/modules-data/<module-name>/module-settings.xml
-			This function writes out any existing data in the old file to the new modules-data location
-		*/
+	// Nothing right now
 
-		if(!is_file(PTS_USER_PATH . 'modules-config.xml'))
-		{
-			return false;
-		}
-
-		$module_config_parser = new nye_XmlReader(PTS_USER_PATH . 'modules-config.xml');
-		$option_module = $module_config_parser->getXMLArrayValues(P_COMPAT_MODULE_OPTION_NAME);
-		$option_identifier = $module_config_parser->getXMLArrayValues(P_COMPAT_MODULE_OPTION_IDENTIFIER);
-		$option_value = $module_config_parser->getXMLArrayValues(P_COMPAT_MODULE_OPTION_VALUE);
-		$module_settings = array();
-
-		for($i = 0; $i < count($option_module); $i++)
-		{
-			$module_settings[$option_module[$i]][$option_identifier[$i]] = $option_value[$i];
-		}
-
-		foreach($module_settings as $module_name => &$module_option_group)
-		{
-			pts_module::module_config_save($module_name, $module_option_group);
-		}
-
-		pts_file_io::unlink(PTS_USER_PATH . 'modules-config.xml');
-	}
 }
 
 ?>

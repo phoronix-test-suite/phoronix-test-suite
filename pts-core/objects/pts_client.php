@@ -307,11 +307,7 @@ class pts_client
 
 		pts_load_xml_definitions('module-settings.xml'); // TODO: make it only load this definition when actually needed
 
-		// Compatibility for importing old module configuration settings from pre PTS 2.6 into new structures
-		if(is_file(PTS_USER_PATH . 'modules-config.xml'))
-		{
-			pts_compatibility::pts_convert_pre_pts_26_module_settings();
-		}
+		// pts_compatibility ops here
 
 		pts_client::init_display_mode();
 	}
