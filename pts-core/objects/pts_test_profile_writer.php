@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010, Phoronix Media
-	Copyright (C) 2010, Michael Larabel
+	Copyright (C) 2010 - 2011, Phoronix Media
+	Copyright (C) 2010 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -19,8 +19,6 @@
 	You should have received a copy of the GNU General Public License
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
-
-pts_load_xml_definitions('test-profile.xml');
 
 class pts_test_profile_writer
 {
@@ -58,64 +56,64 @@ class pts_test_profile_writer
 	}
 	public function add_test_information(&$xml_reader)
 	{
-		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_TITLE, $xml_reader);
-		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_VERSION, $xml_reader);
-		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_DESCRIPTION, $xml_reader);
-		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_SCALE, $xml_reader);
-		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_PROPORTION, $xml_reader);
-		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_QUANTIFIER, $xml_reader);
-		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_DISPLAY_FORMAT, $xml_reader);
-		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_SUBTITLE, $xml_reader);
-		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_EXECUTABLE, $xml_reader);
-		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_RUNCOUNT, $xml_reader);
-		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_IGNORERUNS, $xml_reader);
-		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_INSTALLAGREEMENT, $xml_reader);
+		$this->xml_writer->addXmlNodeFromReaderWNE('PhoronixTestSuite/TestInformation/Title', $xml_reader);
+		$this->xml_writer->addXmlNodeFromReaderWNE('PhoronixTestSuite/TestInformation/AppVersion', $xml_reader);
+		$this->xml_writer->addXmlNodeFromReaderWNE('PhoronixTestSuite/TestInformation/Description', $xml_reader);
+		$this->xml_writer->addXmlNodeFromReaderWNE('PhoronixTestSuite/TestInformation/ResultScale', $xml_reader);
+		$this->xml_writer->addXmlNodeFromReaderWNE('PhoronixTestSuite/TestInformation/Proportion', $xml_reader);
+		$this->xml_writer->addXmlNodeFromReaderWNE('PhoronixTestSuite/TestInformation/ResultQuantifier', $xml_reader);
+		$this->xml_writer->addXmlNodeFromReaderWNE('PhoronixTestSuite/TestInformation/DisplayFormat', $xml_reader);
+		$this->xml_writer->addXmlNodeFromReaderWNE('PhoronixTestSuite/TestInformation/SubTitle', $xml_reader);
+		$this->xml_writer->addXmlNodeFromReaderWNE('PhoronixTestSuite/TestInformation/Executable', $xml_reader);
+		$this->xml_writer->addXmlNodeFromReaderWNE('PhoronixTestSuite/TestInformation/TimesToRun', $xml_reader);
+		$this->xml_writer->addXmlNodeFromReaderWNE('PhoronixTestSuite/TestInformation/IgnoreRuns', $xml_reader);
+		$this->xml_writer->addXmlNodeFromReaderWNE('PhoronixTestSuite/TestInformation/InstallationAgreement', $xml_reader);
 	}
 	public function add_test_data_section(&$xml_reader)
 	{
-		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_PTSVERSION, $xml_reader);
-		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_SUPPORTEDPLATFORMS, $xml_reader);
-		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_SOFTWARE_TYPE, $xml_reader);
-		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_HARDWARE_TYPE, $xml_reader);
-		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_LICENSE, $xml_reader);
-		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_STATUS, $xml_reader);
-		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_SUPPORTEDARCHS, $xml_reader);
-		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_EXDEP, $xml_reader);
-		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_CTPEXTENDS, $xml_reader);
-		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_ROOTNEEDED, $xml_reader);
-		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_ENVIRONMENTSIZE, $xml_reader);
-		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_ENVIRONMENT_TESTING_SIZE, $xml_reader);
-		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_EST_TIME_PER_RUN, $xml_reader);
-		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_PROJECTURL, $xml_reader);
-		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_REQUIRES_COREVERSION_MIN, $xml_reader);
-		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_REQUIRES_COREVERSION_MAX, $xml_reader);
-		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_INTERNAL_TAGS, $xml_reader);
-		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_MAINTAINER, $xml_reader);
-		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_ALLOW_RESULTS_SHARING, $xml_reader);
-		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_AUTO_SAVE_RESULTS, $xml_reader);
+		$this->xml_writer->addXmlNodeFromReaderWNE('PhoronixTestSuite/TestProfile/Version', $xml_reader);
+		$this->xml_writer->addXmlNodeFromReaderWNE('PhoronixTestSuite/TestProfile/SupportedPlatforms', $xml_reader);
+		$this->xml_writer->addXmlNodeFromReaderWNE('PhoronixTestSuite/TestProfile/SoftwareType', $xml_reader);
+		$this->xml_writer->addXmlNodeFromReaderWNE('PhoronixTestSuite/TestProfile/TestType', $xml_reader);
+		$this->xml_writer->addXmlNodeFromReaderWNE('PhoronixTestSuite/TestProfile/License', $xml_reader);
+		$this->xml_writer->addXmlNodeFromReaderWNE('PhoronixTestSuite/TestProfile/Status', $xml_reader);
+		$this->xml_writer->addXmlNodeFromReaderWNE('PhoronixTestSuite/TestProfile/SupportedArchitectures', $xml_reader);
+		$this->xml_writer->addXmlNodeFromReaderWNE('PhoronixTestSuite/TestProfile/ExternalDependencies', $xml_reader);
+		$this->xml_writer->addXmlNodeFromReaderWNE('PhoronixTestSuite/TestProfile/Extends', $xml_reader);
+		$this->xml_writer->addXmlNodeFromReaderWNE('PhoronixTestSuite/TestProfile/RequiresRoot', $xml_reader);
+		$this->xml_writer->addXmlNodeFromReaderWNE('PhoronixTestSuite/TestProfile/EnvironmentSize', $xml_reader);
+		$this->xml_writer->addXmlNodeFromReaderWNE('PhoronixTestSuite/TestProfile/EnvironmentTestingSize', $xml_reader);
+		$this->xml_writer->addXmlNodeFromReaderWNE('PhoronixTestSuite/TestProfile/EstimatedTimePerRun', $xml_reader);
+		$this->xml_writer->addXmlNodeFromReaderWNE('PhoronixTestSuite/TestProfile/ProjectURL', $xml_reader);
+		$this->xml_writer->addXmlNodeFromReaderWNE('PhoronixTestSuite/TestProfile/RequiresCoreVersionMin', $xml_reader);
+		$this->xml_writer->addXmlNodeFromReaderWNE('PhoronixTestSuite/TestProfile/RequiresCoreVersionMax', $xml_reader);
+		$this->xml_writer->addXmlNodeFromReaderWNE('PhoronixTestSuite/TestProfile/InternalTags', $xml_reader);
+		$this->xml_writer->addXmlNodeFromReaderWNE('PhoronixTestSuite/TestProfile/Maintainer', $xml_reader);
+		$this->xml_writer->addXmlNodeFromReaderWNE('PhoronixTestSuite/TestProfile/AllowResultsSharing', $xml_reader);
+		$this->xml_writer->addXmlNodeFromReaderWNE('PhoronixTestSuite/TestProfile/AutoSaveResults', $xml_reader);
 	}
 	public function add_test_settings(&$test_profile)
 	{
 		$xml_reader = &$test_profile->xml_parser;
-		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_DEFAULTARGUMENTS, $xml_reader);
-		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_DEFAULT_POST_ARGUMENTS, $xml_reader);
-		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_ALLOW_CACHE_SHARE, $xml_reader);
-		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_MIN_LENGTH, $xml_reader);
-		$this->xml_writer->addXmlNodeFromReaderWNE(P_TEST_MAX_LENGTH, $xml_reader);
+		$this->xml_writer->addXmlNodeFromReaderWNE('PhoronixTestSuite/TestSettings/Default/Arguments', $xml_reader);
+		$this->xml_writer->addXmlNodeFromReaderWNE('PhoronixTestSuite/TestSettings/Default/PostArguments', $xml_reader);
+		$this->xml_writer->addXmlNodeFromReaderWNE('PhoronixTestSuite/TestSettings/Default/AllowCacheShare', $xml_reader);
+		$this->xml_writer->addXmlNodeFromReaderWNE('PhoronixTestSuite/TestSettings/Default/MinimumLength', $xml_reader);
+		$this->xml_writer->addXmlNodeFromReaderWNE('PhoronixTestSuite/TestSettings/Default/MaximumLength', $xml_reader);
 
 		foreach($test_profile->get_test_option_objects(false) as $option)
 		{
-			$this->xml_writer->addXmlNode(P_TEST_OPTIONS_DISPLAYNAME, $option->get_name());
-			$this->xml_writer->addXmlNodeWNE(P_TEST_OPTIONS_IDENTIFIER, $option->get_identifier());
-			$this->xml_writer->addXmlNodeWNE(P_TEST_OPTIONS_ARGPREFIX, $option->get_option_prefix());
-			$this->xml_writer->addXmlNodeWNE(P_TEST_OPTIONS_ARGPOSTFIX, $option->get_option_postfix());
-			$this->xml_writer->addXmlNodeWNE(P_TEST_OPTIONS_DEFAULTENTRY, $option->get_option_default_raw());
+			$this->xml_writer->addXmlNode('PhoronixTestSuite/TestSettings/Option/DisplayName', $option->get_name());
+			$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/TestSettings/Option/Identifier', $option->get_identifier());
+			$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/TestSettings/Option/ArgumentPrefix', $option->get_option_prefix());
+			$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/TestSettings/Option/ArgumentPostfix', $option->get_option_postfix());
+			$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/TestSettings/Option/DefaultEntry', $option->get_option_default_raw());
 
 			foreach($option->get_options_array() as $item)
 			{
-				$this->xml_writer->addXmlNode(P_TEST_OPTIONS_MENU_GROUP_NAME, $item[0]);
-				$this->xml_writer->addXmlNodeWNE(P_TEST_OPTIONS_MENU_GROUP_VALUE, $item[1]);
-				$this->xml_writer->addXmlNodeWNE(P_TEST_OPTIONS_MENU_GROUP_MESSAGE, $item[2]);
+				$this->xml_writer->addXmlNode('PhoronixTestSuite/TestSettings/Option/Menu/Entry/Name', $item[0]);
+				$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/TestSettings/Option/Menu/Entry/Value', $item[1]);
+				$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/TestSettings/Option/Menu/Entry/Message', $item[2]);
 			}
 		}
 

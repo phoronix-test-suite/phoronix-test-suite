@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2010, Phoronix Media
-	Copyright (C) 2008 - 2010, Michael Larabel
+	Copyright (C) 2008 - 2011, Phoronix Media
+	Copyright (C) 2008 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -57,63 +57,63 @@ class pts_test_profile_parser
 	}
 	public function get_maintainer()
 	{
-		return $this->xml_parser->getXMLValue(P_TEST_MAINTAINER);
+		return $this->xml_parser->getXMLValue('PhoronixTestSuite/TestProfile/Maintainer');
 	}
 	public function get_test_hardware_type()
 	{
-		return $this->xml_parser->getXMLValue(P_TEST_HARDWARE_TYPE);
+		return $this->xml_parser->getXMLValue('PhoronixTestSuite/TestProfile/TestType');
 	}
 	public function get_test_software_type()
 	{
-		return $this->xml_parser->getXMLValue(P_TEST_SOFTWARE_TYPE);
+		return $this->xml_parser->getXMLValue('PhoronixTestSuite/TestProfile/SoftwareType');
 	}
 	public function get_status()
 	{
-		return $this->xml_parser->getXMLValue(P_TEST_STATUS);
+		return $this->xml_parser->getXMLValue('PhoronixTestSuite/TestProfile/Status');
 	}
 	public function get_license()
 	{
-		return $this->xml_parser->getXMLValue(P_TEST_LICENSE);
+		return $this->xml_parser->getXMLValue('PhoronixTestSuite/TestProfile/License');
 	}
 	public function get_test_profile_version()
 	{
-		return $this->xml_parser->getXMLValue(P_TEST_PTSVERSION);
+		return $this->xml_parser->getXMLValue('PhoronixTestSuite/TestProfile/Version');
 	}
 	public function get_app_version()
 	{
-		return $this->xml_parser->getXMLValue(P_TEST_VERSION);
+		return $this->xml_parser->getXMLValue('PhoronixTestSuite/TestInformation/AppVersion');
 	}
 	public function get_project_url()
 	{
-		return $this->xml_parser->getXMLValue(P_TEST_PROJECTURL);
+		return $this->xml_parser->getXMLValue('PhoronixTestSuite/TestProfile/ProjectURL');
 	}
 	public function get_description()
 	{
-		return $this->xml_parser->getXMLValue(P_TEST_DESCRIPTION);
+		return $this->xml_parser->getXMLValue('PhoronixTestSuite/TestInformation/Description');
 	}
 	public function get_title()
 	{
-		return $this->xml_parser->getXMLValue(P_TEST_TITLE);
+		return $this->xml_parser->getXMLValue('PhoronixTestSuite/TestInformation/Title');
 	}
 	public function get_dependencies()
 	{
-		return pts_strings::comma_explode($this->xml_parser->getXMLValue(P_TEST_EXDEP));
+		return pts_strings::comma_explode($this->xml_parser->getXMLValue('PhoronixTestSuite/TestProfile/ExternalDependencies'));
 	}
 	public function get_pre_install_message()
 	{
-		return $this->xml_parser->getXMLValue(P_TEST_PREINSTALLMSG);
+		return $this->xml_parser->getXMLValue('PhoronixTestSuite/TestInformation/PreInstallMessage');
 	}
 	public function get_post_install_message()
 	{
-		return $this->xml_parser->getXMLValue(P_TEST_POSTINSTALLMSG);
+		return $this->xml_parser->getXMLValue('PhoronixTestSuite/TestInformation/PostInstallMessage');
 	}
 	public function get_installation_agreement_message()
 	{
-		return $this->xml_parser->getXMLValue(P_TEST_INSTALLAGREEMENT);
+		return $this->xml_parser->getXMLValue('PhoronixTestSuite/TestInformation/InstallationAgreement');
 	}
 	public function get_internal_tags_raw()
 	{
-		return $this->xml_parser->getXMLValue(P_TEST_INTERNAL_TAGS);
+		return $this->xml_parser->getXMLValue('PhoronixTestSuite/TestProfile/InternalTags');
 	}
 	public function get_internal_tags()
 	{
@@ -121,11 +121,11 @@ class pts_test_profile_parser
 	}
 	public function get_default_arguments()
 	{
-		return $this->xml_parser->getXMLValue(P_TEST_DEFAULTARGUMENTS);
+		return $this->xml_parser->getXMLValue('PhoronixTestSuite/TestSettings/Default/Arguments');
 	}
 	public function get_default_post_arguments()
 	{
-		return $this->xml_parser->getXMLValue(P_TEST_DEFAULT_POST_ARGUMENTS);
+		return $this->xml_parser->getXMLValue('PhoronixTestSuite/TestSettings/Default/PostArguments');
 	}
 	public function get_identifier_base_name()
 	{
@@ -137,27 +137,27 @@ class pts_test_profile_parser
 	}
 	public function get_test_executable()
 	{
-		return $this->xml_parser->getXMLValue(P_TEST_EXECUTABLE, $this->get_identifier_base_name());
+		return $this->xml_parser->getXMLValue('PhoronixTestSuite/TestInformation/Executable', $this->get_identifier_base_name());
 	}
 	public function get_times_to_run()
 	{
-		return $this->xml_parser->getXMLValue(P_TEST_RUNCOUNT, 3);
+		return $this->xml_parser->getXMLValue('PhoronixTestSuite/TestInformation/TimesToRun', 3);
 	}
 	public function get_runs_to_ignore()
 	{
-		return pts_strings::comma_explode($this->xml_parser->getXMLValue(P_TEST_IGNORERUNS));
+		return pts_strings::comma_explode($this->xml_parser->getXMLValue('PhoronixTestSuite/TestInformation/IgnoreRuns'));
 	}
 	public function get_pre_run_message()
 	{
-		return $this->xml_parser->getXMLValue(P_TEST_PRERUNMSG);
+		return $this->xml_parser->getXMLValue('PhoronixTestSuite/TestInformation/PreRunMessage');
 	}
 	public function get_post_run_message()
 	{
-		return $this->xml_parser->getXMLValue(P_TEST_POSTRUNMSG);
+		return $this->xml_parser->getXMLValue('PhoronixTestSuite/TestInformation/PostRunMessage');
 	}
 	public function get_result_scale()
 	{
-		return $this->xml_parser->getXMLValue(P_TEST_SCALE);
+		return $this->xml_parser->getXMLValue('PhoronixTestSuite/TestInformation/ResultScale');
 	}
 	public function get_result_scale_formatted()
 	{
@@ -171,47 +171,47 @@ class pts_test_profile_parser
 	}
 	public function get_result_proportion()
 	{
-		return $this->xml_parser->getXMLValue(P_TEST_PROPORTION);
+		return $this->xml_parser->getXMLValue('PhoronixTestSuite/TestInformation/Proportion');
 	}
 	public function get_display_format()
 	{
-		return $this->xml_parser->getXMLValue(P_TEST_DISPLAY_FORMAT, 'BAR_GRAPH');
+		return $this->xml_parser->getXMLValue('PhoronixTestSuite/TestInformation/DisplayFormat', 'BAR_GRAPH');
 	}
 	public function do_auto_save_results()
 	{
-		return pts_strings::string_bool($this->xml_parser->getXMLValue(P_TEST_AUTO_SAVE_RESULTS, 'FALSE'));
+		return pts_strings::string_bool($this->xml_parser->getXMLValue('PhoronixTestSuite/TestProfile/AutoSaveResults', 'FALSE'));
 	}
 	public function get_result_quantifier()
 	{
-		return $this->xml_parser->getXMLValue(P_TEST_QUANTIFIER);
+		return $this->xml_parser->getXMLValue('PhoronixTestSuite/TestInformation/ResultQuantifier');
 	}
 	public function is_root_required()
 	{
-		return pts_strings::string_bool($this->xml_parser->getXMLValue(P_TEST_ROOTNEEDED, 'FALSE'));
+		return pts_strings::string_bool($this->xml_parser->getXMLValue('PhoronixTestSuite/TestProfile/RequiresRoot', 'FALSE'));
 	}
 	public function allow_cache_share()
 	{
-		return pts_strings::string_bool($this->xml_parser->getXMLValue(P_TEST_ALLOW_CACHE_SHARE, 'FALSE'));
+		return pts_strings::string_bool($this->xml_parser->getXMLValue('PhoronixTestSuite/TestSettings/Default/AllowCacheShare', 'FALSE'));
 	}
 	public function allow_results_sharing()
 	{
-		return pts_strings::string_bool($this->xml_parser->getXMLValue(P_TEST_ALLOW_RESULTS_SHARING, 'TRUE'));
+		return pts_strings::string_bool($this->xml_parser->getXMLValue('PhoronixTestSuite/TestProfile/AllowResultsSharing', 'TRUE'));
 	}
 	public function get_min_length()
 	{
-		return $this->xml_parser->getXMLValue(P_TEST_MIN_LENGTH);
+		return $this->xml_parser->getXMLValue('PhoronixTestSuite/TestSettings/Default/MinimumLength');
 	}
 	public function get_max_length()
 	{
-		return $this->xml_parser->getXMLValue(P_TEST_MAX_LENGTH);
+		return $this->xml_parser->getXMLValue('PhoronixTestSuite/TestSettings/Default/MaximumLength');
 	}
 	public function get_test_subtitle()
 	{
-		return $this->xml_parser->getXMLValue(P_TEST_SUBTITLE);
+		return $this->xml_parser->getXMLValue('PhoronixTestSuite/TestInformation/SubTitle');
 	}
 	public function get_supported_platforms_raw()
 	{
-		return $this->xml_parser->getXMLValue(P_TEST_SUPPORTEDPLATFORMS);
+		return $this->xml_parser->getXMLValue('PhoronixTestSuite/TestProfile/SupportedPlatforms');
 	}
 	public function get_supported_platforms()
 	{
@@ -219,42 +219,42 @@ class pts_test_profile_parser
 	}
 	public function get_supported_architectures()
 	{
-		return pts_strings::comma_explode($this->xml_parser->getXMLValue(P_TEST_SUPPORTEDARCHS));
+		return pts_strings::comma_explode($this->xml_parser->getXMLValue('PhoronixTestSuite/TestProfile/SupportedArchitectures'));
 	}
 	public function get_environment_size()
 	{
-		return $this->xml_parser->getXMLValue(P_TEST_ENVIRONMENTSIZE, 0);
+		return $this->xml_parser->getXMLValue('PhoronixTestSuite/TestProfile/EnvironmentSize', 0);
 	}
 	public function get_test_extension()
 	{
-		return $this->xml_parser->getXMLValue(P_TEST_CTPEXTENDS);
+		return $this->xml_parser->getXMLValue('PhoronixTestSuite/TestProfile/Extends');
 	}
 	public function get_environment_testing_size()
 	{
-		return $this->xml_parser->getXMLValue(P_TEST_ENVIRONMENT_TESTING_SIZE, 0);
+		return $this->xml_parser->getXMLValue('PhoronixTestSuite/TestProfile/EnvironmentTestingSize', 0);
 	}
 	public function get_estimated_run_time()
 	{
-		return $this->xml_parser->getXMLValue(P_TEST_EST_TIME_PER_RUN, 0) * $this->get_times_to_run();
+		return $this->xml_parser->getXMLValue('PhoronixTestSuite/TestProfile/EstimatedTimePerRun', 0) * $this->get_times_to_run();
 	}
 	public function requires_core_version_min()
 	{
-		return $this->xml_parser->getXMLValue(P_TEST_REQUIRES_COREVERSION_MIN, 2950);
+		return $this->xml_parser->getXMLValue('PhoronixTestSuite/TestProfile/RequiresCoreVersionMin', 2950);
 	}
 	public function requires_core_version_max()
 	{
-		return $this->xml_parser->getXMLValue(P_TEST_REQUIRES_COREVERSION_MAX, 9190);
+		return $this->xml_parser->getXMLValue('PhoronixTestSuite/TestProfile/RequiresCoreVersionMax', 9190);
 	}
 	public function get_test_option_objects($auto_process = true)
 	{
-		$settings_name = $this->xml_parser->getXMLArrayValues(P_TEST_OPTIONS_DISPLAYNAME);
-		$settings_argument_prefix = $this->xml_parser->getXMLArrayValues(P_TEST_OPTIONS_ARGPREFIX);
-		$settings_argument_postfix = $this->xml_parser->getXMLArrayValues(P_TEST_OPTIONS_ARGPOSTFIX);
-		$settings_identifier = $this->xml_parser->getXMLArrayValues(P_TEST_OPTIONS_IDENTIFIER);
-		$settings_default = $this->xml_parser->getXMLArrayValues(P_TEST_OPTIONS_DEFAULTENTRY);
-		$option_names = $this->xml_parser->getXMLArrayValues(P_TEST_OPTIONS_MENU_GROUP_NAME, 1);
-		$option_messages = $this->xml_parser->getXMLArrayValues(P_TEST_OPTIONS_MENU_GROUP_MESSAGE, 1);
-		$option_values = $this->xml_parser->getXMLArrayValues(P_TEST_OPTIONS_MENU_GROUP_VALUE, 1);
+		$settings_name = $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/TestSettings/Option/DisplayName');
+		$settings_argument_prefix = $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/TestSettings/Option/ArgumentPrefix');
+		$settings_argument_postfix = $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/TestSettings/Option/ArgumentPostfix');
+		$settings_identifier = $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/TestSettings/Option/Identifier');
+		$settings_default = $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/TestSettings/Option/DefaultEntry');
+		$option_names = $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/TestSettings/Option/Menu/Entry/Name', 1);
+		$option_messages = $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/TestSettings/Option/Menu/Entry/Message', 1);
+		$option_values = $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/TestSettings/Option/Menu/Entry/Value', 1);
 		$test_options = array();
 
 		foreach(array_keys($settings_name) as $option_count)
@@ -296,31 +296,31 @@ class pts_test_profile_parser
 
 	public function set_times_to_run($times)
 	{
-		$this->xml_parser->overrideXMLValue(P_TEST_RUNCOUNT, $times);
+		$this->xml_parser->overrideXMLValue('PhoronixTestSuite/TestInformation/TimesToRun', $times);
 	}
 	public function set_result_scale($scale)
 	{
-		$this->xml_parser->overrideXMLValue(P_TEST_SCALE, $scale);
+		$this->xml_parser->overrideXMLValue('PhoronixTestSuite/TestInformation/ResultScale', $scale);
 	}
 	public function set_result_proportion($proportion)
 	{
-		$this->xml_parser->overrideXMLValue(P_TEST_PROPORTION, $proportion);
+		$this->xml_parser->overrideXMLValue('PhoronixTestSuite/TestInformation/Proportion', $proportion);
 	}
 	public function set_display_format($format)
 	{
-		$this->xml_parser->overrideXMLValue(P_TEST_DISPLAY_FORMAT, $format);
+		$this->xml_parser->overrideXMLValue('PhoronixTestSuite/TestInformation/DisplayFormat', $format);
 	}
 	public function set_result_quantifier($quantifier)
 	{
-		$this->xml_parser->overrideXMLValue(P_TEST_QUANTIFIER, $quantifier);
+		$this->xml_parser->overrideXMLValue('PhoronixTestSuite/TestInformation/ResultQuantifier', $quantifier);
 	}
 	public function set_version($version)
 	{
-		$this->xml_parser->overrideXMLValue(P_TEST_VERSION, $version);
+		$this->xml_parser->overrideXMLValue('PhoronixTestSuite/TestInformation/AppVersion', $version);
 	}
 	public function set_test_title($title)
 	{
-		$this->xml_parser->overrideXMLValue(P_TEST_TITLE, $title);
+		$this->xml_parser->overrideXMLValue('PhoronixTestSuite/TestInformation/Title', $title);
 	}
 	public function set_identifier($identifier)
 	{

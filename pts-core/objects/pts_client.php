@@ -305,8 +305,6 @@ class pts_client
 		copy(PTS_CORE_STATIC_PATH . 'xsl/pts-user-config-viewer.xsl', PTS_USER_PATH . 'xsl/' . 'pts-user-config-viewer.xsl');
 		copy(PTS_CORE_STATIC_PATH . 'images/pts-308x160.png', PTS_USER_PATH . 'xsl/' . 'pts-logo.png');
 
-		pts_load_xml_definitions('module-settings.xml'); // TODO: make it only load this definition when actually needed
-
 		// pts_compatibility ops here
 
 		pts_client::init_display_mode();

@@ -46,8 +46,8 @@ class pts_module
 		if(is_file(PTS_MODULE_DATA_PATH . $module_name . "/module-settings.xml"))
 		{
 			$module_config_parser = new nye_XmlReader(PTS_MODULE_DATA_PATH . $module_name . "/module-settings.xml");
-			$option_identifier = $module_config_parser->getXMLArrayValues(P_MODULE_OPTION_IDENTIFIER);
-			$option_value = $module_config_parser->getXMLArrayValues(P_MODULE_OPTION_VALUE);
+			$option_identifier = $module_config_parser->getXMLArrayValues('PhoronixTestSuite/ModuleSettings/Option/Identifier');
+			$option_value = $module_config_parser->getXMLArrayValues('PhoronixTestSuite/ModuleSettings/Option/Value');
 
 			for($i = 0; $i < count($option_identifier); $i++)
 			{
@@ -64,8 +64,8 @@ class pts_module
 
 		foreach($settings_to_write as $identifier => $value)
 		{
-			$config->addXmlNode(P_MODULE_OPTION_IDENTIFIER, $identifier);
-			$config->addXmlNode(P_MODULE_OPTION_VALUE, $value);
+			$config->addXmlNode('PhoronixTestSuite/ModuleSettings/Option/Identifier', $identifier);
+			$config->addXmlNode('PhoronixTestSuite/ModuleSettings/Option/Value', $value);
 		}
 
 		$config->saveXMLFile(PTS_MODULE_DATA_PATH . $module_name . "/module-settings.xml");
@@ -122,8 +122,8 @@ class pts_module
 		$value = false;
 
 		$module_config_parser = new nye_XmlReader(PTS_MODULE_DATA_PATH . $module_name . "/module-settings.xml");
-		$option_identifier = $module_config_parser->getXMLArrayValues(P_MODULE_OPTION_IDENTIFIER);
-		$option_value = $module_config_parser->getXMLArrayValues(P_MODULE_OPTION_VALUE);
+		$option_identifier = $module_config_parser->getXMLArrayValues('PhoronixTestSuite/ModuleSettings/Option/Identifier');
+		$option_value = $module_config_parser->getXMLArrayValues('PhoronixTestSuite/ModuleSettings/Option/Value');
 
 		for($i = 0; $i < count($option_identifier) && $value == false; $i++)
 		{
@@ -155,8 +155,8 @@ class pts_module
 		$options = array();
 
 		$module_config_parser = new nye_XmlReader(PTS_MODULE_DATA_PATH . $module_name . "/module-settings.xml");
-		$option_identifier = $module_config_parser->getXMLArrayValues(P_MODULE_OPTION_IDENTIFIER);
-		$option_value = $module_config_parser->getXMLArrayValues(P_MODULE_OPTION_VALUE);
+		$option_identifier = $module_config_parser->getXMLArrayValues('PhoronixTestSuite/ModuleSettings/Option/Identifier');
+		$option_value = $module_config_parser->getXMLArrayValues('PhoronixTestSuite/ModuleSettings/Option/Value');
 
 		for($i = 0; $i < count($option_identifier); $i++)
 		{

@@ -20,8 +20,6 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-pts_load_xml_definitions('test-profile.xml');
-
 class pts_test_nye_XmlReader extends nye_XmlReader
 {
 	protected $override_values;
@@ -93,12 +91,12 @@ class pts_test_nye_XmlReader extends nye_XmlReader
 	public function handleXmlZeroTagFallback($xml_tag, $fallback_value)
 	{
 		// Cascading Test Profiles for finding a tag within an XML file being extended by another XML file
-		if($xml_tag == P_TEST_CTPEXTENDS || $this->block_test_extension_support)
+		if($xml_tag == 'PhoronixTestSuite/TestProfile/Extends' || $this->block_test_extension_support)
 		{
 			// Otherwise we'd have an infinite loop
 			return $fallback_value;
 		}
-		$test_extends = $this->getXmlValue(P_TEST_CTPEXTENDS);
+		$test_extends = $this->getXmlValue('PhoronixTestSuite/TestProfile/Extends');
 
 		if(!empty($test_extends))
 		{
