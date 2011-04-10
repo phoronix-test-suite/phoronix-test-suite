@@ -56,59 +56,59 @@ class pts_result_file
 	}
 	public function get_system_hardware()
 	{
-		return $this->xml_parser->getXMLArrayValues(P_RESULTS_SYSTEM_HARDWARE);
+		return $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/System/Hardware');
 	}
 	public function get_system_software()
 	{
-		return $this->xml_parser->getXMLArrayValues(P_RESULTS_SYSTEM_SOFTWARE);
+		return $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/System/Software');
 	}
 	public function get_system_user()
 	{
-		return $this->xml_parser->getXMLArrayValues(P_RESULTS_SYSTEM_USER);
+		return $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/System/User');
 	}
 	public function get_system_notes()
 	{
-		return $this->xml_parser->getXMLArrayValues(P_RESULTS_SYSTEM_NOTES);
+		return $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/System/Notes');
 	}
 	public function get_system_date()
 	{
-		return $this->xml_parser->getXMLArrayValues(P_RESULTS_SYSTEM_DATE);
+		return $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/System/TimeStamp');
 	}
 	public function get_system_pts_version()
 	{
-		return $this->xml_parser->getXMLArrayValues(P_RESULTS_SYSTEM_PTSVERSION);
+		return $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/System/TestClientVersion');
 	}
 	public function get_system_identifiers()
 	{
-		return $this->xml_parser->getXMLArrayValues(P_RESULTS_SYSTEM_IDENTIFIERS);
+		return $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/System/Identifier');
 	}
 	public function get_title()
 	{
-		return $this->xml_parser->getXMLValue(P_RESULTS_GENERATED_TITLE);
+		return $this->xml_parser->getXMLValue('PhoronixTestSuite/Generated/Title');
 	}
 	public function get_description()
 	{
-		return $this->xml_parser->getXMLValue(P_RESULTS_GENERATED_DESCRIPTION);
+		return $this->xml_parser->getXMLValue('PhoronixTestSuite/Generated/Description');
 	}
 	public function get_notes()
 	{
-		return $this->xml_parser->getXMLValue(P_RESULTS_GENERATED_NOTES);
+		return $this->xml_parser->getXMLValue('PhoronixTestSuite/Generated/Notes');
 	}
 	public function get_internal_tags()
 	{
-		return $this->xml_parser->getXMLValue(P_RESULTS_GENERATED_INTERNAL_TAGS);
+		return $this->xml_parser->getXMLValue('PhoronixTestSuite/Generated/InternalTags');
 	}
 	public function get_reference_id()
 	{
-		return $this->xml_parser->getXMLValue(P_RESULTS_GENERATED_REFERENCE_ID);
+		return $this->xml_parser->getXMLValue('PhoronixTestSuite/Generated/ReferenceID');
 	}
 	public function get_preset_environment_variables()
 	{
-		return $this->xml_parser->getXMLValue(P_RESULTS_GENERATED_PRESET_ENV_VARS);
+		return $this->xml_parser->getXMLValue('PhoronixTestSuite/Generated/PreSetEnvironmentVariables');
 	}
 	public function get_test_titles()
 	{
-		return $this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_TITLE);
+		return $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/Result/Title');
 	}
 	public function get_unique_test_titles()
 	{
@@ -192,18 +192,18 @@ class pts_result_file
 		{
 			$this->result_objects = array();
 
-			$results_name = $this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_TITLE);
-			$results_version = $this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_VERSION);
-			$results_attributes = $this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_DESCRIPTION);
-			$results_scale = $this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_SCALE);
-			$results_test_name = $this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_IDENTIFIER);
-			$results_arguments = $this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_ARGS);
-			$results_proportion = $this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_PROPORTION);
-			$results_format = $this->xml_parser->getXMLArrayValues(P_RESULTS_TEST_DISPLAY_FORMAT);
+			$results_name = $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/Result/Title');
+			$results_version = $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/Result/AppVersion');
+			$results_attributes = $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/Result/Description');
+			$results_scale = $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/Result/Scale');
+			$results_test_name = $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/Result/Identifier');
+			$results_arguments = $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/Result/Arguments');
+			$results_proportion = $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/Result/Proportion');
+			$results_format = $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/Result/DisplayFormat');
 
-			$results_identifiers = $this->xml_parser->getXMLArrayValues(P_RESULTS_RESULTS_GROUP_IDENTIFIER, 0);
-			$results_values = $this->xml_parser->getXMLArrayValues(P_RESULTS_RESULTS_GROUP_VALUE, 0);
-			$results_raw = $this->xml_parser->getXMLArrayValues(P_RESULTS_RESULTS_GROUP_RAW, 0);
+			$results_identifiers = $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/Result/Data/Entry/Identifier', 0);
+			$results_values = $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/Result/Data/Entry/Value', 0);
+			$results_raw = $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/Result/Data/Entry/RawString', 0);
 
 			for($i = 0; $i < count($results_name); $i++)
 			{

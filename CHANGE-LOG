@@ -10,6 +10,7 @@ Phoronix Test Suite (Git)
 - phodevi: Don't confuse GCC with LLVM when sym-linking one to the other
 - phodevi: Better detection of Nouveau GPU thermal sensors
 - phodevi: Support monitoring the CPU temperature from the k10temp hwmon module
+- phodevi: Fix system_profiler parsing on Mac OS X 10.7 Lion ("Of" references changed to "of" in Lion)
 
 Phoronix Test Suite 3.0.1
 15 March 2011

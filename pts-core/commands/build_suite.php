@@ -20,8 +20,6 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-pts_load_xml_definitions("result-file.xml");
-
 class build_suite implements pts_option_interface
 {
 	const doc_section = 'Other';

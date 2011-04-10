@@ -48,7 +48,7 @@ class phodevi_osx_parser
 					$line_object = substr($line_object, 0, $cut_point);
 				}
 		
-				if($line_object == $object && isset($line[1]))
+				if(strtolower($line_object) == strtolower($object) && isset($line[1]))
 				{
 					$this_value = trim($line[1]);
 			

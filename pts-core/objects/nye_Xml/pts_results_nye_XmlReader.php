@@ -20,8 +20,6 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-pts_load_xml_definitions('result-file.xml');
-
 class pts_results_nye_XmlReader extends nye_XmlReader
 {
 	public function __construct($read_xml)
