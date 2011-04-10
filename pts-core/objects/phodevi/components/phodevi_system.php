@@ -578,11 +578,6 @@ class phodevi_system extends phodevi_device_interface
 		if(phodevi::is_macosx())
 		{
 			$os = phodevi_osx_parser::read_osx_system_profiler('SPSoftwareDataType', 'SystemVersion');
-		
-			if(($cut_point = strpos($os, '(')) > 0)
-			{
-				$os = substr($os, 0, $cut_point);
-			}
 		}
 
 		$os = trim($os);
