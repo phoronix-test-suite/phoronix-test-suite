@@ -13,6 +13,8 @@
 			<h1>OpenBenchmarking Options</h1>
 			<h3>AnonymousUsageReporting: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/OpenBenchmarking/AnonymousUsageReporting" /></span></h3>
 			<p>If this option is set to <em>TRUE</em>, anonymous usage information and statistics, like the tests that are run and their length of run, will be reported to <a href="http://www.openbenchmarking.org/">OpenBenchmarking.org</a> for analytical reasons. All submitted information is kept anonymous. For more information on the anonymous usage reporting, read the Phoronix Test Suite documentation.</p>
+			<h3>IndexCacheTTL: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/OpenBenchmarking/IndexCacheTTL" /></span></h3>
+			<p>The time to live for OpenBenchmarking.org index caches. This is an integer representing the number of days before an index cache should be automatically refreshed from OpenBenchmarking.org. The default value is <em>3</em> while setting the value to <em>0</em> will disable automatic refreshing of caches (caches can be manually updated at anytime using the respective command).</p>
 			<h3>AlwaysUploadSystemLogs: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/OpenBenchmarking/AlwaysUploadSystemLogs" /></span></h3>
 			<p>If this option is set to <em>TRUE</em>, the system logs (i.e. dmesg, lspci, lsusb, Xorg.0.log) will always be uploaded to OpenBenchmarking.org when uploading your test results. Otherwise the user is prompted whether to attach the system logs with their results.</p>
 

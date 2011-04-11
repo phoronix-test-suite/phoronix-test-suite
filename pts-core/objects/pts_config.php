@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2010, Phoronix Media
-	Copyright (C) 2008 - 2010, Michael Larabel
+	Copyright (C) 2008 - 2011, Phoronix Media
+	Copyright (C) 2008 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -41,6 +41,7 @@ class pts_config
 		$config->addXmlNodeFromReader(P_OPTION_USAGE_REPORTING, $read_config);
 		$config->addXmlNodeFromReader(P_OPTION_SOFTWARE_REPORTING, $read_config);
 		$config->addXmlNodeFromReader(P_OPTION_HARDWARE_REPORTING, $read_config);
+		$config->addXmlNodeFromReader(P_OPTION_OB_CACHE_TTL, $read_config);
 		$config->addXmlNodeFromReader(P_OPTION_ALWAYS_UPLOAD_SYSTEM_LOGS, $read_config);
 
 		$config->addXmlNodeFromReader(P_OPTION_DEFAULT_BROWSER, $read_config);

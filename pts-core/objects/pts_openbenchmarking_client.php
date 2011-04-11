@@ -250,9 +250,23 @@ class pts_openbenchmarking_client
 				$repo_index = json_decode(file_get_contents($index_file), true);
 				$generated_time = $repo_index['main']['generated'];
 
-				// TODO: time zone differences causes this not to be exact if not on server time
 				// Refreshing the indexes once every few days should be suffice
-				if($generated_time > (time() - (86400 * 3)) && $force_refresh == false)
+				// Refresh approximately every three days by default
+				$index_cache_ttl = 3;
+				if(PTS_IS_CLIENT && ($config_ttl = pts_config::read_user_config(P_OPTION_OB_CACHE_TTL)))
+				{
+					if($config_ttl === 0)
+					{
+						// if the value is 0, only rely upon manual refreshes
+						continue;
+					}
+					else if(is_numeric($config_ttl) && $config_ttl >= 1)
+					{
+						$index_cache_ttl = $config_ttl;
+					}
+				}
+
+				if($generated_time > (time() - (86400 * $index_cache_ttl)) && $force_refresh == false)
 				{
 					// The index is new enough
 					continue;
