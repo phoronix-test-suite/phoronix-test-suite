@@ -7,6 +7,7 @@ Phoronix Test Suite (Git)
 - pts-core: Fix for PhoroScript interpreter not running some test profiles under Wine
 - pts-core: OpenSUSE external dependencies updates
 - pts-core: Drop support for importing module-settings from pre-PTS-2.6 installations
+- pts-core: Support OS/distro-specific user-config XML templates
 - phodevi: Don't confuse GCC with LLVM when sym-linking one to the other
 - phodevi: Better detection of Nouveau GPU thermal sensors
 - phodevi: Support monitoring the CPU temperature from the k10temp hwmon module

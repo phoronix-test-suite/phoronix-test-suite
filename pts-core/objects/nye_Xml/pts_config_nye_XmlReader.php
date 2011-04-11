@@ -32,6 +32,10 @@ class pts_config_nye_XmlReader extends nye_XmlReader
 		{
 			$file = PTS_USER_PATH . 'user-config.xml';
 		}
+		else if(PTS_IS_CLIENT && is_file(($t = PTS_CORE_STATIC_PATH . phodevi::read_property('system', 'vendor-identifier') . '-user-config-template.xml')))
+		{
+			$file = $t;
+		}
 		else if(is_file(PTS_CORE_STATIC_PATH . 'user-config-template.xml'))
 		{
 			$file = PTS_CORE_STATIC_PATH . 'user-config-template.xml';
