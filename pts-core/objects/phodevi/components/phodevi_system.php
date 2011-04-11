@@ -52,7 +52,7 @@ class phodevi_system extends phodevi_device_interface
 				$property = new phodevi_device_property('sw_wine_version', PHODEVI_STAND_CACHE);
 				break;
 			case 'display-server':
-				$property = new phodevi_device_property('sw_display_server', PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property('sw_display_server', PHODEVI_STAND_CACHE);
 				break;
 			case 'display-driver':
 				$property = new phodevi_device_property(array('sw_display_driver', false), PHODEVI_STAND_CACHE);
@@ -735,7 +735,7 @@ class phodevi_system extends phodevi_device_interface
 
 		if(empty($display_driver))
 		{
-			if(phodevi::is_ati_graphics())
+			if(phodevi::is_ati_graphics() && phodevi::is_linux())
 			{
 				$display_driver = 'fglrx';
 			}
