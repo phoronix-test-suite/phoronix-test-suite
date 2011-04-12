@@ -275,7 +275,7 @@ class pts_test_run_manager
 
 		if(($env = pts_client::read_env('TEST_RESULTS_NAME')))
 		{
-			$custom_title = $enc;
+			$custom_title = $env;
 			$proposed_name = self::clean_save_name($env);
 			//echo 'Saving Results To: ' . $proposed_name . PHP_EOL;
 		}
