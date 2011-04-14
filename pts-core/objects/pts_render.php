@@ -442,20 +442,24 @@ class pts_render
 
 			if($is_tracking)
 			{
-				if(($x = strpos($date, ' + ')) !== false)
+				// First do a dirty SHA1 hash check
+				if(strlen($date) != 40 || strpos($date, ' ') !== false)
 				{
-					$date = substr($date, 0, $x);
+					if(($x = strpos($date, ' + ')) !== false)
+					{
+						$date = substr($date, 0, $x);
+					}
+
+					// Check to see if only numeric changes are being made
+					$date = str_replace('s', null, pts_strings::remove_from_string($date, pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DASH | pts_strings::CHAR_DECIMAL));
+
+					if($prev_date != null && $date != $prev_date)
+					{
+						$is_tracking = false;
+					}
+
+					$prev_date = $date;
 				}
-
-				// Check to see if only numeric changes are being made
-				$date = str_replace('s', null, pts_strings::remove_from_string($date, pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DASH | pts_strings::CHAR_DECIMAL));
-
-				if($prev_date != null && $date != $prev_date)
-				{
-					$is_tracking = false;
-				}
-
-				$prev_date = $date;
 			}
 		}
 
