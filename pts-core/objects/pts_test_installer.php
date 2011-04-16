@@ -121,7 +121,36 @@ class pts_test_installer
 			echo "\n";
 		}
 	}
-	protected static function download_test_files(&$test_install_request)
+	public static function only_download_test_files(&$test_profiles, $to_dir = null)
+	{
+		// Setup the install manager and add the tests
+		$test_install_manager = new pts_test_install_manager();
+
+		foreach($test_profiles as &$test_profile)
+		{
+			if($test_install_manager->add_test_profile($test_profile) != false)
+			{
+				pts_client::$display->generic_sub_heading('To Download Files: ' . $test_profile->get_identifier());
+			}
+		}
+
+		if($test_install_manager->tests_to_install_count() == 0)
+		{
+			return true;
+		}
+
+		// Let the pts_test_install_manager make some estimations, etc...
+		$test_install_manager->generate_download_file_lists();
+		$test_install_manager->check_download_caches_for_files();
+
+		// Begin the download process
+		while(($test_install_request = $test_install_manager->next_in_install_queue()) != false)
+		{
+			//pts_client::$display->test_install_start($test_install_request->test_profile->get_identifier());
+			pts_test_installer::download_test_files($test_install_request, $to_dir);
+		}
+	}
+	protected static function download_test_files(&$test_install_request, $download_location = false)
 	{
 		// Download needed files for a test
 		if($test_install_request->get_download_object_count() == 0)
@@ -130,9 +159,14 @@ class pts_test_installer
 		}
 
 		$identifier = $test_install_request->test_profile->get_identifier();
-		$download_location = $test_install_request->test_profile->get_install_dir();
 		pts_client::$display->test_install_downloads($test_install_request);
 
+		if($download_location == false)
+		{
+			$download_location = $test_install_request->test_profile->get_install_dir();
+		}
+
+		pts_file_io::mkdir($download_location);
 		$module_pass = array($identifier, $test_install_request->get_download_objects());
 		pts_module_manager::module_process("__pre_test_download", $module_pass);
 

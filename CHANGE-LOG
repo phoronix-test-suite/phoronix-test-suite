@@ -14,6 +14,7 @@ Phoronix Test Suite (Git)
 - pts-core: Fix Debian package generation
 - pts-core: A text-driven interactive mode
 - pts-core: Support caching OpenBenchmarking.org files in /var/cache/phoronix-test-suite/openbenchmarking.org/
+- pts-core: Add download-test-files command back to the Phoronix Test Suite
 - phodevi: Don't confuse GCC with LLVM when sym-linking one to the other
 - phodevi: Better detection of Nouveau GPU thermal sensors
 - phodevi: Support monitoring the CPU temperature from the k10temp hwmon module
