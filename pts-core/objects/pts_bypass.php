@@ -20,38 +20,44 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+pts_bypass::init();
+
 class pts_bypass
 {
 	private static $os_identifier_sha1 = null;
 	private static $flags = 0;
 
 	// Flags
-	private const is_live_cd = (1 << 1);
-	private const no_network_communication = (1 << 2);
-	private const no_openbenchmarking_reporting = (1 << 3);
+	private static $is_live_cd;
+	private static $no_network_communication;
+	private static $no_openbenchmarking_reporting;
 
 	public static function init()
 	{
 		self::$os_identifier_sha1 = sha1(phodevi::read_property('system', 'vendor-identifier'));
 
+		self::$is_live_cd = (1 << 1);
+		self::$no_network_communication = (1 << 2);
+		self::$no_openbenchmarking_reporting = (1 << 3);
+
 		switch(self::$os_identifier_sha1)
 		{
 			case 'b28d6a7148b34595c5b397dfcf5b12ac7932b3d': // Moscow 2011-04 client
-				self::$flags = self::is_live_cd | self::no_network_communication | self::no_openbenchmarking_reporting;
+				self::$flags = self::$is_live_cd | self::$no_network_communication | self::$no_openbenchmarking_reporting;
 				break;
 		}
 	}
 	public static function is_live_cd()
 	{
-		return self::$flags & self::is_live_cd;
+		return self::$flags & self::$is_live_cd;
 	}
 	public static function no_network_communication()
 	{
-		return self::$flags & self::no_network_communication;
+		return self::$flags & self::$no_network_communication;
 	}
 	public static function no_openbenchmarking_reporting()
 	{
-		return self::$flags & self::no_openbenchmarking_reporting;
+		return self::$flags & self::$no_openbenchmarking_reporting;
 	}
 
 

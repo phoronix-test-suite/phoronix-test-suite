@@ -250,7 +250,6 @@ class pts_client
 		}
 
 		phodevi::initial_setup();
-		pts_bypass::init();
 
 		//define('IS_PTS_LIVE', phodevi::read_property('system', 'username') == 'ptslive');
 	}
@@ -512,7 +511,7 @@ class pts_client
 				echo wordwrap($user_agreement, 65);
 				$agree = pts_user_io::prompt_bool_input('Do you agree to these terms and wish to proceed', true);
 
-				if(pts_bypass:no_openbenchmarking_reporting())
+				if(pts_bypass::no_openbenchmarking_reporting())
 				{
 					$usage_reporting = false;
 					$hwsw_reporting = false;
