@@ -81,6 +81,41 @@ class pts_file_io
 			@rmdir($object);
 		}
 	}
+	function copy($source, $dest)
+	{
+		$success = false;
+
+		if(is_file($source))
+		{
+			$success = copy($source, $dest);
+		}
+		else if(is_link($source))
+		{
+			$success = copy(readlink($source), $dest);
+		}
+		else if(is_dir($source))
+		{
+			if(!is_dir($dest))
+			{
+				mkdir($dest);
+			}
+
+			$dir = dir($source);
+			while(($entry = $dir->read()) !== false)
+			{
+				if ($entry == '.' || $entry == '..')
+				{
+					continue;
+				}
+				self::copy($source . '/' . $entry, $dest . '/' . $entry);
+			}
+
+			$dir->close();
+			$success = true;
+		}
+
+		return $success;
+	}
 }
 
 ?>

@@ -35,7 +35,7 @@ class build_suite implements pts_option_interface
 		$suite_description = pts_user_io::prompt_user_input("Enter suite description");
 
 		$possible_suites = pts_openbenchmarking_client::available_suites();
-		$possible_tests =pts_openbenchmarking_client::available_tests();
+		$possible_tests = pts_openbenchmarking_client::available_tests();
 
 		$suite_writer = new pts_test_suite_writer();
 		$suite_writer->add_suite_information($suite_name, "1.0.0", $suite_maintainer, $suite_test_type, $suite_description);
