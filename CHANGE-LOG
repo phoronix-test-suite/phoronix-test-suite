@@ -11,6 +11,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add IndexCacheTTL OpenBenchmarking.org option for controlling how many days before refreshing index caches
 - pts-core: Fix for using TEST_RESULTS_NAME environmental variable
 - pts-core: Consider Git SHA1 hash tags as being part of a tracker, just not dates
+- pts-core: Fix Debian package generation
 - phodevi: Don't confuse GCC with LLVM when sym-linking one to the other
 - phodevi: Better detection of Nouveau GPU thermal sensors
 - phodevi: Support monitoring the CPU temperature from the k10temp hwmon module

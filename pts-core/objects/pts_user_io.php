@@ -117,15 +117,17 @@ class pts_user_io
 
 		if($option_count == 1)
 		{
-			return $return_index ? 0 : array_pop($options_r);
+			return $return_index ? array_pop(array_keys($options_r)) : array_pop($options_r);
 		}
 
 		do
 		{
 			echo PHP_EOL;
-			for($i = 0; $i < $option_count; $i++)
+			$key_index = array();
+			foreach(array_keys($options_r) as $i => $key)
 			{
-				echo ($i + 1) . ': ' . str_repeat(' ', strlen($option_count) - strlen(($i + 1))) . $options_r[$i] . PHP_EOL;
+				$key_index[$i] = $key;
+				echo ($i + 1) . ': ' . str_repeat(' ', strlen($option_count) - strlen(($i + 1))) . $options_r[$key] . PHP_EOL;
 			}
 			echo PHP_EOL . $user_string . ': ';
 			$select_choice = pts_user_io::read_user_input();
@@ -139,7 +141,7 @@ class pts_user_io
 				$multi_select = array();
 				foreach($multi_choice as $choice)
 				{
-					if(in_array($choice, $options_r) || isset($options_r[($choice - 1)]) && ($return_index || $choice = $options_r[($choice - 1)]) != null)
+					if(in_array($choice, $options_r) || isset($key_index[($choice - 1)]) && (($return_index && $choice = $key_index[($choice - 1)]) || $choice = $options_r[$key_index[($choice - 1)]]) != null)
 					{
 						array_push($multi_select, $choice);
 					}
@@ -153,7 +155,7 @@ class pts_user_io
 				}
 			}
 		}
-		while(!$multi_select_pass && !(in_array($select_choice, $options_r) || isset($options_r[($select_choice - 1)]) && ($return_index || $select_choice = $options_r[($select_choice - 1)]) != null));
+		while(!$multi_select_pass && !(in_array($select_choice, $options_r) || isset($options_r[$key_index[($select_choice - 1)]]) && (($return_index && $select_choice = $key_index[($select_choice - 1)]) || $select_choice = $options_r[$key_index[($select_choice - 1)]]) != null));
 
 		return $select_choice;
 	}
