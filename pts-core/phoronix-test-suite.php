@@ -153,6 +153,11 @@ if(!QUICK_START)
 		define('NO_NETWORK_COMMUNICATION', true);
 		echo PHP_EOL . 'Network Communication Is Disabled For Your User Configuration.' . PHP_EOL . PHP_EOL;
 	}
+	else if(pts_bypass::no_network_communication() == true)
+	{
+		define('NO_NETWORK_COMMUNICATION', true);
+		//echo PHP_EOL . 'Network Communication Is Disabled For Your User Configuration.' . PHP_EOL . PHP_EOL;
+	}
 	/* else
 	{
 		$server_response = pts_network::http_get_contents('http://www.phoronix-test-suite.com/PTS', false, false);

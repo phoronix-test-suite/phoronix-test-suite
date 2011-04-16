@@ -250,6 +250,7 @@ class pts_client
 		}
 
 		phodevi::initial_setup();
+		pts_bypass::init();
 
 		//define('IS_PTS_LIVE', phodevi::read_property('system', 'username') == 'ptslive');
 	}
@@ -510,8 +511,17 @@ class pts_client
 				pts_client::$display->generic_heading('User Agreement');
 				echo wordwrap($user_agreement, 65);
 				$agree = pts_user_io::prompt_bool_input('Do you agree to these terms and wish to proceed', true);
-				$usage_reporting = $agree ? pts_user_io::prompt_bool_input('Enable anonymous usage / statistics reporting', true) : -1;
-				$hwsw_reporting = $agree ? pts_user_io::prompt_bool_input('Enable anonymous statistical reporting of installed software / hardware', true) : -1;
+
+				if(pts_bypass:no_openbenchmarking_reporting())
+				{
+					$usage_reporting = false;
+					$hwsw_reporting = false;
+				}
+				else
+				{
+					$usage_reporting = $agree ? pts_user_io::prompt_bool_input('Enable anonymous usage / statistics reporting', true) : -1;
+					$hwsw_reporting = $agree ? pts_user_io::prompt_bool_input('Enable anonymous statistical reporting of installed software / hardware', true) : -1;
+				}
 			}
 
 			if($agree)

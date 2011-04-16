@@ -28,8 +28,7 @@ class interactive implements pts_option_interface
 	public static function run($r)
 	{
 		pts_client::$display->generic_heading('Interactive Benchmarking');
-		// bd1022e368accf93823d9d3716fa5da3 is the K Moscow client
-		$reboot_on_exit = phodevi::read_property('system', 'vendor-identifier') == 'bd1022e368accf93823d9d3716fa5da3' && pts_client::user_home_directory() == '/root/';
+		$reboot_on_exit = pts_bypass::is_live_cd() && pts_client::user_home_directory() == '/root/';
 
 		do
 		{
