@@ -279,9 +279,9 @@ class pts_openbenchmarking_client
 			{
 				file_put_contents($index_file, $server_index);
 			}
-			else if(is_file('/var/cache/phoronix-test-suite/openbenchmarking.org/' . $repo_name))
+			else if(is_file('/var/cache/phoronix-test-suite/openbenchmarking.org/' . $repo_name . '.index'))
 			{
-				copy('/var/cache/phoronix-test-suite/openbenchmarking.org/' . $repo_name, $index_file);
+				copy('/var/cache/phoronix-test-suite/openbenchmarking.org/' . $repo_name . '.index', $index_file);
 			}
 		}
 	}

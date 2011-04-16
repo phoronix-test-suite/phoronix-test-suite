@@ -205,7 +205,7 @@ class pts_test_installer
 
 					if(is_file($download_cache_file))
 					{
-						if(pts_config::read_bool_config(P_OPTION_CACHE_SYMLINK, "FALSE"))
+						if(pts_config::read_bool_config(P_OPTION_CACHE_SYMLINK, "FALSE") || pts_bypass::is_live_cd())
 						{
 							// P_OPTION_CACHE_SYMLINK is disabled by default
 							pts_client::$display->test_install_download_file("LINK_FROM_CACHE", $download_package);
