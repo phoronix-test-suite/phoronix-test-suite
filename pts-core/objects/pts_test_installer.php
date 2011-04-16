@@ -28,7 +28,7 @@ class pts_test_installer
 		pts_client::init_display_mode();
 
 		// Create a lock
-		$lock_path = pts_client::temporary_directory() . "/phoronix-test-suite.active";
+		$lock_path = pts_client::temporary_directory() . '/phoronix-test-suite.active';
 		pts_client::create_lock($lock_path);
 
 		pts_client::set_test_flags($test_flags);
@@ -42,7 +42,7 @@ class pts_test_installer
 		// Install tests
 		if(!is_writable(PTS_TEST_INSTALL_PATH))
 		{
-			echo "\nERROR: The test installation directory is not writable.\nLocation: " . PTS_TEST_INSTALL_PATH . "\n";
+			echo PHP_EOL . 'ERROR: The test installation directory is not writable.' . PHP_EOL . 'Location: ' . PTS_TEST_INSTALL_PATH . PHP_EOL;
 			return false;
 		}
 
@@ -55,7 +55,7 @@ class pts_test_installer
 	{
 		if(count($test_profiles) == 0)
 		{
-			pts_client::$display->generic_error("No Tests Found For Installation.");
+			pts_client::$display->generic_error('No Tests Found For Installation.');
 			return false;
 		}
 
@@ -68,17 +68,17 @@ class pts_test_installer
 			{
 				if($test_profile->is_supported(false) == false)
 				{
-					pts_client::$display->generic_sub_heading("Not Supported: " . $test_profile->get_identifier());
+					pts_client::$display->generic_sub_heading('Not Supported: ' . $test_profile->get_identifier());
 				}
 				else if($test_install_manager->add_test_profile($test_profile) != false)
 				{
-					pts_client::$display->generic_sub_heading("To Install: " . $test_profile->get_identifier());
+					pts_client::$display->generic_sub_heading('To Install: ' . $test_profile->get_identifier());
 				}
 			}
 			else
 			{
 				$installed_test = new pts_installed_test($test_profile);
-				pts_client::$display->generic_sub_heading("Installed: " . $test_profile->get_identifier());
+				pts_client::$display->generic_sub_heading('Installed: ' . $test_profile->get_identifier());
 			}
 		}
 
@@ -88,13 +88,13 @@ class pts_test_installer
 		}
 
 		// Let the pts_test_install_manager make some estimations, etc...
-		echo "\n";
+		echo PHP_EOL;
 		$test_install_manager->generate_download_file_lists();
 		$test_install_manager->check_download_caches_for_files();
 		pts_client::$display->test_install_process($test_install_manager);
 
 		// Begin the install process
-		pts_module_manager::module_process("__pre_install_process", $test_install_manager);
+		pts_module_manager::module_process('__pre_install_process', $test_install_manager);
 		$failed_installs = array();
 		$test_profiles = array();
 		while(($test_install_request = $test_install_manager->next_in_install_queue()) != false)
@@ -111,14 +111,14 @@ class pts_test_installer
 				array_push($test_profiles, $test_install_request->test_profile);
 			}
 		}
-		pts_module_manager::module_process("__post_install_process", $test_install_manager);
+		pts_module_manager::module_process('__post_install_process', $test_install_manager);
 		pts_download_speed_manager::save_data();
 
 		if(count($failed_installs) > 0)
 		{
-			echo "\nThe following tests failed to install:\n\n";
+			echo PHP_EOL . 'The following tests failed to install:' . PHP_EOL . PHP_EOL;
 			echo pts_user_io::display_text_list($failed_installs, "\t- ");
-			echo "\n";
+			echo PHP_EOL;
 		}
 	}
 	public static function only_download_test_files(&$test_profiles, $to_dir = null)
@@ -168,24 +168,24 @@ class pts_test_installer
 
 		pts_file_io::mkdir($download_location);
 		$module_pass = array($identifier, $test_install_request->get_download_objects());
-		pts_module_manager::module_process("__pre_test_download", $module_pass);
+		pts_module_manager::module_process('__pre_test_download', $module_pass);
 
 		foreach($test_install_request->get_download_objects() as $download_package)
 		{
 			$package_filename = $download_package->get_filename();
 			$package_md5 = $download_package->get_md5();
 			$download_destination = $download_location . $package_filename;
-			$download_destination_temp = $download_destination . ".pts";
+			$download_destination_temp = $download_destination . '.pts';
 
 			switch($download_package->get_download_location_type())
 			{
-				case "IN_DESTINATION_DIR":
-					pts_client::$display->test_install_download_file("FILE_FOUND", $download_package);
+				case 'IN_DESTINATION_DIR':
+					pts_client::$display->test_install_download_file('FILE_FOUND', $download_package);
 					continue;
-				case "REMOTE_DOWNLOAD_CACHE":
+				case 'REMOTE_DOWNLOAD_CACHE':
 					foreach($download_package->get_download_location_path() as $remote_download_cache_file)
 					{
-						pts_client::$display->test_install_download_file("DOWNLOAD_FROM_CACHE", $download_package);
+						pts_client::$display->test_install_download_file('DOWNLOAD_FROM_CACHE', $download_package);
 						pts_network::download_file($remote_download_cache_file, $download_destination_temp);
 
 						if(pts_test_installer::validate_md5_download_file($download_destination_temp, $package_md5))
@@ -195,20 +195,20 @@ class pts_test_installer
 						}
 						else
 						{
-							pts_client::$display->test_install_error("The check-sum of the downloaded file failed.");
+							pts_client::$display->test_install_error('The check-sum of the downloaded file failed.');
 							pts_file_io::unlink($download_destination_temp);
 						}
 					}
-				case "MAIN_DOWNLOAD_CACHE":
-				case "LOCAL_DOWNLOAD_CACHE":
+				case 'MAIN_DOWNLOAD_CACHE':
+				case 'LOCAL_DOWNLOAD_CACHE':
 					$download_cache_file = pts_arrays::last_element($download_package->get_download_location_path());
 
 					if(is_file($download_cache_file))
 					{
-						if(pts_config::read_bool_config(P_OPTION_CACHE_SYMLINK, "FALSE") || pts_bypass::is_live_cd())
+						if(pts_config::read_bool_config(P_OPTION_CACHE_SYMLINK, 'FALSE') || pts_bypass::is_live_cd())
 						{
 							// P_OPTION_CACHE_SYMLINK is disabled by default
-							pts_client::$display->test_install_download_file("LINK_FROM_CACHE", $download_package);
+							pts_client::$display->test_install_download_file('LINK_FROM_CACHE', $download_package);
 							symlink($download_cache_file, $download_destination);
 						}
 						else
@@ -219,9 +219,9 @@ class pts_test_installer
 
 							do
 							{
-								pts_client::$display->test_install_download_file("COPY_FROM_CACHE", $download_package);
+								pts_client::$display->test_install_download_file('COPY_FROM_CACHE', $download_package);
 								// $context = stream_context_create();
-								// stream_context_set_params($context, array("notification" => array("pts_network", "stream_status_callback")));
+								// stream_context_set_params($context, array('notification' => array('pts_network', 'stream_status_callback')));
 								// TODO: get the context working correctly for this copy()
 								copy($download_cache_file, $download_destination_temp);
 								pts_client::$display->test_install_progress_completed();
@@ -234,7 +234,7 @@ class pts_test_installer
 								}
 								else
 								{
-									pts_client::$display->test_install_error("The check-sum of the copied file failed.");
+									pts_client::$display->test_install_error('The check-sum of the copied file failed.');
 									pts_file_io::unlink($download_destination_temp);
 								}
 
@@ -258,13 +258,13 @@ class pts_test_installer
 
 						do
 						{
-							if((pts_c::$test_flags ^ pts_c::batch_mode) && (pts_c::$test_flags ^ pts_c::auto_mode) && pts_config::read_bool_config(P_OPTION_PROMPT_DOWNLOADLOC, "FALSE") && count($package_urls) > 1)
+							if((pts_c::$test_flags ^ pts_c::batch_mode) && (pts_c::$test_flags ^ pts_c::auto_mode) && pts_config::read_bool_config(P_OPTION_PROMPT_DOWNLOADLOC, 'FALSE') && count($package_urls) > 1)
 							{
 								// Prompt user to select mirror
 								do
 								{
-									echo "\nAvailable Download Mirrors:\n\n";
-									$url = pts_user_io::prompt_text_menu("Select Your Preferred Mirror", $package_urls, false);
+									echo PHP_EOL . 'Available Download Mirrors:' . PHP_EOL . PHP_EOL;
+									$url = pts_user_io::prompt_text_menu('Select Your Preferred Mirror', $package_urls, false);
 								}
 								while(pts_strings::is_url($url) == false);
 							}
@@ -279,7 +279,7 @@ class pts_test_installer
 								while(pts_strings::is_url($url) == false && !empty($package_urls));
 							}
 
-							pts_client::$display->test_install_download_file("DOWNLOAD", $download_package);
+							pts_client::$display->test_install_download_file('DOWNLOAD', $download_package);
 							$download_start = time();
 							pts_network::download_file($url, $download_destination_temp);
 							$download_end = time();
@@ -302,12 +302,12 @@ class pts_test_installer
 								// Download failed
 								if(is_file($download_destination_temp) && filesize($download_destination_temp) > 0)
 								{
-									pts_client::$display->test_install_error("MD5 Failed: " . $url);
+									pts_client::$display->test_install_error('MD5 Failed: ' . $url);
 									$md5_failed = true;
 								}
 								else
 								{
-									pts_client::$display->test_install_error("Download Failed: " . $url);
+									pts_client::$display->test_install_error('Download Failed: ' . $url);
 									$md5_failed = false;
 								}
 
@@ -322,7 +322,7 @@ class pts_test_installer
 								{
 									if(count($package_urls) > 0 && $package_urls[0] != null)
 									{
-										pts_client::$display->test_install_error("Attempting to re-download from another mirror.");
+										pts_client::$display->test_install_error('Attempting to re-download from another mirror.');
 										$try_again = true;
 									}
 									else
@@ -333,7 +333,7 @@ class pts_test_installer
 										}
 										else if($md5_failed)
 										{
-											$try_again = pts_user_io::prompt_bool_input("Try downloading the file again", true, "TRY_DOWNLOAD_AGAIN");
+											$try_again = pts_user_io::prompt_bool_input('Try downloading the file again', true, 'TRY_DOWNLOAD_AGAIN');
 										}
 										else
 										{
@@ -349,18 +349,18 @@ class pts_test_installer
 
 								if(!$try_again)
 								{
-									//pts_client::$display->test_install_error("Download of Needed Test Dependencies Failed!");
+									//pts_client::$display->test_install_error('Download of Needed Test Dependencies Failed!');
 									return false;
 								}
 							}
 						}
 						while(!is_file($download_destination));
 				}
-				pts_module_manager::module_process("__interim_test_download", $module_pass);
+				pts_module_manager::module_process('__interim_test_download', $module_pass);
 			}
 		}
 
-		pts_module_manager::module_process("__post_test_download", $identifier);
+		pts_module_manager::module_process('__post_test_download', $identifier);
 
 		return true;
 	}
@@ -375,11 +375,11 @@ class pts_test_installer
 
 		if(ceil(disk_free_space($test_install_directory) / 1048576) < ($test_install_request->test_profile->get_download_size() + 128))
 		{
-			pts_client::$display->test_install_error("There is not enough space at " . $test_install_directory . " for the test files.");
+			pts_client::$display->test_install_error('There is not enough space at ' . $test_install_directory . ' for the test files.');
 		}
 		else if(ceil(disk_free_space($test_install_directory) / 1048576) < ($test_install_request->test_profile->get_environment_size(false) + 128))
 		{
-			pts_client::$display->test_install_error("There is not enough space at " . $test_install_directory . " for this test.");
+			pts_client::$display->test_install_error('There is not enough space at ' . $test_install_directory . ' for this test.');
 		}
 		else
 		{
@@ -391,13 +391,13 @@ class pts_test_installer
 
 			if($download_test_files == false)
 			{
-				pts_client::$display->test_install_error("Downloading of needed test files failed.");
+				pts_client::$display->test_install_error('Downloading of needed test files failed.');
 				return false;
 			}
 
 			if($test_install_request->test_profile->get_file_installer() != false)
 			{
-				pts_module_manager::module_process("__pre_test_install", $identifier);
+				pts_module_manager::module_process('__pre_test_install', $identifier);
 				pts_client::$display->test_install_begin($test_install_request);
 
 				$pre_install_message = $test_install_request->test_profile->get_pre_install_message();
@@ -412,56 +412,56 @@ class pts_test_installer
 
 						if(empty($install_agreement))
 						{
-							pts_client::$display->test_install_error("The user agreement could not be found. Test installation aborted.");
+							pts_client::$display->test_install_error('The user agreement could not be found. Test installation aborted.');
 							return false;
 						}
 					}
 
-					echo $install_agreement . "\n";
-					$user_agrees = pts_user_io::prompt_bool_input("Do you agree to these terms", false, "INSTALL_AGREEMENT");
+					echo $install_agreement . PHP_EOL;
+					$user_agrees = pts_user_io::prompt_bool_input('Do you agree to these terms', false, 'INSTALL_AGREEMENT');
 
 					if(!$user_agrees)
 					{
-						pts_client::$display->test_install_error("User agreement failed; this test will not be installed.");
+						pts_client::$display->test_install_error('User agreement failed; this test will not be installed.');
 						return false;
 					}
 				}
 
 				pts_user_io::display_interrupt_message($pre_install_message);
 				$install_time_length_start = time();
-				$install_log = pts_tests::call_test_script($test_install_request->test_profile, "install", null, $test_install_directory, null, false);
+				$install_log = pts_tests::call_test_script($test_install_request->test_profile, 'install', null, $test_install_directory, null, false);
 				$install_time_length = time() - $install_time_length_start;
 				pts_user_io::display_interrupt_message($post_install_message);
 
 				if(!empty($install_log))
 				{
-					file_put_contents($test_install_directory . "install.log", $install_log);
-					pts_file_io::unlink($test_install_directory . "install-failed.log");
+					file_put_contents($test_install_directory . 'install.log', $install_log);
+					pts_file_io::unlink($test_install_directory . 'install-failed.log');
 					pts_client::$display->test_install_output($install_log);
 				}
 
-				if(is_file($test_install_directory . "install-exit-status"))
+				if(is_file($test_install_directory . 'install-exit-status'))
 				{
 					// If the installer writes its exit status to ~/install-exit-status, if it's non-zero the install failed
-					$install_exit_status = pts_file_io::file_get_contents($test_install_directory . "install-exit-status");
-					unlink($test_install_directory . "install-exit-status");
+					$install_exit_status = pts_file_io::file_get_contents($test_install_directory . 'install-exit-status');
+					unlink($test_install_directory . 'install-exit-status');
 
 					if($install_exit_status != 0 && phodevi::is_bsd() == false && phodevi::is_windows() == false)
 					{
 						// TODO: perhaps better way to handle this than to remove pts-install.xml
-						pts_file_io::unlink($test_install_directory . "pts-install.xml");
-						copy($test_install_directory . "install.log", $test_install_directory . "install-failed.log");
+						pts_file_io::unlink($test_install_directory . 'pts-install.xml');
+						copy($test_install_directory . 'install.log', $test_install_directory . 'install-failed.log');
 						pts_test_installer::setup_test_install_directory($test_install_request, true); // Remove installed files from the bunked installation
-						pts_client::$display->test_install_error("The installer exited with a non-zero exit status.");
-						pts_client::$display->test_install_error("Installation Log: " . $test_install_directory . "install-failed.log\n");
+						pts_client::$display->test_install_error('The installer exited with a non-zero exit status.');
+						pts_client::$display->test_install_error('Installation Log: ' . $test_install_directory . 'install-failed.log' . PHP_EOL);
 						return false;
 					}
 				}
 
-				pts_module_manager::module_process("__post_test_install", $identifier);
+				pts_module_manager::module_process('__post_test_install', $identifier);
 				$installed = true;
 
-				if(pts_config::read_bool_config(P_OPTION_TEST_REMOVEDOWNLOADS, "FALSE"))
+				if(pts_config::read_bool_config(P_OPTION_TEST_REMOVEDOWNLOADS, 'FALSE'))
 				{
 					// Remove original downloaded files
 					foreach($test_install_request->get_download_objects() as $download_object)
@@ -472,12 +472,12 @@ class pts_test_installer
 			}
 			else
 			{
-				pts_client::$display->test_install_error("No installation script found.");
+				pts_client::$display->test_install_error('No installation script found.');
 				$installed = true;
 			}
 
 			// Additional validation checks?
-			$custom_validated_output = pts_tests::call_test_script($test_install_request->test_profile, "validate-install", "\nValidating Installation...\n", $test_install_directory, null, false);
+			$custom_validated_output = pts_tests::call_test_script($test_install_request->test_profile, 'validate-install', PHP_EOL . 'Validating Installation...' . PHP_EOL, $test_install_directory, null, false);
 			if(!empty($custom_validated_output) && !pts_strings::string_bool($custom_validated_output))
 			{
 				$installed = false;
@@ -489,7 +489,7 @@ class pts_test_installer
 			}
 		}
 
-		echo "\n";
+		echo PHP_EOL;
 
 		return $installed;
 	}
@@ -499,7 +499,7 @@ class pts_test_installer
 
 		if(is_file($filename))
 		{
-			if(pts_client::read_env("NO_MD5_CHECKS") != false)
+			if(pts_client::read_env('NO_MD5_CHECKS') != false)
 			{
 				$valid = true;
 			}
@@ -511,7 +511,7 @@ class pts_test_installer
 				{
 					foreach(pts_strings::trim_explode("\n", pts_network::http_get_contents($verified_md5)) as $md5_line)
 					{
-						list($md5, $file) = explode(" ", $md5_line);
+						list($md5, $file) = explode(' ', $md5_line);
 
 						if($md5_file == $filename)
 						{
@@ -545,7 +545,7 @@ class pts_test_installer
 		if($remove_old_files)
 		{
 			// Remove any (old) files that were installed
-			$ignore_files = array("pts-install.xml", "install-failed.log");
+			$ignore_files = array('pts-install.xml', 'install-failed.log');
 			foreach($test_install_request->get_download_objects() as $download_object)
 			{
 				array_push($ignore_files, $download_object->get_filename());
@@ -554,7 +554,7 @@ class pts_test_installer
 			pts_file_io::delete($test_install_request->test_profile->get_install_dir(), $ignore_files);
 		}
 
-		pts_file_io::symlink(pts_client::user_home_directory() . ".Xauthority", $test_install_request->test_profile->get_install_dir() . ".Xauthority");
+		pts_file_io::symlink(pts_client::user_home_directory() . '.Xauthority', $test_install_request->test_profile->get_install_dir() . '.Xauthority');
 	}
 }
 
