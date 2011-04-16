@@ -28,6 +28,9 @@ class interactive implements pts_option_interface
 	public static function run($r)
 	{
 		pts_client::$display->generic_heading('Interactive Benchmarking');
+		// bd1022e368accf93823d9d3716fa5da3 is the K Moscow client
+		$reboot_on_exit = phodevi::read_property('system', 'vendor-identifier') == 'bd1022e368accf93823d9d3716fa5da3' && pts_client::user_home_directory() == '/root/';
+
 		do
 		{
 			$options = array(
@@ -42,22 +45,28 @@ class interactive implements pts_option_interface
 				$options['BACKUP_RESULTS_TO_USB'] = 'Backup Results To Media Storage';
 			}
 
-			$options['EXIT'] = 'Exit';
+			$options['EXIT'] = ($reboot_on_exit ? 'Exit & Reboot' : 'Exit');
 			$response = pts_user_io::prompt_text_menu('Select Task', $options, false, true);
 
 			switch($response)
 			{
 				case 'RUN_TEST':
 					$possible_tests = pts_openbenchmarking_client::available_tests();
-					$test_to_run = pts_user_io::prompt_text_menu('Select Test', $possible_tests);
-					pts_test_installer::standard_install($test_to_run);
-					pts_test_run_manager::standard_run($test_to_run);
+					$tests_to_run = pts_user_io::prompt_text_menu('Select Test', $possible_tests, true);
+					foreach(explode(',', $tests_to_run) as $test_to_run)
+					{
+						pts_test_installer::standard_install($test_to_run);
+						pts_test_run_manager::standard_run($test_to_run);
+					}
 					break;
 				case 'RUN_SUITE':
 					$possible_suites = pts_openbenchmarking_client::available_suites();
-					$suite_to_run = pts_user_io::prompt_text_menu('Select Suite', $possible_suites);
-					pts_test_installer::standard_install($suite_to_run);
-					pts_test_run_manager::standard_run($suite_to_run);
+					$suites_to_run = pts_user_io::prompt_text_menu('Select Suite', $possible_suites, true);
+					foreach(explode(',', $suites_to_run) as $suite_to_run)
+					{
+						pts_test_installer::standard_install($suite_to_run);
+						pts_test_run_manager::standard_run($suite_to_run);
+					}
 					break;
 				case 'SHOW_INFO':
 					pts_client::$display->generic_heading('System Software / Hardware Information');
@@ -89,6 +98,11 @@ class interactive implements pts_option_interface
 			echo PHP_EOL . PHP_EOL;
 		}
 		while($response != 'EXIT');
+
+		if($reboot_on_exit)
+		{
+			exec('reboot');
+		}
 	}
 }
 

@@ -155,7 +155,7 @@ class pts_user_io
 				}
 			}
 		}
-		while(!$multi_select_pass && !(in_array($select_choice, $options_r) || isset($options_r[$key_index[($select_choice - 1)]]) && (($return_index && $select_choice = $key_index[($select_choice - 1)]) || $select_choice = $options_r[$key_index[($select_choice - 1)]]) != null));
+		while($multi_select_pass == false && !(in_array($select_choice, $options_r) || isset($options_r[$key_index[($select_choice - 1)]]) && (($return_index && ($select_choice = $key_index[($select_choice - 1)]) !== false) || $select_choice = $options_r[$key_index[($select_choice - 1)]]) != null));
 
 		return $select_choice;
 	}
