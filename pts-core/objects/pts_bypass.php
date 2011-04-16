@@ -42,7 +42,7 @@ class pts_bypass
 
 		switch(self::$os_identifier_sha1)
 		{
-			case 'b28d6a7148b34595c5b397dfcf5b12ac7932b3d': // Moscow 2011-04 client
+			case 'b28d6a7148b34595c5b397dfcf5b12ac7932b3dc': // Moscow 2011-04 client
 				self::$flags = self::$is_live_cd | self::$no_network_communication | self::$no_openbenchmarking_reporting;
 				break;
 		}

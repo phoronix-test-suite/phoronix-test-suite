@@ -279,6 +279,10 @@ class pts_openbenchmarking_client
 			{
 				file_put_contents($index_file, $server_index);
 			}
+			else if(is_file('/var/cache/phoronix-test-suite/openbenchmarking.org/' . $repo_name))
+			{
+				copy('/var/cache/phoronix-test-suite/openbenchmarking.org/' . $repo_name, $index_file);
+			}
 		}
 	}
 	public static function download_test_profile($qualified_identifier, $hash_check = null)
@@ -294,11 +298,15 @@ class pts_openbenchmarking_client
 		{
 			$test_profile = pts_openbenchmarking::make_openbenchmarking_request('download_test', array('i' => $qualified_identifier));
 
-			if($hash_check == null || $hash_check == sha1($test_profile))
+			if($test_profile != null && ($hash_check == null || $hash_check == sha1($test_profile)))
 			{
 				// save it
 				file_put_contents($file, $test_profile);
 				$hash_check = null;
+			}
+			else if(is_file('/var/cache/phoronix-test-suite/openbenchmarking.org/' . $qualified_identifier . '.zip') && ($hash_check == null || sha1_file('/var/cache/phoronix-test-suite/openbenchmarking.org/' . $qualified_identifier . '.zip') == $hash_check))
+			{
+				copy('/var/cache/phoronix-test-suite/openbenchmarking.org/' . $qualified_identifier . '.zip', $file);
 			}
 		}
 
@@ -323,13 +331,17 @@ class pts_openbenchmarking_client
 
 		if(!is_file($file))
 		{
-			$test_profile = pts_openbenchmarking::make_openbenchmarking_request('download_suite', array('i' => $qualified_identifier));
+			$test_suite = pts_openbenchmarking::make_openbenchmarking_request('download_suite', array('i' => $qualified_identifier));
 
-			if($hash_check == null || $hash_check == sha1($test_profile))
+			if($test_suite != null && ($hash_check == null || $hash_check == sha1($test_suite)))
 			{
 				// save it
-				file_put_contents($file, $test_profile);
+				file_put_contents($file, $test_suite);
 				$hash_check = null;
+			}
+			else if(is_file('/var/cache/phoronix-test-suite/openbenchmarking.org/' . $qualified_identifier . '.zip') && ($hash_check == null || sha1_file('/var/cache/phoronix-test-suite/openbenchmarking.org/' . $qualified_identifier . '.zip') == $hash_check))
+			{
+				copy('/var/cache/phoronix-test-suite/openbenchmarking.org/' . $qualified_identifier . '.zip', $file);
 			}
 		}
 
