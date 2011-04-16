@@ -34,7 +34,7 @@ class install_dependencies implements pts_option_interface
 	public static function run($r)
 	{
 		$test_profiles = pts_types::identifiers_to_test_profile_objects($r, true, true);
-		pts_client::set_test_flags(pts_c::auto_mode);
+		//pts_client::set_test_flags(pts_c::auto_mode);
 		pts_external_dependencies::install_dependencies($test_profiles);
 	}
 }

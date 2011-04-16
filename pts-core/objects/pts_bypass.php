@@ -31,6 +31,7 @@ class pts_bypass
 	private static $is_live_cd;
 	private static $no_network_communication;
 	private static $no_openbenchmarking_reporting;
+	private static $user_agreement_skip;
 
 	public static function init()
 	{
@@ -39,11 +40,12 @@ class pts_bypass
 		self::$is_live_cd = (1 << 1);
 		self::$no_network_communication = (1 << 2);
 		self::$no_openbenchmarking_reporting = (1 << 3);
+		self::$user_agreement_skip = (1 << 4);
 
 		switch(self::$os_identifier_sha1)
 		{
 			case 'b28d6a7148b34595c5b397dfcf5b12ac7932b3dc': // Moscow 2011-04 client
-				self::$flags = self::$is_live_cd | self::$no_network_communication | self::$no_openbenchmarking_reporting;
+				self::$flags = self::$is_live_cd | self::$no_network_communication | self::$no_openbenchmarking_reporting | self::$user_agreement_skip;
 				break;
 		}
 	}
@@ -59,8 +61,10 @@ class pts_bypass
 	{
 		return self::$flags & self::$no_openbenchmarking_reporting;
 	}
-
-
+	public static function user_agreement_skip()
+	{
+		return self::$flags & self::$user_agreement_skip;
+	}
 }
 
 ?>
