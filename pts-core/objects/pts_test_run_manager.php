@@ -505,10 +505,10 @@ class pts_test_run_manager
 		{
 			if(count($this->failed_tests_to_run) > 0)
 			{
-				echo "\n\nThe following tests failed to properly run:\n\n";
+				echo PHP_EOL . PHP_EOL . 'The following tests failed to properly run:' . PHP_EOL . PHP_EOL;
 				foreach($this->failed_tests_to_run as &$run_request)
 				{
-					echo "\t- " . $run_request->test_profile->get_identifier() . ($run_request->get_arguments_description() != null ? ": " . $run_request->get_arguments_description() : null) . "\n";
+					echo "\t- " . $run_request->test_profile->get_identifier() . ($run_request->get_arguments_description() != null ? ': ' . $run_request->get_arguments_description() : null) . PHP_EOL;
 				}
 				echo PHP_EOL;
 			}
@@ -700,7 +700,7 @@ class pts_test_run_manager
 			pts_module_manager::module_process('__event_results_process', $this);
 			pts_client::save_result_file($this->result_file_writer, $this->get_file_name());
 			pts_module_manager::module_process('__event_results_saved', $this);
-			//echo "\nResults Saved To: " . PTS_SAVE_RESULTS_PATH . $this->get_file_name() . "/composite.xml\n";
+			//echo PHP_EOL . 'Results Saved To: ; . PTS_SAVE_RESULTS_PATH . $this->get_file_name() . ;/composite.xml' . PHP_EOL;
 			pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . '/index.html');
 
 			if($this->allow_sharing_of_results && !defined('NO_NETWORK_COMMUNICATION'))

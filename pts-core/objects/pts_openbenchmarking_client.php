@@ -43,7 +43,7 @@ class pts_openbenchmarking_client
 		// Validate the XML
 		if($result_file->xml_parser->validate() == false)
 		{
-			echo "\nErrors occurred parsing the result file XML.\n";
+			echo PHP_EOL . 'Errors occurred parsing the result file XML.' . PHP_EOL;
 			return false;
 		}
 
@@ -136,18 +136,18 @@ class pts_openbenchmarking_client
 
 		if(!is_array($json_response))
 		{
-			echo "\nERROR: Unhandled Exception\n";
+			echo PHP_EOL . 'ERROR: Unhandled Exception' . PHP_EOL;
 			return false;
 		}
 
 		if(isset($json_response['openbenchmarking']['upload']['error']))
 		{
-			echo "\nERROR: " . $json_response['openbenchmarking']['upload']['error'] . "\n";
+			echo PHP_EOL . 'ERROR: ' . $json_response['openbenchmarking']['upload']['error'] . PHP_EOL;
 		}
 		if(isset($json_response['openbenchmarking']['upload']['url']))
 		{
-			echo "\nResults Uploaded To: " . $json_response['openbenchmarking']['upload']['url'] . "\n";
-			pts_module_manager::module_process("__event_openbenchmarking_upload", $json_response);
+			echo PHP_EOL . 'Results Uploaded To: ' . $json_response['openbenchmarking']['upload']['url'] . PHP_EOL;
+			pts_module_manager::module_process('__event_openbenchmarking_upload', $json_response);
 		}
 		//$json['openbenchmarking']['upload']['id']
 
@@ -210,7 +210,7 @@ class pts_openbenchmarking_client
 
 			if($test_profile->allow_results_sharing() == false)
 			{
-				echo PHP_EOL . $result_object->test_profile->get_identifier() . " does not allow test results to be uploaded.\n\n";
+				echo PHP_EOL . $result_object->test_profile->get_identifier() . ' does not allow test results to be uploaded.' . PHP_EOL . PHP_EOL;
 				return false;
 			}
 		}
@@ -435,7 +435,7 @@ class pts_openbenchmarking_client
 				{
 					if(in_array($version, $repo_index['tests'][$test]['versions']))
 					{
-						pts_openbenchmarking_client::download_test_profile("$repo/$test-$version", $repo_index['tests'][$test]['package_hash']);
+						pts_openbenchmarking_client::download_test_profile($repo . '/' . $test . '-' . $version, $repo_index['tests'][$test]['package_hash']);
 						return $repo . '/' . $test . ($bind_version ? '-' . $version : null);
 					}
 				}
@@ -443,7 +443,7 @@ class pts_openbenchmarking_client
 				{
 					// Assume to use the latest version
 					$version = array_shift($repo_index['tests'][$test]['versions']);
-					pts_openbenchmarking_client::download_test_profile("$repo/$test-$version", $repo_index['tests'][$test]['package_hash']);
+					pts_openbenchmarking_client::download_test_profile($repo . '/' . $test . '-' . $version, $repo_index['tests'][$test]['package_hash']);
 					return $repo . '/' . $test . ($bind_version ? '-' . $version : null);
 				}
 			}
@@ -456,7 +456,7 @@ class pts_openbenchmarking_client
 				{
 					if(in_array($version, $repo_index['suites'][$test]['versions']))
 					{
-						pts_openbenchmarking_client::download_test_suite("$repo/$test-$version", $repo_index['suites'][$test]['package_hash']);
+						pts_openbenchmarking_client::download_test_suite($repo . '/' . $test . '-' . $version, $repo_index['suites'][$test]['package_hash']);
 						return $repo . '/' . $test . ($bind_version ? '-' . $version : null);
 					}
 				}
@@ -464,7 +464,7 @@ class pts_openbenchmarking_client
 				{
 					// Assume to use the latest version
 					$version = array_shift($repo_index['suites'][$test]['versions']);
-					pts_openbenchmarking_client::download_test_suite("$repo/$test-$version", $repo_index['suites'][$test]['package_hash']);
+					pts_openbenchmarking_client::download_test_suite($repo . '/' . $test . '-' . $version, $repo_index['suites'][$test]['package_hash']);
 					return $repo . '/' . $test . ($bind_version ? '-' . $version : null);
 				}
 			}
