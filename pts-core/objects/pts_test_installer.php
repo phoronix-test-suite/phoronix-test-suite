@@ -64,7 +64,7 @@ class pts_test_installer
 
 		foreach($test_profiles as &$test_profile)
 		{
-			if($test_profile == null)
+			if($test_profile->get_identifier() == null)
 			{
 				continue;
 			}
