@@ -120,44 +120,43 @@ class pts_user_io
 			return $return_index ? array_pop(array_keys($options_r)) : array_pop($options_r);
 		}
 
+		$select = array();
+
 		do
 		{
 			echo PHP_EOL;
 			$key_index = array();
 			foreach(array_keys($options_r) as $i => $key)
 			{
-				$key_index[$i] = $key;
+				$key_index[($i + 1)] = $key;
 				echo ($i + 1) . ': ' . str_repeat(' ', strlen($option_count) - strlen(($i + 1))) . $options_r[$key] . PHP_EOL;
 			}
 			echo PHP_EOL . $user_string . ': ';
 			$select_choice = pts_user_io::read_user_input();
 
-			// Validate possible multi-select
-			$multi_choice = pts_strings::comma_explode($select_choice);
-			$multi_select_pass = false;
-
-			if($allow_multi_select && count($multi_choice) > 1)
+			foreach(($allow_multi_select ? pts_strings::comma_explode($select_choice) : array($select_choice)) as $choice)
 			{
-				$multi_select = array();
-				foreach($multi_choice as $choice)
+				if(in_array($choice, $options_r))
 				{
-					if(in_array($choice, $options_r) || isset($key_index[($choice - 1)]) && (($return_index && $choice = $key_index[($choice - 1)]) || $choice = $options_r[$key_index[($choice - 1)]]) != null)
-					{
-						array_push($multi_select, $choice);
-					}
+					array_push($select, array_search($choice, $options_r));
 				}
-
-				if(count($multi_select) > 0)
+				else if(isset($key_index[$choice]))
 				{
-					$multi_select_pass = true;
-					$select_choice = implode(',', $multi_select);
-				
+					array_push($select, $key_index[$choice]);
 				}
 			}
 		}
-		while($multi_select_pass == false && !(in_array($select_choice, $options_r) || isset($options_r[$key_index[($select_choice - 1)]]) && (($return_index && ($select_choice = $key_index[($select_choice - 1)]) !== false) || $select_choice = $options_r[$key_index[($select_choice - 1)]]) != null));
+		while(!isset($select[0]));
 
-		return $select_choice;
+		if($return_index == false)
+		{
+			foreach($select as &$index)
+			{
+				$index = $options_r[$index];
+			}
+		}
+
+		return implode(',', $select);
 	}
 }
 

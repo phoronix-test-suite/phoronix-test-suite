@@ -130,19 +130,20 @@ class pts_external_dependencies
 				echo PHP_EOL . 'There are dependencies still missing from the system:' . PHP_EOL;
 				echo pts_user_io::display_text_list(self::generic_names_to_titles($generic_packages_needed));
 
-				$actions = array('Ignore missing dependencies and proceed with installation.',
-					'Skip installing the tests with missing dependencies.',
-					'Re-attempt to install the missing dependencies.',
-					'Quit the current Phoronix Test Suite process.'
+				$actions = array(
+					'IGNORE' => 'Ignore missing dependencies and proceed with installation.',
+					'SKIP_TESTS_WITH_MISSING_DEPS' => 'Skip installing the tests with missing dependencies.',
+					'REATTEMPT_DEP_INSTALL' => 'Re-attempt to install the missing dependencies.',
+					'QUIT' => 'Quit the current Phoronix Test Suite process.'
 					);
 
 				$selected_action = pts_user_io::prompt_text_menu('Missing dependencies action', $actions, false, true);
 
 				switch($selected_action)
 				{
-					case 1:
+					case 'IGNORE':
 						break;
-					case 2:
+					case 'SKIP_TESTS_WITH_MISSING_DEPS':
 						// Unset the tests that have dependencies still missing
 						foreach($generic_packages_needed as $pkg)
 						{
@@ -158,10 +159,10 @@ class pts_external_dependencies
 							} 
 						}
 						break;
-					case 3:
+					case 'REATTEMPT_DEP_INSTALL':
 						self::install_packages_on_system($dependencies_to_install);
 						break;
-					case 4:
+					case 'QUIT':
 						exit(0);
 				}
 			}

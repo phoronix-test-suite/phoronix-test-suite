@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2009, Phoronix Media
-	Copyright (C) 2008 - 2009, Michael Larabel
+	Copyright (C) 2008 - 2011, Phoronix Media
+	Copyright (C) 2008 - 2011, Michael Larabel
 	pts_test_option: An object used for storing a test option and its possible values
 
 	This program is free software; you can redistribute it and/or modify
@@ -154,9 +154,9 @@ class pts_test_option
 	{
 		$valid = false;
 
-		if($select_pos > 0 && $select_pos <= $this->option_count())
+		if($select_pos >= 0 && $select_pos < $this->option_count())
 		{
-			$valid = $select_pos - 1;
+			$valid = $select_pos;
 		}
 		else if(in_array($select_pos, $this->get_all_option_names()))
 		{
@@ -178,20 +178,27 @@ class pts_test_option
 	{
 		$return_keys = array();
 
-		foreach(pts_strings::comma_explode($input) as $input_choice)
+		if($input === '0')
 		{
-			if($input_choice == ($this->option_count() + 1) || $input_choice == 'Test All Options')
+			array_push($return_keys, 0);
+		}
+		else
+		{
+			foreach(pts_strings::comma_explode($input) as $input_choice)
 			{
-				// Add all options
-				foreach(array_keys($this->options) as $i)
+				if($input_choice == $this->option_count() || $input_choice == 'Test All Options')
 				{
-					array_push($return_keys, $i);
+					// Add all options
+					foreach(array_keys($this->options) as $i)
+					{
+						array_push($return_keys, $i);
+					}
+					break;
 				}
-				break;
-			}
-			else if(($c = $this->is_valid_select_choice($input_choice)) !== false)
-			{
-				array_push($return_keys, $c);
+				else if(($c = $this->is_valid_select_choice($input_choice)) !== false)
+				{
+					array_push($return_keys, $c);
+				}
 			}
 		}
 

@@ -1117,7 +1117,7 @@ class pts_test_run_manager
 				{
 					foreach(array_keys($virtual_suite_tests) as $i)
 					{
-						if(!in_array(($i + 1), $run_index))
+						if(!in_array($i, $run_index))
 						{
 							unset($virtual_suite_tests[$i]);
 						}
