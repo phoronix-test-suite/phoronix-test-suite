@@ -64,6 +64,11 @@ class pts_test_installer
 
 		foreach($test_profiles as &$test_profile)
 		{
+			if($test_profile == null)
+			{
+				continue;
+			}
+
 			if($test_profile->needs_updated_install())
 			{
 				if($test_profile->is_supported(false) == false)
