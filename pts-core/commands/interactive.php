@@ -38,6 +38,7 @@ class interactive implements pts_option_interface
 				'RUN_SUITE' => 'Run A Suite [A Collection Of Tests]',
 				'SHOW_INFO' => 'Show System Hardware / Software Information',
 				'SHOW_SENSORS' => 'Show Auto-Detected System Sensors',
+				'SET_RUN_COUNT' => 'Set Test Run Repetition'
 				);
 
 			if(count(pts_client::saved_test_results()) > 0 && count(pts_file_io::glob('/media/*')) > 0)
@@ -85,6 +86,10 @@ class interactive implements pts_option_interface
 					{
 						echo phodevi::sensor_name($sensor) . ': ' . phodevi::read_sensor($sensor) . ' ' . phodevi::read_sensor_unit($sensor) . PHP_EOL;
 					}
+					break;
+				case 'SET_RUN_COUNT':
+					$run_count = pts_user_io::prompt_user_input('Set the minimum number of times each test should repeat', false);
+					putenv('FORCE_MIN_TIMES_TO_RUN=' . $run_count);
 					break;
 				case 'BACKUP_RESULTS_TO_USB':
 					pts_client::$display->generic_heading('Backing Up Test Results');
