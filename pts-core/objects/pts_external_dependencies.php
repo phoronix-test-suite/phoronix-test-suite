@@ -83,7 +83,7 @@ class pts_external_dependencies
 		// There were some dependencies not supported on this OS or are missing from the distro's XML file
 		if(count($required_test_dependencies) > 0 && count($dependencies_to_install) == 0)
 		{
-			$xml_parser = new nye_XmlReader(PTS_EXDEP_PATH . "xml/generic-packages.xml");
+			$xml_parser = new nye_XmlReader(PTS_EXDEP_PATH . 'xml/generic-packages.xml');
 			$package_name = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ExternalDependencies/Package/GenericName');
 			$title = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ExternalDependencies/Package/Title');
 			$possible_packages = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ExternalDependencies/Package/PossibleNames');
@@ -96,13 +96,13 @@ class pts_external_dependencies
 			{
 				if(isset($required_test_dependencies[$package_name[$i]]))
 				{
-					array_push($to_report, $title[$i] . "\nPossible Package Names: " . $possible_packages[$i]);
+					array_push($to_report, $title[$i] . PHP_EOL . 'Possible Package Names: ' . $possible_packages[$i]);
 				}
 			}
 
 			if(count($to_report) > 0)
 			{
-				echo "\nSome additional dependencies are required, but they could not be installed automatically for your operating system.\nBelow are the software packages that must be installed.\n\n";
+				echo PHP_EOL . 'Some additional dependencies are required, but they could not be installed automatically for your operating system.\nBelow are the software packages that must be installed.' . PHP_EOL . PHP_EOL;
 
 				foreach($to_report as $report)
 				{
@@ -111,7 +111,7 @@ class pts_external_dependencies
 
 				if((pts_c::$test_flags ^ pts_c::batch_mode) && (pts_c::$test_flags ^ pts_c::auto_mode))
 				{
-					echo "The above dependencies should be installed before proceeding. Press any key when you're ready to continue.";
+					echo 'The above dependencies should be installed before proceeding. Press any key when you\'re ready to continue.';
 					pts_user_io::read_user_input();
 				}
 			}
@@ -127,7 +127,7 @@ class pts_external_dependencies
 
 			if(count($generic_packages_needed) > 0)
 			{
-				echo "\nThere are dependencies still missing from the system:\n";
+				echo PHP_EOL . 'There are dependencies still missing from the system:' . PHP_EOL;
 				echo pts_user_io::display_text_list(self::generic_names_to_titles($generic_packages_needed));
 
 				$actions = array('Ignore missing dependencies and proceed with installation.',
@@ -136,7 +136,7 @@ class pts_external_dependencies
 					'Quit the current Phoronix Test Suite process.'
 					);
 
-				$selected_action = pts_user_io::prompt_text_menu("Missing dependencies action", $actions, false, true);
+				$selected_action = pts_user_io::prompt_text_menu('Missing dependencies action', $actions, false, true);
 
 				switch($selected_action)
 				{
@@ -171,7 +171,7 @@ class pts_external_dependencies
 	}
 	public static function all_dependency_names()
 	{
-		$xml_parser = new nye_XmlReader(PTS_EXDEP_PATH . "xml/generic-packages.xml");
+		$xml_parser = new nye_XmlReader(PTS_EXDEP_PATH . 'xml/generic-packages.xml');
 
 		return $xml_parser->getXMLArrayValues('PhoronixTestSuite/ExternalDependencies/Package/GenericName');
 	}
@@ -214,7 +214,7 @@ class pts_external_dependencies
 	}
 	private static function check_dependencies_missing_from_system(&$required_test_dependencies, &$generic_names_of_packages_needed = false)
 	{
-		$distro_vendor_xml = PTS_EXDEP_PATH . "xml/" . self::vendor_identifier("package-list") . "-packages.xml";
+		$distro_vendor_xml = PTS_EXDEP_PATH . 'xml/' . self::vendor_identifier('package-list') . '-packages.xml';
 		$needed_os_packages = array();
 
 		if(is_file($distro_vendor_xml))
@@ -224,7 +224,7 @@ class pts_external_dependencies
 			$distro_package = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ExternalDependencies/Package/PackageName');
 			$file_check = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ExternalDependencies/Package/FileCheck');
 			$arch_specific = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ExternalDependencies/Package/ArchitectureSpecific');
-			$kernel_architecture = phodevi::read_property("system", "kernel-architecture");
+			$kernel_architecture = phodevi::read_property('system', 'kernel-architecture');
 
 			foreach(array_keys($generic_package) as $i)
 			{
@@ -257,7 +257,7 @@ class pts_external_dependencies
 
 		if(count($required_test_dependencies) > 0)
 		{
-			$xml_parser = new nye_XmlReader(PTS_EXDEP_PATH . "xml/generic-packages.xml");
+			$xml_parser = new nye_XmlReader(PTS_EXDEP_PATH . 'xml/generic-packages.xml');
 			$generic_package_name = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ExternalDependencies/Package/GenericName');
 			$generic_file_check = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ExternalDependencies/Package/FileCheck');
 
@@ -295,7 +295,7 @@ class pts_external_dependencies
 		foreach($file_arr as $file)
 		{
 			$file_is_there = false;
-			$file = explode("OR", $file);
+			$file = explode('OR', $file);
 
 			for($i = 0; $i < count($file) && $file_is_there == false; $i++)
 			{
@@ -314,7 +314,7 @@ class pts_external_dependencies
 	private static function install_packages_on_system($os_packages_to_install)
 	{
 		// Do the actual installing process of packages using the distribution's package management system
-		$vendor_install_file = PTS_EXDEP_PATH . "scripts/install-" . self::vendor_identifier("installer") . "-packages.sh";
+		$vendor_install_file = PTS_EXDEP_PATH . 'scripts/install-' . self::vendor_identifier('installer') . '-packages.sh';
 
 		// Rebuild the array index since some OS package XML tags provide multiple package names in a single string
 		$os_packages_to_install = explode(' ', implode(' ', $os_packages_to_install));
@@ -322,31 +322,31 @@ class pts_external_dependencies
 		if(is_file($vendor_install_file))
 		{
 			// hook into pts_client::$display here if it's desired
-			echo "\nThe following dependencies are needed and will be installed: \n\n";
+			echo PHP_EOL . 'The following dependencies are needed and will be installed: ' . PHP_EOL . PHP_EOL;
 			echo pts_user_io::display_text_list($os_packages_to_install);
-			echo "\nThis process may take several minutes.\n";
+			echo PHP_EOL . 'This process may take several minutes.' . PHP_EOL;
 
-			echo shell_exec("sh " . $vendor_install_file . ' ' . implode(' ', $os_packages_to_install));
+			echo shell_exec('sh ' . $vendor_install_file . ' ' . implode(' ', $os_packages_to_install));
 		}
 		else
 		{
 			if(phodevi::is_macosx() == false)
 			{
-				echo "Distribution install script not found!";
+				echo 'Distribution install script not found!';
 			}
 		}
 	}
 	private static function vendor_identifier($type)
 	{
-		$os_vendor = phodevi::read_property("system", "vendor-identifier");
+		$os_vendor = phodevi::read_property('system', 'vendor-identifier');
 
 		switch($type)
 		{
-			case "package-list":
-				$file_check_success = is_file(PTS_EXDEP_PATH . "xml/" . $os_vendor . "-packages.xml");
+			case 'package-list':
+				$file_check_success = is_file(PTS_EXDEP_PATH . 'xml/' . $os_vendor . '-packages.xml');
 				break;
-			case "installer":
-				$file_check_success = is_file(PTS_EXDEP_PATH . "scripts/install-" . $os_vendor . "-packages.sh");
+			case 'installer':
+				$file_check_success = is_file(PTS_EXDEP_PATH . 'scripts/install-' . $os_vendor . '-packages.sh');
 				break;
 			default:
 				return false;
@@ -354,12 +354,13 @@ class pts_external_dependencies
 
 		if($file_check_success == false)
 		{
-			$vendors_alias_file = pts_file_io::file_get_contents(PTS_CORE_STATIC_PATH . "lists/software-vendor-aliases.list");
+			$os_vendor = false;
+			$vendors_alias_file = pts_file_io::file_get_contents(PTS_CORE_STATIC_PATH . 'lists/software-vendor-aliases.list');
 			$vendors_r = explode("\n", $vendors_alias_file);
 
 			foreach($vendors_r as &$vendor)
 			{
-				$vendor_r = pts_strings::trim_explode("=", $vendor);
+				$vendor_r = pts_strings::trim_explode('=', $vendor);
 
 				if(count($vendor_r) == 2)
 				{
@@ -370,6 +371,12 @@ class pts_external_dependencies
 					}
 				}
 			}
+
+			if($os_vendor == false && is_file('/etc/debian_version'))
+			{
+				// A simple last fall-back
+				$os_vendor = 'ubuntu';
+			}
 		}
 
 		return $os_vendor;
@@ -377,7 +384,7 @@ class pts_external_dependencies
 	private static function generic_names_to_titles($names)
 	{
 		$titles = array();
-		$xml_parser = new nye_XmlReader(PTS_EXDEP_PATH . "xml/generic-packages.xml");
+		$xml_parser = new nye_XmlReader(PTS_EXDEP_PATH . 'xml/generic-packages.xml');
 		$package_name = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ExternalDependencies/Package/GenericName');
 		$title = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ExternalDependencies/Package/Title');
 
