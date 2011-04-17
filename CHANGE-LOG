@@ -16,6 +16,7 @@ Phoronix Test Suite (Git)
 - pts-core: Support caching OpenBenchmarking.org files in /var/cache/phoronix-test-suite/openbenchmarking.org/
 - pts-core: Add download-test-files command back to the Phoronix Test Suite
 - pts-core: Fix install-dependencies command when not being run as root
+- pts-core: When network connection not available / disabled, only list test/suites where OpenBenchmarking.org cache exists
 - phodevi: Don't confuse GCC with LLVM when sym-linking one to the other
 - phodevi: Better detection of Nouveau GPU thermal sensors
 - phodevi: Support monitoring the CPU temperature from the k10temp hwmon module

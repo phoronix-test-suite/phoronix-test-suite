@@ -27,6 +27,7 @@ class interactive implements pts_option_interface
 
 	public static function run($r)
 	{
+		pts_openbenchmarking_client::refresh_repository_lists();
 		pts_client::$display->generic_heading('Interactive Benchmarking');
 		$reboot_on_exit = pts_bypass::is_live_cd() && pts_client::user_home_directory() == '/root/';
 
@@ -60,6 +61,12 @@ class interactive implements pts_option_interface
 					break;
 				case 'RUN_SUITE':
 					$possible_suites = pts_openbenchmarking_client::available_suites();
+
+					foreach(array_map('strtolower', pts_types::subsystem_targets()) as $subsystem)
+					{
+						array_push($possible_suites, 'pts/' . $subsystem);
+					}
+
 					$suites_to_run = pts_user_io::prompt_text_menu('Select Suite', $possible_suites, true);
 					foreach(explode(',', $suites_to_run) as $suite_to_run)
 					{

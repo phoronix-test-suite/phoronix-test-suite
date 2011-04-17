@@ -484,6 +484,15 @@ class pts_openbenchmarking_client
 			{
 				foreach(array_keys($repo_index['tests']) as $identifier)
 				{
+					if(defined('NO_NETWORK_COMMUNICATION') && NO_NETWORK_COMMUNICATION)
+					{
+						$version = array_shift($repo_index['tests'][$identifier]['versions']);
+						if(self::download_test_profile($repo . '/' . $identifier . '-' . $version) == false)
+						{
+							continue;
+						}
+					}
+
 					array_push($available_tests, $repo . '/' . $identifier);
 				}
 			}
@@ -503,6 +512,14 @@ class pts_openbenchmarking_client
 			{
 				foreach(array_keys($repo_index['suites']) as $identifier)
 				{
+					if(defined('NO_NETWORK_COMMUNICATION') && NO_NETWORK_COMMUNICATION)
+					{
+						$version = array_shift($repo_index['suites'][$identifier]['versions']);
+						if(self::download_test_suite($repo . '/' . $identifier . '-' . $version) == false)
+						{
+							continue;
+						}
+					}
 					array_push($available_suites, $repo . '/' . $identifier);
 				}
 			}
