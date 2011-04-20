@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 3.2 Milestone 1
+20 April 2011
 
 - pts-core: Add support for EXTERNAL_PHODEVI_CACHE to load an external Phodevi cache (e.g. within Wine)
 - pts-core: Add support for reporting Wine version to the software system layer
