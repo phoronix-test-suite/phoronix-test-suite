@@ -769,7 +769,7 @@ class pts_test_run_manager
 				$num_installed = 0;
 				foreach($run_object->get_contained_test_profiles() as $test_profile)
 				{
-					if($test_profile == null)
+					if($test_profile == null || $test_profile->get_identifier() == null || $test_profile->is_supported(false) == false)
 					{
 						continue;
 					}
