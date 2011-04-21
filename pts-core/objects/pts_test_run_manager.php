@@ -800,7 +800,7 @@ class pts_test_run_manager
 
 				foreach($run_object->get_contained_test_profiles() as $test_profile)
 				{
-					if($test_profile->get_identifier() == null || $test_profile->is_supported(false) == false)
+					if($test_profile == null || $test_profile->get_identifier() == null || $test_profile->is_supported(false) == false)
 					{
 						continue;
 					}
