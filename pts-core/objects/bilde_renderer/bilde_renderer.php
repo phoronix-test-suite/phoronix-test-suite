@@ -451,7 +451,7 @@ abstract class bilde_renderer
 		//return array_shift($colors);
 		static $cache = array();
 		static $color_shift = 0;
-		static $color_shift_size = 90;
+		static $color_shift_size = 120;
 
 		if(!isset($cache[$ns][$id]))
 		{
@@ -472,12 +472,12 @@ abstract class bilde_renderer
 				$color = bilde_renderer::color_hsl_to_hex($hsl);
 
 				$color_shift += $color_shift_size;
-				if($color_shift == 270)
+				if($color_shift == ($color_shift_size * 3))
 				{
 					$color_shift_size *= 0.8;
 					$colors[0] = self::color_shade($colors[0], 0.5, 1);
 				}
-				else if($color_shift > 600)
+				else if($color_shift > 630)
 				{
 					// We have already exhausted the cache pool once
 					array_shift($colors);
