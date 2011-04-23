@@ -314,7 +314,7 @@ class pts_Table extends pts_Graph
 				$index = substr($index, $c + 1);
 			}
 
-			$col = array_search($index, $this->columns);
+			$col = array_search(strval($index), $this->columns);
 
 			if($col === false)
 			{
