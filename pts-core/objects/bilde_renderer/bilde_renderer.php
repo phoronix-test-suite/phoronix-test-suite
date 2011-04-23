@@ -455,6 +455,11 @@ abstract class bilde_renderer
 
 		if(!isset($cache[$ns][$id]))
 		{
+			if(!isset($cache[$ns]))
+			{
+				$cache[$ns] = array();
+			}
+
 			do
 			{
 				if(empty($colors))
@@ -479,7 +484,7 @@ abstract class bilde_renderer
 					$color_shift = 0;
 				}
 			}
-			while(in_array($color, $cache));
+			while(in_array($color, $cache[$ns]));
 			$cache[$ns][$id] = $color;
 		}
 

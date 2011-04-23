@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- bilde_renderer: Fix for assigning the same color from a color name-space cache multiple times
+
 Phoronix Test Suite 3.2 Milestone 1
 20 April 2011
 
