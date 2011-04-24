@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2010, Phoronix Media
-	Copyright (C) 2008 - 2010, Michael Larabel
+	Copyright (C) 2008 - 2011, Phoronix Media
+	Copyright (C) 2008 - 2011, Michael Larabel
 	pts_LineGraph.php: The line graph object that extends pts_Graph.php.
 
 	This program is free software; you can redistribute it and/or modify
@@ -296,12 +296,13 @@ class pts_LineGraph extends pts_Graph
 				// removed '|| $this->graph_image->get_renderer() == 'SVG'' from line below
 				$from_top = $this->graph_top_start + 4;
 				$longest_string_width = 0;
+				$precision = max($column) > 999 ? 0 : 1;
 
 				foreach($column as &$write)
 				{
 					if(is_numeric($write))
 					{
-						$write = pts_math::set_precision($write, 1);
+						$write = pts_math::set_precision($write, $precision);
 					}
 
 					$this->graph_image->write_text_left($write, $this->graph_font, 6.5, $color_key, $from_left, $from_top, $from_left, $from_top);
