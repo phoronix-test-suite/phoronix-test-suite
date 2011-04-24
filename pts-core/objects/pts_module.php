@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2010, Phoronix Media
-	Copyright (C) 2008 - 2010, Michael Larabel
+	Copyright (C) 2008 - 2011, Phoronix Media
+	Copyright (C) 2008 - 2011, Michael Larabel
 	pts_module_interface.php: The generic Phoronix Test Suite module object that is extended by the specific modules/plug-ins
 
 	This program is free software; you can redistribute it and/or modify
@@ -248,7 +248,7 @@ class pts_module
 	}
 	public static function pts_timed_function($function, $time)
 	{
-		if(($time < 3 && $time != -1) || $time > 300)
+		if(($time < 0.5 && $time != -1) || $time > 300)
 		{
 			return;
 		}
