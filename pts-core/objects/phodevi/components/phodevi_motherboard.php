@@ -30,6 +30,9 @@ class phodevi_motherboard extends phodevi_device_interface
 			case 'identifier':
 				$property = new phodevi_device_property('motherboard_string', PHODEVI_SMART_CACHE);
 				break;
+			case 'serial-number':
+				$property = new phodevi_device_property('serial_number', PHODEVI_SMART_CACHE);
+				break;
 			case 'power-mode':
 				$property = new phodevi_device_property('power_mode', PHODEVI_SMART_CACHE);
 				break;
@@ -194,6 +197,17 @@ class phodevi_motherboard extends phodevi_device_interface
 		}
 
 		return $return_status;
+	}
+	public static function serial_number()
+	{
+		$serial = null;
+
+		if(phodevi::is_linux())
+		{
+			$serial = phodevi_linux_parser::read_dmidecode('system', 'System Information', 'Serial Number', true, array());
+		}
+
+		return $serial;
 	}
 	public static function motherboard_string()
 	{

@@ -30,6 +30,8 @@ class system_info implements pts_option_interface
 		pts_client::$display->generic_heading('System Information');
 		echo 'Hardware:' . PHP_EOL . phodevi::system_hardware(true) . PHP_EOL . PHP_EOL;
 		echo 'Software:' . PHP_EOL . phodevi::system_software(true) . PHP_EOL . PHP_EOL;
+
+		// echo phodevi::read_property('motherboard', 'serial-number');
 	}
 }
 

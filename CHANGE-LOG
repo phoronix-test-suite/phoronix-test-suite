@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - bilde_renderer: Fix for assigning the same color from a color name-space cache multiple times
+- phodevi: Add support for optionally reading motherboard/system serial number for Moscow
 
 Phoronix Test Suite 3.2 Milestone 1
 20 April 2011
