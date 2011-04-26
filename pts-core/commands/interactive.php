@@ -119,11 +119,9 @@ class interactive implements pts_option_interface
 					asort($supported_tests);
 
 					$tests_to_run = pts_user_io::prompt_text_menu('Select Test', $supported_tests, true, true);
-					foreach(explode(',', $tests_to_run) as $test_to_run)
-					{
-						pts_test_installer::standard_install($test_to_run);
-						pts_test_run_manager::standard_run($test_to_run);
-					}
+					$tests_to_run = explode(',', $tests_to_run);
+					pts_test_installer::standard_install($tests_to_run);
+					pts_test_run_manager::standard_run($tests_to_run);
 					break;
 				case 'RUN_SUITE':
 					$possible_suites = pts_openbenchmarking_client::available_suites();
