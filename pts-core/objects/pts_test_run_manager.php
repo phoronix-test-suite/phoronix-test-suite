@@ -478,7 +478,7 @@ class pts_test_run_manager
 				$this->test_run_pos = $i;
 				$test_flag = $this->process_test_run_request($i);
 
-				if(pts_config::read_bool_config(P_OPTION_REMOVE_TEST_INSTALL_ON_COMPLETION, 'FALSE'))
+				if(pts_config::read_bool_config(P_OPTION_REMOVE_TEST_INSTALL_ON_COMPLETION, 'FALSE') || pts_bypass::is_live_cd())
 				{
 					// Remove the installed test if it's no longer needed in this run queue
 					$this_test_profile_identifier = $this->get_test_to_run($this->test_run_pos)->test_profile->get_identifier();
