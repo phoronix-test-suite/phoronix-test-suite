@@ -53,7 +53,7 @@ class interactive implements pts_option_interface
 
 			putenv('TEST_RESULTS_NAME=\'' . str_replace(' ', null, $test_results_name) . '\'');
 			putenv('TEST_RESULTS_IDENTIFIER=\'' . $test_results_name . '\'');
-			putenv('TEST_RESULTS_DESCRIPTION=\'Tests using ' . phodevi::read_property('system', 'operating-system') . ' on ' . date('d F Y') . ' of ' . $test_results_name '.\'');
+			putenv('TEST_RESULTS_DESCRIPTION=\'Tests using ' . phodevi::read_property('system', 'operating-system') . ' on ' . date('d F Y') . ' of ' . $test_results_name . '.\'');
 		}
 
 		pts_openbenchmarking_client::refresh_repository_lists();
