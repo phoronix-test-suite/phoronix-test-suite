@@ -49,6 +49,10 @@ class pts_bypass
 				break;
 		}
 	}
+	public static function os_identifier_hash()
+	{
+		return self::$os_identifier_sha1;
+	}
 	public static function is_live_cd()
 	{
 		return self::$flags & self::$is_live_cd;
