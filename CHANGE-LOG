@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Interactive mode improvements
+- pts-core: Add TEST_RESULTS_DESCRIPTION environmental variable support
 - bilde_renderer: Fix for assigning the same color from a color name-space cache multiple times
 - phodevi: Add support for optionally reading motherboard/system serial number for Moscow
 

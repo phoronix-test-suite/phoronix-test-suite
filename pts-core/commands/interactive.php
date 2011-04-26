@@ -31,6 +31,7 @@ class interactive implements pts_option_interface
 
 		if($is_moscow)
 		{
+			// Auto mount?
 			$drives = pts_file_io::glob('/dev/sd*');
 			sort($drives);
 
@@ -41,6 +42,17 @@ class interactive implements pts_option_interface
 				mkdir('/media/pts-auto-mount');
 				exec('mount ' . $last_drive . ' /media/pts-auto-mount');
 			}
+
+			// Auto save results
+			$test_results_name = phodevi::read_property('motherboard', 'serial-number');
+
+			if($test_results_name == null)
+			{
+				$test_results_name = phodevi::read_name('motherboard');
+			}
+
+			putenv('TEST_RESULTS_NAME=\'' . str_replace(' ', null, $test_results_name) . '\'');
+			putenv('TEST_RESULTS_IDENTIFIER=\'' . $test_results_name . '\'');
 		}
 
 		pts_openbenchmarking_client::refresh_repository_lists();

@@ -902,13 +902,21 @@ class pts_test_run_manager
 						$this->run_description = 'N/A';
 					}
 
-					pts_client::$display->generic_heading('If you wish, enter a new description below to better describe this result set / system configuration under test.' . PHP_EOL . 'Press ENTER to proceed without changes.');
-					echo 'Current Description: ' . $this->run_description . PHP_EOL . PHP_EOL . 'New Description: ';
-					$new_test_description = pts_user_io::read_user_input();
-
-					if(!empty($new_test_description))
+					if(pts_client::read_env('TEST_RESULTS_DESCRIPTION') != null)
 					{
-						$this->run_description = $new_test_description;
+						$this->run_description = pts_client::read_env('TEST_RESULTS_DESCRIPTION');
+						echo 'Test Description: ' . $this->run_description . PHP_EOL;
+					}
+					else
+					{
+						pts_client::$display->generic_heading('If you wish, enter a new description below to better describe this result set / system configuration under test.' . PHP_EOL . 'Press ENTER to proceed without changes.');
+						echo 'Current Description: ' . $this->run_description . PHP_EOL . PHP_EOL . 'New Description: ';
+						$new_test_description = pts_user_io::read_user_input();
+
+						if(!empty($new_test_description))
+						{
+							$this->run_description = $new_test_description;
+						}
 					}
 				}
 			}
