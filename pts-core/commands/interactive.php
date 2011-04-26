@@ -58,6 +58,7 @@ class interactive implements pts_option_interface
 
 		pts_openbenchmarking_client::refresh_repository_lists();
 		pts_client::$display->generic_heading('Interactive Benchmarking');
+		echo 'System Hardware:' . PHP_EOL . phodevi::system_hardware(true) . (phodevi::read_property('motherboard', 'serial-number') != null ? PHP_EOL . 'System Serial Number: ' . phodevi::read_property('motherboard', 'serial-number') : null) . PHP_EOL . PHP_EOL . PHP_EOL;
 		$reboot_on_exit = pts_bypass::is_live_cd() && pts_client::user_home_directory() == '/root/';
 
 		do
