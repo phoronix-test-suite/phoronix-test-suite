@@ -477,6 +477,26 @@ class pts_test_run_manager
 			{
 				$this->test_run_pos = $i;
 				$test_flag = $this->process_test_run_request($i);
+
+				if(pts_config::read_bool_config(P_OPTION_REMOVE_TEST_INSTALL_ON_COMPLETION, 'FALSE'))
+				{
+					// Remove the installed test if it's no longer needed in this run queue
+					$this_test_profile_identifier = $this->get_test_to_run($this->test_run_pos)->test_profile->get_identifier();
+					$still_in_queue = false;
+
+					for($j = ($this->test_run_post + 1); $j < $tests_to_run_count && $still_in_queue == false; $j++)
+					{
+						if($this->get_test_to_run($j)->test_profile->get_identifier() == $this_test_profile_identifier)
+						{
+							$still_in_queue = true;
+						}
+					}
+
+					if($still_in_queue == false)
+					{
+						pts_client::remove_installed_test($this->get_test_to_run($this->test_run_pos)->test_profile);
+					}
+				}
 			}
 		}
 

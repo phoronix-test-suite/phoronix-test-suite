@@ -55,6 +55,10 @@
 			<Value>PhoronixTestSuite/Options/Testing/SaveInstallationLogs</Value>
 		</Define>
 		<Define>
+			<Name>P_OPTION_REMOVE_TEST_INSTALL_ON_COMPLETION</Name>
+			<Value>PhoronixTestSuite/Options/Testing/RemoveTestInstallOnCompletion</Value>
+		</Define>
+		<Define>
 			<Name>P_OPTION_RESULTS_DIRECTORY</Name>
 			<Value>PhoronixTestSuite/Options/Testing/ResultsDirectory</Value>
 		</Define>

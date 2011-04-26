@@ -4,6 +4,7 @@ Phoronix Test Suite (Git)
 
 - pts-core: Interactive mode improvements
 - pts-core: Add TEST_RESULTS_DESCRIPTION environmental variable support
+- pts-core: Add RemoveTestInstallOnCompletion to user-config.xml options
 - bilde_renderer: Fix for assigning the same color from a color name-space cache multiple times
 - phodevi: Add support for optionally reading motherboard/system serial number for Moscow
 
