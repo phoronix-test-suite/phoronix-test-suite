@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 3.2 Milestone 2
+28 April 2011
 
 - pts-core: Interactive mode improvements
 - pts-core: Add TEST_RESULTS_DESCRIPTION environmental variable support

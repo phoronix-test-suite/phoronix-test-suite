@@ -1,4 +1,4 @@
-.TH phoronix-test-suite 1  "www.phoronix-test-suite.com" "3.0.1"
+.TH phoronix-test-suite 1  "www.phoronix-test-suite.com" "3.2.0m2"
 .SH NAME
 phoronix-test-suite \- The Phoronix Test Suite is an extensible open-source platform for performing testing and performance evaluation.
 .SH SYNOPSIS
@@ -77,6 +77,9 @@ This option is used for uploading a test result to OpenBenchmarking.org.
 .B diagnostics
 This option will print information that is useful to developers when debugging problems with the Phoronix Test Suite and/or test profiles and test suites.
 .TP
+.B interactive
+A simple text-driven interactive interface to the Phoronix Test Suite.
+.TP
 .B system-info
 Display the installed system hardware and software information as detected by the Phoronix Test Suite Phodevi Library.
 .TP
@@ -126,6 +129,9 @@ This option is intended for use by test profile writers and is identical to the 
 .TP
 .B debug-test-download-links [Test | Suite]
 This option will check all download links within the specified test profile(s) to ensure there are no broken URLs.
+.TP
+.B download-test-files [Test | Suite]  ...
+This will download the selected test file(s) to the Phoronix Test Suite download cache but will not install the tests.
 .TP
 .B force-install [Test | Suite | OpenBenchmarking.org ID | Test Result]  ...
 This option will force the installation (or re-installation) of a test or suite. The arguments and process is similar to the install option but even if the test is installed, the entire installation process will automatically be executed. This option is generally used when debugging a test installation problem.
