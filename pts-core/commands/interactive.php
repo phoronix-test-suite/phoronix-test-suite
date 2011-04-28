@@ -140,7 +140,7 @@ class interactive implements pts_option_interface
 					break;
 				case 'RUN_SYSTEM_TEST':
 					pts_client::$display->generic_heading('System Test');
-					$system_tests = array('apache', 'c-ray', 'ramspeed', 'sqlite');
+					$system_tests = array('apache', 'c-ray', 'ramspeed', 'postmark');
 					pts_test_installer::standard_install($system_tests);
 					pts_test_run_manager::standard_run($system_tests, pts_c::defaults_mode);
 					break;
