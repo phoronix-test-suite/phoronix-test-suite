@@ -37,7 +37,7 @@ class interactive implements pts_option_interface
 
 			if(count($drives) > 0 && !is_dir('/media/pts-auto-mount') && is_writable('/media/'))
 			{
-				$last_drive = array_pop($drives);
+				$last_drive = array_shift($drives);
 				echo PHP_EOL . 'Attempting to auto-mount last drive: ' . $last_drive . PHP_EOL;
 				mkdir('/media/pts-auto-mount');
 				exec('mount ' . $last_drive . ' /media/pts-auto-mount');
@@ -158,7 +158,7 @@ class interactive implements pts_option_interface
 					break;
 				case 'SET_RUN_COUNT':
 					$run_count = pts_user_io::prompt_user_input('Set the minimum number of times each test should repeat', false);
-					putenv('FORCE_MIN_TIMES_TO_RUN=' . $run_count);
+					putenv('FORCE_TIMES_TO_RUN=' . trim($run_count));
 					break;
 				case 'BACKUP_RESULTS_TO_USB':
 					pts_client::$display->generic_heading('Backing Up Test Results');
