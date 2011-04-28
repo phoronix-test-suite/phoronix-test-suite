@@ -52,13 +52,13 @@ class phodevi_system extends phodevi_device_interface
 				$property = new phodevi_device_property('sw_wine_version', PHODEVI_STAND_CACHE);
 				break;
 			case 'display-server':
-				$property = new phodevi_device_property('sw_display_server', PHODEVI_STAND_CACHE);
+				$property = new phodevi_device_property('sw_display_server', PHODEVI_SMART_CACHE);
 				break;
 			case 'display-driver':
-				$property = new phodevi_device_property(array('sw_display_driver', false), PHODEVI_STAND_CACHE);
+				$property = new phodevi_device_property(array('sw_display_driver', false), PHODEVI_SMART_CACHE);
 				break;
 			case 'display-driver-string':
-				$property = new phodevi_device_property(array('sw_display_driver', true), PHODEVI_STAND_CACHE);
+				$property = new phodevi_device_property(array('sw_display_driver', true), PHODEVI_SMART_CACHE);
 				break;
 			case 'dri-display-driver':
 				$property = new phodevi_device_property('sw_dri_display_driver', PHODEVI_SMART_CACHE);
