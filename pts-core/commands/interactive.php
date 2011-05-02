@@ -41,6 +41,7 @@ class interactive implements pts_option_interface
 				echo PHP_EOL . 'Attempting to auto-mount drive: ' . $last_drive . PHP_EOL;
 				mkdir('/media/pts-auto-mount');
 				exec('mount ' . $last_drive . ' /media/pts-auto-mount');
+				putenv('PTS_TEST_INSTALL_ROOT_PATH=/media/pts-auto-mount/');
 			}
 
 			// Auto save results
@@ -75,6 +76,7 @@ class interactive implements pts_option_interface
 			if($is_moscow)
 			{
 				unset($options['RUN_SUITE']);
+				$options['SELECT_DRIVE_MOUNT'] = 'Select Disk Drive To Use For Testing';
 			}
 
 			if(count(pts_client::saved_test_results()) > 0 && count(pts_file_io::glob('/media/*')) > 0)
@@ -136,6 +138,22 @@ class interactive implements pts_option_interface
 					{
 						pts_test_installer::standard_install($suite_to_run);
 						pts_test_run_manager::standard_run($suite_to_run);
+					}
+					break;
+				case 'SELECT_DRIVE_MOUNT':
+					$drives = pts_file_io::glob('/dev/sda*');
+
+					if(count($drives) == 0)
+					{
+						echo PHP_EOL . 'No Drives Found' . PHP_EOL . PHP_EOL;
+					}
+					else
+					{
+						$to_mount = pts_user_io::prompt_text_menu('Select Drive / Partition To Mount', $drives);
+						echo PHP_EOL . 'Attempting to mount: ' . $to_mount . PHP_EOL;
+						pts_file_io::mkdir('/media/pts-auto-mount');
+						echo exec('mount ' . $last_drive . ' /media/pts-auto-mount');
+						putenv('PTS_TEST_INSTALL_ROOT_PATH=/media/pts-auto-mount/');
 					}
 					break;
 				case 'RUN_SYSTEM_TEST':
