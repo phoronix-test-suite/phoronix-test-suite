@@ -141,7 +141,7 @@ class interactive implements pts_option_interface
 					}
 					break;
 				case 'SELECT_DRIVE_MOUNT':
-					$drives = pts_file_io::glob('/dev/sda*');
+					$drives = pts_file_io::glob('/dev/sd*');
 
 					if(count($drives) == 0)
 					{
@@ -152,6 +152,7 @@ class interactive implements pts_option_interface
 						$to_mount = pts_user_io::prompt_text_menu('Select Drive / Partition To Mount', $drives);
 						echo PHP_EOL . 'Attempting to mount: ' . $to_mount . PHP_EOL;
 						pts_file_io::mkdir('/media/pts-auto-mount');
+						exec('umount /media/pts-auto-mount');
 						echo exec('mount ' . $last_drive . ' /media/pts-auto-mount');
 						putenv('PTS_TEST_INSTALL_ROOT_PATH=/media/pts-auto-mount/');
 					}
