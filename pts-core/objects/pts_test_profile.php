@@ -283,7 +283,7 @@ class pts_test_profile extends pts_test_profile_parser
 	}
 	public function get_install_dir()
 	{
-		return PTS_TEST_INSTALL_PATH . $this->identifier . '/';
+		return pts_client::test_install_root_path() . $this->identifier . '/';
 	}
 	public function get_installer_checksum()
 	{

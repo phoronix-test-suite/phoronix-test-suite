@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010, Phoronix Media
-	Copyright (C) 2010, Michael Larabel
+	Copyright (C) 2010 - 2011, Phoronix Media
+	Copyright (C) 2010 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -40,9 +40,9 @@ class pts_test_installer
 		pts_external_dependencies::install_dependencies($test_profiles);
 
 		// Install tests
-		if(!is_writable(PTS_TEST_INSTALL_PATH))
+		if(!is_writable(pts_client::test_install_root_path()))
 		{
-			echo PHP_EOL . 'ERROR: The test installation directory is not writable.' . PHP_EOL . 'Location: ' . PTS_TEST_INSTALL_PATH . PHP_EOL;
+			echo PHP_EOL . 'ERROR: The test installation directory is not writable.' . PHP_EOL . 'Location: ' . pts_client::test_install_root_path() . PHP_EOL;
 			return false;
 		}
 

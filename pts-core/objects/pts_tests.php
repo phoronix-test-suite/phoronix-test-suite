@@ -26,7 +26,7 @@ class pts_tests
 	{
 		$cleaned_tests = array();
 
-		foreach(pts_file_io::glob(PTS_TEST_INSTALL_PATH . '*') as $repo_path)
+		foreach(pts_file_io::glob(pts_client::test_install_root_path() . '*') as $repo_path)
 		{
 			$repo = basename($repo_path);
 			foreach(pts_file_io::glob($repo_path . '/*') as $identifier_path)

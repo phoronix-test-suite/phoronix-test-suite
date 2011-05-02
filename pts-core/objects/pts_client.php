@@ -49,7 +49,7 @@ class pts_client
 		self::core_storage_init_process();
 
 		pts_config::init_files();
-		define('PTS_TEST_INSTALL_PATH', pts_client::parse_home_directory(pts_config::read_user_config(P_OPTION_TEST_ENVIRONMENT, '~/.phoronix-test-suite/installed-tests/')));
+		define('PTS_TEST_INSTALL_DEFAULT_PATH', pts_client::parse_home_directory(pts_config::read_user_config(P_OPTION_TEST_ENVIRONMENT, '~/.phoronix-test-suite/installed-tests/')));
 		define('PTS_SAVE_RESULTS_PATH', pts_client::parse_home_directory(pts_config::read_user_config(P_OPTION_RESULTS_DIRECTORY, '~/.phoronix-test-suite/test-results/')));
 		self::extended_init_process();
 
@@ -179,6 +179,17 @@ class pts_client
 
 		return $env_variables;
 	}
+	public static function test_install_root_path()
+	{
+		if(getenv('PTS_TEST_INSTALL_ROOT_PATH') != false && is_dir(getenv('PTS_TEST_INSTALL_ROOT_PATH')) && is_writable(getenv('PTS_TEST_INSTALL_ROOT_PATH')))
+		{
+			return getenv('PTS_TEST_INSTALL_ROOT_PATH');
+		}
+		else
+		{
+			return PTS_TEST_INSTALL_DEFAULT_PATH;
+		}
+	}
 	public static function user_run_save_variables()
 	{
 		static $runtime_variables = null;
@@ -282,7 +293,7 @@ class pts_client
 	private static function extended_init_process()
 	{
 		// Extended Initalization Process
-		$directory_check = array(PTS_TEST_INSTALL_PATH, PTS_SAVE_RESULTS_PATH, PTS_MODULE_LOCAL_PATH, PTS_MODULE_DATA_PATH, PTS_DOWNLOAD_CACHE_PATH, PTS_OPENBENCHMARKING_SCRATCH_PATH, PTS_TEST_PROFILE_PATH, PTS_TEST_SUITE_PATH, PTS_TEST_PROFILE_PATH . 'local/', PTS_TEST_SUITE_PATH . 'local/');
+		$directory_check = array(PTS_TEST_INSTALL_DEFAULT_PATH, PTS_SAVE_RESULTS_PATH, PTS_MODULE_LOCAL_PATH, PTS_MODULE_DATA_PATH, PTS_DOWNLOAD_CACHE_PATH, PTS_OPENBENCHMARKING_SCRATCH_PATH, PTS_TEST_PROFILE_PATH, PTS_TEST_SUITE_PATH, PTS_TEST_PROFILE_PATH . 'local/', PTS_TEST_SUITE_PATH . 'local/');
 
 		foreach($directory_check as $dir)
 		{

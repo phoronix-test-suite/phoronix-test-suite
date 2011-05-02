@@ -37,7 +37,7 @@ class phodevi_system extends phodevi_device_interface
 				$property = new phodevi_device_property('sw_vendor_identifier', PHODEVI_SMART_CACHE);
 				break;
 			case 'filesystem':
-				$property = new phodevi_device_property('sw_filesystem', PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property('sw_filesystem', PHODEVI_AVOID_CACHE);
 				break;
 			case 'virtualized-mode':
 				$property = new phodevi_device_property('sw_virtualized_mode', PHODEVI_SMART_CACHE);
@@ -194,7 +194,7 @@ class phodevi_system extends phodevi_device_interface
 		}
 		else if(phodevi::is_linux() || phodevi::is_solaris())
 		{
-			$fs = trim(shell_exec('stat ' . PTS_TEST_INSTALL_PATH . ' -L -f -c %T 2> /dev/null'));
+			$fs = trim(shell_exec('stat ' . pts_client::test_install_root_path() . ' -L -f -c %T 2> /dev/null'));
 
 			switch($fs)
 			{

@@ -650,9 +650,9 @@ class pts_test_run_manager
 			}
 		}
 
-		if(!is_writable(PTS_TEST_INSTALL_PATH))
+		if(!is_writable(pts_client::test_install_root_path()))
 		{
-			pts_client::$display->generic_error('The test installation directory is not writable.' . PHP_EOL . 'Location: ' . PTS_TEST_INSTALL_PATH);
+			pts_client::$display->generic_error('The test installation directory is not writable.' . PHP_EOL . 'Location: ' . pts_client::test_install_root_path());
 			return false;
 		}
 

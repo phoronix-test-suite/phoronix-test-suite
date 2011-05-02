@@ -32,13 +32,13 @@ class interactive implements pts_option_interface
 		if($is_moscow)
 		{
 			// Auto mount?
-			$drives = pts_file_io::glob('/dev/sd*');
+			$drives = pts_file_io::glob('/dev/sda*');
 			sort($drives);
 
 			if(count($drives) > 0 && !is_dir('/media/pts-auto-mount') && is_writable('/media/'))
 			{
-				$last_drive = array_shift($drives);
-				echo PHP_EOL . 'Attempting to auto-mount last drive: ' . $last_drive . PHP_EOL;
+				$last_drive = array_pop($drives);
+				echo PHP_EOL . 'Attempting to auto-mount drive: ' . $last_drive . PHP_EOL;
 				mkdir('/media/pts-auto-mount');
 				exec('mount ' . $last_drive . ' /media/pts-auto-mount');
 			}

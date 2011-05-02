@@ -190,7 +190,7 @@ class phodevi_disk extends phodevi_device_interface
 		if(count($disks) == 0)
 		{
 			$root_disk_size = ceil(disk_total_space('/') / 1073741824);
-			$pts_disk_size = ceil(disk_total_space(PTS_TEST_INSTALL_PATH) / 1073741824);
+			$pts_disk_size = ceil(disk_total_space(pts_client::test_install_root_path()) / 1073741824);
 
 			if($pts_disk_size > $root_disk_size)
 			{
