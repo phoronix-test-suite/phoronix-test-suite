@@ -335,7 +335,7 @@ class pts_client
 					// Oops, this extension is required
 					if($printed_required_header == false)
 					{
-						echo "\nThe following PHP extensions are REQUIRED by the Phoronix Test Suite:\n\n";
+						echo PHP_EOL . 'The following PHP extensions are REQUIRED by the Phoronix Test Suite:' . PHP_EOL . PHP_EOL;
 						$printed_required_header = true;
 					}
 				}
@@ -349,18 +349,18 @@ class pts_client
 					// This extension is missing but optional
 					if($printed_optional_header == false)
 					{
-						echo "\nThe following PHP extensions are optional but recommended by the Phoronix Test Suite:\n\n";
+						echo PHP_EOL . 'The following PHP extensions are optional but recommended by the Phoronix Test Suite:' . PHP_EOL . PHP_EOL;
 						$printed_optional_header = true;
 					}
 				}
 
-				echo sprintf("%-8ls %-30ls\n", $extension[2], $extension[3]);
+				echo sprintf('%-8ls %-30ls' . PHP_EOL, $extension[2], $extension[3]);
 			}
 		}
 
 		if($printed_required_header)
 		{
-			echo "\n";
+			echo PHP_EOL;
 			exit;
 		}
 	}
@@ -536,7 +536,7 @@ class pts_client
 
 			if($agree)
 			{
-				echo "\n";
+				echo PHP_EOL;
 				$pso->add_object('user_agreement_cs', $current_md5);
 				$pso->save_to_file(PTS_CORE_STORAGE);
 			}
@@ -558,13 +558,13 @@ class pts_client
 		{
 			if(count($replace_call) != 2 || method_exists($replace_call[0], $replace_call[1]) == false)
 			{
-				echo "\nVar Swap With Method Failed.\n";
+				echo PHP_EOL . 'Var Swap With Method Failed.' . PHP_EOL;
 				return $user_str;
 			}
 		}
 		else if(!function_exists($replace_call))
 		{
-			echo "\nVar Swap With Function Failed.\n";
+			echo PHP_EOL . 'Var Swap With Function Failed.' . PHP_EOL;
 			return $user_str;
 		}
 
@@ -611,7 +611,7 @@ class pts_client
 			pts_file_io::mkdir($save_to_dir);
 		}
 
-		file_put_contents($save_to_dir . "/index.html", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\"><html><head><title>Phoronix Test Suite</title><meta http-equiv=\"REFRESH\" content=\"0;url=composite.xml\"></HEAD><BODY></BODY></HTML>");
+		file_put_contents($save_to_dir . '/index.html', '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"><html><head><title>Phoronix Test Suite</title><meta http-equiv="REFRESH" content="0;url=composite.xml"></HEAD><BODY></BODY></HTML>');
 
 		return $save_to_dir;
 	}
@@ -626,7 +626,7 @@ class pts_client
 
 		if($string != null)
 		{
-			echo "\n" . $string . "\n";
+			echo PHP_EOL . $string . PHP_EOL;
 		}
 
 		exit($exit_status);
@@ -658,7 +658,7 @@ class pts_client
 			}
 			else
 			{
-				echo "\nERROR: Can't find home directory!\n";
+				echo PHP_EOL . 'ERROR: Cannot find home directory.' . PHP_EOL;
 				$userhome = null;
 			}
 
@@ -975,7 +975,7 @@ class pts_client
 
 		if($generated && $full_process_string)
 		{
-			echo "\n" . $full_process_string . "\n";
+			echo PHP_EOL . $full_process_string . PHP_EOL;
 			pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . $result_file_identifier . '/index.html');
 		}
 
@@ -1022,7 +1022,7 @@ class pts_client
 				{
 					if(!method_exists($method_check, $function_check))
 					{
-						echo "\nMethod check fails.\n";
+						echo PHP_EOL . 'Method check fails.' . PHP_EOL;
 						continue;
 					}
 
@@ -1079,7 +1079,7 @@ class pts_client
 			}
 			else
 			{
-				echo "\nThere is an error in the requested command: " . $command . "\n\n";
+				echo PHP_EOL . 'There is an error in the requested command: ' . $command . PHP_EOL . PHP_EOL;
 			}
 		}
 		else if(pts_module::valid_run_command($command))
@@ -1396,14 +1396,14 @@ class pts_client
 					{
 						if(is_executable($browser_test))
 						{
-							$browser = "\"$browser_test\"";
+							$browser = '"$browser_test"';
 							break;
 						}
 					}
 
-					if(substr($URL, 0, 1) == "\\")
+					if(substr($URL, 0, 1) == '\\')
 					{
-						$URL = "file:///C:" . str_replace('/', '\\', $URL);
+						$URL = 'file:///C:' . str_replace('/', '\\', $URL);
 					}
 				}
 				else
@@ -1429,11 +1429,11 @@ class pts_client
 
 			if($browser != null)
 			{
-				shell_exec($browser . " \"" . $URL . "\" &");
+				shell_exec($browser . ' "' . $URL . '" &');
 			}
 			else
 			{
-				echo "\nNo Web Browser Was Found.\n";
+				echo PHP_EOL . 'No Web Browser Found.' . PHP_EOL;
 			}
 		}
 	}
