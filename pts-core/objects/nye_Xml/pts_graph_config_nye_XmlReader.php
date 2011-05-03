@@ -20,8 +20,6 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-pts_load_xml_definitions('graph-config.xml');
-
 class pts_graph_config_nye_XmlReader extends nye_XmlReader
 {
 	protected $override_values;

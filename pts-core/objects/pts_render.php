@@ -150,7 +150,7 @@ class pts_render
 
 		if($bar_orientation == null)
 		{
-			$bar_orientation = pts_Graph::$graph_config->getXmlValue(P_GRAPH_BAR_ORIENTATION);
+			$bar_orientation = pts_Graph::$graph_config->getXmlValue('PhoronixTestSuite/Graphs/General/BarOrientation');
 		}
 
 		switch($display_format)

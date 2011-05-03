@@ -93,35 +93,34 @@ class pts_config
 		$config = new nye_XmlWriter();
 
 		// General
-		$config->addXmlNodeFromReader(P_GRAPH_SIZE_WIDTH, $read_config);
-		$config->addXmlNodeFromReader(P_GRAPH_SIZE_HEIGHT, $read_config);
-		$config->addXmlNodeFromReader(P_GRAPH_RENDERER, $read_config);
-		$config->addXmlNodeFromReader(P_GRAPH_MARKCOUNT, $read_config);
-		$config->addXmlNodeFromReader(P_GRAPH_WATERMARK, $read_config);
-		$config->addXmlNodeFromReader(P_GRAPH_WATERMARK_URL, $read_config);
-		$config->addXmlNodeFromReader(P_GRAPH_BORDER, $read_config);
-		$config->addXmlNodeFromReader(P_GRAPH_BAR_ORIENTATION, $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Graphs/General/GraphWidth', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Graphs/General/GraphHeight', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Graphs/General/Renderer', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Graphs/General/Watermark', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Graphs/General/WatermarkURL', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Graphs/General/Border', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Graphs/General/BarOrientation', $read_config);
 
-		$config->addXmlNodeFromReader(P_GRAPH_COLOR_BACKGROUND, $read_config);
-		$config->addXmlNodeFromReader(P_GRAPH_COLOR_BODY, $read_config);
-		$config->addXmlNodeFromReader(P_GRAPH_COLOR_NOTCHES, $read_config);
-		$config->addXmlNodeFromReader(P_GRAPH_COLOR_BORDER, $read_config);
-		$config->addXmlNodeFromReader(P_GRAPH_COLOR_ALTERNATE, $read_config);
-		$config->addXmlNodeFromReader(P_GRAPH_COLOR_PAINT, $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Graphs/Colors/Background', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Graphs/Colors/GraphBody', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Graphs/Colors/Notches', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Graphs/Colors/Border', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Graphs/Colors/Alternate', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Graphs/Colors/ObjectPaint', $read_config);
 
-		$config->addXmlNodeFromReader(P_GRAPH_COLOR_HEADERS, $read_config);
-		$config->addXmlNodeFromReader(P_GRAPH_COLOR_MAINHEADERS, $read_config);
-		$config->addXmlNodeFromReader(P_GRAPH_COLOR_TEXT, $read_config);
-		$config->addXmlNodeFromReader(P_GRAPH_COLOR_BODYTEXT, $read_config);
-		$config->addXmlNodeFromReader(P_GRAPH_COLOR_HIGHLIGHT, $read_config);
-		$config->addXmlNodeFromReader(P_GRAPH_COLOR_ALERT, $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Graphs/Colors/Headers', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Graphs/Colors/MainHeaders', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Graphs/Colors/Text', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Graphs/Colors/BodyText', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Graphs/Colors/Highlight', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Graphs/Colors/Alert', $read_config);
 
-		$config->addXmlNodeFromReader(P_GRAPH_FONT_TYPE, $read_config);
-		$config->addXmlNodeFromReader(P_GRAPH_FONT_SIZE_HEADERS, $read_config);
-		$config->addXmlNodeFromReader(P_GRAPH_FONT_SIZE_SUBHEADERS, $read_config);
-		$config->addXmlNodeFromReader(P_GRAPH_FONT_SIZE_TEXT, $read_config);
-		$config->addXmlNodeFromReader(P_GRAPH_FONT_SIZE_IDENTIFIERS, $read_config);
-		$config->addXmlNodeFromReader(P_GRAPH_FONT_SIZE_AXIS, $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Graphs/Font/FontType', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Graphs/Font/Headers', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Graphs/Font/SubHeaders', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Graphs/Font/ObjectText', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Graphs/Font/Identifiers', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Graphs/Font/Axis', $read_config);
 
 		$config->saveXMLFile(PTS_USER_PATH . 'graph-config.xml');
 	}

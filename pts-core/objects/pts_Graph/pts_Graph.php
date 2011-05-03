@@ -112,36 +112,36 @@ abstract class pts_Graph
 	public function __construct(&$result_object = null, &$result_file = null)
 	{
 		// Setup config values
-		$this->graph_attr_width = $this->read_graph_config(P_GRAPH_SIZE_WIDTH); // Graph width
-		$this->graph_attr_height = $this->read_graph_config(P_GRAPH_SIZE_HEIGHT); // Graph height
-		$this->graph_attr_big_border = $this->read_graph_config(P_GRAPH_BORDER) == 'TRUE'; // Graph border
+		$this->graph_attr_width = $this->read_graph_config('PhoronixTestSuite/Graphs/General/GraphWidth'); // Graph width
+		$this->graph_attr_height = $this->read_graph_config('PhoronixTestSuite/Graphs/General/GraphHeight'); // Graph height
+		$this->graph_attr_big_border = $this->read_graph_config('PhoronixTestSuite/Graphs/General/Border') == 'TRUE'; // Graph border
 
 		// Colors
-		$this->graph_color_notches = $this->read_graph_config(P_GRAPH_COLOR_NOTCHES); // Color for notches
-		$this->graph_color_text = $this->read_graph_config(P_GRAPH_COLOR_TEXT); // Color for text
-		$this->graph_color_border = $this->read_graph_config(P_GRAPH_COLOR_BORDER); // Color for border (if used)
-		$this->graph_color_main_headers = $this->read_graph_config(P_GRAPH_COLOR_MAINHEADERS); // Color of main text headers
-		$this->graph_color_headers = $this->read_graph_config(P_GRAPH_COLOR_HEADERS); // Color of other headers
-		$this->graph_color_background = $this->read_graph_config(P_GRAPH_COLOR_BACKGROUND); // Color of background
-		$this->graph_color_body = $this->read_graph_config(P_GRAPH_COLOR_BODY); // Color of graph body
-		$this->graph_color_body_text = $this->read_graph_config(P_GRAPH_COLOR_BODYTEXT); // Color of graph body text
-		$this->graph_color_body_light = $this->read_graph_config(P_GRAPH_COLOR_ALTERNATE); // Color of the border around graph bars (if doing a bar graph)
-		$this->graph_color_highlight = $this->read_graph_config(P_GRAPH_COLOR_HIGHLIGHT); // Color for highlight
-		$this->graph_color_alert = $this->read_graph_config(P_GRAPH_COLOR_ALERT); // Color for alerts
-		$this->graph_color_paint = pts_strings::comma_explode($this->read_graph_config(P_GRAPH_COLOR_PAINT)); // Colors to use for the bars / lines, one color for each key
+		$this->graph_color_notches = $this->read_graph_config('PhoronixTestSuite/Graphs/Colors/Notches'); // Color for notches
+		$this->graph_color_text = $this->read_graph_config('PhoronixTestSuite/Graphs/Colors/Text'); // Color for text
+		$this->graph_color_border = $this->read_graph_config('PhoronixTestSuite/Graphs/Colors/Border'); // Color for border (if used)
+		$this->graph_color_main_headers = $this->read_graph_config('PhoronixTestSuite/Graphs/Colors/MainHeaders'); // Color of main text headers
+		$this->graph_color_headers = $this->read_graph_config('PhoronixTestSuite/Graphs/Colors/Headers'); // Color of other headers
+		$this->graph_color_background = $this->read_graph_config('PhoronixTestSuite/Graphs/Colors/Background'); // Color of background
+		$this->graph_color_body = $this->read_graph_config('PhoronixTestSuite/Graphs/Colors/GraphBody'); // Color of graph body
+		$this->graph_color_body_text = $this->read_graph_config('PhoronixTestSuite/Graphs/Colors/BodyText'); // Color of graph body text
+		$this->graph_color_body_light = $this->read_graph_config('PhoronixTestSuite/Graphs/Colors/Alternate'); // Color of the border around graph bars (if doing a bar graph)
+		$this->graph_color_highlight = $this->read_graph_config('PhoronixTestSuite/Graphs/Colors/Highlight'); // Color for highlight
+		$this->graph_color_alert = $this->read_graph_config('PhoronixTestSuite/Graphs/Colors/Alert'); // Color for alerts
+		$this->graph_color_paint = pts_strings::comma_explode($this->read_graph_config('PhoronixTestSuite/Graphs/Colors/ObjectPaint')); // Colors to use for the bars / lines, one color for each key
 
 		// Text
-		$this->graph_watermark_text = $this->read_graph_config(P_GRAPH_WATERMARK); // watermark
-		$this->graph_watermark_url = $this->read_graph_config(P_GRAPH_WATERMARK_URL); // watermark URL
-		//$this->graph_font = $this->read_graph_config(P_GRAPH_FONT_TYPE);  // TTF file name
-		$this->graph_font_size_heading = $this->read_graph_config(P_GRAPH_FONT_SIZE_HEADERS); // Font size of headings
-		$this->graph_font_size_bars = $this->read_graph_config(P_GRAPH_FONT_SIZE_TEXT); // Font size for text on the bars/objects
-		$this->graph_font_size_identifiers = $this->read_graph_config(P_GRAPH_FONT_SIZE_IDENTIFIERS); // Font size of identifiers
-		$this->graph_font_size_sub_heading = $this->read_graph_config(P_GRAPH_FONT_SIZE_SUBHEADERS); // Font size of headers
-		$this->graph_font_size_axis_heading = $this->read_graph_config(P_GRAPH_FONT_SIZE_AXIS); // Font size of axis headers
+		$this->graph_watermark_text = $this->read_graph_config('PhoronixTestSuite/Graphs/General/Watermark'); // watermark
+		$this->graph_watermark_url = $this->read_graph_config('PhoronixTestSuite/Graphs/General/WatermarkURL'); // watermark URL
+		//$this->graph_font = $this->read_graph_config('PhoronixTestSuite/Graphs/Font/FontType');  // TTF file name
+		$this->graph_font_size_heading = $this->read_graph_config('PhoronixTestSuite/Graphs/Font/Headers'); // Font size of headings
+		$this->graph_font_size_bars = $this->read_graph_config('PhoronixTestSuite/Graphs/Font/ObjectText'); // Font size for text on the bars/objects
+		$this->graph_font_size_identifiers = $this->read_graph_config('PhoronixTestSuite/Graphs/Font/Identifiers'); // Font size of identifiers
+		$this->graph_font_size_sub_heading = $this->read_graph_config('PhoronixTestSuite/Graphs/Font/SubHeaders'); // Font size of headers
+		$this->graph_font_size_axis_heading = $this->read_graph_config('PhoronixTestSuite/Graphs/Font/Axis'); // Font size of axis headers
 
-		$this->graph_attr_marks = $this->read_graph_config(P_GRAPH_MARKCOUNT); // Number of marks to make on vertical axis
-		$this->graph_renderer = $this->read_graph_config(P_GRAPH_RENDERER); // Renderer
+		$this->graph_attr_marks = 6; // Number of marks to make on vertical axis
+		$this->graph_renderer = $this->read_graph_config('PhoronixTestSuite/Graphs/General/Renderer'); // Renderer
 
 		// Reset of setup besides config
 		if($result_object != null)
