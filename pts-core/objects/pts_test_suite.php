@@ -35,9 +35,7 @@ class pts_test_suite extends pts_test_suite_parser
 	{
 		foreach(pts_types::identifiers_to_test_profile_objects($this->get_identifier(), false, true) as $test_profile)
 		{
-			$installed_test = new pts_installed_test($test_profile);
-
-			if($test_profile->is_test_installed() == false || $installed_test->get_installed_system_identifier() != phodevi::system_id_string() || (pts_c::$test_flags & pts_c::force_install))
+			if($test_profile->test_installation == false || $test_profile->test_installation->get_installed_system_identifier() != phodevi::system_id_string() || (pts_c::$test_flags & pts_c::force_install))
 			{
 				return true;
 			}

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2010, Phoronix Media
-	Copyright (C) 2008 - 2010, Michael Larabel
+	Copyright (C) 2008 - 2011, Phoronix Media
+	Copyright (C) 2008 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
 class info implements pts_option_interface
 {
 	const doc_section = 'Information';
-	const doc_description = "This option will show details about the supplied test, suite, virtual suite, or result file.";
+	const doc_description = 'This option will show details about the supplied test, suite, virtual suite, or result file.';
 
 	public static function argument_checks()
 	{
@@ -81,15 +81,14 @@ class info implements pts_option_interface
 
 			echo "\nDescription: " . $args["object"]->get_description() . "\n";
 
-			if($args["object"]->is_test_installed())
+			if($args['object']->test_installation != false)
 			{
-				$installed_test = new pts_installed_test($args["object"]);
-				$last_run = $installed_test->get_last_run_date();
+				$last_run = $args['object']->test_installation->get_last_run_date();
 				$last_run = $last_run == "0000-00-00" ? "Never" : $last_run;
 
-				$avg_time = $installed_test->get_average_run_time();
+				$avg_time = $args['object']->test_installation->get_average_run_time();
 				$avg_time = !empty($avg_time) ? pts_strings::format_time($avg_time, "SECONDS") : "N/A";
-				$latest_time = $installed_test->get_latest_run_time();
+				$latest_time = $args['object']->test_installation->get_latest_run_time();
 				$latest_time = !empty($latest_time) ? pts_strings::format_time($latest_time, "SECONDS") : "N/A";
 
 				echo "\nTest Installed: Yes\n";
@@ -97,13 +96,13 @@ class info implements pts_option_interface
 
 				if($last_run != "Never")
 				{
-					if($installed_test->get_run_count() > 1)
+					if($args['object']->test_installation->get_run_count() > 1)
 					{
 						echo "Average Run-Time: " . $avg_time . "\n";
 					}
 
 					echo "Latest Run-Time: " . $latest_time . "\n";
-					echo "Times Run: " . $installed_test->get_run_count() . "\n";
+					echo "Times Run: " . $args['object']->test_installation->get_run_count() . "\n";
 				}
 			}
 			else

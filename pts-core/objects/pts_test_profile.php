@@ -22,6 +22,8 @@
 
 class pts_test_profile extends pts_test_profile_parser
 {
+	public $test_installation = false;
+
 	public function __construct($identifier = null, $override_values = null)
 	{
 		parent::__construct($identifier);
@@ -29,6 +31,11 @@ class pts_test_profile extends pts_test_profile_parser
 		if($override_values != null && is_array($override_values))
 		{
 			$this->xml_parser->overrideXMLValues($override_values);
+		}
+
+		if(PTS_IS_CLIENT && is_file($this->get_install_dir() . 'pts-install.xml'))
+		{
+			$this->test_installation = new pts_installed_test($this);
 		}
 	}
 	public static function is_test_profile($identifier)
@@ -163,10 +170,7 @@ class pts_test_profile extends pts_test_profile_parser
 	public function get_estimated_run_time()
 	{
 		// get estimated run-time (in seconds)
-		$installed_test = new pts_installed_test($this);
-		$this_length = $installed_test->get_average_run_time();
-
-		return (is_numeric($this_length) && $this_length > 0 ? $this_length : parent::get_estimated_run_time());
+		return $this->test_installation != false && is_numeric($this->test_installation->get_average_run_time()) && $this->test_installation->get_average_run_time() > 0 ? $this->test_installation->get_average_run_time() : parent::get_estimated_run_time();
 	}
 	public function is_supported($report_warnings = true)
 	{
@@ -332,11 +336,9 @@ class pts_test_profile extends pts_test_profile_parser
 	}
 	public function needs_updated_install()
 	{
-		$installed_test = new pts_installed_test($this);
-
 		// Checks if test needs updating
-		// || $installed_test->get_installed_system_identifier() != phodevi::system_id_string()
-		return $this->is_test_installed() == false || $this->get_test_profile_version() != $installed_test->get_installed_version() || $this->get_installer_checksum() != $installed_test->get_installed_checksum() || (pts_c::$test_flags & pts_c::force_install);
+		// || $this->test_installation->get_installed_system_identifier() != phodevi::system_id_string()
+		return $this->test_installation == false || $this->get_test_profile_version() != $this->test_installation->get_installed_version() || $this->get_installer_checksum() != $this->test_installation->get_installed_checksum() || (pts_c::$test_flags & pts_c::force_install);
 	}
 }
 

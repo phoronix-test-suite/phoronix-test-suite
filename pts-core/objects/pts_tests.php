@@ -137,27 +137,31 @@ class pts_tests
 	public static function update_test_install_xml(&$test_profile, $this_duration = 0, $is_install = false)
 	{
 		// Refresh/generate an install XML for pts-install.xml
-		$installed_test = new pts_installed_test($test_profile);
+		if($test_profile->test_installation == false)
+		{
+			// XXX: Hackish way to avoid problems until this function is better written for clean installations, etc
+			$test_profile->test_installation = new pts_installed_test($test_profile);
+		}
 		$xml_writer = new nye_XmlWriter('file://' . PTS_USER_PATH . 'xsl/' . 'pts-test-installation-viewer.xsl');
 
-		$test_duration = $installed_test->get_average_run_time();
+		$test_duration = $test_profile->test_installation->get_average_run_time();
 		if(!is_numeric($test_duration) && !$is_install)
 		{
 			$test_duration = $this_duration;
 		}
 		if(!$is_install && is_numeric($this_duration) && $this_duration > 0)
 		{
-			$test_duration = ceil((($test_duration * $installed_test->get_run_count()) + $this_duration) / ($installed_test->get_run_count() + 1));
+			$test_duration = ceil((($test_duration * $test_profile->test_installation->get_run_count()) + $this_duration) / ($test_profile->test_installation->get_run_count() + 1));
 		}
 
-		$test_version = $is_install ? $test_profile->get_test_profile_version() : $installed_test->get_installed_version();
-		$test_checksum = $is_install ? $test_profile->get_installer_checksum() : $installed_test->get_installed_checksum();
-		$sys_identifier = $is_install ? phodevi::system_id_string() : $installed_test->get_installed_system_identifier();
-		$install_time = $is_install ? date('Y-m-d H:i:s') : $installed_test->get_install_date_time();
-		$install_time_length = $is_install ? $this_duration : $installed_test->get_latest_install_time();
-		$latest_run_time = $is_install || $this_duration == 0 ? $installed_test->get_latest_run_time() : $this_duration;
+		$test_version = $is_install ? $test_profile->get_test_profile_version() : $test_profile->test_installation->get_installed_version();
+		$test_checksum = $is_install ? $test_profile->get_installer_checksum() : $test_profile->test_installation->get_installed_checksum();
+		$sys_identifier = $is_install ? phodevi::system_id_string() : $test_profile->test_installation->get_installed_system_identifier();
+		$install_time = $is_install ? date('Y-m-d H:i:s') : $test_profile->test_installation->get_install_date_time();
+		$install_time_length = $is_install ? $this_duration : $test_profile->test_installation->get_latest_install_time();
+		$latest_run_time = $is_install || $this_duration == 0 ? $test_profile->test_installation->get_latest_run_time() : $this_duration;
 
-		$times_run = $installed_test->get_run_count();
+		$times_run = $test_profile->test_installation->get_run_count();
 
 		if($is_install)
 		{

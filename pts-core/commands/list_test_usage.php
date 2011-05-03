@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2010, Phoronix Media
-	Copyright (C) 2008 - 2010, Michael Larabel
+	Copyright (C) 2008 - 2011, Phoronix Media
+	Copyright (C) 2008 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -35,17 +35,17 @@ class list_test_usage implements pts_option_interface
 			printf("%-18ls   %-8ls %-13ls %-11ls %-13ls %-10ls\n", "TEST", "VERSION", "INSTALL DATE", "LAST RUN", "AVG RUN-TIME", "TIMES RUN");
 			foreach($installed_tests as $identifier)
 			{
-				$installed_test = new pts_installed_test(($tp = new pts_test_profile($identifier)));
+				$test_profile = new pts_test_profile($identifier);
 
-				if($installed_test->get_installed_version() != null)
+				if($test_profile->test_installation->get_installed_version() != null)
 				{
-					$avg_time = $installed_test->get_average_run_time();
+					$avg_time = $test_profile->test_installation->get_average_run_time();
 					$avg_time = !empty($avg_time) ? pts_strings::format_time($avg_time, "SECONDS", false) : "N/A";
 
-					$last_run = $installed_test->get_last_run_date();
+					$last_run = $test_profile->test_installation->get_last_run_date();
 					$last_run = $last_run == "0000-00-00" ? "NEVER" : $last_run;
 
-					printf("%-18ls - %-8ls %-13ls %-11ls %-13ls %-10ls\n", $identifier, $installed_test->get_installed_version(), $installed_test->get_install_date(), $last_run, $avg_time, $installed_test->get_run_count());
+					printf("%-18ls - %-8ls %-13ls %-11ls %-13ls %-10ls\n", $identifier, $test_profile->test_installation->get_installed_version(), $test_profile->test_installation->get_install_date(), $last_run, $avg_time, $test_profile->test_installation->get_run_count());
 				}
 			}
 			echo "\n";
