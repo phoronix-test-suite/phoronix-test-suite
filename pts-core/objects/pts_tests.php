@@ -174,16 +174,16 @@ class pts_tests
 			$times_run++;
 		}
 
-		$xml_writer->addXmlNode(P_INSTALL_TEST_NAME, $test_profile->get_identifier());
-		$xml_writer->addXmlNode(P_INSTALL_TEST_VERSION, $test_version);
-		$xml_writer->addXmlNode(P_INSTALL_TEST_CHECKSUM, $test_checksum);
-		$xml_writer->addXmlNode(P_INSTALL_TEST_SYSIDENTIFY, $sys_identifier);
-		$xml_writer->addXmlNode(P_INSTALL_TEST_INSTALLTIME, $install_time);
-		$xml_writer->addXmlNode(P_INSTALL_TEST_INSTALLTIME_LENGTH, $install_time_length);
-		$xml_writer->addXmlNode(P_INSTALL_TEST_LASTRUNTIME, $last_run);
-		$xml_writer->addXmlNode(P_INSTALL_TEST_TIMESRUN, $times_run);
-		$xml_writer->addXmlNode(P_INSTALL_TEST_AVG_RUNTIME, $test_duration);
-		$xml_writer->addXmlNode(P_INSTALL_TEST_LATEST_RUNTIME, $latest_run_time);
+		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/Environment/Identifier', $test_profile->get_identifier());
+		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/Environment/Version', $test_version);
+		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/Environment/CheckSum', $test_checksum);
+		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/Environment/SystemIdentifier', $sys_identifier);
+		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/History/InstallTime', $install_time);
+		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/History/InstallTimeLength', $install_time_length);
+		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/History/LastRunTime', $last_run);
+		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/History/TimesRun', $times_run);
+		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/History/AverageRunTime', $test_duration);
+		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/History/LatestRunTime', $latest_run_time);
 
 		$xml_writer->saveXMLFile($test_profile->get_install_dir() . 'pts-install.xml');
 	}
