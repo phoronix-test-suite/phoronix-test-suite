@@ -46,64 +46,39 @@ class make_download_cache implements pts_option_interface
 		foreach(pts_tests::installed_tests() as $test)
 		{
 			$test_profile = new pts_test_profile($test);
-			$downloads_file = $test_profile->get_file_download_spec();
-
-			if(!is_file($downloads_file))
-			{
-				continue;
-			}
-
-			$xml_parser = new nye_XmlReader($downloads_file);
-			$package_url = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_URL);
-			$package_md5 = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_MD5);
-			$package_filename = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_FILENAME);
 			$cached = false;
-
 			echo PHP_EOL . 'Checking Downloads For: ' . $test . PHP_EOL;
-			$test_install_message = true;
-			for($i = 0; $i < count($package_url); $i++)
-			{
-				if(empty($package_filename[$i]))
-				{
-					$package_filename[$i] = basename($package_url[$i]);
-				}
 
-				if(is_file($dc_write_directory . $package_filename[$i]) && (empty($package_md5[$i]) || md5_file($dc_write_directory . $package_filename[$i]) == $package_md5[$i]))
+			foreach(pts_test_install_request::read_download_object_list($test_profile, false) as $file)
+			{
+				if(is_file($dc_write_directory . $file->get_filename()) && ($file->get_md5() == null || md5_file($dc_write_directory . $file->get_filename()) == $file->get_md5()))
 				{
-					echo '   Previously Cached: ' . $package_filename[$i] . PHP_EOL;
+					echo '   Previously Cached: ' . $file->get_filename() . PHP_EOL;
 					$cached = true;
 				}
 				else
 				{
 					if(is_dir($test_profile->get_install_dir()))
 					{
-						if(is_file($test_profile->get_install_dir() . $package_filename[$i]))
+						if(is_file($test_profile->get_install_dir() . $file->get_filename()))
 						{
-							if(empty($package_md5[$i]) || md5_file($test_profile->get_install_dir() . $package_filename[$i]) == $package_md5[$i])
+							if($file->get_md5() == null || md5_file($test_profile->get_install_dir() . $file->get_filename()) == $file->get_md5())
 							{
-								echo '   Caching: ' . $package_filename[$i] . PHP_EOL;
+								echo '   Caching: ' . $file->get_filename() . PHP_EOL;
 
-								if(copy($test_profile->get_install_dir() . $package_filename[$i], $dc_write_directory . $package_filename[$i]))
+								if(copy($test_profile->get_install_dir() . $file->get_filename(), $dc_write_directory . $file->get_filename()))
 								{
 									$cached = true;
 								}
 							}
 						}
 					}
-					else
-					{
-						if($test_install_message)
-						{
-							echo '   Test Not Installed' . PHP_EOL;
-							$test_install_message = false;
-						}
-					}
 				}
 
 				if($cached)
 				{
-					$xml_writer->addXmlNode('PhoronixTestSuite/DownloadCache/Package/FileName', $package_filename[$i]);
-					$xml_writer->addXmlNode('PhoronixTestSuite/DownloadCache/Package/MD5', $package_md5[$i]);
+					$xml_writer->addXmlNode('PhoronixTestSuite/DownloadCache/Package/FileName', $file->get_filename());
+					$xml_writer->addXmlNode('PhoronixTestSuite/DownloadCache/Package/MD5', $file->get_md5());
 				}
 			}
 		}

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2010, Phoronix Media
-	Copyright (C) 2008 - 2010, Michael Larabel
+	Copyright (C) 2008 - 2011, Phoronix Media
+	Copyright (C) 2008 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -29,18 +29,22 @@ class pts_test_file_download
 	private $filename;
 	private $filesize;
 	private $md5;
+	private $architecture;
+	private $platform;
 
 	private $download_location_type;
 	private $download_location_path;
 
-	public function __construct($url = null, $filename = null, $filesize = 0, $md5 = null)
+	public function __construct($url = null, $filename = null, $filesize = 0, $md5 = null, $platform = null, $architecture = null)
 	{
-		$this->filename = (empty($filename) ? basename($url) : $filename);
-		$this->url = ($this->filename == $url ? null : $url);
-		$this->filesize = (!is_numeric($filesize) ? 0 : $filesize);
+		$this->filename = empty($filename) ? basename($url) : $filename;
+		$this->url = $this->filename == $url ? null : $url;
+		$this->filesize = !is_numeric($filesize) ? 0 : $filesize;
 		$this->md5 = $md5;
 		$this->location_type = null;
 		$this->location_path = array();
+		$this->platform = $platform;
+		$this->architecture = $architecture;
 
 		// Check for longest file name length as the text UI takes advantage of it
 
@@ -53,6 +57,26 @@ class pts_test_file_download
 	public function get_download_url_array()
 	{
 		return pts_strings::comma_explode($this->url);
+	}
+	public function get_download_url_string()
+	{
+		return $this->url;
+	}
+	public function get_platform_array()
+	{
+		return pts_strings::comma_explode($this->platform);
+	}
+	public function get_platform_string()
+	{
+		return $this->platform;
+	}
+	public function get_architecture_array()
+	{
+		return pts_strings::comma_explode($this->architecture);
+	}
+	public function get_architecture_string()
+	{
+		return $this->architecture;
 	}
 	public function get_filename()
 	{

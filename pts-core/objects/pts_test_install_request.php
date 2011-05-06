@@ -27,7 +27,7 @@ class pts_test_install_request
 
 	public function __construct($test)
 	{
-		if($test instanceOf pts_test_profile)
+		if($test instanceof pts_test_profile)
 		{
 			$this->test_profile = $test;
 		}
@@ -38,11 +38,11 @@ class pts_test_install_request
 
 		$this->test_files = array();
 	}
-	public static function read_download_object_list($test_identifier)
+	public static function read_download_object_list($test, $do_file_checks = true)
 	{
 		// A way to get just the download object list if needed
-		$test_install_request = new pts_test_install_request($test_identifier);
-		$test_install_request->generate_download_object_list();
+		$test_install_request = new pts_test_install_request($test);
+		$test_install_request->generate_download_object_list($do_file_checks);
 
 		return $test_install_request->get_download_objects();
 	}
@@ -58,23 +58,23 @@ class pts_test_install_request
 	{
 		return count($this->test_files);
 	}
-	public function generate_download_object_list()
+	public function generate_download_object_list($do_file_checks = true)
 	{
 		$download_xml_file = $this->test_profile->get_file_download_spec();
 
 		if($download_xml_file != null)
 		{
 			$xml_parser = new pts_test_downloads_nye_XmlReader($download_xml_file);
-			$package_url = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_URL);
-			$package_md5 = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_MD5);
-			$package_filename = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_FILENAME);
-			$package_filesize = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_FILESIZE);
-			$package_platform = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_PLATFORMSPECIFIC);
-			$package_architecture = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_ARCHSPECIFIC);
+			$package_url = $xml_parser->getXMLArrayValues('PhoronixTestSuite/Downloads/Package/URL');
+			$package_md5 = $xml_parser->getXMLArrayValues('PhoronixTestSuite/Downloads/Package/MD5');
+			$package_filename = $xml_parser->getXMLArrayValues('PhoronixTestSuite/Downloads/Package/FileName');
+			$package_filesize = $xml_parser->getXMLArrayValues('PhoronixTestSuite/Downloads/Package/FileSize');
+			$package_platform = $xml_parser->getXMLArrayValues('PhoronixTestSuite/Downloads/Package/PlatformSpecific');
+			$package_architecture = $xml_parser->getXMLArrayValues('PhoronixTestSuite/Downloads/Package/ArchitectureSpecific');
 
 			foreach(array_keys($package_url) as $i)
 			{
-				if(!empty($package_platform[$i]))
+				if(!empty($package_platform[$i]) && $do_file_checks)
 				{
 					$platforms = pts_strings::comma_explode($package_platform[$i]);
 
@@ -85,7 +85,7 @@ class pts_test_install_request
 					}
 				}
 
-				if(!empty($package_architecture[$i]))
+				if(!empty($package_architecture[$i]) && $do_file_checks)
 				{
 					$architectures = pts_strings::comma_explode($package_architecture[$i]);
 
@@ -96,7 +96,7 @@ class pts_test_install_request
 					}
 				}
 
-				array_push($this->test_files, new pts_test_file_download($package_url[$i], $package_filename[$i], $package_filesize[$i], $package_md5[$i]));
+				array_push($this->test_files, new pts_test_file_download($package_url[$i], $package_filename[$i], $package_filesize[$i], $package_md5[$i], $package_platform[$i], $package_architecture[$i]));
 			}
 		}
 	}

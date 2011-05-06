@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010, Phoronix Media
-	Copyright (C) 2010, Michael Larabel
+	Copyright (C) 2010 - 2011, Phoronix Media
+	Copyright (C) 2010 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -19,8 +19,6 @@
 	You should have received a copy of the GNU General Public License
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
-
-pts_load_xml_definitions('test-profile-downloads.xml');
 
 class pts_test_profile_downloads_writer
 {
@@ -38,29 +36,21 @@ class pts_test_profile_downloads_writer
 	{
 		return $this->xml_writer->saveXMLFile($to_save);
 	}
-	public function rebuild_download_file($download_xml_file)
+	public function rebuild_download_file(&$test_profile)
 	{
-		$xml_parser = new pts_test_downloads_nye_XmlReader($download_xml_file);
-		$package_url = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_URL);
-		$package_md5 = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_MD5);
-		$package_filename = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_FILENAME);
-		$package_filesize = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_FILESIZE);
-		$package_platform = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_PLATFORMSPECIFIC);
-		$package_architecture = $xml_parser->getXMLArrayValues(P_DOWNLOADS_PACKAGE_ARCHSPECIFIC);
-
-		foreach(array_keys($package_url) as $i)
+		foreach(pts_test_install_request::read_download_object_list($test_profile, false) as $file)
 		{
-			$this->add_download($package_url[$i], $package_md5[$i], $package_filename[$i], $package_filesize[$i], $package_platform[$i], $package_architecture[$i]);
+			$this->add_download($file->get_download_url_string(), $file->get_md5(), $file->get_filename(), $file->get_filesize(), $file->get_platform_string(), $file->get_architecture_string());
 		}
 	}
 	public function add_download($url_string, $md5 = null, $file_name = null, $file_size = null, $platform_specific = null, $architecture_specific = null)
 	{
-		$this->xml_writer->addXmlNode(P_DOWNLOADS_PACKAGE_URL, $url_string);
-		$this->xml_writer->addXmlNodeWNE(P_DOWNLOADS_PACKAGE_MD5, $md5);
-		$this->xml_writer->addXmlNodeWNE(P_DOWNLOADS_PACKAGE_FILENAME, $file_name);
-		$this->xml_writer->addXmlNodeWNE(P_DOWNLOADS_PACKAGE_FILESIZE, $file_size);
-		$this->xml_writer->addXmlNodeWNE(P_DOWNLOADS_PACKAGE_PLATFORMSPECIFIC, $platform_specific);
-		$this->xml_writer->addXmlNodeWNE(P_DOWNLOADS_PACKAGE_ARCHSPECIFIC, $architecture_specific);
+		$this->xml_writer->addXmlNode('PhoronixTestSuite/Downloads/Package/URL', $url_string);
+		$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/Downloads/Package/MD5', $md5);
+		$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/Downloads/Package/FileName', $file_name);
+		$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/Downloads/Package/FileSize', $file_size);
+		$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/Downloads/Package/PlatformSpecific', $platform_specific);
+		$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/Downloads/Package/ArchitectureSpecific', $architecture_specific);
 	}
 }
 

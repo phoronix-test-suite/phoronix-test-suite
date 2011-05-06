@@ -66,7 +66,7 @@ class validate_test_profile implements pts_option_interface
 			if(empty($download_xml_file) == false)
 			{
 				$writer = new pts_test_profile_downloads_writer();
-				$writer->rebuild_download_file($download_xml_file);
+				$writer->rebuild_download_file($test_profile);
 				$writer->save_xml($download_xml_file);
 
 				$downloads_parser = new pts_test_downloads_nye_XmlReader($download_xml_file);
