@@ -22,7 +22,7 @@
 */
 
 define('PTS_VERSION', '3.2.0m2');
-define('PTS_CORE_VERSION', 3120);
+define('PTS_CORE_VERSION', 3121);
 define('PTS_CODENAME', 'GRIMSTAD');
 define('PTS_IS_CLIENT', PTS_MODE == 'CLIENT');
 

@@ -28,10 +28,10 @@ class phodevi_disk extends phodevi_device_interface
 		switch($identifier)
 		{
 			case 'identifier':
-				$property = new phodevi_device_property('hdd_string', PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property('hdd_string', phodevi::smart_caching);
 				break;
 			case 'scheduler':
-				$property = new phodevi_device_property('hdd_scheduler', PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property('hdd_scheduler', phodevi::smart_caching);
 				break;
 		}
 

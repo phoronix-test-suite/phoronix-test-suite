@@ -21,11 +21,6 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-define('PHODEVI_AVOID_CACHE', 0); // No caching
-define('PHODEVI_STAND_CACHE', 1); // Standard caching
-define('PHODEVI_SMART_CACHE', 2); // Smart caching
-define('PHODEVI_PATH', dirname(__FILE__) . '/');
-
 class phodevi
 {
 	private static $device_cache = null;
@@ -45,6 +40,10 @@ class phodevi
 		'bsd' => false,
 		'windows' => false
 		);
+
+	const no_caching = 1;
+	const std_caching = 2;
+	const smart_caching = 3;
 
 	public static function read_name($device)
 	{
@@ -80,7 +79,7 @@ class phodevi
 	}
 	public static function load_sensors()
 	{
-		foreach(glob(PHODEVI_PATH . 'sensors/*') as $sensor_obj_file)
+		foreach(glob(dirname(__FILE__) . '/sensors/*') as $sensor_obj_file)
 		{
 			$sensor_obj_name = basename($sensor_obj_file, '.php');
 
@@ -271,7 +270,7 @@ class phodevi
 
 			$cache_code = $property->cache_code();
 
-			if($cache_code != PHODEVI_AVOID_CACHE && isset(self::$device_cache[$device][$read_property]))
+			if($cache_code != phodevi::no_caching && isset(self::$device_cache[$device][$read_property]))
 			{
 				$value = self::$device_cache[$device][$read_property];
 			}
@@ -295,11 +294,11 @@ class phodevi
 						$value = pts_strings::strip_string($value);
 					}
 
-					if($cache_code != PHODEVI_AVOID_CACHE)
+					if($cache_code != phodevi::no_caching)
 					{
 						self::$device_cache[$device][$read_property] = $value;
 
-						if($cache_code == PHODEVI_SMART_CACHE)
+						if($cache_code == phodevi::smart_caching)
 						{
 							// TODO: For now just copy the smart cache to other var, but come up with better yet efficient way
 							self::$smart_cache[$device][$read_property] = $value;

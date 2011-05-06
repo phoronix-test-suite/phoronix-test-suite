@@ -28,7 +28,7 @@ class phodevi_audio extends phodevi_device_interface
 		switch($identifier)
 		{
 			case 'identifier':
-				$property = new phodevi_device_property('audio_processor_string', PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property('audio_processor_string', phodevi::smart_caching);
 				break;
 		}
 

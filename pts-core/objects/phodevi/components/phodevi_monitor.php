@@ -28,16 +28,16 @@ class phodevi_monitor extends phodevi_device_interface
 		switch($identifier)
 		{
 			case 'identifier':
-				$property = new phodevi_device_property('monitor_string', PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property('monitor_string', phodevi::smart_caching);
 				break;
 			case 'count':
-				$property = new phodevi_device_property('monitor_count', PHODEVI_STAND_CACHE);
+				$property = new phodevi_device_property('monitor_count', phodevi::std_caching);
 				break;
 			case 'layout':
-				$property = new phodevi_device_property('monitor_layout', PHODEVI_STAND_CACHE);
+				$property = new phodevi_device_property('monitor_layout', phodevi::std_caching);
 				break;
 			case 'modes':
-				$property = new phodevi_device_property('monitor_modes', PHODEVI_STAND_CACHE);
+				$property = new phodevi_device_property('monitor_modes', phodevi::std_caching);
 				break;
 		}
 

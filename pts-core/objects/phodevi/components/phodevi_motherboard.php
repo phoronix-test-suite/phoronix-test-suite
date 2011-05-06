@@ -28,22 +28,19 @@ class phodevi_motherboard extends phodevi_device_interface
 		switch($identifier)
 		{
 			case 'identifier':
-				$property = new phodevi_device_property('motherboard_string', PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property('motherboard_string', phodevi::smart_caching);
 				break;
 			case 'serial-number':
-				$property = new phodevi_device_property('serial_number', PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property('serial_number', phodevi::smart_caching);
 				break;
 			case 'power-mode':
-				$property = new phodevi_device_property('power_mode', PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property('power_mode', phodevi::smart_caching);
 				break;
 			case 'pci-devices':
-				$property = new phodevi_device_property('pci_devices', PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property('pci_devices', phodevi::smart_caching);
 				break;
 			case 'usb-devices':
-				$property = new phodevi_device_property('usb_devices', PHODEVI_STAND_CACHE);
-				break;
-			default:
-				$property = new phodevi_device_property(null, false);
+				$property = new phodevi_device_property('usb_devices', phodevi::std_caching);
 				break;
 		}
 

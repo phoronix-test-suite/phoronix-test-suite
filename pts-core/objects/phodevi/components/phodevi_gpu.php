@@ -28,37 +28,37 @@ class phodevi_gpu extends phodevi_device_interface
 		switch($identifier)
 		{
 			case 'identifier':
-				$property = new phodevi_device_property('gpu_string', PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property('gpu_string', phodevi::smart_caching);
 				break;
 			case 'model':
-				$property = new phodevi_device_property('gpu_model', PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property('gpu_model', phodevi::smart_caching);
 				break;
 			case 'frequency':
-				$property = new phodevi_device_property('gpu_frequency_string', PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property('gpu_frequency_string', phodevi::smart_caching);
 				break;
 			case 'stock-frequency':
-				$property = new phodevi_device_property('gpu_stock_frequency', PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property('gpu_stock_frequency', phodevi::smart_caching);
 				break;
 			case 'memory-capacity':
-				$property = new phodevi_device_property('gpu_memory_size', PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property('gpu_memory_size', phodevi::smart_caching);
 				break;
 			case 'aa-level':
-				$property = new phodevi_device_property('gpu_aa_level', PHODEVI_AVOID_CACHE);
+				$property = new phodevi_device_property('gpu_aa_level', phodevi::no_caching);
 				break;
 			case 'af-level':
-				$property = new phodevi_device_property('gpu_af_level', PHODEVI_AVOID_CACHE);
+				$property = new phodevi_device_property('gpu_af_level', phodevi::no_caching);
 				break;
 			case 'compute-cores':
-				$property = new phodevi_device_property('gpu_compute_cores', PHODEVI_STAND_CACHE);
+				$property = new phodevi_device_property('gpu_compute_cores', phodevi::std_caching);
 				break;
 			case 'available-modes':
-				$property = new phodevi_device_property('gpu_available_modes', PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property('gpu_available_modes', phodevi::smart_caching);
 				break;
 			case 'screen-resolution':
-				$property = new phodevi_device_property('gpu_screen_resolution', PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property('gpu_screen_resolution', phodevi::smart_caching);
 				break;
 			case 'screen-resolution-string':
-				$property = new phodevi_device_property('gpu_screen_resolution_string', PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property('gpu_screen_resolution_string', phodevi::smart_caching);
 				break;
 		}
 

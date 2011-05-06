@@ -28,22 +28,22 @@ class phodevi_cpu extends phodevi_device_interface
 		switch($identifier)
 		{
 			case 'identifier':
-				$property = new phodevi_device_property('cpu_string', PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property('cpu_string', phodevi::smart_caching);
 				break;
 			case 'model':
-				$property = new phodevi_device_property('cpu_model', PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property('cpu_model', phodevi::smart_caching);
 				break;
 			case 'mhz-default-frequency':
-				$property = new phodevi_device_property('cpu_default_frequency_mhz', PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property('cpu_default_frequency_mhz', phodevi::smart_caching);
 				break;
 			case 'default-frequency':
-				$property = new phodevi_device_property(array('cpu_default_frequency', 0), PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property(array('cpu_default_frequency', 0), phodevi::smart_caching);
 				break;
 			case 'core-count':
-				$property = new phodevi_device_property('cpu_core_count', PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property('cpu_core_count', phodevi::smart_caching);
 				break;
 			case 'power-savings-mode':
-				$property = new phodevi_device_property('cpu_power_savings_mode', PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property('cpu_power_savings_mode', phodevi::smart_caching);
 				break;
 		}
 

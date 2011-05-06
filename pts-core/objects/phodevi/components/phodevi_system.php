@@ -28,70 +28,70 @@ class phodevi_system extends phodevi_device_interface
 		switch($identifier)
 		{
 			case 'username':
-				$property = new phodevi_device_property('sw_username', PHODEVI_STAND_CACHE);
+				$property = new phodevi_device_property('sw_username', phodevi::std_caching);
 				break;
 			case 'hostname':
-				$property = new phodevi_device_property('sw_hostname', PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property('sw_hostname', phodevi::smart_caching);
 				break;
 			case 'vendor-identifier':
-				$property = new phodevi_device_property('sw_vendor_identifier', PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property('sw_vendor_identifier', phodevi::smart_caching);
 				break;
 			case 'filesystem':
-				$property = new phodevi_device_property('sw_filesystem', PHODEVI_AVOID_CACHE);
+				$property = new phodevi_device_property('sw_filesystem', phodevi::no_caching);
 				break;
 			case 'virtualized-mode':
-				$property = new phodevi_device_property('sw_virtualized_mode', PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property('sw_virtualized_mode', phodevi::smart_caching);
 				break;
 			case 'java-version':
-				$property = new phodevi_device_property('sw_java_version', PHODEVI_STAND_CACHE);
+				$property = new phodevi_device_property('sw_java_version', phodevi::std_caching);
 				break;
 			case 'python-version':
-				$property = new phodevi_device_property('sw_python_version', PHODEVI_STAND_CACHE);
+				$property = new phodevi_device_property('sw_python_version', phodevi::std_caching);
 				break;
 			case 'wine-version':
-				$property = new phodevi_device_property('sw_wine_version', PHODEVI_STAND_CACHE);
+				$property = new phodevi_device_property('sw_wine_version', phodevi::std_caching);
 				break;
 			case 'display-server':
-				$property = new phodevi_device_property('sw_display_server', PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property('sw_display_server', phodevi::smart_caching);
 				break;
 			case 'display-driver':
-				$property = new phodevi_device_property(array('sw_display_driver', false), PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property(array('sw_display_driver', false), phodevi::smart_caching);
 				break;
 			case 'display-driver-string':
-				$property = new phodevi_device_property(array('sw_display_driver', true), PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property(array('sw_display_driver', true), phodevi::smart_caching);
 				break;
 			case 'dri-display-driver':
-				$property = new phodevi_device_property('sw_dri_display_driver', PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property('sw_dri_display_driver', phodevi::smart_caching);
 				break;
 			case 'opengl-driver':
-				$property = new phodevi_device_property('sw_opengl_driver', PHODEVI_STAND_CACHE);
+				$property = new phodevi_device_property('sw_opengl_driver', phodevi::std_caching);
 				break;
 			case 'opengl-vendor':
-				$property = new phodevi_device_property('sw_opengl_vendor', PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property('sw_opengl_vendor', phodevi::smart_caching);
 				break;
 			case 'desktop-environment':
-				$property = new phodevi_device_property('sw_desktop_environment', PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property('sw_desktop_environment', phodevi::smart_caching);
 				break;
 			case 'operating-system':
-				$property = new phodevi_device_property('sw_operating_system', PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property('sw_operating_system', phodevi::smart_caching);
 				break;
 			case 'os-version':
-				$property = new phodevi_device_property('sw_os_version', PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property('sw_os_version', phodevi::smart_caching);
 				break;
 			case 'kernel':
-				$property = new phodevi_device_property('sw_kernel', PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property('sw_kernel', phodevi::smart_caching);
 				break;
 			case 'kernel-architecture':
-				$property = new phodevi_device_property('sw_kernel_architecture', PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property('sw_kernel_architecture', phodevi::smart_caching);
 				break;
 			case 'kernel-string':
-				$property = new phodevi_device_property('sw_kernel_string', PHODEVI_SMART_CACHE);
+				$property = new phodevi_device_property('sw_kernel_string', phodevi::smart_caching);
 				break;
 			case 'compiler':
-				$property = new phodevi_device_property('sw_compiler', PHODEVI_STAND_CACHE);
+				$property = new phodevi_device_property('sw_compiler', phodevi::std_caching);
 				break;
 			case 'system-layer':
-				$property = new phodevi_device_property('sw_system_layer', PHODEVI_STAND_CACHE);
+				$property = new phodevi_device_property('sw_system_layer', phodevi::std_caching);
 				break;
 		}
 
