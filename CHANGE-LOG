@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Rework test install path handling
+- pts-core: Finish eliminating XML-based definitions
 
 Phoronix Test Suite 3.2 Milestone 2
 28 April 2011

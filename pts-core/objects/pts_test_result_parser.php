@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010, Phoronix Media
-	Copyright (C) 2010, Michael Larabel
+	Copyright (C) 2010 - 2011, Phoronix Media
+	Copyright (C) 2010 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -37,9 +37,9 @@ class pts_test_result_parser
 		self::$monitoring_sensors = array();
 		$test_directory = $test_profile->get_install_dir();
 		$results_parser_xml = new pts_parse_results_nye_XmlReader($parse_xml_file);
-		$monitor_sensor = $results_parser_xml->getXMLArrayValues(P_MONITOR_PARSER_SENSOR);
-		$monitor_frequency = $results_parser_xml->getXMLArrayValues(P_MONITOR_PARSER_FREQUENCY);
-		$monitor_report_as = $results_parser_xml->getXMLArrayValues(P_MONITOR_PARSER_REPORT);
+		$monitor_sensor = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/SystemMonitor/Sensor');
+		$monitor_frequency = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/SystemMonitor/PollingFrequency');
+		$monitor_report_as = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/SystemMonitor/Report');
 
 		if(count($monitor_sensor) == 0)
 		{
@@ -332,12 +332,12 @@ class pts_test_result_parser
 	protected static function parse_iqc_result(&$test_profile, $parse_xml_file, $log_file, $pts_test_arguments, $extra_arguments)
 	{
 		$results_parser_xml = new pts_parse_results_nye_XmlReader($parse_xml_file);
-		$result_match_test_arguments = $results_parser_xml->getXMLArrayValues(P_IMAGE_PARSER_MATCH_TO_TEST_ARGUMENTS);
-		$result_iqc_source_file = $results_parser_xml->getXMLArrayValues(P_IMAGE_PARSER_SOURCE_IMAGE);
-		$result_iqc_image_x = $results_parser_xml->getXMLArrayValues(P_IMAGE_PARSER_IMAGE_X);
-		$result_iqc_image_y = $results_parser_xml->getXMLArrayValues(P_IMAGE_PARSER_IMAGE_Y);
-		$result_iqc_image_width = $results_parser_xml->getXMLArrayValues(P_IMAGE_PARSER_IMAGE_WIDTH);
-		$result_iqc_image_height = $results_parser_xml->getXMLArrayValues(P_IMAGE_PARSER_IMAGE_HEIGHT);
+		$result_match_test_arguments = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/ImageParser/MatchToTestArguments');
+		$result_iqc_source_file = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/ImageParser/SourceImage');
+		$result_iqc_image_x = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/ImageParser/ImageX');
+		$result_iqc_image_y = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/ImageParser/ImageY');
+		$result_iqc_image_width = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/ImageParser/ImageWidth');
+		$result_iqc_image_height = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/ImageParser/ImageHeight');
 
 		$test_result = false;
 
@@ -395,18 +395,18 @@ class pts_test_result_parser
 	protected static function parse_result_process($test_identifier, $parse_xml_file, $log_file, $pts_test_arguments, $extra_arguments, $is_numeric_check = true)
 	{
 		$results_parser_xml = new pts_parse_results_nye_XmlReader($parse_xml_file);
-		$result_match_test_arguments = $results_parser_xml->getXMLArrayValues(P_RESULTS_PARSER_MATCH_TO_TEST_ARGUMENTS);
-		$result_template = $results_parser_xml->getXMLArrayValues(P_RESULTS_PARSER_TEMPLATE);
-		$result_key = $results_parser_xml->getXMLArrayValues(P_RESULTS_PARSER_RESULT_KEY);
-		$result_line_hint = $results_parser_xml->getXMLArrayValues(P_RESULTS_PARSER_LINE_HINT);
-		$result_line_before_hint = $results_parser_xml->getXMLArrayValues(P_RESULTS_PARSER_LINE_BEFORE_HINT);
-		$result_line_after_hint = $results_parser_xml->getXMLArrayValues(P_RESULTS_PARSER_LINE_AFTER_HINT);
-		$result_before_string = $results_parser_xml->getXMLArrayValues(P_RESULTS_PARSER_RESULT_BEFORE_STRING);
-		$result_divide_by = $results_parser_xml->getXMLArrayValues(P_RESULTS_PARSER_DIVIDE_BY);
-		$result_multiply_by = $results_parser_xml->getXMLArrayValues(P_RESULTS_PARSER_MULTIPLY_BY);
-		$strip_from_result = $results_parser_xml->getXMLArrayValues(P_RESULTS_PARSER_STRIP_FROM_RESULT);
-		$strip_result_postfix = $results_parser_xml->getXMLArrayValues(P_RESULTS_PARSER_STRIP_RESULT_POSTFIX);
-		$multi_match = $results_parser_xml->getXMLArrayValues(P_RESULTS_PARSER_MULTI_MATCH);
+		$result_match_test_arguments = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/ResultsParser/MatchToTestArguments');
+		$result_template = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/ResultsParser/OutputTemplate');
+		$result_key = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/ResultsParser/ResultKey');
+		$result_line_hint = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/ResultsParser/LineHint');
+		$result_line_before_hint = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/ResultsParser/LineBeforeHint');
+		$result_line_after_hint = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/ResultsParser/LineAfterHint');
+		$result_before_string = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/ResultsParser/ResultBeforeString');
+		$result_divide_by = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/ResultsParser/DivideResultBy');
+		$result_multiply_by = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/ResultsParser/MultiplyResultBy');
+		$strip_from_result = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/ResultsParser/StripFromResult');
+		$strip_result_postfix = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/ResultsParser/StripResultPostfix');
+		$multi_match = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/ResultsParser/MultiMatch');
 		$test_result = false;
 
 		for($i = 0; $i < count($result_template); $i++)

@@ -70,34 +70,6 @@ function pts_define_directories()
 	define('PTS_TEST_PROFILE_PATH', PTS_USER_PATH . 'test-profiles/');
 	define('PTS_TEST_SUITE_PATH', PTS_USER_PATH . 'test-suites/');
 }
-function pts_load_xml_definitions($definition_file)
-{
-	static $loaded_definition_files = null;
-
-	if(isset($loaded_definition_files[$definition_file]))
-	{
-		return true;
-	}
-
-	$loaded_definition_files[$definition_file] = true;
-	$definition_file = PTS_CORE_PATH . 'definitions/' . $definition_file;
-
-	if(!is_file($definition_file))
-	{
-		return false;
-	}
-
-	$xml_reader = new nye_XmlReader($definition_file);
-	$definitions_names = $xml_reader->getXMLArrayValues('PhoronixTestSuite/Definitions/Define/Name');
-	$definitions_values = $xml_reader->getXMLArrayValues('PhoronixTestSuite/Definitions/Define/Value');
-
-	for($i = 0; $i < count($definitions_names); $i++)
-	{
-		define($definitions_names[$i], $definitions_values[$i]);
-	}
-
-	return true;
-}
 function pts_needed_extensions()
 {
 	return array(

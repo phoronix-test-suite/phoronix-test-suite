@@ -29,7 +29,6 @@ class make_download_cache implements pts_option_interface
 	{
 		// Generates a PTS Download Cache
 		$dc_write_directory = null;
-		pts_load_xml_definitions('test-profile-downloads.xml');
 
 		$dc_write_directory = pts_strings::add_trailing_slash(pts_client::parse_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Installation/CacheDirectory', PTS_DOWNLOAD_CACHE_PATH)));
 

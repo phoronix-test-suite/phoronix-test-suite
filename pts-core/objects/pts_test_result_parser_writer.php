@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010, Phoronix Media
-	Copyright (C) 2010, Michael Larabel
+	Copyright (C) 2010 - 2011, Phoronix Media
+	Copyright (C) 2010 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -39,61 +39,61 @@ class pts_test_result_parser_writer
 	public function rebuild_parser_file($xml_file)
 	{
 		$xml_parser = new pts_parse_results_nye_XmlReader($xml_file);
-		$result_template = $xml_parser->getXMLArrayValues(P_RESULTS_PARSER_TEMPLATE);
-		$result_match_test_arguments = $xml_parser->getXMLArrayValues(P_RESULTS_PARSER_MATCH_TO_TEST_ARGUMENTS);
-		$result_key = $xml_parser->getXMLArrayValues(P_RESULTS_PARSER_RESULT_KEY);
-		$result_line_hint = $xml_parser->getXMLArrayValues(P_RESULTS_PARSER_LINE_HINT);
-		$result_line_before_hint = $xml_parser->getXMLArrayValues(P_RESULTS_PARSER_LINE_BEFORE_HINT);
-		$result_line_after_hint = $xml_parser->getXMLArrayValues(P_RESULTS_PARSER_LINE_AFTER_HINT);
-		$result_before_string = $xml_parser->getXMLArrayValues(P_RESULTS_PARSER_RESULT_BEFORE_STRING);
-		$strip_from_result = $xml_parser->getXMLArrayValues(P_RESULTS_PARSER_STRIP_FROM_RESULT);
-		$strip_result_postfix = $xml_parser->getXMLArrayValues(P_RESULTS_PARSER_STRIP_RESULT_POSTFIX);
-		$multi_match = $xml_parser->getXMLArrayValues(P_RESULTS_PARSER_MULTI_MATCH);
-		$result_divide_by = $xml_parser->getXMLArrayValues(P_RESULTS_PARSER_DIVIDE_BY);
-		$result_multiply_by = $xml_parser->getXMLArrayValues(P_RESULTS_PARSER_MULTIPLY_BY);
+		$result_template = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ResultsParser/OutputTemplate');
+		$result_match_test_arguments = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ResultsParser/MatchToTestArguments');
+		$result_key = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ResultsParser/ResultKey');
+		$result_line_hint = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ResultsParser/LineHint');
+		$result_line_before_hint = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ResultsParser/LineBeforeHint');
+		$result_line_after_hint = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ResultsParser/LineAfterHint');
+		$result_before_string = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ResultsParser/ResultBeforeString');
+		$strip_from_result = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ResultsParser/StripFromResult');
+		$strip_result_postfix = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ResultsParser/StripResultPostfix');
+		$multi_match = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ResultsParser/MultiMatch');
+		$result_divide_by = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ResultsParser/DivideResultBy');
+		$result_multiply_by = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ResultsParser/MultiplyResultBy');
 
 		foreach(array_keys($result_template) as $i)
 		{
-			$this->xml_writer->addXmlNode(P_RESULTS_PARSER_TEMPLATE, $result_template[$i]);
-			$this->xml_writer->addXmlNodeWNE(P_RESULTS_PARSER_MATCH_TO_TEST_ARGUMENTS, $result_match_test_arguments[$i]);
-			$this->xml_writer->addXmlNodeWNE(P_RESULTS_PARSER_RESULT_KEY, $result_key[$i]);
-			$this->xml_writer->addXmlNodeWNE(P_RESULTS_PARSER_LINE_HINT, $result_line_hint[$i]);
-			$this->xml_writer->addXmlNodeWNE(P_RESULTS_PARSER_LINE_BEFORE_HINT, $result_line_before_hint[$i]);
-			$this->xml_writer->addXmlNodeWNE(P_RESULTS_PARSER_LINE_AFTER_HINT, $result_line_after_hint[$i]);
-			$this->xml_writer->addXmlNodeWNE(P_RESULTS_PARSER_RESULT_BEFORE_STRING, $result_before_string[$i]);
-			$this->xml_writer->addXmlNodeWNE(P_RESULTS_PARSER_STRIP_FROM_RESULT, $strip_from_result[$i]);
-			$this->xml_writer->addXmlNodeWNE(P_RESULTS_PARSER_STRIP_RESULT_POSTFIX, $strip_result_postfix[$i]);
-			$this->xml_writer->addXmlNodeWNE(P_RESULTS_PARSER_MULTI_MATCH, $multi_match[$i]);
-			$this->xml_writer->addXmlNodeWNE(P_RESULTS_PARSER_DIVIDE_BY, $result_divide_by[$i]);
-			$this->xml_writer->addXmlNodeWNE(P_RESULTS_PARSER_MULTIPLY_BY, $result_multiply_by[$i]);
+			$this->xml_writer->addXmlNode('PhoronixTestSuite/ResultsParser/OutputTemplate', $result_template[$i]);
+			$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/ResultsParser/MatchToTestArguments', $result_match_test_arguments[$i]);
+			$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/ResultsParser/ResultKey', $result_key[$i]);
+			$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/ResultsParser/LineHint', $result_line_hint[$i]);
+			$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/ResultsParser/LineBeforeHint', $result_line_before_hint[$i]);
+			$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/ResultsParser/LineAfterHint', $result_line_after_hint[$i]);
+			$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/ResultsParser/ResultBeforeString', $result_before_string[$i]);
+			$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/ResultsParser/StripFromResult', $strip_from_result[$i]);
+			$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/ResultsParser/StripResultPostfix', $strip_result_postfix[$i]);
+			$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/ResultsParser/MultiMatch', $multi_match[$i]);
+			$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/ResultsParser/DivideResultBy', $result_divide_by[$i]);
+			$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/ResultsParser/MultiplyResultBy', $result_multiply_by[$i]);
 		}
 
-		$result_iqc_source_file = $xml_parser->getXMLArrayValues(P_IMAGE_PARSER_SOURCE_IMAGE);
-		$result_match_test_arguments = $xml_parser->getXMLArrayValues(P_IMAGE_PARSER_MATCH_TO_TEST_ARGUMENTS);
-		$result_iqc_image_x = $xml_parser->getXMLArrayValues(P_IMAGE_PARSER_IMAGE_X);
-		$result_iqc_image_y = $xml_parser->getXMLArrayValues(P_IMAGE_PARSER_IMAGE_Y);
-		$result_iqc_image_width = $xml_parser->getXMLArrayValues(P_IMAGE_PARSER_IMAGE_WIDTH);
-		$result_iqc_image_height = $xml_parser->getXMLArrayValues(P_IMAGE_PARSER_IMAGE_HEIGHT);
+		$result_iqc_source_file = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ImageParser/SourceImage');
+		$result_match_test_arguments = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ImageParser/MatchToTestArguments');
+		$result_iqc_image_x = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ImageParser/ImageX');
+		$result_iqc_image_y = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ImageParser/ImageY');
+		$result_iqc_image_width = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ImageParser/ImageWidth');
+		$result_iqc_image_height = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ImageParser/ImageHeight');
 
 		foreach(array_keys($result_iqc_source_file) as $i)
 		{
-			$this->xml_writer->addXmlNode(P_IMAGE_PARSER_SOURCE_IMAGE, $result_iqc_source_file[$i]);
-			$this->xml_writer->addXmlNodeWNE(P_IMAGE_PARSER_MATCH_TO_TEST_ARGUMENTS, $result_match_test_arguments[$i]);
-			$this->xml_writer->addXmlNodeWNE(P_IMAGE_PARSER_IMAGE_X, $result_iqc_image_x[$i]);
-			$this->xml_writer->addXmlNodeWNE(P_IMAGE_PARSER_IMAGE_Y, $result_iqc_image_y[$i]);
-			$this->xml_writer->addXmlNodeWNE(P_IMAGE_PARSER_IMAGE_WIDTH, $result_iqc_image_width[$i]);
-			$this->xml_writer->addXmlNodeWNE(P_IMAGE_PARSER_IMAGE_HEIGHT, $result_iqc_image_height[$i]);
+			$this->xml_writer->addXmlNode('PhoronixTestSuite/ImageParser/SourceImage', $result_iqc_source_file[$i]);
+			$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/ImageParser/MatchToTestArguments', $result_match_test_arguments[$i]);
+			$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/ImageParser/ImageX', $result_iqc_image_x[$i]);
+			$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/ImageParser/ImageY', $result_iqc_image_y[$i]);
+			$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/ImageParser/ImageWidth', $result_iqc_image_width[$i]);
+			$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/ImageParser/ImageHeight', $result_iqc_image_height[$i]);
 		}
 
-		$monitor_sensor = $xml_parser->getXMLArrayValues(P_MONITOR_PARSER_SENSOR);
-		$monitor_frequency = $xml_parser->getXMLArrayValues(P_MONITOR_PARSER_FREQUENCY);
-		$monitor_report_as = $xml_parser->getXMLArrayValues(P_MONITOR_PARSER_REPORT);
+		$monitor_sensor = $xml_parser->getXMLArrayValues('PhoronixTestSuite/SystemMonitor/Sensor');
+		$monitor_frequency = $xml_parser->getXMLArrayValues('PhoronixTestSuite/SystemMonitor/PollingFrequency');
+		$monitor_report_as = $xml_parser->getXMLArrayValues('PhoronixTestSuite/SystemMonitor/Report');
 
 		foreach(array_keys($monitor_sensor) as $i)
 		{
-			$this->xml_writer->addXmlNode(P_MONITOR_PARSER_SENSOR, $monitor_sensor[$i]);
-			$this->xml_writer->addXmlNodeWNE(P_MONITOR_PARSER_FREQUENCY, $monitor_frequency[$i]);
-			$this->xml_writer->addXmlNodeWNE(P_MONITOR_PARSER_REPORT, $monitor_report_as[$i]);
+			$this->xml_writer->addXmlNode('PhoronixTestSuite/SystemMonitor/Sensor', $monitor_sensor[$i]);
+			$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/SystemMonitor/PollingFrequency', $monitor_frequency[$i]);
+			$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/SystemMonitor/Report', $monitor_report_as[$i]);
 		}
 	}
 }

@@ -34,11 +34,6 @@ class pts_module_manager
 	public static function load_module($module)
 	{
 		// Load the actual file needed that contains the module
-		if(is_file(PTS_CORE_PATH . "definitions/module-" . $module . ".xml"))
-		{
-			pts_load_xml_definitions("module-" . $module . ".xml");
-		}
-
 		return (is_file(PTS_MODULE_PATH . $module . ".php") && include_once(PTS_MODULE_PATH . $module . ".php")) || (is_file(PTS_MODULE_LOCAL_PATH . $module . ".php") && include_once(PTS_MODULE_LOCAL_PATH . $module . ".php"));
 	}
 	public static function module_call($module, $process, &$object_pass = null)
