@@ -89,7 +89,7 @@ class dump_documentation implements pts_option_interface
 			}
 		}
 
-		$dom->saveHTMLFile(PTS_PATH . 'documentation/html_sections/00_user_options.html');
+		$dom->saveHTMLFile(PTS_PATH . 'documentation/html_stubs/00_user_options.html');
 
 		// Write the virtual suites HTML
 		$dom = new DOMDocument();
@@ -123,10 +123,10 @@ class dump_documentation implements pts_option_interface
 			$body->appendChild($p);
 		}
 
-		$dom->saveHTMLFile(PTS_PATH . 'documentation/html_sections/55_virtual_suites.html');
+		$dom->saveHTMLFile(PTS_PATH . 'documentation/html_stubs/55_virtual_suites.html');
 
 		// Load the HTML documentation
-		foreach(pts_file_io::glob(PTS_PATH . 'documentation/html_sections/*_*.html') as $html_file)
+		foreach(pts_file_io::glob(PTS_PATH . 'documentation/html_stubs/*_*.html') as $html_file)
 		{
 			$pdf->html_to_pdf($html_file);
 		}
