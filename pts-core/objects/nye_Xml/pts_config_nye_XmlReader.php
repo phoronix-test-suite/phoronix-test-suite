@@ -20,8 +20,6 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-pts_load_xml_definitions('user-config.xml');
-
 class pts_config_nye_XmlReader extends nye_XmlReader
 {
 	protected $override_values;

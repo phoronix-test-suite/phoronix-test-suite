@@ -209,9 +209,9 @@ class pts_test_installer
 
 					if(is_file($download_cache_file))
 					{
-						if(pts_config::read_bool_config(P_OPTION_CACHE_SYMLINK, 'FALSE') || pts_bypass::is_live_cd())
+						if(pts_config::read_bool_config('PhoronixTestSuite/Options/Installation/SymLinkFilesFromCache', 'FALSE') || pts_bypass::is_live_cd())
 						{
-							// P_OPTION_CACHE_SYMLINK is disabled by default
+							// SymLinkFilesFromCache is disabled by default
 							pts_client::$display->test_install_download_file('LINK_FROM_CACHE', $download_package);
 							symlink($download_cache_file, $download_destination);
 						}
@@ -262,13 +262,13 @@ class pts_test_installer
 
 						do
 						{
-							if((pts_c::$test_flags ^ pts_c::batch_mode) && (pts_c::$test_flags ^ pts_c::auto_mode) && pts_config::read_bool_config(P_OPTION_PROMPT_DOWNLOADLOC, 'FALSE') && count($package_urls) > 1)
+							if((pts_c::$test_flags ^ pts_c::batch_mode) && (pts_c::$test_flags ^ pts_c::auto_mode) && pts_config::read_bool_config('PhoronixTestSuite/Options/Installation/PromptForDownloadMirror', 'FALSE') && count($package_urls) > 1)
 							{
 								// Prompt user to select mirror
 								do
 								{
 									echo PHP_EOL . 'Available Download Mirrors:' . PHP_EOL . PHP_EOL;
-									$url = pts_user_io::prompt_text_menu('Select Your Preferred Mirror', $package_urls, false);
+									$url = pts_user_io::prompt_text_menu('Select Preferred Mirror', $package_urls, false);
 								}
 								while(pts_strings::is_url($url) == false);
 							}
@@ -465,7 +465,7 @@ class pts_test_installer
 				pts_module_manager::module_process('__post_test_install', $identifier);
 				$installed = true;
 
-				if(pts_config::read_bool_config(P_OPTION_TEST_REMOVEDOWNLOADS, 'FALSE'))
+				if(pts_config::read_bool_config('PhoronixTestSuite/Options/Installation/RemoveDownloadFiles', 'FALSE'))
 				{
 					// Remove original downloaded files
 					foreach($test_install_request->get_download_objects() as $download_object)

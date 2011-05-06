@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2010, Phoronix Media
-	Copyright (C) 2008 - 2010, Michael Larabel
+	Copyright (C) 2008 - 2011, Phoronix Media
+	Copyright (C) 2008 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -92,7 +92,7 @@ class pts_test_execution
 			$cache_share = new pts_storage_object(false, false);
 		}
 
-		if($test_run_manager->get_results_identifier() != null && $test_run_manager->get_file_name() != null && pts_config::read_bool_config(P_OPTION_LOG_TEST_OUTPUT, 'FALSE'))
+		if($test_run_manager->get_results_identifier() != null && $test_run_manager->get_file_name() != null && pts_config::read_bool_config('PhoronixTestSuite/Options/Testing/SaveTestLogs', 'FALSE'))
 		{
 			$backup_test_log_dir = PTS_SAVE_RESULTS_PATH . $test_run_manager->get_file_name() . '/test-logs/active/' . $test_run_manager->get_results_identifier() . '/';
 			pts_file_io::delete($backup_test_log_dir);
@@ -325,7 +325,7 @@ class pts_test_execution
 			unset($cache_share);
 		}
 
-		if($test_run_manager->get_results_identifier() != null && (pts_config::read_bool_config(P_OPTION_LOG_INSTALLATION, 'FALSE')))
+		if($test_run_manager->get_results_identifier() != null && (pts_config::read_bool_config('PhoronixTestSuite/Options/Testing/SaveInstallationLogs', 'FALSE')))
 		{
 			if(is_file($test_run_request->test_profile->get_install_dir() . 'install.log'))
 			{

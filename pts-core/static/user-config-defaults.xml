@@ -26,7 +26,6 @@
 			<CacheDirectory>~/.phoronix-test-suite/download-cache/</CacheDirectory>
 		</Installation>
 		<Testing>
-			<SleepTimeBetweenTests>10</SleepTimeBetweenTests>
 			<SaveSystemLogs>TRUE</SaveSystemLogs>
 			<SaveInstallationLogs>FALSE</SaveInstallationLogs>
 			<SaveTestLogs>FALSE</SaveTestLogs>

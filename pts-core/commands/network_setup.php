@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2010, Phoronix Media
-	Copyright (C) 2009 - 2010, Michael Larabel
+	Copyright (C) 2009 - 2011, Phoronix Media
+	Copyright (C) 2009 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -42,7 +42,10 @@ class network_setup implements pts_option_interface
 		if(pts_network::http_get_contents("http://www.phoronix-test-suite.com/PTS", $proxy_address, $proxy_port) == "PTS")
 		{
 			echo "\nProxy Setup Completed; Storing Network Settings.\n";
-			pts_config::user_config_generate(array(P_OPTION_NET_PROXY_ADDRESS => $proxy_address, P_OPTION_NET_PROXY_PORT => $proxy_port));
+			pts_config::user_config_generate(array(
+				'PhoronixTestSuite/Options/Networking/ProxyAddress' => $proxy_address,
+				'PhoronixTestSuite/Options/Networking/ProxyPort' => $proxy_port
+				));
 		}
 		else
 		{

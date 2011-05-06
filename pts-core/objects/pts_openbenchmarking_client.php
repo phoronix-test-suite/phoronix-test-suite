@@ -56,9 +56,9 @@ class pts_openbenchmarking_client
 		$composite_xml = $result_file->xml_parser->getXML();
 		$system_log_dir = PTS_SAVE_RESULTS_PATH . $result_file->get_identifier() . '/system-logs/';
 
-		if(pts_config::read_bool_config(P_OPTION_ALWAYS_UPLOAD_SYSTEM_LOGS, 'FALSE'))
+		if(pts_config::read_bool_config('PhoronixTestSuite/Options/OpenBenchmarking/AlwaysUploadSystemLogs', 'FALSE'))
 		{
-			$upload_system_logs = P_OPTION_ALWAYS_UPLOAD_SYSTEM_LOGS;
+			$upload_system_logs = true;
 		}
 		else if(isset(self::$client_settings['UploadSystemLogsByDefault']) && self::$client_settings['UploadSystemLogsByDefault'])
 		{
@@ -253,7 +253,7 @@ class pts_openbenchmarking_client
 				// Refreshing the indexes once every few days should be suffice
 				// Refresh approximately every three days by default
 				$index_cache_ttl = 3;
-				if(PTS_IS_CLIENT && ($config_ttl = pts_config::read_user_config(P_OPTION_OB_CACHE_TTL)))
+				if(PTS_IS_CLIENT && ($config_ttl = pts_config::read_user_config('PhoronixTestSuite/Options/OpenBenchmarking/IndexCacheTTL')))
 				{
 					if($config_ttl === 0)
 					{

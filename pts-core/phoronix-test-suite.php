@@ -128,7 +128,7 @@ if(!QUICK_START)
 
 	register_shutdown_function(array('pts_client', 'process_shutdown_tasks'));
 
-	if(($proxy_address = pts_config::read_user_config(P_OPTION_NET_PROXY_ADDRESS, false)) && ($proxy_port = pts_config::read_user_config(P_OPTION_NET_PROXY_PORT, false)))
+	if(($proxy_address = pts_config::read_user_config('PhoronixTestSuite/Options/Networking/ProxyAddress', false)) && ($proxy_port = pts_config::read_user_config('PhoronixTestSuite/Options/Networking/ProxyPort', false)))
 	{
 		define('NETWORK_PROXY', $proxy_address . ':' . $proxy_port);
 		define('NETWORK_PROXY_ADDRESS', $proxy_address);
@@ -141,14 +141,14 @@ if(!QUICK_START)
 		define('NETWORK_PROXY_PORT', $env_proxy[1]);
 	}
 
-	define('NETWORK_TIMEOUT', pts_config::read_user_config(P_OPTION_NET_TIMEOUT, 20));
+	define('NETWORK_TIMEOUT', pts_config::read_user_config('PhoronixTestSuite/Options/Networking/Timeout', 20));
 
 	if(ini_get('allow_url_fopen') == 'Off')
 	{
 		echo PHP_EOL . 'The allow_url_fopen option in your PHP configuration must be enabled for network support.' . PHP_EOL . PHP_EOL;
 		define('NO_NETWORK_COMMUNICATION', true);
 	}
-	else if(pts_config::read_bool_config(P_OPTION_NET_NO_NETWORK, 'FALSE'))
+	else if(pts_config::read_bool_config('PhoronixTestSuite/Options/Networking/NoNetworkCommunication', 'FALSE'))
 	{
 		define('NO_NETWORK_COMMUNICATION', true);
 		echo PHP_EOL . 'Network Communication Is Disabled For Your User Configuration.' . PHP_EOL . PHP_EOL;

@@ -103,7 +103,7 @@ class pts_test_install_request
 	public function scan_download_caches($local_download_caches, $remote_download_caches, $remote_files)
 	{
 		$download_location = $this->test_profile->get_install_dir();
-		$main_download_cache = pts_strings::add_trailing_slash(pts_client::parse_home_directory(pts_config::read_user_config(P_OPTION_CACHE_DIRECTORY, PTS_DOWNLOAD_CACHE_PATH)));
+		$main_download_cache = pts_strings::add_trailing_slash(pts_client::parse_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Installation/CacheDirectory', PTS_DOWNLOAD_CACHE_PATH)));
 
 		foreach($this->test_files as &$download_package)
 		{

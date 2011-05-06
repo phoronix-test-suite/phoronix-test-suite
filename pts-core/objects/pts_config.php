@@ -38,50 +38,49 @@ class pts_config
 
 		$config = new nye_XmlWriter('xsl/pts-user-config-viewer.xsl');
 
-		$config->addXmlNodeFromReader(P_OPTION_USAGE_REPORTING, $read_config);
-		$config->addXmlNodeFromReader(P_OPTION_SOFTWARE_REPORTING, $read_config);
-		$config->addXmlNodeFromReader(P_OPTION_HARDWARE_REPORTING, $read_config);
-		$config->addXmlNodeFromReader(P_OPTION_OB_CACHE_TTL, $read_config);
-		$config->addXmlNodeFromReader(P_OPTION_ALWAYS_UPLOAD_SYSTEM_LOGS, $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/OpenBenchmarking/AnonymousUsageReporting', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/OpenBenchmarking/AnonymousSoftwareReporting', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/OpenBenchmarking/AnonymousHardwareReporting', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/OpenBenchmarking/IndexCacheTTL', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/OpenBenchmarking/AlwaysUploadSystemLogs', $read_config);
 
-		$config->addXmlNodeFromReader(P_OPTION_DEFAULT_BROWSER, $read_config);
-		$config->addXmlNodeFromReader(P_OPTION_PHODEVI_CACHE, $read_config);
-		$config->addXmlNodeFromReader(P_OPTION_DISPLAY_MODE, $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/General/DefaultBrowser', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/General/UsePhodeviCache', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/General/DefaultDisplayMode', $read_config);
 
-		$config->addXmlNodeFromReader(P_OPTION_LOAD_MODULES, $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Modules/LoadModules', $read_config);
 
-		$config->addXmlNodeFromReader(P_OPTION_TEST_REMOVEDOWNLOADS, $read_config);
-		$config->addXmlNodeFromReader(P_OPTION_CACHE_SEARCHMEDIA, $read_config);
-		$config->addXmlNodeFromReader(P_OPTION_CACHE_SYMLINK, $read_config);
-		$config->addXmlNodeFromReader(P_OPTION_PROMPT_DOWNLOADLOC, $read_config);
-		$config->addXmlNodeFromReader(P_OPTION_TEST_ENVIRONMENT, $read_config);
-		$config->addXmlNodeFromReader(P_OPTION_CACHE_DIRECTORY, $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Installation/RemoveDownloadFiles', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Installation/SearchMediaForCache', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Installation/SymLinkFilesFromCache', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Installation/PromptForDownloadMirror', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Installation/EnvironmentDirectory', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Installation/CacheDirectory', $read_config);
 
-		$config->addXmlNodeFromReader(P_OPTION_TEST_SLEEPTIME, $read_config);
-		$config->addXmlNodeFromReader(P_OPTION_LOG_VSYSDETAILS, $read_config);
-		$config->addXmlNodeFromReader(P_OPTION_LOG_INSTALLATION, $read_config);
-		$config->addXmlNodeFromReader(P_OPTION_REMOVE_TEST_INSTALL_ON_COMPLETION, $read_config);
-		$config->addXmlNodeFromReader(P_OPTION_LOG_TEST_OUTPUT, $read_config);
-		$config->addXmlNodeFromReader(P_OPTION_RESULTS_DIRECTORY, $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Testing/SaveSystemLogs', $read_config);
+		$config->addXmlNodeFromReader('horonixTestSuite/Options/Testing/SaveInstallationLogs', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Testing/SaveTestLogs', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Testing/RemoveTestInstallOnCompletion', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Testing/ResultsDirectory', $read_config);
 
-		$config->addXmlNodeFromReader(P_OPTION_STATS_DYNAMIC_RUN_COUNT, $read_config);
-		$config->addXmlNodeFromReader(P_OPTION_STATS_NO_DYNAMIC_ON_LENGTH, $read_config);
-		$config->addXmlNodeFromReader(P_OPTION_STATS_STD_DEVIATION_THRESHOLD, $read_config);
-		$config->addXmlNodeFromReader(P_OPTION_STATS_EXPORT_RESULTS_TO, $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/TestResultValidation/DynamicRunCount', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/TestResultValidation/LimitDynamicToTestLength', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/TestResultValidation/StandardDeviationThreshold', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/TestResultValidation/ExportResultsTo', $read_config);
 
-		$config->addXmlNodeFromReader(P_OPTION_BATCH_SAVERESULTS, $read_config);
-		$config->addXmlNodeFromReader(P_OPTION_BATCH_LAUNCHBROWSER, $read_config);
-		$config->addXmlNodeFromReader(P_OPTION_BATCH_UPLOADRESULTS, $read_config);
-		$config->addXmlNodeFromReader(P_OPTION_BATCH_PROMPTIDENTIFIER, $read_config);
-		$config->addXmlNodeFromReader(P_OPTION_BATCH_PROMPTDESCRIPTION, $read_config);
-		$config->addXmlNodeFromReader(P_OPTION_BATCH_PROMPTSAVENAME, $read_config);
-		$config->addXmlNodeFromReader(P_OPTION_BATCH_TESTALLOPTIONS, $read_config);
-		$config->addXmlNodeFromReader(P_OPTION_BATCH_CONFIGURED, $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/BatchMode/SaveResults', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/BatchMode/OpenBrowser', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/BatchMode/UploadResults', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/BatchMode/PromptForTestIdentifier', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/BatchMode/PromptForTestDescription', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/BatchMode/PromptSaveName', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/BatchMode/RunAllTestCombinations', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/BatchMode/Configured', $read_config);
 
-		$config->addXmlNodeFromReader(P_OPTION_NET_NO_NETWORK, $read_config);
-		$config->addXmlNodeFromReader(P_OPTION_NET_TIMEOUT, $read_config);
-		$config->addXmlNodeFromReader(P_OPTION_NET_PROXY_ADDRESS, $read_config);
-		$config->addXmlNodeFromReader(P_OPTION_NET_PROXY_PORT, $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Networking/NoNetworkCommunication', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Networking/Timeout', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Networking/ProxyAddress', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Networking/ProxyPort', $read_config);
 
 		$config->saveXMLFile(PTS_USER_PATH . 'user-config.xml');
 	}

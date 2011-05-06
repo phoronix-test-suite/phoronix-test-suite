@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2010, Phoronix Media
-	Copyright (C) 2008 - 2010, Michael Larabel
+	Copyright (C) 2008 - 2011, Phoronix Media
+	Copyright (C) 2008 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -68,15 +68,6 @@ class pts_user_io
 		{
 			switch($question_id)
 			{
-				case 'SAVE_RESULTS':
-					$auto_answer = pts_config::read_user_config(P_OPTION_BATCH_SAVERESULTS, 'TRUE');
-					break;
-				case 'OPEN_BROWSER':
-					$auto_answer = pts_config::read_user_config(P_OPTION_BATCH_LAUNCHBROWSER, 'FALSE');
-					break;
-				case 'UPLOAD_RESULTS':
-					$auto_answer = pts_config::read_user_config(P_OPTION_BATCH_UPLOADRESULTS, 'TRUE');
-					break;
 				default:
 					$auto_answer = 'true';
 					break;

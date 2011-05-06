@@ -49,8 +49,8 @@ class pts_client
 		self::core_storage_init_process();
 
 		pts_config::init_files();
-		define('PTS_TEST_INSTALL_DEFAULT_PATH', pts_client::parse_home_directory(pts_config::read_user_config(P_OPTION_TEST_ENVIRONMENT, '~/.phoronix-test-suite/installed-tests/')));
-		define('PTS_SAVE_RESULTS_PATH', pts_client::parse_home_directory(pts_config::read_user_config(P_OPTION_RESULTS_DIRECTORY, '~/.phoronix-test-suite/test-results/')));
+		define('PTS_TEST_INSTALL_DEFAULT_PATH', pts_client::parse_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Installation/EnvironmentDirectory', '~/.phoronix-test-suite/installed-tests/')));
+		define('PTS_SAVE_RESULTS_PATH', pts_client::parse_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Testing/ResultsDirectory', '~/.phoronix-test-suite/test-results/')));
 		self::extended_init_process();
 
 		$openbenchmarking = pts_storage_object::read_from_file(PTS_CORE_STORAGE, 'openbenchmarking');
@@ -67,7 +67,7 @@ class pts_client
 		// Process initially called when PTS starts up
 
 		// Check for modules to auto-load from the configuration file
-		$load_modules = pts_config::read_user_config(P_OPTION_LOAD_MODULES, null);
+		$load_modules = pts_config::read_user_config('PhoronixTestSuite/Options/Modules/LoadModules', null);
 
 		if(!empty($load_modules))
 		{
@@ -275,7 +275,7 @@ class pts_client
 			$env_mode = false;
 		}
 
-		switch(($env_mode != false || ($env_mode = pts_client::read_env('PTS_DISPLAY_MODE')) != false ? $env_mode : pts_config::read_user_config(P_OPTION_DISPLAY_MODE, 'DEFAULT')))
+		switch(($env_mode != false || ($env_mode = pts_client::read_env('PTS_DISPLAY_MODE')) != false ? $env_mode : pts_config::read_user_config('PhoronixTestSuite/Options/General/DefaultDisplayMode', 'DEFAULT')))
 		{
 			case 'BASIC':
 				self::$display = new pts_basic_display_mode();
@@ -486,7 +486,7 @@ class pts_client
 		$config_md5 = $pso->read_object('user_agreement_cs');
 		$current_md5 = md5_file(PTS_PATH . 'pts-core/user-agreement.txt');
 
-		if($config_md5 != $current_md5 || pts_config::read_user_config(P_OPTION_USAGE_REPORTING, 'UNKNOWN') == 'UNKNOWN')
+		if($config_md5 != $current_md5 || pts_config::read_user_config('PhoronixTestSuite/Options/OpenBenchmarking/AnonymousUsageReporting', 'UNKNOWN') == 'UNKNOWN')
 		{
 			$prompt_in_method = pts_client::check_command_for_function($command, 'pts_user_agreement_prompt');
 			$user_agreement = file_get_contents(PTS_PATH . 'pts-core/user-agreement.txt');
@@ -546,9 +546,9 @@ class pts_client
 			}
 
 			pts_config::user_config_generate(array(
-				P_OPTION_USAGE_REPORTING => pts_config::bool_to_string($usage_reporting),
-				P_OPTION_HARDWARE_REPORTING => pts_config::bool_to_string($hwsw_reporting),
-				P_OPTION_SOFTWARE_REPORTING => pts_config::bool_to_string($hwsw_reporting)
+				'PhoronixTestSuite/Options/OpenBenchmarking/AnonymousUsageReporting' => pts_config::bool_to_string($usage_reporting),
+				'PhoronixTestSuite/Options/OpenBenchmarking/AnonymousHardwareReporting' => pts_config::bool_to_string($hwsw_reporting),
+				'PhoronixTestSuite/Options/OpenBenchmarking/AnonymousSoftwareReporting' => pts_config::bool_to_string($hwsw_reporting)
 				));
 		}
 	}
@@ -820,7 +820,7 @@ class pts_client
 		// Generate Phodevi Smart Cache
 		if(pts_client::read_env('NO_PHODEVI_CACHE') == false && pts_client::read_env('EXTERNAL_PHODEVI_CACHE') == false)
 		{
-			if(pts_config::read_bool_config(P_OPTION_PHODEVI_CACHE, 'TRUE'))
+			if(pts_config::read_bool_config('PhoronixTestSuite/Options/General/UsePhodeviCache', 'TRUE'))
 			{
 				pts_storage_object::set_in_file(PTS_CORE_STORAGE, 'phodevi_smart_cache', phodevi::get_phodevi_cache_object(PTS_USER_PATH, PTS_CORE_VERSION));
 			}
@@ -840,7 +840,7 @@ class pts_client
 	}
 	public static function do_anonymous_usage_reporting()
 	{
-		return pts_config::read_bool_config(P_OPTION_USAGE_REPORTING, 0);
+		return pts_config::read_bool_config('PhoronixTestSuite/Options/OpenBenchmarking/AnonymousUsageReporting', 0);
 	}
 	public static function release_lock($lock_file)
 	{
@@ -902,7 +902,7 @@ class pts_client
 
 			$bool = file_put_contents(PTS_SAVE_RESULTS_PATH . $save_to, $save_results);
 
-			if($result_identifier != null && (pts_config::read_bool_config(P_OPTION_LOG_VSYSDETAILS, 'TRUE') || (pts_c::$test_flags & pts_c::batch_mode) || (pts_c::$test_flags & pts_c::auto_mode)))
+			if($result_identifier != null && (pts_config::read_bool_config('PhoronixTestSuite/Options/Testing/SaveSystemLogs', 'TRUE') || (pts_c::$test_flags & pts_c::batch_mode) || (pts_c::$test_flags & pts_c::auto_mode)))
 			{
 				// Save verbose system information here
 				$system_log_dir = $save_to_dir . '/system-logs/' . $result_identifier . '/';
@@ -1138,8 +1138,8 @@ class pts_client
 	}
 	public static function user_hardware_software_reporting()
 	{
-		$hw_reporting = pts_config::read_bool_config(P_OPTION_HARDWARE_REPORTING, 'FALSE');
-		$sw_reporting = pts_config::read_bool_config(P_OPTION_SOFTWARE_REPORTING, 'FALSE');
+		$hw_reporting = pts_config::read_bool_config('PhoronixTestSuite/Options/OpenBenchmarking/AnonymousHardwareReporting', 'FALSE');
+		$sw_reporting = pts_config::read_bool_config('PhoronixTestSuite/Options/OpenBenchmarking/AnonymousSoftwareReporting', 'FALSE');
 
 		if($hw_reporting == false && $sw_reporting == false)
 		{
@@ -1366,7 +1366,14 @@ class pts_client
 
 		if($auto_open == false)
 		{
-			$view_results = pts_user_io::prompt_bool_input($text, $default_open, 'OPEN_BROWSER');
+			if((pts_c::$test_flags & pts_c::batch_mode))
+			{
+				$view_results = pts_config::read_user_config('PhoronixTestSuite/Options/BatchMode/OpenBrowser', 'FALSE');
+			}
+			else
+			{
+				$view_results = pts_user_io::prompt_bool_input($text, $default_open);
+			}
 		}
 		else
 		{
@@ -1379,7 +1386,7 @@ class pts_client
 
 			if($browser == null)
 			{
-				$config_browser = pts_config::read_user_config(P_OPTION_DEFAULT_BROWSER, null);
+				$config_browser = pts_config::read_user_config('PhoronixTestSuite/Options/General/DefaultBrowser', null);
 
 				if($config_browser != null && (is_executable($config_browser) || ($config_browser = pts_client::executable_in_path($config_browser))))
 				{

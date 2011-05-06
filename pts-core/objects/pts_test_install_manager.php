@@ -176,7 +176,7 @@ class pts_test_install_manager
 				array_push($cache_directories, pts_strings::add_trailing_slash($dir_check));
 			}
 
-			if(pts_config::read_bool_config(P_OPTION_CACHE_SEARCHMEDIA, 'TRUE'))
+			if(pts_config::read_bool_config('PhoronixTestSuite/Options/Installation/SearchMediaForCache', 'TRUE'))
 			{
 				$download_cache_dirs = array_merge(
 				pts_file_io::glob('/media/*/download-cache/'),
