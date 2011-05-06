@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010, Phoronix Media
-	Copyright (C) 2010, Michael Larabel
+	Copyright (C) 2010 - 2011, Phoronix Media
+	Copyright (C) 2010 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -24,25 +24,25 @@ class dump_documentation implements pts_option_interface
 {
 	public static function run($r)
 	{
-		if(is_file("/usr/share/php/fpdf/fpdf.php"))
+		if(is_file('/usr/share/php/fpdf/fpdf.php'))
 		{
-			include_once("/usr/share/php/fpdf/fpdf.php");
+			include_once('/usr/share/php/fpdf/fpdf.php');
 		}
 		else
 		{
-			echo "\nThe FPDF library must be installed.\n\n";
+			echo PHP_EOL . 'The FPDF library must be installed.' . PHP_EOL . PHP_EOL;
 			return;
 		}
 
-		$pdf = new pts_pdf_template(pts_title(false), "Test Client Documentation");
+		$pdf = new pts_pdf_template(pts_title(false), 'Test Client Documentation');
 
 		$pdf->AddPage();
-		$pdf->Image(PTS_CORE_STATIC_PATH . "images/pts-308x160.png", 69, 85, 73, 38, 'PNG', 'http://www.phoronix-test-suite.com/');
+		$pdf->Image(PTS_CORE_STATIC_PATH . 'images/pts-308x160.png', 69, 85, 73, 38, 'PNG', 'http://www.phoronix-test-suite.com/');
 		$pdf->Ln(120);
-		$pdf->WriteStatement("www.phoronix-test-suite.com", 'C', 'http://www.phoronix-test-suite.com/');
+		$pdf->WriteStatement('www.phoronix-test-suite.com', 'C', 'http://www.phoronix-test-suite.com/');
 		$pdf->Ln(15);
 		$pdf->WriteBigHeaderCenter(pts_title(true));
-		$pdf->WriteHeaderCenter("User Manual");
+		$pdf->WriteHeaderCenter('User Manual');
 		//$pdf->WriteText($result_file->get_description());
 
 		$pts_options = pts_documentation::client_commands_array();
@@ -89,7 +89,7 @@ class dump_documentation implements pts_option_interface
 			}
 		}
 
-		$dom->saveHTMLFile(PTS_PATH . "documentation/html_sections/00_user_options.html");
+		$dom->saveHTMLFile(PTS_PATH . 'documentation/html_sections/00_user_options.html');
 
 		// Write the virtual suites HTML
 		$dom = new DOMDocument();
@@ -123,30 +123,30 @@ class dump_documentation implements pts_option_interface
 			$body->appendChild($p);
 		}
 
-		$dom->saveHTMLFile(PTS_PATH . "documentation/html_sections/55_virtual_suites.html");
+		$dom->saveHTMLFile(PTS_PATH . 'documentation/html_sections/55_virtual_suites.html');
 
 		// Load the HTML documentation
-		foreach(pts_file_io::glob(PTS_PATH . "documentation/html_sections/*_*.html") as $html_file)
+		foreach(pts_file_io::glob(PTS_PATH . 'documentation/html_sections/*_*.html') as $html_file)
 		{
 			$pdf->html_to_pdf($html_file);
 		}
 
 		if(!is_writable(PTS_PATH . 'documentation/'))
 		{
-			echo "\nNot writable: " . PTS_PATH . 'documentation/';
+			echo PHP_EOL . 'Not writable: ' . PTS_PATH . 'documentation/';
 		}
 		else
 		{
 			$pdf_file = PTS_PATH . 'documentation/phoronix-test-suite.pdf';
 			$pdf->Output($pdf_file);
-			echo "\nSaved To: " . $pdf_file . "\n\n";
+			echo PHP_EOL . 'Saved To: ' . $pdf_file . PHP_EOL . PHP_EOL;
 
 			// Also re-generate the man page
-			$man_page = ".TH phoronix-test-suite 1  \"www.phoronix-test-suite.com\" \"" . PTS_VERSION . "\"\n.SH NAME\n";
-			$man_page .= "phoronix-test-suite \- The Phoronix Test Suite is an extensible open-source platform for performing testing and performance evaluation.\n";
-			$man_page .= ".SH SYNOPSIS\n.B phoronix-test-suite [options]\n.br\n.B phoronix-test-suite benchmark [test | suite]\n";
-			$man_page .= ".SH DESCRIPTION\n" . pts_documentation::basic_description() . "\n";
-			$man_page .= ".SH OPTIONS\n.TP\n";
+			$man_page = '.TH phoronix-test-suite 1  "www.phoronix-test-suite.com" "' . PTS_VERSION . '"' . PHP_EOL . '.SH NAME' . PHP_EOL;
+			$man_page .= 'phoronix-test-suite \- The Phoronix Test Suite is an extensible open-source platform for performing testing and performance evaluation.' . PHP_EOL;
+			$man_page .= '.SH SYNOPSIS' . PHP_EOL . '.B phoronix-test-suite [options]' . PHP_EOL . '.br' . PHP_EOL . '.B phoronix-test-suite benchmark [test | suite]' . PHP_EOL;
+			$man_page .= '.SH DESCRIPTION' . PHP_EOL . pts_documentation::basic_description() . PHP_EOL;
+			$man_page .= '.SH OPTIONS' . PHP_EOL . '.TP' . PHP_EOL;
 
 			foreach($pts_options as $section => &$contents)
 			{
@@ -155,18 +155,18 @@ class dump_documentation implements pts_option_interface
 					continue;
 				}
 
-				$man_page .= '.SH ' . strtoupper($section) . "\n";
+				$man_page .= '.SH ' . strtoupper($section) . PHP_EOL;
 
 				sort($contents);
 				foreach($contents as &$option)
 				{
-					$man_page .= '.B ' . trim($option[0] . ' ' . implode(' ', $option[1])) . "\n" . $option[2] . "\n.TP\n";
+					$man_page .= '.B ' . trim($option[0] . ' ' . implode(' ', $option[1])) . PHP_EOL . $option[2] . PHP_EOL . '.TP' . PHP_EOL;
 				}
 			}
-			$man_page .= ".SH SEE ALSO\n.B Websites:\n.br\nhttp://www.phoronix-test-suite.com/\n.br\nhttp://commercial.phoronix-test-suite.com/\n.br\nhttp://www.openbenchmarking.org/\n.br\nhttp://www.phoronix.com/\n.br\nhttp://www.phoronix.com/forums/\n";
-			$man_page .= ".SH AUTHORS\nCopyright 2008 - " . date('Y') . " by Phoronix Media, Michael Larabel.\n.TP\n";
+			$man_page .= '.SH SEE ALSO' . PHP_EOL . '.B Websites:' . PHP_EOL . '.br' . PHP_EOL . 'http://www.phoronix-test-suite.com/' . PHP_EOL . '.br' . PHP_EOL . 'http://commercial.phoronix-test-suite.com/' . PHP_EOL . '.br' . PHP_EOL . 'http://www.openbenchmarking.org/' . PHP_EOL . '.br' . PHP_EOL . 'http://www.phoronix.com/' . PHP_EOL . '.br' . PHP_EOL . 'http://www.phoronix.com/forums/' . PHP_EOL;
+			$man_page .= '.SH AUTHORS' . PHP_EOL . 'Copyright 2008 - ' . date('Y') . ' by Phoronix Media, Michael Larabel.' . PHP_EOL . '.TP' . PHP_EOL;
 
-			file_put_contents(PTS_PATH . "documentation/man-pages/phoronix-test-suite.1", $man_page);
+			file_put_contents(PTS_PATH . 'documentation/man-pages/phoronix-test-suite.1', $man_page);
 		}
 	}
 }

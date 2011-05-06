@@ -336,7 +336,6 @@ class pts_concise_display_mode implements pts_display_mode_interface
 				$end_print .= $this->tab . $this->tab . $result . PHP_EOL;
 			}
 
-			// TODO: below I don't think is what we want....
 			$end_print .= PHP_EOL . $this->tab . pts_strings::result_quantifier_to_string($test_result->test_profile->get_result_quantifier()) . ': ' . $test_result->get_result() . ' ' . $test_result->test_profile->get_result_scale();
 
 			if($test_result->get_result() == 0)

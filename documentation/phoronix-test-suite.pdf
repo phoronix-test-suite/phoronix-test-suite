@@ -662,7 +662,7 @@ endobj
 /Contents 18 0 R>>
 endobj
 18 0 obj
-<</Length 4620>>
+<</Length 4299>>
 stream
 2 J
 0.57 w
@@ -696,58 +696,52 @@ BT /F2 11.00 Tf ET
 q 0.000 g BT 59.53 601.89 Td (This option will read a saved test results file and output the system hardware and software information) Tj ET Q
 q 0.000 g BT 59.53 587.72 Td (to the terminal. The test results are also outputted.) Tj ET Q
 BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 558.77 Td (user-config-get) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 558.77 Td (user-config-reset) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 125.80 559.07 Td (  ) Tj ET Q
+q 0.380 0.388 0.376 rg BT 137.37 559.07 Td (  ) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 545.20 Td (This option can be used for reading an XML value of the Phoronix Test Suite user configuration file.) Tj ET Q
+q 0.000 g BT 59.53 545.20 Td (This option can be used for resetting the Phoronix Test Suite user configuration file to its default state.) Tj ET Q
 BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 516.25 Td (user-config-reset) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 516.25 Td (user-config-set) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 137.37 516.55 Td (  ) Tj ET Q
+q 0.380 0.388 0.376 rg BT 125.08 516.55 Td (  ) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 502.68 Td (This option can be used for resetting the Phoronix Test Suite user configuration file to its default state.) Tj ET Q
+q 0.000 g BT 59.53 502.68 Td (This option can be used for setting an XML value in the Phoronix Test Suite user configuration file.) Tj ET Q
 BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 473.73 Td (user-config-set) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 473.73 Td (version) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 125.08 474.03 Td (  ) Tj ET Q
+q 0.380 0.388 0.376 rg BT 77.42 474.03 Td (  ) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 460.16 Td (This option can be used for setting an XML value in the Phoronix Test Suite user configuration file.) Tj ET Q
-BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 431.21 Td (version) Tj ET Q
-BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 77.42 431.51 Td (  ) Tj ET Q
-BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 417.64 Td (This option will display the Phoronix Test Suite client version.) Tj ET Q
+q 0.000 g BT 59.53 460.16 Td (This option will display the Phoronix Test Suite client version.) Tj ET Q
 BT /F1 16.00 Tf ET
-q 0.196 0.200 0.192 rg BT 26.93 387.80 Td (Modules) Tj ET Q
+q 0.196 0.200 0.192 rg BT 26.93 430.31 Td (Modules) Tj ET Q
 BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 360.35 Td (list-modules) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 402.87 Td (list-modules) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 107.75 360.65 Td (  ) Tj ET Q
+q 0.380 0.388 0.376 rg BT 107.75 403.17 Td (  ) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 346.78 Td (This option will list all of the available Phoronix Test Suite modules on this system.) Tj ET Q
+q 0.000 g BT 59.53 389.30 Td (This option will list all of the available Phoronix Test Suite modules on this system.) Tj ET Q
 BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 317.83 Td (module-info) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 360.35 Td (module-info) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 105.57 318.13 Td (  [Phoronix Test Suite Module]) Tj ET Q
+q 0.380 0.388 0.376 rg BT 105.57 360.65 Td (  [Phoronix Test Suite Module]) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 304.26 Td (This option will show detailed information on a Phoronix Test Suite module such as the version,) Tj ET Q
-q 0.000 g BT 59.53 290.08 Td (developer, and a description of its purpose.) Tj ET Q
+q 0.000 g BT 59.53 346.78 Td (This option will show detailed information on a Phoronix Test Suite module such as the version,) Tj ET Q
+q 0.000 g BT 59.53 332.60 Td (developer, and a description of its purpose.) Tj ET Q
 BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 261.14 Td (module-setup) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 303.66 Td (module-setup) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 116.41 261.44 Td (  [Phoronix Test Suite Module]) Tj ET Q
+q 0.380 0.388 0.376 rg BT 116.41 303.96 Td (  [Phoronix Test Suite Module]) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 247.56 Td (This option will allow you to configure all available end-user options for a Phoronix Test Suite module.) Tj ET Q
-q 0.000 g BT 59.53 233.39 Td (These options are then stored within the user's configuration file. Not all modules may have options that) Tj ET Q
-q 0.000 g BT 59.53 219.22 Td (can be configured by the end-user.) Tj ET Q
+q 0.000 g BT 59.53 290.08 Td (This option will allow you to configure all available end-user options for a Phoronix Test Suite module.) Tj ET Q
+q 0.000 g BT 59.53 275.91 Td (These options are then stored within the user's configuration file. Not all modules may have options that) Tj ET Q
+q 0.000 g BT 59.53 261.74 Td (can be configured by the end-user.) Tj ET Q
 BT /F1 13.00 Tf ET
-q 0.380 0.388 0.376 rg BT 31.18 190.27 Td (test-module) Tj ET Q
+q 0.380 0.388 0.376 rg BT 31.18 232.79 Td (test-module) Tj ET Q
 BT /F3 12.00 Tf ET
-q 0.380 0.388 0.376 rg BT 104.85 190.57 Td (  [Phoronix Test Suite Module]) Tj ET Q
+q 0.380 0.388 0.376 rg BT 104.85 233.09 Td (  [Phoronix Test Suite Module]) Tj ET Q
 BT /F2 11.00 Tf ET
-q 0.000 g BT 59.53 176.70 Td (This option can be used for debugging a Phoronix Test Suite module.) Tj ET Q
+q 0.000 g BT 59.53 219.22 Td (This option can be used for debugging a Phoronix Test Suite module.) Tj ET Q
 BT /F1 7.00 Tf ET
 q 0.000 g BT 26.93 26.25 Td (Phoronix Test Suite v3.2.0m2) Tj ET Q
 566.93 28.35 0.00 0.00 re f q 0.000 g BT 466.08 26.25 Td (www.phoronix-test-suite.com) Tj ET Q
@@ -2772,7 +2766,7 @@ endobj
 <</Title (Modules)
 /Parent 61 0 R
 /Prev 71 0 R
-/Dest [17 0 R /XYZ 0 413.85 null]
+/Dest [17 0 R /XYZ 0 456.37 null]
 /Count 0>>
 endobj
 73 0 obj
@@ -3067,7 +3061,7 @@ endobj
 /Author (Phoronix Test Suite)
 /Keywords ()
 /Creator (PhoronixTestSuite/Grimstad)
-/CreationDate (D:20110503102158)
+/CreationDate (D:20110506104652)
 >>
 endobj
 110 0 obj
@@ -3083,8 +3077,8 @@ endobj
 xref
 0 111
 0000000000 65535 f 
-0000140409 00000 n 
-0000152271 00000 n 
+0000140088 00000 n 
+0000151950 00000 n 
 0000000009 00000 n 
 0000000380 00000 n 
 0000000890 00000 n 
@@ -3101,98 +3095,98 @@ xref
 0000031068 00000 n 
 0000036714 00000 n 
 0000036944 00000 n 
-0000041615 00000 n 
-0000041970 00000 n 
-0000047363 00000 n 
-0000048033 00000 n 
-0000055584 00000 n 
-0000055964 00000 n 
-0000062929 00000 n 
-0000063294 00000 n 
-0000065797 00000 n 
-0000066027 00000 n 
-0000070371 00000 n 
-0000070601 00000 n 
-0000074824 00000 n 
-0000075054 00000 n 
-0000079294 00000 n 
-0000079524 00000 n 
-0000081626 00000 n 
-0000083188 00000 n 
-0000090490 00000 n 
-0000091000 00000 n 
-0000098282 00000 n 
-0000098512 00000 n 
-0000105814 00000 n 
-0000106044 00000 n 
-0000111939 00000 n 
-0000112169 00000 n 
-0000118008 00000 n 
-0000118663 00000 n 
-0000123386 00000 n 
-0000123756 00000 n 
-0000129458 00000 n 
-0000129825 00000 n 
-0000135025 00000 n 
-0000135656 00000 n 
-0000138680 00000 n 
-0000138910 00000 n 
-0000140669 00000 n 
-0000140771 00000 n 
-0000140868 00000 n 
-0000140973 00000 n 
-0000145132 00000 n 
-0000145911 00000 n 
-0000152420 00000 n 
-0000152560 00000 n 
-0000152677 00000 n 
-0000152797 00000 n 
-0000152923 00000 n 
-0000153056 00000 n 
-0000153175 00000 n 
-0000153299 00000 n 
-0000153427 00000 n 
-0000153558 00000 n 
-0000153688 00000 n 
-0000153807 00000 n 
-0000153915 00000 n 
-0000154082 00000 n 
-0000154191 00000 n 
-0000154317 00000 n 
-0000154450 00000 n 
-0000154558 00000 n 
-0000154686 00000 n 
-0000154815 00000 n 
-0000154948 00000 n 
-0000155088 00000 n 
-0000155231 00000 n 
-0000155364 00000 n 
-0000155499 00000 n 
-0000155637 00000 n 
-0000155767 00000 n 
-0000155901 00000 n 
-0000156022 00000 n 
-0000156177 00000 n 
-0000156298 00000 n 
-0000156421 00000 n 
-0000156583 00000 n 
-0000156710 00000 n 
-0000156851 00000 n 
-0000156959 00000 n 
-0000157080 00000 n 
-0000157207 00000 n 
-0000157341 00000 n 
-0000157456 00000 n 
-0000157592 00000 n 
-0000157749 00000 n 
-0000157861 00000 n 
-0000157983 00000 n 
-0000158146 00000 n 
-0000158299 00000 n 
-0000158406 00000 n 
-0000158529 00000 n 
-0000158594 00000 n 
-0000158843 00000 n 
+0000041294 00000 n 
+0000041649 00000 n 
+0000047042 00000 n 
+0000047712 00000 n 
+0000055263 00000 n 
+0000055643 00000 n 
+0000062608 00000 n 
+0000062973 00000 n 
+0000065476 00000 n 
+0000065706 00000 n 
+0000070050 00000 n 
+0000070280 00000 n 
+0000074503 00000 n 
+0000074733 00000 n 
+0000078973 00000 n 
+0000079203 00000 n 
+0000081305 00000 n 
+0000082867 00000 n 
+0000090169 00000 n 
+0000090679 00000 n 
+0000097961 00000 n 
+0000098191 00000 n 
+0000105493 00000 n 
+0000105723 00000 n 
+0000111618 00000 n 
+0000111848 00000 n 
+0000117687 00000 n 
+0000118342 00000 n 
+0000123065 00000 n 
+0000123435 00000 n 
+0000129137 00000 n 
+0000129504 00000 n 
+0000134704 00000 n 
+0000135335 00000 n 
+0000138359 00000 n 
+0000138589 00000 n 
+0000140348 00000 n 
+0000140450 00000 n 
+0000140547 00000 n 
+0000140652 00000 n 
+0000144811 00000 n 
+0000145590 00000 n 
+0000152099 00000 n 
+0000152239 00000 n 
+0000152356 00000 n 
+0000152476 00000 n 
+0000152602 00000 n 
+0000152735 00000 n 
+0000152854 00000 n 
+0000152978 00000 n 
+0000153106 00000 n 
+0000153237 00000 n 
+0000153367 00000 n 
+0000153486 00000 n 
+0000153594 00000 n 
+0000153761 00000 n 
+0000153870 00000 n 
+0000153996 00000 n 
+0000154129 00000 n 
+0000154237 00000 n 
+0000154365 00000 n 
+0000154494 00000 n 
+0000154627 00000 n 
+0000154767 00000 n 
+0000154910 00000 n 
+0000155043 00000 n 
+0000155178 00000 n 
+0000155316 00000 n 
+0000155446 00000 n 
+0000155580 00000 n 
+0000155701 00000 n 
+0000155856 00000 n 
+0000155977 00000 n 
+0000156100 00000 n 
+0000156262 00000 n 
+0000156389 00000 n 
+0000156530 00000 n 
+0000156638 00000 n 
+0000156759 00000 n 
+0000156886 00000 n 
+0000157020 00000 n 
+0000157135 00000 n 
+0000157271 00000 n 
+0000157428 00000 n 
+0000157540 00000 n 
+0000157662 00000 n 
+0000157825 00000 n 
+0000157978 00000 n 
+0000158085 00000 n 
+0000158208 00000 n 
+0000158273 00000 n 
+0000158522 00000 n 
 trailer
 <<
 /Size 111
@@ -3200,5 +3194,5 @@ trailer
 /Info 109 0 R
 >>
 startxref
-158989
+158668
 %%EOF
