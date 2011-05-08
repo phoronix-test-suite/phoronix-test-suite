@@ -363,12 +363,11 @@ class pts_test_execution
 				{
 					if($set_function != null)
 					{
-						eval("\$test_run_request->test_profile->" . $set_function . "->(\$file_contents);");
+						call_user_func(array($test_run_request->test_profile, $set_function), $file_contents);
 					}
 					else if($result_set_function != null)
 					{
-						call_user_func(array($test_run_request, $set_function), $file_contents);
-						//eval("\$test_run_request->" . $set_function . "->(\$file_contents);");
+						call_user_func(array($test_run_request, $result_set_function), $file_contents);
 					}
 				}
 			}

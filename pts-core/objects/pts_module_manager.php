@@ -49,7 +49,8 @@ class pts_module_manager
 		}
 		else
 		{
-			eval("\$module_val = " . $module . "::" . $process . ";");
+			$class_vars = get_class_vars($module);
+			$module_val = isset($class_vars[$process]) ? $class_vars[$process] : false;
 		}
 
 		return $module_val;

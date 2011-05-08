@@ -112,7 +112,8 @@ class pts_client
 		$module_store_list = array();
 		foreach(pts_module_manager::attached_modules() as $module)
 		{
-			eval("\$module_store_vars = " . $module . "::\$module_store_vars;");
+			$class_vars = get_class_vars($module);
+			$module_store_vars = isset($class_vars['module_store_vars']) ? $class_vars['module_store_vars'] : null;
 
 			if(is_array($module_store_vars))
 			{
