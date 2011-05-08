@@ -1133,11 +1133,11 @@ endobj
 <</Type /Page
 /Parent 1 0 R
 /Resources 2 0 R
-/Annots [<</Type /Annot /Subtype /Link /Rect [137.18 624.87 170.78 613.87] /Border [0 0 0] /A <</S /URI /URI (http://www.cpuid.com/cpuz.php)>>>><</Type /Annot /Subtype /Link /Rect [466.08 31.85 564.09 24.85] /Border [0 0 0] /A <</S /URI /URI (http://www.phoronix-test-suite.com/)>>>>]
+/Annots [<</Type /Annot /Subtype /Link /Rect [137.18 624.87 170.78 613.87] /Border [0 0 0] /A <</S /URI /URI (http://www.cpuid.com/cpuz.php)>>>><</Type /Annot /Subtype /Link /Rect [473.42 539.83 533.51 528.83] /Border [0 0 0] /A <</S /URI /URI (https://github.com/facebook/hiphop-php)>>>><</Type /Annot /Subtype /Link /Rect [59.53 525.65 98.63 514.65] /Border [0 0 0] /A <</S /URI /URI (https://github.com/facebook/hiphop-php)>>>><</Type /Annot /Subtype /Link /Rect [466.08 31.85 564.09 24.85] /Border [0 0 0] /A <</S /URI /URI (http://www.phoronix-test-suite.com/)>>>>]
 /Contents 26 0 R>>
 endobj
 26 0 obj
-<</Length 2452>>
+<</Length 3864>>
 stream
 2 J
 0.57 w
@@ -1175,6 +1175,30 @@ BT /F2 11.00 Tf ET
 q 0.000 g BT 385.33 601.89 Td ( if you wish to utilize this hardware) Tj ET Q
 q 0.000 g BT 59.53 587.72 Td (reporting feature. In terms of the Microsoft Windows support, right now the Phoronix Test Suite is) Tj ET Q
 q 0.000 g BT 59.53 573.55 Td (developed and solely tested against Windows 7 x64.) Tj ET Q
+BT /F1 13.00 Tf ET
+q 0.196 0.200 0.192 rg BT 31.18 544.60 Td (Facebook HipHop) Tj ET Q
+BT /F2 11.00 Tf ET
+q 0.000 g BT 59.53 531.03 Td (The Phoronix Test Suite can also be transformed/compiled from PHP into C++ using ) Tj ET Q
+BT /F1 11.00 Tf ET
+q 0.000 0.000 0.455 rg BT 473.42 531.03 Td (Facebook's) Tj ET 473.42 529.93 60.08 -0.55 re f Q
+q 0.000 0.000 0.455 rg BT 59.53 516.85 Td (HipHop) Tj ET 59.53 515.75 39.10 -0.55 re f Q
+BT /F2 11.00 Tf ET
+q 0.000 g BT 98.63 516.85 Td ( and GCC. This support though is still early and not officially supported. To compile the) Tj ET Q
+q 0.000 g BT 59.53 502.68 Td (Phoronix Test Suite using HipHop/GCC, run ) Tj ET Q
+BT /F3 11.00 Tf ET
+q 0.000 g BT 277.16 502.68 Td (find . -name "*.php" > files.list && hphp --input-list=files.list) Tj ET Q
+q 0.000 g BT 59.53 488.51 Td (-k 1 --log=3 --include-path="." --cluster-count=50 -v "AllDynamic=true" -v "AllVolatile=true") Tj ET Q
+BT /F2 11.00 Tf ET
+q 0.000 g BT 495.28 488.51 Td ( from the root ) Tj ET Q
+BT /F3 11.00 Tf ET
+q 0.000 g BT 59.53 474.33 Td (phoronix-test-suite/) Tj ET Q
+BT /F2 11.00 Tf ET
+q 0.000 g BT 153.06 474.33 Td ( directory. It can then be executed in the form of ) Tj ET Q
+BT /F3 11.00 Tf ET
+q 0.000 g BT 389.08 474.33 Td (/tmp/hphp_XXX/program -f) Tj ET Q
+q 0.000 g BT 59.53 460.16 Td (pts-core/phoronix-test-suite.php system-info) Tj ET Q
+BT /F2 11.00 Tf ET
+q 0.000 g BT 273.49 460.16 Td (.) Tj ET Q
 BT /F1 7.00 Tf ET
 q 0.000 g BT 26.93 26.25 Td (Phoronix Test Suite v3.2.0m2) Tj ET Q
 566.93 28.35 0.00 0.00 re f q 0.000 g BT 466.08 26.25 Td (www.phoronix-test-suite.com) Tj ET Q
@@ -2676,7 +2700,7 @@ endobj
 endobj
 61 0 obj
 <</Title (User Options)
-/Parent 108 0 R
+/Parent 109 0 R
 /Next 73 0 R
 /First 62 0 R
 /Last 72 0 R
@@ -2771,9 +2795,9 @@ endobj
 endobj
 73 0 obj
 <</Title (Installation Instructions)
-/Parent 108 0 R
+/Parent 109 0 R
 /Prev 61 0 R
-/Next 89 0 R
+/Next 90 0 R
 /First 74 0 R
 /Last 76 0 R
 /Dest [19 0 R /XYZ 0 754.01 null]
@@ -2799,7 +2823,7 @@ endobj
 /Parent 73 0 R
 /Prev 75 0 R
 /First 77 0 R
-/Last 88 0 R
+/Last 89 0 R
 /Dest [21 0 R /XYZ 0 541.41 null]
 /Count 0>>
 endobj
@@ -2894,165 +2918,173 @@ endobj
 <</Title (Windows Installation)
 /Parent 76 0 R
 /Prev 87 0 R
+/Next 89 0 R
 /Dest [25 0 R /XYZ 0 697.32 null]
 /Count 0>>
 endobj
 89 0 obj
-<</Title (Configuration)
-/Parent 108 0 R
-/Prev 73 0 R
-/Next 92 0 R
-/First 90 0 R
-/Last 91 0 R
-/Dest [27 0 R /XYZ 0 754.01 null]
+<</Title (Facebook HipHop)
+/Parent 76 0 R
+/Prev 88 0 R
+/Dest [25 0 R /XYZ 0 569.76 null]
 /Count 0>>
 endobj
 90 0 obj
-<</Title (User Files & Folders)
-/Parent 89 0 R
-/Next 91 0 R
-/Dest [27 0 R /XYZ 0 725.67 null]
+<</Title (Configuration)
+/Parent 109 0 R
+/Prev 73 0 R
+/Next 93 0 R
+/First 91 0 R
+/Last 92 0 R
+/Dest [27 0 R /XYZ 0 754.01 null]
 /Count 0>>
 endobj
 91 0 obj
-<</Title (Environmental Variables)
-/Parent 89 0 R
-/Prev 90 0 R
-/Dest [27 0 R /XYZ 0 99.21 null]
+<</Title (User Files & Folders)
+/Parent 90 0 R
+/Next 92 0 R
+/Dest [27 0 R /XYZ 0 725.67 null]
 /Count 0>>
 endobj
 92 0 obj
-<</Title (General Information)
-/Parent 108 0 R
-/Prev 89 0 R
-/Next 100 0 R
-/First 93 0 R
-/Last 94 0 R
-/Dest [35 0 R /XYZ 0 754.01 null]
+<</Title (Environmental Variables)
+/Parent 90 0 R
+/Prev 91 0 R
+/Dest [27 0 R /XYZ 0 99.21 null]
 /Count 0>>
 endobj
 93 0 obj
-<</Title (Frequently Asked Questions)
-/Parent 92 0 R
-/Next 94 0 R
-/Dest [35 0 R /XYZ 0 725.67 null]
+<</Title (General Information)
+/Parent 109 0 R
+/Prev 90 0 R
+/Next 101 0 R
+/First 94 0 R
+/Last 95 0 R
+/Dest [35 0 R /XYZ 0 754.01 null]
 /Count 0>>
 endobj
 94 0 obj
-<</Title (Tips & Tricks)
-/Parent 92 0 R
-/Prev 93 0 R
-/First 95 0 R
-/Last 99 0 R
-/Dest [37 0 R /XYZ 0 598.11 null]
+<</Title (Frequently Asked Questions)
+/Parent 93 0 R
+/Next 95 0 R
+/Dest [35 0 R /XYZ 0 725.67 null]
 /Count 0>>
 endobj
 95 0 obj
-<</Title (General)
-/Parent 94 0 R
-/Next 96 0 R
-/Dest [37 0 R /XYZ 0 569.76 null]
+<</Title (Tips & Tricks)
+/Parent 93 0 R
+/Prev 94 0 R
+/First 96 0 R
+/Last 100 0 R
+/Dest [37 0 R /XYZ 0 598.11 null]
 /Count 0>>
 endobj
 96 0 obj
-<</Title (Running)
-/Parent 94 0 R
-/Prev 95 0 R
+<</Title (General)
+/Parent 95 0 R
 /Next 97 0 R
-/Dest [37 0 R /XYZ 0 371.34 null]
+/Dest [37 0 R /XYZ 0 569.76 null]
 /Count 0>>
 endobj
 97 0 obj
-<</Title (Configuration)
-/Parent 94 0 R
+<</Title (Running)
+/Parent 95 0 R
 /Prev 96 0 R
 /Next 98 0 R
-/Dest [39 0 R /XYZ 0 328.82 null]
+/Dest [37 0 R /XYZ 0 371.34 null]
 /Count 0>>
 endobj
 98 0 obj
-<</Title (Test / Suite Writing)
-/Parent 94 0 R
+<</Title (Configuration)
+/Parent 95 0 R
 /Prev 97 0 R
 /Next 99 0 R
-/Dest [39 0 R /XYZ 0 201.26 null]
+/Dest [39 0 R /XYZ 0 328.82 null]
 /Count 0>>
 endobj
 99 0 obj
-<</Title (Module Writing)
-/Parent 94 0 R
+<</Title (Test / Suite Writing)
+/Parent 95 0 R
 /Prev 98 0 R
-/Dest [39 0 R /XYZ 0 158.74 null]
+/Next 100 0 R
+/Dest [39 0 R /XYZ 0 201.26 null]
 /Count 0>>
 endobj
 100 0 obj
-<</Title (Virtual Test Suites)
-/Parent 108 0 R
-/Prev 92 0 R
-/Next 101 0 R
-/Dest [41 0 R /XYZ 0 754.01 null]
+<</Title (Module Writing)
+/Parent 95 0 R
+/Prev 99 0 R
+/Dest [39 0 R /XYZ 0 158.74 null]
 /Count 0>>
 endobj
 101 0 obj
-<</Title (Phoromatic)
-/Parent 108 0 R
-/Prev 100 0 R
-/Next 104 0 R
-/First 102 0 R
-/Last 103 0 R
-/Dest [45 0 R /XYZ 0 754.01 null]
+<</Title (Virtual Test Suites)
+/Parent 109 0 R
+/Prev 93 0 R
+/Next 102 0 R
+/Dest [41 0 R /XYZ 0 754.01 null]
 /Count 0>>
 endobj
 102 0 obj
-<</Title (Overview)
-/Parent 101 0 R
-/Next 103 0 R
-/Dest [45 0 R /XYZ 0 725.67 null]
+<</Title (Phoromatic)
+/Parent 109 0 R
+/Prev 101 0 R
+/Next 105 0 R
+/First 103 0 R
+/Last 104 0 R
+/Dest [45 0 R /XYZ 0 754.01 null]
 /Count 0>>
 endobj
 103 0 obj
-<</Title (Basic Instructions)
-/Parent 101 0 R
-/Prev 102 0 R
-/Dest [45 0 R /XYZ 0 609.45 null]
+<</Title (Overview)
+/Parent 102 0 R
+/Next 104 0 R
+/Dest [45 0 R /XYZ 0 725.67 null]
 /Count 0>>
 endobj
 104 0 obj
-<</Title (PTS Desktop Live)
-/Parent 108 0 R
-/Prev 101 0 R
-/Next 107 0 R
-/First 105 0 R
-/Last 105 0 R
-/Dest [47 0 R /XYZ 0 754.01 null]
+<</Title (Basic Instructions)
+/Parent 102 0 R
+/Prev 103 0 R
+/Dest [45 0 R /XYZ 0 609.45 null]
 /Count 0>>
 endobj
 105 0 obj
-<</Title (PTS Desktop Live 2010.1 "Anzhofen")
-/Parent 104 0 R
+<</Title (PTS Desktop Live)
+/Parent 109 0 R
+/Prev 102 0 R
+/Next 108 0 R
 /First 106 0 R
 /Last 106 0 R
-/Dest [47 0 R /XYZ 0 725.67 null]
+/Dest [47 0 R /XYZ 0 754.01 null]
 /Count 0>>
 endobj
 106 0 obj
-<</Title (Quick Start Guide)
+<</Title (PTS Desktop Live 2010.1 "Anzhofen")
 /Parent 105 0 R
-/Dest [47 0 R /XYZ 0 113.38 null]
+/First 107 0 R
+/Last 107 0 R
+/Dest [47 0 R /XYZ 0 725.67 null]
 /Count 0>>
 endobj
 107 0 obj
-<</Title (Development Credits)
-/Parent 108 0 R
-/Prev 104 0 R
-/Dest [51 0 R /XYZ 0 754.01 null]
+<</Title (Quick Start Guide)
+/Parent 106 0 R
+/Dest [47 0 R /XYZ 0 113.38 null]
 /Count 0>>
 endobj
 108 0 obj
-<</Type /Outlines /First 61 0 R
-/Last 107 0 R>>
+<</Title (Development Credits)
+/Parent 109 0 R
+/Prev 105 0 R
+/Dest [51 0 R /XYZ 0 754.01 null]
+/Count 0>>
 endobj
 109 0 obj
+<</Type /Outlines /First 61 0 R
+/Last 108 0 R>>
+endobj
+110 0 obj
 <<
 /Producer (Phoronix Media)
 /Subject (Phoronix-Test-Suite.com)
@@ -3061,24 +3093,24 @@ endobj
 /Author (Phoronix Test Suite)
 /Keywords ()
 /Creator (PhoronixTestSuite/Grimstad)
-/CreationDate (D:20110506104652)
+/CreationDate (D:20110508135421)
 >>
 endobj
-110 0 obj
+111 0 obj
 <<
 /Type /Catalog
 /Pages 1 0 R
 /OpenAction [3 0 R /FitH null]
 /PageLayout /OneColumn
-/Outlines 108 0 R
+/Outlines 109 0 R
 /PageMode /UseOutlines
 >>
 endobj
 xref
-0 111
+0 112
 0000000000 65535 f 
-0000140088 00000 n 
-0000151950 00000 n 
+0000141786 00000 n 
+0000153648 00000 n 
 0000000009 00000 n 
 0000000380 00000 n 
 0000000890 00000 n 
@@ -3102,97 +3134,98 @@ xref
 0000055263 00000 n 
 0000055643 00000 n 
 0000062608 00000 n 
-0000062973 00000 n 
-0000065476 00000 n 
-0000065706 00000 n 
-0000070050 00000 n 
-0000070280 00000 n 
-0000074503 00000 n 
-0000074733 00000 n 
-0000078973 00000 n 
-0000079203 00000 n 
-0000081305 00000 n 
-0000082867 00000 n 
-0000090169 00000 n 
-0000090679 00000 n 
-0000097961 00000 n 
-0000098191 00000 n 
-0000105493 00000 n 
-0000105723 00000 n 
-0000111618 00000 n 
-0000111848 00000 n 
-0000117687 00000 n 
-0000118342 00000 n 
-0000123065 00000 n 
-0000123435 00000 n 
-0000129137 00000 n 
-0000129504 00000 n 
-0000134704 00000 n 
-0000135335 00000 n 
-0000138359 00000 n 
-0000138589 00000 n 
-0000140348 00000 n 
-0000140450 00000 n 
-0000140547 00000 n 
-0000140652 00000 n 
-0000144811 00000 n 
-0000145590 00000 n 
-0000152099 00000 n 
-0000152239 00000 n 
-0000152356 00000 n 
-0000152476 00000 n 
-0000152602 00000 n 
-0000152735 00000 n 
-0000152854 00000 n 
-0000152978 00000 n 
-0000153106 00000 n 
-0000153237 00000 n 
-0000153367 00000 n 
-0000153486 00000 n 
-0000153594 00000 n 
-0000153761 00000 n 
-0000153870 00000 n 
-0000153996 00000 n 
-0000154129 00000 n 
-0000154237 00000 n 
-0000154365 00000 n 
-0000154494 00000 n 
-0000154627 00000 n 
-0000154767 00000 n 
-0000154910 00000 n 
-0000155043 00000 n 
-0000155178 00000 n 
-0000155316 00000 n 
-0000155446 00000 n 
-0000155580 00000 n 
-0000155701 00000 n 
-0000155856 00000 n 
-0000155977 00000 n 
-0000156100 00000 n 
-0000156262 00000 n 
-0000156389 00000 n 
-0000156530 00000 n 
-0000156638 00000 n 
-0000156759 00000 n 
-0000156886 00000 n 
-0000157020 00000 n 
-0000157135 00000 n 
-0000157271 00000 n 
-0000157428 00000 n 
-0000157540 00000 n 
-0000157662 00000 n 
-0000157825 00000 n 
-0000157978 00000 n 
-0000158085 00000 n 
-0000158208 00000 n 
-0000158273 00000 n 
-0000158522 00000 n 
+0000063259 00000 n 
+0000067174 00000 n 
+0000067404 00000 n 
+0000071748 00000 n 
+0000071978 00000 n 
+0000076201 00000 n 
+0000076431 00000 n 
+0000080671 00000 n 
+0000080901 00000 n 
+0000083003 00000 n 
+0000084565 00000 n 
+0000091867 00000 n 
+0000092377 00000 n 
+0000099659 00000 n 
+0000099889 00000 n 
+0000107191 00000 n 
+0000107421 00000 n 
+0000113316 00000 n 
+0000113546 00000 n 
+0000119385 00000 n 
+0000120040 00000 n 
+0000124763 00000 n 
+0000125133 00000 n 
+0000130835 00000 n 
+0000131202 00000 n 
+0000136402 00000 n 
+0000137033 00000 n 
+0000140057 00000 n 
+0000140287 00000 n 
+0000142046 00000 n 
+0000142148 00000 n 
+0000142245 00000 n 
+0000142350 00000 n 
+0000146509 00000 n 
+0000147288 00000 n 
+0000153797 00000 n 
+0000153937 00000 n 
+0000154054 00000 n 
+0000154174 00000 n 
+0000154300 00000 n 
+0000154433 00000 n 
+0000154552 00000 n 
+0000154676 00000 n 
+0000154804 00000 n 
+0000154935 00000 n 
+0000155065 00000 n 
+0000155184 00000 n 
+0000155292 00000 n 
+0000155459 00000 n 
+0000155568 00000 n 
+0000155694 00000 n 
+0000155827 00000 n 
+0000155935 00000 n 
+0000156063 00000 n 
+0000156192 00000 n 
+0000156325 00000 n 
+0000156465 00000 n 
+0000156608 00000 n 
+0000156741 00000 n 
+0000156876 00000 n 
+0000157014 00000 n 
+0000157144 00000 n 
+0000157278 00000 n 
+0000157412 00000 n 
+0000157528 00000 n 
+0000157683 00000 n 
+0000157804 00000 n 
+0000157927 00000 n 
+0000158089 00000 n 
+0000158216 00000 n 
+0000158358 00000 n 
+0000158466 00000 n 
+0000158587 00000 n 
+0000158714 00000 n 
+0000158849 00000 n 
+0000158965 00000 n 
+0000159101 00000 n 
+0000159258 00000 n 
+0000159370 00000 n 
+0000159492 00000 n 
+0000159655 00000 n 
+0000159808 00000 n 
+0000159915 00000 n 
+0000160038 00000 n 
+0000160103 00000 n 
+0000160352 00000 n 
 trailer
 <<
-/Size 111
-/Root 110 0 R
-/Info 109 0 R
+/Size 112
+/Root 111 0 R
+/Info 110 0 R
 >>
 startxref
-158668
+160498
 %%EOF

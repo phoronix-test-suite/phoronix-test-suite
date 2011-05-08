@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 - pts-core: Rework test install path handling
 - pts-core: Finish eliminating XML-based definitions
 - pts-core: Increase PHP compatibility
+- pts-core: Facebook HipHop should now fully work with the PTS client
 - phodevi: Internal clean-ups
 
 Phoronix Test Suite 3.2 Milestone 2
