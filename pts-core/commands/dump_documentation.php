@@ -35,6 +35,7 @@ class dump_documentation implements pts_option_interface
 		}
 
 		$pdf = new pts_pdf_template(pts_title(false), 'Test Client Documentation');
+		$html_doc = new pts_html_template(pts_title(false), 'Test Client Documentation');
 
 		$pdf->AddPage();
 		$pdf->Image(PTS_CORE_STATIC_PATH . 'images/pts-308x160.png', 69, 85, 73, 38, 'PNG', 'http://www.phoronix-test-suite.com/');
@@ -129,6 +130,7 @@ class dump_documentation implements pts_option_interface
 		foreach(pts_file_io::glob(PTS_PATH . 'documentation/html_stubs/*_*.html') as $html_file)
 		{
 			$pdf->html_to_pdf($html_file);
+			$html_doc->html_to_html($html_file);
 		}
 
 		if(!is_writable(PTS_PATH . 'documentation/'))
@@ -139,6 +141,7 @@ class dump_documentation implements pts_option_interface
 		{
 			$pdf_file = PTS_PATH . 'documentation/phoronix-test-suite.pdf';
 			$pdf->Output($pdf_file);
+			$html_doc->Output(PTS_PATH . 'documentation/phoronix-test-suite.html');
 			echo PHP_EOL . 'Saved To: ' . $pdf_file . PHP_EOL . PHP_EOL;
 
 			// Also re-generate the man page
