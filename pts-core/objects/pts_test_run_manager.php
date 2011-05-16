@@ -892,6 +892,45 @@ class pts_test_run_manager
 		$this->set_results_identifier($result_identifier);
 		$this->run_description = $description;
 	}
+	protected function auto_generate_description()
+	{
+		if(pts_result_file::is_test_result_file($this->file_name))
+		{
+			$result_file = new pts_result_file($this->file_name);
+			$existing_identifier_count = count($result_file->get_system_identifiers());
+		}
+		else
+		{
+			$existing_identifier_count = 0;
+		}
+
+		$auto_description = 'Running ' . implode(', ', array_unique($this->get_tests_to_run_identifiers())) . ' via the Phoronix Test Suite.';
+		$subsystems_to_test = array();
+		foreach($this->tests_to_run as $test_run_request)
+		{
+			array_push($subsystems_to_test, $test_run_request->test_profile->get_test_hardware_type());
+		}
+		$subsystems_to_test = array_unique($subsystems_to_test);
+
+		if(count($subsystems_to_test) == 1 && $existing_identifier_count == 0)
+		{
+			switch($subsystems_to_test)
+			{
+				case 'Graphics':
+					$auto_description = phodevi::read_property('gpu', 'model') . ' graphics testing with ' . phodevi::read_property('system', 'display-driver-string') . ' / ' . phodevi::read_property('system', 'opengl-driver') . ' via the Phoronix Test Suite.';
+					break;
+				case 'Disk':
+					$auto_description = phodevi::read_name('disk') . ' testing on ' . phodevi::read_property('system', 'operating-system') . ' with a ' . phodevi::read_property('system', 'filesystem') . ' file-system via the Phoronix Test Suite.';
+					break;
+				case 'Processor':
+				default:
+					$auto_description = phodevi::read_property('cpu', 'model') . ' testing with a ' . phodevi::read_name('motherboard') . ' under ' . phodevi::read_property('system', 'operating-system') . ' via the Phoronix Test Suite.';
+					break;
+			}
+		}
+
+		return $auto_description;
+	}
 	public function save_results_prompt()
 	{
 		if(($this->prompt_save_results || $this->force_save_results) && count($this->tests_to_run) > 0) // or check for DO_NOT_SAVE_RESULTS == false
@@ -916,11 +955,11 @@ class pts_test_run_manager
 
 				// Prompt Identifier
 				$this->prompt_results_identifier();
-				$unique_tests_r = array_unique($this->get_tests_to_run_identifiers());
 
-				if($this->run_description == null)
+				if(!isset($this->run_description[16]) || strpos($this-run_description, 'via the Phoronix Test Suite') !== false)
 				{
-					$this->run_description = 'Running ' . implode(', ', $unique_tests_r) . '.';
+					// Write the auto-description if nothing is set or attempt to auto-detect if it was a previous auto-description saved
+					$this->run_description = self::auto_generate_description();
 				}
 
 				// Prompt Description

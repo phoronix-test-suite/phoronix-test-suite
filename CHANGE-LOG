@@ -7,6 +7,7 @@ Phoronix Test Suite (Git)
 - pts-core: Increase PHP compatibility
 - pts-core: Facebook HipHop should now fully work with the PTS client
 - pts-core: Support real-time monitoring the Nouveau GPU frequency via the gpu.freq call as exposed by system_monitor module
+- pts-core: Begin improving the auto-generated result file descriptions
 - phodevi: Internal clean-ups
 - phodevi: Recognition support for GPFS file-system
 
