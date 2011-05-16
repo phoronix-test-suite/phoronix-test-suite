@@ -894,10 +894,23 @@ class pts_test_run_manager
 	}
 	protected function auto_generate_description()
 	{
+
+		$hw_components = array(pts_result_file_analyzer::system_component_string_to_array(phodevi::system_hardware(true)));
+		$sw_components = array(pts_result_file_analyzer::system_component_string_to_array(phodevi::system_software(true)));
+
 		if(pts_result_file::is_test_result_file($this->file_name))
 		{
 			$result_file = new pts_result_file($this->file_name);
 			$existing_identifier_count = count($result_file->get_system_identifiers());
+
+			foreach($result_file->get_system_hardware() as $component_string)
+			{
+				array_push($hw_components, pts_result_file_analyzer::system_component_string_to_array($component_string));
+			}
+			foreach($result_file->get_system_software() as $component_string)
+			{
+				array_push($sw_components, pts_result_file_analyzer::system_component_string_to_array($component_string));
+			}
 		}
 		else
 		{
@@ -906,12 +919,14 @@ class pts_test_run_manager
 
 		$auto_description = 'Running ' . implode(', ', array_unique($this->get_tests_to_run_identifiers())) . ' via the Phoronix Test Suite.';
 		$subsystems_to_test = array();
+
 		foreach($this->tests_to_run as $test_run_request)
 		{
 			array_push($subsystems_to_test, $test_run_request->test_profile->get_test_hardware_type());
 		}
 		$subsystems_to_test = array_unique($subsystems_to_test);
 
+		// TODO: hook into $hw_components and $sw_components for leveraging existing result file data for comparisons already in existent
 		if(count($subsystems_to_test) == 1 && $existing_identifier_count == 0)
 		{
 			switch($subsystems_to_test)
