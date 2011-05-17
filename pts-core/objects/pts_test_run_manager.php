@@ -971,7 +971,7 @@ class pts_test_run_manager
 				// Prompt Identifier
 				$this->prompt_results_identifier();
 
-				if(!isset($this->run_description[16]) || strpos($this-run_description, 'via the Phoronix Test Suite') !== false)
+				if(!isset($this->run_description[16]) || strpos($this->run_description, 'via the Phoronix Test Suite') !== false)
 				{
 					// Write the auto-description if nothing is set or attempt to auto-detect if it was a previous auto-description saved
 					$this->run_description = self::auto_generate_description();
