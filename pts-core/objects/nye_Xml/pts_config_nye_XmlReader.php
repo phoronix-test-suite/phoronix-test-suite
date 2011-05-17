@@ -38,6 +38,10 @@ class pts_config_nye_XmlReader extends nye_XmlReader
 		{
 			$file = PTS_CORE_STATIC_PATH . 'user-config-template.xml';
 		}
+		else if(is_file(PTS_CORE_STATIC_PATH . 'user-config-defaults.xml'))
+		{
+			$file = PTS_CORE_STATIC_PATH . 'user-config-defaults.xml';
+		}
 		else
 		{
 			$file = null;
