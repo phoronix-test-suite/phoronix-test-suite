@@ -56,7 +56,8 @@ class pts_html_template
 		// TODO: the below code is known to emit a fatal error right now since the nodes are different, need to copy/merge nodes between docs
 		foreach($dom->getElementsByTagName('html')->item(0)->getElementsByTagName('body')->item(0)->childNodes as $node)
 		{
-			$this->dom_body->appendChild($node);
+			$n = $this->dom->importNode($node, true);
+			$this->dom_body->appendChild($n);
 		}
 
 	}
