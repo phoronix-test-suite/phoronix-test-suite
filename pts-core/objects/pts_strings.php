@@ -33,6 +33,8 @@ class pts_strings
 	const CHAR_SLASH = 512;
 	const CHAR_AT = 1024;
 	const CHAR_PLUS = 2048;
+	const CHAR_SEMICOLON = 4096;
+	const CHAR_EQUAL = 8192;
 
 	public static function is_url($string)
 	{
@@ -213,6 +215,14 @@ class pts_strings
 			$is_of_type = true;
 		}
 		else if(($attributes & self::CHAR_PLUS) && $i == 43)
+		{
+			$is_of_type = true;
+		}
+		else if(($attributes & self::CHAR_SEMICOLON) && $i == 59)
+		{
+			$is_of_type = true;
+		}
+		else if(($attributes & self::CHAR_EQUAL) && $i == 61)
 		{
 			$is_of_type = true;
 		}
