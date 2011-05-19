@@ -75,6 +75,24 @@ class gpu_temp implements phodevi_sensor
 					break;
 				}
 			}
+
+			if($temp_c == -1 && is_readable('/sys/kernel/debug/dri/0/i915_emon_status'))
+			{
+				// Intel thermal
+				$i915_emon_status = file_get_contents('/sys/kernel/debug/dri/0/i915_emon_status');
+				$temp = strpos($i915_emon_status, 'GMCH temp: ');
+
+				if($temp !== false)
+				{
+					$temp = substr($i915_emon_status, $temp + 11);
+					$temp = substr($temp, 0, strpos($temp, PHP_EOL));
+
+					if(is_numeric($temp))
+					{
+						$temp_c = $temp;
+					}
+				}
+			}
 		}
 
 		return $temp_c;
