@@ -4,6 +4,7 @@ Phoronix Test Suite (Git)
 
 - phodevi: Intel GMCH thermal monitoring sensor
 - phodevi: Support monitoring the GPU power consumption on Intel hardware using the gpu.power sensor
+- phodevi: Support determing Intel GPU load via number of commands processed per second
 
 Phoronix Test Suite 3.2 Milestone 3
 18 May 2011
