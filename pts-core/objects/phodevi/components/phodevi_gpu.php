@@ -729,7 +729,7 @@ class phodevi_gpu extends phodevi_device_interface
 						$mem_freq = is_numeric($mem_freq) ? $mem_freq / 1000 : 0;
 					}				
 					break;
-				case 'i915':
+				case 'intel':
 					if(is_file('/sys/kernel/debug/dri/0/i915_cur_delayinfo'))
 					{
 						$i915_cur_delayinfo = file_get_contents('/sys/kernel/debug/dri/0/i915_cur_delayinfo');
