@@ -109,6 +109,22 @@ class gpu_freq implements phodevi_sensor
 					}
 				}
 			}
+			else if(is_file('/sys/kernel/debug/dri/0/i915_cur_delayinfo'))
+			{
+				$i915_cur_delayinfo = file_get_contents('/sys/kernel/debug/dri/0/i915_cur_delayinfo');
+				$cagf = strpos($i915_cur_delayinfo, 'CAGF: ');
+
+				if($cagf !== false)
+				{
+					$cagf_mhz = substr($i915_cur_delayinfo, $cagf + 6);
+					$cagf_mhz = substr($cagf_mhz, 0, strpos($cagf_mhz, 'MHz'));
+
+					if(is_numeric($cagf_mhz))
+					{
+						$core_freq = $cagf_mhz;
+					}
+				}
+			}
 		}
 
 		if(!is_numeric($core_freq))

@@ -10,6 +10,7 @@ Phoronix Test Suite (Git)
 - pts-core: Begin improving the auto-generated result file descriptions
 - phodevi: Internal clean-ups
 - phodevi: Recognition support for GPFS file-system
+- phodevi: Intel SNB frequency reporting
 - documentation: Begin auto-generation of HTML documentation in a single file that's the same content as the PDF user guide
 
 Phoronix Test Suite 3.2 Milestone 2
