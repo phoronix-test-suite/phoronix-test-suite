@@ -54,6 +54,11 @@ class gpu_power implements phodevi_sensor
 
 				if(is_numeric($power))
 				{
+					if($power > 10000000)
+					{
+						$power /= 1000;
+					}
+
 					$gpu_power = $power;
 				}
 			}
