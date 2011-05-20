@@ -614,6 +614,16 @@ class phodevi_system extends phodevi_device_interface
 				$desktop_version = pts_strings::last_in_string(trim(shell_exec('unity --version 2> /dev/null')));
 			}
 		}
+		else if(pts_client::is_process_running('unity-2d-panel'))
+		{
+			// Canonical / Ubuntu Unity 2D Desktop
+			$desktop_environment = 'Unity 2D';
+
+			if(pts_client::executable_in_path('unity'))
+			{
+				$desktop_version = pts_strings::last_in_string(trim(shell_exec('unity --version 2> /dev/null')));
+			}
+		}
 		else if(($kde4 = pts_client::is_process_running('kded4')) || pts_client::is_process_running('kded'))
 		{
 			// KDE 4.x
