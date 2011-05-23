@@ -732,7 +732,7 @@ class pts_test_run_manager
 				}
 				else if((pts_c::$test_flags & pts_c::batch_mode))
 				{
-					$upload_results = pts_config::read_user_config('PhoronixTestSuite/Options/BatchMode/UploadResults', 'TRUE');
+					$upload_results = pts_config::read_bool_config('PhoronixTestSuite/Options/BatchMode/UploadResults', 'TRUE');
 				}
 				else
 				{

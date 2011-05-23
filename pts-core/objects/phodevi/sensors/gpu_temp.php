@@ -87,7 +87,7 @@ class gpu_temp implements phodevi_sensor
 					$temp = substr($i915_emon_status, $temp + 11);
 					$temp = substr($temp, 0, strpos($temp, PHP_EOL));
 
-					if(is_numeric($temp))
+					if(is_numeric($temp) && $temp > 0)
 					{
 						$temp_c = $temp;
 					}

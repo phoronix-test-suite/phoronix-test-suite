@@ -153,6 +153,17 @@ class pts_result_file
 			}
 
 			$is_tracker = isset($identifiers[4]) && (count(array_unique($identifiers)) <= 1 || $is_sha1_hash);
+
+			if($is_tracker)
+			{
+				$hw = $this->get_system_hardware();
+
+				if(isset($hw[1]) && count($hw) == count(array_unique($hw)))
+				{
+					// it can't be a results tracker if the hardware is always different
+					$is_tracker = false;
+				}
+			}
 		}
 
 		return $is_tracker;
