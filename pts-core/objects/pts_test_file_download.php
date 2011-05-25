@@ -32,8 +32,8 @@ class pts_test_file_download
 	private $architecture;
 	private $platform;
 
-	private $download_location_type;
-	private $download_location_path;
+	private $download_location_type = null;
+	private $download_location_path = null;
 
 	public function __construct($url = null, $filename = null, $filesize = 0, $md5 = null, $platform = null, $architecture = null)
 	{

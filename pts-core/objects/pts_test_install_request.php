@@ -100,6 +100,26 @@ class pts_test_install_request
 			}
 		}
 	}
+	public static function test_files_available_locally(&$test_profile)
+	{
+		$install_request = new pts_test_install_request($test_profile);
+
+		$remote_files = self::remote_files_available_in_download_caches();
+		$local_download_caches = self::local_download_caches();
+		$remote_download_caches = self::remote_download_caches();
+
+		$install_request->scan_download_caches($local_download_caches, $remote_download_caches, $remote_files);
+
+		foreach($install_request->get_download_objects() as $download_object)
+		{
+			if($download_object->get_download_location_type() == null)
+			{
+				return false;
+			}
+		}
+
+		return true;
+	}
 	public function scan_download_caches($local_download_caches, $remote_download_caches, $remote_files)
 	{
 		$download_location = $this->test_profile->get_install_dir();
