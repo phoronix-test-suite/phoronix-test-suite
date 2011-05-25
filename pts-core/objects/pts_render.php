@@ -451,9 +451,10 @@ class pts_render
 					}
 
 					// Check to see if only numeric changes are being made
+					$sha1_short_hash_ending = isset($date[7]) && pts_strings::string_only_contains(substr($date, -8), pts_strings::CHAR_NUMERIC | pts_strings::CHAR_LETTER);
 					$date = str_replace('s', null, pts_strings::remove_from_string($date, pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DASH | pts_strings::CHAR_DECIMAL));
 
-					if($prev_date != null && $date != $prev_date)
+					if($prev_date != null && $date != $prev_date && $sha1_short_hash_ending == false)
 					{
 						$is_tracking = false;
 					}
@@ -578,7 +579,7 @@ class pts_render
 				break;
 			}
 
-			if($is_ordered && $prev_system != null && $prev_system != $identifier_r[0] && isset($systems[$identifier_r[0]]))
+			if(false && $is_ordered && $prev_system != null && $prev_system != $identifier_r[0] && isset($systems[$identifier_r[0]]))
 			{
 				// The results aren't ordered
 				$is_ordered = false;
@@ -595,10 +596,10 @@ class pts_render
 			$targets[$identifier_r[1]] = !isset($targets[$identifier_r[1]]) ? 1 : $targets[$identifier_r[1]] + 1;	
 		}
 
-		if($is_ordered == false && $is_multi_way)
+		if(false && $is_ordered == false && $is_multi_way)
 		{
 			// TODO: get the reordering code to work
-			if(false && $result_file instanceof pts_result_file)
+			if($result_file instanceof pts_result_file)
 			{
 				// Reorder the result file
 				$to_order = array();
@@ -610,7 +611,7 @@ class pts_render
 
 				$ordered_xml = pts_merge::merge_test_results_array($to_order);
 				$result_file = new pts_result_file($ordered_xml);
-				$is_multi_way = false;
+				$is_multi_way = true;
 			}
 			else
 			{

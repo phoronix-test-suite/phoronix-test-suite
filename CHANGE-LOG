@@ -4,6 +4,8 @@ Phoronix Test Suite (Git)
 
 - pts-core: Don't confuse changed hardware as being part of a results tracker
 - pts-core: Interactive mode improvements for Moscow
+- pts-core: Allow unordered multi-way comparisons
+- pts-core: Detect short SHA1 hashes at the end of the identifier string as being part of a results tracker
 - phodevi: Intel GMCH thermal monitoring sensor
 - phodevi: Support monitoring the GPU power consumption on Intel hardware using the gpu.power sensor
 - phodevi: Support determing Intel GPU load via number of commands processed per second

@@ -144,25 +144,35 @@ class pts_result_file
 		{
 			$identifiers = $this->get_system_identifiers();
 
-			// dirty SHA1 hash check
-			$is_sha1_hash = strlen($identifiers[0]) == 40 && strpos($identifiers[0], ' ') === false;
-
-			foreach($identifiers as &$identifier)
+			if(isset($identifiers[4]))
 			{
-				$identifier = pts_strings::remove_from_string($identifier, pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DASH | pts_strings::CHAR_DECIMAL);
-			}
+				// dirty SHA1 hash check
+				$is_sha1_hash = strlen($identifiers[0]) == 40 && strpos($identifiers[0], ' ') === false;
+				$has_sha1_shorthash = true;
 
-			$is_tracker = isset($identifiers[4]) && (count(array_unique($identifiers)) <= 1 || $is_sha1_hash);
-
-			if($is_tracker)
-			{
-				$hw = $this->get_system_hardware();
-
-				if(isset($hw[1]) && count($hw) == count(array_unique($hw)))
+				foreach($identifiers as &$identifier)
 				{
-					// it can't be a results tracker if the hardware is always different
-					$is_tracker = false;
+					$has_sha1_shorthash = $has_sha1_shorthash && isset($identifier[7]) && pts_strings::string_only_contains(substr($identifier, -8), pts_strings::CHAR_NUMERIC | pts_strings::CHAR_LETTER);
+					$identifier = pts_strings::remove_from_string($identifier, pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DASH | pts_strings::CHAR_DECIMAL);
 				}
+
+				$is_tracker = count(array_unique($identifiers)) <= 1 || $is_sha1_hash || $has_sha1_shorthash;
+
+				if($is_tracker)
+				{
+					$hw = $this->get_system_hardware();
+
+					if(isset($hw[1]) && count($hw) == count(array_unique($hw)))
+					{
+						// it can't be a results tracker if the hardware is always different
+						$is_tracker = false;
+					}
+				}
+			}
+			else
+			{
+				// Definitely not a tracker as not over 5 results
+				$is_tracker = false;
 			}
 		}
 
