@@ -944,7 +944,7 @@ class phodevi_gpu extends phodevi_device_interface
 				{
 					$info = $inside_bracket . ' ' . substr($info, ($bracket_close + 1));
 				}
-				else if(stripos($inside_bracket, 'Radeon') !== false || stripos($inside_bracket, 'FirePro') !== false || stripos($inside_bracket, 'FireGL') !== false)
+				else if(stripos($inside_bracket, 'Radeon') !== false || stripos($inside_bracket, 'Fire') !== false || stripos($inside_bracket, 'Fusion') !== false)
 				{
 					$info = $inside_bracket . ' ' . substr($info, ($bracket_close + 1));
 				}
@@ -955,8 +955,9 @@ class phodevi_gpu extends phodevi_device_interface
 		{
 			$info = 'NVIDIA' . ' ' . $info;
 		}
-		else if((stripos($info, 'ATI') === false && stripos($info, 'AMD') === false) && (stripos($info, 'Radeon') !== false || stripos($info, 'FirePro') !== false || stripos($info, 'FireGL') !== false))
+		else if((stripos($info, 'ATI') === false && stripos($info, 'AMD') === false) && (stripos($info, 'Radeon') !== false || stripos($info, 'Fire') !== false || stripos($info, 'Fusion') !== false))
 		{
+			// Fire would be for FireGL or FirePro hardware
 			$info = 'AMD ' . $info;
 		}
 

@@ -123,7 +123,7 @@ class interactive implements pts_option_interface
 					$tests_to_run = pts_user_io::prompt_text_menu('Select Test', $supported_tests, true, true);
 					$tests_to_run = explode(',', $tests_to_run);
 					pts_test_installer::standard_install($tests_to_run);
-					pts_test_run_manager::standard_run($tests_to_run);
+					pts_test_run_manager::standard_run($tests_to_run, (pts_c::defaults_mode | pts_c::auto_mode));
 					break;
 				case 'RUN_SUITE':
 					$possible_suites = pts_openbenchmarking_client::available_suites();
@@ -137,7 +137,7 @@ class interactive implements pts_option_interface
 					foreach(explode(',', $suites_to_run) as $suite_to_run)
 					{
 						pts_test_installer::standard_install($suite_to_run);
-						pts_test_run_manager::standard_run($suite_to_run);
+						pts_test_run_manager::standard_run($suite_to_run, (pts_c::defaults_mode | pts_c::auto_mode));
 					}
 					break;
 				case 'SELECT_DRIVE_MOUNT':
@@ -161,7 +161,7 @@ class interactive implements pts_option_interface
 					pts_client::$display->generic_heading('System Test');
 					$system_tests = array('apache', 'c-ray', 'ramspeed', 'postmark');
 					pts_test_installer::standard_install($system_tests);
-					pts_test_run_manager::standard_run($system_tests, pts_c::defaults_mode);
+					pts_test_run_manager::standard_run($system_tests, (pts_c::defaults_mode | pts_c::auto_mode));
 					break;
 				case 'SHOW_INFO':
 					pts_client::$display->generic_heading('System Software / Hardware Information');
@@ -181,6 +181,21 @@ class interactive implements pts_option_interface
 					break;
 				case 'BACKUP_RESULTS_TO_USB':
 					pts_client::$display->generic_heading('Backing Up Test Results');
+
+					if($is_moscow)
+					{
+						$drives = pts_file_io::glob('/dev/sd*');
+						sort($drives);
+
+						if(count($drives) > 0 && is_writable('/media/'))
+						{
+							$select_drive = pts_user_io::prompt_text_menu('Select Drive / Partition To Save Results', $drives);
+							echo PHP_EOL . 'Attempting to mount: ' . $select_drive . PHP_EOL;
+							mkdir('/media/00-results-backup');
+							exec('mount ' . $select_drive . ' /media/00-results-backup');
+						}
+					}
+
 					foreach(pts_file_io::glob('/media/*') as $media_dir)
 					{
 						if(!is_writable($media_dir))
@@ -191,6 +206,12 @@ class interactive implements pts_option_interface
 
 						echo PHP_EOL . 'Writing Test Results To: ' . $media_dir . PHP_EOL;
 						pts_file_io::copy(PTS_SAVE_RESULTS_PATH, $media_dir . '/');
+					}
+
+					if($is_moscow && is_dir('/media/00-results-backup'))
+					{
+						exec('umount /media/00-results-backup');
+						rmdir('/media/00-results-backup');
 					}
 					break;
 			}
