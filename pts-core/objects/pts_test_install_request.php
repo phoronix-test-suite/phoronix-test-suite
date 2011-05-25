@@ -104,10 +104,11 @@ class pts_test_install_request
 	{
 		$install_request = new pts_test_install_request($test_profile);
 
-		$remote_files = self::remote_files_available_in_download_caches();
-		$local_download_caches = self::local_download_caches();
-		$remote_download_caches = self::remote_download_caches();
+		$remote_files = pts_test_install_manager::remote_files_available_in_download_caches();
+		$local_download_caches = pts_test_install_manager::local_download_caches();
+		$remote_download_caches = pts_test_install_manager::remote_download_caches();
 
+		$install_request->generate_download_object_list();
 		$install_request->scan_download_caches($local_download_caches, $remote_download_caches, $remote_files);
 
 		foreach($install_request->get_download_objects() as $download_object)

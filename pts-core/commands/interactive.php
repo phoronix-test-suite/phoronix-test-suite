@@ -105,9 +105,10 @@ class interactive implements pts_option_interface
 							// Running in a Live RAM-based environment, but no disk mounted, so don't run disk tests
 							unset($supported_tests[$i]);
 						}
-						if($is_moscow && pts_test_install_request::test_files_available_locally($test_profile) == false)
+						if(pts_test_install_request::test_files_available_locally($test_profile) == false)
 						{
 							// Don't show tests where files need to be downloaded
+echo 111111;
 							unset($supported_tests[$i]);
 						}
 
