@@ -79,7 +79,7 @@ class interactive implements pts_option_interface
 				$options['SELECT_DRIVE_MOUNT'] = 'Select Disk Drive To Use For Testing';
 			}
 
-			if(count(pts_client::saved_test_results()) > 0 && count(pts_file_io::glob('/media/*')) > 0)
+			if(count(pts_client::saved_test_results()) > 0)
 			{
 				$options['BACKUP_RESULTS_TO_USB'] = 'Backup Results To Media Storage';
 			}
