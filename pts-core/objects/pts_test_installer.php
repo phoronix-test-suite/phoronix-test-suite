@@ -503,7 +503,7 @@ class pts_test_installer
 
 		if(is_file($filename))
 		{
-			if(pts_client::read_env('NO_MD5_CHECKS') != false)
+			if(pts_client::read_env('NO_MD5_CHECKS') != false || pts_bypass::skip_md5_checks())
 			{
 				$valid = true;
 			}

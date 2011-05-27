@@ -129,7 +129,10 @@ class interactive implements pts_option_interface
 					$tests_to_run = explode(',', $tests_to_run);
 					pts_test_installer::standard_install($tests_to_run);
 					$run_manager = pts_test_run_manager::standard_run($tests_to_run, (pts_c::defaults_mode | pts_c::auto_mode));
-					pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . $run_manager->get_file_name() . '/index.html', null, true, true);
+					if($run_manager != false)
+					{
+						pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . $run_manager->get_file_name() . '/index.html', null, true, true);
+					}
 					break;
 				case 'RUN_SUITE':
 					$possible_suites = pts_openbenchmarking_client::available_suites();
@@ -167,7 +170,11 @@ class interactive implements pts_option_interface
 					pts_client::$display->generic_heading('System Test');
 					$system_tests = array('apache', 'c-ray', 'ramspeed', 'postmark');
 					pts_test_installer::standard_install($system_tests);
-					pts_test_run_manager::standard_run($system_tests, (pts_c::defaults_mode | pts_c::auto_mode));
+					$run_manager = pts_test_run_manager::standard_run($system_tests, (pts_c::defaults_mode | pts_c::auto_mode));
+					if($run_manager != false)
+					{
+						pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . $run_manager->get_file_name() . '/index.html', null, true, true);
+					}
 					break;
 				case 'SHOW_INFO':
 					pts_client::$display->generic_heading('System Software / Hardware Information');
