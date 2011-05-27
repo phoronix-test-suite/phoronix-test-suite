@@ -1299,14 +1299,7 @@ class pts_client
 	}
 	public static function read_env($var)
 	{
-		static $vars = null;
-
-		if(!isset($vars[$var]))
-		{
-			$vars[$var] = getenv($var);
-		}
-
-		return $vars[$var];
+		return getenv($var);
 	}
 	public static function pts_set_environmental_variable($name, $value)
 	{

@@ -51,6 +51,10 @@ class interactive implements pts_option_interface
 			{
 				$test_results_name = phodevi::read_name('motherboard');
 			}
+			if($test_results_name == null)
+			{
+				$test_results_name = phodevi::read_property('system', 'vendor-identifier');
+			}
 
 			putenv('TEST_RESULTS_NAME=' . str_replace(' ', null, $test_results_name));
 			putenv('TEST_RESULTS_IDENTIFIER=' . $test_results_name);
