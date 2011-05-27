@@ -1268,7 +1268,7 @@ class pts_test_run_manager
 				pts_client::$display->test_run_error('3D acceleration support not available, cannot run ' . $test_profile);
 				$valid_test_profile = false;
 			}
-			else if($test_type == 'Disk' && stripos(phodevi::read_propery('system', 'filesystem'), 'SquashFS') !== false)
+			else if($test_type == 'Disk' && stripos(phodevi::read_property('system', 'filesystem'), 'SquashFS') !== false)
 			{
 				pts_client::$display->test_run_error('Running on a RAM-based live file-system, cannot run ' . $test_profile);
 				$valid_test_profile = false;
