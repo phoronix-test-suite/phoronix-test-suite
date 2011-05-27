@@ -164,9 +164,9 @@ class interactive implements pts_option_interface
 					{
 						$to_mount = pts_user_io::prompt_text_menu('Select Drive / Partition To Mount', $drives);
 						echo PHP_EOL . 'Attempting to mount: ' . $to_mount . PHP_EOL;
+						exec('umount /media/pts-auto-mount 2>&1');
 						pts_file_io::delete('/media/pts-auto-mount', null, true);
 						pts_file_io::mkdir('/media/pts-auto-mount');
-						exec('umount /media/pts-auto-mount 2>&1');
 						echo exec('mount ' . $to_mount . ' /media/pts-auto-mount');
 						putenv('PTS_TEST_INSTALL_ROOT_PATH=/media/pts-auto-mount/');
 					}
