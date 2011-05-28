@@ -13,6 +13,7 @@ Phoronix Test Suite (Git)
 - phodevi: Support monitoring the GPU power consumption on Intel hardware using the gpu.power sensor
 - phodevi: Support determing Intel GPU load via number of commands processed per second
 - phodevi: Support for unity-2d desktop version detection (normal Unity has already been supported)
+- phodevi: Support for gnome-shell desktop version detection
 - documentation: Move out the auto-generated PDF documentation (it will be on web server) and just leave in the HTML documentation in tree at the request of Debian packager
 
 Phoronix Test Suite 3.2 Milestone 3

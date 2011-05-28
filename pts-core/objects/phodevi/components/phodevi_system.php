@@ -604,6 +604,16 @@ class phodevi_system extends phodevi_device_interface
 				$desktop_version = pts_strings::last_in_string(trim(shell_exec('gnome-about --version 2> /dev/null')));
 			}
 		}
+		else if(pts_client::is_process_running('gnome-shell'))
+		{
+			// GNOME 3.0 / GNOME Shell
+			$desktop_environment = 'GNOME Shell';
+
+			if(pts_client::executable_in_path('gnome-shell'))
+			{
+				$desktop_version = pts_strings::last_in_string(trim(shell_exec('gnome-shell --version 2> /dev/null')));
+			}
+		}
 		else if(pts_client::is_process_running('unity-panel-service'))
 		{
 			// Canonical / Ubuntu Unity Desktop
