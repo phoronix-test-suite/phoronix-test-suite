@@ -25,7 +25,7 @@ pts_bypass::init();
 class pts_bypass
 {
 	private static $os_identifier_sha1 = null;
-	private static $flags = 0;
+	private static $flags;
 
 	// Flags
 	private static $is_live_cd;
@@ -33,9 +33,11 @@ class pts_bypass
 	private static $no_openbenchmarking_reporting;
 	private static $user_agreement_skip;
 	private static $skip_md5_checks;
+	private static $remove_test_on_completion;
 
 	public static function init()
 	{
+		self::$flags = 0;
 		self::$os_identifier_sha1 = sha1(phodevi::read_property('system', 'vendor-identifier'));
 
 		self::$is_live_cd = (1 << 1);
@@ -43,12 +45,22 @@ class pts_bypass
 		self::$no_openbenchmarking_reporting = (1 << 3);
 		self::$user_agreement_skip = (1 << 4);
 		self::$skip_md5_checks = (1 << 5);
+		self::$remove_test_on_completion = (1 << 6);
 
 		switch(self::$os_identifier_sha1)
 		{
 			case 'b28d6a7148b34595c5b397dfcf5b12ac7932b3dc': // Moscow 2011-04 client
-				self::$flags = self::$is_live_cd | self::$no_network_communication | self::$no_openbenchmarking_reporting | self::$user_agreement_skip | self::$skip_md5_checks;
+				self::$flags = self::$is_live_cd | self::$no_network_communication | self::$no_openbenchmarking_reporting | self::$user_agreement_skip | self::$skip_md5_checks | self::$remove_test_on_completion;
 				break;
+		}
+
+		if(pts_client::read_env('NO_MD5_CHECKS') != false)
+		{
+			self::$flags |= self::$skip_md5_checks;
+		}
+		if(pts_config::read_bool_config('PhoronixTestSuite/Options/Testing/RemoveTestInstallOnCompletion', 'FALSE'))
+		{
+			self::$flags |= self::$remove_test_on_completion;
 		}
 	}
 	public static function os_identifier_hash()
@@ -74,6 +86,10 @@ class pts_bypass
 	public static function skip_md5_checks()
 	{
 		return self::$flags & self::$skip_md5_checks;
+	}
+	public static function remove_test_on_completion()
+	{
+		return self::$flags & self::$remove_test_on_completion;
 	}
 }
 
