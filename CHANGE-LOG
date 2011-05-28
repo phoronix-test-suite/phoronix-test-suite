@@ -8,6 +8,7 @@ Phoronix Test Suite (Git)
 - pts-core: Detect short SHA1 hashes at the end of the identifier string as being part of a results tracker
 - pts-core: Rework pts_bypass class into pts_flags
 - pts-core: Rename SKIP_EXTERNAL_DEPENDENCIES_CHECK to NO_EXTERNAL_DEPENDENCIES
+- pts-core: Add AlwaysUploadResultsToOpenBenchmarking option to user-config.xml
 - phodevi: Intel GMCH thermal monitoring sensor
 - phodevi: Support monitoring the GPU power consumption on Intel hardware using the gpu.power sensor
 - phodevi: Support determing Intel GPU load via number of commands processed per second

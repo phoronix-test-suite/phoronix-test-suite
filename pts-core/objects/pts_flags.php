@@ -36,6 +36,7 @@ class pts_flags
 	private static $remove_test_on_completion;
 	private static $no_phodevi_cache;
 	private static $no_external_dependencies;
+	private static $upload_to_openbenchmarking;
 
 	public static function init()
 	{
@@ -50,6 +51,7 @@ class pts_flags
 		self::$remove_test_on_completion = (1 << 6);
 		self::$no_phodevi_cache = (1 << 7);
 		self::$no_external_dependencies = (1 << 8);
+		self::$upload_to_openbenchmarking = (1 << 9);
 
 		switch(self::$os_identifier_sha1)
 		{
@@ -65,6 +67,10 @@ class pts_flags
 		if(pts_config::read_bool_config('PhoronixTestSuite/Options/Testing/RemoveTestInstallOnCompletion', 'FALSE'))
 		{
 			self::$flags |= self::$remove_test_on_completion;
+		}
+		if(pts_config::read_bool_config('PhoronixTestSuite/Options/Testing/AlwaysUploadResultsToOpenBenchmarking', 'FALSE'))
+		{
+			self::$flags |= self::$upload_to_openbenchmarking;
 		}
 		if(pts_client::read_env('NO_PHODEVI_CACHE') != false)
 		{
@@ -110,6 +116,10 @@ class pts_flags
 	public static function no_external_dependencies()
 	{
 		return self::$flags & self::$no_external_dependencies;
+	}
+	public static function upload_to_openbenchmarking()
+	{
+		return self::$flags & self::$upload_to_openbenchmarking;
 	}
 }
 

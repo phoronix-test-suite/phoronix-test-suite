@@ -30,6 +30,7 @@
 			<SaveInstallationLogs>FALSE</SaveInstallationLogs>
 			<SaveTestLogs>FALSE</SaveTestLogs>
 			<ResultsDirectory>~/.phoronix-test-suite/test-results/</ResultsDirectory>
+			<AlwaysUploadResultsToOpenBenchmarking>FALSE</AlwaysUploadResultsToOpenBenchmarking>
 		</Testing>
 		<TestResultValidation>
 			<DynamicRunCount>TRUE</DynamicRunCount>
