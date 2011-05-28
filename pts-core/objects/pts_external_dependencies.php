@@ -26,7 +26,7 @@ class pts_external_dependencies
 	{
 		// PTS External Dependencies install on distribution
 
-		if(phodevi::is_windows() || phodevi::is_macosx() || pts_client::read_env('SKIP_EXTERNAL_DEPENDENCIES_CHECK'))
+		if(phodevi::is_windows() || phodevi::is_macosx() || pts_flags::no_external_dependencies())
 		{
 			// Windows doesn't use any external dependencies
 			return true;

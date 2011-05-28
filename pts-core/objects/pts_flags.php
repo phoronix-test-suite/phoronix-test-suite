@@ -48,6 +48,7 @@ class pts_flags
 		self::$skip_md5_checks = (1 << 5);
 		self::$remove_test_on_completion = (1 << 6);
 		self::$no_phodevi_cache = (1 << 7);
+		self::$no_external_dependencies = (1 << 8);
 
 		switch(self::$os_identifier_sha1)
 		{
@@ -67,6 +68,10 @@ class pts_flags
 		if(pts_client::read_env('NO_PHODEVI_CACHE') != false)
 		{
 			self::$flags != self::$no_phodevi_cache;
+		}
+		if(pts_client::read_env('NO_EXTERNAL_DEPENDENCIES') != false)
+		{
+			self::$flags != self::$no_external_dependencies;
 		}
 	}
 	public static function os_identifier_hash()
@@ -100,6 +105,10 @@ class pts_flags
 	public static function no_phodevi_cache()
 	{
 		return self::$flags & self::$no_phodevi_cache;
+	}
+	public static function no_external_dependencies()
+	{
+		return self::$flags & self::$no_external_dependencies;
 	}
 }
 
