@@ -521,9 +521,9 @@ class pts_client
 			{
 				pts_client::$display->generic_heading('User Agreement');
 				echo wordwrap($user_agreement, 65);
-				$agree = pts_bypass::user_agreement_skip() || pts_user_io::prompt_bool_input('Do you agree to these terms and wish to proceed', true);
+				$agree = pts_flags::user_agreement_skip() || pts_user_io::prompt_bool_input('Do you agree to these terms and wish to proceed', true);
 
-				if(pts_bypass::no_openbenchmarking_reporting())
+				if(pts_flags::no_openbenchmarking_reporting())
 				{
 					$usage_reporting = false;
 					$hwsw_reporting = false;

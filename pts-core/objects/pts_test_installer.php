@@ -209,7 +209,7 @@ class pts_test_installer
 
 					if(is_file($download_cache_file))
 					{
-						if(pts_config::read_bool_config('PhoronixTestSuite/Options/Installation/SymLinkFilesFromCache', 'FALSE') || pts_bypass::is_live_cd())
+						if(pts_config::read_bool_config('PhoronixTestSuite/Options/Installation/SymLinkFilesFromCache', 'FALSE') || pts_flags::is_live_cd())
 						{
 							// SymLinkFilesFromCache is disabled by default
 							pts_client::$display->test_install_download_file('LINK_FROM_CACHE', $download_package);
@@ -503,7 +503,7 @@ class pts_test_installer
 
 		if(is_file($filename))
 		{
-			if(pts_bypass::skip_md5_checks())
+			if(pts_flags::skip_md5_checks())
 			{
 				$valid = true;
 			}

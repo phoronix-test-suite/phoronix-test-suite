@@ -20,9 +20,9 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-pts_bypass::init();
+pts_flags::init();
 
-class pts_bypass
+class pts_flags
 {
 	private static $os_identifier_sha1 = null;
 	private static $flags;

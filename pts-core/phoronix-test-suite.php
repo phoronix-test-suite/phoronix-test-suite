@@ -153,7 +153,7 @@ if(!QUICK_START)
 		define('NO_NETWORK_COMMUNICATION', true);
 		echo PHP_EOL . 'Network Communication Is Disabled For Your User Configuration.' . PHP_EOL . PHP_EOL;
 	}
-	else if(pts_bypass::no_network_communication() == true)
+	else if(pts_flags::no_network_communication() == true)
 	{
 		define('NO_NETWORK_COMMUNICATION', true);
 		//echo PHP_EOL . 'Network Communication Is Disabled For Your User Configuration.' . PHP_EOL . PHP_EOL;

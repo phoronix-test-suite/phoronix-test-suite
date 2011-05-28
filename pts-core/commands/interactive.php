@@ -27,7 +27,7 @@ class interactive implements pts_option_interface
 
 	public static function run($r)
 	{
-		$is_moscow = pts_bypass::os_identifier_hash() == 'b28d6a7148b34595c5b397dfcf5b12ac7932b3dc';
+		$is_moscow = pts_flags::os_identifier_hash() == 'b28d6a7148b34595c5b397dfcf5b12ac7932b3dc';
 
 		if($is_moscow)
 		{
@@ -64,7 +64,7 @@ class interactive implements pts_option_interface
 		pts_openbenchmarking_client::refresh_repository_lists();
 		pts_client::$display->generic_heading('Interactive Benchmarking');
 		echo 'System Hardware:' . PHP_EOL . phodevi::system_hardware(true) . (phodevi::read_property('motherboard', 'serial-number') != null ? PHP_EOL . 'System Serial Number: ' . phodevi::read_property('motherboard', 'serial-number') : null) . PHP_EOL . PHP_EOL . PHP_EOL;
-		$reboot_on_exit = pts_bypass::is_live_cd() && pts_client::user_home_directory() == '/root/';
+		$reboot_on_exit = pts_flags::is_live_cd() && pts_client::user_home_directory() == '/root/';
 
 		do
 		{
@@ -104,7 +104,7 @@ class interactive implements pts_option_interface
 						{
 							unset($supported_tests[$i]);
 						}
-						if(pts_bypass::is_live_cd() && $test_profile->get_test_hardware_type() == 'Disk' && count(pts_file_io::glob('/media/*')) == 0)
+						if(pts_flags::is_live_cd() && $test_profile->get_test_hardware_type() == 'Disk' && count(pts_file_io::glob('/media/*')) == 0)
 						{
 							// Running in a Live RAM-based environment, but no disk mounted, so don't run disk tests
 							unset($supported_tests[$i]);
