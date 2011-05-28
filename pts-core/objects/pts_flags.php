@@ -34,6 +34,7 @@ class pts_flags
 	private static $user_agreement_skip;
 	private static $skip_md5_checks;
 	private static $remove_test_on_completion;
+	private static $no_phodevi_cache;
 
 	public static function init()
 	{
@@ -46,6 +47,7 @@ class pts_flags
 		self::$user_agreement_skip = (1 << 4);
 		self::$skip_md5_checks = (1 << 5);
 		self::$remove_test_on_completion = (1 << 6);
+		self::$no_phodevi_cache = (1 << 7);
 
 		switch(self::$os_identifier_sha1)
 		{
@@ -61,6 +63,10 @@ class pts_flags
 		if(pts_config::read_bool_config('PhoronixTestSuite/Options/Testing/RemoveTestInstallOnCompletion', 'FALSE'))
 		{
 			self::$flags |= self::$remove_test_on_completion;
+		}
+		if(pts_client::read_env('NO_PHODEVI_CACHE') != false)
+		{
+			self::$flags != self::$no_phodevi_cache;
 		}
 	}
 	public static function os_identifier_hash()
@@ -90,6 +96,10 @@ class pts_flags
 	public static function remove_test_on_completion()
 	{
 		return self::$flags & self::$remove_test_on_completion;
+	}
+	public static function no_phodevi_cache()
+	{
+		return self::$flags & self::$no_phodevi_cache;
 	}
 }
 

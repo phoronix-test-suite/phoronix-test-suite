@@ -446,7 +446,7 @@ class pts_client
 		// Phodevi Cache Handling
 		$phodevi_cache = $pso->read_object('phodevi_smart_cache');
 
-		if($phodevi_cache instanceOf phodevi_cache && pts_client::read_env('NO_PHODEVI_CACHE') != 1)
+		if($phodevi_cache instanceOf phodevi_cache && pts_flags::no_phodevi_cache() == false)
 		{
 			$phodevi_cache = $phodevi_cache->restore_cache(PTS_USER_PATH, PTS_CORE_VERSION);
 			phodevi::set_device_cache($phodevi_cache);
@@ -819,7 +819,7 @@ class pts_client
 		// TODO: possibly do something like posix_getpid() != pts_client::$startup_pid in case shutdown function is called from a child process
 
 		// Generate Phodevi Smart Cache
-		if(pts_client::read_env('NO_PHODEVI_CACHE') == false && pts_client::read_env('EXTERNAL_PHODEVI_CACHE') == false)
+		if(pts_flags::no_phodevi_cache() == false && pts_client::read_env('EXTERNAL_PHODEVI_CACHE') == false)
 		{
 			if(pts_config::read_bool_config('PhoronixTestSuite/Options/General/UsePhodeviCache', 'TRUE'))
 			{
