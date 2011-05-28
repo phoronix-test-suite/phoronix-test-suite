@@ -35,6 +35,7 @@ class pts_flags
 	private static $skip_md5_checks;
 	private static $remove_test_on_completion;
 	private static $no_phodevi_cache;
+	private static $no_external_dependencies;
 
 	public static function init()
 	{
