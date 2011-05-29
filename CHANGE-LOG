@@ -9,6 +9,7 @@ Phoronix Test Suite (Git)
 - pts-core: Rework pts_bypass class into pts_flags
 - pts-core: Rename SKIP_EXTERNAL_DEPENDENCIES_CHECK to NO_EXTERNAL_DEPENDENCIES
 - pts-core: Add AlwaysUploadResultsToOpenBenchmarking option to user-config.xml
+- pts-core: Restore support for just passing the test profile base name to SKIP_TESTS environmental variable
 - phodevi: Intel GMCH thermal monitoring sensor
 - phodevi: Support monitoring the GPU power consumption on Intel hardware using the gpu.power sensor
 - phodevi: Support determing Intel GPU load via number of commands processed per second
