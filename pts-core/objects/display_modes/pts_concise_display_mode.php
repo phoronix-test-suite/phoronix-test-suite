@@ -319,13 +319,23 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	{
 		echo PHP_EOL;
 
-		if(in_array($test_result->test_profile->get_display_format(), array('NO_RESULT', 'FILLED_LINE_GRAPH', 'LINE_GRAPH', 'IMAGE_COMPARISON')))
+		if(in_array($test_result->test_profile->get_display_format(), array('NO_RESULT', 'IMAGE_COMPARISON')))
 		{
 			$end_print = null;
 		}
 		else if(in_array($test_result->test_profile->get_display_format(), array('PASS_FAIL', 'MULTI_PASS_FAIL')))
 		{
 			$end_print = $this->tab . $this->tab . 'Final: ' . $test_result->get_result() . ' (' . $test_result->test_profile->get_result_scale() . ')' . PHP_EOL;
+		}
+		else if(in_array($test_result->test_profile->get_display_format(), array('FILLED_LINE_GRAPH', 'LINE_GRAPH')))
+		{
+			$values = explode(',', $test_result->get_result());
+
+			if(count($values) > 1)
+			{
+				$avg = array_sum($values) / count($values);
+				$end_print = $this->tab . $this->tab . 'Average: ' . $avg . ' (' . $test_result->test_profile->get_result_scale() . ')' . PHP_EOL;
+			}
 		}
 		else
 		{
