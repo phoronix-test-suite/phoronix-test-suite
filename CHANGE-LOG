@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite Milestone 4
+1 June 2011
 
 - pts-core: Don't confuse changed hardware as being part of a results tracker
 - pts-core: Interactive mode improvements for Moscow
