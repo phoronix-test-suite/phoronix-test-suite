@@ -35,7 +35,7 @@ class interactive implements pts_option_interface
 			$drives = pts_file_io::glob('/dev/sda*');
 			sort($drives);
 
-			if(count($drives) > 0 && !is_dir('/media/pts-auto-mount') && is_writable('/media/'))
+			if(false && count($drives) > 0 && !is_dir('/media/pts-auto-mount') && is_writable('/media/'))
 			{
 				$last_drive = array_pop($drives);
 				echo PHP_EOL . 'Attempting to auto-mount drive: ' . $last_drive . PHP_EOL;
@@ -224,6 +224,7 @@ class interactive implements pts_option_interface
 
 						echo PHP_EOL . 'Writing Test Results To: ' . $media_dir . PHP_EOL;
 						pts_file_io::copy(PTS_SAVE_RESULTS_PATH, $media_dir . '/');
+						break;
 					}
 
 					if($is_moscow && is_dir('/media/00-results-backup'))

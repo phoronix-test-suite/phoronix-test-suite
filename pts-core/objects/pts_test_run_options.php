@@ -284,14 +284,17 @@ class pts_test_run_options
 					array_push($option_values, '');
 					array_push($option_names, 'Default Test Directory');
 
-					foreach($partitions_d as $partition_d)
+					if(pts_flags::is_live_cd() == false)
 					{
-						$mount_point = substr(($a = substr($mounts, strpos($mounts, $partition_d) + strlen($partition_d) + 1)), 0, strpos($a, ' '));
-
-						if(is_dir($mount_point) && is_writable($mount_point) && $mount_point != '/boot')
+						foreach($partitions_d as $partition_d)
 						{
-							array_push($option_values, $mount_point);
-							array_push($option_names, $mount_point . ' [' . $partition_d . ']');
+							$mount_point = substr(($a = substr($mounts, strpos($mounts, $partition_d) + strlen($partition_d) + 1)), 0, strpos($a, ' '));
+
+							if(is_dir($mount_point) && is_writable($mount_point) && $mount_point != '/boot')
+							{
+								array_push($option_values, $mount_point);
+								array_push($option_names, $mount_point . ' [' . $partition_d . ']');
+							}
 						}
 					}
 				}
