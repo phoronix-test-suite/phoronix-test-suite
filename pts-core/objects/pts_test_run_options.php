@@ -209,7 +209,15 @@ class pts_test_run_options
 				// Base options off available screen resolutions
 				if(count($option_names) == 1 && count($option_values) == 1)
 				{
-					$available_video_modes = PTS_IS_CLIENT ? phodevi::read_property('gpu', 'available-modes') : null;
+					if(pts_flags::is_live_cd())
+					{
+						// Just use the stock resolution when operating from a LiveCD
+						$available_video_modes = array(phodevi::read_property('gpu', 'screen-resolution'));
+					}
+					else
+					{
+						$available_video_modes = PTS_IS_CLIENT ? phodevi::read_property('gpu', 'available-modes') : null;
+					}
 
 					if(empty($available_video_modes))
 					{
