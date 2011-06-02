@@ -878,7 +878,7 @@ class pts_test_run_manager
 				echo $message;
 			}
 
-			if((pts_c::$test_flags ^ pts_c::auto_mode) && (pts_c::$test_flags ^ pts_c::batch_mode))
+			if((pts_c::$test_flags ^ pts_c::auto_mode) && (pts_c::$test_flags ^ pts_c::batch_mode) && pts_flags::is_live_cd() == false)
 			{
 				$stop_and_install = pts_user_io::prompt_bool_input('Would you like to stop and install these tests now', true);
 
