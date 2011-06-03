@@ -400,6 +400,7 @@ class pts_render
 		$systems = array();
 		$prev_date = null;
 		$is_tracking = true;
+		$sha1_short_count = 0;
 
 		if($identifiers_inverted)
 		{
@@ -454,7 +455,12 @@ class pts_render
 					$sha1_short_hash_ending = isset($date[7]) && pts_strings::string_only_contains(substr($date, -8), pts_strings::CHAR_NUMERIC | pts_strings::CHAR_LETTER);
 					$date = str_replace('s', null, pts_strings::remove_from_string($date, pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DASH | pts_strings::CHAR_DECIMAL));
 
-					if($prev_date != null && $date != $prev_date && $sha1_short_hash_ending == false)
+					if($sha1_short_hash_ending)
+					{
+						$sha1_short_count++;
+					}
+
+					if($prev_date != null && $date != $prev_date && $sha1_short_hash_ending == false && $sha1_short_count < 2)
 					{
 						$is_tracking = false;
 					}
