@@ -59,6 +59,7 @@ class interactive implements pts_option_interface
 			putenv('TEST_RESULTS_NAME=' . str_replace(' ', null, $test_results_name));
 			putenv('TEST_RESULTS_IDENTIFIER=' . $test_results_name);
 			putenv('TEST_RESULTS_DESCRIPTION=Tests using ' . phodevi::read_property('system', 'operating-system') . ' on ' . date('d F Y') . ' of ' . $test_results_name . '.');
+			self::select_drive_mount();
 		}
 
 		pts_openbenchmarking_client::refresh_repository_lists();
@@ -154,22 +155,7 @@ class interactive implements pts_option_interface
 					}
 					break;
 				case 'SELECT_DRIVE_MOUNT':
-					$drives = pts_file_io::glob('/dev/sd*');
-
-					if(count($drives) == 0)
-					{
-						echo PHP_EOL . 'No Drives Found' . PHP_EOL . PHP_EOL;
-					}
-					else
-					{
-						$to_mount = pts_user_io::prompt_text_menu('Select Drive / Partition To Mount', $drives);
-						echo PHP_EOL . 'Attempting to mount: ' . $to_mount . PHP_EOL;
-						exec('umount /media/pts-auto-mount 2>&1');
-						pts_file_io::delete('/media/pts-auto-mount', null, true);
-						pts_file_io::mkdir('/media/pts-auto-mount');
-						echo exec('mount ' . $to_mount . ' /media/pts-auto-mount');
-						putenv('PTS_TEST_INSTALL_ROOT_PATH=/media/pts-auto-mount/');
-					}
+					self::select_drive_mount();
 					break;
 				case 'RUN_SYSTEM_TEST':
 					pts_client::$display->generic_heading('System Test');
@@ -247,6 +233,40 @@ class interactive implements pts_option_interface
 			}
 
 			exec('reboot');
+		}
+	}
+	private static function select_drive_mount()
+	{
+		$drives = pts_file_io::glob('/dev/sd*');
+
+		if(count($drives) == 0)
+		{
+			echo PHP_EOL . 'No Disk Drives Found' . PHP_EOL . PHP_EOL;
+		}
+		else
+		{
+			array_push($drives, 'No HDD');
+			$to_mount = pts_user_io::prompt_text_menu('Select Drive / Partition To Mount', $drives);
+
+			if($to_mount != 'No HDD')
+			{
+				echo PHP_EOL . 'Attempting to mount: ' . $to_mount . PHP_EOL;
+				exec('umount /media/pts-auto-mount 2>&1');
+				pts_file_io::delete('/media/pts-auto-mount', null, true);
+				pts_file_io::mkdir('/media/pts-auto-mount');
+				echo exec('mount ' . $to_mount . ' /media/pts-auto-mount');
+				putenv('PTS_TEST_INSTALL_ROOT_PATH=/media/pts-auto-mount/');
+			}
+			else
+			{
+				if(is_dir('/media/pts-auto-mount'))
+				{
+					exec('umount /media/pts-auto-mount');
+					@rmdir('/media/pts-auto-mount');
+				}
+
+				putenv('PTS_TEST_INSTALL_ROOT_PATH=');
+			}
 		}
 	}
 }
