@@ -105,7 +105,7 @@ class interactive implements pts_option_interface
 						{
 							unset($supported_tests[$i]);
 						}
-						if(pts_flags::is_live_cd() && $test_profile->get_test_hardware_type() == 'Disk' && count(pts_file_io::glob('/media/*')) == 0)
+						if(pts_flags::is_live_cd() && $test_profile->get_test_hardware_type() == 'Disk' && (count(pts_file_io::glob('/media/*')) == 0 || stripos(phodevi::read_property('system', 'filesystem'), 'SquashFS') !== false))
 						{
 							// Running in a Live RAM-based environment, but no disk mounted, so don't run disk tests
 							unset($supported_tests[$i]);
