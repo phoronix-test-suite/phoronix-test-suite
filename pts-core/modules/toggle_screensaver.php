@@ -28,7 +28,8 @@ class toggle_screensaver extends pts_module_interface
 	const module_description = 'This module toggles the system\'s screensaver while the Phoronix Test Suite is running. At this time, the GNOME and KDE screensavers are supported.';
 	const module_author = 'Phoronix Media';
 
-	static $xdg_screensaver_available = true;
+	static $xdg_screensaver_available = false;
+	static $xset = false;
 	static $screensaver_halted = false;
 	static $gnome_screensaver_halted = false;
 	static $kde_screensaver_halted = false;
@@ -82,6 +83,11 @@ class toggle_screensaver extends pts_module_interface
 			}
 		}
 
+		if((self::$xset = pts_client::executable_in_path('xset')))
+		{
+			shell_exec('xset s off');
+		}
+
 		if(self::$gnome_screensaver_halted || self::$kde_screensaver_halted)
 		{
 			self::$screensaver_halted = true;
@@ -109,6 +115,10 @@ class toggle_screensaver extends pts_module_interface
 		{
 			// Restore the KDE Screensaver
 			shell_exec('qdbus org.freedesktop.ScreenSaver /ScreenSaver org.freedesktop.ScreenSaver.SetActive true 2>&1');
+		}
+		if(self::$xset)
+		{
+			shell_exec('xset s default');
 		}
 	}
 	public static function xdg_screensaver_reset()
