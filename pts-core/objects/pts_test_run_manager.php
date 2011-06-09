@@ -1244,6 +1244,8 @@ class pts_test_run_manager
 	{
 		$valid_test_profile = true;
 		$test_type = $test_profile->get_test_hardware_type();
+		$skip_tests = pts_client::read_env('SKIP_TESTS');
+		$display_driver = phodevi::read_property('system', 'display-driver');
 
 		if($test_profile->is_supported(false) == false)
 		{
@@ -1284,9 +1286,6 @@ class pts_test_run_manager
 		if(!isset($test_checks[$test_profile->get_identifier()]))
 		{
 			$valid_test_profile = true;
-			$allow_results_sharing = $this->allow_sharing_of_results;
-			$display_driver = phodevi::read_property('system', 'display-driver');
-			$skip_tests = pts_client::read_env('SKIP_TESTS');
 
 			if(self::test_profile_system_compatibility_check($test_profile, true) == false)
 			{
