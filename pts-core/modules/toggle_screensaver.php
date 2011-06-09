@@ -83,7 +83,7 @@ class toggle_screensaver extends pts_module_interface
 			}
 		}
 
-		if((self::$xset = pts_client::executable_in_path('xset')))
+		if(getenv('DISPLAY') != false && (self::$xset = pts_client::executable_in_path('xset')))
 		{
 			shell_exec('xset s off');
 		}
