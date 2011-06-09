@@ -1240,6 +1240,43 @@ class pts_test_run_manager
 		$this->prompt_save_results = $run_contains_a_no_result_type == false || $unique_test_count > 1;
 		$this->force_save_results = $this->force_save_results || $request_results_save;
 	}
+	public static function test_profile_system_compatibility_check(&$test_profile, $report_errors = false)
+	{
+		$valid_test_profile = true;
+		$test_type = $test_profile->get_test_hardware_type();
+
+		if($test_profile->is_supported(false) == false)
+		{
+			$valid_test_profile = false;
+		}
+		else if($test_type == 'Graphics' && pts_client::read_env('DISPLAY') == false && phodevi::is_windows() == false)
+		{
+			$report_errors && pts_client::$display->test_run_error('No display server was found, cannot run ' . $test_profile);
+			$valid_test_profile = false;
+		}
+		else if($test_type == 'Graphics' && in_array($display_driver, array('vesa', 'nv', 'cirrus')))
+		{
+			$report_errors && pts_client::$display->test_run_error('3D acceleration support not available, cannot run ' . $test_profile);
+			$valid_test_profile = false;
+		}
+		else if($test_type == 'Disk' && stripos(phodevi::read_property('system', 'filesystem'), 'SquashFS') !== false)
+		{
+			$report_errors && pts_client::$display->test_run_error('Running on a RAM-based live file-system, cannot run ' . $test_profile);
+			$valid_test_profile = false;
+		}
+		else if(pts_client::read_env('NO_' . strtoupper($test_type) . '_TESTS') || ($skip_tests && in_array($test_profile, pts_strings::comma_explode($skip_tests))) || ($skip_tests && in_array($test_type, pts_strings::comma_explode($skip_tests))))
+		{
+			$report_errors && pts_client::$display->test_run_error('Due to a pre-set environmental variable, skipping ' . $test_profile);
+			$valid_test_profile = false;
+		}
+		else if($test_profile->is_root_required() && (pts_c::$test_flags & pts_c::batch_mode) && phodevi::read_property('system', 'username') != 'root')
+		{
+			$report_errors && pts_client::$display->test_run_error('Cannot run ' . $test_profile . ' in batch mode as root access is required.');
+			$valid_test_profile = false;
+		}
+
+		return $valid_test_profile;
+	}
 	protected function validate_test_to_run(&$test_profile)
 	{
 		static $test_checks = null;
@@ -1251,36 +1288,8 @@ class pts_test_run_manager
 			$display_driver = phodevi::read_property('system', 'display-driver');
 			$skip_tests = pts_client::read_env('SKIP_TESTS');
 
-			// Validate the empty pts_test_result
-			$test_type = $test_profile->get_test_hardware_type();
-
-			if($test_profile->is_supported(false) == false)
+			if(self::test_profile_system_compatibility_check($test_profile, true) == false)
 			{
-				$valid_test_profile = false;
-			}
-			else if($test_type == 'Graphics' && pts_client::read_env('DISPLAY') == false && phodevi::is_windows() == false)
-			{
-				pts_client::$display->test_run_error('No display server was found, cannot run ' . $test_profile);
-				$valid_test_profile = false;
-			}
-			else if($test_type == 'Graphics' && in_array($display_driver, array('vesa', 'nv', 'cirrus')))
-			{
-				pts_client::$display->test_run_error('3D acceleration support not available, cannot run ' . $test_profile);
-				$valid_test_profile = false;
-			}
-			else if($test_type == 'Disk' && stripos(phodevi::read_property('system', 'filesystem'), 'SquashFS') !== false)
-			{
-				pts_client::$display->test_run_error('Running on a RAM-based live file-system, cannot run ' . $test_profile);
-				$valid_test_profile = false;
-			}
-			else if(pts_client::read_env('NO_' . strtoupper($test_type) . '_TESTS') || ($skip_tests && in_array($test_profile, pts_strings::comma_explode($skip_tests))) || ($skip_tests && in_array($test_type, pts_strings::comma_explode($skip_tests))))
-			{
-				pts_client::$display->test_run_error('Due to a pre-set environmental variable, skipping ' . $test_profile);
-				$valid_test_profile = false;
-			}
-			else if($test_profile->is_root_required() && (pts_c::$test_flags & pts_c::batch_mode) && phodevi::read_property('system', 'username') != 'root')
-			{
-				pts_client::$display->test_run_error('Cannot run ' . $test_profile . ' in batch mode as root access is required.');
 				$valid_test_profile = false;
 			}
 			else if($test_profile->get_test_executable_dir() == null)

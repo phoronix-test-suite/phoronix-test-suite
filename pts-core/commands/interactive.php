@@ -101,19 +101,16 @@ class interactive implements pts_option_interface
 
 					foreach($supported_tests as $i => &$test_profile)
 					{
-						if($test_profile->get_title() == null)
+						if($test_profile->get_title() == null || pts_test_run_manager::test_profile_system_compatibility_check($test_profile) == false)
 						{
 							unset($supported_tests[$i]);
-						}
-						if(pts_flags::is_live_cd() && $test_profile->get_test_hardware_type() == 'Disk' && (count(pts_file_io::glob('/media/*')) == 0 || stripos(phodevi::read_property('system', 'filesystem'), 'SquashFS') !== false))
-						{
-							// Running in a Live RAM-based environment, but no disk mounted, so don't run disk tests
-							unset($supported_tests[$i]);
+							continue;
 						}
 						if($is_moscow && pts_test_install_request::test_files_available_locally($test_profile) == false)
 						{
 							// Don't show tests where files need to be downloaded
 							unset($supported_tests[$i]);
+							continue;
 						}
 
 						$longest_title_length = max($longest_title_length, strlen($test_profile->get_title()));
