@@ -28,6 +28,7 @@ class list_available_tests implements pts_option_interface
 	public static function run($r)
 	{
 		pts_client::$display->generic_heading("Available Tests");
+		$test_count = 0;
 		foreach(pts_openbenchmarking_client::available_tests() as $identifier)
 		{
 			$repo = substr($identifier, 0, strpos($identifier, '/'));
@@ -41,8 +42,14 @@ class list_available_tests implements pts_option_interface
 			}
 
 			echo sprintf("%-28ls - %-35ls %-9ls\n", $identifier, $repo_index['tests'][$id]['title'], $repo_index['tests'][$id]['test_type']);
+			$test_count++;
 		}
-		echo "\n";
+
+		if($test_count == 0)
+		{
+			echo PHP_EOL . 'No tests found. Please check that you have Internet connectivity to download test profile data from OpenBenchmarking.org. The Phoronix Test Suite has documentation on configuring the network setup, proxy settings, and PHP network options. Please contact Phoronix Media if you continuing to experience problems.' . PHP_EOL . PHP_EOL;
+		}
+		echo PHP_EOL;
 	}
 }
 

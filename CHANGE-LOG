@@ -4,6 +4,7 @@ Phoronix Test Suite (Git)
 
 - pts-core: Moscow fixes
 - pts-core: Relax the requirements for appended short SHA1 identifiers in determining trackers (request by Wine/CodeWeavers)
+- pts-core: Add warning messages when test profile/suite data is empty due to no OpenBenchmarking.org communication
 - phodevi: PathCC / PathScale Compiler Suite detection
 
 Phoronix Test Suite Milestone 4
