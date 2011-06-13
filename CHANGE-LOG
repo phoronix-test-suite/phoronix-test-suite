@@ -6,6 +6,7 @@ Phoronix Test Suite (Git)
 - pts-core: Relax the requirements for appended short SHA1 identifiers in determining trackers (request by Wine/CodeWeavers)
 - pts-core: Add warning messages when test profile/suite data is empty due to no OpenBenchmarking.org communication
 - phodevi: PathCC / PathScale Compiler Suite detection
+- phodevi: For audio adapter try to find motherboard audio adapter or sound card rather than GPU integrated audio
 
 Phoronix Test Suite Milestone 4
 1 June 2011
