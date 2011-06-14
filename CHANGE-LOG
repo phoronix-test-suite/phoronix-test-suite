@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 3.2.0-Grimstad
+15 June 2011
 
 - pts-core: Moscow fixes
 - pts-core: Relax the requirements for appended short SHA1 identifiers in determining trackers (request by Wine/CodeWeavers)
@@ -9,7 +10,7 @@ Phoronix Test Suite (Git)
 - phodevi: For audio adapter try to find motherboard audio adapter or sound card rather than GPU integrated audio
 - phoromatic: Restore compatibility with current (old) Phoromatic.com implementation
 
-Phoronix Test Suite Milestone 4
+Phoronix Test Suite 3.2 Milestone 4
 1 June 2011
 
 - pts-core: Don't confuse changed hardware as being part of a results tracker

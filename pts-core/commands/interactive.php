@@ -81,7 +81,7 @@ class interactive implements pts_option_interface
 			if($is_moscow)
 			{
 				unset($options['RUN_SUITE']);
-				$options['SELECT_DRIVE_MOUNT'] = 'Select Disk Drive To Use For Testing';
+			//	$options['SELECT_DRIVE_MOUNT'] = 'Select Disk Drive To Use For Testing';
 			}
 
 			if(count(pts_client::saved_test_results()) > 0)
