@@ -20,6 +20,11 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+if(PTS_IS_CLIENT)
+{
+	echo PHP_EOL . PHP_EOL . 'NOTICE: A new version of Phoromatic is currently under development that is powered on top of the OpenBenchmarking.org infrastructure. Please contact Phoronix-Test-Suite.com if you are interested in testing out this brand new version with several new features.' . PHP_EOL . PHP_EOL;
+}
+
 class phoromatic extends pts_module_interface
 {
 	const module_name = 'Phoromatic Client';
@@ -63,7 +68,7 @@ class phoromatic extends pts_module_interface
 			),
 			$options['remote_host'], $options['remote_account'], $options['remote_verifier']);
 
-		$returned_id = self::read_xml_value($server_response, M_PHOROMATIC_GEN_RESPONSE);
+		$returned_id = self::read_xml_value($server_response, 'PhoronixTestSuite/Phoromatic/General/Response');
 
 		unset($options['system_description']); // No reason to have this locally just pass it to the server
 
@@ -144,19 +149,19 @@ class phoromatic extends pts_module_interface
 			'i' => $to_clone[0]
 			));
 
-		switch(self::read_xml_value($server_response, M_PHOROMATIC_GEN_RESPONSE))
+		switch(self::read_xml_value($server_response, 'PhoronixTestSuite/Phoromatic/General/Response'))
 		{
-			case M_PHOROMATIC_RESPONSE_TRUE:
+			case 'TRUE':
 				$identifier = 'phoromatic-clone-' . str_replace(array('_', ':'), null, $to_clone[0]);
 				pts_client::save_test_result($identifier . '/composite.xml', $server_response); // TODO: regenerate the XML so that the Phoromatic response bits are not included
 				echo PHP_EOL . 'Result Saved To: ' . PTS_SAVE_RESULTS_PATH . $identifier . '/composite.xml' . PHP_EOL . PHP_EOL;
 				pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . $identifier . '/index.html');
 				break;
-			case M_PHOROMATIC_RESPONSE_SETTING_DISABLED:
+			case 'SETTING_DISABLED':
 				echo PHP_EOL . 'You need to enable this support from your Phoromatic account web interface.' . PHP_EOL;
 				break;
 			default:
-			case M_PHOROMATIC_RESPONSE_ERROR:
+			case 'ERROR':
 				echo PHP_EOL . 'An Error Occurred.' . PHP_EOL;
 				break;
 		}
@@ -173,10 +178,10 @@ class phoromatic extends pts_module_interface
 			));
 
 		$schedule_xml = new nye_XmlReader($server_response);
-		$schedule_titles = $schedule_xml->getXmlArrayValues(M_PHOROMATIC_SCHEDULE_TEST_TITLE);
-		$schedule_description = $schedule_xml->getXmlArrayValues(M_PHOROMATIC_SCHEDULE_TEST_DESCRIPTION);
-		$schedule_active_on = $schedule_xml->getXmlArrayValues(M_PHOROMATIC_SCHEDULE_TEST_ACTIVE_ON);
-		$schedule_start_time = $schedule_xml->getXmlArrayValues(M_PHOROMATIC_SCHEDULE_TEST_START);
+		$schedule_titles = $schedule_xml->getXmlArrayValues('PhoronixTestSuite/Phoromatic/Schedules/TestSchedule/Title');
+		$schedule_description = $schedule_xml->getXmlArrayValues('PhoronixTestSuite/Phoromatic/Schedules/TestSchedule/Description');
+		$schedule_active_on = $schedule_xml->getXmlArrayValues('PhoronixTestSuite/Phoromatic/Schedules/TestSchedule/ActiveOn');
+		$schedule_start_time = $schedule_xml->getXmlArrayValues('PhoronixTestSuite/Phoromatic/Schedules/TestSchedule/RunAt');
 
 		if(count($schedule_titles) == 0)
 		{
@@ -204,10 +209,10 @@ class phoromatic extends pts_module_interface
 			));
 
 		$schedule_xml = new nye_XmlReader($server_response);
-		$schedule_titles = $schedule_xml->getXmlArrayValues(M_PHOROMATIC_SCHEDULE_TEST_TITLE);
-		$schedule_description = $schedule_xml->getXmlArrayValues(M_PHOROMATIC_SCHEDULE_TEST_DESCRIPTION);
-		$schedule_active_on = $schedule_xml->getXmlArrayValues(M_PHOROMATIC_SCHEDULE_TEST_ACTIVE_ON);
-		$schedule_start_time = $schedule_xml->getXmlArrayValues(M_PHOROMATIC_SCHEDULE_TEST_START);
+		$schedule_titles = $schedule_xml->getXmlArrayValues('PhoronixTestSuite/Phoromatic/Schedules/TestSchedule/Title');
+		$schedule_description = $schedule_xml->getXmlArrayValues('PhoronixTestSuite/Phoromatic/Schedules/TestSchedule/Description');
+		$schedule_active_on = $schedule_xml->getXmlArrayValues('PhoronixTestSuite/Phoromatic/Schedules/TestSchedule/ActiveOn');
+		$schedule_start_time = $schedule_xml->getXmlArrayValues('PhoronixTestSuite/Phoromatic/Schedules/TestSchedule/RunAt');
 
 		if(count($schedule_titles) == 0)
 		{
@@ -301,14 +306,14 @@ class phoromatic extends pts_module_interface
 			if($last_communication_minute == date('i') && $communication_attempts > 2)
 			{
 				// Something is wrong, Phoromatic shouldn't be communicating with server more than three times a minute
-				$response = M_PHOROMATIC_RESPONSE_IDLE;
+				$response = 'idle';
 			}
 			else
 			{
 				$server_response = phoromatic::upload_to_remote_server(array('r' => 'status_check'));
 
 				$xml_parser = new nye_XmlReader($server_response);
-				$response = $xml_parser->getXMLValue(M_PHOROMATIC_GEN_RESPONSE);
+				$response = $xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/Response');
 
 				if(date('i') != $last_communication_minute)
 				{
@@ -323,8 +328,8 @@ class phoromatic extends pts_module_interface
 
 			switch($response)
 			{
-				case M_PHOROMATIC_RESPONSE_RUN_TEST:
-					$test_flags = pts_c::auto_mode | pts_c::recovery_mode;
+				case 'benchmark':
+					$test_flags = pts_c::auto_mode;
 
 					do
 					{
@@ -332,20 +337,22 @@ class phoromatic extends pts_module_interface
 					}
 					while(is_file(PTS_TEST_SUITE_PATH . 'local/' . $suite_identifier . '/suite-definition.xml'));
 
+					pts_file_io::mkdir(PTS_TEST_SUITE_PATH . 'local/' . $suite_identifier);
 					file_put_contents(PTS_TEST_SUITE_PATH . 'local/' . $suite_identifier . '/suite-definition.xml', $server_response);
 
-					$phoromatic_schedule_id = $xml_parser->getXMLValue(M_PHOROMATIC_ID);
-					$phoromatic_results_identifier = $xml_parser->getXMLValue(M_PHOROMATIC_SYS_NAME);
-					$phoromatic_trigger = $xml_parser->getXMLValue(M_PHOROMATIC_TRIGGER);
+					$phoromatic_schedule_id = $xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/ID');
+					$phoromatic_results_identifier = $xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/SystemName');
+					$phoromatic_trigger = $xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/Trigger');
 
-					if(pts_strings::string_bool($xml_parser->getXMLValue(M_PHOROMATIC_RUN_INSTALL_COMMAND, M_PHOROMATIC_RESPONSE_TRUE)))
+					$suite_identifier = 'local/' . $suite_identifier;
+					if(pts_strings::string_bool($xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/RunInstallCommand', 'TRUE')))
 					{
-						phoromatic::set_user_context($xml_parser->getXMLValue(M_PHOROMATIC_SET_CONTEXT_PRE_INSTALL), $phoromatic_trigger, $phoromatic_schedule_id, 'INSTALL');
+						phoromatic::set_user_context($xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/SetContextPreInstall'), $phoromatic_trigger, $phoromatic_schedule_id, 'INSTALL');
 						pts_client::set_test_flags($test_flags);
 						pts_test_installer::standard_install($suite_identifier);
 					}
 
-					phoromatic::set_user_context($xml_parser->getXMLValue(M_PHOROMATIC_SET_CONTEXT_PRE_RUN), $phoromatic_trigger, $phoromatic_schedule_id, 'INSTALL');
+					phoromatic::set_user_context($xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/SetContextPreRun'), $phoromatic_trigger, $phoromatic_schedule_id, 'INSTALL');
 
 
 					// Do the actual running
@@ -357,7 +364,7 @@ class phoromatic extends pts_module_interface
 						if($test_run_manager->load_tests_to_run($suite_identifier))
 						{
 
-							if(pts_strings::string_bool($xml_parser->getXMLValue(M_PHOROMATIC_UPLOAD_TO_GLOBAL, 'FALSE')))
+							if(pts_strings::string_bool($xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/UploadToGlobal', 'FALSE')))
 							{
 								$test_run_manager->auto_upload_to_openbenchmarking();
 							}
@@ -371,7 +378,7 @@ class phoromatic extends pts_module_interface
 							$test_run_manager->post_execution_process();
 
 							// Upload to Phoromatic
-							pts_file_io::unlink(PTS_TEST_SUITE_PATH . 'local/' . $suite_identifier . '/suite-definition.xml');
+							pts_file_io::unlink(PTS_TEST_SUITE_PATH . $suite_identifier . '/suite-definition.xml');
 
 							// Upload test results
 
@@ -399,7 +406,7 @@ class phoromatic extends pts_module_interface
 									return false;
 								}
 
-								if(pts_strings::string_bool($xml_parser->getXMLValue(M_PHOROMATIC_ARCHIVE_RESULTS_LOCALLY, M_PHOROMATIC_RESPONSE_TRUE)) == false)
+								if(pts_strings::string_bool($xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/ArchiveResultsLocally', 'TRUE')) == false)
 								{
 									pts_client::remove_saved_result_file($save_identifier);
 								}
@@ -407,28 +414,28 @@ class phoromatic extends pts_module_interface
 						}
 					}
 					break;
-				case M_PHOROMATIC_RESPONSE_EXIT:
+				case 'exit':
 					echo PHP_EOL . 'Phoromatic received a remote command to exit.' . PHP_EOL;
 					phoromatic::update_system_status('Exiting Phoromatic');
 					pts_client::release_lock(PTS_USER_PATH . 'phoromatic_lock');
 					$exit_loop = true;
 					break;
-				case M_PHOROMATIC_RESPONSE_SERVER_MAINTENANCE:
+				case 'server_maintenance':
 					// The Phoromatic server is down for maintenance, so don't bother updating system status and wait longer before checking back
 					echo PHP_EOL . 'The Phoromatic server is currently down for maintenance. Waiting for service to be restored.' . PHP_EOL;
 					sleep((15 - (date('i') % 15)) * 60);
 					break;
-				case M_PHOROMATIC_RESPONSE_SHUTDOWN:
+				case 'SHUTDOWN':
 					echo PHP_EOL . 'Shutting down the system.' . PHP_EOL;
 					$exit_loop = true;
 					shell_exec('poweroff'); // Currently assuming root
 					break;
-				case M_PHOROMATIC_RESPONSE_REBOOT:
+				case 'REBOOT':
 					echo PHP_EOL . 'Rebooting the system.' . PHP_EOL;
 					$exit_loop = true;
 					shell_exec('reboot'); // Currently assuming root
 					break;
-				case M_PHOROMATIC_RESPONSE_IDLE:
+				case 'idle':
 				default:
 					phoromatic::update_system_status('Idling, Waiting For Task');
 					sleep((10 - (date('i') % 10)) * 60); // Check with server every 10 minutes
@@ -535,21 +542,21 @@ class phoromatic extends pts_module_interface
 	protected static function update_system_details()
 	{
 		$server_response = phoromatic::upload_to_remote_server(array('r' => 'update_system_details', 'h' => phodevi::system_hardware(true), 's' => phodevi::system_software(true)));
-		self::$phoromatic_server_build = self::read_xml_value($server_response, M_PHOROMATIC_SERVER_BUILD);
+		self::$phoromatic_server_build = self::read_xml_value($server_response, 'PhoronixTestSuite/Phoromatic/Server/ServerBuild');
 
-		return self::read_xml_value($server_response, M_PHOROMATIC_GEN_RESPONSE) == M_PHOROMATIC_RESPONSE_TRUE;
+		return self::read_xml_value($server_response, 'PhoronixTestSuite/Phoromatic/General/Response') == 'TRUE';
 	}
 	protected static function update_system_status($current_task, $estimated_time_remaining = 0)
 	{
 		$server_response = phoromatic::upload_to_remote_server(array('r' => 'update_system_status', 'a' => $current_task, 'time' => $estimated_time_remaining));
 
-		return self::read_xml_value($server_response, M_PHOROMATIC_GEN_RESPONSE) == M_PHOROMATIC_RESPONSE_TRUE;
+		return self::read_xml_value($server_response, 'PhoronixTestSuite/Phoromatic/General/Response') == 'TRUE';
 	}
 	protected static function report_warning_to_phoromatic($warning)
 	{
 		$server_response = phoromatic::upload_to_remote_server(array('r' => 'report_pts_warning', 'a' => $warning));
 
-		return self::read_xml_value($server_response, M_PHOROMATIC_GEN_RESPONSE) == M_PHOROMATIC_RESPONSE_TRUE;
+		return self::read_xml_value($server_response, 'PhoronixTestSuite/Phoromatic/General/Response') == 'TRUE';
 	}
 	private static function capture_test_logs($save_identifier)
 	{
@@ -588,7 +595,7 @@ class phoromatic extends pts_module_interface
 			'tl' => $logs['test-logs']
 			));
 
-		return self::read_xml_value($server_response, M_PHOROMATIC_GEN_RESPONSE) == M_PHOROMATIC_RESPONSE_TRUE;
+		return self::read_xml_value($server_response, 'PhoronixTestSuite/Phoromatic/General/Response') == 'TRUE';
 	}
 	protected static function upload_unscheduled_test_results($save_identifier)
 	{
@@ -606,20 +613,20 @@ class phoromatic extends pts_module_interface
 
 		$xml_parser = new nye_XmlReader($server_response);
 
-		switch($xml_parser->getXMLValue(M_PHOROMATIC_GEN_RESPONSE))
+		switch($xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/Response'))
 		{
-			case M_PHOROMATIC_RESPONSE_TRUE:
+			case 'TRUE':
 				echo PHP_EOL . 'Uploaded To Phoromatic.' . PHP_EOL;
 				break;
-			case M_PHOROMATIC_RESPONSE_ERROR:
+			case 'ERROR':
 				echo PHP_EOL . 'An Error Occurred.' . PHP_EOL;
 				break;
-			case M_PHOROMATIC_RESPONSE_SETTING_DISABLED:
+			case 'SETTING_DISABLED':
 				echo PHP_EOL . 'You need to enable this support from your Phoromatic account web interface.' . PHP_EOL;
 				break;
 		}
 
-		return $xml_parser->getXMLValue(M_PHOROMATIC_GEN_RESPONSE) == M_PHOROMATIC_RESPONSE_TRUE;
+		return $xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/Response') == 'TRUE';
 	}
 	protected static function phoromatic_setup_module()
 	{

@@ -7,6 +7,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add warning messages when test profile/suite data is empty due to no OpenBenchmarking.org communication
 - phodevi: PathCC / PathScale Compiler Suite detection
 - phodevi: For audio adapter try to find motherboard audio adapter or sound card rather than GPU integrated audio
+- phoromatic: Restore compatibility with current (old) Phoromatic.com implementation
 
 Phoronix Test Suite Milestone 4
 1 June 2011
