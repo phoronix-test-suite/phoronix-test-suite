@@ -24,6 +24,7 @@ class sys_power implements phodevi_sensor
 {
 	private static $battery_sys = false;
 	private static $battery_cur = false;
+	private static $wattsup_meter = false;
 
 	public static function get_type()
 	{
@@ -43,6 +44,10 @@ class sys_power implements phodevi_sensor
 		{
 			$unit = 'microAmps';
 		}
+		else if(self::$wattsup_meter)
+		{
+			$unit = 'Watts';
+		}
 
 		return $unit;
 	}
@@ -61,6 +66,12 @@ class sys_power implements phodevi_sensor
 			self::$battery_cur = true;
 			return true;
 		}
+
+		if(pts_client::executable_in_path('wattsup') && self::watts_up_power_meter() > 0)
+		{
+			self::$wattsup_meter = true;
+			return true;
+		}
 	}
 	public static function read_sensor()
 	{
@@ -72,6 +83,16 @@ class sys_power implements phodevi_sensor
 		{
 			return self::sys_power_current();
 		}
+		else if(self::$wattsup_meter)
+		{
+			return self::watts_up_power_meter();
+		}
+	}
+	private static function watts_up_power_meter()
+	{
+		$output = trim(shell_exec('wattsup -c 1 ttyUSB0 watts 2>&1'));
+
+		return is_numeric($output) ? $output : -1;
 	}
 	private static function sys_power_current()
 	{
