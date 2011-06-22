@@ -97,7 +97,7 @@ class sys_power implements phodevi_sensor
 		{
 			$value = array_pop($output);
 		}
-		while(!is_numeric($value) && count($output) > 0)
+		while(!is_numeric($value) && count($output) > 0);
 
 		return is_numeric($value) ? $value : -1;
 	}
