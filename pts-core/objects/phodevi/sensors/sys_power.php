@@ -92,9 +92,14 @@ class sys_power implements phodevi_sensor
 	{
 		$output = trim(shell_exec('wattsup -c 1 ttyUSB0 watts 2>&1'));
 		$output = array_explode(PHP_EOL, $output);
-		$output = array_pop($output);
 
-		return is_numeric($output) ? $output : -1;
+		do
+		{
+			$value = array_pop($output);
+		}
+		while(!is_numeric($value) && count($output) > 0)
+
+		return is_numeric($value) ? $value : -1;
 	}
 	private static function sys_power_current()
 	{
