@@ -330,13 +330,14 @@ class pts_concise_display_mode implements pts_display_mode_interface
 		else if(in_array($test_result->test_profile->get_display_format(), array('FILLED_LINE_GRAPH', 'LINE_GRAPH')))
 		{
 			$values = explode(',', $test_result->get_result());
+			$end_print = null;
 
 			if(count($values) > 1)
 			{
 				$avg = pts_math::set_precision(array_sum($values) / count($values), 2);
 				$min = pts_math::set_precision(min($values), 2);
 				$max = pts_math::set_precision(max($values), 2);
-				$end_print = $this->tab . $this->tab . 'Average: ' . $avg . ' (' . $test_result->test_profile->get_result_scale() . ')' . PHP_EOL;
+				$end_print .= $this->tab . $this->tab . 'Average: ' . $avg . ' (' . $test_result->test_profile->get_result_scale() . ')' . PHP_EOL;
 				$end_print .= $this->tab . $this->tab . 'Minimum: ' . $min . ' (' . $test_result->test_profile->get_result_scale() . ')' . PHP_EOL;
 				$end_print .= $this->tab . $this->tab . 'Maximum: ' . $max . ' (' . $test_result->test_profile->get_result_scale() . ')' . PHP_EOL;
 			}

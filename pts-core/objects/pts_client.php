@@ -1362,7 +1362,7 @@ class pts_client
 		{
 			if((pts_c::$test_flags & pts_c::batch_mode))
 			{
-				$view_results = pts_config::read_user_config('PhoronixTestSuite/Options/BatchMode/OpenBrowser', 'FALSE');
+				$view_results = pts_config::read_bool_config('PhoronixTestSuite/Options/BatchMode/OpenBrowser', 'FALSE');
 			}
 			else
 			{
