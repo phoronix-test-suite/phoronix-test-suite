@@ -67,7 +67,7 @@ class sys_power implements phodevi_sensor
 			return true;
 		}
 
-		if(pts_client::executable_in_path('wattsup') && is_file('/dev/ttyUSB0') && self::watts_up_power_meter() > 1)
+		if(pts_client::executable_in_path('wattsup') && self::watts_up_power_meter() > 1)
 		{
 			self::$wattsup_meter = true;
 			return true;
@@ -91,7 +91,7 @@ class sys_power implements phodevi_sensor
 	private static function watts_up_power_meter()
 	{
 		$output = trim(shell_exec('wattsup -c 1 ttyUSB0 watts 2>&1'));
-		$output = array_explode(PHP_EOL, $output);
+		$output = explode(PHP_EOL, $output);
 
 		do
 		{
