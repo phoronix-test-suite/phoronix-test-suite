@@ -103,7 +103,7 @@ class pts_render
 	{
 		if($result_file != null && ($result_file->is_multi_way_comparison() || $result_file->is_results_tracker()))
 		{
-			if($result_file->is_multi_way_comparison() && in_array($result_object->test_profile->get_display_format(), array('LINE_GRAPH', 'FILLED_LINE_GRAPH')) && $result_object->test_profile->get_identifier() != null)
+			if($result_file->is_multi_way_comparison() && in_array($result_object->test_profile->get_display_format(), array('LINE_GRAPH', 'FILLED_LINE_GRAPH')))
 			{
 				// Turn a multi-way line graph into an averaged bar graph
 				$buffer_items = $result_object->test_result_buffer->get_buffer_items();
@@ -112,7 +112,7 @@ class pts_render
 				foreach($buffer_items as $buffer_item)
 				{
 					$values = pts_strings::comma_explode($buffer_item->get_result_value());
-					$avg_value = array_sum($values) / count($values);
+					$avg_value = pts_math::set_precision(array_sum($values) / count($values), 2);
 					$result_object->test_result_buffer->add_test_result($buffer_item->get_result_identifier(), $avg_value, $avg_value);
 				}
 
