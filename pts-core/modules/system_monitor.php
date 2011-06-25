@@ -98,7 +98,7 @@ class system_monitor extends pts_module_interface
 	}
 	public static function __post_test_run_process(&$result_file_writer)
 	{
-		if(self::$individual_monitoring == false)
+		if(self::$individual_monitoring == false || count(self::$to_monitor) == 0)
 		{
 			return;
 		}
