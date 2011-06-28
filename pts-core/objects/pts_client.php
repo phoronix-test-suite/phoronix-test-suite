@@ -1397,7 +1397,7 @@ class pts_client
 					{
 						if(is_executable($browser_test))
 						{
-							$browser = '"$browser_test"';
+							$browser = $browser_test;
 							break;
 						}
 					}

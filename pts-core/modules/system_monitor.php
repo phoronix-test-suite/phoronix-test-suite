@@ -24,7 +24,7 @@
 class system_monitor extends pts_module_interface
 {
 	const module_name = 'System Monitor';
-	const module_version = '3.0.0';
+	const module_version = '3.0.1';
 	const module_description = 'This module contains sensor monitoring support.';
 	const module_author = 'Michael Larabel';
 
@@ -80,10 +80,10 @@ class system_monitor extends pts_module_interface
 
 		if(count(self::$to_monitor) > 0)
 		{
-			echo PHP_EOL . '   Sensors To Be Logged:';
+			echo PHP_EOL . 'Sensors To Be Logged:';
 			foreach(self::$to_monitor as &$sensor)
 			{
-				echo PHP_EOL . '      ' . phodevi::sensor_name($sensor);
+				echo PHP_EOL . '   - ' . phodevi::sensor_name($sensor);
 			}
 			echo PHP_EOL;
 		}
