@@ -67,10 +67,15 @@ class sys_power implements phodevi_sensor
 			return true;
 		}
 
-		if(pts_client::executable_in_path('wattsup') && self::watts_up_power_meter() >= 1 && is_numeric(self::watts_up_power_meter()))
+		if(pts_client::executable_in_path('wattsup'))
 		{
-			self::$wattsup_meter = true;
-			return true;
+			$wattsup = self::watts_up_power_meter();
+
+			if($wattsup >= 1 && is_numeric($wattsup))
+			{
+				self::$wattsup_meter = true;
+				return true;
+			}
 		}
 	}
 	public static function read_sensor()
