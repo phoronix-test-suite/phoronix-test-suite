@@ -78,7 +78,17 @@ class system_monitor extends pts_module_interface
 			}
 		}
 
-		pts_module::pts_timed_function('pts_monitor_update', 3);
+		if(count(self::$to_monitor) > 0)
+		{
+			echo PHP_EOL . '   Sensors To Be Logged:';
+			foreach(self::$to_monitor as &$sensor)
+			{
+				echo PHP_EOL . '      ' . phodevi::sensor_name($sensor);
+			}
+			echo PHP_EOL;
+		}
+
+		pts_module::pts_timed_function('pts_monitor_update', 2);
 	}
 	public static function __pre_test_run(&$test_run_request)
 	{

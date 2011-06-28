@@ -4,6 +4,7 @@ Phoronix Test Suite (Git)
 
 - pts-core: Fix regression in evaluating browser opening
 - phodevi: USB Watts Up Power Meter support
+- system_monitor: Report sensors to be logged prior to test execution
 
 Phoronix Test Suite 3.2-Grimstad
 15 June 2011
