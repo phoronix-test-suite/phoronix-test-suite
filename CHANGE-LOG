@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 3.2.1-Grimstad
+29 June 2011
 
 - pts-core: Fix regression in evaluating browser opening
 - pts-core: Fix browser launching on Microsoft Windows platforms
