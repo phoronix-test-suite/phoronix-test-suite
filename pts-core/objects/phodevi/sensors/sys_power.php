@@ -71,7 +71,7 @@ class sys_power implements phodevi_sensor
 		{
 			$wattsup = self::watts_up_power_meter();
 
-			if($wattsup >= 1 && is_numeric($wattsup))
+			if($wattsup > 0.5 && is_numeric($wattsup))
 			{
 				self::$wattsup_meter = true;
 				return true;

@@ -22,16 +22,15 @@
 */
 
 define('PTS_VERSION', '3.2.1');
-define('PTS_CORE_VERSION', 3210);
-define('PTS_CODENAME', 'GRIMSTAD');
-define('PTS_IS_CLIENT', PTS_MODE == 'CLIENT');
+define('PTS_CORE_VERSION', 3300);
+define('PTS_CODENAME', 'LILLESAND');
+define('PTS_IS_CLIENT', (defined('PTS_MODE') && PTS_MODE == 'CLIENT'));
 
-/*
+
 if(PTS_IS_CLIENT)
 {
 	error_reporting(E_ALL | E_NOTICE | E_STRICT);
 }
-*/
 
 function pts_codename($full_string = false)
 {
