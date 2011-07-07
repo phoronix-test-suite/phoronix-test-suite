@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2010, Phoronix Media
-	Copyright (C) 2008 - 2010, Michael Larabel
+	Copyright (C) 2008 - 2011, Phoronix Media
+	Copyright (C) 2008 - 2011, Michael Larabel
 	pts_VerticalBarGraph.php: The vertical bar graph object that extends pts_Graph.php
 
 	This program is free software; you can redistribute it and/or modify
@@ -90,15 +90,10 @@ class pts_VerticalBarGraph extends pts_Graph
 			{
 				$value = pts_math::set_precision($this->graph_data[$i_o][$i], 2);
 				$graph_size = round(($value / $this->graph_maximum_value) * ($this->graph_top_end - $this->graph_top_start));
-				$value_plot_top = $this->graph_top_end + 1 - $graph_size;
+				$value_plot_top = max($this->graph_top_end + 1 - $graph_size, 1);
 
 				$px_bound_left = $this->graph_left_start + ($this->identifier_width * $i) + ($bar_width * $i_o) + ($separator_width * ($i_o + 1));
 				$px_bound_right = $px_bound_left + $bar_width;
-
-				if($value_plot_top < 1)
-				{
-					$value_plot_top = 1;
-				}
 
 				$title_tooltip = $this->graph_identifiers[$i] . ': ' . $value;
 				$run_std_deviation = isset($this->graph_data_raw[$i_o][$i]) ? pts_math::standard_deviation(pts_strings::colon_explode($this->graph_data_raw[$i_o][$i])) : 0;

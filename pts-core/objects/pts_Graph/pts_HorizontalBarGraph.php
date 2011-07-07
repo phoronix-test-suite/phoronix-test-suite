@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2010, Phoronix Media
-	Copyright (C) 2008 - 2010, Michael Larabel
+	Copyright (C) 2008 - 2011, Phoronix Media
+	Copyright (C) 2008 - 2011, Michael Larabel
 	pts_HorizontalBarGraph.php: The horizontal bar graph object that extends pts_Graph.php
 
 	This program is free software; you can redistribute it and/or modify
@@ -77,16 +77,11 @@ class pts_HorizontalBarGraph extends pts_Graph
 			{
 				$value = $this->graph_data[$i_o][$i];
 				$graph_size = round(($value / $this->graph_maximum_value) * ($this->graph_left_end - $this->graph_left_start));
-				$value_end_left = $this->graph_left_start + $graph_size;
+				$value_end_left = max($this->graph_left_start + $graph_size, 1);
 
 				$px_bound_top = $this->graph_top_start + ($multi_way ? 5 : 0) + ($this->identifier_height * $i) + ($bar_height * $i_o) + ($separator_height * ($i_o + 1));
 				$px_bound_bottom = $px_bound_top + $bar_height;
 				$middle_of_bar = $px_bound_top + ($bar_height / 2);
-
-				if($value_end_left < 1)
-				{
-					$value_end_left = 1;
-				}
 
 				$title_tooltip = $this->graph_identifiers[$i] . ': ' . $value;
 				$std_error = isset($this->graph_data_raw[$i_o][$i]) ? pts_math::standard_error(pts_strings::colon_explode($this->graph_data_raw[$i_o][$i])) : 0;

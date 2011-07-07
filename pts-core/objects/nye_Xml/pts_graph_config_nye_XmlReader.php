@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010, Phoronix Media
-	Copyright (C) 2010, Michael Larabel
+	Copyright (C) 2010 - 2011, Phoronix Media
+	Copyright (C) 2010 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -27,25 +27,28 @@ class pts_graph_config_nye_XmlReader extends nye_XmlReader
 	public function __construct($new_values = null)
 	{
 		$file = null;
+		$possible_files = array();
 
 		if(PTS_IS_CLIENT)
 		{
-			if(is_file(PTS_USER_PATH . 'graph-config.xml'))
-			{
-				$file = PTS_USER_PATH . 'graph-config.xml';
-			}
-			else if(is_file(PTS_RESULTS_VIEWER_PATH . 'graph-config-template.xml'))
-			{
-				$file = PTS_RESULTS_VIEWER_PATH . 'graph-config-template.xml';
-			}
+			array_push($possible_files, PTS_USER_PATH . 'graph-config.xml');
+			array_push($possible_files, PTS_RESULTS_VIEWER_PATH . 'graph-config-template.xml');
 		}
-		else if(defined('PTS_LIB_GRAPH_CONFIG_XML') && is_file(PTS_LIB_GRAPH_CONFIG_XML))
+		else if(defined('PTS_LIB_GRAPH_CONFIG_XML'))
 		{
-			$file = PTS_LIB_GRAPH_CONFIG_XML;
+			array_push($possible_files, PTS_LIB_GRAPH_CONFIG_XML);
+		}
+
+		foreach($possible_files as $file_check)
+		{
+			if(is_file($file_check))
+			{
+				$file = $file_check;
+				break;
+			}
 		}
 
 		$this->override_values = (is_array($new_values) ? $new_values : false);
-
 		parent::__construct($file);
 	}
 	public function getXMLValue($xml_tag, $fallback_value = false)

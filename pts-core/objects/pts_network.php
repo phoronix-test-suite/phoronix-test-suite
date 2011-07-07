@@ -223,6 +223,53 @@ class pts_network
 		pts_client::$display->test_install_progress_update($downloaded_float);
 		$last_float = $downloaded_float;
 	}
+	public static function client_startup()
+	{
+		if(($proxy_address = pts_config::read_user_config('PhoronixTestSuite/Options/Networking/ProxyAddress', false)) && ($proxy_port = pts_config::read_user_config('PhoronixTestSuite/Options/Networking/ProxyPort', false)))
+		{
+			define('NETWORK_PROXY', $proxy_address . ':' . $proxy_port);
+			define('NETWORK_PROXY_ADDRESS', $proxy_address);
+			define('NETWORK_PROXY_PORT', $proxy_port);
+		}
+		else if(($env_proxy = getenv('http_proxy')) != false && count($env_proxy = pts_strings::colon_explode($env_proxy)) == 2)
+		{
+			define('NETWORK_PROXY', $env_proxy[0] . ':' . $env_proxy[1]);
+			define('NETWORK_PROXY_ADDRESS', $env_proxy[0]);
+			define('NETWORK_PROXY_PORT', $env_proxy[1]);
+		}
+
+		define('NETWORK_TIMEOUT', pts_config::read_user_config('PhoronixTestSuite/Options/Networking/Timeout', 20));
+
+		if(ini_get('allow_url_fopen') == 'Off')
+		{
+			echo PHP_EOL . 'The allow_url_fopen option in your PHP configuration must be enabled for network support.' . PHP_EOL . PHP_EOL;
+			define('NO_NETWORK_COMMUNICATION', true);
+		}
+		else if(pts_config::read_bool_config('PhoronixTestSuite/Options/Networking/NoNetworkCommunication', 'FALSE'))
+		{
+			define('NO_NETWORK_COMMUNICATION', true);
+			echo PHP_EOL . 'Network Communication Is Disabled For Your User Configuration.' . PHP_EOL . PHP_EOL;
+		}
+		else if(pts_flags::no_network_communication() == true)
+		{
+			define('NO_NETWORK_COMMUNICATION', true);
+			//echo PHP_EOL . 'Network Communication Is Disabled For Your User Configuration.' . PHP_EOL . PHP_EOL;
+		}
+		/* else
+		{
+			$server_response = pts_network::http_get_contents('http://www.phoronix-test-suite.com/PTS', false, false);
+
+			if($server_response != 'PTS')
+			{
+				define('NO_NETWORK_COMMUNICATION', true);
+			}
+		}*/
+
+		if(!defined('NO_NETWORK_COMMUNICATION') && ini_get('file_uploads') == 'Off')
+		{
+			echo PHP_EOL . 'The file_uploads option in your PHP configuration must be enabled for network support.' . PHP_EOL . PHP_EOL;
+		}
+	}
 }
 
 ?>
