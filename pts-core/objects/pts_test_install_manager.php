@@ -97,7 +97,7 @@ class pts_test_install_manager
 
 		return $remote_download_files;
 	}
-	public function remote_download_caches()
+	public static function remote_download_caches()
 	{
 		$cache_directories = array();
 
@@ -111,7 +111,7 @@ class pts_test_install_manager
 
 		return $cache_directories;
 	}
-	public function local_download_caches()
+	public static function local_download_caches()
 	{
 		$local_cache_directories = array();
 
