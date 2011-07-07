@@ -315,10 +315,6 @@ abstract class pts_Graph
 	// Misc Functions
 	//
 
-	protected function next_paint_color()
-	{
-		return get_paint_color(time());
-	}
 	protected function get_paint_color($identifier)
 	{
 		return $this->graph_image->convert_hex_to_type(bilde_renderer::color_cache(0, $identifier, $this->graph_color_paint));
@@ -363,12 +359,12 @@ abstract class pts_Graph
 	}
 	protected function text_size_bounds($string, $font, $font_size, $minimum_font_size, $bound_width, $bound_height = -1)
 	{
-		list($string_width, $string_height) = $this->text_string_dimensions($string, $font, $font_size);
+		list($string_width, $string_height) = bilde_renderer::soft_text_string_dimensions($string, $font, $font_size);
 
 		while($font_size > $minimum_font_size && $string_width > $bound_width || ($bound_height > 0 && $string_height > $bound_height))
 		{
 			$font_size -= 0.2;
-			list($string_width, $string_height) = $this->text_string_dimensions($string, $font, $font_size);
+			list($string_width, $string_height) = bilde_renderer::soft_text_string_dimensions($string, $font, $font_size);
 		}
 
 		return $font_size;
@@ -708,7 +704,7 @@ abstract class pts_Graph
 				switch($this->graph_proportion)
 				{
 					case 'LIB':
-						$proportion = 'Less Are Better';
+						$proportion = 'Less Is Better';
 						$offset += 12;
 
 						if($this->graph_orientation == 'HORIZONTAL')
@@ -721,7 +717,7 @@ abstract class pts_Graph
 						}
 						break;
 					case 'HIB':
-						$proportion = 'More Are Better';
+						$proportion = 'More Is Better';
 						$offset += 12;
 						if($this->graph_orientation == 'HORIZONTAL')
 						{
@@ -880,18 +876,14 @@ abstract class pts_Graph
 	// Renderer-specific Functions
 	//
 
-	protected function text_string_dimensions($string, $font, $size, $big = false)
-	{
-		return bilde_renderer::soft_text_string_dimensions($string, $font, $size, $big);
-	}
 	protected function text_string_width($string, $font, $size)
 	{
-		$dimensions = $this->text_string_dimensions($string, $font, $size);
+		$dimensions = bilde_renderer::soft_text_string_dimensions($string, $font, $size);
 		return $dimensions[0];
 	}
 	protected function text_string_height($string, $font, $size)
 	{
-		$dimensions = $this->text_string_dimensions($string, $font, $size);
+		$dimensions = bilde_renderer::soft_text_string_dimensions($string, $font, $size);
 		return $dimensions[1];
 	}
 }

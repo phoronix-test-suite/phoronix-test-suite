@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2010, Phoronix Media
-	Copyright (C) 2008 - 2010, Michael Larabel
+	Copyright (C) 2008 - 2011, Phoronix Media
+	Copyright (C) 2008 - 2011, Michael Larabel
 	pts_PassFailGraph.php: An abstract graph object extending pts_Graph for showing results in a pass/fail scenario.
 
 	This program is free software; you can redistribute it and/or modify
@@ -40,8 +40,8 @@ class pts_MultiPassFailGraph extends pts_Graph
 		$graph_height = $this->graph_top_end - $this->graph_top_start - ($vertical_border * 2) - $heading_height;
 		$line_height = floor($graph_height / $identifier_count);
 
-		$pass_color = $this->next_paint_color();
-		$fail_color = $this->next_paint_color();
+		$pass_color = $this->get_paint_color('PASS');
+		$fail_color = $this->get_paint_color('FAIL');
 
 		$main_width = floor($graph_width * .24);
 		$main_font_size = $this->graph_font_size_bars;
