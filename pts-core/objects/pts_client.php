@@ -829,6 +829,21 @@ class pts_client
 				}
 			}
 			unset($graph);
+/*
+			$graph = new pts_SpatialOverviewGraph($result_file);
+
+			if($graph->doSkipGraph() == false)
+			{
+				$graph->saveGraphToFile($save_to_dir . '/result-graphs/spatial.BILDE_EXTENSION');
+				$graph->renderGraph();
+
+				// Check to see if skip_graph was realized during the rendering process
+				if($graph->doSkipGraph() == true)
+				{
+					pts_file_io::unlink($save_to_dir . '/result-graphs/spatial.svg');
+				}
+			}
+			unset($graph);*/
 		}
 
 		// Save XSL

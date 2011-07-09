@@ -76,7 +76,7 @@ class pts_test_result
 	{
 		if($this->test_profile->get_display_format() != 'BAR_GRAPH') // BAR_ANALYZE_GRAPH is currently unsupported
 		{
-			return;
+			return false;
 		}
 
 		$is_multi_way = pts_render::multi_way_identifier_check($this->test_result_buffer->get_identifiers());
@@ -146,6 +146,7 @@ class pts_test_result
 
 		$this->test_profile->set_result_proportion('HIB');
 		$this->test_profile->set_result_scale('Relative Performance');
+		return true;
 	}
 }
 

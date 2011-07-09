@@ -36,9 +36,29 @@ class pts_test_result_buffer
 	{
 		sort($this->buffer_items);
 	}
+	public function sort_buffer_values($asc = true)
+	{
+		usort($this->buffer_items, array('pts_test_result_buffer', 'buffer_value_comparison'));
+
+		if($asc == false)
+		{
+			$this->buffer_items = array_reverse($this->buffer_items);
+		}
+	}
+	public function buffer_value_comparison($a, $b)
+	{
+		$a = $a->get_result_value();
+		$b = $b->get_result_value();
+
+		return strcmp($a, $b);
+	}
 	public function add_buffer_item($buffer_item)
 	{
 		array_push($this->buffer_items, $buffer_item);
+	}
+	public function get_buffer_item($i)
+	{
+		return isset($this->buffer_items[$i]) ? $this->buffer_items[$i] : false;
 	}
 	public function add_test_result($identifier, $value, $raw_value = null)
 	{

@@ -336,7 +336,7 @@ class bilde_svg_renderer extends bilde_renderer
 
 		$this->svg->appendChild($rect);
 	}
-	public function draw_arc($center_x, $center_y, $radius, $offset_percent, $percent, $body_color, $border_color = null, $border_width = 1, $title = null)
+	public function draw_arc($center_x, $center_y, $radius, $offset_percent, $percent, $body_color, $border_color = null, $border_width = 1, $title = null, $dash = false)
 	{
 		$deg = ($percent * 360);
 		$offset_deg = ($offset_percent * 360);
@@ -353,6 +353,11 @@ class bilde_svg_renderer extends bilde_renderer
 		$path->setAttribute('stroke', $border_color);
 		$path->setAttribute('stroke-width', $border_width);
 		$path->setAttribute('stroke-linejoin', 'round');
+
+		if($dash)
+		{
+			$path->setAttribute('stroke-dasharray', '10,20');
+		}
 
 		if($title != null)
 		{
