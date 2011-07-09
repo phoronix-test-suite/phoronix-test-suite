@@ -4,7 +4,7 @@ Phoronix Test Suite (Git)
 
 - pts-core: Various code clean-ups
 - pts_Graph: Various tweaks
-- pts_Graph: Introduce "spatial overview graph"
+- pts_Graph: Introduce radar / spider overview graph
 
 Phoronix Test Suite 3.2.1-Grimstad
 29 June 2011

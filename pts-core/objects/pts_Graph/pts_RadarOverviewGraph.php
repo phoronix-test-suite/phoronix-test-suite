@@ -5,7 +5,7 @@
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
 	Copyright (C) 2010 - 2011, Phoronix Media
 	Copyright (C) 2010 - 2011, Michael Larabel
-	pts_SpatialOverviewGraph.php: New display type being derived from pts_OverviewGraph... WIP
+	pts_RadarOverviewGraph.php: New display type being derived from pts_OverviewGraph... WIP
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -21,10 +21,11 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class pts_SpatialOverviewGraph extends pts_Graph
+class pts_RadarOverviewGraph extends pts_Graph
 {
 	public $skip_graph = false;
 	private $result_objects = array();
+	private $result_file = null;
 
 	public static function cmp_result_object_sort($a, $b)
 	{
@@ -60,7 +61,7 @@ class pts_SpatialOverviewGraph extends pts_Graph
 		}
 
 		$result_objects = $result_file->get_result_objects();
-		usort($result_objects, array('pts_SpatialOverviewGraph', 'cmp_result_object_sort'));
+		usort($result_objects, array('pts_RadarOverviewGraph', 'cmp_result_object_sort'));
 
 		foreach($result_objects as &$r)
 		{
@@ -105,6 +106,8 @@ class pts_SpatialOverviewGraph extends pts_Graph
 		$this->graph_attr_big_border = true;
 		$this->graph_data_title = $system_identifiers;
 		$this->iveland_view = true;
+
+		$this->result_file = &$result_file;
 
 		return true;
 	}
@@ -193,6 +196,7 @@ class pts_SpatialOverviewGraph extends pts_Graph
 		$this->graph_image->draw_arc($this->graph_left_start, $this->graph_top_start, round($unit_size), 10, 0.25, $this->graph_color_background, $this->graph_color_notches, 1, null);
 
 		$last_hardware_type = $this->result_objects[0]->test_profile->get_test_hardware_type();
+		$hw_types = array();
 		$last_hardware_type_i = 0;
 
 		for($i = 0, $result_object_count = count($this->result_objects); $i < $result_object_count; $i++)
@@ -221,9 +225,31 @@ class pts_SpatialOverviewGraph extends pts_Graph
 
 				$this->graph_image->write_text_right($last_hardware_type, $this->graph_font, $this->graph_font_size_bars, $this->graph_color_alert, $cos_unit, $sin_unit, $cos_unit, $sin_unit);
 
+				array_push($hw_types, $last_hardware_type);
 				$last_hardware_type = $hardware_type;
 				$last_hardware_type_i = $i;
 			}
+		}
+
+		$hw = $this->result_file->get_system_hardware();
+		$sw = $this->result_file->get_system_software();
+		$shw = array();
+
+		foreach($this->graph_data_title as $i => $title)
+		{
+			$merged = pts_result_file_analyzer::system_component_string_to_array($hw[$i] . ', ' . $sw[$i], $hw_types);
+
+			if(!empty($merged))
+			{
+				$shw[$title] = $merged;
+			}
+		}
+
+		$i = 1;
+		foreach($shw as $key => $line)
+		{
+			$this->graph_image->write_text_right(implode('; ', $line), $this->graph_font, $this->graph_font_size_key, $this->get_paint_color($key), $this->graph_left_end - 4, $this->graph_top_end - ($i * $this->graph_font_size_key), $this->graph_left_end - 4, $this->graph_top_end - ($i * $this->graph_font_size_bars));
+			$i++;
 		}
 
 		//$this->render_graph_base($this->graph_left_start, $this->graph_top_start, $this->graph_left_end, $this->graph_top_end);
