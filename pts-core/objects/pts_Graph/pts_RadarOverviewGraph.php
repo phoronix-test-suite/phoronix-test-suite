@@ -37,25 +37,12 @@ class pts_RadarOverviewGraph extends pts_Graph
 	public function __construct(&$result_file)
 	{
 		// System Identifiers
-		if($result_file->is_multi_way_comparison())
+		$system_identifiers = $result_file->get_system_identifiers();
+		if($result_file->is_multi_way_comparison() || count($result_file->get_test_titles()) < 3 || count($system_identifiers) < 3)
 		{
 			// Multi way comparisons currently render the overview graph as blank
-			$this->skip_graph = true;
-			return;
-		}
-
-		$system_identifiers = $result_file->get_system_identifiers();
-		if(count($system_identifiers) < 2)
-		{
-			// No point in generating this when there is only one identifier
-			$this->skip_graph = true;
-			return;
-		}
-
-		// Test Titles
-		if(count($result_file->get_test_titles()) < 3)
-		{
-			// No point in generating this if there aren't many tests
+			// If there aren't more than 3 tests then don't render
+			// If there aren't 3 or more systems then don't render
 			$this->skip_graph = true;
 			return;
 		}
@@ -97,16 +84,11 @@ class pts_RadarOverviewGraph extends pts_Graph
 
 		$this->graph_font_size_identifiers = 6.5;
 		$this->graph_attr_height = $this->graph_attr_width;
-
 		$this->graph_left_start = 35;
-
 		$this->graph_title = $result_file->get_title();
-		$this->graph_y_title = null;
-		$this->graph_background_lines = true;
 		$this->graph_attr_big_border = true;
 		$this->graph_data_title = $system_identifiers;
 		$this->iveland_view = true;
-
 		$this->result_file = &$result_file;
 
 		return true;
@@ -251,8 +233,6 @@ class pts_RadarOverviewGraph extends pts_Graph
 			$this->graph_image->write_text_right(implode('; ', $line), $this->graph_font, $this->graph_font_size_key, $this->get_paint_color($key), $this->graph_left_end - 4, $this->graph_top_end - ($i * $this->graph_font_size_key), $this->graph_left_end - 4, $this->graph_top_end - ($i * $this->graph_font_size_bars));
 			$i++;
 		}
-
-		//$this->render_graph_base($this->graph_left_start, $this->graph_top_start, $this->graph_left_end, $this->graph_top_end);
 
 		return $this->return_graph_image();
 	}
