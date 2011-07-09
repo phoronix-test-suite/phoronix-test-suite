@@ -74,7 +74,7 @@ class pts_SpatialOverviewGraph extends pts_Graph
 			}
 
 			$r_multiple = max($r->test_result_buffer->get_values());
-			if($r_multiple > 10)
+			if($r_multiple > 10 || $r_multiple < 1.02)
 			{
 				continue;
 			}
@@ -130,6 +130,7 @@ class pts_SpatialOverviewGraph extends pts_Graph
 		$this->render_graph_init();
 		$this->graph_key_height();
 		$this->render_graph_key();
+		$this->render_graph_heading();
 
 		$work_area = $this->graph_left_end - $this->graph_left_start;
 		$unit_size = floor($work_area / ($this->graph_maximum_value * 1.05));
@@ -153,46 +154,43 @@ class pts_SpatialOverviewGraph extends pts_Graph
 		$this->graph_image->draw_line($this->graph_left_end, $this->graph_top_end, $this->graph_left_end, $this->graph_top_start, $this->graph_color_notches, 1);
 		$this->graph_image->draw_line($this->graph_left_start, $this->graph_top_end, $this->graph_left_end, $this->graph_top_end, $this->graph_color_notches, 1);
 
-		for($i = 0, $result_object_count = count($this->result_objects); $i < $result_object_count; $i++)
+		for($i = 1, $result_object_count = count($this->result_objects); $i < $result_object_count; $i++)
 		{
-			//$plot_x = cos($rad) * $work_area;
-			//$plot_y = abs(sin($rad)) * $work_area;
-
-			//$this->graph_image->draw_line($this->graph_left_start, $this->graph_top_start, $this->graph_left_start + $plot_x, $this->graph_top_start +  $plot_y, $this->graph_color_notches, 1);
-
-			if($i > 0)
+			for($c = 0, $c_count = $this->result_objects[$i]->test_result_buffer->get_count(); $c < $c_count; $c++)
 			{
-				for($c = 0, $c_count = $this->result_objects[$i]->test_result_buffer->get_count(); $c < $c_count; $c++)
+				$pre_rad = deg2rad(360 - ((($i - 1) / $result_object_count) * 90));
+				$pre_result = $this->result_objects[($i - 1)]->test_result_buffer->get_buffer_item($c)->get_result_value();
+
+				$result = $this->result_objects[$i]->test_result_buffer->get_buffer_item($c)->get_result_value();
+
+				if(($result_object_count - 1) == $i && 90 % $result_object_count != 0)
 				{
-					$pre_rad = deg2rad(360 - ((($i - 1) / $result_object_count) * 90));
-					$pre_result = $this->result_objects[($i - 1)]->test_result_buffer->get_buffer_item($c)->get_result_value();
-
-					$result = $this->result_objects[$i]->test_result_buffer->get_buffer_item($c)->get_result_value();
-
-					if(($result_object_count - 1) == $i && 90 % $result_object_count != 0)
-					{
-						$rad = deg2rad(270);
-					}
-					else
-					{
-						$rad = deg2rad(360 - (($i / $result_object_count) * 90));
-					}
-
-					$result_identifier = $this->result_objects[$i]->test_result_buffer->get_buffer_item($c)->get_result_identifier();
-
-					$pre_size = $unit_size * $pre_result;
-					$size = $unit_size * $result;
-
-					$this->graph_image->draw_polygon(
-						array(
-							array($this->graph_left_start, $this->graph_top_start),
-							array(round($this->graph_left_start + cos($pre_rad) * $pre_size), round($this->graph_top_start + abs(sin($pre_rad)) * $pre_size)),
-							array(round($this->graph_left_start + cos($rad) * $pre_size), round($this->graph_top_start + abs(sin($rad)) * $pre_size))
-						),
-						$this->get_paint_color($result_identifier), $this->graph_color_text, 2);
+					$rad = deg2rad(270);
 				}
+				else
+				{
+					$rad = deg2rad(360 - (($i / $result_object_count) * 90));
+				}
+
+				$result_identifier = $this->result_objects[$i]->test_result_buffer->get_buffer_item($c)->get_result_identifier();
+
+				$pre_size = $unit_size * $pre_result;
+				$size = $unit_size * $result;
+
+				$this->graph_image->draw_polygon(
+					array(
+						array($this->graph_left_start, $this->graph_top_start),
+						array(round($this->graph_left_start + cos($pre_rad) * $pre_size), round($this->graph_top_start + abs(sin($pre_rad)) * $pre_size)),
+						array(round($this->graph_left_start + cos($rad) * $pre_size), round($this->graph_top_start + abs(sin($rad)) * $pre_size))
+					),
+					$this->get_paint_color($result_identifier),
+					$this->graph_color_text,
+					2,
+					$this->result_objects[$i]->test_profile->get_title() . PHP_EOL . $this->result_objects[$i]->test_result_buffer->get_buffer_item($c)->get_result_identifier() . ' - ' . $this->result_objects[$i]->test_result_buffer->get_buffer_item($c)->get_result_value() . 'x Faster Than ' . $this->result_objects[$i]->test_result_buffer->get_buffer_item(($c_count - 1))->get_result_identifier());
 			}
 		}
+
+		$this->graph_image->draw_arc($this->graph_left_start, $this->graph_top_start, round($unit_size), 10, 0.25, $this->graph_color_background, $this->graph_color_notches, 1, null);
 
 		$last_hardware_type = $this->result_objects[0]->test_profile->get_test_hardware_type();
 		$last_hardware_type_i = 0;
@@ -201,26 +199,34 @@ class pts_SpatialOverviewGraph extends pts_Graph
 		{
 			$hardware_type = $this->result_objects[$i]->test_profile->get_test_hardware_type();
 
-			if($hardware_type != $last_hardware_type)
+			if($hardware_type != $last_hardware_type || $i == ($result_object_count - 1))
 			{
-				echo $hardware_type;
-				$rad = deg2rad(360 - (($i / $result_object_count) * 90));
-				$this->graph_image->draw_line(
-					round($this->graph_left_start + cos($rad) * $unit_size),
-					round($this->graph_top_start + abs(sin($rad)) * $unit_size),
-					round($this->graph_left_start + cos($rad) * $unit_size * $this->graph_maximum_value),
-					round($this->graph_top_start + abs(sin($rad)) * $unit_size * $this->graph_maximum_value),
-					$this->graph_color_alert,
-					1);
+				if($i != ($result_object_count - 1))
+				{
+					$rad = deg2rad(360 - (($i / $result_object_count) * 90));
+					$cos_unit = cos($rad) * $unit_size;
+					$sin_unit = abs(sin($rad)) * $unit_size;
+					$this->graph_image->draw_line(
+						round($this->graph_left_start + $cos_unit),
+						round($this->graph_top_start + $sin_unit),
+						round($this->graph_left_start + $cos_unit * $this->graph_maximum_value),
+						round($this->graph_top_start + $sin_unit * $this->graph_maximum_value),
+						$this->graph_color_alert,
+						1);
+				}
+
+				$rad = deg2rad(360 - ((((($i - $last_hardware_type_i) / 2) + $last_hardware_type_i) / $result_object_count) * 90));
+				$cos_unit = $this->graph_left_start + cos($rad) * $unit_size * 0.9;
+				$sin_unit = $this->graph_top_start + abs(sin($rad)) * $unit_size * 0.9;
+
+				$this->graph_image->write_text_right($last_hardware_type, $this->graph_font, $this->graph_font_size_bars, $this->graph_color_alert, $cos_unit, $sin_unit, $cos_unit, $sin_unit);
+
 				$last_hardware_type = $hardware_type;
+				$last_hardware_type_i = $i;
 			}
 		}
 
-		$this->graph_image->draw_arc($this->graph_left_start, $this->graph_top_start, round($unit_size) - 3, 10, 0.25, $this->graph_color_background, $this->graph_color_notches, 1, null);
-
 		//$this->render_graph_base($this->graph_left_start, $this->graph_top_start, $this->graph_left_end, $this->graph_top_end);
-		$this->render_graph_heading();
-		//$this->render_graph_watermark();
 
 		return $this->return_graph_image();
 	}

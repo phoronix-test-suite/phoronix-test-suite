@@ -366,7 +366,7 @@ class bilde_svg_renderer extends bilde_renderer
 
 		$this->svg->appendChild($path);
 	}
-	public function draw_polygon($points, $body_color, $border_color = null, $border_width = 0)
+	public function draw_polygon($points, $body_color, $border_color = null, $border_width = 0, $title = null)
 	{
 		$point_pairs = array();
 		$this_pair = array();
@@ -401,6 +401,36 @@ class bilde_svg_renderer extends bilde_renderer
 			$polygon->setAttribute('stroke', $border_color);
 			$polygon->setAttribute('stroke-width', $border_width);
 			$polygon->setAttribute('points', implode(' ', $point_pairs));
+		}
+
+		if($title != null)
+		{
+			$polygon->setAttribute('xlink:title', $title);
+			/*static $id_counter = 0;
+			$id_counter++;
+			$polygon->setAttribute('id', 'phover' . $id_counter);
+
+			$text = $this->image->createElement('text');
+			$text->setAttribute('id', 'po' . $id_counter);
+			$text->setAttribute('fill', $border_color);
+			//$text->setAttribute('font-size', '30');
+			$text->setAttribute('visibility', 'hidden');
+			$xy = explode(',', $point_pairs[0]);
+			$text->setAttribute('x', array_shift($xy));
+			$text->setAttribute('y', array_shift($xy));
+
+			$string = $this->image->createTextNode($title);
+			$text->appendChild($string);
+
+			$set = $this->image->createElement('set');
+			$set->setAttribute('attributeName', 'visibility');
+			$set->setAttribute('from', 'hidden');
+			$set->setAttribute('to', 'visible');
+			$set->setAttribute('begin', 'phover' . $id_counter . '.mouseover');
+			$set->setAttribute('end', 'phover' . $id_counter . '.mouseout');
+			$text->appendChild($set);
+			$this->svg->appendChild($polygon);
+			$this->svg->appendChild($text);*/
 		}
 
 		$this->svg->appendChild($polygon);

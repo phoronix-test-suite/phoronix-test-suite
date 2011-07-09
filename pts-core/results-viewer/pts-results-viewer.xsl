@@ -55,6 +55,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 		</table></div>
 
 		<a name="result-overview"></a><h1>Results Overview</h1>
+		<div align="center" style="width: 100%; overflow: auto;"><!-- SPATIAL TAG --><object type="image/svg+xml" data="result-graphs/spatial.svg"></object></div>
 		<div align="center" style="width: 100%; overflow: auto;"><!-- OVERVIEW TAG --><object type="image/svg+xml" data="result-graphs/overview.svg"></object></div>
 		<div align="center" style="width: 100%; margin-top: 20px; overflow: auto;"><!-- VISUALIZE TAG --><object type="image/svg+xml" data="result-graphs/visualize.svg"></object></div>
 
