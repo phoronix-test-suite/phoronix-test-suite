@@ -829,7 +829,7 @@ class pts_client
 				}
 			}
 			unset($graph);
-/*
+
 			$graph = new pts_SpatialOverviewGraph($result_file);
 
 			if($graph->doSkipGraph() == false)
@@ -843,7 +843,7 @@ class pts_client
 					pts_file_io::unlink($save_to_dir . '/result-graphs/spatial.svg');
 				}
 			}
-			unset($graph);*/
+			unset($graph);
 		}
 
 		// Save XSL
