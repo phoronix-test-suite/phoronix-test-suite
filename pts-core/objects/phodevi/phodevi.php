@@ -197,6 +197,9 @@ class phodevi
 			case 'SYS':
 				$formatted = 'System';
 				break;
+			case 'HDD':
+				$formatted = 'Drive';
+				break;
 		}
 
 		$formatted .= ' ';
@@ -211,6 +214,9 @@ class phodevi
 				break;
 			case 'memory':
 				$formatted .= 'Memory Usage';
+				break;
+			case 'power':
+				$formatted .= 'Power Consumption';
 				break;
 			default:
 				$formatted .= ucwords(str_replace('-', ' ', $sensor));
