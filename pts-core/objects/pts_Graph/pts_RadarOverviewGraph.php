@@ -171,7 +171,7 @@ class pts_RadarOverviewGraph extends pts_Graph
 					$this->get_paint_color($result_identifier),
 					$this->graph_color_text,
 					2,
-					$this->result_objects[$i]->test_profile->get_title() . PHP_EOL . $this->result_objects[$i]->test_result_buffer->get_buffer_item($c)->get_result_identifier() . ' - ' . $this->result_objects[$i]->test_result_buffer->get_buffer_item($c)->get_result_value() . 'x Faster Than ' . $this->result_objects[$i]->test_result_buffer->get_buffer_item(($c_count - 1))->get_result_identifier());
+					$this->result_objects[$i]->test_profile->get_title() . ' - ' . $this->result_objects[$i]->test_result_buffer->get_buffer_item($c)->get_result_identifier() . ' - ' . $this->result_objects[$i]->test_result_buffer->get_buffer_item($c)->get_result_value() . 'x Faster Than ' . $this->result_objects[$i]->test_result_buffer->get_buffer_item(($c_count - 1))->get_result_identifier());
 			}
 		}
 

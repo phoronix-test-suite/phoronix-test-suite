@@ -192,6 +192,13 @@ class phodevi
 			$formatted = ucwords($type);
 		}
 
+		switch($formatted)
+		{
+			case 'SYS':
+				$formatted = 'System';
+				break;
+		}
+
 		$formatted .= ' ';
 
 		switch($sensor)

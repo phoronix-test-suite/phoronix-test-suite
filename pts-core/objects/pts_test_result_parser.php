@@ -213,6 +213,11 @@ class pts_test_result_parser
 				break;
 			default:
 				$test_result = self::parse_numeric_result($test_identifier, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments);
+
+				if($test_run_request->test_profile->get_display_format() == 'BAR_GRAPH' && !is_numeric($test_result))
+				{
+					$test_result = false;
+				}
 				break;
 		}
 

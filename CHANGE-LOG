@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Various code clean-ups
+- pts-core: Add numeric check to the results parser on bar graphs
 - pts_Graph: Various tweaks
 - pts_Graph: Introduce radar / spider overview graph
 
