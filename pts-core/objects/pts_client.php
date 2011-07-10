@@ -238,6 +238,96 @@ class pts_client
 
 		return $runtime_variables;
 	}
+	public static function save_test_result($save_to = null, $save_results = null, $render_graphs = true, $result_identifier = null)
+	{
+		// Saves PTS result file
+		if(substr($save_to, -4) != '.xml')
+		{
+			$save_to .= '.xml';
+		}
+
+		$save_to_dir = pts_client::setup_test_result_directory($save_to);
+
+		if($save_to == null || $save_results == null)
+		{
+			$bool = false;
+		}
+		else
+		{
+			$save_name = basename($save_to, '.xml');
+
+			if($save_name == 'composite' && $render_graphs)
+			{
+				pts_client::generate_result_file_graphs($save_results, $save_to_dir);
+			}
+
+			$bool = file_put_contents(PTS_SAVE_RESULTS_PATH . $save_to, $save_results);
+
+			if($result_identifier != null && (pts_config::read_bool_config('PhoronixTestSuite/Options/Testing/SaveSystemLogs', 'TRUE') || (pts_c::$test_flags & pts_c::batch_mode) || (pts_c::$test_flags & pts_c::auto_mode)))
+			{
+				// Save verbose system information here
+				$system_log_dir = $save_to_dir . '/system-logs/' . $result_identifier . '/';
+				pts_file_io::mkdir($system_log_dir, 0777, true);
+
+				// Backup system files
+				// TODO: move out these files/commands to log out to respective Phodevi components so only what's relevant will be logged
+				$system_log_files = array(
+					'/var/log/Xorg.0.log',
+					'/proc/cpuinfo',
+					'/proc/modules',
+					'/proc/mounts',
+					'/proc/cmdline',
+					'/etc/X11/xorg.conf'
+					);
+
+				/*
+				if(phodevi::is_linux())
+				{
+					// the kernel config file might just be too large to upload for now
+					array_push($system_log_files, '/boot/config-' . php_uname('r'));
+				}
+				*/
+
+				foreach($system_log_files as $file)
+				{
+					if(is_file($file) && is_readable($file))
+					{
+						// copy() can't be used in this case since it will result in a blank file for /proc/ file-system
+						file_put_contents($system_log_dir . basename($file), file_get_contents($file));
+					}
+				}
+
+				// Generate logs from system commands to backup
+				$system_log_commands = array(
+					'lspci -vvnn',
+					'cc -v',
+					'lsusb',
+					'lsmod',
+					'sensors',
+					'dmesg',
+					'glxinfo'
+					);
+
+				if(phodevi::is_bsd())
+				{
+					array_push($system_log_commands, 'sysctl -a');
+				}
+
+				foreach($system_log_commands as $command_string)
+				{
+					$command = explode(' ', $command_string);
+
+					if(($command_bin = pts_client::executable_in_path($command[0])))
+					{
+						$cmd_output = shell_exec('cd ' . dirname($command_bin) . ' && ./' . $command_string . ' 2>&1');
+						file_put_contents($system_log_dir . $command[0], $cmd_output);
+					}
+				}
+			}
+		}
+
+		return $bool;
+	}
 	public static function save_result_file(&$result_file_writer, $save_name)
 	{
 		// Save the test file
@@ -292,14 +382,7 @@ class pts_client
 	}
 	public static function init_display_mode($flags = 0)
 	{
-		if(($flags & pts_c::debug_mode))
-		{
-			$env_mode = 'BASIC';
-		}
-		else
-		{
-			$env_mode = false;
-		}
+		$env_mode = ($flags & pts_c::debug_mode) ? 'BASIC' : false;
 
 		switch(($env_mode != false || ($env_mode = pts_client::read_env('PTS_DISPLAY_MODE')) != false ? $env_mode : pts_config::read_user_config('PhoronixTestSuite/Options/General/DefaultDisplayMode', 'DEFAULT')))
 		{
@@ -917,96 +1000,6 @@ class pts_client
 		}
 
 		return $in_option;
-	}
-	public static function save_test_result($save_to = null, $save_results = null, $render_graphs = true, $result_identifier = null)
-	{
-		// Saves PTS result file
-		if(substr($save_to, -4) != '.xml')
-		{
-			$save_to .= '.xml';
-		}
-
-		$save_to_dir = pts_client::setup_test_result_directory($save_to);
-	
-		if($save_to == null || $save_results == null)
-		{
-			$bool = false;
-		}
-		else
-		{
-			$save_name = basename($save_to, '.xml');
-
-			if($save_name == 'composite' && $render_graphs)
-			{
-				pts_client::generate_result_file_graphs($save_results, $save_to_dir);
-			}
-
-			$bool = file_put_contents(PTS_SAVE_RESULTS_PATH . $save_to, $save_results);
-
-			if($result_identifier != null && (pts_config::read_bool_config('PhoronixTestSuite/Options/Testing/SaveSystemLogs', 'TRUE') || (pts_c::$test_flags & pts_c::batch_mode) || (pts_c::$test_flags & pts_c::auto_mode)))
-			{
-				// Save verbose system information here
-				$system_log_dir = $save_to_dir . '/system-logs/' . $result_identifier . '/';
-				pts_file_io::mkdir($system_log_dir, 0777, true);
-
-				// Backup system files
-				// TODO: move out these files/commands to log out to respective Phodevi components so only what's relevant will be logged
-				$system_log_files = array(
-					'/var/log/Xorg.0.log',
-					'/proc/cpuinfo',
-					'/proc/modules',
-					'/proc/mounts',
-					'/proc/cmdline',
-					'/etc/X11/xorg.conf'
-					);
-
-				/*
-				if(phodevi::is_linux())
-				{
-					// the kernel config file might just be too large to upload for now
-					array_push($system_log_files, '/boot/config-' . php_uname('r'));
-				}
-				*/
-
-				foreach($system_log_files as $file)
-				{
-					if(is_file($file) && is_readable($file))
-					{
-						// copy() can't be used in this case since it will result in a blank file for /proc/ file-system
-						file_put_contents($system_log_dir . basename($file), file_get_contents($file));
-					}
-				}
-
-				// Generate logs from system commands to backup
-				$system_log_commands = array(
-					'lspci -vvnn',
-					'cc -v',
-					'lsusb',
-					'lsmod',
-					'sensors',
-					'dmesg',
-					'glxinfo'
-					);
-
-				if(phodevi::is_bsd())
-				{
-					array_push($system_log_commands, 'sysctl -a');
-				}
-
-				foreach($system_log_commands as $command_string)
-				{
-					$command = explode(' ', $command_string);
-
-					if(($command_bin = pts_client::executable_in_path($command[0])))
-					{
-						$cmd_output = shell_exec('cd ' . dirname($command_bin) . ' && ./' . $command_string . ' 2>&1');
-						file_put_contents($system_log_dir . $command[0], $cmd_output);
-					}
-				}
-			}
-		}
-
-		return $bool;
 	}
 	public static function regenerate_graphs($result_file_identifier, $full_process_string = false, $extra_graph_attributes = null)
 	{

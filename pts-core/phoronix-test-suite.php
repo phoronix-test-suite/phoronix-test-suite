@@ -110,7 +110,7 @@ if(is_file(PTS_PATH . 'pts-core/commands/' . $sent_command . '.php') == false)
 
 define('PTS_USER_LOCK', PTS_USER_PATH . 'run_lock');
 
-if(!QUICK_START)
+if(QUICK_START == false)
 {
 	if(pts_client::create_lock(PTS_USER_LOCK) == false)
 	{

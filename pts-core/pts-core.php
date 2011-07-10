@@ -21,14 +21,15 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-define('PTS_VERSION', '3.2.1');
+define('PTS_VERSION', '3.4.0m0');
 define('PTS_CORE_VERSION', 3300);
 define('PTS_CODENAME', 'LILLESAND');
 define('PTS_IS_CLIENT', (defined('PTS_MODE') && PTS_MODE == 'CLIENT'));
 
 
-if(PTS_IS_CLIENT)
+if(PTS_IS_CLIENT && substr(PTS_VERSION, -2, 1) == 'm')
 {
+	// Enable more verbose error reporting only when PTS is in development with milestone (alpha/beta) releases but no release candidate (r) or gold versions
 	error_reporting(E_ALL | E_NOTICE | E_STRICT);
 }
 
@@ -117,17 +118,17 @@ if(PTS_IS_CLIENT || defined('PTS_AUTO_LOAD_OBJECTS'))
 	}
 	function __autoload($to_load)
 	{
-		static $sub_objects = null;
+		static $obj_files = null;
 
-		if($sub_objects == null)
+		if($obj_files == null)
 		{
-			pts_build_dir_php_list(PTS_PATH . 'pts-core/objects', $sub_objects);
+			pts_build_dir_php_list(PTS_PATH . 'pts-core/objects', $obj_files);
 		}
 
-		if(isset($sub_objects[$to_load]))
+		if(isset($obj_files[$to_load]))
 		{
-			include($sub_objects[$to_load]);
-			unset($sub_objects[$to_load]);
+			include($obj_files[$to_load]);
+			unset($obj_files[$to_load]);
 		}
 	}
 }
