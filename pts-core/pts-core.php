@@ -93,33 +93,27 @@ function pts_needed_extensions()
 
 if(PTS_IS_CLIENT || defined('PTS_AUTO_LOAD_OBJECTS'))
 {
-	function pts_build_dir_php_list($dir)
+	function pts_build_dir_php_list($dir, &$files)
 	{
-		$files = array();
-
-		if(is_dir($dir))
+		if($dh = opendir($dir))
 		{
-			if($dh = opendir($dir))
+			while(($file = readdir($dh)) !== false)
 			{
-				while(($file = readdir($dh)) !== false)
+				if($file != '.' && $file != '..')
 				{
-					if(!in_array($file, array('.', '..')))
+					if(is_dir($dir . '/' . $file))
 					{
-						if(is_dir($dir . '/' . $file))
-						{
-							$files = array_merge($files, pts_build_dir_php_list($dir . '/' . $file));
-						}
-						else if(substr($file, -4) == '.php')
-						{
-							$files[basename($file, '.php')] = $dir . '/' . $file;
-						}
+						pts_build_dir_php_list($dir . '/' . $file, $files);
+					}
+					else if(substr($file, -4) == '.php')
+					{
+						$files[substr($file, 0, -4)] = $dir . '/' . $file;
 					}
 				}
 			}
-			closedir($dh);
 		}
 
-		return $files;
+		closedir($dh);
 	}
 	function __autoload($to_load)
 	{
@@ -127,7 +121,7 @@ if(PTS_IS_CLIENT || defined('PTS_AUTO_LOAD_OBJECTS'))
 
 		if($sub_objects == null)
 		{
-			$sub_objects = pts_build_dir_php_list(PTS_PATH . 'pts-core/objects');
+			pts_build_dir_php_list(PTS_PATH . 'pts-core/objects', $sub_objects);
 		}
 
 		if(isset($sub_objects[$to_load]))
