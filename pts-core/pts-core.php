@@ -93,26 +93,44 @@ function pts_needed_extensions()
 
 if(PTS_IS_CLIENT || defined('PTS_AUTO_LOAD_OBJECTS'))
 {
+	function pts_build_dir_php_list($dir)
+	{
+		$files = array();
+
+		if(is_dir($dir))
+		{
+			if($dh = opendir($dir))
+			{
+				while(($file = readdir($dh)) !== false)
+				{
+					if(!in_array($file, array('.', '..')))
+					{
+						if(is_dir($dir . '/' . $file))
+						{
+							$files = array_merge($files, pts_build_dir_php_list($dir . '/' . $file));
+						}
+						else if(substr($file, -4) == '.php')
+						{
+							$files[basename($file, '.php')] = $dir . '/' . $file;
+						}
+					}
+				}
+			}
+			closedir($dh);
+		}
+
+		return $files;
+	}
 	function __autoload($to_load)
 	{
 		static $sub_objects = null;
 
 		if($sub_objects == null)
 		{
-			$sub_objects = array();
-
-			foreach(array_merge(glob(PTS_PATH . 'pts-core/objects/*/*.php'), glob(PTS_PATH . 'pts-core/objects/*/*/*.php')) as $file)
-			{
-				$object_name = basename($file, '.php');
-				$sub_objects[$object_name] = $file;
-			}
+			$sub_objects = pts_build_dir_php_list(PTS_PATH . 'pts-core/objects');
 		}
 
-		if(is_file(PTS_PATH . 'pts-core/objects/' . $to_load . '.php'))
-		{
-			include(PTS_PATH . 'pts-core/objects/' . $to_load . '.php');
-		}
-		else if(isset($sub_objects[$to_load]))
+		if(isset($sub_objects[$to_load]))
 		{
 			include($sub_objects[$to_load]);
 			unset($sub_objects[$to_load]);
