@@ -1244,7 +1244,7 @@ class pts_test_run_manager
 	{
 		$valid_test_profile = true;
 		$test_type = $test_profile->get_test_hardware_type();
-		$skip_tests = pts_client::read_env('SKIP_TESTS');
+		$skip_tests = pts_client::read_env('SKIP_TESTS') ? pts_strings::comma_explode(pts_client::read_env('SKIP_TESTS')) : false;
 		$display_driver = phodevi::read_property('system', 'display-driver');
 
 		if($test_profile->is_supported(false) == false)
@@ -1266,7 +1266,7 @@ class pts_test_run_manager
 			$report_errors && pts_client::$display->test_run_error('Running on a RAM-based live file-system, cannot run ' . $test_profile);
 			$valid_test_profile = false;
 		}
-		else if(pts_client::read_env('NO_' . strtoupper($test_type) . '_TESTS') || ($skip_tests && in_array($test_profile, pts_strings::comma_explode($skip_tests))) || ($skip_tests && in_array($test_type, pts_strings::comma_explode($skip_tests))))
+		else if(pts_client::read_env('NO_' . strtoupper($test_type) . '_TESTS') ||($skip_tests && (in_array($test_profile, $skip_tests) || in_array($test_type, $skip_tests) || in_array($test_profile->get_identifier(false), $skip_tests) || in_array($run_object->get_identifier_base_name(), $skip_tests))))
 		{
 			$report_errors && pts_client::$display->test_run_error('Due to a pre-set environmental variable, skipping ' . $test_profile);
 			$valid_test_profile = false;

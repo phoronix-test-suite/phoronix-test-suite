@@ -211,6 +211,7 @@ class pts_test_result_parser
 			case 'MULTI_PASS_FAIL':
 				$test_result = self::parse_generic_result($test_identifier, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments);
 				break;
+			case 'BAR_GRAPH':
 			default:
 				$test_result = self::parse_numeric_result($test_identifier, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments);
 
