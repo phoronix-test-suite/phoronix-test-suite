@@ -53,7 +53,7 @@ class matisk extends pts_module_interface
 			),
 		'set_context' =>
 			array(
-			'The pre_install or pre_run fields must be used when using the MATISK context testing functionality. The set_context fields must specify an executable file for setting the context of the system. Passed as the first argument to the respective file is the context string defined by the contexts section of this file. If any of these set_context scripts emit an exit code of 8 the testing process will abort immediately.',
+			'The pre_install or pre_run fields must be used when using the MATISK context testing functionality. The set_context fields must specify an executable file for setting the context of the system. Passed as the first argument to the respective file is the context string defined by the contexts section of this file. If any of the set_context scripts emit an exit code of 8, the testing process will abort immediately. If any of the set_context scripts emit an exit code of 9, the testing process will skip executing the suite on the current context.',
 			'pre_install' => array(null, 'An external file to be used for setting the system context prior to test installation.'),
 			'pre_run' => array(null, 'An external file to be used for setting the system context prior to test execution.'),
 	//		'interim_run' => array(null, 'An external file to be used for setting the system context in between tests in the execution queue.'),
@@ -68,8 +68,8 @@ class matisk extends pts_module_interface
 
 	private static $context = null;
 	private static $ini = array();
-	private static $set_context_script_exit_code_abort = 8;
 	private static $matisk_config_dir = null;
+	private static $skip_test_set = false;
 
 	public static function module_info()
 	{
@@ -349,27 +349,31 @@ Categories=System;Monitor;');
 				return false;
 			}
 
-			$test_run_manager = new pts_test_run_manager($test_flags);
-
-			// Load the tests to run
-			if($test_run_manager->load_tests_to_run(self::$ini['workload']['suite']) == false)
+			if(self::$skip_test_set == false)
 			{
-				return false;
+				$test_run_manager = new pts_test_run_manager($test_flags);
+
+				// Load the tests to run
+				if($test_run_manager->load_tests_to_run(self::$ini['workload']['suite']) == false)
+				{
+					return false;
+				}
+
+				// Save results?
+				$test_run_manager->set_save_name(self::$ini['workload']['save_name']);
+				$test_run_manager->set_results_identifier(self::$context);
+				$test_run_manager->set_description(self::$ini['workload']['description']);
+
+				// Don't upload results unless it's the last in queue where the context count is now 0
+				$test_run_manager->auto_upload_to_openbenchmarking((count(self::$ini['set_context']['context']) == 0 && self::$ini['general']['upload_to_openbenchmarking']));
+
+				// Run the actual tests
+				$test_run_manager->pre_execution_process();
+				$test_run_manager->call_test_runs();
+				$test_run_manager->post_execution_process();
 			}
 
-			// Save results?
-			$test_run_manager->set_save_name(self::$ini['workload']['save_name']);
-			$test_run_manager->set_results_identifier(self::$context);
-			$test_run_manager->set_description(self::$ini['workload']['description']);
-
-			// Don't upload results unless it's the last in queue where the context count is now 0
-			$test_run_manager->auto_upload_to_openbenchmarking((count(self::$ini['set_context']['context']) == 0 && self::$ini['general']['upload_to_openbenchmarking']));
-
-			// Run the actual tests
-			$test_run_manager->pre_execution_process();
-			$test_run_manager->call_test_runs();
-			$test_run_manager->post_execution_process();
-
+			self::$skip_test_set = false;
 			file_put_contents($spent_context_file, $context . PHP_EOL, FILE_APPEND);
 			pts_file_io::unlink(pts_module::save_dir() . self::$context . '.last-call');
 		}
@@ -432,8 +436,11 @@ Categories=System;Monitor;');
 
 			switch($return_value)
 			{
-				case self::$set_context_script_exit_code_abort:
+				case 8:
 					exit(0);
+				case 9:
+					self::$skip_test_set = true;
+					break;
 			}
 		}
 	}
