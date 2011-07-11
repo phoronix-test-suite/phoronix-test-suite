@@ -78,6 +78,10 @@ class pts_argument_check
 		{
 			$type = 'Phoronix Test Suite Module';
 		}
+		else if($this->get_function_check() == 'is_file')
+		{
+			$type = 'File';
+		}
 		else
 		{
 			$type = 'Unknown Object';

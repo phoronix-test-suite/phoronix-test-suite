@@ -1116,10 +1116,9 @@ class pts_client
 				echo PHP_EOL . 'There is an error in the requested command: ' . $command . PHP_EOL . PHP_EOL;
 			}
 		}
-		else if(pts_module::valid_run_command($command))
+		else if(($t = pts_module::valid_run_command($command)) != false)
 		{
-			list($module, $module_command) = explode('.', $command);
-
+			list($module, $module_command) = $t;
 			pts_module_manager::set_current_module($module);
 			pts_module_manager::run_command($module, $module_command, $pass_args);
 			pts_module_manager::set_current_module(null);

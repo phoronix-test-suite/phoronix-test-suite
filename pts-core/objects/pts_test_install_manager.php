@@ -23,10 +23,16 @@
 class pts_test_install_manager
 {
 	private $tests_to_install;
+	private static $extra_caches;
 
 	public function __construct()
 	{
 		$this->tests_to_install = array();
+		$this->extra_caches = array();
+	}
+	public static function add_external_download_cache($cache)
+	{
+		return !in_array($cache, self::$extra_caches) ? array_push(self::$extra_caches, $cache) : false;
 	}
 	public function add_test_profile($test_profile)
 	{
@@ -159,7 +165,7 @@ class pts_test_install_manager
 			// User Defined Directory Checking
 			$dir_string = ($dir = pts_client::read_env('PTS_DOWNLOAD_CACHE')) != false ? $dir : null;
 
-			foreach(pts_strings::colon_explode($dir_string) as $dir_check)
+			foreach(array_merge(self::$extra_caches, pts_strings::colon_explode($dir_string)) as $dir_check)
 			{
 				if($dir_check == null)
 				{

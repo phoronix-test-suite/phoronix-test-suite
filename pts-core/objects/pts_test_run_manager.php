@@ -896,7 +896,11 @@ class pts_test_run_manager
 	{
 		$this->set_save_name($save_name, false);
 		$this->set_results_identifier($result_identifier);
-		$this->run_description = $description;
+		$this->set_description($description);
+	}
+	public function set_description($description)
+	{
+		$this->run_description = $description == null ? self::auto_generate_description() : $description;
 	}
 	protected function auto_generate_description()
 	{

@@ -98,23 +98,27 @@ class pts_module
 	}
 	public static function valid_run_command($module, $command = null)
 	{
-		$valid = false;
-
-		if($command == null && strpos($module, '.') != false)
+		if($command == null)
 		{
-			list($module, $command) = explode('.', $module);
-
-			if(!pts_module_manager::is_module_attached($module))
+			if(strpos($module, '.') != false)
 			{
-				pts_module_manager::attach_module($module);
+				list($module, $command) = explode('.', $module);
 			}
-
-			$all_options = pts_module_manager::module_call($module, "user_commands");
-
-			$valid = count($all_options) > 0 && ((isset($all_options[$command]) && method_exists($module, $all_options[$command])) || in_array($command, array("help")));
+			else
+			{
+				$command = 'run';
+			}
 		}
 
-		return $valid;
+		if(!pts_module_manager::is_module_attached($module))
+		{
+			pts_module_manager::attach_module($module);
+		}
+
+		$all_options = pts_module_manager::module_call($module, 'user_commands');
+		$valid = count($all_options) > 0 && ((isset($all_options[$command]) && method_exists($module, $all_options[$command])) || in_array($command, array('help')));
+
+		return $valid ? array($module, $command) : false;
 	}
 	public static function read_option($identifier, $default_fallback = false)
 	{
