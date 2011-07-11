@@ -23,12 +23,11 @@
 class pts_test_install_manager
 {
 	private $tests_to_install;
-	private static $extra_caches;
+	private static $extra_caches = array();
 
 	public function __construct()
 	{
 		$this->tests_to_install = array();
-		$this->extra_caches = array();
 	}
 	public static function add_external_download_cache($cache)
 	{

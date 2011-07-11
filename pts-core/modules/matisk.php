@@ -62,7 +62,7 @@ class matisk extends pts_module_interface
 			'context' => array(array(), 'An array of context values.'),
 			'context_file' => array(null, 'An external file for loading a list of contexts, if not loading the list of contexts via the context array in this file.'),
 			'context_file_delimiter' => array('EOL', 'The delimiter for the context_file contexts list. Special keyword: EOL will use a line break as the delimiter and TAB will use a tab as a delimiter.'),
-			'log_context_outputs' => array(false, 'A boolean value of whether to log the output of the set-context scripts to ~/.phoronix-test-suite/modules/matisk/')
+			'log_context_outputs' => array(false, 'A boolean value of whether to log the output of the set-context scripts to ~/.phoronix-test-suite/modules-data/matisk/')
 			)
 		);
 
@@ -216,8 +216,16 @@ class matisk extends pts_module_interface
 
 		if(is_array($ini['set_context']['context']) && count($ini['set_context']['context']) > 0)
 		{
+			foreach($ini['set_context']['context'] as $i => $context)
+			{
+				if($context == null)
+				{
+					unset($ini['set_context']['context'][$i]);
+				}
+			}
+
 			// Context testing
-			if(self::find_file($ini['set_context']['pre_run']) == false && self::find_file($ini['set_context']['pre_install']) == false)
+			if(count($ini['set_context']['context']) > 0 && self::find_file($ini['set_context']['pre_run']) == false && self::find_file($ini['set_context']['pre_install']) == false)
 			{
 				echo PHP_EOL . 'The pre_run or pre_install set_context fields must be set in order to set the system\'s context.' . PHP_EOL;
 				return false;
@@ -266,10 +274,10 @@ class matisk extends pts_module_interface
 		else
 		{
 			// If recovering from an existing run, don't rerun contexts that were already executed
-			$spent_context_file = pts_file_io::file_get_contents($spent_context_file);
-			$spent_context_file = explode(PHP_EOL, $spent_context_file);
+			$spent_contexts = pts_file_io::file_get_contents($spent_context_file);
+			$spent_contexts = explode(PHP_EOL, $spent_contexts);
 
-			foreach($spent_context_file as $sc)
+			foreach($spent_contexts as $sc)
 			{
 				if(($key = array_search($sc, $ini['set_context']['context'])) !== false)
 				{
@@ -305,10 +313,17 @@ Encoding=UTF-8
 Categories=System;Monitor;');
 		}
 
-		self::$ini = $ini;
-
-		while(($context = array_pop(self::$ini['set_context']['context'])) !== null)
+		if(phodevi::system_uptime() < 60)
 		{
+			echo PHP_EOL . 'Sleeping 60 seconds while waiting for the system to settle...' . PHP_EOL;
+			sleep(60);
+		}
+
+		self::$ini = $ini;
+		$total_context_count = count(self::$ini['set_context']['context']);
+		while(($context = array_shift(self::$ini['set_context']['context'])) !== null)
+		{
+			echo PHP_EOL . ($total_context_count - count(self::$ini['set_context']['context'])) . ' of ' . $total_context_count . ' in test execution queue.' . PHP_EOL . PHP_EOL;
 			self::$context = $context;
 
 			if(pts_strings::string_bool(self::$ini['installation']['install_check']) || $ini['set_context']['pre_install'] != null)
@@ -329,7 +344,7 @@ Categories=System;Monitor;');
 			}
 
 			$test_flags = pts_c::auto_mode;
-			if(pts_test_run_manager::initial_checks($to_run, $test_flags) == false)
+			if(pts_test_run_manager::initial_checks(self::$ini['workload']['suite'], $test_flags) == false)
 			{
 				return false;
 			}
@@ -337,7 +352,7 @@ Categories=System;Monitor;');
 			$test_run_manager = new pts_test_run_manager($test_flags);
 
 			// Load the tests to run
-			if($test_run_manager->load_tests_to_run($to_run) == false)
+			if($test_run_manager->load_tests_to_run(self::$ini['workload']['suite']) == false)
 			{
 				return false;
 			}
@@ -355,7 +370,8 @@ Categories=System;Monitor;');
 			$test_run_manager->call_test_runs();
 			$test_run_manager->post_execution_process();
 
-			file_put_contents($spent_context_file, $context, FILE_APPEND);
+			file_put_contents($spent_context_file, $context . PHP_EOL, FILE_APPEND);
+			pts_file_io::unlink(pts_module::save_dir() . self::$context . '.last-call');
 		}
 
 		unlink($spent_context_file);
@@ -379,7 +395,21 @@ Categories=System;Monitor;');
 	}
 	protected static function process_user_config_external_hook_process($process)
 	{
-		$set_context_file = self::find_file($ini['set_context'][$process]);
+		// Check to not run the same process
+		$last_call_file = pts_module::save_dir() . self::$context . '.last-call';
+		if(is_file($last_call_file))
+		{
+			$check = pts_file_io::file_get_contents($last_call_file);
+
+			if($process == $check)
+			{
+				unlink($last_call_file);
+				return false;
+			}
+		}
+		file_put_contents($last_call_file, $process);
+
+		$set_context_file = self::find_file(self::$ini['set_context'][$process]);
 
 		if($set_context_file && is_executable($set_context_file))
 		{
@@ -395,7 +425,7 @@ Categories=System;Monitor;');
 			echo $std_output = stream_get_contents($pipes[1]);
 			$return_value = proc_close($proc);
 
-			if(pts_strings::string_bool($ini['set_context']['log_context_outputs']))
+			if(pts_strings::string_bool(self::$ini['set_context']['log_context_outputs']))
 			{
 				file_put_contents(pts_module::save_dir() . $ini['workload']['save_name'] . '/' . self::$context . '-' . $process . '.txt', $std_output);
 			}

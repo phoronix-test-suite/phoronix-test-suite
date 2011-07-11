@@ -740,9 +740,13 @@ class pts_test_run_manager
 				{
 					$upload_results = pts_config::read_bool_config('PhoronixTestSuite/Options/BatchMode/UploadResults', 'TRUE');
 				}
-				else
+				else if((pts_c::$test_flags ^ pts_c::auto_mode))
 				{
 					$upload_results = pts_user_io::prompt_bool_input('Would you like to upload these results to OpenBenchmarking.org', true);
+				}
+				else
+				{
+					$upload_results = false;
 				}
 
 				if($upload_results)
