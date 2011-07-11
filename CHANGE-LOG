@@ -7,6 +7,7 @@ Phoronix Test Suite (Git)
 - pts-core: Fix SKIP_TESTS handling
 - pts_Graph: Various tweaks
 - pts_Graph: Introduce radar / spider overview graph
+- matisk: Commit initial module
 
 Phoronix Test Suite 3.2.1-Grimstad
 29 June 2011

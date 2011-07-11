@@ -31,7 +31,7 @@ class pts_module
 		$prefix_dir = PTS_MODULE_DATA_PATH;
 		pts_file_io::mkdir($prefix_dir);
 
-		return $prefix_dir . str_replace("_", "-", self::module_name()) . "/";
+		return $prefix_dir . str_replace('_', '-', self::module_name()) . '/';
 	}
 	public static function is_module($name)
 	{
