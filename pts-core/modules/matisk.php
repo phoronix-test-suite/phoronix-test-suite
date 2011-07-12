@@ -209,6 +209,7 @@ class matisk extends pts_module_interface
 			switch($ini['set_context']['context_file_delimiter'])
 			{
 				case 'EOL':
+				case '':
 					$ini['set_context']['context_file_delimiter'] = PHP_EOL;
 					break;
 				case 'TAB':
@@ -338,6 +339,7 @@ Categories=System;Monitor;');
 
 			if(pts_strings::string_bool(self::$ini['installation']['install_check']) || $ini['set_context']['pre_install'] != null)
 			{
+				self::process_user_config_external_hook_process('pre_install');
 				$install_flags = pts_c::auto_mode;
 				if(pts_strings::string_bool(self::$ini['installation']['force_install']))
 				{
@@ -351,6 +353,7 @@ Categories=System;Monitor;');
 
 				// Do the actual test installation
 				pts_test_installer::standard_install(self::$ini['workload']['suite'], $install_flags);
+				self::process_user_config_external_hook_process('post_install');
 			}
 
 			$test_flags = pts_c::auto_mode;
@@ -361,6 +364,7 @@ Categories=System;Monitor;');
 
 			if(self::$skip_test_set == false)
 			{
+				self::process_user_config_external_hook_process('pre_run');
 				$test_run_manager = new pts_test_run_manager($test_flags);
 
 				// Load the tests to run
@@ -386,26 +390,12 @@ Categories=System;Monitor;');
 			self::$skip_test_set = false;
 			file_put_contents($spent_context_file, $context . PHP_EOL, FILE_APPEND);
 			pts_file_io::unlink(pts_module::save_dir() . self::$context . '.last-call');
+			self::process_user_config_external_hook_process('post_run');
 		}
 
 		unlink($spent_context_file);
 		isset($xdg_config_home) && pts_file_io::unlink($xdg_config_home . '/autostart/phoronix-test-suite-matisk.desktop');
-	}
-	public static function __pre_run_process(&$object)
-	{
-		self::process_user_config_external_hook_process('pre_run');
-	}
-	public static function __post_run_process(&$object)
-	{
 		self::process_user_config_external_hook_process('post_run');
-	}
-	public static function __pre_install_process(&$object)
-	{
-		self::process_user_config_external_hook_process('pre_install');
-	}
-	public static function __post_install_process(&$object)
-	{
-		self::process_user_config_external_hook_process('post_install');
 	}
 	protected static function process_user_config_external_hook_process($process)
 	{
