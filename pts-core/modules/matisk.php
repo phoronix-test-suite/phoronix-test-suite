@@ -188,8 +188,18 @@ class matisk extends pts_module_interface
 		// Checks
 		if(pts_test_suite::is_suite($ini['workload']['suite']) == false)
 		{
-			echo PHP_EOL . 'A test suite must be specified to execute. If a suite needs to be constructed, run: ' . PHP_EOL . 'phoronix-test-suite build-suite' . PHP_EOL . PHP_EOL;
-			return false;
+			// See if the XML suite-definition was just tossed into the same directory
+			if(($xml_file = self::find_file($ini['workload']['suite'] . '.xml')) !== false)
+			{
+				pts_file_io::mkdir(PTS_TEST_SUITE_PATH . 'local/' . $ini['workload']['suite']);
+				copy($xml_file, PTS_TEST_SUITE_PATH . 'local/' . $ini['workload']['suite'] . '/suite-definition.xml');
+			}
+
+			if(pts_test_suite::is_suite($ini['workload']['suite']) == false)
+			{
+				echo PHP_EOL . 'A test suite must be specified to execute. If a suite needs to be constructed, run: ' . PHP_EOL . 'phoronix-test-suite build-suite' . PHP_EOL . PHP_EOL;
+				return false;
+			}
 		}
 
 		if($ini['set_context']['context_file'] != null && ($ini['set_context']['context_file'] = self::find_file($ini['set_context']['context_file'])))
