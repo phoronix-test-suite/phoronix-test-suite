@@ -30,8 +30,8 @@ class matisk extends pts_module_interface
 	private static $ini_struct = array(
 		'workload' =>
 			array(
-			'suite' => array(null, 'A string that is an XML test suite for the Phoronix Test Suite. If running a custom collection of tests/suites, first run phoronix-test-suite build-suite.'),
 			'save_results' => array(true, 'A boolean value of whether to save the test results.'),
+			'suite' => array(null, 'A string that is an XML test suite for the Phoronix Test Suite. If running a custom collection of tests/suites, first run phoronix-test-suite build-suite.'),
 			'save_name' => array(null, 'The string to save the test results as.'),
 			'description' => array(null, 'The test description string.'),
 			'result_identifier' => array(null, 'The test result identifier string, unless using contexts.')
@@ -326,15 +326,15 @@ Categories=System;Monitor;');
 
 		if(phodevi::system_uptime() < 60)
 		{
-			echo PHP_EOL . 'Sleeping 60 seconds while waiting for the system to settle...' . PHP_EOL;
-			sleep(60);
+			echo PHP_EOL . 'Sleeping 45 seconds while waiting for the system to settle...' . PHP_EOL;
+			sleep(45);
 		}
 
 		self::$ini = $ini;
 		$total_context_count = count(self::$ini['set_context']['context']);
 		while(($context = array_shift(self::$ini['set_context']['context'])) !== null)
 		{
-			echo PHP_EOL . ($total_context_count - count(self::$ini['set_context']['context'])) . ' of ' . $total_context_count . ' in test execution queue.' . PHP_EOL . PHP_EOL;
+			echo PHP_EOL . ($total_context_count - count(self::$ini['set_context']['context'])) . ' of ' . $total_context_count . ' in test execution queue [' . $context . ']' . PHP_EOL . PHP_EOL;
 			self::$context = $context;
 
 			if(pts_strings::string_bool(self::$ini['installation']['install_check']) || $ini['set_context']['pre_install'] != null)
@@ -411,7 +411,7 @@ Categories=System;Monitor;');
 				return false;
 			}
 		}
-		file_put_contents($last_call_file, $process);
+		$process != 'post_run' && file_put_contents($last_call_file, $process);
 
 		$set_context_file = self::find_file(self::$ini['set_context'][$process]);
 

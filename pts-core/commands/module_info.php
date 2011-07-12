@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2010, Phoronix Media
-	Copyright (C) 2008 - 2010, Michael Larabel
+	Copyright (C) 2008 - 2011, Phoronix Media
+	Copyright (C) 2008 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -23,30 +23,41 @@
 class module_info implements pts_option_interface
 {
 	const doc_section = 'Modules';
-	const doc_description = "This option will show detailed information on a Phoronix Test Suite module such as the version, developer, and a description of its purpose.";
+	const doc_description = 'This option will show detailed information on a Phoronix Test Suite module such as the version, developer, and a description of its purpose.';
 
 	public static function argument_checks()
 	{
 		return array(
-		new pts_argument_check(0, array("pts_module", "is_module"), null)
+		new pts_argument_check(0, array('pts_module', 'is_module'), null)
 		);
 	}
 	public static function run($args)
 	{
 		$module = $args[0];
 		pts_module_manager::load_module($module);
-		pts_client::$display->generic_heading(pts_module_manager::module_call($module, "module_name") . " Module");
+		pts_client::$display->generic_heading(pts_module_manager::module_call($module, 'module_name') . ' Module');
 
 		if(in_array($args[0], pts_module_manager::attached_modules()))
 		{
-			echo "** This module is currently loaded. **\n";
+			echo '** This module is currently loaded. **' . PHP_EOL;
 		}
 
-		echo "Version: " . pts_module_manager::module_call($module, "module_version") . "\n";
-		echo "Author: " . pts_module_manager::module_call($module, "module_author") . "\n";
-		echo "Description: " . pts_module_manager::module_call($module, "module_description") . "\n";
-		echo "\n" . pts_module_manager::module_call($module, "module_info") . "\n";
-		echo "\n";
+		echo 'Version: ' . pts_module_manager::module_call($module, 'module_version') . PHP_EOL;
+		echo 'Author: ' . pts_module_manager::module_call($module, 'module_author') . PHP_EOL;
+		echo 'Description: ' . pts_module_manager::module_call($module, 'module_description') . PHP_EOL;
+		echo PHP_EOL . pts_module_manager::module_call($module, 'module_info') . PHP_EOL;
+
+		$all_options = pts_module_manager::module_call($module, 'user_commands');
+
+		if(count($all_options) > 0)
+		{
+			echo 'Module User Commands:' . PHP_EOL;
+			foreach(array_keys($all_options) as $option)
+			{
+				echo '- ' . $module . '.' . $option . PHP_EOL;
+			}
+			echo PHP_EOL;
+		}
 	}
 }
 
