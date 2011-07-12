@@ -195,9 +195,16 @@ class pts_module_manager
 	{
 		return isset(self::$modules[$module]);
 	}
-	public static function available_modules()
+	public static function available_modules($only_system_modules = false)
 	{
-		$modules = array_merge(pts_file_io::glob(PTS_MODULE_PATH . "*.php"), pts_file_io::glob(PTS_MODULE_LOCAL_PATH . "*.php"));
+		if($only_system_modules)
+		{
+			$modules = pts_file_io::glob(PTS_MODULE_PATH . "*.php");
+		}
+		else
+		{
+			$modules = array_merge(pts_file_io::glob(PTS_MODULE_PATH . "*.php"), pts_file_io::glob(PTS_MODULE_LOCAL_PATH . "*.php"));
+		}
 		$module_names = array();
 
 		foreach($modules as $module)

@@ -92,6 +92,50 @@ class dump_documentation implements pts_option_interface
 
 		$dom->saveHTMLFile(PTS_PATH . 'documentation/html_stubs/00_user_options.html');
 
+		// Write the module options HTML
+		$dom = new DOMDocument();
+		$html = $dom->createElement('html');
+		$dom->appendChild($html);
+		$head = $dom->createElement('head');
+		$title = $dom->createElement('title', 'Module Options');
+		$head->appendChild($title);
+		$html->appendChild($head);
+		$body = $dom->createElement('body');
+		$html->appendChild($body);
+
+		$p = $dom->createElement('p', 'The following list is the modules included with the Phoronix Test Suite that are intended to extend the functionality of pts-core. Some of these options have commands that can be run directly in a similiar manner to the other Phoronix Test Suite user commands. Some modules are just meant to be loaded directly by adding the module name to the LoadModules tag in ~/.phoronix-test-suite/user-config.xml or via the PTS_MODULES environmental variable. A list of available modules is also available by running ');
+		$em = $dom->createElement('em', 'phoronix-test-suite list-modules.');
+		$p->appendChild($em);
+		$phr = $dom->createElement('hr');
+		$p->appendChild($phr);
+		$body->appendChild($p);
+
+		foreach(pts_module_manager::available_modules(true) as $module)
+		{
+			pts_module_manager::load_module($module);
+
+			$header = $dom->createElement('h2', pts_module_manager::module_call($module, 'module_name'));
+			$body->appendChild($header);
+
+			$desc = $dom->createElement('p', pts_module_manager::module_call($module, 'module_description'));
+			$body->appendChild($desc);
+
+			$all_options = pts_module_manager::module_call($module, 'user_commands');
+			if(count($all_options) > 0)
+			{
+			//	$sub_header = $dom->createElement('h3', 'Module Commands');
+			//	$body->appendChild($sub_header);
+
+				foreach($all_options as $key => $option)
+				{
+					$p = $dom->createElement('p', 'phoronix-test-suite ' . $module . '.' . str_replace('_', '-', $key));
+					$body->appendChild($p);
+				}
+			}
+		}
+
+		$dom->saveHTMLFile(PTS_PATH . 'documentation/html_stubs/00_zmodule_options.html');
+
 		// Write the virtual suites HTML
 		$dom = new DOMDocument();
 		$html = $dom->createElement('html');

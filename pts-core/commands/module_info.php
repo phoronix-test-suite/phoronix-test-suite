@@ -54,7 +54,7 @@ class module_info implements pts_option_interface
 			echo 'Module User Commands:' . PHP_EOL;
 			foreach(array_keys($all_options) as $option)
 			{
-				echo '- ' . $module . '.' . $option . PHP_EOL;
+				echo '- ' . $module . '.' . str_replace('_', '-', $option) . PHP_EOL;
 			}
 			echo PHP_EOL;
 		}

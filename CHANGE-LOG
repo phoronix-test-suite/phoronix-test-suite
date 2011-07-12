@@ -9,6 +9,7 @@ Phoronix Test Suite (Git)
 - pts_Graph: Various tweaks
 - pts_Graph: Introduce radar / spider overview graph
 - matisk: Commit initial module
+- documentation: Report valid module user commands to the HTML / PDF documentation
 
 Phoronix Test Suite 3.2.1-Grimstad
 29 June 2011
