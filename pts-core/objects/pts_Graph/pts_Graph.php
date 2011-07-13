@@ -500,8 +500,8 @@ abstract class pts_Graph
 			{
 				if($this->is_multi_way_comparison && count($this->graph_data) > 1)
 				{
-					$longest_string = $this->find_longest_string($this->graph_identifiers);
-					$longest_string = $this->find_longest_string(explode(' - ', $longest_string));
+					$longest_string = explode(' - ', $this->find_longest_string($this->graph_identifiers));
+					$longest_string = $this->find_longest_string($longest_string);
 
 					$rotated_text = round($this->text_string_width($longest_string, $this->graph_font, $this->graph_font_size_identifiers) * 0.96);
 					$per_identifier_height = max((14 + (22 * count($this->graph_data))), $rotated_text);
