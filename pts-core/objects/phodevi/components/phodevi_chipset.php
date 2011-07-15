@@ -77,7 +77,7 @@ class phodevi_chipset extends phodevi_device_interface
 
 			// TODO: Northbridge and Southbridge Detection For Solaris
 		}
-		else if(phodevi::is_linux())
+		else if(phodevi::is_linux() || phodevi::is_hurd())
 		{
 			$info = phodevi_linux_parser::read_pci(array('RAM memory', 'Host bridge'));
 

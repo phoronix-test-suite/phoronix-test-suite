@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010, Phoronix Media
-	Copyright (C) 2010, Michael Larabel
+	Copyright (C) 2010 - 2011, Phoronix Media
+	Copyright (C) 2010 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -48,7 +48,7 @@ class pts_types
 	}
 	public static function operating_systems()
 	{
-		return array(array('Linux'), array('Solaris', 'Sun'), array('BSD', 'DragonFly'), array('MacOSX', 'Darwin'), array('Windows'));
+		return array(array('Linux'), array('Solaris', 'Sun'), array('BSD', 'DragonFly'), array('MacOSX', 'Darwin'), array('Windows'), array('Hurd', 'GNU'));
 	}
 	public static function identifiers_to_test_profile_objects($identifiers, $include_extensions = false, $remove_duplicates = true)
 	{

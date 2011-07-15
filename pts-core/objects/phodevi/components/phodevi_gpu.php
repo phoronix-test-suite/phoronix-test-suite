@@ -891,7 +891,7 @@ class phodevi_gpu extends phodevi_device_interface
 	
 		if(empty($info) || strpos($info, 'Mesa ') !== false || strpos($info, 'Gallium ') !== false || $info == 'Software Rasterizer')
 		{
-			if(phodevi::is_linux())
+			if(phodevi::is_linux() || phodevi::is_hurd())
 			{
 				$info_pci = phodevi_linux_parser::read_pci('VGA compatible controller', false);
 

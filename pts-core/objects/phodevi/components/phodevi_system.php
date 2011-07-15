@@ -192,6 +192,25 @@ class phodevi_system extends phodevi_device_interface
 				}
 			}
 		}
+		else if(phodevi::is_hurd())
+		{
+			// Very rudimentary Hurd filesystem detection support but works for at least a clean Debian GNU/Hurd EXT2 install
+			if(pts_client::executable_in_path('mount'))
+			{
+				$mount = shell_exec('mount 2>&1');
+
+				if(($start = strpos($mount, 'on / type')) != false)
+				{
+					$fs = substr($mount, $start + 10);
+					$fs = substr($fs, 0, strpos($fs, ' '));
+
+					if(substr($fs, -2) == 'fs')
+					{
+						$fs = substr($fs, 0, -2);
+					}
+				}
+			}
+		}
 		else if(phodevi::is_linux() || phodevi::is_solaris())
 		{
 			$fs = trim(shell_exec('stat ' . pts_client::test_install_root_path() . ' -L -f -c %T 2> /dev/null'));
@@ -474,6 +493,7 @@ class phodevi_system extends phodevi_device_interface
 					break;
 				case 'i86pc':
 				case 'i586':
+				case 'i686-AT386':
 					$kernel_arch = 'i686';
 					break;
 			}
@@ -509,7 +529,19 @@ class phodevi_system extends phodevi_device_interface
 	public static function sw_operating_system()
 	{
 		// Determine the operating system release
-		$vendor = phodevi::is_linux() ? phodevi_linux_parser::read_lsb_distributor_id() : false;
+		if(phodevi::is_linux())
+		{
+			$vendor = phodevi_linux_parser::read_lsb_distributor_id();
+		}
+		else if(phodevi::is_hurd())
+		{
+			$vendor = php_uname('v');
+		}
+		else
+		{
+			$vendor = null;
+		}
+
 		$version = phodevi::read_property('system', 'os-version');
 
 		if(!$vendor)

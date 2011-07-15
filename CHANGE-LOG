@@ -10,6 +10,7 @@ Phoronix Test Suite (Git)
 - pts_Graph: Introduce radar / spider overview graph
 - matisk: Commit initial module
 - documentation: Report valid module user commands to the HTML / PDF documentation
+- phodevi: Initial support for GNU Hurd operating system (tested on latest Debian GNU Hurd Wheezy snapshot)
 
 Phoronix Test Suite 3.2.1-Grimstad
 29 June 2011

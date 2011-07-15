@@ -38,6 +38,7 @@ class phodevi
 		'macosx' => false,
 		'solaris' => false,
 		'bsd' => false,
+		'hurd' => false,
 		'windows' => false
 		);
 
@@ -534,6 +535,10 @@ class phodevi
 	public static function is_macosx()
 	{
 		return self::$operating_systems['macosx'];
+	}
+	public static function is_hurd()
+	{
+		return self::$operating_systems['hurd'];
 	}
 	public static function is_windows()
 	{
