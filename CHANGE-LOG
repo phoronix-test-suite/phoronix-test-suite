@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 3.4 Milestone 1
+19 July
 
 - pts-core: Various code clean-ups
 - pts-core: Add numeric check to the results parser on bar graphs
