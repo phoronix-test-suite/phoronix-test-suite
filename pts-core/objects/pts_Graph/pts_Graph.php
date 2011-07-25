@@ -25,6 +25,10 @@
 //if(PTS_IS_CLIENT || (defined('PTS_LIB_GRAPH_CONFIG_XML') && is_file(PTS_LIB_GRAPH_CONFIG_XML)))
 pts_Graph::$graph_config = new pts_graph_config_nye_XmlReader();
 
+
+// TODO: performance optimizations...
+// OpenBenchmarking.org 1107247-LI-MESACOMMI48 is a good large data set test to render to look for speed differences
+
 abstract class pts_Graph
 {
 	// Graph config

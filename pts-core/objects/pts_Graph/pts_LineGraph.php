@@ -67,7 +67,14 @@ class pts_LineGraph extends pts_Graph
 			return;
 		}
 
-		$this->graph_image->draw_dashed_line($this->graph_left_start + $this->identifier_width, $this->graph_top_end, $this->graph_left_end, $this->graph_top_end, $this->graph_color_notches, 10, 1, $this->identifier_width - 1);
+		if($this->identifier_width > 2)
+		{
+			$this->graph_image->draw_dashed_line($this->graph_left_start + $this->identifier_width, $this->graph_top_end, $this->graph_left_end, $this->graph_top_end, $this->graph_color_notches, 10, 1, $this->identifier_width - 1);
+		}
+		else if($this->show_select_identifiers != null)
+		{
+			$this->graph_image->draw_dashed_line($this->graph_left_start + ($this->identifier_width * $this->show_select_identifiers), $this->graph_top_end, $this->graph_left_end, $this->graph_top_end, $this->graph_color_notches, 10, 1, ($this->identifier_width * $this->show_select_identifiers) - 1);
+		}
 
 		foreach(array_keys($this->graph_identifiers) as $i)
 		{
