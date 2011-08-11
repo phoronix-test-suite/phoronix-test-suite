@@ -60,7 +60,8 @@ class phodevi
 		'Disk' => 'disk',
 		'Graphics' => 'gpu',
 		'Audio' => 'audio',
-		'Monitor' => 'monitor'
+		'Monitor' => 'monitor',
+		'Network' => 'network'
 		);
 	}
 	public static function available_software_components()
