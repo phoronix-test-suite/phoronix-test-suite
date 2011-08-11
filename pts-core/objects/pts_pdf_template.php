@@ -118,6 +118,13 @@ class pts_pdf_template extends FPDF
 					$this->SetLeftMargin(10);
 					$this->Ln();
 					break;
+				case 'li':
+					$this->SetFont('Arial', null, 11);
+					$this->SetLeftMargin(30);
+					$this->SetTextColor(0, 0, 0);
+					$this->html_text_interpret('li', $dom_item);
+					$this->Ln();
+					break;
 				case 'p':
 					$this->SetFont('Arial', null, 11);
 					$this->SetLeftMargin(20);
