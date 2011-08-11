@@ -337,6 +337,22 @@ class pts_external_dependencies
 			}
 		}
 	}
+	public static function vendor_file_parents_list()
+	{
+		$vendors = array();
+		foreach(pts_file_io::glob(PTS_EXDEP_PATH . 'xml/*-packages.xml') as $package_xml)
+		{
+			$xml_parser = new nye_XmlReader($package_xml);
+			$vendor = $xml_parser->getXMLValue('PhoronixTestSuite/ExternalDependencies/Information/Name');
+
+			if($vendor != null)
+			{
+				array_push($vendors, $vendor);
+			}
+		}
+
+		return $vendors;
+	}
 	public static function vendor_alias_list($format = true)
 	{
 		$alias_list = array();

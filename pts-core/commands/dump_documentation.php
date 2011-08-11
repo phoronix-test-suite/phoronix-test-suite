@@ -132,9 +132,52 @@ class dump_documentation implements pts_option_interface
 					$body->appendChild($p);
 				}
 			}
+
+			$vars = pts_module_manager::module_call($module, 'module_environmental_variables');
+			if(is_array($vars) && count($vars) > 0)
+			{
+				$p = $dom->createElement('p', 'This module utilizes the following environmental variables: ' . implode(', ', $vars) . '.');
+				$body->appendChild($p);
+			}
 		}
 
 		$dom->saveHTMLFile(PTS_PATH . 'documentation/html_stubs/00_zmodule_options.html');
+
+
+
+		// Write the external dependencies HTML
+		$dom = new DOMDocument();
+		$html = $dom->createElement('html');
+		$dom->appendChild($html);
+		$head = $dom->createElement('head');
+		$title = $dom->createElement('title', 'External Dependencies');
+		$head->appendChild($title);
+		$html->appendChild($head);
+		$body = $dom->createElement('body');
+		$html->appendChild($body);
+
+		$p = $dom->createElement('p', 'The Phoronix Test Suite has a feature known as &quot;External Dependencies&quot; where the Phoronix Test Suite can attempt to automatically install some of the test-specific dependencies on supported distributions. If running on a distribution where there is currently no External Dependencies profile, the needed package name(s) are listed for manual installation.');
+		$body->appendChild($p);
+		$p = $dom->createElement('p', 'Below are a list of the operating systems that currently have external dependencies support within the Phoronix Test Suite for the automatic installation of needed test files.');
+		$body->appendChild($p);
+
+		$phr = $dom->createElement('hr');
+		$p->appendChild($phr);
+
+		$vendors = array_merge(array_keys(pts_external_dependencies::vendor_alias_list(false)), pts_external_dependencies::vendor_file_parents_list());
+		sort($vendors);
+
+		$ul = $dom->createElement('ul');
+		$p->appendChild($ul);
+
+		foreach($vendors as $vendor)
+		{
+			$li = $dom->createElement('li', $vendor);
+			$p->appendChild($li);
+		}
+
+
+		$dom->saveHTMLFile(PTS_PATH . 'documentation/html_stubs/02_external_dependencies.html');
 
 		// Write the virtual suites HTML
 		$dom = new DOMDocument();
