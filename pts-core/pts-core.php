@@ -22,7 +22,7 @@
 */
 
 define('PTS_VERSION', '3.4.0m1');
-define('PTS_CORE_VERSION', 3312);
+define('PTS_CORE_VERSION', 3315);
 define('PTS_CODENAME', 'LILLESAND');
 define('PTS_IS_CLIENT', (defined('PTS_MODE') && PTS_MODE == 'CLIENT'));
 
@@ -87,9 +87,8 @@ function pts_needed_extensions()
 		array(0, extension_loaded('zlib'), 'Zlib', 'The PHP Zlib extension can be used for greater file compression.'),
 		array(0, function_exists('pcntl_fork'), 'PCNTL', 'PHP PCNTL is highly recommended as it is required by some tests.'),
 		array(0, function_exists('posix_getpwuid'), 'POSIX', 'PHP POSIX support is highly recommended.'),
-		array(0, function_exists('curl_init'), 'CURL', 'PHP CURL is recommended for an improved download experience.')
-
-		// PHP FPDF could be added here too...
+		array(0, function_exists('curl_init'), 'CURL', 'PHP CURL is recommended for an enhanced download experience.'),
+		array(0, is_file('/usr/share/php/fpdf/fpdf.php'), 'PHP FPDF', 'PHP FPDF is recommended if wishing to generate PDF reports.')
 		);
 }
 

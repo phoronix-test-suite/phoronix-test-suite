@@ -473,7 +473,7 @@ class pts_client
 					// This extension is missing but optional
 					if($printed_optional_header == false)
 					{
-						echo PHP_EOL . 'The following PHP extensions are optional but recommended:' . PHP_EOL . PHP_EOL;
+						echo PHP_EOL . ($printed_required_header ? null : 'NOTICE: ') . 'The following PHP extensions are OPTIONAL but recommended:' . PHP_EOL . PHP_EOL;
 						$printed_optional_header = true;
 					}
 				}
@@ -482,10 +482,14 @@ class pts_client
 			}
 		}
 
-		if($printed_required_header)
+		if($printed_required_header || $printed_optional_header)
 		{
 			echo PHP_EOL;
-			exit;
+
+			if($printed_required_header)
+			{
+				exit;
+			}
 		}
 	}
 	private static function build_temp_cache()
