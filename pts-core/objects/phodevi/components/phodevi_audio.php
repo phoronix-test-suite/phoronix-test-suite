@@ -70,8 +70,14 @@ class phodevi_audio extends phodevi_device_interface
 				if(strpos($chip_name, 'HDMI') === false)
 				{
 					// If HDMI is in the audio string, likely the GPU-provided audio, so try to find the mainboard otherwise
+					$chip = null;
 					break;
 				}
+			}
+
+			if($audio == null)
+			{
+				$audio = phodevi_linux_parser::read_pci('Multimedia audio controller');
 			}
 		}
 

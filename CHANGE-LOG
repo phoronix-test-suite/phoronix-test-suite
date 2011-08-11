@@ -4,6 +4,7 @@ Phoronix Test Suite (Git)
 
 - pts-core: Small cleaning
 - phodevi: Small cleaning
+- phodevi: Support finding Linux PCI audio devices
 
 Phoronix Test Suite 3.4 Milestone 1
 19 July 2011
