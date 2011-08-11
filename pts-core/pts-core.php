@@ -77,9 +77,9 @@ function pts_needed_extensions()
 		// Required? - The Check If In Place - Name - Description
 
 		// Required extesnions denoted by 1 at [0]
-		array(1, extension_loaded('dom'), 'DOM', 'The PHP Document Object Model (DOM) is required.'),
-		array(1, extension_loaded('zip') || extension_loaded('zlib'), 'ZIP', 'PHP Zip support is required.'),
-		array(1, function_exists('json_decode'), 'JSON', 'PHP JSON support is required.'),
+		array(1, extension_loaded('dom'), 'DOM', 'The PHP Document Object Model (DOM) is required for XML operations.'),
+		array(1, extension_loaded('zip') || extension_loaded('zlib'), 'ZIP', 'PHP Zip support is required for file compression and decompression.'),
+		array(1, function_exists('json_decode'), 'JSON', 'PHP JSON support is required for OpenBenchmarking.org communication.'),
 
 		// Optional but recommended extensions
 		array(0, extension_loaded('openssl'), 'OpenSSL', 'PHP OpenSSL support is recommended to support HTTPS traffic.'),
@@ -87,7 +87,7 @@ function pts_needed_extensions()
 		array(0, extension_loaded('zlib'), 'Zlib', 'The PHP Zlib extension can be used for greater file compression.'),
 		array(0, function_exists('pcntl_fork'), 'PCNTL', 'PHP PCNTL is highly recommended as it is required by some tests.'),
 		array(0, function_exists('posix_getpwuid'), 'POSIX', 'PHP POSIX support is highly recommended.'),
-		array(0, function_exists('curl_init'), 'CURL', 'PHP CURL is recommended for a better download experience.')
+		array(0, function_exists('curl_init'), 'CURL', 'PHP CURL is recommended for an improved download experience.')
 
 		// PHP FPDF could be added here too...
 		);

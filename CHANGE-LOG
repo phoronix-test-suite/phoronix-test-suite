@@ -3,8 +3,8 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Dynamically build all static lists into a new PT2SO temp file
-- pts-core: Small cleaning
-- phodevi: Small cleaning
+- pts-core: Various code cleaning
+- phodevi: Various code cleaning
 - phodevi: Support finding Linux PCI audio devices
 - phodevi: Report network adapters to system hardware area
 - phodevi: Report virtualization platform to system layer field
