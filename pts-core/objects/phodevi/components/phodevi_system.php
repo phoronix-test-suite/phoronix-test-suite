@@ -241,58 +241,38 @@ class phodevi_system extends phodevi_device_interface
 						}
 					}
 					break;
-				case 'UNKNOWN (0x9123683e)':
-					// 0x9123683e is the superblock for Btrfs
-					$fs = 'Btrfs';
-					break;
-				case 'UNKNOWN (0x52345362)':
-					// 0x52345362 is the superblock for Reiser4
-					$fs = 'Reiser4';
-					break;
-				case 'UNKNOWN (0x565a4653)':
-					// 0x52345362 is the superblock for ResierFS
-					$fs = 'ReiserFS';
-					break;
-				case 'UNKNOWN (0x3434)':
-					// 0x3434 is the superblock for NILFS2
-					$fs = 'NILFS2';
-					break;
-				case 'UNKNOWN (0x24051905)':
-					// 0x24051905 is the superblock for UBIFS
-					$fs = 'UBIFS';
-					break;
-				case 'UNKNOWN (0x65735546)':
-					// 0x65735546 is the superblock for the FUSE module
-					$fs = 'FUSE';
-					break;
-				case 'UNKNOWN (0x5346414f)':
-					// 0x65735546 is the superblock for OpenAFS
-					$fs = 'OpenAFS';
-					break;
-				case 'UNKNOWN (0xff534d42)':
-					// 0x65735546 is the superblock for CIFS
-					$fs = 'CIFS';
-					break;
-				case 'UNKNOWN (0x65735546)':
-					// 0x65735546 is the superblock for SSHFS
-					$fs = 'SSHFS';
-					break;
-				case 'UNKNOWN (0x5941ff53)':
-					// 0x5941ff53 is the superblock for SSHFS
-					$fs = 'YAFFS';
-					break;
 				case 'Case-sensitive Journaled HFS+':
-				case 'UNKNOWN (0x482b)':
-					// 0x482b is the superblock for HFS+
 					$fs = 'HFS+';
 					break;
-				case 'UNKNOWN (0x2fc12fc1)':
-					// 0x2fc12fc1 is KQ Infotech ZFS
-					$fs = 'zfs';
-					break;
-				case 'UNKNOWN (0x47504653)':
-					// 0x47504653 is GPFS
-					$fs = 'GPFS';
+				default:
+					if(substr($fs, 0, 9) == 'UNKNOWN (')
+					{
+						$fs_block = substr($fs, 9, -1);
+						$known_fs_blocks = array(
+							'0x9123683e' => 'Btrfs',
+							'0x2fc12fc1' => 'zfs', // KQ Infotech ZFS
+							'0x482b' => 'HFS+',
+							'0x65735546' => 'FUSE',
+							'0x565a4653' => 'ReiserFS',
+							'0x52345362' => 'Reiser4',
+							'0x3434' => 'NILFS2',
+							'0x5346414f' => 'OpenAFS',
+							'0x47504653' => 'GPFS',
+							'0x5941ff53' => 'YAFFS',
+							'0x65735546' => 'SSHFS',
+							'0xff534d42' => 'CIFS',
+							'0x24051905' => 'UBIFS'
+							);
+
+						foreach($known_fs_blocks as $hex => $name)
+						{
+							if($fs_block == $hex)
+							{
+								$fs = $name;
+								break;
+							}
+						}
+					}
 					break;
 			}
 
@@ -301,18 +281,18 @@ class phodevi_system extends phodevi_device_interface
 				$mounts = file_get_contents('/proc/mounts');
 				$fs_r = array();
 
-				if(strpos($mounts, 'squashfs') != false)
-				{
-					array_push($fs_r, 'SquashFS');
-				}
+				$fs_checks = array(
+					'squashfs' => 'SquashFS',
+					'aufs' => 'AuFS',
+					'unionfs' => 'UnionFS'
+					);
 
-				if(strpos($mounts, 'aufs') != false)
+				foreach($fs_checks as $fs_module => $fs_name)
 				{
-					array_push($fs_r, 'AuFS');
-				}
-				else if(strpos($mounts, 'unionfs') != false)
-				{
-					array_push($fs_r, 'UnionFS');
+					if(strpos($mounts, $fs_module) != false)
+					{
+						array_push($fs_r, $fs_name);
+					}
 				}
 
 				if(count($fs_r) > 0)

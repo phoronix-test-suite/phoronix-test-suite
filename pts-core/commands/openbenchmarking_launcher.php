@@ -32,7 +32,7 @@ class openbenchmarking_launcher implements pts_option_interface
 			// OpenBenchmarking.org launcher
 			$dom = new DOMDocument();
 			$dom->loadHTMLFile($r[0]);
-			$requires_core_version = pts_client::read_openbenchmarking_dom($dom, 'requires_core_version', PTS_CORE_VERSION);
+			$requires_core_version = self::read_openbenchmarking_dom($dom, 'requires_core_version', PTS_CORE_VERSION);
 
 			if(PTS_CORE_VERSION < $requires_core_version)
 			{
@@ -40,8 +40,8 @@ class openbenchmarking_launcher implements pts_option_interface
 				return false;
 			}
 
-			$payload_type = pts_client::read_openbenchmarking_dom($dom, 'payload_type');
-			$payload = pts_client::read_openbenchmarking_dom($dom, 'payload');
+			$payload_type = self::read_openbenchmarking_dom($dom, 'payload_type');
+			$payload = self::read_openbenchmarking_dom($dom, 'payload');
 
 			switch($payload_type)
 			{
@@ -53,6 +53,21 @@ class openbenchmarking_launcher implements pts_option_interface
 
 			}
 		}
+	}
+	protected static function read_openbenchmarking_dom(&$dom, $id, $fallback = false)
+	{
+		$tag = $dom->getElementById($id);
+
+		if($tag instanceof DOMElement && $tag->tagName == 'input')
+		{
+			$value = $tag->getAttribute('value');
+		}
+		else
+		{
+			$value = $fallback;
+		}
+
+		return $value;
 	}
 }
 

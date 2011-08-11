@@ -65,7 +65,6 @@ class pts_client
 	public static function module_framework_init()
 	{
 		// Process initially called when PTS starts up
-
 		// Check for modules to auto-load from the configuration file
 		$load_modules = pts_config::read_user_config('PhoronixTestSuite/Options/Modules/LoadModules', null);
 
@@ -402,7 +401,18 @@ class pts_client
 	private static function extended_init_process()
 	{
 		// Extended Initalization Process
-		$directory_check = array(PTS_TEST_INSTALL_DEFAULT_PATH, PTS_SAVE_RESULTS_PATH, PTS_MODULE_LOCAL_PATH, PTS_MODULE_DATA_PATH, PTS_DOWNLOAD_CACHE_PATH, PTS_OPENBENCHMARKING_SCRATCH_PATH, PTS_TEST_PROFILE_PATH, PTS_TEST_SUITE_PATH, PTS_TEST_PROFILE_PATH . 'local/', PTS_TEST_SUITE_PATH . 'local/');
+		$directory_check = array(
+			PTS_TEST_INSTALL_DEFAULT_PATH,
+			PTS_SAVE_RESULTS_PATH,
+			PTS_MODULE_LOCAL_PATH,
+			PTS_MODULE_DATA_PATH,
+			PTS_DOWNLOAD_CACHE_PATH,
+			PTS_OPENBENCHMARKING_SCRATCH_PATH,
+			PTS_TEST_PROFILE_PATH,
+			PTS_TEST_SUITE_PATH,
+			PTS_TEST_PROFILE_PATH . 'local/',
+			PTS_TEST_SUITE_PATH . 'local/'
+			);
 
 		foreach($directory_check as $dir)
 		{
@@ -458,7 +468,7 @@ class pts_client
 					// This extension is missing but optional
 					if($printed_optional_header == false)
 					{
-						echo PHP_EOL . 'The following PHP extensions are optional but recommended by the Phoronix Test Suite:' . PHP_EOL . PHP_EOL;
+						echo PHP_EOL . 'The following PHP extensions are optional but recommended:' . PHP_EOL . PHP_EOL;
 						$printed_optional_header = true;
 					}
 				}
@@ -1125,21 +1135,6 @@ class pts_client
 		}
 
 		pts_module_manager::module_process('__post_option_process', $command);
-	}
-	public static function read_openbenchmarking_dom(&$dom, $id, $fallback = false)
-	{
-		$tag = $dom->getElementById($id);
-
-		if($tag instanceof DOMElement && $tag->tagName == 'input')
-		{
-			$value = $tag->getAttribute('value');
-		}
-		else
-		{
-			$value = $fallback;
-		}
-
-		return $value;
 	}
 	public static function terminal_width()
 	{
