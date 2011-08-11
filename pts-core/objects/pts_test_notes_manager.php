@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2010, Phoronix Media
-	Copyright (C) 2009 - 2010, Michael Larabel
+	Copyright (C) 2009 - 2011, Phoronix Media
+	Copyright (C) 2009 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -72,29 +72,18 @@ class pts_test_notes_manager
 			}
 		}
 
-		if(empty($check_processes))
-		{
-			$word_file = pts_file_io::file_get_contents(PTS_CORE_STATIC_PATH . 'lists/process-reporting-checks.list');
-			$processes_r = pts_strings::trim_explode("\n", $word_file);
-			$check_processes = array();
-
-			foreach($processes_r as $p)
-			{
-				$p = explode('=', $p);
-				$p_title = trim($p[0]);
-				$p_names = pts_strings::comma_explode($p[1]);
-
-				$check_processes[$p_title] = array();
-
-				foreach($p_names as $p_name)
-				{
-					array_push($check_processes[$p_title], $p_name);
-				}
-			}
-		}
-
 		if(phodevi::is_bsd() == false)
 		{
+			if(empty($check_processes))
+			{
+				$check_processes = array(
+					'Compiz' => array('compiz', 'compiz.real'),
+					'Firefox' => array('firefox', 'mozilla-firefox', 'mozilla-firefox-bin'),
+					'Thunderbird' => array('thunderbird', 'mozilla-thunderbird', 'thunderbird-bin'),
+					'BOINC' => array('boinc', 'boinc_client')
+					);
+			}
+
 			self::add_note(self::process_running_string($check_processes));
 		}
 
@@ -153,12 +142,9 @@ class pts_test_notes_manager
 		$p_string = null;
 
 		$process_arr = pts_arrays::to_array($process_arr);
-
-		foreach($process_arr as $p_name => $p_process)
+		foreach($process_arr as $p_name => $p_processes)
 		{
-			$p_process = pts_arrays::to_array($p_process);
-
-			foreach($p_process as $process)
+			foreach($p_processes as $process)
 			{
 				if(pts_client::is_process_running($process))
 				{
