@@ -125,7 +125,6 @@ class pts_test_notes_manager
 		// Power Saving Technologies?
 		self::add_note(phodevi::read_property('cpu', 'power-savings-mode'));
 		self::add_note(phodevi::read_property('motherboard', 'power-mode'));
-		self::add_note(phodevi::read_property('system', 'virtualized-mode'));
 
 		if(in_array('Graphics', $test_types) || in_array('System', $test_types))
 		{

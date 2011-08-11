@@ -120,6 +120,11 @@ class phodevi_system extends phodevi_device_interface
 		{
 			$layer = $wine;
 		}
+		else
+		{
+			// Report virtualization
+			$layer = phodevi::read_property('system', 'virtualized-mode');
+		}
 
 		return $layer;
 	}
@@ -323,18 +328,13 @@ class phodevi_system extends phodevi_device_interface
 		{
 			$virtualized = 'QEMU';
 		}
-		else if(strpos($gpu, 'VMware') !== false)
+		else if(strpos($gpu, 'VMware') !== false || (is_readable('/sys/class/dmi/id/product_name') && stripos(pts_file_io::file_get_contents('/sys/class/dmi/id/product_name'), 'VMware') !== false))
 		{
 			$virtualized = 'VMware';
 		}
 		else if(strpos($gpu, 'VirtualBox') !== false || strpos(phodevi::read_name('motherboard'), 'VirtualBox') !== false)
 		{
 			$virtualized = 'VirtualBox';
-		}
-
-		if($virtualized != null)
-		{
-			$virtualized = 'This system was using ' . $virtualized . ' virtualization';
 		}
 
 		return $virtualized;
