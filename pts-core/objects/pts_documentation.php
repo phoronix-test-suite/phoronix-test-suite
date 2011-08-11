@@ -22,6 +22,30 @@
 
 class pts_documentation
 {
+	public static function client_commands_aliases()
+	{
+		$command_aliases = array();
+		foreach(pts_file_io::glob(PTS_COMMAND_PATH . '*.php') as $option_php_file)
+		{
+			$option_php = basename($option_php_file, '.php');
+
+			include_once($option_php_file);
+			if(method_exists($option_php, 'command_aliases'))
+			{
+				$this_aliases = call_user_func(array($option_php, 'command_aliases'));
+
+				if(is_array($this_aliases))
+				{
+					foreach($this_aliases as $alias)
+					{
+						$command_aliases[$alias] = $option_php;
+					}
+				}
+			}
+		}
+
+		return $command_aliases;
+	}
 	public static function client_commands_array()
 	{
 		$options = array('Test Installation' => array(), 'Testing' => array(), 'Batch Testing' => array(), 'OpenBenchmarking.org' => array(), 'System' => array(), 'Information' => array(), 'Asset Creation' => array(), 'Result Management' => array(), 'Result Analytics' => array(), 'Other' => array());

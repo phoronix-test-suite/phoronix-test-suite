@@ -25,6 +25,10 @@ class list_available_suites implements pts_option_interface
 	const doc_section = 'Information';
 	const doc_description = "This option will list all available test suites that are available from the enabled OpenBenchmarking.org repositories.";
 
+	public static function command_aliases()
+	{
+		return array('list_suites');
+	}
 	public static function run($r)
 	{
 		$available_suites = pts_openbenchmarking_client::available_suites();

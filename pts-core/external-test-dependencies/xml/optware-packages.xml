@@ -4,6 +4,7 @@
 	<ExternalDependencies>
 		<Information>
 			<Name>Optware</Name>
+			<Aliases>Palm</Aliases>
 		</Information>
 		<Package>
 			<GenericName>gtk-development</GenericName>

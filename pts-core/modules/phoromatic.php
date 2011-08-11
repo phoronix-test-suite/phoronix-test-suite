@@ -20,11 +20,6 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-if(PTS_IS_CLIENT)
-{
-	echo PHP_EOL . PHP_EOL . 'NOTICE: A new version of Phoromatic is currently under development that is powered on top of the OpenBenchmarking.org infrastructure. Please contact Phoronix-Test-Suite.com if you are interested in testing out this brand new version with several new features.' . PHP_EOL . PHP_EOL;
-}
-
 class phoromatic extends pts_module_interface
 {
 	const module_name = 'Phoromatic Client';
@@ -104,6 +99,11 @@ class phoromatic extends pts_module_interface
 
 	public static function user_start()
 	{
+		if(PTS_IS_CLIENT)
+		{
+			echo PHP_EOL . PHP_EOL . 'NOTICE: A new version of Phoromatic is currently under development that is powered on top of the OpenBenchmarking.org infrastructure. Please contact Phoronix-Test-Suite.com if you are interested in testing out this brand new version with several new features.' . PHP_EOL . PHP_EOL;
+		}
+
 		if(pts_client::create_lock(PTS_USER_PATH . 'phoromatic_lock') == false)
 		{
 			pts_client::$display->generic_error('Phoromatic is already running.');

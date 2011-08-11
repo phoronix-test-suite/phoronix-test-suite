@@ -32,6 +32,10 @@ class run_test implements pts_option_interface
 		new pts_argument_check('VARIABLE_LENGTH', array('pts_types', 'identifier_to_object'), null)
 		);
 	}
+	public static function command_aliases()
+	{
+		return array('run');
+	}
 	public static function run($to_run)
 	{
 		pts_test_run_manager::standard_run($to_run);

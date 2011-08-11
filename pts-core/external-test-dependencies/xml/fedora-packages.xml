@@ -4,6 +4,7 @@
 	<ExternalDependencies>
 		<Information>
 			<Name>Fedora</Name>
+			<Aliases>Moblin, MeeGo, Amazon, Red Hat Enterprise, Red Hat Enterprise Server, Scientific, CentOS</Aliases>
 		</Information>
 		<Package>
 			<GenericName>gtk-development</GenericName>

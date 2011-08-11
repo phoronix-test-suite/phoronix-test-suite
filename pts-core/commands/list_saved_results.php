@@ -25,6 +25,10 @@ class list_saved_results implements pts_option_interface
 	const doc_section = 'Information';
 	const doc_description = "This option will list all of the saved test results found on the system.";
 
+	public static function command_aliases()
+	{
+		return array('list_results', 'list_test_results');
+	}
 	public static function run($r)
 	{
 		$saved_results = pts_client::saved_test_results();

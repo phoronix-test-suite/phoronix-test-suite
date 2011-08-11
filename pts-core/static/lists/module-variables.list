@@ -1,6 +1,0 @@
-MONITOR = system_monitor
-FORCE_AA = graphics_override
-FORCE_AF = graphics_override
-HALT_SCREENSAVER = toggle_screensaver
-SCREENSHOT_INTERVAL = timed_screenshot
-AUTO_UPLOAD_RESULTS_TO_PHOROMATIC = phoromatic

@@ -48,6 +48,11 @@ class pts_client
 		self::basic_init_process(); // Initalize common / needed PTS start-up work
 		self::core_storage_init_process();
 
+		if(!is_file(PTS_TEMP_STORAGE))
+		{
+			self::build_temp_cache();
+		}
+
 		pts_config::init_files();
 		define('PTS_TEST_INSTALL_DEFAULT_PATH', pts_client::parse_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Installation/EnvironmentDirectory', '~/.phoronix-test-suite/installed-tests/')));
 		define('PTS_SAVE_RESULTS_PATH', pts_client::parse_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Testing/ResultsDirectory', '~/.phoronix-test-suite/test-results/')));
@@ -483,6 +488,21 @@ class pts_client
 			exit;
 		}
 	}
+	private static function build_temp_cache()
+	{
+		$pso = pts_storage_object::recover_from_file(PTS_TEMP_STORAGE);
+
+		if($pso == false)
+		{
+			$pso = new pts_storage_object();
+		}
+
+		$pso->add_object('environmental_variables_for_modules', pts_module_manager::modules_environmental_variables());
+		$pso->add_object('vendor_alias_list', pts_external_dependencies::vendor_alias_list());
+		$pso->add_object('command_alias_list', pts_documentation::client_commands_aliases());
+
+		$pso->save_to_file(PTS_TEMP_STORAGE);
+	}
 	private static function core_storage_init_process()
 	{
 		$pso = pts_storage_object::recover_from_file(PTS_CORE_STORAGE);
@@ -543,6 +563,8 @@ class pts_client
 			{
 				pts_openbenchmarking_client::update_gsid();
 			}
+
+			pts_client::build_temp_cache();
 		}
 		$pso->add_object('last_core_version', PTS_CORE_VERSION); // PTS version last run
 

@@ -86,18 +86,16 @@ if(is_file(PTS_PATH . 'pts-core/commands/' . $sent_command . '.php') == false)
 	}
 	else
 	{
-		$alias_file = pts_file_io::file_get_contents(PTS_CORE_STATIC_PATH . 'lists/option-command-aliases.list');
-
-		foreach(pts_strings::trim_explode("\n", $alias_file) as $alias_line)
+		$aliases = pts_storage_object::read_from_file(PTS_TEMP_STORAGE, 'command_alias_list');
+		if($aliases == null)
 		{
-			list($link_cmd, $real_cmd) = pts_strings::trim_explode('=', $alias_line);
+			$aliases = pts_documentation::client_commands_aliases();
+		}
 
-			if($link_cmd == $sent_command)
-			{
-				$sent_command = $real_cmd;
-				$replaced = true;
-				break;
-			}
+		if(isset($aliases[$sent_command]))
+		{
+			$sent_command = $aliases[$sent_command];
+			$replaced = true;
 		}
 	}
 

@@ -36,6 +36,32 @@ class pts_module_manager
 		// Load the actual file needed that contains the module
 		return (is_file(PTS_MODULE_PATH . $module . ".php") && include_once(PTS_MODULE_PATH . $module . ".php")) || (is_file(PTS_MODULE_LOCAL_PATH . $module . ".php") && include_once(PTS_MODULE_LOCAL_PATH . $module . ".php"));
 	}
+	public static function modules_environmental_variables()
+	{
+		$module_env_vars = array();
+		foreach(pts_module_manager::available_modules() as $module)
+		{
+			pts_module_manager::load_module($module);
+			$vars = pts_module_manager::module_call($module, 'module_environmental_variables');
+
+			if(is_array($vars))
+			{
+				foreach($vars as $var)
+				{
+					if(!isset($module_env_vars[$var]))
+					{
+						$module_env_vars[$var] = array($module);
+					}
+					else
+					{
+						array_push($module_env_vars[$var], $module);
+					}
+				}
+			}
+		}
+
+		return $module_env_vars;
+	}
 	public static function module_call($module, $process, &$object_pass = null)
 	{
 		if(!class_exists($module))
@@ -232,17 +258,23 @@ class pts_module_manager
 	public static function detect_modules_to_load()
 	{
 		// Auto detect modules to load
-		foreach(explode("\n", pts_file_io::file_get_contents(PTS_CORE_STATIC_PATH . "lists/module-variables.list")) as $module_var)
+		$env_vars = pts_storage_object::read_from_file(PTS_TEMP_STORAGE, 'environmental_variables_for_modules');
+
+		if($env_vars == false)
 		{
-			$module_var = pts_strings::trim_explode("=", $module_var);
+			$env_vars = pts_module_manager::modules_environmental_variables();
+		}
 
-			if(count($module_var) == 2)
+		foreach($env_vars as $env_var => $modules)
+		{
+			if(($e = pts_client::read_env($env_var)) != false && !empty($e))
 			{
-				list($env_var, $module) = $module_var;
-
-				if(!pts_module_manager::is_module_attached($module) && ($e = pts_client::read_env($env_var)) != false && !empty($e))
+				foreach($modules as $module)
 				{
-					pts_module_manager::attach_module($module);
+					if(!pts_module_manager::is_module_attached($module))
+					{
+						pts_module_manager::attach_module($module);
+					}
 				}
 			}
 		}

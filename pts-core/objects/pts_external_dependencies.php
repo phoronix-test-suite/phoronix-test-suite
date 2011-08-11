@@ -337,6 +337,38 @@ class pts_external_dependencies
 			}
 		}
 	}
+	public static function vendor_alias_list($format = true)
+	{
+		$alias_list = array();
+
+		foreach(pts_file_io::glob(PTS_EXDEP_PATH . 'xml/*-packages.xml') as $package_xml)
+		{
+			$xml_parser = new nye_XmlReader($package_xml);
+			$aliases = $xml_parser->getXMLValue('PhoronixTestSuite/ExternalDependencies/Information/Aliases');
+
+			if($aliases != null)
+			{
+				$aliases = pts_strings::trim_explode(',', $aliases);
+				$parent = substr(basename($package_xml, '.xml'), 0, -9);
+
+				foreach($aliases as $alias)
+				{
+
+					if($format == true)
+					{
+						$alias = strtolower(str_replace(' ', null, $alias));
+					}
+
+					if($alias != null)
+					{
+						$alias_list[$alias] = $parent;
+					}
+				}
+			}
+		}
+
+		return $alias_list;
+	}
 	private static function vendor_identifier($type)
 	{
 		$os_vendor = phodevi::read_property('system', 'vendor-identifier');
@@ -355,22 +387,15 @@ class pts_external_dependencies
 
 		if($file_check_success == false)
 		{
-			$os_vendor = false;
-			$vendors_alias_file = pts_file_io::file_get_contents(PTS_CORE_STATIC_PATH . 'lists/software-vendor-aliases.list');
-			$vendors_r = explode("\n", $vendors_alias_file);
-
-			foreach($vendors_r as &$vendor)
+			$vendor_aliases = pts_storage_object::read_from_file(PTS_TEMP_STORAGE, 'vendor_alias_list');
+			if($vendor_aliases == null)
 			{
-				$vendor_r = pts_strings::trim_explode('=', $vendor);
+				$vendor_aliases = pts_external_dependencies::vendor_alias_list();
+			}
 
-				if(count($vendor_r) == 2)
-				{
-					if($os_vendor == $vendor_r[0])
-					{
-						$os_vendor = $vendor_r[1];
-						break;
-					}
-				}
+			if(isset($vendor_aliases[$os_vendor]))
+			{
+				$os_vendor = $vendor_aliases[$os_vendor];
 			}
 
 			if($os_vendor == false && is_file('/etc/debian_version'))

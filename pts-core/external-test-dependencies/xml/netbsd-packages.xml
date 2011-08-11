@@ -4,6 +4,7 @@
 	<ExternalDependencies>
 		<Information>
 			<Name>NetBSD</Name>
+			<Aliases>Dragonfly</Aliases>
 		</Information>
 		<Package>
 			<GenericName>32bit-compatibility</GenericName>

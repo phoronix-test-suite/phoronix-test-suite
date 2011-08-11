@@ -26,6 +26,10 @@ class pts_version implements pts_option_interface
 	const doc_use_alias = 'version';
 	const doc_description = "This option will display the Phoronix Test Suite client version.";
 
+	public static function command_aliases()
+	{
+		return array('version');
+	}
 	public static function run($r)
 	{
 		echo "\n" . pts_title(true) . "\n\n";

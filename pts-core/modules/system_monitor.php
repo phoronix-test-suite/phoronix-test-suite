@@ -36,6 +36,10 @@ class system_monitor extends pts_module_interface
 	static $individual_test_run_offsets = null;
 	static $individual_monitoring = null;
 
+	public static function module_environmental_variables()
+	{
+		return array('MONITOR');
+	}
 	public static function module_info()
 	{
 		$info = null;

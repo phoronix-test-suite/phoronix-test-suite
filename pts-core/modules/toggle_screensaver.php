@@ -36,6 +36,10 @@ class toggle_screensaver extends pts_module_interface
 	static $gnome_gconftool = false;
 	static $sleep_display_ac = false;
 
+	public static function module_environmental_variables()
+	{
+		return array('HALT_SCREENSAVER');
+	}
 	public static function __startup()
 	{
 		$halt_screensaver = pts_module::read_variable('HALT_SCREENSAVER');

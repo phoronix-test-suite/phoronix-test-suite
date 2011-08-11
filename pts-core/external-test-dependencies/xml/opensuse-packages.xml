@@ -4,6 +4,7 @@
 	<ExternalDependencies>
 		<Information>
 			<Name>OpenSuSE</Name>
+			<Aliases>SUSE Linux</Aliases>
 		</Information>
 		<Package>
 			<GenericName>gtk-development</GenericName>

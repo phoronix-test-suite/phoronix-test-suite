@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008, Phoronix Media
-	Copyright (C) 2008, Michael Larabel
+	Copyright (C) 2008 - 2011, Phoronix Media
+	Copyright (C) 2008 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -24,6 +24,8 @@ interface pts_option_interface
 {
 	// If a class implementing this interface has a public static function argument_checks()
 	// that returns an array of pts_argument_check options, pts-core will automatically perform the argument checks prior to running the function
+
+	// public static function command_aliases() is optional
 
 	public static function run($passed_arguments_array);
 }

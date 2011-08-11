@@ -31,6 +31,10 @@ class upload_result implements pts_option_interface
 		new pts_argument_check(0, array('pts_types', 'is_result_file'), null)
 		);
 	}
+	public static function command_aliases()
+	{
+		return array('upload', 'upload_results', 'upload_result_file');
+	}
 	public static function run($r)
 	{
 		$result_file = pts_types::identifier_to_object($r[0]);

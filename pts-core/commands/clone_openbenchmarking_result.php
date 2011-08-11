@@ -26,6 +26,10 @@ class clone_openbenchmarking_result implements pts_option_interface
 	const doc_use_alias = 'clone-result';
 	const doc_description = "This option will download a local copy of a file that was saved to OpenBenchmarking.org, as long as a valid public ID is supplied. More than one ID can be specified and the results will then be merged.";
 
+	public static function command_aliases()
+	{
+		return array('clone', 'clone_result');
+	}
 	public static function argument_checks()
 	{
 		return array(

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2010, Phoronix Media
-	Copyright (C) 2008 - 2010, Michael Larabel
+	Copyright (C) 2008 - 2011, Phoronix Media
+	Copyright (C) 2008 - 2011, Michael Larabel
 	graphics_override.php: Graphics AA/AF image quality setting override module
 
 	This program is free software; you can redistribute it and/or modify
@@ -38,6 +38,10 @@ class graphics_override extends pts_module_interface
 	static $supported_aa_levels = array(0, 2, 4, 8, 16);
 	static $supported_af_levels = array(0, 2, 4, 8, 16);
 
+	public static function module_environmental_variables()
+	{
+		return array('FORCE_AA', 'FORCE_AF');
+	}
 	public static function set_nvidia_extension($attribute, $value)
 	{
 		// Sets an object in NVIDIA's NV Extension

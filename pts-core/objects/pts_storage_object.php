@@ -35,7 +35,7 @@ class pts_storage_object
 		$this->creation_time = time();
 		$this->span_reboots = $span_reboots;
 		$this->span_versions = $span_versions;
-		$this->pts_version = PTS_VERSION;
+		$this->pts_version = PTS_CORE_VERSION;
 		$this->object_cache = array();
 	}
 	public function add_object($identifier, $object)
@@ -106,7 +106,7 @@ class pts_storage_object
 
 			if($restore instanceof pts_storage_object)
 			{
-				if(($restore->get_span_versions() || $restore->get_pts_version() == PTS_VERSION) && md5(serialize($restore->get_objects())) == $restore->get_object_checksum())
+				if(($restore->get_span_versions() || $restore->get_pts_version() == PTS_CORE_VERSION) && md5(serialize($restore->get_objects())) == $restore->get_object_checksum())
 				{
 					if($restore->get_span_reboots() == false)
 					{

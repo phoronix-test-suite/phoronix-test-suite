@@ -25,6 +25,10 @@ class openbenchmarking_login implements pts_option_interface
 	const doc_section = 'OpenBenchmarking.org';
 	const doc_description = 'This option is used for controlling your Phoronix Test Suite client options for OpenBechmarking.org and syncing the client to your account.';
 
+	public static function command_aliases()
+	{
+		return array('openbenchmarking_setup');
+	}
 	public static function run($r)
 	{
 		echo "\nIf you have not already registered for your free OpenBenchmarking.org account, you can do so at http://openbenchmarking.org/\n\nOnce you have registered your account and clicked the link within the verification email, enter your log-in information below.\n\n";

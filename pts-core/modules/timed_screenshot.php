@@ -31,6 +31,10 @@ class timed_screenshot extends pts_module_interface
 	static $screenshot_count = 0;
 	static $screenshot_interval = 15;
 
+	public static function module_environmental_variables()
+	{
+		return array('SCREENSHOT_INTERVAL');
+	}
 	public static function __startup()
 	{
 		pts_module::remove_file("is_running");

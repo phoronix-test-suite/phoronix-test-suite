@@ -52,6 +52,7 @@ function pts_define_directories()
 	{
 		define('PTS_USER_PATH', pts_client::user_home_directory() . '.phoronix-test-suite/');
 		define('PTS_CORE_STORAGE', PTS_USER_PATH . 'core.pt2so');
+		define('PTS_TEMP_STORAGE', PTS_USER_PATH . 'temp.pt2so');
 	}
 
 	// Misc Locations
