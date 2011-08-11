@@ -168,15 +168,24 @@ class phodevi_parser
 	}
 	public static function hardware_values_to_remove()
 	{
-		static $remove_words = null;
-
-		if($remove_words == null && is_file(PTS_CORE_STATIC_PATH . 'lists/hal-values-remove.list'))
-		{
-			$word_file = pts_file_io::file_get_contents(PTS_CORE_STATIC_PATH . 'lists/hal-values-remove.list');
-			$remove_words = pts_strings::trim_explode("\n", $word_file);
-		}
-
-		return $remove_words;
+		return array(
+		'empty',
+		'null',
+		'unknown',
+		'unknow',
+		'system manufacturer',
+		'system version',
+		'system name',
+		'system product name',
+		'to be filled by o.e.m.',
+		'not applicable',
+		'not specified',
+		'not available',
+		'oem',
+		'00',
+		'none',
+		'1234567890'
+		);
 	}
 	public static function software_glxinfo_version()
 	{

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2010, Phoronix Media
-	Copyright (C) 2009 - 2010, Michael Larabel
+	Copyright (C) 2009 - 2011, Phoronix Media
+	Copyright (C) 2009 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -41,8 +41,8 @@ class pts_validation
 				case 1839: // Not in pattern
 				case 1871: // Missing / invalid element
 				case 1833: // Below the minInclusive value
-					echo "\n" . $error->message;
-					echo 'Line ' . $error->line . ': ' . $error->file . "\n";
+					echo PHP_EOL . $error->message;
+					echo 'Line ' . $error->line . ': ' . $error->file . PHP_EOL;
 					$error_queue[$error->line] = true;
 					unset($errors[$i]);
 					break;
@@ -90,11 +90,11 @@ class pts_validation
 		{
 			list($target, $description) = $error;
 
-			echo "\n" . $type . ': ' . $description . "\n";
+			echo PHP_EOL . $type . ': ' . $description . PHP_EOL;
 
 			if(!empty($target))
 			{
-				echo 'TARGET: ' . $target . "\n";
+				echo 'TARGET: ' . $target . PHP_EOL;
 			}
 		}
 	}

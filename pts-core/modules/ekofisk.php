@@ -38,11 +38,6 @@ class ekofisk extends pts_module_interface
 		return array(
 			'start' => 'user_start',
 			'user_system_return' => 'user_system_return',
-			'upload_results' => 'upload_unscheduled_results',
-			'clone_results' => 'clone_results',
-			'system_schedule' => 'system_schedule',
-			'system_schedule_today' => 'system_schedule_today',
-			'send_message' => 'report_message_to_server'
 			);
 	}
 
@@ -238,95 +233,6 @@ class ekofisk extends pts_module_interface
 		}
 
 		phoromatic::upload_unscheduled_test_results($to_upload[0]);
-	}
-	public static function system_schedule()
-	{
-		if(!phoromatic::phoromatic_setup_module())
-		{
-			return false;
-		}
-
-		$server_response = phoromatic::upload_to_remote_server(array(
-			'r' => 'system_schedule'
-			));
-
-		$schedule_xml = new nye_XmlReader($server_response);
-		$schedule_titles = $schedule_xml->getXmlArrayValues(M_PHOROMATIC_SCHEDULE_TEST_TITLE);
-		$schedule_description = $schedule_xml->getXmlArrayValues(M_PHOROMATIC_SCHEDULE_TEST_DESCRIPTION);
-		$schedule_active_on = $schedule_xml->getXmlArrayValues(M_PHOROMATIC_SCHEDULE_TEST_ACTIVE_ON);
-		$schedule_start_time = $schedule_xml->getXmlArrayValues(M_PHOROMATIC_SCHEDULE_TEST_START);
-
-		if(count($schedule_titles) == 0)
-		{
-			echo PHP_EOL . 'No test schedules for this system were found on the Phoromatic Server.' . PHP_EOL;
-		}
-		else
-		{
-			for($i = 0; $i < count($schedule_titles); $i++)
-			{
-				echo self::phoromatic_schedule_entry_string($schedule_titles[$i], $schedule_description[$i], $schedule_start_time[$i], $schedule_active_on[$i]);
-			}
-		}
-
-		echo PHP_EOL;
-	}
-	public static function system_schedule_today()
-	{
-		if(!phoromatic::phoromatic_setup_module())
-		{
-			return false;
-		}
-
-		$server_response = phoromatic::upload_to_remote_server(array(
-			'r' => 'system_schedule'
-			));
-
-		$schedule_xml = new nye_XmlReader($server_response);
-		$schedule_titles = $schedule_xml->getXmlArrayValues(M_PHOROMATIC_SCHEDULE_TEST_TITLE);
-		$schedule_description = $schedule_xml->getXmlArrayValues(M_PHOROMATIC_SCHEDULE_TEST_DESCRIPTION);
-		$schedule_active_on = $schedule_xml->getXmlArrayValues(M_PHOROMATIC_SCHEDULE_TEST_ACTIVE_ON);
-		$schedule_start_time = $schedule_xml->getXmlArrayValues(M_PHOROMATIC_SCHEDULE_TEST_START);
-
-		if(count($schedule_titles) == 0)
-		{
-			echo PHP_EOL . 'No test schedules for this system were found on the Phoromatic Server.' . PHP_EOL;
-		}
-		else
-		{
-			for($i = 0; $i < count($schedule_titles); $i++)
-			{
-				if($schedule_active_on[$i][(date('w'))] != 1)
-				{
-					continue;
-				}
-
-				echo self::phoromatic_schedule_entry_string($schedule_titles[$i], $schedule_description[$i], $schedule_start_time[$i], $schedule_active_on[$i]);
-			}
-		}
-
-		echo PHP_EOL;
-	}
-	public static function send_message_to_server($msg)
-	{
-		if(!phoromatic::phoromatic_setup_module())
-		{
-			return false;
-		}
-
-		if(empty($msg))
-		{
-			echo PHP_EOL . 'Pass the message as the first argument.' . PHP_EOL;
-			return false;
-		}
-
-		if(self::report_warning_to_phoromatic('MESSAGE: ' . implode(' ', $msg)))
-		{
-			echo PHP_EOL . 'Message Sent To Phoromatic Server.' . PHP_EOL;
-		}
-		else
-		{
-			echo PHP_EOL . 'Message Failed To Send.' . PHP_EOL;
-		}
 	}
 
 	//
