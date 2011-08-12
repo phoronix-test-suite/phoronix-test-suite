@@ -36,7 +36,7 @@ class phodevi_network extends phodevi_device_interface
 	}
 	public static function network_device_string()
 	{
-		$network = null;
+		$network = array();
 
 		if(phodevi::is_macosx())
 		{
@@ -52,10 +52,18 @@ class phodevi_network extends phodevi_device_interface
 		}
 		else if(phodevi::is_linux())
 		{
-			$network = phodevi_linux_parser::read_pci('Ethernet controller');
+			foreach(array('Ethernet controller', 'Network controller') as $controller)
+			{
+				$pci = phodevi_linux_parser::read_pci($controller);
+
+				if(!empty($pci))
+				{
+					array_push($network, $pci);
+				}
+			}
 		}
 
-		return $network;
+		return implode(' + ', $network);
 	}
 }
 

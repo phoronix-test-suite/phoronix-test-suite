@@ -22,7 +22,7 @@
 */
 
 define('PTS_VERSION', '3.4.0m1');
-define('PTS_CORE_VERSION', 3315);
+define('PTS_CORE_VERSION', 3316);
 define('PTS_CODENAME', 'LILLESAND');
 define('PTS_IS_CLIENT', (defined('PTS_MODE') && PTS_MODE == 'CLIENT'));
 
