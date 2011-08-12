@@ -48,10 +48,6 @@ class pts_test_run_manager
 	private $dynamic_run_count_std_deviation_threshold;
 	private $dynamic_run_count_export_script;
 
-	// These variables could potentially be cleaned up or eliminated
-	private $results_directory;
-	private $wrote_system_xml;
-
 	private static $test_run_process_active = false;
 
 	public function __construct($test_flags = 0)
@@ -682,17 +678,11 @@ class pts_test_run_manager
 		if($this->do_save_results())
 		{
 			$this->result_file_setup();
-			$this->results_directory = pts_client::setup_test_result_directory($this->get_file_name()) . '/';
 
 			if((pts_c::$test_flags ^ pts_c::is_recovering) && (!pts_result_file::is_test_result_file($this->get_file_name()) || $this->result_already_contains_identifier() == false))
 			{
 				$this->result_file_writer->add_result_file_meta_data($this);
 				$this->result_file_writer->add_current_system_information();
-				$this->wrote_system_xml = true;
-			}
-			else
-			{
-				$this->wrote_system_xml = false;
 			}
 
 			$pso = new pts_storage_object(true, false);
@@ -701,7 +691,7 @@ class pts_test_run_manager
 			$pso->add_object('system_hardware', phodevi::system_hardware(false));
 			$pso->add_object('system_software', phodevi::system_software(false));
 
-			$pso->save_to_file($this->results_directory . 'objects.pt2so');
+			$pso->save_to_file(pts_client::setup_test_result_directory($this->get_file_name()) . '/objects.pt2so');
 			unset($pso);
 		}
 	}
@@ -715,10 +705,10 @@ class pts_test_run_manager
 				return false;
 			}
 
-			pts_file_io::unlink($this->results_directory . 'objects.pt2so');
+			pts_file_io::unlink(pts_client::setup_test_result_directory($this->get_file_name()) . '/objects.pt2so');
 			pts_file_io::delete(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . '/test-logs/active/', null, true);
 
-			if($this->wrote_system_xml)
+			if((pts_c::$test_flags ^ pts_c::is_recovering) && (!pts_result_file::is_test_result_file($this->get_file_name()) || $this->result_already_contains_identifier() == false))
 			{
 				$this->result_file_writer->add_test_notes(pts_test_notes_manager::generate_test_notes($this->tests_to_run));
 			}
