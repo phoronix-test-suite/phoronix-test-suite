@@ -52,7 +52,7 @@ class phodevi_audio extends phodevi_device_interface
 		}
 		else if(phodevi::is_linux())
 		{
-			foreach(pts_file_io::glob('/sys/class/sound/card*/hwC0D0/vendor_name') as $vendor_name)
+			foreach(pts_file_io::glob('/sys/class/sound/card*/hwC0D*/vendor_name') as $vendor_name)
 			{
 				$card_dir = dirname($vendor_name) . '/';
 
@@ -78,6 +78,11 @@ class phodevi_audio extends phodevi_device_interface
 			if($audio == null)
 			{
 				$audio = phodevi_linux_parser::read_pci('Multimedia audio controller');
+			}
+
+			if($audio == null)
+			{
+				$audio = phodevi_linux_parser::read_pci('Audio device');
 			}
 		}
 
