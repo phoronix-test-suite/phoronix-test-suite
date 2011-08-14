@@ -280,6 +280,7 @@ class pts_strings
 			'NVIDIA' => 'nVidia',
 			'HDD' => 'HARDDISK',
 			'Intel' => 'Intel64',
+			'HD' => 'High Definition',
 			'IGP' => array('Integrated Graphics Controller', 'Express Graphics Controller', 'Integrated Graphics Device', 'Chipset Integrated')
 			);
 
