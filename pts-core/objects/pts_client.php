@@ -1462,13 +1462,7 @@ class pts_client
 				}
 				else
 				{
-					$possible_browsers = array('epiphany', 'firefox', 'mozilla', 'x-www-browser', 'open');
-
-					if(pts_client::executable_in_path('kfmclient') == false)
-					{
-						// Konqueror is bad with XSL, so if it looks like we are using KDE, don't use XDG
-						array_unshift($possible_browsers, 'xdg-open');
-					}
+					$possible_browsers = array('epiphany', 'firefox', 'mozilla', 'x-www-browser', 'open', 'xdg-open', 'konqueror');
 
 					foreach($possible_browsers as &$b)
 					{

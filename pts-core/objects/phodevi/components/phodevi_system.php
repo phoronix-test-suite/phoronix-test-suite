@@ -249,11 +249,17 @@ class phodevi_system extends phodevi_device_interface
 				case 'Case-sensitive Journaled HFS+':
 					$fs = 'HFS+';
 					break;
+				case 'MS-DOS FAT32':
+					$fs = 'FAT32';
+					break;
+				case 'UFSD_NTFS_COMPR':
+					$fs = 'NTFS';
+					break;
 				default:
 					if(substr($fs, 0, 9) == 'UNKNOWN (')
 					{
-						$fs_block = substr($fs, 9, -1);
-						$known_fs_blocks = array(
+						$magic_block = substr($fs, 9, -1);
+						$known_magic_blocks = array(
 							'0x9123683e' => 'Btrfs',
 							'0x2fc12fc1' => 'zfs', // KQ Infotech ZFS
 							'0x482b' => 'HFS+',
@@ -266,12 +272,17 @@ class phodevi_system extends phodevi_device_interface
 							'0x5941ff53' => 'YAFFS',
 							'0x65735546' => 'SSHFS',
 							'0xff534d42' => 'CIFS',
-							'0x24051905' => 'UBIFS'
+							'0x24051905' => 'UBIFS',
+							'0x1021994' => 'TMPFS',
+							'0x73717368' => 'SquashFS',
+							'0xc97e8168' => 'LogFS',
+							'0x65735546' => 'SSHFS'.
+							'0x5346544E' => 'NTFS'
 							);
 
-						foreach($known_fs_blocks as $hex => $name)
+						foreach($known_magic_blocks as $hex => $name)
 						{
-							if($fs_block == $hex)
+							if($magic_block == $hex)
 							{
 								$fs = $name;
 								break;

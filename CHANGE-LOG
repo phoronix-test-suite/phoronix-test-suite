@@ -8,6 +8,7 @@ Phoronix Test Suite (Git)
 - phodevi: Support finding Linux PCI audio devices
 - phodevi: Report network adapters to system hardware area
 - phodevi: Report virtualization platform to system layer field
+- phodevi: Improved file-system detection for niche file-systems
 - documentation: Take greater advantage of the information that can now be automatically polled from pts-core
 
 Phoronix Test Suite 3.4 Milestone 1

@@ -113,6 +113,7 @@ class pts_external_dependencies
 				{
 					echo 'The above dependencies should be installed before proceeding. Press any key when you\'re ready to continue.';
 					pts_user_io::read_user_input();
+					echo PHP_EOL;
 				}
 			}
 		}
