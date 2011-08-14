@@ -44,7 +44,15 @@ class phodevi_audio extends phodevi_device_interface
 		}
 		else if(phodevi::is_bsd())
 		{
-			// TODO: implement
+			foreach(array('dev.hdac.0.%desc') as $dev)
+			{
+				$dev = phodevi_bsd_parser::read_sysctl($dev);
+
+				if(!empty($dev))
+				{
+					$audio = $dev;
+				}
+			}
 		}
 		else if(phodevi::is_windows())
 		{
