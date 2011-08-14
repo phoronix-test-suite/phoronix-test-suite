@@ -276,7 +276,7 @@ class phodevi_system extends phodevi_device_interface
 							'0x1021994' => 'TMPFS',
 							'0x73717368' => 'SquashFS',
 							'0xc97e8168' => 'LogFS',
-							'0x65735546' => 'SSHFS'.
+							'0x65735546' => 'SSHFS',
 							'0x5346544E' => 'NTFS'
 							);
 
