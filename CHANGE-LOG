@@ -1,6 +1,6 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite 3.2 Milestone 2
+Phoronix Test Suite 3.4 Milestone 2
 15 August 2011
 
 - pts-core: Result parser fix that caused the parser to properly detect the results in some scenarios
