@@ -540,6 +540,7 @@ class pts_test_result_parser
 					}
 					else if($search_key != null)
 					{
+						$search_key = trim($search_key);
 						pts_client::test_profile_debug_message('Result Parsing Search Key: ' . $search_key);
 						$result_line = substr($result_output, 0, strpos($result_output, "\n", strrpos($result_output, $search_key)));
 						$start_of_line = strrpos($result_line, "\n");

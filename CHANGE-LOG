@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+- pts-core: Result parser fix that caused the parser to properly detect the results in some scenarios
 - pts-core: Dynamically build all static lists into a new PT2SO temp file
 - pts-core: Various code cleaning
 - phodevi: Various code cleaning
