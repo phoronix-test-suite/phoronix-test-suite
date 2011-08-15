@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 3.2 Milestone 2
+15 August 2011
 
 - pts-core: Result parser fix that caused the parser to properly detect the results in some scenarios
 - pts-core: Dynamically build all static lists into a new PT2SO temp file
