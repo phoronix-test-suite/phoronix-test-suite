@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2010, Phoronix Media
-	Copyright (C) 2009 - 2010, Michael Larabel
+	Copyright (C) 2009 - 2011, Phoronix Media
+	Copyright (C) 2009 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -30,48 +30,7 @@ class validate_test_suite implements pts_option_interface
 		if(($test_suite = pts_types::identifier_to_object($r[0])) != false)
 		{
 			pts_client::$display->generic_heading($r[0]);
-			if($test_suite->xml_parser->getFileLocation() == null)
-			{
-				echo PHP_EOL . 'ERROR: The file location of the XML test suite source could not be determined.' . PHP_EOL;
-				return false;
-			}
-
-
-			// Validate the XML against the XSD Schemas
-			libxml_clear_errors();
-
-			// First rewrite the main XML file to ensure it is properly formatted, elements are ordered according to the schema, etc...
-			$valid = $test_suite->xml_parser->validate();
-
-			if($valid == false)
-			{
-				echo PHP_EOL . 'Errors occurred parsing the main XML.' . PHP_EOL;
-				pts_validation::process_libxml_errors();
-				return false;
-			}
-			else
-			{
-				echo PHP_EOL . 'Test Suite XML Is Valid.' . PHP_EOL;
-			}
-
-			$suite_identifier = $r[0];
-
-			$zip_file = PTS_OPENBENCHMARKING_SCRATCH_PATH . $suite_identifier . '-' . $test_suite->get_version() . '.zip';
-			$zip_created = pts_compression::zip_archive_create($zip_file, $test_suite->xml_parser->getFileLocation());
-
-			if($zip_created == false)
-			{
-				echo PHP_EOL . 'Failed to create zip file.' . PHP_EOL;
-				return false;
-			}
-
-			$zip = new ZipArchive();
-			$zip->open($zip_file);
-			$zip->renameName(basename($test_suite->xml_parser->getFileLocation()), 'suite-definition.xml');
-			$zip->close();
-
-			// TODO: chmod +x the .sh files, appropriate permissions elsewhere
-			unlink($zip_file);
+			pts_validation::validate_test_suite($test_suite);
 		}
 	}
 }

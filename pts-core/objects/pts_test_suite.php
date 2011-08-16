@@ -43,13 +43,13 @@ class pts_test_suite extends pts_test_suite_parser
 
 		return false;
 	}
-	public function is_supported()
+	public function is_supported($report_warnings = false)
 	{
 		$supported_size = $original_size = count($this->get_contained_test_profiles());
 
 		foreach(pts_types::identifiers_to_test_profile_objects($this->identifier, false, true) as $test_profile)
 		{
-			if($test_profile->is_supported() == false)
+			if($test_profile->is_supported($report_warnings) == false)
 			{
 				$supported_size--;
 			}

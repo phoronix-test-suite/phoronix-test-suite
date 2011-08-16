@@ -98,6 +98,160 @@ class pts_validation
 			}
 		}
 	}
+	public static function validate_test_suite(&$test_suite)
+	{
+		if($test_suite->xml_parser->getFileLocation() == null)
+		{
+			echo PHP_EOL . 'ERROR: The file location of the XML test suite source could not be determined.' . PHP_EOL;
+			return false;
+		}
+
+		// Validate the XML against the XSD Schemas
+		libxml_clear_errors();
+
+		// First rewrite the main XML file to ensure it is properly formatted, elements are ordered according to the schema, etc...
+		$valid = $test_suite->xml_parser->validate();
+
+		if($valid == false)
+		{
+			echo PHP_EOL . 'Errors occurred parsing the main XML.' . PHP_EOL;
+			pts_validation::process_libxml_errors();
+			return false;
+		}
+		else
+		{
+			echo PHP_EOL . 'Test Suite XML Is Valid.' . PHP_EOL;
+		}
+
+		return true;
+	}
+	public static function validate_test_profile(&$test_profile)
+	{
+
+		if($test_profile->xml_parser->getFileLocation() == null)
+		{
+			echo PHP_EOL . 'ERROR: The file location of the XML test profile source could not be determined.' . PHP_EOL;
+			return false;
+		}
+
+		// Validate the XML against the XSD Schemas
+		libxml_clear_errors();
+
+		// First rewrite the main XML file to ensure it is properly formatted, elements are ordered according to the schema, etc...
+		$test_profile_writer = new pts_test_profile_writer();
+		$test_profile_writer->rebuild_test_profile($test_profile);
+		$test_profile_writer->save_xml($test_profile->xml_parser->getFileLocation());
+
+		// Now re-create the pts_test_profile object around the rewritten XML
+		$test_profile = new pts_test_profile($test_profile->get_identifier());
+		$valid = $test_profile->xml_parser->validate();
+
+		if($valid == false)
+		{
+			echo PHP_EOL . 'Errors occurred parsing the main XML.' . PHP_EOL;
+			pts_validation::process_libxml_errors();
+			return false;
+		}
+		else
+		{
+			echo PHP_EOL . 'Test Profile XML Is Valid.' . PHP_EOL;
+		}
+
+		// Validate the downloads file
+		$download_xml_file = $test_profile->get_file_download_spec();
+
+		if(empty($download_xml_file) == false)
+		{
+			$writer = new pts_test_profile_downloads_writer();
+			$writer->rebuild_download_file($test_profile);
+			$writer->save_xml($download_xml_file);
+
+			$downloads_parser = new pts_test_downloads_nye_XmlReader($download_xml_file);
+			$valid = $downloads_parser->validate();
+
+			if($valid == false)
+			{
+				echo PHP_EOL . 'Errors occurred parsing the downloads XML.' . PHP_EOL;
+				pts_validation::process_libxml_errors();
+				return false;
+			}
+			else
+			{
+				echo PHP_EOL . 'Test Downloads XML Is Valid.' . PHP_EOL;
+			}
+
+
+			// Validate the individual download files
+			echo PHP_EOL . 'Testing File Download URLs.' . PHP_EOL;
+			$files_missing = 0;
+			$file_count = 0;
+
+			foreach(pts_test_install_request::read_download_object_list($test_profile) as $download)
+			{
+				foreach($download->get_download_url_array() as $url)
+				{
+					$stream_context = pts_network::stream_context_create();
+					stream_context_set_params($stream_context, array('notification' => 'pts_stream_status_callback'));
+					$file_pointer = @fopen($url, 'r', false, $stream_context);
+
+					if($file_pointer == false)
+					{
+						echo 'File Missing: ' . $download->get_filename() . ' / ' . $url . PHP_EOL;
+						$files_missing++;
+					}
+					else
+					{
+						@fclose($file_pointer);
+					}
+					$file_count++;
+				}
+			}
+
+			if($files_missing > 0) // && $file_count == $files_missing
+			{
+				return false;
+			}
+		}
+
+
+		// Validate the parser file
+		$parser_file = $test_profile->get_file_parser_spec();
+
+		if(empty($parser_file) == false)
+		{
+			$writer = new pts_test_result_parser_writer();
+			$writer->rebuild_parser_file($parser_file);
+			$writer->save_xml($parser_file);
+
+			$parser = new pts_parse_results_nye_XmlReader($parser_file);
+			$valid = $parser->validate();
+
+			if($valid == false)
+			{
+				echo PHP_EOL . 'Errors occurred parsing the results parser XML.' . PHP_EOL;
+				pts_validation::process_libxml_errors();
+				return false;
+			}
+			else
+			{
+				echo PHP_EOL . 'Test Results Parser XML Is Valid.' . PHP_EOL;
+			}
+		}
+
+		// Make sure no extra files are in there
+		$allowed_files = pts_validation::test_profile_permitted_files();
+
+		foreach(pts_file_io::glob($test_profile->get_resource_dir() . '*') as $tp_file)
+		{
+			if(!is_file($tp_file) || !in_array(basename($tp_file), $allowed_files))
+			{
+				echo PHP_EOL . basename($tp_file) . ' is not allowed in the test package.' . PHP_EOL;
+				return false;
+			}
+		}
+
+		return true;
+	}
 }
 
 ?>
