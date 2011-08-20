@@ -66,9 +66,29 @@ class phodevi_cpu extends phodevi_device_interface
 	}
 	public static function cpu_core_count()
 	{
+		$info = null;
+
 		if(phodevi::is_linux())
 		{
-			$info = count(phodevi_linux_parser::read_cpuinfo('processor'));
+			if(is_file('/sys/devices/system/cpu/present'))
+			{
+				$present = pts_file_io::file_get_contents('/sys/devices/system/cpu/present');
+
+				if(substr($present, 0, 2) == '0-')
+				{
+					$present = substr($present, 2);
+
+					if(is_numeric($present))
+					{
+						$info = $present + 1;
+					}
+				}
+			}
+
+			if($info == null)
+			{
+				$info = count(phodevi_linux_parser::read_cpuinfo('processor'));
+			}
 		}
 		else if(phodevi::is_solaris())
 		{
@@ -85,10 +105,6 @@ class phodevi_cpu extends phodevi_device_interface
 		else if(phodevi::is_windows())
 		{
 			$info = getenv('NUMBER_OF_PROCESSORS');
-		}
-		else
-		{
-			$info = null;
 		}
 
 		return (is_numeric($info) && $info > 0 ? $info : 1);

@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- phodevi: Improve CPU core detection; fixes detection for some ARM devices like HP TouchPad
+
 Phoronix Test Suite 3.4 Milestone 2
 15 August 2011
 
