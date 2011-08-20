@@ -80,19 +80,49 @@ class pts_compression
 	}
 	public static function zip_archive_extract($zip_file, $extract_to)
 	{
-		if(!class_exists('ZipArchive') || !is_readable($zip_file))
+		if(!is_readable($zip_file))
 		{
 			return false;
 		}
 
-		$zip = new ZipArchive();
-		$res = $zip->open($zip_file);
-
-		if($res === true && is_writable($extract_to))
+		if(class_exists('ZipArchive'))
 		{
-			$t = $zip->extractTo($extract_to);
-			$zip->close();
-			$success = $t;
+			$zip = new ZipArchive();
+			$res = $zip->open($zip_file);
+
+			if($res === true && is_writable($extract_to))
+			{
+				$t = $zip->extractTo($extract_to);
+				$zip->close();
+				$success = $t;
+			}
+			else
+			{
+				$success = false;
+			}
+		}
+		else if(function_exists('zip_open'))
+		{
+			// the old PHP Zip API, but this is what webOS Optware uses and others
+			$zip = zip_open($zip_file);
+
+			if($zip && is_writable($extract_to))
+			{
+				while($zip_entry = zip_read($zip))
+				{
+					$fp = fopen($extract_to . '/' . zip_entry_name($zip_entry), 'w');
+
+					if(zip_entry_open($zip, $zip_entry, 'r'))
+					{
+						$buf = zip_entry_read($zip_entry, zip_entry_filesize($zip_entry));
+						fwrite($fp, $buf);
+						zip_entry_close($zip_entry);
+						fclose($fp);
+					}
+				}
+				zip_close($zip);
+				$success = true;
+			}
 		}
 		else
 		{
