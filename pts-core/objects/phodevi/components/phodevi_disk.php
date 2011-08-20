@@ -187,6 +187,13 @@ class phodevi_disk extends phodevi_device_interface
 			}
 		}
 
+		if(is_file('/sys/class/block/mmcblk0/device/name'))
+		{
+			$disk_name = pts_file_io::file_get_contents('/sys/class/block/mmcblk0/device/name');
+			$disk_size = pts_file_io::file_get_contents('/sys/class/block/mmcblk0/size');
+			array_push($disks, round($disk_size * 512 / 1000000000) . 'GB ' . $disk_name);
+		}
+
 		if(count($disks) == 0)
 		{
 			$root_disk_size = ceil(disk_total_space('/') / 1073741824);
