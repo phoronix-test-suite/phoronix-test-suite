@@ -129,7 +129,7 @@ class pts_compression
 			// Fallback to using external unzip command
 			if(pts_client::executable_in_path('unzip'))
 			{
-				shell_exec('unzip -o ' . $zip_file . ' -d ' . $extract_to ' 2>&1');
+				shell_exec('unzip -o ' . $zip_file . ' -d ' . $extract_to . ' 2>&1');
 				$success = true;
 			}
 		}

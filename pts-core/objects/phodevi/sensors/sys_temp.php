@@ -95,6 +95,16 @@ class sys_temp implements phodevi_sensor
 					$temp_c = $sensors;
 				}
 			}
+
+			if($temp_c == -1 && is_file('/sys/class/thermal/thermal_zone0/temp'))
+			{
+				$temp_c = pts_file_io::file_get_contents('/sys/class/thermal/thermal_zone0/temp');
+
+				if($temp_c > 1000)
+				{
+					$temp_c = pts_math::set_precision(($temp_c / 1000), 1);
+				}
+			}
 		}
 		else if(phodevi::is_bsd())
 		{
