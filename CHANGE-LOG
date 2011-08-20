@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Support pts_compression library using the old ZIP API when ZipArchive is not present
+- pts-core: Support calling external unzip command if ZIP / ZipArchive API calls fail
 - phodevi: Improve CPU core detection; fixes detection for some ARM devices like HP TouchPad
 - phodevi: Improve disk storage detection for mobile devices
 

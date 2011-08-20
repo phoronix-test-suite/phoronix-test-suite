@@ -72,15 +72,15 @@ class pts_compression
 				$extract_cmd = 'unzip -o';
 				break;
 			default:
-				$extract_cmd = '';
-				break;
+				return false;
 		}
 
 		shell_exec('cd ' . $file_path . ' && ' . $extract_cmd . ' ' . $file_name . ' 2>&1');
+		return true;
 	}
 	public static function zip_archive_extract($zip_file, $extract_to)
 	{
-		if(!is_readable($zip_file))
+		if(!is_readable($zip_file) || !is_writable($extract_to))
 		{
 			return false;
 		}
@@ -90,7 +90,7 @@ class pts_compression
 			$zip = new ZipArchive();
 			$res = $zip->open($zip_file);
 
-			if($res === true && is_writable($extract_to))
+			if($res === true)
 			{
 				$t = $zip->extractTo($extract_to);
 				$zip->close();
@@ -106,7 +106,7 @@ class pts_compression
 			// the old PHP Zip API, but this is what webOS Optware uses and others
 			$zip = zip_open($zip_file);
 
-			if($zip && is_writable($extract_to))
+			if($zip)
 			{
 				while($zip_entry = zip_read($zip))
 				{
@@ -126,7 +126,12 @@ class pts_compression
 		}
 		else
 		{
-			$success = false;
+			// Fallback to using external unzip command
+			if(pts_client::executable_in_path('unzip'))
+			{
+				shell_exec('unzip -o ' . $zip_file . ' -d ' . $extract_to ' 2>&1');
+				$success = true;
+			}
 		}
 
 		return $success;
