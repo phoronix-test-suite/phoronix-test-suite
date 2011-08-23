@@ -7,6 +7,7 @@ Phoronix Test Suite (Git)
 - phodevi: Improve CPU core detection; fixes detection for some ARM devices like HP TouchPad
 - phodevi: Improve disk storage detection for mobile devices
 - phodevi: Use thermal_zone0 as system temperature if it's not claimed by anything else
+- toggle-screensaver: Support toggling the GNOME 3.x screensaver using GSettings
 
 Phoronix Test Suite 3.4 Milestone 2
 15 August 2011

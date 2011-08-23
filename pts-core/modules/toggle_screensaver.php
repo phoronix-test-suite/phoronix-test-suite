@@ -24,14 +24,15 @@
 class toggle_screensaver extends pts_module_interface
 {
 	const module_name = 'Toggle Screensaver';
-	const module_version = '1.2.0';
+	const module_version = '1.3.0';
 	const module_description = 'This module toggles the system\'s screensaver while the Phoronix Test Suite is running. At this time, the GNOME and KDE screensavers are supported.';
 	const module_author = 'Phoronix Media';
 
 	static $xdg_screensaver_available = false;
 	static $xset = false;
 	static $screensaver_halted = false;
-	static $gnome_screensaver_halted = false;
+	static $gnome2_screensaver_halted = false;
+	static $gnome3_screensaver_halted = false;
 	static $kde_screensaver_halted = false;
 	static $gnome_gconftool = false;
 	static $sleep_display_ac = false;
@@ -62,7 +63,7 @@ class toggle_screensaver extends pts_module_interface
 			{
 				// Stop the GNOME Screensaver
 				shell_exec(self::$gnome_gconftool . ' --type bool --set /apps/gnome-screensaver/idle_activation_enabled false 2>&1');
-				self::$gnome_screensaver_halted = true;
+				self::$gnome2_screensaver_halted = true;
 			}
 
 			$sleep_display_ac = trim(shell_exec(self::$gnome_gconftool . ' -g /apps/gnome-power-manager/timeout/sleep_display_ac 2>&1'));
@@ -74,7 +75,8 @@ class toggle_screensaver extends pts_module_interface
 				self::$sleep_display_ac = $sleep_display_ac;
 			}
 		}
-		else if(pts_client::executable_in_path('qdbus'))
+
+		if(pts_client::executable_in_path('qdbus'))
 		{
 			// KDE Screensaver?
 			$is_kde_screensaver_enabled = trim(shell_exec('qdbus org.freedesktop.ScreenSaver /ScreenSaver org.freedesktop.ScreenSaver.GetActive 2>&1'));
@@ -87,12 +89,25 @@ class toggle_screensaver extends pts_module_interface
 			}
 		}
 
+		if(pts_client::executable_in_path('gsettings'))
+		{
+			// GNOME 3.x Screensaver?
+			$is_gnome3_screensaver_enabled = trim(shell_exec('gsettings get org.gnome.desktop.screensaver idle-activation-enabled 2>&1'));
+
+			if($is_gnome3_screensaver_enabled == 'true')
+			{
+				// Stop the GNOME 3.x Screensaver
+				shell_exec('gsettings set org.gnome.desktop.screensaver idle-activation-enabled false 2>&1');
+				self::$gnome3_screensaver_halted = true;
+			}
+		}
+
 		if(getenv('DISPLAY') != false && (self::$xset = pts_client::executable_in_path('xset')))
 		{
 			shell_exec('xset s off');
 		}
 
-		if(self::$gnome_screensaver_halted || self::$kde_screensaver_halted)
+		if(self::$gnome2_screensaver_halted || self::$gnome3_screensaver_halted || self::$kde_screensaver_halted)
 		{
 			self::$screensaver_halted = true;
 		}
@@ -110,12 +125,17 @@ class toggle_screensaver extends pts_module_interface
 			shell_exec(self::$gnome_gconftool . ' --type int --set /apps/gnome-power-manager/timeout/sleep_display_ac ' . self::$sleep_display_ac . ' 2>&1');
 		}
 
-		if(self::$gnome_screensaver_halted == true)
+		if(self::$gnome2_screensaver_halted == true)
 		{
 			// Restore the GNOME Screensaver
 			shell_exec(self::$gnome_gconftool . ' --type bool --set /apps/gnome-screensaver/idle_activation_enabled true 2>&1');
 		}
-		else if(self::$kde_screensaver_halted == true)
+		if(self::$gnome3_screensaver_halted == true)
+		{
+			// Restore the GNOME Screensaver
+			shell_exec('gsettings set org.gnome.desktop.screensaver idle-activation-enabled true 2>&1');
+		}
+		if(self::$kde_screensaver_halted == true)
 		{
 			// Restore the KDE Screensaver
 			shell_exec('qdbus org.freedesktop.ScreenSaver /ScreenSaver org.freedesktop.ScreenSaver.SetActive true 2>&1');
