@@ -62,7 +62,7 @@ class pts_result_file_analyzer
 			$data = array();
 			pts_result_file_analyzer::system_components_to_table($data, $identifiers, $rows, $hw);
 			pts_result_file_analyzer::compact_result_table_data($data, $identifiers, true);
-			$desc = pts_result_file_analyzer::analyze_system_component_changes($data, $rows, array(array('Motherboard', 'Chipset')));
+			$desc = pts_result_file_analyzer::analyze_system_component_changes($data, $rows, array(array('Motherboard', 'Chipset'), array('Motherboard', 'Chipset', 'Audio', 'Network')));
 		}
 		else if(count($hw_unique) == 1)
 		{
