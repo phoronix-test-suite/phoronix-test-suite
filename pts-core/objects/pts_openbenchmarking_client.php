@@ -221,13 +221,16 @@ class pts_openbenchmarking_client
 	{
 		if($repos == null)
 		{
-			if(!defined('HAS_REFRESHED_OBO_LIST') && $force_refresh == false)
+			if($force_refresh == false)
 			{
-				define('HAS_REFRESHED_OBO_LIST', true);
-			}
-			else
-			{
-				return true;
+				if(!defined('HAS_REFRESHED_OBO_LIST'))
+				{
+					define('HAS_REFRESHED_OBO_LIST', true);
+				}
+				else
+				{
+					return true;
+				}
 			}
 
 			$repos = self::linked_repositories();

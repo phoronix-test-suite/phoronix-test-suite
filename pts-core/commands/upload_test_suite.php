@@ -29,7 +29,6 @@ class upload_test_suite implements pts_option_interface
 	{
 		if(($test_suite = pts_types::identifier_to_object($r[0])) != false)
 		{
-			// use validate_test_suite before proceeding
 			pts_client::$display->generic_heading($r[0]);
 
 			if(pts_validation::validate_test_suite($test_suite))
