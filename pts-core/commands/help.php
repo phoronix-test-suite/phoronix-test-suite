@@ -23,12 +23,12 @@
 class help implements pts_option_interface
 {
 	const doc_section = 'Other';
-	const doc_description = "This option will display the list of available Phoronix Test Suite commands.";
+	const doc_description = 'This option will display the list of available Phoronix Test Suite commands.';
 
 	public static function run($r)
 	{
-		echo "\n" . pts_title(true) . "\n\n";
-		echo pts_documentation::basic_description() . "\n\nView the included PDF / HTML documentation or visit http://www.phoronix-test-suite.com/ for full details.\n";
+		echo PHP_EOL . pts_title(true) . PHP_EOL . PHP_EOL;
+		echo pts_documentation::basic_description() . PHP_EOL . PHP_EOL . 'View the included PDF / HTML documentation or visit http://www.phoronix-test-suite.com/ for full details.' . PHP_EOL;
 		$options = pts_documentation::client_commands_array();
 
 		foreach($options as $section => &$contents)
@@ -38,15 +38,15 @@ class help implements pts_option_interface
 				continue;
 			}
 
-			echo "\n" . strtoupper($section) . "\n\n";
+			echo PHP_EOL . strtoupper($section) . PHP_EOL . PHP_EOL;
 
 			sort($contents);
 			foreach($contents as &$option)
 			{
-				echo "    " . trim($option[0] . ' ' . implode(' ', $option[1])) . "\n";
+				echo '   ' . trim($option[0] . ' ' . implode(' ', $option[1])) . PHP_EOL;
 			}
 		}
-		echo "\n\n";
+		echo PHP_EOL . PHP_EOL;
 	}
 }
 
