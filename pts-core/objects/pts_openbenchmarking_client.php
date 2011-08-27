@@ -532,7 +532,7 @@ class pts_openbenchmarking_client
 	}
 	public static function user_name()
 	{
-		return isset(self::$openbenchmarking_account['user_name']) ? self::$openbenchmarking_account['user_name'] : null;
+		return isset(self::$openbenchmarking_account['user_name']) ? self::$openbenchmarking_account['user_name'] : false;
 	}
 	public static function upload_usage_data($task, $data)
 	{
