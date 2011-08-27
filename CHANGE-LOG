@@ -7,6 +7,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add upload-test-profile command to upload user test profiles to their OpenBenchmarking.org account
 - pts-core: Add upload-test-suite command to upload user test suites to their OpenBenchmarking.org account
 - pts-core: When running a newer version of the Phoronix Test Suite then last time, update the OpenBenchmarking index cache
+- pts-core: Add openbenchmarking-repositories command to list basic information about linked OpenBenchmarking.org repos
 - phodevi: Improve CPU core detection; fixes detection for some ARM devices like HP TouchPad
 - phodevi: Improve disk storage detection for mobile devices
 - phodevi: Use thermal_zone0 as system temperature if it's not claimed by anything else

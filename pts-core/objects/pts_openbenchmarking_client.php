@@ -629,7 +629,14 @@ class pts_openbenchmarking_client
 	}
 	public static function linked_repositories()
 	{
-		return array('local', 'pts');
+		$repos = array('local', 'pts');
+
+		if(self::user_name() != false)
+		{
+			array_push($repos, self::user_name());
+		}
+
+		return $repos;
 	}
 }
 
