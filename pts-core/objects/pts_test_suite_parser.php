@@ -39,9 +39,24 @@ class pts_test_suite_parser
 	{
 		return $this->get_identifier() . ' [v' . $this->get_version() . ']';
 	}
-	public function get_identifier()
+	public function get_identifier($bind_version = true)
 	{
-		return $this->identifier;
+		$identifier = $this->identifier;
+
+		if($bind_version == false && ($c = strrpos($identifier, '-')))
+		{
+			$identifier = substr($identifier, 0, $c);
+		}
+
+		return $identifier;
+	}
+	public function get_identifier_base_name()
+	{
+		// TODO: clean this up
+		$identifier = basename($this->identifier);
+		$identifier = ($s = strrpos($identifier, '-')) !== false ? substr($identifier, 0, $s) : $identifier;
+
+		return $identifier;
 	}
 	public function requires_core_version_min()
 	{

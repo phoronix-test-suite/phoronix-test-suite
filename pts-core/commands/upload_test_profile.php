@@ -52,7 +52,7 @@ class upload_test_profile implements pts_option_interface
 
 				echo PHP_EOL;
 				echo $server_response = pts_openbenchmarking::make_openbenchmarking_request('upload_test_profile', array(
-					'tp_identifier' => $test_profile->get_test_executable(),
+					'tp_identifier' => $test_profile->get_identifier_base_name(),
 					'tp_sha1' => sha1_file($zip_file),
 					'tp_zip' => base64_encode(file_get_contents($zip_file)),
 					'tp_zip_name' => basename($zip_file),
