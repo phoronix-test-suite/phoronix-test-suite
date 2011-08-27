@@ -558,7 +558,9 @@ class pts_client
 
 		// Last Run Processing
 		$last_core_version = $pso->read_object('last_core_version');
-		if($last_core_version != PTS_CORE_VERSION)
+		define('FIRST_RUN_ON_PTS_UPGRADE', ($last_core_version != PTS_CORE_VERSION));
+
+		if(FIRST_RUN_ON_PTS_UPGRADE)
 		{
 			// Report any missing/recommended extensions
 			self::program_requirement_checks();

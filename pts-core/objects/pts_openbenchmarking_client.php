@@ -269,7 +269,7 @@ class pts_openbenchmarking_client
 					}
 				}
 
-				if($generated_time > (time() - (86400 * $index_cache_ttl)) && $force_refresh == false)
+				if($generated_time > (time() - (86400 * $index_cache_ttl)) && $force_refresh == false && (!defined('FIRST_RUN_ON_PTS_UPGRADE') || FIRST_RUN_ON_PTS_UPGRADE == false))
 				{
 					// The index is new enough
 					continue;
