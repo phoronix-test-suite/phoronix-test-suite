@@ -931,7 +931,8 @@ class pts_test_run_manager
 		$subsystems_to_test = array_unique($subsystems_to_test);
 
 		// TODO: hook into $hw_components and $sw_components for leveraging existing result file data for comparisons already in existent
-		if(count($subsystems_to_test) == 1 && $existing_identifier_count == 0)
+		// dropped: count($subsystems_to_test) == 1 && $
+		if(existing_identifier_count == 0)
 		{
 			switch($subsystems_to_test)
 			{
@@ -942,8 +943,10 @@ class pts_test_run_manager
 					$auto_description = phodevi::read_name('disk') . ' testing on ' . phodevi::read_property('system', 'operating-system') . ' with a ' . phodevi::read_property('system', 'filesystem') . ' file-system via the Phoronix Test Suite.';
 					break;
 				case 'Processor':
+					$auto_description = phodevi::read_property('cpu', 'model') . ' testing with a ' . phodevi::read_name('motherboard') . ' on ' . phodevi::read_property('system', 'operating-system') . ' via the Phoronix Test Suite.';
+					break;
 				default:
-					$auto_description = phodevi::read_property('cpu', 'model') . ' testing with a ' . phodevi::read_name('motherboard') . ' under ' . phodevi::read_property('system', 'operating-system') . ' via the Phoronix Test Suite.';
+					$auto_description = phodevi::read_property('cpu', 'model') . ' testing with a ' . phodevi::read_name('motherboard') . ' and ' . phodevi::read_property('gpu', 'model') . ' on ' . phodevi::read_property('system', 'operating-system') . ' via the Phoronix Test Suite.';
 					break;
 			}
 		}
