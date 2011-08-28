@@ -957,7 +957,7 @@ class pts_test_run_manager
 				$result_file = new pts_result_file($this->file_name);
 				$result_file_intent = pts_result_file_analyzer::analyze_result_file_intent($result_file);
 
-				if(is_array($result_file_intent))
+				if(is_array($result_file_intent) && $result_file_intent[0] != 'Unknown')
 				{
 					$auto_description = 'A ' . $result_file_intent[0] . ' comparison';
 				}
