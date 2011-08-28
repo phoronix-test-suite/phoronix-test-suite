@@ -162,12 +162,14 @@ abstract class bilde_renderer
 
 		if(isset($_SERVER['HTTP_USER_AGENT']))
 		{
-			static $selected_renderer = null;
+			static $browser_renderer = null;
 
-			if($selected_renderer == null)
+			if($browser_renderer == null)
 			{
-				$selected_renderer = self::browser_compatibility_check($_SERVER['HTTP_USER_AGENT']);
+				$browser_renderer = self::browser_compatibility_check($_SERVER['HTTP_USER_AGENT']);
 			}
+
+			$requested_renderer = $browser_renderer;
 		}
 
 		if((($this_renderer = getenv('BILDE_RENDERER')) != false || defined('BILDE_RENDERER') && ($this_renderer = BILDE_RENDERER) || ($this_renderer = $requested_renderer) != null) && in_array($this_renderer, $available_renderers))
@@ -254,9 +256,9 @@ abstract class bilde_renderer
 			$webkit_ver = substr($user_agent, ($p + 12));
 			$webkit_ver = substr($webkit_ver, 0, strpos($webkit_ver, ' '));
 
-			// Webkit 532.2 on WebOS is buggy
+			// Webkit 532.2 534.6 (WebOS 3.0.2) on WebOS is buggy for SVG
 			// iPhone OS is using 533 right now
-			if($webkit_ver < 533)
+			if($webkit_ver < 533 || strpos($user_agent, 'hpwOS') !== false)
 			{
 				$selected_renderer = 'PNG';
 			}
@@ -283,6 +285,11 @@ abstract class bilde_renderer
 			{
 				$selected_renderer = 'PNG';
 			}
+		}
+		else if(($p = strpos($user_agent, 'KHTML/')) !== false)
+		{
+			// KDE Konqueror as of 4.7 is still broken for SVG
+			$selected_renderer = 'PNG';
 		}
 		else if(($p = strpos($user_agent, 'MSIE 8')) !== false || ($p = strpos($user_agent, 'MSIE 7')) !== false || ($p = strpos($user_agent, 'MSIE 6')) !== false)
 		{

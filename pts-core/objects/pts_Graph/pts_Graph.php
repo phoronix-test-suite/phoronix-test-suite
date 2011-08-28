@@ -84,7 +84,7 @@ abstract class pts_Graph
 	protected $graph_maximum_value;
 
 	protected $graph_output = null;
-	protected $graph_renderer;
+	protected $graph_renderer = 'SVG';
 	protected $graph_data = array();
 	protected $graph_data_raw = array();
 	protected $graph_data_title = array();
@@ -209,7 +209,10 @@ abstract class pts_Graph
 	}
 	public function requestRenderer($renderer)
 	{
-		$this->graph_renderer = $renderer;
+		if($renderer != null)
+		{
+			$this->graph_renderer = $renderer;
+		}
 	}
 	public function getRenderer()
 	{

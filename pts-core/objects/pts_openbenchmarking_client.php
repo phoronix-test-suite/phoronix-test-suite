@@ -348,7 +348,7 @@ class pts_openbenchmarking_client
 			}
 		}
 
-		if(!is_file(PTS_TEST_SUITE_PATH . $qualified_identifier . '/suite-definition.xml') && ($hash_check == null || sha1_file($file) == $hash_check))
+		if(!is_file(PTS_TEST_SUITE_PATH . $qualified_identifier . '/suite-definition.xml') && ($hash_check == null || (is_file($file) && sha1_file($file) == $hash_check)))
 		{
 			// extract it
 			pts_file_io::mkdir(PTS_TEST_SUITE_PATH . dirname($qualified_identifier));
