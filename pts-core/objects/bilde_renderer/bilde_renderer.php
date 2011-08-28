@@ -291,10 +291,15 @@ abstract class bilde_renderer
 			// KDE Konqueror as of 4.7 is still broken for SVG
 			$selected_renderer = 'PNG';
 		}
-		else if(($p = strpos($user_agent, 'MSIE 8')) !== false || ($p = strpos($user_agent, 'MSIE 7')) !== false || ($p = strpos($user_agent, 'MSIE 6')) !== false)
+		else if(($p = strpos($user_agent, 'MSIE ')) !== false)
 		{
+			$ver = substr($user_agent, ($p + 5), 1);
+
 			// Microsoft Internet Explorer 9.0 finally seems to do SVG right
-			$selected_renderer = 'PNG';
+			if($ver < 9 && $ver != 1)
+			{
+				$selected_renderer = 'PNG';
+			}
 		}
 
 		return $selected_renderer;
