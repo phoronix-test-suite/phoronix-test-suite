@@ -66,6 +66,7 @@ class info implements pts_option_interface
 			echo "License Type: " . $args["object"]->get_license() . "\n";
 			echo "Test Status: " . $args["object"]->get_status() . "\n";
 			echo "Project Web-Site: " . $args["object"]->get_project_url() . "\n";
+			echo "Estimated Run-Time: " . $args["object"]->get_estimated_run_time() . " Seconds\n";
 
 			$download_size = $args["object"]->get_download_size();
 			if(!empty($download_size))

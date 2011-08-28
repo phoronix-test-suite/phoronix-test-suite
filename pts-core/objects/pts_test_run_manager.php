@@ -921,7 +921,7 @@ class pts_test_run_manager
 			$existing_identifier_count = 0;
 		}
 
-		$auto_description = 'Running ' . implode(', ', array_unique($this->get_tests_to_run_identifiers())) . ' via the Phoronix Test Suite.';
+		$auto_description = 'Running ' . implode(', ', array_unique($this->get_tests_to_run_identifiers()));
 		$subsystems_to_test = array();
 
 		foreach($this->tests_to_run as $test_run_request)
@@ -937,19 +937,21 @@ class pts_test_run_manager
 			switch($subsystems_to_test)
 			{
 				case 'Graphics':
-					$auto_description = phodevi::read_property('gpu', 'model') . ' graphics testing with ' . phodevi::read_property('system', 'display-driver-string') . ' / ' . phodevi::read_property('system', 'opengl-driver') . ' via the Phoronix Test Suite.';
+					$auto_description = phodevi::read_property('gpu', 'model') . ' graphics testing with ' . phodevi::read_property('system', 'display-driver-string') . ' / ' . phodevi::read_property('system', 'opengl-driver');
 					break;
 				case 'Disk':
-					$auto_description = phodevi::read_name('disk') . ' testing on ' . phodevi::read_property('system', 'operating-system') . ' with a ' . phodevi::read_property('system', 'filesystem') . ' file-system via the Phoronix Test Suite.';
+					$auto_description = phodevi::read_name('disk') . ' testing on ' . phodevi::read_property('system', 'operating-system') . ' with a ' . phodevi::read_property('system', 'filesystem') . ' file-system';
 					break;
 				case 'Processor':
-					$auto_description = phodevi::read_property('cpu', 'model') . ' testing with a ' . phodevi::read_name('motherboard') . ' on ' . phodevi::read_property('system', 'operating-system') . ' via the Phoronix Test Suite.';
+					$auto_description = phodevi::read_property('cpu', 'model') . ' testing with a ' . phodevi::read_name('motherboard') . ' on ' . phodevi::read_property('system', 'operating-system');
 					break;
 				default:
-					$auto_description = phodevi::read_property('cpu', 'model') . ' testing with a ' . phodevi::read_name('motherboard') . ' and ' . phodevi::read_property('gpu', 'model') . ' on ' . phodevi::read_property('system', 'operating-system') . ' via the Phoronix Test Suite.';
+					$auto_description = phodevi::read_property('cpu', 'model') . ' testing with a ' . phodevi::read_name('motherboard') . ' and ' . phodevi::read_property('gpu', 'model') . ' on ' . phodevi::read_property('system', 'operating-system');
 					break;
 			}
 		}
+
+		$auto_description .= ' via the Phoronix Test Suite.';
 
 		return $auto_description;
 	}

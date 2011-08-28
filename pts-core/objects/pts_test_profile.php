@@ -170,7 +170,23 @@ class pts_test_profile extends pts_test_profile_parser
 	public function get_estimated_run_time()
 	{
 		// get estimated run-time (in seconds)
-		return $this->test_installation != false && is_numeric($this->test_installation->get_average_run_time()) && $this->test_installation->get_average_run_time() > 0 ? $this->test_installation->get_average_run_time() : parent::get_estimated_run_time();
+		if($this->test_installation != false && is_numeric($this->test_installation->get_average_run_time()) && $this->test_installation->get_average_run_time() > 0)
+		{
+			$estimated_run_time = $this->test_installation->get_average_run_time();
+		}
+		else
+		{
+			$estimated_run_time = parent::get_estimated_run_time();
+
+			if($estimated_run_time == 0 && PTS_IS_CLIENT)
+			{
+				$identifier = explode('/', $this->get_identifier(false));
+				$repo_index = pts_openbenchmarking::read_repository_index($identifier[0]);
+				$estimated_run_time = isset($repo_index['tests'][$identifier[1]]['average_run_time']) ? $repo_index['tests'][$identifier[1]]['average_run_time'] : 0;
+			}
+		}
+
+		return $estimated_run_time;
 	}
 	public function is_supported($report_warnings = true)
 	{
