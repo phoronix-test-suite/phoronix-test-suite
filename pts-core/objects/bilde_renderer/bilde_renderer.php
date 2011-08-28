@@ -63,33 +63,22 @@ abstract class bilde_renderer
 
 	public function draw_dashed_line($start_x, $start_y, $end_x, $end_y, $color, $line_width, $dash_length, $blank_length)
 	{
-		// TODO: below code can be cleaned up
-		$dash_length--;
 		if($start_y == $end_y)
 		{
-			$blank_length++;
-			$current_x = $start_x;
-			$next_x = $current_x + $dash_length;
+			$pos = $start_y - ($line_width / 2);
 
-			while($next_x < $end_x)
+			for($i = $start_x; $i < $end_x; $i += ($blank_length + $dash_length))
 			{
-				$this->draw_line($current_x, $start_y - ($line_width / 2), $current_x, $end_y + ($line_width / 2), $color, $dash_length + 1);
-
-				$current_x = $current_x + $blank_length;
-				$next_x = $current_x + $dash_length;
+				$this->draw_line($i, $pos, ($i + $dash_length), $pos, $color, $line_width);
 			}
 		}
-		else if($start_x == $end_x)
+		else
 		{
-			$current_y = $start_y;
-			$next_y = $current_y + $dash_length;
+			$pos = $end_x - ($line_width / 2);
 
-			while($next_y < $end_y)
+			for($i = $start_y; $i < $end_y; $i += ($blank_length + $dash_length))
 			{
-				$this->draw_line($start_x - ($line_width / 2), $current_y, $end_x - ($line_width / 2), $next_y, $color, $line_width);
-
-				$current_y = $current_y + $blank_length;
-				$next_y = $current_y + $dash_length;
+				$this->draw_line($pos, $i, $pos, ($i + $dash_length), $color, $line_width);
 			}
 		}
 	}

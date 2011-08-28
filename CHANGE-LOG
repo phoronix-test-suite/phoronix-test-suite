@@ -17,6 +17,7 @@ Phoronix Test Suite 3.4 Milestone 3
 - phodevi: Improve memory capacity detection
 - toggle-screensaver: Support toggling the GNOME 3.x screensaver using GSettings
 - bilde_renderer: Improve detection of web browsers that support SVG and those that need to fall back to PNG
+- bilde_renderer: Rewrite the fake ->draw_dashed_line() function to be more efficient and accurate
 
 Phoronix Test Suite 3.4 Milestone 2
 15 August 2011

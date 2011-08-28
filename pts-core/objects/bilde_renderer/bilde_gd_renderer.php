@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2010, Phoronix Media
-	Copyright (C) 2008 - 2010, Michael Larabel
+	Copyright (C) 2008 - 2011, Phoronix Media
+	Copyright (C) 2008 - 2011, Michael Larabel
 	bilde_gd_renderer: An abstract class providing a GD library renderer that can then be extended by a PNG and JPEG renderer
 
 	This program is free software; you can redistribute it and/or modify
@@ -117,18 +117,6 @@ abstract class bilde_gd_renderer extends bilde_renderer
 	public function draw_arc($center_x, $center_y, $radius, $offset_percent, $percent, $body_color, $border_color = null, $border_width = 1, $title = null)
 	{
 		imagefilledarc($this->image, $center_x, $center_y, ($radius * 2), ($radius * 2), ($offset_percent * 360), ($percent * 360), $body_color, IMG_ARC_PIE);
-	}
-	public function draw_dashed_line($start_x, $start_y, $end_x, $end_y, $color, $line_width, $dash_length, $blank_length)
-	{
-		// TODO: dirty, temporary hack
-		if($line_width != 1)
-		{
-			parent::draw_dashed_line($start_x, $start_y, $end_x, $end_y, $color, $line_width, $dash_length, $blank_length);
-		}
-		else
-		{
-			imagedashedline($this->image, $start_x, $start_y, $end_x, $end_y, $color);
-		}
 	}
 	public function write_text_center($text_string, $font_type, $font_size, $font_color, $bound_x1, $bound_y1, $bound_x2, $bound_y2, $rotate_text = false)
 	{
