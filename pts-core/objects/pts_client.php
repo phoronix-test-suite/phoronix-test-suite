@@ -898,7 +898,15 @@ class pts_client
 			$chart = new pts_ResultFileTable($result_file);
 			$chart->renderChart($save_to_dir . '/result-graphs/overview.BILDE_EXTENSION');
 
-			$chart = new pts_ResultFileSystemsTable($result_file);
+			$intent = -1;
+			if($result_file->get_system_count() == 1 || ($intent = pts_result_file_analyzer::analyze_result_file_intent($result_file, $intent, true)))
+			{
+				$chart = new pts_ResultFileCompactSystemsTable($result_file, $intent);
+			}
+			else
+			{
+				$chart = new pts_ResultFileSystemsTable($result_file);
+			}
 			$chart->renderChart($save_to_dir . '/result-graphs/systems.BILDE_EXTENSION');
 			unset($chart);
 		}

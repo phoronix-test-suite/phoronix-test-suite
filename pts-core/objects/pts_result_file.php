@@ -82,6 +82,10 @@ class pts_result_file
 	{
 		return $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/System/Identifier');
 	}
+	public function get_system_count()
+	{
+		return count($this->get_system_identifiers());
+	}
 	public function get_title()
 	{
 		return $this->xml_parser->getXMLValue('PhoronixTestSuite/Generated/Title');

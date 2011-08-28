@@ -22,7 +22,7 @@
 
 class pts_result_file_analyzer
 {
-	public static function analyze_result_file_intent(&$result_file, &$flagged_results = null)
+	public static function analyze_result_file_intent(&$result_file, &$flagged_results = -1, $return_all_changed_indexes = false)
 	{
 		$identifiers = $result_file->get_system_identifiers();
 
@@ -45,7 +45,7 @@ class pts_result_file_analyzer
 		$hw_unique = array_unique($hw);
 		$sw = $result_file->get_system_software();
 		$sw_unique = array_unique($sw);
-		$desc = null;
+		$desc = false;
 
 		if(count($hw_unique) == 1 && count($sw_unique) == 1)
 		{
@@ -62,7 +62,7 @@ class pts_result_file_analyzer
 			$data = array();
 			pts_result_file_analyzer::system_components_to_table($data, $identifiers, $rows, $hw);
 			pts_result_file_analyzer::compact_result_table_data($data, $identifiers, true);
-			$desc = pts_result_file_analyzer::analyze_system_component_changes($data, $rows, array(array('Motherboard', 'Chipset'), array('Motherboard', 'Chipset', 'Audio', 'Network')));
+			$desc = pts_result_file_analyzer::analyze_system_component_changes($data, $rows, array(array('Motherboard', 'Chipset'), array('Motherboard', 'Chipset', 'Audio', 'Network')), $return_all_changed_indexes);
 		}
 		else if(count($hw_unique) == 1)
 		{
@@ -71,16 +71,17 @@ class pts_result_file_analyzer
 			$data = array();
 			pts_result_file_analyzer::system_components_to_table($data, $identifiers, $rows, $sw);
 			pts_result_file_analyzer::compact_result_table_data($data, $identifiers, true);
-			$desc = pts_result_file_analyzer::analyze_system_component_changes($data, $rows, array(array('Display Driver', 'OpenGL'), array('OpenGL'), array('Display Driver')));
+			$desc = pts_result_file_analyzer::analyze_system_component_changes($data, $rows, array(array('Display Driver', 'OpenGL'), array('OpenGL'), array('Display Driver')), $return_all_changed_indexes);
 		}
 		else
 		{
 			// Both software and hardware are being flipped out
 			$rows = array();
 			$data = array();
-			pts_result_file_analyzer::system_components_to_table($data, $identifiers, $rows, array_merge($hw, $sw));
+			pts_result_file_analyzer::system_components_to_table($data, $identifiers, $rows, $hw);
+			pts_result_file_analyzer::system_components_to_table($data, $identifiers, $rows, $sw);
 			pts_result_file_analyzer::compact_result_table_data($data, $identifiers, true);
-			$desc = pts_result_file_analyzer::analyze_system_component_changes($data, $rows, array(array('Graphics', 'Display Driver', 'OpenGL'), array('Graphics', 'Monitor', 'Display Driver', 'OpenGL'), array('Graphics', 'OpenGL')));
+			$desc = pts_result_file_analyzer::analyze_system_component_changes($data, $rows, array(array('Graphics', 'Display Driver', 'OpenGL'), array('Graphics', 'Monitor', 'Display Driver', 'OpenGL'), array('Graphics', 'OpenGL'), array('Graphics', 'Display Driver')), $return_all_changed_indexes);
 		}
 
 		if($desc)
@@ -125,7 +126,7 @@ class pts_result_file_analyzer
 
 		return $result_objects;
 	}
-	public static function analyze_system_component_changes($data, $rows, $supported_combos = array())
+	public static function analyze_system_component_changes($data, $rows, $supported_combos = array(), $return_all_changed_indexes = false)
 	{
 		$max_combo_count = 2;
 		foreach($supported_combos as $combo)
@@ -150,11 +151,11 @@ class pts_result_file_analyzer
 
 		if(count($first_objects) <= $max_combo_count && count($first_objects) > 0)
 		{
-			array_push($comparison_objects, implode('/', $first_objects));
+			array_push($comparison_objects, ($return_all_changed_indexes ? array_map('strval', $first_objects) : implode('/', $first_objects)));
 
 			$first_objects = array_shift($data);
 			$changed_indexes = array_keys($first_objects);
-			array_push($comparison_objects, implode('/', $first_objects));
+			array_push($comparison_objects, ($return_all_changed_indexes ? array_map('strval', $first_objects) : implode('/', $first_objects)));
 
 			if(count($changed_indexes) <= $max_combo_count)
 			{
@@ -176,7 +177,7 @@ class pts_result_file_analyzer
 					}
 					else
 					{
-						array_push($comparison_objects, implode('/', $this_identifier));
+						array_push($comparison_objects, ($return_all_changed_indexes ? array_map('strval', $this_identifier) : implode('/', $this_identifier)));
 					}
 				}
 			}
@@ -187,17 +188,21 @@ class pts_result_file_analyzer
 
 			if($comparison_good)
 			{
+				$new_index = array();
 				foreach($changed_indexes as &$change)
 				{
-					$change = $rows[$change];
+					$new_index[$change] = $rows[$change];
 				}
+				$changed_indexes = $new_index;
 
-				if(count($changed_indexes) == 1 || in_array($changed_indexes, $supported_combos))
+				if(count($changed_indexes) == 1 || in_array(array_values($changed_indexes), $supported_combos))
 				{
-					$r = implode(', ', $comparison_objects);
-					$category = array_shift($changed_indexes);
+					if($return_all_changed_indexes == false)
+					{
+						$comparison_objects = implode(', ', $comparison_objects);
+					}
 
-					return array($category, $r);
+					return array(($return_all_changed_indexes ? $changed_indexes : array_shift($changed_indexes)), $comparison_objects);
 				}
 			}
 		}
@@ -278,7 +283,7 @@ class pts_result_file_analyzer
 
 		return implode(', ', $components);
 	}
-	protected static function system_value_to_ir_value($value, $index)
+	public static function system_value_to_ir_value($value, $index)
 	{
 		$ir = new pts_graph_ir_value($value);
 
