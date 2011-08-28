@@ -132,7 +132,7 @@ class pts_ResultFileCompactSystemsTable extends pts_Graph
 		$this->graph_image->draw_rectangle(1, ($this->graph_attr_height - $bottom_footer), $this->graph_attr_width - 1, $this->graph_attr_height, $this->graph_color_main_headers);
 		$this->graph_image->image_copy_merge(new pts_graph_ir_value($this->graph_image->png_image_to_type('http://www.phoronix-test-suite.com/external/pts-logo-80x42-white.png'), array('href' => 'http://www.phoronix-test-suite.com/')), 10, ($this->graph_attr_height - 48), 0, 0, 80, 42);
 
-		if(defined('OPENBENCHMARKING_IDS'))
+		if(defined('OPENBENCHMARKING_IDS') && $this->getRenderer() == 'SVG')
 		{
 			$back_width = $this->graph_attr_width - 4;
 			$this->graph_image->write_text_right(new pts_graph_ir_value(OPENBENCHMARKING_TITLE, array('font-weight' => 'bold', 'href' => 'http://openbenchmarking.org/result/' . OPENBENCHMARKING_IDS)), $this->graph_font, 8, $this->graph_color_background, $back_width, ($this->graph_attr_height - 38), $back_width, ($this->graph_attr_height - 38));

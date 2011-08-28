@@ -932,7 +932,7 @@ class pts_test_run_manager
 
 		// TODO: hook into $hw_components and $sw_components for leveraging existing result file data for comparisons already in existent
 		// dropped: count($subsystems_to_test) == 1 && $
-		if(existing_identifier_count == 0)
+		if($existing_identifier_count == 0)
 		{
 			switch($subsystems_to_test)
 			{
@@ -948,6 +948,19 @@ class pts_test_run_manager
 				default:
 					$auto_description = phodevi::read_property('cpu', 'model') . ' testing with a ' . phodevi::read_name('motherboard') . ' and ' . phodevi::read_property('gpu', 'model') . ' on ' . phodevi::read_property('system', 'operating-system');
 					break;
+			}
+		}
+		else
+		{
+			if(pts_result_file::is_test_result_file($this->file_name))
+			{
+				$result_file = new pts_result_file($this->file_name);
+				$result_file_intent = pts_result_file_analyzer::analyze_result_file_intent($result_file);
+
+				if(is_array($result_file_intent))
+				{
+					$auto_description = 'A ' . $result_file_intent[0] . ' comparison';
+				}
 			}
 		}
 
