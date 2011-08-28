@@ -108,9 +108,18 @@ abstract class bilde_gd_renderer extends bilde_renderer
 		$text_dimensions = $this->text_string_dimensions($text_string, $font_type, $font_size);
 		$text_width = $text_dimensions[0];
 		$text_height = $text_dimensions[1];
-		$rotation = ($rotate_text == false ? 0 : 90);
 		$text_x = $bound_x2 - $text_width;
 		$text_y = $bound_y1 + round($text_height / 2);
+
+		if($rotate_text)
+		{
+			$rotation = 90;
+			$text_x += $text_width;
+		}
+		else
+		{
+			$rotation = 0;
+		}
 
 		imagettftext($this->image, $font_size, $rotation, $text_x, $text_y, $font_color, $font_type, $text_string);
 	}
