@@ -293,11 +293,11 @@ abstract class pts_Graph
 	{
 		$this->graph_output = $file;
 	}
-	public function htmlEmbedCode($file, $width, $height)
+	public function htmlEmbedCode($file, $width = null, $height = null)
 	{
 		$attributes = array();
 
-		if(in_array($this->graph_renderer, array('SWF', 'SVG')))
+		if(in_array($this->graph_renderer, array('SWF', 'SVG')) && $width != null)
 		{
 			$attributes['width'] = $width;
 			$attributes['height'] = $height;

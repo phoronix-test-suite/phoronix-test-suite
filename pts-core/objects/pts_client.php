@@ -848,6 +848,16 @@ class pts_client
 		}
 
 		$raw_xsl = file_get_contents(PTS_RESULTS_VIEWER_PATH . 'pts-results-viewer.xsl');
+
+		// System Tables
+		$conversions = array('systems', 'radar', 'overview', 'visualize');
+		foreach($conversions as $convert)
+		{
+			$graph_string = pts_render::$last_graph_object->htmlEmbedCode('result-graphs/' . $convert . '.BILDE_EXTENSION');
+			$raw_xsl = str_replace('<!-- ' . strtoupper($convert) . ' TAG -->', $graph_string, $raw_xsl);
+		}
+
+		// Result Graphs
 		$graph_string = pts_render::$last_graph_object->htmlEmbedCode('result-graphs/<xsl:number value="position()" />.BILDE_EXTENSION', $width, $height);
 
 		$raw_xsl = str_replace('<!-- GRAPH TAG -->', $graph_string, $raw_xsl);
