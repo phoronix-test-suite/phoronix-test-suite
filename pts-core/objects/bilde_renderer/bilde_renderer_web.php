@@ -59,6 +59,19 @@ class bilde_renderer_web
 			{
 				$selected_renderer = 'PNG';
 			}
+
+			if(($p = strpos($user_agent, 'Android ')) !== false)
+			{
+				$android_ver = substr($user_agent, ($p + 8), 3);
+
+				// Android browser doesn't support SVG.
+				// Google bug report 1376 for Android - http://code.google.com/p/android/issues/detail?id=1376
+				// Looks like it might work though in 3.0 Honeycomb
+				if($android_ver < 3.0)
+				{
+					$selected_renderer = 'PNG';
+				}
+			}
 		}
 		else if(($p = strpos($user_agent, 'Opera/')) !== false)
 		{
@@ -71,6 +84,9 @@ class bilde_renderer_web
 			{
 				$selected_renderer = 'PNG';
 			}
+
+			// text-alignment is still fucked as of 11.50/12.0
+			$selected_renderer = 'PNG';
 		}
 		else if(($p = strpos($user_agent, 'Epiphany/')) !== false)
 		{

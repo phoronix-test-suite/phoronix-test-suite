@@ -136,7 +136,7 @@ class pts_ResultFileCompactSystemsTable extends pts_Graph
 		{
 			$back_width = $this->graph_attr_width - 4;
 			$this->graph_image->write_text_right(new pts_graph_ir_value(OPENBENCHMARKING_TITLE, array('font-weight' => 'bold', 'href' => 'http://openbenchmarking.org/result/' . OPENBENCHMARKING_IDS)), $this->graph_font, 8, $this->graph_color_background, $back_width, ($this->graph_attr_height - 38), $back_width, ($this->graph_attr_height - 38));
-			$this->graph_image->write_text_right(new pts_graph_ir_value('System Information', array('href' => 'http://openbenchmarking.org/system/' . OPENBENCHMARKING_IDS)), $this->graph_font, 8, $this->graph_color_background, $back_width, ($this->graph_attr_height - 24), $back_width, ($this->graph_attr_height - 24));
+			$this->graph_image->write_text_right(new pts_graph_ir_value('System Logs', array('href' => 'http://openbenchmarking.org/system/' . OPENBENCHMARKING_IDS)), $this->graph_font, 8, $this->graph_color_background, $back_width, ($this->graph_attr_height - 24), $back_width, ($this->graph_attr_height - 24));
 			$this->graph_image->write_text_right(new pts_graph_ir_value('OPC Classification', array('href' => 'http://openbenchmarking.org/opc/' . OPENBENCHMARKING_IDS)), $this->graph_font, 8, $this->graph_color_background, $back_width, ($this->graph_attr_height - 10), $back_width, ($this->graph_attr_height - 10));
 		}
 	}
