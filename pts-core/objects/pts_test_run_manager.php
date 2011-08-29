@@ -942,6 +942,7 @@ class pts_test_run_manager
 				case 'Disk':
 					$auto_description = phodevi::read_name('disk') . ' testing on ' . phodevi::read_property('system', 'operating-system') . ' with a ' . phodevi::read_property('system', 'filesystem') . ' file-system';
 					break;
+				case 'Memory':
 				case 'Processor':
 					$auto_description = phodevi::read_property('cpu', 'model') . ' testing with a ' . phodevi::read_name('motherboard') . ' on ' . phodevi::read_property('system', 'operating-system');
 					break;

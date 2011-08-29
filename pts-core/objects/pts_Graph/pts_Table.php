@@ -98,10 +98,10 @@ class pts_Table extends pts_Graph
 					$value = $row;
 				}
 
-				if(($new_length = strlen($value)) > $longest_string_length)
+				if(isset($value[$longest_string_length]))
 				{
 					$longest_string = $value;
-					$longest_string_length = $new_length;
+					$longest_string_length = strlen($value);
 				}
 			}
 		}

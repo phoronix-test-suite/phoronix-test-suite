@@ -256,7 +256,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	}
 	public function test_run_start(&$test_run_manager, &$test_result)
 	{
-		echo PHP_EOL . PHP_EOL . $test_result->test_profile->get_title() . ':' . PHP_EOL . $this->tab . $test_result->test_profile->get_identifier();
+		echo PHP_EOL . PHP_EOL . $test_result->test_profile->get_title() . ($test_result->test_profile->get_app_version() != null ? ' ' . $test_result->test_profile->get_app_version() : null) . ':' . PHP_EOL . $this->tab . $test_result->test_profile->get_identifier();
 
 		if(($test_description = $test_result->get_arguments_description()) != false)
 		{
