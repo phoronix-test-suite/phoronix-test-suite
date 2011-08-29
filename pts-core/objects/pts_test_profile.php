@@ -177,13 +177,13 @@ class pts_test_profile extends pts_test_profile_parser
 		else
 		{
 			$estimated_run_time = parent::get_estimated_run_time();
+		}
 
-			if($estimated_run_time == 0 && PTS_IS_CLIENT)
-			{
-				$identifier = explode('/', $this->get_identifier(false));
-				$repo_index = pts_openbenchmarking::read_repository_index($identifier[0]);
-				$estimated_run_time = isset($repo_index['tests'][$identifier[1]]['average_run_time']) ? $repo_index['tests'][$identifier[1]]['average_run_time'] : 0;
-			}
+		if($estimated_run_time < 2 && PTS_IS_CLIENT)
+		{
+			$identifier = explode('/', $this->get_identifier(false));
+			$repo_index = pts_openbenchmarking::read_repository_index($identifier[0]);
+			$estimated_run_time = isset($repo_index['tests'][$identifier[1]]['average_run_time']) ? $repo_index['tests'][$identifier[1]]['average_run_time'] : 0;
 		}
 
 		return $estimated_run_time;

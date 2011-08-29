@@ -312,6 +312,9 @@ class pts_strings
 			'2.8' => 'Torsken',
 			'2.9' => 'Iveland', // early PTS3 development work
 			'3.0' => 'Iveland',
+			'3.2' => 'Grimstad',
+			'3.4' => 'Lillesand',
+			'3.8' => 'Bykle'
 			);
 
 		return isset($codenames[$version]) ? $codenames[$version] : null;
