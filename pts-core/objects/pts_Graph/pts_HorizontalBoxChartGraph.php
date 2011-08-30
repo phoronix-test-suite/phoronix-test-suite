@@ -21,7 +21,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class pts_HorizontalRangeBarGraph extends pts_HorizontalBarGraph
+class pts_HorizontalBoxChartGraph extends pts_HorizontalBarGraph
 {
 	protected function render_graph_bars()
 	{
@@ -40,30 +40,28 @@ class pts_HorizontalRangeBarGraph extends pts_HorizontalBarGraph
 				$avg_value = round(array_sum($this->graph_data[$i_o][$i]) / count($this->graph_data[$i_o][$i]), 2);
 				$max_value = round(max($this->graph_data[$i_o][$i]), 2);
 
-				$value_end_left = max($this->graph_left_start + round(($min_value / $this->graph_maximum_value) * ($this->graph_left_end - $this->graph_left_start)), 1);
-				$value_end_right = max($this->graph_left_start + round(($max_value / $this->graph_maximum_value) * ($this->graph_left_end - $this->graph_left_start)), 1);
 
 				$px_bound_top = $this->graph_top_start + ($multi_way ? 5 : 0) + ($this->identifier_height * $i) + ($bar_height * $i_o) + ($separator_height * ($i_o + 1));
 				$px_bound_bottom = $px_bound_top + $bar_height;
-				$middle_of_bar = $px_bound_top + ($bar_height / 2) - ($this->graph_font_size_identifiers / 2);
+				$middle_of_bar = $px_bound_top + ($bar_height / 2);
 
-				$value = $min_value . ' / ' . $avg_value . ' / ' . $max_value;
+				$value = 'Min: ' . $min_value . ' / Avg: ' . $avg_value . ' / Max: ' . $max_value;
 				$title_tooltip = $this->graph_identifiers[$i] . ': ' . $value;
 
-				$this->graph_image->draw_rectangle_with_border($value_end_left, $px_bound_top, $value_end_right, $px_bound_bottom, in_array($this->graph_identifiers[$i], $this->value_highlights) ? $this->graph_color_highlight : $paint_color, $this->graph_color_body_light, $title_tooltip);
+				$value_end_left = max($this->graph_left_start + round(($min_value / $this->graph_maximum_value) * ($this->graph_left_end - $this->graph_left_start)), 1);
+				$value_end_right = $this->graph_left_start + round(($max_value / $this->graph_maximum_value) * ($this->graph_left_end - $this->graph_left_start));
+				$box_color = in_array($this->graph_identifiers[$i], $this->value_highlights) ? $this->graph_color_highlight : $paint_color;
 
-				if(($this->text_string_width($value, $this->graph_font, ($this->graph_font_size_identifiers - 2)) + 2) < ($value_end_right - $value_end_left))
-				{
-					$this->graph_image->write_text_center($value, $this->graph_font, ($this->graph_font_size_identifiers - 2), $this->graph_color_body_text, $value_end_left, $middle_of_bar, $value_end_right, $middle_of_bar);
-				}
-				else
-				{
-					$value = round($min_value) . ' / ' . round($avg_value) . ' / ' . round($max_value);
-					if(($this->text_string_width($value, $this->graph_font, ($this->graph_font_size_identifiers - 2)) + 2) < ($value_end_right - $value_end_left))
-					{
-						$this->graph_image->write_text_center($value, $this->graph_font, ($this->graph_font_size_identifiers - 2), $this->graph_color_body_text, $value_end_left, $middle_of_bar, $value_end_right, $middle_of_bar);
-					}
-				}
+				$this->graph_image->draw_line($value_end_left, $middle_of_bar, $value_end_right, $middle_of_bar, $box_color, 2, $title_tooltip);
+				$this->graph_image->draw_line($value_end_left, $px_bound_top, $value_end_left, $px_bound_bottom, $this->graph_color_notches, 2, $title_tooltip);
+				$this->graph_image->draw_line($value_end_right, $px_bound_top, $value_end_right, $px_bound_bottom, $this->graph_color_notches, 2, $title_tooltip);
+
+				$box_left = $this->graph_left_start + round((pts_math::find_percentile($this->graph_data[$i_o][$i], 0.25) / $this->graph_maximum_value) * ($this->graph_left_end - $this->graph_left_start));
+				$box_middle = $this->graph_left_start + round((pts_math::find_percentile($this->graph_data[$i_o][$i], 0.5) / $this->graph_maximum_value) * ($this->graph_left_end - $this->graph_left_start));
+				$box_right = $this->graph_left_start + round((pts_math::find_percentile($this->graph_data[$i_o][$i], 0.75) / $this->graph_maximum_value) * ($this->graph_left_end - $this->graph_left_start));
+
+				$this->graph_image->draw_rectangle_with_border($box_left, $px_bound_top, $box_right, $px_bound_bottom, $box_color, $this->graph_color_body_light, $title_tooltip);
+				$this->graph_image->draw_line($box_middle, $px_bound_top, $box_middle, $px_bound_bottom, $this->graph_color_notches, 2, $title_tooltip);
 			}
 		}
 

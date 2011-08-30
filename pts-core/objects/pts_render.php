@@ -158,9 +158,9 @@ class pts_render
 			case 'LINE_GRAPH':
 				if($result_object->test_result_buffer->get_count() > 5)
 				{
-					// If there's too many lines close to each other, it's likely to look cluttered so turn it into range bar graph
-					$display_format = 'RANGE_BAR_GRAPH';
-					$graph = new pts_HorizontalRangeBarGraph($result_object, $result_file);
+					// If there's too many lines close to each other, it's likely to look cluttered so turn it into horizontal range bar / box chart graph
+					$display_format = 'HORIZONTAL_BOX_CHART';
+					$graph = new pts_HorizontalBoxChartGraph($result_object, $result_file);
 				}
 				else
 				{
@@ -287,7 +287,7 @@ class pts_render
 					$graph->loadGraphIdentifiers($ss);
 				}
 				break;
-			case 'RANGE_BAR_GRAPH':
+			case 'HORIZONTAL_BOX_CHART':
 				// TODO: should be able to load pts_test_result_buffer_item objects more cleanly into pts_Graph
 				$identifiers = array();
 				$values = array();

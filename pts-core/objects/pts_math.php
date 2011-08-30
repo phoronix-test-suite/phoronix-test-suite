@@ -90,9 +90,8 @@ class pts_math
 	public static function find_percentile($values, $quartile)
 	{
 		sort($values, SORT_NUMERIC);
-		$values_c = count($values);
-		$qr_index = $values_c * $quartile;
-		$qr = ceil($qr_index) == $qr_index ? ($values[$qr_index - 1] + $values[$qr_index] / 2) : $values[floor($qr_index)];
+		$qr_index = count($values) * $quartile;
+		$qr = $values[floor($qr_index)];
 
 		return $qr;
 	}
