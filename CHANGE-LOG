@@ -20,7 +20,7 @@ Phoronix Test Suite 3.4 Milestone 3
 - bilde_renderer: Rewrite the fake ->draw_dashed_line() function to be more efficient and accurate
 - bilde_renderer: Improve the PNG back-end to render more closely to SVG back-end
 - pts_Graph: Add new system table to use on featured comparisons
-- pts_Graph: Introduce new horizontal box plot/chart graph for line graphs where there's too many lines
+- pts_Graph: Introduce new horizontal box plot graph for line graphs where there's too many lines
 
 Phoronix Test Suite 3.4 Milestone 2
 15 August 2011

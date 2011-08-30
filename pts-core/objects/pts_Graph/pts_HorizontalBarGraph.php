@@ -101,13 +101,16 @@ class pts_HorizontalBarGraph extends pts_Graph
 				if($std_error != -1)
 				{
 					$std_error_height = 8;
-					$std_error_rel_size = round(($std_error / $this->graph_maximum_value) * ($this->graph_left_end - $this->graph_left_start));
 
-					if($std_error_rel_size > 4)
+					if($std_error > 0 && is_numeric($std_error))
 					{
-						$this->graph_image->draw_line(($value_end_right - $std_error_rel_size), $px_bound_top, ($value_end_right - $std_error_rel_size), $px_bound_top + $std_error_height, $this->graph_color_notches, 1);
-						$this->graph_image->draw_line(($value_end_right + $std_error_rel_size), $px_bound_top, ($value_end_right + $std_error_rel_size), $px_bound_top + $std_error_height, $this->graph_color_notches, 1);
-						$this->graph_image->draw_line(($value_end_right - $std_error_rel_size), $px_bound_top, ($value_end_right + $std_error_rel_size), $px_bound_top, $this->graph_color_notches, 1);
+						$std_error_rel_size = round(($std_error / $this->graph_maximum_value) * ($this->graph_left_end - $this->graph_left_start));
+						if($std_error_rel_size > 4)
+						{
+							$this->graph_image->draw_line(($value_end_right - $std_error_rel_size), $px_bound_top, ($value_end_right - $std_error_rel_size), $px_bound_top + $std_error_height, $this->graph_color_notches, 1);
+							$this->graph_image->draw_line(($value_end_right + $std_error_rel_size), $px_bound_top, ($value_end_right + $std_error_rel_size), $px_bound_top + $std_error_height, $this->graph_color_notches, 1);
+							$this->graph_image->draw_line(($value_end_right - $std_error_rel_size), $px_bound_top, ($value_end_right + $std_error_rel_size), $px_bound_top, $this->graph_color_notches, 1);
+						}
 					}
 
 					$bar_offset_34 = $middle_of_bar + ($multi_way ? 0 : ($bar_height / 5) + 4);

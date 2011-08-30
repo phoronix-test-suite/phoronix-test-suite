@@ -77,20 +77,7 @@ class pts_render
 					header('Content-type: image/svg+xml');
 				}
 
-				/*if(false && isset($_SERVER['HTTP_USER_AGENT']) && strpos($_SERVER['HTTP_USER_AGENT'], 'WebKit/') !== false)
-				{
-					$svg_graph = '<img>' . $svg_graph . '</img>';
-				}
-				else
-				{
-					$svg_graph = '<object width="' . $graph->graphWidth() . '" height="' . $graph->graphHeight() . '">' . $svg_graph . '</object>';
-				}*/
-
 				$graph = $svg_graph;
-
-				//$graph = "<object type=\"image/svg+xml\">" . $svg . "</object>";
-				//$graph = "<embed type=\"image/svg+xml\" width=\"" . $graph->graphWidth() . "\" height=\"" . $graph->graphHeight() . "\">" . $svg . "</embed>";
-				// or in WebKit / Chrome / Safari right now we need to embed in <img> if wanting to use auto width/height
 				break;
 			default:
 				$graph = $graph->render_graph_finish();
@@ -105,7 +92,11 @@ class pts_render
 		{
 			if($result_file->is_multi_way_comparison() && in_array($result_object->test_profile->get_display_format(), array('LINE_GRAPH', 'FILLED_LINE_GRAPH')))
 			{
+				// Convert multi-way line graph into horizontal box plot
+				//$result_object->test_profile->set_display_format('HORIZONTAL_BOX_PLOT');
+
 				// Turn a multi-way line graph into an averaged bar graph
+
 				$buffer_items = $result_object->test_result_buffer->get_buffer_items();
 				$result_object->test_result_buffer = new pts_test_result_buffer();
 
@@ -119,10 +110,9 @@ class pts_render
 				$result_object->test_profile->set_display_format('BAR_GRAPH');
 			}
 
-			$result_table = false;
-
 			if($result_object->test_profile->get_display_format() != 'PIE_CHART')
 			{
+				$result_table = false;
 				pts_render::compact_result_file_test_object($result_object, $result_table, $result_file->is_multi_way_inverted(), $extra_attributes);
 			}
 		}
@@ -159,13 +149,16 @@ class pts_render
 				if($result_object->test_result_buffer->get_count() > 5)
 				{
 					// If there's too many lines close to each other, it's likely to look cluttered so turn it into horizontal range bar / box chart graph
-					$display_format = 'HORIZONTAL_BOX_CHART';
-					$graph = new pts_HorizontalBoxChartGraph($result_object, $result_file);
+					$display_format = 'HORIZONTAL_BOX_PLOT';
+					$graph = new pts_HorizontalBoxPlotGraph($result_object, $result_file);
 				}
 				else
 				{
 					$graph = new pts_LineGraph($result_object, $result_file);
 				}
+				break;
+			case 'HORIZONTAL_BOX_PLOT':
+				$graph = new pts_HorizontalBoxPlotGraph($result_object, $result_file);
 				break;
 			case 'BAR_ANALYZE_GRAPH':
 			case 'BAR_GRAPH':
@@ -287,7 +280,7 @@ class pts_render
 					$graph->loadGraphIdentifiers($ss);
 				}
 				break;
-			case 'HORIZONTAL_BOX_CHART':
+			case 'HORIZONTAL_BOX_PLOT':
 				// TODO: should be able to load pts_test_result_buffer_item objects more cleanly into pts_Graph
 				$identifiers = array();
 				$values = array();

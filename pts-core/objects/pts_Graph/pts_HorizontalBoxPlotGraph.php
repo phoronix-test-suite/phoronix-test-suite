@@ -5,7 +5,6 @@
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
 	Copyright (C) 2008 - 2011, Phoronix Media
 	Copyright (C) 2008 - 2011, Michael Larabel
-	pts_HorizontalBarGraph.php: The horizontal bar graph object that extends pts_Graph.php
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -21,7 +20,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class pts_HorizontalBoxChartGraph extends pts_HorizontalBarGraph
+class pts_HorizontalBoxPlotGraph extends pts_HorizontalBarGraph
 {
 	protected function render_graph_bars()
 	{
