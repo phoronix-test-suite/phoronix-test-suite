@@ -93,10 +93,10 @@ class pts_render
 			if($result_file->is_multi_way_comparison() && in_array($result_object->test_profile->get_display_format(), array('LINE_GRAPH', 'FILLED_LINE_GRAPH')))
 			{
 				// Convert multi-way line graph into horizontal box plot
-				//$result_object->test_profile->set_display_format('HORIZONTAL_BOX_PLOT');
+				$result_object->test_profile->set_display_format('HORIZONTAL_BOX_PLOT');
 
 				// Turn a multi-way line graph into an averaged bar graph
-
+/*
 				$buffer_items = $result_object->test_result_buffer->get_buffer_items();
 				$result_object->test_result_buffer = new pts_test_result_buffer();
 
@@ -107,7 +107,7 @@ class pts_render
 					$result_object->test_result_buffer->add_test_result($buffer_item->get_result_identifier(), $avg_value, $avg_value);
 				}
 
-				$result_object->test_profile->set_display_format('BAR_GRAPH');
+				$result_object->test_profile->set_display_format('BAR_GRAPH');*/
 			}
 
 			if($result_object->test_profile->get_display_format() != 'PIE_CHART')
@@ -544,10 +544,17 @@ class pts_render
 		else
 		{
 			$mto->test_profile->set_result_scale($mto->test_profile->get_result_scale() . ' | ' . implode(',', array_keys($days)));
-			if($mto->test_profile->get_display_format() != 'SCATTER_PLOT')
+
+			switch($mto->test_profile->get_display_format())
 			{
-				$line_graph_type = isset($extra_attributes['filled_line_graph']) ? 'FILLED_LINE_GRAPH' : 'LINE_GRAPH';
-				$mto->test_profile->set_display_format((count($days) < 5 || ($is_tracking == false && !isset($extra_attributes['force_line_graph_compact'])) ? 'BAR_ANALYZE_GRAPH' : $line_graph_type));
+				//case 'HORIZONTAL_BOX_PLOT':
+				//	$mto->test_profile->set_display_format('HORIZONTAL_BOX_PLOT_MULTI');
+				//	break;
+				case 'SCATTER_PLOT';
+					break;
+				default:
+					$line_graph_type = isset($extra_attributes['filled_line_graph']) ? 'FILLED_LINE_GRAPH' : 'LINE_GRAPH';
+					$mto->test_profile->set_display_format((count($days) < 5 || ($is_tracking == false && !isset($extra_attributes['force_line_graph_compact'])) ? 'BAR_ANALYZE_GRAPH' : $line_graph_type));
 			}
 
 			foreach(array_keys($systems) as $system_key)
