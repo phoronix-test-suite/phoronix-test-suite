@@ -91,6 +91,7 @@ class system_monitor extends pts_module_interface
 			}
 			echo PHP_EOL;
 		}
+		sleep(4);
 
 		pts_module::pts_timed_function('pts_monitor_update', 2);
 	}

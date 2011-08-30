@@ -156,7 +156,16 @@ class pts_render
 		switch($display_format)
 		{
 			case 'LINE_GRAPH':
-				$graph = new pts_LineGraph($result_object, $result_file);
+				if($result_object->test_result_buffer->get_count() > 5)
+				{
+					// If there's too many lines close to each other, it's likely to look cluttered so turn it into range bar graph
+					$display_format = 'RANGE_BAR_GRAPH';
+					$graph = new pts_HorizontalRangeBarGraph($result_object, $result_file);
+				}
+				else
+				{
+					$graph = new pts_LineGraph($result_object, $result_file);
+				}
 				break;
 			case 'BAR_ANALYZE_GRAPH':
 			case 'BAR_GRAPH':
@@ -277,6 +286,20 @@ class pts_render
 				{
 					$graph->loadGraphIdentifiers($ss);
 				}
+				break;
+			case 'RANGE_BAR_GRAPH':
+				// TODO: should be able to load pts_test_result_buffer_item objects more cleanly into pts_Graph
+				$identifiers = array();
+				$values = array();
+
+				foreach($result_object->test_result_buffer->get_buffer_items() as $buffer_item)
+				{
+					array_push($identifiers, $buffer_item->get_result_identifier());
+					array_push($values, pts_strings::comma_explode($buffer_item->get_result_value()));
+				}
+
+				$graph->loadGraphIdentifiers($identifiers);
+				$graph->loadGraphValues($values);
 				break;
 			default:
 				// TODO: should be able to load pts_test_result_buffer_item objects more cleanly into pts_Graph

@@ -109,7 +109,7 @@ class bilde_renderer_web
 			$ver = substr($user_agent, ($p + 5), 1);
 
 			// Microsoft Internet Explorer 9.0 finally seems to do SVG right
-			if($ver < 9 && $ver != 1)
+			if($ver < 10 && $ver != 1)
 			{
 				$selected_renderer = 'PNG';
 			}

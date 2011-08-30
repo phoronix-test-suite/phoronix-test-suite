@@ -77,27 +77,37 @@ class pts_HorizontalBarGraph extends pts_Graph
 			{
 				$value = $this->graph_data[$i_o][$i];
 				$graph_size = round(($value / $this->graph_maximum_value) * ($this->graph_left_end - $this->graph_left_start));
-				$value_end_left = max($this->graph_left_start + $graph_size, 1);
+				$value_end_right = max($this->graph_left_start + $graph_size, 1);
 
 				$px_bound_top = $this->graph_top_start + ($multi_way ? 5 : 0) + ($this->identifier_height * $i) + ($bar_height * $i_o) + ($separator_height * ($i_o + 1));
 				$px_bound_bottom = $px_bound_top + $bar_height;
 				$middle_of_bar = $px_bound_top + ($bar_height / 2);
 
 				$title_tooltip = $this->graph_identifiers[$i] . ': ' . $value;
-				$std_error = isset($this->graph_data_raw[$i_o][$i]) ? pts_math::standard_error(pts_strings::colon_explode($this->graph_data_raw[$i_o][$i])) : 0;
 
-				$this->graph_image->draw_rectangle_with_border($this->graph_left_start, $px_bound_top, $value_end_left, $px_bound_bottom, in_array($this->graph_identifiers[$i], $this->value_highlights) ? $this->graph_color_highlight : $paint_color, $this->graph_color_body_light, $title_tooltip);
+				$std_error = -1;
+				if(isset($this->graph_data_raw[$i_o][$i]))
+				{
+					$std_error = pts_strings::colon_explode($this->graph_data_raw[$i_o][$i]);
 
-				if($std_error > 0.01)
+					if(count($std_error) > 1)
+					{
+						$std_error = pts_math::standard_error($std_error);
+					}
+				}
+
+				$this->graph_image->draw_rectangle_with_border($this->graph_left_start, $px_bound_top, $value_end_right, $px_bound_bottom, in_array($this->graph_identifiers[$i], $this->value_highlights) ? $this->graph_color_highlight : $paint_color, $this->graph_color_body_light, $title_tooltip);
+
+				if($std_error != -1)
 				{
 					$std_error_height = 8;
 					$std_error_rel_size = round(($std_error / $this->graph_maximum_value) * ($this->graph_left_end - $this->graph_left_start));
 
 					if($std_error_rel_size > 4)
 					{
-						$this->graph_image->draw_line(($value_end_left - $std_error_rel_size), $px_bound_top, ($value_end_left - $std_error_rel_size), $px_bound_top + $std_error_height, $this->graph_color_notches, 1);
-						$this->graph_image->draw_line(($value_end_left + $std_error_rel_size), $px_bound_top, ($value_end_left + $std_error_rel_size), $px_bound_top + $std_error_height, $this->graph_color_notches, 1);
-						$this->graph_image->draw_line(($value_end_left - $std_error_rel_size), $px_bound_top, ($value_end_left + $std_error_rel_size), $px_bound_top, $this->graph_color_notches, 1);
+						$this->graph_image->draw_line(($value_end_right - $std_error_rel_size), $px_bound_top, ($value_end_right - $std_error_rel_size), $px_bound_top + $std_error_height, $this->graph_color_notches, 1);
+						$this->graph_image->draw_line(($value_end_right + $std_error_rel_size), $px_bound_top, ($value_end_right + $std_error_rel_size), $px_bound_top + $std_error_height, $this->graph_color_notches, 1);
+						$this->graph_image->draw_line(($value_end_right - $std_error_rel_size), $px_bound_top, ($value_end_right + $std_error_rel_size), $px_bound_top, $this->graph_color_notches, 1);
 					}
 
 					$bar_offset_34 = $middle_of_bar + ($multi_way ? 0 : ($bar_height / 5) + 4);
@@ -106,12 +116,12 @@ class pts_HorizontalBarGraph extends pts_Graph
 
 				if(($this->text_string_width($value, $this->graph_font, $this->graph_font_size_identifiers) + 2) < $graph_size)
 				{
-					$this->graph_image->write_text_right($value, $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_body_text, $value_end_left - 5, $middle_of_bar, $value_end_left - 5, $middle_of_bar);
+					$this->graph_image->write_text_right($value, $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_body_text, $value_end_right - 5, $middle_of_bar, $value_end_right - 5, $middle_of_bar);
 				}
 				else if($value > 0)
 				{
 					// Write it in front of the result
-					$this->graph_image->write_text_left($value, $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_text, $value_end_left + 6, $middle_of_bar, $value_end_left + 6, $middle_of_bar);
+					$this->graph_image->write_text_left($value, $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_text, $value_end_right + 6, $middle_of_bar, $value_end_right + 6, $middle_of_bar);
 				}
 			}
 		}
