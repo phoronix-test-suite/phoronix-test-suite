@@ -971,6 +971,10 @@ class pts_test_run_manager
 	}
 	public function save_results_prompt()
 	{
+		pts_client::$display->generic_heading('System Information');
+		echo 'Hardware:' . PHP_EOL . phodevi::system_hardware(true) . PHP_EOL . PHP_EOL;
+		echo 'Software:' . PHP_EOL . phodevi::system_software(true) . PHP_EOL . PHP_EOL;
+
 		if(($this->prompt_save_results || $this->force_save_results) && count($this->tests_to_run) > 0) // or check for DO_NOT_SAVE_RESULTS == false
 		{
 			if($this->force_save_results || pts_client::read_env('TEST_RESULTS_NAME'))
