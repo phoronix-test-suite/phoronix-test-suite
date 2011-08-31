@@ -288,7 +288,7 @@ class pts_openbenchmarking_client
 			}
 		}
 	}
-	public static function download_test_profile($qualified_identifier, $hash_check = null)
+	public static function download_test_profile($qualified_identifier)
 	{
 		if(is_file(PTS_TEST_PROFILE_PATH . $qualified_identifier . '/test-definition.xml'))
 		{
@@ -299,6 +299,10 @@ class pts_openbenchmarking_client
 
 		if(!is_file($file))
 		{
+			$hash_json = pts_openbenchmarking::make_openbenchmarking_request('test_hash', array('i' => $qualified_identifier));
+			$hash_json = json_decode($hash_json, true);
+			$hash_check = $hash_json['openbenchmarking']['test']['hash'];  // should also check for ['openbenchmarking']['test']['error'] problems
+
 			$test_profile = pts_openbenchmarking::make_openbenchmarking_request('download_test', array('i' => $qualified_identifier));
 
 			if($test_profile != null && ($hash_check == null || $hash_check == sha1($test_profile)))
@@ -323,7 +327,7 @@ class pts_openbenchmarking_client
 
 		return false;
 	}
-	public static function download_test_suite($qualified_identifier, $hash_check = null)
+	public static function download_test_suite($qualified_identifier)
 	{
 		if(is_file(PTS_TEST_SUITE_PATH . $qualified_identifier . '/suite-definition.xml'))
 		{
@@ -334,6 +338,10 @@ class pts_openbenchmarking_client
 
 		if(!is_file($file))
 		{
+			$hash_json = pts_openbenchmarking::make_openbenchmarking_request('suite_hash', array('i' => $qualified_identifier));
+			$hash_json = json_decode($hash_json, true);
+			$hash_check = $hash_json['openbenchmarking']['suite']['hash'];  // should also check for ['openbenchmarking']['suite']['error'] problems
+
 			$test_suite = pts_openbenchmarking::make_openbenchmarking_request('download_suite', array('i' => $qualified_identifier));
 
 			if($test_suite != null && ($hash_check == null || $hash_check == sha1($test_suite)))
@@ -438,7 +446,7 @@ class pts_openbenchmarking_client
 				{
 					if(in_array($version, $repo_index['tests'][$test]['versions']))
 					{
-						pts_openbenchmarking_client::download_test_profile($repo . '/' . $test . '-' . $version, $repo_index['tests'][$test]['package_hash']);
+						pts_openbenchmarking_client::download_test_profile($repo . '/' . $test . '-' . $version);
 						return $repo . '/' . $test . ($bind_version ? '-' . $version : null);
 					}
 				}
@@ -446,7 +454,7 @@ class pts_openbenchmarking_client
 				{
 					// Assume to use the latest version
 					$version = array_shift($repo_index['tests'][$test]['versions']);
-					pts_openbenchmarking_client::download_test_profile($repo . '/' . $test . '-' . $version, $repo_index['tests'][$test]['package_hash']);
+					pts_openbenchmarking_client::download_test_profile($repo . '/' . $test . '-' . $version);
 					return $repo . '/' . $test . ($bind_version ? '-' . $version : null);
 				}
 			}
@@ -459,7 +467,7 @@ class pts_openbenchmarking_client
 				{
 					if(in_array($version, $repo_index['suites'][$test]['versions']))
 					{
-						pts_openbenchmarking_client::download_test_suite($repo . '/' . $test . '-' . $version, $repo_index['suites'][$test]['package_hash']);
+						pts_openbenchmarking_client::download_test_suite($repo . '/' . $test . '-' . $version);
 						return $repo . '/' . $test . ($bind_version ? '-' . $version : null);
 					}
 				}
@@ -467,7 +475,7 @@ class pts_openbenchmarking_client
 				{
 					// Assume to use the latest version
 					$version = array_shift($repo_index['suites'][$test]['versions']);
-					pts_openbenchmarking_client::download_test_suite($repo . '/' . $test . '-' . $version, $repo_index['suites'][$test]['package_hash']);
+					pts_openbenchmarking_client::download_test_suite($repo . '/' . $test . '-' . $version);
 					return $repo . '/' . $test . ($bind_version ? '-' . $version : null);
 				}
 			}

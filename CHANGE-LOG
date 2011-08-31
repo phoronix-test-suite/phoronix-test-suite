@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- pts-core: Download the SHA1 package hash for test profiles/suites when fetching the test itself rather than using repo index
+
 Phoronix Test Suite 3.4 Milestone 3
 31 August 2011
 
