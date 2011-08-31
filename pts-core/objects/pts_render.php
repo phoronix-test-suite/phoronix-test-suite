@@ -235,9 +235,9 @@ class pts_render
 		{
 			$graph->markResultRegressions($extra_attributes['regression_marker_threshold']);
 		}
-		if(isset($extra_attributes['set_alternate_location']))
+		if(isset($extra_attributes['set_alternate_view']))
 		{
-			$graph->setAlternateLocation($extra_attributes['set_alternate_location']);
+			$graph->setAlternateView($extra_attributes['set_alternate_view']);
 		}
 		if(isset($extra_attributes['sort_result_buffer_values']))
 		{

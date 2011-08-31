@@ -110,7 +110,7 @@ abstract class pts_Graph
 	protected $is_multi_way_comparison = false;
 	private $test_identifier = null;
 	protected $iveland_view = false;
-	protected $link_alternate_table = null;
+	protected $link_alternate_view = null;
 	protected $value_highlights = array();
 
 	public function __construct(&$result_object = null, &$result_file = null)
@@ -547,9 +547,14 @@ abstract class pts_Graph
 		$this->render_graph_pre_init();
 		$this->render_graph_init();
 	}
-	public function setAlternateLocation($location)
+	public function setAlternateLocation($url)
 	{
-		$this->link_alternate_table = $location;
+		// this has been replaced by setAlternateView
+		return false;
+	}
+	public function setAlternateView($url)
+	{
+		$this->link_alternate_view = $url;
 	}
 	public function render_graph_finish()
 	{
@@ -662,13 +667,13 @@ abstract class pts_Graph
 	{
 		if($this->iveland_view)
 		{
-			$bottom_heading_start = $this->graph_top_end + $this->graph_bottom_offset + 25;
+			$bottom_heading_start = $this->graph_top_end + $this->graph_bottom_offset + 22;
 			$this->graph_image->draw_rectangle(0, $bottom_heading_start, $this->graph_attr_width, $this->graph_attr_height, $this->graph_color_main_headers);
-			$this->graph_image->write_text_right(new pts_graph_ir_value('Powered By ' . $this->graph_version, array('href' => 'http://www.phoronix-test-suite.com/')), $this->graph_font, 7, $this->graph_color_background, $this->graph_left_end, $bottom_heading_start + 7, $this->graph_left_end, $bottom_heading_start + 7);
+			$this->graph_image->write_text_right(new pts_graph_ir_value('Powered By ' . $this->graph_version, array('href' => 'http://www.phoronix-test-suite.com/')), $this->graph_font, 7, $this->graph_color_background, $this->graph_left_end, $bottom_heading_start + 9, $this->graph_left_end, $bottom_heading_start + 9);
 
-			if($this->link_alternate_table != null)
+			if($this->link_alternate_view != null)
 			{
-				$this->graph_image->write_text_left(new pts_graph_ir_value('T', array('href' => $this->link_alternate_table, 'show' => 'replace', 'font-weight' => 'bold')), $this->graph_font, 7, $this->graph_color_background, 6, $bottom_heading_start + 7, 6, $bottom_heading_start + 7);
+				$this->graph_image->image_copy_merge(new pts_graph_ir_value($this->graph_image->png_image_to_type('http://openbenchmarking.org/ob-10x16.png'), array('href' => $this->link_alternate_view)), 4, $bottom_heading_start + 1, 0, 0, 10, 16);
 			}
 		}
 	}

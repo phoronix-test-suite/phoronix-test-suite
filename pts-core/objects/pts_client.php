@@ -940,14 +940,13 @@ class pts_client
 					}
 
 					$chart = new pts_ResultFileTable($result_file, null, $table_keys);
-					$chart->setAlternateLocation($save_to_dir . '/result-graphs/' . ($key + 1) . '.svg');
 					$chart->renderChart($save_to_dir . '/result-graphs/' . ($key + 1) . '_table.BILDE_EXTENSION');
 					unset($chart);
 					$generated_graph_tables = true;
 				}
 			}
 
-			$graph = pts_render::render_graph($result_object, $result_file, $save_to, array('set_alternate_location' => $save_to_dir . '/result-graphs/' . ($key + 1) . '_table.svg'));
+			$graph = pts_render::render_graph($result_object, $result_file, $save_to);
 			array_push($generated_graphs, $graph);
 		}
 
