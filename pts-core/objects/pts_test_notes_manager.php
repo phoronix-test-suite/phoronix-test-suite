@@ -130,7 +130,13 @@ class pts_test_notes_manager
 			}
 		}
 
-		$notes_string = trim(implode('. ', self::$notes)) . '.';
+		$notes_string = trim(implode('. ', self::$notes));
+
+		if($notes_string != null)
+		{
+			$notes_string .= '.';
+		}
+
 		self::$notes = array();
 
 		return $notes_string;

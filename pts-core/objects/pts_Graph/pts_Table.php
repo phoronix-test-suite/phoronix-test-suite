@@ -203,9 +203,9 @@ class pts_Table extends pts_Graph
 			$this->graph_image->write_text_left(new pts_graph_ir_value($this->graph_version, array('href' => 'http://www.phoronix-test-suite.com/')), $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_body_text, 2, $table_proper_height + $table_line_height_half, 2, $table_proper_height + $table_line_height_half);
 		}
 		*/
-		if($this->link_alternate_table != null)
+		if($this->link_alternate_view != null)
 		{
-			$this->graph_image->write_text_left(new pts_graph_ir_value('G', array('href' => $this->link_alternate_table, 'show' => 'replace', 'font-weight' => 'bold')), $this->graph_font, 7, $this->graph_color_background, 6, $table_proper_height + $table_line_height_half, 6, $table_proper_height + $table_line_height_half);
+			$this->graph_image->write_text_left(new pts_graph_ir_value('O', array('href' => $this->link_alternate_view, 'show' => 'replace', 'font-weight' => 'bold')), $this->graph_font, 7, $this->graph_color_background, 6, $table_proper_height + $table_line_height_half, 6, $table_proper_height + $table_line_height_half);
 		}
 
 		// Heading
