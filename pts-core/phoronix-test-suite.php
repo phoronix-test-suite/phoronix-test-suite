@@ -36,15 +36,6 @@ define('PTS_MODE', in_array(($m = getenv('PTS_MODE')), array('CLIENT', 'LIB', 'S
 // Any PHP default memory limit should be fine for PTS, until you run image quality comparison tests that begins to consume memory
 ini_set('memory_limit', '256M');
 
-if(PTS_MODE == 'CLIENT' && ini_get('open_basedir') != false)
-{
-	if(pts_client::open_basedir_check() == false)
-	{
-		echo PHP_EOL . 'ERROR: Your php.ini configuration open_basedir setting is preventing ' . PTS_PATH . ' from loading.' . PHP_EOL;
-		return false;
-	}
-}
-
 require(PTS_PATH . 'pts-core/pts-core.php');
 
 if(PTS_MODE != 'CLIENT')
@@ -56,6 +47,15 @@ if(PTS_MODE != 'CLIENT')
 if(ini_get('date.timezone') == null)
 {
 	date_default_timezone_set('UTC');
+}
+
+if(ini_get('open_basedir') != false)
+{
+	if(pts_client::open_basedir_check() == false)
+	{
+		echo PHP_EOL . 'ERROR: Your php.ini configuration open_basedir setting is preventing ' . PTS_PATH . ' from loading.' . PHP_EOL;
+		return false;
+	}
 }
 
 // Needed for shutdown functions
