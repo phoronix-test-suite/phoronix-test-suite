@@ -24,7 +24,7 @@
 class system_monitor extends pts_module_interface
 {
 	const module_name = 'System Monitor';
-	const module_version = '3.0.1';
+	const module_version = '3.0.2';
 	const module_description = 'This module contains sensor monitoring support.';
 	const module_author = 'Michael Larabel';
 
@@ -182,7 +182,6 @@ class system_monitor extends pts_module_interface
 	{
 		$log_f = pts_module::read_file($log_file);
 		$line_breaks = explode("\n", $log_f);
-		$contains_a_non_zero = false;
 		$results = array();
 
 		for($i = 0; $i < $start_offset && isset($line_breaks[$i]); $i++)
@@ -194,21 +193,10 @@ class system_monitor extends pts_module_interface
 		{
 			$line = trim($line);
 
-			if(!empty($line))
+			if(!empty($line) && $line > 0)
 			{
 				array_push($results, $line);
-
-				if(!$contains_a_non_zero && $line != 0)
-				{
-					$contains_a_non_zero = true;
-				}
 			}
-		}
-
-		if(!$contains_a_non_zero)
-		{
-			// Sensor likely not doing anything if ALL of its readings are 0
-			$results = array();
 		}
 
 		return $results;
