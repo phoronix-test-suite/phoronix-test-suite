@@ -193,10 +193,15 @@ class system_monitor extends pts_module_interface
 		{
 			$line = trim($line);
 
-			if(!empty($line) && $line > 0)
+			if(!empty($line) && $line >= 0)
 			{
 				array_push($results, $line);
 			}
+		}
+
+		if(count($results) > 0 && max($results) == 0)
+		{
+			$results = array();
 		}
 
 		return $results;

@@ -98,7 +98,7 @@ class pts_HorizontalBarGraph extends pts_Graph
 
 				$this->graph_image->draw_rectangle_with_border($this->graph_left_start, $px_bound_top, $value_end_right, $px_bound_bottom, in_array($this->graph_identifiers[$i], $this->value_highlights) ? $this->graph_color_highlight : $paint_color, $this->graph_color_body_light, $title_tooltip);
 
-				if($std_error != -1)
+				if($std_error != -1 && $value != null)
 				{
 					$std_error_height = 8;
 
