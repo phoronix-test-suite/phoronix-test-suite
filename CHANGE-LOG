@@ -4,6 +4,7 @@ Phoronix Test Suite (Git)
 
 - pts-core: Download the SHA1 package hash for test profiles/suites when fetching the test itself rather than using repo index
 - pts-core: Don't produce an error when open_basedir is in use by the PHP binary running the Phoronix Test Suite
+- pts-core: Fix compacting of large multi-way comparisons for compacted systems table view
 - system_monitor: Don't log negative values
 - pts_Graph: Fix key length detection for the heat-map bar graph
 

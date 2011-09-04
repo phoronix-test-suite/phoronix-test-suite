@@ -57,10 +57,27 @@ class pts_ResultFileCompactSystemsTable extends pts_Graph
 			$this->text_string_width($longest_component, $this->graph_font, ($this->graph_font_size_identifiers + 3))
 			);
 
+		$intent_count = 0;
+		$dupes = array();
+		if($this->intent[1])
+		{
+			foreach($this->intent[1] as $x)
+			{
+				if(!in_array($x, $dupes))
+				{
+					$intent_count += count($x);
+					array_push($dupes, $x);
+				}
+			}
+
+			$intent_count -= count($this->intent[0]);
+		}
+		unset($dupes);
+
 		$bottom_footer = 50; // needs to be at least 86 to make room for PTS logo
 		$this->graph_attr_height =
 			$this->graph_top_heading_height +
-			((count($this->components) + ($this->intent[1] ? (count($this->intent[0]) * count($this->intent[1])) - 1 : 0)) * $component_header_height) +
+			((count($this->components) + $intent_count) * $component_header_height) +
 			$bottom_footer
 			;
 
@@ -78,6 +95,7 @@ class pts_ResultFileCompactSystemsTable extends pts_Graph
 		// Body
 		$offset = $this->graph_top_heading_height;
 		$dash = false;
+
 		foreach($this->components as $type => $component)
 		{
 			if(($key = array_search($type, $this->intent[0])) !== false)
@@ -85,12 +103,14 @@ class pts_ResultFileCompactSystemsTable extends pts_Graph
 				$component = array();
 				foreach($this->intent[1] as $s)
 				{
-					array_push($component, $s[$key]);
+					if(isset($s[$key]))
+					{
+						array_push($component, $s[$key]);
+					}
 				}
 
 				// Eliminate duplicates from printing
 				$component = array_unique($component);
-
 				$next_offset = $offset + ($component_header_height * count($component));
 			}
 			else

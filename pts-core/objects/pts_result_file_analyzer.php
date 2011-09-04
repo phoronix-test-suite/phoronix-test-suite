@@ -81,7 +81,7 @@ class pts_result_file_analyzer
 			pts_result_file_analyzer::system_components_to_table($data, $identifiers, $rows, $hw);
 			pts_result_file_analyzer::system_components_to_table($data, $identifiers, $rows, $sw);
 			pts_result_file_analyzer::compact_result_table_data($data, $identifiers, true);
-			$desc = pts_result_file_analyzer::analyze_system_component_changes($data, $rows, array(array('Graphics', 'Display Driver', 'OpenGL'), array('Graphics', 'Monitor', 'Display Driver', 'OpenGL'), array('Graphics', 'OpenGL'), array('Graphics', 'Display Driver')), $return_all_changed_indexes);
+			$desc = pts_result_file_analyzer::analyze_system_component_changes($data, $rows, array(array('Graphics', 'Monitor', 'Display Driver', 'OpenGL'), array('Graphics', 'Display Driver', 'OpenGL'), array('Graphics', 'OpenGL'), array('Graphics', 'Display Driver')), $return_all_changed_indexes);
 		}
 
 		if($desc)
@@ -137,13 +137,14 @@ class pts_result_file_analyzer
 			}
 		}
 
+		$total_width = count($data);
 		$first_objects = array_shift($data);
 		$comparison_good = true;
 		$comparison_objects = array();
 
 		foreach($first_objects as $i => $o)
 		{
-			if($o->get_attribute('spans_col'))
+			if($o->get_attribute('spans_col') == $total_width)
 			{
 				unset($first_objects[$i]);
 			}
@@ -151,9 +152,6 @@ class pts_result_file_analyzer
 
 		if(count($first_objects) <= $max_combo_count && count($first_objects) > 0)
 		{
-			array_push($comparison_objects, ($return_all_changed_indexes ? array_map('strval', $first_objects) : implode('/', $first_objects)));
-
-			$first_objects = array_shift($data);
 			$changed_indexes = array_keys($first_objects);
 			array_push($comparison_objects, ($return_all_changed_indexes ? array_map('strval', $first_objects) : implode('/', $first_objects)));
 
@@ -162,6 +160,7 @@ class pts_result_file_analyzer
 				while($comparison_good && ($this_identifier = array_shift($data)) != null)
 				{
 					$this_keys = array_keys($this_identifier);
+					$do_push = false;
 
 					if($this_keys != $changed_indexes)
 					{
@@ -170,12 +169,21 @@ class pts_result_file_analyzer
 							$change = $rows[$change];
 						}
 
-						if(!in_array($this_keys, $supported_combos))
+						if(!in_array($this_keys, $supported_combos) && (count($this_keys) > 1 || array_search($this_keys[0], $supported_combos[0]) === false))
 						{
 							$comparison_good = false;
 						}
+						else
+						{
+							$do_push = true;
+						}
 					}
 					else
+					{
+						$do_push = true;
+					}
+
+					if($do_push)
 					{
 						array_push($comparison_objects, ($return_all_changed_indexes ? array_map('strval', $this_identifier) : implode('/', $this_identifier)));
 					}
