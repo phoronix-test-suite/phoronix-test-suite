@@ -83,7 +83,7 @@ class pts_HeatMapBarGraph
 
 		if(!empty($this->keys))
 		{
-			list($longest_key_width, $key_line_height) = bilde_renderer::soft_text_string_dimensions(max($this->keys), '', 10, true);
+			list($longest_key_width, $key_line_height) = bilde_renderer::soft_text_string_dimensions(pts_strings::find_longest_string($this->keys), '', 10, true);
 			$key_line_height += 18;
 			$keys_per_line = floor($bar_width / ($longest_key_width + 20));
 			$title_key_offset = ceil(count($this->keys) / $keys_per_line) * $key_line_height;

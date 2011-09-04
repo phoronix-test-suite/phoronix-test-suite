@@ -174,6 +174,33 @@ class pts_strings
 
 		return $random;
 	}
+	public static function find_longest_string(&$string_r)
+	{
+		if(!is_array($string_r))
+		{
+			return $string_r;
+		}
+
+		$longest_string = null;
+		$longest_string_length = 0;
+
+		foreach($string_r as $one_string)
+		{
+			if(is_array($one_string))
+			{
+				$one_string = self::find_longest_string($one_string);
+			}
+
+			$one_string = strval($one_string);
+			if(isset($one_string[$longest_string_length]))
+			{
+				$longest_string = $one_string;
+				$longest_string_length = strlen($one_string);
+			}
+		}
+
+		return $longest_string;
+	}
 	public static function char_is_of_type($char, $attributes)
 	{
 		$i = ord($char);

@@ -60,8 +60,8 @@ class pts_Table extends pts_Graph
 		$this->table_data = $table_data;
 
 		// Do some calculations
-		$this->longest_column_identifier = $this->find_longest_string($this->columns);
-		$this->longest_row_identifier = $this->find_longest_string($this->rows);
+		$this->longest_column_identifier = pts_strings::find_longest_string($this->columns);
+		$this->longest_row_identifier = pts_strings::find_longest_string($this->rows);
 		$this->graph_maximum_value = $this->find_longest_string_in_table_data($this->table_data);
 
 		foreach($this->columns as &$column)

@@ -49,7 +49,7 @@ class pts_ResultFileCompactSystemsTable extends pts_Graph
 	{
 		$this->graph_top_heading_height = 22 + $this->graph_font_size_heading;
 
-		$longest_component = $this->find_longest_string($this->components);
+		$longest_component = pts_strings::find_longest_string($this->components);
 		$component_header_height = $this->text_string_height($longest_component, $this->graph_font, ($this->graph_font_size_identifiers + 3)) + 4;
 
 		$this->graph_attr_width = 10 + max(

@@ -44,7 +44,7 @@ class pts_TestCountPassGraph extends pts_Graph
 
 		$main_width = floor($graph_width * .24);
 		$main_font_size = $this->graph_font_size_bars;
-		$main_greatest_length = $this->find_longest_string($this->graph_identifiers);
+		$main_greatest_length = pts_strings::find_longest_string($this->graph_identifiers);
 
 		$width = $main_width - 8;
 		$height = $line_height - 4;
@@ -60,7 +60,7 @@ class pts_TestCountPassGraph extends pts_Graph
 		$headings = pts_strings::comma_explode($this->graph_y_title);
 		$identifiers_width = floor($identifiers_total_width / count($headings));
 		$headings_font_size = $this->graph_font_size_bars;
-		while(($this->text_string_width($this->find_longest_string($headings), $this->graph_font, $headings_font_size) > ($identifiers_width - 2)) || $this->text_string_height($this->graph_maximum_value, $this->graph_font, $headings_font_size) > ($line_height - 4))
+		while(($this->text_string_width(pts_strings::find_longest_string($headings), $this->graph_font, $headings_font_size) > ($identifiers_width - 2)) || $this->text_string_height($this->graph_maximum_value, $this->graph_font, $headings_font_size) > ($line_height - 4))
 		{
 			$headings_font_size -= 0.5;
 		}

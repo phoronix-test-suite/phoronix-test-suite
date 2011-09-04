@@ -60,8 +60,8 @@ class pts_PieChart extends pts_Graph
 		}
 
 		$key_count = count($key_strings);
-		$key_item_width = 18 + $this->text_string_width($this->find_longest_string($this->graph_identifiers), $this->graph_font, $this->graph_font_size_key);
-		$key_item_width_value = 12 + $this->text_string_width($this->find_longest_string($key_strings), $this->graph_font, $this->graph_font_size_key);
+		$key_item_width = 18 + $this->text_string_width(pts_strings::find_longest_string($this->graph_identifiers), $this->graph_font, $this->graph_font_size_key);
+		$key_item_width_value = 12 + $this->text_string_width(pts_strings::find_longest_string($key_strings), $this->graph_font, $this->graph_font_size_key);
 		$keys_per_line = floor(($this->graph_left_end - $this->graph_left_start - 14) / ($key_item_width + $key_item_width_value));
 
 		if($keys_per_line < 1)

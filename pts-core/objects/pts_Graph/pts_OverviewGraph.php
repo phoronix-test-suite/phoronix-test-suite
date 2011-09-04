@@ -68,7 +68,7 @@ class pts_OverviewGraph extends pts_Graph
 		$this->graph_font_size_identifiers = 6.5;
 		$this->graph_attr_width = 1000;
 
-		list($longest_title_width, $longest_title_height) = bilde_renderer::soft_text_string_dimensions($this->find_longest_string($this->test_titles), $this->graph_font, $this->graph_font_size_identifiers);
+		list($longest_title_width, $longest_title_height) = bilde_renderer::soft_text_string_dimensions(pts_strings::find_longest_string($this->test_titles), $this->graph_font, $this->graph_font_size_identifiers);
 
 		$this->graph_left_start += 20;
 		$this->graphs_per_row = floor(($this->graph_attr_width - $this->graph_left_start - $this->graph_left_end_opp) / ($longest_title_width + 2));

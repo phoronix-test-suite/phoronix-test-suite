@@ -41,7 +41,7 @@ class pts_VerticalBarGraph extends pts_Graph
 		$identifier_count = count($this->graph_identifiers);
 		$this->identifier_width = floor(($this->graph_left_end - $this->graph_left_start) / $identifier_count);
 
-		$longest_string = $this->find_longest_string($this->graph_identifiers);
+		$longest_string = pts_strings::find_longest_string($this->graph_identifiers);
 		$width = $this->identifier_width - 4;
 		$this->graph_font_size_identifiers = $this->text_size_bounds($longest_string, $this->graph_font, $this->graph_font_size_identifiers, $this->minimum_identifier_font, $width);
 

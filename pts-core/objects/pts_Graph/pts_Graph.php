@@ -380,32 +380,6 @@ abstract class pts_Graph
 	{
 		$this->value_highlights = $values;
 	}
-	protected function find_longest_string(&$string_r)
-	{
-		$longest_string = null;
-		$longest_string_length = 0;
-
-		if(!is_array($string_r))
-		{
-			$string_r = array($string_r);
-		}
-
-		foreach($string_r as $one_string)
-		{
-			if(is_array($one_string))
-			{
-				$one_string = $this->find_longest_string($one_string);
-			}
-
-			if(($new_length = strlen($one_string)) > $longest_string_length)
-			{
-				$longest_string = $one_string;
-				$longest_string_length = $new_length;
-			}
-		}
-
-		return $longest_string;
-	}
 	protected function update_graph_dimensions($width = -1, $height = -1, $recalculate_offsets = false)
 	{
 		// Allow render area to be increased, but not decreased
@@ -461,7 +435,7 @@ abstract class pts_Graph
 				if($this->is_multi_way_comparison && count($this->graph_data_title) > 1)
 				{
 					// TODO: verify this is good and covered for all scenarios
-					$longest_r = $this->find_longest_string($this->graph_identifiers);
+					$longest_r = pts_strings::find_longest_string($this->graph_identifiers);
 					$longest_r = explode(' - ', $longest_r);
 					$plus_extra = 0;
 
@@ -474,7 +448,7 @@ abstract class pts_Graph
 				}
 				else
 				{
-					$longest_identifier_width = $this->text_string_width($this->find_longest_string($this->graph_identifiers), $this->graph_font, $this->graph_font_size_identifiers) + 8;
+					$longest_identifier_width = $this->text_string_width(pts_strings::find_longest_string($this->graph_identifiers), $this->graph_font, $this->graph_font_size_identifiers) + 8;
 				}
 
 				$longest_identifier_max = $this->graph_attr_width * 0.5;
@@ -507,8 +481,8 @@ abstract class pts_Graph
 			{
 				if($this->is_multi_way_comparison && count($this->graph_data) > 1)
 				{
-					$longest_string = explode(' - ', $this->find_longest_string($this->graph_identifiers));
-					$longest_string = $this->find_longest_string($longest_string);
+					$longest_string = explode(' - ', pts_strings::find_longest_string($this->graph_identifiers));
+					$longest_string = pts_strings::find_longest_string($longest_string);
 
 					$rotated_text = round($this->text_string_width($longest_string, $this->graph_font, $this->graph_font_size_identifiers) * 0.96);
 					$per_identifier_height = max((14 + (22 * count($this->graph_data))), $rotated_text);
@@ -828,7 +802,7 @@ abstract class pts_Graph
 		}
 
 		$this->graph_key_line_height = 16;
-		$this->graph_key_item_width = 16 + $this->text_string_width($this->find_longest_string($this->graph_data_title), $this->graph_font, $this->graph_font_size_key);
+		$this->graph_key_item_width = 16 + $this->text_string_width(pts_strings::find_longest_string($this->graph_data_title), $this->graph_font, $this->graph_font_size_key);
 		$this->graph_keys_per_line = floor(($this->graph_left_end - $this->graph_left_start) / $this->graph_key_item_width);
 
 		return ceil(count($this->graph_data_title) / $this->graph_keys_per_line) * $this->graph_key_line_height;
