@@ -90,9 +90,17 @@ class pts_HorizontalBarGraph extends pts_Graph
 				{
 					$std_error = pts_strings::colon_explode($this->graph_data_raw[$i_o][$i]);
 
-					if(count($std_error) > 1)
+					switch(count($std_error))
 					{
-						$std_error = pts_math::standard_error($std_error);
+						case 0:
+							$std_error = -1;
+							break;
+						case 1:
+							$std_error = 0;
+							break;
+						default:
+							$std_error = pts_math::standard_error($std_error);
+							break;
 					}
 				}
 

@@ -93,21 +93,26 @@ class pts_render
 			if($result_file->is_multi_way_comparison() && in_array($result_object->test_profile->get_display_format(), array('LINE_GRAPH', 'FILLED_LINE_GRAPH')))
 			{
 				// Convert multi-way line graph into horizontal box plot
-				$result_object->test_profile->set_display_format('HORIZONTAL_BOX_PLOT');
-
-				// Turn a multi-way line graph into an averaged bar graph
-/*
-				$buffer_items = $result_object->test_result_buffer->get_buffer_items();
-				$result_object->test_result_buffer = new pts_test_result_buffer();
-
-				foreach($buffer_items as $buffer_item)
+				if(false)
 				{
-					$values = pts_strings::comma_explode($buffer_item->get_result_value());
-					$avg_value = pts_math::set_precision(array_sum($values) / count($values), 2);
-					$result_object->test_result_buffer->add_test_result($buffer_item->get_result_identifier(), $avg_value, $avg_value);
+					$result_object->test_profile->set_display_format('HORIZONTAL_BOX_PLOT');
 				}
+				else
+				{
+					// Turn a multi-way line graph into an averaged bar graph
 
-				$result_object->test_profile->set_display_format('BAR_GRAPH');*/
+					$buffer_items = $result_object->test_result_buffer->get_buffer_items();
+					$result_object->test_result_buffer = new pts_test_result_buffer();
+
+					foreach($buffer_items as $buffer_item)
+					{
+						$values = pts_strings::comma_explode($buffer_item->get_result_value());
+						$avg_value = pts_math::set_precision(array_sum($values) / count($values), 2);
+						$result_object->test_result_buffer->add_test_result($buffer_item->get_result_identifier(), $avg_value, $avg_value);
+					}
+
+					$result_object->test_profile->set_display_format('BAR_GRAPH');
+				}
 			}
 
 			if($result_object->test_profile->get_display_format() != 'PIE_CHART')
@@ -146,7 +151,7 @@ class pts_render
 		switch($display_format)
 		{
 			case 'LINE_GRAPH':
-				if($result_object->test_result_buffer->get_count() > 5)
+				if(false && $result_object->test_result_buffer->get_count() > 5)
 				{
 					// If there's too many lines close to each other, it's likely to look cluttered so turn it into horizontal range bar / box chart graph
 					$display_format = 'HORIZONTAL_BOX_PLOT';
@@ -590,6 +595,11 @@ class pts_render
 	}
 	public static function multi_way_identifier_check($identifiers, &$system_hardware = null, &$result_file = null)
 	{
+		/*
+			Samples To Use For Testing:
+			1109026-LI-AMDRADEON57
+		*/
+
 		$systems = array();
 		$targets = array();
 		$is_multi_way = true;
