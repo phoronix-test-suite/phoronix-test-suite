@@ -171,7 +171,7 @@ class phodevi_memory extends phodevi_device_interface
 				{
 					$info = ceil($info / 1024) * 1024;
 				}
-				else if($info > 3584)
+				else if($info > 1536)
 				{
 					$info = ceil($info / 512) * 512;
 				}

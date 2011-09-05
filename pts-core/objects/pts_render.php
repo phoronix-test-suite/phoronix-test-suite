@@ -108,7 +108,7 @@ class pts_render
 					{
 						$values = pts_strings::comma_explode($buffer_item->get_result_value());
 						$avg_value = pts_math::set_precision(array_sum($values) / count($values), 2);
-						$result_object->test_result_buffer->add_test_result($buffer_item->get_result_identifier(), $avg_value, $avg_value);
+						$result_object->test_result_buffer->add_test_result($buffer_item->get_result_identifier(), $avg_value);
 					}
 
 					$result_object->test_profile->set_display_format('BAR_GRAPH');
