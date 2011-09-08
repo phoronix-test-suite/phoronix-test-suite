@@ -37,7 +37,7 @@ class list_test_usage implements pts_option_interface
 			{
 				$test_profile = new pts_test_profile($identifier);
 
-				if($test_profile->test_installation->get_installed_version() != null)
+				if($test_profile != false && $test_profile->test_installation->get_installed_version() != null)
 				{
 					$avg_time = $test_profile->test_installation->get_average_run_time();
 					$avg_time = !empty($avg_time) ? pts_strings::format_time($avg_time, "SECONDS", false) : "N/A";

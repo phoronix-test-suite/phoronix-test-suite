@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 3.4.0-Lillesand
+8 September 2011
 
 - pts-core: Download the SHA1 package hash for test profiles/suites when fetching the test itself rather than using repo index
 - pts-core: Don't produce an error when open_basedir is in use by the PHP binary running the Phoronix Test Suite
