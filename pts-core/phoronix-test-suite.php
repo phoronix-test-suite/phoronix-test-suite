@@ -38,7 +38,7 @@ ini_set('memory_limit', '256M');
 
 require(PTS_PATH . 'pts-core/pts-core.php');
 
-if(PTS_MODE != 'CLIENT')
+if(!PTS_IS_CLIENT)
 {
 	// pts-core is acting as a library, return now since no need to run client code
 	return;

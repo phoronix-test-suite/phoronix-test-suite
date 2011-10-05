@@ -23,7 +23,7 @@
 class benchmark implements pts_option_interface
 {
 	const doc_section = 'Testing';
-	const doc_description = "This option will install the selected test(s) (if needed) and will proceed to run the test(s). This option is equivalent to running phoronix-test-suite with the install option followed by the run option. Multiple arguments can be supplied to run additional tests at the same time and save the results into one file.";
+	const doc_description = 'This option will install the selected test(s) (if needed) and will proceed to run the test(s). This option is equivalent to running phoronix-test-suite with the install option followed by the run option. Multiple arguments can be supplied to run additional tests at the same time and save the results into one file.';
 
 	public static function command_aliases()
 	{

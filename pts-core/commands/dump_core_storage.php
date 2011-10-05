@@ -24,20 +24,20 @@ class dump_core_storage implements pts_option_interface
 {
 	public static function run($r)
 	{
-		pts_client::$display->generic_heading("Core Storage");
+		pts_client::$display->generic_heading('Core Storage');
 		$pso = pts_storage_object::recover_from_file(PTS_CORE_STORAGE);
 
 		foreach($pso->get_objects() as $pso_index => $pso_object)
 		{
-			if($pso_index != "phodevi_smart_cache")
+			if($pso_index != 'phodevi_smart_cache')
 			{
-				echo $pso_index . ": ";
+				echo $pso_index . ': ';
 
 				if(is_array($pso_object))
 				{
 					foreach($pso_object as $key => $element)
 					{
-						echo "\n\t" . $key . ": " . $element;
+						echo PHP_EOL . "\t" . $key . ': ' . $element;
 					}
 				}
 				else
@@ -45,11 +45,11 @@ class dump_core_storage implements pts_option_interface
 					echo $pso_object;
 				}
 
-				echo "\n";
+				echo PHP_EOL;
 			}
 		}
 
-		echo "\n";
+		echo PHP_EOL;
 	}
 }
 

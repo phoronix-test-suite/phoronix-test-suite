@@ -23,27 +23,27 @@
 class rebuild_composite_xml implements pts_option_interface
 {
 	const doc_section = 'Other';
-	const doc_description = "This option can be used to rebuild your composite XML file in the event that the main result file was corrupted and the test-X.xml files are still present in the result file directory.";
+	const doc_description = 'This option can be used to rebuild your composite XML file in the event that the main result file was corrupted and the test-X.xml files are still present in the result file directory.';
 
 	public static function argument_checks()
 	{
 		return array(
-		new pts_argument_check(0, array("pts_types", "is_result_file"), null)
+		new pts_argument_check(0, array('pts_types', 'is_result_file'), null)
 		);
 	}
 	public static function run($r)
 	{
 		$identifier = $r[0];
-		$test_xml_files = pts_file_io::glob(PTS_SAVE_RESULTS_PATH . $identifier . "/test-*.xml");
+		$test_xml_files = pts_file_io::glob(PTS_SAVE_RESULTS_PATH . $identifier . '/test-*.xml');
 
 		if(count($test_xml_files) == 0)
 		{
-			echo "\nNo test XML data was found.\n";
+			echo PHP_EOL . 'No test XML data was found.' . PHP_EOL;
 			return false;
 		}
 
-		pts_client::save_test_result($identifier . "/composite.xml", pts_merge::merge_test_results_array($test_xml_files));
-		pts_client::regenerate_graphs($identifier, "The " . $identifier . " result file XML has been rebuilt.");
+		pts_client::save_test_result($identifier . '/composite.xml', pts_merge::merge_test_results_array($test_xml_files));
+		pts_client::regenerate_graphs($identifier, 'The ' . $identifier . ' result file XML has been rebuilt.');
 	}
 }
 

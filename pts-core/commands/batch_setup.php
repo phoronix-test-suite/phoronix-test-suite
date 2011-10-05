@@ -27,32 +27,32 @@ class batch_setup implements pts_option_interface
 
 	public static function run($r)
 	{
-		echo "\nThese are the default configuration options for when running the Phoronix Test Suite in a batch mode (i.e. running phoronix-test-suite batch-benchmark universe). Running in a batch mode is designed to be as autonomous as possible, except for where you'd like any end-user interaction.\n\n";
+		echo PHP_EOL . 'These are the default configuration options for when running the Phoronix Test Suite in a batch mode (i.e. running phoronix-test-suite batch-benchmark universe). Running in a batch mode is designed to be as autonomous as possible, except for where you\'d like any end-user interaction.' . PHP_EOL . PHP_EOL;
 		$batch_options = array();
-		$batch_options['PhoronixTestSuite/Options/BatchMode/SaveResults'] = pts_config::bool_to_string(pts_user_io::prompt_bool_input("Save test results when in batch mode", true));
+		$batch_options['PhoronixTestSuite/Options/BatchMode/SaveResults'] = pts_config::bool_to_string(pts_user_io::prompt_bool_input('Save test results when in batch mode', true));
 
-		if($batch_options['PhoronixTestSuite/Options/BatchMode/SaveResults'] == "TRUE")
+		if($batch_options['PhoronixTestSuite/Options/BatchMode/SaveResults'] == 'TRUE')
 		{
-			$batch_options['PhoronixTestSuite/Options/BatchMode/OpenBrowser'] = pts_config::bool_to_string(pts_user_io::prompt_bool_input("Open the web browser automatically when in batch mode", false));
-			$batch_options['PhoronixTestSuite/Options/BatchMode/UploadResults'] = pts_config::bool_to_string(pts_user_io::prompt_bool_input("Auto upload the results to OpenBenchmarking.org", true));
-			$batch_options['PhoronixTestSuite/Options/BatchMode/PromptForTestIdentifier'] = pts_config::bool_to_string(pts_user_io::prompt_bool_input("Prompt for test identifier", true));
-			$batch_options['PhoronixTestSuite/Options/BatchMode/PromptForTestDescription'] = pts_config::bool_to_string(pts_user_io::prompt_bool_input("Prompt for test description", true));
-			$batch_options['PhoronixTestSuite/Options/BatchMode/PromptSaveName'] = pts_config::bool_to_string(pts_user_io::prompt_bool_input("Prompt for saved results file-name", true));
+			$batch_options['PhoronixTestSuite/Options/BatchMode/OpenBrowser'] = pts_config::bool_to_string(pts_user_io::prompt_bool_input('Open the web browser automatically when in batch mode', false));
+			$batch_options['PhoronixTestSuite/Options/BatchMode/UploadResults'] = pts_config::bool_to_string(pts_user_io::prompt_bool_input('Auto upload the results to OpenBenchmarking.org', true));
+			$batch_options['PhoronixTestSuite/Options/BatchMode/PromptForTestIdentifier'] = pts_config::bool_to_string(pts_user_io::prompt_bool_input('Prompt for test identifier', true));
+			$batch_options['PhoronixTestSuite/Options/BatchMode/PromptForTestDescription'] = pts_config::bool_to_string(pts_user_io::prompt_bool_input('Prompt for test description', true));
+			$batch_options['PhoronixTestSuite/Options/BatchMode/PromptSaveName'] = pts_config::bool_to_string(pts_user_io::prompt_bool_input('Prompt for saved results file-name', true));
 		}
 		else
 		{
-			$batch_options['PhoronixTestSuite/Options/BatchMode/OpenBrowser'] = "FALSE";
-			$batch_options['PhoronixTestSuite/Options/BatchMode/UploadResults'] = "FALSE";
-			$batch_options['PhoronixTestSuite/Options/BatchMode/PromptForTestIdentifier'] = "FALSE";
-			$batch_options['PhoronixTestSuite/Options/BatchMode/PromptForTestDescription'] = "FALSE";
-			$batch_options['PhoronixTestSuite/Options/BatchMode/PromptSaveName'] = "FALSE";
+			$batch_options['PhoronixTestSuite/Options/BatchMode/OpenBrowser'] = 'FALSE';
+			$batch_options['PhoronixTestSuite/Options/BatchMode/UploadResults'] = 'FALSE';
+			$batch_options['PhoronixTestSuite/Options/BatchMode/PromptForTestIdentifier'] = 'FALSE';
+			$batch_options['PhoronixTestSuite/Options/BatchMode/PromptForTestDescription'] = 'FALSE';
+			$batch_options['PhoronixTestSuite/Options/BatchMode/PromptSaveName'] = 'FALSE';
 		}
 
-		$batch_options['PhoronixTestSuite/Options/BatchMode/RunAllTestCombinations'] = pts_config::bool_to_string(pts_user_io::prompt_bool_input("Run all test options", true));
-		$batch_options['PhoronixTestSuite/Options/BatchMode/Configured'] = "TRUE";
+		$batch_options['PhoronixTestSuite/Options/BatchMode/RunAllTestCombinations'] = pts_config::bool_to_string(pts_user_io::prompt_bool_input('Run all test options', true));
+		$batch_options['PhoronixTestSuite/Options/BatchMode/Configured'] = 'TRUE';
 
 		pts_config::user_config_generate($batch_options);
-		echo "\nBatch settings saved.\n\n";
+		echo PHP_EOL . 'Batch settings saved.' . PHP_EOL . PHP_EOL;
 	}
 }
 

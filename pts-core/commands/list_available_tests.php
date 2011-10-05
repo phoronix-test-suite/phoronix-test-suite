@@ -23,7 +23,7 @@
 class list_available_tests implements pts_option_interface
 {
 	const doc_section = 'Information';
-	const doc_description = "This option will list all available test profiles that are available from the enabled OpenBenchmarking.org repositories.";
+	const doc_description = 'This option will list all available test profiles that are available from the enabled OpenBenchmarking.org repositories.';
 
 	public static function command_aliases()
 	{
@@ -31,7 +31,7 @@ class list_available_tests implements pts_option_interface
 	}
 	public static function run($r)
 	{
-		pts_client::$display->generic_heading("Available Tests");
+		pts_client::$display->generic_heading('Available Tests');
 		$test_count = 0;
 		foreach(pts_openbenchmarking_client::available_tests() as $identifier)
 		{
@@ -45,7 +45,7 @@ class list_available_tests implements pts_option_interface
 				continue;
 			}
 
-			echo sprintf("%-28ls - %-35ls %-9ls\n", $identifier, $repo_index['tests'][$id]['title'], $repo_index['tests'][$id]['test_type']);
+			echo sprintf('%-28ls - %-35ls %-9ls', $identifier, $repo_index['tests'][$id]['title'], $repo_index['tests'][$id]['test_type']) . PHP_EOL;
 			$test_count++;
 		}
 

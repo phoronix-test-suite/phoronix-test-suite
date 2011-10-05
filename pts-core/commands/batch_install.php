@@ -23,7 +23,7 @@
 class batch_install implements pts_option_interface
 {
 	const doc_section = 'Batch Testing';
-	const doc_description = "If you wish to run the install process in the Phoronix Test Suite batch mode but do not wish to run any tests at this time. Running the install process in the batch mode will use the default values and not prompt the user of any possible options, to ensure the process is fully automated.";
+	const doc_description = 'If you wish to run the install process in the Phoronix Test Suite batch mode but do not wish to run any tests at this time. Running the install process in the batch mode will use the default values and not prompt the user of any possible options, to ensure the process is fully automated.';
 
 	public static function argument_checks()
 	{

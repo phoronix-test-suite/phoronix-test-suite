@@ -23,12 +23,12 @@
 class list_installed_tests implements pts_option_interface
 {
 	const doc_section = 'Information';
-	const doc_description = "This option will list all test profiles that are currently installed on the system.";
+	const doc_description = 'This option will list all test profiles that are currently installed on the system.';
 
 	public static function run($r)
 	{
 		$installed_tests = pts_tests::installed_tests();
-		pts_client::$display->generic_heading(count($installed_tests) . " Tests Installed");
+		pts_client::$display->generic_heading(count($installed_tests) . ' Tests Installed');
 
 		if(count($installed_tests) > 0)
 		{
@@ -42,7 +42,6 @@ class list_installed_tests implements pts_option_interface
 					echo sprintf('%-26ls - %-30ls' . PHP_EOL, $identifier, $name);
 				}
 			}
-			echo "\n";
 		}
 	}
 }

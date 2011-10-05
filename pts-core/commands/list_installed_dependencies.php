@@ -23,14 +23,13 @@
 class list_installed_dependencies implements pts_option_interface
 {
 	const doc_section = 'Information';
-	const doc_description = "This option will list all of the packages / external test dependencies that are already installed on the system that the Phoronix Test Suite may potentially depend upon by test profiles.";
+	const doc_description = 'This option will list all of the packages / external test dependencies that are already installed on the system that the Phoronix Test Suite may potentially depend upon by test profiles.';
 
 	public static function run($r)
 	{
 		$installed_titles = pts_external_dependencies::installed_dependency_titles();
-		pts_client::$display->generic_heading(count($installed_titles) . " of " . count(pts_external_dependencies::all_dependency_names()) . " External Dependencies Installed");
+		pts_client::$display->generic_heading(count($installed_titles) . ' of ' . count(pts_external_dependencies::all_dependency_names()) . ' External Dependencies Installed');
 		echo pts_user_io::display_text_list($installed_titles);
-		echo "\n";
 	}
 }
 

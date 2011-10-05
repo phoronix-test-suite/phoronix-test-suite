@@ -23,7 +23,7 @@
 class debug_test_download_links implements pts_option_interface
 {
 	const doc_section = 'Asset Creation';
-	const doc_description = "This option will check all download links within the specified test profile(s) to ensure there are no broken URLs.";
+	const doc_description = 'This option will check all download links within the specified test profile(s) to ensure there are no broken URLs.';
 
 	public static function argument_checks()
 	{
@@ -35,20 +35,20 @@ class debug_test_download_links implements pts_option_interface
 	{
 		foreach(pts_types::identifiers_to_test_profile_objects($r, true, true) as $test_profile)
 		{
-			echo "Checking: " . $test_profile . "\n";
+			echo 'Checking: ' . $test_profile . PHP_EOL;
 
 			foreach(pts_test_install_request::read_download_object_list($test_profile) as $test_file_download)
 			{
 				foreach($test_file_download->get_download_url_array() as $url)
 				{
 					$stream_context = pts_network::stream_context_create();
-					stream_context_set_params($stream_context, array("notification" => "pts_stream_status_callback"));
+					stream_context_set_params($stream_context, array('notification' => 'pts_stream_status_callback'));
 					$file_pointer = @fopen($url, 'r', false, $stream_context);
 					//fread($file_pointer, 1024);
 
 					if($file_pointer == false)
 					{
-						echo "\nDOWNLOAD: " . $test_file_download->get_filename() . " / " . $url . "\n";
+						echo PHP_EOL . 'DOWNLOAD: ' . $test_file_download->get_filename() . ' / ' . $url . PHP_EOL;
 					}
 					else
 					{

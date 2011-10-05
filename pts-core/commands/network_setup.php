@@ -27,21 +27,21 @@ class network_setup implements pts_option_interface
 
 	public static function run($r)
 	{
-		pts_client::$display->generic_heading("Network Setup");
+		pts_client::$display->generic_heading('Network Setup');
 
-		if(!pts_user_io::prompt_bool_input("Configure the Phoronix Test Suite to use a HTTP proxy", false))
+		if(!pts_user_io::prompt_bool_input('Configure the Phoronix Test Suite to use a HTTP proxy', false))
 		{
 			return false;
 		}
 
-		$proxy_address = pts_user_io::prompt_user_input("Enter IP address / server name of proxy");
-		$proxy_port = pts_user_io::prompt_user_input("Enter TCP port for proxy server");
+		$proxy_address = pts_user_io::prompt_user_input('Enter IP address / server name of proxy');
+		$proxy_port = pts_user_io::prompt_user_input('Enter TCP port for proxy server');
 
-		echo "\nTesting Proxy Server (" . $proxy_address . ":" . $proxy_port . ")\n";
+		echo PHP_EOL . 'Testing Proxy Server (' . $proxy_address . ':' . $proxy_port . ')' . PHP_EOL;
 
-		if(pts_network::http_get_contents("http://www.phoronix-test-suite.com/PTS", $proxy_address, $proxy_port) == "PTS")
+		if(pts_network::http_get_contents('http://www.phoronix-test-suite.com/PTS', $proxy_address, $proxy_port) == 'PTS')
 		{
-			echo "\nProxy Setup Completed; Storing Network Settings.\n";
+			echo PHP_EOL . 'Proxy Setup Completed; Storing Network Settings.' . PHP_EOL;
 			pts_config::user_config_generate(array(
 				'PhoronixTestSuite/Options/Networking/ProxyAddress' => $proxy_address,
 				'PhoronixTestSuite/Options/Networking/ProxyPort' => $proxy_port
@@ -49,7 +49,7 @@ class network_setup implements pts_option_interface
 		}
 		else
 		{
-			echo "\nProxy Setup Failed.\n";
+			echo PHP_EOL . 'Proxy Setup Failed.' . PHP_EOL;
 		}
 	}
 }

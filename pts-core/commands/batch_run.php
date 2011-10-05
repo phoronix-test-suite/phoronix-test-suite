@@ -23,7 +23,7 @@
 class batch_run implements pts_option_interface
 {
 	const doc_section = 'Batch Testing';
-	const doc_description = "This option and its arguments are equivalent to the run option, but the process will be run in the Phoronix Test Suite batch mode.";
+	const doc_description = 'This option and its arguments are equivalent to the run option, but the process will be run in the Phoronix Test Suite batch mode.';
 
 	public static function argument_checks()
 	{

@@ -31,10 +31,10 @@ class openbenchmarking_login implements pts_option_interface
 	}
 	public static function run($r)
 	{
-		echo "\nIf you have not already registered for your free OpenBenchmarking.org account, you can do so at http://openbenchmarking.org/\n\nOnce you have registered your account and clicked the link within the verification email, enter your log-in information below.\n\n";
-		echo "User-Name: ";
+		echo PHP_EOL . 'If you have not already registered for your free OpenBenchmarking.org account, you can do so at http://openbenchmarking.org/\n\nOnce you have registered your account and clicked the link within the verification email, enter your log-in information below.' . PHP_EOL . PHP_EOL;
+		echo 'User-Name: ';
 		$username = pts_user_io::read_user_input();
-		echo "Password: ";
+		echo 'Password: ';
 		$password = pts_user_io::read_user_input();
 
 		$login_payload = array(

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2010, Phoronix Media
-	Copyright (C) 2009 - 2010, Michael Larabel
+	Copyright (C) 2009 - 2011, Phoronix Media
+	Copyright (C) 2009 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -23,12 +23,12 @@
 class finish_run implements pts_option_interface
 {
 	const doc_section = 'Testing';
-	const doc_description = "This option can be used if a test run had not properly finished running all tests within a saved results file. Using this option when specifying a saved results file where all tests had not completed will attempt to finish testing on the remaining tests where there are missing results.";
+	const doc_description = 'This option can be used if a test run had not properly finished running all tests within a saved results file. Using this option when specifying a saved results file where all tests had not completed will attempt to finish testing on the remaining tests where there are missing results.';
 
 	public static function argument_checks()
 	{
 		return array(
-		new pts_argument_check(0, array("pts_result_file", "is_test_result_file"), null)
+		new pts_argument_check(0, array('pts_result_file', 'is_test_result_file'), null)
 		);
 	}
 	public static function run($args)
@@ -64,11 +64,11 @@ class finish_run implements pts_option_interface
 
 		if(count($incomplete_identifiers) == 0)
 		{
-			echo "\nIt appears that there are no incomplete test results within this saved file.\n\n";
+			echo PHP_EOL . 'It appears that there are no incomplete test results within this saved file.' . PHP_EOL . PHP_EOL;
 			return false;
 		}
 
-		$selected = pts_user_io::prompt_text_menu("Select which incomplete test run you would like to finish", $incomplete_identifiers);
+		$selected = pts_user_io::prompt_text_menu('Select which incomplete test run you would like to finish', $incomplete_identifiers);
 
 		// Now run it
 		if(pts_test_run_manager::initial_checks($args[0]) == false)

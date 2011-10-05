@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2010, Phoronix Media
-	Copyright (C) 2008 - 2010, Michael Larabel
+	Copyright (C) 2008 - 2011, Phoronix Media
+	Copyright (C) 2008 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
 class refresh_graphs implements pts_option_interface
 {
 	const doc_section = 'Result Management';
-	const doc_description = "This option will re-render and save all result graphs within a saved file. This option can be used when making modifications to the graphing code or its color/option configuration file and testing the changes.";
+	const doc_description = 'This option will re-render and save all result graphs within a saved file. This option can be used when making modifications to the graphing code or its color/option configuration file and testing the changes.';
 
 	public static function command_aliases()
 	{
@@ -32,13 +32,13 @@ class refresh_graphs implements pts_option_interface
 	public static function argument_checks()
 	{
 		return array(
-		new pts_argument_check(0, array("pts_types", "is_result_file"), null)
+		new pts_argument_check(0, array('pts_types', 'is_result_file'), null)
 		);
 	}
 	public static function run($r)
 	{
 		$identifier = $r[0];
-		pts_client::regenerate_graphs($identifier, "The " . $identifier . " result file graphs have been refreshed.");
+		pts_client::regenerate_graphs($identifier, 'The ' . $identifier . ' result file graphs have been refreshed.');
 	}
 }
 

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2010, Phoronix Media
-	Copyright (C) 2008 - 2010, Michael Larabel
+	Copyright (C) 2008 - 2011, Phoronix Media
+	Copyright (C) 2008 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -23,12 +23,12 @@
 class remove_installed_test implements pts_option_interface
 {
 	const doc_section = 'Test Installation';
-	const doc_description = "This option will permanently remove a installed test by the Phoronix Test Suite.";
+	const doc_description = 'This option will permanently remove a installed test by the Phoronix Test Suite.';
 
 	public static function argument_checks()
 	{
 		return array(
-		new pts_argument_check(0, array("pts_test_profile", "is_test_profile"), null)
+		new pts_argument_check(0, array('pts_test_profile', 'is_test_profile'), null)
 		);
 	}
 	public static function run($r)
@@ -37,18 +37,18 @@ class remove_installed_test implements pts_option_interface
 
 		if($test_profile->is_test_installed() == false)
 		{
-			echo "\nThis test is not installed.\n";
+			echo PHP_EOL . 'This test is not installed.' . PHP_EOL;
 			return false;
 		}
 
-		if(pts_user_io::prompt_bool_input("Are you sure you wish to remove the test " . $test_profile, false))
+		if(pts_user_io::prompt_bool_input('Are you sure you wish to remove the test ' . $test_profile, false))
 		{
 			pts_client::remove_installed_test($test_profile);
-			echo "\n" . $test_profile . " has been removed.\n\n";
+			echo PHP_EOL . $test_profile . ' has been removed.' . PHP_EOL;
 		}
 		else
 		{
-			echo "\n";
+			echo PHP_EOL;
 		}
 	}
 }

@@ -23,7 +23,7 @@
 class list_available_suites implements pts_option_interface
 {
 	const doc_section = 'Information';
-	const doc_description = "This option will list all available test suites that are available from the enabled OpenBenchmarking.org repositories.";
+	const doc_description = 'This option will list all available test suites that are available from the enabled OpenBenchmarking.org repositories.';
 
 	public static function command_aliases()
 	{
@@ -32,7 +32,7 @@ class list_available_suites implements pts_option_interface
 	public static function run($r)
 	{
 		$available_suites = pts_openbenchmarking_client::available_suites();
-		pts_client::$display->generic_heading("Available Suites");
+		pts_client::$display->generic_heading('Available Suites');
 
 		if(count($available_suites) > 0)
 		{
@@ -53,14 +53,14 @@ class list_available_suites implements pts_option_interface
 
 					if($suite_info->get_title() != null)
 					{
-						echo sprintf("%-34ls - %-32ls %s\n", $identifier_prefix . " " . $identifier, $suite_info->get_title(), $suite_info->get_suite_type());
+						echo sprintf('%-34ls - %-32ls %s' . PHP_EOL, $identifier_prefix . ' ' . $identifier, $suite_info->get_title(), $suite_info->get_suite_type());
 					}
 				}
 			}
-			echo "\n";
+			echo PHP_EOL;
 			if($has_partially_supported_suite)
 			{
-				echo "* Indicates a partially supported suite.\n\n";
+				echo '* Indicates a partially supported suite.' . PHP_EOL . PHP_EOL;
 			}
 		}
 		else

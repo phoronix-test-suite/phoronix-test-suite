@@ -1178,6 +1178,7 @@ class pts_client
 			pts_module_manager::run_command($module, $module_command, $pass_args);
 			pts_module_manager::set_current_module(null);
 		}
+		echo PHP_EOL;
 
 		pts_module_manager::module_process('__post_option_process', $command);
 	}

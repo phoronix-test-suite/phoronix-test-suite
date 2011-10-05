@@ -341,7 +341,8 @@ class pts_strings
 			'3.0' => 'Iveland',
 			'3.2' => 'Grimstad',
 			'3.4' => 'Lillesand',
-			'3.8' => 'Bykle'
+			'3.6' => 'Arendal',
+			'3.8' => 'Bygland'
 			);
 
 		return isset($codenames[$version]) ? $codenames[$version] : null;

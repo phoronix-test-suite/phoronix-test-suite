@@ -36,7 +36,7 @@ class openbenchmarking_launcher implements pts_option_interface
 
 			if(PTS_CORE_VERSION < $requires_core_version)
 			{
-				echo "\nAn incompatible OpenBenchmarking.org file was provided. You must upgrade the Phoronix Test Suite installation.\n";
+				echo PHP_EOL . 'An incompatible OpenBenchmarking.org file was provided. You must upgrade the Phoronix Test Suite installation.' . PHP_EOL;
 				return false;
 			}
 

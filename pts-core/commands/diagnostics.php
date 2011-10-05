@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2010, Phoronix Media
-	Copyright (C) 2008 - 2010, Michael Larabel
+	Copyright (C) 2008 - 2011, Phoronix Media
+	Copyright (C) 2008 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -23,31 +23,31 @@
 class diagnostics implements pts_option_interface
 {
 	const doc_section = 'System';
-	const doc_description = "This option will print information that is useful to developers when debugging problems with the Phoronix Test Suite and/or test profiles and test suites.";
+	const doc_description = 'This option will print information that is useful to developers when debugging problems with the Phoronix Test Suite and/or test profiles and test suites.';
 
 	public static function run($r)
 	{
 		$pts_defined_constants = get_defined_constants(true);
-		$show_all_constants = isset($r[0]) && $r[0] == "full";
-		foreach($pts_defined_constants["user"] as $constant => $constant_value)
+		$show_all_constants = isset($r[0]) && $r[0] == 'full';
+		foreach($pts_defined_constants['user'] as $constant => $constant_value)
 		{
-			if($show_all_constants || (!in_array(substr($constant, 0, 2), array("P_", "S_")) && substr($constant, 0, 3) != "IS_" && substr($constant, 0, 5) != "TYPE_"))
+			if($show_all_constants || (substr($constant, 0, 3) != 'IS_' && substr($constant, 0, 5) != 'TYPE_'))
 			{
-				echo $constant . " = " . $constant_value . "\n";
+				echo $constant . ' = ' . $constant_value . PHP_EOL;
 			}
 		}
 
-		echo "\nVariables That Can Be Used As Result Identifiers / File Names:\n";
+		echo PHP_EOL . 'Variables That Can Be Used As Result Identifiers / File Names:' . PHP_EOL;
 		foreach(pts_client::user_run_save_variables() as $var => $var_value)
 		{
-			echo $var . " = " . $var_value . "\n";
+			echo $var . ' = ' . $var_value . PHP_EOL;
 		}
-		echo "\nEnvironmental Variables (accessible via test scripts):\n";
+		echo PHP_EOL . 'Environmental Variables (accessible via test scripts):' . PHP_EOL;
 		foreach(pts_client::environmental_variables() as $var => $var_value)
 		{
-			echo $var . " = " . $var_value . "\n";
+			echo $var . ' = ' . $var_value . PHP_EOL;
 		}
-		echo "\n";
+		echo PHP_EOL;
 	}
 }
 

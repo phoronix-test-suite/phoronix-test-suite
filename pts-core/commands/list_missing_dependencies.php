@@ -23,14 +23,14 @@
 class list_missing_dependencies implements pts_option_interface
 {
 	const doc_section = 'Information';
-	const doc_description = "This option will list all of the packages / external test dependencies that are missing from the system that the Phoronix Test Suite may potentially need by select test profiles.";
+	const doc_description = 'This option will list all of the packages / external test dependencies that are missing from the system that the Phoronix Test Suite may potentially need by select test profiles.';
 
 	public static function run($r)
 	{
 		$missing_titles = pts_external_dependencies::missing_dependency_titles();
-		pts_client::$display->generic_heading(count($missing_titles) . " of " . count(pts_external_dependencies::all_dependency_names()) . " External Dependencies Missing");
+		pts_client::$display->generic_heading(count($missing_titles) . ' of ' . count(pts_external_dependencies::all_dependency_names()) . ' External Dependencies Missing');
 		echo pts_user_io::display_text_list($missing_titles);
-		echo "\n";
+		echo PHP_EOL;
 	}
 }
 

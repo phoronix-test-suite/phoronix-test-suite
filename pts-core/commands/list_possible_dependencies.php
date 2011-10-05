@@ -23,14 +23,14 @@
 class list_possible_dependencies implements pts_option_interface
 {
 	const doc_section = 'Information';
-	const doc_description = "This option will list all of the packages / external test dependencies that are are potentially used by the Phoronix Test Suite.";
+	const doc_description = 'This option will list all of the packages / external test dependencies that are are potentially used by the Phoronix Test Suite.';
 
 	public static function run($r)
 	{
 		$all_dependencies = pts_external_dependencies::all_dependency_titles();
-		pts_client::$display->generic_heading(count($all_dependencies) . " External Dependencies Available");
+		pts_client::$display->generic_heading(count($all_dependencies) . ' External Dependencies Available');
 		echo pts_user_io::display_text_list($all_dependencies);
-		echo "\n";
+		echo PHP_EOL;
 	}
 }
 

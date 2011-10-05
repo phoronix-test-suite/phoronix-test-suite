@@ -26,18 +26,18 @@ class dump_possible_options implements pts_option_interface
 	{
 		$options = array();
 
-		foreach(pts_file_io::glob(PTS_COMMAND_PATH . "*.php") as $option_php)
+		foreach(pts_file_io::glob(PTS_COMMAND_PATH . '*.php') as $option_php)
 		{
-			$name = str_replace("_", "-", basename($option_php, ".php"));
+			$name = str_replace('_', '-', basename($option_php, '.php'));
 
-			if(!in_array(pts_strings::first_in_string($name, '-'), array("dump", "debug", "task")))
+			if(!in_array(pts_strings::first_in_string($name, '-'), array('dump', 'debug', 'task')))
 			{
 				array_push($options, $name);
 			}
 		}
 
-		$is_true = isset($r[0]) && $r[0] == "TRUE";
-		echo implode($is_true ? " " : "\n", $options) . ($is_true ? "" : "\n");
+		$is_true = isset($r[0]) && $r[0] == 'TRUE';
+		echo implode($is_true ? ' ' : PHP_EOL, $options) . ($is_true ? null : PHP_EOL);
 	}
 }
 

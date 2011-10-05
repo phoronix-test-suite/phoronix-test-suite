@@ -24,7 +24,7 @@ class pts_version implements pts_option_interface
 {
 	const doc_section = 'Other';
 	const doc_use_alias = 'version';
-	const doc_description = "This option will display the Phoronix Test Suite client version.";
+	const doc_description = 'This option will display the Phoronix Test Suite client version.';
 
 	public static function command_aliases()
 	{
@@ -32,7 +32,7 @@ class pts_version implements pts_option_interface
 	}
 	public static function run($r)
 	{
-		echo "\n" . pts_title(true) . "\n\n";
+		echo PHP_EOL . pts_title(true) . PHP_EOL;
 	}
 }
 

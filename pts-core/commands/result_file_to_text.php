@@ -46,32 +46,32 @@ class result_file_to_text implements pts_option_interface
 		for($i = 0; $i < count($system_identifiers); $i++)
 		{
 			$result_output .= $system_identifiers[$i] . ': ' . PHP_EOL . PHP_EOL;
-			$result_output .= "\t" . $system_hardware[$i] . "\n\n\t" . $system_software[$i] . "\n\n";
+			$result_output .= "\t" . $system_hardware[$i] . PHP_EOL . PHP_EOL . "\t" . $system_software[$i] . PHP_EOL . PHP_EOL;
 		}
 
 		foreach($result_file->get_result_objects() as $result_object)
 		{
-			$result_output .= trim($result_object->test_profile->get_title() . " " . $result_object->test_profile->get_app_version() . "\n" . $result_object->get_arguments_description());
+			$result_output .= trim($result_object->test_profile->get_title() . ' ' . $result_object->test_profile->get_app_version() . PHP_EOL . $result_object->get_arguments_description());
 
 			foreach($result_object->test_result_buffer->get_buffer_items() as $buffer_item)
 			{
-				$result_output .= "\n" . $buffer_item->get_result_identifier() . ": " . $buffer_item->get_result_value();
+				$result_output .= PHP_EOL . $buffer_item->get_result_identifier() . ': ' . $buffer_item->get_result_value();
 			}
 
-			$result_output .= "\n";
+			$result_output .= PHP_EOL;
 			for($i = 0; $i < count($test_identifiers); $i++)
 			{
-				$result_output .= $test_identifiers[$i] . ": " . $test_values[$i] . "\n";
+				$result_output .= $test_identifiers[$i] . ': ' . $test_values[$i] . PHP_EOL;
 			}
-			$result_output .= "\n";
+			$result_output .= PHP_EOL;
 		}
 
 		/*
-		$file = "SAVE_TO";
+		$file = 'SAVE_TO';
 
-		if(substr($file, -4) != ".txt")
+		if(substr($file, -4) != '.txt')
 		{
-			$file .= ".txt";
+			$file .= '.txt';
 		}
 		file_put_contents($file, $result_output);
 		*/

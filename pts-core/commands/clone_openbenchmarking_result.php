@@ -24,7 +24,7 @@ class clone_openbenchmarking_result implements pts_option_interface
 {
 	const doc_section = 'OpenBenchmarking.org';
 	const doc_use_alias = 'clone-result';
-	const doc_description = "This option will download a local copy of a file that was saved to OpenBenchmarking.org, as long as a valid public ID is supplied. More than one ID can be specified and the results will then be merged.";
+	const doc_description = 'This option will download a local copy of a file that was saved to OpenBenchmarking.org, as long as a valid public ID is supplied. More than one ID can be specified and the results will then be merged.';
 
 	public static function command_aliases()
 	{
@@ -49,7 +49,7 @@ class clone_openbenchmarking_result implements pts_option_interface
 		pts_merge::merge_test_results_process($writer, $result_files);
 		pts_client::save_test_result($args[0] . '/composite.xml', $writer->get_xml(), true);
 
-		echo "\nResult Saved To: " . PTS_SAVE_RESULTS_PATH . $args[0] . "/composite.xml\n\n";
+		echo PHP_EOL . 'Result Saved To: ' . PTS_SAVE_RESULTS_PATH . $args[0] . '/composite.xml' . PHP_EOL;
 	}
 }
 

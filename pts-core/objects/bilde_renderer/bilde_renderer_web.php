@@ -114,6 +114,11 @@ class bilde_renderer_web
 				$selected_renderer = 'PNG';
 			}
 		}
+		else if(strpos($user_agent, 'facebook') !== false)
+		{
+			// Facebook uses this string for its Like/Share crawler, so serve it a PNG so it can use it as an image
+			$selected_renderer = 'PNG';
+		}
 
 		return $selected_renderer;
 	}

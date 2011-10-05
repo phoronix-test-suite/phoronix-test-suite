@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2010, Phoronix Media
-	Copyright (C) 2009 - 2010, Michael Larabel
+	Copyright (C) 2009 - 2011, Phoronix Media
+	Copyright (C) 2009 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -23,12 +23,12 @@
 class remove_from_result_file implements pts_option_interface
 {
 	const doc_section = 'Result Management';
-	const doc_description = "This option is used if there is a set of test results you wish to remove/delete from a saved results file. The user must specify a saved results file and then they will be prompted to select the results identifier associated with the results they wish to remove.";
+	const doc_description = 'This option is used if there is a set of test results you wish to remove/delete from a saved results file. The user must specify a saved results file and then they will be prompted to select the results identifier associated with the results they wish to remove.';
 
 	public static function argument_checks()
 	{
 		return array(
-		new pts_argument_check(0, array("pts_types", "is_result_file"), null)
+		new pts_argument_check(0, array('pts_types', 'is_result_file'), null)
 		);
 	}
 	public static function run($r)
@@ -40,11 +40,11 @@ class remove_from_result_file implements pts_option_interface
 
 		if(count($result_file_identifiers) < 2)
 		{
-			echo "\nThere are not multiple test runs in this result file.\n";
+			echo PHP_EOL . 'There are not multiple test runs in this result file.' . PHP_EOL;
 			return false;
 		}
 
-		$remove_identifier = pts_user_io::prompt_text_menu("Select the test run to remove", $result_file_identifiers);
+		$remove_identifier = pts_user_io::prompt_text_menu('Select the test run to remove', $result_file_identifiers);
 		$keep_identifiers = array();
 
 		foreach($result_file_identifiers as $identifier)
@@ -55,19 +55,19 @@ class remove_from_result_file implements pts_option_interface
 			}
 		}
 
-		foreach(array("test-logs", "system-logs", "installation-logs") as $dir_name)
+		foreach(array('test-logs', 'system-logs', 'installation-logs') as $dir_name)
 		{
-			if(is_dir(PTS_SAVE_RESULTS_PATH . $r[0] . "/" . $dir_name . "/" . $remove_identifier))
+			if(is_dir(PTS_SAVE_RESULTS_PATH . $r[0] . '/' . $dir_name . '/' . $remove_identifier))
 			{
-				pts_file_io::delete(PTS_SAVE_RESULTS_PATH . $r[0] . "/" . $dir_name . "/" . $remove_identifier, null, true);
+				pts_file_io::delete(PTS_SAVE_RESULTS_PATH . $r[0] . '/' . $dir_name . '/' . $remove_identifier, null, true);
 			}
 		}
 
 		$extract_select = new pts_result_merge_select($result, $keep_identifiers);
 		$extract_result = pts_merge::merge_test_results($extract_select);
 
-		pts_client::save_test_result($r[0] . "/composite.xml", $extract_result);
-		pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . $r[0] . "/composite.xml");
+		pts_client::save_test_result($r[0] . '/composite.xml', $extract_result);
+		pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . $r[0] . '/composite.xml');
 	}
 }
 

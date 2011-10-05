@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2010, Phoronix Media
-	Copyright (C) 2009 - 2010, Michael Larabel
+	Copyright (C) 2009 - 2011, Phoronix Media
+	Copyright (C) 2009 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -23,12 +23,12 @@
 class rename_identifier_in_result_file implements pts_option_interface
 {
 	const doc_section = 'Result Management';
-	const doc_description = "This option is used if you wish to change the name of the identifier in a test results file that is shown in the Phoronix Test Suite Results Viewer and the contained graphs.";
+	const doc_description = 'This option is used if you wish to change the name of the identifier in a test results file that is shown in the Phoronix Test Suite Results Viewer and the contained graphs.';
 
 	public static function argument_checks()
 	{
 		return array(
-		new pts_argument_check(0, array("pts_types", "is_result_file"), null)
+		new pts_argument_check(0, array('pts_types', 'is_result_file'), null)
 		);
 	}
 	public static function run($r)
@@ -38,8 +38,8 @@ class rename_identifier_in_result_file implements pts_option_interface
 		$result_file = new pts_result_file($result);
 		$result_file_identifiers = $result_file->get_system_identifiers();
 
-		$rename_identifier = pts_user_io::prompt_text_menu("Select the test run to rename", $result_file_identifiers);
-		$rename_identifier_new = pts_user_io::prompt_user_input("Enter the new identifier");
+		$rename_identifier = pts_user_io::prompt_text_menu('Select the test run to rename', $result_file_identifiers);
+		$rename_identifier_new = pts_user_io::prompt_user_input('Enter the new identifier');
 		$merge_selects = array();
 
 		foreach($result_file_identifiers as $identifier)
@@ -54,17 +54,17 @@ class rename_identifier_in_result_file implements pts_option_interface
 			array_push($merge_selects, $this_merge_select);
 		}
 
-		foreach(array("test-logs", "system-logs", "installation-logs") as $dir_name)
+		foreach(array('test-logs', 'system-logs', 'installation-logs') as $dir_name)
 		{
-			if(is_dir(PTS_SAVE_RESULTS_PATH . $r[0] . "/" . $dir_name . "/" . $rename_identifier))
+			if(is_dir(PTS_SAVE_RESULTS_PATH . $r[0] . '/' . $dir_name . '/' . $rename_identifier))
 			{
-				rename(PTS_SAVE_RESULTS_PATH . $r[0] . "/" . $dir_name . "/" . $rename_identifier, PTS_SAVE_RESULTS_PATH . $r[0] . "/" . $dir_name . "/" . $rename_identifier_new);
+				rename(PTS_SAVE_RESULTS_PATH . $r[0] . '/' . $dir_name . '/' . $rename_identifier, PTS_SAVE_RESULTS_PATH . $r[0] . '/' . $dir_name . '/' . $rename_identifier_new);
 			}
 		}
 
 		$extract_result = pts_merge::merge_test_results_array($merge_selects);
-		pts_client::save_test_result($r[0] . "/composite.xml", $extract_result);
-		pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . $r[0] . "/composite.xml");
+		pts_client::save_test_result($r[0] . '/composite.xml', $extract_result);
+		pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . $r[0] . '/composite.xml');
 	}
 }
 

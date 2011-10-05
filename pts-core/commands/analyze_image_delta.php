@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2010, Phoronix Media
-	Copyright (C) 2009 - 2010, Michael Larabel
+	Copyright (C) 2009 - 2011, Phoronix Media
+	Copyright (C) 2009 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -23,12 +23,12 @@
 class analyze_image_delta implements pts_option_interface
 {
 	const doc_section = 'Result Analytics';
-	const doc_description = "This option will analyze a test result file if it contains any test results that produced an image quality comparison (IQC) and will render image deltas illustrating the difference between images from two test results.";
+	const doc_description = 'This option will analyze a test result file if it contains any test results that produced an image quality comparison (IQC) and will render image deltas illustrating the difference between images from two test results.';
 
 	public static function argument_checks()
 	{
 		return array(
-		new pts_argument_check(0, array("pts_types", "is_result_file"), null)
+		new pts_argument_check(0, array('pts_types', 'is_result_file'), null)
 		);
 	}
 	public static function run($args)
@@ -40,31 +40,31 @@ class analyze_image_delta implements pts_option_interface
 
 		if(count($result_file_identifiers) < 2)
 		{
-			echo "\nThere are not multiple test runs in this result file.\n";
+			echo PHP_EOL . 'There are not multiple test runs in this result file.' . PHP_EOL;
 			return false;
 		}
 
-		$base_identifier = pts_user_io::prompt_text_menu("Select the base test run", $result_file_identifiers);
+		$base_identifier = pts_user_io::prompt_text_menu('Select the base test run', $result_file_identifiers);
 		$base_select = new pts_result_merge_select($result, $base_identifier);
 
-		$compare_identifier = pts_user_io::prompt_text_menu("Select the test run to compare", $result_file_identifiers);
+		$compare_identifier = pts_user_io::prompt_text_menu('Select the test run to compare', $result_file_identifiers);
 		$compare_select = new pts_result_merge_select($result, $compare_identifier);
 
 		do
 		{
-			$extract_to = "iqc-analyze-" . rand(100, 999);
+			$extract_to = 'iqc-analyze-' . rand(100, 999);
 		}
 		while(is_dir(PTS_SAVE_RESULTS_PATH . $extract_to));
 
 		$extract_result = pts_merge::merge_test_results($base_select, $compare_select);
-		pts_client::save_test_result($extract_to . "/composite.xml", $extract_result);
+		pts_client::save_test_result($extract_to . '/composite.xml', $extract_result);
 
 		$compare_file = new pts_result_file($extract_to);
-		$result_file_writer = new pts_result_file_writer("Image Delta");
+		$result_file_writer = new pts_result_file_writer('Image Delta');
 
 		foreach($compare_file->get_result_objects() as $result_object)
 		{
-			if($result_object->test_profile->get_display_format() != "IMAGE_COMPARISON")
+			if($result_object->test_profile->get_display_format() != 'IMAGE_COMPARISON')
 			{
 				continue;
 			}
@@ -123,15 +123,15 @@ class analyze_image_delta implements pts_option_interface
 
 			if($img_changed)
 			{
-				imagepng($delta_img, PTS_SAVE_RESULTS_PATH . $extract_to . "/scratch.png");
-				$result_value = base64_encode(file_get_contents(PTS_SAVE_RESULTS_PATH . $extract_to . "/scratch.png", FILE_BINARY));
-				pts_file_io::unlink(PTS_SAVE_RESULTS_PATH . $extract_to . "/scratch.png");
+				imagepng($delta_img, PTS_SAVE_RESULTS_PATH . $extract_to . '/scratch.png');
+				$result_value = base64_encode(file_get_contents(PTS_SAVE_RESULTS_PATH . $extract_to . '/scratch.png', FILE_BINARY));
+				pts_file_io::unlink(PTS_SAVE_RESULTS_PATH . $extract_to . '/scratch.png');
 				$result_file_writer->add_result_from_result_object_with_value_string($result_object, $result_value);
 			}
 		}
 
 		pts_client::save_result_file($result_file_writer, $extract_to);
-		pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . $extract_to . "/composite.xml");
+		pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . $extract_to . '/composite.xml');
 	}
 }
 

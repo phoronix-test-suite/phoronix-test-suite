@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2010, Phoronix Media
-	Copyright (C) 2008 - 2010, Michael Larabel
+	Copyright (C) 2008 - 2011, Phoronix Media
+	Copyright (C) 2008 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -23,12 +23,12 @@
 class analyze_batch implements pts_option_interface
 {
 	const doc_section = 'Result Analytics';
-	const doc_description = "This option will analyze a batch results file and plot out the performance impact from the different options onto a line graph (i.e. to see the impact that changing the video resolution has on the system's performance).";
+	const doc_description = 'This option will analyze a batch results file and plot out the performance impact from the different options onto a line graph (i.e. to see the impact that changing the video resolution has on the system\'s performance).';
 
 	public static function argument_checks()
 	{
 		return array(
-		new pts_argument_check(0, array("pts_types", "is_result_file"), null)
+		new pts_argument_check(0, array('pts_types', 'is_result_file'), null)
 		);
 	}
 	public static function run($args)
@@ -38,16 +38,16 @@ class analyze_batch implements pts_option_interface
 		do
 		{
 			$rand_file = rand(1000, 9999);
-			$save_to = "analyze-" . $rand_file . '/';
+			$save_to = 'analyze-' . $rand_file . '/';
 		}
 		while(is_dir(PTS_SAVE_RESULTS_PATH . $save_to));
-		$save_to .= "composite.xml";
+		$save_to .= 'composite.xml';
 
 		// Analyze Results
 		$SAVED_RESULTS = pts_merge::generate_analytical_batch_xml($base_file);
 		pts_client::save_test_result($save_to, $SAVED_RESULTS);
-		echo "Results Saved To: " . PTS_SAVE_RESULTS_PATH . $save_to . "\n\n";
-		pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . dirname($save_to) . "/index.html");
+		echo 'Results Saved To: ' . PTS_SAVE_RESULTS_PATH . $save_to . PHP_EOL . PHP_EOL;
+		pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . dirname($save_to) . '/index.html');
 	}
 }
 

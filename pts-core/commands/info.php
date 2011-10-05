@@ -28,120 +28,120 @@ class info implements pts_option_interface
 	public static function argument_checks()
 	{
 		return array(
-		new pts_argument_check(0, array("pts_types", "identifier_to_object"), "object")
+		new pts_argument_check(0, array('pts_types', 'identifier_to_object'), 'object')
 		);
 	}
 	public static function run($args)
 	{
-		echo "\n";
+		echo PHP_EOL;
 
-		if($args["object"] instanceof pts_test_suite)
+		if($args['object'] instanceof pts_test_suite)
 		{
-			pts_client::$display->generic_heading($args["object"]->get_title());
-			echo "Run Identifier: " . $args["object"]->get_identifier() . "\n";
-			echo "Suite Version: " . $args["object"]->get_version() . "\n";
-			echo "Maintainer: " . $args["object"]->get_maintainer() . "\n";
-			echo "Suite Type: " . $args["object"]->get_suite_type() . "\n";
-			echo "Unique Tests: " . $args["object"]->get_unique_test_count() . "\n";
-			echo "Suite Description: " . $args["object"]->get_description() . "\n";
-			echo "\n";
-			echo $args["object"]->pts_format_contained_tests_string();
-			echo "\n";
+			pts_client::$display->generic_heading($args['object']->get_title());
+			echo 'Run Identifier: ' . $args['object']->get_identifier() . PHP_EOL;
+			echo 'Suite Version: ' . $args['object']->get_version() . PHP_EOL;
+			echo 'Maintainer: ' . $args['object']->get_maintainer() . PHP_EOL;
+			echo 'Suite Type: ' . $args['object']->get_suite_type() . PHP_EOL;
+			echo 'Unique Tests: ' . $args['object']->get_unique_test_count() . PHP_EOL;
+			echo 'Suite Description: ' . $args['object']->get_description() . PHP_EOL;
+			echo PHP_EOL;
+			echo $args['object']->pts_format_contained_tests_string();
+			echo PHP_EOL;
 		}
-		else if($args["object"] instanceof pts_test_profile)
+		else if($args['object'] instanceof pts_test_profile)
 		{
-			$test_title = $args["object"]->get_title();
-			$test_version = $args["object"]->get_app_version();
+			$test_title = $args['object']->get_title();
+			$test_version = $args['object']->get_app_version();
 			if(!empty($test_version))
 			{
-				$test_title .= " " . $test_version;
+				$test_title .= ' ' . $test_version;
 			}
 
 			pts_client::$display->generic_heading($test_title);
-			echo "Run Identifier: " . $args["object"]->get_identifier() . "\n";
-			echo "Profile Version: " . $args["object"]->get_test_profile_version() . "\n";
-			echo "Maintainer: " . $args["object"]->get_maintainer() . "\n";
-			echo "Test Type: " . $args["object"]->get_test_hardware_type() . "\n";
-			echo "Software Type: " . $args["object"]->get_test_software_type() . "\n";
-			echo "License Type: " . $args["object"]->get_license() . "\n";
-			echo "Test Status: " . $args["object"]->get_status() . "\n";
-			echo "Project Web-Site: " . $args["object"]->get_project_url() . "\n";
-			echo "Estimated Run-Time: " . $args["object"]->get_estimated_run_time() . " Seconds\n";
+			echo 'Run Identifier: ' . $args['object']->get_identifier() . PHP_EOL;
+			echo 'Profile Version: ' . $args['object']->get_test_profile_version() . PHP_EOL;
+			echo 'Maintainer: ' . $args['object']->get_maintainer() . PHP_EOL;
+			echo 'Test Type: ' . $args['object']->get_test_hardware_type() . PHP_EOL;
+			echo 'Software Type: ' . $args['object']->get_test_software_type() . PHP_EOL;
+			echo 'License Type: ' . $args['object']->get_license() . PHP_EOL;
+			echo 'Test Status: ' . $args['object']->get_status() . PHP_EOL;
+			echo 'Project Web-Site: ' . $args['object']->get_project_url() . PHP_EOL;
+			echo 'Estimated Run-Time: ' . $args['object']->get_estimated_run_time() . ' Seconds' . PHP_EOL;
 
-			$download_size = $args["object"]->get_download_size();
+			$download_size = $args['object']->get_download_size();
 			if(!empty($download_size))
 			{
-				echo "Download Size: " . $download_size . " MB\n";
+				echo 'Download Size: ' . $download_size . ' MB' . PHP_EOL;
 			}
 
-			$environment_size = $args["object"]->get_environment_size();
+			$environment_size = $args['object']->get_environment_size();
 			if(!empty($environment_size))
 			{
-				echo "Environment Size: " . $environment_size . " MB\n";
+				echo 'Environment Size: ' . $environment_size . ' MB' . PHP_EOL;
 			}
 
-			echo "\nDescription: " . $args["object"]->get_description() . "\n";
+			echo PHP_EOL . 'Description: ' . $args['object']->get_description() . PHP_EOL;
 
 			if($args['object']->test_installation != false)
 			{
 				$last_run = $args['object']->test_installation->get_last_run_date();
-				$last_run = $last_run == "0000-00-00" ? "Never" : $last_run;
+				$last_run = $last_run == '0000-00-00' ? 'Never' : $last_run;
 
 				$avg_time = $args['object']->test_installation->get_average_run_time();
-				$avg_time = !empty($avg_time) ? pts_strings::format_time($avg_time, "SECONDS") : "N/A";
+				$avg_time = !empty($avg_time) ? pts_strings::format_time($avg_time, 'SECONDS') : 'N/A';
 				$latest_time = $args['object']->test_installation->get_latest_run_time();
-				$latest_time = !empty($latest_time) ? pts_strings::format_time($latest_time, "SECONDS") : "N/A";
+				$latest_time = !empty($latest_time) ? pts_strings::format_time($latest_time, 'SECONDS') : 'N/A';
 
-				echo "\nTest Installed: Yes\n";
-				echo "Last Run: " . $last_run . "\n";
+				echo PHP_EOL . 'Test Installed: Yes' . PHP_EOL;
+				echo 'Last Run: ' . $last_run . PHP_EOL;
 
-				if($last_run != "Never")
+				if($last_run != 'Never')
 				{
 					if($args['object']->test_installation->get_run_count() > 1)
 					{
-						echo "Average Run-Time: " . $avg_time . "\n";
+						echo 'Average Run-Time: ' . $avg_time . PHP_EOL;
 					}
 
-					echo "Latest Run-Time: " . $latest_time . "\n";
-					echo "Times Run: " . $args['object']->test_installation->get_run_count() . "\n";
+					echo 'Latest Run-Time: ' . $latest_time . PHP_EOL;
+					echo 'Times Run: ' . $args['object']->test_installation->get_run_count() . PHP_EOL;
 				}
 			}
 			else
 			{
-				echo "\nTest Installed: No\n";
+				echo PHP_EOL . 'Test Installed: No' . PHP_EOL;
 			}
 
-			$dependencies = $args["object"]->get_dependencies();
+			$dependencies = $args['object']->get_dependencies();
 			if(!empty($dependencies) && !empty($dependencies[0]))
 			{
-				echo "\nSoftware Dependencies:\n";
-				echo pts_user_io::display_text_list($args["object"]->get_dependency_names());
+				echo PHP_EOL . 'Software Dependencies:';
+				echo pts_user_io::display_text_list($args['object']->get_dependency_names());
 			}
-			echo "\n";
+			echo PHP_EOL;
 		}
-		else if($args["object"] instanceof pts_result_file)
+		else if($args['object'] instanceof pts_result_file)
 		{
-			echo "Title: " . $args["object"]->get_title() . "\nIdentifier: " . $args["object"]->get_identifier() . "\n";
-			echo "\nTest Result Identifiers:\n";
-			echo pts_user_io::display_text_list($args["object"]->get_system_identifiers());
+			echo 'Title: ' . $args['object']->get_title() . '\nIdentifier: ' . $args['object']->get_identifier() . PHP_EOL;
+			echo PHP_EOL . 'Test Result Identifiers:' . PHP_EOL;
+			echo pts_user_io::display_text_list($args['object']->get_system_identifiers());
 
-			if(count(($tests = $args["object"]->get_unique_test_titles())) > 0)
+			if(count(($tests = $args['object']->get_unique_test_titles())) > 0)
 			{
-				echo "\nContained Tests:\n";
+				echo PHP_EOL . 'Contained Tests:' . PHP_EOL;
 				echo pts_user_io::display_text_list($tests);
 			}
-			echo "\n";
+			echo PHP_EOL;
 		}
-		else if($args["object"] instanceof pts_virtual_test_suite)
+		else if($args['object'] instanceof pts_virtual_test_suite)
 		{
-			pts_client::$display->generic_heading($args["object"]->get_title());
-			echo "Virtual Suite Description: " . $args["object"]->get_description() . "\n\n";
+			pts_client::$display->generic_heading($args['object']->get_title());
+			echo 'Virtual Suite Description: ' . $args['object']->get_description() . PHP_EOL . PHP_EOL;
 
-			foreach($args["object"]->get_contained_test_profiles() as $test_profile)
+			foreach($args['object']->get_contained_test_profiles() as $test_profile)
 			{
-				echo '- ' . $test_profile . "\n";
+				echo '- ' . $test_profile . PHP_EOL;
 			}
-			echo "\n";
+			echo PHP_EOL;
 		}
 	}
 }

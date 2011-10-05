@@ -23,7 +23,7 @@
 class list_saved_results implements pts_option_interface
 {
 	const doc_section = 'Information';
-	const doc_description = "This option will list all of the saved test results found on the system.";
+	const doc_description = 'This option will list all of the saved test results found on the system.';
 
 	public static function command_aliases()
 	{
@@ -32,7 +32,7 @@ class list_saved_results implements pts_option_interface
 	public static function run($r)
 	{
 		$saved_results = pts_client::saved_test_results();
-		pts_client::$display->generic_heading(count($saved_results) . " Saved Results");
+		pts_client::$display->generic_heading(count($saved_results) . ' Saved Results');
 
 		if(count($saved_results) > 0)
 		{
@@ -42,19 +42,18 @@ class list_saved_results implements pts_option_interface
 
 				if(($title = $result_file->get_title()) != null)
 				{
-					echo sprintf("Saved Name: %-18ls Title: %-18ls \n", $saved_results_identifier, $title);
+					echo sprintf('Saved Name: %-18ls Title: %-18ls', $saved_results_identifier, $title) . PHP_EOL;
 
 					foreach($result_file->get_system_identifiers() as $id)
 					{
 						if(!empty($id))
 						{
-							echo "\t- " . $id . "\n";
+							echo "\t" . '- ' . $id . PHP_EOL;
 						}
 					}
-					echo "\n";
+					echo PHP_EOL;
 				}
 			}
-			echo "\n";
 		}
 	}
 }

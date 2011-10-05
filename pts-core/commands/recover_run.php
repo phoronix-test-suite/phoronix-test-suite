@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2010, Phoronix Media
-	Copyright (C) 2009 - 2010, Michael Larabel
+	Copyright (C) 2009 - 2011, Phoronix Media
+	Copyright (C) 2009 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -25,12 +25,12 @@
 class recover_run implements pts_option_interface
 {
 	const doc_section = 'Testing';
-	const doc_description = "This option is similar to finish-run and can be used to finish running a set of tests that were started but never finished. Using this option when specifying a saved results file where all tests had not completed will attempt to finish testing on the remaining tests where there are missing results. Differing from <em>finish-run</em>, <em>recover-run</em> can be used if the system had crashed during the testing process and the test results from before the crash happened can generally be recovered.";
+	const doc_description = 'This option is similar to finish-run and can be used to finish running a set of tests that were started but never finished. Using this option when specifying a saved results file where all tests had not completed will attempt to finish testing on the remaining tests where there are missing results. Differing from <em>finish-run</em>, <em>recover-run</em> can be used if the system had crashed during the testing process and the test results from before the crash happened can generally be recovered.';
 
 	public static function argument_checks()
 	{
 		return array(
-		new pts_argument_check(0, array("recover_run", "is_test_result_directory"), null)
+		new pts_argument_check(0, array('recover_run', 'is_test_result_directory'), null)
 		);
 	}
 	public static function is_test_result_directory($identifier)
@@ -39,41 +39,41 @@ class recover_run implements pts_option_interface
 	}
 	public static function run($r)
 	{
-		if(!is_file(PTS_SAVE_RESULTS_PATH . $r[0] . "/objects.pt2so"))
+		if(!is_file(PTS_SAVE_RESULTS_PATH . $r[0] . '/objects.pt2so'))
 		{
-			if(is_file(PTS_SAVE_RESULTS_PATH . $r[0] . "/composite.xml"))
+			if(is_file(PTS_SAVE_RESULTS_PATH . $r[0] . '/composite.xml'))
 			{
-				echo "\nThe test run is already complete.\n";
+				echo PHP_EOL . 'The test run is already complete.' . PHP_EOL;
 			}
 			else
 			{
-				echo "\nThe test run could not be recovered.\n";
+				echo PHP_EOL . 'The test run could not be recovered.' . PHP_EOL;
 			}
 			return false;
 		}
 
-		$pt2so_objects = pts_storage_object::recover_from_file(PTS_SAVE_RESULTS_PATH . $r[0] . "/objects.pt2so");
+		$pt2so_objects = pts_storage_object::recover_from_file(PTS_SAVE_RESULTS_PATH . $r[0] . '/objects.pt2so');
 
 		if($pt2so_objects == null)
 		{
-			echo "\nThere is a compatibility problem with the test run to be recovered.\n";
+			echo PHP_EOL . 'There is a compatibility problem with the test run to be recovered.' . PHP_EOL;
 			return false;
 		}
-		if($pt2so_objects->read_object("system_hardware") != phodevi::system_hardware(false))
+		if($pt2so_objects->read_object('system_hardware') != phodevi::system_hardware(false))
 		{
-			echo "\nThe system hardware does not match that of the recovered test run.\n";
+			echo PHP_EOL . 'The system hardware does not match that of the recovered test run.' . PHP_EOL;
 			return false;
 		}
-		if($pt2so_objects->read_object("system_software") != phodevi::system_software(false))
+		if($pt2so_objects->read_object('system_software') != phodevi::system_software(false))
 		{
-			echo "\nThe system software does not match that of the recovered test run.\n";
+			echo PHP_EOL . 'The system software does not match that of the recovered test run.' . PHP_EOL;
 			return false;
 		}
 
-		if(is_file(PTS_SAVE_RESULTS_PATH . $r[0] . "/active.xml"))
+		if(is_file(PTS_SAVE_RESULTS_PATH . $r[0] . '/active.xml'))
 		{
-			file_put_contents(PTS_SAVE_RESULTS_PATH . $r[0] . "/composite.xml", 
-			pts_merge::merge_test_results(PTS_SAVE_RESULTS_PATH . $r[0] . "/active.xml", PTS_SAVE_RESULTS_PATH . $r[0] . "/composite.xml"));
+			file_put_contents(PTS_SAVE_RESULTS_PATH . $r[0] . '/composite.xml',
+			pts_merge::merge_test_results(PTS_SAVE_RESULTS_PATH . $r[0] . '/active.xml', PTS_SAVE_RESULTS_PATH . $r[0] . '/composite.xml'));
 		}
 
 		// Result file (composite.xml)
@@ -87,8 +87,8 @@ class recover_run implements pts_option_interface
 		}
 
 		// Recovered test_run_manager
-		$is_batch_mode = $pt2so_objects->read_object("batch_mode");
-		$test_run_manager = $pt2so_objects->read_object("test_run_manager");
+		$is_batch_mode = $pt2so_objects->read_object('batch_mode');
+		$test_run_manager = $pt2so_objects->read_object('test_run_manager');
 		$recovered_identifier = $test_run_manager->get_results_identifier();
 
 		// Processing
@@ -122,8 +122,8 @@ class recover_run implements pts_option_interface
 				if($test_to_run_is_empty)
 				{
 					$test_to_run_is_empty = false;
-							pts_client::$display->generic_heading("Last Test Run: " . $test_run_request->test_profile->get_identifier() . "\nLast Test Parameters: " . $test_run_request->get_arguments());
-					$skip_this = pts_user_io::prompt_bool_input("Would you like to skip running this test? Enter N to re-try", true);
+							pts_client::$display->generic_heading('Last Test Run: ' . $test_run_request->test_profile->get_identifier() . PHP_EOL . 'Last Test Parameters: ' . $test_run_request->get_arguments());
+					$skip_this = pts_user_io::prompt_bool_input('Would you like to skip running this test? Enter N to re-try', true);
 
 					if($skip_this)
 					{
@@ -138,11 +138,11 @@ class recover_run implements pts_option_interface
 
 		if(count($tests_to_run) > 0)
 		{
-			pts_client::$display->generic_heading("Proceeding To Recover Run For: " . $recovered_identifier);
+			pts_client::$display->generic_heading('Proceeding To Recover Run For: ' . $recovered_identifier);
 		}
 		else
 		{
-			echo "\nThere is nothing to be recovered for this test run.\n";
+			echo PHP_EOL . 'There is nothing to be recovered for this test run.' . PHP_EOL;
 			return false;
 		}
 

@@ -23,22 +23,22 @@
 class build_suite implements pts_option_interface
 {
 	const doc_section = 'Other';
-	const doc_description = "This option will guide the user through the process of generating their own test suite, which they can then run. Optionally, passed as arguments can be the test(s) or suite(s) to add to the suite to be created, instead of being prompted through the process.";
+	const doc_description = 'This option will guide the user through the process of generating their own test suite, which they can then run. Optionally, passed as arguments can be the test(s) or suite(s) to add to the suite to be created, instead of being prompted through the process.';
 
 	public static function run($r)
 	{
-		pts_client::$display->generic_heading("Test Suite Creation");
+		pts_client::$display->generic_heading('Test Suite Creation');
 
-		$suite_name = pts_user_io::prompt_user_input("Enter name of suite");
-		$suite_test_type = pts_user_io::prompt_text_menu("Select test type", pts_types::subsystem_targets());
-		$suite_maintainer = pts_user_io::prompt_user_input("Enter suite maintainer name");
-		$suite_description = pts_user_io::prompt_user_input("Enter suite description");
+		$suite_name = pts_user_io::prompt_user_input('Enter name of suite');
+		$suite_test_type = pts_user_io::prompt_text_menu('Select test type', pts_types::subsystem_targets());
+		$suite_maintainer = pts_user_io::prompt_user_input('Enter suite maintainer name');
+		$suite_description = pts_user_io::prompt_user_input('Enter suite description');
 
 		$possible_suites = pts_openbenchmarking_client::available_suites();
 		$possible_tests = pts_openbenchmarking_client::available_tests();
 
 		$suite_writer = new pts_test_suite_writer();
-		$suite_writer->add_suite_information($suite_name, "1.0.0", $suite_maintainer, $suite_test_type, $suite_description);
+		$suite_writer->add_suite_information($suite_name, '1.0.0', $suite_maintainer, $suite_test_type, $suite_description);
 
 		foreach($r as $test_object)
 		{
@@ -66,8 +66,8 @@ class build_suite implements pts_option_interface
 		{
 			switch($input_option)
 			{
-				case "Add Test":
-					$test_to_add = pts_user_io::prompt_text_menu("Enter test name", $possible_tests);
+				case 'Add Test':
+					$test_to_add = pts_user_io::prompt_text_menu('Enter test name', $possible_tests);
 					$test_profile = new pts_test_profile($test_to_add);
 
 					list($args, $description) = pts_test_run_options::prompt_user_options($test_profile);
@@ -77,23 +77,23 @@ class build_suite implements pts_option_interface
 						$suite_writer->add_to_suite($test_to_add, $args[$i], $description[$i]);
 					}
 					break;
-				case "Add Sub-Suite":
-					$suite_to_add = pts_user_io::prompt_text_menu("Enter test suite", $possible_suites);
+				case 'Add Sub-Suite':
+					$suite_to_add = pts_user_io::prompt_text_menu('Enter test suite', $possible_suites);
 					$suite_writer->add_to_suite($suite_to_add, null, null);
 					break;
 			}
-			echo "\nAvailable Options:\n";
-			$input_option = pts_user_io::prompt_text_menu("Select next operation", array("Add Test", "Add Sub-Suite", "Save & Exit"));
+			echo PHP_EOL . 'Available Options:' . PHP_EOL;
+			$input_option = pts_user_io::prompt_text_menu('Select next operation', array('Add Test', 'Add Sub-Suite', 'Save & Exit'));
 		}
-		while($input_option != "Save & Exit");
+		while($input_option != 'Save & Exit');
 
 		$suite_identifier = pts_test_run_manager::clean_save_name($suite_name);
-		$save_to = PTS_TEST_SUITE_PATH . "local/" . $suite_identifier . "/suite-definition.xml";
+		$save_to = PTS_TEST_SUITE_PATH . 'local/' . $suite_identifier . '/suite-definition.xml';
 		mkdir(dirname($save_to));
 
 		if($suite_writer->save_xml($save_to) != false)
 		{
-			echo "\n\nSaved To: " . $save_to . "\nTo run this suite, type: phoronix-test-suite benchmark " . $suite_identifier . "\n\n";
+			echo PHP_EOL . PHP_EOL . 'Saved To: ' . $save_to . PHP_EOL . 'To run this suite, type: phoronix-test-suite benchmark ' . $suite_identifier . PHP_EOL . PHP_EOL;
 		}
 	}
 }
