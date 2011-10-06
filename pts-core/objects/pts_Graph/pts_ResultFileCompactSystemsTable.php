@@ -59,7 +59,7 @@ class pts_ResultFileCompactSystemsTable extends pts_Graph
 
 		$intent_count = 0;
 		$dupes = array();
-		if($this->intent[1])
+		if($this->intent[1] && is_array($this->intent[1]))
 		{
 			foreach($this->intent[1] as $x)
 			{
@@ -98,7 +98,7 @@ class pts_ResultFileCompactSystemsTable extends pts_Graph
 
 		foreach($this->components as $type => $component)
 		{
-			if(($key = array_search($type, $this->intent[0])) !== false)
+			if(is_array($this->intent[0]) && ($key = array_search($type, $this->intent[0])) !== false)
 			{
 				$component = array();
 				foreach($this->intent[1] as $s)

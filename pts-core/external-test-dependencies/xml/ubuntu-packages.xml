@@ -180,7 +180,7 @@
 		<Package>
 			<GenericName>curl</GenericName>
 			<PackageName>libcurl3 curl</PackageName>
-			<FileCheck>/usr/lib/libcurl.so.3, /usr/bin/curl</FileCheck>
+			<FileCheck>/usr/bin/curl</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>fftw3-development</GenericName>
