@@ -42,9 +42,6 @@ class phodevi_cpu extends phodevi_device_interface
 			case 'core-count':
 				$property = new phodevi_device_property('cpu_core_count', phodevi::smart_caching);
 				break;
-			case 'power-savings-mode':
-				$property = new phodevi_device_property('cpu_power_savings_mode', phodevi::smart_caching);
-				break;
 		}
 
 		return $property;
@@ -92,7 +89,7 @@ class phodevi_cpu extends phodevi_device_interface
 		}
 		else if(phodevi::is_solaris())
 		{
-			$info = count(explode("\n", trim(shell_exec('psrinfo'))));
+			$info = count(explode(PHP_EOL, trim(shell_exec('psrinfo'))));
 		}
 		else if(phodevi::is_bsd())
 		{
@@ -170,38 +167,6 @@ class phodevi_cpu extends phodevi_device_interface
 		}
 
 		return pts_math::set_precision($info, 2);
-	}
-	public static function cpu_power_savings_mode()
-	{
-		// Report string if CPU power savings feature is enabled
-		$return_string = null;
-
-		if(phodevi::is_linux() && is_file('/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq') && is_file('/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq'))
-		{
-			// if EIST / CnQ is disabled, the cpufreq folder shoudln't be present, but double check by comparing the min and max frequencies
-			$min = pts_file_io::file_get_contents('/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq');
-			$max = pts_file_io::file_get_contents('/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq');
-
-			if($min < $max)
-			{
-				$cpu = phodevi::read_property('cpu', 'model');
-
-				if(strpos($cpu, 'AMD') !== false)
-				{
-					$return_string = 'AMD CnQ was enabled';
-				}
-				else if(strpos($cpu, 'Intel') !== false)
-				{
-					$return_string = 'Intel SpeedStep Technology was enabled';
-				}
-				else
-				{
-					$return_string = 'The CPU was in a power-savings mode';
-				}
-			}
-		}
-
-		return $return_string;
 	}
 	public static function cpu_model()
 	{

@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Code clean-ups
+- phodevi: No longer report if CPU power savings (CnQ, EIST, etc) is active since it's now widespread across all desktop hardware
 
 Phoronix Test Suite 3.4.0-Lillesand
 8 September 2011
