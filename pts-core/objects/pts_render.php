@@ -124,6 +124,10 @@ class pts_render
 	}
 	public static function render_graph_process(&$result_object, &$result_file = null, $save_as = false, $extra_attributes = null)
 	{
+		if(isset($extra_attributes['reverse_result_buffer']))
+		{
+			$result_object->test_result_buffer->buffer_values_reverse();
+		}
 		if(isset($extra_attributes['normalize_result_buffer']))
 		{
 			if(isset($extra_attributes['highlight_graph_values']) && is_array($extra_attributes['highlight_graph_values']) && count($extra_attributes['highlight_graph_values']) == 1)
