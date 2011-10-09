@@ -21,8 +21,14 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+if(PTS_IS_CLIENT && is_file('/proc/cpuinfo'))
+{
+	phodevi_cpu::$cpuinfo = file_get_contents('/proc/cpuinfo');
+}
+
 class phodevi_cpu extends phodevi_device_interface
 {
+	public static $cpuinfo = false;
 	private static $cpu_flags = -1;
 
 	public static function read_property($identifier)
@@ -124,10 +130,9 @@ class phodevi_cpu extends phodevi_device_interface
 				$info = pts_file_io::file_get_contents('/sys/devices/system/cpu/cpu' . $cpu_core . '/cpufreq/scaling_max_freq');
 				$info = intval($info) / 1000000;
 			}
-			else if(is_file('/proc/cpuinfo')) // fall back for those without cpufreq
+			else if(self::$cpuinfo) // fall back for those without cpufreq
 			{
-				$cpuinfo = file_get_contents('/proc/cpuinfo');
-				$cpu_mhz = self::read_cpuinfo_line($cpuinfo, 'cpu MHz');
+				$cpu_mhz = self::read_cpuinfo_line('cpu MHz');
 				$info = $cpu_mhz / 1000;
 			}
 		}
@@ -177,10 +182,10 @@ class phodevi_cpu extends phodevi_device_interface
 
 		if(phodevi::is_linux())
 		{
-			$physical_cpu_ids = phodevi_linux_parser::read_cpuinfo('physical id');
+			$physical_cpu_ids = phodevi_linux_parser::read_cpuinfo('physical id', self::$cpuinfo);
 			$physical_cpu_count = count(array_unique($physical_cpu_ids));
 
-			$cpu_strings = phodevi_linux_parser::read_cpuinfo(array('model name', 'Processor'));
+			$cpu_strings = phodevi_linux_parser::read_cpuinfo(array('model name', 'Processor'), self::$cpuinfo);
 			$cpu_strings_unique = array_unique($cpu_strings);
 
 			if($physical_cpu_count == 1 || empty($physical_cpu_count))
@@ -309,13 +314,13 @@ class phodevi_cpu extends phodevi_device_interface
 
 		return isset($features[$constant]) ? $features[$constant] : -1;
 	}
-	protected static function read_cpuinfo_line(&$cpuinfo, $key, $from_start = true)
+	protected static function read_cpuinfo_line($key, $from_start = true)
 	{
 		$line = false;
 
-		if(($from_start && ($key_pos = strpos($cpuinfo, PHP_EOL . $key)) !== false) || ($key_pos = strrpos($cpuinfo, PHP_EOL . $key)) !== false)
+		if(($from_start && ($key_pos = strpos(self::$cpuinfo, PHP_EOL . $key)) !== false) || ($key_pos = strrpos(self::$cpuinfo, PHP_EOL . $key)) !== false)
 		{
-			$line = substr($cpuinfo, $key_pos);
+			$line = substr(self::$cpuinfo, $key_pos);
 			$line = substr($line, strpos($line, ':') + 1);
 			$line = trim(substr($line, 0, strpos($line, PHP_EOL)));
 		}
@@ -324,8 +329,7 @@ class phodevi_cpu extends phodevi_device_interface
 	}
 	public static function set_cpu_feature_flags()
 	{
-		$cpuinfo = file_get_contents('/proc/cpuinfo');
-		$flags = explode(' ', self::read_cpuinfo_line($cpuinfo, 'flags'));
+		$flags = explode(' ', self::read_cpuinfo_line('flags'));
 
 		self::$cpu_flags = 0;
 		foreach(self::get_cpu_feature_constants() as $feature => $value)
@@ -388,12 +392,11 @@ class phodevi_cpu extends phodevi_device_interface
 	}
 	public static function cpuinfo_core_count()
 	{
-		$cpuinfo = file_get_contents('/proc/cpuinfo');
-		$core_count = self::read_cpuinfo_line($cpuinfo, 'cpu cores');
+		$core_count = self::read_cpuinfo_line('cpu cores');
 
 		if($core_count == false || !is_numeric($core_count))
 		{
-			$core_count = self::read_cpuinfo_line($cpuinfo, 'core id', false);
+			$core_count = self::read_cpuinfo_line('core id', false);
 
 			if(is_numeric($core_count))
 			{
@@ -411,8 +414,7 @@ class phodevi_cpu extends phodevi_device_interface
 	}
 	public static function cpuinfo_thread_count()
 	{
-		$cpuinfo = file_get_contents('/proc/cpuinfo');
-		$thread_count = self::read_cpuinfo_line($cpuinfo, 'processor', false);
+		$thread_count = self::read_cpuinfo_line('processor', false);
 
 		if(is_numeric($thread_count))
 		{
@@ -425,8 +427,7 @@ class phodevi_cpu extends phodevi_device_interface
 	public static function cpuinfo_cache_size()
 	{
 		// CPU cache size in KB
-		$cpuinfo = file_get_contents('/proc/cpuinfo');
-		$cache_size = self::read_cpuinfo_line($cpuinfo, 'cache size');
+		$cache_size = self::read_cpuinfo_line('cache size');
 
 		if(substr($cache_size, -3) == ' KB')
 		{

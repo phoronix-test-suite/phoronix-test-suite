@@ -452,33 +452,42 @@ class phodevi_linux_parser
 
 		return $adapters;
 	}
-	public static function read_cpuinfo($attribute)
+	public static function read_cpuinfo($attribute, $cpuinfo = false)
 	{
 		// Read CPU information
 		$cpuinfo_matches = array();
 
-		foreach(pts_arrays::to_array($attribute) as $attribute_check)
+		if($cpuinfo == false)
 		{
 			if(is_file('/proc/cpuinfo'))
 			{
-				$cpuinfo_lines = explode("\n", file_get_contents('/proc/cpuinfo'));
+				$cpuinfo = file_get_contents('/proc/cpuinfo');
+			}
+			else
+			{
+				return $cpuinfo_matches;
+			}
+		}
 
-				foreach($cpuinfo_lines as $line)
+		foreach(pts_arrays::to_array($attribute) as $attribute_check)
+		{
+			$cpuinfo_lines = explode("\n", $cpuinfo);
+
+			foreach($cpuinfo_lines as $line)
+			{
+				$line = pts_strings::trim_explode(': ', $line);
+
+				if(!isset($line[0]))
 				{
-					$line = pts_strings::trim_explode(': ', $line);
+					continue;
+				}
 
-					if(!isset($line[0]))
-					{
-						continue;
-					}
+				$this_attribute = $line[0];
+				$this_value = (count($line) > 1 ? $line[1] : null);
 
-					$this_attribute = $line[0];
-					$this_value = (count($line) > 1 ? $line[1] : null);
-
-					if($this_attribute == $attribute_check)
-					{
-						array_push($cpuinfo_matches, $this_value);
-					}
+				if($this_attribute == $attribute_check)
+				{
+					array_push($cpuinfo_matches, $this_value);
 				}
 			}
 
