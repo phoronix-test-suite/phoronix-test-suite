@@ -103,22 +103,11 @@ class pts_LineGraph extends pts_Graph
 	}
 	protected function renderGraphLines()
 	{
-		$identifiers_empty = count($this->graph_identifiers) == 0;
 		$calculations_r = array();
 		$point_count = count($this->graph_data[0]);
-		$varying_lengths = false;
 		$min_value = $this->graph_data[0][0];
 		$max_value = $this->graph_data[0][0];
 		$prev_value = $this->graph_data[0][0];
-
-		foreach($this->graph_data as &$graph_r)
-		{
-			if(count($graph_r) != $point_count)
-			{
-				$varying_lengths = true;
-				break;
-			}
-		}
 
 		foreach(array_keys($this->graph_data) as $i_o)
 		{
@@ -187,29 +176,7 @@ class pts_LineGraph extends pts_Graph
 					$value_plot_top = $this->graph_top_end - 1;
 				}
 
-				
-				if($identifiers_empty && $i == 0)
-				{
-					array_push($poly_points, array($this->graph_left_start + 1, $value_plot_top, $data_string, $std_error));
-				}
-				else if($identifiers_empty && $i == ($point_counter - 1))
-				{
-					array_push($poly_points, array($px_from_left, $value_plot_top, $data_string, $std_error));
-					if($varying_lengths && ($point_counter * 1.1) < $point_count)
-					{
-						// This plotting ended prematurely
-					//	array_push($poly_points, array($px_from_left, $this->graph_top_end - 1, null));
-						$this->graph_image->draw_poly_line(array(array($px_from_left, $value_plot_top, $data_string), array($px_from_left, $this->graph_top_end - 1, null)), $paint_color, 2);
-					}
-					else if($value > 0)
-					{
-						array_push($poly_points, array($this->graph_left_end - 1, $value_plot_top, null));
-					}
-				}
-				else
-				{
-					array_push($poly_points, array($px_from_left, $value_plot_top, $data_string, $std_error));
-				}
+				array_push($poly_points, array($px_from_left, $value_plot_top, $data_string, $std_error));
 
 				if($this->regression_marker_threshold > 0 && $i > 0 && abs(1 - ($value / $prev_value)) > $this->regression_marker_threshold)
 				{
