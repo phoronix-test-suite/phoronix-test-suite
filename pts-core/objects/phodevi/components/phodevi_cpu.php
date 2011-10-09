@@ -368,7 +368,7 @@ class phodevi_cpu extends phodevi_device_interface
 		if(($cpu_flags & self::get_cpu_feature_constant('avx')))
 		{
 			// Advanced Vector Extensions
-			$extension_string = ($extension_string != null ? ' + ' : null) . 'AVX';
+			$extension_string .= ($extension_string != null ? ' + ' : null) . 'AVX';
 		}
 
 		return $extension_string;

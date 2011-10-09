@@ -133,6 +133,18 @@ class pts_LineGraph extends pts_Graph
 			for($i = 0; $i < $point_counter; $i++)
 			{
 				$value = $this->graph_data[$i_o][$i];
+
+				if($value == 0)
+				{
+					if(!empty($poly_points))
+					{
+						$this->graph_image->draw_poly_line($poly_points, $paint_color, 2);
+						$this->render_graph_line_extra($poly_points, $paint_color, $regression_plots, $point_counter);
+						$poly_points = array();
+					}
+					continue;
+				}
+
 				$identifier = isset($this->graph_identifiers[$i]) ? $this->graph_identifiers[$i] : null;
 				$std_error = isset($this->graph_data_raw[$i_o][$i]) ? pts_math::standard_error(pts_strings::colon_explode($this->graph_data_raw[$i_o][$i])) : 0;
 				$data_string = isset($this->graph_data_title[$i_o]) ? $this->graph_data_title[$i_o] . ($identifier ? ' @ ' . $identifier : null) . ': ' . $value : null;
@@ -211,38 +223,10 @@ class pts_LineGraph extends pts_Graph
 				$prev_value = $value;
 			}
 
-			$this->graph_image->draw_poly_line($poly_points, $paint_color, 2);
-
-			$poly_points_count = count($poly_points);
-			foreach($poly_points as $i => $x_y_pair)
+			if(!empty($poly_points))
 			{
-				if($x_y_pair[0] < ($this->graph_left_start + 2) || $x_y_pair[0] > ($this->graph_left_end - 2))
-				{
-					// Don't draw anything on the left or right hand edges
-					continue;
-				}
-
-				$plotted_error_bar = false;
-				if($x_y_pair[3] > 0)
-				{
-					$std_error_width = 4;
-					$std_error_rel_size = round(($x_y_pair[3] / $this->graph_maximum_value) * ($this->graph_top_end - $this->graph_top_start));
-
-					if($std_error_rel_size > 3)
-					{
-						$this->graph_image->draw_line($x_y_pair[0], $x_y_pair[1] + $std_error_rel_size, $x_y_pair[0], $x_y_pair[1] - $std_error_rel_size, $paint_color, 1);
-						$this->graph_image->draw_line($x_y_pair[0] - $std_error_width, $x_y_pair[1] - $std_error_rel_size, $x_y_pair[0] + $std_error_width, $x_y_pair[1] - $std_error_rel_size, $paint_color, 1);
-						$this->graph_image->draw_line($x_y_pair[0] - $std_error_width, $x_y_pair[1] + $std_error_rel_size, $x_y_pair[0] + $std_error_width, $x_y_pair[1] + $std_error_rel_size, $paint_color, 1);
-						$plotted_error_bar = true;
-					}
-				}
-
-				if(isset($regression_plots[$i]) && $i > 0)
-				{
-					$this->graph_image->draw_line($x_y_pair[0], $x_y_pair[1] + 6, $x_y_pair[0], $x_y_pair[1] - 6, $this->graph_color_alert, 4, $regression_plots[$i]);
-				}
-
-				$this->graph_image->draw_ellipse($x_y_pair[0], $x_y_pair[1], 7, 7, $paint_color, $paint_color, 1, !($point_counter < 6 || $plotted_error_bar || $i == 0 || $i == ($poly_points_count  - 1)), $x_y_pair[2]);
+				$this->graph_image->draw_poly_line($poly_points, $paint_color, 2);
+				$this->render_graph_line_extra($poly_points, $paint_color, $regression_plots, $point_counter);
 			}
 		}
 
@@ -325,6 +309,40 @@ class pts_LineGraph extends pts_Graph
 
 				$from_left += $longest_string_width + 3;						
 			}
+		}
+	}
+	protected function render_graph_line_extra(&$poly_points, &$paint_color, &$regression_plots, $point_counter)
+	{
+		$poly_points_count = count($poly_points);
+		foreach($poly_points as $i => $x_y_pair)
+		{
+			if($x_y_pair[0] < ($this->graph_left_start + 2) || $x_y_pair[0] > ($this->graph_left_end - 2))
+			{
+				// Don't draw anything on the left or right hand edges
+				continue;
+			}
+
+			$plotted_error_bar = false;
+			if($x_y_pair[3] > 0)
+			{
+				$std_error_width = 4;
+				$std_error_rel_size = round(($x_y_pair[3] / $this->graph_maximum_value) * ($this->graph_top_end - $this->graph_top_start));
+
+				if($std_error_rel_size > 3)
+				{
+					$this->graph_image->draw_line($x_y_pair[0], $x_y_pair[1] + $std_error_rel_size, $x_y_pair[0], $x_y_pair[1] - $std_error_rel_size, $paint_color, 1);
+					$this->graph_image->draw_line($x_y_pair[0] - $std_error_width, $x_y_pair[1] - $std_error_rel_size, $x_y_pair[0] + $std_error_width, $x_y_pair[1] - $std_error_rel_size, $paint_color, 1);
+					$this->graph_image->draw_line($x_y_pair[0] - $std_error_width, $x_y_pair[1] + $std_error_rel_size, $x_y_pair[0] + $std_error_width, $x_y_pair[1] + $std_error_rel_size, $paint_color, 1);
+					$plotted_error_bar = true;
+				}
+			}
+
+			if(isset($regression_plots[$i]) && $i > 0)
+			{
+				$this->graph_image->draw_line($x_y_pair[0], $x_y_pair[1] + 6, $x_y_pair[0], $x_y_pair[1] - 6, $this->graph_color_alert, 4, $regression_plots[$i]);
+			}
+
+			$this->graph_image->draw_ellipse($x_y_pair[0], $x_y_pair[1], 7, 7, $paint_color, $paint_color, 1, !($point_counter < 6 || $plotted_error_bar || $i == 0 || $i == ($poly_points_count  - 1)), $x_y_pair[2]);
 		}
 	}
 	protected function render_graph_result()
