@@ -309,7 +309,8 @@ class pts_client
 					'lsmod',
 					'sensors',
 					'dmesg',
-					'glxinfo'
+					'glxinfo',
+					'uname -a'
 					);
 
 				if(phodevi::is_bsd())

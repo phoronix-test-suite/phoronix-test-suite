@@ -6,6 +6,7 @@ Phoronix Test Suite (Git)
 - pts-core: Allow results to be rendered in reverse order
 - phodevi: No longer report if CPU power savings (CnQ, EIST, etc) is active since it's now widespread across all desktop hardware
 - phodevi: Improve detection of low RAM capacities (1GB)
+- phodevi: Add support for detecting greater CPU features
 
 Phoronix Test Suite 3.4.0-Lillesand
 8 September 2011

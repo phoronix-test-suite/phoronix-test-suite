@@ -23,6 +23,8 @@
 
 class phodevi_cpu extends phodevi_device_interface
 {
+	private static $cpu_flags = -1;
+
 	public static function read_property($identifier)
 	{
 		switch($identifier)
@@ -284,6 +286,94 @@ class phodevi_cpu extends phodevi_device_interface
 		}
 
 		return $info;
+	}
+	public static function get_cpu_feature_constants()
+	{
+		return array(
+			'sse2' => 2, // SSE 2
+			'sse3' => 4, // SSE 3
+			'sse4a' => 8, // SSE 4a
+			'sse4_1' => 16, // SSE 4.1
+			'sse4_2' => 32, // SSE 4.2
+			'sse5' => 64, // SSE 5
+			'avx' => 128, // AVX
+			'aes' => 256, // AES
+			'epb' => 512, // EPB
+			'svm' => 1024, // AMD SVM (Virtualization)
+			'vmx' => 2048 // Intel Virtualization
+			);
+	}
+	public static function get_cpu_feature_constant($constant)
+	{
+		$features = self::get_cpu_feature_constants();
+
+		return isset($features[$constant]) ? $features[$constant] : -1;
+	}
+	public static function set_cpu_feature_flags()
+	{
+		$cpuinfo = file_get_contents('/proc/cpuinfo');
+		$flags = substr($cpuinfo, strpos($cpuinfo, PHP_EOL . 'flags'));
+		$flags = substr($flags, strpos($flags, ':') + 1);
+		$flags = explode(' ', trim(substr($flags, 0, strpos($flags, PHP_EOL))));
+
+		self::$cpu_flags = 0;
+		foreach(self::get_cpu_feature_constants() as $feature => $value)
+		{
+			if(in_array($feature, $flags))
+			{
+				// The feature is supported on the CPU
+				self::$cpu_flags |= $value;
+			}
+		}
+	}
+	public static function get_cpu_flags()
+	{
+		if(self::$cpu_flags === -1)
+		{
+			self::set_cpu_feature_flags();
+		}
+
+		return self::$cpu_flags;
+	}
+	public static function instruction_set_extensions()
+	{
+		$constants = self::get_cpu_feature_constants();
+		$cpu_flags = self::get_cpu_flags();
+		$extension_string = null;
+
+		foreach($constants as $feature => $value)
+		{
+			// find maximum SSE version
+			if(substr($feature, 0, 3) == 'sse' && ($cpu_flags & $value))
+			{
+				$extension_string = 'SSE ' . str_replace('_', '.', substr($feature, 3));
+			}
+		}
+
+		if(($cpu_flags & self::get_cpu_feature_constant('avx')))
+		{
+			// Advanced Vector Extensions
+			$extension_string = ($extension_string != null ? ' + ' : null) . 'AVX';
+		}
+
+		return $extension_string;
+	}
+	public static function virtualization_technology()
+	{
+		$constants = self::get_cpu_feature_constants();
+		$cpu_flags = self::get_cpu_flags();
+		$virtualitzation_technology = false;
+
+		if(($cpu_flags & self::get_cpu_feature_constant('vmx')))
+		{
+			$virtualitzation_technology = 'VT-x';
+		}
+		else if(($cpu_flags & self::get_cpu_feature_constant('svm')))
+		{
+			$virtualitzation_technology = 'AMD-V';
+		}
+
+		return $virtualitzation_technology;
 	}
 }
 
