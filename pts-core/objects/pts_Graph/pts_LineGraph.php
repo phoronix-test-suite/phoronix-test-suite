@@ -125,12 +125,8 @@ class pts_LineGraph extends pts_Graph
 
 				if($value == 0)
 				{
-					if(!empty($poly_points))
-					{
-						$this->graph_image->draw_poly_line($poly_points, $paint_color, 2);
-						$this->render_graph_line_extra($poly_points, $paint_color, $regression_plots, $point_counter);
-						$poly_points = array();
-					}
+					// Draw whatever is needed of the line so far, since there is no result here
+					$this->draw_graph_line_process($poly_points, $paint_color, $regression_plots, $point_counter);
 					continue;
 				}
 
@@ -190,11 +186,7 @@ class pts_LineGraph extends pts_Graph
 				$prev_value = $value;
 			}
 
-			if(!empty($poly_points))
-			{
-				$this->graph_image->draw_poly_line($poly_points, $paint_color, 2);
-				$this->render_graph_line_extra($poly_points, $paint_color, $regression_plots, $point_counter);
-			}
+			$this->draw_graph_line_process($poly_points, $paint_color, $regression_plots, $point_counter);
 		}
 
 		if($this->plot_overview_text)
@@ -278,9 +270,17 @@ class pts_LineGraph extends pts_Graph
 			}
 		}
 	}
-	protected function render_graph_line_extra(&$poly_points, &$paint_color, &$regression_plots, $point_counter)
+	protected function draw_graph_line_process(&$poly_points, &$paint_color, &$regression_plots, $point_counter)
 	{
 		$poly_points_count = count($poly_points);
+
+		if($poly_points_count == 0)
+		{
+			// There's nothing to draw
+			return;
+		}
+
+		$this->graph_image->draw_poly_line($poly_points, $paint_color, 2);
 		foreach($poly_points as $i => $x_y_pair)
 		{
 			if($x_y_pair[0] < ($this->graph_left_start + 2) || $x_y_pair[0] > ($this->graph_left_end - 2))
@@ -311,6 +311,8 @@ class pts_LineGraph extends pts_Graph
 
 			$this->graph_image->draw_ellipse($x_y_pair[0], $x_y_pair[1], 7, 7, $paint_color, $paint_color, 1, !($point_counter < 6 || $plotted_error_bar || $i == 0 || $i == ($poly_points_count  - 1)), $x_y_pair[2]);
 		}
+
+		$poly_points = array();
 	}
 	protected function render_graph_result()
 	{
