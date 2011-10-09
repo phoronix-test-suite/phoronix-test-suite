@@ -86,7 +86,7 @@ class phodevi_cpu extends phodevi_device_interface
 
 			if($info == null)
 			{
-				$info = count(phodevi_linux_parser::read_cpuinfo('processor'));
+				$info = self::cpuinfo_core_count();
 			}
 		}
 		else if(phodevi::is_solaris())
@@ -126,9 +126,9 @@ class phodevi_cpu extends phodevi_device_interface
 			}
 			else if(is_file('/proc/cpuinfo')) // fall back for those without cpufreq
 			{
-				$cpu_speeds = phodevi_linux_parser::read_cpuinfo('cpu MHz');
-				$cpu_core = isset($cpu_speeds[$cpu_core]) ? $cpu_core : 0;
-				$info = isset($cpu_speeds[$cpu_core]) ? ($cpu_speeds[$cpu_core] / 1000) : 0;
+				$cpuinfo = file_get_contents('/proc/cpuinfo');
+				$cpu_mhz = self::read_cpuinfo_line($cpuinfo, 'cpu MHz');
+				$info = $cpu_mhz / 1000;
 			}
 		}
 		else if(phodevi::is_bsd())
@@ -309,12 +309,23 @@ class phodevi_cpu extends phodevi_device_interface
 
 		return isset($features[$constant]) ? $features[$constant] : -1;
 	}
+	protected static function read_cpuinfo_line(&$cpuinfo, $key, $from_start = true)
+	{
+		$line = false;
+
+		if(($from_start && ($key_pos = strpos($cpuinfo, PHP_EOL . $key)) !== false) || ($key_pos = strrpos($cpuinfo, PHP_EOL . $key)) !== false)
+		{
+			$line = substr($cpuinfo, $key_pos);
+			$line = substr($line, strpos($line, ':') + 1);
+			$line = trim(substr($line, 0, strpos($line, PHP_EOL)));
+		}
+
+		return $line;
+	}
 	public static function set_cpu_feature_flags()
 	{
 		$cpuinfo = file_get_contents('/proc/cpuinfo');
-		$flags = substr($cpuinfo, strpos($cpuinfo, PHP_EOL . 'flags'));
-		$flags = substr($flags, strpos($flags, ':') + 1);
-		$flags = explode(' ', trim(substr($flags, 0, strpos($flags, PHP_EOL))));
+		$flags = explode(' ', self::read_cpuinfo_line($cpuinfo, 'flags'));
 
 		self::$cpu_flags = 0;
 		foreach(self::get_cpu_feature_constants() as $feature => $value)
@@ -374,6 +385,59 @@ class phodevi_cpu extends phodevi_device_interface
 		}
 
 		return $virtualitzation_technology;
+	}
+	public static function cpuinfo_core_count()
+	{
+		$cpuinfo = file_get_contents('/proc/cpuinfo');
+		$core_count = self::read_cpuinfo_line($cpuinfo, 'cpu cores');
+
+		if($core_count == false || !is_numeric($core_count))
+		{
+			$core_count = self::read_cpuinfo_line($cpuinfo, 'core id', false);
+
+			if(is_numeric($core_count))
+			{
+				// cpuinfo 'core id' begins counting at 0
+				$core_count += 1;
+			}
+		}
+
+		if($core_count == false || !is_numeric($core_count))
+		{
+			$core_count = self::cpuinfo_thread_count();
+		}
+
+		return $core_count;
+	}
+	public static function cpuinfo_thread_count()
+	{
+		$cpuinfo = file_get_contents('/proc/cpuinfo');
+		$thread_count = self::read_cpuinfo_line($cpuinfo, 'processor', false);
+
+		if(is_numeric($thread_count))
+		{
+			// cpuinfo 'processor' begins counting at 0
+			$thread_count += 1;
+		}
+
+		return $thread_count;
+	}
+	public static function cpuinfo_cache_size()
+	{
+		// CPU cache size in KB
+		$cpuinfo = file_get_contents('/proc/cpuinfo');
+		$cache_size = self::read_cpuinfo_line($cpuinfo, 'cache size');
+
+		if(substr($cache_size, -3) == ' KB')
+		{
+			$cache_size = substr($cache_size, 0, -3);
+		}
+		else
+		{
+			$cache_size = null;
+		}
+
+		return $cache_size;
 	}
 }
 
