@@ -353,7 +353,7 @@ abstract class pts_Graph
 			}
 			else
 			{
-				$maximum = (floor(round($real_maximum * 1.285) / $this->graph_attr_marks) + 1) * $this->graph_attr_marks;
+				$maximum = (floor(round($real_maximum * 1.29) / $this->graph_attr_marks) + 1) * $this->graph_attr_marks;
 				$maximum = round(ceil($maximum / $this->graph_attr_marks), (0 - strlen($maximum) + 2)) * $this->graph_attr_marks;
 			}
 		}
@@ -402,7 +402,6 @@ abstract class pts_Graph
 	//
 	// Render Functions
 	//
-
 
 	public function renderGraph()
 	{
@@ -508,14 +507,6 @@ abstract class pts_Graph
 				$this->graph_attr_height += $bottom_heading + 4;
 			}
 		}
-
-		/*
-		// Not sure this code is needed anymore...
-		if(($key_count = count($this->graph_data_title)) > 8)
-		{
-			$this->update_graph_dimensions(-1, $this->graph_attr_height + (floor(($key_count - 8) / 4) * 14), true);
-		}
-		*/
 
 		// Do the actual work
 		$this->render_graph_pre_init();
@@ -748,7 +739,6 @@ abstract class pts_Graph
 				{
 					$this->graph_image->write_text_center($display_value, $this->graph_font, $this->graph_font_size_tick_mark, $this->graph_color_text, $px_from_left, ($top_end + 5), $px_from_left, ($top_end + 5));
 					$this->graph_image->draw_dashed_line($px_from_left + 2, $top_start, $px_from_left + 2, $top_end - 5, $this->graph_color_body, 1, 5, 5);
-
 					$this->graph_image->draw_line($px_from_left + 2, $top_end - 4, $px_from_left + 2, $top_end + 4, $this->graph_color_notches, 1);
 				}
 

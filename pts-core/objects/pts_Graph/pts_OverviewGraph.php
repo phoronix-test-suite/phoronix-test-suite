@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010, Phoronix Media
-	Copyright (C) 2010, Michael Larabel
+	Copyright (C) 2010 - 2011, Phoronix Media
+	Copyright (C) 2010 - 2011, Michael Larabel
 	pts_OverviewGraph.php: A graping object to create an "overview" / mini graphs of a pts_result_file for pts_Graph
 
 	This program is free software; you can redistribute it and/or modify
@@ -79,7 +79,7 @@ class pts_OverviewGraph extends pts_Graph
 
 		$this->graph_title = $result_file->get_title();
 		$this->graph_y_title = null;
-		$this->graph_proportion = "HIB";
+		$this->graph_proportion = 'HIB';
 		$this->graph_background_lines = true;
 
 		$this->update_graph_dimensions($this->graph_attr_width, $height, true);
@@ -93,7 +93,7 @@ class pts_OverviewGraph extends pts_Graph
 	}
 	public function renderGraph()
 	{
-		$this->requestRenderer("SVG");
+		$this->requestRenderer('SVG');
 		$this->graph_data_title = &$this->system_identifiers;
 		$this->graph_attr_marks = 6;
 		$this->graph_maximum_value = 1.2;
@@ -131,16 +131,16 @@ class pts_OverviewGraph extends pts_Graph
 
 			$this->graph_image->write_text_center($result_object->test_profile->get_title(), $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_headers, $px_bound_left, $top_end + 3, $px_bound_right, $top_end + 3, false);
 
-			if($result_object->test_profile->get_display_format() == "BAR_GRAPH")
+			if($result_object->test_profile->get_display_format() == 'BAR_GRAPH')
 			{
 				$all_values = $result_object->test_result_buffer->get_values();
 
 				switch($result_object->test_profile->get_result_proportion())
 				{
-					case "HIB":
+					case 'HIB':
 						$divide_value = max($all_values);
 						break;
-					case "LIB":
+					case 'LIB':
 						$divide_value = min($all_values);
 						break;
 				}
@@ -151,10 +151,10 @@ class pts_OverviewGraph extends pts_Graph
 
 					switch($result_object->test_profile->get_result_proportion())
 					{
-						case "HIB":
+						case 'HIB':
 							$value = $buffer_item->get_result_value() / $divide_value;
 							break;
-						case "LIB":
+						case 'LIB':
 							$value = $divide_value / $buffer_item->get_result_value();
 							break;
 					}

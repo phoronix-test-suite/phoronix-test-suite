@@ -43,10 +43,11 @@ class pts_HorizontalBarGraph extends pts_Graph
 
 		$this->graph_image->draw_dashed_line($this->graph_left_start, $this->graph_top_start + $this->identifier_height, $this->graph_left_start, $this->graph_top_end - ($this->graph_attr_height % $this->identifier_height), $this->graph_color_notches, 10, 1, $this->identifier_height - 1);
 		$multi_way = $this->is_multi_way_comparison && count($this->graph_data) > 1;
+		$middle_of_vert = $this->graph_top_start + ($multi_way ? 5 : 0) - ($this->identifier_height * 0.5) - 2;
 
 		foreach(array_keys($this->graph_identifiers) as $i)
 		{
-			$middle_of_vert = $this->graph_top_start + ($multi_way ? 5 : 0) + ($this->identifier_height * ($i + 1)) - ($this->identifier_height * 0.5) - 2;
+			$middle_of_vert += $this->identifier_height;
 
 			if($multi_way)
 			{

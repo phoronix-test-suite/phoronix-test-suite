@@ -30,7 +30,7 @@ class pts_VerticalBarGraph extends pts_Graph
 	{
 		parent::__construct($result_object, $result_file);
 
-		if($result_file != null && $result_file instanceOf pts_result_file)
+		if($result_file != null && $result_file instanceof pts_result_file)
 		{
 			$this->is_multi_way_comparison = $result_file->is_multi_way_comparison();
 		}
@@ -100,7 +100,7 @@ class pts_VerticalBarGraph extends pts_Graph
 
 				if($run_std_deviation > 0)
 				{
-					$title_tooltip .= ' || ' . pts_math::set_precision($run_std_deviation, 1) . ' STD.';
+					$title_tooltip .= ' || ' . pts_math::set_precision($run_std_deviation, 1) . ' STD';
 				}
 
 				$this->graph_image->draw_rectangle_with_border($px_bound_left + 1, $value_plot_top, $px_bound_right - 1, $this->graph_top_end, in_array($this->graph_identifiers[$i], $this->value_highlights) ? $this->graph_color_alert : $paint_color, $this->graph_color_body_light, $title_tooltip);
@@ -115,7 +115,7 @@ class pts_VerticalBarGraph extends pts_Graph
 				{
 					$this->graph_image->write_text_center($value, $this->graph_font, $this->graph_font_size_bars, $this->graph_color_body_text, $px_bound_left + 2, $value_plot_top + 2, $px_bound_right - 2, $value_plot_top + 2);
 				}
-				else if($graph_size > 10)
+				else
 				{
 					// Make things more compact
 					$this->graph_image->write_text_center($value, $this->graph_font, ceil($this->graph_font_size_bars * 0.6), $this->graph_color_body_text, $px_bound_left, $value_plot_top  + 1, $px_bound_right, $value_plot_top + 1);

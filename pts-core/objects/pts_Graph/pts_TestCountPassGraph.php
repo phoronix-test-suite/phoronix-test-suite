@@ -27,7 +27,7 @@ class pts_TestCountPassGraph extends pts_Graph
 	{
 		$this->graph_y_title_hide = true;
 		parent::__construct($result_object, $result_file);
-		$this->graph_value_type = "ABSTRACT";
+		$this->graph_value_type = 'ABSTRACT';
 		$this->graph_hide_identifiers = true;
 	}
 	protected function render_graph_passcount()
@@ -68,7 +68,7 @@ class pts_TestCountPassGraph extends pts_Graph
 		for($j = 0; $j < count($this->graph_data[0]); $j++)
 		{
 			$results = array_reverse(pts_strings::comma_explode($this->graph_data[0][$j]));
-			$line_ttf_height = $this->text_string_height("AZ@![]()@|_", $this->graph_font, $this->graph_font_size_bars);
+			$line_ttf_height = $this->text_string_height('AZ@![]()@|_', $this->graph_font, $this->graph_font_size_bars);
 			for($i = 0; $i < count($headings) && $i < count($results); $i++)
 			{
 				$this_bottom_end = $this->graph_top_start + $vertical_border + (($j + 1) * $line_height) + $heading_height + 1;
@@ -88,14 +88,14 @@ class pts_TestCountPassGraph extends pts_Graph
 		}
 
 		$headings = array_reverse($headings);
-		$line_ttf_height = $this->text_string_height("AZ@![]()@|_", $this->graph_font, $headings_font_size);
+		$line_ttf_height = $this->text_string_height('AZ@![]()@|_', $this->graph_font, $headings_font_size);
 		for($i = 0; $i < count($headings); $i++)
 		{
 			$this->graph_image->draw_line($this->graph_left_end - $horizontal_border - (($i + 1) * $identifiers_width), $this->graph_top_start + $vertical_border, $this->graph_left_end - $horizontal_border - (($i + 1) * $identifiers_width), $this->graph_top_end - $vertical_border, $this->graph_color_body_light);
 			$this->graph_image->write_text_center($headings[$i], $this->graph_font, $headings_font_size, $this->graph_color_headers, $this->graph_left_end - $horizontal_border - ($i * $identifiers_width) - $identifiers_width, $this->graph_top_start + $vertical_border + ($heading_height / 2) - ($line_ttf_height / 2), $this->graph_left_end - $horizontal_border - ($i * $identifiers_width), $this->graph_top_start + $vertical_border + ($heading_height / 2) - ($line_ttf_height / 2));
 		}
 
-		$line_ttf_height = $this->text_string_height("AZ@![]()@|_", $this->graph_font, $main_font_size);
+		$line_ttf_height = $this->text_string_height('AZ@![]()@|_', $this->graph_font, $main_font_size);
 		for($i = 0; $i < count($this->graph_identifiers); $i++)
 		{
 			$this->graph_image->draw_line($this->graph_left_start + $horizontal_border, $this->graph_top_start + $vertical_border + ($i * $line_height) + $heading_height, $this->graph_left_end - $horizontal_border, $this->graph_top_start + $vertical_border + ($i * $line_height) + $heading_height, $this->graph_color_body_light);
