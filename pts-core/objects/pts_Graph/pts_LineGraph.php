@@ -60,12 +60,12 @@ class pts_LineGraph extends pts_Graph
 	}
 	protected function render_graph_identifiers()
 	{
-		$px_from_top_end = $this->graph_top_end + 5;
-
 		if(!is_array($this->graph_identifiers))
 		{
 			return;
 		}
+
+		$px_from_top_end = $this->graph_top_end + 5;
 
 		if($this->identifier_width > 2)
 		{
@@ -117,7 +117,6 @@ class pts_LineGraph extends pts_Graph
 			$point_counter = count($this->graph_data[$i_o]);
 			$regression_plots = array();
 			$poly_points = array();
-			$has_hit_non_zero = false;
 
 			for($i = 0; $i < $point_counter; $i++)
 			{
@@ -134,23 +133,8 @@ class pts_LineGraph extends pts_Graph
 				$std_error = isset($this->graph_data_raw[$i_o][$i]) ? pts_math::standard_error(pts_strings::colon_explode($this->graph_data_raw[$i_o][$i])) : 0;
 				$data_string = isset($this->graph_data_title[$i_o]) ? $this->graph_data_title[$i_o] . ($identifier ? ' @ ' . $identifier : null) . ': ' . $value : null;
 
-				if($value == 0 && !$has_hit_non_zero)
-				{
-					if(defined('PHOROMATIC_TRACKER'))
-					{
-						continue;
-					}
-
-					$has_hit_non_zero = true;
-				}
-
 				$value_plot_top = $this->graph_top_end + 1 - ($this->graph_maximum_value == 0 ? 0 : round(($value / $this->graph_maximum_value) * ($this->graph_top_end - $this->graph_top_start)));
 				$px_from_left = round($this->graph_left_start + ($this->identifier_width * ($i + 1)));
-
-				if(($i == ($point_counter - 1)) && $value == 0)
-				{
-					break;
-				}
 
 				if($value > $max_value)
 				{
@@ -180,7 +164,6 @@ class pts_LineGraph extends pts_Graph
 					$regression_plots[$i] = $identifier . ': ' . $value;
 				}
 
-				//array_push($poly_tips, array($value, $this->graph_identifiers[$i]));
 				array_push($calculations_r[$paint_color], $value);
 				$prev_identifier = $identifier;
 				$prev_value = $value;
@@ -200,13 +183,13 @@ class pts_LineGraph extends pts_Graph
 			}
 
 			// in_array($this->graph_y_title, array('Percent', 'Milliwatts', 'Megabytes', 'Celsius', 'MB/s', 'Frames Per Second', 'Seconds', 'Iterations Per Minute'))
-			if(count($calculations_r) > 0)
+			if(isset($calculations_r[0]))
 			{
 				array_push($to_display[$this->graph_color_text], 'Average:');
 
 				foreach($calculations_r as $color => &$values)
 				{
-					array_push($to_display[$color], array_sum($values) / count($values));
+					array_push($to_display[$color], (array_sum($values) / count($values)));
 				}
 			}
 			// in_array($this->graph_y_title, array('Megabytes', 'Milliwatts', 'Celsius', 'MB/s', 'Frames Per Second', 'Seconds', 'Iterations Per Minute'))

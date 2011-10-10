@@ -1350,7 +1350,6 @@ class pts_test_run_manager
 		$test_run_manager->pre_execution_process();
 		$test_run_manager->call_test_runs();
 		$test_run_manager->post_execution_process();
-		echo PHP_EOL;
 
 		return $test_run_manager;
 	}
