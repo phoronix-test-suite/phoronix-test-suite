@@ -330,6 +330,9 @@ class phodevi_motherboard extends phodevi_device_interface
 			$info = 'Apple ' . $info;
 		}
 
+		// ensure words aren't repeated (e.g. VMware VMware Virtual and MSI MSI X58M (MS-7593))
+		$info = implode(' ', array_unique(explode(' ', $info)));
+
 		return $info;
 	}
 }

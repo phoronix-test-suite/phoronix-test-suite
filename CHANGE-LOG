@@ -11,6 +11,7 @@ Phoronix Test Suite (Git)
 - phodevi: Add support for detecting greater CPU features
 - phodevi: Improve system memory detection on Solaris/Illumos operating systems
 - phodevi: Improve disk device detection on Solaris/Illumos operating systems
+- phodevi: Ensure no words in motherboard identifier string are repeated
 - pts_Graph: Allow disconnected lines of results on line graphs
 
 Phoronix Test Suite 3.4.0-Lillesand
