@@ -95,6 +95,24 @@ class phodevi_disk extends phodevi_device_interface
 			while(($disk != false || $i < 9) && $i < 128);
 			// On some systems, the first drive seems to be at dev.ad.8 rather than starting at dev.ad.0
 		}
+		else if(phodevi::is_solaris())
+		{
+			if(is_executable('/usr/ddu/bin/i386/hd_detect'))
+			{
+				$hd_detect = explode(PHP_EOL, trim(shell_exec('/usr/ddu/bin/i386/hd_detect -l 2>&1')));
+
+				foreach($hd_detect as $hd_line)
+				{
+					if(isset($hd_line) && ($hd_pos = strpos($hd_line, ':/')) != false)
+					{
+						$disk = trim(substr($hd_line, 0, $hd_pos));
+						$disk = self::prepend_disk_vendor($disk);
+						array_push($disks, $disk);
+					}
+				}
+			}
+
+		}
 		else if(phodevi::is_linux())
 		{
 			$disks_formatted = array();
@@ -115,44 +133,7 @@ class phodevi_disk extends phodevi_device_interface
 					}
 
 					$disk_size = round($disk_size * 512 / 1000000000) . 'GB';
-
-					if(isset($disk_model[4]))
-					{
-						$disk_manufacturer = null;
-						$third_char = substr($disk_model, 2, 1);
-
-						switch(substr($disk_model, 0, 2))
-						{
-							case 'WD':
-								$disk_manufacturer = 'Western Digital';
-								break;
-							case 'MK':
-								$disk_manufacturer = 'Toshiba';
-								break;
-							case 'HT':
-								// 'HD' might be some Hitachi disk drives, but that prefix seems too common
-								$disk_manufacturer = 'Hitachi';
-								break;
-							case 'ST':
-								if($third_char == 'T')
-								{
-									$disk_manufacturer = 'Super Talent';
-								}
-								else if($third_char != 'E')
-								{
-									$disk_manufacturer = 'Seagate';
-								}
-								break;
-						}
-
-						if($disk_manufacturer != null && strpos($disk_model, $disk_manufacturer) === false)
-						{
-							$disk_model = $disk_manufacturer . ' ' . $disk_model;
-						}
-
-						// OCZ SSDs aren't spaced
-						$disk_model = str_replace('OCZ-', 'OCZ ', $disk_model);
-					}
+					$disk_model = self::prepend_disk_vendor($disk_model);
 
 					if(strpos($disk_model, $disk_size . ' ') === false && strpos($disk_model, ' ' . $disk_size) === false && $disk_size != '1GB')
 					{
@@ -219,6 +200,53 @@ class phodevi_disk extends phodevi_device_interface
 		}
 
 		return $disks;
+	}
+	protected static function prepend_disk_vendor($disk_model)
+	{
+		if(isset($disk_model[4]))
+		{
+			$disk_manufacturer = null;
+			$third_char = substr($disk_model, 2, 1);
+
+			switch(substr($disk_model, 0, 2))
+			{
+				case 'WD':
+					$disk_manufacturer = 'Western Digital';
+
+					if(substr($disk_model, 0, 4) == 'WDC ')
+					{
+						$disk_model = substr($disk_model, 4);
+					}
+					break;
+				case 'MK':
+					$disk_manufacturer = 'Toshiba';
+					break;
+				case 'HT':
+					// 'HD' might be some Hitachi disk drives, but that prefix seems too common
+					$disk_manufacturer = 'Hitachi';
+					break;
+				case 'ST':
+					if($third_char == 'T')
+					{
+						$disk_manufacturer = 'Super Talent';
+					}
+					else if($third_char != 'E')
+					{
+						$disk_manufacturer = 'Seagate';
+					}
+					break;
+			}
+
+			if($disk_manufacturer != null && strpos($disk_model, $disk_manufacturer) === false)
+			{
+				$disk_model = $disk_manufacturer . ' ' . $disk_model;
+			}
+
+			// OCZ SSDs aren't spaced
+			$disk_model = str_replace('OCZ-', 'OCZ ', $disk_model);
+		}
+
+		return $disk_model;
 	}
 	public static function hdd_scheduler()
 	{
