@@ -13,6 +13,7 @@ Phoronix Test Suite (Git)
 - phodevi: Improve disk device detection on Solaris/Illumos operating systems
 - phodevi: Ensure no words in motherboard identifier string are repeated
 - pts_Graph: Allow disconnected lines of results on line graphs
+- toggle_screensaver: Support for toggling the GNOME3 AC display settings
 
 Phoronix Test Suite 3.4.0-Lillesand
 8 September 2011

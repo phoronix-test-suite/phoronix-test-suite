@@ -100,6 +100,16 @@ class toggle_screensaver extends pts_module_interface
 				shell_exec('gsettings set org.gnome.desktop.screensaver idle-activation-enabled false 2>&1');
 				self::$gnome3_screensaver_halted = true;
 			}
+
+			// GNOME 3.x Sleep Dispaly?
+			$is_gnome3_sleep = trim(shell_exec('gsettings get org.gnome.settings-daemon.plugins.power sleep-inactive-ac 2>&1'));
+
+			if($is_gnome3_sleep == 'true')
+			{
+				// Stop the GNOME 3.x Display Sleep
+				shell_exec('gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac false 2>&1');
+				self::$sleep_display_ac = true;
+			}
 		}
 
 		if(getenv('DISPLAY') != false && (self::$xset = pts_client::executable_in_path('xset')))
@@ -122,7 +132,14 @@ class toggle_screensaver extends pts_module_interface
 		if(self::$sleep_display_ac)
 		{
 			// Restore the screen sleep state when on AC power
-			shell_exec(self::$gnome_gconftool . ' --type int --set /apps/gnome-power-manager/timeout/sleep_display_ac ' . self::$sleep_display_ac . ' 2>&1');
+			if(pts_client::executable_in_path('gsettings'))
+			{
+				shell_exec('gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac true 2>&1');
+			}
+			else
+			{
+				shell_exec(self::$gnome_gconftool . ' --type int --set /apps/gnome-power-manager/timeout/sleep_display_ac ' . self::$sleep_display_ac . ' 2>&1');
+			}
 		}
 
 		if(self::$gnome2_screensaver_halted == true)
