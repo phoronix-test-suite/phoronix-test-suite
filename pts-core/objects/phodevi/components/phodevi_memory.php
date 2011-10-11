@@ -54,9 +54,26 @@ class phodevi_memory extends phodevi_device_interface
 			$mem_speed = phodevi_solaris_parser::read_sun_ddu_dmi_info('MemoryDevice*,Speed');
 			$mem_type = phodevi_solaris_parser::read_sun_ddu_dmi_info('MemoryDevice*,MemoryDeviceType');
 
+			for($i = 0; $i < count($mem_size); $i++)
+			{
+				switch(substr($mem_size[$i], -1))
+				{
+					case 'K':
+						// looks like sometimes Solaris now reports flash chip as memory
+						unset($mem_size[$i]);
+						unset($mem_speed[$i]);
+						unset($mem_type[$i]);
+						break;
+					case 'M':
+						// report megabytes as MB, just not M
+						$mem_size[$i] .= 'B';
+						break;
+				}
+			}
+
 			if(is_array($mem_speed) && count($mem_speed) > 0)
 			{
-				$mem_speed = array_pop($mem_speed);
+				$mem_speed = array_shift($mem_speed);
 			}
 
 			$mem_speed = str_replace('MHZ', 'MHz', $mem_speed);

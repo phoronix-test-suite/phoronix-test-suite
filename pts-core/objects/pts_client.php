@@ -593,7 +593,7 @@ class pts_client
 		// Phodevi Cache Handling
 		$phodevi_cache = $pso->read_object('phodevi_smart_cache');
 
-		if($phodevi_cache instanceOf phodevi_cache && pts_flags::no_phodevi_cache() == false)
+		if($phodevi_cache instanceof phodevi_cache && pts_flags::no_phodevi_cache() == false)
 		{
 			$phodevi_cache = $phodevi_cache->restore_cache(PTS_USER_PATH, PTS_CORE_VERSION);
 			phodevi::set_device_cache($phodevi_cache);
