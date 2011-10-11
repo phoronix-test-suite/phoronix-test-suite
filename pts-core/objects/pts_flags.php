@@ -74,11 +74,11 @@ class pts_flags
 		}
 		if(pts_client::read_env('NO_PHODEVI_CACHE') != false)
 		{
-			self::$flags != self::$no_phodevi_cache;
+			self::$flags |= self::$no_phodevi_cache;
 		}
 		if(pts_client::read_env('NO_EXTERNAL_DEPENDENCIES') != false)
 		{
-			self::$flags != self::$no_external_dependencies;
+			self::$flags |= self::$no_external_dependencies;
 		}
 	}
 	public static function os_identifier_hash()
