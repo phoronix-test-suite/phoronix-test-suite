@@ -26,6 +26,7 @@ class pts_LineGraph extends pts_Graph
 	protected $identifier_width = -1;
 	protected $minimum_identifier_font = 6.5;
 	protected $show_select_identifiers = null;
+	protected $identifiers_active = false;
 	public $plot_overview_text = true;
 
 	public function __construct(&$result_object, &$result_file = null)
@@ -39,8 +40,23 @@ class pts_LineGraph extends pts_Graph
 	{
 		// Do some common work to this object
 		$graph_identifiers_count = count($this->graph_identifiers);
-		$identifier_count = $graph_identifiers_count > 1 ? $graph_identifiers_count : count($this->graph_data[0]);
-		$this->identifier_width = ($this->graph_left_end - $this->graph_left_start) / ($identifier_count + 1);
+
+		if($graph_identifiers_count > 1)
+		{
+			$this->identifiers_active = true;
+			$identifier_count = $graph_identifiers_count + 1;
+		}
+		else
+		{
+			$identifier_count = 0;
+
+			foreach(array_keys($this->graph_data) as $i)
+			{
+				$identifier_count = max((count($this->graph_data[$i]) - 1), $identifier_count);
+			}
+		}
+
+		$this->identifier_width = ($this->graph_left_end - $this->graph_left_start) / $identifier_count;
 
 		$longest_string = pts_strings::find_longest_string($this->graph_identifiers);
 		$this->graph_font_size_identifiers = $this->text_size_bounds($longest_string, $this->graph_font, $this->graph_font_size_identifiers, $this->minimum_identifier_font, $this->identifier_width - 4);
@@ -89,7 +105,7 @@ class pts_LineGraph extends pts_Graph
 				continue;
 			}
 
-			$px_from_left = $this->graph_left_start + ($this->identifier_width * ($i + 1));
+			$px_from_left = $this->graph_left_start + ($this->identifier_width * ($i + ($this->identifiers_active ? 1 : 0)));
 
 			if($this->graph_font_size_identifiers <= $this->minimum_identifier_font)
 			{
@@ -104,7 +120,6 @@ class pts_LineGraph extends pts_Graph
 	protected function renderGraphLines()
 	{
 		$calculations_r = array();
-		$point_count = count($this->graph_data[0]);
 		$min_value = $this->graph_data[0][0];
 		$max_value = $this->graph_data[0][0];
 		$prev_value = $this->graph_data[0][0];
@@ -134,7 +149,7 @@ class pts_LineGraph extends pts_Graph
 				$data_string = isset($this->graph_data_title[$i_o]) ? $this->graph_data_title[$i_o] . ($identifier ? ' @ ' . $identifier : null) . ': ' . $value : null;
 
 				$value_plot_top = $this->graph_top_end + 1 - ($this->graph_maximum_value == 0 ? 0 : round(($value / $this->graph_maximum_value) * ($this->graph_top_end - $this->graph_top_start)));
-				$px_from_left = round($this->graph_left_start + ($this->identifier_width * ($i + 1)));
+				$px_from_left = round($this->graph_left_start + ($this->identifier_width * ($i + ($this->identifiers_active ? 1 : 0))));
 
 				if($value > $max_value)
 				{
