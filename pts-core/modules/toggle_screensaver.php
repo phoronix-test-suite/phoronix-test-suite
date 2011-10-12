@@ -24,7 +24,7 @@
 class toggle_screensaver extends pts_module_interface
 {
 	const module_name = 'Toggle Screensaver';
-	const module_version = '1.3.0';
+	const module_version = '1.4.0';
 	const module_description = 'This module toggles the system\'s screensaver while the Phoronix Test Suite is running. At this time, the GNOME and KDE screensavers are supported.';
 	const module_author = 'Phoronix Media';
 
@@ -102,13 +102,13 @@ class toggle_screensaver extends pts_module_interface
 			}
 
 			// GNOME 3.x Sleep Dispaly?
-			$is_gnome3_sleep = trim(shell_exec('gsettings get org.gnome.settings-daemon.plugins.power sleep-inactive-ac 2>&1'));
+			$is_gnome3_sleep = trim(shell_exec('gsettings get org.gnome.settings-daemon.plugins.power sleep-display-ac 2>&1'));
 
-			if($is_gnome3_sleep == 'true')
+			if($is_gnome3_sleep > 0)
 			{
 				// Stop the GNOME 3.x Display Sleep
-				shell_exec('gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac false 2>&1');
-				self::$sleep_display_ac = true;
+				shell_exec('gsettings set org.gnome.settings-daemon.plugins.power sleep-display-ac 0 2>&1');
+				self::$sleep_display_ac = $is_gnome3_sleep;
 			}
 		}
 
@@ -134,7 +134,7 @@ class toggle_screensaver extends pts_module_interface
 			// Restore the screen sleep state when on AC power
 			if(pts_client::executable_in_path('gsettings'))
 			{
-				shell_exec('gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac true 2>&1');
+				shell_exec('gsettings set org.gnome.settings-daemon.plugins.power sleep-display-ac ' . self::$sleep_display_ac . ' 2>&1');
 			}
 			else
 			{
