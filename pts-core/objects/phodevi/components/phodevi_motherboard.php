@@ -88,7 +88,7 @@ class phodevi_motherboard extends phodevi_device_interface
 
 		if(phodevi::is_linux())
 		{
-			$lspci = shell_exec('lspci -mmkvnn');
+			$lspci = shell_exec('lspci -mmkvnn 2> /dev/null');
 			$lspci = explode("\n\n", $lspci);
 
 			foreach($lspci as $o => &$lspci_section)

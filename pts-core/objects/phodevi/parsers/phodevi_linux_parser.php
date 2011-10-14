@@ -626,7 +626,7 @@ class phodevi_linux_parser
 				return false;
 			}
 
-			$pci_info = shell_exec($lspci_cmd . ' 2>&1');
+			$pci_info = shell_exec($lspci_cmd . ' 2> /dev/null');
 		}
 
 		for($i = 0; $i < count($desc) && empty($info); $i++)

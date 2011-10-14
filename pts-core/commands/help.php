@@ -46,7 +46,7 @@ class help implements pts_option_interface
 				echo '   ' . trim($option[0] . ' ' . implode(' ', $option[1])) . PHP_EOL;
 			}
 		}
-		echo PHP_EOL . PHP_EOL;
+		echo PHP_EOL;
 	}
 }
 
