@@ -291,9 +291,9 @@ class phodevi_cpu extends phodevi_device_interface
 				$info = trim(substr($info, 0, $strip_point)); // stripping out the reported freq, since the CPU could be overclocked, etc
 			}
 
-			// to work-around AMD FX Bulldozer, i.e. AMD FX -4100 @ 3.60GHz (4 Cores)
 			if(substr($info, 0, 3) == 'AMD')
 			{
+				// to work-around AMD FX Bulldozer, i.e. AMD FX -4100 @ 3.60GHz (4 Cores)
 				$info = str_replace('FX(tm)-', 'FX-', $info);
 			}
 		}

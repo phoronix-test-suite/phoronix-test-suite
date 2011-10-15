@@ -14,6 +14,7 @@ Phoronix Test Suite (Git)
 - phodevi: Ensure no words in motherboard identifier string are repeated
 - phodevi: Don't print lspci errors
 - phodevi: Few string reporting tweaks found from AMD Bulldozer FX system
+- phodevi: Virtualization detection support for Xen DomU guests
 - pts_Graph: Allow disconnected lines of results on line graphs
 - pts_Graph: Plot entire lines of data on line graphs when there are no identifiers
 - toggle_screensaver: Support for toggling the GNOME3 AC display settings

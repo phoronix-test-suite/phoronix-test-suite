@@ -347,6 +347,20 @@ class phodevi_system extends phodevi_device_interface
 		{
 			$virtualized = 'VirtualBox';
 		}
+		else if(is_file('/sys/class/dmi/id/sys_vendor') && pts_file_io::file_get_contents('/sys/class/dmi/id/sys_vendor') == 'Xen')
+		{
+			$virtualized = pts_file_io::file_get_contents('/sys/class/dmi/id/product_name');
+
+			if(strpos($virtualized, 'Xen') === false)
+			{
+				$virtualized = 'Xen ' . $virtualized;
+			}
+
+			// version string
+			$virtualized .= ' ' . pts_file_io::file_get_contents('/sys/class/dmi/id/product_version');
+
+			// $virtualized should be then e.g. 'Xen HVM domU 4.1.1'
+		}
 
 		return $virtualized;
 	}
