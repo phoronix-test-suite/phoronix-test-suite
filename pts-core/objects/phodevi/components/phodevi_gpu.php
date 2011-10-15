@@ -647,7 +647,12 @@ class phodevi_gpu extends phodevi_device_interface
 		if(phodevi::is_nvidia_graphics() && phodevi::is_macosx() == false) // NVIDIA GPU
 		{
 			// GPUDefault3DClockFreqs is the default and does not show under/over-clocking
-			list($core_freq, $mem_freq) = pts_strings::comma_explode(phodevi_parser::read_nvidia_extension('GPU3DClockFreqs'));
+			$clock_freqs_3d = pts_strings::comma_explode(phodevi_parser::read_nvidia_extension('GPU3DClockFreqs'));
+
+			if(is_array($clock_freqs_3d) && isset($clock_freqs_3d[1]))
+			{
+				list($core_freq, $mem_freq) = $clock_freqs_3d;
+			}
 		}
 		else if(phodevi::is_ati_graphics() && phodevi::is_linux()) // ATI GPU
 		{

@@ -284,10 +284,16 @@ class phodevi_cpu extends phodevi_device_interface
 		{
 			$info = 'Unknown';
 		}
-
-		if(($strip_point = strpos($info, '@')) > 0)
+		else
 		{
-			$info = trim(substr($info, 0, $strip_point)); // stripping out the reported freq, since the CPU could be overclocked, etc
+			if(($strip_point = strpos($info, '@')) > 0)
+			{
+				$info = trim(substr($info, 0, $strip_point)); // stripping out the reported freq, since the CPU could be overclocked, etc
+			}
+
+			// to work-around AMD FX Bulldozer, i.e. AMD FX -4100 @ 3.60GHz (4 Cores)
+			// should be fine to do this for CPU string as I can't think of any caveats
+			$info = str_replace(' -', '-', $info);
 		}
 
 		return $info;
