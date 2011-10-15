@@ -292,8 +292,10 @@ class phodevi_cpu extends phodevi_device_interface
 			}
 
 			// to work-around AMD FX Bulldozer, i.e. AMD FX -4100 @ 3.60GHz (4 Cores)
-			// should be fine to do this for CPU string as I can't think of any caveats
-			$info = str_replace(' -', '-', $info);
+			if(substr($info, 0, 3) == 'AMD')
+			{
+				$info = str_replace('FX(tm)-', 'FX-', $info);
+			}
 		}
 
 		return $info;
