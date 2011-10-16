@@ -99,6 +99,12 @@ class pts_strings
 				break;
 		}
 
+		if(($w = stripos($str, 'WARNING')) !== false)
+		{
+			// to get rid of Scheisse like 'Gtk-WARNING **: Unable'
+			$str = substr($str, 0, strrpos($str, ' ', (0 - (strlen($str) - $w))));
+		}
+
 		return implode(' ', $words);
 	}
 	public static function string_bool($string)
@@ -317,8 +323,13 @@ class pts_strings
 		}
 
 		$remove_phrases = array('incorporation', 'corporation', 'corp.', 'technologies', 'technology', 'version', 'computer', 'To Be Filled By', 'ODM', 'O.E.M.', 'Desktop Reference Platform', 'small form factor', 'convertible', 'group', 'chipset', 'community', 'reference', 'communications', 'semiconductor', 'processor', 'host bridge', 'adapter', 'CPU', 'platform', 'international', 'express', 'graphics', 'dram', 'none', 'electronics', 'integrated', 'alternate', 'quad-core', 'memory', 'series', 'network', 'motherboard', 'serverengines', 'Manufacturer', 'x86/mmx/sse2', '/AGP/SSE/3DNOW!', '/AGP/SSE2', 'controller', '(extreme graphics innovation)', 'pci-e_gfx and ht3 k8 part', 'pci-e_gfx and ht1 k8 part', 'Northbridge only', 'dual slot', 'dual-core', 'dual core', 'microsystems', 'not specified', 'single slot', 'genuine', 'unknown device', 'systemberatung', 'gmbh', 'graphics adapter', 'video device', 'http://', 'www.', '.com', '.tw/', '/pci/sse2/3dnow!', '/pci/sse2', 'balloon', 'network connection', 'ethernet', 'limited.', ' system', 'compliant', 'co. ltd', 'co.', 'ltd.', 'LTD ', '®', '(r)', '(tm)', 'inc.', 'inc', '6.00 PG', ',', '\'', '_ ', '_ ', 'corp');
-
 		$str = str_ireplace($remove_phrases, ' ', $str);
+
+		if(($w = stripos($str, 'WARNING')) !== false)
+		{
+			// to get rid of Scheisse like 'Gtk-WARNING **: Unable'
+			$str = substr($str, 0, strrpos($str, ' ', (0 - (strlen($str) - $w))));
+		}
 
 		return pts_strings::trim_spaces($str);
 	}

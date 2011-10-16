@@ -346,6 +346,17 @@ class phodevi_system extends phodevi_device_interface
 		else if(strpos($gpu, 'VirtualBox') !== false || strpos(phodevi::read_name('motherboard'), 'VirtualBox') !== false)
 		{
 			$virtualized = 'VirtualBox';
+
+			if($vbox_manage = pts_client::executable_in_path('VBoxManage'))
+			{
+				$vbox_manage = trim(shell_exec($vbox_manage . ' 2> /dev/null'));
+
+				if(is_numeric(substr($vbo_manage, 0, 1)))
+				{
+					$virtualized .= ' ' . $vbox_manage;
+				}
+			}
+
 		}
 		else if(is_file('/sys/class/dmi/id/sys_vendor') && pts_file_io::file_get_contents('/sys/class/dmi/id/sys_vendor') == 'Xen')
 		{
