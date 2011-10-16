@@ -72,6 +72,12 @@ class pts_strings
 			$value = substr($value, 0, -1);
 		}
 
+		if(($w = stripos($value, 'WARNING')) !== false)
+		{
+			// to get rid of Scheisse like 'Gtk-WARNING **: Unable'
+			$value = substr($value, 0, strrpos($value, ' ', (0 - (strlen($value) - $w))));
+		}
+
 		// Remove other beginning or ending words based upon conditions
 		$words = explode(' ', trim($value));
 		$c = count($words);
@@ -97,12 +103,6 @@ class pts_strings
 					array_shift($words);
 				}
 				break;
-		}
-
-		if(($w = stripos($str, 'WARNING')) !== false)
-		{
-			// to get rid of Scheisse like 'Gtk-WARNING **: Unable'
-			$str = substr($str, 0, strrpos($str, ' ', (0 - (strlen($str) - $w))));
 		}
 
 		return implode(' ', $words);

@@ -351,7 +351,7 @@ class phodevi_system extends phodevi_device_interface
 			{
 				$vbox_manage = trim(shell_exec($vbox_manage . ' 2> /dev/null'));
 
-				if(is_numeric(substr($vbo_manage, 0, 1)))
+				if(is_numeric(substr($vbox_manage, 0, 1)))
 				{
 					$virtualized .= ' ' . $vbox_manage;
 				}
