@@ -174,7 +174,7 @@ class phodevi_system extends phodevi_device_interface
 			if(pts_client::executable_in_path('mount'))
 			{
 				$mount = shell_exec('mount 2>&1');
-				
+
 				if(($start = strpos($mount, 'on / (')) != false)
 				{
 					/*
@@ -349,7 +349,7 @@ class phodevi_system extends phodevi_device_interface
 
 			if($vbox_manage = pts_client::executable_in_path('VBoxManage'))
 			{
-				$vbox_manage = trim(shell_exec($vbox_manage . ' 2> /dev/null'));
+				$vbox_manage = trim(shell_exec($vbox_manage . ' --version 2> /dev/null'));
 
 				if(is_numeric(substr($vbox_manage, 0, 1)))
 				{
