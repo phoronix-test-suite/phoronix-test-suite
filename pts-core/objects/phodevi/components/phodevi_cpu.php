@@ -296,6 +296,12 @@ class phodevi_cpu extends phodevi_device_interface
 				// to work-around AMD FX Bulldozer, i.e. AMD FX -4100 @ 3.60GHz (4 Cores)
 				$info = str_replace('FX(tm)-', 'FX-', $info);
 			}
+
+			// It seems Intel doesn't report its name when reporting Pentium hardware
+			if(strpos($info, 'Pentium') !== false && strpos($info, 'Intel') === false)
+			{
+				$info = 'Intel ' . $info;
+			}
 		}
 
 		return $info;

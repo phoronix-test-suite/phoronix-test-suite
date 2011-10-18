@@ -36,7 +36,6 @@ class detailed_system_info implements pts_option_interface
 		//
 
 		$cpu_flags = phodevi_cpu::get_cpu_flags();
-		$cpu_feature_constants = phodevi_cpu::get_cpu_feature_constants();
 		echo PHP_EOL . 'PROCESSOR:' . PHP_EOL . PHP_EOL;
 		echo 'Core Count: ' . phodevi_cpu::cpuinfo_core_count() . PHP_EOL;
 		echo 'Thread Count: ' . phodevi_cpu::cpuinfo_thread_count() . PHP_EOL;
