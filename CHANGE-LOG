@@ -7,6 +7,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add detailed-system-info command for reporting more system attributes
 - pts-core: Fix regression of NO_EXTERNAL_DEPENDENCIES and NO_PHODEVI_CACHE not working
 - pts-core: Add dump-openbenchmarking-indexes option for debugging
+- pts-core: Fix for extract-from-result-file not correctly formatting the new saved results name
 - phodevi: No longer report if CPU power savings (CnQ, EIST, etc) is active since it's now widespread across all desktop hardware
 - phodevi: Improve detection of low RAM capacities (1GB)
 - phodevi: Add support for detecting greater CPU features

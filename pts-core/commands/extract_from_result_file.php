@@ -56,6 +56,7 @@ class extract_from_result_file implements pts_option_interface
 		{
 			echo PHP_EOL . 'Enter new result file to extract to: ';
 			$extract_to = pts_user_io::read_user_input();
+			$extract_to = pts_test_run_manager::clean_save_name($extract_to);
 		}
 		while(empty($extract_to) || pts_result_file::is_test_result_file($extract_to));
 
