@@ -54,23 +54,6 @@ class phodevi_memory extends phodevi_device_interface
 			$mem_speed = phodevi_solaris_parser::read_sun_ddu_dmi_info('MemoryDevice*,Speed');
 			$mem_type = phodevi_solaris_parser::read_sun_ddu_dmi_info('MemoryDevice*,MemoryDeviceType');
 
-			for($i = 0; $i < count($mem_size); $i++)
-			{
-				switch(substr($mem_size[$i], -1))
-				{
-					case 'K':
-						// looks like sometimes Solaris now reports flash chip as memory
-						unset($mem_size[$i]);
-						unset($mem_speed[$i]);
-						unset($mem_type[$i]);
-						break;
-					case 'M':
-						// report megabytes as MB, just not M
-						$mem_size[$i] .= 'B';
-						break;
-				}
-			}
-
 			if(is_array($mem_speed) && count($mem_speed) > 0)
 			{
 				$mem_speed = array_shift($mem_speed);
@@ -115,6 +98,32 @@ class phodevi_memory extends phodevi_device_interface
 
 		if($mem_size != false && (!is_array($mem_size) || count($mem_size) != 0))
 		{
+			for($i = 0; $i < count($mem_size); $i++)
+			{
+				switch(substr($mem_size[$i], -1))
+				{
+					case 'K':
+						// looks like sometimes Solaris now reports flash chip as memory. its string ends with K
+						unset($mem_size[$i]);
+						unset($mem_speed[$i]);
+						unset($mem_type[$i]);
+						break;
+					case 'M':
+						// report megabytes as MB, just not M, as on Solaris
+						$mem_size[$i] .= 'B';
+						break;
+					case 'B':
+						if(strtolower(substr($mem_size[$i], -2, 1)) == 'k')
+						{
+							// some hardware on Linux via dmidecode reports flash chips
+							unset($mem_size[$i]);
+							//unset($mem_speed[$i]);
+							//unset($mem_type[$i]);
+						}
+						break;
+				}
+			}
+
 			$mem_count = count($mem_size);
 
 			if(!empty($mem_type))
