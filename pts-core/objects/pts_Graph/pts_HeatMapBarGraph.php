@@ -80,12 +80,25 @@ class pts_HeatMapBarGraph
 			}
 		}
 
+		if(empty($this->keys))
+		{
+			foreach($this->bars as &$bar_index)
+			{
+				foreach(array_keys($bar_index['results']) as $result_identifier)
+				{
+					if(!in_array($result_identifier, $this->keys))
+					{
+						array_push($this->keys, $result_identifier);
+					}
+				}
+			}
+		}
 
 		if(!empty($this->keys))
 		{
 			list($longest_key_width, $key_line_height) = bilde_renderer::soft_text_string_dimensions(pts_strings::find_longest_string($this->keys), '', 10, true);
 			$key_line_height += 18;
-			$keys_per_line = floor($bar_width / ($longest_key_width + 20));
+			$keys_per_line = floor($bar_width / ($longest_key_width + 12));
 			$title_key_offset = ceil(count($this->keys) / $keys_per_line) * $key_line_height;
 		}
 		else

@@ -244,7 +244,7 @@ class pts_LineGraph extends pts_Graph
 				// removed '|| $this->graph_image->get_renderer() == 'SVG'' from line below
 				$from_top = $this->graph_top_start + 4;
 				$longest_string_width = 0;
-				$precision = max($column) > 999 ? 0 : 1;
+				$precision = isset($column[0]) && max($column) > 999 ? 0 : 1;
 
 				foreach($column as &$write)
 				{
