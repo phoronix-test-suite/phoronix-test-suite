@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 3.6 Milestone 1
+20 October 2011
 
 - pts-core: Code clean-ups
 - pts-core: Allow results to be rendered in reverse order
