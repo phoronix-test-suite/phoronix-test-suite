@@ -198,7 +198,7 @@ class pts_LineGraph extends pts_Graph
 			}
 
 			// in_array($this->graph_y_title, array('Percent', 'Milliwatts', 'Megabytes', 'Celsius', 'MB/s', 'Frames Per Second', 'Seconds', 'Iterations Per Minute'))
-			if(isset($calculations_r[0]))
+			if(!empty($calculations_r))
 			{
 				array_push($to_display[$this->graph_color_text], 'Average:');
 

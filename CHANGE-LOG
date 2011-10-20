@@ -23,6 +23,7 @@ Phoronix Test Suite (Git)
 - phodevi: Basic ICC detection
 - pts_Graph: Allow disconnected lines of results on line graphs
 - pts_Graph: Plot entire lines of data on line graphs when there are no identifiers
+- pts_Graph: Fix for the averages on line graphs not appearing
 - toggle_screensaver: Support for toggling the GNOME3 AC display settings
 
 Phoronix Test Suite 3.4.0-Lillesand
