@@ -436,7 +436,7 @@ class phodevi_system extends phodevi_device_interface
 				$compiler_info = substr($compiler_info, ($cv_pos + 14));
 				$clang_version = substr($compiler_info, 0, strpos($compiler_info, ' '));
 
-				if(string_only_contains($clang_version, pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DECIMAL))
+				if(pts_strings::string_only_contains($clang_version, pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DECIMAL))
 				{
 					// Also see if there is a Clang SVN tag to fetch
 					$compiler_info = substr($compiler_info, 0, strpos($compiler_info, PHP_EOL));
@@ -480,7 +480,7 @@ class phodevi_system extends phodevi_device_interface
 				$info = substr($info, 0, strpos($info, PHP_EOL, $s));
 				$info = substr($info, strrpos($info, ' '));
 
-				if(string_only_contains($info, pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DECIMAL))
+				if(pts_strings::string_only_contains($info, pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DECIMAL))
 				{
 					$compilers['llvmc'] = 'LLVM ' . $info;
 				}
