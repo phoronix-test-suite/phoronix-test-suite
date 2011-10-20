@@ -463,6 +463,8 @@ class phodevi_system extends phodevi_device_interface
 			// Clang
 			if(empty($compiler_info))
 			{
+				// At least with Clang ~3.0 the -dumpversion is reporting '4.2.1' ratherthan the useful information...
+				// This is likely just for GCC command compatibility, so only use this as a fallback
 				$compiler_info = 'Clang ' . trim(shell_exec('clang -dumpversion 2> /dev/null'));
 			}
 
