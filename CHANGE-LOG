@@ -19,6 +19,7 @@ Phoronix Test Suite (Git)
 - phodevi: Virtualization detection support for Xen DomU guests
 - phodevi: Detect VirtualBox version from guest VM
 - phodevi: Expose a cpu.power sensor that provides monitoring of CPU power consumption (new feature to AMD 15h Bulldozer CPUs)
+- phodevi: Convert CPU model strings like 'Intel Core i7 M 620' to 'Intel Core i7 620M' to better reflect Intel product marketing names
 - pts_Graph: Allow disconnected lines of results on line graphs
 - pts_Graph: Plot entire lines of data on line graphs when there are no identifiers
 - toggle_screensaver: Support for toggling the GNOME3 AC display settings

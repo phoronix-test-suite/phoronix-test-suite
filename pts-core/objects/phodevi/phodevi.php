@@ -278,7 +278,7 @@ class phodevi
 		{
 			$property = call_user_func(array('phodevi_' . $device, 'read_property'), $read_property);
 
-			if(!($property instanceOf phodevi_device_property))
+			if(!($property instanceof phodevi_device_property))
 			{
 				return false;
 			}

@@ -291,16 +291,26 @@ class phodevi_cpu extends phodevi_device_interface
 				$info = trim(substr($info, 0, $strip_point)); // stripping out the reported freq, since the CPU could be overclocked, etc
 			}
 
-			if(substr($info, 0, 3) == 'AMD')
-			{
-				// to work-around AMD FX Bulldozer, i.e. AMD FX -4100 @ 3.60GHz (4 Cores)
-				$info = str_replace('FX(tm)-', 'FX-', $info);
-			}
+			$info = pts_strings::strip_string($info);
 
 			// It seems Intel doesn't report its name when reporting Pentium hardware
 			if(strpos($info, 'Pentium') !== false && strpos($info, 'Intel') === false)
 			{
 				$info = 'Intel ' . $info;
+			}
+
+			if(substr($info, 0, 5) == 'Intel')
+			{
+				$cpu_words = explode(' ', $info);
+				$cpu_words_count = count($cpu_words);
+
+				// Convert strings like Intel Core i7 M 620 -> Intel Core i7 620M and Intel Core i7 X 990 -> Intel Core i7 990X to better reflect Intel product marketing names
+				if($cpu_words_count > 4 && is_numeric($cpu_words[($cpu_words_count - 1)]) && strlen($cpu_words[($cpu_words_count - 2)]) == 1 && strlen($cpu_words[($cpu_words_count - 3)]) == 2)
+				{
+					$cpu_words[($cpu_words_count - 1)] .= $cpu_words[($cpu_words_count - 2)];
+					unset($cpu_words[($cpu_words_count - 2)]);
+					$info = implode(' ', $cpu_words);
+				}
 			}
 		}
 

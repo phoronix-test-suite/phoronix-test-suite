@@ -331,7 +331,12 @@ class pts_strings
 			$str = substr($str, 0, strrpos($str, ' ', (0 - (strlen($str) - $w))));
 		}
 
-		return pts_strings::trim_spaces($str);
+		$str = pts_strings::trim_spaces($str);
+
+		// Fixes an AMD string issue like 'FX -4100' due to stripping (TM) from in between characters, possibly other cases too
+		$str = str_replace(' -', '-', $str);
+
+		return $str;
 	}
 	public static function pts_version_to_codename($version)
 	{
