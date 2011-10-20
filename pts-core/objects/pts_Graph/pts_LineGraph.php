@@ -137,7 +137,7 @@ class pts_LineGraph extends pts_Graph
 			{
 				$value = $this->graph_data[$i_o][$i];
 
-				if($value == 0)
+				if($value < 0 || ($value == 0 && $this->graph_identifiers != null))
 				{
 					// Draw whatever is needed of the line so far, since there is no result here
 					$this->draw_graph_line_process($poly_points, $paint_color, $regression_plots, $point_counter);
