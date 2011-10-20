@@ -304,7 +304,7 @@ class phodevi_cpu extends phodevi_device_interface
 				$cpu_words = explode(' ', $info);
 				$cpu_words_count = count($cpu_words);
 
-				// Convert strings like Intel Core i7 M 620 -> Intel Core i7 620M and Intel Core i7 X 990 -> Intel Core i7 990X to better reflect Intel product marketing names
+				// Convert strings like 'Intel Core i7 M 620' -> 'Intel Core i7 620M' and 'Intel Core i7 X 990' -> 'Intel Core i7 990X' to better reflect Intel product marketing names
 				if($cpu_words_count > 4 && is_numeric($cpu_words[($cpu_words_count - 1)]) && strlen($cpu_words[($cpu_words_count - 2)]) == 1 && strlen($cpu_words[($cpu_words_count - 3)]) == 2)
 				{
 					$cpu_words[($cpu_words_count - 1)] .= $cpu_words[($cpu_words_count - 2)];

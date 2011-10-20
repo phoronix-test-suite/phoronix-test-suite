@@ -459,6 +459,12 @@ class phodevi_system extends phodevi_device_interface
 			}
 		}
 
+		if(pts_client::executable_in_path('icc'))
+		{
+			// Intel C++ Compiler
+			$compilers['icc'] = 'ICC';
+		}
+
 		// Try to make the compiler that's used by default to appear first
 		if(pts_client::read_env('CC') && isset($compilers[basename(pts_client::read_env('CC'))]))
 		{
