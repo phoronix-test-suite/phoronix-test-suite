@@ -473,12 +473,12 @@ class phodevi_system extends phodevi_device_interface
 		{
 			// LLVM - Low Level Virtual Machine
 			// Reading the version from llvm-ld (the LLVM linker) should be safe as well for finding out version of LLVM in use
-			$info = trim(shell_exec('llvm-ld -version 2> /dev/null'));
+			$info = trim(shell_exec('llvm-ld --version 2> /dev/null'));
 
 			if(($s = strpos($info, 'version')) != false)
 			{
 				$info = substr($info, 0, strpos($info, PHP_EOL, $s));
-				$info = substr($info, strrpos($info, ' '));
+				$info = substr($info, (strrpos($info, ' ') + 1));
 
 				if(pts_strings::string_only_contains($info, pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DECIMAL))
 				{
