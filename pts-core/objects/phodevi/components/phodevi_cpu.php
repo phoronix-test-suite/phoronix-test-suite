@@ -75,9 +75,9 @@ class phodevi_cpu extends phodevi_device_interface
 
 		if(phodevi::is_linux())
 		{
-			if(is_file('/sys/devices/system/cpu/present'))
+			if(is_file('/sys/devices/system/cpu/online'))
 			{
-				$present = pts_file_io::file_get_contents('/sys/devices/system/cpu/present');
+				$present = pts_file_io::file_get_contents('/sys/devices/system/cpu/online');
 
 				if(substr($present, 0, 2) == '0-')
 				{
