@@ -22,6 +22,7 @@ Phoronix Test Suite 3.6 Milestone 1
 - phodevi: Expose a cpu.power sensor that provides monitoring of CPU power consumption (new feature to AMD 15h Bulldozer CPUs)
 - phodevi: Convert CPU model strings like 'Intel Core i7 M 620' to 'Intel Core i7 620M' to better reflect Intel product marketing names
 - phodevi: Basic ICC detection
+- phodevi: Improvements to LLVM/Clang version detection and code revision reporting
 - pts_Graph: Allow disconnected lines of results on line graphs
 - pts_Graph: Plot entire lines of data on line graphs when there are no identifiers
 - pts_Graph: Fix for the averages on line graphs not appearing

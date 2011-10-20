@@ -427,11 +427,66 @@ class phodevi_system extends phodevi_device_interface
 		if(pts_client::executable_in_path('clang'))
 		{
 			// Clang
-			$compiler_info = 'Clang ' . trim(shell_exec('clang -dumpversion 2>&1'));
-			$compilers['clang'] = trim($compiler_info);
+			$compiler_info = shell_exec('clang --version 2> /dev/null');
+			if(($cv_pos = stripos($compiler_info, 'clang version')) !== false)
+			{
+				// With Clang 3.0 and prior, the --version produces output where the first line is:
+				// e.g. clang version 3.0 (branches/release_30 142590)
+
+				$compiler_info = substr($compiler_info, ($cv_pos + 14));
+				$clang_version = substr($compiler_info, 0, strpos($compiler_info, ' '));
+
+				if(string_only_contains($clang_version, pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DECIMAL))
+				{
+					// Also see if there is a Clang SVN tag to fetch
+					$compiler_info = substr($compiler_info, 0, strpos($compiler_info, PHP_EOL));
+					if(($cv_pos = strpos($compiler_info, ')')) !== false)
+					{
+						$compiler_info = substr($compiler_info, 0, $cv_pos);
+						$compiler_info = substr($compiler_info, (strrpos($compiler_info, ' ') + 1));
+
+						if(is_numeric($compiler_info))
+						{
+							// Right now Clang/LLVM uses SVN system and their revisions are only numeric
+							$clang_version .= ' (SVN ' . $compiler_info . ')';
+						}
+					}
+
+					$compiler_info = 'Clang ' . $clang_version;
+				}
+				else
+				{
+					$compiler_info = null;
+				}
+			}
+
+			// Clang
+			if(empty($compiler_info))
+			{
+				$compiler_info = 'Clang ' . trim(shell_exec('clang -dumpversion 2> /dev/null'));
+			}
+
+			$compilers['clang'] = $compiler_info;
 		}
 
-		if(pts_client::executable_in_path('llvmc'))
+		if(pts_client::executable_in_path('llvm-ld'))
+		{
+			// LLVM - Low Level Virtual Machine
+			// Reading the version from llvm-ld (the LLVM linker) should be safe as well for finding out version of LLVM in use
+			$info = trim(shell_exec('llvm-ld -version 2> /dev/null'));
+
+			if(($s = strpos($info, 'version')) != false)
+			{
+				$info = substr($info, 0, strpos($info, PHP_EOL, $s));
+				$info = substr($info, strrpos($info, ' '));
+
+				if(string_only_contains($info, pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DECIMAL))
+				{
+					$compilers['llvmc'] = 'LLVM ' . $info;
+				}
+			}
+		}
+		else if(pts_client::executable_in_path('llvmc'))
 		{
 			// LLVM - Low Level Virtual Machine (llvmc)
 			$info = trim(shell_exec('llvmc -version 2>&1'));
