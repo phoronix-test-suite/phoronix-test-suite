@@ -334,10 +334,21 @@ class phodevi_system extends phodevi_device_interface
 		// Reports if system is running virtualized
 		$virtualized = null;
 		$gpu = phodevi::read_name('gpu');
+		$cpu = phodevi::read_property('cpu', 'model');
 
-		if(strpos(phodevi::read_property('cpu', 'model'), 'QEMU') !== false || (is_readable('/sys/class/dmi/id/bios_vendor') && pts_file_io::file_get_contents('/sys/class/dmi/id/bios_vendor') == 'QEMU'))
+		if(strpos($cpu, 'QEMU') !== false || (is_readable('/sys/class/dmi/id/bios_vendor') && pts_file_io::file_get_contents('/sys/class/dmi/id/bios_vendor') == 'QEMU'))
 		{
 			$virtualized = 'QEMU';
+
+			if(strpos($cpu, 'QEMU Vitual') !== false)
+			{
+				$qemu_version = substr($cpu, (strrpos($cpu, ' ') + 1));
+
+				if(pts_strings::string_only_contains($qemu_version, pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DECIMAL))
+				{
+					$virtualized .= ' ' . $qemu_version;
+				}
+			}
 		}
 		else if(strpos($gpu, 'VMware') !== false || (is_readable('/sys/class/dmi/id/product_name') && stripos(pts_file_io::file_get_contents('/sys/class/dmi/id/product_name'), 'VMware') !== false))
 		{

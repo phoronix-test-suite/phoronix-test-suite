@@ -22,7 +22,7 @@
 */
 
 define('PTS_VERSION', '3.6.0m1');
-define('PTS_CORE_VERSION', 3510);
+define('PTS_CORE_VERSION', 3511);
 define('PTS_CODENAME', 'ARENDAL');
 define('PTS_IS_CLIENT', (defined('PTS_MODE') && PTS_MODE == 'CLIENT'));
 
