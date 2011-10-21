@@ -340,7 +340,7 @@ class phodevi_system extends phodevi_device_interface
 		{
 			$virtualized = 'QEMU';
 
-			if(strpos($cpu, 'QEMU Vitual') !== false)
+			if(strpos($cpu, 'QEMU Virtual') !== false)
 			{
 				$qemu_version = substr($cpu, (strrpos($cpu, ' ') + 1));
 

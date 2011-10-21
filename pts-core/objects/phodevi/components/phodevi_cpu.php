@@ -329,7 +329,10 @@ class phodevi_cpu extends phodevi_device_interface
 			'aes' => 256, // AES
 			'epb' => 512, // EPB
 			'svm' => 1024, // AMD SVM (Virtualization)
-			'vmx' => 2048 // Intel Virtualization
+			'vmx' => 2048, // Intel Virtualization
+			'xop' => 4096, // AMD XOP Instruction Set
+			'fma3' => 8192, // FMA3 Instruction Set
+			'fma4' => 16384 // FMA4 Instruction Set
 			);
 	}
 	public static function get_cpu_feature_constant($constant)
@@ -389,10 +392,13 @@ class phodevi_cpu extends phodevi_device_interface
 			}
 		}
 
-		if(($cpu_flags & self::get_cpu_feature_constant('avx')))
+		// Check for other instruction sets
+		foreach(array('avx', 'xop', 'fma3', 'fma4') as $instruction_set)
 		{
-			// Advanced Vector Extensions
-			$extension_string .= ($extension_string != null ? ' + ' : null) . 'AVX';
+			if(($cpu_flags & self::get_cpu_feature_constant($instruction_set)))
+			{
+				$extension_string .= ($extension_string != null ? ' + ' : null) . strtoupper($instruction_set);
+			}
 		}
 
 		return $extension_string;
