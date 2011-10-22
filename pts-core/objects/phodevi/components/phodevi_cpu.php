@@ -23,7 +23,7 @@
 
 if(PTS_IS_CLIENT && is_file('/proc/cpuinfo'))
 {
-	phodevi_cpu::$cpuinfo = file_get_contents('/proc/cpuinfo');
+	phodevi_cpu::$cpuinfo = PHP_EOL . file_get_contents('/proc/cpuinfo');
 }
 
 class phodevi_cpu extends phodevi_device_interface

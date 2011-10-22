@@ -374,6 +374,8 @@ abstract class bilde_renderer
 		static $cache = array();
 		static $color_shift = 0;
 		static $color_shift_size = 120;
+		$i = count($cache);
+		$color_shift_size = ($i == 0 ? 120 : 360 / $i); // can't be assigned directly to static var
 
 		if(!isset($cache[$ns][$id]))
 		{
@@ -396,8 +398,8 @@ abstract class bilde_renderer
 				$color_shift += $color_shift_size;
 				if($color_shift == ($color_shift_size * 3))
 				{
-					$color_shift_size *= 0.8;
-					$colors[0] = self::color_shade($colors[0], 0.5, 1);
+					$color_shift_size *= 0.3;
+					$colors[0] = self::color_shade($colors[0], 0.9, 1);
 				}
 				else if($color_shift > 630)
 				{
@@ -492,7 +494,7 @@ abstract class bilde_renderer
 		}
 		else
 		{
-			$hsl['s'] = $max / ($hsl['l'] < 0.5 ? $max + $min : 2 - $max - $min);
+			$hsl['s'] = $delta / ($hsl['l'] < 0.5 ? $max + $min : 2 - $max - $min);
 
 			$delta_rgb = array();
 			foreach($rgb as $color => $value)

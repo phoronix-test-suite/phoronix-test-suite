@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 - pts-core: When the PHP version in use changes, re-run the recommended/required PHP checks
 - phodevi: When QEMU virtualization is detected, try to report QEMU version to system layer
 - phodevi: Support for reporting the XOP, FMA3, and FMA4 instruction sets
+- bilde_renderer: Improve automated color selection/shifting
 
 Phoronix Test Suite 3.6 Milestone 1
 20 October 2011
