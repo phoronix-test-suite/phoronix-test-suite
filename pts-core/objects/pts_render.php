@@ -618,8 +618,7 @@ class pts_render
 			if(count($identifier_r) != 2 || (isset($identifier[14]) && $identifier[4] == '-' && $identifier[13] == ':'))
 			{
 				// the later check will fix 0000-00-00 00:00 as breaking into date
-				$is_multi_way = false;
-				break;
+				return false;
 			}
 
 			if(false && $is_ordered && $prev_system != null && $prev_system != $identifier_r[0] && isset($systems[$identifier_r[0]]))
@@ -629,8 +628,7 @@ class pts_render
 
 				if($result_file == null)
 				{
-					$is_multi_way = false;
-					break;
+					return false;
 				}
 			}
 
