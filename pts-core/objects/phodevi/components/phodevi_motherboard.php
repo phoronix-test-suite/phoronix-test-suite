@@ -82,6 +82,12 @@ class phodevi_motherboard extends phodevi_device_interface
 
 		return $usb;
 	}
+	public static function is_genuine($mobo)
+	{
+		// the string length check is a short way of making sure none of those strings are found in the motherboard string
+		return strpos($mobo, ' ') !== false && strlen($mobo) == strlen(str_ireplace(array('Virtual', 'Bochs', '440BX', 'Megatrends', 'Software', 'Xen'), null, $mobo));
+		// pts_strings::string_contains($mobo, pts_strings::CHAR_NUMERIC);
+	}
 	public static function pci_devices()
 	{
 		$pci_devices = array();

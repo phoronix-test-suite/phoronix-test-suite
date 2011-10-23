@@ -118,6 +118,16 @@ class phodevi_cpu extends phodevi_device_interface
 	{
 		return self::cpu_default_frequency() * 1000;
 	}
+	public static function is_genuine($cpu)
+	{
+		/*
+			Real/Genuine CPUs should have:
+			1. Contain more than one word in string
+			2. Check vendor (to avoid QEMU, Virtual CPU, etc): Intel, VIA, AMD, ARM, SPARC
+		*/
+
+		return strpos($cpu, ' ') !== false && strpos($cpu, ' ') != strrpos($cpu, ' ') && strlen($cpu) != strlen(str_ireplace(array('Intel', 'VIA', 'AMD', 'ARM', 'SPARC'), null, $cpu));
+	}
 	public static function cpu_default_frequency($cpu_core = 0)
 	{
 		// Find out the processor frequency
