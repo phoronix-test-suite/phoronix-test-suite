@@ -85,7 +85,7 @@ class phodevi_motherboard extends phodevi_device_interface
 	public static function is_genuine($mobo)
 	{
 		// the string length check is a short way of making sure none of those strings are found in the motherboard string
-		return strpos($mobo, ' ') !== false && strlen($mobo) == strlen(str_ireplace(array('Virtual', 'Bochs', '440BX', 'Megatrends', 'Software', 'Xen'), null, $mobo));
+		return strpos($mobo, ' ') > 1 && strlen($mobo) == strlen(str_ireplace(array('Virtual', 'Bochs', '440BX', 'Megatrends', 'Software', 'Xen', 'Notebook', 'OEM'), null, $mobo));
 		// pts_strings::string_contains($mobo, pts_strings::CHAR_NUMERIC);
 	}
 	public static function pci_devices()
@@ -167,6 +167,132 @@ class phodevi_motherboard extends phodevi_device_interface
 		}
 
 		return $pci_devices;
+	}
+	public static function parse_pci_device_data(&$lspci, &$dmesg, $ignore_external_pci_devices = false)
+	{
+		$pci_devices = explode(PHP_EOL . PHP_EOL, $lspci);
+		$sanitized_devices = array();
+
+		foreach($pci_devices as &$device)
+		{
+			$device .= PHP_EOL;
+			$location = substr($device, 0, strpos($device, ' '));
+
+			if(!strpos($location, ':') || !strpos($location, '.'))
+			{
+				// If it's not a valid PCI bus location (i.e. XX:YY.Z), it's probably not formatted well or wrong
+				continue;
+			}
+
+			$class = substr($device, ($s = (strpos($device, '[') + 1)), (strpos($device, ']', $s) - $s));
+
+			if(!(isset($class[3]) && !isset($class[4])))
+			{
+				// class must be 4 characters: 2 for class, 2 for sub-class
+				continue;
+			}
+
+			// 0300 is GPUs
+			if($ignore_external_pci_devices && in_array($class, array('0300')))
+			{
+				// Don't report external PCI devices
+				continue;
+			}
+
+			$device_class = substr($class, 0, 2);
+			$sub_class = substr($class, 2, 2);
+
+			$device_name = substr($device, ($l = strpos($device, ']:') + 3), ($s = strpos($device, ':', $l)) - $l);
+			$device_name = substr($device_name, 0, strrpos($device_name, ' ['));
+			$device_name = str_replace('/', '-', str_replace(array('[AMD]', '[SiS]'), null, $device_name));
+			$device_name = pts_strings::strip_string($device_name);
+
+			if($device_name == null || strpos($device_name, ' ') === false)
+			{
+				// it must be junk not worth reporting
+				continue;
+			}
+
+			$temp = substr($device, $s - 5);
+			if($temp[0] != '[' || $temp[10] != ']')
+			{
+				continue;
+			}
+
+			$vendor_id = substr($temp, 1, 4);
+			$device_id = substr($temp, 6, 4);
+
+			$drivers = array();
+			if(($s = strpos($device, 'Kernel driver in use:')) !== false)
+			{
+				$temp = substr($device, ($s = $s + 22), (strpos($device, PHP_EOL, $s) - $s));
+
+				if($temp != null)
+				{
+					array_push($drivers, $temp);
+				}
+			}
+			if(($s = strpos($device, 'Kernel modules:')) !== false)
+			{
+				$temp = substr($device, ($s = $s + 16), (strpos($device, PHP_EOL, $s) - $s));
+
+				if($temp != null)
+				{
+					foreach(explode(' ', trim($temp)) as $temp)
+					{
+						$temp = str_replace(',', null, $temp);
+						if($temp != null && !in_array($temp, $drivers))
+						{
+							array_push($drivers, $temp);
+						}
+					}
+				}
+			}
+
+			if(empty($drivers))
+			{
+				// If there's no drivers, nothing to report
+				continue;
+			}
+
+			if(!in_array($vendor_id . ':' . $device_id, array_keys($sanitized_devices)))
+			{
+				$dmesg_example = array();
+
+				if($dmesg != null)
+				{
+					foreach($drivers as $driver)
+					{
+						$offset = 1;
+						while($offset != false && ($offset = strpos($dmesg, $driver, $offset)) !== false)
+						{
+							$line = substr($dmesg, 0, strpos($dmesg, "\n", $offset));
+							$line = substr($line, strrpos($line, "\n"));
+							$line = trim(substr($line, strpos($line, '] ') + 2));
+
+							if($line != null && !isset($line[128]))
+							{
+								array_push($dmesg_example, $line);
+							}
+							$offset = strpos($dmesg, "\n", ($offset + 1));
+						}
+					}
+				}
+
+				$sanitized_devices[$vendor_id . ':' . $device_id] = array(
+					$vendor_id,
+					$device_id,
+					$device_name,
+					$device_class,
+					$sub_class,
+					$drivers,
+					trim($device),
+					implode(PHP_EOL, $dmesg_example)
+					);
+			}
+		}
+
+		return $sanitized_devices;
 	}
 	public static function power_mode()
 	{
