@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2010, Phoronix Media
-	Copyright (C) 2009 - 2010, Michael Larabel
+	Copyright (C) 2009 - 2011, Phoronix Media
+	Copyright (C) 2009 - 2011, Michael Larabel
 	pts_ResultFileTable.php: The result file table object
 
 	This program is free software; you can redistribute it and/or modify
@@ -25,9 +25,9 @@ class pts_ResultFileTable extends pts_Table
 {
 	public $flagged_results = array();
 
-	public function __construct(&$result_file, $system_id_keys = null, $result_object_index = -1)
+	public function __construct(&$result_file, $system_id_keys = null, $result_object_index = -1, $extra_attributes = null)
 	{
-		list($rows, $columns, $table_data) = self::result_file_to_result_table($result_file, $system_id_keys, $result_object_index, $this->flagged_results);
+		list($rows, $columns, $table_data) = self::result_file_to_result_table($result_file, $system_id_keys, $result_object_index, $this->flagged_results, $extra_attributes);
 		parent::__construct($rows, $columns, $table_data, $result_file);
 		$this->result_object_index = $result_object_index;
 
@@ -54,7 +54,7 @@ class pts_ResultFileTable extends pts_Table
 			}
 		}
 	}
-	public static function result_file_to_result_table(&$result_file, &$system_id_keys = null, &$result_object_index = -1, &$flag_delta_results = false)
+	public static function result_file_to_result_table(&$result_file, &$system_id_keys = null, &$result_object_index = -1, &$flag_delta_results = false, $extra_attributes = null)
 	{
 		$result_table = array();
 		$result_tests = array();
@@ -67,6 +67,27 @@ class pts_ResultFileTable extends pts_Table
 
 		foreach($result_file->get_result_objects($result_object_index) as $ri => $result_object)
 		{
+			if($extra_attributes != null)
+			{
+				if(isset($extra_attributes['reverse_result_buffer']))
+				{
+					$result_object->test_result_buffer->buffer_values_reverse();
+				}
+				if(isset($extra_attributes['normalize_result_buffer']))
+				{
+					if(isset($extra_attributes['highlight_graph_values']) && is_array($extra_attributes['highlight_graph_values']) && count($extra_attributes['highlight_graph_values']) == 1)
+					{
+						$normalize_against = $extra_attributes['highlight_graph_values'][0];
+					}
+					else
+					{
+						$normalize_against = false;
+					}
+
+					$result_object->normalize_buffer_values($normalize_against);
+				}
+			}
+
 			if($result_object_index != -1)
 			{
 				if(is_array($result_object_index))
