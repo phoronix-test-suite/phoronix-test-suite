@@ -190,7 +190,7 @@ class pts_LineGraph extends pts_Graph
 		if($this->plot_overview_text)
 		{
 			$to_display = array();
-			$to_display[$this->graph_color_text] = array();
+			$to_display[$this->graph_color_notches] = array();
 
 			foreach(array_keys($calculations_r) as $color)
 			{
@@ -200,71 +200,71 @@ class pts_LineGraph extends pts_Graph
 			// in_array($this->graph_y_title, array('Percent', 'Milliwatts', 'Megabytes', 'Celsius', 'MB/s', 'Frames Per Second', 'Seconds', 'Iterations Per Minute'))
 			if(!empty($calculations_r))
 			{
-				array_push($to_display[$this->graph_color_text], 'Average:');
+				array_push($to_display[$this->graph_color_notches], 'Average:');
 
 				foreach($calculations_r as $color => &$values)
 				{
 					array_push($to_display[$color], (array_sum($values) / count($values)));
 				}
-			}
-			// in_array($this->graph_y_title, array('Megabytes', 'Milliwatts', 'Celsius', 'MB/s', 'Frames Per Second', 'Seconds', 'Iterations Per Minute'))
-			if(($this->graph_y_title != 'Percent' || $max_value < 100) && $max_value != $min_value)
-			{
-				array_push($to_display[$this->graph_color_text], 'Peak:');
 
-				foreach($calculations_r as $color => &$values)
+				// in_array($this->graph_y_title, array('Megabytes', 'Milliwatts', 'Celsius', 'MB/s', 'Frames Per Second', 'Seconds', 'Iterations Per Minute'))
+				if(($this->graph_y_title != 'Percent' || $max_value < 100) && $max_value != $min_value)
 				{
-					array_push($to_display[$color], max($values));
-				}
-			}
-			if($min_value > 0 && $max_value != $min_value)
-			{
-				array_push($to_display[$this->graph_color_text], 'Low:');
+					array_push($to_display[$this->graph_color_notches], 'Peak:');
 
-				foreach($calculations_r as $color => &$values)
-				{
-					array_push($to_display[$color], min($values));
-				}
-			}
-			/*if($point_counter > 9 && !in_array($this->graph_y_title, array('Percent')))
-			{
-				array_push($to_display[$this->graph_color_text], 'Last:');
-
-				foreach($calculations_r as $color => &$values)
-				{
-					array_push($to_display[$color], $values[count($values) - 1]);
-				}
-			}*/
-
-			// Do the actual rendering of avg / low / med high identifiers
-			$from_left = $this->graph_left_start + 6;
-
-			foreach($to_display as $color_key => &$column)
-			{
-				// removed '|| $this->graph_image->get_renderer() == 'SVG'' from line below
-				$from_top = $this->graph_top_start + 4;
-				$longest_string_width = 0;
-				$precision = isset($column[0]) && max($column) > 999 ? 0 : 1;
-
-				foreach($column as &$write)
-				{
-					if(is_numeric($write))
+					foreach($calculations_r as $color => &$values)
 					{
-						$write = pts_math::set_precision($write, $precision);
+						array_push($to_display[$color], max($values));
+					}
+				}
+				if($min_value > 0 && $max_value != $min_value)
+				{
+					array_push($to_display[$this->graph_color_notches], 'Low:');
+
+					foreach($calculations_r as $color => &$values)
+					{
+						array_push($to_display[$color], min($values));
+					}
+				}
+				/*if($point_counter > 9 && !in_array($this->graph_y_title, array('Percent')))
+				{
+					array_push($to_display[$this->graph_color_body_text], 'Last:');
+
+					foreach($calculations_r as $color => &$values)
+					{
+						array_push($to_display[$color], $values[count($values) - 1]);
+					}
+				}*/
+
+				// Do the actual rendering of avg / low / med high identifiers
+				$from_left = $this->graph_left_start + 6;
+				foreach($to_display as $color_key => &$column)
+				{
+					// removed '|| $this->graph_image->get_renderer() == 'SVG'' from line below
+					$from_top = $this->graph_top_start + 4;
+					$longest_string_width = 0;
+					$precision = isset($column[0]) && max($column) > 999 ? 0 : 1;
+
+					foreach($column as &$write)
+					{
+						if(is_numeric($write))
+						{
+							$write = pts_math::set_precision($write, $precision);
+						}
+
+						$this->graph_image->write_text_left($write, $this->graph_font, 6.5, $color_key, $from_left, $from_top, $from_left, $from_top);
+						$string_width = $this->text_string_width($write, $this->graph_font, 6.5);
+
+						if($string_width > $longest_string_width)
+						{
+							$longest_string_width = $string_width;
+						}
+
+						$from_top += 10;
 					}
 
-					$this->graph_image->write_text_left($write, $this->graph_font, 6.5, $color_key, $from_left, $from_top, $from_left, $from_top);
-					$string_width = $this->text_string_width($write, $this->graph_font, 6.5);
-
-					if($string_width > $longest_string_width)
-					{
-						$longest_string_width = $string_width;
-					}
-
-					$from_top += 10;
+					$from_left += $longest_string_width + 3;
 				}
-
-				$from_left += $longest_string_width + 3;						
 			}
 		}
 	}
