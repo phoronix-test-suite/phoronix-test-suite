@@ -117,8 +117,6 @@ if(QUICK_START == false)
 
 	register_shutdown_function(array('pts_client', 'process_shutdown_tasks'));
 
-	pts_network::client_startup();
-
 	if(pts_client::read_env('PTS_IGNORE_MODULES') == false)
 	{
 		pts_client::module_framework_init(); // Initialize the PTS module system

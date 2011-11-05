@@ -21,6 +21,11 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+if(PTS_IS_CLIENT)
+{
+	phodevi::initial_setup();
+}
+
 class phodevi
 {
 	private static $device_cache = null;

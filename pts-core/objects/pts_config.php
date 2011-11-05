@@ -179,4 +179,10 @@ class pts_config
 	}
 }
 
+if(PTS_IS_CLIENT)
+{
+	// Upon loading pts_client, make sure files are loaded
+	pts_config::init_files();
+}
+
 ?>
