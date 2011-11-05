@@ -1546,9 +1546,8 @@ class pts_client
 	{
 		if(($error_code & (E_USER_ERROR | E_USER_WARNING | E_USER_NOTICE)))
 		{
-			// It's a self-generated error
-			self::user_error_handler($error_code, $error_string);
-			return;
+			// It's a self-generated error by pts-core code intentionally
+			return self::user_error_handler($error_code, $error_string, $error_file, $error_line);
 		}
 
 		/*if(!(error_reporting() & $error_code))
@@ -1582,13 +1581,8 @@ class pts_client
 			exit(1);
 		}
 	}
-	public static function user_error_handler($error_code, $error_string)
+	public static function user_error_handler($error_code, $error_string, $error_file, $error_line)
 	{
-		/*if(!(error_reporting() & $error_code))
-		{
-			return;
-		}*/
-
 /*
 
 		trigger_error('Scheisse', E_USER_WARNING);
@@ -1600,18 +1594,34 @@ class pts_client
 			case E_USER_ERROR:
 				$error_type = 'ERROR';
 				break;
-			case E_USER_WARNING:
 			case E_USER_NOTICE:
+				if(pts_client::is_client_debug_mode() == false)
+				{
+					return;
+				}
 				$error_type = 'NOTICE';
+				break;
+			case E_USER_WARNING:
+				$error_type = 'NOTICE'; // Yes, report warnings as a notice label
 				break;
 		}
 
-		echo PHP_EOL . '[' . $error_type . '] ' . $error_string . PHP_EOL; // . ' in ' . basename($error_file) . ':' . $error_line . PHP_EOL;
-
+		echo PHP_EOL . '[' . $error_type . '] ' . $error_string . (pts_client::is_client_debug_mode() ? ' in ' . basename($error_file) . ':' . $error_line : null) . PHP_EOL;
 		return;
+	}
+	public static function is_client_debug_mode()
+	{
+		return false; // TODO
 	}
 }
 
+// Some extra magic
 set_error_handler(array('pts_client', 'code_error_handler'));
+
+if(PTS_IS_CLIENT && (PTS_IS_DEV_BUILD || pts_client::is_client_debug_mode()))
+{
+	// Enable more verbose error reporting only when PTS is in development with milestone (alpha/beta) releases but no release candidate (r) or gold versions
+	error_reporting(E_ALL | E_NOTICE | E_STRICT);
+}
 
 ?>
