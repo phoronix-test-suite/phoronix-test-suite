@@ -255,15 +255,24 @@ class pts_network
 			define('NO_NETWORK_COMMUNICATION', true);
 			//echo PHP_EOL . 'Network Communication Is Disabled For Your User Configuration.' . PHP_EOL . PHP_EOL;
 		}
-		/* else
+		else
 		{
 			$server_response = pts_network::http_get_contents('http://www.phoronix-test-suite.com/PTS', false, false);
 
 			if($server_response != 'PTS')
 			{
-				define('NO_NETWORK_COMMUNICATION', true);
+				// Failed to connect to PTS server
+
+				// As a last resort, see if it can resolve IP to Google.com as a test for Internet connectivity...
+				// i.e. in case Phoronix server is down or some other issue, so just see if Google will resolve
+				// If google.com fails to resolve, it will simply return the original string
+				if(gethostbyname('google.com') == 'google.com')
+				{
+					define('NO_NETWORK_COMMUNICATION', true);
+					echo PHP_EOL . 'NOTICE: No Network Connectivity' . PHP_EOL . PHP_EOL;
+				}
 			}
-		}*/
+		}
 
 		if(!defined('NO_NETWORK_COMMUNICATION') && ini_get('file_uploads') == 'Off')
 		{

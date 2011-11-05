@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 - pts-core: When the PHP version in use changes, re-run the recommended/required PHP checks
 - pts-core: Improve short SHA1 detection for results tracker
 - pts-core: Report notice when no OpenBenchmarking.org repository index is present and fails to fetch
+- pts-core: Improve Internet connectivity detection check
 - phodevi: When QEMU virtualization is detected, try to report QEMU version to system layer
 - phodevi: Support for reporting the XOP, FMA3, and FMA4 instruction sets
 - phodevi: Begin merging is_genuine() support from Openbenchmarking.org into respective Phodevi components
