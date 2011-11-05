@@ -53,8 +53,8 @@ class pts_ResultFileCompactSystemsTable extends pts_Graph
 		$component_header_height = $this->text_string_height($longest_component, $this->graph_font, ($this->graph_font_size_identifiers + 3)) + 4;
 
 		$this->graph_attr_width = 10 + max(
-			$this->text_string_width($this->graph_title, $this->graph_font, $this->graph_font_size_heading),
-			$this->text_string_width($longest_component, $this->graph_font, ($this->graph_font_size_identifiers + 3))
+			$this->text_string_width($this->graph_title, $this->graph_font, $this->graph_font_size_heading) - (isset($this->graph_title[30]) ? 20 : 0),
+			$this->text_string_width($longest_component, $this->graph_font, ($this->graph_font_size_identifiers + (isset($longest_component[29]) ? 1.8 : 2)))
 			);
 
 		$intent_count = 0;

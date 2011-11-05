@@ -88,9 +88,9 @@ class pts_render
 	}
 	public static function multi_way_compact(&$result_file, &$result_object, $extra_attributes = null)
 	{
-		if($result_file != null && ($result_file->is_multi_way_comparison() || $result_file->is_results_tracker()))
+		if($result_file != null && ($result_file->is_multi_way_comparison() || isset($extra_attributes['compact_to_scalar']) || $result_file->is_results_tracker()))
 		{
-			if($result_file->is_multi_way_comparison() && in_array($result_object->test_profile->get_display_format(), array('LINE_GRAPH', 'FILLED_LINE_GRAPH')))
+			if((isset($extra_attributes['compact_to_scalar']) || (false && $result_file->is_multi_way_comparison())) && in_array($result_object->test_profile->get_display_format(), array('LINE_GRAPH', 'FILLED_LINE_GRAPH')))
 			{
 				// Convert multi-way line graph into horizontal box plot
 				if(false)
@@ -115,7 +115,7 @@ class pts_render
 				}
 			}
 
-			if($result_object->test_profile->get_display_format() != 'PIE_CHART')
+			if($result_object->test_profile->get_display_format() != 'PIE_CHART' && !isset($extra_attributes['compact_to_scalar']))
 			{
 				$result_table = false;
 				pts_render::compact_result_file_test_object($result_object, $result_table, $result_file->is_multi_way_inverted(), $extra_attributes);
