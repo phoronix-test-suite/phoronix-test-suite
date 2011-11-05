@@ -1544,10 +1544,17 @@ class pts_client
 	}
 	public static function code_error_handler($error_code, $error_string, $error_file, $error_line)
 	{
-		if(!(error_reporting() & $error_code))
+		if(($error_code & (E_USER_ERROR | E_USER_WARNING | E_USER_NOTICE)))
 		{
+			// It's a self-generated error
+			self::user_error_handler($error_code, $error_string);
 			return;
 		}
+
+		/*if(!(error_reporting() & $error_code))
+		{
+			return;
+		}*/
 
 		switch($error_code)
 		{
@@ -1574,6 +1581,34 @@ class pts_client
 		{
 			exit(1);
 		}
+	}
+	public static function user_error_handler($error_code, $error_string)
+	{
+		/*if(!(error_reporting() & $error_code))
+		{
+			return;
+		}*/
+
+/*
+
+		trigger_error('Scheisse', E_USER_WARNING);
+		trigger_error('Okay', E_USER_NOTICE);
+		trigger_error('F', E_USER_ERROR);
+*/
+		switch($error_code)
+		{
+			case E_USER_ERROR:
+				$error_type = 'ERROR';
+				break;
+			case E_USER_WARNING:
+			case E_USER_NOTICE:
+				$error_type = 'NOTICE';
+				break;
+		}
+
+		echo PHP_EOL . '[' . $error_type . '] ' . $error_string . PHP_EOL; // . ' in ' . basename($error_file) . ':' . $error_line . PHP_EOL;
+
+		return;
 	}
 }
 

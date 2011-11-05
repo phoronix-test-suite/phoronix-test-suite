@@ -8,6 +8,7 @@ Phoronix Test Suite (Git)
 - pts-core: Improve Internet connectivity detection check
 - pts-core: When reporting a command error, report the most appropriate command name string
 - pts-core: Begin work on custom error handler for generated errors in code itself
+- pts-core: Add initial support for internal pts-core warning/notice/error handler
 - phodevi: When QEMU virtualization is detected, try to report QEMU version to system layer
 - phodevi: Support for reporting the XOP, FMA3, and FMA4 instruction sets
 - phodevi: Begin merging is_genuine() support from Openbenchmarking.org into respective Phodevi components

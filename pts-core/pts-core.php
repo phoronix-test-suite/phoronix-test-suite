@@ -25,8 +25,9 @@ define('PTS_VERSION', '3.6.0m1');
 define('PTS_CORE_VERSION', 3511);
 define('PTS_CODENAME', 'ARENDAL');
 define('PTS_IS_CLIENT', (defined('PTS_MODE') && PTS_MODE == 'CLIENT'));
+define('PTS_IS_DEV_BUILD', (substr(PTS_VERSION, -2, 1) == 'm'));
 
-if(PTS_IS_CLIENT && substr(PTS_VERSION, -2, 1) == 'm')
+if(PTS_IS_CLIENT && PTS_IS_DEV_BUILD)
 {
 	// Enable more verbose error reporting only when PTS is in development with milestone (alpha/beta) releases but no release candidate (r) or gold versions
 	error_reporting(E_ALL | E_NOTICE | E_STRICT);
