@@ -286,6 +286,17 @@ class pts_openbenchmarking_client
 			{
 				copy('/var/cache/phoronix-test-suite/openbenchmarking.org/' . $repo_name . '.index', $index_file);
 			}
+
+			if(!is_file($index_file))
+			{
+				static $reported_read_failure_notice;
+
+				if(!isset($reported_read_failure_notice[$repo_name]))
+				{
+					echo PHP_EOL . 'NOTICE: Failed To Fetch OpenBenchmarking.org Repository Data: ' . $repo_name . PHP_EOL;
+					$reported_read_failure_notice[$repo_name] = true;
+				}
+			}
 		}
 	}
 	public static function download_test_profile($qualified_identifier)
