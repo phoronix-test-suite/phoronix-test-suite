@@ -1542,6 +1542,41 @@ class pts_client
 
 		return $results;
 	}
+	public static function code_error_handler($error_code, $error_string, $error_file, $error_line)
+	{
+		if(!(error_reporting() & $error_code))
+		{
+			return;
+		}
+
+		switch($error_code)
+		{
+			case E_ERROR:
+			case E_PARSE:
+				$error_type = 'ERROR';
+				break;
+			case E_WARNING:
+			case E_NOTICE:
+				if(($s = strpos($error_string, 'Undefined ')) !== false && ($x = strpos($error_string, ': ', $s)) !== false)
+				{
+					$error_string = 'Undefined: ' . substr($error_string, ($x + 2));
+				}
+				$error_type = 'NOTICE';
+				break;
+			default:
+				$error_type = $error_code;
+				break;
+		}
+
+		echo PHP_EOL . '[' . $error_type . '] ' . $error_string . ' in ' . basename($error_file) . ':' . $error_line . PHP_EOL;
+
+		if($error_type == 'ERROR')
+		{
+			exit(1);
+		}
+	}
 }
+
+set_error_handler(array('pts_client', 'code_error_handler'));
 
 ?>
