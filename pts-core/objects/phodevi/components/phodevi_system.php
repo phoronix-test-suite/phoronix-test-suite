@@ -830,9 +830,8 @@ class phodevi_system extends phodevi_device_interface
 		if(!empty($desktop_environment))
 		{
 			$desktop = $desktop_environment;
-			$version_check = str_replace(array('.', 1, 2, 3, 4, 5, 6, 7, 8, 9, 0), null, $desktop_version);
 
-			if(!empty($desktop_version) && empty($version_check))
+			if(!empty($desktop_version) && pts_strings::string_only_contains($desktop_version, pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DECIMAL))
 			{
 				$desktop .= ' ' . $desktop_version;
 			}
