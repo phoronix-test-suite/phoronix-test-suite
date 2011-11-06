@@ -1566,6 +1566,11 @@ class pts_client
 				{
 					$error_string = 'Undefined: ' . substr($error_string, ($x + 2));
 				}
+				else if(strpos($error_string, 'Name or service not known') !== false)
+				{
+					// Don't report network errors
+					return;
+				}
 				$error_type = 'NOTICE';
 				break;
 			default:
