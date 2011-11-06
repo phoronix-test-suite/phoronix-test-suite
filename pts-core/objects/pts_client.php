@@ -1502,7 +1502,7 @@ class pts_client
 
 			if($browser != null)
 			{
-				shell_exec($browser . ' "' . $URL . '" &');
+				shell_exec($browser . ' "' . $URL . '" 2> /dev/null &');
 			}
 			else
 			{
