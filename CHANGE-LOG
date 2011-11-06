@@ -14,6 +14,7 @@ Phoronix Test Suite (Git)
 - phodevi: Support for reporting the XOP, FMA3, and FMA4 instruction sets
 - phodevi: Begin merging is_genuine() support from Openbenchmarking.org into respective Phodevi components
 - phodevi: Improve Catalyst OpenGL driver detection with soon-to-be-released versions
+- phodevi: Improve GNOME version detection when using GNOME3 fall-back mode
 - pts_Graph: Allow normalized numbers to appear in the result file table
 - bilde_renderer: Improve automated color selection/shifting
 

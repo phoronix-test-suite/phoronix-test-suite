@@ -731,6 +731,10 @@ class phodevi_system extends phodevi_device_interface
 			{
 				$desktop_version = pts_strings::last_in_string(trim(shell_exec('gnome-about --version 2> /dev/null')));
 			}
+			else if(pts_client::executable_in_path('gnome-session'))
+			{
+				$desktop_version = pts_strings::last_in_string(trim(shell_exec('gnome-session --version 2> /dev/null')));
+			}
 		}
 		else if(pts_client::is_process_running('gnome-shell'))
 		{
