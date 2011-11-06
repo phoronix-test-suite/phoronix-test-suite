@@ -45,8 +45,8 @@ class pts_client
 			return true;
 		}
 
-		pts_network::client_startup();
 		self::basic_init_process(); // Initalize common / needed PTS start-up work
+		pts_network::client_startup();
 		self::core_storage_init_process();
 
 		if(!is_file(PTS_TEMP_STORAGE))
