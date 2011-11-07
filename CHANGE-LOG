@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 3.6 Milestone 2
+7 November 2011
 
 - pts-core: When the PHP version in use changes, re-run the recommended/required PHP checks
 - pts-core: Improve short SHA1 detection for results tracker
