@@ -17,6 +17,7 @@ Phoronix Test Suite (Git)
 - phodevi: Improve Catalyst OpenGL driver detection with soon-to-be-released versions
 - phodevi: Improve GNOME version detection when using GNOME3 fall-back mode
 - pts_Graph: Allow normalized numbers to appear in the result file table
+- pts_Graph: When too many lines are being plotted, auto-convert to scalar
 - bilde_renderer: Improve automated color selection/shifting
 
 Phoronix Test Suite 3.6 Milestone 1

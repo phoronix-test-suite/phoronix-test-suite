@@ -88,7 +88,18 @@ class pts_render
 	}
 	public static function multi_way_compact(&$result_file, &$result_object, $extra_attributes = null)
 	{
-		if($result_file != null && ($result_file->is_multi_way_comparison() || isset($extra_attributes['compact_to_scalar']) || $result_file->is_results_tracker()))
+		if($result_file == null)
+		{
+			return;
+		}
+
+		if(!isset($extra_attributes['compact_to_scalar']) && $result_object->test_profile->get_display_format() == 'LINE_GRAPH' && $result_file->get_system_count() > 8)
+		{
+			// If there's too many lines being plotted on line graph, likely to look messy, so convert to scalar automatically
+			$extra_attributes['compact_to_scalar'] = true;
+		}
+
+		if($result_file->is_multi_way_comparison() || isset($extra_attributes['compact_to_scalar']) || $result_file->is_results_tracker())
 		{
 			if((isset($extra_attributes['compact_to_scalar']) || (false && $result_file->is_multi_way_comparison())) && in_array($result_object->test_profile->get_display_format(), array('LINE_GRAPH', 'FILLED_LINE_GRAPH')))
 			{

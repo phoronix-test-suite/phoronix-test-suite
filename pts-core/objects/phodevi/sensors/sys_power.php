@@ -67,7 +67,7 @@ class sys_power implements phodevi_sensor
 			return true;
 		}
 
-		if(pts_client::executable_in_path('wattsup'))
+		if(pts_client::executable_in_path('wattsup') && is_file('/dev/ttyUSB0'))
 		{
 			$wattsup = self::watts_up_power_meter();
 
