@@ -280,6 +280,20 @@ class pts_test_run_manager
 		{
 			$is_reserved_word = false;
 
+			$recent_results = array();
+			foreach(pts_file_io::glob(PTS_SAVE_RESULTS_PATH . '*/composite.xml') as $composite)
+			{
+				$recent_results[filemtime($composite)] = basename(dirname($composite));
+			}
+
+			if(count($recent_results) > 0)
+			{
+				krsort($recent_results);
+				$recent_results = array_slice($recent_results, 0, 4);
+				echo PHP_EOL . 'Recently Saved Test Results:' . PHP_EOL;
+				echo pts_user_io::display_text_list($recent_results) . PHP_EOL;
+			}
+
 			while(empty($proposed_name) || ($is_reserved_word = pts_types::is_test_or_suite($proposed_name)))
 			{
 				if($is_reserved_word)
