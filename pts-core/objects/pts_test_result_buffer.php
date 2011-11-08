@@ -138,6 +138,34 @@ class pts_test_result_buffer
 			$this->add_test_result('Composite', $total_value);
 		}
 	}
+	public function auto_shorten_buffer_identifiers($identifier_shorten_index = false)
+	{
+		// If there's a lot to plot, try to auto-shorten the identifiers
+		// e.g. if each identifier contains like 'GeForce 6800', 'GeForce GT 220', etc..
+		// then remove the 'GeForce' part of the name.
+
+		if($identifier_shorten_index == false)
+		{
+			$identifier_shorten_index = pts_render::evaluate_redundant_identifier_words($this->get_identifiers());
+		}
+
+		if(empty($identifier_shorten_index))
+		{
+			return false;
+		}
+
+		foreach($this->buffer_items as &$buffer_item)
+		{
+			$identifier = explode(' ', $buffer_item->get_result_identifier());
+			foreach(array_keys($identifier_shorten_index) as $pos)
+			{
+				unset($identifier[$pos]);
+			}
+			$buffer_item->reset_result_identifier(implode(' ', $identifier));
+		}
+
+		return true;
+	}
 	public function buffer_values_to_percent()
 	{
 		// TODO: is this function being used at all anymore?

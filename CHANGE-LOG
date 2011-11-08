@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- pts-core: On large result files, auto-remove redundant words present in all identifiers
+
 Phoronix Test Suite 3.6 Milestone 2
 7 November 2011
 

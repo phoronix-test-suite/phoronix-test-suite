@@ -126,7 +126,7 @@ class pts_render
 				}
 			}
 
-			if($result_object->test_profile->get_display_format() != 'PIE_CHART' && !isset($extra_attributes['compact_to_scalar']))
+			if($result_object->test_profile->get_display_format() != 'PIE_CHART')
 			{
 				$result_table = false;
 				pts_render::compact_result_file_test_object($result_object, $result_table, $result_file->is_multi_way_inverted(), $extra_attributes);
@@ -153,6 +153,21 @@ class pts_render
 			$result_object->normalize_buffer_values($normalize_against);
 		}
 
+		if($result_file != null)
+		{
+			// Cache the redundant words on identifiers so it's not re-computed on every graph
+			static $redundant_word_cache;
+
+			if(!isset($redundant_word_cache[$result_file->get_title()]))
+			{
+				$redundant_word_cache[$result_file->get_title()] = pts_render::evaluate_redundant_identifier_words($result_file->get_system_identifiers());
+			}
+
+			if($redundant_word_cache[$result_file->get_title()])
+			{
+				$result_object->test_result_buffer->auto_shorten_buffer_identifiers($redundant_word_cache[$result_file->get_title()]);
+			}
+		}
 		self::multi_way_compact($result_file, $result_object, $extra_attributes);
 
 		$display_format = $result_object->test_profile->get_display_format();
@@ -344,6 +359,45 @@ class pts_render
 		}
 
 		return $graph;
+	}
+	public static function evaluate_redundant_identifier_words($identifiers)
+	{
+		if(count($identifiers) < 6)
+		{
+			// Probably not worth shortening so few result identifiers
+			return false;
+		}
+
+		// Breakup the an identifier into an array by spaces to be used for comparison
+		$common_segments = explode(' ', pts_arrays::last_element($identifiers));
+
+		if(!isset($common_segments[2]))
+		{
+			// If there aren't at least three words in identifier, probably can't be shortened well
+			return false;
+		}
+
+		foreach($identifiers as &$identifier)
+		{
+			$this_identifier = explode(' ', $identifier);
+
+			foreach($common_segments as $pos => $word)
+			{
+				if(!isset($this_identifier[$pos]) || $this_identifier[$pos] != $word)
+				{
+					// The word isn't the same
+					unset($common_segments[$pos]);
+				}
+			}
+
+			if(count($common_segments) == 0)
+			{
+				// There isn't any common words to each identifier in result set
+				return false;
+			}
+		}
+
+		return $common_segments;
 	}
 	public static function generate_overview_object(&$overview_table, $overview_type)
 	{

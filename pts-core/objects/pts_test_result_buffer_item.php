@@ -32,6 +32,10 @@ class pts_test_result_buffer_item
 		$this->result_final = $final;
 		$this->result_raw = $raw;
 	}
+	public function reset_result_identifier($identifier)
+	{
+		$this->result_identifier = $identifier;
+	}
 	public function reset_result_value($value)
 	{
 		$this->result_final = $value;
