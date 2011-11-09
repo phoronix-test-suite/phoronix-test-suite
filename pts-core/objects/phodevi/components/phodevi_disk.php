@@ -107,7 +107,11 @@ class phodevi_disk extends phodevi_device_interface
 					{
 						$disk = trim(substr($hd_line, 0, $hd_pos));
 						$disk = self::prepend_disk_vendor($disk);
-						array_push($disks, $disk);
+
+						if($disk != 'blkdev')
+						{
+							array_push($disks, $disk);
+						}
 					}
 				}
 			}
