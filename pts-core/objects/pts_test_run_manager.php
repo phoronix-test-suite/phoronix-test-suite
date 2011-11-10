@@ -344,7 +344,7 @@ class pts_test_run_manager
 
 			foreach($this->tests_to_run as &$run_request)
 			{
-				if($run_request instanceOf pts_test_result && in_array($run_request->get_comparison_hash(), $result_objects))
+				if($run_request instanceof pts_test_result && in_array($run_request->get_comparison_hash(), $result_objects))
 				{
 					$no_repeated_tests = false;
 					break;

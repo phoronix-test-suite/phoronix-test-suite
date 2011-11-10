@@ -95,14 +95,14 @@ class system_monitor extends pts_module_interface
 
 		pts_module::pts_timed_function('pts_monitor_update', 2);
 	}
-	public static function __pre_test_run(&$test_run_request)
+	public static function __pre_test_run($test_run_request)
 	{
 		if(self::$individual_monitoring == false)
 		{
 			return;
 		}
 
-		self::$individual_test_run_request = $test_run_request;
+		self::$individual_test_run_request = clone $test_run_request;
 
 		foreach(self::$to_monitor as $id_point => $sensor)
 		{
