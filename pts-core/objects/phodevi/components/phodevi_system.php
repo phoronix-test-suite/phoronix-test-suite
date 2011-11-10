@@ -1000,7 +1000,8 @@ class phodevi_system extends phodevi_device_interface
 		{
 			$info = phodevi_parser::read_nvidia_extension('OpenGLVersion');
 		}
-		else if(pts_client::executable_in_path('glxinfo'))
+
+		if($info == null && pts_client::executable_in_path('glxinfo'))
 		{
 			$info = phodevi_parser::software_glxinfo_version();
 

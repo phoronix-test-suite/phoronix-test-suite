@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: On large result files, auto-remove redundant words present in all identifiers
+- phodevi: Fix Mesa OpenGL detection on Solaris 11 when the NVIDIA binary blob is installed but using Mesa
 - phodevi: Don't report 'blkdev' on Solaris 11 as a disk drive
 
 Phoronix Test Suite 3.6 Milestone 2
