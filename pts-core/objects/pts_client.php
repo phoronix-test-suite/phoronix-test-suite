@@ -279,6 +279,7 @@ class pts_client
 				$system_log_files = array(
 					'/var/log/Xorg.0.log',
 					'/proc/cpuinfo',
+					'/proc/meminfo',
 					'/proc/modules',
 					'/proc/mounts',
 					'/proc/cmdline',
@@ -305,6 +306,7 @@ class pts_client
 				// Generate logs from system commands to backup
 				$system_log_commands = array(
 					'lspci -vvnn',
+					'lscpu',
 					'cc -v',
 					'lsusb',
 					'lsmod',
@@ -1566,7 +1568,7 @@ class pts_client
 				{
 					$error_string = 'Undefined: ' . substr($error_string, ($x + 2));
 				}
-				else if(strpos($error_string, 'Name or service not known') !== false || strpos($error_string, 'HTTP request failed') !== false || strpos($error_string, 'fopen') !== false)
+				else if(strpos($error_string, 'Name or service not known') !== false || strpos($error_string, 'HTTP request failed') !== false || strpos($error_string, 'fopen') !== false || strpos($error_string, 'file_get_contents') !== false)
 				{
 					// Don't report network errors
 					return;

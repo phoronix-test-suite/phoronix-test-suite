@@ -67,7 +67,7 @@ class pts_file_io
 				}
 				else
 				{
-					@unlink($to_remove);
+					unlink($to_remove);
 				}
 			}
 			else if(is_dir($to_remove))
@@ -78,7 +78,7 @@ class pts_file_io
 
 		if($remove_root_directory && is_dir($object) && count(pts_file_io::glob($object . '/*')) == 0)
 		{
-			@rmdir($object);
+			rmdir($object);
 		}
 	}
 	function copy($source, $dest)
