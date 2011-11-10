@@ -804,36 +804,20 @@ abstract class pts_Graph
 			return;
 		}
 
-		$key_pos = 0;
-		$key_count = count($this->graph_data_title);
 		$component_y = $this->graph_top_start - $this->graph_key_height() - 7;
 
-		for($i = 0; $i < $key_count; $i++)
+		for($i = 0, $key_count = count($this->graph_data_title); $i < $key_count; $i++)
 		{
 			if(!empty($this->graph_data_title[$i]))
 			{
 				$this_color = $this->get_paint_color($this->graph_data_title[$i]);
-				$key_pos++;
 
-				if($i != 0 && $key_pos % $this->graph_keys_per_line == 1)
+				if($i != 0 && $i % $this->graph_keys_per_line == 0)
 				{
-					$key_pos = 1;
 					$component_y += $this->graph_key_line_height;
 				}
-				else if($this->is_multi_way_comparison)
-				{
-					$this_key_way = substr($this->graph_data_title[$i], 0, strpos($this->graph_data_title[$i], ': '));
 
-					if($i != 0 && $this_key_way != $prev_key_way)
-					{
-						$key_pos = 1;
-						$component_y += $this->graph_key_line_height;
-					}
-
-					$prev_key_way = $this_key_way;
-				}
-
-				$component_x = $this->graph_left_start + 13 + ($this->graph_key_item_width * ($key_pos - 1 % $this->graph_keys_per_line));
+				$component_x = $this->graph_left_start + 13 + ($this->graph_key_item_width * ($i % $this->graph_keys_per_line));
 
 				$this->graph_image->draw_rectangle_with_border($component_x - 13, $component_y - 5, $component_x - 3, $component_y + 5, $this_color, $this->graph_color_notches);
 				$this->graph_image->write_text_left($this->graph_data_title[$i], $this->graph_font, $this->graph_font_size_key, $this_color, $component_x, $component_y, $component_x, $component_y);
