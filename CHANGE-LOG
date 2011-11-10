@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 - pts-core: On large result files, auto-remove redundant words present in all identifiers
 - phodevi: Fix Mesa OpenGL detection on Solaris 11 when the NVIDIA binary blob is installed but using Mesa
 - phodevi: Don't report 'blkdev' on Solaris 11 as a disk drive
+- phodevi: Change GPU caching to allow overclocked speeds to show without rebooting
 - system_monitor: Fix for running same test multiple times when system_moitor module is loaded
 - pts_Graph: Improve key rendering
 

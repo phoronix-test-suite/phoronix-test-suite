@@ -28,16 +28,16 @@ class phodevi_gpu extends phodevi_device_interface
 		switch($identifier)
 		{
 			case 'identifier':
-				$property = new phodevi_device_property('gpu_string', phodevi::smart_caching);
+				$property = new phodevi_device_property('gpu_string', phodevi::std_caching);
 				break;
 			case 'model':
 				$property = new phodevi_device_property('gpu_model', phodevi::smart_caching);
 				break;
 			case 'frequency':
-				$property = new phodevi_device_property('gpu_frequency_string', phodevi::smart_caching);
+				$property = new phodevi_device_property('gpu_frequency_string', phodevi::std_caching);
 				break;
 			case 'stock-frequency':
-				$property = new phodevi_device_property('gpu_stock_frequency', phodevi::smart_caching);
+				$property = new phodevi_device_property('gpu_stock_frequency', phodevi::std_caching);
 				break;
 			case 'memory-capacity':
 				$property = new phodevi_device_property('gpu_memory_size', phodevi::smart_caching);
@@ -49,7 +49,7 @@ class phodevi_gpu extends phodevi_device_interface
 				$property = new phodevi_device_property('gpu_af_level', phodevi::no_caching);
 				break;
 			case 'compute-cores':
-				$property = new phodevi_device_property('gpu_compute_cores', phodevi::std_caching);
+				$property = new phodevi_device_property('gpu_compute_cores', phodevi::smart_caching);
 				break;
 			case 'available-modes':
 				$property = new phodevi_device_property('gpu_available_modes', phodevi::smart_caching);
