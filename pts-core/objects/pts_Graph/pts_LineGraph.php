@@ -56,7 +56,7 @@ class pts_LineGraph extends pts_Graph
 			}
 		}
 
-		$this->identifier_width = ($this->graph_left_end - $this->graph_left_start) / $identifier_count;
+		$this->identifier_width = $identifier_count > 0 ? (($this->graph_left_end - $this->graph_left_start) / $identifier_count) : 1;
 
 		$longest_string = pts_strings::find_longest_string($this->graph_identifiers);
 		$this->graph_font_size_identifiers = $this->text_size_bounds($longest_string, $this->graph_font, $this->graph_font_size_identifiers, $this->minimum_identifier_font, $this->identifier_width - 4);
