@@ -230,7 +230,7 @@
 		<Package>
 			<GenericName>glibc-development</GenericName>
 			<PackageName>libc6-dev</PackageName>
-			<FileCheck>/usr/include/gnu/stubs-32.h, /usr/lib/libc.a</FileCheck>
+			<FileCheck>/usr/include/gnu/stubs-32.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>glibc-development</GenericName>

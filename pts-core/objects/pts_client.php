@@ -1150,7 +1150,7 @@ class pts_client
 
 				if($return_value == $return_fails_on)
 				{
-					$command_alias = constant($command . '::doc_use_alias') != null ? constant($command . '::doc_use_alias') : $command;
+					$command_alias = defined($command . '::doc_use_alias') ? constant($command . '::doc_use_alias') : $command;
 					pts_client::$display->generic_error('Argument Missing.');
 					echo 'CORRECT SYNTAX' . PHP_EOL . 'phoronix-test-suite ' . str_replace('_', '-', $command_alias) . ' ' . implode(' ', $argument_checks) . PHP_EOL . PHP_EOL;
 					return false;
