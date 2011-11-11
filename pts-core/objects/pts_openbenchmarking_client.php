@@ -53,6 +53,12 @@ class pts_openbenchmarking_client
 			return false;
 		}
 
+		if(defined('NO_NETWORK_COMMUNICATION'))
+		{
+			echo PHP_EOL . 'No network support available.' . PHP_EOL;
+			return false;
+		}
+
 		$composite_xml = $result_file->xml_parser->getXML();
 		$system_log_dir = PTS_SAVE_RESULTS_PATH . $result_file->get_identifier() . '/system-logs/';
 
