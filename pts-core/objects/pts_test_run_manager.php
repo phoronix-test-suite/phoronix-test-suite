@@ -258,6 +258,32 @@ class pts_test_run_manager
 	{
 		$this->results_identifier = self::clean_results_identifier($identifier);
 	}
+	public static function recently_saved_test_results()
+	{
+		$recent_results = array();
+		foreach(pts_file_io::glob(PTS_SAVE_RESULTS_PATH . '*/composite.xml') as $composite)
+		{
+			$recent_results[filemtime($composite)] = basename(dirname($composite));
+		}
+
+		if(count($recent_results) > 0)
+		{
+			krsort($recent_results);
+			$recent_results = array_slice($recent_results, 0, 4, true);
+			$res_length = strlen(pts_strings::find_longest_string($recent_results)) + 2;
+			$current_time = time();
+
+			foreach($recent_results as $m_time => &$recent_result)
+			{
+				$recent_result = sprintf('%-' . $res_length . 'ls [%-ls]', $recent_result, pts_strings::days_ago_format_string(floor(($current_time - $m_time) / 86400)) . ' old');
+			}
+			echo PHP_EOL . 'Recently Saved Test Results:' . PHP_EOL;
+			echo pts_user_io::display_text_list($recent_results) . PHP_EOL;
+			return true;
+		}
+
+		return false;
+	}
 	public function prompt_save_name()
 	{
 		if($this->file_name != null)
@@ -280,19 +306,8 @@ class pts_test_run_manager
 		{
 			$is_reserved_word = false;
 
-			$recent_results = array();
-			foreach(pts_file_io::glob(PTS_SAVE_RESULTS_PATH . '*/composite.xml') as $composite)
-			{
-				$recent_results[filemtime($composite)] = basename(dirname($composite));
-			}
-
-			if(count($recent_results) > 0)
-			{
-				krsort($recent_results);
-				$recent_results = array_slice($recent_results, 0, 4);
-				echo PHP_EOL . 'Recently Saved Test Results:' . PHP_EOL;
-				echo pts_user_io::display_text_list($recent_results) . PHP_EOL;
-			}
+			// Be of help to the user by showing recently saved test results
+			self::recently_saved_test_results();
 
 			while(empty($proposed_name) || ($is_reserved_word = pts_types::is_test_or_suite($proposed_name)))
 			{

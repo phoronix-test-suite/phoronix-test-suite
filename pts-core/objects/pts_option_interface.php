@@ -26,6 +26,7 @@ interface pts_option_interface
 	// that returns an array of pts_argument_check options, pts-core will automatically perform the argument checks prior to running the function
 
 	// public static function command_aliases() is optional
+	// public static function invalid_command() is optional
 
 	public static function run($passed_arguments_array);
 }
