@@ -41,7 +41,7 @@ class run_test implements pts_option_interface
 		// TODO: possibly scan through $passed_args to find similarly named test results if it was mis-spelling or something...
 		$showed_recent_results = pts_test_run_manager::recently_saved_test_results();
 
-		if($showed_recent_results == false || true)
+		if($showed_recent_results == false)
 		{
 			echo 'See available tests to run by visiting OpenBenchmarking.org or running:' . PHP_EOL . PHP_EOL;
 			echo '    phoronix-test-suite list-tests' . PHP_EOL . PHP_EOL;
