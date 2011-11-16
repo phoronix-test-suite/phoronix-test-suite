@@ -927,6 +927,15 @@ class phodevi_system extends phodevi_device_interface
 			{
 				switch($display_driver)
 				{
+					case 'amd':
+						// See if it's radeon driver
+						$driver_version = phodevi_parser::read_xorg_module_version('radeon_drv');
+
+						if($driver_version != false)
+						{
+							$display_driver = 'radeon';
+						}
+						break;
 					case 'radeon':
 						// RadeonHD driver also reports DRI driver as 'radeon', so try reading that instead
 						$driver_version = phodevi_parser::read_xorg_module_version('radeonhd_drv');

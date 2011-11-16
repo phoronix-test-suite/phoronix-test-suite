@@ -53,7 +53,7 @@ class pts_HorizontalBarGraph extends pts_Graph
 			{
 				foreach(explode(' - ', $this->graph_identifiers[$i]) as $i => $identifier_line)
 				{
-					$x = 20 + round($i * $this->graph_font_size_identifiers * 1.4);
+					$x = 16 + round($i * $this->graph_font_size_identifiers * 1.4);
 					$this->graph_image->write_text_center($identifier_line, $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_headers, $x, $middle_of_vert, $x, $middle_of_vert, true);
 				}
 			}
