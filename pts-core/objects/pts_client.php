@@ -313,7 +313,9 @@ class pts_client
 					'sensors',
 					'dmesg',
 					'glxinfo',
-					'uname -a'
+					'uname -a',
+					// 'udisks --dump',
+					'upower --dump'
 					);
 
 				if(phodevi::is_bsd())
