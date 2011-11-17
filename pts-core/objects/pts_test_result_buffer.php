@@ -157,9 +157,12 @@ class pts_test_result_buffer
 		foreach($this->buffer_items as &$buffer_item)
 		{
 			$identifier = explode(' ', $buffer_item->get_result_identifier());
-			foreach(array_keys($identifier_shorten_index) as $pos)
+			foreach($identifier_shorten_index as $pos => $value)
 			{
-				unset($identifier[$pos]);
+				if($identifier[$pos] == $value)
+				{
+					unset($identifier[$pos]);
+				}
 			}
 			$buffer_item->reset_result_identifier(implode(' ', $identifier));
 		}

@@ -383,9 +383,9 @@ class pts_render
 
 			foreach($common_segments as $pos => $word)
 			{
-				if(!isset($this_identifier[$pos]) || $this_identifier[$pos] != $word)
+				if(!isset($this_identifier[$pos]) || $this_identifier[$pos] != $word || !isset($word[2]))
 				{
-					// The word isn't the same
+					// The word isn't the same OR the string is less than three characters (e.g. i7 or HD don't chop off from product names
 					unset($common_segments[$pos]);
 				}
 			}
