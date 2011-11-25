@@ -39,14 +39,14 @@ class pts_strings
 	public static function is_url($string)
 	{
 		$components = parse_url($string);
-
 		return $components != false && isset($components['scheme']) && isset($components['host']);
 	}
 	public static function trim_search_query($value)
 	{
+		$search_break_characters = array('@', '(', '/', '+', '[', '<', '/');
 		for($i = 0, $x = strlen($value); $i < $x; $i++)
 		{
-			if(in_array($value[$i], array('@', '(', '/', '+', '[', '<', '/')))
+			if(in_array($value[$i], $search_break_characters))
 			{
 				$value = substr($value, 0, $i);
 				break;
@@ -270,16 +270,20 @@ class pts_strings
 
 		return $is_of_type;
 	}
-	public static function trim_spaces($string)
+	public static function trim_spaces($str)
 	{
-		do
+		// get rid of multiple/redundant spaces that are next to each other
+		$new_str = null;
+		for($i = strlen($str); $i > 0; $i--)
 		{
-			$string_copy = $string;
-			$string = str_replace('  ', ' ', $string);
+			// 32 is a ASCII space
+			if(ord($str[($i - 1)]) != 32 || ($i < 2 || ord($str[($i - 2)]) != 32))
+			{
+				$new_str = $str[$i - 1] . $new_str;
+			}
 		}
-		while($string_copy != $string);
 
-		return trim($string);
+		return trim($new_str);
 	}
 	public static function remove_redundant($string, $redundant_char)
 	{

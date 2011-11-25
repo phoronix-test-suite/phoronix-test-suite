@@ -34,7 +34,7 @@ class pts_module_manager
 	public static function load_module($module)
 	{
 		// Load the actual file needed that contains the module
-		return (is_file(PTS_MODULE_PATH . $module . ".php") && include_once(PTS_MODULE_PATH . $module . ".php")) || (is_file(PTS_MODULE_LOCAL_PATH . $module . ".php") && include_once(PTS_MODULE_LOCAL_PATH . $module . ".php"));
+		return (is_file(PTS_MODULE_PATH . $module . '.php') && include_once(PTS_MODULE_PATH . $module . '.php')) || (is_file(PTS_MODULE_LOCAL_PATH . $module . '.php') && include_once(PTS_MODULE_LOCAL_PATH . $module . '.php'));
 	}
 	public static function modules_environmental_variables()
 	{
@@ -125,7 +125,7 @@ class pts_module_manager
 	}
 	public static function run_command($module, $command, $arguments = null)
 	{
-		$all_options = pts_module_manager::module_call($module, "user_commands");
+		$all_options = pts_module_manager::module_call($module, 'user_commands');
 	
 		if(isset($all_options[$command]) && method_exists($module, $all_options[$command]))
 		{
@@ -135,15 +135,15 @@ class pts_module_manager
 		{
 			// Not a valid command, list available options for the module 
 			// or help or list_options was called
-			$all_options = pts_module_manager::module_call($module, "user_commands");
+			$all_options = pts_module_manager::module_call($module, 'user_commands');
 
-			echo "\nUser commands for the " . $module . " module:\n\n";
+			echo PHP_EOL . 'User commands for the ' . $module . ' module:' . PHP_EOL . PHP_EOL;
 
 			foreach($all_options as $option)
 			{
-				echo "- " . $module . "." . str_replace('_', '-', $option) . "\n";
+				echo '- ' . $module . '.' . str_replace('_', '-', $option) . PHP_EOL;
 			}
-			echo "\n";
+			echo PHP_EOL;
 		}
 	}
 	public static function attach_module($module)
@@ -161,7 +161,7 @@ class pts_module_manager
 		{
 			foreach(get_class_methods($module) as $module_method)
 			{
-				if(substr($module_method, 0, 2) == "__")
+				if(substr($module_method, 0, 2) == '__')
 				{
 					if(!isset(self::$module_process[$module_method]))
 					{
@@ -173,10 +173,10 @@ class pts_module_manager
 			}
 		}
 
-		if(defined("PTS_STARTUP_TASK_PERFORMED"))
+		if(defined('PTS_STARTUP_TASK_PERFORMED'))
 		{
 			$pass_by_ref_null = null;
-			pts_module_manager::module_process("__startup", $pass_by_ref_null, $module);
+			pts_module_manager::module_process('__startup', $pass_by_ref_null, $module);
 		}
 	}
 	public static function detach_module($module)
@@ -225,17 +225,17 @@ class pts_module_manager
 	{
 		if($only_system_modules)
 		{
-			$modules = pts_file_io::glob(PTS_MODULE_PATH . "*.php");
+			$modules = pts_file_io::glob(PTS_MODULE_PATH . '*.php');
 		}
 		else
 		{
-			$modules = array_merge(pts_file_io::glob(PTS_MODULE_PATH . "*.php"), pts_file_io::glob(PTS_MODULE_LOCAL_PATH . "*.php"));
+			$modules = array_merge(pts_file_io::glob(PTS_MODULE_PATH . '*.php'), pts_file_io::glob(PTS_MODULE_LOCAL_PATH . '*.php'));
 		}
 		$module_names = array();
 
 		foreach($modules as $module)
 		{
-			array_push($module_names, basename($module, ".php"));
+			array_push($module_names, basename($module, '.php'));
 		}
 
 		asort($module_names);
@@ -286,14 +286,14 @@ class pts_module_manager
 
 	public static function var_store_add($var, $value)
 	{
-		if(!in_array($var . "=" . $value, self::$var_storage))
+		if(!in_array($var . '=' . $value, self::$var_storage))
 		{
-			array_push(self::$var_storage, $var . "=" . $value);
+			array_push(self::$var_storage, $var . '=' . $value);
 		}
 	}
 	public static function var_store_string()
 	{
-		return implode(";", self::$var_storage);
+		return implode(';', self::$var_storage);
 	}
 
 	//
