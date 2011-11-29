@@ -184,7 +184,7 @@ class pts_test_install_request
 						{
 							$remote_file = $remote_dir . $package_filename;
 							$stream_context = pts_network::stream_context_create();
-							$file_pointer = @fopen($remote_file, 'r', false, $stream_context);
+							$file_pointer = fopen($remote_file, 'r', false, $stream_context);
 
 							if($file_pointer !== false)
 							{
