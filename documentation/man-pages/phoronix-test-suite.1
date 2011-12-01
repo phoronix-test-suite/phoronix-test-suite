@@ -1,4 +1,4 @@
-.TH phoronix-test-suite 1  "www.phoronix-test-suite.com" "3.6.0m1"
+.TH phoronix-test-suite 1  "www.phoronix-test-suite.com" "3.6.0m3"
 .SH NAME
 phoronix-test-suite \- The Phoronix Test Suite is an extensible open-source platform for performing testing and performance evaluation.
 .SH SYNOPSIS
@@ -188,6 +188,12 @@ This option is used if you wish to change the order in which test results are sh
 .B result-file-to-csv [Test Result]
 This option will read a saved test results file and output the system hardware and software information along with the results to a CSV output. The CSV (Comma Separated Values) output can then be loaded into a spreadsheet for easy viewing.
 .TP
+.B result-file-to-pdf [Test Result]
+This option will read a saved test results file and output the system hardware and software information along with the results to a PDF file.
+.TP
+.B result-file-to-text [Test Result]
+This option will read a saved test results file and output the system hardware and software information to the terminal. The test results are also outputted.
+.TP
 .B show-result [Test Result]
 Open up the test results in the Phoronix Test Suite Result Viewer or on OpenBenchmarking.org.
 .TP
@@ -213,12 +219,6 @@ This option allows the user to configure how the Phoronix Test Suite connects to
 .TP
 .B rebuild-composite-xml [Test Result]
 This option can be used to rebuild your composite XML file in the event that the main result file was corrupted and the test-X.xml files are still present in the result file directory.
-.TP
-.B result-file-to-pdf [Test Result]
-No summary is available.
-.TP
-.B result-file-to-text [Test Result]
-This option will read a saved test results file and output the system hardware and software information to the terminal. The test results are also outputted.
 .TP
 .B user-config-reset
 This option can be used for resetting the Phoronix Test Suite user configuration file to its default state.
