@@ -385,8 +385,6 @@ class pts_client
 		{
 			pts_file_io::mkdir($dir);
 		}
-
-		//define('IS_PTS_LIVE', phodevi::read_property('system', 'username') == 'ptslive');
 	}
 	public static function init_display_mode($flags = 0)
 	{

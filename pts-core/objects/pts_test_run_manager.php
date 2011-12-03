@@ -1322,7 +1322,7 @@ class pts_test_run_manager
 			$report_errors && pts_client::$display->test_run_error('Due to a pre-set environmental variable, skipping ' . $test_profile);
 			$valid_test_profile = false;
 		}
-		else if($test_profile->is_root_required() && (pts_c::$test_flags & pts_c::batch_mode) && phodevi::read_property('system', 'username') != 'root')
+		else if($test_profile->is_root_required() && (pts_c::$test_flags & pts_c::batch_mode) && phodevi::is_root() == false)
 		{
 			$report_errors && pts_client::$display->test_run_error('Cannot run ' . $test_profile . ' in batch mode as root access is required.');
 			$valid_test_profile = false;

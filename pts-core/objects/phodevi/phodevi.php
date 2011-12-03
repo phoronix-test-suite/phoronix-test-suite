@@ -562,6 +562,10 @@ class phodevi
 	{
 		return self::$graphics['nvidia'];
 	}
+	public static function is_root()
+	{
+		return phodevi::read_property('system', 'username') == 'root';
+	}
 }
 
 ?>

@@ -53,7 +53,6 @@ class pts_concise_display_mode implements pts_display_mode_interface
 		echo PHP_EOL;
 		echo $this->tab . $this->test_install_count . ' Test' . ($this->test_install_count > 1 ? 's' : null) . ' To Install' . PHP_EOL;
 
-
 		$download_size = 0;
 		$download_total = 0;
 		$cache_total = 0;

@@ -183,7 +183,7 @@ abstract class pts_Graph
 
 		if($result_file != null && $result_file instanceof pts_result_file)
 		{
-			//$this->addInternalIdentifier('Identifier', null); // TODO: result file name
+			$this->addInternalIdentifier('Identifier', $result_file->get_identifier());
 			$pts_version = pts_arrays::last_element($result_file->get_system_pts_version());
 			$this->is_multi_way_comparison = $result_file->is_multi_way_comparison();
 		}
@@ -433,7 +433,6 @@ abstract class pts_Graph
 			{
 				if($this->is_multi_way_comparison && count($this->graph_data_title) > 1)
 				{
-					// TODO: verify this is good and covered for all scenarios
 					$longest_r = pts_strings::find_longest_string($this->graph_identifiers);
 					$longest_r = explode(' - ', $longest_r);
 					$plus_extra = 0;
