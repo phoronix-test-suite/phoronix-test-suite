@@ -61,6 +61,42 @@ class pts_user_io
 
 		return $list;
 	}
+	public static function display_text_table(&$table)
+	{
+		$column_widths = array();
+		$formatted_table = null;
+
+		for($r = 0; $r < count($table); $r++)
+		{
+			for($c = 0; $c < count($table[$r]); $c++)
+			{
+				if(!isset($column_widths[$c]) || isset($table[$r][$c][$column_widths[$c]]))
+				{
+					$column_widths[$c] = strlen($table[$r][$c]);
+				}
+			}
+		}
+
+		for($r = 0, $r_count = count($table); $r < $r_count; $r++)
+		{
+			for($c = 0, $rc_count = count($table[$r]); $c < $rc_count; $c++)
+			{
+				$formatted_table .= $table[$r][$c];
+
+				if(($c + 1) != $rc_count)
+				{
+					$formatted_table .= str_repeat(' ', (1 + $column_widths[$c] - strlen($table[$r][$c])));
+				}
+			}
+
+			if(($r + 1) != $r_count)
+			{
+				$formatted_table .= PHP_EOL;
+			}
+		}
+
+		return $formatted_table;
+	}
 	public static function prompt_bool_input($question, $default = true, $question_id = 'UNKNOWN')
 	{
 		// Prompt user for yes/no question

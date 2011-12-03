@@ -659,7 +659,7 @@ class phodevi_system extends phodevi_device_interface
 
 					if(trim($file) != null)
 					{
-						$proposed_os = substr($file, 0, strpos($file, "\n"));
+						$proposed_os = substr($file, 0, strpos($file, PHP_EOL));
 
 						if(strpos($proposed_os, '=') == false)
 						{
@@ -693,7 +693,7 @@ class phodevi_system extends phodevi_device_interface
 				}
 				if(is_file('/etc/debian_version'))
 				{
-					$os = 'Debian ' . php_uname('s') . ' ' . pts_file_io::file_get_contents('/etc/debian_version');
+					$os = 'Debian ' . php_uname('s') . ' ' . ucwords(pts_file_io::file_get_contents('/etc/debian_version'));
 				}
 				else
 				{

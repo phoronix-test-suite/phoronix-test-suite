@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+- pts-core: Clean-up some of the test run output in the concise display mode
 - phodevi: Improve Debian non-Linux OS (kFreeBSD/Hurd) detection
 - phodevi: Allow lspci information to be used on Debian GNU/kFreeBSD
 

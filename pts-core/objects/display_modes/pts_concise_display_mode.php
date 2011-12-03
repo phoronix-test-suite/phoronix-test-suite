@@ -265,20 +265,25 @@ class pts_concise_display_mode implements pts_display_mode_interface
 		echo PHP_EOL;
 		echo $this->tab . 'Test ' . $test_run_manager->get_test_run_position() . ' of ' . $test_run_manager->get_test_run_count_reported() . PHP_EOL;
 
-		if(($remaining_length = $test_run_manager->get_estimated_run_time_remaining()) > 1)
-		{
-			echo $this->tab . 'Estimated Time Remaining: ' . pts_strings::format_time($remaining_length, 'SECONDS', true, 60) . PHP_EOL;
-		}
-
-		$estimated_length = $test_result->test_profile->get_estimated_run_time();
-		if($estimated_length > 1 && $estimated_length != $remaining_length)
-		{
-			echo $this->tab . 'Estimated Test Run-Time: ' . pts_strings::format_time($estimated_length, 'SECONDS', true, 60) . PHP_EOL;
-		}
-
 		$this->trial_run_count_current = 0;
 		$this->expected_trial_run_count = $test_result->test_profile->get_times_to_run();
-		echo $this->tab . 'Expected Trial Run Count: ' . $this->expected_trial_run_count;
+		$remaining_length = $test_run_manager->get_estimated_run_time_remaining();
+		$estimated_length = $test_result->test_profile->get_estimated_run_time();
+		$display_table = array();
+
+		array_push($display_table, array($this->tab . 'Estimated Trial Run Count:', $this->expected_trial_run_count));
+
+		if($estimated_length > 1 && $estimated_length != $remaining_length)
+		{
+			array_push($display_table, array($this->tab . 'Estimated Test Run-Time:', pts_strings::format_time($estimated_length, 'SECONDS', true, 60)));
+		}
+
+		if($remaining_length > 1)
+		{
+			array_push($display_table, array($this->tab . 'Estimated Time To Completion:', pts_strings::format_time($remaining_length, 'SECONDS', true, 60)));
+		}
+
+		echo pts_user_io::display_text_table($display_table);
 	}
 	public function test_run_message($message_string)
 	{
