@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- phodevi: Improve Debian non-Linux OS (kFreeBSD/Hurd) detection
+
 Phoronix Test Suite 3.6 Milestone 3
 1 December 2011
 

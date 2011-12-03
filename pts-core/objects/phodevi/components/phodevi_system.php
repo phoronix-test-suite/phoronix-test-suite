@@ -691,6 +691,10 @@ class phodevi_system extends phodevi_device_interface
 				{
 					$os = trim(exec('ver'));
 				}
+				if(is_file('/etc/debian_version'))
+				{
+					$os = 'Debian ' . php_uname('s') . ' ' . pts_file_io::file_get_contents('/etc/debian_version');
+				}
 				else
 				{
 					$os = php_uname('s');

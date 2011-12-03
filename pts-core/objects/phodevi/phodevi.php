@@ -358,6 +358,11 @@ class phodevi
 					break;
 				}
 			}
+
+			if(self::$operating_system != null)
+			{
+				break;
+			}
 		}
 
 		if(self::operating_system() == false)
