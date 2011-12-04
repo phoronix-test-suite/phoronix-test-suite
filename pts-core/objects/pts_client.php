@@ -286,7 +286,9 @@ class pts_client
 					'/etc/X11/xorg.conf',
 					'/sys/kernel/debug/dri/0/radeon_pm_info',
 					'/sys/kernel/debug/dri/0/i915_capabilities',
-					'/sys/devices/system/cpu/cpu0/cpufreq/scaling_available_frequencies'
+					'/sys/kernel/debug/dri/0/i915_cur_delayinfo',
+					'/sys/kernel/debug/dri/0/i915_drpc_info',
+					'/sys/devices/system/cpu/cpu0/cpufreq/scaling_available_frequencies',
 					);
 
 				/*

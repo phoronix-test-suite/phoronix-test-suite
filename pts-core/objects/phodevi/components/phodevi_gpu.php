@@ -768,7 +768,20 @@ class phodevi_gpu extends phodevi_device_interface
 					}				
 					break;
 				case 'intel':
-					if(is_file('/sys/kernel/debug/dri/0/i915_cur_delayinfo'))
+					// try to read the maximum dynamic frequency
+					if(is_file('/sys/kernel/debug/dri/0/i915_max_freq'))
+					{
+						$i915_max_freq = pts_file_io::file_get_contents('/sys/kernel/debug/dri/0/i915_max_freq');
+						$freq_mhz = substr($i915_max_freq, strpos($i915_max_freq, ': ') + 2);
+
+						if(is_numeric($freq_mhz))
+						{
+							$core_freq = $freq_mhz;
+						}
+					}
+
+					// Fallback to base frequency
+					if($core_freq == 0 && is_file('/sys/kernel/debug/dri/0/i915_cur_delayinfo'))
 					{
 						$i915_cur_delayinfo = file_get_contents('/sys/kernel/debug/dri/0/i915_cur_delayinfo');
 						$freq = strpos($i915_cur_delayinfo, 'Nominal (RP1) frequency: ');
