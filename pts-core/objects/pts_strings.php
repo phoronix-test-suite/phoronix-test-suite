@@ -342,6 +342,20 @@ class pts_strings
 
 		return $str;
 	}
+	public static function remove_lines_containing($contents, $contains)
+	{
+		foreach($contains as $needle)
+		{
+			while(($x = stripos($contents, $needle)) !== false)
+			{
+				$affected_line_begins = strrpos($contents, PHP_EOL, (0 - strlen($contents) + $x));
+				$affected_line_ends = strpos($contents, PHP_EOL, $x);
+				$contents = substr($contents, 0, $affected_line_begins) . ($affected_line_ends === false ? null : substr($contents, $affected_line_ends));
+			}
+		}
+
+		return $contents;
+	}
 	public static function pts_version_to_codename($version)
 	{
 		$version = substr($version, 0, 3);

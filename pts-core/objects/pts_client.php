@@ -325,6 +325,10 @@ class pts_client
 				{
 					array_push($system_log_commands, 'sysctl -a');
 				}
+				if(is_readable('/dev/mem'))
+				{
+					array_push($system_log_commands, 'dmidecode');
+				}
 
 				foreach($system_log_commands as $command_string)
 				{
@@ -333,6 +337,10 @@ class pts_client
 					if(($command_bin = pts_client::executable_in_path($command[0])))
 					{
 						$cmd_output = shell_exec('cd ' . dirname($command_bin) . ' && ./' . $command_string . ' 2>&1');
+
+						// Try to filter out any serial numbers, etc.
+						$cmd_output = pts_strings::remove_lines_containing($cmd_output, array('Serial N', 'S/N', 'Serial #'));
+
 						file_put_contents($system_log_dir . $command[0], $cmd_output);
 					}
 				}
