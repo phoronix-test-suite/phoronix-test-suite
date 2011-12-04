@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 - pts-core: Clean-up some of the test run output in the concise display mode
 - phodevi: Improve Debian non-Linux OS (kFreeBSD/Hurd) detection
 - phodevi: Allow lspci information to be used on Debian GNU/kFreeBSD
+- phodevi: Fallback for trying to read the Radeon DRM video memory from dmesg
 
 Phoronix Test Suite 3.6 Milestone 3
 1 December 2011

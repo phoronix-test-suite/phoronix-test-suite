@@ -22,7 +22,7 @@
 */
 
 define('PTS_VERSION', '3.6.0m3');
-define('PTS_CORE_VERSION', 3530);
+define('PTS_CORE_VERSION', 3532);
 define('PTS_CODENAME', 'ARENDAL');
 define('PTS_IS_CLIENT', (defined('PTS_MODE') && PTS_MODE == 'CLIENT'));
 define('PTS_IS_DEV_BUILD', (substr(PTS_VERSION, -2, 1) == 'm'));

@@ -601,6 +601,29 @@ class phodevi_gpu extends phodevi_device_interface
 						$video_ram = intval($info) / 1024;
 					}
 				}
+				else if(pts_client::executable_in_path('dmesg'))
+				{
+					// Fallback to try to find vRAM from dmesg
+					$info = shell_exec('dmesg 2> /dev/null');
+
+					if(($x = strpos($info, 'Detected VRAM RAM=')) !== false)
+					{
+						// Radeon DRM at least reports: [drm] Detected VRAM RAM=2048M, BAR=256M
+						$info = substr($info, $x + 18);
+						$info = substr($info, 0, strpos($info, 'M'));
+					}
+					else if(($x = strpos($info, 'M of VRAM')) !== false)
+					{
+						// Radeon DRM around Linux ~3.0 reports e.g.: [drm] radeon: 2048M of VRAM memory ready
+						$info = substr($info, 0, $x);
+						$info = substr($info, strrpos($info, ' ') + 1);
+					}
+
+					if(is_numeric($info) && $info > 64)
+					{
+						$video_ram = $info;
+					}
+				}
 			}
 		}
 
