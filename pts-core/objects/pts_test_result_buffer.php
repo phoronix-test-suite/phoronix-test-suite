@@ -45,7 +45,7 @@ class pts_test_result_buffer
 			$this->buffer_items = array_reverse($this->buffer_items);
 		}
 	}
-	public function buffer_value_comparison($a, $b)
+	public static function buffer_value_comparison($a, $b)
 	{
 		$a = $a->get_result_value();
 		$b = $b->get_result_value();
