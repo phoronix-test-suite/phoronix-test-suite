@@ -341,7 +341,7 @@ class pts_client
 						$cmd_output = shell_exec('cd ' . dirname($command_bin) . ' && ./' . $command_string . ' 2>&1');
 
 						// Try to filter out any serial numbers, etc.
-						$cmd_output = pts_strings::remove_lines_containing($cmd_output, array('Serial N', 'S/N', 'Serial #'));
+						$cmd_output = pts_strings::remove_lines_containing($cmd_output, array('Serial N', 'S/N', 'Serial #', 'serial:'));
 
 						file_put_contents($system_log_dir . $command[0], $cmd_output);
 					}
