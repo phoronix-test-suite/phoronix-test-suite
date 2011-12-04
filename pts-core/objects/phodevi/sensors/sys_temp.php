@@ -46,16 +46,16 @@ class sys_temp implements phodevi_sensor
 
 		if(phodevi::is_linux())
 		{
-			$raw_temp = phodevi_linux_parser::read_sysfs_node('/sys/class/hwmon/hwmon*/device/temp3_input', 'POSITIVE_NUMERIC', array('name' => '!coretemp'));
+			$raw_temp = phodevi_linux_parser::read_sysfs_node('/sys/class/hwmon/hwmon*/device/temp3_input', 'POSITIVE_NUMERIC', array('name' => '!coretemp,!radeon,!nouveau'));
 
 			if($raw_temp == -1)
 			{
-				$raw_temp = phodevi_linux_parser::read_sysfs_node('/sys/class/hwmon/hwmon*/device/temp2_input', 'POSITIVE_NUMERIC', array('name' => '!coretemp'));
+				$raw_temp = phodevi_linux_parser::read_sysfs_node('/sys/class/hwmon/hwmon*/device/temp2_input', 'POSITIVE_NUMERIC', array('name' => '!coretemp,!radeon,!nouveau'));
 			}
 
 			if($raw_temp == -1)
 			{
-				$raw_temp = phodevi_linux_parser::read_sysfs_node('/sys/class/hwmon/hwmon*/device/temp1_input', 'POSITIVE_NUMERIC', array('name' => '!coretemp'));
+				$raw_temp = phodevi_linux_parser::read_sysfs_node('/sys/class/hwmon/hwmon*/device/temp1_input', 'POSITIVE_NUMERIC', array('name' => '!coretemp,!radeon,!nouveau'));
 			}
 
 			if($raw_temp == -1)

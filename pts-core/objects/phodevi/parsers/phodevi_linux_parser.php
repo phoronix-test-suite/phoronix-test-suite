@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2010, Phoronix Media
-	Copyright (C) 2008 - 2010, Michael Larabel
+	Copyright (C) 2008 - 2011, Phoronix Media
+	Copyright (C) 2008 - 2011, Michael Larabel
 	phodevi_linux_parser.php: General parsing functions specific to Linux
 
 	This program is free software; you can redistribute it and/or modify
@@ -50,19 +50,27 @@ class phodevi_linux_parser
 						{
 							$value_check_value = pts_file_io::file_get_contents($sysfs_dir . $node_check);
 
-							if(isset($value_check[0]) && $value_check[0] == '!')
+							foreach(explode(',', $value_check) as $check)
 							{
-								if($value_check_value == substr($value_check, 1))
+								if(isset($check[0]) && $check[0] == '!')
+								{
+									if($value_check_value == substr($check, 1))
+									{
+										$skip_to_next = true;
+										break;
+									}
+								}
+								else if($value_check_value != $check)
 								{
 									$skip_to_next = true;
 									break;
 								}
 							}
-							else if($value_check_value != $value_check)
-							{
-								$skip_to_next = true;
-								break;
-							}
+						}
+
+						if($skip_to_next)
+						{
+							break;
 						}
 					}
 
