@@ -531,14 +531,15 @@ class phodevi_gpu extends phodevi_device_interface
 	public static function gpu_memory_size()
 	{
 		// Graphics memory capacity
-		$video_ram = 64; // Assume 64MB of video RAM at least
+		$video_ram = -1;
 
-		if(($vram = getenv('VIDEO_MEMORY')) != false && is_numeric($vram) && $vram > $video_ram)
+		if(($vram = getenv('VIDEO_MEMORY')) != false && is_numeric($vram))
 		{
 			$video_ram = $vram;
 		}
 		else if(is_file('/sys/kernel/debug/dri/0/memory'))
 		{
+			// This is how some of the Nouveau DRM VRAM is reported
 			$memory = file_get_contents('/sys/kernel/debug/dri/0/memory');
 
 			if(($x = strpos($memory, 'VRAM total: ')) !== false)
@@ -556,75 +557,84 @@ class phodevi_gpu extends phodevi_device_interface
 				}
 			}
 		}
-		else
+		else if(phodevi::is_nvidia_graphics() && ($NVIDIA = phodevi_parser::read_nvidia_extension('VideoRam')) > 0) // NVIDIA blob
 		{
-			if(phodevi::is_nvidia_graphics() && ($NVIDIA = phodevi_parser::read_nvidia_extension('VideoRam')) > 0) // NVIDIA blob
+			$video_ram = $NVIDIA / 1024;
+		}
+		else if(phodevi::is_macosx())
+		{
+			$info = phodevi_osx_parser::read_osx_system_profiler('SPDisplaysDataType', 'VRAM');
+			$info = explode(' ', $info);
+			$video_ram = $info[0];
+
+			if($info[1] == 'GB')
 			{
-				$video_ram = $NVIDIA / 1024;
+				$video_ram *= 1024;
 			}
-			else if(phodevi::is_macosx())
+		}
+
+		if($video_ram == -1 && is_file('/var/log/Xorg.0.log'))
+		{
+			// Attempt Video RAM detection using X log
+			// fglrx driver reports video memory to: (--) fglrx(0): VideoRAM: XXXXXX kByte, Type: DDR
+			// xf86-video-ati, xf86-video-intel, and xf86-video-radeonhd also report their memory information in a similar format
+
+			$info = shell_exec('cat /var/log/Xorg.0.log | grep -i VideoRAM');
+
+			if(empty($info))
 			{
-				$info = phodevi_osx_parser::read_osx_system_profiler('SPDisplaysDataType', 'VRAM');
-				$info = explode(' ', $info);
-				$video_ram = $info[0];
-			
-				if($info[1] == 'GB')
-				{
-					$video_ram *= 1024;
-				}
+				$info = shell_exec('cat /var/log/Xorg.0.log | grep "Video RAM"');
 			}
-			else if(is_file('/var/log/Xorg.0.log'))
+
+			if(($pos = stripos($info, 'RAM:') + 5) > 5 || ($pos = strpos($info, 'RAM=') + 4) > 4)
 			{
-				// Attempt Video RAM detection using X log
-				// fglrx driver reports video memory to: (--) fglrx(0): VideoRAM: XXXXXX kByte, Type: DDR
-				// xf86-video-ati, xf86-video-intel, and xf86-video-radeonhd also report their memory information in a similar format
+				$info = substr($info, $pos);
+				$info = substr($info, 0, strpos($info, ' '));
 
-				$info = shell_exec('cat /var/log/Xorg.0.log | grep -i VideoRAM');
-
-				if(empty($info))
+				if(!is_numeric($info) && ($cut = strpos($info, ',')))
 				{
-					$info = shell_exec('cat /var/log/Xorg.0.log | grep "Video RAM"');
+					$info = substr($info, 0, $cut);
 				}
 
-				if(($pos = stripos($info, 'RAM:') + 5) > 5 || ($pos = strpos($info, 'RAM=') + 4) > 4)
+				if($info > 65535)
 				{
-					$info = substr($info, $pos);
-					$info = substr($info, 0, strpos($info, ' '));
-
-					if(!is_numeric($info) && ($cut = strpos($info, ',')))
-					{
-						$info = substr($info, 0, $cut);
-					}
-
-					if($info > 65535)
-					{
-						$video_ram = intval($info) / 1024;
-					}
-				}
-				else if(pts_client::executable_in_path('dmesg'))
-				{
-					// Fallback to try to find vRAM from dmesg
-					$info = shell_exec('dmesg 2> /dev/null');
-
-					if(($x = strpos($info, 'Detected VRAM RAM=')) !== false)
-					{
-						// Radeon DRM at least reports: [drm] Detected VRAM RAM=2048M, BAR=256M
-						$info = substr($info, $x + 18);
-						$info = substr($info, 0, strpos($info, 'M'));
-					}
-					else if(($x = strpos($info, 'M of VRAM')) !== false)
-					{
-						// Radeon DRM around Linux ~3.0 reports e.g.: [drm] radeon: 2048M of VRAM memory ready
-						$info = substr($info, 0, $x);
-						$info = substr($info, strrpos($info, ' ') + 1);
-					}
-
-					if(is_numeric($info) && $info > 64)
-					{
-						$video_ram = $info;
-					}
+					$video_ram = intval($info) / 1024;
 				}
 			}
+		}
+		if($video_ram == -1 && pts_client::executable_in_path('dmesg'))
+		{
+			// Fallback to try to find vRAM from dmesg
+			$info = shell_exec('dmesg 2> /dev/null');
+
+			if(($x = strpos($info, 'Detected VRAM RAM=')) !== false)
+			{
+				// Radeon DRM at least reports: [drm] Detected VRAM RAM=2048M, BAR=256M
+				$info = substr($info, $x + 18);
+				$info = substr($info, 0, strpos($info, 'M'));
+			}
+			else if(($x = strpos($info, 'M of VRAM')) !== false)
+			{
+				// Radeon DRM around Linux ~3.0 reports e.g.: [drm] radeon: 2048M of VRAM memory ready
+				$info = substr($info, 0, $x);
+				$info = substr($info, strrpos($info, ' ') + 1);
+			}
+			else if(($x = strpos($info, 'MiB VRAM')) !== false)
+			{
+				// Nouveau DRM around Linux ~3.0 reports e.g.: [drm] nouveau XXX: Detected 1024MiB VRAM
+				$info = substr($info, 0, $x);
+				$info = substr($info, strrpos($info, ' ') + 1);
+			}
+
+			if(is_numeric($info))
+			{
+				$video_ram = $info;
+			}
+		}
+
+		if($video_ram == -1 || !is_numeric($video_ram) || $video_ram < 64)
+		{
+			$video_ram = 64; // default to 64MB of video RAM as something sane...
 		}
 
 		return $video_ram;

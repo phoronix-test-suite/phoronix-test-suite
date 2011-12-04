@@ -6,6 +6,7 @@ Phoronix Test Suite (Git)
 - phodevi: Improve Debian non-Linux OS (kFreeBSD/Hurd) detection
 - phodevi: Allow lspci information to be used on Debian GNU/kFreeBSD
 - phodevi: Fallback for trying to read the Radeon DRM video memory from dmesg
+- phodevi: Further fallbacks for DRM video RAM size detection
 - phodevi: Add initial GPU voltage sensor
 
 Phoronix Test Suite 3.6 Milestone 3
