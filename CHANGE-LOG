@@ -9,6 +9,7 @@ Phoronix Test Suite (Git)
 - phodevi: Fallback for trying to read the Radeon DRM video memory from dmesg
 - phodevi: Further fallbacks for DRM video RAM size detection
 - phodevi: Add initial GPU voltage sensor
+- pts_Graph: If all result lines are flat (i.e. no change), just convert it to a bar graph
 
 Phoronix Test Suite 3.6 Milestone 3
 1 December 2011

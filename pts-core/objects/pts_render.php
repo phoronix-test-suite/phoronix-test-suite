@@ -111,7 +111,6 @@ class pts_render
 				else
 				{
 					// Turn a multi-way line graph into an averaged bar graph
-
 					$buffer_items = $result_object->test_result_buffer->get_buffer_items();
 					$result_object->test_result_buffer = new pts_test_result_buffer();
 
@@ -131,6 +130,37 @@ class pts_render
 				$result_table = false;
 				pts_render::compact_result_file_test_object($result_object, $result_table, $result_file->is_multi_way_inverted(), $extra_attributes);
 			}
+		}
+		else if(in_array($result_object->test_profile->get_display_format(), array('LINE_GRAPH', 'FILLED_LINE_GRAPH')))
+		{
+				// Check to see for line graphs if every result is an array of the same result (i.e. a flat line for every result).
+				// If all the results are just flat lines, you might as well convert it to a bar graph
+				$buffer_items = $result_object->test_result_buffer->get_buffer_items();
+				$all_values_are_flat = false;
+				$flat_values = array();
+
+				foreach($buffer_items as $i => $buffer_item)
+				{
+					$unique_in_buffer = array_unique(explode(',', $buffer_item->get_result_value()));
+					$all_values_are_flat = count($unique_in_buffer) == 1;
+
+					if($all_values_are_flat == false)
+					{
+						break;
+					}
+					$flat_values[$i] = array_pop($unique_in_buffer);
+				}
+
+				if($all_values_are_flat)
+				{
+					$result_object->test_result_buffer = new pts_test_result_buffer();
+					foreach($buffer_items as $i => $buffer_item)
+					{
+						$result_object->test_result_buffer->add_test_result($buffer_item->get_result_identifier(), $flat_values[$i]);
+					}
+
+					$result_object->test_profile->set_display_format('BAR_GRAPH');
+				}
 		}
 	}
 	public static function render_graph_process(&$result_object, &$result_file = null, $save_as = false, $extra_attributes = null)
