@@ -989,7 +989,7 @@ class phodevi_system extends phodevi_device_interface
 				{
 					$catalyst_version = phodevi_linux_parser::read_amd_pcsdb('AMDPCSROOT/SYSTEM/LDC,Catalyst_Version');
 
-					if($catalyst_version != null && $catalyst_version > 10.1 && $catalyst_version != 10.5)
+					if($catalyst_version != null && $catalyst_version > 10.1 && $catalyst_version != 10.5 && $catalyst_version != 11.8)
 					{
 						// This option was introduced around Catalyst 10.5 but seems to not be updated properly until Catalyst 10.11/10.12
 						$display_driver .= ' Catalyst ' . $catalyst_version . '';
