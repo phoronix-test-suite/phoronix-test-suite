@@ -35,6 +35,7 @@ class pts_LineGraph extends pts_Graph
 		$this->graph_show_key = true;
 		$this->graph_background_lines = true;
 		$this->iveland_view = true;
+		$this->graph_maximum_value_multiplier = 1.38; // make room for the average/peak/low table embedded to the top
 	}
 	protected function render_graph_pre_init()
 	{

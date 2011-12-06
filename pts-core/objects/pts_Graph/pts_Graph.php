@@ -107,6 +107,7 @@ abstract class pts_Graph
 	// Internal Switches, Etc
 
 	protected $regression_marker_threshold = 0;
+	protected $graph_maximum_value_multiplier = 1.29;
 	protected $is_multi_way_comparison = false;
 	private $test_identifier = null;
 	protected $iveland_view = false;
@@ -353,7 +354,7 @@ abstract class pts_Graph
 			}
 			else
 			{
-				$maximum = (floor(round($real_maximum * 1.29) / $this->graph_attr_marks) + 1) * $this->graph_attr_marks;
+				$maximum = (floor(round($real_maximum * $this->graph_maximum_value_multiplier) / $this->graph_attr_marks) + 1) * $this->graph_attr_marks;
 				$maximum = round(ceil($maximum / $this->graph_attr_marks), (0 - strlen($maximum) + 2)) * $this->graph_attr_marks;
 			}
 		}
