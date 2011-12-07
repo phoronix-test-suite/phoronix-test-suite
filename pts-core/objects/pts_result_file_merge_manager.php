@@ -52,7 +52,7 @@ class pts_result_file_merge_manager
 	}
 	public function add_test_result($merge_test_object, &$result_merge_select)
 	{
-		$select_identifiers = $result_merge_select instanceOf pts_result_merge_select ? $result_merge_select->get_selected_identifiers() : null;
+		$select_identifiers = $result_merge_select instanceof pts_result_merge_select ? $result_merge_select->get_selected_identifiers() : null;
 		$mto_hash = $merge_test_object->get_comparison_hash();
 		$merged = false;
 

@@ -811,9 +811,10 @@ class pts_test_run_manager
 					{
 						continue;
 					}
-
 					if($run_object->is_test_installed() == false)
 					{
+						// TODO: See if older version of the test is available/installed on client
+						// Also show change-log between installed versions and upstream
 						array_push($tests_missing, $run_object);
 						continue;
 					}

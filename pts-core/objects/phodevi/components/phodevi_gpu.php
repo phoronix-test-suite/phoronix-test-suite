@@ -435,7 +435,12 @@ class phodevi_gpu extends phodevi_device_interface
 
 					if(is_numeric($res[0]) && is_numeric($res[1]))
 					{
-						array_push($available_modes, array($res[0], $res[1]));
+						$m = array($res[0], $res[1]);
+						if(!in_array($m, $available_modes))
+						{
+							// Don't repeat modes
+							array_push($available_modes, $m);
+						}
 					}
 				}
 			}
@@ -459,9 +464,6 @@ class phodevi_gpu extends phodevi_device_interface
 				}
 			}
 		}
-
-		// ensure no modes are repeated
-		$available_modes = array_unique($available_modes);
 
 		foreach($available_modes as $mode_index => $mode)
 		{
