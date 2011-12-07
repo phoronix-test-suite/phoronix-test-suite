@@ -3,6 +3,8 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Clean-up some of the test run output in the concise display mode
+- pts-core: When uploading a test profile to OpenBenchmarking.org, refresh the repository indexes afterwards
+- pts-core: When uploading a test suite to OpenBenchmarking.org, refresh the repository indexes afterwards
 - phodevi: Fix for latest Catalyst Linux driver reporting odd OpenGL version (GL_VERSION) string
 - phodevi: Improve Debian non-Linux OS (kFreeBSD/Hurd) detection
 - phodevi: Allow lspci information to be used on Debian GNU/kFreeBSD
