@@ -460,6 +460,9 @@ class phodevi_gpu extends phodevi_device_interface
 			}
 		}
 
+		// ensure no modes are repeated
+		$available_modes = array_unique($available_modes);
+
 		foreach($available_modes as $mode_index => $mode)
 		{
 			$this_ratio = pts_math::set_precision($mode[0] / $mode[1], 2);
