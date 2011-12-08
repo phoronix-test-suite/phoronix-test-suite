@@ -469,8 +469,24 @@ class pts_openbenchmarking_client
 				}
 				else
 				{
-					// Assume to use the latest version
-					$version = array_shift($repo_index['tests'][$test]['versions']);
+					// Assume to use the latest version unless something else is installed
+					$available_versions = $repo_index['tests'][$test]['versions'];
+					$version = $available_versions[0]; // the latest version available
+
+					foreach($available_versions as $i => $v)
+					{
+						if(is_file(pts_client::test_install_root_path() . $repo . '/' . $test . '-' . $v . '/pts-install.xml'))
+						{
+							$version = $v;
+
+							if($i > 0)
+							{
+								// It's not the latest test profile version available
+								trigger_error($repo . '/' . $test . ': The latest test profile version available for upgrade is ' . $available_versions[0] . ' but version ' . $version . ' is the latest currently installed.', E_USER_WARNING);
+							}
+						}
+					}
+
 					pts_openbenchmarking_client::download_test_profile($repo . '/' . $test . '-' . $version);
 					return $repo . '/' . $test . ($bind_version ? '-' . $version : null);
 				}
