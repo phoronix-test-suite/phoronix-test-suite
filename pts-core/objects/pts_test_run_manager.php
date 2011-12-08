@@ -670,6 +670,7 @@ class pts_test_run_manager
 	public static function initial_checks(&$to_run, $test_flags = 0)
 	{
 		// Refresh the pts_client::$display in case we need to run in debug mode
+		$test_flags |= pts_c::is_run_process;
 		pts_client::init_display_mode($test_flags);
 		pts_client::set_test_flags($test_flags);
 		$to_run = pts_types::identifiers_to_objects($to_run);

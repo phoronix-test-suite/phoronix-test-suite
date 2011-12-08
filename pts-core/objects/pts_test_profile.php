@@ -41,7 +41,7 @@ class pts_test_profile extends pts_test_profile_parser
 	public static function is_test_profile($identifier)
 	{
 		$identifier = pts_openbenchmarking::evaluate_string_to_qualifier($identifier);
-		return $identifier != false && is_file(PTS_TEST_PROFILE_PATH . $identifier . '/test-definition.xml');
+		return $identifier != false && is_file(PTS_TEST_PROFILE_PATH . $identifier . '/test-definition.xml') ? $identifier : false;
 	}
 	public function get_resource_dir()
 	{

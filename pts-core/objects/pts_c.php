@@ -32,6 +32,7 @@ class pts_c
 
 	const force_install = 64;
 	const is_recovering = 128;
+	const is_run_process = 256;
 }
 
 ?>

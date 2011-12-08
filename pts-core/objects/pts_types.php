@@ -116,10 +116,10 @@ class pts_types
 			{
 				array_push($objects, $identifier_item);
 			}
-			else if(pts_test_profile::is_test_profile($identifier_item))
+			else if(($tp_identifier = pts_test_profile::is_test_profile($identifier_item)))
 			{
 				// Object is a test
-				array_push($objects, new pts_test_profile($identifier_item));
+				array_push($objects, new pts_test_profile($tp_identifier));
 			}
 			else if(pts_test_suite::is_suite($identifier_item))
 			{
