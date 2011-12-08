@@ -29,16 +29,9 @@ class benchmark implements pts_option_interface
 	{
 		return array('test');
 	}
-	public static function invalid_command($passed_args)
+	public static function invalid_command($passed_args = null)
 	{
-		// TODO: possibly scan through $passed_args to find similarly named test results if it was mis-spelling or something...
-		$showed_recent_results = pts_test_run_manager::recently_saved_test_results();
-
-		if($showed_recent_results == false || true)
-		{
-			echo 'See available tests to run by visiting OpenBenchmarking.org or running:' . PHP_EOL . PHP_EOL;
-			echo '    phoronix-test-suite list-tests' . PHP_EOL;
-		}
+		pts_tests::invalid_command_helper($passed_args);
 	}
 	public static function argument_checks()
 	{

@@ -1164,7 +1164,16 @@ class pts_client
 				if($return_value == $return_fails_on)
 				{
 					$command_alias = defined($command . '::doc_use_alias') ? constant($command . '::doc_use_alias') : $command;
-					pts_client::$display->generic_error('Argument Missing.');
+
+					if((isset($pass_args[$argument_check->get_argument_index()]) && !empty($pass_args[$argument_check->get_argument_index()])) || ($argument_check->get_argument_index() == 'VARIABLE_LENGTH' && !empty($pass_args)))
+					{
+						pts_client::$display->generic_error('Invalid Argument: ' . implode(' ', $pass_args));
+					}
+					else
+					{
+						pts_client::$display->generic_error('Argument Missing.');
+					}
+
 					echo 'CORRECT SYNTAX' . PHP_EOL . 'phoronix-test-suite ' . str_replace('_', '-', $command_alias) . ' ' . implode(' ', $argument_checks) . PHP_EOL . PHP_EOL;
 
 					if(method_exists($command, 'invalid_command'))

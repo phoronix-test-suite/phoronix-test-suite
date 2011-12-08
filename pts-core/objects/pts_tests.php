@@ -191,6 +191,57 @@ class pts_tests
 
 		$xml_writer->saveXMLFile($test_profile->get_install_dir() . 'pts-install.xml');
 	}
+	public static function invalid_command_helper($passed_args)
+	{
+		$showed_recent_results = pts_test_run_manager::recently_saved_test_results();
+
+		if(!empty($passed_args))
+		{
+			$arg_soundex = soundex($passed_args);
+			$similar_tests = array();
+
+			foreach(pts_openbenchmarking_client::linked_repositories() as $repo)
+			{
+				$repo_index = pts_openbenchmarking::read_repository_index($repo);
+
+				foreach(array('tests', 'suites') as $type)
+				{
+					if(isset($repo_index[$type]) && is_array($repo_index[$type]))
+					{
+						foreach(array_keys($repo_index[$type]) as $identifier)
+						{
+							if(soundex($identifier) == $arg_soundex)
+							{
+								array_push($similar_tests, array('- ' . $repo . '/' . $identifier, ' [' . ucwords(substr($type, 0, -1)) . ']'));
+							}
+						}
+					}
+				}
+			}
+
+			foreach(pts_client::saved_test_results() as $result)
+			{
+				if(soundex($result) == $arg_soundex)
+				{
+					array_push($similar_tests, array('- ' . $result, ' [Test Result]'));
+				}
+			}
+
+			if(count($similar_tests) > 0)
+			{
+				echo 'Possible Suggestions:' . PHP_EOL;
+				echo pts_user_io::display_text_table($similar_tests) . PHP_EOL;
+			}
+		}
+
+		if($showed_recent_results == false)
+		{
+			echo 'See available tests to run by visiting OpenBenchmarking.org or running:' . PHP_EOL . PHP_EOL;
+			echo '    phoronix-test-suite list-tests' . PHP_EOL . PHP_EOL;
+			echo 'Tests can be installed by running:' . PHP_EOL . PHP_EOL;
+			echo '    phoronix-test-suite install <test-name>' . PHP_EOL;
+		}
+	}
 }
 
 ?>
