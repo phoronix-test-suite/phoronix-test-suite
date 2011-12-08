@@ -142,7 +142,7 @@ class pts_openbenchmarking
 
 				if(PTS_IS_CLIENT && $json_response['openbenchmarking']['result']['system_logs_available'])
 				{
-					// Fetch the system logs
+					// Fetch the system logs and toss them into the results directory system-logs/
 					pts_openbenchmarking::clone_openbenchmarking_result_system_logs($id, pts_client::setup_test_result_directory($id), $json_response['openbenchmarking']['result']['system_logs_available']);
 				}
 			}
