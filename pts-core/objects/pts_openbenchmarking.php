@@ -139,6 +139,12 @@ class pts_openbenchmarking
 				//$id = strtolower($id);
 
 				$valid = $return_xml ? $result_file_writer->get_xml() : pts_client::save_test_result($id . '/composite.xml', $result_file_writer->get_xml(), true);
+
+				if(PTS_IS_CLIENT && $json_response['openbenchmarking']['result']['system_logs_available'])
+				{
+					// Fetch the system logs
+					pts_openbenchmarking::clone_openbenchmarking_result_system_logs($id, pts_client::setup_test_result_directory($id), $json_response['openbenchmarking']['result']['system_logs_available']);
+				}
 			}
 		}
 		else if(PTS_IS_CLIENT && isset($json_response['openbenchmarking']['result']['error']))
@@ -147,6 +153,27 @@ class pts_openbenchmarking
 		}
 
 		return $valid;
+	}
+	public static function clone_openbenchmarking_result_system_logs(&$id, $extract_to, $sha1_compare = null)
+	{
+		$system_log_response = pts_openbenchmarking::make_openbenchmarking_request('clone_openbenchmarking_system_logs', array('i' => $id));
+		$extracted = false;
+
+		if($system_log_response != null)
+		{
+			$zip_temp = pts_client::create_temporary_file();
+			file_put_contents($zip_temp, $system_log_response);
+
+			if($sha1_compare == null || sha1_file($zip_temp) == $sha1_compare)
+			{
+				// hash check of file passed or was null
+				$extracted = pts_compression::zip_archive_extract($zip_temp, $extract_to);
+			}
+
+			unlink($zip_temp);
+		}
+
+		return $extracted;
 	}
 	public static function is_string_openbenchmarking_result_id_compliant($id)
 	{

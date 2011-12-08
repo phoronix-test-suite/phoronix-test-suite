@@ -475,6 +475,7 @@ class pts_openbenchmarking_client
 
 					if((pts_c::$test_flags & pts_c::is_run_process))
 					{
+						// Check to see if an older version of the test profile is currently installed
 						foreach($available_versions as $i => $v)
 						{
 							if(is_file(pts_client::test_install_root_path() . $repo . '/' . $test . '-' . $v . '/pts-install.xml'))
