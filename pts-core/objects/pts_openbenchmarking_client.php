@@ -117,6 +117,10 @@ class pts_openbenchmarking_client
 					$system_logs = base64_encode(file_get_contents($system_logs_zip));
 					$system_logs_hash = sha1($system_logs);
 				}
+				else
+				{
+					trigger_error('The systems log attachment is too large to upload to OpenBenchmarking.org.', E_USER_WARNING);
+				}
 
 				unlink($system_logs_zip);
 			}
@@ -304,6 +308,23 @@ class pts_openbenchmarking_client
 				}
 			}
 		}
+	}
+	public static function fetch_repository_changelog($repo_name)
+	{
+		$index_file = PTS_OPENBENCHMARKING_SCRATCH_PATH . $repo_name . '.changes';
+
+		if(!is_file($index_file) || filemtime($index_file) < (time() - 86400))
+		{
+			// Refresh the repository change-log just once a day should be fine
+			$server_index = pts_openbenchmarking::make_openbenchmarking_request('repo_changes', array('repo' => $repo_name));
+
+			if(json_decode($server_index) != false)
+			{
+				file_put_contents($index_file, $server_index);
+			}
+		}
+
+		return is_file($index_file) ? json_decode(file_get_contents($index_file), true) : false;
 	}
 	public static function download_test_profile($qualified_identifier)
 	{
