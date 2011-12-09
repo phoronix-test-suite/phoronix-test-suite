@@ -231,7 +231,7 @@ class pts_tests
 			{
 				echo 'Possible Suggestions:' . PHP_EOL;
 
-				if(count($similar_tests[12]))
+				if(isset($similar_tests[12]))
 				{
 					// lots of tests... trim it down
 					$similar_tests = array_rand($similar_tests, 12);
