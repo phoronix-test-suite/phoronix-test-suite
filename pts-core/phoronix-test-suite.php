@@ -53,8 +53,12 @@ if(ini_get('open_basedir') != false)
 {
 	if(pts_client::open_basedir_check() == false)
 	{
-		echo PHP_EOL . 'ERROR: Your php.ini configuration open_basedir setting is preventing ' . PTS_PATH . ' from loading.' . PHP_EOL;
+		echo PHP_EOL . 'ERROR: The php.ini configuration open_basedir directive is preventing ' . PTS_PATH . ' from loading.' . PHP_EOL;
 		return false;
+	}
+	else
+	{
+		trigger_error('The php.ini configuration is using the "open_basedir" directive, which may prevent some parts of the Phoronix Test Suite from working. See the Phoronix Test Suite documentation for more details and to disable this setting.', E_USER_WARNING);
 	}
 }
 
