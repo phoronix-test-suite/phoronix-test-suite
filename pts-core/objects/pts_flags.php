@@ -76,8 +76,9 @@ class pts_flags
 		{
 			self::$flags |= self::$no_phodevi_cache;
 		}
-		if(pts_client::read_env('NO_EXTERNAL_DEPENDENCIES') != false)
+		if(pts_client::read_env('NO_EXTERNAL_DEPENDENCIES') != false || pts_client::read_env('SKIP_EXTERNAL_DEPENDENCIES') == 1)
 		{
+			// NO_EXTERNAL_DEPENDENCIES was deprecated in PTS 3.6 and replaced by more versatile SKIP_EXTERNAL_DEPENDENCIES
 			self::$flags |= self::$no_external_dependencies;
 		}
 	}

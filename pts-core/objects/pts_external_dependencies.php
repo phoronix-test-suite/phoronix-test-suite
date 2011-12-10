@@ -62,6 +62,20 @@ class pts_external_dependencies
 			}
 		}
 
+		// Does the user wish to skip any particular dependencies?
+		if(pts_client::read_env('SKIP_EXTERNAL_DEPENDENCIES'))
+		{
+			$dependencies_to_skip = explode(',', pts_client::read_env('SKIP_EXTERNAL_DEPENDENCIES'));
+
+			foreach($dependencies_to_skip as $dependency_name)
+			{
+				if(isset($required_test_dependencies[$dependency_name]))
+				{
+					unset($required_test_dependencies[$dependency_name]);
+				}
+			}
+		}
+
 		// Make a copy for use to check at end of process to see if all dependencies were actually found
 		$required_test_dependencies_copy = $required_test_dependencies;
 
