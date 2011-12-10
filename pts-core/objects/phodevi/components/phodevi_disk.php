@@ -48,6 +48,11 @@ class phodevi_disk extends phodevi_device_interface
 
 		return $notes;
 	}
+	public static function is_genuine($disk)
+	{
+		return strpos($disk, ' ') > 1 && strlen($disk) == strlen(str_ireplace(array('VBOX', 'QEMU', 'Virtual'), null, $disk));
+		// pts_strings::string_contains($mobo, pts_strings::CHAR_NUMERIC);
+	}
 	public static function hdd_string()
 	{
 		$disks = array();

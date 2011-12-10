@@ -126,7 +126,7 @@ class phodevi_cpu extends phodevi_device_interface
 			2. Check vendor (to avoid QEMU, Virtual CPU, etc): Intel, VIA, AMD, ARM, SPARC
 		*/
 
-		return strpos($cpu, ' ') !== false && strpos($cpu, ' ') != strrpos($cpu, ' ') && strlen($cpu) != strlen(str_ireplace(array('Intel', 'VIA', 'AMD', 'ARM', 'SPARC'), null, $cpu));
+		return strpos($cpu, ' ') !== false && strpos($cpu, ' ') != strrpos($cpu, ' ') && strlen($cpu) != strlen(str_ireplace(array('Intel', 'VIA', 'AMD', 'ARM', 'SPARC'), null, $cpu))  && stripos($mobo, 'unknown') === false;
 	}
 	public static function cpu_default_frequency($cpu_core = 0)
 	{

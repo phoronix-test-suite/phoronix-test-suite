@@ -252,7 +252,7 @@ class pts_test_execution
 			{
 				if($cache_share_present == false)
 				{
-					pts_tests::call_test_script($test_run_request->test_profile, 'interim', 'Running Interim-Test Script', $test_directory, $extra_runtime_variables, true);
+					pts_tests::call_test_script($test_run_request->test_profile, 'interim', 'Running Interim Test Script', $test_directory, $extra_runtime_variables, true);
 					sleep(2); // Rest for a moment between tests
 				}
 

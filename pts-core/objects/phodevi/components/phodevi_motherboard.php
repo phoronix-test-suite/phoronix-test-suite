@@ -85,7 +85,7 @@ class phodevi_motherboard extends phodevi_device_interface
 	public static function is_genuine($mobo)
 	{
 		// the string length check is a short way of making sure none of those strings are found in the motherboard string
-		return strpos($mobo, ' ') > 1 && strlen($mobo) == strlen(str_ireplace(array('Virtual', 'Bochs', '440BX', 'Megatrends', 'Software', 'Xen', 'Notebook', 'OEM'), null, $mobo));
+		return strpos($mobo, ' ') > 1 && strlen($mobo) == strlen(str_ireplace(array('Virtual', 'Bochs', '440BX', 'Megatrends', 'Award ', 'Software', 'Xen', 'HVM ', 'Notebook', 'OEM', ' KVM'), null, $mobo)) && stripos($mobo, 'unknown') === false;
 		// pts_strings::string_contains($mobo, pts_strings::CHAR_NUMERIC);
 	}
 	public static function pci_devices()
@@ -401,7 +401,7 @@ class phodevi_motherboard extends phodevi_device_interface
 
 				if(!empty($product))
 				{
-					if($vendor != false && strpos($product . ' ', $vendor . ' ') === false)
+					if($vendor != false && stripos($product . ' ', $vendor . ' ') === false)
 					{
 						$info .= $vendor . ' ';
 					}
