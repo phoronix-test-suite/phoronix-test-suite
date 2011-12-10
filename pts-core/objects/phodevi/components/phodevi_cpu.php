@@ -148,7 +148,7 @@ class phodevi_cpu extends phodevi_device_interface
 		}
 		else if(phodevi::is_bsd())
 		{
-			$info = phodevi_bsd_parser::read_sysctl(array('hw.acpi.cpu.px_global', 'machdep.est.frequency.target'));
+			$info = phodevi_bsd_parser::read_sysctl(array('dev.cpu.0.freq', 'hw.acpi.cpu.px_global', 'machdep.est.frequency.target'));
 
 			if(is_numeric($info))
 			{

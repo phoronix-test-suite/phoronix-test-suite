@@ -99,6 +99,20 @@ class phodevi_disk extends phodevi_device_interface
 			}
 			while(($disk != false || $i < 9) && $i < 128);
 			// On some systems, the first drive seems to be at dev.ad.8 rather than starting at dev.ad.0
+
+			if(empty($disks) && pts_client::executable_in_path('camcontrol'))
+			{
+				$camcontrol = trim(shell_exec('camcontrol devlist 2>&1'));
+
+				foreach(explode(PHP_EOL, $camcontrol) as $line)
+				{
+					if(substr($line, 0, 1) == '<' && ($model_end = strpos($line, '>')) !== false)
+					{
+						$disk = self::prepend_disk_vendor(substr($line, 1, ($model_end - 1)));
+						array_push($disks, $disk);
+					}
+				}
+			}
 		}
 		else if(phodevi::is_solaris())
 		{

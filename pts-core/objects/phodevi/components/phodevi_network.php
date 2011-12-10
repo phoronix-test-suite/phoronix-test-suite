@@ -44,7 +44,7 @@ class phodevi_network extends phodevi_device_interface
 		}
 		else if(phodevi::is_bsd())
 		{
-			foreach(array('dev.em.0.%desc', 'dev.wpi.0.%desc') as $controller)
+			foreach(array('dev.em.0.%desc', 'dev.wpi.0.%desc', 'dev.mskc.0.%desc') as $controller)
 			{
 				$pci = phodevi_bsd_parser::read_sysctl($controller);
 
