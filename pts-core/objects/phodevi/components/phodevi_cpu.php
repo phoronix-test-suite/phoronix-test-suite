@@ -148,7 +148,29 @@ class phodevi_cpu extends phodevi_device_interface
 		}
 		else if(phodevi::is_bsd())
 		{
-			$info = phodevi_bsd_parser::read_sysctl(array('dev.cpu.0.freq', 'hw.acpi.cpu.px_global', 'machdep.est.frequency.target'));
+			$info = phodevi_bsd_parser::read_sysctl(array('dev.cpu.0.freq_levels'));
+
+			if($info != null)
+			{
+				// Popping the top speed off of dev.cpu.0.freq_levels should be the default/highest supported frequency
+				$info = pts_arrays::first_element(explode(' ', str_replace('/', $info)));
+
+				if(!is_numeric($info))
+				{
+					$info = null;
+				}
+			}
+
+			if($info == null)
+			{
+				$info = phodevi_bsd_parser::read_sysctl(array('hw.acpi.cpu.px_global', 'machdep.est.frequency.target'));
+			}
+
+			if($info == null)
+			{
+				// dev.cpu.0.freq seems to be the real/current frequency, affected by power management, etc so only use as last fallback
+				$info = phodevi_bsd_parser::read_sysctl(array('dev.cpu.0.freq'));
+			}
 
 			if(is_numeric($info))
 			{
