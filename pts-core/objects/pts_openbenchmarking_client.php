@@ -337,7 +337,7 @@ class pts_openbenchmarking_client
 
 		$hash_json = pts_openbenchmarking::make_openbenchmarking_request('test_hash', array('i' => $qualified_identifier));
 		$hash_json = json_decode($hash_json, true);
-		$hash_check = $hash_json['openbenchmarking']['test']['hash'];  // should also check for ['openbenchmarking']['test']['error'] problems
+		$hash_check = isset($hash_json['openbenchmarking']['test']['hash']) ? $hash_json['openbenchmarking']['test']['hash'] : null;  // should also check for ['openbenchmarking']['test']['error'] problems
 
 		if(!is_file($file))
 		{
@@ -376,7 +376,7 @@ class pts_openbenchmarking_client
 
 		$hash_json = pts_openbenchmarking::make_openbenchmarking_request('suite_hash', array('i' => $qualified_identifier));
 		$hash_json = json_decode($hash_json, true);
-		$hash_check = $hash_json['openbenchmarking']['suite']['hash'];  // should also check for ['openbenchmarking']['suite']['error'] problems
+		$hash_check = isset($hash_json['openbenchmarking']['suite']['hash']) ? $hash_json['openbenchmarking']['suite']['hash'] : null;  // should also check for ['openbenchmarking']['suite']['error'] problems
 
 		if(!is_file($file))
 		{
