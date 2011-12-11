@@ -979,7 +979,21 @@ class pts_test_run_manager
 					$auto_description = phodevi::read_property('cpu', 'model') . ' testing with a ' . phodevi::read_name('motherboard') . ' on ' . phodevi::read_property('system', 'operating-system');
 					break;
 				default:
-					$auto_description = phodevi::read_property('cpu', 'model') . ' testing with a ' . phodevi::read_name('motherboard') . ' and ' . phodevi::read_property('gpu', 'model') . ' on ' . phodevi::read_property('system', 'operating-system');
+					if(phodevi::read_property('system', 'system-layer'))
+					{
+						// Virtualization, Wine testing...
+						$auto_description = phodevi::read_property('system', 'system-layer') . ' testing on ' . phodevi::read_property('system', 'operating-system');
+					}
+					else if(phodevi::read_name('motherboard') != null && phodevi::read_property('gpu', 'model') != null)
+					{
+						// Standard description
+						$auto_description = phodevi::read_property('cpu', 'model') . ' testing with a ' . phodevi::read_name('motherboard') . ' and ' . phodevi::read_property('gpu', 'model') . ' on ' . phodevi::read_property('system', 'operating-system');
+					}
+					else
+					{
+						// A virtualized environment or a BSD or other OS where not all hardware info is available...
+						$auto_description = phodevi::read_property('cpu', 'model') . ' testing on ' . phodevi::read_property('system', 'operating-system');
+					}
 					break;
 			}
 		}
