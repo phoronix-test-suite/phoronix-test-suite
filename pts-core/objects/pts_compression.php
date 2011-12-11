@@ -80,9 +80,10 @@ class pts_compression
 	}
 	public static function zip_archive_extract($zip_file, $extract_to)
 	{
+		$success = false;
 		if(!is_readable($zip_file) || !is_writable($extract_to))
 		{
-			return false;
+			return $success;
 		}
 
 		if(class_exists('ZipArchive'))
@@ -95,10 +96,6 @@ class pts_compression
 				$t = $zip->extractTo($extract_to);
 				$zip->close();
 				$success = $t;
-			}
-			else
-			{
-				$success = false;
 			}
 		}
 		else if(function_exists('zip_open'))
