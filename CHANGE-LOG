@@ -4,6 +4,7 @@ Phoronix Test Suite (Git)
 
 - pts-core: Add "Possible Suggestions" to the invalid command output on install/run/benchmark commands based upon soundex
 - pts-core: Add SKIP_EXTERNAL_DEPENDENCIES support as more versatile option to NO_EXTERNAL_DEPENDENCIES
+- pts-core: Support for detecting PHP at /usr/pkg/libexec/cgi-bin/php
 - pts-core: Support for ClearOS Core Server
 - phodevi: CPU, disk, network detection improvements for FreeBSD/PC-BSD
 
