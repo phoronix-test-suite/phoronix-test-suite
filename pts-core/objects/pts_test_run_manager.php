@@ -1273,7 +1273,7 @@ class pts_test_run_manager
 
 				$run_index = explode(',', pts_user_io::prompt_text_menu('Select the tests in the virtual suite to run', $virtual_suite_tests, true, true));
 
-				if(count($virtual_suite_tests) > 2 && in_array(count($virtual_suite_tests), $run_index))
+				if(count($virtual_suite_tests) > 2 && in_array((count($virtual_suite_tests) - 1), $run_index))
 				{
 					// The appended 'All Tests In Suite' was selected, so run all
 				}
