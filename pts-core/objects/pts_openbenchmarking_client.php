@@ -335,12 +335,12 @@ class pts_openbenchmarking_client
 
 		$file = PTS_OPENBENCHMARKING_SCRATCH_PATH . $qualified_identifier . '.zip';
 
+		$hash_json = pts_openbenchmarking::make_openbenchmarking_request('test_hash', array('i' => $qualified_identifier));
+		$hash_json = json_decode($hash_json, true);
+		$hash_check = $hash_json['openbenchmarking']['test']['hash'];  // should also check for ['openbenchmarking']['test']['error'] problems
+
 		if(!is_file($file))
 		{
-			$hash_json = pts_openbenchmarking::make_openbenchmarking_request('test_hash', array('i' => $qualified_identifier));
-			$hash_json = json_decode($hash_json, true);
-			$hash_check = $hash_json['openbenchmarking']['test']['hash'];  // should also check for ['openbenchmarking']['test']['error'] problems
-
 			$test_profile = pts_openbenchmarking::make_openbenchmarking_request('download_test', array('i' => $qualified_identifier));
 
 			if($test_profile != null && ($hash_check == null || $hash_check == sha1($test_profile)))
@@ -374,12 +374,12 @@ class pts_openbenchmarking_client
 
 		$file = PTS_OPENBENCHMARKING_SCRATCH_PATH . $qualified_identifier . '.zip';
 
+		$hash_json = pts_openbenchmarking::make_openbenchmarking_request('suite_hash', array('i' => $qualified_identifier));
+		$hash_json = json_decode($hash_json, true);
+		$hash_check = $hash_json['openbenchmarking']['suite']['hash'];  // should also check for ['openbenchmarking']['suite']['error'] problems
+
 		if(!is_file($file))
 		{
-			$hash_json = pts_openbenchmarking::make_openbenchmarking_request('suite_hash', array('i' => $qualified_identifier));
-			$hash_json = json_decode($hash_json, true);
-			$hash_check = $hash_json['openbenchmarking']['suite']['hash'];  // should also check for ['openbenchmarking']['suite']['error'] problems
-
 			$test_suite = pts_openbenchmarking::make_openbenchmarking_request('download_suite', array('i' => $qualified_identifier));
 
 			if($test_suite != null && ($hash_check == null || $hash_check == sha1($test_suite)))
