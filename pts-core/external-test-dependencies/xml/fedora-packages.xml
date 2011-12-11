@@ -4,7 +4,7 @@
 	<ExternalDependencies>
 		<Information>
 			<Name>Fedora</Name>
-			<Aliases>Moblin, MeeGo, Amazon, Red Hat Enterprise, Red Hat Enterprise Server, Scientific, CentOS, ClearOS, ClearOSCoreServer</Aliases>
+			<Aliases>Moblin, MeeGo, Amazon, Red Hat Enterprise, Red Hat Enterprise Server, Scientific, CentOS, ClearOS, ClearOS Core Server, Oracle Server</Aliases>
 		</Information>
 		<Package>
 			<GenericName>gtk-development</GenericName>

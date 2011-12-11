@@ -649,6 +649,12 @@ class pts_client
 	public static function user_agreement_check($command)
 	{
 		$pso = pts_storage_object::recover_from_file(PTS_CORE_STORAGE);
+
+		if($pso == false)
+		{
+			return false;
+		}
+
 		$config_md5 = $pso->read_object('user_agreement_cs');
 		$current_md5 = md5_file(PTS_PATH . 'pts-core/user-agreement.txt');
 
