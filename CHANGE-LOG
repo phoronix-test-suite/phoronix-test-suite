@@ -8,6 +8,7 @@ Phoronix Test Suite (Git)
 - pts-core: Support for ClearOS Core Server
 - pts-core: Minor enhancements to DragonflyBSD 2.10 support
 - phodevi: CPU, disk, network detection improvements for FreeBSD/PC-BSD
+- phodevi: Minor support enhancements to OpenBSD 5.0 amd64
 
 Phoronix Test Suite 3.6 Milestone 4
 8 December 2011

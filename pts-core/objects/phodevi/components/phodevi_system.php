@@ -177,6 +177,7 @@ class phodevi_system extends phodevi_device_interface
 
 				if(($start = strpos($mount, 'on / (')) != false)
 				{
+					// FreeBSD, DragonflyBSD mount formatting
 					/*
 					-bash-4.0$ mount
 					ROOT on / (hammer, local)
@@ -194,6 +195,13 @@ class phodevi_system extends phodevi_device_interface
 					// TODO: improve this in case there are other partitions, etc
 					$fs = substr($mount, $start + 6);
 					$fs = substr($fs, 0, strpos($fs, ','));
+				}
+				else if(($start = strpos($mount, 'on / type')) != false)
+				{
+					// OpenBSD 5.0 formatting is slightly different from above FreeBSD example
+					// TODO: improve this in case there are other partitions, etc
+					$fs = substr($mount, $start + 10);
+					$fs = substr($fs, 0, strpos($fs, ' '));
 				}
 			}
 		}
