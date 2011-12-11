@@ -1290,10 +1290,13 @@ class pts_test_run_manager
 
 				foreach($virtual_suite_tests as &$test_profile)
 				{
-					// The user is to configure virtual suites manually
-					foreach(self::test_prompts_to_result_objects($test_profile) as $result_object)
+					if($test_profile instanceof pts_test_profile)
 					{
-						$this->add_test_result_object($result_object);
+						// The user is to configure virtual suites manually
+						foreach(self::test_prompts_to_result_objects($test_profile) as $result_object)
+						{
+							$this->add_test_result_object($result_object);
+						}
 					}
 				}
 			}

@@ -101,7 +101,7 @@ class phodevi_cpu extends phodevi_device_interface
 		}
 		else if(phodevi::is_bsd())
 		{
-			$info = intval(phodevi_bsd_parser::read_sysctl('hw.ncpu'));
+			$info = intval(phodevi_bsd_parser::read_sysctl(array('hw.ncpufound', 'hw.ncpu')));
 		}
 		else if(phodevi::is_macosx())
 		{
@@ -163,7 +163,7 @@ class phodevi_cpu extends phodevi_device_interface
 
 			if($info == null)
 			{
-				$info = phodevi_bsd_parser::read_sysctl(array('hw.acpi.cpu.px_global', 'machdep.est.frequency.target'));
+				$info = phodevi_bsd_parser::read_sysctl(array('hw.acpi.cpu.px_global', 'machdep.est.frequency.target', 'hw.cpuspeed'));
 			}
 
 			if($info == null)

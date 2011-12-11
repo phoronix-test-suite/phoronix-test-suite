@@ -7,6 +7,7 @@ Phoronix Test Suite (Git)
 - pts-core: Support for detecting PHP at /usr/pkg/libexec/cgi-bin/php
 - pts-core: Support for ClearOS Core Server
 - pts-core: Minor enhancements to DragonflyBSD 2.10 support
+- pts-core: Fix for error crash on virtual suite execution when selecting all tests to run
 - phodevi: CPU, disk, network detection improvements for FreeBSD/PC-BSD
 - phodevi: Minor support enhancements to OpenBSD 5.0 amd64
 
