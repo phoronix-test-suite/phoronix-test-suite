@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 3.6.0-Arendal
+13 December 2011
 
 - pts-core: Add "Possible Suggestions" to the invalid command output on install/run/benchmark commands based upon soundex
 - pts-core: Add SKIP_EXTERNAL_DEPENDENCIES support as more versatile option to NO_EXTERNAL_DEPENDENCIES
