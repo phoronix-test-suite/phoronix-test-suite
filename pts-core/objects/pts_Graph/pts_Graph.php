@@ -464,6 +464,12 @@ abstract class pts_Graph
 			// Pad 8px on top and bottom + title bar + sub-headings
 			$this->graph_top_heading_height = 16 + $this->graph_font_size_heading + (count($this->graph_sub_titles) * ($this->graph_font_size_sub_heading + 4));
 
+			if($this->iveland_view)
+			{
+				// Ensure there is enough room to print PTS logo
+				$this->graph_top_heading_height = max($this->graph_top_heading_height, 46);
+			}
+
 			$key_height = $this->graph_key_height();
 			if($key_height > $this->graph_key_line_height)
 			{
@@ -603,6 +609,16 @@ abstract class pts_Graph
 		if($this->iveland_view)
 		{
 			$this->graph_image->draw_rectangle(0, 0, $this->graph_attr_width, $this->graph_top_heading_height, $this->graph_color_main_headers);
+
+			if(isset($this->graph_title[36]))
+			{
+				// If it's a long string make sure it won't run over the side...
+				while(self::text_string_width($this->graph_title, $this->graph_font, $this->graph_font_size_heading) > ($this->graph_left_end - 60))
+				{
+					$this->graph_font_size_heading -= 0.5;
+				}
+			}
+
 			$this->graph_image->write_text_left(new pts_graph_ir_value($this->graph_title, $ir_value_attributes), $this->graph_font, $this->graph_font_size_heading, $this->graph_color_background, 5, 12, $this->graph_left_end, 12);
 
 			foreach($this->graph_sub_titles as $i => $sub_title)
