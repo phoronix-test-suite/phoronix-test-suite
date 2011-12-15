@@ -1,5 +1,10 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- pts-core: Various minor fixes
+- pts-core: Support launching the PTS Results Viewer in IceWeasel
+
 Phoronix Test Suite 3.6.0-Arendal
 13 December 2011
 
