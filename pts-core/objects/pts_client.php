@@ -321,12 +321,13 @@ class pts_client
 					'glxinfo',
 					'uname -a',
 					// 'udisks --dump',
-					'upower --dump'
+					'upower --dump',
 					);
 
 				if(phodevi::is_bsd())
 				{
 					array_push($system_log_commands, 'sysctl -a');
+					array_push($system_log_commands, 'kenv');
 				}
 				if(is_readable('/dev/mem'))
 				{
@@ -342,7 +343,7 @@ class pts_client
 						$cmd_output = shell_exec('cd ' . dirname($command_bin) . ' && ./' . $command_string . ' 2>&1');
 
 						// Try to filter out any serial numbers, etc.
-						$cmd_output = pts_strings::remove_lines_containing($cmd_output, array('Serial N', 'S/N', 'Serial #', 'serial:'));
+						$cmd_output = pts_strings::remove_lines_containing($cmd_output, array('Serial N', 'S/N', 'Serial #', 'serial:', 'serial='));
 
 						file_put_contents($system_log_dir . $command[0], $cmd_output);
 					}

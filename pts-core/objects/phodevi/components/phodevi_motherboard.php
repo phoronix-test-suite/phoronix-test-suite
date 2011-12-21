@@ -359,7 +359,15 @@ class phodevi_motherboard extends phodevi_device_interface
 		}
 		else if(phodevi::is_bsd())
 		{
-			if(($vendor = phodevi_bsd_parser::read_sysctl('hw.vendor')) != false && ($version = phodevi_bsd_parser::read_sysctl(array('hw.version', 'hw.product'))) != false)
+			$vendor = phodevi_bsd_parser::read_kenv('smbios.system.maker');
+			$product = phodevi_bsd_parser::read_kenv('smbios.system.product');
+			$version = phodevi_bsd_parser::read_kenv('smbios.system.version'); // for at least Lenovo ThinkPads this is where it displays ThinkPad model
+
+			if($vendor != null && ($product != null || $version != null))
+			{
+				$info = $vendor . ' ' . $product . ' ' . $version;
+			}
+			else if(($vendor = phodevi_bsd_parser::read_sysctl('hw.vendor')) != false && ($version = phodevi_bsd_parser::read_sysctl(array('hw.version', 'hw.product'))) != false)
 			{
 				$info = trim($vendor . ' ' . $version);
 			}

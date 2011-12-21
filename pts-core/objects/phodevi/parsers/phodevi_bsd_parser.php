@@ -45,6 +45,28 @@ class phodevi_bsd_parser
 
 		return $info;
 	}
+	public static function read_kenv($v)
+	{
+		$ret = null;
+		if(pts_client::executable_in_path('kenv'))
+		{
+			$kenv = shell_exec('kenv 2> /dev/null');
+
+			$v = PHP_EOL . $v . '=';
+			if(($x = strpos($kenv, $v)) !== false)
+			{
+				$ret = substr($kenv, ($x + strlen($v)));
+				$ret = substr($ret, 0, strpos($ret, PHP_EOL));
+
+				if($ret[0] == '"' && $ret[(strlen($ret) - 1)] == '"')
+				{
+					$ret = substr($ret, 1, -1);
+				}
+			}
+		}
+
+		return $ret;
+	}
 	public static function read_acpiconf($desc)
 	{
 		$info = false;
