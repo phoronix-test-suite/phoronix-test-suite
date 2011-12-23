@@ -116,7 +116,7 @@ class pts_external_dependencies
 
 			if(count($to_report) > 0)
 			{
-				echo PHP_EOL . 'Some additional dependencies are required, but they could not be installed automatically for your operating system.\nBelow are the software packages that must be installed.' . PHP_EOL . PHP_EOL;
+				echo PHP_EOL . 'Some additional dependencies are required, but they could not be installed automatically for your operating system.' . PHP_EOL . 'Below are the software packages that must be installed.' . PHP_EOL . PHP_EOL;
 
 				foreach($to_report as $report)
 				{
