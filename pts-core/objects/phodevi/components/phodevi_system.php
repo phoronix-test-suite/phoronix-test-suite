@@ -838,6 +838,12 @@ class phodevi_system extends phodevi_device_interface
 				$desktop_version = substr($xfce_output, 0, strpos($xfce_output, ')'));
 			}
 		}
+		else if(pts_client::is_process_running('sugar-session'))
+		{
+			// Sugar Desktop Environment (namely for OLPC)
+			$desktop_environment = 'Sugar';
+			$desktop_version = null; // TODO: where can the Sugar version be figured out?
+		}
 
 		if(!empty($desktop_environment))
 		{

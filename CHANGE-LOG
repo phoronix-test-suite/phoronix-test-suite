@@ -7,6 +7,7 @@ Phoronix Test Suite (Git)
 - phodevi: Support new Intel GPU name deciphering
 - phodevi: BSD support for reading motherboard information from kenv
 - phodevi: Support for fbdev X.Org DDX driver detection on fall-back after vesa driver
+- phodevi: OLPC Sugar Desktop Environment detection
 
 Phoronix Test Suite 3.6.0-Arendal
 13 December 2011
