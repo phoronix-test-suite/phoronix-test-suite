@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- pts-core: When time-zone is not set in PHP, attempt to query it from the host system
+
 Phoronix Test Suite 3.6.1-Arendal
 23 December 2011
 

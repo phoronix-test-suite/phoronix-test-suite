@@ -46,7 +46,19 @@ if(!PTS_IS_CLIENT)
 
 if(ini_get('date.timezone') == null)
 {
-	date_default_timezone_set('UTC');
+	$tz = 'UTC';
+
+	if(is_executable('/bin/date'))
+	{
+		$tz = timezone_name_from_abbr(trim(shell_exec('date +%Z 2> /dev/null')));
+	}
+
+	if(!in_array($tz, timezone_identifiers_list()))
+	{
+		$tz = 'UTC'; echo 1111111111111;
+	}
+
+	date_default_timezone_set($tz);
 }
 
 if(ini_get('open_basedir') != false)
