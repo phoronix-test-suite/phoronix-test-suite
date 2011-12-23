@@ -1001,6 +1001,20 @@ class phodevi_gpu extends phodevi_device_interface
 				}
 			}
 
+			if(empty($info) && is_readable('/sys/class/graphics/fb0/name'))
+			{
+				switch(pts_file_io::file_get_contents('/sys/class/graphics/fb0/name'))
+				{
+					case 'omapdrm':
+						$info = 'Texas Instruments OMAP'; // The OMAP DRM driver currently is for OMAP2/3/4 hardware
+						break;
+					case 'exynos':
+						$info = 'Samsung EXYNOS'; // The Exynos DRM driver
+						break;
+				}
+
+			}
+
 			if(substr($info, -1) == ')' && ($open_p = strrpos($info, '(')) != false)
 			{
 				$end_check = strpos($info, ' ', $open_p);
