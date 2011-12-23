@@ -6,6 +6,7 @@ Phoronix Test Suite (Git)
 - pts-core: Support launching the PTS Results Viewer in IceWeasel
 - phodevi: Support new Intel GPU name deciphering
 - phodevi: BSD support for reading motherboard information from kenv
+- phodevi: Support for fbdev X.Org DDX driver detection on fall-back after vesa driver
 
 Phoronix Test Suite 3.6.0-Arendal
 13 December 2011

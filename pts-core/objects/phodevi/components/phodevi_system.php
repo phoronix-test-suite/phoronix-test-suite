@@ -979,13 +979,17 @@ class phodevi_system extends phodevi_device_interface
 
 			if($driver_version == false)
 			{
-				// See if the VESA driver is in use
-				$vesa_version = phodevi_parser::read_xorg_module_version('vesa_drv');
-
-				if($vesa_version)
+				// See if the VESA or fbdev driver is in use
+				foreach(array('vesa', 'fbdev') as $drv)
 				{
-					$display_driver = 'vesa';
-					$driver_version = $vesa_version;
+					$drv_version = phodevi_parser::read_xorg_module_version($drv . '_drv');
+
+					if($drv_version)
+					{
+						$display_driver = $drv;
+						$driver_version = $drv_version;
+						break;
+					}
 				}
 			}
 
