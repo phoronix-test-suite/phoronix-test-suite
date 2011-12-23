@@ -169,6 +169,36 @@ class pts_strings
 
 		return implode(($count > 2 ? ', ' : ' ') . ' ', $array) . ($append_to_end != null ? ' ' .  $append_to_end . ($count > 1 ? 's' : null) : null);
 	}
+	public static function has_in_string($string, $r)
+	{
+		$has_in_string = false;
+
+		foreach($r as $string_to_check)
+		{
+			if(strpos($string, $string_to_check) !== false)
+			{
+				$has_in_string = $string_to_check;
+				break;
+			}
+		}
+
+		return $has_in_string;
+	}
+	public static function has_in_istring($string, $r)
+	{
+		$has_in_string = false;
+
+		foreach($r as $string_to_check)
+		{
+			if(stripos($string, $string_to_check) !== false)
+			{
+				$has_in_string = $string_to_check;
+				break;
+			}
+		}
+
+		return $has_in_string;
+	}
 	public static function random_characters($length)
 	{
 		$random = null;

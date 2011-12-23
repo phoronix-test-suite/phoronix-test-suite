@@ -46,16 +46,16 @@ if(!PTS_IS_CLIENT)
 
 if(ini_get('date.timezone') == null)
 {
-	$tz = 'UTC';
+	$tz = null;
 
 	if(is_executable('/bin/date'))
 	{
 		$tz = timezone_name_from_abbr(trim(shell_exec('date +%Z 2> /dev/null')));
 	}
 
-	if(!in_array($tz, timezone_identifiers_list()))
+	if($tz == null || !in_array($tz, timezone_identifiers_list()))
 	{
-		$tz = 'UTC'; echo 1111111111111;
+		$tz = 'UTC';
 	}
 
 	date_default_timezone_set($tz);
