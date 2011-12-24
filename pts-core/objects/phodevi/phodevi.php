@@ -527,6 +527,10 @@ class phodevi
 
 		return $compatible;
 	}
+	public static function is_vendor_string($vendor)
+	{
+		return isset($vendor[2]) && pts_strings::string_only_contains($vendor, (pts_strings::CHAR_LETTER | pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DECIMAL | pts_strings::CHAR_SPACE | pts_strings::CHAR_DASH)) && !pts_strings::has_in_istring($vendor, array('manufacturer', 'vendor', 'unknown', 'generic')) && (!isset($vendor[7]) || strpos($vendor, ' ') !== false || pts_strings::times_occurred($vendor, pts_strings::CHAR_NUMERIC) == 0) && pts_strings::string_contains($vendor, pts_strings::CHAR_LETTER);
+	}
 	public static function operating_system()
 	{
 		return self::$operating_system;

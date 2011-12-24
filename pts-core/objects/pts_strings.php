@@ -483,6 +483,21 @@ class pts_strings
 
 		return false;
 	}
+	public static function times_occurred($string, $attributes)
+	{
+		$string_r = str_split($string);
+		$times_matched = 0;
+
+		foreach($string_r as $char)
+		{
+			if(pts_strings::char_is_of_type($char, $attributes) == true)
+			{
+				$times_matched++;
+			}
+		}
+
+		return $times_matched;
+	}
 	public static function proximity_match($search, $match_to)
 	{
 		// Proximity search in $search string for * against $match_to
