@@ -126,7 +126,7 @@ class phodevi_cpu extends phodevi_device_interface
 			2. Check vendor (to avoid QEMU, Virtual CPU, etc): Intel, VIA, AMD, ARM, SPARC
 		*/
 
-		return strpos($cpu, ' ') !== false && strpos($cpu, ' ') != strrpos($cpu, ' ') && strlen($cpu) != strlen(str_ireplace(array('Intel', 'VIA', 'AMD', 'ARM', 'SPARC'), null, $cpu))  && stripos($mobo, 'unknown') === false;
+		return strpos($cpu, ' ') !== false && strpos($cpu, ' ') != strrpos($cpu, ' ') && pts_strings::has_in_istring($cpu, array('Intel', 'VIA', 'AMD', 'ARM', 'SPARC', 'Transmeta')) && stripos($cpu, 'unknown') === false;
 	}
 	public static function cpu_default_frequency($cpu_core = 0)
 	{
@@ -373,7 +373,7 @@ class phodevi_cpu extends phodevi_device_interface
 
 		return isset($features[$constant]) ? $features[$constant] : -1;
 	}
-	protected static function read_cpuinfo_line($key, $from_start = true)
+	public static function read_cpuinfo_line($key, $from_start = true)
 	{
 		$line = false;
 

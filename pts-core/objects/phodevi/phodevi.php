@@ -529,7 +529,11 @@ class phodevi
 	}
 	public static function is_vendor_string($vendor)
 	{
-		return isset($vendor[2]) && pts_strings::string_only_contains($vendor, (pts_strings::CHAR_LETTER | pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DECIMAL | pts_strings::CHAR_SPACE | pts_strings::CHAR_DASH)) && !pts_strings::has_in_istring($vendor, array('manufacturer', 'vendor', 'unknown', 'generic')) && (!isset($vendor[7]) || strpos($vendor, ' ') !== false || pts_strings::times_occurred($vendor, pts_strings::CHAR_NUMERIC) == 0) && pts_strings::string_contains($vendor, pts_strings::CHAR_LETTER);
+		return isset($vendor[2]) && pts_strings::string_only_contains($vendor, (pts_strings::CHAR_LETTER | pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DECIMAL | pts_strings::CHAR_SPACE | pts_strings::CHAR_DASH)) && !pts_strings::has_in_istring($vendor, array('manufacturer', 'vendor', 'unknown', 'generic', 'warning')) && (!isset($vendor[7]) || strpos($vendor, ' ') !== false || pts_strings::times_occurred($vendor, pts_strings::CHAR_NUMERIC) == 0) && pts_strings::string_contains($vendor, pts_strings::CHAR_LETTER) && (isset($vendor[4]) || pts_strings::times_occurred($vendor, pts_strings::CHAR_LETTER) > 1);
+	}
+	public static function is_product_string($product)
+	{
+		return phodevi::is_vendor_string($product) && !pts_strings::has_in_istring($product, array('VBOX', 'QEMU', 'Virtual', 'Family', '440BX'));
 	}
 	public static function operating_system()
 	{

@@ -47,23 +47,21 @@ function pts_define_directories()
 		define('PTS_USER_PATH', pts_client::user_home_directory() . '.phoronix-test-suite/');
 		define('PTS_CORE_STORAGE', PTS_USER_PATH . 'core.pt2so');
 		define('PTS_TEMP_STORAGE', PTS_USER_PATH . 'temp.pt2so');
+		define('PTS_MODULE_LOCAL_PATH', PTS_USER_PATH . 'modules/');
+		define('PTS_MODULE_DATA_PATH', PTS_USER_PATH . 'modules-data/');
+		define('PTS_DOWNLOAD_CACHE_PATH', PTS_USER_PATH . 'download-cache/');
+		define('PTS_OPENBENCHMARKING_SCRATCH_PATH', PTS_USER_PATH . 'openbenchmarking.org/');
+		define('PTS_TEST_PROFILE_PATH', PTS_USER_PATH . 'test-profiles/');
+		define('PTS_TEST_SUITE_PATH', PTS_USER_PATH . 'test-suites/');
 	}
 
 	// Misc Locations
 	define('PTS_MODULE_PATH', PTS_CORE_PATH . 'modules/');
-	define('PTS_MODULE_LOCAL_PATH', PTS_USER_PATH . 'modules/');
-	define('PTS_MODULE_DATA_PATH', PTS_USER_PATH . 'modules-data/');
-	define('PTS_DOWNLOAD_CACHE_PATH', PTS_USER_PATH . 'download-cache/');
 	define('PTS_CORE_STATIC_PATH', PTS_CORE_PATH . 'static/');
 	define('PTS_COMMAND_PATH', PTS_CORE_PATH . 'commands/');
 	define('PTS_EXDEP_PATH', PTS_CORE_PATH . 'external-test-dependencies/');
 	define('PTS_RESULTS_VIEWER_PATH', PTS_CORE_PATH . 'results-viewer/');
 	define('PTS_OPENBENCHMARKING_PATH', PTS_CORE_PATH . 'openbenchmarking.org/');
-	define('PTS_OPENBENCHMARKING_SCRATCH_PATH', PTS_USER_PATH . 'openbenchmarking.org/');
-
-	// Test & Suite Locations
-	define('PTS_TEST_PROFILE_PATH', PTS_USER_PATH . 'test-profiles/');
-	define('PTS_TEST_SUITE_PATH', PTS_USER_PATH . 'test-suites/');
 }
 function pts_needed_extensions()
 {
