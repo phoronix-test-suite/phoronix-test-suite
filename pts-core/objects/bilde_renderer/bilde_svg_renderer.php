@@ -21,6 +21,34 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+/*
+draw_rectangle*:
+
+$this->svg_dom->add_element('rect', array('x' => 0, 'y' => 0, 'width' => $this->graph_attr_width, 'height' => $this->graph_attr_height, 'fill' => $this->graph_color_background, 'stroke' => $this->graph_color_border, 'stroke-width' => 1));
+
+write_text_left:
+
+$this->svg_dom->add_text_element($text, array('x' => 0, 'y' => 0, 'font-size' => $font_size, 'fill' => $color, 'text-anchor' => 'start', 'dominant-baseline' => 'middle'));
+
+write_text_right:
+
+$this->svg_dom->add_text_element($text, array('x' => 0, 'y' => 0, 'font-size' => $font_size, 'fill' => $color, 'text-anchor' => 'end', 'dominant-baseline' => 'middle'));
+
+write_text_center:
+$this->svg_dom->add_text_element($text, array('x' => 0, 'y' => 0, 'font-size' => $font_size, 'fill' => $color, 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
+
+draw_line:
+
+draw_ellipse
+
+
+image:
+
+$this->svg_dom->add_element('image', array('xlink:href' => $img, 'x' => 0, 'y' => 0, 'width' => $this->graph_attr_width, 'height' => $this->graph_attr_height));
+
+$this->svg_dom->draw_svg_arc($center_x, $center_y, $radius, $offset_percent, $percent, array('fill' => $body_color, 'stroke' => $border_color, 'stroke-width' => $border_width));
+*/
+
 class bilde_svg_renderer extends bilde_renderer
 {
 	public $renderer = 'SVG';
@@ -437,7 +465,7 @@ class bilde_svg_renderer extends bilde_renderer
 	}
 	public function draw_ellipse($center_x, $center_y, $width, $height, $body_color, $border_color = null, $border_width = 0, $default_hide = false, $title = null)
 	{
-
+		$this->svg_dom->add_element('ellipse', array('cx' => $center_x, 'cy' => $center_y, 'rx' = floor($width / 2), 'ry' = floor($height / 2), 'fill' => $body_color, 'stroke' => $border_color, 'stroke-width' => $border_width));
 		$ellipse = $this->image->createElement('ellipse');
 		$ellipse->setAttribute('cx', $center_x);
 		$ellipse->setAttribute('cy', $center_y);

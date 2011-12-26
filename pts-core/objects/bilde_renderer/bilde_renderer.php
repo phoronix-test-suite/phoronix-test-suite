@@ -23,7 +23,6 @@
 
 abstract class bilde_renderer
 {
-	// TODO: rework the entire bilde_renderer drawing API by PTS3, see michaellarabel for details. Right now it's getting a messy with the additions
 	public $renderer = 'bilde_renderer';
 	protected $image;
 	protected $image_width = -1;
