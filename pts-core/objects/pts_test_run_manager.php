@@ -389,7 +389,7 @@ class pts_test_run_manager
 				if($times_tried == 0 && ($env_identifier = pts_client::read_env('TEST_RESULTS_IDENTIFIER')))
 				{
 					$results_identifier = isset($env_identifier) ? $env_identifier : null;
-					echo 'Test Identifier: ' . $results_identifier . PHP_EOL;
+					echo 'Test Identifier: ' . self::clean_results_identifier($results_identifier) . PHP_EOL;
 				}
 				else if((pts_c::$test_flags ^ pts_c::auto_mode))
 				{
@@ -413,16 +413,12 @@ class pts_test_run_manager
 		{
 			$results_identifier = date('Y-m-d H:i');
 		}
-		else
-		{
-			$results_identifier = pts_client::swap_variables($results_identifier, array('pts_client', 'user_run_save_variables'));
-		}
 
 		$this->results_identifier = $results_identifier;
 	}
 	public static function clean_results_identifier($results_identifier)
 	{
-		$results_identifier = trim($results_identifier);
+		$results_identifier = trim(pts_client::swap_variables($results_identifier, array('pts_client', 'user_run_save_variables'));
 		$results_identifier = pts_strings::remove_redundant(pts_strings::keep_in_string($results_identifier, pts_strings::CHAR_LETTER | pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DASH | pts_strings::CHAR_UNDERSCORE | pts_strings::CHAR_COLON | pts_strings::CHAR_COMMA | pts_strings::CHAR_SLASH | pts_strings::CHAR_SPACE | pts_strings::CHAR_DECIMAL | pts_strings::CHAR_AT | pts_strings::CHAR_PLUS | pts_strings::CHAR_SEMICOLON | pts_strings::CHAR_EQUAL), ' ');
 
 		return $results_identifier;
