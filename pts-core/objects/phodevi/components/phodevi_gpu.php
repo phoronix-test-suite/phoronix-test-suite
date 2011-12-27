@@ -1011,6 +1011,12 @@ class phodevi_gpu extends phodevi_device_interface
 					case 'exynos':
 						$info = 'Samsung EXYNOS'; // The Exynos DRM driver
 						break;
+					default:
+						if(is_file('/dev/mali'))
+						{
+							$info = 'ARM Mali'; // One of the ARM Mali models
+						}
+						break;
 				}
 
 			}
