@@ -47,6 +47,9 @@ class phodevi
 		'windows' => false
 		);
 
+	// A variable that modules can use to override Phodevi caching support, etc
+	public static $allow_phodevi_caching = true;
+
 	const no_caching = 1;
 	const std_caching = 2;
 	const smart_caching = 3;
@@ -290,7 +293,7 @@ class phodevi
 
 			$cache_code = $property->cache_code();
 
-			if($cache_code != phodevi::no_caching && isset(self::$device_cache[$device][$read_property]))
+			if($cache_code != phodevi::no_caching && phodevi::$allow_phodevi_caching && isset(self::$device_cache[$device][$read_property]))
 			{
 				$value = self::$device_cache[$device][$read_property];
 			}

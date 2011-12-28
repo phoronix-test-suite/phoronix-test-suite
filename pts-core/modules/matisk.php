@@ -22,7 +22,7 @@
 class matisk extends pts_module_interface
 {
 	const module_name = 'MATISK';
-	const module_version = '1.0.0';
+	const module_version = '1.1.0';
 	const module_description = 'My Automated Test Infrastructure Setup Kit';
 	const module_author = 'Michael Larabel';
 
@@ -40,7 +40,8 @@ class matisk extends pts_module_interface
 			array(
 			'install_check' => array(true, 'Check to see that all tests/suites are installed prior to execution.'),
 			'force_install' => array(false, 'Force all tests/suites to be re-installed each time prior to execution.'),
-			'external_download_cache' => array(null, 'The option to specify a non-standard PTS External Dependencies download cache directory.')
+			'external_download_cache' => array(null, 'The option to specify a non-standard PTS External Dependencies download cache directory.'),
+			'block_phodevi_caching' => array(false, 'If Phodevi should not be caching any hardware/software information.')
 			),
 		'general' =>
 			array(
@@ -59,9 +60,11 @@ class matisk extends pts_module_interface
 	//		'interim_run' => array(null, 'An external file to be used for setting the system context in between tests in the execution queue.'),
 			'post_install' => array(null, 'An external file to be used for setting the system context after the test installation.'),
 			'post_run' => array(null, 'An external file to be used for setting the system context after all tests have been executed.'),
+			'reboot_support' => array(false, 'If any of the context scripts cause the system to reboot, set this value to true and the Phoronix Test Suite will attempt to automatically recover itself upon reboot.'),
 			'context' => array(array(), 'An array of context values.'),
-			'context_file' => array(null, 'An external file for loading a list of contexts, if not loading the list of contexts via the context array in this file.'),
-			'context_file_delimiter' => array('EOL', 'The delimiter for the context_file contexts list. Special keyword: EOL will use a line break as the delimiter and TAB will use a tab as a delimiter.'),
+			'external_contexts' => array(null, 'An external file for loading a list of contexts, if not loading the list of contexts via the context array in this file. If the external file is a script it will be executed and the standard output will be used for parsing the contexts.'),
+			'external_contexts_delimiter' => array('EOL', 'The delimiter for the external_contexts contexts list. Special keyword: EOL will use a line break as the delimiter and TAB will use a tab as a delimiter.'),
+			'reverse_context_order' => array(false, 'A boolean value of whether to reverse the order (from bottom to top) for the execution of a list of contexts.'),
 			'log_context_outputs' => array(false, 'A boolean value of whether to log the output of the set-context scripts to ~/.phoronix-test-suite/modules-data/matisk/')
 			)
 		);
@@ -202,23 +205,37 @@ class matisk extends pts_module_interface
 			}
 		}
 
-		if($ini['set_context']['context_file'] != null && ($ini['set_context']['context_file'] = self::find_file($ini['set_context']['context_file'])))
+		if($ini['set_context']['external_contexts'] != null)
 		{
-			$ini['set_context']['context_file_delimiter'] = $ini['set_context']['context_file_delimiter'] == null ? 'EOL' : null;
-
-			switch($ini['set_context']['context_file_delimiter'])
+			switch($ini['set_context']['external_contexts_delimiter'])
 			{
 				case 'EOL':
 				case '':
-					$ini['set_context']['context_file_delimiter'] = PHP_EOL;
+					$ini['set_context']['external_contexts_delimiter'] = PHP_EOL;
 					break;
 				case 'TAB':
-					$ini['set_context']['context_file_delimiter'] = "\t";
+					$ini['set_context']['external_contexts_delimiter'] = "\t";
 					break;
 			}
 
-			$ini['set_context']['context'] = pts_file_io::file_get_contents($ini['set_context']['context_file']);
-			$ini['set_context']['context'] = explode($ini['set_context']['context_file_delimiter'], $ini['set_context']['context']);
+			if(($ff = self::find_file($ini['set_context']['external_contexts'])))
+			{
+				if(is_executable($ff))
+				{
+					$ini['set_context']['context'] = shell_exec($ff . ' 2> /dev/null');
+				}
+				else
+				{
+					$ini['set_context']['context'] = file_get_contents($ff);
+				}
+			}
+			else
+			{
+				// Hopefully it's a command to execute then...
+				$ini['set_context']['context'] = shell_exec($ini['set_context']['external_contexts'] . ' 2> /dev/null');
+			}
+
+			$ini['set_context']['context'] = explode($ini['set_context']['external_contexts_delimiter'], $ini['set_context']['context']);
 		}
 		else if($ini['set_context']['context'] != null && !is_array($ini['set_context']['context']))
 		{
@@ -236,10 +253,15 @@ class matisk extends pts_module_interface
 			}
 
 			// Context testing
-			if(count($ini['set_context']['context']) > 0 && self::find_file($ini['set_context']['pre_run']) == false && self::find_file($ini['set_context']['pre_install']) == false)
+			if(count($ini['set_context']['context']) > 0 && $ini['set_context']['pre_run'] == null && $ini['set_context']['pre_install'] == null)
 			{
 				echo PHP_EOL . 'The pre_run or pre_install set_context fields must be set in order to set the system\'s context.' . PHP_EOL;
 				return false;
+			}
+
+			if($ini['set_context']['reverse_context_order'])
+			{
+				$ini['set_context']['context'] = array_reverse($ini['set_context']['context']);
 			}
 		}
 
@@ -263,7 +285,7 @@ class matisk extends pts_module_interface
 		{
 			foreach($ini['environmental_variables'] as $key => $value)
 			{
-				putenv($key . '=' . $value);
+				putenv(trim($key) . '=' . trim($value));
 			}
 		}
 
@@ -297,7 +319,7 @@ class matisk extends pts_module_interface
 			}
 		}
 
-		if(phodevi::is_linux())
+		if($ini['set_context']['reboot_support'] && phodevi::is_linux())
 		{
 			// In case a set-context involves a reboot, auto-recover
 			$xdg_config_home = is_dir('/etc/xdg/autostart') && is_writable('/etc/xdg/autostart') ? '/etc/xdg/autostart' : pts_client::read_env('XDG_CONFIG_HOME');
@@ -322,6 +344,12 @@ Icon=phoronix-test-suite
 Type=Application
 Encoding=UTF-8
 Categories=System;Monitor;');
+		}
+
+		if($ini['installation']['block_phodevi_caching'])
+		{
+			// Block Phodevi caching if changing out system components and there is a chance one of the strings of changed contexts might be cached (e.g. OpenGL user-space driver)
+			phodevi::$allow_phodevi_caching = false;
 		}
 
 		if(phodevi::system_uptime() < 60)
@@ -374,8 +402,16 @@ Categories=System;Monitor;');
 				}
 
 				// Save results?
+				$result_identifier = $ini['workload']['result_identifier'];
+				if($result_identifier == null)
+				{
+					$result_identifier = '$MATISK_CONTEXT';
+				}
+				// Allow $MATIISK_CONTEXT as a valid user variable to pass it...
+				$result_identifier = str_replace('$MATISK_CONTEXT', self::$context, $result_identifier);
+
 				$test_run_manager->set_save_name(self::$ini['workload']['save_name']);
-				$test_run_manager->set_results_identifier(self::$context);
+				$test_run_manager->set_results_identifier($result_identifier);
 				$test_run_manager->set_description(self::$ini['workload']['description']);
 
 				// Don't upload results unless it's the last in queue where the context count is now 0
@@ -388,14 +424,13 @@ Categories=System;Monitor;');
 			}
 
 			self::$skip_test_set = false;
-			file_put_contents($spent_context_file, $context . PHP_EOL, FILE_APPEND);
+			file_put_contents($spent_context_file, self::$context . PHP_EOL, FILE_APPEND);
 			pts_file_io::unlink(pts_module::save_dir() . self::$context . '.last-call');
 			self::process_user_config_external_hook_process('post_run');
 		}
 
 		unlink($spent_context_file);
 		isset($xdg_config_home) && pts_file_io::unlink($xdg_config_home . '/autostart/phoronix-test-suite-matisk.desktop');
-		self::process_user_config_external_hook_process('post_run');
 	}
 	protected static function process_user_config_external_hook_process($process)
 	{
@@ -413,10 +448,9 @@ Categories=System;Monitor;');
 		}
 		$process != 'post_run' && file_put_contents($last_call_file, $process);
 
-		$set_context_file = self::find_file(self::$ini['set_context'][$process]);
-
-		if($set_context_file && is_executable($set_context_file))
+		if(self::$ini['set_context'][$process])
 		{
+			$command = self::find_file(self::$ini['set_context'][$process]) ? self::find_file(self::$ini['set_context'][$process]) : self::$ini['set_context'][$process];
 			$descriptor_spec = array(
 				0 => array('pipe', 'r'),
 				1 => array('pipe', 'w'),
@@ -425,7 +459,18 @@ Categories=System;Monitor;');
 
 			$env_vars = null;
 			pts_client::$display->test_run_instance_error('Running ' . $process . ' set-context script.');
-			$proc = proc_open($set_context_file . ' ' . self::$context, $descriptor_spec, $pipes, null, $env_vars);
+			if(is_executable($command))
+			{
+				// Pass the context as the first argument to the string
+				$command .= ' ' . self::$context;
+			}
+			else
+			{
+				// Else find $MATISK_CONTEXT in the command string
+				$command = str_replace('$MATISK_CONTEXT', self::$context, $command);
+			}
+
+			$proc = proc_open($command, $descriptor_spec, $pipes, null, $env_vars);
 			echo $std_output = stream_get_contents($pipes[1]);
 			$return_value = proc_close($proc);
 
