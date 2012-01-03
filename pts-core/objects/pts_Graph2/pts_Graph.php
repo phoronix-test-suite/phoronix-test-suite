@@ -34,32 +34,9 @@ abstract class pts_Graph
 	// Graph config
 	public static $graph_config = null;
 	public $graph_image;
+
+	protected $c;
 	public $svg_dom;
-
-	// Defaults
-	protected $graph_attr_marks; // Number of marks to make on vertical axis
-	protected $graph_attr_width; // Graph width
-	protected $graph_attr_height; // Graph height
-	protected $graph_attr_big_border; // Border around graph or not
-
-	protected $graph_left_start = 10; // Distance in px to start graph from left side
-	protected $graph_left_end_opp = 10; // Distance in px to end graph from right side
-	protected $graph_top_start = 62; // Distance in px to start graph from top side
-	protected $graph_top_end_opp = 22; // Distance in px to end graph from bottom side
-
-	// Colors
-	protected $graph_color_notches; // Color for notches
-	protected $graph_color_text; // Color for text
-	protected $graph_color_border; // Color for border (if used)
-	protected $graph_color_main_headers; // Color of main text headers
-	protected $graph_color_headers; // Color of other headers
-	protected $graph_color_background; // Color of background
-	protected $graph_color_body; // Color of graph body
-	protected $graph_color_body_text; // Color of graph body text
-	protected $graph_color_body_light; // Color of the border around graph bars (if doing a bar graph)
-	protected $graph_color_alert; // Color of any alerts
-	protected $graph_color_highlight; // Color of any highlights
-	protected $graph_color_paint; // Colors to use for the bars / lines, one color for each key
 
 	// Text
 	protected $graph_font; // TTF file name
@@ -117,23 +94,28 @@ abstract class pts_Graph
 	public function __construct(&$result_object = null, &$result_file = null)
 	{
 		// Setup config values
-		$this->graph_attr_width = $this->read_graph_config('PhoronixTestSuite/Graphs/General/GraphWidth'); // Graph width
-		$this->graph_attr_height = $this->read_graph_config('PhoronixTestSuite/Graphs/General/GraphHeight'); // Graph height
-		$this->graph_attr_big_border = $this->read_graph_config('PhoronixTestSuite/Graphs/General/Border') == 'TRUE'; // Graph border
+		$this->c['graph']['width'] = $this->read_graph_config('PhoronixTestSuite/Graphs/General/GraphWidth'); // Graph width
+		$this->c['graph']['height'] = $this->read_graph_config('PhoronixTestSuite/Graphs/General/GraphHeight'); // Graph height
+		$this->c['graph']['border'] = $this->read_graph_config('PhoronixTestSuite/Graphs/General/Border') == 'TRUE'; // Graph border
+
+		$this->c['pos']['left_start'] = 10;
+		$this->c['pos']['left_end_right'] = 10;
+		$this->c['pos']['top_start'] = 62;
+		$this->c['pos']['top_end_bottom'] = 22;
 
 		// Colors
-		$this->graph_color_notches = $this->read_graph_config('PhoronixTestSuite/Graphs/Colors/Notches'); // Color for notches
-		$this->graph_color_text = $this->read_graph_config('PhoronixTestSuite/Graphs/Colors/Text'); // Color for text
-		$this->graph_color_border = $this->read_graph_config('PhoronixTestSuite/Graphs/Colors/Border'); // Color for border (if used)
-		$this->graph_color_main_headers = $this->read_graph_config('PhoronixTestSuite/Graphs/Colors/MainHeaders'); // Color of main text headers
-		$this->graph_color_headers = $this->read_graph_config('PhoronixTestSuite/Graphs/Colors/Headers'); // Color of other headers
-		$this->graph_color_background = $this->read_graph_config('PhoronixTestSuite/Graphs/Colors/Background'); // Color of background
-		$this->graph_color_body = $this->read_graph_config('PhoronixTestSuite/Graphs/Colors/GraphBody'); // Color of graph body
-		$this->graph_color_body_text = $this->read_graph_config('PhoronixTestSuite/Graphs/Colors/BodyText'); // Color of graph body text
-		$this->graph_color_body_light = $this->read_graph_config('PhoronixTestSuite/Graphs/Colors/Alternate'); // Color of the border around graph bars (if doing a bar graph)
-		$this->graph_color_highlight = $this->read_graph_config('PhoronixTestSuite/Graphs/Colors/Highlight'); // Color for highlight
-		$this->graph_color_alert = $this->read_graph_config('PhoronixTestSuite/Graphs/Colors/Alert'); // Color for alerts
-		$this->graph_color_paint = pts_strings::comma_explode($this->read_graph_config('PhoronixTestSuite/Graphs/Colors/ObjectPaint')); // Colors to use for the bars / lines, one color for each key
+		$this->c['color']['notches'] = $this->read_graph_config('PhoronixTestSuite/Graphs/Colors/Notches'); // Color for notches
+		$this->c['color']['text'] = $this->read_graph_config('PhoronixTestSuite/Graphs/Colors/Text'); // Color for text
+		$this->c['color']['border'] = $this->read_graph_config('PhoronixTestSuite/Graphs/Colors/Border'); // Color for border (if used)
+		$this->c['color']['main_headers'] = $this->read_graph_config('PhoronixTestSuite/Graphs/Colors/MainHeaders'); // Color of main text headers
+		$this->c['color']['headers'] = $this->read_graph_config('PhoronixTestSuite/Graphs/Colors/Headers'); // Color of other headers
+		$this->c['color']['background'] = $this->read_graph_config('PhoronixTestSuite/Graphs/Colors/Background'); // Color of background
+		$this->c['color']['body'] = $this->read_graph_config('PhoronixTestSuite/Graphs/Colors/GraphBody'); // Color of graph body
+		$this->c['color']['body_text'] = $this->read_graph_config('PhoronixTestSuite/Graphs/Colors/BodyText'); // Color of graph body text
+		$this->c['color']['body_light'] = $this->read_graph_config('PhoronixTestSuite/Graphs/Colors/Alternate'); // Color of the border around graph bars (if doing a bar graph)
+		$this->c['color']['highlight'] = $this->read_graph_config('PhoronixTestSuite/Graphs/Colors/Highlight'); // Color for highlight
+		$this->c['color']['alert'] = $this->read_graph_config('PhoronixTestSuite/Graphs/Colors/Alert'); // Color for alerts
+		$this->c['color']['paint'] = pts_strings::comma_explode($this->read_graph_config('PhoronixTestSuite/Graphs/Colors/ObjectPaint')); // Colors to use for the bars / lines, one color for each key
 
 		// Text
 		$this->graph_watermark_text = $this->read_graph_config('PhoronixTestSuite/Graphs/General/Watermark'); // watermark
@@ -145,7 +127,7 @@ abstract class pts_Graph
 		$this->graph_font_size_sub_heading = $this->read_graph_config('PhoronixTestSuite/Graphs/Font/SubHeaders'); // Font size of headers
 		$this->graph_font_size_axis_heading = $this->read_graph_config('PhoronixTestSuite/Graphs/Font/Axis'); // Font size of axis headers
 
-		$this->graph_attr_marks = 6; // Number of marks to make on vertical axis
+		$this->c['graph']['mark_count'] = 6; // Number of marks to make on vertical axis
 		$this->graph_renderer = $this->read_graph_config('PhoronixTestSuite/Graphs/General/Renderer'); // Renderer // TODO XXX: hook this up to new system
 
 		// Reset of setup besides config
@@ -300,11 +282,11 @@ abstract class pts_Graph
 	}
 	public function graphWidth()
 	{
-		return $this->graph_attr_width;
+		return $this->c['graph']['width'];
 	}
 	public function graphHeight()
 	{
-		return $this->graph_attr_height;
+		return $this->c['graph']['height'];
 	}
 	public function markResultRegressions($threshold)
 	{
@@ -317,7 +299,7 @@ abstract class pts_Graph
 
 	protected function get_paint_color($identifier)
 	{
-		return pts_svg_dom::sanitize_hex(bilde_renderer::color_cache(0, $identifier, $this->graph_color_paint));
+		return pts_svg_dom::sanitize_hex(bilde_renderer::color_cache(0, $identifier, $this->c['color']['paint']));
 	}
 	protected function maximum_graph_value()
 	{
@@ -340,14 +322,14 @@ abstract class pts_Graph
 
 		if(is_numeric($real_maximum))
 		{
-			if($real_maximum < $this->graph_attr_marks)
+			if($real_maximum < $this->c['graph']['mark_count'])
 			{
-				$maximum = ceil($real_maximum * 1.02 / $this->graph_attr_marks) * $this->graph_attr_marks;
+				$maximum = ceil($real_maximum * 1.02 / $this->c['graph']['mark_count']) * $this->c['graph']['mark_count'];
 			}
 			else
 			{
-				$maximum = (floor(round($real_maximum * $this->graph_maximum_value_multiplier) / $this->graph_attr_marks) + 1) * $this->graph_attr_marks;
-				$maximum = round(ceil($maximum / $this->graph_attr_marks), (0 - strlen($maximum) + 2)) * $this->graph_attr_marks;
+				$maximum = (floor(round($real_maximum * $this->graph_maximum_value_multiplier) / $this->c['graph']['mark_count']) + 1) * $this->c['graph']['mark_count'];
+				$maximum = round(ceil($maximum / $this->c['graph']['mark_count']), (0 - strlen($maximum) + 2)) * $this->c['graph']['mark_count'];
 			}
 		}
 		else
@@ -376,19 +358,13 @@ abstract class pts_Graph
 	protected function update_graph_dimensions($width = -1, $height = -1, $recalculate_offsets = false)
 	{
 		// Allow render area to be increased, but not decreased
-		if($width > $this->graph_attr_width)
-		{
-			$this->graph_attr_width = $width;
-		}
-		if($height > $this->graph_attr_height)
-		{
-			$this->graph_attr_height = $height;
-		}
+		$this->c['graph']['width'] = max($this->c['graph']['width'], $width);
+		$this->c['graph']['height'] = max($this->c['graph']['height'], $height);
 
 		if($recalculate_offsets)
 		{
-			$this->graph_top_end = $this->graph_attr_height - $this->graph_top_end_opp;
-			$this->graph_left_end = $this->graph_attr_width - $this->graph_left_end_opp;
+			$this->graph_top_end = $this->c['graph']['height'] - $this->c['pos']['top_end_bottom'];
+			$this->graph_left_end = $this->c['graph']['width'] - $this->c['pos']['left_end_right'];
 		}
 	}
 
@@ -410,15 +386,15 @@ abstract class pts_Graph
 		{
 			if($this->graph_value_type == 'NUMERICAL')
 			{
-				$this->graph_left_start += $this->text_string_width($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_tick_mark) + 2;
+				$this->c['pos']['left_start'] += $this->text_string_width($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_tick_mark) + 2;
 			}
 
 			if($this->graph_hide_identifiers)
 			{
-				$this->graph_top_end += $this->graph_top_end_opp / 2;
+				$this->graph_top_end += $this->c['pos']['top_end_bottom'] / 2;
 			}
 
-			$this->graph_top_start += $this->graph_key_height();
+			$this->c['pos']['top_start'] += $this->graph_key_height();
 		}
 		else
 		{
@@ -442,15 +418,15 @@ abstract class pts_Graph
 					$longest_identifier_width = $this->text_string_width(pts_strings::find_longest_string($this->graph_identifiers), $this->graph_font, $this->graph_font_size_identifiers) + 8;
 				}
 
-				$longest_identifier_max = $this->graph_attr_width * 0.5;
+				$longest_identifier_max = $this->c['graph']['width'] * 0.5;
 
-				$this->graph_left_start = min($longest_identifier_max, max($longest_identifier_width, 70));
-				$this->graph_left_end_opp = 15;
-				$this->graph_left_end = $this->graph_attr_width - $this->graph_left_end_opp;
+				$this->c['pos']['left_start'] = min($longest_identifier_max, max($longest_identifier_width, 70));
+				$this->c['pos']['left_end_right'] = 15;
+				$this->graph_left_end = $this->c['graph']['width'] - $this->c['pos']['left_end_right'];
 			}
 			else if($this->graph_value_type == 'NUMERICAL')
 			{
-				$this->graph_left_start += max(20, $this->text_string_width($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_tick_mark) + 2);
+				$this->c['pos']['left_start'] += max(20, $this->text_string_width($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_tick_mark) + 2);
 			}
 
 			// Pad 8px on top and bottom + title bar + sub-headings
@@ -466,11 +442,11 @@ abstract class pts_Graph
 			if($key_height > $this->graph_key_line_height)
 			{
 				// Increase height so key doesn't take up too much room
-				$this->graph_attr_height += $key_height;
+				$this->c['graph']['height'] += $key_height;
 				$this->graph_top_end += $key_height;
 			}
 
-			$this->graph_top_start = $this->graph_top_heading_height + $key_height + 16; // + spacing before graph starts
+			$this->c['pos']['top_start'] = $this->graph_top_heading_height + $key_height + 16; // + spacing before graph starts
 
 			$bottom_heading = 14;
 
@@ -496,13 +472,13 @@ abstract class pts_Graph
 
 
 				$num_identifiers = count($this->graph_identifiers);
-				$this->graph_top_end = $this->graph_top_start + ($num_identifiers * $per_identifier_height);
-				// $this->graph_top_end_opp
-				$this->graph_attr_height = $this->graph_top_end + 25 + $bottom_heading;
+				$this->graph_top_end = $this->c['pos']['top_start'] + ($num_identifiers * $per_identifier_height);
+				// $this->c['pos']['top_end_bottom']
+				$this->c['graph']['height'] = $this->graph_top_end + 25 + $bottom_heading;
 			}
 			else
 			{
-				$this->graph_attr_height += $bottom_heading + 4;
+				$this->c['graph']['height'] += $bottom_heading + 4;
 			}
 		}
 
@@ -522,7 +498,7 @@ abstract class pts_Graph
 	public function render_graph_finish()
 	{
 		$this->render_graph_key();
-		$this->render_graph_base($this->graph_left_start, $this->graph_top_start, $this->graph_left_end, $this->graph_top_end);
+		$this->render_graph_base($this->c['pos']['left_start'], $this->c['pos']['top_start'], $this->graph_left_end, $this->graph_top_end);
 		$this->render_graph_heading();
 
 		if($this->graph_hide_identifiers == false)
@@ -532,7 +508,7 @@ abstract class pts_Graph
 
 		if($this->graph_value_type == 'NUMERICAL')
 		{
-			$this->render_graph_value_ticks($this->graph_left_start, $this->graph_top_start, $this->graph_left_end, $this->graph_top_end);
+			$this->render_graph_value_ticks($this->c['pos']['left_start'], $this->c['pos']['top_start'], $this->graph_left_end, $this->graph_top_end);
 		}
 
 		$this->render_graph_result();
@@ -550,39 +526,39 @@ abstract class pts_Graph
 		}
 
 		$this->update_graph_dimensions();
-		$this->svg_dom = new pts_svg_dom(ceil($this->graph_attr_width), ceil($this->graph_attr_height));
-		// $this->graph_image = bilde_renderer::setup_renderer($this->graph_renderer, $this->graph_attr_width, $this->graph_attr_height, $this->graph_internal_identifiers, $bilde_attributes);
+		$this->svg_dom = new pts_svg_dom(ceil($this->c['graph']['width']), ceil($this->c['graph']['height']));
+		// $this->graph_image = bilde_renderer::setup_renderer($this->graph_renderer, $this->c['graph']['width'], $this->c['graph']['height'], $this->graph_internal_identifiers, $bilde_attributes);
 
 		// Initalize Colors
-		$this->graph_color_notches = pts_svg_dom::sanitize_hex($this->graph_color_notches);
-		$this->graph_color_text = pts_svg_dom::sanitize_hex($this->graph_color_text);
-		$this->graph_color_border = pts_svg_dom::sanitize_hex($this->graph_color_border);
-		$this->graph_color_main_headers = pts_svg_dom::sanitize_hex($this->graph_color_main_headers);
-		$this->graph_color_headers = pts_svg_dom::sanitize_hex($this->graph_color_headers);
-		$this->graph_color_background = pts_svg_dom::sanitize_hex($this->graph_color_background);
-		$this->graph_color_body = pts_svg_dom::sanitize_hex($this->graph_color_body);
-		$this->graph_color_body_text = pts_svg_dom::sanitize_hex($this->graph_color_body_text);
-		$this->graph_color_body_light = pts_svg_dom::sanitize_hex($this->graph_color_body_light);
-		$this->graph_color_highlight = pts_svg_dom::sanitize_hex($this->graph_color_highlight);
-		$this->graph_color_alert = pts_svg_dom::sanitize_hex($this->graph_color_alert);
+		$this->c['color']['notches'] = pts_svg_dom::sanitize_hex($this->c['color']['notches']);
+		$this->c['color']['text'] = pts_svg_dom::sanitize_hex($this->c['color']['text']);
+		$this->c['color']['border'] = pts_svg_dom::sanitize_hex($this->c['color']['border']);
+		$this->c['color']['main_headers'] = pts_svg_dom::sanitize_hex($this->c['color']['main_headers']);
+		$this->c['color']['headers'] = pts_svg_dom::sanitize_hex($this->c['color']['headers']);
+		$this->c['color']['background'] = pts_svg_dom::sanitize_hex($this->c['color']['background']);
+		$this->c['color']['body'] = pts_svg_dom::sanitize_hex($this->c['color']['body']);
+		$this->c['color']['body_text'] = pts_svg_dom::sanitize_hex($this->c['color']['body_text']);
+		$this->c['color']['body_light'] = pts_svg_dom::sanitize_hex($this->c['color']['body_light']);
+		$this->c['color']['highlight'] = pts_svg_dom::sanitize_hex($this->c['color']['highlight']);
+		$this->c['color']['alert'] = pts_svg_dom::sanitize_hex($this->c['color']['alert']);
 
 		// Background Color
 		if($this->iveland_view)
 		{
-			$this->svg_dom->add_element('rect', array('x' => 1, 'y' => 1, 'width' => ($this->graph_attr_width - 1), 'height' => ($this->graph_attr_height - 1), 'fill' => $this->graph_color_background, 'stroke' => $this->graph_color_border, 'stroke-width' => 1));
+			$this->svg_dom->add_element('rect', array('x' => 1, 'y' => 1, 'width' => ($this->c['graph']['width'] - 1), 'height' => ($this->c['graph']['height'] - 1), 'fill' => $this->c['color']['background'], 'stroke' => $this->c['color']['border'], 'stroke-width' => 1));
 		}
-		else if($this->graph_attr_big_border)
+		else if($this->c['graph']['border'])
 		{
-			$this->svg_dom->add_element('rect', array('x' => 0, 'y' => 0, 'width' => $this->graph_attr_width, 'height' => $this->graph_attr_height, 'fill' => $this->graph_color_background, 'stroke' => $this->graph_color_border, 'stroke-width' => 1));
+			$this->svg_dom->add_element('rect', array('x' => 0, 'y' => 0, 'width' => $this->c['graph']['width'], 'height' => $this->c['graph']['height'], 'fill' => $this->c['color']['background'], 'stroke' => $this->c['color']['border'], 'stroke-width' => 1));
 		}
 		else
 		{
-			$this->svg_dom->add_element('rect', array('x' => 0, 'y' => 0, 'width' => $this->graph_attr_width, 'height' => $this->graph_attr_height, 'fill' => $this->graph_color_background));
+			$this->svg_dom->add_element('rect', array('x' => 0, 'y' => 0, 'width' => $this->c['graph']['width'], 'height' => $this->c['graph']['height'], 'fill' => $this->c['color']['background']));
 		}
 
 		if($this->iveland_view == false && ($sub_title_count = count($this->graph_sub_titles)) > 1)
 		{
-			$this->graph_top_start += (($sub_title_count - 1) * ($this->graph_font_size_sub_heading + 4));
+			$this->c['pos']['top_start'] += (($sub_title_count - 1) * ($this->graph_font_size_sub_heading + 4));
 		}
 	}
 	protected function render_graph_heading($with_version = true)
@@ -597,7 +573,7 @@ abstract class pts_Graph
 		// Default to NORMAL
 		if($this->iveland_view)
 		{
-			$this->svg_dom->add_element('rect', array('x' => 0, 'y' => 0, 'width' => $this->graph_attr_width, 'height' => $this->graph_top_heading_height, 'fill' => $this->graph_color_main_headers));
+			$this->svg_dom->add_element('rect', array('x' => 0, 'y' => 0, 'width' => $this->c['graph']['width'], 'height' => $this->graph_top_heading_height, 'fill' => $this->c['color']['main_headers']));
 
 			if(isset($this->graph_title[36]))
 			{
@@ -608,28 +584,28 @@ abstract class pts_Graph
 				}
 			}
 
-			$this->svg_dom->add_text_element($this->graph_title, array('x' => 5, 'y' => 12, 'font-size' => $this->graph_font_size_heading, 'fill' => $this->graph_color_background, 'text-anchor' => 'start', 'dominant-baseline' => 'middle', 'xlink:show' => 'new', 'xlink:href' => $href));
+			$this->svg_dom->add_text_element($this->graph_title, array('x' => 5, 'y' => 12, 'font-size' => $this->graph_font_size_heading, 'fill' => $this->c['color']['background'], 'text-anchor' => 'start', 'dominant-baseline' => 'middle', 'xlink:show' => 'new', 'xlink:href' => $href));
 
 			foreach($this->graph_sub_titles as $i => $sub_title)
 			{
 				$vertical_offset = 12 + 4 + $this->graph_font_size_heading + ($i * ($this->graph_font_size_sub_heading + 5));
-				$this->svg_dom->add_text_element($sub_title, array('x' => 5, 'y' => $vertical_offset, 'font-size' => $this->graph_font_size_sub_heading, 'fill' => $this->graph_color_background, 'text-anchor' => 'start', 'dominant-baseline' => 'middle'));
+				$this->svg_dom->add_text_element($sub_title, array('x' => 5, 'y' => $vertical_offset, 'font-size' => $this->graph_font_size_sub_heading, 'fill' => $this->c['color']['background'], 'text-anchor' => 'start', 'dominant-baseline' => 'middle'));
 			}
 
 			$this->svg_dom->add_element('image', array('xlink:href' => 'http://www.phoronix-test-suite.com/external/pts-logo-77x40-white.png', 'x' => ($this->graph_left_end - 77), 'y' => (($this->graph_top_heading_height / 40 + 2)), 'width' => 77, 'height' => 40));
 		}
 		else
 		{
-			$this->svg_dom->add_text_element($this->graph_title, array('x' => round($this->graph_left_end / 2), 'y' => 3, 'font-size' => $this->graph_font_size_heading, 'fill' => $this->graph_color_main_headers, 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge', 'xlink:show' => 'new', 'xlink:href' => $href));
+			$this->svg_dom->add_text_element($this->graph_title, array('x' => round($this->graph_left_end / 2), 'y' => 3, 'font-size' => $this->graph_font_size_heading, 'fill' => $this->c['color']['main_headers'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge', 'xlink:show' => 'new', 'xlink:href' => $href));
 
 			foreach($this->graph_sub_titles as $i => $sub_title)
 			{
-				$this->svg_dom->add_text_element($sub_title, array('x' => round($this->graph_left_end / 2), 'y' => (31 + ($i * 18)), 'font-size' => $this->graph_font_size_sub_heading, 'fill' => $this->graph_color_main_headers, 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
+				$this->svg_dom->add_text_element($sub_title, array('x' => round($this->graph_left_end / 2), 'y' => (31 + ($i * 18)), 'font-size' => $this->graph_font_size_sub_heading, 'fill' => $this->c['color']['main_headers'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
 			}
 
 			if($with_version)
 			{
-				$this->svg_dom->add_text_element($this->graph_version, array('x' => $this->graph_left_end , 'y' => ($this->graph_top_start - 3), 'font-size' => 7, 'fill' => $this->graph_color_body_light, 'text-anchor' => 'end', 'dominant-baseline' => 'bottom', 'xlink:show' => 'new', 'xlink:href' => 'http://www.phoronix-test-suite.com/'));
+				$this->svg_dom->add_text_element($this->graph_version, array('x' => $this->graph_left_end , 'y' => ($this->c['pos']['top_start'] - 3), 'font-size' => 7, 'fill' => $this->c['color']['body_light'], 'text-anchor' => 'end', 'dominant-baseline' => 'bottom', 'xlink:show' => 'new', 'xlink:href' => 'http://www.phoronix-test-suite.com/'));
 			}
 		}
 	}
@@ -638,8 +614,8 @@ abstract class pts_Graph
 		if($this->iveland_view)
 		{
 			$bottom_heading_start = $this->graph_top_end + $this->graph_bottom_offset + 22;
-			$this->svg_dom->add_element('rect', array('x' => 0, 'y' => $bottom_heading_start, 'width' => $this->graph_attr_width, 'height' => ($this->graph_attr_height - $bottom_heading_start), 'fill' => $this->graph_color_main_headers));
-			$this->svg_dom->add_text_element('Powered By ' . $this->graph_version, array('x' => $this->graph_left_end, 'y' => ($bottom_heading_start + 9), 'font-size' => 7, 'fill' => $this->graph_color_background, 'text-anchor' => 'end', 'dominant-baseline' => 'middle', 'xlink:show' => 'new', 'xlink:href' => 'http://www.phoronix-test-suite.com/'));
+			$this->svg_dom->add_element('rect', array('x' => 0, 'y' => $bottom_heading_start, 'width' => $this->c['graph']['width'], 'height' => ($this->c['graph']['height'] - $bottom_heading_start), 'fill' => $this->c['color']['main_headers']));
+			$this->svg_dom->add_text_element('Powered By ' . $this->graph_version, array('x' => $this->graph_left_end, 'y' => ($bottom_heading_start + 9), 'font-size' => 7, 'fill' => $this->c['color']['background'], 'text-anchor' => 'end', 'dominant-baseline' => 'middle', 'xlink:show' => 'new', 'xlink:href' => 'http://www.phoronix-test-suite.com/'));
 
 			if($this->link_alternate_view != null)
 			{
@@ -652,21 +628,21 @@ abstract class pts_Graph
 	{
 		if($this->graph_orientation == 'HORIZONTAL' || $this->iveland_view)
 		{
-			$this->svg_dom->draw_svg_line($left_start, $top_start, $left_start, $top_end, $this->graph_color_notches, 1);
-			$this->svg_dom->draw_svg_line($left_start, $top_end, $left_end, $top_end, $this->graph_color_notches, 1);
+			$this->svg_dom->draw_svg_line($left_start, $top_start, $left_start, $top_end, $this->c['color']['notches'], 1);
+			$this->svg_dom->draw_svg_line($left_start, $top_end, $left_end, $top_end, $this->c['color']['notches'], 1);
 
 			if(!empty($this->graph_watermark_text))
 			{
-				$this->svg_dom->add_text_element($this->graph_watermark_text, array('x' => $left_end, 'y' => ($top_start - 7), 'font-size' => 7, 'fill' => $this->graph_color_text, 'text-anchor' => 'end', 'dominant-baseline' => 'middle', 'xlink:show' => 'new', 'xlink:href' => $this->graph_watermark_url));
+				$this->svg_dom->add_text_element($this->graph_watermark_text, array('x' => $left_end, 'y' => ($top_start - 7), 'font-size' => 7, 'fill' => $this->c['color']['text'], 'text-anchor' => 'end', 'dominant-baseline' => 'middle', 'xlink:show' => 'new', 'xlink:href' => $this->graph_watermark_url));
 			}
 		}
 		else
 		{
-			$this->svg_dom->add_element('rect', array('x' => $left_start, 'y' => $top_start, 'width' => ($left_end - $left_start), 'height' => ($top_end - $top_start), 'fill' => $this->graph_color_body, 'stroke' => $this->graph_color_notches, 'stroke-width' => 1));
+			$this->svg_dom->add_element('rect', array('x' => $left_start, 'y' => $top_start, 'width' => ($left_end - $left_start), 'height' => ($top_end - $top_start), 'fill' => $this->c['color']['body'], 'stroke' => $this->c['color']['notches'], 'stroke-width' => 1));
 
 			if(!empty($this->graph_watermark_text))
 			{
-				$this->svg_dom->add_text_element($this->graph_watermark_text, array('x' => ($left_end - 2), 'y' => ($top_start + 8), 'font-size' => 10, 'fill' => $this->graph_color_text, 'text-anchor' => 'end', 'dominant-baseline' => 'middle', 'xlink:show' => 'new', 'xlink:href' => $this->graph_watermark_url));
+				$this->svg_dom->add_text_element($this->graph_watermark_text, array('x' => ($left_end - 2), 'y' => ($top_start + 8), 'font-size' => 10, 'fill' => $this->c['color']['text'], 'text-anchor' => 'end', 'dominant-baseline' => 'middle', 'xlink:show' => 'new', 'xlink:href' => $this->graph_watermark_url));
 			}
 		}
 
@@ -687,11 +663,11 @@ abstract class pts_Graph
 
 						if($this->graph_orientation == 'HORIZONTAL')
 						{
-							$this->draw_arrow($left_start, $top_start - 8, $left_start + 9, $top_start - 8, $this->graph_color_text, $this->graph_color_body_light, 1);
+							$this->draw_arrow($left_start, $top_start - 8, $left_start + 9, $top_start - 8, $this->c['color']['text'], $this->c['color']['body_light'], 1);
 						}
 						else
 						{
-							$this->draw_arrow($left_start + 4, $top_start - 4, $left_start + 4, $top_start - 11, $this->graph_color_text, $this->graph_color_body_light, 1);
+							$this->draw_arrow($left_start + 4, $top_start - 4, $left_start + 4, $top_start - 11, $this->c['color']['text'], $this->c['color']['body_light'], 1);
 						}
 						break;
 					case 'HIB':
@@ -699,11 +675,11 @@ abstract class pts_Graph
 						$offset += 12;
 						if($this->graph_orientation == 'HORIZONTAL')
 						{
-							$this->draw_arrow($left_start + 9, $top_start - 8, $left_start, $top_start - 8, $this->graph_color_text, $this->graph_color_body_light, 1);
+							$this->draw_arrow($left_start + 9, $top_start - 8, $left_start, $top_start - 8, $this->c['color']['text'], $this->c['color']['body_light'], 1);
 						}
 						else
 						{
-							$this->draw_arrow($left_start + 4, $top_start - 11, $left_start + 4, $top_start - 4, $this->graph_color_text, $this->graph_color_body_light, 1);
+							$this->draw_arrow($left_start + 4, $top_start - 11, $left_start + 4, $top_start - 4, $this->c['color']['text'], $this->c['color']['body_light'], 1);
 						}
 						break;
 				}
@@ -718,27 +694,27 @@ abstract class pts_Graph
 				}
 			}
 
-			$this->svg_dom->add_text_element($str, array('x' => ($left_start + $offset), 'y' => ($top_start - 7), 'font-size' => 7, 'fill' => $this->graph_color_text, 'text-anchor' => 'start', 'dominant-baseline' => 'middle'));
+			$this->svg_dom->add_text_element($str, array('x' => ($left_start + $offset), 'y' => ($top_start - 7), 'font-size' => 7, 'fill' => $this->c['color']['text'], 'text-anchor' => 'start', 'dominant-baseline' => 'middle'));
 		}
 	}
 	protected function render_graph_value_ticks($left_start, $top_start, $left_end, $top_end)
 	{
-		$increment = round($this->graph_maximum_value / $this->graph_attr_marks, 2);
+		$increment = round($this->graph_maximum_value / $this->c['graph']['mark_count'], 2);
 
 		if($this->graph_orientation == 'HORIZONTAL')
 		{
-			$tick_width = round(($left_end - $left_start) / $this->graph_attr_marks);
+			$tick_width = round(($left_end - $left_start) / $this->c['graph']['mark_count']);
 			$display_value = 0;
 
-			for($i = 0; $i < $this->graph_attr_marks; $i++)
+			for($i = 0; $i < $this->c['graph']['mark_count']; $i++)
 			{
 				$px_from_left = $left_start + ($tick_width * $i);
 
 				if($i != 0)
 				{
-					$this->svg_dom->add_text_element($display_value, array('x' => $px_from_left, 'y' => ($top_end + 5), 'font-size' => $this->graph_font_size_tick_mark, 'fill' => $this->graph_color_text, 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
-					$this->svg_dom->draw_svg_line($px_from_left + 2, $top_start, $px_from_left + 2, $top_end - 5, $this->graph_color_body, 1, array('stroke-dasharray' => '5,5'));
-					$this->svg_dom->draw_svg_line($px_from_left + 2, $top_end - 4, $px_from_left + 2, $top_end + 4, $this->graph_color_notches, 1);
+					$this->svg_dom->add_text_element($display_value, array('x' => $px_from_left, 'y' => ($top_end + 5), 'font-size' => $this->graph_font_size_tick_mark, 'fill' => $this->c['color']['text'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
+					$this->svg_dom->draw_svg_line($px_from_left + 2, $top_start, $px_from_left + 2, $top_end - 5, $this->c['color']['body'], 1, array('stroke-dasharray' => '5,5'));
+					$this->svg_dom->draw_svg_line($px_from_left + 2, $top_end - 4, $px_from_left + 2, $top_end + 4, $this->c['color']['notches'], 1);
 				}
 
 				$display_value += $increment;
@@ -747,27 +723,27 @@ abstract class pts_Graph
 		}
 		else
 		{
-			$tick_width = round(($top_end - $top_start) / $this->graph_attr_marks);
+			$tick_width = round(($top_end - $top_start) / $this->c['graph']['mark_count']);
 			$px_from_left_start = $left_start - 5;
 			$px_from_left_end = $left_start + 5;
 
 			$display_value = 0;
 
-			for($i = 0; $i < $this->graph_attr_marks; $i++)
+			for($i = 0; $i < $this->c['graph']['mark_count']; $i++)
 			{
 				$px_from_top = round($top_end - ($tick_width * $i));
 
 				if($i != 0)
 				{
-					$this->svg_dom->add_text_element($display_value, array('x' => ($px_from_left_start - 4), 'y' => $px_from_top, 'font-size' => $this->graph_font_size_tick_mark, 'fill' =>  $this->graph_color_text, 'text-anchor' => 'end', 'dominant-baseline' => 'middle'));
+					$this->svg_dom->add_text_element($display_value, array('x' => ($px_from_left_start - 4), 'y' => $px_from_top, 'font-size' => $this->graph_font_size_tick_mark, 'fill' =>  $this->c['color']['text'], 'text-anchor' => 'end', 'dominant-baseline' => 'middle'));
 
 					if($this->graph_background_lines)
 					{
-						$this->svg_dom->draw_svg_line($px_from_left_end + 6, $px_from_top + 1, $this->graph_left_end, $px_from_top + 1, $this->graph_color_body_light, 1, array('stroke-dasharray' => '5,5'));
+						$this->svg_dom->draw_svg_line($px_from_left_end + 6, $px_from_top + 1, $this->graph_left_end, $px_from_top + 1, $this->c['color']['body_light'], 1, array('stroke-dasharray' => '5,5'));
 					}
 
-					$this->svg_dom->draw_svg_line($left_start, $px_from_top + 1, $left_end, $px_from_top + 1, $this->graph_color_notches, 1, array('stroke-dasharray' => '5,5'));
-					$this->svg_dom->draw_svg_line($left_start - 4, $px_from_top + 1, $left_start + 4, $px_from_top + 1, $this->graph_color_notches, 1);
+					$this->svg_dom->draw_svg_line($left_start, $px_from_top + 1, $left_end, $px_from_top + 1, $this->c['color']['notches'], 1, array('stroke-dasharray' => '5,5'));
+					$this->svg_dom->draw_svg_line($left_start - 4, $px_from_top + 1, $left_start + 4, $px_from_top + 1, $this->c['color']['notches'], 1);
 				}
 
 				$display_value += $increment;
@@ -791,7 +767,7 @@ abstract class pts_Graph
 
 		$this->graph_key_line_height = 16;
 		$this->graph_key_item_width = 16 + $this->text_string_width(pts_strings::find_longest_string($this->graph_data_title), $this->graph_font, $this->graph_font_size_key);
-		$this->graph_keys_per_line = floor(($this->graph_left_end - $this->graph_left_start) / $this->graph_key_item_width);
+		$this->graph_keys_per_line = floor(($this->graph_left_end - $this->c['pos']['left_start']) / $this->graph_key_item_width);
 
 		return ceil(count($this->graph_data_title) / $this->graph_keys_per_line) * $this->graph_key_line_height;
 	}
@@ -802,7 +778,7 @@ abstract class pts_Graph
 			return;
 		}
 
-		$y = $this->graph_top_start - $this->graph_key_height() - 7;
+		$y = $this->c['pos']['top_start'] - $this->graph_key_height() - 7;
 
 		for($i = 0, $key_count = count($this->graph_data_title); $i < $key_count; $i++)
 		{
@@ -815,9 +791,9 @@ abstract class pts_Graph
 					$y += $this->graph_key_line_height;
 				}
 
-				$x = $this->graph_left_start + 13 + ($this->graph_key_item_width * ($i % $this->graph_keys_per_line));
+				$x = $this->c['pos']['left_start'] + 13 + ($this->graph_key_item_width * ($i % $this->graph_keys_per_line));
 
-				$this->svg_dom->add_element('rect', array('x' => ($x - 13), 'y' => ($y - 5), 'width' => 10, 'height' => 10, 'fill' => $this_color, 'stroke' => $this->graph_color_notches, 'stroke-width' => 1));
+				$this->svg_dom->add_element('rect', array('x' => ($x - 13), 'y' => ($y - 5), 'width' => 10, 'height' => 10, 'fill' => $this_color, 'stroke' => $this->c['color']['notches'], 'stroke-width' => 1));
 				$this->svg_dom->add_text_element($this->graph_data_title[$i], array('x' => $x, 'y' => $y, 'font-size' => $this->graph_font_size_key, 'fill' => $this_color, 'text-anchor' => 'start', 'dominant-baseline' => 'middle'));
 			}
 		}

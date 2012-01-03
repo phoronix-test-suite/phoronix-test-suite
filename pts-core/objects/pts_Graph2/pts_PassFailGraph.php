@@ -37,8 +37,8 @@ class pts_PassFailGraph extends pts_Graph
 		$horizontal_border = 10;
 		$spacing = 8;
 		$columns = 1;
-		$graph_width = $this->graph_left_end - $this->graph_left_start - ($horizontal_border * 2);
-		$graph_height = $this->graph_top_end - $this->graph_top_start - ($vertical_border * 1.5);
+		$graph_width = $this->graph_left_end - $this->c['pos']['left_start'] - ($horizontal_border * 2);
+		$graph_height = $this->graph_top_end - $this->c['pos']['top_start'] - ($vertical_border * 1.5);
 		$font_size = $this->graph_font_size_bars * 1.5;
 
 		$pass_color = $this->get_paint_color('PASS');
@@ -68,10 +68,10 @@ class pts_PassFailGraph extends pts_Graph
 				$this_identifier = $this->graph_identifiers[$element_i];
 				$this_value = $this->graph_data[0][$element_i];
 
-				$this_x_start = $this->graph_left_start + $horizontal_border + ($c * ($identifier_width + $spacing));
-				$this_x_end = $this->graph_left_start + $horizontal_border + ($c * ($identifier_width + $spacing)) + $identifier_width;
-				$this_y_start = $this->graph_top_start + $vertical_border + ($i * ($identifier_height + $spacing));
-				$this_y_end = $this->graph_top_start + $vertical_border + ($i * ($identifier_height + $spacing)) + $identifier_height;
+				$this_x_start = $this->c['pos']['left_start'] + $horizontal_border + ($c * ($identifier_width + $spacing));
+				$this_x_end = $this->c['pos']['left_start'] + $horizontal_border + ($c * ($identifier_width + $spacing)) + $identifier_width;
+				$this_y_start = $this->c['pos']['top_start'] + $vertical_border + ($i * ($identifier_height + $spacing));
+				$this_y_end = $this->c['pos']['top_start'] + $vertical_border + ($i * ($identifier_height + $spacing)) + $identifier_height;
 
 				if($this_value == "PASS")
 				{
@@ -82,10 +82,10 @@ class pts_PassFailGraph extends pts_Graph
 					$paint_color = $fail_color;
 				}
 
-				$this->svg_dom->add_element('rect', array('x' => $this_x_start, 'y' => $this_y_start, 'width' => $identifier_width, 'height' => $identifier_height, 'fill' => $paint_color, 'stroke' => $this->graph_color_body_light, 'stroke-width' => 1));
+				$this->svg_dom->add_element('rect', array('x' => $this_x_start, 'y' => $this_y_start, 'width' => $identifier_width, 'height' => $identifier_height, 'fill' => $paint_color, 'stroke' => $this->c['color']['body_light'], 'stroke-width' => 1));
 				$x = $this_x_start + (($this_x_end - $this_x_start) / 2);
 				$y = $this_y_start + (($this_y_end - $this_y_start) / 2);
-				$this->svg_dom->add_text_element($this_identifier, array('x' => $x, 'y' => $y, 'font-size' => $font_size, 'fill' => $this->graph_color_body_text, 'text-anchor' => 'middle', 'dominant-baseline' => 'middle'));
+				$this->svg_dom->add_text_element($this_identifier, array('x' => $x, 'y' => $y, 'font-size' => $font_size, 'fill' => $this->c['color']['body_text'], 'text-anchor' => 'middle', 'dominant-baseline' => 'middle'));
 			}
 		}
 	}

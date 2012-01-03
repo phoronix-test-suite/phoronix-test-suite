@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2011, Phoronix Media
-	Copyright (C) 2009 - 2011, Michael Larabel
+	Copyright (C) 2009 - 2012, Phoronix Media
+	Copyright (C) 2009 - 2012, Michael Larabel
 	pts_PassFailGraph.php: An abstract graph object extending pts_Graph for showing results in a pass/fail scenario.
 
 	This program is free software; you can redistribute it and/or modify
@@ -36,8 +36,8 @@ class pts_TestCountPassGraph extends pts_Graph
 		$vertical_border = 20;
 		$horizontal_border = 14;
 		$heading_height = 24;
-		$graph_width = $this->graph_left_end - $this->graph_left_start - ($horizontal_border * 2);
-		$graph_height = $this->graph_top_end - $this->graph_top_start - ($vertical_border * 2) - $heading_height;
+		$graph_width = $this->graph_left_end - $this->c['pos']['left_start'] - ($horizontal_border * 2);
+		$graph_height = $this->graph_top_end - $this->c['pos']['top_start'] - ($vertical_border * 2) - $heading_height;
 		$line_height = floor($graph_height / $identifier_count);
 
 		$paint_color = $this->get_paint_color('PASS_COUNT');
@@ -71,7 +71,7 @@ class pts_TestCountPassGraph extends pts_Graph
 			$line_ttf_height = $this->text_string_height('AZ@![]()@|_', $this->graph_font, $this->graph_font_size_bars);
 			for($i = 0; $i < count($headings) && $i < count($results); $i++)
 			{
-				$this_bottom_end = $this->graph_top_start + $vertical_border + (($j + 1) * $line_height) + $heading_height + 1;
+				$this_bottom_end = $this->c['pos']['top_start'] + $vertical_border + (($j + 1) * $line_height) + $heading_height + 1;
 
 				if($this_bottom_end >= $this->graph_top_end - $vertical_border)
 				{
@@ -83,13 +83,13 @@ class pts_TestCountPassGraph extends pts_Graph
 				}
 
 				$x = $this->graph_left_end - $horizontal_border - ($i * $identifiers_width);
-				$y = $this->graph_top_start + $vertical_border + ($j * $line_height) + $heading_height;
+				$y = $this->c['pos']['top_start'] + $vertical_border + ($j * $line_height) + $heading_height;
 
 				$this->svg_dom->add_element('rect', array('x' => $x, 'y' => $y, 'width' => $identifiers_width, 'height' => ($this_bottom_end - $y), 'fill' => $paint_color));
 
 				$x = $this->graph_left_end - $horizontal_border - ($i * $identifiers_width) - ($identifiers_width * 0.5);
-				$y = $this->graph_top_start + $vertical_border + ($j * $line_height) + $heading_height + ($line_height / 2) - ($line_ttf_height / 2);
-				$this->svg_dom->add_text_element($results[$i], array('x' => $x, 'y' => $y, 'font-size' => $this->graph_font_size_bars, 'fill' => $this->graph_color_body_text, 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
+				$y = $this->c['pos']['top_start'] + $vertical_border + ($j * $line_height) + $heading_height + ($line_height / 2) - ($line_ttf_height / 2);
+				$this->svg_dom->add_text_element($results[$i], array('x' => $x, 'y' => $y, 'font-size' => $this->graph_font_size_bars, 'fill' => $this->c['color']['body_text'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
 			}
 		}
 
@@ -97,26 +97,26 @@ class pts_TestCountPassGraph extends pts_Graph
 		$line_ttf_height = $this->text_string_height('AZ@![]()@|_', $this->graph_font, $headings_font_size);
 		for($i = 0; $i < count($headings); $i++)
 		{
-			$this->svg_dom->draw_svg_line($this->graph_left_end - $horizontal_border - (($i + 1) * $identifiers_width), $this->graph_top_start + $vertical_border, $this->graph_left_end - $horizontal_border - (($i + 1) * $identifiers_width), $this->graph_top_end - $vertical_border, $this->graph_color_body_light);
+			$this->svg_dom->draw_svg_line($this->graph_left_end - $horizontal_border - (($i + 1) * $identifiers_width), $this->c['pos']['top_start'] + $vertical_border, $this->graph_left_end - $horizontal_border - (($i + 1) * $identifiers_width), $this->graph_top_end - $vertical_border, $this->c['color']['body_light']);
 
 			$x = $this->graph_left_end - $horizontal_border - ($i * $identifiers_width) - ($identifiers_width * 0.5);
-			$y = $this->graph_top_start + $vertical_border + ($heading_height / 2) - ($line_ttf_height / 2);
-			$this->svg_dom->add_text_element($headings[$i], array('x' => 0.5, 'y' => 0, 'font-size' => $headings_font_size, 'fill' => $this->graph_color_headers, 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
+			$y = $this->c['pos']['top_start'] + $vertical_border + ($heading_height / 2) - ($line_ttf_height / 2);
+			$this->svg_dom->add_text_element($headings[$i], array('x' => 0.5, 'y' => 0, 'font-size' => $headings_font_size, 'fill' => $this->c['color']['headers'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
 		}
 
 		$line_ttf_height = $this->text_string_height('AZ@![]()@|_', $this->graph_font, $main_font_size);
 		for($i = 0; $i < count($this->graph_identifiers); $i++)
 		{
-			$this->svg_dom->draw_svg_line($this->graph_left_start + $horizontal_border, $this->graph_top_start + $vertical_border + ($i * $line_height) + $heading_height, $this->graph_left_end - $horizontal_border, $this->graph_top_start + $vertical_border + ($i * $line_height) + $heading_height, $this->graph_color_body_light);
-			$x = $this->graph_left_start + $horizontal_border + $main_width;
-			$y = $this->graph_top_start + $vertical_border + ($i * $line_height) + $heading_height + ($line_height / 2) - 2;
-			$this->svg_dom->add_text_element($this->graph_identifiers[$i], array('x' => $x, 'y' => $y, 'font-size' => $main_font_size, 'fill' => $this->graph_color_headers, 'text-anchor' => 'end', 'dominant-baseline' => 'middle'));
+			$this->svg_dom->draw_svg_line($this->c['pos']['left_start'] + $horizontal_border, $this->c['pos']['top_start'] + $vertical_border + ($i * $line_height) + $heading_height, $this->graph_left_end - $horizontal_border, $this->c['pos']['top_start'] + $vertical_border + ($i * $line_height) + $heading_height, $this->c['color']['body_light']);
+			$x = $this->c['pos']['left_start'] + $horizontal_border + $main_width;
+			$y = $this->c['pos']['top_start'] + $vertical_border + ($i * $line_height) + $heading_height + ($line_height / 2) - 2;
+			$this->svg_dom->add_text_element($this->graph_identifiers[$i], array('x' => $x, 'y' => $y, 'font-size' => $main_font_size, 'fill' => $this->c['color']['headers'], 'text-anchor' => 'end', 'dominant-baseline' => 'middle'));
 		}
 
-		$this->svg_dom->draw_svg_line($this->graph_left_start + $horizontal_border, $this->graph_top_start + $vertical_border, $this->graph_left_end - $horizontal_border, $this->graph_top_start + $vertical_border, $this->graph_color_body_light);
-		$this->svg_dom->draw_svg_line($this->graph_left_start + $horizontal_border, $this->graph_top_start + $vertical_border, $this->graph_left_start + $horizontal_border, $this->graph_top_end - $vertical_border, $this->graph_color_body_light);
-		$this->svg_dom->draw_svg_line($this->graph_left_end - $horizontal_border, $this->graph_top_start + $vertical_border, $this->graph_left_end - $horizontal_border, $this->graph_top_end - $vertical_border, $this->graph_color_body_light);
-		$this->svg_dom->draw_svg_line($this->graph_left_start + $horizontal_border, $this->graph_top_end - $vertical_border, $this->graph_left_end - $horizontal_border, $this->graph_top_end - $vertical_border, $this->graph_color_body_light);
+		$this->svg_dom->draw_svg_line($this->c['pos']['left_start'] + $horizontal_border, $this->c['pos']['top_start'] + $vertical_border, $this->graph_left_end - $horizontal_border, $this->c['pos']['top_start'] + $vertical_border, $this->c['color']['body_light']);
+		$this->svg_dom->draw_svg_line($this->c['pos']['left_start'] + $horizontal_border, $this->c['pos']['top_start'] + $vertical_border, $this->c['pos']['left_start'] + $horizontal_border, $this->graph_top_end - $vertical_border, $this->c['color']['body_light']);
+		$this->svg_dom->draw_svg_line($this->graph_left_end - $horizontal_border, $this->c['pos']['top_start'] + $vertical_border, $this->graph_left_end - $horizontal_border, $this->graph_top_end - $vertical_border, $this->c['color']['body_light']);
+		$this->svg_dom->draw_svg_line($this->c['pos']['left_start'] + $horizontal_border, $this->graph_top_end - $vertical_border, $this->graph_left_end - $horizontal_border, $this->graph_top_end - $vertical_border, $this->c['color']['body_light']);
 	}
 	protected function render_graph_result()
 	{

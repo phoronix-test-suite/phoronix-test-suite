@@ -66,23 +66,23 @@ class pts_OverviewGraph extends pts_Graph
 		}
 
 		$this->graph_font_size_identifiers = 6.5;
-		$this->graph_attr_width = 1000;
+		$this->c['graph']['width'] = 1000;
 
 		list($longest_title_width, $longest_title_height) = bilde_renderer::soft_text_string_dimensions(pts_strings::find_longest_string($this->test_titles), $this->graph_font, $this->graph_font_size_identifiers);
 
-		$this->graph_left_start += 20;
-		$this->graphs_per_row = floor(($this->graph_attr_width - $this->graph_left_start - $this->graph_left_end_opp) / ($longest_title_width + 2));
-		$this->graph_item_width = floor(($this->graph_attr_width - $this->graph_left_start - $this->graph_left_end_opp) / $this->graphs_per_row);
+		$this->c['pos']['left_start'] += 20;
+		$this->graphs_per_row = floor(($this->c['graph']['width'] - $this->c['pos']['left_start'] - $this->c['pos']['left_end_right']) / ($longest_title_width + 2));
+		$this->graph_item_width = floor(($this->c['graph']['width'] - $this->c['pos']['left_start'] - $this->c['pos']['left_end_right']) / $this->graphs_per_row);
 		$this->graph_row_count = ceil(count($this->test_titles) / $this->graphs_per_row);
 
-		$height = $this->graph_top_start + ($this->graph_row_count * ($this->graph_row_height + 15));
+		$height = $this->c['pos']['top_start'] + ($this->graph_row_count * ($this->graph_row_height + 15));
 
 		$this->graph_title = $result_file->get_title();
 		$this->graph_y_title = null;
 		$this->graph_proportion = 'HIB';
 		$this->graph_background_lines = true;
 
-		$this->update_graph_dimensions($this->graph_attr_width, $height, true);
+		$this->update_graph_dimensions($this->c['graph']['width'], $height, true);
 		$this->result_file = $result_file;
 
 		return true;
@@ -95,13 +95,13 @@ class pts_OverviewGraph extends pts_Graph
 	{
 		$this->requestRenderer('SVG');
 		$this->graph_data_title = &$this->system_identifiers;
-		$this->graph_attr_marks = 6;
+		$this->c['graph']['mark_count'] = 6;
 		$this->graph_maximum_value = 1.2;
 		$l_height = 15;
 
 		if(($key_count = count($this->graph_data_title)) > 8)
 		{
-			$this->update_graph_dimensions(-1, $this->graph_attr_height + (floor(($key_count - 8) / 4) * 14), true);
+			$this->update_graph_dimensions(-1, $this->c['graph']['height'] + (floor(($key_count - 8) / 4) * 14), true);
 		}
 
 		// Do the actual work
@@ -110,8 +110,8 @@ class pts_OverviewGraph extends pts_Graph
 
 		for($i = 0; $i < $this->graph_row_count; $i++)
 		{
-			$this->render_graph_base($this->graph_left_start, $this->graph_top_start + ($i * ($this->graph_row_height + $l_height)), $this->graph_left_end, $this->graph_top_start + ($i * ($this->graph_row_height + $l_height)) + $this->graph_row_height);
-			$this->render_graph_value_ticks($this->graph_left_start, $this->graph_top_start + ($i * ($this->graph_row_height + $l_height)), $this->graph_left_end, $this->graph_top_start + ($i * ($this->graph_row_height + $l_height)) + $this->graph_row_height);
+			$this->render_graph_base($this->c['pos']['left_start'], $this->c['pos']['top_start'] + ($i * ($this->graph_row_height + $l_height)), $this->graph_left_end, $this->c['pos']['top_start'] + ($i * ($this->graph_row_height + $l_height)) + $this->graph_row_height);
+			$this->render_graph_value_ticks($this->c['pos']['left_start'], $this->c['pos']['top_start'] + ($i * ($this->graph_row_height + $l_height)), $this->graph_left_end, $this->c['pos']['top_start'] + ($i * ($this->graph_row_height + $l_height)) + $this->graph_row_height);
 		}
 
 		$row = 0;
@@ -124,12 +124,12 @@ class pts_OverviewGraph extends pts_Graph
 
 		foreach($this->result_file->get_result_objects() as $i => $result_object)
 		{
-			$top_start = $this->graph_top_start + ($row * ($this->graph_row_height + $l_height));
-			$top_end = round($this->graph_top_start + ($row * ($this->graph_row_height + $l_height)) + $this->graph_row_height);
-			$px_bound_left = $this->graph_left_start + ($this->graph_item_width * ($col % $this->graphs_per_row));
+			$top_start = $this->c['pos']['top_start'] + ($row * ($this->graph_row_height + $l_height));
+			$top_end = round($this->c['pos']['top_start'] + ($row * ($this->graph_row_height + $l_height)) + $this->graph_row_height);
+			$px_bound_left = $this->c['pos']['left_start'] + ($this->graph_item_width * ($col % $this->graphs_per_row));
 			$px_bound_right = $px_bound_left + $this->graph_item_width;
 
-			$this->svg_dom->add_text_element($result_object->test_profile->get_title(), array('x' => ($px_bound_left + ($this->graph_item_width * 0.5)), 'y' => ($top_end + 3), 'font-size' => $this->graph_font_size_identifiers, 'fill' => $this->graph_color_headers, 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
+			$this->svg_dom->add_text_element($result_object->test_profile->get_title(), array('x' => ($px_bound_left + ($this->graph_item_width * 0.5)), 'y' => ($top_end + 3), 'font-size' => $this->graph_font_size_identifiers, 'fill' => $this->c['color']['headers'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
 
 			if($result_object->test_profile->get_display_format() == 'BAR_GRAPH')
 			{
@@ -165,7 +165,7 @@ class pts_OverviewGraph extends pts_Graph
 					$px_left = $px_bound_left + $inter_width + ($bar_width * $x);
 					$px_right = $px_left + $bar_width;
 
-					$this->svg_dom->add_element('rect', array('x' => $px_left, 'y' => $value_plot_top, 'width' => $bar_width, 'height' => ($top_end - $value_plot_top), 'fill' => $paint_color, 'stroke' => $this->graph_color_body_light, 'stroke-width' => 1));
+					$this->svg_dom->add_element('rect', array('x' => $px_left, 'y' => $value_plot_top, 'width' => $bar_width, 'height' => ($top_end - $value_plot_top), 'fill' => $paint_color, 'stroke' => $this->c['color']['body_light'], 'stroke-width' => 1));
 				}
 
 				$has_graphed_a_bar = true;
@@ -173,8 +173,8 @@ class pts_OverviewGraph extends pts_Graph
 
 			if(($i + 1) % $this->graphs_per_row == 0 && $i != 0)
 			{
-				$this->svg_dom->draw_svg_line($this->graph_left_start + $this->graph_item_width, $top_end, $this->graph_left_end - ($this->graph_attr_width % $this->graph_item_width), $top_end, $this->graph_color_notches, 10, array('stroke-dasharray' => '1,' . ($this->graph_item_width - 1)));
-				$this->svg_dom->draw_svg_line($this->graph_left_start, $top_end, $this->graph_left_end, $top_end, $this->graph_color_notches, 1);
+				$this->svg_dom->draw_svg_line($this->c['pos']['left_start'] + $this->graph_item_width, $top_end, $this->graph_left_end - ($this->c['graph']['width'] % $this->graph_item_width), $top_end, $this->c['color']['notches'], 10, array('stroke-dasharray' => '1,' . ($this->graph_item_width - 1)));
+				$this->svg_dom->draw_svg_line($this->c['pos']['left_start'], $top_end, $this->graph_left_end, $top_end, $this->c['color']['notches'], 1);
 
 				$row++;
 			}
@@ -188,7 +188,7 @@ class pts_OverviewGraph extends pts_Graph
 		}
 
 
-		//$this->render_graph_base($this->graph_left_start, $this->graph_top_start, $this->graph_left_end, $this->graph_top_end);
+		//$this->render_graph_base($this->c['pos']['left_start'], $this->c['pos']['top_start'], $this->graph_left_end, $this->graph_top_end);
 		$this->render_graph_heading();
 		//$this->render_graph_watermark();
 

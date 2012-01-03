@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2011, Phoronix Media
-	Copyright (C) 2008 - 2011, Michael Larabel
+	Copyright (C) 2008 - 2012, Phoronix Media
+	Copyright (C) 2008 - 2012, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -40,32 +40,32 @@ class pts_HorizontalBoxPlotGraph extends pts_HorizontalBarGraph
 				$max_value = round(max($this->graph_data[$i_o][$i]), 2);
 
 
-				$px_bound_top = $this->graph_top_start + ($multi_way ? 5 : 0) + ($this->identifier_height * $i) + ($bar_height * $i_o) + ($separator_height * ($i_o + 1));
+				$px_bound_top = $this->c['pos']['top_start'] + ($multi_way ? 5 : 0) + ($this->identifier_height * $i) + ($bar_height * $i_o) + ($separator_height * ($i_o + 1));
 				$px_bound_bottom = $px_bound_top + $bar_height;
 				$middle_of_bar = $px_bound_top + ($bar_height / 2);
 
 				$value = 'Min: ' . $min_value . ' / Avg: ' . $avg_value . ' / Max: ' . $max_value;
 				$title_tooltip = $this->graph_identifiers[$i] . ': ' . $value;
 
-				$value_end_left = max($this->graph_left_start + round(($min_value / $this->graph_maximum_value) * ($this->graph_left_end - $this->graph_left_start)), 1);
-				$value_end_right = $this->graph_left_start + round(($max_value / $this->graph_maximum_value) * ($this->graph_left_end - $this->graph_left_start));
-				$box_color = in_array($this->graph_identifiers[$i], $this->value_highlights) ? $this->graph_color_highlight : $paint_color;
+				$value_end_left = max($this->c['pos']['left_start'] + round(($min_value / $this->graph_maximum_value) * ($this->graph_left_end - $this->c['pos']['left_start'])), 1);
+				$value_end_right = $this->c['pos']['left_start'] + round(($max_value / $this->graph_maximum_value) * ($this->graph_left_end - $this->c['pos']['left_start']));
+				$box_color = in_array($this->graph_identifiers[$i], $this->value_highlights) ? $this->c['color']['highlight'] : $paint_color;
 
 				$this->svg_dom->draw_svg_line($value_end_left, $middle_of_bar, $value_end_right, $middle_of_bar, $box_color, 2, array('xlink:title' => $title_tooltip));
-				$this->svg_dom->draw_svg_line($value_end_left, $px_bound_top, $value_end_left, $px_bound_bottom, $this->graph_color_notches, 2, array('xlink:title' => $title_tooltip));
-				$this->svg_dom->draw_svg_line($value_end_right, $px_bound_top, $value_end_right, $px_bound_bottom, $this->graph_color_notches, 2, array('xlink:title' => $title_tooltip));
+				$this->svg_dom->draw_svg_line($value_end_left, $px_bound_top, $value_end_left, $px_bound_bottom, $this->c['color']['notches'], 2, array('xlink:title' => $title_tooltip));
+				$this->svg_dom->draw_svg_line($value_end_right, $px_bound_top, $value_end_right, $px_bound_bottom, $this->c['color']['notches'], 2, array('xlink:title' => $title_tooltip));
 
-				$box_left = $this->graph_left_start + round((pts_math::find_percentile($this->graph_data[$i_o][$i], 0.25) / $this->graph_maximum_value) * ($this->graph_left_end - $this->graph_left_start));
-				$box_middle = $this->graph_left_start + round((pts_math::find_percentile($this->graph_data[$i_o][$i], 0.5) / $this->graph_maximum_value) * ($this->graph_left_end - $this->graph_left_start));
-				$box_right = $this->graph_left_start + round((pts_math::find_percentile($this->graph_data[$i_o][$i], 0.75) / $this->graph_maximum_value) * ($this->graph_left_end - $this->graph_left_start));
+				$box_left = $this->c['pos']['left_start'] + round((pts_math::find_percentile($this->graph_data[$i_o][$i], 0.25) / $this->graph_maximum_value) * ($this->graph_left_end - $this->c['pos']['left_start']));
+				$box_middle = $this->c['pos']['left_start'] + round((pts_math::find_percentile($this->graph_data[$i_o][$i], 0.5) / $this->graph_maximum_value) * ($this->graph_left_end - $this->c['pos']['left_start']));
+				$box_right = $this->c['pos']['left_start'] + round((pts_math::find_percentile($this->graph_data[$i_o][$i], 0.75) / $this->graph_maximum_value) * ($this->graph_left_end - $this->c['pos']['left_start']));
 
-				$this->svg_dom->add_element('rect', array('x' => $box_left, 'y' => $px_bound_top, 'width' => ($box_right - $box_left), 'height' => $bar_height, 'fill' => $box_color, 'stroke' => $this->graph_color_body_light, 'stroke-width' => 1, 'xlink:title' => $title_tooltip));
-				$this->svg_dom->draw_svg_line($box_middle, $px_bound_top, $box_middle, $px_bound_bottom, $this->graph_color_notches, 2, array('xlink:title' => $title_tooltip));
+				$this->svg_dom->add_element('rect', array('x' => $box_left, 'y' => $px_bound_top, 'width' => ($box_right - $box_left), 'height' => $bar_height, 'fill' => $box_color, 'stroke' => $this->c['color']['body_light'], 'stroke-width' => 1, 'xlink:title' => $title_tooltip));
+				$this->svg_dom->draw_svg_line($box_middle, $px_bound_top, $box_middle, $px_bound_bottom, $this->c['color']['notches'], 2, array('xlink:title' => $title_tooltip));
 			}
 		}
 
 		// write a new line along the bottom since the draw_rectangle_with_border above had written on top of it
-		$this->svg_dom->draw_svg_line($this->graph_left_start, $this->graph_top_end, $this->graph_left_end, $this->graph_top_end, $this->graph_color_notches, 1);
+		$this->svg_dom->draw_svg_line($this->c['pos']['left_start'], $this->graph_top_end, $this->graph_left_end, $this->graph_top_end, $this->c['color']['notches'], 1);
 	}
 	protected function maximum_graph_value()
 	{
@@ -76,8 +76,8 @@ class pts_HorizontalBoxPlotGraph extends pts_HorizontalBarGraph
 			$real_maximum = max($real_maximum, max(max($data_r)));
 		}
 
-		$maximum = (floor(round($real_maximum * 1.285) / $this->graph_attr_marks) + 1) * $this->graph_attr_marks;
-		$maximum = round(ceil($maximum / $this->graph_attr_marks), (0 - strlen($maximum) + 2)) * $this->graph_attr_marks;
+		$maximum = (floor(round($real_maximum * 1.285) / $this->c['graph']['mark_count']) + 1) * $this->c['graph']['mark_count'];
+		$maximum = round(ceil($maximum / $this->c['graph']['mark_count']), (0 - strlen($maximum) + 2)) * $this->c['graph']['mark_count'];
 
 		return $maximum;
 	}

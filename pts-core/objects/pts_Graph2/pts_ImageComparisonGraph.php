@@ -45,10 +45,10 @@ class pts_ImageComparisonGraph extends pts_Graph
 		$img_height = imagesy($img_first);
 
 		// Assume if the images are being rendered together they are same width and height
-		$this->graph_attr_height = 72 + ($draw_count * ($img_height + 22)); // 110 at top plus 20 px between images
-		$this->graph_attr_width = $this->graph_attr_width < ($img_width + 20) ? $img_width + 20 : $this->graph_attr_width;
+		$this->c['graph']['height'] = 72 + ($draw_count * ($img_height + 22)); // 110 at top plus 20 px between images
+		$this->c['graph']['width'] = $this->c['graph']['width'] < ($img_width + 20) ? $img_width + 20 : $this->c['graph']['width'];
 
-		$this->update_graph_dimensions($this->graph_attr_width, $this->graph_attr_height);
+		$this->update_graph_dimensions($this->c['graph']['width'], $this->c['graph']['height']);
 	}
 	public function renderGraph()
 	{
@@ -71,17 +71,17 @@ class pts_ImageComparisonGraph extends pts_Graph
 
 		for($i_o = 0; $i_o < $draw_count; $i_o++)
 		{
-			$from_left = ($this->graph_attr_width / 2) - ($img_width / 2);
+			$from_left = ($this->c['graph']['width'] / 2) - ($img_width / 2);
 			$from_top = 60 + ($i_o * ($img_height + 22));
 // TODO: make sure this code still works... XXX
-			$this->svg_dom->add_element('rect', array('x' => ($from_left - 1), 'y' => ($from_right - 1), 'width' => ($img_width + 2), 'height' => ($img_height + 2), 'fill' => $this->graph_color_body_light));
+			$this->svg_dom->add_element('rect', array('x' => ($from_left - 1), 'y' => ($from_right - 1), 'width' => ($img_width + 2), 'height' => ($img_height + 2), 'fill' => $this->c['color']['body_light']));
 			$this->svg_dom->add_element('image', array('xlink:href' => base64_decode($this->graph_data[0][$i_o]), 'x' => $from_left, 'y' => $from_top, 'width' => $img_width, 'height' => $img_height));
-			$this->svg_dom->add_text_element($this->graph_identifiers[$i_o], array('x' => round($this->graph_attr_width / 2), 'y' => ($from_top + $img_height + 3), 'font-size' => $this->graph_font_size_bars, 'fill' => $this->graph_color_main_headers, 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
+			$this->svg_dom->add_text_element($this->graph_identifiers[$i_o], array('x' => round($this->c['graph']['width'] / 2), 'y' => ($from_top + $img_height + 3), 'font-size' => $this->graph_font_size_bars, 'fill' => $this->c['color']['main_headers'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
 		}
 
 		if(!empty($this->graph_watermark_text))
 		{
-			$this->svg_dom->add_text_element($this->graph_watermark_text, array('x' => round($this->graph_attr_width), 'y' => ($this->graph_attr_height - 15), 'font-size' => 10, 'fill' => $this->graph_color_text, 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
+			$this->svg_dom->add_text_element($this->graph_watermark_text, array('x' => round($this->c['graph']['width']), 'y' => ($this->c['graph']['height'] - 15), 'font-size' => 10, 'fill' => $this->c['color']['text'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
 		}
 
 		return $this->return_graph_image(100);
