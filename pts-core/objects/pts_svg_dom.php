@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2011, Phoronix Media
-	Copyright (C) 2011, Michael Larabel
+	Copyright (C) 2011 - 2012, Phoronix Media
+	Copyright (C) 2011 - 2012, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -45,6 +45,22 @@ class pts_svg_dom
 
 		$this->dom->appendChild($this->svg);
 	}
+	public function output($save_as = null)
+	{
+		// TODO XXX: Convert here from SVG DOM to other format if desired
+		// else default:
+		$output = $this->save_xml();
+		$output_format = 'svg';
+
+		if($save_as)
+		{
+			return file_put_contents(str_replace('BILDE_EXTENSION', $output_format, $save_as), $output);
+		}
+		else
+		{
+			return $output;
+		}
+	}
 	public function save_xml()
 	{
 		return $this->dom->saveXML();
@@ -84,23 +100,49 @@ class pts_svg_dom
 	{
 		$el = $this->dom->createElement($element_type);
 
-		foreach($attributes as $name => $value)
+		if(isset($attributes['xlink:href']) && !in_array($element_type, array('image', 'a')))
 		{
-			$el->setAttribute($name, $value);
+			$link = $this->dom->createElement('a');
+			$link->setAttribute('xlink:href', $attributes['xlink:href']);
+			$link->setAttribute('xlink:show', 'new');
+			$link->appendChild($el);
+			$this->svg->appendChild($link);
+			unset($attributes['xlink:href']);
 		}
-		$this->svg->appendChild($el);
-	}
-	public function add_text_element($text_string, $attributes)
-	{
-		$el = $this->dom->createElement('text');
-		$text_node = $this->dom->createTextNode($text_string);
+		else
+		{
+			$this->svg->appendChild($el);
+		}
 
 		foreach($attributes as $name => $value)
 		{
 			$el->setAttribute($name, $value);
 		}
+	}
+	public function add_text_element($text_string, $attributes)
+	{
+		$el = $this->dom->createElement('text');
+		$text_node = $this->dom->createTextNode($text_string);
 		$el->appendChild($text_node);
-		$this->svg->appendChild($el);
+
+		if(isset($attributes['xlink:href']))
+		{
+			$link = $this->dom->createElement('a');
+			$link->setAttribute('xlink:href', $attributes['xlink:href']);
+			$link->setAttribute('xlink:show', 'new');
+			$link->appendChild($el);
+			$this->svg->appendChild($link);
+			unset($attributes['xlink:href']);
+		}
+		else
+		{
+			$this->svg->appendChild($el);
+		}
+
+		foreach($attributes as $name => $value)
+		{
+			$el->setAttribute($name, $value);
+		}
 	}
 	public function html_embed_code($file_name, $attributes = null, $is_xsl = false)
 	{
