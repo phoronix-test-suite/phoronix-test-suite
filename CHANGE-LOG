@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 - pts-core: When time-zone is not set in PHP, attempt to query it from the host system
 - pts-core: Fix for handling user variable swaps on the result identifier
 - pts-core: Major enhancements to MATISK testing module
+- pts_Graph: New version of pts_Graph that uses SVG DOM IR directly
 - phodevi: Add some fall-back graphics detection support of Texas Instruments OMAP / Samsung EXYNOS
 - phodevi: Fall-back graphics detection support for the ARM Mali
 - installer: Installer update
