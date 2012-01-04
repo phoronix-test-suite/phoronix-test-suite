@@ -40,16 +40,8 @@ abstract class pts_Graph
 
 	// Text
 	protected $graph_font; // TTF file name
-	protected $graph_font_size_tick_mark = 10; // Tick mark size
-	protected $graph_font_size_key = 9; // Size of height for keys
-	protected $graph_font_size_heading; // Font size of headings
-	protected $graph_font_size_bars; // Font size for text on the bars/objects
-	protected $graph_font_size_identifiers; // Font size of identifiers
-	protected $graph_font_size_sub_heading ; // Font size of headers
-	protected $graph_font_size_axis_heading; // Font size of axis headers
-	protected $graph_watermark_text; // Text for watermark in upper right hand corner. If null, no watermark will display
-	protected $graph_watermark_url;
-	protected $graph_version = null;
+
+
 	protected $graph_proportion = null;
 
 	// Not user-friendly changes below this line
@@ -118,14 +110,16 @@ abstract class pts_Graph
 		$this->c['color']['paint'] = pts_strings::comma_explode($this->read_graph_config('PhoronixTestSuite/Graphs/Colors/ObjectPaint')); // Colors to use for the bars / lines, one color for each key
 
 		// Text
-		$this->graph_watermark_text = $this->read_graph_config('PhoronixTestSuite/Graphs/General/Watermark'); // watermark
-		$this->graph_watermark_url = $this->read_graph_config('PhoronixTestSuite/Graphs/General/WatermarkURL'); // watermark URL
-		//$this->graph_font = $this->read_graph_config('PhoronixTestSuite/Graphs/Font/FontType');  // TTF file name
-		$this->graph_font_size_heading = $this->read_graph_config('PhoronixTestSuite/Graphs/Font/Headers'); // Font size of headings
-		$this->graph_font_size_bars = $this->read_graph_config('PhoronixTestSuite/Graphs/Font/ObjectText'); // Font size for text on the bars/objects
-		$this->graph_font_size_identifiers = $this->read_graph_config('PhoronixTestSuite/Graphs/Font/Identifiers'); // Font size of identifiers
-		$this->graph_font_size_sub_heading = $this->read_graph_config('PhoronixTestSuite/Graphs/Font/SubHeaders'); // Font size of headers
-		$this->graph_font_size_axis_heading = $this->read_graph_config('PhoronixTestSuite/Graphs/Font/Axis'); // Font size of axis headers
+		$this->c['size']['tick_mark'] = 10;
+		$this->c['size']['key'] = 9;
+
+		$this->c['text']['watermark'] = $this->read_graph_config('PhoronixTestSuite/Graphs/General/Watermark'); // watermark
+		$this->c['text']['watermark_url'] = $this->read_graph_config('PhoronixTestSuite/Graphs/General/WatermarkURL'); // watermark URL
+		$this->c['size']['headers'] = $this->read_graph_config('PhoronixTestSuite/Graphs/Font/Headers'); // Font size of headings
+		$this->c['size']['bars'] = $this->read_graph_config('PhoronixTestSuite/Graphs/Font/ObjectText'); // Font size for text on the bars/objects
+		$this->c['size']['identifiers'] = $this->read_graph_config('PhoronixTestSuite/Graphs/Font/Identifiers'); // Font size of identifiers
+		$this->c['size']['sub_headers'] = $this->read_graph_config('PhoronixTestSuite/Graphs/Font/SubHeaders'); // Font size of headers
+		$this->c['size']['axis_headers'] = $this->read_graph_config('PhoronixTestSuite/Graphs/Font/Axis'); // Font size of axis headers
 
 		$this->c['graph']['mark_count'] = 6; // Number of marks to make on vertical axis
 		$this->graph_renderer = $this->read_graph_config('PhoronixTestSuite/Graphs/General/Renderer'); // Renderer // TODO XXX: hook this up to new system
@@ -178,7 +172,7 @@ abstract class pts_Graph
 			$pts_version = PTS_VERSION;
 		}
 
-		$this->graph_version = 'Phoronix Test Suite ' . $pts_version;
+		$this->c['text']['graph_version'] = 'Phoronix Test Suite ' . $pts_version;
 	}
 	public function read_graph_config($xml_path)
 	{
@@ -339,14 +333,14 @@ abstract class pts_Graph
 
 		return $maximum;
 	}
-	protected function text_size_bounds($string, $font, $font_size, $minimum_font_size, $bound_width, $bound_height = -1)
+	protected function text_size_bounds($string, $font_size, $minimum_font_size, $bound_width, $bound_height = -1)
 	{
-		list($string_width, $string_height) = bilde_renderer::soft_text_string_dimensions($string, $font, $font_size);
+		list($string_width, $string_height) = pts_svg_dom::estimate_text_dimensions($string, $font_size);
 
 		while($font_size > $minimum_font_size && $string_width > $bound_width || ($bound_height > 0 && $string_height > $bound_height))
 		{
 			$font_size -= 0.2;
-			list($string_width, $string_height) = bilde_renderer::soft_text_string_dimensions($string, $font, $font_size);
+			list($string_width, $string_height) = pts_svg_dom::estimate_text_dimensions($string, $font_size);
 		}
 
 		return $font_size;
@@ -386,7 +380,7 @@ abstract class pts_Graph
 		{
 			if($this->graph_value_type == 'NUMERICAL')
 			{
-				$this->c['pos']['left_start'] += $this->text_string_width($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_tick_mark) + 2;
+				$this->c['pos']['left_start'] += $this->text_string_width($this->graph_maximum_value, $this->c['size']['tick_mark']) + 2;
 			}
 
 			if($this->graph_hide_identifiers)
@@ -408,14 +402,14 @@ abstract class pts_Graph
 
 					if(count($longest_r) > 1)
 					{
-						$plus_extra = count($longest_r) * $this->graph_font_size_identifiers * 1.2;
+						$plus_extra = count($longest_r) * $this->c['size']['identifiers'] * 1.2;
 					}
 
-					$longest_identifier_width = $this->text_string_width($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_identifiers) + 60 + $plus_extra;
+					$longest_identifier_width = $this->text_string_width($this->graph_maximum_value, $this->c['size']['identifiers']) + 60 + $plus_extra;
 				}
 				else
 				{
-					$longest_identifier_width = $this->text_string_width(pts_strings::find_longest_string($this->graph_identifiers), $this->graph_font, $this->graph_font_size_identifiers) + 8;
+					$longest_identifier_width = $this->text_string_width(pts_strings::find_longest_string($this->graph_identifiers), $this->c['size']['identifiers']) + 8;
 				}
 
 				$longest_identifier_max = $this->c['graph']['width'] * 0.5;
@@ -426,11 +420,11 @@ abstract class pts_Graph
 			}
 			else if($this->graph_value_type == 'NUMERICAL')
 			{
-				$this->c['pos']['left_start'] += max(20, $this->text_string_width($this->graph_maximum_value, $this->graph_font, $this->graph_font_size_tick_mark) + 2);
+				$this->c['pos']['left_start'] += max(20, $this->text_string_width($this->graph_maximum_value, $this->c['size']['tick_mark']) + 2);
 			}
 
 			// Pad 8px on top and bottom + title bar + sub-headings
-			$this->graph_top_heading_height = 16 + $this->graph_font_size_heading + (count($this->graph_sub_titles) * ($this->graph_font_size_sub_heading + 4));
+			$this->graph_top_heading_height = 16 + $this->c['size']['headers'] + (count($this->graph_sub_titles) * ($this->c['size']['sub_headers'] + 4));
 
 			if($this->iveland_view)
 			{
@@ -457,7 +451,7 @@ abstract class pts_Graph
 					$longest_string = explode(' - ', pts_strings::find_longest_string($this->graph_identifiers));
 					$longest_string = pts_strings::find_longest_string($longest_string);
 
-					$rotated_text = round($this->text_string_width($longest_string, $this->graph_font, $this->graph_font_size_identifiers) * 0.96);
+					$rotated_text = round($this->text_string_width($longest_string, $this->c['size']['identifiers']) * 0.96);
 					$per_identifier_height = max((14 + (22 * count($this->graph_data))), $rotated_text);
 				}
 				else if(count($this->graph_data_title) > 3)
@@ -558,7 +552,7 @@ abstract class pts_Graph
 
 		if($this->iveland_view == false && ($sub_title_count = count($this->graph_sub_titles)) > 1)
 		{
-			$this->c['pos']['top_start'] += (($sub_title_count - 1) * ($this->graph_font_size_sub_heading + 4));
+			$this->c['pos']['top_start'] += (($sub_title_count - 1) * ($this->c['size']['sub_headers'] + 4));
 		}
 	}
 	protected function render_graph_heading($with_version = true)
@@ -578,34 +572,34 @@ abstract class pts_Graph
 			if(isset($this->graph_title[36]))
 			{
 				// If it's a long string make sure it won't run over the side...
-				while(self::text_string_width($this->graph_title, $this->graph_font, $this->graph_font_size_heading) > ($this->graph_left_end - 60))
+				while(self::text_string_width($this->graph_title, $this->c['size']['headers']) > ($this->graph_left_end - 60))
 				{
-					$this->graph_font_size_heading -= 0.5;
+					$this->c['size']['headers'] -= 0.5;
 				}
 			}
 
-			$this->svg_dom->add_text_element($this->graph_title, array('x' => 5, 'y' => 12, 'font-size' => $this->graph_font_size_heading, 'fill' => $this->c['color']['background'], 'text-anchor' => 'start', 'dominant-baseline' => 'middle', 'xlink:show' => 'new', 'xlink:href' => $href));
+			$this->svg_dom->add_text_element($this->graph_title, array('x' => 5, 'y' => 12, 'font-size' => $this->c['size']['headers'], 'fill' => $this->c['color']['background'], 'text-anchor' => 'start', 'dominant-baseline' => 'middle', 'xlink:show' => 'new', 'xlink:href' => $href));
 
 			foreach($this->graph_sub_titles as $i => $sub_title)
 			{
-				$vertical_offset = 12 + 4 + $this->graph_font_size_heading + ($i * ($this->graph_font_size_sub_heading + 5));
-				$this->svg_dom->add_text_element($sub_title, array('x' => 5, 'y' => $vertical_offset, 'font-size' => $this->graph_font_size_sub_heading, 'fill' => $this->c['color']['background'], 'text-anchor' => 'start', 'dominant-baseline' => 'middle'));
+				$vertical_offset = 12 + 4 + $this->c['size']['headers'] + ($i * ($this->c['size']['sub_headers'] + 5));
+				$this->svg_dom->add_text_element($sub_title, array('x' => 5, 'y' => $vertical_offset, 'font-size' => $this->c['size']['sub_headers'], 'fill' => $this->c['color']['background'], 'text-anchor' => 'start', 'dominant-baseline' => 'middle'));
 			}
 
 			$this->svg_dom->add_element('image', array('xlink:href' => 'http://www.phoronix-test-suite.com/external/pts-logo-77x40-white.png', 'x' => ($this->graph_left_end - 77), 'y' => (($this->graph_top_heading_height / 40 + 2)), 'width' => 77, 'height' => 40));
 		}
 		else
 		{
-			$this->svg_dom->add_text_element($this->graph_title, array('x' => round($this->graph_left_end / 2), 'y' => 3, 'font-size' => $this->graph_font_size_heading, 'fill' => $this->c['color']['main_headers'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge', 'xlink:show' => 'new', 'xlink:href' => $href));
+			$this->svg_dom->add_text_element($this->graph_title, array('x' => round($this->graph_left_end / 2), 'y' => 3, 'font-size' => $this->c['size']['headers'], 'fill' => $this->c['color']['main_headers'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge', 'xlink:show' => 'new', 'xlink:href' => $href));
 
 			foreach($this->graph_sub_titles as $i => $sub_title)
 			{
-				$this->svg_dom->add_text_element($sub_title, array('x' => round($this->graph_left_end / 2), 'y' => (31 + ($i * 18)), 'font-size' => $this->graph_font_size_sub_heading, 'fill' => $this->c['color']['main_headers'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
+				$this->svg_dom->add_text_element($sub_title, array('x' => round($this->graph_left_end / 2), 'y' => (31 + ($i * 18)), 'font-size' => $this->c['size']['sub_headers'], 'fill' => $this->c['color']['main_headers'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
 			}
 
 			if($with_version)
 			{
-				$this->svg_dom->add_text_element($this->graph_version, array('x' => $this->graph_left_end , 'y' => ($this->c['pos']['top_start'] - 3), 'font-size' => 7, 'fill' => $this->c['color']['body_light'], 'text-anchor' => 'end', 'dominant-baseline' => 'bottom', 'xlink:show' => 'new', 'xlink:href' => 'http://www.phoronix-test-suite.com/'));
+				$this->svg_dom->add_text_element($this->c['text']['graph_version'], array('x' => $this->graph_left_end , 'y' => ($this->c['pos']['top_start'] - 3), 'font-size' => 7, 'fill' => $this->c['color']['body_light'], 'text-anchor' => 'end', 'dominant-baseline' => 'bottom', 'xlink:show' => 'new', 'xlink:href' => 'http://www.phoronix-test-suite.com/'));
 			}
 		}
 	}
@@ -615,7 +609,7 @@ abstract class pts_Graph
 		{
 			$bottom_heading_start = $this->graph_top_end + $this->graph_bottom_offset + 22;
 			$this->svg_dom->add_element('rect', array('x' => 0, 'y' => $bottom_heading_start, 'width' => $this->c['graph']['width'], 'height' => ($this->c['graph']['height'] - $bottom_heading_start), 'fill' => $this->c['color']['main_headers']));
-			$this->svg_dom->add_text_element('Powered By ' . $this->graph_version, array('x' => $this->graph_left_end, 'y' => ($bottom_heading_start + 9), 'font-size' => 7, 'fill' => $this->c['color']['background'], 'text-anchor' => 'end', 'dominant-baseline' => 'middle', 'xlink:show' => 'new', 'xlink:href' => 'http://www.phoronix-test-suite.com/'));
+			$this->svg_dom->add_text_element('Powered By ' . $this->c['text']['graph_version'], array('x' => $this->graph_left_end, 'y' => ($bottom_heading_start + 9), 'font-size' => 7, 'fill' => $this->c['color']['background'], 'text-anchor' => 'end', 'dominant-baseline' => 'middle', 'xlink:show' => 'new', 'xlink:href' => 'http://www.phoronix-test-suite.com/'));
 
 			if($this->link_alternate_view != null)
 			{
@@ -631,18 +625,18 @@ abstract class pts_Graph
 			$this->svg_dom->draw_svg_line($left_start, $top_start, $left_start, $top_end, $this->c['color']['notches'], 1);
 			$this->svg_dom->draw_svg_line($left_start, $top_end, $left_end, $top_end, $this->c['color']['notches'], 1);
 
-			if(!empty($this->graph_watermark_text))
+			if(!empty($this->c['text']['watermark']))
 			{
-				$this->svg_dom->add_text_element($this->graph_watermark_text, array('x' => $left_end, 'y' => ($top_start - 7), 'font-size' => 7, 'fill' => $this->c['color']['text'], 'text-anchor' => 'end', 'dominant-baseline' => 'middle', 'xlink:show' => 'new', 'xlink:href' => $this->graph_watermark_url));
+				$this->svg_dom->add_text_element($this->c['text']['watermark'], array('x' => $left_end, 'y' => ($top_start - 7), 'font-size' => 7, 'fill' => $this->c['color']['text'], 'text-anchor' => 'end', 'dominant-baseline' => 'middle', 'xlink:show' => 'new', 'xlink:href' => $this->c['text']['watermark_url']));
 			}
 		}
 		else
 		{
 			$this->svg_dom->add_element('rect', array('x' => $left_start, 'y' => $top_start, 'width' => ($left_end - $left_start), 'height' => ($top_end - $top_start), 'fill' => $this->c['color']['body'], 'stroke' => $this->c['color']['notches'], 'stroke-width' => 1));
 
-			if(!empty($this->graph_watermark_text))
+			if(!empty($this->c['text']['watermark']))
 			{
-				$this->svg_dom->add_text_element($this->graph_watermark_text, array('x' => ($left_end - 2), 'y' => ($top_start + 8), 'font-size' => 10, 'fill' => $this->c['color']['text'], 'text-anchor' => 'end', 'dominant-baseline' => 'middle', 'xlink:show' => 'new', 'xlink:href' => $this->graph_watermark_url));
+				$this->svg_dom->add_text_element($this->c['text']['watermark'], array('x' => ($left_end - 2), 'y' => ($top_start + 8), 'font-size' => 10, 'fill' => $this->c['color']['text'], 'text-anchor' => 'end', 'dominant-baseline' => 'middle', 'xlink:show' => 'new', 'xlink:href' => $this->c['text']['watermark_url']));
 			}
 		}
 
@@ -712,7 +706,7 @@ abstract class pts_Graph
 
 				if($i != 0)
 				{
-					$this->svg_dom->add_text_element($display_value, array('x' => $px_from_left, 'y' => ($top_end + 5), 'font-size' => $this->graph_font_size_tick_mark, 'fill' => $this->c['color']['text'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
+					$this->svg_dom->add_text_element($display_value, array('x' => $px_from_left, 'y' => ($top_end + 5), 'font-size' => $this->c['size']['tick_mark'], 'fill' => $this->c['color']['text'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
 					$this->svg_dom->draw_svg_line($px_from_left + 2, $top_start, $px_from_left + 2, $top_end - 5, $this->c['color']['body'], 1, array('stroke-dasharray' => '5,5'));
 					$this->svg_dom->draw_svg_line($px_from_left + 2, $top_end - 4, $px_from_left + 2, $top_end + 4, $this->c['color']['notches'], 1);
 				}
@@ -735,7 +729,7 @@ abstract class pts_Graph
 
 				if($i != 0)
 				{
-					$this->svg_dom->add_text_element($display_value, array('x' => ($px_from_left_start - 4), 'y' => $px_from_top, 'font-size' => $this->graph_font_size_tick_mark, 'fill' =>  $this->c['color']['text'], 'text-anchor' => 'end', 'dominant-baseline' => 'middle'));
+					$this->svg_dom->add_text_element($display_value, array('x' => ($px_from_left_start - 4), 'y' => $px_from_top, 'font-size' => $this->c['size']['tick_mark'], 'fill' =>  $this->c['color']['text'], 'text-anchor' => 'end', 'dominant-baseline' => 'middle'));
 
 					if($this->graph_background_lines)
 					{
@@ -766,7 +760,7 @@ abstract class pts_Graph
 		}
 
 		$this->graph_key_line_height = 16;
-		$this->graph_key_item_width = 16 + $this->text_string_width(pts_strings::find_longest_string($this->graph_data_title), $this->graph_font, $this->graph_font_size_key);
+		$this->graph_key_item_width = 16 + $this->text_string_width(pts_strings::find_longest_string($this->graph_data_title), $this->c['size']['key']);
 		$this->graph_keys_per_line = floor(($this->graph_left_end - $this->c['pos']['left_start']) / $this->graph_key_item_width);
 
 		return ceil(count($this->graph_data_title) / $this->graph_keys_per_line) * $this->graph_key_line_height;
@@ -794,7 +788,7 @@ abstract class pts_Graph
 				$x = $this->c['pos']['left_start'] + 13 + ($this->graph_key_item_width * ($i % $this->graph_keys_per_line));
 
 				$this->svg_dom->add_element('rect', array('x' => ($x - 13), 'y' => ($y - 5), 'width' => 10, 'height' => 10, 'fill' => $this_color, 'stroke' => $this->c['color']['notches'], 'stroke-width' => 1));
-				$this->svg_dom->add_text_element($this->graph_data_title[$i], array('x' => $x, 'y' => $y, 'font-size' => $this->graph_font_size_key, 'fill' => $this_color, 'text-anchor' => 'start', 'dominant-baseline' => 'middle'));
+				$this->svg_dom->add_text_element($this->graph_data_title[$i], array('x' => $x, 'y' => $y, 'font-size' => $this->c['size']['key'], 'fill' => $this_color, 'text-anchor' => 'start', 'dominant-baseline' => 'middle'));
 			}
 		}
 	}
@@ -841,14 +835,14 @@ abstract class pts_Graph
 	// Renderer-specific Functions
 	//
 
-	protected function text_string_width($string, $font, $size)
+	protected function text_string_width($string, $size)
 	{
-		$dimensions = bilde_renderer::soft_text_string_dimensions($string, $font, $size);
+		$dimensions = pts_svg_dom::estimate_text_dimensions($string, $size);
 		return $dimensions[0];
 	}
-	protected function text_string_height($string, $font, $size)
+	protected function text_string_height($string, $size)
 	{
-		$dimensions = bilde_renderer::soft_text_string_dimensions($string, $font, $size);
+		$dimensions = pts_svg_dom::estimate_text_dimensions($string, $size);
 		return $dimensions[1];
 	}
 }

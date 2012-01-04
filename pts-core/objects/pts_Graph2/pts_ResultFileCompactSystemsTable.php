@@ -47,14 +47,14 @@ class pts_ResultFileCompactSystemsTable extends pts_Graph
 	}
 	public function render_graph_start()
 	{
-		$this->graph_top_heading_height = 22 + $this->graph_font_size_heading;
+		$this->graph_top_heading_height = 22 + $this->c['size']['headers'];
 
 		$longest_component = pts_strings::find_longest_string($this->components);
-		$component_header_height = $this->text_string_height($longest_component, $this->graph_font, ($this->graph_font_size_identifiers + 3)) + 4;
+		$component_header_height = $this->text_string_height($longest_component, ($this->c['size']['identifiers'] + 3)) + 4;
 
 		$this->c['graph']['width'] = 10 + max(
-			$this->text_string_width($this->graph_title, $this->graph_font, $this->graph_font_size_heading) - (isset($this->graph_title[30]) ? 20 : 0),
-			$this->text_string_width($longest_component, $this->graph_font, ($this->graph_font_size_identifiers + (isset($longest_component[29]) ? 1.8 : 2)))
+			$this->text_string_width($this->graph_title, $this->c['size']['headers']) - (isset($this->graph_title[30]) ? 20 : 0),
+			$this->text_string_width($longest_component, ($this->c['size']['identifiers'] + (isset($longest_component[29]) ? 1.8 : 2)))
 			);
 
 		$intent_count = 0;
@@ -88,10 +88,10 @@ class pts_ResultFileCompactSystemsTable extends pts_Graph
 
 		// Header
 		$this->svg_dom->add_element('rect', array('x' => 2, 'y' => 1, 'width' => ($this->c['graph']['width'] - 3), 'height' => ($this->graph_top_heading_height - 1), 'fill' => $this->c['color']['main_headers'], 'stroke' => $this->c['color']['border'], 'stroke-width' => 1));
-		$this->svg_dom->add_text_element($this->graph_title, array('x' => ($this->c['graph']['width']), 'y' => 2, 'font-size' => $this->graph_font_size_heading, 'fill' => $this->c['color']['background'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
+		$this->svg_dom->add_text_element($this->graph_title, array('x' => ($this->c['graph']['width']), 'y' => 2, 'font-size' => $this->c['size']['headers'], 'fill' => $this->c['color']['background'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
 
-		$this->svg_dom->add_text_element($this->graph_watermark_text, array('x' => 4, 'y' => ($this->graph_top_heading_height - 6), 'font-size' => 8, 'fill' => $this->c['color']['background'], 'text-anchor' => 'start', 'dominant-baseline' => 'middle', 'xlink:show' => 'new', 'xlink:href' => $this->graph_watermark_url));
-		$this->svg_dom->add_text_element($this->graph_version, array('x' => ($this->c['graph']['width'] - 4), 'y' => ($this->graph_top_heading_height - 6), 'font-size' => 8, 'fill' => $this->c['color']['background'], 'text-anchor' => 'end', 'dominant-baseline' => 'middle', 'xlink:show' => 'new', 'xlink:href' => 'http://www.phoronix-test-suite.com/'));
+		$this->svg_dom->add_text_element($this->c['text']['watermark'], array('x' => 4, 'y' => ($this->graph_top_heading_height - 6), 'font-size' => 8, 'fill' => $this->c['color']['background'], 'text-anchor' => 'start', 'dominant-baseline' => 'middle', 'xlink:show' => 'new', 'xlink:href' => $this->c['text']['watermark_url']));
+		$this->svg_dom->add_text_element($this->c['text']['graph_version'], array('x' => ($this->c['graph']['width'] - 4), 'y' => ($this->graph_top_heading_height - 6), 'font-size' => 8, 'fill' => $this->c['color']['background'], 'text-anchor' => 'end', 'dominant-baseline' => 'middle', 'xlink:show' => 'new', 'xlink:href' => 'http://www.phoronix-test-suite.com/'));
 
 		// Body
 		$offset = $this->graph_top_heading_height;
@@ -139,7 +139,7 @@ class pts_ResultFileCompactSystemsTable extends pts_Graph
 			foreach($component as $c)
 			{
 				$c = pts_result_file_analyzer::system_value_to_ir_value($c, $type);
-				$this->svg_dom->add_text_element($c, array('x' => ($this->c['graph']['width'] / 2), 'y' => $offset, 'font-size' => $this->graph_font_size_identifiers, 'fill' => $this->c['color']['text'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge', 'xlink:title' => $type . ': ' . $c, 'font-weight' => 'bold'));
+				$this->svg_dom->add_text_element($c, array('x' => ($this->c['graph']['width'] / 2), 'y' => $offset, 'font-size' => $this->c['size']['identifiers'], 'fill' => $this->c['color']['text'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge', 'xlink:title' => $type . ': ' . $c, 'font-weight' => 'bold'));
 				$offset += $component_header_height;
 			}
 

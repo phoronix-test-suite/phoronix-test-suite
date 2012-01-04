@@ -65,10 +65,10 @@ class pts_OverviewGraph extends pts_Graph
 			return;
 		}
 
-		$this->graph_font_size_identifiers = 6.5;
+		$this->c['size']['identifiers'] = 6.5;
 		$this->c['graph']['width'] = 1000;
 
-		list($longest_title_width, $longest_title_height) = bilde_renderer::soft_text_string_dimensions(pts_strings::find_longest_string($this->test_titles), $this->graph_font, $this->graph_font_size_identifiers);
+		list($longest_title_width, $longest_title_height) = pts_svg_dom::estimate_text_dimensions(pts_strings::find_longest_string($this->test_titles), $this->c['size']['identifiers']);
 
 		$this->c['pos']['left_start'] += 20;
 		$this->graphs_per_row = floor(($this->c['graph']['width'] - $this->c['pos']['left_start'] - $this->c['pos']['left_end_right']) / ($longest_title_width + 2));
@@ -129,7 +129,7 @@ class pts_OverviewGraph extends pts_Graph
 			$px_bound_left = $this->c['pos']['left_start'] + ($this->graph_item_width * ($col % $this->graphs_per_row));
 			$px_bound_right = $px_bound_left + $this->graph_item_width;
 
-			$this->svg_dom->add_text_element($result_object->test_profile->get_title(), array('x' => ($px_bound_left + ($this->graph_item_width * 0.5)), 'y' => ($top_end + 3), 'font-size' => $this->graph_font_size_identifiers, 'fill' => $this->c['color']['headers'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
+			$this->svg_dom->add_text_element($result_object->test_profile->get_title(), array('x' => ($px_bound_left + ($this->graph_item_width * 0.5)), 'y' => ($top_end + 3), 'font-size' => $this->c['size']['identifiers'], 'fill' => $this->c['color']['headers'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
 
 			if($result_object->test_profile->get_display_format() == 'BAR_GRAPH')
 			{

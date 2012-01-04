@@ -44,14 +44,14 @@ class pts_MultiPassFailGraph extends pts_Graph
 		$fail_color = $this->get_paint_color('FAIL');
 
 		$main_width = floor($graph_width * .24);
-		$main_font_size = $this->graph_font_size_bars;
+		$main_font_size = $this->c['size']['bars'];
 		$main_greatest_length = pts_strings::find_longest_string($this->graph_identifiers);
 
 		$width = $main_width - 8;
 		$height = $line_height - 4;
-		$main_font_size = $this->text_size_bounds($main_greatest_length, $this->graph_font, $main_font_size, 4, $width, $height);
+		$main_font_size = $this->text_size_bounds($main_greatest_length, $main_font_size, 4, $width, $height);
 
-		if(($new_size = $this->text_string_width($main_greatest_length, $this->graph_font, $main_font_size)) < ($main_width - 12))
+		if(($new_size = $this->text_string_width($main_greatest_length, $main_font_size)) < ($main_width - 12))
 		{
 			$main_width = $new_size + 10;
 		}
@@ -60,8 +60,8 @@ class pts_MultiPassFailGraph extends pts_Graph
 
 		$headings = pts_strings::comma_explode($this->graph_y_title);
 		$identifiers_width = floor($identifiers_total_width / count($headings));
-		$headings_font_size = $this->graph_font_size_bars;
-		while(($this->text_string_width(pts_strings::find_longest_string($headings), $this->graph_font, $headings_font_size) > ($identifiers_width - 2)) || $this->text_string_height($this->graph_maximum_value, $this->graph_font, $headings_font_size) > ($line_height - 4))
+		$headings_font_size = $this->c['size']['bars'];
+		while(($this->text_string_width(pts_strings::find_longest_string($headings), $headings_font_size) > ($identifiers_width - 2)) || $this->text_string_height($this->graph_maximum_value, $headings_font_size) > ($line_height - 4))
 		{
 			$headings_font_size -= 0.5;
 		}
@@ -69,7 +69,7 @@ class pts_MultiPassFailGraph extends pts_Graph
 		for($j = 0; $j < count($this->graph_data[0]); $j++)
 		{
 			$results = array_reverse(pts_strings::comma_explode($this->graph_data[0][$j]));
-			$line_ttf_height = $this->text_string_height("AZ@![]()@|_", $this->graph_font, $this->graph_font_size_bars);
+			$line_ttf_height = $this->text_string_height("AZ@![]()@|_", $this->c['size']['bars']);
 			for($i = 0; $i < count($headings) && $i < count($results); $i++)
 			{
 				if($results[$i] == "PASS")
@@ -98,12 +98,12 @@ class pts_MultiPassFailGraph extends pts_Graph
 				$this->svg_dom->add_element('rect', array('x' => $x, 'y' => $y, 'width' => $identifiers_width, 'height' => ($this_bottom_end - $y), 'fill' => $this->c['color']['background'], 'stroke' => $this->c['color']['border'], 'stroke-width' => 1));
 				$x = $this->graph_left_end - $horizontal_border - ($i * $identifiers_width) - ($identifiers_width * 0.5);
 				$y = $this->c['pos']['top_start'] + $vertical_border + ($j * $line_height) + $heading_height + ($line_height / 2) - ($line_ttf_height / 2);
-				$this->svg_dom->add_text_element($results[$i], array('x' => $x, 'y' => $y, 'font-size' => $this->graph_font_size_bars, 'fill' => $this->c['color']['body_text'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
+				$this->svg_dom->add_text_element($results[$i], array('x' => $x, 'y' => $y, 'font-size' => $this->c['size']['bars'], 'fill' => $this->c['color']['body_text'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
 			}
 		}
 
 		$headings = array_reverse($headings);
-		$line_ttf_height = $this->text_string_height("AZ@![]()@|_", $this->graph_font, $headings_font_size);
+		$line_ttf_height = $this->text_string_height("AZ@![]()@|_", $headings_font_size);
 		for($i = 0; $i < count($headings); $i++)
 		{
 			$this->svg_dom->draw_svg_line($this->graph_left_end - $horizontal_border - (($i + 1) * $identifiers_width), $this->c['pos']['top_start'] + $vertical_border, $this->graph_left_end - $horizontal_border - (($i + 1) * $identifiers_width), $this->graph_top_end - $vertical_border, $this->c['color']['body_light']);
@@ -112,7 +112,7 @@ class pts_MultiPassFailGraph extends pts_Graph
 			$this->svg_dom->add_text_element($headings[$i], array('x' => $x, 'y' => $y, 'font-size' => $headings_font_size, 'fill' => $this->c['color']['headers'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
 		}
 
-		$line_ttf_height = $this->text_string_height("AZ@![]()@|_", $this->graph_font, $main_font_size);
+		$line_ttf_height = $this->text_string_height("AZ@![]()@|_", $main_font_size);
 		for($i = 0; $i < count($this->graph_identifiers); $i++)
 		{
 			$this->svg_dom->draw_svg_line($this->c['pos']['left_start'] + $horizontal_border, $this->c['pos']['top_start'] + $vertical_border + ($i * $line_height) + $heading_height, $this->graph_left_end - $horizontal_border, $this->c['pos']['top_start'] + $vertical_border + ($i * $line_height) + $heading_height, $this->c['color']['body_light']);

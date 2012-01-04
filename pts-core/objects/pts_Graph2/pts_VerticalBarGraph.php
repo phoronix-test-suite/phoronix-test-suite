@@ -43,11 +43,11 @@ class pts_VerticalBarGraph extends pts_Graph
 
 		$longest_string = pts_strings::find_longest_string($this->graph_identifiers);
 		$width = $this->identifier_width - 4;
-		$this->graph_font_size_identifiers = $this->text_size_bounds($longest_string, $this->graph_font, $this->graph_font_size_identifiers, $this->minimum_identifier_font, $width);
+		$this->c['size']['identifiers'] = $this->text_size_bounds($longest_string, $this->c['size']['identifiers'], $this->minimum_identifier_font, $width);
 
-		if($this->graph_font_size_identifiers <= $this->minimum_identifier_font)
+		if($this->c['size']['identifiers'] <= $this->minimum_identifier_font)
 		{
-			$this->update_graph_dimensions($this->c['graph']['width'], $this->c['graph']['height'] + $this->text_string_width($longest_string, $this->graph_font, 9));
+			$this->update_graph_dimensions($this->c['graph']['width'], $this->c['graph']['height'] + $this->text_string_width($longest_string, 9));
 		}
 	}
 	protected function render_graph_identifiers()
@@ -66,7 +66,7 @@ class pts_VerticalBarGraph extends pts_Graph
 				$px_bound_right = $this->graph_left_end;
 			}
 
-			if($this->graph_font_size_identifiers <= $this->minimum_identifier_font)
+			if($this->c['size']['identifiers'] <= $this->minimum_identifier_font)
 			{
 				$x = $px_bound_left + ceil($this->identifier_width / 2);
 				$this->svg_dom->add_text_element($this->graph_identifiers[$i], array('x' => $x, 'y' => $px_from_top_end, 'font-size' => 9, 'fill' => $this->c['color']['headers'], 'text-anchor' => 'start', 'dominant-baseline' => 'middle', 'transform' => 'rotate(90 ' . $x . ' ' . $px_from_top_end . ')'));
@@ -74,7 +74,7 @@ class pts_VerticalBarGraph extends pts_Graph
 			else
 			{
 				$x = $px_bound_left + (($px_bound_right - $px_bound_left) * 0.5);
-				$this->svg_dom->add_text_element($this->graph_identifiers[$i], array('x' => $x, 'y' => ($px_from_top_end - 3), 'font-size' => $this->graph_font_size_identifiers, 'fill' => $this->c['color']['headers'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
+				$this->svg_dom->add_text_element($this->graph_identifiers[$i], array('x' => $x, 'y' => ($px_from_top_end - 3), 'font-size' => $this->c['size']['identifiers'], 'fill' => $this->c['color']['headers'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
 			}
 		}
 	}
@@ -116,12 +116,12 @@ class pts_VerticalBarGraph extends pts_Graph
 				$x = $px_bound_left + (($px_bound_right - $px_bound_left) / 2);
 				if($graph_size > 18)
 				{
-					$this->svg_dom->add_text_element($value, array('x' => $x, 'y' => ($value_plot_top + 2), 'font-size' => floor($this->graph_font_size_bars * 0.9), 'fill' => $this->c['color']['body_text'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
+					$this->svg_dom->add_text_element($value, array('x' => $x, 'y' => ($value_plot_top + 2), 'font-size' => floor($this->c['size']['bars'] * 0.9), 'fill' => $this->c['color']['body_text'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
 				}
 				else
 				{
 					// Make things more compact
-					$this->svg_dom->add_text_element($value, array('x' => $x, 'y' => ($value_plot_top + 2), 'font-size' => floor($this->graph_font_size_bars * 0.6), 'fill' => $this->c['color']['body_text'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
+					$this->svg_dom->add_text_element($value, array('x' => $x, 'y' => ($value_plot_top + 2), 'font-size' => floor($this->c['size']['bars'] * 0.6), 'fill' => $this->c['color']['body_text'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
 				}
 			}
 		}

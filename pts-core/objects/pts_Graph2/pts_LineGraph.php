@@ -60,11 +60,11 @@ class pts_LineGraph extends pts_Graph
 		$this->identifier_width = $identifier_count > 0 ? (($this->graph_left_end - $this->c['pos']['left_start']) / $identifier_count) : 1;
 
 		$longest_string = pts_strings::find_longest_string($this->graph_identifiers);
-		$this->graph_font_size_identifiers = $this->text_size_bounds($longest_string, $this->graph_font, $this->graph_font_size_identifiers, $this->minimum_identifier_font, $this->identifier_width - 4);
+		$this->c['size']['identifiers'] = $this->text_size_bounds($longest_string, $this->c['size']['identifiers'], $this->minimum_identifier_font, $this->identifier_width - 4);
 
-		if($this->graph_font_size_identifiers <= $this->minimum_identifier_font)
+		if($this->c['size']['identifiers'] <= $this->minimum_identifier_font)
 		{
-			list($text_width, $text_height) = bilde_renderer::soft_text_string_dimensions($longest_string, $this->graph_font, $this->minimum_identifier_font + 0.5);
+			list($text_width, $text_height) = pts_svg_dom::estimate_text_dimensions($longest_string, $this->minimum_identifier_font + 0.5);
 			$this->graph_bottom_offset += $text_width;
 			$this->update_graph_dimensions($this->c['graph']['width'], $this->c['graph']['height'] + $text_width);
 
@@ -108,13 +108,13 @@ class pts_LineGraph extends pts_Graph
 
 			$px_from_left = $this->c['pos']['left_start'] + ($this->identifier_width * ($i + ($this->identifiers_active ? 1 : 0)));
 
-			if($this->graph_font_size_identifiers <= $this->minimum_identifier_font)
+			if($this->c['size']['identifiers'] <= $this->minimum_identifier_font)
 			{
 				$this->svg_dom->add_text_element($this->graph_identifiers[$i], array('x' => $px_from_left, 'y' => ($px_from_top_end + 2), 'font-size' => 9, 'fill' => $this->c['color']['headers'], 'text-anchor' => 'start', 'dominant-baseline' => 'middle', 'transform' => 'rotate(90 ' . $px_from_left . ' ' . ($px_from_top_end + 2) . ')'));
 			}
 			else
 			{
-				$this->svg_dom->add_text_element($this->graph_identifiers[$i], array('x' => $px_from_left, 'y' => ($px_from_top_end + 2), 'font-size' => $this->graph_font_size_identifiers, 'fill' => $this->c['color']['headers'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
+				$this->svg_dom->add_text_element($this->graph_identifiers[$i], array('x' => $px_from_left, 'y' => ($px_from_top_end + 2), 'font-size' => $this->c['size']['identifiers'], 'fill' => $this->c['color']['headers'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
 			}
 		}
 	}
@@ -253,7 +253,7 @@ class pts_LineGraph extends pts_Graph
 						}
 
 						$this->svg_dom->add_text_element($write, array('x' => $from_left, 'y' => $from_top, 'font-size' => 6.5, 'fill' => $color_key, 'text-anchor' => 'start', 'dominant-baseline' => 'middle'));
-						$string_width = $this->text_string_width($write, $this->graph_font, 6.5);
+						$string_width = $this->text_string_width($write, 6.5);
 
 						if($string_width > $longest_string_width)
 						{

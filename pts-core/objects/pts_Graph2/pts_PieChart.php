@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010, Phoronix Media
-	Copyright (C) 2010, Michael Larabel
+	Copyright (C) 2010 - 2012, Phoronix Media
+	Copyright (C) 2010 - 2012, Michael Larabel
 	pts_PieChart.php: A pie chart object for pts_Graph
 
 	This program is free software; you can redistribute it and/or modify
@@ -60,8 +60,8 @@ class pts_PieChart extends pts_Graph
 		}
 
 		$key_count = count($key_strings);
-		$key_item_width = 18 + $this->text_string_width(pts_strings::find_longest_string($this->graph_identifiers), $this->graph_font, $this->graph_font_size_key);
-		$key_item_width_value = 12 + $this->text_string_width(pts_strings::find_longest_string($key_strings), $this->graph_font, $this->graph_font_size_key);
+		$key_item_width = 18 + $this->text_string_width(pts_strings::find_longest_string($this->graph_identifiers), $this->c['size']['key']);
+		$key_item_width_value = 12 + $this->text_string_width(pts_strings::find_longest_string($key_strings), $this->c['size']['key']);
 		$keys_per_line = floor(($this->graph_left_end - $this->c['pos']['left_start'] - 14) / ($key_item_width + $key_item_width_value));
 
 		if($keys_per_line < 1)
@@ -87,8 +87,8 @@ class pts_PieChart extends pts_Graph
 			$c_x = $this->c['pos']['left_start'] + 13 + (($key_item_width + $key_item_width_value) * ($i % $keys_per_line));
 
 			$this->svg_dom->add_element('rect', array('x' => ($c_x - 13), 'y' => ($c_y - 5), 'width' => 10, 'height' => 10, 'fill' => $this_color, 'stroke' => $this->c['color']['notches'], 'stroke-width' => 1));
-			$this->svg_dom->add_text_element($this->graph_identifiers[$i], array('x' => $c_x, 'y' => $c_y, 'font-size' => $this->graph_font_size_key, 'fill' => $this_color, 'text-anchor' => 'start', 'dominant-baseline' => 'middle'));
-			$this->svg_dom->add_text_element($key_strings[$i], array('x' => ($c_x + $key_item_width + 30), 'y' => $c_y, 'font-size' => $this->graph_font_size_key, 'fill' => $this_color, 'text-anchor' => 'end', 'dominant-baseline' => 'middle'));
+			$this->svg_dom->add_text_element($this->graph_identifiers[$i], array('x' => $c_x, 'y' => $c_y, 'font-size' => $this->c['size']['key'], 'fill' => $this_color, 'text-anchor' => 'start', 'dominant-baseline' => 'middle'));
+			$this->svg_dom->add_text_element($key_strings[$i], array('x' => ($c_x + $key_item_width + 30), 'y' => $c_y, 'font-size' => $this->c['size']['key'], 'fill' => $this_color, 'text-anchor' => 'end', 'dominant-baseline' => 'middle'));
 		}
 	}
 	public function render_graph_finish()
@@ -110,9 +110,9 @@ class pts_PieChart extends pts_Graph
 			$offset_percent += $percent;
 		}
 
-		if(!empty($this->graph_watermark_text))
+		if(!empty($this->c['text']['watermark']))
 		{
-			$this->svg_dom->add_text_element($this->graph_watermark_text, array('x' => ($this->c['graph']['width'] / 2), 'y' => ($this->c['graph']['height'] - 15), 'font-size' => 10, 'fill' => $this->c['color']['text'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
+			$this->svg_dom->add_text_element($this->c['text']['watermark'], array('x' => ($this->c['graph']['width'] / 2), 'y' => ($this->c['graph']['height'] - 15), 'font-size' => 10, 'fill' => $this->c['color']['text'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
 		}
 
 		return $this->return_graph_image(100);
