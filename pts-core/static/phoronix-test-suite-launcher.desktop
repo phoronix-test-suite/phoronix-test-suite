@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Phoronix Test Suite Launcher
+Exec=phoronix-test-suite openbenchmarking-launcher %f
+NoDisplay=true
+StartupNotify=true
+MimeType=application/x-openbenchmarking;
+Terminal=true
+Type=Application

@@ -7,6 +7,7 @@ Phoronix Test Suite (Git)
 - pts-core: Major enhancements to MATISK testing module
 - phodevi: Add some fall-back graphics detection support of Texas Instruments OMAP / Samsung EXYNOS
 - phodevi: Fall-back graphics detection support for the ARM Mali
+- installer: Installer update
 
 Phoronix Test Suite 3.6.1-Arendal
 23 December 2011
