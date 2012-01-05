@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2011, Phoronix Media
-	Copyright (C) 2008 - 2011, Michael Larabel
+	Copyright (C) 2008 - 2012, Phoronix Media
+	Copyright (C) 2008 - 2012, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -863,40 +863,21 @@ class pts_client
 
 		return pts_strings::add_trailing_slash($path);
 	}
-	public static function xsl_results_viewer_graph_template($matching_graph_tables = false)
+	public static function xsl_results_viewer_graph_template()
 	{
-		$width = pts_render::$last_graph_object->graphWidth();
-		$height = pts_render::$last_graph_object->graphHeight();
-
-		if(pts_render::$last_graph_object->getRenderer() == 'SVG')
-		{
-			$width = 'auto';
-			$height = 'auto';
-		}
-
 		$raw_xsl = file_get_contents(PTS_RESULTS_VIEWER_PATH . 'pts-results-viewer.xsl');
 
 		// System Tables
 		$conversions = array('systems', 'radar', 'overview', 'visualize');
 		foreach($conversions as $convert)
 		{
-			$graph_string = pts_render::$last_graph_object->htmlEmbedCode('result-graphs/' . $convert . '.BILDE_EXTENSION');
+			$graph_string = pts_svg_dom::html_embed_code('result-graphs/' . $convert . '.BILDE_EXTENSION', 'SVG', array('width' => 'auto', 'height' => 'auto'), true);
 			$raw_xsl = str_replace('<!-- ' . strtoupper($convert) . ' TAG -->', $graph_string, $raw_xsl);
 		}
 
 		// Result Graphs
-		$graph_string = pts_render::$last_graph_object->htmlEmbedCode('result-graphs/<xsl:number value="position()" />.BILDE_EXTENSION', $width, $height);
-
+		$graph_string = pts_svg_dom::html_embed_code('result-graphs/<xsl:number value="position()" />.BILDE_EXTENSION', 'SVG', array('width' => 'auto', 'height' => 'auto'), true);
 		$raw_xsl = str_replace('<!-- GRAPH TAG -->', $graph_string, $raw_xsl);
-
-		/*
-		if($matching_graph_tables)
-		{
-			$bilde_svg = new bilde_svg_renderer(1, 1);
-			$table_string = $bilde_svg->html_embed_code('result-graphs/<xsl:number value="position()" />_table.BILDE_EXTENSION', array('width' => 'auto', 'height' => 'auto'), true);
-			$raw_xsl = str_replace('<!-- GRAPH TABLE TAG -->', $table_string, $raw_xsl);
-		}
-		*/
 
 		return $raw_xsl;
 	}

@@ -38,10 +38,6 @@ abstract class pts_Graph
 	protected $c;
 	public $svg_dom;
 
-	// Text
-	protected $graph_font; // TTF file name
-
-
 	protected $graph_proportion = null;
 
 	// Not user-friendly changes below this line
@@ -138,27 +134,6 @@ abstract class pts_Graph
 		}
 
 		$this->update_graph_dimensions(-1, -1, true);
-/*
-		$default_font = bilde_renderer::find_default_ttf_font($this->graph_font);
-
-		if($default_font == false)
-		{
-			$this->requestRenderer('SVG');
-			$font_type = null;
-		}
-		else
-		{
-			$font_type = basename($default_font);
-
-			if($default_font != $font_type && !defined('CUSTOM_FONT_DIR'))
-			{
-				$font_path = substr($default_font, 0, 0 - (strlen($font_type)));
-				define('CUSTOM_FONT_DIR', $font_path);
-				bilde_renderer::setup_font_directory();
-			}
-		}
-		$this->graph_font = $font_type;
-*/
 
 		if($result_file != null && $result_file instanceof pts_result_file)
 		{
@@ -261,26 +236,6 @@ abstract class pts_Graph
 	public function saveGraphToFile($file)
 	{
 		$this->graph_output = $file;
-	}
-	public function htmlEmbedCode($file, $width = null, $height = null)
-	{
-		$attributes = array();
-
-		if(in_array($this->graph_renderer, array('SWF', 'SVG')) && $width != null)
-		{
-			$attributes['width'] = $width;
-			$attributes['height'] = $height;
-		}
-
-		return $this->svg_dom->html_embed_code($file, $attributes, true);
-	}
-	public function graphWidth()
-	{
-		return $this->c['graph']['width'];
-	}
-	public function graphHeight()
-	{
-		return $this->c['graph']['height'];
 	}
 	public function markResultRegressions($threshold)
 	{

@@ -158,31 +158,61 @@ class pts_svg_dom
 			$el->setAttribute($name, $value);
 		}
 	}
-	public function html_embed_code($file_name, $attributes = null, $is_xsl = false)
+	public static function html_embed_code($file_name, $file_type = 'SVG', $attributes = null, $is_xsl = false)
 	{
-		$file_name = str_replace('BILDE_EXTENSION', 'svg', $file_name);
 		$attributes = pts_arrays::to_array($attributes);
-		$attributes['data'] = $file_name;
+		$file_name = str_replace('BILDE_EXTENSION', strtolower($file_type), $file_name);
 
-		if($is_xsl)
+		switch($file_type)
 		{
-			$html = '<object type="image/svg+xml">';
+			case 'SVG':
+				$attributes['data'] = $file_name;
 
-			foreach($attributes as $option => $value)
-			{
-				$html .= '<xsl:attribute name="' . $option . '">' . $value . '</xsl:attribute>';
-			}
-			$html .= '</object>';
-		}
-		else
-		{
-			$html = '<object type="image/svg+xml"';
+				if($is_xsl)
+				{
+					$html = '<object type="image/svg+xml">';
 
-			foreach($attributes as $option => $value)
-			{
-				$html .= $option . '="' . $value . '" ';
-			}
-			$html .= '/>';
+					foreach($attributes as $option => $value)
+					{
+						$html .= '<xsl:attribute name="' . $option . '">' . $value . '</xsl:attribute>';
+					}
+					$html .= '</object>';
+				}
+				else
+				{
+					$html = '<object type="image/svg+xml"';
+
+					foreach($attributes as $option => $value)
+					{
+						$html .= $option . '="' . $value . '" ';
+					}
+					$html .= '/>';
+				}
+				break;
+			default:
+				$attributes['src'] = $file_name;
+
+				if($is_xsl)
+				{
+					$html = '<img>';
+
+					foreach($attributes as $option => $value)
+					{
+						$html .= '<xsl:attribute name="' . $option . '">' . $value . '</xsl:attribute>';
+					}
+					$html .= '</img>';
+				}
+				else
+				{
+					$html = '<img ';
+
+					foreach($attributes as $option => $value)
+					{
+						$html .= $option . '="' . $value . '" ';
+					}
+					$html .= '/>';
+				}
+				break;
 		}
 
 		return $html;
