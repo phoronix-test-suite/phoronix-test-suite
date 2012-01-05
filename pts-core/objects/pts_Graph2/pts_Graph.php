@@ -49,7 +49,6 @@ abstract class pts_Graph
 	protected $graph_maximum_value;
 
 	protected $graph_output = null;
-	protected $graph_renderer = 'SVG';
 	protected $graph_data = array();
 	protected $graph_data_raw = array();
 	protected $graph_data_title = array();
@@ -118,7 +117,6 @@ abstract class pts_Graph
 		$this->c['size']['axis_headers'] = $this->read_graph_config('PhoronixTestSuite/Graphs/Font/Axis'); // Font size of axis headers
 
 		$this->c['graph']['mark_count'] = 6; // Number of marks to make on vertical axis
-		$this->graph_renderer = $this->read_graph_config('PhoronixTestSuite/Graphs/General/Renderer'); // Renderer // TODO XXX: hook this up to new system
 
 		// Reset of setup besides config
 		if($result_object != null)
@@ -159,17 +157,6 @@ abstract class pts_Graph
 		}
 
 		return $config_store[$xml_path];
-	}
-	public function requestRenderer($renderer)
-	{
-		if($renderer != null)
-		{
-			$this->graph_renderer = $renderer;
-		}
-	}
-	public function getRenderer()
-	{
-		return $this->graph_renderer;
 	}
 
 	//
@@ -476,7 +463,6 @@ abstract class pts_Graph
 
 		$this->update_graph_dimensions();
 		$this->svg_dom = new pts_svg_dom(ceil($this->c['graph']['width']), ceil($this->c['graph']['height']));
-		// $this->graph_image = bilde_renderer::setup_renderer($this->graph_renderer, $this->c['graph']['width'], $this->c['graph']['height'], $this->graph_internal_identifiers, $bilde_attributes);
 
 		// Initalize Colors
 		$this->c['color']['notches'] = pts_svg_dom::sanitize_hex($this->c['color']['notches']);
@@ -785,10 +771,6 @@ abstract class pts_Graph
 		//unset($this->svg_dom);
 		//return $this->graph_output != null ? @file_put_contents(str_replace('BILDE_EXTENSION', 'svg', $this->graph_output), $svg_image) : $svg_image;
 	}
-
-	//
-	// Renderer-specific Functions
-	//
 
 	protected function text_string_width($string, $size)
 	{

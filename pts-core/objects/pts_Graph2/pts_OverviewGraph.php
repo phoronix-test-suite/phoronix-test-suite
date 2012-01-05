@@ -93,7 +93,6 @@ class pts_OverviewGraph extends pts_Graph
 	}
 	public function renderGraph()
 	{
-		$this->requestRenderer('SVG');
 		$this->graph_data_title = &$this->system_identifiers;
 		$this->c['graph']['mark_count'] = 6;
 		$this->graph_maximum_value = 1.2;

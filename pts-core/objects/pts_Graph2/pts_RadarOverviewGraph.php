@@ -106,7 +106,6 @@ class pts_RadarOverviewGraph extends pts_Graph
 	}
 	public function renderGraph()
 	{
-		$this->requestRenderer('SVG');
 		$this->graph_top_heading_height = max($this->c['size']['headers'] + 22 + $this->c['size']['key'], 48);
 		$this->c['pos']['top_start'] = $this->graph_top_heading_height + 50;
 		$this->update_graph_dimensions($this->c['graph']['width'], $this->c['graph']['height'] + $this->c['pos']['top_start'], true);

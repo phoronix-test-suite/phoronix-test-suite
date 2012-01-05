@@ -82,7 +82,6 @@ class pts_ResultFileCompactSystemsTable extends pts_Graph
 			;
 
 		// Do the actual work
-		$this->requestRenderer('SVG');
 		$this->render_graph_pre_init();
 		$this->render_graph_init(array('cache_font_size' => true));
 
@@ -152,7 +151,7 @@ class pts_ResultFileCompactSystemsTable extends pts_Graph
 		$this->svg_dom->add_element('rect', array('x' => 1, 'y' => ($this->c['graph']['height'] - $bottom_footer), 'width' => ($this->c['graph']['width'] - 2), 'height' => $bottom_footer, 'fill' => $this->c['color']['main_headers']));
 		$this->svg_dom->add_element('image', array('xlink:href' => 'http://www.phoronix-test-suite.com/external/pts-logo-80x42-white.png', 'x' => 10, 'y' => ($this->c['graph']['height'] - 48), 'width' => 80, 'height' => 42));
 
-		if(defined('OPENBENCHMARKING_IDS') && $this->getRenderer() == 'SVG')
+		if(defined('OPENBENCHMARKING_IDS'))
 		{
 			$back_width = $this->c['graph']['width'] - 4;
 			$this->svg_dom->add_text_element(OPENBENCHMARKING_TITLE, array('x' => $back_width, 'y' => ($this->c['graph']['height'] - 38), 'font-size' => 8, 'fill' => $this->c['color']['background'], 'text-anchor' => 'end', 'dominant-baseline' => 'middle', 'font-weight' => 'bold', 'xlink:show' => 'new', 'xlink:href' => 'http://openbenchmarking.org/result/' . OPENBENCHMARKING_IDS));
