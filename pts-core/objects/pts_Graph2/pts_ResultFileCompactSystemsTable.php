@@ -161,7 +161,7 @@ class pts_ResultFileCompactSystemsTable extends pts_Graph
 	}
 	public function render_graph_finish()
 	{
-		return $this->return_graph_image();
+
 	}
 }
 

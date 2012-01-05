@@ -190,8 +190,6 @@ class pts_OverviewGraph extends pts_Graph
 		//$this->render_graph_base($this->c['pos']['left_start'], $this->c['pos']['top_start'], $this->graph_left_end, $this->graph_top_end);
 		$this->render_graph_heading();
 		//$this->render_graph_watermark();
-
-		return $this->return_graph_image();
 	}
 }
 

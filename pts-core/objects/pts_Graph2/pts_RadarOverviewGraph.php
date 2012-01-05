@@ -234,8 +234,6 @@ class pts_RadarOverviewGraph extends pts_Graph
 			$this->svg_dom->add_text_element(implode('; ', $line), array('x' => ($this->graph_left_end - 4), 'y' => ($this->graph_top_end - ($i * $this->c['size']['key'])), 'font-size' => $this->c['size']['key'], 'fill' => $this->get_paint_color($key), 'text-anchor' => 'end', 'dominant-baseline' => 'middle'));
 			$i++;
 		}
-
-		return $this->return_graph_image();
 	}
 }
 

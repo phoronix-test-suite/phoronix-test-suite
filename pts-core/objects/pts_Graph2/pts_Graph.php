@@ -235,7 +235,7 @@ abstract class pts_Graph
 
 	protected function get_paint_color($identifier)
 	{
-		return pts_svg_dom::sanitize_hex(bilde_renderer::color_cache(0, $identifier, $this->c['color']['paint']));
+		return pts_svg_dom::sanitize_hex(self::color_cache(0, $identifier, $this->c['color']['paint']));
 	}
 	protected function maximum_graph_value()
 	{
@@ -454,13 +454,8 @@ abstract class pts_Graph
 	{
 		return;
 	}
-	protected function render_graph_init($bilde_attributes = null)
+	protected function render_graph_init()
 	{
-		if(defined('PHOROMATIC_TRACKER'))
-		{
-			$bilde_attributes['cache_font_size'] = true;
-		}
-
 		$this->update_graph_dimensions();
 		$this->svg_dom = new pts_svg_dom(ceil($this->c['graph']['width']), ceil($this->c['graph']['height']));
 
@@ -764,14 +759,6 @@ abstract class pts_Graph
 
 		$this->svg_dom->add_element('polygon', array('points' => implode(' ', $arrow_points), 'fill' => $background_color, 'stroke' => $border_color, 'stroke-width' => $border_width));
 	}
-	protected function return_graph_image($quality = 85)
-	{
-		return null;
-		//$svg_image = $this->svg_dom->save_xml();
-		//unset($this->svg_dom);
-		//return $this->graph_output != null ? @file_put_contents(str_replace('BILDE_EXTENSION', 'svg', $this->graph_output), $svg_image) : $svg_image;
-	}
-
 	protected function text_string_width($string, $size)
 	{
 		$dimensions = pts_svg_dom::estimate_text_dimensions($string, $size);
@@ -781,6 +768,202 @@ abstract class pts_Graph
 	{
 		$dimensions = pts_svg_dom::estimate_text_dimensions($string, $size);
 		return $dimensions[1];
+	}
+	public static function color_cache($ns, $id, &$colors)
+	{
+		//return array_shift($colors);
+		static $cache = array();
+		static $color_shift = 0;
+		static $color_shift_size = 120;
+		$i = count($cache);
+		$color_shift_size = ($i == 0 ? 120 : 360 / $i); // can't be assigned directly to static var
+
+		if(!isset($cache[$ns][$id]))
+		{
+			if(!isset($cache[$ns]))
+			{
+				$cache[$ns] = array();
+			}
+
+			do
+			{
+				if(empty($colors))
+				{
+					return false;
+				}
+
+				$hsl = self::color_rgb_to_hsl($colors[0]);
+				$hsl = self::shift_hsl($hsl, $color_shift % 360);
+				$color = self::color_hsl_to_hex($hsl);
+
+				$color_shift += $color_shift_size;
+				if($color_shift == ($color_shift_size * 3))
+				{
+					$color_shift_size *= 0.3;
+					$colors[0] = self::color_shade($colors[0], 0.9, 1);
+				}
+				else if($color_shift > 630)
+				{
+					// We have already exhausted the cache pool once
+					array_shift($colors);
+					$color_shift = 0;
+				}
+			}
+			while(in_array($color, $cache[$ns]));
+			$cache[$ns][$id] = $color;
+		}
+
+		return $cache[$ns][$id];
+	}
+	public static function color_hex_to_rgb($hex)
+	{
+		$color = hexdec($hex);
+
+		return array(
+			'r' => ($color >> 16) & 0xff,
+			'g' => ($color >> 8) & 0xff,
+			'b' => $color & 0xff
+			);
+	}
+	public static function color_hsl_to_hex($hsl)
+	{
+		if($hsl['s'] == 0)
+		{
+			$rgb['r'] = $hsl['l'] * 255;
+			$rgb['g'] = $hsl['l'] * 255;
+			$rgb['b'] = $hsl['l'] * 255;
+		}
+		else
+		{
+			$conv2 = $hsl['l'] < 0.5 ? $hsl['l'] * (1 + $hsl['s']) : ($hsl['l'] + $hsl['s']) - ($hsl['l'] * $hsl['s']);
+			$conv1 = 2 * $hsl['l'] - $conv2;
+			$rgb['r'] = round(255 * self::color_hue_convert($conv1, $conv2, $hsl['h'] + (1 / 3)));
+			$rgb['g'] = round(255 * self::color_hue_convert($conv1, $conv2, $hsl['h']));
+			$rgb['b'] = round(255 * self::color_hue_convert($conv1, $conv2, $hsl['h'] - (1 / 3)));
+		}
+
+		return self::color_rgb_to_hex($rgb['r'], $rgb['g'], $rgb['b']);
+	}
+	protected static function color_hue_convert($v1, $v2, $vh)
+	{
+		if($vh < 0)
+		{
+			$vh += 1;
+		}
+
+		if($vh > 1)
+		{
+			$vh -= 1;
+		}
+
+		if((6 * $vh) < 1)
+		{
+			return $v1 + ($v2 - $v1) * 6 * $vh;
+		}
+
+		if((2 * $vh) < 1)
+		{
+			return $v2;
+		}
+
+		if((3 * $vh) < 2)
+		{
+			return $v1 + ($v2 - $v1) * ((2 / 3 - $vh) * 6);
+		}
+
+		return $v1;
+	}
+	public static function color_rgb_to_hsl($hex)
+	{
+		$rgb = self::color_hex_to_rgb($hex);
+
+		foreach($rgb as &$value)
+		{
+			$value = $value / 255;
+		}
+
+		$min = min($rgb);
+		$max = max($rgb);
+		$delta = $max - $min;
+
+		$hsl['l'] = ($max + $min) / 2;
+
+		if($delta == 0)
+		{
+			$hsl['h'] = 0;
+			$hsl['s'] = 0;
+		}
+		else
+		{
+			$hsl['s'] = $delta / ($hsl['l'] < 0.5 ? $max + $min : 2 - $max - $min);
+
+			$delta_rgb = array();
+			foreach($rgb as $color => $value)
+			{
+				$delta_rgb[$color] = ((($max - $value) / 6) + ($max / 2)) / $delta;
+			}
+
+			switch($max)
+			{
+				case $rgb['r']:
+					$hsl['h'] = $delta_rgb['b'] - $delta_rgb['g'];
+					break;
+				case $rgb['g']:
+					$hsl['h'] = (1 / 3) + $delta_rgb['r'] - $delta_rgb['b'];
+					break;
+				case $rgb['b']:
+				default:
+					$hsl['h'] = (2 / 3) + $delta_rgb['g'] - $delta_rgb['r'];
+					break;
+			}
+
+			$hsl['h'] += $hsl['h'] < 0 ? 1 : 0;
+			$hsl['h'] -= $hsl['h'] > 1 ? 1 : 0;
+		}
+
+		return $hsl;
+	}
+	public static function shift_hsl($hsl, $rotate_h_degrees = 180)
+	{
+		if($rotate_h_degrees > 0)
+		{
+			$rotate_dec = $rotate_h_degrees / 360;
+			$hsl['h'] = $hsl['h'] <= $rotate_dec ? $hsl['h'] + $rotate_dec : $hsl['h'] - $rotate_dec;
+		}
+
+		return $hsl;
+	}
+	public static function color_rgb_to_hex($r, $g, $b)
+	{
+		$color = ($r << 16) | ($g << 8) | $b;
+		return '#' . sprintf('%06x', $color);
+	}
+	public static function color_gradient($color1, $color2, $color_weight)
+	{
+		$color1 = self::color_hex_to_rgb($color1);
+		$color2 = self::color_hex_to_rgb($color2);
+
+		$diff_r = $color2['r'] - $color1['r'];
+		$diff_g = $color2['g'] - $color1['g'];
+		$diff_b = $color2['b'] - $color1['b'];
+
+		$r = ($color1['r'] + $diff_r * $color_weight);
+		$g = ($color1['g'] + $diff_g * $color_weight);
+		$b = ($color1['b'] + $diff_b * $color_weight);
+
+		return self::color_rgb_to_hex($r, $g, $b);
+	}
+	public static function color_shade($color, $percent, $mask)
+	{
+		$color = self::color_hex_to_rgb($color);
+
+		foreach($color as &$color_value)
+		{
+			$color_value = round($color_value * $percent) + round($mask * (1 - $percent));
+			$color_value = $color_value > 255 ? 255 : $color_value;
+		}
+
+		return self::color_rgb_to_hex($color['r'], $color['g'], $color['b']);
 	}
 }
 

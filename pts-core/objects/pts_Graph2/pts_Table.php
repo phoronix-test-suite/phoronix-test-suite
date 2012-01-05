@@ -409,10 +409,7 @@ class pts_Table extends pts_Graph
 		{
 			// No results were to be reported, so don't report the individualized graphs
 			//$this->graph_image->destroy_image();
-			return $this->return_graph_image();
 		}
-
-		return $this->return_graph_image();
 	}
 }
 

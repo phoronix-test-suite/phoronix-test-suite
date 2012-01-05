@@ -114,8 +114,6 @@ class pts_PieChart extends pts_Graph
 		{
 			$this->svg_dom->add_text_element($this->c['text']['watermark'], array('x' => ($this->c['graph']['width'] / 2), 'y' => ($this->c['graph']['height'] - 15), 'font-size' => 10, 'fill' => $this->c['color']['text'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
 		}
-
-		return $this->return_graph_image(100);
 	}
 }
 
