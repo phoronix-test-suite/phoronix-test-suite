@@ -803,9 +803,9 @@ abstract class pts_Graph
 			$arrow_length_half = $arrow_length / 2;
 
 			$arrow_points = array(
-				$tip_x1 . ', ' . $tip_y1,
-				($tail_x1 + $arrow_length_half) . ', ' . $tail_y1,
-				($tail_x1 - $arrow_length_half) . ', ' . $tail_y1
+				$tip_x1 . ',' . $tip_y1,
+				($tail_x1 + $arrow_length_half) . ',' . $tail_y1,
+				($tail_x1 - $arrow_length_half) . ',' . $tail_y1
 				);
 		}
 		else
@@ -815,9 +815,9 @@ abstract class pts_Graph
 			$arrow_length_half = $arrow_length / 2;
 
 			$arrow_points = array(
-				$tip_x1 . ', ' . $tip_y1,
-				$tail_x1 . ', ' . ($tail_y1 + $arrow_length_half),
-				$tail_x1 . ', ' . ($tail_y1 - $arrow_length_half)
+				$tip_x1 . ',' . $tip_y1,
+				$tail_x1 . ',' . ($tail_y1 + $arrow_length_half),
+				$tail_x1 . ',' . ($tail_y1 - $arrow_length_half)
 				);
 		}
 

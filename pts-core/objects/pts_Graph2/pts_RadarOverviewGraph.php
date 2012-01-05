@@ -171,7 +171,7 @@ class pts_RadarOverviewGraph extends pts_Graph
 				$svg_poly = array();
 				foreach($points as $point_pair)
 				{
-					array_push($svg_poly, implode(', ', $point_pair));
+					array_push($svg_poly, implode(',', $point_pair));
 				}
 				$this->svg_dom->add_element('polygon', array('points' => implode(' ', $svg_poly), 'fill' => $this->get_paint_color($result_identifier), 'stroke' => $this->c['color']['text'], 'stroke-width' => 2, 'xlink:title' => $tooltip));
 			}

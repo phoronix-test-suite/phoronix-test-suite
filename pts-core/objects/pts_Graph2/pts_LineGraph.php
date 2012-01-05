@@ -284,7 +284,7 @@ class pts_LineGraph extends pts_Graph
 			array_push($svg_poly, round($x_y[0]) . ',' . round($x_y[1]));
 		}
 		$svg_poly = implode(' ', $svg_poly);
-		$this->svg_dom->add_element('polyline', array('points' => $svg_poly, 'fill' => 'none', 'stroke' => $paint_color, 'stroke-width' => 2));
+		$this->svg_dom->add_element('polyline', array('points' => $svg_poly, 'fill' => $paint_color, 'stroke' => $paint_color, 'stroke-width' => 2));
 
 		foreach($poly_points as $i => $x_y_pair)
 		{

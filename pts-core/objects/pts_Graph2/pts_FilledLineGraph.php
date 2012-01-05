@@ -137,7 +137,7 @@ class pts_FilledLineGraph extends pts_LineGraph
 			$svg_poly = array();
 			foreach($poly_points as $point_pair)
 			{
-				array_push($svg_poly, implode(', ', $point_pair));
+				array_push($svg_poly, implode(',', $point_pair));
 			}
 			$this->svg_dom->add_element('polygon', array('points' => implode(' ', $svg_poly), 'fill' => $paint_color, 'stroke' => $this->c['color']['main_headers'], 'stroke-width' => 1));
 			$prev_poly_points = array_merge($poly_points, $prev_poly_points);

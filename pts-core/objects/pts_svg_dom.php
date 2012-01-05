@@ -49,6 +49,12 @@ class pts_svg_dom
 	{
 		// TODO XXX: Convert here from SVG DOM to other format if desired
 		// else default:
+/*
+		$output = pts_svg_dom_gd::svg_dom_to_gd($this->dom, 'JPEG');
+		$output_format = 'jpg';
+		$output = pts_svg_dom_gd::svg_dom_to_gd($this->dom, 'PNG');
+		$output_format = 'png';
+*/
 		$output = $this->save_xml();
 		$output_format = 'svg';
 
@@ -67,6 +73,7 @@ class pts_svg_dom
 	}
 	public static function sanitize_hex($hex)
 	{
+		return $hex; // don't shorten it right now until the gd code can handle shortened hex codes
 		$hex = preg_replace('/(?<=^#)([a-f0-9])\\1([a-f0-9])\\2([a-f0-9])\\3\z/i', '\1\2\3', $hex);
 
 		return strtolower($hex);
