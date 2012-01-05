@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2011, Phoronix Media
-	Copyright (C) 2008 - 2011, Michael Larabel
+	Copyright (C) 2008 - 2012, Phoronix Media
+	Copyright (C) 2008 - 2012, Michael Larabel
 	pts_PassFailGraph.php: An abstract graph object extending pts_Graph for showing results in a pass/fail scenario.
 
 	This program is free software; you can redistribute it and/or modify
@@ -37,9 +37,9 @@ class pts_PassFailGraph extends pts_Graph
 		$horizontal_border = 10;
 		$spacing = 8;
 		$columns = 1;
-		$graph_width = $this->graph_left_end - $this->graph_left_start - ($horizontal_border * 2);
-		$graph_height = $this->graph_top_end - $this->graph_top_start - ($vertical_border * 1.5);
-		$font_size = $this->graph_font_size_bars * 1.5;
+		$graph_width = $this->graph_left_end - $this->c['pos']['left_start'] - ($horizontal_border * 2);
+		$graph_height = $this->graph_top_end - $this->c['pos']['top_start'] - ($vertical_border * 1.5);
+		$font_size = $this->c['size']['bars'] * 1.5;
 
 		$pass_color = $this->get_paint_color('PASS');
 		$fail_color = $this->get_paint_color('FAIL');
@@ -58,7 +58,7 @@ class pts_PassFailGraph extends pts_Graph
 
 		$width = $identifier_width - 8;
 		$height = $line_height - 4;
-		$main_font_size = $this->text_size_bounds($this->graph_maximum_value, $this->graph_font, $font_size, 4, $width, $height);
+		$main_font_size = $this->text_size_bounds($this->graph_maximum_value, $font_size, 4, $width, $height);
 
 		for($c = 0; $c < $columns; $c++)
 		{
@@ -68,10 +68,10 @@ class pts_PassFailGraph extends pts_Graph
 				$this_identifier = $this->graph_identifiers[$element_i];
 				$this_value = $this->graph_data[0][$element_i];
 
-				$this_horizontal_start = $this->graph_left_start + $horizontal_border + ($c * ($identifier_width + $spacing));
-				$this_horizontal_end = $this->graph_left_start + $horizontal_border + ($c * ($identifier_width + $spacing)) + $identifier_width;
-				$this_vertical_start = $this->graph_top_start + $vertical_border + ($i * ($identifier_height + $spacing));
-				$this_vertical_end = $this->graph_top_start + $vertical_border + ($i * ($identifier_height + $spacing)) + $identifier_height;
+				$this_x_start = $this->c['pos']['left_start'] + $horizontal_border + ($c * ($identifier_width + $spacing));
+				$this_x_end = $this->c['pos']['left_start'] + $horizontal_border + ($c * ($identifier_width + $spacing)) + $identifier_width;
+				$this_y_start = $this->c['pos']['top_start'] + $vertical_border + ($i * ($identifier_height + $spacing));
+				$this_y_end = $this->c['pos']['top_start'] + $vertical_border + ($i * ($identifier_height + $spacing)) + $identifier_height;
 
 				if($this_value == "PASS")
 				{
@@ -82,9 +82,10 @@ class pts_PassFailGraph extends pts_Graph
 					$paint_color = $fail_color;
 				}
 
-				$this->graph_image->draw_rectangle_with_border($this_horizontal_start + 1, $this_vertical_start + 1, $this_horizontal_end - 1, $this_vertical_end - 1, $paint_color, $this->graph_color_body_light);
-
-				$this->graph_image->write_text_center($this_identifier, $this->graph_font, $font_size, $this->graph_color_body_text, $this_horizontal_start, $this_vertical_start + (($this_vertical_end - $this_vertical_start) / 2) - ($this->text_string_height($this_identifier, $this->graph_font, $font_size) / 2), $this_horizontal_end, $this_vertical_start + (($this_vertical_end - $this_vertical_start) / 2) - ($this->text_string_height($this_identifier, $this->graph_font, $font_size) / 2));
+				$this->svg_dom->add_element('rect', array('x' => $this_x_start, 'y' => $this_y_start, 'width' => $identifier_width, 'height' => $identifier_height, 'fill' => $paint_color, 'stroke' => $this->c['color']['body_light'], 'stroke-width' => 1));
+				$x = $this_x_start + (($this_x_end - $this_x_start) / 2);
+				$y = $this_y_start + (($this_y_end - $this_y_start) / 2);
+				$this->svg_dom->add_text_element($this_identifier, array('x' => $x, 'y' => $y, 'font-size' => $font_size, 'fill' => $this->c['color']['body_text'], 'text-anchor' => 'middle', 'dominant-baseline' => 'middle'));
 			}
 		}
 	}

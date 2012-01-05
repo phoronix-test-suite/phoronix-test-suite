@@ -47,14 +47,14 @@ class pts_ResultFileCompactSystemsTable extends pts_Graph
 	}
 	public function render_graph_start()
 	{
-		$this->graph_top_heading_height = 22 + $this->graph_font_size_heading;
+		$this->graph_top_heading_height = 22 + $this->c['size']['headers'];
 
 		$longest_component = pts_strings::find_longest_string($this->components);
-		$component_header_height = $this->text_string_height($longest_component, $this->graph_font, ($this->graph_font_size_identifiers + 3)) + 4;
+		$component_header_height = $this->text_string_height($longest_component, ($this->c['size']['identifiers'] + 3)) + 4;
 
-		$this->graph_attr_width = 10 + max(
-			$this->text_string_width($this->graph_title, $this->graph_font, $this->graph_font_size_heading) - (isset($this->graph_title[30]) ? 20 : 0),
-			$this->text_string_width($longest_component, $this->graph_font, ($this->graph_font_size_identifiers + (isset($longest_component[29]) ? 1.8 : 2)))
+		$this->c['graph']['width'] = 10 + max(
+			$this->text_string_width($this->graph_title, $this->c['size']['headers']) - (isset($this->graph_title[30]) ? 20 : 0),
+			$this->text_string_width($longest_component, ($this->c['size']['identifiers'] + (isset($longest_component[29]) ? 1.8 : 2)))
 			);
 
 		$intent_count = 0;
@@ -75,22 +75,22 @@ class pts_ResultFileCompactSystemsTable extends pts_Graph
 		unset($dupes);
 
 		$bottom_footer = 50; // needs to be at least 86 to make room for PTS logo
-		$this->graph_attr_height =
+		$this->c['graph']['height'] =
 			$this->graph_top_heading_height +
 			((count($this->components) + $intent_count) * $component_header_height) +
 			$bottom_footer
 			;
 
 		// Do the actual work
-		$this->requestRenderer('SVG');
 		$this->render_graph_pre_init();
 		$this->render_graph_init(array('cache_font_size' => true));
 
 		// Header
-		$this->graph_image->draw_rectangle(2, 1, $this->graph_attr_width - 1, $this->graph_top_heading_height, $this->graph_color_main_headers);
-		$this->graph_image->write_text_center($this->graph_title, $this->graph_font, $this->graph_font_size_heading, $this->graph_color_background, 0, 2, $this->graph_attr_width, 2);
-		$this->graph_image->write_text_left(new pts_graph_ir_value($this->graph_watermark_text, array('href' => $this->graph_watermark_url)), $this->graph_font, 8, $this->graph_color_background, 4, ($this->graph_top_heading_height - 6), 4, ($this->graph_top_heading_height - 6));
-		$this->graph_image->write_text_right(new pts_graph_ir_value($this->graph_version, array('href' => 'http://www.phoronix-test-suite.com/')), $this->graph_font, 8, $this->graph_color_background, ($this->graph_attr_width - 4), ($this->graph_top_heading_height - 6), ($this->graph_attr_width - 4), ($this->graph_top_heading_height - 6));
+		$this->svg_dom->add_element('rect', array('x' => 2, 'y' => 1, 'width' => ($this->c['graph']['width'] - 3), 'height' => ($this->graph_top_heading_height - 1), 'fill' => $this->c['color']['main_headers'], 'stroke' => $this->c['color']['border'], 'stroke-width' => 1));
+		$this->svg_dom->add_text_element($this->graph_title, array('x' => ($this->c['graph']['width']), 'y' => 2, 'font-size' => $this->c['size']['headers'], 'fill' => $this->c['color']['background'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
+
+		$this->svg_dom->add_text_element($this->c['text']['watermark'], array('x' => 4, 'y' => ($this->graph_top_heading_height - 6), 'font-size' => 8, 'fill' => $this->c['color']['background'], 'text-anchor' => 'start', 'dominant-baseline' => 'middle', 'xlink:show' => 'new', 'xlink:href' => $this->c['text']['watermark_url']));
+		$this->svg_dom->add_text_element($this->c['text']['graph_version'], array('x' => ($this->c['graph']['width'] - 4), 'y' => ($this->graph_top_heading_height - 6), 'font-size' => 8, 'fill' => $this->c['color']['background'], 'text-anchor' => 'end', 'dominant-baseline' => 'middle', 'xlink:show' => 'new', 'xlink:href' => 'http://www.phoronix-test-suite.com/'));
 
 		// Body
 		$offset = $this->graph_top_heading_height;
@@ -121,25 +121,24 @@ class pts_ResultFileCompactSystemsTable extends pts_Graph
 
 			if($dash)
 			{
-				$this->graph_image->draw_rectangle(0, $offset, $this->graph_attr_width, $next_offset, $this->graph_color_body_light);
+				$this->svg_dom->add_element('rect', array('x' => 0, 'y' => $offset, 'width' => $this->c['graph']['width'], 'height' => $component_header_height, 'fill' => $this->c['color']['body_light']));
 			}
 
-			$this->graph_image->draw_line(0, $offset, $this->graph_attr_width, $offset, $this->graph_color_notches, 1);
+			$this->svg_dom->draw_svg_line(0, $offset, $this->c['graph']['width'], $offset, $this->c['color']['notches'], 1);
 
 			if(isset($component[1]))
 			{
-				$this->graph_image->draw_rectangle_border(0, $offset + 1, $this->graph_attr_width, $next_offset - 1, $this->graph_color_highlight);
+				$this->svg_dom->add_element('rect', array('x' => 0, 'y' => ($offset + 1), 'width' => $this->c['graph']['width'], 'height' => ($component_header_height - 1), 'fill' => $this->c['color']['highlight']));
 			}
 
-			$this->graph_image->write_text_right($type . (isset($component[1]) && substr($type, -1) != 'y' ? 's' : null), $this->graph_font, 7, $this->graph_color_text, 0, $offset + 7, $this->graph_attr_width - 4, $offset + 7);
+			$text = $type . (isset($component[1]) && substr($type, -1) != 'y' ? 's' : null);
+			$this->svg_dom->add_text_element($text, array('x' => ($this->c['graph']['width'] - 4), 'y' => ($offset + 7), 'font-size' => 7, 'fill' => $this->c['color']['text'], 'text-anchor' => 'end', 'dominant-baseline' => 'middle'));
 			$offset += 2;
 
 			foreach($component as $c)
 			{
 				$c = pts_result_file_analyzer::system_value_to_ir_value($c, $type);
-				$c->set_attribute('title', $type . ': ' . $c);
-				$c->set_attribute('font-weight', 'bold');
-				$this->graph_image->write_text_center($c, $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_text, 0, $offset, $this->graph_attr_width, $offset);
+				$this->svg_dom->add_text_element($c, array('x' => ($this->c['graph']['width'] / 2), 'y' => $offset, 'font-size' => $this->c['size']['identifiers'], 'fill' => $this->c['color']['text'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge', 'xlink:title' => $type . ': ' . $c, 'font-weight' => 'bold'));
 				$offset += $component_header_height;
 			}
 
@@ -149,21 +148,20 @@ class pts_ResultFileCompactSystemsTable extends pts_Graph
 
 
 		// Footer
-		$this->graph_image->draw_rectangle(1, ($this->graph_attr_height - $bottom_footer), $this->graph_attr_width - 1, $this->graph_attr_height, $this->graph_color_main_headers);
-		$this->graph_image->image_copy_merge(new pts_graph_ir_value($this->graph_image->png_image_to_type('http://www.phoronix-test-suite.com/external/pts-logo-80x42-white.png'), array('href' => 'http://www.phoronix-test-suite.com/')), 10, ($this->graph_attr_height - 48), 0, 0, 80, 42);
+		$this->svg_dom->add_element('rect', array('x' => 1, 'y' => ($this->c['graph']['height'] - $bottom_footer), 'width' => ($this->c['graph']['width'] - 2), 'height' => $bottom_footer, 'fill' => $this->c['color']['main_headers']));
+		$this->svg_dom->add_element('image', array('xlink:href' => 'http://www.phoronix-test-suite.com/external/pts-logo-80x42-white.png', 'x' => 10, 'y' => ($this->c['graph']['height'] - 48), 'width' => 80, 'height' => 42));
 
-		if(defined('OPENBENCHMARKING_IDS') && $this->getRenderer() == 'SVG')
+		if(defined('OPENBENCHMARKING_IDS'))
 		{
-			$back_width = $this->graph_attr_width - 4;
-			$this->graph_image->write_text_right(new pts_graph_ir_value(OPENBENCHMARKING_TITLE, array('font-weight' => 'bold', 'href' => 'http://openbenchmarking.org/result/' . OPENBENCHMARKING_IDS)), $this->graph_font, 8, $this->graph_color_background, $back_width, ($this->graph_attr_height - 38), $back_width, ($this->graph_attr_height - 38));
-			$this->graph_image->write_text_right(new pts_graph_ir_value('System Logs', array('href' => 'http://openbenchmarking.org/system/' . OPENBENCHMARKING_IDS)), $this->graph_font, 8, $this->graph_color_background, $back_width, ($this->graph_attr_height - 24), $back_width, ($this->graph_attr_height - 24));
-			$this->graph_image->write_text_right(new pts_graph_ir_value('OPC Classification', array('href' => 'http://openbenchmarking.org/opc/' . OPENBENCHMARKING_IDS)), $this->graph_font, 8, $this->graph_color_background, $back_width, ($this->graph_attr_height - 10), $back_width, ($this->graph_attr_height - 10));
+			$back_width = $this->c['graph']['width'] - 4;
+			$this->svg_dom->add_text_element(OPENBENCHMARKING_TITLE, array('x' => $back_width, 'y' => ($this->c['graph']['height'] - 38), 'font-size' => 8, 'fill' => $this->c['color']['background'], 'text-anchor' => 'end', 'dominant-baseline' => 'middle', 'font-weight' => 'bold', 'xlink:show' => 'new', 'xlink:href' => 'http://openbenchmarking.org/result/' . OPENBENCHMARKING_IDS));
+			$this->svg_dom->add_text_element('System Logs', array('x' => $back_width, 'y' => ($this->c['graph']['height'] - 24), 'font-size' => 8, 'fill' => $this->c['color']['background'], 'text-anchor' => 'end', 'dominant-baseline' => 'middle', 'xlink:show' => 'new', 'xlink:href' => 'http://openbenchmarking.org/system/' . OPENBENCHMARKING_IDS));
+			$this->svg_dom->add_text_element('OPC Classification', array('x' => $back_width, 'y' => ($this->c['graph']['height'] - 10), 'font-size' => 8, 'fill' => $this->c['color']['background'], 'text-anchor' => 'end', 'dominant-baseline' => 'middle', 'xlink:show' => 'new', 'xlink:href' => 'http://openbenchmarking.org/opc/' . OPENBENCHMARKING_IDS));
 		}
 	}
 	public function render_graph_finish()
 	{
-		$this->graph_image->draw_rectangle_border(1, 1, $this->graph_attr_width, $this->graph_attr_height, $this->graph_color_border);
-		return $this->return_graph_image();
+
 	}
 }
 

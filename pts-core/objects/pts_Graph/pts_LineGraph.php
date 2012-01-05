@@ -57,16 +57,16 @@ class pts_LineGraph extends pts_Graph
 			}
 		}
 
-		$this->identifier_width = $identifier_count > 0 ? (($this->graph_left_end - $this->graph_left_start) / $identifier_count) : 1;
+		$this->identifier_width = $identifier_count > 0 ? (($this->graph_left_end - $this->c['pos']['left_start']) / $identifier_count) : 1;
 
 		$longest_string = pts_strings::find_longest_string($this->graph_identifiers);
-		$this->graph_font_size_identifiers = $this->text_size_bounds($longest_string, $this->graph_font, $this->graph_font_size_identifiers, $this->minimum_identifier_font, $this->identifier_width - 4);
+		$this->c['size']['identifiers'] = $this->text_size_bounds($longest_string, $this->c['size']['identifiers'], $this->minimum_identifier_font, $this->identifier_width - 4);
 
-		if($this->graph_font_size_identifiers <= $this->minimum_identifier_font)
+		if($this->c['size']['identifiers'] <= $this->minimum_identifier_font)
 		{
-			list($text_width, $text_height) = bilde_renderer::soft_text_string_dimensions($longest_string, $this->graph_font, $this->minimum_identifier_font + 0.5);
+			list($text_width, $text_height) = pts_svg_dom::estimate_text_dimensions($longest_string, $this->minimum_identifier_font + 0.5);
 			$this->graph_bottom_offset += $text_width;
-			$this->update_graph_dimensions($this->graph_attr_width, $this->graph_attr_height + $text_width);
+			$this->update_graph_dimensions($this->c['graph']['width'], $this->c['graph']['height'] + $text_width);
 
 			if(($text_height + 4) > $this->identifier_width && $graph_identifiers_count > 3)
 			{
@@ -86,11 +86,11 @@ class pts_LineGraph extends pts_Graph
 
 		if($this->identifier_width > 2)
 		{
-			$this->graph_image->draw_dashed_line($this->graph_left_start + $this->identifier_width, $this->graph_top_end, $this->graph_left_end, $this->graph_top_end, $this->graph_color_notches, 10, 1, $this->identifier_width - 1);
+			$this->svg_dom->draw_svg_line($this->c['pos']['left_start'] + $this->identifier_width, $this->graph_top_end, $this->graph_left_end, $this->graph_top_end, $this->c['color']['notches'], 10, array('stroke-dasharray' => '1,' . ($this->identifier_width - 1)));
 		}
 		else if($this->show_select_identifiers != null)
 		{
-			$this->graph_image->draw_dashed_line($this->graph_left_start + ($this->identifier_width * $this->show_select_identifiers), $this->graph_top_end, $this->graph_left_end, $this->graph_top_end, $this->graph_color_notches, 10, 1, ($this->identifier_width * $this->show_select_identifiers) - 1);
+			$this->svg_dom->draw_svg_line($this->c['pos']['left_start'] + ($this->identifier_width * $this->show_select_identifiers), $this->graph_top_end, $this->graph_left_end, $this->graph_top_end, $this->c['color']['notches'], 10, array('stroke-dasharray' => '1,' . (($this->identifier_width * $this->show_select_identifiers) - 1)));
 		}
 
 		foreach(array_keys($this->graph_identifiers) as $i)
@@ -106,15 +106,15 @@ class pts_LineGraph extends pts_Graph
 				continue;
 			}
 
-			$px_from_left = $this->graph_left_start + ($this->identifier_width * ($i + ($this->identifiers_active ? 1 : 0)));
+			$px_from_left = $this->c['pos']['left_start'] + ($this->identifier_width * ($i + ($this->identifiers_active ? 1 : 0)));
 
-			if($this->graph_font_size_identifiers <= $this->minimum_identifier_font)
+			if($this->c['size']['identifiers'] <= $this->minimum_identifier_font)
 			{
-				$this->graph_image->write_text_left($this->graph_identifiers[$i], $this->graph_font, 9, $this->graph_color_headers, $px_from_left, $px_from_top_end + 2, $px_from_left, $px_from_top_end + 2, true);
+				$this->svg_dom->add_text_element($this->graph_identifiers[$i], array('x' => $px_from_left, 'y' => ($px_from_top_end + 2), 'font-size' => 9, 'fill' => $this->c['color']['headers'], 'text-anchor' => 'start', 'dominant-baseline' => 'middle', 'transform' => 'rotate(90 ' . $px_from_left . ' ' . ($px_from_top_end + 2) . ')'));
 			}
 			else
 			{
-				$this->graph_image->write_text_center($this->graph_identifiers[$i], $this->graph_font, $this->graph_font_size_identifiers, $this->graph_color_headers, $px_from_left, $px_from_top_end + 2, $px_from_left, $px_from_top_end + 2);
+				$this->svg_dom->add_text_element($this->graph_identifiers[$i], array('x' => $px_from_left, 'y' => ($px_from_top_end + 2), 'font-size' => $this->c['size']['identifiers'], 'fill' => $this->c['color']['headers'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
 			}
 		}
 	}
@@ -149,8 +149,8 @@ class pts_LineGraph extends pts_Graph
 				$std_error = isset($this->graph_data_raw[$i_o][$i]) ? pts_math::standard_error(pts_strings::colon_explode($this->graph_data_raw[$i_o][$i])) : 0;
 				$data_string = isset($this->graph_data_title[$i_o]) ? $this->graph_data_title[$i_o] . ($identifier ? ' @ ' . $identifier : null) . ': ' . $value : null;
 
-				$value_plot_top = $this->graph_top_end + 1 - ($this->graph_maximum_value == 0 ? 0 : round(($value / $this->graph_maximum_value) * ($this->graph_top_end - $this->graph_top_start)));
-				$px_from_left = round($this->graph_left_start + ($this->identifier_width * ($i + ($this->identifiers_active ? 1 : 0))));
+				$value_plot_top = $this->graph_top_end + 1 - ($this->graph_maximum_value == 0 ? 0 : round(($value / $this->graph_maximum_value) * ($this->graph_top_end - $this->c['pos']['top_start'])));
+				$px_from_left = round($this->c['pos']['left_start'] + ($this->identifier_width * ($i + ($this->identifiers_active ? 1 : 0))));
 
 				if($value > $max_value)
 				{
@@ -191,7 +191,7 @@ class pts_LineGraph extends pts_Graph
 		if($this->plot_overview_text)
 		{
 			$to_display = array();
-			$to_display[$this->graph_color_notches] = array();
+			$to_display[$this->c['color']['notches']] = array();
 
 			foreach(array_keys($calculations_r) as $color)
 			{
@@ -201,7 +201,7 @@ class pts_LineGraph extends pts_Graph
 			// in_array($this->graph_y_title, array('Percent', 'Milliwatts', 'Megabytes', 'Celsius', 'MB/s', 'Frames Per Second', 'Seconds', 'Iterations Per Minute'))
 			if(!empty($calculations_r))
 			{
-				array_push($to_display[$this->graph_color_notches], 'Average:');
+				array_push($to_display[$this->c['color']['notches']], 'Average:');
 
 				foreach($calculations_r as $color => &$values)
 				{
@@ -211,7 +211,7 @@ class pts_LineGraph extends pts_Graph
 				// in_array($this->graph_y_title, array('Megabytes', 'Milliwatts', 'Celsius', 'MB/s', 'Frames Per Second', 'Seconds', 'Iterations Per Minute'))
 				if(($this->graph_y_title != 'Percent' || $max_value < 100) && $max_value != $min_value)
 				{
-					array_push($to_display[$this->graph_color_notches], 'Peak:');
+					array_push($to_display[$this->c['color']['notches']], 'Peak:');
 
 					foreach($calculations_r as $color => &$values)
 					{
@@ -220,7 +220,7 @@ class pts_LineGraph extends pts_Graph
 				}
 				if($min_value > 0 && $max_value != $min_value)
 				{
-					array_push($to_display[$this->graph_color_notches], 'Low:');
+					array_push($to_display[$this->c['color']['notches']], 'Low:');
 
 					foreach($calculations_r as $color => &$values)
 					{
@@ -229,7 +229,7 @@ class pts_LineGraph extends pts_Graph
 				}
 				/*if($point_counter > 9 && !in_array($this->graph_y_title, array('Percent')))
 				{
-					array_push($to_display[$this->graph_color_body_text], 'Last:');
+					array_push($to_display[$this->c['color']['body_text']], 'Last:');
 
 					foreach($calculations_r as $color => &$values)
 					{
@@ -238,11 +238,10 @@ class pts_LineGraph extends pts_Graph
 				}*/
 
 				// Do the actual rendering of avg / low / med high identifiers
-				$from_left = $this->graph_left_start + 6;
+				$from_left = $this->c['pos']['left_start'] + 6;
 				foreach($to_display as $color_key => &$column)
 				{
-					// removed '|| $this->graph_image->get_renderer() == 'SVG'' from line below
-					$from_top = $this->graph_top_start + 4;
+					$from_top = $this->c['pos']['top_start'] + 4;
 					$longest_string_width = 0;
 					$precision = isset($column[0]) && max($column) > 999 ? 0 : 1;
 
@@ -253,8 +252,8 @@ class pts_LineGraph extends pts_Graph
 							$write = pts_math::set_precision($write, $precision);
 						}
 
-						$this->graph_image->write_text_left($write, $this->graph_font, 6.5, $color_key, $from_left, $from_top, $from_left, $from_top);
-						$string_width = $this->text_string_width($write, $this->graph_font, 6.5);
+						$this->svg_dom->add_text_element($write, array('x' => $from_left, 'y' => $from_top, 'font-size' => 6.5, 'fill' => $color_key, 'text-anchor' => 'start', 'dominant-baseline' => 'middle'));
+						$string_width = $this->text_string_width($write, 6.5);
 
 						if($string_width > $longest_string_width)
 						{
@@ -279,10 +278,17 @@ class pts_LineGraph extends pts_Graph
 			return;
 		}
 
-		$this->graph_image->draw_poly_line($poly_points, $paint_color, 2);
+		$svg_poly = array();
+		foreach($poly_points as $x_y)
+		{
+			array_push($svg_poly, round($x_y[0]) . ',' . round($x_y[1]));
+		}
+		$svg_poly = implode(' ', $svg_poly);
+		$this->svg_dom->add_element('polyline', array('points' => $svg_poly, 'fill' => $paint_color, 'stroke' => $paint_color, 'stroke-width' => 2));
+
 		foreach($poly_points as $i => $x_y_pair)
 		{
-			if($x_y_pair[0] < ($this->graph_left_start + 2) || $x_y_pair[0] > ($this->graph_left_end - 2))
+			if($x_y_pair[0] < ($this->c['pos']['left_start'] + 2) || $x_y_pair[0] > ($this->graph_left_end - 2))
 			{
 				// Don't draw anything on the left or right hand edges
 				continue;
@@ -292,23 +298,26 @@ class pts_LineGraph extends pts_Graph
 			if($x_y_pair[3] > 0)
 			{
 				$std_error_width = 4;
-				$std_error_rel_size = round(($x_y_pair[3] / $this->graph_maximum_value) * ($this->graph_top_end - $this->graph_top_start));
+				$std_error_rel_size = round(($x_y_pair[3] / $this->graph_maximum_value) * ($this->graph_top_end - $this->c['pos']['top_start']));
 
 				if($std_error_rel_size > 3)
 				{
-					$this->graph_image->draw_line($x_y_pair[0], $x_y_pair[1] + $std_error_rel_size, $x_y_pair[0], $x_y_pair[1] - $std_error_rel_size, $paint_color, 1);
-					$this->graph_image->draw_line($x_y_pair[0] - $std_error_width, $x_y_pair[1] - $std_error_rel_size, $x_y_pair[0] + $std_error_width, $x_y_pair[1] - $std_error_rel_size, $paint_color, 1);
-					$this->graph_image->draw_line($x_y_pair[0] - $std_error_width, $x_y_pair[1] + $std_error_rel_size, $x_y_pair[0] + $std_error_width, $x_y_pair[1] + $std_error_rel_size, $paint_color, 1);
+					$this->svg_dom->draw_svg_line($x_y_pair[0], $x_y_pair[1] + $std_error_rel_size, $x_y_pair[0], $x_y_pair[1] - $std_error_rel_size, $paint_color, 1);
+					$this->svg_dom->draw_svg_line($x_y_pair[0] - $std_error_width, $x_y_pair[1] - $std_error_rel_size, $x_y_pair[0] + $std_error_width, $x_y_pair[1] - $std_error_rel_size, $paint_color, 1);
+					$this->svg_dom->draw_svg_line($x_y_pair[0] - $std_error_width, $x_y_pair[1] + $std_error_rel_size, $x_y_pair[0] + $std_error_width, $x_y_pair[1] + $std_error_rel_size, $paint_color, 1);
 					$plotted_error_bar = true;
 				}
 			}
 
 			if(isset($regression_plots[$i]) && $i > 0)
 			{
-				$this->graph_image->draw_line($x_y_pair[0], $x_y_pair[1] + 6, $x_y_pair[0], $x_y_pair[1] - 6, $this->graph_color_alert, 4, $regression_plots[$i]);
+				$this->svg_dom->draw_svg_line($x_y_pair[0], $x_y_pair[1] + 6, $x_y_pair[0], $x_y_pair[1] - 6, $this->c['color']['alert'], 4, array('xlink:title' => $regression_plots[$i]));
 			}
 
-			$this->graph_image->draw_ellipse($x_y_pair[0], $x_y_pair[1], 7, 7, $paint_color, $paint_color, 1, !($point_counter < 6 || $plotted_error_bar || $i == 0 || $i == ($poly_points_count  - 1)), $x_y_pair[2]);
+			if($point_counter < 6 || $plotted_error_bar || $i == 0 || $i == ($poly_points_count  - 1))
+			{
+				$this->svg_dom->add_element('ellipse', array('cx' => $x_y_pair[0], 'cy' => $x_y_pair[1], 'rx' => 3, 'ry' => 3, 'fill' => $paint_color, 'stroke' => $paint_color, 'stroke-width' => 1, 'xlink:title' => $x_y_pair[2]));
+			}
 		}
 
 		$poly_points = array();

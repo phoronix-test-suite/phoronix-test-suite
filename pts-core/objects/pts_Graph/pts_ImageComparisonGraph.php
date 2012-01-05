@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2010, Phoronix Media
-	Copyright (C) 2009 - 2010, Michael Larabel
+	Copyright (C) 2009 - 2011, Phoronix Media
+	Copyright (C) 2009 - 2011, Michael Larabel
 	pts_ImageComparisonGraph.php: A graph object for image comparisons
 
 	This program is free software; you can redistribute it and/or modify
@@ -45,10 +45,10 @@ class pts_ImageComparisonGraph extends pts_Graph
 		$img_height = imagesy($img_first);
 
 		// Assume if the images are being rendered together they are same width and height
-		$this->graph_attr_height = 72 + ($draw_count * ($img_height + 22)); // 110 at top plus 20 px between images
-		$this->graph_attr_width = $this->graph_attr_width < ($img_width + 20) ? $img_width + 20 : $this->graph_attr_width;
+		$this->c['graph']['height'] = 72 + ($draw_count * ($img_height + 22)); // 110 at top plus 20 px between images
+		$this->c['graph']['width'] = $this->c['graph']['width'] < ($img_width + 20) ? $img_width + 20 : $this->c['graph']['width'];
 
-		$this->update_graph_dimensions($this->graph_attr_width, $this->graph_attr_height);
+		$this->update_graph_dimensions($this->c['graph']['width'], $this->c['graph']['height']);
 	}
 	public function renderGraph()
 	{
@@ -71,21 +71,18 @@ class pts_ImageComparisonGraph extends pts_Graph
 
 		for($i_o = 0; $i_o < $draw_count; $i_o++)
 		{
-			$from_left = ($this->graph_attr_width / 2) - ($img_width / 2);
+			$from_left = ($this->c['graph']['width'] / 2) - ($img_width / 2);
 			$from_top = 60 + ($i_o * ($img_height + 22));
-
-			$this->graph_image->draw_rectangle_border($from_left - 1, $from_top - 1, $from_left + $img_width, $from_top + $img_height, $this->graph_color_body_light);
-			$this->graph_image->image_copy_merge(imagecreatefromstring(base64_decode($this->graph_data[0][$i_o])), $from_left, $from_top, 0, 0, $img_width, $img_height);
-
-			$this->graph_image->write_text_center($this->graph_identifiers[$i_o], $this->graph_font, $this->graph_font_size_bars, $this->graph_color_main_headers, 0, $from_top + $img_height + 3, $this->graph_attr_width, $from_top + $img_height + 3);
+// TODO: make sure this code still works... XXX
+			$this->svg_dom->add_element('rect', array('x' => ($from_left - 1), 'y' => ($from_right - 1), 'width' => ($img_width + 2), 'height' => ($img_height + 2), 'fill' => $this->c['color']['body_light']));
+			$this->svg_dom->add_element('image', array('xlink:href' => base64_decode($this->graph_data[0][$i_o]), 'x' => $from_left, 'y' => $from_top, 'width' => $img_width, 'height' => $img_height));
+			$this->svg_dom->add_text_element($this->graph_identifiers[$i_o], array('x' => round($this->c['graph']['width'] / 2), 'y' => ($from_top + $img_height + 3), 'font-size' => $this->c['size']['bars'], 'fill' => $this->c['color']['main_headers'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
 		}
 
-		if(!empty($this->graph_watermark_text))
+		if(!empty($this->c['text']['watermark']))
 		{
-			$this->graph_image->write_text_center($this->graph_watermark_text, $this->graph_font, 10, $this->graph_color_text, 0, $this->graph_attr_height - 15, $this->graph_attr_width, $this->graph_attr_height - 15);
+			$this->svg_dom->add_text_element($this->c['text']['watermark'], array('x' => round($this->c['graph']['width']), 'y' => ($this->c['graph']['height'] - 15), 'font-size' => 10, 'fill' => $this->c['color']['text'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
 		}
-
-		return $this->return_graph_image(100);
 	}
 }
 

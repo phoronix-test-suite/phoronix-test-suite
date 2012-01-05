@@ -62,8 +62,8 @@ class pts_FilledLineGraph extends pts_LineGraph
 				$identifier = isset($this->graph_identifiers[$i]) ? $this->graph_identifiers[$i] : null;
 				$data_string = isset($this->graph_data_title[$i_o]) ? $this->graph_data_title[$i_o] . ($identifier ? ' @ ' . $identifier : null) . ': ' . $value : null;
 
-				$value_plot_top = $this->graph_top_end + 1 - ($this->graph_maximum_value == 0 ? 0 : round(($value / $this->graph_maximum_value) * ($this->graph_top_end - $this->graph_top_start)));
-				$px_from_left = round($this->graph_left_start + ($this->identifier_width * ($i + 1)));
+				$value_plot_top = $this->graph_top_end + 1 - ($this->graph_maximum_value == 0 ? 0 : round(($value / $this->graph_maximum_value) * ($this->graph_top_end - $this->c['pos']['top_start'])));
+				$px_from_left = round($this->c['pos']['left_start'] + ($this->identifier_width * ($i + 1)));
 
 /*
 				if(($i == ($point_counter - 1)) && $value == 0)
@@ -86,8 +86,8 @@ class pts_FilledLineGraph extends pts_LineGraph
 
 				if($identifiers_empty && $i == 0)
 				{
-					array_push($poly_points, array($this->graph_left_start + 1, ($this->graph_top_end + 1)));
-					array_push($poly_points, array($this->graph_left_start + 1, $value_plot_top, $data_string));
+					array_push($poly_points, array($this->c['pos']['left_start'] + 1, ($this->graph_top_end + 1)));
+					array_push($poly_points, array($this->c['pos']['left_start'] + 1, $value_plot_top, $data_string));
 				}
 				else if($identifiers_empty && $i == ($point_counter - 1))
 				{
@@ -134,7 +134,12 @@ class pts_FilledLineGraph extends pts_LineGraph
 					break;
 			}
 
-			$this->graph_image->draw_polygon($poly_points, $paint_color, $this->graph_color_main_headers, 1);
+			$svg_poly = array();
+			foreach($poly_points as $point_pair)
+			{
+				array_push($svg_poly, implode(',', $point_pair));
+			}
+			$this->svg_dom->add_element('polygon', array('points' => implode(' ', $svg_poly), 'fill' => $paint_color, 'stroke' => $this->c['color']['main_headers'], 'stroke-width' => 1));
 			$prev_poly_points = array_merge($poly_points, $prev_poly_points);
 		}
 	}
@@ -156,8 +161,8 @@ class pts_FilledLineGraph extends pts_LineGraph
 		}
 
 		$maximum = max($values);
-		$maximum = (floor(round($maximum * 1.285) / $this->graph_attr_marks) + 1) * $this->graph_attr_marks;
-		$maximum = round(ceil($maximum / $this->graph_attr_marks), (0 - strlen($maximum) + 2)) * $this->graph_attr_marks;
+		$maximum = (floor(round($maximum * 1.285) / $this->c['graph']['mark_count']) + 1) * $this->c['graph']['mark_count'];
+		$maximum = round(ceil($maximum / $this->c['graph']['mark_count']), (0 - strlen($maximum) + 2)) * $this->c['graph']['mark_count'];
 
 		return $maximum;
 	}

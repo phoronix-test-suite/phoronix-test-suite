@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2010, Phoronix Media
-	Copyright (C) 2008 - 2010, Michael Larabel
+	Copyright (C) 2008 - 2012, Phoronix Media
+	Copyright (C) 2008 - 2012, Michael Larabel
 	pts_CandleStickGraph.php: Models a Japanese Candlestick chart
 
 	This program is free software; you can redistribute it and/or modify
@@ -29,7 +29,7 @@ class pts_CandleStickGraph extends pts_VerticalBarGraph
 	}
 	protected function render_graph_candle_sticks()
 	{
- 		$bar_count = count($this->graph_data_raw);
+		$bar_count = count($this->graph_data_raw);
 		$bar_width = floor($this->identifier_width / $bar_count) - ($bar_count * 16);
 
 		for($i_o = 0; $i_o < $bar_count; $i_o++)
@@ -47,11 +47,10 @@ class pts_CandleStickGraph extends pts_VerticalBarGraph
 				$low_value = $run_values_r[0];
 				$high_value = $run_values_r[(count($run_values_r) - 1)];
 
-				$px_bound_left = $this->graph_left_start + ($this->identifier_width * $i) + ($bar_width * $i_o) + 8;
+				$px_bound_left = $this->c['pos']['left_start'] + ($this->identifier_width * $i) + ($bar_width * $i_o) + 8;
 				$px_bound_center = $px_bound_left + round($bar_width / 2);
-				$px_bound_right = $px_bound_left + $bar_width;
 
-				$top_diff = $this->graph_top_end - $this->graph_top_start;
+				$top_diff = $this->graph_top_end - $this->c['pos']['top_start'];
 				$plot_wick_lowest = $this->graph_top_end + 1 - round(($low_value / $this->graph_maximum_value) * $top_diff);
 				$plot_wick_highest = $this->graph_top_end + 1 - round(($high_value / $this->graph_maximum_value) * $top_diff);
 				$plot_body_start = $this->graph_top_end + 1 - round(($start_value / $this->graph_maximum_value) * $top_diff);
@@ -59,7 +58,7 @@ class pts_CandleStickGraph extends pts_VerticalBarGraph
 
 				if($start_value > $end_value)
 				{
-					$body_color = $this->graph_color_body;
+					$body_color = $this->c['color']['body'];
 					$plot_body_high = $plot_body_start;
 					$plot_body_low = $plot_body_end;
 				}
@@ -70,8 +69,8 @@ class pts_CandleStickGraph extends pts_VerticalBarGraph
 					$plot_body_high = $plot_body_end;
 				}
 
-				$this->graph_image->draw_line($px_bound_center, $plot_wick_lowest, $px_bound_center, $plot_wick_highest, $this->graph_color_body_light, 1);
-				$this->graph_image->draw_rectangle_with_border($px_bound_left, $plot_body_low, $px_bound_right, $plot_body_high, $body_color, $this->graph_color_body_light);
+				$this->svg_dom->draw_svg_line($px_bound_center, $plot_wick_lowest, $px_bound_center, $plot_wick_highest, $this->c['color']['body_light'], 1);
+				$this->svg_dom->add_element('rect', array('x' => $px_bound_left, 'y' => $plot_body_low, 'width' => $bar_width, 'height' => ($plot_body_high - $plot_body_low), 'fill' => $body_color, 'stroke' => $this->c['color']['body_light'], 'stroke-width' => 1));
 			}
 		}
 	}
