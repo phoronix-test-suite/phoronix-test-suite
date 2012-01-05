@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2011, Phoronix Media
-	Copyright (C) 2008 - 2011, Michael Larabel
+	Copyright (C) 2008 - 2012, Phoronix Media
+	Copyright (C) 2008 - 2012, Michael Larabel
 	phodevi_system.php: The PTS Device Interface object for the system software
 
 	This program is free software; you can redistribute it and/or modify
@@ -978,6 +978,15 @@ class phodevi_system extends phodevi_device_interface
 							{
 								$driver_version = substr($glxinfo, ($pos + 7));
 							}
+						}
+						break;
+					default:
+						if(is_readable('/sys/class/graphics/fb0/name'))
+						{
+							// This path works for at least finding NVIDIA Tegra 2 DDX (via tegra_fb)
+							$display_driver = file_get_contents('/sys/class/graphics/fb0/name');
+							$display_driver = str_replace(array('drm', '_fb'), null, $display_driver);
+							$driver_version = phodevi_parser::read_xorg_module_version($display_driver . '_drv');
 						}
 						break;
 				}

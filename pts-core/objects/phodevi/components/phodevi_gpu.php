@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2011, Phoronix Media
-	Copyright (C) 2008 - 2011, Michael Larabel
+	Copyright (C) 2008 - 2012, Phoronix Media
+	Copyright (C) 2008 - 2012, Michael Larabel
 	phodevi_gpu.php: The PTS Device Interface object for the graphics processor
 
 	This program is free software; you can redistribute it and/or modify
@@ -950,7 +950,7 @@ class phodevi_gpu extends phodevi_device_interface
 			$info = phodevi_windows_parser::read_cpuz('Display Adapters', 'Name');
 		}
 	
-		if(empty($info) || strpos($info, 'Mesa ') !== false || strpos($info, 'Gallium ') !== false || $info == 'Software Rasterizer')
+		if(empty($info) || strpos($info, 'Mesa ') !== false || strpos($info, 'Gallium ') !== false)
 		{
 			if(phodevi::is_windows() == false)
 			{
@@ -1010,6 +1010,9 @@ class phodevi_gpu extends phodevi_device_interface
 						break;
 					case 'exynos':
 						$info = 'Samsung EXYNOS'; // The Exynos DRM driver
+						break;
+					case 'tegra_fb':
+						$info = 'NVIDIA TEGRA'; // The Exynos DRM driver
 						break;
 					default:
 						if(is_file('/dev/mali'))

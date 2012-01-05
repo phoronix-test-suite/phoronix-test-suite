@@ -29,7 +29,7 @@ class pts_render
 		$graph = self::render_graph_process($result_object, $result_file, $save_as, $extra_attributes);
 		$graph->renderGraph();
 
-		return $graph->svg_dom->output($save_as);
+		return $graph->svg_dom->output($save_as, 'SVG');
 	}
 	public static function render_graph_inline_embed(&$object, &$result_file = null, $extra_attributes = null, $nested = true)
 	{
@@ -43,46 +43,36 @@ class pts_render
 		}
 		else
 		{
-			return null;
+			return false;
 		}
 
-		$graph->render_graph_start();
-		switch($graph->graph_image->get_renderer())
+		$graph->renderGraph();
+		$output_format = 'SVG';
+		$graph = $graph->svg_dom->output(null, $output_format);
+
+		switch($output_format) // TODO
 		{
 			case 'PNG':
 			case 'JPG':
-				$save_as = tempnam('/tmp', 'pts_gd_render');
-				$graph->saveGraphToFile($save_as);
-				$graph->render_graph_finish();
-				$graph = file_get_contents($save_as);
-				unlink($save_as);
-
 				if($nested)
 				{
 					$graph = '<img src="data:image/png;base64,' . base64_encode($graph) . '" />';
 				}
 				else
 				{
-					header('Content-Type: image/' . strtolower($graph->graph_image->get_renderer()));
+					header('Content-Type: image/' . strtolower($output_format));
 				}
 				break;
 			case 'SVG':
-				$svg_graph = $graph->render_graph_finish();
-
 				if($nested)
 				{
 					// strip out any DOCTYPE and other crud that would be redundant, so start at SVG tag
-					$svg_graph = substr($svg_graph, strpos($svg_graph, '<svg'));
+					$graph = substr($graph, strpos($graph, '<svg'));
 				}
 				else
 				{
 					header('Content-type: image/svg+xml');
 				}
-
-				$graph = $svg_graph;
-				break;
-			default:
-				$graph = $graph->render_graph_finish();
 				break;
 		}
 

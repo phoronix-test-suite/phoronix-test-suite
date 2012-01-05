@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2011, Phoronix Media
-	Copyright (C) 2008 - 2011, Michael Larabel
+	Copyright (C) 2008 - 2012, Phoronix Media
+	Copyright (C) 2008 - 2012, Michael Larabel
 	phodevi_parser.php: General parsing functions used by different parts of Phodevi that are supported by more than one OS
 
 	This program is free software; you can redistribute it and/or modify
@@ -82,6 +82,11 @@ class phodevi_parser
 			$info = trim(substr($info, 0, strpos($info, "\n")));
 		}
 		else
+		{
+			$info = null;
+		}
+
+		if($info == 'Software Rasterizer')
 		{
 			$info = null;
 		}

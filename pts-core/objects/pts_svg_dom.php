@@ -45,18 +45,25 @@ class pts_svg_dom
 
 		$this->dom->appendChild($this->svg);
 	}
-	public function output($save_as = null)
+	public function output($save_as = null, $output_format = 'SVG')
 	{
-		// TODO XXX: Convert here from SVG DOM to other format if desired
-		// else default:
-/*
-		$output = pts_svg_dom_gd::svg_dom_to_gd($this->dom, 'JPEG');
-		$output_format = 'jpg';
-		$output = pts_svg_dom_gd::svg_dom_to_gd($this->dom, 'PNG');
-		$output_format = 'png';
-*/
-		$output = $this->save_xml();
-		$output_format = 'svg';
+		switch($output_format)
+		{
+			case 'JPEG':
+				$output = pts_svg_dom_gd::svg_dom_to_gd($this->dom, 'JPEG');
+				$output_format = 'jpg';
+				break;
+			case 'PNG':
+				$output = pts_svg_dom_gd::svg_dom_to_gd($this->dom, 'PNG');
+				$output_format = 'png';
+				break;
+			case 'SVG':
+				$output = $this->save_xml();
+				$output_format = 'svg';
+				break;
+			default:
+				return false;
+		}
 
 		if($save_as)
 		{
@@ -200,7 +207,7 @@ class pts_svg_dom
 		*/
 
 		$box_height = 0.75 * $font_size;
-		$box_width = 0.8 * strlen($text_string) * $font_size; // 0.8 now but should be about 1.18
+		$box_width = 0.76 * strlen($text_string) * $font_size;
 
 		// Width x Height
 		return array($box_width, $box_height);
