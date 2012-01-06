@@ -6,6 +6,7 @@ Phoronix Test Suite (Git)
 - pts-core: Fix for handling user variable swaps on the result identifier
 - pts-core: Major enhancements to MATISK testing module
 - pts_Graph: New version of pts_Graph that uses SVG DOM IR directly
+- pts-core: Allow pts_svg_dom to be converted to JPEG/PNG using new library as bilde_renderer replacement
 - phodevi: Add some fall-back graphics detection support of Texas Instruments OMAP / Samsung EXYNOS
 - phodevi: Fall-back graphics detection support for the ARM Mali
 - phodevi: NVIDIA TEGRA hardware detection improvements (as tested on a TEGRA-2 CompuLab TrimSlice)

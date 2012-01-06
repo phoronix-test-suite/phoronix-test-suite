@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2011, Phoronix Media
-	Copyright (C) 2011, Michael Larabel
+	Copyright (C) 2011 - 2012, Phoronix Media
+	Copyright (C) 2011 - 2012, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class pts_HeatMapBarGraph
+class pts_HeatMapBarGraph extends pts_Graph
 {
 	protected $bars;
 	protected $last_updated;
@@ -106,18 +106,21 @@ class pts_HeatMapBarGraph
 			$title_key_offset = 0;
 		}
 
-		$bilde_renderer = bilde_renderer::setup_renderer('SVG', $bar_width + ($border * 2), ($bar_height + $heading_per_bar + $border) * count($this->bars) + $border + (count($categories) * $category_heights) + $title_bar_height + $title_key_offset + $footer_bar_height);
+		$this->c['graph']['width'] = $bar_width + ($border * 2);
+		$this->c['graph']['height'] = ($bar_height + $heading_per_bar + $border) * count($this->bars) + $border + (count($categories) * $category_heights) + $title_bar_height + $title_key_offset + $footer_bar_height;
+		$this->svg_dom = new pts_svg_dom(ceil($this->c['graph']['width']), ceil($this->c['graph']['height']));
 
-		$border_color = $bilde_renderer->convert_hex_to_type('#222');
-		$text_color = $bilde_renderer->convert_hex_to_type('#e12128');
-		$alt_text_color = $bilde_renderer->convert_hex_to_type('#646464');
+		$this->c['color']['border'] = pts_svg_dom::sanitize_hex('#222');
+		$text_color = pts_svg_dom::sanitize_hex('#e12128');
+		$alt_text_color = pts_svg_dom::sanitize_hex('#646464');
 
 		// Setup
 		$start_x = $border;
 		$end_x = $start_x + $bar_width;
 
 		// Title bar
-		$bilde_renderer->image_copy_merge($bilde_renderer->png_image_to_type('http://openbenchmarking.org/media/logo-183x32.png'), $end_x - 183, $border, 0, 0, 183, 32);
+		$this->svg_dom->add_element('image', array('xlink:href' => 'http://openbenchmarking.org/media/logo-183x32.png', 'x' => ($end_x - 183), 'y' => ($end_x - 183), 'width' => 183, 'height' => 32));
+
 
 		if(!empty($this->keys))
 		{
@@ -127,13 +130,13 @@ class pts_HeatMapBarGraph
 			{
 				$component_x = $border + ($i % $keys_per_line) * ($longest_key_width + 10);
 				$component_y = (floor($i / $keys_per_line) * $key_line_height) + $title_bar_height + 3;
-				$key_color = $bilde_renderer->convert_hex_to_type(bilde_renderer::color_cache('opc', $this->keys[$i], $color_cache));
+				$key_color = pts_svg_dom::sanitize_hex(self::color_cache('opc', $this->keys[$i], $color_cache));
 
-				//$key_color = $bilde_renderer->convert_hex_to_type(bilde_renderer::color_gradient('e12128', '065695', ($i / $c)));
+				//$key_color = pts_svg_dom::sanitize_hex(self::color_gradient('e12128', '065695', ($i / $c)));
 				$key_colors[$this->keys[$i]] = $key_color;
 
-				$bilde_renderer->draw_rectangle_with_border($component_x + 1, $component_y, $component_x + 11, $component_y + 10, $key_color, $border_color);
-				$bilde_renderer->write_text_left($this->keys[$i], null, 10, $key_color, $component_x + 15, $component_y + 5, $component_x, $component_y + 5);
+				$this->svg_dom->add_element('rect', array('x' => ($component_x + 1), 'y' => $component_y, 'width' => 10, 'height' => 10, 'fill' => $key_color, 'stroke' => $this->c['color']['border'], 'stroke-width' => 1));
+				$this->svg_dom->add_text_element($this->keys[$i], array('x' => ($component_x + 15), 'y' => ($component_y + 5), 'font-size' => 10, 'fill' => $key_color, 'text-anchor' => 'start', 'dominant-baseline' => 'middle'));
 			}
 		}
 
@@ -145,7 +148,7 @@ class pts_HeatMapBarGraph
 
 			if($hmap['test_data']['h'] != null && $hmap['test_data']['h'] != $previous_category)
 			{
-				$bilde_renderer->write_text_center($hmap['test_data']['h'] . ' Tests', '', 16, $text_color, $start_x + ($bar_width / 2), $upper_y - 10, $start_x + ($bar_width / 2), $upper_y - 10);
+				$this->svg_dom->add_text_element($hmap['test_data']['h'] . ' Tests', array('x' => ($start_x + ($bar_width / 2)), 'y' => ($upper_y - 10), 'font-size' => 16, 'fill' => $text_color, 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
 				$category_offsets += $category_heights;
 				$upper_y += $category_heights;
 			}
@@ -154,11 +157,11 @@ class pts_HeatMapBarGraph
 			$lower_y = $upper_y + $bar_height;
 
 			$value_size = $bar_width / ($hmap['max_value'] - $hmap['min_value']);
-			$prev_color = $bilde_renderer->convert_hex_to_type('#ff');
+			$prev_color = pts_svg_dom::sanitize_hex('#ffffff');
 			$last_plot_x = $start_x;
 
-			$bilde_renderer->write_text_left($hmap['test_data']['t'], '', 12, $text_color, $start_x, $upper_y - 10, $start_x + ($bar_width / 2), $upper_y - 10);
-			$bilde_renderer->write_text_right($hmap['test_data']['a'], '', 10, $alt_text_color, $end_x, $upper_y - 9, $end_x, $upper_y - 9);
+			$this->svg_dom->add_text_element($hmap['test_data']['t'], array('x' => $start_x, 'y' => ($upper_y - 10), 'font-size' => 12, 'fill' => $text_color, 'text-anchor' => 'start', 'dominant-baseline' => 'middle'));
+			$this->svg_dom->add_text_element($hmap['test_data']['a'], array('x' => $end_x, 'y' => ($upper_y - 10), 'font-size' => 10, 'fill' => $alt_text_color, 'text-anchor' => 'end', 'dominant-baseline' => 'middle'));
 
 			if($hmap['test_data']['p'] == 'LIB')
 			{
@@ -200,13 +203,13 @@ class pts_HeatMapBarGraph
 			*/
 
 			$color_weight = 0.61 - (0 / $max_section_value * 0.5);
-			$background_color = $bilde_renderer->convert_hex_to_type(bilde_renderer::color_gradient('FFFFFF', '000000', $color_weight));
-			$bilde_renderer->draw_rectangle($start_x, $upper_y, $end_x, $lower_y, $background_color);
+			$background_color = pts_svg_dom::sanitize_hex(self::color_gradient('#FFFFFF', '#000000', $color_weight));
+			$this->svg_dom->add_element('rect', array('x' => $start_x, 'y' => $upper_y, 'width' => $bar_width, 'height' => $bar_height, 'fill' => $background_color));
 
 			foreach($hmap['sections'] as $next_section => $next_section_value)
 			{
 				$color_weight = 0.61 - ($next_section_value / $max_section_value * 0.5);
-				$color = $bilde_renderer->convert_hex_to_type(bilde_renderer::color_gradient('FFFFFF', '000000', $color_weight));
+				$color = pts_svg_dom::sanitize_hex(self::color_gradient('#FFFFFF', '#000000', $color_weight));
 
 				if($next_section > $hmap['min_value'])
 				{
@@ -217,7 +220,7 @@ class pts_HeatMapBarGraph
 					if($prev_color != $color || ($color != $background_color))
 					{
 						// don't uselessly paint background color, it's already painted
-						$bilde_renderer->draw_rectangle_gradient($last_plot_x, $upper_y, ceil($plot_x), $lower_y, $prev_color, $color);
+						$this->svg_dom->draw_rectangle_gradient($last_plot_x, $upper_y, ceil($plot_x - $last_plot_x), $bar_height, $prev_color, $color);
 					}
 
 					$last_plot_x = floor($plot_x - 0.6);
@@ -237,19 +240,19 @@ class pts_HeatMapBarGraph
 			{
 				$plot_x = $last_plot_x + $next_section + $hmap['bin_size'];
 				$plot_x = $plot_x > $end_x ? $end_x : $plot_x;
-				$bilde_renderer->draw_rectangle_gradient($last_plot_x, $upper_y, ceil($plot_x), $lower_y, $prev_color, $background_color);
+				$this->svg_dom->draw_rectangle_gradient($last_plot_x, $upper_y, ceil($plot_x - $last_plot_x), $bar_height, $prev_color, $background_color);
 			}
 			if($last_plot_x < $end_x)
 			{
 				// Fill in the blank
-				$bilde_renderer->draw_rectangle($last_plot_x, $upper_y, $end_x, $lower_y, $prev_color);
+				$this->svg_dom->add_element('rect', array('x' => $last_plot_x, 'y' => $upper_y, 'width' => ($end_x - $last_plot_x), 'height' => $bar_height, 'fill' => $prev_color));
 			}
 			*/
 
 			foreach($hmap['draw_lines'] as $line_value)
 			{
 				$line_x = $start_x + ($line_value - $hmap['min_value']) * $value_size;
-				$bilde_renderer->draw_line($line_x, $upper_y, $line_x, $lower_y, $border_color, 1);
+				$this->svg_dom->draw_svg_line($line_x, $upper_y, $line_x, $lower_y, $this->c['color']['border'], 1);
 			}
 
 			foreach($hmap['results'] as $identifier => $value)
@@ -258,23 +261,22 @@ class pts_HeatMapBarGraph
 
 				if(($start_x + 10) < $line_x && $line_x < ($end_x - 10))
 				{
-					$bilde_renderer->draw_arrow($line_x, $lower_y - 10, $line_x, $lower_y - 1, $key_colors[$identifier], $key_colors[$identifier], 1);
-					$bilde_renderer->draw_arrow($line_x, $upper_y + 10, $line_x, $upper_y + 1, $key_colors[$identifier], $key_colors[$identifier], 1);
+					$this->svg_dom->draw_svg_line($line_x, ($lower_y - 10), $line_x, ($lower_y - 1), $key_colors[$identifier], 1);
+					$this->svg_dom->draw_svg_line($line_x, ($lower_y + 10), $line_x, ($lower_y + 1), $key_colors[$identifier], 1);
 				}
 
-				$bilde_renderer->draw_line($line_x, $lower_y, $line_x, $upper_y, $key_colors[$identifier], 1);
+				$this->svg_dom->draw_svg_line($line_x, $lower_y, $line_x, $upper_y, $key_colors[$identifier], 1);
 			}
 
-			$bilde_renderer->draw_rectangle_border($start_x, $upper_y, $end_x, $lower_y, $border_color);
+			$this->svg_dom->add_element('rect', array('x' => $start_x, 'y' => $upper_y, 'width' => $bar_width, 'height' => $bar_height, 'stroke' => $this->c['color']['border'], 'stroke-width' => 1));
 		}
 
 		// Footer
-		$bilde_renderer->draw_arrow($start_x + 8, $lower_y + 8, $start_x + 1, $lower_y + 8, $alt_text_color, $border_color, 1);
-		$bilde_renderer->write_text_left('Percentile Rank' . ($this->last_updated != null ? '; Data As Of ' . pts_strings::time_stamp_to_string($this->last_updated, 'j F Y') . ' For Trailing 200 Days' : null), '', 7, $alt_text_color, $start_x + 13, $lower_y + 8, $start_x + 13, $lower_y + 8);
-		$bilde_renderer->write_text_right('OpenBenchmarking.org Performance Classification', '', 7, $alt_text_color, $end_x, $lower_y + 8, $end_x, $lower_y + 8);
+		$this->draw_arrow($start_x + 8, $lower_y + 8, $start_x + 1, $lower_y + 8, $alt_text_color, $this->c['color']['border'], 1);
+		$this->svg_dom->add_text_element('Percentile Rank' . ($this->last_updated != null ? '; Data As Of ' . pts_strings::time_stamp_to_string($this->last_updated, 'j F Y') . ' For Trailing 200 Days' : null), array('x' => $start_x + 13, 'y' => $lower_y + 8, 'font-size' => 7, 'fill' => $alt_text_color, 'text-anchor' => 'start', 'dominant-baseline' => 'middle'));
+		$this->svg_dom->add_text_element('OpenBenchmarking.org Performance Classification', array('x' => $end_x, 'y' => $lower_y + 8, 'font-size' => 7, 'fill' => $alt_text_color, 'text-anchor' => 'end', 'dominant-baseline' => 'middle'));
 
-
-		return $bilde_renderer;
+		return $this->svg_dom;
 	}
 }
 

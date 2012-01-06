@@ -158,6 +158,42 @@ class pts_svg_dom
 			$el->setAttribute($name, $value);
 		}
 	}
+	public function draw_rectangle_gradient($x1, $y1, $width, $height, $color, $next_color)
+	{
+		static $gradient_count = 1;
+
+		$gradient = $this->dom->createElement('linearGradient');
+		$gradient->setAttribute('id', 'g_' . $gradient_count);
+		$gradient->setAttribute('x1', '0%');
+		$gradient->setAttribute('y1', '0%');
+		$gradient->setAttribute('x2', '100%');
+		$gradient->setAttribute('y2', '0%');
+
+		$stop = $this->dom->createElement('stop');
+		$stop->setAttribute('offset', '0%');
+		$stop->setAttribute('style', 'stop-color: ' . $color .'; stop-opacity: 1;');
+		$gradient->appendChild($stop);
+
+		$stop = $this->dom->createElement('stop');
+		$stop->setAttribute('offset', '100%');
+		$stop->setAttribute('style', 'stop-color: ' . $next_color .'; stop-opacity: 1;');
+		$gradient->appendChild($stop);
+
+		$defs = $this->dom->createElement('defs');
+		$defs->appendChild($gradient);
+		$this->svg->appendChild($defs);
+
+		$rect = $this->dom->createElement('rect');
+		$rect->setAttribute('x', $x1);
+		$rect->setAttribute('y', $y1);
+		$rect->setAttribute('width', $width);
+		$rect->setAttribute('height', $height);
+		//$rect->setAttribute('fill', $background_color);
+		$rect->setAttribute('style', 'fill:url(#g_' .  $gradient_count . ')');
+		$gradient_count++;
+
+		$this->svg->appendChild($rect);
+	}
 	public static function html_embed_code($file_name, $file_type = 'SVG', $attributes = null, $is_xsl = false)
 	{
 		$attributes = pts_arrays::to_array($attributes);
