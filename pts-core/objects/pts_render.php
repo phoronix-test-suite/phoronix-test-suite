@@ -368,11 +368,6 @@ class pts_render
 				break;
 		}
 
-		if($save_as)
-		{
-			$graph->saveGraphToFile($save_as);
-		}
-
 		return $graph;
 	}
 	public static function evaluate_redundant_identifier_words($identifiers)

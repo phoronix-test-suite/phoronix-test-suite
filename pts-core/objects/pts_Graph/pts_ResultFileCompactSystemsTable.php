@@ -41,9 +41,9 @@ class pts_ResultFileCompactSystemsTable extends pts_Graph
 	}
 	public function renderChart($file = null)
 	{
-		$this->saveGraphToFile($file);
 		$this->render_graph_start();
-		return $this->render_graph_finish();
+		$this->render_graph_finish();
+		return $this->svg_dom->output($file);
 	}
 	public function render_graph_start()
 	{
@@ -87,7 +87,7 @@ class pts_ResultFileCompactSystemsTable extends pts_Graph
 
 		// Header
 		$this->svg_dom->add_element('rect', array('x' => 2, 'y' => 1, 'width' => ($this->c['graph']['width'] - 3), 'height' => ($this->graph_top_heading_height - 1), 'fill' => $this->c['color']['main_headers'], 'stroke' => $this->c['color']['border'], 'stroke-width' => 1));
-		$this->svg_dom->add_text_element($this->graph_title, array('x' => ($this->c['graph']['width']), 'y' => 2, 'font-size' => $this->c['size']['headers'], 'fill' => $this->c['color']['background'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
+		$this->svg_dom->add_text_element($this->graph_title, array('x' => ($this->c['graph']['width'] / 2), 'y' => 2, 'font-size' => $this->c['size']['headers'], 'fill' => $this->c['color']['background'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
 
 		$this->svg_dom->add_text_element($this->c['text']['watermark'], array('x' => 4, 'y' => ($this->graph_top_heading_height - 6), 'font-size' => 8, 'fill' => $this->c['color']['background'], 'text-anchor' => 'start', 'dominant-baseline' => 'middle', 'xlink:show' => 'new', 'xlink:href' => $this->c['text']['watermark_url']));
 		$this->svg_dom->add_text_element($this->c['text']['graph_version'], array('x' => ($this->c['graph']['width'] - 4), 'y' => ($this->graph_top_heading_height - 6), 'font-size' => 8, 'fill' => $this->c['color']['background'], 'text-anchor' => 'end', 'dominant-baseline' => 'middle', 'xlink:show' => 'new', 'xlink:href' => 'http://www.phoronix-test-suite.com/'));

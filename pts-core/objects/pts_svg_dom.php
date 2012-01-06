@@ -219,23 +219,6 @@ class pts_svg_dom
 	}
 	public static function estimate_text_dimensions($text_string, $font_size)
 	{
-		/*
-		bilde_renderer::setup_font_directory();
-
-		if(function_exists('imagettfbbox') && $font_type != false)
-		{
-			$box_array = imagettfbbox($font_size, 0, $font_type, $text_string);
-			$box_width = $box_array[4] - $box_array[6];
-
-			if($predefined_string)
-			{
-				$box_array = imagettfbbox($font_size, 0, $font_type, 'JAZ@![]()@|_qy');
-			}
-
-			$box_height = $box_array[1] - $box_array[7];
-		}
-		*/
-
 		$box_height = 0.75 * $font_size;
 		$box_width = 0.76 * strlen($text_string) * $font_size;
 

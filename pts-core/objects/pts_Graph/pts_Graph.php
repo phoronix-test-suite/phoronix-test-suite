@@ -48,7 +48,6 @@ abstract class pts_Graph
 	protected $graph_value_type = 'NUMERICAL';
 	protected $graph_maximum_value;
 
-	protected $graph_output = null;
 	protected $graph_data = array();
 	protected $graph_data_raw = array();
 	protected $graph_data_title = array();
@@ -219,10 +218,6 @@ abstract class pts_Graph
 	public function addInternalIdentifier($identifier, $value)
 	{
 		$this->graph_internal_identifiers[$identifier] = $value;
-	}
-	public function saveGraphToFile($file)
-	{
-		$this->graph_output = $file;
 	}
 	public function markResultRegressions($threshold)
 	{

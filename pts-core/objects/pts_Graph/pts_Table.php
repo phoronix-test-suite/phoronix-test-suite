@@ -173,7 +173,7 @@ class pts_Table extends pts_Graph
 		}
 		else
 		{
-			$this->svg_dom->add_element('image', array('xlink:href' => 'http://www.phoronix-test-suite.com/external/pts-logo-80x42.png', 'x' => round($this->c['pos']['left_start'] / 2 - 40), 'y' => round($identifier_height / 2 - 21), 'width' => 80, 'height' => 42));
+			$this->svg_dom->add_element('image', array('xlink:href' => 'http://www.phoronix-test-suite.com/external/pts-logo-80x42.png', 'x' => round($this->c['pos']['left_start'] / 2 - 40), 'y' => round($identifier_height / 2 - 21 + $this->graph_top_heading_height), 'width' => 80, 'height' => 42));
 
 		}
 
@@ -228,11 +228,10 @@ class pts_Table extends pts_Graph
 				$row_string = new pts_graph_ir_value($row_string);
 			}
 
-			$row_string->set_attribute('font-weight', 'bold');
 			$text_color = $row_string->get_attribute('alert') ? $this->c['color']['alert'] : $this->c['color']['text'];
 
 			$v = round($identifier_height + $this->graph_top_heading_height + ($row * $table_line_height) + $table_line_height_half);
-			$this->svg_dom->add_text_element($row_string, array('x' => ($this->c['pos']['left_start'] - 2), 'y' => $v, 'font-size' => $this->c['size']['identifiers'], 'fill' => $text_color, 'text-anchor' => 'end', 'dominant-baseline' => 'middle'));
+			$this->svg_dom->add_text_element($row_string, array('x' => ($this->c['pos']['left_start'] - 2), 'y' => $v, 'font-size' => $this->c['size']['identifiers'], 'fill' => $text_color, 'font-weight' => 'bold', 'text-anchor' => 'end', 'dominant-baseline' => 'middle'));
 			$row++;
 		}
 
@@ -274,9 +273,8 @@ class pts_Table extends pts_Graph
 						$this->svg_dom->draw_svg_line(($this->c['pos']['left_start'] + ($current_col * $table_item_width) + 1), 1, ($this->c['pos']['left_start'] + ($current_col * $table_item_width) + 1), $table_proper_height, $paint_color, 1);
 					}
 
-					//$last_identifier->set_attribute('font-weight', 'bold');
 					$x = $this->c['pos']['left_start'] + ($last_changed_col * $table_item_width) + ($this->c['pos']['left_start'] + ($current_col * $table_item_width) - $this->c['pos']['left_start'] + ($last_changed_col * $table_item_width));
-					$this->svg_dom->add_text_element($last_identifier, array('x' => $x, 'y' => 4, 'font-size' => $this->c['size']['axis_headers'], 'fill' => $this->c['color']['background'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
+					$this->svg_dom->add_text_element($last_identifier, array('x' => $x, 'y' => 4, 'font-size' => $this->c['size']['axis_headers'], 'fill' => $this->c['color']['background'], 'font-weight' => 'bold', 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
 
 					$last_identifier = $identifier[0];
 					$last_changed_col = $current_col;
@@ -287,19 +285,17 @@ class pts_Table extends pts_Graph
 		$table_identifier_offset = ($table_item_width / 2) + ($table_identifier_width / 2) - 1;
 		foreach($this->columns as $i => $col_string)
 		{
-			$col_string->set_attribute('font-weight', 'bold');
-
 			if($this->column_heading_vertical)
 			{
 				$x = $this->c['pos']['left_start'] + ($i * $table_item_width) + $table_identifier_offset;
 				$y = $this->graph_top_heading_height + $identifier_height - 10;
-				$this->svg_dom->add_text_element($col_string, array('x' => $x, 'y' => $y, 'font-size' => $this->c['size']['identifiers'], 'fill' => $this->c['color']['text'], 'text-anchor' => 'end', 'dominant-baseline' => 'middle', 'transform' => 'rotate(90 ' . $x . ' ' . $y . ')'));
+				$this->svg_dom->add_text_element($col_string, array('x' => $x, 'y' => $y, 'font-size' => $this->c['size']['identifiers'], 'fill' => $this->c['color']['text'], 'font-weight' => 'bold', 'text-anchor' => 'end', 'dominant-baseline' => 'middle', 'transform' => 'rotate(90 ' . $x . ' ' . $y . ')'));
 			}
 			else
 			{
 				$x = $this->c['pos']['left_start'] + ($i * $table_item_width) + ($table_item_width / 2);
 				$y = $this->graph_top_heading_height + ($identifier_height / 2);
-				$this->svg_dom->add_text_element($col_string, array('x' => $x, 'y' => $y, 'font-size' => $this->c['size']['identifiers'], 'fill' => $this->c['color']['text'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
+				$this->svg_dom->add_text_element($col_string, array('x' => $x, 'y' => $y, 'font-size' => $this->c['size']['identifiers'], 'fill' => $this->c['color']['text'], 'font-weight' => 'bold', 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
 			}
 		}
 

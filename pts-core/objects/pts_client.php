@@ -965,13 +965,12 @@ class pts_client
 
 			if($graph->doSkipGraph() == false)
 			{
-				$graph->saveGraphToFile($save_to_dir . '/result-graphs/visualize.BILDE_EXTENSION');
 				$graph->renderGraph();
 
 				// Check to see if skip_graph was realized during the rendering process
-				if($graph->doSkipGraph() == true)
+				if($graph->doSkipGraph() == false)
 				{
-					pts_file_io::unlink($save_to_dir . '/result-graphs/visualize.svg');
+					$graph->svg_dom->output($save_to_dir . '/result-graphs/visualize.BILDE_EXTENSION', 'SVG');
 				}
 			}
 			unset($graph);
@@ -980,13 +979,12 @@ class pts_client
 
 			if($graph->doSkipGraph() == false)
 			{
-				$graph->saveGraphToFile($save_to_dir . '/result-graphs/radar.BILDE_EXTENSION');
 				$graph->renderGraph();
 
 				// Check to see if skip_graph was realized during the rendering process
-				if($graph->doSkipGraph() == true)
+				if($graph->doSkipGraph() == false)
 				{
-					pts_file_io::unlink($save_to_dir . '/result-graphs/radar.svg');
+					$graph->svg_dom->output($save_to_dir . '/result-graphs/radar.BILDE_EXTENSION', 'SVG');
 				}
 			}
 			unset($graph);
