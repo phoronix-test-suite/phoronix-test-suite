@@ -62,7 +62,7 @@ class pts_FilledLineGraph extends pts_LineGraph
 				$identifier = isset($this->graph_identifiers[$i]) ? $this->graph_identifiers[$i] : null;
 				$data_string = isset($this->graph_data_title[$i_o]) ? $this->graph_data_title[$i_o] . ($identifier ? ' @ ' . $identifier : null) . ': ' . $value : null;
 
-				$value_plot_top = $this->graph_top_end + 1 - ($this->graph_maximum_value == 0 ? 0 : round(($value / $this->graph_maximum_value) * ($this->graph_top_end - $this->c['pos']['top_start'])));
+				$value_plot_top = $this->i['graph_top_end'] + 1 - ($this->i['graph_max_value'] == 0 ? 0 : round(($value / $this->i['graph_max_value']) * ($this->i['graph_top_end'] - $this->c['pos']['top_start'])));
 				$px_from_left = round($this->c['pos']['left_start'] + ($this->identifier_width * ($i + 1)));
 
 /*
@@ -72,21 +72,21 @@ class pts_FilledLineGraph extends pts_LineGraph
 				}
 */
 
-				if($px_from_left > $this->graph_left_end)
+				if($px_from_left > $this->i['graph_left_end'])
 				{
-					//$px_from_left = $this->graph_left_end - 1;
+					//$px_from_left = $this->i['graph_left_end'] - 1;
 					break;
 				}
 
-				if($value_plot_top >= $this->graph_top_end)
+				if($value_plot_top >= $this->i['graph_top_end'])
 				{
-					$value_plot_top = $this->graph_top_end - 1;
+					$value_plot_top = $this->i['graph_top_end'] - 1;
 				}
 
 
 				if($identifiers_empty && $i == 0)
 				{
-					array_push($poly_points, array($this->c['pos']['left_start'] + 1, ($this->graph_top_end + 1)));
+					array_push($poly_points, array($this->c['pos']['left_start'] + 1, ($this->i['graph_top_end'] + 1)));
 					array_push($poly_points, array($this->c['pos']['left_start'] + 1, $value_plot_top, $data_string));
 				}
 				else if($identifiers_empty && $i == ($point_counter - 1))
@@ -95,18 +95,18 @@ class pts_FilledLineGraph extends pts_LineGraph
 					if($varying_lengths && ($point_counter * 1.1) < $point_count)
 					{
 						// This plotting ended prematurely
-						array_push($poly_points, array($px_from_left, $this->graph_top_end - 1, null));
+						array_push($poly_points, array($px_from_left, $this->i['graph_top_end'] - 1, null));
 					}
 					else if($value > 0)
 					{
-						array_push($poly_points, array($this->graph_left_end - 1, $value_plot_top, null));
+						array_push($poly_points, array($this->i['graph_left_end'] - 1, $value_plot_top, null));
 					}
 				}
 				else
 				{
 					if($i == 0)
 					{
-						array_push($poly_points, array($px_from_left, ($this->graph_top_end + 1)));
+						array_push($poly_points, array($px_from_left, ($this->i['graph_top_end'] + 1)));
 					}
 
 					array_push($poly_points, array($px_from_left, $value_plot_top, $data_string));
@@ -118,7 +118,7 @@ class pts_FilledLineGraph extends pts_LineGraph
 			switch($z)
 			{
 				case 0:
-					array_push($poly_points, array($px_from_left, ($this->graph_top_end + 1)));
+					array_push($poly_points, array($px_from_left, ($this->i['graph_top_end'] + 1)));
 					array_push($poly_points, $poly_points[0]);
 					break;
 				case 1:

@@ -39,7 +39,7 @@ class pts_VerticalBarGraph extends pts_Graph
 	{
 		// Do some common work to this object
 		$identifier_count = count($this->graph_identifiers);
-		$this->identifier_width = floor(($this->graph_left_end - $this->c['pos']['left_start']) / $identifier_count);
+		$this->identifier_width = floor(($this->i['graph_left_end'] - $this->c['pos']['left_start']) / $identifier_count);
 
 		$longest_string = pts_strings::find_longest_string($this->graph_identifiers);
 		$width = $this->identifier_width - 4;
@@ -52,18 +52,18 @@ class pts_VerticalBarGraph extends pts_Graph
 	}
 	protected function render_graph_identifiers()
 	{
-		$px_from_top_end = $this->graph_top_end + 5;
+		$px_from_top_end = $this->i['graph_top_end'] + 5;
 
-		$this->svg_dom->draw_svg_line($this->c['pos']['left_start'] + $this->identifier_width, $this->graph_top_end, $this->graph_left_end - ($this->c['graph']['width'] % $this->identifier_width), $this->graph_top_end, $this->c['color']['notches'], 10, array('stroke-dasharray' => '1,' . ($this->identifier_width - 1)));
+		$this->svg_dom->draw_svg_line($this->c['pos']['left_start'] + $this->identifier_width, $this->i['graph_top_end'], $this->i['graph_left_end'] - ($this->c['graph']['width'] % $this->identifier_width), $this->i['graph_top_end'], $this->c['color']['notches'], 10, array('stroke-dasharray' => '1,' . ($this->identifier_width - 1)));
 
 		foreach(array_keys($this->graph_identifiers) as $i)
 		{
 			$px_bound_left = $this->c['pos']['left_start'] + ($this->identifier_width * $i);
 			$px_bound_right = $px_bound_left + $this->identifier_width;
 
-			if($i == (count($this->graph_identifiers) - 1) && $px_bound_right != $this->graph_left_end)
+			if($i == (count($this->graph_identifiers) - 1) && $px_bound_right != $this->i['graph_left_end'])
 			{
-				$px_bound_right = $this->graph_left_end;
+				$px_bound_right = $this->i['graph_left_end'];
 			}
 
 			if($this->c['size']['identifiers'] <= $this->minimum_identifier_font)
@@ -91,8 +91,8 @@ class pts_VerticalBarGraph extends pts_Graph
 			foreach(array_keys($this->graph_data[$i_o]) as $i)
 			{
 				$value = pts_math::set_precision($this->graph_data[$i_o][$i], 2);
-				$graph_size = round(($value / $this->graph_maximum_value) * ($this->graph_top_end - $this->c['pos']['top_start']));
-				$value_plot_top = max($this->graph_top_end + 1 - $graph_size, 1);
+				$graph_size = round(($value / $this->i['graph_max_value']) * ($this->i['graph_top_end'] - $this->c['pos']['top_start']));
+				$value_plot_top = max($this->i['graph_top_end'] + 1 - $graph_size, 1);
 
 				$px_bound_left = $this->c['pos']['left_start'] + ($this->identifier_width * $i) + ($bar_width * $i_o) + ($separator_width * ($i_o + 1));
 				$px_bound_right = $px_bound_left + $bar_width;
@@ -105,7 +105,7 @@ class pts_VerticalBarGraph extends pts_Graph
 					$title_tooltip .= ' || ' . pts_math::set_precision($run_std_deviation, 1) . ' STD';
 				}
 
-				$this->svg_dom->add_element('rect', array('x' => ($px_bound_left + 1), 'y' => $value_plot_top, 'width' => $bar_width, 'height' => ($this->graph_top_end - $value_plot_top), 'fill' => (in_array($this->graph_identifiers[$i], $this->value_highlights) ? $this->c['color']['alert'] : $paint_color), 'stroke' => $this->c['color']['body_light'], 'stroke-width' => 1, 'xlink:title' => $title_tooltip));
+				$this->svg_dom->add_element('rect', array('x' => ($px_bound_left + 1), 'y' => $value_plot_top, 'width' => $bar_width, 'height' => ($this->i['graph_top_end'] - $value_plot_top), 'fill' => (in_array($this->graph_identifiers[$i], $this->value_highlights) ? $this->c['color']['alert'] : $paint_color), 'stroke' => $this->c['color']['body_light'], 'stroke-width' => 1, 'xlink:title' => $title_tooltip));
 
 				if(($px_bound_right - $px_bound_left) < 15)
 				{
@@ -127,7 +127,7 @@ class pts_VerticalBarGraph extends pts_Graph
 		}
 
 		// write a new line along the bottom since the draw_rectangle_with_border above had written on top of it
-		$this->svg_dom->draw_svg_line($this->c['pos']['left_start'], $this->graph_top_end, $this->graph_left_end, $this->graph_top_end, $this->c['color']['notches'], 1);
+		$this->svg_dom->draw_svg_line($this->c['pos']['left_start'], $this->i['graph_top_end'], $this->i['graph_left_end'], $this->i['graph_top_end'], $this->c['color']['notches'], 1);
 	}
 	protected function render_graph_result()
 	{

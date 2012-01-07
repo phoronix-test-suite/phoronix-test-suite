@@ -26,8 +26,8 @@ class pts_PassFailGraph extends pts_Graph
 	public function __construct(&$result_object, &$result_file = null)
 	{
 		parent::__construct($result_object, $result_file);
-		$this->graph_value_type = "ABSTRACT";
-		$this->graph_hide_identifiers = true;
+		$this->i['graph_value_type'] = 'ABSTRACT';
+		$this->i['hide_graph_identifiers'] = true;
 		$this->graph_data_title = array("PASSED", "FAILED");
 	}
 	protected function render_graph_passfail()
@@ -37,8 +37,8 @@ class pts_PassFailGraph extends pts_Graph
 		$horizontal_border = 10;
 		$spacing = 8;
 		$columns = 1;
-		$graph_width = $this->graph_left_end - $this->c['pos']['left_start'] - ($horizontal_border * 2);
-		$graph_height = $this->graph_top_end - $this->c['pos']['top_start'] - ($vertical_border * 1.5);
+		$graph_width = $this->i['graph_left_end'] - $this->c['pos']['left_start'] - ($horizontal_border * 2);
+		$graph_height = $this->i['graph_top_end'] - $this->c['pos']['top_start'] - ($vertical_border * 1.5);
 		$font_size = $this->c['size']['bars'] * 1.5;
 
 		$pass_color = $this->get_paint_color('PASS');
@@ -58,7 +58,7 @@ class pts_PassFailGraph extends pts_Graph
 
 		$width = $identifier_width - 8;
 		$height = $line_height - 4;
-		$main_font_size = $this->text_size_bounds($this->graph_maximum_value, $font_size, 4, $width, $height);
+		$main_font_size = $this->text_size_bounds($this->i['graph_max_value'], $font_size, 4, $width, $height);
 
 		for($c = 0; $c < $columns; $c++)
 		{

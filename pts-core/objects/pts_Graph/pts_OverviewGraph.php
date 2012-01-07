@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2011, Phoronix Media
-	Copyright (C) 2010 - 2011, Michael Larabel
+	Copyright (C) 2010 - 2012, Phoronix Media
+	Copyright (C) 2010 - 2012, Michael Larabel
 	pts_OverviewGraph.php: A graping object to create an "overview" / mini graphs of a pts_result_file for pts_Graph
 
 	This program is free software; you can redistribute it and/or modify
@@ -79,8 +79,8 @@ class pts_OverviewGraph extends pts_Graph
 
 		$this->graph_title = $result_file->get_title();
 		$this->graph_y_title = null;
-		$this->graph_proportion = 'HIB';
-		$this->graph_background_lines = true;
+		$this->i['graph_proportion'] = 'HIB';
+		$this->i['show_background_lines'] = true;
 
 		$this->update_graph_dimensions($this->c['graph']['width'], $height, true);
 		$this->result_file = $result_file;
@@ -95,7 +95,7 @@ class pts_OverviewGraph extends pts_Graph
 	{
 		$this->graph_data_title = &$this->system_identifiers;
 		$this->c['graph']['mark_count'] = 6;
-		$this->graph_maximum_value = 1.2;
+		$this->i['graph_max_value'] = 1.2;
 		$l_height = 15;
 
 		if(($key_count = count($this->graph_data_title)) > 8)
@@ -109,8 +109,8 @@ class pts_OverviewGraph extends pts_Graph
 
 		for($i = 0; $i < $this->graph_row_count; $i++)
 		{
-			$this->render_graph_base($this->c['pos']['left_start'], $this->c['pos']['top_start'] + ($i * ($this->graph_row_height + $l_height)), $this->graph_left_end, $this->c['pos']['top_start'] + ($i * ($this->graph_row_height + $l_height)) + $this->graph_row_height);
-			$this->render_graph_value_ticks($this->c['pos']['left_start'], $this->c['pos']['top_start'] + ($i * ($this->graph_row_height + $l_height)), $this->graph_left_end, $this->c['pos']['top_start'] + ($i * ($this->graph_row_height + $l_height)) + $this->graph_row_height);
+			$this->render_graph_base($this->c['pos']['left_start'], $this->c['pos']['top_start'] + ($i * ($this->graph_row_height + $l_height)), $this->i['graph_left_end'], $this->c['pos']['top_start'] + ($i * ($this->graph_row_height + $l_height)) + $this->graph_row_height);
+			$this->render_graph_value_ticks($this->c['pos']['left_start'], $this->c['pos']['top_start'] + ($i * ($this->graph_row_height + $l_height)), $this->i['graph_left_end'], $this->c['pos']['top_start'] + ($i * ($this->graph_row_height + $l_height)) + $this->graph_row_height);
 		}
 
 		$row = 0;
@@ -158,7 +158,7 @@ class pts_OverviewGraph extends pts_Graph
 							break;
 					}
 
-					$graph_size = round(($value / $this->graph_maximum_value) * ($top_end - $top_start));
+					$graph_size = round(($value / $this->i['graph_max_value']) * ($top_end - $top_start));
 					$value_plot_top = $top_end + 1 - $graph_size;
 
 					$px_left = $px_bound_left + $inter_width + ($bar_width * $x);
@@ -172,8 +172,8 @@ class pts_OverviewGraph extends pts_Graph
 
 			if(($i + 1) % $this->graphs_per_row == 0 && $i != 0)
 			{
-				$this->svg_dom->draw_svg_line($this->c['pos']['left_start'] + $this->graph_item_width, $top_end, $this->graph_left_end - ($this->c['graph']['width'] % $this->graph_item_width), $top_end, $this->c['color']['notches'], 10, array('stroke-dasharray' => '1,' . ($this->graph_item_width - 1)));
-				$this->svg_dom->draw_svg_line($this->c['pos']['left_start'], $top_end, $this->graph_left_end, $top_end, $this->c['color']['notches'], 1);
+				$this->svg_dom->draw_svg_line($this->c['pos']['left_start'] + $this->graph_item_width, $top_end, $this->i['graph_left_end'] - ($this->c['graph']['width'] % $this->graph_item_width), $top_end, $this->c['color']['notches'], 10, array('stroke-dasharray' => '1,' . ($this->graph_item_width - 1)));
+				$this->svg_dom->draw_svg_line($this->c['pos']['left_start'], $top_end, $this->i['graph_left_end'], $top_end, $this->c['color']['notches'], 1);
 
 				$row++;
 			}
@@ -187,7 +187,7 @@ class pts_OverviewGraph extends pts_Graph
 		}
 
 
-		//$this->render_graph_base($this->c['pos']['left_start'], $this->c['pos']['top_start'], $this->graph_left_end, $this->graph_top_end);
+		//$this->render_graph_base($this->c['pos']['left_start'], $this->c['pos']['top_start'], $this->i['graph_left_end'], $this->i['graph_top_end']);
 		$this->render_graph_heading();
 		//$this->render_graph_watermark();
 	}

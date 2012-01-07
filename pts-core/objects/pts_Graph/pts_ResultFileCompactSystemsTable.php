@@ -47,7 +47,7 @@ class pts_ResultFileCompactSystemsTable extends pts_Graph
 	}
 	public function render_graph_start()
 	{
-		$this->graph_top_heading_height = 22 + $this->c['size']['headers'];
+		$this->i['top_heading_height'] = 22 + $this->c['size']['headers'];
 
 		$longest_component = pts_strings::find_longest_string($this->components);
 		$component_header_height = $this->text_string_height($longest_component, ($this->c['size']['identifiers'] + 3)) + 4;
@@ -76,7 +76,7 @@ class pts_ResultFileCompactSystemsTable extends pts_Graph
 
 		$bottom_footer = 50; // needs to be at least 86 to make room for PTS logo
 		$this->c['graph']['height'] =
-			$this->graph_top_heading_height +
+			$this->i['top_heading_height'] +
 			((count($this->components) + $intent_count) * $component_header_height) +
 			$bottom_footer
 			;
@@ -86,14 +86,14 @@ class pts_ResultFileCompactSystemsTable extends pts_Graph
 		$this->render_graph_init(array('cache_font_size' => true));
 
 		// Header
-		$this->svg_dom->add_element('rect', array('x' => 2, 'y' => 1, 'width' => ($this->c['graph']['width'] - 3), 'height' => ($this->graph_top_heading_height - 1), 'fill' => $this->c['color']['main_headers'], 'stroke' => $this->c['color']['border'], 'stroke-width' => 1));
+		$this->svg_dom->add_element('rect', array('x' => 2, 'y' => 1, 'width' => ($this->c['graph']['width'] - 3), 'height' => ($this->i['top_heading_height'] - 1), 'fill' => $this->c['color']['main_headers'], 'stroke' => $this->c['color']['border'], 'stroke-width' => 1));
 		$this->svg_dom->add_text_element($this->graph_title, array('x' => ($this->c['graph']['width'] / 2), 'y' => 2, 'font-size' => $this->c['size']['headers'], 'fill' => $this->c['color']['background'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
 
-		$this->svg_dom->add_text_element($this->c['text']['watermark'], array('x' => 4, 'y' => ($this->graph_top_heading_height - 6), 'font-size' => 8, 'fill' => $this->c['color']['background'], 'text-anchor' => 'start', 'dominant-baseline' => 'middle', 'xlink:show' => 'new', 'xlink:href' => $this->c['text']['watermark_url']));
-		$this->svg_dom->add_text_element($this->c['text']['graph_version'], array('x' => ($this->c['graph']['width'] - 4), 'y' => ($this->graph_top_heading_height - 6), 'font-size' => 8, 'fill' => $this->c['color']['background'], 'text-anchor' => 'end', 'dominant-baseline' => 'middle', 'xlink:show' => 'new', 'xlink:href' => 'http://www.phoronix-test-suite.com/'));
+		$this->svg_dom->add_text_element($this->c['text']['watermark'], array('x' => 4, 'y' => ($this->i['top_heading_height'] - 6), 'font-size' => 8, 'fill' => $this->c['color']['background'], 'text-anchor' => 'start', 'dominant-baseline' => 'middle', 'xlink:show' => 'new', 'xlink:href' => $this->c['text']['watermark_url']));
+		$this->svg_dom->add_text_element($this->c['text']['graph_version'], array('x' => ($this->c['graph']['width'] - 4), 'y' => ($this->i['top_heading_height'] - 6), 'font-size' => 8, 'fill' => $this->c['color']['background'], 'text-anchor' => 'end', 'dominant-baseline' => 'middle', 'xlink:show' => 'new', 'xlink:href' => 'http://www.phoronix-test-suite.com/'));
 
 		// Body
-		$offset = $this->graph_top_heading_height;
+		$offset = $this->i['top_heading_height'];
 		$dash = false;
 
 		foreach($this->components as $type => $component)

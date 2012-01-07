@@ -28,8 +28,8 @@ class pts_PieChart extends pts_Graph
 	public function __construct(&$result_object, &$result_file = null)
 	{
 		parent::__construct($result_object, $result_file);
-		$this->graph_value_type = "ABSTRACT";
-		$this->graph_hide_identifiers = false;
+		$this->i['graph_value_type'] = 'ABSTRACT';
+		$this->i['hide_graph_identifiers'] = false;
 		$this->update_graph_dimensions($this->c['graph']['width'], $this->c['graph']['height'] + 100);
 	}
 	protected function render_graph_pre_init()
@@ -62,7 +62,7 @@ class pts_PieChart extends pts_Graph
 		$key_count = count($key_strings);
 		$key_item_width = 18 + $this->text_string_width(pts_strings::find_longest_string($this->graph_identifiers), $this->c['size']['key']);
 		$key_item_width_value = 12 + $this->text_string_width(pts_strings::find_longest_string($key_strings), $this->c['size']['key']);
-		$keys_per_line = floor(($this->graph_left_end - $this->c['pos']['left_start'] - 14) / ($key_item_width + $key_item_width_value));
+		$keys_per_line = floor(($this->i['graph_left_end'] - $this->c['pos']['left_start'] - 14) / ($key_item_width + $key_item_width_value));
 
 		if($keys_per_line < 1)
 		{
