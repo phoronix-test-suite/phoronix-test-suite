@@ -66,7 +66,7 @@ class pts_LineGraph extends pts_Graph
 		{
 			list($text_width, $text_height) = pts_svg_dom::estimate_text_dimensions($longest_string, $this->minimum_identifier_font + 0.5);
 			$this->i['bottom_offset'] += $text_width;
-			$this->update_graph_dimensions($this->c['graph']['width'], $this->c['graph']['height'] + $text_width);
+			$this->update_graph_dimensions($this->i['graph_width'], $this->i['graph_height'] + $text_width);
 
 			if(($text_height + 4) > $this->identifier_width && $graph_identifiers_count > 3)
 			{

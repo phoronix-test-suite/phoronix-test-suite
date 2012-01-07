@@ -47,14 +47,14 @@ class pts_VerticalBarGraph extends pts_Graph
 
 		if($this->c['size']['identifiers'] <= $this->minimum_identifier_font)
 		{
-			$this->update_graph_dimensions($this->c['graph']['width'], $this->c['graph']['height'] + $this->text_string_width($longest_string, 9));
+			$this->update_graph_dimensions($this->i['graph_width'], $this->i['graph_height'] + $this->text_string_width($longest_string, 9));
 		}
 	}
 	protected function render_graph_identifiers()
 	{
 		$px_from_top_end = $this->i['graph_top_end'] + 5;
 
-		$this->svg_dom->draw_svg_line($this->c['pos']['left_start'] + $this->identifier_width, $this->i['graph_top_end'], $this->i['graph_left_end'] - ($this->c['graph']['width'] % $this->identifier_width), $this->i['graph_top_end'], $this->c['color']['notches'], 10, array('stroke-dasharray' => '1,' . ($this->identifier_width - 1)));
+		$this->svg_dom->draw_svg_line($this->c['pos']['left_start'] + $this->identifier_width, $this->i['graph_top_end'], $this->i['graph_left_end'] - ($this->i['graph_width'] % $this->identifier_width), $this->i['graph_top_end'], $this->c['color']['notches'], 10, array('stroke-dasharray' => '1,' . ($this->identifier_width - 1)));
 
 		foreach(array_keys($this->graph_identifiers) as $i)
 		{

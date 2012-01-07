@@ -30,7 +30,7 @@ class pts_PieChart extends pts_Graph
 		parent::__construct($result_object, $result_file);
 		$this->i['graph_value_type'] = 'ABSTRACT';
 		$this->i['hide_graph_identifiers'] = false;
-		$this->update_graph_dimensions($this->c['graph']['width'], $this->c['graph']['height'] + 100);
+		$this->update_graph_dimensions($this->i['graph_width'], $this->i['graph_height'] + 100);
 	}
 	protected function render_graph_pre_init()
 	{
@@ -44,7 +44,7 @@ class pts_PieChart extends pts_Graph
 
 		if($pie_slices > 8)
 		{
-			$this->update_graph_dimensions($this->c['graph']['width'], $this->c['graph']['height'] + 100);
+			$this->update_graph_dimensions($this->i['graph_width'], $this->i['graph_height'] + 100);
 		}
 
 	}
@@ -97,9 +97,9 @@ class pts_PieChart extends pts_Graph
 		$this->render_graph_heading(false);
 
 		$pie_slices = count($this->graph_identifiers);
-		$radius = min(($this->c['graph']['height'] - $this->c['pos']['top_start'] - $this->c['pos']['top_end_bottom']), ($this->c['graph']['width'] - $this->c['pos']['left_start'] - $this->c['pos']['left_end_right'])) / 2;
-		$center_x = ($this->c['graph']['width'] / 2);
-		$center_y = $this->c['pos']['top_start'] + (($this->c['graph']['height'] - $this->c['pos']['top_start'] - $this->c['pos']['top_end_bottom']) / 2);
+		$radius = min(($this->i['graph_height'] - $this->c['pos']['top_start'] - $this->c['pos']['top_end_bottom']), ($this->i['graph_width'] - $this->c['pos']['left_start'] - $this->c['pos']['left_end_right'])) / 2;
+		$center_x = ($this->i['graph_width'] / 2);
+		$center_y = $this->c['pos']['top_start'] + (($this->i['graph_height'] - $this->c['pos']['top_start'] - $this->c['pos']['top_end_bottom']) / 2);
 		$offset_percent = 0;
 
 		for($i = 0; $i < $pie_slices; $i++)
@@ -112,7 +112,7 @@ class pts_PieChart extends pts_Graph
 
 		if(!empty($this->c['text']['watermark']))
 		{
-			$this->svg_dom->add_text_element($this->c['text']['watermark'], array('x' => ($this->c['graph']['width'] / 2), 'y' => ($this->c['graph']['height'] - 15), 'font-size' => 10, 'fill' => $this->c['color']['text'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
+			$this->svg_dom->add_text_element($this->c['text']['watermark'], array('x' => ($this->i['graph_width'] / 2), 'y' => ($this->i['graph_height'] - 15), 'font-size' => 10, 'fill' => $this->c['color']['text'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
 		}
 	}
 }

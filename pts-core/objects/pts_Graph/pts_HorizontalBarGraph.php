@@ -41,7 +41,7 @@ class pts_HorizontalBarGraph extends pts_Graph
 	{
 		$px_from_top_end = $this->i['graph_top_end'] + 5;
 
-		$this->svg_dom->draw_svg_line($this->c['pos']['left_start'], $this->c['pos']['top_start'] + $this->identifier_height, $this->c['pos']['left_start'], $this->i['graph_top_end'] - ($this->c['graph']['height'] % $this->identifier_height), $this->c['color']['notches'], 10, array('stroke-dasharray' => 1 . ',' . ($this->identifier_height - 1)));
+		$this->svg_dom->draw_svg_line($this->c['pos']['left_start'], $this->c['pos']['top_start'] + $this->identifier_height, $this->c['pos']['left_start'], $this->i['graph_top_end'] - ($this->i['graph_height'] % $this->identifier_height), $this->c['color']['notches'], 10, array('stroke-dasharray' => 1 . ',' . ($this->identifier_height - 1)));
 		$multi_way = $this->is_multi_way_comparison && count($this->graph_data) > 1;
 		$middle_of_vert = $this->c['pos']['top_start'] + ($multi_way ? 5 : 0) - ($this->identifier_height * 0.5) - 2;
 

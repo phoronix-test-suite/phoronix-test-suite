@@ -66,13 +66,13 @@ class pts_OverviewGraph extends pts_Graph
 		}
 
 		$this->c['size']['identifiers'] = 6.5;
-		$this->c['graph']['width'] = 1000;
+		$this->i['graph_width'] = 1000;
 
 		list($longest_title_width, $longest_title_height) = pts_svg_dom::estimate_text_dimensions(pts_strings::find_longest_string($this->test_titles), $this->c['size']['identifiers']);
 
 		$this->c['pos']['left_start'] += 20;
-		$this->graphs_per_row = floor(($this->c['graph']['width'] - $this->c['pos']['left_start'] - $this->c['pos']['left_end_right']) / ($longest_title_width + 2));
-		$this->graph_item_width = floor(($this->c['graph']['width'] - $this->c['pos']['left_start'] - $this->c['pos']['left_end_right']) / $this->graphs_per_row);
+		$this->graphs_per_row = floor(($this->i['graph_width'] - $this->c['pos']['left_start'] - $this->c['pos']['left_end_right']) / ($longest_title_width + 2));
+		$this->graph_item_width = floor(($this->i['graph_width'] - $this->c['pos']['left_start'] - $this->c['pos']['left_end_right']) / $this->graphs_per_row);
 		$this->graph_row_count = ceil(count($this->test_titles) / $this->graphs_per_row);
 
 		$height = $this->c['pos']['top_start'] + ($this->graph_row_count * ($this->graph_row_height + 15));
@@ -82,7 +82,7 @@ class pts_OverviewGraph extends pts_Graph
 		$this->i['graph_proportion'] = 'HIB';
 		$this->i['show_background_lines'] = true;
 
-		$this->update_graph_dimensions($this->c['graph']['width'], $height, true);
+		$this->update_graph_dimensions($this->i['graph_width'], $height, true);
 		$this->result_file = $result_file;
 
 		return true;
@@ -100,7 +100,7 @@ class pts_OverviewGraph extends pts_Graph
 
 		if(($key_count = count($this->graph_data_title)) > 8)
 		{
-			$this->update_graph_dimensions(-1, $this->c['graph']['height'] + (floor(($key_count - 8) / 4) * 14), true);
+			$this->update_graph_dimensions(-1, $this->i['graph_height'] + (floor(($key_count - 8) / 4) * 14), true);
 		}
 
 		// Do the actual work
@@ -172,7 +172,7 @@ class pts_OverviewGraph extends pts_Graph
 
 			if(($i + 1) % $this->graphs_per_row == 0 && $i != 0)
 			{
-				$this->svg_dom->draw_svg_line($this->c['pos']['left_start'] + $this->graph_item_width, $top_end, $this->i['graph_left_end'] - ($this->c['graph']['width'] % $this->graph_item_width), $top_end, $this->c['color']['notches'], 10, array('stroke-dasharray' => '1,' . ($this->graph_item_width - 1)));
+				$this->svg_dom->draw_svg_line($this->c['pos']['left_start'] + $this->graph_item_width, $top_end, $this->i['graph_left_end'] - ($this->i['graph_width'] % $this->graph_item_width), $top_end, $this->c['color']['notches'], 10, array('stroke-dasharray' => '1,' . ($this->graph_item_width - 1)));
 				$this->svg_dom->draw_svg_line($this->c['pos']['left_start'], $top_end, $this->i['graph_left_end'], $top_end, $this->c['color']['notches'], 1);
 
 				$row++;

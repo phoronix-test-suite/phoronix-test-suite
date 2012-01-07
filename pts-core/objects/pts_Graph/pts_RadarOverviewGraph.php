@@ -83,7 +83,7 @@ class pts_RadarOverviewGraph extends pts_Graph
 		parent::__construct($result_object, $result_file);
 
 		$this->c['size']['identifiers'] = 6.5;
-		$this->c['graph']['height'] = $this->c['graph']['width'];
+		$this->i['graph_height'] = $this->i['graph_width'];
 		$this->c['pos']['left_start'] = 35;
 		$this->graph_title = $result_file->get_title();
 		$this->c['graph']['border'] = true;
@@ -99,7 +99,7 @@ class pts_RadarOverviewGraph extends pts_Graph
 	}
 	protected function render_graph_heading($with_version = true)
 	{
-		$this->svg_dom->add_element('rect', array('x' => 0, 'y' => 0, 'width' => $this->c['graph']['width'], 'height' => $this->i['top_heading_height'], 'fill' => $this->c['color']['main_headers']));
+		$this->svg_dom->add_element('rect', array('x' => 0, 'y' => 0, 'width' => $this->i['graph_width'], 'height' => $this->i['top_heading_height'], 'fill' => $this->c['color']['main_headers']));
 		$this->svg_dom->add_element('image', array('xlink:href' => 'http://www.phoronix-test-suite.com/external/pts-logo-77x40-white.png', 'x' => 10, 'y' => round($this->i['top_heading_height'] / 40 + 1), 'width' => 77, 'height' => 40));
 		$this->svg_dom->add_text_element($this->graph_title, array('x' => 100, 'y' => 12, 'font-size' => $this->c['size']['headers'], 'fill' => $this->c['color']['background'], 'text-anchor' => 'start', 'dominant-baseline' => 'middle'));
 		$this->svg_dom->add_text_element($this->c['text']['graph_version'], array('x' => 100, 'y' => ($this->c['size']['headers'] + 15), 'font-size' => $this->c['size']['key'], 'fill' => $this->c['color']['background'], 'text-anchor' => 'start', 'dominant-baseline' => 'middle', 'href' => 'http://www.phoronix-test-suite.com/'));
@@ -108,7 +108,7 @@ class pts_RadarOverviewGraph extends pts_Graph
 	{
 		$this->i['top_heading_height'] = max($this->c['size']['headers'] + 22 + $this->c['size']['key'], 48);
 		$this->c['pos']['top_start'] = $this->i['top_heading_height'] + 50;
-		$this->update_graph_dimensions($this->c['graph']['width'], $this->c['graph']['height'] + $this->c['pos']['top_start'], true);
+		$this->update_graph_dimensions($this->i['graph_width'], $this->i['graph_height'] + $this->c['pos']['top_start'], true);
 
 		// Do the actual work
 		$this->render_graph_init();

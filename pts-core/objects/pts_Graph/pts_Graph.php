@@ -76,6 +76,8 @@ abstract class pts_Graph
 		$this->i['bottom_offset'] = 0;
 		$this->i['hide_y_title'] = false;
 		$this->i['key_line_height'] = 0;
+		$this->i['graph_height'] = 0;
+		$this->i['graph_width'] = 0;
 
 		// Colors
 		$this->c['color']['notches'] = $this->read_graph_config('PhoronixTestSuite/Graphs/Colors/Notches'); // Color for notches
@@ -118,7 +120,7 @@ abstract class pts_Graph
 			$this->addInternalIdentifier('Test', $result_object->test_profile->get_identifier());
 		}
 
-		$this->update_graph_dimensions(-1, -1, true);
+		$this->update_graph_dimensions($this->c['graph']['width'], $this->c['graph']['height'], true);
 
 		if($result_file != null && $result_file instanceof pts_result_file)
 		{
@@ -277,13 +279,13 @@ abstract class pts_Graph
 	protected function update_graph_dimensions($width = -1, $height = -1, $recalculate_offsets = false)
 	{
 		// Allow render area to be increased, but not decreased
-		$this->c['graph']['width'] = max($this->c['graph']['width'], $width);
-		$this->c['graph']['height'] = max($this->c['graph']['height'], $height);
+		$this->i['graph_width'] = max($this->i['graph_width'], $width);
+		$this->i['graph_height'] = max($this->i['graph_height'], $height);
 
 		if($recalculate_offsets)
 		{
-			$this->i['graph_top_end'] = $this->c['graph']['height'] - $this->c['pos']['top_end_bottom'];
-			$this->i['graph_left_end'] = $this->c['graph']['width'] - $this->c['pos']['left_end_right'];
+			$this->i['graph_top_end'] = $this->i['graph_height'] - $this->c['pos']['top_end_bottom'];
+			$this->i['graph_left_end'] = $this->i['graph_width'] - $this->c['pos']['left_end_right'];
 		}
 	}
 
@@ -337,11 +339,11 @@ abstract class pts_Graph
 					$longest_identifier_width = $this->text_string_width(pts_strings::find_longest_string($this->graph_identifiers), $this->c['size']['identifiers']) + 8;
 				}
 
-				$longest_identifier_max = $this->c['graph']['width'] * 0.5;
+				$longest_identifier_max = $this->i['graph_width'] * 0.5;
 
 				$this->c['pos']['left_start'] = min($longest_identifier_max, max($longest_identifier_width, 70));
 				$this->c['pos']['left_end_right'] = 15;
-				$this->i['graph_left_end'] = $this->c['graph']['width'] - $this->c['pos']['left_end_right'];
+				$this->i['graph_left_end'] = $this->i['graph_width'] - $this->c['pos']['left_end_right'];
 			}
 			else if($this->i['graph_value_type'] == 'NUMERICAL')
 			{
@@ -361,7 +363,7 @@ abstract class pts_Graph
 			if($key_height > $this->i['key_line_height'])
 			{
 				// Increase height so key doesn't take up too much room
-				$this->c['graph']['height'] += $key_height;
+				$this->i['graph_height'] += $key_height;
 				$this->i['graph_top_end'] += $key_height;
 			}
 
@@ -393,11 +395,11 @@ abstract class pts_Graph
 				$num_identifiers = count($this->graph_identifiers);
 				$this->i['graph_top_end'] = $this->c['pos']['top_start'] + ($num_identifiers * $per_identifier_height);
 				// $this->c['pos']['top_end_bottom']
-				$this->c['graph']['height'] = $this->i['graph_top_end'] + 25 + $bottom_heading;
+				$this->i['graph_height'] = $this->i['graph_top_end'] + 25 + $bottom_heading;
 			}
 			else
 			{
-				$this->c['graph']['height'] += $bottom_heading + 4;
+				$this->i['graph_height'] += $bottom_heading + 4;
 			}
 		}
 
@@ -440,7 +442,7 @@ abstract class pts_Graph
 	protected function render_graph_init()
 	{
 		$this->update_graph_dimensions();
-		$this->svg_dom = new pts_svg_dom(ceil($this->c['graph']['width']), ceil($this->c['graph']['height']));
+		$this->svg_dom = new pts_svg_dom(ceil($this->i['graph_width']), ceil($this->i['graph_height']));
 
 		// Initalize Colors
 		$this->c['color']['notches'] = pts_svg_dom::sanitize_hex($this->c['color']['notches']);
@@ -458,15 +460,15 @@ abstract class pts_Graph
 		// Background Color
 		if($this->i['iveland_view'])
 		{
-			$this->svg_dom->add_element('rect', array('x' => 1, 'y' => 1, 'width' => ($this->c['graph']['width'] - 1), 'height' => ($this->c['graph']['height'] - 1), 'fill' => $this->c['color']['background'], 'stroke' => $this->c['color']['border'], 'stroke-width' => 1));
+			$this->svg_dom->add_element('rect', array('x' => 1, 'y' => 1, 'width' => ($this->i['graph_width'] - 1), 'height' => ($this->i['graph_height'] - 1), 'fill' => $this->c['color']['background'], 'stroke' => $this->c['color']['border'], 'stroke-width' => 1));
 		}
 		else if($this->c['graph']['border'])
 		{
-			$this->svg_dom->add_element('rect', array('x' => 0, 'y' => 0, 'width' => $this->c['graph']['width'], 'height' => $this->c['graph']['height'], 'fill' => $this->c['color']['background'], 'stroke' => $this->c['color']['border'], 'stroke-width' => 1));
+			$this->svg_dom->add_element('rect', array('x' => 0, 'y' => 0, 'width' => $this->i['graph_width'], 'height' => $this->i['graph_height'], 'fill' => $this->c['color']['background'], 'stroke' => $this->c['color']['border'], 'stroke-width' => 1));
 		}
 		else
 		{
-			$this->svg_dom->add_element('rect', array('x' => 0, 'y' => 0, 'width' => $this->c['graph']['width'], 'height' => $this->c['graph']['height'], 'fill' => $this->c['color']['background']));
+			$this->svg_dom->add_element('rect', array('x' => 0, 'y' => 0, 'width' => $this->i['graph_width'], 'height' => $this->i['graph_height'], 'fill' => $this->c['color']['background']));
 		}
 
 		if($this->i['iveland_view'] == false && ($sub_title_count = count($this->graph_sub_titles)) > 1)
@@ -486,7 +488,7 @@ abstract class pts_Graph
 		// Default to NORMAL
 		if($this->i['iveland_view'])
 		{
-			$this->svg_dom->add_element('rect', array('x' => 0, 'y' => 0, 'width' => $this->c['graph']['width'], 'height' => $this->i['top_heading_height'], 'fill' => $this->c['color']['main_headers']));
+			$this->svg_dom->add_element('rect', array('x' => 0, 'y' => 0, 'width' => $this->i['graph_width'], 'height' => $this->i['top_heading_height'], 'fill' => $this->c['color']['main_headers']));
 
 			if(isset($this->graph_title[36]))
 			{
@@ -527,7 +529,7 @@ abstract class pts_Graph
 		if($this->i['iveland_view'])
 		{
 			$bottom_heading_start = $this->i['graph_top_end'] + $this->i['bottom_offset'] + 22;
-			$this->svg_dom->add_element('rect', array('x' => 0, 'y' => $bottom_heading_start, 'width' => $this->c['graph']['width'], 'height' => ($this->c['graph']['height'] - $bottom_heading_start), 'fill' => $this->c['color']['main_headers']));
+			$this->svg_dom->add_element('rect', array('x' => 0, 'y' => $bottom_heading_start, 'width' => $this->i['graph_width'], 'height' => ($this->i['graph_height'] - $bottom_heading_start), 'fill' => $this->c['color']['main_headers']));
 			$this->svg_dom->add_text_element('Powered By ' . $this->c['text']['graph_version'], array('x' => $this->i['graph_left_end'], 'y' => ($bottom_heading_start + 9), 'font-size' => 7, 'fill' => $this->c['color']['background'], 'text-anchor' => 'end', 'dominant-baseline' => 'middle', 'xlink:show' => 'new', 'xlink:href' => 'http://www.phoronix-test-suite.com/'));
 
 			if($this->link_alternate_view != null)

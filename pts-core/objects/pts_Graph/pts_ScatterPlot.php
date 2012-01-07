@@ -34,8 +34,8 @@ class pts_ScatterPlot extends pts_Graph
 		$this->i['show_graph_key'] = true;
 		$this->i['show_background_lines'] = true;
 		$this->i['iveland_view'] = true;
-		//$this->c['graph']['width'] = 1400;
-		//$this->c['graph']['height'] = 600;
+		//$this->i['graph_width'] = 1400;
+		//$this->i['graph_height'] = 600;
 		//$this->update_graph_dimensions(-1, -1, true);
 	}
 	protected function maximum_graph_value()
@@ -71,7 +71,7 @@ class pts_ScatterPlot extends pts_Graph
 		{
 			list($text_width, $text_height) = pts_svg_dom::estimate_text_dimensions($longest_string, $this->minimum_identifier_font + 0.5);
 			$this->i['bottom_offset'] += $text_width;
-			$this->update_graph_dimensions($this->c['graph']['width'], $this->c['graph']['height'] + $text_width);
+			$this->update_graph_dimensions($this->i['graph_width'], $this->i['graph_height'] + $text_width);
 
 			if(($text_height + 4) > $this->identifier_width && $graph_identifiers_count > 3)
 			{

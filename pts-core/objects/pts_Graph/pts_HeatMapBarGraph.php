@@ -106,9 +106,9 @@ class pts_HeatMapBarGraph extends pts_Graph
 			$title_key_offset = 0;
 		}
 
-		$this->c['graph']['width'] = $bar_width + ($border * 2);
-		$this->c['graph']['height'] = ($bar_height + $heading_per_bar + $border) * count($this->bars) + $border + (count($categories) * $category_heights) + $title_bar_height + $title_key_offset + $footer_bar_height;
-		$this->svg_dom = new pts_svg_dom(ceil($this->c['graph']['width']), ceil($this->c['graph']['height']));
+		$this->i['graph_width'] = $bar_width + ($border * 2);
+		$this->i['graph_height'] = ($bar_height + $heading_per_bar + $border) * count($this->bars) + $border + (count($categories) * $category_heights) + $title_bar_height + $title_key_offset + $footer_bar_height;
+		$this->svg_dom = new pts_svg_dom(ceil($this->i['graph_width']), ceil($this->i['graph_height']));
 
 		$this->c['color']['border'] = pts_svg_dom::sanitize_hex('#222');
 		$text_color = pts_svg_dom::sanitize_hex('#e12128');
