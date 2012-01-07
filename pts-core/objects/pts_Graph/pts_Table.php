@@ -54,7 +54,6 @@ class pts_Table extends pts_Graph
 			}
 		}
 
-		$this->c['graph']['border'] = false;
 		$this->rows = $rows;
 		$this->columns = $columns;
 		$this->table_data = $table_data;
@@ -117,17 +116,17 @@ class pts_Table extends pts_Graph
 	public function render_graph_start()
 	{
 		// Needs to be at least 86px wide for the PTS logo
-		$this->c['pos']['left_start'] = max(86, $this->text_string_width($this->longest_row_identifier, $this->c['size']['identifiers']) + 10);
+		$this->i['left_start'] = max(86, $this->text_string_width($this->longest_row_identifier, $this->i['identifier_size']) + 10);
 
 		if($this->column_heading_vertical)
 		{
-			$identifier_height = $this->text_string_width($this->longest_column_identifier, $this->c['size']['identifiers']) + 12;
-			$table_identifier_width = $this->text_string_height($this->longest_column_identifier, $this->c['size']['identifiers']);
+			$identifier_height = $this->text_string_width($this->longest_column_identifier, $this->i['identifier_size']) + 12;
+			$table_identifier_width = $this->text_string_height($this->longest_column_identifier, $this->i['identifier_size']);
 		}
 		else
 		{
-			$identifier_height = $this->text_string_height($this->longest_column_identifier, $this->c['size']['identifiers']) + 8;
-			$table_identifier_width = $this->text_string_width($this->longest_column_identifier, $this->c['size']['identifiers']);
+			$identifier_height = $this->text_string_height($this->longest_column_identifier, $this->i['identifier_size']) + 8;
+			$table_identifier_width = $this->text_string_width($this->longest_column_identifier, $this->i['identifier_size']);
 		}
 
 
@@ -147,18 +146,18 @@ class pts_Table extends pts_Graph
 			$this->i['top_heading_height'] = 8 + $this->c['size']['headers'] + (count($this->graph_sub_titles) * ($this->c['size']['sub_headers'] + 4));
 		}
 
-		$table_max_value_width = $this->text_string_width($this->i['graph_max_value'], $this->c['size']['identifiers']);
+		$table_max_value_width = $this->text_string_width($this->i['graph_max_value'], $this->i['identifier_size']);
 
 		$table_item_width = max($table_max_value_width, $table_identifier_width) + 2;
 		$table_width = max(($table_item_width * count($this->columns)), floor($this->text_string_width($this->graph_title, 12) / $table_item_width) * $table_item_width);
 		//$table_width = $table_item_width * count($this->columns);
-		$table_line_height = round($this->text_string_height($this->i['graph_max_value'], $this->c['size']['identifiers']) + 8);
+		$table_line_height = round($this->text_string_height($this->i['graph_max_value'], $this->i['identifier_size']) + 8);
 		$table_line_height_half = round($table_line_height / 2);
 		$table_height = $table_line_height * count($this->rows);
 
 		$table_proper_height = $this->i['top_heading_height'] + $table_height + $identifier_height;
 
-		$this->i['graph_width'] = $table_width + $this->c['pos']['left_start'];
+		$this->i['graph_width'] = $table_width + $this->i['left_start'];
 		$this->i['graph_height'] = $table_proper_height + $table_line_height;
 
 		// Do the actual work
@@ -167,21 +166,21 @@ class pts_Table extends pts_Graph
 		$this->svg_dom->add_element('rect', array('x' => 0, 'y' => 0, 'width' => $this->i['graph_width'], 'height' => $this->i['graph_height'], 'fill' => $this->c['color']['background'], 'stroke' => $this->c['color']['border'], 'stroke-width' => 1));
 
 		// Start drawing
-		if($this->c['pos']['left_start'] >= 170 && $identifier_height >= 90)
+		if($this->i['left_start'] >= 170 && $identifier_height >= 90)
 		{
-			$this->svg_dom->add_element('image', array('xlink:href' => 'http://www.phoronix-test-suite.com/external/pts-logo-160x83.png', 'x' => round($this->c['pos']['left_start'] / 2 - 80), 'y' => round(($identifier_height / 2 - 41.5) + $this->i['top_heading_height']), 'width' => 160, 'height' => 83));
+			$this->svg_dom->add_element('image', array('xlink:href' => 'http://www.phoronix-test-suite.com/external/pts-logo-160x83.png', 'x' => round($this->i['left_start'] / 2 - 80), 'y' => round(($identifier_height / 2 - 41.5) + $this->i['top_heading_height']), 'width' => 160, 'height' => 83));
 		}
 		else
 		{
-			$this->svg_dom->add_element('image', array('xlink:href' => 'http://www.phoronix-test-suite.com/external/pts-logo-80x42.png', 'x' => round($this->c['pos']['left_start'] / 2 - 40), 'y' => round($identifier_height / 2 - 21 + $this->i['top_heading_height']), 'width' => 80, 'height' => 42));
+			$this->svg_dom->add_element('image', array('xlink:href' => 'http://www.phoronix-test-suite.com/external/pts-logo-80x42.png', 'x' => round($this->i['left_start'] / 2 - 40), 'y' => round($identifier_height / 2 - 21 + $this->i['top_heading_height']), 'width' => 80, 'height' => 42));
 
 		}
 
 		// Draw the vertical table lines
 		$v = round((($identifier_height + $table_height) / 2) + $this->i['top_heading_height']);
-		$table_columns_end = $this->c['pos']['left_start'] + ($table_item_width * count($this->columns));
+		$table_columns_end = $this->i['left_start'] + ($table_item_width * count($this->columns));
 
-		$this->svg_dom->draw_svg_line($this->c['pos']['left_start'], $v, $table_columns_end, $v, $this->c['color']['body'], $table_height + $identifier_height, array('stroke-dasharray' => $table_item_width . ',' . $table_item_width));
+		$this->svg_dom->draw_svg_line($this->i['left_start'], $v, $table_columns_end, $v, $this->c['color']['body'], $table_height + $identifier_height, array('stroke-dasharray' => $table_item_width . ',' . $table_item_width));
 
 		if($table_columns_end < $this->i['graph_width'])
 		{
@@ -193,10 +192,10 @@ class pts_Table extends pts_Graph
 
 		// Draw the borders
 		$this->svg_dom->draw_svg_line(($table_columns_end / 2), ($identifier_height + $this->i['top_heading_height']), round($table_columns_end / 2), $this->i['graph_height'], $this->c['color']['border'], $table_columns_end, array('stroke-dasharray' => '1,' . ($table_line_height - 1)));
-		$this->svg_dom->draw_svg_line($this->c['pos']['left_start'], $v, $table_columns_end + ($table_columns_end < $this->i['graph_width'] ? $table_item_width : 0), $v, $this->c['color']['border'], $table_height + $identifier_height, array('stroke-dasharray' => '1,' . ($table_item_width - 1)));
+		$this->svg_dom->draw_svg_line($this->i['left_start'], $v, $table_columns_end + ($table_columns_end < $this->i['graph_width'] ? $table_item_width : 0), $v, $this->c['color']['border'], $table_height + $identifier_height, array('stroke-dasharray' => '1,' . ($table_item_width - 1)));
 
 		$this->svg_dom->add_element('rect', array('x' => 0, 'y' => $table_proper_height, 'width' => $this->i['graph_width'], 'height' => ($this->i['graph_height'] - $table_proper_height), 'fill' => $this->c['color']['headers']));
-		$this->svg_dom->add_text_element($this->c['text']['watermark'], array('x' => ($this->i['graph_width'] - 2), 'y' => ($table_proper_height + $table_line_height_half), 'font-size' => $this->c['size']['identifiers'], 'fill' => $this->c['color']['body_text'], 'text-anchor' => 'end', 'dominant-baseline' => 'middle', 'xlink:show' => 'new', 'xlink:href' => $this->c['text']['watermark_url']));
+		$this->svg_dom->add_text_element($this->c['text']['watermark'], array('x' => ($this->i['graph_width'] - 2), 'y' => ($table_proper_height + $table_line_height_half), 'font-size' => $this->i['identifier_size'], 'fill' => $this->c['color']['body_text'], 'text-anchor' => 'end', 'dominant-baseline' => 'middle', 'xlink:show' => 'new', 'xlink:href' => $this->c['text']['watermark_url']));
 
 		if($this->link_alternate_view != null)
 		{
@@ -231,7 +230,7 @@ class pts_Table extends pts_Graph
 			$text_color = $row_string->get_attribute('alert') ? $this->c['color']['alert'] : $this->c['color']['text'];
 
 			$v = round($identifier_height + $this->i['top_heading_height'] + ($row * $table_line_height) + $table_line_height_half);
-			$this->svg_dom->add_text_element($row_string, array('x' => ($this->c['pos']['left_start'] - 2), 'y' => $v, 'font-size' => $this->c['size']['identifiers'], 'fill' => $text_color, 'font-weight' => 'bold', 'text-anchor' => 'end', 'dominant-baseline' => 'middle'));
+			$this->svg_dom->add_text_element($row_string, array('x' => ($this->i['left_start'] - 2), 'y' => $v, 'font-size' => $this->i['identifier_size'], 'fill' => $text_color, 'font-weight' => 'bold', 'text-anchor' => 'end', 'dominant-baseline' => 'middle'));
 			$row++;
 		}
 
@@ -263,17 +262,17 @@ class pts_Table extends pts_Graph
 						$extra_heading_height = $this->i['top_heading_height'];
 					}
 
-					$x = $this->c['pos']['left_start'] + 1 + ($last_changed_col * $table_item_width);
-					$x_end = ($this->c['pos']['left_start'] + ($last_changed_col * $table_item_width)) + ($table_item_width * ($current_col - $last_changed_col));
+					$x = $this->i['left_start'] + 1 + ($last_changed_col * $table_item_width);
+					$x_end = ($this->i['left_start'] + ($last_changed_col * $table_item_width)) + ($table_item_width * ($current_col - $last_changed_col));
 
 					$this->svg_dom->add_element('rect', array('x' => $x, '2' => 0, 'width' => ($table_item_width * ($current_col - $last_changed_col)), 'height' => ($extra_heading_height - 2), 'fill' => $paint_color, 'stroke' => $this->c['color']['border'], 'stroke-width' => 1));
 
 					if($identifier[0] != 'Temp')
 					{
-						$this->svg_dom->draw_svg_line(($this->c['pos']['left_start'] + ($current_col * $table_item_width) + 1), 1, ($this->c['pos']['left_start'] + ($current_col * $table_item_width) + 1), $table_proper_height, $paint_color, 1);
+						$this->svg_dom->draw_svg_line(($this->i['left_start'] + ($current_col * $table_item_width) + 1), 1, ($this->i['left_start'] + ($current_col * $table_item_width) + 1), $table_proper_height, $paint_color, 1);
 					}
 
-					$x = $this->c['pos']['left_start'] + ($last_changed_col * $table_item_width) + ($this->c['pos']['left_start'] + ($current_col * $table_item_width) - $this->c['pos']['left_start'] + ($last_changed_col * $table_item_width));
+					$x = $this->i['left_start'] + ($last_changed_col * $table_item_width) + ($this->i['left_start'] + ($current_col * $table_item_width) - $this->i['left_start'] + ($last_changed_col * $table_item_width));
 					$this->svg_dom->add_text_element($last_identifier, array('x' => $x, 'y' => 4, 'font-size' => $this->c['size']['axis_headers'], 'fill' => $this->c['color']['background'], 'font-weight' => 'bold', 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
 
 					$last_identifier = $identifier[0];
@@ -287,15 +286,15 @@ class pts_Table extends pts_Graph
 		{
 			if($this->column_heading_vertical)
 			{
-				$x = $this->c['pos']['left_start'] + ($i * $table_item_width) + $table_identifier_offset;
+				$x = $this->i['left_start'] + ($i * $table_item_width) + $table_identifier_offset;
 				$y = $this->i['top_heading_height'] + $identifier_height - 10;
-				$this->svg_dom->add_text_element($col_string, array('x' => $x, 'y' => $y, 'font-size' => $this->c['size']['identifiers'], 'fill' => $this->c['color']['text'], 'font-weight' => 'bold', 'text-anchor' => 'end', 'dominant-baseline' => 'middle', 'transform' => 'rotate(90 ' . $x . ' ' . $y . ')'));
+				$this->svg_dom->add_text_element($col_string, array('x' => $x, 'y' => $y, 'font-size' => $this->i['identifier_size'], 'fill' => $this->c['color']['text'], 'font-weight' => 'bold', 'text-anchor' => 'end', 'dominant-baseline' => 'middle', 'transform' => 'rotate(90 ' . $x . ' ' . $y . ')'));
 			}
 			else
 			{
-				$x = $this->c['pos']['left_start'] + ($i * $table_item_width) + ($table_item_width / 2);
+				$x = $this->i['left_start'] + ($i * $table_item_width) + ($table_item_width / 2);
 				$y = $this->i['top_heading_height'] + ($identifier_height / 2);
-				$this->svg_dom->add_text_element($col_string, array('x' => $x, 'y' => $y, 'font-size' => $this->c['size']['identifiers'], 'fill' => $this->c['color']['text'], 'font-weight' => 'bold', 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
+				$this->svg_dom->add_text_element($col_string, array('x' => $x, 'y' => $y, 'font-size' => $this->i['identifier_size'], 'fill' => $this->c['color']['text'], 'font-weight' => 'bold', 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
 			}
 		}
 
@@ -372,8 +371,8 @@ class pts_Table extends pts_Graph
 					$spans_col = 1;
 				}
 
-				$left_bounds = $this->c['pos']['left_start'] + ($col * $table_item_width);
-				$right_bounds = $this->c['pos']['left_start'] + (($col + max(1, $spans_col)) * $table_item_width);
+				$left_bounds = $this->i['left_start'] + ($col * $table_item_width);
+				$right_bounds = $this->i['left_start'] + (($col + max(1, $spans_col)) * $table_item_width);
 				$top_bounds = round($this->i['top_heading_height'] + $identifier_height + (($row + 1.2) * $table_line_height));
 
 				if($spans_col > 1)
@@ -392,7 +391,7 @@ class pts_Table extends pts_Graph
 				}
 
 				$x = $left_bounds + (($right_bounds - $left_bounds) / 2);
-				$this->svg_dom->add_text_element($result_table_value, array('x' => $x, 'y' => $top_bounds, 'font-size' => $this->c['size']['identifiers'], 'fill' => $text_color, 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge', 'xlink:title' => implode('; ', $hover)));
+				$this->svg_dom->add_text_element($result_table_value, array('x' => $x, 'y' => $top_bounds, 'font-size' => $this->i['identifier_size'], 'fill' => $text_color, 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge', 'xlink:title' => implode('; ', $hover)));
 				//$row++;
 			}
 		}

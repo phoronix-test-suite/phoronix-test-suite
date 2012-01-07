@@ -39,13 +39,13 @@ class pts_VerticalBarGraph extends pts_Graph
 	{
 		// Do some common work to this object
 		$identifier_count = count($this->graph_identifiers);
-		$this->identifier_width = floor(($this->i['graph_left_end'] - $this->c['pos']['left_start']) / $identifier_count);
+		$this->identifier_width = floor(($this->i['graph_left_end'] - $this->i['left_start']) / $identifier_count);
 
 		$longest_string = pts_strings::find_longest_string($this->graph_identifiers);
 		$width = $this->identifier_width - 4;
-		$this->c['size']['identifiers'] = $this->text_size_bounds($longest_string, $this->c['size']['identifiers'], $this->minimum_identifier_font, $width);
+		$this->i['identifier_size'] = $this->text_size_bounds($longest_string, $this->i['identifier_size'], $this->minimum_identifier_font, $width);
 
-		if($this->c['size']['identifiers'] <= $this->minimum_identifier_font)
+		if($this->i['identifier_size'] <= $this->minimum_identifier_font)
 		{
 			$this->update_graph_dimensions($this->i['graph_width'], $this->i['graph_height'] + $this->text_string_width($longest_string, 9));
 		}
@@ -54,11 +54,11 @@ class pts_VerticalBarGraph extends pts_Graph
 	{
 		$px_from_top_end = $this->i['graph_top_end'] + 5;
 
-		$this->svg_dom->draw_svg_line($this->c['pos']['left_start'] + $this->identifier_width, $this->i['graph_top_end'], $this->i['graph_left_end'] - ($this->i['graph_width'] % $this->identifier_width), $this->i['graph_top_end'], $this->c['color']['notches'], 10, array('stroke-dasharray' => '1,' . ($this->identifier_width - 1)));
+		$this->svg_dom->draw_svg_line($this->i['left_start'] + $this->identifier_width, $this->i['graph_top_end'], $this->i['graph_left_end'] - ($this->i['graph_width'] % $this->identifier_width), $this->i['graph_top_end'], $this->c['color']['notches'], 10, array('stroke-dasharray' => '1,' . ($this->identifier_width - 1)));
 
 		foreach(array_keys($this->graph_identifiers) as $i)
 		{
-			$px_bound_left = $this->c['pos']['left_start'] + ($this->identifier_width * $i);
+			$px_bound_left = $this->i['left_start'] + ($this->identifier_width * $i);
 			$px_bound_right = $px_bound_left + $this->identifier_width;
 
 			if($i == (count($this->graph_identifiers) - 1) && $px_bound_right != $this->i['graph_left_end'])
@@ -66,7 +66,7 @@ class pts_VerticalBarGraph extends pts_Graph
 				$px_bound_right = $this->i['graph_left_end'];
 			}
 
-			if($this->c['size']['identifiers'] <= $this->minimum_identifier_font)
+			if($this->i['identifier_size'] <= $this->minimum_identifier_font)
 			{
 				$x = $px_bound_left + ceil($this->identifier_width / 2);
 				$this->svg_dom->add_text_element($this->graph_identifiers[$i], array('x' => $x, 'y' => $px_from_top_end, 'font-size' => 9, 'fill' => $this->c['color']['headers'], 'text-anchor' => 'start', 'dominant-baseline' => 'middle', 'transform' => 'rotate(90 ' . $x . ' ' . $px_from_top_end . ')'));
@@ -74,7 +74,7 @@ class pts_VerticalBarGraph extends pts_Graph
 			else
 			{
 				$x = $px_bound_left + (($px_bound_right - $px_bound_left) * 0.5);
-				$this->svg_dom->add_text_element($this->graph_identifiers[$i], array('x' => $x, 'y' => ($px_from_top_end - 3), 'font-size' => $this->c['size']['identifiers'], 'fill' => $this->c['color']['headers'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
+				$this->svg_dom->add_text_element($this->graph_identifiers[$i], array('x' => $x, 'y' => ($px_from_top_end - 3), 'font-size' => $this->i['identifier_size'], 'fill' => $this->c['color']['headers'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
 			}
 		}
 	}
@@ -91,10 +91,10 @@ class pts_VerticalBarGraph extends pts_Graph
 			foreach(array_keys($this->graph_data[$i_o]) as $i)
 			{
 				$value = pts_math::set_precision($this->graph_data[$i_o][$i], 2);
-				$graph_size = round(($value / $this->i['graph_max_value']) * ($this->i['graph_top_end'] - $this->c['pos']['top_start']));
+				$graph_size = round(($value / $this->i['graph_max_value']) * ($this->i['graph_top_end'] - $this->i['top_start']));
 				$value_plot_top = max($this->i['graph_top_end'] + 1 - $graph_size, 1);
 
-				$px_bound_left = $this->c['pos']['left_start'] + ($this->identifier_width * $i) + ($bar_width * $i_o) + ($separator_width * ($i_o + 1));
+				$px_bound_left = $this->i['left_start'] + ($this->identifier_width * $i) + ($bar_width * $i_o) + ($separator_width * ($i_o + 1));
 				$px_bound_right = $px_bound_left + $bar_width;
 
 				$title_tooltip = $this->graph_identifiers[$i] . ': ' . $value;
@@ -127,7 +127,7 @@ class pts_VerticalBarGraph extends pts_Graph
 		}
 
 		// write a new line along the bottom since the draw_rectangle_with_border above had written on top of it
-		$this->svg_dom->draw_svg_line($this->c['pos']['left_start'], $this->i['graph_top_end'], $this->i['graph_left_end'], $this->i['graph_top_end'], $this->c['color']['notches'], 1);
+		$this->svg_dom->draw_svg_line($this->i['left_start'], $this->i['graph_top_end'], $this->i['graph_left_end'], $this->i['graph_top_end'], $this->c['color']['notches'], 1);
 	}
 	protected function render_graph_result()
 	{

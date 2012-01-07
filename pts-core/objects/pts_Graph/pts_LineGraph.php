@@ -57,12 +57,12 @@ class pts_LineGraph extends pts_Graph
 			}
 		}
 
-		$this->identifier_width = $identifier_count > 0 ? (($this->i['graph_left_end'] - $this->c['pos']['left_start']) / $identifier_count) : 1;
+		$this->identifier_width = $identifier_count > 0 ? (($this->i['graph_left_end'] - $this->i['left_start']) / $identifier_count) : 1;
 
 		$longest_string = pts_strings::find_longest_string($this->graph_identifiers);
-		$this->c['size']['identifiers'] = $this->text_size_bounds($longest_string, $this->c['size']['identifiers'], $this->minimum_identifier_font, $this->identifier_width - 4);
+		$this->i['identifier_size'] = $this->text_size_bounds($longest_string, $this->i['identifier_size'], $this->minimum_identifier_font, $this->identifier_width - 4);
 
-		if($this->c['size']['identifiers'] <= $this->minimum_identifier_font)
+		if($this->i['identifier_size'] <= $this->minimum_identifier_font)
 		{
 			list($text_width, $text_height) = pts_svg_dom::estimate_text_dimensions($longest_string, $this->minimum_identifier_font + 0.5);
 			$this->i['bottom_offset'] += $text_width;
@@ -86,11 +86,11 @@ class pts_LineGraph extends pts_Graph
 
 		if($this->identifier_width > 2)
 		{
-			$this->svg_dom->draw_svg_line($this->c['pos']['left_start'] + $this->identifier_width, $this->i['graph_top_end'], $this->i['graph_left_end'], $this->i['graph_top_end'], $this->c['color']['notches'], 10, array('stroke-dasharray' => '1,' . ($this->identifier_width - 1)));
+			$this->svg_dom->draw_svg_line($this->i['left_start'] + $this->identifier_width, $this->i['graph_top_end'], $this->i['graph_left_end'], $this->i['graph_top_end'], $this->c['color']['notches'], 10, array('stroke-dasharray' => '1,' . ($this->identifier_width - 1)));
 		}
 		else if($this->show_select_identifiers != null)
 		{
-			$this->svg_dom->draw_svg_line($this->c['pos']['left_start'] + ($this->identifier_width * $this->show_select_identifiers), $this->i['graph_top_end'], $this->i['graph_left_end'], $this->i['graph_top_end'], $this->c['color']['notches'], 10, array('stroke-dasharray' => '1,' . (($this->identifier_width * $this->show_select_identifiers) - 1)));
+			$this->svg_dom->draw_svg_line($this->i['left_start'] + ($this->identifier_width * $this->show_select_identifiers), $this->i['graph_top_end'], $this->i['graph_left_end'], $this->i['graph_top_end'], $this->c['color']['notches'], 10, array('stroke-dasharray' => '1,' . (($this->identifier_width * $this->show_select_identifiers) - 1)));
 		}
 
 		foreach(array_keys($this->graph_identifiers) as $i)
@@ -106,15 +106,15 @@ class pts_LineGraph extends pts_Graph
 				continue;
 			}
 
-			$px_from_left = $this->c['pos']['left_start'] + ($this->identifier_width * ($i + ($this->identifiers_active ? 1 : 0)));
+			$px_from_left = $this->i['left_start'] + ($this->identifier_width * ($i + ($this->identifiers_active ? 1 : 0)));
 
-			if($this->c['size']['identifiers'] <= $this->minimum_identifier_font)
+			if($this->i['identifier_size'] <= $this->minimum_identifier_font)
 			{
 				$this->svg_dom->add_text_element($this->graph_identifiers[$i], array('x' => $px_from_left, 'y' => ($px_from_top_end + 2), 'font-size' => 9, 'fill' => $this->c['color']['headers'], 'text-anchor' => 'start', 'dominant-baseline' => 'middle', 'transform' => 'rotate(90 ' . $px_from_left . ' ' . ($px_from_top_end + 2) . ')'));
 			}
 			else
 			{
-				$this->svg_dom->add_text_element($this->graph_identifiers[$i], array('x' => $px_from_left, 'y' => ($px_from_top_end + 2), 'font-size' => $this->c['size']['identifiers'], 'fill' => $this->c['color']['headers'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
+				$this->svg_dom->add_text_element($this->graph_identifiers[$i], array('x' => $px_from_left, 'y' => ($px_from_top_end + 2), 'font-size' => $this->i['identifier_size'], 'fill' => $this->c['color']['headers'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
 			}
 		}
 	}
@@ -149,8 +149,8 @@ class pts_LineGraph extends pts_Graph
 				$std_error = isset($this->graph_data_raw[$i_o][$i]) ? pts_math::standard_error(pts_strings::colon_explode($this->graph_data_raw[$i_o][$i])) : 0;
 				$data_string = isset($this->graph_data_title[$i_o]) ? $this->graph_data_title[$i_o] . ($identifier ? ' @ ' . $identifier : null) . ': ' . $value : null;
 
-				$value_plot_top = $this->i['graph_top_end'] + 1 - ($this->i['graph_max_value'] == 0 ? 0 : round(($value / $this->i['graph_max_value']) * ($this->i['graph_top_end'] - $this->c['pos']['top_start'])));
-				$px_from_left = round($this->c['pos']['left_start'] + ($this->identifier_width * ($i + ($this->identifiers_active ? 1 : 0))));
+				$value_plot_top = $this->i['graph_top_end'] + 1 - ($this->i['graph_max_value'] == 0 ? 0 : round(($value / $this->i['graph_max_value']) * ($this->i['graph_top_end'] - $this->i['top_start'])));
+				$px_from_left = round($this->i['left_start'] + ($this->identifier_width * ($i + ($this->identifiers_active ? 1 : 0))));
 
 				if($value > $max_value)
 				{
@@ -238,10 +238,10 @@ class pts_LineGraph extends pts_Graph
 				}*/
 
 				// Do the actual rendering of avg / low / med high identifiers
-				$from_left = $this->c['pos']['left_start'] + 6;
+				$from_left = $this->i['left_start'] + 6;
 				foreach($to_display as $color_key => &$column)
 				{
-					$from_top = $this->c['pos']['top_start'] + 4;
+					$from_top = $this->i['top_start'] + 4;
 					$longest_string_width = 0;
 					$precision = isset($column[0]) && max($column) > 999 ? 0 : 1;
 
@@ -288,7 +288,7 @@ class pts_LineGraph extends pts_Graph
 
 		foreach($poly_points as $i => $x_y_pair)
 		{
-			if($x_y_pair[0] < ($this->c['pos']['left_start'] + 2) || $x_y_pair[0] > ($this->i['graph_left_end'] - 2))
+			if($x_y_pair[0] < ($this->i['left_start'] + 2) || $x_y_pair[0] > ($this->i['graph_left_end'] - 2))
 			{
 				// Don't draw anything on the left or right hand edges
 				continue;
@@ -298,7 +298,7 @@ class pts_LineGraph extends pts_Graph
 			if($x_y_pair[3] > 0)
 			{
 				$std_error_width = 4;
-				$std_error_rel_size = round(($x_y_pair[3] / $this->i['graph_max_value']) * ($this->i['graph_top_end'] - $this->c['pos']['top_start']));
+				$std_error_rel_size = round(($x_y_pair[3] / $this->i['graph_max_value']) * ($this->i['graph_top_end'] - $this->i['top_start']));
 
 				if($std_error_rel_size > 3)
 				{

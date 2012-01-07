@@ -62,7 +62,7 @@ class pts_PieChart extends pts_Graph
 		$key_count = count($key_strings);
 		$key_item_width = 18 + $this->text_string_width(pts_strings::find_longest_string($this->graph_identifiers), $this->c['size']['key']);
 		$key_item_width_value = 12 + $this->text_string_width(pts_strings::find_longest_string($key_strings), $this->c['size']['key']);
-		$keys_per_line = floor(($this->i['graph_left_end'] - $this->c['pos']['left_start'] - 14) / ($key_item_width + $key_item_width_value));
+		$keys_per_line = floor(($this->i['graph_left_end'] - $this->i['left_start'] - 14) / ($key_item_width + $key_item_width_value));
 
 		if($keys_per_line < 1)
 		{
@@ -70,8 +70,8 @@ class pts_PieChart extends pts_Graph
 		}
 
 		$key_line_height = 14;
-		$this->c['pos']['top_start'] += 12;
-		$c_y = $this->c['pos']['top_start'] - $key_line_height - 5;
+		$this->i['top_start'] += 12;
+		$c_y = $this->i['top_start'] - $key_line_height - 5;
 		//$this->reset_paint_index();
 
 		for($i = 0; $i < $key_count; $i++)
@@ -81,10 +81,10 @@ class pts_PieChart extends pts_Graph
 			if($i > 0 && $i % $keys_per_line == 0)
 			{
 				$c_y += $key_line_height;
-				$this->c['pos']['top_start'] += $key_line_height;
+				$this->i['top_start'] += $key_line_height;
 			}
 
-			$c_x = $this->c['pos']['left_start'] + 13 + (($key_item_width + $key_item_width_value) * ($i % $keys_per_line));
+			$c_x = $this->i['left_start'] + 13 + (($key_item_width + $key_item_width_value) * ($i % $keys_per_line));
 
 			$this->svg_dom->add_element('rect', array('x' => ($c_x - 13), 'y' => ($c_y - 5), 'width' => 10, 'height' => 10, 'fill' => $this_color, 'stroke' => $this->c['color']['notches'], 'stroke-width' => 1));
 			$this->svg_dom->add_text_element($this->graph_identifiers[$i], array('x' => $c_x, 'y' => $c_y, 'font-size' => $this->c['size']['key'], 'fill' => $this_color, 'text-anchor' => 'start', 'dominant-baseline' => 'middle'));
@@ -97,9 +97,9 @@ class pts_PieChart extends pts_Graph
 		$this->render_graph_heading(false);
 
 		$pie_slices = count($this->graph_identifiers);
-		$radius = min(($this->i['graph_height'] - $this->c['pos']['top_start'] - $this->c['pos']['top_end_bottom']), ($this->i['graph_width'] - $this->c['pos']['left_start'] - $this->c['pos']['left_end_right'])) / 2;
+		$radius = min(($this->i['graph_height'] - $this->i['top_start'] - $this->i['top_end_bottom']), ($this->i['graph_width'] - $this->i['left_start'] - $this->i['left_end_right'])) / 2;
 		$center_x = ($this->i['graph_width'] / 2);
-		$center_y = $this->c['pos']['top_start'] + (($this->i['graph_height'] - $this->c['pos']['top_start'] - $this->c['pos']['top_end_bottom']) / 2);
+		$center_y = $this->i['top_start'] + (($this->i['graph_height'] - $this->i['top_start'] - $this->i['top_end_bottom']) / 2);
 		$offset_percent = 0;
 
 		for($i = 0; $i < $pie_slices; $i++)

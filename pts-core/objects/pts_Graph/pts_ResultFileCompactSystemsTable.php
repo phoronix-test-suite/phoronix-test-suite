@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2011, Phoronix Media
-	Copyright (C) 2011, Michael Larabel
+	Copyright (C) 2011 - 2012, Phoronix Media
+	Copyright (C) 2011 - 2012, Michael Larabel
 	pts_Table.php: A charting table object for pts_Graph
 
 	This program is free software; you can redistribute it and/or modify
@@ -50,11 +50,11 @@ class pts_ResultFileCompactSystemsTable extends pts_Graph
 		$this->i['top_heading_height'] = 22 + $this->c['size']['headers'];
 
 		$longest_component = pts_strings::find_longest_string($this->components);
-		$component_header_height = $this->text_string_height($longest_component, ($this->c['size']['identifiers'] + 3)) + 4;
+		$component_header_height = $this->text_string_height($longest_component, ($this->i['identifier_size'] + 3)) + 4;
 
 		$this->i['graph_width'] = 10 + max(
 			$this->text_string_width($this->graph_title, $this->c['size']['headers']) - (isset($this->graph_title[30]) ? 20 : 0),
-			$this->text_string_width($longest_component, ($this->c['size']['identifiers'] + (isset($longest_component[29]) ? 1.8 : 2)))
+			$this->text_string_width($longest_component, ($this->i['identifier_size'] + (isset($longest_component[29]) ? 1.8 : 2)))
 			);
 
 		$intent_count = 0;
@@ -90,7 +90,7 @@ class pts_ResultFileCompactSystemsTable extends pts_Graph
 		$this->svg_dom->add_text_element($this->graph_title, array('x' => ($this->i['graph_width'] / 2), 'y' => 2, 'font-size' => $this->c['size']['headers'], 'fill' => $this->c['color']['background'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
 
 		$this->svg_dom->add_text_element($this->c['text']['watermark'], array('x' => 4, 'y' => ($this->i['top_heading_height'] - 6), 'font-size' => 8, 'fill' => $this->c['color']['background'], 'text-anchor' => 'start', 'dominant-baseline' => 'middle', 'xlink:show' => 'new', 'xlink:href' => $this->c['text']['watermark_url']));
-		$this->svg_dom->add_text_element($this->c['text']['graph_version'], array('x' => ($this->i['graph_width'] - 4), 'y' => ($this->i['top_heading_height'] - 6), 'font-size' => 8, 'fill' => $this->c['color']['background'], 'text-anchor' => 'end', 'dominant-baseline' => 'middle', 'xlink:show' => 'new', 'xlink:href' => 'http://www.phoronix-test-suite.com/'));
+		$this->svg_dom->add_text_element($this->i['graph_version'], array('x' => ($this->i['graph_width'] - 4), 'y' => ($this->i['top_heading_height'] - 6), 'font-size' => 8, 'fill' => $this->c['color']['background'], 'text-anchor' => 'end', 'dominant-baseline' => 'middle', 'xlink:show' => 'new', 'xlink:href' => 'http://www.phoronix-test-suite.com/'));
 
 		// Body
 		$offset = $this->i['top_heading_height'];
@@ -138,7 +138,7 @@ class pts_ResultFileCompactSystemsTable extends pts_Graph
 			foreach($component as $c)
 			{
 				$c = pts_result_file_analyzer::system_value_to_ir_value($c, $type);
-				$this->svg_dom->add_text_element($c, array('x' => ($this->i['graph_width'] / 2), 'y' => $offset, 'font-size' => $this->c['size']['identifiers'], 'fill' => $this->c['color']['text'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge', 'xlink:title' => $type . ': ' . $c, 'font-weight' => 'bold'));
+				$this->svg_dom->add_text_element($c, array('x' => ($this->i['graph_width'] / 2), 'y' => $offset, 'font-size' => $this->i['identifier_size'], 'fill' => $this->c['color']['text'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge', 'xlink:title' => $type . ': ' . $c, 'font-weight' => 'bold'));
 				$offset += $component_header_height;
 			}
 

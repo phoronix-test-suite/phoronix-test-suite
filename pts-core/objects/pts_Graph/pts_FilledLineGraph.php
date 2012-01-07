@@ -62,8 +62,8 @@ class pts_FilledLineGraph extends pts_LineGraph
 				$identifier = isset($this->graph_identifiers[$i]) ? $this->graph_identifiers[$i] : null;
 				$data_string = isset($this->graph_data_title[$i_o]) ? $this->graph_data_title[$i_o] . ($identifier ? ' @ ' . $identifier : null) . ': ' . $value : null;
 
-				$value_plot_top = $this->i['graph_top_end'] + 1 - ($this->i['graph_max_value'] == 0 ? 0 : round(($value / $this->i['graph_max_value']) * ($this->i['graph_top_end'] - $this->c['pos']['top_start'])));
-				$px_from_left = round($this->c['pos']['left_start'] + ($this->identifier_width * ($i + 1)));
+				$value_plot_top = $this->i['graph_top_end'] + 1 - ($this->i['graph_max_value'] == 0 ? 0 : round(($value / $this->i['graph_max_value']) * ($this->i['graph_top_end'] - $this->i['top_start'])));
+				$px_from_left = round($this->i['left_start'] + ($this->identifier_width * ($i + 1)));
 
 /*
 				if(($i == ($point_counter - 1)) && $value == 0)
@@ -86,8 +86,8 @@ class pts_FilledLineGraph extends pts_LineGraph
 
 				if($identifiers_empty && $i == 0)
 				{
-					array_push($poly_points, array($this->c['pos']['left_start'] + 1, ($this->i['graph_top_end'] + 1)));
-					array_push($poly_points, array($this->c['pos']['left_start'] + 1, $value_plot_top, $data_string));
+					array_push($poly_points, array($this->i['left_start'] + 1, ($this->i['graph_top_end'] + 1)));
+					array_push($poly_points, array($this->i['left_start'] + 1, $value_plot_top, $data_string));
 				}
 				else if($identifiers_empty && $i == ($point_counter - 1))
 				{
@@ -161,8 +161,8 @@ class pts_FilledLineGraph extends pts_LineGraph
 		}
 
 		$maximum = max($values);
-		$maximum = (floor(round($maximum * 1.285) / $this->c['graph']['mark_count']) + 1) * $this->c['graph']['mark_count'];
-		$maximum = round(ceil($maximum / $this->c['graph']['mark_count']), (0 - strlen($maximum) + 2)) * $this->c['graph']['mark_count'];
+		$maximum = (floor(round($maximum * 1.285) / $this->i['mark_count']) + 1) * $this->i['mark_count'];
+		$maximum = round(ceil($maximum / $this->i['mark_count']), (0 - strlen($maximum) + 2)) * $this->i['mark_count'];
 
 		return $maximum;
 	}

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2011, Phoronix Media
-	Copyright (C) 2009 - 2011, Michael Larabel
+	Copyright (C) 2009 - 2012, Phoronix Media
+	Copyright (C) 2009 - 2012, Michael Larabel
 	pts_ResultFileTable.php: The result file table object
 
 	This program is free software; you can redistribute it and/or modify
@@ -44,7 +44,7 @@ class pts_ResultFileSystemsTable extends pts_Table
 		}
 
 		parent::__construct($rows, $columns, $table_data, $result_file);
-		$this->c['size']['identifiers'] *= 0.8;
+		$this->i['identifier_size'] *= 0.8;
 		$this->column_heading_vertical = false;
 		$this->graph_title = $result_file->get_title();
 	}

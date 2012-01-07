@@ -110,7 +110,6 @@ class pts_HeatMapBarGraph extends pts_Graph
 		$this->i['graph_height'] = ($bar_height + $heading_per_bar + $border) * count($this->bars) + $border + (count($categories) * $category_heights) + $title_bar_height + $title_key_offset + $footer_bar_height;
 		$this->svg_dom = new pts_svg_dom(ceil($this->i['graph_width']), ceil($this->i['graph_height']));
 
-		$this->c['color']['border'] = pts_svg_dom::sanitize_hex('#222');
 		$text_color = pts_svg_dom::sanitize_hex('#e12128');
 		$alt_text_color = pts_svg_dom::sanitize_hex('#646464');
 

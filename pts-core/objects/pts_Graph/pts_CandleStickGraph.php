@@ -47,10 +47,10 @@ class pts_CandleStickGraph extends pts_VerticalBarGraph
 				$low_value = $run_values_r[0];
 				$high_value = $run_values_r[(count($run_values_r) - 1)];
 
-				$px_bound_left = $this->c['pos']['left_start'] + ($this->identifier_width * $i) + ($bar_width * $i_o) + 8;
+				$px_bound_left = $this->i['left_start'] + ($this->identifier_width * $i) + ($bar_width * $i_o) + 8;
 				$px_bound_center = $px_bound_left + round($bar_width / 2);
 
-				$top_diff = $this->i['graph_top_end'] - $this->c['pos']['top_start'];
+				$top_diff = $this->i['graph_top_end'] - $this->i['top_start'];
 				$plot_wick_lowest = $this->i['graph_top_end'] + 1 - round(($low_value / $this->i['graph_max_value']) * $top_diff);
 				$plot_wick_highest = $this->i['graph_top_end'] + 1 - round(($high_value / $this->i['graph_max_value']) * $top_diff);
 				$plot_body_start = $this->i['graph_top_end'] + 1 - round(($start_value / $this->i['graph_max_value']) * $top_diff);

@@ -47,8 +47,8 @@ class pts_ScatterPlot extends pts_Graph
 			$maximum = max(max($data_r), $maximum);
 		}
 
-		$maximum = (floor(round($maximum * 1.2) / $this->c['graph']['mark_count']) + 1) * $this->c['graph']['mark_count'];
-		$maximum = round(ceil($maximum / $this->c['graph']['mark_count']), (0 - strlen($maximum) + 2)) * $this->c['graph']['mark_count'];
+		$maximum = (floor(round($maximum * 1.2) / $this->i['mark_count']) + 1) * $this->i['mark_count'];
+		$maximum = round(ceil($maximum / $this->i['mark_count']), (0 - strlen($maximum) + 2)) * $this->i['mark_count'];
 
 		return $maximum;
 	}
@@ -62,12 +62,12 @@ class pts_ScatterPlot extends pts_Graph
 /*
 		$graph_identifiers_count = count($this->graph_identifiers);
 		$identifier_count = $graph_identifiers_count > 1 ? $graph_identifiers_count : count($this->graph_data[0]);
-		$this->identifier_width = ($this->i['graph_left_end'] - $this->c['pos']['left_start']) / ($identifier_count + 1);
+		$this->identifier_width = ($this->i['graph_left_end'] - $this->i['left_start']) / ($identifier_count + 1);
 
 		$longest_string = pts_strings::find_longest_string($this->graph_identifiers);
-		$this->c['size']['identifiers'] = $this->text_size_bounds($longest_string, $this->c['size']['identifiers'], $this->minimum_identifier_font, $this->identifier_width - 4);
+		$this->i['identifier_size'] = $this->text_size_bounds($longest_string, $this->i['identifier_size'], $this->minimum_identifier_font, $this->identifier_width - 4);
 
-		if($this->c['size']['identifiers'] <= $this->minimum_identifier_font)
+		if($this->i['identifier_size'] <= $this->minimum_identifier_font)
 		{
 			list($text_width, $text_height) = pts_svg_dom::estimate_text_dimensions($longest_string, $this->minimum_identifier_font + 0.5);
 			$this->i['bottom_offset'] += $text_width;
@@ -100,8 +100,8 @@ class pts_ScatterPlot extends pts_Graph
 					continue;
 				}
 
-				$x = $this->c['pos']['left_start'] + (($this->i['graph_left_end'] - $this->c['pos']['left_start']) * (($key_time - $this->min_time) / $this->spread_time));
-				$y = $this->i['graph_top_end'] + 1 - round(($value / $this->i['graph_max_value']) * ($this->i['graph_top_end'] - $this->c['pos']['top_start']));
+				$x = $this->i['left_start'] + (($this->i['graph_left_end'] - $this->i['left_start']) * (($key_time - $this->min_time) / $this->spread_time));
+				$y = $this->i['graph_top_end'] + 1 - round(($value / $this->i['graph_max_value']) * ($this->i['graph_top_end'] - $this->i['top_start']));
 				$this->svg_dom->add_element('ellipse', array('cx' => $x, 'cy' => $y, 'rx' = 2, 'ry' = 2, 'fill' => $paint_color, 'stroke' => $paint_color, 'stroke-width' => 1));
 				array_push($points, array($x, $y));
 			}
@@ -133,16 +133,16 @@ class pts_ScatterPlot extends pts_Graph
 			$pearson_coefficient = $pearson_den == 0 ? 0 : $pearson_num / $pearson_den;
 
 
-			$start_y = ($m * $this->c['pos']['left_start']) + $b;
+			$start_y = ($m * $this->i['left_start']) + $b;
 			$end_y = ($m * $this->i['graph_left_end']) + $b;
 
 			// TODO: hook into pearson_coefficient for figuring out if the line is good or not, for now if it goes out of bounds assume bad
-			if($start_y > $this->i['graph_top_end'] || $start_y < $this->c['pos']['top_start'] || $end_y > $this->i['graph_top_end'] || $end_y < $this->c['pos']['top_start'])
+			if($start_y > $this->i['graph_top_end'] || $start_y < $this->i['top_start'] || $end_y > $this->i['graph_top_end'] || $end_y < $this->i['top_start'])
 			{
 				continue;
 			}
 
-			$this->svg_dom->draw_svg_line($this->c['pos']['left_start'], $start_y, $this->i['graph_left_end'], $end_y, $paint_color, 2);
+			$this->svg_dom->draw_svg_line($this->i['left_start'], $start_y, $this->i['graph_left_end'], $end_y, $paint_color, 2);
 
 		}
 	}
@@ -156,7 +156,7 @@ class pts_ScatterPlot extends pts_Graph
 			return;
 		}
 
-		$this->svg_dom->draw_svg_line($this->c['pos']['left_start'] + $this->identifier_width, $this->i['graph_top_end'], $this->i['graph_left_end'], $this->i['graph_top_end'], $this->c['color']['notches'], 10, array('stroke-dasharray' => '1,' . ($this->identifier_width - 1)));
+		$this->svg_dom->draw_svg_line($this->i['left_start'] + $this->identifier_width, $this->i['graph_top_end'], $this->i['graph_left_end'], $this->i['graph_top_end'], $this->c['color']['notches'], 10, array('stroke-dasharray' => '1,' . ($this->identifier_width - 1)));
 
 		foreach(array_keys($this->graph_identifiers) as $i)
 		{
@@ -171,15 +171,15 @@ class pts_ScatterPlot extends pts_Graph
 				continue;
 			}
 
-			$px_from_left = $this->c['pos']['left_start'] + ($this->identifier_width * ($i + 1));
+			$px_from_left = $this->i['left_start'] + ($this->identifier_width * ($i + 1));
 
-			if($this->c['size']['identifiers'] <= $this->minimum_identifier_font)
+			if($this->i['identifier_size'] <= $this->minimum_identifier_font)
 			{
 				$this->svg_dom->add_text_element($this->graph_identifiers[$i], array('x' => $px_from_left, 'y' => ($px_from_top_end + 2), 'font-size' => 9, 'fill' => $this->c['color']['headers'], 'text-anchor' => 'start', 'dominant-baseline' => 'middle', 'transform' => 'rotate(90 ' . $px_from_left . ' ' . ($px_from_top_end + 2) . ')'));
 			}
 			else
 			{
-				$this->svg_dom->add_text_element($this->graph_identifiers[$i], array('x' => $px_from_left, 'y' => ($px_from_top_end + 2), 'font-size' => $this->c['size']['identifiers'], 'fill' => $this->c['color']['headers'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
+				$this->svg_dom->add_text_element($this->graph_identifiers[$i], array('x' => $px_from_left, 'y' => ($px_from_top_end + 2), 'font-size' => $this->i['identifier_size'], 'fill' => $this->c['color']['headers'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
 			}
 		}
 	}

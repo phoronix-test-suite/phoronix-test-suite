@@ -65,17 +65,17 @@ class pts_OverviewGraph extends pts_Graph
 			return;
 		}
 
-		$this->c['size']['identifiers'] = 6.5;
+		$this->i['identifier_size'] = 6.5;
 		$this->i['graph_width'] = 1000;
 
-		list($longest_title_width, $longest_title_height) = pts_svg_dom::estimate_text_dimensions(pts_strings::find_longest_string($this->test_titles), $this->c['size']['identifiers']);
+		list($longest_title_width, $longest_title_height) = pts_svg_dom::estimate_text_dimensions(pts_strings::find_longest_string($this->test_titles), $this->i['identifier_size']);
 
-		$this->c['pos']['left_start'] += 20;
-		$this->graphs_per_row = floor(($this->i['graph_width'] - $this->c['pos']['left_start'] - $this->c['pos']['left_end_right']) / ($longest_title_width + 2));
-		$this->graph_item_width = floor(($this->i['graph_width'] - $this->c['pos']['left_start'] - $this->c['pos']['left_end_right']) / $this->graphs_per_row);
+		$this->i['left_start'] += 20;
+		$this->graphs_per_row = floor(($this->i['graph_width'] - $this->i['left_start'] - $this->i['left_end_right']) / ($longest_title_width + 2));
+		$this->graph_item_width = floor(($this->i['graph_width'] - $this->i['left_start'] - $this->i['left_end_right']) / $this->graphs_per_row);
 		$this->graph_row_count = ceil(count($this->test_titles) / $this->graphs_per_row);
 
-		$height = $this->c['pos']['top_start'] + ($this->graph_row_count * ($this->graph_row_height + 15));
+		$height = $this->i['top_start'] + ($this->graph_row_count * ($this->graph_row_height + 15));
 
 		$this->graph_title = $result_file->get_title();
 		$this->graph_y_title = null;
@@ -94,7 +94,7 @@ class pts_OverviewGraph extends pts_Graph
 	public function renderGraph()
 	{
 		$this->graph_data_title = &$this->system_identifiers;
-		$this->c['graph']['mark_count'] = 6;
+		$this->i['mark_count'] = 6;
 		$this->i['graph_max_value'] = 1.2;
 		$l_height = 15;
 
@@ -109,8 +109,8 @@ class pts_OverviewGraph extends pts_Graph
 
 		for($i = 0; $i < $this->graph_row_count; $i++)
 		{
-			$this->render_graph_base($this->c['pos']['left_start'], $this->c['pos']['top_start'] + ($i * ($this->graph_row_height + $l_height)), $this->i['graph_left_end'], $this->c['pos']['top_start'] + ($i * ($this->graph_row_height + $l_height)) + $this->graph_row_height);
-			$this->render_graph_value_ticks($this->c['pos']['left_start'], $this->c['pos']['top_start'] + ($i * ($this->graph_row_height + $l_height)), $this->i['graph_left_end'], $this->c['pos']['top_start'] + ($i * ($this->graph_row_height + $l_height)) + $this->graph_row_height);
+			$this->render_graph_base($this->i['left_start'], $this->i['top_start'] + ($i * ($this->graph_row_height + $l_height)), $this->i['graph_left_end'], $this->i['top_start'] + ($i * ($this->graph_row_height + $l_height)) + $this->graph_row_height);
+			$this->render_graph_value_ticks($this->i['left_start'], $this->i['top_start'] + ($i * ($this->graph_row_height + $l_height)), $this->i['graph_left_end'], $this->i['top_start'] + ($i * ($this->graph_row_height + $l_height)) + $this->graph_row_height);
 		}
 
 		$row = 0;
@@ -123,12 +123,12 @@ class pts_OverviewGraph extends pts_Graph
 
 		foreach($this->result_file->get_result_objects() as $i => $result_object)
 		{
-			$top_start = $this->c['pos']['top_start'] + ($row * ($this->graph_row_height + $l_height));
-			$top_end = round($this->c['pos']['top_start'] + ($row * ($this->graph_row_height + $l_height)) + $this->graph_row_height);
-			$px_bound_left = $this->c['pos']['left_start'] + ($this->graph_item_width * ($col % $this->graphs_per_row));
+			$top_start = $this->i['top_start'] + ($row * ($this->graph_row_height + $l_height));
+			$top_end = round($this->i['top_start'] + ($row * ($this->graph_row_height + $l_height)) + $this->graph_row_height);
+			$px_bound_left = $this->i['left_start'] + ($this->graph_item_width * ($col % $this->graphs_per_row));
 			$px_bound_right = $px_bound_left + $this->graph_item_width;
 
-			$this->svg_dom->add_text_element($result_object->test_profile->get_title(), array('x' => ($px_bound_left + ($this->graph_item_width * 0.5)), 'y' => ($top_end + 3), 'font-size' => $this->c['size']['identifiers'], 'fill' => $this->c['color']['headers'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
+			$this->svg_dom->add_text_element($result_object->test_profile->get_title(), array('x' => ($px_bound_left + ($this->graph_item_width * 0.5)), 'y' => ($top_end + 3), 'font-size' => $this->i['identifier_size'], 'fill' => $this->c['color']['headers'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
 
 			if($result_object->test_profile->get_display_format() == 'BAR_GRAPH')
 			{
@@ -172,8 +172,8 @@ class pts_OverviewGraph extends pts_Graph
 
 			if(($i + 1) % $this->graphs_per_row == 0 && $i != 0)
 			{
-				$this->svg_dom->draw_svg_line($this->c['pos']['left_start'] + $this->graph_item_width, $top_end, $this->i['graph_left_end'] - ($this->i['graph_width'] % $this->graph_item_width), $top_end, $this->c['color']['notches'], 10, array('stroke-dasharray' => '1,' . ($this->graph_item_width - 1)));
-				$this->svg_dom->draw_svg_line($this->c['pos']['left_start'], $top_end, $this->i['graph_left_end'], $top_end, $this->c['color']['notches'], 1);
+				$this->svg_dom->draw_svg_line($this->i['left_start'] + $this->graph_item_width, $top_end, $this->i['graph_left_end'] - ($this->i['graph_width'] % $this->graph_item_width), $top_end, $this->c['color']['notches'], 10, array('stroke-dasharray' => '1,' . ($this->graph_item_width - 1)));
+				$this->svg_dom->draw_svg_line($this->i['left_start'], $top_end, $this->i['graph_left_end'], $top_end, $this->c['color']['notches'], 1);
 
 				$row++;
 			}
@@ -187,7 +187,7 @@ class pts_OverviewGraph extends pts_Graph
 		}
 
 
-		//$this->render_graph_base($this->c['pos']['left_start'], $this->c['pos']['top_start'], $this->i['graph_left_end'], $this->i['graph_top_end']);
+		//$this->render_graph_base($this->i['left_start'], $this->i['top_start'], $this->i['graph_left_end'], $this->i['graph_top_end']);
 		$this->render_graph_heading();
 		//$this->render_graph_watermark();
 	}
