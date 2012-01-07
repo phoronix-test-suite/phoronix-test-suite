@@ -283,7 +283,10 @@ class pts_svg_dom_gd
 					// TODO: IMPLEMENT XXX
 					break;
 				default:
-					echo $node->nodeName . ' not implemented.' . PHP_EOL;
+					if(PTS_IS_CLIENT)
+					{
+						echo $node->nodeName . ' not implemented.' . PHP_EOL;
+					}
 					break;
 
 			}
