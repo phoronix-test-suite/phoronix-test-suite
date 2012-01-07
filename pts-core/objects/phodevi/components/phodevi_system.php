@@ -252,6 +252,14 @@ class phodevi_system extends phodevi_device_interface
 						{
 							$fs = 'ext2';
 						}
+						else if(is_dir('/proc/fs/ext4/'))
+						{
+							$fs = 'ext4';
+						}
+						else if(is_dir('/proc/fs/ext3/'))
+						{
+							$fs = 'ext3';
+						}
 					}
 					break;
 				case 'Case-sensitive Journaled HFS+':
