@@ -33,9 +33,9 @@ function pts_codename($full_string = false)
 
 	return ($full_string ? 'PhoronixTestSuite/' : null) . $codename;
 }
-function pts_title($show_both = false)
+function pts_title($show_codename = false)
 {
-	return 'Phoronix Test Suite' . (PTS_VERSION != null ? ' v' . PTS_VERSION : null) . (PTS_CODENAME != null && (PTS_VERSION == null || $show_both ) ? ' (' . ucwords(strtolower(PTS_CODENAME)) . ')' : null);
+	return 'Phoronix Test Suite v' . PTS_VERSION . ($show_codename ? ' (' . pts_codename() . ')' : null);
 }
 function pts_define_directories()
 {
@@ -53,6 +53,7 @@ function pts_define_directories()
 		define('PTS_OPENBENCHMARKING_SCRATCH_PATH', PTS_USER_PATH . 'openbenchmarking.org/');
 		define('PTS_TEST_PROFILE_PATH', PTS_USER_PATH . 'test-profiles/');
 		define('PTS_TEST_SUITE_PATH', PTS_USER_PATH . 'test-suites/');
+		define('PTS_RESULTS_VIEWER_PATH', PTS_CORE_PATH . 'results-viewer/');
 	}
 
 	// Misc Locations
@@ -60,19 +61,16 @@ function pts_define_directories()
 	define('PTS_CORE_STATIC_PATH', PTS_CORE_PATH . 'static/');
 	define('PTS_COMMAND_PATH', PTS_CORE_PATH . 'commands/');
 	define('PTS_EXDEP_PATH', PTS_CORE_PATH . 'external-test-dependencies/');
-	define('PTS_RESULTS_VIEWER_PATH', PTS_CORE_PATH . 'results-viewer/');
 	define('PTS_OPENBENCHMARKING_PATH', PTS_CORE_PATH . 'openbenchmarking.org/');
 }
 function pts_needed_extensions()
 {
 	return array(
 		// Required? - The Check If In Place - Name - Description
-
 		// Required extesnions denoted by 1 at [0]
 		array(1, extension_loaded('dom'), 'DOM', 'The PHP Document Object Model (DOM) is required for XML operations.'),
 		array(1, extension_loaded('zip') || extension_loaded('zlib'), 'ZIP', 'PHP Zip support is required for file compression and decompression.'),
 		array(1, function_exists('json_decode'), 'JSON', 'PHP JSON support is required for OpenBenchmarking.org communication.'),
-
 		// Optional but recommended extensions
 		array(0, extension_loaded('openssl'), 'OpenSSL', 'PHP OpenSSL support is recommended to support HTTPS traffic.'),
 		array(0, extension_loaded('gd'), 'GD', 'The PHP GD library is recommended for improved graph rendering.'),
@@ -106,7 +104,6 @@ if(PTS_IS_CLIENT || defined('PTS_AUTO_LOAD_OBJECTS'))
 				}
 			}
 		}
-
 		closedir($dh);
 	}
 	function __autoload($to_load)
