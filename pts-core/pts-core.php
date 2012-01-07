@@ -27,6 +27,11 @@ define('PTS_CODENAME', 'BYGLAND');
 define('PTS_IS_CLIENT', (defined('PTS_MODE') && PTS_MODE == 'CLIENT'));
 define('PTS_IS_DEV_BUILD', (substr(PTS_VERSION, -2, 1) == 'm'));
 
+if(!defined('PTS_PATH'))
+{
+	define('PTS_PATH', dirname(dirname(__FILE__)) . '/');
+}
+
 function pts_codename($full_string = false)
 {
 	$codename = ucwords(strtolower(PTS_CODENAME));
