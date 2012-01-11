@@ -45,7 +45,7 @@ class pts_network
 		$http_parameters = array('http' => array('method' => 'POST', 'content' => $upload_data));
 		$stream_context = pts_network::stream_context_create($http_parameters);
 		$opened_url = fopen($url, 'rb', false, $stream_context);
-		$response = stream_get_contents($opened_url);
+		$response = $opened_url ? stream_get_contents($opened_url) : false;
 
 		return $response;
 	}

@@ -11,6 +11,7 @@ Phoronix Test Suite (Git)
 - phodevi: Fall-back graphics detection support for the ARM Mali
 - phodevi: NVIDIA TEGRA hardware detection improvements (as tested on a TEGRA-2 CompuLab TrimSlice)
 - phodevi: Further fall-back support for further detecting EXT3/EXT4 file-system from user-space
+- phodevi: Improve Arch Linux OS detection on at least ARM platforms
 - installer: Installer update
 
 Phoronix Test Suite 3.6.1-Arendal

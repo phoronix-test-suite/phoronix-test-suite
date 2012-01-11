@@ -716,6 +716,15 @@ class phodevi_system extends phodevi_device_interface
 					$os = php_uname('s');
 				}
 			}
+			else if(strpos($os, ' ') === false)
+			{
+				// The OS string is only one word, likely a problem...
+				if(is_file('/etc/arch-release') && stripos($os, 'Arch') === false)
+				{
+					// On at least some Arch installs (ARM) the file is empty so would have missed above check
+					$os = trim('Arch Linux ' . $os);
+				}
+			}
 		}
 		else
 		{
