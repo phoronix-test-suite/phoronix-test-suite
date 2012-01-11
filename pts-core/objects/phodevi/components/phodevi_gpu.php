@@ -369,6 +369,17 @@ class phodevi_gpu extends phodevi_device_interface
 					}
 				}
 			}
+
+			if($resolution == false && is_readable('/sys/class/graphics/fb0/virtual_size'))
+			{
+				// As last fall-back try reading size of fb
+				$virtual_size = explode(',', pts_file_io::file_get_contents('/sys/class/graphics/fb0/virtual_size'));
+
+				if(count($virtual_size) == 2 && is_numeric($virtual_size[0]) && is_numeric($virtual_size[1]))
+				{
+					$resolution = $virtual_size;
+				}
+			}
 		}
 
 		return $resolution == false ? array(-1, -1) : $resolution;
