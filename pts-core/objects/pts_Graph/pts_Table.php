@@ -272,8 +272,8 @@ class pts_Table extends pts_Graph
 						$this->svg_dom->draw_svg_line(($this->i['left_start'] + ($current_col * $table_item_width) + 1), 1, ($this->i['left_start'] + ($current_col * $table_item_width) + 1), $table_proper_height, $paint_color, 1);
 					}
 
-					$x = $this->i['left_start'] + ($last_changed_col * $table_item_width) + ($this->i['left_start'] + ($current_col * $table_item_width) - $this->i['left_start'] + ($last_changed_col * $table_item_width));
-					$this->svg_dom->add_text_element($last_identifier, array('x' => $x, 'y' => 4, 'font-size' => $this->c['size']['axis_headers'], 'fill' => $this->c['color']['background'], 'font-weight' => 'bold', 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
+					//$x = $this->i['left_start'] + ($last_changed_col * $table_item_width) + ($this->i['left_start'] + ($current_col * $table_item_width) - $this->i['left_start'] + ($last_changed_col * $table_item_width));
+					$this->svg_dom->add_text_element($last_identifier, array('x' => ($x + (($x_end - $x) / 2)), 'y' => 4, 'font-size' => $this->c['size']['axis_headers'], 'fill' => $this->c['color']['background'], 'font-weight' => 'bold', 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
 
 					$last_identifier = $identifier[0];
 					$last_changed_col = $current_col;
