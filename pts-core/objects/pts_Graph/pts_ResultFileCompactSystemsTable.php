@@ -121,14 +121,14 @@ class pts_ResultFileCompactSystemsTable extends pts_Graph
 
 			if($dash)
 			{
-				$this->svg_dom->add_element('rect', array('x' => 0, 'y' => $offset, 'width' => $this->i['graph_width'], 'height' => $component_header_height, 'fill' => $this->c['color']['body_light']));
+				$this->svg_dom->add_element('rect', array('x' => 0, 'y' => $offset, 'width' => $this->i['graph_width'], 'height' => ($next_offset - $offset), 'fill' => $this->c['color']['body_light']));
 			}
 
 			$this->svg_dom->draw_svg_line(0, $offset, $this->i['graph_width'], $offset, $this->c['color']['notches'], 1);
 
 			if(isset($component[1]))
 			{
-				$this->svg_dom->add_element('rect', array('x' => 0, 'y' => ($offset + 1), 'width' => $this->i['graph_width'], 'height' => ($component_header_height - 1), 'fill' => $this->c['color']['highlight']));
+				$this->svg_dom->add_element('rect', array('x' => 1, 'y' => ($offset + 1), 'width' => ($this->i['graph_width'] - 2), 'height' => ($next_offset - $offset - 1), 'fill' => 'none', 'stroke-width' => 1, 'stroke' => $this->c['color']['highlight']));
 			}
 
 			$text = $type . (isset($component[1]) && substr($type, -1) != 'y' ? 's' : null);
