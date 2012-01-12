@@ -13,6 +13,7 @@ Phoronix Test Suite (Git)
 - phodevi: Further fall-back support for further detecting EXT3/EXT4 file-system from user-space
 - phodevi: Improve Arch Linux OS detection on at least ARM platforms
 - phodevi: Screen resolution fall-back of reading frame-buffer virtual size
+- phodevi: Improved Intel chipset detection parsing from Xorg.0.log when /sys/kernel/debug/ isn't readable
 - installer: Installer update
 
 Phoronix Test Suite 3.6.1-Arendal

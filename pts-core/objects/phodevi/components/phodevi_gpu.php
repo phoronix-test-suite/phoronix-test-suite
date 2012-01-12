@@ -971,26 +971,57 @@ class phodevi_gpu extends phodevi_device_interface
 				{
 					$info = $info_pci;
 
-					if(strpos($info, 'Intel 2nd Generation Core Family') !== false && is_readable('/sys/kernel/debug/dri/0/i915_capabilities'))
+					if(strpos($info, 'Intel 2nd Generation Core Family') !== false)
 					{
 						// Try to come up with a better non-generic string
-						$i915_caps = file_get_contents('/sys/kernel/debug/dri/0/i915_capabilities');
-						if(($x = strpos($i915_caps, 'gen: ')) !== false)
+						if(is_readable('/sys/kernel/debug/dri/0/i915_capabilities'))
 						{
-							$gen = substr($i915_caps, ($x + 5));
-							$gen = substr($gen, 0, strpos($gen, PHP_EOL));
-
-							if(is_numeric($gen))
+							$i915_caps = file_get_contents('/sys/kernel/debug/dri/0/i915_capabilities');
+							if(($x = strpos($i915_caps, 'gen: ')) !== false)
 							{
-								$info = 'Intel Gen' . $gen;
+								$gen = substr($i915_caps, ($x + 5));
+								$gen = substr($gen, 0, strpos($gen, PHP_EOL));
 
-								if(strpos($i915_caps, 'is_mobile: yes') !== false)
+								if(is_numeric($gen))
 								{
-									$info .= ' Mobile';
+									$info = 'Intel Gen' . $gen;
+
+									if(strpos($i915_caps, 'is_mobile: yes') !== false)
+									{
+										$info .= ' Mobile';
+									}
 								}
 							}
 						}
+						else if(is_readable('/var/log/Xorg.0.log'))
+						{
+							/*
+							$ cat /var/log/Xorg.0.log | grep -i Chipset
+							[     8.421] (II) intel: Driver for Intel Integrated Graphics Chipsets: i810,
+							[     8.421] (II) VESA: driver for VESA chipsets: vesa
+							[     8.423] (II) intel(0): Integrated Graphics Chipset: Intel(R) Sandybridge Mobile (GT2+)
+							[     8.423] (--) intel(0): Chipset: "Sandybridge Mobile (GT2+)"
+							*/
 
+							$xorg_log = file_get_contents('/var/log/Xorg.0.log');
+
+							if(($x = strpos($xorg_log, 'intel(0): Chipset: ')) !== false)
+							{
+								$xorg_log = substr($xorg_log, ($x + 19));
+								$xorg_log = str_replace(array('(R)', '"'), null, substr($xorg_log, 0, strpos($xorg_log, PHP_EOL)));
+
+								if(stripos($xorg_log, 'Intel') === false)
+								{
+									$xorg_log = 'Intel ' . $xorg_log;
+								}
+
+								// if string is too long, likely not product
+								if(!isset($xorg_log[45]))
+								{
+									$info = $xorg_log;
+								}
+							}
+						}
 					}
 				}
 			}

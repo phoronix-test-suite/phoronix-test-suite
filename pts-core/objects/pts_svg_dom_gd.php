@@ -261,7 +261,12 @@ class pts_svg_dom_gd
 				case 'rect':
 					// Draw a rectangle
 					$a = self::attributes_to_array($node, array('x', 'y', 'width', 'height', 'fill', 'stroke', 'stroke-width'));
-					imagefilledrectangle($gd, $a['x'], $a['y'], ($a['x'] + $a['width']), ($a['y'] + $a['height']), self::gd_color_allocate($gd, $a['fill']));
+
+					if($a['fill'] != 'none')
+					{
+						imagefilledrectangle($gd, $a['x'], $a['y'], ($a['x'] + $a['width']), ($a['y'] + $a['height']), self::gd_color_allocate($gd, $a['fill']));
+					}
+
 					if($a['stroke'] != null)
 					{
 						// TODO: implement $a['stroke-width']
