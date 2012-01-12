@@ -265,7 +265,7 @@ class pts_Table extends pts_Graph
 					$x = $this->i['left_start'] + 1 + ($last_changed_col * $table_item_width);
 					$x_end = ($this->i['left_start'] + ($last_changed_col * $table_item_width)) + ($table_item_width * ($current_col - $last_changed_col));
 
-					$this->svg_dom->add_element('rect', array('x' => $x, '2' => 0, 'width' => ($table_item_width * ($current_col - $last_changed_col)), 'height' => ($extra_heading_height - 2), 'fill' => $paint_color, 'stroke' => $this->c['color']['border'], 'stroke-width' => 1));
+					$this->svg_dom->add_element('rect', array('x' => $x, 'y' => 0, 'width' => ($table_item_width * ($current_col - $last_changed_col)), 'height' => ($extra_heading_height - 2), 'fill' => $paint_color, 'stroke' => $this->c['color']['border'], 'stroke-width' => 1));
 
 					if($identifier[0] != 'Temp')
 					{
