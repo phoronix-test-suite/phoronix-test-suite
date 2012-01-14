@@ -118,7 +118,7 @@ class pts_render
 			if($result_object->test_profile->get_display_format() != 'PIE_CHART')
 			{
 				$result_table = false;
-				pts_render::compact_result_file_test_object($result_object, $result_table, $result_file->is_multi_way_inverted(), $extra_attributes);
+				pts_render::compact_result_file_test_object($result_object, $result_table, $result_file, $extra_attributes);
 			}
 		}
 		else if(in_array($result_object->test_profile->get_display_format(), array('LINE_GRAPH', 'FILLED_LINE_GRAPH')))
@@ -485,8 +485,9 @@ class pts_render
 
 		return $test_result;
 	}
-	public static function compact_result_file_test_object(&$mto, &$result_table = false, $identifiers_inverted = false, $extra_attributes = null)
+	public static function compact_result_file_test_object(&$mto, &$result_table = false, &$result_file, $extra_attributes = null)
 	{
+		$identifiers_inverted = $result_file && $result_file->is_multi_way_inverted();
 		// TODO: this may need to be cleaned up, its logic is rather messy
 		$condense_multi_way = isset($extra_attributes['condense_multi_way']);
 		if(count($mto->test_profile->get_result_scale_offset()) > 0)
@@ -628,6 +629,12 @@ class pts_render
 		else
 		{
 			$mto->test_profile->set_result_scale($mto->test_profile->get_result_scale() . ' | ' . implode(',', array_keys($days)));
+
+			if($is_tracking && pts_result_file_analyzer::analyze_result_file_intent($result_file) != false)
+			{
+				// It can't be a tracker if the result file is comparing hardware/software, etc
+				$is_tracking = false;
+			}
 
 			switch($mto->test_profile->get_display_format())
 			{
