@@ -36,6 +36,9 @@ class pts_RadarOverviewGraph extends pts_Graph
 	}
 	public function __construct(&$result_file)
 	{
+		$result_object = null;
+		parent::__construct($result_object, $result_file);
+
 		// System Identifiers
 		$system_identifiers = $result_file->get_system_identifiers();
 		if($result_file->is_multi_way_comparison() || count($result_file->get_test_titles()) < 3 || count($system_identifiers) < 3)
@@ -78,9 +81,6 @@ class pts_RadarOverviewGraph extends pts_Graph
 			$this->skip_graph = true;
 			return;
 		}
-
-		$result_object = null;
-		parent::__construct($result_object, $result_file);
 
 		$this->i['identifier_size'] = 6.5;
 		$this->i['graph_height'] = $this->i['graph_width'];

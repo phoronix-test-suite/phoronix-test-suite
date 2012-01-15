@@ -459,13 +459,9 @@ abstract class pts_Graph
 		$this->svg_dom = new pts_svg_dom(ceil($this->i['graph_width']), ceil($this->i['graph_height']));
 
 		// Background Color
-		if($this->i['iveland_view'])
+		if($this->i['iveland_view'] || $this->c['graph']['border'])
 		{
 			$this->svg_dom->add_element('rect', array('x' => 1, 'y' => 1, 'width' => ($this->i['graph_width'] - 1), 'height' => ($this->i['graph_height'] - 1), 'fill' => $this->c['color']['background'], 'stroke' => $this->c['color']['border'], 'stroke-width' => 1));
-		}
-		else if($this->c['graph']['border'])
-		{
-			$this->svg_dom->add_element('rect', array('x' => 0, 'y' => 0, 'width' => $this->i['graph_width'], 'height' => $this->i['graph_height'], 'fill' => $this->c['color']['background'], 'stroke' => $this->c['color']['border'], 'stroke-width' => 1));
 		}
 		else
 		{

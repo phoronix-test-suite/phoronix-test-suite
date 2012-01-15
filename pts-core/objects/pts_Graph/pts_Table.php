@@ -163,7 +163,7 @@ class pts_Table extends pts_Graph
 		// Do the actual work
 		$this->render_graph_pre_init();
 		$this->render_graph_init(array('cache_font_size' => true));
-		$this->svg_dom->add_element('rect', array('x' => 0, 'y' => 0, 'width' => $this->i['graph_width'], 'height' => $this->i['graph_height'], 'fill' => $this->c['color']['background'], 'stroke' => $this->c['color']['border'], 'stroke-width' => 1));
+		$this->svg_dom->add_element('rect', array('x' => 1, 'y' => 1, 'width' => ($this->i['graph_width'] - 1), 'height' => ($this->i['graph_height'] - 1), 'fill' => $this->c['color']['background'], 'stroke' => $this->c['color']['border'], 'stroke-width' => 1));
 
 		// Start drawing
 		if($this->i['left_start'] >= 170 && $identifier_height >= 90)
