@@ -348,6 +348,40 @@ class pts_client
 						file_put_contents($system_log_dir . $command[0], $cmd_output);
 					}
 				}
+
+				// Dump some common / important environmental variables
+				$environment_variables = array(
+					'PATH' => null,
+					'CFLAGS' => null,
+					'CXXFLAGS' => null,
+					'LD_LIBRARY_PATH' => null,
+					'CC' => null,
+					'LIBGL_DRIVERS_PATH' => null
+					);
+
+				foreach($environment_variables as $variable => &$value)
+				{
+					$v = getenv($variable);
+
+					if($v != null)
+					{
+						$value = $v;
+					}
+					else
+					{
+						unset($environment_variables[$variable]);
+					}
+				}
+
+				if(!empty($environment_variables))
+				{
+					$variable_dump = null;
+					foreach($environment_variables as $variable => $value)
+					{
+						$variable_dump .= $variable . '=' . $value . PHP_EOL;
+					}
+					file_put_contents($system_log_dir . 'environment-variables', $variable_dump);
+				}
 			}
 		}
 
