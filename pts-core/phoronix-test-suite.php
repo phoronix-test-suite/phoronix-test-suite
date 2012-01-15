@@ -48,7 +48,7 @@ if(ini_get('date.timezone') == null)
 {
 	$tz = null;
 
-	if(is_executable('/bin/date'))
+	if(is_executable('/bin/date') && function_exists('timezone_name_from_abbr'))
 	{
 		$tz = timezone_name_from_abbr(trim(shell_exec('date +%Z 2> /dev/null')));
 	}
