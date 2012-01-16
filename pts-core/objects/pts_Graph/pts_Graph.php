@@ -26,7 +26,7 @@
 // Other tests:
 // 1201120-BY-MESA80GAL31
 
-// Setup main config values
+// Setup main config values, should only be needed once since the configuration values should never be over-written within pts_Graph*
 pts_Graph::init_graph_config();
 
 abstract class pts_Graph
@@ -54,8 +54,6 @@ abstract class pts_Graph
 
 	public function __construct(&$result_object = null, &$result_file = null)
 	{
-		//$this->set_openbenchmarking_graph_overrides();
-
 		// Initalize Colors
 		$this->i['identifier_size'] = self::$c['size']['identifiers']; // Copy this since it's commonly overwritten
 		$this->i['graph_orientation'] = 'VERTICAL';

@@ -155,6 +155,10 @@ class pts_render
 	}
 	public static function render_graph_process(&$result_object, &$result_file = null, $save_as = false, $extra_attributes = null)
 	{
+		if(isset($extra_attributes['sort_result_buffer']))
+		{
+			$result_object->test_result_buffer->sort_buffer_items();
+		}
 		if(isset($extra_attributes['reverse_result_buffer']))
 		{
 			$result_object->test_result_buffer->buffer_values_reverse();
