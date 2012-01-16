@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2010, Phoronix Media
-	Copyright (C) 2008 - 2010, Michael Larabel
+	Copyright (C) 2008 - 2012, Phoronix Media
+	Copyright (C) 2008 - 2012, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -40,6 +40,10 @@ class pts_arrays
 	public static function to_array($var)
 	{
 		return !is_array($var) ? array($var) : $var;
+	}
+	public static function json_encode_pretty_string($json)
+	{
+		return str_replace(array(',"', '{', '}'), array(",\n\t\"", " {\n\t", "\n}"), json_encode($json));
 	}
 }
 

@@ -29,10 +29,10 @@
 abstract class pts_Graph
 {
 	// Graph config
-	protected $c; // user-configurable data. no pts_Graph* should ever over-write any of this data... should be read-only.
-	protected $d; // the data from the test result / whatever... important data
-	protected $i; // internal data, pts_Graph* can read-write
-	public $svg_dom;
+	protected $c = array(); // user-configurable data. no pts_Graph* should ever over-write any of this data... should be read-only.
+	protected $d = array(); // the data from the test result / whatever... important data
+	protected $i = array(); // internal data, pts_Graph* can read-write
+	public $svg_dom = null;
 
 	// TODO: Convert below variables to using $this->[XXX]
 	protected $graph_data = array();
@@ -49,77 +49,10 @@ abstract class pts_Graph
 	protected $link_alternate_view = null;
 	protected $value_highlights = array();
 
-	protected function set_default_graph_values()
-	{
-		// Setup config values
-		$this->c['graph']['width'] = 580; // Graph width
-		$this->c['graph']['height'] = 300; // Graph height
-		$this->c['graph']['border'] = true; // Graph border
-
-		// Colors
-		$this->c['color']['notches'] = '#454545'; // Color for notches
-		$this->c['color']['text'] = '#454545'; // Color for text
-		$this->c['color']['border'] = '#454545'; // Color for border (if used)
-		$this->c['color']['main_headers'] = '#2B6B29'; // Color of main text headers
-		$this->c['color']['headers'] = '#2B6B29'; // Color of other headers
-		$this->c['color']['background'] = '#FEFEFE'; // Color of background
-		$this->c['color']['body'] = '#BABABA'; // Color of graph body
-		$this->c['color']['body_text'] = '#FFFFFF'; // Color of graph body text
-		$this->c['color']['body_light'] = '#949494'; // Color of the border around graph bars (if doing a bar graph)
-		$this->c['color']['highlight'] = '#005A00'; // Color for highlight
-		$this->c['color']['alert'] = '#C80000'; // Color for alerts
-		$this->c['color']['paint'] = array('#2B6B29', '#0b27cf', '#ff9c00', '#d78f1d', '#6B6B6B', '#ff5800', '#221914', '#AC008A', '#E00022', '#3A9137', '#00F6FF', '#8A00AC', '#949200', '#797766', '#5598b1'); // Colors to use for the bars / lines, one color for each key
-
-		// Text
-		$this->c['size']['tick_mark'] = 10;
-		$this->c['size']['key'] = 9;
-
-		$this->c['text']['watermark'] = 'PHORONIX-TEST-SUITE.COM'; // watermark
-		$this->c['text']['watermark_url'] = 'http://www.phoronix-test-suite.com/'; // watermark URL
-		$this->c['size']['headers'] = 17; // Font size of headings
-		$this->c['size']['bars'] = 11; // Font size for text on the bars/objects
-		$this->c['size']['identifiers'] = 10; // Font size of identifiers
-		$this->c['size']['sub_headers'] = 11; // Font size of headers
-		$this->c['size']['axis_headers'] = 10; // Font size of axis headers
-	}
-	public function set_openbenchmarking_graph_overrides()
-	{
-		// Setup config values
-		$this->c['graph']['width'] = 600;
-		$this->c['graph']['height'] = 310;
-		$this->c['graph']['border'] = true;
-
-		// Colors
-		$this->c['color']['notches'] = '#757575';
-		$this->c['color']['text'] = '#065695';
-		$this->c['color']['border'] = '#757575';
-		$this->c['color']['main_headers'] = '#231f20';
-		$this->c['color']['headers'] = '#231f20';
-		$this->c['color']['background'] = '#FEFEFE';
-		$this->c['color']['body'] = '#BABABA';
-		$this->c['color']['body_text'] = '#FFFFFF';
-		$this->c['color']['body_light'] = '#949494';
-		$this->c['color']['highlight'] = '#005a00';
-		$this->c['color']['alert'] = '#C80000';
-		$this->c['color']['paint'] = array('#065695', '#e12128', '#009345', '#1b75bb', '#a3365c', '#2794A9', '#ff5800', '#221914', '#AC008A', '#E00022', '#3A9137', '#00F6FF', '#8A00AC', '#949200', '#797766', '#5598b1', '#555555', '#757575', '#999999', '#CCCDDD');
-
-		// Text
-		$this->c['size']['tick_mark'] = 10;
-		$this->c['size']['key'] = 9;
-
-		$this->c['text']['watermark'] = 'OpenBenchmarking.org';
-		$this->c['text']['watermark_url'] = 'http://www.openbenchmarking.org/';
-		$this->c['size']['headers'] = 17;
-		$this->c['size']['bars'] = 11;
-		$this->c['size']['identifiers'] = 10;
-		$this->c['size']['sub_headers'] = 11;
-		$this->c['size']['axis_headers'] = 10;
-	}
-
 	public function __construct(&$result_object = null, &$result_file = null)
 	{
 		// Setup config values
-		$this->set_default_graph_values();
+		self::set_default_graph_values($this->c);
 		//$this->set_openbenchmarking_graph_overrides();
 
 		// Initalize Colors
@@ -183,6 +116,72 @@ abstract class pts_Graph
 		}
 
 		$this->i['graph_version'] = 'Phoronix Test Suite ' . $pts_version;
+	}
+	public static function set_default_graph_values(&$config)
+	{
+		// Setup config values
+		$config['graph']['width'] = 580; // Graph width
+		$config['graph']['height'] = 300; // Graph height
+		$config['graph']['border'] = true; // Graph border
+
+		// Colors
+		$config['color']['notches'] = '#454545'; // Color for notches
+		$config['color']['text'] = '#454545'; // Color for text
+		$config['color']['border'] = '#454545'; // Color for border (if used)
+		$config['color']['main_headers'] = '#2B6B29'; // Color of main text headers
+		$config['color']['headers'] = '#2B6B29'; // Color of other headers
+		$config['color']['background'] = '#FEFEFE'; // Color of background
+		$config['color']['body'] = '#BABABA'; // Color of graph body
+		$config['color']['body_text'] = '#FFFFFF'; // Color of graph body text
+		$config['color']['body_light'] = '#949494'; // Color of the border around graph bars (if doing a bar graph)
+		$config['color']['highlight'] = '#005A00'; // Color for highlight
+		$config['color']['alert'] = '#C80000'; // Color for alerts
+		$config['color']['paint'] = array('#2B6B29', '#0b27cf', '#ff9c00', '#d78f1d', '#6B6B6B', '#ff5800', '#221914', '#AC008A', '#E00022', '#3A9137', '#00F6FF', '#8A00AC', '#949200', '#797766', '#5598b1'); // Colors to use for the bars / lines, one color for each key
+
+		// Text
+		$config['size']['tick_mark'] = 10;
+		$config['size']['key'] = 9;
+
+		$config['text']['watermark'] = 'PHORONIX-TEST-SUITE.COM'; // watermark
+		$config['text']['watermark_url'] = 'http://www.phoronix-test-suite.com/'; // watermark URL
+		$config['size']['headers'] = 17; // Font size of headings
+		$config['size']['bars'] = 11; // Font size for text on the bars/objects
+		$config['size']['identifiers'] = 10; // Font size of identifiers
+		$config['size']['sub_headers'] = 11; // Font size of headers
+		$config['size']['axis_headers'] = 10; // Font size of axis headers
+	}
+	public static function set_openbenchmarking_graph_overrides(&$config)
+	{
+		// Setup config values
+		$config['graph']['width'] = 600;
+		$config['graph']['height'] = 310;
+		$config['graph']['border'] = true;
+
+		// Colors
+		$config['color']['notches'] = '#757575';
+		$config['color']['text'] = '#065695';
+		$config['color']['border'] = '#757575';
+		$config['color']['main_headers'] = '#231f20';
+		$config['color']['headers'] = '#231f20';
+		$config['color']['background'] = '#FEFEFE';
+		$config['color']['body'] = '#BABABA';
+		$config['color']['body_text'] = '#FFFFFF';
+		$config['color']['body_light'] = '#949494';
+		$config['color']['highlight'] = '#005a00';
+		$config['color']['alert'] = '#C80000';
+		$config['color']['paint'] = array('#065695', '#e12128', '#009345', '#1b75bb', '#a3365c', '#2794A9', '#ff5800', '#221914', '#AC008A', '#E00022', '#3A9137', '#00F6FF', '#8A00AC', '#949200', '#797766', '#5598b1', '#555555', '#757575', '#999999', '#CCCDDD');
+
+		// Text
+		$config['size']['tick_mark'] = 10;
+		$config['size']['key'] = 9;
+
+		$config['text']['watermark'] = 'OpenBenchmarking.org';
+		$config['text']['watermark_url'] = 'http://www.openbenchmarking.org/';
+		$config['size']['headers'] = 17;
+		$config['size']['bars'] = 11;
+		$config['size']['identifiers'] = 10;
+		$config['size']['sub_headers'] = 11;
+		$config['size']['axis_headers'] = 10;
 	}
 
 	//

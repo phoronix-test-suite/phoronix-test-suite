@@ -7,6 +7,7 @@ Phoronix Test Suite (Git)
 - pts-core: Major enhancements to MATISK testing module
 - pts-core: Fix for some hardware/software comparisons being turned into line graphs
 - pts-core: Dump some common / important environmental variables to system log area
+- pts-core: Migrate to a JSON-based graph configuration file at ~/.phoronix-test-suite/graph-config.json
 - pts_Graph: New version of pts_Graph that uses SVG DOM IR directly
 - pts-core: Allow pts_svg_dom to be converted to JPEG/PNG using new library as bilde_renderer replacement
 - phodevi: Add some fall-back graphics detection support of Texas Instruments OMAP / Samsung EXYNOS

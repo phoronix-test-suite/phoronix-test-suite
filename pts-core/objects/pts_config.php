@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2011, Phoronix Media
-	Copyright (C) 2008 - 2011, Michael Larabel
+	Copyright (C) 2008 - 2012, Phoronix Media
+	Copyright (C) 2008 - 2012, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -20,15 +20,57 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+if(PTS_IS_CLIENT)
+{
+	// Upon loading pts_client, make sure files are loaded
+	pts_config::init_files();
+}
+
 class pts_config
 {
+	static $init_process_ran = false;
 	static $xml_user_config = null;
-	static $xml_graph_config = null;
 
 	public static function init_files()
 	{
+		// Don't let the process run multiple times...
+		if(pts_config::$init_process_ran)
+		{
+			return false;
+		}
+		pts_config::$init_process_ran = true;
+
+		// The main PTS user client config
 		pts_config::user_config_generate();
-		pts_config::graph_config_generate();
+
+		// Generate the graph config
+		$json_pre = null;
+		if(is_file(PTS_USER_PATH . 'graph-config.json'))
+		{
+			$json_pre = file_get_contents(PTS_USER_PATH . 'graph-config.json');
+		}
+		else if(PTS_IS_CLIENT && is_file(($t = PTS_CORE_STATIC_PATH . 'graph-config-template-' . phodevi::read_property('system', 'vendor-identifier') . '.json')))
+		{
+			$json_pre = file_get_contents($t);
+		}
+		else if(is_file(PTS_CORE_STATIC_PATH . 'graph-config-template.json'))
+		{
+			$json_pre = file_get_contents(PTS_CORE_STATIC_PATH . 'graph-config-template.json');
+		}
+
+		$json_graph = array();
+		pts_Graph::set_default_graph_values($json_graph);
+		if($json_pre != null)
+		{
+			$json_pre = json_decode($json_pre, true);
+
+			if(is_array($json_pre))
+			{
+				$json_graph = array_merge($json_graph, $json_pre);
+			}
+		}
+		// TODO XXX: Now pass $json_graph to pts_Graph....
+		file_put_contents(PTS_USER_PATH . 'graph-config.json', pts_arrays::json_encode_pretty_string($json_graph));
 	}
 	public static function user_config_generate($new_config_values = null)
 	{
@@ -85,45 +127,6 @@ class pts_config
 
 		$config->saveXMLFile(PTS_USER_PATH . 'user-config.xml');
 	}
-	public static function graph_config_generate($new_config_values = null)
-	{
-		// Initialize the graph configuration file
-
-		$read_config = new pts_graph_config_nye_XmlReader($new_config_values);
-		$config = new nye_XmlWriter();
-
-		// General
-		$config->addXmlNodeFromReader('PhoronixTestSuite/Graphs/General/GraphWidth', $read_config);
-		$config->addXmlNodeFromReader('PhoronixTestSuite/Graphs/General/GraphHeight', $read_config);
-		$config->addXmlNodeFromReader('PhoronixTestSuite/Graphs/General/Renderer', $read_config);
-		$config->addXmlNodeFromReader('PhoronixTestSuite/Graphs/General/Watermark', $read_config);
-		$config->addXmlNodeFromReader('PhoronixTestSuite/Graphs/General/WatermarkURL', $read_config);
-		$config->addXmlNodeFromReader('PhoronixTestSuite/Graphs/General/Border', $read_config);
-		$config->addXmlNodeFromReader('PhoronixTestSuite/Graphs/General/BarOrientation', $read_config);
-
-		$config->addXmlNodeFromReader('PhoronixTestSuite/Graphs/Colors/Background', $read_config);
-		$config->addXmlNodeFromReader('PhoronixTestSuite/Graphs/Colors/GraphBody', $read_config);
-		$config->addXmlNodeFromReader('PhoronixTestSuite/Graphs/Colors/Notches', $read_config);
-		$config->addXmlNodeFromReader('PhoronixTestSuite/Graphs/Colors/Border', $read_config);
-		$config->addXmlNodeFromReader('PhoronixTestSuite/Graphs/Colors/Alternate', $read_config);
-		$config->addXmlNodeFromReader('PhoronixTestSuite/Graphs/Colors/ObjectPaint', $read_config);
-
-		$config->addXmlNodeFromReader('PhoronixTestSuite/Graphs/Colors/Headers', $read_config);
-		$config->addXmlNodeFromReader('PhoronixTestSuite/Graphs/Colors/MainHeaders', $read_config);
-		$config->addXmlNodeFromReader('PhoronixTestSuite/Graphs/Colors/Text', $read_config);
-		$config->addXmlNodeFromReader('PhoronixTestSuite/Graphs/Colors/BodyText', $read_config);
-		$config->addXmlNodeFromReader('PhoronixTestSuite/Graphs/Colors/Highlight', $read_config);
-		$config->addXmlNodeFromReader('PhoronixTestSuite/Graphs/Colors/Alert', $read_config);
-
-		$config->addXmlNodeFromReader('PhoronixTestSuite/Graphs/Font/FontType', $read_config);
-		$config->addXmlNodeFromReader('PhoronixTestSuite/Graphs/Font/Headers', $read_config);
-		$config->addXmlNodeFromReader('PhoronixTestSuite/Graphs/Font/SubHeaders', $read_config);
-		$config->addXmlNodeFromReader('PhoronixTestSuite/Graphs/Font/ObjectText', $read_config);
-		$config->addXmlNodeFromReader('PhoronixTestSuite/Graphs/Font/Identifiers', $read_config);
-		$config->addXmlNodeFromReader('PhoronixTestSuite/Graphs/Font/Axis', $read_config);
-
-		$config->saveXMLFile(PTS_USER_PATH . 'graph-config.xml');
-	}
 	public static function bool_to_string($bool)
 	{
 		return $bool ? 'TRUE' : 'FALSE';
@@ -152,37 +155,6 @@ class pts_config
 		$value = self::read_user_config($xml_pointer, $predefined_value, $nye_xml);
 		return pts_strings::string_bool($value);
 	}
-	public static function read_graph_config($xml_pointer, $predefined_value = false, &$nye_xml = null)
-	{
-		// Generic call for reading a config file
-		if($nye_xml instanceof nye_XmlReader)
-		{
-			$read_value = $nye_xml->getXmlValue($xml_pointer);
-		}
-		else
-		{
-			// For now don't bother caching the graph config values since this isn't used as much as user config
-			/*
-			if(self::$xml_graph_config == null)
-			{
-				self::$xml_graph_config = new pts_graph_config_nye_XmlReader();
-			}
-
-			$temp_value = self::$xml_graph_config->getXmlValue($xml_pointer);
-			*/
-
-			$nye_temp = new pts_graph_config_nye_XmlReader();
-			$read_value = $nye_temp->getXmlValue($xml_pointer);
-		}
-
-		return !empty($read_value) ? $read_value : $predefined_value;
-	}
-}
-
-if(PTS_IS_CLIENT)
-{
-	// Upon loading pts_client, make sure files are loaded
-	pts_config::init_files();
 }
 
 ?>
