@@ -74,14 +74,14 @@ class pts_ImageComparisonGraph extends pts_Graph
 			$from_left = ($this->i['graph_width'] / 2) - ($img_width / 2);
 			$from_top = 60 + ($i_o * ($img_height + 22));
 // TODO: make sure this code still works... XXX
-			$this->svg_dom->add_element('rect', array('x' => ($from_left - 1), 'y' => ($from_right - 1), 'width' => ($img_width + 2), 'height' => ($img_height + 2), 'fill' => $this->c['color']['body_light']));
+			$this->svg_dom->add_element('rect', array('x' => ($from_left - 1), 'y' => ($from_right - 1), 'width' => ($img_width + 2), 'height' => ($img_height + 2), 'fill' => self::$c['color']['body_light']));
 			$this->svg_dom->add_element('image', array('xlink:href' => base64_decode($this->graph_data[0][$i_o]), 'x' => $from_left, 'y' => $from_top, 'width' => $img_width, 'height' => $img_height));
-			$this->svg_dom->add_text_element($this->graph_identifiers[$i_o], array('x' => round($this->i['graph_width'] / 2), 'y' => ($from_top + $img_height + 3), 'font-size' => $this->c['size']['bars'], 'fill' => $this->c['color']['main_headers'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
+			$this->svg_dom->add_text_element($this->graph_identifiers[$i_o], array('x' => round($this->i['graph_width'] / 2), 'y' => ($from_top + $img_height + 3), 'font-size' => self::$c['size']['bars'], 'fill' => self::$c['color']['main_headers'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
 		}
 
-		if(!empty($this->c['text']['watermark']))
+		if(!empty(self::$c['text']['watermark']))
 		{
-			$this->svg_dom->add_text_element($this->c['text']['watermark'], array('x' => round($this->i['graph_width']), 'y' => ($this->i['graph_height'] - 15), 'font-size' => 10, 'fill' => $this->c['color']['text'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
+			$this->svg_dom->add_text_element(self::$c['text']['watermark'], array('x' => round($this->i['graph_width']), 'y' => ($this->i['graph_height'] - 15), 'font-size' => 10, 'fill' => self::$c['color']['text'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
 		}
 	}
 }

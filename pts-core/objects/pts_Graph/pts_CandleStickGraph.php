@@ -58,7 +58,7 @@ class pts_CandleStickGraph extends pts_VerticalBarGraph
 
 				if($start_value > $end_value)
 				{
-					$body_color = $this->c['color']['body'];
+					$body_color = self::$c['color']['body'];
 					$plot_body_high = $plot_body_start;
 					$plot_body_low = $plot_body_end;
 				}
@@ -69,8 +69,8 @@ class pts_CandleStickGraph extends pts_VerticalBarGraph
 					$plot_body_high = $plot_body_end;
 				}
 
-				$this->svg_dom->draw_svg_line($px_bound_center, $plot_wick_lowest, $px_bound_center, $plot_wick_highest, $this->c['color']['body_light'], 1);
-				$this->svg_dom->add_element('rect', array('x' => $px_bound_left, 'y' => $plot_body_low, 'width' => $bar_width, 'height' => ($plot_body_high - $plot_body_low), 'fill' => $body_color, 'stroke' => $this->c['color']['body_light'], 'stroke-width' => 1));
+				$this->svg_dom->draw_svg_line($px_bound_center, $plot_wick_lowest, $px_bound_center, $plot_wick_highest, self::$c['color']['body_light'], 1);
+				$this->svg_dom->add_element('rect', array('x' => $px_bound_left, 'y' => $plot_body_low, 'width' => $bar_width, 'height' => ($plot_body_high - $plot_body_low), 'fill' => $body_color, 'stroke' => self::$c['color']['body_light'], 'stroke-width' => 1));
 			}
 		}
 	}

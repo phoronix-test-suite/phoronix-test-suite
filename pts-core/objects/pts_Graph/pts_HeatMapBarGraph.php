@@ -110,8 +110,8 @@ class pts_HeatMapBarGraph extends pts_Graph
 		$this->i['graph_height'] = ($bar_height + $heading_per_bar + $border) * count($this->bars) + $border + (count($categories) * $category_heights) + $title_bar_height + $title_key_offset + $footer_bar_height;
 		$this->svg_dom = new pts_svg_dom(ceil($this->i['graph_width']), ceil($this->i['graph_height']));
 
-		$text_color = pts_svg_dom::sanitize_hex('#e12128');
-		$alt_text_color = pts_svg_dom::sanitize_hex('#646464');
+		$text_color = '#e12128';
+		$alt_text_color = '#646464';
 
 		// Setup
 		$start_x = $border;
@@ -129,12 +129,12 @@ class pts_HeatMapBarGraph extends pts_Graph
 			{
 				$component_x = $border + ($i % $keys_per_line) * ($longest_key_width + 10);
 				$component_y = (floor($i / $keys_per_line) * $key_line_height) + $title_bar_height + 3;
-				$key_color = pts_svg_dom::sanitize_hex(self::color_cache('opc', $this->keys[$i], $color_cache));
+				$key_color = self::color_cache('opc', $this->keys[$i], $color_cache);
 
-				//$key_color = pts_svg_dom::sanitize_hex(self::color_gradient('e12128', '065695', ($i / $c)));
+				//$key_color = self::color_gradient('e12128', '065695', ($i / $c));
 				$key_colors[$this->keys[$i]] = $key_color;
 
-				$this->svg_dom->add_element('rect', array('x' => ($component_x + 1), 'y' => $component_y, 'width' => 10, 'height' => 10, 'fill' => $key_color, 'stroke' => $this->c['color']['border'], 'stroke-width' => 1));
+				$this->svg_dom->add_element('rect', array('x' => ($component_x + 1), 'y' => $component_y, 'width' => 10, 'height' => 10, 'fill' => $key_color, 'stroke' => self::$c['color']['border'], 'stroke-width' => 1));
 				$this->svg_dom->add_text_element($this->keys[$i], array('x' => ($component_x + 15), 'y' => ($component_y + 5), 'font-size' => 10, 'fill' => $key_color, 'text-anchor' => 'start', 'dominant-baseline' => 'middle'));
 			}
 		}
@@ -156,7 +156,7 @@ class pts_HeatMapBarGraph extends pts_Graph
 			$lower_y = $upper_y + $bar_height;
 
 			$value_size = $bar_width / ($hmap['max_value'] - $hmap['min_value']);
-			$prev_color = pts_svg_dom::sanitize_hex('#ffffff');
+			$prev_color = '#ffffff';
 			$last_plot_x = $start_x;
 
 			$this->svg_dom->add_text_element($hmap['test_data']['t'], array('x' => $start_x, 'y' => ($upper_y - 10), 'font-size' => 12, 'fill' => $text_color, 'text-anchor' => 'start', 'dominant-baseline' => 'middle'));
@@ -202,13 +202,13 @@ class pts_HeatMapBarGraph extends pts_Graph
 			*/
 
 			$color_weight = 0.61 - (0 / $max_section_value * 0.5);
-			$background_color = pts_svg_dom::sanitize_hex(self::color_gradient('#FFFFFF', '#000000', $color_weight));
+			$background_color = self::color_gradient('#FFFFFF', '#000000', $color_weight);
 			$this->svg_dom->add_element('rect', array('x' => $start_x, 'y' => $upper_y, 'width' => $bar_width, 'height' => $bar_height, 'fill' => $background_color));
 
 			foreach($hmap['sections'] as $next_section => $next_section_value)
 			{
 				$color_weight = 0.61 - ($next_section_value / $max_section_value * 0.5);
-				$color = pts_svg_dom::sanitize_hex(self::color_gradient('#FFFFFF', '#000000', $color_weight));
+				$color = self::color_gradient('#FFFFFF', '#000000', $color_weight);
 
 				if($next_section > $hmap['min_value'])
 				{
@@ -251,7 +251,7 @@ class pts_HeatMapBarGraph extends pts_Graph
 			foreach($hmap['draw_lines'] as $line_value)
 			{
 				$line_x = $start_x + ($line_value - $hmap['min_value']) * $value_size;
-				$this->svg_dom->draw_svg_line($line_x, $upper_y, $line_x, $lower_y, $this->c['color']['border'], 1);
+				$this->svg_dom->draw_svg_line($line_x, $upper_y, $line_x, $lower_y, self::$c['color']['border'], 1);
 			}
 
 			foreach($hmap['results'] as $identifier => $value)
@@ -267,11 +267,11 @@ class pts_HeatMapBarGraph extends pts_Graph
 				$this->svg_dom->draw_svg_line($line_x, $lower_y, $line_x, $upper_y, $key_colors[$identifier], 1);
 			}
 
-			$this->svg_dom->add_element('rect', array('x' => $start_x, 'y' => $upper_y, 'width' => $bar_width, 'height' => $bar_height, 'stroke' => $this->c['color']['border'], 'stroke-width' => 1));
+			$this->svg_dom->add_element('rect', array('x' => $start_x, 'y' => $upper_y, 'width' => $bar_width, 'height' => $bar_height, 'stroke' => self::$c['color']['border'], 'stroke-width' => 1));
 		}
 
 		// Footer
-		$this->draw_arrow($start_x + 8, $lower_y + 8, $start_x + 1, $lower_y + 8, $alt_text_color, $this->c['color']['border'], 1);
+		$this->draw_arrow($start_x + 8, $lower_y + 8, $start_x + 1, $lower_y + 8, $alt_text_color, self::$c['color']['border'], 1);
 		$this->svg_dom->add_text_element('Percentile Rank' . ($this->last_updated != null ? '; Data As Of ' . pts_strings::time_stamp_to_string($this->last_updated, 'j F Y') . ' For Trailing 200 Days' : null), array('x' => $start_x + 13, 'y' => $lower_y + 8, 'font-size' => 7, 'fill' => $alt_text_color, 'text-anchor' => 'start', 'dominant-baseline' => 'middle'));
 		$this->svg_dom->add_text_element('OpenBenchmarking.org Performance Classification', array('x' => $end_x, 'y' => $lower_y + 8, 'font-size' => 7, 'fill' => $alt_text_color, 'text-anchor' => 'end', 'dominant-baseline' => 'middle'));
 

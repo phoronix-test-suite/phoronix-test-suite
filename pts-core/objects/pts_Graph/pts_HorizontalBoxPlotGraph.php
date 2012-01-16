@@ -49,23 +49,23 @@ class pts_HorizontalBoxPlotGraph extends pts_HorizontalBarGraph
 
 				$value_end_left = max($this->i['left_start'] + round(($min_value / $this->i['graph_max_value']) * ($this->i['graph_left_end'] - $this->i['left_start'])), 1);
 				$value_end_right = $this->i['left_start'] + round(($max_value / $this->i['graph_max_value']) * ($this->i['graph_left_end'] - $this->i['left_start']));
-				$box_color = in_array($this->graph_identifiers[$i], $this->value_highlights) ? $this->c['color']['highlight'] : $paint_color;
+				$box_color = in_array($this->graph_identifiers[$i], $this->value_highlights) ? self::$c['color']['highlight'] : $paint_color;
 
 				$this->svg_dom->draw_svg_line($value_end_left, $middle_of_bar, $value_end_right, $middle_of_bar, $box_color, 2, array('xlink:title' => $title_tooltip));
-				$this->svg_dom->draw_svg_line($value_end_left, $px_bound_top, $value_end_left, $px_bound_bottom, $this->c['color']['notches'], 2, array('xlink:title' => $title_tooltip));
-				$this->svg_dom->draw_svg_line($value_end_right, $px_bound_top, $value_end_right, $px_bound_bottom, $this->c['color']['notches'], 2, array('xlink:title' => $title_tooltip));
+				$this->svg_dom->draw_svg_line($value_end_left, $px_bound_top, $value_end_left, $px_bound_bottom, self::$c['color']['notches'], 2, array('xlink:title' => $title_tooltip));
+				$this->svg_dom->draw_svg_line($value_end_right, $px_bound_top, $value_end_right, $px_bound_bottom, self::$c['color']['notches'], 2, array('xlink:title' => $title_tooltip));
 
 				$box_left = $this->i['left_start'] + round((pts_math::find_percentile($this->graph_data[$i_o][$i], 0.25) / $this->i['graph_max_value']) * ($this->i['graph_left_end'] - $this->i['left_start']));
 				$box_middle = $this->i['left_start'] + round((pts_math::find_percentile($this->graph_data[$i_o][$i], 0.5) / $this->i['graph_max_value']) * ($this->i['graph_left_end'] - $this->i['left_start']));
 				$box_right = $this->i['left_start'] + round((pts_math::find_percentile($this->graph_data[$i_o][$i], 0.75) / $this->i['graph_max_value']) * ($this->i['graph_left_end'] - $this->i['left_start']));
 
-				$this->svg_dom->add_element('rect', array('x' => $box_left, 'y' => $px_bound_top, 'width' => ($box_right - $box_left), 'height' => $bar_height, 'fill' => $box_color, 'stroke' => $this->c['color']['body_light'], 'stroke-width' => 1, 'xlink:title' => $title_tooltip));
-				$this->svg_dom->draw_svg_line($box_middle, $px_bound_top, $box_middle, $px_bound_bottom, $this->c['color']['notches'], 2, array('xlink:title' => $title_tooltip));
+				$this->svg_dom->add_element('rect', array('x' => $box_left, 'y' => $px_bound_top, 'width' => ($box_right - $box_left), 'height' => $bar_height, 'fill' => $box_color, 'stroke' => self::$c['color']['body_light'], 'stroke-width' => 1, 'xlink:title' => $title_tooltip));
+				$this->svg_dom->draw_svg_line($box_middle, $px_bound_top, $box_middle, $px_bound_bottom, self::$c['color']['notches'], 2, array('xlink:title' => $title_tooltip));
 			}
 		}
 
 		// write a new line along the bottom since the draw_rectangle_with_border above had written on top of it
-		$this->svg_dom->draw_svg_line($this->i['left_start'], $this->i['graph_top_end'], $this->i['graph_left_end'], $this->i['graph_top_end'], $this->c['color']['notches'], 1);
+		$this->svg_dom->draw_svg_line($this->i['left_start'], $this->i['graph_top_end'], $this->i['graph_left_end'], $this->i['graph_top_end'], self::$c['color']['notches'], 1);
 	}
 	protected function maximum_graph_value()
 	{

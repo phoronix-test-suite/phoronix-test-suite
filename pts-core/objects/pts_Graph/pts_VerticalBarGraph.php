@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2011, Phoronix Media
-	Copyright (C) 2008 - 2011, Michael Larabel
+	Copyright (C) 2008 - 2012, Phoronix Media
+	Copyright (C) 2008 - 2012, Michael Larabel
 	pts_VerticalBarGraph.php: The vertical bar graph object that extends pts_Graph.php
 
 	This program is free software; you can redistribute it and/or modify
@@ -54,7 +54,7 @@ class pts_VerticalBarGraph extends pts_Graph
 	{
 		$px_from_top_end = $this->i['graph_top_end'] + 5;
 
-		$this->svg_dom->draw_svg_line($this->i['left_start'] + $this->identifier_width, $this->i['graph_top_end'], $this->i['graph_left_end'] - ($this->i['graph_width'] % $this->identifier_width), $this->i['graph_top_end'], $this->c['color']['notches'], 10, array('stroke-dasharray' => '1,' . ($this->identifier_width - 1)));
+		$this->svg_dom->draw_svg_line($this->i['left_start'] + $this->identifier_width, $this->i['graph_top_end'], $this->i['graph_left_end'] - ($this->i['graph_width'] % $this->identifier_width), $this->i['graph_top_end'], self::$c['color']['notches'], 10, array('stroke-dasharray' => '1,' . ($this->identifier_width - 1)));
 
 		foreach(array_keys($this->graph_identifiers) as $i)
 		{
@@ -69,12 +69,12 @@ class pts_VerticalBarGraph extends pts_Graph
 			if($this->i['identifier_size'] <= $this->minimum_identifier_font)
 			{
 				$x = $px_bound_left + ceil($this->identifier_width / 2);
-				$this->svg_dom->add_text_element($this->graph_identifiers[$i], array('x' => $x, 'y' => $px_from_top_end, 'font-size' => 9, 'fill' => $this->c['color']['headers'], 'text-anchor' => 'start', 'dominant-baseline' => 'middle', 'transform' => 'rotate(90 ' . $x . ' ' . $px_from_top_end . ')'));
+				$this->svg_dom->add_text_element($this->graph_identifiers[$i], array('x' => $x, 'y' => $px_from_top_end, 'font-size' => 9, 'fill' => self::$c['color']['headers'], 'text-anchor' => 'start', 'dominant-baseline' => 'middle', 'transform' => 'rotate(90 ' . $x . ' ' . $px_from_top_end . ')'));
 			}
 			else
 			{
 				$x = $px_bound_left + (($px_bound_right - $px_bound_left) * 0.5);
-				$this->svg_dom->add_text_element($this->graph_identifiers[$i], array('x' => $x, 'y' => ($px_from_top_end - 3), 'font-size' => $this->i['identifier_size'], 'fill' => $this->c['color']['headers'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
+				$this->svg_dom->add_text_element($this->graph_identifiers[$i], array('x' => $x, 'y' => ($px_from_top_end - 3), 'font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['headers'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
 			}
 		}
 	}
@@ -105,7 +105,7 @@ class pts_VerticalBarGraph extends pts_Graph
 					$title_tooltip .= ' || ' . pts_math::set_precision($run_std_deviation, 1) . ' STD';
 				}
 
-				$this->svg_dom->add_element('rect', array('x' => ($px_bound_left + 1), 'y' => $value_plot_top, 'width' => $bar_width, 'height' => ($this->i['graph_top_end'] - $value_plot_top), 'fill' => (in_array($this->graph_identifiers[$i], $this->value_highlights) ? $this->c['color']['alert'] : $paint_color), 'stroke' => $this->c['color']['body_light'], 'stroke-width' => 1, 'xlink:title' => $title_tooltip));
+				$this->svg_dom->add_element('rect', array('x' => ($px_bound_left + 1), 'y' => $value_plot_top, 'width' => $bar_width, 'height' => ($this->i['graph_top_end'] - $value_plot_top), 'fill' => (in_array($this->graph_identifiers[$i], $this->value_highlights) ? self::$c['color']['alert'] : $paint_color), 'stroke' => self::$c['color']['body_light'], 'stroke-width' => 1, 'xlink:title' => $title_tooltip));
 
 				if(($px_bound_right - $px_bound_left) < 15)
 				{
@@ -116,18 +116,18 @@ class pts_VerticalBarGraph extends pts_Graph
 				$x = $px_bound_left + (($px_bound_right - $px_bound_left) / 2);
 				if($graph_size > 18)
 				{
-					$this->svg_dom->add_text_element($value, array('x' => $x, 'y' => ($value_plot_top + 2), 'font-size' => floor($this->c['size']['bars'] * 0.9), 'fill' => $this->c['color']['body_text'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
+					$this->svg_dom->add_text_element($value, array('x' => $x, 'y' => ($value_plot_top + 2), 'font-size' => floor(self::$c['size']['bars'] * 0.9), 'fill' => self::$c['color']['body_text'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
 				}
 				else
 				{
 					// Make things more compact
-					$this->svg_dom->add_text_element($value, array('x' => $x, 'y' => ($value_plot_top + 2), 'font-size' => floor($this->c['size']['bars'] * 0.6), 'fill' => $this->c['color']['body_text'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
+					$this->svg_dom->add_text_element($value, array('x' => $x, 'y' => ($value_plot_top + 2), 'font-size' => floor(self::$c['size']['bars'] * 0.6), 'fill' => self::$c['color']['body_text'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
 				}
 			}
 		}
 
 		// write a new line along the bottom since the draw_rectangle_with_border above had written on top of it
-		$this->svg_dom->draw_svg_line($this->i['left_start'], $this->i['graph_top_end'], $this->i['graph_left_end'], $this->i['graph_top_end'], $this->c['color']['notches'], 1);
+		$this->svg_dom->draw_svg_line($this->i['left_start'], $this->i['graph_top_end'], $this->i['graph_left_end'], $this->i['graph_top_end'], self::$c['color']['notches'], 1);
 	}
 	protected function render_graph_result()
 	{

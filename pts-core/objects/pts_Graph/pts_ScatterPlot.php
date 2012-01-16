@@ -156,7 +156,7 @@ class pts_ScatterPlot extends pts_Graph
 			return;
 		}
 
-		$this->svg_dom->draw_svg_line($this->i['left_start'] + $this->identifier_width, $this->i['graph_top_end'], $this->i['graph_left_end'], $this->i['graph_top_end'], $this->c['color']['notches'], 10, array('stroke-dasharray' => '1,' . ($this->identifier_width - 1)));
+		$this->svg_dom->draw_svg_line($this->i['left_start'] + $this->identifier_width, $this->i['graph_top_end'], $this->i['graph_left_end'], $this->i['graph_top_end'], self::$c['color']['notches'], 10, array('stroke-dasharray' => '1,' . ($this->identifier_width - 1)));
 
 		foreach(array_keys($this->graph_identifiers) as $i)
 		{
@@ -175,11 +175,11 @@ class pts_ScatterPlot extends pts_Graph
 
 			if($this->i['identifier_size'] <= $this->minimum_identifier_font)
 			{
-				$this->svg_dom->add_text_element($this->graph_identifiers[$i], array('x' => $px_from_left, 'y' => ($px_from_top_end + 2), 'font-size' => 9, 'fill' => $this->c['color']['headers'], 'text-anchor' => 'start', 'dominant-baseline' => 'middle', 'transform' => 'rotate(90 ' . $px_from_left . ' ' . ($px_from_top_end + 2) . ')'));
+				$this->svg_dom->add_text_element($this->graph_identifiers[$i], array('x' => $px_from_left, 'y' => ($px_from_top_end + 2), 'font-size' => 9, 'fill' => self::$c['color']['headers'], 'text-anchor' => 'start', 'dominant-baseline' => 'middle', 'transform' => 'rotate(90 ' . $px_from_left . ' ' . ($px_from_top_end + 2) . ')'));
 			}
 			else
 			{
-				$this->svg_dom->add_text_element($this->graph_identifiers[$i], array('x' => $px_from_left, 'y' => ($px_from_top_end + 2), 'font-size' => $this->i['identifier_size'], 'fill' => $this->c['color']['headers'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
+				$this->svg_dom->add_text_element($this->graph_identifiers[$i], array('x' => $px_from_left, 'y' => ($px_from_top_end + 2), 'font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['headers'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
 			}
 		}
 	}

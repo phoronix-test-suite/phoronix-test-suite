@@ -60,8 +60,8 @@ class pts_PieChart extends pts_Graph
 		}
 
 		$key_count = count($key_strings);
-		$key_item_width = 18 + $this->text_string_width(pts_strings::find_longest_string($this->graph_identifiers), $this->c['size']['key']);
-		$key_item_width_value = 12 + $this->text_string_width(pts_strings::find_longest_string($key_strings), $this->c['size']['key']);
+		$key_item_width = 18 + $this->text_string_width(pts_strings::find_longest_string($this->graph_identifiers), self::$c['size']['key']);
+		$key_item_width_value = 12 + $this->text_string_width(pts_strings::find_longest_string($key_strings), self::$c['size']['key']);
 		$keys_per_line = floor(($this->i['graph_left_end'] - $this->i['left_start'] - 14) / ($key_item_width + $key_item_width_value));
 
 		if($keys_per_line < 1)
@@ -86,9 +86,9 @@ class pts_PieChart extends pts_Graph
 
 			$c_x = $this->i['left_start'] + 13 + (($key_item_width + $key_item_width_value) * ($i % $keys_per_line));
 
-			$this->svg_dom->add_element('rect', array('x' => ($c_x - 13), 'y' => ($c_y - 5), 'width' => 10, 'height' => 10, 'fill' => $this_color, 'stroke' => $this->c['color']['notches'], 'stroke-width' => 1));
-			$this->svg_dom->add_text_element($this->graph_identifiers[$i], array('x' => $c_x, 'y' => $c_y, 'font-size' => $this->c['size']['key'], 'fill' => $this_color, 'text-anchor' => 'start', 'dominant-baseline' => 'middle'));
-			$this->svg_dom->add_text_element($key_strings[$i], array('x' => ($c_x + $key_item_width + 30), 'y' => $c_y, 'font-size' => $this->c['size']['key'], 'fill' => $this_color, 'text-anchor' => 'end', 'dominant-baseline' => 'middle'));
+			$this->svg_dom->add_element('rect', array('x' => ($c_x - 13), 'y' => ($c_y - 5), 'width' => 10, 'height' => 10, 'fill' => $this_color, 'stroke' => self::$c['color']['notches'], 'stroke-width' => 1));
+			$this->svg_dom->add_text_element($this->graph_identifiers[$i], array('x' => $c_x, 'y' => $c_y, 'font-size' => self::$c['size']['key'], 'fill' => $this_color, 'text-anchor' => 'start', 'dominant-baseline' => 'middle'));
+			$this->svg_dom->add_text_element($key_strings[$i], array('x' => ($c_x + $key_item_width + 30), 'y' => $c_y, 'font-size' => self::$c['size']['key'], 'fill' => $this_color, 'text-anchor' => 'end', 'dominant-baseline' => 'middle'));
 		}
 	}
 	public function render_graph_finish()
@@ -106,13 +106,13 @@ class pts_PieChart extends pts_Graph
 		{
 			$percent = pts_math::set_precision($this->graph_data[0][$i] / $this->pie_sum, 3);
 
-			$this->svg_dom->draw_svg_arc($center_x, $center_y, $radius, $offset_percent, $percent, array('fill' => $this->get_paint_color($i), 'stroke' => $this->c['color']['border'], 'stroke-width' => 2, 'xlink:title' =>  $this->graph_identifiers[$i] . ': ' . $this->graph_data[0][$i]));
+			$this->svg_dom->draw_svg_arc($center_x, $center_y, $radius, $offset_percent, $percent, array('fill' => $this->get_paint_color($i), 'stroke' => self::$c['color']['border'], 'stroke-width' => 2, 'xlink:title' =>  $this->graph_identifiers[$i] . ': ' . $this->graph_data[0][$i]));
 			$offset_percent += $percent;
 		}
 
-		if(!empty($this->c['text']['watermark']))
+		if(!empty(self::$c['text']['watermark']))
 		{
-			$this->svg_dom->add_text_element($this->c['text']['watermark'], array('x' => ($this->i['graph_width'] / 2), 'y' => ($this->i['graph_height'] - 15), 'font-size' => 10, 'fill' => $this->c['color']['text'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
+			$this->svg_dom->add_text_element(self::$c['text']['watermark'], array('x' => ($this->i['graph_width'] / 2), 'y' => ($this->i['graph_height'] - 15), 'font-size' => 10, 'fill' => self::$c['color']['text'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
 		}
 	}
 }

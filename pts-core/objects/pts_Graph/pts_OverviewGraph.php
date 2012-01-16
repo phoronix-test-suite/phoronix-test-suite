@@ -128,7 +128,7 @@ class pts_OverviewGraph extends pts_Graph
 			$px_bound_left = $this->i['left_start'] + ($this->graph_item_width * ($col % $this->graphs_per_row));
 			$px_bound_right = $px_bound_left + $this->graph_item_width;
 
-			$this->svg_dom->add_text_element($result_object->test_profile->get_title(), array('x' => ($px_bound_left + ($this->graph_item_width * 0.5)), 'y' => ($top_end + 3), 'font-size' => $this->i['identifier_size'], 'fill' => $this->c['color']['headers'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
+			$this->svg_dom->add_text_element($result_object->test_profile->get_title(), array('x' => ($px_bound_left + ($this->graph_item_width * 0.5)), 'y' => ($top_end + 3), 'font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['headers'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
 
 			if($result_object->test_profile->get_display_format() == 'BAR_GRAPH')
 			{
@@ -164,7 +164,7 @@ class pts_OverviewGraph extends pts_Graph
 					$px_left = $px_bound_left + $inter_width + ($bar_width * $x);
 					$px_right = $px_left + $bar_width;
 
-					$this->svg_dom->add_element('rect', array('x' => $px_left, 'y' => $value_plot_top, 'width' => $bar_width, 'height' => ($top_end - $value_plot_top), 'fill' => $paint_color, 'stroke' => $this->c['color']['body_light'], 'stroke-width' => 1));
+					$this->svg_dom->add_element('rect', array('x' => $px_left, 'y' => $value_plot_top, 'width' => $bar_width, 'height' => ($top_end - $value_plot_top), 'fill' => $paint_color, 'stroke' => self::$c['color']['body_light'], 'stroke-width' => 1));
 				}
 
 				$has_graphed_a_bar = true;
@@ -172,8 +172,8 @@ class pts_OverviewGraph extends pts_Graph
 
 			if(($i + 1) % $this->graphs_per_row == 0 && $i != 0)
 			{
-				$this->svg_dom->draw_svg_line($this->i['left_start'] + $this->graph_item_width, $top_end, $this->i['graph_left_end'] - ($this->i['graph_width'] % $this->graph_item_width), $top_end, $this->c['color']['notches'], 10, array('stroke-dasharray' => '1,' . ($this->graph_item_width - 1)));
-				$this->svg_dom->draw_svg_line($this->i['left_start'], $top_end, $this->i['graph_left_end'], $top_end, $this->c['color']['notches'], 1);
+				$this->svg_dom->draw_svg_line($this->i['left_start'] + $this->graph_item_width, $top_end, $this->i['graph_left_end'] - ($this->i['graph_width'] % $this->graph_item_width), $top_end, self::$c['color']['notches'], 10, array('stroke-dasharray' => '1,' . ($this->graph_item_width - 1)));
+				$this->svg_dom->draw_svg_line($this->i['left_start'], $top_end, $this->i['graph_left_end'], $top_end, self::$c['color']['notches'], 1);
 
 				$row++;
 			}

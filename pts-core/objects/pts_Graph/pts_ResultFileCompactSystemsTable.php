@@ -47,13 +47,13 @@ class pts_ResultFileCompactSystemsTable extends pts_Graph
 	}
 	public function render_graph_start()
 	{
-		$this->i['top_heading_height'] = 22 + $this->c['size']['headers'];
+		$this->i['top_heading_height'] = 22 + self::$c['size']['headers'];
 
 		$longest_component = pts_strings::find_longest_string($this->components);
 		$component_header_height = $this->text_string_height($longest_component, ($this->i['identifier_size'] + 3)) + 4;
 
 		$this->i['graph_width'] = 10 + max(
-			$this->text_string_width($this->graph_title, $this->c['size']['headers']) - (isset($this->graph_title[30]) ? 20 : 0),
+			$this->text_string_width($this->graph_title, self::$c['size']['headers']) - (isset($this->graph_title[30]) ? 20 : 0),
 			$this->text_string_width($longest_component, ($this->i['identifier_size'] + (isset($longest_component[29]) ? 1.8 : 2)))
 			);
 
@@ -86,11 +86,11 @@ class pts_ResultFileCompactSystemsTable extends pts_Graph
 		$this->render_graph_init(array('cache_font_size' => true));
 
 		// Header
-		$this->svg_dom->add_element('rect', array('x' => 2, 'y' => 1, 'width' => ($this->i['graph_width'] - 3), 'height' => ($this->i['top_heading_height'] - 1), 'fill' => $this->c['color']['main_headers'], 'stroke' => $this->c['color']['border'], 'stroke-width' => 1));
-		$this->svg_dom->add_text_element($this->graph_title, array('x' => ($this->i['graph_width'] / 2), 'y' => 2, 'font-size' => $this->c['size']['headers'], 'fill' => $this->c['color']['background'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
+		$this->svg_dom->add_element('rect', array('x' => 2, 'y' => 1, 'width' => ($this->i['graph_width'] - 3), 'height' => ($this->i['top_heading_height'] - 1), 'fill' => self::$c['color']['main_headers'], 'stroke' => self::$c['color']['border'], 'stroke-width' => 1));
+		$this->svg_dom->add_text_element($this->graph_title, array('x' => ($this->i['graph_width'] / 2), 'y' => 2, 'font-size' => self::$c['size']['headers'], 'fill' => self::$c['color']['background'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
 
-		$this->svg_dom->add_text_element($this->c['text']['watermark'], array('x' => 4, 'y' => ($this->i['top_heading_height'] - 6), 'font-size' => 8, 'fill' => $this->c['color']['background'], 'text-anchor' => 'start', 'dominant-baseline' => 'middle', 'xlink:show' => 'new', 'xlink:href' => $this->c['text']['watermark_url']));
-		$this->svg_dom->add_text_element($this->i['graph_version'], array('x' => ($this->i['graph_width'] - 4), 'y' => ($this->i['top_heading_height'] - 6), 'font-size' => 8, 'fill' => $this->c['color']['background'], 'text-anchor' => 'end', 'dominant-baseline' => 'middle', 'xlink:show' => 'new', 'xlink:href' => 'http://www.phoronix-test-suite.com/'));
+		$this->svg_dom->add_text_element(self::$c['text']['watermark'], array('x' => 4, 'y' => ($this->i['top_heading_height'] - 6), 'font-size' => 8, 'fill' => self::$c['color']['background'], 'text-anchor' => 'start', 'dominant-baseline' => 'middle', 'xlink:show' => 'new', 'xlink:href' => self::$c['text']['watermark_url']));
+		$this->svg_dom->add_text_element($this->i['graph_version'], array('x' => ($this->i['graph_width'] - 4), 'y' => ($this->i['top_heading_height'] - 6), 'font-size' => 8, 'fill' => self::$c['color']['background'], 'text-anchor' => 'end', 'dominant-baseline' => 'middle', 'xlink:show' => 'new', 'xlink:href' => 'http://www.phoronix-test-suite.com/'));
 
 		// Body
 		$offset = $this->i['top_heading_height'];
@@ -121,24 +121,24 @@ class pts_ResultFileCompactSystemsTable extends pts_Graph
 
 			if($dash)
 			{
-				$this->svg_dom->add_element('rect', array('x' => 0, 'y' => $offset, 'width' => $this->i['graph_width'], 'height' => ($next_offset - $offset), 'fill' => $this->c['color']['body_light']));
+				$this->svg_dom->add_element('rect', array('x' => 0, 'y' => $offset, 'width' => $this->i['graph_width'], 'height' => ($next_offset - $offset), 'fill' => self::$c['color']['body_light']));
 			}
 
-			$this->svg_dom->draw_svg_line(0, $offset, $this->i['graph_width'], $offset, $this->c['color']['notches'], 1);
+			$this->svg_dom->draw_svg_line(0, $offset, $this->i['graph_width'], $offset, self::$c['color']['notches'], 1);
 
 			if(isset($component[1]))
 			{
-				$this->svg_dom->add_element('rect', array('x' => 1, 'y' => ($offset + 1), 'width' => ($this->i['graph_width'] - 2), 'height' => ($next_offset - $offset - 1), 'fill' => 'none', 'stroke-width' => 1, 'stroke' => $this->c['color']['highlight']));
+				$this->svg_dom->add_element('rect', array('x' => 1, 'y' => ($offset + 1), 'width' => ($this->i['graph_width'] - 2), 'height' => ($next_offset - $offset - 1), 'fill' => 'none', 'stroke-width' => 1, 'stroke' => self::$c['color']['highlight']));
 			}
 
 			$text = $type . (isset($component[1]) && substr($type, -1) != 'y' ? 's' : null);
-			$this->svg_dom->add_text_element($text, array('x' => ($this->i['graph_width'] - 4), 'y' => ($offset + 7), 'font-size' => 7, 'fill' => $this->c['color']['text'], 'text-anchor' => 'end', 'dominant-baseline' => 'middle'));
+			$this->svg_dom->add_text_element($text, array('x' => ($this->i['graph_width'] - 4), 'y' => ($offset + 7), 'font-size' => 7, 'fill' => self::$c['color']['text'], 'text-anchor' => 'end', 'dominant-baseline' => 'middle'));
 			$offset += 2;
 
 			foreach($component as $c)
 			{
 				$c = pts_result_file_analyzer::system_value_to_ir_value($c, $type);
-				$this->svg_dom->add_text_element($c, array('x' => ($this->i['graph_width'] / 2), 'y' => $offset, 'font-size' => $this->i['identifier_size'], 'fill' => $this->c['color']['text'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge', 'xlink:title' => $type . ': ' . $c, 'font-weight' => 'bold'));
+				$this->svg_dom->add_text_element($c, array('x' => ($this->i['graph_width'] / 2), 'y' => $offset, 'font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['text'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge', 'xlink:title' => $type . ': ' . $c, 'font-weight' => 'bold'));
 				$offset += $component_header_height;
 			}
 
@@ -148,15 +148,15 @@ class pts_ResultFileCompactSystemsTable extends pts_Graph
 
 
 		// Footer
-		$this->svg_dom->add_element('rect', array('x' => 1, 'y' => ($this->i['graph_height'] - $bottom_footer), 'width' => ($this->i['graph_width'] - 2), 'height' => $bottom_footer, 'fill' => $this->c['color']['main_headers']));
+		$this->svg_dom->add_element('rect', array('x' => 1, 'y' => ($this->i['graph_height'] - $bottom_footer), 'width' => ($this->i['graph_width'] - 2), 'height' => $bottom_footer, 'fill' => self::$c['color']['main_headers']));
 		$this->svg_dom->add_element('image', array('xlink:href' => 'http://www.phoronix-test-suite.com/external/pts-logo-80x42-white.png', 'x' => 10, 'y' => ($this->i['graph_height'] - 48), 'width' => 80, 'height' => 42));
 
 		if(defined('OPENBENCHMARKING_IDS'))
 		{
 			$back_width = $this->i['graph_width'] - 4;
-			$this->svg_dom->add_text_element(OPENBENCHMARKING_TITLE, array('x' => $back_width, 'y' => ($this->i['graph_height'] - 38), 'font-size' => 8, 'fill' => $this->c['color']['background'], 'text-anchor' => 'end', 'dominant-baseline' => 'middle', 'font-weight' => 'bold', 'xlink:show' => 'new', 'xlink:href' => 'http://openbenchmarking.org/result/' . OPENBENCHMARKING_IDS));
-			$this->svg_dom->add_text_element('System Logs', array('x' => $back_width, 'y' => ($this->i['graph_height'] - 24), 'font-size' => 8, 'fill' => $this->c['color']['background'], 'text-anchor' => 'end', 'dominant-baseline' => 'middle', 'xlink:show' => 'new', 'xlink:href' => 'http://openbenchmarking.org/system/' . OPENBENCHMARKING_IDS));
-			$this->svg_dom->add_text_element('OPC Classification', array('x' => $back_width, 'y' => ($this->i['graph_height'] - 10), 'font-size' => 8, 'fill' => $this->c['color']['background'], 'text-anchor' => 'end', 'dominant-baseline' => 'middle', 'xlink:show' => 'new', 'xlink:href' => 'http://openbenchmarking.org/opc/' . OPENBENCHMARKING_IDS));
+			$this->svg_dom->add_text_element(OPENBENCHMARKING_TITLE, array('x' => $back_width, 'y' => ($this->i['graph_height'] - 38), 'font-size' => 8, 'fill' => self::$c['color']['background'], 'text-anchor' => 'end', 'dominant-baseline' => 'middle', 'font-weight' => 'bold', 'xlink:show' => 'new', 'xlink:href' => 'http://openbenchmarking.org/result/' . OPENBENCHMARKING_IDS));
+			$this->svg_dom->add_text_element('System Logs', array('x' => $back_width, 'y' => ($this->i['graph_height'] - 24), 'font-size' => 8, 'fill' => self::$c['color']['background'], 'text-anchor' => 'end', 'dominant-baseline' => 'middle', 'xlink:show' => 'new', 'xlink:href' => 'http://openbenchmarking.org/system/' . OPENBENCHMARKING_IDS));
+			$this->svg_dom->add_text_element('OPC Classification', array('x' => $back_width, 'y' => ($this->i['graph_height'] - 10), 'font-size' => 8, 'fill' => self::$c['color']['background'], 'text-anchor' => 'end', 'dominant-baseline' => 'middle', 'xlink:show' => 'new', 'xlink:href' => 'http://openbenchmarking.org/opc/' . OPENBENCHMARKING_IDS));
 		}
 	}
 	public function render_graph_finish()

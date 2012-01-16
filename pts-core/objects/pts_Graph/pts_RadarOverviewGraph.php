@@ -98,14 +98,14 @@ class pts_RadarOverviewGraph extends pts_Graph
 	}
 	protected function render_graph_heading($with_version = true)
 	{
-		$this->svg_dom->add_element('rect', array('x' => 0, 'y' => 0, 'width' => $this->i['graph_width'], 'height' => $this->i['top_heading_height'], 'fill' => $this->c['color']['main_headers']));
+		$this->svg_dom->add_element('rect', array('x' => 0, 'y' => 0, 'width' => $this->i['graph_width'], 'height' => $this->i['top_heading_height'], 'fill' => self::$c['color']['main_headers']));
 		$this->svg_dom->add_element('image', array('xlink:href' => 'http://www.phoronix-test-suite.com/external/pts-logo-77x40-white.png', 'x' => 10, 'y' => round($this->i['top_heading_height'] / 40 + 1), 'width' => 77, 'height' => 40));
-		$this->svg_dom->add_text_element($this->graph_title, array('x' => 100, 'y' => 12, 'font-size' => $this->c['size']['headers'], 'fill' => $this->c['color']['background'], 'text-anchor' => 'start', 'dominant-baseline' => 'middle'));
-		$this->svg_dom->add_text_element($this->i['graph_version'], array('x' => 100, 'y' => ($this->c['size']['headers'] + 15), 'font-size' => $this->c['size']['key'], 'fill' => $this->c['color']['background'], 'text-anchor' => 'start', 'dominant-baseline' => 'middle', 'href' => 'http://www.phoronix-test-suite.com/'));
+		$this->svg_dom->add_text_element($this->graph_title, array('x' => 100, 'y' => 12, 'font-size' => self::$c['size']['headers'], 'fill' => self::$c['color']['background'], 'text-anchor' => 'start', 'dominant-baseline' => 'middle'));
+		$this->svg_dom->add_text_element($this->i['graph_version'], array('x' => 100, 'y' => (self::$c['size']['headers'] + 15), 'font-size' => self::$c['size']['key'], 'fill' => self::$c['color']['background'], 'text-anchor' => 'start', 'dominant-baseline' => 'middle', 'href' => 'http://www.phoronix-test-suite.com/'));
 	}
 	public function renderGraph()
 	{
-		$this->i['top_heading_height'] = max($this->c['size']['headers'] + 22 + $this->c['size']['key'], 48);
+		$this->i['top_heading_height'] = max(self::$c['size']['headers'] + 22 + self::$c['size']['key'], 48);
 		$this->i['top_start'] = $this->i['top_heading_height'] + 50;
 		$this->update_graph_dimensions($this->i['graph_width'], $this->i['graph_height'] + $this->i['top_start'], true);
 
@@ -123,18 +123,18 @@ class pts_RadarOverviewGraph extends pts_Graph
 			$num = pts_math::set_precision(round($i, 1), 1);
 			$length = round($unit_size * $num);
 
-			$this->svg_dom->draw_svg_arc($this->i['left_start'], $this->i['top_start'], $length, 10, 0.25, array('fill' => $this->c['color']['background'], 'stroke' => $this->c['color']['body_light'], 'stroke-width' => 1, 'stroke-dasharray' => '10,20'));
-			$this->svg_dom->add_text_element($num, array('x' => ($this->i['left_start'] + $length), 'y' => ($this->i['top_start'] - 8 - $this->c['size']['tick_mark']), 'font-size' => $this->c['size']['tick_mark'], 'fill' => $this->c['color']['notches'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
-			$this->svg_dom->draw_svg_line($this->i['left_start'] + $length, $this->i['top_start'] - 6, $this->i['left_start'] + $length, $this->i['top_start'], $this->c['color']['notches'], 1);
+			$this->svg_dom->draw_svg_arc($this->i['left_start'], $this->i['top_start'], $length, 10, 0.25, array('fill' => self::$c['color']['background'], 'stroke' => self::$c['color']['body_light'], 'stroke-width' => 1, 'stroke-dasharray' => '10,20'));
+			$this->svg_dom->add_text_element($num, array('x' => ($this->i['left_start'] + $length), 'y' => ($this->i['top_start'] - 8 - self::$c['size']['tick_mark']), 'font-size' => self::$c['size']['tick_mark'], 'fill' => self::$c['color']['notches'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
+			$this->svg_dom->draw_svg_line($this->i['left_start'] + $length, $this->i['top_start'] - 6, $this->i['left_start'] + $length, $this->i['top_start'], self::$c['color']['notches'], 1);
 
-			$this->svg_dom->add_text_element($num, array('x' => ($this->i['left_start'] - 8), 'y' => ($this->i['top_start'] + $length), 'font-size' => $this->c['size']['tick_mark'], 'fill' => $this->c['color']['notches'], 'text-anchor' => 'end', 'dominant-baseline' => 'middle'));
-			$this->svg_dom->draw_svg_line($this->i['left_start'] - 6, $this->i['top_start'] + $length, $this->i['left_start'], $this->i['top_start'] + $length, $this->c['color']['notches'], 1);
+			$this->svg_dom->add_text_element($num, array('x' => ($this->i['left_start'] - 8), 'y' => ($this->i['top_start'] + $length), 'font-size' => self::$c['size']['tick_mark'], 'fill' => self::$c['color']['notches'], 'text-anchor' => 'end', 'dominant-baseline' => 'middle'));
+			$this->svg_dom->draw_svg_line($this->i['left_start'] - 6, $this->i['top_start'] + $length, $this->i['left_start'], $this->i['top_start'] + $length, self::$c['color']['notches'], 1);
 		}
 
-		$this->svg_dom->draw_svg_line($this->i['left_start'], $this->i['top_start'], $this->i['graph_left_end'], $this->i['top_start'], $this->c['color']['notches'], 1);
-		$this->svg_dom->draw_svg_line($this->i['left_start'], $this->i['top_start'], $this->i['left_start'], $this->i['graph_top_end'], $this->c['color']['notches'], 1);
-		$this->svg_dom->draw_svg_line($this->i['graph_left_end'], $this->i['graph_top_end'], $this->i['graph_left_end'], $this->i['top_start'], $this->c['color']['notches'], 1);
-		$this->svg_dom->draw_svg_line($this->i['left_start'], $this->i['graph_top_end'], $this->i['graph_left_end'], $this->i['graph_top_end'], $this->c['color']['notches'], 1);
+		$this->svg_dom->draw_svg_line($this->i['left_start'], $this->i['top_start'], $this->i['graph_left_end'], $this->i['top_start'], self::$c['color']['notches'], 1);
+		$this->svg_dom->draw_svg_line($this->i['left_start'], $this->i['top_start'], $this->i['left_start'], $this->i['graph_top_end'], self::$c['color']['notches'], 1);
+		$this->svg_dom->draw_svg_line($this->i['graph_left_end'], $this->i['graph_top_end'], $this->i['graph_left_end'], $this->i['top_start'], self::$c['color']['notches'], 1);
+		$this->svg_dom->draw_svg_line($this->i['left_start'], $this->i['graph_top_end'], $this->i['graph_left_end'], $this->i['graph_top_end'], self::$c['color']['notches'], 1);
 
 		for($i = 1, $result_object_count = count($this->result_objects); $i < $result_object_count; $i++)
 		{
@@ -171,11 +171,11 @@ class pts_RadarOverviewGraph extends pts_Graph
 				{
 					array_push($svg_poly, implode(',', $point_pair));
 				}
-				$this->svg_dom->add_element('polygon', array('points' => implode(' ', $svg_poly), 'fill' => $this->get_paint_color($result_identifier), 'stroke' => $this->c['color']['text'], 'stroke-width' => 2, 'xlink:title' => $tooltip));
+				$this->svg_dom->add_element('polygon', array('points' => implode(' ', $svg_poly), 'fill' => $this->get_paint_color($result_identifier), 'stroke' => self::$c['color']['text'], 'stroke-width' => 2, 'xlink:title' => $tooltip));
 			}
 		}
 
-		$this->svg_dom->draw_svg_arc($this->i['left_start'], $this->i['top_start'], round($unit_size), 10, 0.25, array('fill' => $this->c['color']['background'], 'stroke' => $this->c['color']['notches'], 'stroke-width' => 1));
+		$this->svg_dom->draw_svg_arc($this->i['left_start'], $this->i['top_start'], round($unit_size), 10, 0.25, array('fill' => self::$c['color']['background'], 'stroke' => self::$c['color']['notches'], 'stroke-width' => 1));
 
 		$last_hardware_type = $this->result_objects[0]->test_profile->get_test_hardware_type();
 		$hw_types = array();
@@ -197,7 +197,7 @@ class pts_RadarOverviewGraph extends pts_Graph
 						round($this->i['top_start'] + $sin_unit),
 						round($this->i['left_start'] + $cos_unit * $this->i['graph_max_value']),
 						round($this->i['top_start'] + $sin_unit * $this->i['graph_max_value']),
-						$this->c['color']['alert'],
+						self::$c['color']['alert'],
 						1);
 				}
 
@@ -205,7 +205,7 @@ class pts_RadarOverviewGraph extends pts_Graph
 				$cos_unit = $this->i['left_start'] + cos($rad) * $unit_size * 0.9;
 				$sin_unit = $this->i['top_start'] + abs(sin($rad)) * $unit_size * 0.9;
 
-				$this->svg_dom->add_text_element($last_hardware_type, array('x' => $cos_unit, 'y' => $sin_unit, 'font-size' => $this->c['size']['bars'], 'fill' => $this->c['color']['alert'], 'text-anchor' => 'end', 'dominant-baseline' => 'middle'));
+				$this->svg_dom->add_text_element($last_hardware_type, array('x' => $cos_unit, 'y' => $sin_unit, 'font-size' => self::$c['size']['bars'], 'fill' => self::$c['color']['alert'], 'text-anchor' => 'end', 'dominant-baseline' => 'middle'));
 
 				array_push($hw_types, $last_hardware_type);
 				$last_hardware_type = $hardware_type;
@@ -230,7 +230,7 @@ class pts_RadarOverviewGraph extends pts_Graph
 		$i = 1;
 		foreach($shw as $key => $line)
 		{
-			$this->svg_dom->add_text_element(implode('; ', $line), array('x' => ($this->i['graph_left_end'] - 4), 'y' => ($this->i['graph_top_end'] - ($i * $this->c['size']['key'])), 'font-size' => $this->c['size']['key'], 'fill' => $this->get_paint_color($key), 'text-anchor' => 'end', 'dominant-baseline' => 'middle'));
+			$this->svg_dom->add_text_element(implode('; ', $line), array('x' => ($this->i['graph_left_end'] - 4), 'y' => ($this->i['graph_top_end'] - ($i * self::$c['size']['key'])), 'font-size' => self::$c['size']['key'], 'fill' => $this->get_paint_color($key), 'text-anchor' => 'end', 'dominant-baseline' => 'middle'));
 			$i++;
 		}
 	}
