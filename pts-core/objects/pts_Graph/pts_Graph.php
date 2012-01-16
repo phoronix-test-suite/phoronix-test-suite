@@ -21,11 +21,6 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-// Since the graph_config should be the same for the duration, only create it once rather than creating it everytime a graph is made
-//if(PTS_IS_CLIENT || (defined('PTS_LIB_GRAPH_CONFIG_XML') && is_file(PTS_LIB_GRAPH_CONFIG_XML)))
-pts_Graph::$graph_config = new pts_graph_config_nye_XmlReader();
-
-
 // TODO: performance optimizations...
 // OpenBenchmarking.org 1107247-LI-MESACOMMI48 is a good large data set test to render to look for speed differences
 // Other tests:
@@ -34,7 +29,6 @@ pts_Graph::$graph_config = new pts_graph_config_nye_XmlReader();
 abstract class pts_Graph
 {
 	// Graph config
-	public static $graph_config = null;
 	protected $c; // user-configurable data. no pts_Graph* should ever over-write any of this data... should be read-only.
 	protected $d; // the data from the test result / whatever... important data
 	protected $i; // internal data, pts_Graph* can read-write
@@ -55,38 +49,78 @@ abstract class pts_Graph
 	protected $link_alternate_view = null;
 	protected $value_highlights = array();
 
-	public function __construct(&$result_object = null, &$result_file = null)
+	protected function set_default_graph_values()
 	{
 		// Setup config values
-		$this->c['graph']['width'] = $this->read_graph_config('PhoronixTestSuite/Graphs/General/GraphWidth'); // Graph width
-		$this->c['graph']['height'] = $this->read_graph_config('PhoronixTestSuite/Graphs/General/GraphHeight'); // Graph height
-		$this->c['graph']['border'] = $this->read_graph_config('PhoronixTestSuite/Graphs/General/Border') == 'TRUE'; // Graph border
+		$this->c['graph']['width'] = 580; // Graph width
+		$this->c['graph']['height'] = 300; // Graph height
+		$this->c['graph']['border'] = true; // Graph border
 
 		// Colors
-		$this->c['color']['notches'] = $this->read_graph_config('PhoronixTestSuite/Graphs/Colors/Notches'); // Color for notches
-		$this->c['color']['text'] = $this->read_graph_config('PhoronixTestSuite/Graphs/Colors/Text'); // Color for text
-		$this->c['color']['border'] = $this->read_graph_config('PhoronixTestSuite/Graphs/Colors/Border'); // Color for border (if used)
-		$this->c['color']['main_headers'] = $this->read_graph_config('PhoronixTestSuite/Graphs/Colors/MainHeaders'); // Color of main text headers
-		$this->c['color']['headers'] = $this->read_graph_config('PhoronixTestSuite/Graphs/Colors/Headers'); // Color of other headers
-		$this->c['color']['background'] = $this->read_graph_config('PhoronixTestSuite/Graphs/Colors/Background'); // Color of background
-		$this->c['color']['body'] = $this->read_graph_config('PhoronixTestSuite/Graphs/Colors/GraphBody'); // Color of graph body
-		$this->c['color']['body_text'] = $this->read_graph_config('PhoronixTestSuite/Graphs/Colors/BodyText'); // Color of graph body text
-		$this->c['color']['body_light'] = $this->read_graph_config('PhoronixTestSuite/Graphs/Colors/Alternate'); // Color of the border around graph bars (if doing a bar graph)
-		$this->c['color']['highlight'] = $this->read_graph_config('PhoronixTestSuite/Graphs/Colors/Highlight'); // Color for highlight
-		$this->c['color']['alert'] = $this->read_graph_config('PhoronixTestSuite/Graphs/Colors/Alert'); // Color for alerts
-		$this->c['color']['paint'] = pts_strings::comma_explode($this->read_graph_config('PhoronixTestSuite/Graphs/Colors/ObjectPaint')); // Colors to use for the bars / lines, one color for each key
+		$this->c['color']['notches'] = '#454545'; // Color for notches
+		$this->c['color']['text'] = '#454545'; // Color for text
+		$this->c['color']['border'] = '#454545'; // Color for border (if used)
+		$this->c['color']['main_headers'] = '#2B6B29'; // Color of main text headers
+		$this->c['color']['headers'] = '#2B6B29'; // Color of other headers
+		$this->c['color']['background'] = '#FEFEFE'; // Color of background
+		$this->c['color']['body'] = '#BABABA'; // Color of graph body
+		$this->c['color']['body_text'] = '#FFFFFF'; // Color of graph body text
+		$this->c['color']['body_light'] = '#949494'; // Color of the border around graph bars (if doing a bar graph)
+		$this->c['color']['highlight'] = '#005A00'; // Color for highlight
+		$this->c['color']['alert'] = '#C80000'; // Color for alerts
+		$this->c['color']['paint'] = array('#2B6B29', '#0b27cf', '#ff9c00', '#d78f1d', '#6B6B6B', '#ff5800', '#221914', '#AC008A', '#E00022', '#3A9137', '#00F6FF', '#8A00AC', '#949200', '#797766', '#5598b1'); // Colors to use for the bars / lines, one color for each key
 
 		// Text
 		$this->c['size']['tick_mark'] = 10;
 		$this->c['size']['key'] = 9;
 
-		$this->c['text']['watermark'] = $this->read_graph_config('PhoronixTestSuite/Graphs/General/Watermark'); // watermark
-		$this->c['text']['watermark_url'] = $this->read_graph_config('PhoronixTestSuite/Graphs/General/WatermarkURL'); // watermark URL
-		$this->c['size']['headers'] = $this->read_graph_config('PhoronixTestSuite/Graphs/Font/Headers'); // Font size of headings
-		$this->c['size']['bars'] = $this->read_graph_config('PhoronixTestSuite/Graphs/Font/ObjectText'); // Font size for text on the bars/objects
-		$this->c['size']['identifiers'] = $this->read_graph_config('PhoronixTestSuite/Graphs/Font/Identifiers'); // Font size of identifiers
-		$this->c['size']['sub_headers'] = $this->read_graph_config('PhoronixTestSuite/Graphs/Font/SubHeaders'); // Font size of headers
-		$this->c['size']['axis_headers'] = $this->read_graph_config('PhoronixTestSuite/Graphs/Font/Axis'); // Font size of axis headers
+		$this->c['text']['watermark'] = 'PHORONIX-TEST-SUITE.COM'; // watermark
+		$this->c['text']['watermark_url'] = 'http://www.phoronix-test-suite.com/'; // watermark URL
+		$this->c['size']['headers'] = 17; // Font size of headings
+		$this->c['size']['bars'] = 11; // Font size for text on the bars/objects
+		$this->c['size']['identifiers'] = 10; // Font size of identifiers
+		$this->c['size']['sub_headers'] = 11; // Font size of headers
+		$this->c['size']['axis_headers'] = 10; // Font size of axis headers
+	}
+	public function set_openbenchmarking_graph_overrides()
+	{
+		// Setup config values
+		$this->c['graph']['width'] = 600;
+		$this->c['graph']['height'] = 310;
+		$this->c['graph']['border'] = true;
+
+		// Colors
+		$this->c['color']['notches'] = '#757575';
+		$this->c['color']['text'] = '#065695';
+		$this->c['color']['border'] = '#757575';
+		$this->c['color']['main_headers'] = '#231f20';
+		$this->c['color']['headers'] = '#231f20';
+		$this->c['color']['background'] = '#FEFEFE';
+		$this->c['color']['body'] = '#BABABA';
+		$this->c['color']['body_text'] = '#FFFFFF';
+		$this->c['color']['body_light'] = '#949494';
+		$this->c['color']['highlight'] = '#005a00';
+		$this->c['color']['alert'] = '#C80000';
+		$this->c['color']['paint'] = array('#065695', '#e12128', '#009345', '#1b75bb', '#a3365c', '#2794A9', '#ff5800', '#221914', '#AC008A', '#E00022', '#3A9137', '#00F6FF', '#8A00AC', '#949200', '#797766', '#5598b1', '#555555', '#757575', '#999999', '#CCCDDD');
+
+		// Text
+		$this->c['size']['tick_mark'] = 10;
+		$this->c['size']['key'] = 9;
+
+		$this->c['text']['watermark'] = 'OpenBenchmarking.org';
+		$this->c['text']['watermark_url'] = 'http://www.openbenchmarking.org/';
+		$this->c['size']['headers'] = 17;
+		$this->c['size']['bars'] = 11;
+		$this->c['size']['identifiers'] = 10;
+		$this->c['size']['sub_headers'] = 11;
+		$this->c['size']['axis_headers'] = 10;
+	}
+
+	public function __construct(&$result_object = null, &$result_file = null)
+	{
+		// Setup config values
+		$this->set_default_graph_values();
+		//$this->set_openbenchmarking_graph_overrides();
 
 		// Initalize Colors
 		$this->c['color']['notches'] = pts_svg_dom::sanitize_hex($this->c['color']['notches']);
@@ -149,17 +183,6 @@ abstract class pts_Graph
 		}
 
 		$this->i['graph_version'] = 'Phoronix Test Suite ' . $pts_version;
-	}
-	public function read_graph_config($xml_path)
-	{
-		static $config_store = null;
-
-		if(!isset($config_store[$xml_path]))
-		{
-			$config_store[$xml_path] = self::$graph_config->getXmlValue($xml_path);
-		}
-
-		return $config_store[$xml_path];
 	}
 
 	//

@@ -191,12 +191,7 @@ class pts_render
 		self::multi_way_compact($result_file, $result_object, $extra_attributes);
 
 		$display_format = $result_object->test_profile->get_display_format();
-		static $bar_orientation = null;
-
-		if($bar_orientation == null)
-		{
-			$bar_orientation = pts_Graph::$graph_config->getXmlValue('PhoronixTestSuite/Graphs/General/BarOrientation');
-		}
+		$bar_orientation = 'HORIZONTAL'; // default to horizontal bar graph
 
 		switch($display_format)
 		{
