@@ -69,7 +69,8 @@ class pts_config
 				$json_graph = array_merge($json_graph, $json_pre);
 			}
 		}
-		// TODO XXX: Now pass $json_graph to pts_Graph....
+
+		pts_Graph::init_graph_config($json_graph);
 		file_put_contents(PTS_USER_PATH . 'graph-config.json', pts_arrays::json_encode_pretty_string($json_graph));
 	}
 	public static function user_config_generate($new_config_values = null)

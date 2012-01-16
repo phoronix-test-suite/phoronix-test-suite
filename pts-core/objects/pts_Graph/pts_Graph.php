@@ -26,6 +26,9 @@
 // Other tests:
 // 1201120-BY-MESA80GAL31
 
+// Setup main config values
+pts_Graph::init_graph_config();
+
 abstract class pts_Graph
 {
 	// Graph config
@@ -51,8 +54,6 @@ abstract class pts_Graph
 
 	public function __construct(&$result_object = null, &$result_file = null)
 	{
-		// Setup config values
-		self::set_default_graph_values(self::$c);
 		//$this->set_openbenchmarking_graph_overrides();
 
 		// Initalize Colors
@@ -105,6 +106,22 @@ abstract class pts_Graph
 
 		$this->i['graph_version'] = 'Phoronix Test Suite ' . $pts_version;
 	}
+	public static function init_graph_config($external_config = null)
+	{
+		if(defined('OPENBENCHMARKING_BUILD'))
+		{
+			self::set_openbenchmarking_graph_values(self::$c);
+		}
+		else
+		{
+			self::set_default_graph_values(self::$c);
+		}
+
+		if($external_config && is_array($external_config))
+		{
+			self::$c = array_merge(self::$c, $external_config);
+		}
+	}
 	public static function set_default_graph_values(&$config)
 	{
 		// Setup config values
@@ -138,7 +155,7 @@ abstract class pts_Graph
 		$config['size']['sub_headers'] = 11; // Font size of headers
 		$config['size']['axis_headers'] = 10; // Font size of axis headers
 	}
-	public static function set_openbenchmarking_graph_overrides(&$config)
+	public static function set_openbenchmarking_graph_values(&$config)
 	{
 		// Setup config values
 		$config['graph']['width'] = 600;
