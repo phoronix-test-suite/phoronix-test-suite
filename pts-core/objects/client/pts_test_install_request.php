@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2011, Phoronix Media
-	Copyright (C) 2010 - 2011, Michael Larabel
+	Copyright (C) 2010 - 2012, Phoronix Media
+	Copyright (C) 2010 - 2012, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -24,6 +24,8 @@ class pts_test_install_request
 {
 	public $test_profile;
 	private $test_files;
+	public $compiler_mask_dir = false;
+	public $special_environment_vars;
 
 	public function __construct($test)
 	{
@@ -37,6 +39,7 @@ class pts_test_install_request
 		}
 
 		$this->test_files = array();
+		$this->special_environment_vars = array();
 	}
 	public static function read_download_object_list($test, $do_file_checks = true)
 	{

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2011, Phoronix Media
-	Copyright (C) 2008 - 2011, Michael Larabel
+	Copyright (C) 2008 - 2012, Phoronix Media
+	Copyright (C) 2008 - 2012, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -88,6 +88,14 @@ class pts_tests
 	public static function call_test_script($test_profile, $script_name, $print_string = null, $pass_argument = null, $extra_vars_append = null, $use_ctp = true)
 	{
 		$extra_vars = pts_tests::extra_environmental_variables($test_profile);
+
+		if(isset($extra_vars_append['PATH']))
+		{
+			// Special case variable where you likely want the two merged rather than overwriting
+			$extra_vars['PATH'] = $extra_vars_append['PATH'] . (substr($extra_vars_append['PATH'], -1) != ':' ? ':' : null) . $extra_vars['PATH'];
+			unset($extra_vars_append['PATH']);
+		}
+
 		if(is_array($extra_vars_append))
 		{
 			$extra_vars = array_merge($extra_vars, $extra_vars_append);

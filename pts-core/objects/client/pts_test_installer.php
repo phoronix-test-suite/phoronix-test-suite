@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2011, Phoronix Media
-	Copyright (C) 2010 - 2011, Michael Larabel
+	Copyright (C) 2010 - 2012, Phoronix Media
+	Copyright (C) 2010 - 2012, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -105,6 +105,8 @@ class pts_test_installer
 		{
 			pts_client::$display->test_install_start($test_install_request->test_profile->get_identifier());
 			$installed = pts_test_installer::install_test_process($test_install_request);
+
+			pts_test_installer::end_compiler_mask($test_install_request);
 
 			if($installed == false)
 			{
@@ -368,6 +370,176 @@ class pts_test_installer
 
 		return true;
 	}
+	protected static function create_compiler_mask(&$test_install_request)
+	{
+		$compilers = array();
+
+		if(in_array('build-utilities', $test_install_request->test_profile->get_dependencies()))
+		{
+			// Handle C/C++ compilers for this external dependency
+			$compilers['CC'] = array(getenv('CC'), 'gcc', 'clang', 'icc', 'pcc');
+			$compilers['CXX'] = array(getenv('CXX'), 'g++', 'clang++');
+		}
+		if(in_array('fortran-compiler', $test_install_request->test_profile->get_dependencies()))
+		{
+			// Handle Fortran for this external dependency
+			$compilers['F9X'] = array(getenv('F9X'), getenv('F95'), 'gfortran', 'f95', 'fortran');
+		}
+
+		if(empty($compilers))
+		{
+			// If the test profile doesn't request a compiler external dependency, probably not compiling anything
+			return false;
+		}
+
+		foreach($compilers as $compiler_type => $possible_compilers)
+		{
+			// Compilers to check for, listed in order of priority
+			$compiler_found = false;
+			foreach($possible_compilers as $i => $possible_compiler)
+			{
+				// first check to ensure not null sent to executable_in_path from env variable
+				if($possible_compiler && ($compiler_path = pts_client::executable_in_path($possible_compiler)))
+				{
+					// Replace the array of possible compilers with a string to the detected compiler executable
+					$compilers[$compiler_type] = $compiler_path;
+					$compiler_found = true;
+					break;
+				}
+			}
+
+			if($compiler_found == false)
+			{
+				unset($compilers[$compiler_type]);
+			}
+		}
+
+		if(!empty($compilers))
+		{
+			// Create a temporary directory that will be at front of PATH and serve for masking the actual compiler
+			$mask_dir = pts_client::temporary_directory() . '/pts-compiler-mask-' . $test_install_request->test_profile->get_identifier_base_name() . $test_install_request->test_profile->get_test_profile_version() . '/';
+			pts_file_io::mkdir($mask_dir);
+
+			$compiler_extras = array(
+				'CC' => array('safeguard-names' => array('gcc', 'cc'), 'environment-variables' => 'CFLAGS'),
+				'CXX' => array('safeguard-names' => array('g++', 'c++'), 'environment-variables' => 'CXXFLAGS'),
+				'F9X' => array('safeguard-names' => array('gfortran', 'f95'), 'environment-variables' => 'F9XFLAGS')
+				);
+
+			foreach($compilers as $compiler_type => $compiler_path)
+			{
+				$compiler_name = basename($compiler_path);
+				$main_compiler = $mask_dir . $compiler_name;
+
+				// take advantage of environment-variables to be sure they're found in the string
+				$env_var_check = PHP_EOL;
+				/*
+				foreach(pts_arrays::to_array($compiler_extras[$compiler_type]['environment-variables']) as $env_var)
+				{
+					// since it's a dynamic check in script could probably get rid of this check...
+					if(true || getenv($env_var))
+					{
+						$env_var_check .= 'if [[ $COMPILER_OPTIONS != "*$' . $env_var . '*" ]]' . PHP_EOL . 'then ' . PHP_EOL . 'COMPILER_OPTIONS="$COMPILER_OPTIONS $' . $env_var . '"' . PHP_EOL . 'fi' . PHP_EOL;
+					}
+				}
+				*/
+
+				// Write the main mask for the compiler
+				file_put_contents($main_compiler,
+					'#!/bin/bash' . PHP_EOL . 'COMPILER_OPTIONS="$@"' . PHP_EOL . $env_var_check . PHP_EOL . 'echo $COMPILER_OPTIONS >> ' . $mask_dir . $compiler_type . '-options-' . $compiler_name . PHP_EOL . $compiler_path . ' $COMPILER_OPTIONS' . PHP_EOL);
+
+				// Make executable
+				chmod($main_compiler, 0755);
+
+				// The two below code chunks ensure the proper compiler is always hit
+				if(!in_array($compiler_name, pts_arrays::to_array($compiler_extras[$compiler_type]['safeguard-names'])) && getenv($compiler_type) == false)
+				{
+					// So if e.g. clang becomes the default compiler, since it's not GCC, it will ensure CC is also set to clang beyond the masking below
+					$test_install_request->special_environment_vars[$compiler_type] = $compiler_name;
+				}
+
+				// Just in case any test profile script is statically always calling 'gcc' or anything not CC, try to make sure it hits one of the safeguard-names so it redirects to the intended compiler under test
+				foreach(pts_arrays::to_array($compiler_extras[$compiler_type]['safeguard-names']) as $safe_name)
+				{
+					if(!is_file($mask_dir . $safe_name))
+					{
+						symlink($main_compiler, $mask_dir . $safe_name);
+					}
+				}
+			}
+			$test_install_request->compiler_mask_dir = $mask_dir;
+			// Appending the rest of the path will be done automatically within call_test_script
+			$test_install_request->special_environment_vars['PATH'] = $mask_dir;
+		}
+	}
+	protected static function end_compiler_mask(&$test_install_request)
+	{
+		if($test_install_request->compiler_mask_dir == false && is_dir($test_install_request->compiler_mask_dir))
+		{
+			return false;
+		}
+
+		foreach(pts_file_io::glob($test_install_request->compiler_mask_dir . '*-options-*') as $compiler_output)
+		{
+			$output_name = basename($compiler_output);
+			$compiler_type = substr($output_name, 0, strpos($output_name, '-'));
+			$compiler_choice = substr($output_name, (strrpos($output_name, 'options-') + 8));
+			$compiler_lines = explode(PHP_EOL, pts_file_io::file_get_contents($compiler_output));
+
+			// Clean-up / reduce the compiler options that are important
+			$compiler_options = null;
+			foreach($compiler_lines as $l => $compiler_line)
+			{
+				$compiler_line .= ' '; // allows for easier/simplified detection in a few checks below
+				$o = strpos($compiler_line, '-o ');
+				if($o === false)
+				{
+					unset($compiler_lines[$l]);
+					continue;
+				}
+
+				$o = substr($compiler_line, ($o + 3), (strpos($compiler_line, ' ', ($o + 3)) - $o - 3));
+				// $o now has whatever is set for the -o output
+
+				if(!isset($o[4]) || substr($o, -2) == '.o' || substr(basename($o), 0, 3) == 'lib' || substr($o, -4) == 'test')
+				{
+					// If it's outputting to a .o should not be the proper compile command we want
+					// Or if it's a lib, probably not what is the actual target either
+					unset($compiler_lines[$l]);
+					continue;
+				}
+//echo $compiler_line;
+//echo PHP_EOL . 'O: ' . $o;
+			}
+//print_r($compiler_lines);
+			if(!empty($compiler_lines))
+			{
+				$compiler_line = array_pop($compiler_lines);
+				$compiler_options = explode(' ', $compiler_line);
+
+				foreach($compiler_options as $i => $option)
+				{
+					// Decide what to include and what not... D?
+					if(!isset($option[2]) || $option[0] != '-' || $option[1] == 'L' || $option[1] == 'D' || $option[1] == 'I' || $option[1] == 'W' || isset($option[20]))
+					{
+						unset($compiler_options[$i]);
+					}
+
+					if($option[1] == 'l')
+					{
+						// If you're linking a library it's also useful for other purposes
+						$library = substr($option, 1);
+						// TODO XXX: scan the external dependencies to make sure $library is covered if not alert test profile maintainer...
+						unset($compiler_options[$i]);
+					}
+				}
+				$compiler_options = implode(' ', $compiler_options);
+
+				echo PHP_EOL . 'DEBUG: ' . $compiler_type . ' ' . $compiler_choice . ' :: ' . $compiler_options . PHP_EOL;
+			}
+		}
+		pts_file_io::delete($test_install_request->compiler_mask_dir, null, true);
+	}
 	protected static function install_test_process(&$test_install_request)
 	{
 		// Install a test
@@ -401,6 +573,7 @@ class pts_test_installer
 
 			if($test_install_request->test_profile->get_file_installer() != false)
 			{
+				self::create_compiler_mask($test_install_request);
 				pts_module_manager::module_process('__pre_test_install', $identifier);
 				pts_client::$display->test_install_begin($test_install_request);
 
@@ -433,7 +606,7 @@ class pts_test_installer
 
 				pts_user_io::display_interrupt_message($pre_install_message);
 				$install_time_length_start = time();
-				$install_log = pts_tests::call_test_script($test_install_request->test_profile, 'install', null, $test_install_directory, null, false);
+				$install_log = pts_tests::call_test_script($test_install_request->test_profile, 'install', null, $test_install_directory, $test_install_request->special_environment_vars, false);
 				$install_time_length = time() - $install_time_length_start;
 				pts_user_io::display_interrupt_message($post_install_message);
 
