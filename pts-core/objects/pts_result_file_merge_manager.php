@@ -59,7 +59,7 @@ class pts_result_file_merge_manager
 		if($this->skip_subsystems != null)
 		{
 			// Check whether to omit rendering this test if only certain subsystem test types should be merged
-			$test_subsystem = pts_tests::test_hardware_type($merge_test_object->test_profile->get_identifier());
+			$test_subsystem = $merge_test_object->test_profile->get_test_hardware_type();
 
 			if($test_subsystem != null && !in_array($test_subsystem, $this->skip_subsystems))
 			{

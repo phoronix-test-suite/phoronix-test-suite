@@ -42,20 +42,6 @@ class pts_tests
 
 		return $cleaned_tests;
 	}
-	public static function test_hardware_type($test_identifier)
-	{
-		static $cache;
-
-		if(!isset($cache[$test_identifier]))
-		{
-			$test_profile = new pts_test_profile($test_identifier);
-			$test_subsystem = $test_profile->get_test_hardware_type();
-			$cache[$test_identifier] = $test_subsystem;
-			unset($test_profile);
-		}
-
-		return $cache[$test_identifier];
-	}
 	public static function extra_environmental_variables(&$test_profile)
 	{
 		$extra_vars = array();
