@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 3.8 Milestone 1
+17 January 2012
 
 - pts-core: When time-zone is not set in PHP, attempt to query it from the host system
 - pts-core: Fix for handling user variable swaps on the result identifier

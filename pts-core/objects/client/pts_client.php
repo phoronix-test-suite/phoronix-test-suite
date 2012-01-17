@@ -356,6 +356,7 @@ class pts_client
 					'CXXFLAGS' => null,
 					'LD_LIBRARY_PATH' => null,
 					'CC' => null,
+					'CXX' => null,
 					'LIBGL_DRIVERS_PATH' => null
 					);
 
