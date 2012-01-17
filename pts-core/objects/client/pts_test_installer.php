@@ -105,12 +105,11 @@ class pts_test_installer
 		{
 			pts_client::$display->test_install_start($test_install_request->test_profile->get_identifier());
 			$installed = pts_test_installer::install_test_process($test_install_request);
-
-			pts_test_installer::end_compiler_mask($test_install_request);
+			$compiler_data = pts_test_installer::end_compiler_mask($test_install_request);
 
 			if($installed)
 			{
-				pts_tests::update_test_install_xml($test_install_request->test_profile, $test_install_request->install_time_duration, true);
+				pts_tests::update_test_install_xml($test_install_request->test_profile, $test_install_request->install_time_duration, true, $compiler_data);
 				array_push($test_profiles, $test_install_request->test_profile);
 			}
 			else
@@ -480,6 +479,7 @@ class pts_test_installer
 			return false;
 		}
 
+		$compiler = false;
 		foreach(pts_file_io::glob($test_install_request->compiler_mask_dir . '*-options-*') as $compiler_output)
 		{
 			$output_name = basename($compiler_output);
@@ -536,10 +536,14 @@ class pts_test_installer
 				}
 				$compiler_options = implode(' ', $compiler_options);
 
-				echo PHP_EOL . 'DEBUG: ' . $compiler_type . ' ' . $compiler_choice . ' :: ' . $compiler_options . PHP_EOL;
+				// TODO: right now just keep overwriting $compiler to take the last compiler.. so TODO add support for multiple compiler reporting or decide what todo
+				$compiler = array('compiler-type' => $compiler_type, 'compiler' => $compiler_choice, 'compiler-options' => $compiler_options);
+				//echo PHP_EOL . 'DEBUG: ' . $compiler_type . ' ' . $compiler_choice . ' :: ' . $compiler_options . PHP_EOL;
 			}
 		}
 		pts_file_io::delete($test_install_request->compiler_mask_dir, null, true);
+
+		return $compiler;
 	}
 	protected static function install_test_process(&$test_install_request)
 	{
