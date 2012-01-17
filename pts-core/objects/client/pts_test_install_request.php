@@ -24,6 +24,7 @@ class pts_test_install_request
 {
 	public $test_profile;
 	private $test_files;
+	public $install_time_duration = -1;
 	public $compiler_mask_dir = false;
 	public $special_environment_vars;
 

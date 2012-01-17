@@ -108,13 +108,14 @@ class pts_test_installer
 
 			pts_test_installer::end_compiler_mask($test_install_request);
 
-			if($installed == false)
+			if($installed)
 			{
-				array_push($failed_installs, $test_install_request->test_profile);
+				pts_tests::update_test_install_xml($test_install_request->test_profile, $test_install_request->install_time_duration, true);
+				array_push($test_profiles, $test_install_request->test_profile);
 			}
 			else
 			{
-				array_push($test_profiles, $test_install_request->test_profile);
+				array_push($failed_installs, $test_install_request->test_profile);
 			}
 		}
 		pts_module_manager::module_process('__post_install_process', $test_install_manager);
@@ -559,7 +560,6 @@ class pts_test_installer
 		}
 		else
 		{
-			$install_time_length = 0;
 			pts_test_installer::setup_test_install_directory($test_install_request, true);
 
 			// Download test files
@@ -607,7 +607,7 @@ class pts_test_installer
 				pts_user_io::display_interrupt_message($pre_install_message);
 				$install_time_length_start = time();
 				$install_log = pts_tests::call_test_script($test_install_request->test_profile, 'install', null, $test_install_directory, $test_install_request->special_environment_vars, false);
-				$install_time_length = time() - $install_time_length_start;
+				$test_install_request->install_time_duration = time() - $install_time_length_start;
 				pts_user_io::display_interrupt_message($post_install_message);
 
 				if(!empty($install_log))
@@ -658,11 +658,6 @@ class pts_test_installer
 			if(!empty($custom_validated_output) && !pts_strings::string_bool($custom_validated_output))
 			{
 				$installed = false;
-			}
-
-			if($installed)
-			{
-				pts_tests::update_test_install_xml($test_install_request->test_profile, $install_time_length, true);
 			}
 		}
 
