@@ -107,11 +107,11 @@ class pts_Table extends pts_Graph
 
 		return $longest_string;
 	}
-	public function renderChart($save_as = null, $output_format = 'SVG')
+	public function renderChart($save_as = null)
 	{
 		$this->render_graph_start();
 		$this->render_graph_finish();
-		return $this->svg_dom->output($save_as, $output_format);
+		return $this->svg_dom->output($save_as, pts_render::determine_visual_renderer());
 	}
 	public function render_graph_start()
 	{

@@ -27,7 +27,7 @@ class pts_render
 		$graph = self::render_graph_process($result_object, $result_file, $save_as, $extra_attributes);
 		$graph->renderGraph();
 
-		return $graph->svg_dom->output($save_as, 'SVG');
+		return $graph->svg_dom->output($save_as, pts_render::determine_visual_renderer());
 	}
 	public static function render_graph_inline_embed(&$object, &$result_file = null, $extra_attributes = null, $nested = true)
 	{
@@ -45,8 +45,7 @@ class pts_render
 		}
 
 		$graph->renderGraph();
-		$output_format = 'SVG';
-		$graph = $graph->svg_dom->output(null, $output_format);
+		$graph = $graph->svg_dom->output(null, pts_render::determine_visual_renderer());
 
 		switch($output_format) // TODO
 		{
@@ -785,6 +784,123 @@ class pts_render
 		// TODO: figure out what else is needed to reasonably determine if the result file is a multi-way comparison
 
 		return $is_multi_way ? array($is_multi_way, $is_multi_way_inverted) : false;
+	}
+	public static function renderer_compatibility_check($user_agent)
+	{
+		if(isset($_REQUEST['force_format']))
+		{
+			return $_REQUEST['force_format'];
+		}
+
+		$user_agent .= ' ';
+		$selected_renderer = 'SVG';
+
+		// Yahoo Slurp, msnbot, and googlebot should always be served SVG so no problems there
+
+		if(($p = strpos($user_agent, 'Gecko/')) !== false)
+		{
+			// Mozilla Gecko-based browser (Firefox, etc)
+			$gecko_date = substr($user_agent, ($p + 6));
+			$gecko_date = substr($gecko_date, 0, 6);
+
+			// Around Firefox 3.0 era is best
+			// Firefox 2.0 mostly works except text might not show...
+			if($gecko_date < 200702)
+			{
+				$selected_renderer = 'PNG';
+			}
+		}
+		else if(($p = strpos($user_agent, 'AppleWebKit/')) !== false)
+		{
+			// Safari, Google Chrome, Google Chromium, etc
+			$webkit_ver = substr($user_agent, ($p + 12));
+			$webkit_ver = substr($webkit_ver, 0, strpos($webkit_ver, ' '));
+
+			// Webkit 532.2 534.6 (WebOS 3.0.2) on WebOS is buggy for SVG
+			// iPhone OS is using 533 right now
+			if($webkit_ver < 533 || strpos($user_agent, 'hpwOS') !== false)
+			{
+				$selected_renderer = 'PNG';
+			}
+
+			if(($p = strpos($user_agent, 'Android ')) !== false)
+			{
+				$android_ver = substr($user_agent, ($p + 8), 3);
+
+				// Android browser doesn't support SVG.
+				// Google bug report 1376 for Android - http://code.google.com/p/android/issues/detail?id=1376
+				// Looks like it might work though in 3.0 Honeycomb
+				if($android_ver < 3.0)
+				{
+					$selected_renderer = 'PNG';
+				}
+			}
+		}
+		else if(($p = strpos($user_agent, 'Opera/')) !== false)
+		{
+			// Opera
+			$ver = substr($user_agent, ($p + 6));
+			$ver = substr($ver, 0, strpos($ver, ' '));
+
+			// 9.27, 9.64 displays most everything okay
+			if($ver < 9.27)
+			{
+				$selected_renderer = 'PNG';
+			}
+
+			// text-alignment is still fucked as of 11.50/12.0
+			$selected_renderer = 'PNG';
+		}
+		else if(($p = strpos($user_agent, 'Epiphany/')) !== false)
+		{
+			// Older versions of Epiphany. Newer versions should report their Gecko or WebKit appropriately
+			$ver = substr($user_agent, ($p + 9));
+			$ver = substr($ver, 0, 4);
+
+			if($ver < 2.22)
+			{
+				$selected_renderer = 'PNG';
+			}
+		}
+		else if(($p = strpos($user_agent, 'KHTML/')) !== false)
+		{
+			// KDE Konqueror as of 4.7 is still broken for SVG
+			$selected_renderer = 'PNG';
+		}
+		else if(($p = strpos($user_agent, 'MSIE ')) !== false)
+		{
+			$ver = substr($user_agent, ($p + 5), 1);
+
+			// Microsoft Internet Explorer 9.0 finally seems to do SVG right
+			if($ver < 10 && $ver != 1)
+			{
+				$selected_renderer = 'PNG';
+			}
+		}
+		else if(strpos($user_agent, 'facebook') !== false)
+		{
+			// Facebook uses this string for its Like/Share crawler, so serve it a PNG so it can use it as an image
+			$selected_renderer = 'PNG';
+		}
+
+		return $selected_renderer;
+	}
+	public static function determine_visual_renderer()
+	{
+		$requested_renderer = 'SVG';
+		if(isset($_SERVER['HTTP_USER_AGENT']))
+		{
+			static $browser_renderer = null;
+
+			if($browser_renderer == null || isset($_REQUEST['force_format']))
+			{
+				$browser_renderer = self::renderer_compatibility_check($_SERVER['HTTP_USER_AGENT']);
+			}
+
+			$requested_renderer = $browser_renderer;
+		}
+
+		return $requested_renderer;
 	}
 }
 
