@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2011, Phoronix Media
-	Copyright (C) 2008 - 2011, Michael Larabel
+	Copyright (C) 2008 - 2012, Phoronix Media
+	Copyright (C) 2008 - 2012, Michael Larabel
 	phodevi_disk.php: The PTS Device Interface object for the system disk(s)
 
 	This program is free software; you can redistribute it and/or modify
@@ -247,6 +247,11 @@ class phodevi_disk extends phodevi_device_interface
 				case 'HT':
 					// 'HD' might be some Hitachi disk drives, but that prefix seems too common
 					$disk_manufacturer = 'Hitachi';
+					break;
+				case 'HM':
+				case 'HN':
+					// HM and HN appear to be Samsung series
+					$disk_manufacturer = 'Samsung';
 					break;
 				case 'ST':
 					if($third_char == 'T')
