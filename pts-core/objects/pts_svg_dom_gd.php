@@ -200,7 +200,7 @@ class pts_svg_dom_gd
 				case 'text':
 					$a = self::attributes_to_array($node, array('x', 'y', 'font-size', 'text-anchor', 'fill', 'dominant-baseline', 'transform'));
 					$text = $node->nodeValue;
-					$a['font-size'] -= 1;
+					$a['font-size'] -= 1.6;
 
 					$box_array = imagettfbbox($a['font-size'], 0, self::$default_font, $text);
 					$box_width = $box_array[4] - $box_array[6];
@@ -236,7 +236,6 @@ class pts_svg_dom_gd
 								break;
 						}
 					}
-
 					imagettftext($gd, $a['font-size'], $rotate, $a['x'], $a['y'], self::gd_color_allocate($gd, $a['fill']), self::$default_font, $text);
 					break;
 				case 'polygon':

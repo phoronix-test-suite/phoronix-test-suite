@@ -107,11 +107,11 @@ class pts_Table extends pts_Graph
 
 		return $longest_string;
 	}
-	public function renderChart($save_as = null)
+	public function renderChart($save_as = null, $output_format = 'SVG')
 	{
 		$this->render_graph_start();
 		$this->render_graph_finish();
-		return $this->svg_dom->output($save_as);
+		return $this->svg_dom->output($save_as, $output_format);
 	}
 	public function render_graph_start()
 	{
@@ -265,7 +265,7 @@ class pts_Table extends pts_Graph
 					$x = $this->i['left_start'] + 1 + ($last_changed_col * $table_item_width);
 					$x_end = ($this->i['left_start'] + ($last_changed_col * $table_item_width)) + ($table_item_width * ($current_col - $last_changed_col));
 
-					$this->svg_dom->add_element('rect', array('x' => $x, 'y' => 0, 'width' => ($table_item_width * ($current_col - $last_changed_col)), 'height' => ($extra_heading_height - 2), 'fill' => $paint_color, 'stroke' => self::$c['color']['border'], 'stroke-width' => 1));
+					$this->svg_dom->add_element('rect', array('x' => $x, 'y' => 1, 'width' => ($table_item_width * ($current_col - $last_changed_col)) - 2, 'height' => ($extra_heading_height - 1), 'fill' => $paint_color));
 
 					if($identifier[0] != 'Temp')
 					{

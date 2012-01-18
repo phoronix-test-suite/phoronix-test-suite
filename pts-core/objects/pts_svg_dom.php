@@ -255,8 +255,8 @@ class pts_svg_dom
 	}
 	public static function estimate_text_dimensions($text_string, $font_size)
 	{
-		$box_height = 0.75 * $font_size;
-		$box_width = 0.76 * strlen($text_string) * $font_size;
+		$box_height = ceil(0.76 * $font_size);
+		$box_width = ceil((0.76 * strlen($text_string) * $font_size) - ceil(strlen($text_string) * 1.05));
 
 		// Width x Height
 		return array($box_width, $box_height);
