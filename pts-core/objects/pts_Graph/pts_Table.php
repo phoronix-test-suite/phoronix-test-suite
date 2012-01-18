@@ -387,7 +387,7 @@ class pts_Table extends pts_Graph
 					}
 
 					$y = $this->i['top_heading_height'] + $identifier_height + (($row + 1) * $table_line_height) + 1;
-					$this->svg_dom->add_element('rect', array('x' => ($left_bounds + 1), 'y' => $y, 'width' => ($right_bounds - $left_bounds), 'height' => $table_line_height, 'fill' => $background_paint));
+					$this->svg_dom->add_element('rect', array('x' => ($left_bounds + 1), 'y' => $y, 'width' => ($right_bounds - $left_bounds - 1), 'height' => ($table_line_height - 1), 'fill' => $background_paint));
 				}
 
 				$x = $left_bounds + (($right_bounds - $left_bounds) / 2);

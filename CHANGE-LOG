@@ -4,6 +4,7 @@ Phoronix Test Suite (Git)
 
 - pts-core: Initial support for compiler masking / compiler option intercepting on test installation
 - phodevi: Better recognition of Samsung disk drives
+- pts_Graph: Rendering corrections of SVG DOM IR
 
 Phoronix Test Suite 3.8 Milestone 1
 17 January 2012
