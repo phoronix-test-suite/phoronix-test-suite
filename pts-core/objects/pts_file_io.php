@@ -51,6 +51,10 @@ class pts_file_io
 	public static function delete($object, $ignore_files = null, $remove_root_directory = false)
 	{
 		// Delete files and/or directories
+		if($object == false)
+		{
+			return false;
+		}
 
 		if(is_dir($object))
 		{

@@ -23,7 +23,6 @@
 class pts_test_run_manager
 {
 	public $result_file_writer = null;
-	public $reporting_attributes = null;
 
 	private $tests_to_run = array();
 	private $failed_tests_to_run = array();
@@ -59,8 +58,6 @@ class pts_test_run_manager
 		$this->dynamic_roun_count_on_length_or_less = pts_config::read_user_config('PhoronixTestSuite/Options/TestResultValidation/LimitDynamicToTestLength', 20);
 		$this->dynamic_run_count_std_deviation_threshold = pts_config::read_user_config('PhoronixTestSuite/Options/TestResultValidation/StandardDeviationThreshold', 3.50);
 		$this->dynamic_run_count_export_script = pts_config::read_user_config('PhoronixTestSuite/Options/TestResultValidation/ExportResultsTo', null);
-
-		$this->reporting_attributes = array();
 
 		pts_module_manager::module_process('__run_manager_setup', $this);
 	}
@@ -429,16 +426,6 @@ class pts_test_run_manager
 	public function result_file_setup()
 	{
 		$this->result_file_writer = new pts_result_file_writer($this->get_results_identifier());
-
-		if(is_file(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . '/reporting-attributes.json'))
-		{
-			$this->reporting_attributes = json_decode(file_get_contents(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . '/reporting-attributes.json'), true);
-		}
-
-		if(!isset($this->reporting_attributes['PhoronixTestSuite']['Results']))
-		{
-			$this->reporting_attributes['PhoronixTestSuite']['Results'] = array();
-		}
 	}
 	public function get_test_run_position()
 	{
@@ -586,7 +573,6 @@ class pts_test_run_manager
 		if($this->get_file_name() != null)
 		{
 			$this->result_file_writer->save_xml(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . '/active.xml');
-			file_put_contents(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . '/reporting-attributes.json', json_encode($this->reporting_attributes));
 		}
 
 		$test_run_request = $this->get_test_to_run($run_index);
@@ -627,10 +613,11 @@ class pts_test_run_manager
 
 				if(!empty($test_identifier))
 				{
-					$this->result_file_writer->add_result_from_result_object_with_value_string($test_run_request, $test_run_request->get_result(), $test_run_request->test_result_buffer->get_values_as_string());
+					// XXX : add to attributes JSON Here and TODO XXX then pass to the result_file_writer
+					$reporting_attributes = null;
+					$reporting_attributes['compiler-data'] = $test_run_request->test_profile->test_installation->get_compiler_data();
 
-					// XXX : add to attributes JSON Here, model after result_file_writer in other parts of this class
-					$this->reporting_attributes['PhoronixTestSuite']['Results'][$test_run_request->get_comparison_hash()][$this->get_results_identifier()]['system-attributes']['compiler-data'] = $test_run_request->test_profile->test_installation->get_compiler_data();
+					$this->result_file_writer->add_result_from_result_object_with_value_string($test_run_request, $test_run_request->get_result(), $test_run_request->test_result_buffer->get_values_as_string());
 
 					if($this->get_results_identifier() != null && $this->get_file_name() != null && pts_config::read_bool_config('PhoronixTestSuite/Options/Testing/SaveTestLogs', 'FALSE'))
 					{
@@ -760,7 +747,6 @@ class pts_test_run_manager
 			echo PHP_EOL;
 			pts_module_manager::module_process('__event_results_process', $this);
 			pts_client::save_result_file($this->result_file_writer, $this->get_file_name());
-			file_put_contents(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . '/reporting-attributes.json', json_encode($this->reporting_attributes));
 			pts_module_manager::module_process('__event_results_saved', $this);
 			//echo PHP_EOL . 'Results Saved To: ; . PTS_SAVE_RESULTS_PATH . $this->get_file_name() . ;/composite.xml' . PHP_EOL;
 			pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . '/index.html');
