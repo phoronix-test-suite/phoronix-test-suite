@@ -474,7 +474,7 @@ class pts_test_installer
 	}
 	protected static function end_compiler_mask(&$test_install_request)
 	{
-		if($test_install_request->compiler_mask_dir == false && is_dir($test_install_request->compiler_mask_dir))
+		if($test_install_request->compiler_mask_dir == false && !is_dir($test_install_request->compiler_mask_dir))
 		{
 			return false;
 		}
