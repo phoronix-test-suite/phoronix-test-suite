@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2011, Phoronix Media
-	Copyright (C) 2010 - 2011, Michael Larabel
+	Copyright (C) 2010 - 2012, Phoronix Media
+	Copyright (C) 2010 - 2012, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -111,9 +111,9 @@ class pts_openbenchmarking_client
 				$system_logs_zip = pts_client::create_temporary_file();
 				pts_compression::zip_archive_create($system_logs_zip, $system_log_dir);
 
-				if(filesize($system_logs_zip) < 614400)
+				if(filesize($system_logs_zip) < 1048576)
 				{
-					// If it's about 600Kb, probably too big
+					// If it's over 1MB, probably too big
 					$system_logs = base64_encode(file_get_contents($system_logs_zip));
 					$system_logs_hash = sha1($system_logs);
 				}
