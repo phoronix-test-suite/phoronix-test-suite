@@ -318,6 +318,7 @@ class pts_client
 					'lsmod',
 					'sensors',
 					'dmesg',
+					'cpufreq-info',
 					'glxinfo',
 					'uname -a',
 					// 'udisks --dump',
