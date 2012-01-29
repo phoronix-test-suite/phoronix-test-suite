@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2011, Phoronix Media
-	Copyright (C) 2008 - 2011, Michael Larabel
+	Copyright (C) 2008 - 2012, Phoronix Media
+	Copyright (C) 2008 - 2012, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -114,7 +114,7 @@ class info implements pts_option_interface
 			$dependencies = $args['object']->get_dependencies();
 			if(!empty($dependencies) && !empty($dependencies[0]))
 			{
-				echo PHP_EOL . 'Software Dependencies:';
+				echo PHP_EOL . 'Software Dependencies:' . PHP_EOL;
 				echo pts_user_io::display_text_list($args['object']->get_dependency_names());
 			}
 			echo PHP_EOL;

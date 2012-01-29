@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2011, Phoronix Media
-	Copyright (C) 2008 - 2011, Michael Larabel
+	Copyright (C) 2008 - 2012, Phoronix Media
+	Copyright (C) 2008 - 2012, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -129,9 +129,18 @@ class pts_test_profile_parser
 	}
 	public function get_identifier_base_name()
 	{
-		// TODO: clean this up
 		$identifier = basename($this->identifier);
-		$identifier = ($s = strrpos($identifier, '-')) !== false ? substr($identifier, 0, $s) : $identifier;
+
+		if(($s = strrpos($identifier, '-')) !== false)
+		{
+			$post_dash = substr($identifier, ($s + 1));
+
+			// If the version is attached, remove it
+			if(pts_strings::string_only_contains($post_dash, (pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DECIMAL)))
+			{
+				$identifier = substr($identifier, 0, $s);
+			}
+		}
 
 		return $identifier;
 	}
