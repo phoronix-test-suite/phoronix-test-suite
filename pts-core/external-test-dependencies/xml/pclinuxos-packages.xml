@@ -16,6 +16,11 @@
 			<FileCheck>/usr/include/SDL/SDL.h, /usr/include/SDL/SDL_gfxPrimitives.h, /usr/include/SDL/SDL_net.h, /usr/include/SDL/SDL_image.h, /usr/include/SDL/SDL_ttf.h</FileCheck>
 		</Package>
 		<Package>
+			<GenericName>cairo-development</GenericName>
+			<PackageName>libcairo-devel</PackageName>
+			<FileCheck>/usr/include/cairo/cairo.h</FileCheck>
+		</Package>
+		<Package>
 			<GenericName>glut</GenericName>
 			<PackageName>libmesaglut3-devel</PackageName>
 			<FileCheck>/usr/include/GL/glut.h</FileCheck>

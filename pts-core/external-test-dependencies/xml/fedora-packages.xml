@@ -27,6 +27,11 @@
 			<FileCheck>/bin/tcsh OR /usr/bin/tcsh</FileCheck>
 		</Package>
 		<Package>
+			<GenericName>cairo-development</GenericName>
+			<PackageName>cairo-devel</PackageName>
+			<FileCheck>/usr/include/cairo/cairo.h</FileCheck>
+		</Package>
+		<Package>
 			<GenericName>libpng-development</GenericName>
 			<PackageName>libpng-devel</PackageName>
 			<FileCheck>/usr/include/libpng12/png.h</FileCheck>

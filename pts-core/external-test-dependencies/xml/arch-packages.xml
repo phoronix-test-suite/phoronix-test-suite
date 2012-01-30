@@ -166,6 +166,11 @@
 			<FileCheck>/usr/include/boost/</FileCheck>
 		</Package>
 		<Package>
+			<GenericName>cairo-development</GenericName>
+			<PackageName>cairo</PackageName>
+			<FileCheck>/usr/include/cairo/cairo.h</FileCheck>
+		</Package>
+		<Package>
 			<GenericName>tcl</GenericName>
 			<PackageName>tcl</PackageName>
 			<FileCheck>/usr/bin/tclsh</FileCheck>

@@ -43,6 +43,11 @@
 			<FileCheck>/usr/share/build-essential</FileCheck>
 		</Package>
 		<Package>
+			<GenericName>cairo-development</GenericName>
+			<PackageName>libcairo2-dev libgdk-pixbuf2.0-dev</PackageName>
+			<FileCheck>/usr/include/cairo/cairo.h, /usr/include/gdk-pixbuf-2.0/gdk-pixbuf/gdk-pixbuf.h</FileCheck>
+		</Package>
+		<Package>
 			<GenericName>xorg-development</GenericName>
 			<PackageName>xorg-dev</PackageName>
 			<FileCheck>/usr/share/doc/xserver-xorg-dev, /usr/lib/libXmu.so, /usr/lib/libXmuu.so</FileCheck>

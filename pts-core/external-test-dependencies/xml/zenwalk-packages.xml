@@ -76,6 +76,11 @@
 			<FileCheck>/usr/include/GL/glew.h</FileCheck>
 		</Package>
 		<Package>
+			<GenericName>cairo-development</GenericName>
+			<PackageName>cairo</PackageName>
+			<FileCheck>/usr/include/cairo/cairo.h</FileCheck>
+		</Package>
+		<Package>
 			<GenericName>freeimage</GenericName>
 			<PackageName>freeimage</PackageName>
 			<FileCheck>/usr/lib/libfreeimage.so.3, /usr/include/FreeImage.h</FileCheck>

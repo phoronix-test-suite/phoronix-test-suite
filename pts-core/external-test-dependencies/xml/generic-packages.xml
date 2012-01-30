@@ -52,6 +52,12 @@
 			<FileCheck>/usr/include/xorg</FileCheck>
 		</Package>
 		<Package>
+			<GenericName>cairo-development</GenericName>
+			<Title>Cairo Development Files and Libraries</Title>
+			<PossibleNames>cairo-devel, libcairo2-dev, libcairo-devel</PossibleNames>
+			<FileCheck>/usr/include/cairo/cairo.h</FileCheck>
+		</Package>
+		<Package>
 			<GenericName>bison</GenericName>
 			<Title>Bison</Title>
 			<PossibleNames>bison</PossibleNames>
