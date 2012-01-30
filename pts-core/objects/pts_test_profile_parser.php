@@ -50,7 +50,10 @@ class pts_test_profile_parser
 
 		if($bind_version == false && ($c = strrpos($identifier, '-')))
 		{
-			$identifier = substr($identifier, 0, $c);
+			if(pts_strings::is_version(substr($identifier, ($c + 1))))
+			{
+				$identifier = substr($identifier, 0, $c);
+			}
 		}
 
 		return "$identifier";
@@ -136,7 +139,7 @@ class pts_test_profile_parser
 			$post_dash = substr($identifier, ($s + 1));
 
 			// If the version is attached, remove it
-			if(pts_strings::string_only_contains($post_dash, (pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DECIMAL)))
+			if(pts_strings::is_version($post_dash))
 			{
 				$identifier = substr($identifier, 0, $s);
 			}

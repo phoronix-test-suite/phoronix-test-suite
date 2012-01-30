@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2011, Phoronix Media
-	Copyright (C) 2010 - 2011, Michael Larabel
+	Copyright (C) 2010 - 2012, Phoronix Media
+	Copyright (C) 2010 - 2012, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -41,7 +41,7 @@ class upload_test_profile implements pts_option_interface
 			if(pts_validation::validate_test_profile($test_profile))
 			{
 				pts_client::$display->generic_heading($test_profile);
-				$zip_file = PTS_OPENBENCHMARKING_SCRATCH_PATH . $test_profile->get_identifier(false) . '-' . $test_profile->get_test_profile_version() . '.zip';
+				$zip_file = PTS_OPENBENCHMARKING_SCRATCH_PATH . $test_profile->get_identifier_base_name() . '-' . $test_profile->get_test_profile_version() . '.zip';
 				$zip_created = pts_compression::zip_archive_create($zip_file, pts_file_io::glob($test_profile->get_resource_dir() . '*'));
 				if($zip_created == false)
 				{
