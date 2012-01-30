@@ -549,6 +549,22 @@ class phodevi_system extends phodevi_device_interface
 			$compilers['icc'] = 'ICC';
 		}
 
+		if(pts_client::executable_in_path('nvcc'))
+		{
+			// NVIDIA CUDA Compiler Driver
+			$nvcc = shell_exec('nvcc --version 2>&1');
+			if(($s = strpos($nvcc, 'release ')) !== false)
+			{
+				$nvcc = str_replace(array(','), null, substr($nvcc, ($s + 8)));
+				$nvcc = substr($nvcc, 0, strpos($nvcc, ' '));
+
+				if(pts_strings::is_version($nvcc))
+				{
+					$compilers['CUDA'] = 'CUDA ' . $nvcc;
+				}
+			}
+		}
+
 		// Try to make the compiler that's used by default to appear first
 		if(pts_client::read_env('CC') && isset($compilers[basename(pts_client::read_env('CC'))]))
 		{
