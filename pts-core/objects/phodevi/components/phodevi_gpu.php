@@ -974,26 +974,8 @@ class phodevi_gpu extends phodevi_device_interface
 					if(strpos($info, 'Intel 2nd Generation Core Family') !== false)
 					{
 						// Try to come up with a better non-generic string
-						if(is_readable('/sys/kernel/debug/dri/0/i915_capabilities'))
-						{
-							$i915_caps = file_get_contents('/sys/kernel/debug/dri/0/i915_capabilities');
-							if(($x = strpos($i915_caps, 'gen: ')) !== false)
-							{
-								$gen = substr($i915_caps, ($x + 5));
-								$gen = substr($gen, 0, strpos($gen, PHP_EOL));
-
-								if(is_numeric($gen))
-								{
-									$info = 'Intel Gen' . $gen;
-
-									if(strpos($i915_caps, 'is_mobile: yes') !== false)
-									{
-										$info .= ' Mobile';
-									}
-								}
-							}
-						}
-						else if(is_readable('/var/log/Xorg.0.log'))
+						$was_reset = false;
+						if(is_readable('/var/log/Xorg.0.log'))
 						{
 							/*
 							$ cat /var/log/Xorg.0.log | grep -i Chipset
@@ -1019,6 +1001,26 @@ class phodevi_gpu extends phodevi_device_interface
 								if(!isset($xorg_log[45]))
 								{
 									$info = $xorg_log;
+									$was_reset = true;
+								}
+							}
+						}
+						if($was_reset == false && is_readable('/sys/kernel/debug/dri/0/i915_capabilities'))
+						{
+							$i915_caps = file_get_contents('/sys/kernel/debug/dri/0/i915_capabilities');
+							if(($x = strpos($i915_caps, 'gen: ')) !== false)
+							{
+								$gen = substr($i915_caps, ($x + 5));
+								$gen = substr($gen, 0, strpos($gen, PHP_EOL));
+
+								if(is_numeric($gen))
+								{
+									$info = 'Intel Gen' . $gen;
+
+									if(strpos($i915_caps, 'is_mobile: yes') !== false)
+									{
+										$info .= ' Mobile';
+									}
 								}
 							}
 						}
