@@ -8,6 +8,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add cairo-development as an external dependency for Cairo drawing library development
 - phodevi: Better recognition of Samsung disk drives
 - phodevi: NVIDIA CUDA (nvcc) detection and report it to system information compiler area
+- phodevi: Detection support for Microsoft Hyper-V virtualization server
 - pts_Graph: Rendering corrections of SVG DOM IR
 
 Phoronix Test Suite 3.8 Milestone 1

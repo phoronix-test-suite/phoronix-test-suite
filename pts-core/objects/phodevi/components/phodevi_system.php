@@ -366,11 +366,11 @@ class phodevi_system extends phodevi_device_interface
 				}
 			}
 		}
-		else if(strpos($gpu, 'VMware') !== false || (is_readable('/sys/class/dmi/id/product_name') && stripos(pts_file_io::file_get_contents('/sys/class/dmi/id/product_name'), 'VMware') !== false))
+		else if(stripos($gpu, 'VMware') !== false || (is_readable('/sys/class/dmi/id/product_name') && stripos(pts_file_io::file_get_contents('/sys/class/dmi/id/product_name'), 'VMware') !== false))
 		{
 			$virtualized = 'VMware';
 		}
-		else if(strpos($gpu, 'VirtualBox') !== false || strpos(phodevi::read_name('motherboard'), 'VirtualBox') !== false)
+		else if(stripos($gpu, 'VirtualBox') !== false || stripos(phodevi::read_name('motherboard'), 'VirtualBox') !== false)
 		{
 			$virtualized = 'VirtualBox';
 
@@ -398,6 +398,10 @@ class phodevi_system extends phodevi_device_interface
 			$virtualized .= ' ' . pts_file_io::file_get_contents('/sys/class/dmi/id/product_version');
 
 			// $virtualized should be then e.g. 'Xen HVM domU 4.1.1'
+		}
+		else if(stripos($gpu, 'Microsoft Hyper-V') !== false)
+		{
+			$virtualized = 'Microsoft Hyper-V Server';
 		}
 
 		return $virtualized;
