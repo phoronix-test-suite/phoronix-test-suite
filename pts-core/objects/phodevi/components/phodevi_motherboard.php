@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2011, Phoronix Media
-	Copyright (C) 2008 - 2011, Michael Larabel
+	Copyright (C) 2008 - 2012, Phoronix Media
+	Copyright (C) 2008 - 2012, Michael Larabel
 	phodevi_motherboard.php: The PTS Device Interface object for the motherboard
 
 	This program is free software; you can redistribute it and/or modify
@@ -386,7 +386,7 @@ class phodevi_motherboard extends phodevi_device_interface
 				$info = strpos($name . ' ', $vendor . ' ') === false ? $vendor . ' ' : null;
 				$info .= $name;
 
-				if($version != false && strpos($info, $version) === false && strlen(pts_strings::remove_from_string($version, pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DECIMAL)) == 0)
+				if($version != false && strpos($info, $version) === false && pts_strings::string_only_contains($version, pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DECIMAL))
 				{
 					$info .= (substr($version, 0, 1) == 'v' ? ' ' : ' v') . $version;
 				}

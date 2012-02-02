@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2011, Phoronix Media
-	Copyright (C) 2010 - 2011, Michael Larabel
+	Copyright (C) 2010 - 2012, Phoronix Media
+	Copyright (C) 2010 - 2012, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -62,8 +62,8 @@ class pts_openbenchmarking
 
 		if(strlen($gsid) == 9)
 		{
-			if(strlen(pts_strings::keep_in_string(substr($gsid, 0, 6), pts_strings::CHAR_LETTER)) == 6 &&
-			strlen(pts_strings::keep_in_string(substr($gsid, 6, 3), pts_strings::CHAR_NUMERIC)) == 3)
+			if(pts_strings::string_only_contains(substr($gsid, 0, 6), pts_strings::CHAR_LETTER) &&
+			pts_strings::string_only_contains(substr($gsid, 6, 3), pts_strings::CHAR_NUMERIC))
 			{
 				$gsid_valid = true;
 			}
@@ -77,8 +77,8 @@ class pts_openbenchmarking
 
 		if(strlen($gside) == 12)
 		{
-			if(strlen(pts_strings::keep_in_string(substr($gside, 0, 10), pts_strings::CHAR_LETTER)) == 10 &&
-			strlen(pts_strings::keep_in_string(substr($gside, 10, 2), pts_strings::CHAR_NUMERIC)) == 2)
+			if(pts_strings::string_only_contains(substr($gside, 0, 10), pts_strings::CHAR_LETTER) &&
+			pts_strings::string_only_contains(substr($gside, 10, 2), pts_strings::CHAR_NUMERIC))
 			{
 				$gside_valid = true;
 			}
@@ -92,8 +92,8 @@ class pts_openbenchmarking
 
 		if(strlen($gsidp) == 10)
 		{
-			if(strlen(pts_strings::keep_in_string(substr($gsidp, 0, 9), pts_strings::CHAR_LETTER)) == 9 &&
-			strlen(pts_strings::keep_in_string(substr($gsidp, 9, 1), pts_strings::CHAR_NUMERIC)) == 1)
+			if(pts_strings::string_only_contains(substr($gsidp, 0, 9), pts_strings::CHAR_LETTER) &&
+			pts_strings::string_only_contains(substr($gsidp, 9, 1), pts_strings::CHAR_NUMERIC))
 			{
 				$gsidp_valid = true;
 			}

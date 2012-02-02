@@ -437,7 +437,7 @@ class pts_openbenchmarking_client
 			$version_length = strlen($version);
 
 			// TODO: functionalize this and read against types.xsd
-			if($version_length >= 5 && $version_length <= 8 && strlen(pts_strings::keep_in_string($version, (pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DECIMAL))) == $version_length)
+			if($version_length >= 5 && $version_length <= 8 && pts_strings::string_only_contains($version, (pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DECIMAL)))
 			{
 				$test = substr($test, 0, $c);
 			}

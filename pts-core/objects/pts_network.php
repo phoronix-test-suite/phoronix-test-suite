@@ -26,7 +26,7 @@ class pts_network
 
 	public static function network_support_available()
 	{
-		return !self::$disable_network_support;
+		return self::$disable_network_support == false;
 	}
 	public static function http_get_contents($url, $override_proxy = false, $override_proxy_port = false)
 	{
@@ -280,7 +280,7 @@ class pts_network
 			}
 		}
 
-		if(pts_network::network_support_available() == false::&& ini_get('file_uploads') == 'Off')
+		if(pts_network::network_support_available() == false && ini_get('file_uploads') == 'Off')
 		{
 			echo PHP_EOL . 'The file_uploads option in your PHP configuration must be enabled for network support.' . PHP_EOL . PHP_EOL;
 		}

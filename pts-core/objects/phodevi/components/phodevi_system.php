@@ -858,7 +858,7 @@ class phodevi_system extends phodevi_device_interface
 
 			$desktop_environment = 'LXDE';
 
-			if(strlen(pts_strings::keep_in_string($version, pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DECIMAL)) == strlen($version))
+			if(pts_strings::string_only_contains($version, pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DECIMAL))
 			{
 				$desktop_version = $version;
 			}

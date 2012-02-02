@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2009, Phoronix Media
-	Copyright (C) 2008 - 2009, Michael Larabel
+	Copyright (C) 2008 - 2012, Phoronix Media
+	Copyright (C) 2008 - 2012, Michael Larabel
 	pts_module_option.php: The object for handling persistent module options that can be controlled by the end-user
 
 	This program is free software; you can redistribute it and/or modify
@@ -94,13 +94,13 @@ class pts_module_option
 					}
 					break;
 				case 'NUMERIC_DASH':
-					if(!empty($input) && strlen(pts_strings::keep_in_string($identifier, pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DASH)) == strlen($input))
+					if(!empty($input) && pts_strings::string_only_contains($input, pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DASH))
 					{
 						$supported = true;
 					}
 					break;
 				case 'ALPHA_NUMERIC':
-					if(!empty($input) && strlen(pts_strings::keep_in_string($input, pts_strings::CHAR_NUMERIC | pts_strings::CHAR_LETTER)) == strlen($input))
+					if(!empty($input) && pts_strings::string_only_contains($input, pts_strings::CHAR_NUMERIC | pts_strings::CHAR_LETTER))
 					{
 						$supported = true;
 					}
