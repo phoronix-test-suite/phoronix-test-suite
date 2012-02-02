@@ -23,6 +23,7 @@
 class pts_network
 {
 	private static $disable_network_support = false;
+	private static $network_proxy = false;
 
 	public static function network_support_available()
 	{
@@ -125,9 +126,9 @@ class pts_network
 			curl_setopt($cr, CURLOPT_PROGRESSFUNCTION, array('pts_network', 'curl_status_callback'));
 		}
 
-		if(defined('NETWORK_PROXY'))
+		if(self::$network_proxy)
 		{
-			curl_setopt($cr, CURLOPT_PROXY, NETWORK_PROXY);
+			curl_setopt($cr, CURLOPT_PROXY, self::$network_proxy['proxy']);
 		}
 
 		curl_exec($cr);
@@ -168,10 +169,10 @@ class pts_network
 			$parameters = array();
 		}
 
-		if($proxy_address == false && $proxy_port == false && defined('NETWORK_PROXY'))
+		if($proxy_address == false && $proxy_port == false && self::$network_proxy)
 		{
-			$proxy_address = NETWORK_PROXY_ADDRESS;
-			$proxy_port = NETWORK_PROXY_PORT;
+			$proxy_address = self::$network_proxy['address'];
+			$proxy_port = self::$network_proxy['port'];
 		}
 
 		if($proxy_address != false && $proxy_port != false && is_numeric($proxy_port))
@@ -233,15 +234,15 @@ class pts_network
 	{
 		if(($proxy_address = pts_config::read_user_config('PhoronixTestSuite/Options/Networking/ProxyAddress', false)) && ($proxy_port = pts_config::read_user_config('PhoronixTestSuite/Options/Networking/ProxyPort', false)))
 		{
-			define('NETWORK_PROXY', $proxy_address . ':' . $proxy_port);
-			define('NETWORK_PROXY_ADDRESS', $proxy_address);
-			define('NETWORK_PROXY_PORT', $proxy_port);
+			self::$network_proxy['proxy'] = $proxy_address . ':' . $proxy_port;
+			self::$network_proxy['address'] = $proxy_address;
+			self::$network_proxy['port'] = $proxy_port;
 		}
 		else if(($env_proxy = getenv('http_proxy')) != false && count($env_proxy = pts_strings::colon_explode($env_proxy)) == 2)
 		{
-			define('NETWORK_PROXY', $env_proxy[0] . ':' . $env_proxy[1]);
-			define('NETWORK_PROXY_ADDRESS', $env_proxy[0]);
-			define('NETWORK_PROXY_PORT', $env_proxy[1]);
+			self::$network_proxy['proxy'] = $env_proxy[0] . ':' . $env_proxy[1];
+			self::$network_proxy['address'] = $env_proxy[0];
+			self::$network_proxy['port'] = $env_proxy[1];
 		}
 
 		define('NETWORK_TIMEOUT', pts_config::read_user_config('PhoronixTestSuite/Options/Networking/Timeout', 20));
