@@ -45,9 +45,10 @@ class pts_render
 		}
 
 		$graph->renderGraph();
-		$graph = $graph->svg_dom->output(null, pts_render::determine_visual_renderer());
+		$output_format = pts_render::determine_visual_renderer();
+		$graph = $graph->svg_dom->output(null, $output_format);
 
-		switch($output_format) // TODO
+		switch($output_format)
 		{
 			case 'PNG':
 			case 'JPG':

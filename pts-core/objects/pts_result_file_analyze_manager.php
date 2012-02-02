@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009, Phoronix Media
-	Copyright (C) 2009, Michael Larabel
+	Copyright (C) 2009 - 2012, Phoronix Media
+	Copyright (C) 2009 - 2012, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -51,12 +51,12 @@ class pts_result_file_analyze_manager
 			$attributes_clean[$temp[0]] = isset($temp[1]) ? $temp[1] : null;
 		}
 
-		if(!isset($this->relations[$mto->test_profile->get_identifier()][$mto->test_profile->get_app_version()]))
+		if(!isset($this->relations[$mto->test_profile->get_identifier()][$mto->test_profile->get_test_profile_version()]))
 		{
-			$this->relations[$mto->test_profile->get_identifier()][$mto->test_profile->get_app_version()] = array();
+			$this->relations[$mto->test_profile->get_identifier()][$mto->test_profile->get_test_profile_version()] = array();
 		}
 
-		array_push($this->relations[$mto->test_profile->get_identifier()][$mto->test_profile->get_app_version()], array($total_objects, $attributes_clean));
+		array_push($this->relations[$mto->test_profile->get_identifier()][$mto->test_profile->get_test_profile_version()], array($total_objects, $attributes_clean));
 	}
 	public function get_results()
 	{

@@ -134,25 +134,19 @@ class pts_strings
 	}
 	public static function comma_explode($to_explode)
 	{
-		return empty($to_explode) ? array() : array_map('trim', explode(',', $to_explode));
+		return self::trim_explode(',', $to_explode);
 	}
 	public static function colon_explode($to_explode)
 	{
-		return empty($to_explode) ? array() : array_map('trim', explode(':', $to_explode));
+		return self::trim_explode(':', $to_explode);
 	}
 	public static function first_in_string($string, $delimited_by = ' ')
 	{
-		// This function returns the first word/phrase/string on the end of a string that's separated by a space or something else
-		// Using this helper function will avoid a PHP E_STRICT warning if just using the code directly from the output of a function/object
-		$string = explode($delimited_by, $string);
-		return array_shift($string);
+		return ($t = strpos($string, $delimited_by)) ? substr($string, 0, $t) : $string;
 	}
 	public static function last_in_string($string, $delimited_by = ' ')
 	{
-		// This function returns the last word/phrase/string on the end of a string that's separated by a space or something else
-		// Using this helper function will avoid a PHP E_STRICT warning if just using the code directly from the output of a function/object
-		$string = explode($delimited_by, $string);
-		return array_pop($string);
+		return ($t = strrpos($string, $delimited_by)) ? substr($string, ($t + 1)) : $string;
 	}
 	public static function array_list_to_string($array, $bold_items = false, $append_to_end = null)
 	{
