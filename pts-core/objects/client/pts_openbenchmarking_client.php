@@ -53,7 +53,7 @@ class pts_openbenchmarking_client
 			return false;
 		}
 
-		if(defined('NO_NETWORK_COMMUNICATION'))
+		if(pts_network::network_support_available() == false)
 		{
 			echo PHP_EOL . 'No network support available.' . PHP_EOL;
 			return false;
@@ -554,7 +554,7 @@ class pts_openbenchmarking_client
 			{
 				foreach(array_keys($repo_index['tests']) as $identifier)
 				{
-					if(defined('NO_NETWORK_COMMUNICATION') && NO_NETWORK_COMMUNICATION)
+					if(pts_network::network_support_available())
 					{
 						$version = array_shift($repo_index['tests'][$identifier]['versions']);
 						if(self::download_test_profile($repo . '/' . $identifier . '-' . $version) == false)
@@ -582,7 +582,7 @@ class pts_openbenchmarking_client
 			{
 				foreach(array_keys($repo_index['suites']) as $identifier)
 				{
-					if(defined('NO_NETWORK_COMMUNICATION') && NO_NETWORK_COMMUNICATION)
+					if(pts_network::network_support_available())
 					{
 						$version = array_shift($repo_index['suites'][$identifier]['versions']);
 						if(self::download_test_suite($repo . '/' . $identifier . '-' . $version) == false)

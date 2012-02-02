@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2011, Phoronix Media
-	Copyright (C) 2008 - 2011, Michael Larabel
+	Copyright (C) 2008 - 2012, Phoronix Media
+	Copyright (C) 2008 - 2012, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -105,7 +105,6 @@ class pts_merge
 		}
 
 		$result_file_writer = new pts_result_file_writer();
-		$added_systems_hash = array();
 
 		$result_file_writer->add_result_file_meta_data($analyze_file);
 		$result_file_writer->add_system_information_from_result_file($analyze_file);

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2011, Phoronix Media
-	Copyright (C) 2008 - 2011, Michael Larabel
+	Copyright (C) 2008 - 2012, Phoronix Media
+	Copyright (C) 2008 - 2012, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -89,9 +89,8 @@ class pts_compression
 		if(class_exists('ZipArchive'))
 		{
 			$zip = new ZipArchive();
-			$res = $zip->open($zip_file);
 
-			if($res === true)
+			if($zip->open($zip_file) === true)
 			{
 				$t = $zip->extractTo($extract_to);
 				$zip->close();
@@ -182,9 +181,8 @@ class pts_compression
 		}
 
 		$zip = new ZipArchive();
-		$res = $zip->open($zip_file);
 
-		if($res === true)
+		if($zip->open($zip_file) === true)
 		{
 			$files = array();
 

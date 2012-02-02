@@ -22,9 +22,15 @@
 
 class pts_network
 {
+	private static $disable_network_support = false;
+
+	public static function network_support_available()
+	{
+		return !self::$disable_network_support;
+	}
 	public static function http_get_contents($url, $override_proxy = false, $override_proxy_port = false)
 	{
-		if(defined('NO_NETWORK_COMMUNICATION'))
+		if(!pts_network::network_support_available())
 		{
 			return false;
 		}
@@ -36,7 +42,7 @@ class pts_network
 	}
 	public static function http_upload_via_post($url, $to_post_data)
 	{
-		if(defined('NO_NETWORK_COMMUNICATION'))
+		if(!pts_network::network_support_available())
 		{
 			return false;
 		}
@@ -51,7 +57,7 @@ class pts_network
 	}
 	public static function download_file($download, $to)
 	{
-		if(defined('NO_NETWORK_COMMUNICATION'))
+		if(!pts_network::network_support_available())
 		{
 			return false;
 		}
@@ -243,17 +249,17 @@ class pts_network
 		if(ini_get('allow_url_fopen') == 'Off')
 		{
 			echo PHP_EOL . 'The allow_url_fopen option in your PHP configuration must be enabled for network support.' . PHP_EOL . PHP_EOL;
-			define('NO_NETWORK_COMMUNICATION', true);
+			self::$disable_network_support = true;
 		}
 		else if(pts_config::read_bool_config('PhoronixTestSuite/Options/Networking/NoNetworkCommunication', 'FALSE'))
 		{
-			define('NO_NETWORK_COMMUNICATION', true);
 			echo PHP_EOL . 'Network Communication Is Disabled For Your User Configuration.' . PHP_EOL . PHP_EOL;
+			self::$disable_network_support = true;
 		}
 		else if(pts_flags::no_network_communication() == true)
 		{
-			define('NO_NETWORK_COMMUNICATION', true);
 			//echo PHP_EOL . 'Network Communication Is Disabled For Your User Configuration.' . PHP_EOL . PHP_EOL;
+			self::$disable_network_support = true;
 		}
 		else
 		{
@@ -268,13 +274,13 @@ class pts_network
 				// If google.com fails to resolve, it will simply return the original string
 				if(gethostbyname('google.com') == 'google.com')
 				{
-					define('NO_NETWORK_COMMUNICATION', true);
 					echo PHP_EOL . 'NOTICE: No Network Connectivity' . PHP_EOL . PHP_EOL;
+					self::$disable_network_support = true;
 				}
 			}
 		}
 
-		if(!defined('NO_NETWORK_COMMUNICATION') && ini_get('file_uploads') == 'Off')
+		if(pts_network::network_support_available() == false::&& ini_get('file_uploads') == 'Off')
 		{
 			echo PHP_EOL . 'The file_uploads option in your PHP configuration must be enabled for network support.' . PHP_EOL . PHP_EOL;
 		}

@@ -751,7 +751,7 @@ class pts_test_run_manager
 			//echo PHP_EOL . 'Results Saved To: ; . PTS_SAVE_RESULTS_PATH . $this->get_file_name() . ;/composite.xml' . PHP_EOL;
 			pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . '/index.html');
 
-			if($this->allow_sharing_of_results && !defined('NO_NETWORK_COMMUNICATION'))
+			if($this->allow_sharing_of_results && pts_network::network_support_available())
 			{
 				if($this->auto_upload_to_openbenchmarking || pts_openbenchmarking_client::auto_upload_results() || pts_flags::upload_to_openbenchmarking())
 				{
