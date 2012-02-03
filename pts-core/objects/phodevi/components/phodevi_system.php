@@ -349,6 +349,7 @@ class phodevi_system extends phodevi_device_interface
 	{
 		// Reports if system is running virtualized
 		$virtualized = null;
+		$mobo = phodevi::read_name('motherboard');
 		$gpu = phodevi::read_name('gpu');
 		$cpu = phodevi::read_property('cpu', 'model');
 
@@ -402,6 +403,10 @@ class phodevi_system extends phodevi_device_interface
 		else if(stripos($gpu, 'Microsoft Hyper-V') !== false)
 		{
 			$virtualized = 'Microsoft Hyper-V Server';
+		}
+		else if(stripos($mobo, 'Parallels Software') !== false)
+		{
+			$virtualized = 'Parallels Virtualization';
 		}
 
 		return $virtualized;
