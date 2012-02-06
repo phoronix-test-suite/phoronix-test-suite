@@ -2,10 +2,10 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
-- pts-core: Initial support for compiler masking / compiler option intercepting on test installation
 - pts-core: Allow up to 1MB of system log files to be attached and uploaded to OpenBenchmarking.org
 - pts-core: Fix test profile / test suite identifier base name parsing on version handling
 - pts-core: Add cairo-development as an external dependency for Cairo drawing library development
+- pts-core: Initial support for compiler masking / compiler option intercepting on test installation
 - phodevi: Better recognition of Samsung disk drives
 - phodevi: NVIDIA CUDA (nvcc) detection and report it to system information compiler area
 - phodevi: Detection support for Microsoft Hyper-V virtualization server
