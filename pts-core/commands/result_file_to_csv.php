@@ -34,7 +34,7 @@ class result_file_to_csv implements pts_option_interface
 	public static function run($r)
 	{
 		$result_file = new pts_result_file($r[0]);
-		$result_output = pts_result_file_analyzer::result_file_to_csv($result_file);
+		$result_output = pts_result_file_output::result_file_to_csv($result_file);
 
 		// To save the result:
 		$file = pts_client::user_home_directory() . $r[0] . '.csv';

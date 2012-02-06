@@ -47,10 +47,7 @@ class pts_test_result_buffer
 	}
 	public static function buffer_value_comparison($a, $b)
 	{
-		$a = $a->get_result_value();
-		$b = $b->get_result_value();
-
-		return strcmp($a, $b);
+		return strcmp($a->get_result_value(), $b->get_result_value());
 	}
 	public function add_buffer_item($buffer_item)
 	{
@@ -64,79 +61,13 @@ class pts_test_result_buffer
 	{
 		array_push($this->buffer_items, new pts_test_result_buffer_item($identifier, $value, $raw_value));
 	}
-	public function append_to_test_result($identifier, $value)
-	{
-		if(($key = array_search(strtolower($identifier), $this->buffer_items)) !== false)
-		{
-			$buffer = $this->buffer_items[$key];
-			unset($this->buffer_items[$key]);
-
-			$buffer_item = new pts_test_result_buffer_item($identifier, ($value + $buffer->get_result_value()));
-		}
-		else
-		{
-			$buffer_item = new pts_test_result_buffer_item($identifier, $value, null);
-		}
-
-		array_push($this->buffer_items, $buffer_item);
-	}
 	public function clear_outlier_results($add_to_other = true, $value_below = false)
 	{
-		$other_value = 0;
-
-		foreach($this->buffer_items as $key => &$buffer_item)
-		{
-			if($value_below !== false && $buffer_item->get_result_value() < $value_below)
-			{
-				$other_value += $buffer_item->get_result_value();
-				unset($this->buffer_items[$key]);
-			}
-		}
-
-		if($add_to_other && $other_value > 0)
-		{
-			$this->append_to_test_result('Other', $other_value);
-		}
+		pts_test_result_buffer_extra::clear_outlier_results($this->buffer_items, $add_to_other, $value_below);
 	}
 	public function add_composite_result($force = false)
 	{
-		$is_multi_way = $force ? $force : pts_render::multi_way_identifier_check($this->get_identifiers());
-
-		if($is_multi_way)
-		{
-			$group_values = array();
-
-			foreach($this->buffer_items as &$buffer_item)
-			{
-				$identifier_r = pts_strings::trim_explode(': ', $buffer_item->get_result_identifier());
-
-				if(!isset($group_values[$identifier_r[1]]))
-				{
-					$group_values[$identifier_r[1]] = 0;
-				}
-
-				$group_values[$identifier_r[1]] += $buffer_item->get_result_value();
-			}
-
-			foreach($group_values as $key => $value)
-			{
-				if(1 == 0)
-				{
-					$title = $key . ': Composite';
-				}
-				else
-				{
-					$title = 'Composite: ' . $key;
-				}
-
-				$this->add_test_result($title, $value);
-			}
-		}
-		else
-		{
-			$total_value = array_sum($this->get_values());
-			$this->add_test_result('Composite', $total_value);
-		}
+		pts_test_result_buffer_extra::add_composite_result($this, $force)
 	}
 	public function auto_shorten_buffer_identifiers($identifier_shorten_index = false)
 	{
@@ -169,109 +100,9 @@ class pts_test_result_buffer
 
 		return true;
 	}
-	public function buffer_values_to_percent()
-	{
-		// TODO: is this function being used at all anymore?
-		$is_multi_way = pts_render::multi_way_identifier_check($this->get_identifiers());
-
-		if($is_multi_way)
-		{
-			$group_values = array();
-
-			foreach($this->buffer_items as &$buffer_item)
-			{
-				$identifier_r = pts_strings::trim_explode(': ', $buffer_item->get_result_identifier());
-
-				if(!isset($group_values[$identifier_r[1]]))
-				{
-					$group_values[$identifier_r[1]] = 0;
-				}
-
-				$group_values[$identifier_r[1]] += $buffer_item->get_result_value();
-			}
-
-			foreach($this->buffer_items as &$buffer_item)
-			{
-				$identifier_r = pts_strings::trim_explode(': ', $buffer_item->get_result_identifier());
-
-				$percent = pts_math::set_precision(($buffer_item->get_result_value() / $group_values[$identifier_r[1]] * 100), 3);
-				$buffer_item->reset_result_value($percent);
-			}
-		}
-		else
-		{
-			$total_value = array_sum($this->get_values());
-
-			foreach($this->buffer_items as &$buffer_item)
-			{
-				$percent = pts_math::set_precision(($buffer_item->get_result_value() / $total_value * 100), 3);
-				$buffer_item->reset_result_value($percent);
-			}
-		}
-	}
 	public function clear_iqr_outlier_results()
 	{
-		$is_multi_way = pts_render::multi_way_identifier_check($this->get_identifiers());
-
-		if($is_multi_way)
-		{
-			$group_values = array();
-			$group_keys = array();
-
-			foreach($this->buffer_items as $key => &$buffer_item)
-			{
-				$identifier_r = pts_strings::trim_explode(': ', $buffer_item->get_result_identifier());
-
-				if(!isset($group_values[$identifier_r[1]]))
-				{
-					$group_values[$identifier_r[1]] = array();
-					$group_keys[$identifier_r[1]] = array();
-				}
-
-				array_push($group_values[$identifier_r[1]], $buffer_item->get_result_value());
-				array_push($group_keys[$identifier_r[1]], $key);
-			}
-
-			foreach($group_values as $group_key => $values)
-			{
-				// From: http://www.mathwords.com/o/outlier.htm
-				$fqr = pts_math::first_quartile($values);
-				$tqr = pts_math::third_quartile($values);
-				$iqr_cut = ($tqr - $fqr) * 1.5;
-				$bottom_cut = $fqr - $iqr_cut;
-				$top_cut = $tqr + $iqr_cut;
-
-				foreach($group_keys[$group_key] as $key)
-				{
-					$value = $this->buffer_items[$key]->get_result_value();
-
-					if($value > $top_cut || $value < $bottom_cut)
-					{
-						unset($this->buffer_items[$key]);
-					}
-				}
-			}
-		}
-		else
-		{
-			// From: http://www.mathwords.com/o/outlier.htm
-			$values = $this->get_values();
-			$fqr = pts_math::first_quartile($values);
-			$tqr = pts_math::third_quartile($values);
-			$iqr_cut = ($tqr - $fqr) * 1.5;
-			$bottom_cut = $fqr - $iqr_cut;
-			$top_cut = $tqr + $iqr_cut;
-
-			foreach($this->buffer_items as $key => &$buffer_item)
-			{
-				$value = $buffer_item->get_result_value();
-
-				if($value > $top_cut || $value < $bottom_cut)
-				{
-					unset($this->buffer_items[$key]);
-				}
-			}
-		}
+		pts_test_result_buffer_extra::clear_iqr_outlier_results($this);
 	}
 	public function buffer_values_sort()
 	{
