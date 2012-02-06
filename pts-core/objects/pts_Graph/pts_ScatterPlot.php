@@ -75,7 +75,7 @@ class pts_ScatterPlot extends pts_Graph
 			if(($text_height + 4) > $this->i['identifier_width'] && $graph_identifiers_count > 3)
 			{
 				// Show the identifiers as frequently as they will fit
-				$this->show_select_identifiers = ceil(($text_height + 4) / $this->i['identifier_width']);
+				$this->i['display_select_identifiers'] = ceil(($text_height + 4) / $this->i['identifier_width']);
 			}
 		}
 */
@@ -164,9 +164,9 @@ class pts_ScatterPlot extends pts_Graph
 				break;
 			}
 
-			if($this->show_select_identifiers != null && ($i % $this->show_select_identifiers) != 0)
+			if($this->i['display_select_identifiers'] && ($i % $this->i['display_select_identifiers']) != 0)
 			{
-				// $show_select_identifiers contains the value of how frequently to display identifiers
+				// $this->i['display_select_identifiers'] contains the value of how frequently to display identifiers
 				continue;
 			}
 

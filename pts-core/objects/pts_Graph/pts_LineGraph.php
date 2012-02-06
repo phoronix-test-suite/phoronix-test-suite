@@ -23,9 +23,6 @@
 
 class pts_LineGraph extends pts_Graph
 {
-	protected $show_select_identifiers = null;
-	protected $identifiers_active = false;
-
 	public function __construct(&$result_object, &$result_file = null)
 	{
 		parent::__construct($result_object, $result_file);
@@ -36,6 +33,7 @@ class pts_LineGraph extends pts_Graph
 		$this->i['graph_max_value_multiplier'] = 1.38; // make room for the average/peak/low table embedded to the top
 		$this->i['min_identifier_size'] = 6.5;
 		$this->i['plot_overview_text'] = true;
+		this->i['display_select_identifiers'] = false;
 	}
 	protected function render_graph_pre_init()
 	{
@@ -44,7 +42,6 @@ class pts_LineGraph extends pts_Graph
 
 		if($graph_identifiers_count > 1)
 		{
-			$this->identifiers_active = true;
 			$identifier_count = $graph_identifiers_count + 1;
 		}
 		else
@@ -71,7 +68,7 @@ class pts_LineGraph extends pts_Graph
 			if(($text_height + 4) > $this->i['identifier_width'] && $graph_identifiers_count > 3)
 			{
 				// Show the identifiers as frequently as they will fit
-				$this->show_select_identifiers = ceil(($text_height + 4) / $this->i['identifier_width']);
+				$this->i['display_select_identifiers'] = ceil(($text_height + 4) / $this->i['identifier_width']);
 			}
 		}
 	}
@@ -88,9 +85,9 @@ class pts_LineGraph extends pts_Graph
 		{
 			$this->svg_dom->draw_svg_line($this->i['left_start'] + $this->i['identifier_width'], $this->i['graph_top_end'], $this->i['graph_left_end'], $this->i['graph_top_end'], self::$c['color']['notches'], 10, array('stroke-dasharray' => '1,' . ($this->i['identifier_width'] - 1)));
 		}
-		else if($this->show_select_identifiers != null)
+		else if($this->i['display_select_identifiers'])
 		{
-			$this->svg_dom->draw_svg_line($this->i['left_start'] + ($this->i['identifier_width'] * $this->show_select_identifiers), $this->i['graph_top_end'], $this->i['graph_left_end'], $this->i['graph_top_end'], self::$c['color']['notches'], 10, array('stroke-dasharray' => '1,' . (($this->i['identifier_width'] * $this->show_select_identifiers) - 1)));
+			$this->svg_dom->draw_svg_line($this->i['left_start'] + ($this->i['identifier_width'] * $this->i['display_select_identifiers']), $this->i['graph_top_end'], $this->i['graph_left_end'], $this->i['graph_top_end'], self::$c['color']['notches'], 10, array('stroke-dasharray' => '1,' . (($this->i['identifier_width'] * $this->i['display_select_identifiers']) - 1)));
 		}
 
 		foreach(array_keys($this->graph_identifiers) as $i)
@@ -100,13 +97,13 @@ class pts_LineGraph extends pts_Graph
 				break;
 			}
 
-			if($this->show_select_identifiers != null && ($i % $this->show_select_identifiers) != 0)
+			if($this->i['display_select_identifiers'] && ($i % $this->i['display_select_identifiers']) != 0)
 			{
-				// $show_select_identifiers contains the value of how frequently to display identifiers
+				// $this->i['display_select_identifiers'] contains the value of how frequently to display identifiers
 				continue;
 			}
 
-			$px_from_left = $this->i['left_start'] + ($this->i['identifier_width'] * ($i + ($this->identifiers_active ? 1 : 0)));
+			$px_from_left = $this->i['left_start'] + ($this->i['identifier_width'] * ($i + (count($this->graph_identifiers) > 1 ? 1 : 0)));
 
 			if($this->i['identifier_size'] <= $this->i['min_identifier_size'])
 			{
@@ -150,7 +147,7 @@ class pts_LineGraph extends pts_Graph
 				$data_string = isset($this->graph_data_title[$i_o]) ? $this->graph_data_title[$i_o] . ($identifier ? ' @ ' . $identifier : null) . ': ' . $value : null;
 
 				$value_plot_top = $this->i['graph_top_end'] + 1 - ($this->i['graph_max_value'] == 0 ? 0 : round(($value / $this->i['graph_max_value']) * ($this->i['graph_top_end'] - $this->i['top_start'])));
-				$px_from_left = round($this->i['left_start'] + ($this->i['identifier_width'] * ($i + ($this->identifiers_active ? 1 : 0))));
+				$px_from_left = round($this->i['left_start'] + ($this->i['identifier_width'] * ($i + (count($this->graph_identifiers) > 1 ? 1 : 0))));
 
 				if($value > $max_value)
 				{

@@ -28,13 +28,13 @@ class pts_ImageComparisonGraph extends pts_Graph
 		parent::__construct($result_object, $result_file);
 		$this->i['graph_value_type'] = 'ABSTRACT';
 		$this->i['hide_graph_identifiers'] = true;
-		$this->graph_data_title = array("PASSED", "FAILED");
+		$this->graph_data_title = array('PASSED', 'FAILED');
 	}
 	protected function render_graph_pre_init()
 	{
-		if(!function_exists("imagecreatefromstring"))
+		if(!function_exists('imagecreatefromstring'))
 		{
-			echo "\nCurrently you must have PHP-GD installed to utilize this feature.\n";
+			echo PHP_EOL . 'Currently you must have PHP-GD installed to utilize this feature.' . PHP_EOL;
 			return false;
 		}
 
@@ -52,9 +52,9 @@ class pts_ImageComparisonGraph extends pts_Graph
 	}
 	public function renderGraph()
 	{
-		if(!function_exists("imagecreatefromstring"))
+		if(!function_exists('imagecreatefromstring'))
 		{
-			echo "\nCurrently you must have PHP-GD installed to utilize this feature.\n";
+			echo PHP_EOL . 'Currently you must have PHP-GD installed to utilize this feature.' . PHP_EOL;
 			return false;
 		}
 

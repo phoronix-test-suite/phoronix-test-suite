@@ -39,7 +39,6 @@ class pts_HorizontalBoxPlotGraph extends pts_HorizontalBarGraph
 				$avg_value = round(array_sum($this->graph_data[$i_o][$i]) / count($this->graph_data[$i_o][$i]), 2);
 				$max_value = round(max($this->graph_data[$i_o][$i]), 2);
 
-
 				$px_bound_top = $this->i['top_start'] + ($multi_way ? 5 : 0) + ($this->i['identifier_height'] * $i) + ($bar_height * $i_o) + ($separator_height * ($i_o + 1));
 				$px_bound_bottom = $px_bound_top + $bar_height;
 				$middle_of_bar = $px_bound_top + ($bar_height / 2);
