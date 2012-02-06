@@ -67,7 +67,7 @@ class pts_test_result_buffer
 	}
 	public function add_composite_result($force = false)
 	{
-		pts_test_result_buffer_extra::add_composite_result($this, $force)
+		pts_test_result_buffer_extra::add_composite_result($this, $force);
 	}
 	public function auto_shorten_buffer_identifiers($identifier_shorten_index = false)
 	{
