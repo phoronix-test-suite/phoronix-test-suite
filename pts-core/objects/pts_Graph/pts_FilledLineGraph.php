@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2011, Phoronix Media
-	Copyright (C) 2011, Michael Larabel
+	Copyright (C) 2011 - 2012, Phoronix Media
+	Copyright (C) 2011 - 2012, Michael Larabel
 	pts_FilledLineGraph.php: The filled line graph object
 
 	This program is free software; you can redistribute it and/or modify
@@ -63,7 +63,7 @@ class pts_FilledLineGraph extends pts_LineGraph
 				$data_string = isset($this->graph_data_title[$i_o]) ? $this->graph_data_title[$i_o] . ($identifier ? ' @ ' . $identifier : null) . ': ' . $value : null;
 
 				$value_plot_top = $this->i['graph_top_end'] + 1 - ($this->i['graph_max_value'] == 0 ? 0 : round(($value / $this->i['graph_max_value']) * ($this->i['graph_top_end'] - $this->i['top_start'])));
-				$px_from_left = round($this->i['left_start'] + ($this->identifier_width * ($i + 1)));
+				$px_from_left = round($this->i['left_start'] + ($this->i['identifier_width'] * ($i + 1)));
 
 /*
 				if(($i == ($point_counter - 1)) && $value == 0)

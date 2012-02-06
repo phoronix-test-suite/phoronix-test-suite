@@ -23,31 +23,30 @@
 
 class pts_HorizontalBarGraph extends pts_Graph
 {
-	protected $identifier_height = -1;
-
 	public function __construct(&$result_object, &$result_file = null)
 	{
 		parent::__construct($result_object, $result_file);
 		$this->i['iveland_view'] = true;
 		$this->i['graph_orientation'] = 'HORIZONTAL';
+		$this->i['identifier_height'] = -1;
 	}
 	protected function render_graph_pre_init()
 	{
 		// Do some common work to this object
 		$identifier_count = count($this->graph_identifiers);
-		$this->identifier_height = floor(($this->i['graph_top_end'] - $this->i['top_start']) / $identifier_count);
+		$this->i['identifier_height'] = floor(($this->i['graph_top_end'] - $this->i['top_start']) / $identifier_count);
 	}
 	protected function render_graph_identifiers()
 	{
 		$px_from_top_end = $this->i['graph_top_end'] + 5;
 
-		$this->svg_dom->draw_svg_line($this->i['left_start'], $this->i['top_start'] + $this->identifier_height, $this->i['left_start'], $this->i['graph_top_end'] - ($this->i['graph_height'] % $this->identifier_height), self::$c['color']['notches'], 10, array('stroke-dasharray' => 1 . ',' . ($this->identifier_height - 1)));
+		$this->svg_dom->draw_svg_line($this->i['left_start'], $this->i['top_start'] + $this->i['identifier_height'], $this->i['left_start'], $this->i['graph_top_end'] - ($this->i['graph_height'] % $this->i['identifier_height']), self::$c['color']['notches'], 10, array('stroke-dasharray' => 1 . ',' . ($this->i['identifier_height'] - 1)));
 		$multi_way = $this->is_multi_way_comparison && count($this->graph_data) > 1;
-		$middle_of_vert = $this->i['top_start'] + ($multi_way ? 5 : 0) - ($this->identifier_height * 0.5) - 2;
+		$middle_of_vert = $this->i['top_start'] + ($multi_way ? 5 : 0) - ($this->i['identifier_height'] * 0.5) - 2;
 
 		foreach(array_keys($this->graph_identifiers) as $i)
 		{
-			$middle_of_vert += $this->identifier_height;
+			$middle_of_vert += $this->i['identifier_height'];
 
 			if($multi_way)
 			{
@@ -68,7 +67,7 @@ class pts_HorizontalBarGraph extends pts_Graph
 		$bar_count = count($this->graph_data);
 		$separator_height = ($a = (6 - (floor($bar_count / 2) * 2))) > 0 ? $a : 0;
 		$multi_way = $this->is_multi_way_comparison && count($this->graph_data) > 1;
-		$bar_height = floor(($this->identifier_height - ($multi_way ? 4 : 0) - $separator_height - ($bar_count * $separator_height)) / $bar_count);
+		$bar_height = floor(($this->i['identifier_height'] - ($multi_way ? 4 : 0) - $separator_height - ($bar_count * $separator_height)) / $bar_count);
 
 		for($i_o = 0; $i_o < $bar_count; $i_o++)
 		{
@@ -80,7 +79,7 @@ class pts_HorizontalBarGraph extends pts_Graph
 				$graph_size = max(0, round(($value / $this->i['graph_max_value']) * ($this->i['graph_left_end'] - $this->i['left_start'])));
 				$value_end_right = max($this->i['left_start'] + $graph_size, 1);
 
-				$px_bound_top = $this->i['top_start'] + ($multi_way ? 5 : 0) + ($this->identifier_height * $i) + ($bar_height * $i_o) + ($separator_height * ($i_o + 1));
+				$px_bound_top = $this->i['top_start'] + ($multi_way ? 5 : 0) + ($this->i['identifier_height'] * $i) + ($bar_height * $i_o) + ($separator_height * ($i_o + 1));
 				$px_bound_bottom = $px_bound_top + $bar_height;
 				$middle_of_bar = $px_bound_top + ($bar_height / 2);
 

@@ -23,23 +23,22 @@
 
 class pts_PieChart extends pts_Graph
 {
-	private $pie_sum = 0;
-
 	public function __construct(&$result_object, &$result_file = null)
 	{
 		parent::__construct($result_object, $result_file);
 		$this->i['graph_value_type'] = 'ABSTRACT';
 		$this->i['hide_graph_identifiers'] = false;
+		$this->i['identifier_width'] = 0;
 		$this->update_graph_dimensions($this->i['graph_width'], $this->i['graph_height'] + 100);
 	}
 	protected function render_graph_pre_init()
 	{
 		$pie_slices = count($this->graph_identifiers);
-		$this->pie_sum = 0;
+		$this->i['pie_sum'] = 0;
 
 		for($i = 0; $i < $pie_slices; $i++)
 		{
-			$this->pie_sum += $this->graph_data[0][$i];
+			$this->i['pie_sum'] += $this->graph_data[0][$i];
 		}
 
 		if($pie_slices > 8)
@@ -54,7 +53,7 @@ class pts_PieChart extends pts_Graph
 
 		foreach(array_keys($this->graph_identifiers) as $i)
 		{
-			$percent = pts_math::set_precision($this->graph_data[0][$i] / $this->pie_sum * 100, 2);
+			$percent = pts_math::set_precision($this->graph_data[0][$i] / $this->i['pie_sum'] * 100, 2);
 			array_push($key_strings, '[' . $percent . "%]");
 			//array_push($key_strings, '[' . $this->graph_data[0][$i] . ' / ' . $percent . "%]");
 		}
@@ -104,7 +103,7 @@ class pts_PieChart extends pts_Graph
 
 		for($i = 0; $i < $pie_slices; $i++)
 		{
-			$percent = pts_math::set_precision($this->graph_data[0][$i] / $this->pie_sum, 3);
+			$percent = pts_math::set_precision($this->graph_data[0][$i] / $this->i['pie_sum'], 3);
 
 			$this->svg_dom->draw_svg_arc($center_x, $center_y, $radius, $offset_percent, $percent, array('fill' => $this->get_paint_color($i), 'stroke' => self::$c['color']['border'], 'stroke-width' => 2, 'xlink:title' =>  $this->graph_identifiers[$i] . ': ' . $this->graph_data[0][$i]));
 			$offset_percent += $percent;

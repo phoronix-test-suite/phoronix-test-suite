@@ -27,7 +27,7 @@ class pts_HorizontalBoxPlotGraph extends pts_HorizontalBarGraph
 		$bar_count = count($this->graph_data);
 		$separator_height = ($a = (6 - (floor($bar_count / 2) * 2))) > 0 ? $a : 0;
 		$multi_way = $this->is_multi_way_comparison && count($this->graph_data) > 1;
-		$bar_height = floor(($this->identifier_height - ($multi_way ? 4 : 0) - $separator_height - ($bar_count * $separator_height)) / $bar_count);
+		$bar_height = floor(($this->i['identifier_height'] - ($multi_way ? 4 : 0) - $separator_height - ($bar_count * $separator_height)) / $bar_count);
 
 		for($i_o = 0; $i_o < $bar_count; $i_o++)
 		{
@@ -40,7 +40,7 @@ class pts_HorizontalBoxPlotGraph extends pts_HorizontalBarGraph
 				$max_value = round(max($this->graph_data[$i_o][$i]), 2);
 
 
-				$px_bound_top = $this->i['top_start'] + ($multi_way ? 5 : 0) + ($this->identifier_height * $i) + ($bar_height * $i_o) + ($separator_height * ($i_o + 1));
+				$px_bound_top = $this->i['top_start'] + ($multi_way ? 5 : 0) + ($this->i['identifier_height'] * $i) + ($bar_height * $i_o) + ($separator_height * ($i_o + 1));
 				$px_bound_bottom = $px_bound_top + $bar_height;
 				$middle_of_bar = $px_bound_top + ($bar_height / 2);
 

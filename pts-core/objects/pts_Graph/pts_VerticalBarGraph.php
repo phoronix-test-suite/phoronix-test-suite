@@ -23,9 +23,6 @@
 
 class pts_VerticalBarGraph extends pts_Graph
 {
-	protected $identifier_width = -1;
-	protected $minimum_identifier_font = 6;
-
 	public function __construct(&$result_object, &$result_file = null)
 	{
 		parent::__construct($result_object, $result_file);
@@ -34,18 +31,20 @@ class pts_VerticalBarGraph extends pts_Graph
 		{
 			$this->is_multi_way_comparison = $result_file->is_multi_way_comparison();
 		}
+		$this->i['min_identifier_size'] = 6;
+		$this->i['identifier_width'] = -1;
 	}
 	protected function render_graph_pre_init()
 	{
 		// Do some common work to this object
 		$identifier_count = count($this->graph_identifiers);
-		$this->identifier_width = floor(($this->i['graph_left_end'] - $this->i['left_start']) / $identifier_count);
+		$this->i['identifier_width'] = floor(($this->i['graph_left_end'] - $this->i['left_start']) / $identifier_count);
 
 		$longest_string = pts_strings::find_longest_string($this->graph_identifiers);
-		$width = $this->identifier_width - 4;
-		$this->i['identifier_size'] = $this->text_size_bounds($longest_string, $this->i['identifier_size'], $this->minimum_identifier_font, $width);
+		$width = $this->i['identifier_width'] - 4;
+		$this->i['identifier_size'] = $this->text_size_bounds($longest_string, $this->i['identifier_size'], $this->i['min_identifier_size'], $width);
 
-		if($this->i['identifier_size'] <= $this->minimum_identifier_font)
+		if($this->i['identifier_size'] <= $this->i['min_identifier_size'])
 		{
 			$this->update_graph_dimensions($this->i['graph_width'], $this->i['graph_height'] + $this->text_string_width($longest_string, 9));
 		}
@@ -54,21 +53,21 @@ class pts_VerticalBarGraph extends pts_Graph
 	{
 		$px_from_top_end = $this->i['graph_top_end'] + 5;
 
-		$this->svg_dom->draw_svg_line($this->i['left_start'] + $this->identifier_width, $this->i['graph_top_end'], $this->i['graph_left_end'] - ($this->i['graph_width'] % $this->identifier_width), $this->i['graph_top_end'], self::$c['color']['notches'], 10, array('stroke-dasharray' => '1,' . ($this->identifier_width - 1)));
+		$this->svg_dom->draw_svg_line($this->i['left_start'] + $this->i['identifier_width'], $this->i['graph_top_end'], $this->i['graph_left_end'] - ($this->i['graph_width'] % $this->i['identifier_width']), $this->i['graph_top_end'], self::$c['color']['notches'], 10, array('stroke-dasharray' => '1,' . ($this->i['identifier_width'] - 1)));
 
 		foreach(array_keys($this->graph_identifiers) as $i)
 		{
-			$px_bound_left = $this->i['left_start'] + ($this->identifier_width * $i);
-			$px_bound_right = $px_bound_left + $this->identifier_width;
+			$px_bound_left = $this->i['left_start'] + ($this->i['identifier_width'] * $i);
+			$px_bound_right = $px_bound_left + $this->i['identifier_width'];
 
 			if($i == (count($this->graph_identifiers) - 1) && $px_bound_right != $this->i['graph_left_end'])
 			{
 				$px_bound_right = $this->i['graph_left_end'];
 			}
 
-			if($this->i['identifier_size'] <= $this->minimum_identifier_font)
+			if($this->i['identifier_size'] <= $this->i['min_identifier_size'])
 			{
-				$x = $px_bound_left + ceil($this->identifier_width / 2);
+				$x = $px_bound_left + ceil($this->i['identifier_width'] / 2);
 				$this->svg_dom->add_text_element($this->graph_identifiers[$i], array('x' => $x, 'y' => $px_from_top_end, 'font-size' => 9, 'fill' => self::$c['color']['headers'], 'text-anchor' => 'start', 'dominant-baseline' => 'middle', 'transform' => 'rotate(90 ' . $x . ' ' . $px_from_top_end . ')'));
 			}
 			else
@@ -82,7 +81,7 @@ class pts_VerticalBarGraph extends pts_Graph
 	{
 		$bar_count = count($this->graph_data);
 		$separator_width = ($a = (8 - (floor($bar_count / 2) * 2))) > 0 ? $a : 0;
-		$bar_width = floor(($this->identifier_width - $separator_width - ($bar_count * $separator_width)) / $bar_count);
+		$bar_width = floor(($this->i['identifier_width'] - $separator_width - ($bar_count * $separator_width)) / $bar_count);
 
 		for($i_o = 0; $i_o < $bar_count; $i_o++)
 		{
@@ -94,7 +93,7 @@ class pts_VerticalBarGraph extends pts_Graph
 				$graph_size = round(($value / $this->i['graph_max_value']) * ($this->i['graph_top_end'] - $this->i['top_start']));
 				$value_plot_top = max($this->i['graph_top_end'] + 1 - $graph_size, 1);
 
-				$px_bound_left = $this->i['left_start'] + ($this->identifier_width * $i) + ($bar_width * $i_o) + ($separator_width * ($i_o + 1));
+				$px_bound_left = $this->i['left_start'] + ($this->i['identifier_width'] * $i) + ($bar_width * $i_o) + ($separator_width * ($i_o + 1));
 				$px_bound_right = $px_bound_left + $bar_width;
 
 				$title_tooltip = $this->graph_identifiers[$i] . ': ' . $value;

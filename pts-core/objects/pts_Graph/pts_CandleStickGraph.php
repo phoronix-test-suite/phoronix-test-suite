@@ -30,7 +30,7 @@ class pts_CandleStickGraph extends pts_VerticalBarGraph
 	protected function render_graph_candle_sticks()
 	{
 		$bar_count = count($this->graph_data_raw);
-		$bar_width = floor($this->identifier_width / $bar_count) - ($bar_count * 16);
+		$bar_width = floor($this->i['identifier_width'] / $bar_count) - ($bar_count * 16);
 
 		for($i_o = 0; $i_o < $bar_count; $i_o++)
 		{
@@ -47,7 +47,7 @@ class pts_CandleStickGraph extends pts_VerticalBarGraph
 				$low_value = $run_values_r[0];
 				$high_value = $run_values_r[(count($run_values_r) - 1)];
 
-				$px_bound_left = $this->i['left_start'] + ($this->identifier_width * $i) + ($bar_width * $i_o) + 8;
+				$px_bound_left = $this->i['left_start'] + ($this->i['identifier_width'] * $i) + ($bar_width * $i_o) + 8;
 				$px_bound_center = $px_bound_left + round($bar_width / 2);
 
 				$top_diff = $this->i['graph_top_end'] - $this->i['top_start'];
