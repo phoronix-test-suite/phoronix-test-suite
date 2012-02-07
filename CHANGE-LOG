@@ -11,6 +11,7 @@ Phoronix Test Suite (Git)
 - phodevi: Detection support for Microsoft Hyper-V virtualization server
 - phodevi: Detection support for Parallels Virtualization
 - phodevi: Better VMware DDX driver detection when using vmwgfx
+- phodevi: Support for detecting VirtualBox version using vboxguest kernel module information
 - pts_Graph: Rendering corrections of SVG DOM IR
 
 Phoronix Test Suite 3.8 Milestone 1

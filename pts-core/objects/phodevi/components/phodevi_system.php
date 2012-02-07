@@ -384,6 +384,15 @@ class phodevi_system extends phodevi_device_interface
 					$virtualized .= ' ' . $vbox_manage;
 				}
 			}
+			else if($modinfo = pts_client::executable_in_path('modinfo'))
+			{
+				$modinfo = trim(shell_exec('modinfo -F version vboxguest 2> /dev/null'));
+
+				if($modinfo != null && pts_strings::is_version($modinfo))
+				{
+					$virtualized .= ' ' . $modinfo;
+				}
+			}
 
 		}
 		else if(is_file('/sys/class/dmi/id/sys_vendor') && pts_file_io::file_get_contents('/sys/class/dmi/id/sys_vendor') == 'Xen')
