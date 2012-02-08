@@ -469,6 +469,12 @@ class phodevi_system extends phodevi_device_interface
 			}
 		}
 
+		if(pts_client::executable_in_path('pgcpp') || pts_client::executable_in_path('pgCC'))
+		{
+			// The Portland Group Compilers
+			$compilers['pgcpp'] = 'PGI C-C++ Workstation';
+		}
+
 		if(pts_client::executable_in_path('clang'))
 		{
 			// Clang
