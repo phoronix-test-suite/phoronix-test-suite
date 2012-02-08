@@ -33,7 +33,7 @@ class pts_LineGraph extends pts_Graph
 		$this->i['graph_max_value_multiplier'] = 1.38; // make room for the average/peak/low table embedded to the top
 		$this->i['min_identifier_size'] = 6.5;
 		$this->i['plot_overview_text'] = true;
-		this->i['display_select_identifiers'] = false;
+		$this->i['display_select_identifiers'] = false;
 	}
 	protected function render_graph_pre_init()
 	{
