@@ -1107,18 +1107,18 @@ class phodevi_system extends phodevi_device_interface
 			$info = phodevi_parser::read_nvidia_extension('OpenGLVersion');
 		}
 
-		if($info == null && pts_client::executable_in_path('glxinfo'))
+		if($info == null)
 		{
 			$info = phodevi_parser::software_glxinfo_version();
 
-			if(($pos = strpos($info, ' ')) != false && strpos($info, 'Mesa') === false)
+			if($info && ($pos = strpos($info, ' ')) != false && strpos($info, 'Mesa') === false)
 			{
 				$info = substr($info, 0, $pos);
 			}
 
 			$renderer = phodevi_parser::read_glx_renderer();
 
-			if(($s = strpos($renderer, 'Gallium')) !== false)
+			if($renderer && ($s = strpos($renderer, 'Gallium')) !== false)
 			{
 				$renderer = substr($renderer, $s);
 				$renderer = substr($renderer, 0, strpos($renderer, ' ', strpos($renderer, '.')));

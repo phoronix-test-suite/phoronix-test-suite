@@ -84,7 +84,7 @@ class phodevi_parser
 		}
 		else
 		{
-			return null;
+			return false;
 		}
 
 		if(($pos = strpos($info, 'OpenGL renderer string:')) !== false)
@@ -94,12 +94,12 @@ class phodevi_parser
 		}
 		else
 		{
-			$info = null;
+			$info = false;
 		}
 
 		if($info == 'Software Rasterizer')
 		{
-			$info = null;
+			$info = false;
 		}
 
 		return $info;
@@ -209,7 +209,7 @@ class phodevi_parser
 
 		if($info == -1)
 		{
-			$info = null;
+			$info = false;
 			if(pts_client::executable_in_path('glxinfo'))
 			{
 				$glxinfo = shell_exec('glxinfo 2> /dev/null');
