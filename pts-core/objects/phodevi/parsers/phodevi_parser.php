@@ -97,7 +97,7 @@ class phodevi_parser
 			$info = false;
 		}
 
-		if($info == 'Software Rasterizer')
+		if(stripos($info, 'Software Rasterizer') !== false)
 		{
 			$info = false;
 		}
