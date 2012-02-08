@@ -74,9 +74,20 @@ class phodevi_parser
 	}
 	public static function read_glx_renderer()
 	{
-		$info = pts_client::executable_in_path('glxinfo') != false ? shell_exec('glxinfo 2>&1 | grep renderer') : null;
+		if(pts_client::executable_in_path('glxinfo'))
+		{
+			$info = shell_exec('glxinfo 2>&1');
+		}
+		else if(pts_client::executable_in_path('fglrxinfo'))
+		{
+			$info = shell_exec('fglrxinfo 2>&1');
+		}
+		else
+		{
+			return null;
+		}
 
-		if(($pos = strpos($info, 'renderer string:')) > 0)
+		if(($pos = strpos($info, 'OpenGL renderer string:')) !== false)
 		{
 			$info = substr($info, $pos + 16);
 			$info = trim(substr($info, 0, strpos($info, "\n")));
@@ -199,7 +210,14 @@ class phodevi_parser
 		if($info == -1)
 		{
 			$info = null;
-			$glxinfo = shell_exec('glxinfo 2> /dev/null');
+			if(pts_client::executable_in_path('glxinfo'))
+			{
+				$glxinfo = shell_exec('glxinfo 2> /dev/null');
+			}
+			else if(pts_client::executable_in_path('fglrxinfo'))
+			{
+				$glxinfo = shell_exec('fglrxinfo 2> /dev/null');
+			}
 
 			if(($pos = strpos($glxinfo, 'OpenGL version string:')) !== false)
 			{
