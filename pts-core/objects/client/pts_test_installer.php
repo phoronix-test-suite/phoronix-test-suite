@@ -731,6 +731,7 @@ class pts_test_installer
 		}
 
 		pts_file_io::symlink(pts_client::user_home_directory() . '.Xauthority', $test_install_request->test_profile->get_install_dir() . '.Xauthority');
+		pts_file_io::symlink(pts_client::user_home_directory() . '.drirc', $test_install_request->test_profile->get_install_dir() . '.drirc');
 	}
 }
 

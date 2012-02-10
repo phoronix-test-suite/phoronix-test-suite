@@ -6,6 +6,7 @@ Phoronix Test Suite (Git)
 - pts-core: Fix test profile / test suite identifier base name parsing on version handling
 - pts-core: Add cairo-development as an external dependency for Cairo drawing library development
 - pts-core: Initial support for compiler masking / compiler option intercepting on test installation
+- pts-core: Support symlinked ~/.drirc to test install directories
 - phodevi: Better recognition of Samsung disk drives
 - phodevi: NVIDIA CUDA (nvcc) detection and report it to system information compiler area
 - phodevi: Detection support for Microsoft Hyper-V virtualization server
