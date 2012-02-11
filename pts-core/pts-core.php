@@ -21,8 +21,8 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-define('PTS_VERSION', '3.8.0m1');
-define('PTS_CORE_VERSION', 3710);
+define('PTS_VERSION', '3.8.0m2');
+define('PTS_CORE_VERSION', 3719);
 define('PTS_CODENAME', 'BYGLAND');
 define('PTS_IS_CLIENT', (defined('PTS_MODE') && PTS_MODE == 'CLIENT'));
 define('PTS_IS_DEV_BUILD', (substr(PTS_VERSION, -2, 1) == 'm'));
