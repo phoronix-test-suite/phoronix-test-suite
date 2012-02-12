@@ -305,7 +305,7 @@ abstract class pts_Graph
 
 		while($font_size > $minimum_font_size && $string_width > $bound_width || ($bound_height > 0 && $string_height > $bound_height))
 		{
-			$font_size -= 0.2;
+			$font_size -= 0.3;
 			list($string_width, $string_height) = pts_svg_dom::estimate_text_dimensions($string, $font_size);
 		}
 
@@ -554,7 +554,7 @@ abstract class pts_Graph
 			$this->svg_dom->add_element('rect', array('x' => 0, 'y' => $bottom_heading_start, 'width' => $this->i['graph_width'], 'height' => ($this->i['graph_height'] - $bottom_heading_start), 'fill' => self::$c['color']['main_headers']));
 			$this->svg_dom->add_text_element('Powered By ' . $this->i['graph_version'], array('x' => $this->i['graph_left_end'], 'y' => ($bottom_heading_start + 9), 'font-size' => 7, 'fill' => self::$c['color']['background'], 'text-anchor' => 'end', 'dominant-baseline' => 'middle', 'xlink:show' => 'new', 'xlink:href' => 'http://www.phoronix-test-suite.com/'));
 
-			if($this->link_alternate_view != null)
+			if($this->link_alternate_view)
 			{
 				// offer link of image to $this->link_alternate_view
 				$this->svg_dom->add_element('image', array('xlink:href' => 'http://openbenchmarking.org/ob-10x16.png', 'x' => 4, 'y' => ($bottom_heading_start + 1), 'width' => 10, 'height' => 16));
@@ -621,9 +621,9 @@ abstract class pts_Graph
 						break;
 				}
 
-				if($proportion != null)
+				if($proportion)
 				{
-					if(!empty($str))
+					if($str)
 					{
 						$str .= ', ';
 					}

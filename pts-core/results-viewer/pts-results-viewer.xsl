@@ -3,8 +3,8 @@
 
 Phoronix Test Suite
 URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-Copyright (C) 2008 - 2011, Phoronix Media
-Copyright (C) 2008 - 2011, Michael Larabel
+Copyright (C) 2008 - 2012, Phoronix Media
+Copyright (C) 2008 - 2012, Michael Larabel
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -68,7 +68,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 			</xsl:for-each>
 		</div>
 
-		<div id="pts_copyright_area">Copyright &#xA9; 2008 - 2011 by <a href="http://www.phoronix-media.com/">Phoronix Media</a>.</div>
+		<div id="pts_copyright_area">Copyright &#xA9; 2008 - 2012 by <a href="http://www.phoronix-media.com/">Phoronix Media</a>.</div>
 		</div>
 		<div id="pts_header_bottom">
 			<div class="pts_header_center">
