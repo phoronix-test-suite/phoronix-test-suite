@@ -474,55 +474,44 @@ class pts_test_run_manager
 			}
 			while(time() < $loop_end_time && $test_flag);
 		}
-		else if(($total_loop_count = pts_client::read_env('TOTAL_LOOP_COUNT')) && is_numeric($total_loop_count))
+		else
 		{
-			if(($estimated_length = $this->get_estimated_run_time()) > 1)
+			if(($t = pts_client::read_env('TOTAL_LOOP_COUNT')) && is_numeric($t) && $t > 0)
 			{
-				pts_client::$display->generic_heading('Estimated Run-Time: ' . pts_strings::format_time(($estimated_length * $total_loop_count), 'SECONDS', true, 60));
+				$total_loop_count = $t;
+			}
+			else
+			{
+				$total_loop_count = 1;
 			}
 
-			$this->test_run_count = ($total_loop_count * $tests_to_run_count);
+			$this->test_run_count = ($tests_to_run_count * $total_loop_count);
 
-			for($loop = 0; $loop < $total_loop_count && $test_flag; $loop++)
+			for($loop = 1; $loop <= $total_loop_count && $test_flag; $loop++)
 			{
 				for($i = 0; $i < $tests_to_run_count && $test_flag; $i++)
 				{
-					$this->test_run_pos = ($loop * $tests_to_run_count + $i);
+					$this->test_run_pos = $i;
 					$test_flag = $this->process_test_run_request($i);
-				}
-			}
-		}
-		else
-		{
-			if(($estimated_length = $this->get_estimated_run_time()) > 1)
-			{
-				pts_client::$display->generic_heading('Estimated Run-Time: ' . pts_strings::format_time($estimated_length, 'SECONDS', true, 60));
-			}
 
-			$this->test_run_count = $tests_to_run_count;
-
-			for($i = 0; $i < $tests_to_run_count && $test_flag; $i++)
-			{
-				$this->test_run_pos = $i;
-				$test_flag = $this->process_test_run_request($i);
-
-				if(pts_flags::remove_test_on_completion())
-				{
-					// Remove the installed test if it's no longer needed in this run queue
-					$this_test_profile_identifier = $this->get_test_to_run($this->test_run_pos)->test_profile->get_identifier();
-					$still_in_queue = false;
-
-					for($j = ($this->test_run_pos + 1); $j < $tests_to_run_count && $still_in_queue == false; $j++)
+					if(pts_flags::remove_test_on_completion())
 					{
-						if($this->get_test_to_run($j)->test_profile->get_identifier() == $this_test_profile_identifier)
+						// Remove the installed test if it's no longer needed in this run queue
+						$this_test_profile_identifier = $this->get_test_to_run($this->test_run_pos)->test_profile->get_identifier();
+						$still_in_queue = false;
+
+						for($j = ($this->test_run_pos + 1); $j < $tests_to_run_count && $still_in_queue == false; $j++)
 						{
-							$still_in_queue = true;
+							if($this->get_test_to_run($j)->test_profile->get_identifier() == $this_test_profile_identifier)
+							{
+								$still_in_queue = true;
+							}
 						}
-					}
 
-					if($still_in_queue == false)
-					{
-						pts_client::remove_installed_test($this->get_test_to_run($this->test_run_pos)->test_profile);
+						if($still_in_queue == false)
+						{
+							pts_client::remove_installed_test($this->get_test_to_run($this->test_run_pos)->test_profile);
+						}
 					}
 				}
 			}

@@ -141,9 +141,10 @@ class pts_Table extends pts_Graph
 			$identifier_height += 6 + $extra_heading_height;
 		}
 
+		$this->i['top_heading_height'] = 8;
 		if($this->graph_title != null)
 		{
-			$this->i['top_heading_height'] = 8 + self::$c['size']['headers'] + (count($this->graph_sub_titles) * (self::$c['size']['sub_headers'] + 4));
+			$this->i['top_heading_height'] += self::$c['size']['headers'] + (count($this->graph_sub_titles) * (self::$c['size']['sub_headers'] + 4));
 		}
 
 		$table_max_value_width = $this->text_string_width($this->i['graph_max_value'], $this->i['identifier_size']);
