@@ -41,11 +41,14 @@ class pts_openbenchmarking_client
 		}
 
 		// Validate the XML
+		// Rely upon server-side validation in case of additions to the spec later on as might be a problem with the JSON addition
+		/*
 		if($result_file->xml_parser->validate() == false)
 		{
 			echo PHP_EOL . 'Errors occurred parsing the result file XML.' . PHP_EOL;
 			return false;
 		}
+		*/
 
 		// Ensure the results can be shared
 		if(self::result_upload_supported($result_file) == false)
