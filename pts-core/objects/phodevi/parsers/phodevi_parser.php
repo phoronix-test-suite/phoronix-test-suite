@@ -89,7 +89,7 @@ class phodevi_parser
 
 		if(($pos = strpos($info, 'OpenGL renderer string:')) !== false)
 		{
-			$info = substr($info, $pos + 16);
+			$info = substr($info, $pos + 24);
 			$info = trim(substr($info, 0, strpos($info, "\n")));
 		}
 		else
