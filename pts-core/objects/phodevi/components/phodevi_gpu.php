@@ -963,6 +963,10 @@ class phodevi_gpu extends phodevi_device_interface
 	
 		if(empty($info) || strpos($info, 'Mesa ') !== false || strpos($info, 'Gallium ') !== false)
 		{
+			if(phodevi::is_macosx())
+			{
+				$info = phodevi_osx_parser::read_osx_system_profiler('SPDisplaysDataType', 'ChipsetModel');
+			}
 			if(phodevi::is_windows() == false)
 			{
 				$info_pci = phodevi_linux_parser::read_pci('VGA compatible controller', false);

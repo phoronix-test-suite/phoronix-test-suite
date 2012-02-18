@@ -573,6 +573,17 @@ class phodevi_system extends phodevi_device_interface
 			$compilers['icc'] = 'ICC';
 		}
 
+		if(phodevi::is_macosx() && pts_client::executable_in_path('xcodebuild'))
+		{
+			$xcode = phodevi_osx_parser::read_osx_system_profiler('SPDeveloperToolsDataType', 'Xcode');
+			$xcode = substr($xcode, 0, strpos($xcode, ' '));
+
+			if($xcode)
+			{
+				$compilers['Xcode'] = 'Xcode ' . $xcode;
+			}
+		}
+
 		if(pts_client::executable_in_path('nvcc'))
 		{
 			// NVIDIA CUDA Compiler Driver

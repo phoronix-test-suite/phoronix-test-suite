@@ -219,7 +219,7 @@ class phodevi_parser
 				$glxinfo = shell_exec('fglrxinfo 2> /dev/null');
 			}
 
-			if(($pos = strpos($glxinfo, 'OpenGL version string:')) !== false)
+			if(isset($glxinfo) && ($pos = strpos($glxinfo, 'OpenGL version string:')) !== false)
 			{
 				$info = substr($glxinfo, $pos + 23);
 				$info = substr($info, 0, strpos($info, "\n"));

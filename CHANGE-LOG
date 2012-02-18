@@ -14,6 +14,7 @@ Phoronix Test Suite (Git)
 - phodevi: Better VMware DDX driver detection when using vmwgfx
 - phodevi: Support for detecting VirtualBox version using vboxguest kernel module information
 - phodevi: Support for detecting Portland Group (PGI) Workstation compilers
+- phodevi: Validation against Mac OS X 10.8 Developer Preview 1
 - pts_Graph: Rendering corrections of SVG DOM IR
 
 Phoronix Test Suite 3.8 Milestone 1
