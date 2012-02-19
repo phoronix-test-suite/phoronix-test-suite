@@ -1311,7 +1311,7 @@ class pts_client
 			$pci_prev = $pso->read_object('global_reported_pci');
 			$pso->add_object('global_reported_pci', $pci);
 
-			if(is_array($pci_prev) && !empty($pci_prev))
+			if(!empty($pci_prev) && is_array($pci_prev) && is_array($pci))
 			{
 				$pci = array_diff($pci, $pci_prev);
 			}
@@ -1326,7 +1326,7 @@ class pts_client
 			$usb_prev = $pso->read_object('global_reported_usb');
 			$pso->add_object('global_reported_usb', $usb);
 
-			if(is_array($usb_prev) && !empty($usb_prev))
+			if(!empty($usb_prev) && is_array($usb_prev) && is_array($usb))
 			{
 				$usb = array_diff($usb, $usb_prev);
 			}
