@@ -244,8 +244,13 @@ class phodevi_disk extends phodevi_device_interface
 				case 'MK':
 					$disk_manufacturer = 'Toshiba';
 					break;
+				case 'HD':
+					if($third_char == 'T')
+					{
+						$disk_manufacturer = 'Hitachi';
+					}
+					break;
 				case 'HT':
-					// 'HD' might be some Hitachi disk drives, but that prefix seems too common
 					$disk_manufacturer = 'Hitachi';
 					break;
 				case 'HM':
