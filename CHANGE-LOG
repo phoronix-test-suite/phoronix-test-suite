@@ -7,6 +7,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add cairo-development as an external dependency for Cairo drawing library development
 - pts-core: Initial support for compiler masking / compiler option intercepting on test installation
 - pts-core: Support symlinked ~/.drirc to test install directories
+- pts-core: Support for Mac OS X 10.8 "Mountain Lion" Developer Preview 1
 - phodevi: Better recognition of Samsung disk drives
 - phodevi: NVIDIA CUDA (nvcc) detection and report it to system information compiler area
 - phodevi: Detection support for Microsoft Hyper-V virtualization server
@@ -14,7 +15,7 @@ Phoronix Test Suite (Git)
 - phodevi: Better VMware DDX driver detection when using vmwgfx
 - phodevi: Support for detecting VirtualBox version using vboxguest kernel module information
 - phodevi: Support for detecting Portland Group (PGI) Workstation compilers
-- phodevi: Validation against Mac OS X 10.8 Developer Preview 1
+- phodevi: Support for Mac OS X 10.8 "Mountain Lion" Developer Preview 1
 - pts_Graph: Rendering corrections of SVG DOM IR
 
 Phoronix Test Suite 3.8 Milestone 1

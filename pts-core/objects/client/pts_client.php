@@ -1482,7 +1482,7 @@ class pts_client
 	}
 	public static function display_web_page($URL, $alt_text = null, $default_open = false, $auto_open = false)
 	{
-		if(((pts_c::$test_flags & pts_c::auto_mode) && $auto_open == false && $default_open == false) || (pts_client::read_env('DISPLAY') == false && phodevi::is_windows() == false))
+		if(((pts_c::$test_flags & pts_c::auto_mode) && $auto_open == false && $default_open == false) || (pts_client::read_env('DISPLAY') == false && phodevi::is_windows() == false && phodevi::is_macosx() == false))
 		{
 			return;
 		}
