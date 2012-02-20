@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 3.8 Milestone 2
+20 February 2012
 
 - pts-core: Allow up to 1MB of system log files to be attached and uploaded to OpenBenchmarking.org
 - pts-core: Fix test profile / test suite identifier base name parsing on version handling
