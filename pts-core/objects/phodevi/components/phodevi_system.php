@@ -601,9 +601,9 @@ class phodevi_system extends phodevi_device_interface
 		}
 
 		// Try to make the compiler that's used by default to appear first
-		if(pts_client::read_env('CC') && isset($compilers[basename(pts_client::read_env('CC'))]))
+		if(pts_client::read_env('CC') && isset($compilers[basename(pts_strings::first_in_string(pts_client::read_env('CC'), ' '))]))
 		{
-			$cc_env = basename(pts_client::read_env('CC'));
+			$cc_env = basename(pts_strings::first_in_string(pts_client::read_env('CC'), ' '));
 			$default_compiler = $compilers[$cc_env];
 			unset($compilers[$cc_env]);
 			array_unshift($compilers, $default_compiler);

@@ -377,13 +377,13 @@ class pts_test_installer
 		if(in_array('build-utilities', $test_install_request->test_profile->get_dependencies()))
 		{
 			// Handle C/C++ compilers for this external dependency
-			$compilers['CC'] = array(getenv('CC'), 'gcc', 'clang', 'icc', 'pcc');
-			$compilers['CXX'] = array(getenv('CXX'), 'g++', 'clang++');
+			$compilers['CC'] = array(pts_strings::first_in_string(pts_client::read_env('CC'), ' '), 'gcc', 'clang', 'icc', 'pcc');
+			$compilers['CXX'] = array(pts_strings::first_in_string(pts_client::read_env('CXX'), ' '), 'g++', 'clang++');
 		}
 		if(in_array('fortran-compiler', $test_install_request->test_profile->get_dependencies()))
 		{
 			// Handle Fortran for this external dependency
-			$compilers['F9X'] = array(getenv('F9X'), getenv('F95'), 'gfortran', 'f95', 'fortran');
+			$compilers['F9X'] = array(pts_strings::first_in_string(pts_client::read_env('F9X'), ' '), pts_strings::first_in_string(pts_client::read_env('F95'), ' '), 'gfortran', 'f95', 'fortran');
 		}
 
 		if(empty($compilers))
@@ -399,7 +399,7 @@ class pts_test_installer
 			foreach($possible_compilers as $i => $possible_compiler)
 			{
 				// first check to ensure not null sent to executable_in_path from env variable
-				if($possible_compiler && ($compiler_path = pts_client::executable_in_path($possible_compiler)))
+				if($possible_compiler && (($compiler_path = is_executable($possible_compiler)) || ($compiler_path = pts_client::executable_in_path($possible_compiler))))
 				{
 					// Replace the array of possible compilers with a string to the detected compiler executable
 					$compilers[$compiler_type] = $compiler_path;

@@ -50,7 +50,7 @@
 		<Package>
 			<GenericName>xorg-development</GenericName>
 			<PackageName>xorg-dev</PackageName>
-			<FileCheck>/usr/share/doc/xserver-xorg-dev, /usr/lib/libXmu.so, /usr/lib/libXmuu.so</FileCheck>
+			<FileCheck>/usr/share/doc/xserver-xorg-dev, /usr/include/xorg</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>bison</GenericName>
