@@ -178,12 +178,25 @@ class pts_test_installer
 
 		foreach($test_install_request->get_download_objects() as $download_package)
 		{
-			// Attempt a possible last-minute look-aside copy cache in case a previous test in the install queue downloaded this file already
-
 			$package_filename = $download_package->get_filename();
 			$package_md5 = $download_package->get_md5();
 			$download_destination = $download_location . $package_filename;
 			$download_destination_temp = $download_destination . '.pts';
+
+			if($download_package->get_download_location_type() == null)
+			{
+				// Attempt a possible last-minute look-aside copy cache in case a previous test in the install queue downloaded this file already
+				$lookaside_copy = pts_test_install_manager::file_lookaside_test_installations($package_filename, $package_md5);
+				if($lookaside_copy)
+				{
+					if($download_package->get_filesize() == 0)
+					{
+						$download_package->set_filesize(filesize($lookaside_copy));
+					}
+
+					$download_package->set_download_location('LOOKASIDE_DOWNLOAD_CACHE', array($lookaside_copy));
+				}
+			}
 
 			switch($download_package->get_download_location_type())
 			{
@@ -209,12 +222,12 @@ class pts_test_installer
 					}
 				case 'MAIN_DOWNLOAD_CACHE':
 				case 'LOCAL_DOWNLOAD_CACHE':
-				case 'LOOKASIDE_COPY':
+				case 'LOOKASIDE_DOWNLOAD_CACHE':
 					$download_cache_file = pts_arrays::last_element($download_package->get_download_location_path());
 
 					if(is_file($download_cache_file))
 					{
-						if((pts_config::read_bool_config('PhoronixTestSuite/Options/Installation/SymLinkFilesFromCache', 'FALSE') && $download_package->get_download_location_type() != 'LOOKASIDE_COPY') || pts_flags::is_live_cd())
+						if((pts_config::read_bool_config('PhoronixTestSuite/Options/Installation/SymLinkFilesFromCache', 'FALSE') && $download_package->get_download_location_type() != 'LOOKASIDE_DOWNLOAD_CACHE') || pts_flags::is_live_cd())
 						{
 							// For look-aside copies never symlink (unless a pre-packaged LiveCD) in case the other test ends up being un-installed
 							// SymLinkFilesFromCache is disabled by default

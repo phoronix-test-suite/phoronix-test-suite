@@ -184,8 +184,7 @@ class pts_test_install_request
 						$download_package->set_filesize(filesize($lookaside_copy));
 					}
 
-					$download_package->set_download_location('LOOKASIDE_COPY', array($lookaside_copy));
-					break;
+					$download_package->set_download_location('LOOKASIDE_DOWNLOAD_CACHE', array($lookaside_copy));
 				}
 
 				// If still not found, check remote download caches
