@@ -99,7 +99,7 @@ class pts_test_file_download
 		// IN_DESTINATION_DIR == already good, in the destination directory already, was previously downloaded
 		// LOCAL_DOWNLOAD_CACHE == In a local download cache, can be copied, etc
 		// REMOTE_DOWNLOAD_CACHE == In a remote download cache for download
-		// LOOKASIDE_DOWNLOAD_CACHE == In another test installation directory
+		// LOOKASIDE_COPY == In another test installation directory
 
 		$this->download_location_type = $location_type;
 		$this->download_location_path = $location_path;
