@@ -174,6 +174,22 @@ class pts_test_install_request
 					}
 				}
 
+				// Look-aside download cache
+				foreach(pts_file_io::glob(pts_client::test_install_root_path() . '*/*/' . $package_filename) as $possible_package_match)
+				{
+					// Check to see if the same package name with the same package check-sum is already present in another test installation
+					if(pts_test_installer::validate_md5_download_file($possible_package_match, $package_md5))
+					{
+						if($download_package->get_filesize() == 0)
+						{
+							$download_package->set_filesize(filesize($possible_package_match));
+						}
+
+						$download_package->set_download_location('LOOKASIDE_DOWNLOAD_CACHE', array($possible_package_match));
+						break;
+					}
+				}
+
 				// If still not found, check remote download caches
 				if($download_package->get_download_location_type() == null)
 				{

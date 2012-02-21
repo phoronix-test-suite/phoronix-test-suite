@@ -20,6 +20,8 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+// TODO XXX: some of these functions may be better optimized using the ctype functions: http://us.php.net/manual/en/ref.ctype.php
+
 class pts_strings
 {
 	const CHAR_LETTER = 2;

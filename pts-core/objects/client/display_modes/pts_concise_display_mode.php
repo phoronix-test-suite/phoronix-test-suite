@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2011, Phoronix Media
-	Copyright (C) 2009 - 2011, Michael Larabel
+	Copyright (C) 2009 - 2012, Phoronix Media
+	Copyright (C) 2009 - 2012, Michael Larabel
 	pts_concise_display_mode.php: The batch / concise display mode
 
 	This program is free software; you can redistribute it and/or modify
@@ -72,6 +72,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 						break;
 					case 'LOCAL_DOWNLOAD_CACHE':
 					case 'REMOTE_DOWNLOAD_CACHE':
+					case 'LOOKASIDE_DOWNLOAD_CACHE':
 						$cache_size += $test_file_download->get_filesize();
 						$cache_total++;
 						break;

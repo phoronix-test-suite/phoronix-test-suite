@@ -207,6 +207,7 @@ class pts_test_installer
 					}
 				case 'MAIN_DOWNLOAD_CACHE':
 				case 'LOCAL_DOWNLOAD_CACHE':
+				case 'LOOKASIDE_DOWNLOAD_CACHE':
 					$download_cache_file = pts_arrays::last_element($download_package->get_download_location_path());
 
 					if(is_file($download_cache_file))

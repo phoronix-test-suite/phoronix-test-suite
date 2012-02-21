@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+- pts-core: Introduce a look-aside download cache that automatically checks other existing test installations for needed files
 - pts-core: Attempt to detect when any test ends prematurely with an invalid result
 - phodevi: Fix for Linux memory module count decoding in niche cases on multi-socket systems
 - graphics_event_checker: Rewrite of the graphics event checker and enable by default
