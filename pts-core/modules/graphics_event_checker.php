@@ -108,6 +108,8 @@ class graphics_event_checker extends pts_module_interface
 
 		//	echo '\nThe video resolution had changed during testing and it was not properly reset! Now resetting to $reset_width x $reset_height from $video_width x $video_height.\n';
 			phodevi::set_property('gpu', 'screen-resolution', array($reset_width, $reset_height));
+			// Sleep for three seconds to allow time for display to settle after mode-set
+			sleep(3);
 		}
 
 		if(phodevi::is_nvidia_graphics())
