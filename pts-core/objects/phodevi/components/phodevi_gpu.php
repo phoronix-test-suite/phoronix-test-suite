@@ -55,10 +55,10 @@ class phodevi_gpu extends phodevi_device_interface
 				$property = new phodevi_device_property('gpu_available_modes', phodevi::smart_caching);
 				break;
 			case 'screen-resolution':
-				$property = new phodevi_device_property('gpu_screen_resolution', phodevi::smart_caching);
+				$property = new phodevi_device_property('gpu_screen_resolution', phodevi::std_caching);
 				break;
 			case 'screen-resolution-string':
-				$property = new phodevi_device_property('gpu_screen_resolution_string', phodevi::smart_caching);
+				$property = new phodevi_device_property('gpu_screen_resolution_string', phodevi::std_caching);
 				break;
 		}
 
@@ -280,6 +280,31 @@ class phodevi_gpu extends phodevi_device_interface
 
 		return $cores;
 	}
+	public static function gpu_xrandr_resolution()
+	{
+		$resolution = false;
+
+		if(pts_client::executable_in_path('xrandr') && getenv('DISPLAY'))
+		{
+			// Read resolution from xrandr
+			$info = shell_exec('xrandr 2>&1 | grep "*"');
+
+			if(strpos($info, '*') !== false)
+			{
+				$res = pts_strings::trim_explode('x', $info);
+				$res[0] = substr($res[0], strrpos($res[0], ' '));
+				$res[1] = substr($res[1], 0, strpos($res[1], ' '));
+				$res = array_map('trim', $res);
+
+				if(is_numeric($res[0]) && is_numeric($res[1]))
+				{
+					$resolution = array($res[0], $res[1]);
+				}
+			}
+		}
+
+		return $resolution;
+	}
 	public static function gpu_screen_resolution()
 	{
 		$resolution = false;
@@ -326,21 +351,7 @@ class phodevi_gpu extends phodevi_device_interface
 
 			if($resolution == false && pts_client::executable_in_path('xrandr'))
 			{
-				// Read resolution from xrandr
-				$info = shell_exec('xrandr 2>&1 | grep "*"');
-
-				if(strpos($info, '*') !== false)
-				{
-					$res = pts_strings::trim_explode('x', $info);
-					$res[0] = substr($res[0], strrpos($res[0], ' '));
-					$res[1] = substr($res[1], 0, strpos($res[1], ' '));
-					$res = array_map('trim', $res);
-
-					if(is_numeric($res[0]) && is_numeric($res[1]))
-					{
-						$resolution = array($res[0], $res[1]);
-					}
-				}
+				$resolution = self::gpu_xrandr_resolution();
 			}
 
 			if($resolution == false && phodevi::is_nvidia_graphics())

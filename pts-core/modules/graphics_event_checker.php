@@ -58,7 +58,8 @@ class graphics_event_checker extends pts_module_interface
 		self::$error_analysis = array();
 
 		// Store the video resolution
-		self::$start_video_resolution = phodevi::read_property('gpu', 'screen-resolution');
+		// Access the xrandr resolution directly to ensure it's not polling the FB size or one of the KMS modes
+		self::$start_video_resolution = phodevi_gpu::gpu_xrandr_resolution();
 
 		if(phodevi::is_ati_graphics())
 		{
@@ -95,7 +96,8 @@ class graphics_event_checker extends pts_module_interface
 		}
 
 		// Check for video resolution changes
-		$current_res = phodevi::read_property('gpu', 'screen-resolution');
+		// Access the xrandr resolution directly to ensure it's not polling the FB size or one of the KMS modes
+		$current_res = phodevi_gpu::gpu_xrandr_resolution();
 
 		if($current_res != self::$start_video_resolution && self::$start_video_resolution != array(-1, -1))
 		{
