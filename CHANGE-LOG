@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- graphics_event_checker: Rewrite of the graphics event checker and enable by default
+
 Phoronix Test Suite 3.8 Milestone 2
 20 February 2012
 

@@ -100,7 +100,7 @@ class phodevi_gpu extends phodevi_device_interface
 	}
 	public static function gpu_set_resolution($args)
 	{
-		if(count($args) != 2 || phodevi::is_windows() || phodevi::is_macosx())
+		if(count($args) != 2 || phodevi::is_windows() || phodevi::is_macosx() || !pts_client::executable_in_path('xrandr'))
 		{
 			return false;
 		}
