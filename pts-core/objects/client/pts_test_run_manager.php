@@ -44,7 +44,7 @@ class pts_test_run_manager
 	private $is_pcqs = false;
 
 	private $do_dynamic_run_count = false;
-	private $dynamic_roun_count_on_length_or_less;
+	private $dynamic_run_count_on_length_or_less;
 	private $dynamic_run_count_std_deviation_threshold;
 	private $dynamic_run_count_export_script;
 
@@ -55,7 +55,7 @@ class pts_test_run_manager
 		pts_client::set_test_flags($test_flags);
 
 		$this->do_dynamic_run_count = pts_config::read_bool_config('PhoronixTestSuite/Options/TestResultValidation/DynamicRunCount', 'TRUE');
-		$this->dynamic_roun_count_on_length_or_less = pts_config::read_user_config('PhoronixTestSuite/Options/TestResultValidation/LimitDynamicToTestLength', 20);
+		$this->dynamic_run_count_on_length_or_less = pts_config::read_user_config('PhoronixTestSuite/Options/TestResultValidation/LimitDynamicToTestLength', 20);
 		$this->dynamic_run_count_std_deviation_threshold = pts_config::read_user_config('PhoronixTestSuite/Options/TestResultValidation/StandardDeviationThreshold', 3.50);
 		$this->dynamic_run_count_export_script = pts_config::read_user_config('PhoronixTestSuite/Options/TestResultValidation/ExportResultsTo', null);
 
@@ -76,7 +76,7 @@ class pts_test_run_manager
 	public function increase_run_count_check(&$test_results, $scheduled_times_to_run, $latest_test_run_time)
 	{
 		// First make sure this test doesn't take too long to run where we don't want dynamic handling
-		if(floor($latest_test_run_time / 60) > $this->dynamic_roun_count_on_length_or_less)
+		if(floor($latest_test_run_time / 60) > $this->dynamic_run_count_on_length_or_less)
 		{
 			return false;
 		}

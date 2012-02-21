@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+- pts-core: Attempt to detect when any test ends prematurely with an invalid result
 - graphics_event_checker: Rewrite of the graphics event checker and enable by default
 
 Phoronix Test Suite 3.8 Milestone 2

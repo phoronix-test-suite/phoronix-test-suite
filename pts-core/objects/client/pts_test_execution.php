@@ -199,11 +199,19 @@ class pts_test_execution
 
 				if(!empty($test_result))
 				{
-					$test_run_request->test_result_buffer->add_test_result(null, $test_result, null);
+					if($test_run_time <= 10 && intval($test_result) == $test_result && $test_run_request->test_profile->get_estimated_run_time() > 60)
+					{
+						// If the test ended in less than 10 seconds, outputted some int, and normally the test takes much longer, then it's likely some invalid run
+						pts_client::$display->test_run_instance_error('The test run ended prematurely.');
+					}
+					else
+					{
+						$test_run_request->test_result_buffer->add_test_result(null, $test_result, null);
+					}
 				}
 				else if($test_run_request->test_profile->get_display_format() != 'NO_RESULT')
 				{
-					pts_client::$display->test_run_instance_error('The test did not produce a result.');
+					pts_client::$display->test_run_instance_error('The test run did not produce a result.');
 				}
 
 				if($allow_cache_share && !is_file($cache_share_pt2so))
