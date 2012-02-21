@@ -163,7 +163,7 @@ class phodevi_linux_parser
 					}
 				}
 			}
-			while($sub_type_start !== false && $find_once == false);
+			while($sub_type_start !== false && ($find_once == false || $found_in_section == false));
 		}
 
 		if(count($value) == 0)
