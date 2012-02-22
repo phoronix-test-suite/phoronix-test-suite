@@ -61,15 +61,15 @@ class graphics_event_checker extends pts_module_interface
 		// Access the xrandr resolution directly to ensure it's not polling the FB size or one of the KMS modes
 		self::$start_video_resolution = phodevi_gpu::gpu_xrandr_resolution();
 
-		if(phodevi::is_ati_graphics())
+		if(phodevi::is_linux() && phodevi::is_ati_graphics())
 		{
-			$vsync_val = phodevi_parser::read_amd_pcsdb('AMDPCSROOT/SYSTEM/BUSID-*/OpenGL,VSyncControl'); // Check for vSync
+			$vsync_val = phodevi_linux_parser::read_amd_pcsdb('AMDPCSROOT/SYSTEM/BUSID-*/OpenGL,VSyncControl'); // Check for vSync
 			if($vsync_val == '0x00000002' || $vsync_val == '0x00000003')
 			{
 				self::$driver_forced_vsync = true;
 			}
 
-			//$catalyst_ai_val = phodevi_parser::read_amd_pcsdb('AMDPCSROOT/SYSTEM/BUSID-*/OpenGL,CatalystAI'); // Check for Catalyst AI
+			//$catalyst_ai_val = phodevi_linux_parser::read_amd_pcsdb('AMDPCSROOT/SYSTEM/BUSID-*/OpenGL,CatalystAI'); // Check for Catalyst AI
 			//if($catalyst_ai_val == '0x00000001' || $catalyst_ai_val == '0x00000002')
 			//	echo '\nCatalyst AI is enabled, which will use driver-specific optimizations in some tests that may offer extra performance enhancements.\n';
 		}
