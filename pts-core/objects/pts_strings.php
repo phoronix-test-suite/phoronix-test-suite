@@ -524,7 +524,7 @@ class pts_strings
 
 		return $is_match;
 	}
-	public static function result_quantifier_to_string($result_quantifier)
+	public static function result_quantifier_to_string($quantifier)
 	{
 		$quantifiers = array('MAX' => 'Maximum', 'MIN' => 'Minimum', 'NULL' => null, 'AVG' => 'Average');
 		return isset($quantifiers[$quantifier]) ? $quantifiers[$quantifier] : 'Average';
