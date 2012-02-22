@@ -62,8 +62,7 @@ class pts_openbenchmarking
 
 		if(strlen($gsid) == 9)
 		{
-			if(pts_strings::string_only_contains(substr($gsid, 0, 6), pts_strings::CHAR_LETTER) &&
-			pts_strings::string_only_contains(substr($gsid, 6, 3), pts_strings::CHAR_NUMERIC))
+			if(ctype_upper(substr($gsid, 0, 6)) && ctype_digit(substr($gsid, 6, 3)))
 			{
 				$gsid_valid = true;
 			}
@@ -77,8 +76,7 @@ class pts_openbenchmarking
 
 		if(strlen($gside) == 12)
 		{
-			if(pts_strings::string_only_contains(substr($gside, 0, 10), pts_strings::CHAR_LETTER) &&
-			pts_strings::string_only_contains(substr($gside, 10, 2), pts_strings::CHAR_NUMERIC))
+			if(ctype_upper(substr($gside, 0, 10)) && ctype_digit(substr($gside, 10, 2)))
 			{
 				$gside_valid = true;
 			}
@@ -92,8 +90,7 @@ class pts_openbenchmarking
 
 		if(strlen($gsidp) == 10)
 		{
-			if(pts_strings::string_only_contains(substr($gsidp, 0, 9), pts_strings::CHAR_LETTER) &&
-			pts_strings::string_only_contains(substr($gsidp, 9, 1), pts_strings::CHAR_NUMERIC))
+			if(ctype_upper(substr($gsidp, 0, 9)) &&	ctype_digit(substr($gsidp, 9, 1)))
 			{
 				$gsidp_valid = true;
 			}
@@ -189,9 +186,9 @@ class pts_openbenchmarking
 				{
 					$us = strlen($segments[1]);
 
-					if($us > 1 && $us < 9 && pts_strings::string_only_contains($segments[1], pts_strings::CHAR_LETTER | pts_strings::CHAR_NUMERIC))
+					if($us > 1 && $us < 9 && ctype_alnum($segments[1]))
 					{
-						if(pts_strings::string_only_contains($segments[2], pts_strings::CHAR_LETTER | pts_strings::CHAR_NUMERIC))
+						if(ctype_alnum($segments[2]))
 						{
 							$valid = true;
 						}
@@ -208,7 +205,7 @@ class pts_openbenchmarking
 
 		if(strlen($id) == 4)
 		{
-			if(pts_strings::string_only_contains($id, pts_strings::CHAR_LETTER))
+			if(ctype_alpha($id))
 			{
 				$valid = true;
 			}

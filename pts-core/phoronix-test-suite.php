@@ -21,10 +21,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-if(defined('LC_NUMERIC'))
-{
-	setlocale(LC_NUMERIC, 'C');
-}
+setlocale(LC_NUMERIC, 'C');
 define('PTS_PATH', dirname(dirname(__FILE__)) . '/');
 
 // PTS_MODE types
@@ -43,6 +40,9 @@ if(!PTS_IS_CLIENT)
 	// pts-core is acting as a library, return now since no need to run client code
 	return;
 }
+
+// Default to C locale
+setlocale(LC_ALL, 'C');
 
 if(ini_get('date.timezone') == null)
 {
