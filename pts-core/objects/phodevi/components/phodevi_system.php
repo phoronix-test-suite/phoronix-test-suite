@@ -361,7 +361,7 @@ class phodevi_system extends phodevi_device_interface
 			{
 				$qemu_version = substr($cpu, (strrpos($cpu, ' ') + 1));
 
-				if(pts_strings::string_only_contains($qemu_version, pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DECIMAL))
+				if(pts_strings::is_version($qemu_version))
 				{
 					$virtualized .= ' ' . $qemu_version;
 				}
@@ -487,7 +487,7 @@ class phodevi_system extends phodevi_device_interface
 				$compiler_info = substr($compiler_info, ($cv_pos + 14));
 				$clang_version = substr($compiler_info, 0, strpos($compiler_info, ' '));
 
-				if(pts_strings::string_only_contains($clang_version, pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DECIMAL))
+				if(pts_strings::is_version($clang_version))
 				{
 					// Also see if there is a Clang SVN tag to fetch
 					$compiler_info = substr($compiler_info, 0, strpos($compiler_info, PHP_EOL));
@@ -533,7 +533,7 @@ class phodevi_system extends phodevi_device_interface
 				$info = substr($info, 0, strpos($info, PHP_EOL, $s));
 				$info = substr($info, (strrpos($info, ' ') + 1));
 
-				if(pts_strings::string_only_contains($info, pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DECIMAL))
+				if(pts_strings::is_version($info))
 				{
 					$compilers['llvmc'] = 'LLVM ' . $info;
 				}
@@ -888,11 +888,7 @@ class phodevi_system extends phodevi_device_interface
 			$version = substr($lx_output, strpos(' ', $lx_output) + 1);
 
 			$desktop_environment = 'LXDE';
-
-			if(pts_strings::string_only_contains($version, pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DECIMAL))
-			{
-				$desktop_version = $version;
-			}
+			$desktop_version = $version;
 		}
 		else if(pts_client::is_process_running('xfce4-session') || pts_client::is_process_running('xfce-mcs-manager'))
 		{
@@ -917,7 +913,7 @@ class phodevi_system extends phodevi_device_interface
 		{
 			$desktop = $desktop_environment;
 
-			if(!empty($desktop_version) && pts_strings::string_only_contains($desktop_version, pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DECIMAL))
+			if(!empty($desktop_version) && pts_strings::is_version($desktop_version))
 			{
 				$desktop .= ' ' . $desktop_version;
 			}

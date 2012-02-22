@@ -501,6 +501,7 @@ class pts_render
 		$prev_date = null;
 		$is_tracking = true;
 		$sha1_short_count = 0;
+		$identifier = array_map('trim', explode(':', $buffer_item->get_result_identifier()));
 
 		if($identifiers_inverted)
 		{
@@ -515,8 +516,6 @@ class pts_render
 
 		foreach($mto->test_result_buffer->get_buffer_items() as $buffer_item)
 		{
-			$identifier = pts_strings::trim_explode(':', $buffer_item->get_result_identifier());
-
 			switch(count($identifier))
 			{
 				case 2:
@@ -552,7 +551,7 @@ class pts_render
 					}
 
 					// Check to see if only numeric changes are being made
-					$sha1_short_hash_ending = isset($date[7]) && pts_strings::string_only_contains(substr($date, -8), pts_strings::CHAR_NUMERIC | pts_strings::CHAR_LETTER);
+					$sha1_short_hash_ending = isset($date[7]) && ctype_alnum(substr($date, -8);
 					$date = str_replace('s', null, pts_strings::remove_from_string($date, pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DASH | pts_strings::CHAR_DECIMAL));
 
 					if($sha1_short_hash_ending)
@@ -579,8 +578,6 @@ class pts_render
 
 		foreach($mto->test_result_buffer->get_buffer_items() as $buffer_item)
 		{
-			$identifier = pts_strings::trim_explode(':', $buffer_item->get_result_identifier());
-
 			switch(count($identifier))
 			{
 				case 2:
@@ -695,7 +692,7 @@ class pts_render
 
 		foreach($identifiers as $identifier)
 		{
-			$identifier_r = pts_strings::trim_explode(':', $identifier);
+			$identifier_r = explode(':', $identifier);
 
 			if(count($identifier_r) != 2 || (isset($identifier[14]) && $identifier[4] == '-' && $identifier[13] == ':'))
 			{

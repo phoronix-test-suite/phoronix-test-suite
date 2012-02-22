@@ -46,7 +46,7 @@ class pts_strings
 	public static function is_version($string)
 	{
 		// Only numeric or decimal, and at least a decimal (not int)
-		return pts_strings::string_only_contains($string, (pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DECIMAL)) && pts_strings::string_contains($string, (pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DECIMAL));
+		return pts_strings::string_only_contains($string, (pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DECIMAL)) && pts_strings::string_contains($string, pts_strings::CHAR_DECIMAL);
 	}
 	public static function trim_search_query($value)
 	{
@@ -526,24 +526,8 @@ class pts_strings
 	}
 	public static function result_quantifier_to_string($result_quantifier)
 	{
-		switch($result_quantifier)
-		{
-			case 'MAX':
-				$return_str = 'Maximum';
-				break;
-			case 'MIN':
-				$return_str = 'Minimum';
-				break;
-			case 'NULL':
-				$return_str = null;
-				break;
-			case 'AVG':
-			default:
-				$return_str = 'Average';
-				break;
-		}
-
-		return $return_str;
+		$quantifiers = array('MAX' => 'Maximum', 'MIN' => 'Minimum', 'NULL' => null, 'AVG' => 'Average');
+		return isset($quantifiers[$quantifier]) ? $quantifiers[$quantifier] : 'Average';
 	}
 	public static function format_time($time, $input_format = 'SECONDS', $standard_version = true, $round_to = 0)
 	{
@@ -639,21 +623,8 @@ class pts_strings
 	}
 	public static function system_category_to_openbenchmark_category($category)
 	{
-		switch($category)
-		{
-			case 'Graphics':
-				$category = 'GPU';
-				break;
-			case 'Processor':
-			case 'System':
-				$category = 'CPU';
-				break;
-			case 'File-System':
-				$category = 'File System';
-				break;
-		}
-
-		return $category;
+		$categories = array('Graphics' => 'GPU', 'Processor' => 'CPU', 'System' => 'CPU', 'File-System' => 'File System');
+		return isset($categories[$category]) ? $categories[$category] : $category;
 	}
 }
 

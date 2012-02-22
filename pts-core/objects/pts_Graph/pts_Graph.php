@@ -26,6 +26,8 @@
 // Other tests:
 // 1201120-BY-MESA80GAL31
 
+// TODO: elimiante need for some of the pts_* classes called inside here, instead build them in or find other efficient ways of handling...
+
 // Setup main config values, should only be needed once since the configuration values should never be over-written within pts_Graph*
 pts_Graph::init_graph_config();
 
