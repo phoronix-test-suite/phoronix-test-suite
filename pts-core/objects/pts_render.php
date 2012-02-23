@@ -501,7 +501,6 @@ class pts_render
 		$prev_date = null;
 		$is_tracking = true;
 		$sha1_short_count = 0;
-		$identifier = array_map('trim', explode(':', $buffer_item->get_result_identifier()));
 
 		if($identifiers_inverted)
 		{
@@ -516,6 +515,8 @@ class pts_render
 
 		foreach($mto->test_result_buffer->get_buffer_items() as $buffer_item)
 		{
+			$identifier = array_map('trim', explode(':', $buffer_item->get_result_identifier()));
+
 			switch(count($identifier))
 			{
 				case 2:
@@ -578,6 +579,8 @@ class pts_render
 
 		foreach($mto->test_result_buffer->get_buffer_items() as $buffer_item)
 		{
+			$identifier = array_map('trim', explode(':', $buffer_item->get_result_identifier()));
+
 			switch(count($identifier))
 			{
 				case 2:
