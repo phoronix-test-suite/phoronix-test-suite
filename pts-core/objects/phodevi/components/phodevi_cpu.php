@@ -73,7 +73,12 @@ class phodevi_cpu extends phodevi_device_interface
 	{
 		$info = null;
 
-		if(phodevi::is_linux())
+		if(getenv('NUMBER_OF_PROCESSORS') && is_numeric(getenv('NUMBER_OF_PROCESSORS')))
+		{
+			// Should be used by Windows they have NUMBER_OF_PROCESSORS set and use this as an easy way to override CPUs exposed
+			$info = getenv('NUMBER_OF_PROCESSORS');
+		}
+		else if(phodevi::is_linux())
 		{
 			if(is_file('/sys/devices/system/cpu/online'))
 			{
@@ -109,7 +114,8 @@ class phodevi_cpu extends phodevi_device_interface
 		}
 		else if(phodevi::is_windows())
 		{
-			$info = getenv('NUMBER_OF_PROCESSORS');
+			// Should be hit by the first NUMBER_OF_PROCESSORS env check...
+			//$info = getenv('NUMBER_OF_PROCESSORS');
 		}
 
 		return (is_numeric($info) && $info > 0 ? $info : 1);
