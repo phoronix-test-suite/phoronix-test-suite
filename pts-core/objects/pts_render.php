@@ -551,7 +551,7 @@ class pts_render
 					}
 
 					// Check to see if only numeric changes are being made
-					$sha1_short_hash_ending = isset($date[7]) && ctype_alnum(substr($date, -8);
+					$sha1_short_hash_ending = isset($date[7]) && ctype_alnum(substr($date, -8));
 					$date = str_replace('s', null, pts_strings::remove_from_string($date, pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DASH | pts_strings::CHAR_DECIMAL));
 
 					if($sha1_short_hash_ending)
