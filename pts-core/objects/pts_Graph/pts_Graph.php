@@ -76,6 +76,7 @@ abstract class pts_Graph
 		$this->i['top_start'] = 62;
 		$this->i['top_end_bottom'] = 22;
 		$this->i['mark_count'] = 6; // Number of marks to make on vertical axis
+		$this->i['notes'] = array();
 
 		// Reset of setup besides config
 		if($result_object != null)
@@ -245,6 +246,10 @@ abstract class pts_Graph
 				array_push($this->graph_sub_titles, $sub_title);
 			}
 		}
+	}
+	public function addTestNote($note)
+	{
+		array_push($this->i['notes'], $note);
 	}
 	public function addInternalIdentifier($identifier, $value)
 	{
@@ -442,6 +447,11 @@ abstract class pts_Graph
 			{
 				$this->i['graph_height'] += $bottom_heading + 4;
 			}
+
+			if(!empty($this->i['notes']))
+			{
+				$this->i['graph_height'] += count($this->i['notes']) * self::$c['size']['key'];
+			}
 		}
 
 		// Do the actual work
@@ -554,12 +564,20 @@ abstract class pts_Graph
 		{
 			$bottom_heading_start = $this->i['graph_top_end'] + $this->i['bottom_offset'] + 22;
 			$this->svg_dom->add_element('rect', array('x' => 0, 'y' => $bottom_heading_start, 'width' => $this->i['graph_width'], 'height' => ($this->i['graph_height'] - $bottom_heading_start), 'fill' => self::$c['color']['main_headers']));
-			$this->svg_dom->add_text_element('Powered By ' . $this->i['graph_version'], array('x' => $this->i['graph_left_end'], 'y' => ($bottom_heading_start + 9), 'font-size' => 7, 'fill' => self::$c['color']['background'], 'text-anchor' => 'end', 'dominant-baseline' => 'middle', 'xlink:show' => 'new', 'xlink:href' => 'http://www.phoronix-test-suite.com/'));
+			$this->svg_dom->add_text_element('Powered By ' . $this->i['graph_version'], array('x' => $this->i['graph_left_end'], 'y' => ($bottom_heading_start + 9), 'font-size' => (self::$c['size']['key'] - 1), 'fill' => self::$c['color']['background'], 'text-anchor' => 'end', 'dominant-baseline' => 'middle', 'xlink:show' => 'new', 'xlink:href' => 'http://www.phoronix-test-suite.com/'));
 
 			if($this->link_alternate_view)
 			{
 				// offer link of image to $this->link_alternate_view
 				$this->svg_dom->add_element('image', array('xlink:href' => 'http://openbenchmarking.org/ob-10x16.png', 'x' => 4, 'y' => ($bottom_heading_start + 1), 'width' => 10, 'height' => 16));
+			}
+
+			if(!empty($this->i['notes']))
+			{
+				foreach($this->i['notes'] as $i => $note)
+				{
+					$this->svg_dom->add_text_element('- ' . $note, array('x' => 4, 'y' => ($bottom_heading_start + (($i + 2) * self::$c['size']['key'])), 'font-size' => (self::$c['size']['key'] - 1), 'fill' => self::$c['color']['background'], 'text-anchor' => 'start', 'dominant-baseline' => 'middle'));
+				}
 			}
 		}
 	}
