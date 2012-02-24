@@ -245,7 +245,7 @@ class pts_Table extends pts_Graph
 			$text_color = $row_string->get_attribute('alert') ? self::$c['color']['alert'] : self::$c['color']['text'];
 
 			$v = round($identifier_height + $this->i['top_heading_height'] + ($row * $table_line_height) + $table_line_height_half);
-			$this->svg_dom->add_text_element($row_string, array('x' => ($this->i['left_start'] - 2), 'y' => $v, 'font-size' => $this->i['identifier_size'], 'fill' => $text_color, 'font-weight' => 'bold', 'text-anchor' => 'end', 'dominant-baseline' => 'middle'));
+			$this->svg_dom->add_text_element($row_string, array('x' => ($this->i['left_start'] - 2), 'y' => $v, 'font-size' => $this->i['identifier_size'], 'fill' => $text_color, 'font-weight' => 'bold', 'text-anchor' => 'end', 'dominant-baseline' => 'middle', 'xlink:href' => $row_string->get_attribute('href')));
 			$row++;
 		}
 
@@ -406,7 +406,7 @@ class pts_Table extends pts_Graph
 				}
 
 				$x = $left_bounds + (($right_bounds - $left_bounds) / 2);
-				$this->svg_dom->add_text_element($result_table_value, array('x' => $x, 'y' => $top_bounds, 'font-size' => $this->i['identifier_size'], 'fill' => $text_color, 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge', 'xlink:title' => implode('; ', $hover)));
+				$this->svg_dom->add_text_element($result_table_value, array('x' => $x, 'y' => $top_bounds, 'font-size' => $this->i['identifier_size'], 'fill' => $text_color, 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge', 'xlink:title' => implode('; ', $hover), 'xlink:href' => $result_table_value->get_attribute('href')));
 				//$row++;
 			}
 		}

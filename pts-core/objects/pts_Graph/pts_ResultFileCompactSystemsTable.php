@@ -143,7 +143,7 @@ class pts_ResultFileCompactSystemsTable extends pts_Graph
 			foreach($component as $c)
 			{
 				$c = pts_result_file_analyzer::system_value_to_ir_value($c, $type);
-				$this->svg_dom->add_text_element($c, array('x' => ($this->i['graph_width'] / 2), 'y' => $offset, 'font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['text'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge', 'xlink:title' => $type . ': ' . $c, 'font-weight' => 'bold'));
+				$this->svg_dom->add_text_element($c, array('x' => ($this->i['graph_width'] / 2), 'y' => $offset, 'font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['text'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge', 'xlink:title' => $type . ': ' . $c, 'font-weight' => 'bold', 'xlink:href' => $c->get_attribute('href')));
 				$offset += $component_header_height;
 			}
 

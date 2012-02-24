@@ -143,6 +143,10 @@ class pts_openbenchmarking
 					pts_openbenchmarking::clone_openbenchmarking_result_system_logs($id, pts_client::setup_test_result_directory($id), $json_response['openbenchmarking']['result']['system_logs_available']);
 				}
 			}
+			else
+			{
+				echo PHP_EOL . 'ERROR: Validating the result file schema failed.' . PHP_EOL . PHP_EOL;
+			}
 		}
 		else if(PTS_IS_CLIENT && isset($json_response['openbenchmarking']['result']['error']))
 		{

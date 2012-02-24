@@ -114,7 +114,7 @@ class pts_svg_dom
 	{
 		$el = $this->dom->createElement($element_type);
 
-		if(isset($attributes['xlink:href']) && !in_array($element_type, array('image', 'a')))
+		if(isset($attributes['xlink:href']) && $attributes['xlink:href'] != null && !in_array($element_type, array('image', 'a')))
 		{
 			$link = $this->dom->createElement('a');
 			$link->setAttribute('xlink:href', $attributes['xlink:href']);
