@@ -139,7 +139,7 @@ class pts_svg_dom
 		$text_node = $this->dom->createTextNode($text_string);
 		$el->appendChild($text_node);
 
-		if(isset($attributes['xlink:href']))
+		if(isset($attributes['xlink:href']) && $attributes['xlink:href'] != null)
 		{
 			$link = $this->dom->createElement('a');
 			$link->setAttribute('xlink:href', $attributes['xlink:href']);
