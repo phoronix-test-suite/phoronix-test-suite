@@ -161,6 +161,11 @@ class pts_Table extends pts_Graph
 		$this->i['graph_width'] = $table_width + $this->i['left_start'];
 		$this->i['graph_height'] = $table_proper_height + $table_line_height;
 
+		if(!empty($this->i['notes']))
+		{
+			$this->i['graph_height'] += count($this->i['notes']) * self::$c['size']['key'];
+		}
+
 		// Do the actual work
 		$this->render_graph_pre_init();
 		$this->render_graph_init(array('cache_font_size' => true));
@@ -201,6 +206,15 @@ class pts_Table extends pts_Graph
 		if($this->link_alternate_view != null)
 		{
 			$this->svg_dom->add_text_element(0, array('x' => 6, 'y' => ($table_proper_height + $table_line_height_half), 'font-size' => 7, 'fill' => self::$c['color']['background'], 'text-anchor' => 'start', 'dominant-baseline' => 'middle', 'xlink:show' => 'new', 'xlink:href' => $this->link_alternate_view, 'show' => 'replace', 'font-weight' => 'bold'));
+		}
+
+
+		if(!empty($this->i['notes']))
+		{
+			foreach($this->i['notes'] as $i => $note)
+			{
+				$this->svg_dom->add_text_element('- ' . $note, array('x' => 6, 'y' => ($table_proper_height + $table_line_height + ($i * self::$c['size']['key'])), 'font-size' => (self::$c['size']['key'] - 1), 'fill' => self::$c['color']['background'], 'text-anchor' => 'start', 'dominant-baseline' => 'middle'));
+			}
 		}
 
 		// Heading

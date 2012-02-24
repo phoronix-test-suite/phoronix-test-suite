@@ -75,6 +75,11 @@ class pts_ResultFileCompactSystemsTable extends pts_Graph
 		unset($dupes);
 
 		$bottom_footer = 50; // needs to be at least 86 to make room for PTS logo
+		if(!empty($this->i['notes']))
+		{
+			$bottom_footer += count($this->i['notes']) * self::$c['size']['key'];
+		}
+
 		$this->i['graph_height'] =
 			$this->i['top_heading_height'] +
 			((count($this->components) + $intent_count) * $component_header_height) +
@@ -157,6 +162,14 @@ class pts_ResultFileCompactSystemsTable extends pts_Graph
 			$this->svg_dom->add_text_element(OPENBENCHMARKING_TITLE, array('x' => $back_width, 'y' => ($this->i['graph_height'] - 38), 'font-size' => 8, 'fill' => self::$c['color']['background'], 'text-anchor' => 'end', 'dominant-baseline' => 'middle', 'font-weight' => 'bold', 'xlink:show' => 'new', 'xlink:href' => 'http://openbenchmarking.org/result/' . OPENBENCHMARKING_IDS));
 			$this->svg_dom->add_text_element('System Logs', array('x' => $back_width, 'y' => ($this->i['graph_height'] - 24), 'font-size' => 8, 'fill' => self::$c['color']['background'], 'text-anchor' => 'end', 'dominant-baseline' => 'middle', 'xlink:show' => 'new', 'xlink:href' => 'http://openbenchmarking.org/system/' . OPENBENCHMARKING_IDS));
 			$this->svg_dom->add_text_element('OPC Classification', array('x' => $back_width, 'y' => ($this->i['graph_height'] - 10), 'font-size' => 8, 'fill' => self::$c['color']['background'], 'text-anchor' => 'end', 'dominant-baseline' => 'middle', 'xlink:show' => 'new', 'xlink:href' => 'http://openbenchmarking.org/opc/' . OPENBENCHMARKING_IDS));
+		}
+
+		if(!empty($this->i['notes']))
+		{
+			foreach($this->i['notes'] as $i => $note)
+			{
+				$this->svg_dom->add_text_element('- ' . $note, array('x' => 4, 'y' => (($this->i['graph_height'] - $bottom_footer + 50) + ($i * self::$c['size']['key'])), 'font-size' => (self::$c['size']['key'] - 1), 'fill' => self::$c['color']['background'], 'text-anchor' => 'start', 'dominant-baseline' => 'middle'));
+			}
 		}
 	}
 	public function render_graph_finish()
