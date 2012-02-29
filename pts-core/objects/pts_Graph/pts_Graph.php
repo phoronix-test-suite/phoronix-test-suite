@@ -247,9 +247,9 @@ abstract class pts_Graph
 			}
 		}
 	}
-	public function addTestNote($note)
+	public function addTestNote($note, $hover_title = null)
 	{
-		array_push($this->i['notes'], $note);
+		array_push($this->i['notes'], array('note' => $note, 'hover-title' => $hover_title));
 	}
 	public function addInternalIdentifier($identifier, $value)
 	{
@@ -574,9 +574,9 @@ abstract class pts_Graph
 
 			if(!empty($this->i['notes']))
 			{
-				foreach($this->i['notes'] as $i => $note)
+				foreach($this->i['notes'] as $i => $note_r)
 				{
-					$this->svg_dom->add_text_element('- ' . $note, array('x' => 4, 'y' => ($bottom_heading_start + (($i + 2) * self::$c['size']['key'])), 'font-size' => (self::$c['size']['key'] - 1), 'fill' => self::$c['color']['background'], 'text-anchor' => 'start', 'dominant-baseline' => 'middle'));
+					$this->svg_dom->add_text_element('- ' . $note_r['note'], array('x' => 4, 'y' => ($bottom_heading_start + (($i + 2) * self::$c['size']['key'])), 'font-size' => (self::$c['size']['key'] - 1), 'fill' => self::$c['color']['background'], 'text-anchor' => 'start', 'dominant-baseline' => 'middle', 'xlink:title' => $note_r['hover-title']));
 				}
 			}
 		}
