@@ -94,11 +94,6 @@ class phodevi_cpu extends phodevi_device_interface
 					}
 				}
 			}
-
-			if($info == null)
-			{
-				$info = self::cpuinfo_core_count();
-			}
 		}
 		else if(phodevi::is_solaris())
 		{
@@ -116,6 +111,11 @@ class phodevi_cpu extends phodevi_device_interface
 		{
 			// Should be hit by the first NUMBER_OF_PROCESSORS env check...
 			//$info = getenv('NUMBER_OF_PROCESSORS');
+		}
+
+		if($info == null && self::$cpuinfo)
+		{
+			$info = self::cpuinfo_core_count();
 		}
 
 		return (is_numeric($info) && $info > 0 ? $info : 1);
@@ -137,20 +137,16 @@ class phodevi_cpu extends phodevi_device_interface
 	public static function cpu_default_frequency($cpu_core = 0)
 	{
 		// Find out the processor frequency
-
-		if(phodevi::is_linux())
+		// First, the ideal way, with modern CPUs using CnQ or EIST and cpuinfo reporting the current
+		if(is_file('/sys/devices/system/cpu/cpu' . $cpu_core . '/cpufreq/scaling_max_freq'))
 		{
-			// First, the ideal way, with modern CPUs using CnQ or EIST and cpuinfo reporting the current
-			if(is_file('/sys/devices/system/cpu/cpu' . $cpu_core . '/cpufreq/scaling_max_freq'))
-			{
-				$info = pts_file_io::file_get_contents('/sys/devices/system/cpu/cpu' . $cpu_core . '/cpufreq/scaling_max_freq');
-				$info = intval($info) / 1000000;
-			}
-			else if(self::$cpuinfo) // fall back for those without cpufreq
-			{
-				$cpu_mhz = self::read_cpuinfo_line('cpu MHz');
-				$info = $cpu_mhz / 1000;
-			}
+			$info = pts_file_io::file_get_contents('/sys/devices/system/cpu/cpu' . $cpu_core . '/cpufreq/scaling_max_freq');
+			$info = intval($info) / 1000000;
+		}
+		else if(self::$cpuinfo) // fall back for those without cpufreq
+		{
+			$cpu_mhz = self::read_cpuinfo_line('cpu MHz');
+			$info = $cpu_mhz / 1000;
 		}
 		else if(phodevi::is_bsd())
 		{
@@ -218,7 +214,7 @@ class phodevi_cpu extends phodevi_device_interface
 		// Returns the processor name / frequency information
 		$info = null;
 
-		if(phodevi::is_linux())
+		if(self::$cpuinfo)
 		{
 			$physical_cpu_ids = phodevi_linux_parser::read_cpuinfo('physical id', self::$cpuinfo);
 			$physical_cpu_count = count(array_unique($physical_cpu_ids));

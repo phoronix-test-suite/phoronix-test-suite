@@ -44,6 +44,7 @@ class phodevi
 		'solaris' => false,
 		'bsd' => false,
 		'hurd' => false,
+		'minix' => false,
 		'windows' => false
 		);
 
@@ -545,6 +546,10 @@ class phodevi
 	public static function is_linux()
 	{
 		return self::$operating_systems['linux'];
+	}
+	public static function is_minix()
+	{
+		return self::$operating_systems['minix'];
 	}
 	public static function is_solaris()
 	{
