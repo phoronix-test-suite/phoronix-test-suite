@@ -327,7 +327,7 @@ class pts_test_execution
 			}
 		}
 
-		if($allow_cache_share && !is_file($cache_share_pt2so) && $cache_share instanceOf pts_storage_object)
+		if($allow_cache_share && !is_file($cache_share_pt2so) && $cache_share instanceof pts_storage_object)
 		{
 			$cache_share->save_to_file($cache_share_pt2so);
 			unset($cache_share);

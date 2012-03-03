@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 - pts-core: Introduce a look-aside download cache that automatically checks other existing test installations for needed files
 - pts-core: Support a last-minute look-aside copy if a previous test in the install queue downloaded the same file
 - pts-core: Attempt to detect when any test ends prematurely with an invalid result
+- pts-core: Begin reporting test installation compiler attributes from test profiles to the JSON in new result file XML schema
 - pts_Graph: Add support for reporting test notes to graphs
 - pts_Graph: Restore links within tables for the new pts_Graph table SVG DOM IR
 - phodevi: Fix for Linux memory module count decoding in niche cases on multi-socket systems

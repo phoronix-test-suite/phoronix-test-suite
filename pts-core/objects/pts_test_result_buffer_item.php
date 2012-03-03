@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2011, Phoronix Media
-	Copyright (C) 2009 - 2011, Michael Larabel
+	Copyright (C) 2009 - 2012, Phoronix Media
+	Copyright (C) 2009 - 2012, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -25,12 +25,19 @@ class pts_test_result_buffer_item
 	private $result_identifier;
 	private $result_final;
 	private $result_raw;
+	private $result_json;
 
-	public function __construct($identifier, $final, $raw = null)
+	public function __construct($identifier, $final, $raw = null, $json = null)
 	{
 		$this->result_identifier = $identifier;
 		$this->result_final = $final;
 		$this->result_raw = $raw;
+
+		if($json && !is_array($json))
+		{
+			$json = json_decode($json, true);
+		}
+		$this->result_json = $json;
 	}
 	public function reset_result_identifier($identifier)
 	{
@@ -55,6 +62,10 @@ class pts_test_result_buffer_item
 	public function get_result_raw()
 	{
 		return $this->result_raw;
+	}
+	public function get_result_json()
+	{
+		return $this->result_json;
 	}
 	public function __toString()
 	{

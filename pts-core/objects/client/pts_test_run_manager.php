@@ -589,10 +589,14 @@ class pts_test_run_manager
 				if(!empty($test_identifier))
 				{
 					// XXX : add to attributes JSON Here and TODO XXX then pass to the result_file_writer
-					$reporting_attributes = null;
-					$reporting_attributes['compiler-data'] = $test_run_request->test_profile->test_installation->get_compiler_data();
+					$json_report_attributes = null;
 
-					$this->result_file_writer->add_result_from_result_object_with_value_string($test_run_request, $test_run_request->get_result(), $test_run_request->test_result_buffer->get_values_as_string());
+					if(($t = $test_run_request->test_profile->test_installation->get_compiler_data()))
+					{
+						$json_report_attributes['compiler-data'] = $t;
+					}
+
+					$this->result_file_writer->add_result_from_result_object_with_value_string($test_run_request, $test_run_request->get_result(), $test_run_request->test_result_buffer->get_values_as_string(), $json_report_attributes);
 
 					if($this->get_results_identifier() != null && $this->get_file_name() != null && pts_config::read_bool_config('PhoronixTestSuite/Options/Testing/SaveTestLogs', 'FALSE'))
 					{

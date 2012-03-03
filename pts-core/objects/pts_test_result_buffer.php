@@ -57,9 +57,9 @@ class pts_test_result_buffer
 	{
 		return isset($this->buffer_items[$i]) ? $this->buffer_items[$i] : false;
 	}
-	public function add_test_result($identifier, $value, $raw_value = null)
+	public function add_test_result($identifier, $value, $raw_value = null, $json = null)
 	{
-		array_push($this->buffer_items, new pts_test_result_buffer_item($identifier, $value, $raw_value));
+		array_push($this->buffer_items, new pts_test_result_buffer_item($identifier, $value, $raw_value, $json));
 	}
 	public function clear_outlier_results($add_to_other = true, $value_below = false)
 	{

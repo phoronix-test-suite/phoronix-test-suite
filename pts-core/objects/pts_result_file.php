@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2011, Phoronix Media
-	Copyright (C) 2008 - 2011, Michael Larabel
+	Copyright (C) 2008 - 2012, Phoronix Media
+	Copyright (C) 2008 - 2012, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -232,6 +232,7 @@ class pts_result_file
 			$results_identifiers = $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/Result/Data/Entry/Identifier', 0);
 			$results_values = $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/Result/Data/Entry/Value', 0);
 			$results_raw = $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/Result/Data/Entry/RawString', 0);
+			$results_json = $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/Result/Data/Entry/JSON', 0);
 
 			for($i = 0; $i < count($results_name); $i++)
 			{
@@ -249,7 +250,7 @@ class pts_result_file
 				$result_buffer = new pts_test_result_buffer();
 				for($j = 0; $j < count($results_identifiers[$i]); $j++)
 				{
-					$result_buffer->add_test_result($results_identifiers[$i][$j], $results_values[$i][$j], $results_raw[$i][$j]);
+					$result_buffer->add_test_result($results_identifiers[$i][$j], $results_values[$i][$j], $results_raw[$i][$j], $results_json[$i][$j]);
 				}
 
 				$test_result->set_test_result_buffer($result_buffer);

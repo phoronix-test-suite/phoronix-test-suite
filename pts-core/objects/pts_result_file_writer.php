@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2011, Phoronix Media
-	Copyright (C) 2010 - 2011, Michael Larabel
+	Copyright (C) 2010 - 2012, Phoronix Media
+	Copyright (C) 2010 - 2012, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -69,13 +69,13 @@ class pts_result_file_writer
 		$this->xml_writer->addXmlNode('PhoronixTestSuite/Result/DisplayFormat', $result_object->test_profile->get_display_format());
 		$this->result_count++;
 	}
-	public function add_result_from_result_object_with_value_string(&$result_object, $result_value, $result_value_raw = null)
+	public function add_result_from_result_object_with_value_string(&$result_object, $result_value, $result_value_raw = null, $json = null)
 	{
 		$this->add_result_from_result_object($result_object);
-
 		$this->xml_writer->addXmlNode('PhoronixTestSuite/Result/Data/Entry/Identifier', $this->result_identifier);
 		$this->xml_writer->addXmlNode('PhoronixTestSuite/Result/Data/Entry/Value', $result_value);
 		$this->xml_writer->addXmlNode('PhoronixTestSuite/Result/Data/Entry/RawString', $result_value_raw);
+		$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/Result/Data/Entry/JSON', ($json ? json_encode($json) : null));
 	}
 	public function add_result_from_result_object_with_value(&$result_object)
 	{
@@ -93,6 +93,7 @@ class pts_result_file_writer
 			$this->xml_writer->addXmlNode('PhoronixTestSuite/Result/Data/Entry/Identifier', $buffer_item->get_result_identifier());
 			$this->xml_writer->addXmlNode('PhoronixTestSuite/Result/Data/Entry/Value', $buffer_item->get_result_value());
 			$this->xml_writer->addXmlNode('PhoronixTestSuite/Result/Data/Entry/RawString', $buffer_item->get_result_raw());
+			$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/Result/Data/Entry/JSON', ($buffer_item->get_result_json() ? json_encode($buffer_item->get_result_json()) : null));
 		}
 
 		return true;

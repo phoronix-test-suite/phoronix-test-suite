@@ -89,7 +89,7 @@ class pts_result_file_merge_manager
 
 					if($this->result_already_contained($this->test_results[$mto_hash], $buffer_item) == false)
 					{
-						$this->test_results[$mto_hash]->test_result_buffer->add_test_result($this_identifier, $buffer_item->get_result_value(), $buffer_item->get_result_raw());
+						$this->test_results[$mto_hash]->test_result_buffer->add_test_result($this_identifier, $buffer_item->get_result_value(), $buffer_item->get_result_raw(), $buffer_item->get_result_json());
 					}
 				}
 			}
@@ -125,7 +125,7 @@ class pts_result_file_merge_manager
 							$this_identifier = $renamed;
 						}
 
-						$merge_test_object->test_result_buffer->add_test_result($this_identifier, $buffer_item->get_result_value(), $buffer_item->get_result_raw());
+						$merge_test_object->test_result_buffer->add_test_result($this_identifier, $buffer_item->get_result_value(), $buffer_item->get_result_raw(), $buffer_item->get_result_json());
 					}
 				}
 			}
