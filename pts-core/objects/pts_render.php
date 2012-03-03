@@ -367,7 +367,21 @@ class pts_render
 				break;
 		}
 
+		self::report_test_notes_to_graph($graph, $result_object);
+
 		return $graph;
+	}
+	protected static function report_test_notes_to_graph(&$graph, &$result_object)
+	{
+		/*
+		// do some magic here to report any test notes....
+		foreach($result_object->test_result_buffer->get_buffer_items() as $buffer_item)
+		{
+			$buffer_item->get_result_identifier();
+			$buffer_item->get_result_json(); // check for ['compiler-data']
+			// report against graph with $graph->addTestNote($note, $hover_title = null);
+		}
+		*/
 	}
 	public static function evaluate_redundant_identifier_words($identifiers)
 	{
