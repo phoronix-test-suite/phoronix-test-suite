@@ -392,6 +392,8 @@ class pts_strings
 			}
 		}
 		$log = implode(PHP_EOL, $log);
+
+		return $log;
 	}
 	public static function remove_lines_containing($contents, $contains)
 	{
