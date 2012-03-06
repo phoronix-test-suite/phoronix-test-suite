@@ -373,15 +373,31 @@ class pts_render
 	}
 	protected static function report_test_notes_to_graph(&$graph, &$result_object)
 	{
-		/*
 		// do some magic here to report any test notes....
+		$json = array();
+		$unique_compiler_data = array();
 		foreach($result_object->test_result_buffer->get_buffer_items() as $buffer_item)
 		{
-			$buffer_item->get_result_identifier();
-			$buffer_item->get_result_json(); // check for ['compiler-data']
+			$result_json = $buffer_item->get_result_json();
+
+			if(!empty($result_json))
+			{
+				$json[$buffer_item->get_result_identifier()] = $result_json;
+				if(isset($result_json['compiler-data']) && !empty($result_json['compiler-data']))
+				{
+					pts_arrays::unique_push($unique_compiler_data, $result_json['compiler-data']);
+				}
+			}
 			// report against graph with $graph->addTestNote($note, $hover_title = null);
 		}
-		*/
+
+		if(count($unique_compiler_data) == 1)
+		{
+			if($unique_compiler_data[0]['compiler-options'] != null)
+			{
+				$graph->addTestNote('(' . strtoupper($unique_compiler_data[0]['compiler-type']) . ') ' . $unique_compiler_data[0]['compiler'] . ' options: ' . $unique_compiler_data[0]['compiler-options'], $unique_compiler_data[0]['compiler-options']);
+			}
+		}
 	}
 	public static function evaluate_redundant_identifier_words($identifiers)
 	{
