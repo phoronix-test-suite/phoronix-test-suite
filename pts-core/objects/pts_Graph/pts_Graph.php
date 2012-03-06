@@ -198,6 +198,10 @@ abstract class pts_Graph
 	{
 		$this->graph_identifiers = $data_array;
 	}
+	public function addGraphIdentifierNote($identifier, $note)
+	{
+		$this->d['identifier_notes'][$identifier] = $note;
+	}
 	public function hideGraphIdentifiers()
 	{
 		$this->i['hide_graph_identifiers'] = true;

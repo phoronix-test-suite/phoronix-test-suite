@@ -391,12 +391,66 @@ class pts_render
 			// report against graph with $graph->addTestNote($note, $hover_title = null);
 		}
 
-		if(count($unique_compiler_data) == 1)
+		if(empty($json))
 		{
-			if($unique_compiler_data[0]['compiler-options'] != null)
-			{
-				$graph->addTestNote('(' . strtoupper($unique_compiler_data[0]['compiler-type']) . ') ' . $unique_compiler_data[0]['compiler'] . ' options: ' . $unique_compiler_data[0]['compiler-options'], $unique_compiler_data[0]['compiler-options']);
-			}
+			// no JSON data being reported to look at...
+			return false;
+		}
+
+		$compiler_options_string = '(' . strtoupper($unique_compiler_data[0]['compiler-type']) . ') ' . $unique_compiler_data[0]['compiler'] . ' options: ';
+
+		switch(count($unique_compiler_data))
+		{
+			case 0:
+				break;
+			case 1:
+				if($unique_compiler_data[0]['compiler-options'] != null)
+				{
+					$graph->addTestNote($compiler_options_string . $unique_compiler_data[0]['compiler-options'], $unique_compiler_data[0]['compiler-options']);
+				}
+				break;
+			default:
+				$diff = call_user_func_array('array_diff_assoc', $unique_compiler_data);
+
+				if(isset($diff['compiler-options']))
+				{
+					$unique_compiler_data = array();
+					foreach($json as $identifier => &$data)
+					{
+						if(isset($data['compiler-data']['compiler-options']))
+						{
+							pts_arrays::unique_push($unique_compiler_data, explode(' ', $data['compiler-data']['compiler-options']));
+						}
+					}
+
+					$diff = call_user_func_array('array_diff', $unique_compiler_data);
+
+					if(count($diff) == 1)
+					{
+						$diff = array_search(array_pop($diff), $unique_compiler_data[0]);
+
+						if($diff !== false)
+						{
+							$intersect = call_user_func_array('array_intersect', $unique_compiler_data);
+							$graph->addTestNote($compiler_options_string . implode(' ', $intersect));
+
+							foreach($json as $identifier => &$data)
+							{
+								if(isset($data['compiler-data']['compiler-options']))
+								{
+									$options = explode(' ', $data['compiler-data']['compiler-options']);
+
+									if(isset($options[$diff]) && stripos($identifier, $options[$diff]) === false)
+									{
+										$graph->addGraphIdentifierNote($identifier, $options[$diff]);
+									}
+								}
+							}
+						}
+					}
+				}
+
+				break;
 		}
 	}
 	public static function evaluate_redundant_identifier_words($identifiers)

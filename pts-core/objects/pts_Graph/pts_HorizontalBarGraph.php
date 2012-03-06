@@ -127,6 +127,11 @@ class pts_HorizontalBarGraph extends pts_Graph
 
 				if(($this->text_string_width($value, $this->i['identifier_size']) + 2) < $graph_size)
 				{
+					if(isset($this->d['identifier_notes'][$this->graph_identifiers[$i]]))
+					{
+						$this->svg_dom->add_text_element($this->d['identifier_notes'][$this->graph_identifiers[$i]], array('x' => ($this->i['left_start'] + 4), 'y' => ($px_bound_top + 8), 'font-size' => (self::$c['size']['key'] - 1), 'fill' => self::$c['color']['body_text'], 'text-anchor' => 'start', 'dominant-baseline' => 'middle'));
+					}
+
 					$this->svg_dom->add_text_element($value, array('x' => ($value_end_right - 5), 'y' => $middle_of_bar, 'font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['body_text'], 'text-anchor' => 'end', 'dominant-baseline' => 'middle'));
 				}
 				else if($value > 0)
