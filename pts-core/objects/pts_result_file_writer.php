@@ -75,7 +75,13 @@ class pts_result_file_writer
 		$this->xml_writer->addXmlNode('PhoronixTestSuite/Result/Data/Entry/Identifier', $this->result_identifier);
 		$this->xml_writer->addXmlNode('PhoronixTestSuite/Result/Data/Entry/Value', $result_value);
 		$this->xml_writer->addXmlNode('PhoronixTestSuite/Result/Data/Entry/RawString', $result_value_raw);
-		$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/Result/Data/Entry/JSON', ($json ? json_encode($json) : null));
+
+		if(!defined('USER_PTS_CORE_VERSION') || USER_PTS_CORE_VERSION > 3722)
+		{
+			// Ensure that a supported result file schema is being written...
+			// USER_PTS_CORE_VERSION is set by OpenBenchmarking.org so if the requested client is old, don't write this data to send back to their version
+			$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/Result/Data/Entry/JSON', ($json ? json_encode($json) : null));
+		}
 	}
 	public function add_result_from_result_object_with_value(&$result_object)
 	{
@@ -93,7 +99,13 @@ class pts_result_file_writer
 			$this->xml_writer->addXmlNode('PhoronixTestSuite/Result/Data/Entry/Identifier', $buffer_item->get_result_identifier());
 			$this->xml_writer->addXmlNode('PhoronixTestSuite/Result/Data/Entry/Value', $buffer_item->get_result_value());
 			$this->xml_writer->addXmlNode('PhoronixTestSuite/Result/Data/Entry/RawString', $buffer_item->get_result_raw());
-			$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/Result/Data/Entry/JSON', ($buffer_item->get_result_json() ? json_encode($buffer_item->get_result_json()) : null));
+
+			if(!defined('USER_PTS_CORE_VERSION') || USER_PTS_CORE_VERSION > 3722)
+			{
+				// Ensure that a supported result file schema is being written...
+				// USER_PTS_CORE_VERSION is set by OpenBenchmarking.org so if the requested client is old, don't write this data to send back to their version
+				$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/Result/Data/Entry/JSON', ($buffer_item->get_result_json() ? json_encode($buffer_item->get_result_json()) : null));
+			}
 		}
 
 		return true;
@@ -146,6 +158,7 @@ class pts_result_file_writer
 		$pts_version = $result_file->get_system_pts_version();
 		$system_notes = $result_file->get_system_notes();
 		$associated_identifiers = $result_file->get_system_identifiers();
+		$system_json = $result_file->get_system_json();
 
 		// Write the system hardware/software information
 		foreach(array_keys($system_hardware) as $i)
@@ -169,6 +182,13 @@ class pts_result_file_writer
 					$this->xml_writer->addXmlNode('PhoronixTestSuite/System/TimeStamp', $system_date[$i]);
 					$this->xml_writer->addXmlNode('PhoronixTestSuite/System/TestClientVersion', $pts_version[$i]);
 					$this->xml_writer->addXmlNode('PhoronixTestSuite/System/Notes', $system_notes[$i]);
+
+					if(!defined('USER_PTS_CORE_VERSION') || USER_PTS_CORE_VERSION > 3722)
+					{
+						// Ensure that a supported result file schema is being written...
+						// USER_PTS_CORE_VERSION is set by OpenBenchmarking.org so if the requested client is old, don't write this data to send back to their version
+						$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/System/JSON', ($system_json[$i] ? json_encode($system_json[$i]) : null));
+					}
 
 					array_push($this->added_hashes, $this_hash);
 				}

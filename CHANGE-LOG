@@ -7,6 +7,7 @@ Phoronix Test Suite (Git)
 - pts-core: Attempt to detect when any test ends prematurely with an invalid result
 - pts-core: Begin reporting test installation compiler attributes from test profiles to the JSON in new result file XML schema
 - pts-core: Remove timestamps from captured log files
+- pts-core: Support system JSON for each identifier in the result file XML schema
 - pts_Graph: Add support for reporting test notes to graphs
 - pts_Graph: Restore links within tables for the new pts_Graph table SVG DOM IR
 - phodevi: Fix for Linux memory module count decoding in niche cases on multi-socket systems

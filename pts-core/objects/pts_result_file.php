@@ -62,6 +62,10 @@ class pts_result_file
 	{
 		return $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/System/Software');
 	}
+	public function get_system_json()
+	{
+		return $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/System/JSON');
+	}
 	public function get_system_user()
 	{
 		return $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/System/User');
