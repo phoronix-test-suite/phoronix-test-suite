@@ -305,7 +305,9 @@ class pts_client
 					if(is_file($file) && is_readable($file))
 					{
 						// copy() can't be used in this case since it will result in a blank file for /proc/ file-system
-						file_put_contents($system_log_dir . basename($file), file_get_contents($file));
+						$file_contents = file_get_contents($file);
+						$file_contents = pts_strings::remove_line_timestamps($file_contents);
+						file_put_contents($system_log_dir . basename($file), $file_contents);
 					}
 				}
 
@@ -320,6 +322,7 @@ class pts_client
 					'dmesg',
 					'cpufreq-info',
 					'glxinfo',
+					'clinfo',
 					'uname -a',
 					// 'udisks --dump',
 					'upower --dump',
@@ -345,6 +348,7 @@ class pts_client
 
 						// Try to filter out any serial numbers, etc.
 						$cmd_output = pts_strings::remove_lines_containing($cmd_output, array('Serial N', 'S/N', 'Serial #', 'serial:', 'serial='));
+						$cmd_output = pts_strings::remove_line_timestamps($cmd_output);
 
 						file_put_contents($system_log_dir . $command[0], $cmd_output);
 					}

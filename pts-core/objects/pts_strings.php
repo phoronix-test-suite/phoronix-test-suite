@@ -373,6 +373,26 @@ class pts_strings
 
 		return $str;
 	}
+	public static function remove_line_timestamps($log)
+	{
+		// Try to strip out timestamps from lines like Xorg.0.log and dmesg, e.g.:
+		// [  326.390358] EXT4-fs (dm-1): initial error at 1306235400: ext4_journal_start_sb:251
+
+		$log = explode(PHP_EOL, $log);
+		foreach($log as &$line)
+		{
+			if(substr($line, 0, 1) == '[' && ($t = strpos($line, '] ', 2)) !== false)
+			{
+				$encased_segment = trim(substr($line, 1, ($t - 1)));
+
+				if(is_numeric($encased_segment))
+				{
+					$line = substr($line, ($t + 2));
+				}
+			}
+		}
+		$log = implode(PHP_EOL, $log);
+	}
 	public static function remove_lines_containing($contents, $contains)
 	{
 		foreach($contains as $needle)
