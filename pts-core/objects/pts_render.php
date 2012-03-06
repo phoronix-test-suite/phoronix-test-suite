@@ -412,14 +412,20 @@ class pts_render
 			default:
 				$diff = call_user_func_array('array_diff_assoc', $unique_compiler_data);
 
-				if(isset($diff['compiler-options']))
+				if(count($diff) == 1)
+				{
+					$key = array_keys($diff);
+					$key = array_pop($key);
+				}
+
+				if(isset($diff[$key]))
 				{
 					$unique_compiler_data = array();
 					foreach($json as $identifier => &$data)
 					{
-						if(isset($data['compiler-data']['compiler-options']))
+						if(isset($data['compiler-data'][$key]))
 						{
-							pts_arrays::unique_push($unique_compiler_data, explode(' ', $data['compiler-data']['compiler-options']));
+							pts_arrays::unique_push($unique_compiler_data, explode(' ', $data['compiler-data'][$key]));
 						}
 					}
 
@@ -431,14 +437,17 @@ class pts_render
 
 						if($diff !== false)
 						{
-							$intersect = call_user_func_array('array_intersect', $unique_compiler_data);
-							$graph->addTestNote($compiler_options_string . implode(' ', $intersect));
+							if($key == 'compiler-options')
+							{
+								$intersect = call_user_func_array('array_intersect', $unique_compiler_data);
+								$graph->addTestNote($compiler_options_string . implode(' ', $intersect));
+							}
 
 							foreach($json as $identifier => &$data)
 							{
-								if(isset($data['compiler-data']['compiler-options']))
+								if(isset($data['compiler-data'][$key]))
 								{
-									$options = explode(' ', $data['compiler-data']['compiler-options']);
+									$options = explode(' ', $data['compiler-data'][$key]);
 
 									if(isset($options[$diff]) && stripos($identifier, $options[$diff]) === false)
 									{
@@ -449,7 +458,6 @@ class pts_render
 						}
 					}
 				}
-
 				break;
 		}
 	}
