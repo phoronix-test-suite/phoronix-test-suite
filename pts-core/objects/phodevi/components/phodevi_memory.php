@@ -229,7 +229,7 @@ class phodevi_memory extends phodevi_device_interface
 				$mem_size = phodevi_bsd_parser::read_sysctl('hw.realmem');
 			}
 
-			$info = ceil(floor($mem_size / 1048576) / 512) * 512;
+			$info = ceil(floor($mem_size / 1048576) / 256) * 256;
 		}
 		else if(phodevi::is_macosx())
 		{
