@@ -97,6 +97,7 @@ class pts_OverviewGraph extends pts_Graph
 		$this->i['mark_count'] = 6;
 		$this->i['graph_max_value'] = 1.2;
 		$l_height = 15;
+		$this->i['key_line_height'] = $l_height;
 
 		if(($key_count = count($this->graph_data_title)) > 8)
 		{
