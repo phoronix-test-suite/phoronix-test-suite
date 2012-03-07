@@ -389,15 +389,16 @@ class pts_test_installer
 	}
 	protected static function create_compiler_mask(&$test_install_request)
 	{
+		// or pass false to $test_install_request to bypass the test checks
 		$compilers = array();
 
-		if(in_array('build-utilities', $test_install_request->test_profile->get_dependencies()))
+		if($test_install_request === false || in_array('build-utilities', $test_install_request->test_profile->get_dependencies()))
 		{
 			// Handle C/C++ compilers for this external dependency
 			$compilers['CC'] = array(pts_strings::first_in_string(pts_client::read_env('CC'), ' '), 'gcc', 'clang', 'icc', 'pcc');
 			$compilers['CXX'] = array(pts_strings::first_in_string(pts_client::read_env('CXX'), ' '), 'g++', 'clang++');
 		}
-		if(in_array('fortran-compiler', $test_install_request->test_profile->get_dependencies()))
+		if($test_install_request === false || in_array('fortran-compiler', $test_install_request->test_profile->get_dependencies()))
 		{
 			// Handle Fortran for this external dependency
 			$compilers['F9X'] = array(pts_strings::first_in_string(pts_client::read_env('F9X'), ' '), pts_strings::first_in_string(pts_client::read_env('F95'), ' '), 'gfortran', 'f95', 'fortran');
@@ -434,7 +435,15 @@ class pts_test_installer
 		if(!empty($compilers))
 		{
 			// Create a temporary directory that will be at front of PATH and serve for masking the actual compiler
-			$mask_dir = pts_client::temporary_directory() . '/pts-compiler-mask-' . $test_install_request->test_profile->get_identifier_base_name() . $test_install_request->test_profile->get_test_profile_version() . '/';
+			if($test_install_request instanceof pts_test_install_request)
+			{
+				$mask_dir = pts_client::temporary_directory() . '/pts-compiler-mask-' . $test_install_request->test_profile->get_identifier_base_name() . $test_install_request->test_profile->get_test_profile_version() . '/';
+			}
+			else
+			{
+				$mask_dir = pts_client::temporary_directory() . '/pts-compiler-mask-' . rand(100, 999) . '/';
+			}
+
 			pts_file_io::mkdir($mask_dir);
 
 			$compiler_extras = array(
@@ -469,7 +478,7 @@ class pts_test_installer
 				chmod($main_compiler, 0755);
 
 				// The two below code chunks ensure the proper compiler is always hit
-				if(!in_array($compiler_name, pts_arrays::to_array($compiler_extras[$compiler_type]['safeguard-names'])) && getenv($compiler_type) == false)
+				if($test_install_request instanceof pts_test_install_request && !in_array($compiler_name, pts_arrays::to_array($compiler_extras[$compiler_type]['safeguard-names'])) && getenv($compiler_type) == false)
 				{
 					// So if e.g. clang becomes the default compiler, since it's not GCC, it will ensure CC is also set to clang beyond the masking below
 					$test_install_request->special_environment_vars[$compiler_type] = $compiler_name;
@@ -484,10 +493,18 @@ class pts_test_installer
 					}
 				}
 			}
-			$test_install_request->compiler_mask_dir = $mask_dir;
-			// Appending the rest of the path will be done automatically within call_test_script
-			$test_install_request->special_environment_vars['PATH'] = $mask_dir;
+
+			if($test_install_request instanceof pts_test_install_request)
+			{
+				$test_install_request->compiler_mask_dir = $mask_dir;
+				// Appending the rest of the path will be done automatically within call_test_script
+				$test_install_request->special_environment_vars['PATH'] = $mask_dir;
+			}
+
+			return $mask_dir;
 		}
+
+		return false;
 	}
 	protected static function end_compiler_mask(&$test_install_request)
 	{
