@@ -131,7 +131,7 @@ class pts_Table extends pts_Graph
 
 
 		// $this->i['graph_max_value'] isn't actually correct to use, but it works
-		$extra_heading_height = $this->text_string_height($this->i['graph_max_value'], self::$c['size']['headers']) * 1.2;
+		$extra_heading_height = $this->text_string_height($this->i['graph_max_value'], self::$c['size']['headers']) * 1.25;
 
 		// Needs to be at least 46px tall for the PTS logo
 		$identifier_height = max($identifier_height, 48);
@@ -147,7 +147,7 @@ class pts_Table extends pts_Graph
 			$this->i['top_heading_height'] += self::$c['size']['headers'] + (count($this->graph_sub_titles) * (self::$c['size']['sub_headers'] + 4));
 		}
 
-		$table_max_value_width = $this->text_string_width($this->i['graph_max_value'], $this->i['identifier_size']);
+		$table_max_value_width = ceil($this->text_string_width($this->i['graph_max_value'], $this->i['identifier_size']) * 1.02) + 2;
 
 		$table_item_width = max($table_max_value_width, $table_identifier_width) + 2;
 		$table_width = max(($table_item_width * count($this->columns)), floor($this->text_string_width($this->graph_title, 12) / $table_item_width) * $table_item_width);
