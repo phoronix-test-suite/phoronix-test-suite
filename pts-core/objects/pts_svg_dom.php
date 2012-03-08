@@ -261,6 +261,10 @@ class pts_svg_dom
 		// Width x Height
 		return array($box_width, $box_height);
 	}
+	public static function embed_png_image($png_img_file)
+	{
+		return 'data:image/png;base64,' . base64_encode(file_get_contents($png_img_file));
+	}
 }
 
 ?>

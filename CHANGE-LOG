@@ -12,6 +12,7 @@ Phoronix Test Suite (Git)
 - pts_Graph: Add support for reporting test notes to graphs
 - pts_Graph: Restore links within tables for the new pts_Graph table SVG DOM IR
 - pts_Graph: Fix for key not appearing on overview graph
+- pts_Graph: Embed PTS and OpenBenchmarking.org logos locally within SVG
 - phodevi: Fix for Linux memory module count decoding in niche cases on multi-socket systems
 - phodevi: Initial work towards Minix 3.2.0 operating system support
 - graphics_event_checker: Rewrite of the graphics event checker and enable by default on new installs

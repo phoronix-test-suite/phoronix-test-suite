@@ -118,7 +118,7 @@ class pts_HeatMapBarGraph extends pts_Graph
 		$end_x = $start_x + $bar_width;
 
 		// Title bar
-		$this->svg_dom->add_element('image', array('xlink:href' => 'http://openbenchmarking.org/media/logo-183x32.png', 'x' => ($end_x - 183), 'y' => ($end_x - 183), 'width' => 183, 'height' => 32));
+		$this->svg_dom->add_element('image', array('xlink:href' => pts_svg_dom::embed_png_image(PTS_CORE_STATIC_PATH . 'images/ob-fulltext-183x32.png'), 'x' => ($end_x - 183), 'y' => ($end_x - 183), 'width' => 183, 'height' => 32));
 
 
 		if(!empty($this->keys))
