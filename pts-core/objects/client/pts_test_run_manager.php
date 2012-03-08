@@ -637,7 +637,7 @@ class pts_test_run_manager
 	public static function clean_save_name($input, $is_new_save = true)
 	{
 		$input = pts_client::swap_variables($input, array('pts_client', 'user_run_save_variables'));
-		$input = pts_strings::remove_redundant(pts_strings::keep_in_string(str_replace(array(' -', ' '), '-', trim($input)), pts_strings::CHAR_LETTER | pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DASH | pts_strings::CHAR_UNDERSCORE), '-');
+		$input = pts_strings::remove_redundant(pts_strings::keep_in_string(str_replace(' ', '-', trim($input)), pts_strings::CHAR_LETTER | pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DASH), '-');
 
 		if($is_new_save)
 		{
