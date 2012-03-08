@@ -284,7 +284,18 @@ class pts_svg_dom_gd
 					}
 					break;
 				case 'image':
-					// TODO: IMPLEMENT XXX
+					$a = self::attributes_to_array($node, array('xlink:href', 'x', 'y', 'width', 'height'));
+
+					if(substr($a['xlink:href'], 0, 22) == 'data:image/png;base64,')
+					{
+						$img = imagecreatefromstring(base64_decode(substr($a['xlink:href'], 22)));
+					}
+					else
+					{
+						$img = imagecreatefromstring(file_get_contents($a['xlink:href']));
+					}
+
+					imagecopyresampled($gd, $img, $a['x'], $a['y'], 0, 0, $a['width'], $a['height'], imagesx($img), imagesy($img));
 					break;
 				default:
 					if(PTS_IS_CLIENT)
