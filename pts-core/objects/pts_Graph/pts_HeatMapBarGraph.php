@@ -38,6 +38,11 @@ class pts_HeatMapBarGraph extends pts_Graph
 	}
 	public function add_result_bar($min_value, $max_value, $bin_size, $sections, $lines, $test_data, $results = array())
 	{
+		if($min_value == $max_value)
+		{
+			return false;
+		}
+
 		array_push($this->bars, array(
 			'min_value' => $min_value,
 			'max_value' => $max_value,
