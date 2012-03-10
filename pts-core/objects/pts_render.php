@@ -879,11 +879,6 @@ class pts_render
 	}
 	public static function renderer_compatibility_check($user_agent)
 	{
-		if(isset($_REQUEST['force_format']))
-		{
-			return $_REQUEST['force_format'];
-		}
-
 		$user_agent .= ' ';
 		$selected_renderer = 'SVG';
 
@@ -976,23 +971,6 @@ class pts_render
 		}
 
 		return $selected_renderer;
-	}
-	public static function determine_visual_renderer()
-	{
-		$requested_renderer = 'SVG';
-		if(isset($_SERVER['HTTP_USER_AGENT']))
-		{
-			static $browser_renderer = null;
-
-			if($browser_renderer == null || isset($_REQUEST['force_format']))
-			{
-				$browser_renderer = self::renderer_compatibility_check($_SERVER['HTTP_USER_AGENT']);
-			}
-
-			$requested_renderer = $browser_renderer;
-		}
-
-		return $requested_renderer;
 	}
 }
 

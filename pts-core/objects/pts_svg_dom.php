@@ -47,7 +47,25 @@ class pts_svg_dom
 	}
 	public function output($save_as = null)
 	{
-		$output_format = pts_render::determine_visual_renderer();
+		$output_format = 'SVG';
+		if(isset($_SERVER['HTTP_USER_AGENT']) || isset($_REQUEST['force_format']))
+		{
+			static $browser_renderer = null;
+
+			if(isset($_REQUEST['force_format']))
+			{
+				// Don't nest the force_format within the browser_renderer null check in case its overriden by OpenBenchmarking.org dynamically
+				$output_format = $_REQUEST['force_format'];
+			}
+			else if($browser_renderer == null)
+			{
+				$output_format = self::renderer_compatibility_check($_SERVER['HTTP_USER_AGENT']);
+			}
+			else
+			{
+				$output_format = $browser_renderer;
+			}
+		}
 
 		switch($output_format)
 		{
@@ -60,11 +78,10 @@ class pts_svg_dom
 				$output_format = 'png';
 				break;
 			case 'SVG':
+			default:
 				$output = $this->save_xml();
 				$output_format = 'svg';
 				break;
-			default:
-				return false;
 		}
 
 		if($save_as)
