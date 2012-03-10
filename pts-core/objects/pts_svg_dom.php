@@ -47,7 +47,7 @@ class pts_svg_dom
 	}
 	public function render_image($save_as = null, &$format = null)
 	{
-		// Alias for output
+		// XXX: Alias for output. With PTS 3.8 this is just here for API compatibility with OpenBenchmarking.org.
 		$this->output($save_as, $format);
 	}
 	public function output($save_as = null, &$format = null)

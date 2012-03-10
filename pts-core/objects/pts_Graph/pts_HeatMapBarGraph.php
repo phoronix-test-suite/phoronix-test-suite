@@ -123,7 +123,7 @@ class pts_HeatMapBarGraph extends pts_Graph
 		$end_x = $start_x + $bar_width;
 
 		// Title bar
-		$this->svg_dom->add_element('image', array('xlink:href' => pts_svg_dom::embed_png_image(PTS_CORE_STATIC_PATH . 'images/ob-fulltext-183x32.png'), 'x' => ($end_x - 183), 'y' => ($end_x - 183), 'width' => 183, 'height' => 32));
+		$this->svg_dom->add_element('image', array('xlink:href' => pts_svg_dom::embed_png_image(PTS_CORE_STATIC_PATH . 'images/ob-fulltext-183x32.png'), 'x' => ($end_x - 190), 'y' => 10, 'width' => 183, 'height' => 32));
 
 
 		if(!empty($this->keys))
@@ -218,13 +218,13 @@ class pts_HeatMapBarGraph extends pts_Graph
 				if($next_section > $hmap['min_value'])
 				{
 					$next_section = $next_section > $hmap['max_value'] ? $hmap['max_value'] : $next_section;
-					$plot_x = $last_plot_x + (($next_section - $prev_section) * $value_size);
+					$plot_x = floor($last_plot_x + (($next_section - $prev_section) * $value_size));
 					$plot_x = $plot_x > $end_x ? $end_x : $plot_x;
 
 					if($prev_color != $color || ($color != $background_color))
 					{
 						// don't uselessly paint background color, it's already painted
-						$this->svg_dom->draw_rectangle_gradient($last_plot_x, $upper_y, ceil($plot_x - $last_plot_x), $bar_height, $prev_color, $color);
+						$this->svg_dom->draw_rectangle_gradient($last_plot_x, $upper_y, abs($plot_x - $last_plot_x), $bar_height, $prev_color, $color);
 					}
 
 					$last_plot_x = floor($plot_x - 0.6);
@@ -268,16 +268,16 @@ class pts_HeatMapBarGraph extends pts_Graph
 
 				$line_x = $start_x + ($value - $hmap['min_value']) * $value_size;
 
-				if(($start_x + 10) < $line_x && $line_x < ($end_x - 10))
+				if(false && ($start_x + 10) < $line_x && $line_x < ($end_x - 10))
 				{
 					$this->svg_dom->draw_svg_line($line_x, ($lower_y - 10), $line_x, ($lower_y - 1), $key_colors[$identifier], 1);
 					$this->svg_dom->draw_svg_line($line_x, ($lower_y + 10), $line_x, ($lower_y + 1), $key_colors[$identifier], 1);
 				}
 
-				$this->svg_dom->draw_svg_line($line_x, $lower_y, $line_x, $upper_y, $key_colors[$identifier], 1);
+				$this->svg_dom->draw_svg_line($line_x, $upper_y, $line_x, $lower_y, $key_colors[$identifier], 1);
 			}
 
-			$this->svg_dom->add_element('rect', array('x' => $start_x, 'y' => $upper_y, 'width' => $bar_width, 'height' => $bar_height, 'stroke' => self::$c['color']['border'], 'stroke-width' => 1));
+			$this->svg_dom->add_element('rect', array('x' => $start_x, 'y' => $upper_y, 'width' => $bar_width, 'height' => $bar_height, 'fill' => 'none', 'stroke' => self::$c['color']['border'], 'stroke-width' => 1));
 		}
 
 		// Footer
