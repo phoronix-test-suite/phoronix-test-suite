@@ -261,6 +261,11 @@ class pts_HeatMapBarGraph extends pts_Graph
 
 			foreach($hmap['results'] as $identifier => $value)
 			{
+				if(!isset($key_colors[$identifier]))
+				{
+					continue;
+				}
+
 				$line_x = $start_x + ($value - $hmap['min_value']) * $value_size;
 
 				if(($start_x + 10) < $line_x && $line_x < ($end_x - 10))

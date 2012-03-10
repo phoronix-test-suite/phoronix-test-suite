@@ -111,7 +111,7 @@ class pts_Table extends pts_Graph
 	{
 		$this->render_graph_start();
 		$this->render_graph_finish();
-		return $this->svg_dom->output($save_as, pts_render::determine_visual_renderer());
+		return $this->svg_dom->output($save_as);
 	}
 	public function render_graph_start()
 	{

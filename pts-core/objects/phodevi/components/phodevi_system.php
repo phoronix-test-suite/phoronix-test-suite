@@ -685,6 +685,12 @@ class phodevi_system extends phodevi_device_interface
 	}
 	public static function sw_operating_system()
 	{
+		if(!PTS_IS_CLIENT)
+		{
+			// TODO: Figure out why this function is sometimes called from OpenBenchmarking.org....
+			return false;
+		}
+
 		// Determine the operating system release
 		if(phodevi::is_linux())
 		{

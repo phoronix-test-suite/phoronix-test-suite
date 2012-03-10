@@ -1010,7 +1010,7 @@ class pts_client
 				// Check to see if skip_graph was realized during the rendering process
 				if($graph->doSkipGraph() == false)
 				{
-					$graph->svg_dom->output($save_to_dir . '/result-graphs/visualize.BILDE_EXTENSION', 'SVG');
+					$graph->svg_dom->output($save_to_dir . '/result-graphs/visualize.BILDE_EXTENSION');
 				}
 			}
 			unset($graph);
@@ -1024,7 +1024,7 @@ class pts_client
 				// Check to see if skip_graph was realized during the rendering process
 				if($graph->doSkipGraph() == false)
 				{
-					$graph->svg_dom->output($save_to_dir . '/result-graphs/radar.BILDE_EXTENSION', 'SVG');
+					$graph->svg_dom->output($save_to_dir . '/result-graphs/radar.BILDE_EXTENSION');
 				}
 			}
 			unset($graph);

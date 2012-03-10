@@ -45,8 +45,10 @@ class pts_svg_dom
 
 		$this->dom->appendChild($this->svg);
 	}
-	public function output($save_as = null, $output_format = 'SVG')
+	public function output($save_as = null)
 	{
+		$output_format = pts_render::determine_visual_renderer();
+
 		switch($output_format)
 		{
 			case 'JPEG':
