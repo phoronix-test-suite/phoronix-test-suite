@@ -45,7 +45,8 @@ class pts_render
 		}
 
 		$graph->renderGraph();
-		$graph = $graph->svg_dom->output(null);
+		$output_format = 'SVG';
+		$graph = $graph->svg_dom->output(null, $output_format);
 
 		switch($output_format)
 		{
@@ -60,6 +61,7 @@ class pts_render
 					header('Content-Type: image/' . strtolower($output_format));
 				}
 				break;
+			default:
 			case 'SVG':
 				if($nested)
 				{

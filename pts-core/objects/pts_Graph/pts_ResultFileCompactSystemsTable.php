@@ -50,7 +50,7 @@ class pts_ResultFileCompactSystemsTable extends pts_Graph
 		$this->i['top_heading_height'] = 22 + self::$c['size']['headers'];
 
 		$longest_component = pts_strings::find_longest_string($this->components);
-		$component_header_height = $this->text_string_height($longest_component, ($this->i['identifier_size'] + 3)) + 4;
+		$component_header_height = $this->text_string_height($longest_component, ($this->i['identifier_size'] + 3)) + 6;
 
 		$this->i['graph_width'] = 10 + max(
 			$this->text_string_width($this->graph_title, self::$c['size']['headers']) - (isset($this->graph_title[30]) ? 20 : 0),

@@ -254,7 +254,7 @@ class pts_result_file
 				$result_buffer = new pts_test_result_buffer();
 				for($j = 0; $j < count($results_identifiers[$i]); $j++)
 				{
-					$result_buffer->add_test_result($results_identifiers[$i][$j], $results_values[$i][$j], $results_raw[$i][$j], $results_json[$i][$j]);
+					$result_buffer->add_test_result($results_identifiers[$i][$j], $results_values[$i][$j], $results_raw[$i][$j], (isset($results_json[$i][$j]) ? $results_json[$i][$j] : null));
 				}
 
 				$test_result->set_test_result_buffer($result_buffer);
