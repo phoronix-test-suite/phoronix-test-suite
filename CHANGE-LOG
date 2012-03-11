@@ -8,6 +8,7 @@ Phoronix Test Suite (Git)
 - pts-core: Begin reporting test installation compiler attributes from test profiles to the JSON in new result file XML schema
 - pts-core: Remove timestamps from captured log files
 - pts-core: Support system JSON for each identifier in the result file XML schema
+- pts-core: Fix save name issue when dealing with dashes mixed with spaces in save name
 - pts-core: Pass compiler options to graphs for reporting
 - pts_Graph: Add support for reporting test notes to graphs
 - pts_Graph: Restore links within tables for the new pts_Graph table SVG DOM IR
