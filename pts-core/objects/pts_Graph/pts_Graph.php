@@ -728,7 +728,7 @@ abstract class pts_Graph
 
 		$this->i['key_line_height'] = 16;
 		$this->i['key_item_width'] = 16 + $this->text_string_width(pts_strings::find_longest_string($this->graph_data_title), self::$c['size']['key']);
-		$this->i['keys_per_line'] = floor(($this->i['graph_left_end'] - $this->i['left_start']) / $this->i['key_item_width']);
+		$this->i['keys_per_line'] = max(1, floor(($this->i['graph_left_end'] - $this->i['left_start']) / $this->i['key_item_width']));
 
 		return ceil(count($this->graph_data_title) / $this->i['keys_per_line']) * $this->i['key_line_height'];
 	}

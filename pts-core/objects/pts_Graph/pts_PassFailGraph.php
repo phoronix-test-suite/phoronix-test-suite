@@ -57,7 +57,7 @@ class pts_PassFailGraph extends pts_Graph
 		$identifier_width = floor(($graph_width - (($columns - 1) * $spacing)) / $columns);
 
 		$width = $identifier_width - 8;
-		$height = $line_height - 4;
+		$height = $identifier_height - 4;
 		$main_font_size = $this->text_size_bounds($this->i['graph_max_value'], $font_size, 4, $width, $height);
 
 		for($c = 0; $c < $columns; $c++)

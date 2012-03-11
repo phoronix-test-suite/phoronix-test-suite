@@ -103,7 +103,7 @@ class pts_HeatMapBarGraph extends pts_Graph
 		{
 			list($longest_key_width, $key_line_height) = pts_svg_dom::estimate_text_dimensions(pts_strings::find_longest_string($this->keys), '', 10, true);
 			$key_line_height += 18;
-			$keys_per_line = floor($bar_width / ($longest_key_width + 12));
+			$keys_per_line = max(floor($bar_width / max(1, $longest_key_width + 12)), 1);
 			$title_key_offset = ceil(count($this->keys) / $keys_per_line) * $key_line_height;
 		}
 		else

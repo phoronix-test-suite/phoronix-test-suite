@@ -262,7 +262,7 @@ class pts_Table extends pts_Graph
 			{
 				$identifier = pts_strings::colon_explode($system_identifier);
 
-				if($identifier[0] != $last_identifier)
+				if(isset($identifier[0]) && $identifier[0] != $last_identifier)
 				{
 					if($current_col == $last_changed_col)
 					{

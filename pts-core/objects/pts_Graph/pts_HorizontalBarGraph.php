@@ -68,6 +68,7 @@ class pts_HorizontalBarGraph extends pts_Graph
 		$separator_height = ($a = (6 - (floor($bar_count / 2) * 2))) > 0 ? $a : 0;
 		$multi_way = $this->is_multi_way_comparison && count($this->graph_data) > 1;
 		$bar_height = floor(($this->i['identifier_height'] - ($multi_way ? 4 : 0) - $separator_height - ($bar_count * $separator_height)) / $bar_count);
+		$this->i['graph_max_value'] = $this->i['graph_max_value'] != 0 ? $this->i['graph_max_value'] : 1;
 
 		for($i_o = 0; $i_o < $bar_count; $i_o++)
 		{
