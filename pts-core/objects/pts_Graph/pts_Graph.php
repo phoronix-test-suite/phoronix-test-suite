@@ -581,7 +581,7 @@ abstract class pts_Graph
 				$estimated_height = 0;
 				foreach($this->i['notes'] as $i => $note_r)
 				{
-					$this->svg_dom->add_textarea_element(($i + 1) . '. ' . $note_r['note'], array('x' => 5, 'y' => ($bottom_heading_start + (self::$c['size']['key'] * 2) + $estimated_height), 'font-size' => (self::$c['size']['key'] - 1), 'fill' => self::$c['color']['background'], 'text-anchor' => 'start', 'dominant-baseline' => 'middle', 'xlink:title' => $note_r['hover-title']), $estimated_height);
+					$this->svg_dom->add_textarea_element(($i + 1) . '. ' . $note_r['note'], array('x' => 5, 'y' => ($bottom_heading_start + (self::$c['size']['key'] * 2) + 4 + $estimated_height), 'font-size' => (self::$c['size']['key'] - 1), 'fill' => self::$c['color']['background'], 'text-anchor' => 'start', 'dominant-baseline' => 'middle', 'xlink:title' => $note_r['hover-title']), $estimated_height);
 				}
 			}
 		}
@@ -867,7 +867,7 @@ abstract class pts_Graph
 			foreach($this->i['notes'] as $note)
 			{
 				// If the note isn't at least 36 characters long, assume it's not long enough to word-wrap, so take short-cut for efficiency
-				$note_height += !isset($note['note'][36]) ? self::$c['size']['key'] : (ceil($this->text_string_width($note['note'], self::$c['size']['key']) / ($this->i['graph_width'] - 14)) + 1) * self::$c['size']['key'];
+				$note_height += !isset($note['note'][36]) ? (self::$c['size']['key'] + 2) : (ceil($this->text_string_width($note['note'], self::$c['size']['key']) / ($this->i['graph_width'] - 14)) + 1) * self::$c['size']['key'];
 			}
 		}
 
