@@ -139,14 +139,16 @@ class pts_svg_dom
 	{
 		$el = $this->dom->createElement($element_type);
 
-		if(isset($attributes['xlink:href']) && $attributes['xlink:href'] != null && !in_array($element_type, array('image', 'a')))
+		if(isset($attributes['xlink:href']) && $attributes['xlink:href'] != null && $element_type != 'a' && ($element_type != 'image' || (isset($attributes['http_link']) && $attributes['http_link'] != null)))
 		{
+			// image tag uses xlink:href as the image src, so check for 'http_link' instead to make a link out of it
+			$link_key = ($element_type == 'image' ? 'http_link' : 'xlink:href');
 			$link = $this->dom->createElement('a');
-			$link->setAttribute('xlink:href', $attributes['xlink:href']);
+			$link->setAttribute('xlink:href', $attributes[$link_key]);
 			$link->setAttribute('xlink:show', 'new');
 			$link->appendChild($el);
 			$this->svg->appendChild($link);
-			unset($attributes['xlink:href']);
+			unset($attributes[$link_key]);
 		}
 		else
 		{
