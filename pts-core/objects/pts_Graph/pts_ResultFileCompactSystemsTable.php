@@ -76,11 +76,7 @@ class pts_ResultFileCompactSystemsTable extends pts_Graph
 		}
 		unset($dupes);
 
-		$bottom_footer = 50; // needs to be at least 86 to make room for PTS logo
-		if(!empty($this->i['notes']))
-		{
-			$bottom_footer += count($this->i['notes']) * self::$c['size']['key'];
-		}
+		$bottom_footer = 50 + $this->note_display_height(); // needs to be at least 86 to make room for PTS logo
 
 		$this->i['graph_height'] =
 			$this->i['top_heading_height'] +
@@ -168,9 +164,10 @@ class pts_ResultFileCompactSystemsTable extends pts_Graph
 
 		if(!empty($this->i['notes']))
 		{
+			$estimated_height = 0;
 			foreach($this->i['notes'] as $i => $note_r)
 			{
-				$this->svg_dom->add_text_element('- ' . $note_r['note'], array('x' => 4, 'y' => (($this->i['graph_height'] - $bottom_footer + 50) + ($i * self::$c['size']['key'])), 'font-size' => (self::$c['size']['key'] - 1), 'fill' => self::$c['color']['background'], 'text-anchor' => 'start', 'dominant-baseline' => 'middle', 'xlink:title' => $note_r['hover-title']));
+				$this->svg_dom->add_textarea_element('- ' . $note_r['note'], array('x' => 4, 'y' => (($this->i['graph_height'] - $bottom_footer + 50) + $estimated_height), 'font-size' => (self::$c['size']['key'] - 1), 'fill' => self::$c['color']['background'], 'text-anchor' => 'start', 'dominant-baseline' => 'middle', 'xlink:title' => $note_r['hover-title']), $estimated_height);
 			}
 		}
 	}

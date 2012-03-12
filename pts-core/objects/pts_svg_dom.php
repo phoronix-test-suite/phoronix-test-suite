@@ -24,6 +24,8 @@ class pts_svg_dom
 {
 	protected $dom;
 	protected $svg;
+	protected $width;
+	protected $height;
 
 	public function __construct($width, $height)
 	{
@@ -42,6 +44,8 @@ class pts_svg_dom
 		$this->svg->setAttribute('viewbox', '0 0 ' . $width . ' ' . $height);
 		$this->svg->setAttribute('width', $width);
 		$this->svg->setAttribute('height', $height);
+		$this->width = $width;
+		$this->height = $height;
 
 		$this->dom->appendChild($this->svg);
 	}
@@ -165,6 +169,77 @@ class pts_svg_dom
 		$el = $this->dom->createElement('text');
 		$text_node = $this->dom->createTextNode($text_string);
 		$el->appendChild($text_node);
+
+		if(isset($attributes['xlink:href']) && $attributes['xlink:href'] != null)
+		{
+			$link = $this->dom->createElement('a');
+			$link->setAttribute('xlink:href', $attributes['xlink:href']);
+			$link->setAttribute('xlink:show', 'new');
+			$link->appendChild($el);
+			$this->svg->appendChild($link);
+			unset($attributes['xlink:href']);
+		}
+		else
+		{
+			$this->svg->appendChild($el);
+		}
+
+		foreach($attributes as $name => $value)
+		{
+			$el->setAttribute($name, $value);
+		}
+	}
+	public function add_textarea_element($text_string, $attributes, &$estimated_height = null)
+	{
+		if(!isset($attributes['width']))
+		{
+			$attributes['width'] = $this->width - $attributes['x'];
+		}
+
+		$queue_dimensions = self::estimate_text_dimensions($text_string, $attributes['font-size']);
+		if($queue_dimensions[0] < $attributes['width'])
+		{
+			// No wrapping is occuring, so stuff it in a more efficient text element instead
+			$this->add_text_element($text_string, $attributes);
+			$estimated_height = ($attributes['font-size'] + 1);
+			return;
+		}
+
+		$el = $this->dom->createElement('text');
+		$word_queue = null;
+		$line_count = 0;
+		$words = explode(' ', $text_string);
+		$word_count = count($words);
+		$last_word = null;
+
+		foreach($words as $i => $word)
+		{
+			$word_queue .= $word . ' ';
+
+			$queue_dimensions = self::estimate_text_dimensions($word_queue, $attributes['font-size']);
+			if($queue_dimensions[0] > $attributes['width'] || $i == ($word_count - 1))
+			{
+				if($i != ($word_count - 1))
+				{
+					$last_word_pos = strrpos($word_queue, ' ', -2);
+					$last_word = substr($word_queue, $last_word_pos);
+					$word_queue = substr($word_queue, 0, $last_word_pos);
+				}
+
+				$tspan = $this->dom->createElement('tspan');
+				$tspan->setAttribute('x', $attributes['x']);
+				$tspan->setAttribute('y', $attributes['y']);
+				$tspan->setAttribute('dx', ($line_count == 0 ? 0 : 5));
+				$tspan->setAttribute('dy', ($line_count * ($attributes['font-size'] + 1)));
+				$text_node = $this->dom->createTextNode($word_queue);
+				$tspan->appendChild($text_node);
+				$el->appendChild($tspan);
+				$word_queue = $last_word;
+				$line_count++;
+			}
+		}
+		$estimated_height = ($line_count + 1) * ($attributes['font-size'] + 1);
+		unset($attributes['width']);
 
 		if(isset($attributes['xlink:href']) && $attributes['xlink:href'] != null)
 		{
