@@ -116,7 +116,7 @@ class pts_Table extends pts_Graph
 	public function render_graph_start()
 	{
 		// Needs to be at least 86px wide for the PTS logo
-		$this->i['left_start'] = max(86, $this->text_string_width($this->longest_row_identifier, $this->i['identifier_size']) + 10);
+		$this->i['left_start'] = max(86, ($this->text_string_width($this->longest_row_identifier, $this->i['identifier_size']) * 1.1) + 12);
 
 		if($this->column_heading_vertical)
 		{

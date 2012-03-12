@@ -28,7 +28,7 @@ class pts_PassFailGraph extends pts_Graph
 		parent::__construct($result_object, $result_file);
 		$this->i['graph_value_type'] = 'ABSTRACT';
 		$this->i['hide_graph_identifiers'] = true;
-		$this->graph_data_title = array("PASSED", "FAILED");
+		$this->graph_data_title = array('PASSED', 'FAILED');
 	}
 	protected function render_graph_passfail()
 	{
@@ -73,15 +73,7 @@ class pts_PassFailGraph extends pts_Graph
 				$this_y_start = $this->i['top_start'] + $vertical_border + ($i * ($identifier_height + $spacing));
 				$this_y_end = $this->i['top_start'] + $vertical_border + ($i * ($identifier_height + $spacing)) + $identifier_height;
 
-				if($this_value == "PASS")
-				{
-					$paint_color = $pass_color;
-				}
-				else
-				{
-					$paint_color = $fail_color;
-				}
-
+				$paint_color = $this_value == 'PASS' ? $pass_color : $fail_color;
 				$this->svg_dom->add_element('rect', array('x' => $this_x_start, 'y' => $this_y_start, 'width' => $identifier_width, 'height' => $identifier_height, 'fill' => $paint_color, 'stroke' => self::$c['color']['body_light'], 'stroke-width' => 1));
 				$x = $this_x_start + (($this_x_end - $this_x_start) / 2);
 				$y = $this_y_start + (($this_y_end - $this_y_start) / 2);
