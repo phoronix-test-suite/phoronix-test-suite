@@ -29,6 +29,7 @@ class pts_test_run_manager
 	private $last_test_run_index = 0;
 	private $test_run_pos = 0;
 	private $test_run_count = 0;
+	private $tests_to_run_external_dependencies = array();
 
 	private $file_name = null;
 	private $file_name_title = null;
@@ -146,6 +147,7 @@ class pts_test_run_manager
 	{
 		if($this->validate_test_to_run($test_result->test_profile))
 		{
+			$this->tests_to_run_external_dependencies = array_merge($this->tests_to_run_external_dependencies, $test_result->test_profile->get_dependencies());
 			pts_arrays::unique_push($this->tests_to_run, $test_result);
 		}
 	}
@@ -593,7 +595,7 @@ class pts_test_run_manager
 
 					if(($t = $test_run_request->test_profile->test_installation->get_compiler_data()))
 					{
-						$json_report_attributes['compiler-data'] = $t;
+						$json_report_attributes['compiler-flags'] = $t;
 					}
 
 					$this->result_file_writer->add_result_from_result_object_with_value_string($test_run_request, $test_run_request->get_result(), $test_run_request->test_result_buffer->get_values_as_string(), $json_report_attributes);
@@ -705,6 +707,17 @@ class pts_test_run_manager
 			unset($pso);
 		}
 	}
+	protected function generate_json_system_attributes()
+	{
+		$json_notes = null;
+
+		if(false)
+		{
+			$json_notes['compiler-configuration'] = $t;
+		}
+
+		return $json_notes;
+	}
 	public function post_execution_process()
 	{
 		if($this->do_save_results())
@@ -720,7 +733,7 @@ class pts_test_run_manager
 
 			if((pts_c::$test_flags ^ pts_c::is_recovering) && (!pts_result_file::is_test_result_file($this->get_file_name()) || $this->result_already_contains_identifier() == false))
 			{
-				$this->result_file_writer->add_test_notes(pts_test_notes_manager::generate_test_notes($this->tests_to_run));
+				$this->result_file_writer->add_test_notes(pts_test_notes_manager::generate_test_notes($this->tests_to_run), $this->generate_json_system_attributes());
 			}
 
 			echo PHP_EOL;

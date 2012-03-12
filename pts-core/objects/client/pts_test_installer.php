@@ -565,10 +565,11 @@ class pts_test_installer
 						// If you're linking a library it's also useful for other purposes
 						$library = substr($option, 1);
 						// TODO XXX: scan the external dependencies to make sure $library is covered if not alert test profile maintainer...
-						unset($compiler_options[$i]);
+						//unset($compiler_options[$i]);
 					}
 				}
-				$compiler_options = implode(' ', $compiler_options);
+				$compiler_options = array_unique(implode(' ', $compiler_options));
+				sort($compiler_options);
 
 				// TODO: right now just keep overwriting $compiler to take the last compiler.. so TODO add support for multiple compiler reporting or decide what todo
 				$compiler = array('compiler-type' => $compiler_type, 'compiler' => $compiler_choice, 'compiler-options' => $compiler_options);

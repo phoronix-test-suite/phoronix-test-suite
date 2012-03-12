@@ -124,9 +124,10 @@ class pts_result_file_writer
 			$this->add_result_from_result_object_with_value($result_object);
 		}
 	}
-	public function add_test_notes($test_notes)
+	public function add_test_notes($test_notes, $json = null)
 	{
 		$this->xml_writer->addXmlNode('PhoronixTestSuite/System/Notes', $test_notes);
+		$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/System/JSON', ($json ? json_encode($json) : null));
 	}
 	public function add_result_file_meta_data(&$object, $reference_id = null)
 	{

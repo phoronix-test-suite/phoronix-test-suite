@@ -384,9 +384,9 @@ class pts_render
 			if(!empty($result_json))
 			{
 				$json[$buffer_item->get_result_identifier()] = $result_json;
-				if(isset($result_json['compiler-data']) && !empty($result_json['compiler-data']))
+				if(isset($result_json['compiler-options']) && !empty($result_json['compiler-options']))
 				{
-					pts_arrays::unique_push($unique_compiler_data, $result_json['compiler-data']);
+					pts_arrays::unique_push($unique_compiler_data, $result_json['compiler-options']);
 				}
 			}
 			// report against graph with $graph->addTestNote($note, $hover_title = null);
@@ -424,9 +424,9 @@ class pts_render
 					$unique_compiler_data = array();
 					foreach($json as $identifier => &$data)
 					{
-						if(isset($data['compiler-data'][$key]))
+						if(isset($data['compiler-options'][$key]))
 						{
-							pts_arrays::unique_push($unique_compiler_data, explode(' ', $data['compiler-data'][$key]));
+							pts_arrays::unique_push($unique_compiler_data, explode(' ', $data['compiler-options'][$key]));
 						}
 					}
 
@@ -446,9 +446,9 @@ class pts_render
 
 							foreach($json as $identifier => &$data)
 							{
-								if(isset($data['compiler-data'][$key]))
+								if(isset($data['compiler-options'][$key]))
 								{
-									$options = explode(' ', $data['compiler-data'][$key]);
+									$options = explode(' ', $data['compiler-options'][$key]);
 
 									if(isset($options[$diff]) && stripos($identifier, $options[$diff]) === false)
 									{
