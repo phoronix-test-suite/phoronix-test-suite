@@ -595,7 +595,7 @@ class pts_test_run_manager
 
 					if(($t = $test_run_request->test_profile->test_installation->get_compiler_data()))
 					{
-						$json_report_attributes['compiler-flags'] = $t;
+						$json_report_attributes['compiler-options'] = $t;
 					}
 
 					$this->result_file_writer->add_result_from_result_object_with_value_string($test_run_request, $test_run_request->get_result(), $test_run_request->test_result_buffer->get_values_as_string(), $json_report_attributes);
