@@ -38,6 +38,8 @@ class pts_ResultFileCompactSystemsTable extends pts_Graph
 		$hw = pts_result_file_analyzer::system_component_string_to_array(array_shift($hw));
 		$sw = pts_result_file_analyzer::system_component_string_to_array(array_shift($sw));
 		$this->components = array_merge($hw, $sw);
+
+		pts_render::report_system_notes_to_table($result_file, $this);
 	}
 	public function renderChart($file = null)
 	{

@@ -711,9 +711,22 @@ class pts_test_run_manager
 	{
 		$json_notes = null;
 
-		if(false)
+		if(in_array('build-utilities', $this->tests_to_run_external_dependencies))
 		{
-			$json_notes['compiler-configuration'] = $t;
+			// So compiler tests were run....
+			$test = false;
+			$compiler_mask_dir = pts_test_installer::create_compiler_mask($test);
+
+			if($compiler_mask_dir && is_executable($compiler_mask_dir . 'cc'))
+			{
+				$compiler_configuration = phodevi_system::sw_compiler_build_configuration($compiler_mask_dir . 'cc');
+				pts_file_io::delete($compiler_mask_dir, null, true);
+
+				if(!empty($compiler_configuration))
+				{
+					$json_notes['compiler-configuration'] = $compiler_configuration;
+				}
+			}
 		}
 
 		return $json_notes;

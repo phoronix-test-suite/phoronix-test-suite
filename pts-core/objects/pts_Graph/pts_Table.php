@@ -213,7 +213,7 @@ class pts_Table extends pts_Graph
 		{
 			foreach($this->i['notes'] as $i => $note_r)
 			{
-				$this->svg_dom->add_text_element('- ' . $note_r['note'], array('x' => 6, 'y' => ($table_proper_height + $table_line_height + ($i * self::$c['size']['key'])), 'font-size' => (self::$c['size']['key'] - 1), 'fill' => self::$c['color']['background'], 'text-anchor' => 'start', 'dominant-baseline' => 'middle', 'xlink:title' => $note_r['hover-title']));
+				$this->svg_dom->add_text_element('- ' . $note_r['note'], array('x' => 6, 'y' => ($table_proper_height + 3 + $table_line_height + ($i * self::$c['size']['key'])), 'font-size' => (self::$c['size']['key'] - 1), 'fill' => self::$c['color']['background'], 'text-anchor' => 'start', 'dominant-baseline' => 'middle', 'xlink:title' => $note_r['hover-title']));
 			}
 		}
 

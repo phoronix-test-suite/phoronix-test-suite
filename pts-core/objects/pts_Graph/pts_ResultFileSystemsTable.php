@@ -47,6 +47,7 @@ class pts_ResultFileSystemsTable extends pts_Table
 		$this->i['identifier_size'] *= 0.8;
 		$this->column_heading_vertical = false;
 		$this->graph_title = $result_file->get_title();
+		pts_render::report_system_notes_to_table($result_file, $this);
 	}
 }
 

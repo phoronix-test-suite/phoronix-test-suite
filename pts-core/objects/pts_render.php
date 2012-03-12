@@ -372,6 +372,28 @@ class pts_render
 
 		return $graph;
 	}
+	public static function report_system_notes_to_table(&$result_file, &$table)
+	{
+		$system_json = $result_file->get_system_json();
+		$identifiers = $result_file->get_system_identifiers();
+		$compiler_configuration = array();
+
+		foreach($system_json as $i => $json)
+		{
+			if(isset($json['compiler-configuration']) && $json['compiler-configuration'] != null)
+			{
+				$compiler_configuration[$identifiers[$i]] = $json['compiler-configuration'];
+			}
+		}
+
+		if(count(array_unique($compiler_configuration)) > 1)
+		{
+			foreach($compiler_configuration as $identifier => $configuration)
+			{
+				$table->addTestNote(ucwords($identifier) . ' CC: ' . $configuration);
+			}
+		}
+	}
 	protected static function report_test_notes_to_graph(&$graph, &$result_object)
 	{
 		// do some magic here to report any test notes....

@@ -387,7 +387,7 @@ class pts_test_installer
 
 		return true;
 	}
-	protected static function create_compiler_mask(&$test_install_request)
+	public static function create_compiler_mask(&$test_install_request)
 	{
 		// or pass false to $test_install_request to bypass the test checks
 		$compilers = array();
@@ -506,7 +506,7 @@ class pts_test_installer
 
 		return false;
 	}
-	protected static function end_compiler_mask(&$test_install_request)
+	public static function end_compiler_mask(&$test_install_request)
 	{
 		if($test_install_request->compiler_mask_dir == false && !is_dir($test_install_request->compiler_mask_dir))
 		{
@@ -569,7 +569,7 @@ class pts_test_installer
 					}
 				}
 				$compiler_options = array_unique(implode(' ', $compiler_options));
-				sort($compiler_options);
+				//sort($compiler_options);
 
 				// TODO: right now just keep overwriting $compiler to take the last compiler.. so TODO add support for multiple compiler reporting or decide what todo
 				$compiler = array('compiler-type' => $compiler_type, 'compiler' => $compiler_choice, 'compiler-options' => $compiler_options);

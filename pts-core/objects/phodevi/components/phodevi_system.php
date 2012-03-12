@@ -1175,6 +1175,62 @@ class phodevi_system extends phodevi_device_interface
 
 		return $info;
 	}
+	public static function sw_compiler_build_configuration($compiler)
+	{
+		$cc = shell_exec($compiler . ' -v 2>&1');
+
+		if(($t = stripos($cc, 'Configured with: ')) !== false)
+		{
+			$cc = substr($cc, ($t + 18));
+			$cc = substr($cc, 0, strpos($cc, PHP_EOL));
+			$cc = explode(' ', $cc);
+			array_shift($cc); // this should just be the configure call (i.e. ../src/configure)
+
+			$drop_arguments = array(
+				'--with-pkgversion=',
+				'--with-bugurl=',
+				'--prefix=',
+				'--program-suffix=',
+				'--libexecdir=',
+				'--libdir=',
+				'--with-sysroot=',
+				'--with-gxx-include-dir=',
+				'--with-system-zlib',
+				'--enable-linker-build-id',
+				'--without-included-gettext'
+				);
+
+			foreach($cc as $i => $argument)
+			{
+				$arg_length = strlen($argument);
+				if($argument[0] != '-')
+				{
+					unset($cc[$i]);
+				}
+				else
+				{
+					foreach($drop_arguments as $check_to_drop)
+					{
+						$len = strlen($check_to_drop);
+
+						if($len <= $arg_length && substr($argument, 0, $len) == $check_to_drop)
+						{
+							unset($cc[$i]);
+						}
+					}
+				}
+			}
+
+			sort($cc);
+			$cc = implode(' ', $cc);
+		}
+		else
+		{
+			$cc = null;
+		}
+
+		return $cc;
+	}
 	public static function sw_dri_display_driver()
 	{
 		$dri_driver = false;
