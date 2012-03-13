@@ -1073,6 +1073,9 @@ class phodevi_system extends phodevi_device_interface
 
 			if($driver_version == false)
 			{
+				// If the version is empty, chances are the DDX driver string is incorrect
+				$display_driver = null;
+
 				// See if the VESA or fbdev driver is in use
 				foreach(array('vesa', 'fbdev') as $drv)
 				{

@@ -87,9 +87,9 @@ class phodevi_disk extends phodevi_device_interface
 			if(isset($mounts[4]) && $mounts[1] == $mount_point && substr($mounts[0], 0, 4) == '/dev')
 			{
 				// Sort mount options alphabetically so it's easier to look at...
-				$mounts[1] = explode(',', $mounts[1]);
-				sort($mounts[1]);
-				$mounts[1] = implode(',', $mounts[1]);
+				$mounts[3] = explode(',', $mounts[3]);
+				sort($mounts[3]);
+				$mounts[3] = implode(',', $mounts[3]);
 
 				$mount_options = array(
 					'device' => $mounts[0],
