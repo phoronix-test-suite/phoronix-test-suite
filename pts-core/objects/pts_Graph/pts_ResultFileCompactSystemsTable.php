@@ -167,7 +167,7 @@ class pts_ResultFileCompactSystemsTable extends pts_Graph
 			$estimated_height = 0;
 			foreach($this->i['notes'] as $i => $note_r)
 			{
-				$this->svg_dom->add_textarea_element('- ' . $note_r['note'], array('x' => 4, 'y' => (($this->i['graph_height'] - $bottom_footer + 50) + $estimated_height), 'font-size' => (self::$c['size']['key'] - 1), 'fill' => self::$c['color']['background'], 'text-anchor' => 'start', 'dominant-baseline' => 'middle', 'xlink:title' => $note_r['hover-title']), $estimated_height);
+				$this->svg_dom->add_textarea_element('- ' . $note_r['note'], array('x' => 4, 'y' => ($this->i['graph_height'] - $bottom_footer + $estimated_height + 7), 'font-size' => (self::$c['size']['key'] - 1), 'fill' => self::$c['color']['background'], 'text-anchor' => 'start', 'dominant-baseline' => 'middle', 'xlink:title' => $note_r['hover-title']), $estimated_height);
 			}
 		}
 	}
