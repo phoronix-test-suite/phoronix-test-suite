@@ -568,7 +568,7 @@ class pts_test_installer
 						//unset($compiler_options[$i]);
 					}
 				}
-				$compiler_options = array_unique(implode(' ', $compiler_options));
+				$compiler_options = implode(' ', array_unique($compiler_options));
 				//sort($compiler_options);
 
 				// TODO: right now just keep overwriting $compiler to take the last compiler.. so TODO add support for multiple compiler reporting or decide what todo
