@@ -334,16 +334,16 @@ class phodevi_disk extends phodevi_device_interface
 	{
 		$scheduler = null;
 		$device = self::proc_mount_options();
-		$device = pts_strings::keep_in_string(basename($device['device']), pts_strings::CHAR_LETTER);
+		$device = basename($device['device']);
 
-		if(is_readable('/sys/block/' . $device . '/queue/scheduler'))
+		if(is_readable('/sys/block/' . ($d = pts_strings::keep_in_string($device, pts_strings::CHAR_LETTER)) . '/queue/scheduler'))
 		{
-			$scheduler = '/sys/block/' . $device . '/queue/scheduler';
+			$scheduler = '/sys/block/' . $d . '/queue/scheduler';
 		}
-		else if(is_link(($device = '/dev/disk/by-uuid/' . pts_strings::keep_in_string(basename($device), pts_strings::CHAR_LETTER)))
+		else if(is_link(($device = '/dev/disk/by-uuid/' . $device)))
 		{
 			// Go from the disk UUID to the device
-			$device = pts_strings::keep_in_string(basename(readlink($device), pts_strings::CHAR_LETTER);
+			$device = pts_strings::keep_in_string(basename(readlink($device)), pts_strings::CHAR_LETTER);
 
 			if(is_readable('/sys/block/' . $device . '/queue/scheduler'))
 			{
