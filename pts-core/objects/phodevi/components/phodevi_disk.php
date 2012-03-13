@@ -31,7 +31,10 @@ class phodevi_disk extends phodevi_device_interface
 				$property = new phodevi_device_property('hdd_string', phodevi::smart_caching);
 				break;
 			case 'scheduler':
-				$property = new phodevi_device_property('hdd_scheduler', phodevi::smart_caching);
+				$property = new phodevi_device_property('hdd_scheduler', phodevi::no_caching);
+				break;
+			case 'mount-options':
+				$property = new phodevi_device_property('proc_mount_options', phodevi::no_caching);
 				break;
 		}
 
@@ -47,6 +50,52 @@ class phodevi_disk extends phodevi_device_interface
 		}
 
 		return $notes;
+	}
+	public static function proc_mount_options($mount_point = null, $mounts = null)
+	{
+		$mount_options = false;
+
+		if($mount_point == null && PTS_IS_CLIENT)
+		{
+			$mount_point = pts_client::test_install_root_path();
+		}
+		if($mounts == null && is_readable('/proc/mounts'))
+		{
+			$mounts = file_get_contents('/proc/mounts');
+		}
+
+		do
+		{
+			$mount_point = dirname($mount_point);
+		}
+		while(($p = strrpos($mounts, ' ' . $mount_point . ' ')) === false && $mount_point != null && $mount_point != '/');
+
+		if($p)
+		{
+			if(($x = strrpos($mounts, PHP_EOL, (0 - strlen($mounts) + $p))) !== false)
+			{
+				$mounts = trim(substr($mounts, $x));
+			}
+
+			if(($x = strpos($mounts, PHP_EOL)) !== false)
+			{
+				$mounts = substr($mounts, 0, $x);
+			}
+
+			$mounts = explode(' ', $mounts);
+
+			if(isset($mounts[4]) && $mounts[1] == $mount_point && substr($mounts[0], 0, 4) == '/dev')
+			{
+				$mount_options = array(
+					'device' => $mounts[0],
+					'mount-point' => $mounts[1],
+					'file-system' => $mounts[2],
+					'mount-options' => $mounts[3]
+					);
+			}
+		}
+
+		return $mount_options;
 	}
 	public static function is_genuine($disk)
 	{
@@ -284,14 +333,31 @@ class phodevi_disk extends phodevi_device_interface
 	public static function hdd_scheduler()
 	{
 		$scheduler = null;
+		$device = self::proc_mount_options();
+		$device = pts_strings::keep_in_string(basename($device['device']), pts_strings::CHAR_LETTER);
 
-		if(is_readable('/sys/block/sda/queue/scheduler'))
+		if(is_readable('/sys/block/' . $device . '/queue/scheduler'))
 		{
-			$scheduler = pts_file_io::file_get_contents('/sys/block/sda/queue/scheduler');
+			$scheduler = '/sys/block/' . $device . '/queue/scheduler';
+		}
+		else if(is_link(($device = '/dev/disk/by-uuid/' . pts_strings::keep_in_string(basename($device), pts_strings::CHAR_LETTER)))
+		{
+			// Go from the disk UUID to the device
+			$device = pts_strings::keep_in_string(basename(readlink($device), pts_strings::CHAR_LETTER);
+
+			if(is_readable('/sys/block/' . $device . '/queue/scheduler'))
+			{
+				$scheduler = '/sys/block/' . $device . '/queue/scheduler';
+			}
+		}
+
+		if($scheduler)
+		{
+			$scheduler = pts_file_io::file_get_contents($scheduler);
 
 			if(($s = strpos($scheduler, '[')) !== false && ($e = strpos($scheduler, ']', $s)) !== false)
 			{
-				$scheduler = strtoupper(substr($scheduler, $s + 1, $e - $s - 1));
+				$scheduler = strtoupper(substr($scheduler, ($s + 1), ($e - $s - 1)));
 			}
 		}
 

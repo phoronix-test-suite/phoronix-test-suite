@@ -18,6 +18,7 @@ Phoronix Test Suite (Git)
 - pts_Graph: Support for representing web links on images within the new SVG DOM IR
 - pts_Graph: Support for word-wrapping test notes with long lines
 - phodevi: Fix for Linux memory module count decoding in niche cases on multi-socket systems
+- phodevi: Support for detecting all file-system mount options on test install path
 - phodevi: Initial work towards Minix 3.2.0 operating system support
 - graphics_event_checker: Rewrite of the graphics event checker and enable by default on new installs
 
