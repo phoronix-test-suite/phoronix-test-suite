@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 3.8 Milestone 3
+13 March 2012
 
 - pts-core: Introduce a look-aside download cache that automatically checks other existing test installations for needed files
 - pts-core: Support a last-minute look-aside copy if a previous test in the install queue downloaded the same file
