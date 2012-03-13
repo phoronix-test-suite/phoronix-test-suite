@@ -29,7 +29,6 @@ class pts_test_run_manager
 	private $last_test_run_index = 0;
 	private $test_run_pos = 0;
 	private $test_run_count = 0;
-	private $tests_to_run_external_dependencies = array();
 
 	private $file_name = null;
 	private $file_name_title = null;
@@ -147,7 +146,6 @@ class pts_test_run_manager
 	{
 		if($this->validate_test_to_run($test_result->test_profile))
 		{
-			$this->tests_to_run_external_dependencies = array_merge($this->tests_to_run_external_dependencies, $test_result->test_profile->get_dependencies());
 			pts_arrays::unique_push($this->tests_to_run, $test_result);
 		}
 	}
@@ -710,8 +708,16 @@ class pts_test_run_manager
 	protected function generate_json_system_attributes()
 	{
 		$json_notes = null;
+		$test_external_dependencies = array();
+		$test_hardware_types = array();
 
-		if(in_array('build-utilities', $this->tests_to_run_external_dependencies))
+		foreach($this->tests_to_run as $test_to_run)
+		{
+			$test_external_dependencies = array_merge($test_external_dependencies, $test_result->test_profile->get_dependencies());
+			$test_hardware_types = array_merge($test_hardware_types, $test_result->test_profile->get_test_hardware_type());
+		}
+
+		if(in_array('build-utilities', $test_external_dependencies))
 		{
 			// So compiler tests were run....
 			$test = false;
@@ -726,6 +732,21 @@ class pts_test_run_manager
 				{
 					$json_notes['compiler-configuration'] = $compiler_configuration;
 				}
+			}
+		}
+		if(in_array('Disk', $test_hardware_types))
+		{
+			// A disk test was run so report some disk information...
+			$disk_scheduler = phodevi::read_property('disk', 'scheduler');
+			if($disk_scheduler)
+			{
+				$json_notes['disk-scheduler'] = $disk_scheduler;
+			}
+
+			$mount_options = phodevi::read_property('disk', 'mount-options');
+			if(isset($mount_options['mount-options']) && $mount_options['mount-options'] != null)
+			{
+				$json_notes['disk-mount-options'] = $mount_options['mount-options'];
 			}
 		}
 

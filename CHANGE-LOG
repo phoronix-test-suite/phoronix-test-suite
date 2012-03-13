@@ -11,6 +11,7 @@ Phoronix Test Suite (Git)
 - pts-core: Fix save name issue when dealing with dashes mixed with spaces in save name
 - pts-core: Pass compiler options to graphs for reporting
 - pts-core: Report compiler configuration (GCC's "Configured with") to test system table when it changes between runs in a result file
+- pts-core: Report disk scheduler / mount options to test system table when disk tests are contained in result file
 - pts_Graph: Add support for reporting test notes to graphs
 - pts_Graph: Restore links within tables for the new pts_Graph table SVG DOM IR
 - pts_Graph: Fix for key not appearing on overview graph
