@@ -714,7 +714,7 @@ class pts_test_run_manager
 		foreach($this->tests_to_run as $test_to_run)
 		{
 			$test_external_dependencies = array_merge($test_external_dependencies, $test_to_run->test_profile->get_dependencies());
-			$test_hardware_types = pts_arrays::unique_push($test_hardware_types, $test_to_run->test_profile->get_test_hardware_type());
+			pts_arrays::unique_push($test_hardware_types, $test_to_run->test_profile->get_test_hardware_type());
 		}
 
 		if(in_array('build-utilities', $test_external_dependencies))

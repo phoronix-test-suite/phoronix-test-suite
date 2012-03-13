@@ -377,6 +377,7 @@ class pts_render
 		$system_json = $result_file->get_system_json();
 		$identifiers = $result_file->get_system_identifiers();
 		$compiler_configuration = array();
+		$disk_options = array();
 
 		foreach($system_json as $i => $json)
 		{
@@ -384,14 +385,33 @@ class pts_render
 			{
 				$compiler_configuration[$identifiers[$i]] = $json['compiler-configuration'];
 			}
+			if(isset($json['disk-scheduler']) && isset($json['disk-mount-options']))
+			{
+				$disk_options[$identifiers[$i]] = $json['disk-scheduler'] . ' / ' . $json['disk-mount-options'];
+			}
 		}
 
 		if(count(array_unique($compiler_configuration)) > 1)
 		{
 			foreach($compiler_configuration as $identifier => $configuration)
 			{
-				$table->addTestNote(ucwords($identifier) . ' CC: ' . $configuration);
+				$table->addTestNote($identifier . ' CC: ' . $configuration);
 			}
+		}
+
+		switch(count(array_unique($disk_options)))
+		{
+			case 0:
+				break;
+			case 1:
+				$table->addTestNote(array_pop($disk_options));
+				break;
+			default:
+				foreach($disk_options as $identifier => $configuration)
+				{
+					$table->addTestNote($identifier . ': ' . $configuration);
+				}
+				break;
 		}
 	}
 	protected static function report_test_notes_to_graph(&$graph, &$result_object)
