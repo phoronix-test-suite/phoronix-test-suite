@@ -189,7 +189,7 @@ class pts_svg_dom
 			$el->setAttribute($name, $value);
 		}
 	}
-	public function add_textarea_element($text_string, $attributes, &$estimated_height = null)
+	public function add_textarea_element($text_string, $attributes, &$estimated_height = 0)
 	{
 		if(!isset($attributes['width']))
 		{
@@ -201,7 +201,7 @@ class pts_svg_dom
 		{
 			// No wrapping is occuring, so stuff it in a more efficient text element instead
 			$this->add_text_element($text_string, $attributes);
-			$estimated_height = ($attributes['font-size'] + 1);
+			$estimated_height += ($attributes['font-size'] + 1);
 			return;
 		}
 
@@ -238,7 +238,7 @@ class pts_svg_dom
 				$line_count++;
 			}
 		}
-		$estimated_height = ($line_count + 1) * ($attributes['font-size'] + 1);
+		$estimated_height += ($line_count + 1) * ($attributes['font-size'] + 1);
 		unset($attributes['width']);
 
 		if(isset($attributes['xlink:href']) && $attributes['xlink:href'] != null)
