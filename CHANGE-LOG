@@ -2,7 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
-- pts-core: Support longer titles on result files (64 characters supported by OpenBenchmarking.org)
+- pts-core: Support longer titles on result files (64 characters expanded on OpenBenchmarking.org)
 
 Phoronix Test Suite 3.8 Milestone 3
 13 March 2012

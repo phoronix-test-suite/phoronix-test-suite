@@ -391,12 +391,24 @@ class pts_render
 			}
 		}
 
-		if(count(array_unique($compiler_configuration)) > 1)
+		switch(count(array_unique($compiler_configuration)))
 		{
-			foreach($compiler_configuration as $identifier => $configuration)
-			{
-				$table->addTestNote($identifier . ' CC: ' . $configuration);
-			}
+			case 0:
+				break;
+			case 1:
+				$intent = -1;
+				if($result_file->get_system_count() > 1 && ($intent = pts_result_file_analyzer::analyze_result_file_intent($result_file, $intent, true)) && isset($intent[0]) && array_shift($intent[0]) == 'Compiler')
+				{
+					// Even if the compiler build configuration isn't changing but a compiler is being compared, might as well report its build configuration
+					$table->addTestNote('CC: ' . array_pop($compiler_configuration));
+				}
+				break;
+			default:
+				foreach($compiler_configuration as $identifier => $configuration)
+				{
+					$table->addTestNote($identifier . ' CC: ' . $configuration);
+				}
+				break;
 		}
 
 		switch(count(array_unique($disk_options)))
