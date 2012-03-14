@@ -113,6 +113,7 @@ class pts_tests
 				{
 					$phoroscript = new pts_phoroscript_interpreter($run_file, $extra_vars, $test_directory);
 					$phoroscript->execute_script($pass_argument);
+					$this_result = null;
 				}
 				else
 				{

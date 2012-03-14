@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2011, Phoronix Media
-	Copyright (C) 2009 - 2011, Michael Larabel
+	Copyright (C) 2009 - 2012, Phoronix Media
+	Copyright (C) 2009 - 2012, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -136,10 +136,13 @@ class pts_phoroscript_interpreter
 				$var_value = $pass_arguments_r[($var - 1)];
 			}
 
+			/*
+			// Stefan reports that this is not needed...
 			if(phodevi::is_windows() && $var == "LOG_FILE")
 			{
 				$value = str_replace('/', '\\', $value);
 			}
+			*/
 
 			$to_parse = $before_var . $var_value . $after_var;
 		}
@@ -176,8 +179,10 @@ class pts_phoroscript_interpreter
 
 			$line_r = pts_strings::trim_explode(' ', $line);
 
-			switch($line_r[0])
+			switch((isset($line_r[0]) ? $line_r[0] : null))
 			{
+				case '':
+					break;
 				case 'mv':
 					// TODO: implement folder support better
 					$line_r[1] = $this->get_real_path($line_r[1], $pass_arguments);
