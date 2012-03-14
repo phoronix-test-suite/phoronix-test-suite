@@ -431,7 +431,26 @@ class phodevi_system extends phodevi_device_interface
 			{
 				// GCC
 				// If it's a link, ensure that it's not linking to llvm/clang or something
-				$compilers['gcc'] = 'GCC ' . trim(shell_exec('gcc -dumpversion 2>&1'));
+				$version = trim(shell_exec('gcc -dumpversion 2>&1'));
+				if(pts_strings::is_version($version))
+				{
+					$v = shell_exec('gcc -v 2>&1');
+
+					if(($t = strrpos($v, $version . ' ')) !== false)
+					{
+						$v = substr($v, ($t + strlen($version) + 1));
+						$v = substr($v, 0, strpos($v, ' '));
+
+						if($v != null && ctype_digit($v))
+						{
+							// On development versions the release date is expressed
+							// e.g. gcc version 4.7.0 20120314 (prerelease) (GCC)
+							$version .= ' ' . $v;
+						}
+					}
+
+					$compilers['gcc'] = 'GCC ' . $version;
+				}
 			}
 		}
 
