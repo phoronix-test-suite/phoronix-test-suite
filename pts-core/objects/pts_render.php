@@ -397,7 +397,7 @@ class pts_render
 				break;
 			case 1:
 				$intent = -1;
-				if($result_file->get_system_count() > 1 && ($intent = pts_result_file_analyzer::analyze_result_file_intent($result_file, $intent, true)) && isset($intent[0]) && array_shift($intent[0]) == 'Compiler')
+				if($result_file->get_system_count() > 1 && ($intent = pts_result_file_analyzer::analyze_result_file_intent($result_file, $intent, true)) && isset($intent[0]) && is_array($intent[0]) && array_shift($intent[0]) == 'Compiler')
 				{
 					// Even if the compiler build configuration isn't changing but a compiler is being compared, might as well report its build configuration
 					$table->addTestNote('CC: ' . array_pop($compiler_configuration));
@@ -481,6 +481,15 @@ class pts_render
 						if(isset($data['compiler-options'][$key]))
 						{
 							pts_arrays::unique_push($unique_compiler_data, explode(' ', $data['compiler-options'][$key]));
+						}
+					}
+
+					if(($c0 = count($unique_compiler_data[0])) < ($c1 = count($unique_compiler_data[1])))
+					{
+						for($i = 0; $i < ($c1 - $c0); $i++)
+						{
+							// Make the length of the first array the same length
+							array_push($unique_compiler_data[0], null);
 						}
 					}
 

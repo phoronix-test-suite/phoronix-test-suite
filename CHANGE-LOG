@@ -4,6 +4,7 @@ Phoronix Test Suite (Git)
 
 - pts-core: Support longer titles on result files (64 characters expanded on OpenBenchmarking.org)
 - pts-core: Wine/Windows fixes for items reported by Stefan Dösinger
+- pts-core: Minor improvement for analyzing compiler option string differences
 - phodevi: Support for determining and appending release dates on GCC snapshots/pre-releases
 
 Phoronix Test Suite 3.8 Milestone 3
