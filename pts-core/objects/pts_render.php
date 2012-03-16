@@ -657,6 +657,7 @@ class pts_render
 		$prev_date = null;
 		$is_tracking = true;
 		$sha1_short_count = 0;
+		$buffer_count = $mto->test_result_buffer->get_count();
 
 		if($identifiers_inverted)
 		{
@@ -726,6 +727,12 @@ class pts_render
 			}
 		}
 
+		if($is_tracking == false && $sha1_short_count > 5)
+		{
+			// It's probably actually tracking..... based upon Stefan's Wine 1.4 example on 15 March 2012
+			$is_tracking = true;
+		}
+
 		foreach(array_keys($days) as $day_key)
 		{
 			$days[$day_key] = $systems;
@@ -785,7 +792,7 @@ class pts_render
 		{
 			$mto->test_profile->set_result_scale($mto->test_profile->get_result_scale() . ' | ' . implode(',', array_keys($days)));
 
-			if($is_tracking && $result_file && pts_result_file_analyzer::analyze_result_file_intent($result_file) != false)
+			if($is_tracking && $buffer_count < 16 && $result_file && pts_result_file_analyzer::analyze_result_file_intent($result_file) != false)
 			{
 				// It can't be a tracker if the result file is comparing hardware/software, etc
 				$is_tracking = false;

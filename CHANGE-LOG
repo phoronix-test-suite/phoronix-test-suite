@@ -6,6 +6,7 @@ Phoronix Test Suite (Git)
 - pts-core: Wine/Windows fixes for items reported by Stefan Dösinger
 - pts-core: Minor improvement for analyzing compiler option string differences
 - pts-core: Fix for result file analyzing sometimes not returning hardware changes
+- pts-core: Better handling for detecting Wine trackers / other trackers using a mix of short SHA1s
 - phodevi: Support for determining and appending release dates on GCC snapshots/pre-releases
 
 Phoronix Test Suite 3.8 Milestone 3
