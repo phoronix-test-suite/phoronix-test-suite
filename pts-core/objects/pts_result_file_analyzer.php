@@ -157,8 +157,13 @@ class pts_result_file_analyzer
 
 			if(count($changed_indexes) <= $max_combo_count)
 			{
-				while($comparison_good && ($this_identifier = array_shift($data)) != null)
+				while($comparison_good && ($this_identifier = array_shift($data)) !== null)
 				{
+					if(empty($this_identifier))
+					{
+						continue;
+					}
+
 					$this_keys = array_keys($this_identifier);
 					$do_push = false;
 
