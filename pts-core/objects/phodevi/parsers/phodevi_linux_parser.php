@@ -443,6 +443,7 @@ class phodevi_linux_parser
 	public static function read_amd_graphics_adapters()
 	{
 		// Read ATI/AMD graphics hardware using aticonfig
+		// TODO XXX: check for amdconfig as well in case AMD drops aticonfig utility name in the future... amdconfig right now is present right now and mirrors aticonfig
 		$adapters = array();
 
 		if(pts_client::executable_in_path('aticonfig'))
