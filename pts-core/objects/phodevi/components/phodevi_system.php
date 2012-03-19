@@ -1214,6 +1214,7 @@ class phodevi_system extends phodevi_device_interface
 				'--prefix=',
 				'--program-suffix=',
 				'--libexecdir=',
+				'--infodir=',
 				'--libdir=',
 				'--with-sysroot=',
 				'--with-gxx-include-dir=',
