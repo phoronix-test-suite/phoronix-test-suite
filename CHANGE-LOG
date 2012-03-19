@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 3.8.0-Bygland
+19 March 2012
 
 - pts-core: Support longer titles on result files (64 characters expanded on OpenBenchmarking.org)
 - pts-core: Wine/Windows fixes for items reported by Stefan Dösinger
