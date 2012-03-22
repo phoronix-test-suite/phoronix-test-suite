@@ -544,47 +544,6 @@ class phodevi_linux_parser
 
 		return $info;
 	}
-	public static function read_hal($name, $UDI = null)
-	{
-		// Read HAL - Hardware Abstraction Layer
-		$info = false;
-
-		if(pts_client::executable_in_path('lshal'))
-		{
-			$name = pts_arrays::to_array($name);
-			$remove_words = phodevi_parser::hardware_values_to_remove();
-
-			for($i = 0; $i < count($name) && empty($info); $i++)
-			{
-				$info = shell_exec('lshal ' . (!empty($UDI) ? '-u ' . $UDI : null) . ' 2>&1 | grep "' . $name[$i] . '"');
-
-				if(($pos = strpos($info, $name[$i] . " = '")) !== false)
-				{
-					$info = substr($info, $pos + strlen($name[$i] . " = '"));
-					$info = trim(substr($info, 0, strpos($info, "'")));
-				}
-
-				if(empty($info) || in_array(strtolower($info), $remove_words))
-				{
-					$info = false;
-				}
-			}
-		}
-
-		return $info;
-	}
-	public static function read_system_hal($name)
-	{
-		// Read system HAL
-		$hal = phodevi_linux_parser::read_hal($name, '/org/freedesktop/Hal/devices/computer');
-
-		if($hal == false)
-		{
-			$hal = phodevi_linux_parser::read_hal($name);
-		}
-
-		return $hal;
-	}
 	public static function read_acpi($point, $match)
 	{
 		// Read ACPI - Advanced Configuration and Power Interface

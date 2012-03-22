@@ -394,48 +394,6 @@ class phodevi_motherboard extends phodevi_device_interface
 
 			if(empty($info))
 			{
-				// Read motherboard from HAL
-				$vendor = phodevi_linux_parser::read_system_hal(array('system.hardware.vendor', 'system.board.vendor'));
-				$product = phodevi_linux_parser::read_system_hal(array('system.hardware.product', 'system.board.product'));
-				$version = phodevi_linux_parser::read_system_hal(array('system.hardware.version', 'smbios.system.version'));
-
-				$info = null;
-
-				if(empty($product) && (strpos($version, '.') === false && !empty($version)))
-				{
-					$product = $version;
-				}
-
-				if(!empty($product))
-				{
-					if($vendor != false && stripos($product . ' ', $vendor . ' ') === false)
-					{
-						$info .= $vendor . ' ';
-					}
-
-					$info .= $product;
-				}
-
-				if($info == null)
-				{
-					$fw_version = explode(' ', phodevi_linux_parser::read_system_hal('system.firmware.version'));
-
-					if(count($fw_version) > 1)
-					{
-						$info = $fw_version[0] . ' ' . $fw_version[1];
-					}
-				}
-
-				if($info == null)
-				{
-					$pci_vendor = phodevi_linux_parser::read_hal('pci.subsys_vendor');
-
-					if(strpos($pci_vendor, '(') === false)
-					{
-						$info = $pci_vendor;
-					}
-				}
-
 				if($info == null)
 				{
 					$hw_string = phodevi_linux_parser::read_cpuinfo('Hardware');
