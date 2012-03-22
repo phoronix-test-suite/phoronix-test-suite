@@ -40,7 +40,7 @@ class pts_graph_ir_value
 	}
 	public function get_attribute($attribute)
 	{
-		return isset($this->attributes[$attribute]) ? $this->attributes[$attribute] : false;
+		return isset($this->attributes[$attribute]) ? $this->attributes[$attribute] : null;
 	}
 	public function get_value()
 	{

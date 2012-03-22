@@ -186,6 +186,11 @@ class pts_svg_dom
 
 		foreach($attributes as $name => $value)
 		{
+			if($value === null)
+			{
+				continue;
+			}
+
 			$el->setAttribute($name, $value);
 		}
 	}
