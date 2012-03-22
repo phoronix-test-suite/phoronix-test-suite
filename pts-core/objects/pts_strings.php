@@ -412,25 +412,7 @@ class pts_strings
 	public static function pts_version_to_codename($version)
 	{
 		$version = substr($version, 0, 3);
-
-		$codenames = array(
-			'1.0' => 'Trondheim',
-			'1.2' => 'Malvik',
-			'1.4' => 'Orkdal',
-			'1.6' => 'Tydal',
-			'1.8' => 'Selbu',
-			'2.0' => 'Sandtorg',
-			'2.2' => 'Bardu',
-			'2.4' => 'Lenvik',
-			'2.6' => 'Lyngen',
-			'2.8' => 'Torsken',
-			'2.9' => 'Iveland', // early PTS3 development work
-			'3.0' => 'Iveland',
-			'3.2' => 'Grimstad',
-			'3.4' => 'Lillesand',
-			'3.6' => 'Arendal',
-			'3.8' => 'Bygland'
-			);
+		$codenames = pts_version_codenames();
 
 		return isset($codenames[$version]) ? $codenames[$version] : null;
 	}

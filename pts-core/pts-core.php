@@ -21,9 +21,9 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-define('PTS_VERSION', '3.8.0');
-define('PTS_CORE_VERSION', 3800);
-define('PTS_CODENAME', 'BYGLAND');
+define('PTS_VERSION', '4.0.0m0');
+define('PTS_CORE_VERSION', 3900);
+define('PTS_CODENAME', 'SULDAL');
 define('PTS_IS_CLIENT', (defined('PTS_MODE') && PTS_MODE == 'CLIENT'));
 define('PTS_IS_DEV_BUILD', (substr(PTS_VERSION, -2, 1) == 'm'));
 
@@ -84,6 +84,28 @@ function pts_needed_extensions()
 		array(0, function_exists('posix_getpwuid'), 'POSIX', 'PHP POSIX support is highly recommended.'),
 		array(0, function_exists('curl_init'), 'CURL', 'PHP CURL is recommended for an enhanced download experience.'),
 		array(0, is_file('/usr/share/php/fpdf/fpdf.php'), 'PHP FPDF', 'PHP FPDF is recommended if wishing to generate PDF reports.')
+		);
+}
+function pts_version_codenames()
+{
+	return array(
+		'1.0' => 'Trondheim',
+		'1.2' => 'Malvik',
+		'1.4' => 'Orkdal',
+		'1.6' => 'Tydal',
+		'1.8' => 'Selbu',
+		'2.0' => 'Sandtorg',
+		'2.2' => 'Bardu',
+		'2.4' => 'Lenvik',
+		'2.6' => 'Lyngen',
+		'2.8' => 'Torsken',
+		'2.9' => 'Iveland', // early PTS3 development work
+		'3.0' => 'Iveland',
+		'3.2' => 'Grimstad',
+		'3.4' => 'Lillesand',
+		'3.6' => 'Arendal',
+		'3.8' => 'Bygland',
+		'4.0' => 'Suldal'
 		);
 }
 
