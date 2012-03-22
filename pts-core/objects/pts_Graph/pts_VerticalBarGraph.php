@@ -73,7 +73,7 @@ class pts_VerticalBarGraph extends pts_Graph
 			else
 			{
 				$x = $px_bound_left + (($px_bound_right - $px_bound_left) * 0.5);
-				$this->svg_dom->add_text_element($this->graph_identifiers[$i], array('x' => $x, 'y' => ($px_from_top_end - 3), 'font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['headers'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
+				$this->svg_dom->add_text_element($this->graph_identifiers[$i], array('x' => $x, 'y' => ($px_from_top_end + $this->i['identifier_size']), 'font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['headers'], 'text-anchor' => 'middle'));
 			}
 		}
 	}

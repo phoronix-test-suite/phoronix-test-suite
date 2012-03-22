@@ -140,7 +140,7 @@ class pts_HeatMapBarGraph extends pts_Graph
 				$key_colors[$this->keys[$i]] = $key_color;
 
 				$this->svg_dom->add_element('rect', array('x' => ($component_x + 1), 'y' => $component_y, 'width' => 10, 'height' => 10, 'fill' => $key_color, 'stroke' => self::$c['color']['border'], 'stroke-width' => 1));
-				$this->svg_dom->add_text_element($this->keys[$i], array('x' => ($component_x + 15), 'y' => ($component_y + 5), 'font-size' => 10, 'fill' => $key_color, 'text-anchor' => 'start', 'dominant-baseline' => 'middle'));
+				$this->svg_dom->add_text_element($this->keys[$i], array('x' => ($component_x + 15), 'y' => ($component_y + 5), 'font-size' => 10, 'fill' => $key_color, 'text-anchor' => 'start'));
 			}
 		}
 
@@ -152,7 +152,7 @@ class pts_HeatMapBarGraph extends pts_Graph
 
 			if($hmap['test_data']['h'] != null && $hmap['test_data']['h'] != $previous_category)
 			{
-				$this->svg_dom->add_text_element($hmap['test_data']['h'] . ' Tests', array('x' => ($start_x + ($bar_width / 2)), 'y' => ($upper_y - 10), 'font-size' => 16, 'fill' => $text_color, 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
+				$this->svg_dom->add_text_element($hmap['test_data']['h'] . ' Tests', array('x' => ($start_x + ($bar_width / 2)), 'y' => $upper_y, 'font-size' => 16, 'fill' => $text_color, 'text-anchor' => 'middle'));
 				$category_offsets += $category_heights;
 				$upper_y += $category_heights;
 			}
@@ -164,8 +164,8 @@ class pts_HeatMapBarGraph extends pts_Graph
 			$prev_color = '#ffffff';
 			$last_plot_x = $start_x;
 
-			$this->svg_dom->add_text_element($hmap['test_data']['t'], array('x' => $start_x, 'y' => ($upper_y - 10), 'font-size' => 12, 'fill' => $text_color, 'text-anchor' => 'start', 'dominant-baseline' => 'middle'));
-			$this->svg_dom->add_text_element($hmap['test_data']['a'], array('x' => $end_x, 'y' => ($upper_y - 10), 'font-size' => 10, 'fill' => $alt_text_color, 'text-anchor' => 'end', 'dominant-baseline' => 'middle'));
+			$this->svg_dom->add_text_element($hmap['test_data']['t'], array('x' => $start_x, 'y' => $upper_y, 'font-size' => 12, 'fill' => $text_color, 'text-anchor' => 'start'));
+			$this->svg_dom->add_text_element($hmap['test_data']['a'], array('x' => $end_x, 'y' => $upper_y, 'font-size' => 10, 'fill' => $alt_text_color, 'text-anchor' => 'end'));
 
 			if($hmap['test_data']['p'] == 'LIB')
 			{

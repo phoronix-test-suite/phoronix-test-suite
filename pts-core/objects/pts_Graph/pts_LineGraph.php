@@ -107,11 +107,11 @@ class pts_LineGraph extends pts_Graph
 
 			if($this->i['identifier_size'] <= $this->i['min_identifier_size'])
 			{
-				$this->svg_dom->add_text_element($this->graph_identifiers[$i], array('x' => $px_from_left, 'y' => ($px_from_top_end + 2), 'font-size' => 9, 'fill' => self::$c['color']['headers'], 'text-anchor' => 'start', 'dominant-baseline' => 'middle', 'transform' => 'rotate(90 ' . $px_from_left . ' ' . ($px_from_top_end + 2) . ')'));
+				$this->svg_dom->add_text_element($this->graph_identifiers[$i], array('x' => $px_from_left, 'y' => ($px_from_top_end + 2), 'font-size' => 9, 'fill' => self::$c['color']['headers'], 'text-anchor' => 'start', 'transform' => 'rotate(90 ' . $px_from_left . ' ' . ($px_from_top_end + 2) . ')'));
 			}
 			else
 			{
-				$this->svg_dom->add_text_element($this->graph_identifiers[$i], array('x' => $px_from_left, 'y' => ($px_from_top_end + 2), 'font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['headers'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
+				$this->svg_dom->add_text_element($this->graph_identifiers[$i], array('x' => $px_from_left, 'y' => ($px_from_top_end + 10), 'font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['headers'], 'text-anchor' => 'middle'));
 			}
 		}
 	}
@@ -238,7 +238,7 @@ class pts_LineGraph extends pts_Graph
 				$from_left = $this->i['left_start'] + 6;
 				foreach($to_display as $color_key => &$column)
 				{
-					$from_top = $this->i['top_start'] + 4;
+					$from_top = $this->i['top_start'] + 10;
 					$longest_string_width = 0;
 					$precision = isset($column[0]) && max($column) > 999 ? 0 : 1;
 
@@ -249,7 +249,7 @@ class pts_LineGraph extends pts_Graph
 							$write = pts_math::set_precision($write, $precision);
 						}
 
-						$this->svg_dom->add_text_element($write, array('x' => $from_left, 'y' => $from_top, 'font-size' => 6.5, 'fill' => $color_key, 'text-anchor' => 'start', 'dominant-baseline' => 'middle'));
+						$this->svg_dom->add_text_element($write, array('x' => $from_left, 'y' => $from_top, 'font-size' => 6.5, 'fill' => $color_key, 'text-anchor' => 'start'));
 						$string_width = $this->text_string_width($write, 6.5);
 
 						if($string_width > $longest_string_width)

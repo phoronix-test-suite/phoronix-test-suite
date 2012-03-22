@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts_Graph: Tweak spacing on pts_Table
+- pts_Graph: Re-factor most text vertical offsets to not use dominant-baseline since Opera still doesn't support this SVG attribute properly
 
 Phoronix Test Suite 3.8.0-Bygland
 19 March 2012
