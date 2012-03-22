@@ -1028,6 +1028,13 @@ class pts_client
 				}
 			}
 			unset($graph);
+
+			/*
+			// TODO XXX: just stuffing some debug code here temporarily while working on block diagram code...
+			$graph = new pts_BlockDiagramGraph($result_file);
+			$graph->renderGraph();
+			$graph->svg_dom->output($save_to_dir . '/result-graphs/blocks.BILDE_EXTENSION');
+			*/
 		}
 
 		// Save XSL

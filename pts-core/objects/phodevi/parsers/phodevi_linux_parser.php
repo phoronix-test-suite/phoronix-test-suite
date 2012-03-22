@@ -244,15 +244,15 @@ class phodevi_linux_parser
 	}
 	public static function read_ati_overdrive($attribute, $adapter = 0)
 	{
-		// Read ATI OverDrive information using aticonfig
+		// Read ATI OverDrive information
 		// OverDrive supported in fglrx 8.52+ drivers
 		$value = false;
 
-		if(pts_client::executable_in_path('aticonfig'))
+		if(($amdconfig = self::find_amdconfig()))
 		{
 			if($attribute == 'Temperature')
 			{
-				$info = shell_exec('aticonfig --adapter=' . $adapter . ' --od-gettemperature 2>&1');
+				$info = shell_exec($amdconfig . ' --adapter=' . $adapter . ' --od-gettemperature 2>&1');
 
 				if(($start = strpos($info, 'Temperature -')) !== false)
 				{
@@ -263,7 +263,7 @@ class phodevi_linux_parser
 			else if($attribute == 'FanSpeed')
 			{
 				// Right now there is no standardized interface to get the fan speed through besides the pplib command
-				$info = shell_exec('aticonfig --adapter=' . $adapter . ' --pplib-cmd \'get fanspeed 0\' 2>&1');
+				$info = shell_exec($amdconfig . ' --adapter=' . $adapter . ' --pplib-cmd \'get fanspeed 0\' 2>&1');
 
 				if(($start = strpos($info, 'Fan Speed:')) !== false)
 				{
@@ -278,7 +278,7 @@ class phodevi_linux_parser
 			}
 			else
 			{
-				$info = shell_exec('aticonfig --adapter=' . $adapter . ' --od-getclocks 2>&1');
+				$info = shell_exec($amdconfig . ' --adapter=' . $adapter . ' --od-getclocks 2>&1');
 
 				if(strpos($info, 'GPU') !== false)
 				{
@@ -315,9 +315,9 @@ class phodevi_linux_parser
 
 		if($try_aticonfig)
 		{
-			if(pts_client::executable_in_path('aticonfig'))
+			if(($amdconfig = self::find_amdconfig()))
 			{
-				$info = shell_exec('aticonfig --get-pcs-key=' . $attribute . ' 2>&1');
+				$info = shell_exec($amdconfig . ' --get-pcs-key=' . $attribute . ' 2>&1');
 
 				if($is_first_read && strpos($info, 'No supported adapters') != false)
 				{
@@ -350,7 +350,7 @@ class phodevi_linux_parser
 	}
 	public static function read_amd_pcsdb_direct_parser($attribute, $find_once = false)
 	{
-		// Read AMD's AMDPCSDB, AMD Persistent Configuration Store Database but using our own internal parser instead of relying upon aticonfig
+		// Read AMD's AMDPCSDB, AMD Persistent Configuration Store Database but using our own internal parser instead of relying upon aticonfig/amdconfig
 		$amdpcsdb_file = null;
 		$last_found_section_count = -1;
 		$this_section_count = 0;
@@ -440,15 +440,29 @@ class phodevi_linux_parser
 
 		return $attribute_values;
 	}
+	public static function find_amdconfig()
+	{
+		$amdconfig = false;
+
+		if(($t = pts_client::executable_in_path('aticonfig')))
+		{
+			$amdconfig = $t;
+		}
+		else if(($t = pts_client::executable_in_path('amdconfig')))
+		{
+			$amdconfig = $t;
+		}
+
+		return $amdconfig;
+	}
 	public static function read_amd_graphics_adapters()
 	{
 		// Read ATI/AMD graphics hardware using aticonfig
-		// TODO XXX: check for amdconfig as well in case AMD drops aticonfig utility name in the future... amdconfig right now is present right now and mirrors aticonfig
 		$adapters = array();
 
-		if(pts_client::executable_in_path('aticonfig'))
+		if(($amdconfig = self::find_amdconfig()))
 		{
-			$info = trim(shell_exec('aticonfig --list-adapters 2>&1'));
+			$info = trim(shell_exec($amdconfig . ' --list-adapters 2>&1'));
 
 			foreach(explode("\n", $info) as $line)
 			{
