@@ -109,14 +109,7 @@ abstract class pts_Graph
 	}
 	public static function init_graph_config($external_config = null)
 	{
-		if(defined('OPENBENCHMARKING_BUILD'))
-		{
-			self::set_openbenchmarking_graph_values(self::$c);
-		}
-		else
-		{
-			self::set_default_graph_values(self::$c);
-		}
+		self::set_default_graph_values(self::$c);
 
 		if($external_config && is_array($external_config))
 		{
@@ -124,39 +117,6 @@ abstract class pts_Graph
 		}
 	}
 	public static function set_default_graph_values(&$config)
-	{
-		// Setup config values
-		$config['graph']['width'] = 580; // Graph width
-		$config['graph']['height'] = 300; // Graph height
-		$config['graph']['border'] = true; // Graph border
-
-		// Colors
-		$config['color']['notches'] = '#454545'; // Color for notches
-		$config['color']['text'] = '#454545'; // Color for text
-		$config['color']['border'] = '#454545'; // Color for border (if used)
-		$config['color']['main_headers'] = '#2B6B29'; // Color of main text headers
-		$config['color']['headers'] = '#2B6B29'; // Color of other headers
-		$config['color']['background'] = '#FEFEFE'; // Color of background
-		$config['color']['body'] = '#BABABA'; // Color of graph body
-		$config['color']['body_text'] = '#FFFFFF'; // Color of graph body text
-		$config['color']['body_light'] = '#949494'; // Color of the border around graph bars (if doing a bar graph)
-		$config['color']['highlight'] = '#005A00'; // Color for highlight
-		$config['color']['alert'] = '#C80000'; // Color for alerts
-		$config['color']['paint'] = array('#2B6B29', '#0b27cf', '#ff9c00', '#d78f1d', '#6B6B6B', '#ff5800', '#221914', '#AC008A', '#E00022', '#3A9137', '#00F6FF', '#8A00AC', '#949200', '#797766', '#5598b1'); // Colors to use for the bars / lines, one color for each key
-
-		// Text
-		$config['size']['tick_mark'] = 10;
-		$config['size']['key'] = 9;
-
-		$config['text']['watermark'] = 'PHORONIX-TEST-SUITE.COM'; // watermark
-		$config['text']['watermark_url'] = 'http://www.phoronix-test-suite.com/'; // watermark URL
-		$config['size']['headers'] = 17; // Font size of headings
-		$config['size']['bars'] = 11; // Font size for text on the bars/objects
-		$config['size']['identifiers'] = 10; // Font size of identifiers
-		$config['size']['sub_headers'] = 11; // Font size of headers
-		$config['size']['axis_headers'] = 10; // Font size of axis headers
-	}
-	public static function set_openbenchmarking_graph_values(&$config)
 	{
 		// Setup config values
 		$config['graph']['width'] = 600;
@@ -181,8 +141,17 @@ abstract class pts_Graph
 		$config['size']['tick_mark'] = 10;
 		$config['size']['key'] = 9;
 
-		$config['text']['watermark'] = 'OpenBenchmarking.org';
-		$config['text']['watermark_url'] = 'http://www.openbenchmarking.org/';
+		if(defined('OPENBENCHMARKING_BUILD'))
+		{
+			$config['text']['watermark'] = 'OpenBenchmarking.org';
+			$config['text']['watermark_url'] = 'http://www.openbenchmarking.org/';
+		}
+		else
+		{
+			$config['text']['watermark'] = 'PHORONIX-TEST-SUITE.COM';
+			$config['text']['watermark_url'] = 'http://www.phoronix-test-suite.com/';
+		}
+
 		$config['size']['headers'] = 17;
 		$config['size']['bars'] = 11;
 		$config['size']['identifiers'] = 10;
