@@ -79,6 +79,7 @@ class graphics_event_checker extends pts_module_interface
 
 			if(phodevi_parser::read_nvidia_extension('SyncToVBlank') == '1')
 			{
+				shell_exec('nvidia-settings -a SyncToVBlank=0 2>&1');
 				self::$driver_forced_vsync = true;
 			}
 		}
@@ -87,6 +88,9 @@ class graphics_event_checker extends pts_module_interface
 		{
 		//	echo '\nYour video driver is forcing vertical sync to be enabled. This will limit the system's frame-rate performance potential in any graphical tests!\n';
 		}
+
+		// vblank_mode=0 has long been set within pts-core, but put it here too just since there's these other checks here
+		putenv('vblank_mode=0');
 	}
 	public static function __post_test_run(&$test_result)
 	{
@@ -146,6 +150,11 @@ class graphics_event_checker extends pts_module_interface
 			}
 
 			echo PHP_EOL . 'GPU Errors: ' . $error_count . $error_breakdown . PHP_EOL;
+		}
+
+		if(phodevi::is_nvidia_graphics() && self::$driver_forced_vsync)
+		{
+			shell_exec('nvidia-settings -a SyncToVBlank=1 2>&1');
 		}
 	}
 	protected static function nvidia_gpu_error_count()
