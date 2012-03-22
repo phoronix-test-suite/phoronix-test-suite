@@ -82,7 +82,10 @@ $sent_command = strtolower(str_replace('-', '_', (isset($argv[1]) ? $argv[1] : n
 $quick_start_options = array('dump_possible_options');
 define('QUICK_START', in_array($sent_command, $quick_start_options));
 
-pts_client::program_requirement_checks(true);
+if(QUICK_START == false)
+{
+	pts_client::program_requirement_checks(true);
+}
 pts_client::init(); // Initalize the Phoronix Test Suite (pts-core) client
 $pass_args = array();
 
