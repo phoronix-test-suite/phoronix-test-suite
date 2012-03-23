@@ -195,8 +195,14 @@ class phodevi_disk extends phodevi_device_interface
 			$disks_formatted = array();
 			$disks = array();
 
-			foreach(pts_file_io::glob('/sys/block/sd*') as $sdx)
+			foreach(array_merge(pts_file_io::glob('/sys/block/sd*'), pts_file_io::glob('/sys/block/mmcblk*')) as $sdx)
 			{
+				if(strpos($sdx, 'boot') !== false)
+				{
+					// Don't include devices like /sys/block/mmcblk0boot[0,1] as it's repeat of /sys/block/mmcblk0
+					continue;
+				}
+
 				if(is_file($sdx . '/device/model') && is_file($sdx . '/size'))
 				{
 					$disk_size = pts_file_io::file_get_contents($sdx . '/size');
@@ -243,13 +249,6 @@ class phodevi_disk extends phodevi_device_interface
 					array_push($disks, $disk);
 				}
 			}
-		}
-
-		if(is_file('/sys/class/block/mmcblk0/device/name'))
-		{
-			$disk_name = pts_file_io::file_get_contents('/sys/class/block/mmcblk0/device/name');
-			$disk_size = pts_file_io::file_get_contents('/sys/class/block/mmcblk0/size');
-			array_push($disks, round($disk_size * 512 / 1000000000) . 'GB ' . $disk_name);
 		}
 
 		if(count($disks) == 0)
