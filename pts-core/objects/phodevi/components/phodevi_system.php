@@ -545,17 +545,26 @@ class phodevi_system extends phodevi_device_interface
 		{
 			// LLVM - Low Level Virtual Machine
 			// Reading the version from llvm-ld (the LLVM linker) should be safe as well for finding out version of LLVM in use
-			$info = trim(shell_exec('llvm-ld --version 2> /dev/null'));
+			$info = trim(shell_exec('llvm-ld -version 2> /dev/null'));
 
 			if(($s = strpos($info, 'version')) != false)
 			{
 				$info = substr($info, 0, strpos($info, PHP_EOL, $s));
 				$info = substr($info, (strrpos($info, ' ') + 1));
 
-				if(pts_strings::is_version($info))
+				if(pts_strings::is_version(str_replace('svn', null, $info)))
 				{
 					$compilers['llvmc'] = 'LLVM ' . $info;
 				}
+			}
+		}
+		else if(pts_client::executable_in_path('llvm-config'))
+		{
+			// LLVM - Low Level Virtual Machine config
+			$info = trim(shell_exec('llvm-config --version 2> /dev/null'));
+			if(pts_strings::is_version(str_replace('svn', null, $info)))
+			{
+				$compilers['llvmc'] = 'LLVM ' . $info;
 			}
 		}
 		else if(pts_client::executable_in_path('llvmc'))
@@ -1246,6 +1255,56 @@ class phodevi_system extends phodevi_device_interface
 
 			sort($cc);
 			$cc = implode(' ', $cc);
+		}
+		else if(($t = stripos($cc, 'clang')) !== false)
+		{
+			$cc = null;
+
+			// Clang doesn't report "configured with" but has other useful tid-bits...
+			if(($c = pts_client::executable_in_path('llvm-ld')))
+			{
+				$llvm_ld = shell_exec($c . ' -version');
+				/*
+				EXAMPLE OUTPUT:
+					LLVM (http://llvm.org/):
+					  LLVM version 3.1svn
+					  Optimized build.
+					  Built Mar 23 2012 (08:53:34).
+					  Default target: x86_64-unknown-linux-gnu
+					  Host CPU: corei7-avx
+				*/
+
+				if(stripos($llvm_ld, 'build') && stripos($llvm_ld, 'target'))
+				{
+					$llvm_ld = explode(PHP_EOL, $llvm_ld);
+
+					if(stripos($llvm_ld[0], 'http://'))
+					{
+						array_shift($llvm_ld);
+					}
+					if(stripos($llvm_ld[0], 'version'))
+					{
+						array_shift($llvm_ld);
+					}
+
+					foreach($llvm_ld as $i => &$line)
+					{
+						$line = trim($line);
+						if(substr($line, -1) == '.')
+						{
+							$line = substr($line, 0, -1);
+						}
+
+						if($line == null)
+						{
+							unset($llvm_ld[$i]);
+						}
+					}
+
+					$cc = implode('; ', $llvm_ld);
+				}
+			}
+
 		}
 		else
 		{
