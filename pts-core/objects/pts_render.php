@@ -1008,7 +1008,8 @@ class pts_render
 			}
 
 			// text-alignment is still fucked as of 11.50/12.0
-			$selected_renderer = 'PNG';
+			// With PTS4 and the bilde_svg_dom calls not using dominant-baseline, Opera support seems to be fine
+			// $selected_renderer = 'PNG';
 		}
 		else if(($p = strpos($user_agent, 'Epiphany/')) !== false)
 		{
