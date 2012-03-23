@@ -423,10 +423,6 @@ class pts_test_run_manager
 
 		return $results_identifier;
 	}
-	public function result_file_setup()
-	{
-		$this->result_file_writer = new pts_result_file_writer($this->get_results_identifier());
-	}
 	public function get_test_run_position()
 	{
 		return $this->test_run_pos + 1;
@@ -687,13 +683,15 @@ class pts_test_run_manager
 	{
 		if($this->do_save_results())
 		{
-			$this->result_file_setup();
+			$this->result_file_writer = new pts_result_file_writer($this->get_results_identifier());
 
 			if((pts_c::$test_flags ^ pts_c::is_recovering) && (!pts_result_file::is_test_result_file($this->get_file_name()) || $this->result_already_contains_identifier() == false))
 			{
 				$this->result_file_writer->add_result_file_meta_data($this);
 				$this->result_file_writer->add_current_system_information();
 			}
+
+			pts_client::setup_test_result_directory($this->get_file_name());
 		}
 	}
 	protected function generate_json_system_attributes()

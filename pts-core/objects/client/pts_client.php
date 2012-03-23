@@ -1638,7 +1638,7 @@ class pts_client
 				{
 					$error_string = 'Undefined: ' . substr($error_string, ($x + 2));
 				}
-				else if(strpos($error_string, 'Name or service not known') !== false || strpos($error_string, 'HTTP request failed') !== false || strpos($error_string, 'fopen') !== false || strpos($error_string, 'file_get_contents') !== false)
+				else if(strpos($error_string, 'Name or service not known') !== false || strpos($error_string, 'HTTP request failed') !== false || strpos($error_string, 'fopen') !== false || strpos($error_string, 'file_get_contents') !== false || strpos($error_string, 'Directory not empty') !== false)
 				{
 					// Don't report network errors
 					return;
