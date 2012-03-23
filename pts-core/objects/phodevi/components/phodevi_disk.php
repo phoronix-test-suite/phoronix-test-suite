@@ -203,10 +203,10 @@ class phodevi_disk extends phodevi_device_interface
 					continue;
 				}
 
-				if(is_file($sdx . '/device/model') && is_file($sdx . '/size'))
+				if((is_file($sdx . '/device/name') || is_file($sdx . '/device/model')) && is_file($sdx . '/size'))
 				{
 					$disk_size = pts_file_io::file_get_contents($sdx . '/size');
-					$disk_model = pts_file_io::file_get_contents($sdx . '/device/model');
+					$disk_model = pts_file_io::file_get_contents($sdx .  (is_file($sdx . '/device/model') ? '/device/model' : '/device/name'));
 					$disk_removable = pts_file_io::file_get_contents($sdx . '/removable');
 
 					if($disk_removable == '1')
