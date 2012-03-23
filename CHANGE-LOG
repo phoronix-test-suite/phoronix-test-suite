@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Add AutoSortRunQueue option that by default automatically sorts the test execution queue to run similar tests together
+- pts-core: Expose more verbose information within detailed-system-info command
 - pts_Graph: Tweak spacing on pts_Table
 - pts_Graph: Re-factor most text vertical offsets to not use dominant-baseline since Opera still doesn't support this SVG attribute properly
 - pts_Graph: Begin unifying the Phoronix Test Suite and OpenBenchmarking.org theme

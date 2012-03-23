@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2011, Phoronix Media
-	Copyright (C) 2011, Michael Larabel
+	Copyright (C) 2011 - 2012, Phoronix Media
+	Copyright (C) 2011 - 2012, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -45,6 +45,35 @@ class detailed_system_info implements pts_option_interface
 		echo 'AES Encryption: ' . ($cpu_flags & phodevi_cpu::get_cpu_feature_constant('aes') ? 'YES' : 'NO') . PHP_EOL;
 		echo 'Energy Performance Bias: ' . ($cpu_flags & phodevi_cpu::get_cpu_feature_constant('epb') ? 'YES' : 'NO') . PHP_EOL;
 		echo 'Virtualization: ' . (phodevi_cpu::virtualization_technology() ? phodevi_cpu::virtualization_technology() : 'NO') . PHP_EOL;
+
+		// Compiler Configuration
+		$test = false;
+		$compiler_mask_dir = pts_test_installer::create_compiler_mask($test);
+		if($compiler_mask_dir && is_executable($compiler_mask_dir . 'cc'))
+		{
+			$compiler_configuration = phodevi_system::sw_compiler_build_configuration($compiler_mask_dir . 'cc');
+			pts_file_io::delete($compiler_mask_dir, null, true);
+
+			if(!empty($compiler_configuration))
+			{
+				echo PHP_EOL . 'Main Compiler Configuration: ' . $compiler_configuration . PHP_EOL . PHP_EOL;
+			}
+		}
+
+		// Disk Mount Options
+		$disk_scheduler = phodevi::read_property('disk', 'scheduler');
+		if($disk_scheduler)
+		{
+			echo PHP_EOL . 'Disk Scheduler: ' . $disk_scheduler;
+		}
+		$mount_options = phodevi::read_property('disk', 'mount-options');
+		if($mount_options != null)
+		{
+			foreach($mount_options as $key => $value)
+			{
+				echo 'Disk ' . $key . ': ' . $value . PHP_EOL;
+			}
+		}
 
 	}
 }

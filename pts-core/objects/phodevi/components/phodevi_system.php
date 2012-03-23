@@ -1263,7 +1263,7 @@ class phodevi_system extends phodevi_device_interface
 			// Clang doesn't report "configured with" but has other useful tid-bits...
 			if(($c = pts_client::executable_in_path('llvm-ld')))
 			{
-				$llvm_ld = shell_exec($c . ' -version');
+				$llvm_ld = shell_exec($c . ' -version 2>&1');
 				/*
 				EXAMPLE OUTPUT:
 					LLVM (http://llvm.org/):
@@ -1274,7 +1274,7 @@ class phodevi_system extends phodevi_device_interface
 					  Host CPU: corei7-avx
 				*/
 
-				if(stripos($llvm_ld, 'build') && stripos($llvm_ld, 'target'))
+				if(stripos($llvm_ld, 'build') && (stripos($llvm_ld, 'host') || stripos($llvm_ld, 'target')))
 				{
 					$llvm_ld = explode(PHP_EOL, $llvm_ld);
 
