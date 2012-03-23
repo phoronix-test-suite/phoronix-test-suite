@@ -1324,7 +1324,14 @@ class pts_client
 
 			if(!empty($pci_prev) && is_array($pci_prev) && is_array($pci))
 			{
-				$pci = array_diff($pci, $pci_prev);
+				if($pci == $pci_prev)
+				{
+					$pci = null;
+				}
+				else
+				{
+					$pci = array_diff($pci, $pci_prev);
+				}
 			}
 
 			if(!empty($pci))

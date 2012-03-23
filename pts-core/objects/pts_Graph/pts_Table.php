@@ -120,18 +120,18 @@ class pts_Table extends pts_Graph
 
 		if($this->column_heading_vertical)
 		{
-			$identifier_height = ($this->text_string_width($this->longest_column_identifier, $this->i['identifier_size']) * 1.1) + 12;
+			$identifier_height = round($this->text_string_width($this->longest_column_identifier, $this->i['identifier_size']) * 1.1) + 12;
 			$table_identifier_width = $this->text_string_height($this->longest_column_identifier, $this->i['identifier_size']);
 		}
 		else
 		{
 			$identifier_height = $this->text_string_height($this->longest_column_identifier, $this->i['identifier_size']) + 8;
-			$table_identifier_width = ($this->text_string_width($this->longest_column_identifier, $this->i['identifier_size']) * 1.1) + 8;
+			$table_identifier_width = round($this->text_string_width($this->longest_column_identifier, $this->i['identifier_size']) * 1.1) + 8;
 		}
 
 
 		// $this->i['graph_max_value'] isn't actually correct to use, but it works
-		$extra_heading_height = $this->text_string_height($this->i['graph_max_value'], self::$c['size']['headers']) * 1.25;
+		$extra_heading_height = round($this->text_string_height($this->i['graph_max_value'], self::$c['size']['headers']) * 1.25);
 
 		// Needs to be at least 46px tall for the PTS logo
 		$identifier_height = max($identifier_height, 48);
@@ -159,7 +159,7 @@ class pts_Table extends pts_Graph
 		$table_proper_height = $this->i['top_heading_height'] + $table_height + $identifier_height;
 
 		$this->i['graph_width'] = $table_width + $this->i['left_start'];
-		$this->i['graph_height'] = $table_proper_height + $table_line_height;
+		$this->i['graph_height'] = round($table_proper_height + $table_line_height);
 
 		if(!empty($this->i['notes']))
 		{
@@ -270,7 +270,7 @@ class pts_Table extends pts_Graph
 					}
 
 					//$x = $this->i['left_start'] + ($last_changed_col * $table_item_width) + ($this->i['left_start'] + ($current_col * $table_item_width) - $this->i['left_start'] + ($last_changed_col * $table_item_width));
-					$this->svg_dom->add_text_element($last_identifier, array('x' => ($x + (($x_end - $x) / 2)), 'y' => (self::$c['size']['axis_headers'] + 4), 'font-size' => self::$c['size']['axis_headers'], 'fill' => self::$c['color']['background'], 'font-weight' => 'bold', 'text-anchor' => 'middle'));
+					$this->svg_dom->add_text_element($last_identifier, array('x' => round($x + (($x_end - $x) / 2)), 'y' => (self::$c['size']['axis_headers'] + 4), 'font-size' => self::$c['size']['axis_headers'], 'fill' => self::$c['color']['background'], 'font-weight' => 'bold', 'text-anchor' => 'middle'));
 
 					$last_identifier = $identifier[0];
 					$last_changed_col = $current_col;
