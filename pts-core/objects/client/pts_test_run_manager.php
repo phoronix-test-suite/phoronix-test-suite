@@ -1333,8 +1333,25 @@ class pts_test_run_manager
 			}
 		}
 
+		// AlwaysUploadResultsToOpenBenchmarking AutoSortRunQueue
+		if(pts_config::read_bool_config('PhoronixTestSuite/Options/Testing/AutoSortRunQueue', 'TRUE') && $this->force_save_results == false)
+		{
+			// Not that it matters much, but if $this->force_save_results is set that means likely running from a result file...
+			// so if running a result file, don't change the ordering of the existing results
+
+			// Sort the run order so that all tests that are similar are grouped together, etc
+			usort($this->tests_to_run, array('pts_test_run_manager', 'cmp_result_object_sort'));
+		}
+
 		$this->prompt_save_results = $run_contains_a_no_result_type == false || $unique_test_count > 1;
 		$this->force_save_results = $this->force_save_results || $request_results_save;
+	}
+	public static function cmp_result_object_sort($a, $b)
+	{
+		$a = $a->test_profile->get_test_hardware_type() . $a->test_profile->get_result_scale_formatted() . $a->test_profile->get_test_software_type() . $a->test_profile->get_identifier(true) . $a->get_arguments_description();
+		$b = $b->test_profile->get_test_hardware_type() . $b->test_profile->get_result_scale_formatted() . $b->test_profile->get_test_software_type() . $b->test_profile->get_identifier(true) . $b->get_arguments_description();
+
+		return strcmp($a, $b);
 	}
 	public static function test_profile_system_compatibility_check(&$test_profile, $report_errors = false)
 	{

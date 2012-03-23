@@ -31,6 +31,7 @@
 			<SaveTestLogs>FALSE</SaveTestLogs>
 			<ResultsDirectory>~/.phoronix-test-suite/test-results/</ResultsDirectory>
 			<AlwaysUploadResultsToOpenBenchmarking>FALSE</AlwaysUploadResultsToOpenBenchmarking>
+			<AutoSortRunQueue>TRUE</AutoSortRunQueue>
 		</Testing>
 		<TestResultValidation>
 			<DynamicRunCount>TRUE</DynamicRunCount>
