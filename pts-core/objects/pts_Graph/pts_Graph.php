@@ -662,11 +662,11 @@ abstract class pts_Graph
 
 			for($i = 0; $i < $this->i['mark_count']; $i++)
 			{
-				$px_from_top = round($top_end - ($tick_width * ($i + 1)));
+				$px_from_top = round($top_end - ($tick_width * $i));
 
 				if($i != 0)
 				{
-					$this->svg_dom->add_text_element($display_value, array('x' => ($px_from_left_start - 4), 'y' => $px_from_top, 'font-size' => self::$c['size']['tick_mark'], 'fill' =>  self::$c['color']['text'], 'text-anchor' => 'end'));
+					$this->svg_dom->add_text_element($display_value, array('x' => ($px_from_left_start - 4), 'y' => round($px_from_top + (self::$c['size']['tick_mark'] / 2)), 'font-size' => self::$c['size']['tick_mark'], 'fill' =>  self::$c['color']['text'], 'text-anchor' => 'end'));
 
 					if($this->i['show_background_lines'])
 					{
