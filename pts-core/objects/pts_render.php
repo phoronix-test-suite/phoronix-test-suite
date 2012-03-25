@@ -376,6 +376,7 @@ class pts_render
 	{
 		$system_json = $result_file->get_system_json();
 		$identifiers = $result_file->get_system_identifiers();
+		$identifier_count = count($identifiers);
 		$compiler_configuration = array();
 		$system_attributes = array();
 
@@ -428,7 +429,7 @@ class pts_render
 				case 0:
 					break;
 				case 1:
-					if($unique_attribue_count == count($attributes))
+					if($identifier_count == count($attributes))
 					{
 						// So there is something for all of the test runs and it's all the same...
 						$table->addTestNote(array_pop($attributes));
@@ -761,6 +762,7 @@ class pts_render
 		}
 
 		$raw_days = $days;
+		$json_days = $days;
 
 		foreach($mto->test_result_buffer->get_buffer_items() as $buffer_item)
 		{
@@ -783,6 +785,7 @@ class pts_render
 
 			$days[$date][$system] = $buffer_item->get_result_value();
 			$raw_days[$date][$system] = $buffer_item->get_result_raw();
+			$json_days[$date][$system] = $buffer_item->get_result_json();
 
 			if(!is_numeric($days[$date][$system]))
 			{
@@ -837,14 +840,25 @@ class pts_render
 			{
 				$results = array();
 				$raw_results = array();
+				$json_results = array();
 
 				foreach($day_keys as $day_key)
 				{
 					array_push($results, $days[$day_key][$system_key]);
 					array_push($raw_results, $raw_days[$day_key][$system_key]);
+					pts_arrays::unique_push($json_results, $json_days[$day_key][$system_key]);
 				}
 
-				$mto->test_result_buffer->add_test_result($system_key, implode(',', $results), implode(',', $raw_results));
+				if(count($json_results) == 1)
+				{
+					$json = array_shift($json_results);
+				}
+				else
+				{
+					$json = null;
+				}
+
+				$mto->test_result_buffer->add_test_result($system_key, implode(',', $results), implode(',', $raw_results), $json);
 			}
 		}
 
