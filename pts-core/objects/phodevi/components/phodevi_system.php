@@ -417,6 +417,30 @@ class phodevi_system extends phodevi_device_interface
 		{
 			$virtualized = 'Parallels Virtualization';
 		}
+		else if(is_file('/sys/hypervisor/type'))
+		{
+			$type = pts_file_io::file_get_contents('/sys/hypervisor/type');
+			$version = array();
+
+			foreach(array('major', 'minor', 'extra') as $v)
+			{
+				if(is_file('/sys/class/hypervisor/version/' . $v))
+				{
+					$v = pts_file_io::file_get_contents('/sys/class/hypervisor/version/' . $v);
+				}
+
+				if($v != null)
+				{
+					if(!empty($version) && substr($v, 0, 1) != '.')
+					{
+						$v = '.' . $v;
+					}
+					array_push($version, $v);
+				}
+			}
+
+			$virtualized = ucwords($type) . implode('', $version);
+		}
 
 		return $virtualized;
 	}
