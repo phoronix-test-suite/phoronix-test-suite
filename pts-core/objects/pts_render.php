@@ -389,9 +389,13 @@ class pts_render
 			{
 				$system_attributes['disk'][$identifiers[$i]] = $json['disk-scheduler'] . ' / ' . $json['disk-mount-options'];
 			}
-			if(isset($json['cpu-scaling-governor']) && isset($json['cpu-scaling-governor']))
+			if(isset($json['cpu-scaling-governor']))
 			{
 				$system_attributes['cpu'][$identifiers[$i]] = 'Scaling Governor: ' . $json['cpu-scaling-governor'];
+			}
+			if(isset($json['graphics-2d-acceleration']))
+			{
+				$system_attributes['gpu'][$identifiers[$i]] = '2D Acceleration: ' . $json['graphics-2d-acceleration'];
 			}
 		}
 

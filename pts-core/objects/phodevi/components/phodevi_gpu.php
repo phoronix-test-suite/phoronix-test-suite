@@ -60,9 +60,39 @@ class phodevi_gpu extends phodevi_device_interface
 			case 'screen-resolution-string':
 				$property = new phodevi_device_property('gpu_screen_resolution_string', phodevi::std_caching);
 				break;
+			case '2d-acceleration':
+				$property = new phodevi_device_property('gpu_2d_acceleration', phodevi::std_caching);
+				break;
 		}
 
 		return $property;
+	}
+	public static function gpu_2d_acceleration()
+	{
+		$xorg_log = is_file('/var/log/Xorg.0.log') ? file_get_contents('/var/log/Xorg.0.log') : false;
+		$accel_2d = null;
+
+		if($xorg_log)
+		{
+			if(strpos($xorg_log, 'EXA(0)'))
+			{
+				$accel_2d = 'EXA';
+			}
+			else if(strpos($xorg_log, 'UXA(0)'))
+			{
+				$accel_2d = 'UXA';
+			}
+			else if(strpos($xorg_log, 'SNA initialized'))
+			{
+				$accel_2d = 'SNA';
+			}
+			else if(strpos($xorg_log, 'shadowfb'))
+			{
+				$accel_2d = 'ShadowFB';
+			}
+		}
+
+		return $accel_2d;
 	}
 	public static function set_property($identifier, $args)
 	{

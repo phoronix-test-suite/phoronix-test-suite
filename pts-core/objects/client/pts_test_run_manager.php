@@ -746,6 +746,14 @@ class pts_test_run_manager
 				$json_notes['cpu-scaling-governor'] = $scaling_governor;
 			}
 		}
+		if(in_array('Graphics', $test_hardware_types))
+		{
+			$accel_2d = phodevi::read_property('gpu', '2d-acceleration');
+			if($accel_2d)
+			{
+				$json_notes['graphics-2d-acceleration'] = $accel_2d;
+			}
+		}
 
 		return $json_notes;
 	}

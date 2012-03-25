@@ -6,6 +6,7 @@ Phoronix Test Suite (Git)
 - pts-core: Expose more verbose information within detailed-system-info command
 - pts-core: Remove recover-run command since with new PTS4 changes the finish-run command will provide the same functionality
 - pts-core: Track the CPU scaling governor configuration between test runs
+- pts-core: Report 2D acceleration information to system table report on graphics test runs
 - pts_Graph: Tweak spacing on pts_Table
 - pts_Graph: Re-factor most text vertical offsets to not use dominant-baseline since Opera still doesn't support this SVG attribute properly
 - pts_Graph: Begin unifying the Phoronix Test Suite and OpenBenchmarking.org theme
