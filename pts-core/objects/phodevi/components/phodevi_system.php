@@ -426,7 +426,7 @@ class phodevi_system extends phodevi_device_interface
 			{
 				if(is_file('/sys/hypervisor/version/' . $v))
 				{
-					$v = pts_file_io::file_get_contents('/sys/class/version/' . $v);
+					$v = pts_file_io::file_get_contents('/sys/hypervisor/version/' . $v);
 				}
 				else
 				{
@@ -443,7 +443,7 @@ class phodevi_system extends phodevi_device_interface
 				}
 			}
 
-			$virtualized = ucwords($type) . implode('', $version) . ' Hypervisor';
+			$virtualized = ucwords($type) . ' ' . implode('', $version) . ' Hypervisor';
 		}
 
 		return $virtualized;
