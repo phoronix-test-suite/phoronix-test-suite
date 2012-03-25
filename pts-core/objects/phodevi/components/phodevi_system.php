@@ -424,9 +424,13 @@ class phodevi_system extends phodevi_device_interface
 
 			foreach(array('major', 'minor', 'extra') as $v)
 			{
-				if(is_file('/sys/class/hypervisor/version/' . $v))
+				if(is_file('/sys/hypervisor/version/' . $v))
 				{
-					$v = pts_file_io::file_get_contents('/sys/class/hypervisor/version/' . $v);
+					$v = pts_file_io::file_get_contents('/sys/class/version/' . $v);
+				}
+				else
+				{
+					continue;
 				}
 
 				if($v != null)
