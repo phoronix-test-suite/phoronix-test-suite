@@ -439,7 +439,7 @@ class phodevi_system extends phodevi_device_interface
 				}
 			}
 
-			$virtualized = ucwords($type) . implode('', $version);
+			$virtualized = ucwords($type) . implode('', $version) . ' Hypervisor';
 		}
 
 		return $virtualized;
