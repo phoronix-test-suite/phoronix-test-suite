@@ -264,7 +264,7 @@ abstract class pts_Graph
 		{
 			if($real_maximum < $this->i['mark_count'])
 			{
-				$maximum = ceil($real_maximum * 1.02 / $this->i['mark_count']) * $this->i['mark_count'];
+				$maximum = ceil(($real_maximum * 1.35 / $this->i['mark_count']) * $this->i['mark_count']);
 			}
 			else
 			{
