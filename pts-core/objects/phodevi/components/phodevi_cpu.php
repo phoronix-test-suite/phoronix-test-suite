@@ -50,6 +50,9 @@ class phodevi_cpu extends phodevi_device_interface
 			case 'core-count':
 				$property = new phodevi_device_property('cpu_core_count', phodevi::smart_caching);
 				break;
+			case 'scaling-governor':
+				$property = new phodevi_device_property('cpu_scaling_governor', phodevi::stand_caching);
+				break;
 		}
 
 		return $property;
@@ -123,6 +126,17 @@ class phodevi_cpu extends phodevi_device_interface
 	public static function cpu_default_frequency_mhz()
 	{
 		return self::cpu_default_frequency() * 1000;
+	}
+	public static function cpu_scaling_governor()
+	{
+		$scaling_governor = false;
+
+		if(is_file('/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor'))
+		{
+			$scaling_governor = pts_file_io::file_get_contents('/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor');
+		}
+
+		return $scaling_governor;
 	}
 	public static function is_genuine($cpu)
 	{

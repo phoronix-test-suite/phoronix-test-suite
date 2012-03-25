@@ -64,7 +64,7 @@ class detailed_system_info implements pts_option_interface
 		$disk_scheduler = phodevi::read_property('disk', 'scheduler');
 		if($disk_scheduler)
 		{
-			echo PHP_EOL . 'Disk Scheduler: ' . $disk_scheduler;
+			echo PHP_EOL . 'Disk Scheduler: ' . $disk_scheduler . PHP_EOL;
 		}
 		$mount_options = phodevi::read_property('disk', 'mount-options');
 		if($mount_options != null)

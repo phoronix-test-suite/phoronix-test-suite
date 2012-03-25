@@ -738,6 +738,14 @@ class pts_test_run_manager
 				$json_notes['disk-mount-options'] = $mount_options['mount-options'];
 			}
 		}
+		if(in_array('Processor', $test_hardware_types) || in_array('System', $test_hardware_types))
+		{
+			$scaling_governor = phodevi::read_property('cpu', 'scaling-governor');
+			if($scaling_governor)
+			{
+				$json_notes['cpu-scaling-governor'] = $scaling_governor;
+			}
+		}
 
 		return $json_notes;
 	}

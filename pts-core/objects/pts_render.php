@@ -377,7 +377,7 @@ class pts_render
 		$system_json = $result_file->get_system_json();
 		$identifiers = $result_file->get_system_identifiers();
 		$compiler_configuration = array();
-		$disk_options = array();
+		$system_attributes = array();
 
 		foreach($system_json as $i => $json)
 		{
@@ -387,7 +387,11 @@ class pts_render
 			}
 			if(isset($json['disk-scheduler']) && isset($json['disk-mount-options']))
 			{
-				$disk_options[$identifiers[$i]] = $json['disk-scheduler'] . ' / ' . $json['disk-mount-options'];
+				$system_attributes['disk'][$identifiers[$i]] = $json['disk-scheduler'] . ' / ' . $json['disk-mount-options'];
+			}
+			if(isset($json['cpu-scaling-governor']) && isset($json['cpu-scaling-governor']))
+			{
+				$system_attributes['cpu'][$identifiers[$i]] = 'Scaling Governor: ' . $json['cpu-scaling-governor'];
 			}
 		}
 
@@ -411,19 +415,22 @@ class pts_render
 				break;
 		}
 
-		switch(count(array_unique($disk_options)))
+		foreach($system_attributes as $index_name => $attributes)
 		{
-			case 0:
-				break;
-			case 1:
-				$table->addTestNote(array_pop($disk_options));
-				break;
-			default:
-				foreach($disk_options as $identifier => $configuration)
-				{
-					$table->addTestNote($identifier . ': ' . $configuration);
-				}
-				break;
+			switch(count(array_unique($attributes)))
+			{
+				case 0:
+					break;
+				case 1:
+					$table->addTestNote(array_pop($attributes));
+					break;
+				default:
+					foreach($attributes as $identifier => $configuration)
+					{
+						$table->addTestNote($identifier . ': ' . $configuration);
+					}
+					break;
+			}
 		}
 	}
 	protected static function report_test_notes_to_graph(&$graph, &$result_object)
