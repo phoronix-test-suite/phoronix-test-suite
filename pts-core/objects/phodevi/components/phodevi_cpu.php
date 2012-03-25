@@ -51,7 +51,7 @@ class phodevi_cpu extends phodevi_device_interface
 				$property = new phodevi_device_property('cpu_core_count', phodevi::smart_caching);
 				break;
 			case 'scaling-governor':
-				$property = new phodevi_device_property('cpu_scaling_governor', phodevi::stand_caching);
+				$property = new phodevi_device_property('cpu_scaling_governor', phodevi::std_caching);
 				break;
 		}
 
