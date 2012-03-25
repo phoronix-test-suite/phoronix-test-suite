@@ -421,12 +421,23 @@ class pts_render
 
 		foreach($system_attributes as $index_name => $attributes)
 		{
-			switch(count(array_unique($attributes)))
+			$unique_attribue_count = count(array_unique($attributes));
+
+			switch($unique_attribue_count)
 			{
 				case 0:
 					break;
 				case 1:
-					$table->addTestNote(array_pop($attributes));
+					if($unique_attribue_count == count($attributes))
+					{
+						// So there is something for all of the test runs and it's all the same...
+						$table->addTestNote(array_pop($attributes));
+					}
+					else
+					{
+						// There is missing data for some test runs for this value so report the runs this is relevant to.
+						$table->addTestNote(implode(', ', array_keys($attributes)) . ': ' . array_pop($attributes));
+					}
 					break;
 				default:
 					foreach($attributes as $identifier => $configuration)
