@@ -750,7 +750,17 @@ class pts_render
 			}
 		}
 
-		if($is_tracking == false && $sha1_short_count > 5)
+		if($is_tracking)
+		{
+			$prev_date_r = explode(' ', $prev_date);
+
+			if(count($prev_date_r) == 2 && ctype_alpha($prev_date_r[0]))
+			{
+				// This check should make it so when like testing every Ubuntu releases (Ubuntu 11.04, Ubuntu 11.10, etc) it's not in a line graph
+				$is_tracking = false;
+			}
+		}
+		else if($is_tracking == false && $sha1_short_count > 5)
 		{
 			// It's probably actually tracking..... based upon Stefan's Wine 1.4 example on 15 March 2012
 			$is_tracking = true;
@@ -787,7 +797,7 @@ class pts_render
 			$raw_days[$date][$system] = $buffer_item->get_result_raw();
 			$json_days[$date][$system] = $buffer_item->get_result_json();
 
-			if(!is_numeric($days[$date][$system]))
+			if(!ctype_digit($days[$date][$system]))
 			{
 				return;
 			}
@@ -848,6 +858,8 @@ class pts_render
 					array_push($raw_results, $raw_days[$day_key][$system_key]);
 					pts_arrays::unique_push($json_results, $json_days[$day_key][$system_key]);
 				}
+
+				// TODO XXX: Make JSON data work for multi-way comparisons!
 
 				if(count($json_results) == 1)
 				{
