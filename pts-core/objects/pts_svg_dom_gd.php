@@ -187,7 +187,7 @@ class pts_svg_dom_gd
 				case 'polyline':
 					$a = self::attributes_to_array($node, array('points', 'stroke', 'stroke-width', 'fill'));
 					imagesetthickness($gd, $a['stroke-width']);
-					$line_color = self::gd_color_allocate($gd, $a['fill']);
+					$line_color = self::gd_color_allocate($gd, $a['stroke']);
 
 					$a['points'] = explode(' ', $a['points']);
 					for($i = 1; $i < count($a['points']); $i++)
