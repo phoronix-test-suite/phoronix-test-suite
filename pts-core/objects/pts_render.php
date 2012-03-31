@@ -797,7 +797,7 @@ class pts_render
 			$raw_days[$date][$system] = $buffer_item->get_result_raw();
 			$json_days[$date][$system] = $buffer_item->get_result_json();
 
-			if(!ctype_digit($days[$date][$system]))
+			if(!is_numeric($days[$date][$system]))
 			{
 				return;
 			}
