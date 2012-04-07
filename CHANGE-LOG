@@ -19,6 +19,7 @@ Phoronix Test Suite (Git)
 - phodevi: Fix LXDE version detection
 - phodevi: Support for reporting the Openbox version
 - graphics_event_checker: Override NVIDIA SyncToVBlank so it's always disabled
+- system_monitor: Allow performance per Watt to be automatically calculated if PERFORMANCE_PER_WATT is set
 
 Phoronix Test Suite 3.8.0-Bygland
 19 March 2012

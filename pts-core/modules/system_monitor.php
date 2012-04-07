@@ -76,6 +76,7 @@ class system_monitor extends pts_module_interface
 		{
 			// We need to ensure the system power consumption is being tracked to get performance-per-Watt
 			pts_arrays::unique_push($to_show, 'sys.power');
+			self::$individual_monitoring = true;
 		}
 
 		foreach(phodevi::supported_sensors() as $sensor)
@@ -113,7 +114,7 @@ class system_monitor extends pts_module_interface
 		{
 			$log_f = pts_module::read_file('logs/' . phodevi::sensor_identifier($sensor));
 			$offset = count(explode(PHP_EOL, $log_f));
-			self::$individual_test_run_offsets[$sensor] = $offset;
+			self::$individual_test_run_offsets[phodevi::sensor_identifier($sensor)] = $offset;
 		}
 	}
 	public static function __post_test_run_process(&$result_file_writer)
@@ -125,7 +126,7 @@ class system_monitor extends pts_module_interface
 
 		if(pts_module::read_variable('PERFORMANCE_PER_WATT'))
 		{
-			$sensor_results = self::parse_monitor_log('logs/' . phodevi::sensor_identifier('sys.power'), self::$individual_test_run_offsets['sys.power']);
+			$sensor_results = self::parse_monitor_log('logs/' . phodevi::sensor_identifier('sys.power'), self::$individual_test_run_offsets[phodevi::sensor_identifier('sys.power')]);
 
 			if(count($sensor_results) > 2)
 			{
@@ -134,7 +135,7 @@ class system_monitor extends pts_module_interface
 				$process_perf_per_watt = true;
 
 				$watt_average = array_sum($sensor_results) / count($sensor_results);
-				switch($test_result->test_profile->get_result_scale())
+				switch(phodevi::read_sensor_unit($sensor))
 				{
 					case 'Milliwatts':
 						$watt_average = $watt_average / 1000;
@@ -156,7 +157,7 @@ class system_monitor extends pts_module_interface
 
 						foreach($test_result->test_result_buffer->buffer_items as &$buffer_item)
 						{
-							$buffer_item->reset_result_value(($buffer_item->get_result_value() / $watt_average);
+							$buffer_item->reset_result_value(($buffer_item->get_result_value() / $watt_average));
 							$buffer_item->reset_raw_value(null);
 						}
 
@@ -181,7 +182,7 @@ class system_monitor extends pts_module_interface
 
 		foreach(self::$to_monitor as $sensor)
 		{
-			$sensor_results = self::parse_monitor_log('logs/' . phodevi::sensor_identifier($sensor), self::$individual_test_run_offsets[$sensor]);
+			$sensor_results = self::parse_monitor_log('logs/' . phodevi::sensor_identifier($sensor), self::$individual_test_run_offsets[phodevi::sensor_identifier($sensor)]);
 
 			if(count($sensor_results) > 2)
 			{
@@ -197,7 +198,7 @@ class system_monitor extends pts_module_interface
 
 				$result_file_writer->add_result_from_result_object_with_value_string($test_result, implode(',', $sensor_results), implode(',', $sensor_results));
 			}
-			self::$individual_test_run_offsets[$sensor] = array();
+			self::$individual_test_run_offsets[phodevi::sensor_identifier($sensor)] = array();
 		}
 
 		self::$individual_test_run_request = null;
