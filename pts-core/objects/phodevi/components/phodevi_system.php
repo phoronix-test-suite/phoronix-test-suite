@@ -970,6 +970,17 @@ class phodevi_system extends phodevi_device_interface
 			$desktop_environment = 'Sugar';
 			$desktop_version = null; // TODO: where can the Sugar version be figured out?
 		}
+		else if(pts_client::is_process_running('openbox'))
+		{
+			$desktop_environment = 'Openbox';
+			$openbox_output = trim(shell_exec('openbox --version 2>&1'));
+
+			if(($openbox_d = strpos($openbox_output, 'Openbox ')) > 0)
+			{
+				$openbox_output = substr($openbox_output, ($openbox_d + 8));
+				$desktop_version = substr($openbox_output, 0, strpos($openbox_output, PHP_EOL));
+			}
+		}
 
 		if(!empty($desktop_environment))
 		{
