@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2011, Phoronix Media
-	Copyright (C) 2008 - 2011, Michael Larabel
+	Copyright (C) 2008 - 2012, Phoronix Media
+	Copyright (C) 2008 - 2012, Michael Larabel
 	system_monitor.php: System sensor monitoring module for PTS
 
 	This program is free software; you can redistribute it and/or modify
@@ -24,7 +24,7 @@
 class system_monitor extends pts_module_interface
 {
 	const module_name = 'System Monitor';
-	const module_version = '3.0.2';
+	const module_version = '3.1.0';
 	const module_description = 'This module contains sensor monitoring support.';
 	const module_author = 'Michael Larabel';
 
@@ -38,13 +38,13 @@ class system_monitor extends pts_module_interface
 
 	public static function module_environmental_variables()
 	{
-		return array('MONITOR');
+		return array('MONITOR', 'PERFORMANCE_PER_WATT');
 	}
 	public static function module_info()
 	{
 		$info = null;
 
-		$info .= PHP_EOL . 'Monitoring these sensors are as easy as running your normal Phoronix Test Suite commands but at the beginning of the command add: MONITOR=<selected sensors> (example: MONITOR=cpu.temp,cpu.voltage phoronix-test-suite benchmark universe). Below are all of the sensors supported by this version of the Phoronix Test Suite.' . PHP_EOL . PHP_EOL;
+		$info .= PHP_EOL . 'Monitoring these sensors are as easy as running your normal Phoronix Test Suite commands but at the beginning of the command add: MONITOR=<selected sensors> (example: MONITOR=cpu.temp,cpu.voltage phoronix-test-suite benchmark universe). If the PERFORMANCE_PER_WATT environment variable is set, a performance per Watt graph will also be added, assuming the system\'s power consumption can be monitored. Below are all of the sensors supported by this version of the Phoronix Test Suite.' . PHP_EOL . PHP_EOL;
 		$info .= 'Supported Options:' . PHP_EOL . PHP_EOL;
 
 		foreach(self::monitor_arguments() as $arg)
@@ -67,11 +67,16 @@ class system_monitor extends pts_module_interface
 	public static function __pre_run_process(&$test_run_manager)
 	{
 		self::$result_identifier = $test_run_manager->get_results_identifier();
-		self::$individual_monitoring = pts_module::read_variable('MONITOR_INDIVIDUAL') == '1';
-		self::$individual_monitoring = true;
+		self::$individual_monitoring = pts_module::read_variable('MONITOR_INDIVIDUAL') !== '0';
 		self::$to_monitor = array();
 		$to_show = pts_strings::comma_explode(pts_module::read_variable('MONITOR'));
 		$monitor_all = in_array('all', $to_show);
+
+		if(pts_module::read_variable('PERFORMANCE_PER_WATT'))
+		{
+			// We need to ensure the system power consumption is being tracked to get performance-per-Watt
+			pts_arrays::unique_push($to_show, 'sys.power');
+		}
 
 		foreach(phodevi::supported_sensors() as $sensor)
 		{
@@ -104,11 +109,11 @@ class system_monitor extends pts_module_interface
 
 		self::$individual_test_run_request = clone $test_run_request;
 
-		foreach(self::$to_monitor as $id_point => $sensor)
+		foreach(self::$to_monitor as $sensor)
 		{
 			$log_f = pts_module::read_file('logs/' . phodevi::sensor_identifier($sensor));
-			$offset = count(explode("\n", $log_f));
-			self::$individual_test_run_offsets[$id_point] = $offset;
+			$offset = count(explode(PHP_EOL, $log_f));
+			self::$individual_test_run_offsets[$sensor] = $offset;
 		}
 	}
 	public static function __post_test_run_process(&$result_file_writer)
@@ -118,15 +123,71 @@ class system_monitor extends pts_module_interface
 			return;
 		}
 
-		foreach(self::$to_monitor as $id_point => $sensor)
+		if(pts_module::read_variable('PERFORMANCE_PER_WATT'))
 		{
-			$sensor_results = self::parse_monitor_log('logs/' . phodevi::sensor_identifier($sensor), self::$individual_test_run_offsets[$id_point]);
-
-			// Copy the value each time as if you are directly writing the original data, each succeeding time in the loop the used arguments gets borked
-			$test_result = self::$individual_test_run_request;
+			$sensor_results = self::parse_monitor_log('logs/' . phodevi::sensor_identifier('sys.power'), self::$individual_test_run_offsets['sys.power']);
 
 			if(count($sensor_results) > 2)
 			{
+				// Copy the value each time as if you are directly writing the original data, each succeeding time in the loop the used arguments gets borked
+				$test_result = clone self::$individual_test_run_request;
+				$process_perf_per_watt = true;
+
+				$watt_average = array_sum($sensor_results) / count($sensor_results);
+				switch($test_result->test_profile->get_result_scale())
+				{
+					case 'Milliwatts':
+						$watt_average = $watt_average / 1000;
+					case 'Watts':
+						break;
+					default:
+						$process_perf_per_watt = false;
+				}
+
+				if($process_perf_per_watt && $watt_average > 0)
+				{
+					$test_result->test_profile->set_identifier(null);
+					//$test_result->set_used_arguments_description(phodevi::sensor_name('sys.power') . ' Monitor');
+					//$test_result->set_used_arguments(phodevi::sensor_name('sys.power') . ' ' . $test_result->get_arguments());
+
+					if($test_result->test_profile->get_result_proportion() == 'HIB')
+					{
+						$test_result->test_profile->set_result_scale($test_result->test_profile->get_result_scale() . ' Per Watt');
+
+						foreach($test_result->test_result_buffer->buffer_items as &$buffer_item)
+						{
+							$buffer_item->reset_result_value(($buffer_item->get_result_value() / $watt_average);
+							$buffer_item->reset_raw_value(null);
+						}
+
+						$result_file_writer->add_result_from_result_object_with_value($test_result);
+					}
+					else if($test_result->test_profile->get_result_proportion() == 'LIB')
+					{
+						$test_result->test_profile->set_result_proportion('HIB');
+						$test_result->test_profile->set_result_scale('Performance Per Watt');
+
+						foreach($test_result->test_result_buffer->buffer_items as &$buffer_item)
+						{
+							$buffer_item->reset_result_value(1 / ($buffer_item->get_result_value() / $watt_average));
+							$buffer_item->reset_raw_value(null);
+						}
+
+						$result_file_writer->add_result_from_result_object_with_value($test_result);
+					}
+				}
+			}
+		}
+
+		foreach(self::$to_monitor as $sensor)
+		{
+			$sensor_results = self::parse_monitor_log('logs/' . phodevi::sensor_identifier($sensor), self::$individual_test_run_offsets[$sensor]);
+
+			if(count($sensor_results) > 2)
+			{
+				// Copy the value each time as if you are directly writing the original data, each succeeding time in the loop the used arguments gets borked
+				$test_result = clone self::$individual_test_run_request;
+
 				$test_result->test_profile->set_identifier(null);
 				$test_result->test_profile->set_result_proportion('LIB');
 				$test_result->test_profile->set_display_format('LINE_GRAPH');
@@ -136,15 +197,15 @@ class system_monitor extends pts_module_interface
 
 				$result_file_writer->add_result_from_result_object_with_value_string($test_result, implode(',', $sensor_results), implode(',', $sensor_results));
 			}
+			self::$individual_test_run_offsets[$sensor] = array();
 		}
 
 		self::$individual_test_run_request = null;
-		self::$individual_test_run_offsets[$id_point] = array();
 		self::$monitor_test_count++;
 	}
 	public static function __event_results_process(&$test_run_manager)
 	{
-		foreach(self::$to_monitor as $id_point => $sensor)
+		foreach(self::$to_monitor as $sensor)
 		{
 			$sensor_results = self::parse_monitor_log('logs/' . phodevi::sensor_identifier($sensor));
 			pts_module::remove_file('logs/' . phodevi::sensor_identifier($sensor));
@@ -181,7 +242,7 @@ class system_monitor extends pts_module_interface
 	private static function parse_monitor_log($log_file, $start_offset = 0)
 	{
 		$log_f = pts_module::read_file($log_file);
-		$line_breaks = explode("\n", $log_f);
+		$line_breaks = explode(PHP_EOL, $log_f);
 		$results = array();
 
 		for($i = 0; $i < $start_offset && isset($line_breaks[$i]); $i++)
