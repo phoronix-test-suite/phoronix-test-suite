@@ -838,6 +838,7 @@ abstract class pts_Graph
 				// If the note isn't at least 36 characters long, assume it's not long enough to word-wrap, so take short-cut for efficiency
 				$note_height += !isset($note['note'][36]) ? (self::$c['size']['key'] + 2) : (ceil($this->text_string_width($note['note'], self::$c['size']['key']) / ($this->i['graph_width'] - 14)) + 1) * self::$c['size']['key'];
 			}
+			$note_height += self::$c['size']['key'];
 		}
 
 		return $note_height;

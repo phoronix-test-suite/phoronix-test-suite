@@ -243,7 +243,7 @@ class pts_svg_dom
 				$line_count++;
 			}
 		}
-		$estimated_height += ($line_count + 1) * ($attributes['font-size'] + 2);
+		$estimated_height += $line_count * ($attributes['font-size'] + 2) + 4;
 		unset($attributes['width']);
 
 		if(isset($attributes['xlink:href']) && $attributes['xlink:href'] != null)

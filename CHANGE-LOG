@@ -16,6 +16,7 @@ Phoronix Test Suite (Git)
 - phodevi: LLVM compiler reporting build configuration enhancements
 - phodevi: Support for reporting multiple mmcblk* disk devices
 - phodevi: Report /sys/hypervisor/type as a system layer
+- phodevi: Fix LXDE version detection
 - graphics_event_checker: Override NVIDIA SyncToVBlank so it's always disabled
 
 Phoronix Test Suite 3.8.0-Bygland
