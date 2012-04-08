@@ -160,15 +160,15 @@ class system_monitor extends pts_module_interface
 					if($test_result->test_profile->get_result_proportion() == 'HIB')
 					{
 						$test_result->test_profile->set_result_scale($test_result->test_profile->get_result_scale() . ' Per Watt');
-						$test_result->set_result($test_result->get_result() / $watt_average);
-						$result_file_writer->add_result_from_result_object_with_value_string($test_run_request, $test_result->get_result()
+						$test_result->set_result(pts_math::set_precision($test_result->get_result() / $watt_average));
+						$result_file_writer->add_result_from_result_object_with_value_string($test_result, $test_result->get_result());
 					}
 					else if($test_result->test_profile->get_result_proportion() == 'LIB')
 					{
 						$test_result->test_profile->set_result_proportion('HIB');
 						$test_result->test_profile->set_result_scale('Performance Per Watt');
-						$test_result->set_result(1 / ($test_result->get_result() / $watt_average));
-						$result_file_writer->add_result_from_result_object_with_value_string($test_run_request, $test_result->get_result()
+						$test_result->set_result(pts_math::set_precision(1 / ($test_result->get_result() / $watt_average)));
+						$result_file_writer->add_result_from_result_object_with_value_string($test_result, $test_result->get_result());
 					}
 				}
 			}
