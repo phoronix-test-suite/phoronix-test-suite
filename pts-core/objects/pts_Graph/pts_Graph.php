@@ -220,9 +220,9 @@ abstract class pts_Graph
 			}
 		}
 	}
-	public function addTestNote($note, $hover_title = null)
+	public function addTestNote($note, $hover_title = null, $section = null)
 	{
-		array_push($this->i['notes'], array('note' => $note, 'hover-title' => $hover_title));
+		array_push($this->i['notes'], array('note' => $note, 'hover-title' => $hover_title, 'section' => $section));
 	}
 	public function addInternalIdentifier($identifier, $value)
 	{
@@ -831,15 +831,22 @@ abstract class pts_Graph
 		// This basically figures out how many lines of notes there are times the size of the font key...
 		// additionally, it attempts to figure out if the note will word-wrap to additional lines to accomodate that
 		$note_height = 0;
+		$sections = array();
 		if(!empty($this->i['notes']))
 		{
 			foreach($this->i['notes'] as $note)
 			{
 				// If the note isn't at least 36 characters long, assume it's not long enough to word-wrap, so take short-cut for efficiency
-				$note_height += !isset($note['note'][36]) ? (self::$c['size']['key'] + 2) : (ceil($this->text_string_width($note['note'], self::$c['size']['key']) / ($this->i['graph_width'] - 14)) + 1) * self::$c['size']['key'];
+				$note_height += !isset($note['note'][36]) ? (self::$c['size']['key'] + 2) : (ceil($this->text_string_width($note['note'], self::$c['size']['key']) / ($this->i['graph_width'] - 14))) * self::$c['size']['key'];
+
+				if($note['section'] != null)
+				{
+					array_push($sections, $note['section']);
+				}
 			}
 			$note_height += self::$c['size']['key'];
 		}
+		$note_height += (count(array_unique($sections)) * (self::$c['size']['key'] + 4));
 
 		return $note_height;
 	}

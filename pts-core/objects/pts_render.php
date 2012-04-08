@@ -377,14 +377,13 @@ class pts_render
 		$system_json = $result_file->get_system_json();
 		$identifiers = $result_file->get_system_identifiers();
 		$identifier_count = count($identifiers);
-		$compiler_configuration = array();
 		$system_attributes = array();
 
 		foreach($system_json as $i => $json)
 		{
 			if(isset($json['compiler-configuration']) && $json['compiler-configuration'] != null)
 			{
-				$compiler_configuration[$identifiers[$i]] = $json['compiler-configuration'];
+				$system_attributes['compiler'][$identifiers[$i]] = $json['compiler-configuration'];
 			}
 			if(isset($json['disk-scheduler']) && isset($json['disk-mount-options']))
 			{
@@ -392,37 +391,25 @@ class pts_render
 			}
 			if(isset($json['cpu-scaling-governor']))
 			{
-				$system_attributes['cpu'][$identifiers[$i]] = 'Scaling Governor: ' . $json['cpu-scaling-governor'];
+				$system_attributes['processor'][$identifiers[$i]] = 'Scaling Governor: ' . $json['cpu-scaling-governor'];
 			}
 			if(isset($json['graphics-2d-acceleration']))
 			{
-				$system_attributes['gpu'][$identifiers[$i]] = '2D Acceleration: ' . $json['graphics-2d-acceleration'];
+				$system_attributes['graphics'][$identifiers[$i]] = '2D Acceleration: ' . $json['graphics-2d-acceleration'];
 			}
 		}
 
-		switch(count(array_unique($compiler_configuration)))
+		if(isset($system_attributes['compiler']) && count($system_attributes['compiler']) == 1 && ($result_file->get_system_count() > 1 && ($intent = pts_result_file_analyzer::analyze_result_file_intent($result_file, $intent, true)) && isset($intent[0]) && is_array($intent[0]) && array_shift($intent[0]) == 'Compiler') == false)
 		{
-			case 0:
-				break;
-			case 1:
-				$intent = -1;
-				if($result_file->get_system_count() > 1 && ($intent = pts_result_file_analyzer::analyze_result_file_intent($result_file, $intent, true)) && isset($intent[0]) && is_array($intent[0]) && array_shift($intent[0]) == 'Compiler')
-				{
-					// Even if the compiler build configuration isn't changing but a compiler is being compared, might as well report its build configuration
-					$table->addTestNote('CC: ' . array_pop($compiler_configuration));
-				}
-				break;
-			default:
-				foreach($compiler_configuration as $identifier => $configuration)
-				{
-					$table->addTestNote($identifier . ' CC: ' . $configuration);
-				}
-				break;
+			// Only show compiler strings when it's meaningful (since they tend to be long strings)
+			unset($system_attributes['compiler']);
 		}
 
 		foreach($system_attributes as $index_name => $attributes)
 		{
 			$unique_attribue_count = count(array_unique($attributes));
+
+			$section = $identifier_count > 1 ? ucwords($index_name) : null;
 
 			switch($unique_attribue_count)
 			{
@@ -432,18 +419,18 @@ class pts_render
 					if($identifier_count == count($attributes))
 					{
 						// So there is something for all of the test runs and it's all the same...
-						$table->addTestNote(array_pop($attributes));
+						$table->addTestNote(array_pop($attributes), null, $section);
 					}
 					else
 					{
 						// There is missing data for some test runs for this value so report the runs this is relevant to.
-						$table->addTestNote(implode(', ', array_keys($attributes)) . ': ' . array_pop($attributes));
+						$table->addTestNote(implode(', ', array_keys($attributes)) . ': ' . array_pop($attributes), null, $section);
 					}
 					break;
 				default:
 					foreach($attributes as $identifier => $configuration)
 					{
-						$table->addTestNote($identifier . ': ' . $configuration);
+						$table->addTestNote($identifier . ': ' . $configuration, null, $section);
 					}
 					break;
 			}

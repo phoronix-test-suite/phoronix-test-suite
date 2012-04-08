@@ -221,7 +221,7 @@ class pts_svg_dom
 		{
 			$word_queue .= $word . ' ';
 
-			$queue_dimensions = self::estimate_text_dimensions($word_queue, $attributes['font-size']);
+			$queue_dimensions = self::estimate_text_dimensions($word_queue, ($attributes['font-size'] - 0.45));
 			if($queue_dimensions[0] > $attributes['width'] || $i == ($word_count - 1))
 			{
 				if($i != ($word_count - 1))
@@ -243,7 +243,7 @@ class pts_svg_dom
 				$line_count++;
 			}
 		}
-		$estimated_height += $line_count * ($attributes['font-size'] + 2) + 4;
+		$estimated_height += $line_count * ($attributes['font-size'] + 2);
 		unset($attributes['width']);
 
 		if(isset($attributes['xlink:href']) && $attributes['xlink:href'] != null)
