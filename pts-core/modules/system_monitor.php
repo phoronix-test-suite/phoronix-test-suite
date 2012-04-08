@@ -33,6 +33,7 @@ class system_monitor extends pts_module_interface
 	static $monitor_test_count = 0;
 
 	static $individual_test_run_request = null;
+	static $successful_test_run_request = null;
 	static $individual_test_run_offsets = null;
 	static $individual_monitoring = null;
 
@@ -117,6 +118,10 @@ class system_monitor extends pts_module_interface
 			self::$individual_test_run_offsets[phodevi::sensor_identifier($sensor)] = $offset;
 		}
 	}
+	public static function __post_test_run_success($test_run_request)
+	{
+		self::$successful_test_run_request = clone $test_run_request;
+	}
 	public static function __post_test_run_process(&$result_file_writer)
 	{
 		if(self::$individual_monitoring == false || count(self::$to_monitor) == 0)
@@ -126,12 +131,13 @@ class system_monitor extends pts_module_interface
 
 		if(pts_module::read_variable('PERFORMANCE_PER_WATT'))
 		{
-			$sensor_results = self::parse_monitor_log('logs/' . phodevi::sensor_identifier('sys.power'), self::$individual_test_run_offsets[phodevi::sensor_identifier('sys.power')]);
+			$sensor = array('sys', 'power');
+			$sensor_results = self::parse_monitor_log('logs/' . phodevi::sensor_identifier($sensor), self::$individual_test_run_offsets[phodevi::sensor_identifier($sensor)]);
 
 			if(count($sensor_results) > 2)
 			{
 				// Copy the value each time as if you are directly writing the original data, each succeeding time in the loop the used arguments gets borked
-				$test_result = clone self::$individual_test_run_request;
+				$test_result = clone self::$successful_test_run_request;
 				$process_perf_per_watt = true;
 
 				$watt_average = array_sum($sensor_results) / count($sensor_results);
@@ -145,7 +151,7 @@ class system_monitor extends pts_module_interface
 						$process_perf_per_watt = false;
 				}
 
-				if($process_perf_per_watt && $watt_average > 0)
+				if($process_perf_per_watt && $watt_average > 0 && $test_result->test_profile->get_display_format() == 'BAR_GRAPH')
 				{
 					$test_result->test_profile->set_identifier(null);
 					//$test_result->set_used_arguments_description(phodevi::sensor_name('sys.power') . ' Monitor');
@@ -201,6 +207,7 @@ class system_monitor extends pts_module_interface
 			self::$individual_test_run_offsets[phodevi::sensor_identifier($sensor)] = array();
 		}
 
+		self::$successful_test_run_request = null;
 		self::$individual_test_run_request = null;
 		self::$monitor_test_count++;
 	}

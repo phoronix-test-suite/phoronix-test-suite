@@ -579,6 +579,7 @@ class pts_test_run_manager
 			// removed count($result) > 0 in the move to pts_test_result
 			if(count($test_run_request) > 0 && ((is_numeric($end_result) && $end_result > 0) || (!is_numeric($end_result) && isset($end_result[3]))))
 			{
+				pts_module_manager::module_process('__post_test_run_success', $test_run_request);
 				$test_identifier = $this->get_results_identifier();
 				$test_successful = true;
 

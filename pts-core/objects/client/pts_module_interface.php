@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2011, Phoronix Media
-	Copyright (C) 2008 - 2011, Michael Larabel
+	Copyright (C) 2008 - 2012, Phoronix Media
+	Copyright (C) 2008 - 2012, Michael Larabel
 	pts_module_interface.php: The generic Phoronix Test Suite module object that is extended by the specific modules/plug-ins
 
 	This program is free software; you can redistribute it and/or modify
@@ -154,6 +154,11 @@ class pts_module_interface
 	public static function __post_test_run($obj = null)
 	{
 		// Passed is a read-only copy of the current pts_test_result for the given test
+		return;
+	}
+	public static function __post_test_run_success($obj = null)
+	{
+		// Passed is a copy of the pts_test_result when the run was successful
 		return;
 	}
 	public static function __post_test_run_process($obj = null)
