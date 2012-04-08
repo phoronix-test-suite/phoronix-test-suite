@@ -134,7 +134,7 @@ class system_monitor extends pts_module_interface
 			$sensor = array('sys', 'power');
 			$sensor_results = self::parse_monitor_log('logs/' . phodevi::sensor_identifier($sensor), self::$individual_test_run_offsets[phodevi::sensor_identifier($sensor)]);
 
-			if(count($sensor_results) > 2)
+			if(count($sensor_results) > 2 && self::$successful_test_run_request)
 			{
 				// Copy the value each time as if you are directly writing the original data, each succeeding time in the loop the used arguments gets borked
 				$test_result = clone self::$successful_test_run_request;
@@ -160,27 +160,15 @@ class system_monitor extends pts_module_interface
 					if($test_result->test_profile->get_result_proportion() == 'HIB')
 					{
 						$test_result->test_profile->set_result_scale($test_result->test_profile->get_result_scale() . ' Per Watt');
-
-						foreach($test_result->test_result_buffer->buffer_items as &$buffer_item)
-						{
-							$buffer_item->reset_result_value(($buffer_item->get_result_value() / $watt_average));
-							$buffer_item->reset_raw_value(null);
-						}
-
-						$result_file_writer->add_result_from_result_object_with_value($test_result);
+						$test_result->set_result($test_result->get_result() / $watt_average);
+						$result_file_writer->add_result_from_result_object_with_value_string($test_run_request, $test_result->get_result()
 					}
 					else if($test_result->test_profile->get_result_proportion() == 'LIB')
 					{
 						$test_result->test_profile->set_result_proportion('HIB');
 						$test_result->test_profile->set_result_scale('Performance Per Watt');
-
-						foreach($test_result->test_result_buffer->buffer_items as &$buffer_item)
-						{
-							$buffer_item->reset_result_value(1 / ($buffer_item->get_result_value() / $watt_average));
-							$buffer_item->reset_raw_value(null);
-						}
-
-						$result_file_writer->add_result_from_result_object_with_value($test_result);
+						$test_result->set_result(1 / ($test_result->get_result() / $watt_average));
+						$result_file_writer->add_result_from_result_object_with_value_string($test_run_request, $test_result->get_result()
 					}
 				}
 			}
