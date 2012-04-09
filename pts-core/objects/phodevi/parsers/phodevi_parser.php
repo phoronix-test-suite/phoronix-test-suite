@@ -74,11 +74,11 @@ class phodevi_parser
 	}
 	public static function read_glx_renderer()
 	{
-		if(pts_client::executable_in_path('glxinfo'))
+		if(isset(phodevi::$vfs->glxinfo))
 		{
-			$info = shell_exec('glxinfo 2>&1');
+			$info = phodevi::$vfs->glxinfo;
 		}
-		else if(pts_client::executable_in_path('fglrxinfo'))
+		else if(PTS_IS_CLIENT && pts_client::executable_in_path('fglrxinfo'))
 		{
 			$info = shell_exec('fglrxinfo 2>&1');
 		}
@@ -210,11 +210,11 @@ class phodevi_parser
 		if($info == -1)
 		{
 			$info = false;
-			if(pts_client::executable_in_path('glxinfo'))
+			if(isset(phodevi::$vfs->glxinfo))
 			{
-				$glxinfo = shell_exec('glxinfo 2> /dev/null');
+				$glxinfo = phodevi::$vfs->glxinfo;
 			}
-			else if(pts_client::executable_in_path('fglrxinfo'))
+			else if(PTS_IS_CLIENT && pts_client::executable_in_path('fglrxinfo'))
 			{
 				$glxinfo = shell_exec('fglrxinfo 2> /dev/null');
 			}

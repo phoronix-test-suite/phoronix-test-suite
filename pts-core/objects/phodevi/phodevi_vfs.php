@@ -25,11 +25,10 @@ class phodevi_vfs
 {
 	private $cache;
 	private $options = array(
-
-		// TODO: preservable?
 		// name => F/C - Cacheable? - File / Command - Additional Checks
 		// F = File, C = Command
-		'cpuinfo' => array('type' => 'F', 'F' => '/proc/cpuinfo', 'cacheable' => true, 'preserve' => true, 'subsystem' => 'CPU')
+		'cpuinfo' => array('type' => 'F', 'F' => '/proc/cpuinfo', 'cacheable' => true, 'preserve' => true, 'subsystem' => 'CPU'),
+		'glxinfo' => array('type' => 'C', 'C' => 'glxinfo', 'cacheable' => true, 'preserve' => true, 'subsystem' => 'GPU'),
 		);
 
 	public function __construct()
