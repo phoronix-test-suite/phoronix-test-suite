@@ -9,11 +9,12 @@ Phoronix Test Suite (Git)
 - pts-core: Report 2D acceleration information to system table report on graphics test runs
 - pts-core: Support for showing test notes on multi-way comparisons
 - pts-core: Fix compatibility with the new pts_Graph renderer back-end for result-file-to-pdf option
+- pts_Graph: Begin work on PHP 5.4 "webui" option (currently far from incomplete/experimental)
 - pts_Graph: Tweak spacing on pts_Table
 - pts_Graph: Re-factor most text vertical offsets to not use dominant-baseline since Opera still doesn't support this SVG attribute properly
 - pts_Graph: Begin unifying the Phoronix Test Suite and OpenBenchmarking.org theme
 - pts_Graph: Fix for emitted GD poly-lines being always black
-- pts_Graph: Begin work on block diagram graph
+- pts_Graph: Begin work on block diagram graph (currently incomplete/experimental)
 - phodevi: Remove support for the deprecated HAL Linux fall-backs
 - phodevi: LLVM compiler reporting build configuration enhancements
 - phodevi: Support for reporting multiple mmcblk* disk devices
