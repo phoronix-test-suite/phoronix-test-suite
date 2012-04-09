@@ -43,8 +43,8 @@ class result_file_to_pdf implements pts_option_interface
 			return false;
 		}
 
-		define('BILDE_RENDERER', 'PNG'); // Force to PNG renderer
-		define('BILDE_IMAGE_INTERLACING', false); // Otherwise FPDF will fail
+		$_REQUEST['force_format'] = 'PNG'; // Force to PNG renderer
+		$_REQUEST['svg_dom_gd_no_interlacing'] = true; // Otherwise FPDF will fail
 		pts_client::generate_result_file_graphs($r[0], PTS_SAVE_RESULTS_PATH . $r[0] . '/');
 
 		$result_file = new pts_result_file($r[0]);

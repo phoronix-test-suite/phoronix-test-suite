@@ -94,7 +94,11 @@ class pts_svg_dom
 				break;
 		}
 
-		if($save_as)
+		if($output == null)
+		{
+			return false;
+		}
+		else if($save_as)
 		{
 			return file_put_contents(str_replace('BILDE_EXTENSION', $output_format, $save_as), $output);
 		}

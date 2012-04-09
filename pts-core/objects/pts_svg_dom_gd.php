@@ -118,7 +118,11 @@ class pts_svg_dom_gd
 			{
 				$gd = imagecreatetruecolor($width, $height);
 
-				imageinterlace($gd, true);
+				if(!isset($_REQUEST['svg_dom_gd_no_interlacing']))
+				{
+					// PHP FPDF fails on image interlacing
+					imageinterlace($gd, true);
+				}
 
 				if(function_exists('imageantialias'))
 				{
@@ -223,7 +227,7 @@ class pts_svg_dom_gd
 								$a['x'] -= round($box_width / 2);
 								break;
 							case 'end':
-								$a['x'] -= $box_width;
+								$a['x'] -= $box_width - 4;
 								break;
 						}
 						switch($a['dominant-baseline'])
@@ -249,13 +253,12 @@ class pts_svg_dom_gd
 						array_push($points, $point[1]);
 					}
 
-					imagefilledpolygon($gd, $points, count($a['points']), self::gd_color_allocate($gd, $a['fill']));
-
 					if($a['stroke-width'])
 					{
 						imagesetthickness($gd, $a['stroke-width']);
 						imagefilledpolygon($gd, $points, count($a['points']), self::gd_color_allocate($gd, $a['stroke']));
 					}
+					imagefilledpolygon($gd, $points, count($a['points']), self::gd_color_allocate($gd, $a['fill']));
 					break;
 				case 'rect':
 					// Draw a rectangle

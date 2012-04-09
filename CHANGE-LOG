@@ -8,6 +8,7 @@ Phoronix Test Suite (Git)
 - pts-core: Track the CPU scaling governor configuration between test runs
 - pts-core: Report 2D acceleration information to system table report on graphics test runs
 - pts-core: Support for showing test notes on multi-way comparisons
+- pts-core: Fix compatibility with the new pts_Graph renderer back-end for result-file-to-pdf option
 - pts_Graph: Tweak spacing on pts_Table
 - pts_Graph: Re-factor most text vertical offsets to not use dominant-baseline since Opera still doesn't support this SVG attribute properly
 - pts_Graph: Begin unifying the Phoronix Test Suite and OpenBenchmarking.org theme
