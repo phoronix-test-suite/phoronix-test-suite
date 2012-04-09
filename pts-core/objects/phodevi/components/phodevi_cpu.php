@@ -21,13 +21,9 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-if(PTS_IS_CLIENT && is_file('/proc/cpuinfo'))
-{
-	phodevi_cpu::$cpuinfo = PHP_EOL . file_get_contents('/proc/cpuinfo');
-}
-
 class phodevi_cpu extends phodevi_device_interface
 {
+	// TODO XXX: $cpuinfo is now useless and needs to be replaced by the VFS layer... update OpenBenchmarking.org accordingly
 	public static $cpuinfo = false;
 	private static $cpu_flags = -1;
 
@@ -116,7 +112,7 @@ class phodevi_cpu extends phodevi_device_interface
 			//$info = getenv('NUMBER_OF_PROCESSORS');
 		}
 
-		if($info == null && self::$cpuinfo)
+		if($info == null && isset(phodevi::$vfs->cpuinfo))
 		{
 			$info = self::cpuinfo_core_count();
 		}
@@ -157,7 +153,7 @@ class phodevi_cpu extends phodevi_device_interface
 			$info = pts_file_io::file_get_contents('/sys/devices/system/cpu/cpu' . $cpu_core . '/cpufreq/scaling_max_freq');
 			$info = intval($info) / 1000000;
 		}
-		else if(self::$cpuinfo) // fall back for those without cpufreq
+		else if(isset(phodevi::$vfs->cpuinfo)) // fall back for those without cpufreq
 		{
 			$cpu_mhz = self::read_cpuinfo_line('cpu MHz');
 			$info = $cpu_mhz / 1000;
@@ -228,12 +224,12 @@ class phodevi_cpu extends phodevi_device_interface
 		// Returns the processor name / frequency information
 		$info = null;
 
-		if(self::$cpuinfo)
+		if(isset(phodevi::$vfs->cpuinfo))
 		{
-			$physical_cpu_ids = phodevi_linux_parser::read_cpuinfo('physical id', self::$cpuinfo);
+			$physical_cpu_ids = phodevi_linux_parser::read_cpuinfo('physical id');
 			$physical_cpu_count = count(array_unique($physical_cpu_ids));
 
-			$cpu_strings = phodevi_linux_parser::read_cpuinfo(array('model name', 'Processor'), self::$cpuinfo);
+			$cpu_strings = phodevi_linux_parser::read_cpuinfo(array('model name', 'Processor'));
 			$cpu_strings_unique = array_unique($cpu_strings);
 
 			if($physical_cpu_count == 1 || empty($physical_cpu_count))
@@ -393,9 +389,9 @@ class phodevi_cpu extends phodevi_device_interface
 	{
 		$line = false;
 
-		if(($from_start && ($key_pos = strpos(self::$cpuinfo, PHP_EOL . $key)) !== false) || ($key_pos = strrpos(self::$cpuinfo, PHP_EOL . $key)) !== false)
+		if(isset(phodevi::$vfs->cpuinfo) && ($from_start && ($key_pos = strpos(phodevi::$vfs->cpuinfo, PHP_EOL . $key)) !== false) || ($key_pos = strrpos(phodevi::$vfs->cpuinfo, PHP_EOL . $key)) !== false)
 		{
-			$line = substr(self::$cpuinfo, $key_pos);
+			$line = substr(phodevi::$vfs->cpuinfo, $key_pos);
 			$line = substr($line, strpos($line, ':') + 1);
 			$line = trim(substr($line, 0, strpos($line, PHP_EOL)));
 		}

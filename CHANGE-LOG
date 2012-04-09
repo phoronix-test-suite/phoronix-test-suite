@@ -18,6 +18,8 @@ Phoronix Test Suite (Git)
 - phodevi: Report /sys/hypervisor/type as a system layer
 - phodevi: Fix LXDE version detection
 - phodevi: Support for reporting the Openbox version
+- phodevi: Read Nouveau clock current frequencies rather than maximum frequencies (performance_level)
+- phodevi: Initial implementation of the Phodevi VFS (Virtual File-System; Still A Work In Progress)
 - graphics_event_checker: Override NVIDIA SyncToVBlank so it's always disabled
 - system_monitor: Allow performance per Watt to be automatically calculated if PERFORMANCE_PER_WATT is set
 

@@ -21,13 +21,17 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+phodevi::create_vfs();
+
 if(PTS_IS_CLIENT)
 {
 	phodevi::initial_setup();
 }
 
+
 class phodevi
 {
+	public static $vfs = false;
 	private static $device_cache = null;
 	private static $smart_cache = null;
 	private static $sensors = null;
@@ -344,6 +348,10 @@ class phodevi
 		}
 
 		return $return_value;
+	}
+	public static function create_vfs()
+	{
+		self::$vfs = new phodevi_vfs();
 	}
 	public static function initial_setup()
 	{
