@@ -758,7 +758,7 @@ class phodevi_gpu extends phodevi_device_interface
 			switch(phodevi::read_property('system', 'display-driver'))
 			{
 				case 'nouveau':
-					foreach(pts_file_io::glob('/sys/class/drm/card0/device/performance_level*') as $performance_level)
+					if(is_file('/sys/class/drm/card0/device/performance_level'))
 					{
 						/*
 							EXAMPLE OUTPUTS:
@@ -767,14 +767,14 @@ class phodevi_gpu extends phodevi_device_interface
 							c: memory 333MHz core 500MHz shader 1250MHz
 						*/
 
-						$performance_level = pts_file_io::file_get_contents($performance_level);
+						$performance_level = pts_file_io::file_get_contents('/sys/class/drm/card0/device/performance_level');
 						$performance_level = explode(' ', $performance_level);
 
 						$core_string = array_search('core', $performance_level);
 						if($core_string !== false && isset($performance_level[($core_string + 1)]))
 						{
 							$core_string = str_ireplace('MHz', null, $performance_level[($core_string + 1)]);
-							if(is_numeric($core_string) && $core_string > $core_freq)
+							if(is_numeric($core_string))
 							{
 								$core_freq = $core_string;
 							}
@@ -784,7 +784,7 @@ class phodevi_gpu extends phodevi_device_interface
 						if($mem_string !== false && isset($performance_level[($mem_string + 1)]))
 						{
 							$mem_string = str_ireplace('MHz', null, $performance_level[($mem_string + 1)]);
-							if(is_numeric($mem_string) && $mem_string > $mem_freq)
+							if(is_numeric($mem_string))
 							{
 								$mem_freq = $mem_string;
 							}
