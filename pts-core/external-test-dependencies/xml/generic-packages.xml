@@ -70,6 +70,12 @@
 			<FileCheck>/usr/bin/flex</FileCheck>
 		</Package>
 		<Package>
+			<GenericName>p7zip</GenericName>
+			<Title>7-Zip / p7zip</Title>
+			<PossibleNames>p7zip, p7zip-full</PossibleNames>
+			<FileCheck>/usr/bin/7za</FileCheck>
+		</Package>
+		<Package>
 			<GenericName>imlib2-development</GenericName>
 			<Title>Imlib2 Development Files</Title>
 			<PossibleNames>libimlib2-dev</PossibleNames>

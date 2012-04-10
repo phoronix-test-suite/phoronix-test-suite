@@ -122,6 +122,11 @@
 			<FileCheck>/usr/lib/libstdc++.so.5 OR /usr/lib64/libstdc++.so.5</FileCheck>
 		</Package>
 		<Package>
+			<GenericName>p7zip</GenericName>
+			<PackageName>p7zip</PackageName>
+			<FileCheck>/usr/bin/7za</FileCheck>
+		</Package>
+		<Package>
 			<GenericName>openal-development</GenericName>
 			<PackageName>openal openal-devel</PackageName>
 			<FileCheck>/usr/include/AL/al.h, /usr/lib/libopenal.so.0 OR /usr/lib64/libopenal.so.0 OR /usr/lib/libopenal.so OR /usr/lib64/libopenal.so</FileCheck>

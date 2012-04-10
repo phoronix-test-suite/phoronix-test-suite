@@ -166,6 +166,11 @@
 			<FileCheck>/usr/include/boost/</FileCheck>
 		</Package>
 		<Package>
+			<GenericName>p7zip</GenericName>
+			<PackageName>p7zip</PackageName>
+			<FileCheck>/usr/bin/7za</FileCheck>
+		</Package>
+		<Package>
 			<GenericName>cairo-development</GenericName>
 			<PackageName>cairo</PackageName>
 			<FileCheck>/usr/include/cairo/cairo.h</FileCheck>

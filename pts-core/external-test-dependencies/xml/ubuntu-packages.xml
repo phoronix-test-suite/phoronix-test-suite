@@ -153,6 +153,11 @@
 			<FileCheck>/usr/bin/jam.perforce</FileCheck>
 		</Package>
 		<Package>
+			<GenericName>p7zip</GenericName>
+			<PackageName>p7zip-full</PackageName>
+			<FileCheck>/usr/bin/7za</FileCheck>
+		</Package>
+		<Package>
 			<GenericName>qt4-development</GenericName>
 			<PackageName>libqt4-dev libqt4-opengl-dev</PackageName>
 			<FileCheck>/usr/bin/qmake-qt4, /usr/include/qt4/Qt/qgl.h</FileCheck>

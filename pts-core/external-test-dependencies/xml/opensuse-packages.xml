@@ -47,6 +47,11 @@
 			<FileCheck>/usr/include/cairo/cairo.h</FileCheck>
 		</Package>
 		<Package>
+			<GenericName>p7zip</GenericName>
+			<PackageName>p7zip</PackageName>
+			<FileCheck>/usr/bin/7za</FileCheck>
+		</Package>
+		<Package>
 			<GenericName>bison</GenericName>
 			<PackageName>bison</PackageName>
 			<FileCheck>/usr/bin/bison</FileCheck>

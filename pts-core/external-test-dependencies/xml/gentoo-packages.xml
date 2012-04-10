@@ -31,6 +31,11 @@
 			<FileCheck>/bin/csh</FileCheck>
 		</Package>
 		<Package>
+			<GenericName>p7zip</GenericName>
+			<PackageName>app-arch/p7zip</PackageName>
+			<FileCheck>/usr/bin/7za</FileCheck>
+		</Package>
+		<Package>
 			<GenericName>libpng-development</GenericName>
 			<PackageName>media-libs/libpng</PackageName>
 			<FileCheck>/usr/include/libpng12/png.h</FileCheck>
