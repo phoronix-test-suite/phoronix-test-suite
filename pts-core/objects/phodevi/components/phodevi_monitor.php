@@ -57,11 +57,14 @@ class phodevi_monitor extends phodevi_device_interface
 				$monitor = null;
 			}
 		}
-		else
+		else if(isset(phodevi::$vfs->xorg_log))
 		{
-			$log_parse = shell_exec('cat /var/log/Xorg.0.log 2>&1 | grep "Monitor name"');
-			$log_parse = substr($log_parse, strpos($log_parse, 'Monitor name:') + 14);
-			$monitor = trim(substr($log_parse, 0, strpos($log_parse, "\n")));
+			$log_parse = phodevi::$vfs->xorg_log;
+			if(($monitor_name = strpos($log_parse, 'Monitor name:')))
+			{
+				$log_parse = substr($log_parse, $monitor_name + 14);
+				$monitor = trim(substr($log_parse, 0, strpos($log_parse, "\n")));
+			}
 		}
 
 		return empty($monitor) ? false : $monitor;

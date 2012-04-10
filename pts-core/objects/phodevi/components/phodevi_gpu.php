@@ -69,8 +69,8 @@ class phodevi_gpu extends phodevi_device_interface
 	}
 	public static function gpu_2d_acceleration()
 	{
-		$xorg_log = is_file('/var/log/Xorg.0.log') ? file_get_contents('/var/log/Xorg.0.log') : false;
-		$accel_2d = null;
+		$xorg_log = isset(phodevi::$vfs->xorg_log) ? phodevi::$vfs->xorg_log : false;
+		$accel_2d = false;
 
 		if($xorg_log)
 		{
@@ -630,18 +630,12 @@ class phodevi_gpu extends phodevi_device_interface
 			}
 		}
 
-		if($video_ram == -1 && is_file('/var/log/Xorg.0.log'))
+		if($video_ram == -1 && isset(phodevi::$vfs->xorg_log))
 		{
 			// Attempt Video RAM detection using X log
 			// fglrx driver reports video memory to: (--) fglrx(0): VideoRAM: XXXXXX kByte, Type: DDR
 			// xf86-video-ati, xf86-video-intel, and xf86-video-radeonhd also report their memory information in a similar format
-
-			$info = shell_exec('cat /var/log/Xorg.0.log | grep -i VideoRAM');
-
-			if(empty($info))
-			{
-				$info = shell_exec('cat /var/log/Xorg.0.log | grep "Video RAM"');
-			}
+			$info = phodevi::$vfs->xorg_log;
 
 			if(($pos = stripos($info, 'RAM:') + 5) > 5 || ($pos = strpos($info, 'RAM=') + 4) > 4)
 			{
@@ -653,7 +647,7 @@ class phodevi_gpu extends phodevi_device_interface
 					$info = substr($info, 0, $cut);
 				}
 
-				if($info > 65535)
+				if(is_numeric($info) && $info > 65535)
 				{
 					$video_ram = intval($info) / 1024;
 				}
@@ -813,7 +807,7 @@ class phodevi_gpu extends phodevi_device_interface
 					else
 					{
 						// Old ugly way of handling the clock information
-						$log_parse = shell_exec('cat /var/log/Xorg.0.log 2>&1 | grep " Clock: "');
+						$log_parse = isset(phodevi::$vfs->xorg_log) ? phodevi::$vfs->xorg_log : null;
 
 						$core_freq = substr($log_parse, strpos($log_parse, 'Default Engine Clock: ') + 22);
 						$core_freq = substr($core_freq, 0, strpos($core_freq, "\n"));
@@ -986,10 +980,9 @@ class phodevi_gpu extends phodevi_device_interface
 				$info = $drm_info;
 			}
 
-			if($info == null && is_readable('/var/log/Xorg.0.log'))
+			if($info == null && isset(phodevi::$vfs->xorg_log))
 			{
-				$xorg_log = file_get_contents('/var/log/Xorg.0.log');
-
+				$xorg_log = phodevi::$vfs->xorg_log;
 				if(($e = strpos($xorg_log, ' at 01@00:00:0')) !== false)
 				{
 					$xorg_log = substr($xorg_log, 0, $e);
@@ -1020,7 +1013,7 @@ class phodevi_gpu extends phodevi_device_interface
 					{
 						// Try to come up with a better non-generic string
 						$was_reset = false;
-						if(is_readable('/var/log/Xorg.0.log'))
+						if(isset(phodevi::$vfs->xorg_log))
 						{
 							/*
 							$ cat /var/log/Xorg.0.log | grep -i Chipset
@@ -1030,9 +1023,8 @@ class phodevi_gpu extends phodevi_device_interface
 							[     8.423] (--) intel(0): Chipset: "Sandybridge Mobile (GT2+)"
 							*/
 
-							$xorg_log = file_get_contents('/var/log/Xorg.0.log');
-
-							if(($x = strpos($xorg_log, 'intel(0): Chipset: ')) !== false)
+							$xorg_log = phodevi::$vfs->xorg_log;
+							if(($x = strpos($xorg_log, '(0): Chipset: ')) !== false)
 							{
 								$xorg_log = substr($xorg_log, ($x + 19));
 								$xorg_log = str_replace(array('(R)', '"'), null, substr($xorg_log, 0, strpos($xorg_log, PHP_EOL)));
@@ -1078,13 +1070,13 @@ class phodevi_gpu extends phodevi_device_interface
 				$info = substr($info, $start_pos + 5);
 			}
 
-			if(empty($info))
+			if(empty($info) && isset(phodevi::$vfs->xorg_log))
 			{
-				$log_parse = shell_exec('cat /var/log/Xorg.0.log 2>&1 | grep Chipset');
+				$log_parse = phodevi::$vfs->xorg_log;
 				$log_parse = substr($log_parse, strpos($log_parse, 'Chipset') + 8);
 				$log_parse = substr($log_parse, 0, strpos($log_parse, 'found'));
 
-				if(strpos($log_parse, '(--)') === false && strlen(str_replace(array('ATI', 'NVIDIA', 'VIA', 'Intel'), '', $log_parse)) != strlen($log_parse))
+				if(strpos($log_parse, '(--)') === false && strlen(str_ireplace(array('ATI', 'NVIDIA', 'VIA', 'Intel'), '', $log_parse)) != strlen($log_parse))
 				{
 					$info = $log_parse;
 				}

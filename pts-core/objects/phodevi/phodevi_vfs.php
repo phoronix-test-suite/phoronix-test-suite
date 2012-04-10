@@ -29,6 +29,7 @@ class phodevi_vfs
 		// F = File, C = Command
 		'cpuinfo' => array('type' => 'F', 'F' => '/proc/cpuinfo', 'cacheable' => true, 'preserve' => true, 'subsystem' => 'CPU'),
 		'glxinfo' => array('type' => 'C', 'C' => 'glxinfo', 'cacheable' => true, 'preserve' => true, 'subsystem' => 'GPU'),
+		'xorg_log' => array('type' => 'F', 'F' => '/var/log/Xorg.0.log', 'cacheable' => true, 'preserve' => true, 'subsystem' => 'System', 'remove_timestamps' => true),
 		);
 
 	public function __construct()
@@ -61,6 +62,12 @@ class phodevi_vfs
 				$contents = stream_get_contents($pipes[1]);
 				fclose($pipes[1]);
 				$return_value = proc_close($proc);
+			}
+
+			if(isset($this->options[$name]['remove_timestamps']) && $this->options[$name]['remove_timestamps'])
+			{
+				// remove leading timestamps such as from dmesg and Xorg.0.log
+				$contents = pts_strings::remove_line_timestamps($contents);
 			}
 
 			if($this->options[$name]['cacheable'])

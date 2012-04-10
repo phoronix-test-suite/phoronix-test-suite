@@ -146,10 +146,9 @@ class phodevi_parser
 	public static function read_xorg_module_version($module)
 	{
 		$module_version = false;
-		if(is_file('/var/log/Xorg.0.log'))
+		if(isset(phodevi::$vfs->xorg_log))
 		{
-			$xorg_log = file_get_contents('/var/log/Xorg.0.log');
-
+			$xorg_log = phodevi::$vfs->xorg_log;
 			if(($module_start = strpos($xorg_log, $module)) > 0)
 			{
 				$xorg_log = substr($xorg_log, $module_start);
