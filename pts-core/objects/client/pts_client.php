@@ -313,7 +313,7 @@ class pts_client
 
 				// Generate logs from system commands to backup
 				$system_log_commands = array(
-					'lspci -vvnn',
+					'lspci -mmkvvvnn',
 					'lscpu',
 					'cc -v',
 					'lsusb',

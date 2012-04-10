@@ -653,10 +653,10 @@ class phodevi_gpu extends phodevi_device_interface
 				}
 			}
 		}
-		if($video_ram == -1 && pts_client::executable_in_path('dmesg'))
+		if($video_ram == -1 && isset(phodevi::$vfs->dmesg))
 		{
 			// Fallback to try to find vRAM from dmesg
-			$info = shell_exec('dmesg 2> /dev/null');
+			$info = phodevi::$vfs->dmesg;
 
 			if(($x = strpos($info, 'Detected VRAM RAM=')) !== false)
 			{

@@ -28,6 +28,10 @@ class phodevi_vfs
 		// name => F/C - Cacheable? - File / Command - Additional Checks
 		// F = File, C = Command
 		'cpuinfo' => array('type' => 'F', 'F' => '/proc/cpuinfo', 'cacheable' => true, 'preserve' => true, 'subsystem' => 'CPU'),
+		'lscpu' => array('type' => 'C', 'C' => 'lscpu', 'cacheable' => true, 'preserve' => true, 'subsystem' => 'CPU'),
+		'lsusb' => array('type' => 'C', 'C' => 'lsusb -v', 'cacheable' => false, 'preserve' => true, 'subsystem' => 'System'),
+		'sensors' => array('type' => 'C', 'C' => 'sensors', 'cacheable' => false, 'preserve' => true, 'subsystem' => 'System'),
+		'cc' => array('type' => 'C', 'C' => 'cc -v', 'cacheable' => false, 'preserve' => true, 'subsystem' => 'System'),
 		'scaling_available_frequencies' => array('type' => 'F', 'F' => '/sys/devices/system/cpu/cpu0/cpufreq/scaling_available_frequencies', 'cacheable' => false, 'preserve' => true, 'subsystem' => 'CPU'),
 		'meminfo' => array('type' => 'F', 'F' => '/proc/meminfo', 'cacheable' => true, 'preserve' => true, 'subsystem' => 'Memory'),
 		'modules' => array('type' => 'F', 'F' => '/proc/modules', 'cacheable' => false, 'preserve' => true, 'subsystem' => 'System'),
@@ -35,12 +39,14 @@ class phodevi_vfs
 		'kernel_version' => array('type' => 'F', 'F' => '/proc/version', 'cacheable' => true, 'preserve' => true, 'subsystem' => 'System'),
 		'mounts' => array('type' => 'F', 'F' => '/proc/mounts', 'cacheable' => false, 'preserve' => true, 'subsystem' => 'Disk'),
 		'glxinfo' => array('type' => 'C', 'C' => 'glxinfo', 'cacheable' => true, 'preserve' => true, 'subsystem' => 'GPU'),
+		'lspci' => array('type' => 'C', 'C' => 'lspci -mmkvvnn', 'cacheable' => true, 'preserve' => true, 'subsystem' => 'System'),
 		'radeon_pm_info' => array('type' => 'F', 'F' => '/sys/kernel/debug/dri/0/radeon_pm_info', 'cacheable' => false, 'preserve' => true, 'subsystem' => 'GPU'),
 		'i915_capabilities' => array('type' => 'F', 'F' => '/sys/kernel/debug/dri/0/i915_capabilities', 'cacheable' => true, 'preserve' => true, 'subsystem' => 'GPU'),
 		'i915_cur_delayinfo' => array('type' => 'F', 'F' => '/sys/kernel/debug/dri/0/i915_cur_delayinfo', 'cacheable' => false, 'preserve' => true, 'subsystem' => 'GPU'),
 		'i915_drpc_info' => array('type' => 'F', 'F' => '/sys/kernel/debug/dri/0/i915_drpc_info', 'cacheable' => false, 'preserve' => true, 'subsystem' => 'GPU'),
 		'xorg_log' => array('type' => 'F', 'F' => '/var/log/Xorg.0.log', 'cacheable' => true, 'preserve' => true, 'subsystem' => 'System', 'remove_timestamps' => true),
 		'xorg_conf' => array('type' => 'F', 'F' => '/etc/X11/xorg.conf', 'cacheable' => true, 'preserve' => true, 'subsystem' => 'System'),
+		'dmesg' => array('type' => 'C', 'C' => 'dmesg', 'cacheable' => false, 'preserve' => true, 'subsystem' => 'System', 'remove_timestamps' => true),
 		);
 
 	public function __construct()

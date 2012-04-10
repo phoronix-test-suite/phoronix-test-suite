@@ -91,9 +91,9 @@ class phodevi_motherboard extends phodevi_device_interface
 	{
 		$pci_devices = array();
 
-		if(phodevi::is_linux())
+		if(phodevi::is_linux() && isset(phodevi::$vfs->lspci))
 		{
-			$lspci = shell_exec('lspci -mmkvnn 2> /dev/null');
+			$lspci = phodevi::$vfs->lspci;
 			$lspci = explode("\n\n", $lspci);
 
 			foreach($lspci as $o => &$lspci_section)
@@ -142,7 +142,10 @@ class phodevi_motherboard extends phodevi_device_interface
 								case 'Multimedia audio controller':
 									$line[1] = 'Audio';
 									break;
-
+							//	case 'RAM memory':
+							//	case 'Host bridge':
+							//		$line[1] = 'Chipset';
+							//		break;
 								default:
 									$line[1] = null;
 									break;

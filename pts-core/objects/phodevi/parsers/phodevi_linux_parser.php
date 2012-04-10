@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2011, Phoronix Media
-	Copyright (C) 2008 - 2011, Michael Larabel
+	Copyright (C) 2008 - 2012, Phoronix Media
+	Copyright (C) 2008 - 2012, Michael Larabel
 	phodevi_linux_parser.php: General parsing functions specific to Linux
 
 	This program is free software; you can redistribute it and/or modify
@@ -660,9 +660,9 @@ class phodevi_linux_parser
 		// Read LM_Sensors
 		$value = false;
 
-		if(pts_client::executable_in_path('sensors'))
+		if(isset(phodevi::$vfs->sensors))
 		{
-			$sensors = shell_exec('sensors 2>&1');
+			$sensors = phodevi::$vfs->sensors;
 			$sensors_lines = explode("\n", $sensors);
 			$attributes = pts_arrays::to_array($attributes);
 
