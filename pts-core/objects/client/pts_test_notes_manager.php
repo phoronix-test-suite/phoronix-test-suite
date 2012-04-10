@@ -95,9 +95,9 @@ class pts_test_notes_manager
 				self::add_note('SELinux: Enabled');
 			}
 		}
-		else if(is_readable('/proc/cmdline'))
+		else if(isset(phodevi::$vfs->cmdline))
 		{
-			if(stripos(file_get_contents('/proc/cmdline'), 'selinux=1') != false)
+			if(stripos(phodevi::$vfs->cmdline, 'selinux=1') != false)
 			{
 				self::add_note('SELinux: Enabled');
 			}

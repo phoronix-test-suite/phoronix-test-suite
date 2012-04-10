@@ -29,6 +29,10 @@ class phodevi_vfs
 		// F = File, C = Command
 		'cpuinfo' => array('type' => 'F', 'F' => '/proc/cpuinfo', 'cacheable' => true, 'preserve' => true, 'subsystem' => 'CPU'),
 		'meminfo' => array('type' => 'F', 'F' => '/proc/meminfo', 'cacheable' => true, 'preserve' => true, 'subsystem' => 'Memory'),
+		'modules' => array('type' => 'F', 'F' => '/proc/modules', 'cacheable' => false, 'preserve' => true, 'subsystem' => 'System'),
+		'cmdline' => array('type' => 'F', 'F' => '/proc/cmdline', 'cacheable' => true, 'preserve' => true, 'subsystem' => 'System'),
+		'kernel_version' => array('type' => 'F', 'F' => '/proc/version', 'cacheable' => true, 'preserve' => true, 'subsystem' => 'System'),
+		'mounts' => array('type' => 'F', 'F' => '/proc/mounts', 'cacheable' => false, 'preserve' => true, 'subsystem' => 'Disk'),
 		'glxinfo' => array('type' => 'C', 'C' => 'glxinfo', 'cacheable' => true, 'preserve' => true, 'subsystem' => 'GPU'),
 		'xorg_log' => array('type' => 'F', 'F' => '/var/log/Xorg.0.log', 'cacheable' => true, 'preserve' => true, 'subsystem' => 'System', 'remove_timestamps' => true),
 		);

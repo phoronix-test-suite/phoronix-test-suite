@@ -17,7 +17,7 @@
 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 	GNU General Public License for more details.
 
-	You should have received a copy of the GNU General Public License$mounts[1]
+	You should have received a copy of the GNU General Public License
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
@@ -59,9 +59,9 @@ class phodevi_disk extends phodevi_device_interface
 		{
 			$mount_point = pts_client::test_install_root_path();
 		}
-		if($mounts == null && is_readable('/proc/mounts'))
+		if($mounts == null && isset(phodevi::$vfs->mounts))
 		{
-			$mounts = file_get_contents('/proc/mounts');
+			$mounts = phodevi::$vfs->mounts;
 		}
 
 		do

@@ -231,9 +231,9 @@ class phodevi_system extends phodevi_device_interface
 			switch($fs)
 			{
 				case 'ext2/ext3':
-					if(is_readable('/proc/mounts'))
+					if(isset(phodevi::$vfs->mounts))
 					{
-						$fstab = file_get_contents('/proc/mounts');
+						$fstab = phodevi::$vfs->mounts;
 						$fstab = str_replace('/boot ', 'IGNORE', $fstab);
 
 						$using_ext2 = strpos($fstab, ' ext2') !== false;
@@ -308,9 +308,9 @@ class phodevi_system extends phodevi_device_interface
 					break;
 			}
 
-			if(strpos($fs, 'UNKNOWN') !== false && is_readable('/proc/mounts'))
+			if(strpos($fs, 'UNKNOWN') !== false && isset(phodevi::$vfs->mounts))
 			{
-				$mounts = file_get_contents('/proc/mounts');
+				$mounts = phodevi::$vfs->mounts;
 				$fs_r = array();
 
 				$fs_checks = array(
