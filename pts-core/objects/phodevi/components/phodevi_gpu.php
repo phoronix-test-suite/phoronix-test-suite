@@ -1026,7 +1026,7 @@ class phodevi_gpu extends phodevi_device_interface
 							$xorg_log = phodevi::$vfs->xorg_log;
 							if(($x = strpos($xorg_log, '(0): Chipset: ')) !== false)
 							{
-								$xorg_log = substr($xorg_log, ($x + 19));
+								$xorg_log = substr($xorg_log, ($x + 14));
 								$xorg_log = str_replace(array('(R)', '"'), null, substr($xorg_log, 0, strpos($xorg_log, PHP_EOL)));
 
 								if(stripos($xorg_log, 'Intel') === false)
