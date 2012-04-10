@@ -28,6 +28,7 @@ class phodevi_vfs
 		// name => F/C - Cacheable? - File / Command - Additional Checks
 		// F = File, C = Command
 		'cpuinfo' => array('type' => 'F', 'F' => '/proc/cpuinfo', 'cacheable' => true, 'preserve' => true, 'subsystem' => 'CPU'),
+		'meminfo' => array('type' => 'F', 'F' => '/proc/meminfo', 'cacheable' => true, 'preserve' => true, 'subsystem' => 'Memory'),
 		'glxinfo' => array('type' => 'C', 'C' => 'glxinfo', 'cacheable' => true, 'preserve' => true, 'subsystem' => 'GPU'),
 		'xorg_log' => array('type' => 'F', 'F' => '/var/log/Xorg.0.log', 'cacheable' => true, 'preserve' => true, 'subsystem' => 'System', 'remove_timestamps' => true),
 		);

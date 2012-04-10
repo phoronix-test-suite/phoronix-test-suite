@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2011, Phoronix Media
-	Copyright (C) 2008 - 2011, Michael Larabel
+	Copyright (C) 2008 - 2012, Phoronix Media
+	Copyright (C) 2008 - 2012, Michael Larabel
 	phodevi_memory.php: The PTS Device Interface object for system memory
 
 	This program is free software; you can redistribute it and/or modify
@@ -191,9 +191,9 @@ class phodevi_memory extends phodevi_device_interface
 	public static function memory_capacity()
 	{
 		// Returns physical memory capacity
-		if(is_file('/proc/meminfo'))
+		if(isset(phodevi::$vfs->meminfo))
 		{
-			$info = file_get_contents('/proc/meminfo');
+			$info = phodevi::$vfs->meminfo;
 			$info = substr($info, strpos($info, 'MemTotal:') + 9);
 			$info = intval(trim(substr($info, 0, strpos($info, 'kB'))));
 			$info = floor($info / 1024);
