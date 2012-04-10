@@ -109,9 +109,9 @@ class gpu_freq implements phodevi_sensor
 					}
 				}
 			}
-			else if(is_file('/sys/kernel/debug/dri/0/i915_cur_delayinfo'))
+			else if(isset(phodevi::$vfs->i915_cur_delayinfo))
 			{
-				$i915_cur_delayinfo = file_get_contents('/sys/kernel/debug/dri/0/i915_cur_delayinfo');
+				$i915_cur_delayinfo = phodevi::$vfs->i915_cur_delayinfo;
 				$cagf = strpos($i915_cur_delayinfo, 'CAGF: ');
 
 				if($cagf !== false)

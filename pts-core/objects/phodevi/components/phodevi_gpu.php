@@ -832,9 +832,9 @@ class phodevi_gpu extends phodevi_device_interface
 					}
 
 					// Fallback to base frequency
-					if($core_freq == 0 && is_file('/sys/kernel/debug/dri/0/i915_cur_delayinfo'))
+					if($core_freq == 0 && isset(phodevi::$vfs->i915_cur_delayinfo))
 					{
-						$i915_cur_delayinfo = file_get_contents('/sys/kernel/debug/dri/0/i915_cur_delayinfo');
+						$i915_cur_delayinfo = phodevi::$vfs->i915_cur_delayinfo;
 						$freq = strpos($i915_cur_delayinfo, 'Max non-overclocked (RP0) frequency: ');
 
 						if($freq === false)
@@ -1042,9 +1042,9 @@ class phodevi_gpu extends phodevi_device_interface
 								}
 							}
 						}
-						if($was_reset == false && is_readable('/sys/kernel/debug/dri/0/i915_capabilities'))
+						if($was_reset == false && isset(phodevi::$vfs->i915_capabilities))
 						{
-							$i915_caps = file_get_contents('/sys/kernel/debug/dri/0/i915_capabilities');
+							$i915_caps = phodevi::$vfs->i915_capabilities;
 							if(($x = strpos($i915_caps, 'gen: ')) !== false)
 							{
 								$gen = substr($i915_caps, ($x + 5));
