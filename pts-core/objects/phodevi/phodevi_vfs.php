@@ -34,7 +34,9 @@ class phodevi_vfs
 		'kernel_version' => array('type' => 'F', 'F' => '/proc/version', 'cacheable' => true, 'preserve' => true, 'subsystem' => 'System'),
 		'mounts' => array('type' => 'F', 'F' => '/proc/mounts', 'cacheable' => false, 'preserve' => true, 'subsystem' => 'Disk'),
 		'glxinfo' => array('type' => 'C', 'C' => 'glxinfo', 'cacheable' => true, 'preserve' => true, 'subsystem' => 'GPU'),
+		'radeon_pm_info' => array('type' => 'F', 'F' => '/sys/kernel/debug/dri/0/radeon_pm_info', 'cacheable' => false, 'preserve' => true, 'subsystem' => 'GPU'),
 		'xorg_log' => array('type' => 'F', 'F' => '/var/log/Xorg.0.log', 'cacheable' => true, 'preserve' => true, 'subsystem' => 'System', 'remove_timestamps' => true),
+		'xorg_conf' => array('type' => 'F', 'F' => '/etc/X11/xorg.conf', 'cacheable' => true, 'preserve' => true, 'subsystem' => 'System'),
 		);
 
 	public function __construct()

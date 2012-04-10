@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2011, Phoronix Media
-	Copyright (C) 2009 - 2011, Michael Larabel
+	Copyright (C) 2009 - 2012, Phoronix Media
+	Copyright (C) 2009 - 2012, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -66,10 +66,10 @@ class gpu_freq implements phodevi_sensor
 		}
 		else if(phodevi::is_linux())
 		{
-			if(is_file('/sys/kernel/debug/dri/0/radeon_pm_info'))
+			if(isset(phodevi::$vfs->radeon_pm_info))
 			{
 				// radeon_pm_info should be present with Linux 2.6.34+
-				foreach(pts_strings::trim_explode("\n", pts_file_io::file_get_contents('/sys/kernel/debug/dri/0/radeon_pm_info')) as $pm_line)
+				foreach(pts_strings::trim_explode("\n", phodevi::$vfs->radeon_pm_info) as $pm_line)
 				{
 					list($descriptor, $value) = pts_strings::colon_explode($pm_line);
 
