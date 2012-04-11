@@ -1353,10 +1353,10 @@ class pts_test_run_manager
 	}
 	public static function cmp_result_object_sort($a, $b)
 	{
-		$a = $a->test_profile->get_test_hardware_type() . $a->test_profile->get_test_software_type() . $a->test_profile->get_result_scale_formatted() . $a->test_profile->get_identifier(true);
-		$b = $b->test_profile->get_test_hardware_type() . $b->test_profile->get_test_software_type() . $b->test_profile->get_result_scale_formatted() . $b->test_profile->get_identifier(true);
+		$a_comp = $a->test_profile->get_test_hardware_type() . $a->test_profile->get_test_software_type() . $a->test_profile->get_result_scale_formatted() . $a->test_profile->get_identifier(true);
+		$b_comp = $b->test_profile->get_test_hardware_type() . $b->test_profile->get_test_software_type() . $b->test_profile->get_result_scale_formatted() . $b->test_profile->get_identifier(true);
 
-		if($a == $b)
+		if($a_comp == $b_comp)
 		{
 			// So it's the same test being compared... try to sort in ascending order (such that 800 x 600 resolution comes before 1024 x 768), below way is an attempt to recognize such in weird manner
 			if(strlen($a->get_arguments_description()) == strlen($b->get_arguments_description()))
@@ -1369,7 +1369,7 @@ class pts_test_run_manager
 			}
 		}
 
-		return strcmp($a, $b);
+		return strcmp($a_comp, $b_comp);
 	}
 	public static function test_profile_system_compatibility_check(&$test_profile, $report_errors = false)
 	{

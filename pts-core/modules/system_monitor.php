@@ -123,7 +123,7 @@ class system_monitor extends pts_module_interface
 		}
 
 		// Just to pad in some idling into the run process
-		sleep((self::$sensor_monitoring_frequency * 2));
+		sleep(self::$sensor_monitoring_frequency);
 	}
 	public static function __post_test_run_success($test_run_request)
 	{
@@ -137,7 +137,7 @@ class system_monitor extends pts_module_interface
 		}
 
 		// Let the system return to brief idling...
-		sleep((self::$sensor_monitoring_frequency * 2));
+		sleep(self::$sensor_monitoring_frequency);
 
 		if(pts_module::read_variable('PERFORMANCE_PER_WATT'))
 		{
