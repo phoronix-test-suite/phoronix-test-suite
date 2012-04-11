@@ -37,6 +37,8 @@ class system_monitor extends pts_module_interface
 	static $individual_test_run_offsets = null;
 	static $individual_monitoring = null;
 
+	private static $sensor_monitoring_frequency = 2;
+
 	public static function module_environmental_variables()
 	{
 		return array('MONITOR', 'PERFORMANCE_PER_WATT');
@@ -97,10 +99,12 @@ class system_monitor extends pts_module_interface
 				echo PHP_EOL . '   - ' . phodevi::sensor_name($sensor);
 			}
 			echo PHP_EOL;
-		}
-		sleep(4);
 
-		pts_module::pts_timed_function('pts_monitor_update', 2);
+			// Pad some idling sensor results at the start
+			sleep((self::$sensor_monitoring_frequency * 4));
+		}
+
+		pts_module::pts_timed_function('pts_monitor_update', self::$sensor_monitoring_frequency);
 	}
 	public static function __pre_test_run($test_run_request)
 	{
@@ -117,6 +121,9 @@ class system_monitor extends pts_module_interface
 			$offset = count(explode(PHP_EOL, $log_f));
 			self::$individual_test_run_offsets[phodevi::sensor_identifier($sensor)] = $offset;
 		}
+
+		// Just to pad in some idling into the run process
+		sleep((self::$sensor_monitoring_frequency * 2));
 	}
 	public static function __post_test_run_success($test_run_request)
 	{
@@ -128,6 +135,9 @@ class system_monitor extends pts_module_interface
 		{
 			return;
 		}
+
+		// Let the system return to brief idling...
+		sleep((self::$sensor_monitoring_frequency * 2));
 
 		if(pts_module::read_variable('PERFORMANCE_PER_WATT'))
 		{
@@ -201,6 +211,8 @@ class system_monitor extends pts_module_interface
 	}
 	public static function __event_results_process(&$test_run_manager)
 	{
+		echo PHP_EOL . 'Finishing System Sensor Monitoring Process' . PHP_EOL;
+		sleep((self::$sensor_monitoring_frequency * 4));
 		foreach(self::$to_monitor as $sensor)
 		{
 			$sensor_results = self::parse_monitor_log('logs/' . phodevi::sensor_identifier($sensor));
