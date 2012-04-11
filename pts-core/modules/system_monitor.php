@@ -208,6 +208,9 @@ class system_monitor extends pts_module_interface
 		self::$successful_test_run_request = null;
 		self::$individual_test_run_request = null;
 		self::$monitor_test_count++;
+
+		// Let the system rest before jumping to next test...
+		sleep((self::$sensor_monitoring_frequency * 6));
 	}
 	public static function __event_results_process(&$test_run_manager)
 	{
