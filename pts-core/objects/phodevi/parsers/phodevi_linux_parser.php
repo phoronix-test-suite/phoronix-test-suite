@@ -573,6 +573,12 @@ class phodevi_linux_parser
 				for($i = 0; $i < count($acpi_lines) && $value == false; $i++)
 				{
 					$line = pts_strings::trim_explode(': ', $acpi_lines[$i]);
+
+					if(!isset($line[0]))
+					{
+						continue;
+					}
+
 					$this_attribute = $line[0];
 					$this_value = (count($line) > 1 ? $line[1] : null);
 
