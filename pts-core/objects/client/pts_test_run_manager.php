@@ -1353,9 +1353,21 @@ class pts_test_run_manager
 	}
 	public static function cmp_result_object_sort($a, $b)
 	{
-		// could add $a->get_arguments_description() or not?
-		$a = $a->test_profile->get_test_hardware_type() . $a->test_profile->get_result_scale_formatted() . $a->test_profile->get_test_software_type() . $a->test_profile->get_identifier(true);
-		$b = $b->test_profile->get_test_hardware_type() . $b->test_profile->get_result_scale_formatted() . $b->test_profile->get_test_software_type() . $b->test_profile->get_identifier(true);
+		$a = $a->test_profile->get_test_hardware_type() . $a->test_profile->get_test_software_type() . $a->test_profile->get_result_scale_formatted() . $a->test_profile->get_identifier(true);
+		$b = $b->test_profile->get_test_hardware_type() . $b->test_profile->get_test_software_type() . $b->test_profile->get_result_scale_formatted() . $b->test_profile->get_identifier(true);
+
+		if($a == $b)
+		{
+			// So it's the same test being compared... try to sort in ascending order (such that 800 x 600 resolution comes before 1024 x 768), below way is an attempt to recognize such in weird manner
+			if(strlen($a->get_arguments_description()) == strlen($b->get_arguments_description()))
+			{
+				return strcmp($a->get_arguments_description(), $b->get_arguments_description());
+			}
+			else
+			{
+				return strcmp(strlen($a->get_arguments_description()), strlen($b->get_arguments_description()));
+			}
+		}
 
 		return strcmp($a, $b);
 	}
