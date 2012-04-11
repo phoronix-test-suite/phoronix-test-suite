@@ -325,8 +325,8 @@
 		<Package>
 			<GenericName>opencl</GenericName>
 			<Title>OpenCL</Title>
-			<PossibleNames>NVIDIA OpenCL, ATI Stream SDK</PossibleNames>
-			<FileCheck>/usr/include/CL/cl.h OR /usr/include/OpenCL/cl.h</FileCheck>
+			<PossibleNames>NVIDIA OpenCL, ATI Stream SDK, OpenCL SDK</PossibleNames>
+			<FileCheck>/usr/include/CL/cl.h OR /usr/include/OpenCL/cl.h OR /usr/local/cuda OR /usr/cuda</FileCheck>
 		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
