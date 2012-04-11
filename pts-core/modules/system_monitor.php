@@ -80,6 +80,7 @@ class system_monitor extends pts_module_interface
 			// We need to ensure the system power consumption is being tracked to get performance-per-Watt
 			pts_arrays::unique_push($to_show, 'sys.power');
 			self::$individual_monitoring = true;
+			echo PHP_EOL . 'To Provide Performance-Per-Watt Outputs.' . PHP_EOL;
 		}
 
 		foreach(phodevi::supported_sensors() as $sensor)
