@@ -11,6 +11,7 @@ XX April 2012
 - pts-core: Support for showing test notes on multi-way comparisons
 - pts-core: Fix compatibility with the new pts_Graph renderer back-end for result-file-to-pdf option
 - pts-core: Add p7zip as a possible external dependency
+- pts-core: When running OpenCL tests, report the number of available compute cores
 - pts_Graph: Begin work on PHP 5.4 "webui" option (currently far from incomplete/experimental)
 - pts_Graph: Tweak spacing on pts_Table
 - pts_Graph: Re-factor most text vertical offsets to not use dominant-baseline since Opera still doesn't support this SVG attribute properly

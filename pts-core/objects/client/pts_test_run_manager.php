@@ -700,10 +700,12 @@ class pts_test_run_manager
 		$json_notes = null;
 		$test_external_dependencies = array();
 		$test_hardware_types = array();
+		$test_internal_tags = array();
 
 		foreach($this->tests_to_run as $test_to_run)
 		{
 			$test_external_dependencies = array_merge($test_external_dependencies, $test_to_run->test_profile->get_dependencies());
+			$test_internal_tags = array_merge($test_internal_tags, $test_to_run->test_profile->get_internal_tags());
 			pts_arrays::unique_push($test_hardware_types, $test_to_run->test_profile->get_test_hardware_type());
 		}
 
@@ -722,6 +724,15 @@ class pts_test_run_manager
 				{
 					$json_notes['compiler-configuration'] = $compiler_configuration;
 				}
+			}
+		}
+		if(in_array('OpenCL', $test_internal_tags))
+		{
+			// So OpenCL tests were run....
+			$gpu_compute_cores = phodevi::read_property('gpu', 'compute-cores');
+			if($gpu_compute_cores > 0)
+			{
+				$json_notes['graphics-compute-cores'] = $gpu_compute_cores;
 			}
 		}
 		if(in_array('Disk', $test_hardware_types))

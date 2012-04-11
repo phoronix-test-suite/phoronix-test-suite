@@ -383,19 +383,23 @@ class pts_render
 		{
 			if(isset($json['compiler-configuration']) && $json['compiler-configuration'] != null)
 			{
-				$system_attributes['compiler'][$identifiers[$i]] = $json['compiler-configuration'];
+				$system_attributes['Compiler'][$identifiers[$i]] = $json['compiler-configuration'];
 			}
 			if(isset($json['disk-scheduler']) && isset($json['disk-mount-options']))
 			{
-				$system_attributes['disk'][$identifiers[$i]] = $json['disk-scheduler'] . ' / ' . $json['disk-mount-options'];
+				$system_attributes['Disk'][$identifiers[$i]] = $json['disk-scheduler'] . ' / ' . $json['disk-mount-options'];
 			}
 			if(isset($json['cpu-scaling-governor']))
 			{
-				$system_attributes['processor'][$identifiers[$i]] = 'Scaling Governor: ' . $json['cpu-scaling-governor'];
+				$system_attributes['Processor'][$identifiers[$i]] = 'Scaling Governor: ' . $json['cpu-scaling-governor'];
 			}
 			if(isset($json['graphics-2d-acceleration']))
 			{
-				$system_attributes['graphics'][$identifiers[$i]] = '2D Acceleration: ' . $json['graphics-2d-acceleration'];
+				$system_attributes['Graphics'][$identifiers[$i]] = '2D Acceleration: ' . $json['graphics-2d-acceleration'];
+			}
+			if(isset($json['graphics-compute-cores']))
+			{
+				$system_attributes['OpenCL'][$identifiers[$i]] = 'GPU Compute Cores: ' . $json['graphics-compute-cores'];
 			}
 		}
 
