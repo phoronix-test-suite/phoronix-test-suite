@@ -809,13 +809,23 @@ class phodevi_gpu extends phodevi_device_interface
 						// Old ugly way of handling the clock information
 						$log_parse = isset(phodevi::$vfs->xorg_log) ? phodevi::$vfs->xorg_log : null;
 
-						$core_freq = substr($log_parse, strpos($log_parse, 'Default Engine Clock: ') + 22);
-						$core_freq = substr($core_freq, 0, strpos($core_freq, "\n"));
-						$core_freq = is_numeric($core_freq) ? $core_freq / 1000 : 0;
+						if(($engine_clock = strpos($log_parse, 'Default Engine Clock: ')))
+						{
+							$core_freq = substr($log_parse, $engine_clock + 22);
+							$core_freq = substr($core_freq, 0, strpos($core_freq, "\n"));
+							$core_freq = is_numeric($core_freq) ? $core_freq / 1000 : 0;
 
-						$mem_freq = substr($log_parse, strpos($log_parse, 'Default Memory Clock: ') + 22);
-						$mem_freq = substr($mem_freq, 0, strpos($mem_freq, "\n"));
-						$mem_freq = is_numeric($mem_freq) ? $mem_freq / 1000 : 0;
+							if($core_freq && ($mem_clock = strpos($log_parse, 'Default Memory Clock: ')))
+							{
+								$mem_freq = substr($log_parse, $mem_clock + 22);
+								$mem_freq = substr($mem_freq, 0, strpos($mem_freq, "\n"));
+								$mem_freq = is_numeric($mem_freq) ? $mem_freq / 1000 : 0;
+							}
+							else
+							{
+								$core_freq = 0;
+							}
+						}
 					}				
 					break;
 				case 'intel':
