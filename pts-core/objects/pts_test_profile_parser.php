@@ -44,6 +44,10 @@ class pts_test_profile_parser
 	{
 		return $this->get_identifier();
 	}
+	public function __clone()
+	{
+		$this->xml_parser = clone $this->xml_parser;
+	}
 	public function get_identifier($bind_version = true)
 	{
 		$identifier = $this->identifier;
