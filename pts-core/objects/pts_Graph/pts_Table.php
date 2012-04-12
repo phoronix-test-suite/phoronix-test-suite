@@ -194,7 +194,7 @@ class pts_Table extends pts_Graph
 		}
 
 		// Background horizontal
-		$this->svg_dom->draw_svg_line(($table_columns_end / 2), ($identifier_height + $this->i['top_heading_height']), round($table_columns_end / 2), $table_proper_height, self::$c['color']['body_light'], $table_columns_end, array('stroke-dasharray' => $table_line_height . ',' . $table_line_height));
+		$this->svg_dom->draw_svg_line(round($table_columns_end / 2), ($identifier_height + $this->i['top_heading_height']), round($table_columns_end / 2), $table_proper_height, self::$c['color']['body_light'], $table_columns_end, array('stroke-dasharray' => $table_line_height . ',' . $table_line_height));
 
 		// Draw the borders
 		$this->svg_dom->draw_svg_line($this->i['left_start'], $v, $table_columns_end + ($table_columns_end < $this->i['graph_width'] ? $table_item_width : 0), $v, self::$c['color']['border'], $table_height + $identifier_height, array('stroke-dasharray' => '1,' . ($table_item_width - 1)));
@@ -393,7 +393,7 @@ class pts_Table extends pts_Graph
 		}
 
 		//$this->svg_dom->draw_svg_line(($table_columns_end / 2), ($identifier_height + $this->i['top_heading_height']), round($table_columns_end / 2), $this->i['graph_height'], self::$c['color']['border'], $table_columns_end, array('stroke-dasharray' => '1,' . ($table_line_height - 1)));
-		$this->svg_dom->draw_svg_line(($table_columns_end / 2), ($identifier_height + $this->i['top_heading_height']), round($table_columns_end / 2), $table_proper_height, self::$c['color']['body_light'], $table_columns_end, array('stroke-dasharray' => 1 . ',' . ($table_line_height - 1)));
+		$this->svg_dom->draw_svg_line(round($table_columns_end / 2), ($identifier_height + $this->i['top_heading_height']), round($table_columns_end / 2), $table_proper_height, self::$c['color']['body_light'], $table_columns_end, array('stroke-dasharray' => 1 . ',' . ($table_line_height - 1)));
 
 		// Bottom part
 
