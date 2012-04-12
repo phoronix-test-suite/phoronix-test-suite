@@ -22,7 +22,7 @@
 */
 
 define('PTS_VERSION', '4.0.0m1');
-define('PTS_CORE_VERSION', 3909);
+define('PTS_CORE_VERSION', 3910);
 define('PTS_CODENAME', 'SULDAL');
 define('PTS_IS_CLIENT', (defined('PTS_MODE') && PTS_MODE == 'CLIENT'));
 define('PTS_IS_DEV_BUILD', (substr(PTS_VERSION, -2, 1) == 'm'));

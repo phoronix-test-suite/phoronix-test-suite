@@ -1,7 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
-XX April 2012
+Phoronix Test Suite 4.0 Milestone 1
+12 April 2012
 
 - pts-core: Add AutoSortRunQueue option that by default automatically sorts the test execution queue to run similar tests together
 - pts-core: Expose more verbose information within detailed-system-info command
