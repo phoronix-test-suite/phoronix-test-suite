@@ -363,20 +363,20 @@ class phodevi_cpu extends phodevi_device_interface
 	public static function get_cpu_feature_constants()
 	{
 		return array(
-			'sse2' => 2, // SSE 2
-			'sse3' => 4, // SSE 3
-			'sse4a' => 8, // SSE 4a
-			'sse4_1' => 16, // SSE 4.1
-			'sse4_2' => 32, // SSE 4.2
-			'sse5' => 64, // SSE 5
-			'avx' => 128, // AVX
-			'aes' => 256, // AES
-			'epb' => 512, // EPB
-			'svm' => 1024, // AMD SVM (Virtualization)
-			'vmx' => 2048, // Intel Virtualization
-			'xop' => 4096, // AMD XOP Instruction Set
-			'fma3' => 8192, // FMA3 Instruction Set
-			'fma4' => 16384 // FMA4 Instruction Set
+			'sse2' => (1 << 1), // SSE 2
+			'sse3' => (1 << 2), // SSE 3
+			'sse4a' => (1 << 3), // SSE 4a
+			'sse4_1' => (1 << 4), // SSE 4.1
+			'sse4_2' => (1 << 5), // SSE 4.2
+			'sse5' => (1 << 6), // SSE 5
+			'avx' => (1 << 7), // AVX
+			'aes' => (1 << 8), // AES
+			'epb' => (1 << 9), // EPB
+			'svm' => (1 << 10), // AMD SVM (Virtualization)
+			'vmx' => (1 << 11), // Intel Virtualization
+			'xop' => (1 << 12), // AMD XOP Instruction Set
+			'fma3' => (1 << 13), // FMA3 Instruction Set
+			'fma4' => (1 << 14), // FMA4 Instruction Set
 			);
 	}
 	public static function get_cpu_feature_constant($constant)
