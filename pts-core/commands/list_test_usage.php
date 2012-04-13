@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2011, Phoronix Media
-	Copyright (C) 2008 - 2011, Michael Larabel
+	Copyright (C) 2008 - 2012, Phoronix Media
+	Copyright (C) 2008 - 2012, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -37,7 +37,7 @@ class list_test_usage implements pts_option_interface
 			{
 				$test_profile = new pts_test_profile($identifier);
 
-				if($test_profile != false && $test_profile->test_installation->get_installed_version() != null)
+				if($test_profile && $test_profile->test_installation && $test_profile->test_installation->get_installed_version() != null)
 				{
 					$avg_time = $test_profile->test_installation->get_average_run_time();
 					$avg_time = !empty($avg_time) ? pts_strings::format_time($avg_time, 'SECONDS', false) : 'N/A';

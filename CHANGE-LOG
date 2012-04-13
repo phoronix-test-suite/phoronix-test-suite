@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Better recognize some open-source vs. closed-source graphics card/driver combination comparisons
+- pts-core: Fix potential crash in list-test-usage command
 - pts_Graph: Fix rounding issue on pts tables that are very wide
 
 Phoronix Test Suite 4.0 Milestone 1
