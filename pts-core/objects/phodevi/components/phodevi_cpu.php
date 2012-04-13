@@ -377,6 +377,8 @@ class phodevi_cpu extends phodevi_device_interface
 			'xop' => (1 << 12), // AMD XOP Instruction Set
 			'fma3' => (1 << 13), // FMA3 Instruction Set
 			'fma4' => (1 << 14), // FMA4 Instruction Set
+			'rdrand' => (1 << 15), // Intel Bull Mountain RDRAND - Ivy Bridge
+			'fsgsbase' => ( 1 << 16) // FSGSBASE - Ivy Bridge AVX
 			);
 	}
 	public static function get_cpu_feature_constant($constant)
@@ -437,7 +439,7 @@ class phodevi_cpu extends phodevi_device_interface
 		}
 
 		// Check for other instruction sets
-		foreach(array('avx', 'xop', 'fma3', 'fma4') as $instruction_set)
+		foreach(array('avx', 'xop', 'fma3', 'fma4', 'rdrand', 'fsgsbase') as $instruction_set)
 		{
 			if(($cpu_flags & self::get_cpu_feature_constant($instruction_set)))
 			{
