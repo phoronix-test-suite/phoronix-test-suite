@@ -63,7 +63,11 @@ class pts_result_file_analyzer
 			$data = array();
 			pts_result_file_analyzer::system_components_to_table($data, $identifiers, $rows, $hw);
 			pts_result_file_analyzer::compact_result_table_data($data, $identifiers, true);
-			$desc = pts_result_file_analyzer::analyze_system_component_changes($data, $rows, array(array('Motherboard', 'Chipset'), array('Motherboard', 'Chipset', 'Audio', 'Network')), $return_all_changed_indexes);
+			$desc = pts_result_file_analyzer::analyze_system_component_changes($data, $rows, array(
+				array('Processor', 'Chipset'), // Processor comparison - Sandy/Ivy Bridge for Intel will change CPU/chipset reporting when still using same mobo
+				array('Motherboard', 'Chipset'), // Motherboard comparison
+				array('Motherboard', 'Chipset', 'Audio', 'Network') // Also a potential motherboard comparison
+				), $return_all_changed_indexes);
 		}
 		else if(count($hw_unique) == 1)
 		{
@@ -72,7 +76,9 @@ class pts_result_file_analyzer
 			$data = array();
 			pts_result_file_analyzer::system_components_to_table($data, $identifiers, $rows, $sw);
 			pts_result_file_analyzer::compact_result_table_data($data, $identifiers, true);
-			$desc = pts_result_file_analyzer::analyze_system_component_changes($data, $rows, array(array('Display Driver', 'OpenGL'), array('OpenGL'), array('Display Driver')), $return_all_changed_indexes);
+			$desc = pts_result_file_analyzer::analyze_system_component_changes($data, $rows, array(
+				array('Display Driver', 'OpenGL'), array('OpenGL'), array('Display Driver') // Graphics driver comparisons
+				), $return_all_changed_indexes);
 		}
 		else
 		{
@@ -82,7 +88,9 @@ class pts_result_file_analyzer
 			pts_result_file_analyzer::system_components_to_table($data, $identifiers, $rows, $hw);
 			pts_result_file_analyzer::system_components_to_table($data, $identifiers, $rows, $sw);
 			pts_result_file_analyzer::compact_result_table_data($data, $identifiers, true);
-			$desc = pts_result_file_analyzer::analyze_system_component_changes($data, $rows, array(array('Graphics', 'Monitor', 'Kernel', 'Display Driver', 'OpenGL'), array('Graphics', 'Monitor', 'Display Driver', 'OpenGL'), array('Graphics', 'Kernel', 'Display Driver', 'OpenGL'), array('Graphics', 'Display Driver', 'OpenGL'), array('Graphics', 'OpenGL'), array('Graphics', 'Kernel'), array('Graphics', 'Display Driver')), $return_all_changed_indexes);
+			$desc = pts_result_file_analyzer::analyze_system_component_changes($data, $rows, array(
+				array('Graphics', 'Monitor', 'Kernel', 'Display Driver', 'OpenGL'), array('Graphics', 'Monitor', 'Display Driver', 'OpenGL'), array('Graphics', 'Kernel', 'Display Driver', 'OpenGL'), array('Graphics', 'Display Driver', 'OpenGL'), array('Graphics', 'OpenGL'), array('Graphics', 'Kernel'), array('Graphics', 'Display Driver') // All potential graphics comparisons
+			), $return_all_changed_indexes);
 		}
 
 		if($desc)
