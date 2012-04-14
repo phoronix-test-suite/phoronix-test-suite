@@ -86,7 +86,7 @@ class pts_ResultFileCompactSystemsTable extends pts_Graph
 
 		// Do the actual work
 		$this->render_graph_pre_init();
-		$this->render_graph_init(array('cache_font_size' => true));
+		$this->render_graph_init();
 
 		// Header
 		$this->svg_dom->add_element('rect', array('x' => 2, 'y' => 1, 'width' => ($this->i['graph_width'] - 3), 'height' => ($this->i['top_heading_height'] - 1), 'fill' => self::$c['color']['main_headers'], 'stroke' => self::$c['color']['border'], 'stroke-width' => 1));
