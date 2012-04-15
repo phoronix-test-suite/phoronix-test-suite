@@ -957,6 +957,8 @@ class pts_client
 			}
 			$chart->renderChart($save_to_dir . '/result-graphs/systems.BILDE_EXTENSION');
 			unset($chart);
+
+
 		}
 
 		foreach($result_file->get_result_objects() as $key => $result_object)

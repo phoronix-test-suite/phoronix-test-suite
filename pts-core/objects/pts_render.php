@@ -84,7 +84,7 @@ class pts_render
 			return;
 		}
 
-		if(!isset($extra_attributes['compact_to_scalar']) && $result_object->test_profile->get_display_format() == 'LINE_GRAPH' && $result_file->get_system_count() > 8)
+		if(!isset($extra_attributes['compact_to_scalar']) && $result_object->test_profile->get_display_format() == 'LINE_GRAPH' && $result_file->get_system_count() > 10)
 		{
 			// If there's too many lines being plotted on line graph, likely to look messy, so convert to scalar automatically
 			$extra_attributes['compact_to_scalar'] = true;

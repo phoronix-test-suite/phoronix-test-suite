@@ -211,10 +211,9 @@ class pts_Table extends pts_Graph
 			}
 
 			$this->svg_dom->draw_svg_line(1, $this->i['top_heading_height'], $this->i['graph_width'] - 1, $this->i['top_heading_height'], self::$c['color']['border'], 1);
-
 		}
 
-		// Write the test names
+		// Write the rows
 		$row = 1;
 		foreach($this->rows as $i => $row_string)
 		{
@@ -231,7 +230,6 @@ class pts_Table extends pts_Graph
 		}
 
 		// Write the identifiers
-
 		if(defined('PHOROMATIC_TRACKER') || $this->is_multi_way)
 		{
 			$last_identifier = null;
@@ -294,7 +292,7 @@ class pts_Table extends pts_Graph
 			}
 		}
 
-		// Write the values
+		// Write the columns
 		foreach($this->table_data as $index => &$table_values)
 		{
 			if(!is_array($table_values))
@@ -343,7 +341,7 @@ class pts_Table extends pts_Graph
 						array_push($hover, ' STD Error: ' . $t);
 					}
 
-					if(defined('PHOROMATIC_TRACKER') &&($t = $result_table_value->get_attribute('delta')) != 0)
+					if(defined('PHOROMATIC_TRACKER') && ($t = $result_table_value->get_attribute('delta')) != 0)
 					{
 						$bold = true;
 						$text_color = $t < 0 ? self::$c['color']['alert'] : self::$c['color']['headers'];
