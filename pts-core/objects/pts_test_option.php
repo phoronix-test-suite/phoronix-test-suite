@@ -154,7 +154,7 @@ class pts_test_option
 	{
 		$valid = false;
 
-		if($select_pos >= 0 && $select_pos < $this->option_count())
+		if(is_numeric($select_pos) && $select_pos >= 0 && $select_pos < $this->option_count())
 		{
 			$valid = $select_pos;
 		}

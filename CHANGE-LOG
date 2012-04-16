@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 - pts-core: Better recognize some open-source vs. closed-source graphics card/driver combination comparisons
 - pts-core: Fix potential crash in list-test-usage command
 - pts-core: Support for detecting FSGSBASE and RDRAND on Intel Ivy Bridge
+- pts-core: Fix PRESET_OPTIONS failing when specifying an option value rather than its index
 - pts_Graph: Fix rounding issue on pts tables that are very wide
 
 Phoronix Test Suite 4.0 Milestone 1
