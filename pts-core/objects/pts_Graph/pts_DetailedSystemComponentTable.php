@@ -3,9 +3,9 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2012, Phoronix Media
-	Copyright (C) 2009 - 2012, Michael Larabel
-	pts_ResultFileTable.php: The result file table object
+	Copyright (C) 2012, Phoronix Media
+	Copyright (C) 2012, Michael Larabel
+	pts_DetailedSystemComponentTable.php: The detailed system component table
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -107,31 +107,6 @@ class pts_DetailedSystemComponentTable extends pts_SideViewTable
 		{
 			$this->addTestNote(implode(' ', $intersect), null, 'Common CPU Flags');
 		}
-		return;
-
-		$columns = $result_file->get_system_identifiers();
-		$rows = array();
-		$table_data = array();
-
-		pts_result_file_analyzer::system_components_to_table($table_data, $columns, $rows, $result_file->get_system_hardware());
-		pts_result_file_analyzer::system_components_to_table($table_data, $columns, $rows, $result_file->get_system_software());
-
-		pts_result_file_analyzer::compact_result_table_data($table_data, $columns, true); // TODO: see if this true value works fine but if rendering starts messing up, disable it
-
-		if(defined('OPENBENCHMARKING_IDS'))
-		{
-			foreach($columns as &$column)
-			{
-				$column = new pts_graph_ir_value($column);
-				$column->set_attribute('href', 'http://openbenchmarking.org/system/' . OPENBENCHMARKING_IDS . '/' . $column);
-			}
-		}
-
-		parent::__construct($rows, $columns, $table_data, $result_file);
-		$this->i['identifier_size'] *= 0.8;
-		$this->column_heading_vertical = false;
-		$this->graph_title = $result_file->get_title();
-		pts_render::report_system_notes_to_table($result_file, $this);
 	}
 	protected function generate_processor_data(&$result_file, $system_identifier)
 	{

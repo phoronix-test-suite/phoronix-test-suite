@@ -51,7 +51,15 @@ class phodevi_vfs
 
 	public function __construct()
 	{
+		$this->clear_cache();
+	}
+	public function clear_cache()
+	{
 		$this->cache = array();
+	}
+	public function cache_index()
+	{
+		return array_keys($this->cache);
 	}
 	public function __get($name)
 	{
@@ -100,6 +108,10 @@ class phodevi_vfs
 	public function __isset($name)
 	{
 		return isset($this->cache[$name]) || (PTS_IS_CLIENT && $this->cache_isset_names($name));
+	}
+	public function set_cache_item($name, $cache)
+	{
+		$this->cache[$name] = $cache;
 	}
 	protected function cache_isset_names($name)
 	{

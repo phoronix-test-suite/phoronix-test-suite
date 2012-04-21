@@ -947,7 +947,7 @@ class pts_client
 			$chart->renderChart($save_to_dir . '/result-graphs/overview.BILDE_EXTENSION');
 
 			$intent = -1;
-			if($result_file->get_system_count() == 1 || ($intent = pts_result_file_analyzer::analyze_result_file_intent($result_file, $intent, true)))
+			if(($intent = pts_result_file_analyzer::analyze_result_file_intent($result_file, $intent, true)) || $result_file->get_system_count() == 1)
 			{
 				$chart = new pts_ResultFileCompactSystemsTable($result_file, $intent);
 			}
@@ -957,6 +957,16 @@ class pts_client
 			}
 			$chart->renderChart($save_to_dir . '/result-graphs/systems.BILDE_EXTENSION');
 			unset($chart);
+
+			if($intent && in_array('Processor', $intent[0]) && is_dir($save_to_dir . '/system-logs/'))
+			{
+				$chart = new pts_DetailedSystemComponentTable($result_file, $save_to_dir . '/system-logs/', 'Processor', $intent);
+
+				if($chart)
+				{
+					$chart->renderChart($save_to_dir . '/result-graphs/system_component_details.BILDE_EXTENSION');
+				}
+			}
 		}
 
 		foreach($result_file->get_result_objects() as $key => $result_object)

@@ -3,9 +3,9 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2012, Phoronix Media
-	Copyright (C) 2009 - 2012, Michael Larabel
-	pts_Table.php: A charting table object for pts_Graph
+	Copyright (C) 2012, Phoronix Media
+	Copyright (C) 2012, Michael Larabel
+	pts_SideViewTable.php: A charting table object for pts_Graph in a side-view manner
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by

@@ -390,6 +390,7 @@ class phodevi_cpu extends phodevi_device_interface
 	public static function read_cpuinfo_line($key, $from_start = true)
 	{
 		$line = false;
+		$key .= "\t";
 
 		if(isset(phodevi::$vfs->cpuinfo) && ($from_start && ($key_pos = strpos(phodevi::$vfs->cpuinfo, PHP_EOL . $key)) !== false) || ($key_pos = strrpos(phodevi::$vfs->cpuinfo, PHP_EOL . $key)) !== false)
 		{
@@ -426,6 +427,7 @@ class phodevi_cpu extends phodevi_device_interface
 	public static function instruction_set_extensions()
 	{
 		$constants = self::get_cpu_feature_constants();
+		self::set_cpu_feature_flags();
 		$cpu_flags = self::get_cpu_flags();
 		$extension_string = null;
 
@@ -465,6 +467,19 @@ class phodevi_cpu extends phodevi_device_interface
 		}
 
 		return $virtualitzation_technology;
+	}
+	public static function lscpu_l2_cache()
+	{
+		$l2_cache = false;
+
+		if(isset(phodevi::$vfs->lscpu) && ($t = strpos(phodevi::$vfs->lscpu, 'L2 cache:')))
+		{
+			$lscpu = substr(phodevi::$vfs->lscpu, $t + strlen('L2 cache:') + 1);
+			$lscpu = substr($lscpu, 0, strpos($lscpu, PHP_EOL));
+			$l2_cache = trim($lscpu);
+		}
+
+		return $l2_cache;
 	}
 	public static function cpuinfo_core_count()
 	{
