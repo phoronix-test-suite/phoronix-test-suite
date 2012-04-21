@@ -45,6 +45,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 		<h1>System Information</h1>
 		<div align="center" style="width: 100%; overflow: auto;"><!-- SYSTEMS TAG --></div>
+		<div align="center" style="width: 100%; overflow: auto;"><!-- DETAILED_COMPONENT TAG --></div>
 		<div class="pts_table_box_out"><table border="0">
 		<tr class="pts_column_head"> 
 		<xsl:for-each select="PhoronixTestSuite/System"><td><xsl:value-of select="Identifier" /></td></xsl:for-each>

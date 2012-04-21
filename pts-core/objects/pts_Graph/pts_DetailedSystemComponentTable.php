@@ -115,29 +115,26 @@ class pts_DetailedSystemComponentTable extends pts_SideViewTable
 
 		foreach($this->columns as $i => $cpuinfo_item)
 		{
-			if($cpuinfo_item == 'Features')
+			switch($cpuinfo_item)
 			{
-				$line = phodevi_cpu::instruction_set_extensions();
-			}
-			else if($cpuinfo_item == 'Core Count')
-			{
-				$line = phodevi_cpu::cpuinfo_core_count();
-			}
-			else if($cpuinfo_item == 'Thread Count')
-			{
-				$line = phodevi_cpu::cpuinfo_thread_count();
-			}
-			else if($cpuinfo_item == 'L2 Cache')
-			{
-				$line = phodevi_cpu::lscpu_l2_cache();
-			}
-			else if($cpuinfo_item == 'Virtualization')
-			{
-				$line = phodevi_cpu::virtualization_technology();
-			}
-			else
-			{
-				$line = phodevi_cpu::read_cpuinfo_line(strtolower($cpuinfo_item), false);
+				case 'Features':
+					$line = phodevi_cpu::instruction_set_extensions();
+					break;
+				case 'Core Count':
+					$line = phodevi_cpu::cpuinfo_core_count();
+					break;
+				case 'Thread Count':
+					$line = phodevi_cpu::cpuinfo_thread_count();
+					break;
+				case 'L2 Cache':
+					$line = phodevi_cpu::lscpu_l2_cache();
+					break;
+				case 'Virtualization':
+					$line = phodevi_cpu::virtualization_technology();
+					break;
+				default:
+					$line = phodevi_cpu::read_cpuinfo_line(strtolower($cpuinfo_item), false);
+					break;
 			}
 
 			if($line)

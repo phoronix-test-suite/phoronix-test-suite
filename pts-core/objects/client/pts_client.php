@@ -908,7 +908,7 @@ class pts_client
 		$raw_xsl = file_get_contents(PTS_RESULTS_VIEWER_PATH . 'pts-results-viewer.xsl');
 
 		// System Tables
-		$conversions = array('systems', 'radar', 'overview', 'visualize');
+		$conversions = array('systems', 'detailed_component', 'radar', 'overview', 'visualize');
 		foreach($conversions as $convert)
 		{
 			$graph_string = pts_svg_dom::html_embed_code('result-graphs/' . $convert . '.BILDE_EXTENSION', 'SVG', array('width' => 'auto', 'height' => 'auto'), true);
@@ -964,7 +964,7 @@ class pts_client
 
 				if($chart)
 				{
-					$chart->renderChart($save_to_dir . '/result-graphs/system_component_details.BILDE_EXTENSION');
+					$chart->renderChart($save_to_dir . '/result-graphs/detailed_component.BILDE_EXTENSION');
 				}
 			}
 		}
