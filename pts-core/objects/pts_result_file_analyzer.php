@@ -64,6 +64,8 @@ class pts_result_file_analyzer
 			pts_result_file_analyzer::system_components_to_table($data, $identifiers, $rows, $hw);
 			pts_result_file_analyzer::compact_result_table_data($data, $identifiers, true);
 			$desc = pts_result_file_analyzer::analyze_system_component_changes($data, $rows, array(
+				array('Processor', 'Motherboard', 'Chipset', 'Audio', 'Network'), // Processor comparison
+				array('Processor', 'Motherboard', 'Chipset', 'Network'), // Processor comparison
 				array('Processor', 'Chipset'), // Processor comparison - Sandy/Ivy Bridge for Intel will change CPU/chipset reporting when still using same mobo
 				array('Motherboard', 'Chipset'), // Motherboard comparison
 				array('Motherboard', 'Chipset', 'Audio', 'Network') // Also a potential motherboard comparison

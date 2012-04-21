@@ -77,7 +77,7 @@ class result_file_to_pdf implements pts_option_interface
 			$pdf->WriteMiniHeader($identifiers[$i]);
 			$pdf->WriteText($hardware_r[$i]);
 			$pdf->WriteText($software_r[$i]);
-			$pdf->WriteText($notes_r[$i]);
+			//$pdf->WriteText($notes_r[$i]);
 		}
 
 		/*

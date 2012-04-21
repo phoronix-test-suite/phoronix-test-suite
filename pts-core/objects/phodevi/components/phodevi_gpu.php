@@ -791,6 +791,11 @@ class phodevi_gpu extends phodevi_device_interface
 						// radeon_pm_info should be present with Linux 2.6.34+
 						foreach(pts_strings::trim_explode("\n", phodevi::$vfs->radeon_pm_info) as $pm_line)
 						{
+							if($pm_line == null)
+							{
+								continue;
+							}
+
 							list($descriptor, $value) = pts_strings::colon_explode($pm_line);
 
 							switch($descriptor)
