@@ -23,7 +23,7 @@
 
 class pts_DetailedSystemComponentTable extends pts_SideViewTable
 {
-	public function __construct(&$result_file, $log_location, $component_report, $intent = false)
+	public function __construct(&$result_file, $log_location, $intent = false)
 	{
 		if(!is_readable($log_location))
 		{
@@ -33,6 +33,19 @@ class pts_DetailedSystemComponentTable extends pts_SideViewTable
 		{
 			$intent = -1;
 			$intent = pts_result_file_analyzer::analyze_result_file_intent($result_file, $intent, true);
+		}
+
+		if(in_array('Processor', $intent[0]))
+		{
+			$component_report = 'Processor';
+		}
+		else if(in_array('Graphics', $intent[0]))
+		{
+			$component_report = 'Graphics';
+		}
+		else
+		{
+			return false;
 		}
 
 		$this->rows = array();

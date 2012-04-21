@@ -960,14 +960,7 @@ class pts_client
 
 			if($intent && is_dir($save_to_dir . '/system-logs/'))
 			{
-				if(in_array('Processor', $intent[0]))
-				{
-					$chart = new pts_DetailedSystemComponentTable($result_file, $save_to_dir . '/system-logs/', 'Processor', $intent);
-				}
-				else if(in_array('Graphics', $intent[0]))
-				{
-					$chart = new pts_DetailedSystemComponentTable($result_file, $save_to_dir . '/system-logs/', 'Graphics', $intent);
-				}
+				$chart = new pts_DetailedSystemComponentTable($result_file, $save_to_dir . '/system-logs/', $intent);
 
 				if($chart)
 				{
