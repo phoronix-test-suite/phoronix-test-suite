@@ -45,6 +45,11 @@ class pts_DetailedSystemComponentTable extends pts_SideViewTable
 			$this->columns = array('Model Name', 'Core Count', 'Thread Count', 'L2 Cache', 'Cache Size', 'Virtualization', 'Features', 'Flags');
 			$logs_to_capture = array('cpuinfo', 'lscpu');
 		}
+		else if($component_report == 'Graphics')
+		{
+			$this->columns = array('OpenGL Renderer', 'OpenGL Version', 'GLSL Version', 'OpenGL Extensions');
+			$logs_to_capture = array('glxinfo');
+		}
 
 		if(is_dir($log_location))
 		{
@@ -66,6 +71,9 @@ class pts_DetailedSystemComponentTable extends pts_SideViewTable
 						case 'Processor':
 							$this->generate_processor_data($result_file, $system_identifier);
 							break;
+						case 'Graphics':
+							$this->generate_graphics_data($result_file, $system_identifier);
+							break;
 
 					}
 				}
@@ -79,33 +87,38 @@ class pts_DetailedSystemComponentTable extends pts_SideViewTable
 			return false;
 		}
 
-		if($component_report == 'Processor')
+		foreach(array(array('Processor', 'Flags', 'Common CPU Flags'), array('Graphics', 'OpenGL Extensions', 'Common OpenGL Extensions')) as $set)
 		{
-			$flags_data = $this->table_data[array_search('Flags', $this->columns)];
-
-			foreach($flags_data as $i => &$flags)
+			if($component_report == $set[0])
 			{
-				$flags = explode(' ', $flags);
-				sort($flags);
+				$flags_data = $this->table_data[array_search($set[1], $this->columns)];
+
+				foreach($flags_data as $i => &$flags)
+				{
+					$flags = explode(' ', $flags);
+					sort($flags);
+				}
+
+				$intersect = call_user_func_array('array_intersect', $flags_data);
+				sort($intersect);
+
+				foreach($flags_data as $i => &$flags)
+				{
+					$flags = array_diff($flags, $intersect);
+					$flags = implode(' ', $flags);
+				}
+
+				$this->table_data[array_search($set[1], $this->columns)] = $flags_data;
+				$intersect_label = $set[2];
+				break;
 			}
-
-			$intersect = call_user_func_array('array_intersect', $flags_data);
-			sort($intersect);
-
-			foreach($flags_data as $i => &$flags)
-			{
-				$flags = array_diff($flags, $intersect);
-				$flags = implode(' ', $flags);
-			}
-
-			$this->table_data[array_search('Flags', $this->columns)] = $flags_data;
 		}
 
 		parent::__construct($this->rows, $this->columns, $this->table_data);
 
-		if($component_report == 'Processor' && !empty($intersect))
+		if(isset($intersect) && !empty($intersect))
 		{
-			$this->addTestNote(implode(' ', $intersect), null, 'Common CPU Flags');
+			$this->addTestNote(trim(implode(' ', $intersect)), null, $intersect_label);
 		}
 	}
 	protected function generate_processor_data(&$result_file, $system_identifier)
@@ -140,6 +153,32 @@ class pts_DetailedSystemComponentTable extends pts_SideViewTable
 			if($line)
 			{
 				$line = pts_strings::strip_string($line);
+			}
+
+			$this->table_data[$i][$rows_index] = $line;
+		}
+	}
+	protected function generate_graphics_data(&$result_file, $system_identifier)
+	{
+		array_push($this->rows, $system_identifier);
+		$rows_index = count($this->rows) - 1;
+
+		foreach($this->columns as $i => $cpuinfo_item)
+		{
+			switch($cpuinfo_item)
+			{
+				case 'OpenGL Renderer':
+					$line = phodevi_parser::read_glx_renderer();
+					break;
+				case 'OpenGL Version':
+					$line = phodevi_parser::software_glxinfo_version();
+					break;
+				case 'GLSL Version':
+					$line = phodevi_parser::software_glxinfo_glsl_version();
+					break;
+				case 'OpenGL Extensions':
+					$line = phodevi_parser::software_glxinfo_opengl_extensions();
+					break;
 			}
 
 			$this->table_data[$i][$rows_index] = $line;

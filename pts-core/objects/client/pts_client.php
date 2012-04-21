@@ -958,9 +958,16 @@ class pts_client
 			$chart->renderChart($save_to_dir . '/result-graphs/systems.BILDE_EXTENSION');
 			unset($chart);
 
-			if($intent && in_array('Processor', $intent[0]) && is_dir($save_to_dir . '/system-logs/'))
+			if($intent && is_dir($save_to_dir . '/system-logs/'))
 			{
-				$chart = new pts_DetailedSystemComponentTable($result_file, $save_to_dir . '/system-logs/', 'Processor', $intent);
+				if(in_array('Processor', $intent[0]))
+				{
+					$chart = new pts_DetailedSystemComponentTable($result_file, $save_to_dir . '/system-logs/', 'Processor', $intent);
+				}
+				else if(in_array('Graphics', $intent[0]))
+				{
+					$chart = new pts_DetailedSystemComponentTable($result_file, $save_to_dir . '/system-logs/', 'Graphics', $intent);
+				}
 
 				if($chart)
 				{

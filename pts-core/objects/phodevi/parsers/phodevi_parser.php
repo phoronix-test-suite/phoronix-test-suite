@@ -204,36 +204,69 @@ class phodevi_parser
 	}
 	public static function software_glxinfo_version()
 	{
-		static $info = -1;
-
-		if($info == -1)
+		$info = false;
+		if(isset(phodevi::$vfs->glxinfo))
 		{
-			$info = false;
-			if(isset(phodevi::$vfs->glxinfo))
-			{
-				$glxinfo = phodevi::$vfs->glxinfo;
-			}
-			else if(PTS_IS_CLIENT && pts_client::executable_in_path('fglrxinfo'))
-			{
-				$glxinfo = shell_exec('fglrxinfo 2> /dev/null');
-			}
+			$glxinfo = phodevi::$vfs->glxinfo;
+		}
+		else if(PTS_IS_CLIENT && pts_client::executable_in_path('fglrxinfo'))
+		{
+			$glxinfo = shell_exec('fglrxinfo 2> /dev/null');
+		}
 
-			if(isset($glxinfo) && ($pos = strpos($glxinfo, 'OpenGL version string:')) !== false)
-			{
-				$info = substr($glxinfo, $pos + 23);
-				$info = substr($info, 0, strpos($info, "\n"));
-				$info = trim(str_replace(array(' Release'), null, $info));
+		if(isset($glxinfo) && ($pos = strpos($glxinfo, 'OpenGL version string:')) !== false)
+		{
+			$info = substr($glxinfo, $pos + 23);
+			$info = substr($info, 0, strpos($info, "\n"));
+			$info = trim(str_replace(array(' Release'), null, $info));
 
-				// The Catalyst Linux Driver now does something stupid for this string like:
-				//  1.4 (2.1 (3.3.11005 Compatibility Profile Context))
-				if(($pos = strrpos($info, 'Compatibility Profile Context')) !== false && strpos($info, '(') != ($last_p = strrpos($info, '(')))
+			// The Catalyst Linux Driver now does something stupid for this string like:
+			//  1.4 (2.1 (3.3.11005 Compatibility Profile Context))
+			if(($pos = strrpos($info, 'Compatibility Profile Context')) !== false && strpos($info, '(') != ($last_p = strrpos($info, '(')))
+			{
+				if(is_numeric(str_replace(array('(', '.', ' '), null, substr($info, 0, $last_p))))
 				{
-					if(is_numeric(str_replace(array('(', '.', ' '), null, substr($info, 0, $last_p))))
-					{
-						// This looks like a stupid Catalyst driver string, so grab the last GL version reported
-						$info = str_replace(array('(', ')'), null, substr($info, ($last_p + 1)));
-					}
+					// This looks like a stupid Catalyst driver string, so grab the last GL version reported
+					$info = str_replace(array('(', ')'), null, substr($info, ($last_p + 1)));
 				}
+			}
+		}
+
+		return $info;
+	}
+	public static function software_glxinfo_glsl_version()
+	{
+		$info = false;
+		if(isset(phodevi::$vfs->glxinfo))
+		{
+			$glxinfo = phodevi::$vfs->glxinfo;
+		}
+		else if(PTS_IS_CLIENT && pts_client::executable_in_path('fglrxinfo'))
+		{
+			$glxinfo = shell_exec('fglrxinfo 2> /dev/null');
+		}
+
+		if(isset($glxinfo) && ($pos = strpos($glxinfo, 'OpenGL shading language version string:')) !== false)
+		{
+			$info = substr($glxinfo, $pos + 40);
+			$info = substr($info, 0, strpos($info, "\n"));
+			$info = trim($info);
+		}
+
+		return $info;
+	}
+	public static function software_glxinfo_opengl_extensions()
+	{
+		$info = false;
+		if(isset(phodevi::$vfs->glxinfo))
+		{
+			$glxinfo = phodevi::$vfs->glxinfo;
+
+			if(($pos = strpos($glxinfo, 'OpenGL extensions:')) !== false)
+			{
+				$info = substr($glxinfo, $pos + 19);
+				$info = substr($info, 0, strpos($info, PHP_EOL . PHP_EOL));
+				$info = trim($info);
 			}
 		}
 
