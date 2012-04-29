@@ -8,6 +8,7 @@ Phoronix Test Suite (Git)
 - pts-core: When detecting a CPU comparison, report the detailed CPU system table information
 - pts-core: When detecting a GPU/OpenGL comparison, report the detailed GPU system table information
 - pts-core: Fix PRESET_OPTIONS failing when specifying an option value rather than its index
+- phodevi: Support for detecting GLAMOR (Intel OpenGL-accelerated X.Org Driver) acceleration
 - pts_Graph: Fix rounding issue on pts tables that are very wide
 - pts_Graph: Add SideViewTable
 

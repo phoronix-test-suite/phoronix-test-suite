@@ -86,6 +86,10 @@ class phodevi_gpu extends phodevi_device_interface
 			{
 				$accel_2d = 'SNA';
 			}
+			else if(stripos($xorg_log, 'GLAMOR acceleration'))
+			{
+				$accel_2d = 'GLAMOR';
+			}
 			else if(strpos($xorg_log, 'shadowfb'))
 			{
 				$accel_2d = 'ShadowFB';

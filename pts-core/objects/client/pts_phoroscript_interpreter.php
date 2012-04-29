@@ -177,7 +177,7 @@ class pts_phoroscript_interpreter
 				$line = substr($line, 0, $script_pointer);
 			}
 
-			$line_r = pts_strings::trim_explode(' ', $line);
+			$line_r = $line != null ? pts_strings::trim_explode(' ', $line) : null;
 
 			switch((isset($line_r[0]) ? $line_r[0] : null))
 			{
