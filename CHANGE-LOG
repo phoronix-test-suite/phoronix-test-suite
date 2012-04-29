@@ -10,6 +10,7 @@ Phoronix Test Suite 4.0 Milestone 2
 - pts-core: When detecting a GPU/OpenGL comparison, report the detailed GPU system table information
 - pts-core: Fix PRESET_OPTIONS failing when specifying an option value rather than its index
 - pts-core: Archive vdpauinfo when available
+- phodevi: Detection support for Intel IOC (Intel Offline Compiler) OpenCL SDK
 - phodevi: Support for detecting GLAMOR (Intel OpenGL-accelerated X.Org Driver) acceleration
 - pts_Graph: Fix rounding issue on pts tables that are very wide
 - pts_Graph: Add SideViewTable

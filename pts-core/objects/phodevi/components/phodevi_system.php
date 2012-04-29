@@ -623,6 +623,36 @@ class phodevi_system extends phodevi_device_interface
 			}
 		}
 
+		if(pts_client::executable_in_path('ioc'))
+		{
+			// Intel Offline Compiler (IOC) SDK for OpenCL
+			// -v e.g. : Intel(R) SDK for OpenCL* - Offline Compiler 2012 Command-Line Client, version 1.0.2
+			$info = trim(shell_exec('ioc -version 2>&1')) . ' ';
+
+			if(($s = strpos($info, 'Offline Compiler ')) != false)
+			{
+				$compilers['ioc'] = 'Intel IOC SDK';
+				$sv = substr($info, ($s + 17));
+				$sv = substr($sv, 0, strpos($sv, ' '));
+
+				if(is_numeric($sv))
+				{
+					$compilers['ioc'] .= ' ' . $sv;
+				}
+
+				if(($s = strpos($info, 'version ')) != false)
+				{
+					$sv = substr($info, ($s + 8));
+					$sv = substr($sv, 0, strpos($sv, ' '));
+
+					if(pts_strings::is_version($sv))
+					{
+						$compilers['ioc'] .= ' v' . $sv;
+					}
+				}
+			}
+		}
+
 		if(pts_client::executable_in_path('icc'))
 		{
 			// Intel C++ Compiler
