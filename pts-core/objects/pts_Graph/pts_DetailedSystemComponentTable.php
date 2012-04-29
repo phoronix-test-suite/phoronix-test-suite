@@ -35,6 +35,11 @@ class pts_DetailedSystemComponentTable extends pts_SideViewTable
 			$intent = pts_result_file_analyzer::analyze_result_file_intent($result_file, $intent, true);
 		}
 
+		if(!isset($intent[0]))
+		{
+			return false;
+		}
+
 		if(in_array('Processor', $intent[0]))
 		{
 			$component_report = 'Processor';
