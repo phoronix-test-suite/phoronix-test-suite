@@ -534,7 +534,8 @@ class phodevi_system extends phodevi_device_interface
 				$compiler_info = substr($compiler_info, ($cv_pos + 14));
 				$clang_version = substr($compiler_info, 0, strpos($compiler_info, ' '));
 
-				if(pts_strings::is_version($clang_version))
+				// XXX: the below check bypass now because e.g. Ubuntu appends '-ubuntuX', etc that breaks check
+				if(pts_strings::is_version($clang_version) || true)
 				{
 					// Also see if there is a Clang SVN tag to fetch
 					$compiler_info = substr($compiler_info, 0, strpos($compiler_info, PHP_EOL));
