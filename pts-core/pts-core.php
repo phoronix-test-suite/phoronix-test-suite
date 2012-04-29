@@ -21,7 +21,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-define('PTS_VERSION', '4.0.0m1');
+define('PTS_VERSION', '4.0.0m2');
 define('PTS_CORE_VERSION', 3920);
 define('PTS_CODENAME', 'SULDAL');
 define('PTS_IS_CLIENT', (defined('PTS_MODE') && PTS_MODE == 'CLIENT'));

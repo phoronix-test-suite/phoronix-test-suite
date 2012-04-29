@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 4.0 Milestone 2
+29 April 2012
 
 - pts-core: Better recognize some open-source vs. closed-source graphics card/driver combination comparisons
 - pts-core: Fix potential crash in list-test-usage command
