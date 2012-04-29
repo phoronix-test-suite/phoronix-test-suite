@@ -670,10 +670,11 @@ class phodevi_system extends phodevi_device_interface
 			}
 		}
 
-		if(pts_client::executable_in_path('nvcc'))
+		if(($nvcc = pts_client::executable_in_path('nvcc')) || is_executable(($nvcc = '/usr/local/cuda/bin/nvcc')))
 		{
+			// Check outside of PATH too since by default the CUDA Toolkit goes to '/usr/local/cuda/' and relies upon user to update system
 			// NVIDIA CUDA Compiler Driver
-			$nvcc = shell_exec('nvcc --version 2>&1');
+			$nvcc = shell_exec($nvcc . ' --version 2>&1');
 			if(($s = strpos($nvcc, 'release ')) !== false)
 			{
 				$nvcc = str_replace(array(','), null, substr($nvcc, ($s + 8)));
