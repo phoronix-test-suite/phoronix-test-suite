@@ -320,6 +320,7 @@ class pts_client
 					'lsmod',
 					'sensors',
 					'dmesg',
+					'vdpauinfo',
 					'cpufreq-info',
 					'glxinfo',
 					'clinfo',
