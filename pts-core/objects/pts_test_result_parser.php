@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2011, Phoronix Media
-	Copyright (C) 2010 - 2011, Michael Larabel
+	Copyright (C) 2010 - 2012, Phoronix Media
+	Copyright (C) 2010 - 2012, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -454,7 +454,7 @@ class pts_test_result_parser
 				// Look for an element that partially matches, if like a '.' or '/sec' or some other pre/post-fix is present
 				foreach($result_template_r as $i => $r_check)
 				{
-					if(strpos($check, $result_key[$i]) !== false)
+					if(isset($result_key[$i]) && strpos($r_check, $result_key[$i]) !== false)
 					{
 						$result_template_r_pos = $i;
 						break;
