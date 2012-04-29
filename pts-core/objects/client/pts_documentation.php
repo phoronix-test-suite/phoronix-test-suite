@@ -85,7 +85,7 @@ class pts_documentation
 	}
 	public static function basic_description()
 	{
-		return 'The Phoronix Test Suite is the most comprehensive testing and benchmarking platform available for Linux, Solaris, Mac OS X, and BSD operating systems. The Phoronix Test Suite allows for carrying out tests in a fully automated manner from test installation to execution and reporting. All tests are meant to be easily reproducible, easy-to-use, and support fully automated execution. The Phoronix Test Suite is open-source under the GNU GPLv3 license and is developed by Phoronix Media in cooperation with partners. Version 1.0 of the Phoronix Test Suite was publicly released in 2008.';
+		return 'The Phoronix Test Suite is the most comprehensive testing and benchmarking platform available for Linux, Solaris, Mac OS X, and BSD operating systems. The Phoronix Test Suite allows for carrying out tests in a fully automated manner from test installation to execution and reporting. All tests are meant to be easily reproducible, easy-to-use, and support fully automated execution. The Phoronix Test Suite is open-source under the GNU GPLv3 license and is developed by Phoronix Media in cooperation with partners.';
 	}
 }
 

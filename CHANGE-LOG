@@ -12,6 +12,7 @@ Phoronix Test Suite (Git)
 - phodevi: Support for detecting GLAMOR (Intel OpenGL-accelerated X.Org Driver) acceleration
 - pts_Graph: Fix rounding issue on pts tables that are very wide
 - pts_Graph: Add SideViewTable
+- documentation: Add a basic text README to the root phoronix-test-suite directory
 
 Phoronix Test Suite 4.0 Milestone 1
 12 April 2012

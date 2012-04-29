@@ -90,7 +90,7 @@ class dump_documentation implements pts_option_interface
 			}
 		}
 
-		$dom->saveHTMLFile(PTS_PATH . 'documentation/html_stubs/00_user_options.html');
+		$dom->saveHTMLFile(PTS_PATH . 'documentation/stubs/00_user_options.html');
 
 		// Write the module options HTML
 		$dom = new DOMDocument();
@@ -141,7 +141,7 @@ class dump_documentation implements pts_option_interface
 			}
 		}
 
-		$dom->saveHTMLFile(PTS_PATH . 'documentation/html_stubs/00_zmodule_options.html');
+		$dom->saveHTMLFile(PTS_PATH . 'documentation/stubs/00_zmodule_options.html');
 
 
 
@@ -177,7 +177,7 @@ class dump_documentation implements pts_option_interface
 		}
 
 
-		$dom->saveHTMLFile(PTS_PATH . 'documentation/html_stubs/02_external_dependencies.html');
+		$dom->saveHTMLFile(PTS_PATH . 'documentation/stubs/02_external_dependencies.html');
 
 		// Write the virtual suites HTML
 		$dom = new DOMDocument();
@@ -211,10 +211,10 @@ class dump_documentation implements pts_option_interface
 			$body->appendChild($p);
 		}
 
-		$dom->saveHTMLFile(PTS_PATH . 'documentation/html_stubs/55_virtual_suites.html');
+		$dom->saveHTMLFile(PTS_PATH . 'documentation/stubs/55_virtual_suites.html');
 
 		// Load the HTML documentation
-		foreach(pts_file_io::glob(PTS_PATH . 'documentation/html_stubs/*_*.html') as $html_file)
+		foreach(pts_file_io::glob(PTS_PATH . 'documentation/stubs/*_*.html') as $html_file)
 		{
 			$pdf->html_to_pdf($html_file);
 			$html_doc->html_to_html($html_file);
@@ -258,6 +258,14 @@ class dump_documentation implements pts_option_interface
 
 			file_put_contents(PTS_PATH . 'documentation/man-pages/phoronix-test-suite.1', $man_page);
 		}
+
+
+		// simple README
+		$readme = 'Phoronix Test Suite ' . PTS_VERSION . ' <http://www.phoronix-test-suite.com/>' . PHP_EOL . PHP_EOL;
+		$readme .= pts_documentation::basic_description() . PHP_EOL . PHP_EOL;
+		$readme .= pts_file_io::file_get_contents(PTS_PATH . 'documentation/stubs/readme-basics.txt') . PHP_EOL . PHP_EOL;
+		$readme = wordwrap($readme, 80, PHP_EOL);
+		file_put_contents(PTS_PATH . 'README', $readme);
 	}
 }
 

@@ -1,4 +1,4 @@
-.TH phoronix-test-suite 1  "www.phoronix-test-suite.com" "3.8.0"
+.TH phoronix-test-suite 1  "www.phoronix-test-suite.com" "4.0.0m1"
 .SH NAME
 phoronix-test-suite \- The Phoronix Test Suite is an extensible open-source platform for performing testing and performance evaluation.
 .SH SYNOPSIS
@@ -6,7 +6,7 @@ phoronix-test-suite \- The Phoronix Test Suite is an extensible open-source plat
 .br
 .B phoronix-test-suite benchmark [test | suite]
 .SH DESCRIPTION
-The Phoronix Test Suite is the most comprehensive testing and benchmarking platform available for Linux, Solaris, Mac OS X, and BSD operating systems. The Phoronix Test Suite allows for carrying out tests in a fully automated manner from test installation to execution and reporting. All tests are meant to be easily reproducible, easy-to-use, and support fully automated execution. The Phoronix Test Suite is open-source under the GNU GPLv3 license and is developed by Phoronix Media in cooperation with partners. Version 1.0 of the Phoronix Test Suite was publicly released in 2008.
+The Phoronix Test Suite is the most comprehensive testing and benchmarking platform available for Linux, Solaris, Mac OS X, and BSD operating systems. The Phoronix Test Suite allows for carrying out tests in a fully automated manner from test installation to execution and reporting. All tests are meant to be easily reproducible, easy-to-use, and support fully automated execution. The Phoronix Test Suite is open-source under the GNU GPLv3 license and is developed by Phoronix Media in cooperation with partners.
 .SH OPTIONS
 .TP
 .SH TEST INSTALLATION
@@ -28,9 +28,6 @@ This option will install the selected test(s) (if needed) and will proceed to ru
 .TP
 .B finish-run [Test Result]
 This option can be used if a test run had not properly finished running all tests within a saved results file. Using this option when specifying a saved results file where all tests had not completed will attempt to finish testing on the remaining tests where there are missing results.
-.TP
-.B recover-run [Unknown Object]
-This option is similar to finish-run and can be used to finish running a set of tests that were started but never finished. Using this option when specifying a saved results file where all tests had not completed will attempt to finish testing on the remaining tests where there are missing results. Differing from <em>finish-run</em>, <em>recover-run</em> can be used if the system had crashed during the testing process and the test results from before the crash happened can generally be recovered.
 .TP
 .B run [Test | Suite | OpenBenchmarking.org ID | Test Result]  ...
 This option will run the selected test(s).
@@ -233,9 +230,6 @@ This option can be used for setting an XML value in the Phoronix Test Suite user
 This option will display the Phoronix Test Suite client version.
 .TP
 .SH MODULES
-.B r
-p
-.TP
 .B list-modules
 This option will list all of the available Phoronix Test Suite modules on this system.
 .TP
@@ -244,6 +238,13 @@ This option will show detailed information on a Phoronix Test Suite module such 
 .TP
 .B module-setup [Phoronix Test Suite Module]
 This option will allow you to configure all available end-user options for a Phoronix Test Suite module. These options are then stored within the user's configuration file. Not all modules may have options that can be configured by the end-user.
+.TP
+.B test-module [Phoronix Test Suite Module]
+This option can be used for debugging a Phoronix Test Suite module.
+.TP
+.SH WEB USER INTERFACE
+.B r
+p
 .TP
 .SH SEE ALSO
 .B Websites:
