@@ -35,6 +35,7 @@ class pts_test_notes_manager
 	}
 	public static function generate_test_notes(&$test_result_objects)
 	{
+		// TODO XXX: Integrate with system table notes
 		static $check_processes = null;
 
 		$test_types = array();

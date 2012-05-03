@@ -135,7 +135,7 @@
 		<Package>
 			<GenericName>libstdcpp5</GenericName>
 			<PackageName>libstdc++5</PackageName>
-			<FileCheck>/usr/lib/libstdc++.so.5 OR /usr/lib32/libstdc++.so.5</FileCheck>
+			<FileCheck>/usr/lib/libstdc++.so.5 OR /usr/lib32/libstdc++.so.5 OR /usr/lib/x86_64-linux-gnu/libstdc++.so.5</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>openal-development</GenericName>
