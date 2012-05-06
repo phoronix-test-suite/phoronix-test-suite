@@ -37,13 +37,13 @@ class pts_test_run_options
 
 		$identifier = $test_profile->get_identifier_base_name();
 
+		if(count($test_profile->get_test_option_objects()) > 0)
+		{
+			pts_client::$display->test_run_configure($test_profile);
+		}
+
 		foreach($test_profile->get_test_option_objects() as $i => $o)
 		{
-			if($i == 0)
-			{
-				pts_client::$display->generic_heading($test_profile->get_title() . ' Test Configuration');
-			}
-
 			$option_identifier = $o->get_identifier();
 
 			if($o->option_count() == 0)
@@ -75,11 +75,11 @@ class pts_test_run_options
 
 					if(count($option_names) > 1)
 					{
-						echo PHP_EOL . $o->get_name() . ':' . PHP_EOL;
+						//echo PHP_EOL . $o->get_name() . ':' . PHP_EOL;
 						array_push($option_names, 'Test All Options');
 					}
 
-					$bench_choice = pts_user_io::prompt_text_menu('Enter Your Choice', $option_names, true, true);
+					$bench_choice = pts_user_io::prompt_text_menu($o->get_name(), $option_names, true, true, pts_client::$display->get_tab() . pts_client::$display->get_tab());
 				}
 
 				$bench_choice = $o->parse_selection_choice_input($bench_choice);

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2011, Phoronix Media
-	Copyright (C) 2009 - 2011, Michael Larabel
+	Copyright (C) 2009 - 2012, Phoronix Media
+	Copyright (C) 2009 - 2012, Michael Larabel
 	pts_basic_display_mode.php: The basic display mode
 
 	This program is free software; you can redistribute it and/or modify
@@ -205,6 +205,15 @@ class pts_basic_display_mode implements pts_display_mode_interface
 		}
 
 		return PHP_EOL . str_repeat($char, $header_size) . PHP_EOL . $heading . PHP_EOL . str_repeat($char, $header_size) . PHP_EOL . PHP_EOL;
+	}
+	public function test_run_configure(&$test_profile)
+	{
+		echo PHP_EOL . PHP_EOL . $test_profile->get_title() . ($test_profile->get_app_version() != null ? ' ' . $test_profile->get_app_version() : null) . ':' . PHP_EOL . $test_profile->get_identifier() . PHP_EOL;
+		echo $test_profile->get_test_hardware_type() . ' Test Configuration';
+	}
+	public function get_tab()
+	{
+		return null;
 	}
 }
 

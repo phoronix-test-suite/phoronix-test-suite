@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2011, Phoronix Media
-	Copyright (C) 2008 - 2011, Michael Larabel
+	Copyright (C) 2008 - 2012, Phoronix Media
+	Copyright (C) 2008 - 2012, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -138,7 +138,7 @@ class pts_user_io
 
 		return $answer;
 	}
-	public static function prompt_text_menu($user_string, $options_r, $allow_multi_select = false, $return_index = false)
+	public static function prompt_text_menu($user_string, $options_r, $allow_multi_select = false, $return_index = false, $line_prefix = null)
 	{
 		$option_count = count($options_r);
 
@@ -156,9 +156,9 @@ class pts_user_io
 			foreach(array_keys($options_r) as $i => $key)
 			{
 				$key_index[($i + 1)] = $key;
-				echo ($i + 1) . ': ' . str_repeat(' ', strlen($option_count) - strlen(($i + 1))) . $options_r[$key] . PHP_EOL;
+				echo $line_prefix . ($i + 1) . ': ' . str_repeat(' ', strlen($option_count) - strlen(($i + 1))) . $options_r[$key] . PHP_EOL;
 			}
-			echo PHP_EOL . $user_string . ': ';
+			echo $line_prefix . $user_string . ': ';
 			$select_choice = pts_user_io::read_user_input();
 
 			foreach(($allow_multi_select ? pts_strings::comma_explode($select_choice) : array($select_choice)) as $choice)

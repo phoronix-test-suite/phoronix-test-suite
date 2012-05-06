@@ -254,6 +254,13 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	{
 		return;
 	}
+	public function test_run_configure(&$test_profile)
+	{
+		echo PHP_EOL . PHP_EOL . $test_profile->get_title() . ($test_profile->get_app_version() != null ? ' ' . $test_profile->get_app_version() : null) . ':' . PHP_EOL . $this->tab . $test_profile->get_identifier() . PHP_EOL;
+		echo $this->tab . $test_profile->get_test_hardware_type() . ' Test Configuration';
+		//echo PHP_EOL;
+		//echo $this->tab . 'Test ' . $test_run_manager->get_test_run_position() . ' of ' . $test_run_manager->get_test_run_count_reported() . PHP_EOL;
+	}
 	public function test_run_start(&$test_run_manager, &$test_result)
 	{
 		echo PHP_EOL . PHP_EOL . $test_result->test_profile->get_title() . ($test_result->test_profile->get_app_version() != null ? ' ' . $test_result->test_profile->get_app_version() : null) . ':' . PHP_EOL . $this->tab . $test_result->test_profile->get_identifier();
@@ -435,6 +442,10 @@ class pts_concise_display_mode implements pts_display_mode_interface
 			echo ($line_count > 0 ? '         ' : null) . $line_string . PHP_EOL;
 		}
 		echo PHP_EOL;
+	}
+	public function get_tab()
+	{
+		return $this->tab;
 	}
 }
 
