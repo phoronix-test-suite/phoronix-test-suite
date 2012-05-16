@@ -139,7 +139,7 @@ class pts_test_run_manager
 			}
 		}
 
-		// No reason to increase the run count evidently
+		// No reason to increase the run count with none of the previous checks requesting otherwise
 		return false;
 	}
 	protected function add_test_result_object(&$test_result)
@@ -166,24 +166,17 @@ class pts_test_run_manager
 
 		return $identifiers;
 	}
-	public function get_estimated_run_time()
+	public function get_estimated_run_time($index = -1)
 	{
-		return $this->calculate_estimated_run_time(0);
-	}
-	public function get_estimated_run_time_remaining()
-	{
-		return $this->calculate_estimated_run_time($this->last_test_run_index);
-	}
-	private function calculate_estimated_run_time($index = 0)
-	{
-		$estimated_time = 0;
-
-		if(isset($this->tests_to_run[$index]))
+		if($index == -1)
 		{
-			for($i = $index; $i < count($this->tests_to_run); $i++)
-			{
-				$estimated_time += $this->tests_to_run[$i]->test_profile->get_estimated_run_time();
-			}
+			$index = $this->last_test_run_index;
+		}
+
+		$estimated_time = 0;
+		for($i = $index; $i < count($this->tests_to_run); $i++)
+		{
+			$estimated_time += $this->tests_to_run[$i]->test_profile->get_estimated_run_time();
 		}
 
 		return $estimated_time;
