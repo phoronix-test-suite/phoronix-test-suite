@@ -46,35 +46,11 @@ class detailed_system_info implements pts_option_interface
 		echo 'Energy Performance Bias: ' . ($cpu_flags & phodevi_cpu::get_cpu_feature_constant('epb') ? 'YES' : 'NO') . PHP_EOL;
 		echo 'Virtualization: ' . (phodevi_cpu::virtualization_technology() ? phodevi_cpu::virtualization_technology() : 'NO') . PHP_EOL;
 
-		// Compiler Configuration
-		$test = false;
-		$compiler_mask_dir = pts_test_installer::create_compiler_mask($test);
-		if($compiler_mask_dir && is_executable($compiler_mask_dir . 'cc'))
+		// Other info
+		foreach(pts_test_run_manager::pull_test_notes(true) as $test_note_head => $test_note)
 		{
-			$compiler_configuration = phodevi_system::sw_compiler_build_configuration($compiler_mask_dir . 'cc');
-			pts_file_io::delete($compiler_mask_dir, null, true);
-
-			if(!empty($compiler_configuration))
-			{
-				echo PHP_EOL . 'Main Compiler Configuration: ' . $compiler_configuration . PHP_EOL . PHP_EOL;
-			}
+			echo ucwords(str_replace('-', ' ', $test_note_head)) . ': ' . $test_note . PHP_EOL;
 		}
-
-		// Disk Mount Options
-		$disk_scheduler = phodevi::read_property('disk', 'scheduler');
-		if($disk_scheduler)
-		{
-			echo PHP_EOL . 'Disk Scheduler: ' . $disk_scheduler . PHP_EOL;
-		}
-		$mount_options = phodevi::read_property('disk', 'mount-options');
-		if($mount_options != null)
-		{
-			foreach($mount_options as $key => $value)
-			{
-				echo 'Disk ' . $key . ': ' . $value . PHP_EOL;
-			}
-		}
-
 	}
 }
 

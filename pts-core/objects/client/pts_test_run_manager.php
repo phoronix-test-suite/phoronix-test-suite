@@ -697,7 +697,6 @@ class pts_test_run_manager
 	}
 	protected function generate_json_system_attributes()
 	{
-		$json_notes = null;
 		$test_external_dependencies = array();
 		$test_hardware_types = array();
 		$test_internal_tags = array();
@@ -709,7 +708,13 @@ class pts_test_run_manager
 			pts_arrays::unique_push($test_hardware_types, $test_to_run->test_profile->get_test_hardware_type());
 		}
 
-		if(in_array('build-utilities', $test_external_dependencies))
+		return self::pull_test_notes(false, $test_external_dependencies);
+	}
+	public static function pull_test_notes($show_all = false, $test_external_dependencies = array(), $test_internal_tags = array())
+	{
+		$notes = null;
+
+		if($show_all || in_array('build-utilities', $test_external_dependencies))
 		{
 			// So compiler tests were run....
 			$test = false;
@@ -722,52 +727,52 @@ class pts_test_run_manager
 
 				if(!empty($compiler_configuration))
 				{
-					$json_notes['compiler-configuration'] = $compiler_configuration;
+					$notes['compiler-configuration'] = $compiler_configuration;
 				}
 			}
 		}
-		if(in_array('OpenCL', $test_internal_tags))
+		if($show_all || in_array('OpenCL', $test_internal_tags))
 		{
 			// So OpenCL tests were run....
 			$gpu_compute_cores = phodevi::read_property('gpu', 'compute-cores');
 			if($gpu_compute_cores > 0)
 			{
-				$json_notes['graphics-compute-cores'] = $gpu_compute_cores;
+				$notes['graphics-compute-cores'] = $gpu_compute_cores;
 			}
 		}
-		if(in_array('Disk', $test_hardware_types))
+		if($show_all || in_array('Disk', $test_hardware_types))
 		{
 			// A disk test was run so report some disk information...
 			$disk_scheduler = phodevi::read_property('disk', 'scheduler');
 			if($disk_scheduler)
 			{
-				$json_notes['disk-scheduler'] = $disk_scheduler;
+				$notes['disk-scheduler'] = $disk_scheduler;
 			}
 
 			$mount_options = phodevi::read_property('disk', 'mount-options');
 			if(isset($mount_options['mount-options']) && $mount_options['mount-options'] != null)
 			{
-				$json_notes['disk-mount-options'] = $mount_options['mount-options'];
+				$notes['disk-mount-options'] = $mount_options['mount-options'];
 			}
 		}
-		if(in_array('Processor', $test_hardware_types) || in_array('System', $test_hardware_types))
+		if($show_all || in_array('Processor', $test_hardware_types) || in_array('System', $test_hardware_types))
 		{
 			$scaling_governor = phodevi::read_property('cpu', 'scaling-governor');
 			if($scaling_governor)
 			{
-				$json_notes['cpu-scaling-governor'] = $scaling_governor;
+				$notes['cpu-scaling-governor'] = $scaling_governor;
 			}
 		}
-		if(in_array('Graphics', $test_hardware_types))
+		if($show_all || in_array('Graphics', $test_hardware_types))
 		{
 			$accel_2d = phodevi::read_property('gpu', '2d-acceleration');
 			if($accel_2d)
 			{
-				$json_notes['graphics-2d-acceleration'] = $accel_2d;
+				$notes['graphics-2d-acceleration'] = $accel_2d;
 			}
 		}
 
-		return $json_notes;
+		return $notes;
 	}
 	public function post_execution_process()
 	{
