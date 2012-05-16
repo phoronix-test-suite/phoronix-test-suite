@@ -543,10 +543,8 @@ class pts_test_installer
 					unset($compiler_lines[$l]);
 					continue;
 				}
-//echo $compiler_line;
-//echo PHP_EOL . 'O: ' . $o;
 			}
-//print_r($compiler_lines);
+
 			if(!empty($compiler_lines))
 			{
 				$compiler_line = array_pop($compiler_lines);
