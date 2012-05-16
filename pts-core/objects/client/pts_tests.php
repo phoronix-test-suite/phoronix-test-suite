@@ -245,6 +245,23 @@ class pts_tests
 			echo '    phoronix-test-suite install <test-name>' . PHP_EOL;
 		}
 	}
+	public static function recently_saved_results()
+	{
+		$recent_results = array();
+		foreach(pts_file_io::glob(PTS_SAVE_RESULTS_PATH . '*/composite.xml') as $composite)
+		{
+			$recent_results[filemtime($composite)] = basename(dirname($composite));
+		}
+
+		if(count($recent_results) > 0)
+		{
+			krsort($recent_results);
+			$recent_results = array_slice($recent_results, 0, 6, true);
+			echo PHP_EOL . 'Recently Saved Test Results:' . PHP_EOL;
+			echo pts_user_io::display_text_list($recent_results) . PHP_EOL;
+			return true;
+		}
+	}
 }
 
 ?>

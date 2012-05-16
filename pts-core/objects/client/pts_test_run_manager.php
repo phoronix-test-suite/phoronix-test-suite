@@ -708,9 +708,9 @@ class pts_test_run_manager
 			pts_arrays::unique_push($test_hardware_types, $test_to_run->test_profile->get_test_hardware_type());
 		}
 
-		return self::pull_test_notes(false, $test_external_dependencies);
+		return self::pull_test_notes(false, $test_external_dependencies, $test_internal_tags, $test_hardware_types);
 	}
-	public static function pull_test_notes($show_all = false, $test_external_dependencies = array(), $test_internal_tags = array())
+	public static function pull_test_notes($show_all = false, $test_external_dependencies = array(), $test_internal_tags = array(), $test_hardware_types = array())
 	{
 		$notes = null;
 
