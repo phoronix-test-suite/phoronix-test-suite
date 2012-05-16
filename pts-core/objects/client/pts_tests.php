@@ -233,7 +233,7 @@ class pts_tests
 					// lots of tests... trim it down
 					$similar_tests = array_rand($similar_tests, 12);
 				}
-				echo pts_user_io::display_text_table($similar_tests) . PHP_EOL;
+				echo pts_user_io::display_text_table($similar_tests) . PHP_EOL . PHP_EOL;
 			}
 		}
 

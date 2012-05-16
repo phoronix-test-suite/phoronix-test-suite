@@ -29,7 +29,7 @@ class pts_test_suite_parser
 	{
 		if(PTS_IS_CLIENT)
 		{
-			$identifier = pts_openbenchmarking::evaluate_string_to_qualifier($identifier);
+			$identifier = pts_openbenchmarking::evaluate_string_to_qualifier($identifier, true, 'suite');
 		}
 
 		$this->identifier = $identifier;

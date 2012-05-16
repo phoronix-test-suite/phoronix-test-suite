@@ -1219,7 +1219,7 @@ class pts_client
 						pts_client::$display->generic_error('Argument Missing.');
 					}
 
-					echo 'CORRECT SYNTAX' . PHP_EOL . 'phoronix-test-suite ' . str_replace('_', '-', $command_alias) . ' ' . implode(' ', $argument_checks) . PHP_EOL . PHP_EOL;
+					echo 'CORRECT SYNTAX:' . PHP_EOL . 'phoronix-test-suite ' . str_replace('_', '-', $command_alias) . ' ' . implode(' ', $argument_checks) . PHP_EOL . PHP_EOL;
 
 					if(method_exists($command, 'invalid_command'))
 					{
