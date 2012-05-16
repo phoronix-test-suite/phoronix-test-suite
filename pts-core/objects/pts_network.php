@@ -275,7 +275,8 @@ class pts_network
 				// If google.com fails to resolve, it will simply return the original string
 				if(gethostbyname('google.com') == 'google.com')
 				{
-					echo PHP_EOL . 'NOTICE: No Network Connectivity' . PHP_EOL . PHP_EOL;
+					echo PHP_EOL;
+					trigger_error('No Network Connectivity', E_USER_WARNING);
 					self::$disable_network_support = true;
 				}
 			}

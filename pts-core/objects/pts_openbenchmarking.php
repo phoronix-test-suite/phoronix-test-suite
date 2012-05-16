@@ -246,9 +246,9 @@ class pts_openbenchmarking
 
 		return $index_file;
 	}
-	public static function evaluate_string_to_qualifier($supplied, $bind_version = true)
+	public static function evaluate_string_to_qualifier($supplied, $bind_version = true, $check_only_type = false)
 	{
-		return pts_openbenchmarking_client::evaluate_string_to_qualifier($supplied, true);
+		return pts_openbenchmarking_client::evaluate_string_to_qualifier($supplied, $bind_version, $check_only_type);
 	}
 	public static function upload_test_result(&$object)
 	{

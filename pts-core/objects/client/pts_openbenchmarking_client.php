@@ -306,7 +306,7 @@ class pts_openbenchmarking_client
 
 				if(!isset($reported_read_failure_notice[$repo_name]))
 				{
-					echo PHP_EOL . 'NOTICE: Failed To Fetch OpenBenchmarking.org Repository Data: ' . $repo_name . PHP_EOL;
+					trigger_error('Failed To Fetch OpenBenchmarking.org Repository Data: ' . $repo_name, E_USER_WARNING);
 					$reported_read_failure_notice[$repo_name] = true;
 				}
 			}
@@ -356,6 +356,11 @@ class pts_openbenchmarking_client
 			{
 				copy('/var/cache/phoronix-test-suite/openbenchmarking.org/' . $qualified_identifier . '.zip', $file);
 			}
+			else if(PTS_IS_CLIENT && $test_profile === false)
+			{
+				trigger_error('Network support is needed to obtain ' . $qualified_identifier . ' data.' . PHP_EOL, E_USER_ERROR);
+				return false;
+			}
 		}
 
 		if(!is_file(PTS_TEST_PROFILE_PATH . $qualified_identifier . '/test-definition.xml') && is_file($file) && ($hash_check == null || sha1_file($file) == $hash_check))
@@ -395,6 +400,11 @@ class pts_openbenchmarking_client
 			{
 				copy('/var/cache/phoronix-test-suite/openbenchmarking.org/' . $qualified_identifier . '.zip', $file);
 			}
+			else if(PTS_IS_CLIENT && $test_suite === false)
+			{
+				trigger_error('Network support is needed to obtain ' . $qualified_identifier . ' data.' . PHP_EOL, E_USER_ERROR);
+				return false;
+			}
 		}
 
 		if(!is_file(PTS_TEST_SUITE_PATH . $qualified_identifier . '/suite-definition.xml') && ($hash_check == null || (is_file($file) && sha1_file($file) == $hash_check)))
@@ -407,7 +417,11 @@ class pts_openbenchmarking_client
 
 		return false;
 	}
-	public static function evaluate_string_to_qualifier($supplied, $bind_version = true)
+	protected static function check_only_type_compare($check_only_type, $is_type)
+	{
+		return $check_only_type == false || $check_only_type === $is_type;
+	}
+	public static function evaluate_string_to_qualifier($supplied, $bind_version = true, $check_only_type = false)
 	{
 		$qualified = false;
 		$c_repo = null;
@@ -457,27 +471,34 @@ class pts_openbenchmarking_client
 		{
 			if($repo == 'local')
 			{
-				if(is_file(PTS_TEST_PROFILE_PATH . $repo . '/' . $test . '/test-definition.xml'))
+				if(self::check_only_type_compare($check_only_type, 'test'))
 				{
-					return $repo . '/' . $test; // ($bind_version ? '-' . $version : null)
+					if(is_file(PTS_TEST_PROFILE_PATH . $repo . '/' . $test . '/test-definition.xml'))
+					{
+						return $repo . '/' . $test; // ($bind_version ? '-' . $version : null)
+					}
+					else if(is_file(PTS_TEST_PROFILE_PATH . $repo . '/' . $test . '-' . $version . '/test-definition.xml'))
+					{
+						return $repo . '/' . $test . '-' . $version; // ($bind_version ? '-' . $version : null)
+					}
 				}
-				else if(is_file(PTS_TEST_PROFILE_PATH . $repo . '/' . $test . '-' . $version . '/test-definition.xml'))
+
+				if(self::check_only_type_compare($check_only_type, 'suite'))
 				{
-					return $repo . '/' . $test . '-' . $version; // ($bind_version ? '-' . $version : null)
-				}
-				else if(is_file(PTS_TEST_SUITE_PATH . $repo . '/' . $test . '/suite-definition.xml'))
-				{
-					return $repo . '/' . $test; // ($bind_version ? '-' . $version : null)
-				}
-				else if(is_file(PTS_TEST_SUITE_PATH . $repo . '/' . $test . '-' . $version . '/suite-definition.xml'))
-				{
-					return $repo . '/' . $test . '-' . $version; // ($bind_version ? '-' . $version : null)
+					if(is_file(PTS_TEST_SUITE_PATH . $repo . '/' . $test . '/suite-definition.xml'))
+					{
+						return $repo . '/' . $test; // ($bind_version ? '-' . $version : null)
+					}
+					else if(is_file(PTS_TEST_SUITE_PATH . $repo . '/' . $test . '-' . $version . '/suite-definition.xml'))
+					{
+						return $repo . '/' . $test . '-' . $version; // ($bind_version ? '-' . $version : null)
+					}
 				}
 			}
 
 			$repo_index = pts_openbenchmarking::read_repository_index($repo);
 
-			if(is_array($repo_index) && isset($repo_index['tests'][$test]))
+			if(is_array($repo_index) && isset($repo_index['tests'][$test]) && self::check_only_type_compare($check_only_type, 'test'))
 			{
 				// The test profile at least exists
 
@@ -519,7 +540,7 @@ class pts_openbenchmarking_client
 					return $repo . '/' . $test . ($bind_version ? '-' . $version : null);
 				}
 			}
-			if(is_array($repo_index) && isset($repo_index['suites'][$test]))
+			if(is_array($repo_index) && isset($repo_index['suites'][$test]) && self::check_only_type_compare($check_only_type, 'suite'))
 			{
 				// The test profile at least exists
 

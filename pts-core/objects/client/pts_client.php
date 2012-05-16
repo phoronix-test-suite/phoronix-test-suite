@@ -1693,7 +1693,7 @@ class pts_client
 				break;
 		}
 
-		echo PHP_EOL . '[' . $error_type . '] ' . $error_string . (pts_client::is_client_debug_mode() ? ' in ' . basename($error_file) . ':' . $error_line : null) . PHP_EOL;
+		echo '[' . $error_type . '] ' . $error_string . (pts_client::is_client_debug_mode() ? ' in ' . basename($error_file) . ':' . $error_line : null) . PHP_EOL;
 		return;
 	}
 	public static function is_client_debug_mode()

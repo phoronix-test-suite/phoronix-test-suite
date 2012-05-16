@@ -28,7 +28,7 @@ class pts_test_suite extends pts_test_suite_parser
 	}
 	public static function is_suite($identifier)
 	{
-		$identifier = pts_openbenchmarking::evaluate_string_to_qualifier($identifier);
+		$identifier = pts_openbenchmarking::evaluate_string_to_qualifier($identifier, true, 'suite');
 		return is_file(PTS_TEST_SUITE_PATH . $identifier . '/suite-definition.xml');
 	}
 	public function needs_updated_install()
