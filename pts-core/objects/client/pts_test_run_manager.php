@@ -233,7 +233,6 @@ class pts_test_run_manager
 	public function result_already_contains_identifier()
 	{
 		$result_file = new pts_result_file($this->file_name);
-
 		return in_array($this->results_identifier, $result_file->get_system_identifiers());
 	}
 	public function set_save_name($save_name, $is_new_save = true)
@@ -404,6 +403,7 @@ class pts_test_run_manager
 
 		if(empty($results_identifier))
 		{
+			// TODO: intelligently decide a proper result identifier based upon type of tests being run, etc.
 			$results_identifier = date('Y-m-d H:i');
 		}
 
@@ -578,7 +578,7 @@ class pts_test_run_manager
 
 				if(!empty($test_identifier))
 				{
-					// XXX : add to attributes JSON Here and TODO XXX then pass to the result_file_writer
+					// XXX : add to attributes JSON here
 					$json_report_attributes = null;
 
 					if(($t = $test_run_request->test_profile->test_installation->get_compiler_data()))
@@ -803,7 +803,7 @@ class pts_test_run_manager
 				}
 				else if((pts_c::$test_flags ^ pts_c::auto_mode))
 				{
-					$upload_results = pts_user_io::prompt_bool_input('Would you like to upload these results to OpenBenchmarking.org', true);
+					$upload_results = pts_user_io::prompt_bool_input('Would you like to upload the results to OpenBenchmarking.org', true);
 				}
 				else
 				{

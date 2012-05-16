@@ -396,7 +396,7 @@ class pts_test_installer
 		{
 			// Handle C/C++ compilers for this external dependency
 			$compilers['CC'] = array(pts_strings::first_in_string(pts_client::read_env('CC'), ' '), 'gcc', 'clang', 'icc', 'pcc');
-			$compilers['CXX'] = array(pts_strings::first_in_string(pts_client::read_env('CXX'), ' '), 'g++', 'clang++');
+			$compilers['CXX'] = array(pts_strings::first_in_string(pts_client::read_env('CXX'), ' '), 'g++', 'clang++', 'cpp');
 		}
 		if($test_install_request === false || in_array('fortran-compiler', $test_install_request->test_profile->get_dependencies()))
 		{

@@ -6,6 +6,7 @@ Phoronix Test Suite (Git)
 - pts-core: Improve no-network support handling
 - pts-core: Streamline detailed-system-info collection
 - pts-core: Invalid command improvements
+- pts-core: Various alterations
 - phodevi: Support to attempt to detect the file-system underneath ecryptfs
 
 Phoronix Test Suite 4.0 Milestone 2
