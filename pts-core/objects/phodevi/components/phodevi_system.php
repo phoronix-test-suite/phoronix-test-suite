@@ -271,6 +271,24 @@ class phodevi_system extends phodevi_device_interface
 				case 'UFSD_NTFS_COMPR':
 					$fs = 'NTFS';
 					break;
+				case 'ecryptfs':
+					if(isset(phodevi::$vfs->mounts))
+					{
+						// An easy attempt to determine what file-system is underneath ecryptfs if being compared
+						// For now just attempt to figure out the root file-system.
+						if(($s = strrpos(phodevi::$vfs->mounts, ' / ')) !== false)
+						{
+							$s = substr(phodevi::$vfs->mounts, ($s + 3));
+							$s = substr($s, 0, strpos($s, ' '));
+
+
+							if($s != null && !isset($s[18]) && $s != 'rootfs'&& pts_strings::string_only_contains($s, pts_strings::CHAR_LETTER | pts_strings::CHAR_NUMERIC))
+							{
+								$fs = $s . ' (ecryptfs)';
+							}
+						}
+					}
+					break;
 				default:
 					if(substr($fs, 0, 9) == 'UNKNOWN (')
 					{
