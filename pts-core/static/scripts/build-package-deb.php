@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2011, Phoronix Media
-	Copyright (C) 2008 - 2011, Michael Larabel
+	Copyright (C) 2008 - 2012, Phoronix Media
+	Copyright (C) 2008 - 2012, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -54,7 +54,8 @@ $control_file .= "Architecture: all\n";
 $control_file .= "Depends: php5-cli, php5-gd\n";
 $control_file .= "Recommends: build-essential\n";
 $control_file .= "Maintainer: Phoronix Media <trondheim-pts@phoronix-test-suite.com>\n";
-$control_file .= "Description: " . @str_replace("\n", " ", file_get_contents("pts-core/static/short-description.txt")) . "\n";
+$control_file .= "Description: An Automated, Open-Source Testing Framework\n " . @str_replace("\n", " ", file_get_contents('pts-core/static/short-description.txt')) . "\n";
+$control_file .= "Homepage: http://www.phoronix-test-suite.com/ \n";
 file_put_contents("/tmp/pts-deb-builder/DEBIAN/control", $control_file);
 
 shell_exec("dpkg --build /tmp/pts-deb-builder ../phoronix-test-suite_" . $pts_version . "_all.deb");
