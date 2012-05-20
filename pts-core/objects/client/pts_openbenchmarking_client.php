@@ -149,13 +149,13 @@ class pts_openbenchmarking_client
 
 		if(!is_array($json_response))
 		{
-			echo PHP_EOL . 'ERROR: Unhandled Exception' . PHP_EOL;
+			trigger_error('Unhandled Exception', E_USER_ERROR);
 			return false;
 		}
 
 		if(isset($json_response['openbenchmarking']['upload']['error']))
 		{
-			echo PHP_EOL . 'ERROR: ' . $json_response['openbenchmarking']['upload']['error'] . PHP_EOL;
+			trigger_error($json_response['openbenchmarking']['upload']['error'], E_USER_ERROR);
 		}
 		if(isset($json_response['openbenchmarking']['upload']['url']))
 		{

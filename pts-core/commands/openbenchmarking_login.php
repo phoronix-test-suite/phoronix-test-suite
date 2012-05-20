@@ -48,7 +48,7 @@ class openbenchmarking_login implements pts_option_interface
 
 		if(isset($json['openbenchmarking']['response']['error']))
 		{
-			echo PHP_EOL . PHP_EOL . 'ERROR: ' . $json['openbenchmarking']['response']['error'] . PHP_EOL . PHP_EOL;
+			trigger_error($json['openbenchmarking']['response']['error'], E_USER_ERROR);
 			pts_storage_object::remove_in_file(PTS_CORE_STORAGE, 'openbenchmarking');
 		}
 		else

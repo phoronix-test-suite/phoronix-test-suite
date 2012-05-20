@@ -42,7 +42,7 @@ class pts_test_installer
 		// Install tests
 		if(!is_writable(pts_client::test_install_root_path()))
 		{
-			echo PHP_EOL . 'ERROR: The test installation directory is not writable.' . PHP_EOL . 'Location: ' . pts_client::test_install_root_path() . PHP_EOL;
+			trigger_error('The test installation directory is not writable.' . PHP_EOL . 'Location: ' . pts_client::test_install_root_path(), E_USER_ERROR);
 			return false;
 		}
 

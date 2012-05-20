@@ -67,6 +67,7 @@ class pts_result_file_analyzer
 				array('Processor', 'Motherboard', 'Chipset', 'Audio', 'Network'), // Processor comparison
 				array('Processor', 'Motherboard', 'Chipset', 'Network'), // Processor comparison
 				array('Processor', 'Chipset', 'Graphics'),
+				array('Processor', 'Graphics'),
 				array('Processor', 'Chipset'), // Processor comparison - Sandy/Ivy Bridge for Intel will change CPU/chipset reporting when still using same mobo
 				array('Motherboard', 'Chipset'), // Motherboard comparison
 				array('Motherboard', 'Chipset', 'Audio', 'Network') // Also a potential motherboard comparison

@@ -145,12 +145,12 @@ class pts_openbenchmarking
 			}
 			else
 			{
-				echo PHP_EOL . 'ERROR: Validating the result file schema failed.' . PHP_EOL . PHP_EOL;
+				trigger_error('Validating the result file schema failed.', E_USER_ERROR);
 			}
 		}
 		else if(PTS_IS_CLIENT && isset($json_response['openbenchmarking']['result']['error']))
 		{
-			echo PHP_EOL . 'ERROR: ' . $json_response['openbenchmarking']['result']['error'] . PHP_EOL . PHP_EOL;
+			trigger_error($json_response['openbenchmarking']['result']['error'], E_USER_ERROR);
 		}
 
 		return $valid;
