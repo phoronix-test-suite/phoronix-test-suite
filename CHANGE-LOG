@@ -8,6 +8,7 @@ Phoronix Test Suite (Git)
 - pts-core: Invalid command improvements
 - pts-core: Various alterations
 - pts-core: Make greater use of trigger_error
+- pts-core: Generate more relevant default result identifier strings based on subsystems under test on empty input
 - phodevi: Support to attempt to detect the file-system underneath ecryptfs
 - pts-core: Debian control script update
 

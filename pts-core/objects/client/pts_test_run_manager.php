@@ -285,49 +285,34 @@ class pts_test_run_manager
 		}
 
 		// Prompt to save a file when running a test
-		$proposed_name = null;
-		$custom_title = null;
+		$save_name = null;
 
 		if(($env = pts_client::read_env('TEST_RESULTS_NAME')))
 		{
-			$custom_title = $env;
-			$proposed_name = self::clean_save_name($env);
+			$save_name = $env;
 			//echo 'Saving Results To: ' . $proposed_name . PHP_EOL;
 		}
 
 		if((pts_c::$test_flags ^ pts_c::batch_mode) || pts_config::read_bool_config('PhoronixTestSuite/Options/BatchMode/PromptSaveName', 'FALSE'))
 		{
 			$is_reserved_word = false;
-
 			// Be of help to the user by showing recently saved test results
 			self::recently_saved_test_results();
 
-			while(empty($proposed_name) || ($is_reserved_word = pts_types::is_test_or_suite($proposed_name)))
+			while(empty($save_name) || ($is_reserved_word = pts_types::is_test_or_suite($save_name)))
 			{
 				if($is_reserved_word)
 				{
-					echo PHP_EOL . 'The name of the saved file cannot be the same as a test/suite: ' . $proposed_name . PHP_EOL;
+					echo PHP_EOL . 'The name of the saved file cannot be the same as a test/suite: ' . $save_name . PHP_EOL;
 					$is_reserved_word = false;
 				}
 
 				pts_client::$display->generic_prompt('Enter a name to save these results under: ');
-				$proposed_name = pts_user_io::read_user_input();
-				$custom_title = $proposed_name;
-				$proposed_name = self::clean_save_name($proposed_name);
+				$save_name = pts_user_io::read_user_input();
 			}
 		}
 
-		if(empty($proposed_name))
-		{
-			$proposed_name = date('Y-m-d-Hi');
-		}
-		if(empty($custom_title))
-		{
-			$custom_title = $proposed_name;
-		}
-
-		$this->file_name = $proposed_name;
-		$this->file_name_title = $custom_title;
+		$this->set_save_name($save_name);
 	}
 	public function prompt_results_identifier()
 	{
@@ -403,8 +388,48 @@ class pts_test_run_manager
 
 		if(empty($results_identifier))
 		{
-			// TODO: intelligently decide a proper result identifier based upon type of tests being run, etc.
-			$results_identifier = date('Y-m-d H:i');
+			// If the save result identifier is empty, try to come up with something based upon the tests being run.
+			$subsystem_r = array();
+			$subsystems_to_test = $this->subsystems_under_test();
+
+			if(pts_result_file::is_test_result_file($this->file_name))
+			{
+				$result_file = new pts_result_file($this->file_name);
+				$result_file_intent = pts_result_file_analyzer::analyze_result_file_intent($result_file);
+
+				if(is_array($result_file_intent) && $result_file_intent[0] != 'Unknown')
+				{
+					array_unshift($subsystems_to_test, $result_file_intent[0]);
+				}
+			}
+
+			foreach($subsystems_to_test as $subsystem)
+			{
+				$components = pts_result_file_analyzer::system_component_string_to_array(phodevi::system_hardware(true) . ', ' . phodevi::system_software(true));
+				if(isset($components[$subsystem]))
+				{
+					$subsystem_name = pts_strings::trim_search_query($components[$subsystem]);
+
+					if(phodevi::is_vendor_string($subsystem_name) && !in_array($subsystem_name, $subsystem_r))
+					{
+						array_push($subsystem_r, $subsystem_name);
+					}
+					if(isset($subsystem_r[2]) || isset($subsystem_name[19]))
+					{
+						break;
+					}
+				}
+			}
+
+			if(isset($subsystem_r[0]))
+			{
+				$results_identifier = implode(' - ', $subsystem_r);
+			}
+
+			if(empty($results_identifier))
+			{
+				$results_identifier = date('Y-m-d H:i');
+			}
 		}
 
 		$this->results_identifier = $results_identifier;
@@ -968,6 +993,15 @@ class pts_test_run_manager
 	{
 		$this->run_description = $description == null ? self::auto_generate_description() : $description;
 	}
+	public function subsystems_under_test()
+	{
+		$subsystems_to_test = array();
+		foreach($this->tests_to_run as $test_run_request)
+		{
+			pts_arrays::unique_push($subsystems_to_test, $test_run_request->test_profile->get_test_hardware_type());
+		}
+		return $subsystems_to_test;
+	}
 	protected function auto_generate_description()
 	{
 
@@ -994,13 +1028,7 @@ class pts_test_run_manager
 		}
 
 		$auto_description = 'Running ' . implode(', ', array_unique($this->get_tests_to_run_identifiers()));
-		$subsystems_to_test = array();
-
-		foreach($this->tests_to_run as $test_run_request)
-		{
-			array_push($subsystems_to_test, $test_run_request->test_profile->get_test_hardware_type());
-		}
-		$subsystems_to_test = array_unique($subsystems_to_test);
+		$subsystems_to_test = $this->subsystems_under_test();
 
 		// TODO: hook into $hw_components and $sw_components for leveraging existing result file data for comparisons already in existent
 		// dropped: count($subsystems_to_test) == 1 && $
