@@ -218,6 +218,10 @@ class pts_result_file
 
 		return $test_profiles;
 	}
+	public function override_result_objects($result_objects)
+	{
+		$this->result_objects = $result_objects;
+	}
 	public function get_result_objects($select_indexes = -1)
 	{
 		if($this->result_objects == null)

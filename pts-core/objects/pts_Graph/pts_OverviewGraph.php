@@ -35,7 +35,7 @@ class pts_OverviewGraph extends pts_Graph
 
 	public $skip_graph = false;
 
-	public function __construct(&$result_file)
+	public function __construct($result_file)
 	{
 		$result_object = null;
 		parent::__construct($result_object, $result_file);
@@ -56,24 +56,34 @@ class pts_OverviewGraph extends pts_Graph
 			return;
 		}
 
-		// Test Titles
-		$this->test_titles = $result_file->get_test_titles();
-		if(count($this->test_titles) < 3)
+		$result_objects = array();
+		foreach($result_file->get_result_objects() as $result_object)
+		{
+			if($result_object->test_profile->get_display_format() == 'BAR_GRAPH')
+			{
+				array_push($result_objects, $result_object);
+			}
+		}
+
+		$result_object_count = count($result_objects);
+		if($result_object_count < 3)
 		{
 			// No point in generating this if there aren't many tests
 			$this->skip_graph = true;
 			return;
 		}
+		$result_file->override_result_objects($result_objects);
 
+		// Test Titles
 		$this->i['identifier_size'] = 6.5;
 		$this->i['graph_width'] = 1000;
 
-		list($longest_title_width, $longest_title_height) = pts_svg_dom::estimate_text_dimensions(pts_strings::find_longest_string($this->test_titles), $this->i['identifier_size']);
+		list($longest_title_width, $longest_title_height) = pts_svg_dom::estimate_text_dimensions(pts_strings::find_longest_string($result_file->get_test_titles()), $this->i['identifier_size']);
 
 		$this->i['left_start'] += 20;
 		$this->graphs_per_row = floor(($this->i['graph_width'] - $this->i['left_start'] - $this->i['left_end_right']) / ($longest_title_width + 2));
 		$this->graph_item_width = floor(($this->i['graph_width'] - $this->i['left_start'] - $this->i['left_end_right']) / $this->graphs_per_row);
-		$this->graph_row_count = ceil(count($this->test_titles) / $this->graphs_per_row);
+		$this->graph_row_count = ceil($result_object_count / $this->graphs_per_row);
 
 		$this->i['top_start'] += 14;
 		$height = $this->i['top_start'] + ($this->graph_row_count * ($this->graph_row_height + 15));

@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- pts_Graph: Only render as much room for pts_OverViewGraph as there are for what will be rendered (bar graph values)
+
 Phoronix Test Suite 4.0 Milestone 3
 22 May 2012
 
