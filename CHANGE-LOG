@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 4.0 Milestone 3
+22 May 2012
 
 - pts-core: Reformat user configuration input on test run
 - pts-core: Improve no-network support handling
