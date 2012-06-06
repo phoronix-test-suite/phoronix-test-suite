@@ -201,6 +201,7 @@ class pts_test_install_manager
 			{
 				$download_cache_dirs = array_merge(
 				pts_file_io::glob('/media/*/download-cache/'),
+				pts_file_io::glob('/run/media/*/*/download-cache/'),
 				pts_file_io::glob('/Volumes/*/download-cache/')
 				);
 
