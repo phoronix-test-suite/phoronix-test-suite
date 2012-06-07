@@ -78,7 +78,8 @@ class pts_OverviewGraph extends pts_Graph
 		$this->i['identifier_size'] = 6.5;
 		$this->i['graph_width'] = 1000;
 
-		list($longest_title_width, $longest_title_height) = pts_svg_dom::estimate_text_dimensions(pts_strings::find_longest_string($result_file->get_test_titles()), $this->i['identifier_size']);
+		$titles = $result_file->get_test_titles();
+		list($longest_title_width, $longest_title_height) = pts_svg_dom::estimate_text_dimensions(pts_strings::find_longest_string($titles), $this->i['identifier_size']);
 
 		$this->i['left_start'] += 20;
 		$this->graphs_per_row = floor(($this->i['graph_width'] - $this->i['left_start'] - $this->i['left_end_right']) / ($longest_title_width + 2));
