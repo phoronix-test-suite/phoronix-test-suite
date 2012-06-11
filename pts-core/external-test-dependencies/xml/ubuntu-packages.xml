@@ -214,7 +214,7 @@
 		</Package>
 		<Package>
 			<GenericName>openmpi-development</GenericName>
-			<PackageName>libopenmpi-dev openmpi-bin</PackageName>
+			<PackageName>libopenmpi-dev openmpi-bin libmpich2-dev libmpich1.0-dev</PackageName>
 			<FileCheck>/usr/lib/openmpi/lib/libmpi.so, /usr/bin/mpirun.openmpi</FileCheck>
 		</Package>
 		<Package>
