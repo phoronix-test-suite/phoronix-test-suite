@@ -731,7 +731,7 @@ class pts_render
 						$sha1_short_count++;
 					}
 
-					if($prev_date != null && $date != $prev_date && $sha1_short_hash_ending == false && $sha1_short_count < 2)
+					if($prev_date != null && $date != $prev_date && $sha1_short_hash_ending == false && $sha1_short_count < 3)
 					{
 						$is_tracking = false;
 					}
