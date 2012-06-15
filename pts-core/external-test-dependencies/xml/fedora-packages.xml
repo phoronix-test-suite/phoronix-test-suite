@@ -228,7 +228,7 @@
 		</Package>
 		<Package>
 			<GenericName>openmpi-development</GenericName>
-			<PackageName>openmpi-devel openmpi</PackageName>
+			<PackageName>openmpi-devel openmpi mpich2-devel</PackageName>
 			<FileCheck>/usr/lib/openmpi/ OR /usr/lib64/openmpi/</FileCheck>
 		</Package>
 		<Package>
