@@ -38,6 +38,7 @@ class system_monitor extends pts_module_interface
 	static $individual_monitoring = null;
 
 	private static $sensor_monitoring_frequency = 2;
+	private static $test_run_timer = 0;
 
 	private static $monitor_i915_energy = false; // special case of monitoring since it's not tapping Phodevi (right now at least)
 
@@ -140,6 +141,8 @@ class system_monitor extends pts_module_interface
 			// Just read i915_energy to reset the joule counter
 			file_get_contents('/sys/kernel/debug/dri/0/i915_energy');
 		}
+
+		self::$test_run_timer = time();
 	}
 	public static function __post_test_run_success($test_run_request)
 	{
@@ -152,7 +155,10 @@ class system_monitor extends pts_module_interface
 			return;
 		}
 
-		// Let the system return to brief idling...
+		// The self::$test_run_timer to contain how long each individual test run lasted, should anything else past this point want to use the info...
+		self::$test_run_timer = time() - self::$test_run_timer;
+
+		// Let the system return to brief idling..
 		sleep(self::$sensor_monitoring_frequency);
 
 		if(pts_module::read_variable('PERFORMANCE_PER_WATT'))

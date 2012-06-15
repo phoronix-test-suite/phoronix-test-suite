@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 - pts-core: Support download caches at /run/media/*/*/download-cache/
 - pts_Graph: Only render as much room for pts_OverViewGraph as there are for what will be rendered (bar graph values)
 - system_monitor: Add support for handling i915_energy monitor reading in microJoules for each test run
+- system_monitor: Place timer support for individual test runs within the module
 
 Phoronix Test Suite 4.0 Milestone 3
 22 May 2012
