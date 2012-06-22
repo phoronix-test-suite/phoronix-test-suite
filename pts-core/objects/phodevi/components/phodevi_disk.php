@@ -145,7 +145,7 @@ class phodevi_disk extends phodevi_device_interface
 			{
 				$disk = phodevi_bsd_parser::read_sysctl('dev.ad.' . $i . '.%desc');
 
-				if($disk != false)
+				if($disk != false && strpos($disk, 'DVD') === false)
 				{
 					array_push($disks, $disk);
 				}
@@ -160,7 +160,7 @@ class phodevi_disk extends phodevi_device_interface
 
 				foreach(explode(PHP_EOL, $camcontrol) as $line)
 				{
-					if(substr($line, 0, 1) == '<' && ($model_end = strpos($line, '>')) !== false)
+					if(substr($line, 0, 1) == '<' && ($model_end = strpos($line, '>')) !== false && strpos($line, 'DVD') === false)
 					{
 						$disk = self::prepend_disk_vendor(substr($line, 1, ($model_end - 1)));
 						array_push($disks, $disk);

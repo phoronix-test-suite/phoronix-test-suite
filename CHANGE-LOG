@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 - pts-core: Support download caches at /run/media/*/*/download-cache/
 - pts-core: Set SKIP_TEST_SUPPORT_CHECKS=1 environment variable for debugging purposes to run tests on unsupported platforms
 - pts_Graph: Only render as much room for pts_OverViewGraph as there are for what will be rendered (bar graph values)
+- phodevi: Ensure DVD drives don't get reported on BSD operating systems when requesting disk drives
 - system_monitor: Add support for handling i915_energy monitor reading in microJoules for each test run
 - system_monitor: Place timer support for individual test runs within the module
 
