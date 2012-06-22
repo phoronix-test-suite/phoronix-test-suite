@@ -40,11 +40,11 @@ class pts_DetailedSystemComponentTable extends pts_SideViewTable
 			return false;
 		}
 
-		if(in_array('Processor', $intent[0]))
+		if(is_array($intent[0]) && in_array('Processor', $intent[0]))
 		{
 			$component_report = 'Processor';
 		}
-		else if(in_array('Graphics', $intent[0]))
+		else if(is_array($intent[0]) && in_array('Graphics', $intent[0]))
 		{
 			$component_report = 'Graphics';
 		}
