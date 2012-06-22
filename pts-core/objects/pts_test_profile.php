@@ -192,6 +192,11 @@ class pts_test_profile extends pts_test_profile_parser
 	{
 		$test_supported = true;
 
+		if(PTS_IS_CLIENT && pts_client::read_env('SKIP_TEST_SUPPORT_CHECKS'))
+		{
+			// set SKIP_TEST_SUPPORT_CHECKS=1 environment variable for debugging purposes to run tests on unsupported platforms
+			return true;
+		}
 		if($this->is_test_architecture_supported() == false)
 		{
 			PTS_IS_CLIENT && $report_warnings && pts_client::$display->test_run_error($this->get_identifier() . ' is not supported on this architecture: ' . phodevi::read_property('system', 'kernel-architecture'));
