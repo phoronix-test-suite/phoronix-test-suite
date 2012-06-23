@@ -1355,12 +1355,7 @@ class pts_client
 			$usb_prev = $pso->read_object('global_reported_usb');
 			$pso->add_object('global_reported_usb', $usb);
 
-			if(!empty($usb_prev) && is_array($usb_prev) && is_array($usb))
-			{
-				$usb = array_diff($usb, $usb_prev);
-			}
-
-			if(!empty($usb))
+			if(!empty($usb_prev) && is_array($usb_prev) && is_array($usb) && $usb != $usb_prev)
 			{
 				pts_openbenchmarking_client::upload_usb_data($usb);
 			}
