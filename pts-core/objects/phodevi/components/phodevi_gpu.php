@@ -964,16 +964,37 @@ class phodevi_gpu extends phodevi_device_interface
 				$info .= ' SLI';
 			}
 		}
-
-		if(phodevi::is_solaris())
+		else if(phodevi::is_solaris())
 		{
 			if(($cut = strpos($info, 'DRI ')) !== false)
 			{
 				$info = substr($info, ($cut + 4));
 			}
+
 			if(($cut = strpos($info, ' Chipset')) !== false)
 			{
 				$info = substr($info, 0, $cut);
+			}
+
+			if($info == false && isset(phodevi::$vfs->xorg_log))
+			{
+				$xorg_log = phodevi::$vfs->xorg_log;
+				if(($x = strpos($xorg_log, '(0): Chipset: ')) !== false)
+				{
+					$xorg_log = substr($xorg_log, ($x + 14));
+					$xorg_log = str_replace(array('(R)', '"'), null, substr($xorg_log, 0, strpos($xorg_log, PHP_EOL)));
+
+					if(($c = strpos($xorg_log, '[')) || ($c = strpos($xorg_log, '(')))
+					{
+						$xorg_log = substr($xorg_log, 0, $c);
+					}
+
+					if(phodevi::is_product_string($xorg_log))
+					{
+						$info = $xorg_log;
+					}
+				}
+
 			}
 		}
 		else if(phodevi::is_bsd())
