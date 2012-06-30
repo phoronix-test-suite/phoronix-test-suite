@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 4.0 Milestone 4
+29 June 2012
 
 - pts-core: Support download caches at /run/media/*/*/download-cache/
 - pts-core: Set SKIP_TEST_SUPPORT_CHECKS=1 environment variable for debugging purposes to run tests on unsupported platforms
