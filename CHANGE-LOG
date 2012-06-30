@@ -2,7 +2,8 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
-- timed_screenshot: Overhaul of the timed screenshot PTS modul;e
+- pts-core: Initial command of ob-test-profile-analyze
+- timed_screenshot: Overhaul of the timed screenshot PTS module
 
 Phoronix Test Suite 4.0 Milestone 4
 29 June 2012
