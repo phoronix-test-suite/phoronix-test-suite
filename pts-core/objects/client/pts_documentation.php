@@ -65,7 +65,13 @@ class pts_documentation
 				$doc_description = isset($constants['doc_description']) ? constant($option_php . '::doc_description') : 'No summary is available.';
 				$doc_section = isset($constants['doc_section']) ? constant($option_php . '::doc_section') : 'Other';
 				$name = isset($constants['doc_use_alias']) ? constant($option_php . '::doc_use_alias') : $name;
+				$skip = isset($constants['doc_skip']) ? constant($option_php . '::doc_skip') : false;
 				$doc_args = array();
+
+				if($skip)
+				{
+					continue;
+				}
 
 				if(method_exists($option_php, 'argument_checks'))
 				{
