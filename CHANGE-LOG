@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- timed_screenshot: Overhaul of the timed screenshot PTS modul;e
+
 Phoronix Test Suite 4.0 Milestone 4
 29 June 2012
 

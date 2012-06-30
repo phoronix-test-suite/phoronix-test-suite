@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2010, Phoronix Media
-	Copyright (C) 2008 - 2010, Michael Larabel
+	Copyright (C) 2008 - 2012, Phoronix Media
+	Copyright (C) 2008 - 2012, Michael Larabel
 	timed_screenshot.php: A PTS module that takes a screenshot at a pre-defined interval.
 
 	This program is free software; you can redistribute it and/or modify
@@ -23,13 +23,14 @@
 
 class timed_screenshot extends pts_module_interface
 {
-	const module_name = "Timed Screenshot";
-	const module_version = "0.1.0";
-	const module_description = "This is a module that will take a screenshot of the system at a pre-defined interval. ImageMagick must be installed onto the system prior to using this module.";
-	const module_author = "Michael Larabel";
+	const module_name = 'Timed Screenshot';
+	const module_version = '1.0.0';
+	const module_description = 'This is a module that will take a screenshot of the system at a pre-defined interval. ImageMagick must be installed onto the system prior to using this module.';
+	const module_author = 'Michael Larabel';
 
-	static $screenshot_count = 0;
-	static $screenshot_interval = 15;
+	protected static $screenshots = array();
+	protected static $screenshot_interval = 10;
+	protected static $existing_screenshots = array();
 
 	public static function module_environmental_variables()
 	{
@@ -37,47 +38,73 @@ class timed_screenshot extends pts_module_interface
 	}
 	public static function __startup()
 	{
-		pts_module::remove_file("is_running");
-		$PATH = pts_client::read_env("PATH");
-		$found = false;
+		// Make sure the file is removed to avoid potential problems if it was leftover from earlier run
+		pts_module::remove_file('is_running');
 
-		foreach(pts_strings::colon_explode($PATH) as $single_path)
-			if(is_file($single_path . "/import"))
-				$found = true;
-
-		if(!$found)
+		if(pts_client::executable_in_path('import') == false)
 		{
-			echo "\nImageMagick must first be installed onto this system!\n";
+			echo PHP_EOL . 'ImageMagick must first be installed onto this system!' . PHP_EOL;
 			return pts_module::MODULE_UNLOAD;
 		}
 
-		if(($interval = pts_module::read_variable("SCREENSHOT_INTERVAL")) > 0 && is_numeric($interval))
+		if(($interval = pts_module::read_variable('SCREENSHOT_INTERVAL')) > 1 && is_numeric($interval))
+		{
 			self::$screenshot_interval = $interval;
+			return true;
+		}
+
+		return pts_module::MODULE_UNLOAD;
+		self::$existing_screenshots = pts_file_io::glob(pts_module::save_dir() . 'screenshot-*.png');
 	}
 	public static function __shutdown()
 	{
-		if(self::$screenshot_count > 0)
-			echo "\n" . self::$screenshot_count . " screenshots recorded. They are saved in the " . pts_module::save_dir() . " directory.\n";
+		if(!empty(self::$screenshots))
+		{
+			echo PHP_EOL . count(self::$screenshots) . ' screenshots recorded. They are saved in the ' . pts_module::save_dir() . ' directory.' . PHP_EOL;
+		}
 	}
 
 	public static function __pre_run_process()
 	{
-		pts_module::pts_timed_function("take_screenshot", self::$screenshot_interval);
+		self::$screenshots = array();
+		pts_module::pts_timed_function('take_screenshot', self::$screenshot_interval);
 	}
 	public static function __pre_test_run()
 	{
-		pts_module::save_file("is_running", "yes");
+		pts_module::save_file('is_running', 'yes');
 	}
 	public static function __post_test_run()
 	{
-		pts_module::remove_file("is_running");
+		pts_module::remove_file('is_running');
+		return self::$screenshots;
 	}
-	public static function take_screenshot()
+	public static function take_screenshot($force = false)
 	{
-		if(pts_module::read_file("is_running") == "yes")
+		if(pts_module::read_file('is_running') == 'yes' || $force)
 		{
-			shell_exec("import -window root " . pts_module::save_dir() . "screenshot-" . self::$screenshot_count . ".png");
-			self::$screenshot_count++;
+			$ss_file = pts_module::save_dir() . 'screenshot-' . date('ymd-His') . '.png';
+			shell_exec('import -window root ' . $ss_file);
+
+			if(is_file($ss_file))
+			{
+				array_push(self::$screenshots, $ss_file);
+				return $ss_file;
+			}
+		}
+
+		return false;
+	}
+	public static function get_screenshots()
+	{
+		if(!empty(self::$screenshots))
+		{
+			return self::$screenshots;
+		}
+		else
+		{
+			// Another thread is going on and thread empty so try to query the file-system for differences
+			$screenshots = pts_file_io::glob(pts_module::save_dir() . 'screenshot-*.png');
+			return array_diff($screenshots, self::$existing_screenshots);
 		}
 	}
 }
