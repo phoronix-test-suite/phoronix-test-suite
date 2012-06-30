@@ -63,7 +63,7 @@ class pts_file_io
 
 		foreach(pts_file_io::glob($object . '*') as $to_remove)
 		{
-			if(is_file($to_remove))
+			if(is_file($to_remove) || is_link($to_remove))
 			{
 				if(is_array($ignore_files) && in_array(basename($to_remove), $ignore_files))
 				{
@@ -85,7 +85,21 @@ class pts_file_io
 			rmdir($object);
 		}
 	}
-	function copy($source, $dest)
+	public static function array_filesize($r)
+	{
+		$filesize = 0;
+
+		foreach($r as $file)
+		{
+			if(is_file($file))
+			{
+				$filesize += filesize($file);
+			}
+		}
+
+		return $filesize;
+	}
+	public static function copy($source, $dest)
 	{
 		$success = false;
 

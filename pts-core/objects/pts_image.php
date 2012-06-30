@@ -88,6 +88,27 @@ class pts_image
 	{
 		return abs(array_sum($rgb1) - array_sum($rgb2));
 	}
+	public static function gd_image_delta_composite(&$base_img, &$compare_img, $only_return_changes = true)
+	{
+		$composite = array();
+
+		for($x = 0; $x < imagesx($base_img); $x++)
+		{
+			for($y = 0; $y < imagesy($base_img); $y++)
+			{
+				$base_rgb = imagecolorat($base_img, $x, $y);
+				$compare_rgb = imagecolorat($compare_img, $x, $y);
+				$diff_rgb = abs($base_rgb - $compare_rgb);
+
+				if($only_return_changes == false || $diff_rgb != 0)
+				{
+					$composite[$x][$y] = $diff_rgb;
+				}
+			}
+		}
+
+		return $composite;
+	}
 	public static function color_pixel_delta(&$base_img, &$compare_img, &$x, &$y)
 	{
 		$color = false; // for now we set to true when it should change, but ultimately should return a color
