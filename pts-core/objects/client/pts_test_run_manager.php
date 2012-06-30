@@ -297,7 +297,11 @@ class pts_test_run_manager
 		{
 			$is_reserved_word = false;
 			// Be of help to the user by showing recently saved test results
-			self::recently_saved_test_results();
+			if($save_name == null)
+			{
+				self::recently_saved_test_results();
+
+			}
 
 			while(empty($save_name) || ($is_reserved_word = pts_types::is_test_or_suite($save_name)))
 			{
@@ -1085,9 +1089,12 @@ class pts_test_run_manager
 	}
 	public function save_results_prompt()
 	{
-		pts_client::$display->generic_heading('System Information');
-		echo 'Hardware:' . PHP_EOL . phodevi::system_hardware(true) . PHP_EOL . PHP_EOL;
-		echo 'Software:' . PHP_EOL . phodevi::system_software(true) . PHP_EOL . PHP_EOL;
+		if((pts_c::$test_flags ^ pts_c::auto_mode))
+		{
+			pts_client::$display->generic_heading('System Information');
+			echo 'Hardware:' . PHP_EOL . phodevi::system_hardware(true) . PHP_EOL . PHP_EOL;
+			echo 'Software:' . PHP_EOL . phodevi::system_software(true) . PHP_EOL . PHP_EOL;
+		}
 
 		if(($this->prompt_save_results || $this->force_save_results) && count($this->tests_to_run) > 0) // or check for DO_NOT_SAVE_RESULTS == false
 		{
@@ -1119,19 +1126,22 @@ class pts_test_run_manager
 				}
 
 				// Prompt Description
-				if((pts_c::$test_flags ^ pts_c::auto_mode) && ((pts_c::$test_flags ^ pts_c::batch_mode) || pts_config::read_bool_config('PhoronixTestSuite/Options/BatchMode/PromptForTestDescription', 'FALSE')))
+				if((pts_c::$test_flags ^ pts_c::batch_mode) || pts_config::read_bool_config('PhoronixTestSuite/Options/BatchMode/PromptForTestDescription', 'FALSE'))
 				{
 					if($this->run_description == null)
 					{
 						$this->run_description = 'N/A';
 					}
 
-					if(pts_client::read_env('TEST_RESULTS_DESCRIPTION') != null)
+					if(pts_client::read_env('TEST_RESULTS_DESCRIPTION'))
 					{
-						$this->run_description = pts_client::read_env('TEST_RESULTS_DESCRIPTION');
-						echo 'Test Description: ' . $this->run_description . PHP_EOL;
+						if(strlen(pts_client::read_env('TEST_RESULTS_DESCRIPTION')) > 1)
+						{
+							$this->run_description = pts_client::read_env('TEST_RESULTS_DESCRIPTION');
+							echo 'Test Description: ' . $this->run_description . PHP_EOL;
+						}
 					}
-					else
+					else if((pts_c::$test_flags ^ pts_c::auto_mode))
 					{
 						pts_client::$display->generic_heading('If you wish, enter a new description below to better describe this result set / system configuration under test.' . PHP_EOL . 'Press ENTER to proceed without changes.');
 						echo 'Current Description: ' . $this->run_description . PHP_EOL . PHP_EOL . 'New Description: ';

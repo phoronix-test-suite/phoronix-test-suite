@@ -198,6 +198,10 @@ class pts_openbenchmarking_client
 	{
 		return isset(self::$client_settings['AutoUploadResults']) && self::$client_settings['AutoUploadResults'];
 	}
+	public static function override_client_setting($key, $value)
+	{
+		self::$client_settings[$key] = $value;
+	}
 	public static function make_openbenchmarking_request($request, $post = array())
 	{
 		$url = pts_openbenchmarking::openbenchmarking_host() . 'f/client.php';

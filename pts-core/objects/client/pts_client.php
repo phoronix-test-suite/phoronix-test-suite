@@ -1459,6 +1459,7 @@ class pts_client
 	}
 	public static function pts_set_environmental_variable($name, $value)
 	{
+		// TODO XXX: rename pts_set_environmental_variable to set_environment_variable
 		// Sets an environmental variable
 		return getenv($name) == false && putenv($name . '=' . $value);
 	}
