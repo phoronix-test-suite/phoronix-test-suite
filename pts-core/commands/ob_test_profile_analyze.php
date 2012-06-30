@@ -247,7 +247,6 @@ var_dump($screenshots);
 				echo PHP_EOL . $test_binary;
 				echo PHP_EOL . 'Test binary could not be found.' . PHP_EOL;
 			}
-
 		}
 	}
 }

@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Initial command of ob-test-profile-analyze
+- phodevi: Additional fall-back support when GPU driver doesn't expose all standard mode-setting modes
 - timed_screenshot: Overhaul of the timed screenshot PTS module
 
 Phoronix Test Suite 4.0 Milestone 4

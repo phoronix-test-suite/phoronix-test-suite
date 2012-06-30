@@ -52,7 +52,7 @@ class phodevi_gpu extends phodevi_device_interface
 				$property = new phodevi_device_property('gpu_compute_cores', phodevi::smart_caching);
 				break;
 			case 'available-modes':
-				$property = new phodevi_device_property('gpu_available_modes', phodevi::smart_caching);
+				$property = new phodevi_device_property('gpu_available_modes', phodevi::std_caching);
 				break;
 			case 'screen-resolution':
 				$property = new phodevi_device_property('gpu_screen_resolution', phodevi::std_caching);
@@ -507,7 +507,8 @@ class phodevi_gpu extends phodevi_device_interface
 			// Fallback to providing stock modes
 			$stock_modes = array(
 				array(800, 600), array(1024, 768),
-				array(1280, 1024), array(1400, 1050), 
+				array(1280, 1024), array(1400, 900),
+				array(1400, 1050), array(1600, 900),
 				array(1680, 1050), array(1600, 1200),
 				array(1920, 1080), array(2560, 1600));
 			$available_modes = array();
@@ -519,6 +520,11 @@ class phodevi_gpu extends phodevi_device_interface
 					array_push($available_modes, $stock_modes[$i]);
 				}
 			}
+		}
+
+		if(!in_array(phodevi::read_property('gpu', 'screen-resolution'), $available_modes))
+		{
+			array_push($available_modes, phodevi::read_property('gpu', 'screen-resolution'));
 		}
 
 		foreach($available_modes as $mode_index => $mode)
