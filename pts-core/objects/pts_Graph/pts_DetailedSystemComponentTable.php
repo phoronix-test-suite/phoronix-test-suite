@@ -117,6 +117,11 @@ class pts_DetailedSystemComponentTable extends pts_SideViewTable
 					sort($flags);
 				}
 
+				if($flags_data == null)
+				{
+					continue;
+				}
+
 				$intersect = call_user_func_array('array_intersect', $flags_data);
 				sort($intersect);
 
