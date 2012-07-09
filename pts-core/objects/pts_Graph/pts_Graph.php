@@ -47,8 +47,6 @@ abstract class pts_Graph
 	protected $graph_identifiers;
 	protected $graph_title;
 	protected $graph_y_title;
-	protected $graph_internal_identifiers = array();
-	protected $regression_marker_threshold = 0;
 	protected $is_multi_way_comparison = false;
 	private $test_identifier = null;
 	protected $value_highlights = array();
@@ -87,14 +85,12 @@ abstract class pts_Graph
 			$this->test_identifier = $result_object->test_profile->get_identifier();
 			$this->i['graph_proportion'] = $result_object->test_profile->get_result_proportion();
 			$this->addSubTitle($result_object->get_arguments_description());
-			$this->addInternalIdentifier('Test', $result_object->test_profile->get_identifier());
 		}
 
 		$this->update_graph_dimensions(self::$c['graph']['width'], self::$c['graph']['height'], true);
 
 		if($result_file != null && $result_file instanceof pts_result_file)
 		{
-			$this->addInternalIdentifier('Identifier', $result_file->get_identifier());
 			$pts_version = pts_arrays::last_element($result_file->get_system_pts_version());
 			$this->is_multi_way_comparison = $result_file->is_multi_way_comparison();
 		}
@@ -223,13 +219,9 @@ abstract class pts_Graph
 	{
 		array_push($this->i['notes'], array('note' => $note, 'hover-title' => $hover_title, 'section' => $section));
 	}
-	public function addInternalIdentifier($identifier, $value)
-	{
-		$this->graph_internal_identifiers[$identifier] = $value;
-	}
 	public function markResultRegressions($threshold)
 	{
-		$this->regression_marker_threshold = $threshold;
+		$this->d['regression_marker_threshold'] = $threshold;
 	}
 
 	//

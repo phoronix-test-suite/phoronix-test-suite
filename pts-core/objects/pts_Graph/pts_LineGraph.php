@@ -171,7 +171,7 @@ class pts_LineGraph extends pts_Graph
 
 				array_push($poly_points, array($px_from_left, $value_plot_top, $data_string, $std_error));
 
-				if($this->regression_marker_threshold > 0 && $i > 0 && abs(1 - ($value / $prev_value)) > $this->regression_marker_threshold)
+				if(isset($this->d['regression_marker_threshold']) && $this->d['regression_marker_threshold'] > 0 && $i > 0 && abs(1 - ($value / $prev_value)) > $this->d['regression_marker_threshold'])
 				{
 					$regression_plots[($i - 1)] = $prev_identifier . ': ' . $prev_value;
 					$regression_plots[$i] = $identifier . ': ' . $value;
