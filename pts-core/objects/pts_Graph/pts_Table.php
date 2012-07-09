@@ -397,9 +397,9 @@ class pts_Table extends pts_Graph
 		$this->svg_dom->add_element('rect', array('x' => 0, 'y' => $table_proper_height, 'width' => $this->i['graph_width'], 'height' => ($this->i['graph_height'] - $table_proper_height), 'fill' => self::$c['color']['headers']));
 		$this->svg_dom->add_text_element(self::$c['text']['watermark'], array('x' => ($this->i['graph_width'] - 2), 'y' => ($this->i['graph_height'] - 3), 'font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['body_text'], 'text-anchor' => 'end', 'xlink:show' => 'new', 'xlink:href' => self::$c['text']['watermark_url']));
 
-		if($this->link_alternate_view != null)
+		if(isset($this->d['link_alternate_view']) && $this->d['link_alternate_view'])
 		{
-			$this->svg_dom->add_text_element(0, array('x' => 6, 'y' => ($this->i['graph_height'] - 3), 'font-size' => 7, 'fill' => self::$c['color']['background'], 'text-anchor' => 'start', 'xlink:show' => 'new', 'xlink:href' => $this->link_alternate_view, 'show' => 'replace', 'font-weight' => 'bold'));
+			$this->svg_dom->add_text_element(0, array('x' => 6, 'y' => ($this->i['graph_height'] - 3), 'font-size' => 7, 'fill' => self::$c['color']['background'], 'text-anchor' => 'start', 'xlink:show' => 'new', 'xlink:href' => $this->d['link_alternate_view'], 'show' => 'replace', 'font-weight' => 'bold'));
 		}
 
 		if(!empty($this->i['notes']))
