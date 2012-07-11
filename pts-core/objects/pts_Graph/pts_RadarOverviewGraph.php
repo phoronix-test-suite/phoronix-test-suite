@@ -124,7 +124,7 @@ class pts_RadarOverviewGraph extends pts_Graph
 			$length = round($unit_size * $num);
 
 			$this->svg_dom->draw_svg_arc($this->i['left_start'], $this->i['top_start'], $length, 10, 0.25, array('fill' => self::$c['color']['background'], 'stroke' => self::$c['color']['body_light'], 'stroke-width' => 1, 'stroke-dasharray' => '10,20'));
-			$this->svg_dom->add_text_element($num, array('x' => ($this->i['left_start'] + $length), 'y' => ($this->i['top_start'] - self::$c['size']['tick_mark']), 'font-size' => self::$c['size']['tick_mark'], 'fill' => self::$c['color']['notches'], 'text-anchor' => 'middle'));
+			$this->svg_dom->add_text_element($num, array('x' => ($this->i['left_start'] + $length), 'y' => ($this->i['top_start'] - self::$c['size']['tick_mark'] + 2), 'font-size' => self::$c['size']['tick_mark'], 'fill' => self::$c['color']['notches'], 'text-anchor' => 'middle'));
 			$this->svg_dom->draw_svg_line($this->i['left_start'] + $length, $this->i['top_start'] - 6, $this->i['left_start'] + $length, $this->i['top_start'], self::$c['color']['notches'], 1);
 
 			$this->svg_dom->add_text_element($num, array('x' => ($this->i['left_start'] - 8), 'y' => ($this->i['top_start'] + $length), 'font-size' => self::$c['size']['tick_mark'], 'fill' => self::$c['color']['notches'], 'text-anchor' => 'end', 'dominant-baseline' => 'middle'));
