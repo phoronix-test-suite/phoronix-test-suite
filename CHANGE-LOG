@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+- pts-core: Initial implementation of the PTS4 Local Results Viewer
 - pts-core: Initial command of ob-test-profile-analyze
 - phodevi: Additional fall-back support when GPU driver doesn't expose all standard mode-setting modes
 - timed_screenshot: Overhaul of the timed screenshot PTS module

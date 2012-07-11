@@ -15,85 +15,18 @@ a:hover
 {
 	text-decoration: underline;
 }
-div#pts_header_top
-{
-	width: 100%;
-	margin: 0;
-	color: #FFF;
-	background-color: #454545;
-	border: solid #333;
-	border-width: 0 0 1px;
-}
-div.pts_header_center
-{
-	min-width: 940px;
-	width: 60%;
-	margin: 0 auto;
-	overflow: hidden;
-}
-div#pts_header_top_logo
-{
-	position: relative;
-	float: left;
-	background-image: url(pts-header.png);
-	margin: 5px 0;
-	width: 510px;
-	height: 60px;
-}
-div#pts_header_top_title
-{
-	font-size: 40px;
-	margin: 10px 0 0 15px;
-	float: left;
-}
-div.pts_header_links
-{
-	margin: 4px 0 0;
-	text-align: right;
-	font-size: 11px;
-	float: right;
-}
-div.pts_header_links_left
-{
-	margin: 4px 0 0;
-	text-align: left;
-	font-size: 11px;
-	float: left;
-}
 div#pts_container
 {
 	text-align: left;
 	min-width: 940px;
-	width: 60%;
-	margin: 0 auto;
+	background: #FFF;
+	width: 80%;
+	margin: 10px auto 30px;
 	overflow: hidden;
-	border: solid #919191;
-	border-width: 0 1px;
-	background-color: #FFF;
-}
-div#pts_header_bottom a
-{
-	color: #FFF;
-}
-div#pts_header_bottom
-{
-	width: 100%;
-	margin: 0;
-	color: #FFF;
-	background-color: #454545;
-	border: solid #333;
-	border-width: 1px 0 0;
-	padding-bottom: 5px;
-}
-div#pts_header_bottom_center
-{
-	margin: 2px auto;
-	padding: 6px 0 10px;
-	width: 940px;
-	width: 60%;
-	overflow: hidden;
-	font-size: 12px;
-	text-align: center;
+	border: 1px solid #D7D7D7;
+	box-shadow: 1px 1px 4px #000;
+	-moz-box-shadow: 1px 1px 4px #000;
+	-webkit-box-shadow: 1px 1px 4px #000;
 }
 div.pts_column_head
 {	
@@ -103,12 +36,23 @@ div.pts_column_head
 	font-weight: bold;
 	display: table-row;
 }
+a#pts_top_logo
+{
+	display: block;
+	width: 160px;
+	height: 83px;
+	background: transparent url(pts-logo-light.png);
+}
+a#pts_top_logo:hover
+{
+	background: transparent url(pts-logo.png);
+}
 h1
 {
 	margin-left: 10px;
 	margin-top: 10px;
 	font-size: 21px;
-	color: #454545;
+	color: #044374;
 	font-weight: bold;
 }
 p
@@ -210,34 +154,34 @@ div.pts_benchmark_img_table_area
 div#pts_copyright_area
 {
 	clear: both;
-	background-color: #BABABA;
+	background-color: #044374;
 	text-align: center;
-	padding: 0 -10px -15px;
-	border: solid #919191;
-	border-width: 1px 0 0;
-	padding: 1px 0;
-	color: #454545;
+	border: 0;
+	font-size: 10px;
+	font-weight: bold;
+	padding: 2px;
+	margin: 20px 0 0;
+	color: #FFF;
 }
 div#pts_banner_nav
 {
-	height: 36px;
-	width: 100%;
+	height: 28px;
 	background: #266c29 url(horizontal-nav-bg.png) repeat-x;
-	border: solid #949494;
-	border-width: 0 0 1px;
+	border: solid #949494 1px;
 	text-align: center;
 	color: #FFF;
 	font-weight: bold;
-	font-size: 16px;
+	font-size: 14px;
 	padding-right: 1px;
+	margin: 4px 10px;
 }
 div#pts_banner_nav a
 {
-	width: 20%;
-	height: 36px;
+	width: 15%;
+	height: 100%;
 	display: block;
 	float: left;
-	line-height: 36px;
+	line-height: 28px;
 	margin-right: -1px;
 	border: solid #333;
 	border-width: 0 1px 0 0;
