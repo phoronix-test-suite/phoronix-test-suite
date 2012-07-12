@@ -22,11 +22,13 @@
 
 class webui implements pts_option_interface
 {
+	const doc_skip = true; // TODO XXX: cleanup this code before formally advertising this...
 	const doc_section = 'Web User Interface';
 	const doc_description = 'Launch the Phoronix Test Suite web user-interface.';
 
 	public static function run($r)
 	{
+		return false; // This won't be formally ready for PTS 4.0 Suldal
 		if(PHP_VERSION_ID < 50400)
 		{
 			echo 'Running an unsupported PHP version. PHP 5.4+ is required to use this feature.' . PHP_EOL . PHP_EOL;
