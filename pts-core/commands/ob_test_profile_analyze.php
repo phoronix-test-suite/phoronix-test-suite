@@ -20,6 +20,8 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+ini_set('memory_limit', '16192M');
+
 class ob_test_profile_analyze implements pts_option_interface
 {
 	const doc_skip = true; // TODO XXX: cleanup this code before formally advertising this...
@@ -52,27 +54,44 @@ class ob_test_profile_analyze implements pts_option_interface
 			}
 
 			// Set some other things...
-			pts_client::pts_set_environmental_variable('FORCE_TIMES_TO_RUN', 1);
-			pts_client::pts_set_environmental_variable('TEST_RESULTS_NAME', $test_profile->get_title() . ' Testing ' . date('Y-m-d'));
-			pts_client::pts_set_environmental_variable('TEST_RESULTS_IDENTIFIER', 'Sample Run');
-			pts_client::pts_set_environmental_variable('TEST_RESULTS_DESCRIPTION', 1);
+			pts_client::pts_set_environment_variable('FORCE_TIMES_TO_RUN', 1);
+			pts_client::pts_set_environment_variable('TEST_RESULTS_NAME', $test_profile->get_title() . ' Testing ' . date('Y-m-d'));
+			pts_client::pts_set_environment_variable('TEST_RESULTS_IDENTIFIER', 'Sample Run');
+			pts_client::pts_set_environment_variable('TEST_RESULTS_DESCRIPTION', 1);
 
 			pts_openbenchmarking_client::override_client_setting('AutoUploadResults', true);
 			pts_openbenchmarking_client::override_client_setting('UploadSystemLogsByDefault', true);
 
 			// Take screenshots
-			pts_client::pts_set_environmental_variable('SCREENSHOT_INTERVAL', 9);
+			pts_client::pts_set_environment_variable('SCREENSHOT_INTERVAL', 9);
 			pts_module_manager::attach_module('timed_screenshot');
 
 			$force_ss = true;
 			$reference_ss_file = pts_module_manager::module_call('timed_screenshot', 'take_screenshot', $force_ss);
 			sleep(2);
 
+			$apitrace = pts_file_io::glob('/usr/local/lib/*/apitrace/wrappers/glxtrace.so');
+
+			if(!empty($apitrace) && pts_client::executable_in_path('apitrace'))
+			{
+				$apitrace = array_shift($apitrace);
+				putenv('LD_PRELOAD=' . $apitrace);
+			}
+			else
+			{
+				$apitrace = false;
+			}
+
 			// So for any compiling tasks they will try to use the most aggressive instructions possible
 			putenv('CFLAGS=-march=native -O3');
 			putenv('CXXFLAGS=-march=native -O3');
 			pts_test_installer::standard_install($qualified_identifier, pts_c::force_install);
 			pts_test_run_manager::standard_run($qualified_identifier, (pts_c::defaults_mode | pts_c::auto_mode));
+
+			if($apitrace)
+			{
+				putenv('LD_PRELOAD=');
+			}
 
 			if($reference_ss_file)
 			{
@@ -106,8 +125,8 @@ var_dump($screenshots);
 				$ss_files = array_keys($screenshots_gd);
 				shuffle($ss_files);
 
-				// Don't upload more than 8MB worth of screenshots
-				while(pts_file_io::array_filesize($ss_files) > (1048576 * 4))
+				// Don't upload more than 4MB worth of screenshots
+				while(pts_file_io::array_filesize($ss_files) > (1048576 * 2))
 				{
 					$f = array_pop($ss_files);
 					unlink($f);
@@ -144,9 +163,29 @@ var_dump($screenshots);
 
 			$shared_library_dependencies = array();
 			$instruction_usage = array();
+			$gl_calls = null;
 
 			if(is_executable($test_binary))
 			{
+				if($apitrace)
+				{
+					// Find the trace...
+					$test_binary_dir = dirname($test_binary);
+					$trace_file = glob($test_binary_dir . '/*.trace');
+
+					if($trace_file)
+					{
+						echo 'Analyzing GL traces';
+						$trace_file = array_shift($trace_file);
+						$gl_usage = self::analyze_apitrace_trace_glpop($trace_file);
+
+						if(!empty($gl_usage))
+						{
+							$gl_calls = implode(',', $gl_usage);
+						}
+					}
+				}
+
 				$ldd = trim(shell_exec('ldd ' . $test_binary));
 
 				foreach(explode(PHP_EOL, $ldd) as $line)
@@ -193,14 +232,16 @@ var_dump($screenshots);
 		}
 			sleep(10);
 
-	var_dump($shared_library_dependencies);
+		var_dump($shared_library_dependencies);
 		var_dump($instruction_usage);
+		var_dump($gl_calls);
 
 		$server_response = pts_openbenchmarking::make_openbenchmarking_request('upload_test_meta', array(
 			'i' => $test_profile->get_identifier(),
 			'screenshots_zip' => ($ss_zip_conts = base64_encode(file_get_contents($ss_zip_file))),
 			'screenshots_zip_sha1' => sha1($ss_zip_conts),
 			'ldd_libraries' => implode(',', $shared_library_dependencies),
+			'opengl_calls' => $gl_calls,
 			'instruction_set_usage' => base64_encode(json_encode($instruction_usage))
 			));
 var_dump($server_response);
@@ -303,6 +344,35 @@ var_dump($server_response);
 		}
 
 		return $instruction_usage;
+	}
+	public static function analyze_apitrace_trace_glpop($apitrace_file)
+	{
+		$tracedump = trim(shell_exec('apitrace dump --call-nos=no ' . $apitrace_file));
+		$gl_usage = array();
+
+		while($tracedump && ($break = strpos($tracedump, PHP_EOL)) != false)
+		{
+			$line = substr($tracedump, 0, $break);
+			$tracedump = substr($tracedump, $break + 1);
+			$line = substr($line, 0, strpos($line, '('));
+
+			if(strtolower(substr($line, 0, 2)) == 'gl')
+			{
+				if(isset($gl_usage[$line]))
+				{
+					$gl_usage[$line]++;
+				}
+				else if(ctype_alnum($line))
+				{
+					$gl_usage[$line] = 1;
+				}
+			}
+		}
+
+		arsort($gl_usage);
+		$gl_usage = array_keys($gl_usage);
+
+		return $gl_usage;
 	}
 }
 

@@ -83,7 +83,7 @@ class pts_client
 				if(count($module_r) == 2)
 				{
 					// TODO: end up hooking this into pts_module::read_variable() rather than using the real env
-					pts_client::set_environmental_variable($module_r[0], $module_r[1]);
+					pts_client::set_environment_variable($module_r[0], $module_r[1]);
 				}
 				else
 				{
@@ -1456,11 +1456,6 @@ class pts_client
 	public static function read_env($var)
 	{
 		return getenv($var);
-	}
-	public static function pts_set_environmental_variable($name, $value)
-	{
-		// TODO XXX: programs calling this should be updated to use environment_variable
-		self::pts_set_environment_variable($name, $value);
 	}
 	public static function pts_set_environment_variable($name, $value)
 	{
