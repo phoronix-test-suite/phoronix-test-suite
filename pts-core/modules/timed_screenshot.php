@@ -76,7 +76,15 @@ class timed_screenshot extends pts_module_interface
 	public static function __post_test_run()
 	{
 		pts_module::remove_file('is_running');
-		return self::$screenshots;
+		$screenshots = self::get_screenshots();
+
+		foreach($screenshots as $screenshot)
+		{
+			// Compress the PNGs a bit
+			pts_image::compres_png_image($screenshot, 9);
+		}
+
+		return $screenshots;
 	}
 	public static function take_screenshot($force = false)
 	{

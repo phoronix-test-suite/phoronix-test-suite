@@ -131,6 +131,19 @@ class pts_image
 
 		return $color;
 	}
+	public static function compres_png_image($png_file, $compression_level = 8)
+	{
+		$img = imagecreatefrompng($png_file);
+
+		if($img)
+		{
+			imagepng($img, $png_file, $compression_level);
+			imagedestroy($img);
+			return true;
+		}
+
+		return false;
+	}
 }
 
 ?>
