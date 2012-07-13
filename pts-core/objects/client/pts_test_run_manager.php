@@ -845,7 +845,10 @@ class pts_test_run_manager
 
 					if(!empty($upload_url))
 					{
-						pts_client::display_web_page($upload_url, 'Do you want to launch OpenBenchmarking.org', true);
+						if((pts_c::$test_flags ^ pts_c::auto_mode) && pts_openbenchmarking_client::auto_upload_results() == false)
+						{
+							pts_client::display_web_page($upload_url, 'Do you want to launch OpenBenchmarking.org', true);
+						}
 					}
 					else
 					{

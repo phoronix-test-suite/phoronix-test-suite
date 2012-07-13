@@ -1459,7 +1459,11 @@ class pts_client
 	}
 	public static function pts_set_environmental_variable($name, $value)
 	{
-		// TODO XXX: rename pts_set_environmental_variable to set_environment_variable
+		// TODO XXX: programs calling this should be updated to use environment_variable
+		self::pts_set_environment_variable($name, $value);
+	}
+	public static function pts_set_environment_variable($name, $value)
+	{
 		// Sets an environmental variable
 		return getenv($name) == false && putenv($name . '=' . $value);
 	}
