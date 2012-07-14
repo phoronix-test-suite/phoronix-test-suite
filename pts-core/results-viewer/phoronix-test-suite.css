@@ -20,7 +20,7 @@ div#pts_container
 	text-align: left;
 	min-width: 940px;
 	background: #FFF;
-	width: 90%;
+	width: 88%;
 	margin: 20px auto 30px;
 	overflow: hidden;
 	border: 1px solid #D7D7D7;
@@ -151,18 +151,6 @@ div.pts_benchmark_img_table_area
 	height: 100%;
 	text-align: center;
 }
-div#pts_copyright_area
-{
-	clear: both;
-	background-color: #044374;
-	text-align: center;
-	border: 0;
-	font-size: 10px;
-	font-weight: bold;
-	padding: 2px;
-	margin: 20px 0 0;
-	color: #FFF;
-}
 div#pts_banner_nav
 {
 	height: 28px;
@@ -190,4 +178,28 @@ div#pts_banner_nav a:hover
 {
 	text-decoration: none;
 	background: #266c29 url(horizontal-nav-bg-hover.png) repeat-x;
+}
+div#pts_footer
+{
+	clear: both;
+	top: 20px;
+	width: 100%;
+	border: 0 solid #D4D4D4;
+	border-width: 1px 0 0;
+	padding: 15px 0 10px;
+	color: #757575;
+	font-size: 10px;
+}
+div#pts_footer a
+{
+	text-decoration: none;
+}
+div#pts_footer a:hover, div#oborg_main_area blockquote a
+{
+	text-decoration: underline;
+}
+div#pts_footer p
+{
+	margin: 1px;
+	text-indent: 20px;
 }
