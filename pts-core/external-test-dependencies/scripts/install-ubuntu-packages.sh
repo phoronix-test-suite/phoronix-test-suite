@@ -1,14 +1,16 @@
 #!/bin/sh
-if [ `whoami` != "root" ]; then
-	if [ -x /usr/bin/gksudo ] && [ ! -z "$DISPLAY" ]; then
+if [ `whoami` != "root" ] && [ ! -z "$DISPLAY" ]; then
+	if [ -x /usr/bin/gksudo ]; then
 		ROOT="/usr/bin/gksudo"
-	elif [ -x /usr/bin/kdesudo ] && [ ! -z "$DISPLAY" ]; then
+	elif [ -x /usr/bin/kdesudo ]; then
 		ROOT="/usr/bin/kdesudo"
 	elif [ -x /usr/bin/sudo ]; then
 		ROOT="/usr/bin/sudo"
 	fi
+elif [ -z "$DISPLAY" ]; then
+	sudo -- apt-get -y --ignore-missing install $*
 else
-	su -c "apt-get -y install $*"
+	su -c "apt-get -y --ignore-missing install $*"
 	exit
 fi
 

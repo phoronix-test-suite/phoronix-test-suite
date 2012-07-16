@@ -4,6 +4,7 @@ Phoronix Test Suite (Git)
 
 - pts-core: Initial implementation of the PTS4 Local Results Viewer
 - pts-core: Initial command of ob-test-profile-analyze
+- pts-core: Fix for installing Ubuntu external dependencies in a headless mode
 - pts-core: Disable webui since it won't be ready until PTS 4.2
 - phodevi: Additional fall-back support when GPU driver doesn't expose all standard mode-setting modes
 - timed_screenshot: Overhaul of the timed screenshot PTS module

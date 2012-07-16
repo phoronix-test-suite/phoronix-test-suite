@@ -58,6 +58,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 		</div>
 
 		<div id="pts_footer">
+			<div id="pts_footer_logo"><a href="http://www.phoronix-test-suite.com/"></a></div>
 			<p>Copyright &#xA9; 2008 - 2012 by <a href="http://www.phoronix-media.com/">Phoronix Media</a>.</p>
 			<p>All trademarks used are properties of their respective owners. All rights reserved.</p>
 		</div>
