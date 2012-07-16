@@ -28,7 +28,7 @@
 
 			<h1>Modules Options</h1>
 			<h3>LoadModules: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/Modules/LoadModules" /></span></h3>
-			<p>This tag contains a string of the names of the Phoronix Test Suite modules to load by default when running the Phoronix Test Suite. Multiple modules can be listed when delimited by a comma. Modules that load via setting an environmental variable can also be specified here (i.e. <em>FORCE_AA=8</em> as an option in this string to load the <em>graphics_override</em> module with the 8x forced anti-aliasing). The default value is <em>toggle_screensaver, update_checker</em>.</p>
+			<p>This tag contains a string of the names of the Phoronix Test Suite modules to load by default when running the Phoronix Test Suite. Multiple modules can be listed when delimited by a comma. Modules that load via setting an environment variable can also be specified here (i.e. <em>FORCE_AA=8</em> as an option in this string to load the <em>graphics_override</em> module with the 8x forced anti-aliasing). The default value is <em>toggle_screensaver, update_checker</em>.</p>
 
 			<h1>Installation Options</h1>
 			<h3>RemoveDownloadFiles: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/Installation/RemoveDownloadFiles" /></span></h3>
@@ -91,7 +91,7 @@
 			<h3>Timeout: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/Networking/Timeout" /></span></h3>
 			<p>This is the read timeout (in seconds) for network connections. The default value is <em>20</em>.</p>
 			<h3>ProxyAddress: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/Networking/ProxyAddress" /></span></h3>
-			<p>If you wish to use a HTTP proxy server to allow the Phoronix Test Suite to communicate with OpenBenchmarking.org and other web services, enter the IP address / server name of the proxy server in this tag. If the proxy address and port tags are left empty but the <em>http_proxy</em> environmental variable is set, the Phoronix Test Suite will attempt to use that as the proxy information.</p>
+			<p>If you wish to use a HTTP proxy server to allow the Phoronix Test Suite to communicate with OpenBenchmarking.org and other web services, enter the IP address / server name of the proxy server in this tag. If the proxy address and port tags are left empty but the <em>http_proxy</em> environment variable is set, the Phoronix Test Suite will attempt to use that as the proxy information.</p>
 			<h3>ProxyPort: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/Networking/ProxyPort" /></span></h3>
 			<p>If using a proxy server, enter the TCP port in this tag.</p>
 

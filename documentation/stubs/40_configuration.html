@@ -20,7 +20,7 @@
 <p>This is the directory where test profiles are stored.</p>
 <p><strong>~/.phoronix-test-suite/test-suites/</strong></p>
 <p>This is the directory where test suites are stored.</p>
-<h1>Environmental Variables</h1>
+<h1>Environment Variables</h1>
 <p><strong>TEST_RESULTS_NAME</strong></p>
 <p>When this variable is set, the value will be used as the name for automatically saving the test results.</p>
 <p><strong>TEST_RESULTS_IDENTIFIER</strong></p>
@@ -28,7 +28,7 @@
 <p><strong>TEST_RESULTS_DESCRIPTION</strong></p>
 <p>When this variable is set, the value will be used as the test results description when saving the test results.</p>
 <p><strong>PRESET_OPTIONS</strong></p>
-<p>For setting any test option(s) from an environmental variable rather than being prompted for the options when running a test. Example: <em>PRESET_OPTIONS=&quot;stream.run-type=Add&quot; ./phoronix-test-suite benchmark stream</em></p>
+<p>For setting any test option(s) from an environment variable rather than being prompted for the options when running a test. Example: <em>PRESET_OPTIONS=&quot;stream.run-type=Add&quot; ./phoronix-test-suite benchmark stream</em></p>
 <p><strong>SKIP_TESTS</strong></p>
 <p>If there are any test(s) to exempt from the testing process, specify them in this variable. Multiple tests can be waived by delimiting each test identifier by a comma. A test hardware type (i.e. Graphics) can also be supplied for skipping a range of tests.</p>
 <p><strong>PTS_MODULE_SETUP</strong></p>
@@ -64,6 +64,6 @@
 <p><strong>DEFAULT_VIDEO_MODE</strong></p>
 <p>If Phodevi fails to detect the system's monitor standard / default resolution, the mode can be specified in this variable. Example: <em>DEFAULT_VIDEO_MODE=1680x1050 phoronix-test-suite benchmark nexuiz</em>.</p>
 <p><strong>SKIP_EXTERNAL_DEPENDENCIES</strong></p>
-<p>To skip the Phoronix Test Suite external dependency checking/installation when installing a test, set this environmental variable to <em>1</em>. If wishing to skip only certain external dependencies, set this variable's value to the name of the external dependencies (the generic dependency names used by the Phoronix Test Suite) to not install. Multiple dependencies to skip can be delimited by a comma.</p>
+<p>To skip the Phoronix Test Suite external dependency checking/installation when installing a test, set this environment variable to <em>1</em>. If wishing to skip only certain external dependencies, set this variable's value to the name of the external dependencies (the generic dependency names used by the Phoronix Test Suite) to not install. Multiple dependencies to skip can be delimited by a comma.</p>
 </body>
 </html>

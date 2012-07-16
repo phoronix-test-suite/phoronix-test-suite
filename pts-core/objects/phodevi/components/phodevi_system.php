@@ -1031,6 +1031,11 @@ class phodevi_system extends phodevi_device_interface
 				$desktop_version = substr($openbox_output, 0, strpos($openbox_output, PHP_EOL));
 			}
 		}
+		else if(pts_client::is_process_running('cinnamon'))
+		{
+			$desktop_environment = 'Cinnamon';
+			$desktop_version = pts_strings::last_in_string(trim(shell_exec('cinnamon --version 2> /dev/null')));
+		}
 
 		if(!empty($desktop_environment))
 		{
