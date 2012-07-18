@@ -109,7 +109,7 @@
 		</Package>
 		<Package>
 			<GenericName>jpeg-development</GenericName>
-			<PackageName>libjpeg62-dev</PackageName>
+			<PackageName>libjpeg-dev</PackageName>
 			<FileCheck>/usr/include/jpeglib.h</FileCheck>
 		</Package>
 		<Package>

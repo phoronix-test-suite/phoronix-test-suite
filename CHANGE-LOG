@@ -6,6 +6,7 @@ Phoronix Test Suite (Git)
 - pts-core: Initial command of ob-test-profile-analyze
 - pts-core: Fix for installing Ubuntu external dependencies in a headless mode
 - pts-core: Disable webui since it won't be ready until PTS 4.2
+- pts-core: External dependencies fix for SUSE Linux Enterprise Server 11
 - phodevi: Additional fall-back support when GPU driver doesn't expose all standard mode-setting modes
 - phodevi: Support for detecting and reading the version of the Cinnamon Desktop Environment
 - timed_screenshot: Overhaul of the timed screenshot PTS module
