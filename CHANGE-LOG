@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 4.0
+23 July 2012
 
 - pts-core: Initial implementation of the PTS4 Local Results Viewer
 - pts-core: Initial command of ob-test-profile-analyze
