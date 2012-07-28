@@ -205,5 +205,10 @@
 			<PackageName>subversion</PackageName>
 			<FileCheck>/usr/bin/svn</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>git</GenericName>
+			<PackageName>git</PackageName>
+			<FileCheck>/usr/bin/git</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

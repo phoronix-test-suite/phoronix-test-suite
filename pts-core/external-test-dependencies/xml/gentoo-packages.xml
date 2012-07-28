@@ -250,5 +250,10 @@
 			<PackageName>dev-vcs/subversion</PackageName>
 			<FileCheck>/usr/bin/svn</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>git</GenericName>
+			<PackageName>dev-vcs/git</PackageName>
+			<FileCheck>/usr/bin/git</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

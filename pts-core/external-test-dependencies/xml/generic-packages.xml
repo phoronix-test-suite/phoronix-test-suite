@@ -334,5 +334,11 @@
 			<PossibleNames>Subversion</PossibleNames>
 			<FileCheck>/usr/bin/svn</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>git</GenericName>
+			<Title>Git</Title>
+			<PossibleNames>git, git-core</PossibleNames>
+			<FileCheck>/usr/bin/git</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
