@@ -255,5 +255,10 @@
 			<PackageName>dev-vcs/git</PackageName>
 			<FileCheck>/usr/bin/git</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>superlu</GenericName>
+			<PackageName>sci-libs/superlu</PackageName>
+			<FileCheck>/usr/include/superlu</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

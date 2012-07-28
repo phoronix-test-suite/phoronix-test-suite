@@ -262,5 +262,10 @@
 			<PackageName>git-core</PackageName>
 			<FileCheck>/usr/bin/git</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>superlu</GenericName>
+			<PackageName>superlu</PackageName>
+			<FileCheck>/usr/include/superlu</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

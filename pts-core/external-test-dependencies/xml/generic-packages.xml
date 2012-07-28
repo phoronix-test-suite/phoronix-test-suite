@@ -340,5 +340,11 @@
 			<PossibleNames>git, git-core</PossibleNames>
 			<FileCheck>/usr/bin/git</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>superlu</GenericName>
+			<Title>SuperLU</Title>
+			<PossibleNames>superlu, libsuperlu3-dev</PossibleNames>
+			<FileCheck>/usr/include/superlu</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
