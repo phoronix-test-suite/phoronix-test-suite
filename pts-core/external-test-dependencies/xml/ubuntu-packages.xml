@@ -39,7 +39,7 @@
 		</Package>
 		<Package>
 			<GenericName>build-utilities</GenericName>
-			<PackageName>build-essential</PackageName>
+			<PackageName>build-essential autoconf</PackageName>
 			<FileCheck>/usr/share/build-essential</FileCheck>
 		</Package>
 		<Package>
@@ -292,6 +292,11 @@
 			<GenericName>superlu</GenericName>
 			<PackageName>libsuperlu3-dev</PackageName>
 			<FileCheck>/usr/include/superlu</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>libtool</GenericName>
+			<PackageName>libtool</PackageName>
+			<FileCheck>/usr/bin/libtool</FileCheck>
 		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
