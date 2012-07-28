@@ -252,5 +252,10 @@
 			<ArchitectureSpecific>x86_64</ArchitectureSpecific>
 			<FileCheck>/usr/lib/ia32el</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>subversion</GenericName>
+			<PackageName>subversion</PackageName>
+			<FileCheck>/usr/bin/svn</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

@@ -328,5 +328,11 @@
 			<PossibleNames>NVIDIA OpenCL, ATI Stream SDK, OpenCL SDK</PossibleNames>
 			<FileCheck>/usr/include/CL/cl.h OR /usr/include/OpenCL/cl.h OR /usr/local/cuda OR /usr/cuda</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>subversion</GenericName>
+			<Title>Subversion</Title>
+			<PossibleNames>Subversion</PossibleNames>
+			<FileCheck>/usr/bin/svn</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

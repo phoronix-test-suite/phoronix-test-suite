@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- pts-core: Add subversion as a PTS External Dependency
+
 Phoronix Test Suite 4.0
 23 July 2012
 

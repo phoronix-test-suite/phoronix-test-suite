@@ -240,5 +240,10 @@
 			<PackageName>libgmp-devel</PackageName>
 			<FileCheck>/usr/include/gmp.h</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>subversion</GenericName>
+			<PackageName>subversion</PackageName>
+			<FileCheck>/usr/bin/svn</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
