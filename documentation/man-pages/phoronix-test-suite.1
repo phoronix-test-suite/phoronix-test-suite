@@ -103,10 +103,10 @@ Display the installed system hardware and software sensors in real-time as detec
 This option will show details about the supplied test, suite, virtual suite, or result file.
 .TP
 .B list-available-suites
-This option will list all available test suites that are available from the enabled OpenBenchmarking.org repositories.
+This option will list all test suites that are available from the enabled OpenBenchmarking.org repositories.
 .TP
 .B list-available-tests
-This option will list all available test profiles that are available from the enabled OpenBenchmarking.org repositories.
+This option will list all test profiles that are available from the enabled OpenBenchmarking.org repositories.
 .TP
 .B list-available-virtual-suites
 This option will list all available virtual test suites that can be dynamically created based upon the available tests from enabled OpenBenchmarking.org repositories.
@@ -131,6 +131,9 @@ This option will list all of the saved test results found on the system.
 .TP
 .B list-test-usage
 This option will list various details about installed tests and their usage.
+.TP
+.B list-unsupported-tests
+This option will list all available test profiles that are available from the enabled OpenBenchmarking.org repositories but are NOT SUPPORTED on the given hardware/software platform. This is mainly a debugging option for those looking for test profiles to potentially port to new platforms, etc.
 .TP
 .SH ASSET CREATION
 .B debug-install [Test | Suite | OpenBenchmarking.org ID | Test Result]  ...
