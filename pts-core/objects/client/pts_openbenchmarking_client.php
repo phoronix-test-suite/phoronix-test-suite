@@ -566,6 +566,21 @@ class pts_openbenchmarking_client
 				// Looking for a particular test profile version?
 				if($version != null)
 				{
+					if(!in_array($version, $repo_index['suites'][$test]['versions']))
+					{
+						// Grep to see if the version passed was e.g. 1.3 instead of 1.3.3
+						$versions = $repo_index['suites'][$test]['versions'];
+						sort($versions);
+						foreach(array_reverse($versions) as $check_version)
+						{
+							if(strstr($check_version, $version) != false)
+							{
+								$version = $check_version;
+								break;
+							}
+						}
+					}
+
 					if(in_array($version, $repo_index['suites'][$test]['versions']))
 					{
 						pts_openbenchmarking_client::download_test_suite($repo . '/' . $test . '-' . $version);
