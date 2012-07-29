@@ -457,7 +457,7 @@ class pts_openbenchmarking_client
 			$version = substr($test, ($c + 1));
 
 			// TODO: functionalize this and read against types.xsd
-			if(isset($version[4]) && !isset($version[8]) && pts_strings::string_only_contains($version, (pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DECIMAL)))
+			if(isset($version[2]) && !isset($version[8]) && pts_strings::string_only_contains($version, (pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DECIMAL)))
 			{
 				$test = substr($test, 0, $c);
 			}
@@ -509,6 +509,21 @@ class pts_openbenchmarking_client
 				// Looking for a particular test profile version?
 				if($version != null)
 				{
+					if(!in_array($version, $repo_index['tests'][$test]['versions']))
+					{
+						// Grep to see if the version passed was e.g. 1.3 instead of 1.3.3
+						$versions = $repo_index['tests'][$test]['versions'];
+						sort($versions);
+						foreach(array_reverse($versions) as $check_version)
+						{
+							if(strstr($check_version, $version) != false)
+							{
+								$version = $check_version;
+								break;
+							}
+						}
+					}
+
 					if(in_array($version, $repo_index['tests'][$test]['versions']))
 					{
 						pts_openbenchmarking_client::download_test_profile($repo . '/' . $test . '-' . $version);
