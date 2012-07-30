@@ -943,6 +943,15 @@ class phodevi_gpu extends phodevi_device_interface
 				}
 			}
 		}
+		else if(phodevi::is_macosx())
+		{
+			$system_profiler_info = implode(' + ', phodevi_osx_parser::read_osx_system_profiler('SPDisplaysDataType', 'ChipsetModel', true));
+
+			if(!empty($system_profiler_info))
+			{
+				$info = $system_profiler_info;
+			}
+		}
 		else if(phodevi::is_nvidia_graphics())
 		{
 			if($info == null)
@@ -1034,15 +1043,6 @@ class phodevi_gpu extends phodevi_device_interface
 					$xorg_log = substr($xorg_log, 0, $e);
 					$info = substr($xorg_log, strrpos($xorg_log, 'Found ') + 6);
 				}
-			}
-		}
-		else if(phodevi::is_macosx())
-		{
-			$system_profiler_info = implode(' + ', phodevi_osx_parser::read_osx_system_profiler('SPDisplaysDataType', 'ChipsetModel', true));
-
-			if(!empty($system_profiler_info))
-			{
-				$info = $system_profiler_info;
 			}
 		}
 		else if(phodevi::is_windows())
