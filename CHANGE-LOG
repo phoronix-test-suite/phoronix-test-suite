@@ -11,6 +11,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add libtool as a PTS External Dependency
 - phodevi: Fix memory RAM DIMM count detection in select configurations
 - phodevi: Intel GPU string reporting improvement
+- phodevi: Support for detecting multiple GPUs on Apple OS X
 
 Phoronix Test Suite 4.0
 23 July 2012

@@ -1036,6 +1036,15 @@ class phodevi_gpu extends phodevi_device_interface
 				}
 			}
 		}
+		else if(phodevi::is_macosx())
+		{
+			$system_profiler_info = implode(' + ', phodevi_osx_parser::read_osx_system_profiler('SPDisplaysDataType', 'ChipsetModel', true));
+
+			if(!empty($system_profiler_info))
+			{
+				$info = $system_profiler_info;
+			}
+		}
 		else if(phodevi::is_windows())
 		{
 			$info = phodevi_windows_parser::read_cpuz('Display Adapters', 'Name');
@@ -1043,10 +1052,6 @@ class phodevi_gpu extends phodevi_device_interface
 	
 		if(empty($info) || strpos($info, 'Mesa ') !== false || strpos($info, 'Gallium ') !== false)
 		{
-			if(phodevi::is_macosx())
-			{
-				$info = phodevi_osx_parser::read_osx_system_profiler('SPDisplaysDataType', 'ChipsetModel');
-			}
 			if(phodevi::is_windows() == false)
 			{
 				$info_pci = phodevi_linux_parser::read_pci('VGA compatible controller', false);
