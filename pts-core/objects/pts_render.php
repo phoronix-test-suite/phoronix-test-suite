@@ -498,6 +498,11 @@ class pts_render
 						}
 					}
 
+					if(!isset($unique_compiler_data[1]))
+					{
+						break;
+					}
+
 					if(($c0 = count($unique_compiler_data[0])) < ($c1 = count($unique_compiler_data[1])))
 					{
 						for($i = 0; $i < ($c1 - $c0); $i++)

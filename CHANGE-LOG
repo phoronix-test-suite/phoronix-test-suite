@@ -9,6 +9,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add git as a PTS External Dependency
 - pts-core: Add superlu as a PTS External Dependency
 - pts-core: Add libtool as a PTS External Dependency
+- phodevi: Intel GPU string reporting improvement
 
 Phoronix Test Suite 4.0
 23 July 2012

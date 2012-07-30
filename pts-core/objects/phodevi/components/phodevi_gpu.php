@@ -1055,7 +1055,7 @@ class phodevi_gpu extends phodevi_device_interface
 				{
 					$info = $info_pci;
 
-					if(strpos($info, 'Intel 2nd Generation Core Family') !== false)
+					if(strpos($info, 'Intel 2nd Generation Core Family') !== false || strpos($info, 'Gen Core') !== false)
 					{
 						// Try to come up with a better non-generic string
 						$was_reset = false;
