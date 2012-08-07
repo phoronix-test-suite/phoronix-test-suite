@@ -90,6 +90,10 @@ class phodevi_gpu extends phodevi_device_interface
 			{
 				$accel_2d = 'UXA';
 			}
+			else if(strpos($xorg_log, 'Gallium3D XA'))
+			{
+				$accel_2d = 'Gallium3D XA';
+			}
 			else if(strpos($xorg_log, 'shadowfb'))
 			{
 				$accel_2d = 'ShadowFB';

@@ -12,6 +12,7 @@ Phoronix Test Suite (Git)
 - phodevi: Fix memory RAM DIMM count detection in select configurations
 - phodevi: Intel GPU string reporting improvement
 - phodevi: Support for detecting multiple GPUs on Apple OS X
+- phodevi: Support for detecting Gallium3D XA
 
 Phoronix Test Suite 4.0
 23 July 2012
