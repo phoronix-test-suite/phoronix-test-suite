@@ -9,6 +9,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add git as a PTS External Dependency
 - pts-core: Add superlu as a PTS External Dependency
 - pts-core: Add libtool as a PTS External Dependency
+- pts-core: Hash within the result file all of the contained tests
 - phodevi: Fix memory RAM DIMM count detection in select configurations
 - phodevi: Intel GPU string reporting improvement
 - phodevi: Support for detecting multiple GPUs on Apple OS X
