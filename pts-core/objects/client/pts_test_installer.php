@@ -558,7 +558,7 @@ class pts_test_installer
 						unset($compiler_options[$i]);
 					}
 
-					if($option[1] == 'l')
+					if(isset($option[1]) && $option[1] == 'l')
 					{
 						// If you're linking a library it's also useful for other purposes
 						$library = substr($option, 1);
