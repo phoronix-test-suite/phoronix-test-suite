@@ -14,6 +14,7 @@ Phoronix Test Suite (Git)
 - phodevi: Intel GPU string reporting improvement
 - phodevi: Support for detecting multiple GPUs on Apple OS X
 - phodevi: Support for detecting Gallium3D XA
+- phodevi: Support for llvm-link introduced in LLVM 3.2svn
 
 Phoronix Test Suite 4.0
 23 July 2012

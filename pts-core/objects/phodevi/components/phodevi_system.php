@@ -588,11 +588,13 @@ class phodevi_system extends phodevi_device_interface
 			$compilers['clang'] = $compiler_info;
 		}
 
-		if(pts_client::executable_in_path('llvm-ld'))
+		if(($llvm_ld = pts_client::executable_in_path('llvm-link')) || ($llvm_ld = pts_client::executable_in_path('llvm-ld')))
 		{
 			// LLVM - Low Level Virtual Machine
 			// Reading the version from llvm-ld (the LLVM linker) should be safe as well for finding out version of LLVM in use
-			$info = trim(shell_exec('llvm-ld -version 2> /dev/null'));
+			// As of LLVM 3.2svn, llvm-ld seems to be llvm-link
+
+			$info = trim(shell_exec($llvm_ld . ' -version 2> /dev/null'));
 
 			if(($s = strpos($info, 'version')) != false)
 			{
