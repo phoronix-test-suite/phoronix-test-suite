@@ -431,6 +431,7 @@ class pts_test_execution
 
 		if($report_elapsed_time && pts_client::do_anonymous_usage_reporting() && $time_test_elapsed >= 60)
 		{
+			// If anonymous usage reporting enabled, report test run-time to OpenBenchmarking.org
 			pts_openbenchmarking_client::upload_usage_data('test_complete', array($test_run_request, $time_test_elapsed));
 		}
 

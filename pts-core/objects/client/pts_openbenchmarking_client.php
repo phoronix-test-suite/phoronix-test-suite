@@ -662,6 +662,11 @@ class pts_openbenchmarking_client
 	{
 		switch($task)
 		{
+			case 'test_install':
+				list($test_install, $time_elapsed) = $data;
+				$upload_data = array('test_identifier' => $test_install->test_profile->get_identifier(), 'test_version' => $test_install->test_profile->get_test_profile_version(), 'elapsed_time' => $time_elapsed);
+				pts_network::http_upload_via_post(pts_openbenchmarking::openbenchmarking_host() . 'extern/statistics/report-test-install.php', $upload_data);
+				break;
 			case 'test_complete':
 				list($test_result, $time_elapsed) = $data;
 				$upload_data = array('test_identifier' => $test_result->test_profile->get_identifier(), 'test_version' => $test_result->test_profile->get_test_profile_version(), 'elapsed_time' => $time_elapsed);
