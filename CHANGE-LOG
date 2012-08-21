@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 4.0.1
+21 August 2012
 
 - pts-core: Allow shortened test profile versions inputted by user to be expanded to matching latest version in stream
 - pts-core: Allow shortened test suite versions inputted by user to be expanded to matching latest version in stream
@@ -15,7 +16,7 @@ Phoronix Test Suite (Git)
 - phodevi: Intel GPU string reporting improvement
 - phodevi: Support for detecting multiple GPUs on Apple OS X
 - phodevi: Support for detecting Gallium3D XA
-- phodevi: Support for llvm-link introduced in LLVM 3.2svn
+- phodevi: Support for llvm-link on LLVM 3.2svn
 
 Phoronix Test Suite 4.0
 23 July 2012
