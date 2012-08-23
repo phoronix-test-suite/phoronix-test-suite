@@ -406,7 +406,7 @@ class phodevi_system extends phodevi_device_interface
 			{
 				$modinfo = trim(shell_exec('modinfo -F version vboxguest 2> /dev/null'));
 
-				if($modinfo != null && pts_strings::is_version($modinfo))
+				if($modinfo != null && pts_strings::is_version(str_ireplace(array('_', 'RC', 'beta'), null, $modinfo)))
 				{
 					$virtualized .= ' ' . $modinfo;
 				}

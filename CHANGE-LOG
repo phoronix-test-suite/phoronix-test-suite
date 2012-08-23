@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Support download caches at /media/*/*/download-cache/
+- phodevi: Support for reading the VirtualBox version of Beta/RC versions
 
 Phoronix Test Suite 4.0.1
 21 August 2012
