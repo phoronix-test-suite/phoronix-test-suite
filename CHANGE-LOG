@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- pts-core: Support download caches at /media/*/*/download-cache/
+
 Phoronix Test Suite 4.0.1
 21 August 2012
 
