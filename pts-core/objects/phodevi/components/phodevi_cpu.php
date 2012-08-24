@@ -241,6 +241,14 @@ class phodevi_cpu extends phodevi_device_interface
 				}
 
 				$info = $cpu_strings[0];
+
+				if(strpos($info, 'ARM') !== false)
+				{
+					if(is_dir('/sys/devices/system/exynos-core/') && stripos($info, 'Exynos') === false)
+					{
+						$info = 'Exynos ' . $info;
+					}
+				}
 			}
 			else if($physical_cpu_count > 1 && count($cpu_strings_unique) == 1)
 			{

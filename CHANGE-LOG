@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 - pts-core: Support download caches at /media/*/*/download-cache/
 - pts-core: For external dependency handling, treat Linaro as Ubuntu
 - phodevi: Support for reading the VirtualBox version of Beta/RC versions
+- phodevi: Better support detection for Exynos ARM cores
 
 Phoronix Test Suite 4.0.1
 21 August 2012
