@@ -487,7 +487,7 @@ class pts_render
 					$key = array_pop($key);
 				}
 
-				if(isset($diff[$key]))
+				if(isset($key) && isset($diff[$key]))
 				{
 					$unique_compiler_data = array();
 					foreach($json as $identifier => &$data)

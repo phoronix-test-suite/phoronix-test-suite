@@ -231,6 +231,7 @@ class pts_client
 			'VIDEO_RESOLUTION' => phodevi::read_property('gpu', 'screen-resolution-string'),
 			'VIDEO_CARD' => phodevi::read_name('gpu'),
 			'VIDEO_DRIVER' => phodevi::read_property('system', 'display-driver-string'),
+			'OPENGL_DRIVER' => str_replace('(', '', phodevi::read_property('system', 'opengl-driver')),
 			'OPERATING_SYSTEM' => phodevi::read_property('system', 'operating-system'),
 			'PROCESSOR' => phodevi::read_name('cpu'),
 			'MOTHERBOARD' => phodevi::read_name('motherboard'),
