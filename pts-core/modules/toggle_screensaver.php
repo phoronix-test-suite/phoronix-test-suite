@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2011, Phoronix Media
-	Copyright (C) 2008 - 2011, Michael Larabel
+	Copyright (C) 2008 - 2012, Phoronix Media
+	Copyright (C) 2008 - 2012, Michael Larabel
 	toggle_screensaver.php: A module to toggle the screensaver while tests are running on GNOME
 
 	This program is free software; you can redistribute it and/or modify
@@ -24,7 +24,7 @@
 class toggle_screensaver extends pts_module_interface
 {
 	const module_name = 'Toggle Screensaver';
-	const module_version = '1.4.0';
+	const module_version = '1.4.1';
 	const module_description = 'This module toggles the system\'s screensaver while the Phoronix Test Suite is running. At this time, the GNOME and KDE screensavers are supported.';
 	const module_author = 'Phoronix Media';
 
@@ -35,6 +35,7 @@ class toggle_screensaver extends pts_module_interface
 	static $gnome3_screensaver_halted = false;
 	static $kde_screensaver_halted = false;
 	static $gnome_gconftool = false;
+	static $xfce_screensaver_halted = false;
 	static $sleep_display_ac = false;
 
 	public static function module_environmental_variables()
@@ -111,13 +112,23 @@ class toggle_screensaver extends pts_module_interface
 				self::$sleep_display_ac = $is_gnome3_sleep;
 			}
 		}
+		if(pts_client::executable_in_path('xfconf-query'))
+		{
+			$is_xfce_screensaver_enabled = stripos(shell_exec('xfconf-query -c xfce4-session -p /startup/screensaver/enabled 2>&1'), 'false') !== false;
+
+			if($is_xfce_screensaver_enabled)
+			{
+				shell_exec('xfconf-query -c xfce4-session -n -t bool -p /startup/screensaver/enabled -s false 2>&1');
+				self::$xfce_screensaver_halted = true;
+			}
+		}
 
 		if(getenv('DISPLAY') != false && (self::$xset = pts_client::executable_in_path('xset')))
 		{
 			shell_exec('xset s off');
 		}
 
-		if(self::$gnome2_screensaver_halted || self::$gnome3_screensaver_halted || self::$kde_screensaver_halted)
+		if(self::$gnome2_screensaver_halted || self::$gnome3_screensaver_halted || self::$kde_screensaver_halted || self::$xfce_screensaver_halted)
 		{
 			self::$screensaver_halted = true;
 		}
@@ -151,6 +162,10 @@ class toggle_screensaver extends pts_module_interface
 		{
 			// Restore the GNOME Screensaver
 			shell_exec('gsettings set org.gnome.desktop.screensaver idle-activation-enabled true 2>&1');
+		}
+		if(self::$xfce_screensaver_halted)
+		{
+			shell_exec('xfconf-query -c xfce4-session -n -t bool -p /startup/screensaver/enabled -s true 2>&1');
 		}
 		if(self::$kde_screensaver_halted == true)
 		{

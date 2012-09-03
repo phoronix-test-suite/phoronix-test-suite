@@ -545,7 +545,7 @@ class phodevi
 	}
 	public static function is_product_string($product)
 	{
-		return phodevi::is_vendor_string($product) && !pts_strings::has_in_istring($product, array('VBOX', 'QEMU', 'Virtual', 'Family', '440BX'));
+		return phodevi::is_vendor_string($product) && !pts_strings::has_in_istring($product, array('VBOX', 'QEMU', 'Virtual', 'Family', '440BX', 'VMware', ' Gen', 'Core IGP'));
 	}
 	public static function operating_system()
 	{
