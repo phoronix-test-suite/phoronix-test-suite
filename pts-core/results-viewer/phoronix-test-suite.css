@@ -20,8 +20,8 @@ div#pts_container
 	text-align: left;
 	min-width: 940px;
 	background: #FFF;
-	width: 88%;
-	margin: 30px auto;
+	width: auto;
+	margin: 60px;
 	overflow: hidden;
 	border: 1px solid #D7D7D7;
 	box-shadow: 1px 1px 4px #000;

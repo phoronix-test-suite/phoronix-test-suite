@@ -41,6 +41,15 @@ if(!PTS_IS_CLIENT)
 	return;
 }
 
+define('IS_PTS_WEB_INTERFACE', php_sapi_name() == 'cli-server');
+
+if(IS_PTS_WEB_INTERFACE == 'cli-server')
+{
+	$argv = array();
+	$argv[1] = 'webui';
+	$argc = count($argv);
+}
+
 // Default to C locale
 setlocale(LC_ALL, 'C');
 
@@ -82,7 +91,7 @@ $sent_command = strtolower(str_replace('-', '_', (isset($argv[1]) ? $argv[1] : n
 $quick_start_options = array('dump_possible_options');
 define('QUICK_START', in_array($sent_command, $quick_start_options));
 
-if(QUICK_START == false)
+if(QUICK_START == false && IS_PTS_WEB_INTERFACE == false)
 {
 	pts_client::program_requirement_checks(true);
 }
@@ -128,7 +137,7 @@ if(is_file(PTS_PATH . 'pts-core/commands/' . $sent_command . '.php') == false)
 
 define('PTS_USER_LOCK', PTS_USER_PATH . 'run_lock');
 
-if(QUICK_START == false)
+if(QUICK_START == false && IS_PTS_WEB_INTERFACE == false)
 {
 	if(pts_client::create_lock(PTS_USER_LOCK) == false)
 	{
@@ -149,7 +158,7 @@ for($i = 2; $i < $argc && isset($argv[$i]); $i++)
 	array_push($pass_args, $argv[$i]);
 }
 
-if(QUICK_START == false)
+if(QUICK_START == false && IS_PTS_WEB_INTERFACE == false)
 {
 	pts_client::user_agreement_check($sent_command);
 	pts_client::user_hardware_software_reporting();

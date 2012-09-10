@@ -20,6 +20,9 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+
+// chromium-browser --incognito --temp-profile --kiosk --app=
+
 class webui implements pts_option_interface
 {
 	const doc_skip = true; // TODO XXX: cleanup this code before formally advertising this...
@@ -28,7 +31,7 @@ class webui implements pts_option_interface
 
 	public static function run($r)
 	{
-		return false; // This won't be formally ready for PTS 4.0 Suldal
+		//return false; // This won't be formally ready for PTS 4.0 Suldal
 		if(PHP_VERSION_ID < 50400)
 		{
 			echo 'Running an unsupported PHP version. PHP 5.4+ is required to use this feature.' . PHP_EOL . PHP_EOL;
@@ -40,8 +43,13 @@ class webui implements pts_option_interface
 			return false;
 		}
 
-		$chrome = pts_client::executable_in_path('chromium-browser');
+		echo '<pre>';
+		echo 'Hardware:' . PHP_EOL . phodevi::system_hardware(true) . PHP_EOL . PHP_EOL;
+		echo 'Software:' . PHP_EOL . phodevi::system_software(true) . PHP_EOL . PHP_EOL;
+		echo '</pre>';
 
+		/*
+		$chrome = pts_client::executable_in_path('chromium-browser');
 		if($chrome)
 		{
 			$pid = pcntl_fork();
@@ -58,7 +66,8 @@ class webui implements pts_option_interface
 			{
 				echo shell_exec(getenv('PHP_BIN') . ' -S localhost:2300 test.php');
 			}
-		}
+		}*/
+
 	}
 }
 
