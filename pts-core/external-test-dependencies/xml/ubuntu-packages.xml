@@ -25,7 +25,7 @@
 		<Package>
 			<GenericName>glut</GenericName>
 			<PackageName>freeglut3-dev</PackageName>
-			<FileCheck>/usr/lib/libglut.so.3, /usr/include/GL/glut.h</FileCheck>
+			<FileCheck>/usr/include/GL/glut.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>csh</GenericName>
