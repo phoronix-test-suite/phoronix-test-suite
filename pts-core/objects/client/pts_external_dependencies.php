@@ -254,7 +254,7 @@ class pts_external_dependencies
 					$add_dependency = empty($file_check[$i]) || self::file_missing_check($file_check[$i]);
 					$arch_compliant = empty($arch_specific[$i]) || in_array($kernel_architecture, pts_strings::comma_explode($arch_specific[$i]));
 
-					if($add_dependency && $arch_compliant)
+					if($add_dependency && $arch_compliant && $distro_package[$i] != null)
 					{
 						if(!in_array($distro_package[$i], $needed_os_packages))
 						{
