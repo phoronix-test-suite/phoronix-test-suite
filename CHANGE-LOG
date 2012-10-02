@@ -8,6 +8,8 @@ Phoronix Test Suite (Git)
 - pts-core: Check for null distribution-specific external dependency package names
 - phodevi: Support for reading the VirtualBox version of Beta/RC versions
 - phodevi: Better support detection for Exynos ARM cores
+- phodevi: Initial support for reading node power over IPMI
+- phodevi: Initial support for reading core temperature over IPMI
 - toggle_screensaver: Support for module disabling the Xfce4 desktop screensaver using xfconf-query
 
 Phoronix Test Suite 4.0.1

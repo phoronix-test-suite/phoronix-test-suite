@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2011, Phoronix Media
-	Copyright (C) 2009 - 2011, Michael Larabel
+	Copyright (C) 2009 - 2012, Phoronix Media
+	Copyright (C) 2009 - 2012, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -112,6 +112,16 @@ class cpu_temp implements phodevi_sensor
 				if($sensors != false && is_numeric($sensors) && $sensors > 0)
 				{
 					$temp_c = $sensors;
+				}
+			}
+
+			if(pts_client::executable_in_path('ipmitool'))
+			{
+				$ipmi = phodevi_linux_parser::read_ipmitool_sensor('Temp 0');
+
+				if($ipmi > 0 && is_numeric($ipmi))
+				{
+					$temp_c = $ipmi;
 				}
 			}
 		}

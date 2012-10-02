@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2011, Phoronix Media
-	Copyright (C) 2009 - 2011, Michael Larabel
+	Copyright (C) 2009 - 2012, Phoronix Media
+	Copyright (C) 2009 - 2012, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -25,6 +25,7 @@ class sys_power implements phodevi_sensor
 	private static $battery_sys = false;
 	private static $battery_cur = false;
 	private static $wattsup_meter = false;
+	private static $ipmitool = false;
 
 	public static function get_type()
 	{
@@ -44,7 +45,7 @@ class sys_power implements phodevi_sensor
 		{
 			$unit = 'microAmps';
 		}
-		else if(self::$wattsup_meter)
+		else if(self::$wattsup_meter || self::$ipmitool)
 		{
 			$unit = 'Watts';
 		}
@@ -77,6 +78,17 @@ class sys_power implements phodevi_sensor
 				return true;
 			}
 		}
+
+		if(pts_client::executable_in_path('ipmitool'))
+		{
+			$ipmi_read = phodevi_linux_parser::read_ipmitool_sensor('Node Power');
+
+			if($ipmi_read > 0 && is_numeric($ipmi_read))
+			{
+				self::$ipmitool = true;
+				return true;
+			}
+		}
 	}
 	public static function read_sensor()
 	{
@@ -91,6 +103,10 @@ class sys_power implements phodevi_sensor
 		else if(self::$wattsup_meter)
 		{
 			return self::watts_up_power_meter();
+		}
+		else if(self::$ipmitool)
+		{
+			return phodevi_linux_parser::read_ipmitool_sensor('Node Power');
 		}
 	}
 	private static function watts_up_power_meter()

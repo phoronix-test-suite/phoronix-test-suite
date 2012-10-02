@@ -23,6 +23,28 @@
 
 class phodevi_linux_parser
 {
+	public static function read_ipmitool_sensor($sensor)
+	{
+		$value = false;
+		$ipmitool = shell_exec('ipmitool sdr list 2>&1');
+
+		$hit = stripos($ipmitool, $sensor);
+
+		if($hit !== false)
+		{
+			$trimmed = substr($ipmitool, ($hit + strlen($sensor)));
+			$trimmed = substr($trimmed, 0, strpos($trimmed, PHP_EOL));
+			$trimmed = explode('|', $trimmed);
+
+			if(count($trimmed) == 3)
+			{
+				$value = explode(' ', trim($trimmed[1]));
+				$value = $value[0];
+			}
+		}
+
+		return $value;
+	}
 	public static function read_sysfs_node($search, $type = 'NUMERIC', $node_dir_check = null, $find_position = 1)
 	{
 		static $sysfs_file_cache = null;
