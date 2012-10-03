@@ -417,7 +417,7 @@ class pts_pdf_template extends FPDF
 		$this->_newobj();
 		$this->pdf_bookmarks_outline_object_n = $this->n;
 		$this->_out('<</Type /Outlines /First ' . $n . ' 0 R');
-		$this->_out('/Last ' . ($n + $ls[0]) . ' 0 R>>');
+		$this->_out('/Last ' . ($n + (isset($ls[0]) ? $ls[0] : 0)) . ' 0 R>>');
 		$this->_out('endobj');
 	}
 	public function _putresources()
