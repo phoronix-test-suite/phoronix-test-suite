@@ -42,6 +42,12 @@ class phodevi_memory extends phodevi_device_interface
 		$mem_string = null;
 		$mem_prefix = null;
 
+		$mem_size = false;
+		$mem_speed = false;
+		$mem_type = false;
+		$mem_manufacturer = false;
+		$mem_part = false;
+
 		if(phodevi::is_macosx())
 		{
 			$mem_size = phodevi_osx_parser::read_osx_system_profiler('SPMemoryDataType', 'Size', true, array('Empty'));
@@ -83,12 +89,8 @@ class phodevi_memory extends phodevi_device_interface
 			$mem_size = phodevi_linux_parser::read_dmidecode('memory', 'Memory Device', 'Size', false, array('Not Installed', 'No Module Installed'));
 			$mem_speed = phodevi_linux_parser::read_dmidecode('memory', 'Memory Device', 'Speed', true, 'Unknown');
 			$mem_type = phodevi_linux_parser::read_dmidecode('memory', 'Memory Device', 'Type', true, array('Unknown', 'Other'));
-		}
-		else
-		{
-			$mem_size = false;
-			$mem_speed = false;
-			$mem_type = false;
+			$mem_manufacturer = phodevi_linux_parser::read_dmidecode('memory', 'Memory Device', 'Manufacturer', false, array('Unknown'));
+			$mem_part = phodevi_linux_parser::read_dmidecode('memory', 'Memory Device', 'Part Number', false, array('Unknown'));
 		}
 
 		if(is_array($mem_type))
@@ -178,7 +180,29 @@ class phodevi_memory extends phodevi_device_interface
 					$mem_count = phodevi::read_property('memory', 'capacity') / $mem_size[0];
 				}
 
-				$mem_string = $mem_count . ' x ' . $mem_size[0] . ' ' . $mem_prefix;
+				$product_string = null;
+
+				if(is_array($mem_manufacturer) && count(array_unique($mem_manufacturer)) == 1)
+				{
+					$mem_manufacturer = array_pop($mem_manufacturer);
+
+					if(!empty($mem_manufacturer))
+					{
+						$product_string .= ' ' . $mem_manufacturer;
+					}
+				}
+
+				if(is_array($mem_part) && count(array_unique($mem_part)) == 1)
+				{
+					$mem_part = array_pop($mem_part);
+
+					if(!empty($mem_part))
+					{
+						$product_string .= ' ' . $mem_part;
+					}
+				}
+
+				$mem_string = $mem_count . ' x ' . $mem_size[0] . ' ' . $mem_prefix . $product_string;
 			}
 		}
 
