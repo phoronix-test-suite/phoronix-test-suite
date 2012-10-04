@@ -12,6 +12,7 @@ Phoronix Test Suite (Git)
 - phodevi: Initial support for reading core temperature over IPMI
 - phodevi: On Linux attempt to determine the install RAM's vendor and product part number
 - toggle_screensaver: Support for module disabling the Xfce4 desktop screensaver using xfconf-query
+- pts_Graph: Fix for vertical/rotated text in SVG -> GD translation
 
 Phoronix Test Suite 4.0.1
 21 August 2012

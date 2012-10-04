@@ -216,6 +216,18 @@ class pts_svg_dom_gd
 						$rotate = substr($a['transform'], 7);
 						$rotate = substr($rotate, 0, strpos($rotate, ' '));
 						// $rotate this should be the rotation degree in SVG
+
+						if($rotate != 0)
+						{
+							$rotate += 180;
+						}
+
+						switch($a['text-anchor'])
+						{
+							case 'middle':
+								$a['y'] -= round($box_width / 2);
+								break;
+						}
 					}
 					else
 					{
