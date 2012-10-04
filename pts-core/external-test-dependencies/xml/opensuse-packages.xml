@@ -22,6 +22,11 @@
 			<FileCheck>/usr/include/GL/glut.h</FileCheck>
 		</Package>
 		<Package>
+			<GenericName>openssl-development</GenericName>
+			<PackageName>openssl-devel</PackageName>
+			<FileCheck>/usr/include/openssl/</FileCheck>
+		</Package>
+		<Package>
 			<GenericName>csh</GenericName>
 			<PackageName>tcsh</PackageName>
 			<FileCheck>/bin/csh</FileCheck>

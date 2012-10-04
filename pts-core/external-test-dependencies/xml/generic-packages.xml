@@ -40,6 +40,12 @@
 			<FileCheck>/usr/include/libpng12/png.h</FileCheck>
 		</Package>
 		<Package>
+			<GenericName>openssl-development</GenericName>
+			<Title>OpenSSL Development Files</Title>
+			<PossibleNames>libssl-dev, openssl-devel</PossibleNames>
+			<FileCheck>/usr/include/openssl/</FileCheck>
+		</Package>
+		<Package>
 			<GenericName>build-utilities</GenericName>
 			<Title>Compiler / Development Libraries</Title>
 			<PossibleNames>gcc</PossibleNames>

@@ -36,6 +36,11 @@
 			<FileCheck>/usr/bin/X</FileCheck>
 		</Package>
 		<Package>
+			<GenericName>openssl-development</GenericName>
+			<PackageName>openssl</PackageName>
+			<FileCheck>/usr/include/openssl/</FileCheck>
+		</Package>
+		<Package>
 			<GenericName>bison</GenericName>
 			<PackageName>bison</PackageName>
 			<FileCheck>/usr/bin/bison</FileCheck>

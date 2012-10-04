@@ -38,6 +38,11 @@
 			<FileCheck>/usr/include/libpng12/png.h</FileCheck>
 		</Package>
 		<Package>
+			<GenericName>openssl-development</GenericName>
+			<PackageName>libssl-dev</PackageName>
+			<FileCheck>/usr/include/openssl/sha.h</FileCheck>
+		</Package>
+		<Package>
 			<GenericName>build-utilities</GenericName>
 			<PackageName>build-essential autoconf</PackageName>
 			<FileCheck>/usr/share/build-essential</FileCheck>

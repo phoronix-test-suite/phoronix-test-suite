@@ -98,7 +98,7 @@ class pts_test_nye_XmlReader extends nye_XmlReader
 		}
 		$test_extends = $this->getXmlValue('PhoronixTestSuite/TestProfile/Extends');
 
-		if(!empty($test_extends))
+		if(!empty($test_extends) && PTS_IS_CLIENT)
 		{
 			$test_extends = pts_openbenchmarking::evaluate_string_to_qualifier($test_extends, true, 'test');
 			$test_below_parser = new pts_test_nye_XmlReader($test_extends);

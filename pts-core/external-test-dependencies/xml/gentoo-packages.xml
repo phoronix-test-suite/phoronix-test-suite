@@ -21,6 +21,11 @@
 			<FileCheck>/usr/lib/libglut.so.3 OR /usr/lib64/libglut.so.3, /usr/include/GL/glut.h</FileCheck>
 		</Package>
 		<Package>
+			<GenericName>openssl-development</GenericName>
+			<PackageName>dev-libs/openssl</PackageName>
+			<FileCheck>/usr/include/openssl/</FileCheck>
+		</Package>
+		<Package>
 			<GenericName>cairo-development</GenericName>
 			<PackageName>x11-libs/cairo</PackageName>
 			<FileCheck>/usr/include/cairo/cairo.h</FileCheck>

@@ -7,6 +7,7 @@ Phoronix Test Suite (Git)
 - pts-core: For external dependency handling, treat Linaro as Ubuntu
 - pts-core: Check for null distribution-specific external dependency package names
 - pts-core: Formatting improvements to result-file-to-text output
+- pts-core: Add openssl-development as a new test external dependency
 - phodevi: Support for reading the VirtualBox version of Beta/RC versions
 - phodevi: Better support detection for Exynos ARM cores
 - phodevi: Initial support for reading node power over IPMI
