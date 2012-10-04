@@ -191,12 +191,12 @@ class phodevi_memory extends phodevi_device_interface
 
 				$product_string = null;
 
-				if(!empty($mem_manufacturer) && stripos($mem_manufacturer, 'manufacturer') === false)
+				if(!empty($mem_manufacturer) && stripos($mem_manufacturer, 'manufacturer') === false && isset($mem_manufacturer[2]) && ctype_alpha($mem_manufacturer))
 				{
 					$product_string .= ' ' . $mem_manufacturer;
 				}
 
-				if(!empty($mem_part) && stripos($mem_manufacturer, 'part') === false)
+				if(!empty($mem_part) && stripos($mem_manufacturer, 'part') === false && substr($mem_part, 0, 2) != '0x' && !isset($mem_part[24]))
 				{
 					$product_string .= ' ' . $mem_part;
 				}
