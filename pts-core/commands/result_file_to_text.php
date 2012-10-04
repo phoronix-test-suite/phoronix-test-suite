@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2011, Phoronix Media
-	Copyright (C) 2009 - 2011, Michael Larabel
+	Copyright (C) 2009 - 2012, Phoronix Media
+	Copyright (C) 2009 - 2012, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -53,17 +53,17 @@ class result_file_to_text implements pts_option_interface
 		{
 			$result_output .= trim($result_object->test_profile->get_title() . ' ' . $result_object->test_profile->get_app_version() . PHP_EOL . $result_object->get_arguments_description());
 
-			foreach($result_object->test_result_buffer->get_buffer_items() as $buffer_item)
+			if($result_object->test_profile->get_result_scale() != null)
 			{
-				$result_output .= PHP_EOL . $buffer_item->get_result_identifier() . ': ' . $buffer_item->get_result_value();
+				$result_output .= PHP_EOL . '  ' .  $result_object->test_profile->get_result_scale();
 			}
 
-			$result_output .= PHP_EOL;
-			for($i = 0; $i < count($test_identifiers); $i++)
+			foreach($result_object->test_result_buffer->get_buffer_items() as $buffer_item)
 			{
-				$result_output .= $test_identifiers[$i] . ': ' . $test_values[$i] . PHP_EOL;
+				$result_output .= PHP_EOL . '    ' . $buffer_item->get_result_identifier() . ': ' . $buffer_item->get_result_value();
 			}
-			$result_output .= PHP_EOL;
+
+			$result_output .= PHP_EOL . PHP_EOL;
 		}
 
 		/*
