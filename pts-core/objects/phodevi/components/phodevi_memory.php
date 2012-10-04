@@ -89,8 +89,8 @@ class phodevi_memory extends phodevi_device_interface
 			$mem_size = phodevi_linux_parser::read_dmidecode('memory', 'Memory Device', 'Size', false, array('Not Installed', 'No Module Installed'));
 			$mem_speed = phodevi_linux_parser::read_dmidecode('memory', 'Memory Device', 'Speed', true, 'Unknown');
 			$mem_type = phodevi_linux_parser::read_dmidecode('memory', 'Memory Device', 'Type', true, array('Unknown', 'Other'));
-			$mem_manufacturer = phodevi_linux_parser::read_dmidecode('memory', 'Memory Device', 'Manufacturer', false, array('Unknown'));
-			$mem_part = phodevi_linux_parser::read_dmidecode('memory', 'Memory Device', 'Part Number', false, array('Unknown'));
+			$mem_manufacturer = phodevi_linux_parser::read_dmidecode('memory', 'Memory Device', 'Manufacturer', true, array('Unknown'));
+			$mem_part = phodevi_linux_parser::read_dmidecode('memory', 'Memory Device', 'Part Number', true, array('Unknown'));
 		}
 
 		if(is_array($mem_type))
@@ -182,24 +182,14 @@ class phodevi_memory extends phodevi_device_interface
 
 				$product_string = null;
 
-				if(is_array($mem_manufacturer) && count(array_unique($mem_manufacturer)) == 1)
+				if(!empty($mem_manufacturer) && stripos($mem_manufacturer, 'manufacturer') === false)
 				{
-					$mem_manufacturer = array_pop($mem_manufacturer);
-
-					if(!empty($mem_manufacturer))
-					{
-						$product_string .= ' ' . $mem_manufacturer;
-					}
+					$product_string .= ' ' . $mem_manufacturer;
 				}
 
-				if(is_array($mem_part) && count(array_unique($mem_part)) == 1)
+				if(!empty($mem_part) && stripos($mem_manufacturer, 'part') === false)
 				{
-					$mem_part = array_pop($mem_part);
-
-					if(!empty($mem_part))
-					{
-						$product_string .= ' ' . $mem_part;
-					}
+					$product_string .= ' ' . $mem_part;
 				}
 
 				$mem_string = $mem_count . ' x ' . $mem_size[0] . ' ' . $mem_prefix . $product_string;
