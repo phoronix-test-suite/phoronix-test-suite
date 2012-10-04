@@ -126,6 +126,15 @@ class phodevi_memory extends phodevi_device_interface
 				}
 			}
 
+			foreach($mem_size as $i => $mem_stick)
+			{
+				if(!is_numeric(substr($mem_stick, 0, 3)))
+				{
+					// If the memory size isn't at least three digits (basically 128MB+), chances are something is wrong, i.e. reporting flash chip from dmidecode, so get rid of it.
+					unset($mem_size[$i]);
+				}
+			}
+
 			$mem_count = count($mem_size);
 
 			if(!empty($mem_type))
