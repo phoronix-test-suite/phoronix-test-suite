@@ -545,7 +545,7 @@ class pts_openbenchmarking_client
 							{
 								$version = $v;
 
-								if($i > 0)
+								if($i > 0 && (pts_c::$test_flags ^ pts_c::batch_mode))
 								{
 									// It's not the latest test profile version available
 									trigger_error($repo . '/' . $test . ': The latest test profile version available for upgrade is ' . $available_versions[0] . ' but version ' . $version . ' is the latest currently installed.', E_USER_WARNING);
