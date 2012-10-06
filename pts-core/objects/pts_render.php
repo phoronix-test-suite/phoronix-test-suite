@@ -90,7 +90,9 @@ class pts_render
 			$extra_attributes['compact_to_scalar'] = true;
 		}
 
-		if($result_file->is_multi_way_comparison() || isset($extra_attributes['compact_to_scalar']) || $result_file->is_results_tracker())
+		// XXX: removed || $result_file->is_results_tracker() from below and should be added
+		// Removing the command fixes cases like: 1210053-BY-MYRESULTS43
+		if($result_file->is_multi_way_comparison() || isset($extra_attributes['compact_to_scalar']))
 		{
 			if((isset($extra_attributes['compact_to_scalar']) || (false && $result_file->is_multi_way_comparison())) && in_array($result_object->test_profile->get_display_format(), array('LINE_GRAPH', 'FILLED_LINE_GRAPH')))
 			{
