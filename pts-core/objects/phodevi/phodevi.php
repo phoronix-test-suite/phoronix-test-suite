@@ -21,15 +21,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-phodevi::create_vfs();
-
-if(PTS_IS_CLIENT)
-{
-	phodevi::initial_setup();
-}
-
-
-class phodevi
+class phodevi extends phodevi_base
 {
 	public static $vfs = false;
 	private static $device_cache = null;
@@ -62,35 +54,6 @@ class phodevi
 	public static function read_name($device)
 	{
 		return phodevi::read_property($device, 'identifier');
-	}
-	public static function available_hardware_devices()
-	{
-		return array(
-		'Processor' => 'cpu',
-		'Motherboard' => 'motherboard',
-		'Chipset' => 'chipset',
-		'Memory' => 'memory',
-		'Disk' => 'disk',
-		'Graphics' => 'gpu',
-		'Audio' => 'audio',
-		'Monitor' => 'monitor',
-		'Network' => 'network'
-		);
-	}
-	public static function available_software_components()
-	{
-		return array(
-		'OS' => array('system', 'operating-system'),
-		'Kernel' => array('system', 'kernel-string'),
-		'Desktop' => array('system', 'desktop-environment'),
-		'Display Server' => array('system', 'display-server'),
-		'Display Driver' => array('system', 'display-driver-string'),
-		'OpenGL' => array('system', 'opengl-driver'),
-		'Compiler' => array('system', 'compiler'),
-		'File-System' => array('system', 'filesystem'),
-		'Screen Resolution' => array('gpu', 'screen-resolution-string'),
-		'System Layer' => array('system', 'system-layer')
-		);
 	}
 	public static function load_sensors()
 	{
@@ -595,6 +558,13 @@ class phodevi
 	{
 		return phodevi::read_property('system', 'username') == 'root';
 	}
+}
+
+phodevi::create_vfs();
+
+if(PTS_IS_CLIENT)
+{
+	phodevi::initial_setup();
 }
 
 ?>

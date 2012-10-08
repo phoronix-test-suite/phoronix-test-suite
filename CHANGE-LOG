@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- phodevi: Split some into new phodevi_base class
+
 Phoronix Test Suite 4.2 Milestone 1
 8 October 2012
 
