@@ -248,9 +248,10 @@ class dump_documentation implements pts_option_interface
 				$man_page .= '.SH ' . strtoupper($section) . PHP_EOL;
 
 				sort($contents);
+
 				foreach($contents as &$option)
 				{
-					$man_page .= '.B ' . trim($option[0] . ' ' . implode(' ', $option[1])) . PHP_EOL . $option[2] . PHP_EOL . '.TP' . PHP_EOL;
+					$man_page .= '.B ' . trim($option[0] . ' ' . (!empty($option[1]) && is_array($option[1]) ? implode(' ', $option[1]) : null)) . PHP_EOL . $option[2] . PHP_EOL . '.TP' . PHP_EOL;
 				}
 			}
 			$man_page .= '.SH SEE ALSO' . PHP_EOL . '.B Websites:' . PHP_EOL . '.br' . PHP_EOL . 'http://www.phoronix-test-suite.com/' . PHP_EOL . '.br' . PHP_EOL . 'http://commercial.phoronix-test-suite.com/' . PHP_EOL . '.br' . PHP_EOL . 'http://www.openbenchmarking.org/' . PHP_EOL . '.br' . PHP_EOL . 'http://www.phoronix.com/' . PHP_EOL . '.br' . PHP_EOL . 'http://www.phoronix.com/forums/' . PHP_EOL;

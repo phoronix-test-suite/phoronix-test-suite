@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 4.2 Milestone 1
+8 October 2012
 
 - pts-core: Support download caches at /media/*/*/download-cache/
 - pts-core: Support OPENGL_DRIVER as a run-time variable
@@ -14,7 +15,7 @@ Phoronix Test Suite (Git)
 - phodevi: Initial support for reading node power over IPMI
 - phodevi: Initial support for reading core temperature over IPMI
 - phodevi: On Linux attempt to determine the install RAM's vendor and product part number
-- toggle_screensaver: Support for module disabling the Xfce4 desktop screensaver using xfconf-query
+- toggle_screensaver: Support for module suspending the Xfce4 desktop screensaver using xfconf-query
 - pts_Graph: Fix for vertical/rotated text in SVG -> GD translation
 
 Phoronix Test Suite 4.0.1
@@ -35,7 +36,7 @@ Phoronix Test Suite 4.0.1
 - phodevi: Support for detecting Gallium3D XA
 - phodevi: Support for llvm-link on LLVM 3.2svn
 
-Phoronix Test Suite 4.0
+Phoronix Test Suite 4.0.0-Suldal
 23 July 2012
 
 - pts-core: Initial implementation of the PTS4 Local Results Viewer
