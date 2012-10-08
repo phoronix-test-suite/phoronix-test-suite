@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+- pts-core: Add list-recommended-tests option for providing subsystem test recommendations based upon OpenBenchmarking.org popularity/usage
 - phodevi: Split some into new phodevi_base class
 
 Phoronix Test Suite 4.2 Milestone 1

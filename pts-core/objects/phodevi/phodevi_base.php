@@ -5,7 +5,7 @@
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
 	Copyright (C) 2009 - 2012, Phoronix Media
 	Copyright (C) 2009 - 2012, Michael Larabel
-	phodevi.php: The object for interacting with the PTS device framework
+	phodevi_base.php: The base object for interacting with the Phoronix Device Interface
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by

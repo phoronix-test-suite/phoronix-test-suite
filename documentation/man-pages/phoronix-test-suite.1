@@ -29,6 +29,9 @@ This option will install the selected test(s) (if needed) and will proceed to ru
 .B finish-run [Test Result]
 This option can be used if a test run had not properly finished running all tests within a saved results file. Using this option when specifying a saved results file where all tests had not completed will attempt to finish testing on the remaining tests where there are missing results.
 .TP
+.B global-benchmark
+This option will autonomously determine the most relevant test(s) to run for any selected sub-system(s). The tests to run are determined via OpenBenchmarking.org integration with the global results pool. Related test results from OpenBenchmarking.org are also merged to provide a straight-forward and effective means of carrying out a system comparison.
+.TP
 .B run [Test | Suite | OpenBenchmarking.org ID | Test Result]  ...
 This option will run the selected test(s).
 .TP
@@ -57,6 +60,9 @@ This option will run the selected test(s). The name of the test or suite must be
 .SH OPENBENCHMARKING.ORG
 .B clone-result [OpenBenchmarking ID]  ...
 This option will download a local copy of a file that was saved to OpenBenchmarking.org, as long as a valid public ID is supplied. More than one ID can be specified and the results will then be merged.
+.TP
+.B list-recommended-tests
+This option will list recommended test profiles for benchmarking sorted by hardware sub-system. The recommended tests are determined via querying OpenBenchmarking.org and determining the most popular tests for a given environment based upon the number of times a test profile has been downloaded, the number of test results available on OpenBenchmarking.org for a given test profile, the age of the test profile, and other weighted factors.
 .TP
 .B openbenchmarking-changes
 This option will list recent changes to test profiles of enabled OpenBenchmarking.org repositories.
