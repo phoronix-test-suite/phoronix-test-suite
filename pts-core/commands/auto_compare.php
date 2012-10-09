@@ -79,17 +79,17 @@ class auto_compare implements pts_option_interface
 		switch($subsystem_under_test)
 		{
 			case 'Processor':
-				self::system_component_to_format($system_info, $to_include, array('OS', 'Compiler', 'Kernel', 'Motherboard'));
+				self::system_component_to_format($system_info, $to_include, array('OS', 'Compiler', 'Kernel', 'Motherboard'), true);
 				break;
 			case 'Graphics':
-				self::system_component_to_format($system_info, $to_include, array('OS', 'Display Driver', 'OpenGL', 'Processor', 'Kernel', 'Desktop'));
+				self::system_component_to_format($system_info, $to_include, array('OS', 'Display Driver', 'OpenGL', 'Processor', 'Kernel', 'Desktop'), true);
 				break;
 			case 'OS':
-				self::system_component_to_format($system_info, $to_include, array('Processor', 'Motherboard', 'Graphics', 'Disk'));
+				self::system_component_to_format($system_info, $to_include, array('Processor', 'Motherboard', 'Graphics', 'Disk'), true);
 				self::system_component_to_format($system_info, $to_exclude, array('OS'));
 				break;
 			case 'Disk':
-				self::system_component_to_format($system_info, $to_include, array('Processor', 'OS', 'Chipset', 'Motherboard', 'Kernel'));
+				self::system_component_to_format($system_info, $to_include, array('Processor', 'OS', 'Chipset', 'Motherboard', 'Kernel'), true);
 				break;
 		}
 
@@ -189,7 +189,7 @@ class auto_compare implements pts_option_interface
 		pts_test_installer::standard_install(array('auto-comparison'));
 		pts_test_run_manager::standard_run(array('auto-comparison'));
 	}
-	protected static function system_component_to_format(&$system_info, &$to_array, $component_types)
+	protected static function system_component_to_format(&$system_info, &$to_array, $component_types, $allow_trim_extra = false)
 	{
 		foreach($component_types as $component_type)
 		{
@@ -199,6 +199,13 @@ class auto_compare implements pts_option_interface
 
 				if($value != null)
 				{
+					if($allow_trim_extra && !isset($to_array[2]))
+					{
+						$value_r = explode(' ', $value);
+						array_pop($value_r);
+						array_push($to_array, $component_type . ':' . implode(' ', $value_r));
+					}
+
 					array_push($to_array, $component_type . ':' . $value);
 				}
 			}
