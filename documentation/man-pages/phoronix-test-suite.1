@@ -23,14 +23,14 @@ This option will create a download cache for use by the Phoronix Test Suite.
 This option will permanently remove a installed test by the Phoronix Test Suite.
 .TP
 .SH TESTING
+.B auto-compare
+This option will autonomously determine the most relevant test(s) to run for any selected sub-system(s). The tests to run are determined via OpenBenchmarking.org integration with the global results pool. Related test results from OpenBenchmarking.org are also merged to provide a straight-forward and effective means of carrying out a system comparison.
+.TP
 .B benchmark [Test | Suite | OpenBenchmarking.org ID | Test Result]  ...
 This option will install the selected test(s) (if needed) and will proceed to run the test(s). This option is equivalent to running phoronix-test-suite with the install option followed by the run option. Multiple arguments can be supplied to run additional tests at the same time and save the results into one file.
 .TP
 .B finish-run [Test Result]
 This option can be used if a test run had not properly finished running all tests within a saved results file. Using this option when specifying a saved results file where all tests had not completed will attempt to finish testing on the remaining tests where there are missing results.
-.TP
-.B global-benchmark
-This option will autonomously determine the most relevant test(s) to run for any selected sub-system(s). The tests to run are determined via OpenBenchmarking.org integration with the global results pool. Related test results from OpenBenchmarking.org are also merged to provide a straight-forward and effective means of carrying out a system comparison.
 .TP
 .B run [Test | Suite | OpenBenchmarking.org ID | Test Result]  ...
 This option will run the selected test(s).
