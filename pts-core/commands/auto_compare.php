@@ -23,7 +23,7 @@
 class auto_compare implements pts_option_interface
 {
 	const doc_section = 'Testing';
-	const doc_description = 'This option will autonomously determine the most relevant test(s) to run for any selected sub-system(s). The tests to run are determined via OpenBenchmarking.org integration with the global results pool. Related test results from OpenBenchmarking.org are also merged to provide a straight-forward and effective means of carrying out a system comparison.';
+	const doc_description = 'This option will autonomously determine the most relevant test(s) to run for any selected sub-system(s). The tests to run are determined via OpenBenchmarking.org integration with the global results pool. Related test results from OpenBenchmarking.org are also merged to provide a straight-forward and effective means of carrying out a system comparison. If wishing to find comparable results for any particular test profile(s), simply pass the test profile names as additional arguments to this command.';
 
 	public static function invalid_command($passed_args = null)
 	{
@@ -31,7 +31,38 @@ class auto_compare implements pts_option_interface
 	}
 	public static function run($r)
 	{
-		$subsystem_under_test = pts_user_io::prompt_text_menu('Sub-System To Test', array('Processor', 'Graphics', 'Disk'));
+		$compare_tests = array();
+		$compare_subsystems = array();
+		foreach($r as $test_object)
+		{
+			$test_object = pts_types::identifier_to_object($test_object);
+
+			if($test_object instanceof pts_test_profile)
+			{
+				array_push($compare_tests, $test_object->get_identifier(false));
+
+				if(!isset($compare_subsystems[$test_object->get_test_hardware_type()]))
+				{
+					$compare_subsystems[$test_object->get_test_hardware_type()] = 1;
+				}
+				else
+				{
+					$compare_subsystems[$test_object->get_test_hardware_type()] += 1;
+				}
+			}
+		}
+
+		if(empty($compare_tests))
+		{
+			$subsystem_under_test = pts_user_io::prompt_text_menu('Sub-System To Test', array('Processor', 'Graphics', 'Disk'));
+		}
+		else
+		{
+			arsort($compare_subsystems);
+			$compare_subsystems = array_keys($compare_subsystems);
+			$subsystem_under_test = array_shift($compare_subsystems);
+		}
+
 		$system_info = array_merge(phodevi::system_hardware(false), phodevi::system_software(false));
 		$to_include = array();
 		$to_exclude = array();
@@ -66,7 +97,8 @@ class auto_compare implements pts_option_interface
 			'subsystem_under_test' => $subsystem_under_test,
 			'component_under_test' => $compare_component,
 			'include_components' => implode(',', $to_include),
-			'exclude_components' => implode(',', $to_exclude)
+			'exclude_components' => implode(',', $to_exclude),
+			'include_tests' => implode(',', $compare_tests),
 			);
 
 		echo PHP_EOL . 'Querying test data from OpenBenchmarking.org...' . PHP_EOL;
@@ -90,7 +122,14 @@ class auto_compare implements pts_option_interface
 
 					foreach($result_objects as $i => &$result_object)
 					{
-						if($result_object->test_profile->get_test_hardware_type() != $subsystem_under_test)
+						if(!empty($compare_tests))
+						{
+							if(!in_array($result_object->test_profile->get_identifier(false), $compare_tests))
+							{
+								unset($result_objects[$i]);
+							}
+						}
+						else if($result_object->test_profile->get_test_hardware_type() != $subsystem_under_test)
 						{
 							unset($result_objects[$i]);
 						}
