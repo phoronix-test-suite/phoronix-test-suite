@@ -114,9 +114,9 @@ class pts_openbenchmarking_client
 				$system_logs_zip = pts_client::create_temporary_file();
 				pts_compression::zip_archive_create($system_logs_zip, $system_log_dir);
 
-				if(filesize($system_logs_zip) < 1048576)
+				if(filesize($system_logs_zip) < 2097152)
 				{
-					// If it's over 1MB, probably too big
+					// If it's over 2MB, probably too big
 					$system_logs = base64_encode(file_get_contents($system_logs_zip));
 					$system_logs_hash = sha1($system_logs);
 				}

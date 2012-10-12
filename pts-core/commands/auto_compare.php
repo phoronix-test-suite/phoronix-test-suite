@@ -201,7 +201,7 @@ class auto_compare implements pts_option_interface
 				{
 					if($allow_trim_extra && !isset($to_array[2]))
 					{
-						$value_r = explode(' ', $value);
+						$value_r = explode(' ', str_replace('-', ' ', $value));
 						array_pop($value_r);
 						array_push($to_array, $component_type . ':' . implode(' ', $value_r));
 					}
