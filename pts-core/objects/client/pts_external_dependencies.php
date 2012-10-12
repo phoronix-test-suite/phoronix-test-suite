@@ -97,21 +97,13 @@ class pts_external_dependencies
 		// There were some dependencies not supported on this OS or are missing from the distro's XML file
 		if(count($required_test_dependencies) > 0 && count($dependencies_to_install) == 0)
 		{
-			$xml_parser = new nye_XmlReader(PTS_EXDEP_PATH . 'xml/generic-packages.xml');
-			$package_name = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ExternalDependencies/Package/GenericName');
-			$title = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ExternalDependencies/Package/Title');
-			$possible_packages = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ExternalDependencies/Package/PossibleNames');
-			$file_check = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ExternalDependencies/Package/FileCheck');
-			$required_test_dependencies_names = array_keys($required_test_dependencies);
-
+			$exdep_generic_parser = new pts_exdep_generic_parser();
 			$to_report = array();
 
-			foreach(array_keys($package_name) as $i)
+			foreach(array_keys($required_test_dependencies) as $dependency)
 			{
-				if(isset($required_test_dependencies[$package_name[$i]]))
-				{
-					array_push($to_report, $title[$i] . PHP_EOL . 'Possible Package Names: ' . $possible_packages[$i]);
-				}
+				$dependency_data = $exdep_generic_parser->get_package_data($dependency);
+				array_push($to_report, $dependency_data['title'] . PHP_EOL . 'Possible Package Names: ' . $dependency_data['possible_packages']);
 			}
 
 			if(count($to_report) > 0)
@@ -187,9 +179,8 @@ class pts_external_dependencies
 	}
 	public static function all_dependency_names()
 	{
-		$xml_parser = new nye_XmlReader(PTS_EXDEP_PATH . 'xml/generic-packages.xml');
-
-		return $xml_parser->getXMLArrayValues('PhoronixTestSuite/ExternalDependencies/Package/GenericName');
+		$exdep_generic_parser = new pts_exdep_generic_parser();
+		return $exdep_generic_parser->get_available_packages();
 	}
 	public static function all_dependency_titles()
 	{
@@ -230,68 +221,44 @@ class pts_external_dependencies
 	}
 	private static function check_dependencies_missing_from_system(&$required_test_dependencies, &$generic_names_of_packages_needed = false)
 	{
-		$distro_vendor_xml = PTS_EXDEP_PATH . 'xml/' . self::vendor_identifier('package-list') . '-packages.xml';
+		$external_dependencies_parser = new pts_exdep_platform_parser(self::vendor_identifier('package-list'));
+		$kernel_architecture = phodevi::read_property('system', 'kernel-architecture');
 		$needed_os_packages = array();
 
-		if(is_file($distro_vendor_xml))
+		foreach($external_dependencies_parser->get_available_packages() as $package)
 		{
-			$xml_parser = new nye_XmlReader($distro_vendor_xml);
-			$generic_package = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ExternalDependencies/Package/GenericName');
-			$distro_package = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ExternalDependencies/Package/PackageName');
-			$file_check = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ExternalDependencies/Package/FileCheck');
-			$arch_specific = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ExternalDependencies/Package/ArchitectureSpecific');
-			$kernel_architecture = phodevi::read_property('system', 'kernel-architecture');
-
-			foreach(array_keys($generic_package) as $i)
+			if(isset($required_test_dependencies[$package]))
 			{
-				if(empty($generic_package[$i]))
-				{
-					continue;
-				}
+				$package_data = $external_dependencies_parser->get_package_data($package);
+				$add_dependency = empty($package_data['file_check']) || self::file_missing_check($package_data['file_check']);
+				$arch_compliant = empty($package_data['arch_specific']) || in_array($kernel_architecture, $package_data['arch_specific']);
 
-				if(isset($required_test_dependencies[$generic_package[$i]]))
+				if($add_dependency && $arch_compliant && $package_data['os_package'] != null)
 				{
-					$add_dependency = empty($file_check[$i]) || self::file_missing_check($file_check[$i]);
-					$arch_compliant = empty($arch_specific[$i]) || in_array($kernel_architecture, pts_strings::comma_explode($arch_specific[$i]));
-
-					if($add_dependency && $arch_compliant && $distro_package[$i] != null)
+					if(!in_array($package_data['os_package'], $needed_os_packages))
 					{
-						if(!in_array($distro_package[$i], $needed_os_packages))
-						{
-							array_push($needed_os_packages, $distro_package[$i]);
-						}
-						if($generic_names_of_packages_needed !== false && !in_array($generic_package[$i], $generic_names_of_packages_needed))
-						{
-							array_push($generic_names_of_packages_needed, $generic_package[$i]);
-						}
+						array_push($needed_os_packages, $package_data['os_package']);
 					}
-
-					unset($required_test_dependencies[$generic_package[$i]]);
+					if($generic_names_of_packages_needed !== false && !in_array($package, $generic_names_of_packages_needed))
+					{
+						array_push($generic_names_of_packages_needed, $package);
+					}
 				}
 			}
 		}
 
 		if(count($required_test_dependencies) > 0)
 		{
-			$xml_parser = new nye_XmlReader(PTS_EXDEP_PATH . 'xml/generic-packages.xml');
-			$generic_package_name = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ExternalDependencies/Package/GenericName');
-			$generic_file_check = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ExternalDependencies/Package/FileCheck');
+			$generic_dependencies_parser = new pts_exdep_generic_parser();
 
-			foreach(array_keys($generic_package_name) as $i)
+			foreach($required_test_dependencies as $i => $dependency)
 			{
-				if(empty($generic_package_name[$i]))
-				{
-					continue;
-				}
+				$package_data = $generic_dependencies_parser->get_package_data($i);
+				$file_present = !empty($package_data['file_check']) && !self::file_missing_check($package_data['file_check']);
 
-				if(isset($required_test_dependencies[$generic_package_name[$i]]))
+				if($file_present)
 				{
-					$file_present = !empty($generic_file_check[$i]) && !self::file_missing_check($generic_file_check[$i]);
-
-					if($file_present)
-					{
-						unset($required_test_dependencies[$generic_package_name[$i]]);
-					}
+					unset($required_test_dependencies[$i]);
 				}
 			}
 		}
@@ -352,54 +319,6 @@ class pts_external_dependencies
 			}
 		}
 	}
-	public static function vendor_file_parents_list()
-	{
-		$vendors = array();
-		foreach(pts_file_io::glob(PTS_EXDEP_PATH . 'xml/*-packages.xml') as $package_xml)
-		{
-			$xml_parser = new nye_XmlReader($package_xml);
-			$vendor = $xml_parser->getXMLValue('PhoronixTestSuite/ExternalDependencies/Information/Name');
-
-			if($vendor != null)
-			{
-				array_push($vendors, $vendor);
-			}
-		}
-
-		return $vendors;
-	}
-	public static function vendor_alias_list($format = true)
-	{
-		$alias_list = array();
-
-		foreach(pts_file_io::glob(PTS_EXDEP_PATH . 'xml/*-packages.xml') as $package_xml)
-		{
-			$xml_parser = new nye_XmlReader($package_xml);
-			$aliases = $xml_parser->getXMLValue('PhoronixTestSuite/ExternalDependencies/Information/Aliases');
-
-			if($aliases != null)
-			{
-				$aliases = pts_strings::trim_explode(',', $aliases);
-				$parent = substr(basename($package_xml, '.xml'), 0, -9);
-
-				foreach($aliases as $alias)
-				{
-
-					if($format == true)
-					{
-						$alias = strtolower(str_replace(' ', null, $alias));
-					}
-
-					if($alias != null)
-					{
-						$alias_list[$alias] = $parent;
-					}
-				}
-			}
-		}
-
-		return $alias_list;
-	}
 	private static function vendor_identifier($type)
 	{
 		$os_vendor = phodevi::read_property('system', 'vendor-identifier');
@@ -418,16 +337,8 @@ class pts_external_dependencies
 
 		if($file_check_success == false)
 		{
-			$vendor_aliases = pts_storage_object::read_from_file(PTS_TEMP_STORAGE, 'vendor_alias_list');
-			if($vendor_aliases == null)
-			{
-				$vendor_aliases = pts_external_dependencies::vendor_alias_list();
-			}
-
-			if(isset($vendor_aliases[$os_vendor]))
-			{
-				$os_vendor = $vendor_aliases[$os_vendor];
-			}
+			$exdep_generic_parser = new pts_exdep_generic_parser();
+			$os_vendor = $exdep_generic_parser->find_vendor_alias($os_vendor);
 
 			if($os_vendor == false && is_file('/etc/debian_version'))
 			{
@@ -441,15 +352,14 @@ class pts_external_dependencies
 	private static function generic_names_to_titles($names)
 	{
 		$titles = array();
-		$xml_parser = new nye_XmlReader(PTS_EXDEP_PATH . 'xml/generic-packages.xml');
-		$package_name = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ExternalDependencies/Package/GenericName');
-		$title = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ExternalDependencies/Package/Title');
+		$generic_dependencies_parser = new pts_exdep_generic_parser();
 
-		foreach(array_keys($package_name) as $i)
+		foreach($generic_dependencies_parser->get_available_packages() as $package)
 		{
-			if(in_array($package_name[$i], $names))
+			if(in_array($package, $names))
 			{
-				array_push($titles, $title[$i]);
+				$package_data = $generic_dependencies_parser->get_package_data($package);
+				array_push($titles, $package_data['title']);
 			}
 		}
 		sort($titles);

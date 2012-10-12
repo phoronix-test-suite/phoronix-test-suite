@@ -561,7 +561,6 @@ class pts_client
 		}
 
 		$pso->add_object('environmental_variables_for_modules', pts_module_manager::modules_environmental_variables());
-		$pso->add_object('vendor_alias_list', pts_external_dependencies::vendor_alias_list());
 		$pso->add_object('command_alias_list', pts_documentation::client_commands_aliases());
 
 		$pso->save_to_file(PTS_TEMP_STORAGE);

@@ -164,7 +164,8 @@ class dump_documentation implements pts_option_interface
 		$phr = $dom->createElement('hr');
 		$p->appendChild($phr);
 
-		$vendors = array_merge(array_keys(pts_external_dependencies::vendor_alias_list(false)), pts_external_dependencies::vendor_file_parents_list());
+		$exdep_generic_parser = new pts_exdep_generic_parser();
+		$vendors = array_merge($exdep_generic_parser->get_vendor_aliases_formatted(), $exdep_generic_parser->get_vendors_list_formatted());
 		sort($vendors);
 
 		$ul = $dom->createElement('ul');

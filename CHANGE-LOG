@@ -6,6 +6,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add auto-compare option for automatically determining relevant OpenBenchmarking.org result comparisons based upon software/hardware
 - pts-core: Allow passing test profile names to auto-compare to seed it with the test(s) you wish to use for comparison
 - pts-core: OpenBenchmarking.org now supports system log payload sizes up to 2MB
+- pts-core: Object-ify PTS external dependency handling
 - phodevi: Split some into new phodevi_base class
 
 Phoronix Test Suite 4.2 Milestone 1

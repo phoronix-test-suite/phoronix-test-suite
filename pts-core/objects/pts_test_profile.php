@@ -125,20 +125,15 @@ class pts_test_profile extends pts_test_profile_parser
 	public function get_dependency_names()
 	{
 		$dependency_names = array();
-
-		$xml_parser = new nye_XmlReader(PTS_EXDEP_PATH . 'xml/generic-packages.xml');
-		$package_name = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ExternalDependencies/Package/GenericName');
-		$title = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ExternalDependencies/Package/Title');
+		$exdep_generic_parser = new pts_exdep_generic_parser();
 
 		foreach($this->get_dependencies() as $dependency)
 		{
-			foreach(array_keys($title) as $i)
+			if($exdep_generic_parser->is_package($dependency))
 			{
-				if($dependency == $package_name[$i])
-				{
-					array_push($dependency_names, $title[$i]);
-					break;
-				}
+				$package_data = $exdep_generic_parser->get_package_data($dependency);
+				array_push($dependency_names, $package_data['title']);
+				break;
 			}
 		}
 
