@@ -68,7 +68,7 @@ class pts_exdep_generic_parser
 
 		foreach($package_files as &$file)
 		{
-			$file = substr(basename($file, '.xml'), 0, '-packages.xml');
+			$file = basename(substr($file, 0, strpos($file, '-packages.xml')));
 		}
 
 		return $package_files;
