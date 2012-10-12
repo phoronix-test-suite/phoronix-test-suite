@@ -90,7 +90,7 @@ class pts_exdep_generic_parser
 
 		return $vendors;
 	}
-	public static function find_vendor_alias($alias)
+	public function find_vendor_alias($alias)
 	{
 		foreach($this->get_vendors_list() as $vendor)
 		{
@@ -105,7 +105,7 @@ class pts_exdep_generic_parser
 
 		return false;
 	}
-	public static function get_vendor_aliases()
+	public function get_vendor_aliases()
 	{
 		$alias_list = array();
 
@@ -122,7 +122,7 @@ class pts_exdep_generic_parser
 
 		return $alias_list;
 	}
-	public static function get_vendor_aliases_formatted()
+	public function get_vendor_aliases_formatted()
 	{
 		$alias_list = array();
 
