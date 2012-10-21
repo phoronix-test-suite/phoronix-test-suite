@@ -117,7 +117,7 @@ class pts_DetailedSystemComponentTable extends pts_SideViewTable
 					sort($flags);
 				}
 
-				if($flags_data == null)
+				if($flags_data == null || count($flags_data) < 2)
 				{
 					continue;
 				}
