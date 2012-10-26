@@ -1357,7 +1357,7 @@ class phodevi_system extends phodevi_device_interface
 			$cc = null;
 
 			// Clang doesn't report "configured with" but has other useful tid-bits...
-			if(($c = pts_client::executable_in_path('llvm-ld')))
+			if(($c = pts_client::executable_in_path('llvm-ld')) || ($c = pts_client::executable_in_path('llvm-link')))
 			{
 				$llvm_ld = shell_exec($c . ' -version 2>&1');
 				/*
