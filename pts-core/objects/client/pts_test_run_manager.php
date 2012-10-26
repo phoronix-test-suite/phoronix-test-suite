@@ -966,13 +966,14 @@ class pts_test_run_manager
 
 			if(count($tests_missing) == 1)
 			{
-				pts_client::$display->generic_error($tests_missing[0] . ' is not installed.' . PHP_EOL . 'To install, run: phoronix-test-suite install ' . $tests_missing[0]);
+				pts_client::$display->generic_error($tests_missing[0] . ' is not installed.');
+				// PHP_EOL . 'To install, run: phoronix-test-suite install ' . $tests_missing[0]
 			}
 			else
 			{
 				$message = PHP_EOL . PHP_EOL . 'Multiple tests are not installed:' . PHP_EOL . PHP_EOL;
 				$message .= pts_user_io::display_text_list($tests_missing);
-				$message .= PHP_EOL . 'To install, run: phoronix-test-suite install ' . implode(' ', $tests_missing) . PHP_EOL . PHP_EOL;
+				//$message .= PHP_EOL . 'To install, run: phoronix-test-suite install ' . implode(' ', $tests_missing) . PHP_EOL . PHP_EOL;
 				echo $message;
 			}
 
