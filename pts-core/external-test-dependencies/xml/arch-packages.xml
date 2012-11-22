@@ -67,7 +67,7 @@
 		</Package>
 		<Package>
 			<GenericName>fortran-compiler</GenericName>
-			<PackageName>gcc</PackageName>
+			<PackageName>gcc-fortran</PackageName>
 			<FileCheck>/usr/bin/gfortran</FileCheck>
 		</Package>
 		<Package>
