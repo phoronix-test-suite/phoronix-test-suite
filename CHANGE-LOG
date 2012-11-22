@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 4.2 Milestone 3
+22 November 2012
 
 - pts-core: Don't report null times for estimated run-time
 - phodevi: Support for determining the build configuration on LLVM 3.2 where llvm-ld is llvm-link
