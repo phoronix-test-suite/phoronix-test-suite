@@ -1010,7 +1010,8 @@ class pts_render
 
 			// Around Firefox 3.0 era is best
 			// Firefox 2.0 mostly works except text might not show...
-			if($gecko_date < 200702)
+			// With Firefox 17.0 it's now Gecko/17.0 rather than a date...
+			if(substr($gecko_date, 0, 3) == '200' && $gecko_date < 200702)
 			{
 				$selected_renderer = 'PNG';
 			}

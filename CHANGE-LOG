@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- pts-core: Fix SVG render detection on Firefox/Gecko 17.0
+
 Phoronix Test Suite 4.2 Milestone 3
 22 November 2012
 
