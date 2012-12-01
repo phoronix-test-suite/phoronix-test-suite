@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Fix SVG render detection on Firefox/Gecko 17.0
+- pts-core: Fix for breaking quoted args with internal spaces (reported by _rubio_)
 
 Phoronix Test Suite 4.2 Milestone 3
 22 November 2012
