@@ -43,7 +43,7 @@
 		</Package>
 		<Package>
 			<GenericName>build-utilities</GenericName>
-			<PackageName>gcc gcc-c++ make autoconf automake</PackageName>
+			<PackageName>gcc gcc-c++ make autoconf automake glibc-static</PackageName>
 			<FileCheck>/usr/bin/gcc, /usr/bin/c++, /usr/bin/make, /usr/bin/autoconf</FileCheck>
 		</Package>
 		<Package>
