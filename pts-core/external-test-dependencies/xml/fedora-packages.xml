@@ -43,8 +43,8 @@
 		</Package>
 		<Package>
 			<GenericName>build-utilities</GenericName>
-			<PackageName>gcc gcc-c++ make autoconf automake glibc-static</PackageName>
-			<FileCheck>/usr/bin/gcc, /usr/bin/c++, /usr/bin/make, /usr/bin/autoconf</FileCheck>
+			<PackageName>gcc gcc-c++ make autoconf automake glibc-static patch</PackageName>
+			<FileCheck>/usr/bin/gcc, /usr/bin/c++, /usr/bin/make, /usr/bin/autoconf, /usr/bin/patch</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>xorg-development</GenericName>
