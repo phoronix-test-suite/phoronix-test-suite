@@ -107,6 +107,7 @@ function pts_version_codenames()
 		'3.8' => 'Bygland',
 		'4.0' => 'Suldal',
 		'4.2' => 'Randaberg',
+		'4.4' => 'Forsand'
 		);
 }
 
