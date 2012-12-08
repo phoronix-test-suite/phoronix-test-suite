@@ -194,7 +194,7 @@ class sys_power implements phodevi_sensor
 			{
 				$voltage_now = pts_file_io::file_get_contents('/sys/class/power_supply/BAT0/voltage_now') / 1000;
 				$current_now = pts_file_io::file_get_contents('/sys/class/power_supply/BAT0/current_now') / 1000;
-				$power_now = $voltage_now / $current_now / 1000;
+				$power_now = $voltage_now * $current_now / 1000;
 
 				if($power_now > 1)
 				{
