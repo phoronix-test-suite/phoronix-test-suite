@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 - pts-core: Fix SVG render detection on Firefox/Gecko 17.0
 - pts-core: Fix for breaking quoted args with internal spaces (reported by _rubio_)
 - pts-core: Add glibc-static to build-utilities external dependency on Fedora
+- pts-core: Fix for using the SKIP_TESTS environment variable causing a fatal error
 
 Phoronix Test Suite 4.2 Milestone 3
 22 November 2012
