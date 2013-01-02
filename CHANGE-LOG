@@ -2,6 +2,11 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+- phodevi: Improve Nouveau video RAM memory capacity detection on newer Linux kernels
+
+Phoronix Test Suite 4.2.0-Randaberg
+20 December 2012
+
 - pts-core: Fix SVG render detection on Firefox/Gecko 17.0
 - pts-core: Fix for breaking quoted args with internal spaces (reported by _rubio_)
 - pts-core: Add glibc-static to build-utilities external dependency on Fedora

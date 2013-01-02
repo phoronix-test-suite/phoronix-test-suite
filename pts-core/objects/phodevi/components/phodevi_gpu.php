@@ -690,6 +690,12 @@ class phodevi_gpu extends phodevi_device_interface
 				$info = substr($info, 0, $x);
 				$info = substr($info, strrpos($info, ' ') + 1);
 			}
+			else if(($x = strpos($info, 'DRM] VRAM: ')) !== false)
+			{
+				// Nouveau DRM around Linux ~3.6 reports e.g.: DRM] VRAM: 512 MiB
+				$info = substr($info, 0, ($x + 11));
+				$info = substr($info, strpos($info, ' '));
+			}
 
 			if(is_numeric($info))
 			{
