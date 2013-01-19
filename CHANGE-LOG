@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+- pts-core: Introduce 'common-dependencies' concept to PTS External Dependencies
 - phodevi: Improve Nouveau video RAM memory capacity detection on newer Linux kernels
 
 Phoronix Test Suite 4.2.0-Randaberg

@@ -3,6 +3,10 @@
 <PhoronixTestSuite>
 	<ExternalDependencies>
 		<Package>
+			<GenericName>common-dependencies</GenericName>
+			<Title>Common Dependencies For The Phoronix Test Suite</Title>
+		</Package>
+		<Package>
 			<GenericName>32bit-compatibility</GenericName>
 			<Title>32-bit Libraries / Compatibility For Linux</Title>
 			<ArchitectureSpecific>x86_64</ArchitectureSpecific>

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2011, Phoronix Media
-	Copyright (C) 2010 - 2011, Michael Larabel
+	Copyright (C) 2010 - 2013, Phoronix Media
+	Copyright (C) 2010 - 2013, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -60,6 +60,13 @@ class pts_external_dependencies
 
 				array_push($required_test_dependencies[$test_dependency], $test_profile);
 			}
+		}
+
+		if(!empty($required_test_dependencies[$test_dependency]))
+		{
+			// The 'common-dependencies' package is any general non-explicitly-required but nice-to-have packages like mesa-utils for providing glxinfo about the system
+			// So if we're going to be installing external dependencies anyways, might as well try to see the common-dependencies are satisfied
+			$required_test_dependencies['common-dependencies'] = array();
 		}
 
 		// Does the user wish to skip any particular dependencies?

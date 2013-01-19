@@ -7,6 +7,11 @@
 			<Aliases>Linux Mint, MEPIS, Debian, Nexenta Core, PTS Linux Live, PTS Desktop Live, Joli Cloud, gNewSense, Fluxbuntu, Mythbuntu, Goobuntu, GNU KFreeBSD, Linaro</Aliases>
 		</Information>
 		<Package>
+			<GenericName>common-dependencies</GenericName>
+			<PackageName>mesa-utils</PackageName>
+			<FileCheck>/usr/bin/glxinfo</FileCheck>
+		</Package>
+		<Package>
 			<GenericName>32bit-compatibility</GenericName>
 			<PackageName>ia32-libs</PackageName>
 			<ArchitectureSpecific>x86_64</ArchitectureSpecific>
