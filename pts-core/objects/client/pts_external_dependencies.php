@@ -110,7 +110,11 @@ class pts_external_dependencies
 			foreach(array_keys($required_test_dependencies) as $dependency)
 			{
 				$dependency_data = $exdep_generic_parser->get_package_data($dependency);
-				array_push($to_report, $dependency_data['title'] . PHP_EOL . 'Possible Package Names: ' . $dependency_data['possible_packages']);
+
+				if($dependency_data['possible_packages'] != null)
+				{
+					array_push($to_report, $dependency_data['title'] . PHP_EOL . 'Possible Package Names: ' . $dependency_data['possible_packages']);
+				}
 			}
 
 			if(count($to_report) > 0)
