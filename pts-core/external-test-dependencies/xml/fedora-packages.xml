@@ -113,8 +113,8 @@
 		</Package>
 		<Package>
 			<GenericName>perl</GenericName>
-			<PackageName>perl perl-SDL</PackageName>
-			<FileCheck>/usr/bin/perl</FileCheck>
+			<PackageName>perl perl-SDL pcre-devel</PackageName>
+			<FileCheck>/usr/bin/perl, /usr/include/pcre.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>xorg-video</GenericName>

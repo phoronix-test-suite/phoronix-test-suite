@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2011, Phoronix Media
-	Copyright (C) 2010 - 2011, Michael Larabel
+	Copyright (C) 2010 - 2013, Phoronix Media
+	Copyright (C) 2010 - 2013, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -47,7 +47,13 @@ class pts_test_profile_downloads_writer
 	{
 		$this->xml_writer->addXmlNode('PhoronixTestSuite/Downloads/Package/URL', $url_string);
 		$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/Downloads/Package/MD5', $md5);
-		$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/Downloads/Package/FileName', $file_name);
+
+		if(basename($url_string) != $file_name)
+		{
+			// If the downloaded file is the same name as the file name, pts-core already obtains it, so having it here is redundant.
+			$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/Downloads/Package/FileName', $file_name);
+		}
+
 		$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/Downloads/Package/FileSize', $file_size);
 		$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/Downloads/Package/PlatformSpecific', $platform_specific);
 		$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/Downloads/Package/ArchitectureSpecific', $architecture_specific);

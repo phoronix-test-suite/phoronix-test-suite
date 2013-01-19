@@ -251,6 +251,10 @@ class pts_external_dependencies
 						array_push($generic_names_of_packages_needed, $package);
 					}
 				}
+				else
+				{
+					unset($required_test_dependencies[$package]);
+				}
 			}
 		}
 
