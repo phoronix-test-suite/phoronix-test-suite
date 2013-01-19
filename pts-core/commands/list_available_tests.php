@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2011, Phoronix Media
-	Copyright (C) 2008 - 2011, Michael Larabel
+	Copyright (C) 2008 - 2013, Phoronix Media
+	Copyright (C) 2008 - 2013, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -49,11 +49,21 @@ class list_available_tests implements pts_option_interface
 			$test_count++;
 		}
 
+		foreach(pts_file_io::glob(PTS_TEST_PROFILE_PATH . 'local/*/test-definition.xml') as $path)
+		{
+			$test_profile = new pts_test_profile('local/' . basename(dirname($path)));
+
+			if($test_profile->get_title() != null && $test_profile->is_supported())
+			{
+				echo sprintf('%-28ls - %-35ls %-9ls', $test_profile->get_identifier(), $test_profile->get_title(), $test_profile->get_test_hardware_type()) . PHP_EOL;
+				$test_count++;
+			}
+		}
+
 		if($test_count == 0)
 		{
 			echo PHP_EOL . 'No tests found. Please check that you have Internet connectivity to download test profile data from OpenBenchmarking.org. The Phoronix Test Suite has documentation on configuring the network setup, proxy settings, and PHP network options. Please contact Phoronix Media if you continuing to experience problems.' . PHP_EOL . PHP_EOL;
 		}
-		echo PHP_EOL;
 	}
 }
 

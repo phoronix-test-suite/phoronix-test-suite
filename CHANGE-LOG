@@ -4,6 +4,7 @@ Phoronix Test Suite (Git)
 
 - pts-core: Introduce 'common-dependencies' concept to PTS External Dependencies
 - pts-core: Fix reporting of some already installed dependencies
+- pts-core: Support for listing 'local/' tests from the list-supported-tests command
 - phodevi: Improve Nouveau video RAM memory capacity detection on newer Linux kernels
 - phodevi: Warning fix for Radeon GPU frequency detection
 
