@@ -229,6 +229,15 @@ class phodevi_gpu extends phodevi_device_interface
 				}
 			}
 		}
+		else if(phodevi::is_mesa_graphics())
+		{
+			$gallium_msaa = getenv('GALLIUM_MSAA');
+			if(is_numeric($gallium_msaa) && $gallium_msaa > 0)
+			{
+				// Simple test to try to figure out if the GALLIUM_MSAA anti-aliasing value was forced
+				$aa_level = $gallium_msaa . 'x MSAA';
+			}
+		}
 
 		return $aa_level;
 	}

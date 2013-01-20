@@ -10,6 +10,7 @@ Phoronix Test Suite (Git)
 - phodevi: Improve Nouveau video RAM memory capacity detection on newer Linux kernels
 - phodevi: Warning fix for Radeon GPU frequency detection
 - phodevi: Drop "special_settings_string" support
+- phodevi: Support for checking if the Gallium3D anti-aliasing level was overrode using GALLIUM_MSAA environment variable
 
 Phoronix Test Suite 4.2.0-Randaberg
 20 December 2012
