@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2012, Phoronix Media
-	Copyright (C) 2009 - 2012, Michael Larabel
+	Copyright (C) 2009 - 2013, Phoronix Media
+	Copyright (C) 2009 - 2013, Michael Larabel
 	phodevi.php: The object for interacting with the PTS device framework
 
 	This program is free software; you can redistribute it and/or modify
@@ -230,21 +230,6 @@ class phodevi extends phodevi_base
 		}
 
 		return is_array($notes_r) ? $notes_r : array();
-	}
-	public static function read_special_settings_string($device)
-	{
-		$devices = phodevi::available_hardware_devices();
-
-		if(isset($devices[$device]))
-		{
-			$settings_special = call_user_func(array('phodevi_' . $devices[$device], 'special_settings_string'));
-		}
-		else
-		{
-			$settings_special = null;
-		}
-
-		return $settings_special;
 	}
 	public static function read_property($device, $read_property)
 	{

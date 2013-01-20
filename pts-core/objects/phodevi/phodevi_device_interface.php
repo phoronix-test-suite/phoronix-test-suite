@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009, Phoronix Media
-	Copyright (C) 2009, Michael Larabel
+	Copyright (C) 2009 - 2013, Phoronix Media
+	Copyright (C) 2009 - 2013, Michael Larabel
 	phodevi_device_interface: The abstract interface for the PTS Device Interface
 
 	This program is free software; you can redistribute it and/or modify
@@ -37,11 +37,6 @@ abstract class phodevi_device_interface
 	{
 		// Any important notes about that device subsystem (i.e. for disk the disk scheduler in use) that in the context of PTS will be reported to the test notes area when called
 		return array();
-	}
-	public static function special_settings_string()
-	{
-		// Any important settings that may be special or overridden settings that in the context of PTS will be appended to a test result's description string (i.e. forced AA / AF values)
-		return null;
 	}
 	public static function available_sensors()
 	{

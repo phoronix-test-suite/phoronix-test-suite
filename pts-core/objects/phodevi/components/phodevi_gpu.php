@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2012, Phoronix Media
-	Copyright (C) 2008 - 2012, Michael Larabel
+	Copyright (C) 2008 - 2013, Phoronix Media
+	Copyright (C) 2008 - 2013, Michael Larabel
 	phodevi_gpu.php: The PTS Device Interface object for the graphics processor
 
 	This program is free software; you can redistribute it and/or modify
@@ -112,29 +112,6 @@ class phodevi_gpu extends phodevi_device_interface
 		}
 
 		return $property;
-	}
-	public static function special_settings_string()
-	{
-		$special_string = null;
-		$extra_gfx_settings = array();
-		$aa_level = phodevi::read_property('gpu', 'aa-level');
-		$af_level = phodevi::read_property('gpu', 'af-level');
-
-		if($aa_level)
-		{
-			array_push($extra_gfx_settings, 'AA: ' . $aa_level);
-		}
-		if($af_level)
-		{
-			array_push($extra_gfx_settings, 'AF: ' . $af_level);
-		}
-
-		if(count($extra_gfx_settings) > 0)
-		{
-			$special_string = implode(' - ', $extra_gfx_settings);
-		}
-
-		return $special_string;
 	}
 	public static function gpu_set_resolution($args)
 	{
