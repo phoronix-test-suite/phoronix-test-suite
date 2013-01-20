@@ -402,7 +402,9 @@ class pts_test_execution
 			pts_test_notes_manager::add_note($note);
 		}
 
+		// As of PTS 4.4, this is removed and superceded effectively by reporting the notes to table
 		// Any special information (such as forced AA/AF levels for graphics) to add to the description string of the result?
+		/*
 		if(($special_string = phodevi::read_special_settings_string($test_type)) != null)
 		{
 			if(strpos($arguments_description, $special_string) === false)
@@ -415,6 +417,7 @@ class pts_test_execution
 				$arguments_description .= $special_string;
 			}
 		}
+		*/
 
 		// Result Calculation
 		$test_run_request->set_used_arguments_description($arguments_description);

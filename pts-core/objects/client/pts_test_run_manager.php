@@ -792,6 +792,18 @@ class pts_test_run_manager
 			{
 				$notes['graphics-2d-acceleration'] = $accel_2d;
 			}
+
+			$aa = phodevi::read_property('gpu', 'aa-level');
+			if($aa)
+			{
+				$notes['graphics-aa'] = $aa;
+			}
+
+			$af = phodevi::read_property('gpu', 'af-level');
+			if($af)
+			{
+				$notes['graphics-af'] = $af;
+			}
 		}
 
 		return $notes;

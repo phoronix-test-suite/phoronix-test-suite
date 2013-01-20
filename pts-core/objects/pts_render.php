@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2012, Phoronix Media
-	Copyright (C) 2008 - 2012, Michael Larabel
+	Copyright (C) 2008 - 2013, Phoronix Media
+	Copyright (C) 2008 - 2013, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -395,9 +395,18 @@ class pts_render
 			{
 				$system_attributes['Processor'][$identifiers[$i]] = 'Scaling Governor: ' . $json['cpu-scaling-governor'];
 			}
-			if(isset($json['graphics-2d-acceleration']))
+			if(isset($json['graphics-2d-acceleration']) || isset($json['graphics-aa']) || isset($json['graphics-af']))
 			{
-				$system_attributes['Graphics'][$identifiers[$i]] = '2D Acceleration: ' . $json['graphics-2d-acceleration'];
+				$report = array();
+				foreach(array('graphics-2d-acceleration', 'graphics-aa', 'graphics-af') as $check)
+				{
+					if(isset($json[$check]) && !empty($json[$check]))
+					{
+						array_push($report, $json[$check]);
+					}
+				}
+
+				$system_attributes['Graphics'][$identifiers[$i]] = implode(' - ' , $report);
 			}
 			if(isset($json['graphics-compute-cores']))
 			{
