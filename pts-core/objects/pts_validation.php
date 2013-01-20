@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2011, Phoronix Media
-	Copyright (C) 2009 - 2011, Michael Larabel
+	Copyright (C) 2009 - 2013, Phoronix Media
+	Copyright (C) 2009 - 2013, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -59,11 +59,12 @@ class pts_validation
 	}
 	public static function test_profile_permitted_files()
 	{
-		$allowed_files = array('downloads.xml', 'test-definition.xml', 'results-definition.xml', 'install.sh', 'pre.sh', 'post.sh', 'interim.sh', 'post-cache-share.sh');
+		$allowed_files = array('downloads.xml', 'test-definition.xml', 'results-definition.xml', 'install.sh', 'support-check.sh', 'pre.sh', 'post.sh', 'interim.sh', 'post-cache-share.sh');
 
 		foreach(pts_types::operating_systems() as $os)
 		{
 			$os = strtolower($os[0]);
+			array_push($allowed_files, 'support-check_' . $os . '.sh');
 			array_push($allowed_files, 'install_' . $os . '.sh');
 			array_push($allowed_files, 'pre_' . $os . '.sh');
 			array_push($allowed_files, 'post_' . $os . '.sh');

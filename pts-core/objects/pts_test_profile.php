@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2012, Phoronix Media
-	Copyright (C) 2008 - 2012, Michael Larabel
+	Copyright (C) 2008 - 2013, Phoronix Media
+	Copyright (C) 2008 - 2013, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -207,8 +207,42 @@ class pts_test_profile extends pts_test_profile_parser
 			PTS_IS_CLIENT && $report_warnings && pts_client::$display->test_run_error($this->get_identifier() . ' is not supported by this version of the Phoronix Test Suite: ' . PTS_VERSION);
 			$test_supported = false;
 		}
+		else if(PTS_IS_CLIENT && ($custom_support_check = $this->custom_test_support_check()) !== true)
+		{
+			// A custom-self-generated error occurred, see code comments in custom_test_support_check()
+			PTS_IS_CLIENT && $report_warnings && pts_client::$display->test_run_error($this->get_identifier() . ': ' . $custom_support_check);
+			$test_supported = false;
+		}
 
 		return $test_supported;
+	}
+	public function custom_test_support_check()
+	{
+		/*
+		As of Phoronix Test Suite 4.4, the software will check for the presence of a 'support-check' file.
+		Any test profile can optionally include a support-check.sh file to check for arbitrary commands not covered by
+		the rest of the PTS testing architecture, e.g. to check for the presence of systemd on the target system. If
+		the script finds that the system is incompatible with the test, it can write a custom error message to the file
+		specified by the $TEST_CUSTOM_ERROR environment variable. If the $TEST_CUSTOM_ERROR target is written to, the PTS
+		client will abort the test installation with the specified error message.
+		*/
+
+		$support_check_file = $this->get_resource_dir() . 'support-check.sh';
+
+		if(PTS_IS_CLIENT && is_file($support_check_file))
+		{
+			$environment['TEST_CUSTOM_ERROR'] = pts_client::temporary_directory() . '/PTS-' . $this->get_identifier_base_name() . '-' . rand(1000, 9999);
+			$support_check = pts_tests::call_test_script($this, 'support-check', null, null, $environment, false);
+
+			if(is_file($environment['TEST_CUSTOM_ERROR']))
+			{
+				$support_result = pts_file_io::file_get_contents($environment['TEST_CUSTOM_ERROR']);
+				pts_file_io::delete($environment['TEST_CUSTOM_ERROR']);
+				return $support_result;
+			}
+		}
+
+		return true;
 	}
 	public function is_test_architecture_supported()
 	{

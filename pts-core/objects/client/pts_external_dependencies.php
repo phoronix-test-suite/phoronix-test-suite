@@ -62,7 +62,7 @@ class pts_external_dependencies
 			}
 		}
 
-		if(!empty($required_test_dependencies[$test_dependency]))
+		if(!empty($required_test_dependencies))
 		{
 			// The 'common-dependencies' package is any general non-explicitly-required but nice-to-have packages like mesa-utils for providing glxinfo about the system
 			// So if we're going to be installing external dependencies anyways, might as well try to see the common-dependencies are satisfied
