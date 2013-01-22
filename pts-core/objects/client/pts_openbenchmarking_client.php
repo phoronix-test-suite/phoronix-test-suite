@@ -674,8 +674,7 @@ class pts_openbenchmarking_client
 				break;
 			case 'test_install_failure':
 				list($test_install, $error) = $data;
-				// TODO: See that those calling this function are using an appropriate 'error' attribute
-				$upload_data = array('test_identifier' => $test_install->test_profile->get_identifier(), 'error' => $error);
+				$upload_data = array('test_identifier' => $test_install->test_profile->get_identifier(), 'error' => $error, 'os' => phodevi::read_property('system', 'vendor-identifier'));
 				pts_network::http_upload_via_post(pts_openbenchmarking::openbenchmarking_host() . 'extern/statistics/report-test-install-failure.php', $upload_data);
 				break;
 		}

@@ -668,22 +668,53 @@ class pts_test_installer
 
 					if($install_exit_status != 0 && phodevi::is_bsd() == false && phodevi::is_windows() == false)
 					{
+						$install_error = null;
+
 						// TODO: perhaps better way to handle this than to remove pts-install.xml
 						pts_file_io::unlink($test_install_directory . 'pts-install.xml');
 
 						if(is_file($test_install_directory . 'install.log'))
 						{
+							$install_log = pts_file_io::file_get_contents($test_install_directory . 'install.log');
+							foreach(array('fatal error', 'error:', 'undefined reference', 'returned 1 exit status') as $error_string)
+							{
+								if(($e = strripos($install_log, $error_string)) !== false)
+								{
+
+									if(($line_end = strpos($install_log, PHP_EOL, $e)) !== false)
+									{
+										$install_log = substr($install_log, 0, $line_end);
+									}
+
+									if(($line_start_e = strrpos($install_log, PHP_EOL)) !== false)
+									{
+										$install_log = substr($install_log, ($line_start_e + 1));
+									}
+
+									$install_log = $install_log;
+
+									if(isset($install_log[8]) && !isset($install_log[144]) && strpos($install_log, PHP_EOL) === false)
+									{
+										$install_error = $install_log;
+									}
+
+								}
+							}
 							copy($test_install_directory . 'install.log', $test_install_directory . 'install-failed.log');
 						}
 
 						pts_test_installer::setup_test_install_directory($test_install_request, true); // Remove installed files from the bunked installation
 						pts_client::$display->test_install_error('The installer exited with a non-zero exit status.');
-						pts_client::$display->test_install_error('Installation Log: ' . $test_install_directory . 'install-failed.log' . PHP_EOL);
+						if($install_error != null)
+						{
+							pts_client::$display->test_install_error('ERROR: ' . self::pretty_error_string($install_error));
+						}
+						pts_client::$display->test_install_error('LOG: ' . str_replace(pts_client::user_home_directory(), '~/', $test_install_directory) . 'install-failed.log' . PHP_EOL);
 
 						if(pts_client::do_anonymous_usage_reporting())
 						{
 							// If anonymous usage reporting enabled, report test install failure to OpenBenchmarking.org
-							pts_openbenchmarking_client::upload_usage_data('test_install_failure', array($test_install_request, null)); // TODO: implement 'error' attribute as second element of array
+							pts_openbenchmarking_client::upload_usage_data('test_install_failure', array($test_install_request, $install_error));
 						}
 
 						return false;
@@ -719,6 +750,32 @@ class pts_test_installer
 		echo PHP_EOL;
 
 		return $installed;
+	}
+	public static function pretty_error_string($error)
+	{
+		if(($t = strpos($error, '.h: No such file')) !== false)
+		{
+			$pretty_error = substr($error, strrpos($error, ' ', (0 - (strlen($error) - $t))));
+			$pretty_error = substr($pretty_error, 0, strpos($pretty_error, ':'));
+
+			if(isset($pretty_error[2]))
+			{
+				$error = 'Missing Header File: ' . trim($pretty_error);
+			}
+		}
+		else if(($t = strpos($error, 'configure: error: ')) !== false)
+		{
+			$pretty_error = substr($error, ($t + strlen('configure: error: ')));
+
+			if(($t = strpos($pretty_error, 'not found.')) !== false)
+			{
+				$pretty_error = substr($pretty_error, 0, ($t + strlen('not found.')));
+			}
+
+			$error = $pretty_error;
+		}
+
+		return $error;
 	}
 	public static function validate_md5_download_file($filename, $verified_md5)
 	{
