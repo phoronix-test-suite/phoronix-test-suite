@@ -34,7 +34,8 @@ class pts_test_installer
 		pts_client::set_test_flags($test_flags);
 
 		// Get the test profiles
-		$test_profiles = pts_types::identifiers_to_test_profile_objects($items_to_install, true, true);
+		$unknown_tests = array();
+		$test_profiles = pts_types::identifiers_to_test_profile_objects($items_to_install, true, true, $unknown_tests);
 
 		// Any external dependencies?
 		pts_external_dependencies::install_dependencies($test_profiles);
@@ -46,12 +47,12 @@ class pts_test_installer
 			return false;
 		}
 
-		pts_test_installer::start_install($test_profiles);
+		pts_test_installer::start_install($test_profiles, $unknown_tests);
 		pts_client::release_lock($lock_path);
 
 		return $test_profiles;
 	}
-	public static function start_install(&$test_profiles)
+	public static function start_install(&$test_profiles, &$unknown_tests = null)
 	{
 		if(count($test_profiles) == 0)
 		{
@@ -83,6 +84,14 @@ class pts_test_installer
 			else
 			{
 				pts_client::$display->generic_sub_heading('Installed: ' . $test_profile->get_identifier());
+			}
+		}
+
+		if($unknown_tests)
+		{
+			foreach($unknown_tests as $unkown)
+			{
+				pts_client::$display->generic_sub_heading('Unknown: ' . $unkown);
 			}
 		}
 

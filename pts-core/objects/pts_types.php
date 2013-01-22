@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2012, Phoronix Media
-	Copyright (C) 2010 - 2012, Michael Larabel
+	Copyright (C) 2010 - 2013, Phoronix Media
+	Copyright (C) 2010 - 2013, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -50,11 +50,11 @@ class pts_types
 	{
 		return array(array('Linux'), array('Solaris', 'Sun'), array('BSD', 'DragonFly'), array('MacOSX', 'Darwin'), array('Windows'), array('Hurd', 'GNU'));
 	}
-	public static function identifiers_to_test_profile_objects($identifiers, $include_extensions = false, $remove_duplicates = true)
+	public static function identifiers_to_test_profile_objects($identifiers, $include_extensions = false, $remove_duplicates = true, &$archive_unknown_objects = false)
 	{
 		$test_profiles = array();
 
-		foreach(pts_types::identifiers_to_objects($identifiers) as $object)
+		foreach(pts_types::identifiers_to_objects($identifiers, $archive_unknown_objects) as $object)
 		{
 			if($object instanceof pts_test_profile)
 			{
@@ -105,7 +105,7 @@ class pts_types
 
 		return $test_profiles;
 	}
-	public static function identifiers_to_objects($identifiers)
+	public static function identifiers_to_objects($identifiers, &$archive_unknown_objects = false)
 	{
 		// Provide an array containing the location(s) of all test(s) for the supplied object name
 		$objects = array();
@@ -146,6 +146,11 @@ class pts_types
 			{
 				// Object is a virtual suite
 				array_push($objects, new pts_virtual_test_suite($identifier_item));
+			}
+			else if(is_array($archive_unknown_objects))
+			{
+				// Unknown / nothing / broken
+				array_push($archive_unknown_objects, $identifier_item);
 			}
 		}
 
