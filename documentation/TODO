@@ -38,5 +38,5 @@ PHORONIX TEST SUITE PUBLIC TODO LIST:
 - oclGaussCrack [https://hashcat.net/oclGaussCrack/]
 - ViennaCL [http://viennacl.sourceforge.net/viennacl-benchmarks.html]
 - Handbrake [http://handbrake.fr/]
-- Parboil [http://impact.crhc.illinois.edu/parboil.aspx]
+- Expand on OpenCL/CUDA test support within the OpenCL demos, Parboil, etc
 

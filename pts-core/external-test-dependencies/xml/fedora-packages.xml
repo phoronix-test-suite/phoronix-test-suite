@@ -40,7 +40,7 @@
 		<Package>
 			<GenericName>libpng-development</GenericName>
 			<PackageName>libpng-devel</PackageName>
-			<FileCheck>/usr/include/libpng12/png.h</FileCheck>
+			<FileCheck>/usr/include/libpng12/png.h OR /usr/include/png.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>build-utilities</GenericName>
