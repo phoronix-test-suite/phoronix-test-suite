@@ -8,8 +8,9 @@ Phoronix Test Suite (Git)
 - pts-core: Support for test profiles providing a 'support-check.sh' file
 - pts-core: Support for reporting the Graphics AA/AF values to the system notes table
 - pts-core: Add a public version of the TODO list
-- pts-core: Don't attempt install.log -> install-failed.log on empty files
+- pts-core: Don't attempt copying install.log to install-failed.log on empty files
 - pts-core: Add fallback to allow matching an operating system to an external dependencies package list based upon the detected package manager
+- pts-core: When anonymous usage reporting is enabled, report test installation failures to OpenBenchmarking.org for analyzing problem
 - phodevi: Improve Nouveau video RAM memory capacity detection on newer Linux kernels
 - phodevi: Warning fix for Radeon GPU frequency detection
 - phodevi: Drop "special_settings_string" support

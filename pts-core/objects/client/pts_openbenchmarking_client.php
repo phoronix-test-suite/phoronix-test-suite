@@ -672,6 +672,12 @@ class pts_openbenchmarking_client
 				$upload_data = array('test_identifier' => $test_result->test_profile->get_identifier(), 'test_version' => $test_result->test_profile->get_test_profile_version(), 'elapsed_time' => $time_elapsed);
 				pts_network::http_upload_via_post(pts_openbenchmarking::openbenchmarking_host() . 'extern/statistics/report-test-completion.php', $upload_data);
 				break;
+			case 'test_install_failure':
+				list($test_install, $error) = $data;
+				// TODO: See that those calling this function are using an appropriate 'error' attribute
+				$upload_data = array('test_identifier' => $test_install->test_profile->get_identifier(), 'error' => $error);
+				pts_network::http_upload_via_post(pts_openbenchmarking::openbenchmarking_host() . 'extern/statistics/report-test-install-failure.php', $upload_data);
+				break;
 		}
 	}
 	public static function upload_hwsw_data($to_report)

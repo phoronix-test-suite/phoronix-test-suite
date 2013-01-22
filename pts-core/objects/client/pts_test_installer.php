@@ -679,6 +679,13 @@ class pts_test_installer
 						pts_test_installer::setup_test_install_directory($test_install_request, true); // Remove installed files from the bunked installation
 						pts_client::$display->test_install_error('The installer exited with a non-zero exit status.');
 						pts_client::$display->test_install_error('Installation Log: ' . $test_install_directory . 'install-failed.log' . PHP_EOL);
+
+						if(pts_client::do_anonymous_usage_reporting())
+						{
+							// If anonymous usage reporting enabled, report test install failure to OpenBenchmarking.org
+							pts_openbenchmarking_client::upload_usage_data('test_install_failure', array($test_install_request, null)); // TODO: implement 'error' attribute as second element of array
+						}
+
 						return false;
 					}
 				}
