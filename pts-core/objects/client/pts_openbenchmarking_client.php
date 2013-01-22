@@ -599,7 +599,7 @@ class pts_openbenchmarking_client
 
 		return false;
 	}
-	public static function available_tests()
+	public static function available_tests($download_tests = true)
 	{
 		$available_tests = array();
 
@@ -611,7 +611,7 @@ class pts_openbenchmarking_client
 			{
 				foreach(array_keys($repo_index['tests']) as $identifier)
 				{
-					if(pts_network::network_support_available())
+					if($download_tests && pts_network::network_support_available())
 					{
 						$version = array_shift($repo_index['tests'][$identifier]['versions']);
 						if(self::download_test_profile($repo . '/' . $identifier . '-' . $version) == false)

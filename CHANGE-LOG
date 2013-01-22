@@ -14,6 +14,7 @@ Phoronix Test Suite (Git)
 - pts-core: Support for detecting common errors within test profile install failures and reporting the relevant information to the user
 - pts-core: When installing many tests and there are install failures, conveniently show the errors at the end
 - pts-core: When installing multiple tests, report any unknown test profiles/suites
+- pts-core: Faster loading of list-available-tests command by not forcing all test profiles be downloaded
 - phodevi: Improve Nouveau video RAM memory capacity detection on newer Linux kernels
 - phodevi: Warning fix for Radeon GPU frequency detection
 - phodevi: Drop "special_settings_string" support
