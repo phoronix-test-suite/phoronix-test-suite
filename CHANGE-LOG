@@ -12,6 +12,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add fallback to allow matching an operating system to an external dependencies package list based upon the detected package manager
 - pts-core: When anonymous usage reporting is enabled, report test installation failures to OpenBenchmarking.org for analyzing problem
 - pts-core: Support for detecting common errors within test profile install failures and reporting the relevant information to the user
+- pts-core: When installing many tests and there are install failures, conveniently show the errors at the end
 - phodevi: Improve Nouveau video RAM memory capacity detection on newer Linux kernels
 - phodevi: Warning fix for Radeon GPU frequency detection
 - phodevi: Drop "special_settings_string" support

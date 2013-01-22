@@ -120,16 +120,39 @@ class pts_test_installer
 			}
 			else
 			{
-				array_push($failed_installs, $test_install_request->test_profile);
+				array_push($failed_installs, $test_install_request);
 			}
 		}
 		pts_module_manager::module_process('__post_install_process', $test_install_manager);
 		pts_download_speed_manager::save_data();
 
-		if(count($failed_installs) > 0)
+		if(count($failed_installs) > 1)
 		{
 			echo PHP_EOL . 'The following tests failed to install:' . PHP_EOL . PHP_EOL;
-			echo pts_user_io::display_text_list($failed_installs, "\t- ");
+			// $test_install_request->install_error
+			if(count($failed_installs) > 5)
+			{
+				// If many tests are being installed, show the error messages reported in order to reduce scrolling...
+				foreach($failed_installs as &$install_request)
+				{
+					echo '   - ' . $install_request->test_profile;
+
+					if($install_request->install_error)
+					{
+						echo ' [' . $install_request->install_error . ']';
+					}
+
+					echo PHP_EOL;
+				}
+			}
+			else
+			{
+				foreach($failed_installs as &$install_request)
+				{
+					echo '   - ' . $install_request->test_profile . PHP_EOL;
+				}
+			}
+
 			echo PHP_EOL;
 		}
 	}
@@ -707,7 +730,8 @@ class pts_test_installer
 						pts_client::$display->test_install_error('The installer exited with a non-zero exit status.');
 						if($install_error != null)
 						{
-							pts_client::$display->test_install_error('ERROR: ' . self::pretty_error_string($install_error));
+							$test_install_request->install_error = self::pretty_error_string($install_error);
+							pts_client::$display->test_install_error('ERROR: ' . $test_install_request->install_error);
 						}
 						pts_client::$display->test_install_error('LOG: ' . str_replace(pts_client::user_home_directory(), '~/', $test_install_directory) . 'install-failed.log' . PHP_EOL);
 
