@@ -45,7 +45,7 @@ class list_available_tests implements pts_option_interface
 				continue;
 			}
 
-			echo sprintf('%-28ls - %-35ls %-9ls', $identifier, $repo_index['tests'][$id]['title'], $repo_index['tests'][$id]['test_type']) . PHP_EOL;
+			echo sprintf('%-30ls - %-35ls %-9ls', $identifier, $repo_index['tests'][$id]['title'], $repo_index['tests'][$id]['test_type']) . PHP_EOL;
 			$test_count++;
 		}
 
@@ -53,9 +53,9 @@ class list_available_tests implements pts_option_interface
 		{
 			$test_profile = new pts_test_profile('local/' . basename(dirname($path)));
 
-			if($test_profile->get_title() != null && $test_profile->is_supported())
+			if($test_profile->get_title() != null && $test_profile->is_supported(false))
 			{
-				echo sprintf('%-28ls - %-35ls %-9ls', $test_profile->get_identifier(), $test_profile->get_title(), $test_profile->get_test_hardware_type()) . PHP_EOL;
+				echo sprintf('%-30ls - %-35ls %-9ls', $test_profile->get_identifier(), $test_profile->get_title(), $test_profile->get_test_hardware_type()) . PHP_EOL;
 				$test_count++;
 			}
 		}

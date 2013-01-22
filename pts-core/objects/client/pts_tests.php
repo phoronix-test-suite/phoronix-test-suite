@@ -90,6 +90,7 @@ class pts_tests
 		// TODO: call_test_script could be better cleaned up to fit more closely with new pts_test_profile functions
 		$result = null;
 		$test_directory = $test_profile->get_install_dir();
+		pts_file_io::mkdir($test_directory);
 		$os_postfix = '_' . strtolower(phodevi::operating_system());
 		$test_profiles = array($test_profile);
 
