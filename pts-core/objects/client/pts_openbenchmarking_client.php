@@ -627,7 +627,7 @@ class pts_openbenchmarking_client
 
 		return $available_tests;
 	}
-	public static function available_suites()
+	public static function available_suites($download_suites = true)
 	{
 		$available_suites = array();
 
@@ -639,7 +639,7 @@ class pts_openbenchmarking_client
 			{
 				foreach(array_keys($repo_index['suites']) as $identifier)
 				{
-					if(pts_network::network_support_available())
+					if($download_suites && pts_network::network_support_available())
 					{
 						$version = array_shift($repo_index['suites'][$identifier]['versions']);
 						if(self::download_test_suite($repo . '/' . $identifier . '-' . $version) == false)
