@@ -129,8 +129,8 @@
 		</Package>
 		<Package>
 			<GenericName>perl</GenericName>
-			<PackageName>perl perl-base perl-modules libsdl-perl libperl-dev</PackageName>
-			<FileCheck>/usr/bin/perl, /etc/perl/CPAN, /usr/lib/perl5/auto/SDL_perl/SDL_perl.so</FileCheck>
+			<PackageName>perl perl-base perl-modules libsdl-perl libperl-dev libpcre3-dev</PackageName>
+			<FileCheck>/usr/bin/perl, /etc/perl/CPAN, /usr/lib/perl5/auto/SDL_perl/SDL_perl.so, /usr/include/pcre.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>perl-opengl</GenericName>
