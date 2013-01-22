@@ -90,21 +90,6 @@ class pts_exdep_generic_parser
 
 		return $vendors;
 	}
-	public function find_vendor_alias($alias)
-	{
-		foreach($this->get_vendors_list() as $vendor)
-		{
-			$exdep_platform_parser = new pts_exdep_platform_parser($vendor);
-			$aliases = $exdep_platform_parser->get_aliases();
-
-			if(in_array($alias, $aliases))
-			{
-				return $vendor;
-			}
-		}
-
-		return false;
-	}
 	public function get_vendor_aliases()
 	{
 		$alias_list = array();

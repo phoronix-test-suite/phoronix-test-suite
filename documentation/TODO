@@ -2,6 +2,7 @@ PHORONIX TEST SUITE PUBLIC TODO LIST:
 
 ### PTS-CORE ###
 
+- Move External Dependencies into OpenBenchmarking.org cloud
 - Reporting to OpenBenchmarking.org on broken download URLs for test profiles.
 - Reporting of install times to OpenBenchmarking.org and also exposing this information back to clients.
 - Support for multiple languages / internationality.
@@ -9,6 +10,7 @@ PHORONIX TEST SUITE PUBLIC TODO LIST:
 - Possibly restore "weighted suites" [http://phorogit.com/index.php?p=phoronix-test-suite.git&a=commitdiff&h=548e5c073cc90d92ac3f382ca4933d5f556e78c6&hb=444441f9be866f51920e0ad8ca3909951b4d90c5]
 - Integrate recover-run command into the run command, auto-detect if the result file was a partial save and then ask if to perform run recovery' [ POSSIBLY DO THE SAME FOR FINISH-RUN]
 - Multi-threaded downloading of test files
+- Numerous pts_render improvements [see in-line code comments]
 
 ### PTS-GRAPH ###
 

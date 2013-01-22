@@ -5,6 +5,7 @@
 		<Information>
 			<Name>OpenSuSE</Name>
 			<Aliases>SUSE Linux, SUSE</Aliases>
+			<PackageManager>zypper</PackageManager>
 		</Information>
 		<Package>
 			<GenericName>gtk-development</GenericName>

@@ -5,6 +5,7 @@
 		<Information>
 			<Name>Fedora</Name>
 			<Aliases>Moblin, MeeGo, Amazon, Red Hat Enterprise, Red Hat Enterprise Server, Scientific, ScientificSL, CentOS, ClearOS, ClearOS Core Server, Oracle Server, OLPC</Aliases>
+			<PackageManager>yum</PackageManager>
 		</Information>
 		<Package>
 			<GenericName>gtk-development</GenericName>

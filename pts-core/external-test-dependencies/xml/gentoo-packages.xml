@@ -4,6 +4,7 @@
 	<ExternalDependencies>
 		<Information>
 			<Name>Gentoo</Name>
+			<PackageManager>emerge</PackageManager>
 		</Information>
 		<Package>
 			<GenericName>gtk-development</GenericName>

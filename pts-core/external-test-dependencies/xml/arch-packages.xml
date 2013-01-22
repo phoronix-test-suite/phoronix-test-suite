@@ -4,6 +4,7 @@
 	<ExternalDependencies>
 		<Information>
 			<Name>Arch Linux</Name>
+			<PackageManager>pacman</PackageManager>
 		</Information>
 		<Package>
 			<GenericName>gtk-development</GenericName>

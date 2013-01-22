@@ -4,6 +4,7 @@
 	<ExternalDependencies>
 		<Information>
 			<Name>Mandriva</Name>
+			<Aliases>Mageia, OpenMandriva</Aliases>
 		</Information>
 		<Package>
 			<GenericName>gtk-development</GenericName>

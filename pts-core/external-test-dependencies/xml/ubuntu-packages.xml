@@ -5,6 +5,7 @@
 		<Information>
 			<Name>Ubuntu</Name>
 			<Aliases>Linux Mint, MEPIS, Debian, Nexenta Core, PTS Linux Live, PTS Desktop Live, Joli Cloud, gNewSense, Fluxbuntu, Mythbuntu, Goobuntu, GNU KFreeBSD, Linaro</Aliases>
+			<PackageManager>apt-get</PackageManager>
 		</Information>
 		<Package>
 			<GenericName>common-dependencies</GenericName>

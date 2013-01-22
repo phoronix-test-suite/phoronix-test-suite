@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2012, Phoronix Media
-	Copyright (C) 2012, Michael Larabel
+	Copyright (C) 2012 - 2013, Phoronix Media
+	Copyright (C) 2012 - 2013, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@ class pts_exdep_platform_parser
 
 	public function __construct($identifier = null)
 	{
-		$this->struct = array('external-dependencies' => array('name' => null, 'aliases' => array(), 'packages' => array()));
+		$this->struct = array('external-dependencies' => array('name' => null, 'package_manager' => null, 'aliases' => array(), 'packages' => array()));
 
 		if(PTS_IS_CLIENT)
 		{
@@ -34,6 +34,7 @@ class pts_exdep_platform_parser
 			$xml_parser = new nye_XmlReader($xml);
 
 			$this->struct['external-dependencies']['name'] = $xml_parser->getXMLValue('PhoronixTestSuite/ExternalDependencies/Information/Name');
+			$this->struct['external-dependencies']['package_manager'] = $xml_parser->getXMLValue('PhoronixTestSuite/ExternalDependencies/Information/PackageManager');
 			$generic_package = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ExternalDependencies/Package/GenericName');
 			$distro_package = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ExternalDependencies/Package/PackageName');
 			$file_check = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ExternalDependencies/Package/FileCheck');
@@ -82,6 +83,10 @@ class pts_exdep_platform_parser
 	public function get_name()
 	{
 		return $this->struct['external-dependencies']['name'];
+	}
+	public function get_package_manager()
+	{
+		return $this->struct['external-dependencies']['package_manager'];
 	}
 	public function get_aliases()
 	{

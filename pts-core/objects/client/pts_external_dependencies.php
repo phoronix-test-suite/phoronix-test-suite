@@ -346,19 +346,39 @@ class pts_external_dependencies
 			case 'installer':
 				$file_check_success = is_file(PTS_EXDEP_PATH . 'scripts/install-' . $os_vendor . '-packages.sh');
 				break;
-			default:
-				return false;
 		}
 
 		if($file_check_success == false)
 		{
+			// Check the aliases to figure out the upstream distribution
+			$os_vendor = false;
 			$exdep_generic_parser = new pts_exdep_generic_parser();
-			$os_vendor = $exdep_generic_parser->find_vendor_alias($os_vendor);
-
-			if($os_vendor == false && is_file('/etc/debian_version'))
+			foreach($exdep_generic_parser->get_vendors_list() as $this_vendor)
 			{
-				// A simple last fall-back
-				$os_vendor = 'ubuntu';
+				$exdep_platform_parser = new pts_exdep_platform_parser($this_vendor);
+				$aliases = $exdep_platform_parser->get_aliases();
+
+				if(in_array($os_vendor, $aliases))
+				{
+					$os_vendor = $this_vendor;
+					break;
+				}
+			}
+
+			if($os_vendor == false)
+			{
+				// Attempt to match the current operating system by seeing what package manager matches
+				foreach($exdep_generic_parser->get_vendors_list() as $this_vendor)
+				{
+					$exdep_platform_parser = new pts_exdep_platform_parser($this_vendor);
+					$package_manager = $exdep_platform_parser->get_package_manager();
+
+					if($package_manager != null && pts_client::executable_in_path($package_manager))
+					{
+						$os_vendor = $this_vendor;
+						break;
+					}
+				}
 			}
 		}
 
