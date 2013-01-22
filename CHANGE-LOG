@@ -7,6 +7,7 @@ Phoronix Test Suite (Git)
 - pts-core: Support for listing 'local/' tests from the list-supported-tests command
 - pts-core: Support for test profiles providing a 'support-check.sh' file
 - pts-core: Support for reporting the Graphics AA/AF values to the system notes table
+- pts-core: Add a public version of the TODO list
 - phodevi: Improve Nouveau video RAM memory capacity detection on newer Linux kernels
 - phodevi: Warning fix for Radeon GPU frequency detection
 - phodevi: Drop "special_settings_string" support

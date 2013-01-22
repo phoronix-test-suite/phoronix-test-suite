@@ -1,0 +1,40 @@
+PHORONIX TEST SUITE PUBLIC TODO LIST:
+
+### PTS-CORE ###
+
+- Reporting to OpenBenchmarking.org on broken download URLs for test profiles.
+- Reporting of install times to OpenBenchmarking.org and also exposing this information back to clients.
+- Support for multiple languages / internationality.
+- BLKID fall-back support for determining file-system [e.g. /sbin/blkid -s TYPE -o value /dev/sda1].
+- Possibly restore "weighted suites" [http://phorogit.com/index.php?p=phoronix-test-suite.git&a=commitdiff&h=548e5c073cc90d92ac3f382ca4933d5f556e78c6&hb=444441f9be866f51920e0ad8ca3909951b4d90c5]
+- Integrate recover-run command into the run command, auto-detect if the result file was a partial save and then ask if to perform run recovery' [ POSSIBLY DO THE SAME FOR FINISH-RUN]
+- Multi-threaded downloading of test files
+
+### PTS-GRAPH ###
+
+- Improve rendering of large data-sets, e.g. http://openbenchmarking.org/result/1205231-LI-BL460G6BE41
+- Rotated text alignment for some PNG graphixs is sometimes off by 90/180 degrees compared to SVG, e.g. http://openbenchmarking.org/s/Compiler
+- SVG graph improvements
+
+### OPENBENCHMARKING.ORG ###
+
+[SUBJECT TO PHORONIX MEDIA NDA]
+
+### NEW TEST PROFILES ###
+
+- Python-libmemcached [http://code.google.com/p/python-libmemcached/]
+- Intel HiBench [https://github.com/intel-hadoop/HiBench]
+- Hadoop Benchmarks
+- LATT Latency Tests [git://git.kernel.dk/latt.git]
+- QMC Beaver [http://qmcbeaver.sourceforge.net/]
+- Some potential interesting GPGPU tests [http://www.bealto.com/gpu-benchmarks.html]
+- WebGL / Chrome Test [http://phoronix.com/forums/showthread.php?73167-Some-Benchmarks-to-add-to-PTS-WebGL-and-Google-Chrome]
+- GtkPerf improvements [http://phoronix.com/forums/showthread.php?73047-gtkperf-I-m-maintaining-feature-requests-new-tests]
+- Rodinia [https://www.cs.virginia.edu/~skadron/wiki/rodinia/index.php/Main_Page]
+- Frame latency analysis [http://phoronix.com/forums/showthread.php?74951-Frame-latency-analysis-on-Doom-3&p=295415&posted=1#post295415]
+- SIPP [http://sipp.sourceforge.net/]
+- oclGaussCrack [https://hashcat.net/oclGaussCrack/]
+- ViennaCL [http://viennacl.sourceforge.net/viennacl-benchmarks.html]
+- Handbrake [http://handbrake.fr/]
+- Parboil [http://impact.crhc.illinois.edu/parboil.aspx]
+
