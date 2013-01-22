@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2012, Phoronix Media
-	Copyright (C) 2010 - 2012, Michael Larabel
+	Copyright (C) 2010 - 2013, Phoronix Media
+	Copyright (C) 2010 - 2013, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -670,7 +670,12 @@ class pts_test_installer
 					{
 						// TODO: perhaps better way to handle this than to remove pts-install.xml
 						pts_file_io::unlink($test_install_directory . 'pts-install.xml');
-						copy($test_install_directory . 'install.log', $test_install_directory . 'install-failed.log');
+
+						if(is_file($test_install_directory . 'install.log'))
+						{
+							copy($test_install_directory . 'install.log', $test_install_directory . 'install-failed.log');
+						}
+
 						pts_test_installer::setup_test_install_directory($test_install_request, true); // Remove installed files from the bunked installation
 						pts_client::$display->test_install_error('The installer exited with a non-zero exit status.');
 						pts_client::$display->test_install_error('Installation Log: ' . $test_install_directory . 'install-failed.log' . PHP_EOL);
