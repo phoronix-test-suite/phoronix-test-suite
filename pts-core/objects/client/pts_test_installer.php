@@ -145,7 +145,7 @@ class pts_test_installer
 				// If many tests are being installed, show the error messages reported in order to reduce scrolling...
 				if($install_request->install_error && isset($failed_installs[5]))
 				{
-					echo '   [' . $install_request->install_error . ']' . PHP_EOL;
+					echo '    [' . $install_request->install_error . ']' . PHP_EOL;
 				}
 			}
 		}
@@ -717,6 +717,17 @@ class pts_test_installer
 
 								}
 							}
+
+							if($install_error == null && ($s = strrpos($install_log, PHP_EOL)) !== false && stripos($install_log, 'found', $s) !== false && stripos($install_log, 'no', ($s - 1)) !== false)
+							{
+								// See if the last line of the log is e.g. 'No OpenCL Environment Found', 'FFFFF Not Found', Etc
+								$last_line = trim(substr($install_log, $s));
+								if(isset($last_line[8]) && !isset($last_line[144]))
+								{
+									$install_error = $last_line;
+								}
+							}
+
 							copy($test_install_directory . 'install.log', $test_install_directory . 'install-failed.log');
 						}
 
