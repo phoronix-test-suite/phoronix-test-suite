@@ -723,7 +723,7 @@ class pts_test_installer
 										$install_log = substr($install_log, ($line_start_e + 1));
 									}
 
-									$install_log = $install_log;
+									$install_log = str_replace(array(PTS_TEST_PROFILE_PATH, $test_install_directory), null, $install_log);
 
 									if(isset($install_log[8]) && !isset($install_log[144]) && strpos($install_log, PHP_EOL) === false)
 									{
@@ -806,6 +806,12 @@ class pts_test_installer
 			}
 
 			$error = $pretty_error;
+		}
+		else if(($t = strpos($error, ': not found')) !== false)
+		{
+			$pretty_error = substr($error, 0, $t);
+			$pretty_error = substr($pretty_error, (strrpos($pretty_error, ' ') + 1));
+			$pretty_error = 'Missing Command: ' . $pretty_error;
 		}
 
 		if(($x = strpos($error, 'See docs')) !== false)
