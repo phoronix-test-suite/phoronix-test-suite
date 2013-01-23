@@ -1,7 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite 4.4 Milestone 1
-23 Janiary 2013
+23 January 2013
 
 - pts-core: Introduce 'common-dependencies' concept to PTS External Dependencies
 - pts-core: Fix reporting of some already installed dependencies

@@ -138,31 +138,16 @@ class pts_test_installer
 		if(count($failed_installs) > 1)
 		{
 			echo PHP_EOL . 'The following tests failed to install:' . PHP_EOL . PHP_EOL;
-			// $test_install_request->install_error
-			if(count($failed_installs) > 5)
+			foreach($failed_installs as &$install_request)
 			{
+				echo '  - ' . $install_request->test_profile . PHP_EOL;
+
 				// If many tests are being installed, show the error messages reported in order to reduce scrolling...
-				foreach($failed_installs as &$install_request)
+				if($install_request->install_error && isset($failed_installs[5]))
 				{
-					echo '   - ' . $install_request->test_profile;
-
-					if($install_request->install_error)
-					{
-						echo ' [' . $install_request->install_error . ']';
-					}
-
-					echo PHP_EOL;
+					echo '   [' . $install_request->install_error . ']' . PHP_EOL;
 				}
 			}
-			else
-			{
-				foreach($failed_installs as &$install_request)
-				{
-					echo '   - ' . $install_request->test_profile . PHP_EOL;
-				}
-			}
-
-			echo PHP_EOL;
 		}
 	}
 	public static function only_download_test_files(&$test_profiles, $to_dir = null)
