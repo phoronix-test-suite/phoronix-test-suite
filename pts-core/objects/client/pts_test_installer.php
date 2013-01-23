@@ -708,7 +708,7 @@ class pts_test_installer
 						if(is_file($test_install_directory . 'install.log'))
 						{
 							$install_log = pts_file_io::file_get_contents($test_install_directory . 'install.log');
-							foreach(array('fatal error', 'error:', 'undefined reference', 'returned 1 exit status') as $error_string)
+							foreach(array('fatal error', 'error:', 'undefined reference', 'returned 1 exit status', 'not found') as $error_string)
 							{
 								if(($e = strripos($install_log, $error_string)) !== false)
 								{
@@ -808,7 +808,12 @@ class pts_test_installer
 			$error = $pretty_error;
 		}
 
-		return $error;
+		if(($x = strpos($error, 'See docs')) !== false)
+		{
+			$error = substr($error, 0, $x);
+		}
+
+		return trim($error);
 	}
 	public static function validate_md5_download_file($filename, $verified_md5)
 	{
