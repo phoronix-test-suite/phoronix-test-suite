@@ -811,7 +811,7 @@ class pts_test_installer
 		{
 			$pretty_error = substr($error, 0, $t);
 			$pretty_error = substr($pretty_error, (strrpos($pretty_error, ' ') + 1));
-			$pretty_error = 'Missing Command: ' . $pretty_error;
+			$error = 'Missing Command: ' . $pretty_error;
 		}
 
 		if(($x = strpos($error, 'See docs')) !== false)
