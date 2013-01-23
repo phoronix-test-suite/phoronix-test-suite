@@ -3,8 +3,8 @@
 <xs:annotation>
 	<xs:documentation xml:lang="en">
 		Phoronix Test Suite / OpenBenchmarking.org
-		Copyright (C) 2008 - 2011, Phoronix Media
-		Copyright (C) 2008 - 2011, Michael Larabel
+		Copyright (C) 2008 - 2013, Phoronix Media
+		Copyright (C) 2008 - 2013, Michael Larabel
 	</xs:documentation>
 </xs:annotation>
 <xs:simpleType name="TitleString">
@@ -121,10 +121,11 @@
 <xs:simpleType name="ProfileStatus">
 	<xs:restriction base="xs:string">
 		<xs:enumeration value="Verified" />
+		<xs:enumeration value="Unverified" />
 		<xs:enumeration value="Private" />
 		<xs:enumeration value="Broken" />
 		<xs:enumeration value="Experimental" />
-		<xs:enumeration value="Unverified" />
+		<xs:enumeration value="Deprecated" />
 	</xs:restriction>
 </xs:simpleType>
 <xs:simpleType name="URLString">
