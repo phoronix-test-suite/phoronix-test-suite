@@ -180,6 +180,16 @@ class pts_test_execution
 				if($exit_status != 0 && phodevi::is_bsd() == false)
 				{
 					pts_client::$display->test_run_instance_error('The test exited with a non-zero exit status.');
+					if(is_file($test_log_file))
+					{
+						$scan_log = pts_file_io::file_get_contents($test_log_file);
+						$test_run_error = pts_tests::scan_for_error($scan_log, $test_run_request->test_profile->get_test_executable_dir());
+
+						if($test_run_error)
+						{
+							pts_client::$display->test_run_instance_error('E: ' . $test_run_error);
+						}
+					}
 					$exit_status_pass = false;
 				}
 			}
@@ -199,10 +209,20 @@ class pts_test_execution
 
 				if(!empty($test_result))
 				{
-					if($test_run_time <= 10 && intval($test_result) == $test_result && $test_run_request->test_profile->get_estimated_run_time() > 60)
+					if($test_run_time < 5 && intval($test_result) == $test_result && $test_run_request->test_profile->get_estimated_run_time() > 60)
 					{
-						// If the test ended in less than 10 seconds, outputted some int, and normally the test takes much longer, then it's likely some invalid run
+						// If the test ended in less than 5 seconds, outputted some int, and normally the test takes much longer, then it's likely some invalid run
 						pts_client::$display->test_run_instance_error('The test run ended prematurely.');
+						if(is_file($test_log_file))
+						{
+							$scan_log = pts_file_io::file_get_contents($test_log_file);
+							$test_run_error = pts_tests::scan_for_error($scan_log, $test_run_request->test_profile->get_test_executable_dir());
+
+							if($test_run_error)
+							{
+								pts_client::$display->test_run_instance_error('E: ' . $test_run_error);
+							}
+						}
 					}
 					else
 					{
@@ -211,6 +231,16 @@ class pts_test_execution
 				}
 				else if($test_run_request->test_profile->get_display_format() != 'NO_RESULT')
 				{
+					if(is_file($test_log_file))
+					{
+						$scan_log = pts_file_io::file_get_contents($test_log_file);
+						$test_run_error = pts_tests::scan_for_error($scan_log, $test_run_request->test_profile->get_test_executable_dir());
+
+						if($test_run_error)
+						{
+							pts_client::$display->test_run_instance_error('E: ' . $test_run_error);
+						}
+					}
 					pts_client::$display->test_run_instance_error('The test run did not produce a result.');
 				}
 

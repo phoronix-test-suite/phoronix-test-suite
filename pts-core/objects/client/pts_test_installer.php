@@ -693,41 +693,7 @@ class pts_test_installer
 						if(is_file($test_install_directory . 'install.log'))
 						{
 							$install_log = pts_file_io::file_get_contents($test_install_directory . 'install.log');
-							foreach(array('fatal error', 'error:', 'undefined reference', 'returned 1 exit status', 'not found') as $error_string)
-							{
-								if(($e = strripos($install_log, $error_string)) !== false)
-								{
-
-									if(($line_end = strpos($install_log, PHP_EOL, $e)) !== false)
-									{
-										$install_log = substr($install_log, 0, $line_end);
-									}
-
-									if(($line_start_e = strrpos($install_log, PHP_EOL)) !== false)
-									{
-										$install_log = substr($install_log, ($line_start_e + 1));
-									}
-
-									$install_log = str_replace(array(PTS_TEST_PROFILE_PATH, $test_install_directory), null, $install_log);
-
-									if(isset($install_log[8]) && !isset($install_log[144]) && strpos($install_log, PHP_EOL) === false)
-									{
-										$install_error = $install_log;
-									}
-
-								}
-							}
-
-							if($install_error == null && ($s = strrpos($install_log, PHP_EOL)) !== false && stripos($install_log, 'found', $s) !== false && stripos($install_log, 'no', ($s - 1)) !== false)
-							{
-								// See if the last line of the log is e.g. 'No OpenCL Environment Found', 'FFFFF Not Found', Etc
-								$last_line = trim(substr($install_log, $s));
-								if(isset($last_line[8]) && !isset($last_line[144]))
-								{
-									$install_error = $last_line;
-								}
-							}
-
+							$install_error = pts_tests::scan_for_error($install_log, $test_install_directory);
 							copy($test_install_directory . 'install.log', $test_install_directory . 'install-failed.log');
 						}
 
@@ -735,7 +701,7 @@ class pts_test_installer
 						pts_client::$display->test_install_error('The installer exited with a non-zero exit status.');
 						if($install_error != null)
 						{
-							$test_install_request->install_error = self::pretty_error_string($install_error);
+							$test_install_request->install_error = pts_tests::pretty_error_string($install_error);
 							pts_client::$display->test_install_error('ERROR: ' . $test_install_request->install_error);
 						}
 						pts_client::$display->test_install_error('LOG: ' . str_replace(pts_client::user_home_directory(), '~/', $test_install_directory) . 'install-failed.log' . PHP_EOL);
@@ -779,43 +745,6 @@ class pts_test_installer
 		echo PHP_EOL;
 
 		return $installed;
-	}
-	public static function pretty_error_string($error)
-	{
-		if(($t = strpos($error, '.h: No such file')) !== false)
-		{
-			$pretty_error = substr($error, strrpos($error, ' ', (0 - (strlen($error) - $t))));
-			$pretty_error = substr($pretty_error, 0, strpos($pretty_error, ':'));
-
-			if(isset($pretty_error[2]))
-			{
-				$error = 'Missing Header File: ' . trim($pretty_error);
-			}
-		}
-		else if(($t = strpos($error, 'configure: error: ')) !== false)
-		{
-			$pretty_error = substr($error, ($t + strlen('configure: error: ')));
-
-			if(($t = strpos($pretty_error, 'not found.')) !== false)
-			{
-				$pretty_error = substr($pretty_error, 0, ($t + strlen('not found.')));
-			}
-
-			$error = $pretty_error;
-		}
-		else if(($t = strpos($error, ': not found')) !== false)
-		{
-			$pretty_error = substr($error, 0, $t);
-			$pretty_error = substr($pretty_error, (strrpos($pretty_error, ' ') + 1));
-			$error = 'Missing Command: ' . $pretty_error;
-		}
-
-		if(($x = strpos($error, 'See docs')) !== false)
-		{
-			$error = substr($error, 0, $x);
-		}
-
-		return trim($error);
 	}
 	public static function validate_md5_download_file($filename, $verified_md5)
 	{

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2012, Phoronix Media
-	Copyright (C) 2008 - 2012, Michael Larabel
+	Copyright (C) 2008 - 2013, Phoronix Media
+	Copyright (C) 2008 - 2013, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -41,6 +41,82 @@ class pts_tests
 		}
 
 		return $cleaned_tests;
+	}
+	public static function scan_for_error($log_file, $strip_string)
+	{
+		$error = null;
+
+		foreach(array('fatal error', 'error:', 'undefined reference', 'returned 1 exit status', 'not found') as $error_string)
+		{
+			if(($e = strripos($log_file, $error_string)) !== false)
+			{
+				if(($line_end = strpos($log_file, PHP_EOL, $e)) !== false)
+				{
+					$log_file = substr($log_file, 0, $line_end);
+				}
+
+				if(($line_start_e = strrpos($log_file, PHP_EOL)) !== false)
+				{
+					$log_file = substr($log_file, ($line_start_e + 1));
+				}
+
+				$log_file = str_replace(array(PTS_TEST_PROFILE_PATH, $strip_string), null, $log_file);
+
+				if(isset($log_file[8]) && !isset($log_file[144]) && strpos($log_file, PHP_EOL) === false)
+				{
+					$error = $log_file;
+				}
+			}
+		}
+
+		if($error == null && ($s = strrpos($log_file, PHP_EOL)) !== false && stripos($log_file, 'found', $s) !== false && stripos($log_file, 'no', ($s - 1)) !== false)
+		{
+			// See if the last line of the log is e.g. 'No OpenCL Environment Found', 'FFFFF Not Found', Etc
+			$last_line = trim(substr($log_file, $s));
+			if(isset($last_line[8]) && !isset($last_line[144]))
+			{
+				$error = $last_line;
+			}
+		}
+
+		return $error;
+	}
+	public static function pretty_error_string($error)
+	{
+		if(($t = strpos($error, '.h: No such file')) !== false)
+		{
+			$pretty_error = substr($error, strrpos($error, ' ', (0 - (strlen($error) - $t))));
+			$pretty_error = substr($pretty_error, 0, strpos($pretty_error, ':'));
+
+			if(isset($pretty_error[2]))
+			{
+				$error = 'Missing Header File: ' . trim($pretty_error);
+			}
+		}
+		else if(($t = strpos($error, 'configure: error: ')) !== false)
+		{
+			$pretty_error = substr($error, ($t + strlen('configure: error: ')));
+
+			if(($t = strpos($pretty_error, 'not found.')) !== false)
+			{
+				$pretty_error = substr($pretty_error, 0, ($t + strlen('not found.')));
+			}
+
+			$error = $pretty_error;
+		}
+		else if(($t = strpos($error, ': not found')) !== false)
+		{
+			$pretty_error = substr($error, 0, $t);
+			$pretty_error = substr($pretty_error, (strrpos($pretty_error, ' ') + 1));
+			$error = 'Missing Command: ' . $pretty_error;
+		}
+
+		if(($x = strpos($error, 'See docs')) !== false)
+		{
+			$error = substr($error, 0, $x);
+		}
+
+		return trim($error);
 	}
 	public static function extra_environmental_variables(&$test_profile)
 	{
