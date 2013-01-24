@@ -46,7 +46,7 @@ class pts_tests
 	{
 		$error = null;
 
-		foreach(array('fatal error', 'error:', 'undefined reference', 'returned 1 exit status', 'not found') as $error_string)
+		foreach(array('fatal error', 'error:', 'error while loading', 'undefined reference', 'returned 1 exit status', 'not found') as $error_string)
 		{
 			if(($e = strripos($log_file, $error_string)) !== false)
 			{

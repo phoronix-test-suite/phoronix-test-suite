@@ -107,6 +107,7 @@ class pts_test_execution
 		{
 			pts_client::$display->test_run_instance_header($test_run_request);
 			$test_log_file = $test_directory . basename($test_identifier) . '-' . $runtime_identifier . '-' . ($i + 1) . '.log';
+			$is_expected_last_run = ($i == ($times_to_run - 1));
 
 			$test_extra_runtime_variables = array_merge($extra_runtime_variables, array(
 			'LOG_FILE' => $test_log_file
@@ -180,7 +181,7 @@ class pts_test_execution
 				if($exit_status != 0 && phodevi::is_bsd() == false)
 				{
 					pts_client::$display->test_run_instance_error('The test exited with a non-zero exit status.');
-					if(is_file($test_log_file))
+					if($is_expected_last_run && is_file($test_log_file))
 					{
 						$scan_log = pts_file_io::file_get_contents($test_log_file);
 						$test_run_error = pts_tests::scan_for_error($scan_log, $test_run_request->test_profile->get_test_executable_dir());
@@ -213,7 +214,7 @@ class pts_test_execution
 					{
 						// If the test ended in less than 5 seconds, outputted some int, and normally the test takes much longer, then it's likely some invalid run
 						pts_client::$display->test_run_instance_error('The test run ended prematurely.');
-						if(is_file($test_log_file))
+						if($is_expected_last_run && is_file($test_log_file))
 						{
 							$scan_log = pts_file_io::file_get_contents($test_log_file);
 							$test_run_error = pts_tests::scan_for_error($scan_log, $test_run_request->test_profile->get_test_executable_dir());
@@ -231,7 +232,8 @@ class pts_test_execution
 				}
 				else if($test_run_request->test_profile->get_display_format() != 'NO_RESULT')
 				{
-					if(is_file($test_log_file))
+					pts_client::$display->test_run_instance_error('The test run did not produce a result.');
+					if($is_expected_last_run && is_file($test_log_file))
 					{
 						$scan_log = pts_file_io::file_get_contents($test_log_file);
 						$test_run_error = pts_tests::scan_for_error($scan_log, $test_run_request->test_profile->get_test_executable_dir());
@@ -241,7 +243,6 @@ class pts_test_execution
 							pts_client::$display->test_run_instance_error('E: ' . $test_run_error);
 						}
 					}
-					pts_client::$display->test_run_instance_error('The test run did not produce a result.');
 				}
 
 				if($allow_cache_share && !is_file($cache_share_pt2so))
@@ -252,7 +253,7 @@ class pts_test_execution
 				}
 			}
 
-			if($i == ($times_to_run - 1) && $test_run_request->test_result_buffer->get_count() > floor(($i - 2) / 2))
+			if($is_expected_last_run && $test_run_request->test_result_buffer->get_count() > floor(($i - 2) / 2))
 			{
 				// The later check above ensures if the test is failing often the run count won't uselessly be increasing
 				// Should we increase the run count?
