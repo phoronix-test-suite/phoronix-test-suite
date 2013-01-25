@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2012, Phoronix Media
-	Copyright (C) 2008 - 2012, Michael Larabel
+	Copyright (C) 2008 - 2013, Phoronix Media
+	Copyright (C) 2008 - 2013, Michael Larabel
 	phodevi_system.php: The PTS Device Interface object for the system software
 
 	This program is free software; you can redistribute it and/or modify
@@ -1037,6 +1037,16 @@ class phodevi_system extends phodevi_device_interface
 		{
 			$desktop_environment = 'Cinnamon';
 			$desktop_version = pts_strings::last_in_string(trim(shell_exec('cinnamon --version 2> /dev/null')));
+		}
+		else if(pts_client::is_process_running('enlightenment'))
+		{
+			$desktop_environment = 'Enlightenment';
+			$desktop_version = null; // No known -v / --version command on any Enlightenment component
+		}
+		else if(pts_client::is_process_running('consort-panel'))
+		{
+			$desktop_environment = 'Consort';
+			$desktop_version = null; // TODO: Haven't tested Consort Desktop yet
 		}
 
 		if(!empty($desktop_environment))

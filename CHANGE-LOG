@@ -6,6 +6,8 @@ Phoronix Test Suite (Git)
 - pts-core: Allow "Deprecated" flag for ProfileStatus in the XML test profile schema
 - pts-core: Support for scanning test run log files automatically to look for errors when tests fail to execute
 - phodevi: Fix to improve Xfce version detection when Gtk-Warnings are thrown before the version string
+- phodevi: Add Enlightenment desktop environment detection support
+- phodevi: Add Consort Desktop Environment (GNOME Fork) detection support
 
 Phoronix Test Suite 4.4 Milestone 1
 23 January 2013
