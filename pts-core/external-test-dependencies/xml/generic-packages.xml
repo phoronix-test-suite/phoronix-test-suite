@@ -356,11 +356,5 @@
 			<PossibleNames>superlu, libsuperlu3-dev</PossibleNames>
 			<FileCheck>/usr/include/superlu</FileCheck>
 		</Package>
-		<Package>
-			<GenericName>libtool</GenericName>
-			<Title>LibTool</Title>
-			<PossibleNames>libtool</PossibleNames>
-			<FileCheck>/usr/bin/libtool</FileCheck>
-		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

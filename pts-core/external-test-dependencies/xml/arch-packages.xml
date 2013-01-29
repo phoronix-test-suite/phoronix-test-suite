@@ -221,10 +221,5 @@
 			<PackageName>superlu</PackageName>
 			<FileCheck>/usr/include/superlu</FileCheck>
 		</Package>
-		<Package>
-			<GenericName>libtool</GenericName>
-			<PackageName>libtool</PackageName>
-			<FileCheck>/usr/bin/libtool</FileCheck>
-		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
