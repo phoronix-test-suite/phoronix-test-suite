@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2012, Phoronix Media
-	Copyright (C) 2008 - 2012, Michael Larabel
+	Copyright (C) 2008 - 2013, Phoronix Media
+	Copyright (C) 2008 - 2013, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -178,7 +178,7 @@ class pts_test_execution
 				$exit_status = pts_file_io::file_get_contents($test_directory . 'test-exit-status');
 				unlink($test_directory . 'test-exit-status');
 
-				if($exit_status != 0 && phodevi::is_bsd() == false)
+				if($exit_status != 0)
 				{
 					pts_client::$display->test_run_instance_error('The test exited with a non-zero exit status.');
 					if($is_expected_last_run && is_file($test_log_file))
