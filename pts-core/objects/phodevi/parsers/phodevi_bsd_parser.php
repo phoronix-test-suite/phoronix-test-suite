@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2012, Phoronix Media
-	Copyright (C) 2009 - 2012, Michael Larabel
+	Copyright (C) 2009 - 2013, Phoronix Media
+	Copyright (C) 2009 - 2013, Michael Larabel
 	phodevi_bsd_parser.php: General parsing functions specific to BSD
 
 	This program is free software; you can redistribute it and/or modify
@@ -71,7 +71,7 @@ class phodevi_bsd_parser
 	{
 		$info = false;
 
-		if(pts_client::executable_in_path('acpiconf'))
+		if(pts_client::executable_in_path('acpiconf 2> /dev/null'))
 		{
 			$output = shell_exec('acpiconf -i0');
 
