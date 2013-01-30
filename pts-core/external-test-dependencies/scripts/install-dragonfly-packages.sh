@@ -12,7 +12,7 @@ then
 	if [ -d /usr/pkgsrc/.git ];
 	then
 		make pkgsrc-update
-	elif
+	else
 		make pkgsrc-create
 	fi
 fi
