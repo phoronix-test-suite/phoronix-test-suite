@@ -2,20 +2,22 @@
 
 # FreeBSD package installation
 
-# Check that ports is setup, below code should work for making sure good state with PC-BSD at least
-if [ -f /usr/ports/distfiles ] && [ ! -d /usr/ports/devel ] && [ -x /usr/sbin/portsnap ];
-then
-   sudo portsnap fetch extract
-fi
+echo "For now with this test profile script, please run: phoronix-test-suite install-dependencies xxx as root."
+# sudo seems a bit odd at times on PC-BSD 9.1
 
-# for now try to set BATCH several ways...
-setenv BATCH 1
-# using config-reursive would be another option...
+# Check that ports is setup, below code should work for making sure good state with PC-BSD at least
+if [ -d /usr/ports/distfiles ] && [ ! -d /usr/ports/devel ] && [ -x /usr/sbin/portsnap ];
+then
+	portsnap fetch extract
+fi
 
 for portdir in $*
 do
-  cd /usr/ports/$portdir
-  sudo make config-recursive install clean BATCH="yes"
+	if [ -d /usr/ports/$portdir ];
+	then
+		cd /usr/ports/$portdir
+		make config-recursive install clean BATCH="yes"
+	fi
 done
 
 #echo "Please enter your root password below:" 1>&2
