@@ -9,6 +9,7 @@ Phoronix Test Suite (Git)
 - pts-core: Complete rewrite of the FreeBSD external dependency handling to use ports collection
 - pts-core: Enable BSD support for checking exit codes on test installation and test execution
 - pts-core: Various BSD support improvements
+- pts-core: Begin on DragonFlyBSD pkgsrc-based external dependency solution
 - phodevi: Fix to improve Xfce version detection when Gtk-Warnings are thrown before the version string
 - phodevi: Add Enlightenment desktop environment detection support
 - phodevi: Add Consort Desktop Environment (GNOME Fork) detection support
