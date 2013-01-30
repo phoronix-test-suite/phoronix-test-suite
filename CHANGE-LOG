@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 4.4 Milestone 2
+30 January 2013
 
 - pts-core: Improvement for detecting errors from failed test installations
 - pts-core: Allow "Deprecated" flag for ProfileStatus in the XML test profile schema

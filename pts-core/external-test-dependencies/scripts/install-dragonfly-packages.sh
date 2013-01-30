@@ -4,7 +4,7 @@
 
 echo "For now with this test profile script, please run: phoronix-test-suite install-dependencies xxx as root."
 
-# Check that ports is setup, below code should work for making sure good state with PC-BSD at least
+# Check that pkgsrc is setup, below code should work for making sure good state with at least DragonFlyBSD
 if [ -d /usr/pkgsrc ] && [ ! -d /usr/pkgsrc/devel ];
 then
 	cd /usr
