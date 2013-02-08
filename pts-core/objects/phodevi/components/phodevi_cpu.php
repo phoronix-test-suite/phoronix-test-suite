@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2012, Phoronix Media
-	Copyright (C) 2008 - 2012, Michael Larabel
+	Copyright (C) 2008 - 2013, Phoronix Media
+	Copyright (C) 2008 - 2013, Michael Larabel
 	phodevi_cpu.php: The PTS Device Interface object for the CPU / processor
 
 	This program is free software; you can redistribute it and/or modify
@@ -378,15 +378,16 @@ class phodevi_cpu extends phodevi_device_interface
 			'sse4_2' => (1 << 5), // SSE 4.2
 			'sse5' => (1 << 6), // SSE 5
 			'avx' => (1 << 7), // AVX
-			'aes' => (1 << 8), // AES
-			'epb' => (1 << 9), // EPB
-			'svm' => (1 << 10), // AMD SVM (Virtualization)
-			'vmx' => (1 << 11), // Intel Virtualization
-			'xop' => (1 << 12), // AMD XOP Instruction Set
-			'fma3' => (1 << 13), // FMA3 Instruction Set
-			'fma4' => (1 << 14), // FMA4 Instruction Set
-			'rdrand' => (1 << 15), // Intel Bull Mountain RDRAND - Ivy Bridge
-			'fsgsbase' => ( 1 << 16) // FSGSBASE - Ivy Bridge AVX
+			'avx2' => (1 << 8), // AVX2
+			'aes' => (1 << 9), // AES
+			'epb' => (1 << 10), // EPB
+			'svm' => (1 << 11), // AMD SVM (Virtualization)
+			'vmx' => (1 << 12), // Intel Virtualization
+			'xop' => (1 << 13), // AMD XOP Instruction Set
+			'fma3' => (1 << 14), // FMA3 Instruction Set
+			'fma4' => (1 << 15), // FMA4 Instruction Set
+			'rdrand' => (1 << 16), // Intel Bull Mountain RDRAND - Ivy Bridge
+			'fsgsbase' => ( 1 << 17) // FSGSBASE - Ivy Bridge AVX
 			);
 	}
 	public static function get_cpu_feature_constant($constant)
@@ -449,7 +450,7 @@ class phodevi_cpu extends phodevi_device_interface
 		}
 
 		// Check for other instruction sets
-		foreach(array('avx', 'xop', 'fma3', 'fma4', 'rdrand', 'fsgsbase') as $instruction_set)
+		foreach(array('avx2', 'avx', 'xop', 'fma3', 'fma4', 'rdrand', 'fsgsbase') as $instruction_set)
 		{
 			if(($cpu_flags & self::get_cpu_feature_constant($instruction_set)))
 			{
