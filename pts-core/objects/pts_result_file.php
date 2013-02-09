@@ -134,7 +134,7 @@ class pts_result_file
 	{
 		$result_object_hashes = $this->get_result_object_hashes();
 		sort($result_object_hashes);
-		return sha1(implode(',', $result_object_hashes));
+		return sha1(implode(',', $result_object_hashes), true);
 	}
 	public function get_result_object_hashes()
 	{
