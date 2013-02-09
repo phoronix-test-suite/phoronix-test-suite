@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2012, Phoronix Media
-	Copyright (C) 2008 - 2012, Michael Larabel
+	Copyright (C) 2008 - 2013, Phoronix Media
+	Copyright (C) 2008 - 2013, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -70,7 +70,19 @@ class pts_test_result
 	}
 	public function get_comparison_hash($show_version_and_attributes = true)
 	{
-		return $show_version_and_attributes ? pts_test_profile::generate_comparison_hash($this->test_profile->get_identifier(false), $this->get_arguments(), $this->get_arguments_description(), $this->test_profile->get_app_version()) : pts_test_profile::generate_comparison_hash($this->test_profile->get_identifier(false), $this->get_arguments());
+		if($show_version_and_attributes)
+		{
+			$tp = $this->test_profile->get_identifier(true);
+			// remove the last segment of the test profile version that should be in xx.yy.zz format
+			// this removal is done since the zz segment should be maintainable between comparisons
+			$tp = substr($tp, 0, strrpos($tp, '.'));
+
+			return pts_test_profile::generate_comparison_hash($tp, $this->get_arguments(), $this->get_arguments_description(), $this->test_profile->get_app_version());
+		}
+		else
+		{
+			return pts_test_profile::generate_comparison_hash($this->test_profile->get_identifier(false), $this->get_arguments());
+		}
 	}
 	public function __toString()
 	{
