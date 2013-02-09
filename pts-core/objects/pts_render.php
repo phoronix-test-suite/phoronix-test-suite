@@ -490,7 +490,7 @@ class pts_render
 				}
 				break;
 			default:
-				$diff = call_user_func_array('array_diff_assoc', $unique_compiler_data);
+				$diff = call_user_func_array('array_diff', $unique_compiler_data);
 
 				if(count($diff) == 1)
 				{
@@ -505,48 +505,38 @@ class pts_render
 					{
 						if(isset($data['compiler-options'][$key]))
 						{
-							pts_arrays::unique_push($unique_compiler_data, explode(' ', $data['compiler-options'][$key]));
+							$d = explode(' ', $data['compiler-options'][$key]);
+
+							if(!in_array($d, $unique_compiler_data))
+							{
+								$unique_compiler_data[$identifier] = $d;
+							}
 						}
 					}
 
-					if(!isset($unique_compiler_data[1]))
+					if(empty($unique_compiler_data))
 					{
 						break;
 					}
 
-					if(($c0 = count($unique_compiler_data[0])) < ($c1 = count($unique_compiler_data[1])))
+					if($key == 'compiler-options')
 					{
-						for($i = 0; $i < ($c1 - $c0); $i++)
-						{
-							// Make the length of the first array the same length
-							array_push($unique_compiler_data[0], null);
-						}
+						$intersect = count($unique_compiler_data) == 1 ? reset($unique_compiler_data) : call_user_func_array('array_intersect', $unique_compiler_data);
+						$graph->addTestNote($compiler_options_string . implode(' ', $intersect));
 					}
 
-					$diff = call_user_func_array('array_diff', $unique_compiler_data);
-
-					if(count($diff) == 1)
+					if(count($unique_compiler_data) > 1)
 					{
-						$diff = array_search(array_pop($diff), $unique_compiler_data[0]);
-
-						if($diff !== false)
+						foreach($json as $identifier => &$data)
 						{
-							if($key == 'compiler-options')
+							if(isset($data['compiler-options'][$key]))
 							{
-								$intersect = call_user_func_array('array_intersect', $unique_compiler_data);
-								$graph->addTestNote($compiler_options_string . implode(' ', $intersect));
-							}
+								$options = explode(' ', $data['compiler-options'][$key]);
+								$diff = implode(' ', array_diff($options, $intersect));
 
-							foreach($json as $identifier => &$data)
-							{
-								if(isset($data['compiler-options'][$key]))
+								if($diff)
 								{
-									$options = explode(' ', $data['compiler-options'][$key]);
-
-									if(isset($options[$diff]) && stripos($identifier, $options[$diff]) === false)
-									{
-										$graph->addGraphIdentifierNote($identifier, $options[$diff]);
-									}
+									$graph->addGraphIdentifierNote($identifier, $diff);
 								}
 							}
 						}
