@@ -304,14 +304,16 @@ class phodevi_system extends phodevi_device_interface
 							'0x5346414f' => 'OpenAFS',
 							'0x47504653' => 'GPFS',
 							'0x5941ff53' => 'YAFFS',
-							'0x65735546' => 'SSHFS',
 							'0xff534d42' => 'CIFS',
 							'0x24051905' => 'UBIFS',
 							'0x1021994' => 'TMPFS',
 							'0x73717368' => 'SquashFS',
 							'0xc97e8168' => 'LogFS',
-							'0x65735546' => 'SSHFS',
-							'0x5346544E' => 'NTFS'
+							'0x5346544E' => 'NTFS',
+							'0xf15f' => 'eCryptfs',
+							'0x61756673' => 'AuFS',
+							'0xbd00bd0' => 'Lustre',
+							'0xaad7aaea' => 'PanFS' // Panasas FS
 							);
 
 						foreach($known_magic_blocks as $hex => $name)

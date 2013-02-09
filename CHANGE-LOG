@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+- phodevi: Add file-system magic blocks for eCryptfs, AuFS, LustreFS, and Panasas PanFS
 - phodevi: Add AVX2 (Advanced Vector Extensions 2) CPU instruction set detection
 
 Phoronix Test Suite 4.4 Milestone 2
