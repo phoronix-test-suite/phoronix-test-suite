@@ -8,6 +8,7 @@ Phoronix Test Suite (Git)
 - pts-core: Support specifying just relative include files, shared libraries, and command names for file check in PTS External Dependencies
 - pts-core: Faster PTS External Dependencies resolution and file checking
 - pts-core: Support for falling back right away to the generic file check lists for packages if not supplied by OS-specific list
+- pts-core: Add MacPorts PTS External Dependencies support for handling some package dependencies on Apple Mac OS X
 - phodevi: Add file-system magic blocks for eCryptfs, AuFS, LustreFS, and Panasas PanFS
 - phodevi: Add AVX2 (Advanced Vector Extensions 2) CPU instruction set detection
 

@@ -238,6 +238,7 @@
 		</Package>
 		<Package>
 			<GenericName>yasm</GenericName>
+			<PackageName>yasm</PackageName>
 		</Package>
 		<Package>
 			<GenericName>gmp-library</GenericName>
