@@ -252,7 +252,7 @@ class pts_external_dependencies
 				{
 					// If the OS/platform-specific package didn't supply a file check list, obtain it from the generic listing
 					$generic_package_data = $generic_dependencies_parser->get_package_data($package);
-					$add_dependency = self::file_missing_check($generic_package_data['file_check']);
+					$add_dependency = empty($generic_package_data['file_check']) || self::file_missing_check($generic_package_data['file_check']);
 				}
 
 				if($add_dependency && $arch_compliant && $package_data['os_package'] != null)

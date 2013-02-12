@@ -17,296 +17,296 @@
 			<GenericName>gtk-development</GenericName>
 			<Title>GTK Development Files</Title>
 			<PossibleNames>libgtk2.0-dev</PossibleNames>
-			<FileCheck>/usr/include/gtk-2.0</FileCheck>
+			<FileCheck>gtk-2.0/gtk/gtk.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>sdl-development</GenericName>
 			<Title>SDL Development Files</Title>
 			<PossibleNames>libsdl1.2-dev, sdl-net, sdl-image</PossibleNames>
-			<FileCheck>/usr/include/SDL/SDL.h, /usr/include/SDL/SDL_net.h, /usr/include/SDL/SDL_image.h</FileCheck>
+			<FileCheck>SDL/SDL.h, SDL/SDL_net.h, SDL/SDL_image.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>glut</GenericName>
 			<Title>OpenGL Utility Kit / GLUT</Title>
 			<PossibleNames>freeglut3-dev, freeglut-devel</PossibleNames>
-			<FileCheck>/usr/lib/libglut.so.3, /usr/include/GL/glut.h</FileCheck>
+			<FileCheck>libglut.so.3, GL/glut.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>csh</GenericName>
 			<Title>CSH</Title>
 			<PossibleNames>csh, tcsh</PossibleNames>
-			<FileCheck>/bin/csh</FileCheck>
+			<FileCheck>csh</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>libpng-development</GenericName>
 			<Title>PNG Library Development Files</Title>
 			<PossibleNames>libpng12-dev</PossibleNames>
-			<FileCheck>/usr/include/libpng12/png.h</FileCheck>
+			<FileCheck>libpng12/png.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>openssl-development</GenericName>
 			<Title>OpenSSL Development Files</Title>
 			<PossibleNames>libssl-dev, openssl-devel</PossibleNames>
-			<FileCheck>/usr/include/openssl/</FileCheck>
+			<FileCheck>openssl/ssl.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>build-utilities</GenericName>
 			<Title>Compiler / Development Libraries</Title>
 			<PossibleNames>gcc</PossibleNames>
-			<FileCheck>/usr/bin/gcc</FileCheck>
+			<FileCheck>gcc</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>xorg-development</GenericName>
 			<Title>X.Org Development Files and Libraries</Title>
 			<PossibleNames>xserver-xorg-development, xorg-devel</PossibleNames>
-			<FileCheck>/usr/include/xorg</FileCheck>
+			<FileCheck>xorg/xf86.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>cairo-development</GenericName>
 			<Title>Cairo Development Files and Libraries</Title>
 			<PossibleNames>cairo-devel, libcairo2-dev, libcairo-devel</PossibleNames>
-			<FileCheck>/usr/include/cairo/cairo.h</FileCheck>
+			<FileCheck>cairo/cairo.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>bison</GenericName>
 			<Title>Bison</Title>
 			<PossibleNames>bison</PossibleNames>
-			<FileCheck>/usr/bin/bison</FileCheck>
+			<FileCheck>bison</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>flex</GenericName>
 			<Title>Flex</Title>
 			<PossibleNames>flex</PossibleNames>
-			<FileCheck>/usr/bin/flex</FileCheck>
+			<FileCheck>flex</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>p7zip</GenericName>
 			<Title>7-Zip / p7zip</Title>
 			<PossibleNames>p7zip, p7zip-full</PossibleNames>
-			<FileCheck>/usr/bin/7za</FileCheck>
+			<FileCheck>7za</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>imlib2-development</GenericName>
 			<Title>Imlib2 Development Files</Title>
 			<PossibleNames>libimlib2-dev</PossibleNames>
-			<FileCheck>/usr/include/Imlib2.h</FileCheck>
+			<FileCheck>Imlib2.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>java</GenericName>
 			<Title>Java Runtime Environment</Title>
 			<PossibleNames>java-openjdk, icedtea, java, sun-java</PossibleNames>
-			<FileCheck>/usr/bin/java OR /usr/lib/jvm OR /usr/lib64/jvm</FileCheck>
+			<FileCheck>java OR jvm OR /usr/lib64/jvm</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>portaudio-development</GenericName>
 			<Title>PortAudio Development Files</Title>
 			<PossibleNames>libportaudio-dev, portaudio-devel</PossibleNames>
-			<FileCheck>/usr/include/portaudio.h</FileCheck>
+			<FileCheck>portaudio.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>ncurses-development</GenericName>
 			<Title>NCurses Development Files</Title>
 			<PossibleNames>libncurses5-dev</PossibleNames>
-			<FileCheck>/usr/include/ncurses.h</FileCheck>
+			<FileCheck>ncurses.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>fortran-compiler</GenericName>
 			<Title>Fortran Compiler</Title>
 			<PossibleNames>gfortran, gcc-fortran</PossibleNames>
-			<FileCheck>/usr/bin/gfortran</FileCheck>
+			<FileCheck>gfortran</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>glew</GenericName>
 			<Title>OpenGL Extension Wrangler</Title>
 			<PossibleNames>libglew, libglew1.5-dev, glew-devel</PossibleNames>
-			<FileCheck>/usr/include/GL/glew.h</FileCheck>
+			<FileCheck>GL/glew.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>freeimage</GenericName>
 			<Title>FreeImage Graphics Library</Title>
 			<PossibleNames>libfreeimage3, libfreeimage-dev, </PossibleNames>
-			<FileCheck>/usr/lib/libfreeimage.so.3, /usr/include/FreeImage.h</FileCheck>
+			<FileCheck>libfreeimage.so.3, FreeImage.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>scons</GenericName>
 			<Title>SCons</Title>
 			<PossibleNames>scons</PossibleNames>
-			<FileCheck>/usr/bin/scons</FileCheck>
+			<FileCheck>scons</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>zlib-development</GenericName>
 			<Title>Zlib Compression Library</Title>
 			<PossibleNames>zlib1-devel, zlib-devel, zlib1g-dev</PossibleNames>
-			<FileCheck>/usr/include/zlib.h</FileCheck>
+			<FileCheck>zlib.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>jpeg-development</GenericName>
 			<Title>Development Files For IJG JPEG Library</Title>
 			<PossibleNames>libjpeg62-devel, libjpeg62-dev, libjpeg-devel</PossibleNames>
-			<FileCheck>/usr/include/jpeglib.h</FileCheck>
+			<FileCheck>jpeglib.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>libaio-development</GenericName>
 			<Title>Linux Kernel AIO Development Files</Title>
 			<PossibleNames>libaio-dev, libaio-devel</PossibleNames>
-			<FileCheck>/usr/include/libaio.h</FileCheck>
+			<FileCheck>libaio.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>perl</GenericName>
 			<Title>Support For PERL Language</Title>
 			<PossibleNames>perl, perl-base</PossibleNames>
-			<FileCheck>/usr/bin/perl</FileCheck>
+			<FileCheck>perl</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>perl-opengl</GenericName>
 			<Title>OpenGL Support For PERL Language</Title>
 			<PossibleNames>perl-opengl, perl-OpenGL-Simple</PossibleNames>
-			<FileCheck>/usr/lib/perl5/auto/OpenGL/OpenGL.so</FileCheck>
+			<FileCheck>perl5/auto/OpenGL/OpenGL.so</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>xorg-video</GenericName>
 			<Title>Xv and XvMC Library Files</Title>
 			<PossibleNames>xorg-x11-libXv-devel, xorg-x11-devel, libxv-dev, libxvmc-dev</PossibleNames>
-			<FileCheck>/usr/include/X11/extensions/Xvlib.h, /usr/include/X11/extensions/XvMClib.h</FileCheck>
+			<FileCheck>X11/extensions/Xvlib.h, X11/extensions/XvMClib.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>libstdcpp5</GenericName>
 			<Title>GNU Standard C++ Library v3</Title>
 			<PossibleNames>compat-libstdc++-33, libstdc++5</PossibleNames>
-			<FileCheck>/usr/lib/libstdc++.so.5</FileCheck>
+			<FileCheck>libstdc++.so.5</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>openal-development</GenericName>
 			<Title>OpenAL Library And Development Files</Title>
 			<PossibleNames>openal, openal-devel, libopenal0a, libopenal-dev</PossibleNames>
-			<FileCheck>/usr/include/AL/al.h, /usr/lib/libopenal.so.0</FileCheck>
+			<FileCheck>AL/al.h, libopenal.so.0</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>vorbis-development</GenericName>
 			<Title>Vorbis Audio Development Files</Title>
 			<PossibleNames>libvorbis-dev, vorbis-devel</PossibleNames>
-			<FileCheck>/usr/include/vorbis/vorbisfile.h</FileCheck>
+			<FileCheck>vorbis/vorbisfile.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>jam</GenericName>
 			<Title>Jam Build Tool</Title>
 			<PossibleNames>jam</PossibleNames>
-			<FileCheck>/usr/bin/jam</FileCheck>
+			<FileCheck>jam</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>qt4-development</GenericName>
 			<Title>Qt4 Development Files</Title>
 			<PossibleNames>libqt4-dev, libqt4-devel, qt4-devel</PossibleNames>
-			<FileCheck>/usr/lib/qt4/bin/qmake</FileCheck>
+			<FileCheck>qmake</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>autoconf</GenericName>
 			<Title>Autoconf</Title>
 			<PossibleNames>autoconf</PossibleNames>
-			<FileCheck>/usr/bin/autoconf</FileCheck>
+			<FileCheck>autoconf</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>libtool</GenericName>
 			<Title>Libtool</Title>
 			<PossibleNames>libtool</PossibleNames>
-			<FileCheck>/usr/bin/libtool</FileCheck>
+			<FileCheck>libtool</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>popt</GenericName>
 			<Title>Popt</Title>
 			<PossibleNames>popt, popt-devel, libpopt-dev</PossibleNames>
-			<FileCheck>/usr/include/popt.h</FileCheck>
+			<FileCheck>popt.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>numa-development</GenericName>
 			<Title>NUMA Development Files</Title>
 			<PossibleNames>libnuma-dev, numactl-devel</PossibleNames>
-			<FileCheck>/usr/include/numa.h</FileCheck>
+			<FileCheck>numa.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>curl</GenericName>
 			<Title>Curl</Title>
 			<PossibleNames>curl, libcurl3, libcurl</PossibleNames>
-			<FileCheck>/usr/lib/libcurl.so.3, /usr/bin/curl</FileCheck>
+			<FileCheck>libcurl.so.3, curl</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>fftw3-development</GenericName>
 			<Title>Fast Fourier Transform 3 Library</Title>
 			<PossibleNames>fftw3, libfftw3-dev, libfftw3-devel, fftw3-devel</PossibleNames>
-			<FileCheck>/usr/include/fftw3.h</FileCheck>
+			<FileCheck>fftw3.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>blas-development</GenericName>
 			<Title>Basic Linear Algebra Sub-Routine Library</Title>
 			<PossibleNames>libblas-dev, libblas-devel, blas-devel, blas</PossibleNames>
-			<FileCheck>/usr/include/cblas.h</FileCheck>
+			<FileCheck>cblas.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>lapack-development</GenericName>
 			<Title>Linear Algebra Pack</Title>
 			<PossibleNames>liblapack-dev, lapack, lapack-devel, liblapack-devel</PossibleNames>
-			<FileCheck>/usr/lib/liblapack.so</FileCheck>
+			<FileCheck>liblapack.so</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>atlas-development</GenericName>
 			<Title>Linear Algebra Pack</Title>
 			<PossibleNames>libatlas-base-dev</PossibleNames>
-			<FileCheck>/usr/lib/libatlas.a</FileCheck>
+			<FileCheck>libatlas.a</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>openmpi-development</GenericName>
 			<Title>OpenMPI</Title>
 			<PossibleNames>libopenmpi-dev, openmpi-bin</PossibleNames>
-			<FileCheck>/usr/lib/openmpi/lib/libmpi.so, /usr/bin/mpirun.openmpi</FileCheck>
+			<FileCheck>openmpi/lib/libmpi.so, mpirun.openmpi</FileCheck>
 		</Package>
 
 		<Package>
 			<GenericName>cmake</GenericName>
 			<Title>CMake</Title>
 			<PossibleNames>cmake</PossibleNames>
-			<FileCheck>/usr/bin/cmake</FileCheck>
+			<FileCheck>cmake</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>boost-development</GenericName>
 			<Title>Boost Development Libraries</Title>
 			<PossibleNames>boost-devel, libboost-dev, libboost-devel</PossibleNames>
-			<FileCheck>/usr/include/boost/</FileCheck>
+			<FileCheck>boost/regex.hpp</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>bzip2-development</GenericName>
 			<Title>BZIP2 Development Libraries</Title>
 			<PossibleNames>bzip2-devel, libbz2-dev, libbzip2-devel</PossibleNames>
-			<FileCheck>/usr/include/bzlib.h</FileCheck>
+			<FileCheck>bzlib.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>tcl</GenericName>
 			<Title>Tool Command Language</Title>
 			<PossibleNames>tcl</PossibleNames>
-			<FileCheck>/usr/bin/tclsh</FileCheck>
+			<FileCheck>tclsh</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>glibc-development</GenericName>
 			<Title>GNU C Development Libraries w/ 32-bit Support</Title>
 			<PossibleNames>libc6-dev, libc6-dev-i386, glibc-devel</PossibleNames>
-			<FileCheck>/usr/include/gnu/stubs-32.h, /usr/lib/libc.a</FileCheck>
+			<FileCheck>gnu/stubs-32.h, libc.a</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>python</GenericName>
 			<Title>Python</Title>
 			<PossibleNames>python</PossibleNames>
-			<FileCheck>/usr/bin/python</FileCheck>
+			<FileCheck>python</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>python-boost-development</GenericName>
 			<Title>Python Boost Development Libraries</Title>
 			<PossibleNames>libboost-python-dev</PossibleNames>
-			<FileCheck>/usr/include/boost/python.hpp</FileCheck>
+			<FileCheck>boost/python.hpp</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>boost-thread-development</GenericName>
 			<Title>Boost Thread Development Libraries</Title>
 			<PossibleNames>libboost-thread-dev</PossibleNames>
-			<FileCheck>/usr/include/boost/thread.hpp</FileCheck>
+			<FileCheck>boost/thread.hpp</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>python-numpy</GenericName>
@@ -318,43 +318,43 @@
 			<GenericName>yasm</GenericName>
 			<Title>Yasm Assembler</Title>
 			<PossibleNames>yasm</PossibleNames>
-			<FileCheck>/usr/bin/yasm OR /usr/local/bin/yasm</FileCheck>
+			<FileCheck>yasm</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>lib3ds</GenericName>
 			<Title>AutoDesk 3DS File Support</Title>
 			<PossibleNames>lib3ds libs3ds-devel</PossibleNames>
-			<FileCheck>/usr/include/lib3ds/atmosphere.h</FileCheck>
+			<FileCheck>lib3ds/atmosphere.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>gmp-library</GenericName>
 			<Title>The GNU Multiple Precision Arithmetic Library</Title>
 			<PossibleNames>libgmp3-dev, libgmp3, gmp-devel</PossibleNames>
-			<FileCheck>/usr/include/gmp.h</FileCheck>
+			<FileCheck>gmp.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>opencl</GenericName>
 			<Title>OpenCL</Title>
 			<PossibleNames>NVIDIA OpenCL, ATI Stream SDK, OpenCL SDK</PossibleNames>
-			<FileCheck>/usr/include/CL/cl.h OR /usr/include/OpenCL/cl.h OR /usr/local/cuda OR /usr/cuda</FileCheck>
+			<FileCheck>CL/cl.h OR OpenCL/cl.h OR /usr/local/cuda OR /usr/cuda</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>subversion</GenericName>
 			<Title>Subversion</Title>
 			<PossibleNames>Subversion</PossibleNames>
-			<FileCheck>/usr/bin/svn</FileCheck>
+			<FileCheck>svn</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>git</GenericName>
 			<Title>Git</Title>
 			<PossibleNames>git, git-core</PossibleNames>
-			<FileCheck>/usr/bin/git</FileCheck>
+			<FileCheck>git</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>superlu</GenericName>
 			<Title>SuperLU</Title>
 			<PossibleNames>superlu, libsuperlu3-dev</PossibleNames>
-			<FileCheck>/usr/include/superlu</FileCheck>
+			<FileCheck>superlu/slu_util.h</FileCheck>
 		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
