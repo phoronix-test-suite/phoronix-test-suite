@@ -6,6 +6,8 @@ Phoronix Test Suite (Git)
 - pts-core: Return contained tests hash for result files as a raw SHA1
 - pts-core: Improving passing of compiler flags/options to be reported on test result graphs
 - pts-core: Support specifying just relative include files, shared libraries, and command names for file check in PTS External Dependencies
+- pts-core: Faster PTS External Dependencies resolution and file checking
+- pts-core: Support for falling back right away to the generic file check lists for packages if not supplied by OS-specific list
 - phodevi: Add file-system magic blocks for eCryptfs, AuFS, LustreFS, and Panasas PanFS
 - phodevi: Add AVX2 (Advanced Vector Extensions 2) CPU instruction set detection
 

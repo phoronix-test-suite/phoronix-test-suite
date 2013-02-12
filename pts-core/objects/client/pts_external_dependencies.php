@@ -232,17 +232,28 @@ class pts_external_dependencies
 	}
 	private static function check_dependencies_missing_from_system(&$required_test_dependencies, &$generic_names_of_packages_needed = false)
 	{
-		$external_dependencies_parser = new pts_exdep_platform_parser(self::vendor_identifier('package-list'));
+		$generic_dependencies_parser = new pts_exdep_generic_parser();
+		$vendor_dependencies_parser = new pts_exdep_platform_parser(self::vendor_identifier('package-list'));
 		$kernel_architecture = phodevi::read_property('system', 'kernel-architecture');
 		$needed_os_packages = array();
 
-		foreach($external_dependencies_parser->get_available_packages() as $package)
+		foreach($required_test_dependencies as $package => $dependents)
 		{
-			if(isset($required_test_dependencies[$package]))
+			if($vendor_dependencies_parser->is_package($package))
 			{
-				$package_data = $external_dependencies_parser->get_package_data($package);
-				$add_dependency = empty($package_data['file_check']) || self::file_missing_check($package_data['file_check']);
+				$package_data = $vendor_dependencies_parser->get_package_data($package);
 				$arch_compliant = empty($package_data['arch_specific']) || in_array($kernel_architecture, $package_data['arch_specific']);
+
+				if(!empty($package_data['file_check']))
+				{
+					$add_dependency = self::file_missing_check($package_data['file_check']);
+				}
+				else if($generic_dependencies_parser->is_package($package))
+				{
+					// If the OS/platform-specific package didn't supply a file check list, obtain it from the generic listing
+					$generic_package_data = $generic_dependencies_parser->get_package_data($package);
+					$add_dependency = self::file_missing_check($generic_package_data['file_check']);
+				}
 
 				if($add_dependency && $arch_compliant && $package_data['os_package'] != null)
 				{
@@ -264,8 +275,6 @@ class pts_external_dependencies
 
 		if(count($required_test_dependencies) > 0)
 		{
-			$generic_dependencies_parser = new pts_exdep_generic_parser();
-
 			foreach($required_test_dependencies as $i => $dependency)
 			{
 				$package_data = $generic_dependencies_parser->get_package_data($i);
