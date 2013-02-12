@@ -303,6 +303,65 @@ class pts_external_dependencies
 				{
 					$file_is_there = true;
 				}
+				else if(isset($file[$i][2]) && $file[$i][0] != '/')
+				{
+					// See if it's some relative command/path
+
+					if(substr($file[$i], -2) == '.h' || substr($file[$i], -4) == '.hpp')
+					{
+						// May just be a relative header file to look for...
+						$possible_paths = array('/usr/local/include', '/usr/target/include/', '/usr/include/');
+						foreach($possible_paths as $path)
+						{
+							if(is_file($path . $file[$i]) || is_link($path . $file[$i]))
+							{
+								$file_is_there = true;
+							}
+						}
+					}
+					else if(substr($file[$i], -2) == '.so')
+					{
+						// May just be a relative shared library to look for...
+						$possible_paths = array('/usr/local/lib/', '/usr/lib/');
+
+						if(getenv('LD_LIBRARY_PATH'))
+						{
+							foreach(explode(':', getenv('LD_LIBRARY_PATH')) as $path)
+							{
+								array_push($possible_paths, $path . '/');
+							}
+						}
+
+						foreach($possible_paths as $path)
+						{
+							if(is_file($path . $file[$i]) || is_link($path . $file[$i]))
+							{
+								$file_is_there = true;
+							}
+						}
+					}
+					else if(strpos($file[$i], '.') === false && strpos($file[$i], '/') === false)
+					{
+						// May just be a command to look for...
+						$possible_paths = array('/usr/local/bin/', '/usr/bin/');
+
+						if(getenv('PATH'))
+						{
+							foreach(explode(':', getenv('PATH')) as $path)
+							{
+								array_push($possible_paths, $path . '/');
+							}
+						}
+
+						foreach($possible_paths as $path)
+						{
+							if(is_file($path . $file[$i]) || is_link($path . $file[$i]))
+							{
+								$file_is_there = true;
+							}
+						}
+					}
+				}
 			}
 			$file_missing = $file_missing || !$file_is_there;
 		}
