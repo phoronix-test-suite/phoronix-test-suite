@@ -8,172 +8,140 @@
 		<Package>
 			<GenericName>gtk-development</GenericName>
 			<PackageName>x11-toolkits/gtk20</PackageName>
-			<FileCheck>/usr/local/include/gtk-2.0/</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>sdl-development</GenericName>
 			<PackageName>devel/sdl12 graphics/sdl_gfx graphics/sdl_image graphics/sdl_ttf audio/sdl_sound audio/sdl_mixer</PackageName>
-			<FileCheck>/usr/local/include/SDL/SDL.h, /usr/local/include/SDL/SDL_image.h, /usr/local/include/SDL/SDL_ttf.h, /usr/local/include/SDL/SDL_audio.h, /usr/local/include/SDL/SDL_mixer.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>glut</GenericName>
 			<PackageName>graphics/freeglut</PackageName>
-			<FileCheck>/usr/local/include/GL/glut.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>csh</GenericName>
 			<PackageName>shells/44bsd-csh</PackageName>
-			<FileCheck>/usr/local/bin/44bsd-csh</FileCheck>
+			<FileCheck>44bsd-csh</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>libpng-development</GenericName>
 			<PackageName>graphics/png</PackageName>
-			<FileCheck>/usr/local/include/png.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>openssl-development</GenericName>
 			<PackageName>security/openssl</PackageName>
-			<FileCheck>/usr/local/include/openssl/ssl.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>build-utilities</GenericName>
 			<PackageName>devel/autoconf</PackageName>
-			<FileCheck>/usr/local/bin/autoconf</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>cairo-development</GenericName>
 			<PackageName>graphics/cairo</PackageName>
-			<FileCheck>/usr/local/include/cairo/cairo.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>bison</GenericName>
 			<PackageName>devel/bison</PackageName>
-			<FileCheck>/usr/local/bin/bison</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>flex</GenericName>
 			<PackageName>textproc/flex</PackageName>
-			<FileCheck>/usr/local/bin/flex</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>imlib2-development</GenericName>
 			<PackageName>graphics/imlib2</PackageName>
-			<FileCheck>/usr/local/lib/imlib2/</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>java</GenericName>
 			<PackageName>java/openjdk7</PackageName>
-			<FileCheck>/usr/local/bin/java</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>portaudio-development</GenericName>
 			<PackageName>audio/portaudio</PackageName>
-			<FileCheck>/usr/local/include/portaudio.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>fortran-compiler</GenericName>
 			<PackageName>lang/g95</PackageName>
-			<FileCheck>/usr/local/bin/g95</FileCheck>
+			<FileCheck>g95</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>glew</GenericName>
 			<PackageName>graphics/glew</PackageName>
-			<FileCheck>/usr/local/include/GL/glew.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>lib3ds</GenericName>
 			<PackageName>graphics/lib3ds</PackageName>
-			<FileCheck>/usr/local/include/lib3ds/io.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>freeimage</GenericName>
 			<PackageName>graphics/freeimage</PackageName>
-			<FileCheck>/usr/local/include/FreeImage.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>scons</GenericName>
 			<PackageName>devel/scons</PackageName>
-			<FileCheck>/usr/local/bin/scons</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>jpeg-development</GenericName>
 			<PackageName>graphics/libjpeg-turbo</PackageName>
-			<FileCheck>/usr/local/include/jpeglib.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>libaio-development</GenericName>
 			<PackageName>emulators/linux-libaio</PackageName>
-			<FileCheck>/usr/local/include/libaio.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>perl</GenericName>
 			<PackageName>lang/perl5.14</PackageName>
-			<FileCheck>/usr/local/bin/perl</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>openal-development</GenericName>
 			<PackageName>audio/openal</PackageName>
-			<FileCheck>/usr/local/include/AL/al.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>vorbis-development</GenericName>
 			<PackageName>audio/libvorbis</PackageName>
-			<FileCheck>/usr/local/include/vorbis/vorbisfile.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>jam</GenericName>
 			<PackageName>devel/jam</PackageName>
-			<FileCheck>/usr/local/bin/jam</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>p7zip</GenericName>
 			<PackageName>archivers/p7zip</PackageName>
-			<FileCheck>/usr/local/bin/7za</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>qt4-development</GenericName>
 			<PackageName>x11-toolkits/qt4-gui</PackageName>
-			<FileCheck>/usr/local/include/qt4/Qt/qgl.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>autoconf</GenericName>
 			<PackageName>devel/autoconf</PackageName>
-			<FileCheck>/usr/local/bin/autoconf</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>libtool</GenericName>
 			<PackageName>devel/libtool</PackageName>
-			<FileCheck>/usr/local/bin/libtool</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>ncurses-development</GenericName>
 			<PackageName>devel/ncurses</PackageName>
-			<FileCheck>/usr/local/include/ncurses/ncurses.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>popt</GenericName>
 			<PackageName>devel/popt</PackageName>
-			<FileCheck>/usr/local/include/popt.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>curl</GenericName>
 			<PackageName>ftp/curl</PackageName>
-			<FileCheck>/usr/local/bin/curl</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>fftw3-development</GenericName>
 			<PackageName>math/fftw</PackageName>
-			<FileCheck>/usr/local/include/fftw3.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>blas-development</GenericName>
 			<PackageName>math/blas</PackageName>
-			<FileCheck>/usr/local/lib/libblas.so</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>lapack-development</GenericName>
 			<PackageName>math/lapack</PackageName>
-			<FileCheck>/usr/local/lib/liblapack.so</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>atlas-development</GenericName>
@@ -183,62 +151,50 @@
 		<Package>
 			<GenericName>openmpi-development</GenericName>
 			<PackageName>net/openmpi net/mpich2</PackageName>
-			<FileCheck>/usr/local/mpi/openmpi/lib, /usr/local/include/mpicxx.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>cmake</GenericName>
 			<PackageName>devel/cmake</PackageName>
-			<FileCheck>/usr/local/bin/cmake</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>boost-development</GenericName>
 			<PackageName>devel/boost-all</PackageName>
-			<FileCheck>/usr/local/include/boost/iostreams/write.hpp</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>bzip2-development</GenericName>
 			<PackageName>archivers/bzip2</PackageName>
-			<FileCheck>/usr/local/include/bzlib.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>tcl</GenericName>
 			<PackageName>devel/tcllib</PackageName>
-			<FileCheck>/usr/local/bin/tclsh8.5</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>python</GenericName>
 			<PackageName>lang/python</PackageName>
-			<FileCheck>/usr/local/bin/python</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>python-boost-development</GenericName>
 			<PackageName>devel/boost-python-libs</PackageName>
-			<FileCheck>/usr/local/include/boost/python.hpp</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>yasm</GenericName>
 			<PackageName>devel/yasm</PackageName>
-			<FileCheck>/usr/local/bin/yasm</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>gmp-library</GenericName>
 			<PackageName>math/gmp</PackageName>
-			<FileCheck>/usr/local/include/gmp.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>subversion</GenericName>
 			<PackageName>devel/subversion</PackageName>
-			<FileCheck>/usr/local/bin/svn</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>git</GenericName>
 			<PackageName>devel/git</PackageName>
-			<FileCheck>/usr/local/bin/git</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>superlu</GenericName>
 			<PackageName>math/superlu</PackageName>
-			<FileCheck>/usr/local/include/superlu/</FileCheck>
 		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

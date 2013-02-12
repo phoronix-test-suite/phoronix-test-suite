@@ -21,32 +21,26 @@
 		<Package>
 			<GenericName>gtk-development</GenericName>
 			<PackageName>libgtk2.0-dev</PackageName>
-			<FileCheck>gtk-2.0/gtk/gtk.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>sdl-development</GenericName>
 			<PackageName>libsdl1.2-dev libsdl-gfx1.2-dev libsdl-net1.2-dev libsdl-image1.2-dev libsdl-ttf2.0-dev libsdl-mixer1.2-dev</PackageName>
-			<FileCheck>SDL/SDL.h, SDL/SDL_gfxPrimitives.h, SDL/SDL_net.h, SDL/SDL_image.h, SDL/SDL_ttf.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>glut</GenericName>
 			<PackageName>freeglut3-dev</PackageName>
-			<FileCheck>GL/glut.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>csh</GenericName>
 			<PackageName>csh</PackageName>
-			<FileCheck>/bin/bsd-csh</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>libpng-development</GenericName>
 			<PackageName>libpng12-dev</PackageName>
-			<FileCheck>libpng12/png.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>openssl-development</GenericName>
 			<PackageName>libssl-dev</PackageName>
-			<FileCheck>openssl/sha.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>build-utilities</GenericName>
@@ -61,62 +55,50 @@
 		<Package>
 			<GenericName>xorg-development</GenericName>
 			<PackageName>xorg-dev</PackageName>
-			<FileCheck>xorg/xf86.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>bison</GenericName>
 			<PackageName>bison</PackageName>
-			<FileCheck>bison</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>flex</GenericName>
 			<PackageName>flex</PackageName>
-			<FileCheck>flex</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>imlib2-development</GenericName>
 			<PackageName>libimlib2-dev</PackageName>
-			<FileCheck>libImlib2.so</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>java</GenericName>
 			<PackageName>openjdk-6-jre</PackageName>
-			<FileCheck>java</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>portaudio-development</GenericName>
 			<PackageName>libportaudio-dev</PackageName>
-			<FileCheck>portaudio.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>fortran-compiler</GenericName>
 			<PackageName>gfortran</PackageName>
-			<FileCheck>gfortran</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>glew</GenericName>
 			<PackageName>libglew1.5-dev</PackageName>
-			<FileCheck>GL/glew.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>lib3ds</GenericName>
 			<PackageName>lib3ds-dev</PackageName>
-			<FileCheck>lib3ds/atmosphere.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>freeimage</GenericName>
 			<PackageName>libfreeimage3 libfreeimage-dev</PackageName>
-			<FileCheck>libfreeimage.so.3, FreeImage.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>scons</GenericName>
 			<PackageName>scons</PackageName>
-			<FileCheck>scons</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>zlib-development</GenericName>
 			<PackageName>zlib1g-dev</PackageName>
-			<FileCheck>zlib.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>jpeg-development</GenericName>
@@ -126,7 +108,6 @@
 		<Package>
 			<GenericName>libaio-development</GenericName>
 			<PackageName>libaio-dev</PackageName>
-			<FileCheck>libaio.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>perl</GenericName>
@@ -141,32 +122,26 @@
 		<Package>
 			<GenericName>xorg-video</GenericName>
 			<PackageName>libxv-dev libxvmc-dev</PackageName>
-			<FileCheck>X11/extensions/Xvlib.h, X11/extensions/XvMClib.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>libstdcpp5</GenericName>
 			<PackageName>libstdc++5</PackageName>
-			<FileCheck>libstdc++.so.5 OR /usr/lib32/libstdc++.so.5 OR /usr/lib/x86_64-linux-gnu/libstdc++.so.5</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>openal-development</GenericName>
 			<PackageName>libopenal-dev</PackageName>
-			<FileCheck>AL/al.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>vorbis-development</GenericName>
 			<PackageName>libvorbis-dev</PackageName>
-			<FileCheck>vorbis/vorbisfile.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>jam</GenericName>
 			<PackageName>jam</PackageName>
-			<FileCheck>jam.perforce</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>p7zip</GenericName>
 			<PackageName>p7zip-full</PackageName>
-			<FileCheck>7za</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>qt4-development</GenericName>
@@ -176,62 +151,50 @@
 		<Package>
 			<GenericName>autoconf</GenericName>
 			<PackageName>autoconf</PackageName>
-			<FileCheck>autoconf</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>libtool</GenericName>
 			<PackageName>libtool</PackageName>
-			<FileCheck>libtool</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>ncurses-development</GenericName>
 			<PackageName>libncurses5-dev</PackageName>
-			<FileCheck>ncurses.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>popt</GenericName>
 			<PackageName>libpopt-dev</PackageName>
-			<FileCheck>popt.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>numa-development</GenericName>
 			<PackageName>libnuma-dev</PackageName>
-			<FileCheck>numa.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>curl</GenericName>
 			<PackageName>libcurl3 curl</PackageName>
-			<FileCheck>curl</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>fftw3-development</GenericName>
 			<PackageName>libfftw3-dev fftw-dev</PackageName>
-			<FileCheck>fftw3.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>blas-development</GenericName>
 			<PackageName>libblas-dev</PackageName>
-			<FileCheck>cblas.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>lapack-development</GenericName>
 			<PackageName>liblapack-dev</PackageName>
-			<FileCheck>liblapack.so</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>atlas-development</GenericName>
 			<PackageName>libatlas-base-dev</PackageName>
-			<FileCheck>libatlas.a</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>openmpi-development</GenericName>
 			<PackageName>libopenmpi-dev openmpi-bin libmpich2-dev libmpich1.0-dev</PackageName>
-			<FileCheck>openmpi/lib/libmpi.so, mpirun.openmpi</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>cmake</GenericName>
 			<PackageName>cmake</PackageName>
-			<FileCheck>cmake</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>boost-development</GenericName>
@@ -241,17 +204,14 @@
 		<Package>
 			<GenericName>bzip2-development</GenericName>
 			<PackageName>libbz2-dev</PackageName>
-			<FileCheck>bzlib.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>tcl</GenericName>
 			<PackageName>tcl</PackageName>
-			<FileCheck>tclsh</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>glibc-development</GenericName>
 			<PackageName>libc6-dev</PackageName>
-			<FileCheck>gnu/stubs-32.h OR gnu-versions.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>glibc-development</GenericName>
@@ -262,17 +222,14 @@
 		<Package>
 			<GenericName>python</GenericName>
 			<PackageName>python</PackageName>
-			<FileCheck>python</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>python-boost-development</GenericName>
 			<PackageName>libboost-python-dev</PackageName>
-			<FileCheck>boost/python.hpp</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>boost-thread-development</GenericName>
 			<PackageName>libboost-thread-dev</PackageName>
-			<FileCheck>boost/thread.hpp</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>python-numpy</GenericName>
@@ -281,28 +238,22 @@
 		</Package>
 		<Package>
 			<GenericName>yasm</GenericName>
-			<PackageName>yasm</PackageName>
-			<FileCheck>yasm</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>gmp-library</GenericName>
 			<PackageName>libgmp3-dev</PackageName>
-			<FileCheck>gmp.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>subversion</GenericName>
 			<PackageName>subversion</PackageName>
-			<FileCheck>svn</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>git</GenericName>
 			<PackageName>git-core</PackageName>
-			<FileCheck>git</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>superlu</GenericName>
 			<PackageName>libsuperlu3-dev</PackageName>
-			<FileCheck>superlu/slu_util.h</FileCheck>
 		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

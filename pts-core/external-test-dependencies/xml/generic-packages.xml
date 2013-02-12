@@ -35,7 +35,7 @@
 			<GenericName>csh</GenericName>
 			<Title>CSH</Title>
 			<PossibleNames>csh, tcsh</PossibleNames>
-			<FileCheck>csh</FileCheck>
+			<FileCheck>csh OR bsd-csh</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>libpng-development</GenericName>
@@ -89,7 +89,7 @@
 			<GenericName>imlib2-development</GenericName>
 			<Title>Imlib2 Development Files</Title>
 			<PossibleNames>libimlib2-dev</PossibleNames>
-			<FileCheck>Imlib2.h</FileCheck>
+			<FileCheck>Imlib2.h, libImlib2.so</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>java</GenericName>
@@ -191,13 +191,13 @@
 			<GenericName>jam</GenericName>
 			<Title>Jam Build Tool</Title>
 			<PossibleNames>jam</PossibleNames>
-			<FileCheck>jam</FileCheck>
+			<FileCheck>jam OR jam.perforce</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>qt4-development</GenericName>
 			<Title>Qt4 Development Files</Title>
 			<PossibleNames>libqt4-dev, libqt4-devel, qt4-devel</PossibleNames>
-			<FileCheck>qmake</FileCheck>
+			<FileCheck>qmake OR qmake-qt4</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>autoconf</GenericName>
@@ -288,7 +288,7 @@
 			<GenericName>glibc-development</GenericName>
 			<Title>GNU C Development Libraries w/ 32-bit Support</Title>
 			<PossibleNames>libc6-dev, libc6-dev-i386, glibc-devel</PossibleNames>
-			<FileCheck>gnu/stubs-32.h, libc.a</FileCheck>
+			<FileCheck>gnu/stubs-32.h OR gnu-versions.h, libc.a</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>python</GenericName>
