@@ -319,7 +319,7 @@ class pts_external_dependencies
 							}
 						}
 					}
-					else if(substr($file[$i], -2) == '.so')
+					else if(strpos($file[$i], '.so') !== false || substr($file[$i], -2) == '.a')
 					{
 						// May just be a relative shared library to look for...
 						$possible_paths = array('/usr/local/lib/', '/usr/lib/');
@@ -340,7 +340,7 @@ class pts_external_dependencies
 							}
 						}
 					}
-					else if(strpos($file[$i], '.') === false && strpos($file[$i], '/') === false)
+					else if(strpos($file[$i], '/') === false)
 					{
 						// May just be a command to look for...
 						$possible_paths = array('/usr/local/bin/', '/usr/bin/');
