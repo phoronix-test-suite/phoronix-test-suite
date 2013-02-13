@@ -313,7 +313,8 @@ class phodevi_system extends phodevi_device_interface
 							'0xf15f' => 'eCryptfs',
 							'0x61756673' => 'AuFS',
 							'0xbd00bd0' => 'Lustre',
-							'0xaad7aaea' => 'PanFS' // Panasas FS
+							'0xaad7aaea' => 'PanFS', // Panasas FS
+							'0xf2f52010' => 'F2FS'
 							);
 
 						foreach($known_magic_blocks as $hex => $name)
