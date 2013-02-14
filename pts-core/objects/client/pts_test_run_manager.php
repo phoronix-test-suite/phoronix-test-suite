@@ -1440,6 +1440,7 @@ class pts_test_run_manager
 		$test_type = $test_profile->get_test_hardware_type();
 		$skip_tests = pts_client::read_env('SKIP_TESTS') ? pts_strings::comma_explode(pts_client::read_env('SKIP_TESTS')) : false;
 		$display_driver = phodevi::read_property('system', 'display-driver');
+		$gpu = phodevi::read_name('gpu')
 
 		if($test_profile->is_supported(false) == false)
 		{
@@ -1450,8 +1451,9 @@ class pts_test_run_manager
 			$report_errors && pts_client::$display->test_run_error('No display server was found, cannot run ' . $test_profile);
 			$valid_test_profile = false;
 		}
-		else if($test_type == 'Graphics' && in_array($display_driver, array('vesa', 'nv', 'cirrus')))
+		else if($test_type == 'Graphics' && in_array($display_driver, array('vesa', 'nv', 'cirrus')) && stripos($gpu, 'LLVM') === false)
 		{
+			// These display drivers end up being in known configurations without 3D hardware support so unless an LLVM-based string is reported as the GPU, don't advertise 3D tests
 			$report_errors && pts_client::$display->test_run_error('3D acceleration support not available, cannot run ' . $test_profile);
 			$valid_test_profile = false;
 		}
