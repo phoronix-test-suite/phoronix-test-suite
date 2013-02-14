@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 4.4 Milestone 3
+14 February 2013
 
 - pts-core: Incorporate xx.yy (of xx.yy.zz) test profile version string into test result comparison_hash
 - pts-core: Return contained tests hash for result files as a raw SHA1
