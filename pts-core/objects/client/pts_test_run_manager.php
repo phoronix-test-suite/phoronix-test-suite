@@ -1440,7 +1440,7 @@ class pts_test_run_manager
 		$test_type = $test_profile->get_test_hardware_type();
 		$skip_tests = pts_client::read_env('SKIP_TESTS') ? pts_strings::comma_explode(pts_client::read_env('SKIP_TESTS')) : false;
 		$display_driver = phodevi::read_property('system', 'display-driver');
-		$gpu = phodevi::read_name('gpu')
+		$gpu = phodevi::read_name('gpu');
 
 		if($test_profile->is_supported(false) == false)
 		{

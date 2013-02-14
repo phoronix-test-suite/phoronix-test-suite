@@ -179,7 +179,7 @@
 			<GenericName>openal-development</GenericName>
 			<Title>OpenAL Library And Development Files</Title>
 			<PossibleNames>openal, openal-devel, libopenal0a, libopenal-dev</PossibleNames>
-			<FileCheck>AL/al.h, libopenal.so.0</FileCheck>
+			<FileCheck>AL/al.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>vorbis-development</GenericName>
