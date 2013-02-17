@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- pts-core: Improvement for detecting installed libraries for external dependency handling
+
 Phoronix Test Suite 4.4 Milestone 3
 14 February 2013
 
