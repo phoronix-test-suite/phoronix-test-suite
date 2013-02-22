@@ -1073,32 +1073,34 @@ class phodevi_system extends phodevi_device_interface
 		}
 		else
 		{
-			if(!(($x_bin = pts_client::executable_in_path('Xorg')) || ($x_bin = pts_client::executable_in_path('X'))))
+			if(($x_bin = pts_client::executable_in_path('Xorg')) || ($x_bin = pts_client::executable_in_path('X')))
 			{
-				return false;
-			}
+				// Find graphics subsystem version
+				$info = shell_exec($x_bin . ' ' . (phodevi::is_solaris() ? ':0' : '') . ' -version 2>&1');
+				$pos = (($p = strrpos($info, 'Release Date')) !== false ? $p : strrpos($info, 'Build Date'));
+				$info = trim(substr($info, 0, $pos));
 
-			// Find graphics subsystem version
-			$info = shell_exec($x_bin . ' ' . (phodevi::is_solaris() ? ':0' : '') . ' -version 2>&1');
-			$pos = (($p = strrpos($info, 'Release Date')) !== false ? $p : strrpos($info, 'Build Date'));
-			$info = trim(substr($info, 0, $pos));
+				if($pos === false || getenv('DISPLAY') == false)
+				{
+					$info = null;
+				}
+				else if(($pos = strrpos($info, '(')) === false)
+				{
+					$info = trim(substr($info, strrpos($info, ' ')));
+				}
+				else
+				{
+					$info = trim(substr($info, strrpos($info, 'Server') + 6));
+				}
 
-			if($pos === false || getenv('DISPLAY') == false)
-			{
-				$info = null;
+				if($info != null)
+				{
+					$info = 'X Server ' . $info;
+				}
 			}
-			else if(($pos = strrpos($info, '(')) === false)
+			else if(pts_client::is_process_running('surfaceflinger'))
 			{
-				$info = trim(substr($info, strrpos($info, ' ')));
-			}
-			else
-			{
-				$info = trim(substr($info, strrpos($info, 'Server') + 6));
-			}
-
-			if($info != null)
-			{
-				$info = 'X Server ' . $info;
+				$info = 'SurfaceFlinger';
 			}
 		}
 
