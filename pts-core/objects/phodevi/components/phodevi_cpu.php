@@ -83,7 +83,7 @@ class phodevi_cpu extends phodevi_device_interface
 			{
 				$present = pts_file_io::file_get_contents('/sys/devices/system/cpu/online');
 
-				if(substr($present, 0, 2) == '0-')
+				if(isset($present[2]) && substr($present, 0, 2) == '0-')
 				{
 					$present = substr($present, 2);
 

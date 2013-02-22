@@ -1066,6 +1066,8 @@ class phodevi_system extends phodevi_device_interface
 	}
 	public static function sw_display_server()
 	{
+		$info = null;
+
 		if(phodevi::is_windows())
 		{
 			// TODO: determine what to do for Windows support
