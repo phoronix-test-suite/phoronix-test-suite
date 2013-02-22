@@ -268,6 +268,10 @@ class phodevi extends phodevi_base
 					if(!is_array($value) && $value != null)
 					{
 						$value = pts_strings::strip_string($value);
+						if(function_exists('preg_replace'))
+						{
+							$value = preg_replace('/[^(\x20-\x7F)]*/','', $value);
+						}
 					}
 
 					if($cache_code != phodevi::no_caching)
