@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2012, Phoronix Media
-	Copyright (C) 2008 - 2012, Michael Larabel
+	Copyright (C) 2008 - 2013, Phoronix Media
+	Copyright (C) 2008 - 2013, Michael Larabel
 	phodevi_parser.php: General parsing functions used by different parts of Phodevi that are supported by more than one OS
 
 	This program is free software; you can redistribute it and/or modify
@@ -214,20 +214,24 @@ class phodevi_parser
 			$glxinfo = shell_exec('fglrxinfo 2> /dev/null');
 		}
 
-		if(isset($glxinfo) && ($pos = strpos($glxinfo, 'OpenGL version string:')) !== false)
+		foreach(array('OpenGL core profile version string:', 'OpenGL version string:') as $gl_v_string)
 		{
-			$info = substr($glxinfo, $pos + 23);
-			$info = substr($info, 0, strpos($info, "\n"));
-			$info = trim(str_replace(array(' Release'), null, $info));
-
-			// The Catalyst Linux Driver now does something stupid for this string like:
-			//  1.4 (2.1 (3.3.11005 Compatibility Profile Context))
-			if(($pos = strrpos($info, 'Compatibility Profile Context')) !== false && strpos($info, '(') != ($last_p = strrpos($info, '(')))
+			if($info == false && isset($glxinfo) && ($pos = strpos($glxinfo, $gl_v_string)) !== false)
 			{
-				if(is_numeric(str_replace(array('(', '.', ' '), null, substr($info, 0, $last_p))))
+				$info = substr($glxinfo, $pos + strlen($gl_v_string));
+				$info = substr($info, 0, strpos($info, "\n"));
+				$info = trim(str_replace(array(' Release'), null, $info));
+
+				// The Catalyst Linux Driver now does something stupid for this string like:
+				//  1.4 (2.1 (3.3.11005 Compatibility Profile Context))
+				if(($pos = strrpos($info, 'Compatibility Profile Context')) !== false && strpos($info, '(') != ($last_p = strrpos($info, '(')))
 				{
-					// This looks like a stupid Catalyst driver string, so grab the last GL version reported
-					$info = str_replace(array('(', ')'), null, substr($info, ($last_p + 1)));
+					if(is_numeric(str_replace(array('(', '.', ' '), null, substr($info, 0, $last_p))))
+					{
+						// This looks like a stupid Catalyst driver string, so grab the last GL version reported
+						$info = str_replace(array('(', ')'), null, substr($info, ($last_p + 1)));
+						break;
+					}
 				}
 			}
 		}
@@ -246,11 +250,14 @@ class phodevi_parser
 			$glxinfo = shell_exec('fglrxinfo 2> /dev/null');
 		}
 
-		if(isset($glxinfo) && ($pos = strpos($glxinfo, 'OpenGL shading language version string:')) !== false)
+		foreach(array('OpenGL core profile shading language version string:', 'OpenGL shading language version string:') as $shader_v_string)
 		{
-			$info = substr($glxinfo, $pos + 40);
-			$info = substr($info, 0, strpos($info, "\n"));
-			$info = trim($info);
+			if(isset($glxinfo) && $info == false && ($pos = strpos($glxinfo, $shader_v_string)) !== false)
+			{
+				$info = substr($glxinfo, $pos + strlen($shader_v_string));
+				$info = substr($info, 0, strpos($info, "\n"));
+				$info = trim($info);
+			}
 		}
 
 		return $info;
