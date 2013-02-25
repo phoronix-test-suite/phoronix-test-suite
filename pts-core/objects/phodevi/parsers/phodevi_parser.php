@@ -220,7 +220,7 @@ class phodevi_parser
 			{
 				$info = substr($glxinfo, $pos + strlen($gl_v_string));
 				$info = substr($info, 0, strpos($info, "\n"));
-				$info = trim(str_replace(array(' Release'), null, $info));
+				$info = trim(str_replace(array(' Release', '(Core Profile)'), null, $info));
 
 				// The Catalyst Linux Driver now does something stupid for this string like:
 				//  1.4 (2.1 (3.3.11005 Compatibility Profile Context))
