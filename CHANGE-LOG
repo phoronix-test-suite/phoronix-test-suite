@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Improvement for detecting installed libraries for external dependency handling
+- pts-core: Address redundant dash handling within the result file save name
 - phodevi: Support for detecting SurfaceFlinger (Google Android)
 - phodevi: Ensure non-ASCII characters are removed from Phodevi properties
 - phodevi: Support for reading the OpenGL Core Profile information via glxinfo
