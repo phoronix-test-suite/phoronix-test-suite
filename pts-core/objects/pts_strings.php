@@ -321,7 +321,7 @@ class pts_strings
 		$prev_char = null;
 		$new_string = null;
 
-		for($i = 1, $l = strlen($string); $i < $l; $i++)
+		for($i = 0, $l = strlen($string); $i < $l; $i++)
 		{
 			$this_char = $string[$i];
 
