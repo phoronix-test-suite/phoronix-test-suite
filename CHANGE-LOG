@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- pts-core: Add the arm-linux-gnueabihf library directory for PTS External Dependency checks
+
 Phoronix Test Suite 4.4.0-Forsand
 26 February 2013
 
