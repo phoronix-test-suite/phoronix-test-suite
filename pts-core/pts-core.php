@@ -21,8 +21,8 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-define('PTS_VERSION', '4.4.0m3');
-define('PTS_CORE_VERSION', 4330);
+define('PTS_VERSION', '4.4.0');
+define('PTS_CORE_VERSION', 4400);
 define('PTS_CODENAME', 'FORSAND');
 define('PTS_IS_CLIENT', (defined('PTS_MODE') && PTS_MODE == 'CLIENT'));
 define('PTS_IS_DEV_BUILD', (substr(PTS_VERSION, -2, 1) == 'm'));
@@ -107,7 +107,8 @@ function pts_version_codenames()
 		'3.8' => 'Bygland',
 		'4.0' => 'Suldal',
 		'4.2' => 'Randaberg',
-		'4.4' => 'Forsand'
+		'4.4' => 'Forsand',
+		'4.6' => 'Utsira'
 		);
 }
 

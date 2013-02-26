@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 4.4.0-Forsand
+26 February 2013
 
 - pts-core: Improvement for detecting installed libraries for external dependency handling
 - pts-core: Address redundant dash handling within the result file save name
