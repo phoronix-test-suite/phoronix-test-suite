@@ -1051,6 +1051,11 @@ class phodevi_system extends phodevi_device_interface
 			$desktop_environment = 'Consort';
 			$desktop_version = null; // TODO: Haven't tested Consort Desktop yet
 		}
+		else if(pts_client::is_process_running('razor-desktop'))
+		{
+			$desktop_environment = 'Razor-qt';
+			$desktop_version = null; // TODO: Figure out how to determine razor version
+		}
 
 		if(!empty($desktop_environment))
 		{

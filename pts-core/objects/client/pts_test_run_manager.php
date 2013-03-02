@@ -1473,6 +1473,12 @@ class pts_test_run_manager
 			$valid_test_profile = false;
 		}
 
+		if($valid_test_profile == false && pts_client::read_env('SKIP_ALL_TEST_SUPPORT_CHECKS'))
+		{
+			$valid_test_profile = true;
+			$report_errors && pts_client::$display->test_run_error('SKIP_ALL_TEST_SUPPORT_CHECKS is set for ' . $test_profile . '.');
+		}
+
 		return $valid_test_profile;
 	}
 	protected function validate_test_to_run(&$test_profile)

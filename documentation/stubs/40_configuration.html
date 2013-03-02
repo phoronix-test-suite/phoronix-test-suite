@@ -61,6 +61,8 @@
 <p>If Phodevi fails to detect all of the system's monitor video modes or a separate set of modes would be preferred, the modes can be specified in this variable. Example: <em>OVERRIDE_VIDEO_MODES=800x600,1024x768,1280x1024 phoronix-test-suite benchmark nexuiz</em>.</p>
 <p><strong>SKIP_TEST_SUPPORT_CHECKS</strong></p>
 <p>If this environment variable is set, it will not honor the support checks made by individual test profiles. I.e. test profiles that would normally be considered un-supported on a given platform are attempted to install and run regardless.</p>
+<p><strong>SKIP_ALL_TEST_SUPPORT_CHECKS</strong></p>
+<p>If this environment variable is set, all tests will be permitted on the client for execution. SKIP_ALL_TEST_SUPPORT_CHECKS is more liberal than SKIP_TEST_SUPPORT_CHECKS in letting disk tests run on RAM-based file-systems, attempt to run 2D/3D tests on VESA display drivers, and other special cases.</p>
 <p><strong>DEFAULT_VIDEO_MODE</strong></p>
 <p>If Phodevi fails to detect the system's monitor standard / default resolution, the mode can be specified in this variable. Example: <em>DEFAULT_VIDEO_MODE=1680x1050 phoronix-test-suite benchmark nexuiz</em>.</p>
 <p><strong>SKIP_EXTERNAL_DEPENDENCIES</strong></p>
