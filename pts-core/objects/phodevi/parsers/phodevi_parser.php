@@ -155,7 +155,7 @@ class phodevi_parser
 				$temp_version = substr($xorg_log, strpos($xorg_log, 'module version =') + 17);
 				$temp_version = substr($temp_version, 0, strpos($temp_version, "\n"));
 
-				if(is_numeric(str_replace('.', null, $temp_version)))
+				if(is_numeric(str_replace('.', null, $temp_version)) && stripos($xorg_log, 'UnloadModule: "' . $module . '"') === false)
 				{
 					$module_version = $temp_version;
 				}
