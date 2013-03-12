@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add the arm-linux-gnueabihf library directory for PTS External Dependency checks
 - pts-core: Add SKIP_ALL_TEST_SUPPORT_CHECKS environment variable
 - phodevi: Add support for detecting the Razor-qt desktop environment
+- phodevi: No longer report the Catalyst marketing version number since the DDX is no longer reporting it reliably
 
 Phoronix Test Suite 4.4.0-Forsand
 26 February 2013

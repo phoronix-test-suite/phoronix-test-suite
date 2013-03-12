@@ -1240,7 +1240,8 @@ class phodevi_system extends phodevi_device_interface
 			{
 				$display_driver .= ' ' . $driver_version;
 
-				if(phodevi::is_ati_graphics() && strpos($display_driver, 'fglrx') !== false)
+				// XXX: The below check is disabled since the Catalyst Version no longer seems reliably reported (circa Catalyst 13.x)
+				if(false && phodevi::is_ati_graphics() && strpos($display_driver, 'fglrx') !== false)
 				{
 					$catalyst_version = phodevi_linux_parser::read_amd_pcsdb('AMDPCSROOT/SYSTEM/LDC,Catalyst_Version');
 
