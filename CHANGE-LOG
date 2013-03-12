@@ -8,6 +8,7 @@ Phoronix Test Suite (Git)
 - phodevi: No longer report the Catalyst marketing version number since the DDX is no longer reporting it reliably
 - phodevi: Detect if the X.Org Server DDX module was unloaded
 - phodevi: Reorder DDX driver fallback detection
+- phodevi: Cleanse eCryptfs sig and cipher from showing in mounts file
 
 Phoronix Test Suite 4.4.0-Forsand
 26 February 2013

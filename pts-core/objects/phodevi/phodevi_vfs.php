@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2012, Phoronix Media
-	Copyright (C) 2012, Michael Larabel
+	Copyright (C) 2012 - 2013, Phoronix Media
+	Copyright (C) 2012 - 2013, Michael Larabel
 	phodevi.php: The object for an effective VFS with PTS/Phodevi
 
 	This program is free software; you can redistribute it and/or modify
@@ -53,6 +53,35 @@ class phodevi_vfs
 	public function __construct()
 	{
 		$this->clear_cache();
+	}
+	public static function cleanse_file(&$file, $name = false)
+	{
+		switch($name)
+		{
+			case 'mounts':
+				foreach(array('ecryptfs_cipher=', 'ecryptfs_sig=', 'ecryptfs_fnek_sig=') as $check)
+				{
+					if(($x = stripos($file, $check)) !== false)
+					{
+						$split_a = substr($file, 0, ($x + strlen($check)));
+
+						$y = strlen($file);
+						foreach(array(',', ' ', '&', PHP_EOL) as $next)
+						{
+							if(($z = stripos($file, $next, ($x + strlen($check)))) !== false && $z < $y)
+							{
+								$y = $z;
+							}
+						}
+
+						$file = $split_a . 'XXXX' . substr($file, $y);
+					}
+				}
+				break;
+			default:
+				$file = pts_strings::remove_lines_containing($file, array('Serial N', 'S/N', 'Serial #', 'serial:', 'serial='));
+				break;
+		}
 	}
 	public function clear_cache()
 	{
