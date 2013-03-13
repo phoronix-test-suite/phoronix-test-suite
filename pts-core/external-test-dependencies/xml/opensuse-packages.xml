@@ -206,12 +206,6 @@
 			<PackageName>libgmp3</PackageName>
 		</Package>
 		<Package>
-			<GenericName>32bit-compatibility</GenericName>
-			<PackageName>ia32el</PackageName>
-			<ArchitectureSpecific>x86_64</ArchitectureSpecific>
-			<FileCheck>/usr/lib/ia32el</FileCheck>
-		</Package>
-		<Package>
 			<GenericName>subversion</GenericName>
 			<PackageName>subversion</PackageName>
 		</Package>
