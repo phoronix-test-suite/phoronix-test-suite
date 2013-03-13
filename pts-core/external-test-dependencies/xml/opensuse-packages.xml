@@ -21,7 +21,7 @@
 		</Package>
 		<Package>
 			<GenericName>openssl-development</GenericName>
-			<PackageName>openssl-devel</PackageName>
+			<PackageName>libopenssl-devel</PackageName>
 		</Package>
 		<Package>
 			<GenericName>csh</GenericName>
@@ -155,11 +155,11 @@
 		</Package>
 		<Package>
 			<GenericName>blas-development</GenericName>
-			<PackageName>blas</PackageName>
+			<PackageName>blas-devel</PackageName>
 		</Package>
 		<Package>
 			<GenericName>lapack-development</GenericName>
-			<PackageName>lapack</PackageName>
+			<PackageName>lapack-devel</PackageName>
 		</Package>
 		<Package>
 			<GenericName>cmake</GenericName>
