@@ -210,20 +210,24 @@ class pts_test_run_options
 				// Base options off available screen resolutions
 				if(count($option_names) == 1 && count($option_values) == 1)
 				{
-					if(pts_flags::is_live_cd())
+					if(PTS_IS_CLIENT && pts_flags::is_live_cd())
 					{
 						// Just use the stock resolution when operating from a LiveCD
 						$available_video_modes = array(phodevi::read_property('gpu', 'screen-resolution'));
 					}
+					else if(PTS_IS_CLIENT && phodevi::read_property('gpu', 'screen-resolution') && phodevi::read_property('gpu', 'screen-resolution') != array(-1, -1))
+					{
+						$available_video_modes = phodevi::read_property('gpu', 'available-modes');
+					}
 					else
 					{
-						$available_video_modes = PTS_IS_CLIENT ? phodevi::read_property('gpu', 'available-modes') : null;
+						$available_video_modes = array();
 					}
 
 					if(empty($available_video_modes))
 					{
 						// Use hard-coded defaults
-						$available_video_modes = array(array(800, 600), array(1024, 768), array(1280, 1024), array(1280, 960), 
+						$available_video_modes = array(array(800, 600), array(1024, 768), array(1280, 1024), array(1280, 960), array(1366, 768),
 							array(1400, 1050), array(1600, 900), array(1680, 1050), array(1600, 1200), array(1920, 1080), array(2560, 1600));
 					}
 
