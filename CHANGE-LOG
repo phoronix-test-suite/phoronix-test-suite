@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 4.4.1-Forsand
+14 March 2013
 
 - pts-core: Add the arm-linux-gnueabihf library directory for PTS External Dependency checks
 - pts-core: Add SKIP_ALL_TEST_SUPPORT_CHECKS environment variable
