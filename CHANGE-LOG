@@ -12,6 +12,7 @@ Phoronix Test Suite (Git)
 - phodevi: Detect if the X.Org Server DDX module was unloaded
 - phodevi: Reorder DDX driver fallback detection
 - phodevi: Cleanse eCryptfs sig and cipher from showing in mounts file
+- phodevi: Improve Linux memory RAM type detection
 
 Phoronix Test Suite 4.4.0-Forsand
 26 February 2013

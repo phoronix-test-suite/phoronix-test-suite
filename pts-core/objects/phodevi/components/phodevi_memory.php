@@ -88,7 +88,7 @@ class phodevi_memory extends phodevi_device_interface
 		{
 			$mem_size = phodevi_linux_parser::read_dmidecode('memory', 'Memory Device', 'Size', false, array('Not Installed', 'No Module Installed'));
 			$mem_speed = phodevi_linux_parser::read_dmidecode('memory', 'Memory Device', 'Speed', true, 'Unknown');
-			$mem_type = phodevi_linux_parser::read_dmidecode('memory', 'Memory Device', 'Type', true, array('Unknown', 'Other'));
+			$mem_type = phodevi_linux_parser::read_dmidecode('memory', 'Memory Device', 'Type', true, array('Unknown', 'Other', 'Flash'));
 			$mem_manufacturer = phodevi_linux_parser::read_dmidecode('memory', 'Memory Device', 'Manufacturer', true, array('Unknown'));
 			$mem_part = phodevi_linux_parser::read_dmidecode('memory', 'Memory Device', 'Part Number', true, array('Unknown'));
 		}
