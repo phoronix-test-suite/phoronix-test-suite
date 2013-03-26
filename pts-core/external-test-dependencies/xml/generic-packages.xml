@@ -53,7 +53,7 @@
 			<GenericName>build-utilities</GenericName>
 			<Title>Compiler / Development Libraries</Title>
 			<PossibleNames>gcc</PossibleNames>
-			<FileCheck>gcc OR clang</FileCheck>
+			<FileCheck>gcc OR clang OR cc</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>xorg-development</GenericName>

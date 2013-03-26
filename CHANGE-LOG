@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- phodevi: Fix for memory reporting on OS X
+
 Phoronix Test Suite 4.4.1-Forsand
 14 March 2013
 
