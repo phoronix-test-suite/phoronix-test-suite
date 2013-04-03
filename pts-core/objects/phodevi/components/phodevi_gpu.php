@@ -856,7 +856,12 @@ class phodevi_gpu extends phodevi_device_interface
 					if($core_freq == 0 && isset(phodevi::$vfs->i915_cur_delayinfo))
 					{
 						$i915_cur_delayinfo = phodevi::$vfs->i915_cur_delayinfo;
-						$freq = strpos($i915_cur_delayinfo, 'Max non-overclocked (RP0) frequency: ');
+						$freq = strpos($i915_cur_delayinfo, 'Max overclocked frequency: ');
+
+						if($freq === false)
+						{
+							$freq = strpos($i915_cur_delayinfo, 'Max non-overclocked (RP0) frequency: ');
+						}
 
 						if($freq === false)
 						{
