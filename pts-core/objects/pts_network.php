@@ -119,9 +119,9 @@ class pts_network
 			curl_setopt($cr, CURLOPT_CAINFO, PTS_CORE_STATIC_PATH . 'certificates/phoromatic-com.pem');
 		}
 
-		if(PHP_VERSION_ID >= 50300)
+		if(PHP_VERSION_ID >= 50300 && defined('CURLOPT_PROGRESSFUNCTION'))
 		{
-			// CURLOPT_PROGRESSFUNCTION only seems to work with PHP 5.3+
+			// CURLOPT_PROGRESSFUNCTION only seems to work with PHP 5.3+, but is not working with HipHop HHVM ~2.0.1
 			curl_setopt($cr, CURLOPT_NOPROGRESS, false);
 			curl_setopt($cr, CURLOPT_PROGRESSFUNCTION, array('pts_network', 'curl_status_callback'));
 		}
