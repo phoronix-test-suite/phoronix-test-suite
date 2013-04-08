@@ -366,6 +366,11 @@ class phodevi extends phodevi_base
 			self::$device_cache = array_merge(self::$device_cache, $cache_array);
 		}
 	}
+	public static function clear_cache()
+	{
+		self::$smart_cache = array();
+		self::$device_cache = array();
+	}
 	public static function get_phodevi_cache_object($store_dir, $client_version = 0)
 	{
 		return new phodevi_cache(self::$smart_cache, $store_dir, $client_version);
