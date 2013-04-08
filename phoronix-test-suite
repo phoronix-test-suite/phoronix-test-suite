@@ -53,6 +53,9 @@ then
 elif [ -x /usr/pkg/libexec/cgi-bin/php ]
 then
 	export PHP_BIN="/usr/pkg/libexec/cgi-bin/php"
+elif [ -x /usr/bin/hhvm ]
+then
+	export PHP_BIN="/usr/bin/hhvm"
 else
 	export PHP_BIN=""
 fi
