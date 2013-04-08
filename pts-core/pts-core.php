@@ -21,17 +21,6 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-define('PTS_VERSION', '4.4.1');
-define('PTS_CORE_VERSION', 4410);
-define('PTS_CODENAME', 'FORSAND');
-define('PTS_IS_CLIENT', (defined('PTS_MODE') && PTS_MODE == 'CLIENT'));
-define('PTS_IS_DEV_BUILD', (substr(PTS_VERSION, -2, 1) == 'm'));
-
-if(!defined('PTS_PATH'))
-{
-	define('PTS_PATH', dirname(dirname(__FILE__)) . '/');
-}
-
 function pts_codename($full_string = false)
 {
 	$codename = ucwords(strtolower(PTS_CODENAME));
@@ -42,31 +31,43 @@ function pts_title($show_codename = false)
 {
 	return 'Phoronix Test Suite v' . PTS_VERSION . ($show_codename ? ' (' . pts_codename() . ')' : null);
 }
+function pts_define($name, $value = null)
+{
+	static $defines;
+
+	if($name === -1)
+	{
+		return $defines;
+	}
+
+	$defines[$name] = $value;
+	define($name, $value);
+}
 function pts_define_directories()
 {
 	// User's home directory for storing results, module files, test installations, etc.
-	define('PTS_CORE_PATH', PTS_PATH . 'pts-core/');
+	pts_define('PTS_CORE_PATH', PTS_PATH . 'pts-core/');
 
 	if(PTS_IS_CLIENT)
 	{
-		define('PTS_USER_PATH', pts_client::user_home_directory() . '.phoronix-test-suite/');
-		define('PTS_CORE_STORAGE', PTS_USER_PATH . 'core.pt2so');
-		define('PTS_TEMP_STORAGE', PTS_USER_PATH . 'temp.pt2so');
-		define('PTS_MODULE_LOCAL_PATH', PTS_USER_PATH . 'modules/');
-		define('PTS_MODULE_DATA_PATH', PTS_USER_PATH . 'modules-data/');
-		define('PTS_DOWNLOAD_CACHE_PATH', PTS_USER_PATH . 'download-cache/');
-		define('PTS_OPENBENCHMARKING_SCRATCH_PATH', PTS_USER_PATH . 'openbenchmarking.org/');
-		define('PTS_TEST_PROFILE_PATH', PTS_USER_PATH . 'test-profiles/');
-		define('PTS_TEST_SUITE_PATH', PTS_USER_PATH . 'test-suites/');
-		define('PTS_RESULTS_VIEWER_PATH', PTS_CORE_PATH . 'results-viewer/');
+		pts_define('PTS_USER_PATH', pts_client::user_home_directory() . '.phoronix-test-suite/');
+		pts_define('PTS_CORE_STORAGE', PTS_USER_PATH . 'core.pt2so');
+		pts_define('PTS_TEMP_STORAGE', PTS_USER_PATH . 'temp.pt2so');
+		pts_define('PTS_MODULE_LOCAL_PATH', PTS_USER_PATH . 'modules/');
+		pts_define('PTS_MODULE_DATA_PATH', PTS_USER_PATH . 'modules-data/');
+		pts_define('PTS_DOWNLOAD_CACHE_PATH', PTS_USER_PATH . 'download-cache/');
+		pts_define('PTS_OPENBENCHMARKING_SCRATCH_PATH', PTS_USER_PATH . 'openbenchmarking.org/');
+		pts_define('PTS_TEST_PROFILE_PATH', PTS_USER_PATH . 'test-profiles/');
+		pts_define('PTS_TEST_SUITE_PATH', PTS_USER_PATH . 'test-suites/');
+		pts_define('PTS_RESULTS_VIEWER_PATH', PTS_CORE_PATH . 'results-viewer/');
 	}
 
 	// Misc Locations
-	define('PTS_MODULE_PATH', PTS_CORE_PATH . 'modules/');
-	define('PTS_CORE_STATIC_PATH', PTS_CORE_PATH . 'static/');
-	define('PTS_COMMAND_PATH', PTS_CORE_PATH . 'commands/');
-	define('PTS_EXDEP_PATH', PTS_CORE_PATH . 'external-test-dependencies/');
-	define('PTS_OPENBENCHMARKING_PATH', PTS_CORE_PATH . 'openbenchmarking.org/');
+	pts_define('PTS_MODULE_PATH', PTS_CORE_PATH . 'modules/');
+	pts_define('PTS_CORE_STATIC_PATH', PTS_CORE_PATH . 'static/');
+	pts_define('PTS_COMMAND_PATH', PTS_CORE_PATH . 'commands/');
+	pts_define('PTS_EXDEP_PATH', PTS_CORE_PATH . 'external-test-dependencies/');
+	pts_define('PTS_OPENBENCHMARKING_PATH', PTS_CORE_PATH . 'openbenchmarking.org/');
 }
 function pts_needed_extensions()
 {
@@ -110,6 +111,17 @@ function pts_version_codenames()
 		'4.4' => 'Forsand',
 		'4.6' => 'Utsira'
 		);
+}
+
+pts_define('PTS_VERSION', '4.4.1');
+pts_define('PTS_CORE_VERSION', 4410);
+pts_define('PTS_CODENAME', 'FORSAND');
+pts_define('PTS_IS_CLIENT', (defined('PTS_MODE') && PTS_MODE == 'CLIENT'));
+pts_define('PTS_IS_DEV_BUILD', (substr(PTS_VERSION, -2, 1) == 'm'));
+
+if(!defined('PTS_PATH'))
+{
+	pts_define('PTS_PATH', dirname(dirname(__FILE__)) . '/');
 }
 
 if(PTS_IS_CLIENT || defined('PTS_AUTO_LOAD_OBJECTS'))

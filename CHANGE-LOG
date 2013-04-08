@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Support for detecting Facebook's HipHop HHVM PHP implementation
+- pts-core: Introduce new pts_define interface
 - phodevi: Fix for memory reporting on OS X
 - phodevi: Improved LLVM Clang compiler version detection with modern Apple Xcode
 - phodevi: Improved Intel Linux GPU overclocking frequency detection

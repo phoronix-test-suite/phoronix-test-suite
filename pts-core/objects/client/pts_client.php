@@ -55,8 +55,8 @@ class pts_client
 		}
 
 		pts_config::init_files();
-		define('PTS_TEST_INSTALL_DEFAULT_PATH', pts_client::parse_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Installation/EnvironmentDirectory', '~/.phoronix-test-suite/installed-tests/')));
-		define('PTS_SAVE_RESULTS_PATH', pts_client::parse_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Testing/ResultsDirectory', '~/.phoronix-test-suite/test-results/')));
+		pts_define('PTS_TEST_INSTALL_DEFAULT_PATH', pts_client::parse_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Installation/EnvironmentDirectory', '~/.phoronix-test-suite/installed-tests/')));
+		pts_define('PTS_SAVE_RESULTS_PATH', pts_client::parse_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Testing/ResultsDirectory', '~/.phoronix-test-suite/test-results/')));
 		self::extended_init_process();
 
 		$openbenchmarking = pts_storage_object::read_from_file(PTS_CORE_STORAGE, 'openbenchmarking');
@@ -144,7 +144,7 @@ class pts_client
 		}
 
 		pts_module_manager::module_process('__startup');
-		define('PTS_STARTUP_TASK_PERFORMED', true);
+		pts_define('PTS_STARTUP_TASK_PERFORMED', true);
 		register_shutdown_function(array('pts_module_manager', 'module_process'), '__shutdown');
 	}
 	public static function open_basedir_check()
@@ -427,14 +427,14 @@ class pts_client
 		// Initialize The Phoronix Test Suite
 
 		// PTS Defines
-		define('PHP_BIN', pts_client::read_env('PHP_BIN'));
-		define('PTS_INIT_TIME', time());
+		pts_define('PHP_BIN', pts_client::read_env('PHP_BIN'));
+		pts_define('PTS_INIT_TIME', time());
 
 		if(!defined('PHP_VERSION_ID'))
 		{
 			// PHP_VERSION_ID is only available in PHP 5.2.6 and later
 			$php_version = explode('.', PHP_VERSION);
-			define('PHP_VERSION_ID', ($php_version[0] * 10000 + $php_version[1] * 100 + $php_version[2]));
+			pts_define('PHP_VERSION_ID', ($php_version[0] * 10000 + $php_version[1] * 100 + $php_version[2]));
 		}
 
 		$dir_init = array(PTS_USER_PATH);
@@ -590,13 +590,13 @@ class pts_client
 				$pso->add_object('global_system_id', $global_gsid['gsid']); // GSID
 				$pso->add_object('global_system_id_p', $global_gsid['gsid_p']); // GSID_P
 				$pso->add_object('global_system_id_e', $global_gsid['gsid_e']); // GSID_E
-				define('PTS_GSID', $global_gsid['gsid']);
-				define('PTS_GSID_E', $global_gsid['gsid_e']);
+				pts_define('PTS_GSID', $global_gsid['gsid']);
+				pts_define('PTS_GSID_E', $global_gsid['gsid_e']);
 			}
 		}
 		else if(pts_openbenchmarking::is_valid_gsid_e_format($global_gsid_e) == false || pts_openbenchmarking::is_valid_gsid_e_format($global_gsid_p) == false)
 		{
-			define('PTS_GSID', $global_gsid);
+			pts_define('PTS_GSID', $global_gsid);
 			$requested_gsid = false;
 			$global_gsid = pts_openbenchmarking_client::retrieve_gsid();
 
@@ -604,19 +604,19 @@ class pts_client
 			{
 				$pso->add_object('global_system_id_p', $global_gsid['gsid_p']); // GSID_P
 				$pso->add_object('global_system_id_e', $global_gsid['gsid_e']); // GSID_E
-				define('PTS_GSID_E', $global_gsid['gsid_e']);
+				pts_define('PTS_GSID_E', $global_gsid['gsid_e']);
 			}
 		}
 		else
 		{
-			define('PTS_GSID', $global_gsid);
-			define('PTS_GSID_E', $global_gsid_e);
+			pts_define('PTS_GSID', $global_gsid);
+			pts_define('PTS_GSID_E', $global_gsid_e);
 			$requested_gsid = false;
 		}
 
 		// Last Run Processing
 		$last_core_version = $pso->read_object('last_core_version');
-		define('FIRST_RUN_ON_PTS_UPGRADE', ($last_core_version != PTS_CORE_VERSION));
+		pts_define('FIRST_RUN_ON_PTS_UPGRADE', ($last_core_version != PTS_CORE_VERSION));
 
 		if(FIRST_RUN_ON_PTS_UPGRADE || ($pso->read_object('last_php_version') != phpversion()))
 		{
@@ -642,7 +642,7 @@ class pts_client
 
 		// Last Run Processing
 		$last_run = $pso->read_object('last_run_time');
-		define('IS_FIRST_RUN_TODAY', (substr($last_run, 0, 10) != date('Y-m-d')));
+		pts_define('IS_FIRST_RUN_TODAY', (substr($last_run, 0, 10) != date('Y-m-d')));
 		$pso->add_object('last_run_time', date('Y-m-d H:i:s')); // Time PTS was last run
 
 
@@ -837,7 +837,7 @@ class pts_client
 	public static function exit_client($string = null, $exit_status = 0)
 	{
 		// Exit the Phoronix Test Suite client
-		define('PTS_EXIT', 1);
+		pts_define('PTS_EXIT', 1);
 
 		if($string != null)
 		{

@@ -242,7 +242,7 @@ class pts_openbenchmarking_client
 			{
 				if(!defined('HAS_REFRESHED_OBO_LIST'))
 				{
-					define('HAS_REFRESHED_OBO_LIST', true);
+					pts_define('HAS_REFRESHED_OBO_LIST', true);
 				}
 				else
 				{

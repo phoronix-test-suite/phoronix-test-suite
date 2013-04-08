@@ -41,7 +41,7 @@ if(!PTS_IS_CLIENT)
 	return;
 }
 
-define('IS_PTS_WEB_INTERFACE', php_sapi_name() == 'cli-server');
+pts_define('IS_PTS_WEB_INTERFACE', php_sapi_name() == 'cli-server');
 
 if(IS_PTS_WEB_INTERFACE == 'cli-server')
 {
@@ -89,7 +89,7 @@ if(ini_get('open_basedir') != false)
 
 $sent_command = strtolower(str_replace('-', '_', (isset($argv[1]) ? $argv[1] : null)));
 $quick_start_options = array('dump_possible_options');
-define('QUICK_START', in_array($sent_command, $quick_start_options));
+pts_define('QUICK_START', in_array($sent_command, $quick_start_options));
 
 if(QUICK_START == false && IS_PTS_WEB_INTERFACE == false)
 {
@@ -135,7 +135,7 @@ if(is_file(PTS_PATH . 'pts-core/commands/' . $sent_command . '.php') == false)
 	}
 }
 
-define('PTS_USER_LOCK', PTS_USER_PATH . 'run_lock');
+pts_define('PTS_USER_LOCK', PTS_USER_PATH . 'run_lock');
 
 if(QUICK_START == false && IS_PTS_WEB_INTERFACE == false)
 {
