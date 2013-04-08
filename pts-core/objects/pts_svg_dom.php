@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2011 - 2012, Phoronix Media
-	Copyright (C) 2011 - 2012, Michael Larabel
+	Copyright (C) 2011 - 2013, Phoronix Media
+	Copyright (C) 2011 - 2013, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -34,8 +34,11 @@ class pts_svg_dom
 		$this->dom = $dom->createDocument(null, null, $dtd);
 		$this->dom->formatOutput = PTS_IS_CLIENT;
 
-		$pts_comment = $this->dom->createComment(pts_title(true) . ' [ http://www.phoronix-test-suite.com/ ]');
-		$this->dom->appendChild($pts_comment);
+		if(stripos(PTS_PHP_VERSION, 'hiphop') === false)
+		{
+			$pts_comment = $this->dom->createComment(pts_title(true) . ' [ http://www.phoronix-test-suite.com/ ]');
+			$this->dom->appendChild($pts_comment);
+		}
 
 		$this->svg = $this->dom->createElementNS('http://www.w3.org/2000/svg', 'svg');
 		$this->svg->setAttribute('xmlns:xlink', 'http://www.w3.org/1999/xlink');

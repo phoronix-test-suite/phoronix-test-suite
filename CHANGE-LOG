@@ -2,7 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
-- pts-core: Support for detecting Facebook's HipHop HHVM PHP implementation
+- pts-core: Official support for Facebook's HipHop HHVM PHP
 - pts-core: Introduce new pts_define interface
 - pts-core: Add debug-self-test option for running a self-hosting PHP/PTS performance test
 - pts-core: Support PHP 5.4's cli_set_process_title() function

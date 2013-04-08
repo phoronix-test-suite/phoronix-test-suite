@@ -124,6 +124,8 @@ if(!defined('PTS_PATH'))
 	pts_define('PTS_PATH', dirname(dirname(__FILE__)) . '/');
 }
 
+pts_define('PTS_PHP_VERSION', phpversion());
+
 if(PTS_IS_CLIENT || defined('PTS_AUTO_LOAD_OBJECTS'))
 {
 	function pts_build_dir_php_list($dir, &$files)

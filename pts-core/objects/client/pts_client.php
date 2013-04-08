@@ -623,7 +623,7 @@ class pts_client
 		$last_core_version = $pso->read_object('last_core_version');
 		pts_define('FIRST_RUN_ON_PTS_UPGRADE', ($last_core_version != PTS_CORE_VERSION));
 
-		if(FIRST_RUN_ON_PTS_UPGRADE || ($pso->read_object('last_php_version') != phpversion()))
+		if(FIRST_RUN_ON_PTS_UPGRADE || ($pso->read_object('last_php_version') != PTS_PHP_VERSION))
 		{
 			// Report any missing/recommended extensions
 			self::program_requirement_checks();
@@ -639,7 +639,7 @@ class pts_client
 			pts_client::build_temp_cache();
 		}
 		$pso->add_object('last_core_version', PTS_CORE_VERSION); // PTS version last run
-		$pso->add_object('last_php_version', phpversion()); // PHP version last run
+		$pso->add_object('last_php_version', PTS_PHP_VERSION); // PHP version last run
 
 		//$last_pts_version = $pso->read_object('last_pts_version');
 		// do something here with $last_pts_version if you want that information

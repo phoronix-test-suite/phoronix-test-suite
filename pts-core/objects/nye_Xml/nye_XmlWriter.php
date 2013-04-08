@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010, Phoronix Media
-	Copyright (C) 2010, Michael Larabel
+	Copyright (C) 2010 - 2013, Phoronix Media
+	Copyright (C) 2010 - 2013, Michael Larabel
 	nye_XmlWriter.php: The XML writing object for the Phoronix Test Suite succeeding tandem_XmlWriter
 
 	Additional Notes: A very simple XML writer with a few extras... Does not support attributes on tags, etc.
@@ -37,7 +37,7 @@ class nye_XmlWriter
 		//$this->dom->preserveWhiteSpace = false;
 		$this->items = array();
 
-		if(PTS_IS_CLIENT)
+		if(PTS_IS_CLIENT && stripos(PTS_PHP_VERSION, 'hiphop') === false)
 		{
 			$pts_comment = $this->dom->createComment(pts_title(true));
 			$this->dom->appendChild($pts_comment);

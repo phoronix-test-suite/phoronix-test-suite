@@ -60,7 +60,7 @@ class debug_self_test implements pts_option_interface
 		$finish = microtime(true);
 
 		echo PHP_EOL . PHP_EOL . '### OVERALL DATA ###' . PHP_EOL . PHP_EOL;
-		echo 'PHP:  ' . phpversion() . PHP_EOL;
+		echo 'PHP:  ' . PTS_PHP_VERSION . PHP_EOL;
 
 		$longest_c = max(array_map('strlen', array_keys($individual_times)));
 		foreach($individual_times as $component => $times)
