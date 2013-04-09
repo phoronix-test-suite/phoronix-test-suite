@@ -19,5 +19,5 @@ if [ -x /usr/bin/aptitude ]; then
 	# See: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=503215
 	$ROOT -- "aptitude -y install $*"
 else
-	$ROOT -- "apt-get -y --ignore-missing install $*"
+	$ROOT -- su -c "apt-get -y --ignore-missing install $*"
 fi
