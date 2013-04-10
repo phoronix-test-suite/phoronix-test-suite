@@ -57,6 +57,9 @@ This option will install the selected test(s) (if needed) and will proceed to ru
 .B default-run [Test | Suite | OpenBenchmarking.org ID | Test Result]  ...
 This option will run the selected test(s). The name of the test or suite must be supplied or the OpenBenchmarking.org ID or saved local file name. Multiple arguments can be supplied to run additional tests at the same time and save the results in a suite-like fashion. Unlike the normal run option, the default-run will not prompt the user to select from the available test options but will instead use the default options as automatically set by pts-core or the test profile. Use batch-run to automatically test all of the available options.
 .TP
+.B internal-run [Test | Suite | OpenBenchmarking.org ID | Test Result]  ...
+This option and its arguments pre-set the Phoronix Test Suite batch run mode with sane values for carrying out benchmarks in a semi-automated manner and without uploading any of the result data to the public OpenBenchmarking.org.
+.TP
 .SH OPENBENCHMARKING.ORG
 .B clone-result [OpenBenchmarking ID]  ...
 This option will download a local copy of a file that was saved to OpenBenchmarking.org, as long as a valid public ID is supplied. More than one ID can be specified and the results will then be merged.

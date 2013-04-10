@@ -8,6 +8,7 @@ Phoronix Test Suite (Git)
 - pts-core: Support PHP 5.4's cli_set_process_title() function
 - pts-core: For now don't use PHP CURL on HipHop HHVM due to issues
 - pts-core: Ubuntu 13.04's sudo seems to have problems with the external dependency handling
+- pts-core: Add internal-run command for running benchmarks in semi-automated manner and without uploading data to OpenBenchmarking.org
 - phodevi: Fix for memory reporting on OS X
 - phodevi: Improved LLVM Clang compiler version detection with modern Apple Xcode
 - phodevi: Improved Intel Linux GPU overclocking frequency detection

@@ -49,6 +49,7 @@ class pts_test_run_manager
 	private $dynamic_run_count_export_script;
 
 	private static $test_run_process_active = false;
+	private static $batch_mode_options = false;
 
 	public function __construct($test_flags = 0)
 	{
@@ -293,7 +294,7 @@ class pts_test_run_manager
 			//echo 'Saving Results To: ' . $proposed_name . PHP_EOL;
 		}
 
-		if((pts_c::$test_flags ^ pts_c::batch_mode) || pts_config::read_bool_config('PhoronixTestSuite/Options/BatchMode/PromptSaveName', 'FALSE'))
+		if((pts_c::$test_flags ^ pts_c::batch_mode) || self::$batch_mode_options['PromptSaveName'])
 		{
 			$is_reserved_word = false;
 			// Be of help to the user by showing recently saved test results
@@ -355,7 +356,7 @@ class pts_test_run_manager
 			$current_software = array();
 		}
 
-		if((pts_c::$test_flags ^ pts_c::batch_mode) || pts_config::read_bool_config('PhoronixTestSuite/Options/BatchMode/PromptForTestIdentifier', 'TRUE') && (pts_c::$test_flags ^ pts_c::auto_mode) && (pts_c::$test_flags ^ pts_c::is_recovering))
+		if((pts_c::$test_flags ^ pts_c::batch_mode) || self::$batch_mode_options['PromptForTestIdentifier'] && (pts_c::$test_flags ^ pts_c::auto_mode) && (pts_c::$test_flags ^ pts_c::is_recovering))
 		{
 			if(count($current_identifiers) > 0)
 			{
@@ -675,7 +676,12 @@ class pts_test_run_manager
 
 		if((pts_c::$test_flags & pts_c::batch_mode))
 		{
-			if(pts_config::read_bool_config('PhoronixTestSuite/Options/BatchMode/Configured', 'FALSE') == false && (pts_c::$test_flags ^ pts_c::auto_mode))
+			if(self::$batch_mode_options === false)
+			{
+				self::set_batch_mode();
+			}
+
+			if(self::$batch_mode_options['Configured'] == false && (pts_c::$test_flags ^ pts_c::auto_mode))
 			{
 				pts_client::$display->generic_error('The batch mode must first be configured.' . PHP_EOL . 'To configure, run phoronix-test-suite batch-setup');
 				return false;
@@ -840,7 +846,7 @@ class pts_test_run_manager
 				}
 				else if((pts_c::$test_flags & pts_c::batch_mode))
 				{
-					$upload_results = pts_config::read_bool_config('PhoronixTestSuite/Options/BatchMode/UploadResults', 'TRUE');
+					$upload_results = self::$batch_mode_options['UploadResults'];
 				}
 				else if((pts_c::$test_flags ^ pts_c::auto_mode))
 				{
@@ -868,6 +874,28 @@ class pts_test_run_manager
 					}
 				}
 			}
+		}
+	}
+	public static function set_batch_mode($custom_preset = false)
+	{
+		self::$batch_mode_options = array(
+			'UploadResults' => pts_config::read_bool_config('PhoronixTestSuite/Options/BatchMode/UploadResults', 'TRUE'),
+			'SaveResults' => pts_config::read_user_config('PhoronixTestSuite/Options/BatchMode/SaveResults', 'TRUE'),
+			'PromptForTestDescription' => pts_config::read_bool_config('PhoronixTestSuite/Options/BatchMode/PromptForTestDescription', 'FALSE'),
+			'RunAllTestCombinations' => pts_config::read_bool_config('PhoronixTestSuite/Options/BatchMode/RunAllTestCombinations', 'TRUE'),
+			'PromptSaveName' => pts_config::read_bool_config('PhoronixTestSuite/Options/BatchMode/PromptSaveName', 'FALSE'),
+			'PromptForTestIdentifier' => pts_config::read_bool_config('PhoronixTestSuite/Options/BatchMode/PromptForTestIdentifier', 'TRUE'),
+			'Configured' => pts_config::read_bool_config('PhoronixTestSuite/Options/BatchMode/Configured', 'FALSE'),
+			);
+
+		if($custom_preset && is_array($custom_preset))
+		{
+			foreach($custom_preset as $key => $value)
+			{
+				self::$batch_mode_options[$key] = $value;
+			}
+
+			self::$batch_mode_options['Configured'] = true;
 		}
 	}
 	public static function cleanup_tests_to_run(&$to_run_objects)
@@ -1120,7 +1148,7 @@ class pts_test_run_manager
 			}
 			else if((pts_c::$test_flags & pts_c::batch_mode))
 			{
-				$save_results = pts_config::read_user_config('PhoronixTestSuite/Options/BatchMode/SaveResults', 'TRUE');
+				$save_results = self::$batch_mode_options['SaveResults'];
 			}
 			else
 			{
@@ -1142,7 +1170,7 @@ class pts_test_run_manager
 				}
 
 				// Prompt Description
-				if((pts_c::$test_flags ^ pts_c::batch_mode) || pts_config::read_bool_config('PhoronixTestSuite/Options/BatchMode/PromptForTestDescription', 'FALSE'))
+				if((pts_c::$test_flags ^ pts_c::batch_mode) || self::$batch_mode_options['PromptForTestDescription'])
 				{
 					if($this->run_description == null)
 					{
@@ -1255,7 +1283,7 @@ class pts_test_run_manager
 	{
 		$result_objects = array();
 
-		if((pts_c::$test_flags & pts_c::batch_mode) && pts_config::read_bool_config('PhoronixTestSuite/Options/BatchMode/RunAllTestCombinations', 'TRUE'))
+		if((pts_c::$test_flags & pts_c::batch_mode) && self::$batch_mode_options['RunAllTestCombinations'])
 		{
 			list($test_arguments, $test_arguments_description) = pts_test_run_options::batch_user_options($test_profile);
 		}
