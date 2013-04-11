@@ -1193,6 +1193,7 @@ class phodevi_system extends phodevi_device_interface
 						}
 						break;
 					case 'nvidia':
+					case 'NVIDIA':
 						// NVIDIA's binary driver usually ends up reporting 1.0.0
 						if(($nvs_value = phodevi_parser::read_nvidia_extension('NvidiaDriverVersion')))
 						{
