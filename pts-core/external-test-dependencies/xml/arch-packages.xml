@@ -119,7 +119,7 @@
 		</Package>
 		<Package>
 			<GenericName>curl</GenericName>
-			<PackageName>libcurl curl</PackageName>
+			<PackageName>curl</PackageName>
 		</Package>
 		<Package>
 			<GenericName>fftw3-development</GenericName>
