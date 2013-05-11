@@ -424,7 +424,7 @@ class pts_test_installer
 		if($test_install_request === false || in_array('fortran-compiler', $test_install_request->test_profile->get_dependencies()))
 		{
 			// Handle Fortran for this external dependency
-			$compilers['F9X'] = array(pts_strings::first_in_string(pts_client::read_env('F9X'), ' '), pts_strings::first_in_string(pts_client::read_env('F95'), ' '), 'gfortran', 'f95', 'fortran');
+			$compilers['F9X'] = array(pts_strings::first_in_string(pts_client::read_env('F9X'), ' '), pts_strings::first_in_string(pts_client::read_env('F95'), ' '), 'gfortran', 'f90', 'f95', 'fortran');
 		}
 
 		if(empty($compilers))
@@ -557,9 +557,10 @@ class pts_test_installer
 				}
 
 				$o = substr($compiler_line, ($o + 3), (strpos($compiler_line, ' ', ($o + 3)) - $o - 3));
+				$o_l = strlen($o);
 				// $o now has whatever is set for the -o output
 
-				if(!isset($o[4]) || substr($o, -2) == '.o' || substr(basename($o), 0, 3) == 'lib' || substr($o, -4) == 'test')
+				if(($o_l > 2 && substr($o, -2) == '.o') || ($o_l > 2 && substr(basename($o), 0, 3) == 'lib') || ($o_l > 3 && substr($o, -4) == 'test'))
 				{
 					// If it's outputting to a .o should not be the proper compile command we want
 					// Or if it's a lib, probably not what is the actual target either

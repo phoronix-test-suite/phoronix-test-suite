@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- pts-core: Support compiler masking on short binaries
+
 Phoronix Test Suite 4.6 Milestone 1
 11 April 2013
 
