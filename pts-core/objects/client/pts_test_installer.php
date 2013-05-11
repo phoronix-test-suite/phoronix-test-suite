@@ -546,6 +546,7 @@ class pts_test_installer
 
 			// Clean-up / reduce the compiler options that are important
 			$compiler_options = null;
+			$compiler_backup_line = null;
 			foreach($compiler_lines as $l => $compiler_line)
 			{
 				$compiler_line .= ' '; // allows for easier/simplified detection in a few checks below
@@ -560,10 +561,17 @@ class pts_test_installer
 				$o_l = strlen($o);
 				// $o now has whatever is set for the -o output
 
-				if(($o_l > 2 && substr($o, -2) == '.o') || ($o_l > 2 && substr(basename($o), 0, 3) == 'lib') || ($o_l > 3 && substr($o, -4) == 'test'))
+				if(($o_l > 2 && substr(basename($o), 0, 3) == 'lib') || ($o_l > 3 && substr($o, -4) == 'test'))
+				{
+					// If it's a lib, probably not what is the actual target
+					unset($compiler_lines[$l]);
+					continue;
+				}
+				else if(($o_l > 2 && substr($o, -2) == '.o'))
 				{
 					// If it's outputting to a .o should not be the proper compile command we want
-					// Or if it's a lib, probably not what is the actual target either
+					// but back it up in case... keep overwriting temp variable to get the last one
+					$compiler_backup_line = $compiler_line;
 					unset($compiler_lines[$l]);
 					continue;
 				}
@@ -572,6 +580,12 @@ class pts_test_installer
 			if(!empty($compiler_lines))
 			{
 				$compiler_line = array_pop($compiler_lines);
+
+				if(strpos($compiler_line, '-O') === false && strpos($compiler_line, '-f') === false && (strpos($compiler_backup_line, '-f') !== false || strpos($compiler_backup_line, '-O'))
+				{
+					$compiler_line .= ' ' . $compiler_backup_line;
+				}
+
 				$compiler_options = explode(' ', $compiler_line);
 
 				foreach($compiler_options as $i => $option)
