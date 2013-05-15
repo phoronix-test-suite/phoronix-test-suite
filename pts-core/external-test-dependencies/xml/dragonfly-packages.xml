@@ -142,7 +142,7 @@
 		</Package>
 		<Package>
 			<GenericName>cmake</GenericName>
-			<PackageName>devel/cmake-fedora</PackageName>
+			<PackageName>devel/cmake</PackageName>
 			<FileCheck>/usr/pkg/bin/cmake</FileCheck>
 		</Package>
 		<Package>
