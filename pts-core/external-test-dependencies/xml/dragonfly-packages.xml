@@ -6,6 +6,11 @@
 			<Name>DragonFlyBSD</Name>
 		</Information>
 		<Package>
+			<GenericName>common-dependencies</GenericName>
+			<PackageName>archivers/unzip</PackageName>
+			<FileCheck>unzip</FileCheck>
+		</Package>
+		<Package>
 			<GenericName>gtk-development</GenericName>
 			<PackageName>x11/gtk2</PackageName>
 			<FileCheck>/usr/pkg/include/gtk-2.0/</FileCheck>
@@ -162,7 +167,7 @@
 		</Package>
 		<Package>
 			<GenericName>python</GenericName>
-			<PackageName>lang/python</PackageName>
+			<PackageName>lang/python33</PackageName>
 			<FileCheck>/usr/pkg/bin/python</FileCheck>
 		</Package>
 		<Package>
