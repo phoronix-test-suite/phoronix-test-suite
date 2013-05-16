@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 4.6 Milestone 2
+16 May 2013
 
 - pts-core: Support compiler masking on short binaries
 - pts-core: More advanced detection of compiler flags within the compiler masking process
