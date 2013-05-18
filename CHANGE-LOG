@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- phodevi: Report CPU scaling driver along side the CPU scaling governor
+
 Phoronix Test Suite 4.6 Milestone 2
 16 May 2013
 
@@ -7,6 +11,7 @@ Phoronix Test Suite 4.6 Milestone 2
 - pts-core: More advanced detection of compiler flags within the compiler masking process
 - pts-core: DragonFlyBSD external dependency packaging updates
 - pts-core: Various fixes
+- phodevi: Fix for cpu.freq sensor reading on Apple OS X
 
 Phoronix Test Suite 4.6 Milestone 1
 11 April 2013

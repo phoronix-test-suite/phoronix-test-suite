@@ -127,12 +127,17 @@ class phodevi_cpu extends phodevi_device_interface
 	{
 		$scaling_governor = false;
 
-		if(is_file('/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor'))
+		if(is_file('/sys/devices/system/cpu/cpu0/cpufreq/scaling_driver'))
 		{
-			$scaling_governor = pts_file_io::file_get_contents('/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor');
+			$scaling_governor = pts_file_io::file_get_contents('/sys/devices/system/cpu/cpu0/cpufreq/scaling_driver') . ' ';
 		}
 
-		return $scaling_governor;
+		if(is_file('/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor'))
+		{
+			$scaling_governor .= pts_file_io::file_get_contents('/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor');
+		}
+
+		return trim($scaling_governor);
 	}
 	public static function is_genuine($cpu)
 	{
