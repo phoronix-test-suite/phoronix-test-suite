@@ -901,18 +901,12 @@ class pts_test_run_manager
 	public static function cleanup_tests_to_run(&$to_run_objects)
 	{
 		$skip_tests = ($e = pts_client::read_env('SKIP_TESTS')) ? pts_strings::comma_explode($e) : false;
-		$only_test_type = ($e = pts_client::read_env('ONLY_TEST_TYPE')) ? pts_strings::comma_explode($e) : false;
 		$tests_verified = array();
 		$tests_missing = array();
 
 		foreach($to_run_objects as &$run_object)
 		{
 			if($skip_tests && (in_array($run_object->get_identifier(false), $skip_tests) || ($run_object instanceof pts_test_profile && in_array($run_object->get_identifier_base_name(), $skip_tests))))
-			{
-				echo 'Skipping: ' . $run_object->get_identifier() . PHP_EOL;
-				continue;
-			}
-			if($only_test_type && !in_array($run_object->get_test_hardware_type(), $only_test_type))
 			{
 				echo 'Skipping: ' . $run_object->get_identifier() . PHP_EOL;
 				continue;
@@ -1473,6 +1467,7 @@ class pts_test_run_manager
 		$valid_test_profile = true;
 		$test_type = $test_profile->get_test_hardware_type();
 		$skip_tests = pts_client::read_env('SKIP_TESTS') ? pts_strings::comma_explode(pts_client::read_env('SKIP_TESTS')) : false;
+		$only_test_types = ($e = pts_client::read_env('ONLY_TEST_TYPES')) ? pts_strings::comma_explode($e) : false;
 		$display_driver = phodevi::read_property('system', 'display-driver');
 		$gpu = phodevi::read_name('gpu');
 
@@ -1497,6 +1492,11 @@ class pts_test_run_manager
 			$valid_test_profile = false;
 		}
 		else if(pts_client::read_env('NO_' . strtoupper($test_type) . '_TESTS') ||($skip_tests && (in_array($test_profile, $skip_tests) || in_array($test_type, $skip_tests) || in_array($test_profile->get_identifier(false), $skip_tests) || in_array($test_profile->get_identifier_base_name(), $skip_tests))))
+		{
+			$report_errors && pts_client::$display->test_run_error('Due to a pre-set environmental variable, skipping ' . $test_profile);
+			$valid_test_profile = false;
+		}
+		else if($only_test_types && !in_array($test_profile->get_test_hardware_type(), $only_test_types))
 		{
 			$report_errors && pts_client::$display->test_run_error('Due to a pre-set environmental variable, skipping ' . $test_profile);
 			$valid_test_profile = false;
