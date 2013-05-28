@@ -392,7 +392,8 @@ class phodevi_cpu extends phodevi_device_interface
 			'fma3' => (1 << 14), // FMA3 Instruction Set
 			'fma4' => (1 << 15), // FMA4 Instruction Set
 			'rdrand' => (1 << 16), // Intel Bull Mountain RDRAND - Ivy Bridge
-			'fsgsbase' => ( 1 << 17) // FSGSBASE - Ivy Bridge AVX
+			'fsgsbase' => (1 << 17), // FSGSBASE - Ivy Bridge AVX
+			'bmi2' => (1 << 18) // Intel Haswell has BMI2
 			);
 	}
 	public static function get_cpu_feature_constant($constant)
