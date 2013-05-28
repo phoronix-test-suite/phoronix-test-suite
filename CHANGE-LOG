@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+- pts-core: Add ONLY_TEST_TYPE environment variable for skipping test profiles that don't belong to a certain hardware type
 - phodevi: Add Haswell BMI2 detection
 
 Phoronix Test Suite 4.6.0-Utsira
