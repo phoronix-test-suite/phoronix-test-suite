@@ -8,6 +8,7 @@ Phoronix Test Suite (Git)
 - pts-core: Ensure reorder-result-file opens the proper HTML web-browser
 - pts-core: Ensure rename-identifier-in-result-file opens the proper HTML web-browser
 - pts-core: Ensure remove-from-result-file opens the proper HTML web-browser
+- pts-core: Reworked handling of browser launching in batch mode
 - phodevi: Add Haswell BMI2 detection
 
 Phoronix Test Suite 4.6.0-Utsira

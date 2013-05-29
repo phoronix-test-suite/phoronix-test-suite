@@ -1516,19 +1516,9 @@ class pts_client
 			return;
 		}
 
-		// Launch the web browser
-		$text = $alt_text == null ? 'Do you want to view the results in your web browser' : $alt_text;
-
 		if($auto_open == false)
 		{
-			if((pts_c::$test_flags & pts_c::batch_mode))
-			{
-				$view_results = pts_config::read_bool_config('PhoronixTestSuite/Options/BatchMode/OpenBrowser', 'FALSE');
-			}
-			else
-			{
-				$view_results = pts_user_io::prompt_bool_input($text, $default_open);
-			}
+			$view_results = pts_user_io::prompt_bool_input(($alt_text == null ? 'Do you want to view the results in your web browser' : $alt_text), $default_open);
 		}
 		else
 		{
