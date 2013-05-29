@@ -39,7 +39,8 @@ class internal_run implements pts_option_interface
 			'PromptForTestDescription' => true,
 			'RunAllTestCombinations' => false,
 			'PromptSaveName' => true,
-			'PromptForTestIdentifier' => true
+			'PromptForTestIdentifier' => true,
+			'OpenBrowser' => true
 			));
 
 		pts_test_run_manager::standard_run($r, pts_c::batch_mode);
