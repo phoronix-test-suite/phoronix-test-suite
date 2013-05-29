@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2011, Phoronix Media
-	Copyright (C) 2009 - 2011, Michael Larabel
+	Copyright (C) 2009 - 2013, Phoronix Media
+	Copyright (C) 2009 - 2013, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -62,7 +62,7 @@ class extract_from_result_file implements pts_option_interface
 
 		$extract_result = call_user_func_array(array('pts_merge', 'merge_test_results'), $extract_selects);
 		pts_client::save_test_result($extract_to . '/composite.xml', $extract_result);
-		pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . $extract_to . '/composite.xml');
+		pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . $extract_to . '/info.html');
 	}
 }
 

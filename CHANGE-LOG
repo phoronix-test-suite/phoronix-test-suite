@@ -3,6 +3,11 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Add ONLY_TEST_TYPES environment variable for skipping test profiles that don't belong to a certain hardware type
+- pts-core: Ensure extract-from-result-file opens the proper HTML web-browser
+- pts-core: Ensure copy-run-in-result-file opens the proper HTML web-browser
+- pts-core: Ensure reorder-result-file opens the proper HTML web-browser
+- pts-core: Ensure rename-identifier-in-result-file opens the proper HTML web-browser
+- pts-core: Ensure remove-from-result-file opens the proper HTML web-browser
 - phodevi: Add Haswell BMI2 detection
 
 Phoronix Test Suite 4.6.0-Utsira

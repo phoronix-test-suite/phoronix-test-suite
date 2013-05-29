@@ -1509,8 +1509,8 @@ class pts_test_run_manager
 
 		if($valid_test_profile == false && pts_client::read_env('SKIP_ALL_TEST_SUPPORT_CHECKS'))
 		{
-			$valid_test_profile = true;
 			$report_errors && pts_client::$display->test_run_error('SKIP_ALL_TEST_SUPPORT_CHECKS is set for ' . $test_profile . '.');
+			$valid_test_profile = true;
 		}
 
 		return $valid_test_profile;
