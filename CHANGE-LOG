@@ -12,6 +12,7 @@ Phoronix Test Suite (Git)
 - pts-core: Launch the web browser to display results when using internal-run mode
 - phodevi: Add Haswell BMI2 detection
 - phodevi: Support vm_stat with the memory.usage sensor, works on OS X
+- phodevi: Add new network.usage sensor for Apple OS X contributed by ESET
 
 Phoronix Test Suite 4.6.0-Utsira
 
