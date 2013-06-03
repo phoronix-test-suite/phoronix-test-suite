@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2010, Phoronix Media
-	Copyright (C) 2009 - 2010, Michael Larabel
+	Copyright (C) 2009 - 2013, Phoronix Media
+	Copyright (C) 2009 - 2013, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -22,6 +22,8 @@
 
 class memory_usage implements phodevi_sensor
 {
+	private static $page_size = -1;
+
 	public static function get_type()
 	{
 		return 'memory';
@@ -108,6 +110,52 @@ class memory_usage implements phodevi_sensor
 					}
 				}
 			}
+		}
+		else if(pts_client::executable_in_path('vm_stat') != false)
+		{
+			$vmstats = explode("\n", shell_exec('vm_stat 2>&1'));
+			$grab_line = null;
+			// buffers_and_cache
+			foreach($vmstats as $vmstat_line)
+			{
+				$line_parts = pts_strings::colon_explode($vmstat_line);
+
+				if(self::$page_size == -1)
+				{
+					strtok($vmstat_line, ':');
+					$tok = strtok(' ');
+					while(self::$page_size == -1)
+					{
+						if(is_numeric($tok))
+						{
+							self::$page_size = $tok;
+						}
+						else
+						{
+							$tok = strtok(' ');
+						}
+					}
+					continue;
+				}
+				//$line_parts[1] = pts_strings::trim_spaces($line_parts[1]);
+				$line_type = strtok($vmstat_line, ':');
+				$line_value = strtok(' .');
+				if($TYPE == 'MEMORY')
+				{
+					if($line_type == 'Pages active' && $READ == 'USED')
+					{
+						$mem_usage = $line_value / (1048576 / self::$page_size);
+						break;
+					}
+					if($line_type == 'Pages free' && $READ == 'FREE')
+					{
+						$mem_usage = $line_value / (1048576 / self::$page_size);
+						break;
+					}
+				}
+
+			}
+			$mem_usage = pts_math::set_precision($mem_usage);
 		}
 
 		return $mem_usage;

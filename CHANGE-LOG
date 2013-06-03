@@ -11,6 +11,7 @@ Phoronix Test Suite (Git)
 - pts-core: Reworked handling of browser launching in batch mode
 - pts-core: Launch the web browser to display results when using internal-run mode
 - phodevi: Add Haswell BMI2 detection
+- phodevi: Support vm_stat with the memory.usage sensor, works on OS X
 
 Phoronix Test Suite 4.6.0-Utsira
 
