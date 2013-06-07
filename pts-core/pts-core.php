@@ -109,12 +109,13 @@ function pts_version_codenames()
 		'4.0' => 'Suldal',
 		'4.2' => 'Randaberg',
 		'4.4' => 'Forsand',
-		'4.6' => 'Utsira'
+		'4.6' => 'Utsira',
+		'4.8' => 'Sokndal'
 		);
 }
 
-pts_define('PTS_VERSION', '4.6.0');
-pts_define('PTS_CORE_VERSION', 4600);
+pts_define('PTS_VERSION', '4.6.1');
+pts_define('PTS_CORE_VERSION', 4610);
 pts_define('PTS_CODENAME', 'UTSIRA');
 pts_define('PTS_IS_CLIENT', (defined('PTS_MODE') && PTS_MODE == 'CLIENT'));
 pts_define('PTS_IS_DEV_BUILD', (substr(PTS_VERSION, -2, 1) == 'm'));

@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 4.6.1-Utsira
+6 June 2013
 
 - pts-core: Add ONLY_TEST_TYPES environment variable for skipping test profiles that don't belong to a certain hardware type
 - pts-core: Ensure extract-from-result-file opens the proper HTML web-browser
@@ -15,6 +16,7 @@ Phoronix Test Suite (Git)
 - phodevi: Add new network.usage sensor for Apple OS X contributed by ESET
 
 Phoronix Test Suite 4.6.0-Utsira
+21 May 2013
 
 - phodevi: Report CPU scaling driver along side the CPU scaling governor
 
