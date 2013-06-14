@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- pts-core: Don't show null error strings on failed test installations
+
 Phoronix Test Suite 4.6.1-Utsira
 6 June 2013
 

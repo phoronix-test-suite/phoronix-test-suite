@@ -42,6 +42,11 @@ class phodevi_chipset extends phodevi_device_interface
 		{
 			$sb_vendor = phodevi_osx_parser::read_osx_system_profiler('SPSerialATADataType', 'Vendor');
 			$sb_product = phodevi_osx_parser::read_osx_system_profiler('SPSerialATADataType', 'Product');
+
+			if($sb_product == 'SSD')
+			{
+				$sb_product = null;
+			}
 		
 			if(($cut_point = strpos($sb_product, ' ')) > 0)
 			{

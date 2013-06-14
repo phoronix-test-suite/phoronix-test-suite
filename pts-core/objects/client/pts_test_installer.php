@@ -717,7 +717,11 @@ class pts_test_installer
 						if($install_error != null)
 						{
 							$test_install_request->install_error = pts_tests::pretty_error_string($install_error);
-							pts_client::$display->test_install_error('ERROR: ' . $test_install_request->install_error);
+
+							if($test_install_request->install_error != null)
+							{
+								pts_client::$display->test_install_error('ERROR: ' . $test_install_request->install_error);
+							}
 						}
 						pts_client::$display->test_install_error('LOG: ' . str_replace(pts_client::user_home_directory(), '~/', $test_install_directory) . 'install-failed.log' . PHP_EOL);
 
