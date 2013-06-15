@@ -334,11 +334,7 @@ class pts_test_result_parser
 
 						if(count($min = $test_result->test_result_buffer->get_min_values()) > 0)
 						{
-							$min = pts_math::set_precision(min($min), 2);
-							if(!$is_float || round($min) == $min)
-							{
-								$min = round($min);
-							}
+							$min = round(min($min), 2);
 
 							if($min < $END_RESULT && is_numeric($min) && $min != 0)
 							{
@@ -347,11 +343,7 @@ class pts_test_result_parser
 						}
 						if(count($max = $test_result->test_result_buffer->get_max_values()) > 0)
 						{
-							$max = pts_math::set_precision(max($max), 2);
-							if(!$is_float || round($max) == $max)
-							{
-								$min = round($max);
-							}
+							$max = round(max($max), 2);
 
 							if($max > $END_RESULT && is_numeric($max) && $max != 0)
 							{

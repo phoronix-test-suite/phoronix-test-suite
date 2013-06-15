@@ -164,7 +164,14 @@ abstract class pts_Graph
 	}
 	public function addGraphIdentifierNote($identifier, $note)
 	{
-		$this->d['identifier_notes'][$identifier] = $note;
+		if(!isset($this->d['identifier_notes'][$identifier]) || empty($this->d['identifier_notes'][$identifier]))
+		{
+			$this->d['identifier_notes'][$identifier] = $note;
+		}
+		else
+		{
+			$this->d['identifier_notes'][$identifier] .= ' - ' . $note;
+		}
 	}
 	public function hideGraphIdentifiers()
 	{

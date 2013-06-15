@@ -477,7 +477,14 @@ class pts_render
 			return false;
 		}
 
-		$compiler_options_string = '(' . strtoupper($unique_compiler_data[0]['compiler-type']) . ') ' . $unique_compiler_data[0]['compiler'] . ' options: ';
+		if(isset($unique_compiler_data[0]['compiler-type']) && isset($unique_compiler_data[0]['compiler']))
+		{
+			$compiler_options_string = '(' . strtoupper($unique_compiler_data[0]['compiler-type']) . ') ' . $unique_compiler_data[0]['compiler'] . ' options: ';
+		}
+		else
+		{
+			$compiler_options_string = null;
+		}
 
 		switch(count($unique_compiler_data))
 		{
@@ -543,6 +550,15 @@ class pts_render
 					}
 				}
 				break;
+		}
+
+		foreach($json as $identifier => &$data)
+		{
+			// TODO XXX: Ultimately merge this data into the SE +/- line...
+			if(isset($data['min-result']) && isset($data['max-result']))
+			{
+				$graph->addGraphIdentifierNote($identifier, 'MIN: ' . $data['min-result'] . ' / MAX: ' . $data['max-result']);
+			}
 		}
 	}
 	public static function evaluate_redundant_identifier_words($identifiers)
