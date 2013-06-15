@@ -227,7 +227,7 @@ class pts_test_execution
 					}
 					else
 					{
-						$test_run_request->test_result_buffer->add_test_result(null, $test_run_request->active_result, null);
+						$test_run_request->test_result_buffer->add_test_result(null, $test_run_request->active_result, null, null, $test_run_request->active_min_result, $test_run_request->active_max_result);
 					}
 				}
 				else if($test_run_request->test_profile->get_display_format() != 'NO_RESULT')
