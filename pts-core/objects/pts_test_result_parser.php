@@ -334,7 +334,7 @@ class pts_test_result_parser
 
 						if(count($min = $test_result->test_result_buffer->get_min_values()) > 0)
 						{
-							$min = pts_math::set_precision(array_sum($min) / count($min), 2);
+							$min = pts_math::set_precision(min($min), 2);
 							if(!$is_float)
 							{
 								$min = round($min);
@@ -347,7 +347,7 @@ class pts_test_result_parser
 						}
 						if(count($max = $test_result->test_result_buffer->get_max_values()) > 0)
 						{
-							$max = pts_math::set_precision(array_sum($max) / count($max), 2);
+							$max = pts_math::set_precision(max($max), 2);
 							if(!$is_float)
 							{
 								$min = round($max);
