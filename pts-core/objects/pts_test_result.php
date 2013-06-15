@@ -31,6 +31,8 @@ class pts_test_result
 	public $test_profile;
 	public $test_result_buffer;
 
+	public $active_result = null;
+
 	public function __construct(&$test_profile)
 	{
 		$this->test_profile = $test_profile;

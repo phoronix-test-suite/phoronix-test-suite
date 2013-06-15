@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2012, Phoronix Media
-	Copyright (C) 2010 - 2012, Michael Larabel
+	Copyright (C) 2010 - 2013, Phoronix Media
+	Copyright (C) 2010 - 2013, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -205,24 +205,26 @@ class pts_test_result_parser
 		switch($test_run_request->test_profile->get_display_format())
 		{
 			case 'IMAGE_COMPARISON':
-				$test_result = self::parse_iqc_result($test_run_request->test_profile, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments);
+				$test_run_request->active_result = self::parse_iqc_result($test_run_request->test_profile, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments);
 				break;
 			case 'PASS_FAIL':
 			case 'MULTI_PASS_FAIL':
-				$test_result = self::parse_generic_result($test_identifier, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments);
+				$test_run_request->active_result = self::parse_generic_result($test_identifier, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments);
 				break;
 			case 'BAR_GRAPH':
 			default:
-				$test_result = self::parse_numeric_result($test_identifier, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments);
+				$test_run_request->active_result = self::parse_numeric_result($test_identifier, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments);
 
-				if($test_run_request->test_profile->get_display_format() == 'BAR_GRAPH' && !is_numeric($test_result))
+				if($test_run_request->test_profile->get_display_format() == 'BAR_GRAPH' && !is_numeric($test_run_request->active_result))
 				{
-					$test_result = false;
+					$test_run_request->active_result = false;
+				}
+				else
+				{
+
 				}
 				break;
 		}
-
-		return $test_result;
 	}
 	public static function calculate_end_result(&$test_result)
 	{
@@ -390,15 +392,15 @@ class pts_test_result_parser
 
 		return $test_result;
 	}
-	protected static function parse_numeric_result($test_identifier, $parse_xml_file, $log_file, $pts_test_arguments, $extra_arguments)
+	protected static function parse_numeric_result($test_identifier, $parse_xml_file, $log_file, $pts_test_arguments, $extra_arguments, $prefix = null)
 	{
-		return self::parse_result_process($test_identifier, $parse_xml_file, $log_file, $pts_test_arguments, $extra_arguments, true);
+		return self::parse_result_process($test_identifier, $parse_xml_file, $log_file, $pts_test_arguments, $extra_arguments, true, $prefix);
 	}
-	protected static function parse_generic_result($test_identifier, $parse_xml_file, $log_file, $pts_test_arguments, $extra_arguments)
+	protected static function parse_generic_result($test_identifier, $parse_xml_file, $log_file, $pts_test_arguments, $extra_arguments, $prefix = null)
 	{
-		return self::parse_result_process($test_identifier, $parse_xml_file, $log_file, $pts_test_arguments, $extra_arguments, false);
+		return self::parse_result_process($test_identifier, $parse_xml_file, $log_file, $pts_test_arguments, $extra_arguments, false, $prefix);
 	}
-	protected static function parse_result_process($test_identifier, $parse_xml_file, $log_file, $pts_test_arguments, $extra_arguments, $is_numeric_check = true)
+	protected static function parse_result_process($test_identifier, $parse_xml_file, $log_file, $pts_test_arguments, $extra_arguments, $is_numeric_check = true, $prefix = null)
 	{
 		$results_parser_xml = new pts_parse_results_nye_XmlReader($parse_xml_file);
 		$result_match_test_arguments = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/ResultsParser/MatchToTestArguments');
@@ -415,6 +417,11 @@ class pts_test_result_parser
 		$multi_match = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/ResultsParser/MultiMatch');
 		$test_result = false;
 
+		if($prefix != null && substr($prefix, -1) != '_')
+		{
+			$prefix .= '_';
+		}
+
 		for($i = 0; $i < count($result_template); $i++)
 		{
 			if(!empty($result_match_test_arguments[$i]) && strpos($pts_test_arguments, $result_match_test_arguments[$i]) === false)
@@ -425,23 +432,30 @@ class pts_test_result_parser
 
 			if($result_key[$i] == null)
 			{
-				$result_key[$i] = '#_RESULT_#';
+				$result_key[$i] = '#_' . $prefix . 'RESULT_#';
 			}
 			else
 			{
 				switch($result_key[$i])
 				{
 					case 'PTS_TEST_ARGUMENTS':
-						$result_key[$i] = '#_' . str_replace(' ', '', $pts_test_arguments) . '_#';
+						$result_key[$i] = '#_' . $prefix . str_replace(' ', '', $pts_test_arguments) . '_#';
 						break;
 					case 'PTS_USER_SET_ARGUMENTS':
-						$result_key[$i] = '#_' . str_replace(' ', '', $extra_arguments) . '_#';
+						$result_key[$i] = '#_' . $prefix . str_replace(' ', '', $extra_arguments) . '_#';
 						break;
 				}
 			}
 
 			// The actual parsing here
 			$start_result_pos = strrpos($result_template[$i], $result_key[$i]);
+
+			if($prefix != null && $start_result_pos === false)
+			{
+				// XXX: technically the $prefix check shouldn't be needed, verify whether safe to have this check be unconditional on start_result_pos failing...
+				return false;
+			}
+
 			$end_result_pos = $start_result_pos + strlen($result_key[$i]);
 			$end_result_line_pos = strpos($result_template[$i], "\n", $end_result_pos);
 			$result_template_line = substr($result_template[$i], 0, ($end_result_line_pos === false ? strlen($result_template[$i]) : $end_result_line_pos));

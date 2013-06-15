@@ -199,18 +199,18 @@ class pts_test_execution
 			{
 				if(isset($monitor_result) && $monitor_result != 0)
 				{
-					$test_result = $monitor_result;
+					$test_run_request->active_result = $monitor_result;
 				}
 				else
 				{
-					$test_result = pts_test_result_parser::parse_result($test_run_request, $test_extra_runtime_variables['LOG_FILE']);
+					pts_test_result_parser::parse_result($test_run_request, $test_extra_runtime_variables['LOG_FILE']);
 				}
 
-				pts_client::test_profile_debug_message('Test Result Value: ' . $test_result);
+				pts_client::test_profile_debug_message('Test Result Value: ' . $test_run_request->active_result);
 
-				if(!empty($test_result))
+				if(!empty($test_run_request->active_result))
 				{
-					if($test_run_time < 3 && intval($test_result) == $test_result && $test_run_request->test_profile->get_estimated_run_time() > 60)
+					if($test_run_time < 3 && intval($test_run_request->active_result) == $test_run_request->active_result && $test_run_request->test_profile->get_estimated_run_time() > 60)
 					{
 						// If the test ended in less than 3 seconds, outputted some int, and normally the test takes much longer, then it's likely some invalid run
 						pts_client::$display->test_run_instance_error('The test run ended prematurely.');
@@ -227,7 +227,7 @@ class pts_test_execution
 					}
 					else
 					{
-						$test_run_request->test_result_buffer->add_test_result(null, $test_result, null);
+						$test_run_request->test_result_buffer->add_test_result(null, $test_run_request->active_result, null);
 					}
 				}
 				else if($test_run_request->test_profile->get_display_format() != 'NO_RESULT')
@@ -247,7 +247,7 @@ class pts_test_execution
 
 				if($allow_cache_share && !is_file($cache_share_pt2so))
 				{
-					$cache_share->add_object('test_results_output_' . $i, $test_result);
+					$cache_share->add_object('test_results_output_' . $i, $test_run_request->active_result);
 					$cache_share->add_object('log_file_location_' . $i, $test_extra_runtime_variables['LOG_FILE']);
 					$cache_share->add_object('log_file_' . $i, (is_file($test_log_file) ? file_get_contents($test_log_file) : null));
 				}

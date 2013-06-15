@@ -198,7 +198,7 @@
 		</Package>
 		<Package>
 			<GenericName>boost-development</GenericName>
-			<PackageName>libboost-all-dev libasio-dev</PackageName>
+			<PackageName>libboost-all-dev libasio-dev libboost-iostreams-dev</PackageName>
 			<FileCheck>boost/regex.hpp, boost/iostreams/write.hpp</FileCheck>
 		</Package>
 		<Package>
