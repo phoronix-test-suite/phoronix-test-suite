@@ -85,7 +85,7 @@ class cpu_freq implements phodevi_sensor
 			}
 		}
 
-		return pts_math::set_precision($info, 2);
+		return pts_math::set_precision(($info * 1000), 2);
 	}
 }
 
