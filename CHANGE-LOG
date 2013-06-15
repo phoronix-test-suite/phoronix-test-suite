@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Don't show null error strings on failed test installations
+- pts-core: Allow test profiles to pass min/max data results through JSON to graphs using MIN_ and MAX_ prefixes
 
 Phoronix Test Suite 4.6.1-Utsira
 6 June 2013

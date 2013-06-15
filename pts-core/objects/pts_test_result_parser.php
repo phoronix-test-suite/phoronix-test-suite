@@ -221,7 +221,8 @@ class pts_test_result_parser
 				}
 				else
 				{
-
+					$test_run_request->active_min_result = self::parse_numeric_result($test_identifier, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments, 'MIN');
+					$test_run_request->active_max_result = self::parse_numeric_result($test_identifier, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments, 'MAX');
 				}
 				break;
 		}
@@ -329,6 +330,33 @@ class pts_test_result_parser
 						if(!$is_float)
 						{
 							$END_RESULT = round($END_RESULT);
+						}
+
+						if(count($min = $test_result->test_result_buffer->get_min_values()) > 0)
+						{
+							$min = pts_math::set_precision(array_sum($min) / count($min), 2);
+							if(!$is_float)
+							{
+								$min = round($min);
+							}
+
+							if($min < $END_RESULT && is_numeric($min) && $min != 0)
+							{
+								$test_result->set_min_result($min);
+							}
+						}
+						if(count($max = $test_result->test_result_buffer->get_max_values()) > 0)
+						{
+							$max = pts_math::set_precision(array_sum($max) / count($max), 2);
+							if(!$is_float)
+							{
+								$min = round($max);
+							}
+
+							if($max > $END_RESULT && is_numeric($max) && $max != 0)
+							{
+								$test_result->set_max_result($max);
+							}
 						}
 						break;
 				}

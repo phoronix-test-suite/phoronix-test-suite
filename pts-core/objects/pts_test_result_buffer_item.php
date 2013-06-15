@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2012, Phoronix Media
-	Copyright (C) 2009 - 2012, Michael Larabel
+	Copyright (C) 2009 - 2013, Phoronix Media
+	Copyright (C) 2009 - 2013, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -26,12 +26,16 @@ class pts_test_result_buffer_item
 	private $result_final;
 	private $result_raw;
 	private $result_json;
+	private $result_min;
+	private $result_max;
 
-	public function __construct($identifier, $final, $raw = null, $json = null)
+	public function __construct($identifier, $final, $raw = null, $json = null, $min_value = null, $max_value = null)
 	{
 		$this->result_identifier = $identifier;
 		$this->result_final = $final;
 		$this->result_raw = $raw;
+		$this->result_min = $min_value;
+		$this->result_max = $max_value;
 
 		if($json && !is_array($json))
 		{
@@ -58,6 +62,14 @@ class pts_test_result_buffer_item
 	public function get_result_value()
 	{
 		return $this->result_final;
+	}
+	public function get_min_result_value()
+	{
+		return $this->result_min;
+	}
+	public function get_max_result_value()
+	{
+		return $this->result_max;
 	}
 	public function get_result_raw()
 	{

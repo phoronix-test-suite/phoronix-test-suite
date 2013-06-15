@@ -615,6 +615,14 @@ class pts_test_run_manager
 					{
 						$json_report_attributes['compiler-options'] = $t;
 					}
+					if(($t = $test_run_request->get_min_result()) != 0)
+					{
+						$json_report_attributes['min-result'] = $t;
+					}
+					if(($t = $test_run_request->get_max_result()) != 0)
+					{
+						$json_report_attributes['max-result'] = $t;
+					}
 
 					$this->result_file_writer->add_result_from_result_object_with_value_string($test_run_request, $test_run_request->get_result(), $test_run_request->test_result_buffer->get_values_as_string(), $json_report_attributes);
 

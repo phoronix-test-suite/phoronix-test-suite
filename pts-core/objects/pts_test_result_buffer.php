@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2012, Phoronix Media
-	Copyright (C) 2009 - 2012, Michael Larabel
+	Copyright (C) 2009 - 2013, Phoronix Media
+	Copyright (C) 2009 - 2013, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -57,9 +57,9 @@ class pts_test_result_buffer
 	{
 		return isset($this->buffer_items[$i]) ? $this->buffer_items[$i] : false;
 	}
-	public function add_test_result($identifier, $value, $raw_value = null, $json = null)
+	public function add_test_result($identifier, $value, $raw_value = null, $json = null, $min_value = null, $max_value = null)
 	{
-		array_push($this->buffer_items, new pts_test_result_buffer_item($identifier, $value, $raw_value, $json));
+		array_push($this->buffer_items, new pts_test_result_buffer_item($identifier, $value, $raw_value, $json, $min_value, $max_value));
 	}
 	public function clear_outlier_results($add_to_other = true, $value_below = false)
 	{
@@ -134,6 +134,34 @@ class pts_test_result_buffer
 		foreach($this->buffer_items as &$buffer_item)
 		{
 			array_push($values, $buffer_item->get_result_value());
+		}
+
+		return $values;
+	}
+	public function get_min_values()
+	{
+		$values = array();
+
+		foreach($this->buffer_items as &$buffer_item)
+		{
+			if(($min = $buffer_item->get_min_result_value()) != null)
+			{
+				array_push($values, $min);
+			}
+		}
+
+		return $values;
+	}
+	public function get_max_values()
+	{
+		$values = array();
+
+		foreach($this->buffer_items as &$buffer_item)
+		{
+			if(($max = $buffer_item->get_max_result_value()) != null)
+			{
+				array_push($values, $max);
+			}
 		}
 
 		return $values;
