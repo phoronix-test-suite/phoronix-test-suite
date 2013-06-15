@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2012, Phoronix Media
-	Copyright (C) 2009 - 2012, Michael Larabel
+	Copyright (C) 2009 - 2013, Phoronix Media
+	Copyright (C) 2009 - 2013, Michael Larabel
 	pts_concise_display_mode.php: The batch / concise display mode
 
 	This program is free software; you can redistribute it and/or modify
@@ -364,6 +364,15 @@ class pts_concise_display_mode implements pts_display_mode_interface
 			}
 
 			$end_print .= PHP_EOL . $this->tab . pts_strings::result_quantifier_to_string($test_result->test_profile->get_result_quantifier()) . ': ' . $test_result->get_result() . ' ' . $test_result->test_profile->get_result_scale();
+
+			if($test_result->get_min_result())
+			{
+				$end_print .= PHP_EOL . $this->tab . 'Minimum: ' . $test_result->get_min_result();
+			}
+			if($test_result->get_max_result())
+			{
+				$end_print .= PHP_EOL . $this->tab . 'Maximum: ' . $test_result->get_max_result();
+			}
 
 			if($test_result->get_result() == 0)
 			{
