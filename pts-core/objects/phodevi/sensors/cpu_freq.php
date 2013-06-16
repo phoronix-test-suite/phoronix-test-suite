@@ -83,9 +83,14 @@ class cpu_freq implements phodevi_sensor
 				$info = substr($info, 0, $cut_point);
 				$info = str_replace(',', '.', $info);
 			}
+
+			if($info < 100)
+			{
+				$info *= 1000;
+			}
 		}
 
-		return pts_math::set_precision(($info * 1000), 2);
+		return pts_math::set_precision($info, 2);
 	}
 }
 

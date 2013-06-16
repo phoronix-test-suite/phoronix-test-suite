@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2012, Phoronix Media
-	Copyright (C) 2009 - 2012, Michael Larabel
+	Copyright (C) 2009 - 2013, Phoronix Media
+	Copyright (C) 2009 - 2013, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -206,7 +206,20 @@ class sys_power implements phodevi_sensor
 		{
 			$amperage = abs(phodevi_osx_parser::read_osx_system_profiler('SPPowerDataType', 'Amperage')); // in mA
 			$voltage = phodevi_osx_parser::read_osx_system_profiler('SPPowerDataType', 'Voltage'); // in mV
-			$rate = round(($amperage * $voltage) / 1000);
+
+			if($amperage > 0 && $voltage > 0)
+			{
+				$rate = round(($amperage * $voltage) / 1000);
+			}
+			else if(pts_client::executable_in_path('ioreg'))
+			{
+				$ioreg = trim(shell_exec("ioreg -l | grep LegacyBatteryInfo | cut -d '{' -f 2 | tr -d \} | tr ',' '=' | awk -F'=' '{print ($2*$10/10^22)}' 2>&1"));
+
+				if(is_numeric($ioreg) && $ioreg > 0)
+				{
+					$rate = $ioreg;
+				}
+			}
 		}
 		else if(phodevi::is_solaris())
 		{
