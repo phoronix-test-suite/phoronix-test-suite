@@ -60,11 +60,21 @@ class phodevi_monitor extends phodevi_device_interface
 		else if(isset(phodevi::$vfs->xorg_log))
 		{
 			$log_parse = phodevi::$vfs->xorg_log;
-			if(($monitor_name = strpos($log_parse, 'Monitor name:')))
+			$offset = 0;
+			$monitor = array();
+
+			while(($monitor_name = strpos($log_parse, 'Monitor name:', $offset)) !== false)
 			{
 				$log_parse = substr($log_parse, $monitor_name + 14);
-				$monitor = trim(substr($log_parse, 0, strpos($log_parse, "\n")));
+				$m = trim(substr($log_parse, 0, strpos($log_parse, "\n")));
+
+				if(!empty($m))
+				{
+					array_push($monitor, $m);
+				}
 			}
+
+			$monitor = implode(' + ', $monitor);
 		}
 
 		return empty($monitor) ? false : $monitor;
