@@ -476,11 +476,18 @@ class pts_test_result_parser
 				return false;
 			}
 
+			$space_out_chars = array('(', ')', "\t");
+
+			if((isset($result_template[$i][($start_result_pos - 1)]) && $result_template[$i][($start_result_pos - 1)] == '/') || (isset($result_template[$i][($start_result_pos + strlen($result_key[$i]))]) && $result_template[$i][($start_result_pos + strlen($result_key[$i]))] == '/'))
+			{
+				array_push($space_out_chars, '/');
+			}
+
 			$end_result_pos = $start_result_pos + strlen($result_key[$i]);
 			$end_result_line_pos = strpos($result_template[$i], "\n", $end_result_pos);
 			$result_template_line = substr($result_template[$i], 0, ($end_result_line_pos === false ? strlen($result_template[$i]) : $end_result_line_pos));
 			$result_template_line = substr($result_template_line, strrpos($result_template_line, "\n"));
-			$result_template_r = explode(' ', pts_strings::trim_spaces(str_replace(array('(', ')', "\t"), ' ', str_replace('=', ' = ', $result_template_line))));
+			$result_template_r = explode(' ', pts_strings::trim_spaces(str_replace($space_out_chars, ' ', str_replace('=', ' = ', $result_template_line))));
 			$result_template_r_pos = array_search($result_key[$i], $result_template_r);
 
 			if($result_template_r_pos === false)
@@ -499,15 +506,15 @@ class pts_test_result_parser
 			$search_key = null;
 			$line_before_key = null;
 
-			if($result_line_hint[$i] != null && strpos($result_template_line, $result_line_hint[$i]) !== false)
+			if(isset($result_line_hint[$i]) && $result_line_hint[$i] != null && strpos($result_template_line, $result_line_hint[$i]) !== false)
 			{
 				$search_key = $result_line_hint[$i];
 			}
-			else if($result_line_before_hint[$i] != null && strpos($result_template[$i], $result_line_hint[$i]) !== false)
+			else if(isset($result_line_before_hint[$i]) && $result_line_before_hint[$i] != null && strpos($result_template[$i], $result_line_hint[$i]) !== false)
 			{
 				$search_key = null; // doesn't really matter what this value is
 			}
-			else if($result_line_after_hint[$i] != null && strpos($result_template[$i], $result_line_hint[$i]) !== false)
+			else if(isset($result_line_after_hint[$i]) && $result_line_after_hint[$i] != null && strpos($result_template[$i], $result_line_hint[$i]) !== false)
 			{
 				$search_key = null; // doesn't really matter what this value is
 			}
@@ -523,7 +530,7 @@ class pts_test_result_parser
 					}
 				}
 
-				if($search_key == null)
+				if($search_key == null && isset($result_key[$i]))
 				{
 					// Just try searching for the first part of the string
 					/*
@@ -550,7 +557,7 @@ class pts_test_result_parser
 
 			$test_results = array();
 
-			if($search_key != null || $result_line_before_hint[$i] != null || $result_line_after_hint[$i] != null || $result_template_r[0] == $result_key[$i])
+			if($search_key != null || (isset($result_line_before_hint[$i]) && $result_line_before_hint[$i] != null) || (isset($result_line_after_hint[$i]) && $result_line_after_hint[$i]) != null || (isset($result_key[$i]) && $result_template_r[0] == $result_key[$i]))
 			{
 				$is_multi_match = !empty($multi_match[$i]) && $multi_match[$i] != 'NONE';
 
@@ -587,10 +594,9 @@ class pts_test_result_parser
 						pts_client::test_profile_debug_message('No Result Parsing Hint, Including Entire Result Output');
 						$result_line = trim($result_output);
 					}
-
 					pts_client::test_profile_debug_message('Result Line: ' . $result_line);
 
-					$result_r = explode(' ', pts_strings::trim_spaces(str_replace(array('(', ')', "\t"), ' ', str_replace('=', ' = ', $result_line))));
+					$result_r = explode(' ', pts_strings::trim_spaces(str_replace($space_out_chars, ' ', str_replace('=', ' = ', $result_line))));
 					$result_r_pos = array_search($result_key[$i], $result_r);
 
 					if(!empty($result_before_string[$i]))
