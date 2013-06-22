@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2012, Phoronix Media
-	Copyright (C) 2008 - 2012, Michael Larabel
+	Copyright (C) 2008 - 2013, Phoronix Media
+	Copyright (C) 2008 - 2013, Michael Larabel
 	phodevi_linux_parser.php: General parsing functions specific to Linux
 
 	This program is free software; you can redistribute it and/or modify
@@ -575,6 +575,11 @@ class phodevi_linux_parser
 			{
 				$info = substr($output, $pos + strlen($desc) + 1);
 				$info = trim(substr($info, 0, strpos($info, "\n")));
+			}
+
+			if(strtolower($info) == 'n/a')
+			{
+				$info = false;
 			}
 		}
 

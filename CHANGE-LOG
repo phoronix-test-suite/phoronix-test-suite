@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- phodevi: Don't return "n/a" from LSB release strings
+
 Phoronix Test Suite 4.8 Milestone 1
 20 June 2013
 

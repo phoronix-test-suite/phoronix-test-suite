@@ -368,7 +368,7 @@ class pts_test_installer
 								{
 									if(count($package_urls) > 0 && $package_urls[0] != null)
 									{
-										pts_client::$display->test_install_error('Attempting to re-download from another mirror.');
+										pts_client::$display->test_install_error('Attempting to download from alternate mirror.');
 										$try_again = true;
 									}
 									else
