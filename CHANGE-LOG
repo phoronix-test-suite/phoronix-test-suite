@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+- pts-core: Expand Mandriva Linux external dependency support to distributions having urpmi
 - phodevi: Don't return "n/a" from LSB release strings
 
 Phoronix Test Suite 4.8 Milestone 1

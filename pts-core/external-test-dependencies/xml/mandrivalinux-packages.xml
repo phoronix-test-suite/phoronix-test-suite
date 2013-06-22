@@ -5,6 +5,7 @@
 		<Information>
 			<Name>Mandriva</Name>
 			<Aliases>Mageia, OpenMandriva</Aliases>
+			<PackageManager>urpmi</PackageManager>
 		</Information>
 		<Package>
 			<GenericName>gtk-development</GenericName>
