@@ -4,6 +4,7 @@ Phoronix Test Suite (Git)
 
 - pts-core: Expand Mandriva Linux external dependency support to distributions having urpmi
 - phodevi: Don't return "n/a" from LSB release strings
+- phodevi: IceWM window manager detection
 
 Phoronix Test Suite 4.8 Milestone 1
 20 June 2013

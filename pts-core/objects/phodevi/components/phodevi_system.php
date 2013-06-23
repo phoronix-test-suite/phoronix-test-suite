@@ -1060,6 +1060,11 @@ class phodevi_system extends phodevi_device_interface
 			$desktop_environment = 'Razor-qt';
 			$desktop_version = null; // TODO: Figure out how to determine razor version
 		}
+		else if(pts_client::is_process_running('icewm'))
+		{
+			$desktop_environment = 'IceWM';
+			$desktop_version = null;
+		}
 
 		if(!empty($desktop_environment))
 		{
