@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Expand Mandriva Linux external dependency support to distributions having urpmi
+- pts-core: Add Apple OS X font paths for use by the GD graph renderer
 - phodevi: Don't return "n/a" from LSB release strings
 - phodevi: IceWM window manager detection
 
