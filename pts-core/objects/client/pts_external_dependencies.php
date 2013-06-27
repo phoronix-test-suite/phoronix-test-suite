@@ -331,7 +331,7 @@ class pts_external_dependencies
 					else if(strpos($file[$i], '.so') !== false || substr($file[$i], -2) == '.a')
 					{
 						// May just be a relative shared library to look for...
-						$possible_paths = array('/usr/local/lib/', '/usr/lib/', '/usr/lib/x86_64-linux-gnu/', '/usr/lib/i386-linux-gnu/', '/usr/lib/arm-linux-gnueabihf/');
+						$possible_paths = array('/usr/local/lib/', '/usr/lib/', '/usr/lib64/', '/usr/lib/x86_64-linux-gnu/', '/usr/lib/i386-linux-gnu/', '/usr/lib/arm-linux-gnueabihf/');
 
 						if(getenv('LD_LIBRARY_PATH'))
 						{
