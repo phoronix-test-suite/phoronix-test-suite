@@ -8,6 +8,7 @@ Phoronix Test Suite (Git)
 - phodevi: Don't return "n/a" from LSB release strings
 - phodevi: IceWM window manager detection
 - phodevi: Add gpu.temp safety check to prevent against AMD Catalyst OverDrive sending garbage
+- phodevi: Fix for XRandR resolution query on XMir
 
 Phoronix Test Suite 4.8 Milestone 1
 20 June 2013

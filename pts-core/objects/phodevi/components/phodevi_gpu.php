@@ -316,13 +316,17 @@ class phodevi_gpu extends phodevi_device_interface
 			if(strpos($info, '*') !== false)
 			{
 				$res = pts_strings::trim_explode('x', $info);
-				$res[0] = substr($res[0], strrpos($res[0], ' '));
-				$res[1] = substr($res[1], 0, strpos($res[1], ' '));
-				$res = array_map('trim', $res);
 
-				if(is_numeric($res[0]) && is_numeric($res[1]))
+				if(isset($res[1]))
 				{
-					$resolution = array($res[0], $res[1]);
+					$res[0] = substr($res[0], strrpos($res[0], ' '));
+					$res[1] = substr($res[1], 0, strpos($res[1], ' '));
+					$res = array_map('trim', $res);
+
+					if(is_numeric($res[0]) && is_numeric($res[1]))
+					{
+						$resolution = array($res[0], $res[1]);
+					}
 				}
 			}
 		}
