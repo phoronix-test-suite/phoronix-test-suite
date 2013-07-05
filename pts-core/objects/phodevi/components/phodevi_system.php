@@ -913,6 +913,11 @@ class phodevi_system extends phodevi_device_interface
 			$os = phodevi_osx_parser::read_osx_system_profiler('SPSoftwareDataType', 'SystemVersion');
 		}
 
+		if(($break_point = strpos($os, '(')) > 0)
+		{
+			$os = substr($os, 0, $break_point);
+		}
+
 		$os = trim($os);
 
 		return $os;
