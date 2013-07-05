@@ -467,6 +467,28 @@ class phodevi_system extends phodevi_device_interface
 			$virtualized = ucwords($type) . ' ' . implode('', $version) . ' Hypervisor';
 		}
 
+		if($systemd_virt = pts_client::executable_in_path('systemd-detect-virt'))
+		{
+			$systemd_virt = trim(shell_exec($systemd_virt . ' 2> /dev/null'));
+
+			if($systemd_virt != null && $systemd_virt != 'none')
+			{
+				if($systemd_virt == 'kvm')
+				{
+					$systemd_virt = 'KVM';
+				}
+
+				if($virtualized != null && stripos($virtualized, $systed_virt) == false)
+				{
+					$virtualized = $systemd_virt . ' ' . $virtualized;
+				}
+				else
+				{
+					$virtualized = $systemd_virt;
+				}
+			}
+		}
+
 		return $virtualized;
 	}
 	public static function sw_compiler()
@@ -1171,7 +1193,7 @@ class phodevi_system extends phodevi_device_interface
 		{
 			$driver_version = phodevi_parser::read_xorg_module_version($display_driver . '_drv');
 
-			if($driver_version == false || $driver_version == '1.0.0')
+			if($driver_version == false || $driver_version == '1.0.0' || $driver_version == '0.0.0')
 			{
 				switch($display_driver)
 				{
