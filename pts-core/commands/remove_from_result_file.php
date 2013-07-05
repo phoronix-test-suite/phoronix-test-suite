@@ -44,12 +44,12 @@ class remove_from_result_file implements pts_option_interface
 			return false;
 		}
 
-		$remove_identifier = pts_user_io::prompt_text_menu('Select the test run to remove', $result_file_identifiers);
+		$remove_identifiers = explode(',', pts_user_io::prompt_text_menu('Select the test run(s) to remove', $result_file_identifiers, true));
 		$keep_identifiers = array();
 
 		foreach($result_file_identifiers as $identifier)
 		{
-			if($identifier != $remove_identifier)
+			if(!in_array($identifier, $remove_identifiers))
 			{
 				array_push($keep_identifiers, $identifier);
 			}
@@ -57,9 +57,12 @@ class remove_from_result_file implements pts_option_interface
 
 		foreach(array('test-logs', 'system-logs', 'installation-logs') as $dir_name)
 		{
-			if(is_dir(PTS_SAVE_RESULTS_PATH . $r[0] . '/' . $dir_name . '/' . $remove_identifier))
+			foreach($remove_identifiers as $remove_identifier)
 			{
-				pts_file_io::delete(PTS_SAVE_RESULTS_PATH . $r[0] . '/' . $dir_name . '/' . $remove_identifier, null, true);
+				if(is_dir(PTS_SAVE_RESULTS_PATH . $r[0] . '/' . $dir_name . '/' . $remove_identifier))
+				{
+					pts_file_io::delete(PTS_SAVE_RESULTS_PATH . $r[0] . '/' . $dir_name . '/' . $remove_identifier, null, true);
+				}
 			}
 		}
 
