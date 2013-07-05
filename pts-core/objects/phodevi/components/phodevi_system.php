@@ -478,7 +478,7 @@ class phodevi_system extends phodevi_device_interface
 					$systemd_virt = 'KVM';
 				}
 
-				if($virtualized != null && stripos($virtualized, $systed_virt) === false && stripos($systed_virt, $virtualized) === false)
+				if($virtualized != null && stripos($virtualized, $systemd_virt) === false && stripos($systemd_virt, $virtualized) === false)
 				{
 					$virtualized = $systemd_virt . ' ' . $virtualized;
 				}
