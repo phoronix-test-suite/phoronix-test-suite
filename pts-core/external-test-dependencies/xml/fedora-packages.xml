@@ -190,6 +190,7 @@
 		<Package>
 			<GenericName>openmpi-development</GenericName>
 			<PackageName>openmpi-devel openmpi mpich2-devel</PackageName>
+			<FileCheck>openmpi/lib/libmpi.so</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>yasm</GenericName>

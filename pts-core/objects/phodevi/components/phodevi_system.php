@@ -478,7 +478,7 @@ class phodevi_system extends phodevi_device_interface
 					$systemd_virt = 'KVM';
 				}
 
-				if($virtualized != null && stripos($virtualized, $systed_virt) == false)
+				if($virtualized != null && stripos($virtualized, $systed_virt) === false && stripos($systed_virt, $virtualized) === false)
 				{
 					$virtualized = $systemd_virt . ' ' . $virtualized;
 				}
@@ -1193,7 +1193,7 @@ class phodevi_system extends phodevi_device_interface
 		{
 			$driver_version = phodevi_parser::read_xorg_module_version($display_driver . '_drv');
 
-			if($driver_version == false || $driver_version == '1.0.0' || $driver_version == '0.0.0')
+			if($driver_version == false || $driver_version == '1.0.0')
 			{
 				switch($display_driver)
 				{
@@ -1273,7 +1273,7 @@ class phodevi_system extends phodevi_device_interface
 				}
 			}
 
-			if(!empty($driver_version) && $with_version)
+			if(!empty($driver_version) && $with_version && $driver_version != '0.0.0')
 			{
 				$display_driver .= ' ' . $driver_version;
 
