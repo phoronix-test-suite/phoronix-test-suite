@@ -482,7 +482,7 @@ class phodevi_system extends phodevi_device_interface
 				{
 					$virtualized = $systemd_virt . ' ' . $virtualized;
 				}
-				else
+				else if($virtualized != null)
 				{
 					$virtualized = $systemd_virt;
 				}
