@@ -45,6 +45,17 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	{
 
 	}
+	protected function bytes_to_download_size($bytes)
+	{
+		$mb = pts_math::set_precision($download_size / 1048576, 2);
+
+		if($mb > 99)
+		{
+			$mb = ceil($mb);
+		}
+
+		return $mb;
+	}
 	public function test_install_process($test_install_manager)
 	{
 		$this->test_install_pos = 0;
@@ -91,7 +102,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 
 			if($download_size > 0)
 			{
-				echo ' [' . pts_math::set_precision($download_size / 1048576, 2) . 'MB]';
+				echo ' [' . self::bytes_to_download_size($download_size) . 'MB]';
 			}
 			echo PHP_EOL;
 		}
@@ -102,7 +113,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 
 			if($cache_size > 0)
 			{
-				echo ' [' . pts_math::set_precision($cache_size / 1048576, 2) . 'MB]';
+				echo ' [' . self::bytes_to_download_size($cache_size) . 'MB]';
 			}
 			echo PHP_EOL;
 		}
@@ -129,6 +140,11 @@ class pts_concise_display_mode implements pts_display_mode_interface
 
 		if(($size = $test_install_request->test_profile->get_download_size(false, 1048576)) > 0)
 		{
+			if($size > 99)
+			{
+				$size = ceil($size);
+			}
+
 			echo ' [' . $size . ' MB';
 
 			if(($avg_speed = pts_download_speed_manager::get_average_download_speed()) > 0)
@@ -177,7 +193,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 
 		// TODO: handle if file-name is too long for terminal width
 		$download_string = $this->tab . $this->tab . $process_string . ': ' . $pts_test_file_download->get_filename();
-		$download_size_string = $pts_test_file_download->get_filesize() > 0 ? ' [' . pts_math::set_precision($pts_test_file_download->get_filesize() / 1048576, 2) . 'MB]' : null;
+		$download_size_string = $pts_test_file_download->get_filesize() > 0 ? ' [' . self::bytes_to_download_size($pts_test_file_download->get_filesize()) . 'MB]' : null;
 		$offset_length = pts_client::terminal_width() > 1 ? pts_client::terminal_width() : pts_test_file_download::$longest_file_name_length;
 		$offset_length = $offset_length - strlen($download_string) - strlen($download_size_string) - 2;
 
