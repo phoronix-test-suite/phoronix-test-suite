@@ -36,7 +36,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 		<script type="text/javascript">
 		if(navigator.userAgent.indexOf("Konqueror") >= 0)
 		{
-			document.write("<p>Konqueror generally fails to render the SVG/XSL properly. Please use an alternative web-browser for viewing these results.</p>");
+			document.write("<p style='text-align: center;'>Konqueror generally fails to render the SVG/XSL properly. Please use an alternative web-browser for viewing these results.</p>");
 		}
 		</script>
 		<h1><xsl:value-of select="PhoronixTestSuite/Generated/Title" /></h1>
