@@ -6,6 +6,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add Apple OS X font paths for use by the GD graph renderer
 - pts-core: Add "/usr/lib64/" to the automated external dependency verification path
 - pts-core: Allow passing multiple test identifiers to remove with remove-from-result-file command
+- pts-core: Give a warning when the results viewer opens in the KDE Konqueror web-browser
 - phodevi: Break operating system string at "("
 - phodevi: Don't return "n/a" from LSB release strings
 - phodevi: IceWM window manager detection
