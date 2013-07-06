@@ -3,7 +3,8 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Add few more cases of error detection on failed test install
-- toggle-screensaver: Support doing "xscreensaver-command -exit"
+- toggle-screensaver: Support doing "xscreensaver-command -exit" when needed
+- phodevi: Add more stock fallback display modes
 
 Phoronix Test Suite 4.8 Milestone 2
 6 July 2013
