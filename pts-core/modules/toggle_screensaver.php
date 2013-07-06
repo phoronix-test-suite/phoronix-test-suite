@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2012, Phoronix Media
-	Copyright (C) 2008 - 2012, Michael Larabel
+	Copyright (C) 2008 - 2013, Phoronix Media
+	Copyright (C) 2008 - 2013, Michael Larabel
 	toggle_screensaver.php: A module to toggle the screensaver while tests are running on GNOME
 
 	This program is free software; you can redistribute it and/or modify
@@ -140,6 +140,11 @@ class toggle_screensaver extends pts_module_interface
 		if(($xdg = pts_client::executable_in_path('xdg-screensaver')) == false)
 		{
 			self::$xdg_screensaver_available = $xdg;
+		}
+
+		if(($xscreensaver = pts_client::executable_in_path('xscreensaver-command')))
+		{
+			shell_exec($xscreensaver . ' -exit 2> &1');
 		}
 	}
 	public static function __shutdown()
