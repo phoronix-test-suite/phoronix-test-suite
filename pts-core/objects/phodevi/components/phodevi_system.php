@@ -473,9 +473,14 @@ class phodevi_system extends phodevi_device_interface
 
 			if($systemd_virt != null && $systemd_virt != 'none')
 			{
-				if($systemd_virt == 'kvm')
+				switch($systemd_virt)
 				{
-					$systemd_virt = 'KVM';
+					case 'kvm':
+						$systemd_virt = 'KVM';
+						break;
+					case 'oracle':
+						$systemd_virt = 'Oracle';
+						break;
 				}
 
 				if($virtualized != null && stripos($virtualized, $systemd_virt) === false && stripos($systemd_virt, $virtualized) === false)

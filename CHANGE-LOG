@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 4.8 Milestone 2
+6 July 2013
 
 - pts-core: Expand Mandriva Linux external dependency support to distributions having urpmi
 - pts-core: Add Apple OS X font paths for use by the GD graph renderer
