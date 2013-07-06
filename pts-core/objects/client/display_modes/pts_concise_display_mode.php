@@ -47,7 +47,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	}
 	protected function bytes_to_download_size($bytes)
 	{
-		$mb = pts_math::set_precision($download_size / 1048576, 2);
+		$mb = pts_math::set_precision($bytes / 1048576, 2);
 
 		if($mb > 99)
 		{
