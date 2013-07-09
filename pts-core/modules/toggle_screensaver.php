@@ -144,7 +144,7 @@ class toggle_screensaver extends pts_module_interface
 
 		if(($xscreensaver = pts_client::executable_in_path('xscreensaver-command')))
 		{
-			shell_exec($xscreensaver . ' -exit 2> &1');
+			shell_exec($xscreensaver . ' -exit 2>&1');
 		}
 	}
 	public static function __shutdown()

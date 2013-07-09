@@ -219,7 +219,7 @@ class phodevi_cpu extends phodevi_device_interface
 				$info = $info / 1000;
 			}
 		}
-		else($info == null)
+		else if($info == null)
 		{
 			$info = phodevi::read_sensor(array('cpu', 'freq'));
 
