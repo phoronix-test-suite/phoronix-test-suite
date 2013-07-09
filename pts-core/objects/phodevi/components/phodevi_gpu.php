@@ -1211,6 +1211,11 @@ class phodevi_gpu extends phodevi_device_interface
 			$info = 'AMD ' . $info;
 		}
 
+		if(phodevi::is_linux() && ($vendor = phodevi_linux_parser::read_pci_subsystem_value('VGA compatible controller')) != null && stripos($info, $vendor) === false)
+		{
+			$info = $vendor . ' ' . $info;
+		}
+
 		if($video_ram > 64 && strpos($info, $video_ram) == false) // assume more than 64MB of vRAM
 		{
 			$info .= ' ' . $video_ram . 'MB';

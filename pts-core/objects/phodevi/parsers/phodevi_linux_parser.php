@@ -619,6 +619,43 @@ class phodevi_linux_parser
 
 		return $value;
 	}
+	public static function read_pci_subsystem_value($desc)
+	{
+		$lspci = phodevi::$vfs->lspci;
+		$subsystem = null;
+
+		foreach(pts_arrays::to_array($desc) as $check)
+		{
+			if(($hit = strpos($lspci, $check)) !== false)
+			{
+				$lspci = substr($lspci, $hit);
+
+				if(($hit = strpos($lspci, 'SVendor: ')) !== false)
+				{
+					$lspci = substr($lspci, ($hit + strlen('SVendor: ')));
+					$lspci = substr($lspci, 0, strpos($lspci, PHP_EOL));
+
+					$vendors = array(
+						'Sapphire Technology' => 'Sapphire',
+						'PC Partner' => 'Sapphire',
+						'Micro-Star International' => 'MSI',
+						'XFX' => 'XFX'
+						);
+
+					foreach($vendors as $vendor => $clean_vendor)
+					{
+						if(stripos($lspci, $vendor) !== false)
+						{
+							$subsystem = $clean_vendor;
+							break;
+						}
+					}
+				}
+			}
+		}
+
+		return $subsystem;
+	}
 	public static function read_pci($desc, $clean_string = true)
 	{
 		// Read PCI bus information

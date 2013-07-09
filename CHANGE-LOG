@@ -8,6 +8,7 @@ Phoronix Test Suite (Git)
 - phodevi: Add more stock fallback display modes
 - phodevi: Ensure MB/GB are reported on OS X memory strings
 - phodevi: Workaround Linux 3.10 kernel reporting bogus frequencies for scaling_max_freq on some Intel CPUs
+- phodevi: Support prepending the graphics card / AIB vendor on GPU strings
 
 Phoronix Test Suite 4.8 Milestone 2
 6 July 2013
