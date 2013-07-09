@@ -205,11 +205,11 @@ class phodevi_memory extends phodevi_device_interface
 				{
 					if($mem_size >= 1024)
 					{
-						$mem_size .= ' MB';
+						$mem_size[0] .= ' MB';
 					}
 					else
 					{
-						$mem_size .= ' GB';
+						$mem_size[0] .= ' GB';
 					}
 				}
 
