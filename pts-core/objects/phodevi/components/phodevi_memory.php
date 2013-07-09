@@ -201,6 +201,18 @@ class phodevi_memory extends phodevi_device_interface
 					$product_string .= ' ' . $mem_part;
 				}
 
+				if(is_numeric($mem_size[0]) && stripos($mem_size[0], 'b') === false)
+				{
+					if($mem_size >= 1024)
+					{
+						$mem_size .= ' MB';
+					}
+					else
+					{
+						$mem_size .= ' GB';
+					}
+				}
+
 				$mem_string = $mem_count . ' x ' . $mem_size[0] . ' ' . $mem_prefix . $product_string;
 			}
 		}

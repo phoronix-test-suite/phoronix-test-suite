@@ -6,6 +6,7 @@ Phoronix Test Suite (Git)
 - pts-core: Round download size totals in the concise display mode for large files
 - toggle-screensaver: Support doing "xscreensaver-command -exit" when needed
 - phodevi: Add more stock fallback display modes
+- phodevi: Ensure MB/GB are reported on OS X memory strings
 
 Phoronix Test Suite 4.8 Milestone 2
 6 July 2013
