@@ -152,18 +152,26 @@ class phodevi_cpu extends phodevi_device_interface
 	public static function cpu_default_frequency($cpu_core = 0)
 	{
 		// Find out the processor frequency
+		$info = null;
 		// First, the ideal way, with modern CPUs using CnQ or EIST and cpuinfo reporting the current
 		if(is_file('/sys/devices/system/cpu/cpu' . $cpu_core . '/cpufreq/scaling_max_freq'))
 		{
 			$info = pts_file_io::file_get_contents('/sys/devices/system/cpu/cpu' . $cpu_core . '/cpufreq/scaling_max_freq');
 			$info = intval($info) / 1000000;
+
+			if($info > 9)
+			{
+				// For some reason on Linux 3.10 the scaling_max_freq is reported as 25GHz...
+				$info = null;
+			}
 		}
-		else if(isset(phodevi::$vfs->cpuinfo)) // fall back for those without cpufreq
+
+		if($info == null && isset(phodevi::$vfs->cpuinfo)) // fall back for those without cpufreq
 		{
 			$cpu_mhz = self::read_cpuinfo_line('cpu MHz');
 			$info = $cpu_mhz / 1000;
 		}
-		else if(phodevi::is_bsd())
+		else if($info == null && phodevi::is_bsd())
 		{
 			$info = phodevi_bsd_parser::read_sysctl(array('dev.cpu.0.freq_levels'));
 
@@ -198,7 +206,7 @@ class phodevi_cpu extends phodevi_device_interface
 				$info = null;
 			}
 		}
-		else if(phodevi::is_windows())
+		else if($info == null && phodevi::is_windows())
 		{
 			$info = phodevi_windows_parser::read_cpuz('Processor 1', 'Stock frequency');
 			if($info != null)
@@ -211,7 +219,7 @@ class phodevi_cpu extends phodevi_device_interface
 				$info = $info / 1000;
 			}
 		}
-		else
+		else($info == null)
 		{
 			$info = phodevi::read_sensor(array('cpu', 'freq'));
 
