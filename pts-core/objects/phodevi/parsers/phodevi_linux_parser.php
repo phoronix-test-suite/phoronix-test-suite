@@ -621,7 +621,7 @@ class phodevi_linux_parser
 	}
 	public static function read_pci_subsystem_value($desc)
 	{
-		$lspci = phodevi::$vfs->lspci;
+		$lspci = shell_exec('lspci -v 2> /dev/null');
 		$subsystem = null;
 
 		foreach(pts_arrays::to_array($desc) as $check)
@@ -630,9 +630,9 @@ class phodevi_linux_parser
 			{
 				$lspci = substr($lspci, $hit);
 
-				if(($hit = strpos($lspci, 'SVendor: ')) !== false)
+				if(($hit = strpos($lspci, 'Subsystem: ')) !== false)
 				{
-					$lspci = substr($lspci, ($hit + strlen('SVendor: ')));
+					$lspci = substr($lspci, ($hit + strlen('Subsystem: ')));
 					$lspci = substr($lspci, 0, strpos($lspci, PHP_EOL));
 
 					$vendors = array(
