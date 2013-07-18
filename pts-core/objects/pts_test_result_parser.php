@@ -269,7 +269,7 @@ class pts_test_result_parser
 						$tp->set_display_format('LINE_GRAPH');
 						$tp->set_identifier(null);
 						$extra_result = new pts_test_result($tp);
-						$extra_result->set_used_arguments_description('Total Frame Time / Jitter');
+						$extra_result->set_used_arguments_description('Total Frame Time');
 						$extra_result->set_result(implode(',', $frame_all_times));
 						array_push($extra_results, $extra_result);
 						//$extra_result->set_used_arguments(phodevi::sensor_name($sensor) . ' ' . $test_result->get_arguments());
