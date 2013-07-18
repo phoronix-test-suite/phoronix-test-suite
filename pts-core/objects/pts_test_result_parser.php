@@ -249,14 +249,17 @@ class pts_test_result_parser
 				case 'com-speeds-frame-latency-totals':
 					$log_file = pts_file_io::file_get_contents($test_log_file);
 					$frame_all_times = array();
-					while(($log_file = strstr($log_file, "\nframe:")) || ($log_file = strstr($log_file, "\n]   frame:")))
+					while(($log_file = strstr($log_file, 'frame:')))
 					{
-						$all = ltrim(substr($log_file, strpos($log_file, ' all: ') + 6));
-						$all = substr($all, 0, strpos($all, ' '));
-
-						if(is_numeric($all) && $all > 0)
+						if(($a = strpos($log_file, ' all: ')) !== false && $a < strpos($log_file, "\n"))
 						{
-							array_push($frame_all_times, $all);
+							$all = ltrim(substr($log_file, $a + 6));
+							$all = substr($all, 0, strpos($all, ' '));
+
+							if(is_numeric($all) && $all > 0)
+							{
+								array_push($frame_all_times, $all);
+							}
 						}
 						$log_file = strstr($log_file, 'bk:');
 					}
