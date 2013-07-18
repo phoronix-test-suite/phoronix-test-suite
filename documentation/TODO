@@ -2,6 +2,7 @@ PHORONIX TEST SUITE PUBLIC TODO LIST:
 
 ### PTS-CORE ###
 
+- Optional support for SHA1/SHA512 or hash alternatives to MD5 for file downloads
 - Move External Dependencies into OpenBenchmarking.org cloud
 - Reporting to OpenBenchmarking.org on broken download URLs for test profiles.
 - Reporting of install times to OpenBenchmarking.org and also exposing this information back to clients.

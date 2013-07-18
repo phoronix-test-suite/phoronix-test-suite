@@ -639,7 +639,8 @@ class phodevi_linux_parser
 						'Sapphire Technology' => 'Sapphire',
 						'PC Partner' => 'Sapphire',
 						'Micro-Star International' => 'MSI',
-						'XFX' => 'XFX'
+						'XFX' => 'XFX',
+						'Gigabyte' => 'Gigabyte',
 						);
 
 					foreach($vendors as $vendor => $clean_vendor)

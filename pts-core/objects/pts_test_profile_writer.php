@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2011, Phoronix Media
-	Copyright (C) 2010 - 2011, Michael Larabel
+	Copyright (C) 2010 - 2013, Phoronix Media
+	Copyright (C) 2010 - 2013, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -68,6 +68,8 @@ class pts_test_profile_writer
 		$this->xml_writer->addXmlNodeFromReaderWNE('PhoronixTestSuite/TestInformation/TimesToRun', $xml_reader);
 		$this->xml_writer->addXmlNodeFromReaderWNE('PhoronixTestSuite/TestInformation/IgnoreRuns', $xml_reader);
 		$this->xml_writer->addXmlNodeFromReaderWNE('PhoronixTestSuite/TestInformation/InstallationAgreement', $xml_reader);
+		$this->xml_writer->addXmlNodeFromReaderWNE('PhoronixTestSuite/TestInformation/PreInstallMessage', $xml_reader);
+		$this->xml_writer->addXmlNodeFromReaderWNE('PhoronixTestSuite/TestInformation/PostInstallMessage', $xml_reader);
 	}
 	public function add_test_data_section(&$xml_reader)
 	{

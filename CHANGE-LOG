@@ -4,6 +4,8 @@ Phoronix Test Suite (Git)
 
 - pts-core: Add few more cases of error detection on failed test install
 - pts-core: Round download size totals in the concise display mode for large files
+- pts-core: Add missing PreInstallMessage and PostInstallMessage to the OpenBenchmarking.org test profile schema and writer
+- pts_Graph: Assume any version of Google Chrome/Chromium can render SVG
 - toggle-screensaver: Support doing "xscreensaver-command -exit" when needed
 - phodevi: Add more stock fallback display modes
 - phodevi: Ensure MB/GB are reported on OS X memory strings

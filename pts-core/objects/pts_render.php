@@ -1031,9 +1031,11 @@ class pts_render
 				$selected_renderer = 'PNG';
 			}
 		}
-		else if(($p = strpos($user_agent, 'AppleWebKit/')) !== false)
+		else if(($p = strpos($user_agent, 'AppleWebKit/')) !== false && strpos($user_agent, 'Chrome/') === false)
 		{
+			// All modern versions of Chrome should work with SVG
 			// Safari, Google Chrome, Google Chromium, etc
+			// Any version of Chrome should be okay
 			$webkit_ver = substr($user_agent, ($p + 12));
 			$webkit_ver = substr($webkit_ver, 0, strpos($webkit_ver, ' '));
 
