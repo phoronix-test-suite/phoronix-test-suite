@@ -263,6 +263,8 @@ class pts_test_result_parser
 
 					if(isset($frame_all_times[60]))
 					{
+						// Take off the first frame as it's likely to have taken much longer when game just starting off...
+						array_shift($frame_all_times);
 						$tp = clone $test_result->test_profile;
 						$tp->set_result_scale('Milliseconds');
 						$tp->set_result_proportion('LIB');
