@@ -608,23 +608,15 @@ class pts_test_run_manager
 
 				if(!empty($test_identifier))
 				{
-					// XXX : add to attributes JSON here
-					$json_report_attributes = null;
+					$this->result_file_writer->add_result_from_result_object_with_value_string($test_run_request, $test_run_request->get_result(), $test_run_request->test_result_buffer->get_values_as_string(), self::process_json_report_attributes($test_run_request));
 
-					if(($t = $test_run_request->test_profile->test_installation->get_compiler_data()))
+					if($test_run_request->secondary_linked_results != null && is_array($test_run_request->secondary_linked_results))
 					{
-						$json_report_attributes['compiler-options'] = $t;
+						foreach($test_run_request->secondary_linked_results as &$run_request_minor)
+						{
+							$this->result_file_writer->add_result_from_result_object_with_value_string($run_request_minor, $run_request_minor->get_result(), $run_request_minor->test_result_buffer->get_values_as_string(), self::process_json_report_attributes($run_request_minor));
+						}
 					}
-					if(($t = $test_run_request->get_min_result()) != 0)
-					{
-						$json_report_attributes['min-result'] = $t;
-					}
-					if(($t = $test_run_request->get_max_result()) != 0)
-					{
-						$json_report_attributes['max-result'] = $t;
-					}
-
-					$this->result_file_writer->add_result_from_result_object_with_value_string($test_run_request, $test_run_request->get_result(), $test_run_request->test_result_buffer->get_values_as_string(), $json_report_attributes);
 
 					if($this->get_results_identifier() != null && $this->get_file_name() != null && pts_config::read_bool_config('PhoronixTestSuite/Options/Testing/SaveTestLogs', 'FALSE'))
 					{
@@ -661,6 +653,26 @@ class pts_test_run_manager
 		pts_module_manager::module_process('__post_test_run_process', $this->result_file_writer);
 
 		return true;
+	}
+	protected static function process_json_report_attributes(&$test_run_request)
+	{
+		// XXX : add to attributes JSON here
+		$json_report_attributes = null;
+
+		if(($t = $test_run_request->test_profile->test_installation->get_compiler_data()))
+		{
+			$json_report_attributes['compiler-options'] = $t;
+		}
+		if(($t = $test_run_request->get_min_result()) != 0)
+		{
+			$json_report_attributes['min-result'] = $t;
+		}
+		if(($t = $test_run_request->get_max_result()) != 0)
+		{
+			$json_report_attributes['max-result'] = $t;
+		}
+
+		return $json_report_attributes;
 	}
 	public static function clean_save_name($input, $is_new_save = true)
 	{

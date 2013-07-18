@@ -37,6 +37,8 @@ class pts_test_result
 	public $active_min_result = null;
 	public $active_max_result = null;
 
+	public $secondary_linked_results = null;
+
 	public function __construct(&$test_profile)
 	{
 		$this->test_profile = $test_profile;

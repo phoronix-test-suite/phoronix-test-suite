@@ -3,8 +3,8 @@
 <xs:annotation>
 	<xs:documentation xml:lang="en">
 		Phoronix Test Suite / OpenBenchmarking.org XML Test Profile Specification
-		Copyright (C) 2008 - 2010, Phoronix Media
-		Copyright (C) 2008 - 2010, Michael Larabel
+		Copyright (C) 2008 - 2013, Phoronix Media
+		Copyright (C) 2008 - 2013, Michael Larabel
 	</xs:documentation>
 </xs:annotation>
 <xs:include schemaLocation="types.xsd" />
@@ -49,6 +49,14 @@
 			<xs:element name="Sensor" type="xs:string" />
 			<xs:element name="PollingFrequency" type="PositiveInteger" minOccurs="0" maxOccurs="1" />
 			<xs:element name="Report" type="MonitorReporting" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+		</xs:complexType>
+		</xs:element>
+
+		<xs:element name="ExtraData" minOccurs="0" maxOccurs="unbounded">
+		<xs:complexType>
+		<xs:sequence>
+			<xs:element name="Data" type="xs:string" />
 		</xs:sequence>
 		</xs:complexType>
 		</xs:element>
