@@ -246,7 +246,7 @@ class pts_test_result_parser
 
 			switch($id)
 			{
-				case 'com-speeds-total-frame-latency':
+				case 'com-speeds-frame-latency-totals':
 					$log_file = pts_file_io::file_get_contents($test_log_file);
 					$frame_all_times = array();
 					while(($log_file = strstr($log_file, "\nframe:")))
@@ -264,9 +264,10 @@ class pts_test_result_parser
 					if(isset($frame_all_times[60]))
 					{
 						$tp = clone $test_result->test_profile;
-						$tp->set_result_scale('ms');
+						$tp->set_result_scale('Milliseconds');
 						$tp->set_result_proportion('LIB');
 						$tp->set_display_format('LINE_GRAPH');
+						$tp->set_identifier(null);
 						$extra_result = new pts_test_result($tp);
 						$extra_result->set_used_arguments_description('Total Frame Time / Jitter');
 						$extra_result->set_result(implode(',', $frame_all_times));
