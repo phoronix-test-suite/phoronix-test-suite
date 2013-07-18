@@ -249,7 +249,7 @@ class pts_test_result_parser
 				case 'com-speeds-frame-latency-totals':
 					$log_file = pts_file_io::file_get_contents($test_log_file);
 					$frame_all_times = array();
-					while(($log_file = strstr($log_file, "\nframe:")))
+					while(($log_file = strstr($log_file, "\nframe:")) || ($log_file = strstr($log_file, "\n]   frame:")))
 					{
 						$all = ltrim(substr($log_file, strpos($log_file, ' all: ') + 6));
 						$all = substr($all, 0, strpos($all, ' '));
