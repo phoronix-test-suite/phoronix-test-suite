@@ -227,6 +227,61 @@ class pts_test_result_parser
 				break;
 		}
 	}
+	public static function generate_extra_data(&$test_result, &$test_log_file = null)
+	{
+		$parse_xml_file = $test_result->test_profile->get_file_parser_spec();
+
+		if($parse_xml_file == false)
+		{
+			return;
+		}
+
+		$results_parser_xml = new pts_parse_results_nye_XmlReader($parse_xml_file);
+		$extra_data_identifiers = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/ExtraData/Identifier');
+		$extra_results = array();
+
+		foreach(array_keys($extra_data_identifiers) as $i)
+		{
+			$id = $extra_data_identifiers[$i];
+
+			switch($id)
+			{
+				case 'com-speeds-total-frame-latency':
+					$log_file = pts_file_io::file_get_contents($test_log_file);
+					$frame_all_times = array();
+					while(($log_file = strstr($log_file, "\nframe:")))
+					{
+						$all = ltrim(substr($log_file, strpos($log_file, ' all: ') + 6));
+						$all = substr($all, 0, strpos($all, ' '));
+
+						if(is_numeric($all) && $all > 0)
+						{
+							array_push($frame_all_times, $all);
+						}
+						$log_file = strstr($log_file, 'bk:');
+					}
+
+					if(isset($frame_all_times[60]))
+					{
+						$tp = clone $test_result->test_profile;
+						$tp->set_result_scale('ms');
+						$tp->set_result_proportion('LIB');
+						$tp->set_display_format('LINE_GRAPH');
+						$extra_result = new pts_test_result($tp);
+						$extra_result->set_used_arguments_description('Total Frame Time / Jitter');
+						$extra_result->set_result(implode(',', $frame_all_times));
+						array_push($extra_results, $extra_result);
+						//$extra_result->set_used_arguments(phodevi::sensor_name($sensor) . ' ' . $test_result->get_arguments());
+					}
+					break;
+			}
+		}
+
+		if(!empty($extra_results))
+		{
+			$test_result->secondary_linked_results = $extra_results;
+		}
+	}
 	public static function calculate_end_result(&$test_result)
 	{
 		$trial_results = $test_result->test_result_buffer->get_values();

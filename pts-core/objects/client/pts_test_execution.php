@@ -283,6 +283,7 @@ class pts_test_execution
 				if($increase_run_count > 0)
 				{
 					$times_to_run += $increase_run_count;
+					$is_expected_last_run = false;
 					//$test_run_request->test_profile->set_times_to_run($times_to_run);
 				}
 			}
@@ -300,6 +301,12 @@ class pts_test_execution
 
 			if(is_file($test_log_file))
 			{
+				if($is_expected_last_run)
+				{
+					// For now just passing the last test log file...
+					pts_test_result_parser::generate_extra_data($test_run_request, $test_log_file);
+				}
+
 				if($backup_test_log_dir)
 				{
 					copy($test_log_file, $backup_test_log_dir . basename($test_log_file));

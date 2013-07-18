@@ -56,7 +56,7 @@
 		<xs:element name="ExtraData" minOccurs="0" maxOccurs="unbounded">
 		<xs:complexType>
 		<xs:sequence>
-			<xs:element name="Data" type="xs:string" />
+			<xs:element name="Identifier" type="xs:string" />
 		</xs:sequence>
 		</xs:complexType>
 		</xs:element>
