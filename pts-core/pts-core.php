@@ -90,22 +90,26 @@ function pts_needed_extensions()
 function pts_version_codenames()
 {
 	return array(
+		// Sør-Trøndelag - Norway
 		'1.0' => 'Trondheim',
 		'1.2' => 'Malvik',
 		'1.4' => 'Orkdal',
 		'1.6' => 'Tydal',
 		'1.8' => 'Selbu',
+		// Troms - Norway
 		'2.0' => 'Sandtorg',
 		'2.2' => 'Bardu',
 		'2.4' => 'Lenvik',
 		'2.6' => 'Lyngen',
 		'2.8' => 'Torsken',
+		// Aust-Agder - Norway
 		'2.9' => 'Iveland', // early PTS3 development work
 		'3.0' => 'Iveland',
 		'3.2' => 'Grimstad',
 		'3.4' => 'Lillesand',
 		'3.6' => 'Arendal',
 		'3.8' => 'Bygland',
+		// Rogaland - Norway
 		'4.0' => 'Suldal',
 		'4.2' => 'Randaberg',
 		'4.4' => 'Forsand',
@@ -114,8 +118,8 @@ function pts_version_codenames()
 		);
 }
 
-pts_define('PTS_VERSION', '4.8.0m2');
-pts_define('PTS_CORE_VERSION', 4724);
+pts_define('PTS_VERSION', '4.8.0m3');
+pts_define('PTS_CORE_VERSION', 4730);
 pts_define('PTS_CODENAME', 'SOKNDAL');
 pts_define('PTS_IS_CLIENT', (defined('PTS_MODE') && PTS_MODE == 'CLIENT'));
 pts_define('PTS_IS_DEV_BUILD', (substr(PTS_VERSION, -2, 1) == 'm'));

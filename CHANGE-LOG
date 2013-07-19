@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 4.8 Milestone 3
+19 July 2013
 
 - pts-core: Add few more cases of error detection on failed test install
 - pts-core: Round download size totals in the concise display mode for large files
