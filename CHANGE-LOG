@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Add initial support for test profile's downloads.xml to have a SHA256 hash for files
+- pts-core: Rename NO_MD5_CHECKS environment variable to NO_FILE_HASH_CHECKS
 
 Phoronix Test Suite 4.8 Milestone 3
 19 July 2013
