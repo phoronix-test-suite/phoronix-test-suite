@@ -8,6 +8,7 @@ Phoronix Test Suite (Git)
 - pts-core: Allow test results to have "secondary_linked_results"
 - pts-core: Add initial support for frame latency / jitter secondary result graphs
 - pts_Graph: Assume any version of Google Chrome/Chromium can render SVG
+- pts_Graph: Only prepend 'v' to version string on graphs if first character is numeric
 - toggle-screensaver: Support doing "xscreensaver-command -exit" when needed
 - phodevi: Add more stock fallback display modes
 - phodevi: Ensure MB/GB are reported on OS X memory strings

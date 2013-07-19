@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2012, Phoronix Media
-	Copyright (C) 2008 - 2012, Michael Larabel
+	Copyright (C) 2008 - 2013, Phoronix Media
+	Copyright (C) 2008 - 2013, Michael Larabel
 	pts_Graph.php: The core graph object that is used by the different graphing objects.
 
 	This program is free software; you can redistribute it and/or modify
@@ -79,7 +79,13 @@ abstract class pts_Graph
 		if($result_object != null)
 		{
 			$test_version = $result_object->test_profile->get_app_version();
-			$this->graph_title = $result_object->test_profile->get_title() . (isset($test_version[2]) ? ' v' . $test_version : null);
+
+			if(isset($test_version[2]) && is_numeric($test_version[0]))
+			{
+				$test_version = 'v' . $test_version;
+			}
+
+			$this->graph_title = $result_object->test_profile->get_title() . $test_version;
 
 			$this->graph_y_title = $result_object->test_profile->get_result_scale_formatted();
 			$this->test_identifier = $result_object->test_profile->get_identifier();

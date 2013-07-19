@@ -640,7 +640,8 @@ class phodevi_linux_parser
 						'PC Partner' => 'Sapphire',
 						'Micro-Star International' => 'MSI',
 						'XFX' => 'XFX',
-						'Gigabyte' => 'Gigabyte',
+						'ASUS' => 'ASUS',
+						'Gigabyte' => 'Gigabyte'
 						);
 
 					foreach($vendors as $vendor => $clean_vendor)
