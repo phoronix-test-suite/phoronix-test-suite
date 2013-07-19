@@ -114,7 +114,13 @@ function pts_version_codenames()
 		'4.2' => 'Randaberg',
 		'4.4' => 'Forsand',
 		'4.6' => 'Utsira',
-		'4.8' => 'Sokndal'
+		'4.8' => 'Sokndal',
+		// Tulskaya oblast / Tula Oblast region - Russia
+		'5.0' => 'Plavsk',
+		'5.2' => 'Khanino',
+		'5.4' => 'Lipki',
+		'5.6' => 'Dedilovo',
+		'5.8' => 'Belev',
 		);
 }
 
