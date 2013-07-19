@@ -203,13 +203,14 @@ class pts_test_installer
 		{
 			$package_filename = $download_package->get_filename();
 			$package_md5 = $download_package->get_md5();
+			$package_sha256 = $download_package->get_sha256();
 			$download_destination = $download_location . $package_filename;
 			$download_destination_temp = $download_destination . '.pts';
 
 			if($download_package->get_download_location_type() == null)
 			{
 				// Attempt a possible last-minute look-aside copy cache in case a previous test in the install queue downloaded this file already
-				$lookaside_copy = pts_test_install_manager::file_lookaside_test_installations($package_filename, $package_md5);
+				$lookaside_copy = pts_test_install_manager::file_lookaside_test_installations($package_filename, $package_md5, $package_sha256);
 				if($lookaside_copy)
 				{
 					if($download_package->get_filesize() == 0)
@@ -797,6 +798,50 @@ class pts_test_installer
 					}
 				}
 				else if($real_md5 == $verified_md5)
+				{
+					$valid = true;
+				}
+			}
+			else
+			{
+				$valid = true;
+			}
+		}
+
+		return $valid;
+	}
+	public static function validate_sha256_download_file($filename, $verified_sha256)
+	{
+		$valid = false;
+
+		if(is_file($filename))
+		{
+			if(pts_flags::skip_md5_checks())
+			{
+				$valid = true;
+			}
+			else if(!empty($verified_sha256))
+			{
+				$real_sha256 = hash_file('sha256', $filename);
+
+				if(pts_strings::is_url($verified_sha256))
+				{
+					foreach(pts_strings::trim_explode("\n", pts_network::http_get_contents($verified_sha256)) as $sha256_line)
+					{
+						list($sha256, $file) = explode(' ', $sha256_line);
+
+						if($sha256_file == $filename)
+						{
+							if($sha256 == $real_sha256)
+							{
+								$valid = true;
+							}
+
+							break;
+						}
+					}
+				}
+				else if($real_sha256 == $verified_sha256)
 				{
 					$valid = true;
 				}

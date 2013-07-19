@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2012, Phoronix Media
-	Copyright (C) 2010 - 2012, Michael Larabel
+	Copyright (C) 2010 - 2013, Phoronix Media
+	Copyright (C) 2010 - 2013, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -102,14 +102,14 @@ class pts_test_install_manager
 
 		return $remote_download_files;
 	}
-	public static function file_lookaside_test_installations($package_filename, $package_md5)
+	public static function file_lookaside_test_installations($package_filename, $package_md5, $package_sha256)
 	{
 		// Check to see if the same package name with the same package check-sum is already present in another test installation
 		$package_match = false;
 		foreach(pts_file_io::glob(pts_client::test_install_root_path() . '*/*/' . $package_filename) as $possible_package_match)
 		{
 			// Check to see if the same package name with the same package check-sum is already present in another test installation
-			if(pts_test_installer::validate_md5_download_file($possible_package_match, $package_md5))
+			if(pts_test_installer::validate_sha256_download_file($possible_package_match, $package_sha256) || pts_test_installer::validate_md5_download_file($possible_package_match, $package_md5))
 			{
 				$package_match = $possible_package_match;
 				break;

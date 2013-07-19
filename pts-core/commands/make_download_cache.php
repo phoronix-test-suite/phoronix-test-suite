@@ -50,7 +50,7 @@ class make_download_cache implements pts_option_interface
 
 			foreach(pts_test_install_request::read_download_object_list($test_profile, false) as $file)
 			{
-				if(is_file($dc_write_directory . $file->get_filename()) && ($file->get_md5() == null || md5_file($dc_write_directory . $file->get_filename()) == $file->get_md5()))
+				if(is_file($dc_write_directory . $file->get_filename()) && $file->check_file_hash($dc_write_directory . $file->get_filename()))
 				{
 					echo '   Previously Cached: ' . $file->get_filename() . PHP_EOL;
 					$cached = true;
@@ -59,16 +59,13 @@ class make_download_cache implements pts_option_interface
 				{
 					if(is_dir($test_profile->get_install_dir()))
 					{
-						if(is_file($test_profile->get_install_dir() . $file->get_filename()))
+						if(is_file($test_profile->get_install_dir() . $file->get_filename()) && $file->check_file_hash($test_profile->get_install_dir() . $file->get_filename()))
 						{
-							if($file->get_md5() == null || md5_file($test_profile->get_install_dir() . $file->get_filename()) == $file->get_md5())
-							{
-								echo '   Caching: ' . $file->get_filename() . PHP_EOL;
+							echo '   Caching: ' . $file->get_filename() . PHP_EOL;
 
-								if(copy($test_profile->get_install_dir() . $file->get_filename(), $dc_write_directory . $file->get_filename()))
-								{
-									$cached = true;
-								}
+							if(copy($test_profile->get_install_dir() . $file->get_filename(), $dc_write_directory . $file->get_filename()))
+							{
+								$cached = true;
 							}
 						}
 					}
@@ -78,6 +75,7 @@ class make_download_cache implements pts_option_interface
 				{
 					$xml_writer->addXmlNode('PhoronixTestSuite/DownloadCache/Package/FileName', $file->get_filename());
 					$xml_writer->addXmlNode('PhoronixTestSuite/DownloadCache/Package/MD5', $file->get_md5());
+					$xml_writer->addXmlNode('PhoronixTestSuite/DownloadCache/Package/SHA256', $file->get_sha256());
 				}
 			}
 		}

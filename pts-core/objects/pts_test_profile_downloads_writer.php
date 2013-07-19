@@ -40,13 +40,14 @@ class pts_test_profile_downloads_writer
 	{
 		foreach(pts_test_install_request::read_download_object_list($test_profile, false) as $file)
 		{
-			$this->add_download($file->get_download_url_string(), $file->get_md5(), $file->get_filename(), $file->get_filesize(), $file->get_platform_string(), $file->get_architecture_string());
+			$this->add_download($file->get_download_url_string(), $file->get_md5(), $file->get_sha256(), $file->get_filename(), $file->get_filesize(), $file->get_platform_string(), $file->get_architecture_string());
 		}
 	}
-	public function add_download($url_string, $md5 = null, $file_name = null, $file_size = null, $platform_specific = null, $architecture_specific = null)
+	public function add_download($url_string, $md5 = null, $sha256 = null, $file_name = null, $file_size = null, $platform_specific = null, $architecture_specific = null)
 	{
 		$this->xml_writer->addXmlNode('PhoronixTestSuite/Downloads/Package/URL', $url_string);
 		$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/Downloads/Package/MD5', $md5);
+		$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/Downloads/Package/SHA256', $sha256);
 
 		if(basename($url_string) != $file_name)
 		{

@@ -3,8 +3,8 @@
 <xs:annotation>
 	<xs:documentation xml:lang="en">
 		Phoronix Test Suite / OpenBenchmarking.org XML Test Profile Specification
-		Copyright (C) 2008 - 2010, Phoronix Media
-		Copyright (C) 2008 - 2010, Michael Larabel
+		Copyright (C) 2008 - 2013, Phoronix Media
+		Copyright (C) 2008 - 2013, Michael Larabel
 	</xs:documentation>
 </xs:annotation>
 <xs:include schemaLocation="types.xsd" />
@@ -19,6 +19,7 @@
 			<xs:sequence>
 				<xs:element name="URL" type="xs:string" />
 				<xs:element name="MD5" type="xs:string" minOccurs="0" maxOccurs="1" />
+				<xs:element name="SHA256" type="xs:string" minOccurs="0" maxOccurs="1" />
 				<xs:element name="FileName" type="xs:string" minOccurs="0" maxOccurs="1" />
 				<xs:element name="FileSize" type="FileSize" minOccurs="0" maxOccurs="1" />
 				<xs:element name="PlatformSpecific" type="xs:string" minOccurs="0" maxOccurs="1" />

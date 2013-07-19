@@ -72,6 +72,7 @@ class pts_test_install_request
 			$xml_parser = new pts_test_downloads_nye_XmlReader($download_xml_file);
 			$package_url = $xml_parser->getXMLArrayValues('PhoronixTestSuite/Downloads/Package/URL');
 			$package_md5 = $xml_parser->getXMLArrayValues('PhoronixTestSuite/Downloads/Package/MD5');
+			$package_sha256 = $xml_parser->getXMLArrayValues('PhoronixTestSuite/Downloads/Package/SHA256');
 			$package_filename = $xml_parser->getXMLArrayValues('PhoronixTestSuite/Downloads/Package/FileName');
 			$package_filesize = $xml_parser->getXMLArrayValues('PhoronixTestSuite/Downloads/Package/FileSize');
 			$package_platform = $xml_parser->getXMLArrayValues('PhoronixTestSuite/Downloads/Package/PlatformSpecific');
@@ -101,7 +102,7 @@ class pts_test_install_request
 					}
 				}
 
-				array_push($this->test_files, new pts_test_file_download($package_url[$i], $package_filename[$i], $package_filesize[$i], $package_md5[$i], $package_platform[$i], $package_architecture[$i]));
+				array_push($this->test_files, new pts_test_file_download($package_url[$i], $package_filename[$i], $package_filesize[$i], $package_md5[$i], $package_sha256[$i], $package_platform[$i], $package_architecture[$i]));
 			}
 		}
 	}
@@ -135,6 +136,7 @@ class pts_test_install_request
 		{
 			$package_filename = $download_package->get_filename();
 			$package_md5 = $download_package->get_md5();
+			$package_sha256 = $download_package->get_sha256();
 
 			if(is_file($download_location . $package_filename))
 			{
@@ -163,7 +165,7 @@ class pts_test_install_request
 				// Scan the local download caches
 				foreach($local_download_caches as &$cache_directory)
 				{
-					if(pts_test_installer::validate_md5_download_file($cache_directory . $package_filename, $package_md5))
+					if(pts_test_installer::validate_sha256_download_file($cache_directory . $package_filename, $package_sha256) || pts_test_installer::validate_md5_download_file($cache_directory . $package_filename, $package_md5))
 					{
 						if($download_package->get_filesize() == 0)
 						{
@@ -177,7 +179,7 @@ class pts_test_install_request
 
 				// Look-aside download cache copy
 				// Check to see if the same package name with the same package check-sum is already present in another test installation
-				$lookaside_copy = pts_test_install_manager::file_lookaside_test_installations($package_filename, $package_md5);
+				$lookaside_copy = pts_test_install_manager::file_lookaside_test_installations($package_filename, $package_md5, $package_sha256);
 				if($lookaside_copy)
 				{
 					if($download_package->get_filesize() == 0)

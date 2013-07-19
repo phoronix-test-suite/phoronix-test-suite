@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2012, Phoronix Media
-	Copyright (C) 2008 - 2012, Michael Larabel
+	Copyright (C) 2008 - 2013, Phoronix Media
+	Copyright (C) 2008 - 2013, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -29,18 +29,20 @@ class pts_test_file_download
 	private $filename;
 	private $filesize;
 	private $md5;
+	private $sha256;
 	private $architecture;
 	private $platform;
 
 	private $download_location_type = null;
 	private $download_location_path = null;
 
-	public function __construct($url = null, $filename = null, $filesize = 0, $md5 = null, $platform = null, $architecture = null)
+	public function __construct($url = null, $filename = null, $filesize = 0, $md5 = null, $sha256 = null, $platform = null, $architecture = null)
 	{
 		$this->filename = empty($filename) ? basename($url) : $filename;
 		$this->url = $this->filename == $url ? null : $url;
 		$this->filesize = !is_numeric($filesize) ? 0 : $filesize;
 		$this->md5 = $md5;
+		$this->sha256 = $sha256;
 		$this->location_type = null;
 		$this->location_path = array();
 		$this->platform = $platform;
@@ -89,6 +91,25 @@ class pts_test_file_download
 	public function get_md5()
 	{
 		return $this->md5;
+	}
+	public function get_sha256()
+	{
+		return $this->sha256;
+	}
+	public function check_file_hash($file)
+	{
+		if($this->sha256)
+		{
+			return hash_file('sha256', $file) == $this->sha256;
+		}
+		else if($this->md5)
+		{
+			return md5_file($file) == $this->md5;
+		}
+		else
+		{
+			return true;
+		}
 	}
 	public function set_filesize($size)
 	{

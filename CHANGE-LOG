@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- pts-core: Add initial support for test profile's downloads.xml to have a SHA256 hash for files
+
 Phoronix Test Suite 4.8 Milestone 3
 19 July 2013
 
