@@ -141,7 +141,12 @@ class pts_network
 	public static function stream_download($download, $download_to, $stream_context_parameters = null, $callback_function = array('pts_network', 'stream_status_callback'))
 	{
 		$stream_context = pts_network::stream_context_create($stream_context_parameters);
-		stream_context_set_params($stream_context, array('notification' => $callback_function));
+
+		if(function_exists('stream_context_set_params'))
+		{
+			// HHVM 2.1 doesn't have stream_context_set_params()
+			stream_context_set_params($stream_context, array('notification' => $callback_function));
+		}
 
 		/*
 		if(strpos($download, 'https://openbenchmarking.org/') !== false)
