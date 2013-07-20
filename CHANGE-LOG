@@ -6,6 +6,7 @@ Phoronix Test Suite (Git)
 - pts-core: Rename NO_MD5_CHECKS environment variable to NO_FILE_HASH_CHECKS
 - pts-core: Add PTS5 codenames from Tulskaya oblast / Tula Oblast Russian region
 - pts-core: Support fixes for Facebook HipHop Virtual Machine for PHP HHVM 2.1.0
+- pts_Graph: Fix auto shortening when the first identifier is only one word
 
 Phoronix Test Suite 4.8 Milestone 3
 19 July 2013

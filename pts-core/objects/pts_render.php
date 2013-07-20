@@ -570,9 +570,10 @@ class pts_render
 		}
 
 		// Breakup the an identifier into an array by spaces to be used for comparison
-		$common_segments = explode(' ', pts_arrays::last_element($identifiers));
+		$common_segments_first = explode(' ', pts_arrays::first_element($identifiers));
+		$common_segments_last = explode(' ', pts_arrays::last_element($identifiers));
 
-		if(!isset($common_segments[2]))
+		if(!isset($common_segments_last[2]) || !isset($common_segments_first[2]))
 		{
 			// If there aren't at least three words in identifier, probably can't be shortened well
 			return false;
@@ -582,7 +583,7 @@ class pts_render
 		{
 			$this_identifier = explode(' ', $identifier);
 
-			foreach($common_segments as $pos => $word)
+			foreach($common_segments_last as $pos => $word)
 			{
 				if(!isset($this_identifier[$pos]) || $this_identifier[$pos] != $word || !isset($word[2]) || !ctype_alnum(substr($word, -1)))
 				{
@@ -591,14 +592,14 @@ class pts_render
 				}
 			}
 
-			if(count($common_segments) == 0)
+			if(count($common_segments_last) == 0)
 			{
 				// There isn't any common words to each identifier in result set
 				return false;
 			}
 		}
 
-		return $common_segments;
+		return $common_segments_last;
 	}
 	public static function generate_overview_object(&$overview_table, $overview_type)
 	{
