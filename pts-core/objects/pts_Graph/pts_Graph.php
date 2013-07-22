@@ -85,7 +85,7 @@ abstract class pts_Graph
 				$test_version = 'v' . $test_version;
 			}
 
-			$this->graph_title = $result_object->test_profile->get_title() . $test_version;
+			$this->graph_title = trim($result_object->test_profile->get_title() . ' ' . $test_version);
 
 			$this->graph_y_title = $result_object->test_profile->get_result_scale_formatted();
 			$this->test_identifier = $result_object->test_profile->get_identifier();

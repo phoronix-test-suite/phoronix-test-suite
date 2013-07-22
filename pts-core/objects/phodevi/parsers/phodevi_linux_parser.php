@@ -641,7 +641,9 @@ class phodevi_linux_parser
 						'Micro-Star International' => 'MSI',
 						'XFX' => 'XFX',
 						'ASUS' => 'ASUS',
-						'Gigabyte' => 'Gigabyte'
+						'Gigabyte' => 'Gigabyte',
+						'Elitegroup' => 'ECS',
+						'eVga' => 'eVGA',
 						);
 
 					foreach($vendors as $vendor => $clean_vendor)

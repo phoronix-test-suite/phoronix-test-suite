@@ -7,6 +7,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add PTS5 codenames from Tulskaya oblast / Tula Oblast Russian region
 - pts-core: Support fixes for Facebook HipHop Virtual Machine for PHP HHVM 2.1.0
 - pts_Graph: Fix auto shortening when the first identifier is only one word
+- phodevi: Support ECS and eVGA graphics card AIB vendor detection
 
 Phoronix Test Suite 4.8 Milestone 3
 19 July 2013
