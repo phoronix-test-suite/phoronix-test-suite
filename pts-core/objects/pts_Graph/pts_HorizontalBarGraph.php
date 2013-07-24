@@ -130,7 +130,8 @@ class pts_HorizontalBarGraph extends pts_Graph
 				{
 					if(isset($this->d['identifier_notes'][$this->graph_identifiers[$i]]))
 					{
-						$this->svg_dom->add_text_element($this->d['identifier_notes'][$this->graph_identifiers[$i]], array('x' => ($this->i['left_start'] + 4), 'y' => ($px_bound_top + 2 + self::$c['size']['key']), 'font-size' => (self::$c['size']['key'] - 1), 'fill' => self::$c['color']['body_text'], 'text-anchor' => 'start'));
+						$note_size = self::$c['size']['key'] - 2;
+						$this->svg_dom->add_text_element($this->d['identifier_notes'][$this->graph_identifiers[$i]], array('x' => ($this->i['left_start'] + 4), 'y' => ($px_bound_top + self::$c['size']['key']), 'font-size' => $note_size, 'fill' => self::$c['color']['body_text'], 'text-anchor' => 'start'));
 					}
 
 					$this->svg_dom->add_text_element($value, array('x' => ($value_end_right - 5), 'y' => $middle_of_bar, 'font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['body_text'], 'text-anchor' => 'end'));

@@ -124,8 +124,8 @@ function pts_version_codenames()
 		);
 }
 
-pts_define('PTS_VERSION', '4.8.0m3');
-pts_define('PTS_CORE_VERSION', 4730);
+pts_define('PTS_VERSION', '4.8.0m4');
+pts_define('PTS_CORE_VERSION', 4740);
 pts_define('PTS_CODENAME', 'SOKNDAL');
 pts_define('PTS_IS_CLIENT', (defined('PTS_MODE') && PTS_MODE == 'CLIENT'));
 pts_define('PTS_IS_DEV_BUILD', (substr(PTS_VERSION, -2, 1) == 'm'));

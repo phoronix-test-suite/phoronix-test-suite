@@ -257,7 +257,7 @@ class pts_module
 			return;
 		}
 
-		if(function_exists("pcntl_fork"))
+		if(function_exists('pcntl_fork'))
 		{
 			$pid = pcntl_fork();
 
