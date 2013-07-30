@@ -563,7 +563,7 @@ class pts_render
 	}
 	public static function evaluate_redundant_identifier_words($identifiers)
 	{
-		if(count($identifiers) < 6)
+		if(count($identifiers) < 6 || strpos(pts_arrays::first_element($identifiers), ':') !== false)
 		{
 			// Probably not worth shortening so few result identifiers
 			return false;
