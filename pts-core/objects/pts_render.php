@@ -563,43 +563,45 @@ class pts_render
 	}
 	public static function evaluate_redundant_identifier_words($identifiers)
 	{
-		if(count($identifiers) < 6 || strpos(pts_arrays::first_element($identifiers), ':') !== false)
+		if(count($identifiers) < 4 || strpos(pts_arrays::first_element($identifiers), ':') !== false)
 		{
 			// Probably not worth shortening so few result identifiers
 			return false;
 		}
 
 		// Breakup the an identifier into an array by spaces to be used for comparison
-		$common_segments_first = explode(' ', pts_arrays::first_element($identifiers));
+		$common_segments = explode(' ', pts_arrays::first_element($identifiers));
 		$common_segments_last = explode(' ', pts_arrays::last_element($identifiers));
 
-		if(!isset($common_segments_last[2]) || !isset($common_segments_first[2]))
+		if(!isset($common_segments_last[2]) || !isset($common_segments[2]))
 		{
 			// If there aren't at least three words in identifier, probably can't be shortened well
 			return false;
 		}
 
-		foreach($identifiers as &$identifier)
+		foreach(array_reverse($identifiers) as $id)
 		{
-			$this_identifier = explode(' ', $identifier);
+			$words = explode(' ', $id);
 
-			foreach($common_segments_last as $pos => $word)
+			foreach($words as $i => $word)
 			{
-				if(!isset($this_identifier[$pos]) || $this_identifier[$pos] != $word || !isset($word[2]) || !ctype_alnum(substr($word, -1)))
+				if(isset($common_segments[$i]) && $word != $common_segments[$i] && isset($word[2]) && !ctype_alnum(substr($word, -1)))
 				{
-					// The word isn't the same OR the string is less than three characters (e.g. i7 or HD don't chop off from product names
-					unset($common_segments[$pos]);
+					// IS COMMON WORD
+				}
+				else
+				{
+					unset($common_segments[$i]);
 				}
 			}
 
-			if(count($common_segments_last) == 0)
+			if(count($common_segments) == 0)
 			{
-				// There isn't any common words to each identifier in result set
 				return false;
 			}
 		}
 
-		return $common_segments_last;
+		return $common_segments;
 	}
 	public static function generate_overview_object(&$overview_table, $overview_type)
 	{
