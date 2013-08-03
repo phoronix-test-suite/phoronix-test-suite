@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2012, Phoronix Media
-	Copyright (C) 2008 - 2012, Michael Larabel
+	Copyright (C) 2008 - 2013, Phoronix Media
+	Copyright (C) 2008 - 2013, Michael Larabel
 	pts_LineGraph.php: The line graph object that extends pts_Graph.php.
 
 	This program is free software; you can redistribute it and/or modify
@@ -115,6 +115,27 @@ class pts_LineGraph extends pts_Graph
 			}
 		}
 	}
+	protected function get_special_paint_color($identifier)
+	{
+		// For now to try to improve the color handling of line graphs, first try to use a pre-defined pool of colors until falling back to the old color code once exhausted
+		// Thanks to ua=42 in the Phoronix Forums for the latest attempt at improving the automated color handling
+		static $line_color_cache = null;
+		static $predef_line_colors = array('#000000', '#FFB300', '#803E75', '#FF6800', '#A6BDD7', '#C10020', '#CEA262', '#817066', '#007D34', '#F6768E', '#00538A', '#FF7A5C', '#53377A', '#FF8E00', '#B32851', '#F4C800', '#7F180D', '#93AA00', '#593315', '#F13A13', '#232C16');
+
+		if(!isset($line_color_cache[$identifier]))
+		{
+			if(!empty($predef_line_colors))
+			{
+				$line_color_cache[$identifier] = array_shift($predef_line_colors);
+			}
+			else
+			{
+				$line_color_cache[$identifier] = $this->get_paint_color($identifier);
+			}
+		}
+
+		return $line_color_cache[$identifier];
+	}
 	protected function renderGraphLines()
 	{
 		$calculations_r = array();
@@ -124,7 +145,7 @@ class pts_LineGraph extends pts_Graph
 
 		foreach(array_keys($this->graph_data) as $i_o)
 		{
-			$paint_color = $this->get_paint_color((isset($this->graph_data_title[$i_o]) ? $this->graph_data_title[$i_o] : null));
+			$paint_color = $this->get_special_paint_color((isset($this->graph_data_title[$i_o]) ? $this->graph_data_title[$i_o] : null));
 			$calculations_r[$paint_color] = array();
 
 			$point_counter = count($this->graph_data[$i_o]);

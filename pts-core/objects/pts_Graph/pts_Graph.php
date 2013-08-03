@@ -463,6 +463,27 @@ abstract class pts_Graph
 		$this->render_graph_result();
 		$this->render_graph_post();
 	}
+	protected function get_special_paint_color($identifier)
+	{
+		// For now to try to improve the color handling of line graphs, first try to use a pre-defined pool of colors until falling back to the old color code once exhausted
+		// Thanks to ua=42 in the Phoronix Forums for the latest attempt at improving the automated color handling
+		static $line_color_cache = null;
+		static $predef_line_colors = array('#000000', '#FFB300', '#803E75', '#FF6800', '#A6BDD7', '#C10020', '#CEA262', '#817066', '#007D34', '#F6768E', '#00538A', '#FF7A5C', '#53377A', '#FF8E00', '#B32851', '#F4C800', '#7F180D', '#93AA00', '#593315', '#F13A13', '#232C16');
+
+		if(!isset($line_color_cache[$identifier]))
+		{
+			if(!empty($predef_line_colors))
+			{
+				$line_color_cache[$identifier] = array_pop($predef_line_colors);
+			}
+			else
+			{
+				$line_color_cache[$identifier] = $this->get_paint_color($identifier);
+			}
+		}
+
+		return $line_color_cache[$identifier];
+	}
 	protected function render_graph_pre_init()
 	{
 		return;
@@ -719,7 +740,7 @@ abstract class pts_Graph
 		{
 			if(!empty($this->graph_data_title[$i]))
 			{
-				$this_color = $this->get_paint_color($this->graph_data_title[$i]);
+				$this_color = $this->get_special_paint_color($this->graph_data_title[$i]);
 
 				if($i != 0 && $i % $this->i['keys_per_line'] == 0)
 				{

@@ -11,7 +11,7 @@
 		</Package>
 		<Package>
 			<GenericName>sdl-development</GenericName>
-			<PackageName>devel/sdl12 graphics/sdl_gfx graphics/sdl_image graphics/sdl_ttf audio/sdl_sound audio/sdl_mixer</PackageName>
+			<PackageName>devel/sdl12 graphics/sdl_gfx graphics/sdl_image graphics/sdl_ttf audio/sdl_sound audio/sdl_mixer graphics/linux-f10-sdl_image graphics/linux-sdl_ttf devel/linux-f10-sdl12</PackageName>
 		</Package>
 		<Package>
 			<GenericName>glut</GenericName>
@@ -97,7 +97,7 @@
 		</Package>
 		<Package>
 			<GenericName>vorbis-development</GenericName>
-			<PackageName>audio/libvorbis</PackageName>
+			<PackageName>audio/libvorbis audio/linux-f10-libvorbis audio/linux-f10-alsa-lib</PackageName>
 		</Package>
 		<Package>
 			<GenericName>jam</GenericName>

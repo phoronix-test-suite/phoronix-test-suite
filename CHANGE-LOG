@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- pts_Graph: Add new automated color chooser for line graph color selection
+
 Phoronix Test Suite 4.8 Milestone 4
 24 July 2013
 
