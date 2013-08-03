@@ -852,7 +852,18 @@ class phodevi_gpu extends phodevi_device_interface
 					break;
 				case 'intel':
 					// try to read the maximum dynamic frequency
-					if(is_file('/sys/kernel/debug/dri/0/i915_max_freq'))
+					if(is_file('/sys/class/drm/card0/gt_max_freq_mhz'))
+					{
+						$gt_max_freq_mhz = pts_file_io::file_get_contents('/sys/class/drm/card0/gt_max_freq_mhz');
+
+						if(is_numeric($gt_max_freq_mhz) && $gt_max_freq_mhz > 100)
+						{
+							// Tested on Linux 3.11. Assume the max frequency on any competent GPU is beyond 100MHz
+							$core_freq = $gt_max_freq_mhz;
+						}
+					}
+
+					if($core_freq == 0 && is_file('/sys/kernel/debug/dri/0/i915_max_freq'))
 					{
 						$i915_max_freq = pts_file_io::file_get_contents('/sys/kernel/debug/dri/0/i915_max_freq');
 						$freq_mhz = substr($i915_max_freq, strpos($i915_max_freq, ': ') + 2);

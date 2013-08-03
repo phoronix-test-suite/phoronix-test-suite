@@ -93,6 +93,14 @@ class gpu_freq implements phodevi_sensor
 					}
 				}
 			}
+			else if(is_file('/sys/class/drm/card0/gt_cur_freq_mhz'))
+			{
+				$gt_cur_freq_mhz = pts_file_io::file_get_contents('/sys/class/drm/card0/gt_cur_freq_mhz');
+				if($gt_cur_freq_mhz > 2)
+				{
+					$core_freq = $gt_cur_freq_mhz;
+				}
+			}
 			else if(is_file('/sys/class/drm/card0/device/performance_level'))
 			{
 				$performance_level = pts_file_io::file_get_contents('/sys/class/drm/card0/device/performance_level');

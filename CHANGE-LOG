@@ -3,6 +3,8 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts_Graph: Add new automated color chooser for line graph color selection
+- phodevi: Add support for Intel DRM driver's gt_max_freq_mhz for obtaining maximum GPU frequency on modern kernels
+- phodevi: Add support for Intel DRM driver's gt_cur_freq_mhz for obtaining current GPU frequency on modern kernels
 
 Phoronix Test Suite 4.8 Milestone 4
 24 July 2013
