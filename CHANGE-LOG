@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+- pts-core: Add php5-json as a dependency now on Debian packages since Ubuntu split it up and no longer in php5-cli
 - pts_Graph: Add new automated color chooser for line graph color selection
 - pts_Graph: Slight rework to code handling the remove of common words from result identifiers
 - phodevi: Add support for Intel DRM driver's gt_max_freq_mhz for obtaining maximum GPU frequency on modern kernels
