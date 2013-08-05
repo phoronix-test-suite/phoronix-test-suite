@@ -320,7 +320,8 @@ class phodevi_system extends phodevi_device_interface
 							'0x61756673' => 'AuFS',
 							'0xbd00bd0' => 'Lustre',
 							'0xaad7aaea' => 'PanFS', // Panasas FS
-							'0xf2f52010' => 'F2FS'
+							'0xf2f52010' => 'F2FS',
+							'0xc36400' => 'CephFS',
 							);
 
 						foreach($known_magic_blocks as $hex => $name)
@@ -504,7 +505,7 @@ class phodevi_system extends phodevi_device_interface
 	}
 	public static function sw_environment_variables()
 	{
-		$check_variables = array('LIBGL', '__GL');
+		$check_variables = array('LIBGL', '__GL', 'DRI_');
 		$to_report = array();
 
 		if(stripos(phodevi::read_property('system', 'opengl-driver'), 'Mesa'))

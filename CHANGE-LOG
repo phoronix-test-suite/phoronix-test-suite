@@ -13,6 +13,7 @@ Phoronix Test Suite (Git)
 - phodevi: Add system.kernel-parameters property for reading kernel command line parameters
 - phodevi: Add support for checking the __GL_FSAA_MODE environment variable
 - phodevi: Add support for checking the __GL_LOG_MAX_ANISO environment variable
+- phodevi: Add 0xc36400 super block for CephFS
 
 Phoronix Test Suite 4.8 Milestone 4
 24 July 2013
