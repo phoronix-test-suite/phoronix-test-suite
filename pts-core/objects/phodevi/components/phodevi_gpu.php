@@ -245,7 +245,6 @@ class phodevi_gpu extends phodevi_device_interface
 			{
 				$aa_level = '__GL_FSAA_MODE=' . $gallium_msaa;
 			}
-
 		}
 
 		return $aa_level;
@@ -296,6 +295,30 @@ class phodevi_gpu extends phodevi_device_interface
 						$af_level = '16x';
 						break;
 				}
+			}
+		}
+		else if(getenv('__GL_LOG_MAX_ANISO'))
+		{
+			$max_aniso = getenv('__GL_LOG_MAX_ANISO');
+			if(is_numeric($max_aniso) && $max_aniso > 0)
+			{
+				switch($max_aniso)
+				{
+					case 1:
+						$max_aniso = '2x';
+						break;
+					case 2:
+						$max_aniso = '4x';
+						break;
+					case 3:
+						$max_aniso = '8x';
+						break;
+					case 4:
+						$max_aniso = '16x';
+						break;
+				}
+
+				$af_level = $max_aniso;
 			}
 		}
 
