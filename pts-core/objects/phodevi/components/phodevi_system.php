@@ -512,22 +512,23 @@ class phodevi_system extends phodevi_device_interface
 			array_push($check_variables, 'MESA', 'GALLIUM');
 		}
 
-		if(isset($_ENV))
+		if(isset($_SERVER))
 		{
-			foreach($_ENV as $name => $value)
+			foreach($_SERVER as $name => &$value)
 			{
 				foreach($check_variables as $var)
 				{
 					if(stripos($name, $var) !== false)
 					{
 						array_push($to_report, $name . '=' . $value);
+						break;
 					}
 				}
 
 			}
 		}
 
-		return implode(' ', $to_report);
+		return implode(' ', array_unique($to_report));
 	}
 	public static function sw_compiler()
 	{
@@ -840,7 +841,7 @@ class phodevi_system extends phodevi_device_interface
 
 				if(!empty($to_report))
 				{
-					$parameters = implode(' ', $parameters);
+					$parameters = implode(' ', $to_report);
 				}
 			}
 		}
