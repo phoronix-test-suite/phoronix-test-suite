@@ -96,6 +96,9 @@ class phodevi_system extends phodevi_device_interface
 			case 'system-layer':
 				$property = new phodevi_device_property('sw_system_layer', phodevi::std_caching);
 				break;
+			case 'environment-variables':
+				$property = new phodevi_device_property('sw_environment_variables', phodevi::std_caching);
+				break;
 		}
 
 		return $property;
@@ -498,6 +501,33 @@ class phodevi_system extends phodevi_device_interface
 		}
 
 		return $virtualized;
+	}
+	public static function sw_environment_variables()
+	{
+		$check_variables = array('LIBGL', '__GL');
+		$to_report = array();
+
+		if(stripos(phodevi::read_property('system', 'opengl-driver'), 'Mesa'))
+		{
+			array_push($check_variables, 'MESA', 'GALLIUM');
+		}
+
+		if(isset($_ENV))
+		{
+			foreach($_ENV as $name => $value)
+			{
+				foreach($check_variables as $var)
+				{
+					if(stripos($name, $var) !== false)
+					{
+						array_push($to_report, $name . '=' . $value);
+					}
+				}
+
+			}
+		}
+
+		return implode(' ', $to_report);
 	}
 	public static function sw_compiler()
 	{

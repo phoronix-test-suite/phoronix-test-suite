@@ -841,6 +841,11 @@ class pts_test_run_manager
 			$notes['kernel-parameters'] = phodevi::read_property('system', 'kernel-parameters');
 		}
 
+		if(phodevi::read_property('system', 'environment-variables'))
+		{
+			$notes['environment-variables'] = phodevi::read_property('system', 'environment-variables');
+		}
+
 		return $notes;
 	}
 	public function post_execution_process()

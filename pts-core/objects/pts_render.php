@@ -387,6 +387,10 @@ class pts_render
 			{
 				$system_attributes['Kernel'][$identifiers[$i]] = $json['kernel-parameters'];
 			}
+			if(isset($json['environment-variables']) && $json['environment-variables'] != null)
+			{
+				$system_attributes['Environment'][$identifiers[$i]] = $json['kernel-parameters'];
+			}
 			if(isset($json['compiler-configuration']) && $json['compiler-configuration'] != null)
 			{
 				$system_attributes['Compiler'][$identifiers[$i]] = $json['compiler-configuration'];
