@@ -383,6 +383,10 @@ class pts_render
 
 		foreach($system_json as $i => $json)
 		{
+			if(isset($json['kernel-parameters']) && $json['kernel-parameters'] != null)
+			{
+				$system_attributes['Kernel'][$identifiers[$i]] = $json['kernel-parameters'];
+			}
 			if(isset($json['compiler-configuration']) && $json['compiler-configuration'] != null)
 			{
 				$system_attributes['Compiler'][$identifiers[$i]] = $json['compiler-configuration'];

@@ -836,6 +836,11 @@ class pts_test_run_manager
 			}
 		}
 
+		if(phodevi::read_property('system', 'kernel-parameters'))
+		{
+			$notes['kernel-parameters'] = phodevi::read_property('system', 'kernel-parameters');
+		}
+
 		return $notes;
 	}
 	public function post_execution_process()

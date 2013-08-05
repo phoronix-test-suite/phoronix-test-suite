@@ -87,6 +87,9 @@ class phodevi_system extends phodevi_device_interface
 			case 'kernel-string':
 				$property = new phodevi_device_property('sw_kernel_string', phodevi::smart_caching);
 				break;
+			case 'kernel-parameters':
+				$property = new phodevi_device_property('sw_kernel_parameters', phodevi::std_caching);
+				break;
 			case 'compiler':
 				$property = new phodevi_device_property('sw_compiler', phodevi::std_caching);
 				break;
@@ -771,6 +774,48 @@ class phodevi_system extends phodevi_device_interface
 	public static function sw_kernel()
 	{
 		return php_uname('r');
+	}
+	public static function sw_kernel_parameters()
+	{
+		$parameters = null;
+
+		if(is_file('/proc/cmdline') && is_file('/proc/modules'))
+		{
+			$modules = array();
+
+			foreach(explode(PHP_EOL, pts_file_io::file_get_contents('/proc/modules')) as $module_line)
+			{
+				$module_line = explode(' ', $module_line);
+
+				if(isset($module_line[0]) && !empty($module_line[0]))
+				{
+					array_push($modules, $module_line[0]);
+				}
+			}
+
+			if(!empty($modules))
+			{
+				$to_report = array();
+				$cmdline = explode(' ', pts_file_io::file_get_contents('/proc/cmdline'));
+				foreach($cmdline as $option)
+				{
+					if(($t = strpos($option, '.')) !== false)
+					{
+						if(in_array(substr($option, 0, $t), $modules))
+						{
+							array_push($to_report, $option);
+						}
+					}
+				}
+
+				if(!empty($to_report))
+				{
+					$parameters = implode(' ', $parameters);
+				}
+			}
+		}
+
+		return $parameters;
 	}
 	public static function sw_kernel_architecture()
 	{
