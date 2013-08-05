@@ -44,7 +44,7 @@ class extract_from_result_file implements pts_option_interface
 			return false;
 		}
 
-		$extract_identifiers = pts_strings::comma_explode(pts_user_io::prompt_text_menu('Select the test run to extract', $result_file_identifiers, true));
+		$extract_identifiers = pts_strings::comma_explode(pts_user_io::prompt_text_menu('Select the test run(s) to extract', $result_file_identifiers, true));
 		$extract_selects = array();
 
 		foreach($extract_identifiers as $extract_identifier)
@@ -62,7 +62,7 @@ class extract_from_result_file implements pts_option_interface
 
 		$extract_result = call_user_func_array(array('pts_merge', 'merge_test_results'), $extract_selects);
 		pts_client::save_test_result($extract_to . '/composite.xml', $extract_result);
-		pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . $extract_to . '/info.html');
+		pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . $extract_to . '/index.html');
 	}
 }
 
