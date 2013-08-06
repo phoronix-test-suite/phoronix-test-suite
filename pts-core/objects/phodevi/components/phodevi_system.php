@@ -1230,7 +1230,7 @@ class phodevi_system extends phodevi_device_interface
 
 			if(pts_client::is_process_running('unity-system-compositor'))
 			{
-				$unity_system_comp = trim(str_replace('unity-system-compositor', null, shell_exec('unity-system-compositor --version')));
+				$unity_system_comp = trim(str_replace('unity-system-compositor', null, shell_exec('unity-system-compositor --version 2>&1')));
 
 				if(pts_strings::is_version($unity_system_comp))
 				{
