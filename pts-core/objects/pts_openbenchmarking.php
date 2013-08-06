@@ -321,9 +321,9 @@ class pts_openbenchmarking
 	{
 		$repos = array('local', 'pts');
 
-		if(PTS_IS_CLIENT && self::user_name() != false)
+		if(PTS_IS_CLIENT && pts_openbenchmarking_client::user_name() != false)
 		{
-			array_push($repos, self::user_name());
+			array_push($repos, pts_openbenchmarking_client::user_name());
 		}
 
 		return $repos;
