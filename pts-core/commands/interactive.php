@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2011, Phoronix Media
-	Copyright (C) 2011, Michael Larabel
+	Copyright (C) 2011 - 2013, Phoronix Media
+	Copyright (C) 2011 - 2013, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -62,7 +62,7 @@ class interactive implements pts_option_interface
 			self::select_drive_mount();
 		}
 
-		pts_openbenchmarking_client::refresh_repository_lists();
+		pts_openbenchmarking::refresh_repository_lists();
 		pts_client::$display->generic_heading('Interactive Benchmarking');
 		echo 'System Hardware:' . PHP_EOL . phodevi::system_hardware(true) . (phodevi::read_property('motherboard', 'serial-number') != null ? PHP_EOL . 'System Serial Number: ' . phodevi::read_property('motherboard', 'serial-number') : null) . PHP_EOL . PHP_EOL . PHP_EOL;
 		$reboot_on_exit = pts_flags::is_live_cd() && pts_client::user_home_directory() == '/root/';
@@ -95,7 +95,7 @@ class interactive implements pts_option_interface
 			switch($response)
 			{
 				case 'RUN_TEST':
-					$supported_tests = pts_openbenchmarking_client::available_tests();
+					$supported_tests = pts_openbenchmarking::available_tests();
 					$supported_tests = pts_types::identifiers_to_test_profile_objects($supported_tests, false, true);
 					$longest_title_length = 0;
 
@@ -137,7 +137,7 @@ class interactive implements pts_option_interface
 					}
 					break;
 				case 'RUN_SUITE':
-					$possible_suites = pts_openbenchmarking_client::available_suites();
+					$possible_suites = pts_openbenchmarking::available_suites();
 
 					foreach(array_map('strtolower', pts_types::subsystem_targets()) as $subsystem)
 					{

@@ -31,7 +31,7 @@ class list_available_suites implements pts_option_interface
 	}
 	public static function run($r)
 	{
-		$available_suites = pts_openbenchmarking_client::available_suites(false);
+		$available_suites = pts_openbenchmarking::available_suites(false);
 		pts_client::$display->generic_heading('Available Suites');
 
 		if(count($available_suites) > 0)

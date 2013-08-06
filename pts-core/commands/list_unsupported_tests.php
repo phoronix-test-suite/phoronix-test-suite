@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2012, Phoronix Media
-	Copyright (C) 2012, Michael Larabel
+	Copyright (C) 2012 - 2013, Phoronix Media
+	Copyright (C) 2012 - 2013, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ class list_unsupported_tests implements pts_option_interface
 	{
 		pts_client::$display->generic_heading('Unsupported Tests');
 
-		foreach(pts_openbenchmarking_client::available_tests() as $identifier)
+		foreach(pts_openbenchmarking::available_tests() as $identifier)
 		{
 			$unsupported = false;
 			$test_profile = new pts_test_profile($identifier);

@@ -61,6 +61,12 @@ function pts_define_directories()
 		pts_define('PTS_TEST_SUITE_PATH', PTS_USER_PATH . 'test-suites/');
 		pts_define('PTS_RESULTS_VIEWER_PATH', PTS_CORE_PATH . 'results-viewer/');
 	}
+	else if('PATH_TO_PHOROMATIC_STORAGE')
+	{
+		pts_define('PTS_OPENBENCHMARKING_SCRATCH_PATH', PATH_TO_PHOROMATIC_STORAGE . 'openbenchmarking.org/');
+		pts_define('PTS_TEST_PROFILE_PATH', PATH_TO_PHOROMATIC_STORAGE . 'test-profiles/');
+		pts_define('PTS_TEST_SUITE_PATH', PATH_TO_PHOROMATIC_STORAGE . 'test-suites/');
+	}
 
 	// Misc Locations
 	pts_define('PTS_MODULE_PATH', PTS_CORE_PATH . 'modules/');

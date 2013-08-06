@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2011, Phoronix Media
-	Copyright (C) 2008 - 2011, Michael Larabel
+	Copyright (C) 2008 - 2013, Phoronix Media
+	Copyright (C) 2008 - 2013, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
 
 class pts_file_io
 {
-	public static function mkdir($dir, $mode = 0777, $recursive = false)
+	public static function mkdir($dir, $mode = 0777, $recursive = true)
 	{
 		// Compared to the normal PHP mkdir, don't emit a warning/notice when the directory already exists
 		return !is_dir($dir) && mkdir($dir, $mode, $recursive);

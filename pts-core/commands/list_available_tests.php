@@ -33,7 +33,7 @@ class list_available_tests implements pts_option_interface
 	{
 		pts_client::$display->generic_heading('Available Tests');
 		$test_count = 0;
-		foreach(pts_openbenchmarking_client::available_tests(false) as $identifier)
+		foreach(pts_openbenchmarking::available_tests(false) as $identifier)
 		{
 			$repo = substr($identifier, 0, strpos($identifier, '/'));
 			$id = substr($identifier, strlen($repo) + 1);
