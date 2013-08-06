@@ -1227,6 +1227,17 @@ class phodevi_system extends phodevi_device_interface
 			{
 				$info = 'SurfaceFlinger';
 			}
+
+			if(pts_client::is_process_running('unity-system-compositor'))
+			{
+				$unity_system_comp = trim(str_replace('unity-system-compositor', null, shell_exec('unity-system-compositor --version')));
+
+				if(pts_strings::is_version($unity_system_comp))
+				{
+					$info = 'Unity System Compositor ' . $unity_system_comp . ($info != null ? ' + ' . $info : null);
+				}
+
+			}
 		}
 
 		return $info;

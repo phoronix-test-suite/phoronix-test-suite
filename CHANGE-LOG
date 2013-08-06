@@ -15,6 +15,7 @@ Phoronix Test Suite (Git)
 - phodevi: Add support for checking the __GL_FSAA_MODE environment variable
 - phodevi: Add support for checking the __GL_LOG_MAX_ANISO environment variable
 - phodevi: Add 0xc36400 super block for CephFS
+- phodevi: Add unity-system-compositor version detection
 
 Phoronix Test Suite 4.8 Milestone 4
 24 July 2013
