@@ -1234,7 +1234,7 @@ class phodevi_system extends phodevi_device_interface
 
 				if(pts_strings::is_version($unity_system_comp))
 				{
-					$info = 'Unity System Compositor ' . $unity_system_comp . ($info != null ? ' + ' . $info : null);
+					$info = 'Unity-System-Compositor ' . $unity_system_comp . ($info != null ? ' + ' . $info : null);
 				}
 
 			}
