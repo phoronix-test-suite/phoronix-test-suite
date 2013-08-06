@@ -35,6 +35,7 @@ abstract class pts_Graph
 {
 	// Graph config
 	protected static $c = array(); // user-configurable data. no pts_Graph* should ever over-write any of this data... should be read-only.
+	protected static $color_cache = array();
 	protected $d = array(); // the data from the test result / whatever... important data
 	protected $i = array(); // internal data, pts_Graph* can read-write
 	public $svg_dom = null;
@@ -244,6 +245,26 @@ abstract class pts_Graph
 	protected function get_paint_color($identifier)
 	{
 		return self::color_cache(0, $identifier, self::$c['color']['paint']);
+	}
+	protected function get_special_paint_color($identifier)
+	{
+		// For now to try to improve the color handling of line graphs, first try to use a pre-defined pool of colors until falling back to the old color code once exhausted
+		// Thanks to ua=42 in the Phoronix Forums for the latest attempt at improving the automated color handling
+		static $predef_line_colors = array('#FFB300', '#803E75', '#FF6800', '#A6BDD7', '#C10020', '#CEA262', '#817066', '#007D34', '#F6768E', '#00538A', '#FF7A5C', '#53377A', '#FF8E00', '#B32851', '#F4C800', '#7F180D', '#93AA00', '#593315', '#F13A13', '#232C16');
+
+		if(!isset(self::$color_cache[0][$identifier]))
+		{
+			if(!empty($predef_line_colors))
+			{
+				self::$color_cache[0][$identifier] = array_pop($predef_line_colors);
+			}
+			else
+			{
+				self::$color_cache[0][$identifier] = $this->get_paint_color($identifier);
+			}
+		}
+
+		return self::$color_cache[0][$identifier];
 	}
 	protected function maximum_graph_value()
 	{
@@ -462,27 +483,6 @@ abstract class pts_Graph
 
 		$this->render_graph_result();
 		$this->render_graph_post();
-	}
-	protected function get_special_paint_color($identifier)
-	{
-		// For now to try to improve the color handling of line graphs, first try to use a pre-defined pool of colors until falling back to the old color code once exhausted
-		// Thanks to ua=42 in the Phoronix Forums for the latest attempt at improving the automated color handling
-		static $line_color_cache = null;
-		static $predef_line_colors = array('#000000', '#FFB300', '#803E75', '#FF6800', '#A6BDD7', '#C10020', '#CEA262', '#817066', '#007D34', '#F6768E', '#00538A', '#FF7A5C', '#53377A', '#FF8E00', '#B32851', '#F4C800', '#7F180D', '#93AA00', '#593315', '#F13A13', '#232C16');
-
-		if(!isset($line_color_cache[$identifier]))
-		{
-			if(!empty($predef_line_colors))
-			{
-				$line_color_cache[$identifier] = array_pop($predef_line_colors);
-			}
-			else
-			{
-				$line_color_cache[$identifier] = $this->get_paint_color($identifier);
-			}
-		}
-
-		return $line_color_cache[$identifier];
 	}
 	protected function render_graph_pre_init()
 	{
@@ -798,17 +798,16 @@ abstract class pts_Graph
 	public static function color_cache($ns, $id, &$colors)
 	{
 		//return array_shift($colors);
-		static $cache = array();
 		static $color_shift = 0;
 		static $color_shift_size = 120;
-		$i = count($cache);
+		$i = count(self::$color_cache);
 		$color_shift_size = ($i == 0 ? 120 : 360 / $i); // can't be assigned directly to static var
 
-		if(!isset($cache[$ns][$id]))
+		if(!isset(self::$color_cache[$ns][$id]))
 		{
-			if(!isset($cache[$ns]))
+			if(!isset(self::$color_cache[$ns]))
 			{
-				$cache[$ns] = array();
+				self::$color_cache[$ns] = array();
 			}
 
 			do
@@ -835,11 +834,11 @@ abstract class pts_Graph
 					$color_shift = 0;
 				}
 			}
-			while(in_array($color, $cache[$ns]));
-			$cache[$ns][$id] = $color;
+			while(in_array($color, self::$color_cache[$ns]));
+			self::$color_cache[$ns][$id] = $color;
 		}
 
-		return $cache[$ns][$id];
+		return self::$color_cache[$ns][$id];
 	}
 	public static function color_hex_to_rgb($hex)
 	{
