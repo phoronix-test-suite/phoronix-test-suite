@@ -61,7 +61,7 @@ class pts_virtual_test_suite
 			array_map('strtolower', pts_types::test_profile_software_types())
 			);
 
-		foreach(pts_openbenchmarking_client::linked_repositories() as $repo)
+		foreach(pts_openbenchmarking::linked_repositories() as $repo)
 		{
 			$repo_identifiers = array_merge($possible_identifiers, self::tags_in_repo($repo));
 

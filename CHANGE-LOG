@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 4.8 Milestone 5
+06 August 2013
 
 - pts-core: Add php5-json as a dependency now on Debian packages since Ubuntu split it up and no longer in php5-cli
 - pts-core: Add support for reporting set kernel module parameters to notes on the system table graph
