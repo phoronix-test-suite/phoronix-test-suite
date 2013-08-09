@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2011 - 2012, Phoronix Media
-	Copyright (C) 2011 - 2012, Michael Larabel
+	Copyright (C) 2011 - 2013, Phoronix Media
+	Copyright (C) 2011 - 2013, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -48,15 +48,24 @@ class gpu_voltage implements phodevi_sensor
 		{
 			// For Radeon power management it should be exposed on a line like:
 			// voltage: 1140 mV
-			$radeon_pm_info = phodevi::$vfs->radeon_pm_info;
-
-			if(($x = strpos($radeon_pm_info, 'voltage: ')) !== false)
+			if(($x = strpos(phodevi::$vfs->radeon_pm_info, 'voltage: ')) !== false)
 			{
 				$radeon_pm_info = substr($radeon_pm_info, ($x + 9));
 
 				if(($x = stripos($radeon_pm_info, ' mV')) !== false)
 				{
 					$sensor = substr($radeon_pm_info, 0, $x);
+				}
+			}
+
+			if($sensor == null && ($x = strpos(phodevi::$vfs->radeon_pm_info, 'vddc: ')))
+			{
+				$x = substr(phodevi::$vfs->radeon_pm_info, ($x + strlen('vddc: ')));
+				$x = substr($x, 0, strpos($x, ' '));
+
+				if(is_numeric($x))
+				{
+					$sensor = $x;
 				}
 			}
 		}

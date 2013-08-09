@@ -100,7 +100,7 @@ class gpu_freq implements phodevi_sensor
 
 					if(is_numeric($x))
 					{
-						if($x > 10000)
+						if($x > 1000)
 						{
 							$x = $x / 100;
 						}
@@ -115,7 +115,7 @@ class gpu_freq implements phodevi_sensor
 
 					if(is_numeric($x))
 					{
-						if($x > 10000)
+						if($x > 1000)
 						{
 							$x = $x / 100;
 						}

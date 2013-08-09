@@ -874,6 +874,7 @@ class phodevi_gpu extends phodevi_device_interface
 							$sclk = array_search('sclk:', $dmesg_parse);
 							if($sclk !== false && isset($dmesg_parse[($sclk + 1)]) && is_numeric($dmesg_parse[($sclk + 1)]))
 							{
+								$sclk = $dmesg_parse[($sclk + 1)];
 								if($sclk > 10000)
 								{
 									$sclk = $sclk / 100;
@@ -884,6 +885,7 @@ class phodevi_gpu extends phodevi_device_interface
 							$mclk = array_search('mclk:', $dmesg_parse);
 							if($mclk !== false && isset($dmesg_parse[($mclk + 1)]) && is_numeric($dmesg_parse[($mclk + 1)]))
 							{
+								$mclk = $dmesg_parse[($mclk + 1)];
 								if($mclk > 10000)
 								{
 									$mclk = $mclk / 100;
