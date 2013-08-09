@@ -92,6 +92,37 @@ class gpu_freq implements phodevi_sensor
 							break;
 					}
 				}
+
+				if($core_freq == null && ($x = strpos(phodevi::$vfs->radeon_pm_info, 'sclk: ')))
+				{
+					$x = substr(phodevi::$vfs->radeon_pm_info, ($x + strlen('sclk: ')));
+					$x = substr($x, 0, strpos($x, ' ');
+
+					if(is_numeric($x))
+					{
+						if($x > 10000)
+						{
+							$x = $x / 100;
+						}
+
+						$core_freq = $x;
+					}
+				}
+				if($mem_freq == null && ($x = strpos(phodevi::$vfs->radeon_pm_info, 'mclk: ')))
+				{
+					$x = substr(phodevi::$vfs->radeon_pm_info, ($x + strlen('mclk: ')));
+					$x = substr($x, 0, strpos($x, ' ');
+
+					if(is_numeric($x))
+					{
+						if($x > 10000)
+						{
+							$x = $x / 100;
+						}
+
+						$core_freq = $x;
+					}
+				}
 			}
 			else if(is_file('/sys/class/drm/card0/gt_cur_freq_mhz'))
 			{
