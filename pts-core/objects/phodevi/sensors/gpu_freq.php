@@ -120,7 +120,7 @@ class gpu_freq implements phodevi_sensor
 							$x = $x / 100;
 						}
 
-						$core_freq = $x;
+						$mem_freq = $x;
 					}
 				}
 			}
