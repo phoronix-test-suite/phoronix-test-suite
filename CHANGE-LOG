@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+- pts-core: When PHP is missing, for apt-get/yum distributions report the likely command needed to run
 - phodevi: Support for reading the Radeon DRM driver's current core/memory frequencies when DPM is enabled (Linux 3.11+)
 - phodevi: Support for reading the top Radeon DRM driver core/memory frequency via dmesg when DPM is enabled (Linux 3.11+)
 - phodevi: Support for reading the Radeon DRM driver's current GPU (vddc) voltage when DPM is enabled (Linux 3.11+)

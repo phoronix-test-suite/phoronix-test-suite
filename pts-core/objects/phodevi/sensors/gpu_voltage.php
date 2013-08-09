@@ -60,7 +60,7 @@ class gpu_voltage implements phodevi_sensor
 
 			if($sensor == null && ($x = strpos(phodevi::$vfs->radeon_pm_info, 'vddc: ')))
 			{
-				$x = substr(phodevi::$vfs->radeon_pm_info, ($x + strlen('vddc: ')));
+				$x = ltrim(substr(phodevi::$vfs->radeon_pm_info, ($x + strlen('vddc: '))));
 				$x = substr($x, 0, strpos($x, ' '));
 
 				if(is_numeric($x))
