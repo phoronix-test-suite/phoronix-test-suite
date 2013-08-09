@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - phodevi: Support for reading the Radeon DRM driver's current core/memory frequencies when DPM is enabled (Linux 3.11+)
+- phodevi: Support for reading the top Radeon DRM driver core/memory frequency via dmesg when DPM is enabled (Linux 3.11+)
 
 Phoronix Test Suite 4.8 Milestone 5
 06 August 2013

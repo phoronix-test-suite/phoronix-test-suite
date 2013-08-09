@@ -837,32 +837,67 @@ class phodevi_gpu extends phodevi_device_interface
 				case 'radeon':
 					if(isset(phodevi::$vfs->radeon_pm_info))
 					{
-						// radeon_pm_info should be present with Linux 2.6.34+
-						foreach(pts_strings::trim_explode("\n", phodevi::$vfs->radeon_pm_info) as $pm_line)
+						// radeon_pm_info should be present with Linux 2.6.34+ but was changed with Linux 3.11 Radeon DPM
+						if(stripos(phodevi::$vfs->radeon_pm_info, 'default'))
 						{
-							if($pm_line == null)
+							foreach(pts_strings::trim_explode("\n", phodevi::$vfs->radeon_pm_info) as $pm_line)
 							{
-								continue;
-							}
+								if($pm_line == null)
+								{
+									continue;
+								}
 
-							list($descriptor, $value) = pts_strings::colon_explode($pm_line);
+								list($descriptor, $value) = pts_strings::colon_explode($pm_line);
 
-							switch($descriptor)
-							{
-								case 'default engine clock':
-									$core_freq = pts_arrays::first_element(explode(' ', $value)) / 1000;
-									break;
-								case 'default memory clock':
-									$mem_freq = pts_arrays::first_element(explode(' ', $value)) / 1000;
-									break;
+								switch($descriptor)
+								{
+									case 'default engine clock':
+										$core_freq = pts_arrays::first_element(explode(' ', $value)) / 1000;
+										break;
+									case 'default memory clock':
+										$mem_freq = pts_arrays::first_element(explode(' ', $value)) / 1000;
+										break;
+								}
 							}
 						}
 					}
-					else
+
+					if($core_freq == null)
+					{
+						// Attempt to read the LAST power level reported to dmesg, this is the current way for Radeon DPM on Linux 3.11+
+						$dmesg_parse = isset(phodevi::$vfs->dmesg) ? phodevi::$vfs->dmesg : null;
+						if(($x = strrpos($dmesg_parse, ' sclk:')))
+						{
+							$dmesg_parse = substr($dmesg_parse, $x);
+							$dmesg_parse = explode(' ', substr($dmesg_parse, 0, strpos($dmesg_parse, PHP_EOL)));
+
+							$sclk = array_search('sclk:', $dmesg_parse);
+							if($sclk !== false && isset($dmesg_parse[($sclk + 1)]) && is_numeric($dmesg_parse[($sclk + 1)]))
+							{
+								if($sclk > 10000)
+								{
+									$sclk = $sclk / 100;
+								}
+
+								$core_freq = $sclk;
+							}
+							$mclk = array_search('mclk:', $dmesg_parse);
+							if($mclk !== false && isset($dmesg_parse[($mclk + 1)]) && is_numeric($dmesg_parse[($mclk + 1)]))
+							{
+								if($mclk > 10000)
+								{
+									$mclk = $mclk / 100;
+								}
+
+								$mem_freq = $mclk;
+							}
+						}
+					}
+
+					if($core_freq == null)
 					{
 						// Old ugly way of handling the clock information
 						$log_parse = isset(phodevi::$vfs->xorg_log) ? phodevi::$vfs->xorg_log : null;
-
 						if(($engine_clock = strpos($log_parse, 'Default Engine Clock: ')))
 						{
 							$core_freq = substr($log_parse, $engine_clock + 22);
@@ -880,7 +915,7 @@ class phodevi_gpu extends phodevi_device_interface
 								$core_freq = 0;
 							}
 						}
-					}				
+					}
 					break;
 				case 'intel':
 					// try to read the maximum dynamic frequency
