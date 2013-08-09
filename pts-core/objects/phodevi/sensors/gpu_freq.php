@@ -96,7 +96,7 @@ class gpu_freq implements phodevi_sensor
 				if($core_freq == null && ($x = strpos(phodevi::$vfs->radeon_pm_info, 'sclk: ')))
 				{
 					$x = substr(phodevi::$vfs->radeon_pm_info, ($x + strlen('sclk: ')));
-					$x = substr($x, 0, strpos($x, ' ');
+					$x = substr($x, 0, strpos($x, ' '));
 
 					if(is_numeric($x))
 					{
@@ -111,7 +111,7 @@ class gpu_freq implements phodevi_sensor
 				if($mem_freq == null && ($x = strpos(phodevi::$vfs->radeon_pm_info, 'mclk: ')))
 				{
 					$x = substr(phodevi::$vfs->radeon_pm_info, ($x + strlen('mclk: ')));
-					$x = substr($x, 0, strpos($x, ' ');
+					$x = substr($x, 0, strpos($x, ' '));
 
 					if(is_numeric($x))
 					{
