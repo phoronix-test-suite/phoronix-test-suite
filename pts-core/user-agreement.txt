@@ -1,8 +1,8 @@
-The Phoronix Test Suite is the most comprehensive testing and benchmarking platform available for Linux, OpenSolaris, Mac OS X, and BSD operating systems. The Phoronix Test Suite is designed to carry out tests in a clean, reproducible, and easy-to-use manner.
+The Phoronix Test Suite is the most comprehensive testing and benchmarking platform available for Linux, OpenSolaris, Mac OS X, Windows, and BSD operating systems. The Phoronix Test Suite is designed to carry out tests in a clean, reproducible, and easy-to-use manner.
 
 - The Phoronix Test Suite is open-source and licensed under the GNU GPLv3. However, some tests supported by the Phoronix Test Suite are not open-source software or available for free of charge.
 
-- The Phoronix Test Suite contains tests which may stress your system and in some cases could exhibit stability problems of the system's hardware or software configuration. The Phoronix Test Suite is provided WITHOUT ANY WARRANTY. In no event shall OpenBenchmarking.org, Phoronix Media, the Phoronix Test Suite, or any associated stakeholder be liable to any party for any direct or indirect damages for any use of OpenBenchmarking.org -- including, without limitation, any lost profits, business interruption, loss of programs, loss of programmed data, or otherwise.
+- The Phoronix Test Suite contains tests which may stress your system and in some cases could exhibit stability problems of the system's hardware or software configuration. The Phoronix Test Suite is provided WITHOUT ANY WARRANTY. In no event shall OpenBenchmarking.org, Phoromatic, Phoronix Media, the Phoronix Test Suite, or any associated stakeholder be liable to any party for any direct or indirect damages for any use of OpenBenchmarking.org -- including, without limitation, any lost profits, business interruption, loss of programs, loss of programmed data, or otherwise.
 
 - For enterprise support, sponsorship, or other professional inquiries, contact phoronix@phoronix.com. Community support can be found in the Phoronix Forums at http://www.phoronix.com/forums/.
 
