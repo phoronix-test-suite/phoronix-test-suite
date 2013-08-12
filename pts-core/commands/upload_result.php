@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2012, Phoronix Media
-	Copyright (C) 2008 - 2012, Michael Larabel
+	Copyright (C) 2008 - 2013, Phoronix Media
+	Copyright (C) 2008 - 2013, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -44,7 +44,11 @@ class upload_result implements pts_option_interface
 		$result_file = pts_types::identifier_to_object($r[0]);
 		$upload_url = pts_openbenchmarking::upload_test_result($result_file);
 
-		if($upload_url == false)
+		if($upload_url)
+		{
+			pts_client::display_web_page($upload_url, 'Do you want to view the results on OpenBenchmarking.org', true);
+		}
+		else
 		{
 			echo PHP_EOL . 'Results Failed To Upload.' . PHP_EOL;
 		}

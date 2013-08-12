@@ -33,6 +33,7 @@ class phoromatic extends pts_module_interface
 	static $phoromatic_account = null;
 	static $phoromatic_verifier = null;
 	static $phoromatic_system = null;
+	static $openbenchmarking_upload_json = null;
 
 	public static function module_info()
 	{
@@ -99,11 +100,6 @@ class phoromatic extends pts_module_interface
 
 	public static function user_start()
 	{
-		if(PTS_IS_CLIENT)
-		{
-			echo PHP_EOL . PHP_EOL . 'NOTICE: A new version of Phoromatic is currently under development that is powered on top of the OpenBenchmarking.org infrastructure. Please contact Phoronix-Test-Suite.com if you are interested in testing out this brand new version with several new features.' . PHP_EOL . PHP_EOL;
-		}
-
 		if(pts_client::create_lock(PTS_USER_PATH . 'phoromatic_lock') == false)
 		{
 			pts_client::$display->generic_error('Phoromatic is already running.');
@@ -324,7 +320,10 @@ class phoromatic extends pts_module_interface
 				$communication_attempts++;
 			}
 
-			echo ' [' . $response . ']' . PHP_EOL;
+			if($response != null)
+			{
+				echo ' [' . $response . ']' . PHP_EOL;
+			}
 
 			switch($response)
 			{
@@ -343,6 +342,7 @@ class phoromatic extends pts_module_interface
 					$phoromatic_schedule_id = $xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/ID');
 					$phoromatic_results_identifier = $xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/SystemName');
 					$phoromatic_trigger = $xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/Trigger');
+					self::$openbenchmarking_upload_json = null;
 
 					$suite_identifier = 'local/' . $suite_identifier;
 					if(pts_strings::string_bool($xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/RunInstallCommand', 'TRUE')))
@@ -367,6 +367,7 @@ class phoromatic extends pts_module_interface
 							if(pts_strings::string_bool($xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/UploadToGlobal', 'FALSE')))
 							{
 								$test_run_manager->auto_upload_to_openbenchmarking();
+								pts_openbenchmarking_client::override_client_setting('UploadSystemLogsByDefault', pts_strings::string_bool($xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/UploadSystemLogs', 'TRUE')));
 							}
 
 							// Save results?
@@ -396,7 +397,7 @@ class phoromatic extends pts_module_interface
 										sleep(60);
 									}
 
-									$uploaded_test_results = phoromatic::upload_test_results($test_run_manager->get_file_name(), $phoromatic_schedule_id, $phoromatic_results_identifier, $phoromatic_trigger);
+									$uploaded_test_results = phoromatic::upload_test_results($test_run_manager->get_file_name(), $phoromatic_schedule_id, $phoromatic_results_identifier, $phoromatic_trigger, $xml_parser);
 									$times_tried++;
 								}
 								while($uploaded_test_results == false && $times_tried < 5);
@@ -490,6 +491,10 @@ class phoromatic extends pts_module_interface
 			phoromatic::upload_unscheduled_test_results($test_run_manager->get_file_name());
 		}
 	}
+	public static function __event_openbenchmarking_upload($json)
+	{
+		self::$openbenchmarking_upload_json = $json;
+	}
 
 	//
 	// Other Functions
@@ -559,11 +564,11 @@ class phoromatic extends pts_module_interface
 
 		return self::read_xml_value($server_response, 'PhoronixTestSuite/Phoromatic/General/Response') == 'TRUE';
 	}
-	private static function capture_test_logs($save_identifier)
+	private static function capture_test_logs($save_identifier, &$xml_parser)
 	{
 		$data = array('system-logs' => null, 'test-logs' => null);
 
-		if(is_dir(PTS_SAVE_RESULTS_PATH . $save_identifier . '/system-logs/'))
+		if(is_dir(PTS_SAVE_RESULTS_PATH . $save_identifier . '/system-logs/') && ($xml_parser == null || $xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/UploadSystemLogs', 'FALSE')))
 		{
 			$system_logs_zip = pts_client::create_temporary_file();
 			pts_compression::zip_archive_create($system_logs_zip, PTS_SAVE_RESULTS_PATH . $save_identifier . '/system-logs/');
@@ -571,7 +576,7 @@ class phoromatic extends pts_module_interface
 			unlink($system_logs_zip);
 		}
 
-		if(is_dir(PTS_SAVE_RESULTS_PATH . $save_identifier . '/test-logs/'))
+		if(is_dir(PTS_SAVE_RESULTS_PATH . $save_identifier . '/test-logs/') && ($xml_parser == null || $xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/UploadTestLogs', 'FALSE')))
 		{
 			$test_logs_zip = pts_client::create_temporary_file();
 			pts_compression::zip_archive_create($test_logs_zip, PTS_SAVE_RESULTS_PATH . $save_identifier . '/test-logs/');
@@ -581,11 +586,20 @@ class phoromatic extends pts_module_interface
 
 		return $data;
 	}
-	protected static function upload_test_results($save_identifier, $phoromatic_schedule_id, $results_identifier, $phoromatic_trigger)
+	protected static function upload_test_results($save_identifier, $phoromatic_schedule_id, $results_identifier, $phoromatic_trigger, &$xml_parser = null)
 	{
 		$composite_xml = file_get_contents(PTS_SAVE_RESULTS_PATH . $save_identifier . '/composite.xml');
 
-		$logs = self::capture_test_logs($save_identifier);
+		if(self::$openbenchmarking_upload_json != null && isset(self::$openbenchmarking_upload_json['openbenchmarking']['upload']['id']))
+		{
+			$openbenchmarking_id = self::$openbenchmarking_upload_json['openbenchmarking']['upload']['id'];
+		}
+		else
+		{
+			$openbenchmarking_id = null;
+		}
+
+		$logs = self::capture_test_logs($save_identifier, $xml_parser);
 		$server_response = phoromatic::upload_to_remote_server(array(
 			'r' => 'upload_test_results',
 			'c' => $composite_xml,
@@ -593,7 +607,8 @@ class phoromatic extends pts_module_interface
 			'ti' => $results_identifier,
 			'ts' => $phoromatic_trigger,
 			'sl' => $logs['system-logs'],
-			'tl' => $logs['test-logs']
+			'tl' => $logs['test-logs'],
+			'ob' => $openbenchmarking_id,
 			));
 
 		return self::read_xml_value($server_response, 'PhoronixTestSuite/Phoromatic/General/Response') == 'TRUE';
