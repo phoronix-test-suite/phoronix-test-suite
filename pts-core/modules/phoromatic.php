@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2011, Phoronix Media
-	Copyright (C) 2009 - 2011, Michael Larabel
+	Copyright (C) 2009 - 2013, Phoronix Media
+	Copyright (C) 2009 - 2013, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
 class phoromatic extends pts_module_interface
 {
 	const module_name = 'Phoromatic Client';
-	const module_version = '1.0.0';
+	const module_version = '2.0.0';
 	const module_description = 'The Phoromatic client is used for connecting to a Phoromatic server (Phoromatic.com or a locally run server) to facilitate the automatic running of tests, generally across multiple test nodes in a routine manner. For more details visit http://www.phoromatic.com/';
 	const module_author = 'Phoronix Media';
 
@@ -41,7 +41,7 @@ class phoromatic extends pts_module_interface
 	public static function module_setup()
 	{
 		return array(
-		new pts_module_option('remote_host', 'Enter the URL to host', 'HTTP_URL', 'https://www.phoromatic.com/'),
+		new pts_module_option('remote_host', 'Enter the URL to host', 'HTTP_URL', 'http://www.phoromatic.com/'),
 		new pts_module_option('remote_account', 'Enter the account code', 'ALPHA_NUMERIC'),
 		new pts_module_option('remote_verifier', 'Enter the verification code', 'ALPHA_NUMERIC'),
 		new pts_module_option('system_description', 'Enter a short (optional) description for this system', null, null, null, false)
@@ -262,6 +262,7 @@ class phoromatic extends pts_module_interface
 
 	public static function user_system_process()
 	{
+		define('PHOROMATIC_PROCESS', true);
 		$last_communication_minute = date('i');
 		$communication_attempts = 0;
 		static $current_hw = null;
@@ -311,7 +312,6 @@ class phoromatic extends pts_module_interface
 			else
 			{
 				$server_response = phoromatic::upload_to_remote_server(array('r' => 'status_check'));
-
 				$xml_parser = new nye_XmlReader($server_response);
 				$response = $xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/Response');
 
@@ -370,7 +370,8 @@ class phoromatic extends pts_module_interface
 							}
 
 							// Save results?
-							$test_run_manager->auto_save_results(date('Y-m-d H:i:s'), $phoromatic_results_identifier, 'A Phoromatic run.');
+							$save_identifier = date('Y-m-d H:i:s');
+							$test_run_manager->auto_save_results($save_identifier, $phoromatic_results_identifier, 'A Phoromatic run.');
 
 							// Run the actual tests
 							$test_run_manager->pre_execution_process();
@@ -382,7 +383,7 @@ class phoromatic extends pts_module_interface
 
 							// Upload test results
 
-							if(is_file(PTS_SAVE_RESULTS_PATH . $save_identifier . '/composite.xml'))
+							if(is_file(PTS_SAVE_RESULTS_PATH . $test_run_manager->get_file_name() . '/composite.xml'))
 							{
 								phoromatic::update_system_status('Uploading Test Results');
 
@@ -395,7 +396,7 @@ class phoromatic extends pts_module_interface
 										sleep(60);
 									}
 
-									$uploaded_test_results = phoromatic::upload_test_results($save_identifier, $phoromatic_schedule_id, $phoromatic_results_identifier, $phoromatic_trigger);
+									$uploaded_test_results = phoromatic::upload_test_results($test_run_manager->get_file_name(), $phoromatic_schedule_id, $phoromatic_results_identifier, $phoromatic_trigger);
 									$times_tried++;
 								}
 								while($uploaded_test_results == false && $times_tried < 5);
@@ -408,7 +409,7 @@ class phoromatic extends pts_module_interface
 
 								if(pts_strings::string_bool($xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/ArchiveResultsLocally', 'TRUE')) == false)
 								{
-									pts_client::remove_saved_result_file($save_identifier);
+									pts_client::remove_saved_result_file($test_run_manager->get_file_name());
 								}
 							}
 						}
