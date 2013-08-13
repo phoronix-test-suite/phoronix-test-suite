@@ -1053,7 +1053,7 @@ class pts_test_run_manager
 				echo $message;
 			}
 
-			if((pts_c::$test_flags & pts_c::auto_mode) == false && (pts_c::$test_flags & pts_c::batch_mode) == false && pts_flags::is_live_cd() == false)
+			if((pts_c::$test_flags & pts_c::auto_mode) == false && (pts_c::$test_flags & pts_c::batch_mode) == false && pts_flags::is_live_cd() == false && pts_client::current_command() != 'benchmark')
 			{
 				$stop_and_install = pts_user_io::prompt_bool_input('Would you like to stop and install these tests now', true);
 

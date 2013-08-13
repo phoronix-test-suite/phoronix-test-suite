@@ -23,6 +23,7 @@
 class pts_client
 {
 	public static $display;
+	private static $current_command = null;
 	protected static $lock_pointers = null;
 
 	public static function create_lock($lock_file)
@@ -1248,6 +1249,8 @@ class pts_client
 
 		if(is_file(PTS_COMMAND_PATH . $command . '.php'))
 		{
+			self::$current_command = $command;
+
 			if(method_exists($command, 'run'))
 			{
 				call_user_func(array($command, 'run'), $pass_args);
@@ -1267,6 +1270,10 @@ class pts_client
 		echo PHP_EOL;
 
 		pts_module_manager::module_process('__post_option_process', $command);
+	}
+	public static function current_command()
+	{
+		return self::$current_command;
 	}
 	public static function terminal_width()
 	{

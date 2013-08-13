@@ -348,6 +348,12 @@ class phoromatic extends pts_module_interface
 					if(pts_strings::string_bool($xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/RunInstallCommand', 'TRUE')))
 					{
 						phoromatic::set_user_context($xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/SetContextPreInstall'), $phoromatic_trigger, $phoromatic_schedule_id, 'INSTALL');
+
+						if(pts_strings::string_bool($xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/ForceInstallTests', 'TRUE')))
+						{
+							$test_flags |= pts_c::force_install;
+						}
+
 						pts_client::set_test_flags($test_flags);
 						pts_test_installer::standard_install($suite_identifier);
 					}
@@ -564,7 +570,7 @@ class phoromatic extends pts_module_interface
 
 		return self::read_xml_value($server_response, 'PhoronixTestSuite/Phoromatic/General/Response') == 'TRUE';
 	}
-	private static function capture_test_logs($save_identifier, &$xml_parser)
+	private static function capture_test_logs($save_identifier, &$xml_parser = null)
 	{
 		$data = array('system-logs' => null, 'test-logs' => null);
 
