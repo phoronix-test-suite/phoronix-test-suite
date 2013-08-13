@@ -338,9 +338,9 @@ class pts_openbenchmarking
 			'gsid_e' => (defined('PTS_GSID_E') ? PTS_GSID_E : null)
 			), $post);
 
-		if(isset(self::$openbenchmarking_account) && is_array(self::$openbenchmarking_account))
+		if(PTS_IS_CLIENT && ($account = pts_openbenchmarking_client::get_openbenchmarking_account()) && is_array($account))
 		{
-			$to_post = array_merge($to_post, self::$openbenchmarking_account);
+			$to_post = array_merge($to_post, $account);
 		}
 
 		return pts_network::http_upload_via_post($url, $to_post);

@@ -194,6 +194,10 @@ class pts_openbenchmarking_client
 			}
 		}
 	}
+	public static function get_openbenchmarking_account()
+	{
+		return self::$openbenchmarking_account;
+	}
 	public static function auto_upload_results()
 	{
 		return isset(self::$client_settings['AutoUploadResults']) && self::$client_settings['AutoUploadResults'];

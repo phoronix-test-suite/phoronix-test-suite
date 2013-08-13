@@ -66,6 +66,7 @@ class upload_test_profile implements pts_option_interface
 					'commit_description' => $commit_description
 					));
 				echo PHP_EOL;
+
 				$json = json_decode($server_response, true);
 				if(isset($json['openbenchmarking']['upload']['error']) && !empty($json['openbenchmarking']['upload']['error']))
 				{

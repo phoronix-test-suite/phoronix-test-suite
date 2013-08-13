@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2012, Phoronix Media
-	Copyright (C) 2008 - 2012, Michael Larabel
+	Copyright (C) 2008 - 2013, Phoronix Media
+	Copyright (C) 2008 - 2013, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -27,7 +27,11 @@ class pts_test_profile_parser
 
 	public function __construct($identifier = null)
 	{
-		$identifier = pts_openbenchmarking::evaluate_string_to_qualifier($identifier, true, 'test');
+		if(strpos($identifier, '<?xml version="1.0"?>') === false)
+		{
+			$identifier = pts_openbenchmarking::evaluate_string_to_qualifier($identifier, true, 'test');
+		}
+
 		$this->xml_parser = new pts_test_nye_XmlReader($identifier);
 
 		if(!isset($identifier[64]))
