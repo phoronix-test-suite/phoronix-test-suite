@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- pts-core: Fix for reporting environment variables to system notes on system graph table
+
 Phoronix Test Suite 4.8.1-Sokndal
 14 August 2013
 
