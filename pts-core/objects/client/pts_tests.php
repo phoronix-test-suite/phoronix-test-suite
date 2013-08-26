@@ -274,7 +274,7 @@ class pts_tests
 			$arg_soundex = soundex($passed_args);
 			$similar_tests = array();
 
-			foreach(pts_openbenchmarking_client::linked_repositories() as $repo)
+			foreach(pts_openbenchmarking::linked_repositories() as $repo)
 			{
 				$repo_index = pts_openbenchmarking::read_repository_index($repo);
 

@@ -851,7 +851,7 @@ class pts_render
 		{
 			$mto->test_profile->set_result_scale($mto->test_profile->get_result_scale() . ' | ' . implode(',', array_keys($days)));
 
-			if($is_tracking && $buffer_count < 16 && $result_file && pts_result_file_analyzer::analyze_result_file_intent($result_file) != false)
+			if($is_tracking && $buffer_count < 16 && $result_file && pts_result_file_analyzer::analyze_result_file_intent($result_file) == false)
 			{
 				// It can't be a tracker if the result file is comparing hardware/software, etc
 				$is_tracking = false;

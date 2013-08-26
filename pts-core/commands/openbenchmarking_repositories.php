@@ -29,7 +29,7 @@ class openbenchmarking_repositories implements pts_option_interface
 	{
 		echo PHP_EOL . 'Linked OpenBenchmarking.org Repositories:' . PHP_EOL . PHP_EOL;
 
-		foreach(pts_openbenchmarking_client::linked_repositories() as $repo)
+		foreach(pts_openbenchmarking::linked_repositories() as $repo)
 		{
 			if($repo == 'local')
 			{
