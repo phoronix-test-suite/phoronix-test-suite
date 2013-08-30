@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 4.8.2-Sokndal
+30 August 2013
 
 - pts-core: Fix for reporting environment variables to system notes on system graph table
 - pts-core: Fix OpenBenchmarking.org class issue for select code paths
