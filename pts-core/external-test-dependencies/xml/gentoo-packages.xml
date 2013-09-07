@@ -190,6 +190,7 @@
 		<Package>
 			<GenericName>openmpi-development</GenericName>
 			<PackageName>sys-cluster/openmpi</PackageName>
+			<FileCheck>libmpi.so, mpirun</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>yasm</GenericName>
