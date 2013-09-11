@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2012, Phoronix Media
-	Copyright (C) 2010 - 2012, Michael Larabel
+	Copyright (C) 2010 - 2013, Phoronix Media
+	Copyright (C) 2010 - 2013, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -70,7 +70,8 @@ class pts_result_file_analyzer
 				array('Processor', 'Graphics'),
 				array('Processor', 'Chipset'), // Processor comparison - Sandy/Ivy Bridge for Intel will change CPU/chipset reporting when still using same mobo
 				array('Motherboard', 'Chipset'), // Motherboard comparison
-				array('Motherboard', 'Chipset', 'Audio', 'Network') // Also a potential motherboard comparison
+				array('Motherboard', 'Chipset', 'Audio', 'Network'), // Also a potential motherboard comparison
+				array('Graphics', 'Audio'), // GPU comparison
 				), $return_all_changed_indexes);
 		}
 		else if(count($hw_unique) == 1)
