@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 - pts-core: Fix openmpi on Gentoo external dependency
 - pts-core: Detect graphics comparison when GPU changes with audio string
 - pts-core: Don't use HTTPS on proxies when connecting to OpenBenchmarking.org
+- pts-core: Add VersionSpecific capability to external dependencies handling for package(s) that may only be in certain OS versions
 
 Phoronix Test Suite 4.8.2-Sokndal
 30 August 2013

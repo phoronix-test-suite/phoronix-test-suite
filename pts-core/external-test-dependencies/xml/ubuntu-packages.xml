@@ -19,6 +19,13 @@
 			<FileCheck>/usr/share/doc/ia32-libs</FileCheck>
 		</Package>
 		<Package>
+			<GenericName>32bit-compatibility</GenericName>
+			<PackageName>ia32-libs</PackageName>
+			<ArchitectureSpecific>x86_64</ArchitectureSpecific>
+			<VersionSpecific>8.04, 8.10, 9.04, 9.10, 10.04, 10.10, 11.04, 11.10, 12.04, 12.10, 13.04</VersionSpecific>
+			<FileCheck>/usr/share/doc/ia32-libs</FileCheck>
+		</Package>
+		<Package>
 			<GenericName>gtk-development</GenericName>
 			<PackageName>libgtk2.0-dev</PackageName>
 		</Package>

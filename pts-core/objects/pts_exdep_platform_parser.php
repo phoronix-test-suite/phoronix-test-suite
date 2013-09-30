@@ -39,11 +39,17 @@ class pts_exdep_platform_parser
 			$distro_package = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ExternalDependencies/Package/PackageName');
 			$file_check = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ExternalDependencies/Package/FileCheck');
 			$arch_specific = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ExternalDependencies/Package/ArchitectureSpecific');
-			$kernel_architecture = phodevi::read_property('system', 'kernel-architecture');
+			$os_version_specific = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ExternalDependencies/Package/VersionSpecific');
+			$os_version = phodevi::read_property('system', 'os-version');
 
 			foreach(array_keys($generic_package) as $i)
 			{
 				if(empty($generic_package[$i]))
+				{
+					continue;
+				}
+				$os_version_compliant = empty($os_version_specific) || in_array($os_version, pts_strings::comma_explode($os_version_specific));
+				if($os_version_compliant == false)
 				{
 					continue;
 				}
