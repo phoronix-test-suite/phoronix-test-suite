@@ -48,7 +48,7 @@ class pts_exdep_platform_parser
 				{
 					continue;
 				}
-				$os_version_compliant = empty($os_version_specific) || in_array($os_version, pts_strings::comma_explode($os_version_specific));
+				$os_version_compliant = empty($os_version_specific[$i]) || in_array($os_version, pts_strings::comma_explode($os_version_specific[$i]));
 				if($os_version_compliant == false)
 				{
 					continue;
