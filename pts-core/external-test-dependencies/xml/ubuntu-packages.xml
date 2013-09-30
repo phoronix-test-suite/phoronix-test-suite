@@ -14,7 +14,7 @@
 		</Package>
 		<Package>
 			<GenericName>32bit-compatibility</GenericName>
-			<PackageName>ia32-libs</PackageName>
+			<PackageName>libc6-i386 libc6:i386 libstdc++6:i386 libx11-6:i386 libxext6:i386 libxrandr2:i386 libxinerama1:i386 libgl1-mesa-dev:i386</PackageName>
 			<ArchitectureSpecific>x86_64</ArchitectureSpecific>
 			<FileCheck>/usr/share/doc/ia32-libs</FileCheck>
 		</Package>

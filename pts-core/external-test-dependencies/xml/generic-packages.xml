@@ -227,7 +227,7 @@
 			<GenericName>curl</GenericName>
 			<Title>Curl</Title>
 			<PossibleNames>curl, libcurl3, libcurl</PossibleNames>
-			<FileCheck>libcurl.so.3, curl</FileCheck>
+			<FileCheck>libcurl.so.3 OR libcurl.so.4, curl</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>fftw3-development</GenericName>

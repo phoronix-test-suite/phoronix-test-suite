@@ -25,6 +25,10 @@ class pts_network
 	private static $disable_network_support = false;
 	private static $network_proxy = false;
 
+	public static function is_proxy_setup()
+	{
+		return self::$network_proxy == false;
+	}
 	public static function network_support_available()
 	{
 		return self::$disable_network_support == false;
