@@ -196,6 +196,11 @@ class toggle_screensaver extends pts_module_interface
 		{
 			shell_exec(self::$xdg_screensaver_available . ' reset 2>&1');
 		}
+
+		if(($xscreensaver = pts_client::executable_in_path('xscreensaver-command')))
+		{
+			shell_exec($xscreensaver . ' -deactivate 2>&1');
+		}
 	}
 	public static function __pre_option_process()
 	{
