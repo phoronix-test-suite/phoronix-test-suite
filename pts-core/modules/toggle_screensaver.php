@@ -33,6 +33,7 @@ class toggle_screensaver extends pts_module_interface
 	static $screensaver_halted = false;
 	static $gnome2_screensaver_halted = false;
 	static $gnome3_screensaver_halted = false;
+	static $gnome3_screensaver_halted_old = false;
 	static $kde_screensaver_halted = false;
 	static $gnome_gconftool = false;
 	static $xfce_screensaver_halted = false;
@@ -93,13 +94,23 @@ class toggle_screensaver extends pts_module_interface
 		if(pts_client::executable_in_path('gsettings'))
 		{
 			// GNOME 3.x Screensaver?
-			$is_gnome3_screensaver_enabled = trim(shell_exec('gsettings get org.gnome.desktop.screensaver idle-activation-enabled 2>&1'));
+			$is_gnome3_screensaver_enabled = trim(shell_exec('gsettings get org.gnome.desktop.session idle-delay 2>&1'));
 
-			if($is_gnome3_screensaver_enabled == 'true')
+			if(stripos($is_gnome3_screensaver_enabled, 'no such key') === false && pts_strings::last_in_string($is_gnome3_screensaver_enabled) > 0)
+			{
+				// Stop the GNOME 3.x Screensaver
+				shell_exec('gsettings set org.gnome.desktop.session idle-delay 0 2>&1');
+				self::$gnome3_screensaver_halted = pts_strings::last_in_string($is_gnome3_screensaver_enabled);
+			}
+
+			// This GNOME3 GSettings method is deprecated on distributions like GNOME 3.8 with Fedora 19
+			$is_gnome3_screensaver_enabled_old = trim(shell_exec('gsettings get org.gnome.desktop.screensaver idle-activation-enabled 2>&1'));
+
+			if($is_gnome3_screensaver_enabled_old == 'true')
 			{
 				// Stop the GNOME 3.x Screensaver
 				shell_exec('gsettings set org.gnome.desktop.screensaver idle-activation-enabled false 2>&1');
-				self::$gnome3_screensaver_halted = true;
+				self::$gnome3_screensaver_halted_old = true;
 			}
 
 			// GNOME 3.x Sleep Dispaly?
@@ -132,7 +143,7 @@ class toggle_screensaver extends pts_module_interface
 			shell_exec('setterm -powersave off -blank 0 2>&1');
 		}
 
-		if(self::$gnome2_screensaver_halted || self::$gnome3_screensaver_halted || self::$kde_screensaver_halted || self::$xfce_screensaver_halted)
+		if(self::$gnome2_screensaver_halted || self::$gnome3_screensaver_halted || self::$gnome3_screensaver_halted_old || self::$kde_screensaver_halted || self::$xfce_screensaver_halted)
 		{
 			self::$screensaver_halted = true;
 		}
@@ -167,7 +178,12 @@ class toggle_screensaver extends pts_module_interface
 			// Restore the GNOME Screensaver
 			shell_exec(self::$gnome_gconftool . ' --type bool --set /apps/gnome-screensaver/idle_activation_enabled true 2>&1');
 		}
-		if(self::$gnome3_screensaver_halted == true)
+		if(self::$gnome3_screensaver_halted)
+		{
+			// Restore the GNOME Screensaver
+			shell_exec('gsettings set org.gnome.desktop.session idle-delay ' . self::$gnome3_screensaver_halted . ' 2>&1');
+		}
+		if(self::$gnome3_screensaver_halted_old == true)
 		{
 			// Restore the GNOME Screensaver
 			shell_exec('gsettings set org.gnome.desktop.screensaver idle-activation-enabled true 2>&1');
