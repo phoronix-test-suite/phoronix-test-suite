@@ -9,6 +9,7 @@ Phoronix Test Suite (Git)
 - pts-core: Ensure xscreensaver is deactivated
 - pts-core: Support toggling GNOME3 screensaver on GNOME 3.8+ where org.gnome.desktop.screensaver idle-activation-enabled -> org.gnome.desktop.session idle-delay
 - phodevi: Fix for parsing long PCI string values
+- phodevi: Improve Intel GPU model detection with recent xf86-video-intel DDX
 
 Phoronix Test Suite 4.8.2-Sokndal
 30 August 2013
