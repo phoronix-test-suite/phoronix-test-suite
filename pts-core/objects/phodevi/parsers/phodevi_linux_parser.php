@@ -720,7 +720,7 @@ class phodevi_linux_parser
 
 				$sub_pci_info = trim(substr($sub_pci_info, 0, $EOL));
 
-				if(($strlen = strlen($sub_pci_info)) >= 6 && $strlen < 96)
+				if(($strlen = strlen($sub_pci_info)) >= 6 && $strlen < 128)
 				{
 					$info = pts_strings::strip_string($sub_pci_info);
 				}

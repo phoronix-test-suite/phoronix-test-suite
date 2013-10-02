@@ -119,7 +119,7 @@
 		</Package>
 		<Package>
 			<GenericName>vorbis-development</GenericName>
-			<PackageName>taglib-devel</PackageName>
+			<PackageName>taglib-devel libvorbis-devel</PackageName>
 		</Package>
 		<Package>
 			<GenericName>jam</GenericName>
