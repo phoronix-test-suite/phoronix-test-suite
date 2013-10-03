@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 4.8.3-Sokndal
+2 October 2013
 
 - pts-core: Fix openmpi on Gentoo external dependency
 - pts-core: Detect graphics comparison when GPU changes with audio string
