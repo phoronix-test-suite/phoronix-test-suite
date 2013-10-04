@@ -1511,7 +1511,7 @@ class pts_test_run_manager
 		{
 			$valid_test_profile = false;
 		}
-		else if($test_type == 'Graphics' && pts_client::read_env('DISPLAY') == false && phodevi::is_windows() == false && phodevi::is_macosx() == false)
+		else if($test_type == 'Graphics' && pts_client::read_env('DISPLAY') == false && pts_client::read_env('WAYLAND_DISPLAY') == false && phodevi::is_windows() == false && phodevi::is_macosx() == false)
 		{
 			$report_errors && pts_client::$display->test_run_error('No display server was found, cannot run ' . $test_profile);
 			$valid_test_profile = false;
