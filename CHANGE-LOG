@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - phodevi: Protect against "undefined" memory strings from DMI data
+- phodevi: Add Wayland Weston version detection
 
 Phoronix Test Suite 4.8.3-Sokndal
 2 October 2013

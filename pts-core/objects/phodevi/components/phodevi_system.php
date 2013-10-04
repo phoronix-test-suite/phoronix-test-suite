@@ -1223,6 +1223,16 @@ class phodevi_system extends phodevi_device_interface
 					$info = 'X Server ' . $info;
 				}
 			}
+			else if(pts_client::is_process_running('weston'))
+			{
+				$info = 'Wayland Weston';
+				$vinfo = trim(shell_exec('weston --version 2>&1'));
+
+				if(pts_strings::last_in_string($vinfo))
+				{
+					$info .= ' ' . pts_strings::last_in_string($vinfo);
+				}
+			}
 			else if(pts_client::is_process_running('surfaceflinger'))
 			{
 				$info = 'SurfaceFlinger';
