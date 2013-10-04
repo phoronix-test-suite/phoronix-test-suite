@@ -1202,7 +1202,7 @@ class phodevi_system extends phodevi_device_interface
 				$info = 'Wayland Weston';
 				$vinfo = trim(shell_exec('weston --version 2>&1'));
 
-				if(pts_strings::last_in_string($vinfo) && pts_strings::is_version($vinfo))
+				if(pts_strings::last_in_string($vinfo) && pts_strings::is_version(pts_strings::last_in_string($vinfo)))
 				{
 					$info .= ' ' . pts_strings::last_in_string($vinfo);
 				}
