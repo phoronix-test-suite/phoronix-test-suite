@@ -1189,15 +1189,36 @@ class phodevi_system extends phodevi_device_interface
 	}
 	public static function sw_display_server()
 	{
-		$info = null;
+		$display_servers = array();
 
 		if(phodevi::is_windows())
 		{
 			// TODO: determine what to do for Windows support
-			$info = false;
 		}
 		else
 		{
+			if(pts_client::is_process_running('weston'))
+			{
+				$info = 'Wayland Weston';
+				$vinfo = trim(shell_exec('weston --version 2>&1'));
+
+				if(pts_strings::last_in_string($vinfo) && pts_strings::is_version($vinfo))
+				{
+					$info .= ' ' . pts_strings::last_in_string($vinfo);
+				}
+					array_push($display_servers, $info);
+			}
+			if(pts_client::is_process_running('unity-system-compositor'))
+			{
+				$unity_system_comp = trim(str_replace('unity-system-compositor', null, shell_exec('unity-system-compositor --version 2>&1')));
+
+				if(pts_strings::is_version($unity_system_comp))
+				{
+					array_push($display_servers, 'Unity-System-Compositor ' . $unity_system_comp);
+				}
+
+			}
+
 			if(($x_bin = pts_client::executable_in_path('Xorg')) || ($x_bin = pts_client::executable_in_path('X')))
 			{
 				// Find graphics subsystem version
@@ -1220,37 +1241,16 @@ class phodevi_system extends phodevi_device_interface
 
 				if($info != null)
 				{
-					$info = 'X Server ' . $info;
+					array_push($display_servers, 'X Server ' . $info);
 				}
 			}
-			else if(pts_client::is_process_running('weston'))
+			if(pts_client::is_process_running('surfaceflinger'))
 			{
-				$info = 'Wayland Weston';
-				$vinfo = trim(shell_exec('weston --version 2>&1'));
-
-				if(pts_strings::last_in_string($vinfo))
-				{
-					$info .= ' ' . pts_strings::last_in_string($vinfo);
-				}
-			}
-			else if(pts_client::is_process_running('surfaceflinger'))
-			{
-				$info = 'SurfaceFlinger';
-			}
-
-			if(pts_client::is_process_running('unity-system-compositor'))
-			{
-				$unity_system_comp = trim(str_replace('unity-system-compositor', null, shell_exec('unity-system-compositor --version 2>&1')));
-
-				if(pts_strings::is_version($unity_system_comp))
-				{
-					$info = 'Unity-System-Compositor ' . $unity_system_comp . ($info != null ? ' + ' . $info : null);
-				}
-
+				array_push($display_servers, 'SurfaceFlinger');
 			}
 		}
 
-		return $info;
+		return implode(' + ', $display_servers);
 	}
 	public static function sw_display_driver($with_version = true)
 	{
