@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2012, Phoronix Media
-	Copyright (C) 2008 - 2012, Michael Larabel
+	Copyright (C) 2008 - 2013, Phoronix Media
+	Copyright (C) 2008 - 2013, Michael Larabel
 	phodevi_memory.php: The PTS Device Interface object for system memory
 
 	This program is free software; you can redistribute it and/or modify
@@ -86,11 +86,11 @@ class phodevi_memory extends phodevi_device_interface
 		}
 		else if(phodevi::is_linux())
 		{
-			$mem_size = phodevi_linux_parser::read_dmidecode('memory', 'Memory Device', 'Size', false, array('Not Installed', 'No Module Installed'));
-			$mem_speed = phodevi_linux_parser::read_dmidecode('memory', 'Memory Device', 'Speed', true, 'Unknown');
-			$mem_type = phodevi_linux_parser::read_dmidecode('memory', 'Memory Device', 'Type', true, array('Unknown', 'Other', 'Flash'));
-			$mem_manufacturer = phodevi_linux_parser::read_dmidecode('memory', 'Memory Device', 'Manufacturer', true, array('Unknown'));
-			$mem_part = phodevi_linux_parser::read_dmidecode('memory', 'Memory Device', 'Part Number', true, array('Unknown'));
+			$mem_size = phodevi_linux_parser::read_dmidecode('memory', 'Memory Device', 'Size', false, array('Not Installed', 'No Module Installed', 'Undefined'));
+			$mem_speed = phodevi_linux_parser::read_dmidecode('memory', 'Memory Device', 'Speed', true, array('Unknown', 'Undefined'));
+			$mem_type = phodevi_linux_parser::read_dmidecode('memory', 'Memory Device', 'Type', true, array('Unknown', 'Other', 'Flash', 'Undefined'));
+			$mem_manufacturer = phodevi_linux_parser::read_dmidecode('memory', 'Memory Device', 'Manufacturer', true, array('Unknown', 'Undefined'));
+			$mem_part = phodevi_linux_parser::read_dmidecode('memory', 'Memory Device', 'Part Number', true, array('Unknown', 'Undefined'));
 		}
 
 		if(is_array($mem_type))
