@@ -1248,6 +1248,13 @@ class phodevi_system extends phodevi_device_interface
 			{
 				array_push($display_servers, 'SurfaceFlinger');
 			}
+
+			if(pts_client::is_process_running('gnome-shell-wayland'))
+			{
+				array_push($display_servers, 'GNOME Shell Wayland');
+			}
+
+
 		}
 
 		return implode(' + ', $display_servers);

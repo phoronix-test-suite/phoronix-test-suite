@@ -124,7 +124,7 @@ class info implements pts_option_interface
 		}
 		else if($args['object'] instanceof pts_result_file)
 		{
-			echo 'Title: ' . $args['object']->get_title() . '\nIdentifier: ' . $args['object']->get_identifier() . PHP_EOL;
+			echo 'Title: ' . $args['object']->get_title() . PHP_EOL . 'Identifier: ' . $args['object']->get_identifier() . PHP_EOL;
 			echo PHP_EOL . 'Test Result Identifiers:' . PHP_EOL;
 			echo pts_user_io::display_text_list($args['object']->get_system_identifiers());
 

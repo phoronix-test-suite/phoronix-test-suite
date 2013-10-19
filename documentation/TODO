@@ -12,6 +12,8 @@ PHORONIX TEST SUITE PUBLIC TODO LIST:
 - Multi-threaded downloading of test files
 - Numerous pts_render improvements [see in-line code comments]
 
+- NVIDIA make use of UsedDedicatedGPUMemory as new GPU sensor
+
 ### PTS-GRAPH ###
 
 - Improve rendering of large data-sets, e.g. http://openbenchmarking.org/result/1205231-LI-BL460G6BE41

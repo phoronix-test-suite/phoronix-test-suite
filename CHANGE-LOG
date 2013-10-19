@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 - pts-core: Allow web browsers and graphics tests to work on $WAYLAND_DISPLAY when $DISPLAY is not set
 - phodevi: Protect against "undefined" memory strings from DMI data
 - phodevi: Add Wayland Weston version detection
+- phodevi: Detect gnome-shell-wayland
 
 Phoronix Test Suite 4.8.3-Sokndal
 2 October 2013
