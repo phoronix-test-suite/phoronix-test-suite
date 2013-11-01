@@ -104,7 +104,7 @@
 		</Package>
 		<Package>
 			<GenericName>libstdcpp5</GenericName>
-			<PackageName>virtual/libstdc++-3.3</PackageName>
+			<PackageName>virtual/libstdc++:3.3</PackageName>
 		</Package>
 		<Package>
 			<GenericName>openal-development</GenericName>
