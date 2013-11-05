@@ -185,5 +185,13 @@
 			<GenericName>suitesparse</GenericName>
 			<PackageName>suitesparse</PackageName>
 		</Package>
+		<Package>
+			<GenericName>dune</GenericName>
+			<PackageName>dune-common dune-grid dune-istl</PackageName>
+		</Package>
+		<Package>
+			<GenericName>tinyxml</GenericName>
+			<PackageName>tinyxml</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

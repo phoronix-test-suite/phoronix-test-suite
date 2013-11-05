@@ -221,5 +221,13 @@
 			<GenericName>suitesparse</GenericName>
 			<PackageName>suitesparse-devel</PackageName>
 		</Package>
+		<Package>
+			<GenericName>dune</GenericName>
+			<PackageName>dune-common-devel dune-istl-devel</PackageName>
+		</Package>
+		<Package>
+			<GenericName>tinyxml</GenericName>
+			<PackageName>tinyxml-devel</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

@@ -267,5 +267,13 @@
 			<GenericName>suitesparse</GenericName>
 			<PackageName>libsuitesparse-dev</PackageName>
 		</Package>
+		<Package>
+			<GenericName>dune</GenericName>
+			<PackageName>libdune-common-dev libdune-istl-dev libdune-grid-dev</PackageName>
+		</Package>
+		<Package>
+			<GenericName>tinyxml</GenericName>
+			<PackageName>libtinyxml-dev</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

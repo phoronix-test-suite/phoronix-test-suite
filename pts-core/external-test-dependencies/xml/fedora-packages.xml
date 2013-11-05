@@ -220,11 +220,15 @@
 		</Package>
 		<Package>
 			<GenericName>superlu</GenericName>
-			<PackageName>superlu</PackageName>
+			<PackageName>superlu libsuperlu3</PackageName>
 		</Package>
 		<Package>
 			<GenericName>suitesparse</GenericName>
-			<PackageName>libsuitesparse-dev</PackageName>
+			<PackageName>suitesparse-devel</PackageName>
+		</Package>
+		<Package>
+			<GenericName>tinyxml</GenericName>
+			<PackageName>tinyxml-devel</PackageName>
 		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

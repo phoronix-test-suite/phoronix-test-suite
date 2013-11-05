@@ -359,8 +359,20 @@
 		<Package>
 			<GenericName>suitesparse</GenericName>
 			<Title>SuiteSparse</Title>
-			<PossibleNames>libsuitesparse-dev</PossibleNames>
+			<PossibleNames>libsuitesparse-dev, suitesparse-devel</PossibleNames>
 			<FileCheck>suitesparse/cs.h, libcsparse.so</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>dune</GenericName>
+			<Title>Distributed and Unified Numerics Environment</Title>
+			<PossibleNames>libdune-common-dev</PossibleNames>
+			<FileCheck>libdunecommon.so, libdunegrid.so</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>tinyxml</GenericName>
+			<Title>TinyXML Library</Title>
+			<PossibleNames>tinyxml-dev</PossibleNames>
+			<FileCheck>tinyxml.h</FileCheck>
 		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

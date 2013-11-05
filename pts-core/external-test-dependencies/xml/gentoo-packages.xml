@@ -224,5 +224,9 @@
 			<GenericName>suitesparse</GenericName>
 			<PackageName>sci-libs/suitesparse</PackageName>
 		</Package>
+		<Package>
+			<GenericName>tinyxml</GenericName>
+			<PackageName>dev-libs/tinyxml</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
