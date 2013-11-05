@@ -29,6 +29,7 @@ class pts_test_result
 	private $result_max = 0;
 	private $used_arguments;
 	private $used_arguments_description;
+	private $result_precision = 2;
 
 	public $test_profile;
 	public $test_result_buffer;
@@ -36,7 +37,6 @@ class pts_test_result
 	public $active_result = null;
 	public $active_min_result = null;
 	public $active_max_result = null;
-
 	public $secondary_linked_results = null;
 
 	public function __construct(&$test_profile)
@@ -55,6 +55,10 @@ class pts_test_result
 	public function set_used_arguments_description($arguments_description)
 	{
 		$this->used_arguments_description = $arguments_description;
+	}
+	public function set_result_precision($precision = 2)
+	{
+		$this->result_precision = $precision;
 	}
 	public function set_used_arguments($used_arguments)
 	{
@@ -184,7 +188,7 @@ class pts_test_result
 
 			foreach($keys as $k)
 			{
-				$normalized = pts_math::set_precision(($this->test_result_buffer->buffer_items[$k]->get_result_value() / $divide_value), 2);
+				$normalized = pts_math::set_precision(($this->test_result_buffer->buffer_items[$k]->get_result_value() / $divide_value), $this->result_precision);
 				$this->test_result_buffer->buffer_items[$k]->reset_result_value($normalized);
 				$this->test_result_buffer->buffer_items[$k]->reset_raw_value(0);
 			}

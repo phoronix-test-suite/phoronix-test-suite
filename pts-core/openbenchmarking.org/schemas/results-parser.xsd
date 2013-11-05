@@ -28,6 +28,7 @@
 			<xs:element name="MultiplyResultBy" type="PositiveInteger" minOccurs="0" maxOccurs="1" />
 			<xs:element name="ResultScale" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="ResultProportion" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="ResultPrecision" type="xs:string" minOccurs="0" maxOccurs="1" />
 		</xs:sequence>
 		</xs:complexType>
 		</xs:element>
