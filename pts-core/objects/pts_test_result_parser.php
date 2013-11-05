@@ -209,11 +209,11 @@ class pts_test_result_parser
 				break;
 			case 'PASS_FAIL':
 			case 'MULTI_PASS_FAIL':
-				$test_run_request->active_result = self::parse_generic_result($test_identifier, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments);
+				$test_run_request->active_result = self::parse_generic_result($test_run_request, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments);
 				break;
 			case 'BAR_GRAPH':
 			default:
-				$test_run_request->active_result = self::parse_numeric_result($test_identifier, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments);
+				$test_run_request->active_result = self::parse_numeric_result($test_run_request, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments);
 
 				if($test_run_request->test_profile->get_display_format() == 'BAR_GRAPH' && !is_numeric($test_run_request->active_result))
 				{
@@ -221,8 +221,8 @@ class pts_test_result_parser
 				}
 				else
 				{
-					$test_run_request->active_min_result = self::parse_numeric_result($test_identifier, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments, 'MIN');
-					$test_run_request->active_max_result = self::parse_numeric_result($test_identifier, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments, 'MAX');
+					$test_run_request->active_min_result = self::parse_numeric_result($test_run_request, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments, 'MIN');
+					$test_run_request->active_max_result = self::parse_numeric_result($test_run_request, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments, 'MAX');
 				}
 				break;
 		}
@@ -473,18 +473,20 @@ class pts_test_result_parser
 
 		return $test_result;
 	}
-	protected static function parse_numeric_result($test_identifier, $parse_xml_file, $log_file, $pts_test_arguments, $extra_arguments, $prefix = null)
+	protected static function parse_numeric_result(&$test_run_request, $parse_xml_file, $log_file, $pts_test_arguments, $extra_arguments, $prefix = null)
 	{
-		return self::parse_result_process($test_identifier, $parse_xml_file, $log_file, $pts_test_arguments, $extra_arguments, true, $prefix);
+		return self::parse_result_process($test_run_request, $parse_xml_file, $log_file, $pts_test_arguments, $extra_arguments, true, $prefix);
 	}
-	protected static function parse_generic_result($test_identifier, $parse_xml_file, $log_file, $pts_test_arguments, $extra_arguments, $prefix = null)
+	protected static function parse_generic_result(&$test_run_request, $parse_xml_file, $log_file, $pts_test_arguments, $extra_arguments, $prefix = null)
 	{
-		return self::parse_result_process($test_identifier, $parse_xml_file, $log_file, $pts_test_arguments, $extra_arguments, false, $prefix);
+		return self::parse_result_process($test_run_request, $parse_xml_file, $log_file, $pts_test_arguments, $extra_arguments, false, $prefix);
 	}
-	protected static function parse_result_process($test_identifier, $parse_xml_file, $log_file, $pts_test_arguments, $extra_arguments, $is_numeric_check = true, $prefix = null)
+	protected static function parse_result_process(&$test_run_request, $parse_xml_file, $log_file, $pts_test_arguments, $extra_arguments, $is_numeric_check = true, $prefix = null)
 	{
+		$test_identifier = $test_run_request->test_profile->get_identifier();
 		$results_parser_xml = new pts_parse_results_nye_XmlReader($parse_xml_file);
 		$result_match_test_arguments = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/ResultsParser/MatchToTestArguments');
+		$result_scale = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/ResultsParser/ResultScale');
 		$result_template = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/ResultsParser/OutputTemplate');
 		$result_key = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/ResultsParser/ResultKey');
 		$result_line_hint = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/ResultsParser/LineHint');
@@ -724,6 +726,11 @@ class pts_test_result_parser
 
 			if($test_result != false)
 			{
+				if($result_scale[$i] != null)
+				{
+					$test_run_request->test_profile->set_result_scale($result_scale[$i]);
+				}
+
 				break;
 			}
 		}

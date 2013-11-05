@@ -4,6 +4,7 @@ Phoronix Test Suite (Git)
 
 - pts-core: Allow web browsers and graphics tests to work on $WAYLAND_DISPLAY when $DISPLAY is not set
 - pts-core: Fix for libstdc++ on Gentoo external dependency
+- pts-core: Add a ResultScale XML tag option for the results-definition.xml to provide custom ResultScale values depending upon selected option
 - phodevi: Protect against "undefined" memory strings from DMI data
 - phodevi: Add Wayland Weston version detection
 - phodevi: Detect gnome-shell-wayland
