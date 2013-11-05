@@ -487,6 +487,7 @@ class pts_test_result_parser
 		$results_parser_xml = new pts_parse_results_nye_XmlReader($parse_xml_file);
 		$result_match_test_arguments = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/ResultsParser/MatchToTestArguments');
 		$result_scale = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/ResultsParser/ResultScale');
+		$result_proportion = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/ResultsParser/ResultProportion');
 		$result_template = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/ResultsParser/OutputTemplate');
 		$result_key = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/ResultsParser/ResultKey');
 		$result_line_hint = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/ResultsParser/LineHint');
@@ -729,6 +730,10 @@ class pts_test_result_parser
 				if($result_scale[$i] != null)
 				{
 					$test_run_request->test_profile->set_result_scale($result_scale[$i]);
+				}
+				if($result_proportion[$i] != null)
+				{
+					$test_run_request->test_profile->set_result_proportion($result_proportion[$i]);
 				}
 
 				break;
