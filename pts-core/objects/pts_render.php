@@ -569,7 +569,8 @@ class pts_render
 			}
 			if(isset($data['install-footnote']) && $data['install-footnote'] != null)
 			{
-				$graph->addGraphIdentifierNote($identifier, $data['install-footnote']);
+				$graph->addTestNote($identifier . ': ' . $data['install-footnote']);
+				//$graph->addGraphIdentifierNote($identifier, $data['install-footnote']);
 			}
 		}
 	}
