@@ -72,7 +72,7 @@ class pts_installed_test
 	}
 	public function get_install_footnote()
 	{
-		return json_decode($this->xml_parser->getXMLValue('PhoronixTestSuite/TestInstallation/Environment/InstallFootnote'), true);
+		return $this->xml_parser->getXMLValue('PhoronixTestSuite/TestInstallation/Environment/InstallFootnote');
 	}
 	public function get_installed_checksum()
 	{
