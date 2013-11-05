@@ -191,6 +191,7 @@ class pts_client
 			'PTS_DIR' => PTS_PATH,
 			'PHP_BIN' => PHP_BIN,
 			'NUM_CPU_CORES' => phodevi::read_property('cpu', 'core-count'),
+			'NUM_CPU_NODES' => phodevi::read_property('cpu', 'node-count'),
 			'NUM_CPU_JOBS' => (phodevi::read_property('cpu', 'core-count') * 2),
 			'SYS_MEMORY' => phodevi::read_property('memory', 'capacity'),
 			'VIDEO_MEMORY' => phodevi::read_property('gpu', 'memory-capacity'),

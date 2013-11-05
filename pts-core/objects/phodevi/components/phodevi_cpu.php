@@ -46,6 +46,9 @@ class phodevi_cpu extends phodevi_device_interface
 			case 'core-count':
 				$property = new phodevi_device_property('cpu_core_count', phodevi::smart_caching);
 				break;
+			case 'node-count':
+				$property = new phodevi_device_property('cpu_node_count', phodevi::smart_caching);
+				break;
 			case 'scaling-governor':
 				$property = new phodevi_device_property('cpu_scaling_governor', phodevi::std_caching);
 				break;
@@ -118,6 +121,19 @@ class phodevi_cpu extends phodevi_device_interface
 		}
 
 		return (is_numeric($info) && $info > 0 ? $info : 1);
+	}
+	public static function cpu_node_count()
+	{
+		$node_count = 1;
+
+		if(isset(phodevi::$vfs->lscpu) && ($t = strpos(phodevi::$vfs->lscpu, 'NUMA node(s):')))
+		{
+			$lscpu = substr(phodevi::$vfs->lscpu, $t + strlen('NUMA node(s):') + 1);
+			$lscpu = substr($lscpu, 0, strpos($lscpu, PHP_EOL));
+			$node_count = trim($lscpu);
+		}
+
+		return (is_numeric($node_count) && $node_count > 0 ? $node_count : 1);
 	}
 	public static function cpu_default_frequency_mhz()
 	{
