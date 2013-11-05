@@ -8,6 +8,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add a ResultProportion XML tag option for the results-parser to provide custom result proportion values depending upon selected parser option
 - pts-core: Add ResultPrecision XML tag to results-parser for setting math precision of decimal points on result (default remains 2)
 - pts-core: Add support for writing to $INSTALL_FOOTNOTE during test installations to report custom footnote on generated graphs
+- pts-core: Add SuiteSparse external dependency
 - phodevi: Protect against "undefined" memory strings from DMI data
 - phodevi: Add Wayland Weston version detection
 - phodevi: Detect gnome-shell-wayland

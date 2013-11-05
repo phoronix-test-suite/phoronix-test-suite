@@ -29,7 +29,7 @@ class pts_test_profile_parser
 	{
 		if(strpos($identifier, '<?xml version="1.0"?>') === false)
 		{
-			$identifier = pts_openbenchmarking::evaluate_string_to_qualifier($identifier, true, 'test');
+			$identifier = PTS_IS_CLIENT ? pts_openbenchmarking::evaluate_string_to_qualifier($identifier, true, 'test') : $identifier;
 		}
 
 		$this->xml_parser = new pts_test_nye_XmlReader($identifier);

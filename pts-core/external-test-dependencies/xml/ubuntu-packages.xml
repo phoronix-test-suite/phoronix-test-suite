@@ -201,7 +201,7 @@
 		</Package>
 		<Package>
 			<GenericName>cmake</GenericName>
-			<PackageName>cmake</PackageName>
+			<PackageName>cmake cmake-data</PackageName>
 		</Package>
 		<Package>
 			<GenericName>boost-development</GenericName>
@@ -262,6 +262,10 @@
 		<Package>
 			<GenericName>superlu</GenericName>
 			<PackageName>libsuperlu3-dev</PackageName>
+		</Package>
+		<Package>
+			<GenericName>suitesparse</GenericName>
+			<PackageName>libsuitesparse-dev</PackageName>
 		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

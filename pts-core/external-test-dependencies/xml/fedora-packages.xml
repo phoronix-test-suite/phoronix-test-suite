@@ -222,5 +222,9 @@
 			<GenericName>superlu</GenericName>
 			<PackageName>superlu</PackageName>
 		</Package>
+		<Package>
+			<GenericName>suitesparse</GenericName>
+			<PackageName>libsuitesparse-dev</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

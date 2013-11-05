@@ -356,5 +356,11 @@
 			<PossibleNames>superlu, libsuperlu3-dev</PossibleNames>
 			<FileCheck>superlu/slu_util.h</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>suitesparse</GenericName>
+			<Title>SuiteSparse</Title>
+			<PossibleNames>libsuitesparse-dev</PossibleNames>
+			<FileCheck>suitesparse/cs.h, libcsparse.so</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
