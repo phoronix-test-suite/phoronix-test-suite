@@ -60,6 +60,10 @@ class pts_test_result
 	{
 		$this->result_precision = $precision;
 	}
+	public function get_result_precision()
+	{
+		return $this->result_precision;
+	}
 	public function set_used_arguments($used_arguments)
 	{
 		$this->used_arguments = $used_arguments;
