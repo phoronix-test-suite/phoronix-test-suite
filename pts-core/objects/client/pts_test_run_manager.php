@@ -667,6 +667,10 @@ class pts_test_run_manager
 		{
 			$json_report_attributes['compiler-options'] = $t;
 		}
+		if(($t = $test_run_request->test_profile->test_installation->get_install_footnote()))
+		{
+			$json_report_attributes['install-footnote'] = $t;
+		}
 		if(($t = $test_run_request->get_min_result()) != 0)
 		{
 			$json_report_attributes['min-result'] = $t;

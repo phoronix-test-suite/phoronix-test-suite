@@ -567,6 +567,10 @@ class pts_render
 			{
 				$graph->addGraphIdentifierNote($identifier, 'MIN: ' . $data['min-result'] . ' / MAX: ' . $data['max-result']);
 			}
+			if(isset($data['install-footnote']) && $data['install-footnote'] != null)
+			{
+				$graph->addGraphIdentifierNote($identifier, $data['install-footnote']);
+			}
 		}
 	}
 	public static function evaluate_redundant_identifier_words($identifiers)

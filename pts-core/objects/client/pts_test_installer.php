@@ -113,6 +113,7 @@ class pts_test_installer
 		while(($test_install_request = $test_install_manager->next_in_install_queue()) != false)
 		{
 			pts_client::$display->test_install_start($test_install_request->test_profile->get_identifier());
+			$test_install_request->special_environment_vars['INSTALL_FOOTNOTE'] = $test_install_request->test_profile->get_install_dir() . 'install-footnote';
 			$installed = pts_test_installer::install_test_process($test_install_request);
 			$compiler_data = pts_test_installer::end_compiler_mask($test_install_request);
 
@@ -124,13 +125,21 @@ class pts_test_installer
 					pts_openbenchmarking_client::upload_usage_data('test_install', array($test_install_request, $test_install_request->install_time_duration));
 				}
 
-				pts_tests::update_test_install_xml($test_install_request->test_profile, $test_install_request->install_time_duration, true, $compiler_data);
+				$install_footnote = null;
+				if(is_file($test_install_request->special_environment_vars['INSTALL_FOOTNOTE']))
+				{
+					$install_footnote = pts_file_io::file_get_contents($test_install_request->special_environment_vars['INSTALL_FOOTNOTE']);
+				}
+
+				pts_tests::update_test_install_xml($test_install_request->test_profile, $test_install_request->install_time_duration, true, $compiler_data, $install_footnote);
 				array_push($test_profiles, $test_install_request->test_profile);
 			}
 			else
 			{
 				array_push($failed_installs, $test_install_request);
 			}
+
+			pts_file_io::unlink($test_install_request->special_environment_vars['INSTALL_FOOTNOTE']);
 		}
 		pts_module_manager::module_process('__post_install_process', $test_install_manager);
 		pts_download_speed_manager::save_data();

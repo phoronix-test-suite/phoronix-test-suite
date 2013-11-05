@@ -206,7 +206,7 @@ class pts_tests
 
 		return $result;
 	}
-	public static function update_test_install_xml(&$test_profile, $this_duration = 0, $is_install = false, $compiler_data = null)
+	public static function update_test_install_xml(&$test_profile, $this_duration = 0, $is_install = false, $compiler_data = null, $install_footnote = null)
 	{
 		// Refresh/generate an install XML for pts-install.xml
 		if($test_profile->test_installation == false)
@@ -227,6 +227,7 @@ class pts_tests
 		}
 
 		$compiler_data = $is_install ? $compiler_data : $test_profile->test_installation->get_compiler_data();
+		$install_footnote = $is_install ? $install_footnote : $test_profile->test_installation->get_install_footnote();
 		$test_version = $is_install ? $test_profile->get_test_profile_version() : $test_profile->test_installation->get_installed_version();
 		$test_checksum = $is_install ? $test_profile->get_installer_checksum() : $test_profile->test_installation->get_installed_checksum();
 		$sys_identifier = $is_install ? phodevi::system_id_string() : $test_profile->test_installation->get_installed_system_identifier();
@@ -255,6 +256,7 @@ class pts_tests
 		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/Environment/Version', $test_version);
 		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/Environment/CheckSum', $test_checksum);
 		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/Environment/CompilerData', json_encode($compiler_data));
+		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/Environment/InstallFootnote', $install_footnote);
 		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/Environment/SystemIdentifier', $sys_identifier);
 		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/History/InstallTime', $install_time);
 		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/History/InstallTimeLength', $install_time_length);
