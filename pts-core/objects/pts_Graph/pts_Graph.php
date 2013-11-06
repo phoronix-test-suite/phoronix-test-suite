@@ -289,7 +289,12 @@ abstract class pts_Graph
 		{
 			if($real_maximum < $this->i['mark_count'])
 			{
-				$maximum = ceil(($real_maximum * 1.35 / $this->i['mark_count']) * $this->i['mark_count']);
+				$maximum = (($real_maximum * 1.35 / $this->i['mark_count']) * $this->i['mark_count']);
+
+				if($maximum > 1)
+				{
+					round($maximum);
+				}
 			}
 			else
 			{
@@ -655,7 +660,7 @@ abstract class pts_Graph
 	}
 	protected function render_graph_value_ticks($left_start, $top_start, $left_end, $top_end)
 	{
-		$increment = round($this->i['graph_max_value'] / $this->i['mark_count'], 2);
+		$increment = round($this->i['graph_max_value'] / $this->i['mark_count'], $this->i['graph_max_value'] < 10 ? 4 : 2);
 
 		if($this->i['graph_orientation'] == 'HORIZONTAL')
 		{

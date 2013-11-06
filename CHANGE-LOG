@@ -9,6 +9,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add ResultPrecision XML tag to results-parser for setting math precision of decimal points on result (default remains 2)
 - pts-core: Add support for writing to $INSTALL_FOOTNOTE during test installations to report custom footnote on generated graphs
 - pts-core: Add SuiteSparse, TinyXML, DUNE external dependencies
+- pts_Graph: Improve precision of increments for graph results with sub-1 values
 - phodevi: Protect against "undefined" memory strings from DMI data
 - phodevi: Add Wayland Weston version detection
 - phodevi: Detect gnome-shell-wayland
