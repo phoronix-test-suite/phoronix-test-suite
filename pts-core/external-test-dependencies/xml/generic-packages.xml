@@ -335,8 +335,8 @@
 		<Package>
 			<GenericName>opencl</GenericName>
 			<Title>OpenCL</Title>
-			<PossibleNames>NVIDIA OpenCL, ATI Stream SDK, OpenCL SDK</PossibleNames>
-			<FileCheck>CL/cl.h OR OpenCL/cl.h OR /usr/local/cuda OR /usr/cuda</FileCheck>
+			<PossibleNames>NVIDIA OpenCL, ATI Stream SDK, OpenCL SDK, opencl-headers</PossibleNames>
+			<FileCheck>CL/cl.h OR OpenCL/cl.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>subversion</GenericName>

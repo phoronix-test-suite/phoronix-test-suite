@@ -228,5 +228,9 @@
 			<GenericName>tinyxml</GenericName>
 			<PackageName>dev-libs/tinyxml</PackageName>
 		</Package>
+		<Package>
+			<GenericName>opencl</GenericName>
+			<PackageName>dev-util/opencl-headers</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
