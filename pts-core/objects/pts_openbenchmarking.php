@@ -22,6 +22,8 @@
 
 class pts_openbenchmarking
 {
+	protected static $openbenchmarking_index_refreshed = false;
+
 	public static function stats_hardware_list()
 	{
 		return array(
@@ -296,6 +298,7 @@ class pts_openbenchmarking
 			}
 
 			$server_index = pts_openbenchmarking::make_openbenchmarking_request('repo_index', array('repo' => $repo_name));
+			self::$openbenchmarking_index_refreshed = true;
 
 			if(json_decode($server_index) != false)
 			{
@@ -317,6 +320,10 @@ class pts_openbenchmarking
 				}
 			}
 		}
+	}
+	public static function openbenchmarking_has_refreshed()
+	{
+		return self::$openbenchmarking_index_refreshed;
 	}
 	public static function linked_repositories()
 	{

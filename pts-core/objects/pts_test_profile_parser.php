@@ -29,7 +29,17 @@ class pts_test_profile_parser
 	{
 		if(strpos($identifier, '<?xml version="1.0"?>') === false)
 		{
-			$identifier = PTS_IS_CLIENT ? pts_openbenchmarking::evaluate_string_to_qualifier($identifier, true, 'test') : $identifier;
+			if(PTS_IS_CLIENT)
+			{
+				$identifier = pts_openbenchmarking::evaluate_string_to_qualifier($identifier, true, 'test');
+
+				if($identifier == false && pts_openbenchmarking::openbenchmarking_has_refreshed() == false)
+				{
+					// Test profile might be brand new, so refresh repository and then check
+					pts_openbenchmarking::refresh_repository_lists(null, true);
+					$identifier = pts_openbenchmarking::evaluate_string_to_qualifier($identifier, true, 'test');
+				}
+			}
 		}
 
 		$this->xml_parser = new pts_test_nye_XmlReader($identifier);
