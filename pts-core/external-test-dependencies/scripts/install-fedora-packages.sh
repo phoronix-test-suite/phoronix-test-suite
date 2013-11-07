@@ -2,7 +2,7 @@
 
 # Fedora / Red Hat package installation
 
-if [ `whoami` = "ec2-user" ] then
+if [ `whoami` = "ec2-user" ]; then
 	sudo yum -y --skip-broken install $*
 else
 	echo "Please enter your root password below:" 1>&2
