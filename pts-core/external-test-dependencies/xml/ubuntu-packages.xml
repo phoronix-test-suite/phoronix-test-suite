@@ -276,7 +276,7 @@
 			<PackageName>libtinyxml-dev</PackageName>
 		</Package>
 		<Package>
-			<GenericNamme>opencl</GenericName>
+			<GenericName>opencl</GenericName>
 			<PackageName>opencl-headers</PackageName>
 		</Package>
 	</ExternalDependencies>
