@@ -278,5 +278,6 @@
 		<Package>
 			<GenericNamme>opencl</GenericName>
 			<PackageName>opencl-headers</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
