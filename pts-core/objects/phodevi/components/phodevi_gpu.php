@@ -833,6 +833,35 @@ class phodevi_gpu extends phodevi_device_interface
 							}
 						}
 					}
+					else if(is_file('/sys/class/drm/card0/device/pstate'))
+					{
+						// pstate is present with Linux 3.13 as the new performance states on Fermi/Kepler
+						$performance_state = pts_file_io::file_get_contents('/sys/class/drm/card0/device/pstate');
+						$performance_level = substr($performance_state, 0, strpos($performance_state, ' *'));
+						$performance_level = substr($performance_level, strrpos($performance_level, ': ') + 2);
+						$performance_level = explode(' ', $performance_level);
+
+						$core_string = array_search('core', $performance_level);
+						if($core_string !== false && isset($performance_level[($core_string + 1)]))
+						{
+							$core_string = str_ireplace('MHz', null, $performance_level[($core_string + 1)]);
+							if(is_numeric($core_string))
+							{
+								$core_freq = $core_string;
+							}
+						}
+
+						$mem_string = array_search('memory', $performance_level);
+						if($mem_string !== false && isset($performance_level[($mem_string + 1)]))
+						{
+							$mem_string = str_ireplace('MHz', null, $performance_level[($mem_string + 1)]);
+							if(is_numeric($mem_string))
+							{
+								$mem_freq = $mem_string;
+							}
+						}
+
+					}
 					break;
 				case 'radeon':
 					if(isset(phodevi::$vfs->radeon_pm_info))
