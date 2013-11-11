@@ -34,12 +34,10 @@ PHORONIX TEST SUITE PUBLIC TODO LIST:
 - Some potential interesting GPGPU tests [http://www.bealto.com/gpu-benchmarks.html]
 - WebGL / Chrome Test [http://phoronix.com/forums/showthread.php?73167-Some-Benchmarks-to-add-to-PTS-WebGL-and-Google-Chrome]
 - GtkPerf improvements [http://phoronix.com/forums/showthread.php?73047-gtkperf-I-m-maintaining-feature-requests-new-tests]
-- Rodinia [https://www.cs.virginia.edu/~skadron/wiki/rodinia/index.php/Main_Page]
 - Frame latency analysis [http://phoronix.com/forums/showthread.php?74951-Frame-latency-analysis-on-Doom-3&p=295415&posted=1#post295415]
 - SIPP [http://sipp.sourceforge.net/]
 - oclGaussCrack [https://hashcat.net/oclGaussCrack/]
 - ViennaCL [http://viennacl.sourceforge.net/viennacl-benchmarks.html]
 - Handbrake [http://handbrake.fr/]
 - libMicro [https://github.com/portante/libMicro]
-- Expand on OpenCL/CUDA test support within the OpenCL demos, Parboil, etc
-
+- https://code.google.com/p/pyrit/

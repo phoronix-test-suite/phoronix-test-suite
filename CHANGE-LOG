@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - phodevi: Add support for Nouveau PSTATE parsing on Linux 3.13+
+- phodevi: Recognize 'HIS' (Hightech Information System) graphics cards
 
 Phoronix Test Suite 4.8.4-Sokndal
 7 November 2013
