@@ -211,6 +211,17 @@ class pts_concise_display_mode implements pts_display_mode_interface
 		$this->progress_tab_count = 2;
 		$this->progress_string_length = strlen($download_string);
 	}
+	public function display_interrupt_message($message)
+	{
+		if($message == null)
+		{
+			return;
+		}
+
+		$terminal_width = pts_client::terminal_width() > 1 ? pts_client::terminal_width() : $terminal_width;
+		$text_width = $terminal_width - (strlen($this->tab) * 3);
+		echo PHP_EOL . $this->tab . $this->tab . wordwrap('[NOTICE] ' . $message, $text_width, PHP_EOL . $this->tab . $this->tab) . PHP_EOL;
+	}
 	public function test_install_progress_start($process)
 	{
 		$this->progress_line_prefix = $process;

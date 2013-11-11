@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2012, Phoronix Media
-	Copyright (C) 2009 - 2012, Michael Larabel
+	Copyright (C) 2009 - 2013, Phoronix Media
+	Copyright (C) 2009 - 2013, Michael Larabel
 	pts_basic_display_mode.php: The basic display mode
 
 	This program is free software; you can redistribute it and/or modify
@@ -112,6 +112,10 @@ class pts_basic_display_mode implements pts_display_mode_interface
 	{
 		$this->trial_run_count_current++;
 		echo self::string_header($test_result->test_profile->get_title() . ' (Run ' . $this->trial_run_count_current . ' of ' . $this->expected_trial_run_count . ')');
+	}
+	public function display_interrupt_message($message)
+	{
+		echo $message;
 	}
 	public function test_run_instance_output(&$to_output)
 	{

@@ -462,7 +462,7 @@ class pts_test_run_manager
 
 		if($this->pre_run_message != null)
 		{
-			pts_user_io::display_interrupt_message($this->pre_run_message);
+			pts_client::$display->display_interrupt_message($this->pre_run_message);
 		}
 
 		// Hook into the module framework
@@ -535,7 +535,7 @@ class pts_test_run_manager
 
 		if($this->post_run_message != null)
 		{
-			pts_user_io::display_interrupt_message($this->post_run_message);
+			pts_client::$display->display_interrupt_message($this->post_run_message);
 		}
 
 		self::$test_run_process_active = -1;

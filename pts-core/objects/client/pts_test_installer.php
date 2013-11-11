@@ -689,11 +689,11 @@ class pts_test_installer
 					}
 				}
 
-				pts_user_io::display_interrupt_message($pre_install_message);
+				pts_client::$display->display_interrupt_message($pre_install_message);
 				$install_time_length_start = microtime(true);
 				$install_log = pts_tests::call_test_script($test_install_request->test_profile, 'install', null, $test_install_directory, $test_install_request->special_environment_vars, false);
 				$test_install_request->install_time_duration = ceil(microtime(true) - $install_time_length_start);
-				pts_user_io::display_interrupt_message($post_install_message);
+				pts_client::$display->display_interrupt_message($post_install_message);
 
 				if(!empty($install_log))
 				{

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2012, Phoronix Media
-	Copyright (C) 2008 - 2012, Michael Larabel
+	Copyright (C) 2008 - 2013, Phoronix Media
+	Copyright (C) 2008 - 2013, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -36,19 +36,6 @@ class pts_user_io
 		while(!$allow_null && empty($answer));
 
 		return $answer;
-	}
-	public static function display_interrupt_message($message)
-	{
-		if(!empty($message))
-		{
-			echo $message . PHP_EOL;
-
-			if((pts_c::$test_flags ^ pts_c::batch_mode) && (pts_c::$test_flags ^ pts_c::auto_mode))
-			{
-				echo PHP_EOL . 'Hit Any Key To Continue...' . PHP_EOL;
-				pts_user_io::read_user_input();
-			}
-		}
 	}
 	public static function display_text_list($list_items, $line_start = '- ')
 	{
