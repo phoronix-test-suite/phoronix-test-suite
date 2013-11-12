@@ -74,6 +74,10 @@ class phodevi_monitor extends phodevi_device_interface
 				}
 			}
 
+			// technically should be fine reporting multiple of the same monitor
+			// but fglrx/catalyst as of late 2013 is in habit of reporting monitors twice
+			$monitor = array_unique($monitor);
+
 			$monitor = implode(' + ', $monitor);
 		}
 

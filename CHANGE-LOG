@@ -6,6 +6,7 @@ Phoronix Test Suite (Git)
 - phodevi: Add support for Nouveau PSTATE parsing on Linux 3.13+
 - phodevi: Recognize 'HIS' (Hightech Information System) graphics cards
 - phodevi: Recognize 'ZOTAC' graphics cards
+- phodevi: Fix redundant monitor model reporting detection on Catalyst
 
 Phoronix Test Suite 4.8.4-Sokndal
 7 November 2013
