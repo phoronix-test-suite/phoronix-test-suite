@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 - pts-core: Improve formatting of interrupt messages with the (default) concise display mode
 - phodevi: Add support for Nouveau PSTATE parsing on Linux 3.13+
 - phodevi: Recognize 'HIS' (Hightech Information System) graphics cards
+- phodevi: Recognize 'ZOTAC' graphics cards
 
 Phoronix Test Suite 4.8.4-Sokndal
 7 November 2013

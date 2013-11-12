@@ -644,7 +644,8 @@ class phodevi_linux_parser
 						'Gigabyte' => 'Gigabyte',
 						'Elitegroup' => 'ECS',
 						'eVga' => 'eVGA',
-						'Hightech Information System' => 'HIS'
+						'Hightech Information System' => 'HIS',
+						'Zotac' => 'Zotac'
 						);
 
 					foreach($vendors as $vendor => $clean_vendor)
