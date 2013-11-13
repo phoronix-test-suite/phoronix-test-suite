@@ -722,7 +722,7 @@ class pts_test_installer
 							copy($test_install_directory . 'install.log', $test_install_directory . 'install-failed.log');
 						}
 
-						pts_test_installer::setup_test_install_directory($test_install_request, true); // Remove installed files from the bunked installation
+						//pts_test_installer::setup_test_install_directory($test_install_request, true); // Remove installed files from the bunked installation
 						pts_client::$display->test_install_error('The installer exited with a non-zero exit status.');
 						if($install_error != null)
 						{
