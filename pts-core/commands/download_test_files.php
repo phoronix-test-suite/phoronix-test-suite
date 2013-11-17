@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2011, Phoronix Media
-	Copyright (C) 2011, Michael Larabel
+	Copyright (C) 2011 - 2013, Phoronix Media
+	Copyright (C) 2011 - 2013, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@ class download_test_files implements pts_option_interface
 	public static function argument_checks()
 	{
 		return array(
-		new pts_argument_check('VARIABLE_LENGTH', array('pts_types', 'is_test_or_suite'), null)
+		new pts_argument_check('VARIABLE_LENGTH', array('pts_types', 'identifier_to_object'), null)
 		);
 	}
 	public static function run($r)

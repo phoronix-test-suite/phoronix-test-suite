@@ -4,6 +4,7 @@ Phoronix Test Suite (Git)
 
 - pts-core: Improve formatting of interrupt messages with the (default) concise display mode
 - pts-core: Don't remove test install files on installation failures
+- pts-core: Allow download-test-files command to use OpenBenchmarking.org IDs
 - phodevi: Add support for Nouveau PSTATE parsing on Linux 3.13+
 - phodevi: Recognize 'HIS' (Hightech Information System) graphics cards
 - phodevi: Recognize 'ZOTAC' graphics cards
