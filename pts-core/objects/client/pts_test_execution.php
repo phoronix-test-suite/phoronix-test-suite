@@ -253,7 +253,7 @@ class pts_test_execution
 				}
 			}
 
-			if($is_expected_last_run && $test_run_request->test_result_buffer->get_count() > floor(($i - 2) / 2))
+			if($is_expected_last_run && $test_run_request->test_result_buffer->get_count() > floor(($i - 2) / 2) &&!$cache_share_present)
 			{
 				// The later check above ensures if the test is failing often the run count won't uselessly be increasing
 				// Should we increase the run count?
