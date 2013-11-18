@@ -10,6 +10,7 @@ Phoronix Test Suite (Git)
 - phodevi: Recognize 'HIS' (Hightech Information System) graphics cards
 - phodevi: Recognize 'ZOTAC' graphics cards
 - phodevi: Fix redundant monitor model reporting detection on Catalyst
+- phodevi: Add support for NVIDIA-Settings GPUUtilization in gpu.usage sensor
 
 Phoronix Test Suite 4.8.4-Sokndal
 7 November 2013

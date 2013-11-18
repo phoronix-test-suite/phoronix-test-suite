@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2011, Phoronix Media
-	Copyright (C) 2009 - 2011, Michael Larabel
+	Copyright (C) 2009 - 2013, Phoronix Media
+	Copyright (C) 2009 - 2013, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -26,6 +26,7 @@ class gpu_usage implements phodevi_sensor
 	static $probe_radeon_fences = false;
 	static $probe_intel_commands = false;
 	static $probe_nvidia_smi = false;
+	static $probe_nvidia_settings = false;
 
 	public static function get_type()
 	{
@@ -37,7 +38,7 @@ class gpu_usage implements phodevi_sensor
 	}
 	public static function get_unit()
 	{
-		if(self::$probe_ati_overdrive || self::$probe_nvidia_smi)
+		if(self::$probe_ati_overdrive || self::$probe_nvidia_smi || self::$probe_nvidia_settings)
 		{
 			$unit = 'Percent';
 		}
@@ -88,7 +89,14 @@ class gpu_usage implements phodevi_sensor
 		}
 		else if(phodevi::is_nvidia_graphics())
 		{
-			if(pts_client::executable_in_path('nvidia-smi'))
+			$util = phodevi_parser::read_nvidia_extension('GPUUtilization');
+
+			if(is_numeric($util) && $util >= 0 && $util <= 100)
+			{
+				self::$probe_nvidia_settings = true;
+				return true;
+			}
+			else if(pts_client::executable_in_path('nvidia-smi'))
 			{
 				$usage = self::nvidia_core_usage();
 
@@ -107,6 +115,10 @@ class gpu_usage implements phodevi_sensor
 		if(self::$probe_ati_overdrive)
 		{
 			return self::ati_overdrive_core_usage();
+		}
+		else if(self::$probe_nvidia_settings)
+		{
+			return phodevi_parser::read_nvidia_extension('GPUUtilization');
 		}
 		else if(self::$probe_nvidia_smi)
 		{
