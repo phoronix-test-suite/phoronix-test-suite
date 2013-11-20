@@ -7,6 +7,7 @@ Phoronix Test Suite (Git)
 - pts-core: Allow download-test-files command to use OpenBenchmarking.org IDs
 - pts-core: Don't dynamically increase the test run count when dealing with cache shares
 - pts-core: Fix for not opening the web-browser in batch mode
+- pts-core: Add zypper SUSE help support when not finding PHP
 - phodevi: Add support for Nouveau PSTATE parsing on Linux 3.13+
 - phodevi: Recognize 'HIS' (Hightech Information System) graphics cards
 - phodevi: Recognize 'ZOTAC' graphics cards
