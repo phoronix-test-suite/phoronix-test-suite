@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 4.8.5-Sokndal
+22 November 2013
 
 - pts-core: Improve formatting of interrupt messages with the (default) concise display mode
 - pts-core: Don't remove test install files on installation failures
