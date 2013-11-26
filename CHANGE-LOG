@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: DragonFlyBSD 3.6.0 support improvements
+- pts-core: Support using DragonFlyBSD dports package management system for external dependencies
 
 Phoronix Test Suite 4.8.5-Sokndal
 22 November 2013

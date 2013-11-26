@@ -17,11 +17,20 @@ then
 	fi
 fi
 
-for portdir in $*
-do
-	if [ -d /usr/pkgsrc/$portdir ];
-	then
-		cd /usr/pkgsrc/$portdir
-		bmake install clean BATCH="yes"
-	fi
-done
+if [ -d /usr/pkgsrc ]
+then
+	for portdir in $*
+	do
+		if [ -d /usr/pkgsrc/$portdir ];
+		then
+			cd /usr/pkgsrc/$portdir
+			bmake install clean BATCH="yes"
+		fi
+	done
+elif [ -x /usr/local/sbin/pkg ]
+	for portdir in $*
+	do
+		# DragonFlyBSD 3.6 now uses dports by default and this method seems to work fine for hitting most packages based upon earlier pkgsrc basename
+		pkg install -y `basename $portdir`
+	done
+fi
