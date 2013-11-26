@@ -28,6 +28,7 @@ then
 		fi
 	done
 elif [ -x /usr/local/sbin/pkg ]
+then
 	for portdir in $*
 	do
 		# DragonFlyBSD 3.6 now uses dports by default and this method seems to work fine for hitting most packages based upon earlier pkgsrc basename

@@ -269,7 +269,7 @@
 		</Package>
 		<Package>
 			<GenericName>dune</GenericName>
-			<PackageName>libdune-common-dev libdune-istl-dev libdune-grid-dev</PackageName>
+			<PackageName>libdune-common-dev libdune-istl-dev libdune-grid-dev libdune-localfunctions-dev</PackageName>
 		</Package>
 		<Package>
 			<GenericName>tinyxml</GenericName>

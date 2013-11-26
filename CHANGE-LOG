@@ -4,6 +4,7 @@ Phoronix Test Suite (Git)
 
 - pts-core: DragonFlyBSD 3.6.0 support improvements
 - pts-core: Support using DragonFlyBSD dports package management system for external dependencies
+- pts-core: NO_FILE_HASH_CHECKS environment variable also doesn't enforce MD5/SHA256 checks on make-download-cache sub-command
 
 Phoronix Test Suite 4.8.5-Sokndal
 22 November 2013
