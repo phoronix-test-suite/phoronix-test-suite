@@ -552,7 +552,7 @@ class phodevi_system extends phodevi_device_interface
 						$v = substr($v, ($t + strlen($version) + 1));
 						$v = substr($v, 0, strpos($v, ' '));
 
-						if($v != null && ctype_digit($v))
+						if($v != null && is_numeric($v))
 						{
 							// On development versions the release date is expressed
 							// e.g. gcc version 4.7.0 20120314 (prerelease) (GCC)

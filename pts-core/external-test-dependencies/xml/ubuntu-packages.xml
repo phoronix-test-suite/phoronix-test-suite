@@ -277,7 +277,7 @@
 		</Package>
 		<Package>
 			<GenericName>opencl</GenericName>
-			<PackageName>opencl-headers</PackageName>
+			<PackageName>opencl-headers ocl-icd-libopencl1</PackageName>
 		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

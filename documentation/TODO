@@ -19,6 +19,7 @@ PHORONIX TEST SUITE PUBLIC TODO LIST:
 - Improve rendering of large data-sets, e.g. http://openbenchmarking.org/result/1205231-LI-BL460G6BE41
 - Rotated text alignment for some PNG graphixs is sometimes off by 90/180 degrees compared to SVG, e.g. http://openbenchmarking.org/s/Compiler
 - SVG graph improvements
+- WebP image support
 
 ### OPENBENCHMARKING.ORG ###
 

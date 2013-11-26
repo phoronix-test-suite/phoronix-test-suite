@@ -86,6 +86,11 @@ then
 	echo "The command to likely run for your operating system is: "
 	echo "# zypper install php5 php5-zip"
 	echo " "
+elif [ -x /usr/bin/pkg_radd ]
+then
+	echo "The command to likely run for your operating system is: "
+	echo "# pkg_radd php5 php5-json php5-zip php5-dom"
+	echo " "
 fi
 
 exit

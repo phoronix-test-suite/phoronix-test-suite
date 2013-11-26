@@ -64,7 +64,14 @@ class pts_openbenchmarking
 
 		if(strlen($gsid) == 9)
 		{
-			if(ctype_upper(substr($gsid, 0, 6)) && ctype_digit(substr($gsid, 6, 3)))
+			if(function_exists('ctype_digit'))
+			{
+				if(ctype_upper(substr($gsid, 0, 6)) && ctype_digit(substr($gsid, 6, 3)))
+				{
+					$gsid_valid = true;
+				}
+			}
+			else if(substr($gsid, 0, 6) == strtoupper(substr($gsid, 0, 6)) && is_numeric(substr($gsid, 6, 3)))
 			{
 				$gsid_valid = true;
 			}
@@ -78,9 +85,20 @@ class pts_openbenchmarking
 
 		if(strlen($gside) == 12)
 		{
-			if(ctype_upper(substr($gside, 0, 10)) && ctype_digit(substr($gside, 10, 2)))
+			if(function_exists('ctype_digit'))
 			{
-				$gside_valid = true;
+				if(ctype_upper(substr($gside, 0, 10)) && ctype_digit(substr($gside, 10, 2)))
+				{
+					$gside_valid = true;
+				}
+			}
+			else
+			{
+				if(substr($gside, 0, 10) == strtoupper(substr($gside, 0, 10)) && is_numeric(substr($gside, 10, 2)))
+				{
+					$gside_valid = true;
+				}
+
 			}
 		}
 
@@ -92,9 +110,19 @@ class pts_openbenchmarking
 
 		if(strlen($gsidp) == 10)
 		{
-			if(ctype_upper(substr($gsidp, 0, 9)) &&	ctype_digit(substr($gsidp, 9, 1)))
+			if(function_exists('ctype_digit'))
 			{
-				$gsidp_valid = true;
+				if(ctype_upper(substr($gsidp, 0, 9)) && ctype_digit(substr($gsidp, 9, 1)))
+				{
+					$gsidp_valid = true;
+				}
+			}
+			else
+			{
+				if(substr($gsidp, 0, 9) == strtoupper(substr($gsidp, 0, 9)) && is_numeric(substr($gsidp, 9, 1)))
+				{
+					$gsidp_valid = true;
+				}
 			}
 		}
 
