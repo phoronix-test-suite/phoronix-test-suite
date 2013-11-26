@@ -98,7 +98,11 @@ class pts_test_file_download
 	}
 	public function check_file_hash($file)
 	{
-		if($this->sha256)
+		if(pts_client::read_env('NO_FILE_HASH_CHECKS') != false)
+		{
+			return true;
+		}
+		else if($this->sha256)
 		{
 			return hash_file('sha256', $file) == $this->sha256;
 		}
