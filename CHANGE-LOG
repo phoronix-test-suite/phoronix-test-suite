@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+- pts-core: Print out pre/interim/post test script outputs when running in debug-run mode
 - pts-core: DragonFlyBSD 3.6.0 support improvements
 - pts-core: Support using DragonFlyBSD dports package management system for external dependencies
 - pts-core: NO_FILE_HASH_CHECKS environment variable also doesn't enforce MD5/SHA256 checks on make-download-cache sub-command

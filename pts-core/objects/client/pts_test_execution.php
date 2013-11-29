@@ -75,7 +75,12 @@ class pts_test_execution
 
 		if(!$cache_share_present)
 		{
-			pts_tests::call_test_script($test_run_request->test_profile, 'pre', 'Running Pre-Test Script', $pts_test_arguments, $extra_runtime_variables, true);
+			$pre_output = pts_tests::call_test_script($test_run_request->test_profile, 'pre', 'Running Pre-Test Script', $pts_test_arguments, $extra_runtime_variables, true);
+
+			if($pre_output != null && (pts_c::$test_flags & pts_c::debug_mode))
+			{
+				pts_client::$display->test_run_instance_output($pre_output);
+			}
 		}
 
 		pts_client::$display->display_interrupt_message($test_run_request->test_profile->get_pre_run_message());
@@ -292,7 +297,12 @@ class pts_test_execution
 			{
 				if($cache_share_present == false)
 				{
-					pts_tests::call_test_script($test_run_request->test_profile, 'interim', 'Running Interim Test Script', $pts_test_arguments, $extra_runtime_variables, true);
+					$interim_output = pts_tests::call_test_script($test_run_request->test_profile, 'interim', 'Running Interim Test Script', $pts_test_arguments, $extra_runtime_variables, true);
+
+					if($interim_output != null && (pts_c::$test_flags & pts_c::debug_mode))
+					{
+						pts_client::$display->test_run_instance_output($interim_output);
+					}
 					sleep(2); // Rest for a moment between tests
 				}
 
@@ -332,7 +342,12 @@ class pts_test_execution
 
 		if($cache_share_present == false)
 		{
-			pts_tests::call_test_script($test_run_request->test_profile, 'post', 'Running Post-Test Script', $pts_test_arguments, $extra_runtime_variables, true);
+			$post_output = pts_tests::call_test_script($test_run_request->test_profile, 'post', 'Running Post-Test Script', $pts_test_arguments, $extra_runtime_variables, true);
+
+			if($post_output != null && (pts_c::$test_flags & pts_c::debug_mode))
+			{
+				pts_client::$display->test_run_instance_output($post_output);
+			}
 		}
 
 		if($abort_testing)
