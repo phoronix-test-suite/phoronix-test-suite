@@ -46,7 +46,7 @@ class toggle_screensaver extends pts_module_interface
 	public static function __startup()
 	{
 		$halt_screensaver = pts_module::read_variable('HALT_SCREENSAVER');
-		if(!empty($halt_screensaver) && !pts_strings::string_bool($halt_screensaver))
+		if((!empty($halt_screensaver) && !pts_strings::string_bool($halt_screensaver)) || phodevi::read_property('system', 'display-server') == null)
 		{
 			return pts_module::MODULE_UNLOAD;
 		}
