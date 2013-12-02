@@ -70,6 +70,10 @@ class pts_test_run_manager
 	{
 		return $this->do_dynamic_run_count;
 	}
+	public function disable_dynamic_run_count()
+	{
+		$this->do_dynamic_run_count = false;
+	}
 	public function auto_upload_to_openbenchmarking($do = true)
 	{
 		$this->auto_upload_to_openbenchmarking = ($do == true);

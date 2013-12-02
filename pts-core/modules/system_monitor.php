@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2012, Phoronix Media
-	Copyright (C) 2008 - 2012, Michael Larabel
+	Copyright (C) 2008 - 2013, Phoronix Media
+	Copyright (C) 2008 - 2013, Michael Larabel
 	system_monitor.php: System sensor monitoring module for PTS
 
 	This program is free software; you can redistribute it and/or modify
@@ -68,6 +68,7 @@ class system_monitor extends pts_module_interface
 	public static function __run_manager_setup(&$test_run_manager)
 	{
 		$test_run_manager->force_results_save();
+		$test_run_manager->disable_dynamic_run_count();
 	}
 
 	public static function __pre_run_process(&$test_run_manager)
