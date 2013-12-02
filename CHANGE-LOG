@@ -8,6 +8,7 @@ Phoronix Test Suite (Git)
 - pts-core: NO_FILE_HASH_CHECKS environment variable also doesn't enforce MD5/SHA256 checks on make-download-cache sub-command
 - pts-core: Pass test arguments to pre/interim/post test profile scripts; ESET / Michal Zatloukal patch
 - pts-core: Don't do dynamic test run counts when using system_monitor module
+- pts-core: Support reading the full terminal width using stty as tput cols doesn't seem to report anything but 80 with shell_exec()
 
 Phoronix Test Suite 4.8.5-Sokndal
 22 November 2013

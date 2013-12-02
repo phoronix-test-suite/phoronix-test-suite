@@ -1282,9 +1282,22 @@ class pts_client
 
 		if($terminal_width == null)
 		{
-			$chars = -1;
+			$chars = 80;
 
-			if(pts_client::executable_in_path('tput'))
+			if(pts_client::read_env('TERMINAL_WIDTH') != false && is_numeric(pts_client::read_env('TERMINAL_WIDTH')) >= 80)
+			{
+					$terminal_width = pts_client::read_env('TERMINAL_WIDTH');
+			}
+			else if(pts_client::executable_in_path('stty'))
+			{
+				$terminal_width = explode(' ', trim(shell_exec('stty size 2>&1')));
+
+				if(count($terminal_width) == 2 && is_numeric($terminal_width[1]) && $terminal_width[1] >= 80)
+				{
+					$chars = $terminal_width[1];
+				}
+			}
+			else if(pts_client::executable_in_path('tput'))
 			{
 				$terminal_width = trim(shell_exec('tput cols 2>&1'));
 
@@ -1292,11 +1305,6 @@ class pts_client
 				{
 					$chars = $terminal_width;
 				}
-			}
-			else if(phodevi::is_windows())
-			{
-				// Need a better way to handle this
-				$chars = 80;
 			}
 
 			$terminal_width = $chars;
