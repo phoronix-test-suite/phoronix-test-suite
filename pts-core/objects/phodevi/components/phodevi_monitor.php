@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2011, Phoronix Media
-	Copyright (C) 2008 - 2011, Michael Larabel
+	Copyright (C) 2008 - 2013, Phoronix Media
+	Copyright (C) 2008 - 2013, Michael Larabel
 	phodevi_monitor.php: The PTS Device Interface object for the display monitor
 
 	This program is free software; you can redistribute it and/or modify
@@ -56,6 +56,37 @@ class phodevi_monitor extends phodevi_device_interface
 			{
 				$monitor = null;
 			}
+		}
+		else if(phodevi::is_nvidia_graphics() && isset(phodevi::$vfs->xorg_log))
+		{
+			$log_parse = phodevi::$vfs->xorg_log;
+			$offset = 0;
+			$monitor = array();
+
+			/* e.g.
+			$ cat /var/log/Xorg.0.log | grep -i connected
+			[    18.174] (--) NVIDIA(0):     Acer P243W (DFP-0) (connected)
+			[    18.174] (--) NVIDIA(0):     Acer AL2223W (DFP-1) (connected)
+			*/
+
+			while(($monitor_pos = strpos($log_parse, ') (connected)', $offset)) !== false)
+			{
+				$m = substr($log_parse, 0, $monitor_pos);
+				$m = substr($m, strrpos($m, '): ') + 2);
+				$m = trim(substr($m, 0, strpos($m, ' (')));
+
+				if(!empty($m) && !isset($m[32]) && isset($m[6]))
+				{
+					array_push($monitor, $m);
+				}
+				$offset = $monitor_pos + 2;
+			}
+
+			// technically should be fine reporting multiple of the same monitor
+			// but fglrx/catalyst as of late 2013 is in habit of reporting monitors twice
+			$monitor = array_unique($monitor);
+
+			$monitor = implode(' + ', $monitor);
 		}
 		else if(isset(phodevi::$vfs->xorg_log))
 		{
