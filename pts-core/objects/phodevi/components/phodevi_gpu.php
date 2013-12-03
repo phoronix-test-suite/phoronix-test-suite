@@ -343,21 +343,35 @@ class phodevi_gpu extends phodevi_device_interface
 		if(pts_client::executable_in_path('xrandr') && getenv('DISPLAY'))
 		{
 			// Read resolution from xrandr
-			$info = shell_exec('xrandr 2>&1 | grep "*"');
+			// First try reading "current" screen 0 as it should better handle multiple monitors, etc.
+			// e.g. Screen 0: minimum 1 x 1, current 2560 x 1341, maximum 8192 x 8192
+			$info = shell_exec('xrandr 2>&1');
+			$info = substr($info, strpos($info, 'current ') + 8);
+			$info = explode(' x ', trim(substr($info, 0, strpos($info, ','))));
 
-			if(strpos($info, '*') !== false)
+			if(count($info) == 2 && is_numeric($info[0]) && is_numeric($info[1]))
 			{
-				$res = pts_strings::trim_explode('x', $info);
+				$resolution = $info;
+			}
 
-				if(isset($res[1]))
+			if($resolution == false)
+			{
+				$info = shell_exec('xrandr 2>&1 | grep "*"');
+
+				if(strpos($info, '*') !== false)
 				{
-					$res[0] = substr($res[0], strrpos($res[0], ' '));
-					$res[1] = substr($res[1], 0, strpos($res[1], ' '));
-					$res = array_map('trim', $res);
+					$res = pts_strings::trim_explode('x', $info);
 
-					if(is_numeric($res[0]) && is_numeric($res[1]))
+					if(isset($res[1]))
 					{
-						$resolution = array($res[0], $res[1]);
+						$res[0] = substr($res[0], strrpos($res[0], ' '));
+						$res[1] = substr($res[1], 0, strpos($res[1], ' '));
+						$res = array_map('trim', $res);
+
+						if(is_numeric($res[0]) && is_numeric($res[1]))
+						{
+							$resolution = array($res[0], $res[1]);
+						}
 					}
 				}
 			}
@@ -388,7 +402,12 @@ class phodevi_gpu extends phodevi_device_interface
 		}
 		else if(phodevi::is_linux() || phodevi::is_bsd() || phodevi::is_solaris())
 		{
-			if(phodevi::is_linux())
+			if($resolution == false && pts_client::executable_in_path('xrandr'))
+			{
+				$resolution = self::gpu_xrandr_resolution();
+			}
+
+			if($resolution == false && phodevi::is_linux())
 			{
 				// Before calling xrandr first try to get the resolution through KMS path
 				foreach(pts_file_io::glob('/sys/class/drm/card*/*/modes') as $connector_path)
@@ -407,11 +426,6 @@ class phodevi_gpu extends phodevi_device_interface
 						}
 					}
 				}
-			}
-
-			if($resolution == false && pts_client::executable_in_path('xrandr'))
-			{
-				$resolution = self::gpu_xrandr_resolution();
 			}
 
 			if($resolution == false && phodevi::is_nvidia_graphics())
