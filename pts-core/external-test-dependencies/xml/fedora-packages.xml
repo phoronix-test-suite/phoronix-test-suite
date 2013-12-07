@@ -171,7 +171,7 @@
 		</Package>
 		<Package>
 			<GenericName>boost-development</GenericName>
-			<PackageName>boost-devel</PackageName>
+			<PackageName>boost-devel boost-thread</PackageName>
 		</Package>
 		<Package>
 			<GenericName>bzip2-development</GenericName>

@@ -69,7 +69,7 @@ class phodevi_monitor extends phodevi_device_interface
 			[    18.174] (--) NVIDIA(0):     Acer AL2223W (DFP-1) (connected)
 			*/
 
-			while(($monitor_pos = strpos($log_parse, ') (connected)', $offset)) !== false)
+			while(($monitor_pos = strpos($log_parse, ') (connected)', $offset)) !== false || ($monitor_pos = strpos($log_parse, ') (boot, connected)', $offset)) !== false)
 			{
 				$m = substr($log_parse, 0, $monitor_pos);
 				$m = substr($m, strrpos($m, '): ') + 2);
