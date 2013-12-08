@@ -69,6 +69,10 @@ class reorder_result_file implements pts_option_interface
 		pts_client::save_test_result($args[0] . '/composite.xml', $ordered_result);
 		pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . $args[0] . '/index.html');
 	}
+	public static function invalid_command($passed_args = null)
+	{
+		pts_tests::recently_saved_results();
+	}
 }
 
 ?>

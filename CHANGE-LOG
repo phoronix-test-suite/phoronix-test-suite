@@ -9,6 +9,7 @@ Phoronix Test Suite (Git)
 - pts-core: Pass test arguments to pre/interim/post test profile scripts; ESET / Michal Zatloukal patch
 - pts-core: Don't do dynamic test run counts when using system_monitor module
 - pts-core: Support reading the full terminal width using stty as tput cols doesn't seem to report anything but 80 with shell_exec()
+- pts-core: Add "tiff" external dependency for providing libtiff and header files
 - phodevi: Support reading monitor vendor/model numbers when using the binary NVIDIA Linux driver, including recent versions
 - phodevi: Improve multi-monitor resolution reporting when sharing an X.Org Server
 - toggle_screensaver: Auto unload module when no display server found

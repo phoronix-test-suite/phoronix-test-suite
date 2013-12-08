@@ -24,6 +24,10 @@
 			<PackageName>openssl</PackageName>
 		</Package>
 		<Package>
+			<GenericName>tiff</GenericName>
+			<PackageName>libtiff-devel</PackageName>
+		</Package>
+		<Package>
 			<GenericName>p7zip</GenericName>
 			<PackageName>p7zip</PackageName>
 		</Package>

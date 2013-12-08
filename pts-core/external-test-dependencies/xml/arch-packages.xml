@@ -23,6 +23,10 @@
 			<PackageName>libpng</PackageName>
 		</Package>
 		<Package>
+			<GenericName>tiff</GenericName>
+			<PackageName>libtiff</PackageName>
+		</Package>
+		<Package>
 			<GenericName>build-utilities</GenericName>
 			<PackageName>gcc</PackageName>
 			<FileCheck>g++</FileCheck>

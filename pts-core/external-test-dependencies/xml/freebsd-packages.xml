@@ -169,6 +169,10 @@
 			<PackageName>devel/tcllib</PackageName>
 		</Package>
 		<Package>
+			<GenericName>tiff</GenericName>
+			<PackageName>graphics/tiff</PackageName>
+		</Package>
+		<Package>
 			<GenericName>python</GenericName>
 			<PackageName>lang/python</PackageName>
 		</Package>

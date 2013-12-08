@@ -201,6 +201,10 @@
 			<PackageName>media-libs/lib3ds</PackageName>
 		</Package>
 		<Package>
+			<GenericName>tiff</GenericName>
+			<PackageName>media-libs/tiff</PackageName>
+		</Package>
+		<Package>
 			<GenericName>gmp-library</GenericName>
 			<PackageName>dev-libs/gmp</PackageName>
 		</Package>

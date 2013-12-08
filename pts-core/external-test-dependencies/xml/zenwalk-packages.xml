@@ -31,6 +31,10 @@
 			<FileCheck>/usr/include/libpng12/png.h</FileCheck>
 		</Package>
 		<Package>
+			<GenericName>tiff</GenericName>
+			<PackageName>libtiff</PackageName>
+		</Package>
+		<Package>
 			<GenericName>build-utilities</GenericName>
 			<PackageName>gcc gcc-g++ gcc-objc automake pkg-config</PackageName>
 			<FileCheck>/usr/bin/gcc</FileCheck>

@@ -41,7 +41,7 @@
 			<GenericName>libpng-development</GenericName>
 			<Title>PNG Library Development Files</Title>
 			<PossibleNames>libpng12-dev</PossibleNames>
-			<FileCheck>libpng12/png.h</FileCheck>
+			<FileCheck>libpng12/png.h OR png.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>openssl-development</GenericName>
@@ -54,6 +54,12 @@
 			<Title>Compiler / Development Libraries</Title>
 			<PossibleNames>gcc</PossibleNames>
 			<FileCheck>gcc OR clang OR cc</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>tiff</GenericName>
+			<Title>TIFF Image Development Files</Title>
+			<PossibleNames>libtiff-dev, libtiff, libtiff-devel</PossibleNames>
+			<FileCheck>tiff.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>xorg-development</GenericName>

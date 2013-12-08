@@ -198,6 +198,10 @@
 			<PackageName>yasm</PackageName>
 		</Package>
 		<Package>
+			<GenericName>tiff</GenericName>
+			<PackageName>libtiff-devel</PackageName>
+		</Package>
+		<Package>
 			<GenericName>lib3ds</GenericName>
 			<PackageName>lib3ds-devel</PackageName>
 		</Package>

@@ -64,6 +64,10 @@
 			<PackageName>xorg-dev</PackageName>
 		</Package>
 		<Package>
+			<GenericName>tiff</GenericName>
+			<PackageName>libtiff-dev</PackageName>
+		</Package>
+		<Package>
 			<GenericName>bison</GenericName>
 			<PackageName>bison</PackageName>
 		</Package>

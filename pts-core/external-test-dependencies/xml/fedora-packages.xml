@@ -22,6 +22,10 @@
 			<PackageName>SDL-devel SDL_gfx-devel SDL_image-devel SDL_net-devel SDL_sound-devel SDL_ttf-devel</PackageName>
 		</Package>
 		<Package>
+			<GenericName>tiff</GenericName>
+			<PackageName>libtiff-devel</PackageName>
+		</Package>
+		<Package>
 			<GenericName>glut</GenericName>
 			<PackageName>freeglut-devel</PackageName>
 		</Package>
