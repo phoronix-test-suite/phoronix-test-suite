@@ -12,6 +12,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add "tiff" external dependency for providing libtiff and header files
 - phodevi: Support reading monitor vendor/model numbers when using the binary NVIDIA Linux driver, including recent versions
 - phodevi: Improve multi-monitor resolution reporting when sharing an X.Org Server
+- phodevi: Remove more useless compiler path argument reports
 - toggle_screensaver: Auto unload module when no display server found
 
 Phoronix Test Suite 4.8.5-Sokndal
