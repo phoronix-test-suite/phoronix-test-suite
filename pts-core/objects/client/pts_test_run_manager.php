@@ -1198,6 +1198,10 @@ class pts_test_run_manager
 			{
 				$save_results = self::$batch_mode_options['SaveResults'];
 			}
+			else if((pts_c::$test_flags & pts_c::debug_mode))
+			{
+				$save_results = false;
+			}
 			else
 			{
 				$save_results = pts_user_io::prompt_bool_input('Would you like to save these test results', true);
