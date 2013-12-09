@@ -257,7 +257,7 @@
 			<GenericName>atlas-development</GenericName>
 			<Title>Linear Algebra Pack</Title>
 			<PossibleNames>libatlas-base-dev</PossibleNames>
-			<FileCheck>libatlas.a OR atlas-base/libatlas.a OR atlas/libatlas.a</FileCheck>
+			<FileCheck>libatlas.a OR atlas-base/libatlas.a OR atlas/libatlas.so OR cblas.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>openmpi-development</GenericName>

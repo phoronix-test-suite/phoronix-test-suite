@@ -11,7 +11,7 @@ PHORONIX TEST SUITE PUBLIC TODO LIST:
 - Integrate recover-run command into the run command, auto-detect if the result file was a partial save and then ask if to perform run recovery' [ POSSIBLY DO THE SAME FOR FINISH-RUN]
 - Multi-threaded downloading of test files
 - Numerous pts_render improvements [see in-line code comments]
-
+- Optimus / DRI_PRIME=1 / xrandr --listproviders better GPU detection
 - NVIDIA make use of UsedDedicatedGPUMemory as new GPU sensor
 
 ### PTS-GRAPH ###
