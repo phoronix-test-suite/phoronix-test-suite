@@ -36,6 +36,7 @@
 <h2>Debian/Ubuntu Installation</h2>
 <p>Debian/Ubuntu users are able to follow the Generic Installation instructions or can obtain a Debian Package from the Phoronix Test Suite web-site. The package contains the <em>phoronix-test-suite</em> executable in <em>/usr/bin/</em>, the Phoronix Test Suite files in <em>/usr/share/phoronix-test-suite/</em>, and the documentation in <em>/usr/share/doc/phoronix-test-suite/</em>.</p>
 <p>A phoronix-test-suite package can also be found in the official Ubuntu universe repository beginning with the Ubuntu 9.04 (Jaunty) release, but it may be out of date compared to the latest upstream version.</p>
+<p>On Ubuntu 13.04 and newer if you experience an issue of system sensor monitoring not working, other multi-process tasks, or related issues reported as PHP PCNTL missing, the pcntl functions need to be removed from the <em>disable_functions</em> line within the <em>/etc/php5/cli/php.ini</em> file. This may also affect other Linux distribution support too if the vendor disables access to the PCNTL functions.</p>
 <h2>Fedora / Red Hat Installation</h2>
 <p>The Phoronix Test Suite can be installed on Fedora, Red Hat Enterprise Linux, and CentOS systems using the generic installation method. Alternatively, a <em>phoronix-test-suite</em> package is available in recent versions of the Fedora repository and in the EPEL (Extra Packages for Enterprise Linux) repository for Red Hat Enterprise Linux. At this time, however, the Fedora-supplied package is vastly out of date.</p>
 <h2>Gentoo Installation</h2>

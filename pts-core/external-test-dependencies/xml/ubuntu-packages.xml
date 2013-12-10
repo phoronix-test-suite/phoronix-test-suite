@@ -201,7 +201,7 @@
 		</Package>
 		<Package>
 			<GenericName>openmpi-development</GenericName>
-			<PackageName>libopenmpi-dev openmpi-bin libmpich2-dev libmpich1.0-dev</PackageName>
+			<PackageName>libopenmpi-dev openmpi-bin libmpich2-dev libmpich-dev</PackageName>
 		</Package>
 		<Package>
 			<GenericName>cmake</GenericName>
