@@ -14,10 +14,10 @@ else
 	exit
 fi
 
-if [ -x /usr/bin/aptitude ]; then
+# if [ -x /usr/bin/aptitude ]; then
 	# aptitude is nice since it doesn't fail if a non-existant package is hit
 	# See: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=503215
-	$ROOT -- "aptitude -y install $*"
-else
+#	$ROOT -- "aptitude -y install $*"
+#else
 	$ROOT -- su -c "apt-get -y --ignore-missing install $*"
-fi
+#fi
