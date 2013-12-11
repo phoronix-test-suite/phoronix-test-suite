@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 4.8.6-Sokndal
+10 December 2013
 
 - pts-core: Print out pre/interim/post test script outputs when running in debug-run mode
 - pts-core: DragonFlyBSD 3.6.0 support improvements
