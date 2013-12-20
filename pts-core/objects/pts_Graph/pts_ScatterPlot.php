@@ -101,7 +101,7 @@ class pts_ScatterPlot extends pts_Graph
 
 				$x = $this->i['left_start'] + (($this->i['graph_left_end'] - $this->i['left_start']) * (($key_time - $this->i['min_time']) / $this->i['spread_time']));
 				$y = $this->i['graph_top_end'] + 1 - round(($value / $this->i['graph_max_value']) * ($this->i['graph_top_end'] - $this->i['top_start']));
-				$this->svg_dom->add_element('ellipse', array('cx' => $x, 'cy' => $y, 'rx' = 2, 'ry' = 2, 'fill' => $paint_color, 'stroke' => $paint_color, 'stroke-width' => 1));
+				$this->svg_dom->add_element('ellipse', array('cx' => $x, 'cy' => $y, 'rx' => 2, 'ry' => 2, 'fill' => $paint_color, 'stroke' => $paint_color, 'stroke-width' => 1));
 				array_push($points, array($x, $y));
 			}
 

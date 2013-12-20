@@ -49,3 +49,6 @@ PHORONIX TEST SUITE PUBLIC TODO LIST:
 - http://code.google.com/p/lz4/
 - http://parsec.cs.princeton.edu/parsec3-doc.htm
 - http://www.capsl.udel.edu/splash/Download.html
+- http://tesseract.gg/
+- https://github.com/facebook/linkbench
+- Check for Botan updates (1.11 in development) as failing to build with GCC 4.9
