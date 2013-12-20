@@ -136,9 +136,9 @@ function pts_version_codenames()
 		);
 }
 
-pts_define('PTS_VERSION', '4.8.6');
-pts_define('PTS_CORE_VERSION', 4860);
-pts_define('PTS_CODENAME', 'SOKNDAL');
+pts_define('PTS_VERSION', '5.0.0m0');
+pts_define('PTS_CORE_VERSION', 4900);
+pts_define('PTS_CODENAME', 'PLAVSK');
 pts_define('PTS_IS_CLIENT', (defined('PTS_MODE') && PTS_MODE == 'CLIENT'));
 pts_define('PTS_IS_DEV_BUILD', (substr(PTS_VERSION, -2, 1) == 'm'));
 
