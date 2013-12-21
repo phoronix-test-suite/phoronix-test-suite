@@ -106,7 +106,7 @@ class pts_test_install_request
 			}
 		}
 	}
-	public static function test_files_available_locally(&$test_profile)
+	public static function test_files_available_locally(&$test_profile, $include_extended_test_profiles = true)
 	{
 		$install_request = new pts_test_install_request($test_profile);
 
@@ -120,6 +120,14 @@ class pts_test_install_request
 		foreach($install_request->get_download_objects() as $download_object)
 		{
 			if($download_object->get_download_location_type() == null)
+			{
+				return false;
+			}
+		}
+
+		foreach($test_profile->extended_test_profiles() as $extended_test_profile)
+		{
+			if(self::test_files_available_locally($extended_test_profile) == false)
 			{
 				return false;
 			}

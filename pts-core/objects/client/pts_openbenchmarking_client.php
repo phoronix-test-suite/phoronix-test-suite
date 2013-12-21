@@ -221,6 +221,14 @@ class pts_openbenchmarking_client
 
 		return true;
 	}
+	public static function read_repository_test_profile_attribute($test_profile, $attribute)
+	{
+		list($repo, $tp) = explode('/', $test_profile);
+		$tp = substr($tp, 0, strrpos($tp, '-'));
+		$repo_index = pts_openbenchmarking::read_repository_index($repo);
+
+		return isset($repo_index['tests'][$tp][$attribute]) ? $repo_index['tests'][$tp][$attribute] : null;
+	}
 	public static function fetch_repository_changelog($repo_name)
 	{
 		$index_file = PTS_OPENBENCHMARKING_SCRATCH_PATH . $repo_name . '.changes';

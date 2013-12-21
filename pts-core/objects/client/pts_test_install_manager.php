@@ -76,7 +76,7 @@ class pts_test_install_manager
 		}
 		pts_client::$display->test_install_progress_completed();
 	}
-	public function remote_files_available_in_download_caches()
+	public static function remote_files_available_in_download_caches()
 	{
 		$remote_download_files = array();
 

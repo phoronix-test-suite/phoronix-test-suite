@@ -210,8 +210,19 @@ class pts_test_profile extends pts_test_profile_parser
 		else if(PTS_IS_CLIENT && ($custom_support_check = $this->custom_test_support_check()) !== true)
 		{
 			// A custom-self-generated error occurred, see code comments in custom_test_support_check()
-			PTS_IS_CLIENT && $report_warnings && pts_client::$display->test_run_error($this->get_identifier() . ': ' . $custom_support_check);
+			PTS_IS_CLIENT && $report_warnings && is_callable(array(pts_client::$display, 'test_run_error')) && pts_client::$display->test_run_error($this->get_identifier() . ': ' . $custom_support_check);
 			$test_supported = false;
+		}
+		else if(PTS_IS_CLIENT)
+		{
+			foreach($this->extended_test_profiles() as $extension)
+			{
+				if($extension->is_supported($report_warnings) == false)
+				{
+					$test_supported = false;
+					break;
+				}
+			}
 		}
 
 		return $test_supported;

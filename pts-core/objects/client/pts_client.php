@@ -46,7 +46,7 @@ class pts_client
 			cli_set_process_title('Phoronix Test Suite');
 		}
 
-		if(QUICK_START)
+		if(defined('QUICK_START') && QUICK_START)
 		{
 			return true;
 		}

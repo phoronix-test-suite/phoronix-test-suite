@@ -56,24 +56,6 @@ if(IS_PTS_WEB_INTERFACE == 'cli-server')
 // Default to C locale
 setlocale(LC_ALL, 'C');
 
-if(ini_get('date.timezone') == null)
-{
-	$tz = null;
-
-	// timezone_name_from_abbr was added in PHP 5.1.3. pre-5.2 really isn't supported by PTS, but don't at least error out here but let it get to proper checks...
-	if(is_executable('/bin/date') && function_exists('timezone_name_from_abbr'))
-	{
-		$tz = timezone_name_from_abbr(trim(shell_exec('date +%Z 2> /dev/null')));
-	}
-
-	if($tz == null || !in_array($tz, timezone_identifiers_list()))
-	{
-		$tz = 'UTC';
-	}
-
-	date_default_timezone_set($tz);
-}
-
 if(ini_get('open_basedir') != false)
 {
 	if(pts_client::open_basedir_check() == false)

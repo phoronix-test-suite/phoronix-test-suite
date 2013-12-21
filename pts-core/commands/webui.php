@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2012, Phoronix Media
-	Copyright (C) 2012, Michael Larabel
+	Copyright (C) 2012 - 2013, Phoronix Media
+	Copyright (C) 2012 - 2013, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -20,9 +20,6 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-
-// chromium-browser --incognito --temp-profile --kiosk --app=
-
 class webui implements pts_option_interface
 {
 	const doc_skip = true; // TODO XXX: cleanup this code before formally advertising this...
@@ -31,43 +28,26 @@ class webui implements pts_option_interface
 
 	public static function run($r)
 	{
-		//return false; // This won't be formally ready for PTS 4.0 Suldal
+		pts_file_io::unlink(PTS_USER_PATH . 'web-server-launcher');
 		if(PHP_VERSION_ID < 50400)
 		{
 			echo 'Running an unsupported PHP version. PHP 5.4+ is required to use this feature.' . PHP_EOL . PHP_EOL;
 			return false;
 		}
-		if(!function_exists('pcntl_fork'))
+
+		$server_launcher = '#!/bin/sh' . PHP_EOL . getenv('PHP_BIN') . ' -S localhost:2300 -t ' . PTS_CORE_PATH . 'web/ &' . PHP_EOL;
+		$server_launcher .= 'server_pid=$!'. PHP_EOL . PHP_EOL;
+
+		if(($browser = pts_client::executable_in_path('chromium-browser')) || ($browser = pts_client::executable_in_path('google-chrome')))
 		{
-			echo 'PCNTL support is required to use this feature' . PHP_EOL . PHP_EOL;
-			return false;
+			// chromium-browser --incognito --temp-profile --kiosk --app=
+			$server_launcher .= 'echo "Launching Browser"' . PHP_EOL;
+			$server_launcher .= $browser . ' --temp-profile --app=http://localhost:2300 -start-maximized';
+			// chromium-browser --kiosk URL starts full-screen
 		}
 
-		echo '<pre>';
-		echo 'Hardware:' . PHP_EOL . phodevi::system_hardware(true) . PHP_EOL . PHP_EOL;
-		echo 'Software:' . PHP_EOL . phodevi::system_software(true) . PHP_EOL . PHP_EOL;
-		echo '</pre>';
-
-		/*
-		$chrome = pts_client::executable_in_path('chromium-browser');
-		if($chrome)
-		{
-			$pid = pcntl_fork();
-			if($pid == -1)
-			{
-				echo 'ERROR' . PHP_EOL;
-			}
-			else if($pid)
-			{
-				shell_exec($chrome . ' --temp-profile --app=http://localhost:2300');
-				//pcntl_wait($status);
-			}
-			else
-			{
-				echo shell_exec(getenv('PHP_BIN') . ' -S localhost:2300 test.php');
-			}
-		}*/
-
+		$server_launcher .= PHP_EOL . 'kill $server_pid';
+		file_put_contents(PTS_USER_PATH . 'web-server-launcher', $server_launcher);
 	}
 }
 

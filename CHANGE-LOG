@@ -2,6 +2,9 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+- pts-core: Add web-server-launcher support
+- pts-core: Random fixes
+
 Phoronix Test Suite 4.8.6-Sokndal
 10 December 2013
 

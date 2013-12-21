@@ -110,10 +110,15 @@ fi
 
 # Command-specific conditions
 case "$1" in
-"test-module" | "debug-module")
+"test-module" | "debug-module" | "webui")
 	export PTS_IGNORE_MODULES=1
 	;;
 esac
+
+if [ -f $HOME/.phoronix-test-suite/web-server-launcher ]
+then
+	rm -f $HOME/.phoronix-test-suite/web-server-launcher
+fi
 
 # Run The Phoronix Test Suite
 PTS_EXIT_STATUS=8
@@ -121,3 +126,10 @@ while [ $PTS_EXIT_STATUS -eq 8 ]; do
 	$PHP_BIN pts-core/phoronix-test-suite.php $@
 	PTS_EXIT_STATUS=$?
 done
+
+if [ -f $HOME/.phoronix-test-suite/web-server-launcher ]
+then
+	chmod +x $HOME/.phoronix-test-suite/web-server-launcher
+	exec $HOME/.phoronix-test-suite/web-server-launcher
+	rm -f $HOME/.phoronix-test-suite/web-server-launcher
+fi

@@ -189,5 +189,22 @@ if(PTS_IS_CLIENT || defined('PTS_AUTO_LOAD_OBJECTS'))
 		}
 	}
 }
+if(PTS_IS_CLIENT && ini_get('date.timezone') == null)
+{
+	$tz = null;
+
+	// timezone_name_from_abbr was added in PHP 5.1.3. pre-5.2 really isn't supported by PTS, but don't at least error out here but let it get to proper checks...
+	if(is_executable('/bin/date') && function_exists('timezone_name_from_abbr'))
+	{
+		$tz = timezone_name_from_abbr(trim(shell_exec('date +%Z 2> /dev/null')));
+	}
+
+	if($tz == null || !in_array($tz, timezone_identifiers_list()))
+	{
+		$tz = 'UTC';
+	}
+
+	date_default_timezone_set($tz);
+}
 
 ?>
