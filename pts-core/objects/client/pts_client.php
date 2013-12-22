@@ -51,8 +51,27 @@ class pts_client
 			return true;
 		}
 
-		self::basic_init_process(); // Initalize common / needed PTS start-up work
-		pts_network::client_startup();
+		pts_define('PHP_BIN', pts_client::read_env('PHP_BIN'));
+		pts_define('PTS_INIT_TIME', time());
+
+		if(!defined('PHP_VERSION_ID'))
+		{
+			// PHP_VERSION_ID is only available in PHP 5.2.6 and later
+			$php_version = explode('.', PHP_VERSION);
+			pts_define('PHP_VERSION_ID', ($php_version[0] * 10000 + $php_version[1] * 100 + $php_version[2]));
+		}
+
+		$dir_init = array(PTS_USER_PATH);
+		foreach($dir_init as $dir)
+		{
+			pts_file_io::mkdir($dir);
+		}
+
+		if(PTS_IS_CLIENT)
+		{
+			pts_network::client_startup();
+		}
+
 		self::core_storage_init_process();
 
 		if(!is_file(PTS_TEMP_STORAGE))
@@ -60,7 +79,8 @@ class pts_client
 			self::build_temp_cache();
 		}
 
-		pts_config::init_files();
+		// XXX: technically the config init_files line shouldn't be needed since it should be dynamically called
+		// pts_config::init_files();
 		pts_define('PTS_TEST_INSTALL_DEFAULT_PATH', pts_client::parse_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Installation/EnvironmentDirectory', '~/.phoronix-test-suite/installed-tests/')));
 		pts_define('PTS_SAVE_RESULTS_PATH', pts_client::parse_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Testing/ResultsDirectory', '~/.phoronix-test-suite/test-results/')));
 		self::extended_init_process();
@@ -428,27 +448,6 @@ class pts_client
 		}
 
 		return $real_name;
-	}
-	private static function basic_init_process()
-	{
-		// Initialize The Phoronix Test Suite
-
-		// PTS Defines
-		pts_define('PHP_BIN', pts_client::read_env('PHP_BIN'));
-		pts_define('PTS_INIT_TIME', time());
-
-		if(!defined('PHP_VERSION_ID'))
-		{
-			// PHP_VERSION_ID is only available in PHP 5.2.6 and later
-			$php_version = explode('.', PHP_VERSION);
-			pts_define('PHP_VERSION_ID', ($php_version[0] * 10000 + $php_version[1] * 100 + $php_version[2]));
-		}
-
-		$dir_init = array(PTS_USER_PATH);
-		foreach($dir_init as $dir)
-		{
-			pts_file_io::mkdir($dir);
-		}
 	}
 	public static function init_display_mode($flags = 0)
 	{

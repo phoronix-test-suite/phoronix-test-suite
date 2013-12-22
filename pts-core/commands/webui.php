@@ -35,14 +35,24 @@ class webui implements pts_option_interface
 			return false;
 		}
 
-		$server_launcher = '#!/bin/sh' . PHP_EOL . getenv('PHP_BIN') . ' -S localhost:2300 -t ' . PTS_CORE_PATH . 'web/ &' . PHP_EOL;
+		$server_launcher = '#!/bin/sh' . PHP_EOL . getenv('PHP_BIN');
+		$web_port = rand(2000, 9999);
+
+		if(false && strpos(getenv('PHP_BIN'), 'hhvm'))
+		{
+			$server_launcher .= ' --mode server -vServer.Type=fastcgi -vServer.Port=' . $web_port . ' -t ' . PTS_CORE_PATH . 'web-interface/ &' . PHP_EOL;
+		}
+		else
+		{
+			$server_launcher .= ' -S localhost:' . $web_port . ' -t ' . PTS_CORE_PATH . 'web-interface/ &' . PHP_EOL;
+		}
 		$server_launcher .= 'server_pid=$!'. PHP_EOL . PHP_EOL;
 
 		if(($browser = pts_client::executable_in_path('chromium-browser')) || ($browser = pts_client::executable_in_path('google-chrome')))
 		{
 			// chromium-browser --incognito --temp-profile --kiosk --app=
 			$server_launcher .= 'echo "Launching Browser"' . PHP_EOL;
-			$server_launcher .= $browser . ' --temp-profile --app=http://localhost:2300 -start-maximized';
+			$server_launcher .= $browser . ' --temp-profile --app=http://localhost:' . $web_port . ' -start-maximized';
 			// chromium-browser --kiosk URL starts full-screen
 		}
 

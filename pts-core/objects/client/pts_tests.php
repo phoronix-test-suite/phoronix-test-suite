@@ -25,19 +25,12 @@ class pts_tests
 	public static function installed_tests()
 	{
 		$cleaned_tests = array();
-
-		foreach(pts_file_io::glob(pts_client::test_install_root_path() . '*') as $repo_path)
+		$repo = '*';
+		$install_root_path = pts_client::test_install_root_path();
+		$install_root_path_length = strlen($install_root_path);
+		foreach(pts_file_io::glob($install_root_path . $repo . '/*/pts-install.xml') as $identifier_path)
 		{
-			$repo = basename($repo_path);
-			foreach(pts_file_io::glob($repo_path . '/*') as $identifier_path)
-			{
-				if(is_file($identifier_path . '/pts-install.xml'))
-				{
-					$identifier = basename($identifier_path);
-
-					array_push($cleaned_tests, $repo . '/' . $identifier);
-				}
-			}
+			array_push($cleaned_tests, substr(dirname($identifier_path), $install_root_path_length));
 		}
 
 		return $cleaned_tests;

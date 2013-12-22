@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Add web-server-launcher support
+- pts-core: Startup speed optimizations
 - pts-core: Random fixes
 
 Phoronix Test Suite 4.8.6-Sokndal
