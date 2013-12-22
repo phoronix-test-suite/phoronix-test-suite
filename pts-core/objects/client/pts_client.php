@@ -1631,12 +1631,6 @@ class pts_client
 	}
 	public static function code_error_handler($error_code, $error_string, $error_file, $error_line)
 	{
-		if(($error_code & (E_USER_ERROR | E_USER_WARNING | E_USER_NOTICE)))
-		{
-			// It's a self-generated error by pts-core code intentionally
-			return self::user_error_handler($error_code, $error_string, $error_file, $error_line);
-		}
-
 		/*if(!(error_reporting() & $error_code))
 		{
 			return;
@@ -1644,47 +1638,8 @@ class pts_client
 
 		switch($error_code)
 		{
-			case E_ERROR:
-			case E_PARSE:
-				$error_type = 'ERROR';
-				break;
-			case E_WARNING:
-			case E_NOTICE:
-				if(($s = strpos($error_string, 'Undefined ')) !== false && ($x = strpos($error_string, ': ', $s)) !== false)
-				{
-					$error_string = 'Undefined: ' . substr($error_string, ($x + 2));
-				}
-				else if(strpos($error_string, 'Name or service not known') !== false || strpos($error_string, 'HTTP request failed') !== false || strpos($error_string, 'fopen') !== false || strpos($error_string, 'file_get_contents') !== false || strpos($error_string, 'Directory not empty') !== false)
-				{
-					// Don't report network errors
-					return;
-				}
-				$error_type = 'NOTICE';
-				break;
-			default:
-				$error_type = $error_code;
-				break;
-		}
-
-		echo PHP_EOL . '[' . $error_type . '] ' . $error_string . ' in ' . basename($error_file) . ':' . $error_line . PHP_EOL;
-
-		if($error_type == 'ERROR')
-		{
-			exit(1);
-		}
-	}
-	public static function user_error_handler($error_code, $error_string, $error_file, $error_line)
-	{
-/*
-
-		trigger_error('Scheisse', E_USER_WARNING);
-		trigger_error('Okay', E_USER_NOTICE);
-		trigger_error('F', E_USER_ERROR);
-*/
-		switch($error_code)
-		{
 			case E_USER_ERROR:
-				$error_type = 'ERROR';
+				$error_type = 'PROBLEM';
 				break;
 			case E_USER_NOTICE:
 				if(pts_client::is_client_debug_mode() == false)
@@ -1696,10 +1651,49 @@ class pts_client
 			case E_USER_WARNING:
 				$error_type = 'NOTICE'; // Yes, report warnings as a notice label
 				break;
+			case E_ERROR:
+			case E_PARSE:
+				$error_type = 'ERROR';
+				break;
+			case E_WARNING:
+			case E_NOTICE:
+				$error_type = 'NOTICE';
+				if(($s = strpos($error_string, 'Undefined ')) !== false && ($x = strpos($error_string, ': ', $s)) !== false)
+				{
+					$error_string = 'Undefined: ' . substr($error_string, ($x + 2));
+				}
+				else
+				{
+					$ignore_errors = array(
+						'Name or service not known',
+						'HTTP request failed',
+						'fopen',
+						'fsockopen',
+						'file_get_contents',
+						'unable to connect',
+						'directory not empty'
+						);
+
+					foreach($ignore_errors as $error_check)
+					{
+						if(stripos($error_string, $error_check) !== false)
+						{
+							return;
+						}
+					}
+				}
+				break;
+			default:
+				$error_type = $error_code;
+				break;
 		}
 
-		echo '[' . $error_type . '] ' . $error_string . (pts_client::is_client_debug_mode() ? ' in ' . basename($error_file) . ':' . $error_line : null) . PHP_EOL;
-		return;
+		echo PHP_EOL . '[' . $error_type . '] ' . $error_string . ' in ' . basename($error_file, '.php') . ':' . $error_line . PHP_EOL;
+
+		if($error_type == 'ERROR')
+		{
+			exit(1);
+		}
 	}
 	public static function is_client_debug_mode()
 	{
