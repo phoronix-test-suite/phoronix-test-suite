@@ -60,5 +60,9 @@
 			<ProxyAddress></ProxyAddress>
 			<ProxyPort></ProxyPort>
 		</Networking>
+		<Server>
+			<RemoteAccessAllowed>FALSE</RemoteAccessAllowed>
+			<Password></Password>
+		</Server>
 	</Options>
 </PhoronixTestSuite>

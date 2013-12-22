@@ -3,7 +3,10 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Add web-server-launcher support
+- pts-core: Support starting HHVM as a web server
 - pts-core: Startup speed optimizations
+- pts-core: Cleaned up code error reporting/handling
+- pts-core: Add server remote access and password options to user-config.xml user configuration options
 - pts-core: Random fixes
 
 Phoronix Test Suite 4.8.6-Sokndal

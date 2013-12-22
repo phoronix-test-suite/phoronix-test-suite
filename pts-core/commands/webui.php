@@ -36,15 +36,57 @@ class webui implements pts_option_interface
 		}
 
 		$server_launcher = '#!/bin/sh' . PHP_EOL . getenv('PHP_BIN');
-		$web_port = rand(2000, 9999);
+		$web_port = 0;
+		$remote_access = pts_config::read_user_config('PhoronixTestSuite/Options/Server/RemoteAccessAllowed', 'FALSE');
+		$remote_access = is_numeric($remote_access) && $remote_access > 1 ? $remote_access : false;
 
-		if(false && strpos(getenv('PHP_BIN'), 'hhvm'))
+		if($remote_access)
 		{
-			$server_launcher .= ' --mode server -vServer.Type=fastcgi -vServer.Port=' . $web_port . ' -t ' . PTS_CORE_PATH . 'web-interface/ &' . PHP_EOL;
+			// ALLOWING SERVER TO BE REMOTELY ACCESSIBLE
+			$server_ip = '0.0.0.0';
+			$fp = false;
+			$errno = null;
+			$errstr = null;
+
+			if(($fp = fsockopen('127.0.0.1', $remote_access, $errno, $errstr, 5)) != false)
+			{
+				trigger_error('Port ' . $remote_access . ' is already in use by another server process. Close that process or change the Phoronix Test Suite server port via ~/.phoronix-test-suite/user-config.xml to proceed.', E_USER_ERROR);
+				fclose($fp);
+				return false;
+			}
+			else
+			{
+				$web_port = $remote_access;
+			}
 		}
 		else
 		{
-			$server_launcher .= ' -S localhost:' . $web_port . ' -t ' . PTS_CORE_PATH . 'web-interface/ &' . PHP_EOL;
+			// SERVER JUST RUNNING FOR LOCAL SYSTEM, SO ALSO COME UP WITH RANDOM FREE PORT
+			$server_ip = 'localhost';
+			// Randomly choose a port and ensure it's not being used...
+			$fp = false;
+			$errno = null;
+			$errstr = null;
+			do
+			{
+				if($fp != false)
+				{
+					fclose($fp);
+				}
+
+				$web_port = rand(2000, 9999);
+			}
+			while(($fp = fsockopen('127.0.0.1', $web_port, $errno, $errstr, 5)) != false);
+
+		}
+
+		if(strpos(getenv('PHP_BIN'), 'hhvm'))
+		{
+			$server_launcher .= ' -m server -vServer.Type=fastcgi -vServer.Port=' . $web_port . ' -vServer.IP=' . $server_ip . ' -t ' . PTS_CORE_PATH . 'web-interface/ &' . PHP_EOL;
+		}
+		else
+		{
+			$server_launcher .= ' -S ' . $server_ip . ':' . $web_port . ' -t ' . PTS_CORE_PATH . 'web-interface/ &' . PHP_EOL;
 		}
 		$server_launcher .= 'server_pid=$!'. PHP_EOL . PHP_EOL;
 

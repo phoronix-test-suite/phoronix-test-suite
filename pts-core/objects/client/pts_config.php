@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2012, Phoronix Media
-	Copyright (C) 2008 - 2012, Michael Larabel
+	Copyright (C) 2008 - 2013, Phoronix Media
+	Copyright (C) 2008 - 2013, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -126,6 +126,9 @@ class pts_config
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Networking/Timeout', $read_config);
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Networking/ProxyAddress', $read_config);
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Networking/ProxyPort', $read_config);
+
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Server/RemoteAccessAllowed', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Server/Password', $read_config);
 
 		$config->saveXMLFile(PTS_USER_PATH . 'user-config.xml');
 	}

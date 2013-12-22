@@ -95,8 +95,14 @@
 			<h3>ProxyPort: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/Networking/ProxyPort" /></span></h3>
 			<p>If using a proxy server, enter the TCP port in this tag.</p>
 
+			<h1>Server Options</h1>
+			<h3>RemoteAccessAllowed: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/Server/RemoteAccessAllowed" /></span></h3>
+			<p>If you wish to allow remote access to the built-in web-based interface to the Phoronix Test Suite when running its built-in web server, set the port number for remote access here. Port 80 is the common HTTP port but the Phoronix Test Suite web-interface can be easily set to other port numbers. If you do not wish to allow remote access, use the default value of <em>FALSE</em>.</p>
+			<h3>Password: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/Server/Password" /></span></h3>
+			<p>If you wish to require a password when entering the web-based interface to the Phoronix Test Suite -- either locally or remotely -- specify the password here using the password's SHA256 sum as the value.</p>
+
 		</div>
-		<div style="text-align: center; font-size: 12px;">Copyright &#xA9; 2008 - 2011 by <a href="http://www.phoronix-media.com/" style="text-decoration: none; color: #000;">Phoronix Media</a>.</div>
+		<div style="text-align: center; font-size: 12px;">Copyright &#xA9; 2008 - 2013 by <a href="http://www.phoronix-media.com/" style="text-decoration: none; color: #000;">Phoronix Media</a>.</div>
 	</body>
 </html>
 </xsl:template>
