@@ -588,11 +588,15 @@ class pts_strings
 
 		return implode(($standard_version ? ', ' : null), $formatted_time);
 	}
+	public static function plural_handler($count, $base)
+	{
+		return $count . ' ' . $base . ($count > 1 ? 's' : null);
+	}
 	public static function days_ago_format_string($days_ago)
 	{
 		if($days_ago < 30)
 		{
-			$days_ago .= ' day' . ($days_ago > 1 ? 's': null);
+			$days_ago = pts_strings::plural_handler($days_ago, 'day');
 		}
 		else
 		{
@@ -603,16 +607,16 @@ class pts_strings
 				$year = floor($days_ago / 12);
 				$months = $days_ago % 12;
 
-				$days_ago = $year . ' year' . ($year > 1 ? 's': null);
+				$days_ago = pts_strings::plural_handler($year, 'year');
 
 				if($months > 0)
 				{
-					$days_ago .= ', ' . $months . ' month' . ($months > 1 ? 's': null);
+					$days_ago .= ', ' . pts_strings::plural_handler($months, 'month');
 				}
 			}
 			else
 			{
-				$days_ago = $days_ago . ' month' . ($days_ago > 1 ? 's': null);
+				$days_ago = pts_strings::plural_handler($days_ago, 'month');
 			}
 		}
 

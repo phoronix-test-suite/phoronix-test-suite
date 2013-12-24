@@ -69,7 +69,7 @@ class phodevi_cpu extends phodevi_device_interface
 
 		$core_count = phodevi::read_property('cpu', 'core-count');
 
-		return $model . ' (' . $core_count . ' Core' . ($core_count > 1 ? 's' : null) . ')';
+		return $model . ' (' . pts_strings::plural_handler($core_count, 'Core') . ')';
 	}
 	public static function cpu_core_count()
 	{

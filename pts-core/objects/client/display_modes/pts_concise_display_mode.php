@@ -62,7 +62,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 		$this->test_install_count = $test_install_manager->tests_to_install_count();
 
 		echo PHP_EOL;
-		echo $this->tab . $this->test_install_count . ' Test' . ($this->test_install_count > 1 ? 's' : null) . ' To Install' . PHP_EOL;
+		echo $this->tab . pts_strings::plural_handler($this->test_install_count, 'Test') . ' To Install' . PHP_EOL;
 
 		$download_size = 0;
 		$download_total = 0;
@@ -98,7 +98,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 
 		if($download_total > 0)
 		{
-			echo $this->tab . $this->tab . $download_total . ' File' . ($download_total > 1 ? 's' : null) . ' To Download';
+			echo $this->tab . $this->tab . pts_strings::plural_handler($download_total, 'File') . ' To Download';
 
 			if($download_size > 0)
 			{
@@ -109,7 +109,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 
 		if($cache_total > 0)
 		{
-			echo $this->tab . $this->tab . $cache_total . ' File' . ($cache_total > 1 ? 's' : null) . ' In Cache';
+			echo $this->tab . $this->tab . pts_strings::plural_handler($cache_total, 'File') . ' In Cache';
 
 			if($cache_size > 0)
 			{
