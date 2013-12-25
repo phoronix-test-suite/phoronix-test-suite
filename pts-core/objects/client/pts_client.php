@@ -600,7 +600,7 @@ class pts_client
 				pts_define('PTS_GSID_E', $global_gsid['gsid_e']);
 			}
 		}
-		else if(pts_openbenchmarking::is_valid_gsid_e_format($global_gsid_e) == false || pts_openbenchmarking::is_valid_gsid_e_format($global_gsid_p) == false)
+		else if(pts_openbenchmarking::is_valid_gsid_e_format($global_gsid_e) == false || pts_openbenchmarking::is_valid_gsid_p_format($global_gsid_p) == false)
 		{
 			pts_define('PTS_GSID', $global_gsid);
 			$requested_gsid = false;

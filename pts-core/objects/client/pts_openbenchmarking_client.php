@@ -183,6 +183,7 @@ class pts_openbenchmarking_client
 				$openbenchmarking['s_h'] = base64_encode(phodevi::system_hardware(true));
 			}
 
+			// TODO XXX: Make this so it isn't needed everytime
 			$return_state = pts_openbenchmarking::make_openbenchmarking_request('account_verify', $openbenchmarking);
 			$json = json_decode($return_state, true);
 
