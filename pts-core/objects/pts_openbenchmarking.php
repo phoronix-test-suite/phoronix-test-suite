@@ -378,15 +378,30 @@ class pts_openbenchmarking
 		{
 			return true;
 		}
-
 		$file = PTS_OPENBENCHMARKING_SCRATCH_PATH . $qualified_identifier . '.zip';
+		if(!is_file($file))
+		{
+			$cache_locations = array('/var/cache/phoronix-test-suite/openbenchmarking.org/');
 
-		$hash_json = pts_openbenchmarking::make_openbenchmarking_request('test_hash', array('i' => $qualified_identifier));
-		$hash_json = json_decode($hash_json, true);
-		$hash_check = isset($hash_json['openbenchmarking']['test']['hash']) ? $hash_json['openbenchmarking']['test']['hash'] : null;  // should also check for ['openbenchmarking']['test']['error'] problems
+			foreach($cache_locations as $cache_location)
+			{
+				// Assuming if file is present that the SHA1 checksum is fine
+				// otherwise add: && ($hash_check == null || sha1_file($cache_location . $qualified_identifier . '.zip') == $hash_check)
+				if(is_file($cache_location . $qualified_identifier . '.zip'))
+				{
+					copy($cache_location . $qualified_identifier . '.zip', $file);
+					break;
+				}
+			}
+		}
 
 		if(!is_file($file))
 		{
+			// TODO cache this somewhere
+			$hash_json = pts_openbenchmarking::make_openbenchmarking_request('test_hash', array('i' => $qualified_identifier));
+			$hash_json = json_decode($hash_json, true);
+			$hash_check = isset($hash_json['openbenchmarking']['test']['hash']) ? $hash_json['openbenchmarking']['test']['hash'] : null;  // should also check for ['openbenchmarking']['test']['error'] problems
+
 			$test_profile = pts_openbenchmarking::make_openbenchmarking_request('download_test', array('i' => $qualified_identifier));
 
 			if($test_profile != null && ($hash_check == null || $hash_check == sha1($test_profile)))
@@ -395,10 +410,6 @@ class pts_openbenchmarking
 				file_put_contents($file, $test_profile);
 				$hash_check = null;
 			}
-			else if(is_file('/var/cache/phoronix-test-suite/openbenchmarking.org/' . $qualified_identifier . '.zip') && ($hash_check == null || sha1_file('/var/cache/phoronix-test-suite/openbenchmarking.org/' . $qualified_identifier . '.zip') == $hash_check))
-			{
-				copy('/var/cache/phoronix-test-suite/openbenchmarking.org/' . $qualified_identifier . '.zip', $file);
-			}
 			else if(PTS_IS_CLIENT && $test_profile === false)
 			{
 				trigger_error('Network support is needed to obtain ' . $qualified_identifier . ' data.' . PHP_EOL, E_USER_ERROR);
@@ -406,7 +417,7 @@ class pts_openbenchmarking
 			}
 		}
 
-		if(!is_file(PTS_TEST_PROFILE_PATH . $qualified_identifier . '/test-definition.xml') && is_file($file) && ($hash_check == null || sha1_file($file) == $hash_check))
+		if(!is_file(PTS_TEST_PROFILE_PATH . $qualified_identifier . '/test-definition.xml') && is_file($file))
 		{
 			// extract it
 			pts_file_io::mkdir(PTS_TEST_PROFILE_PATH . dirname($qualified_identifier));
