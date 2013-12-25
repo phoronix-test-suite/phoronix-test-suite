@@ -171,7 +171,7 @@ class pts_openbenchmarking_client
 
 		return isset($json_response['openbenchmarking']['upload']['url']) ? $json_response['openbenchmarking']['upload']['url'] : false;
 	}
-	public static function init_account($openbenchmarking)
+	public static function init_account($openbenchmarking, $settings)
 	{
 		if(isset($openbenchmarking['user_name']) && isset($openbenchmarking['communication_id']) && isset($openbenchmarking['sav']))
 		{
@@ -181,17 +181,27 @@ class pts_openbenchmarking_client
 				// But don't do it everytime to preserve bandwidth
 				$openbenchmarking['s_s'] = base64_encode(phodevi::system_software(true));
 				$openbenchmarking['s_h'] = base64_encode(phodevi::system_hardware(true));
+
+				$return_state = pts_openbenchmarking::make_openbenchmarking_request('account_verify', $openbenchmarking);
+				$json = json_decode($return_state, true);
+
+				if(isset($json['openbenchmarking']['account']['valid']))
+				{
+					// The account is valid
+					self::$openbenchmarking_account = $openbenchmarking;
+					self::$client_settings = $json['openbenchmarking']['account']['settings'];
+					pts_storage_object::set_in_file(PTS_CORE_STORAGE, 'openbenchmarking_account_settings', $json['openbenchmarking']['account']['settings']);
+				}
+				else
+				{
+					pts_storage_object::set_in_file(PTS_CORE_STORAGE, 'openbenchmarking', false);
+					trigger_error('Invalid OpenBenchmarking.org account supplied, please re-login.', E_USER_ERROR);
+				}
 			}
-
-			// TODO XXX: Make this so it isn't needed everytime
-			$return_state = pts_openbenchmarking::make_openbenchmarking_request('account_verify', $openbenchmarking);
-			$json = json_decode($return_state, true);
-
-			if(isset($json['openbenchmarking']['account']['valid']))
+			else
 			{
-				// The account is valid
 				self::$openbenchmarking_account = $openbenchmarking;
-				self::$client_settings = $json['openbenchmarking']['account']['settings'];
+				self::$client_settings = $settings;
 			}
 		}
 	}

@@ -8,6 +8,7 @@ Phoronix Test Suite (Git)
 - pts-core: Cleaned up code error reporting/handling
 - pts-core: Add server remote access and password options to user-config.xml user configuration options
 - pts-core: Adjust handling of PTS OpenBenchmarking.org downloading of test profile order and hash handling
+- pts-core: Reduce unnecessary communication with OpenBenchmarking.org network server
 - pts-core: Random fixes
 
 Phoronix Test Suite 4.8.6-Sokndal

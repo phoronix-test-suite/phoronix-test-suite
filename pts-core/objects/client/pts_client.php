@@ -86,10 +86,12 @@ class pts_client
 		self::extended_init_process();
 
 		$openbenchmarking = pts_storage_object::read_from_file(PTS_CORE_STORAGE, 'openbenchmarking');
+		$openbenchmarking_account_settings = pts_storage_object::read_from_file(PTS_CORE_STORAGE, 'openbenchmarking_account_settings');
+
 		if($openbenchmarking != null)
 		{
 			// OpenBenchmarking.org Account
-			pts_openbenchmarking_client::init_account($openbenchmarking);
+			pts_openbenchmarking_client::init_account($openbenchmarking, $openbenchmarking_account_settings);
 		}
 
 		return true;
