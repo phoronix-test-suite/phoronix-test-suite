@@ -36,7 +36,7 @@ class pts_test_profile_parser
 				if($identifier == false && pts_openbenchmarking::openbenchmarking_has_refreshed() == false)
 				{
 					// Test profile might be brand new, so refresh repository and then check
-					pts_openbenchmarking::refresh_repository_lists(null, true);
+					// pts_openbenchmarking::refresh_repository_lists(null, true);
 					$identifier = pts_openbenchmarking::evaluate_string_to_qualifier($identifier, true, 'test');
 				}
 			}

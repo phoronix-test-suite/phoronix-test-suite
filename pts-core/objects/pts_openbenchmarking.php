@@ -302,10 +302,10 @@ class pts_openbenchmarking
 					// The index is new enough
 					continue;
 				}
-			}
 
-			$server_index = pts_openbenchmarking::make_openbenchmarking_request('repo_index', array('repo' => $repo_name));
-			self::$openbenchmarking_index_refreshed = true;
+				$server_index = pts_openbenchmarking::make_openbenchmarking_request('repo_index', array('repo' => $repo_name));
+				self::$openbenchmarking_index_refreshed = true;
+			}
 
 			if(json_decode($server_index) != false)
 			{

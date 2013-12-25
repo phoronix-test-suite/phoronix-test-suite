@@ -57,7 +57,7 @@ class pts_network
 		$stream_context = pts_network::stream_context_create($http_parameters);
 		$opened_url = fopen($url, 'rb', false, $stream_context);
 		$response = $opened_url ? stream_get_contents($opened_url) : false;
-//var_dump($url); var_dump($to_post_data);
+var_dump($url); var_dump($to_post_data);
 		return $response;
 	}
 	public static function download_file($download, $to)
