@@ -1,0 +1,280 @@
+body
+{
+	text-align: left;
+	margin: 0;
+	padding: 0;
+	font-family: Lucida Sans;
+	font-size: 12px;
+	background: #e0e0e0 url(background.png) repeat;
+	height: 100%;
+	overflow: hidden;
+}
+div#pts_web_container
+{
+	min-width: 600px;
+	width: 96%;
+	height: 90%;
+	margin: 3% 0 0 2%;
+	padding: 0;
+	background: #FFF;
+	border: 2px solid #BABABA;
+	border-radius: 14px;
+	position: relative;
+}
+div#pts_web_container_inside
+{
+	margin: 5px 10px 0;
+	padding: 0;
+	height: inherit;
+	position: relative;
+}
+div#pts_web_container div#pts_header
+{
+	padding: 5px 2px;
+	clear: both;
+	border: 1px solid #e0e0e0;
+	border-width: 0 0 1px 0;
+	overflow: hidden;
+	position: absolute;
+	top: 0;
+	width: 100%;
+	height: 60px;
+}
+div#pts_header div#pts_header_left
+{
+	float: left;
+	position: absolute;
+	bottom: 7px;
+	left: 5px;
+	font-weight: 800;
+	font-size: 38px;
+	color: #949494;
+}
+div#pts_header_left a
+{
+	padding-right: 30px;
+	text-decoration: none;
+	color: #044374;
+}
+div#pts_header_left a:hover
+{
+	color: #1F1F1F;
+	-webkit-text-stroke-width: 1px;
+	-webkit-text-stroke-color: #949494;
+}
+div#pts_header div#pts_logo_right
+{
+	float: right;
+	padding-right: 5px;
+	width: 115px;
+	height: 60px;
+}
+div#pts_logo_right a
+{
+	border: 0;
+	opacity: 0.6;
+}
+div#pts_logo_right a:hover
+{
+	opacity: 1;
+}
+table
+{
+	border: solid #fff 1px;
+	border-radius: 4px;
+	table-layout: fixed;
+}
+td
+{
+	border: solid #fff 1px;
+	background: #BABABA;
+	color: #1F1F1F;
+	border-radius: 4px;
+	font-weight: bold;
+	padding: 2px 6px;
+}
+th
+{
+	border: solid #fff 1px;
+	background: #044374;
+	color: #FFF;
+	font-weight: bold;
+	padding: 2px 6px;
+	text-transform: uppercase;
+	text-align: right;
+	border-radius: 4px;
+}
+td a
+{
+	text-decoration: none;
+	color: #1F1F1F;
+}
+td:hover a
+{
+	text-decoration: underline;
+}
+tr
+{
+
+}
+h1
+{
+	font-size: 30px;
+	color: #949494;
+}
+h2
+{
+	font-size: 20px;
+	color: #1F1F1F;
+}
+h3
+{
+	font-size: 15px;
+	color: #044374;
+}
+h4
+{
+	font-size: 15px;
+	color: #949494;
+	text-transform: uppercase;
+	text-align: center;
+	margin: 2px 0;
+	padding: 2px 0;
+	font-weight: bold;
+}
+div#pts_web_container div#pts_main_region
+{
+	color: #1F1F1F;
+	font-size: 13px;
+	position: absolute;
+	left: 5px;
+	right: 5px;
+	top: 70px;
+	bottom: -40px;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+input
+{
+	border: solid #1F1F1F 1px;
+	color: #FFF;
+	font-weight: bold;
+	padding: 4px 14px;
+	text-transform: uppercase;
+	background: #044374;
+	border-radius: 4px;
+}
+div#pts_web_container div#pts_copyright
+{
+	position: absolute;
+	text-align: right;
+	bottom: -60px;
+	left: 0;
+	right: 0;
+	padding: 1px 10px 0;
+	color: #BABABA;
+	font-size: 9px;
+	border: 1px solid #e0e0e0;
+	border-width: 1px 0 0;
+}
+div.pts_system_component_bar
+{
+	padding: 5px 10px;
+	background: #044374;
+	border-radius: 6px;
+	border: solid #1F1F1F 1px;
+	display: inline-block;
+	overflow: hidden;
+	margin: 10px 20px 0 0;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	user-select: none;
+	color: #FFF;
+	min-height: 50px;
+}
+div.pts_system_component_bar p
+{
+	margin: 0;
+	color: #e0e0e0;
+}
+div.pts_system_component_bar h1
+{
+	float: left;
+	margin: 1px;
+	color: #FFF;
+	text-transform: uppercase;
+}
+a div.pts_blue_bar:hover
+{
+	background: #1F1F1F;
+	border-color: #949494;
+}
+div.pts_blue_bar
+{
+	background: #044374;
+	color: #FFF;
+	border-radius: 6px;
+	border: solid #1F1F1F 1px;
+	display: block;
+	margin: 5px 10px;
+	padding: 2px 5px;
+	float: left;
+	width: 280px;
+}
+div#pts_web_container_inside table#notification_area
+{
+	position: absolute;
+	right: 20px;
+	top: 80px;
+	height: 450px;
+	overflow: hidden;
+	display: block;
+	z-index: 2;
+	border: 0;
+}
+table#notification_area tr
+{
+	display: block;
+}
+table#notification_area td:hover
+{
+	opacity: 1;
+}
+table#notification_area td
+{
+	float: right;
+	background: #BABABA;
+	min-width: 190px;
+	max-width: 300px;
+	padding: 5px 8px;
+	margin: 0 0 10px;
+	border: solid #1F1F1F 2px;
+	border-radius: 10px;
+	min-height: 50px;
+	overflow: hidden;
+	font-size: 10px;
+	text-align: right;
+	opacity: 0.4;
+}
+table#notification_area td a
+{
+	color: #044374;
+}
+table#notification_area td p
+{
+	padding: 0;
+	margin: 0;
+	text-align: left;
+	font-weight: normal;
+}
+table#notification_area td h5
+{
+	text-align: left;
+	font-weight: bold;
+	padding: 0;
+	margin: 0;
+	font-size: 12px;
+	font-weight: bold;
+}
