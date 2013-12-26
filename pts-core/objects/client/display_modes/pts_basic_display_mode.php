@@ -192,14 +192,6 @@ class pts_basic_display_mode implements pts_display_mode_interface
 	{
 		echo $string . PHP_EOL;
 	}
-	public function generic_error($string)
-	{
-		echo self::string_header($string, '=');
-	}
-	public function generic_warning($string)
-	{
-		echo self::string_header($string, '=');
-	}
 	protected static function string_header($heading, $char = '=')
 	{
 		// Return a string header

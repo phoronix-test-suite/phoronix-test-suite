@@ -49,8 +49,6 @@ interface pts_display_mode_interface
 	public function generic_prompt($prompt_string);
 	public function generic_heading($string);
 	public function generic_sub_heading($string);
-	public function generic_error($string);
-	public function generic_warning($string);
 	public function triggered_system_error($level, $message, $file, $line);
 	public function get_tab();
 }

@@ -715,14 +715,14 @@ class pts_test_run_manager
 
 			if(self::$batch_mode_options['Configured'] == false && (pts_c::$test_flags ^ pts_c::auto_mode))
 			{
-				pts_client::$display->generic_error('The batch mode must first be configured.' . PHP_EOL . 'To configure, run phoronix-test-suite batch-setup');
+				trigger_error('The batch mode must first be configured.' . PHP_EOL . 'To configure, run phoronix-test-suite batch-setup', E_USER_ERROR);
 				return false;
 			}
 		}
 
 		if(!is_writable(pts_client::test_install_root_path()))
 		{
-			pts_client::$display->generic_error('The test installation directory is not writable.' . PHP_EOL . 'Location: ' . pts_client::test_install_root_path());
+			trigger_error('The test installation directory is not writable.' . PHP_EOL . 'Location: ' . pts_client::test_install_root_path(), E_USER_ERROR);
 			return false;
 		}
 
@@ -733,8 +733,7 @@ class pts_test_run_manager
 		}
 		else if(count($to_run) == 0)
 		{
-			pts_client::$display->generic_error('You must enter at least one test, suite, or result identifier to run.');
-
+			trigger_error('You must enter at least one test, suite, or result identifier to run.', E_USER_ERROR);
 			return false;
 		}
 
@@ -1054,7 +1053,7 @@ class pts_test_run_manager
 
 			if(count($tests_missing) == 1)
 			{
-				pts_client::$display->generic_error($tests_missing[0] . ' is not installed.');
+				trigger_error($tests_missing[0] . ' is not installed.', E_USER_ERROR);
 				// PHP_EOL . 'To install, run: phoronix-test-suite install ' . $tests_missing[0]
 			}
 			else
@@ -1476,7 +1475,7 @@ class pts_test_run_manager
 			}
 			else
 			{
-				pts_client::$display->generic_error($to_run . ' is not recognized.');
+				trigger_error($to_run . ' is not recognized.', E_USER_ERROR);
 				continue;
 			}
 		}

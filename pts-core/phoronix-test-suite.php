@@ -117,7 +117,7 @@ if(QUICK_START == false)
 {
 	if(pts_client::create_lock(PTS_USER_LOCK) == false)
 	{
-		pts_client::$display->generic_warning('It appears that the Phoronix Test Suite is already running.' . PHP_EOL . 'For proper results, only run one instance at a time.');
+		trigger_error('It appears that the Phoronix Test Suite is already running.' . PHP_EOL . 'For proper results, only run one instance at a time.', E_USER_WARNING);
 	}
 
 	register_shutdown_function(array('pts_client', 'process_shutdown_tasks'));

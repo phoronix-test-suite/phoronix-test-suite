@@ -470,7 +470,19 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	}
 	public function triggered_system_error($level, $message, $file, $line)
 	{
-		echo PHP_EOL . '[' .$level . '] ' . $message;
+		echo PHP_EOL . '[' . $level . '] ';
+		if(strpos($message, PHP_EOL) === false)
+		{
+			echo $message;
+		}
+		else
+		{
+			foreach(pts_strings::trim_explode(PHP_EOL, $message) as $line_count => $line_string)
+			{
+				// ($line_count > 0 ? $this->tab : null)
+				echo PHP_EOL . ($line_count > 0 ? '       ' : null) . $line_string;
+			}
+		}
 
 		if($file != null)
 		{

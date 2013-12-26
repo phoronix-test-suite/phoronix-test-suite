@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2011, Phoronix Media
-	Copyright (C) 2009 - 2011, Michael Larabel
+	Copyright (C) 2009 - 2013, Phoronix Media
+	Copyright (C) 2009 - 2013, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -49,12 +49,12 @@ class ekofisk extends pts_module_interface
 	{
 		if(pts_client::create_lock(PTS_USER_PATH . 'ekofisk_lock') == false)
 		{
-			pts_client::$display->generic_error('Ekofisk is already running.');
+			trigger_error('Ekofisk is already running.', E_USER_ERROR);
 			return false;
 		}
 		if(pts_openbenchmarking_client::user_name() == null)
 		{
-			pts_client::$display->generic_error('You must be logged into your OpenBenchmarking.org account.');
+			trigger_error('You must be logged into your OpenBenchmarking.org account.', E_USER_ERROR);
 			return false;
 		}
 

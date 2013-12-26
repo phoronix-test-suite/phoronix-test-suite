@@ -56,7 +56,7 @@ class pts_test_installer
 	{
 		if(count($test_profiles) == 0)
 		{
-			pts_client::$display->generic_error('No Tests Found For Installation.');
+			trigger_error('No Tests Found For Installation.', E_USER_ERROR);
 			return false;
 		}
 

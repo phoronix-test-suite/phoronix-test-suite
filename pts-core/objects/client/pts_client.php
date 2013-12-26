@@ -1220,11 +1220,11 @@ class pts_client
 
 					if((isset($pass_args[$argument_check->get_argument_index()]) && !empty($pass_args[$argument_check->get_argument_index()])) || ($argument_check->get_argument_index() == 'VARIABLE_LENGTH' && !empty($pass_args)))
 					{
-						pts_client::$display->generic_error('Invalid Argument: ' . implode(' ', $pass_args));
+						trigger_error('Invalid Argument: ' . implode(' ', $pass_args), E_USER_ERROR);
 					}
 					else
 					{
-						pts_client::$display->generic_error('Argument Missing.');
+						trigger_error('Argument Missing.', E_USER_ERROR);
 					}
 
 					echo 'CORRECT SYNTAX:' . PHP_EOL . 'phoronix-test-suite ' . str_replace('_', '-', $command_alias) . ' ' . implode(' ', $argument_checks) . PHP_EOL . PHP_EOL;
@@ -1642,6 +1642,11 @@ class pts_client
 		{
 			case E_USER_ERROR:
 				$error_type = 'PROBLEM';
+				if(pts_client::is_client_debug_mode() == false)
+				{
+					$error_file = null;
+					$error_line = 0;
+				}
 				break;
 			case E_USER_NOTICE:
 				if(pts_client::is_client_debug_mode() == false)
@@ -1651,7 +1656,12 @@ class pts_client
 				$error_type = 'NOTICE';
 				break;
 			case E_USER_WARNING:
-				$error_type = 'NOTICE'; // Yes, report warnings as a notice label
+				$error_type = 'NOTICE'; // Yes, report warnings as a notice
+				if(pts_client::is_client_debug_mode() == false)
+				{
+					$error_file = null;
+					$error_line = 0;
+				}
 				break;
 			case E_ERROR:
 			case E_PARSE:
