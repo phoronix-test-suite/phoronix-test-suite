@@ -453,6 +453,12 @@ class pts_client
 	}
 	public static function init_display_mode($flags = 0)
 	{
+		if(PTS_IS_WEB_CLIENT)
+		{
+			self::$display = new pts_web_display_mode();
+			return;
+		}
+
 		$env_mode = ($flags & pts_c::debug_mode) ? 'BASIC' : false;
 
 		switch(($env_mode != false || ($env_mode = pts_client::read_env('PTS_DISPLAY_MODE')) != false ? $env_mode : pts_config::read_user_config('PhoronixTestSuite/Options/General/DefaultDisplayMode', 'DEFAULT')))

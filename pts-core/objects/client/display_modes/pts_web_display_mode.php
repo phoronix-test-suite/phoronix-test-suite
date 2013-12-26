@@ -21,7 +21,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class pts_concise_display_mode implements pts_display_mode_interface
+class pts_web_display_mode implements pts_display_mode_interface
 {
 	private $tab = '    ';
 
@@ -91,7 +91,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 						$download_size += $test_file_download->get_filesize();
 						$download_total++;
 						break;
-				}			
+				}
 			}
 		}
 
@@ -248,7 +248,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 			$this->progress_char_pos = $char_current;
 		}
 
-		$this->progress_last_float = $progress_float;		
+		$this->progress_last_float = $progress_float;
 	}
 	public function test_install_progress_completed()
 	{
@@ -434,7 +434,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 			echo PHP_EOL;
 			foreach(pts_strings::trim_explode(PHP_EOL, $string) as $line_count => $line_string)
 			{
-				// ($line_count > 0 ? $this->tab : null) . 
+				// ($line_count > 0 ? $this->tab : null)
 				echo $line_string . PHP_EOL;
 			}
 
@@ -459,30 +459,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	}
 	public function triggered_system_error($level, $message, $file, $line)
 	{
-		echo PHP_EOL . '[' . $level . '] ';
-		if(strpos($message, PHP_EOL) === false)
-		{
-			echo $message;
-		}
-		else
-		{
-			foreach(pts_strings::trim_explode(PHP_EOL, $message) as $line_count => $line_string)
-			{
-				// ($line_count > 0 ? $this->tab : null)
-				echo PHP_EOL . ($line_count > 0 ? '       ' : null) . $line_string;
-			}
-		}
-
-		if($file != null)
-		{
-			' in ' . basename($file, '.php');
-		}
-		if($line != 0)
-		{
-			echo  ':' . $line;
-		}
-
-		echo PHP_EOL;
+		echo '<script type="text/javascript">pts_add_web_notification(\'' . $level . '\', \'' . str_replace(PHP_EOL, '<br />', $message) . '\');</script>' . PHP_EOL;
 	}
 	public function get_tab()
 	{
