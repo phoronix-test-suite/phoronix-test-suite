@@ -1690,7 +1690,7 @@ class pts_client
 				break;
 		}
 
-		echo PHP_EOL . '[' . $error_type . '] ' . $error_string . ' in ' . basename($error_file, '.php') . ':' . $error_line . PHP_EOL;
+		pts_client::$display->triggered_system_error($error_type, $error_string, $error_file, $error_line);
 
 		if($error_type == 'ERROR')
 		{

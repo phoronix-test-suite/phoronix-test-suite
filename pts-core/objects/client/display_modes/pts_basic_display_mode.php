@@ -117,6 +117,21 @@ class pts_basic_display_mode implements pts_display_mode_interface
 	{
 		echo $message;
 	}
+	public function triggered_system_error($level, $message, $file, $line)
+	{
+		echo PHP_EOL . '[' .$level . '] ' . $message;
+
+		if($file != null)
+		{
+			' in ' . $file;
+		}
+		if($line != 0)
+		{
+			echo  ':' . $line;
+		}
+
+		echo PHP_EOL;
+	}
 	public function test_run_instance_output(&$to_output)
 	{
 		echo $to_output;

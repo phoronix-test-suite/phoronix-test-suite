@@ -468,6 +468,21 @@ class pts_concise_display_mode implements pts_display_mode_interface
 		}
 		echo PHP_EOL;
 	}
+	public function triggered_system_error($level, $message, $file, $line)
+	{
+		echo PHP_EOL . '[' .$level . '] ' . $message;
+
+		if($file != null)
+		{
+			' in ' . basename($file, '.php');
+		}
+		if($line != 0)
+		{
+			echo  ':' . $line;
+		}
+
+		echo PHP_EOL;
+	}
 	public function generic_warning($string)
 	{
 		echo PHP_EOL;

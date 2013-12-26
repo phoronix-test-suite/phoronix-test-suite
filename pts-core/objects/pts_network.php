@@ -272,7 +272,7 @@ var_dump($url); var_dump($to_post_data);
 			//echo PHP_EOL . 'Network Communication Is Disabled For Your User Configuration.' . PHP_EOL . PHP_EOL;
 			self::$disable_network_support = true;
 		}
-		else
+		else if(!PTS_IS_WEB_CLIENT)
 		{
 			$server_response = pts_network::http_get_contents('http://www.phoronix-test-suite.com/PTS', false, false);
 
