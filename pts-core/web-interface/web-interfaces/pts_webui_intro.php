@@ -35,7 +35,7 @@ class pts_webui_intro implements pts_webui_interface
 	{
 		return true;
 	}
-	public static function render_page_process()
+	public static function render_page_process($PATH)
 	{
 		echo '<h2>Welcome</h2>' . PHP_EOL;
 		echo '<p>' . str_replace("\n", '<br />', file_get_contents(PTS_CORE_STATIC_PATH . 'short-description.txt')) . '</p>';

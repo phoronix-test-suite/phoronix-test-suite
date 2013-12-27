@@ -49,7 +49,7 @@ class pts_webui_test implements pts_webui_interface
 	{
 		return null;
 	}
-	public static function render_page_process()
+	public static function render_page_process($PATH)
 	{
 		$test_version = self::$test_profile->get_app_version();
 		$test_title = self::$test_profile->get_title() . ($test_version != null ? ' ' . $test_version : null);

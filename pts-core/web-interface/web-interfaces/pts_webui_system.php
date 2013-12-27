@@ -35,7 +35,7 @@ class pts_webui_system implements pts_webui_interface
 	{
 		return true;
 	}
-	public static function render_page_process()
+	public static function render_page_process($PATH)
 	{
 		$component_modal = array(
 			'CPU' => array(

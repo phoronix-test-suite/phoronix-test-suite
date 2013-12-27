@@ -84,10 +84,11 @@ interface pts_webui_interface
 	public static function preload($PATH);
 	public static function page_title();
 	public static function page_header();
-	public static function render_page_process();
+	public static function render_page_process($PATH);
 }
 
-$PATH = explode('/', substr($_SERVER['REQUEST_URI'], strpos($_SERVER['REQUEST_URI'], '?') + 1));
+$URI = substr($_SERVER['REQUEST_URI'], strpos($_SERVER['REQUEST_URI'], '?') + 1);
+$PATH = explode('/', $URI);
 $PAGE_REQUEST = str_replace('.', null, array_shift($PATH));
 
 if(is_file('web-interfaces/pts_webui_' . $PAGE_REQUEST . '.php'))
@@ -97,14 +98,14 @@ if(is_file('web-interfaces/pts_webui_' . $PAGE_REQUEST . '.php'))
 else
 {
 	// or pts_webui_intro on invalidated classes
-	$webui_class = 'pts_webui_home';
+	$webui_class = 'pts_webui_main';
 }
 
 $webui_class = pts_webui_load_interface($webui_class, $PATH);
 
 if($webui_class === false)
 {
-	$webui_class = pts_webui_load_interface('pts_webui_home', $PATH);
+	$webui_class = pts_webui_load_interface('pts_webui_main', $PATH);
 }
 
 ?>
@@ -113,20 +114,57 @@ if($webui_class === false)
 <head>
 <link href="/assets/pts-web-interface.css" rel="stylesheet" type="text/css" />
 <script src="/assets/pts-web-interface.js" type="text/javascript"></script>
-<title><?php $page_title = $webui_class::page_title(); echo $page_title != null ? $page_title : pts_title(true); ?></title>
+<title><?php $page_title = $webui_class::page_title(); echo $page_title != null ? $page_title . ' - Phoronix Test Suite' : pts_title(true); ?></title>
 </head>
 <body>
 <div id="pts_web_container">
 <div id="pts_web_container_inside">
 <table id="notification_area"></table>
 	<div id="pts_header">
-		<div id="pts_header_left"><?php $page_header = $webui_class::page_header(); echo $page_header != null ? $page_header : '<a href="?tests">Tests</a> <a href="?results">Results</a> <a href="?system">System</a>'; ?></div>
+		<div id="pts_header_left"><?php $page_header = $webui_class::page_header();
+		$custom_header = true;
+		if($page_header == null)
+		{	$custom_header = false;
+			$page_header = array('Main' => 'main', 'Tests' => 'tests/available_tests', 'Results' => 'results', 'System' => 'system');
+		}
+		else if(is_array($page_header) && !isset($page_header['Main']))
+		{
+			$page_header = array('Main' => 'main') + $page_header;
+		}
+
+		if(is_array($page_header))
+		{
+			$new_header = null;
+			foreach($page_header as $page => $url)
+			{
+
+				if($PAGE_REQUEST == $url || $URI == $url)
+				{
+					$new_header .= '<a href="?' . $url . '"><span class="dark_alt">' . $page . '</span></a> ';
+				}
+				else
+				{
+					if($custom_header && $page == 'Main')
+					{
+						$new_header .= '<a href="?' . $url . '"><span class="alt">' . $page . '</span></a> ';
+					}
+					else
+					{
+						$new_header .= '<a href="?' . $url . '">' . $page . '</a> ';
+					}
+				}
+			}
+
+			$page_header = rtrim($new_header);
+		}
+
+		echo $page_header; ?></div>
 		<div id="pts_logo_right"><a href="http://www.phoronix-test-suite.com/" target="_blank"><img src="/assets/pts-web-logo.png" /></a></div>
 	</div>
 	<div id="pts_main_region">
-<?php $webui_class::render_page_process(); ?>
+<?php $webui_class::render_page_process($PATH); ?>
 	</div>
-	<div id="pts_copyright"><?php $DEBUG_END_TIME = microtime(true); $DEBUG_TIME = $DEBUG_END_TIME - $DEBUG_START_TIME; echo '<strong>Page Rendering Took: ' . $DEBUG_TIME . ' secs.</strong> '; ?>Copyright &#xA9; 2008 - <?php echo date('Y'); ?> by Phoronix Media. All trademarks used are properties of their respective owners. All rights reserved.</div>
+	<div id="pts_copyright"><?php //$DEBUG_END_TIME = microtime(true); $DEBUG_TIME = $DEBUG_END_TIME - $DEBUG_START_TIME; echo '<strong>Page Rendering Took: ' . $DEBUG_TIME . ' secs.</strong> '; ?>Copyright &#xA9; 2008 - <?php echo date('Y'); ?> by Phoronix Media. All trademarks used are properties of their respective owners. All rights reserved.</div>
 </div>
 </div>
 </body>

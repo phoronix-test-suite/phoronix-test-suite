@@ -171,6 +171,93 @@ class pts_openbenchmarking_client
 
 		return isset($json_response['openbenchmarking']['upload']['url']) ? $json_response['openbenchmarking']['upload']['url'] : false;
 	}
+	public static function recently_updated_tests($limit = -1)
+	{
+		$available_tests = array();
+
+		foreach(pts_openbenchmarking::linked_repositories() as $repo)
+		{
+			$repo_index = pts_openbenchmarking::read_repository_index($repo);
+
+			if(isset($repo_index['tests']) && is_array($repo_index['tests']))
+			{
+				foreach(array_keys($repo_index['tests']) as $identifier)
+				{
+					if($repo_index['tests'][$identifier]['title'] == null)
+					{
+						continue;
+					}
+
+					$version = array_shift($repo_index['tests'][$identifier]['versions']);
+					$update_time = $repo_index['tests'][$identifier]['last_updated'];
+					$available_tests[$update_time] = $repo . '/' . $identifier . '-' . $version;
+				}
+			}
+		}
+
+		krsort($available_tests);
+
+		if($limit > 0)
+		{
+			$available_tests = array_slice($available_tests, 0, $limit);
+		}
+
+		return $available_tests;
+	}
+	public static function popular_tests($limit = -1, $test_type = null)
+	{
+		$available_tests = array();
+
+		foreach(pts_openbenchmarking::linked_repositories() as $repo)
+		{
+			$repo_index = pts_openbenchmarking::read_repository_index($repo);
+
+			if(isset($repo_index['tests']) && is_array($repo_index['tests']))
+			{
+				foreach(array_keys($repo_index['tests']) as $identifier)
+				{
+					if($repo_index['tests'][$identifier]['title'] == null)
+					{
+						continue;
+					}
+
+					$popularity = $repo_index['tests'][$identifier]['popularity'];
+
+					if($popularity < 1 || ($test_type != null && $repo_index['tests'][$identifier]['test_type'] != $test_type))
+					{
+						continue;
+					}
+
+					$available_tests[$repo . '/' . $identifier] = $popularity;
+				}
+			}
+		}
+
+		asort($available_tests);
+
+		if($limit > 0)
+		{
+			$available_tests = array_slice($available_tests, 0, $limit);
+		}
+
+		return array_keys($available_tests);
+	}
+	public static function tests_available()
+	{
+		$test_count = 0;
+
+		foreach(pts_openbenchmarking::linked_repositories() as $repo)
+		{
+			$repo_index = pts_openbenchmarking::read_repository_index($repo);
+
+			if(isset($repo_index['tests']) && is_array($repo_index['tests']))
+			{
+				$test_count += count($repo_index['tests']);
+			}
+		}
+
+		return $test_count;
+	}
 	public static function init_account($openbenchmarking, $settings)
 	{
 		if(isset($openbenchmarking['user_name']) && isset($openbenchmarking['communication_id']) && isset($openbenchmarking['sav']))

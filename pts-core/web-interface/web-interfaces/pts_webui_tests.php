@@ -29,27 +29,26 @@ class pts_webui_tests implements pts_webui_interface
 	}
 	public static function page_header()
 	{
-		return null;
+		return array('Available Tests' => 'tests/available_tests', 'Local Tests' => 'tests/locally_available_tests', 'Installed Tests' => 'tests/installed_tests');
 	}
 	public static function preload($PAGE)
 	{
 		return true;
 	}
-	public static function render_page_process()
+	public static function render_page_process($PATH)
 	{
-		$show = 'available_tests';
-
-		switch($show)
+		$local_only = false;
+		switch(isset($PATH[0]) ? $PATH[0] : null)
 		{
-			case 'available_tests':
-			case 'locally_available_tests':
-				$tests = pts_openbenchmarking::available_tests();
-				break;
 			case 'installed_tests':
 				$tests = pts_tests::installed_tests();
 				break;
+			case 'locally_available_tests':
+				$local_only = true;
+			case 'available_tests':
 			default:
-				return;
+				$tests = pts_openbenchmarking::available_tests();
+				break;
 		}
 
 		$installed_dependencies = pts_external_dependencies::installed_dependency_names();
@@ -63,7 +62,7 @@ class pts_webui_tests implements pts_webui_interface
 				// Don't show unsupported tests
 				continue;
 			}
-			if($show == 'locally_available_tests' && count(($test_dependencies = $test_profile->get_dependencies())) > 0)
+			if($local_only && count(($test_dependencies = $test_profile->get_dependencies())) > 0)
 			{
 				$dependencies_met = true;
 				foreach($test_dependencies as $d)
@@ -80,7 +79,7 @@ class pts_webui_tests implements pts_webui_interface
 					continue;
 				}
 			}
-			if($show == 'locally_available_tests' && pts_test_install_request::test_files_available_locally($test_profile) == false)
+			if($local_only && pts_test_install_request::test_files_available_locally($test_profile) == false)
 			{
 				continue;
 			}
@@ -98,9 +97,11 @@ class pts_webui_tests implements pts_webui_interface
 			{
 				$category = $test_profile->get_test_hardware_type();
 				echo '</div>' . PHP_EOL . '<h2>' . $category . '</h2>' . PHP_EOL . '<div style="overflow: hidden;">';
+				$popularity_index = pts_openbenchmarking_client::popular_tests(-1, pts_openbenchmarking_client::read_repository_test_profile_attribute($test_profile, 'test_type'));
 			}
 
 			$last_updated = pts_openbenchmarking_client::read_repository_test_profile_attribute($test_profile, 'last_updated');
+			$popularity = array_search($test_profile->get_identifier(false), $popularity_index);
 			$secondary_message = null;
 
 			if($last_updated > (time() - (60 * 60 * 24 * 21)))
@@ -108,9 +109,16 @@ class pts_webui_tests implements pts_webui_interface
 				// Mark it as newly updated if uploaded in past 3 weeks
 				$secondary_message = '<strong>Newly Updated.</strong>';
 			}
-			// TODO XXX: add for 'Popular Test' based on OpenBenchmarking.org use
+			else if($popularity === 0)
+			{
+				$secondary_message = '<strong>Most Popular.</strong>';
+			}
+			else if($popularity < 4)
+			{
+				$secondary_message = '<strong>Very Popular.</strong>';
+			}
 
-			echo '<a href="?test/' . $test_profile->get_identifier() . '"><div class="pts_blue_bar"><strong>' . trim($test_profile->get_title() . ' ' . $test_profile->get_app_version()) . '</strong><br /><span style="font-size: 10px;">Runtime: ~' . max(1, round($test_profile->get_estimated_run_time() / 60)) . ' mins. ' . $secondary_message . '</span></div></a>';
+			echo '<a href="?test/' . $test_profile->get_identifier() . '"><div class="pts_blue_bar"><strong>' . trim($test_profile->get_title() . ' ' . $test_profile->get_app_version()) . '</strong><br /><span style="font-size: 10px;">~' . max(1, round($test_profile->get_estimated_run_time() / 60)) . ' mins To Run. ' . $secondary_message . '</span></div></a>';
 		}
 		echo '</div>';
 	}
