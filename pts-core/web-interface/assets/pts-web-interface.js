@@ -11,3 +11,32 @@ function pts_add_web_notification(title, message)
 	new_row.appendChild(new_message);
 	document.getElementById('notification_area').appendChild(new_row);
 }
+function pts_fade_in(id)
+{
+	var opacity = 0.01;
+	var timer = setInterval(function ()
+	{
+		if(opacity >= 1)
+		{
+			clearInterval(timer);
+			document.getElementById(id).style.opacity = 1.0;
+		}
+		document.getElementById(id).style.opacity = opacity;
+		opacity *= 1.06;
+	}, 50);
+}
+function pts_fade_out(id)
+{
+	var opacity = 1;
+	var timer = setInterval(function ()
+	{
+		if(opacity <= 0)
+		{
+			clearInterval(timer);
+			document.getElementById(id).style.opacity = 0;
+			document.getElementById(id).style.display = 'none';
+		}
+		document.getElementById(id).style.opacity = opacity;
+		opacity = opacity * 0.94;
+	}, 50);
+}

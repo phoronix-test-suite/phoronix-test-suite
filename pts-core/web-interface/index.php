@@ -98,7 +98,7 @@ if(is_file('web-interfaces/pts_webui_' . $PAGE_REQUEST . '.php'))
 else
 {
 	// or pts_webui_intro on invalidated classes
-	$webui_class = 'pts_webui_main';
+	$webui_class = 'pts_webui_loader';
 }
 
 $webui_class = pts_webui_load_interface($webui_class, $PATH);
@@ -120,8 +120,9 @@ if($webui_class === false)
 <div id="pts_web_container">
 <div id="pts_web_container_inside">
 <table id="notification_area"></table>
+	<?php $page_header = $webui_class::page_header(); if($page_header !== -1) { ?>
 	<div id="pts_header">
-		<div id="pts_header_left"><?php $page_header = $webui_class::page_header();
+		<div id="pts_header_left"><?php
 		$custom_header = true;
 		if($page_header == null)
 		{	$custom_header = false;
@@ -161,6 +162,7 @@ if($webui_class === false)
 		echo $page_header; ?></div>
 		<div id="pts_logo_right"><a href="http://www.phoronix-test-suite.com/" target="_blank"><img src="/assets/pts-web-logo.png" /></a></div>
 	</div>
+	<?php } // $page_header !== -1 ?>
 	<div id="pts_main_region">
 <?php $webui_class::render_page_process($PATH); ?>
 	</div>

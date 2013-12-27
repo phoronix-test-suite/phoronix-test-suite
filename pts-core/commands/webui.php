@@ -86,7 +86,7 @@ class webui implements pts_option_interface
 		}
 		else
 		{
-			$server_launcher .= ' -S ' . $server_ip . ':' . $web_port . ' -t ' . PTS_CORE_PATH . 'web-interface/ &' . PHP_EOL;
+			$server_launcher .= ' -S ' . $server_ip . ':' . $web_port . ' -t ' . PTS_CORE_PATH . 'web-interface/ 2> /dev/null &' . PHP_EOL;
 		}
 		$server_launcher .= 'server_pid=$!'. PHP_EOL . PHP_EOL;
 
