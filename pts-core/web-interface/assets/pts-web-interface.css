@@ -249,7 +249,6 @@ div.pts_list_box
 	margin: 5px 10px;
 	padding: 0 10px 5px;
 	float: left;
-	max-width: 30%;
 }
 div.pts_list_box ol
 {
@@ -346,6 +345,15 @@ div#pts_side_pane
 	padding: 10px 20px 40px 0;
 	margin: 0 20px 10px 0;
 	color: #949494;
+}
+div#pts_side_pane div.pts_pane_window
+{
+	color: #FFF;
+	background: #bababa;
+	border-radius: 6px;
+	border: solid #e0e0e0 1px;
+	padding: 4px 6px;
+	display: block;
 }
 div#pts_side_pane hr
 {

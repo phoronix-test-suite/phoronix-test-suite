@@ -112,8 +112,8 @@ if($webui_class === false)
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html style="height: 100%;">
 <head>
-<link href="/assets/pts-web-interface.css" rel="stylesheet" type="text/css" />
-<script src="/assets/pts-web-interface.js" type="text/javascript"></script>
+<link href="assets/pts-web-interface.css" rel="stylesheet" type="text/css" />
+<script src="assets/pts-web-interface.js" type="text/javascript"></script>
 <title><?php $page_title = $webui_class::page_title(); echo $page_title != null ? $page_title . ' - Phoronix Test Suite' : pts_title(true); ?></title>
 </head>
 <body>

@@ -35,7 +35,7 @@ class webui implements pts_option_interface
 			return false;
 		}
 
-		$server_launcher = '#!/bin/sh' . PHP_EOL . getenv('PHP_BIN');
+		$server_launcher = '#!/bin/sh' . PHP_EOL;
 		$web_port = 0;
 		$remote_access = pts_config::read_user_config('PhoronixTestSuite/Options/Server/RemoteAccessAllowed', 'FALSE');
 		$remote_access = is_numeric($remote_access) && $remote_access > 1 ? $remote_access : false;
@@ -82,11 +82,11 @@ class webui implements pts_option_interface
 
 		if(strpos(getenv('PHP_BIN'), 'hhvm'))
 		{
-			$server_launcher .= ' -m server -vServer.Type=fastcgi -vServer.Port=' . $web_port . ' -vServer.IP=' . $server_ip . ' -t ' . PTS_CORE_PATH . 'web-interface/ &' . PHP_EOL;
+			$server_launcher .= 'cd ' . PTS_CORE_PATH . 'web-interface/ && ' . getenv('PHP_BIN') . ' --config ' . PTS_CORE_PATH . 'static/hhvm-server.hdf -m server -vServer.Port=' . $web_port . ' -vServer.IP=' . $server_ip . ' -vServer.SourceRoot=' . PTS_CORE_PATH . 'web-interface/' . ' &' . PHP_EOL;
 		}
 		else
 		{
-			$server_launcher .= ' -S ' . $server_ip . ':' . $web_port . ' -t ' . PTS_CORE_PATH . 'web-interface/ 2> /dev/null &' . PHP_EOL;
+			$server_launcher .= getenv('PHP_BIN') . ' -S ' . $server_ip . ':' . $web_port . ' -t ' . PTS_CORE_PATH . 'web-interface/ 2> /dev/null &' . PHP_EOL;
 		}
 		$server_launcher .= 'server_pid=$!'. PHP_EOL . PHP_EOL;
 

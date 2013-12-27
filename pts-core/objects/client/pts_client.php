@@ -1688,6 +1688,7 @@ class pts_client
 						'fopen',
 						'fsockopen',
 						'file_get_contents',
+						'failed to connect',
 						'unable to connect',
 						'directory not empty'
 						);

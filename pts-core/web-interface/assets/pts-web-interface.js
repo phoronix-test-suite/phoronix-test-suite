@@ -40,3 +40,14 @@ function pts_fade_out(id)
 		opacity = opacity * 0.94;
 	}, 50);
 }
+function pts_server_sent_event(display_id, request_address)
+{
+	if(typeof(EventSource) !== "undefined")
+	{
+		var pts_event_source = new EventSource(request_address);
+		pts_event_source.onmessage = function(event)
+			{
+				document.getElementById(display_id).innerHTML = event.data;
+			};
+	}
+}

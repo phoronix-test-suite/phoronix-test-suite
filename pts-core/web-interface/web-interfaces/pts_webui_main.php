@@ -60,11 +60,16 @@ class pts_webui_main implements pts_webui_interface
 			}
 			echo '</ul>';
 
+			echo '<div class="pts_pane_window">sfsdfsd dsfsd fdsf s<br />fddfg dfg dfgfd gdf gdf g</div>';
+
 		echo '</div>';
 
 		echo '<div style="text-align: right; margin-bottom: 10px;">';
-		echo '<form name="search_form" target="#here" method="get">SEARCH: <input type="text" size="30" name="search" onkeydown="if (event.keyCode == 13) { this.form.submit(); return false; }" /></form>';
+		echo 'SEARCH: <input type="text" size="30" id="pts_search" name="search" onkeydown="if(event.keyCode == 13) { if(document.getElementById(\'pts_search\').value.length < 3) { alert(\'Please enter a longer search query.\'); return false; } else { window.location.href = \'/?search/\' + document.getElementById(\'pts_search\').value; } return false; }" />';
 		echo '</div>';
+
+		echo '<div id="server_sent_test">ddd</div>';
+
 		echo '<div style="float: left; overflow: hidden; width: auto;">';
 
 		echo '<div class="pts_list_box">';
@@ -82,7 +87,7 @@ class pts_webui_main implements pts_webui_interface
 			foreach($results as $result)
 			{
 				$result_file = new pts_result_file($result);
-				echo '<a href="?result/' . $result . '\"><li>' . $result_file->get_title() . '</li></a>';
+				echo '<a href="?result/' . $result . '"><li>' . $result_file->get_title() . '</li></a>';
 			}
 			echo '<a href="?results"><li><strong>' . $result_count . ' Results Saved</strong></li></a>';
 			echo '</ol>';
@@ -117,6 +122,10 @@ class pts_webui_main implements pts_webui_interface
 		echo '</div>';
 
 		echo '</div>';
+
+		echo '<script type="text/javascript">
+			pts_server_sent_event("server_sent_test", "/send_sse.php");
+			</script>';
 	}
 }
 

@@ -37,6 +37,10 @@ class pts_webui_loader implements pts_webui_interface
 	}
 	public static function render_page_process($PATH)
 	{
+
+// add check for PTS 5.3
+// check for JavaScript
+// check for : if(typeof(EventSource)!=="undefined") {
 echo '<div style="text-align: center; vertical-align: middle; margin-top: 10%;" onclick="show_verbose_info();">
 <svg xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
