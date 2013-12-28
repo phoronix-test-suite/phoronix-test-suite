@@ -22,7 +22,7 @@
 
 class pts_client
 {
-	public static $display;
+	public static $display = false;
 	private static $current_command = null;
 	protected static $lock_pointers = null;
 
@@ -39,6 +39,7 @@ class pts_client
 	}
 	public static function init()
 	{
+		set_time_limit(0);
 		pts_define_directories(); // Define directories
 
 		if(function_exists('cli_set_process_title'))
@@ -1707,7 +1708,14 @@ class pts_client
 				break;
 		}
 
-		pts_client::$display->triggered_system_error($error_type, $error_string, $error_file, $error_line);
+		if(pts_client::$display != false)
+		{
+			pts_client::$display->triggered_system_error($error_type, $error_string, $error_file, $error_line);
+		}
+		else
+		{
+			echo PHP_EOL . $error_string . ' in ' . $error_file . ':' . $error_line . PHP_EOL;
+		}
 
 		if($error_type == 'ERROR')
 		{

@@ -44,10 +44,27 @@ function pts_server_sent_event(display_id, request_address)
 {
 	if(typeof(EventSource) !== "undefined")
 	{
-		var pts_event_source = new EventSource(request_address);
-		pts_event_source.onmessage = function(event)
+		var sse = new EventSource(request_address);
+		sse.onmessage = function(event)
 			{
 				document.getElementById(display_id).innerHTML = event.data;
 			};
 	}
+}
+function pts_ajax_query(request, destination)
+{
+	var http = new Array();
+	var rnow = new Date();
+	http[rnow] = new XMLHttpRequest();
+	http[rnow].open("GET", request, true);
+	http[rnow].onreadystatechange = function(){
+		if(http[rnow].readyState == 4)
+		{
+			if(http[rnow].status == 200 || http[rnow].status == 304)
+			{
+				document.getElementById(destination).innerHTML = http[rnow].responseText;
+			}
+		}}
+	http[rnow].send(null);
+	pollTimer = setInterval(handleResponse, 1000);
 }

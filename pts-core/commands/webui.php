@@ -86,9 +86,10 @@ class webui implements pts_option_interface
 		}
 		else
 		{
-			$server_launcher .= getenv('PHP_BIN') . ' -S ' . $server_ip . ':' . $web_port . ' -t ' . PTS_CORE_PATH . 'web-interface/ 2> /dev/null &' . PHP_EOL;
+			$server_launcher .= getenv('PHP_BIN') . ' -S ' . $server_ip . ':' . $web_port . ' -t ' . PTS_CORE_PATH . 'web-interface/  &' . PHP_EOL; //2> /dev/null
 		}
-		$server_launcher .= 'server_pid=$!'. PHP_EOL . PHP_EOL;
+		$server_launcher .= 'server_pid=$!'. PHP_EOL;
+		$server_launcher .= 'sleep 1' . PHP_EOL;
 
 		if(($browser = pts_client::executable_in_path('chromium-browser')) || ($browser = pts_client::executable_in_path('google-chrome')))
 		{
@@ -96,6 +97,10 @@ class webui implements pts_option_interface
 			$server_launcher .= 'echo "Launching Browser"' . PHP_EOL;
 			$server_launcher .= $browser . ' --temp-profile --app=http://localhost:' . $web_port . ' -start-maximized';
 			// chromium-browser --kiosk URL starts full-screen
+		}
+		else
+		{
+			$server_launcher .= 'echo "Launch: http://localhost:' . $web_port . '"' . PHP_EOL;
 		}
 
 		$server_launcher .= PHP_EOL . 'kill $server_pid';
