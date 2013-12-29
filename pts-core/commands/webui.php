@@ -75,11 +75,18 @@ class webui implements pts_option_interface
 				}
 
 				$web_port = rand(2000, 9999);
+				$web_socket_port = $web_port - 1;
 			}
-			while(($fp = fsockopen('127.0.0.1', $web_port, $errno, $errstr, 5)) != false);
+			while(($fp = fsockopen('127.0.0.1', $web_port, $errno, $errstr, 5)) != false || ($fp = fsockopen('127.0.0.1', $web_socket_port, $errno, $errstr, 5)) != false);
 
 		}
 
+		// WebSocket Server Setup
+		$server_launcher .= 'export PTS_WEBSOCKET_PORT=' . $web_socket_port . PHP_EOL;
+		$server_launcher .= 'cd ' . getenv('PTS_DIR') . ' && ./phoronix-test-suite websocket-server &' . PHP_EOL;
+		$server_launcher .= 'websocket_server_pid=$!'. PHP_EOL;
+
+		// HTTP Server Setup
 		if(strpos(getenv('PHP_BIN'), 'hhvm'))
 		{
 			$server_launcher .= 'cd ' . PTS_CORE_PATH . 'web-interface/ && ' . getenv('PHP_BIN') . ' --config ' . PTS_CORE_PATH . 'static/hhvm-server.hdf -m server -vServer.Port=' . $web_port . ' -vServer.IP=' . $server_ip . ' -vServer.SourceRoot=' . PTS_CORE_PATH . 'web-interface/' . ' &' . PHP_EOL;
@@ -88,9 +95,10 @@ class webui implements pts_option_interface
 		{
 			$server_launcher .= getenv('PHP_BIN') . ' -S ' . $server_ip . ':' . $web_port . ' -t ' . PTS_CORE_PATH . 'web-interface/  &' . PHP_EOL; //2> /dev/null
 		}
-		$server_launcher .= 'server_pid=$!'. PHP_EOL;
+		$server_launcher .= 'http_server_pid=$!'. PHP_EOL;
 		$server_launcher .= 'sleep 1' . PHP_EOL;
 
+		// Browser Launching
 		if(($browser = pts_client::executable_in_path('chromium-browser')) || ($browser = pts_client::executable_in_path('google-chrome')))
 		{
 			// chromium-browser --incognito --temp-profile --kiosk --app=
@@ -103,7 +111,9 @@ class webui implements pts_option_interface
 			$server_launcher .= 'echo "Launch: http://localhost:' . $web_port . '"' . PHP_EOL;
 		}
 
-		$server_launcher .= PHP_EOL . 'kill $server_pid';
+		// Shutdown / Kill Servers
+		$server_launcher .= PHP_EOL . 'kill $http_server_pid';
+		$server_launcher .= PHP_EOL . 'kill $websocket_server_pid';
 		file_put_contents(PTS_USER_PATH . 'web-server-launcher', $server_launcher);
 	}
 }
