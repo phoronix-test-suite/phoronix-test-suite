@@ -462,20 +462,20 @@ class pts_concise_display_mode implements pts_display_mode_interface
 		echo PHP_EOL . '[' . $level . '] ';
 		if(strpos($message, PHP_EOL) === false)
 		{
-			echo $message;
+			echo $message . ' ';
 		}
 		else
 		{
 			foreach(pts_strings::trim_explode(PHP_EOL, $message) as $line_count => $line_string)
 			{
 				// ($line_count > 0 ? $this->tab : null)
-				echo PHP_EOL . ($line_count > 0 ? '       ' : null) . $line_string;
+				echo $line_string . PHP_EOL . str_repeat(' ', strlen($level) + 3);
 			}
 		}
 
 		if($file != null)
 		{
-			' in ' . basename($file, '.php');
+			echo 'in ' . basename($file, '.php');
 		}
 		if($line != 0)
 		{

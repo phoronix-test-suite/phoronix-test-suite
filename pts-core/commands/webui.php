@@ -39,6 +39,7 @@ class webui implements pts_option_interface
 		$web_port = 0;
 		$remote_access = pts_config::read_user_config('PhoronixTestSuite/Options/Server/RemoteAccessAllowed', 'FALSE');
 		$remote_access = is_numeric($remote_access) && $remote_access > 1 ? $remote_access : false;
+		$blocked_ports = array(2049, 3659, 4045, 6000);
 
 		if($remote_access)
 		{
@@ -74,10 +75,10 @@ class webui implements pts_option_interface
 					fclose($fp);
 				}
 
-				$web_port = rand(2000, 9999);
+				$web_port = rand(2000, 5999);
 				$web_socket_port = $web_port - 1;
 			}
-			while(($fp = fsockopen('127.0.0.1', $web_port, $errno, $errstr, 5)) != false || ($fp = fsockopen('127.0.0.1', $web_socket_port, $errno, $errstr, 5)) != false);
+			while(($fp = fsockopen('127.0.0.1', $web_port, $errno, $errstr, 5)) != false || ($fp = fsockopen('127.0.0.1', $web_socket_port, $errno, $errstr, 5)) != false || in_array($web_port, $blocked_ports) || in_array($web_socket_port, $blocked_ports));
 
 		}
 

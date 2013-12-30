@@ -39,7 +39,7 @@ class websocket_server implements pts_option_interface
 			$web_socket_port = '80';
 		}
 
-		$pts_websocket = new pts_web_socket('localhost', $web_socket_port);
+		$websocket = new pts_web_socket_server('localhost', $web_socket_port);
 	}
 }
 

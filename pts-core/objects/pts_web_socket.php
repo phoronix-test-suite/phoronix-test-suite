@@ -146,7 +146,12 @@ class pts_web_socket
 			$this->send_data($user->socket, $decoded_msg);
 		}
 	}
-	protected function send_data($socket, $data)
+	protected function send_json_data($socket, $json)
+	{
+		$data = json_encode($json, JSON_UNESCAPED_SLASHES);
+		$this->send_data($socket, $data);
+	}
+	public function send_data($socket, $data)
 	{
 		$frames = array();
 		$encoded = null;
@@ -182,7 +187,7 @@ class pts_web_socket
 
 		return $user;
 	}
-	private function disconnect($socket)
+	protected function disconnect($socket)
 	{
 		$found_user = false;
 		foreach($this->users as $i => &$user)
@@ -207,7 +212,7 @@ class pts_web_socket
 
 		socket_close($socket);
 	}
-	private function process_hand_shake($user, $buffer)
+	protected function process_hand_shake($user, $buffer)
 	{
 		//echo 'HANDSHAKE = ' . PHP_EOL; var_dump($buffer);
 		list($resource, $host, $origin, $key, $version, $user_agent) = $this->extract_headers($buffer);
@@ -228,7 +233,7 @@ class pts_web_socket
 			);
 
 		$protocol_handshake = implode("\r\n", $protocol_handshake) . "\r\n" . "\r\n";
-		// echo 'HANDSHAKE RESPONSE = ' . PHP_EOL; var_dump($protocol_handshake);
+		//echo 'HANDSHAKE RESPONSE = ' . PHP_EOL; var_dump($protocol_handshake);
 
 		$wrote = socket_write($user->socket, $protocol_handshake, strlen($protocol_handshake));
 		$user->handshake = true;

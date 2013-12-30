@@ -92,7 +92,7 @@ class pts_webui_loader implements pts_webui_interface
 		   id="pts_highlight_6"
 		   style="fill:#000" />
 		  </g>
-		</svg><div id="loading_message_box" style="display: block; margin: 40px auto; width: 60%; height: 100px; text-align: left; overflow-y: auto;">Starting services...<br />Connecting to OpenBenchmarking.org...<br /></div></div>
+		</svg><div id="loading_message_box" style="display: block; margin: 40px auto; width: 60%; height: 100px; text-align: left; overflow-y: auto;"></div></div>
 
 		<script text="text/javascript">
 			function show_verbose_info()
@@ -118,13 +118,25 @@ class pts_webui_loader implements pts_webui_interface
 			}
 			var switcher = setInterval(switch_color, 500);
 
+			function append_to_loading_box(msg)
+			{
+				document.getElementById("loading_message_box").innerHTML += msg + "...<br />";
+			}
 
-		pts_fade_in(\'pts_loading_logo\');
+
+			pts_fade_in(\'pts_loading_logo\');
+
+			function web_socket_connect()
+			{
+				socket = new WebSocket("' . PTS_WEBSOCKET_SERVER . 'start-user-session");
+				socket.onopen    = function(msg){ append_to_loading_box("Connecting To WebSocket Server"); };
+				socket.onmessage = function(msg){ var j = JSON.parse(msg.data); append_to_loading_box(j.pts.status.current); };
+				socket.onclose   = function(msg){ pts_fade_out("pts_loading_logo"); setTimeout(function() { window.location.href = "/?main"; return false; }, 3000); };
+				return false;
+			}
 
 
-
-
-		setTimeout(function() { pts_fade_out(\'pts_loading_logo\'); window.location.href = "/?main"; }, 6000);
+			setTimeout(function() { web_socket_connect(); return false; }, 5000);
 		</script>';
 	}
 }

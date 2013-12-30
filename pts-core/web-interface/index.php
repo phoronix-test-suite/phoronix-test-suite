@@ -107,6 +107,7 @@ if($webui_class === false)
 {
 	$webui_class = pts_webui_load_interface('pts_webui_main', $PATH);
 }
+define('PTS_WEBSOCKET_SERVER', 'ws://' . $_SERVER['REMOTE_ADDR'] . ':' . getenv('PTS_WEBSOCKET_PORT') . '/');
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
