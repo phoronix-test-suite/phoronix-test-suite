@@ -111,16 +111,18 @@ if(is_file(PTS_PATH . 'pts-core/commands/' . $sent_command . '.php') == false)
 	}
 }
 
-pts_define('PTS_USER_LOCK', PTS_USER_PATH . 'run_lock');
+
+pts_define('PTS_USER_LOCK', function_exists('posix_getpid') ? PTS_USER_PATH . 'run-lock-' . posix_getpid() : tempnam(PTS_USER_PATH, 'run-lock-'));
 
 if(QUICK_START == false)
 {
 	if(pts_client::create_lock(PTS_USER_LOCK) == false)
 	{
-		trigger_error('It appears that the Phoronix Test Suite is already running.' . PHP_EOL . 'For proper results, only run one instance at a time.', E_USER_WARNING);
+		//trigger_error('It appears that the Phoronix Test Suite is already running.' . PHP_EOL . 'For proper results, only run one instance at a time.', E_USER_WARNING);
 	}
 
 	register_shutdown_function(array('pts_client', 'process_shutdown_tasks'));
+	//pcntl_signal(SIGTERM, array('pts_client', 'exit_client'));
 
 	if(pts_client::read_env('PTS_IGNORE_MODULES') == false)
 	{

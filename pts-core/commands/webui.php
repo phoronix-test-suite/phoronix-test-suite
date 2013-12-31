@@ -114,7 +114,9 @@ class webui implements pts_option_interface
 
 		// Shutdown / Kill Servers
 		$server_launcher .= PHP_EOL . 'kill $http_server_pid';
-		$server_launcher .= PHP_EOL . 'kill $websocket_server_pid';
+		$server_launcher .= PHP_EOL . 'kill -1 $websocket_server_pid';
+		$server_launcher .= PHP_EOL . 'kill -9 $websocket_server_pid';
+		$server_launcher .= PHP_EOL . 'rm -f ~/.phoronix-test-suite/run-lock*';
 		file_put_contents(PTS_USER_PATH . 'web-server-launcher', $server_launcher);
 	}
 }

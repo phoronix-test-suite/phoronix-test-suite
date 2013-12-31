@@ -25,6 +25,7 @@ class pts_client
 	public static $display = false;
 	private static $current_command = null;
 	protected static $lock_pointers = null;
+	private static $forked_pids = array();
 
 	public static function create_lock($lock_file)
 	{
@@ -1071,10 +1072,10 @@ class pts_client
 
 		return $generated_graphs;
 	}
+
 	public static function process_shutdown_tasks()
 	{
 		// TODO: possibly do something like posix_getpid() != pts_client::$startup_pid in case shutdown function is called from a child process
-
 		// Generate Phodevi Smart Cache
 		if(pts_flags::no_phodevi_cache() == false && pts_client::read_env('EXTERNAL_PHODEVI_CACHE') == false)
 		{
@@ -1093,6 +1094,14 @@ class pts_client
 			foreach(array_keys(self::$lock_pointers) as $lock_file)
 			{
 				self::release_lock($lock_file);
+			}
+		}
+
+		foreach(self::$forked_pids as $pid)
+		{
+			if(is_dir('/proc/' . $pid) && is_function('posix_kill'))
+			{
+				posix_kill($pid, SIGKILL);
 			}
 		}
 	}
@@ -1469,6 +1478,20 @@ class pts_client
 	{
 		return tempnam(pts_client::temporary_directory(), 'PTS');
 	}
+	public static function create_temporary_directory($prefix = null)
+	{
+		$tmpdir = pts_client::temporary_directory();
+
+		do
+		{
+			$randname = '/pts-' . $prefix . rand(0, 9999);
+		}
+		while(is_dir($tmpdir . $randname));
+
+		mkdir($tmpdir . $randname);
+
+		return $tmpdir . $randname . '/';
+	}
 	public static function temporary_directory()
 	{
 		if(PHP_VERSION_ID >= 50210)
@@ -1637,6 +1660,57 @@ class pts_client
 		}
 
 		return $results;
+	}
+	public static function timed_function($function, $time, $continue_while_true_function = null)
+	{
+		if(($time < 0.5 && $time != -1) || $time > 300)
+		{
+			return;
+		}
+
+		if(function_exists('pcntl_fork'))
+		{
+			$current_pid = function_exists('posix_getpid') ? posix_getpid() : -1;
+			$pid = pcntl_fork();
+
+			if($pid == -1)
+			{
+				trigger_error('Could not fork ' . $function . '.', E_USER_ERROR);
+			}
+			else if($pid)
+			{
+				array_push(self::$forked_pids, $pid);
+			}
+			else
+			{
+				posix_setsid();
+				$loop_continue = true;
+				while($loop_continue && is_file(PTS_USER_LOCK) && ($continue_while_true_function === true || ($loop_continue = call_user_func($continue_while_true_function))))
+				{
+					call_user_func($function);
+
+					if($time > 0)
+					{
+						sleep($time);
+					}
+					else if($time == -1)
+					{
+						$loop_continue = false;
+					}
+					if($current_pid != -1 && !is_dir('/proc/' . $current_pid))
+					{
+						exit;
+					}
+					clearstatcache();
+				}
+				posix_kill(posix_getpid(), SIGINT);
+				exit(0);
+			}
+		}
+		else
+		{
+			trigger_error('php-pcntl must be installed for calling ' . $function . '.', E_USER_ERROR);
+		}
 	}
 	public static function code_error_handler($error_code, $error_string, $error_file, $error_line)
 	{

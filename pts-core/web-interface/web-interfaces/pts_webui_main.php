@@ -68,7 +68,8 @@ class pts_webui_main implements pts_webui_interface
 		echo 'SEARCH: <input type="text" size="30" id="pts_search" name="search" onkeydown="if(event.keyCode == 13) { if(document.getElementById(\'pts_search\').value.length < 3) { alert(\'Please enter a longer search query.\'); return false; } else { window.location.href = \'/?search/\' + document.getElementById(\'pts_search\').value; } return false; }" />';
 		echo '</div>';
 
-
+		// Graphs
+		echo '<div id="svg_graphs"></div>';
 		echo '<div style="float: left; overflow: hidden; width: auto;">';
 
 		echo '<div class="pts_list_box">';
@@ -121,6 +122,22 @@ class pts_webui_main implements pts_webui_interface
 		echo '</div>';
 
 		echo '</div>';
+
+		echo '<script text="text/javascript">
+
+
+			function web_socket_connect()
+			{
+				socket = new WebSocket("' . PTS_WEBSOCKET_SERVER . 'main");
+				socket.onopen    = function(msg){ socket.send("user-svg-system-graphs"); };
+				socket.onmessage = function(msg){ var j = JSON.parse(msg.data); if(j.pts.element.name == "svg_graphs") { document.getElementById("svg_graphs").innerHTML = j.pts.element.contents; } };
+				socket.onclose   = function(msg){ };
+				return false;
+			}
+
+
+			web_socket_connect();
+		</script>';
 	}
 }
 

@@ -130,13 +130,18 @@ class pts_webui_loader implements pts_webui_interface
 			{
 				socket = new WebSocket("' . PTS_WEBSOCKET_SERVER . 'start-user-session");
 				socket.onopen    = function(msg){ append_to_loading_box("Connecting To WebSocket Server"); };
-				socket.onmessage = function(msg){ var j = JSON.parse(msg.data); append_to_loading_box(j.pts.status.current); };
-				socket.onclose   = function(msg){ pts_fade_out("pts_loading_logo"); setTimeout(function() { window.location.href = "/?main"; return false; }, 3000); };
+				socket.onmessage = function(msg){ var j = JSON.parse(msg.data); append_to_loading_box(j.pts.status.current); if(j.pts.status.current == "Session Startup Complete") proceed_to_main(); };
+				socket.onclose   = function(msg){ setTimeout(function() { web_socket_connect(); return false; }, 4000); proceed_to_main(); };
 				return false;
+			}
+			function proceed_to_main()
+			{
+				pts_fade_out("pts_loading_logo");
+				setTimeout(function() { window.location.href = "/?main"; return false; }, 3000);
 			}
 
 
-			setTimeout(function() { web_socket_connect(); return false; }, 5000);
+			setTimeout(function() { web_socket_connect(); return false; }, 6000);
 		</script>';
 	}
 }

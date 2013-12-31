@@ -23,8 +23,10 @@
 
 class pts_web_socket_server extends pts_web_socket
 {
+	private $sensor_logging = false;
 	protected function add_to_status($current, &$json)
 	{
+		$json['pts']['element']['name'] = 'loading';
 		$json['pts']['status']['current'] = $current;
 		$json['pts']['status']['full'] = (!isset($json['pts']['status']['full']) ? null : $json['pts']['status']['full'] . PHP_EOL) . $json['pts']['status']['current'];
 	}
@@ -46,9 +48,14 @@ class pts_web_socket_server extends pts_web_socket
 					// Phodevi
 					$this->add_to_status('Generating Phodevi Cache Information', $json);
 					$this->send_json_data($user->socket, $json);
-					phodevi::supported_sensors();
 					phodevi::system_software(true);
 					phodevi::system_hardware(true);
+
+					// Sensors
+					$this->add_to_status('Starting Phodevi Sensor Handler', $json);
+					$this->send_json_data($user->socket, $json);
+					$this->sensor_logging = new phodevi_sensor_monitor(array('all'));
+					$this->sensor_logging->sensor_logging_start();
 
 					// Test Information
 					$this->add_to_status('Downloading Test Information', $json);
@@ -58,13 +65,36 @@ class pts_web_socket_server extends pts_web_socket
 					// Complete
 					$this->add_to_status('Session Startup Complete', $json);
 					$this->send_json_data($user->socket, $json);
-					$this->disconnect($user->socket);
-
-					// TODO XXX: Run caches on Phodevi data, download all tests, etc etc....
-					// TODO XXX: send data when caching complete and updates;
+					//$this->disconnect($user->socket);
 					break;
 			}
 			return true;
+		}
+	}
+	protected function process_data(&$user, &$msg)
+	{
+		$decoded_msg = $this->decode_data($msg);
+		switch($decoded_msg)
+		{
+			case 'user-svg-system-graphs':
+				$json['pts']['element']['name'] = 'svg_graphs';
+				$json['pts']['element']['contents'] = null;
+				foreach($this->sensor_logging->sensors_logging() as $sensor)
+				{
+					$sensor_data = $this->sensor_logging->read_sensor_results($sensor, -300);
+					$graph = new pts_sys_graph(array('title' => $sensor_data['name'], 'x_scale' => 's', 'y_scale' => $sensor_data['unit'], 'reverse_x_direction' => true));
+					$graph->render_base();
+					$svg_dom = $graph->render_graph_data($sensor_data['results']);
+					if($svg_dom === false)
+					{
+						continue;
+					}
+					$output_type = 'SVG';
+					$graph = $svg_dom->output(null, $output_type);
+					$json['pts']['element']['contents'] .= substr($graph, strpos($graph, '<svg'));
+				}
+				$this->send_json_data($user->socket, $json);
+				break;
 		}
 	}
 

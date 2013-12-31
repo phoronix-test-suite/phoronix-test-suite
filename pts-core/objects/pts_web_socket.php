@@ -104,7 +104,7 @@ class pts_web_socket
 			}
 		}
 	}
-	private function decode_data(&$data)
+	protected function decode_data(&$data)
 	{
 		$data_length = $data[1] & 127;
 
@@ -132,7 +132,7 @@ class pts_web_socket
 
 		return $decoded_data;
 	}
-	private function process_data(&$user, &$msg)
+	protected function process_data(&$user, &$msg)
 	{
 		$decoded_msg = $this->decode_data($msg);
 		// echo 'DECODED MESSAGE =' . PHP_EOL; var_dump($decoded_msg);

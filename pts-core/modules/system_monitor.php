@@ -21,6 +21,8 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+// TODO XXX: Port to new phodevi_sensor_monitor interface
+
 class system_monitor extends pts_module_interface
 {
 	const module_name = 'System Monitor';
@@ -70,14 +72,12 @@ class system_monitor extends pts_module_interface
 		$test_run_manager->force_results_save();
 		$test_run_manager->disable_dynamic_run_count();
 	}
-
 	public static function __pre_run_process(&$test_run_manager)
 	{
 		self::$result_identifier = $test_run_manager->get_results_identifier();
 		self::$individual_monitoring = pts_module::read_variable('MONITOR_INDIVIDUAL') !== '0';
 		self::$to_monitor = array();
 		$to_show = pts_strings::comma_explode(pts_module::read_variable('MONITOR'));
-		$monitor_all = in_array('all', $to_show);
 
 		if(pts_module::read_variable('PERFORMANCE_PER_WATT'))
 		{
@@ -87,6 +87,7 @@ class system_monitor extends pts_module_interface
 			echo PHP_EOL . 'To Provide Performance-Per-Watt Outputs.' . PHP_EOL;
 		}
 
+		$monitor_all = in_array('all', $to_show);
 		foreach(phodevi::supported_sensors() as $sensor)
 		{
 			if($monitor_all || in_array(phodevi::sensor_identifier($sensor), $to_show) || in_array('all.' . $sensor[0], $to_show))

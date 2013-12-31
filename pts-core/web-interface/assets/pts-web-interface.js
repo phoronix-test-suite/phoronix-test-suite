@@ -22,7 +22,7 @@ function pts_fade_in(id)
 			document.getElementById(id).style.opacity = 1.0;
 		}
 		document.getElementById(id).style.opacity = opacity;
-		opacity *= 1.06;
+		opacity *= 1.04;
 	}, 50);
 }
 function pts_fade_out(id)
