@@ -58,11 +58,16 @@ class phodevi_sensor_monitor
 	}
 	public function sensor_logging_start()
 	{
+		$this->sensor_logging_update();
 		pts_client::timed_function(array($this, 'sensor_logging_update'), 1, array($this, 'sensor_logging_continue'));
 	}
 	public function sensor_logging_stop()
 	{
 		file_put_contents($this->sensor_storage_dir . 'STOP', 'STOP');
+	}
+	public function cleanup()
+	{
+		pts_file_io::delete($this->sensor_storage_dir, null, true);
 	}
 	public function sensor_logging_continue()
 	{

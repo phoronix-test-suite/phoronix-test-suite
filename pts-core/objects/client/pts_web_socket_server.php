@@ -82,7 +82,12 @@ class pts_web_socket_server extends pts_web_socket
 				foreach($this->sensor_logging->sensors_logging() as $sensor)
 				{
 					$sensor_data = $this->sensor_logging->read_sensor_results($sensor, -300);
-					$graph = new pts_sys_graph(array('title' => $sensor_data['name'], 'x_scale' => 's', 'y_scale' => $sensor_data['unit'], 'reverse_x_direction' => true));
+					if(count($sensor_data) < 2 || max($sensor_data) == min($sensor_data))
+					{
+						continue;
+					}
+
+					$graph = new pts_sys_graph(array('title' => $sensor_data['name'], 'x_scale' => 's', 'y_scale' => $sensor_data['unit'], 'reverse_x_direction' => true, 'width' => 350, 'height' => 200));
 					$graph->render_base();
 					$svg_dom = $graph->render_graph_data($sensor_data['results']);
 					if($svg_dom === false)
