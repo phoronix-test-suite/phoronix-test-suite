@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2013, Phoronix Media
-	Copyright (C) 2008 - 2013, Michael Larabel
+	Copyright (C) 2008 - 2014, Phoronix Media
+	Copyright (C) 2008 - 2014, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -1661,7 +1661,7 @@ class pts_client
 
 		return $results;
 	}
-	public static function timed_function($function, $time, $continue_while_true_function = null)
+	public static function timed_function($function, $function_parameters, $time, $continue_while_true_function = null, $continue_while_true_function_parameters)
 	{
 		if(($time < 0.5 && $time != -1) || $time > 300)
 		{
@@ -1685,9 +1685,9 @@ class pts_client
 			{
 				posix_setsid();
 				$loop_continue = true;
-				while($loop_continue && is_file(PTS_USER_LOCK) && ($continue_while_true_function === true || ($loop_continue = call_user_func($continue_while_true_function))))
+				while($loop_continue && is_file(PTS_USER_LOCK) && ($continue_while_true_function === true || ($loop_continue = call_user_func_array($continue_while_true_function, $continue_while_true_function_parameters))))
 				{
-					call_user_func($function);
+					call_user_func_array($function, $function_parameters);
 
 					if($time > 0)
 					{

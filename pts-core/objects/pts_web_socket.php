@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2013, Phoronix Media
-	Copyright (C) 2013, Michael Larabel
+	Copyright (C) 2013 - 2014, Phoronix Media
+	Copyright (C) 2013 - 2014, Michael Larabel
 	pts-web-socket: A simple WebSocket implementation, inspired by designs of https://github.com/varspool/Wrench and http://code.google.com/p/phpwebsocket/
 
 	This program is free software; you can redistribute it and/or modify
@@ -260,6 +260,11 @@ class pts_web_socket_user
 	public $socket;
 	public $handshake;
 	public $res;
+
+	public function __toString()
+	{
+		return $this->id . ' ' . $this->socket . ' ' . $this->handshake . ' ' . $this->res;
+	}
 }
 
 ?>

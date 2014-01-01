@@ -67,6 +67,9 @@ class pts_web_socket_server extends pts_web_socket
 					$this->send_json_data($user->socket, $json);
 					//$this->disconnect($user->socket);
 					break;
+				default:
+					$this->shared_events($user, $resource);
+					break;
 			}
 			return true;
 		}
@@ -74,33 +77,77 @@ class pts_web_socket_server extends pts_web_socket
 	protected function process_data(&$user, &$msg)
 	{
 		$decoded_msg = $this->decode_data($msg);
+
 		switch($decoded_msg)
 		{
-			case 'user-svg-system-graphs':
-				$json['pts']['element']['name'] = 'svg_graphs';
-				$json['pts']['element']['contents'] = null;
-				foreach($this->sensor_logging->sensors_logging() as $sensor)
-				{
-					$sensor_data = $this->sensor_logging->read_sensor_results($sensor, -300);
-					if(count($sensor_data) < 2 || max($sensor_data) == min($sensor_data))
-					{
-						continue;
-					}
-
-					$graph = new pts_sys_graph(array('title' => $sensor_data['name'], 'x_scale' => 's', 'y_scale' => $sensor_data['unit'], 'reverse_x_direction' => true, 'width' => 350, 'height' => 200));
-					$graph->render_base();
-					$svg_dom = $graph->render_graph_data($sensor_data['results']);
-					if($svg_dom === false)
-					{
-						continue;
-					}
-					$output_type = 'SVG';
-					$graph = $svg_dom->output(null, $output_type);
-					$json['pts']['element']['contents'] .= substr($graph, strpos($graph, '<svg'));
-				}
-				$this->send_json_data($user->socket, $json);
+			default:
+				$this->shared_events($user, $decoded_msg);
 				break;
 		}
+	}
+	protected function shared_events(&$user, &$msg)
+	{
+		switch($msg)
+		{
+			case 'user-svg-system-graphs':
+			//	pts_client::timed_function(array($this, 'generate_system_svg_graphs'), array($user), 1, array($this, 'sensor_logging_continue'), array($user));
+				$this->generate_system_svg_graphs($user);
+				break;
+			case 'user-large-svg-system-graphs':
+			//	pts_client::timed_function(array($this, 'generate_system_svg_graphs'), array($user), 1, array($this, 'sensor_logging_continue'), array($user));
+				$this->generate_large_system_svg_graphs($user);
+				break;
+		}
+	}
+	protected function generate_system_svg_graphs(&$user)
+	{
+		$json['pts']['element']['name'] = 'svg_graphs';
+		$json['pts']['element']['contents'] = null;
+		foreach($this->sensor_logging->sensors_logging() as $sensor)
+		{
+			$sensor_data = $this->sensor_logging->read_sensor_results($sensor, -300);
+			if(count($sensor_data['results']) < 2 || max($sensor_data['results']) == min($sensor_data['results']))
+			{
+				continue;
+			}
+
+			$graph = new pts_sys_graph(array('title' => $sensor_data['name'], 'x_scale' => 's', 'y_scale' => $sensor_data['unit'], 'reverse_x_direction' => true, 'width' => 350, 'height' => 160));
+			$graph->render_base();
+			$svg_dom = $graph->render_graph_data($sensor_data['results']);
+			if($svg_dom === false)
+			{
+				continue;
+			}
+			$output_type = 'SVG';
+			$graph = $svg_dom->output(null, $output_type);
+			$json['pts']['element']['contents'] .= ' ' . substr($graph, strpos($graph, '<svg'));
+		}
+		$this->send_json_data($user->socket, $json);
+	}
+	protected function generate_large_system_svg_graphs(&$user)
+	{
+		$json['pts']['element']['name'] = 'large_svg_graphs';
+		$json['pts']['element']['contents'] = null;
+		foreach($this->sensor_logging->sensors_logging() as $sensor)
+		{
+			$sensor_data = $this->sensor_logging->read_sensor_results($sensor, -500);
+			if(count($sensor_data['results']) < 2 || max($sensor_data['results']) == min($sensor_data['results']))
+			{
+				continue;
+			}
+
+			$graph = new pts_sys_graph(array('title' => $sensor_data['name'], 'x_scale' => 's', 'y_scale' => $sensor_data['unit'], 'reverse_x_direction' => true, 'width' => 800, 'height' => 300));
+			$graph->render_base();
+			$svg_dom = $graph->render_graph_data($sensor_data['results']);
+			if($svg_dom === false)
+			{
+				continue;
+			}
+			$output_type = 'SVG';
+			$graph = $svg_dom->output(null, $output_type);
+			$json['pts']['element']['contents'] .= substr($graph, strpos($graph, '<svg')) . '<br /><br />';
+		}
+		$this->send_json_data($user->socket, $json);
 	}
 
 }

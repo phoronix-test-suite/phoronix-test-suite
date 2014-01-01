@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2013, Phoronix Media
-	Copyright (C) 2013, Michael Larabel
+	Copyright (C) 2013 - 2014, Phoronix Media
+	Copyright (C) 2013 - 2014, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -38,7 +38,7 @@ class pts_sys_graph
 		'paint_color' => '#044374',
 		'text_color' => '#1F1F1F',
 		'text_size' => 13,
-		'text_size_sub' => 10,
+		'text_size_sub' => 10
 		);
 	protected $computed = array(
 		'graph_area_y_end' => 40,
@@ -173,7 +173,7 @@ class pts_sys_graph
 		$svg_dom->add_element('polyline', array('points' => $svg_poly, 'fill' => 'none', 'stroke' => $this->data['paint_color'], 'stroke-width' => ($graph_data_count < ($this->computed['graph_area_width'] / 2)) ? 2 : 1));
 
 		$title_extra = null;
-		if(max($graph_data) < 1000)
+		if(max($graph_data) < 1000 && $this->computed['graph_area_width'] >= 500)
 		{
 			$title_extra .= ' (Min: ' . min($graph_data) . ' / Avg: ' . round(array_sum($graph_data) / count($graph_data)) . ' / Max: ' . max($graph_data) . ' / Last: ' . end($graph_data) . ')';
 		}

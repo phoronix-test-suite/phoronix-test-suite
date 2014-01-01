@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2013, Phoronix Media
-	Copyright (C) 2008 - 2013, Michael Larabel
+	Copyright (C) 2008 - 2014, Phoronix Media
+	Copyright (C) 2008 - 2014, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -59,7 +59,7 @@ class phodevi_sensor_monitor
 	public function sensor_logging_start()
 	{
 		$this->sensor_logging_update();
-		pts_client::timed_function(array($this, 'sensor_logging_update'), 1, array($this, 'sensor_logging_continue'));
+		pts_client::timed_function(array($this, 'sensor_logging_update'), array(), 1, array($this, 'sensor_logging_continue'), array());
 	}
 	public function sensor_logging_stop()
 	{
@@ -110,9 +110,9 @@ class phodevi_sensor_monitor
 
 		return array_values($lines);
 	}
-	public function read_sensor_results($sensor)
+	public function read_sensor_results($sensor, $offset = 0)
 	{
-		$results = $this->read_sensor_data($sensor);
+		$results = $this->read_sensor_data($sensor, $offset);
 
 		if(empty($results))
 		{

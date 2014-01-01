@@ -64,6 +64,8 @@ class pts_webui_system implements pts_webui_interface
 			echo '<div class="pts_system_component_bar"><h1>' . $component[0] . '</h1><p>' . $component[1] . '</p></div>';
 		}
 		echo '</div>';
+
+		echo '<div id="large_svg_graphs" style="margin: 10px 0; text-align: center;"></div>';
 	/*	list($area_width, $area_height) = phodevi::read_property('gpu', 'screen-resolution');
 		$area_width = round($area_width / 2);
 		$area_height = round($area_height / 2);
@@ -75,6 +77,21 @@ class pts_webui_system implements pts_webui_interface
 		$output_type = 'SVG';
 		$graph = $svg_dom->output(null, $output_type);
 		echo substr($graph, strpos($graph, '<svg')); */
+
+		echo '<script text="text/javascript">
+			var socket_connected = 0;
+
+			function web_socket_connect()
+			{
+				socket = new WebSocket("' . PTS_WEBSOCKET_SERVER . 'main");
+				socket.onopen    = function(msg){ socket_connected = 1; socket.send("user-large-svg-system-graphs");  setInterval(function(){if(socket_connected == 1) { socket.send("user-large-svg-system-graphs"); }},1000); };
+				socket.onmessage = function(msg){ var j = JSON.parse(msg.data); if(j.pts.element.name == "large_svg_graphs") { document.getElementById("large_svg_graphs").innerHTML = j.pts.element.contents; } };
+				socket.onclose   = function(msg){ socket_connected = 0; };
+				return false;
+			}
+			web_socket_connect();
+
+		</script>';
 
 	}
 }

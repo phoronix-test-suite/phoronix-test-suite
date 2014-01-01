@@ -345,6 +345,7 @@ div#pts_side_pane
 	padding: 10px 20px 40px 0;
 	margin: 0 20px 10px 0;
 	color: #949494;
+	max-width: 18%;
 }
 div#pts_side_pane div.pts_pane_window
 {

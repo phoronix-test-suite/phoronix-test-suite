@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2013, Phoronix Media
-	Copyright (C) 2013, Michael Larabel
+	Copyright (C) 2013 - 2014, Phoronix Media
+	Copyright (C) 2013 - 2014, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -60,7 +60,7 @@ class pts_webui_main implements pts_webui_interface
 			}
 			echo '</ul>';
 
-			echo '<div class="pts_pane_window">sfsdfsd dsfsd fdsf s<br />fddfg dfg dfgfd gdf gdf g</div>';
+			echo '<div class="pts_pane_window">Log-in to OpenBenchmarking.org to gain access to more functionality.</div>';
 
 		echo '</div>';
 
@@ -69,8 +69,8 @@ class pts_webui_main implements pts_webui_interface
 		echo '</div>';
 
 		// Graphs
-		echo '<div id="svg_graphs"></div>';
-		echo '<div style="float: left; overflow: hidden; width: auto;">';
+		echo '<div id="svg_graphs" style="margin: 10px 0; text-align: right;"></div>';
+		echo '<div style="float: right; overflow: hidden; width: auto;">';
 
 		echo '<div class="pts_list_box">';
 
@@ -124,19 +124,18 @@ class pts_webui_main implements pts_webui_interface
 		echo '</div>';
 
 		echo '<script text="text/javascript">
-
+			var socket_connected = 0;
 
 			function web_socket_connect()
 			{
 				socket = new WebSocket("' . PTS_WEBSOCKET_SERVER . 'main");
-				socket.onopen    = function(msg){ socket.send("user-svg-system-graphs"); };
+				socket.onopen    = function(msg){ socket_connected = 1; socket.send("user-svg-system-graphs");  setInterval(function(){if(socket_connected == 1) { socket.send("user-svg-system-graphs"); }},1000); };
 				socket.onmessage = function(msg){ var j = JSON.parse(msg.data); if(j.pts.element.name == "svg_graphs") { document.getElementById("svg_graphs").innerHTML = j.pts.element.contents; } };
-				socket.onclose   = function(msg){ };
+				socket.onclose   = function(msg){ socket_connected = 0; };
 				return false;
 			}
-
-
 			web_socket_connect();
+
 		</script>';
 	}
 }
