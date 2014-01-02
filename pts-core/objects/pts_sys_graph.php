@@ -72,8 +72,8 @@ class pts_sys_graph
 	}
 	public function render_base()
 	{
-		$this->computed['tick_frequency_x'] = 10;
-		$this->computed['tick_frequency_y'] = 5;
+		$this->computed['tick_frequency_x'] = 6;
+		$this->computed['tick_frequency_y'] = 4;
 
 		$this->computed['graph_area_width'] = $this->data['width'] - ($this->computed['graph_area_x_start'] * 2);
 		$this->computed['graph_area_width'] = $this->computed['graph_area_width'] - ($this->computed['graph_area_width'] % $this->computed['tick_frequency_x']);

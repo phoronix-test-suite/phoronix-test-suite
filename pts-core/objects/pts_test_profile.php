@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2013, Phoronix Media
-	Copyright (C) 2008 - 2013, Michael Larabel
+	Copyright (C) 2008 - 2014, Phoronix Media
+	Copyright (C) 2008 - 2014, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -386,6 +386,19 @@ class pts_test_profile extends pts_test_profile_parser
 		// Checks if test needs updating
 		// || $this->test_installation->get_installed_system_identifier() != phodevi::system_id_string()
 		return $this->test_installation == false || $this->get_test_profile_version() != $this->test_installation->get_installed_version() || $this->get_installer_checksum() != $this->test_installation->get_installed_checksum() || (pts_c::$test_flags & pts_c::force_install);
+	}
+	public function to_json()
+	{
+		$file = $this->xml_parser->getFileLocation();
+
+		if(is_file($file))
+		{
+			$file = file_get_contents($file);
+			$file = str_replace(array("\n", "\r", "\t"), '', $file);
+			$file = trim(str_replace('"', "'", $file));
+			$simple_xml = simplexml_load_string($file);
+			return json_encode($simple_xml);
+		}
 	}
 }
 

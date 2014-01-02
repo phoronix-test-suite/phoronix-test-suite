@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2013, Phoronix Media
-	Copyright (C) 2013, Michael Larabel
+	Copyright (C) 2013 - 2014, Phoronix Media
+	Copyright (C) 2013 - 2014, Michael Larabel
 	pts-web-socket_server: Build upon pts_web_socket
 
 	This program is free software; you can redistribute it and/or modify
@@ -38,7 +38,7 @@ class pts_web_socket_server extends pts_web_socket
 		{
 			$resource = substr($user->res, strrpos($user->res, '/') + 1);
 
-			switch($resource)
+			switch(strstr($resource . ' ', ' ', true))
 			{
 				case 'start-user-session':
 					$json = array();
@@ -78,8 +78,10 @@ class pts_web_socket_server extends pts_web_socket
 	{
 		$decoded_msg = $this->decode_data($msg);
 
-		switch($decoded_msg)
+		switch(strstr($decoded_msg . ' ', ' ', true))
 		{
+			case 'search':
+				$this->search_pts($user, $decoded_msg);
 			default:
 				$this->shared_events($user, $decoded_msg);
 				break;
@@ -87,8 +89,16 @@ class pts_web_socket_server extends pts_web_socket
 	}
 	protected function shared_events(&$user, &$msg)
 	{
-		switch($msg)
+		switch(strstr($msg . ' ', ' ', true))
 		{
+			case 'version':
+				$version = pts_title(true);
+				$this->send_data($user->socket, $version);
+				break;
+			case 'core-version':
+				$version = PTS_CORE_VERSION;
+				$this->send_data($user->socket, $version);
+				break;
 			case 'user-svg-system-graphs':
 			//	pts_client::timed_function(array($this, 'generate_system_svg_graphs'), array($user), 1, array($this, 'sensor_logging_continue'), array($user));
 				$this->generate_system_svg_graphs($user);
@@ -98,6 +108,50 @@ class pts_web_socket_server extends pts_web_socket
 				$this->generate_large_system_svg_graphs($user);
 				break;
 		}
+	}
+	protected function search_pts(&$user, $search)
+	{
+		$search = trim(strstr($search, ' '));
+		$json['pts']['element']['name'] = 'search_results';
+
+		if(strlen($search) < 3)
+		{
+			$json['pts']['status']['error'] = 'Longer search query needed; at least three characters required.';
+			$this->send_json_data($user->socket, $json);
+			return false;
+		}
+		else if(is_numeric($search))
+		{
+			$json['pts']['status']['error'] = 'An alpha-numeric string is needed to perform this search.';
+			$this->send_json_data($user->socket, $json);
+			return false;
+		}
+
+		$test_matches = pts_openbenchmarking_client::search_tests($search, true);
+
+		if(count($test_matches) == 1)
+		{
+			// SHOW BASIC TEST INFO, FIND ALL RESULTS ON SYSTEM USING THIS TEST
+			$json['pts']['element']['contents'] = $test_matches[0];
+			$json['pts']['element']['tests'] = array($test_matches[0]);
+			$json['pts']['element']['matching_tests'] = 1;
+
+			$tp = new pts_test_profile($test_matches[0]);
+			$json['pts']['element'][$test_matches[0]] = base64_encode($tp->to_json());
+		}
+		else if(count($test_matches) > 1)
+		{
+			// SHOW ALL MATCHES AND PROMPT TO PICK ONE...
+			$json['pts']['element']['contents'] = implode(' ', $test_matches);
+		}
+		else
+		{
+			// DO MORE BROAD SEARCH, NOT A TEST...
+			$test_matches = pts_openbenchmarking_client::search_tests($search, false);
+			// SEARCH TEST PROFILES
+		}
+
+		$this->send_json_data($user->socket, $json);
 	}
 	protected function generate_system_svg_graphs(&$user)
 	{
@@ -130,7 +184,7 @@ class pts_web_socket_server extends pts_web_socket
 		$json['pts']['element']['contents'] = null;
 		foreach($this->sensor_logging->sensors_logging() as $sensor)
 		{
-			$sensor_data = $this->sensor_logging->read_sensor_results($sensor, -500);
+			$sensor_data = $this->sensor_logging->read_sensor_results($sensor, -400);
 			if(count($sensor_data['results']) < 2 || max($sensor_data['results']) == min($sensor_data['results']))
 			{
 				continue;
@@ -147,6 +201,7 @@ class pts_web_socket_server extends pts_web_socket
 			$graph = $svg_dom->output(null, $output_type);
 			$json['pts']['element']['contents'] .= substr($graph, strpos($graph, '<svg')) . '<br /><br />';
 		}
+		$json['pts']['element']['contents'] = base64_encode($json['pts']['element']['contents']);
 		$this->send_json_data($user->socket, $json);
 	}
 

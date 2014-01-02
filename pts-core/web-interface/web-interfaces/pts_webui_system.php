@@ -85,7 +85,7 @@ class pts_webui_system implements pts_webui_interface
 			{
 				socket = new WebSocket("' . PTS_WEBSOCKET_SERVER . 'main");
 				socket.onopen    = function(msg){ socket_connected = 1; socket.send("user-large-svg-system-graphs");  setInterval(function(){if(socket_connected == 1) { socket.send("user-large-svg-system-graphs"); }},1000); };
-				socket.onmessage = function(msg){ var j = JSON.parse(msg.data); if(j.pts.element.name == "large_svg_graphs") { document.getElementById("large_svg_graphs").innerHTML = j.pts.element.contents; } };
+				socket.onmessage = function(msg){ var j = JSON.parse(msg.data); if(j.pts.element.name == "large_svg_graphs") { document.getElementById("large_svg_graphs").innerHTML = atob(j.pts.element.contents); } };
 				socket.onclose   = function(msg){ socket_connected = 0; };
 				return false;
 			}

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2013, Phoronix Media
-	Copyright (C) 2010 - 2013, Michael Larabel
+	Copyright (C) 2010 - 2014, Phoronix Media
+	Copyright (C) 2010 - 2014, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -241,6 +241,32 @@ class pts_openbenchmarking_client
 		}
 
 		return array_keys($available_tests);
+	}
+	public static function search_tests($search, $test_titles_only = true)
+	{
+		$matching_tests = array();
+
+		foreach(pts_openbenchmarking::linked_repositories() as $repo)
+		{
+			$repo_index = pts_openbenchmarking::read_repository_index($repo);
+
+			if(isset($repo_index['tests']) && is_array($repo_index['tests']))
+			{
+				foreach(array_keys($repo_index['tests']) as $identifier)
+				{
+					if(stripos($identifier, $search) !== false || stripos($repo_index['tests'][$identifier]['title'], $search) !== false)
+					{
+						array_push($matching_tests, $repo . '/' . $identifier);
+					}
+					else if($test_titles_only == false && (stripos($repo_index['tests'][$identifier]['internal_tags'], $search) !== false || stripos($repo_index['tests'][$identifier]['test_type'], $search) !== false) || stripos($repo_index['tests'][$identifier]['description'], $search) !== false)
+					{
+						array_push($matching_tests, $repo . '/' . $identifier);
+					}
+				}
+			}
+		}
+
+		return $matching_tests;
 	}
 	public static function tests_available()
 	{

@@ -50,7 +50,7 @@ tag with Cascading Test Profiles (CTP) and other tags that require processing by
 				<div style="width: 45%; float: left; clear: left;"><xsl:value-of select="PhoronixTestSuite/TestInformation/Description" /></div>
 			</div>
 		</div>
-		<div style="text-align: center; font-size: 12px;">Copyright &#xA9; 2008 - 2010 by <a href="http://www.phoronix-media.com/" style="text-decoration: none; color: #000;">Phoronix Media</a>.</div>
+		<div style="text-align: center; font-size: 12px;">Copyright &#xA9; 2008 - 2014 by <a href="http://www.phoronix-media.com/" style="text-decoration: none; color: #000;">Phoronix Media</a>.</div>
 	</body>
 </html>
 </xsl:template>

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2013, Phoronix Media
-	Copyright (C) 2013, Michael Larabel
+	Copyright (C) 2013 - 2014, Phoronix Media
+	Copyright (C) 2013 - 2014, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -124,7 +124,7 @@ class pts_webui_loader implements pts_webui_interface
 			}
 
 
-			pts_fade_in(\'pts_loading_logo\');
+			pts_fade_in(\'pts_loading_logo\', 0.04);
 
 			function web_socket_connect()
 			{
@@ -136,7 +136,7 @@ class pts_webui_loader implements pts_webui_interface
 			}
 			function proceed_to_main()
 			{
-				pts_fade_out("pts_loading_logo");
+				pts_fade_out("pts_loading_logo", 0.94);
 				setTimeout(function() { window.location.href = "/?main"; return false; }, 3000);
 			}
 

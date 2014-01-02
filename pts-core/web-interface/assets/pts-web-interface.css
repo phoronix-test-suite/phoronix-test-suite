@@ -13,6 +13,11 @@ a:active
 {
 	cursor: wait;
 }
+.alert
+{
+	background: #dd4b39;
+	color: #fff;
+}
 div#pts_web_container
 {
 	min-width: 600px;
@@ -41,22 +46,17 @@ div#pts_web_container_inside
 }
 div#pts_web_container div#pts_header
 {
-	padding: 5px 2px;
 	clear: both;
 	border: 1px solid #e0e0e0;
 	border-width: 0 0 1px 0;
 	overflow: hidden;
-	position: absolute;
 	top: 0;
 	width: 100%;
-	height: 60px;
 }
 div#pts_header div#pts_header_left
 {
 	float: left;
-	position: absolute;
-	bottom: 7px;
-	left: 5px;
+	margin: 15px 0 0;
 	font-weight: 800;
 	font-size: 38px;
 	color: #949494;
@@ -66,6 +66,7 @@ div#pts_header_left a
 	padding-right: 30px;
 	text-decoration: none;
 	color: #044374;
+	padding: 5px 2px;
 }
 div#pts_header_left a:hover
 {
@@ -76,9 +77,8 @@ div#pts_header_left a:hover
 div#pts_header div#pts_logo_right
 {
 	float: right;
-	padding-right: 5px;
+	padding: 5px;
 	width: 115px;
-	height: 60px;
 }
 div#pts_logo_right a
 {
@@ -174,7 +174,7 @@ input
 	border: solid #044374 1px;
 	color: #1F1F1F;
 	font-weight: bold;
-	padding: 4px 14px;
+	padding: 3px 6px;
 	text-transform: uppercase;
 	background: #e0e0e0;
 	border-radius: 4px;
@@ -189,7 +189,7 @@ div#pts_web_container div#pts_copyright
 {
 	position: absolute;
 	text-align: right;
-	bottom: -60px;
+	bottom: -55px;
 	left: 0;
 	right: 0;
 	padding: 1px 10px 0;
@@ -346,6 +346,7 @@ div#pts_side_pane
 	margin: 0 20px 10px 0;
 	color: #949494;
 	max-width: 18%;
+	letter-spacing: 1px;
 }
 div#pts_side_pane div.pts_pane_window
 {

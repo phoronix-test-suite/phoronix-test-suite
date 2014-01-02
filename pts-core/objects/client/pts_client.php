@@ -1099,7 +1099,7 @@ class pts_client
 
 		foreach(self::$forked_pids as $pid)
 		{
-			if(is_dir('/proc/' . $pid) && is_function('posix_kill'))
+			if(is_dir('/proc/' . $pid) && function_exists('posix_kill'))
 			{
 				posix_kill($pid, SIGKILL);
 			}
