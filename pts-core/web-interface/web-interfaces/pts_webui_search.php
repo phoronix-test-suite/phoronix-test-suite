@@ -21,35 +21,38 @@
 */
 
 
-class pts_webui_loader implements pts_webui_interface
+class pts_webui_search implements pts_webui_interface
 {
-	public static function preload($REQUEST)
-	{
-		return true;
-	}
 	public static function page_title()
 	{
-		return null;
+		return 'Search';
 	}
 	public static function page_header()
 	{
-		return -1;
+		return null;
+	}
+	public static function preload($PAGE)
+	{
+		return true;
 	}
 	public static function render_page_process($PATH)
 	{
-		if(PHP_VERSION_ID < 50400)
-		{
-			echo '<p>Running an unsupported PHP version. PHP 5.4+ is required to use the Phoronix Test Suite web-server feature.</p>' . PHP_EOL . PHP_EOL;
-			return false;
-		}
+		$SEARCH_QUERY = str_replace('%20', ' ', $PATH[0]);
 
-		echo '<div style="text-align: center; vertical-align: middle; margin-top: 10%;" onclick="show_verbose_info();">
+		echo '<div style="text-align: right; margin: 10px 0;">';
+		echo 'SEARCH: <input type="text" size="30" id="pts_search" name="search" onkeydown="if(event.keyCode == 13) { if(document.getElementById(\'pts_search\').value.length < 3) { alert(\'Please enter a longer search query.\'); return false; } else { window.location.href = \'/?search/\' + document.getElementById(\'pts_search\').value; } return false; }" />';
+		echo '</div>';
+
+		echo '<p>Search query for <strong>' . $SEARCH_QUERY . '</strong> yields:</h1>';
+
+		echo '<div id="search_results"></div>';
+		echo '<div style="text-align: center; vertical-align: middle; margin-top: 10%;">
 		<svg xmlns:svg="http://www.w3.org/2000/svg"
 		   xmlns="http://www.w3.org/2000/svg"
 		   width="324"
 		   height="178"
 		   viewBox="0 0 323 178"
-		   id="pts_loading_logo" style="opacity: 0;"
+		   id="pts_loading_logo" style="opacity: 1; display: block;"
 		   version="1.1">
 		  <g
 		 id="layer"
@@ -92,60 +95,42 @@ class pts_webui_loader implements pts_webui_interface
 		   id="pts_highlight_6"
 		   style="fill:#000" />
 		  </g>
-		</svg><div id="loading_message_box" style="display: block; margin: 40px auto; width: 60%; height: 100px; text-align: left; overflow-y: auto;"></div></div>
+		</svg></div>
 
 		<script text="text/javascript">
-			function show_verbose_info()
+			var switcher = setInterval(pts_highlight_loader_switch_color, 500);
+
+			pts_add_onopen_event("search ' . $SEARCH_QUERY . '");
+			pts_add_onmessage_event("search_results", "search_results");
+
+			function search_results(j)
 			{
-				if(document.getElementById(\'loading_message_box\').style.display == \'block\')
+				var logo = document.getElementById("pts_loading_logo");
+				logo.parentNode.removeChild(logo);
+
+				if(j.pts.status && j.pts.status.error)
 				{
-					document.getElementById(\'loading_message_box\').style.display = \'none\';
+					document.getElementById("search_results").innerHTML = "<h2>" + j.pts.status.error + "</h2>";
 				}
 				else
 				{
-					document.getElementById(\'loading_message_box\').style.display = \'block\';
+					if(j.pts.element.tests.length == 0)
+					{
+						document.getElementById("search_results").innerHTML += "<h1>No Tests Found</h1>";
+					}
+
+					for(var i = 0; i < j.pts.element.tests.length; i++)
+					{
+						var test = j.pts.element.tests[i];
+						var test_profile = JSON.parse(atob(j.pts.element.test_profiles[i]));
+						document.getElementById("search_results").innerHTML += "<h2>" + test_profile.TestInformation.Title + "</h2>";
+						document.getElementById("search_results").innerHTML += "<p>" + test_profile.TestInformation.Description + "</p>";
+						document.getElementById("search_results").innerHTML += "<p><a href=\"?test/" + test + "\">More " + test_profile.TestInformation.Title + " Information</a></p>";
+					}
 				}
 			}
-
-			var current_selection = 6;
-			function switch_color()
-			{
-				document.getElementById(\'pts_highlight_\' + current_selection).style.fill = \'#000\';
-				current_selection++;
-				if(current_selection == 7)
-					current_selection = 1;
-				document.getElementById(\'pts_highlight_\' + current_selection).style.fill = \'#949494\';
-			}
-			var switcher = setInterval(switch_color, 500);
-
-			function append_to_loading_box(msg)
-			{
-				document.getElementById("loading_message_box").innerHTML += msg + "...<br />";
-			}
-
-
-			pts_fade_in(\'pts_loading_logo\', 0.04);
-
-			append_to_loading_box("Connecting To WebSocket Server");
-			pts_set_web_socket_path("start-user-session");
-			pts_add_onmessage_event("user_session_start", "user_session_connect_update");
-			pts_add_onclose_event("proceed_to_main");
-			function user_session_connect_update(j)
-			{
-				append_to_loading_box(j.pts.status.current);
-
-				if(j.pts.status.current == "Session Startup Complete")
-				{
-					proceed_to_main();
-				}
-			}
-			function proceed_to_main()
-			{
-				pts_fade_out("pts_loading_logo", 0.94);
-				setTimeout(function() { window.location.href = "/?main"; return false; }, 3000);
-			}
-
 		</script>';
+
 	}
 }
 

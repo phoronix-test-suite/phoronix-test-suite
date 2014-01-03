@@ -124,17 +124,15 @@ class pts_webui_main implements pts_webui_interface
 		echo '</div>';
 
 		echo '<script text="text/javascript">
-			var socket_connected = 0;
 
-			function web_socket_connect()
+			pts_add_onopen_event("user-svg-system-graphs");
+			setInterval(function(){if(pts_web_socket_connected()) { pts_web_socket_send("user-svg-system-graphs"); }},1000);
+			pts_add_onmessage_event("svg_graphs", "update_svg_graph_space");
+
+			function update_svg_graph_space(jsonr)
 			{
-				socket = new WebSocket("' . PTS_WEBSOCKET_SERVER . 'main");
-				socket.onopen    = function(msg){ socket_connected = 1; socket.send("user-svg-system-graphs");  setInterval(function(){if(socket_connected == 1) { socket.send("user-svg-system-graphs"); }},1000); };
-				socket.onmessage = function(msg){ var j = JSON.parse(msg.data); if(j.pts.element.name == "svg_graphs") { document.getElementById("svg_graphs").innerHTML = j.pts.element.contents; } };
-				socket.onclose   = function(msg){ socket_connected = 0; };
-				return false;
+				document.getElementById("svg_graphs").innerHTML = jsonr.pts.element.contents;
 			}
-			web_socket_connect();
 
 		</script>';
 	}

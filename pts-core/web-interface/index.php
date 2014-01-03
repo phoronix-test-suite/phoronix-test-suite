@@ -108,6 +108,7 @@ if($webui_class === false)
 	$webui_class = pts_webui_load_interface('pts_webui_main', $PATH);
 }
 define('PTS_WEBSOCKET_SERVER', 'ws://' . $_SERVER['REMOTE_ADDR'] . ':' . getenv('PTS_WEBSOCKET_PORT') . '/');
+setcookie('pts_websocket_server', PTS_WEBSOCKET_SERVER, (time() + 60 * 60 * 24), '/');
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -115,6 +116,7 @@ define('PTS_WEBSOCKET_SERVER', 'ws://' . $_SERVER['REMOTE_ADDR'] . ':' . getenv(
 <head>
 <link href="assets/pts-web-interface.css" rel="stylesheet" type="text/css" />
 <script src="assets/pts-web-interface.js" type="text/javascript"></script>
+<script src="assets/pts-web-socket.js" type="text/javascript"></script>
 <title><?php $page_title = $webui_class::page_title(); echo $page_title != null ? $page_title . ' - Phoronix Test Suite' : pts_title(true); ?></title>
 </head>
 <body>
@@ -168,6 +170,9 @@ define('PTS_WEBSOCKET_SERVER', 'ws://' . $_SERVER['REMOTE_ADDR'] . ':' . getenv(
 <?php $webui_class::render_page_process($PATH); ?>
 	</div>
 	<div id="pts_copyright"><?php //$DEBUG_END_TIME = microtime(true); $DEBUG_TIME = $DEBUG_END_TIME - $DEBUG_START_TIME; echo '<strong>Page Rendering Took: ' . $DEBUG_TIME . ' secs.</strong> '; ?>Copyright &#xA9; 2008 - <?php echo date('Y'); ?> by Phoronix Media. All trademarks used are properties of their respective owners. All rights reserved.</div>
+<script type="text/javascript">
+	pts_web_socket_connect();
+</script>
 </div>
 </div>
 </body>

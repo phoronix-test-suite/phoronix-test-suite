@@ -258,7 +258,7 @@ class pts_openbenchmarking_client
 					{
 						array_push($matching_tests, $repo . '/' . $identifier);
 					}
-					else if($test_titles_only == false && (stripos($repo_index['tests'][$identifier]['internal_tags'], $search) !== false || stripos($repo_index['tests'][$identifier]['test_type'], $search) !== false) || stripos($repo_index['tests'][$identifier]['description'], $search) !== false)
+					else if($test_titles_only == false && (stripos(implode(' ', $repo_index['tests'][$identifier]['internal_tags']), $search) !== false || stripos($repo_index['tests'][$identifier]['test_type'], $search) !== false || stripos($repo_index['tests'][$identifier]['description'], $search) !== false))
 					{
 						array_push($matching_tests, $repo . '/' . $identifier);
 					}

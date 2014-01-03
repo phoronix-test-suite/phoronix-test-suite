@@ -66,31 +66,17 @@ class pts_webui_system implements pts_webui_interface
 		echo '</div>';
 
 		echo '<div id="large_svg_graphs" style="margin: 10px 0; text-align: center;"></div>';
-	/*	list($area_width, $area_height) = phodevi::read_property('gpu', 'screen-resolution');
-		$area_width = round($area_width / 2);
-		$area_height = round($area_height / 2);
-		var_dump(phodevi::system_hardware());
-
-
-		$svg_dom = new pts_svg_dom($area_width, $area_height);
-		$svg_dom->add_element('rect', array('x' => 50, 'y' => 0, 'width' => 100, 'height' => 100, 'fill' => '#000000'));
-		$output_type = 'SVG';
-		$graph = $svg_dom->output(null, $output_type);
-		echo substr($graph, strpos($graph, '<svg')); */
 
 		echo '<script text="text/javascript">
-			var socket_connected = 0;
 
-			function web_socket_connect()
+			pts_add_onopen_event("user-large-svg-system-graphs");
+			setInterval(function(){if(pts_web_socket_connected()) { pts_web_socket_send("user-large-svg-system-graphs"); }},1000);
+			pts_add_onmessage_event("large_svg_graphs", "update_large_svg_graph_space");
+
+			function update_large_svg_graph_space(jsonr)
 			{
-				socket = new WebSocket("' . PTS_WEBSOCKET_SERVER . 'main");
-				socket.onopen    = function(msg){ socket_connected = 1; socket.send("user-large-svg-system-graphs");  setInterval(function(){if(socket_connected == 1) { socket.send("user-large-svg-system-graphs"); }},1000); };
-				socket.onmessage = function(msg){ var j = JSON.parse(msg.data); if(j.pts.element.name == "large_svg_graphs") { document.getElementById("large_svg_graphs").innerHTML = atob(j.pts.element.contents); } };
-				socket.onclose   = function(msg){ socket_connected = 0; };
-				return false;
+				document.getElementById("large_svg_graphs").innerHTML = atob(jsonr.pts.element.contents);
 			}
-			web_socket_connect();
-
 		</script>';
 
 	}

@@ -40,17 +40,6 @@ function pts_fade_out(id, rate)
 		opacity = opacity * rate;
 	}, 50);
 }
-function pts_server_sent_event(display_id, request_address)
-{
-	if(typeof(EventSource) !== "undefined")
-	{
-		var sse = new EventSource(request_address);
-		sse.onmessage = function(event)
-			{
-				document.getElementById(display_id).innerHTML = event.data;
-			};
-	}
-}
 function pts_ajax_query(request, destination)
 {
 	var http = new Array();
@@ -67,6 +56,20 @@ function pts_ajax_query(request, destination)
 		}}
 	http[rnow].send(null);
 	pollTimer = setInterval(handleResponse, 1000);
+}
+function pts_read_cookie(cookie_name)
+{
+	var cookie_name = cookie_name + "=";
+	var cookies = document.cookie.split(';');
+	for(var i = 0; i < cookies.length; i++)
+	{
+		var c = cookies[i].trim();
+		if(c.indexOf(cookie_name) == 0)
+		{
+			return decodeURIComponent(c.substring(cookie_name.length, c.length));
+		}
+	}
+	return;
 }
 
 var pts_highlighter_selection = 6;

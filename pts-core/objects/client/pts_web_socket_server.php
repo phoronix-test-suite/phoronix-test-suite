@@ -26,7 +26,7 @@ class pts_web_socket_server extends pts_web_socket
 	private $sensor_logging = false;
 	protected function add_to_status($current, &$json)
 	{
-		$json['pts']['element']['name'] = 'loading';
+		//$json['pts']['element']['name'] = 'loading';
 		$json['pts']['status']['current'] = $current;
 		$json['pts']['status']['full'] = (!isset($json['pts']['status']['full']) ? null : $json['pts']['status']['full'] . PHP_EOL) . $json['pts']['status']['current'];
 	}
@@ -42,6 +42,7 @@ class pts_web_socket_server extends pts_web_socket
 			{
 				case 'start-user-session':
 					$json = array();
+					$json['pts']['element']['name'] = 'user_session_start';
 					$this->add_to_status('Starting Session', $json);
 					$this->send_json_data($user->socket, $json);
 
@@ -129,20 +130,18 @@ class pts_web_socket_server extends pts_web_socket
 
 		$test_matches = pts_openbenchmarking_client::search_tests($search, true);
 
-		if(count($test_matches) == 1)
+		if(count($test_matches) > 0)
 		{
-			// SHOW BASIC TEST INFO, FIND ALL RESULTS ON SYSTEM USING THIS TEST
-			$json['pts']['element']['contents'] = $test_matches[0];
-			$json['pts']['element']['tests'] = array($test_matches[0]);
-			$json['pts']['element']['matching_tests'] = 1;
+			$json['pts']['element']['test_profiles'] = array();
+			$json['pts']['element']['tests'] = array();
 
-			$tp = new pts_test_profile($test_matches[0]);
-			$json['pts']['element'][$test_matches[0]] = base64_encode($tp->to_json());
-		}
-		else if(count($test_matches) > 1)
-		{
-			// SHOW ALL MATCHES AND PROMPT TO PICK ONE...
-			$json['pts']['element']['contents'] = implode(' ', $test_matches);
+			for($i = 0; $i < count($test_matches); $i++)
+			{
+				array_push($json['pts']['element']['tests'], $test_matches[$i]);
+
+				$tp = new pts_test_profile($test_matches[$i]);
+				array_push($json['pts']['element']['test_profiles'], base64_encode($tp->to_json()));
+			}
 		}
 		else
 		{
