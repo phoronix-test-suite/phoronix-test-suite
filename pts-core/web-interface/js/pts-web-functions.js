@@ -37,5 +37,13 @@ function search_results(j)
 			document.getElementById("search_results").innerHTML += "<p>" + test_description + "</p>";
 			document.getElementById("search_results").innerHTML += "<p><a href=\"?test/" + test + "\">More " + test_profile.TestInformation.Title + " Information</a></p>";
 		}
+
+		document.getElementById("search_results").innerHTML += "<hr />";
+
+		for(var i = 0; i < j.pts.msg.results.length; i++)
+		{
+			var result_file = JSON.parse(atob(j.pts.msg.results[i]));
+			document.getElementById("search_results").innerHTML += "<p><a href=\"?test/" + test + "\">" + result_file.Generated.Title + "</a></p>";
+		}
 	}
 }

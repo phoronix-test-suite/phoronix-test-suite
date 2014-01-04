@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2012, Phoronix Media
-	Copyright (C) 2008 - 2012, Michael Larabel
+	Copyright (C) 2008 - 2014, Phoronix Media
+	Copyright (C) 2008 - 2014, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -228,6 +228,10 @@ class pts_result_file
 	{
 		$this->result_objects = $result_objects;
 	}
+	public function get_result_identifiers()
+	{
+		return $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/Result/Identifier');;
+	}
 	public function get_result_objects($select_indexes = -1)
 	{
 		if($this->result_objects == null)
@@ -289,6 +293,19 @@ class pts_result_file
 		}
 
 		return $this->result_objects;
+	}
+	public function to_json()
+	{
+		$file = $this->xml_parser->getFileLocation();
+
+		if(is_file($file))
+		{
+			$file = file_get_contents($file);
+			$file = str_replace(array("\n", "\r", "\t"), '', $file);
+			$file = trim(str_replace('"', "'", $file));
+			$simple_xml = simplexml_load_string($file);
+			return json_encode($simple_xml);
+		}
 	}
 }
 

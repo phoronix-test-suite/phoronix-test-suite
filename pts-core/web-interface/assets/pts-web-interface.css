@@ -283,6 +283,15 @@ div.pts_list_box a:hover li
 {
 	font-weight: bold;
 }
+div#search_results hr
+{
+	text-align: center;
+	color: #e0e0e0;
+	border: solid #e0e0e0 1px;
+	border-width: 1px 0 0;
+	width: 90%;
+	margin: 20px auto;
+}
 div#pts_web_container_inside table#notification_area
 {
 	position: absolute;

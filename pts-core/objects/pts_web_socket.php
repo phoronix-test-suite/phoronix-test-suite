@@ -153,28 +153,29 @@ class pts_web_socket
 	}
 	public function send_data($socket, $data)
 	{
-		$frames = array();
-		$encoded = null;
-		$frames[0] = 0x81;
 		$data_length = strlen($data);
+		$encoded = null;
 
+		// FRAME THE MESSAGE
+		$encoded .= chr(0x81);
 		if($data_length <= 125)
 		{
-			$frames[1] = $data_length;
+			$encoded .= chr($data_length);
+		}
+		else if($data_length <= 65535)
+		{
+			$encoded .= chr(126) . chr($data_length >> 8) . chr($data_length & 0xFF);
 		}
 		else
 		{
-			$frames[1] = 126;
-			$frames[2] = $data_length >> 8;
-			$frames[3] = $data_length & 0xFF;
+			$encoded .= chr(127) . pack('N', 0) . pack('N', $data_length);
+
 		}
 
-		foreach($frames as &$frame)
-		{
-			$encoded .= chr($frame);
-		}
-
+		// MESSAGE DATA
 		$encoded .= $data;
+
+		// SEND
 		return socket_write($socket, $encoded, strlen($encoded));
 	}
 	private function connect($socket)

@@ -350,6 +350,66 @@ class pts_tests
 
 		return $results;
 	}
+	public static function search_test_results($query, $search = 'RESULTS')
+	{
+		$matches = array();
+
+		foreach(self::test_results_by_date() as $file)
+		{
+			$result_file = new pts_result_file($file);
+
+			if(($search == 'ALL' || $search == 'INFO') && (stripos($result_file->get_title(), $query) !== false || stripos($result_file->get_description(), $query) !== false))
+			{
+				array_push($matches, $file);
+				continue;
+			}
+
+			if($search == 'ALL' || $search == 'SYSTEM_INFO')
+			{
+				$hw = $result_file->get_system_hardware();
+				$sw = $result_file->get_system_software();
+				$ids = $result_file->get_system_identifiers();
+
+				$matched = false;
+				for($i = 0; $i < count($ids); $i++)
+				{
+					if(stripos($sw[$i], $query) !== false || stripos($ids[$i], $query) !== false || $stripos($hw[$i], $query) !== false)
+					{
+						array_push($matches, $file);
+						$matched = true;
+						break;
+					}
+				}
+
+				if($matched)
+				{
+					continue;
+				}
+			}
+
+			if($search == 'ALL' || $search == 'RESULTS')
+			{
+				$matched = false;
+				foreach($result_file->get_result_identifiers() as $result_identifier)
+				{
+					if(stripos($result_identifier, $query) !== false)
+					{
+						array_push($matches, $file);
+						$matched = true;
+						break;
+					}
+				}
+
+				if($matched)
+				{
+					continue;
+				}
+			}
+
+		}
+
+		return $matches;
+	}
 }
 
 ?>

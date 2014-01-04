@@ -163,6 +163,18 @@ class pts_web_socket_server extends pts_web_socket
 			// SEARCH TEST PROFILES
 		}
 
+		$json['pts']['msg']['results'] = array();
+		if(count($test_matches) > 0)
+		{
+			$result_matches = pts_tests::search_test_results($search, 'RESULTS');
+
+			foreach($result_matches as $result)
+			{
+				$result_file = new pts_result_file($result);
+				array_push($json['pts']['msg']['results'], base64_encode($result_file->to_json()));
+			}
+		}
+
 		$this->send_json_data($user->socket, $json);
 	}
 	protected function generate_system_svg_graphs(&$user)
