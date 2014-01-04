@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2013, Phoronix Media
-	Copyright (C) 2008 - 2013, Michael Larabel
+	Copyright (C) 2008 - 2014, Phoronix Media
+	Copyright (C) 2008 - 2014, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -262,7 +262,7 @@ class pts_tests
 	}
 	public static function invalid_command_helper($passed_args)
 	{
-		$showed_recent_results = pts_test_run_manager::recently_saved_test_results();
+		$showed_recent_results = self::recently_saved_results();
 
 		if(!empty($passed_args))
 		{
@@ -319,20 +319,36 @@ class pts_tests
 	}
 	public static function recently_saved_results()
 	{
-		$recent_results = array();
-		foreach(pts_file_io::glob(PTS_SAVE_RESULTS_PATH . '*/composite.xml') as $composite)
-		{
-			$recent_results[filemtime($composite)] = basename(dirname($composite));
-		}
+		$recent_results = pts_tests::test_results_by_date();
 
 		if(count($recent_results) > 0)
 		{
-			krsort($recent_results);
-			$recent_results = array_slice($recent_results, 0, 6, true);
+			$recent_results = array_slice($recent_results, 0, 5, true);
+			$res_length = strlen(pts_strings::find_longest_string($recent_results)) + 2;
+			$current_time = time();
+
+			foreach($recent_results as $m_time => &$recent_result)
+			{
+				$days = floor(($current_time - $m_time) / 86400);
+				$recent_result = sprintf('%-' . $res_length . 'ls [%-ls]', $recent_result, ($days == 0 ? 'Today' : pts_strings::days_ago_format_string($days) . ' old'));
+			}
 			echo PHP_EOL . 'Recently Saved Test Results:' . PHP_EOL;
 			echo pts_user_io::display_text_list($recent_results) . PHP_EOL;
 			return true;
 		}
+
+		return false;
+	}
+	public static function test_results_by_date()
+	{
+		$results = array();
+		foreach(pts_file_io::glob(PTS_SAVE_RESULTS_PATH . '*/composite.xml') as $composite)
+		{
+			$results[filemtime($composite)] = basename(dirname($composite));
+		}
+		krsort($results);
+
+		return $results;
 	}
 }
 

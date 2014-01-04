@@ -37,12 +37,7 @@ class pts_webui_results implements pts_webui_interface
 	}
 	public static function render_page_process($PATH)
 	{
-		$results = array();
-		foreach(pts_file_io::glob(PTS_SAVE_RESULTS_PATH . '*/composite.xml') as $composite)
-		{
-			$results[filemtime($composite)] = basename(dirname($composite));
-		}
-		krsort($results);
+		$results = pts_tests::test_results_by_date();
 
 		$sections = array(
 			mktime(date('H'), date('i') - 10, 0, date('n'), date('j')) => 'Just Now',

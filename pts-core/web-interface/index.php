@@ -115,11 +115,15 @@ setcookie('pts_websocket_server', PTS_WEBSOCKET_SERVER, (time() + 60 * 60 * 24),
 <html style="height: 100%;">
 <head>
 <link href="assets/pts-web-interface.css" rel="stylesheet" type="text/css" />
-<script src="assets/pts-web-interface.js" type="text/javascript"></script>
-<script src="assets/pts-web-socket.js" type="text/javascript"></script>
+<script src="js/pts-web-interface.js" type="text/javascript"></script>
+<script src="js/pts-web-socket.js" type="text/javascript"></script>
+<script src="js/pts-web-functions.js" type="text/javascript"></script>
 <title><?php $page_title = $webui_class::page_title(); echo $page_title != null ? $page_title . ' - Phoronix Test Suite' : pts_title(true); ?></title>
 </head>
 <body>
+<script type="text/javascript">
+	var pts_web_socket = new pts_web_socket();
+</script>
 <div id="pts_web_container">
 <div id="pts_web_container_inside">
 <table id="notification_area"></table>
@@ -129,7 +133,7 @@ setcookie('pts_websocket_server', PTS_WEBSOCKET_SERVER, (time() + 60 * 60 * 24),
 		$custom_header = true;
 		if($page_header == null)
 		{	$custom_header = false;
-			$page_header = array('Main' => 'main', 'Tests' => 'tests/available_tests', 'Results' => 'results', 'System' => 'system');
+			$page_header = array('Main' => 'main', 'Tests' => 'tests', 'Results' => 'results', 'System' => 'system');
 		}
 		else if(is_array($page_header) && !isset($page_header['Main']))
 		{
@@ -141,7 +145,6 @@ setcookie('pts_websocket_server', PTS_WEBSOCKET_SERVER, (time() + 60 * 60 * 24),
 			$new_header = null;
 			foreach($page_header as $page => $url)
 			{
-
 				if($PAGE_REQUEST == $url || $URI == $url)
 				{
 					$new_header .= '<a href="?' . $url . '"><span class="dark_alt">' . $page . '</span></a> ';
@@ -171,7 +174,7 @@ setcookie('pts_websocket_server', PTS_WEBSOCKET_SERVER, (time() + 60 * 60 * 24),
 	</div>
 	<div id="pts_copyright"><?php //$DEBUG_END_TIME = microtime(true); $DEBUG_TIME = $DEBUG_END_TIME - $DEBUG_START_TIME; echo '<strong>Page Rendering Took: ' . $DEBUG_TIME . ' secs.</strong> '; ?>Copyright &#xA9; 2008 - <?php echo date('Y'); ?> by Phoronix Media. All trademarks used are properties of their respective owners. All rights reserved.</div>
 <script type="text/javascript">
-	pts_web_socket_connect();
+	pts_web_socket.connect();
 </script>
 </div>
 </div>

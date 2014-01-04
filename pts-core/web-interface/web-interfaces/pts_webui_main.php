@@ -74,13 +74,8 @@ class pts_webui_main implements pts_webui_interface
 
 		echo '<div class="pts_list_box">';
 
-			$results = array();
-			foreach(pts_file_io::glob(PTS_SAVE_RESULTS_PATH . '*/composite.xml') as $composite)
-			{
-				$results[filemtime($composite)] = basename(dirname($composite));
-			}
+			$results = pts_tests::test_results_by_date();
 			$result_count = count($results);
-			krsort($results);
 			$results = array_slice($results, 0, 10, true);
 			echo '<ol>';
 			echo '<li><u>Recent Benchmark Results</u></li>';
@@ -125,13 +120,13 @@ class pts_webui_main implements pts_webui_interface
 
 		echo '<script text="text/javascript">
 
-			pts_add_onopen_event("user-svg-system-graphs");
-			setInterval(function(){if(pts_web_socket_connected()) { pts_web_socket_send("user-svg-system-graphs"); }},1000);
-			pts_add_onmessage_event("svg_graphs", "update_svg_graph_space");
+			pts_web_socket.add_onopen_event("user-svg-system-graphs");
+			setInterval(function(){if(pts_web_socket.is_connected()) { pts_web_socket.send("user-svg-system-graphs"); }},1000);
+			pts_web_socket.add_onmessage_event("svg_graphs", "update_svg_graph_space");
 
 			function update_svg_graph_space(jsonr)
 			{
-				document.getElementById("svg_graphs").innerHTML = jsonr.pts.element.contents;
+				document.getElementById("svg_graphs").innerHTML = jsonr.pts.msg.contents;
 			}
 
 		</script>';

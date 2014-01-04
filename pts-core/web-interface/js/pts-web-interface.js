@@ -75,9 +75,13 @@ function pts_read_cookie(cookie_name)
 var pts_highlighter_selection = 6;
 function pts_highlight_loader_switch_color()
 {
-	document.getElementById('pts_highlight_' + pts_highlighter_selection).style.fill = '#000';
-	pts_highlighter_selection++;
-	if(pts_highlighter_selection == 7)
-		pts_highlighter_selection = 1;
-	document.getElementById('pts_highlight_' + pts_highlighter_selection).style.fill = '#949494';
+	var el = document.getElementById('pts_highlight_' + pts_highlighter_selection);
+	if(el)
+	{
+		el.style.fill = '#000';
+		pts_highlighter_selection++;
+		if(pts_highlighter_selection == 7)
+			pts_highlighter_selection = 1;
+		document.getElementById('pts_highlight_' + pts_highlighter_selection).style.fill = '#949494';
+	}
 }

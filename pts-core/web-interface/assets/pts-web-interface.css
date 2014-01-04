@@ -29,7 +29,6 @@ div#pts_web_container
 	border: 2px solid #BABABA;
 	border-radius: 14px;
 	position: relative;
-
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;
 	-khtml-user-select: none;
@@ -61,14 +60,14 @@ div#pts_header div#pts_header_left
 	font-size: 38px;
 	color: #949494;
 }
-div#pts_header_left a
+div#pts_header_left a, h2 a
 {
 	padding-right: 30px;
 	text-decoration: none;
 	color: #044374;
 	padding: 5px 2px;
 }
-div#pts_header_left a:hover
+div#pts_header_left a:hover, h2 a:hover
 {
 	color: #1F1F1F;
 	-webkit-text-stroke-width: 1px;
@@ -178,6 +177,16 @@ input
 	text-transform: uppercase;
 	background: #e0e0e0;
 	border-radius: 4px;
+}
+p a
+{
+	color: #044374;
+	text-decoration: none;
+	font-weight: bold;
+}
+p a:hover
+{
+	text-decoration: underline;
 }
 button
 {

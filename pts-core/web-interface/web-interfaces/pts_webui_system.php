@@ -69,13 +69,13 @@ class pts_webui_system implements pts_webui_interface
 
 		echo '<script text="text/javascript">
 
-			pts_add_onopen_event("user-large-svg-system-graphs");
-			setInterval(function(){if(pts_web_socket_connected()) { pts_web_socket_send("user-large-svg-system-graphs"); }},1000);
-			pts_add_onmessage_event("large_svg_graphs", "update_large_svg_graph_space");
+			pts_web_socket.add_onopen_event("user-large-svg-system-graphs");
+			setInterval(function(){if(pts_web_socket.is_connected()) { pts_web_socket.send("user-large-svg-system-graphs"); }},1000);
+			pts_web_socket.add_onmessage_event("large_svg_graphs", "update_large_svg_graph_space");
 
 			function update_large_svg_graph_space(jsonr)
 			{
-				document.getElementById("large_svg_graphs").innerHTML = atob(jsonr.pts.element.contents);
+				document.getElementById("large_svg_graphs").innerHTML = atob(jsonr.pts.msg.contents);
 			}
 		</script>';
 

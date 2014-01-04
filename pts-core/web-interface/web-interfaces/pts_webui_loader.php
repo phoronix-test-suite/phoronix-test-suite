@@ -127,9 +127,13 @@ class pts_webui_loader implements pts_webui_interface
 			pts_fade_in(\'pts_loading_logo\', 0.04);
 
 			append_to_loading_box("Connecting To WebSocket Server");
-			pts_set_web_socket_path("start-user-session");
-			pts_add_onmessage_event("user_session_start", "user_session_connect_update");
-			pts_add_onclose_event("proceed_to_main");
+			pts_web_socket.set_web_socket_path("start-user-session");
+			pts_web_socket.add_onmessage_event("user_session_start", "user_session_connect_update");
+			pts_web_socket.add_onclose_event("reconnect_on_fail");
+			function reconnect_on_fail()
+			{
+				setTimeout(function() { pts_web_socket.connect(); }, 3000);
+			}
 			function user_session_connect_update(j)
 			{
 				append_to_loading_box(j.pts.status.current);
@@ -142,7 +146,7 @@ class pts_webui_loader implements pts_webui_interface
 			function proceed_to_main()
 			{
 				pts_fade_out("pts_loading_logo", 0.94);
-				setTimeout(function() { window.location.href = "/?main"; return false; }, 3000);
+				setTimeout(function() { window.location.href = "/?main"; }, 3000);
 			}
 
 		</script>';

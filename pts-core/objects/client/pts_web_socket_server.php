@@ -26,7 +26,7 @@ class pts_web_socket_server extends pts_web_socket
 	private $sensor_logging = false;
 	protected function add_to_status($current, &$json)
 	{
-		//$json['pts']['element']['name'] = 'loading';
+		//$json['pts']['msg']['name'] = 'loading';
 		$json['pts']['status']['current'] = $current;
 		$json['pts']['status']['full'] = (!isset($json['pts']['status']['full']) ? null : $json['pts']['status']['full'] . PHP_EOL) . $json['pts']['status']['current'];
 	}
@@ -42,7 +42,7 @@ class pts_web_socket_server extends pts_web_socket
 			{
 				case 'start-user-session':
 					$json = array();
-					$json['pts']['element']['name'] = 'user_session_start';
+					$json['pts']['msg']['name'] = 'user_session_start';
 					$this->add_to_status('Starting Session', $json);
 					$this->send_json_data($user->socket, $json);
 
@@ -113,7 +113,7 @@ class pts_web_socket_server extends pts_web_socket
 	protected function search_pts(&$user, $search)
 	{
 		$search = trim(strstr($search, ' '));
-		$json['pts']['element']['name'] = 'search_results';
+		$json['pts']['msg']['name'] = 'search_results';
 
 		if(strlen($search) < 3)
 		{
@@ -129,24 +129,37 @@ class pts_web_socket_server extends pts_web_socket
 		}
 
 		$test_matches = pts_openbenchmarking_client::search_tests($search, true);
+			$json['pts']['msg']['exact_hits'] = 0;
+		$json['pts']['msg']['search_query'] = $search;
 
 		if(count($test_matches) > 0)
 		{
-			$json['pts']['element']['test_profiles'] = array();
-			$json['pts']['element']['tests'] = array();
+			$json['pts']['msg']['test_profiles'] = array();
+			$json['pts']['msg']['exact_hits'] = 1;
+			$json['pts']['msg']['tests'] = array();
 
 			for($i = 0; $i < count($test_matches); $i++)
 			{
-				array_push($json['pts']['element']['tests'], $test_matches[$i]);
+				array_push($json['pts']['msg']['tests'], $test_matches[$i]);
 
 				$tp = new pts_test_profile($test_matches[$i]);
-				array_push($json['pts']['element']['test_profiles'], base64_encode($tp->to_json()));
+				array_push($json['pts']['msg']['test_profiles'], base64_encode($tp->to_json()));
 			}
 		}
 		else
 		{
 			// DO MORE BROAD SEARCH, NOT A TEST...
 			$test_matches = pts_openbenchmarking_client::search_tests($search, false);
+			$json['pts']['msg']['test_profiles'] = array();
+			$json['pts']['msg']['tests'] = array();
+
+			for($i = 0; $i < count($test_matches); $i++)
+			{
+				array_push($json['pts']['msg']['tests'], $test_matches[$i]);
+
+				$tp = new pts_test_profile($test_matches[$i]);
+				array_push($json['pts']['msg']['test_profiles'], base64_encode($tp->to_json()));
+			}
 			// SEARCH TEST PROFILES
 		}
 
@@ -154,8 +167,13 @@ class pts_web_socket_server extends pts_web_socket
 	}
 	protected function generate_system_svg_graphs(&$user)
 	{
-		$json['pts']['element']['name'] = 'svg_graphs';
-		$json['pts']['element']['contents'] = null;
+		if($this->sensor_logging == false)
+		{
+			return false;
+		}
+
+		$json['pts']['msg']['name'] = 'svg_graphs';
+		$json['pts']['msg']['contents'] = null;
 		foreach($this->sensor_logging->sensors_logging() as $sensor)
 		{
 			$sensor_data = $this->sensor_logging->read_sensor_results($sensor, -300);
@@ -173,14 +191,19 @@ class pts_web_socket_server extends pts_web_socket
 			}
 			$output_type = 'SVG';
 			$graph = $svg_dom->output(null, $output_type);
-			$json['pts']['element']['contents'] .= ' ' . substr($graph, strpos($graph, '<svg'));
+			$json['pts']['msg']['contents'] .= ' ' . substr($graph, strpos($graph, '<svg'));
 		}
 		$this->send_json_data($user->socket, $json);
 	}
 	protected function generate_large_system_svg_graphs(&$user)
 	{
-		$json['pts']['element']['name'] = 'large_svg_graphs';
-		$json['pts']['element']['contents'] = null;
+		if($this->sensor_logging == false)
+		{
+			return false;
+		}
+
+		$json['pts']['msg']['name'] = 'large_svg_graphs';
+		$json['pts']['msg']['contents'] = null;
 		foreach($this->sensor_logging->sensors_logging() as $sensor)
 		{
 			$sensor_data = $this->sensor_logging->read_sensor_results($sensor, -400);
@@ -198,9 +221,9 @@ class pts_web_socket_server extends pts_web_socket
 			}
 			$output_type = 'SVG';
 			$graph = $svg_dom->output(null, $output_type);
-			$json['pts']['element']['contents'] .= substr($graph, strpos($graph, '<svg')) . '<br /><br />';
+			$json['pts']['msg']['contents'] .= substr($graph, strpos($graph, '<svg')) . '<br /><br />';
 		}
-		$json['pts']['element']['contents'] = base64_encode($json['pts']['element']['contents']);
+		$json['pts']['msg']['contents'] = base64_encode($json['pts']['msg']['contents']);
 		$this->send_json_data($user->socket, $json);
 	}
 

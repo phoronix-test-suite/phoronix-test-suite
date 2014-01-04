@@ -29,7 +29,7 @@ class pts_webui_tests implements pts_webui_interface
 	}
 	public static function page_header()
 	{
-		return array('Available Tests' => 'tests/available_tests', 'Local Tests' => 'tests/locally_available_tests', 'Installed Tests' => 'tests/installed_tests');
+		return null;
 	}
 	public static function preload($PAGE)
 	{
@@ -42,14 +42,27 @@ class pts_webui_tests implements pts_webui_interface
 		{
 			case 'installed_tests':
 				$tests = pts_tests::installed_tests();
+				$selected = 'Installed Tests';
 				break;
 			case 'locally_available_tests':
 				$local_only = true;
+				$selected = 'Locally Available Tests';
+				$tests = pts_openbenchmarking::available_tests();
+				break;
 			case 'available_tests':
 			default:
+				$selected = 'Available Tests';
 				$tests = pts_openbenchmarking::available_tests();
 				break;
 		}
+
+		echo '<h2>';
+		$sub_links = array('Available Tests' => 'tests/available_tests', 'Locally Available Tests' => 'tests/locally_available_tests', 'Installed Tests' => 'tests/installed_tests');
+		foreach($sub_links as $txt => $loc)
+		{
+			echo '<a href="/?' . $loc . '">' . ($selected == $txt ? '<span class="alt">' : null) . $txt . ($selected == $txt ? '<span class="alt">' : null) . '</a> ';
+		}
+		echo '</h2>';
 
 		$installed_dependencies = pts_external_dependencies::installed_dependency_names();
 		$tests_to_show = array();

@@ -43,8 +43,6 @@ class pts_webui_search implements pts_webui_interface
 		echo 'SEARCH: <input type="text" size="30" id="pts_search" name="search" onkeydown="if(event.keyCode == 13) { if(document.getElementById(\'pts_search\').value.length < 3) { alert(\'Please enter a longer search query.\'); return false; } else { window.location.href = \'/?search/\' + document.getElementById(\'pts_search\').value; } return false; }" />';
 		echo '</div>';
 
-		echo '<p>Search query for <strong>' . $SEARCH_QUERY . '</strong> yields:</h1>';
-
 		echo '<div id="search_results"></div>';
 		echo '<div style="text-align: center; vertical-align: middle; margin-top: 10%;">
 		<svg xmlns:svg="http://www.w3.org/2000/svg"
@@ -100,35 +98,9 @@ class pts_webui_search implements pts_webui_interface
 		<script text="text/javascript">
 			var switcher = setInterval(pts_highlight_loader_switch_color, 500);
 
-			pts_add_onopen_event("search ' . $SEARCH_QUERY . '");
-			pts_add_onmessage_event("search_results", "search_results");
+			pts_web_socket.add_onopen_event("search ' . $SEARCH_QUERY . '");
+			pts_web_socket.add_onmessage_event("search_results", "search_results");
 
-			function search_results(j)
-			{
-				var logo = document.getElementById("pts_loading_logo");
-				logo.parentNode.removeChild(logo);
-
-				if(j.pts.status && j.pts.status.error)
-				{
-					document.getElementById("search_results").innerHTML = "<h2>" + j.pts.status.error + "</h2>";
-				}
-				else
-				{
-					if(j.pts.element.tests.length == 0)
-					{
-						document.getElementById("search_results").innerHTML += "<h1>No Tests Found</h1>";
-					}
-
-					for(var i = 0; i < j.pts.element.tests.length; i++)
-					{
-						var test = j.pts.element.tests[i];
-						var test_profile = JSON.parse(atob(j.pts.element.test_profiles[i]));
-						document.getElementById("search_results").innerHTML += "<h2>" + test_profile.TestInformation.Title + "</h2>";
-						document.getElementById("search_results").innerHTML += "<p>" + test_profile.TestInformation.Description + "</p>";
-						document.getElementById("search_results").innerHTML += "<p><a href=\"?test/" + test + "\">More " + test_profile.TestInformation.Title + " Information</a></p>";
-					}
-				}
-			}
 		</script>';
 
 	}
