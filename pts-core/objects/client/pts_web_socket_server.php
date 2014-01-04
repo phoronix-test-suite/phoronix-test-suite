@@ -78,11 +78,18 @@ class pts_web_socket_server extends pts_web_socket
 	protected function process_data(&$user, &$msg)
 	{
 		$decoded_msg = $this->decode_data($msg);
+		$args = trim(strstr($decoded_msg, ' '));
 
 		switch(strstr($decoded_msg . ' ', ' ', true))
 		{
 			case 'search':
-				$this->search_pts($user, $decoded_msg);
+				$this->search_pts($user, $args);
+			case 'result_file':
+				$result_file = new pts_result_file($args);
+				$json['pts']['msg']['name'] = 'result_file';
+				$json['pts']['msg']['result'] = $args;
+				$json['pts']['msg']['result_file'] = base64_encode($result_file->to_json());
+				$this->send_json_data($user->socket, $json);
 			default:
 				$this->shared_events($user, $decoded_msg);
 				break;
@@ -112,7 +119,6 @@ class pts_web_socket_server extends pts_web_socket
 	}
 	protected function search_pts(&$user, $search)
 	{
-		$search = trim(strstr($search, ' '));
 		$json['pts']['msg']['name'] = 'search_results';
 
 		if(strlen($search) < 3)

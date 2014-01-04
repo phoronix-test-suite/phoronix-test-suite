@@ -366,6 +366,12 @@ div#pts_side_pane
 	max-width: 18%;
 	letter-spacing: 1px;
 }
+p.result_object
+{
+	text-align: center;
+	overflow: auto;
+	margin: 10px;
+}
 div#pts_side_pane div.pts_pane_window
 {
 	color: #FFF;
