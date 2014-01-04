@@ -373,7 +373,7 @@ class pts_tests
 				$matched = false;
 				for($i = 0; $i < count($ids); $i++)
 				{
-					if(stripos($sw[$i], $query) !== false || stripos($ids[$i], $query) !== false || $stripos($hw[$i], $query) !== false)
+					if(stripos($sw[$i], $query) !== false || stripos($ids[$i], $query) !== false || stripos($hw[$i], $query) !== false)
 					{
 						array_push($matches, $file);
 						$matched = true;

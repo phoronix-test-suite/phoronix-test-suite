@@ -37,20 +37,20 @@ class pts_webui_search implements pts_webui_interface
 	}
 	public static function render_page_process($PATH)
 	{
-		$SEARCH_QUERY = str_replace('%20', ' ', $PATH[0]);
+		$SEARCH_QUERY = trim(str_replace('%20', ' ', $PATH[0]));
 
 		echo '<div style="text-align: right; margin: 10px 0;">';
 		echo 'SEARCH: <input type="text" size="30" id="pts_search" name="search" onkeydown="if(event.keyCode == 13) { if(document.getElementById(\'pts_search\').value.length < 3) { alert(\'Please enter a longer search query.\'); return false; } else { window.location.href = \'/?search/\' + document.getElementById(\'pts_search\').value; } return false; }" />';
 		echo '</div>';
 
 		echo '<div id="search_results"></div>';
-		echo '<div style="text-align: center; vertical-align: middle; margin-top: 10%;">
+		echo '<div style="text-align: center; margin-top: 10px auto;" id="search_loading_area"><h2>Searching For ' . $SEARCH_QUERY . '...</h2>
 		<svg xmlns:svg="http://www.w3.org/2000/svg"
 		   xmlns="http://www.w3.org/2000/svg"
 		   width="324"
 		   height="178"
 		   viewBox="0 0 323 178"
-		   id="pts_loading_logo" style="opacity: 1; display: block;"
+		   id="pts_loading_logo" style="opacity: 1;"
 		   version="1.1">
 		  <g
 		 id="layer"

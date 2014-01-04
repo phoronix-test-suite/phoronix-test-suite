@@ -164,6 +164,7 @@ class pts_web_socket_server extends pts_web_socket
 		}
 
 		$json['pts']['msg']['results'] = array();
+		$json['pts']['msg']['result_files'] = array();
 		if(count($test_matches) > 0)
 		{
 			$result_matches = pts_tests::search_test_results($search, 'RESULTS');
@@ -171,8 +172,21 @@ class pts_web_socket_server extends pts_web_socket
 			foreach($result_matches as $result)
 			{
 				$result_file = new pts_result_file($result);
-				array_push($json['pts']['msg']['results'], base64_encode($result_file->to_json()));
+				array_push($json['pts']['msg']['results'], $result);
+				array_push($json['pts']['msg']['result_files'], base64_encode($result_file->to_json()));
 			}
+		}
+		else
+		{
+			$result_matches = pts_tests::search_test_results($search, 'ALL');
+
+			foreach($result_matches as $result)
+			{
+				$result_file = new pts_result_file($result);
+				array_push($json['pts']['msg']['results'], $result);
+				array_push($json['pts']['msg']['result_files'], base64_encode($result_file->to_json()));
+			}
+
 		}
 
 		$this->send_json_data($user->socket, $json);
