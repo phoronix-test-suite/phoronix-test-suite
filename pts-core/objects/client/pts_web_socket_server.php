@@ -85,11 +85,19 @@ class pts_web_socket_server extends pts_web_socket
 			case 'search':
 				$this->search_pts($user, $args);
 			case 'result_file':
-				$result_file = new pts_result_file($args);
-				$json['pts']['msg']['name'] = 'result_file';
-				$json['pts']['msg']['result'] = $args;
-				$json['pts']['msg']['result_file'] = base64_encode($result_file->to_json());
-				$this->send_json_data($user->socket, $json);
+				foreach(explode(',', $args) as $result)
+				{
+					if($result == null)
+					{
+						continue;
+					}
+
+					$result_file = new pts_result_file($result);
+					$json['pts']['msg']['name'] = 'result_file';
+					$json['pts']['msg']['result'] = $result;
+					$json['pts']['msg']['result_file'] = base64_encode($result_file->to_json());
+					$this->send_json_data($user->socket, $json);
+				}
 				break;
 			case 'results_by_date':
 				$results = pts_tests::test_results_by_date();

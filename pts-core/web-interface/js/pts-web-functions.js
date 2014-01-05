@@ -129,6 +129,7 @@ function display_grouped_results_by_date(j)
 {
 	var results = j.pts.msg.results;
 	pts_web_socket.add_onmessage_event("result_file", "update_result_box");
+	var result_files = ""
 
 	for(var k in results)
 	{
@@ -137,11 +138,12 @@ function display_grouped_results_by_date(j)
 		for(var i = 0; i < results[k].length; i++)
 		{
 			document.getElementById("results_linear_display").innerHTML += "<a href=\"?result/" + results[k][i] + "\"><div class=\"pts_blue_bar\" id=\"result_" + b64id(results[k][i]) + "\"><strong>" + results[k][i] + "</strong></div></a>";
-			pts_web_socket.send("result_file " + results[k][i]);
+			result_files += results[k][i] + ",";
 		}
 
 		document.getElementById("results_linear_display").innerHTML += "</div>";
 	}
+	pts_web_socket.send("result_file " + result_files);
 }
 function b64id(i)
 {
@@ -155,6 +157,17 @@ function b64id(i)
 
 	return id;
 }
+function plural_handler(count, base)
+{
+	var str = count + " " + base;
+
+	if(count > 1)
+	{
+		str += "s";
+	}
+
+	return str;
+}
 function update_result_box(j)
 {
 	var result_file = JSON.parse(atob(j.pts.msg.result_file));
@@ -162,6 +175,11 @@ function update_result_box(j)
 
 	if(document.getElementById("result_" + b64id(result)))
 	{
-		document.getElementById("result_" + b64id(result)).innerHTML = "<strong>" + result_file.Generated.Title + "</strong><br /><span style=\"font-size: 10px;\">" + result_file.System.TimeStamp + " - " + result_file.System.Identifier + "System(s) " + result_file.Result.Identifier + "Result(s)</span>";
-	} else document.write('111');
+		var systems = result_file.System.length || 1;
+		var results = result_file.Result.length || 1;
+		var system_date = result_file.System.TimeStamp || result_file.System[(systems - 1)].TimeStamp;
+		var system_date_obj = new Date(system_date);
+
+		document.getElementById("result_" + b64id(result)).innerHTML = "<strong>" + result_file.Generated.Title + "</strong><br /><span style=\"font-size: 10px;\">" + system_date_obj.toLocaleDateString() + " - " + plural_handler(systems, "System") + " " + plural_handler(results, "Result") + "s</span>";
+	} else alert(result);
 }
