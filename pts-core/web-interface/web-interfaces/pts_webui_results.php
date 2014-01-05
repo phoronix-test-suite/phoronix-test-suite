@@ -49,31 +49,12 @@ class pts_webui_results implements pts_webui_interface
 			mktime(0, 0, 0, 1, 1, date('Y') - 1) => 'Last Year',
 			);
 
+		echo '<div id="results_linear_display" style="overflow: hidden;"></div>';
+		echo '<script text="text/javascript">
+			pts_web_socket.add_onopen_event("results_grouped_by_date");
+			pts_web_socket.add_onmessage_event("results_grouped_by_date", "display_grouped_results_by_date");
 
-		echo '<div style="overflow: hidden;">';
-		$section = current($sections);
-		foreach($results as $result_time => &$result)
-		{
-			if($result_time < key($sections))
-			{
-				while($result_time < key($sections) && $section !== false)
-				{
-					$section = next($sections);
-				}
-
-				if($section === false)
-				{
-					break;
-				}
-
-				echo '</div>' . PHP_EOL . '<h2>' . current($sections) . '</h2>' . PHP_EOL . '<div style="overflow: hidden;">';
-			}
-
-			$result_file = new pts_result_file($result);
-
-			echo '<a href="?result/' . $result . '"><div class="pts_blue_bar"><strong>' . $result_file->get_title() . '</strong><br /><span style="font-size: 10px;">' . date('j M', $result_time) . ' - ' . pts_strings::plural_handler($result_file->get_system_count(), 'System') . ' - ' . pts_strings::plural_handler($result_file->get_test_count(), 'Result') . '</span></div></a>';
-		}
-		echo '</div>';
+		</script>';
 	}
 }
 

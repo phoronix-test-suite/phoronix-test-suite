@@ -47,3 +47,121 @@ function search_results(j)
 		}
 	}
 }
+function display_results_by_date(j)
+{
+	var results = JSON.parse(atob(j.pts.msg.results));
+	var date_sections = new Array();
+	var date_titles = new Array();
+
+	var today = new Date();
+	today.setHours(0, 0, 0, 0);
+	date_sections.push(today);
+	date_titles.push("Today");
+
+	var this_month = new Date();
+	this_month.setHours(0, 0, 0, 0);
+	this_month.setDate(1);
+	date_sections.push(this_month);
+	date_titles.push("This Month");
+
+	var last_month = new Date();
+	last_month.setDate(1);
+	last_month.setMonth(last_month.getMonth() - 1);
+	last_month.setHours(0, 0, 0, 0);
+	date_sections.push(last_month);
+	date_titles.push("Last Month");
+
+	if(today.getMonth() > 2)
+	{
+		var this_year = new Date();
+		this_year.setDate(1);
+		this_year.setMonth(0);
+		this_year.setHours(0, 0, 0, 0);
+		date_sections.push(this_year);
+		date_titles.push("Earlier This Year");
+	}
+
+	var last_year = new Date();
+	last_year.setDate(31);
+	last_year.setMonth(11);
+	last_year.setHours(0, 0, 0, 0);
+	last_year.setFullYear(last_year.getFullYear() - 1);
+	date_sections.push(last_year);
+	date_titles.push("Last Year");
+
+	var last_yeart = new Date();
+	last_yeart.setDate(1);
+	last_yeart.setMonth(0);
+	last_yeart.setHours(0, 0, 0, 0);
+	last_yeart.setFullYear(last_yeart.getFullYear() - 2);
+	date_sections.push(last_yeart);
+	date_titles.push("Two Years Ago");
+
+	var current_section = date_sections.length - 1;
+	var prepend = "";
+
+	for(var k in results)
+	{
+		var d = new Date(k * 1000);
+
+		if(d > date_sections[current_section])
+		{
+			if(prepend != "")
+				prepend = "</div><h2>" + date_titles[current_section] + "</h2><div style=\"overflow: hidden;\">" + prepend;
+
+			while(current_section > 0 && d > date_sections[current_section])
+			{
+				current_section--;
+			}
+		}
+		else if(d < last_year)
+		{
+			continue;
+		}
+
+		prepend = "<a href=\"?result/" + k + "\"><div class=\"pts_blue_bar\"><strong>" + results[k] + "</strong><br /><span style=\"font-size: 10px;\">" + "date" + " - " + "system count System(s)" + "result count(s)" + "</span></div></a>" + prepend;
+	}
+
+	document.getElementById("results_linear_display").innerHTML += prepend;
+}
+
+function display_grouped_results_by_date(j)
+{
+	var results = j.pts.msg.results;
+	pts_web_socket.add_onmessage_event("result_file", "update_result_box");
+
+	for(var k in results)
+	{
+		document.getElementById("results_linear_display").innerHTML += "<h2 style=\"clear: both;\">" + k + "</h2><div style=\"overflow: hidden;\">";
+
+		for(var i = 0; i < results[k].length; i++)
+		{
+			document.getElementById("results_linear_display").innerHTML += "<a href=\"?result/" + results[k][i] + "\"><div class=\"pts_blue_bar\" id=\"result_" + b64id(results[k][i]) + "\"><strong>" + results[k][i] + "</strong></div></a>";
+			pts_web_socket.send("result_file " + results[k][i]);
+		}
+
+		document.getElementById("results_linear_display").innerHTML += "</div>";
+	}
+}
+function b64id(i)
+{
+	var id = btoa(i);
+	var t = id.indexOf('=');
+
+	if(t != -1)
+	{
+		id = id.substr(0, t);
+	}
+
+	return id;
+}
+function update_result_box(j)
+{
+	var result_file = JSON.parse(atob(j.pts.msg.result_file));
+	var result = j.pts.msg.result;
+
+	if(document.getElementById("result_" + b64id(result)))
+	{
+		document.getElementById("result_" + b64id(result)).innerHTML = "<strong>" + result_file.Generated.Title + "</strong><br /><span style=\"font-size: 10px;\">" + result_file.System.TimeStamp + " - " + result_file.System.Identifier + "System(s) " + result_file.Result.Identifier + "Result(s)</span>";
+	} else document.write('111');
+}

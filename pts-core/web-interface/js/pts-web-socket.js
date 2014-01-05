@@ -28,7 +28,7 @@ function pts_web_socket()
 	}
 	this.is_connected = function()
 	{
-		return this.socket_connected;
+		return this.socket_connected == 1;
 	}
 	this.connect = function()
 	{
@@ -61,6 +61,10 @@ function pts_web_socket()
 		if(this.is_connected())
 		{
 			this.socket.send(msg);
+		}
+		else
+		{
+			pts_web_socket.add_onopen_event(msg);
 		}
 	}
 	this.web_socket_onmessage = function(msg)

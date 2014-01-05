@@ -106,28 +106,28 @@ class pts_web_socket
 	}
 	protected function decode_data(&$data)
 	{
-		$data_length = $data[1] & 127;
+		$data_length = ord($data[1]) & 127;
 
 		if($data_length === 126)
 		{
-			$mask = substr($data, 4, 8);
+			$mask = substr($data, 4, 4);
 			$encoded_data = substr($data, 8);
 		}
 		else if($data_length === 127)
 		{
-			$mask = substr($data, 10, 14);
+			$mask = substr($data, 10, 4);
 			$encoded_data = substr($data, 14);
 		}
 		else
 		{
-			$mask = substr($data, 2, 6);
-			$encoded_data = substr($data, 6);
+			$mask = substr($data, 2, 4);
+			$encoded_data = substr($data, 6, $data_length);
 		}
 
 		$decoded_data = null;
 		for($i = 0; $i < strlen($encoded_data); $i++)
 		{
-			$decoded_data .= $encoded_data[$i] ^ $mask[($i%4)];
+			$decoded_data .= $encoded_data[$i] ^ $mask[($i % 4)];
 		}
 
 		return $decoded_data;

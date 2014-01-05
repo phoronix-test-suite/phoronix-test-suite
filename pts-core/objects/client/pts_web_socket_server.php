@@ -79,7 +79,7 @@ class pts_web_socket_server extends pts_web_socket
 	{
 		$decoded_msg = $this->decode_data($msg);
 		$args = trim(strstr($decoded_msg, ' '));
-
+		echo 'DECODED MSG: ' . $decoded_msg . PHP_EOL;
 		switch(strstr($decoded_msg . ' ', ' ', true))
 		{
 			case 'search':
@@ -90,6 +90,56 @@ class pts_web_socket_server extends pts_web_socket
 				$json['pts']['msg']['result'] = $args;
 				$json['pts']['msg']['result_file'] = base64_encode($result_file->to_json());
 				$this->send_json_data($user->socket, $json);
+				break;
+			case 'results_by_date':
+				$results = pts_tests::test_results_by_date();
+				$json['pts']['msg']['name'] = 'results_by_date';
+				$json['pts']['msg']['result_count'] = count($results);
+				$json['pts']['msg']['results'] = base64_encode(json_encode($results));
+				$this->send_json_data($user->socket, $json);
+				break;
+			case 'results_grouped_by_date':
+				$results = pts_tests::test_results_by_date();
+				$json['pts']['msg']['name'] = 'results_grouped_by_date';
+				$json['pts']['msg']['result_count'] = count($results);
+				$sections = array(
+					mktime(date('H'), date('i') - 10, 0, date('n'), date('j')) => 'Just Now',
+					mktime(0, 0, 0, date('n'), date('j')) => 'Today',
+					mktime(0, 0, 0, date('n'), date('j') - date('N') + 1) => 'This Week',
+					mktime(0, 0, 0, date('n'), 1) => 'This Month',
+					mktime(0, 0, 0, date('n') - 1, 1) => 'Last Month',
+					mktime(0, 0, 0, 1, 1) => 'This Year',
+					mktime(0, 0, 0, 1, 1, date('Y') - 1) => 'Last Year',
+					);
+
+				$section = current($sections);
+				foreach($results as $result_time => &$result)
+				{
+					if($result_time < key($sections))
+					{
+						while($result_time < key($sections) && $section !== false)
+						{
+							$section = next($sections);
+						}
+
+						if($section === false)
+						{
+							break;
+						}
+					}
+
+					if(!isset($json['pts']['msg']['results'][current($sections)]))
+					{
+						$json['pts']['msg']['results'][current($sections)] = array();
+					}
+
+					if($result != null)
+					{
+						array_push($json['pts']['msg']['results'][current($sections)], $result);
+					}
+				}
+				$this->send_json_data($user->socket, $json);
+				break;
 			default:
 				$this->shared_events($user, $decoded_msg);
 				break;
@@ -238,7 +288,7 @@ class pts_web_socket_server extends pts_web_socket
 		$json['pts']['msg']['contents'] = null;
 		foreach($this->sensor_logging->sensors_logging() as $sensor)
 		{
-			$sensor_data = $this->sensor_logging->read_sensor_results($sensor, -400);
+			$sensor_data = $this->sensor_logging->read_sensor_results($sensor, -1000);
 			if(count($sensor_data['results']) < 2 || max($sensor_data['results']) == min($sensor_data['results']))
 			{
 				continue;
