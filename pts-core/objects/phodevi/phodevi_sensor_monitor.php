@@ -52,9 +52,26 @@ class phodevi_sensor_monitor
 	{
 		return array($this->sensors_to_monitor, $this->sensor_storage_dir);
 	}
-	public function sensors_logging()
+	public function sensors_logging($match = null)
 	{
-		return $this->sensors_to_monitor;
+		if($match == null || $match == 'all')
+		{
+			return $this->sensors_to_monitor;
+		}
+		else
+		{
+			$share = array();
+			$match = explode(',', $match);
+			foreach($this->sensors_to_monitor as $sensor)
+			{
+				if(in_array(phodevi::sensor_identifier($sensor), $match) || in_array('all.' . $sensor[0], $match))
+				{
+					array_push($share, $sensor);
+				}
+			}
+
+			return $share;
+		}
 	}
 	public function sensor_logging_start()
 	{

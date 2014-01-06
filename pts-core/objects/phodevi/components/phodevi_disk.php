@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2013, Phoronix Media
-	Copyright (C) 2008 - 2013, Michael Larabel
+	Copyright (C) 2008 - 2014, Phoronix Media
+	Copyright (C) 2008 - 2014, Michael Larabel
 	phodevi_disk.php: The PTS Device Interface object for the system disk(s)
 
 	This program is free software; you can redistribute it and/or modify
@@ -353,6 +353,10 @@ class phodevi_disk extends phodevi_device_interface
 			{
 				$scheduler = '/sys/block/' . $device . '/queue/scheduler';
 			}
+		}
+		else if(is_readable('/sys/block/sda/queue/scheduler'))
+		{
+			$scheduler = '/sys/block/sda/queue/scheduler';
 		}
 
 		if($scheduler)

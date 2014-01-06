@@ -148,6 +148,33 @@ class pts_web_socket_server extends pts_web_socket
 				}
 				$this->send_json_data($user->socket, $json);
 				break;
+			case 'user-svg-system-graphs':
+			//	pts_client::timed_function(array($this, 'generate_system_svg_graphs'), array($user), 1, array($this, 'sensor_logging_continue'), array($user));
+				$this->generate_system_svg_graphs($user, $args);
+				break;
+			case 'user-large-svg-system-graphs':
+			//	pts_client::timed_function(array($this, 'generate_system_svg_graphs'), array($user), 1, array($this, 'sensor_logging_continue'), array($user));
+				$this->generate_large_system_svg_graphs($user, $args);
+				break;
+			case 'tests-by-popularity':
+				$args = explode(' ', $args);
+				$limit = isset($args[0]) && is_numeric($args[0]) ? $args[0] : 10;
+				$test_type = isset($args[1]) && $args[1] != null ? $args[1] : null;
+				$tests = pts_openbenchmarking_client::popular_tests($limit, $test_type);
+				$json['pts']['msg']['name'] = 'tests_by_popularity';
+				$json['pts']['msg']['test_count'] = count($tests);
+				$json['pts']['msg']['test_type'] = $test_type;
+				$json['pts']['msg']['tests'] = array();
+				$json['pts']['msg']['test_profiles'] = array();
+
+				foreach($tests as $test)
+				{
+					array_push($json['pts']['msg']['tests'], $test);
+					$tp = new pts_test_profile($test);
+					array_push($json['pts']['msg']['test_profiles'], base64_encode($tp->to_json()));
+				}
+				$this->send_json_data($user->socket, $json);
+				break;
 			default:
 				$this->shared_events($user, $decoded_msg);
 				break;
@@ -164,14 +191,6 @@ class pts_web_socket_server extends pts_web_socket
 			case 'core-version':
 				$version = PTS_CORE_VERSION;
 				$this->send_data($user->socket, $version);
-				break;
-			case 'user-svg-system-graphs':
-			//	pts_client::timed_function(array($this, 'generate_system_svg_graphs'), array($user), 1, array($this, 'sensor_logging_continue'), array($user));
-				$this->generate_system_svg_graphs($user);
-				break;
-			case 'user-large-svg-system-graphs':
-			//	pts_client::timed_function(array($this, 'generate_system_svg_graphs'), array($user), 1, array($this, 'sensor_logging_continue'), array($user));
-				$this->generate_large_system_svg_graphs($user);
 				break;
 		}
 	}
@@ -255,7 +274,7 @@ class pts_web_socket_server extends pts_web_socket
 
 		$this->send_json_data($user->socket, $json);
 	}
-	protected function generate_system_svg_graphs(&$user)
+	protected function generate_system_svg_graphs(&$user, $sensors_to_watch = null)
 	{
 		if($this->sensor_logging == false)
 		{
@@ -264,10 +283,14 @@ class pts_web_socket_server extends pts_web_socket
 
 		$json['pts']['msg']['name'] = 'svg_graphs';
 		$json['pts']['msg']['contents'] = null;
-		foreach($this->sensor_logging->sensors_logging() as $sensor)
+		foreach($this->sensor_logging->sensors_logging($sensors_to_watch) as $sensor)
 		{
 			$sensor_data = $this->sensor_logging->read_sensor_results($sensor, -300);
-			if(count($sensor_data['results']) < 2 || max($sensor_data['results']) == min($sensor_data['results']))
+			if(count($sensor_data['results']) < 2)
+			{
+				continue;
+			}
+			else if($sensors_to_watch == null && max($sensor_data['results']) == min($sensor_data['results']))
 			{
 				continue;
 			}
@@ -285,7 +308,7 @@ class pts_web_socket_server extends pts_web_socket
 		}
 		$this->send_json_data($user->socket, $json);
 	}
-	protected function generate_large_system_svg_graphs(&$user)
+	protected function generate_large_system_svg_graphs(&$user, $sensors_to_watch = null)
 	{
 		if($this->sensor_logging == false)
 		{
@@ -294,10 +317,14 @@ class pts_web_socket_server extends pts_web_socket
 
 		$json['pts']['msg']['name'] = 'large_svg_graphs';
 		$json['pts']['msg']['contents'] = null;
-		foreach($this->sensor_logging->sensors_logging() as $sensor)
+		foreach($this->sensor_logging->sensors_logging($sensors_to_watch) as $sensor)
 		{
 			$sensor_data = $this->sensor_logging->read_sensor_results($sensor, -1000);
-			if(count($sensor_data['results']) < 2 || max($sensor_data['results']) == min($sensor_data['results']))
+			if(count($sensor_data['results']) < 2)
+			{
+				continue;
+			}
+			else if($sensors_to_watch == null && max($sensor_data['results']) == min($sensor_data['results']))
 			{
 				continue;
 			}

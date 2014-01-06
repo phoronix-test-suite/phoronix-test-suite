@@ -10,6 +10,8 @@ Phoronix Test Suite (Git)
 - pts-core: Adjust handling of PTS OpenBenchmarking.org downloading of test profile order and hash handling
 - pts-core: Reduce unnecessary communication with OpenBenchmarking.org network server
 - pts-core: Random fixes
+- phodevi: Various improvements
+- phodevi: Improved disk scheduler fallback reporting
 
 Phoronix Test Suite 4.8.6-Sokndal
 10 December 2013

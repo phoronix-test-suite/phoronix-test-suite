@@ -41,7 +41,7 @@ class pts_webui_main implements pts_webui_interface
 
 		echo '<div id="pts_side_pane">';
 
-			$hw_component_modal = array('CPU' => phodevi::read_property('cpu', 'model'), 'Motherboard' => phodevi::read_property('motherboard', 'identifier'), 'Disk' => phodevi::read_property('disk', 'identifier'), 'GPU' => phodevi::read_property('gpu', 'model'));
+			$hw_component_modal = array('CPU' => phodevi::read_property('cpu', 'model'), 'Motherboard' => phodevi::read_property('motherboard', 'identifier'), 'Memory' => phodevi::read_property('memory', 'identifier'), 'Disk' => phodevi::read_property('disk', 'identifier'), 'GPU' => phodevi::read_property('gpu', 'model'));
 
 			echo '<ul>';
 			foreach($hw_component_modal as $type => $component)
@@ -51,16 +51,21 @@ class pts_webui_main implements pts_webui_interface
 			echo '</ul>';
 			echo '<hr />';
 
-			$sw_component_modal = array('OS' => phodevi::read_property('system', 'operating-system'), 'OS' => phodevi::read_property('system', 'kernel-string'), 'Display Driver' => phodevi::read_property('system', 'display-driver-string'), 'OpenGL' => phodevi::read_property('system', 'opengl-driver'), 'Compiler' => phodevi::read_property('system', 'compiler'), 'File-System' => phodevi::read_property('system', 'filesystem'));
+			$sw_component_modal = array(1 => phodevi::read_property('system', 'operating-system'), 2 => phodevi::read_property('system', 'kernel-string'), 3 => phodevi::read_property('system', 'display-driver-string'), 4 => phodevi::read_property('system', 'opengl-driver'), 5 => phodevi::read_property('system', 'compiler'));
 
 			echo '<ul>';
 			foreach($sw_component_modal as $type => $component)
 			{
-				echo '<a href="/?component/' . $type . '"><li>' . $component . '</li></a>';
+				echo '<a href="/?component/Software"><li>' . $component . '</li></a>';
 			}
 			echo '</ul>';
 
 			echo '<div class="pts_pane_window">Log-in to OpenBenchmarking.org to gain access to more functionality.</div>';
+
+			echo '<ul>';
+			echo '<a href="/?settings"><li>Software Settings</li></a>';
+			echo '<a href="/?about"><li>About The Phoronix Test Suite</li></a>';
+			echo '</ul>';
 
 		echo '</div>';
 
@@ -70,7 +75,7 @@ class pts_webui_main implements pts_webui_interface
 
 		// Graphs
 		echo '<div id="svg_graphs" style="margin: 10px 0; text-align: right;"></div>';
-		echo '<div style="float: right; overflow: hidden; width: auto;">';
+		echo '<div style="overflow: hidden;">';
 
 		echo '<div class="pts_list_box">';
 

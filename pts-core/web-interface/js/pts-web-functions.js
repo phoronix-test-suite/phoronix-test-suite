@@ -17,6 +17,10 @@ function search_results(j)
 		{
 			document.getElementById("search_results").innerHTML += "<p><strong>No matching tests found.</strong></p>";
 		}
+		else
+		{
+			document.getElementById("search_results").innerHTML += "<p><strong>Matching test profiles.</strong></p>";
+		}
 
 		for(var i = 0; i < j.pts.msg.tests.length; i++)
 		{
@@ -189,4 +193,24 @@ function update_result_box(j)
 
 		document.getElementById("result_" + b64id(result)).innerHTML = "<strong>" + result_file.Generated.Title + "</strong><br /><span style=\"font-size: 10px;\">" + system_date_obj.toLocaleDateString() + " - " + plural_handler(systems, "System") + " " + plural_handler(results, "Result") + "s</span>";
 	} else alert(result);
+}
+function tests_by_popularity_display(j)
+{
+	if(j.pts.msg.test_type == null)
+	{
+		j.pts.msg.test_type = "";
+	}
+
+	document.getElementById("tests_by_popularity").innerHTML = "<h2>Most Popular " +  j.pts.msg.test_type + " Tests</h2>";
+
+	for(var i = 0; i < j.pts.msg.tests.length; i++)
+	{
+		var test = j.pts.msg.tests[i];
+		var test_profile = JSON.parse(atob(j.pts.msg.test_profiles[i]));
+
+		document.getElementById("tests_by_popularity").innerHTML += "<h3><a href=\"?test/" + test + "\">" + test_profile.TestInformation.Title + "</a></h3>";
+		var test_description = test_profile.TestInformation.Description;
+		document.getElementById("tests_by_popularity").innerHTML += "<p>" + test_description + "</p>";
+	}
+	document.getElementById("tests_by_popularity").innerHTML += "<p><a href=\"\?tests#" + j.pts.msg.test_type + "\">More " + j.pts.msg.test_type + " Tests</a></p>";
 }

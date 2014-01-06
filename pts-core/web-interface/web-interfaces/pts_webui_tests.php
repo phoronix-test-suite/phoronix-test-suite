@@ -109,7 +109,7 @@ class pts_webui_tests implements pts_webui_interface
 			if($category != $test_profile->get_test_hardware_type())
 			{
 				$category = $test_profile->get_test_hardware_type();
-				echo '</div>' . PHP_EOL . '<h2>' . $category . '</h2>' . PHP_EOL . '<div style="overflow: hidden;">';
+				echo '</div><a name="' . $category . '"></a>' . PHP_EOL . '<h2>' . $category . '</h2>' . PHP_EOL . '<div style="overflow: hidden;">';
 				$popularity_index = pts_openbenchmarking_client::popular_tests(-1, pts_openbenchmarking_client::read_repository_test_profile_attribute($test_profile, 'test_type'));
 			}
 

@@ -57,17 +57,17 @@ div#pts_header div#pts_header_left
 	float: left;
 	margin: 15px 0 0;
 	font-weight: 800;
-	font-size: 38px;
+	font-size: 316%;
 	color: #949494;
 }
-div#pts_header_left a, h2 a
+div#pts_header_left a, h2 a, h3 a
 {
 	padding-right: 30px;
 	text-decoration: none;
 	color: #044374;
 	padding: 5px 2px;
 }
-div#pts_header_left a:hover, h2 a:hover
+div#pts_header_left a:hover, h2 a:hover, h3 a:hover
 {
 	color: #1F1F1F;
 	-webkit-text-stroke-width: 1px;
@@ -77,7 +77,7 @@ div#pts_header div#pts_logo_right
 {
 	float: right;
 	padding: 5px;
-	width: 115px;
+	text-align: right;
 }
 div#pts_logo_right a
 {
@@ -129,22 +129,22 @@ tr
 }
 h1
 {
-	font-size: 30px;
+	font-size: 250%;
 	color: #949494;
 }
 h2
 {
-	font-size: 20px;
+	font-size: 166%;
 	color: #1F1F1F;
 }
 h3
 {
-	font-size: 15px;
+	font-size: 125%;
 	color: #044374;
 }
 h4
 {
-	font-size: 15px;
+	font-size: 125%;
 	color: #949494;
 	text-transform: uppercase;
 	text-align: center;
@@ -155,7 +155,7 @@ h4
 div#pts_web_container div#pts_main_region
 {
 	color: #1F1F1F;
-	font-size: 13px;
+	font-size: 109%;
 	position: absolute;
 	left: 5px;
 	right: 5px;
@@ -203,7 +203,7 @@ div#pts_web_container div#pts_copyright
 	right: 0;
 	padding: 1px 10px 0;
 	color: #BABABA;
-	font-size: 9px;
+	font-size: 75%;
 	border: 1px solid #e0e0e0;
 	border-width: 1px 0 0;
 }
@@ -257,7 +257,8 @@ div.pts_list_box
 	display: block;
 	margin: 5px 10px;
 	padding: 0 10px 5px;
-	float: left;
+	float: right;
+	max-width: 31%;
 }
 div.pts_list_box ol
 {
@@ -268,13 +269,12 @@ div.pts_list_box ol
 div.pts_list_box ol li
 {
 	margin: 10px 0;
-	font-size: 14px;
+	font-size: 116%;
 	font-weight: bold;
 }
 div.pts_list_box a, div.pts_list_box a li
 {
 	color: #fff;
-	font-size: 12px;
 	text-decoration: none;
 	font-weight: normal;
 	margin: 5px 0;
@@ -323,7 +323,7 @@ table#notification_area td
 	border-radius: 10px;
 	min-height: 50px;
 	overflow: hidden;
-	font-size: 10px;
+	font-size: 83%;
 	text-align: right;
 	opacity: 0.4;
 }
@@ -344,7 +344,7 @@ table#notification_area td h5
 	font-weight: bold;
 	padding: 0;
 	margin: 0;
-	font-size: 12px;
+	font-size: 100%;
 	font-weight: bold;
 }
 .alt
@@ -365,6 +365,7 @@ div#pts_side_pane
 	color: #949494;
 	max-width: 18%;
 	letter-spacing: 1px;
+	height: 100%;
 }
 p.result_object
 {
@@ -378,7 +379,8 @@ div#pts_side_pane div.pts_pane_window
 	background: #bababa;
 	border-radius: 6px;
 	border: solid #e0e0e0 1px;
-	padding: 4px 6px;
+	padding: 2px 6px;
+	margin: 0 0 20px;
 	display: block;
 }
 div#pts_side_pane hr
@@ -388,6 +390,11 @@ div#pts_side_pane hr
 	border-width: 1px 0 0;
 	width: 100%;
 	margin: 0 0 20px;
+}
+div#pts_side_pane h2
+{
+	color: #949494;
+	font-size: 130%;
 }
 div#pts_side_pane ul
 {
@@ -404,7 +411,7 @@ div#pts_side_pane a
 	text-decoration: none;
 	color: inherit;
 }
-div#pts_side_pane a li:hover, div#pts_side_pane li:hover
+div#pts_side_pane a li:hover
 {
 	color: #044374;
 }
