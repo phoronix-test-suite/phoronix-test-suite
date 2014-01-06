@@ -191,7 +191,7 @@ function update_result_box(j)
 		var system_date = result_file.System.TimeStamp || result_file.System[(systems - 1)].TimeStamp;
 		var system_date_obj = new Date(system_date);
 
-		document.getElementById("result_" + b64id(result)).innerHTML = "<strong>" + result_file.Generated.Title + "</strong><br /><span style=\"font-size: 10px;\">" + system_date_obj.toLocaleDateString() + " - " + plural_handler(systems, "System") + " " + plural_handler(results, "Result") + "s</span>";
+		document.getElementById("result_" + b64id(result)).innerHTML = "<strong>" + result_file.Generated.Title + "</strong><br /><span style=\"font-size: 10px;\">" + system_date_obj.toLocaleDateString() + " - " + plural_handler(systems, "System") + " " + plural_handler(results, "Result") + "</span>";
 	} else alert(result);
 }
 function tests_by_popularity_display(j)

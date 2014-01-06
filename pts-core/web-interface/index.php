@@ -167,9 +167,9 @@ setcookie('pts_websocket_server', PTS_WEBSOCKET_SERVER, (time() + 60 * 60 * 24),
 
 		echo $page_header; ?></div>
 		<div id="pts_logo_right"><a href="http://www.phoronix-test-suite.com/" target="_blank"><img src="/assets/pts-web-logo.png" /></a></div>
-		<div style="float: right; margin: 5px 10px; padding: 5px; font-size: 150%; color: #FFF;
+		<div style="float: right; margin: 20px 20px 0 10px; padding: 5px 10px; font-size: 150%; color: #FFF;
 	border: 1px solid #e0e0e0; background: #bfbfbf; vertical-align: middle; text-align: center;
-	border-width: 0 0 1px 0; border-radius: 10px;">20 Tests In Run Queue</div>
+	border-width: 0 0 1px 0; border-radius: 10px;">20 Tests Queued To Benchmark</div>
 	</div>
 	<?php } // $page_header !== -1 ?>
 	<div id="pts_main_region">

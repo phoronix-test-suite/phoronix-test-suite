@@ -60,7 +60,7 @@ class pts_webui_main implements pts_webui_interface
 			}
 			echo '</ul>';
 
-			echo '<div class="pts_pane_window">Log-in to OpenBenchmarking.org to gain access to more functionality.</div>';
+			echo '<div class="pts_pane_window"><strong>OpenBenchmarking.org</strong><br />Log-in to gain access to additional features.</div>';
 
 			echo '<ul>';
 			echo '<a href="/?settings"><li>Software Settings</li></a>';
