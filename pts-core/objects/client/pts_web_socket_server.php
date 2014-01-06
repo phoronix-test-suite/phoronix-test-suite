@@ -79,7 +79,7 @@ class pts_web_socket_server extends pts_web_socket
 	{
 		$decoded_msg = $this->decode_data($msg);
 		$args = trim(strstr($decoded_msg, ' '));
-		echo 'DECODED MSG: ' . $decoded_msg . PHP_EOL;
+		//echo 'DECODED MSG: ' . $decoded_msg . PHP_EOL;
 		switch(strstr($decoded_msg . ' ', ' ', true))
 		{
 			case 'search':
@@ -272,7 +272,7 @@ class pts_web_socket_server extends pts_web_socket
 				continue;
 			}
 
-			$graph = new pts_sys_graph(array('title' => $sensor_data['name'], 'x_scale' => 's', 'y_scale' => $sensor_data['unit'], 'reverse_x_direction' => true, 'width' => 350, 'height' => 160));
+			$graph = new pts_sys_graph(array('title' => $sensor_data['name'], 'x_scale' => 's', 'y_scale' => $sensor_data['unit'], 'reverse_x_direction' => true, 'width' => 300, 'height' => 160));
 			$graph->render_base();
 			$svg_dom = $graph->render_graph_data($sensor_data['results']);
 			if($svg_dom === false)

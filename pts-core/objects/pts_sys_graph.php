@@ -143,11 +143,11 @@ class pts_sys_graph
 		{
 			if($this->data['reverse_x_direction'] == true)
 			{
-				$val = round(($this->computed['graph_area_x_end'] - $i) / $this->computed['graph_area_width'] * $graph_data_count, 1);
+				$val = round(($this->computed['graph_area_x_end'] - $i) / $this->computed['graph_area_width'] * $graph_data_count, 1, PHP_ROUND_HALF_EVEN);
 			}
 			else
 			{
-				$val = round(($i - $this->computed['graph_area_x_start']) / $this->computed['graph_area_width'] * $graph_data_count, 1);
+				$val = round(($i - $this->computed['graph_area_x_start']) / $this->computed['graph_area_width'] * $graph_data_count, 1, PHP_ROUND_HALF_EVEN);
 			}
 			if($val <= 0)
 			{

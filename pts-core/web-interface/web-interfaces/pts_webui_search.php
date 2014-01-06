@@ -40,11 +40,11 @@ class pts_webui_search implements pts_webui_interface
 		$SEARCH_QUERY = trim(str_replace('%20', ' ', $PATH[0]));
 
 		echo '<div style="text-align: right; margin: 10px 0;">';
-		echo 'SEARCH: <input type="text" size="30" id="pts_search" name="search" onkeydown="if(event.keyCode == 13) { if(document.getElementById(\'pts_search\').value.length < 3) { alert(\'Please enter a longer search query.\'); return false; } else { window.location.href = \'/?search/\' + document.getElementById(\'pts_search\').value; } return false; }" />';
+		echo 'SEARCH: <input type="text" size="30" id="pts_search" name="search" value="' .  $SEARCH_QUERY . '" onkeydown="if(event.keyCode == 13) { if(document.getElementById(\'pts_search\').value.length < 3) { alert(\'Please enter a longer search query.\'); return false; } else { window.location.href = \'/?search/\' + document.getElementById(\'pts_search\').value; } return false; }" />';
 		echo '</div>';
 
 		echo '<div id="search_results"></div>';
-		echo '<div style="text-align: center; margin-top: 10px auto;" id="search_loading_area"><h2>Searching For ' . $SEARCH_QUERY . '...</h2>
+		echo '<div style="text-align: center; margin-top: 10px auto;" id="search_loading_area">
 		<svg xmlns:svg="http://www.w3.org/2000/svg"
 		   xmlns="http://www.w3.org/2000/svg"
 		   width="324"
@@ -93,7 +93,7 @@ class pts_webui_search implements pts_webui_interface
 		   id="pts_highlight_6"
 		   style="fill:#000" />
 		  </g>
-		</svg></div>
+		</svg><br /><h2>Searching For ' . $SEARCH_QUERY . '...</h2></div>
 
 		<script text="text/javascript">
 			var switcher = setInterval(pts_highlight_loader_switch_color, 500);

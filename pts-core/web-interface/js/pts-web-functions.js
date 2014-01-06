@@ -34,9 +34,16 @@ function search_results(j)
 
 		document.getElementById("search_results").innerHTML += "<hr />";
 
-		if(j.pts.msg.tests.length == 0 && j.pts.msg.results.length > 0)
+		if(j.pts.msg.results.length > 0)
 		{
-			document.getElementById("search_results").innerHTML += "<p><strong>Test results referencing " + j.pts.msg.search_query + ".</strong></p>";
+			if(j.pts.msg.tests.length == 0)
+			{
+				document.getElementById("search_results").innerHTML += "<p><strong>Test results referencing " + j.pts.msg.search_query + ".</strong></p>";
+			}
+			else
+			{
+				document.getElementById("search_results").innerHTML += "<p><strong>Test results containing these tests.</strong></p>";
+			}
 		}
 
 		for(var i = 0; i < j.pts.msg.results.length; i++)

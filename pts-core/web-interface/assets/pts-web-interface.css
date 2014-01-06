@@ -399,7 +399,12 @@ div#pts_side_pane li
 {
 	margin-bottom: 5px;
 }
-div#pts_side_pane li:hover
+div#pts_side_pane a
+{
+	text-decoration: none;
+	color: inherit;
+}
+div#pts_side_pane a li:hover, div#pts_side_pane li:hover
 {
 	color: #044374;
 }

@@ -41,22 +41,22 @@ class pts_webui_main implements pts_webui_interface
 
 		echo '<div id="pts_side_pane">';
 
-			$hw_component_modal = array(phodevi::read_property('cpu', 'model'), phodevi::read_property('motherboard', 'identifier'), phodevi::read_property('memory', 'identifier'), phodevi::read_property('disk', 'identifier'), phodevi::read_property('gpu', 'model'));
+			$hw_component_modal = array('CPU' => phodevi::read_property('cpu', 'model'), 'Motherboard' => phodevi::read_property('motherboard', 'identifier'), 'Disk' => phodevi::read_property('disk', 'identifier'), 'GPU' => phodevi::read_property('gpu', 'model'));
 
 			echo '<ul>';
-			foreach($hw_component_modal as $component)
+			foreach($hw_component_modal as $type => $component)
 			{
-				echo '<li>' . $component . '</li>';
+				echo '<a href="/?component/' . $type . '"><li>' . $component . '</li></a>';
 			}
 			echo '</ul>';
 			echo '<hr />';
 
-			$sw_component_modal = array(phodevi::read_property('system', 'operating-system'), phodevi::read_property('system', 'kernel-string'), phodevi::read_property('system', 'display-server'), phodevi::read_property('system', 'display-driver-string'), phodevi::read_property('system', 'opengl-driver'), phodevi::read_property('system', 'compiler'), phodevi::read_property('system', 'filesystem'));
+			$sw_component_modal = array('OS' => phodevi::read_property('system', 'operating-system'), 'OS' => phodevi::read_property('system', 'kernel-string'), 'Display Driver' => phodevi::read_property('system', 'display-driver-string'), 'OpenGL' => phodevi::read_property('system', 'opengl-driver'), 'Compiler' => phodevi::read_property('system', 'compiler'), 'File-System' => phodevi::read_property('system', 'filesystem'));
 
 			echo '<ul>';
-			foreach($sw_component_modal as $component)
+			foreach($sw_component_modal as $type => $component)
 			{
-				echo '<li>' . $component . '</li>';
+				echo '<a href="/?component/' . $type . '"><li>' . $component . '</li></a>';
 			}
 			echo '</ul>';
 
