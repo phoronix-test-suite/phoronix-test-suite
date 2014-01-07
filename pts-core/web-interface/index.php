@@ -174,13 +174,7 @@ setcookie('pts_websocket_server', PTS_WEBSOCKET_SERVER, (time() + 60 * 60 * 24),
 
 		echo $page_header; ?></div>
 		<div id="pts_logo_right"><a href="http://www.phoronix-test-suite.com/" target="_blank"><img src="/assets/pts-web-logo.png" /></a></div>
-		<script type="text/javascript">
-			if(localStorage.test_queue)
-			{
-				var test_queue = JSON.parse(localStorage.test_queue);
-				document.write('<a href=""><div id="pts_benchmark_button">' + test_queue.length + ' Tests Queued To Benchmark</div></a>');
-			}
-		</script>
+		<div id="pts_benchmark_button_area"><script type="text/javascript"> update_benchmark_button(); </script></div>
 	</div>
 	<?php } // $page_header !== -1 ?>
 	<div id="pts_main_region">

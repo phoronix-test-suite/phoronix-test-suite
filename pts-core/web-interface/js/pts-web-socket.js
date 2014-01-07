@@ -33,7 +33,7 @@ function pts_web_socket()
 	this.connect = function()
 	{
 		this.socket = new WebSocket(pts_read_cookie("pts_websocket_server") + this.socket_path);
-		this.socket.onopen    = function() { setTimeout(function(){pts_web_socket.web_socket_onopen(); }, 300); };
+		this.socket.onopen    = function() { setTimeout(function(){pts_web_socket.web_socket_onopen(); }, 100); };
 		this.socket.onmessage = function(msg) { pts_web_socket.web_socket_onmessage(msg); } ;
 		this.socket.onclose   = function() { pts_web_socket.web_socket_onclose(); };
 		this.socket.onerror   = function() { setTimeout(function() { pts_web_socket.web_socket_connect(); }, 4000); };

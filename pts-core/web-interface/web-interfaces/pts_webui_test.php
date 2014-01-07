@@ -61,6 +61,7 @@ class pts_webui_test implements pts_webui_interface
 			echo '<p>' . self::$test_profile->get_description() . '</p>';
 
 			echo '<h4 style="margin-top: 60px;">Run This Test</h4>';
+			echo '<div id="pts_add_test_area">';
 			$test_settings = array();
 			$test_options = self::$test_profile->get_test_option_objects();
 			$identifiers = array();
@@ -86,15 +87,16 @@ class pts_webui_test implements pts_webui_interface
 						$option_value .= '<option value="' . $o->format_option_value_from_input($o->get_option_value($j)) . '">' . $o->get_option_name($j) . '</option>';
 					}
 
-					$option_value .= '</select></p>';
+					$option_value .= '</select>';
 				}
 				array_push($identifiers, $o->get_identifier());
 
 				echo '<input id="' . $test_prefix . $o->get_identifier() . '_title" type="hidden" value="' . $option_name . '" />';
 				array_push($test_settings, array($option_name, $option_value));
 			}
-			array_push($test_settings, array('<input type="Submit" value="Add Test To Run Queue" onclick="test_add_to_queue(\'' . $test_prefix . '\', \'' . implode(':', $identifiers) . '\', \'' . self::$test_profile->get_identifier() . '\'); return false;" />'));
+			array_push($test_settings, array('<input type="Submit" value="Add Test To Run Queue" onclick="test_add_to_queue(\'' . (isset($test_prefix) ? $test_prefix : "") . '\', \'' . implode(':', $identifiers) . '\', \'' . self::$test_profile->get_identifier() . '\'); return false;" />'));
 			pts_webui_2d_array_to_table($test_settings);
+			echo '</div>';
 
 		echo '</div>';
 

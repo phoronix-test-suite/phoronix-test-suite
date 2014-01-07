@@ -215,29 +215,31 @@ function test_add_to_queue(f, ids, tp)
 	var option_name;
 	var option_value;
 	var options = new Array();
-	var identifiers = ids.split(':');
-
-	for(var i = 0; i < identifiers.length; i++)
+	if(f.length > 0)
 	{
-		option_title = document.getElementById(f + identifiers[i] + "_title").value;
-		var el = document.getElementById(f + identifiers[i]);
-
-		if(el.tagName == 'INPUT')
+		var identifiers = ids.split(':');
+		for(var i = 0; i < identifiers.length; i++)
 		{
-			option_name = el.value;
-			option_value = el.value;
-		}
-		else if(el.tagName == 'SELECT')
-		{
-			option_name = el.options[el.selectedIndex].innerHTML;
-			option_value = el.options[el.selectedIndex].value;
-		}
+			option_title = document.getElementById(f + identifiers[i] + "_title").value;
+			var el = document.getElementById(f + identifiers[i]);
 
-		var opt = new Object();
-		opt.title = option_title;
-		opt.name = option_name;
-		opt.value = option_value;
-		options.push(opt);
+			if(el.tagName == 'INPUT')
+			{
+				option_name = el.value;
+				option_value = el.value;
+			}
+			else if(el.tagName == 'SELECT')
+			{
+				option_name = el.options[el.selectedIndex].innerHTML;
+				option_value = el.options[el.selectedIndex].value;
+			}
+
+			var opt = new Object();
+			opt.title = option_title;
+			opt.name = option_name;
+			opt.value = option_value;
+			options.push(opt);
+		}
 	}
 
 	var test = new Object();
@@ -246,7 +248,7 @@ function test_add_to_queue(f, ids, tp)
 
 	if(localStorage.test_queue)
 	{
-		var tq = localStorage.test_queue;
+		var tq = JSON.parse(localStorage.test_queue);
 	}
 	else
 	{
@@ -255,6 +257,8 @@ function test_add_to_queue(f, ids, tp)
 
 	tq.push(test);
 	localStorage.test_queue = JSON.stringify(tq);
+	document.getElementById('pts_add_test_area').innerHTML = "<p style=\"text-align: center; font-weight: bold;\">This test has been added to the next benchmark queue.</p>";
+	update_benchmark_button();
 }
 function log_viewer_change()
 {
@@ -291,4 +295,12 @@ function tests_by_popularity_display(j)
 		document.getElementById("tests_by_popularity").innerHTML += "<p>" + test_description + "</p>";
 	}
 	document.getElementById("tests_by_popularity").innerHTML += "<p><a href=\"\?tests#" + j.pts.msg.test_type + "\">More " + j.pts.msg.test_type + " Tests</a></p>";
+}
+function update_benchmark_button()
+{
+	if(localStorage.test_queue)
+	{
+		var test_queue = JSON.parse(localStorage.test_queue);
+		document.getElementById('pts_benchmark_button_area').innerHTML = '<a href=""><div id="pts_benchmark_button">' +  plural_handler(test_queue.length, 'Test') + ' Queued To Benchmark</div></a>';
+	}
 }

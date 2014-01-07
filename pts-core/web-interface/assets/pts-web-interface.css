@@ -102,6 +102,12 @@ td
 	border-radius: 4px;
 	font-weight: bold;
 	padding: 2px 6px;
+	vertical-align: middle;
+}
+td input, td select
+{
+	vertical-align: bottom;
+	font-weight: bold;
 }
 th
 {
@@ -113,6 +119,7 @@ th
 	text-transform: uppercase;
 	text-align: right;
 	border-radius: 4px;
+	vertical-align: middle;
 }
 td a
 {
