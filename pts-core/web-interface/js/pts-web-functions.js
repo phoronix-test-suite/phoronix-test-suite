@@ -194,6 +194,84 @@ function update_result_box(j)
 		document.getElementById("result_" + b64id(result)).innerHTML = "<strong>" + result_file.Generated.Title + "</strong><br /><span style=\"font-size: 10px;\">" + system_date_obj.toLocaleDateString() + " - " + plural_handler(systems, "System") + " " + plural_handler(results, "Result") + "</span>";
 	} else alert(result);
 }
+function update_system_log_viewer(j)
+{
+	var option = document.createElement("option");
+	option.text = "System Log Viewer";
+	option.value = "";
+	document.getElementById("log_viewer_selector").appendChild(option);
+
+	for(var i = 0; i < j.pts.msg.logs.length; i++)
+	{
+		option = document.createElement("option");
+		option.text = j.pts.msg.logs[i];
+		option.value = j.pts.msg.logs[i];
+		document.getElementById("log_viewer_selector").appendChild(option);
+	}
+}
+function test_add_to_queue(f, ids, tp)
+{
+	var option_title;
+	var option_name;
+	var option_value;
+	var options = new Array();
+	var identifiers = ids.split(':');
+
+	for(var i = 0; i < identifiers.length; i++)
+	{
+		option_title = document.getElementById(f + identifiers[i] + "_title").value;
+		var el = document.getElementById(f + identifiers[i]);
+
+		if(el.tagName == 'INPUT')
+		{
+			option_name = el.value;
+			option_value = el.value;
+		}
+		else if(el.tagName == 'SELECT')
+		{
+			option_name = el.options[el.selectedIndex].innerHTML;
+			option_value = el.options[el.selectedIndex].value;
+		}
+
+		var opt = new Object();
+		opt.title = option_title;
+		opt.name = option_name;
+		opt.value = option_value;
+		options.push(opt);
+	}
+
+	var test = new Object();
+	test.test_profile = tp;
+	test.options = options;
+
+	if(localStorage.test_queue)
+	{
+		var tq = localStorage.test_queue;
+	}
+	else
+	{
+		var tq = new Array();
+	}
+
+	tq.push(test);
+	localStorage.test_queue = JSON.stringify(tq);
+}
+function log_viewer_change()
+{
+	var log_view = document.getElementById("log_viewer_selector").options[document.getElementById("log_viewer_selector").selectedIndex].value;
+	if(log_view.length > 0)
+	{
+		pts_web_socket.add_onmessage_event("fetch_system_log", "update_system_log_view");
+		pts_web_socket.send("fetch-system-log " + log_view);
+	}
+}
+function update_system_log_view(j)
+{
+	var system_log = atob(j.pts.msg.log);
+	system_log = system_log.replace("\n", "<br />");
+	document.getElementById("system_log_display").style.display = "block";
+	document.getElementById("system_log_display").innerHTML = "<h2>" + j.pts.msg.log_name + "</h2><pre>" + system_log + "</pre>";
+}
 function tests_by_popularity_display(j)
 {
 	if(j.pts.msg.test_type == null)

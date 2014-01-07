@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2012 - 2013, Phoronix Media
-	Copyright (C) 2012 - 2013, Michael Larabel
+	Copyright (C) 2012 - 2014, Phoronix Media
+	Copyright (C) 2012 - 2014, Michael Larabel
 	phodevi.php: The object for an effective VFS with PTS/Phodevi
 
 	This program is free software; you can redistribute it and/or modify
@@ -25,7 +25,7 @@ class phodevi_vfs
 {
 	private $cache;
 	private $options = array(
-		// name => F/C - Cacheable? - File / Command - Additional Checks
+		// name => F/C - Cacheable? - File / 	Command - Additional Checks
 		// F = File, C = Command
 		'cpuinfo' => array('type' => 'F', 'F' => '/proc/cpuinfo', 'cacheable' => true, 'preserve' => true, 'subsystem' => 'CPU'),
 		'lscpu' => array('type' => 'C', 'C' => 'lscpu', 'cacheable' => true, 'preserve' => true, 'subsystem' => 'CPU'),
@@ -53,6 +53,35 @@ class phodevi_vfs
 	public function __construct()
 	{
 		$this->clear_cache();
+	}
+	public function list_cache_nodes($subsystem = null)
+	{
+		$nodes = array();
+
+		if($subsystem == null)
+		{
+			foreach($this->options as $name => $node)
+			{
+				if($this->cache_isset_names($name))
+				{
+					array_push($nodes, $name);
+				}
+			}
+		}
+		else
+		{
+			$nodes = array();
+			$subsystem = explode(' ', $subsystem);
+			foreach($this->options as $name => $node)
+			{
+				if(in_array($node['subsystem'], $subsystem) && $this->cache_isset_names($name))
+				{
+					array_push($nodes, $name);
+				}
+			}
+		}
+
+		return $nodes;
 	}
 	public static function cleanse_file(&$file, $name = false)
 	{
@@ -143,7 +172,7 @@ class phodevi_vfs
 	{
 		$this->cache[$name] = $cache;
 	}
-	protected function cache_isset_names($name)
+	public function cache_isset_names($name)
 	{
 		// Cache the isset call names with their values when checking files/commands since Phodevi will likely hit each one potentially multiple times and little overhead to caching them
 		static $isset_cache;

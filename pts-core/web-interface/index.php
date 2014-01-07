@@ -57,10 +57,17 @@ function pts_webui_2d_array_to_table(&$r2d)
 	foreach($r2d as $tr)
 	{
 		echo '<tr>';
-		foreach($tr as $col_i => $col)
+		if(count($tr) == 1)
 		{
-			$type = $col_i == 0 ? 'th' : 'td';
-			echo '<' . $type . '>' . $col . '</' . $type . '>';
+			echo '<th colspan="2" style="text-align: center;">' . $tr[0] . '</th>';
+		}
+		else
+		{
+			foreach($tr as $col_i => $col)
+			{
+				$type = $col_i == 0 ? 'th' : 'td';
+				echo '<' . $type . '>' . $col . '</' . $type . '>';
+			}
 		}
 		echo '</tr>';
 	}
@@ -167,9 +174,13 @@ setcookie('pts_websocket_server', PTS_WEBSOCKET_SERVER, (time() + 60 * 60 * 24),
 
 		echo $page_header; ?></div>
 		<div id="pts_logo_right"><a href="http://www.phoronix-test-suite.com/" target="_blank"><img src="/assets/pts-web-logo.png" /></a></div>
-		<div style="float: right; margin: 20px 20px 0 10px; padding: 5px 10px; font-size: 150%; color: #FFF;
-	border: 1px solid #e0e0e0; background: #bfbfbf; vertical-align: middle; text-align: center;
-	border-width: 0 0 1px 0; border-radius: 10px;">20 Tests Queued To Benchmark</div>
+		<script type="text/javascript">
+			if(localStorage.test_queue)
+			{
+				var test_queue = JSON.parse(localStorage.test_queue);
+				document.write('<a href=""><div id="pts_benchmark_button">' + test_queue.length + ' Tests Queued To Benchmark</div></a>');
+			}
+		</script>
 	</div>
 	<?php } // $page_header !== -1 ?>
 	<div id="pts_main_region">

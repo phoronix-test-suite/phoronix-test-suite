@@ -231,6 +231,43 @@ div.pts_system_component_bar h1
 	color: #FFF;
 	text-transform: uppercase;
 }
+div#system_log_viewer
+{
+	background: #044374;
+	color: #FFF;
+	border-radius: 16px;
+	border: solid #1F1F1F 1px;
+	margin: 10px 40px;
+	text-align: center;
+	min-height: 50px;
+	padding: 10px 40px;
+	overflow: hidden;
+	vertical-align: center;
+}
+div#system_log_viewer select
+{
+	font-size: 120%;
+	background: #FFF;
+	font-weight: bold;
+}
+div#system_log_display
+{
+	color: #000;
+	background: #FFF;
+	border-radius: 16px;
+	border: solid #1F1F1F 1px;
+	padding: 10px;
+	max-height: 500px;
+	overflow: auto;
+	margin: 10px 0 1px;
+	text-align: left;
+	display: none;
+}
+div#system_log_display pre, div#system_log_display h2
+{
+	margin: 0;
+	padding: 0;
+}
 a div.pts_blue_bar:hover
 {
 	background: #1F1F1F;
@@ -372,6 +409,24 @@ p.result_object
 	text-align: center;
 	overflow: auto;
 	margin: 10px;
+}
+div#pts_benchmark_button
+{
+	float: right;
+	margin: 18px 20px 0 10px;
+	padding: 10px 10px;
+	font-size: 150%;
+	color: #FFF;
+	border: 1px solid #e0e0e0;
+	background: #bfbfbf;
+	vertical-align: middle;
+	text-align: center;
+	border-width: 0 0 1px 0;
+	border-radius: 10px;
+}
+a:hover div#pts_benchmark_button
+{
+	background: #949494;
 }
 div#pts_side_pane div.pts_pane_window
 {

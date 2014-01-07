@@ -24,6 +24,7 @@
 class pts_web_socket_server extends pts_web_socket
 {
 	private $sensor_logging = false;
+	private $phodevi_vfs = false;
 	protected function add_to_status($current, &$json)
 	{
 		//$json['pts']['msg']['name'] = 'loading';
@@ -47,10 +48,12 @@ class pts_web_socket_server extends pts_web_socket
 					$this->send_json_data($user->socket, $json);
 
 					// Phodevi
-					$this->add_to_status('Generating Phodevi Cache Information', $json);
+					$this->add_to_status('Generating Phodevi Cache + VFS', $json);
 					$this->send_json_data($user->socket, $json);
 					phodevi::system_software(true);
 					phodevi::system_hardware(true);
+					$this->phodevi_vfs = new phodevi_vfs();
+					$this->phodevi_vfs->list_cache_nodes();
 
 					// Sensors
 					$this->add_to_status('Starting Phodevi Sensor Handler', $json);
@@ -174,6 +177,23 @@ class pts_web_socket_server extends pts_web_socket
 					array_push($json['pts']['msg']['test_profiles'], base64_encode($tp->to_json()));
 				}
 				$this->send_json_data($user->socket, $json);
+				break;
+			case 'available-system-logs':
+				if($this->phodevi_vfs instanceof phodevi_vfs)
+				{
+					$json['pts']['msg']['name'] = 'available_system_logs';
+					$json['pts']['msg']['logs'] = $this->phodevi_vfs->list_cache_nodes($args);
+					$this->send_json_data($user->socket, $json);
+				}
+				break;
+			case 'fetch-system-log':
+				if($this->phodevi_vfs instanceof phodevi_vfs && $args != null && $this->phodevi_vfs->cache_isset_names($args))
+				{
+					$json['pts']['msg']['name'] = 'fetch_system_log';
+					$json['pts']['msg']['log_name'] = $args;
+					$json['pts']['msg']['log'] = base64_encode($this->phodevi_vfs->__get($args));
+					$this->send_json_data($user->socket, $json);
+				}
 				break;
 			default:
 				$this->shared_events($user, $decoded_msg);

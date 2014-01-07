@@ -183,20 +183,23 @@ class pts_webui_component implements pts_webui_interface
 		echo '<div id="svg_graphs" style="margin: 10px 0; text-align: right;"></div>';
 		echo '<div id="tests_by_popularity" style="margin: 10px 0; text-align: left;"></div>';
 
-		echo '<script text="text/javascript">
+		echo '<div id="system_log_viewer"><select id="log_viewer_selector" onchange="javascript:log_viewer_change(); return true;"></select><div id="system_log_display"></div></div>';
 
-			pts_web_socket.add_onopen_event("user-svg-system-graphs ' . $sensor_flag .'");
-			pts_web_socket.add_onopen_event("tests-by-popularity 6 ' . $ob_type .'");
+		echo '<script text="text/javascript">
+			pts_web_socket.add_onmessage_event("available_system_logs", "update_system_log_viewer");
+			pts_web_socket.add_onmessage_event("tests_by_popularity", "tests_by_popularity_display");
+			pts_web_socket.add_onmessage_event("svg_graphs", "update_svg_graph_space");
 
 			setInterval(function(){if(pts_web_socket.is_connected()) { pts_web_socket.send("user-svg-system-graphs ' . $sensor_flag .'"); }},1000);
-
-			pts_web_socket.add_onmessage_event("svg_graphs", "update_svg_graph_space");
-			pts_web_socket.add_onmessage_event("tests_by_popularity", "tests_by_popularity_display");
 
 			function update_svg_graph_space(jsonr)
 			{
 				document.getElementById("svg_graphs").innerHTML = jsonr.pts.msg.contents;
 			}
+
+			pts_web_socket.add_onopen_event("user-svg-system-graphs ' . $sensor_flag .'");
+			pts_web_socket.add_onopen_event("tests-by-popularity 6 ' . $ob_type .'");
+			pts_web_socket.add_onopen_event("available-system-logs System ' . $COMPONENT . '");
 
 		</script>';
 	}
