@@ -83,6 +83,7 @@ class pts_web_socket_server extends pts_web_socket
 		$decoded_msg = $this->decode_data($msg);
 		$args = trim(strstr($decoded_msg, ' '));
 		//echo 'DECODED MSG: ' . $decoded_msg . PHP_EOL;
+		echo strstr($decoded_msg . ' ', ' ', true) . PHP_EOL;
 		switch(strstr($decoded_msg . ' ', ' ', true))
 		{
 			case 'search':

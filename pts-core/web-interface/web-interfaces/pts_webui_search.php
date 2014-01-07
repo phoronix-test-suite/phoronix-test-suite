@@ -97,10 +97,7 @@ class pts_webui_search implements pts_webui_interface
 
 		<script text="text/javascript">
 			var switcher = setInterval(pts_highlight_loader_switch_color, 500);
-
-			pts_web_socket.add_onopen_event("search ' . $SEARCH_QUERY . '");
-			pts_web_socket.add_onmessage_event("search_results", "search_results");
-
+			pts_web_socket.submit_event("search ' . $SEARCH_QUERY . '", "search_results", "search_results");
 		</script>';
 
 	}

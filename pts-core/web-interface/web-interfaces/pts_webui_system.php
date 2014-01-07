@@ -69,17 +69,9 @@ class pts_webui_system implements pts_webui_interface
 		echo '<div id="system_log_viewer"><select id="log_viewer_selector" onchange="javascript:log_viewer_change(); return true;"></select><div id="system_log_display"></div></div>';
 
 		echo '<script text="text/javascript">
-			pts_web_socket.add_onmessage_event("available_system_logs", "update_system_log_viewer");
-			pts_web_socket.add_onmessage_event("large_svg_graphs", "update_large_svg_graph_space");
-
-			function update_large_svg_graph_space(jsonr)
-			{
-				document.getElementById("large_svg_graphs").innerHTML = atob(jsonr.pts.msg.contents);
-			}
+			pts_web_socket.submit_event("available-system-logs", "available_system_logs", "update_system_log_viewer");
+			pts_web_socket.submit_event("user-large-svg-system-graphs", "large_svg_graphs", "update_large_svg_graph_space");
 			setInterval(function(){if(pts_web_socket.is_connected()) { pts_web_socket.send("user-large-svg-system-graphs"); }},1000);
-
-			pts_web_socket.add_onopen_event("user-large-svg-system-graphs");
-			pts_web_socket.add_onopen_event("available-system-logs");
 		</script>';
 
 	}

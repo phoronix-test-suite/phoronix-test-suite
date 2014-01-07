@@ -186,21 +186,11 @@ class pts_webui_component implements pts_webui_interface
 		echo '<div id="system_log_viewer"><select id="log_viewer_selector" onchange="javascript:log_viewer_change(); return true;"></select><div id="system_log_display"></div></div>';
 
 		echo '<script text="text/javascript">
-			pts_web_socket.add_onmessage_event("available_system_logs", "update_system_log_viewer");
-			pts_web_socket.add_onmessage_event("tests_by_popularity", "tests_by_popularity_display");
-			pts_web_socket.add_onmessage_event("svg_graphs", "update_svg_graph_space");
+			pts_web_socket.submit_event("user-svg-system-graphs ' . $sensor_flag .'", "svg_graphs", "update_svg_graph_space");
+			pts_web_socket.submit_event("available-system-logs System ' . $COMPONENT . '", "available_system_logs", "update_system_log_viewer");
+			pts_web_socket.submit_event("tests-by-popularity 6 ' . $ob_type .'", "tests_by_popularity", "tests_by_popularity_display");
 
 			setInterval(function(){if(pts_web_socket.is_connected()) { pts_web_socket.send("user-svg-system-graphs ' . $sensor_flag .'"); }},1000);
-
-			function update_svg_graph_space(jsonr)
-			{
-				document.getElementById("svg_graphs").innerHTML = jsonr.pts.msg.contents;
-			}
-
-			pts_web_socket.add_onopen_event("user-svg-system-graphs ' . $sensor_flag .'");
-			pts_web_socket.add_onopen_event("tests-by-popularity 6 ' . $ob_type .'");
-			pts_web_socket.add_onopen_event("available-system-logs System ' . $COMPONENT . '");
-
 		</script>';
 	}
 }

@@ -128,12 +128,6 @@ class pts_webui_main implements pts_webui_interface
 			pts_web_socket.add_onopen_event("user-svg-system-graphs");
 			setInterval(function(){if(pts_web_socket.is_connected()) { pts_web_socket.send("user-svg-system-graphs"); }},1000);
 			pts_web_socket.add_onmessage_event("svg_graphs", "update_svg_graph_space");
-
-			function update_svg_graph_space(jsonr)
-			{
-				document.getElementById("svg_graphs").innerHTML = jsonr.pts.msg.contents;
-			}
-
 		</script>';
 	}
 }

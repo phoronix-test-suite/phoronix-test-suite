@@ -276,6 +276,14 @@ function update_system_log_view(j)
 	document.getElementById("system_log_display").style.display = "block";
 	document.getElementById("system_log_display").innerHTML = "<h2>" + j.pts.msg.log_name + "</h2><pre>" + system_log + "</pre>";
 }
+function update_svg_graph_space(jsonr)
+{
+	document.getElementById("svg_graphs").innerHTML = jsonr.pts.msg.contents;
+}
+function update_large_svg_graph_space(jsonr)
+{
+	document.getElementById("large_svg_graphs").innerHTML = atob(jsonr.pts.msg.contents);
+}
 function tests_by_popularity_display(j)
 {
 	if(j.pts.msg.test_type == null)

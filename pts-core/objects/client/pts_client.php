@@ -1709,6 +1709,11 @@ class pts_client
 		}
 		else
 		{
+			if(is_array($function))
+			{
+				$function = implode(':', $function);
+			}
+
 			trigger_error('php-pcntl must be installed for calling ' . $function . '.', E_USER_ERROR);
 		}
 	}

@@ -3,7 +3,7 @@ body
 	text-align: left;
 	margin: 0;
 	padding: 0;
-	font-family: Lucida Sans;
+	font-family: Lucida Sans, Liberation Sans;
 	font-size: 12px;
 	background: #e0e0e0 url(background.png) repeat;
 	height: 100%;
