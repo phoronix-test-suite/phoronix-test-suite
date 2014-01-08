@@ -102,8 +102,10 @@ class pts_web_socket
 	}
 	protected function decode_data(&$data)
 	{
+		$msg_opcode = bindec(substr(sprintf('%08b', ord($data[0])), 4, 4));
 		$data_length = ord($data[1]) & 127;
 
+		// TODO XXX: sometimes the opcode is 8 (close)... figure out why....
 		if($data_length === 126)
 		{
 			$mask = substr($data, 4, 4);
@@ -223,7 +225,7 @@ class pts_web_socket
 			'Access-Control-Allow-Origin: ' . $origin,
 			'Access-Control-Allow-Credentials: true',
 			'Sec-WebSocket-Location: ws://' . $host . $resource,
-			'Sec-WebSocket-Version: ' . $version,
+		//	'Sec-WebSocket-Version: ' . $version,
 		//	'Sec-WebSocket-Protocol: phoronixtestsuite',
 			'Server: phoronix-test-suite',
 			'Sec-WebSocket-Accept: ' . base64_encode(pack('H*', sha1($key . '258EAFA5-E914-47DA-95CA-C5AB0DC85B11')))

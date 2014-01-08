@@ -53,6 +53,10 @@ function pts_web_socket()
 	this.web_socket_onopen = function()
 	{
 		this.socket_connected = 1;
+		this.send(this.socket_onopen.join(" ;; "));
+
+		return;
+
 		for(var i = 0; i < this.socket_onopen.length; i++)
 		{
 			this.send(this.socket_onopen[i]);
