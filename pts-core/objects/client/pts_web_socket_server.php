@@ -225,7 +225,7 @@ class pts_web_socket_server extends pts_web_socket
 		}
 
 		$test_matches = pts_openbenchmarking_client::search_tests($search, true);
-			$json['pts']['msg']['exact_hits'] = 0;
+		$json['pts']['msg']['exact_hits'] = 0;
 		$json['pts']['msg']['search_query'] = $search;
 
 		if(count($test_matches) > 0)

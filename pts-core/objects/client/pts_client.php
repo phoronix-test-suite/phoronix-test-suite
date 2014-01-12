@@ -1240,10 +1240,10 @@ class pts_client
 					}
 					else
 					{
-						trigger_error('Argument Missing.', E_USER_ERROR);
+						trigger_error('Phoronix Test Suite Argument Missing.', E_USER_ERROR);
 					}
 
-					echo 'CORRECT SYNTAX:' . PHP_EOL . 'phoronix-test-suite ' . str_replace('_', '-', $command_alias) . ' ' . implode(' ', $argument_checks) . PHP_EOL . PHP_EOL;
+					echo PHP_EOL . 'CORRECT SYNTAX:' . PHP_EOL . 'phoronix-test-suite ' . str_replace('_', '-', $command_alias) . ' ' . implode(' ', $argument_checks) . PHP_EOL . PHP_EOL;
 
 					if(method_exists($command, 'invalid_command'))
 					{
