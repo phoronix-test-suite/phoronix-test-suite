@@ -209,7 +209,7 @@ function update_system_log_viewer(j)
 		document.getElementById("log_viewer_selector").appendChild(option);
 	}
 }
-function test_add_to_queue(f, ids, tp)
+function test_add_to_queue(f, ids, tp_id, tp)
 {
 	var option_title;
 	var option_name;
@@ -243,7 +243,8 @@ function test_add_to_queue(f, ids, tp)
 	}
 
 	var test = new Object();
-	test.test_profile = tp;
+	test.test_profile_id = tp_id;
+	test.test_profile = JSON.parse(atob(tp));
 	test.options = options;
 
 	if(localStorage.test_queue)
@@ -259,6 +260,53 @@ function test_add_to_queue(f, ids, tp)
 	localStorage.test_queue = JSON.stringify(tq);
 	document.getElementById('pts_add_test_area').innerHTML = "<p style=\"text-align: center; font-weight: bold;\">This test has been added to the next benchmark queue.</p>";
 	update_benchmark_button();
+}
+function get_test_queue()
+{
+	var tq = new Array();
+
+	if(localStorage.test_queue)
+	{
+		var tq = JSON.parse(localStorage.test_queue);
+	}
+
+	return tq;
+}
+function get_test_options_value(options)
+{
+	var title = "";
+	for(var i = 0; i < options.length; i++)
+	{
+		if(options[i].title == "")
+		{
+			continue;
+		}
+		if(title != "")
+		{
+			title += " ";
+		}
+		title += options[i].value;
+	}
+
+	return title;
+}
+function get_test_options_title(options)
+{
+	var title = "";
+	for(var i = 0; i < options.length; i++)
+	{
+		if(options[i].title == "")
+		{
+			continue;
+		}
+		if(title != "")
+		{
+			title += " - ";
+		}
+		title += options[i].title + ": " + options[i].name;
+	}
+
+	return title;
 }
 function log_viewer_change()
 {
@@ -309,6 +357,6 @@ function update_benchmark_button()
 	if(localStorage.test_queue)
 	{
 		var test_queue = JSON.parse(localStorage.test_queue);
-		document.getElementById('pts_benchmark_button_area').innerHTML = '<a href=""><div id="pts_benchmark_button">' +  plural_handler(test_queue.length, 'Test') + ' Queued To Benchmark</div></a>';
+		document.getElementById('pts_benchmark_button_area').innerHTML = '<a href="/?test_queue"><div id="pts_benchmark_button">' +  plural_handler(test_queue.length, 'Test') + ' Queued To Benchmark</div></a>';
 	}
 }

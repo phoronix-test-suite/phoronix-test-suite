@@ -94,7 +94,7 @@ class pts_webui_test implements pts_webui_interface
 				echo '<input id="' . $test_prefix . $o->get_identifier() . '_title" type="hidden" value="' . $option_name . '" />';
 				array_push($test_settings, array($option_name, $option_value));
 			}
-			array_push($test_settings, array('<input type="Submit" value="Add Test To Run Queue" onclick="test_add_to_queue(\'' . (isset($test_prefix) ? $test_prefix : "") . '\', \'' . implode(':', $identifiers) . '\', \'' . self::$test_profile->get_identifier() . '\'); return false;" />'));
+			array_push($test_settings, array('<input type="Submit" value="Add Test To Run Queue" onclick="test_add_to_queue(\'' . (isset($test_prefix) ? $test_prefix : "") . '\', \'' . implode(':', $identifiers) . '\', \'' . self::$test_profile->get_identifier() . '\', \'' . base64_encode(json_encode(self::$test_profile->to_json())) . '\'); return false;" />'));
 			pts_webui_2d_array_to_table($test_settings);
 			echo '</div>';
 

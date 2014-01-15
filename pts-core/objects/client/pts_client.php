@@ -1730,8 +1730,8 @@ class pts_client
 				$error_type = 'PROBLEM';
 				if(pts_client::is_client_debug_mode() == false)
 				{
-					//$error_file = null;
-					//$error_line = 0;
+					$error_file = null;
+					$error_line = 0;
 				}
 				break;
 			case E_USER_NOTICE:
@@ -1745,8 +1745,8 @@ class pts_client
 				$error_type = 'NOTICE'; // Yes, report warnings as a notice
 				if(pts_client::is_client_debug_mode() == false)
 				{
-					//$error_file = null;
-					//$error_line = 0;
+					$error_file = null;
+					$error_line = 0;
 				}
 				break;
 			case E_ERROR:
