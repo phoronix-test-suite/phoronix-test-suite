@@ -360,3 +360,31 @@ function update_benchmark_button()
 		document.getElementById('pts_benchmark_button_area').innerHTML = '<a href="/?test_queue"><div id="pts_benchmark_button">' +  plural_handler(test_queue.length, 'Test') + ' Queued To Benchmark</div></a>';
 	}
 }
+function pts_set_completion_circle(percent_complete, sub_text)
+{
+	var deg = (percent_complete / 100) * 360;
+	var offset_deg = 1 - deg;
+	var arc = percent_complete > 50 ? 1 : 0;
+
+	var size = 200;
+	var radius = size / 2;
+	var stroke_width = 20;
+	var center = radius + stroke_width;
+	var p1_x = Math.round(Math.cos((offset_deg * (Math.PI / 180))) * radius) + center;
+	var p1_y = Math.round(Math.sin((offset_deg * (Math.PI / 180))) * radius) + center;
+	var p2_x = Math.round(Math.cos(((offset_deg + deg) * (Math.PI / 180))) * radius) + center;
+	var p2_y = Math.round(Math.sin(((offset_deg + deg) * (Math.PI / 180))) * radius) + center;
+
+	document.write('<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewbox="0 0 ' + (center * 2) + ' ' + (center * 2) + '" style="min-height: 100px; max-height: ' + (window_size.height * 0.4) + 'px; display: block; text-align: center; margin: 5px auto;">');
+	document.write('<circle cx="' + center + '" cy="' + center + '" r="' + radius + '" stroke="#044374" stroke-width="' + (stroke_width / 2) + '" fill="#FFF" />');
+	document.write('<path d="M' + center + ',' + center + ' L' + p1_x + ',' + p1_y + 'A' + radius + ',' + radius + ' 0 ' + arc + ',1 ' + p2_x  + ',' + p2_y + ' Z" fill="#FFF" stroke="#dd4b39" stroke-width="' + stroke_width + '" />');
+	document.write('<circle cx="' + center + '" cy="' + center + '" r="' + (radius - (stroke_width / 2)) + '" fill="#FFF" stroke-width="0" />');
+
+	document.write('<text x="' + center + '" y="' + center + '" font-size="20" font-weight="bold" fill="#044374" text-anchor="middle" alignment-baseline="middle" xlink:show="new">' + percent_complete + '% Complete</text>');
+
+	if(sub_text.length > 0)
+	{
+		document.write('<text x="' + center + '" y="' + (center * 1.25) + '" font-size="15" font-weight="bold" fill="#BABABA" text-anchor="middle" alignment-baseline="middle" xlink:show="new">' + sub_text + '</text>');
+	}
+	document.write('</svg>');
+}

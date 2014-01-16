@@ -159,6 +159,20 @@ h4
 	padding: 2px 0;
 	font-weight: bold;
 }
+div.pts_test_progress_area
+{
+	float: left;
+	width: 50%;
+	display: block;
+	text-align: center;
+}
+div.pts_test_progress_area p
+{
+	margin: 2px 10% 5px;
+	font-size: 20px;
+	text-align: center;
+	line-height: 150%;
+}
 div#pts_web_container div#pts_main_region
 {
 	color: #1F1F1F;

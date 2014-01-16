@@ -129,6 +129,10 @@ setcookie('pts_websocket_server', PTS_WEBSOCKET_SERVER, (time() + 60 * 60 * 24),
 </head>
 <body>
 <script type="text/javascript">
+	var window_size = {
+		width: window.innerWidth || document.body.clientWidth,
+		height: window.innerHeight || document.body.clientHeight
+		};
 	var pts_web_socket = new pts_web_socket();
 </script>
 <div id="pts_web_container">
@@ -178,7 +182,14 @@ setcookie('pts_websocket_server', PTS_WEBSOCKET_SERVER, (time() + 60 * 60 * 24),
 	</div>
 	<?php } // $page_header !== -1 ?>
 	<div id="pts_main_region">
-<?php $webui_class::render_page_process($PATH); ?>
+<?php $page_ret = $webui_class::render_page_process($PATH);
+
+if($page_ret == -1 && is_file('html/' . $webui_class . '.html'))
+{
+	include('html/' . $webui_class . '.html');
+}
+
+?>
 	</div>
 	<div id="pts_copyright"><?php //$DEBUG_END_TIME = microtime(true); $DEBUG_TIME = $DEBUG_END_TIME - $DEBUG_START_TIME; echo '<strong>Page Rendering Took: ' . $DEBUG_TIME . ' secs.</strong> '; ?>Copyright &#xA9; 2008 - <?php echo date('Y'); ?> by Phoronix Media. All trademarks used are properties of their respective owners. All rights reserved. <strong><?php echo pts_title(true); ?></strong></div>
 <script type="text/javascript">

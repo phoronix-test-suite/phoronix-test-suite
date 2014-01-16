@@ -4,7 +4,7 @@
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
 	Copyright (C) 2013 - 2014, Phoronix Media
-	Copyright (C) 2013 - 2013, Michael Larabel
+	Copyright (C) 2013 - 2014, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -39,22 +39,7 @@ class pts_webui_test_queue implements pts_webui_interface
 	}
 	public static function render_page_process($PATH)
 	{
-		echo '
-
-		<h1>Tests To Run</h1>
-		<script type="text/javascript">
-			var tq = get_test_queue();
-
-		for(var i = 0; i < tq.length; i++)
-		{
-			tq[i].test_profile = JSON.parse(tq[i].test_profile);
-			document.write("<h2><a href=\"/?test/" + tq[i].test_profile_id + "\">" + tq[i].test_profile.TestInformation.Title + "</a></h2>");
-			document.write("<p>" + get_test_options_title(tq[i].options) + "</p>");
-		}
-
-		</script>
-	';
-
+		return -1;
 	}
 }
 
