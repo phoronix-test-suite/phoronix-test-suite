@@ -9,12 +9,14 @@ Professional support and custom engineering for the Phoronix Test Suite, Phoroma
 Full details on the Phoronix Test Suite setup and usage is available from the included HTML/PDF documentation within the phoronix-test-suite package and from the Phoronix Test Suite web-site.
 
 INSTALLATION & SETUP:
+#####################
 
 The Phoronix Test Suite is supported on Linux, *BSD, Solaris, Mac OS X, and Windows systems. However, the most full-featured and well supported operating system for conducting the tests is Linux with some non-basic functionality not being available under all platforms. The Phoronix Test Suite software/framework is compatible with all major CPU architectures (e.g. i686, x86_64, ARM, PowerPC), but not all of the test profiles/suites are compatible with all architectures.
 
 The Phoronix Test Suite can be installed for system-wide usage or run locally without installation from the extracted tar.gz/zip package. The only hard dependency on the Phoronix Test Suite is having command-line support for PHP (PHP 5.2+) installed. A complete PHP stack (e.g. with web-server) is NOT needed, but merely the PHP command-line support, which is widely available from operating system package managers under the name php, php5-cli, or php5.
 
 USAGE:
+######
 
 The process to download, install/setup, execute, and report the results of a benchmark can be as simple as a command such as *phoronix-test-suite benchmark smallpt* to run a simple CPU test profile. If wishing to simply install a test, it's a matter of running *phoronix-test-suite install <test or suite name>* and to run it's *phoronix-test-suite run <test or suite name>*. There's also a batch mode for non-interactive benchmarking by first running *phoronix-test-suite batch-setup* and then using the *batch-run* sub-command rather than *run*.
 

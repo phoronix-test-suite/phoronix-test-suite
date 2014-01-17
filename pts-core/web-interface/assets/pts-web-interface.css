@@ -172,6 +172,11 @@ div.pts_test_progress_area p
 	font-size: 20px;
 	text-align: center;
 	line-height: 150%;
+	color: #111;
+}
+div.pts_test_progress_area p strong
+{
+	color: #044374
 }
 div#pts_web_container div#pts_main_region
 {

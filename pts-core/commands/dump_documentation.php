@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2011, Phoronix Media
-	Copyright (C) 2010 - 2011, Michael Larabel
+	Copyright (C) 2010 - 2014, Phoronix Media
+	Copyright (C) 2010 - 2014, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -263,7 +263,7 @@ class dump_documentation implements pts_option_interface
 
 
 		// simple README
-		$readme = 'Phoronix Test Suite ' . PTS_VERSION . ' <http://www.phoronix-test-suite.com/>' . PHP_EOL . PHP_EOL;
+		$readme = 'Phoronix Test Suite ' . PTS_VERSION . ' (http://www.phoronix-test-suite.com/)' . PHP_EOL . '#####################################' . PHP_EOL . PHP_EOL;
 		$readme .= pts_documentation::basic_description() . PHP_EOL . PHP_EOL;
 		$readme .= pts_file_io::file_get_contents(PTS_PATH . 'documentation/stubs/readme-basics.txt') . PHP_EOL . PHP_EOL;
 		$readme = wordwrap($readme, 80, PHP_EOL);
