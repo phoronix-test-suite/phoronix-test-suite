@@ -144,7 +144,7 @@ class pts_web_socket
 			$this->send_data($user->socket, $decoded_msg);
 		}
 	}
-	protected function send_json_data($socket, $json)
+	public function send_json_data($socket, $json)
 	{
 		$data = json_encode($json, JSON_UNESCAPED_SLASHES);
 		$this->send_data($socket, $data);
