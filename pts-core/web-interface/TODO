@@ -1,0 +1,5 @@
+- WebSocket security
+- HTTP security
+- Ensuring only one session at a time
+- Porting more of the web-interface code to the new JavaScript + WebSocket design rather than original PHP design
+- Handle test installations and external dependencies (prompting for root password handling?)

@@ -1,0 +1,27 @@
+<h1>Tests To Run</h1>
+
+<script type="text/javascript">
+var tq = get_test_queue();
+var tq_json = new Array();
+for(var i = 0; i < tq.length; i++)
+{
+	tq[i].test_profile = JSON.parse(tq[i].test_profile);
+	document.write("<h2><a href=\"/?test/" + tq[i].test_profile_id + "\">" + tq[i].test_profile.TestInformation.Title + "</a></h2>");
+	document.write("<p><strong>" + get_test_options_title(tq[i].options) + "</strong></p>");
+
+	var t = new Object();
+	t.test_profile_id = tq[i].test_profile_id;
+	t.test_options_title = get_test_options_title(tq[i].options);
+	t.test_options_value = get_test_options_value(tq[i].options);
+	tq_json.push(t);
+}
+</script>
+<hr />
+<strong>
+<p>Test Name: <input type="text" size="30" id="pts_test_name" /></p>
+<p>Test Identifier: <input type="text" size="30" id="pts_test_identifier" /></p>
+<p>Test Description:<br /><textarea id="pts_test_description" rows="4" cols="50"></textarea></p>
+</strong>
+<script type="text/javascript">
+document.write(' <button type="button" onclick="javascript:send_benchmark_request(\'' + btoa(JSON.stringify(tq_json)) + '\');">Start Benchmarking</button>');
+</script>

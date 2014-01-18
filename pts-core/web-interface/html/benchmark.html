@@ -1,0 +1,20 @@
+<div style="overflow: hidden; margin: 60px auto;">
+<div class="pts_test_progress_area">
+<script type="text/javascript">
+pts_set_completion_circle(40, "Encode MP3");
+</script>
+<p>The Phoronix Test Suite is currently running the <strong>pts/encode-mp3</strong> benchmark. It's estimated this test will finish in <strong>1 minute, 12 seconds</strong>. The test is on its <strong>second</strong> of expected <strong>five</strong> trial runs.</p>
+</div>
+<div class="pts_test_progress_area">
+<script type="text/javascript">
+pts_set_completion_circle(88, "Overall Progress");
+</script>
+<p>The Phoronix Test Suite has run <strong>seven</strong> tests of <strong>nine</strong> currently in the test queue. It's estimated the testing will be complete in <strong>13 minutes, 54 seconds</strong>. The next test to run is <strong>Doom 3</strong>.</p>
+</div>
+</div>
+<div id="svg_graphs" style="margin: 10px 0; text-align: center;"></div>
+<script text="text/javascript">
+pts_web_socket.add_onopen_event("user-svg-system-graphs");
+setInterval(function(){if(pts_web_socket.is_connected()) { pts_web_socket.send("user-svg-system-graphs"); }},2000);
+pts_web_socket.add_onmessage_event("svg_graphs", "update_svg_graph_space");
+</script>
