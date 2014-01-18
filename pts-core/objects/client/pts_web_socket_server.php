@@ -205,9 +205,9 @@ class pts_web_socket_server extends pts_web_socket
 					$version = PTS_CORE_VERSION;
 					$this->send_data($user->socket, $version);
 					break;
-				case 'start-benchmark-queue':
+				case 'run-benchmark-queue':
 					$json_queue = json_decode(base64_decode($args), true);
-					$json['pts']['msg']['name'] = 'start_benchmark_queue';
+					$json['pts']['msg']['name'] = 'run_benchmark_queue';
 
 					if(!isset($json_queue['tests']) || count($json_queue['tests']) == 0)
 					{
@@ -231,7 +231,8 @@ class pts_web_socket_server extends pts_web_socket
 					{
 						break;
 					}
-
+					pts_client::$display = new pts_websocket_display_mode();
+					pts_client::$display->set_web_socket($this, $user->id);
 					$virtual_test_queue = array();
 					$virtual_test_queue[0] = new pts_virtual_test_queue();
 					foreach($json_queue['tests'] as $test)

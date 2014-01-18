@@ -41,9 +41,28 @@ class pts_websocket_display_mode implements pts_display_mode_interface
 	private $expected_trial_run_count = 0;
 	private $trial_run_count_current = 0;
 
+	private $web_socket_server = false;
+	private $web_socket_user_id = false;
+
 	public function __construct()
 	{
 
+	}
+	public function set_web_socket($ws_server, $ws_user_id)
+	{
+		$this->web_socket_server = $ws_server;
+		$this->web_socket_user_id = $ws_user_id;
+	}
+	protected function web_socket_respond($json)
+	{
+		if($this->web_socket_server && $this->web_socket_user_id)
+		{
+			return $this->web_socket_server->send_json_data_by_user_id($this->web_socket_user_id, $json);
+		}
+		else
+		{
+			echo PHP_EOL . 'SOCKET PROBLEM' . PHP_EOL . PHP_EOL;
+		}
 	}
 	protected function bytes_to_download_size($bytes)
 	{
@@ -283,67 +302,74 @@ class pts_websocket_display_mode implements pts_display_mode_interface
 	}
 	public function test_run_configure(&$test_profile)
 	{
+		echo 'ERROR!!!!! NOT EXPECTED IN THIS MODE: ' . __FUNCTION__;
 		echo PHP_EOL . PHP_EOL . $test_profile->get_title() . ($test_profile->get_app_version() != null ? ' ' . $test_profile->get_app_version() : null) . ':' . PHP_EOL . $this->tab . $test_profile->get_identifier() . PHP_EOL;
 		echo $this->tab . $test_profile->get_test_hardware_type() . ' Test Configuration';
 		//echo PHP_EOL;
 		//echo $this->tab . 'Test ' . $test_run_manager->get_test_run_position() . ' of ' . $test_run_manager->get_test_run_count_reported() . PHP_EOL;
 	}
+	protected function update_benchmark_status(&$trm, &$tr)
+	{
+		static $test_run_manager = false;
+		static $test_result = false;
+
+		if($trm != null)
+		{
+			$test_run_manager = $trm;
+		}
+		if($tr != null)
+		{
+			$test_result = $tr;
+		}
+
+		// GENERAL STUFF FOR CURRENT RUN
+		$j['pts']['msg']['name'] = 'benchmark_state';
+		$j['pts']['msg']['current_test'] = base64_encode($test_result->test_profile->to_json());
+		$j['pts']['msg']['arguments_description'] = pts_client::swap_variables($test_result->get_arguments_description(), array('pts_client', 'environmental_variables'));
+
+		// CURRENT RUN QUEUE
+		$j['pts']['msg']['test_run_pos'] = $this->trial_run_count_current + 1;
+		$j['pts']['msg']['test_run_total'] = $this->expected_trial_run_count;
+		$j['pts']['msg']['test_run_estimated_time'] = $test_result->test_profile->get_estimated_run_time();
+
+		// TOTAL QUEUE
+		$j['pts']['msg']['test_queue_pos'] = $test_run_manager->get_test_run_position();
+		$j['pts']['msg']['test_queue_total'] = $test_run_manager->get_test_run_count_reported();
+		$j['pts']['msg']['test_queue_estimated_run_time'] = $test_run_manager->get_estimated_run_time();
+
+		// LATEST RESULT
+
+		$this->web_socket_respond($j);
+	}
 	public function test_run_start(&$test_run_manager, &$test_result)
 	{
-		echo PHP_EOL . PHP_EOL . $test_result->test_profile->get_title() . ($test_result->test_profile->get_app_version() != null ? ' ' . $test_result->test_profile->get_app_version() : null) . ':' . PHP_EOL . $this->tab . $test_result->test_profile->get_identifier();
-
-		if(($test_description = $test_result->get_arguments_description()) != false)
-		{
-			echo ' [' . pts_client::swap_variables($test_description, array('pts_client', 'environmental_variables')) . ']';
-		}
-
-		echo PHP_EOL;
-		echo $this->tab . 'Test ' . $test_run_manager->get_test_run_position() . ' of ' . $test_run_manager->get_test_run_count_reported() . PHP_EOL;
-
 		$this->trial_run_count_current = 0;
 		$this->expected_trial_run_count = $test_result->test_profile->get_times_to_run();
-		$remaining_length = $test_run_manager->get_estimated_run_time();
-		$estimated_length = $test_result->test_profile->get_estimated_run_time();
-		$display_table = array();
 
-		array_push($display_table, array($this->tab . 'Estimated Trial Run Count:', $this->expected_trial_run_count));
-
-		if($estimated_length > 1 && $estimated_length != $remaining_length)
-		{
-			array_push($display_table, array($this->tab . 'Estimated Test Run-Time:', pts_strings::format_time($estimated_length, 'SECONDS', true, 60)));
-		}
-
-		if($remaining_length > 1)
-		{
-			array_push($display_table, array($this->tab . 'Estimated Time To Completion:', pts_strings::format_time($remaining_length, 'SECONDS', true, 60)));
-		}
-
-		echo pts_user_io::display_text_table($display_table);
+		$this->update_benchmark_status($test_run_manager, $test_result);
 	}
 	public function test_run_message($message_string)
 	{
-		echo PHP_EOL . $this->tab . $this->tab . $message_string . ' @ ' . date('H:i:s');
+		//echo PHP_EOL . $this->tab . $this->tab . $message_string . ' @ ' . date('H:i:s');
 	}
 	public function test_run_instance_header(&$test_result)
 	{
 		$this->trial_run_count_current++;
-		echo PHP_EOL . $this->tab . $this->tab . 'Started Run ' . $this->trial_run_count_current . ' @ ' . date('H:i:s');
+		$test_run_manager = null;
+		$this->update_benchmark_status($test_run_manager, $test_result);
 	}
 	public function test_run_instance_error($error_string)
-	{
+	{ // TODO XXX: IMPLEMENT?!?
 		echo PHP_EOL . $this->tab . $this->tab . $error_string;
 	}
 	public function test_run_instance_output(&$to_output)
 	{
-		if((pts_c::$test_flags & pts_c::debug_mode))
-		{
-			echo $to_output;
-		}
-
 		return;
 	}
 	public function test_run_instance_complete(&$test_result)
 	{
+		// TODO XXX: IMPLEMENT?
+		return;
 		if($this->expected_trial_run_count > 1 && $this->trial_run_count_current >= $this->expected_trial_run_count)
 		{
 			$values = $test_result->test_result_buffer->get_values();
@@ -356,33 +382,14 @@ class pts_websocket_display_mode implements pts_display_mode_interface
 	}
 	public function test_run_end(&$test_result)
 	{
+		$test_run_manager = null;
+		$this->update_benchmark_status($test_run_manager, $test_result);
+		// TODO XXX: DO THIS
 		echo PHP_EOL;
 
-		if(in_array($test_result->test_profile->get_display_format(), array('NO_RESULT', 'IMAGE_COMPARISON')))
+		if(!in_array($test_result->test_profile->get_display_format(), array('NO_RESULT', 'IMAGE_COMPARISON', 'PASS_FAIL', 'MULTI_PASS_FAIL', 'FILLED_LINE_GRAPH', 'LINE_GRAPH')))
 		{
-			$end_print = null;
-		}
-		else if(in_array($test_result->test_profile->get_display_format(), array('PASS_FAIL', 'MULTI_PASS_FAIL')))
-		{
-			$end_print = $this->tab . $this->tab . 'Final: ' . $test_result->get_result() . ' (' . $test_result->test_profile->get_result_scale() . ')' . PHP_EOL;
-		}
-		else if(in_array($test_result->test_profile->get_display_format(), array('FILLED_LINE_GRAPH', 'LINE_GRAPH')))
-		{
-			$values = explode(',', $test_result->get_result());
-			$end_print = null;
-
-			if(count($values) > 1)
-			{
-				$avg = pts_math::set_precision(array_sum($values) / count($values), 2);
-				$min = pts_math::set_precision(min($values), 2);
-				$max = pts_math::set_precision(max($values), 2);
-				$end_print .= $this->tab . $this->tab . 'Average: ' . $avg . ' (' . $test_result->test_profile->get_result_scale() . ')' . PHP_EOL;
-				$end_print .= $this->tab . $this->tab . 'Minimum: ' . $min . ' (' . $test_result->test_profile->get_result_scale() . ')' . PHP_EOL;
-				$end_print .= $this->tab . $this->tab . 'Maximum: ' . $max . ' (' . $test_result->test_profile->get_result_scale() . ')' . PHP_EOL;
-			}
-		}
-		else
-		{
+			// TODO XXX: At least implement line_graph support as may be fairly popular
 			$end_print = PHP_EOL . $this->tab . 'Test Results:' . PHP_EOL;
 
 			foreach($test_result->test_result_buffer->get_values() as $result)
@@ -413,6 +420,7 @@ class pts_websocket_display_mode implements pts_display_mode_interface
 	}
 	public function test_run_error($error_string)
 	{
+		// TODO XXX: IMPLEMENT?
 		echo $this->tab . $this->tab . $error_string . PHP_EOL;
 	}
 	public function generic_prompt($prompt_string)

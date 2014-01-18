@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2013, Phoronix Media
-	Copyright (C) 2010 - 2013, Michael Larabel
+	Copyright (C) 2010 - 2014, Phoronix Media
+	Copyright (C) 2010 - 2014, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -25,7 +25,10 @@ class pts_test_installer
 	public static function standard_install($items_to_install, $test_flags = 0)
 	{
 		// Refresh the pts_client::$display in case we need to run in debug mode
-		pts_client::init_display_mode();
+		if(pts_client::$display == false || ($test_flags != 0 && !(pts_client::$display instanceof pts_websocket_display_mode)))
+		{
+			pts_client::init_display_mode($test_flags);
+		}
 
 		// Create a lock
 		$lock_path = pts_client::temporary_directory() . '/phoronix-test-suite.active';

@@ -144,12 +144,12 @@ class pts_web_socket
 			$this->send_data($user->socket, $decoded_msg);
 		}
 	}
-	public function send_json_data($socket, $json)
+	protected function send_json_data($socket, $json)
 	{
 		$data = json_encode($json, JSON_UNESCAPED_SLASHES);
 		$this->send_data($socket, $data);
 	}
-	public function send_data($socket, $data)
+	protected function send_data($socket, $data)
 	{
 		$data_length = strlen($data);
 		$encoded = null;
@@ -175,6 +175,17 @@ class pts_web_socket
 
 		// SEND
 		return socket_write($socket, $encoded, strlen($encoded));
+	}
+	public function send_json_data_by_user_id($user_id, $msg)
+	{
+		foreach($this->users as &$u)
+		{
+			if($u->id == $user_id)
+			{
+				$this->send_json_data($u->socket, $msg);
+				break;
+			}
+		}
 	}
 	private function connect($socket)
 	{

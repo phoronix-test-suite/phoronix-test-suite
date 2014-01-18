@@ -300,7 +300,8 @@ function send_benchmark_request(base64_json_string)
 	req.description = document.getElementById("pts_test_description").value;
 	req.tests = JSON.parse(atob(base64_json_string));
 	base64_json_string = btoa(JSON.stringify(req))
-	pts_web_socket.submit_event("start-benchmark-queue " + base64_json_string, "start_benchmark_queue", "send_benchmark_request_received");
+	localStorage.test_queue_submit = base64_json_string;
+	window.location.href = '/?benchmark';
 }
 function send_benchmark_request_received(j)
 {
