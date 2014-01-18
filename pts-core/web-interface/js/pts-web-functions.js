@@ -156,6 +156,10 @@ function display_grouped_results_by_date(j)
 	}
 	pts_web_socket.send("result_file " + result_files);
 }
+function update_version_string(j)
+{
+	document.getElementById("pts_version").innerHTML = j.pts.msg.version;
+}
 function b64id(i)
 {
 	var id = btoa(i);
@@ -271,6 +275,43 @@ function get_test_queue()
 	}
 
 	return tq;
+}
+function send_benchmark_request(base64_json_string)
+{
+	if(document.getElementById("pts_test_name").value == "")
+	{
+		alert("Please enter a test name.");
+		return false;
+	}
+	if(document.getElementById("pts_test_identifier").value == "")
+	{
+		alert("Please enter a test identifier.");
+		return false;
+	}
+	if(document.getElementById("pts_test_description").value == "")
+	{
+		alert("Please enter a test description.");
+		return false;
+	}
+
+	var req = new Object();
+	req.title = document.getElementById("pts_test_name").value;
+	req.identifier = document.getElementById("pts_test_identifier").value;
+	req.description = document.getElementById("pts_test_description").value;
+	req.tests = JSON.parse(atob(base64_json_string));
+	base64_json_string = btoa(JSON.stringify(req))
+	pts_web_socket.submit_event("start-benchmark-queue " + base64_json_string, "start_benchmark_queue", "send_benchmark_request_received");
+}
+function send_benchmark_request_received(j)
+{
+	if(j.pts.msg.error && j.pts.msg.error.length > 0)
+	{
+		alert(j.pts.msg.error);
+	}
+	else
+	{
+		window.location.href = '/?benchmark';
+	}
 }
 function get_test_options_value(options)
 {

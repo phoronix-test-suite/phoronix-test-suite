@@ -977,7 +977,7 @@ class pts_test_run_manager
 					continue;
 				}
 			}
-			else if($run_object instanceof pts_test_suite || $run_object instanceof pts_virtual_test_suite)
+			else if($run_object instanceof pts_test_suite || $run_object instanceof pts_virtual_test_suite|| $run_object instanceof pts_virtual_test_queue)
 			{
 				if($run_object->is_core_version_supported() == false)
 				{
@@ -1370,6 +1370,13 @@ class pts_test_run_manager
 					$this->is_pcqs = true;
 				}
 
+				foreach($run_object->get_contained_test_result_objects() as $result_object)
+				{
+					$this->add_test_result_object($result_object);
+				}
+			}
+			else if($run_object instanceof pts_virtual_test_queue)
+			{
 				foreach($run_object->get_contained_test_result_objects() as $result_object)
 				{
 					$this->add_test_result_object($result_object);

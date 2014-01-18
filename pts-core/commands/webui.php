@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2012 - 2013, Phoronix Media
-	Copyright (C) 2012 - 2013, Michael Larabel
+	Copyright (C) 2012 - 2014, Phoronix Media
+	Copyright (C) 2012 - 2014, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -84,7 +84,7 @@ class webui implements pts_option_interface
 
 		// WebSocket Server Setup
 		$server_launcher .= 'export PTS_WEBSOCKET_PORT=' . $web_socket_port . PHP_EOL;
-		$server_launcher .= 'cd ' . getenv('PTS_DIR') . ' && ' . getenv('PHP_BIN') . ' pts-core/phoronix-test-suite.php websocket-server &' . PHP_EOL;
+		$server_launcher .= 'cd ' . getenv('PTS_DIR') . ' && PTS_MODE="CLIENT" ' . getenv('PHP_BIN') . ' pts-core/phoronix-test-suite.php websocket-server &' . PHP_EOL;
 		$server_launcher .= 'websocket_server_pid=$!'. PHP_EOL;
 
 		// HTTP Server Setup

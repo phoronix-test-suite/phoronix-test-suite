@@ -194,7 +194,7 @@ form
 {
 	font-weight: bold;
 }
-input
+input, textarea
 {
 	border: solid #044374 1px;
 	color: #1F1F1F;
@@ -219,6 +219,12 @@ button
 	background: #044374;
 	border: #1F1F1F;
 	color: #FFF;
+	font-weight: bold;
+	padding: 8px 14px;
+	font-size: 16px;
+	border: solid #e0e0e0 1px;
+	border-radius: 8px;
+	margin: 10px 0;
 }
 div#pts_web_container div#pts_copyright
 {
@@ -346,7 +352,7 @@ div.pts_list_box a:hover li
 {
 	font-weight: bold;
 }
-div#search_results hr
+div#search_results hr, div#pts_main_region hr
 {
 	text-align: center;
 	color: #e0e0e0;

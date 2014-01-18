@@ -48,6 +48,10 @@ function pts_webui_load_interface($interface, $PATH)
 			return pts_webui_load_interface($response, $PATH);
 		}
 	}
+	else if(is_file('html/' . $interface . '.html'))
+	{
+		return $interface;
+	}
 
 	return false;
 }
@@ -102,6 +106,10 @@ if(is_file('web-interfaces/pts_webui_' . $PAGE_REQUEST . '.php'))
 {
 	$webui_class = 'pts_webui_' . $PAGE_REQUEST;
 }
+else if(is_file('html/' . $PAGE_REQUEST . '.html'))
+{
+	$webui_class = $PAGE_REQUEST;
+}
 else
 {
 	// or pts_webui_intro on invalidated classes
@@ -125,7 +133,7 @@ setcookie('pts_websocket_server', PTS_WEBSOCKET_SERVER, (time() + 60 * 60 * 24),
 <script src="js/pts-web-interface.js" type="text/javascript"></script>
 <script src="js/pts-web-socket.js" type="text/javascript"></script>
 <script src="js/pts-web-functions.js" type="text/javascript"></script>
-<title><?php $page_title = $webui_class::page_title(); echo $page_title != null ? $page_title . ' - Phoronix Test Suite' : pts_title(true); ?></title>
+<title><?php $page_title = class_exists($webui_class) ? $webui_class::page_title() : null; echo $page_title != null ? $page_title . ' - Phoronix Test Suite' : pts_title(true); ?></title>
 </head>
 <body>
 <script type="text/javascript">
@@ -138,7 +146,7 @@ setcookie('pts_websocket_server', PTS_WEBSOCKET_SERVER, (time() + 60 * 60 * 24),
 <div id="pts_web_container">
 <div id="pts_web_container_inside">
 <table id="notification_area"></table>
-	<?php $page_header = $webui_class::page_header(); if($page_header !== -1) { ?>
+	<?php $page_header = class_exists($webui_class) ? $webui_class::page_header() : null; if($page_header !== -1) { ?>
 	<div id="pts_header">
 		<div id="pts_header_left"><?php
 		$custom_header = true;
@@ -182,7 +190,7 @@ setcookie('pts_websocket_server', PTS_WEBSOCKET_SERVER, (time() + 60 * 60 * 24),
 	</div>
 	<?php } // $page_header !== -1 ?>
 	<div id="pts_main_region">
-<?php $page_ret = $webui_class::render_page_process($PATH);
+<?php $page_ret = class_exists($webui_class) ? $webui_class::render_page_process($PATH) : -1;
 
 if($page_ret == -1 && is_file('html/' . $webui_class . '.html'))
 {

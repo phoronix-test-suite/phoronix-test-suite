@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2013, Phoronix Media
-	Copyright (C) 2010 - 2013, Michael Larabel
+	Copyright (C) 2010 - 2014, Phoronix Media
+	Copyright (C) 2010 - 2014, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -60,7 +60,7 @@ class pts_types
 			{
 				array_push($test_profiles, $object);
 			}
-			else if($object instanceof pts_test_suite || $object instanceof pts_virtual_test_suite)
+			else if($object instanceof pts_test_suite || $object instanceof pts_virtual_test_suite || $object instanceof pts_virtual_test_queue)
 			{
 				foreach($object->get_contained_test_profiles() as $test_profile)
 				{
@@ -114,6 +114,11 @@ class pts_types
 		{
 			if($identifier_item instanceof pts_test_profile || $identifier_item instanceof pts_test_suite || $identifier_item instanceof pts_result_file)
 			{
+				array_push($objects, $identifier_item);
+			}
+			else if(PTS_IS_CLIENT && $identifier_item instanceof pts_virtual_test_queue)
+			{
+				// Object is a virtual suite
 				array_push($objects, $identifier_item);
 			}
 			else if(($tp_identifier = pts_test_profile::is_test_profile($identifier_item)))
