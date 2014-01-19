@@ -3,8 +3,8 @@
 <xs:annotation>
 	<xs:documentation xml:lang="en">
 		Phoronix Test Suite / OpenBenchmarking.org
-		Copyright (C) 2008 - 2013, Phoronix Media
-		Copyright (C) 2008 - 2013, Michael Larabel
+		Copyright (C) 2008 - 2014, Phoronix Media
+		Copyright (C) 2008 - 2014, Michael Larabel
 	</xs:documentation>
 </xs:annotation>
 <xs:simpleType name="TitleString">
@@ -16,7 +16,7 @@
 <xs:simpleType name="SystemIdentifier">
 	<xs:restriction base="xs:string">
 		<xs:minLength value="1" />
-		<xs:maxLength value="42" />
+		<xs:maxLength value="64" />
 	</xs:restriction>
 </xs:simpleType>
 <xs:simpleType name="Boolean">
