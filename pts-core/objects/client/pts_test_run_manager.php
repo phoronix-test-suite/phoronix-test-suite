@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2013, Phoronix Media
-	Copyright (C) 2009 - 2013, Michael Larabel
+	Copyright (C) 2009 - 2014, Phoronix Media
+	Copyright (C) 2009 - 2014, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -42,6 +42,7 @@ class pts_test_run_manager
 	private $allow_sharing_of_results = true;
 	private $auto_upload_to_openbenchmarking = false;
 	private $is_pcqs = false;
+	private $openbenchmarking_results_url = false;
 
 	private $do_dynamic_run_count = false;
 	private $dynamic_run_count_on_length_or_less;
@@ -886,13 +887,13 @@ class pts_test_run_manager
 
 				if($upload_results)
 				{
-					$upload_url = pts_openbenchmarking::upload_test_result($this);
+					$this->openbenchmarking_results_url = pts_openbenchmarking::upload_test_result($this);
 
-					if(!empty($upload_url))
+					if(!empty($this->openbenchmarking_results_url))
 					{
 						if((pts_c::$test_flags ^ pts_c::auto_mode) && pts_openbenchmarking_client::auto_upload_results() == false)
 						{
-							pts_client::display_web_page($upload_url, 'Do you want to launch OpenBenchmarking.org', true);
+							pts_client::display_web_page($this->openbenchmarking_results_url, 'Do you want to launch OpenBenchmarking.org', true);
 						}
 					}
 					else
@@ -902,6 +903,10 @@ class pts_test_run_manager
 				}
 			}
 		}
+	}
+	public function get_results_url()
+	{
+		return $this->openbenchmarking_results_url;
 	}
 	public static function set_batch_mode($custom_preset = false)
 	{

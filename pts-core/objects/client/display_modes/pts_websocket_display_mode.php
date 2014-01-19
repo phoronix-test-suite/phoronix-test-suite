@@ -75,19 +75,68 @@ class pts_websocket_display_mode implements pts_display_mode_interface
 
 		return $mb;
 	}
+	protected function update_install_status(&$m, $tr = null, $s = null)
+	{
+		static $test_install_manager = false;
+		static $test_install_request = false;
+		static $stats = false;
+
+		if($m != null)
+		{
+			$test_install_manager = $m;
+		}
+		if($tr != null)
+		{
+			$test_install_request = $tr;
+		}
+		if($s != null)
+		{
+			if($stats == null || !is_array($stats))
+			{
+				$stats = $s;
+			}
+			else
+			{
+				$stats = array_merge($stats, $s);
+			}
+		}
+
+		// GENERAL STUFF FOR CURRENT RUN
+		$j['pts']['msg']['name'] = 'benchmark_state';
+		$j['pts']['msg']['current_state'] = 'install';
+		$j['pts']['msg']['current_test'] = $test_install_request ? base64_encode($test_install_request->test_profile->to_json()) : null;
+		//$j['pts']['msg']['arguments_description'] = pts_client::swap_variables($test_result->get_arguments_description(), array('pts_client', 'environmental_variables'));
+
+		// CURRENT RUN QUEUE
+		//$j['pts']['msg']['test_run_pos'] = $this->trial_run_count_current;
+		//$j['pts']['msg']['test_run_total'] = $this->expected_trial_run_count;
+		//$j['pts']['msg']['test_run_estimated_time'] = $test_result->test_profile->get_estimated_run_time();
+
+		// TOTAL QUEUE
+		$j['pts']['msg']['test_install_pos'] = $this->test_install_pos;
+		$j['pts']['msg']['test_install_total'] = $this->test_install_count;
+		$j['pts']['msg']['test_install_disk_space_total'] = $stats['disk_space_total'];
+		$j['pts']['msg']['test_install_download_total'] = $stats['download_total'];
+		$j['pts']['msg']['test_install_cache_total'] = $stats['cache_total'];
+		//$j['pts']['msg']['test_queue_estimated_run_time'] = $test_run_manager->get_estimated_run_time();
+
+		// LATEST RESULT
+		$this->web_socket_respond($j);
+	}
 	public function test_install_process($test_install_manager)
 	{
 		$this->test_install_pos = 0;
 		$this->test_install_count = $test_install_manager->tests_to_install_count();
-
-		echo PHP_EOL;
-		echo $this->tab . pts_strings::plural_handler($this->test_install_count, 'Test') . ' To Install' . PHP_EOL;
 
 		$download_size = 0;
 		$download_total = 0;
 		$cache_total = 0;
 		$cache_size = 0;
 		$install_size = 0;
+
+		$download_string_total = null;
+		$cache_string_total = null;
+		$disk_space_total = null;
 
 		foreach($test_install_manager->get_test_run_requests() as $test_run_request)
 		{
@@ -114,68 +163,48 @@ class pts_websocket_display_mode implements pts_display_mode_interface
 			}
 		}
 
-
 		if($download_total > 0)
 		{
-			echo $this->tab . $this->tab . pts_strings::plural_handler($download_total, 'File') . ' To Download';
+			$download_string_total = pts_strings::plural_handler($download_total, 'File');
 
 			if($download_size > 0)
 			{
-				echo ' [' . self::bytes_to_download_size($download_size) . 'MB]';
+				$download_string_total .= ' / ' . self::bytes_to_download_size($download_size) . 'MB';
 			}
-			echo PHP_EOL;
 		}
 
 		if($cache_total > 0)
 		{
-			echo $this->tab . $this->tab . pts_strings::plural_handler($cache_total, 'File') . ' In Cache';
+			$cache_string_total = pts_strings::plural_handler($cache_total, 'File');
 
 			if($cache_size > 0)
 			{
-				echo ' [' . self::bytes_to_download_size($cache_size) . 'MB]';
+				$cache_string_total .= ' / ' . self::bytes_to_download_size($cache_size) . 'MB';
 			}
-			echo PHP_EOL;
 		}
 
 		if($install_size > 0)
 		{
-			echo $this->tab . $this->tab . ceil($install_size) . 'MB Of Disk Space Is Needed' . PHP_EOL;
+			$disk_space_total = ceil($install_size) . 'MB';
 		}
 
-		echo PHP_EOL;
+		$stats = array('download_total' => $download_string_total, 'cache_total' => $cache_string_total, 'disk_space_total' => $disk_space_total);
+		$this->update_install_status($test_install_manager, null, $stats);
 	}
 	public function test_install_start($identifier)
 	{
-		$this->test_install_pos++;
-		echo $this->tab . $identifier . ':' . PHP_EOL;
-		echo $this->tab . $this->tab . 'Test Installation ' . $this->test_install_pos . ' of ' . $this->test_install_count . PHP_EOL;
+		$this->update_install_status(null, null);
 	}
 	public function test_install_downloads($test_install_request)
 	{
-		$identifier = $test_install_request->test_profile->get_identifier();
-		$download_packages = $test_install_request->get_download_objects();
+		$stats['test_download_count'] = $test_install_request->get_download_objects();
 
-		echo $this->tab . $this->tab . count($download_packages) . ' File' . (isset($download_packages[1]) ? 's' : null) . ' Needed';
-
-		if(($size = $test_install_request->test_profile->get_download_size(false, 1048576)) > 0)
+		if(($size = $test_install_request->test_profile->get_download_size(false, 1048576)) > 0 && ($avg_speed = pts_download_speed_manager::get_average_download_speed()) > 0)
 		{
-			if($size > 99)
-			{
-				$size = ceil($size);
-			}
-
-			echo ' [' . $size . ' MB';
-
-			if(($avg_speed = pts_download_speed_manager::get_average_download_speed()) > 0)
-			{
-				$avg_time = ($size * 1048576) / $avg_speed;
-				echo ' / ' . pts_strings::format_time($avg_time, 'SECONDS', true, 60);
-			}
-
-			echo ']';
+			$stats['test_download_time'] = ($size * 1048576) / $avg_speed;
 		}
 
-		echo PHP_EOL;
+		$this->update_install_status(null, $test_install_request, $stats);
 	}
 	public function test_install_download_file($process, &$pts_test_file_download)
 	{
@@ -232,46 +261,16 @@ class pts_websocket_display_mode implements pts_display_mode_interface
 	}
 	public function display_interrupt_message($message)
 	{
-		if($message == null)
-		{
-			return;
-		}
-
-		$terminal_width = pts_client::terminal_width() > 1 ? pts_client::terminal_width() : $terminal_width;
-		$text_width = $terminal_width - (strlen($this->tab) * 3);
-		echo PHP_EOL . $this->tab . $this->tab . wordwrap('[NOTICE] ' . $message, $text_width, PHP_EOL . $this->tab . $this->tab) . PHP_EOL;
 	}
 	public function test_install_progress_start($process)
 	{
-		$this->progress_line_prefix = $process;
-		$this->progress_last_float = -1;
-		$this->progress_tab_count = 1;
-		$this->progress_string_length = pts_client::terminal_width() > 1 ? pts_client::terminal_width() - 4 : 20;
-		return;
 	}
 	public function test_install_progress_update($progress_float)
 	{
-		if($this->progress_last_float == -1)
-		{
-			$progress_prefix = str_repeat($this->tab, $this->progress_tab_count) . $this->progress_line_prefix . ' ';
-			echo $progress_prefix;
-			$this->progress_char_count = $this->progress_string_length - strlen($progress_prefix);
-			$this->progress_char_pos = 0;
-		}
-
-		$char_current = floor($progress_float * $this->progress_char_count);
-
-		if($char_current > $this->progress_char_pos && $char_current <= $this->progress_char_count)
-		{
-			echo str_repeat('.', $char_current - $this->progress_char_pos);
-			$this->progress_char_pos = $char_current;
-		}
-
-		$this->progress_last_float = $progress_float;
+		echo $progress_float . PHP_EOL;
 	}
 	public function test_install_progress_completed()
 	{
-		echo $this->progress_last_float != -1 ? str_repeat('.', $this->progress_char_count - $this->progress_char_pos) . PHP_EOL : null;
 		$this->progress_last_float == -1;
 	}
 	public function test_install_begin($test_install_request)
@@ -308,14 +307,15 @@ class pts_websocket_display_mode implements pts_display_mode_interface
 		//echo PHP_EOL;
 		//echo $this->tab . 'Test ' . $test_run_manager->get_test_run_position() . ' of ' . $test_run_manager->get_test_run_count_reported() . PHP_EOL;
 	}
-	protected function update_benchmark_status(&$trm, &$tr)
+	protected function update_benchmark_status(&$m, &$tr)
 	{
 		static $test_run_manager = false;
 		static $test_result = false;
+		static $current_state = false;
 
-		if($trm != null)
+		if($m != null)
 		{
-			$test_run_manager = $trm;
+			$test_run_manager = $m;
 		}
 		if($tr != null)
 		{
@@ -324,6 +324,7 @@ class pts_websocket_display_mode implements pts_display_mode_interface
 
 		// GENERAL STUFF FOR CURRENT RUN
 		$j['pts']['msg']['name'] = 'benchmark_state';
+		$j['pts']['msg']['current_state'] = 'benchmark';
 		$j['pts']['msg']['current_test'] = base64_encode($test_result->test_profile->to_json());
 		$j['pts']['msg']['arguments_description'] = pts_client::swap_variables($test_result->get_arguments_description(), array('pts_client', 'environmental_variables'));
 
@@ -338,7 +339,6 @@ class pts_websocket_display_mode implements pts_display_mode_interface
 		$j['pts']['msg']['test_queue_estimated_run_time'] = $test_run_manager->get_estimated_run_time();
 
 		// LATEST RESULT
-
 		$this->web_socket_respond($j);
 	}
 	public function test_run_start(&$test_run_manager, &$test_result)

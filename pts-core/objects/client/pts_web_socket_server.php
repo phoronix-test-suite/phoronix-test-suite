@@ -254,6 +254,14 @@ class pts_web_socket_server extends pts_web_socket
 						$test_run_manager->pre_execution_process();
 						$test_run_manager->call_test_runs();
 						$test_run_manager->post_execution_process();
+
+						$j['pts']['msg']['name'] = 'benchmark_state';
+						$j['pts']['msg']['current_state'] = 'complete';
+						$j['pts']['msg']['result_title'] = $test_run_manager->get_title();
+						$j['pts']['msg']['result_file_name'] = $test_run_manager->get_file_name();
+						$j['pts']['msg']['result_identifier'] = $test_run_manager->get_results_identifier();
+						$j['pts']['msg']['result_url'] = $test_run_manager->get_results_url();
+						$this->send_json_data($user->socket, $j);
 					}
 					break;
 			}
