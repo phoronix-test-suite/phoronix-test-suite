@@ -112,7 +112,7 @@ class webui implements pts_option_interface
 		{
 			$server_launcher .= 'echo "Launch: http://localhost:' . $web_port . '"' . PHP_EOL;
 		}
-
+		$server_launcher .= PHP_EOL . 'echo -n "Press [ENTER] to kill server..."' . PHP_EOL . 'read var_name';
 		// Shutdown / Kill Servers
 		$server_launcher .= PHP_EOL . 'kill $http_server_pid';
 		$server_launcher .= PHP_EOL . 'kill $websocket_server_pid';

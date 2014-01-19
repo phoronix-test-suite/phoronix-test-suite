@@ -32,10 +32,17 @@ class pts_web_socket
 	public function __construct($address = 'localhost', $port = 80, $callback_on_data_receive = null, $callback_on_hand_shake = null)
 	{
 		ob_implicit_flush();
-		$this->socket_master = socket_create(AF_INET, SOCK_STREAM, getprotobyname('tcp'));
-		socket_set_option($this->socket_master, SOL_SOCKET, SO_REUSEADDR, 1);
-		socket_bind($this->socket_master, $address, $port);
-		socket_listen($this->socket_master);
+		if($address == 'localhost')
+		{
+			$this->socket_master = socket_create_listen($port);
+		}
+		else
+		{
+			$this->socket_master = socket_create(AF_INET, SOCK_STREAM, getprotobyname('tcp'));
+			socket_set_option($this->socket_master, SOL_SOCKET, SO_REUSEADDR, 1);
+			socket_bind($this->socket_master, $address, $port);
+			socket_listen($this->socket_master);
+		}
 		array_push($this->sockets, $this->socket_master);
 		$this->callback_on_data_receive = $callback_on_data_receive;
 		$this->callback_on_hand_shake = $callback_on_hand_shake;

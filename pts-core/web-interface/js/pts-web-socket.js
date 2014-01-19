@@ -43,11 +43,11 @@ function pts_web_socket()
 	}
 	this.connect = function()
 	{
-		this.socket = new WebSocket(pts_read_cookie("pts_websocket_server") + this.socket_path);
+		this.socket = new WebSocket("ws://" + location.hostname + ":" + (location.port - 1) + "/" + this.socket_path);
 		this.socket.onopen    = function() { pts_web_socket.web_socket_onopen(); };
 		this.socket.onmessage = function(msg) { pts_web_socket.web_socket_onmessage(msg); } ;
 		this.socket.onclose   = function() { pts_web_socket.web_socket_onclose(); };
-		this.socket.onerror   = function() { setTimeout(function() { pts_web_socket.web_socket_connect(); }, 4000); };
+		this.socket.onerror   = function() { setTimeout(function() { pts_web_socket.connect(); }, 4000); };
 		return true;
 	}
 	this.web_socket_onopen = function()
