@@ -14,6 +14,7 @@ Phoronix Test Suite (Git)
 - pts-core: Random fixes
 - phodevi: Various improvements
 - phodevi: Improved disk scheduler fallback reporting
+- documentation: Update to point out new Git location at github.com/phoronix-test-suite/ over Phorogit
 
 Phoronix Test Suite 4.8.6-Sokndal
 10 December 2013
