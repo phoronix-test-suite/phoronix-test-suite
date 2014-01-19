@@ -483,3 +483,60 @@ function pts_set_completion_circle(percent_complete, sub_text, el)
 		document.write(output);
 	}
 }
+function pts_set_completion_circle_array(percent_complete_r, sub_text_r, el)
+{
+	var size = 300;
+	var stroke_width = 10;
+	var center = size / 2;
+	var color_table = new Array("#044374", "#dd4b39", '#BABABA');
+
+	var output = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewbox="0 0 ' + (center * 2) + ' ' + (center * 2) + '" style="min-height: 100px; max-height: ' + (window_size.height * 0.6) + 'px; display: block; text-align: center; margin: 5px auto;">';
+	for(var i = 0; i < percent_complete_r.length; i++)
+	{
+		var percent_complete = percent_complete_r[i];
+		var radius = (size - ((i + 1) * stroke_width * 2.5)) / 2;
+
+		if(percent_complete < 100)
+		{
+			percent_complete = percent_complete.toPrecision(2);
+			var deg = (percent_complete / 100) * 360;
+			var offset_deg = 1 - deg;
+			var arc = percent_complete > 50 && percent_complete < 100 ? 1 : 0;
+
+			var p1_x = Math.round(Math.cos((offset_deg * (Math.PI / 180))) * radius) + center;
+			var p1_y = Math.round(Math.sin((offset_deg * (Math.PI / 180))) * radius) + center;
+			var p2_x = Math.round(Math.cos(((offset_deg + deg) * (Math.PI / 180))) * radius) + center;
+			var p2_y = Math.round(Math.sin(((offset_deg + deg) * (Math.PI / 180))) * radius) + center;
+		}
+
+		output += '<circle cx="' + center + '" cy="' + center + '" r="' + radius + '" onload="javascript:pts_color_rotate(this);" stroke="#FFFFFF" stroke-width="' + (stroke_width / 4) + '" fill="#FFFFFF" />';
+
+		if(percent_complete >= 100)
+		{
+			output += '<circle cx="' + center + '" cy="' + center + '" r="' + radius + '" stroke="' + color_table[(i % color_table.length)] + '" stroke-width="' + stroke_width + '" fill="#FFF" />';
+		}
+		else if(percent_complete > 0)
+		{
+			output += '<path d="M' + center + ',' + center + ' L' + p1_x + ',' + p1_y + 'A' + radius + ',' + radius + ' 0 ' + arc + ',1 ' + p2_x  + ',' + p2_y + ' Z" fill="#FFF" stroke="' + color_table[(i % color_table.length)] + '" stroke-width="' + stroke_width + '" />';
+		}
+		output += '<circle cx="' + center + '" cy="' + center + '" r="' + (radius - (stroke_width / 2)) + '" fill="#FFF" stroke-width="0" />';
+	}
+
+	output += '<text x="' + center + '" y="' + (center / (sub_text_r.length + 1)) * 2 + '" font-size="20" font-weight="bold" fill="#044374" text-anchor="middle" alignment-baseline="middle" xlink:show="new">' + percent_complete_r[0].toPrecision(2) + '% Complete</text>';
+
+	for(i = 0; i < sub_text_r.length; i++)
+	{
+		output += '<text x="' + center + '" y="' + (center / (sub_text_r.length + 1) * (i + 3)) + '" font-size="15" font-weight="bold" fill="#BABABA" text-anchor="middle" alignment-baseline="middle" xlink:show="new">' + sub_text_r[i] + '</text>';
+	}
+
+	output += '</svg>';
+
+	if(document.getElementById(el))
+	{
+		document.getElementById(el).innerHTML = output;
+	}
+	else
+	{
+		document.write(output);
+	}
+}

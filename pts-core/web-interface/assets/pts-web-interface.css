@@ -161,8 +161,6 @@ h4
 }
 div.pts_test_progress_area
 {
-	float: left;
-	width: 50%;
 	display: block;
 	text-align: center;
 }
