@@ -4,14 +4,14 @@
 <script type="text/javascript">
 pts_set_completion_circle(0, "Starting Benchmark", "pts_left_circle");
 </script>
-<p>The Phoronix Test Suite is currently running the <strong id="currently_running_test_sentence">XXX</strong> benchmark. It's estimated this test will finish in <strong id="time_to_current_test_finish">XXX</strong>. The test is on its <strong id="current_test_run_pos">XXX</strong> of expected <strong id="current_test_run_total">XXX</strong> trial runs.</p>
+<p>The Phoronix Test Suite is currently running the <strong id="currently_running_test_sentence"></strong> benchmark. It's estimated this test will finish in <strong id="time_to_current_test_finish"></strong>. The test is on its <strong id="current_test_run_pos" style="text-transform: lowercase;"></strong> of expected <strong id="current_test_run_total" style="text-transform: lowercase;"></strong> trial runs<span id="current_test_run_extra_string"></span>.</p>
 </div>
 <div class="pts_test_progress_area">
 <div id="pts_right_circle"></div>
 <script type="text/javascript">
 pts_set_completion_circle(0, "Overall Progress", "pts_right_circle");
 </script>
-<p>The Phoronix Test Suite is running test <strong id="current_test_queue_pos">seven</strong> of <strong id="current_test_queue_total">nine</strong> currently in the test queue. It's estimated the testing will be complete in <strong id="test_queue_estimated_run_time">13 minutes, 54 seconds</strong>. The next test to run is <strong>Doom 3</strong>.</p>
+<p>The Phoronix Test Suite is running test <strong id="current_test_queue_pos" style="text-transform: lowercase;"></strong> of <strong id="current_test_queue_total" style="text-transform: lowercase;"></strong> currently in the test queue. It's estimated the testing will be complete in <strong id="test_queue_estimated_run_time"></strong>.</p>
 </div>
 </div>
 <div id="svg_graphs" style="margin: 10px 0; text-align: center;"></div>
@@ -24,18 +24,24 @@ function update_benchmark_state(j)
 {
 	current_test_profile = JSON.parse(atob(j.pts.msg.current_test));
 	document.getElementById("currently_running_test_sentence").innerHTML = current_test_profile.TestInformation.Title;
-	document.getElementById("time_to_current_test_finish").innerHTML = j.pts.msg.test_run_estimated_time + " seconds";
-	document.getElementById("current_test_run_pos").innerHTML = j.pts.msg.test_run_pos;
-	document.getElementById("current_test_run_total").innerHTML = j.pts.msg.test_run_total;
-	pts_set_completion_circle((j.pts.msg.test_run_pos / j.pts.msg.test_run_total) * 100, current_test_profile.TestInformation.Title, "pts_left_circle");
-	document.getElementById("current_test_queue_pos").innerHTML = j.pts.msg.test_queue_pos;
-	document.getElementById("current_test_queue_total").innerHTML = j.pts.msg.test_queue_total;
-	document.getElementById("test_queue_estimated_run_time").innerHTML = j.pts.msg.test_queue_estimated_run_time;
-	pts_set_completion_circle((j.pts.msg.test_queue_pos - 1 + (j.pts.msg.test_run_pos / j.pts.msg.test_run_total)) / j.pts.msg.test_queue_total * 100, "Overall Progress", "pts_right_circle");
+	document.getElementById("time_to_current_test_finish").innerHTML = pts_seconds_to_pretty_string(j.pts.msg.test_run_estimated_time);
+	document.getElementById("current_test_run_pos").innerHTML = pts_number_to_string(j.pts.msg.test_run_pos);
+	document.getElementById("current_test_run_total").innerHTML = pts_number_to_string(j.pts.msg.test_run_total);
+	var current_test_offset = j.pts.msg.test_run_pos > j.pts.msg.test_run_total ? 1 : '';
+	document.getElementById("current_test_run_extra_string").innerHTML = current_test_offset == 1 ? ' as additional test runs were required for greater accuracy' : '';
+	var test_completeness = j.pts.msg.test_run_pos / (j.pts.msg.test_run_total + current_test_offset);
+	console.log("COMPLETE " + test_completeness + " pos " + j.pts.msg.test_run_pos + " total " + j.pts.msg.test_run_total);
+	pts_set_completion_circle((test_completeness * 100), current_test_profile.TestInformation.Title, "pts_left_circle");
+	document.getElementById("current_test_queue_pos").innerHTML = pts_number_to_string(j.pts.msg.test_queue_pos);
+	document.getElementById("current_test_queue_total").innerHTML = pts_number_to_string(j.pts.msg.test_queue_total);
+	document.getElementById("test_queue_estimated_run_time").innerHTML = pts_seconds_to_pretty_string(j.pts.msg.test_queue_estimated_run_time);
+	pts_set_completion_circle(((j.pts.msg.test_queue_pos - 1 + test_completeness) / j.pts.msg.test_queue_total * 100), "Overall Progress", "pts_right_circle");
 }
 if(localStorage.test_queue_submit)
 {
 	pts_web_socket.submit_event("run-benchmark-queue " + localStorage.test_queue_submit, "benchmark_state", "update_benchmark_state");
+	localStorage.test_queue_submit = "";
+	localStorage.test_queue = "";
 }
 
 </script>
