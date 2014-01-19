@@ -58,6 +58,7 @@ class webui implements pts_option_interface
 			else
 			{
 				$web_port = $remote_access;
+				$web_socket_port = $web_port - 1;
 			}
 		}
 		else
