@@ -328,7 +328,7 @@ class pts_websocket_display_mode implements pts_display_mode_interface
 		$j['pts']['msg']['arguments_description'] = pts_client::swap_variables($test_result->get_arguments_description(), array('pts_client', 'environmental_variables'));
 
 		// CURRENT RUN QUEUE
-		$j['pts']['msg']['test_run_pos'] = $this->trial_run_count_current + 1;
+		$j['pts']['msg']['test_run_pos'] = $this->trial_run_count_current;
 		$j['pts']['msg']['test_run_total'] = $this->expected_trial_run_count;
 		$j['pts']['msg']['test_run_estimated_time'] = $test_result->test_profile->get_estimated_run_time();
 

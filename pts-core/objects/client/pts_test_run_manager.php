@@ -566,6 +566,11 @@ class pts_test_run_manager
 			// Just skip the current test and do not save the results, but continue testing
 			continue;
 		}
+		else if(pts_client::read_env('LIMIT_ELAPSED_TEST_TIME') > 0 && (PTS_INIT_TIME + (pts_client::read_env('LIMIT_ELAPSED_TEST_TIME') * 60)) > time())
+		{
+			// Allocated amount of time has expired
+			return false;
+		}
 
 		$test_successful = false;
 		if($test_run_request->test_profile->get_display_format() == 'NO_RESULT')
