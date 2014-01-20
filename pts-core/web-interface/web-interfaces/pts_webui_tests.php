@@ -131,7 +131,7 @@ class pts_webui_tests implements pts_webui_interface
 				$secondary_message = '<strong>Very Popular.</strong>';
 			}
 
-			echo '<a href="?test/' . $test_profile->get_identifier() . '"><div class="pts_blue_bar"><strong>' . trim($test_profile->get_title() . ' ' . $test_profile->get_app_version()) . '</strong><br /><span style="font-size: 10px;">~' . max(1, round($test_profile->get_estimated_run_time() / 60)) . ' mins To Run. ' . $secondary_message . '</span></div></a>';
+			echo '<a href="?test/' . $test_profile->get_identifier() . '"><div class="pts_blue_bar"><strong>' . trim($test_profile->get_title() . ' ' . $test_profile->get_app_version()) . '</strong><br /><span style="">~' . max(1, round($test_profile->get_estimated_run_time() / 60)) . ' mins To Run. ' . $secondary_message . '</span></div></a>';
 		}
 		echo '</div>';
 	}

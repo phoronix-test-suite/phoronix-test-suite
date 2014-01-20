@@ -69,7 +69,7 @@ class pts_webui_main implements pts_webui_interface
 
 		echo '</div>';
 
-		echo '<div style="text-align: right; margin-bottom: 10px;">';
+		echo '<div id="pts_search_bar">';
 		echo 'SEARCH: <input type="text" size="30" id="pts_search" name="search" onkeydown="if(event.keyCode == 13) { if(document.getElementById(\'pts_search\').value.length < 3) { alert(\'Please enter a longer search query.\'); return false; } else { window.location.href = \'/?search/\' + document.getElementById(\'pts_search\').value; } return false; }" />';
 		echo '</div>';
 

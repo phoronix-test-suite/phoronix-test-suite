@@ -2,11 +2,20 @@ body
 {
 	overflow-y: auto;
 }
-div#pts_header div#pts_header_left, div#pts_header div#pts_logo_right
+div#pts_header div#pts_header_left
 {
 	text-align: center;
 	float: none;
 	overflow: hidden;
+}
+div#pts_header div#pts_logo_right
+{
+	display: none;
+}
+h1
+{
+	font-size: 500%;
+	text-align: center;
 }
 div#pts_header_left a
 {
@@ -16,6 +25,7 @@ div#pts_header_left a
 	float: left;
 	width: 50%;
 	display: block;
+	font-size: 200%;
 }
 div#pts_web_container
 {
@@ -36,4 +46,83 @@ div#pts_web_container div#pts_main_region
 	overflow: hidden;
 	position: static;
 	bottom: 0;
+}
+div#pts_side_pane
+{
+	float: none;
+	font-size: 200%;
+	text-align: center;
+	border-width: 0 0 1px 0;
+	padding: 0;
+	margin: 10px 0;
+	max-width: 100%;
+	width: 100%;
+	letter-spacing: 1px;
+	height: auto;
+}
+div#pts_search_bar
+{
+	text-align: center;
+	font-size: 200%;
+}
+div.pts_blue_bar
+{
+	width: 100%;
+	float: none;
+	font-size: 300%;
+}
+
+div#test_main_area, div#test_side_area
+{
+	float: none;
+	width: 100%;
+	font-size: 300%;
+}
+button, select
+{
+	margin: 8px 0;
+	font-size: 100%;
+}
+input
+{
+	font-size: 200%;
+}
+h2
+{
+	font-size: 250%;
+}
+div#svg_graphs svg
+{
+
+}
+div#pts_benchmark_button
+{
+	float: none;
+	margin: 10px 0;
+	padding: 10px 10px;
+	font-size: 150%;
+	color: #FFF;
+	border: 1px solid #e0e0e0;
+	font-size: 400%;
+	text-transform: uppercase;
+	background: #bfbfbf;
+	vertical-align: middle;
+	text-align: center;
+	border-width: 0 0 1px 0;
+	border-radius: 10px;
+}
+div.pts_list_box
+{
+	font-size: 250%;
+	float: none;
+	max-width: 100%;
+	margin-bottom: 20px;
+}
+div#loading_message_box
+{
+	clear: both;
+	width: 100%;
+	font-size: 250%;
+	height: auto;
+	display: block;
 }

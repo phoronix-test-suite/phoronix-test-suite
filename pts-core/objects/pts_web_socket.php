@@ -35,6 +35,13 @@ class pts_web_socket
 		if($address == 'localhost')
 		{
 			$this->socket_master = socket_create_listen($port);
+
+			if($this->socket_master === false)
+			{
+				echo PHP_EOL . 'WebSocket create_listen failed:' . socket_last_error() . PHP_EOL . PHP_EOL;
+				return false;
+			}
+			socket_set_option($this->socket_master, SOL_SOCKET, SO_REUSEADDR, 1);
 		}
 		else
 		{

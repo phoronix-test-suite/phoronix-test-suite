@@ -130,7 +130,7 @@ setcookie('pts_websocket_server', PTS_WEBSOCKET_SERVER, (time() + 60 * 60 * 24),
 <html style="height: 100%;">
 <head>
 <link href="assets/pts-web-interface.css" rel="stylesheet" type="text/css" />
-<?php if(stripos($_SERVER['HTTP_USER_AGENT'], 'iPod') || stripos($_SERVER['HTTP_USER_AGENT'], 'iPhone')) { ?>
+<?php if(stripos($_SERVER['HTTP_USER_AGENT'], 'iPod') || stripos($_SERVER['HTTP_USER_AGENT'], 'iPhone') || stripos($_SERVER['HTTP_USER_AGENT'], 'Android')) { ?>
 <link href="assets/pts-mobile-interface.css" rel="stylesheet" type="text/css" />
 <?php } ?>
 <script src="js/pts-web-interface.js" type="text/javascript"></script>

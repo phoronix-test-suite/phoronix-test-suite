@@ -424,7 +424,7 @@ function pts_seconds_to_pretty_string(secs)
 	{
 		pretty = plural_handler(secs, "second");
 	}
-	else if(seconds < 180)
+	else if(secs < 180)
 	{
 		pretty = plural_handler(Math.floor(secs / 60), "minute") + ", " + plural_handler((secs % 60), "second");
 	}

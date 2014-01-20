@@ -32,7 +32,7 @@ function update_benchmark_state(j)
 		document.getElementById("current_test_run_total").innerHTML = pts_number_to_string(j.pts.msg.test_run_total);
 		var current_test_offset = j.pts.msg.test_run_pos > j.pts.msg.test_run_total ? 1 : '';
 		document.getElementById("current_test_run_extra_string").innerHTML = current_test_offset == 1 ? ' as additional test runs were required for greater accuracy' : '';
-		var test_completeness = j.pts.msg.test_run_pos / (j.pts.msg.test_run_total + current_test_offset);
+		var test_completeness = j.pts.msg.test_run_pos / ((+j.pts.msg.test_run_total + 1) + current_test_offset);
 		document.getElementById("time_to_current_test_finish").innerHTML = pts_seconds_to_pretty_string(Math.round(j.pts.msg.test_run_estimated_time * (1 - test_completeness)));
 		//pts_set_completion_circle((test_completeness * 100), current_test_profile.TestInformation.Title, "pts_left_circle");
 		document.getElementById("current_test_queue_pos").innerHTML = pts_number_to_string(j.pts.msg.test_queue_pos);
@@ -57,6 +57,7 @@ if(localStorage.test_queue_submit)
 	pts_web_socket.submit_event("run-benchmark-queue " + localStorage.test_queue_submit, "benchmark_state", "update_benchmark_state");
 	localStorage.test_queue_submit = "";
 	localStorage.test_queue = "";
+	update_benchmark_button();
 }
 
 </script>

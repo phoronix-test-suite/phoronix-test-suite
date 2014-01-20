@@ -92,7 +92,7 @@ class pts_webui_loader implements pts_webui_interface
 		   id="pts_highlight_6"
 		   style="fill:#000" />
 		  </g>
-		</svg><div id="loading_message_box" style="display: block; margin: 40px auto; width: 60%; height: 100px; text-align: left; overflow-y: auto;"></div></div>
+		</svg><div id="loading_message_box"></div></div>
 
 		<script text="text/javascript">
 			function show_verbose_info()

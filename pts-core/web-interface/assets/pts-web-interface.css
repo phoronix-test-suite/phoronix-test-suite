@@ -350,6 +350,10 @@ div.pts_list_box a:hover li
 {
 	font-weight: bold;
 }
+a:visited, a
+{
+	text-decoration: none;
+}
 div#search_results hr, div#pts_main_region hr
 {
 	text-align: center;
@@ -499,4 +503,28 @@ div#pts_side_pane a
 div#pts_side_pane a li:hover
 {
 	color: #044374;
+}
+div#test_main_area
+{
+	float: left;
+	width: 60%;
+}
+div#test_side_area
+{
+	float: right;
+	width: 40%;
+}
+div#pts_search_bar
+{
+	text-align: right;
+	margin-bottom: 10px;
+}
+div#loading_message_box
+{
+	display: block;
+	margin: 40px auto;
+	width: 60%;
+	height: 100px;
+	text-align: left;
+	overflow-y: auto;
 }

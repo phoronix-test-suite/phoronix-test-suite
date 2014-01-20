@@ -56,7 +56,7 @@ class pts_webui_test implements pts_webui_interface
 
 		echo '<h1>' . $test_title . '</h1>';
 
-		echo '<div style="float: left; width: 60%;">';
+		echo '<div id="test_main_area">';
 
 			echo '<p>' . self::$test_profile->get_description() . '</p>';
 
@@ -101,7 +101,7 @@ class pts_webui_test implements pts_webui_interface
 		echo '</div>';
 
 
-		echo '<div style="float: right; width: 40%;">';
+		echo '<div id="test_side_area">';
 
 		$tabular_info = array(
 			array('Test Profile', self::$test_profile->get_identifier()),
