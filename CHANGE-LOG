@@ -11,6 +11,7 @@ Phoronix Test Suite (Git)
 - pts-core: Reduce unnecessary communication with OpenBenchmarking.org network server
 - pts-core: Support system identifier strings up to 64 characters
 - pts-core: Add LIMIT_ELAPSED_TEST_TIME to limit the amount of time (in minutes) for a given Phoronix Test Suite process to complete its testing
+- pts-core: Allow null descriptor strings
 - pts-core: Random fixes
 - phodevi: Various improvements
 - phodevi: Improved disk scheduler fallback reporting

@@ -29,7 +29,7 @@
 </xs:simpleType>
 <xs:simpleType name="DescriptionString">
 	<xs:restriction base="xs:string">
-		<xs:minLength value="4" />
+		<xs:minLength value="0" />
 		<xs:maxLength value="2048" />
 	</xs:restriction>
 </xs:simpleType>
