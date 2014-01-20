@@ -40,19 +40,19 @@ class pts_webui_tests implements pts_webui_interface
 		$local_only = false;
 		switch(isset($PATH[0]) ? $PATH[0] : null)
 		{
-			case 'installed_tests':
-				$tests = pts_tests::installed_tests();
-				$selected = 'Installed Tests';
-				break;
 			case 'locally_available_tests':
 				$local_only = true;
 				$selected = 'Locally Available Tests';
 				$tests = pts_openbenchmarking::available_tests();
 				break;
 			case 'available_tests':
-			default:
 				$selected = 'Available Tests';
 				$tests = pts_openbenchmarking::available_tests();
+				break;
+			case 'installed_tests':
+			default:
+				$tests = pts_tests::installed_tests();
+				$selected = 'Installed Tests';
 				break;
 		}
 

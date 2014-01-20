@@ -1,0 +1,39 @@
+body
+{
+	overflow-y: auto;
+}
+div#pts_header div#pts_header_left, div#pts_header div#pts_logo_right
+{
+	text-align: center;
+	float: none;
+	overflow: hidden;
+}
+div#pts_header_left a
+{
+	padding: 0;
+	margin: 0 0 10px;
+	text-align: center;
+	float: left;
+	width: 50%;
+	display: block;
+}
+div#pts_web_container
+{
+	min-width: inherit;
+	height: auto;
+	position: static;
+	overflow: hidden;
+
+}
+div#pts_web_container div#pts_copyright
+{
+	position: static;
+	overflow: hidden;
+}
+div#pts_web_container div#pts_main_region
+{
+	margin: 10px 0;
+	overflow: hidden;
+	position: static;
+	bottom: 0;
+}
