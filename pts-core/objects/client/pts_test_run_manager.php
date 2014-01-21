@@ -1064,9 +1064,9 @@ class pts_test_run_manager
 
 		return true;
 	}
-	public function auto_save_results($save_name, $result_identifier, $description = null)
+	public function auto_save_results($save_name, $result_identifier, $description = null, $is_new_save = false)
 	{
-		$this->set_save_name($save_name, false);
+		$this->set_save_name($save_name, $is_new_save);
 		$this->set_results_identifier($result_identifier);
 		$this->set_description($description);
 	}

@@ -28,6 +28,7 @@ class pts_web_socket
 	private $users = array();
 	private $callback_on_data_receive = false;
 	private $callback_on_hand_shake = false;
+	private $debug_mode = false;
 
 	public function __construct($address = 'localhost', $port = 80, $callback_on_data_receive = null, $callback_on_hand_shake = null)
 	{
@@ -69,6 +70,11 @@ class pts_web_socket
 					$connection = socket_accept($this->socket_master);
 					if($connection !== false)
 					{
+						if($this->debug_mode)
+						{
+							$this->debug_msg($connection, 'Connecting');
+						}
+
 						$this->connect($connection);
 					}
 				}
@@ -78,6 +84,11 @@ class pts_web_socket
 
 					if($bytes == false)
 					{
+						if($this->debug_mode)
+						{
+							$this->debug_msg($socket, 'Disconnecting');
+						}
+
 						$this->disconnect($socket);
 					}
 					else
@@ -113,6 +124,17 @@ class pts_web_socket
 				}
 			}
 		}
+	}
+	protected function debug_msg(&$socket, $msg)
+	{
+		echo PHP_EOL;
+		if($socket && is_resource($socket))
+		{
+			$address = null;
+			socket_getpeername($socket, $address);
+			echo $address . ': ';
+		}
+		echo $msg . PHP_EOL;
 	}
 	protected function decode_data(&$data)
 	{
@@ -165,6 +187,11 @@ class pts_web_socket
 	}
 	protected function send_data($socket, $data)
 	{
+		if($this->debug_mode)
+		{
+			$this->debug_msg($socket, 'Sending: ' . $data);
+		}
+
 		$data_length = strlen($data);
 		$encoded = null;
 

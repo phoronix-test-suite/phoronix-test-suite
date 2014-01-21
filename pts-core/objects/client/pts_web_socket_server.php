@@ -257,8 +257,7 @@ class pts_web_socket_server extends pts_web_socket
 			// SETUP
 			$test_run_manager->auto_upload_to_openbenchmarking();
 			pts_openbenchmarking_client::override_client_setting('UploadSystemLogsByDefault', true);
-			// TODO XXX: Make sure auto_save_result() is using strtolower() ... seems some results are mixed case in their folder names
-			$test_run_manager->auto_save_results($json_queue['title'], $json_queue['identifier'], $json_queue['description']);
+			$test_run_manager->auto_save_results($json_queue['title'], $json_queue['identifier'], $json_queue['description'], true);
 
 			// BENCHMARK
 			$test_run_manager->pre_execution_process();
