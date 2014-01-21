@@ -1717,6 +1717,43 @@ class pts_client
 			trigger_error('php-pcntl must be installed for calling ' . $function . '.', E_USER_ERROR);
 		}
 	}
+	public static function fork($fork_function, $fork_function_parameters)
+	{
+		if(function_exists('pcntl_fork'))
+		{
+			$current_pid = function_exists('posix_getpid') ? posix_getpid() : -1;
+			$pid = pcntl_fork();
+
+			if($pid == -1)
+			{
+				trigger_error('Could not fork ' . $function . '.', E_USER_ERROR);
+			}
+			else if($pid)
+			{
+				// PARENT
+				array_push(self::$forked_pids, $pid);
+				return true;
+			}
+			else
+			{
+				// CHILD
+				// posix_setsid();
+				if(!is_array($fork_function_parameters))
+				{
+					$fork_function_parameters = array($fork_function_parameters);
+				}
+				call_user_func_array($fork_function, $fork_function_parameters);
+				exit(0);
+			}
+		}
+		else
+		{
+			// No PCNTL Support
+			call_user_func_array($fork_function, $fork_function_parameters);
+		}
+
+		return false;
+	}
 	public static function code_error_handler($error_code, $error_string, $error_file, $error_line)
 	{
 		/*if(!(error_reporting() & $error_code))

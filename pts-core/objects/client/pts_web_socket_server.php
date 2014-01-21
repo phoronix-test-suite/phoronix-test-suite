@@ -206,65 +206,72 @@ class pts_web_socket_server extends pts_web_socket
 					$this->send_data($user->socket, $version);
 					break;
 				case 'run-benchmark-queue':
-					$json_queue = json_decode(base64_decode($args), true);
-					$json['pts']['msg']['name'] = 'run_benchmark_queue';
-
-					if(!isset($json_queue['tests']) || count($json_queue['tests']) == 0)
-					{
-						$json['pts']['msg']['error'] = 'No tests in the queue.';
-					}
-					else if(!isset($json_queue['title']) || $json_queue['title'] == null)
-					{
-						$json['pts']['msg']['error'] = 'No test title/name provided.';
-					}
-					else if(!isset($json_queue['identifier']) || $json_queue['identifier'] == null)
-					{
-						$json['pts']['msg']['error'] = 'No test identifier provided.';
-					}
-					else
-					{
-						$json['pts']['msg']['go'] = 'Benchmarking.';
-					}
-					$this->send_json_data($user->socket, $json);
-
-					if(isset($json['pts']['msg']['error']) && $json['pts']['msg']['error'] != null)
-					{
-						break;
-					}
-					pts_client::$display = new pts_websocket_display_mode();
-					pts_client::$display->set_web_socket($this, $user->id);
-					$virtual_test_queue = array();
-					$virtual_test_queue[0] = new pts_virtual_test_queue();
-					foreach($json_queue['tests'] as $test)
-					{
-						$virtual_test_queue[0]->add_to_queue($test['test_profile_id'], $test['test_options_title'], $test['test_options_value']);
-					}
-					$test_flags = pts_c::auto_mode; // | pts_c::debug_mode
-					pts_client::set_test_flags($test_flags);
-					pts_test_installer::standard_install($virtual_test_queue);
-					$test_run_manager = new pts_test_run_manager($test_flags);
-					if($test_run_manager->load_tests_to_run($virtual_test_queue))
-					{
-						// SETUP
-						$test_run_manager->auto_upload_to_openbenchmarking();
-						pts_openbenchmarking_client::override_client_setting('UploadSystemLogsByDefault', true);
-						$test_run_manager->auto_save_results($json_queue['title'], $json_queue['identifier'], $json_queue['description']);
-
-						// BENCHMARK
-						$test_run_manager->pre_execution_process();
-						$test_run_manager->call_test_runs();
-						$test_run_manager->post_execution_process();
-
-						$j['pts']['msg']['name'] = 'benchmark_state';
-						$j['pts']['msg']['current_state'] = 'complete';
-						$j['pts']['msg']['result_title'] = $test_run_manager->get_title();
-						$j['pts']['msg']['result_file_name'] = $test_run_manager->get_file_name();
-						$j['pts']['msg']['result_identifier'] = $test_run_manager->get_results_identifier();
-						$j['pts']['msg']['result_url'] = $test_run_manager->get_results_url();
-						$this->send_json_data($user->socket, $j);
-					}
+					// BENCHMARK
+					//$this->run_benchmark($user, $args);
+					pts_client::fork(array($this, 'run_benchmark'), array($user, $args));
 					break;
 			}
+		}
+	}
+	public function run_benchmark($user, $args)
+	{
+		$json_queue = json_decode(base64_decode($args), true);
+		$json['pts']['msg']['name'] = 'run_benchmark_queue';
+
+		if(!isset($json_queue['tests']) || count($json_queue['tests']) == 0)
+		{
+			$json['pts']['msg']['error'] = 'No tests in the queue.';
+		}
+		else if(!isset($json_queue['title']) || $json_queue['title'] == null)
+		{
+			$json['pts']['msg']['error'] = 'No test title/name provided.';
+		}
+		else if(!isset($json_queue['identifier']) || $json_queue['identifier'] == null)
+		{
+			$json['pts']['msg']['error'] = 'No test identifier provided.';
+		}
+		else
+		{
+			$json['pts']['msg']['go'] = 'Benchmarking.';
+		}
+		$this->send_json_data($user->socket, $json);
+
+		if(isset($json['pts']['msg']['error']) && $json['pts']['msg']['error'] != null)
+		{
+			break;
+		}
+		pts_client::$display = new pts_websocket_display_mode();
+		pts_client::$display->set_web_socket($this, $user->id);
+		$virtual_test_queue = array();
+		$virtual_test_queue[0] = new pts_virtual_test_queue();
+		foreach($json_queue['tests'] as $test)
+		{
+			$virtual_test_queue[0]->add_to_queue($test['test_profile_id'], $test['test_options_title'], $test['test_options_value']);
+		}
+		$test_flags = pts_c::auto_mode; // | pts_c::debug_mode
+		pts_client::set_test_flags($test_flags);
+		pts_test_installer::standard_install($virtual_test_queue);
+		$test_run_manager = new pts_test_run_manager($test_flags);
+		if($test_run_manager->load_tests_to_run($virtual_test_queue))
+		{
+			// SETUP
+			$test_run_manager->auto_upload_to_openbenchmarking();
+			pts_openbenchmarking_client::override_client_setting('UploadSystemLogsByDefault', true);
+			// TODO XXX: Make sure auto_save_result() is using strtolower() ... seems some results are mixed case in their folder names
+			$test_run_manager->auto_save_results($json_queue['title'], $json_queue['identifier'], $json_queue['description']);
+
+			// BENCHMARK
+			$test_run_manager->pre_execution_process();
+			$test_run_manager->call_test_runs();
+			$test_run_manager->post_execution_process();
+
+			$j['pts']['msg']['name'] = 'benchmark_state';
+			$j['pts']['msg']['current_state'] = 'complete';
+			$j['pts']['msg']['result_title'] = $test_run_manager->get_title();
+			$j['pts']['msg']['result_file_name'] = $test_run_manager->get_file_name();
+			$j['pts']['msg']['result_identifier'] = $test_run_manager->get_results_identifier();
+			$j['pts']['msg']['result_url'] = $test_run_manager->get_results_url();
+			$this->send_json_data($user->socket, $j);
 		}
 	}
 	protected function search_pts(&$user, $search)

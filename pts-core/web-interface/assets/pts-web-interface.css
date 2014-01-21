@@ -272,7 +272,7 @@ div#system_log_viewer
 	min-height: 50px;
 	padding: 10px 40px;
 	overflow: hidden;
-	vertical-align: center;
+	vertical-align: middle;
 }
 div#system_log_viewer select
 {
