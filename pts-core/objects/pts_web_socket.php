@@ -28,7 +28,7 @@ class pts_web_socket
 	private $users = array();
 	private $callback_on_data_receive = false;
 	private $callback_on_hand_shake = false;
-	private $debug_mode = false;
+	public static $debug_mode = false;
 
 	public function __construct($address = 'localhost', $port = 80, $callback_on_data_receive = null, $callback_on_hand_shake = null)
 	{
@@ -70,7 +70,7 @@ class pts_web_socket
 					$connection = socket_accept($this->socket_master);
 					if($connection !== false)
 					{
-						if($this->debug_mode)
+						if(self::$debug_mode)
 						{
 							$this->debug_msg($connection, 'Connecting');
 						}
@@ -84,7 +84,7 @@ class pts_web_socket
 
 					if($bytes == false)
 					{
-						if($this->debug_mode)
+						if(self::$debug_mode)
 						{
 							$this->debug_msg($socket, 'Disconnecting');
 						}
@@ -136,10 +136,15 @@ class pts_web_socket
 		}
 		echo $msg . PHP_EOL;
 	}
-	protected function decode_data(&$data)
+	protected function decode_data(&$user, &$data)
 	{
 		$msg_opcode = bindec(substr(sprintf('%08b', ord($data[0])), 4, 4));
 		$data_length = ord($data[1]) & 127;
+
+		if(self::$debug_mode)
+		{
+			$this->debug_msg($socket, 'RECEIVED: ' . $data);
+		}
 
 		// TODO XXX: sometimes the opcode is 8 (close)... figure out why....
 		if($data_length === 126)
@@ -159,16 +164,29 @@ class pts_web_socket
 		}
 
 		$decoded_data = null;
-		for($i = 0; $i < strlen($encoded_data); $i++)
+		if(false && $user->user_agent == 'phoronix-test-suite')
 		{
-			$decoded_data .= $encoded_data[$i] ^ $mask[($i % 4)];
+			// The PTS WebSocket client isn't currently masking data due to bug it seems
+			$decoded_data .= $encoded_data;
+		}
+		else
+		{
+			for($i = 0; $i < strlen($encoded_data); $i++)
+			{
+				$decoded_data .= $encoded_data[$i] ^ $mask[($i % 4)];
+			}
+		}
+
+		if(self::$debug_mode)
+		{
+			$this->debug_msg($socket, 'RECEIVED DECODED: ' . $decoded_data);
 		}
 
 		return $decoded_data;
 	}
 	protected function process_data(&$user, &$msg)
 	{
-		$decoded_msg = $this->decode_data($msg);
+		$decoded_msg = $this->decode_data($user, $msg);
 		// echo 'DECODED MESSAGE =' . PHP_EOL; var_dump($decoded_msg);
 		if($this->callback_on_data_receive != false && is_callable($this->callback_on_data_receive))
 		{
@@ -187,7 +205,7 @@ class pts_web_socket
 	}
 	protected function send_data($socket, $data)
 	{
-		if($this->debug_mode)
+		if(self::$debug_mode)
 		{
 			$this->debug_msg($socket, 'Sending: ' . $data);
 		}
@@ -302,19 +320,6 @@ class pts_web_socket
 		$user_agent = trim(strstr(substr(strstr($request, 'User-Agent: '), 12), PHP_EOL, true));
 
 		return array($resource, $host, $origin, $key, $version, $user_agent);
-	}
-}
-
-class pts_web_socket_user
-{
-	public $id;
-	public $socket;
-	public $handshake;
-	public $res;
-
-	public function __toString()
-	{
-		return $this->id . ' ' . $this->socket . ' ' . $this->handshake . ' ' . $this->res;
 	}
 }
 

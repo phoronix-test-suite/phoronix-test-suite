@@ -77,7 +77,7 @@ class pts_web_socket_server extends pts_web_socket
 	}
 	protected function process_data(&$user, &$msg)
 	{
-		$decoded_msg = $this->decode_data($msg);
+		$decoded_msg = $this->decode_data($user, $msg);
 		//echo 'DECODED MSG: ' . $decoded_msg . PHP_EOL;
 
 		foreach(explode(' ;; ', $decoded_msg) as $single_msg)
