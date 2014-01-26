@@ -129,6 +129,7 @@ class pts_config
 
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Server/RemoteAccessAllowed', $read_config);
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Server/Password', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Server/WebSocketPort', $read_config);
 
 		$config->saveXMLFile(PTS_USER_PATH . 'user-config.xml');
 	}

@@ -58,7 +58,12 @@ class webui implements pts_option_interface
 			else
 			{
 				$web_port = $remote_access;
-				$web_socket_port = $web_port - 1;
+				$web_socket_port = pts_config::read_user_config('PhoronixTestSuite/Options/Server/WebSocketPort', '');
+
+				if($web_socket_port == null || !is_numeric($web_socket_port))
+				{
+					$web_socket_port = $web_port - 1;
+				}
 			}
 		}
 		else
@@ -85,7 +90,7 @@ class webui implements pts_option_interface
 
 		// WebSocket Server Setup
 		$server_launcher .= 'export PTS_WEBSOCKET_PORT=' . $web_socket_port . PHP_EOL;
-		$server_launcher .= 'cd ' . getenv('PTS_DIR') . ' && PTS_MODE="CLIENT" ' . getenv('PHP_BIN') . ' pts-core/phoronix-test-suite.php websocket-server &' . PHP_EOL;
+		$server_launcher .= 'cd ' . getenv('PTS_DIR') . ' && PTS_MODE="CLIENT" ' . getenv('PHP_BIN') . ' pts-core/phoronix-test-suite.php start-ws-server &' . PHP_EOL;
 		$server_launcher .= 'websocket_server_pid=$!'. PHP_EOL;
 
 		// HTTP Server Setup

@@ -63,6 +63,7 @@
 		<Server>
 			<RemoteAccessAllowed>FALSE</RemoteAccessAllowed>
 			<Password></Password>
+			<WebSocketPort></WebSocketPort>
 		</Server>
 	</Options>
 </PhoronixTestSuite>

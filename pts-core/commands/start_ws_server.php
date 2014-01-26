@@ -20,19 +20,20 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class websocket_server implements pts_option_interface
+class start_ws_server implements pts_option_interface
 {
-	const doc_skip = true; // TODO XXX
-	const doc_section = 'Result Management';
-	const doc_description = 'Open up the test results in the Phoronix Test Suite Result Viewer or on OpenBenchmarking.org.';
+	const doc_section = 'Server';
+	const doc_description = 'Manually start a WebSocket server for communication by remote Phoronix Test Suite GUIs, the Phoronix Test Suite Multi-System Commander, and other functionality.';
 
 	public static function run($r)
 	{
-		//$URL = PTS_SAVE_RESULTS_PATH . $r[0];
-	//$master = new websocket('localhost', 12345);
 		if(getenv('PTS_WEBSOCKET_PORT') !== false)
 		{
 			$web_socket_port = getenv('PTS_WEBSOCKET_PORT');
+		}
+		if(!isset($web_socket_port) || !is_numeric($web_socket_port))
+		{
+			$web_socket_port = pts_config::read_user_config('PhoronixTestSuite/Options/Server/WebSocketPort', '80');
 		}
 		if(!isset($web_socket_port) || !is_numeric($web_socket_port))
 		{

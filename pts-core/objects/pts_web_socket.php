@@ -166,6 +166,7 @@ class pts_web_socket
 		$decoded_data = null;
 		if(false && $user->user_agent == 'phoronix-test-suite')
 		{
+			/// XXX TODO: This might not be needed anymore if PTS websocket client is properly masking
 			// The PTS WebSocket client isn't currently masking data due to bug it seems
 			$decoded_data .= $encoded_data;
 		}
