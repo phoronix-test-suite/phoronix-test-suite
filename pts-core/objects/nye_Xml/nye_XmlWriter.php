@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2013, Phoronix Media
-	Copyright (C) 2010 - 2013, Michael Larabel
+	Copyright (C) 2010 - 2014, Phoronix Media
+	Copyright (C) 2010 - 2014, Michael Larabel
 	nye_XmlWriter.php: The XML writing object for the Phoronix Test Suite succeeding tandem_XmlWriter
 
 	Additional Notes: A very simple XML writer with a few extras... Does not support attributes on tags, etc.
@@ -52,7 +52,7 @@ class nye_XmlWriter
 	public function addXmlNodeWNE($xml_location, $xml_value = null)
 	{
 		// When Not Empty, add the XML node
-		return empty($xml_value) ? false : $this->addXmlNode($xml_location, $xml_value);
+		return $xml_value === null || $xml_value === false ? false : $this->addXmlNode($xml_location, $xml_value);
 	}
 	public function addXmlNode($xml_location, $xml_value = null)
 	{
