@@ -13,6 +13,7 @@ PHORONIX TEST SUITE PUBLIC TODO LIST:
 - Numerous pts_render improvements [see in-line code comments]
 - Optimus / DRI_PRIME=1 / xrandr --listproviders better GPU detection
 - NVIDIA make use of UsedDedicatedGPUMemory as new GPU sensor
+- Clean up all the WebSocket code and make it fit to spec
 
 ### PTS-GRAPH ###
 
@@ -53,3 +54,4 @@ PHORONIX TEST SUITE PUBLIC TODO LIST:
 - http://tesseract.gg/
 - https://github.com/facebook/linkbench
 - https://github.com/vasi/pixz
+- Update download links on build-imagemagick

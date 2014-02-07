@@ -1,4 +1,4 @@
-.TH phoronix-test-suite 1  "www.phoronix-test-suite.com" "5.0.0m0"
+.TH phoronix-test-suite 1  "www.phoronix-test-suite.com" "5.0.0m1"
 .SH NAME
 phoronix-test-suite \- The Phoronix Test Suite is an extensible open-source platform for performing testing and performance evaluation.
 .SH SYNOPSIS
@@ -245,9 +245,6 @@ This option can be used for setting an XML value in the Phoronix Test Suite user
 This option will display the Phoronix Test Suite client version.
 .TP
 .SH MODULES
-.B r
-p
-.TP
 .B list-modules
 This option will list all of the available Phoronix Test Suite modules on this system.
 .TP
@@ -256,6 +253,13 @@ This option will show detailed information on a Phoronix Test Suite module such 
 .TP
 .B module-setup [Phoronix Test Suite Module]
 This option will allow you to configure all available end-user options for a Phoronix Test Suite module. These options are then stored within the user's configuration file. Not all modules may have options that can be configured by the end-user.
+.TP
+.B test-module [Phoronix Test Suite Module]
+This option can be used for debugging a Phoronix Test Suite module.
+.TP
+.SH SERVER
+.B r
+p
 .TP
 .SH SEE ALSO
 .B Websites:

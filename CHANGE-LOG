@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 5.0 Milestone 1
+6 February 2014
 
 - pts-core: Add web-server-launcher support
 - pts-core: Support starting HHVM as a web server
@@ -17,6 +18,7 @@ Phoronix Test Suite (Git)
 - phodevi: Various improvements
 - phodevi: Improved disk scheduler fallback reporting
 - documentation: Update to point out new Git location at github.com/phoronix-test-suite/ over Phorogit
+- nye_Xml: Fix for writing zeros in XML tags when using the "when not empty" function
 
 Phoronix Test Suite 4.8.6-Sokndal
 10 December 2013
