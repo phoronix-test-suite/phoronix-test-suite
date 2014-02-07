@@ -131,7 +131,7 @@ class pts_web_socket
 		if($socket && is_resource($socket))
 		{
 			$address = null;
-			socket_getpeername($socket, $address);
+			@socket_getpeername($socket, $address);
 			echo $address . ': ';
 		}
 		echo $msg . PHP_EOL;
@@ -143,7 +143,7 @@ class pts_web_socket
 
 		if(self::$debug_mode)
 		{
-			$this->debug_msg($socket, 'RECEIVED: ' . $data);
+		//	$this->debug_msg($socket, 'RECEIVED: ' . $data);
 		}
 
 		// TODO XXX: sometimes the opcode is 8 (close)... figure out why....

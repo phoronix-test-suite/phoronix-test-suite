@@ -21,86 +21,55 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+// TODO XXX: Something is still not reliable in pts_web_socket_client or pts_web_socket with sometimes junk being passed
+
 class pts_web_socket_client
 {
 	private $socket_master;
-	private $sockets = array();
-	private $users = array();
-	private $callback_on_data_receive = false;
-	private $callback_on_hand_shake = false;
+	private $user_master;
 	public static $debug_mode = false;
 
-	public function __construct($address = 'localhost', $port = 80, $callback_on_data_receive = null, $callback_on_hand_shake = null)
+	public function __construct($address = 'localhost', $port = 80)
 	{
 		ob_implicit_flush();
 		$this->socket_master = socket_create(AF_INET, SOCK_STREAM, getprotobyname('tcp'));
 		//socket_set_option($this->socket_master, SOL_SOCKET, SO_REUSEADDR, 1);
 		//socket_bind($this->socket_master, $address, $port);
 		//echo   socket_strerror(socket_last_error());
+		//socket_set_option($socket, SOL_SOCKET, SO_RCVTIMEO, array('sec' => 2, 'usec' => 0));
 		socket_connect($this->socket_master, $address, $port);
-
-		$this->make_hand_shake($this->socket_master);
 
 		//	socket_listen($this->socket_master);
 		//echo   socket_strerror(socket_last_error());
+		$this->make_hand_shake($this->socket_master);
 		$this->connect($this->socket_master);
-		$this->send_data($this->socket_master, 'TEST 1 2 3');
+		echo 'WebSocket Client Connected: ' . $address . ':' . $port . PHP_EOL;
+		$this->send_message('ping');
+		return;
+	}
+	public function send_message($msg)
+	{
+		return $this->send_data($this->socket_master, $msg);
+	}
+	public function receive_message()
+	{
+		$buffer = null;
+		$bytes = socket_recv($this->socket_master, $buffer, 8192, 0);
 
-		$this->send_data($this->socket_master, '1234678910 VERY LONG MESSAGE 1234678910 VERY LONG MESSAGE 1234678910 VERY LONG MESSAGE 1234678910 VERY LONG MESSAGE 1234678910 VERY LONG MESSAGE 1234678910 VERY LONG MESSAGE 1234678910 VERY LONG MESSAGE 1234678910 VERY LONG MESSAGE 1234678910 VERY LONG MESSAGE 1234678910 VERY LONG MESSAGE 1234678910 VERY LONG MESSAGE 1234678910 VERY LONG MESSAGE 1234678910 VERY LONG MESSAGE 1234678910 VERY LONG MESSAGE 1234678910 VERY LONG MESSAGE 1234678910 VERY LONG MESSAGE 1234678910 VERY LONG MESSAGE 1234678910 VERY LONG MESSAGE 1234678910 VERY LONG MESSAGE 1234678910 VERY LONG MESSAGE 1234678910 VERY LONG MESSAGE 1234678910 VERY LONG MESSAGE 1234678910 VERY LONG MESSAGE 1234678910 VERY LONG MESSAGE 1234678910 VERY LONG MESSAGE 1234678910 VERY LONG MESSAGE 1234678910 VERY LONG MESSAGE 1234678910 VERY LONG MESSAGE 1234678910 VERY LONG MESSAGE 1234678910 VERY LONG MESSAGE 1234678910 VERY LONG MESSAGE 1234678910 VERY LONG MESSAGE 1234678910 VERY LONG MESSAGE 1234678910 VERY LONG MESSAGE 1234678910 VERY LONG MESSAGE 1234678910 VERY LONG MESSAGE 1234678910 VERY LONG MESSAGE 1234678910 VERY LONG MESSAGE 1234678910 VERY LONG MESSAGE 1234678910 VERY LONG MESSAGE 1234678910 VERY LONG MESSAGE 1234678910 VERY LONG MESSAGE 1234678910 VERY LONG MESSAGE 1234678910 VERY LONG MESSAGE 1234678910 VERY LONG MESSAGE 1234678910 VERY LONG MESSAGE 1234678910 VERY LONG MESSAGE 1234678910 VERY LONG MESSAGE END END END 321');
-		$this->send_data($this->socket_master, 'TEST MESSAGE');
-		//	return;
-
-		array_push($this->sockets, $this->socket_master);
-		$this->callback_on_data_receive = $callback_on_data_receive;
-		$this->callback_on_hand_shake = $callback_on_hand_shake;
-		echo 'WebSocket Server Active: ' . $address . ':' . $port . PHP_EOL;
-
-		while(true)
+		if($bytes > 0)
 		{
-			$changed = $this->sockets;
-			$write = null;
-			$except = null;
-			//socket_select($changed, $write, $except, 0);
-
-			foreach($changed as $socket)
-			{
-				$bytes = socket_recv($socket, $buffer, 2048, 0);
-				if(self::$debug_mode)
-				{
-				//	$this->debug_msg($socket, 'RECV: ' . $buffer);
-				}
-
-				if($bytes == false)
-				{
-					if(self::$debug_mode)
-					{
-						$this->debug_msg($socket, 'Disconnecting');
-					}
-					$this->disconnect($socket);
-				}
-				else
-				{
-					$user = false;
-					foreach($this->users as &$u)
-					{
-						if($u->socket == $socket)
-						{
-							$user = $u;
-							break;
-						}
-					}
-
-					if($user === false)
-					{
-						continue;
-					}
-					else
-					{
-						$this->process_data($user, $buffer);
-					}
-				}
-			}
+			return $this->decode_data($this->user_master, $buffer);
 		}
+		else if($bytes === false)
+		{
+			echo PHP_EOL . socket_strerror(socket_last_error()) . PHP_EOL;
+		}
+		else
+		{
+			// NO DATA RECEIVED
+			// $this->disconnect($this->socket_master);
+		}
+
 	}
 	protected function debug_msg(&$socket, $msg)
 	{
@@ -150,21 +119,6 @@ class pts_web_socket_client
 		}
 
 		return $decoded_data;
-	}
-	protected function process_data(&$user, &$msg)
-	{
-		$decoded_msg = $this->decode_data($user, $msg);
-		// echo 'DECODED MESSAGE =' . PHP_EOL; var_dump($decoded_msg);
-		if($this->callback_on_data_receive != false && is_callable($this->callback_on_data_receive))
-		{
-			$ret = call_user_func($this->callback_on_data_receive, $user, $decoded_msg);
-		}
-		else
-		{
-			// Just return the message to the user if no callback function is hooked up
-			echo PHP_EOL . 'RECEIVED THIS MESSAGE: ' . $decoded_msg . PHP_EOL;
-			//$this->send_data($user->socket, $decoded_msg);
-		}
 	}
 	protected function send_json_data($socket, $json)
 	{
@@ -236,35 +190,11 @@ class pts_web_socket_client
 		$user = new pts_web_socket_user();
 		$user->id = uniqid();
 		$user->socket = $socket;
-		array_push($this->users, $user);
-		array_push($this->sockets, $socket);
-
 		return $user;
 	}
-	protected function disconnect($socket)
+	public function disconnect()
 	{
-		$found_user = false;
-		foreach($this->users as $i => &$user)
-		{
-			if($user->socket == $socket)
-			{
-				$found_user = $i;
-				break;
-			}
-		}
-
-		if($found_user !== false)
-		{
-			array_splice($this->users, $found_user, 1);
-		}
-
-		$index = array_search($socket, $this->sockets);
-		if($index !== false)
-		{
-			array_splice($this->sockets, $index, 1);
-		}
-
-		socket_close($socket);
+		socket_close($this->socket_master);
 	}
 	protected function make_hand_shake(&$socket)
 	{
