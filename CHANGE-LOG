@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- pts-core: Add rename-result-file option
+
 Phoronix Test Suite 5.0 Milestone 1
 6 February 2014
 
