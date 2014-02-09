@@ -1842,6 +1842,23 @@ class pts_client
 	{
 		return false; // TODO
 	}
+	public static function get_local_ip()
+	{
+		$local_ip = false;
+
+		if(($ifconfig = pts_client::executable_in_path('ifconfig')))
+		{
+			$ifconfig = shell_exec($ifconfig . ' 2>&1');
+			if(($ipv4 = strpos($ifconfig, 'inet addr:')) !== false)
+			{
+				$ipv4 = substr($ifconfig, $ipv4 + strlen('inet addr:'));
+				$ipv4 = substr($ipv4, 0, strpos($ipv4, ' '));
+				$local_ip = $ipv4;
+			}
+		}
+
+		return $local_ip;
+	}
 }
 
 // Some extra magic
