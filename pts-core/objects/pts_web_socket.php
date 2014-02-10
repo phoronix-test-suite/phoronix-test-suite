@@ -61,7 +61,7 @@ class pts_web_socket
 			$changed = $this->sockets;
 			$write = null;
 			$except = null;
-			socket_select($changed, $write, $except, 0);
+			socket_select($changed, $write, $except, null);
 
 			foreach($changed as $socket)
 			{
