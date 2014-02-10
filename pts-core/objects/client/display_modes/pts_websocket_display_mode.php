@@ -193,7 +193,8 @@ class pts_websocket_display_mode implements pts_display_mode_interface
 	}
 	public function test_install_start($identifier)
 	{
-		$this->update_install_status(null, null);
+		$null_ref_var = null;
+		$this->update_install_status($null_ref_var, null);
 	}
 	public function test_install_downloads($test_install_request)
 	{
@@ -203,8 +204,8 @@ class pts_websocket_display_mode implements pts_display_mode_interface
 		{
 			$stats['test_download_time'] = ($size * 1048576) / $avg_speed;
 		}
-
-		$this->update_install_status(null, $test_install_request, $stats);
+		$null_ref_var = null;
+		$this->update_install_status($null_ref_var, $test_install_request, $stats);
 	}
 	public function test_install_download_file($process, &$pts_test_file_download)
 	{
