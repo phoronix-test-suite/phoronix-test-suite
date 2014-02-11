@@ -115,6 +115,9 @@ else
 	// or pts_webui_intro on invalidated classes
 	$webui_class = 'pts_webui_loader';
 }
+$PTS_WEBSOCKET_PORT = getenv('PTS_WEBSOCKET_PORT');
+define('PTS_WEBSOCKET_SERVER', 'ws://' . $_SERVER['REMOTE_ADDR'] . ':' . $PTS_WEBSOCKET_PORT . '/');
+setcookie('pts_websocket_server', PTS_WEBSOCKET_SERVER, (time() + 60 * 60 * 24), '/');
 
 $webui_class = pts_webui_load_interface($webui_class, $PATH);
 
@@ -122,8 +125,6 @@ if($webui_class === false)
 {
 	$webui_class = pts_webui_load_interface('pts_webui_main', $PATH);
 }
-define('PTS_WEBSOCKET_SERVER', 'ws://' . $_SERVER['REMOTE_ADDR'] . ':' . getenv('PTS_WEBSOCKET_PORT') . '/');
-setcookie('pts_websocket_server', PTS_WEBSOCKET_SERVER, (time() + 60 * 60 * 24), '/');
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

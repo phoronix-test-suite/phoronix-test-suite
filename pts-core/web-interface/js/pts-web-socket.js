@@ -43,7 +43,8 @@ function pts_web_socket()
 	}
 	this.connect = function()
 	{
-		this.socket = new WebSocket("ws://" + location.hostname + ":" + (location.port - 1) + "/" + this.socket_path);
+        var wsserver = pts_read_cookie('pts_websocket_server');
+        this.socket = new WebSocket(wsserver + this.socket_path);
 		this.socket.onopen    = function() { pts_web_socket.web_socket_onopen(); };
 		this.socket.onmessage = function(msg) { pts_web_socket.web_socket_onmessage(msg); } ;
 		this.socket.onclose   = function() { pts_web_socket.web_socket_onclose(); };
