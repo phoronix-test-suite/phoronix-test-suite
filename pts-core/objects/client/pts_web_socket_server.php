@@ -238,7 +238,7 @@ class pts_web_socket_server extends pts_web_socket
 
 		if(isset($json['pts']['msg']['error']) && $json['pts']['msg']['error'] != null)
 		{
-			break;
+			return;
 		}
 		pts_client::$display = new pts_websocket_display_mode();
 		pts_client::$display->set_web_socket($this, $user->id);
