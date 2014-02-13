@@ -23,6 +23,14 @@ function update_benchmark_state(j)
 		}
 		document.getElementById("benchmark_status_window").innerHTML = benchmark_complete;
 	}
+    else if(j.pts.msg.current_state == "failed")
+    {
+        var benchmark_failed = "<h1>Benchmark Failed</h1>";
+        benchmark_failed += "<p><strong>" + j.pts.msg.error + "</p>";
+
+        document.getElementById("benchmark_status_window").innerHTML = benchmark_failed;
+
+    }
 	else
 	{
 		// current_state = benchmark

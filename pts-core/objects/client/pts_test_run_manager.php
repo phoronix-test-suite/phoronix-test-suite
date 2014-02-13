@@ -565,7 +565,7 @@ class pts_test_run_manager
 		else if(pts_file_io::unlink(PTS_USER_PATH . 'skip-test'))
 		{
 			// Just skip the current test and do not save the results, but continue testing
-			continue;
+			return true;
 		}
 		else if(pts_client::read_env('LIMIT_ELAPSED_TEST_TIME') > 0 && (PTS_INIT_TIME + (pts_client::read_env('LIMIT_ELAPSED_TEST_TIME') * 60)) > time())
 		{
@@ -1468,7 +1468,7 @@ class pts_test_run_manager
 			}
 			else
 			{
-				trigger_error($to_run . ' is not recognized.', E_USER_ERROR);
+				trigger_error($run_object . ' is not recognized.', E_USER_ERROR);
 				continue;
 			}
 		}
