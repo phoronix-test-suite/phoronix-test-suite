@@ -798,7 +798,7 @@ class pts_test_installer
 					{
 						list($md5, $file) = explode(' ', $md5_line);
 
-						if($md5_file == $filename)
+						if($file == $filename)
 						{
 							if($md5 == $real_md5)
 							{
@@ -842,7 +842,7 @@ class pts_test_installer
 					{
 						list($sha256, $file) = explode(' ', $sha256_line);
 
-						if($sha256_file == $filename)
+						if($file == $filename)
 						{
 							if($sha256 == $real_sha256)
 							{
