@@ -1726,7 +1726,7 @@ class pts_client
 
 			if($pid == -1)
 			{
-				trigger_error('Could not fork ' . $function . '.', E_USER_ERROR);
+				trigger_error('Could not fork ' . $fork_function . '.', E_USER_ERROR);
 			}
 			else if($pid)
 			{
