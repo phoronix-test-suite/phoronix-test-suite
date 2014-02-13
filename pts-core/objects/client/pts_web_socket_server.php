@@ -238,7 +238,7 @@ class pts_web_socket_server extends pts_web_socket
 
 		if(isset($json['pts']['msg']['error']) && $json['pts']['msg']['error'] != null)
 		{
-			return;
+            exit(1);
 		}
 		pts_client::$display = new pts_websocket_display_mode();
 		pts_client::$display->set_web_socket($this, $user->id);
@@ -251,8 +251,16 @@ class pts_web_socket_server extends pts_web_socket
 		$test_flags = pts_c::auto_mode; // | pts_c::debug_mode
 		pts_client::set_test_flags($test_flags);
 		pts_test_installer::standard_install($virtual_test_queue);
-		$test_run_manager = new pts_test_run_manager($test_flags);
-		if($test_run_manager->load_tests_to_run($virtual_test_queue))
+        if(pts_test_run_manager::initial_checks($virtual_test_queue, $test_flags) == false)
+        {
+            $j['pts']['msg']['name'] = 'benchmark_state';
+            $j['pts']['msg']['current_state'] = 'failed';
+            $j['pts']['msg']['error'] = 'Failed to install test.';
+            $this->send_json_data($user->socket, $j);
+            exit(1);
+        }
+        $test_run_manager = new pts_test_run_manager($test_flags);
+        if($test_run_manager->load_tests_to_run($virtual_test_queue))
 		{
 			// SETUP
 			$test_run_manager->auto_upload_to_openbenchmarking();
@@ -272,6 +280,7 @@ class pts_web_socket_server extends pts_web_socket
 			$j['pts']['msg']['result_url'] = $test_run_manager->get_results_url();
 			$this->send_json_data($user->socket, $j);
 		}
+        exit(0);
 	}
 	protected function search_pts(&$user, $search)
 	{
