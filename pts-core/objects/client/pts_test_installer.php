@@ -425,6 +425,12 @@ class pts_test_installer
 	}
 	public static function create_compiler_mask(&$test_install_request)
 	{
+		if(phodevi::is_bsd())
+		{
+			// XXX: Using the compiler-mask causes a number of tests to fail to properly install due to compiler issues with at least PC-BSD 10.0
+			return false;
+		}
+
 		// or pass false to $test_install_request to bypass the test checks
 		$compilers = array();
 
