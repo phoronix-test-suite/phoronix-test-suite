@@ -247,6 +247,13 @@ This option can be used for setting an XML value in the Phoronix Test Suite user
 .B version
 This option will display the Phoronix Test Suite client version.
 .TP
+.SH GUI / WEB SUPPORT
+.B gui
+Launch the Phoronix Test Suite HTML5 web user-interface in the local GUI mode (no remote web support) and attempt to auto-launch the web-browser.
+.TP
+.B start-remote-gui-server
+Start the GUI web server and WebSocket server processes for remote (or local) access via the web-browser. The settings can be configured via the Phoronix Test Suite's user-config.xml configuration file.
+.TP
 .SH MODULES
 .B list-modules
 This option will list all of the available Phoronix Test Suite modules on this system.
@@ -260,7 +267,7 @@ This option will allow you to configure all available end-user options for a Pho
 .B test-module [Phoronix Test Suite Module]
 This option can be used for debugging a Phoronix Test Suite module.
 .TP
-.SH SERVER
+.SH WEB / UI SUPPORT
 .B r
 p
 .TP
