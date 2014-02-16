@@ -5,6 +5,8 @@ Phoronix Test Suite (Git)
 - pts-core: Add rename-result-file option'
 - pts-core: WebSocket bug-fixes
 - pts-core: Other bug-fixes
+- pts-core: Disable the compiler-mask by default on FreeBSD/PC-BSD due to potential test installation issues on 10.0-RELEASE
+- pts-core: Split webui command into gui and start-remote-gui-server (local HTML5 GUI support) commands (remote + local HTML5 GUI support)
 
 Phoronix Test Suite 5.0 Milestone 1
 6 February 2014

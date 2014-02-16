@@ -20,11 +20,10 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class webui implements pts_option_interface
+class start_remote_gui_server implements pts_option_interface
 {
-	const doc_skip = true; // TODO XXX: cleanup this code before formally advertising this...
-	const doc_section = 'Web User Interface';
-	const doc_description = 'Launch the Phoronix Test Suite web user-interface.';
+	const doc_section = 'GUI / Web Support';
+	const doc_description = 'Start the GUI web server and WebSocket server processes for remote (or local) access via the web-browser. The settings can be configured via the Phoronix Test Suite\'s user-config.xml configuration file.';
 
 	public static function run($r)
 	{
@@ -68,24 +67,8 @@ class webui implements pts_option_interface
 		}
 		else
 		{
-			// SERVER JUST RUNNING FOR LOCAL SYSTEM, SO ALSO COME UP WITH RANDOM FREE PORT
-			$server_ip = 'localhost';
-			// Randomly choose a port and ensure it's not being used...
-			$fp = false;
-			$errno = null;
-			$errstr = null;
-			do
-			{
-				if($fp != false)
-				{
-					fclose($fp);
-				}
-
-				$web_port = rand(2000, 5999);
-				$web_socket_port = $web_port - 1;
-			}
-			while(($fp = fsockopen('127.0.0.1', $web_port, $errno, $errstr, 5)) != false || ($fp = fsockopen('127.0.0.1', $web_socket_port, $errno, $errstr, 5)) != false || in_array($web_port, $blocked_ports) || in_array($web_socket_port, $blocked_ports));
-
+			echo PHP_EOL . PHP_EOL . 'You must first configure the remote GUI/WEBUI settings via the ~/.phoronix-test-suite/user-config.xml.' . PHP_EOL . PHP_EOL;
+			return false;
 		}
 
 		// WebSocket Server Setup
@@ -105,19 +88,9 @@ class webui implements pts_option_interface
 		$server_launcher .= 'http_server_pid=$!'. PHP_EOL;
 		$server_launcher .= 'sleep 1' . PHP_EOL;
 
-		// Browser Launching
-		if(($browser = pts_client::executable_in_path('chromium-browser')) || ($browser = pts_client::executable_in_path('google-chrome')))
-		{
-			// chromium-browser --incognito --temp-profile --kiosk --app=
-			$server_launcher .= 'echo "Launching Browser"' . PHP_EOL;
-			$server_launcher .= $browser . ' --temp-profile --app=http://localhost:' . $web_port . ' -start-maximized';
-			// chromium-browser --kiosk URL starts full-screen
-		}
-		else
-		{
-			$server_launcher .= 'echo "Launch: http://localhost:' . $web_port . '"' . PHP_EOL;
-		}
+		$server_launcher .= 'echo "The Web Interface Is Accessible At: http://localhost:' . $web_port . '"' . PHP_EOL;
 		$server_launcher .= PHP_EOL . 'echo -n "Press [ENTER] to kill server..."' . PHP_EOL . 'read var_name';
+
 		// Shutdown / Kill Servers
 		$server_launcher .= PHP_EOL . 'kill $http_server_pid';
 		$server_launcher .= PHP_EOL . 'kill $websocket_server_pid';
