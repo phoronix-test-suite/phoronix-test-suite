@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2011, Phoronix Media
-	Copyright (C) 2010 - 2011, Michael Larabel
+	Copyright (C) 2010 - 2014, Phoronix Media
+	Copyright (C) 2010 - 2014, Michael Larabel
 	phodevi_audio.php: The PTS Device Interface object for audio / sound cards
 
 	This program is free software; you can redistribute it and/or modify
@@ -75,10 +75,13 @@ class phodevi_audio extends phodevi_device_interface
 
 				$audio = $vendor_name . ' '. $chip_name;
 
-				if(strpos($chip_name, 'HDMI') === false)
+				if(strpos($chip_name, 'HDMI') !== false || strpos($chip_name, 'DP') !== false)
 				{
 					// If HDMI is in the audio string, likely the GPU-provided audio, so try to find the mainboard otherwise
-					$chip = null;
+					$audio = null;
+				}
+				else
+				{
 					break;
 				}
 			}
