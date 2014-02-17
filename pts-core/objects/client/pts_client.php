@@ -1830,7 +1830,14 @@ class pts_client
 		}
 		else
 		{
-			echo PHP_EOL . $error_string . ' in ' . $error_file . ':' . $error_line . PHP_EOL;
+			echo PHP_EOL . $error_string;
+
+			if($error_file != null && $error_line != null)
+			{
+				echo ' in ' . $error_file . ':' . $error_line;
+			}
+
+			echo PHP_EOL;
 		}
 
 		if($error_type == 'ERROR')

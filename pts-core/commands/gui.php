@@ -72,7 +72,7 @@ class gui implements pts_option_interface
 		}
 		else
 		{
-			$server_launcher .= getenv('PHP_BIN') . ' -S ' . $server_ip . ':' . $web_port . ' -t ' . PTS_CORE_PATH . 'web-interface/  &' . PHP_EOL; //2> /dev/null
+			$server_launcher .= getenv('PHP_BIN') . ' -S ' . $server_ip . ':' . $web_port . ' -t ' . PTS_CORE_PATH . 'web-interface/ 2> /dev/null  &' . PHP_EOL; //2> /dev/null
 		}
 		$server_launcher .= 'http_server_pid=$!'. PHP_EOL;
 		$server_launcher .= 'sleep 1' . PHP_EOL;
