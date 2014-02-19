@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2013, Phoronix Media
-	Copyright (C) 2008 - 2013, Michael Larabel
+	Copyright (C) 2008 - 2014, Phoronix Media
+	Copyright (C) 2008 - 2014, Michael Larabel
 	phodevi_system.php: The PTS Device Interface object for the system software
 
 	This program is free software; you can redistribute it and/or modify
@@ -1336,9 +1336,11 @@ class phodevi_system extends phodevi_device_interface
 						break;
 					case 'nvidia':
 					case 'NVIDIA':
+					case 'nouveau':
 						// NVIDIA's binary driver usually ends up reporting 1.0.0
 						if(($nvs_value = phodevi_parser::read_nvidia_extension('NvidiaDriverVersion')))
 						{
+							$display_driver = 'NVIDIA';
 							$driver_version = $nvs_value;
 						}
 						else
@@ -1348,6 +1350,7 @@ class phodevi_system extends phodevi_device_interface
 
 							if(($pos = strpos($glxinfo, 'NVIDIA ')) != false)
 							{
+								$display_driver = 'NVIDIA';
 								$driver_version = substr($glxinfo, ($pos + 7));
 							}
 						}
