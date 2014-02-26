@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2013, Phoronix Media
-	Copyright (C) 2008 - 2013, Michael Larabel
+	Copyright (C) 2008 - 2014, Phoronix Media
+	Copyright (C) 2008 - 2014, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -111,7 +111,19 @@ class pts_render
 					{
 						$values = pts_strings::comma_explode($buffer_item->get_result_value());
 						$avg_value = pts_math::set_precision(array_sum($values) / count($values), 2);
-						$result_object->test_result_buffer->add_test_result($buffer_item->get_result_identifier(), $avg_value);
+						$j = null;
+						if(count($values) > 2)
+						{
+							$j['min-result'] = min($values);
+							$j['max-result'] = max($values);
+
+							if($j['min-result'] == $j['max-result'])
+							{
+								$json = null;
+							}
+						}
+
+						$result_object->test_result_buffer->add_test_result($buffer_item->get_result_identifier(), $avg_value, null, $j, $j['min-result'], $j['max-result']);
 					}
 
 					$result_object->test_profile->set_display_format('BAR_GRAPH');
