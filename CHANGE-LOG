@@ -4,6 +4,7 @@ Phoronix Test Suite (Git)
 
 - phodevi: Improve NVIDIA DDX version detection
 - phodevi: Improve audio detection
+- phodevi: Add extra fallback for trying to read Radeon DRM core and memory frequencies on recent kernels
 
 Phoronix Test Suite 5.0 Milestone 2
 17 February 2014

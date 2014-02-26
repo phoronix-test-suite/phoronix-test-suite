@@ -903,6 +903,33 @@ class phodevi_gpu extends phodevi_device_interface
 								}
 							}
 						}
+						if($core_freq == 0 && ($x = stripos(phodevi::$vfs->radeon_pm_info, 'sclk: ')) != false)
+						{
+							$x = substr(phodevi::$vfs->radeon_pm_info, $x + strlen('sclk: '));
+							$x = substr($x, 0, strpos($x, ' '));
+							if(is_numeric($x) && $x > 100)
+							{
+								if($x > 10000)
+								{
+									$x = $x / 100;
+								}
+								$core_freq = $x;
+							}
+
+							if(($x = stripos(phodevi::$vfs->radeon_pm_info, 'mclk: ')) != false)
+							{
+								$x = substr(phodevi::$vfs->radeon_pm_info, $x + strlen('mclk: '));
+								$x = substr($x, 0, strpos($x, ' '));
+								if(is_numeric($x) && $x > 100)
+								{
+									if($x > 10000)
+									{
+										$x = $x / 100;
+									}
+									$mem_freq = $x;
+								}
+							}
+						}
 					}
 
 					if($core_freq == null)
