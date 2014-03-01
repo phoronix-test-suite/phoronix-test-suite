@@ -24,11 +24,13 @@ set PTS_DIR=%pwd%
 set PTS_MODE=CLIENT
 
 :: TODO: Other work to bring this up to sync with the *NIX phoronix-test-suite launcher
-
+If defined PHP_BIN goto SkipBinSearch
+echo "\nNo PHP_BIN defined checking for usual locations.\n"
 If exist "C:\Program Files (x86)\PHP"\php set PHP_BIN="C:\Program Files (x86)\PHP"\php
 If exist C:\php-gtk2\php set PHP_BIN=C:\php-gtk2\php
 set PHP_BIN="C:\Program Files (x86)\PHP"\php
 
+:SkipBinSearch
 If not defined PHP_BIN echo "\nPHP could not be found.\n" else cls
 %PHP_BIN% pts-core/phoronix-test-suite.php %*
 
