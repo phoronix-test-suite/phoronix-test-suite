@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+- pts-core: Windows 8.1 support improvements
 - phodevi: Improve NVIDIA DDX version detection
 - phodevi: Improve audio detection
 - phodevi: Add extra fallback for trying to read Radeon DRM core and memory frequencies on recent kernels
