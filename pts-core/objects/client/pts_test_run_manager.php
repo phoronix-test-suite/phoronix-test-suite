@@ -1511,7 +1511,7 @@ class pts_test_run_manager
 		$valid_test_profile = true;
 		$test_type = $test_profile->get_test_hardware_type();
 		$skip_tests = pts_client::read_env('SKIP_TESTS') ? pts_strings::comma_explode(pts_client::read_env('SKIP_TESTS')) : false;
-		$only_test_types = ($e = pts_client::read_env('ONLY_TEST_TYPES')) ? pts_strings::comma_explode($e) : false;
+		$skip_test_subsystems = pts_client::read_env('SKIP_TESTING_SUBSYSTEMS') ? pts_strings::comma_explode(strtolower(pts_client::read_env('SKIP_TESTING_SUBSYSTEMS'))) : false;
 		$display_driver = phodevi::read_property('system', 'display-driver');
 		$gpu = phodevi::read_name('gpu');
 
@@ -1540,7 +1540,7 @@ class pts_test_run_manager
 			$report_errors && pts_client::$display->test_run_error('Due to a pre-set environmental variable, skipping ' . $test_profile);
 			$valid_test_profile = false;
 		}
-		else if($only_test_types && !in_array($test_profile->get_test_hardware_type(), $only_test_types))
+		else if($skip_test_subsystems && in_array(strtolower($test_profile->get_test_hardware_type()), $skip_test_subsystems))
 		{
 			$report_errors && pts_client::$display->test_run_error('Due to a pre-set environmental variable, skipping ' . $test_profile);
 			$valid_test_profile = false;

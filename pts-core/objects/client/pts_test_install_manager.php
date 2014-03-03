@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2013, Phoronix Media
-	Copyright (C) 2010 - 2013, Michael Larabel
+	Copyright (C) 2010 - 2014, Phoronix Media
+	Copyright (C) 2010 - 2014, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -38,6 +38,10 @@ class pts_test_install_manager
 		$added = false;
 
 		if(($e = pts_client::read_env('SKIP_TESTS')) != false && (in_array($test_profile->get_identifier(false), pts_strings::comma_explode($e)) || in_array($test_profile->get_identifier(true), pts_strings::comma_explode($e))))
+		{
+			//pts_client::$display->test_install_error($test_profile->get_identifier() . ' is being skipped from installation.');
+		}
+		else if(($e = pts_client::read_env('SKIP_TESTING_SUBSYSTEMS')) != false && in_array(strtolower($test_profile->get_test_hardware_type()), pts_strings::comma_explode(strtolower($e))))
 		{
 			//pts_client::$display->test_install_error($test_profile->get_identifier() . ' is being skipped from installation.');
 		}

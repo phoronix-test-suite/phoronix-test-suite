@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Windows 8.1 support improvements
+- pts-core: Add SKIP_TESTING_SUBSYSTEMS environment variable, partially based on former ONLY_TEST_TYPES
 - phodevi: Improve NVIDIA DDX version detection
 - phodevi: Improve audio detection
 - phodevi: Add extra fallback for trying to read Radeon DRM core and memory frequencies on recent kernels

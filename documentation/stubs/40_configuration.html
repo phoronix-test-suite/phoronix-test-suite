@@ -31,8 +31,8 @@
 <p>For setting any test option(s) from an environment variable rather than being prompted for the options when running a test. Example: <em>PRESET_OPTIONS=&quot;stream.run-type=Add&quot; ./phoronix-test-suite benchmark stream</em></p>
 <p><strong>SKIP_TESTS</strong></p>
 <p>If there are any test(s) to exempt from the testing process, specify them in this variable. Multiple tests can be waived by delimiting each test identifier by a comma. A test hardware type (i.e. Graphics) can also be supplied for skipping a range of tests.</p>
-<p><strong>ONLY_TEST_TYPES</strong></p>
-<p>If you are running a set of benchmarks (namely a result file) but wish to skip some of the tests that don't belong to a certain test type group, you can set the hardware types to test via this environment variable. E.g. setting <em>ONLY_TEST_TYPE=Graphics</em> will skip all test profiles to run that are not of the graphics test group. Multiple types should be delimited by a comma.</p>
+<p><strong>SKIP_TESTING_SUBSYSTEMS</strong></p>
+<p>If you are running a set of benchmarks (namely a result file) but wish to skip some of the tests that don't belong to a certain test type group, you can set the hardware types to test via this environment variable. E.g. setting <em>SKIP_TESTING_SUBSYSTEMS=Graphics</em> will skip all test profiles to run that are not of the graphics test group. Multiple types should be delimited by a comma.</p>
 <p><strong>PTS_MODULE_SETUP</strong></p>
 <p>This variable can be used to load Phoronix Test Suite module settings automatically when using the <em>module-setup</em> option. An example would be: <em>PTS_MODULE_SETUP=&quot;phoromatic.remote_host=http://www.phoromatic.com/; phoromatic.remote_account=123456; phoromatic.remote_verifier=ABCD&quot; phoronix-test-suite module-setup phoromatic</em>.</p>
 <p><strong>PTS_MODULES</strong></p>
