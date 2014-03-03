@@ -90,25 +90,25 @@ class run_random_tests implements pts_option_interface
 				pts_test_installer::standard_install($to_test, $test_flags);
 			}
 
+			$batch_mode_settings = array(
+				'UploadResults' => false,
+				'SaveResults' => true,
+				'PromptForTestDescription' => false,
+				'RunAllTestCombinations' => false,
+				'PromptSaveName' => false,
+				'PromptForTestIdentifier' => false,
+				'OpenBrowser' => false
+				);
+
+			if($upload_to_openbenchmarking)
+			{
+				$batch_mode_settings['UploadResults'] = true;
+				pts_openbenchmarking_client::override_client_setting('UploadSystemLogsByDefault', true);
+			}
+			pts_test_run_manager::set_batch_mode($batch_mode_settings);
+
 			if(pts_test_run_manager::initial_checks($to_test, $test_flags) != false)
 			{
-				$batch_mode_settings = array(
-					'UploadResults' => false,
-					'SaveResults' => true,
-					'PromptForTestDescription' => false,
-					'RunAllTestCombinations' => false,
-					'PromptSaveName' => false,
-					'PromptForTestIdentifier' => false,
-					'OpenBrowser' => false
-					);
-
-				if($upload_to_openbenchmarking)
-				{
-					$batch_mode_settings['UploadResults'] = true;
-					pts_openbenchmarking_client::override_client_setting('UploadSystemLogsByDefault', true);
-				}
-				pts_test_run_manager::set_batch_mode($batch_mode_settings);
-
 				$test_run_manager = new pts_test_run_manager($test_flags);
 				if($test_run_manager->load_tests_to_run($to_test))
 				{
