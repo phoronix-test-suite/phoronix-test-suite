@@ -72,6 +72,7 @@ class run_random_tests implements pts_option_interface
 			}
 
 			$test_flags = pts_c::auto_mode | pts_c::defaults_mode;
+			pts_client::set_test_flags($test_flags);
 			if($allow_new_tests_to_be_installed)
 			{
 				if($allow_new_dependencies_to_be_installed == false)
