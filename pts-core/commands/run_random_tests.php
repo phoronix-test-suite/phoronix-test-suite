@@ -78,7 +78,7 @@ class run_random_tests implements pts_option_interface
 				pts_client::pts_set_environment_variable('SKIP_TESTING_SUBSYSTEMS', implode(',', $subsystems_to_avoid));
 			}
 
-			$test_flags = pts_c::auto_mode | pts_c::defaults_mode;
+			$test_flags = pts_c::auto_mode | pts_c::defaults_mode | pts_c::batch_mode;
 			pts_client::set_test_flags($test_flags);
 			if($allow_new_tests_to_be_installed)
 			{
@@ -92,16 +92,27 @@ class run_random_tests implements pts_option_interface
 
 			if(pts_test_run_manager::initial_checks($to_test, $test_flags) != false)
 			{
+				$batch_mode_settings = array(
+					'UploadResults' => false,
+					'SaveResults' => true,
+					'PromptForTestDescription' => false,
+					'RunAllTestCombinations' => false,
+					'PromptSaveName' => false,
+					'PromptForTestIdentifier' => false,
+					'OpenBrowser' => false
+					);
+
+				if($upload_to_openbenchmarking)
+				{
+					$batch_mode_settings['UploadResults'] = true;
+					pts_openbenchmarking_client::override_client_setting('UploadSystemLogsByDefault', true);
+				}
+				pts_test_run_manager::set_batch_mode($batch_mode_settings);
+
 				$test_run_manager = new pts_test_run_manager($test_flags);
 				if($test_run_manager->load_tests_to_run($to_test))
 				{
 					// SETUP
-					if($upload_to_openbenchmarking)
-					{
-						$test_run_manager->auto_upload_to_openbenchmarking();
-						pts_openbenchmarking_client::override_client_setting('UploadSystemLogsByDefault', true);
-					}
-
 					$test_run_manager->auto_save_results($title, $id, 'Automated open-source benchmarks by the Phoronix Test Suite.', true);
 
 					// BENCHMARK
