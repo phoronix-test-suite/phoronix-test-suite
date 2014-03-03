@@ -865,7 +865,7 @@ class pts_test_run_manager
 				if((pts_c::$test_flags & pts_c::batch_mode))
 				{
 					if(self::$batch_mode_options['OpenBrowser'])
-					{$
+					{
 						pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . '/index.html', null, true, true);
 					}
 				}
