@@ -860,10 +860,19 @@ class pts_test_run_manager
 			pts_module_manager::module_process('__event_results_saved', $this);
 			//echo PHP_EOL . 'Results Saved To: ; . PTS_SAVE_RESULTS_PATH . $this->get_file_name() . ;/composite.xml' . PHP_EOL;
 
-			if((pts_c::$test_flags ^ pts_c::auto_mode) && ((pts_c::$test_flags ^ pts_c::batch_mode) || self::$batch_mode_options['OpenBrowser'] == true))
+			if((pts_c::$test_flags ^ pts_c::auto_mode))
 			{
-				$auto_open = (pts_c::$test_flags & pts_c::batch_mode) ? self::$batch_mode_options['OpenBrowser'] : false;
-				pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . '/index.html', null, true, $auto_open);
+				if((pts_c::$test_flags & pts_c::batch_mode))
+				{
+					if(self::$batch_mode_options['OpenBrowser'])
+					{
+						pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . '/index.html', null, true, true);
+					}
+				}
+				else
+				{
+					pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . '/index.html', null, true, false);
+				}
 			}
 
 			if($this->allow_sharing_of_results && pts_network::network_support_available())

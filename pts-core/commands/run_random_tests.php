@@ -67,7 +67,8 @@ class run_random_tests implements pts_option_interface
 
 			if(isset($id[50]))
 			{
-				$id = substr($id, 0, strrpos($id, ' ', 50));
+				$id = substr($id, 0, 50);
+				$id = substr($id, 0, strrpos($id, ' '));
 			}
 
 			if($limit_test_subsystem)
