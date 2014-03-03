@@ -54,14 +54,15 @@ class run_random_tests implements pts_option_interface
 			{
 				$available_tests = pts_openbenchmarking::available_tests();
 				shuffle($available_tests);
-				$to_test = array_rand($available_tests, 0, rand(1, 4));
+				$to_test = array_slice($available_tests, 0, rand(1, 4));
 			}
 
 			echo PHP_EOL . 'TO RUN: ' . implode(', ', $to_test) . PHP_EOL . PHP_EOL;
 
 			// QUERY FROM OB
 			$random_titles = array(phodevi::read_property('cpu', 'model') . ' Benchmarks', phodevi::read_property('system', 'operating-system') . ' Benchmarks', phodevi::read_property('system', 'operating-system') . ' Performance', phodevi::read_property('cpu', 'model') . ' Performance');
-			$title = array_rand($random_titles);
+			array_shuffle($random_titles);
+			$title = array_pop($random_titles);
 			$id = phodevi::read_property('cpu', 'model') . ' - ' . phodevi::read_property('gpu', 'model') . ' - ' . phodevi::read_property('motherboard', 'identifier');
 			if($limit_test_subsystem)
 			{
@@ -90,6 +91,7 @@ class run_random_tests implements pts_option_interface
 					if($upload_to_openbenchmarking)
 					{
 						$test_run_manager->auto_upload_to_openbenchmarking();
+						pts_openbenchmarking_client::override_client_setting('UploadSystemLogsByDefault', true);
 					}
 
 					$test_run_manager->auto_save_results($title, $id, 'Automated open-source benchmarks by the Phoronix Test Suite.', true);
@@ -101,7 +103,7 @@ class run_random_tests implements pts_option_interface
 				}
 			}
 
-			sleep(60);
+			sleep(30);
 		}
 	}
 }
