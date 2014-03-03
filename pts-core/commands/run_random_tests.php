@@ -61,7 +61,7 @@ class run_random_tests implements pts_option_interface
 
 			// QUERY FROM OB
 			$random_titles = array(phodevi::read_property('cpu', 'model') . ' Benchmarks', phodevi::read_property('system', 'operating-system') . ' Benchmarks', phodevi::read_property('system', 'operating-system') . ' Performance', phodevi::read_property('cpu', 'model') . ' Performance');
-			array_shuffle($random_titles);
+			shuffle($random_titles);
 			$title = array_pop($random_titles);
 			$id = phodevi::read_property('cpu', 'model') . ' - ' . phodevi::read_property('gpu', 'model') . ' - ' . phodevi::read_property('motherboard', 'identifier');
 			if($limit_test_subsystem)
