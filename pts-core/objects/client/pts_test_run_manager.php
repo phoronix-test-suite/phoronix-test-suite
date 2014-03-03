@@ -950,14 +950,14 @@ class pts_test_run_manager
 		{
 			if($skip_tests && (in_array($run_object->get_identifier(false), $skip_tests) || ($run_object instanceof pts_test_profile && in_array($run_object->get_identifier_base_name(), $skip_tests))))
 			{
-				echo 'Skipping: ' . $run_object->get_identifier() . PHP_EOL;
+				pts_client::$display->generic_sub_heading('Skipping: ' . $run_object->get_identifier());
 				continue;
 			}
 			else if($run_object instanceof pts_test_profile)
 			{
 				if($run_object->get_title() == null)
 				{
-					echo 'Not A Test: ' . $run_object . PHP_EOL;
+					pts_client::$display->generic_sub_heading('Not A Test: ' . $run_object);
 					continue;
 				}
 				else
@@ -1003,7 +1003,7 @@ class pts_test_run_manager
 			{
 				if($run_object->is_core_version_supported() == false)
 				{
-					echo $run_object->get_title() . ' is a suite not supported by this version of the Phoronix Test Suite.' . PHP_EOL;
+					pts_client::$display->generic_sub_heading($run_object->get_title() . ' is a suite not supported by this version of the Phoronix Test Suite.');
 					continue;
 				}
 
@@ -1033,7 +1033,7 @@ class pts_test_run_manager
 			}
 			else
 			{
-				echo 'Not Recognized: ' . $run_object . PHP_EOL;
+				pts_client::$display->generic_sub_heading('Not Recognized: ' . $run_object);
 				continue;
 			}
 
