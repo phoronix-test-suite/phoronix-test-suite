@@ -46,7 +46,7 @@ class run_random_tests implements pts_option_interface
 				if($installed_tests > 2)
 				{
 					shuffle($installed_tests);
-					$to_test = array_slice($installed_tests, 0, rand(1, 6));
+					$to_test = array_slice($installed_tests, 0, rand(1, 10));
 				}
 			}
 
@@ -54,16 +54,22 @@ class run_random_tests implements pts_option_interface
 			{
 				$available_tests = pts_openbenchmarking::available_tests();
 				shuffle($available_tests);
-				$to_test = array_slice($available_tests, 0, rand(1, 4));
+				$to_test = array_slice($available_tests, 0, rand(1, 6));
 			}
 
 			echo PHP_EOL . 'TO RUN: ' . implode(', ', $to_test) . PHP_EOL . PHP_EOL;
 
 			// QUERY FROM OB
-			$random_titles = array(phodevi::read_property('cpu', 'model') . ' Benchmarks', phodevi::read_property('system', 'operating-system') . ' Benchmarks', phodevi::read_property('system', 'operating-system') . ' Performance', phodevi::read_property('cpu', 'model') . ' Performance');
+			$random_titles = array(phodevi::read_property('cpu', 'model') . ' Benchmarks', phodevi::read_property('system', 'operating-system') . ' Benchmarks', phodevi::read_property('system', 'operating-system') . ' Performance', phodevi::read_property('cpu', 'model') . ' Performance', phodevi::read_property('motherboard', 'identifier') . ' On ' . phodevi::read_property('system', 'operating-system'), phodevi::read_property('cpu', 'model') . ' On ' . phodevi::read_property('system', 'operating-system'));
 			shuffle($random_titles);
 			$title = array_pop($random_titles);
 			$id = phodevi::read_property('cpu', 'model') . ' - ' . phodevi::read_property('gpu', 'model') . ' - ' . phodevi::read_property('motherboard', 'identifier');
+
+			if(isset($id[50]))
+			{
+				$id = substr($id, 0, strrpos($id, ' ', 50));
+			}
+
 			if($limit_test_subsystem)
 			{
 				$subsystems_to_test = explode(',', $limit_test_subsystem);
