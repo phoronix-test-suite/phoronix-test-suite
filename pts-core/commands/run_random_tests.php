@@ -52,7 +52,7 @@ class run_random_tests implements pts_option_interface
 					return false;
 				}
 			}
-			else if(rand(1, 4) == 2)
+			else if(rand(1, 6) == 2)
 			{
 				$ob_ids = pts_openbenchmarking_client::popular_openbenchmarking_results();
 				$ob_type = rand(0, 1) == 1 ? 'recent_popular_results' : 'recent_results';
@@ -147,7 +147,7 @@ class run_random_tests implements pts_option_interface
 				if($test_run_manager->load_tests_to_run($to_test))
 				{
 					// SETUP
-					$test_run_manager->auto_save_results($title, null, 'Open-source benchmarks by the Phoronix Test Suite.', true);
+					$test_run_manager->auto_save_results($title, null, 'Open-source benchmarks by the ' . pts_title(true) . '.', true);
 					$test_run_manager->auto_generate_results_identifier();
 					echo PHP_EOL;
 					pts_client::$display->generic_sub_heading('Result File: ' . $test_run_manager->get_file_name());
