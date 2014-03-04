@@ -353,6 +353,25 @@ class pts_openbenchmarking_client
 
 		return isset($repo_index['tests'][$tp][$attribute]) ? $repo_index['tests'][$tp][$attribute] : null;
 	}
+	public static function popular_openbenchmarking_results()
+	{
+		$index_file = PTS_OPENBENCHMARKING_SCRATCH_PATH . 'popular.results';
+
+		if(!is_file($index_file) || filemtime($index_file) < (time() - 1800))
+		{
+			// Refresh the repository change-log just once a day should be fine
+			$server_index = pts_openbenchmarking::make_openbenchmarking_request('interesting_results');
+
+			if(json_decode($server_index) != false)
+			{
+				file_put_contents($index_file, $server_index);
+			}
+		}
+
+		$results = is_file($index_file) ? json_decode(file_get_contents($index_file), true) : false;
+
+		return $results ? $results['results'] : false;
+	}
 	public static function fetch_repository_changelog($repo_name)
 	{
 		$index_file = PTS_OPENBENCHMARKING_SCRATCH_PATH . $repo_name . '.changes';

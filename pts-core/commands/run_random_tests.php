@@ -52,24 +52,35 @@ class run_random_tests implements pts_option_interface
 					return false;
 				}
 			}
+			else if(rand(1, 4) == 2)
+			{
+				$ob_ids = pts_openbenchmarking_client::popular_openbenchmarking_results();
+				$ob_type = rand(0, 1) == 1 ? 'recent_popular_results' : 'recent_results';
+
+				if(isset($ob_ids[$ob_type]) && !empty($ob_ids[$ob_type]))
+				{
+					shuffle($ob_ids[$ob_type]);
+					$to_test = array(array_pop($ob_ids[$ob_type]));
+				}
+			}
 
 			if(empty($to_test))
 			{
 				// Randomly pick some installed tests
 				$installed_tests = pts_tests::installed_tests();
 
-				if($installed_tests > 2)
+				if($installed_tests > 3)
 				{
 					shuffle($installed_tests);
 					$to_test = array_slice($installed_tests, 0, rand(1, 8));
 				}
-			}
 
-			if(!isset($to_test[1]) && $allow_new_tests_to_be_installed)
-			{
-				$available_tests = pts_openbenchmarking::available_tests();
-				shuffle($available_tests);
-				$to_test = array_merge($to_test, array_slice($available_tests, 0, rand(1, 10)));
+				if(!isset($to_test[2]) && $allow_new_tests_to_be_installed)
+				{
+					$available_tests = pts_openbenchmarking::available_tests();
+					shuffle($available_tests);
+					$to_test = array_merge($to_test, array_slice($available_tests, 0, rand(1, 10)));
+				}
 			}
 
 			if(empty($to_test))
@@ -82,9 +93,9 @@ class run_random_tests implements pts_option_interface
 			pts_client::$display->generic_sub_heading('Tests To Run: ' . implode(', ', $to_test));
 
 			// QUERY FROM OB
-			$random_titles = array(phodevi::read_property('cpu', 'model') . ' Benchmarks', phodevi::read_property('system', 'operating-system') . ' Benchmarks', phodevi::read_property('system', 'operating-system') . ' Performance', phodevi::read_property('cpu', 'model') . ' Performance', phodevi::read_property('motherboard', 'identifier') . ' On ' . phodevi::read_property('system', 'operating-system'), phodevi::read_property('cpu', 'model') . ' On ' . phodevi::read_property('system', 'operating-system'));
+			$random_titles = array(phodevi::read_property('cpu', 'model') . ' Benchmarks', phodevi::read_property('system', 'operating-system') . ' Benchmarks', phodevi::read_property('system', 'operating-system') . ' Performance', phodevi::read_property('cpu', 'model') . ' Performance', phodevi::read_property('motherboard', 'identifier') . ' On ' . phodevi::read_property('system', 'operating-system'), phodevi::read_property('cpu', 'model') . ' On ' . phodevi::read_property('system', 'operating-system'), phodevi::read_property('system', 'kernel') . ' + ' . phodevi::read_property('system', 'operating-system') . ' Tests');
 			shuffle($random_titles);
-			$title = array_pop($random_titles) . ' ' . date('H:i y.m.d');
+			$title = array_pop($random_titles);
 			$id = phodevi::read_property('cpu', 'model') . ' - ' . phodevi::read_property('gpu', 'model') . ' - ' . phodevi::read_property('motherboard', 'identifier');
 
 			if(strlen($id) > 55)
@@ -141,9 +152,11 @@ class run_random_tests implements pts_option_interface
 					$test_run_manager->pre_execution_process();
 					$test_run_manager->call_test_runs();
 					$test_run_manager->post_execution_process();
+					pts_client::remove_saved_result_file($test_run_manager->get_file_name());
 				}
 			}
 
+			echo PHP_EOL;
 			sleep(30);
 		}
 	}
