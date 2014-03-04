@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 5.0 Milestone 3
+3 March 2014
 
 - pts-core: Windows 8.1 support improvements
 - pts-core: Add SKIP_TESTING_SUBSYSTEMS environment variable, partially based on former ONLY_TEST_TYPES
