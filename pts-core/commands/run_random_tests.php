@@ -78,12 +78,13 @@ class run_random_tests implements pts_option_interface
 				return false;
 			}
 
+			echo PHP_EOL;
 			pts_client::$display->generic_sub_heading('Tests To Run: ' . implode(', ', $to_test));
 
 			// QUERY FROM OB
 			$random_titles = array(phodevi::read_property('cpu', 'model') . ' Benchmarks', phodevi::read_property('system', 'operating-system') . ' Benchmarks', phodevi::read_property('system', 'operating-system') . ' Performance', phodevi::read_property('cpu', 'model') . ' Performance', phodevi::read_property('motherboard', 'identifier') . ' On ' . phodevi::read_property('system', 'operating-system'), phodevi::read_property('cpu', 'model') . ' On ' . phodevi::read_property('system', 'operating-system'));
 			shuffle($random_titles);
-			$title = array_pop($random_titles) . date('H:i y.m.d');
+			$title = array_pop($random_titles) . ' ' . date('H:i y.m.d');
 			$id = phodevi::read_property('cpu', 'model') . ' - ' . phodevi::read_property('gpu', 'model') . ' - ' . phodevi::read_property('motherboard', 'identifier');
 
 			if(strlen($id) > 55)
