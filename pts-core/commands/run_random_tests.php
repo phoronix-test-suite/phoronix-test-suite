@@ -29,7 +29,7 @@ class run_random_tests implements pts_option_interface
 	{
 		pts_client::$display->generic_heading('Random Test Execution');
 		$allow_new_tests_to_be_installed = pts_user_io::prompt_bool_input('Allow new tests to be installed', true);
-		$allow_new_dependencies_to_be_installed = $allow_new_tests_to_be_installed ? pts_user_io::prompt_bool_input('Allow new test dependencies to be installed', true) : false;
+		$allow_new_dependencies_to_be_installed = $allow_new_tests_to_be_installed ? pts_user_io::prompt_bool_input('Allow new test external dependencies to be installed', false) : false;
 		$limit_test_subsystem = pts_user_io::prompt_bool_input('Limit tests to a given subsystem', false);
 		$limit_test_subsystem = $limit_test_subsystem ? pts_user_io::prompt_text_menu('Select subsystem(s) to test', pts_types::subsystem_targets(), true) : false;
 		$upload_to_openbenchmarking = pts_user_io::prompt_bool_input('Auto-upload test results to OpenBenchmarking.org', true);
@@ -37,6 +37,21 @@ class run_random_tests implements pts_option_interface
 		while(1)
 		{
 			$to_test = array();
+
+			if($limit_test_subsystem)
+			{
+				foreach(explode(',', $limit_test_subsystem) as $test_type)
+				{
+					$tests = pts_openbenchmarking_client::popular_tests(-1, $test_type);
+					$to_test = array_merge($to_test, $tests);
+				}
+
+				if(empty($to_test))
+				{
+					pts_client::$display->generic_sub_heading('No tests could be found to run.');
+					return false;
+				}
+			}
 
 			if(empty($to_test))
 			{
@@ -46,18 +61,24 @@ class run_random_tests implements pts_option_interface
 				if($installed_tests > 2)
 				{
 					shuffle($installed_tests);
-					$to_test = array_slice($installed_tests, 0, rand(1, 10));
+					$to_test = array_slice($installed_tests, 0, rand(1, 8));
 				}
 			}
 
-			if(!isset($to_test[2]) && $allow_new_tests_to_be_installed)
+			if(!isset($to_test[1]) && $allow_new_tests_to_be_installed)
 			{
 				$available_tests = pts_openbenchmarking::available_tests();
 				shuffle($available_tests);
-				$to_test = array_slice($available_tests, 0, rand(1, 6));
+				$to_test = array_merge($to_test, array_slice($available_tests, 0, rand(1, 10)));
 			}
 
-			echo PHP_EOL . 'TO RUN: ' . implode(', ', $to_test) . PHP_EOL . PHP_EOL;
+			if(empty($to_test))
+			{
+				pts_client::$display->generic_sub_heading('No tests could be found to run.');
+				return false;
+			}
+
+			pts_client::$display->generic_sub_heading('Tests To Run: ' . implode(', ', $to_test));
 
 			// QUERY FROM OB
 			$random_titles = array(phodevi::read_property('cpu', 'model') . ' Benchmarks', phodevi::read_property('system', 'operating-system') . ' Benchmarks', phodevi::read_property('system', 'operating-system') . ' Performance', phodevi::read_property('cpu', 'model') . ' Performance', phodevi::read_property('motherboard', 'identifier') . ' On ' . phodevi::read_property('system', 'operating-system'), phodevi::read_property('cpu', 'model') . ' On ' . phodevi::read_property('system', 'operating-system'));
