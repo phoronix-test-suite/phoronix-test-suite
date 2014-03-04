@@ -96,13 +96,6 @@ class run_random_tests implements pts_option_interface
 			$random_titles = array(phodevi::read_property('cpu', 'model') . ' Benchmarks', phodevi::read_property('system', 'operating-system') . ' Benchmarks', phodevi::read_property('system', 'operating-system') . ' Performance', phodevi::read_property('cpu', 'model') . ' Performance', phodevi::read_property('motherboard', 'identifier') . ' On ' . phodevi::read_property('system', 'operating-system'), phodevi::read_property('cpu', 'model') . ' On ' . phodevi::read_property('system', 'operating-system'), phodevi::read_property('system', 'kernel') . ' + ' . phodevi::read_property('system', 'operating-system') . ' Tests');
 			shuffle($random_titles);
 			$title = array_pop($random_titles);
-			$id = phodevi::read_property('cpu', 'model') . ' - ' . phodevi::read_property('gpu', 'model') . ' - ' . phodevi::read_property('motherboard', 'identifier');
-
-			if(strlen($id) > 55)
-			{
-				$id = substr($id, 0, 54);
-				$id = substr($id, 0, strrpos($id, ' '));
-			}
 
 			if($limit_test_subsystem)
 			{
@@ -146,7 +139,10 @@ class run_random_tests implements pts_option_interface
 				if($test_run_manager->load_tests_to_run($to_test))
 				{
 					// SETUP
-					$test_run_manager->auto_save_results($title, $id, 'Automated open-source benchmarks by the Phoronix Test Suite.', true);
+					$test_run_manager->auto_save_results($title, null, 'Automated open-source benchmarks by the Phoronix Test Suite.', true);
+					$test_run_manager->auto_generate_results_identifier();
+					pts_client::$display->generic_sub_heading('Result File: ' . $test_run_manager->get_file_name());
+					pts_client::$display->generic_sub_heading('Result Identifier: ' . $test_run_manager->get_results_identifier());
 
 					// BENCHMARK
 					$test_run_manager->pre_execution_process();

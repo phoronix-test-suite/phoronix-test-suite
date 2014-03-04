@@ -371,51 +371,71 @@ class pts_test_run_manager
 
 		if(empty($results_identifier))
 		{
-			// If the save result identifier is empty, try to come up with something based upon the tests being run.
-			$subsystem_r = array();
-			$subsystems_to_test = $this->subsystems_under_test();
-
-			if(pts_result_file::is_test_result_file($this->file_name))
-			{
-				$result_file = new pts_result_file($this->file_name);
-				$result_file_intent = pts_result_file_analyzer::analyze_result_file_intent($result_file);
-
-				if(is_array($result_file_intent) && $result_file_intent[0] != 'Unknown')
-				{
-					array_unshift($subsystems_to_test, $result_file_intent[0]);
-				}
-			}
-
-			foreach($subsystems_to_test as $subsystem)
-			{
-				$components = pts_result_file_analyzer::system_component_string_to_array(phodevi::system_hardware(true) . ', ' . phodevi::system_software(true));
-				if(isset($components[$subsystem]))
-				{
-					$subsystem_name = pts_strings::trim_search_query($components[$subsystem]);
-
-					if(phodevi::is_vendor_string($subsystem_name) && !in_array($subsystem_name, $subsystem_r))
-					{
-						array_push($subsystem_r, $subsystem_name);
-					}
-					if(isset($subsystem_r[2]) || isset($subsystem_name[19]))
-					{
-						break;
-					}
-				}
-			}
-
-			if(isset($subsystem_r[0]))
-			{
-				$results_identifier = implode(' - ', $subsystem_r);
-			}
-
-			if(empty($results_identifier))
-			{
-				$results_identifier = date('Y-m-d H:i');
-			}
+			$results_identifier = $this->auto_generate_results_identifier();
 		}
 
 		$this->results_identifier = $results_identifier;
+	}
+	public function auto_generate_results_identifier()
+	{
+		// If the save result identifier is empty, try to come up with something based upon the tests being run.
+		$results_identifier = null;
+		$subsystem_r = array();
+		$subsystems_to_test = $this->subsystems_under_test();
+
+		if(pts_result_file::is_test_result_file($this->file_name))
+		{
+			$result_file = new pts_result_file($this->file_name);
+			$result_file_intent = pts_result_file_analyzer::analyze_result_file_intent($result_file);
+
+			if(is_array($result_file_intent) && $result_file_intent[0] != 'Unknown')
+			{
+				array_unshift($subsystems_to_test, $result_file_intent[0]);
+			}
+		}
+
+		foreach($subsystems_to_test as $subsystem)
+		{
+			$components = pts_result_file_analyzer::system_component_string_to_array(phodevi::system_hardware(true) . ', ' . phodevi::system_software(true));
+			if(isset($components[$subsystem]))
+			{
+				$subsystem_name = pts_strings::trim_search_query($components[$subsystem]);
+
+				if(phodevi::is_vendor_string($subsystem_name) && !in_array($subsystem_name, $subsystem_r))
+				{
+					array_push($subsystem_r, $subsystem_name);
+				}
+				if(isset($subsystem_r[2]) || isset($subsystem_name[19]))
+				{
+					break;
+				}
+			}
+		}
+
+		if(isset($subsystem_r[0]))
+		{
+			$results_identifier = implode(' - ', $subsystem_r);
+		}
+
+		if(empty($results_identifier) && (pts_c::$test_flags ^ pts_c::batch_mode))
+		{
+			$results_identifier = phodevi::read_property('cpu', 'model') . ' - ' . phodevi::read_property('gpu', 'model') . ' - ' . phodevi::read_property('motherboard', 'identifier');
+		}
+
+		if(strlen($results_identifier) > 55)
+		{
+			$results_identifier = substr($results_identifier, 0, 54);
+			$results_identifier = substr($results_identifier, 0, strrpos($results_identifier, ' '));
+		}
+
+		if(empty($results_identifier))
+		{
+			$results_identifier = date('Y-m-d H:i');
+		}
+
+		$this->results_identifier = $results_identifier;
+
+		return $results_identifier;
 	}
 	public static function clean_results_identifier($results_identifier)
 	{
