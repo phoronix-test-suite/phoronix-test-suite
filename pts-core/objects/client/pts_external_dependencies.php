@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2013, Phoronix Media
-	Copyright (C) 2010 - 2013, Michael Larabel
+	Copyright (C) 2010 - 2014, Phoronix Media
+	Copyright (C) 2010 - 2014, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -60,6 +60,16 @@ class pts_external_dependencies
 
 				array_push($required_test_dependencies[$test_dependency], $test_profile);
 			}
+		}
+
+		if((pts_c::$test_flags & pts_c::skip_tests_with_missing_dependencies))
+		{
+			// Remove tests that have external dependencies that aren't satisfied and then return
+			$generic_packages_needed = array();
+			$required_test_dependencies_copy = $required_test_dependencies;
+			$dependencies_to_install = self::check_dependencies_missing_from_system($required_test_dependencies_copy, $generic_packages_needed);
+			self::remove_tests_with_missing_dependencies($test_profiles, $generic_packages_needed, $required_test_dependencies);
+			return true;
 		}
 
 		if(!empty($required_test_dependencies))
@@ -163,19 +173,7 @@ class pts_external_dependencies
 						break;
 					case 'SKIP_TESTS_WITH_MISSING_DEPS':
 						// Unset the tests that have dependencies still missing
-						foreach($generic_packages_needed as $pkg)
-						{
-							if(isset($required_test_dependencies[$pkg]))
-							{
-								foreach($required_test_dependencies[$pkg] as $test_with_this_dependency)
-								{
-									if(($index = array_search($test_with_this_dependency, $test_profiles)) !== false)
-									{
-										unset($test_profiles[$index]);
-									}
-								}
-							} 
-						}
+						self::remove_tests_with_missing_dependencies($test_profiles, $generic_packages_needed, $required_test_dependencies);
 						break;
 					case 'REATTEMPT_DEP_INSTALL':
 						self::install_packages_on_system($dependencies_to_install);
@@ -187,6 +185,22 @@ class pts_external_dependencies
 		}
 
 		return true;
+	}
+	protected static function remove_tests_with_missing_dependencies(&$test_profiles, $generic_packages_needed, $required_test_dependencies)
+	{
+		foreach($generic_packages_needed as $pkg)
+		{
+			if(isset($required_test_dependencies[$pkg]))
+			{
+				foreach($required_test_dependencies[$pkg] as $test_with_this_dependency)
+				{
+					if(($index = array_search($test_with_this_dependency, $test_profiles)) !== false)
+					{
+						unset($test_profiles[$index]);
+					}
+				}
+			}
+		}
 	}
 	public static function all_dependency_names()
 	{
