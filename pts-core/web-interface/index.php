@@ -116,7 +116,15 @@ else
 	$webui_class = 'pts_webui_loader';
 }
 $PTS_WEBSOCKET_PORT = getenv('PTS_WEBSOCKET_PORT');
-define('PTS_WEBSOCKET_SERVER', 'ws://' . $_SERVER['REMOTE_ADDR'] . ':' . $PTS_WEBSOCKET_PORT . '/');
+
+// For some reason websockets don't seem to like ::1 which is ipv6 localhost.
+// So we will work around it by just pointing to localhost instead.
+if ($_SERVER['REMOTE_ADDR'] === '::1')
+	$server_adrs = 'localhost';
+else
+	$server_adrs = $_SERVER['REMOTE_ADDR'];
+
+define('PTS_WEBSOCKET_SERVER', 'ws://' . $server_adrs . ':' . $PTS_WEBSOCKET_PORT . '/');
 setcookie('pts_websocket_server', PTS_WEBSOCKET_SERVER, (time() + 60 * 60 * 24), '/');
 
 $webui_class = pts_webui_load_interface($webui_class, $PATH);
