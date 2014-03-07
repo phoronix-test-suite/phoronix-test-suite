@@ -558,6 +558,24 @@ class phodevi_system extends phodevi_device_interface
 							// e.g. gcc version 4.7.0 20120314 (prerelease) (GCC)
 							$version .= ' ' . $v;
 						}
+						else
+						{
+							$v = shell_exec('gcc --version 2>&1');
+							if(($t = strrpos($v, $version)) !== false)
+							{
+								$v = substr($v, $t);
+								$v = substr($v, 0, strpos(str_replace(PHP_EOL, ' ', $v), ' '));
+								if(($t = strpos($v, ')')) !== false)
+								{
+									$v = substr($v, 0, $t);
+								}
+
+								if(pts_strings::is_version($version))
+								{
+									$version = $v;
+								}
+							}
+						}
 					}
 
 					$compilers['gcc'] = 'GCC ' . $version;

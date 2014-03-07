@@ -6,6 +6,7 @@ Phoronix Test Suite (Git)
 - pts-core: Support for running the HTML5 UI on Microsoft Windows
 - phodevi: Improve MATE detection
 - phodevi: Improve desktop environment recognition with $DESKTOP_SESSION
+- phodevi: Ensure GCC's minor version number is reported
 
 Phoronix Test Suite 5.0 Milestone 3
 3 March 2014
