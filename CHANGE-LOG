@@ -3,6 +3,8 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Improvements to run-random-tests
+- phodevi: Improve MATE detection
+- phodevi: Improve desktop environment recognition with $DESKTOP_SESSION
 
 Phoronix Test Suite 5.0 Milestone 3
 3 March 2014

@@ -1031,8 +1031,19 @@ class phodevi_system extends phodevi_device_interface
 		$desktop = null;
 		$desktop_environment = null;
 		$desktop_version = null;
+		$desktop_session = pts_client::read_env('DESKTOP_SESSION');
 
-		if(pts_client::is_process_running('gnome-panel'))
+		if(pts_client::is_process_running('gnome-shell'))
+		{
+			// GNOME 3.0 / GNOME Shell
+			$desktop_environment = 'GNOME Shell';
+
+			if(pts_client::executable_in_path('gnome-shell'))
+			{
+				$desktop_version = pts_strings::last_in_string(trim(shell_exec('gnome-shell --version 2> /dev/null')));
+			}
+		}
+		else if(pts_client::is_process_running('gnome-panel') || $desktop_session == 'gnome')
 		{
 			// GNOME
 			$desktop_environment = 'GNOME';
@@ -1046,17 +1057,7 @@ class phodevi_system extends phodevi_device_interface
 				$desktop_version = pts_strings::last_in_string(trim(shell_exec('gnome-session --version 2> /dev/null')));
 			}
 		}
-		else if(pts_client::is_process_running('gnome-shell'))
-		{
-			// GNOME 3.0 / GNOME Shell
-			$desktop_environment = 'GNOME Shell';
-
-			if(pts_client::executable_in_path('gnome-shell'))
-			{
-				$desktop_version = pts_strings::last_in_string(trim(shell_exec('gnome-shell --version 2> /dev/null')));
-			}
-		}
-		else if(pts_client::is_process_running('unity-2d-panel'))
+		else if(pts_client::is_process_running('unity-2d-panel') || $desktop_session == 'ubuntu-2d')
 		{
 			// Canonical / Ubuntu Unity 2D Desktop
 			$desktop_environment = 'Unity 2D';
@@ -1066,7 +1067,7 @@ class phodevi_system extends phodevi_device_interface
 				$desktop_version = pts_strings::last_in_string(trim(shell_exec('unity --version 2> /dev/null')));
 			}
 		}
-		else if(pts_client::is_process_running('unity-panel-service'))
+		else if(pts_client::is_process_running('unity-panel-service') || $desktop_session == 'ubuntu')
 		{
 			// Canonical / Ubuntu Unity Desktop
 			$desktop_environment = 'Unity';
@@ -1074,6 +1075,14 @@ class phodevi_system extends phodevi_device_interface
 			if(pts_client::executable_in_path('unity'))
 			{
 				$desktop_version = pts_strings::last_in_string(trim(shell_exec('unity --version 2> /dev/null')));
+			}
+		}
+		else if($desktop_session == 'mate')
+		{
+			$desktop_environment = 'MATE';
+			if(pts_client::executable_in_path('mate-about'))
+			{
+				$desktop_version = pts_strings::last_in_string(trim(shell_exec('mate-about --version 2> /dev/null')));
 			}
 		}
 		else if(($kde4 = pts_client::is_process_running('kded4')) || pts_client::is_process_running('kded'))
@@ -1112,7 +1121,7 @@ class phodevi_system extends phodevi_device_interface
 
 			$desktop_environment = $chrome_output;
 		}
-		else if(pts_client::is_process_running('lxsession'))
+		else if(pts_client::is_process_running('lxsession') || $desktop_session == 'lxde')
 		{
 			$lx_output = trim(shell_exec('lxpanel --version'));
 			$version = substr($lx_output, strpos($lx_output, ' ') + 1);
@@ -1120,7 +1129,7 @@ class phodevi_system extends phodevi_device_interface
 			$desktop_environment = 'LXDE';
 			$desktop_version = $version;
 		}
-		else if(pts_client::is_process_running('xfce4-session') || pts_client::is_process_running('xfce-mcs-manager'))
+		else if(pts_client::is_process_running('xfce4-session') || pts_client::is_process_running('xfce-mcs-manager') || $desktop_session == 'xfce')
 		{
 			// Xfce 4.x
 			$desktop_environment = 'Xfce';
