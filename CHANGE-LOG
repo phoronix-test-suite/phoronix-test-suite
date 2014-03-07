@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Improvements to run-random-tests
+- pts-core: Support for running the HTML5 UI on Microsoft Windows
 - phodevi: Improve MATE detection
 - phodevi: Improve desktop environment recognition with $DESKTOP_SESSION
 
