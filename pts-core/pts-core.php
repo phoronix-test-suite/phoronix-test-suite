@@ -50,7 +50,7 @@ function pts_define_directories()
 
 	if(PTS_IS_CLIENT)
 	{
-		pts_define('PTS_USER_PATH', pts_client::user_home_directory() . '.phoronix-test-suite/');
+		pts_define('PTS_USER_PATH', pts_client::user_home_directory() . '.phoronix-test-suite' . DIRECTORY_SEPARATOR);
 		pts_define('PTS_CORE_STORAGE', PTS_USER_PATH . 'core.pt2so');
 		pts_define('PTS_TEMP_STORAGE', PTS_USER_PATH . 'temp.pt2so');
 		pts_define('PTS_MODULE_LOCAL_PATH', PTS_USER_PATH . 'modules/');
