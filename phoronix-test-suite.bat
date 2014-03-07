@@ -20,7 +20,7 @@
 
 :: Full path to root directory of the actual Phoronix Test Suite code
 @echo off
-set PTS_DIR=%pwd%
+set PTS_DIR=%cd%
 set PTS_MODE=CLIENT
 
 :: TODO: Other work to bring this up to sync with the *NIX phoronix-test-suite launcher
@@ -33,4 +33,3 @@ set PHP_BIN="C:\Program Files (x86)\PHP"\php
 :SkipBinSearch
 If not defined PHP_BIN echo "\nPHP could not be found.\n" else cls
 %PHP_BIN% pts-core/phoronix-test-suite.php %*
-
