@@ -61,7 +61,7 @@
 			<ProxyPort></ProxyPort>
 		</Networking>
 		<Server>
-			<RemoteAccessAllowed>-1</RemoteAccessAllowed>
+			<RemoteAccessPort>-1</RemoteAccessPort>
 			<Password></Password>
 			<WebSocketPort></WebSocketPort>
 		</Server>

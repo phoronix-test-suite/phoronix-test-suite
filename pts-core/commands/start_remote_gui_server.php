@@ -36,7 +36,7 @@ class start_remote_gui_server implements pts_option_interface
 
 		$server_launcher = '#!/bin/sh' . PHP_EOL;
 		$web_port = 0;
-		$remote_access = pts_config::read_user_config('PhoronixTestSuite/Options/Server/RemoteAccessAllowed', 'FALSE');
+		$remote_access = pts_config::read_user_config('PhoronixTestSuite/Options/Server/RemoteAccessPort', 'FALSE');
 		$remote_access = is_numeric($remote_access) && $remote_access > 1 ? $remote_access : false;
 		$blocked_ports = array(2049, 3659, 4045, 6000);
 

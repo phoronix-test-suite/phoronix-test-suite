@@ -127,7 +127,7 @@ class pts_config
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Networking/ProxyAddress', $read_config);
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Networking/ProxyPort', $read_config);
 
-		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Server/RemoteAccessAllowed', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Server/RemoteAccessPort', $read_config);
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Server/Password', $read_config);
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Server/WebSocketPort', $read_config);
 
