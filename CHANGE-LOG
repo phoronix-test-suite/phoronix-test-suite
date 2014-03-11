@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 5.0-Plavsk
+12 March 2014
 
 - pts-core: Improvements to run-random-tests
 - pts-core: Support for running the HTML5 UI on Microsoft Windows
