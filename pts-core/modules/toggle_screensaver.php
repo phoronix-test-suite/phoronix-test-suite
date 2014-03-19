@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2013, Phoronix Media
-	Copyright (C) 2008 - 2013, Michael Larabel
+	Copyright (C) 2008 - 2014, Phoronix Media
+	Copyright (C) 2008 - 2014, Michael Larabel
 	toggle_screensaver.php: A module to toggle the screensaver while tests are running on GNOME
 
 	This program is free software; you can redistribute it and/or modify
@@ -50,6 +50,12 @@ class toggle_screensaver extends pts_module_interface
 		{
 			return pts_module::MODULE_UNLOAD;
 		}
+		if(phodevi::is_macosx())
+		{
+			// Right now there doesn't appear to be a better way to disable OS X screensaver automatically...
+			return pts_module::MODULE_UNLOAD;
+		}
+
 
 		// GNOME Screensaver?
 		if(($gt = pts_client::executable_in_path('gconftool')) != false || ($gt = pts_client::executable_in_path('gconftool-2')) != false)
