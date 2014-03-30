@@ -1301,7 +1301,7 @@ class phodevi_system extends phodevi_device_interface
 			{
 				$display_driver = 'fglrx';
 			}
-			else if(phodevi::is_nvidia_graphics())
+			else if(phodevi::is_nvidia_graphics() || is_file('/proc/driver/nvidia/version'))
 			{
 				$display_driver = 'nvidia';
 			}
@@ -1620,7 +1620,11 @@ class phodevi_system extends phodevi_device_interface
 	{
 		$dri_driver = false;
 
-		if(is_file('/proc/dri/0/name'))
+		if(is_file('/proc/driver/nvidia/version'))
+		{
+			$dri_driver = 'nvidia';
+		}
+		else if(is_file('/proc/dri/0/name'))
 		{
 			$driver_info = file_get_contents('/proc/dri/0/name');
 			$dri_driver = substr($driver_info, 0, strpos($driver_info, ' '));
