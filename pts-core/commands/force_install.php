@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2010, Phoronix Media
-	Copyright (C) 2009 - 2010, Michael Larabel
+	Copyright (C) 2009 - 2014, Phoronix Media
+	Copyright (C) 2009 - 2014, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -34,6 +34,10 @@ class force_install implements pts_option_interface
 	public static function run($r)
 	{
 		pts_test_installer::standard_install($r, pts_c::force_install);
+	}
+	public static function invalid_command($passed_args = null)
+	{
+		pts_tests::invalid_command_helper($passed_args);
 	}
 }
 
