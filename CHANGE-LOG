@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add "libudev1:i386" to "32bit-compatibility" external dependency for Ubuntu Linux
 - pts-core: Add invalid command helper to force-install sub-command
 - pts-core: Add "pcre" external dependency
+- pts-core: Add pushover_net module as a way of sending iOS/Android push notifications of results using Pushover.net
 - toggle_screensaver: Disable on OS X since there is no support for automatically disabling the OS X screensaver and causes collision with MacPorts
 - phodevi: Add extra checks to ensure NVIDIA blob doesn't get reported as Nouveau DDX due to kernel changes
 
