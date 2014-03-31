@@ -158,6 +158,12 @@
 			<FileCheck>libaio.h</FileCheck>
 		</Package>
 		<Package>
+			<GenericName>pcre</GenericName>
+			<Title>Perl Compatible Regular Expressions</Title>
+			<PossibleNames>perl, libpcre-devel, libpcre3-dev</PossibleNames>
+			<FileCheck>pcre.h</FileCheck>
+		</Package>
+		<Package>
 			<GenericName>perl</GenericName>
 			<Title>Support For PERL Language</Title>
 			<PossibleNames>perl, perl-base</PossibleNames>

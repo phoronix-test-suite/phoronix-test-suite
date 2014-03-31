@@ -102,8 +102,12 @@
 			<PackageName>libaio-devel</PackageName>
 		</Package>
 		<Package>
+			<GenericName>pcre</GenericName>
+			<PackageName>pcre-devel</PackageName>
+		</Package>
+		<Package>
 			<GenericName>perl</GenericName>
-			<PackageName>perl perl-SDL pcre-devel</PackageName>
+			<PackageName>perl perl-SDL</PackageName>
 		</Package>
 		<Package>
 			<GenericName>xorg-video</GenericName>

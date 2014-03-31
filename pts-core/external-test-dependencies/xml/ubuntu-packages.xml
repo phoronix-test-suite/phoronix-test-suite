@@ -121,9 +121,13 @@
 			<PackageName>libaio-dev</PackageName>
 		</Package>
 		<Package>
+			<GenericName>pcre</GenericName>
+			<PackageName>libpcre3-dev</PackageName>
+		</Package>
+		<Package>
 			<GenericName>perl</GenericName>
-			<PackageName>perl perl-base perl-modules libsdl-perl libperl-dev libpcre3-dev</PackageName>
-			<FileCheck>perl, /etc/perl/CPAN, perl5/auto/SDL_perl/SDL_perl.so, pcre.h</FileCheck>
+			<PackageName>perl perl-base perl-modules libsdl-perl libperl-dev</PackageName>
+			<FileCheck>perl, /etc/perl/CPAN, perl5/auto/SDL_perl/SDL_perl.so</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>perl-opengl</GenericName>

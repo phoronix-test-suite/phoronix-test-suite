@@ -55,6 +55,10 @@
 			<PackageName>java/openjdk7</PackageName>
 		</Package>
 		<Package>
+			<GenericName>pcre</GenericName>
+			<PackageName>devel/pcre</PackageName>
+		</Package>
+		<Package>
 			<GenericName>portaudio-development</GenericName>
 			<PackageName>audio/portaudio</PackageName>
 		</Package>

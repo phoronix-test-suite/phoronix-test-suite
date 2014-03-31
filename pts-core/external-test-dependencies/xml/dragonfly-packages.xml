@@ -36,6 +36,11 @@
 			<FileCheck>/usr/pkg/bin/autoconf</FileCheck>
 		</Package>
 		<Package>
+			<GenericName>pcre</GenericName>
+			<PackageName>devel/pcre</PackageName>
+			<FileCheck>/usr/pkg/include/pcre.h</FileCheck>
+		</Package>
+		<Package>
 			<GenericName>cairo-development</GenericName>
 			<PackageName>graphics/cairo</PackageName>
 			<FileCheck>/usr/pkg/include/cairo/cairo.h</FileCheck>

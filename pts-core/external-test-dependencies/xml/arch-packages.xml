@@ -19,6 +19,10 @@
 			<PackageName>freeglut</PackageName>
 		</Package>
 		<Package>
+			<GenericName>pcre</GenericName>
+			<PackageName>pcre</PackageName>
+		</Package>
+		<Package>
 			<GenericName>libpng-development</GenericName>
 			<PackageName>libpng</PackageName>
 		</Package>
