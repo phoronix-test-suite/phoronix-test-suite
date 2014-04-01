@@ -235,7 +235,9 @@ class pts_openbenchmarking
 			// Use HTTPS if OpenSSL is available as a check to see if HTTPS can be handled
 			// OpenSSL seems to have problems on OpenIndiana at least, TODO: investigate
 			// Using a proxy seems to have problems for HTTPS
-			$host = ((extension_loaded('openssl') && getenv('NO_OPENSSL') == false && php_uname('s') == 'Linux' && (!PTS_IS_CLIENT || !pts_network::is_proxy_setup())) ? 'https://' : 'http://') . 'openbenchmarking.org/';
+			// TODO XXX
+			//$host = ((extension_loaded('openssl') && getenv('NO_OPENSSL') == false && php_uname('s') == 'Linux' && (!PTS_IS_CLIENT || !pts_network::is_proxy_setup())) ? 'https://' : 'http://') . 'openbenchmarking.org/';
+			$host = 'http://openbenchmarking.org/';
 		}
 
 		return $host;
