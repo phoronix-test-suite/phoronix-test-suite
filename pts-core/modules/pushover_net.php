@@ -42,7 +42,7 @@ class pushover_net extends pts_module_interface
 			echo PHP_EOL . 'Your Pushover.net user key must be passed via the PUSHOVER_NET_USER environment variable.' . PHP_EOL;
 			return pts_module::MODULE_UNLOAD;
 		}
-		if(function_exists('curl_setopt_array') == false)
+		if(function_exists('curl_setopt_array') == false || function_exists('curl_init') == false)
 		{
 			echo PHP_EOL . 'PHP5 CURL support must be installed to use this module.' . PHP_EOL;
 			return pts_module::MODULE_UNLOAD;
