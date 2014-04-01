@@ -42,6 +42,7 @@ class pts_merge
 		$has_written_suite_info = false;
 
 		$result_files = array();
+		$result_merge_selects = array();
 		foreach($files_to_combine as &$file)
 		{
 			if(is_object($file) && $file instanceof pts_result_merge_select)
@@ -82,6 +83,7 @@ class pts_merge
 			}
 
 			array_push($result_files, $this_result_file);
+			array_push($result_merge_selects, $result_merge_select);
 		}
 
 		if(!isset($pass_attributes['only_render_results_xml']) && ($result_file_count = count($result_files)) > 0)
@@ -89,14 +91,14 @@ class pts_merge
 			$result_file_writer->add_result_file_meta_data($result_files[($result_file_count - 1)]);
 		}
 
-		foreach($result_files as &$result_file)
+		foreach($result_files as $i => &$result_file)
 		{
 			if(!isset($pass_attributes['only_render_results_xml']))
 			{
-				$result_file_writer->add_system_information_from_result_file($result_file, $result_merge_select);
+				$result_file_writer->add_system_information_from_result_file($result_file, $result_merge_selects[$i]);
 			}
 
-			$test_result_manager->add_test_result_set($result_file->get_result_objects(), $result_merge_select);
+			$test_result_manager->add_test_result_set($result_file->get_result_objects(), $result_merge_selects[$i]);
 		}
 
 		// Write the actual test results
