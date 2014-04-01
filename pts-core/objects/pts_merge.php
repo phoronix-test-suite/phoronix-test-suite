@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2012, Phoronix Media
-	Copyright (C) 2008 - 2012, Michael Larabel
+	Copyright (C) 2008 - 2014, Phoronix Media
+	Copyright (C) 2008 - 2014, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -41,6 +41,7 @@ class pts_merge
 		$test_result_manager = new pts_result_file_merge_manager($pass_attributes);
 		$has_written_suite_info = false;
 
+		$result_files = array();
 		foreach($files_to_combine as &$file)
 		{
 			if(is_object($file) && $file instanceof pts_result_merge_select)
@@ -76,22 +77,26 @@ class pts_merge
 
 			if($this_result_file->get_test_count() == 0)
 			{
-				// Why print the system information if there are no contained results?
+				// No reason to print the system information if there are no contained results
 				continue;
 			}
 
+			array_push($result_files, $this_result_file);
+		}
+
+		if(!isset($pass_attributes['only_render_results_xml']) && ($result_file_count = count($result_files)) > 0)
+		{
+			$result_file_writer->add_result_file_meta_data($result_files[($result_file_count - 1)]);
+		}
+
+		foreach($result_files as &$result_file)
+		{
 			if(!isset($pass_attributes['only_render_results_xml']))
 			{
-				if($has_written_suite_info == false)
-				{
-					$result_file_writer->add_result_file_meta_data($this_result_file);
-					$has_written_suite_info = true;
-				}
-
-				$result_file_writer->add_system_information_from_result_file($this_result_file, $result_merge_select);
+				$result_file_writer->add_system_information_from_result_file($result_file, $result_merge_select);
 			}
 
-			$test_result_manager->add_test_result_set($this_result_file->get_result_objects(), $result_merge_select);
+			$test_result_manager->add_test_result_set($result_file->get_result_objects(), $result_merge_select);
 		}
 
 		// Write the actual test results
