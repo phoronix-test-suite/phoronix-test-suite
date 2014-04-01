@@ -41,7 +41,7 @@ class edit_result_file implements pts_option_interface
 
 		$result_title = $result_file->get_title();
 		echo PHP_EOL . 'Current Result Title: ' . $result_title . PHP_EOL;
-		$new_title = pts_user_io::prompt_user_input('Enter new title');
+		$new_title = pts_user_io::prompt_user_input('Enter New Title');
 
 		if(!empty($new_title))
 		{
@@ -50,7 +50,7 @@ class edit_result_file implements pts_option_interface
 
 		$result_description = $result_file->get_description();
 		echo PHP_EOL . 'Current Result Description: ' . $result_description . PHP_EOL;
-		$new_description = pts_user_io::prompt_user_input('Enter new description');
+		$new_description = pts_user_io::prompt_user_input('Enter New Description');
 
 		if(!empty($new_description))
 		{

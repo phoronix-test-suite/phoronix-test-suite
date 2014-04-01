@@ -1253,6 +1253,7 @@ class pts_test_run_manager
 					}
 					else if((pts_c::$test_flags ^ pts_c::auto_mode))
 					{
+						//echo PHP_EOL . 'Current Title: ' . $this->file_name_title . PHP_EOL;
 						pts_client::$display->generic_heading('If you wish, enter a new description below to better describe this result set / system configuration under test.' . PHP_EOL . 'Press ENTER to proceed without changes.');
 						echo 'Current Description: ' . $this->run_description . PHP_EOL . PHP_EOL . 'New Description: ';
 						$new_test_description = pts_user_io::read_user_input();
@@ -1432,6 +1433,7 @@ class pts_test_run_manager
 				$result_objects = $run_object->get_result_objects();
 
 				$this->set_save_name($run_object->get_identifier(), false);
+				$this->file_name_title = $run_object->get_title();
 
 				pts_module_manager::process_environment_variables_string_to_set($preset_vars);
 
