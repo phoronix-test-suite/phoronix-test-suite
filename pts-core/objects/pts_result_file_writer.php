@@ -129,12 +129,12 @@ class pts_result_file_writer
 		$this->xml_writer->addXmlNode('PhoronixTestSuite/System/Notes', $test_notes);
 		$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/System/JSON', ($json ? json_encode($json) : null));
 	}
-	public function add_result_file_meta_data(&$object, $reference_id = null)
+	public function add_result_file_meta_data(&$object, $reference_id = null, $title = null, $description = null)
 	{
-		$this->xml_writer->addXmlNode('PhoronixTestSuite/Generated/Title', $object->get_title());
+		$this->xml_writer->addXmlNode('PhoronixTestSuite/Generated/Title', $title != null ? $title : $object->get_title());
 		$this->xml_writer->addXmlNode('PhoronixTestSuite/Generated/LastModified', date('Y-m-d H:i:s'));
 		$this->xml_writer->addXmlNode('PhoronixTestSuite/Generated/TestClient', pts_title(true));
-		$this->xml_writer->addXmlNode('PhoronixTestSuite/Generated/Description', $object->get_description());
+		$this->xml_writer->addXmlNode('PhoronixTestSuite/Generated/Description', $description != null ? $description : $object->get_description());
 		$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/Generated/Notes', $object->get_notes());
 		$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/Generated/InternalTags', $object->get_internal_tags());
 		$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/Generated/ReferenceID', ($reference_id != null ? $reference_id : $object->get_reference_id()));
