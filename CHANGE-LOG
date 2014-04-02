@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 5.0.1-Plavsk
+2 April 2014
 
 - pts-core: Add "libudev1:i386" to "32bit-compatibility" external dependency for Ubuntu Linux
 - pts-core: Add invalid command helper to force-install sub-command
