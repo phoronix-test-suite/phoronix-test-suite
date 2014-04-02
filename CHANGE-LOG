@@ -11,6 +11,7 @@ Phoronix Test Suite (Git)
 - pts-core: Workaround HTTPS OpenBenchmarking.org proxy issue
 - pts-core: Improved handling when the system's php.ini is using a restricted open_basedir setting
 - pts-core: Arch Linux support improvements
+- pts-core: When PTS client fails to find ZIP support, emit a PTS error
 - toggle_screensaver: Disable on OS X since there is no support for automatically disabling the OS X screensaver and causes collision with MacPorts
 - phodevi: Add extra checks to ensure NVIDIA blob doesn't get reported as Nouveau DDX due to kernel changes
 

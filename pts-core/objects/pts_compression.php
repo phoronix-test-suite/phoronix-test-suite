@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2012, Phoronix Media
-	Copyright (C) 2008 - 2012, Michael Larabel
+	Copyright (C) 2008 - 2014, Phoronix Media
+	Copyright (C) 2008 - 2014, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -120,14 +120,15 @@ class pts_compression
 				$success = true;
 			}
 		}
-		else
+		else if(pts_client::executable_in_path('unzip'))
 		{
 			// Fallback to using external unzip command
-			if(pts_client::executable_in_path('unzip'))
-			{
-				shell_exec('unzip -o ' . $zip_file . ' -d ' . $extract_to . ' 2>&1');
-				$success = true;
-			}
+			shell_exec('unzip -o ' . $zip_file . ' -d ' . $extract_to . ' 2>&1');
+			$success = true;
+		}
+		else if(PTS_IS_CLIENT)
+		{
+			trigger_error('Failed to find ZIP support for extracting file: ' . $zip_file, E_USER_ERROR);
 		}
 
 		return $success;
