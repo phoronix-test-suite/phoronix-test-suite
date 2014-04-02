@@ -91,7 +91,6 @@ then
 	echo "The command to likely run for your operating system is: "
 	echo "# pkg_radd php5 php5-json php5-zip php5-dom"
 	echo " "
-fi
 elif [ -x /usr/bin/pacman ]
 then
 	echo "The command to likely run for your operating system is: "
