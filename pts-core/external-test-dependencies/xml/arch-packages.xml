@@ -146,6 +146,11 @@
 			<PackageName>cmake</PackageName>
 		</Package>
 		<Package>
+			<GenericName>common-dependencies</GenericName>
+			<PackageName>unzip</PackageName>
+			<FileCheck>unzip</FileCheck>
+		</Package>
+		<Package>
 			<GenericName>boost-development</GenericName>
 			<PackageName>boost</PackageName>
 		</Package>
