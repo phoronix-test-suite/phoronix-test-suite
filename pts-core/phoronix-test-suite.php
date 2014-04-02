@@ -36,6 +36,41 @@ if(!defined('PTS_MODE'))
 // Any PHP default memory limit should be fine for PTS, until you run image quality comparison tests that begins to consume memory
 ini_set('memory_limit', '256M');
 
+if(PHP_IS_CLIENT && ini_get('open_basedir') != false)
+{
+	$passes = true;
+	$open_basedir = ini_get('open_basedir');
+
+	if($open_basedir != false)
+	{
+		$is_in_allowed_dir = false;
+		foreach(explode(':', $open_basedir) as $allowed_dir)
+		{
+			if(strpos(PTS_PATH, $allowed_dir) === 0)
+			{
+				$is_in_allowed_dir = true;
+				break;
+			}
+		}
+
+		if($is_in_allowed_dir == false)
+		{
+			$passes = false;
+		}
+	}
+
+
+	if($passes == false)
+	{
+		echo PHP_EOL . 'ERROR: The php.ini configuration open_basedir directive is preventing ' . PTS_PATH . ' from loading.' . PHP_EOL;
+		return false;
+	}
+	else
+	{
+		echo PHP_EOL . 'NOTICE: The php.ini configuration is using the "open_basedir" directive, which may prevent some parts of the Phoronix Test Suite from working. See the Phoronix Test Suite documentation for more details and to disable this setting.' . PHP_EOL;
+	}
+}
+
 require(PTS_PATH . 'pts-core/pts-core.php');
 
 if(!PTS_IS_CLIENT)
@@ -46,19 +81,6 @@ if(!PTS_IS_CLIENT)
 
 // Default to C locale
 setlocale(LC_ALL, 'C');
-
-if(ini_get('open_basedir') != false)
-{
-	if(pts_client::open_basedir_check() == false)
-	{
-		echo PHP_EOL . 'ERROR: The php.ini configuration open_basedir directive is preventing ' . PTS_PATH . ' from loading.' . PHP_EOL;
-		return false;
-	}
-	else
-	{
-		trigger_error('The php.ini configuration is using the "open_basedir" directive, which may prevent some parts of the Phoronix Test Suite from working. See the Phoronix Test Suite documentation for more details and to disable this setting.', E_USER_WARNING);
-	}
-}
 
 // Needed for shutdown functions
 // declare(ticks = 1);

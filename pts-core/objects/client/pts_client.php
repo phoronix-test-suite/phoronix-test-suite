@@ -177,31 +177,6 @@ class pts_client
 		pts_define('PTS_STARTUP_TASK_PERFORMED', true);
 		register_shutdown_function(array('pts_module_manager', 'module_process'), '__shutdown');
 	}
-	public static function open_basedir_check()
-	{
-		$passes = true;
-		$open_basedir = ini_get('open_basedir');
-
-		if($open_basedir != false)
-		{
-			$is_in_allowed_dir = false;
-			foreach(explode(':', $open_basedir) as $allowed_dir)
-			{
-				if(strpos(PTS_PATH, $allowed_dir) === 0)
-				{
-					$is_in_allowed_dir = true;
-					break;
-				}
-			}
-
-			if($is_in_allowed_dir == false)
-			{
-				$passes = false;
-			}
-		}
-
-		return $passes;
-	}
 	public static function environmental_variables()
 	{
 		// The PTS environmental variables passed during the testing process, etc
