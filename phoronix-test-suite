@@ -26,7 +26,7 @@
 export PTS_DIR=`pwd`
 export PTS_MODE="CLIENT"
 
-if [ $PTS_DIR != `pwd` ]
+if [ $PTS_DIR != "`pwd`" ]
 then
 	cd $PTS_DIR
 fi
@@ -137,4 +137,9 @@ then
 	chmod +x $HOME/.phoronix-test-suite/web-server-launcher
 	exec $HOME/.phoronix-test-suite/web-server-launcher
 	rm -f $HOME/.phoronix-test-suite/web-server-launcher
+elif [ -f $HOME/.phoronix-test-suite/phoromatic-server-launcher ]
+then
+	chmod +x $HOME/.phoronix-test-suite/phoromatic-server-launcher
+	exec $HOME/.phoronix-test-suite/phoromatic-server-launcher
+	rm -f $HOME/.phoronix-test-suite/phoromatic-server-launcher
 fi
