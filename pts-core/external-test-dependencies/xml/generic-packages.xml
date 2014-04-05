@@ -372,7 +372,7 @@
 			<GenericName>suitesparse</GenericName>
 			<Title>SuiteSparse</Title>
 			<PossibleNames>libsuitesparse-dev, suitesparse-devel</PossibleNames>
-			<FileCheck>suitesparse/cs.h, libcsparse.so</FileCheck>
+			<FileCheck>suitesparse/cs.h OR cs.h, libcxsparse.so</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>dune</GenericName>
