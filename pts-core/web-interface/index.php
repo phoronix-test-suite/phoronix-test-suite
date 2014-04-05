@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2013, Phoronix Media
-	Copyright (C) 2013, Michael Larabel
+	Copyright (C) 2013 - 2014, Phoronix Media
+	Copyright (C) 2013 - 2014, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -27,68 +27,6 @@ define('PTS_AUTO_LOAD_OBJECTS', true);
 
 include('../pts-core.php');
 pts_client::init();
-
-function pts_webui_load_interface($interface, $PATH)
-{
-	if(!class_exists($interface) && is_file('web-interfaces/' . $interface . '.php'))
-	{
-		require('web-interfaces/' . $interface . '.php');
-		$response = $interface::preload($PATH);
-
-		if($response === true)
-		{
-			return $interface;
-		}
-		else if($response === false)
-		{
-			return false;
-		}
-		else
-		{
-			return pts_webui_load_interface($response, $PATH);
-		}
-	}
-	else if(is_file('html/' . $interface . '.html'))
-	{
-		return $interface;
-	}
-
-	return false;
-}
-function pts_webui_2d_array_to_table(&$r2d)
-{
-	echo '<table width="100%;">';
-	foreach($r2d as $tr)
-	{
-		echo '<tr>';
-		if(count($tr) == 1)
-		{
-			echo '<th colspan="2" style="text-align: center;">' . $tr[0] . '</th>';
-		}
-		else
-		{
-			foreach($tr as $col_i => $col)
-			{
-				$type = $col_i == 0 ? 'th' : 'td';
-				echo '<' . $type . '>' . $col . '</' . $type . '>';
-			}
-		}
-		echo '</tr>';
-	}
-	echo '</table>';
-}
-function pts_webui_1d_array_to_table(&$r1d)
-{
-	echo '<table width="100%;">';
-	foreach($r1d as $i => $td)
-	{
-		echo '<tr>';
-		$type = $i == 0 ? 'th' : 'td';
-		echo '<' . $type . ' style="text-align: center;">' . $td . '</' . $type . '>';
-		echo '</tr>';
-	}
-	echo '</table>';
-}
 
 interface pts_webui_interface
 {
@@ -115,23 +53,13 @@ else
 	// or pts_webui_intro on invalidated classes
 	$webui_class = 'pts_webui_loader';
 }
-$PTS_WEBSOCKET_PORT = getenv('PTS_WEBSOCKET_PORT');
 
-// For some reason websockets don't seem to like ::1 which is ipv6 localhost.
-// So we will work around it by just pointing to localhost instead.
-if ($_SERVER['REMOTE_ADDR'] === '::1')
-	$server_adrs = 'localhost';
-else
-	$server_adrs = $_SERVER['REMOTE_ADDR'];
-
-define('PTS_WEBSOCKET_SERVER', 'ws://' . $server_adrs . ':' . $PTS_WEBSOCKET_PORT . '/');
-setcookie('pts_websocket_server', PTS_WEBSOCKET_SERVER, (time() + 60 * 60 * 24), '/');
-
-$webui_class = pts_webui_load_interface($webui_class, $PATH);
+pts_webui::websocket_setup_defines();
+$webui_class = pts_webui::load_web_interface($webui_class, $PATH);
 
 if($webui_class === false)
 {
-	$webui_class = pts_webui_load_interface('pts_webui_main', $PATH);
+	$webui_class = pts_webui::load_web_interface('pts_webui_main', $PATH);
 }
 
 ?>
