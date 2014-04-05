@@ -2,6 +2,8 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+- pts-core: Fix for not writing null test result file titles
+
 Phoronix Test Suite 5.0.1-Plavsk
 2 April 2014
 

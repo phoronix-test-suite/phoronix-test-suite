@@ -88,7 +88,15 @@ class pts_merge
 
 		if(!isset($pass_attributes['only_render_results_xml']) && ($result_file_count = count($result_files)) > 0)
 		{
-			$result_file_writer->add_result_file_meta_data($result_files[($result_file_count - 1)]);
+			for($i = ($result_file_count - 1); $i >= 0; $i--)
+			{
+				$ret = $result_file_writer->add_result_file_meta_data($result_files[$i]);
+
+				if($ret)
+				{
+					break;
+				}
+			}
 		}
 
 		foreach($result_files as $i => &$result_file)

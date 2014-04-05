@@ -131,7 +131,15 @@ class pts_result_file_writer
 	}
 	public function add_result_file_meta_data(&$object, $reference_id = null, $title = null, $description = null)
 	{
-		$this->xml_writer->addXmlNode('PhoronixTestSuite/Generated/Title', $title != null ? $title : $object->get_title());
+		$title = !empty($title) ? $title : $object->get_title();
+
+		if($title == null)
+		{
+			trigger_error('No title supplied for result file meta-data.', E_USER_WARNING);
+			return false;
+		}
+
+		$this->xml_writer->addXmlNode('PhoronixTestSuite/Generated/Title', $title);
 		$this->xml_writer->addXmlNode('PhoronixTestSuite/Generated/LastModified', date('Y-m-d H:i:s'));
 		$this->xml_writer->addXmlNode('PhoronixTestSuite/Generated/TestClient', pts_title(true));
 		$this->xml_writer->addXmlNode('PhoronixTestSuite/Generated/Description', $description != null ? $description : $object->get_description());
