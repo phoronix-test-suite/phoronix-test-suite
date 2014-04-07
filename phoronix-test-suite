@@ -123,6 +123,9 @@ esac
 if [ -f $HOME/.phoronix-test-suite/web-server-launcher ]
 then
 	rm -f $HOME/.phoronix-test-suite/web-server-launcher
+elif [ -f $HOME/.phoronix-test-suite/phoromatic-server-launcher ]
+then
+	rm -f $HOME/.phoronix-test-suite/phoromatic-server-launcher
 fi
 
 # Run The Phoronix Test Suite

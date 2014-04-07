@@ -147,6 +147,7 @@ class pts_result_file_writer
 		$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/Generated/InternalTags', $object->get_internal_tags());
 		$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/Generated/ReferenceID', ($reference_id != null ? $reference_id : $object->get_reference_id()));
 		$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/Generated/PreSetEnvironmentVariables', $object->get_preset_environment_variables());
+		return true;
 	}
 	public function add_current_system_information()
 	{
