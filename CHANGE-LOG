@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Fix for not writing null test result file titles
+- phodevi: Improvement for detecting optimal NVIDIA Linux GPU core frequency on modern GPUs
 
 Phoronix Test Suite 5.0.1-Plavsk
 2 April 2014

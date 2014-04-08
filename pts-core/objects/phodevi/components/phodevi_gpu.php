@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2013, Phoronix Media
-	Copyright (C) 2008 - 2013, Michael Larabel
+	Copyright (C) 2008 - 2014, Phoronix Media
+	Copyright (C) 2008 - 2014, Michael Larabel
 	phodevi_gpu.php: The PTS Device Interface object for the graphics processor
 
 	This program is free software; you can redistribute it and/or modify
@@ -795,10 +795,16 @@ class phodevi_gpu extends phodevi_device_interface
 		{
 			// GPUDefault3DClockFreqs is the default and does not show under/over-clocking
 			$clock_freqs_3d = pts_strings::comma_explode(phodevi_parser::read_nvidia_extension('GPU3DClockFreqs'));
+			$clock_freqs_current = pts_strings::comma_explode(phodevi_parser::read_nvidia_extension('GPUCurrentClockFreqs'));
 
 			if(is_array($clock_freqs_3d) && isset($clock_freqs_3d[1]))
 			{
 				list($core_freq, $mem_freq) = $clock_freqs_3d;
+			}
+			if(is_array($clock_freqs_current) && isset($clock_freqs_current[1]))
+			{
+				$core_freq = max($core_freq, $clock_freqs_current[0]);
+				$mem_freq = max($mem_freq, $clock_freqs_current[1]);
 			}
 		}
 		else if(phodevi::is_ati_graphics() && phodevi::is_linux()) // ATI GPU
