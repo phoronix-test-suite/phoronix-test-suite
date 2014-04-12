@@ -95,7 +95,7 @@ class pts_webui_test implements pts_webui_interface
 				array_push($test_settings, array($option_name, $option_value));
 			}
 			array_push($test_settings, array('<input type="Submit" value="Add Test To Run Queue" onclick="test_add_to_queue(\'' . (isset($test_prefix) ? $test_prefix : "") . '\', \'' . implode(':', $identifiers) . '\', \'' . self::$test_profile->get_identifier() . '\', \'' . base64_encode(json_encode(self::$test_profile->to_json())) . '\'); return false;" />'));
-			pts_webui::r2d_array_to_table($test_settings);
+			echo pts_webui::r2d_array_to_table($test_settings);
 			echo '</div>';
 
 		echo '</div>';
@@ -121,7 +121,7 @@ class pts_webui_test implements pts_webui_interface
 		}
 
 		echo '<h4>Test Profile Information</h4>';
-		pts_webui::r2d_array_to_table($tabular_info);
+		echo pts_webui::r2d_array_to_table($tabular_info);
 
 		$tabular_info = array();
 
@@ -173,7 +173,7 @@ class pts_webui_test implements pts_webui_interface
 		}
 
 		echo '<h4>Installation Data</h4>';
-		pts_webui::r2d_array_to_table($tabular_info);
+		echo pts_webui::r2d_array_to_table($tabular_info);
 
 		$dependencies = self::$test_profile->get_dependency_names();
 		if(!empty($dependencies) && !empty($dependencies[0]))

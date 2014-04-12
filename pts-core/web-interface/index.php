@@ -55,11 +55,11 @@ else
 }
 
 pts_webui::websocket_setup_defines();
-$webui_class = pts_webui::load_web_interface($webui_class, $PATH);
+$webui_class = pts_webui::load_web_interface('web-interfaces/' . $webui_class, $PATH);
 
 if($webui_class === false)
 {
-	$webui_class = pts_webui::load_web_interface('pts_webui_main', $PATH);
+	$webui_class = pts_webui::load_web_interface('web-interfaces/pts_webui_main', $PATH);
 }
 
 ?>

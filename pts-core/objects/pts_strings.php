@@ -200,13 +200,27 @@ class pts_strings
 
 		return $has_in_string;
 	}
-	public static function random_characters($length)
+	public static function random_characters($length, $with_numbers = false)
 	{
 		$random = null;
 
-		for($i = 0; $i < $length; $i++)
+		if($with_numbers)
 		{
-			$random .= chr(rand(65, 90));
+			for($i = 0; $i < $length; $i++)
+			{
+				$r = rand(0, 35);
+				if($r < 10)
+					$random .= $r;
+				else
+					$random .= chr(55 + $r);
+			}
+		}
+		else
+		{
+			for($i = 0; $i < $length; $i++)
+			{
+				$random .= chr(rand(65, 90));
+			}
 		}
 
 		return $random;

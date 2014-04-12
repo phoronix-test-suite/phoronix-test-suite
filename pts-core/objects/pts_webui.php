@@ -24,9 +24,15 @@ class pts_webui
 {
 	public static function load_web_interface($interface, $PATH)
 	{
-		if(!class_exists($interface) && is_file('web-interfaces/' . $interface . '.php'))
+		if(!class_exists($interface) && is_file($interface . '.php'))
 		{
-			require('web-interfaces/' . $interface . '.php');
+			require($interface . '.php');
+
+			if(strpos($interface, '/'))
+			{
+				$interface = basename($interface);
+			}
+
 			$response = $interface::preload($PATH);
 
 			if($response === true)
@@ -51,25 +57,27 @@ class pts_webui
 	}
 	public static function r2d_array_to_table(&$r2d)
 	{
-		echo '<table width="100%;">';
+		$ret = '<table width="100%;">';
 		foreach($r2d as $tr)
 		{
-			echo '<tr>';
+			$ret .= '<tr>';
 			if(count($tr) == 1)
 			{
-				echo '<th colspan="2" style="text-align: center;">' . $tr[0] . '</th>';
+				$ret .= '<th colspan="2" style="text-align: center;">' . $tr[0] . '</th>';
 			}
 			else
 			{
 				foreach($tr as $col_i => $col)
 				{
 					$type = $col_i == 0 ? 'th' : 'td';
-					echo '<' . $type . '>' . $col . '</' . $type . '>';
+					$ret .= '<' . $type . '>' . $col . '</' . $type . '>';
 				}
 			}
-			echo '</tr>';
+			$ret .= '</tr>';
 		}
-		echo '</table>';
+		$ret .= '</table>';
+
+		return $ret;
 	}
 	public static function r1d_array_to_table(&$r1d)
 	{
