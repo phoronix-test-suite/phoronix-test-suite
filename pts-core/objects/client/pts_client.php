@@ -1440,9 +1440,10 @@ class pts_client
 		{
 			if(count($preset = pts_strings::trim_explode('=', $preset)) == 2)
 			{
-				if(count($preset[0] = pts_strings::trim_explode('.', $preset[0])) == 2)
+				$dot = strrpos($preset[0], '.');
+				if($dot !== false && ($test = substr($preset[0], 0, $dot)) != null && ($option = substr($preset[0], ($dot + 1))) != null)
 				{
-					$values[$preset[0][0]][$preset[0][1]] = $preset[1];
+					$values[$test][$option] = $preset[1];
 				}
 			}
 		}

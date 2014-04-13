@@ -27,15 +27,18 @@ class pts_test_run_options
 		$user_args = array();
 		$text_args = array();
 
-		// Rather than using AUTO_TEST_OPTION_SELECTIONS, pass it to the $preset_selections argument
 		if(($cli_presets_env = pts_client::read_env('PRESET_OPTIONS')) != false)
 		{
 			// To specify test options externally from an environment variable
 			// i.e. PRESET_OPTIONS='stream.run-type=Add' ./phoronix-test-suite benchmark stream
+			// The string format is <test-name>.<test-option-name-from-XML-file>=<test-option-value>
+			// The test-name can either be the short/base name (e.g. stream) or the full identifier (pts/stream) without version postfix
+			// Multiple preset options can be delimited with the PRESET_OPTIONS environment variable via a semicolon ;
 			$preset_selections = pts_client::parse_value_string_double_identifier($cli_presets_env);
 		}
 
-		$identifier = $test_profile->get_identifier_base_name();
+		$identifier_short = $test_profile->get_identifier_base_name();
+		$identifier_full = $test_profile->get_identifier(false);
 
 		if(count($test_profile->get_test_option_objects()) > 0)
 		{
@@ -49,9 +52,15 @@ class pts_test_run_options
 			if($o->option_count() == 0)
 			{
 				// User inputs their option as there is nothing to select
-				if(isset($preset_selections[$identifier][$option_identifier]))
+				if(isset($preset_selections[$identifier_short][$option_identifier]))
 				{
-					$value = $preset_selections[$identifier][$option_identifier];
+					$value = $preset_selections[$identifier_short][$option_identifier];
+					echo PHP_EOL . '    Using Pre-Set Run Option: ' . $value . PHP_EOL;
+				}
+				else if(isset($preset_selections[$identifier_full][$option_identifier]))
+				{
+					$value = $preset_selections[$identifier_full][$option_identifier];
+					echo PHP_EOL . '    Using Pre-Set Run Option: ' . $value . PHP_EOL;
 				}
 				else
 				{
@@ -65,9 +74,15 @@ class pts_test_run_options
 			else
 			{
 				// Have the user select the desired option
-				if(isset($preset_selections[$identifier][$option_identifier]))
+				if(isset($preset_selections[$identifier_short][$option_identifier]))
 				{
-					$bench_choice = $preset_selections[$identifier][$option_identifier];
+					$bench_choice = $preset_selections[$identifier_short][$option_identifier];
+					echo PHP_EOL . '    Using Pre-Set Run Option: ' . $bench_choice . PHP_EOL;
+				}
+				else if(isset($preset_selections[$identifier_full][$option_identifier]))
+				{
+					$bench_choice = $preset_selections[$identifier_full][$option_identifier];
+					echo PHP_EOL . '    Using Pre-Set Run Option: ' . $bench_choice . PHP_EOL;
 				}
 				else
 				{
