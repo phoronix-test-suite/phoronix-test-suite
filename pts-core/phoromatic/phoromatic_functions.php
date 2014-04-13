@@ -110,8 +110,8 @@ function phoromatic_web_socket_server_addr()
 			$server_ip = $local_ip;
 		}
 	}
-
-	return $server_ip . ':' . getenv('PTS_WEBSOCKET_PORT') . '/' . $_SESSION['AccountID'];
+	// getenv('PTS_WEBSOCKET_PORT')
+	return $server_ip . ':' . $_SERVER['SERVER_PORT'] . '/' . $_SESSION['AccountID'];
 }
 
 ?>

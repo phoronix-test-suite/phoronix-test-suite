@@ -21,12 +21,12 @@
 */
 error_reporting(E_ALL);
 session_start();
-include('phoromatic_functions.php');
+include('../phoromatic_functions.php');
 
 define('PTS_MODE', 'WEB_CLIENT');
 define('PTS_AUTO_LOAD_OBJECTS', true);
 
-include('../pts-core.php');
+include('../../pts-core.php');
 pts_client::init();
 
 interface pts_webui_interface
@@ -53,7 +53,7 @@ if(!isset($_SESSION['UserName']) || !isset($_SESSION['AccountID']) || trim($_SES
 	// NOT LOGGED IN
 	$PAGE_REQUEST = 'welcome';
 }
-else if(is_file('pages/phoromatic_' . $PAGE_REQUEST . '.php'))
+else if(is_file('../pages/phoromatic_' . $PAGE_REQUEST . '.php'))
 {
 	$PAGE_REQUEST = $PAGE_REQUEST;
 }
@@ -65,7 +65,7 @@ define('PAGE_REQUEST', $PAGE_REQUEST);
 $page_class = 'phoromatic_' . PAGE_REQUEST;
 
 pts_webui::websocket_setup_defines();
-$page_class = pts_webui::load_web_interface('pages/' . $page_class, $PATH);
+$page_class = pts_webui::load_web_interface('../pages/' . $page_class, $PATH);
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
