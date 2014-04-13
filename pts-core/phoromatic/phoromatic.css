@@ -89,6 +89,11 @@ div#pts_phoromatic_top_header ul
 	margin: 0 2px;
 	float: left;
 }
+div#pts_phoromatic_top_header ul li u
+{
+	text-decoration: underline;
+	color: #DDD;
+}
 div#pts_phoromatic_top_header ul li
 {
 	list-style-type: none;
@@ -217,9 +222,17 @@ h1
 {
 	font-size: 140%;
 }
+div#pts_phoromatic_main_area ol
+{
+	margin: 0;
+}
+div#pts_phoromatic_main_area ol li
+{
+	margin-bottom: 4px;
+}
 div#pts_phoromatic_main_area h2
 {
-	margin: 1px 0;
+	margin: 1px 0 5px;
 	font-size: 120%;
 }
 div#pts_phoromatic_main_area h2 a

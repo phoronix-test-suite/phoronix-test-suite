@@ -78,7 +78,13 @@ class phoromatic_welcome implements pts_webui_interface
 				return false;
 			}
 
-			$account_id = pts_strings::random_characters(6, true);
+			do
+			{
+				$account_id = pts_strings::random_characters(6, true);
+				$matching_accounts = phoromatic_server::$db->querySingle('SELECT AccountID FROM phoromatic_accounts WHERE AccountID = \'' . $account_id . '\'');
+			}
+			while(!empty($matching_accounts));
+
 			$account_salt = pts_strings::random_characters(12, true);
 
 			$salted_password = hash('sha256', $account_salt . $_POST['register_password']);

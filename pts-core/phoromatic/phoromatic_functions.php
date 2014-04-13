@@ -48,6 +48,42 @@ function phoromatic_webui_footer()
 <p style="margin: 6px 15px;">Copyright &copy; 2008 - ' . date('Y') . ' by <a href="http://www.phoronix-media.com/">Phoronix Media</a>. All rights reserved.<br />
 All trademarks used are properties of their respective owners.<br />' . pts_title(true) . ' - Core Version ' . PTS_CORE_VERSION . ' - PHP ' . PHP_VERSION . '</p></div>';
 }
+function phoromatic_webui_header_logged_in()
+{
+	$html_links = array();
+	$pages = array('Main', 'Systems', 'Settings', 'Schedules', 'Results');
+	foreach($pages as $page)
+	{
+		if(strtolower($page) == PAGE_REQUEST)
+		{
+			array_push($html_links, '<a href="?' . strtolower($page) . '"><u>' . $page . '</u></a>');
+		}
+		else
+		{
+			array_push($html_links, '<a href="?' . strtolower($page) . '">' . $page . '</a>');
+		}
+	}
 
+	return phoromatic_webui_header($html_links, '<form action="#" id="search"><input type="search" name="q" size="14" /><input type="submit" name="sa" value="Search" /></form>');
+}
+function phoromatic_web_socket_server_addr()
+{
+	$server_ip = $_SERVER['HTTP_HOST'];
+	if(($x = strpos($server_ip, ':')) !== false)
+	{
+		$server_ip = substr($server_ip, 0, $x);
+	}
+
+	if($server_ip == 'localhost' || $server_ip == '0.0.0.0')
+	{
+		$local_ip = pts_network::get_local_ip();
+		if($local_ip)
+		{
+			$server_ip = $local_ip;
+		}
+	}
+
+	return $server_ip . ':' . getenv('PTS_WEBSOCKET_PORT') . '/' . $_SESSION['AccountID'];
+}
 
 ?>

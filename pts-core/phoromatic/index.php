@@ -39,8 +39,9 @@ interface pts_webui_interface
 
 $URI = substr($_SERVER['REQUEST_URI'], strpos($_SERVER['REQUEST_URI'], '?') + 1);
 $PATH = explode('/', $URI);
+var_dump($PATH);
 $PAGE_REQUEST = str_replace('.', null, array_shift($PATH));
-var_dump($PATH); var_dump($PAGE_REQUEST);
+var_dump($PAGE_REQUEST);
 
 if($PAGE_REQUEST == 'logout')
 {
@@ -51,17 +52,19 @@ if($PAGE_REQUEST == 'logout')
 
 if(!isset($_SESSION['UserName']) || !isset($_SESSION['AccountID']) || trim($_SESSION['UserName']) == null || trim($_SESSION['AccountID']) == null)
 {
-	$page_class = 'phoromatic_welcome';
+	// NOT LOGGED IN
+	$PAGE_REQUEST = 'welcome';
 }
 else if(is_file('pages/phoromatic_' . $PAGE_REQUEST . '.php'))
 {
-	$page_class = 'phoromatic_' . $PAGE_REQUEST;
+	$PAGE_REQUEST = $PAGE_REQUEST;
 }
 else
 {
-	// or pts_webui_intro on invalidated classes
-	$page_class = 'phoromatic_main';
+	$PAGE_REQUEST = 'main';
 }
+define('PAGE_REQUEST', $PAGE_REQUEST);
+$page_class = 'phoromatic_' . PAGE_REQUEST;
 
 pts_webui::websocket_setup_defines();
 $page_class = pts_webui::load_web_interface('pages/' . $page_class, $PATH);

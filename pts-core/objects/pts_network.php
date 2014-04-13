@@ -297,6 +297,30 @@ class pts_network
 			echo PHP_EOL . 'The file_uploads option in your PHP configuration must be enabled for network support.' . PHP_EOL . PHP_EOL;
 		}
 	}
+	public static function get_local_ip()
+	{
+		$local_ip = false;
+
+		if(($ifconfig = pts_client::executable_in_path('ifconfig')))
+		{
+			$ifconfig = shell_exec($ifconfig . ' 2>&1');
+			$offset = 0;
+			while(($ipv4_pos = strpos($ifconfig, 'inet addr:', $offset)) !== false)
+			{
+				$ipv4 = substr($ifconfig, $ipv4_pos + strlen('inet addr:'));
+				$ipv4 = substr($ipv4, 0, strpos($ipv4, ' '));
+				$local_ip = $ipv4;
+
+				if($local_ip != '127.0.0.1' && $local_ip != null)
+				{
+					break;
+				}
+				$offset = $ipv4_pos + 1;
+			}
+		}
+
+		return $local_ip;
+	}
 }
 
 ?>
