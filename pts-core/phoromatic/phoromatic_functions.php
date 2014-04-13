@@ -66,6 +66,34 @@ function phoromatic_webui_header_logged_in()
 
 	return phoromatic_webui_header($html_links, '<form action="#" id="search"><input type="search" name="q" size="14" /><input type="submit" name="sa" value="Search" /></form>');
 }
+function phoromatic_webui_right_panel_logged_in($add = null)
+{
+	$right = $add;
+
+	if($add == null)
+	{
+		$right .= '<ul>
+					<li>Active Systems</li>
+					<li><a href="#">System A</a></li>
+					<li><a href="#">System B</a></li>
+					<li><a href="#">System C</a></li>
+					<li><a href="#">System D</a></li>
+				</ul>
+				<hr />
+				<ul>
+					<li>Upcoming Tests</li>
+					<li><a href="#">Test A</a></li>
+					<li><a href="#">Test B</a></li>
+					<li><a href="#">Test C</a></li>
+					<li><a href="#">Test D</a></li>
+				</ul>';
+
+	}
+
+	$right .= '<hr /><p><strong>' . date('H:i - j F Y') . '</strong><br />XXX Systems Connected<br />X Test Schedules<br /><a href="?logout">Log-Out</a></p>';
+
+	return $right;
+}
 function phoromatic_web_socket_server_addr()
 {
 	$server_ip = $_SERVER['HTTP_HOST'];

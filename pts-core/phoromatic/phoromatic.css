@@ -222,6 +222,10 @@ h1
 {
 	font-size: 140%;
 }
+div#pts_phoromatic_main_area h1
+{
+	margin-left: -15px;
+}
 div#pts_phoromatic_main_area ol
 {
 	margin: 0;

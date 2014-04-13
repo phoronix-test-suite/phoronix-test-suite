@@ -47,7 +47,7 @@ class phoromatic_systems implements pts_webui_interface
 
 				<hr />
 
-			<h1>Systems</h1>
+			<h2>Systems</h2>
 			<div class="pts_phoromatic_info_box_area">
 
 				<div style="float: left; width: 50%;">
@@ -64,27 +64,35 @@ class phoromatic_systems implements pts_webui_interface
 						<a href=""><li>Radeon R9 270X<br /><em>sfdg dsfg dfsg fdgdfsav fgrthtehr hfbfg bbsfdg dsfg dfsg fdgdfsav fgrthtehr hfbfg bbsfdg dsfg dfsg fdgdfsav fgrthtehr hfbfg bbsfdg dsfg dfsg fdgdfsav fgrthtehr hfbfg bbsfdg dsfg dfsg fdgdfsav fgrthtehr hfbfg bb.</em></li></a>
 					</ul>
 				</div>
-			</div>';
+			</div>
 
-			$right = '<ul>
-					<li>Active Systems</li>
+			<hr />
+			<h2>System Groups</h2>
+			<p>System groups make it very easy to organize multiple test systems for targeting by test schedules. You can always add/remove systems to groups, create new groups, and add systems to multiple groups.</p>
+
+
+			'
+			;
+
+
+
+			$right_systems = '<ul>
+					<li>Systems</li>
 					<li><a href="#">System A</a></li>
 					<li><a href="#">System B</a></li>
 					<li><a href="#">System C</a></li>
 					<li><a href="#">System D</a></li>
-				</ul>
-				<hr />
-				<ul>
-					<li>Upcoming Tests</li>
-					<li><a href="#">Test A</a></li>
-					<li><a href="#">Test B</a></li>
-					<li><a href="#">Test C</a></li>
-					<li><a href="#">Test D</a></li>
-				</ul>
-				<hr />
-				<p><strong>' . date('H:i - j F Y') . '</strong><br />10 Systems Connected<br />2 Test Schedules<br /><a href="?logout">Log-Out</a></p>';
+					<li><a href="#">System A</a></li>
+					<li><a href="#">System B</a></li>
+					<li><a href="#">System C</a></li>
+					<li><a href="#">System D</a></li>
+					<li><a href="#">System A</a></li>
+					<li><a href="#">System B</a></li>
+					<li><a href="#">System C</a></li>
+					<li><a href="#">System D</a></li>
+				</ul>';
 
-			echo phoromatic_webui_main($main, $right);
+			echo phoromatic_webui_main($main, phoromatic_webui_right_panel_logged_in($right_systems));
 			echo phoromatic_webui_footer();
 	}
 }
