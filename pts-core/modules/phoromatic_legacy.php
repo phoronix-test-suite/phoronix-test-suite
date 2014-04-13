@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2013, Phoronix Media
-	Copyright (C) 2009 - 2013, Michael Larabel
+	Copyright (C) 2009 - 2014, Phoronix Media
+	Copyright (C) 2009 - 2014, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -20,11 +20,11 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class phoromatic extends pts_module_interface
+class phoromatic_legacy extends pts_module_interface
 {
-	const module_name = 'Phoromatic Client';
+	const module_name = 'Phoromatic Legacy Client';
 	const module_version = '2.0.0';
-	const module_description = 'The Phoromatic client is used for connecting to a Phoromatic server (Phoromatic.com or a locally run server) to facilitate the automatic running of tests, generally across multiple test nodes in a routine manner. For more details visit http://www.phoromatic.com/';
+	const module_description = 'The Phoromatic client is used for connecting to a Phoromatic server (Phoromatic.com or a locally run server) to facilitate the automatic running of tests, generally across multiple test nodes in a routine manner. For more details visit http://www.phoromatic.com/. THIS MODULE IS USED FOR CONNECTING TO THE PRE-2014 VERSION OF PHOROMATIC; THIS OLDER VERSION OF PHOROMATIC IS NO LONGER BEING ACTIVELY MAINTAINED. PLEASE UPGRADE TO PHORONIX-TEST-SUITE 5.2+ WITH ITS BUILT-IN PHOROMATIC SERVER.';
 	const module_author = 'Phoronix Media';
 
 	static $phoromatic_server_build = false;

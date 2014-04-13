@@ -39,9 +39,7 @@ interface pts_webui_interface
 
 $URI = substr($_SERVER['REQUEST_URI'], strpos($_SERVER['REQUEST_URI'], '?') + 1);
 $PATH = explode('/', $URI);
-var_dump($PATH);
 $PAGE_REQUEST = str_replace('.', null, array_shift($PATH));
-var_dump($PAGE_REQUEST);
 
 if($PAGE_REQUEST == 'logout')
 {

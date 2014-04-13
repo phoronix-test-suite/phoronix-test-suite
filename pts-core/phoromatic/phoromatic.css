@@ -91,8 +91,10 @@ div#pts_phoromatic_top_header ul
 }
 div#pts_phoromatic_top_header ul li u
 {
-	text-decoration: underline;
+	text-decoration: none;
 	color: #DDD;
+	border-bottom: 1px solid #DDD;
+	padding-bottom: 6px;
 }
 div#pts_phoromatic_top_header ul li
 {
@@ -158,7 +160,7 @@ div#pts_phoromatic_menu_right ul li a
 	font-weight: normal;
 	color: #FFF;
 }
-div#pts_phoromatic_menu_right ul li a:hover
+div#pts_phoromatic_menu_right ul li a:hover, div#pts_phoromatic_menu_right p a:hover
 {
 	color: #CCC;
 	text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;

@@ -64,7 +64,7 @@ function phoromatic_webui_header_logged_in()
 		}
 	}
 
-	return phoromatic_webui_header($html_links, '<form action="#" id="search"><input type="search" name="q" size="14" /><input type="submit" name="sa" value="Search" /></form>');
+	return phoromatic_webui_header($html_links, '<form action="#" id="search"><input type="search" name="q" size="14" disabled="disabled" /><input type="submit" name="sa" value="Search" disabled="disabled" /></form>');
 }
 function phoromatic_webui_right_panel_logged_in($add = null)
 {
@@ -90,7 +90,7 @@ function phoromatic_webui_right_panel_logged_in($add = null)
 
 	}
 
-	$right .= '<hr /><p><strong>' . date('H:i - j F Y') . '</strong><br />XXX Systems Connected<br />X Test Schedules<br /><a href="?logout">Log-Out</a></p>';
+	$right .= '<hr /><p><strong>' . date('H:i - j F Y') . '</strong><br />XXX Systems Connected<br />X Test Schedules<br /><a href="?logout"><strong>Log-Out</strong></a></p>';
 
 	return $right;
 }
