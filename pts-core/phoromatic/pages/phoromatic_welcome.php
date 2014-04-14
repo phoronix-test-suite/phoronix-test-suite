@@ -42,22 +42,22 @@ class phoromatic_welcome implements pts_webui_interface
 			// REGISTER NEW USER
 			if(strlen($_POST['register_username']) < 4 || strpos($_POST['register_username'], ' ') !== false)
 			{
-				echo '<p><strong>Please go back and ensure the supplied username is at least four characters long and contains no spaces.</strong></p>';
+				phoromatic_error_page('Oops!', 'Please go back and ensure the supplied username is at least four characters long and contains no spaces.');
 				return false;
 			}
 			if(strlen($_POST['register_password']) < 6)
 			{
-				echo '<p><strong>Please go back and ensure the supplied password is at least six characters long.</strong></p>';
+				phoromatic_error_page('Oops!', 'Please go back and ensure the supplied password is at least six characters long.');
 				return false;
 			}
 			if($_POST['register_password'] != $_POST['register_password_confirm'])
 			{
-				echo '<p><strong>Please go back and ensure the supplied password matches the password confirmation.</strong></p>';
+				phoromatic_error_page('Oops!', 'Please go back and ensure the supplied password matches the password confirmation.');
 				return false;
 			}
 			if($_POST['register_email'] == null || filter_var($_POST['register_email'], FILTER_VALIDATE_EMAIL) == false)
 			{
-				echo '<p><strong>Please enter a valid email address.</strong></p>';
+				phoromatic_error_page('Oops!', 'Please enter a valid email address.');
 				return false;
 			}
 
@@ -66,7 +66,7 @@ class phoromatic_welcome implements pts_webui_interface
 			{
 				if(strpos($valid_user_name_chars, substr($_POST['register_username'], $i, 1)) === false)
 				{
-					echo '<p><strong>Please go back and ensure a valid user-name. The character <em>' . substr($_POST['register_username'], $i, 1) . '</em> is not allowed.</strong></p>';
+					phoromatic_error_page('Oops!', 'Please go back and ensure a valid user-name. The character <em>' . substr($_POST['register_username'], $i, 1) . '</em> is not allowed.');
 					return false;
 				}
 			}
@@ -74,7 +74,7 @@ class phoromatic_welcome implements pts_webui_interface
 			$matching_users = phoromatic_server::$db->querySingle('SELECT UserName FROM phoromatic_users WHERE UserName = \'' . SQLite3::escapeString($_POST['register_username']) . '\'');
 			if(!empty($matching_users))
 			{
-				echo '<p><strong>The user-name is already taken.</strong></p>';
+				phoromatic_error_page('Oops!', 'The user-name is already taken.');
 				return false;
 			}
 
@@ -152,13 +152,13 @@ class phoromatic_welcome implements pts_webui_interface
 				}
 				else
 				{
-					echo '<p><strong>The user-name or password did not match our system.</strong></p>';
+					phoromatic_error_page('Invalid Information', 'The user-name or password did not match our records.');
 					return false;
 				}
 			}
 			else
 			{
-				echo '<p><strong>The user-name was not found within our system.</strong></p>';
+				phoromatic_error_page('Invalid Information', 'The user-name was not found within our system.');
 				return false;
 			}
 		}

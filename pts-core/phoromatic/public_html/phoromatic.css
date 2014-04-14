@@ -280,12 +280,12 @@ div#pts_phoromatic_main_area hr
 	height: 1px;
 	margin: 20px 0;
 }
-div#pts_phoromatic_main_area p a, div#pts_phoromatic_main_area a, div#pts_phoromatic_main_area h6 a, div#pts_phoromatic_main_area h5 a
+div#pts_phoromatic_main_area p a, div#pts_phoromatic_main_area a, div#pts_phoromatic_main_area h6 a, div#pts_phoromatic_main_area h5 a, div#pts_phoromatic_main_box p a
 {
 	color: #e08a09;
 	font-weight: 600;
 }
-div#pts_phoromatic_main_area p a:hover, div#pts_phoromatic_main_area a:hover, div#pts_phoromatic_main_area h6 a:hover, div#pts_phoromatic_main_area h5 a:hover
+div#pts_phoromatic_main_area p a:hover, div#pts_phoromatic_main_area a:hover, div#pts_phoromatic_main_area h6 a:hover, div#pts_phoromatic_main_area h5 a:hover, div#pts_phoromatic_main_box p a:hover
 {
 	text-decoration: underline;
 }

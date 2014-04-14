@@ -113,5 +113,15 @@ function phoromatic_web_socket_server_addr()
 	// getenv('PTS_WEBSOCKET_PORT')
 	return $server_ip . ':' . $_SERVER['SERVER_PORT'] . '/' . $_SESSION['AccountID'];
 }
+function phoromatic_error_page($title, $description)
+{
+	echo phoromatic_webui_header(array(''), '');
+
+	$box = '<h1>' . $title . '</h1>
+		<h2>' . $description . '</h2>
+		<p>To fix this error, try <a onclick="javascript:window.history.back();">returning to the previous page</a>. Still having problems? Consider <a href="https://github.com/phoronix-test-suite/phoronix-test-suite/issues?state=open">opening a GitHub issue report</a>; commercial support customers should contact Phoronix Media.</p><hr /><hr />';
+	echo phoromatic_webui_box($box);
+	echo phoromatic_webui_footer();
+}
 
 ?>
