@@ -58,3 +58,17 @@ function phoromatic_login(form)
 
 	return true;
 }
+function phoromatic_system_edit(form)
+{
+	if(form.system_title.value.length < 3)
+	{
+		alert("Please enter a system title of at least three characters.");
+		return false;
+	}
+	if(form.system_description.value.length == 0)
+	{
+		alert("Please enter a system description.");
+		return false;
+	}
+	return true;
+}

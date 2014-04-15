@@ -125,14 +125,14 @@ function phoromatic_error_page($title, $description)
 }
 function phoromatic_systems_needing_attention()
 {
-	$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, Status, LastIP, LocalIP, LastCommunication FROM phoromatic_systems WHERE AccountID = :account_id AND Status = 0 ORDER BY LastCommunication DESC');
+	$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, State, LastIP, LocalIP, LastCommunication FROM phoromatic_systems WHERE AccountID = :account_id AND State = 0 ORDER BY LastCommunication DESC');
 	$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 	$result = $stmt->execute();
-	if($result)
+	if($row = $result->fetchArray())
 	{
-		$main .= '<div class="pts_phoromatic_info_box_area"><div style="float: left; width: 100%;"><ul><li><h1>Systems Needing Attention</h1></li><li class="light" style="font-weight: normal;">The following systems have attempted to sync with this Phoromatic account but have not been validated. When clicking on them you are able to approve or delete them from your account along with editing the system information.</li>';
+		$main .= '<div class="pts_phoromatic_info_box_area"><div style="float: left; width: 100%;"><ul><li><h1>Systems Needing Attention</h1></li><li class="light" style="font-weight: normal;">The following systems have attempted to sync with this Phoromatic account but have not been validated. When clicking on them you are able to approve or disable them from your account along with editing the system information.</li>';
 
-		while($row = $result->fetchArray())
+		do
 		{
 			$ip = $row['LocalIP'];
 			if($row['LastIP'] != $row['LocalIP'])
@@ -142,6 +142,7 @@ function phoromatic_systems_needing_attention()
 
 			$main .= '<a href="?systems/' . $row['SystemID'] . '/edit"><li>' . $row['Title'] . '<br /><em><strong>IP:</strong> ' . $ip . ' <strong>Last Communication:</strong> ' . $row['LastCommunication'] . '</em></li></a>';
 		}
+		while($row = $result->fetchArray());
 
 		$main .= '</ul></div></div>';
 	}

@@ -40,6 +40,17 @@ class phoromatic_systems implements pts_webui_interface
 		echo phoromatic_webui_header_logged_in();
 		$main = null;
 
+		if(!empty($PATH[0]) && isset($_POST['system_title']) && !empty($_POST['system_title']) && isset($_POST['system_description']) && isset($_POST['system_state']))
+		{
+			$stmt = phoromatic_server::$db->prepare('UPDATE phoromatic_systems SET Title = :title, Description = :description, State = :state, CurrentTask = \'Awaiting Task\' WHERE AccountID = :account_id AND SystemID = :system_id');
+			$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+			$stmt->bindValue(':system_id', $PATH[0]);
+			$stmt->bindValue(':title', $_POST['system_title']);
+			$stmt->bindValue(':description', $_POST['system_description']);
+			$stmt->bindValue(':state', $_POST['system_state']);
+			$stmt->execute();
+		}
+
 		if(!empty($PATH[0]))
 		{
 			$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_systems WHERE AccountID = :account_id AND SystemID = :system_id ORDER BY LastCommunication DESC');
@@ -51,13 +62,36 @@ class phoromatic_systems implements pts_webui_interface
 			{
 				$row = $result->fetchArray();
 
-				var_dump($row);
+				if($PATH[1] == 'edit')
+				{
+					$main = '<h1>' . $row['Title'] . '</h1>';
+					$main .= '<form name="system_form" id="system_form" action="?systems/' . $PATH[0] . '" method="post" onsubmit="return phoromatic_system_edit(this);">
+			<p><div style="width: 200px; font-weight: bold; float: left;">System Title:</div> <input type="text" style="width: 400px;" name="system_title" value="' . $row['Title'] . '" /></p>
+			<p><div style="width: 200px; font-weight: bold; float: left;">System Description:</div> <textarea style="width: 400px;" name="system_description">' . $row['Description'] . '</textarea></p>
+			<p><div style="width: 200px; font-weight: bold; float: left;">System State:</div><select name="system_state" style="width: 200px;"><option value="-1">Disabled</option><option value="1" selected="selected">Enabled</option></select></p>
+			<p><div style="width: 200px; font-weight: bold; float: left;">&nbsp;</div> <input type="submit" value="Submit" /></p></form>';
+				}
+				else
+				{
+					$main = '<h1>' . $row['Title'] . '</h1><p><em>' . ($row['Description'] != null ? $row['Description'] : 'No system description.') . '</em></p>';
+					$main .= '<p><a href="?systems/' . $PATH[0] . '/edit">Edit Task & Enable/Disable System</a></p>';
+				}
 
+				switch($row['State'])
+				{
+					case -1:
+						$state = 'Disabled';
+						break;
+					case 0:
+						$state = 'Connected; Awaiting Approval';
+						break;
+					case 1:
+						$state = 'Active';
+						break;
+				}
 
-
-				$main = '<h1>' . $row['Title'] . '</h1><p><em>' . ($row['Description'] != null ? $row['Description'] : 'No system description.') . '</em></p>';
-
-				$info_table = array('Status:' => $row['CurrentTask'], 'Phoronix Test Suite Client:' => $row['ClientVersion'], 'Last IP:' => $row['LastIP'], 'Last Communication:' => $row['LastCommunication'], 'Initial Creation:' => $row['CreatedOn'], 'System ID:' => $row['SystemID']);
+				$main .= '<hr />';
+				$info_table = array('Status:' => $row['CurrentTask'], 'State:' => $state, 'Phoronix Test Suite Client:' => $row['ClientVersion'], 'Last IP:' => $row['LastIP'], 'Last Communication:' => $row['LastCommunication'], 'Initial Creation:' => $row['CreatedOn'], 'System ID:' => $row['SystemID']);
 				$main .= '<h2>System State</h2>' . pts_webui::r2d_array_to_table($info_table, 'auto');
 
 				$main .= '<hr /><h2>System Components</h2><div style="float: left; width: 50%;">';
