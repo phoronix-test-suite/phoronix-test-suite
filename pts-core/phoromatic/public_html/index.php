@@ -71,9 +71,9 @@ $page_class = pts_webui::load_web_interface('../pages/' . $page_class, $PATH);
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-<script src="phoromatic.js" type="text/javascript"></script>
+<script src="/phoromatic.js" type="text/javascript"></script>
 <title>Phoronix Test Suite - Phoromatic - <?php echo $page_class::page_title(); ?></title>
-<link href="phoromatic.css" rel="stylesheet" type="text/css" />
+<link href="/phoromatic.css" rel="stylesheet" type="text/css" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="keywords" content="Phoronix Test Suite, open-source benchmarking, Linux benchmarking, automated testing" />
 <meta name="Description" content="Phoronix Test Suite local control server." />

@@ -55,11 +55,16 @@ class pts_webui
 
 		return false;
 	}
-	public static function r2d_array_to_table(&$r2d)
+	public static function r2d_array_to_table(&$r2d, $width = '100%')
 	{
-		$ret = '<table width="100%;">';
-		foreach($r2d as $tr)
+		$ret = '<table width="' . $width . ';">';
+		foreach($r2d as $row => $tr)
 		{
+			if(!is_array($tr) && !is_numeric($row))
+			{
+				$tr = array($row, $tr);
+			}
+
 			$ret .= '<tr>';
 			if(count($tr) == 1)
 			{

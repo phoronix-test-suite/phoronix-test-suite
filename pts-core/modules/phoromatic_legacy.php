@@ -55,7 +55,7 @@ class phoromatic_legacy extends pts_module_interface
 			$options['remote_host'] = pts_strings::add_trailing_slash($options['remote_host']) . 'phoromatic.php';
 		}
 
-		$server_response = phoromatic::upload_to_remote_server(array(
+		$server_response = self::upload_to_remote_server(array(
 			'r' => 'setup',
 			'h' => phodevi::system_hardware(true),
 			's' => phodevi::system_software(true),
@@ -105,16 +105,16 @@ class phoromatic_legacy extends pts_module_interface
 			trigger_error('Phoromatic is already running.', E_USER_ERROR);
 			return false;
 		}
-		if(!phoromatic::phoromatic_setup_module())
+		if(!self::phoromatic_setup_module())
 		{
 			return false;
 		}
 
-		phoromatic::user_system_process();
+		self::user_system_process();
 	}
 	public static function upload_unscheduled_results($to_upload)
 	{
-		if(!phoromatic::phoromatic_setup_module())
+		if(!self::phoromatic_setup_module())
 		{
 			return false;
 		}
@@ -125,11 +125,11 @@ class phoromatic_legacy extends pts_module_interface
 			return false;
 		}
 
-		phoromatic::upload_unscheduled_test_results($to_upload[0]);
+		self::upload_unscheduled_test_results($to_upload[0]);
 	}
 	public static function clone_results($to_clone)
 	{
-		if(!phoromatic::phoromatic_setup_module())
+		if(!self::phoromatic_setup_module())
 		{
 			return false;
 		}
@@ -140,7 +140,7 @@ class phoromatic_legacy extends pts_module_interface
 			return false;
 		}
 
-		$server_response = phoromatic::upload_to_remote_server(array(
+		$server_response = self::upload_to_remote_server(array(
 			'r' => 'clone_test_results',
 			'i' => $to_clone[0]
 			));
@@ -164,12 +164,12 @@ class phoromatic_legacy extends pts_module_interface
 	}
 	public static function system_schedule()
 	{
-		if(!phoromatic::phoromatic_setup_module())
+		if(!self::phoromatic_setup_module())
 		{
 			return false;
 		}
 
-		$server_response = phoromatic::upload_to_remote_server(array(
+		$server_response = self::upload_to_remote_server(array(
 			'r' => 'system_schedule'
 			));
 
@@ -195,12 +195,12 @@ class phoromatic_legacy extends pts_module_interface
 	}
 	public static function system_schedule_today()
 	{
-		if(!phoromatic::phoromatic_setup_module())
+		if(!self::phoromatic_setup_module())
 		{
 			return false;
 		}
 
-		$server_response = phoromatic::upload_to_remote_server(array(
+		$server_response = self::upload_to_remote_server(array(
 			'r' => 'system_schedule'
 			));
 
@@ -231,7 +231,7 @@ class phoromatic_legacy extends pts_module_interface
 	}
 	public static function send_message_to_server($msg)
 	{
-		if(!phoromatic::phoromatic_setup_module())
+		if(!self::phoromatic_setup_module())
 		{
 			return false;
 		}
@@ -277,7 +277,7 @@ class phoromatic_legacy extends pts_module_interface
 					sleep(60);
 				}
 
-				$update_sd = phoromatic::update_system_details();
+				$update_sd = self::update_system_details();
 				$times_tried++;
 			}
 			while(!$update_sd && $times_tried < 5);
@@ -307,7 +307,7 @@ class phoromatic_legacy extends pts_module_interface
 			}
 			else
 			{
-				$server_response = phoromatic::upload_to_remote_server(array('r' => 'status_check'));
+				$server_response = self::upload_to_remote_server(array('r' => 'status_check'));
 				$xml_parser = new nye_XmlReader($server_response);
 				$response = $xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/Response');
 
@@ -347,7 +347,7 @@ class phoromatic_legacy extends pts_module_interface
 					$suite_identifier = 'local/' . $suite_identifier;
 					if(pts_strings::string_bool($xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/RunInstallCommand', 'TRUE')))
 					{
-						phoromatic::set_user_context($xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/SetContextPreInstall'), $phoromatic_trigger, $phoromatic_schedule_id, 'INSTALL');
+						self::set_user_context($xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/SetContextPreInstall'), $phoromatic_trigger, $phoromatic_schedule_id, 'INSTALL');
 
 						if(pts_strings::string_bool($xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/ForceInstallTests', 'TRUE')))
 						{
@@ -358,7 +358,7 @@ class phoromatic_legacy extends pts_module_interface
 						pts_test_installer::standard_install($suite_identifier);
 					}
 
-					phoromatic::set_user_context($xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/SetContextPreRun'), $phoromatic_trigger, $phoromatic_schedule_id, 'INSTALL');
+					self::set_user_context($xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/SetContextPreRun'), $phoromatic_trigger, $phoromatic_schedule_id, 'INSTALL');
 
 
 					// Do the actual running
@@ -392,7 +392,7 @@ class phoromatic_legacy extends pts_module_interface
 
 							if(is_file(PTS_SAVE_RESULTS_PATH . $test_run_manager->get_file_name() . '/composite.xml'))
 							{
-								phoromatic::update_system_status('Uploading Test Results');
+								self::update_system_status('Uploading Test Results');
 
 								$times_tried = 0;
 								do
@@ -403,7 +403,7 @@ class phoromatic_legacy extends pts_module_interface
 										sleep(60);
 									}
 
-									$uploaded_test_results = phoromatic::upload_test_results($test_run_manager->get_file_name(), $phoromatic_schedule_id, $phoromatic_results_identifier, $phoromatic_trigger, $xml_parser);
+									$uploaded_test_results = self::upload_test_results($test_run_manager->get_file_name(), $phoromatic_schedule_id, $phoromatic_results_identifier, $phoromatic_trigger, $xml_parser);
 									$times_tried++;
 								}
 								while($uploaded_test_results == false && $times_tried < 5);
@@ -424,7 +424,7 @@ class phoromatic_legacy extends pts_module_interface
 					break;
 				case 'exit':
 					echo PHP_EOL . 'Phoromatic received a remote command to exit.' . PHP_EOL;
-					phoromatic::update_system_status('Exiting Phoromatic');
+					self::update_system_status('Exiting Phoromatic');
 					pts_client::release_lock(PTS_USER_PATH . 'phoromatic_lock');
 					$exit_loop = true;
 					break;
@@ -445,7 +445,7 @@ class phoromatic_legacy extends pts_module_interface
 					break;
 				case 'idle':
 				default:
-					phoromatic::update_system_status('Idling, Waiting For Task');
+					self::update_system_status('Idling, Waiting For Task');
 					sleep((10 - (date('i') % 10)) * 60); // Check with server every 10 minutes
 					break;
 			}
@@ -454,14 +454,14 @@ class phoromatic_legacy extends pts_module_interface
 			{
 				// Hardware and/or software has changed while PTS/Phoromatic has been running, update the Phoromatic Server
 				echo 'Updating Installed Hardware / Software With Phoromatic Server' . PHP_EOL;
-				phoromatic::update_system_details();
+				self::update_system_details();
 				$current_hw = phodevi::system_hardware(true);
 				$current_sw = phodevi::system_software(true);
 			}
 		}
 		while($exit_loop == false);
 
-		phoromatic::update_system_status('Offline');
+		self::update_system_status('Offline');
 	}
 
 	//
@@ -475,7 +475,7 @@ class phoromatic_legacy extends pts_module_interface
 
 		if(time() > ($last_update_time + 600))
 		{
-			phoromatic::update_system_status('Installing Tests');
+			self::update_system_status('Installing Tests');
 			$last_update_time = time();
 		}
 	}
@@ -483,18 +483,18 @@ class phoromatic_legacy extends pts_module_interface
 	{
 		// TODO: need a way to get the estimated time remaining from the test_run_manager so we can pass that back to the update_system_status parameter so server can read it
 		// TODO: report name of test identifier/run i.e. . ' For ' . PHOROMATIC_TITLE
-		phoromatic::update_system_status('Running ' . $pts_test_result->test_profile->get_identifier());
+		self::update_system_status('Running ' . $pts_test_result->test_profile->get_identifier());
 	}
 	public static function __event_user_error($user_error)
 	{
 		// Report PTS user error warnings to Phoromatic server
-		phoromatic::report_warning_to_phoromatic($user_error->get_error_string());
+		self::report_warning_to_phoromatic($user_error->get_error_string());
 	}
 	public static function __event_results_saved($test_run_manager)
 	{
 		if(pts_module::read_variable('AUTO_UPLOAD_RESULTS_TO_PHOROMATIC') && pts_module::is_module_setup())
 		{
-			phoromatic::upload_unscheduled_test_results($test_run_manager->get_file_name());
+			self::upload_unscheduled_test_results($test_run_manager->get_file_name());
 		}
 	}
 	public static function __event_openbenchmarking_upload($json)
@@ -553,20 +553,20 @@ class phoromatic_legacy extends pts_module_interface
 	}
 	protected static function update_system_details()
 	{
-		$server_response = phoromatic::upload_to_remote_server(array('r' => 'update_system_details', 'h' => phodevi::system_hardware(true), 's' => phodevi::system_software(true)));
+		$server_response = self::upload_to_remote_server(array('r' => 'update_system_details', 'h' => phodevi::system_hardware(true), 's' => phodevi::system_software(true)));
 		self::$phoromatic_server_build = self::read_xml_value($server_response, 'PhoronixTestSuite/Phoromatic/Server/ServerBuild');
 
 		return self::read_xml_value($server_response, 'PhoronixTestSuite/Phoromatic/General/Response') == 'TRUE';
 	}
 	protected static function update_system_status($current_task, $estimated_time_remaining = 0)
 	{
-		$server_response = phoromatic::upload_to_remote_server(array('r' => 'update_system_status', 'a' => $current_task, 'time' => $estimated_time_remaining));
+		$server_response = self::upload_to_remote_server(array('r' => 'update_system_status', 'a' => $current_task, 'time' => $estimated_time_remaining));
 
 		return self::read_xml_value($server_response, 'PhoronixTestSuite/Phoromatic/General/Response') == 'TRUE';
 	}
 	protected static function report_warning_to_phoromatic($warning)
 	{
-		$server_response = phoromatic::upload_to_remote_server(array('r' => 'report_pts_warning', 'a' => $warning));
+		$server_response = self::upload_to_remote_server(array('r' => 'report_pts_warning', 'a' => $warning));
 
 		return self::read_xml_value($server_response, 'PhoronixTestSuite/Phoromatic/General/Response') == 'TRUE';
 	}
@@ -606,7 +606,7 @@ class phoromatic_legacy extends pts_module_interface
 		}
 
 		$logs = self::capture_test_logs($save_identifier, $xml_parser);
-		$server_response = phoromatic::upload_to_remote_server(array(
+		$server_response = self::upload_to_remote_server(array(
 			'r' => 'upload_test_results',
 			'c' => $composite_xml,
 			'i' => $phoromatic_schedule_id,
@@ -624,7 +624,7 @@ class phoromatic_legacy extends pts_module_interface
 		$composite_xml = file_get_contents(PTS_SAVE_RESULTS_PATH . $save_identifier . '/composite.xml');
 
 		$logs = self::capture_test_logs($save_identifier);
-		$server_response = phoromatic::upload_to_remote_server(array(
+		$server_response = self::upload_to_remote_server(array(
 			'r' => 'upload_test_results_unscheduled',
 			'c' => $composite_xml,
 			'i' => 0,

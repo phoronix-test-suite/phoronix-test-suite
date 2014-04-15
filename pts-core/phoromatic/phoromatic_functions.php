@@ -23,7 +23,7 @@
 function phoromatic_webui_header($left_items, $right)
 {
 	$ret = '<div id="pts_phoromatic_top_header">
-	<div id="pts_phoromatic_logo"><a href="?"><img src="images/phoromatic_logo.png" /></a></div><ul>';
+	<div id="pts_phoromatic_logo"><a href="?"><img src="/images/phoromatic_logo.png" /></a></div><ul>';
 
 	foreach($left_items as $item)
 	{
@@ -44,7 +44,7 @@ function phoromatic_webui_box(&$box)
 function phoromatic_webui_footer()
 {
 	return '<div id="pts_phoromatic_bottom_footer">
-<div style="float: right; padding: 2px 10px; overflow: hidden;"><a href="http://openbenchmarking.org/" style="margin-right: 20px;"><img src="images/ob-white-logo.png" /></a> <a href="http://www.phoronix-test-suite.com/"><img src="images/pts-white-logo.png" /></a></div>
+<div style="float: right; padding: 2px 10px; overflow: hidden;"><a href="http://openbenchmarking.org/" style="margin-right: 20px;"><img src="/images/ob-white-logo.png" /></a> <a href="http://www.phoronix-test-suite.com/"><img src="/images/pts-white-logo.png" /></a></div>
 <p style="margin: 6px 15px;">Copyright &copy; 2008 - ' . date('Y') . ' by <a href="http://www.phoronix-media.com/">Phoronix Media</a>. All rights reserved.<br />
 All trademarks used are properties of their respective owners.<br />' . pts_title(true) . ' - Core Version ' . PTS_CORE_VERSION . ' - PHP ' . PHP_VERSION . '</p></div>';
 }
@@ -90,7 +90,7 @@ function phoromatic_webui_right_panel_logged_in($add = null)
 
 	}
 
-	$right .= '<hr /><p><strong>' . date('H:i - j F Y') . '</strong><br />XXX Systems Connected<br />X Test Schedules<br /><a href="?logout"><strong>Log-Out</strong></a></p>';
+	$right .= '<hr /><p><strong>' . date('H:i T - j F Y') . '</strong><br />XXX Systems Connected<br />X Test Schedules<br /><a href="?logout"><strong>Log-Out</strong></a></p>';
 
 	return $right;
 }
@@ -122,6 +122,31 @@ function phoromatic_error_page($title, $description)
 		<p>To fix this error, try <a onclick="javascript:window.history.back();">returning to the previous page</a>. Still having problems? Consider <a href="https://github.com/phoronix-test-suite/phoronix-test-suite/issues?state=open">opening a GitHub issue report</a>; commercial support customers should contact Phoronix Media.</p><hr /><hr />';
 	echo phoromatic_webui_box($box);
 	echo phoromatic_webui_footer();
+}
+function phoromatic_systems_needing_attention()
+{
+	$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, Status, LastIP, LocalIP, LastCommunication FROM phoromatic_systems WHERE AccountID = :account_id AND Status = 0 ORDER BY LastCommunication DESC');
+	$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+	$result = $stmt->execute();
+	if($result)
+	{
+		$main .= '<div class="pts_phoromatic_info_box_area"><div style="float: left; width: 100%;"><ul><li><h1>Systems Needing Attention</h1></li><li class="light" style="font-weight: normal;">The following systems have attempted to sync with this Phoromatic account but have not been validated. When clicking on them you are able to approve or delete them from your account along with editing the system information.</li>';
+
+		while($row = $result->fetchArray())
+		{
+			$ip = $row['LocalIP'];
+			if($row['LastIP'] != $row['LocalIP'])
+			{
+				$ip .= ' / ' . $row['LastIP'];
+			}
+
+			$main .= '<a href="?systems/' . $row['SystemID'] . '/edit"><li>' . $row['Title'] . '<br /><em><strong>IP:</strong> ' . $ip . ' <strong>Last Communication:</strong> ' . $row['LastCommunication'] . '</em></li></a>';
+		}
+
+		$main .= '</ul></div></div>';
+	}
+
+	return $main;
 }
 
 ?>

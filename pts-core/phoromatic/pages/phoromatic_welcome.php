@@ -89,19 +89,21 @@ class phoromatic_welcome implements pts_webui_interface
 
 			$salted_password = hash('sha256', $account_salt . $_POST['register_password']);
 
-			$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_accounts (AccountID, ValidateID, CreatedOn, Salt) VALUES (:account_id, :validate_id, datetime(\'now\'), :salt)');
+			$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_accounts (AccountID, ValidateID, CreatedOn, Salt) VALUES (:account_id, :validate_id, :current_time, :salt)');
 			$stmt->bindValue(':account_id', $account_id);
 			$stmt->bindValue(':validate_id', pts_strings::random_characters(4, true));
 			$stmt->bindValue(':salt', $account_salt);
+			$stmt->bindValue(':current_time', phoromatic_server::current_time());
 			$result = $stmt->execute();
 
-			$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_users (UserID, AccountID, UserName, Email, Password, CreatedOn, LastIP) VALUES (:user_id, :account_id, :user_name, :email, :password, datetime(\'now\'), :last_ip)');
+			$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_users (UserID, AccountID, UserName, Email, Password, CreatedOn, LastIP) VALUES (:user_id, :account_id, :user_name, :email, :password, :current_time, :last_ip)');
 			$stmt->bindValue(':user_id', pts_strings::random_characters(4, true));
 			$stmt->bindValue(':account_id', $account_id);
 			$stmt->bindValue(':user_name', $_POST['register_username']);
 			$stmt->bindValue(':email', $_POST['register_email']);
 			$stmt->bindValue(':password', $salted_password);
 			$stmt->bindValue(':last_ip', $_SERVER['REMOTE_ADDR']);
+			$stmt->bindValue(':current_time', phoromatic_server::current_time());
 			$result = $stmt->execute();
 
 			phoromatic_server::send_email($_POST['register_email'], 'no-reply@phoromatic', 'Phoromatic Account Registration', '<p><strong>' . $_POST['register_username'] . '</strong>:</p><p>Your Phoromatic account has been created and is now active.</p>');
@@ -141,7 +143,7 @@ class phoromatic_welcome implements pts_webui_interface
 					session_regenerate_id();
 					$_SESSION['UserName'] = $user;
 					$_SESSION['AccountID'] = $account_id;
-					$account_salt = phoromatic_server::$db->exec('UPDATE phoromatic_users SET LastIP = \'' . $_SERVER['REMOTE_ADDR'] . '\', LastLogin = datetime(\'now\') WHERE UserName = \'' . $matching_user['UserName'] . '\'');
+					$account_salt = phoromatic_server::$db->exec('UPDATE phoromatic_users SET LastIP = \'' . $_SERVER['REMOTE_ADDR'] . '\', LastLogin = \'' . phoromatic_server::current_time() . ' WHERE UserName = \'' . $matching_user['UserName'] . '\'');
 					session_write_close();
 
 					echo phoromatic_webui_header(array('Welcome, ' . $user), '');

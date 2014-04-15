@@ -24,6 +24,10 @@ class phoromatic_server
 {
 	public static $db = null;
 
+	public static function current_time()
+	{
+		return date('Y-m-d H:i:s');
+	}
 	public static function read_database_version()
 	{
 		$result = self::$db->query('PRAGMA user_version');
@@ -45,7 +49,7 @@ class phoromatic_server
 			self::$db->exec('CREATE TABLE phoromatic_schedules_tests (AccountID TEXT UNIQUE, ScheduleID INTEGER UNIQUE, TestArguments TEXT UNIQUE, TestDescription TEXT UNIQUE)');
 			self::$db->exec('CREATE TABLE phoromatic_schedules_triggers (AccountID TEXT UNIQUE, ScheduleID INTEGER UNIQUE, Trigger TEXT UNIQUE, TriggeredOn TEXT)');
 			self::$db->exec('CREATE TABLE phoromatic_user_settings (AccountID TEXT UNIQUE, UserID TEXT UNIQUE, NotifyOnResultUploads INTEGER, NotifyOnWarnings INTEGER, NotifyOnNewSystems INTEGER)');
-			self::$db->exec('CREATE TABLE phoromatic_systems (AccountID TEXT UNIQUE, SystemID TEXT UNIQUE, Title TEXT, Description TEXT, Groups TEXT Hardware TEXT, Software TEXT, ClientVersion TEXT, GSID TEXT, CurrentTask TEXT, EstimatedTimeForTask TEXT, CreatedOn TEXT, LastCommunication TEXT, LastIP TEXT)');
+			self::$db->exec('CREATE TABLE phoromatic_systems (AccountID TEXT UNIQUE, SystemID TEXT UNIQUE, Title TEXT, Description TEXT, Groups TEXT, Hardware TEXT, Software TEXT, ClientVersion TEXT, GSID TEXT, CurrentTask TEXT, EstimatedTimeForTask TEXT, CreatedOn TEXT, LastCommunication TEXT, LastIP TEXT, Status INTEGER, LocalIP TEXT)');
 			self::$db->exec('CREATE TABLE phoromatic_system_warnings (AccountID TEXT UNIQUE, SystemID TEXT UNIQUE, Warning TEXT, WarningTime TEXT)');
 			self::$db->exec('CREATE TABLE phoromatic_results (AccountID TEXT UNIQUE, UploadID INTEGER, ScheduleID INTEGER, Trigger TEXT, UploadTime TEXT, Title TEXT, OpenBenchmarkingID TEXT)');
 			self::$db->exec('CREATE TABLE phoromatic_groups (AccountID TEXT UNIQUE, Group TEXT UNIQUE)');
