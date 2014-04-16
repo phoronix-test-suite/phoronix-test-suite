@@ -72,14 +72,28 @@ function phoromatic_webui_right_panel_logged_in($add = null)
 
 	if($add == null)
 	{
-		$right .= '<ul>
-					<li>Active Systems</li>
-					<li><a href="#">System A</a></li>
-					<li><a href="#">System B</a></li>
-					<li><a href="#">System C</a></li>
-					<li><a href="#">System D</a></li>
-				</ul>
-				<hr />
+		$right .= '<ul><li>Recently Active Systems</li>';
+
+		$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID FROM phoromatic_systems WHERE AccountID = :account_id AND State >= 0 ORDER BY LastCommunication DESC');
+		$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+		$result = $stmt->execute();
+		$row = $result->fetchArray();
+
+		if($row == false)
+		{
+			$right .= '<li align="center">No Systems Found</li>';
+		}
+		else
+		{
+			do
+			{
+				$right .= '<li><a href="?systems/' . $row['SystemID'] . '">' . $row['Title'] . '</a></li>';
+			}
+			while($row = $result->fetchArray());
+		}
+
+
+			$right .= '<hr />
 				<ul>
 					<li>Upcoming Tests</li>
 					<li><a href="#">Test A</a></li>
@@ -90,7 +104,12 @@ function phoromatic_webui_right_panel_logged_in($add = null)
 
 	}
 
-	$right .= '<hr /><p><strong>' . date('H:i T - j F Y') . '</strong><br />XXX Systems Connected<br />X Test Schedules<br /><a href="?logout"><strong>Log-Out</strong></a></p>';
+	$stmt = phoromatic_server::$db->prepare('SELECT COUNT(Title) AS SystemCount FROM phoromatic_systems WHERE AccountID = :account_id AND State >= 0 ORDER BY LastCommunication DESC LIMIT 10');
+	$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+	$result = $stmt->execute();
+	$row = $result->fetchArray();
+	$system_count = $row['SystemCount'];
+	$right .= '<hr /><p><strong>' . date('H:i T - j F Y') . '</strong><br />' . $system_count . ' System' . ($system_count > 1 ? 's' : '') .'<br />X Test Schedules<br /><a href="?logout"><strong>Log-Out</strong></a></p>';
 
 	return $right;
 }

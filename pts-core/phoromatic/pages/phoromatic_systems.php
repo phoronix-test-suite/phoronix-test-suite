@@ -117,19 +117,30 @@ class phoromatic_systems implements pts_webui_interface
 			<h2>Systems</h2>
 			<div class="pts_phoromatic_info_box_area">
 
-				<div style="float: left; width: 50%;">
+				<div style="float: left; width: 100%;">
 					<ul>
-						<li><h1>Recent System Activity</h1></li>
-						<a href=""><li>Core i7 4770K<br /><em>sfdg dsfg dfsg fdgdfsav fgrthtehr hfbfg bbsfdg dsfg dfsg fdgdfsav fgrthtehr hfbfg bbsfdg dsfg dfsg fdgdfsav fgrthtehr hfbfg bbsfdg dsfg dfsg fdgdfsav fgrthtehr hfbfg bb.</em></li></a>
-						<a href=""><li>Radeon R9 270X<br /><em>sfdg dsfg dfsg fdgdfsav fgrthtehr hfbfg bbsfdg dsfg dfsg fdgdfsav fgrthtehr hfbfg bbsfdg dsfg dfsg fdgdfsav fgrthtehr hfbfg bbsfdg dsfg dfsg fdgdfsav fgrthtehr hfbfg bbsfdg dsfg dfsg fdgdfsav fgrthtehr hfbfg bb.</em></li></a>
-					</ul>
-				</div>
-				<div style="float: left; width: 50%;">
-					<ul>
-						<li><h1>Recent System Warnings &amp; Errors</h1></li>
-						<a href=""><li>Core i7 4770K<br /><em>sfdg dsfg dfsg fdgdfsav fgrthtehr hfbfg bbsfdg dsfg dfsg fdgdfsav fgrthtehr hfbfg bbsfdg dsfg dfsg fdgdfsav fgrthtehr hfbfg bbsfdg dsfg dfsg fdgdfsav fgrthtehr hfbfg bb.</em></li></a>
-						<a href=""><li>Radeon R9 270X<br /><em>sfdg dsfg dfsg fdgdfsav fgrthtehr hfbfg bbsfdg dsfg dfsg fdgdfsav fgrthtehr hfbfg bbsfdg dsfg dfsg fdgdfsav fgrthtehr hfbfg bbsfdg dsfg dfsg fdgdfsav fgrthtehr hfbfg bbsfdg dsfg dfsg fdgdfsav fgrthtehr hfbfg bb.</em></li></a>
-					</ul>
+						<li><h1>Active Systems</h1></li>';
+
+					$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, LocalIP, CurrentTask, LastCommunication FROM phoromatic_systems WHERE AccountID = :account_id AND State >= 0 ORDER BY LastCommunication DESC');
+					$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+					$result = $stmt->execute();
+					$row = $result->fetchArray();
+
+					if($row == false)
+					{
+						$main .= '<li class="light" style="text-align: center;">No Systems Found</li>';
+					}
+					else
+					{
+						do
+						{
+							$main .= '<a href="?systems/' . $row['SystemID'] . '"><li>' . $row['Title'] . '<br /><em>' . $row['LocalIP'] . ' - ' . $row['CurrentTask'] . ' - Last Activity: ' . $row['LastCommunication'] . '</em></li></a>';
+						}
+						while($row = $result->fetchArray());
+					}
+
+
+			$main .= '</ul>
 				</div>
 			</div>
 
@@ -142,22 +153,26 @@ class phoromatic_systems implements pts_webui_interface
 			;
 		}
 
-			$right_systems = '<ul>
-					<li>Systems</li>
-					<li><a href="#">System A</a></li>
-					<li><a href="#">System B</a></li>
-					<li><a href="#">System C</a></li>
-					<li><a href="#">System D</a></li>
-					<li><a href="#">System A</a></li>
-					<li><a href="#">System B</a></li>
-					<li><a href="#">System C</a></li>
-					<li><a href="#">System D</a></li>
-					<li><a href="#">System A</a></li>
-					<li><a href="#">System B</a></li>
-					<li><a href="#">System C</a></li>
-					<li><a href="#">System D</a></li>
-				</ul>';
-		echo phoromatic_webui_main($main, phoromatic_webui_right_panel_logged_in($right_systems));
+		$right = '<ul><li>Active Systems</li>';
+
+		$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID FROM phoromatic_systems WHERE AccountID = :account_id AND State > 0 ORDER BY Title ASC');
+		$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+		$result = $stmt->execute();
+		$row = $result->fetchArray();
+
+		if($row == false)
+		{
+			$right .= '<li align="center">No Systems Found</li>';
+		}
+		else
+		{
+			do
+			{
+				$right .= '<li><a href="?systems/' . $row['SystemID'] . '">' . $row['Title'] . '</a></li>';
+			}
+			while($row = $result->fetchArray());
+		}
+		echo phoromatic_webui_main($main, phoromatic_webui_right_panel_logged_in($right));
 		echo phoromatic_webui_footer();
 	}
 }

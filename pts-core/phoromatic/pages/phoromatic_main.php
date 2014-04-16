@@ -87,10 +87,27 @@ class phoromatic_main implements pts_webui_interface
 
 				<div style="float: left; width: 50%;">
 					<ul>
-						<li><h1>Recent System Activity</h1></li>
-						<a href=""><li>Core i7 4770K<br /><em>sfdg dsfg dfsg fdgdfsav fgrthtehr hfbfg bbsfdg dsfg dfsg fdgdfsav fgrthtehr hfbfg bbsfdg dsfg dfsg fdgdfsav fgrthtehr hfbfg bbsfdg dsfg dfsg fdgdfsav fgrthtehr hfbfg bb.</em></li></a>
-						<a href=""><li>Radeon R9 270X<br /><em>sfdg dsfg dfsg fdgdfsav fgrthtehr hfbfg bbsfdg dsfg dfsg fdgdfsav fgrthtehr hfbfg bbsfdg dsfg dfsg fdgdfsav fgrthtehr hfbfg bbsfdg dsfg dfsg fdgdfsav fgrthtehr hfbfg bbsfdg dsfg dfsg fdgdfsav fgrthtehr hfbfg bb.</em></li></a>
-					</ul>
+						<li><h1>Recent System Activity</h1></li>';
+
+		$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, LocalIP, CurrentTask FROM phoromatic_systems WHERE AccountID = :account_id AND State >= 0 ORDER BY LastCommunication DESC LIMIT 10');
+		$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+		$result = $stmt->execute();
+		$row = $result->fetchArray();
+
+		if($row == false)
+		{
+			$main .= '<li class="light" style="text-align: center;">No Systems Found</li>';
+		}
+		else
+		{
+			do
+			{
+				$main .= '<a href="?systems/' . $row['SystemID'] . '"><li>' . $row['Title'] . '<br /><em>' . $row['LocalIP'] . ' - ' . $row['CurrentTask'] . '</em></li></a>';
+			}
+			while($row = $result->fetchArray());
+		}
+
+		$main .= '</ul>
 				</div>
 				<div style="float: left; width: 50%;">
 					<ul>

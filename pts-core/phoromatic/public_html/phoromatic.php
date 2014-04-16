@@ -143,7 +143,8 @@ if($SYSTEM_STATE < 1)
 
 define('AID', ACCOUNT_ID);
 define('SID', SYSTEM_ID);
-define("STORAGE", PATH_TO_PHOROMATIC_STORAGE . AID . "/");
+
+return;
 
 if(defined("ACCOUNT_SETUP") && pts_rmm_get_settings_value("NotifyOnNewSystems") == 1)
 {
