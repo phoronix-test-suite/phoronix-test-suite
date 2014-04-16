@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2013, Phoronix Media
-	Copyright (C) 2008 - 2013, Michael Larabel
+	Copyright (C) 2008 - 2014, Phoronix Media
+	Copyright (C) 2008 - 2014, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -157,6 +157,18 @@ class pts_user_io
 				else if(isset($key_index[$choice]))
 				{
 					array_push($select, $key_index[$choice]);
+				}
+				else if($allow_multi_select && strpos($choice, '-') !== false)
+				{
+					$choice_range = pts_strings::trim_explode('-', $choice);
+
+					if(count($choice_range) == 2 && is_numeric($choice_range[0]) && is_numeric($choice_range[1]) && isset($key_index[$choice_range[0]]) && isset($key_index[$choice_range[1]]))
+					{
+						for($i = min($choice_range); $i <= max($choice_range); $i++)
+						{
+							array_push($select, $key_index[$i]);
+						}
+					}
 				}
 			}
 		}

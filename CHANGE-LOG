@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 - pts-core: Fix for not writing null test result file titles
 - pts-core: Fix & improvements to PRESET_OPTIONS environment variable
 - pts-core: Rename old/legacy phoromatic module to phoromaric_legacy
+- pts-core: Allow a range of test run options to be inputted (e.g. 2-5) to complement just a single test option or delimited by commas
 - phodevi: Improvement for detecting optimal NVIDIA Linux GPU core frequency on modern GPUs
 
 Phoronix Test Suite 5.0.1-Plavsk

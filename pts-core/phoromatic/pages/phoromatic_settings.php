@@ -87,7 +87,7 @@ class phoromatic_settings implements pts_webui_interface
 				}
 				$main .= '</p>';
 			}
-			$main .= '<p><input type="submit" value="Submit" /></p>';
+			$main .= '<p><input type="submit" value="Save User Settings" /></p>';
 			$main .= '</form>';
 
 			$main .= '<hr />
@@ -137,7 +137,7 @@ class phoromatic_settings implements pts_webui_interface
 				}
 				$main .= '</p>';
 			}
-			$main .= '<p><input type="submit" value="Submit" /></p>';
+			$main .= '<p><input type="submit" value="Save Account Settings" /></p>';
 			$main .= '</form>';
 
 			echo phoromatic_webui_main($main, phoromatic_webui_right_panel_logged_in());
