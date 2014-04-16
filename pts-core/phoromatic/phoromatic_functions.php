@@ -81,7 +81,7 @@ function phoromatic_webui_right_panel_logged_in($add = null)
 
 		if($row == false)
 		{
-			$right .= '<li align="center">No Systems Found</li>';
+			$right .= '<li style="text-align: center;">No Systems Found</li>';
 		}
 		else
 		{
