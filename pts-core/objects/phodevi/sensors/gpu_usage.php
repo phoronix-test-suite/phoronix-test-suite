@@ -5,6 +5,7 @@
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
 	Copyright (C) 2009 - 2013, Phoronix Media
 	Copyright (C) 2009 - 2013, Michael Larabel
+	Copyright (C) 2014, Lauri Kasanen
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -23,6 +24,7 @@
 class gpu_usage implements phodevi_sensor
 {
 	static $probe_ati_overdrive = false;
+	static $probe_radeontop = false;
 	static $probe_radeon_fences = false;
 	static $probe_intel_commands = false;
 	static $probe_nvidia_smi = false;
@@ -38,7 +40,8 @@ class gpu_usage implements phodevi_sensor
 	}
 	public static function get_unit()
 	{
-		if(self::$probe_ati_overdrive || self::$probe_nvidia_smi || self::$probe_nvidia_settings)
+		if(self::$probe_ati_overdrive || self::$probe_nvidia_smi || self::$probe_nvidia_settings ||
+			self::$probe_radeontop)
 		{
 			$unit = 'Percent';
 		}
@@ -67,7 +70,17 @@ class gpu_usage implements phodevi_sensor
 		}
 		else if(phodevi::is_mesa_graphics())
 		{
-			if(is_readable('/sys/kernel/debug/dri/0/radeon_fence_info'))
+			if(pts_client::executable_in_path('radeontop'))
+			{
+				$test = self::radeontop_gpu_usage();
+
+				if(is_numeric($test) && $test >= 0)
+				{
+					self::$probe_radeontop = true;
+					return true;
+				}
+			}
+			else if(is_readable('/sys/kernel/debug/dri/0/radeon_fence_info'))
 			{
 				$fence_speed = self::radeon_fence_speed();
 
@@ -123,6 +136,10 @@ class gpu_usage implements phodevi_sensor
 		else if(self::$probe_nvidia_smi)
 		{
 			return self::nvidia_core_usage();
+		}
+		else if(self::$probe_radeontop)
+		{
+			return self::radeontop_gpu_usage();
 		}
 		else if(self::$probe_radeon_fences)
 		{
@@ -201,6 +218,19 @@ class gpu_usage implements phodevi_sensor
 		$second_read = self::intel_current_sequence_count();
 
 		return $second_read - $first_read;
+	}
+	public static function radeontop_gpu_usage()
+	{
+		$out = shell_exec('radeontop -d - -l 1');
+
+		$pos = strpos($out, 'gpu');
+		if ($pos === false)
+			return -1;
+
+		$out = substr($out, $pos + 4);
+		$out = trim(substr($out, 0, strpos($out, '%')));
+
+		return $out;
 	}
 }
 
