@@ -72,3 +72,22 @@ function phoromatic_system_edit(form)
 	}
 	return true;
 }
+function phoromatic_new_group(form)
+{
+	if(form.new_group.value.length < 3)
+	{
+		alert("Please enter a name for the new system group.");
+		return false;
+	}
+
+	var valid_group_chars = ' 1234567890-_.abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+	for(var i = 0; i < form.new_group.value.length; i++)
+	{
+		if(valid_group_chars.indexOf(form.new_group.value.substr(i, 1)) == -1)
+		{
+			alert("The group name contains an invalid character: " + form.new_group.value.substr(i, 1));
+			return false;
+		}
+	}
+	return true;
+}

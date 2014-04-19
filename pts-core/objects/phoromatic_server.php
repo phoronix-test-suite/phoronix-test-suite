@@ -34,9 +34,15 @@ class phoromatic_server
 		$result = $result->fetchArray();
 		return isset($result['user_version']) && is_numeric($result['user_version']) ? $result['user_version'] : 0;
 	}
+	public static function phoromatic_path()
+	{
+		$PHOROMATIC_PATH = PTS_USER_PATH . 'phoromatic/';
+		pts_file_io::mkdir($PHOROMATIC_PATH);
+		return $PHOROMATIC_PATH;
+	}
 	public static function prepare_database()
 	{
-		self::$db = new SQLite3(PTS_USER_PATH . 'phoromatic.db');
+		self::$db = new SQLite3(self::phoromatic_path() . 'phoromatic.db');
 
 		if(self::read_database_version() == 0)
 		{
@@ -52,7 +58,7 @@ class phoromatic_server
 			self::$db->exec('CREATE TABLE phoromatic_systems (AccountID TEXT UNIQUE, SystemID TEXT UNIQUE, Title TEXT, Description TEXT, Groups TEXT, Hardware TEXT, Software TEXT, ClientVersion TEXT, GSID TEXT, CurrentTask TEXT, EstimatedTimeForTask TEXT, CreatedOn TEXT, LastCommunication TEXT, LastIP TEXT, State INTEGER, LocalIP TEXT, NetworkMAC TEXT, Flags TEXT)');
 			self::$db->exec('CREATE TABLE phoromatic_system_warnings (AccountID TEXT UNIQUE, SystemID TEXT UNIQUE, Warning TEXT, WarningTime TEXT)');
 			self::$db->exec('CREATE TABLE phoromatic_results (AccountID TEXT UNIQUE, UploadID INTEGER, ScheduleID INTEGER, Trigger TEXT, UploadTime TEXT, Title TEXT, OpenBenchmarkingID TEXT)');
-			self::$db->exec('CREATE TABLE phoromatic_groups (AccountID TEXT UNIQUE, Group TEXT UNIQUE)');
+			self::$db->exec('CREATE TABLE phoromatic_groups (AccountID TEXT, GroupName TEXT, Description TEXT)');
 
 			self::$db->exec('PRAGMA user_version = 1');
 		}

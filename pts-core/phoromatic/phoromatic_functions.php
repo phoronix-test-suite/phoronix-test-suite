@@ -81,7 +81,7 @@ function phoromatic_webui_right_panel_logged_in($add = null)
 
 		if($row == false)
 		{
-			$right .= '<li style="text-align: center;">No Systems Found</li>';
+			$right .= '</ul><p style="text-align: left; margin: 6px 10px;">No Systems Found</p>';
 		}
 		else
 		{
@@ -90,17 +90,18 @@ function phoromatic_webui_right_panel_logged_in($add = null)
 				$right .= '<li><a href="?systems/' . $row['SystemID'] . '">' . $row['Title'] . '</a></li>';
 			}
 			while($row = $result->fetchArray());
+			$right .= '</ul>';
 		}
 
 
-			$right .= '<hr />
-				<ul>
-					<li>Upcoming Tests</li>
-					<li><a href="#">Test A</a></li>
-					<li><a href="#">Test B</a></li>
-					<li><a href="#">Test C</a></li>
-					<li><a href="#">Test D</a></li>
-				</ul>';
+		$right .= '<hr />
+			<ul>
+				<li>Upcoming Tests</li>
+				<li><a href="#">Test A</a></li>
+				<li><a href="#">Test B</a></li>
+				<li><a href="#">Test C</a></li>
+				<li><a href="#">Test D</a></li>
+			</ul>';
 
 	}
 

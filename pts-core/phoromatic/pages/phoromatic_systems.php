@@ -105,6 +105,31 @@ class phoromatic_systems implements pts_webui_interface
 
 		if($main == null)
 		{
+			if(isset($_POST['new_group']) && !empty($_POST['new_group']))
+			{
+				$group = trim($_POST['new_group']);
+
+				if($group)
+				{
+					$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_groups (AccountID, GroupName) VALUES (:account_id, :group)');
+					$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+					$stmt->bindValue(':group', $group);
+					$result = $stmt->execute();
+
+					if(!empty($_POST['systems_for_group']) && is_array($_POST['systems_for_group']))
+					{
+						foreach($_POST['systems_for_group'] as $sid)
+						{
+							$stmt = phoromatic_server::$db->prepare('UPDATE phoromatic_systems SET Groups = Groups || :new_group WHERE AccountID = :account_id AND SystemID = :system_id');
+							$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+							$stmt->bindValue(':system_id', $sid);
+							$stmt->bindValue(':new_group', '#' . $group . '#');
+							$stmt->execute();
+						}
+					}
+				}
+			}
+
 			$main = '<h1>Test Systems</h1>';
 			$main .= phoromatic_systems_needing_attention();
 			$main .= '<h2>Add A System</h2>
@@ -146,11 +171,55 @@ class phoromatic_systems implements pts_webui_interface
 
 			<hr />
 			<h2>System Groups</h2>
-			<p>System groups make it very easy to organize multiple test systems for targeting by test schedules. You can always add/remove systems to groups, create new groups, and add systems to multiple groups.</p>
-			<h3>TODO TODO TODO</h3>
+			<p>System groups make it very easy to organize multiple test systems for targeting by test schedules. You can always add/remove systems to groups, create new groups, and add systems to multiple groups. After creating a group and adding systems to the group, you can begin targeting tests against a particular group of systems. Systems can always be added/removed from groups later and a system can belong to multiple groups.</p>';
 
-			'
-			;
+
+			$main .= '<div style="float: left;"><form name="new_group_form" id="new_group_form" action="?systems" method="post" onsubmit="return phoromatic_new_group(this);">
+			<p><div style="width: 200px; font-weight: bold; float: left;">New Group Name:</div> <input type="text" style="width: 300px;" name="new_group" value="" /></p>
+			<p><div style="width: 200px; font-weight: bold; float: left;">Select System(s) To Add To Group:</div><select name="systems_for_group[]" multiple="multiple" style="width: 300px;">';
+
+			$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID FROM phoromatic_systems WHERE AccountID = :account_id AND State >= 0 ORDER BY Title ASC');
+			$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+			$result = $stmt->execute();
+			$row = $result->fetchArray();
+
+			if($row != false)
+			{
+				do
+				{
+					$main .= '<option value="' . $row['SystemID'] . '">' . $row['Title'] . '</option>';
+				}
+				while($row = $result->fetchArray());
+			}
+
+
+			$main .= '</select></p>
+			<p><div style="width: 200px; font-weight: bold; float: left;">&nbsp;</div> <input type="submit" value="Create Group" /></p></form></div>';
+
+			$stmt = phoromatic_server::$db->prepare('SELECT GroupName FROM phoromatic_groups WHERE AccountID = :account_id ORDER BY GroupName ASC');
+			$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+			$result = $stmt->execute();
+			$row = $result->fetchArray();
+
+			if($row != false)
+			{
+				$main .= '<div style="float: left; margin-left: 90px;"><h3>Current System Groups</h3>';
+
+				do
+				{
+					$stmt_count = phoromatic_server::$db->prepare('SELECT COUNT(SystemID) AS system_count FROM phoromatic_systems WHERE AccountID = :account_id AND Groups LIKE \'%#' . $row['GroupName'] . '#%\'');
+					$stmt_count->bindValue(':account_id', $_SESSION['AccountID']);
+					$result_count = $stmt_count->execute();
+					$row_count = $result_count->fetchArray();
+					$row_count['system_count'] = isset($row_count['system_count']) ? $row_count['system_count'] : 0;
+
+					$main .= '<p><div style="width: 200px; float: left; font-weight: bold;">' . $row['GroupName'] . '</div> ' . $row_count['system_count'] . ' System' . ($row_count['system_count'] != 1 ? 's' : '') . '</p>';
+
+				}
+				while($row = $result->fetchArray());
+
+				$main .= '</div>';
+			}
 		}
 
 		$right = '<ul><li>Active Systems</li>';
@@ -162,7 +231,7 @@ class phoromatic_systems implements pts_webui_interface
 
 		if($row == false)
 		{
-			$right .= '<li align="center">No Systems Found</li>';
+			$right .= '</ul><p style="text-align: left; margin: 6px 10px;">No Systems Found</p>';
 		}
 		else
 		{
@@ -171,6 +240,7 @@ class phoromatic_systems implements pts_webui_interface
 				$right .= '<li><a href="?systems/' . $row['SystemID'] . '">' . $row['Title'] . '</a></li>';
 			}
 			while($row = $result->fetchArray());
+			$right .= '</ul>';
 		}
 		echo phoromatic_webui_main($main, phoromatic_webui_right_panel_logged_in($right));
 		echo phoromatic_webui_footer();

@@ -45,10 +45,50 @@ class phoromatic_schedules implements pts_webui_interface
 
 			<hr />
 			<h2>Create A Schedule</h2>
-			<p>Account settings are system-wide, in cases where there are multiple individuals/accounts managing the same test systems and data.</p>
-			'
-			;
+			<p>Account settings are system-wide, in cases where there are multiple individuals/accounts managing the same test systems and data.</p>';
 
+			$main .= '<form action="?schedules/add" name="add_test" id="add_test" method="post" onsubmit="return validate_schedule();">
+			<h3>Title</h3>
+			<p><input type="text" name="schedule_title" /></p>
+			<h3><em>Pre-Install Set Context Script:</em></h3>
+			<p><input type="text" name="pre_install_set_context" /></p>
+			<h3><em>Pre-Run Set Context Script:</em></h3>
+			<p><input type="text" name="pre_run_set_context" /></p>
+			<h3>Run Time:</h3>
+			<p><select name="schedule_hour" id="schedule_hour">';
+			for($i = 0; $i <= 23; $i++)
+			{
+				$i_f = (strlen($i) == 1 ? '0' . $i : $i);
+				$main .= '<option value="' . $i_f . '">' . $i_f . '</option>';
+			}
+
+			$main .= '</select><select name="schedule_minute" id="schedule_minute">';
+
+			for($i = 0; $i < 60; $i += 10)
+			{
+				$i_f = (strlen($i) == 1 ? '0' . $i : $i);
+				$main .= '<option value="' . $i_f . '">' . $i_f . '</option>';
+			}
+
+			$main .= '</select><h3>Active On:</h3><p>';
+
+			$week = array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
+			foreach($week as $index => $day)
+			{
+				$main .= '<input type="checkbox" id="day_' . $index . '" name="day_' . $index . '" value="yes" /> ' . $day;
+			}
+
+			$main .= '</p>
+			<h3>System Targets:</h3>
+			<p>
+			<input type="checkbox" id="system_all" name="system_all" value="yes"  checked="checked" onChange="javascript:pts_rmm_schedule_days_toggle(this);" /> <strong>All Systems</strong>
+			<input type="checkbox" id="system_<?php echo $record->SystemID; ?>" name="system_SYSTEMID" value="yes" onChange="javascript:pts_rmm_schedule_days_toggle(this);" /> SYSTEMID
+			</p>
+			<h3>Description:</h3>
+			<p><textarea name="schedule_description" id="schedule_description" cols="50" rows="3"></textarea></p>
+			<h3><em>Indicates optional field.</em></h3>
+			<p align="right"><input name="submit" value="Add Schedule" type="submit" onclick="return pts_rmm_validate_schedule();" /></p>
+			</form>';
 			echo phoromatic_webui_main($main, phoromatic_webui_right_panel_logged_in());
 			echo phoromatic_webui_footer();
 	}

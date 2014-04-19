@@ -113,7 +113,6 @@ if(empty($result))
 	$stmt->bindValue(':local_ip', $LOCAL_IP);
 	$stmt->bindValue(':title', $HOSTNAME);
 	$stmt->bindValue(':current_time', phoromatic_server::current_time());
-
 	$result = $stmt->execute();
 	echo 'INFORMATION STORED... WAITING FOR INFORMATION TO BE APPROVED BY ACCOUNT ADMINISTRATOR.';
 	exit;
