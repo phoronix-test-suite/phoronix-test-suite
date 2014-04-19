@@ -361,3 +361,25 @@ button
 	background-color: #272727;
 	color: #E08A09;
 }
+table.pts_phoromatic_schedule_type
+{
+	padding: 10px 0;
+}
+table.pts_phoromatic_schedule_type td
+{
+	border: 5px solid transparent;
+	border-width: 0 5px;
+	border-collapse: collapse;
+}
+table.pts_phoromatic_schedule_type tr td:first-child
+{
+	vertical-align: top;
+	background: #f1f1f1;
+	border: solid #d2d2d2 1px;
+	padding: 2px 10px;
+	max-width: 20%;
+}
+table.pts_phoromatic_schedule_type tr td:last-child
+{
+	min-width: 80%;
+}

@@ -52,9 +52,24 @@ class phoromatic_schedules implements pts_webui_interface
 			<p><input type="text" name="schedule_title" /></p>
 			<h3><em>Pre-Install Set Context Script:</em></h3>
 			<p><input type="text" name="pre_install_set_context" /></p>
+			<h3><em>Post-Install Set Context Script:</em></h3>
+			<p><input type="text" name="post_install_set_context" /></p>
 			<h3><em>Pre-Run Set Context Script:</em></h3>
 			<p><input type="text" name="pre_run_set_context" /></p>
-			<h3>Run Time:</h3>
+			<h3><em>Post-Run Set Context Script:</em></h3>
+			<p><input type="text" name="post_run_set_context" /></p>
+			<h3>System Targets:</h3>
+			<p>
+			<input type="checkbox" id="system_all" name="system_all" value="yes"  checked="checked" onChange="javascript:pts_rmm_schedule_days_toggle(this);" /> <strong>All Systems</strong>
+			<input type="checkbox" id="system_<?php echo $record->SystemID; ?>" name="system_SYSTEMID" value="yes" onChange="javascript:pts_rmm_schedule_days_toggle(this);" /> SYSTEMID
+			</p>
+			<h3>Description:</h3>
+			<p><textarea name="schedule_description" id="schedule_description" cols="50" rows="3"></textarea></p>
+
+			<table class="pts_phoromatic_schedule_type">
+<tr>
+  <td><h3>Time-Based Testing</h3><em>Time-based testing allows tests to automatically commence at a given time on a defined cycle each day/week. This option is primarly aimed for those wishing to run a set of benchmarks every morning or night or at another defined period.</em></td>
+  <td><h3>Run Time:</h3>
 			<p><select name="schedule_hour" id="schedule_hour">';
 			for($i = 0; $i <= 23; $i++)
 			{
@@ -62,7 +77,7 @@ class phoromatic_schedules implements pts_webui_interface
 				$main .= '<option value="' . $i_f . '">' . $i_f . '</option>';
 			}
 
-			$main .= '</select><select name="schedule_minute" id="schedule_minute">';
+			$main .= '</select> <select name="schedule_minute" id="schedule_minute">';
 
 			for($i = 0; $i < 60; $i += 10)
 			{
@@ -75,17 +90,17 @@ class phoromatic_schedules implements pts_webui_interface
 			$week = array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
 			foreach($week as $index => $day)
 			{
-				$main .= '<input type="checkbox" id="day_' . $index . '" name="day_' . $index . '" value="yes" /> ' . $day;
+				$main .= '<input type="checkbox" name="days_active[]" value="' . $index . '" /> ' . $day;
 			}
 
-			$main .= '</p>
-			<h3>System Targets:</h3>
-			<p>
-			<input type="checkbox" id="system_all" name="system_all" value="yes"  checked="checked" onChange="javascript:pts_rmm_schedule_days_toggle(this);" /> <strong>All Systems</strong>
-			<input type="checkbox" id="system_<?php echo $record->SystemID; ?>" name="system_SYSTEMID" value="yes" onChange="javascript:pts_rmm_schedule_days_toggle(this);" /> SYSTEMID
-			</p>
-			<h3>Description:</h3>
-			<p><textarea name="schedule_description" id="schedule_description" cols="50" rows="3"></textarea></p>
+			$main .= '</p></td>
+</tr>
+<tr>
+  <td><h3>Trigger-Based Testing</h3><em>To carry out trigger-based testing, you can simply have an external process/script trigger (&quot;ping&quot;) a specialized URL whenever an event occurs to commence a new round of testing. This is the most customizable approach to having Phoromatic run tests on a system if you wish to have it occur whenever a Git/SVN commit takes place or other operations.</em></td>
+  <td><h3>Run Time:</h3></td>
+</tr>
+</table>
+
 			<h3><em>Indicates optional field.</em></h3>
 			<p align="right"><input name="submit" value="Add Schedule" type="submit" onclick="return pts_rmm_validate_schedule();" /></p>
 			</form>';
