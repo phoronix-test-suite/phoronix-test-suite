@@ -22,7 +22,7 @@
 
 class start_ws_server implements pts_option_interface
 {
-	const doc_section = 'Web / UI Support';
+	const doc_section = 'Web / GUI Support';
 	const doc_description = 'Manually start a WebSocket server for communication by remote Phoronix Test Suite GUIs, the Phoronix Test Suite Multi-System Commander, and other functionality.';
 
 	public static function run($r)

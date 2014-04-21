@@ -97,7 +97,7 @@ class toggle_screensaver extends pts_module_interface
 			}
 		}
 
-		if(pts_client::executable_in_path('gsettings'))
+		if(self::$gnome2_screensaver_halted == false && pts_client::executable_in_path('gsettings'))
 		{
 			// GNOME 3.x Screensaver?
 			$is_gnome3_screensaver_enabled = trim(shell_exec('gsettings get org.gnome.desktop.session idle-delay 2>&1'));

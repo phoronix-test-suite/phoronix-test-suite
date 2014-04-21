@@ -22,7 +22,7 @@
 
 class gui implements pts_option_interface
 {
-	const doc_section = 'GUI / Web Support';
+	const doc_section = 'Web / GUI Support';
 	const doc_description = 'Launch the Phoronix Test Suite HTML5 web user-interface in the local GUI mode (no remote web support) and attempt to auto-launch the web-browser.';
 
 	public static function command_aliases()

@@ -47,22 +47,53 @@ class phoromatic_schedules implements pts_webui_interface
 			<h2>Create A Schedule</h2>
 			<p>Account settings are system-wide, in cases where there are multiple individuals/accounts managing the same test systems and data.</p>';
 
-			$main .= '<form action="?schedules/add" name="add_test" id="add_test" method="post" onsubmit="return validate_schedule();">
+			$main .= '<form action="?schedules/add" name="add_test" id="add_test" method="post" enctype="multipart/form-data" onsubmit="return validate_schedule();">
 			<h3>Title</h3>
 			<p><input type="text" name="schedule_title" /></p>
 			<h3><em>Pre-Install Set Context Script:</em></h3>
-			<p><input type="text" name="pre_install_set_context" /></p>
+			<p><input type="file" name="pre_install_set_context" /></p>
 			<h3><em>Post-Install Set Context Script:</em></h3>
-			<p><input type="text" name="post_install_set_context" /></p>
+			<p><input type="file" name="post_install_set_context" /></p>
 			<h3><em>Pre-Run Set Context Script:</em></h3>
-			<p><input type="text" name="pre_run_set_context" /></p>
+			<p><input type="file" name="pre_run_set_context" /></p>
 			<h3><em>Post-Run Set Context Script:</em></h3>
-			<p><input type="text" name="post_run_set_context" /></p>
+			<p><input type="file" name="post_run_set_context" /></p>
 			<h3>System Targets:</h3>
 			<p>
-			<input type="checkbox" id="system_all" name="system_all" value="yes"  checked="checked" onChange="javascript:pts_rmm_schedule_days_toggle(this);" /> <strong>All Systems</strong>
-			<input type="checkbox" id="system_<?php echo $record->SystemID; ?>" name="system_SYSTEMID" value="yes" onChange="javascript:pts_rmm_schedule_days_toggle(this);" /> SYSTEMID
-			</p>
+			<input type="checkbox" id="system_all" name="system_all" value="yes"  checked="checked" onChange="javascript:pts_rmm_schedule_days_toggle(this);" /> <strong>All Systems</strong>';
+
+
+			$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID FROM phoromatic_systems WHERE AccountID = :account_id AND State >= 0 ORDER BY Title ASC');
+			$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+			$result = $stmt->execute();
+
+			if($row = $result->fetchArray())
+			{
+				$main .= '<h4>Systems: ';
+				do
+				{
+					$main .= '<input type="checkbox" name="run_on_systems[]" value="' . $row['SystemID'] . '" /> ' . $row['Title'] . ' ';
+				}
+				while($row = $result->fetchArray());
+				$main .= '</h4>';
+			}
+
+			$stmt = phoromatic_server::$db->prepare('SELECT GroupName FROM phoromatic_groups WHERE AccountID = :account_id ORDER BY GroupName ASC');
+			$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+			$result = $stmt->execute();
+
+			if($row = $result->fetchArray())
+			{
+				$main .= '<h4>Groups: ';
+				do
+				{
+					$main .= '<input type="checkbox" name="run_on_systems[]" value="' . $row['GroupName'] . '" /> ' . $row['GroupName'] . ' ';
+				}
+				while($row = $result->fetchArray());
+				$main .= '</h4>';
+			}
+
+			$main .= '</p>
 			<h3>Description:</h3>
 			<p><textarea name="schedule_description" id="schedule_description" cols="50" rows="3"></textarea></p>
 
@@ -97,7 +128,11 @@ class phoromatic_schedules implements pts_webui_interface
 </tr>
 <tr>
   <td><h3>Trigger-Based Testing</h3><em>To carry out trigger-based testing, you can simply have an external process/script trigger (&quot;ping&quot;) a specialized URL whenever an event occurs to commence a new round of testing. This is the most customizable approach to having Phoromatic run tests on a system if you wish to have it occur whenever a Git/SVN commit takes place or other operations.</em></td>
-  <td><h3>Run Time:</h3></td>
+  <td><h3>TODO IMPLEMENT UI</h3></td>
+</tr>
+<tr>
+  <td><h3>One-Time Test</h3><em>If you wish to just run a single set of tests once on a given set of systems via Phoromatic, without any further scheduling, this is the option.</em></td>
+  <td><h3>TODO IMPLEMENT UI</h3></td>
 </tr>
 </table>
 

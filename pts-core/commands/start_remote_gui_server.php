@@ -22,7 +22,7 @@
 
 class start_remote_gui_server implements pts_option_interface
 {
-	const doc_section = 'GUI / Web Support';
+	const doc_section = 'Web / GUI Support';
 	const doc_description = 'Start the GUI web server and WebSocket server processes for remote (or local) access via the web-browser. The settings can be configured via the Phoronix Test Suite\'s user-config.xml configuration file.';
 
 	public static function run($r)
