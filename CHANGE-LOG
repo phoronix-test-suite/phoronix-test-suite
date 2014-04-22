@@ -6,6 +6,7 @@ Phoronix Test Suite (Git)
 - pts-core: Fix & improvements to PRESET_OPTIONS environment variable
 - pts-core: Rename old/legacy phoromatic module to phoromaric_legacy
 - pts-core: Allow a range of test run options to be inputted (e.g. 2-5) to complement just a single test option or delimited by commas
+- pts-core: Fix for NOT saving test results when in batch-run mode and configured against saving
 - phodevi: Improvement for detecting optimal NVIDIA Linux GPU core frequency on modern GPUs
 - phodevi: Add GPU usage reporting support to open-source AMD Radeon driver via RadeonTOP
 

@@ -941,7 +941,7 @@ class pts_test_run_manager
 	{
 		self::$batch_mode_options = array(
 			'UploadResults' => pts_config::read_bool_config('PhoronixTestSuite/Options/BatchMode/UploadResults', 'TRUE'),
-			'SaveResults' => pts_config::read_user_config('PhoronixTestSuite/Options/BatchMode/SaveResults', 'TRUE'),
+			'SaveResults' => pts_config::read_bool_config('PhoronixTestSuite/Options/BatchMode/SaveResults', 'TRUE'),
 			'PromptForTestDescription' => pts_config::read_bool_config('PhoronixTestSuite/Options/BatchMode/PromptForTestDescription', 'FALSE'),
 			'RunAllTestCombinations' => pts_config::read_bool_config('PhoronixTestSuite/Options/BatchMode/RunAllTestCombinations', 'TRUE'),
 			'PromptSaveName' => pts_config::read_bool_config('PhoronixTestSuite/Options/BatchMode/PromptSaveName', 'FALSE'),
