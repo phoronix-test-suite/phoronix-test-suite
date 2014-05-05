@@ -106,7 +106,6 @@ class pts_OverviewGraph extends pts_Graph
 	public function renderGraph()
 	{
 		$this->graph_data_title = &$this->system_identifiers;
-		$this->i['mark_count'] = 6;
 		$this->i['graph_max_value'] = 1.2;
 		$l_height = 15;
 		$this->i['key_line_height'] = $l_height;
