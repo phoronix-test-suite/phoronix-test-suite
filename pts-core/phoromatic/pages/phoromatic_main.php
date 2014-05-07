@@ -57,7 +57,6 @@ class phoromatic_main implements pts_webui_interface
 
 				<hr />
 
-			<h2>Results</h2>
 			<div class="pts_phoromatic_info_box_area">
 				<div style="float: left; width: 100%;">
 					<ul>
@@ -66,18 +65,43 @@ class phoromatic_main implements pts_webui_interface
 						<a href=""><li>Title 2<br /><em>Monitoring the performance of various Mesa/Gallium3D drivers.</em></li></a>
 					</ul>
 				</div>
+<div style="float: left; width: 100%;">
+					<ul>
+						<li><h1>Active Test Schedules</h1></li>';
+
+					$stmt = phoromatic_server::$db->prepare('SELECT Title, ScheduleID, Description FROM phoromatic_schedules WHERE AccountID = :account_id AND State >= 1 ORDER BY Title ASC');
+					$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+					$result = $stmt->execute();
+					$row = $result->fetchArray();
+
+					if($row == false)
+					{
+						$main .= '<li class="light" style="text-align: center;">No Schedules Found</li>';
+					}
+					else
+					{
+						do
+						{
+							$main .= '<a href="?schedules/' . $row['ScheduleID'] . '"><li>' . $row['Title'] . '<br /><em>' . $row['Description'] . '</em></li></a>';
+						}
+						while($row = $result->fetchArray());
+					}
+
+
+			$main .= '</ul>
+				</div>
 				<div style="float: left; width: 50%;">
 					<ul>
 						<li><h1>Yesterday\'s Test Results</h1></li>
-						<a href=""><li>Test<br /><em>sdf sdfsdf dsfds fds fds fdsf dsf dsf dsfdsf ds</em></li></a>
-						<a href=""><li>Test<br /><em>sdf dsfdsf dsfdsfds fdsfds fds fds fdsfdsfds fdsfdsfsdfdsfdsfds fsdfsdfsdfsdf.</em></li></a>
+						<a href=""><li>Test<br /><em>Test</em></li></a>
+						<a href=""><li>Test<br /><em>Test.</em></li></a>
 					</ul>
 				</div>
 				<div style="float: left; width: 50%;">
 					<ul>
 						<li><h1>Other Test Results This Week</h1></li>
-						<a href=""><li>Core i7 4770K<br /><em>sfdg dsfg dfsg fdgdfsav fgrthtehr hfbfg bbsfdg dsfg dfsg fdgdfsav fgrthtehr hfbfg bbsfdg dsfg dfsg fdgdfsav fgrthtehr hfbfg bbsfdg dsfg dfsg fdgdfsav fgrthtehr hfbfg bb.</em></li></a>
-						<a href=""><li>Radeon R9 270X<br /><em>sfdg dsfg dfsg fdgdfsav fgrthtehr hfbfg bbsfdg dsfg dfsg fdgdfsav fgrthtehr hfbfg bbsfdg dsfg dfsg fdgdfsav fgrthtehr hfbfg bbsfdg dsfg dfsg fdgdfsav fgrthtehr hfbfg bbsfdg dsfg dfsg fdgdfsav fgrthtehr hfbfg bb.</em></li></a>
+						<a href=""><li>Core i7 4770K<br /><em>Intel Linux benchmark.</em></li></a>
+						<a href=""><li>Radeon R9 270X<br /><em>Benchmark 1.</em></li></a>
 					</ul>
 				</div>
 
@@ -112,8 +136,8 @@ class phoromatic_main implements pts_webui_interface
 				<div style="float: left; width: 50%;">
 					<ul>
 						<li><h1>Recent System Warnings &amp; Errors</h1></li>
-						<a href=""><li>Core i7 4770K<br /><em>sfdg dsfg dfsg fdgdfsav fgrthtehr hfbfg bbsfdg dsfg dfsg fdgdfsav fgrthtehr hfbfg bbsfdg dsfg dfsg fdgdfsav fgrthtehr hfbfg bbsfdg dsfg dfsg fdgdfsav fgrthtehr hfbfg bb.</em></li></a>
-						<a href=""><li>Radeon R9 270X<br /><em>sfdg dsfg dfsg fdgdfsav fgrthtehr hfbfg bbsfdg dsfg dfsg fdgdfsav fgrthtehr hfbfg bbsfdg dsfg dfsg fdgdfsav fgrthtehr hfbfg bbsfdg dsfg dfsg fdgdfsav fgrthtehr hfbfg bbsfdg dsfg dfsg fdgdfsav fgrthtehr hfbfg bb.</em></li></a>
+						<a href=""><li>Core i7 4770K<br /><em>Warning.</em></li></a>
+						<a href=""><li>Radeon R9 270X<br /><em>Error.</em></li></a>
 					</ul>
 				</div>
 			</div>';

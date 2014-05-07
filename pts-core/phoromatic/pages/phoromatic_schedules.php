@@ -37,12 +37,96 @@ class phoromatic_schedules implements pts_webui_interface
 	}
 	public static function render_page_process($PATH)
 	{
+		if(isset($_POST['schedule_title']) && !empty($_POST['schedule_title']))
+		{
+			$title = $_POST['schedule_title'];
+			$description = $_POST['schedule_description'];
+			$pre_install_context = $_POST['pre_install_set_context'];
+			$post_install_context = $_POST['post_install_set_context'];
+			$pre_run_context = $_POST['pre_run_set_context'];
+			$post_run_context = $_POST['post_run_set_context'];
+
+			$system_all = $_POST['system_all'];
+			$run_on_systems = $_POST['run_on_systems'];
+			$run_on_groups = $_POST['run_on_groups'];
+
+			$schedule_hour = $_POST['schedule_hour'];
+			$schedule_minute = $_POST['schedule_minute'];
+			$days_active = $_POST['days_active'];
+
+			// TODO XXX: Validation of input
+
+			do
+			{
+				$schedule_id = rand(10, 9999);
+				$matching_schedules = phoromatic_server::$db->querySingle('SELECT ScheduleID FROM phoromatic_schedules WHERE AccountID = \'' . $_SESSION['AccountID'] . '\' AND ScheduleID = \'' . $schedule_id . '\'');
+			}
+			while(!empty($matching_schedules));
+
+			do
+			{
+				$public_key = pts_strings::random_characters(12, true);;
+				$matching_schedules = phoromatic_server::$db->querySingle('SELECT ScheduleID FROM phoromatic_schedules WHERE AccountID = \'' . $_SESSION['AccountID'] . '\' AND PublicKey = \'' . $public_key . '\'');
+			}
+			while(!empty($matching_schedules));
+
+			$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_schedules (AccountID, ScheduleID, Title, Description, State, ActiveOn, RunAt, SetContextPreInstall, SetContextPostInstall, SetContextPreRun, SetContextPostRun, LastModifiedBy, LastModifiedOn, PublicKey) VALUES (:account_id, :schedule_id, :title, :description, :state, :active_on, :run_at, :context_pre_install, :context_post_install, :context_pre_run, :context_post_run, :modified_by, :modified_on, :public_key)');
+			$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+			$stmt->bindValue(':schedule_id', $schedule_id);
+			$stmt->bindValue(':title', $title);
+			$stmt->bindValue(':description', $description);
+			$stmt->bindValue(':state', 1);
+			$stmt->bindValue(':active_on', implode(',', $days_active));
+			$stmt->bindValue(':run_at', $schedule_hour . ':' . $schedule_minute);
+			$stmt->bindValue(':context_pre_install', $pre_install_context);
+			$stmt->bindValue(':context_post_install', $post_install_context);
+			$stmt->bindValue(':context_pre_run', $pre_run_context);
+			$stmt->bindValue(':context_post_run', $post_run_context);
+			$stmt->bindValue(':modified_by', $_SESSION['UserName']);
+			$stmt->bindValue(':modified_on', phoromatic_server::current_time());
+			$stmt->bindValue(':public_key', $public_key);
+			$result = $stmt->execute();
+
+			// self::$db->exec('CREATE TABLE phoromatic_schedules (AccountID TEXT UNIQUE, ScheduleID INTEGER UNIQUE, Title TEXT, Description TEXT, State INTEGER, ActiveOn TEXT, RunAt TEXT, SetContextPreInstall TEXT, SetContextPostInstall TEXT, SetContextPreRun TEXT, SetContextPostRun TEXT, LastModifiedBy TEXT, LastModifiedOn TEXT, PublicKey TEXT)');
+		}
+
+
 			echo phoromatic_webui_header_logged_in();
 
 			$main = '<h1>Test Schedules</h1>
-				<h2>Current Schedules</h2>
-				<p>User settings are specific to your particular account, in cases where there are multiple individuals/accounts managing the same test systems and data.</p>
+				<h2>Current Schedules</h2>';
 
+
+			$main .= '<div class="pts_phoromatic_info_box_area">
+
+				<div style="float: left; width: 100%;">
+					<ul>
+						<li><h1>Active Test Schedules</h1></li>';
+
+					$stmt = phoromatic_server::$db->prepare('SELECT Title, ScheduleID, Description FROM phoromatic_schedules WHERE AccountID = :account_id AND State >= 1 ORDER BY Title ASC');
+					$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+					$result = $stmt->execute();
+					$row = $result->fetchArray();
+
+					if($row == false)
+					{
+						$main .= '<li class="light" style="text-align: center;">No Schedules Found</li>';
+					}
+					else
+					{
+						do
+						{
+							$main .= '<a href="?schedules/' . $row['ScheduleID'] . '"><li>' . $row['Title'] . '<br /><em>' . $row['Description'] . '</em></li></a>';
+						}
+						while($row = $result->fetchArray());
+					}
+
+
+			$main .= '</ul>
+				</div>
+			</div>';
+
+			$main .= '
 			<hr />
 			<h2>Create A Schedule</h2>
 			<p>Account settings are system-wide, in cases where there are multiple individuals/accounts managing the same test systems and data.</p>';
@@ -87,7 +171,7 @@ class phoromatic_schedules implements pts_webui_interface
 				$main .= '<h4>Groups: ';
 				do
 				{
-					$main .= '<input type="checkbox" name="run_on_systems[]" value="' . $row['GroupName'] . '" /> ' . $row['GroupName'] . ' ';
+					$main .= '<input type="checkbox" name="run_on_groups[]" value="' . $row['GroupName'] . '" /> ' . $row['GroupName'] . ' ';
 				}
 				while($row = $result->fetchArray());
 				$main .= '</h4>';

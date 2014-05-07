@@ -96,21 +96,40 @@ function phoromatic_webui_right_panel_logged_in($add = null)
 
 		$right .= '<hr />
 			<ul>
-				<li>Upcoming Tests</li>
-				<li><a href="#">Test A</a></li>
-				<li><a href="#">Test B</a></li>
-				<li><a href="#">Test C</a></li>
-				<li><a href="#">Test D</a></li>
-			</ul>';
+				<li>Upcoming Test Events</li>';
+
+			$stmt = phoromatic_server::$db->prepare('SELECT Title, ScheduleID FROM phoromatic_schedules WHERE AccountID = :account_id AND State >= 1 ORDER BY Title ASC');
+			$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+			$result = $stmt->execute();
+			$row = $result->fetchArray();
+
+			if($row == false)
+			{
+				$right .= '</ul><p style="text-align: left; margin: 6px 10px;">No Events Found</p>';
+			}
+			else
+			{
+				do
+				{
+					$right .= '<li><a href="?schedules/' . $row['ScheduleID'] . '">' . $row['Title'] . '</a></li>';
+				}
+				while($row = $result->fetchArray());
+				$right .= '</ul>';
+			}
 
 	}
 
-	$stmt = phoromatic_server::$db->prepare('SELECT COUNT(Title) AS SystemCount FROM phoromatic_systems WHERE AccountID = :account_id AND State >= 0 ORDER BY LastCommunication DESC LIMIT 10');
+	$stmt = phoromatic_server::$db->prepare('SELECT COUNT(Title) AS SystemCount FROM phoromatic_systems WHERE AccountID = :account_id AND State >= 0');
 	$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 	$result = $stmt->execute();
 	$row = $result->fetchArray();
 	$system_count = $row['SystemCount'];
-	$right .= '<hr /><p><strong>' . date('H:i T - j F Y') . '</strong><br />' . $system_count . ' System' . ($system_count > 1 ? 's' : '') .'<br />X Test Schedules<br /><a href="?logout"><strong>Log-Out</strong></a></p>';
+	$stmt = phoromatic_server::$db->prepare('SELECT COUNT(Title) AS ScheduleCount FROM phoromatic_schedules WHERE AccountID = :account_id AND State >= 1');
+	$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+	$result = $stmt->execute();
+	$row = $result->fetchArray();
+	$schedule_count = $row['ScheduleCount'];
+	$right .= '<hr /><p><strong>' . date('H:i T - j F Y') . '</strong><br />' . $system_count . ' System' . ($system_count == 1 ? '' : 's') .'<br />' . $schedule_count . ' Schedule' . ($schedule_count == 1 ? '' : 's') .'<br /><a href="?logout"><strong>Log-Out</strong></a></p>';
 
 	return $right;
 }

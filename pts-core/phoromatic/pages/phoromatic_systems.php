@@ -111,9 +111,9 @@ class phoromatic_systems implements pts_webui_interface
 
 				if($group)
 				{
-					$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_groups (AccountID, GroupName) VALUES (:account_id, :group)');
+					$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_groups (AccountID, GroupName) VALUES (:account_id, :group_name)');
 					$stmt->bindValue(':account_id', $_SESSION['AccountID']);
-					$stmt->bindValue(':group', $group);
+					$stmt->bindValue(':group_name', $group);
 					$result = $stmt->execute();
 
 					if(!empty($_POST['systems_for_group']) && is_array($_POST['systems_for_group']))
