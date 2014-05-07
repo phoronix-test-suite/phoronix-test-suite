@@ -348,8 +348,8 @@ class pts_test_run_manager
 			{
 				if($times_tried == 0 && ($env_identifier = pts_client::read_env('TEST_RESULTS_IDENTIFIER')))
 				{
-					$results_identifier = isset($env_identifier) ? $env_identifier : null;
-					echo 'Test Identifier: ' . self::clean_results_identifier($results_identifier) . PHP_EOL;
+					$results_identifier = isset($env_identifier) ? self::clean_results_identifier($env_identifier) : null;
+					echo 'Test Identifier: ' . $results_identifier . PHP_EOL;
 				}
 				else if((pts_c::$test_flags ^ pts_c::auto_mode))
 				{
@@ -370,7 +370,7 @@ class pts_test_run_manager
 		}
 		else if(($env_identifier = pts_client::read_env('TEST_RESULTS_IDENTIFIER')))
 		{
-			$results_identifier = $env_identifier;
+			$results_identifier = self::clean_results_identifier($env_identifier);
 		}
 
 
