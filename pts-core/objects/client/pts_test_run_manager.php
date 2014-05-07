@@ -368,6 +368,11 @@ class pts_test_run_manager
 			}
 			while((!$no_repeated_tests && $identifier_pos != -1) || (isset($current_hardware[$identifier_pos]) && $current_hardware[$identifier_pos] != phodevi::system_hardware(true)) || (isset($current_software[$identifier_pos]) && $current_software[$identifier_pos] != phodevi::system_software(true)));
 		}
+		else if(($env_identifier = pts_client::read_env('TEST_RESULTS_IDENTIFIER')))
+		{
+			$results_identifier = $env_identifier;
+		}
+
 
 		if(empty($results_identifier))
 		{
