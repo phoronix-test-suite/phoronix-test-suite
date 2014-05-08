@@ -1,4 +1,4 @@
-.TH phoronix-test-suite 1  "www.phoronix-test-suite.com" "5.0.1"
+.TH phoronix-test-suite 1  "www.phoronix-test-suite.com" "5.2.0m1"
 .SH NAME
 phoronix-test-suite \- The Phoronix Test Suite is an extensible open-source platform for performing testing and performance evaluation.
 .SH SYNOPSIS
@@ -253,12 +253,15 @@ This option can be used for setting an XML value in the Phoronix Test Suite user
 .B version
 This option will display the Phoronix Test Suite client version.
 .TP
-.SH GUI / WEB SUPPORT
+.SH WEB / GUI SUPPORT
 .B gui
 Launch the Phoronix Test Suite HTML5 web user-interface in the local GUI mode (no remote web support) and attempt to auto-launch the web-browser.
 .TP
 .B start-remote-gui-server
 Start the GUI web server and WebSocket server processes for remote (or local) access via the web-browser. The settings can be configured via the Phoronix Test Suite's user-config.xml configuration file.
+.TP
+.B start-ws-server
+Manually start a WebSocket server for communication by remote Phoronix Test Suite GUIs, the Phoronix Test Suite Multi-System Commander, and other functionality.
 .TP
 .SH MODULES
 .B list-modules
@@ -273,7 +276,7 @@ This option will allow you to configure all available end-user options for a Pho
 .B test-module [Phoronix Test Suite Module]
 This option can be used for debugging a Phoronix Test Suite module.
 .TP
-.SH WEB / UI SUPPORT
+.SH GUI / WEB SUPPORT
 .B r
 p
 .TP
