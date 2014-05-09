@@ -1518,6 +1518,10 @@ class pts_test_run_manager
 			// Sort the run order so that all tests that are similar are grouped together, etc
 			usort($this->tests_to_run, array('pts_test_run_manager', 'cmp_result_object_sort'));
 		}
+		if(pts_client::read_env('RUN_TESTS_IN_RANDOM_ORDER'))
+		{
+			shuffle($this->tests_to_run);
+		}
 
 		$this->prompt_save_results = $run_contains_a_no_result_type == false || $unique_test_count > 1;
 		$this->force_save_results = $this->force_save_results || $request_results_save;

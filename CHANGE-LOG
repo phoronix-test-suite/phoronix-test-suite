@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- pts-core: Add RUN_TESTS_IN_RANDOM_ORDER environment variable to cause tests to run in a random order
+
 Phoronix Test Suite 5.2 Milestone 1
 8 May 2014
 
