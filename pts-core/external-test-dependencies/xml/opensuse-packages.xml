@@ -16,6 +16,10 @@
 			<PackageName>libSDL-devel libSDL_image-devel libSDL_gfx-devel libSDL_net-devel libSDL_ttf-devel</PackageName>
 		</Package>
 		<Package>
+			<GenericName>sdl2-development</GenericName>
+			<PackageName>libSDL2-devel libSDL2_image-devel libSDL2_gfx-devel libSDL2_net-devel libSDL2_ttf-devel</PackageName>
+		</Package>
+		<Package>
 			<GenericName>glut</GenericName>
 			<PackageName>freeglut-devel</PackageName>
 		</Package>

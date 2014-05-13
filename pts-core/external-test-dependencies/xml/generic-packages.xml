@@ -21,9 +21,15 @@
 		</Package>
 		<Package>
 			<GenericName>sdl-development</GenericName>
-			<Title>SDL Development Files</Title>
+			<Title>SDL 1.x Development Files</Title>
 			<PossibleNames>libsdl1.2-dev, sdl-net, sdl-image</PossibleNames>
 			<FileCheck>SDL/SDL.h, SDL/SDL_net.h, SDL/SDL_image.h</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>sdl2-development</GenericName>
+			<Title>SDL 2.x Development Files</Title>
+			<PossibleNames>libsdl2-dev</PossibleNames>
+			<FileCheck>SDL2/SDL.h, SDL2/SDL_image.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>glut</GenericName>

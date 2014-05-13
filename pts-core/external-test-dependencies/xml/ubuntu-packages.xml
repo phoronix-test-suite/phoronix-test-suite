@@ -30,6 +30,10 @@
 			<PackageName>libgtk2.0-dev</PackageName>
 		</Package>
 		<Package>
+			<GenericName>sdl2-development</GenericName>
+			<PackageName>libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libstdl2-ttf-dev</PackageName>
+		</Package>
+		<Package>
 			<GenericName>sdl-development</GenericName>
 			<PackageName>libsdl1.2-dev libsdl-gfx1.2-dev libsdl-net1.2-dev libsdl-image1.2-dev libsdl-ttf2.0-dev libsdl-mixer1.2-dev</PackageName>
 		</Package>

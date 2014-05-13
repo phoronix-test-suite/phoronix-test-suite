@@ -14,6 +14,10 @@
 			<PackageName>devel/sdl12 graphics/sdl_gfx graphics/sdl_image graphics/sdl_ttf audio/sdl_sound audio/sdl_mixer graphics/linux-f10-sdl_image graphics/linux-sdl_ttf devel/linux-f10-sdl12</PackageName>
 		</Package>
 		<Package>
+			<GenericName>sdl2-development</GenericName>
+			<PackageName>devel/sdl2 graphics/sdl2_gfx graphics/sdl2_image graphics/sdl2_ttf audio/sdl2_sound audio/sdl2_mixer graphics/linux-f10-sdl2_image graphics/linux-sdl2_ttf devel/linux-f10-sdl2</PackageName>
+		</Package>
+		<Package>
 			<GenericName>glut</GenericName>
 			<PackageName>graphics/freeglut</PackageName>
 		</Package>

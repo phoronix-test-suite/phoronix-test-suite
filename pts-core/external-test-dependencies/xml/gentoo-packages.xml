@@ -15,6 +15,10 @@
 			<PackageName>media-libs/libsdl media-libs/sdl-net media-libs/sdl-image</PackageName>
 		</Package>
 		<Package>
+			<GenericName>sdl2-development</GenericName>
+			<PackageName>media-libs/libsdl2 media-libs/sdl2-net media-libs/sdl2-image</PackageName>
+		</Package>
+		<Package>
 			<GenericName>glut</GenericName>
 			<PackageName>virtual/glut</PackageName>
 		</Package>
