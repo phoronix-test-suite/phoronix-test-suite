@@ -31,7 +31,7 @@
 		</Package>
 		<Package>
 			<GenericName>sdl2-development</GenericName>
-			<PackageName>libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libstdl2-ttf-dev</PackageName>
+			<PackageName>libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev</PackageName>
 		</Package>
 		<Package>
 			<GenericName>sdl-development</GenericName>
