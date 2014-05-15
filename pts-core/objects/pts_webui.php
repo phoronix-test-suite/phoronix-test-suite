@@ -22,16 +22,11 @@
 
 class pts_webui
 {
-	public static function load_web_interface($interface, $PATH)
+	public static function load_web_interface($interface, $PATH, $page_class_location, $html_class_loation = 'html/')
 	{
-		if(!class_exists($interface) && is_file($interface . '.php'))
+		if(!class_exists($interface) && is_file($page_class_location . $interface . '.php'))
 		{
-			require($interface . '.php');
-
-			if(strpos($interface, '/'))
-			{
-				$interface = basename($interface);
-			}
+			require($page_class_location . $interface . '.php');
 
 			$response = $interface::preload($PATH);
 
@@ -45,10 +40,10 @@ class pts_webui
 			}
 			else
 			{
-				return self::load_web_interface($response, $PATH);
+				return self::load_web_interface($response, $PATH, $page_class_location, $html_class_loation);
 			}
 		}
-		else if(is_file('html/' . $interface . '.html'))
+		else if(is_file($html_class_loation . $interface . '.html'))
 		{
 			return $interface;
 		}

@@ -65,7 +65,7 @@ define('PAGE_REQUEST', $PAGE_REQUEST);
 $page_class = 'phoromatic_' . PAGE_REQUEST;
 
 pts_webui::websocket_setup_defines();
-$page_class = pts_webui::load_web_interface('../pages/' . $page_class, $PATH);
+$page_class = pts_webui::load_web_interface($page_class, $PATH, '../pages/');
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
