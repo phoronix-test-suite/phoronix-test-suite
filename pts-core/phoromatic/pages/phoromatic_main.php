@@ -61,8 +61,7 @@ class phoromatic_main implements pts_webui_interface
 				<div style="float: left; width: 100%;">
 					<ul>
 						<li><h1>Today\'s Test Results</h1></li>
-						<a href=""><li>Title 1<br /><em>The daily mainline kernel performance tracking.</em></li></a>
-						<a href=""><li>Title 2<br /><em>Monitoring the performance of various Mesa/Gallium3D drivers.</em></li></a>
+						<li class="light" style="text-align: center;">No Results Available</li>
 					</ul>
 				</div>
 <div style="float: left; width: 100%;">
@@ -93,15 +92,13 @@ class phoromatic_main implements pts_webui_interface
 				<div style="float: left; width: 50%;">
 					<ul>
 						<li><h1>Yesterday\'s Test Results</h1></li>
-						<a href=""><li>Test<br /><em>Test</em></li></a>
-						<a href=""><li>Test<br /><em>Test.</em></li></a>
+						<li class="light" style="text-align: center;">No Results Available</li>
 					</ul>
 				</div>
 				<div style="float: left; width: 50%;">
 					<ul>
 						<li><h1>Other Test Results This Week</h1></li>
-						<a href=""><li>Core i7 4770K<br /><em>Intel Linux benchmark.</em></li></a>
-						<a href=""><li>Radeon R9 270X<br /><em>Benchmark 1.</em></li></a>
+						<li class="light" style="text-align: center;">No Results Available</li>
 					</ul>
 				</div>
 
@@ -136,8 +133,7 @@ class phoromatic_main implements pts_webui_interface
 				<div style="float: left; width: 50%;">
 					<ul>
 						<li><h1>Recent System Warnings &amp; Errors</h1></li>
-						<a href=""><li>Core i7 4770K<br /><em>Warning.</em></li></a>
-						<a href=""><li>Radeon R9 270X<br /><em>Error.</em></li></a>
+						<li class="light" style="text-align: center;">No Warnings Or Errors At This Time</li>
 					</ul>
 				</div>
 			</div>';

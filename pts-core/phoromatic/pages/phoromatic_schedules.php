@@ -136,8 +136,6 @@ class phoromatic_schedules implements pts_webui_interface
 					}
 				}
 
-
-
 				$main = '<h1>' . $row['Title'] . '</h1>';
 				$main .= '<h3>' . $row['Description'] . '</h3>';
 				$main .= '<p>This schedule was last modified at <strong>' . $row['LastModifiedOn'] . '</strong> by <strong>' . $row['LastModifiedBy'] . '</strong>.';
@@ -177,7 +175,7 @@ class phoromatic_schedules implements pts_webui_interface
 				while($row = $result->fetchArray())
 				{
 					$test_count++;
-					$main .= '<h3>' . $row['TestProfile'] . ($row['TestDescription'] != null ? ' <em>' . $row['TestDescription'] . '</em>' : '') . '</h3>';
+					$main .= '<h3>' . $row['TestProfile'] . ($row['TestDescription'] != null ? ' - <em>' . $row['TestDescription'] . '</em>' : '') . '</h3>';
 				}
 
 				if($test_count == 0)
