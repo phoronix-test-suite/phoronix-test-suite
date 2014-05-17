@@ -133,7 +133,7 @@ class phoromatic_main implements pts_webui_interface
 				<div style="float: left; width: 50%;">
 					<ul>
 						<li><h1>Recent System Warnings &amp; Errors</h1></li>
-						<li class="light" style="text-align: center;">No Warnings Or Errors At This Time</li>
+						<li class="light" style="text-align: center;">No Warnings Or Errors At This Time<br />&nbsp;</li>
 					</ul>
 				</div>
 			</div>';

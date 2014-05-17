@@ -51,7 +51,6 @@ PHORONIX TEST SUITE PUBLIC TODO LIST:
 - http://code.google.com/p/lz4/
 - http://parsec.cs.princeton.edu/parsec3-doc.htm
 - http://www.capsl.udel.edu/splash/Download.html
-- http://tesseract.gg/
 - https://github.com/facebook/linkbench
 - https://github.com/vasi/pixz
 - http://nondot.org/sabre/LLVMNotes/#benchmarks
@@ -63,3 +62,10 @@ PHORONIX TEST SUITE PUBLIC TODO LIST:
 - Ensuring only one session at a time, at least for benchmarking
 - Handle test installations and external dependencies (prompting for root password handling?)
 - Porting more of the web-interface code to the new JavaScript + WebSocket design rather than original PHP design [Originally with the 5.0 UI design it wasn't settled for mostly JS + WebSocket but some of the original code is with a traditional PHP-based + web server design... so slowly move over to newer design.]
+
+### PHOROMATIC ####
+
+- Group handling
+- Editing/deleting lots of different possible items
+- Implement the complementary WebSocket communication to HTTP pulls
+- More mobile form factor optimizations

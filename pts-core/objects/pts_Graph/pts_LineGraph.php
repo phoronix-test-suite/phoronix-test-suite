@@ -71,15 +71,15 @@ class pts_LineGraph extends pts_Graph
 			}
 		}
 
-        $max_value = 0;
-        foreach($this->graph_data as $dataset)
-        {
-            $data_max = max($dataset);
-            $max_value = $max_value > $data_max ? $max_value : $data_max;
-        }
+	$max_value = 0;
+	foreach($this->graph_data as $dataset)
+	{
+	    $data_max = max($dataset);
+	    $max_value = $max_value > $data_max ? $max_value : $data_max;
+	}
 
-        $max_value *= 1.25; // leave room at top of graph
-        $this->i['graph_max_value'] = round($max_value, $max_value < 10 ? 1 : 0);
+	$max_value *= 1.25; // leave room at top of graph
+	$this->i['graph_max_value'] = round($max_value, $max_value < 10 ? 1 : 0);
 	}
 	protected function render_graph_identifiers()
 	{
@@ -147,123 +147,123 @@ class pts_LineGraph extends pts_Graph
 	}
     protected function render_graph_key()
     {
-        if($this->i['key_line_height'] == 0)
-        {
-            return;
-        }
+	if($this->i['key_line_height'] == 0)
+	{
+	    return;
+	}
 
-        $square_length = 10;
-        $precision = $this->getPrecision($this->graph_data);
+	$square_length = 10;
+	$precision = $this->getPrecision($this->graph_data);
 
-        $num_rows = ceil(count($this->graph_data_title) / $this->i['keys_per_line']);
-        $num_cols = ceil(count($this->graph_data_title) / $num_rows);
+	$num_rows = ceil(count($this->graph_data_title) / $this->i['keys_per_line']);
+	$num_cols = ceil(count($this->graph_data_title) / $num_rows);
 
-        $y_start = $this->i['top_start'] - $this->graph_key_height() + $this->getStatisticsHeaderHeight();
-        $y_end = $y_start + $this->i['key_line_height'] * ($num_rows - 1);
-        $x_start = $this->i['left_start'];
-        $x_end = $x_start + $this->i['key_item_width'] * ($num_cols - 1);
+	$y_start = $this->i['top_start'] - $this->graph_key_height() + $this->getStatisticsHeaderHeight();
+	$y_end = $y_start + $this->i['key_line_height'] * ($num_rows - 1);
+	$x_start = $this->i['left_start'];
+	$x_end = $x_start + $this->i['key_item_width'] * ($num_cols - 1);
 
-        // draw the "Min Avg Max" text
-        $stat_header_offset = $this->i['key_longest_string_width'] + $square_length;
-        for($x = $x_start + $stat_header_offset; $x <= $x_end + $stat_header_offset; $x += $this->i['key_item_width'])
-        {
-            $this->drawMinAvgMaxText($x, array('y' => $y_start - 14, 'font-size' => 6.5, 'fill' => self::$c['color']['notches']));
-        }
+	// draw the "Min Avg Max" text
+	$stat_header_offset = $this->i['key_longest_string_width'] + $square_length;
+	for($x = $x_start + $stat_header_offset; $x <= $x_end + $stat_header_offset; $x += $this->i['key_item_width'])
+	{
+	    $this->draw_stat_text($x, array('y' => $y_start - 14, 'font-size' => 6.5, 'fill' => self::$c['color']['notches']));
+	}
 
-        // draw the keys and the min,avg,max values
-        for($i = 0, $x = $x_start; $x <= $x_end; $x += $this->i['key_item_width'])
-        {
-            for ($y = $y_start; $y <= $y_end; $y += $this->i['key_line_height'], ++$i)
-            {
-                if (empty($this->graph_data_title[$i]))
-                {
-                    continue;
-                }
+	// draw the keys and the min,avg,max values
+	for($i = 0, $x = $x_start; $x <= $x_end; $x += $this->i['key_item_width'])
+	{
+	    for ($y = $y_start; $y <= $y_end; $y += $this->i['key_line_height'], ++$i)
+	    {
+		if (empty($this->graph_data_title[$i]))
+		{
+		    continue;
+		}
 
-                $this_color = $this->get_special_paint_color($this->graph_data_title[$i]);
+		$this_color = $this->get_special_paint_color($this->graph_data_title[$i]);
 
-                // draw square
-                $this->svg_dom->add_element('rect',
-                                            array('x' => $x, 'y' => $y - $square_length, 'width' => $square_length,
-                                                  'height' => $square_length, 'fill' => $this_color,
-                                                  'stroke' => self::$c['color']['notches'], 'stroke-width' => 1));
+		// draw square
+		$this->svg_dom->add_element('rect',
+					    array('x' => $x, 'y' => $y - $square_length, 'width' => $square_length,
+						  'height' => $square_length, 'fill' => $this_color,
+						  'stroke' => self::$c['color']['notches'], 'stroke-width' => 1));
 
-                // draw text
-                $this->svg_dom->add_text_element($this->graph_data_title[$i],
-                                                 array('x' => $x + $square_length + 4, 'y' => $y,
-                                                       'font-size' => self::$c['size']['key'], 'fill' => $this_color));
+		// draw text
+		$this->svg_dom->add_text_element($this->graph_data_title[$i],
+						 array('x' => $x + $square_length + 4, 'y' => $y,
+						       'font-size' => self::$c['size']['key'], 'fill' => $this_color));
 
-                // draw min/avg/max
-                $x_stat_loc = $x + $square_length + $this->i['key_longest_string_width'];
-                $this->drawMinAvgMaxStatistics($this->graph_data[$i], $precision, $x_stat_loc,
-                                               array('y' => $y, 'font-size' => self::$c['size']['key'], 'fill' => $this_color));
-            }
-        }
+		// draw min/avg/max
+		$x_stat_loc = $x + $square_length + $this->i['key_longest_string_width'];
+		$this->draw_result_stats($this->graph_data[$i], $precision, $x_stat_loc,
+					       array('y' => $y, 'font-size' => self::$c['size']['key'], 'fill' => $this_color));
+	    }
+	}
     }
-    private function drawMinAvgMaxText($x, $attributes)
+    private function draw_stat_text($x, $attributes)
     {
-        if(!$this->i['plot_overview_text'])
-        {
-            return;
-        }
+	if(!$this->i['plot_overview_text'])
+	{
+	    return;
+	}
 
-        $stat_words = array("Min", "Avg", "Max");
-        $stat_word_width = $this->getStatWordWidth();
+	$stat_words = array('Min', 'Avg', 'Max');
+	$stat_word_width = $this->get_stat_word_width();
 
-        foreach ($stat_words as &$stat_word)
-        {
-            $attributes['x'] = $x;
-            $this->svg_dom->add_text_element($stat_word, $attributes);
-            $x += $stat_word_width;
-        }
+	foreach ($stat_words as &$stat_word)
+	{
+	    $attributes['x'] = $x;
+	    $this->svg_dom->add_text_element($stat_word, $attributes);
+	    $x += $stat_word_width;
+	}
     }
-    private function drawMinAvgMaxStatistics(&$data_set, $precision, $x, $attributes)
+    private function draw_result_stats(&$data_set, $precision, $x, $attributes)
     {
-        if(!$this->i['plot_overview_text'])
-        {
-            return;
-        }
+	if(!$this->i['plot_overview_text'])
+	{
+		return;
+	}
 
-        $stat_word_width = $this->getStatWordWidth();
-        $stat_array = $this->calculateMinAvgMax($data_set);
+	$stat_word_width = $this->get_stat_word_width();
+	$stat_array = $this->calc_min_avg_max($data_set);
 
-        $precise_stat_array = array();
-        foreach ($stat_array as $stat_value)
-        {
-            array_push($precise_stat_array, pts_math::set_precision($stat_value, $precision));
-        }
+	$precise_stat_array = array();
+	foreach ($stat_array as $stat_value)
+	{
+		array_push($precise_stat_array, pts_math::set_precision($stat_value, $precision));
+	}
 
-        foreach ($precise_stat_array as $stat_value)
-        {
-            $attributes['x'] = $x;
-            $this->svg_dom->add_text_element(strval($stat_value), $attributes);
-            $x += $stat_word_width;
-        }
+	foreach ($precise_stat_array as $stat_value)
+	{
+		$attributes['x'] = $x;
+		$this->svg_dom->add_text_element(strval($stat_value), $attributes);
+		$x += $stat_word_width;
+	}
     }
-    private static function calculateMinAvgMax(&$data_set)
+    private static function calc_min_avg_max(&$data_set)
     {
-        if(empty($data_set))
-        {
-            return array(0, 0, 0);
-        }
+	if(empty($data_set))
+	{
+	    return array(0, 0, 0);
+	}
 
-        $min_value = min($data_set);
-        $max_value = max($data_set);
-        $avg_value = array_sum($data_set) / count($data_set);
+	$min_value = min($data_set);
+	$max_value = max($data_set);
+	$avg_value = array_sum($data_set) / count($data_set);
 
-        return array($min_value, $avg_value, $max_value);
+	return array($min_value, $avg_value, $max_value);
     }
     private static function getPrecision(&$data)
     {
-        // get the maximum value
-        $max = 0;
-        foreach($data as &$data_set)
-        {
-            $data_set_max = max($data_set);
-            $max = $max > $data_set_max ? $max : $data_set_max;
-        }
+	// get the maximum value
+	$max = 0;
+	foreach($data as &$data_set)
+	{
+	    $data_set_max = max($data_set);
+	    $max = $max > $data_set_max ? $max : $data_set_max;
+	}
 
-        return $max > 999 ? 0 : 1;
+	return $max > 999 ? 0 : 1;
     }
 	protected function renderGraphLines()
 	{
@@ -352,7 +352,7 @@ class pts_LineGraph extends pts_Graph
 		$svg_poly = implode(' ', $svg_poly);
 		$this->svg_dom->add_element('polyline', array('points' => $svg_poly, 'fill' => 'none', 'stroke' => $paint_color, 'stroke-width' => 2));
 
-        // plot error bars if needed
+	// plot error bars if needed
 		foreach($poly_points as $i => $x_y_pair)
 		{
 			if($x_y_pair[0] < ($this->i['left_start'] + 2) || $x_y_pair[0] > ($this->i['graph_left_end'] - 2))
@@ -395,39 +395,39 @@ class pts_LineGraph extends pts_Graph
 	}
     protected function graph_key_height()
     {
-        if(count($this->graph_data_title) < 2 && $this->i['show_graph_key'] == false)
-        {
-            return 0;
-        }
+	if(count($this->graph_data_title) < 2 && $this->i['show_graph_key'] == false)
+	{
+	    return 0;
+	}
 
-        $this->i['key_line_height'] = 16;
-        $this->i['key_longest_string_width'] = $this->text_string_width(pts_strings::find_longest_string($this->graph_data_title), self::$c['size']['key']);
+	$this->i['key_line_height'] = 16;
+	$this->i['key_longest_string_width'] = $this->text_string_width(pts_strings::find_longest_string($this->graph_data_title), self::$c['size']['key']);
 
-        $item_width_spacing = 24;
-        $this->i['key_item_width'] = $this->i['key_longest_string_width'] + $this->getStatWordWidth() * 3 + $item_width_spacing;
+	$item_width_spacing = 24;
+	$this->i['key_item_width'] = $this->i['key_longest_string_width'] + $this->get_stat_word_width() * 3 + $item_width_spacing;
 
-        // if there are <=4 data sets, then use a single column, otherwise, try and multi-col it
-        if (count($this->graph_data_title) <= 4)
-        {
-            $this->i['keys_per_line'] = 1;
-        }
-        else
-        {
-            $this->i['keys_per_line'] = max(1, floor(($this->i['graph_left_end'] - $this->i['left_start']) / $this->i['key_item_width']));
-        }
+	// if there are <=4 data sets, then use a single column, otherwise, try and multi-col it
+	if (count($this->graph_data_title) <= 4)
+	{
+	    $this->i['keys_per_line'] = 1;
+	}
+	else
+	{
+	    $this->i['keys_per_line'] = max(1, floor(($this->i['graph_left_end'] - $this->i['left_start']) / $this->i['key_item_width']));
+	}
 
-        $statistics_header_height = $this->getStatisticsHeaderHeight();
-        $extra_spacing = 4;
-        return ceil(count($this->graph_data_title) / $this->i['keys_per_line']) * $this->i['key_line_height']
-                + $statistics_header_height + $extra_spacing;
+	$statistics_header_height = $this->getStatisticsHeaderHeight();
+	$extra_spacing = 4;
+	return ceil(count($this->graph_data_title) / $this->i['keys_per_line']) * $this->i['key_line_height']
+		+ $statistics_header_height + $extra_spacing;
     }
-    private function getStatWordWidth()
+    private function get_stat_word_width()
     {
-        return 1.8 * $this->text_string_width("Min", $this->i['min_identifier_size'] + 0.5);
+	return 2.5 * $this->text_string_width('Min', $this->i['min_identifier_size'] + 0.5);
     }
     private function getStatisticsHeaderHeight()
     {
-        return $this->i['plot_overview_text'] ? 10 : 0;
+	return $this->i['plot_overview_text'] ? 10 : 0;
     }
 }
 
