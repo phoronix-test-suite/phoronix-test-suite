@@ -67,6 +67,19 @@ $page_class = 'phoromatic_' . PAGE_REQUEST;
 pts_webui::websocket_setup_defines();
 $page_class = pts_webui::load_web_interface($page_class, $PATH, '../pages/');
 
+if(substr($PAGE_REQUEST, 0, 2) == 'r_')
+{
+	// RESOURCE
+	phoromatic_server::prepare_database();
+	$page_class::render_page_process($PATH);
+
+	if(phoromatic_server::$db != null)
+	{
+		phoromatic_server::$db->close();
+	}
+	return;
+}
+
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>

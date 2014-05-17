@@ -91,3 +91,72 @@ function phoromatic_new_group(form)
 	}
 	return true;
 }
+function phoromatic_schedule_test_details()
+{
+	document.getElementById("test_details").innerHTML = "";
+	var test_target = pts_get_list_item("add_to_schedule_select_test");
+	phoromatic_ajax_update_element("r_add_test_details/&tp=" + test_target, "test_details");
+}
+function pts_get_list_item(select_id)
+{
+	var item_value = document.getElementById(select_id).options[document.getElementById(select_id).selectedIndex].value;
+
+	if(pts_is_int_string(item_value))
+	{
+		if(item_value[0] == "0" && item_value.length > 1)
+			item_value = item_value.substring(1);
+
+		item_value = parseInt(item_value);
+	}
+
+	return item_value;
+}
+function pts_is_int_string(str)
+{
+	for(var i = 0; i < str.length; i++)
+	{
+		var ch = str[i];
+
+		if(ch != 0 && ch != 1 && ch != 2 && ch != 3 && ch != 4 && ch != 5 && ch != 6 && ch != 7 && ch != 8 && ch != 9)
+			return false;
+	}
+	return true;
+}
+function phoromatic_test_select_update_selected_name(select_obj)
+{
+	var select_id = select_obj.id;
+	var select_name = document.getElementById(select_id).options[document.getElementById(select_id).selectedIndex].innerHTML;
+
+	document.getElementById(select_id + "_selected").value = document.getElementById(select_id + "_name").innerHTML + ": " + select_name;
+}
+function pts_ajax_request_object()
+{
+	var request_;
+	var browser = navigator.appName;
+
+	if(browser == "Microsoft Internet Explorer")
+	{
+		request_ = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	else
+	{
+		request_ = new XMLHttpRequest();
+	}
+	return request_;
+}
+function phoromatic_ajax_update_element(r, d)
+{
+	var http = new Array();
+	var rnow = new Date();
+	http[rnow] = pts_ajax_request_object();
+	http[rnow].open("get", "index.php?" + r, true);
+	http[rnow].onreadystatechange = function(){
+		if(http[rnow].readyState == 4)
+		{
+			if(http[rnow].status == 200 || http[rnow].status == 304)
+			{
+				document.getElementById(d).innerHTML = http[rnow].responseText;
+			}
+		}}
+	http[rnow].send(null);
+}

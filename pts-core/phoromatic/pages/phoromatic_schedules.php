@@ -86,15 +86,131 @@ class phoromatic_schedules implements pts_webui_interface
 			$stmt->bindValue(':modified_on', phoromatic_server::current_time());
 			$stmt->bindValue(':public_key', $public_key);
 			$result = $stmt->execute();
+		}
 
-			// self::$db->exec('CREATE TABLE phoromatic_schedules (AccountID TEXT UNIQUE, ScheduleID INTEGER UNIQUE, Title TEXT, Description TEXT, State INTEGER, ActiveOn TEXT, RunAt TEXT, SetContextPreInstall TEXT, SetContextPostInstall TEXT, SetContextPreRun TEXT, SetContextPostRun TEXT, LastModifiedBy TEXT, LastModifiedOn TEXT, PublicKey TEXT)');
+		echo phoromatic_webui_header_logged_in();
+
+		if(!empty($PATH[0]) && is_numeric($PATH[0]))
+		{
+			$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_schedules WHERE AccountID = :account_id AND ScheduleID = :schedule_id');
+			$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+			$stmt->bindValue(':schedule_id', $PATH[0]);
+			$result = $stmt->execute();
+			$row = $result->fetchArray();
+
+			if(empty($row))
+			{
+				$main = '<h1>Test Schedules</h1>';
+				$main .= '<h3>No Resource Found</h3>';
+			}
+			else
+			{
+
+				if(isset($_POST['add_to_schedule_select_test']))
+				{
+					$name = $_POST['add_to_schedule_select_test'];
+					$args = array();
+					$args_name = array();
+
+					foreach($_POST as $i => $v)
+					{
+						if(substr($i, 0, 12) == 'test_option_' && substr($i, -9) != '_selected')
+						{
+							array_push($args, $v);
+							array_push($args_name, $_POST[$i . '_selected']);
+						}
+					}
+
+					$args_name = implode(' - ', $args_name);
+					$args = implode(' ', $args);
+
+					if(!empty($name))
+					{
+						$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_schedules_tests (AccountID, ScheduleID, TestProfile, TestArguments, TestDescription) VALUES (:account_id, :schedule_id, :test_profile, :test_arguments, :test_description)');
+						$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+						$stmt->bindValue(':schedule_id', $PATH[0]);
+						$stmt->bindValue(':test_profile', $name);
+						$stmt->bindValue(':test_arguments', $args);
+						$stmt->bindValue(':test_description', $args_name);
+						$result = $stmt->execute();
+					}
+				}
+
+
+
+				$main = '<h1>' . $row['Title'] . '</h1>';
+				$main .= '<h3>' . $row['Description'] . '</h3>';
+				$main .= '<p>This schedule was last modified at <strong>' . $row['LastModifiedOn'] . '</strong> by <strong>' . $row['LastModifiedBy'] . '</strong>.';
+				$main .= '<hr />';
+				$main .= '<h2>Active On</h2>';
+				if(!empty($row['ActiveOn']))
+				{
+					$active_days = explode(',', $row['ActiveOn']);
+					$week = array('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday');
+					foreach($active_days as $i => &$day)
+					{
+						if(!isset($week[$day]))
+						{
+							unset($active_days[$i]);
+						}
+						else
+						{
+							$day = $week[$day];
+						}
+					}
+
+					$main .= '<p>This test is scheduled to run on <strong>' . implode(', ', $active_days) . '</strong> at <strong>' . $row['RunAt'] . '</strong>.';
+				}
+				else
+				{
+					$main .= '<p>This test schedule is not currently set to run a pre-defined time-based schedule.</p>';
+				}
+				$main .= '<hr />';
+				$main .= '<h2>Tests To Run</h2>';
+
+				$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_schedules_tests WHERE AccountID = :account_id AND ScheduleID = :schedule_id ORDER BY TestProfile ASC');
+				$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+				$stmt->bindValue(':schedule_id', $PATH[0]);
+				$result = $stmt->execute();
+
+				$test_count = 0;
+				while($row = $result->fetchArray())
+				{
+					$test_count++;
+					$main .= '<h3>' . $row['TestProfile'] . ($row['TestDescription'] != null ? ' <em>' . $row['TestDescription'] . '</em>' : '') . '</h3>';
+				}
+
+				if($test_count == 0)
+				{
+					$main .= '<h3 style="text-transform: uppercase;">No tests have been added yet for this test schedule.</h3>';
+				}
+
+				$main .= '<hr /><h2>Add A Test</h2>';
+				$main .= '<form action="?schedules/' . $PATH[0] . '" name="add_test" id="add_test" method="post">';
+				$main .= '<select name="add_to_schedule_select_test" id="add_to_schedule_select_test" onchange="phoromatic_schedule_test_details();">';
+				foreach(pts_openbenchmarking::available_tests() as $test) {
+					$main .= '<option value="' . $test . '">' . $test . '</option>';
+				}
+				$main .= '</select>';
+				$main .= '<p><div id="test_details"></div></p>';
+				$main .= '</form>';
+				//$main .= '<script type="text/javascript">phoromatic_add_a_test_init();</script>';
+
+
+//self::$db->exec('CREATE TABLE phoromatic_schedules_tests (AccountID TEXT, ScheduleID INTEGER, Test TEXT, TestArguments TEXT, TestDescription TEXT, UNIQUE(AccountID, ScheduleID, TestArguments) ON CONFLICT REPLACE)');
+
+
+			}
+
+
+			echo phoromatic_webui_main($main, phoromatic_webui_right_panel_logged_in());
+			echo phoromatic_webui_footer();
+			return;
 		}
 
 
-			echo phoromatic_webui_header_logged_in();
-
-			$main = '<h1>Test Schedules</h1>
-				<h2>Current Schedules</h2>';
+		$main = '<h1>Test Schedules</h1>
+			<h2>Current Schedules</h2>';
 
 
 			$main .= '<div class="pts_phoromatic_info_box_area">
@@ -202,7 +318,7 @@ class phoromatic_schedules implements pts_webui_interface
 
 			$main .= '</select><h3>Active On:</h3><p>';
 
-			$week = array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
+			$week = array('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday');
 			foreach($week as $index => $day)
 			{
 				$main .= '<input type="checkbox" name="days_active[]" value="' . $index . '" /> ' . $day;

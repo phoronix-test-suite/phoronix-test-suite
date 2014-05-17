@@ -459,6 +459,7 @@ class pts_openbenchmarking
 				}
 			}
 		}
+		$available_tests = array_unique($available_tests);
 
 		return $available_tests;
 	}
