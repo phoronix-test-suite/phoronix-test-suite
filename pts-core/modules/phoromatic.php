@@ -188,10 +188,9 @@ class phoromatic extends pts_module_interface
 									'ts' => $json['phoromatic']['trigger_id'],
 									));
 
-									if(!$json['phoromatic']['settings']['ArchiveResultsLocally'])
-									{
-										pts_client::remove_saved_result_file($test_run_manager->get_file_name());
-									}
+								if(!$json['phoromatic']['settings']['ArchiveResultsLocally'])
+								{
+									pts_client::remove_saved_result_file($test_run_manager->get_file_name());
 								}
 							}
 						}
