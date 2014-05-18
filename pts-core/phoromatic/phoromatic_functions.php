@@ -129,7 +129,12 @@ function phoromatic_webui_right_panel_logged_in($add = null)
 	$result = $stmt->execute();
 	$row = $result->fetchArray();
 	$schedule_count = $row['ScheduleCount'];
-	$right .= '<hr /><p><strong>' . date('H:i T - j F Y') . '</strong><br />' . $system_count . ' System' . ($system_count == 1 ? '' : 's') .'<br />' . $schedule_count . ' Schedule' . ($schedule_count == 1 ? '' : 's') .'<br /><a href="?logout"><strong>Log-Out</strong></a></p>';
+	$stmt = phoromatic_server::$db->prepare('SELECT COUNT(UploadID) AS ResultCount FROM phoromatic_results WHERE AccountID = :account_id');
+	$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+	$result = $stmt->execute();
+	$row = $result->fetchArray();
+	$result_count = $row['ResultCount'];
+	$right .= '<hr /><p><strong>' . date('H:i T - j F Y') . '</strong><br />' . $system_count . ' System' . ($system_count == 1 ? '' : 's') . '<br />' . $schedule_count . ' Schedule' . ($schedule_count == 1 ? '' : 's') . '<br />' . $result_count . ' Result' . ($result_count == 1 ? '' : 's') .'<br /><a href="?logout"><strong>Log-Out</strong></a></p>';
 
 	return $right;
 }
@@ -192,6 +197,22 @@ function phoromatic_systems_needing_attention()
 	}
 
 	return $main;
+}
+function phoromatic_system_id_to_name($system_id)
+{
+	static $system_names;
+
+	if(!isset($system_names[$system_id]))
+	{
+		$stmt = phoromatic_server::$db->prepare('SELECT Title FROM phoromatic_systems WHERE AccountID = :account_id AND SystemID = :system_id');
+		$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+		$stmt->bindValue(':system_id', $system_id);
+		$result = $stmt->execute();
+		$row = $result->fetchArray();
+		$system_names[$system_id] = $row['Title'];
+	}
+
+	return $system_names[$system_id];
 }
 
 ?>

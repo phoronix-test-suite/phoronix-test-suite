@@ -334,7 +334,7 @@ class phoromatic_schedules implements pts_webui_interface
 </tr>
 <tr>
   <td><h3>Trigger-Based Testing</h3><em>To carry out trigger-based testing, you can simply have an external process/script trigger (&quot;ping&quot;) a specialized URL whenever an event occurs to commence a new round of testing. This is the most customizable approach to having Phoromatic run tests on a system if you wish to have it occur whenever a Git/SVN commit takes place or other operations.</em></td>
-  <td><h3>TODO IMPLEMENT UI</h3></td>
+  <td><h3>Once creating the test schedule there will be a specialized URL you can use for &quot;pinging&quot; where you can pass it a Git commit hash, SVN revision number, date, or other unique identifiers to externally trigger the test schedules and systems to begin testing. This custom trigger is passed to any of the used context scripts for setting up the system in an appropriate state.</h3></td>
 </tr>
 <tr>
   <td><h3>One-Time Test</h3><em>If you wish to just run a single set of tests once on a given set of systems via Phoromatic, without any further scheduling, this is the option.</em></td>

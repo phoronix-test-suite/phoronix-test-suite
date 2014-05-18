@@ -57,52 +57,89 @@ class phoromatic_main implements pts_webui_interface
 
 				<hr />
 
-			<div class="pts_phoromatic_info_box_area">
-				<div style="float: left; width: 100%;">
-					<ul>
-						<li><h1>Today\'s Test Results</h1></li>
-						<li class="light" style="text-align: center;">No Results Available</li>
-					</ul>
-				</div>
-<div style="float: left; width: 100%;">
-					<ul>
-						<li><h1>Active Test Schedules</h1></li>';
+			<div class="pts_phoromatic_info_box_area">';
 
-					$stmt = phoromatic_server::$db->prepare('SELECT Title, ScheduleID, Description FROM phoromatic_schedules WHERE AccountID = :account_id AND State >= 1 ORDER BY Title ASC');
-					$stmt->bindValue(':account_id', $_SESSION['AccountID']);
-					$result = $stmt->execute();
-					$row = $result->fetchArray();
+		// ACTIVE TEST SCHEDULES
+		$main .= '<div style="float: left; width: 100%;"><ul><li><h1>Active Test Schedules</h1></li>';
+		$stmt = phoromatic_server::$db->prepare('SELECT Title, ScheduleID, Description FROM phoromatic_schedules WHERE AccountID = :account_id AND State >= 1 ORDER BY Title ASC');
+		$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+		$result = $stmt->execute();
+		$row = $result->fetchArray();
 
-					if($row == false)
-					{
-						$main .= '<li class="light" style="text-align: center;">No Schedules Found</li>';
-					}
-					else
-					{
-						do
-						{
-							$main .= '<a href="?schedules/' . $row['ScheduleID'] . '"><li>' . $row['Title'] . '<br /><em>' . $row['Description'] . '</em></li></a>';
-						}
-						while($row = $result->fetchArray());
-					}
+		if($row == false)
+		{
+			$main .= '<li class="light" style="text-align: center;">No Schedules Found</li>';
+		}
+		else
+		{
+			do
+			{
+				$main .= '<a href="?schedules/' . $row['ScheduleID'] . '"><li>' . $row['Title'] . '<br /><em>' . $row['Description'] . '</em></li></a>';
+			}
+			while($row = $result->fetchArray());
+		}
+		$main .= '</ul></div>';
 
+		// TODAY'S TEST RESULTS
+		$main .= '<div style="float: left; width: 100%;"><ul><li><h1>Today\'s Test Results</h1></li>';
+		// $stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_results (AccountID, SystemID, UploadID, ScheduleID, Trigger, UploadTime, Title, OpenBenchmarkingID) VALUES (:account_id, :system_id, :upload_id, :schedule_id, :trigger, :upload_time, :title, :openbenchmarking_id)');
+		$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, ScheduleID, UploadID, UploadTime FROM phoromatic_results WHERE AccountID = :account_id ORDER BY UploadTime DESC');
+		$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+		$test_result_result = $stmt->execute();
 
-			$main .= '</ul>
-				</div>
-				<div style="float: left; width: 50%;">
-					<ul>
-						<li><h1>Yesterday\'s Test Results</h1></li>
-						<li class="light" style="text-align: center;">No Results Available</li>
-					</ul>
-				</div>
-				<div style="float: left; width: 50%;">
-					<ul>
-						<li><h1>Other Test Results This Week</h1></li>
-						<li class="light" style="text-align: center;">No Results Available</li>
-					</ul>
-				</div>
+		$results_today = 0;
+		while($test_result_row = $test_result_result->fetchArray())
+		{
+			if(substr($test_result_row['UploadTime'], 0, 10) != date('Y-m-d'))
+			{
+				break;
+			}
+			$main .= '<a href="?results/' . $test_result_row['UploadID'] . '"><li>' . $test_result_row['Title'] . '<br /><em>' . phoromatic_system_id_to_name($test_result_row['SystemID']) . '</em></li></a>';
+			$results_today++;
 
-			</div>
+		}
+		if($results_today == 0)
+		{
+			$main .= '<li class="light" style="text-align: center;">No Results Found</li>';
+		}
+		$main .= '</ul></div>';
+
+		// YESTERDAY'S RESULTS
+		if($test_result_row && substr($test_result_row['UploadTime'], 0, 10) != date('Y-m-d', (time() - 60 * 60 * 24)))
+		{
+			$main .= '<div style="float: left; width: 50%;"><ul><li><h1>Yesterday\'s Test Results</h1></li>';
+
+			do
+			{
+				if(substr($test_result_row['UploadTime'], 0, 10) != date('Y-m-d', (time() - 60 * 60 * 24)))
+				{
+					break;
+				}
+				$main .= '<a href="?results/' . $test_result_row['UploadID'] . '"><li>' . $test_result_row['Title'] . '<br /><em>' . phoromatic_system_id_to_name($test_result_row['SystemID']) . '</em></li></a>';
+			}
+			while($test_result_row = $test_result_result->fetchArray());
+			$main .= '</ul></div>';
+		}
+
+		// THIS WEEK'S RESULTS
+		$one_week_ago = strtotime('-1 week');
+		if($test_result_row && strtotime($test_result_row['UploadTime']) > $one_week_ago)
+		{
+			$main .= '<div style="float: left; width: 50%;"><ul><li><h1>Other Test Results This Week</h1></li>';
+
+			do
+			{
+				if(strtotime($test_result_row['UploadTime']) < $one_week_ago)
+				{
+					break;
+				}
+				$main .= '<a href="?results/' . $test_result_row['UploadID'] . '"><li>' . $test_result_row['Title'] . '<br /><em>' . phoromatic_system_id_to_name($test_result_row['SystemID']) . ' - ' . $test_result_row['UploadTime'] .  '</em></li></a>';
+			}
+			while($test_result_row = $test_result_result->fetchArray());
+			$main .= '</ul></div>';
+		}
+
+		$main .= '</div>
 			<h2>Systems</h2>
 			<div class="pts_phoromatic_info_box_area">
 

@@ -239,6 +239,7 @@ div#pts_phoromatic_main_area ol li
 div#pts_phoromatic_main_area h2
 {
 	margin: 1px 0 5px;
+	clear: both;
 	font-size: 120%;
 }
 div#pts_phoromatic_main_area h2 a
