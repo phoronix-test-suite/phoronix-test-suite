@@ -55,5 +55,9 @@ class pts_suite_nye_XmlReader extends nye_XmlReader
 	{
 		self::$temp_suite[$name] = $suite_xml;
 	}
+	public static function is_temporary_suite($name)
+	{
+		return isset(self::$temp_suite[$name]);
+	}
 }
 ?>

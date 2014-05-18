@@ -125,7 +125,7 @@ class phoromatic extends pts_module_interface
 			}
 
 
-			switch(isset($json['phoromatic']['task'] ? $json['phoromatic']['task'] : null)
+			switch(isset($json['phoromatic']['task']) ? $json['phoromatic']['task'] : null)
 			{
 				case 'benchmark':
 					$test_flags = pts_c::auto_mode;

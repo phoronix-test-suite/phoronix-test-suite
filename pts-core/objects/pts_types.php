@@ -152,6 +152,11 @@ class pts_types
 				// Object is a virtual suite
 				array_push($objects, new pts_virtual_test_suite($identifier_item));
 			}
+			else if(pts_suite_nye_XmlReader::is_temporary_suite($identifier_item))
+			{
+				// Object is a suite
+				array_push($objects, new pts_test_suite($identifier_item));
+			}
 			else if(is_array($archive_unknown_objects))
 			{
 				// Unknown / nothing / broken

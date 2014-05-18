@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2012, Phoronix Media
-	Copyright (C) 2008 - 2012, Michael Larabel
+	Copyright (C) 2008 - 2014, Phoronix Media
+	Copyright (C) 2008 - 2014, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -29,7 +29,12 @@ class pts_test_suite_parser
 	{
 		if(PTS_IS_CLIENT)
 		{
-			$identifier = pts_openbenchmarking::evaluate_string_to_qualifier($identifier, true, 'suite');
+			$ob_identifier = pts_openbenchmarking::evaluate_string_to_qualifier($identifier, true, 'suite');
+
+			if($ob_identifier != false)
+			{
+				$identifier = $ob_identifier;
+			}
 		}
 
 		$this->identifier = $identifier;
