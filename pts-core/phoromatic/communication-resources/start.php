@@ -68,6 +68,7 @@ function phoromatic_generate_test_suite(&$test_schedule, &$json, $trigger_id)
 	}
 
 	$json['phoromatic']['task'] = 'benchmark';
+	$json['phoromatic']['save_identifier'] = $test_schedule['Title'] . ' - ' . $trigger_id;
 	$json['phoromatic']['trigger_id'] = $trigger_id;
 	$json['phoromatic']['test_suite'] = $suite_writer->get_xml();
 
