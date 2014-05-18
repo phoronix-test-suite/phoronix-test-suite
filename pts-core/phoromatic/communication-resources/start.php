@@ -42,8 +42,11 @@ while($result && $row = $result->fetchArray())
 			return;
 		}
 	}
-
 }
+
+$json['phoromatic']['response'] = 'Idling, waiting for task assignment...';
+echo json_encode($json);
+return;
 
 function phoromatic_generate_test_suite(&$test_schedule, &$json, $trigger_id)
 {

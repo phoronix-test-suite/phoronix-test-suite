@@ -70,3 +70,5 @@ PHORONIX TEST SUITE PUBLIC TODO LIST:
 - Implement the complementary WebSocket communication to HTTP pulls
 - More mobile form factor optimizations
 - Ensure sane validating of more user input / resource uploads
+- Hook up the system targeting / groups support for test schedules
+- Restore some of the older phoromatic code for allowing reboots to happen during context script execution

@@ -95,138 +95,110 @@ class phoromatic extends pts_module_interface
 	}
 	public static function run_connection($args)
 	{
-		$account_id = substr($args[0], strrpos($args[0], '/') + 1);
-		$ip = substr($args[0], 0, strpos($args[0], ':'));
-		$http_port = substr($args[0], strlen($ip) + 1, -1 - strlen($account_id));
-		pts_client::$display->generic_heading('Server IP: ' . $ip . PHP_EOL . 'Server HTTP Port: ' . $http_port . PHP_EOL . 'Account ID: ' . $account_id);
+		self::$account_id = substr($args[0], strrpos($args[0], '/') + 1);
+		self::$server_address = substr($args[0], 0, strpos($args[0], ':'));
+		self::$server_http_port = substr($args[0], strlen(self::$server_address) + 1, -1 - strlen(self::$account_id));
+		pts_client::$display->generic_heading('Server IP: ' . self::$server_address . PHP_EOL . 'Server HTTP Port: ' . self::$server_http_port . PHP_EOL . 'Account ID: ' . $account_id);
 
-		$server_response = phoromatic::upload_to_remote_server(array(
-			'r' => 'start',
-			), $ip, $http_port, $account_id);
-
-		self::$account_id = $account_id;
-		self::$server_http_port = $http_port;
-		self::$server_address = $ip;
-
-		if(substr($server_response, 0, 1) == '{')
+		while(1)
 		{
-			$json = json_decode($server_response, true);
+			$server_response = phoromatic::upload_to_remote_server(array(
+				'r' => 'start',
+				));
 
-			if($json != null)
+			if(substr($server_response, 0, 1) == '{')
 			{
-				if(isset($json['phoromatic']['error']) && !empty($json['phoromatic']['error']))
+				$json = json_decode($server_response, true);
+
+				if($json != null)
 				{
-					trigger_error($json['phoromatic']['error'], E_USER_ERROR);
-				}
-				if(isset($json['phoromatic']['response']) && !empty($json['phoromatic']['response']))
-				{
-					echo PHP_EOL . $json['phoromatic']['response'] . PHP_EOL;
-				}
-			}
-
-			switch(isset($json['phoromatic']['task']) ? $json['phoromatic']['task'] : null)
-			{
-				case 'benchmark':
-					$test_flags = pts_c::auto_mode | pts_c::batch_mode;
-					$suite_identifier = sha1(time() . rand(0, 100));
-					pts_suite_nye_XmlReader::set_temporary_suite($suite_identifier, $json['phoromatic']['test_suite']);
-
-					$phoromatic_schedule_id = $json['phoromatic']['trigger_id'];
-					$phoromatic_results_identifier = $phoromatic_schedule_id;
-					$phoromatic_save_identifier = $json['phoromatic']['save_identifier'];
-					$phoromatic_trigger = $phoromatic_schedule_id;
-
-					if($json['phoromatic']['settings']['RunInstallCommand'])
+					if(isset($json['phoromatic']['error']) && !empty($json['phoromatic']['error']))
 					{
-						phoromatic::set_user_context('SetContextPreInstall', $phoromatic_trigger, $phoromatic_schedule_id, 'INSTALL');
-
-						if($json['phoromatic']['settings']['ForceInstallTests'])
-						{
-							$test_flags |= pts_c::force_install;
-						}
-
-						pts_client::set_test_flags($test_flags);
-						pts_test_installer::standard_install($suite_identifier);
+						trigger_error($json['phoromatic']['error'], E_USER_ERROR);
 					}
-
-					phoromatic::set_user_context('SetContextPreRun', $phoromatic_trigger, $phoromatic_schedule_id, 'INSTALL');
-
-					// Do the actual running
-					if(pts_test_run_manager::initial_checks($suite_identifier))
+					if(isset($json['phoromatic']['response']) && !empty($json['phoromatic']['response']))
 					{
-						$test_run_manager = new pts_test_run_manager($test_flags);
-						pts_test_run_manager::set_batch_mode(array(
-							'UploadResults' => true,
-							'SaveResults' => true,
-							'RunAllTestCombinations' => false,
-							'OpenBrowser' => false
-							));
+						echo PHP_EOL . $json['phoromatic']['response'] . PHP_EOL;
+					}
+				}
 
-						// Load the tests to run
-						if($test_run_manager->load_tests_to_run($suite_identifier))
+				switch(isset($json['phoromatic']['task']) ? $json['phoromatic']['task'] : null)
+				{
+					case 'benchmark':
+						$test_flags = pts_c::auto_mode | pts_c::batch_mode;
+						$suite_identifier = sha1(time() . rand(0, 100));
+						pts_suite_nye_XmlReader::set_temporary_suite($suite_identifier, $json['phoromatic']['test_suite']);
+
+						$phoromatic_schedule_id = $json['phoromatic']['trigger_id'];
+						$phoromatic_results_identifier = $phoromatic_schedule_id;
+						$phoromatic_save_identifier = $json['phoromatic']['save_identifier'];
+						$phoromatic_trigger = $phoromatic_schedule_id;
+
+						if($json['phoromatic']['settings']['RunInstallCommand'])
 						{
-							if(true)
+							phoromatic::set_user_context('SetContextPreInstall', $phoromatic_trigger, $phoromatic_schedule_id, 'INSTALL');
+
+							if($json['phoromatic']['settings']['ForceInstallTests'])
 							{
-								$test_run_manager->auto_upload_to_openbenchmarking();
-								pts_openbenchmarking_client::override_client_setting('UploadSystemLogsByDefault', $json['phoromatic']['settings']['UploadSystemLogs']);
+								$test_flags |= pts_c::force_install;
 							}
 
-							// Save results?
-							$test_run_manager->auto_save_results($phoromatic_save_identifier, $phoromatic_results_identifier, 'A Phoromatic run.');
+							pts_client::set_test_flags($test_flags);
+							pts_test_installer::standard_install($suite_identifier);
+						}
 
-							// Run the actual tests
-							$test_run_manager->pre_execution_process();
-							$test_run_manager->call_test_runs();
-							$test_run_manager->post_execution_process();
+						phoromatic::set_user_context('SetContextPreRun', $phoromatic_trigger, $phoromatic_schedule_id, 'INSTALL');
 
-							// Upload to Phoromatic
-							$ob_data = $test_run_manager->get_result_upload_data();
-
-							$server_response = phoromatic::upload_to_remote_server(array(
-								'r' => 'result_upload',
-								'ob' => $ob_data['id'],
-								'sched' => $json['phoromatic']['schedule_id'],
-								'o' => $phoromatic_save_identifier,
-								'ts' => $json['phoromatic']['trigger_id'],
+						// Do the actual running
+						if(pts_test_run_manager::initial_checks($suite_identifier))
+						{
+							$test_run_manager = new pts_test_run_manager($test_flags);
+							pts_test_run_manager::set_batch_mode(array(
+								'UploadResults' => true,
+								'SaveResults' => true,
+								'RunAllTestCombinations' => false,
+								'OpenBrowser' => false
 								));
-var_dump($server_response);
-						//$ob_data['id']
 
-return;
-							// Upload test results
-							if(is_file(PTS_SAVE_RESULTS_PATH . $test_run_manager->get_file_name() . '/composite.xml'))
+							// Load the tests to run
+							if($test_run_manager->load_tests_to_run($suite_identifier))
 							{
-								//phoromatic::update_system_status('Uploading Test Results');
-
-								$times_tried = 0;
-								do
+								if(true)
 								{
-									if($times_tried > 0)
+									$test_run_manager->auto_upload_to_openbenchmarking();
+									pts_openbenchmarking_client::override_client_setting('UploadSystemLogsByDefault', $json['phoromatic']['settings']['UploadSystemLogs']);
+								}
+
+								// Save results?
+								$test_run_manager->auto_save_results($phoromatic_save_identifier, $phoromatic_results_identifier, 'A Phoromatic run.');
+
+								// Run the actual tests
+								$test_run_manager->pre_execution_process();
+								$test_run_manager->call_test_runs();
+								$test_run_manager->post_execution_process();
+
+								// Upload to Phoromatic
+								$ob_data = $test_run_manager->get_result_upload_data();
+
+								$server_response = phoromatic::upload_to_remote_server(array(
+									'r' => 'result_upload',
+									'ob' => $ob_data['id'],
+									'sched' => $json['phoromatic']['schedule_id'],
+									'o' => $phoromatic_save_identifier,
+									'ts' => $json['phoromatic']['trigger_id'],
+									));
+
+									if(!$json['phoromatic']['settings']['ArchiveResultsLocally'])
 									{
-										echo PHP_EOL . 'Connection to server failed. Trying again in 60 seconds...' . PHP_EOL;
-										sleep(60);
+										pts_client::remove_saved_result_file($test_run_manager->get_file_name());
 									}
-
-									$uploaded_test_results = phoromatic::upload_test_results($test_run_manager->get_file_name(), $phoromatic_schedule_id, $phoromatic_results_identifier, $phoromatic_trigger, $xml_parser);
-									$times_tried++;
-								}
-								while($uploaded_test_results == false && $times_tried < 5);
-
-								if($uploaded_test_results == false)
-								{
-									echo 'Server connection failed. Exiting...' . PHP_EOL;
-									return false;
-								}
-
-								if(pts_strings::string_bool($xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/ArchiveResultsLocally', 'TRUE')) == false)
-								{
-									pts_client::remove_saved_result_file($test_run_manager->get_file_name());
 								}
 							}
 						}
-					}
-				break;
+					break;
+				}
 			}
+			sleep(60);
 		}
 	}
 	private static function set_user_context($context_script, $trigger, $schedule_id, $process)
