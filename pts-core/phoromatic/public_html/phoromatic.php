@@ -65,7 +65,8 @@ foreach($environmental_variables as $get_var => $to_var)
 
 if($GSID == null || $ACCOUNT_ID == null)
 {
-	echo 'INVALID CREDENTIALS';
+	$json['phoromatic']['error'] = 'Invalid Credentials';
+	echo json_encode($json);
 	exit;
 }
 
@@ -80,7 +81,8 @@ $result = $result->fetchArray();
 //var_dump($result = $result->fetchArray());
 if(empty($result))
 {
-	echo 'INVALID USER';
+	$json['phoromatic']['error'] = 'Invalid User';
+	echo json_encode($json);
 	exit;
 }
 define('ACCOUNT_ID', $ACCOUNT_ID);
@@ -114,7 +116,8 @@ if(empty($result))
 	$stmt->bindValue(':title', $HOSTNAME);
 	$stmt->bindValue(':current_time', phoromatic_server::current_time());
 	$result = $stmt->execute();
-	echo 'INFORMATION STORED... WAITING FOR INFORMATION TO BE APPROVED BY ACCOUNT ADMINISTRATOR.';
+	$json['phoromatic']['response'] = 'Information Added; Waiting For Approval From Administrator.';
+	echo json_encode($json);
 	exit;
 }
 define('SYSTEM_ID', $result['SystemID']);
@@ -136,12 +139,16 @@ $stmt->execute();
 //echo phoromatic_server::$db->lastErrorMsg();
 if($SYSTEM_STATE < 1)
 {
-	echo 'STILL WAITING FOR INFORMATION TO BE APPROVED BY ACCOUNT ADMINISTRATOR.';
+	$json['phoromatic']['response'] = 'Waiting For Approval From Administrator.';
+	echo json_encode($json);
 	exit;
 }
 
 define('AID', ACCOUNT_ID);
 define('SID', SYSTEM_ID);
+
+	$json['phoromatic']['response'] = 'Test';
+	echo json_encode($json);
 
 return;
 

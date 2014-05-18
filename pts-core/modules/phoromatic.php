@@ -105,10 +105,33 @@ class phoromatic extends pts_module_interface
 			'aid' => $account_id
 			), $ip, $http_port, $account_id);
 
-		var_dump($server_response);
+		if(substr($server_response, 0, 1) == '{')
+		{
+			$json = json_decode($server_response, true);
 
+			if($json != null)
+			{
+				if(isset($json['phoromatic']['error']) && !empty($json['phoromatic']['error']))
+				{
+					trigger_error($json['phoromatic']['error'], E_USER_ERROR);
+				}
+				if(isset($json['phoromatic']['response']) && !empty($json['phoromatic']['response']))
+				{
+					echo PHP_EOL . $json['phoromatic']['response'] . PHP_EOL;
+				}
+
+			}
+		}
+
+		var_dump($server_response);
 		var_dump($args);
 	}
+
+
+
+
+
+
 	public static function module_setup_validate($options)
 	{
 		if(substr($options['remote_host'], -14) != 'phoromatic.php')
