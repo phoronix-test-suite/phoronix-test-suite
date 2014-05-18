@@ -25,7 +25,7 @@ class pts_openbenchmarking_client
 	private static $openbenchmarking_account = false;
 	private static $client_settings = null;
 
-	public static function upload_test_result(&$object)
+	public static function upload_test_result(&$object, $return_json_data = false)
 	{
 		if($object instanceof pts_test_run_manager)
 		{
@@ -167,6 +167,11 @@ class pts_openbenchmarking_client
 		if(isset(self::$client_settings['RemoveLocalResultsOnUpload']) && self::$client_settings['RemoveLocalResultsOnUpload'] && $local_file_name != null)
 		{
 			pts_client::remove_saved_result_file($local_file_name);
+		}
+
+		if($return_json_data)
+		{
+			return isset($json_response['openbenchmarking']['upload']) ? $json_response['openbenchmarking']['upload'] : false;
 		}
 
 		return isset($json_response['openbenchmarking']['upload']['url']) ? $json_response['openbenchmarking']['upload']['url'] : false;

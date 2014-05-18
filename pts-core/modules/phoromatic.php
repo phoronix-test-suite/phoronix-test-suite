@@ -136,7 +136,6 @@ class phoromatic extends pts_module_interface
 					$phoromatic_results_identifier = $phoromatic_schedule_id;
 					$phoromatic_save_identifier = $json['phoromatic']['save_identifier'];
 					$phoromatic_trigger = $phoromatic_schedule_id;
-				//	self::$openbenchmarking_upload_json = null;
 
 					if($json['phoromatic']['settings']['RunInstallCommand'])
 					{
@@ -182,6 +181,8 @@ class phoromatic extends pts_module_interface
 							$test_run_manager->post_execution_process();
 
 							// Upload to Phoromatic
+							$ob_data = $test_run_manager->get_result_upload_data();
+						var_dump($ob_data);
 
 return;
 							// Upload test results
@@ -707,10 +708,6 @@ return;
 		{
 			phoromatic::upload_unscheduled_test_results($test_run_manager->get_file_name());
 		}
-	}
-	public static function __event_openbenchmarking_upload($json)
-	{
-		self::$openbenchmarking_upload_json = $json;
 	}
 
 	//

@@ -712,9 +712,9 @@ class pts_openbenchmarking
 
 		return false;
 	}
-	public static function upload_test_result(&$object)
+	public static function upload_test_result(&$object, $return_json_data = false)
 	{
-		return pts_openbenchmarking_client::upload_test_result($object);
+		return pts_openbenchmarking_client::upload_test_result($object, $return_json_data);
 	}
 }
 
