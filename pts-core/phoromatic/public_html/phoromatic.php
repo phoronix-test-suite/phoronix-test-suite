@@ -150,16 +150,14 @@ define('SID', SYSTEM_ID);
 	$json['phoromatic']['response'] = 'Test';
 	echo json_encode($json);
 
-return;
-
-if(defined("ACCOUNT_SETUP") && pts_rmm_get_settings_value("NotifyOnNewSystems") == 1)
-{
-	pts_rmm_send_email("New Test System Added", "A new test system has been linked to your Phoromatic account.\n\nLog-in to your account to view the available test systems.");
+if(is_file('../communication-resources/' . $REQUEST . '.php'))
+{echo 333;
+	require('../communication-resources/' . $REQUEST . '.php');
 }
-
-if(is_file("phoromatic-remote/" . $REQUEST . ".php"))
+else
 {
-	require("phoromatic-remote/" . $REQUEST . ".php");
+	$json['phoromatic']['error'] = 'Unknown Resource: ' . $REQUEST;
+	echo json_encode($json);
 }
 
 ?>

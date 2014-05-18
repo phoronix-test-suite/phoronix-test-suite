@@ -105,6 +105,8 @@ class phoromatic extends pts_module_interface
 			'aid' => $account_id
 			), $ip, $http_port, $account_id);
 
+		var_dump($server_response);
+
 		if(substr($server_response, 0, 1) == '{')
 		{
 			$json = json_decode($server_response, true);
@@ -122,8 +124,6 @@ class phoromatic extends pts_module_interface
 
 			}
 		}
-
-		var_dump($server_response);
 		var_dump($args);
 	}
 
