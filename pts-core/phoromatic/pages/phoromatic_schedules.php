@@ -206,8 +206,34 @@ class phoromatic_schedules implements pts_webui_interface
 				$main .= '</select>';
 				$main .= '<p><div id="test_details"></div></p>';
 				$main .= '</form>';
-			}
 
+
+				$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, ScheduleID, UploadID, UploadTime FROM phoromatic_results WHERE AccountID = :account_id AND ScheduleID = :schedule_id ORDER BY UploadTime DESC');
+				$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+				$stmt->bindValue(':schedule_id', $PATH[0]);
+				$test_result_result = $stmt->execute();
+				$test_result_row = $test_result_result->fetchArray();
+
+				if($test_result_row)
+				{
+					$main .= '<div class="pts_phoromatic_info_box_area">';
+					$main .= '<div style="float: left; width: 100%;"><ul><li><h1>Recent Test Results For This Schedule</h1></li>';
+					$results = 0;
+					do
+					{
+						if($results > 100)
+						{
+							break;
+						}
+						$main .= '<a href="?results/' . $test_result_row['UploadID'] . '"><li>' . $test_result_row['Title'] . '<br /><em>' . phoromatic_system_id_to_name($test_result_row['SystemID']) . ' - ' . $test_result_row['UploadTime'] .  '</em></li></a>';
+						$results++;
+
+					}
+					while($test_result_row = $test_result_result->fetchArray());
+					$main .= '</ul></div>';
+					$main .= '</div>';
+				}
+			}
 
 			echo phoromatic_webui_main($main, phoromatic_webui_right_panel_logged_in());
 			echo phoromatic_webui_footer();

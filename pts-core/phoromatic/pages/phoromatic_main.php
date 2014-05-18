@@ -82,7 +82,6 @@ class phoromatic_main implements pts_webui_interface
 
 		// TODAY'S TEST RESULTS
 		$main .= '<div style="float: left; width: 100%;"><ul><li><h1>Today\'s Test Results</h1></li>';
-		// $stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_results (AccountID, SystemID, UploadID, ScheduleID, Trigger, UploadTime, Title, OpenBenchmarkingID) VALUES (:account_id, :system_id, :upload_id, :schedule_id, :trigger, :upload_time, :title, :openbenchmarking_id)');
 		$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, ScheduleID, UploadID, UploadTime FROM phoromatic_results WHERE AccountID = :account_id ORDER BY UploadTime DESC');
 		$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 		$test_result_result = $stmt->execute();

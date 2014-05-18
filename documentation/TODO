@@ -73,3 +73,4 @@ PHORONIX TEST SUITE PUBLIC TODO LIST:
 - Hook up the system targeting / groups support for test schedules
 - Restore some of the older phoromatic code for allowing reboots to happen during context script execution
 - Hook up TriggerTarget for allowing event.php to optionally specify a sub-set of systems/groups to target for a given trigger
+- Clean up the code and modularize more of the code into functions

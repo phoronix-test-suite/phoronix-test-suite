@@ -242,6 +242,10 @@ div#pts_phoromatic_main_area h2
 	clear: both;
 	font-size: 120%;
 }
+p.result_object
+{
+	text-align: center;
+}
 div#pts_phoromatic_main_area h2 a
 {
 	color: #e08a09;
