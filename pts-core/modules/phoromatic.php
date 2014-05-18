@@ -88,6 +88,9 @@ class phoromatic extends pts_module_interface
 		$to_post['pts_core'] = PTS_CORE_VERSION;
 		$to_post['gsid'] = PTS_GSID;
 		$to_post['lip'] = pts_network::get_local_ip();
+		$to_post['h'] = phodevi::system_hardware(true);
+		$to_post['s'] = phodevi::system_software(true);
+		$to_post['n'] = phodevi::read_property('system', 'hostname');
 		return pts_network::http_upload_via_post('http://' . $server_address . ':' . $server_http_port .  '/phoromatic.php', $to_post);
 	}
 	public static function run_connection($args)
@@ -99,13 +102,11 @@ class phoromatic extends pts_module_interface
 
 		$server_response = phoromatic::upload_to_remote_server(array(
 			'r' => 'start',
-			'h' => phodevi::system_hardware(true),
-			's' => phodevi::system_software(true),
-			'n' => phodevi::read_property('system', 'hostname'),
-			'aid' => $account_id
 			), $ip, $http_port, $account_id);
 
-		var_dump($server_response);
+		self::$account_id = $account_id;
+		self::$server_http_port = $http_port;
+		self::$server_address = $ip;
 
 		if(substr($server_response, 0, 1) == '{')
 		{
@@ -121,9 +122,7 @@ class phoromatic extends pts_module_interface
 				{
 					echo PHP_EOL . $json['phoromatic']['response'] . PHP_EOL;
 				}
-
 			}
-
 
 			switch(isset($json['phoromatic']['task']) ? $json['phoromatic']['task'] : null)
 			{
@@ -182,7 +181,7 @@ class phoromatic extends pts_module_interface
 
 							// Upload to Phoromatic
 							$ob_data = $test_run_manager->get_result_upload_data();
-						var_dump($ob_data);
+						//$ob_data['id']
 
 return;
 							// Upload test results
