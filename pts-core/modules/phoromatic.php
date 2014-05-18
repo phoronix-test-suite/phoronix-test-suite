@@ -181,6 +181,15 @@ class phoromatic extends pts_module_interface
 
 							// Upload to Phoromatic
 							$ob_data = $test_run_manager->get_result_upload_data();
+
+							$server_response = phoromatic::upload_to_remote_server(array(
+								'r' => 'result_upload',
+								'ob' => $ob_data['id'],
+								'sched' => $json['phoromatic']['schedule_id'],
+								'o' => $phoromatic_save_identifier,
+								'ts' => $json['phoromatic']['trigger_id'],
+								));
+var_dump($server_response);
 						//$ob_data['id']
 
 return;

@@ -49,6 +49,7 @@ $environmental_variables = array(
 	'time' => 'ESTIMATED_TIME',
 	'c' => 'COMPOSITE_XML',
 	'ob' => 'OPENBENCHMARKING_ID',
+	'sched' => 'SCHEDULE_ID',
 	'lip' => 'LOCAL_IP'
 	);
 

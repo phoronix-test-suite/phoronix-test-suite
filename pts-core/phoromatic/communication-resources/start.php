@@ -50,7 +50,7 @@ function phoromatic_generate_test_suite(&$test_schedule, &$json, $trigger_id)
 	$suite_writer = new pts_test_suite_writer();
 	$suite_writer->add_suite_information($test_schedule['Title'], '1.0.0', $test_schedule['LastModifiedBy'], 'System', 'An automated Phoromatic test schedule.');
 
-	$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_schedules_tests WHERE AccountID = :account_id AND ScheduleID = :schedule_id ORDER BY TestProfile ASC');
+	$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_schedules_tests WHERE AccountID = :account_id AND ScheduleID = :schedule_id');
 	$stmt->bindValue(':account_id', ACCOUNT_ID);
 	$stmt->bindValue(':schedule_id', $test_schedule['ScheduleID']);
 	$result = $stmt->execute();
@@ -70,6 +70,7 @@ function phoromatic_generate_test_suite(&$test_schedule, &$json, $trigger_id)
 	$json['phoromatic']['task'] = 'benchmark';
 	$json['phoromatic']['save_identifier'] = $test_schedule['Title'] . ' - ' . $trigger_id;
 	$json['phoromatic']['trigger_id'] = $trigger_id;
+	$json['phoromatic']['schedule_id'] = $test_schedule['ScheduleID'];
 	$json['phoromatic']['test_suite'] = $suite_writer->get_xml();
 
 
