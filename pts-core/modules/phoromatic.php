@@ -128,7 +128,7 @@ class phoromatic extends pts_module_interface
 			switch(isset($json['phoromatic']['task']) ? $json['phoromatic']['task'] : null)
 			{
 				case 'benchmark':
-					$test_flags = pts_c::auto_mode;
+					$test_flags = pts_c::auto_mode | pts_c::batch_mode;
 					$suite_identifier = sha1(time() . rand(0, 100));
 					pts_suite_nye_XmlReader::set_temporary_suite($suite_identifier, $json['phoromatic']['test_suite']);
 
@@ -157,11 +157,17 @@ class phoromatic extends pts_module_interface
 					if(pts_test_run_manager::initial_checks($suite_identifier))
 					{
 						$test_run_manager = new pts_test_run_manager($test_flags);
+						pts_test_run_manager::set_batch_mode(array(
+							'UploadResults' => true,
+							'SaveResults' => true,
+							'RunAllTestCombinations' => false,
+							'OpenBrowser' => false
+							));
 
 						// Load the tests to run
 						if($test_run_manager->load_tests_to_run($suite_identifier))
 						{
-							if(true || pts_strings::string_bool($xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/UploadToGlobal', 'FALSE')))
+							if(true)
 							{
 								$test_run_manager->auto_upload_to_openbenchmarking();
 								pts_openbenchmarking_client::override_client_setting('UploadSystemLogsByDefault', $json['phoromatic']['settings']['UploadSystemLogs']);
@@ -564,12 +570,12 @@ return;
 					if(pts_test_run_manager::initial_checks($suite_identifier))
 					{
 						$test_run_manager = new pts_test_run_manager($test_flags);
-						pts_test_run_manager::set_batch_mode(
+						pts_test_run_manager::set_batch_mode(array(
 							'UploadResults' => true,
 							'SaveResults' => true,
 							'RunAllTestCombinations' => false,
 							'OpenBrowser' => false
-							);
+							));
 
 						// Load the tests to run
 						if($test_run_manager->load_tests_to_run($suite_identifier))
