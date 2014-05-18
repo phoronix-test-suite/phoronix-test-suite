@@ -527,7 +527,7 @@ return;
 			switch($response)
 			{
 				case 'benchmark':
-					$test_flags = pts_c::auto_mode;
+					$test_flags = pts_c::auto_mode | pts_c::batch_mode;
 
 					do
 					{
@@ -564,6 +564,12 @@ return;
 					if(pts_test_run_manager::initial_checks($suite_identifier))
 					{
 						$test_run_manager = new pts_test_run_manager($test_flags);
+						pts_test_run_manager::set_batch_mode(
+							'UploadResults' => true,
+							'SaveResults' => true,
+							'RunAllTestCombinations' => false,
+							'OpenBrowser' => false
+							);
 
 						// Load the tests to run
 						if($test_run_manager->load_tests_to_run($suite_identifier))

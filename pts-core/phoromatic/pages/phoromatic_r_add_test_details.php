@@ -60,7 +60,7 @@ class phoromatic_r_add_test_details implements pts_webui_interface
 
 				$test_prefix = "test_option_" . $_GET['tp'] . "_";
 
-				echo '<p id="' . $test_prefix . $o->get_identifier() . '_name"><strong>' . $o->get_name() . '</strong></p>';
+				echo '<p id="' . $test_prefix . $o->get_identifier() . '_name">' . $o->get_name() . '</p>';
 
 				if($option_count == 0)
 				{
