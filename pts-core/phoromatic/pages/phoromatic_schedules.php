@@ -135,6 +135,18 @@ class phoromatic_schedules implements pts_webui_interface
 						$result = $stmt->execute();
 					}
 				}
+				else if($PATH[1] == 'remove' && !empty($PATH[2]))
+				{
+					// REMOVE TEST
+					$to_remove = explode(PHP_EOL, base64_decode($PATH[2]));
+					$stmt = phoromatic_server::$db->prepare('DELETE FROM phoromatic_schedules_tests WHERE AccountID = :account_id AND ScheduleID = :schedule_id AND TestProfile = :test AND TestArguments = :test_args');
+					$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+					$stmt->bindValue(':schedule_id', $PATH[0]);
+					$stmt->bindValue(':test', $to_remove[0]);
+					$stmt->bindValue(':test_args', $to_remove[1]);
+					$result = $stmt->execute();
+				}
+
 
 				$main = '<h1>' . $row['Title'] . '</h1>';
 				$main .= '<h3>' . $row['Description'] . '</h3>';
@@ -175,7 +187,7 @@ class phoromatic_schedules implements pts_webui_interface
 				while($row = $result->fetchArray())
 				{
 					$test_count++;
-					$main .= '<h3>' . $row['TestProfile'] . ($row['TestDescription'] != null ? ' - <em>' . $row['TestDescription'] . '</em>' : '') . '</h3>';
+					$main .= '<h3>' . $row['TestProfile'] . ($row['TestDescription'] != null ? ' - <em>' . $row['TestDescription'] . '</em>' : '') . ' <a href="?schedules/' . $PATH[0] . '/remove/' . base64_encode(implode(PHP_EOL, array($row['TestProfile'], $row['TestArguments']))) . '">Remove Test</a>' . '</h3>';
 				}
 
 				if($test_count == 0)
@@ -192,12 +204,6 @@ class phoromatic_schedules implements pts_webui_interface
 				$main .= '</select>';
 				$main .= '<p><div id="test_details"></div></p>';
 				$main .= '</form>';
-				//$main .= '<script type="text/javascript">phoromatic_add_a_test_init();</script>';
-
-
-//self::$db->exec('CREATE TABLE phoromatic_schedules_tests (AccountID TEXT, ScheduleID INTEGER, Test TEXT, TestArguments TEXT, TestDescription TEXT, UNIQUE(AccountID, ScheduleID, TestArguments) ON CONFLICT REPLACE)');
-
-
 			}
 
 
