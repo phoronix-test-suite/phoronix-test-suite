@@ -26,7 +26,7 @@ $stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_schedules WHER
 //echo phoromatic_server::$db->lastErrorMsg();
 $stmt->bindValue(':account_id', ACCOUNT_ID);
 $result = $stmt->execute();
-while($row = $result->fetchArray())
+while($result && $row = $result->fetchArray())
 {
 	// See if test is a time-based schedule due to run today and now or past the time scheduled to run
 	if(strpos($row['ActiveOn'], strval($day_of_week_int)) !== false && $row['RunAt'] <= date('H.i'))
@@ -47,6 +47,20 @@ while($row = $result->fetchArray())
 
 function phoromatic_generate_test_suite(&$test_schedule, &$json, $trigger_id)
 {
+	$stmt = phoromatic_server::$db->prepare('SELECT UploadID FROM phoromatic_results WHERE AccountID = :account_id AND ScheduleID = :schedule_id AND Trigger = :trigger AND SystemID = :system_id');
+	$stmt->bindValue(':account_id', ACCOUNT_ID);
+	$stmt->bindValue(':system_id', SYSTEM_ID);
+	$stmt->bindValue(':schedule_id', $test_schedule['ScheduleID']);
+	$stmt->bindValue(':trigger', $trigger_id);
+	$result = $stmt->execute();
+
+	if($result != false && $result->fetchArray() != false)
+	{
+		// There's already a result for this system ID, schedule ID, and trigger combination
+		return false;
+	}
+
+
 	$suite_writer = new pts_test_suite_writer();
 	$suite_writer->add_suite_information($test_schedule['Title'], '1.0.0', $test_schedule['LastModifiedBy'], 'System', 'An automated Phoromatic test schedule.');
 

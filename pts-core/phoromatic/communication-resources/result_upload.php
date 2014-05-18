@@ -33,7 +33,7 @@ $result = $stmt->execute();
 $row = $result->fetchArray();
 $upload_id = (isset($row['UploadID']) ? $row['UploadID'] : 0) + 1;
 
-$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_results (AccountID, SystemID, UploadID, ScheduleID, Trigger, UploadTime, Title, OpenBenchmarkingID) VALUES (:account_id, :system_id, :upload_id, :schedule_id, :trigger, :upload_time, :openbenchmarking_id)');
+$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_results (AccountID, SystemID, UploadID, ScheduleID, Trigger, UploadTime, Title, OpenBenchmarkingID) VALUES (:account_id, :system_id, :upload_id, :schedule_id, :trigger, :upload_time, :title, :openbenchmarking_id)');
 $stmt->bindValue(':account_id', ACCOUNT_ID);
 $stmt->bindValue(':system_id', SYSTEM_ID);
 $stmt->bindValue(':upload_id', $upload_id);
@@ -44,7 +44,7 @@ $stmt->bindValue(':title', $OTHER);
 $stmt->bindValue(':openbenchmarking_id', $OPENBENCHMARKING_ID);
 $result = $stmt->execute();
 
-$json['phoromatic']['response'] = 'Result Upload: ' . $unique_id;
+$json['phoromatic']['response'] = 'Result Upload: ' . $upload_id;
 echo json_encode($json);
 exit;
 
