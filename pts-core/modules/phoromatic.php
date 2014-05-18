@@ -716,46 +716,6 @@ class phoromatic extends pts_module_interface
 		$xml_parser = new nye_XmlReader($file);
 		return $xml_parser->getXMLValue($xml_option);
 	}
-	private static function set_user_context($context_script, $trigger, $schedule_id, $process)
-	{
-		if(!empty($context_script))
-		{
-			if(!is_executable($context_script))
-			{
-				if(($context_script = pts_client::executable_in_path($context_script)) == false || !is_executable($context_script))
-				{
-					return false;
-				}
-			}
-
-			$storage_path = pts_module::save_dir() . 'memory.pt2so';
-			$storage_object = pts_storage_object::recover_from_file($storage_path);
-
-			// We check to see if the context was already set but the system rebooted or something in that script
-			if($storage_object == false)
-			{
-				$storage_object = new pts_storage_object(true, true);
-			}
-			else if($storage_object->read_object('last_set_context_trigger') == $trigger && $storage_object->read_object('last_set_context_schedule') == $schedule_id && $storage_object->read_object('last_set_context_process') == $process)
-			{
-				// If the script already ran once for this trigger, don't run it again
-				return false;
-			}
-
-			$storage_object->add_object('last_set_context_trigger', $trigger);
-			$storage_object->add_object('last_set_context_schedule', $schedule_id);
-			$storage_object->add_object('last_set_context_process', $process);
-			$storage_object->save_to_file($storage_path);
-
-			// Run the set context script
-			exec($context_script . ' ' . $trigger);
-
-			// Just simply return true for now, perhaps check exit code status and do something
-			return true;
-		}
-
-		return false;
-	}
 	protected static function update_system_details()
 	{
 		$server_response = phoromatic::upload_to_remote_server(array('r' => 'update_system_details', 'h' => phodevi::system_hardware(true), 's' => phodevi::system_software(true)));
