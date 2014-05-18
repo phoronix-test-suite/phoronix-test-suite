@@ -98,7 +98,7 @@ class phoromatic extends pts_module_interface
 		self::$account_id = substr($args[0], strrpos($args[0], '/') + 1);
 		self::$server_address = substr($args[0], 0, strpos($args[0], ':'));
 		self::$server_http_port = substr($args[0], strlen(self::$server_address) + 1, -1 - strlen(self::$account_id));
-		pts_client::$display->generic_heading('Server IP: ' . self::$server_address . PHP_EOL . 'Server HTTP Port: ' . self::$server_http_port . PHP_EOL . 'Account ID: ' . $account_id);
+		pts_client::$display->generic_heading('Server IP: ' . self::$server_address . PHP_EOL . 'Server HTTP Port: ' . self::$server_http_port . PHP_EOL . 'Account ID: ' . self::$account_id);
 
 		while(1)
 		{
@@ -200,6 +200,12 @@ class phoromatic extends pts_module_interface
 			sleep(60);
 		}
 	}
+
+
+	//
+	// TODO XXX: The code below here is Phoromatic legacy code still needing to be ported to the new interfaces of PTS 5.2 Khanino
+	//
+
 	private static function set_user_context($context_script, $trigger, $schedule_id, $process)
 	{
 		return; // TODO XXX

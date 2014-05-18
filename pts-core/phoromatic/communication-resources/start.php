@@ -32,14 +32,33 @@ while($result && $row = $result->fetchArray())
 	if(strpos($row['ActiveOn'], strval($day_of_week_int)) !== false && $row['RunAt'] <= date('H.i'))
 	{
 		$trigger_id = date('Y-m-d');
-		$result = phoromatic_generate_test_suite($row, $json, $trigger_id);
-		if($result == false)
+		if(!phoromatic_check_for_triggered_result($row['ScheduleID'], $trigger_id))
 		{
-			continue;
+			$result = phoromatic_generate_test_suite($row, $json, $trigger_id);
+			if($result)
+			{
+				return;
+			}
 		}
-		else
+	}
+
+	// See if custom trigger...
+	$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_schedules_triggers WHERE AccountID = :account_id AND ScheduleID = :schedule_id ORDER BY TriggeredOn DESC');
+	$stmt->bindValue(':account_id', ACCOUNT_ID);
+	$stmt->bindValue(':schedule_id', $row['ScheduleID']);
+	$trigger_result = $stmt->execute();
+	while($trigger_result && $trigger_row = $trigger_result->fetchArray())
+	{
+		if(substr($trigger_row['TriggeredOn'], 0, 10) == date('Y-m-d') || substr($trigger_row['TriggeredOn'], 0, 10) == date('Y-m-d', (time() - 60 * 60 * 24)))
 		{
-			return;
+			if(!phoromatic_check_for_triggered_result($row['ScheduleID'], $trigger_row['Trigger']))
+			{
+				$result = phoromatic_generate_test_suite($row, $json, $trigger_row['Trigger']);
+				if($result)
+				{
+					return;
+				}
+			}
 		}
 	}
 }
@@ -48,22 +67,24 @@ $json['phoromatic']['response'] = 'Idling, waiting for task assignment...';
 echo json_encode($json);
 return;
 
-function phoromatic_generate_test_suite(&$test_schedule, &$json, $trigger_id)
+function phoromatic_check_for_triggered_result($schedule_id, $trigger_id)
 {
 	$stmt = phoromatic_server::$db->prepare('SELECT UploadID FROM phoromatic_results WHERE AccountID = :account_id AND ScheduleID = :schedule_id AND Trigger = :trigger AND SystemID = :system_id');
 	$stmt->bindValue(':account_id', ACCOUNT_ID);
 	$stmt->bindValue(':system_id', SYSTEM_ID);
-	$stmt->bindValue(':schedule_id', $test_schedule['ScheduleID']);
+	$stmt->bindValue(':schedule_id', $schedule_id);
 	$stmt->bindValue(':trigger', $trigger_id);
 	$result = $stmt->execute();
 
 	if($result != false && $result->fetchArray() != false)
 	{
-		// There's already a result for this system ID, schedule ID, and trigger combination
-		return false;
+		return true;
 	}
 
-
+	return false;
+}
+function phoromatic_generate_test_suite(&$test_schedule, &$json, $trigger_id)
+{
 	$suite_writer = new pts_test_suite_writer();
 	$suite_writer->add_suite_information($test_schedule['Title'], '1.0.0', $test_schedule['LastModifiedBy'], 'System', 'An automated Phoromatic test schedule.');
 

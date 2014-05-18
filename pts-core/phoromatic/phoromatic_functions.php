@@ -133,7 +133,7 @@ function phoromatic_webui_right_panel_logged_in($add = null)
 
 	return $right;
 }
-function phoromatic_web_socket_server_addr()
+function phoromatic_web_socket_server_ip()
 {
 	$server_ip = $_SERVER['HTTP_HOST'];
 	if(($x = strpos($server_ip, ':')) !== false)
@@ -150,7 +150,12 @@ function phoromatic_web_socket_server_addr()
 		}
 	}
 	// getenv('PTS_WEBSOCKET_PORT')
-	return $server_ip . ':' . $_SERVER['SERVER_PORT'] . '/' . $_SESSION['AccountID'];
+	return $server_ip . ':' . $_SERVER['SERVER_PORT'];
+}
+function phoromatic_web_socket_server_addr()
+{
+	// getenv('PTS_WEBSOCKET_PORT')
+	return phoromatic_web_socket_server_ip() . '/' . $_SESSION['AccountID'];
 }
 function phoromatic_error_page($title, $description)
 {

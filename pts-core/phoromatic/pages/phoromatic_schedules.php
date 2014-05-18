@@ -175,6 +175,8 @@ class phoromatic_schedules implements pts_webui_interface
 				{
 					$main .= '<p>This test schedule is not currently set to run a pre-defined time-based schedule.</p>';
 				}
+				$trigger_url = 'http://' . phoromatic_web_socket_server_ip() . '/event.php?type=trigger&user=' . $_SESSION['UserName'] . '&public_key=' . $row['PublicKey'] . '&trigger=XXX';
+				$main .= '<p>This test schedule can be manually triggered to run at any time by calling <a href="#">' . $trigger_url . '</a> where <em>XXX</em> is the trigger value to be used (if relevant, such as a time-stamp, Git/SVN commit number or hash, etc.)';
 				$main .= '<hr />';
 				$main .= '<h2>Tests To Run</h2>';
 
