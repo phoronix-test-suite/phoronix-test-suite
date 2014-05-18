@@ -123,6 +123,102 @@ class phoromatic extends pts_module_interface
 				}
 
 			}
+
+
+			switch(isset($json['phoromatic']['task'] ? $json['phoromatic']['task'] : null)
+			{
+				case 'benchmark':
+					$test_flags = pts_c::auto_mode;
+					$temp_suite_identifier = sha1(time() . rand(0, 100));
+					pts_suite_nye_XmlReader::set_temporary_suite($temp_suite_identifier, $json['phoromatic']['test_suite']);
+
+				//	$phoromatic_schedule_id = $xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/ID');
+				//	$phoromatic_results_identifier = $xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/SystemName');
+				//	$phoromatic_trigger = $xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/Trigger');
+				//	self::$openbenchmarking_upload_json = null;
+
+					/*if(true || pts_strings::string_bool($xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/RunInstallCommand', 'TRUE')))
+					{
+						phoromatic::set_user_context($xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/SetContextPreInstall'), $phoromatic_trigger, $phoromatic_schedule_id, 'INSTALL');
+
+						if(pts_strings::string_bool($xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/ForceInstallTests', 'TRUE')))
+						{
+							$test_flags |= pts_c::force_install;
+						}
+
+						pts_client::set_test_flags($test_flags);
+						pts_test_installer::standard_install($suite_identifier);
+					}*/
+						pts_client::set_test_flags($test_flags);
+						pts_test_installer::standard_install($temp_suite_identifier);
+
+			return;
+
+					//phoromatic::set_user_context($xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/SetContextPreRun'), $phoromatic_trigger, $phoromatic_schedule_id, 'INSTALL');
+
+
+					// Do the actual running
+					if(pts_test_run_manager::initial_checks($suite_identifier))
+					{
+						$test_run_manager = new pts_test_run_manager($test_flags);
+
+						// Load the tests to run
+						if($test_run_manager->load_tests_to_run($suite_identifier))
+						{
+
+							if(pts_strings::string_bool($xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/UploadToGlobal', 'FALSE')))
+							{
+								$test_run_manager->auto_upload_to_openbenchmarking();
+								pts_openbenchmarking_client::override_client_setting('UploadSystemLogsByDefault', pts_strings::string_bool($xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/UploadSystemLogs', 'TRUE')));
+							}
+
+							// Save results?
+							$save_identifier = date('Y-m-d H:i:s');
+							$test_run_manager->auto_save_results($save_identifier, $phoromatic_results_identifier, 'A Phoromatic run.');
+
+							// Run the actual tests
+							$test_run_manager->pre_execution_process();
+							$test_run_manager->call_test_runs();
+							$test_run_manager->post_execution_process();
+
+							// Upload to Phoromatic
+							pts_file_io::unlink(PTS_TEST_SUITE_PATH . $suite_identifier . '/suite-definition.xml');
+
+							// Upload test results
+
+							if(is_file(PTS_SAVE_RESULTS_PATH . $test_run_manager->get_file_name() . '/composite.xml'))
+							{
+								phoromatic::update_system_status('Uploading Test Results');
+
+								$times_tried = 0;
+								do
+								{
+									if($times_tried > 0)
+									{
+										echo PHP_EOL . 'Connection to server failed. Trying again in 60 seconds...' . PHP_EOL;
+										sleep(60);
+									}
+
+									$uploaded_test_results = phoromatic::upload_test_results($test_run_manager->get_file_name(), $phoromatic_schedule_id, $phoromatic_results_identifier, $phoromatic_trigger, $xml_parser);
+									$times_tried++;
+								}
+								while($uploaded_test_results == false && $times_tried < 5);
+
+								if($uploaded_test_results == false)
+								{
+									echo 'Server connection failed. Exiting...' . PHP_EOL;
+									return false;
+								}
+
+								if(pts_strings::string_bool($xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/ArchiveResultsLocally', 'TRUE')) == false)
+								{
+									pts_client::remove_saved_result_file($test_run_manager->get_file_name());
+								}
+							}
+						}
+					}
+				break;
+			}
 		}
 		var_dump($args);
 	}

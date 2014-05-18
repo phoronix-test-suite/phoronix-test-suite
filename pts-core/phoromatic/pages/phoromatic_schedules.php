@@ -77,7 +77,7 @@ class phoromatic_schedules implements pts_webui_interface
 			$stmt->bindValue(':description', $description);
 			$stmt->bindValue(':state', 1);
 			$stmt->bindValue(':active_on', implode(',', $days_active));
-			$stmt->bindValue(':run_at', $schedule_hour . ':' . $schedule_minute);
+			$stmt->bindValue(':run_at', $schedule_hour . '.' . $schedule_minute);
 			$stmt->bindValue(':context_pre_install', $pre_install_context);
 			$stmt->bindValue(':context_post_install', $post_install_context);
 			$stmt->bindValue(':context_pre_run', $pre_run_context);
@@ -169,7 +169,7 @@ class phoromatic_schedules implements pts_webui_interface
 						}
 					}
 
-					$main .= '<p>This test is scheduled to run on <strong>' . implode(', ', $active_days) . '</strong> at <strong>' . $row['RunAt'] . '</strong>.';
+					$main .= '<p>This test is scheduled to run on <strong>' . implode(', ', $active_days) . '</strong> at <strong>' . str_replace('.', ':', $row['RunAt']) . '</strong>.';
 				}
 				else
 				{

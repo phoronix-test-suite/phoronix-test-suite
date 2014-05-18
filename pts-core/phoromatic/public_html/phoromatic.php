@@ -21,6 +21,7 @@
 */
 
 // INIT
+define('PHOROMATIC_SERVER', true);
 define('REMOTE_ACCESS', true); // XXX TODO: Is this still used with new Phoromatic?
 //ini_set('memory_limit', '64M');
 define('PTS_MODE', 'WEB_CLIENT');
@@ -147,11 +148,8 @@ if($SYSTEM_STATE < 1)
 define('AID', ACCOUNT_ID);
 define('SID', SYSTEM_ID);
 
-	$json['phoromatic']['response'] = 'Test';
-	echo json_encode($json);
-
 if(is_file('../communication-resources/' . $REQUEST . '.php'))
-{echo 333;
+{
 	require('../communication-resources/' . $REQUEST . '.php');
 }
 else

@@ -22,6 +22,8 @@
 
 class pts_suite_nye_XmlReader extends nye_XmlReader
 {
+	static $temp_suite = null;
+
 	public function __construct($read_xml)
 	{
 		if(!isset($xml_file[512]) && defined('PTS_TEST_SUITE_PATH') && is_file(PTS_TEST_SUITE_PATH . $read_xml . '/suite-definition.xml'))
@@ -38,12 +40,20 @@ class pts_suite_nye_XmlReader extends nye_XmlReader
 				$zip->close();
 			}
 		}
+		else if(isset(self::$temp_suite[$name]))
+		{
+			$read_xml = self::$temp_suite[$name];
+		}
 
 		parent::__construct($read_xml);
 	}
 	public function validate()
 	{
 		return $this->dom->schemaValidate(PTS_OPENBENCHMARKING_PATH . 'schemas/test-suite.xsd');
+	}
+	public static function set_temporary_suite($name, $suite_xml)
+	{
+		self::$temp_suite[$name] = $suite_xml;
 	}
 }
 ?>

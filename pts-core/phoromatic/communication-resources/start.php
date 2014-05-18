@@ -21,13 +21,69 @@
 */
 
 $day_of_week_int = date('N') - 1;
-echo 2222;
-$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_schedules WHERE AccountID = :account_id AND Status = 1 AND (SELECT COUNT(*) FROM phoromatic_schedules_tests WHERE AccountID = :account_id AND ScheduleID = phoromatic_schedules.ScheduleID) > 0');
-$stmt->bindValue(':account_id', $_SESSION['AccountID']);
-$stmt->bindValue(':schedule_id', $PATH[0]);
+
+$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_schedules WHERE AccountID = :account_id AND State = 1 AND (SELECT COUNT(*) FROM phoromatic_schedules_tests WHERE AccountID = :account_id AND ScheduleID = phoromatic_schedules.ScheduleID) > 0');
+//echo phoromatic_server::$db->lastErrorMsg();
+$stmt->bindValue(':account_id', ACCOUNT_ID);
 $result = $stmt->execute();
 while($row = $result->fetchArray())
-	echo $row['Title'];
+{
+	// See if test is a time-based schedule due to run today and now or past the time scheduled to run
+	if(strpos($row['ActiveOn'], strval($day_of_week_int)) !== false && $row['RunAt'] <= date('H.i'))
+	{
+		$result = phoromatic_generate_test_suite($row, $json);
+		if($result == false)
+		{
+			continue;
+		}
+		else
+		{
+			return;
+		}
+	}
+
+}
+
+function phoromatic_generate_test_suite(&$test_schedule, &$json)
+{
+	$suite_writer = new pts_test_suite_writer();
+	$suite_writer->add_suite_information($test_schedule['Title'], '1.0.0', $test_schedule['LastModifiedBy'], 'System', 'An automated Phoromatic test schedule.');
+
+	$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_schedules_tests WHERE AccountID = :account_id AND ScheduleID = :schedule_id ORDER BY TestProfile ASC');
+	$stmt->bindValue(':account_id', ACCOUNT_ID);
+	$stmt->bindValue(':schedule_id', $test_schedule['ScheduleID']);
+	$result = $stmt->execute();
+
+	$test_count = 0;
+	while($row = $result->fetchArray())
+	{
+		$suite_writer->add_to_suite($row['TestProfile'], $row['TestArguments'], $row['TestDescription']);
+		$test_count++;
+	}
+
+	if($test_count == 0)
+	{
+		return false;
+	}
+
+	$json['phoromatic']['task'] = 'benchmark';
+	$json['phoromatic']['test_suite'] = $suite_writer->get_xml();
+
+	/*
+	$xml_writer->addXmlNode('PhoronixTestSuite/Phoromatic/General/UploadToGlobal', (pts_rmm_get_settings_value("UploadResultsToGlobal") == 1 ? "TRUE" : "FALSE"));
+	$xml_writer->addXmlNode('PhoronixTestSuite/Phoromatic/General/ArchiveResultsLocally', (pts_rmm_get_settings_value("ArchiveResultsLocally") == 1 ? "TRUE" : "FALSE"));
+	$xml_writer->addXmlNode('PhoronixTestSuite/Phoromatic/General/UploadTestLogs', (pts_rmm_get_settings_value("UploadTestLogsToServer") == 1 ? "TRUE" : "FALSE"));
+	$xml_writer->addXmlNode('PhoronixTestSuite/Phoromatic/General/UploadSystemLogs', (pts_rmm_get_settings_value("UploadSystemLogsToServer") == 1 ? "TRUE" : "FALSE"));
+	$xml_writer->addXmlNode('PhoronixTestSuite/Phoromatic/General/RunInstallCommand', (pts_rmm_get_settings_value("RunInstallCommand") == 1 ? "TRUE" : "FALSE"));
+	$xml_writer->addXmlNode('PhoronixTestSuite/Phoromatic/General/ForceInstallTests', (pts_rmm_get_settings_value("ForceInstallTests") == 1 ? "TRUE" : "FALSE"));
+	$xml_writer->addXmlNode('PhoronixTestSuite/Phoromatic/General/SetContextPreInstall', $record->SetContextPreInstall);
+	$xml_writer->addXmlNode('PhoronixTestSuite/Phoromatic/General/SetContextPreRun', $record->SetContextPreRun);
+	$xml_writer->addXmlNode('PhoronixTestSuite/Phoromatic/General/Trigger', $trigger_string);
+	$xml_writer->addXmlNode('PhoronixTestSuite/Phoromatic/General/ID', $schedule_id);
+	*/
+	echo json_encode($json);
+	return true;
+}
 
 return;
 

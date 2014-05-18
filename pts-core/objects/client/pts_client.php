@@ -430,7 +430,7 @@ class pts_client
 	}
 	public static function init_display_mode($flags = 0)
 	{
-		if(PTS_IS_WEB_CLIENT)
+		if(PTS_IS_WEB_CLIENT && !defined('PHOROMATIC_SERVER'))
 		{
 			self::$display = new pts_web_display_mode();
 			return;
