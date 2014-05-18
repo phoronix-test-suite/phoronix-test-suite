@@ -31,7 +31,8 @@ while($row = $result->fetchArray())
 	// See if test is a time-based schedule due to run today and now or past the time scheduled to run
 	if(strpos($row['ActiveOn'], strval($day_of_week_int)) !== false && $row['RunAt'] <= date('H.i'))
 	{
-		$result = phoromatic_generate_test_suite($row, $json);
+		$trigger_id = date('Y-m-d');
+		$result = phoromatic_generate_test_suite($row, $json, $trigger_id);
 		if($result == false)
 		{
 			continue;
@@ -44,7 +45,7 @@ while($row = $result->fetchArray())
 
 }
 
-function phoromatic_generate_test_suite(&$test_schedule, &$json)
+function phoromatic_generate_test_suite(&$test_schedule, &$json, $trigger_id)
 {
 	$suite_writer = new pts_test_suite_writer();
 	$suite_writer->add_suite_information($test_schedule['Title'], '1.0.0', $test_schedule['LastModifiedBy'], 'System', 'An automated Phoromatic test schedule.');
@@ -67,7 +68,15 @@ function phoromatic_generate_test_suite(&$test_schedule, &$json)
 	}
 
 	$json['phoromatic']['task'] = 'benchmark';
+	$json['phoromatic']['trigger_id'] = $trigger_id;
 	$json['phoromatic']['test_suite'] = $suite_writer->get_xml();
+
+
+	$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_account_settings WHERE AccountID = :account_id');
+	$stmt->bindValue(':account_id', ACCOUNT_ID);
+	$result = $stmt->execute();
+	$json['phoromatic']['settings'] = $result->fetchArray(SQLITE3_ASSOC);
+	unset($json['phoromatic']['settings']['AccountID']);
 
 	/*
 	$xml_writer->addXmlNode('PhoronixTestSuite/Phoromatic/General/UploadToGlobal', (pts_rmm_get_settings_value("UploadResultsToGlobal") == 1 ? "TRUE" : "FALSE"));

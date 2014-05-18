@@ -132,25 +132,23 @@ class phoromatic extends pts_module_interface
 					$temp_suite_identifier = sha1(time() . rand(0, 100));
 					pts_suite_nye_XmlReader::set_temporary_suite($temp_suite_identifier, $json['phoromatic']['test_suite']);
 
-				//	$phoromatic_schedule_id = $xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/ID');
-				//	$phoromatic_results_identifier = $xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/SystemName');
-				//	$phoromatic_trigger = $xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/Trigger');
+					$phoromatic_schedule_id = $json['phoromatic']['trigger_id'];
+					$phoromatic_results_identifier = $phoromatic_schedule_id;
+					$phoromatic_trigger = $phoromatic_schedule_id;
 				//	self::$openbenchmarking_upload_json = null;
 
-					/*if(true || pts_strings::string_bool($xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/RunInstallCommand', 'TRUE')))
+					if($json['phoromatic']['settings']['RunInstallCommand'])
 					{
-						phoromatic::set_user_context($xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/SetContextPreInstall'), $phoromatic_trigger, $phoromatic_schedule_id, 'INSTALL');
+						phoromatic::set_user_context('SetContextPreInstall', $phoromatic_trigger, $phoromatic_schedule_id, 'INSTALL');
 
-						if(pts_strings::string_bool($xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/ForceInstallTests', 'TRUE')))
+						if($json['phoromatic']['settings']['ForceInstallTests'])
 						{
 							$test_flags |= pts_c::force_install;
 						}
 
 						pts_client::set_test_flags($test_flags);
-						pts_test_installer::standard_install($suite_identifier);
-					}*/
-						pts_client::set_test_flags($test_flags);
 						pts_test_installer::standard_install($temp_suite_identifier);
+					}
 
 			return;
 
@@ -222,7 +220,47 @@ class phoromatic extends pts_module_interface
 		}
 		var_dump($args);
 	}
+	private static function set_user_context($context_script, $trigger, $schedule_id, $process)
+	{
+		return; // TODO XXX
+		if(!empty($context_script))
+		{
+			if(!is_executable($context_script))
+			{
+				if(($context_script = pts_client::executable_in_path($context_script)) == false || !is_executable($context_script))
+				{
+					return false;
+				}
+			}
 
+			$storage_path = pts_module::save_dir() . 'memory.pt2so';
+			$storage_object = pts_storage_object::recover_from_file($storage_path);
+
+			// We check to see if the context was already set but the system rebooted or something in that script
+			if($storage_object == false)
+			{
+				$storage_object = new pts_storage_object(true, true);
+			}
+			else if($storage_object->read_object('last_set_context_trigger') == $trigger && $storage_object->read_object('last_set_context_schedule') == $schedule_id && $storage_object->read_object('last_set_context_process') == $process)
+			{
+				// If the script already ran once for this trigger, don't run it again
+				return false;
+			}
+
+			$storage_object->add_object('last_set_context_trigger', $trigger);
+			$storage_object->add_object('last_set_context_schedule', $schedule_id);
+			$storage_object->add_object('last_set_context_process', $process);
+			$storage_object->save_to_file($storage_path);
+
+			// Run the set context script
+			exec($context_script . ' ' . $trigger);
+
+			// Just simply return true for now, perhaps check exit code status and do something
+			return true;
+		}
+
+		return false;
+	}
 
 
 
