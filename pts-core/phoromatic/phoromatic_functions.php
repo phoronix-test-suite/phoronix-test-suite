@@ -96,7 +96,7 @@ function phoromatic_webui_right_panel_logged_in($add = null)
 
 		$right .= '<hr />
 			<ul>
-				<li>Upcoming Test Events</li>';
+				<li>Active Test Events</li>';
 
 			$stmt = phoromatic_server::$db->prepare('SELECT Title, ScheduleID FROM phoromatic_schedules WHERE AccountID = :account_id AND State >= 1 ORDER BY Title ASC');
 			$stmt->bindValue(':account_id', $_SESSION['AccountID']);
