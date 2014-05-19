@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - Cleaning up more of the Phoromatic UI
+- phoromatic: Support for updating the system status
 
 Phoronix Test Suite 5.2 Milestone 2
 18 May 2014

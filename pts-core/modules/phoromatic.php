@@ -93,6 +93,14 @@ class phoromatic extends pts_module_interface
 		$to_post['n'] = phodevi::read_property('system', 'hostname');
 		return pts_network::http_upload_via_post('http://' . $server_address . ':' . $server_http_port .  '/phoromatic.php', $to_post);
 	}
+	protected static function update_system_status($current_task, $estimated_time_remaining = 0)
+	{
+		return $server_response = phoromatic::upload_to_remote_server(array(
+				'r' => 'update_system_status',
+				'a' => $current_task,
+				'time' => $estimated_time_remaining
+				));
+	}
 	public static function run_connection($args)
 	{
 		self::$account_id = substr($args[0], strrpos($args[0], '/') + 1);
@@ -133,6 +141,7 @@ class phoromatic extends pts_module_interface
 						$phoromatic_results_identifier = $phoromatic_schedule_id;
 						$phoromatic_save_identifier = $json['phoromatic']['save_identifier'];
 						$phoromatic_trigger = $phoromatic_schedule_id;
+						phoromatic::update_system_status('Running Benchmarks For Schedule: ' . $phoromatic_trigger . ' - ' . $phoromatic_schedule_id);
 
 						if($json['phoromatic']['settings']['RunInstallCommand'])
 						{
@@ -175,6 +184,7 @@ class phoromatic extends pts_module_interface
 								// Run the actual tests
 								$test_run_manager->pre_execution_process();
 								$test_run_manager->call_test_runs();
+								phoromatic::update_system_status('Benchmarks Completed For Schedule: ' . $phoromatic_trigger . ' - ' . $phoromatic_schedule_id);
 								$test_run_manager->post_execution_process();
 
 								// Upload to Phoromatic
@@ -196,9 +206,14 @@ class phoromatic extends pts_module_interface
 							phoromatic::set_user_context($json['phoromatic']['post_install_set_context'], $phoromatic_trigger, $phoromatic_schedule_id, 'POST_RUN');
 						}
 					break;
+					case 'exit':
+						echo PHP_EOL . 'Phoromatic received a remote command to exit.' . PHP_EOL;
+						phoromatic::update_system_status('Exiting Phoromatic');
+					break;
 				}
 			}
 			sleep(60);
+			phoromatic::update_system_status('Idling, Waiting For Task');
 		}
 	}
 	private static function set_user_context($context_script, $trigger, $schedule_id, $process)
@@ -237,6 +252,34 @@ class phoromatic extends pts_module_interface
 		}
 
 		return false;
+	}
+	public static function __pre_test_install($test_identifier)
+	{
+		static $last_update_time = 0;
+
+		if(time() > ($last_update_time + 600))
+		{
+			phoromatic::update_system_status('Installing Tests');
+			$last_update_time = time();
+		}
+	}
+	public static function __pre_test_run($pts_test_result)
+	{
+		// TODO: need a way to get the estimated time remaining from the test_run_manager so we can pass that back to the update_system_status parameter so server can read it
+		// TODO: report name of test identifier/run i.e. . ' For ' . PHOROMATIC_TITLE
+		phoromatic::update_system_status('Running ' . $pts_test_result->test_profile->get_identifier());
+	}
+	public static function __event_user_error($user_error)
+	{
+		// Report PTS user error warnings to Phoromatic server
+		phoromatic::report_warning_to_phoromatic($user_error->get_error_string());
+	}
+	public static function __event_results_saved($test_run_manager)
+	{
+		/*if(pts_module::read_variable('AUTO_UPLOAD_RESULTS_TO_PHOROMATIC') && pts_module::is_module_setup())
+		{
+			phoromatic::upload_unscheduled_test_results($test_run_manager->get_file_name());
+		}*/
 	}
 
 
@@ -661,36 +704,6 @@ class phoromatic extends pts_module_interface
 	// Process Functions
 	//
 
-
-	public static function __pre_test_install($test_identifier)
-	{
-		static $last_update_time = 0;
-
-		if(time() > ($last_update_time + 600))
-		{
-			phoromatic::update_system_status('Installing Tests');
-			$last_update_time = time();
-		}
-	}
-	public static function __pre_test_run($pts_test_result)
-	{
-		// TODO: need a way to get the estimated time remaining from the test_run_manager so we can pass that back to the update_system_status parameter so server can read it
-		// TODO: report name of test identifier/run i.e. . ' For ' . PHOROMATIC_TITLE
-		phoromatic::update_system_status('Running ' . $pts_test_result->test_profile->get_identifier());
-	}
-	public static function __event_user_error($user_error)
-	{
-		// Report PTS user error warnings to Phoromatic server
-		phoromatic::report_warning_to_phoromatic($user_error->get_error_string());
-	}
-	public static function __event_results_saved($test_run_manager)
-	{
-		if(pts_module::read_variable('AUTO_UPLOAD_RESULTS_TO_PHOROMATIC') && pts_module::is_module_setup())
-		{
-			phoromatic::upload_unscheduled_test_results($test_run_manager->get_file_name());
-		}
-	}
-
 	//
 	// Other Functions
 	//
@@ -704,12 +717,6 @@ class phoromatic extends pts_module_interface
 	{
 		$server_response = phoromatic::upload_to_remote_server(array('r' => 'update_system_details', 'h' => phodevi::system_hardware(true), 's' => phodevi::system_software(true)));
 		self::$phoromatic_server_build = self::read_xml_value($server_response, 'PhoronixTestSuite/Phoromatic/Server/ServerBuild');
-
-		return self::read_xml_value($server_response, 'PhoronixTestSuite/Phoromatic/General/Response') == 'TRUE';
-	}
-	protected static function update_system_status($current_task, $estimated_time_remaining = 0)
-	{
-		$server_response = phoromatic::upload_to_remote_server(array('r' => 'update_system_status', 'a' => $current_task, 'time' => $estimated_time_remaining));
 
 		return self::read_xml_value($server_response, 'PhoronixTestSuite/Phoromatic/General/Response') == 'TRUE';
 	}
