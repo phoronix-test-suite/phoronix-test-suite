@@ -37,7 +37,7 @@ $stmt = phoromatic_server::$db->prepare('UPDATE phoromatic_systems SET CurrentTa
 $stmt->bindValue(':account_id', $ACCOUNT_ID);
 $stmt->bindValue(':system_id', SYSTEM_ID);
 $stmt->bindValue(':current_task', $ACTIVITY);
-$stmt->bindValue(':current_task', $ESTIMATED_TIME);
+$stmt->bindValue(':time_for_task', $ESTIMATED_TIME);
 $stmt->execute();
 
 $json['phoromatic']['response'] = 'Status Updated';

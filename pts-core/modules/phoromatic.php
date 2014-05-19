@@ -103,6 +103,12 @@ class phoromatic extends pts_module_interface
 	}
 	public static function run_connection($args)
 	{
+		if(pts_client::create_lock(PTS_USER_PATH . 'phoromatic_lock') == false)
+		{
+			trigger_error('Phoromatic is already running.', E_USER_ERROR);
+			return false;
+		}
+
 		self::$account_id = substr($args[0], strrpos($args[0], '/') + 1);
 		self::$server_address = substr($args[0], 0, strpos($args[0], ':'));
 		self::$server_http_port = substr($args[0], strlen(self::$server_address) + 1, -1 - strlen(self::$account_id));
@@ -141,7 +147,7 @@ class phoromatic extends pts_module_interface
 						$phoromatic_results_identifier = $phoromatic_schedule_id;
 						$phoromatic_save_identifier = $json['phoromatic']['save_identifier'];
 						$phoromatic_trigger = $phoromatic_schedule_id;
-						phoromatic::update_system_status('Running Benchmarks For Schedule: ' . $phoromatic_trigger . ' - ' . $phoromatic_schedule_id);
+						phoromatic::update_system_status('Running Benchmarks For Schedule: ' . $phoromatic_save_identifier . ' - ' . $phoromatic_schedule_id);
 
 						if($json['phoromatic']['settings']['RunInstallCommand'])
 						{
@@ -184,7 +190,7 @@ class phoromatic extends pts_module_interface
 								// Run the actual tests
 								$test_run_manager->pre_execution_process();
 								$test_run_manager->call_test_runs();
-								phoromatic::update_system_status('Benchmarks Completed For Schedule: ' . $phoromatic_trigger . ' - ' . $phoromatic_schedule_id);
+								phoromatic::update_system_status('Benchmarks Completed For Schedule: ' . $phoromatic_save_identifier . ' - ' . $phoromatic_schedule_id);
 								$test_run_manager->post_execution_process();
 
 								// Upload to Phoromatic
@@ -212,9 +218,10 @@ class phoromatic extends pts_module_interface
 					break;
 				}
 			}
-			sleep(60);
 			phoromatic::update_system_status('Idling, Waiting For Task');
+			sleep(60);
 		}
+		pts_client::release_lock(PTS_USER_PATH . 'phoromatic_lock');
 	}
 	private static function set_user_context($context_script, $trigger, $schedule_id, $process)
 	{
@@ -330,11 +337,6 @@ class phoromatic extends pts_module_interface
 
 	public static function user_start()
 	{
-		if(pts_client::create_lock(PTS_USER_PATH . 'phoromatic_lock') == false)
-		{
-			trigger_error('Phoromatic is already running.', E_USER_ERROR);
-			return false;
-		}
 		if(!phoromatic::phoromatic_setup_module())
 		{
 			return false;
