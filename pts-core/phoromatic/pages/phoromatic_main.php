@@ -104,7 +104,7 @@ class phoromatic_main implements pts_webui_interface
 		$main .= '</ul></div>';
 
 		// YESTERDAY'S RESULTS
-		if($test_result_row && substr($test_result_row['UploadTime'], 0, 10) != date('Y-m-d', (time() - 60 * 60 * 24)))
+		if($test_result_row && substr($test_result_row['UploadTime'], 0, 10) == date('Y-m-d', (time() - 60 * 60 * 24)))
 		{
 			$main .= '<div style="float: left; width: 50%;"><ul><li><h1>Yesterday\'s Test Results</h1></li>';
 
@@ -132,7 +132,7 @@ class phoromatic_main implements pts_webui_interface
 				{
 					break;
 				}
-				$main .= '<a href="?results/' . $test_result_row['UploadID'] . '"><li>' . $test_result_row['Title'] . '<br /><em>' . phoromatic_system_id_to_name($test_result_row['SystemID']) . ' - ' . $test_result_row['UploadTime'] .  '</em></li></a>';
+				$main .= '<a href="?results/' . $test_result_row['UploadID'] . '"><li>' . $test_result_row['Title'] . '<br /><em>' . phoromatic_system_id_to_name($test_result_row['SystemID']) . ' - ' . phoromatic_user_friendly_timedate($test_result_row['UploadTime']) .  '</em></li></a>';
 			}
 			while($test_result_row = $test_result_result->fetchArray());
 			$main .= '</ul></div>';

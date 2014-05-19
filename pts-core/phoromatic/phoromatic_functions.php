@@ -20,6 +20,10 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+function phoromatic_user_friendly_timedate($time)
+{
+	return date('j F H:i', strtotime($time));
+}
 function phoromatic_webui_header($left_items, $right)
 {
 	$ret = '<div id="pts_phoromatic_top_header">
