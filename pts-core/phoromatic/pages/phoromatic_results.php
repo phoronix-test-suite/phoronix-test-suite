@@ -103,7 +103,7 @@ class phoromatic_results implements pts_webui_interface
 					$main .= '<li class="light" style="text-align: center;">No Results Found</li>';
 				}
 				$main .= '</ul></div>';
-				$main .= '</div>';
+				$main .= '</div><h3>TODO A lot of other result analysis functionality powered by OpenBenchmarking.org to come in next few days...';
 			}
 
 			echo phoromatic_webui_main($main, phoromatic_webui_right_panel_logged_in());

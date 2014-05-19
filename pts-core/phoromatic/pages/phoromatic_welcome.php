@@ -115,6 +115,8 @@ class phoromatic_welcome implements pts_webui_interface
 			$stmt->bindValue(':account_id', $account_id);
 			$result = $stmt->execute();
 
+			mkdir(phoromatic_server::phoromatic_account_path($account_id));
+
 			phoromatic_server::send_email($_POST['register_email'], 'no-reply@phoromatic', 'Phoromatic Account Registration', '<p><strong>' . $_POST['register_username'] . '</strong>:</p><p>Your Phoromatic account has been created and is now active.</p>');
 
 
@@ -156,6 +158,11 @@ class phoromatic_welcome implements pts_webui_interface
 					$_SESSION['AccountID'] = $account_id;
 					$account_salt = phoromatic_server::$db->exec('UPDATE phoromatic_users SET LastIP = \'' . $_SERVER['REMOTE_ADDR'] . '\', LastLogin = \'' . phoromatic_server::current_time() . ' WHERE UserName = \'' . $matching_user['UserName'] . '\'');
 					session_write_close();
+
+					if(!is_dir(phoromatic_server::phoromatic_account_path($account_id)))
+					{
+						mkdir(phoromatic_server::phoromatic_account_path($account_id));
+					}
 
 					echo phoromatic_webui_header(array('Welcome, ' . $user), '');
 					$box = '<h1>Log-In Successful</h1>

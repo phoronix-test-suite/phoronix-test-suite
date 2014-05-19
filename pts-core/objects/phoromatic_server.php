@@ -40,6 +40,10 @@ class phoromatic_server
 		pts_file_io::mkdir($PHOROMATIC_PATH);
 		return $PHOROMATIC_PATH;
 	}
+	public static function phoromatic_account_path($account_id)
+	{
+		return self::phoromatic_path() . 'accounts/' . $account_id . '/';
+	}
 	public static function prepare_database()
 	{
 		self::$db = new SQLite3(self::phoromatic_path() . 'phoromatic.db');
@@ -72,6 +76,11 @@ class phoromatic_server
 
 		mail($to, $subject, $msg, $headers);
 	}
+}
+
+if(!is_dir())
+{
+	mkdir(phoromatic_server::phoromatic_path() . 'accounts');
 }
 
 ?>

@@ -66,7 +66,7 @@ PHORONIX TEST SUITE PUBLIC TODO LIST:
 ### PHOROMATIC ####
 
 - Group handling
-- Editing/deleting lots of different possible items
+- Editing/deleting lots of different possible items like scheduling meta-data
 - Implement the complementary WebSocket communication to HTTP pulls
 - More mobile form factor optimizations
 - Ensure sane validating of more user input / resource uploads

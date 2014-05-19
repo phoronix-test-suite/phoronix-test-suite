@@ -136,7 +136,7 @@ class phoromatic extends pts_module_interface
 
 						if($json['phoromatic']['settings']['RunInstallCommand'])
 						{
-							phoromatic::set_user_context('SetContextPreInstall', $phoromatic_trigger, $phoromatic_schedule_id, 'INSTALL');
+							phoromatic::set_user_context($json['phoromatic']['pre_install_set_context'], $phoromatic_trigger, $phoromatic_schedule_id, 'PRE_INSTALL');
 
 							if($json['phoromatic']['settings']['ForceInstallTests'])
 							{
@@ -145,9 +145,8 @@ class phoromatic extends pts_module_interface
 
 							pts_client::set_test_flags($test_flags);
 							pts_test_installer::standard_install($suite_identifier);
+							phoromatic::set_user_context($json['phoromatic']['post_install_set_context'], $phoromatic_trigger, $phoromatic_schedule_id, 'POST_INSTALL');
 						}
-
-						phoromatic::set_user_context('SetContextPreRun', $phoromatic_trigger, $phoromatic_schedule_id, 'INSTALL');
 
 						// Do the actual running
 						if(pts_test_run_manager::initial_checks($suite_identifier))
@@ -163,6 +162,7 @@ class phoromatic extends pts_module_interface
 							// Load the tests to run
 							if($test_run_manager->load_tests_to_run($suite_identifier))
 							{
+								phoromatic::set_user_context($json['phoromatic']['pre_run_set_context'], $phoromatic_trigger, $phoromatic_schedule_id, 'PRE_RUN');
 								if(true)
 								{
 									$test_run_manager->auto_upload_to_openbenchmarking();
@@ -193,6 +193,7 @@ class phoromatic extends pts_module_interface
 									pts_client::remove_saved_result_file($test_run_manager->get_file_name());
 								}
 							}
+							phoromatic::set_user_context($json['phoromatic']['post_install_set_context'], $phoromatic_trigger, $phoromatic_schedule_id, 'POST_RUN');
 						}
 					break;
 				}
@@ -208,16 +209,11 @@ class phoromatic extends pts_module_interface
 
 	private static function set_user_context($context_script, $trigger, $schedule_id, $process)
 	{
-		return; // TODO XXX
 		if(!empty($context_script))
 		{
-			if(!is_executable($context_script))
-			{
-				if(($context_script = pts_client::executable_in_path($context_script)) == false || !is_executable($context_script))
-				{
-					return false;
-				}
-			}
+			$context_file = pts_file_io::create_temporary_file();
+			file_put_contents($context_file, $context_script);
+			chmod($context_file, 0755);
 
 			$storage_path = pts_module::save_dir() . 'memory.pt2so';
 			$storage_object = pts_storage_object::recover_from_file($storage_path);

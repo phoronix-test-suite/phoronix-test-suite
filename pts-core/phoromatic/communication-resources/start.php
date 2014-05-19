@@ -111,6 +111,14 @@ function phoromatic_generate_test_suite(&$test_schedule, &$json, $trigger_id)
 	$json['phoromatic']['schedule_id'] = $test_schedule['ScheduleID'];
 	$json['phoromatic']['test_suite'] = $suite_writer->get_xml();
 
+	$contexts = array('SetContextPreInstall' => 'pre_install_set_context', 'SetContextPostInstall' => 'post_install_set_context', 'SetContextPreRun' => 'pre_run_set_context', 'SetContextPostRun' => 'post_run_set_context');
+	foreach($contexts as $context => $v)
+	{
+		if(isset($test_schedule[$context]) && !empty($test_schedule[$context]) && is_file(phoromatic_server::phoromatic_account_path(ACCOUNT_ID) . 'context_' . $test_schedule[$context]))
+		{
+			$json['phoromatic'][$v] = file_get_contents(phoromatic_server::phoromatic_account_path(ACCOUNT_ID) . 'context_' . $test_schedule[$context]);
+		}
+	}
 
 	$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_account_settings WHERE AccountID = :account_id');
 	$stmt->bindValue(':account_id', ACCOUNT_ID);

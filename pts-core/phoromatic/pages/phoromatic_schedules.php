@@ -54,6 +54,24 @@ class phoromatic_schedules implements pts_webui_interface
 			$schedule_minute = $_POST['schedule_minute'];
 			$days_active = $_POST['days_active'];
 
+			$context_files = array('pre_install_set_context', 'post_install_set_context', 'pre_run_set_context', 'post_run_set_context');
+			foreach($context_files as $context)
+			{
+				$$context = null;
+
+				if($_FILES[$context]['error'] == 0 && $_FILES[$context]['size'] > 0)
+				{
+					$sha1_hash = sha1_file($_FILES[$context]['tmp_name']);
+
+					if(!is_file(phoromatic_server::phoromatic_account_path($_SESSION['AccountID']) . 'context_' . $sha1_hash))
+					{
+						move_uploaded_file($_FILES[$context]['tmp_name'], phoromatic_server::phoromatic_account_path($_SESSION['AccountID']) . 'context_' . $sha1_hash);
+					}
+
+					$$context = $sha1_hash;
+				}
+			}
+
 			// TODO XXX: Validation of input
 
 			do
@@ -78,10 +96,10 @@ class phoromatic_schedules implements pts_webui_interface
 			$stmt->bindValue(':state', 1);
 			$stmt->bindValue(':active_on', implode(',', $days_active));
 			$stmt->bindValue(':run_at', $schedule_hour . '.' . $schedule_minute);
-			$stmt->bindValue(':context_pre_install', $pre_install_context);
-			$stmt->bindValue(':context_post_install', $post_install_context);
-			$stmt->bindValue(':context_pre_run', $pre_run_context);
-			$stmt->bindValue(':context_post_run', $post_run_context);
+			$stmt->bindValue(':context_pre_install', $pre_install_set_context);
+			$stmt->bindValue(':context_post_install', $post_install_set_context);
+			$stmt->bindValue(':context_pre_run', $pre_run_set_context);
+			$stmt->bindValue(':context_post_run', $post_run_set_context);
 			$stmt->bindValue(':modified_by', $_SESSION['UserName']);
 			$stmt->bindValue(':modified_on', phoromatic_server::current_time());
 			$stmt->bindValue(':public_key', $public_key);
@@ -216,7 +234,7 @@ class phoromatic_schedules implements pts_webui_interface
 
 				if($test_result_row)
 				{
-					$main .= '<div class="pts_phoromatic_info_box_area">';
+					$main .= '<hr /><div class="pts_phoromatic_info_box_area">';
 					$main .= '<div style="float: left; width: 100%;"><ul><li><h1>Recent Test Results For This Schedule</h1></li>';
 					$results = 0;
 					do
