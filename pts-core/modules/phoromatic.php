@@ -211,10 +211,11 @@ class phoromatic extends pts_module_interface
 	{
 		if(!empty($context_script))
 		{
-			$context_file = pts_file_io::create_temporary_file();
+			$context_file = pts_client::create_temporary_file();
 			file_put_contents($context_file, $context_script);
 			chmod($context_file, 0755);
 
+			pts_file_io::pts_module::save_dir();
 			$storage_path = pts_module::save_dir() . 'memory.pt2so';
 			$storage_object = pts_storage_object::recover_from_file($storage_path);
 
@@ -235,7 +236,7 @@ class phoromatic extends pts_module_interface
 			$storage_object->save_to_file($storage_path);
 
 			// Run the set context script
-			exec($context_script . ' ' . $trigger);
+			exec('./' . $context_script . ' ' . $trigger);
 
 			// Just simply return true for now, perhaps check exit code status and do something
 			return true;

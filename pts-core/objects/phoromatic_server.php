@@ -78,7 +78,7 @@ class phoromatic_server
 	}
 }
 
-if(!is_dir())
+if(!is_dir(phoromatic_server::phoromatic_path() . 'accounts'))
 {
 	mkdir(phoromatic_server::phoromatic_path() . 'accounts');
 }
