@@ -114,6 +114,8 @@ function phoromatic_generate_test_suite(&$test_schedule, &$json, $trigger_id)
 	$contexts = array('SetContextPreInstall' => 'pre_install_set_context', 'SetContextPostInstall' => 'post_install_set_context', 'SetContextPreRun' => 'pre_run_set_context', 'SetContextPostRun' => 'post_run_set_context');
 	foreach($contexts as $context => $v)
 	{
+		$json['phoromatic'][$v] = null;
+
 		if(isset($test_schedule[$context]) && !empty($test_schedule[$context]) && is_file(phoromatic_server::phoromatic_account_path(ACCOUNT_ID) . 'context_' . $test_schedule[$context]))
 		{
 			$json['phoromatic'][$v] = file_get_contents(phoromatic_server::phoromatic_account_path(ACCOUNT_ID) . 'context_' . $test_schedule[$context]);

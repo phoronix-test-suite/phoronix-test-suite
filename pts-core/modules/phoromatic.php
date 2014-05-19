@@ -201,12 +201,6 @@ class phoromatic extends pts_module_interface
 			sleep(60);
 		}
 	}
-
-
-	//
-	// TODO XXX: The code below here is Phoromatic legacy code still needing to be ported to the new interfaces of PTS 5.2 Khanino
-	//
-
 	private static function set_user_context($context_script, $trigger, $schedule_id, $process)
 	{
 		if(!empty($context_script))
@@ -215,7 +209,7 @@ class phoromatic extends pts_module_interface
 			file_put_contents($context_file, $context_script);
 			chmod($context_file, 0755);
 
-			pts_file_io::pts_module::save_dir();
+			pts_file_io::mkdir(pts_module::save_dir());
 			$storage_path = pts_module::save_dir() . 'memory.pt2so';
 			$storage_object = pts_storage_object::recover_from_file($storage_path);
 
@@ -244,6 +238,11 @@ class phoromatic extends pts_module_interface
 
 		return false;
 	}
+
+
+	//
+	// TODO XXX: The code below here is Phoromatic legacy code still needing to be ported to the new interfaces of PTS 5.2 Khanino
+	//
 
 
 

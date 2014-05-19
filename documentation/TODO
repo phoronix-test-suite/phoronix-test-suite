@@ -67,6 +67,7 @@ PHORONIX TEST SUITE PUBLIC TODO LIST:
 
 - Hookup the email notifications
 - Group handling
+- Get the Phoromatic search box implemented/working
 - Editing/deleting lots of different possible items like scheduling meta-data
 - Implement the complementary WebSocket communication to HTTP pulls
 - More mobile form factor optimizations

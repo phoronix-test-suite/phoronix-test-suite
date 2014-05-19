@@ -67,7 +67,13 @@ class start_phoromatic_server implements pts_option_interface
 		}
 		else
 		{
-			echo PHP_EOL . PHP_EOL . 'You must first configure the remote web / Phoromatic settings via the ~/.phoronix-test-suite/user-config.xml.' . PHP_EOL . PHP_EOL;
+			echo PHP_EOL . PHP_EOL . 'You must first configure the remote web / Phoromatic settings via:' . PHP_EOL . '    ~/.phoronix-test-suite/user-config.xml.' . PHP_EOL . PHP_EOL . 'The RemoteAccessPort should be a network port to use for HTTP communication while WebSocketPort should be set to another available network port.';
+			return false;
+		}
+
+		if(!extension_loaded('sqlite3'))
+		{
+			echo PHP_EOL . PHP_EOL . 'PHP SQLite3 support must first be enabled before accessing the Phoromatic server (e.g. installing the php5-sqlite package).' . PHP_EOL . PHP_EOL;
 			return false;
 		}
 
