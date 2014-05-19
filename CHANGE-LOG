@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 5.2 Milestone 2
+18 May 2014
 
 - pts-core: Add RUN_TESTS_IN_RANDOM_ORDER environment variable to cause tests to run in a random order
 - pts-core: Add sdl2-development to PTS External Dependencies
