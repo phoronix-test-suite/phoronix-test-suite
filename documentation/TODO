@@ -65,6 +65,7 @@ PHORONIX TEST SUITE PUBLIC TODO LIST:
 
 ### PHOROMATIC ####
 
+- Hookup the email notifications
 - Group handling
 - Editing/deleting lots of different possible items like scheduling meta-data
 - Implement the complementary WebSocket communication to HTTP pulls

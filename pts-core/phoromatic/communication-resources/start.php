@@ -63,7 +63,7 @@ while($result && $row = $result->fetchArray())
 	}
 }
 
-$json['phoromatic']['response'] = 'Idling, waiting for task assignment...';
+$json['phoromatic']['response'] = '[' . date('H:i:s') . '] Idling, waiting for task assignment...';
 echo json_encode($json);
 return;
 
