@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2013, Phoronix Media
-	Copyright (C) 2008 - 2013, Michael Larabel
+	Copyright (C) 2008 - 2014, Phoronix Media
+	Copyright (C) 2008 - 2014, Michael Larabel
 	system_monitor.php: System sensor monitoring module for PTS
 
 	This program is free software; you can redistribute it and/or modify
@@ -114,7 +114,7 @@ class system_monitor extends pts_module_interface
 			echo PHP_EOL;
 
 			// Pad some idling sensor results at the start
-			sleep((self::$sensor_monitoring_frequency * 4));
+			sleep((self::$sensor_monitoring_frequency * 8));
 		}
 
 		pts_module::pts_timed_function('pts_monitor_update', self::$sensor_monitoring_frequency);
@@ -161,7 +161,7 @@ class system_monitor extends pts_module_interface
 		self::$test_run_timer = time() - self::$test_run_timer;
 
 		// Let the system return to brief idling..
-		sleep(self::$sensor_monitoring_frequency);
+		sleep(self::$sensor_monitoring_frequency * 8);
 
 		if(pts_module::read_variable('PERFORMANCE_PER_WATT'))
 		{
