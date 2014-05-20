@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+- pts-core: Be more strict in handling DynamicRunCount option
 - Cleaning up more of the Phoromatic UI
 - phoromatic: Support for updating the system status
 

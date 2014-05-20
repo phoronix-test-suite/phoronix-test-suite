@@ -258,7 +258,7 @@ class pts_test_execution
 				}
 			}
 
-			if($is_expected_last_run && $test_run_request->test_result_buffer->get_count() > floor(($i - 2) / 2) && !$cache_share_present)
+			if($is_expected_last_run && $test_run_request->test_result_buffer->get_count() > floor(($i - 2) / 2) && !$cache_share_present && $test_run_manager->do_dynamic_run_count())
 			{
 				// The later check above ensures if the test is failing often the run count won't uselessly be increasing
 				// Should we increase the run count?
@@ -269,7 +269,7 @@ class pts_test_execution
 					// At least one run passed, but at least one run failed to produce a result. Increase count to try to get more successful runs
 					$increase_run_count = $defined_times_to_run - $test_run_request->test_result_buffer->get_count();
 				}
-				else if($test_run_request->test_result_buffer->get_count() >= 2 && $test_run_manager->do_dynamic_run_count())
+				else if($test_run_request->test_result_buffer->get_count() >= 2)
 				{
 					// Dynamically increase run count if needed for statistical significance or other reasons
 					$increase_run_count = $test_run_manager->increase_run_count_check($test_run_request, $defined_times_to_run, $test_run_time);
