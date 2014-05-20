@@ -782,11 +782,13 @@ abstract class pts_Graph
 	}
 	protected function text_string_width($string, $size)
 	{
-        return pts_svg_dom::estimate_text_dimensions($string, $size)[0];
+		$dimensions = pts_svg_dom::estimate_text_dimensions($string, $size);
+		return $dimensions[0];
 	}
 	protected function text_string_height($string, $size)
 	{
-		return pts_svg_dom::estimate_text_dimensions($string, $size)[1];
+		$dimensions = pts_svg_dom::estimate_text_dimensions($string, $size);
+		return $dimensions[1];
 	}
 	public static function color_cache($ns, $id, &$colors)
 	{
