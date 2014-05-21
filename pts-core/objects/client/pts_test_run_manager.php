@@ -910,7 +910,7 @@ class pts_test_run_manager
 				{
 					$upload_results = self::$batch_mode_options['UploadResults'];
 				}
-				else if((pts_c::$test_flags ^ pts_c::auto_mode))
+				else if(!(pts_c::$test_flags & pts_c::auto_mode))
 				{
 					$upload_results = pts_user_io::prompt_bool_input('Would you like to upload the results to OpenBenchmarking.org', true);
 				}
@@ -925,7 +925,7 @@ class pts_test_run_manager
 
 					if($this->get_results_url())
 					{
-						if((pts_c::$test_flags ^ pts_c::auto_mode) && pts_openbenchmarking_client::auto_upload_results() == false)
+						if(!(pts_c::$test_flags & pts_c::auto_mode) && pts_openbenchmarking_client::auto_upload_results() == false)
 						{
 							pts_client::display_web_page($this->get_results_url(), 'Do you want to launch OpenBenchmarking.org', true);
 						}

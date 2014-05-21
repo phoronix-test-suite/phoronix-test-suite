@@ -423,7 +423,7 @@ class pts_LineGraph extends pts_Graph
 	}
 	private function get_stat_word_width()
 	{
-		return 1.8 * $this->text_string_width($this->i['graph_max_value'], $this->i['min_identifier_size'] + 0.5);
+		return ceil(2.2 * $this->text_string_width($this->i['graph_max_value'], $this->i['min_identifier_size'] + 0.5));
 	}
 	private function getStatisticsHeaderHeight()
 	{
