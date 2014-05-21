@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2013, Phoronix Media
-	Copyright (C) 2008 - 2013, Michael Larabel
+	Copyright (C) 2008 - 2014, Phoronix Media
+	Copyright (C) 2008 - 2014, Michael Larabel
 	pts_LineGraph.php: The line graph object that extends pts_Graph.php.
 
 	This program is free software; you can redistribute it and/or modify
@@ -423,7 +423,7 @@ class pts_LineGraph extends pts_Graph
 	}
 	private function get_stat_word_width()
 	{
-		return 2.5 * $this->text_string_width('Min', $this->i['min_identifier_size'] + 0.5);
+		return 1.8 * $this->text_string_width($this->i['graph_max_value'], $this->i['min_identifier_size'] + 0.5);
 	}
 	private function getStatisticsHeaderHeight()
 	{
