@@ -885,7 +885,7 @@ class pts_test_run_manager
 			pts_module_manager::module_process('__event_results_saved', $this);
 			//echo PHP_EOL . 'Results Saved To: ; . PTS_SAVE_RESULTS_PATH . $this->get_file_name() . ;/composite.xml' . PHP_EOL;
 
-			if((pts_c::$test_flags ^ pts_c::auto_mode))
+			if(!(pts_c::$test_flags & pts_c::auto_mode))
 			{
 				if((pts_c::$test_flags & pts_c::batch_mode))
 				{
