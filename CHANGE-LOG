@@ -7,6 +7,7 @@ Phoronix Test Suite (Git)
 - phoromatic: Support for updating the system status
 - system_monitor: Allow extra idling time at begin and end of testing process
 - pts_Graph: Improve formatting of line graph keys
+- phodevi: Detection support for KDE Frameworks 5 / Plasma Next desktop
 
 Phoronix Test Suite 5.2 Milestone 2
 18 May 2014
