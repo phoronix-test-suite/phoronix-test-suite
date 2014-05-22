@@ -1,9 +1,10 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 5.2 Milestone 3
+22 May 2014
 
 - pts-core: Be more strict in handling DynamicRunCount option
-- Cleaning up more of the Phoromatic UI
+- phoromatic: Cleaning up more of the Phoromatic UI
 - phoromatic: Support for updating the system status
 - system_monitor: Allow extra idling time at begin and end of testing process
 - pts_Graph: Improve formatting of line graph keys
