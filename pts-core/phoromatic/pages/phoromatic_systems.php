@@ -91,7 +91,7 @@ class phoromatic_systems implements pts_webui_interface
 				}
 
 				$main .= '<hr />';
-				$info_table = array('Status:' => $row['CurrentTask'], 'State:' => $state, 'Phoronix Test Suite Client:' => $row['ClientVersion'], 'Last IP:' => $row['LastIP'], 'Last Communication:' => $row['LastCommunication'], 'Initial Creation:' => $row['CreatedOn'], 'System ID:' => $row['SystemID']);
+				$info_table = array('Status:' => $row['CurrentTask'], 'State:' => $state, 'Phoronix Test Suite Client:' => $row['ClientVersion'], 'Last IP:' => $row['LastIP'], 'Last Communication:' => phoromatic_user_friendly_timedate($row['LastCommunication']), 'Initial Creation:' => phoromatic_user_friendly_timedate($row['CreatedOn']), 'System ID:' => $row['SystemID']);
 				$main .= '<h2>System State</h2>' . pts_webui::r2d_array_to_table($info_table, 'auto');
 
 				$main .= '<hr /><h2>System Components</h2><div style="float: left; width: 50%;">';
@@ -99,6 +99,40 @@ class phoromatic_systems implements pts_webui_interface
 				$main .= pts_webui::r2d_array_to_table($components) . '</div><div style="float: left; width: 50%;">';
 				$components = pts_result_file_analyzer::system_component_string_to_array($row['Software']);
 				$main .= pts_webui::r2d_array_to_table($components) . '</div>';
+
+				$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, ScheduleID, UploadID, UploadTime FROM phoromatic_results WHERE AccountID = :account_id AND SystemID = :system_id ORDER BY UploadTime DESC');
+				$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+				$stmt->bindValue(':system_id', $PATH[0]);
+				$test_result_result = $stmt->execute();
+				$test_result_row = $test_result_result->fetchArray();
+				$results = 0;
+
+				if($test_result_row != false)
+				{
+					$main .= '<h2>Test Results</h2>';
+					$main .= '<div class="pts_phoromatic_info_box_area">';
+					$main .= '<div style="float: left; width: 100%;"><ul><li><h1>Recent Test Results</h1></li>';
+				}
+
+				do
+				{
+					if($results > 20)
+					{
+						break;
+					}
+
+					$main .= '<a href="?results/' . $test_result_row['UploadID'] . '"><li>' . $test_result_row['Title'] . '<br /><em>' . phoromatic_system_id_to_name($test_result_row['SystemID']) . ' - ' . phoromatic_user_friendly_timedate($test_result_row['UploadTime']) .  '</em></li></a>';
+					$results++;
+
+				}
+				while($test_result_row = $test_result_result->fetchArray());
+
+				if($results > 0)
+				{
+					$main .= '</ul></div>';
+				}
+
+
 			}
 		}
 

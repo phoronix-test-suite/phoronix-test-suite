@@ -113,6 +113,7 @@ class phoromatic extends pts_module_interface
 		self::$server_address = substr($args[0], 0, strpos($args[0], ':'));
 		self::$server_http_port = substr($args[0], strlen(self::$server_address) + 1, -1 - strlen(self::$account_id));
 		pts_client::$display->generic_heading('Server IP: ' . self::$server_address . PHP_EOL . 'Server HTTP Port: ' . self::$server_http_port . PHP_EOL . 'Account ID: ' . self::$account_id);
+		$times_failed = 0;
 
 		while(1)
 		{
@@ -120,8 +121,19 @@ class phoromatic extends pts_module_interface
 				'r' => 'start',
 				));
 
-			if(substr($server_response, 0, 1) == '{')
+			if($server_response == false)
 			{
+				$times_failed++;
+
+				if($times_failed > 2)
+				{
+					trigger_error('Communication with server failed.', E_USER_ERROR);
+					return false;
+				}
+			}
+			else if(substr($server_response, 0, 1) == '{')
+			{
+				$times_failed = 0;
 				$json = json_decode($server_response, true);
 
 				if($json != null)

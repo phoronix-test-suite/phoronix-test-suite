@@ -1,5 +1,10 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- phoromatic: Improve the systems' page
+- phoromatic: Allow up to three connection failures before quitting
+
 Phoronix Test Suite 5.2 Milestone 3
 22 May 2014
 
