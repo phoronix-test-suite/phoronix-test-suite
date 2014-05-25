@@ -821,8 +821,9 @@ class pts_test_run_manager
 				$notes['disk-mount-options'] = $mount_options['mount-options'];
 			}
 		}
-		if($show_all || in_array('Processor', $test_hardware_types) || in_array('System', $test_hardware_types))
+		if(true || $show_all || in_array('Processor', $test_hardware_types) || in_array('System', $test_hardware_types))
 		{
+			// XXX probably makes sense always reporting the CPU scaling governor
 			$scaling_governor = phodevi::read_property('cpu', 'scaling-governor');
 			if($scaling_governor)
 			{

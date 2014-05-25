@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+- pts-core: Always report the CPU scaling governor to the system table
 - phoromatic: Improve the systems' page
 - phoromatic: Allow up to three connection failures before quitting
 

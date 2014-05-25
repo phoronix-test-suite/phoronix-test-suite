@@ -38,12 +38,10 @@ class phoromatic_main implements pts_webui_interface
 	public static function render_page_process($PATH)
 	{
 		echo phoromatic_webui_header_logged_in();
-
-		$main = '<h1>Phoromatic</h1>';
+		$main .= '<h2 style="color: red;">Phoromatic is currently under development with the Phoronix Test Suite 5.2-Khanino release. With the 5.2 release the public Phoromatic code is intended as a &quot;technical preview&quot; and is a work-in-progress. All basic functionality should be implemented while other features are forthcoming (<em>see the TODO list for more details</em>). Your code contributions are welcome via our GitHub. We also accept <a href="http://www.phoronix-test-suite.com/?k=commercial">custom engineering work / commercial sponsorship</a> and other forms of support to continue its public, open-source development.</h2><hr />';
+		$main .= '<h1>Phoromatic</h1>';
 
 		$main .= phoromatic_systems_needing_attention();
-
-
 		$main .= '<h2>Welcome</h2>
 				<p>Phoromatic is the remote management and test orchestration component to the <a href="http://www.phoronix-test-suite.com/">Phoronix Test Suite</a>. Phoromatic allows you to exploit the Phoronix Test Suite\'s vast feature-set across multiple systems over the LAN/WAN, manage entire test farms of systems for benchmarking via a centralized interface, centrally collect test results, and carry out other enteprise-focused tasks. To get started with your new account, the basic steps to get started include:</p>
 				<ol>
@@ -74,7 +72,7 @@ class phoromatic_main implements pts_webui_interface
 		{
 			do
 			{
-				$main .= '<a href="?schedules/' . $row['ScheduleID'] . '"><li>' . $row['Title'] . '<br /><em>' . $row['Description'] . '</em></li></a>';
+				$main .= '<a href="?schedules/' . $row['ScheduleID'] . '"><li>' . $row['Title'] . '<br /><span style="color: #065695;"><em>' . $row['Description'] . '</em></span></li></a>';
 			}
 			while($row = $result->fetchArray());
 		}
@@ -93,7 +91,7 @@ class phoromatic_main implements pts_webui_interface
 			{
 				break;
 			}
-			$main .= '<a href="?results/' . $test_result_row['UploadID'] . '"><li>' . $test_result_row['Title'] . '<br /><em>' . phoromatic_system_id_to_name($test_result_row['SystemID']) . '</em></li></a>';
+			$main .= '<a href="?results/' . $test_result_row['UploadID'] . '"><li>' . $test_result_row['Title'] . '<br /><span style="color: #065695;"><em>' . phoromatic_system_id_to_name($test_result_row['SystemID']) . '</em></span></li></a>';
 			$results_today++;
 
 		}
@@ -114,7 +112,7 @@ class phoromatic_main implements pts_webui_interface
 				{
 					break;
 				}
-				$main .= '<a href="?results/' . $test_result_row['UploadID'] . '"><li>' . $test_result_row['Title'] . '<br /><em>' . phoromatic_system_id_to_name($test_result_row['SystemID']) . '</em></li></a>';
+				$main .= '<a href="?results/' . $test_result_row['UploadID'] . '"><li>' . $test_result_row['Title'] . '<br /><span style="color: #065695;"><em>' . phoromatic_system_id_to_name($test_result_row['SystemID']) . '</em></span></li></a>';
 			}
 			while($test_result_row = $test_result_result->fetchArray());
 			$main .= '</ul></div>';
@@ -132,7 +130,7 @@ class phoromatic_main implements pts_webui_interface
 				{
 					break;
 				}
-				$main .= '<a href="?results/' . $test_result_row['UploadID'] . '"><li>' . $test_result_row['Title'] . '<br /><em>' . phoromatic_system_id_to_name($test_result_row['SystemID']) . ' - ' . phoromatic_user_friendly_timedate($test_result_row['UploadTime']) .  '</em></li></a>';
+				$main .= '<a href="?results/' . $test_result_row['UploadID'] . '"><li>' . $test_result_row['Title'] . '<br /><span style="color: #065695;"><em>' . phoromatic_system_id_to_name($test_result_row['SystemID']) . ' - ' . phoromatic_user_friendly_timedate($test_result_row['UploadTime']) .  '</em></span></li></a>';
 			}
 			while($test_result_row = $test_result_result->fetchArray());
 			$main .= '</ul></div>';
@@ -159,7 +157,7 @@ class phoromatic_main implements pts_webui_interface
 		{
 			do
 			{
-				$main .= '<a href="?systems/' . $row['SystemID'] . '"><li>' . $row['Title'] . '<br /><em>' . $row['LocalIP'] . ' - ' . $row['CurrentTask'] . '</em></li></a>';
+				$main .= '<a href="?systems/' . $row['SystemID'] . '"><li>' . $row['Title'] . '<br /><span style="color: #065695;"><em>' . $row['LocalIP'] . ' - ' . $row['CurrentTask'] . '</em></span></li></a>';
 			}
 			while($row = $result->fetchArray());
 		}
@@ -169,7 +167,7 @@ class phoromatic_main implements pts_webui_interface
 				<div style="float: left; width: 50%;">
 					<ul>
 						<li><h1>Recent System Warnings &amp; Errors</h1></li>
-						<li class="light" style="text-align: center;">No Warnings Or Errors At This Time<br />&nbsp;</li>
+						<li class="light" style="text-align: center;">No Warnings Or Errors At This Time</li>
 					</ul>
 				</div>
 			</div>';
