@@ -105,7 +105,7 @@ class pts_sys_graph
 		}
 
 		// Text
-		$this->svg_dom->add_text_element($this->data['y_scale'], array('x' => $this->computed['graph_area_x_end'], 'y' => $this->computed['graph_area_y_end'] - 5, 'font-size' => $this->data['text_size_sub'], 'fill' => $this->data['text_color'], 'text-anchor' => 'end', 'alignment-baseline' => 'above-edge'));
+		$this->svg_dom->add_element_with_value('text', $this->data['y_scale'], array('x' => $this->computed['graph_area_x_end'], 'y' => $this->computed['graph_area_y_end'] - 5, 'font-size' => $this->data['text_size_sub'], 'fill' => $this->data['text_color'], 'text-anchor' => 'end', 'alignment-baseline' => 'above-edge'));
 	}
 	public function render_graph_data(&$graph_data)
 	{
@@ -135,7 +135,7 @@ class pts_sys_graph
 				continue;
 			}
 
-			$svg_dom->add_text_element($val, array('x' => $this->computed['graph_area_x_start'] - 8, 'y' => $i, 'font-size' => $this->data['text_size_sub'], 'fill' => $this->data['text_color'], 'text-anchor' => 'end', 'alignment-baseline' => 'middle'));
+			$svg_dom->add_element_with_value('text', $val, array('x' => $this->computed['graph_area_x_start'] - 8, 'y' => $i, 'font-size' => $this->data['text_size_sub'], 'fill' => $this->data['text_color'], 'text-anchor' => 'end', 'alignment-baseline' => 'middle'));
 		}
 
 		$graph_data_count = count($graph_data);
@@ -154,7 +154,7 @@ class pts_sys_graph
 				continue;
 			}
 
-			$this->svg_dom->add_text_element($val . $this->data['x_scale'], array('x' => $i, 'y' => $this->computed['graph_area_y_start'] + 8, 'font-size' => ($this->data['text_size_sub'] - 1), 'fill' => $this->data['text_color'], 'alignment-baseline' => 'after-edge', 'text-anchor' => 'middle'));
+			$this->svg_dom->add_element_with_value('text', $val . $this->data['x_scale'], array('x' => $i, 'y' => $this->computed['graph_area_y_start'] + 8, 'font-size' => ($this->data['text_size_sub'] - 1), 'fill' => $this->data['text_color'], 'alignment-baseline' => 'after-edge', 'text-anchor' => 'middle'));
 		}
 
 		$pixels_per_increment = $this->computed['graph_area_width'] / $graph_data_count;
@@ -178,7 +178,7 @@ class pts_sys_graph
 			$title_extra .= ' (Min: ' . min($graph_data) . ' / Avg: ' . round(array_sum($graph_data) / count($graph_data)) . ' / Max: ' . max($graph_data) . ' / Last: ' . end($graph_data) . ')';
 		}
 
-		$this->svg_dom->add_text_element($this->data['title'] . $title_extra, array('x' => $this->computed['graph_area_x_start'], 'y' => $this->computed['graph_area_y_end'] - 5, 'font-size' => $this->data['text_size'], 'fill' => $this->data['text_color'], 'text-anchor' => 'start', 'alignment-baseline' => 'above-edge', 'font-weight' => 'bold'));
+		$this->svg_dom->add_element_with_value('text', $this->data['title'] . $title_extra, array('x' => $this->computed['graph_area_x_start'], 'y' => $this->computed['graph_area_y_end'] - 5, 'font-size' => $this->data['text_size'], 'fill' => $this->data['text_color'], 'text-anchor' => 'start', 'alignment-baseline' => 'above-edge', 'font-weight' => 'bold'));
 
 		return $svg_dom;
 	}

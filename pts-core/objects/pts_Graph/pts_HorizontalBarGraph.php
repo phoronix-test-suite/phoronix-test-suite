@@ -53,12 +53,12 @@ class pts_HorizontalBarGraph extends pts_Graph
 				foreach(explode(' - ', $this->graph_identifiers[$i]) as $i => $identifier_line)
 				{
 					$x = 8;
-					$this->svg_dom->add_text_element($identifier_line, array('x' => $x, 'y' => $middle_of_vert, 'font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['headers'], 'text-anchor' => 'middle', 'transform' => 'rotate(90 ' . $x . ' ' . $middle_of_vert . ')'));
+					$this->svg_dom->add_element_with_value('text', $identifier_line, array('x' => $x, 'y' => $middle_of_vert, 'font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['headers'], 'text-anchor' => 'middle', 'transform' => 'rotate(90 ' . $x . ' ' . $middle_of_vert . ')'));
 				}
 			}
 			else
 			{
-				$this->svg_dom->add_text_element($this->graph_identifiers[$i], array('x' => ($this->i['left_start'] - 5), 'y' => $middle_of_vert, 'font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['headers'], 'text-anchor' => 'end'));
+				$this->svg_dom->add_element_with_value('text', $this->graph_identifiers[$i], array('x' => ($this->i['left_start'] - 5), 'y' => $middle_of_vert, 'font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['headers'], 'text-anchor' => 'end'));
 			}
 		}
 	}
@@ -123,7 +123,7 @@ class pts_HorizontalBarGraph extends pts_Graph
 					}
 
 					$bar_offset_34 = $middle_of_bar + ($multi_way ? 0 : ($bar_height / 5) + 1);
-					$this->svg_dom->add_text_element('SE +/- ' . pts_math::set_precision($std_error, 2), array('x' => ($this->i['left_start'] - 5), 'y' => $bar_offset_34, 'font-size' => ($this->i['identifier_size'] - 2), 'fill' => self::$c['color']['text'], 'text-anchor' => 'end'));
+					$this->svg_dom->add_element_with_value('text', 'SE +/- ' . pts_math::set_precision($std_error, 2), array('x' => ($this->i['left_start'] - 5), 'y' => $bar_offset_34, 'font-size' => ($this->i['identifier_size'] - 2), 'fill' => self::$c['color']['text'], 'text-anchor' => 'end'));
 				}
 
 				if(($this->text_string_width($value, $this->i['identifier_size']) + 2) < $graph_size)
@@ -131,15 +131,15 @@ class pts_HorizontalBarGraph extends pts_Graph
 					if(isset($this->d['identifier_notes'][$this->graph_identifiers[$i]]))
 					{
 						$note_size = self::$c['size']['key'] - 2;
-						$this->svg_dom->add_text_element($this->d['identifier_notes'][$this->graph_identifiers[$i]], array('x' => ($this->i['left_start'] + 4), 'y' => ($px_bound_top + self::$c['size']['key']), 'font-size' => $note_size, 'fill' => self::$c['color']['body_text'], 'text-anchor' => 'start'));
+						$this->svg_dom->add_element_with_value('text', $this->d['identifier_notes'][$this->graph_identifiers[$i]], array('x' => ($this->i['left_start'] + 4), 'y' => ($px_bound_top + self::$c['size']['key']), 'font-size' => $note_size, 'fill' => self::$c['color']['body_text'], 'text-anchor' => 'start'));
 					}
 
-					$this->svg_dom->add_text_element($value, array('x' => ($value_end_right - 5), 'y' => $middle_of_bar, 'font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['body_text'], 'text-anchor' => 'end'));
+					$this->svg_dom->add_element_with_value('text', $value, array('x' => ($value_end_right - 5), 'y' => $middle_of_bar, 'font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['body_text'], 'text-anchor' => 'end'));
 				}
 				else if($value > 0)
 				{
 					// Write it in front of the result
-					$this->svg_dom->add_text_element($value, array('x' => ($value_end_right + 6), 'y' => $middle_of_bar, 'font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['text'], 'text-anchor' => 'start'));
+					$this->svg_dom->add_element_with_value('text', $value, array('x' => ($value_end_right + 6), 'y' => $middle_of_bar, 'font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['text'], 'text-anchor' => 'start'));
 				}
 			}
 		}

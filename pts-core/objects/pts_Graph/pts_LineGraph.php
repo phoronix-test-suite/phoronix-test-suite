@@ -33,6 +33,9 @@ class pts_LineGraph extends pts_Graph
 		$this->i['min_identifier_size'] = 6.5;
 		$this->i['plot_overview_text'] = true;
 		$this->i['display_select_identifiers'] = false;
+
+		// only supported in line graph - groups may later be added to the superclass
+		$this->dom_groups = array();
 	}
 	protected function render_graph_pre_init()
 	{
@@ -116,11 +119,11 @@ class pts_LineGraph extends pts_Graph
 
 			if($this->i['identifier_size'] <= $this->i['min_identifier_size'])
 			{
-				$this->svg_dom->add_text_element($this->graph_identifiers[$i], array('x' => $px_from_left, 'y' => ($px_from_top_end + 2), 'font-size' => 9, 'fill' => self::$c['color']['headers'], 'text-anchor' => 'start', 'transform' => 'rotate(90 ' . $px_from_left . ' ' . ($px_from_top_end + 2) . ')'));
+				$this->svg_dom->add_element_with_value('text', $this->graph_identifiers[$i], array('x' => $px_from_left, 'y' => ($px_from_top_end + 2), 'font-size' => 9, 'fill' => self::$c['color']['headers'], 'text-anchor' => 'start', 'transform' => 'rotate(90 ' . $px_from_left . ' ' . ($px_from_top_end + 2) . ')'));
 			}
 			else
 			{
-				$this->svg_dom->add_text_element($this->graph_identifiers[$i], array('x' => $px_from_left, 'y' => ($px_from_top_end + 10), 'font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['headers'], 'text-anchor' => 'middle'));
+				$this->svg_dom->add_element_with_value('text', $this->graph_identifiers[$i], array('x' => $px_from_left, 'y' => ($px_from_top_end + 10), 'font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['headers'], 'text-anchor' => 'middle'));
 			}
 		}
 	}
@@ -147,6 +150,16 @@ class pts_LineGraph extends pts_Graph
 	}
 	protected function render_graph_key()
 	{
+		// create the SVG groups
+		for ($i = 0; $i < count($this->graph_data_title); ++$i)
+		{
+			array_push($this->dom_groups, $this->svg_dom->create_group());
+		}
+
+		// add the style for the groups
+		$this->svg_dom->add_element_with_value('style', "g:hover polyline { stroke-width: 2; opacity: 1.0; }", array("type" => "text/css"));
+
+
 		if($this->i['key_line_height'] == 0)
 		{
 			return;
@@ -180,23 +193,27 @@ class pts_LineGraph extends pts_Graph
 					continue;
 				}
 
+				// group to add the elements to
+				$group_el = $this->dom_groups[$i];
+
 				$this_color = $this->get_special_paint_color($this->graph_data_title[$i]);
 
 				// draw square
-				$this->svg_dom->add_element('rect',
+				$this->svg_dom->add_element_to_element($group_el, 'rect',
 								array('x' => $x, 'y' => $y - $square_length, 'width' => $square_length,
 								  'height' => $square_length, 'fill' => $this_color,
 								  'stroke' => self::$c['color']['notches'], 'stroke-width' => 1));
 
 				// draw text
-				$this->svg_dom->add_text_element($this->graph_data_title[$i],
+				$this->svg_dom->add_element_with_value_to_element($group_el, 'text', $this->graph_data_title[$i],
 								 array('x' => $x + $square_length + 4, 'y' => $y,
 									   'font-size' => self::$c['size']['key'], 'fill' => $this_color));
 
 				// draw min/avg/max
 				$x_stat_loc = $x + $square_length + $this->i['key_longest_string_width'];
-				$this->draw_result_stats($this->graph_data[$i], $precision, $x_stat_loc,
-								   array('y' => $y, 'font-size' => self::$c['size']['key'], 'fill' => $this_color));
+				$this->draw_result_stats($group_el, $this->graph_data[$i], $precision, $x_stat_loc,
+										   array('y' => $y, 'font-size' => self::$c['size']['key'],
+												 'fill' => $this_color));
 			}
 		}
 	}
@@ -213,11 +230,11 @@ class pts_LineGraph extends pts_Graph
 		foreach ($stat_words as &$stat_word)
 		{
 			$attributes['x'] = $x;
-			$this->svg_dom->add_text_element($stat_word, $attributes);
+			$this->svg_dom->add_element_with_value('text', $stat_word, $attributes);
 			$x += $stat_word_width;
 		}
 	}
-	private function draw_result_stats(&$data_set, $precision, $x, $attributes)
+	private function draw_result_stats($group_el, &$data_set, $precision, $x, $attributes)
 	{
 		if(!$this->i['plot_overview_text'])
 		{
@@ -236,7 +253,7 @@ class pts_LineGraph extends pts_Graph
 		foreach ($precise_stat_array as $stat_value)
 		{
 			$attributes['x'] = $x;
-			$this->svg_dom->add_text_element(strval($stat_value), $attributes);
+			$this->svg_dom->add_element_with_value_to_element($group_el, 'text', strval($stat_value), $attributes);
 			$x += $stat_word_width;
 		}
 	}
@@ -281,6 +298,8 @@ class pts_LineGraph extends pts_Graph
 			$regression_plots = array();
 			$poly_points = array();
 
+			$group_el = $this->dom_groups[$i_o];
+
 			for($i = 0; $i < $point_counter; $i++)
 			{
 				$value = $this->graph_data[$i_o][$i];
@@ -288,7 +307,7 @@ class pts_LineGraph extends pts_Graph
 				if($value < 0 || ($value == 0 && $this->graph_identifiers != null))
 				{
 					// Draw whatever is needed of the line so far, since there is no result here
-					$this->draw_graph_line_process($poly_points, $paint_color, $regression_plots, $point_counter);
+					$this->draw_graph_line_process($group_el, $poly_points, $paint_color, $regression_plots, $point_counter);
 					continue;
 				}
 
@@ -331,10 +350,10 @@ class pts_LineGraph extends pts_Graph
 				$prev_value = $value;
 			}
 
-			$this->draw_graph_line_process($poly_points, $paint_color, $regression_plots, $point_counter);
+			$this->draw_graph_line_process($group_el, $poly_points, $paint_color, $regression_plots, $point_counter);
 		}
 	}
-	protected function draw_graph_line_process(&$poly_points, &$paint_color, &$regression_plots, $point_counter)
+	protected function draw_graph_line_process($group_el, &$poly_points, &$paint_color, &$regression_plots, $point_counter)
 	{
 		$poly_points_count = count($poly_points);
 
@@ -350,7 +369,7 @@ class pts_LineGraph extends pts_Graph
 			array_push($svg_poly, round($x_y[0]) . ',' . round($x_y[1]));
 		}
 		$svg_poly = implode(' ', $svg_poly);
-		$this->svg_dom->add_element('polyline', array('points' => $svg_poly, 'fill' => 'none', 'stroke' => $paint_color, 'stroke-width' => 2));
+		$this->svg_dom->add_element_to_element($group_el, 'polyline', array('points' => $svg_poly, 'opacity' => "0.4", 'fill' => 'none', 'stroke' => $paint_color, 'stroke-width' => 1));
 
 		// plot error bars if needed
 		foreach($poly_points as $i => $x_y_pair)
@@ -369,21 +388,21 @@ class pts_LineGraph extends pts_Graph
 
 				if($std_error_rel_size > 3)
 				{
-					$this->svg_dom->draw_svg_line($x_y_pair[0], $x_y_pair[1] + $std_error_rel_size, $x_y_pair[0], $x_y_pair[1] - $std_error_rel_size, $paint_color, 1);
-					$this->svg_dom->draw_svg_line($x_y_pair[0] - $std_error_width, $x_y_pair[1] - $std_error_rel_size, $x_y_pair[0] + $std_error_width, $x_y_pair[1] - $std_error_rel_size, $paint_color, 1);
-					$this->svg_dom->draw_svg_line($x_y_pair[0] - $std_error_width, $x_y_pair[1] + $std_error_rel_size, $x_y_pair[0] + $std_error_width, $x_y_pair[1] + $std_error_rel_size, $paint_color, 1);
+					$this->svg_dom->draw_svg_line_to_element($group_el, $x_y_pair[0], $x_y_pair[1] + $std_error_rel_size, $x_y_pair[0], $x_y_pair[1] - $std_error_rel_size, $paint_color, 1, array("opacity" => "0.4"));
+					$this->svg_dom->draw_svg_line_to_element($group_el, $x_y_pair[0] - $std_error_width, $x_y_pair[1] - $std_error_rel_size, $x_y_pair[0] + $std_error_width, $x_y_pair[1] - $std_error_rel_size, $paint_color, 1, array("opacity" => "0.4"));
+					$this->svg_dom->draw_svg_line_to_element($group_el, $x_y_pair[0] - $std_error_width, $x_y_pair[1] + $std_error_rel_size, $x_y_pair[0] + $std_error_width, $x_y_pair[1] + $std_error_rel_size, $paint_color, 1, array("opacity" => "0.4"));
 					$plotted_error_bar = true;
 				}
 			}
 
 			if(isset($regression_plots[$i]) && $i > 0)
 			{
-				$this->svg_dom->draw_svg_line($x_y_pair[0], $x_y_pair[1] + 6, $x_y_pair[0], $x_y_pair[1] - 6, self::$c['color']['alert'], 4, array('xlink:title' => $regression_plots[$i]));
+				$this->svg_dom->draw_svg_line_to_element($group_el, $x_y_pair[0], $x_y_pair[1] + 6, $x_y_pair[0], $x_y_pair[1] - 6, self::$c['color']['alert'], 4, array('xlink:title' => $regression_plots[$i], "opacity" => "0.4"));
 			}
 
 			if($point_counter < 6 || $plotted_error_bar || $i == 0 || $i == ($poly_points_count  - 1))
 			{
-				$this->svg_dom->add_element('ellipse', array('cx' => $x_y_pair[0], 'cy' => $x_y_pair[1], 'rx' => 3, 'ry' => 3, 'fill' => $paint_color, 'stroke' => $paint_color, 'stroke-width' => 1, 'xlink:title' => $x_y_pair[2]));
+				$this->svg_dom->add_element_to_element($group_el, 'ellipse', array('cx' => $x_y_pair[0], 'cy' => $x_y_pair[1], 'rx' => 3, 'ry' => 3, 'fill' => $paint_color, 'stroke' => $paint_color, 'stroke-width' => 1, 'xlink:title' => $x_y_pair[2], "opacity" => "0.4"));
 			}
 		}
 

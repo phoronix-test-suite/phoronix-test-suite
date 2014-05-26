@@ -124,6 +124,10 @@ class pts_svg_dom
 	}
 	public function draw_svg_line($start_x, $start_y, $end_x, $end_y, $color, $line_width = 1, $extra_elements = null)
 	{
+		$this->draw_svg_line_to_element($this->svg, $start_x, $start_y, $end_x, $end_y, $color, $line_width, $extra_elements);
+	}
+	public function draw_svg_line_to_element($element, $start_x, $start_y, $end_x, $end_y, $color, $line_width = 1, $extra_elements = null)
+	{
 		$attributes = array('x1' => $start_x, 'y1' => $start_y, 'x2' => $end_x, 'y2' => $end_y, 'stroke' => $color, 'stroke-width' => $line_width);
 
 		if($extra_elements != null)
@@ -131,7 +135,7 @@ class pts_svg_dom
 			$attributes = array_merge($attributes, $extra_elements);
 		}
 
-		$this->add_element('line', $attributes);
+		$this->add_element_to_element($element, 'line', $attributes);
 	}
 	public function draw_svg_arc($center_x, $center_y, $radius, $offset_percent, $percent, $attributes)
 	{
@@ -147,60 +151,34 @@ class pts_svg_dom
 		$attributes['d'] = "M$center_x,$center_y L$p1_x,$p1_y A$radius,$radius 0 $arc,1 $p2_x,$p2_y Z";
 		$this->add_element('path', $attributes);
 	}
+	public function create_group()
+	{
+		return $this->add_element("g");
+	}
+	public function add_anchored_element($href, $element_type, $attributes)
+	{
+		return $this->add_anchored_element_with_value($href, $element_type, "", $attributes);
+	}
+	public function add_anchored_element_with_value($href, $element_type, $value, $attributes)
+	{
+		$anchor = $this->generate_subelement_with_value_to_element($this->svg, 'a', "", array('xlink:show' => 'new', 'xlink:href' => $href));
+		return $this->generate_subelement_with_value_to_element($anchor, $element_type, $value, $attributes);
+	}
 	public function add_element($element_type, $attributes = array())
 	{
-		$el = $this->dom->createElement($element_type);
-
-		if(isset($attributes['xlink:href']) && $attributes['xlink:href'] != null && $element_type != 'a' && ($element_type != 'image' || (isset($attributes['http_link']) && $attributes['http_link'] != null)))
-		{
-			// image tag uses xlink:href as the image src, so check for 'http_link' instead to make a link out of it
-			$link_key = ($element_type == 'image' ? 'http_link' : 'xlink:href');
-			$link = $this->dom->createElement('a');
-			$link->setAttribute('xlink:href', $attributes[$link_key]);
-			$link->setAttribute('xlink:show', 'new');
-			$link->appendChild($el);
-			$this->svg->appendChild($link);
-			unset($attributes[$link_key]);
-		}
-		else
-		{
-			$this->svg->appendChild($el);
-		}
-
-		foreach($attributes as $name => $value)
-		{
-			$el->setAttribute($name, $value);
-		}
+		return $this->add_element_with_value($element_type, "", $attributes);
 	}
-	public function add_text_element($text_string, $attributes)
+	public function add_element_with_value($element_type, $value, $attributes = array())
 	{
-		$el = $this->dom->createElement('text');
-		$text_node = $this->dom->createTextNode($text_string);
-		$el->appendChild($text_node);
-
-		if(isset($attributes['xlink:href']) && $attributes['xlink:href'] != null)
-		{
-			$link = $this->dom->createElement('a');
-			$link->setAttribute('xlink:href', $attributes['xlink:href']);
-			$link->setAttribute('xlink:show', 'new');
-			$link->appendChild($el);
-			$this->svg->appendChild($link);
-			unset($attributes['xlink:href']);
-		}
-		else
-		{
-			$this->svg->appendChild($el);
-		}
-
-		foreach($attributes as $name => $value)
-		{
-			if($value === null)
-			{
-				continue;
-			}
-
-			$el->setAttribute($name, $value);
-		}
+		return $this->generate_subelement_with_value_to_element($this->svg, $element_type, $value, $attributes);
+	}
+	public function add_element_to_element($el, $element_type, $attributes = array())
+	{
+		return $this->add_element_with_value_to_element($el, $element_type, "", $attributes);
+	}
+	public function add_element_with_value_to_element($el, $element_type, $value, $attributes = array())
+	{
+		return $this->generate_subelement_with_value_to_element($el, $element_type, $value, $attributes);
 	}
 	public function add_textarea_element($text_string, $attributes, &$estimated_height = 0)
 	{
@@ -212,8 +190,8 @@ class pts_svg_dom
 		$queue_dimensions = self::estimate_text_dimensions($text_string, $attributes['font-size']);
 		if($queue_dimensions[0] < $attributes['width'])
 		{
-			// No wrapping is occuring, so stuff it in a more efficient text element instead
-			$this->add_text_element($text_string, $attributes);
+			// No wrapping is occurring, so stuff it in a more efficient text element instead
+			$this->add_element_with_value('text', $text_string, $attributes);
 			$estimated_height += ($attributes['font-size'] + 3);
 			return;
 		}
@@ -254,19 +232,7 @@ class pts_svg_dom
 		$estimated_height += $line_count * ($attributes['font-size'] + 2);
 		unset($attributes['width']);
 
-		if(isset($attributes['xlink:href']) && $attributes['xlink:href'] != null)
-		{
-			$link = $this->dom->createElement('a');
-			$link->setAttribute('xlink:href', $attributes['xlink:href']);
-			$link->setAttribute('xlink:show', 'new');
-			$link->appendChild($el);
-			$this->svg->appendChild($link);
-			unset($attributes['xlink:href']);
-		}
-		else
-		{
-			$this->svg->appendChild($el);
-		}
+		$this->svg->appendChild($el);
 
 		foreach($attributes as $name => $value)
 		{
@@ -379,6 +345,32 @@ class pts_svg_dom
 	public static function embed_png_image($png_img_file)
 	{
 		return 'data:image/png;base64,' . base64_encode(file_get_contents($png_img_file));
+	}
+	/* master function for adding elements to the SVG DOM */
+	private function generate_subelement_with_value_to_element($super_element, $element_type, $value, $attributes = array())
+	{
+		$el = $this->dom->createElement($element_type);
+
+		if (!empty($value))
+		{
+			$text_node = $this->dom->createTextNode((string)$value);
+			$el->appendChild($text_node);
+		}
+
+		if (gettype($attributes) != "array")
+		{
+			debug_print_backtrace();
+			exit(1);
+		}
+
+		foreach($attributes as $name => $value)
+		{
+			$el->setAttribute($name, $value);
+		}
+
+		$super_element->appendChild($el);
+
+		return $el;
 	}
 }
 
