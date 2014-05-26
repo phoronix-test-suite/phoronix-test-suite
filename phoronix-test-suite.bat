@@ -31,5 +31,5 @@ If exist C:\php-gtk2\php set PHP_BIN=C:\php-gtk2\php
 set PHP_BIN="C:\Program Files (x86)\PHP"\php
 
 :SkipBinSearch
-If not defined PHP_BIN echo "\nPHP could not be found.\n" else cls
+cls
 %PHP_BIN% pts-core/phoronix-test-suite.php %*
