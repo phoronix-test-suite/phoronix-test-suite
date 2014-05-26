@@ -76,12 +76,12 @@ class pts_ImageComparisonGraph extends pts_Graph
 
 			$this->svg_dom->add_element('rect', array('x' => ($from_left - 1), 'y' => ($from_top - 1), 'width' => ($img_width + 2), 'height' => ($img_height + 2), 'fill' => self::$c['color']['body_light']));
 			$this->svg_dom->add_element('image', array('xlink:href' => 'data:image/png;base64,' . $this->graph_data[0][$i_o], 'x' => $from_left, 'y' => $from_top, 'width' => $img_width, 'height' => $img_height));
-			$this->svg_dom->add_text_element($this->graph_identifiers[$i_o], array('x' => round($this->i['graph_width'] / 2), 'y' => ($from_top + $img_height + 3), 'font-size' => self::$c['size']['bars'], 'fill' => self::$c['color']['main_headers'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
+			$this->svg_dom->add_element_with_value('text', $this->graph_identifiers[$i_o], array('x' => round($this->i['graph_width'] / 2), 'y' => ($from_top + $img_height + 3), 'font-size' => self::$c['size']['bars'], 'fill' => self::$c['color']['main_headers'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
 		}
 
 		if(!empty(self::$c['text']['watermark']))
 		{
-			$this->svg_dom->add_text_element(self::$c['text']['watermark'], array('x' => (round($this->i['graph_width']) / 2), 'y' => ($this->i['graph_height'] - 15), 'font-size' => 10, 'fill' => self::$c['color']['text'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
+			$this->svg_dom->add_element_with_value('text', self::$c['text']['watermark'], array('x' => (round($this->i['graph_width']) / 2), 'y' => ($this->i['graph_height'] - 15), 'font-size' => 10, 'fill' => self::$c['color']['text'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
 		}
 	}
 }

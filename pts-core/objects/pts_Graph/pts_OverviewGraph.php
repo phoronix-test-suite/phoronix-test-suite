@@ -138,9 +138,8 @@ class pts_OverviewGraph extends pts_Graph
 			$top_start = $this->i['top_start'] + ($row * ($this->graph_row_height + $l_height));
 			$top_end = round($this->i['top_start'] + ($row * ($this->graph_row_height + $l_height)) + $this->graph_row_height);
 			$px_bound_left = $this->i['left_start'] + ($this->graph_item_width * ($col % $this->graphs_per_row));
-			$px_bound_right = $px_bound_left + $this->graph_item_width;
 
-			$this->svg_dom->add_text_element($result_object->test_profile->get_title(), array('x' => ($px_bound_left + ($this->graph_item_width * 0.5)), 'y' => ($top_end + 3), 'font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['headers'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
+			$this->svg_dom->add_element_with_value('text', $result_object->test_profile->get_title(), array('x' => ($px_bound_left + ($this->graph_item_width * 0.5)), 'y' => ($top_end + 3), 'font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['headers'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
 
 			if($result_object->test_profile->get_display_format() == 'BAR_GRAPH')
 			{
@@ -174,8 +173,6 @@ class pts_OverviewGraph extends pts_Graph
 					$value_plot_top = $top_end + 1 - $graph_size;
 
 					$px_left = $px_bound_left + $inter_width + ($bar_width * $x);
-					$px_right = $px_left + $bar_width;
-
 					$this->svg_dom->add_element('rect', array('x' => $px_left, 'y' => $value_plot_top, 'width' => $bar_width, 'height' => ($top_end - $value_plot_top), 'fill' => $paint_color, 'stroke' => self::$c['color']['body_light'], 'stroke-width' => 1));
 				}
 

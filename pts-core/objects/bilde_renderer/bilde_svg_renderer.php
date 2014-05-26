@@ -28,14 +28,14 @@ $this->svg_dom->add_element('rect', array('x' => 0, 'y' => 0, 'width' => $this->
 
 write_text_left:
 
-$this->svg_dom->add_text_element($text, array('x' => 0, 'y' => 0, 'font-size' => $font_size, 'fill' => $color, 'text-anchor' => 'start', 'dominant-baseline' => 'middle'));
+$this->svg_dom->add_element_with_value('text', $text, array('x' => 0, 'y' => 0, 'font-size' => $font_size, 'fill' => $color, 'text-anchor' => 'start', 'dominant-baseline' => 'middle'));
 
 write_text_right:
 
-$this->svg_dom->add_text_element($text, array('x' => 0, 'y' => 0, 'font-size' => $font_size, 'fill' => $color, 'text-anchor' => 'end', 'dominant-baseline' => 'middle'));
+$this->svg_dom->add_element_with_value('text', $text, array('x' => 0, 'y' => 0, 'font-size' => $font_size, 'fill' => $color, 'text-anchor' => 'end', 'dominant-baseline' => 'middle'));
 
 write_text_center:
-$this->svg_dom->add_text_element($text, array('x' => 0, 'y' => 0, 'font-size' => $font_size, 'fill' => $color, 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
+$this->svg_dom->add_element_with_value('text', $text, array('x' => 0, 'y' => 0, 'font-size' => $font_size, 'fill' => $color, 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
 
 draw_line:
 

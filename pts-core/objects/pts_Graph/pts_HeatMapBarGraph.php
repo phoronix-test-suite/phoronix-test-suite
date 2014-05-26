@@ -140,7 +140,7 @@ class pts_HeatMapBarGraph extends pts_Graph
 				$key_colors[$this->keys[$i]] = $key_color;
 
 				$this->svg_dom->add_element('rect', array('x' => ($component_x + 1), 'y' => $component_y, 'width' => 10, 'height' => 10, 'fill' => $key_color, 'stroke' => self::$c['color']['border'], 'stroke-width' => 1));
-				$this->svg_dom->add_text_element($this->keys[$i], array('x' => ($component_x + 15), 'y' => ($component_y + 5), 'font-size' => 10, 'fill' => $key_color, 'text-anchor' => 'start'));
+				$this->svg_dom->add_element_with_value('text', $this->keys[$i], array('x' => ($component_x + 15), 'y' => ($component_y + 5), 'font-size' => 10, 'fill' => $key_color, 'text-anchor' => 'start'));
 			}
 		}
 
@@ -152,7 +152,7 @@ class pts_HeatMapBarGraph extends pts_Graph
 
 			if($hmap['test_data']['h'] != null && $hmap['test_data']['h'] != $previous_category)
 			{
-				$this->svg_dom->add_text_element($hmap['test_data']['h'] . ' Tests', array('x' => ($start_x + ($bar_width / 2)), 'y' => $upper_y, 'font-size' => 16, 'fill' => $text_color, 'text-anchor' => 'middle'));
+				$this->svg_dom->add_element_with_value('text', $hmap['test_data']['h'] . ' Tests', array('x' => ($start_x + ($bar_width / 2)), 'y' => $upper_y, 'font-size' => 16, 'fill' => $text_color, 'text-anchor' => 'middle'));
 				$category_offsets += $category_heights;
 				$upper_y += $category_heights;
 			}
@@ -164,8 +164,8 @@ class pts_HeatMapBarGraph extends pts_Graph
 			$prev_color = '#ffffff';
 			$last_plot_x = $start_x;
 
-			$this->svg_dom->add_text_element($hmap['test_data']['t'], array('x' => $start_x, 'y' => $upper_y, 'font-size' => 12, 'fill' => $text_color, 'text-anchor' => 'start'));
-			$this->svg_dom->add_text_element($hmap['test_data']['a'], array('x' => $end_x, 'y' => $upper_y, 'font-size' => 10, 'fill' => $alt_text_color, 'text-anchor' => 'end'));
+			$this->svg_dom->add_element_with_value('text', $hmap['test_data']['t'], array('x' => $start_x, 'y' => $upper_y, 'font-size' => 12, 'fill' => $text_color, 'text-anchor' => 'start'));
+			$this->svg_dom->add_element_with_value('text', $hmap['test_data']['a'], array('x' => $end_x, 'y' => $upper_y, 'font-size' => 10, 'fill' => $alt_text_color, 'text-anchor' => 'end'));
 
 			if($hmap['test_data']['p'] == 'LIB')
 			{
@@ -282,8 +282,8 @@ class pts_HeatMapBarGraph extends pts_Graph
 
 		// Footer
 		$this->draw_arrow($start_x + 8, $lower_y + 8, $start_x + 1, $lower_y + 8, $alt_text_color, self::$c['color']['border'], 1);
-		$this->svg_dom->add_text_element('Percentile Rank' . ($this->last_updated != null ? '; Data As Of ' . pts_strings::time_stamp_to_string($this->last_updated, 'j F Y') . ' For Trailing 200 Days' : null), array('x' => $start_x + 13, 'y' => $lower_y + 8, 'font-size' => 7, 'fill' => $alt_text_color, 'text-anchor' => 'start', 'dominant-baseline' => 'middle'));
-		$this->svg_dom->add_text_element('OpenBenchmarking.org Performance Classification', array('x' => $end_x, 'y' => $lower_y + 8, 'font-size' => 7, 'fill' => $alt_text_color, 'text-anchor' => 'end', 'dominant-baseline' => 'middle'));
+		$this->svg_dom->add_element_with_value('text', 'Percentile Rank' . ($this->last_updated != null ? '; Data As Of ' . pts_strings::time_stamp_to_string($this->last_updated, 'j F Y') . ' For Trailing 200 Days' : null), array('x' => $start_x + 13, 'y' => $lower_y + 8, 'font-size' => 7, 'fill' => $alt_text_color, 'text-anchor' => 'start', 'dominant-baseline' => 'middle'));
+		$this->svg_dom->add_element_with_value('text', 'OpenBenchmarking.org Performance Classification', array('x' => $end_x, 'y' => $lower_y + 8, 'font-size' => 7, 'fill' => $alt_text_color, 'text-anchor' => 'end', 'dominant-baseline' => 'middle'));
 
 		return $this->svg_dom;
 	}
