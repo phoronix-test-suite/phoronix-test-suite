@@ -26,7 +26,7 @@
 // Other tests:
 // 1201120-BY-MESA80GAL31
 
-// TODO: elimiante need for some of the pts_* classes called inside here, instead build them in or find other efficient ways of handling...
+// TODO: eliminate need for some of the pts_* classes called inside here, instead build them in or find other efficient ways of handling...
 
 // Setup main config values, should only be needed once since the configuration values should never be over-written within pts_Graph*
 pts_Graph::init_graph_config();
@@ -54,7 +54,7 @@ abstract class pts_Graph
 
 	public function __construct(&$result_object = null, &$result_file = null)
 	{
-		// Initalize Colors
+		// Initialize Colors
 		$this->i['identifier_size'] = self::$c['size']['identifiers']; // Copy this since it's commonly overwritten
 		$this->i['graph_orientation'] = 'VERTICAL';
 		$this->i['graph_value_type'] = 'NUMERICAL';
@@ -721,7 +721,7 @@ abstract class pts_Graph
 
 				if($i != 0)
 				{
-					$show_numbers && $this->svg_dom->add_text_element($display_value, array('x' => $px_from_left, 'y' => ($top_end + 5 + self::$c['size']['tick_mark']), 'font-size' => self::$c['size']['tick_mark'], 'fill' => self::$c['color']['text'], 'text-anchor' => 'middle'));
+					$show_numbers && $this->svg_dom->add_element_with_value('text', $display_value, array('x' => $px_from_left, 'y' => ($top_end + 5 + self::$c['size']['tick_mark']), 'font-size' => self::$c['size']['tick_mark'], 'fill' => self::$c['color']['text'], 'text-anchor' => 'middle'));
 					$this->svg_dom->draw_svg_line($px_from_left + 2, $top_start, $px_from_left + 2, $top_end - 5, self::$c['color']['body'], 1, array('stroke-dasharray' => '5,5'));
 					$this->svg_dom->draw_svg_line($px_from_left + 2, $top_end - 4, $px_from_left + 2, $top_end + 4, self::$c['color']['notches'], 1);
 				}

@@ -124,6 +124,10 @@ class pts_svg_dom
 	}
 	public function draw_svg_line($start_x, $start_y, $end_x, $end_y, $color, $line_width = 1, $extra_elements = null)
 	{
+		$this->draw_svg_line_to_element($this->svg, $start_x, $start_y, $end_x, $end_y, $color, $line_width, $extra_elements);
+	}
+	public function draw_svg_line_to_element($element, $start_x, $start_y, $end_x, $end_y, $color, $line_width = 1, $extra_elements = null)
+	{
 		$attributes = array('x1' => $start_x, 'y1' => $start_y, 'x2' => $end_x, 'y2' => $end_y, 'stroke' => $color, 'stroke-width' => $line_width);
 
 		if($extra_elements != null)
@@ -131,7 +135,7 @@ class pts_svg_dom
 			$attributes = array_merge($attributes, $extra_elements);
 		}
 
-		$this->add_element('line', $attributes);
+		$this->add_element_to_element($element, 'line', $attributes);
 	}
 	public function draw_svg_arc($center_x, $center_y, $radius, $offset_percent, $percent, $attributes)
 	{
@@ -154,6 +158,10 @@ class pts_svg_dom
 		$extra_attributes['r'] = $radius;
 		$extra_attributes['fill'] = $color;
 		$this->add_element('circle', $extra_attributes);
+	}
+	public function create_group($attributes = array())
+	{
+		return $this->add_element("g", $attributes);
 	}
 	public function add_anchored_element($href, $element_type, $attributes)
 	{
@@ -179,6 +187,12 @@ class pts_svg_dom
 	public function add_element_with_value_to_element($el, $element_type, $value, $attributes = array())
 	{
 		return $this->generate_subelement_with_value_to_element($el, $element_type, $value, $attributes);
+	}
+	public function add_cdata_element_to_element($el, $cdata)
+	{
+		$cdata_el = $this->dom->createCDATASection($cdata);
+		$el->appendChild($cdata_el);
+		return $cdata_el;
 	}
 	public function add_textarea_element($text_string, $attributes, &$estimated_height = 0)
 	{
