@@ -56,10 +56,6 @@ class pts_PassFailGraph extends pts_Graph
 		$identifier_height = floor(($graph_height - (($identifiers_per_column - 1) * $spacing)) / $identifiers_per_column);
 		$identifier_width = floor(($graph_width - (($columns - 1) * $spacing)) / $columns);
 
-		$width = $identifier_width - 8;
-		$height = $identifier_height - 4;
-		$main_font_size = $this->text_size_bounds($this->i['graph_max_value'], $font_size, 4, $width, $height);
-
 		for($c = 0; $c < $columns; $c++)
 		{
 			for($i = 0; $i < $identifiers_per_column; $i++)
@@ -77,7 +73,7 @@ class pts_PassFailGraph extends pts_Graph
 				$this->svg_dom->add_element('rect', array('x' => $this_x_start, 'y' => $this_y_start, 'width' => $identifier_width, 'height' => $identifier_height, 'fill' => $paint_color, 'stroke' => self::$c['color']['body_light'], 'stroke-width' => 1));
 				$x = $this_x_start + (($this_x_end - $this_x_start) / 2);
 				$y = $this_y_start + (($this_y_end - $this_y_start) / 2);
-				$this->svg_dom->add_text_element($this_identifier, array('x' => $x, 'y' => $y, 'font-size' => $font_size, 'fill' => self::$c['color']['body_text'], 'text-anchor' => 'middle', 'dominant-baseline' => 'middle'));
+				$this->svg_dom->add_element_with_value('text', $this_identifier, array('x' => $x, 'y' => $y, 'font-size' => $font_size, 'fill' => self::$c['color']['body_text'], 'text-anchor' => 'middle', 'dominant-baseline' => 'middle'));
 			}
 		}
 	}

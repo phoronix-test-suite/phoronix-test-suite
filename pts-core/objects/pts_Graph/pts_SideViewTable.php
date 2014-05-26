@@ -126,11 +126,11 @@ class pts_SideViewTable extends pts_Graph
 		// Start drawing
 		if($this->i['left_start'] >= 170 && $top_identifier_height >= 90)
 		{
-			$this->svg_dom->add_element('image', array('http_link' => 'http://www.phoronix-test-suite.com/', 'xlink:href' => pts_svg_dom::embed_png_image(PTS_CORE_STATIC_PATH . 'images/pts-160x83.png'), 'x' => round($this->i['left_start'] / 2 - 80), 'y' => round(($top_identifier_height / 2 - 41.5) + $this->i['top_heading_height']), 'width' => 160, 'height' => 83));
+			$this->svg_dom->add_anchored_element('http://www.phoronix-test-suite.com/', 'image', array('xlink:href' => pts_svg_dom::embed_png_image(PTS_CORE_STATIC_PATH . 'images/pts-160x83.png'), 'x' => round($this->i['left_start'] / 2 - 80), 'y' => round(($top_identifier_height / 2 - 41.5) + $this->i['top_heading_height']), 'width' => 160, 'height' => 83));
 		}
 		else
 		{
-			$this->svg_dom->add_element('image', array('http_link' => 'http://www.phoronix-test-suite.com/', 'xlink:href' => pts_svg_dom::embed_png_image(PTS_CORE_STATIC_PATH . 'images/pts-80x42.png'), 'x' => round($this->i['left_start'] / 2 - 40), 'y' => round($top_identifier_height / 2 - 21 + $this->i['top_heading_height']), 'width' => 80, 'height' => 42));
+			$this->svg_dom->add_anchored_element('http://www.phoronix-test-suite.com/', 'image', array('xlink:href' => pts_svg_dom::embed_png_image(PTS_CORE_STATIC_PATH . 'images/pts-80x42.png'), 'x' => round($this->i['left_start'] / 2 - 40), 'y' => round($top_identifier_height / 2 - 21 + $this->i['top_heading_height']), 'width' => 80, 'height' => 42));
 		}
 
 		// Draw the vertical table lines
@@ -144,7 +144,7 @@ class pts_SideViewTable extends pts_Graph
 			foreach($this->graph_sub_titles as $i => $sub_title)
 			{
 				$vertical_offset = 16 + self::$c['size']['headers'] + ($i * (self::$c['size']['sub_headers']));
-				$this->svg_dom->add_text_element($sub_title, array('x' => 5, 'y' => $vertical_offset, 'font-size' => self::$c['size']['sub_headers'], 'fill' => self::$c['color']['background'], 'text-anchor' => 'start'));
+				$this->svg_dom->add_element_with_value('text', $sub_title, array('x' => 5, 'y' => $vertical_offset, 'font-size' => self::$c['size']['sub_headers'], 'fill' => self::$c['color']['background'], 'text-anchor' => 'start'));
 			}
 
 			$this->svg_dom->draw_svg_line(1, $this->i['top_heading_height'], $this->i['graph_width'] - 1, $this->i['top_heading_height'], self::$c['color']['border'], 1);
@@ -159,7 +159,7 @@ class pts_SideViewTable extends pts_Graph
 				$this->svg_dom->add_element('rect', array('x' => 1, 'y' => $horizontal_offset, 'width' => $this->i['left_start'], 'height' => $row_heights[$i], 'fill' => self::$c['color']['body_light'], 'stroke' => self::$c['color']['border'], 'stroke-width' => 1));
 			}
 
-			$this->svg_dom->add_text_element($row_string, array('x' => ($this->i['left_start'] - 4), 'y' => ($horizontal_offset + 16), 'font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['text'], 'font-weight' => 'bold', 'text-anchor' => 'end'));
+			$this->svg_dom->add_element_with_value('text', $row_string, array('x' => ($this->i['left_start'] - 4), 'y' => ($horizontal_offset + 16), 'font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['text'], 'font-weight' => 'bold', 'text-anchor' => 'end'));
 			$horizontal_offset += $row_heights[$i];
 		}
 
@@ -172,7 +172,7 @@ class pts_SideViewTable extends pts_Graph
 			{
 				$this->svg_dom->add_element('rect', array('x' => $column_width_offset, 'y' => $this->i['top_heading_height'], 'width' => $column_widths[$i], 'height' => $top_identifier_height, 'fill' => self::$c['color']['body_light'], 'stroke' => self::$c['color']['border'], 'stroke-width' => 1));
 			}
-			$this->svg_dom->add_text_element($col_string, array('x' => $column_width_offset + round($column_widths[$i] / 2) , 'y' => $y, 'font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['text'], 'font-weight' => 'bold', 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
+			$this->svg_dom->add_element_with_value('text', $col_string, array('x' => $column_width_offset + round($column_widths[$i] / 2) , 'y' => $y, 'font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['text'], 'font-weight' => 'bold', 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
 			$column_width_offset += $column_widths[$i];
 		}
 
@@ -200,7 +200,7 @@ class pts_SideViewTable extends pts_Graph
 				}
 				else
 				{
-					$this->svg_dom->add_text_element($value, array('x' => $x, 'y' => ($row_offset + 16), 'font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['text'], 'text-anchor' => 'middle'));
+					$this->svg_dom->add_element_with_value('text', $value, array('x' => $x, 'y' => ($row_offset + 16), 'font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['text'], 'text-anchor' => 'middle'));
 				}
 
 				$row_count++;
@@ -213,7 +213,10 @@ class pts_SideViewTable extends pts_Graph
 
 		// Bottom part
 		$this->svg_dom->add_element('rect', array('x' => 0, 'y' => $table_proper_height, 'width' => $this->i['graph_width'], 'height' => ($this->i['graph_height'] - $table_proper_height), 'fill' => self::$c['color']['headers']));
-		$this->svg_dom->add_text_element(self::$c['text']['watermark'], array('x' => ($this->i['graph_width'] - 2), 'y' => ($this->i['graph_height'] - 3), 'font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['body_text'], 'text-anchor' => 'end', 'xlink:show' => 'new', 'xlink:href' => self::$c['text']['watermark_url']));
+		$this->svg_dom->add_anchored_element_with_value(self::$c['text']['watermark_url'], 'text', self::$c['text']['watermark'],
+														array('x' => ($this->i['graph_width'] - 2), 'y' => ($this->i['graph_height'] - 3),
+															  'font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['body_text'],
+															  'text-anchor' => 'end'));
 
 		if(!empty($this->i['notes']))
 		{

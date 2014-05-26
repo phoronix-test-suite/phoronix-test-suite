@@ -68,12 +68,12 @@ class pts_VerticalBarGraph extends pts_Graph
 			if($this->i['identifier_size'] <= $this->i['min_identifier_size'])
 			{
 				$x = $px_bound_left + ceil($this->i['identifier_width'] / 2);
-				$this->svg_dom->add_text_element($this->graph_identifiers[$i], array('x' => $x, 'y' => $px_from_top_end, 'font-size' => 9, 'fill' => self::$c['color']['headers'], 'text-anchor' => 'start', 'dominant-baseline' => 'middle', 'transform' => 'rotate(90 ' . $x . ' ' . $px_from_top_end . ')'));
+				$this->svg_dom->add_element_with_value('text', $this->graph_identifiers[$i], array('x' => $x, 'y' => $px_from_top_end, 'font-size' => 9, 'fill' => self::$c['color']['headers'], 'text-anchor' => 'start', 'dominant-baseline' => 'middle', 'transform' => 'rotate(90 ' . $x . ' ' . $px_from_top_end . ')'));
 			}
 			else
 			{
 				$x = $px_bound_left + (($px_bound_right - $px_bound_left) * 0.5);
-				$this->svg_dom->add_text_element($this->graph_identifiers[$i], array('x' => $x, 'y' => ($px_from_top_end + $this->i['identifier_size']), 'font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['headers'], 'text-anchor' => 'middle'));
+				$this->svg_dom->add_element_with_value('text', $this->graph_identifiers[$i], array('x' => $x, 'y' => ($px_from_top_end + $this->i['identifier_size']), 'font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['headers'], 'text-anchor' => 'middle'));
 			}
 		}
 	}
@@ -115,12 +115,12 @@ class pts_VerticalBarGraph extends pts_Graph
 				$x = $px_bound_left + (($px_bound_right - $px_bound_left) / 2);
 				if($graph_size > 18)
 				{
-					$this->svg_dom->add_text_element($value, array('x' => $x, 'y' => ($value_plot_top + 2), 'font-size' => floor(self::$c['size']['bars'] * 0.9), 'fill' => self::$c['color']['body_text'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
+					$this->svg_dom->add_element_with_value('text', $value, array('x' => $x, 'y' => ($value_plot_top + 2), 'font-size' => floor(self::$c['size']['bars'] * 0.9), 'fill' => self::$c['color']['body_text'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
 				}
 				else
 				{
 					// Make things more compact
-					$this->svg_dom->add_text_element($value, array('x' => $x, 'y' => ($value_plot_top + 2), 'font-size' => floor(self::$c['size']['bars'] * 0.6), 'fill' => self::$c['color']['body_text'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
+					$this->svg_dom->add_element_with_value('text', $value, array('x' => $x, 'y' => ($value_plot_top + 2), 'font-size' => floor(self::$c['size']['bars'] * 0.6), 'fill' => self::$c['color']['body_text'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
 				}
 			}
 		}
