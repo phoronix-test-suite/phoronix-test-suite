@@ -124,6 +124,10 @@ class pts_svg_dom
 	}
 	public function draw_svg_line($start_x, $start_y, $end_x, $end_y, $color, $line_width = 1, $extra_elements = null)
 	{
+		$this->draw_svg_line_to_element($this->svg, $start_x, $start_y, $end_x, $end_y, $color, $line_width, $extra_elements);
+	}
+	public function draw_svg_line_to_element($element, $start_x, $start_y, $end_x, $end_y, $color, $line_width = 1, $extra_elements = null)
+	{
 		$attributes = array('x1' => $start_x, 'y1' => $start_y, 'x2' => $end_x, 'y2' => $end_y, 'stroke' => $color, 'stroke-width' => $line_width);
 
 		if($extra_elements != null)
@@ -131,7 +135,7 @@ class pts_svg_dom
 			$attributes = array_merge($attributes, $extra_elements);
 		}
 
-		$this->add_element('line', $attributes);
+		$this->add_element_to_element($element, 'line', $attributes);
 	}
 	public function draw_svg_arc($center_x, $center_y, $radius, $offset_percent, $percent, $attributes)
 	{
@@ -146,6 +150,10 @@ class pts_svg_dom
 
 		$attributes['d'] = "M$center_x,$center_y L$p1_x,$p1_y A$radius,$radius 0 $arc,1 $p2_x,$p2_y Z";
 		$this->add_element('path', $attributes);
+	}
+	public function create_group()
+	{
+		return $this->add_element("g");
 	}
 	public function add_anchored_element($href, $element_type, $attributes)
 	{

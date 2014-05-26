@@ -26,7 +26,7 @@
 // Other tests:
 // 1201120-BY-MESA80GAL31
 
-// TODO: elimiante need for some of the pts_* classes called inside here, instead build them in or find other efficient ways of handling...
+// TODO: eliminate need for some of the pts_* classes called inside here, instead build them in or find other efficient ways of handling...
 
 // Setup main config values, should only be needed once since the configuration values should never be over-written within pts_Graph*
 pts_Graph::init_graph_config();
@@ -54,7 +54,7 @@ abstract class pts_Graph
 
 	public function __construct(&$result_object = null, &$result_file = null)
 	{
-		// Initalize Colors
+		// Initialize Colors
 		$this->i['identifier_size'] = self::$c['size']['identifiers']; // Copy this since it's commonly overwritten
 		$this->i['graph_orientation'] = 'VERTICAL';
 		$this->i['graph_value_type'] = 'NUMERICAL';
