@@ -25,7 +25,7 @@ class pts_HorizontalBoxPlotGraph extends pts_HorizontalBarGraph
 	protected function render_graph_bars()
 	{
 		$bar_count = count($this->graph_data);
-		$separator_height = ($a = (6 - (floor($bar_count / 2) * 2))) > 0 ? $a : 0;
+		$separator_height = ($a = (8 - (floor($bar_count / 2) * 2))) > 0 ? $a : 0;
 		$multi_way = $this->is_multi_way_comparison && count($this->graph_data) > 1;
 		$bar_height = floor(($this->i['identifier_height'] - ($multi_way ? 4 : 0) - $separator_height - ($bar_count * $separator_height)) / $bar_count);
 

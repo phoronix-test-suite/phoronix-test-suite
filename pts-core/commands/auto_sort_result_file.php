@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2013, Phoronix Media
-	Copyright (C) 2009 - 2013, Michael Larabel
+	Copyright (C) 2014, Phoronix Media
+	Copyright (C) 2014, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -20,10 +20,10 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class reorder_result_file implements pts_option_interface
+class auto_sort_result_file implements pts_option_interface
 {
 	const doc_section = 'Result Management';
-	const doc_description = 'This option is used if you wish to manually change the order in which test results are shown in the Phoronix Test Suite Results Viewer and the contained graphs. The user must specify a saved results file and then they will be prompted to select the results identifiers one at a time in the order they would like them to be displayed from left to right.';
+	const doc_description = 'This option is used if you wish to automatically attempt to sort the results by their result identifier string.';
 
 	public static function argument_checks()
 	{
@@ -45,25 +45,14 @@ class reorder_result_file implements pts_option_interface
 		}
 
 		$extract_selects = array();
-		echo PHP_EOL . 'Enter The New Order To Display The New Results, From Left To Right.' . PHP_EOL;
+		echo PHP_EOL . 'Automatically sorting the results...' . PHP_EOL;
 
-		do
+		sort($result_file_identifiers);
+
+		foreach($result_file_identifiers as $identifier)
 		{
-			$extract_identifier = pts_user_io::prompt_text_menu('Select the test run to be showed next', $result_file_identifiers);
-			array_push($extract_selects, new pts_result_merge_select($result, $extract_identifier));
-
-			$old_identifiers = $result_file_identifiers;
-			$result_file_identifiers = array();
-
-			foreach($old_identifiers as $identifier)
-			{
-				if($identifier != $extract_identifier)
-				{
-					array_push($result_file_identifiers, $identifier);
-				}
-			}
+			array_push($extract_selects, new pts_result_merge_select($result, $identifier));
 		}
-		while(count($result_file_identifiers) > 0);
 
 		$ordered_result = pts_merge::merge_test_results_array($extract_selects);
 		pts_client::save_test_result($args[0] . '/composite.xml', $ordered_result);
