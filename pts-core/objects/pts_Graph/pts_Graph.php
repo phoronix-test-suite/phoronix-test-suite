@@ -660,44 +660,54 @@ abstract class pts_Graph
 	}
 	protected function render_graph_value_ticks($left_start, $top_start, $left_end, $top_end)
 	{
-		$increment = round($this->i['graph_max_value'] / ($this->i['mark_count'] - 1), $this->i['graph_max_value'] < 10 ? 2 : 0);
+		$increment = round($this->i['graph_max_value'] / $this->i['mark_count'], $this->i['graph_max_value'] < 10 ? 4 : 2);
 
 		if($this->i['graph_orientation'] == 'HORIZONTAL')
 		{
 			$tick_width = round(($left_end - $left_start) / $this->i['mark_count']);
+			$display_value = 0;
 
-			for($i = 1; $i < $this->i['mark_count']; $i++)
+			for($i = 0; $i < $this->i['mark_count']; $i++)
 			{
 				$px_from_left = $left_start + ($tick_width * $i);
 
-                $this->svg_dom->add_text_element($increment * $i, array('x' => $px_from_left, 'y' => ($top_end + 5 + self::$c['size']['tick_mark']), 'font-size' => self::$c['size']['tick_mark'], 'fill' => self::$c['color']['text'], 'text-anchor' => 'middle'));
-                $this->svg_dom->draw_svg_line($px_from_left + 2, $top_start, $px_from_left + 2, $top_end - 5, self::$c['color']['body'], 1, array('stroke-dasharray' => '5,5'));
-                $this->svg_dom->draw_svg_line($px_from_left + 2, $top_end - 4, $px_from_left + 2, $top_end + 4, self::$c['color']['notches'], 1);
+				if($i != 0)
+				{
+					$this->svg_dom->add_text_element($display_value, array('x' => $px_from_left, 'y' => ($top_end + 5 + self::$c['size']['tick_mark']), 'font-size' => self::$c['size']['tick_mark'], 'fill' => self::$c['color']['text'], 'text-anchor' => 'middle'));
+					$this->svg_dom->draw_svg_line($px_from_left + 2, $top_start, $px_from_left + 2, $top_end - 5, self::$c['color']['body'], 1, array('stroke-dasharray' => '5,5'));
+					$this->svg_dom->draw_svg_line($px_from_left + 2, $top_end - 4, $px_from_left + 2, $top_end + 4, self::$c['color']['notches'], 1);
+				}
+
+				$display_value += $increment;
 			}
+
 		}
 		else
 		{
-			$tick_width = round(($top_end - $top_start) / ($this->i['mark_count'] - 1));
+			$tick_width = round(($top_end - $top_start) / $this->i['mark_count']);
 			$px_from_left_start = $left_start - 5;
 			$px_from_left_end = $left_start + 5;
 
-            // draw zero
-            $this->svg_dom->add_text_element(0, array('x' => ($px_from_left_start - 4), 'y' => round($top_end + (self::$c['size']['tick_mark'] / 2)), 'font-size' => self::$c['size']['tick_mark'], 'fill' =>  self::$c['color']['text'], 'text-anchor' => 'end'));
+			$display_value = 0;
 
-            // draw increments with a dashed line
-			for($i = 1; $i < $this->i['mark_count']; $i++)
+			for($i = 0; $i < $this->i['mark_count']; $i++)
 			{
 				$px_from_top = round($top_end - ($tick_width * $i));
 
-                $this->svg_dom->add_text_element($increment * $i, array('x' => ($px_from_left_start - 4), 'y' => round($px_from_top + (self::$c['size']['tick_mark'] / 2)), 'font-size' => self::$c['size']['tick_mark'], 'fill' =>  self::$c['color']['text'], 'text-anchor' => 'end'));
+				if($i != 0)
+				{
+					$this->svg_dom->add_text_element($display_value, array('x' => ($px_from_left_start - 4), 'y' => round($px_from_top + (self::$c['size']['tick_mark'] / 2)), 'font-size' => self::$c['size']['tick_mark'], 'fill' =>  self::$c['color']['text'], 'text-anchor' => 'end'));
 
-                if($this->i['show_background_lines'])
-                {
-                    $this->svg_dom->draw_svg_line($px_from_left_end + 6, $px_from_top + 1, $this->i['graph_left_end'], $px_from_top + 1, self::$c['color']['body_light'], 1, array('stroke-dasharray' => '5,5'));
-                }
+					if($this->i['show_background_lines'])
+					{
+						$this->svg_dom->draw_svg_line($px_from_left_end + 6, $px_from_top + 1, $this->i['graph_left_end'], $px_from_top + 1, self::$c['color']['body_light'], 1, array('stroke-dasharray' => '5,5'));
+					}
 
-                $this->svg_dom->draw_svg_line($left_start, $px_from_top + 1, $left_end, $px_from_top + 1, self::$c['color']['notches'], 1, array('stroke-dasharray' => '5,5'));
-                $this->svg_dom->draw_svg_line($left_start - 4, $px_from_top + 1, $left_start + 4, $px_from_top + 1, self::$c['color']['notches'], 1);
+					$this->svg_dom->draw_svg_line($left_start, $px_from_top + 1, $left_end, $px_from_top + 1, self::$c['color']['notches'], 1, array('stroke-dasharray' => '5,5'));
+					$this->svg_dom->draw_svg_line($left_start - 4, $px_from_top + 1, $left_start + 4, $px_from_top + 1, self::$c['color']['notches'], 1);
+				}
+
+				$display_value += $increment;
 			}
 		}
 	}

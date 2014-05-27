@@ -7,6 +7,7 @@ Phoronix Test Suite (Git)
 - phoromatic: Allow up to three connection failures before quitting
 - pts_Graph: Improved, cleaner, and more accurate rendering of the pts_OverViewGraph
 - pts_Graph: Make the horizontal box chart graph in good shape
+- pts_Graph: Revert earlier render_graph_value_ticks() change by mufasa72 as it produced inaccurate tick values
 
 Phoronix Test Suite 5.2 Milestone 3
 22 May 2014
