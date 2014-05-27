@@ -97,7 +97,7 @@ class pts_render
 			if((isset($extra_attributes['compact_to_scalar']) || (false && $result_file->is_multi_way_comparison())) && in_array($result_object->test_profile->get_display_format(), array('LINE_GRAPH', 'FILLED_LINE_GRAPH')))
 			{
 				// Convert multi-way line graph into horizontal box plot
-				if(false)
+				if(stripos($result_object->get_arguments_description(), 'frame time') !== false)
 				{
 					$result_object->test_profile->set_display_format('HORIZONTAL_BOX_PLOT');
 				}
