@@ -122,7 +122,7 @@ class pts_OverviewGraph extends pts_Graph
 		for($i = 0; $i < $this->graph_row_count; $i++)
 		{
 			$this->render_graph_base($this->i['left_start'], $this->i['top_start'] + ($i * ($this->graph_row_height + $l_height)), $this->i['graph_left_end'], $this->i['top_start'] + ($i * ($this->graph_row_height + $l_height)) + $this->graph_row_height);
-			$this->render_graph_value_ticks($this->i['left_start'], $this->i['top_start'] + ($i * ($this->graph_row_height + $l_height)), $this->i['graph_left_end'], $this->i['top_start'] + ($i * ($this->graph_row_height + $l_height)) + $this->graph_row_height);
+			$this->render_graph_value_ticks($this->i['left_start'], $this->i['top_start'] + ($i * ($this->graph_row_height + $l_height)), $this->i['graph_left_end'], $this->i['top_start'] + ($i * ($this->graph_row_height + $l_height)) + $this->graph_row_height, false);
 		}
 
 		$row = 0;

@@ -69,6 +69,7 @@ class pts_HorizontalBarGraph extends pts_Graph
 		$multi_way = $this->is_multi_way_comparison && count($this->graph_data) > 1;
 		$bar_height = floor(($this->i['identifier_height'] - ($multi_way ? 4 : 0) - $separator_height - ($bar_count * $separator_height)) / $bar_count);
 		$this->i['graph_max_value'] = $this->i['graph_max_value'] != 0 ? $this->i['graph_max_value'] : 1;
+		$work_area_width = $this->i['graph_left_end'] - $this->i['left_start'];
 
 		for($i_o = 0; $i_o < $bar_count; $i_o++)
 		{
@@ -77,7 +78,7 @@ class pts_HorizontalBarGraph extends pts_Graph
 			foreach(array_keys($this->graph_data[$i_o]) as $i)
 			{
 				$value = $this->graph_data[$i_o][$i];
-				$graph_size = max(0, round(($value / $this->i['graph_max_value']) * ($this->i['graph_left_end'] - $this->i['left_start'])));
+				$graph_size = max(0, round(($value / $this->i['graph_max_value']) * $work_area_width));
 				$value_end_right = max($this->i['left_start'] + $graph_size, 1);
 
 				$px_bound_top = $this->i['top_start'] + ($multi_way ? 5 : 0) + ($this->i['identifier_height'] * $i) + ($bar_height * $i_o) + ($separator_height * ($i_o + 1));
