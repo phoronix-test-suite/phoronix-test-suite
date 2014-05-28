@@ -35,10 +35,14 @@ class pts_HorizontalBoxPlotGraph extends pts_HorizontalBarGraph
 
 			foreach(array_keys($this->graph_data[$i_o]) as $i)
 			{
-				$min_value = round(min($this->graph_data[$i_o][$i]), 2);
 				$avg_value = round(array_sum($this->graph_data[$i_o][$i]) / count($this->graph_data[$i_o][$i]), 2);
-				$max_value = round(max($this->graph_data[$i_o][$i]), 2);
+				$whisker_bottom = pts_math::find_percentile($this->graph_data[$i_o][$i], 0.02);
+				$whisker_top = pts_math::find_percentile($this->graph_data[$i_o][$i], 0.98);
 				$median = pts_math::find_percentile($this->graph_data[$i_o][$i], 0.5);
+
+				$unique_values = array_unique($this->graph_data[$i_o][$i]);
+				$min_value = round(min($unique_values), 2);
+				$max_value = round(max($unique_values), 2);
 
 				$px_bound_top = $this->i['top_start'] + ($multi_way ? 5 : 0) + ($this->i['identifier_height'] * $i) + ($bar_height * $i_o) + ($separator_height * ($i_o + 1));
 				$px_bound_bottom = $px_bound_top + $bar_height;
@@ -47,8 +51,8 @@ class pts_HorizontalBoxPlotGraph extends pts_HorizontalBarGraph
 				$stat_value = 'Min: ' . $min_value . ' / Avg: ' . $avg_value . ' / Max: ' . $max_value;
 				$title_tooltip = $this->graph_identifiers[$i] . ': ' . $stat_value;
 
-				$value_end_left = $this->i['left_start'] + max(1, round(($min_value / $this->i['graph_max_value']) * ($this->i['graph_left_end'] - $this->i['left_start'])));
-				$value_end_right = $this->i['left_start'] + round(($max_value / $this->i['graph_max_value']) * ($this->i['graph_left_end'] - $this->i['left_start']));
+				$value_end_left = $this->i['left_start'] + max(1, round(($whisker_bottom / $this->i['graph_max_value']) * ($this->i['graph_left_end'] - $this->i['left_start'])));
+				$value_end_right = $this->i['left_start'] + round(($whisker_top / $this->i['graph_max_value']) * ($this->i['graph_left_end'] - $this->i['left_start']));
 				$box_color = in_array($this->graph_identifiers[$i], $this->value_highlights) ? self::$c['color']['highlight'] : $paint_color;
 
 				$this->svg_dom->draw_svg_line($value_end_left, $middle_of_bar, $value_end_right, $middle_of_bar, $box_color, 2, array('xlink:title' => $title_tooltip));
@@ -62,7 +66,15 @@ class pts_HorizontalBoxPlotGraph extends pts_HorizontalBarGraph
 				$this->svg_dom->add_element('rect', array('x' => $box_left, 'y' => $px_bound_top, 'width' => ($box_right - $box_left), 'height' => $bar_height, 'fill' => $box_color, 'stroke' => self::$c['color']['body_light'], 'stroke-width' => 1, 'xlink:title' => $title_tooltip));
 				$this->svg_dom->draw_svg_line($box_middle, $px_bound_top, $box_middle, $px_bound_bottom, self::$c['color']['notches'], 2, array('xlink:title' => $title_tooltip));
 
-		$this->svg_dom->add_text_element($stat_value, array('x' => ($this->i['left_start'] - 5), 'y' => round($px_bound_top + ($bar_height * 0.75) + 4), 'font-size' => ($this->i['identifier_size'] - 2), 'fill' => self::$c['color']['text'], 'text-anchor' => 'end'));
+				$this->svg_dom->add_text_element($stat_value, array('x' => ($this->i['left_start'] - 5), 'y' => ceil($px_bound_top + ($bar_height * 0.8) + 6), 'font-size' => ($this->i['identifier_size'] - 2), 'fill' => self::$c['color']['text'], 'text-anchor' => 'end'));
+
+				foreach($unique_values as &$val)
+				{
+					if($val < $whisker_bottom || $val > $whisker_top)
+					{
+						$this->svg_dom->draw_svg_circle($this->i['left_start'] + round(($val / $this->i['graph_max_value']) * ($this->i['graph_left_end'] - $this->i['left_start'])), $middle_of_bar, 1, self::$c['color']['notches']);
+					}
+				}
 			}
 		}
 
