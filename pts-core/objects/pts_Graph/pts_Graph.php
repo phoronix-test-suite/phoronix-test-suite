@@ -437,7 +437,19 @@ abstract class pts_Graph
 				else
 				{
 					// If there's too much to plot, reduce the size so each graph doesn't take too much room
-					$per_identifier_height = count($this->graph_data[0]) > 10 ? 36 : 46;
+					$id_count = count($this->graph_data[0]);
+					if($id_count < 10)
+					{
+						$per_identifier_height = 46;
+					}
+					else if($id_count < 20)
+					{
+						$per_identifier_height = 36;
+					}
+					else
+					{
+						$per_identifier_height = 30;
+					}
 				}
 
 

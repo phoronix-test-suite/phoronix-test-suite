@@ -10,6 +10,7 @@ Phoronix Test Suite (Git)
 - pts_Graph: Make the horizontal box chart graph in good shape
 - pts_Graph: Revert earlier render_graph_value_ticks() change by mufasa72 as it produced inaccurate tick values
 - pts_Graph: use the horizontal box plot when rendering frame times for large number of results
+- pts_Graph: Various other graphing improvements
 
 Phoronix Test Suite 5.2 Milestone 3
 22 May 2014

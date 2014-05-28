@@ -175,7 +175,7 @@ class pts_LineGraph extends pts_Graph
 		{
 			for ($y = $y_start; $y <= $y_end; $y += $this->i['key_line_height'], ++$i)
 			{
-				if (empty($this->graph_data_title[$i]))
+				if(empty($this->graph_data_title[$i]))
 				{
 					continue;
 				}
@@ -228,12 +228,12 @@ class pts_LineGraph extends pts_Graph
 		$stat_array = $this->calc_min_avg_max($data_set);
 
 		$precise_stat_array = array();
-		foreach ($stat_array as $stat_value)
+		foreach($stat_array as $stat_value)
 		{
 			array_push($precise_stat_array, pts_math::set_precision($stat_value, $precision));
 		}
 
-		foreach ($precise_stat_array as $stat_value)
+		foreach($precise_stat_array as $stat_value)
 		{
 			$attributes['x'] = $x;
 			$this->svg_dom->add_text_element(strval($stat_value), $attributes);
@@ -423,7 +423,7 @@ class pts_LineGraph extends pts_Graph
 	}
 	private function get_stat_word_width()
 	{
-		return ceil(2.2 * $this->text_string_width($this->i['graph_max_value'], $this->i['min_identifier_size'] + 0.5));
+		return ceil(3 * $this->text_string_width($this->i['graph_max_value'], $this->i['min_identifier_size'] + 0.5));
 	}
 	private function getStatisticsHeaderHeight()
 	{
