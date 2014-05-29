@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 5.2 Milestone 4
+29 May 2014
 
 - pts-core: Always report the CPU scaling governor to the system table
 - pts-core: Add auto-sort-result-file option
