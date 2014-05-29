@@ -86,7 +86,7 @@ class pts_OverviewGraph extends pts_Graph
 		$this->graph_item_width = floor(($this->i['graph_width'] - $this->i['left_start'] - $this->i['left_end_right']) / $this->graphs_per_row);
 		$this->graph_row_count = ceil($result_object_count / $this->graphs_per_row);
 
-		$this->i['top_start'] += 20 + ($this->graph_row_count * $this->i['identifier_size']);
+		$this->i['top_start'] += 20 + (count($this->system_identifiers) / 3 * $this->i['identifier_size']);
 		$height = $this->i['top_start'] + ($this->graph_row_count * ($this->graph_row_height + 15));
 
 		$this->graph_title = $result_file->get_title();

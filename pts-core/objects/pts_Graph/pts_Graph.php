@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2013, Phoronix Media
-	Copyright (C) 2008 - 2013, Michael Larabel
+	Copyright (C) 2008 - 2014, Phoronix Media
+	Copyright (C) 2008 - 2014, Michael Larabel
 	pts_Graph.php: The core graph object that is used by the different graphing objects.
 
 	This program is free software; you can redistribute it and/or modify
@@ -66,6 +66,7 @@ abstract class pts_Graph
 		$this->i['graph_max_value'] = 0;
 		$this->i['bottom_offset'] = 0;
 		$this->i['hide_y_title'] = false;
+		$this->i['compact_result_view'] = false;
 		$this->i['key_line_height'] = 0;
 		$this->i['graph_height'] = 0;
 		$this->i['graph_width'] = 0;
@@ -446,9 +447,14 @@ abstract class pts_Graph
 					{
 						$per_identifier_height = 36;
 					}
-					else
+					else if($id_count <= 38)
 					{
 						$per_identifier_height = 30;
+					}
+					else
+					{
+						$this->i['compact_result_view'] = true;
+						$per_identifier_height = 26;
 					}
 				}
 
