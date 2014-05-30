@@ -1,5 +1,4 @@
 <?php
-
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/

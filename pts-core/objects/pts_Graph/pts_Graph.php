@@ -350,6 +350,12 @@ abstract class pts_Graph
 	}
 	public function render_graph_start()
 	{
+		$this->render_graph_dimensions();
+		$this->render_graph_pre_init();
+		$this->render_graph_init();
+	}
+	public function render_graph_dimensions()
+	{
 		$this->i['graph_max_value'] = $this->maximum_graph_value();
 
 		// Make room for tick markings, left hand side
@@ -449,6 +455,7 @@ abstract class pts_Graph
 					}
 					else if($id_count <= 38)
 					{
+						$this->i['compact_result_view'] = true;
 						$per_identifier_height = 30;
 					}
 					else
@@ -474,10 +481,6 @@ abstract class pts_Graph
 				$this->i['graph_height'] += $this->note_display_height();
 			}
 		}
-
-		// Do the actual work
-		$this->render_graph_pre_init();
-		$this->render_graph_init();
 	}
 	public function setAlternateLocation($url)
 	{

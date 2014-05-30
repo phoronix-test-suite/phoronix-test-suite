@@ -37,6 +37,29 @@ class pts_HorizontalBoxPlotGraph extends pts_HorizontalBarGraph
 
 			foreach(array_keys($this->graph_data[$i_o]) as $i)
 			{
+				if(isset($this->graph_data[$i_o][$i][10]))
+				{
+					// If there's 0 padding at start and/or end of test, might be from idling of test
+					if($this->graph_data[$i_o][$i][0] == 0 && $this->graph_data[$i_o][$i][3] != 0)
+					{
+						$j = 0;
+						while($this->graph_data[$i_o][$i][$j] == 0)
+						{
+							unset($this->graph_data[$i_o][$i][$j]);
+							$j++;
+						}
+					}
+					if($this->graph_data[$i_o][$i][(count($this->graph_data[$i_o][$i]) - 1)] == 0 && $this->graph_data[$i_o][$i][(count($this->graph_data[$i_o][$i]) - 4)] != 0)
+					{
+						$j = count($this->graph_data[$i_o][$i]) - 1;
+						while($this->graph_data[$i_o][$i][$j] == 0)
+						{
+							unset($this->graph_data[$i_o][$i][$j]);
+							$j--;
+						}
+					}
+				}
+
 				$avg_value = round(array_sum($this->graph_data[$i_o][$i]) / count($this->graph_data[$i_o][$i]), 2);
 				$whisker_bottom = pts_math::find_percentile($this->graph_data[$i_o][$i], 0.02);
 				$whisker_top = pts_math::find_percentile($this->graph_data[$i_o][$i], 0.98);
@@ -72,7 +95,7 @@ class pts_HorizontalBoxPlotGraph extends pts_HorizontalBarGraph
 
 				foreach($unique_values as &$val)
 				{
-					if($val < $whisker_bottom || $val > $whisker_top)
+					if(($val < $whisker_bottom || $val > $whisker_top) && $val > 0.1)
 					{
 						$this->svg_dom->draw_svg_circle($this->i['left_start'] + round(($val / $this->i['graph_max_value']) * $work_area_width), $middle_of_bar, 1, self::$c['color']['notches']);
 					}
@@ -83,18 +106,26 @@ class pts_HorizontalBoxPlotGraph extends pts_HorizontalBarGraph
 		// write a new line along the bottom since the draw_rectangle_with_border above had written on top of it
 		$this->svg_dom->draw_svg_line($this->i['left_start'], $this->i['graph_top_end'], $this->i['graph_left_end'], $this->i['graph_top_end'], self::$c['color']['notches'], 1);
 	}
+	public function render_graph_dimensions()
+	{
+		parent::render_graph_dimensions();
+		$longest_sub_identifier_width = $this->text_string_width('Min: ' . $this->i['graph_max_value'] . ' / Avg: XX / Max: ' . $this->i['graph_max_value'], $this->i['identifier_size']);
+		$this->i['left_start'] = max($this->i['left_start'], $longest_sub_identifier_width);
+	}
 	protected function maximum_graph_value()
 	{
 		$real_maximum = 0;
 
 		foreach($this->graph_data as &$data_r)
 		{
-			$real_maximum = max($real_maximum, max(max($data_r)));
+			foreach($data_r as &$xr)
+			{
+				$real_maximum = max($real_maximum, max($xr));
+			}
 		}
 
-		$maximum = (ceil(round($real_maximum * 1.8) / $this->i['mark_count']) + 1) * $this->i['mark_count'];
+		$maximum = (ceil(round($real_maximum * 1.01) / $this->i['mark_count']) + 1) * $this->i['mark_count'];
 		$maximum = round(ceil($maximum / $this->i['mark_count']), (0 - strlen($maximum) + 2)) * $this->i['mark_count'];
-
 		return $maximum;
 	}
 }
