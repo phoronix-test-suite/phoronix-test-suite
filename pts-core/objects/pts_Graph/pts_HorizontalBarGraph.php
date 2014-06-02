@@ -57,6 +57,12 @@ class pts_HorizontalBarGraph extends pts_Graph
 			}
 			else
 			{
+				/*$v_offset = 0;
+				if(!isset($this->graph_data_raw[0][$i]) || count($this->graph_data_raw[0][$i]) < 2)
+				{
+				//	$v_offset += 4;
+				}*/
+
 				$this->svg_dom->add_text_element($this->graph_identifiers[$i], array('x' => ($this->i['left_start'] - 5), 'y' => $middle_of_vert, 'font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['headers'], 'text-anchor' => 'end'));
 			}
 		}

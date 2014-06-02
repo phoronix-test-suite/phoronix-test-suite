@@ -129,9 +129,23 @@ class pts_openbenchmarking_client
 			}
 		}
 
+		$composite_xml_hash = sha1($composite_xml);
+		$composite_xml_type = 'composite_xml';
+
+		// Compress the result file XML if it's big
+		if(isset($composite_xml[50000]) && function_exists('gzdeflate'))
+		{
+			$composite_xml_gz = gzdeflate($composite_xml);
+
+			if($composite_xml_gz != false)
+			{
+				$composite_xml = $composite_xml_gz;
+				$composite_xml_type = 'composite_xml_gz';
+			}
+		}
 		$to_post = array(
-			'composite_xml' => base64_encode($composite_xml),
-			'composite_xml_hash' => sha1($composite_xml),
+			$composite_xml_type => base64_encode($composite_xml),
+			'composite_xml_hash' => $composite_xml_hash,
 			'local_file_name' => $local_file_name,
 			'this_results_identifier' => $results_identifier,
 			'system_logs_zip' => $system_logs,
@@ -146,7 +160,6 @@ class pts_openbenchmarking_client
 
 		$json_response = pts_openbenchmarking::make_openbenchmarking_request('upload_test_result', $to_post);
 		$json_response = json_decode($json_response, true);
-
 		if(!is_array($json_response))
 		{
 			trigger_error('Unhandled Exception', E_USER_ERROR);
