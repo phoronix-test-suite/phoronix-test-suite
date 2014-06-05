@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 5.2.0-Khanino
+5 June 2014
 
 - pts-core: Support for GZ compressing result file XML data before uploading to OpenBenchmarking.org
 - pts_Graph: Further graphing improvements
