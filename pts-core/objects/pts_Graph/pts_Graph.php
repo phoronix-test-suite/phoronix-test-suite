@@ -403,7 +403,7 @@ abstract class pts_Graph
 			}
 			else if($this->i['graph_value_type'] == 'NUMERICAL')
 			{
-				$this->i['left_start'] += max(20, $this->text_string_width($this->i['graph_max_value'] + 0.001, self::$c['size']['tick_mark']) + 2);
+				$this->i['left_start'] += max(20, $this->text_string_width($this->i['graph_max_value'] + 0.01, self::$c['size']['tick_mark']) + 2);
 			}
 
 			// Pad 8px on top and bottom + title bar + sub-headings
