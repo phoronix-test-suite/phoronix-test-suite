@@ -140,7 +140,7 @@
 		</Package>
 		<Package>
 			<GenericName>xorg-video</GenericName>
-			<PackageName>libxv-dev libxvmc-dev</PackageName>
+			<PackageName>libxv-dev libxvmc-dev libvdpau-dev</PackageName>
 		</Package>
 		<Package>
 			<GenericName>libstdcpp5</GenericName>

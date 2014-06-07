@@ -94,7 +94,7 @@
 		</Package>
 		<Package>
 			<GenericName>xorg-video</GenericName>
-			<PackageName>xorg</PackageName>
+			<PackageName>xorg libvdpau</PackageName>
 		</Package>
 		<Package>
 			<GenericName>libstdcpp5</GenericName>

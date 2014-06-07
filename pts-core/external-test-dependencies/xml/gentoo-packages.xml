@@ -104,7 +104,7 @@
 		</Package>
 		<Package>
 			<GenericName>xorg-video</GenericName>
-			<PackageName>x11-libs/libXvMC x11-libs/libXv</PackageName>
+			<PackageName>x11-libs/libXvMC x11-libs/libXv x11-libs/libvdpau</PackageName>
 		</Package>
 		<Package>
 			<GenericName>libstdcpp5</GenericName>
