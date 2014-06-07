@@ -155,7 +155,7 @@ class pts_LineGraph extends pts_Graph
 		$square_length = 10;
 		$precision = $this->getPrecision($this->graph_data);
 
-		$num_rows = ceil(count($this->graph_data_title) / $this->i['keys_per_line']);
+		$num_rows = max(1, ceil(count($this->graph_data_title) / $this->i['keys_per_line']));
 		$num_cols = ceil(count($this->graph_data_title) / $num_rows);
 
 		$y_start = $this->i['top_start'] - $this->graph_key_height() + $this->getStatisticsHeaderHeight();

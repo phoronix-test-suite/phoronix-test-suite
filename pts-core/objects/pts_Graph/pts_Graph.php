@@ -395,7 +395,7 @@ abstract class pts_Graph
 					$longest_identifier_width = $this->text_string_width(pts_strings::find_longest_string($this->graph_identifiers), $this->i['identifier_size']) + 8;
 				}
 
-				$longest_identifier_max = $this->i['graph_width'] * 0.5;
+				$longest_identifier_max = ($this->i['graph_width'] * 0.5) + 0.01;
 
 				$this->i['left_start'] = min($longest_identifier_max, max($longest_identifier_width, 70));
 				$this->i['left_end_right'] = 15;
@@ -403,7 +403,7 @@ abstract class pts_Graph
 			}
 			else if($this->i['graph_value_type'] == 'NUMERICAL')
 			{
-				$this->i['left_start'] += max(20, $this->text_string_width($this->i['graph_max_value'], self::$c['size']['tick_mark']) + 2);
+				$this->i['left_start'] += max(20, $this->text_string_width($this->i['graph_max_value'] + 0.001, self::$c['size']['tick_mark']) + 2);
 			}
 
 			// Pad 8px on top and bottom + title bar + sub-headings
