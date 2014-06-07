@@ -21,47 +21,30 @@
 */
 
 pts_svg_dom_gd::setup_default_font();
+pts_svg_dom_gd::setup_draw_funcs();
 
 class pts_svg_dom_gd
 {
-	protected static $color_table;
-	protected static $default_font;
+	private static $color_table;
+	private static $default_font;
+	private static $draw_funcs;
 
 	public static function setup_default_font($font = null)
 	{
-		$default_font = self::find_default_font($font);
-
-		if($default_font)
-		{
-			$font_type = basename($default_font);
-
-			if($default_font != $font_type && !defined('CUSTOM_FONT_DIR'))
-			{
-				define('CUSTOM_FONT_DIR', dirname($default_font));
-			}
-
-			self::$default_font = $font_type;
-		}
-
-		if(getenv('GDFONTPATH') == false)
-		{
-			if(defined('CUSTOM_FONT_DIR'))
-			{
-				putenv('GDFONTPATH=' . CUSTOM_FONT_DIR);
-			}
-			else if(defined('FONT_DIR'))
-			{
-				putenv('GDFONTPATH=' . FONT_DIR);
-			}
-			else if(($font_env = getenv('FONT_DIR')) != false)
-			{
-				putenv('GDFONTPATH=' . $font_env);
-			}
-			else
-			{
-				putenv('GDFONTPATH=' . getcwd());
-			}
-		}
+		self::$default_font = self::find_default_font($font);
+	}
+	public static function setup_draw_funcs()
+	{
+		self::$draw_funcs = array(
+			'line'     => array('pts_svg_dom_gd', 'draw_line'),
+			'polyline' => array('pts_svg_dom_gd', 'draw_polyline'),
+			'text'     => array('pts_svg_dom_gd', 'draw_text'),
+			'polygon'  => array('pts_svg_dom_gd', 'draw_polygon'),
+			'rect'     => array('pts_svg_dom_gd', 'draw_rectangle'),
+			'circle'   => array('pts_svg_dom_gd', 'draw_circle'),
+			'ellipse'  => array('pts_svg_dom_gd', 'draw_ellipse'),
+			'image'    => array('pts_svg_dom_gd', 'draw_image')
+		);
 	}
 	public static function find_default_font($find_font)
 	{
@@ -70,11 +53,7 @@ class pts_svg_dom_gd
 			if(is_readable($find_font))
 			{
 				$default_font = $find_font;
-			}/*
-			else if(ini_get('open_basedir'))
-			{
-				$default_font = false;
-			}*/
+			}
 			else
 			{
 				$default_font = false;
@@ -111,6 +90,18 @@ class pts_svg_dom_gd
 	}
 	public static function svg_dom_to_gd($dom, $format)
 	{
+		$gd = self::generate_gd($dom);
+		if ($gd == null)
+		{
+			return false;
+		}
+		self::draw_dom_elements($dom, $gd);
+		return self::save_image($gd, $format);
+	}
+	private static function generate_gd($dom)
+	{
+		$gd = null;
+
 		if(extension_loaded('gd') && function_exists('imagettftext') && $dom->childNodes->item(2)->nodeName == 'svg')
 		{
 			$width = $dom->childNodes->item(2)->attributes->getNamedItem('width')->nodeValue;
@@ -133,18 +124,19 @@ class pts_svg_dom_gd
 			}
 			else
 			{
-				return false;
+				return null;
 			}
-
-//foreach($dom->childNodes->item(2)->attributes  as $atrr)
-//	{ echo $atrr->name . ' ' . $atrr->value . PHP_EOL; }
 		}
 		else
 		{
 			// If the first tag isn't an svg tag, chances are something is broke...
-			return false;
+			return null;
 		}
 
+		return $gd;
+	}
+	private static function draw_dom_elements($dom, $gd)
+	{
 		self::$color_table = array();
 		foreach($dom->childNodes->item(2)->childNodes as $node)
 		{
@@ -154,183 +146,19 @@ class pts_svg_dom_gd
 				$node = $node->childNodes->item(0);
 			}
 
-			switch($node->nodeName)
+			$draw_func = pts_svg_dom_gd::$draw_funcs[$node->nodeName];
+			if ($draw_func == null && PTS_IS_CLIENT)
 			{
-				case 'svg':
-					// Not relevant at this point to GD rendering
-					break;
-				case 'line':
-					$a = self::attributes_to_array($node, array('x1', 'y1', 'x2', 'y2', 'stroke', 'stroke-width', 'stroke-dasharray'));
-					$line_color = self::gd_color_allocate($gd, $a['stroke']);
-
-					if($a['stroke-dasharray'] != null)
-					{
-						list($dash_length, $blank_length) = explode(',', $a['stroke-dasharray']);
-
-						if($a['y1'] == $a['y2'])
-						{
-							for($i = $a['x1']; $i < $a['x2']; $i += ($blank_length + $dash_length))
-							{
-								imagefilledrectangle($gd, $i, ($a['y1'] - floor($a['stroke-width'] / 2)), ($i + $dash_length), ($a['y1'] + floor($a['stroke-width'] / 2)), $line_color);
-								//imageline($gd, $i, $pos, ($i + $dash_length), $pos, $line_color);
-							}
-						}
-						else
-						{
-							for($i = $a['y1']; $i < $a['y2']; $i += ($blank_length + $dash_length))
-							{
-								imagefilledrectangle($gd, ($a['x1'] - floor($a['stroke-width'] / 2)), $i, ($a['x1'] + floor($a['stroke-width'] / 2)), ($i + $dash_length), $line_color);
-								//imageline($gd, $i, $pos, ($i + $dash_length), $pos, $line_color);
-							}
-						}
-					}
-					else
-					{
-						imagesetthickness($gd, $a['stroke-width']);
-						imageline($gd, $a['x1'], $a['y1'], $a['x2'], $a['y2'], $line_color);
-					}
-					break;
-				case 'polyline':
-					$a = self::attributes_to_array($node, array('points', 'stroke', 'stroke-width', 'fill'));
-					imagesetthickness($gd, $a['stroke-width']);
-					$line_color = self::gd_color_allocate($gd, $a['stroke']);
-
-					$a['points'] = explode(' ', $a['points']);
-					for($i = 1; $i < count($a['points']); $i++)
-					{
-						$s_point = explode(',', $a['points'][($i - 1)]);
-						$e_point = explode(',', $a['points'][$i]);
-						imageline($gd, $s_point[0], $s_point[1], $e_point[0], $e_point[1], $line_color);
-					}
-					break;
-				case 'text':
-					$a = self::attributes_to_array($node, array('x', 'y', 'font-size', 'text-anchor', 'fill', 'dominant-baseline', 'transform'));
-					$text = $node->nodeValue;
-					$a['font-size'] -= 1.6;
-
-					$box_array = imagettfbbox($a['font-size'], 0, self::$default_font, $text);
-					$box_width = $box_array[4] - $box_array[6];
-					$box_height = $box_array[1] - $box_array[7];
-
-					$rotate = 0;
-					if($a['transform'])
-					{
-						$rotate = substr($a['transform'], 7);
-						$rotate = substr($rotate, 0, strpos($rotate, ' '));
-						// $rotate this should be the rotation degree in SVG
-
-						if($rotate != 0)
-						{
-							$rotate += 180;
-						}
-
-						switch($a['text-anchor'])
-						{
-							case 'middle':
-								$a['y'] -= round($box_width / 2);
-								break;
-						}
-					}
-					else
-					{
-						switch($a['text-anchor'])
-						{
-							case 'start':
-								break;
-							case 'middle':
-								$a['x'] -= round($box_width / 2);
-								break;
-							case 'end':
-								$a['x'] -= $box_width - 4;
-								break;
-						}
-						switch($a['dominant-baseline'])
-						{
-							case 'text-before-edge':
-								$a['y'] += $box_height;
-								break;
-							case 'middle':
-								$a['y'] += round($box_height / 2);
-								break;
-						}
-					}
-					imagettftext($gd, $a['font-size'], $rotate, $a['x'], $a['y'], self::gd_color_allocate($gd, $a['fill']), self::$default_font, $text);
-					break;
-				case 'polygon':
-					$a = self::attributes_to_array($node, array('points', 'fill', 'stroke', 'stroke-width'));
-					$a['points'] = explode(' ', $a['points']);
-					$points = array();
-					foreach($a['points'] as &$point)
-					{
-						$point = explode(',', $point);
-						array_push($points, $point[0]);
-						array_push($points, $point[1]);
-					}
-
-					if($a['stroke-width'])
-					{
-						imagesetthickness($gd, $a['stroke-width']);
-						imagefilledpolygon($gd, $points, count($a['points']), self::gd_color_allocate($gd, $a['stroke']));
-					}
-					imagefilledpolygon($gd, $points, count($a['points']), self::gd_color_allocate($gd, $a['fill']));
-					break;
-				case 'rect':
-					// Draw a rectangle
-					$a = self::attributes_to_array($node, array('x', 'y', 'width', 'height', 'fill', 'stroke', 'stroke-width'));
-
-					if($a['fill'] != 'none')
-					{
-						imagefilledrectangle($gd, $a['x'], $a['y'], ($a['x'] + $a['width']), ($a['y'] + $a['height']), self::gd_color_allocate($gd, $a['fill']));
-					}
-
-					if($a['stroke'] != null)
-					{
-						// TODO: implement $a['stroke-width']
-						imagerectangle($gd, $a['x'], $a['y'], ($a['x'] + $a['width']), ($a['y'] + $a['height']), self::gd_color_allocate($gd, $a['stroke']));
-					}
-					break;
-				case 'circle':
-					// Draw a circle
-					$a = self::attributes_to_array($node, array('cx', 'cy', 'r', 'fill'));
-					imagefilledellipse($gd, $a['cx'], $a['cy'], ($a['r'] * 2), ($a['r'] * 2), self::gd_color_allocate($gd, $a['fill']));
-					break;
-				case 'ellipse':
-					// Draw a ellipse/circle
-					$a = self::attributes_to_array($node, array('cx', 'cy', 'rx', 'ry', 'fill', 'stroke', 'stroke-width'));
-					imagefilledellipse($gd, $a['cx'], $a['cy'], ($a['rx'] * 2), ($a['ry'] * 2), self::gd_color_allocate($gd, $a['fill']));
-
-					if($a['stroke'] != null)
-					{
-						// TODO: implement $a['stroke-width']
-						imagefilledellipse($gd, $a['cx'], $a['cy'], ($a['rx'] * 2), ($a['ry'] * 2), self::gd_color_allocate($gd, $a['stroke']));
-					}
-					break;
-				case 'image':
-					$a = self::attributes_to_array($node, array('xlink:href', 'x', 'y', 'width', 'height'));
-
-					if(substr($a['xlink:href'], 0, 22) == 'data:image/png;base64,')
-					{
-						$img = imagecreatefromstring(base64_decode(substr($a['xlink:href'], 22)));
-					}
-					else
-					{
-						$img = imagecreatefromstring(file_get_contents($a['xlink:href']));
-					}
-
-					imagecopyresampled($gd, $img, $a['x'], $a['y'], 0, 0, $a['width'], $a['height'], imagesx($img), imagesy($img));
-					break;
-				default:
-					if(PTS_IS_CLIENT)
-					{
-						echo $node->nodeName . ' not implemented.' . PHP_EOL;
-					}
-					break;
-
+				echo $node->nodeName . ' not implemented.' . PHP_EOL;
 			}
-			// imagejpeg($this->image, $output_file, $quality);
-			//var_dump($node->attributes);
+			else
+			{
+				$draw_func($gd, $node);
+			}
 		}
-
+	}
+	private static function save_image($gd, $format)
+	{
 		$tmp_output = tempnam('/tmp', 'pts-gd');
 		switch($format)
 		{
@@ -367,6 +195,175 @@ class pts_svg_dom_gd
 		}
 
 		return $values;
+	}
+	private static function draw_line(&$gd, &$node)
+	{
+		$a = self::attributes_to_array($node, array('x1', 'y1', 'x2', 'y2', 'stroke', 'stroke-width', 'stroke-dasharray'));
+		$line_color = self::gd_color_allocate($gd, $a['stroke']);
+
+		if($a['stroke-dasharray'] != null)
+		{
+			list($dash_length, $blank_length) = explode(',', $a['stroke-dasharray']);
+
+			if($a['y1'] == $a['y2'])
+			{
+				for($i = $a['x1']; $i < $a['x2']; $i += ($blank_length + $dash_length))
+				{
+					imagefilledrectangle($gd, $i, ($a['y1'] - floor($a['stroke-width'] / 2)), ($i + $dash_length), ($a['y1'] + floor($a['stroke-width'] / 2)), $line_color);
+				}
+			}
+			else
+			{
+				for($i = $a['y1']; $i < $a['y2']; $i += ($blank_length + $dash_length))
+				{
+					imagefilledrectangle($gd, ($a['x1'] - floor($a['stroke-width'] / 2)), $i, ($a['x1'] + floor($a['stroke-width'] / 2)), ($i + $dash_length), $line_color);
+				}
+			}
+		}
+		else
+		{
+			imagesetthickness($gd, $a['stroke-width']);
+			imageline($gd, $a['x1'], $a['y1'], $a['x2'], $a['y2'], $line_color);
+		}
+	}
+	private static function draw_polyline(&$gd, &$node)
+	{
+		$a = self::attributes_to_array($node, array('points', 'stroke', 'stroke-width', 'fill'));
+		imagesetthickness($gd, $a['stroke-width']);
+		$line_color = self::gd_color_allocate($gd, $a['stroke']);
+
+		$a['points'] = explode(' ', $a['points']);
+		for ($i = 1; $i < count($a['points']); $i++)
+		{
+			$s_point = explode(',', $a['points'][($i - 1)]);
+			$e_point = explode(',', $a['points'][$i]);
+			imageline($gd, $s_point[0], $s_point[1], $e_point[0], $e_point[1], $line_color);
+		}
+	}
+	private static function draw_text(&$gd, &$node)
+	{
+		$a = self::attributes_to_array($node, array('x', 'y', 'font-size', 'text-anchor', 'fill', 'dominant-baseline', 'transform'));
+		$text = $node->nodeValue;
+		$a['font-size'] -= 1.6;
+
+		$box_array = imagettfbbox($a['font-size'], 0, self::$default_font, $text);
+		$box_width = $box_array[4] - $box_array[6];
+		$box_height = $box_array[1] - $box_array[7];
+
+		$rotate = 0;
+		if ($a['transform'])
+		{
+			$rotate = substr($a['transform'], 7);
+			$rotate = substr($rotate, 0, strpos($rotate, ' '));
+			// $rotate this should be the rotation degree in SVG
+
+			if ($rotate != 0)
+			{
+				$rotate += 180;
+			}
+
+			switch ($a['text-anchor'])
+			{
+			case 'middle':
+				$a['y'] -= round($box_width / 2);
+				break;
+			}
+		}
+		else
+		{
+			switch ($a['text-anchor'])
+			{
+			case 'start':
+				break;
+			case 'middle':
+				$a['x'] -= round($box_width / 2);
+				break;
+			case 'end':
+				$a['x'] -= $box_width - 4;
+				break;
+			}
+			switch ($a['dominant-baseline'])
+			{
+			case 'text-before-edge':
+				$a['y'] += $box_height;
+				break;
+			case 'middle':
+				$a['y'] += round($box_height / 2);
+				break;
+			}
+		}
+		imagettftext($gd, $a['font-size'], $rotate, $a['x'], $a['y'], self::gd_color_allocate($gd, $a['fill']),
+					 self::$default_font, $text);
+	}
+	private static function draw_polygon(&$gd, &$node)
+	{
+		$a = self::attributes_to_array($node, array('points', 'fill', 'stroke', 'stroke-width'));
+		$a['points'] = explode(' ', $a['points']);
+		$points = array();
+		foreach ($a['points'] as &$point)
+		{
+			$point = explode(',', $point);
+			array_push($points, $point[0]);
+			array_push($points, $point[1]);
+		}
+
+		if ($a['stroke-width'])
+		{
+			imagesetthickness($gd, $a['stroke-width']);
+			imagefilledpolygon($gd, $points, count($a['points']), self::gd_color_allocate($gd, $a['stroke']));
+		}
+		imagefilledpolygon($gd, $points, count($a['points']), self::gd_color_allocate($gd, $a['fill']));
+	}
+	private static function draw_rectangle(&$gd, &$node)
+	{
+		$a = self::attributes_to_array($node, array('x', 'y', 'width', 'height', 'fill', 'stroke', 'stroke-width'));
+
+		if ($a['fill'] != 'none')
+		{
+			imagefilledrectangle($gd, $a['x'], $a['y'],	($a['x'] + $a['width']), ($a['y'] + $a['height']),
+								 self::gd_color_allocate($gd, $a['fill']));
+		}
+
+		if ($a['stroke'] != null)
+		{
+			// TODO: implement $a['stroke-width']
+			imagerectangle($gd, $a['x'], $a['y'], ($a['x'] + $a['width']), ($a['y'] + $a['height']),
+						   self::gd_color_allocate($gd, $a['stroke']));
+		}
+	}
+	private static function draw_circle(&$gd, &$node)
+	{
+		$a = self::attributes_to_array($node, array('cx', 'cy', 'r', 'fill'));
+		imagefilledellipse($gd, $a['cx'], $a['cy'], ($a['r'] * 2), ($a['r'] * 2),
+						   self::gd_color_allocate($gd, $a['fill']));
+	}
+	private static function draw_ellipse(&$gd, &$node)
+	{
+		$a = self::attributes_to_array($node, array('cx', 'cy', 'rx', 'ry', 'fill', 'stroke', 'stroke-width'));
+		imagefilledellipse($gd, $a['cx'], $a['cy'], ($a['rx'] * 2), ($a['ry'] * 2),
+						   self::gd_color_allocate($gd, $a['fill']));
+
+		if ($a['stroke'] != null)
+		{
+			// TODO: implement $a['stroke-width']
+			imagefilledellipse($gd, $a['cx'], $a['cy'], ($a['rx'] * 2), ($a['ry'] * 2),
+							   self::gd_color_allocate($gd, $a['stroke']));
+		}
+	}
+	private static function draw_image(&$gd, &$node)
+	{
+		$a = self::attributes_to_array($node, array('xlink:href', 'x', 'y', 'width', 'height'));
+
+		if (substr($a['xlink:href'], 0, 22) == 'data:image/png;base64,')
+		{
+			$img = imagecreatefromstring(base64_decode(substr($a['xlink:href'], 22)));
+		}
+		else
+		{
+			$img = imagecreatefromstring(file_get_contents($a['xlink:href']));
+		}
+
+		imagecopyresampled($gd, $img, $a['x'], $a['y'], 0, 0, $a['width'], $a['height'], imagesx($img), imagesy($img));
 	}
 }
 

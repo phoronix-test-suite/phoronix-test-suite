@@ -65,7 +65,6 @@ class result_file_to_pdf implements pts_option_interface
 		$identifiers = $result_file->get_system_identifiers();
 		$hardware_r = $result_file->get_system_hardware();
 		$software_r = $result_file->get_system_software();
-		$notes_r = $result_file->get_system_notes();
 		$tests = $result_file->get_test_titles();
 
 		$pdf->SetSubject($result_file->get_title() . ' Benchmarks');
@@ -77,18 +76,7 @@ class result_file_to_pdf implements pts_option_interface
 			$pdf->WriteMiniHeader($identifiers[$i]);
 			$pdf->WriteText($hardware_r[$i]);
 			$pdf->WriteText($software_r[$i]);
-			//$pdf->WriteText($notes_r[$i]);
 		}
-
-		/*
-		if(count($identifiers) > 1 && is_file(PTS_SAVE_RESULTS_PATH . $r[0] . '/result-graphs/overview.jpg'))
-		{
-			$pdf->AddPage();
-			$pdf->Ln(100);
-			$pdf->Image(PTS_SAVE_RESULTS_PATH . $r[0] . '/result-graphs/overview.jpg', 15, 40, 180);
-		}
-		*/
-
 
 		$pdf->AddPage();
 		$placement = 1;
@@ -112,16 +100,6 @@ class result_file_to_pdf implements pts_option_interface
 			$placement++;
 		}
 
-
-		// To save:
-		/*
-		$pdf_file = 'SAVE_TO';
-
-		if(substr($pdf_file, -4) != '.pdf')
-		{
-			$pdf_file .= '.pdf';
-		}
-		*/
 		$pdf_file = pts_client::user_home_directory() . $r[0] . '.pdf';
 
 		$pdf->Output($pdf_file);
