@@ -164,7 +164,7 @@ class pts_LineGraph extends pts_Graph
 		$x_end = $x_start + $this->i['key_item_width'] * ($num_cols - 1);
 
 		// draw the "Min Avg Max" text
-		$stat_header_offset = $this->i['key_longest_string_width'] + $square_length + 2;
+		$stat_header_offset = $this->i['key_longest_string_width'] + $square_length + 6;
 		for($x = $x_start + $stat_header_offset; $x <= $x_end + $stat_header_offset; $x += $this->i['key_item_width'])
 		{
 			$this->draw_stat_text($x, array('y' => $y_start - 14, 'font-size' => 6.5, 'fill' => self::$c['color']['notches']));
@@ -194,7 +194,7 @@ class pts_LineGraph extends pts_Graph
 									   'font-size' => self::$c['size']['key'], 'fill' => $this_color));
 
 				// draw min/avg/max
-				$x_stat_loc = $x + $square_length + $this->i['key_longest_string_width'] + 2;
+				$x_stat_loc = $x + $square_length + $this->i['key_longest_string_width'] + 6;
 				$this->draw_result_stats($this->graph_data[$i], $precision, $x_stat_loc,
 								   array('y' => $y, 'font-size' => self::$c['size']['key'], 'fill' => $this_color));
 			}
@@ -403,7 +403,7 @@ class pts_LineGraph extends pts_Graph
 		$this->i['key_line_height'] = 16;
 		$this->i['key_longest_string_width'] = $this->text_string_width(pts_strings::find_longest_string($this->graph_data_title), self::$c['size']['key']);
 
-		$item_width_spacing = 26;
+		$item_width_spacing = 30;
 		$this->i['key_item_width'] = $this->i['key_longest_string_width'] + $this->get_stat_word_width() * 3 + $item_width_spacing;
 
 		// if there are <=4 data sets, then use a single column, otherwise, try and multi-col it
