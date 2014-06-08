@@ -163,7 +163,7 @@ class gpu_usage implements phodevi_sensor
 			if(($x = stripos($util, 'graphics=')) !== false)
 			{
 				$util = substr($util, ($x + 9));
-				$util = substr($util, strpos($util, ','));
+				$util = substr($util, 0, strpos($util, ','));
 
 				if(is_numeric($util) && $util >= 0 && $util <= 100)
 				{
