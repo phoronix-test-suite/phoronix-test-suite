@@ -36,6 +36,8 @@ class pts_svg_dom_gd
 	public static function setup_draw_funcs()
 	{
 		self::$draw_funcs = array(
+			'svg'      => array('pts_svg_dom_gd', 'draw_svg'),
+			'script'   => array('pts_svg_dom_gd', 'draw_script'),
 			'line'     => array('pts_svg_dom_gd', 'draw_line'),
 			'polyline' => array('pts_svg_dom_gd', 'draw_polyline'),
 			'text'     => array('pts_svg_dom_gd', 'draw_text'),
@@ -43,7 +45,9 @@ class pts_svg_dom_gd
 			'rect'     => array('pts_svg_dom_gd', 'draw_rectangle'),
 			'circle'   => array('pts_svg_dom_gd', 'draw_circle'),
 			'ellipse'  => array('pts_svg_dom_gd', 'draw_ellipse'),
-			'image'    => array('pts_svg_dom_gd', 'draw_image')
+			'image'    => array('pts_svg_dom_gd', 'draw_image'),
+			'a'        => array('pts_svg_dom_gd', 'draw_anchor'),
+			'g'        => array('pts_svg_dom_gd', 'draw_group'),
 		);
 	}
 	public static function find_default_font($find_font)
@@ -140,21 +144,19 @@ class pts_svg_dom_gd
 		self::$color_table = array();
 		foreach($dom->childNodes->item(2)->childNodes as $node)
 		{
-			if($node->nodeName == 'a')
-			{
-				// This is just a link so get whatever is the child of the embedded link to display
-				$node = $node->childNodes->item(0);
-			}
-
-			$draw_func = pts_svg_dom_gd::$draw_funcs[$node->nodeName];
-			if ($draw_func == null && PTS_IS_CLIENT)
-			{
-				echo $node->nodeName . ' not implemented.' . PHP_EOL;
-			}
-			else
-			{
-				$draw_func($gd, $node);
-			}
+			self::draw_node($gd, $node);
+		}
+	}
+	private static function draw_node(&$gd, &$node)
+	{
+		$draw_func = pts_svg_dom_gd::$draw_funcs[$node->nodeName];
+		if ($draw_func == null && PTS_IS_CLIENT)
+		{
+			echo $node->nodeName . ' not implemented.' . PHP_EOL;
+		}
+		else
+		{
+			$draw_func($gd, $node);
 		}
 	}
 	private static function save_image($gd, $format)
@@ -195,6 +197,16 @@ class pts_svg_dom_gd
 		}
 
 		return $values;
+	}
+	private static function draw_svg(&$gd, &$node)
+	{
+		// don't do anything
+		return;
+	}
+	private static function draw_script(&$gd, &$node)
+	{
+		// don't do anything
+		return;
 	}
 	private static function draw_line(&$gd, &$node)
 	{
@@ -364,6 +376,20 @@ class pts_svg_dom_gd
 		}
 
 		imagecopyresampled($gd, $img, $a['x'], $a['y'], 0, 0, $a['width'], $a['height'], imagesx($img), imagesy($img));
+	}
+	private static function draw_anchor(&$gd, &$node)
+	{
+		// This is just a link so get whatever is the child of the embedded link to display
+		$childNode = $node->childNodes->item(0);
+		self::draw_node($gd, $childNode);
+	}
+	private static function draw_group(&$gd, &$node)
+	{
+		// don't do anything
+		foreach($node->childNodes as $childNode)
+		{
+			self::draw_node($gd, $childNode);
+		}
 	}
 }
 
