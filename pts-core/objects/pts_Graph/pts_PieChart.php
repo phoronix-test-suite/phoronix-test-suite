@@ -86,8 +86,8 @@ class pts_PieChart extends pts_Graph
 			$c_x = $this->i['left_start'] + 13 + (($key_item_width + $key_item_width_value) * ($i % $keys_per_line));
 
 			$this->svg_dom->add_element('rect', array('x' => ($c_x - 13), 'y' => ($c_y - 5), 'width' => 10, 'height' => 10, 'fill' => $this_color, 'stroke' => self::$c['color']['notches'], 'stroke-width' => 1));
-			$this->svg_dom->add_text_element($this->graph_identifiers[$i], array('x' => $c_x, 'y' => $c_y, 'font-size' => self::$c['size']['key'], 'fill' => $this_color, 'text-anchor' => 'start', 'dominant-baseline' => 'middle'));
-			$this->svg_dom->add_text_element($key_strings[$i], array('x' => ($c_x + $key_item_width + 30), 'y' => $c_y, 'font-size' => self::$c['size']['key'], 'fill' => $this_color, 'text-anchor' => 'end', 'dominant-baseline' => 'middle'));
+			$this->svg_dom->add_element_with_value('text', $this->graph_identifiers[$i], array('x' => $c_x, 'y' => $c_y, 'font-size' => self::$c['size']['key'], 'fill' => $this_color, 'text-anchor' => 'start', 'dominant-baseline' => 'middle'));
+			$this->svg_dom->add_element_with_value('text', $key_strings[$i], array('x' => ($c_x + $key_item_width + 30), 'y' => $c_y, 'font-size' => self::$c['size']['key'], 'fill' => $this_color, 'text-anchor' => 'end', 'dominant-baseline' => 'middle'));
 		}
 	}
 	public function render_graph_finish()
@@ -111,7 +111,7 @@ class pts_PieChart extends pts_Graph
 
 		if(!empty(self::$c['text']['watermark']))
 		{
-			$this->svg_dom->add_text_element(self::$c['text']['watermark'], array('x' => ($this->i['graph_width'] / 2), 'y' => ($this->i['graph_height'] - 15), 'font-size' => 10, 'fill' => self::$c['color']['text'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
+			$this->svg_dom->add_element_with_value('text', self::$c['text']['watermark'], array('x' => ($this->i['graph_width'] / 2), 'y' => ($this->i['graph_height'] - 15), 'font-size' => 10, 'fill' => self::$c['color']['text'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
 		}
 	}
 }

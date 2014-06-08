@@ -26,7 +26,7 @@
 // Other tests:
 // 1201120-BY-MESA80GAL31
 
-// TODO: elimiante need for some of the pts_* classes called inside here, instead build them in or find other efficient ways of handling...
+// TODO: eliminate need for some of the pts_* classes called inside here, instead build them in or find other efficient ways of handling...
 
 // Setup main config values, should only be needed once since the configuration values should never be over-written within pts_Graph*
 pts_Graph::init_graph_config();
@@ -54,7 +54,7 @@ abstract class pts_Graph
 
 	public function __construct(&$result_object = null, &$result_file = null)
 	{
-		// Initalize Colors
+		// Initialize Colors
 		$this->i['identifier_size'] = self::$c['size']['identifiers']; // Copy this since it's commonly overwritten
 		$this->i['graph_orientation'] = 'VERTICAL';
 		$this->i['graph_value_type'] = 'NUMERICAL';
@@ -187,7 +187,7 @@ abstract class pts_Graph
 	}
 	public function loadGraphData($data_array)
 	{
-		loadGraphValues($data_array);
+		$this->loadGraphValues($data_array);
 	}
 	public function loadGraphValues($data_array, $data_title = null)
 	{
@@ -557,28 +557,42 @@ abstract class pts_Graph
 				}
 			}
 
-			$this->svg_dom->add_text_element($this->graph_title, array('x' => 6, 'y' => (self::$c['size']['headers'] + 2), 'font-size' => self::$c['size']['headers'], 'fill' => self::$c['color']['background'], 'text-anchor' => 'start', 'xlink:show' => 'new', 'xlink:href' => $href));
+			$this->svg_dom->add_anchored_element_with_value($href, 'text', $this->graph_title,
+													 		array('x' => 6, 'y' => (self::$c['size']['headers'] + 2),
+																	'font-size' => self::$c['size']['headers'],
+																	'fill' => self::$c['color']['background'], 'text-anchor' => 'start'));
 
 			foreach($this->graph_sub_titles as $i => $sub_title)
 			{
 				$vertical_offset = 12 + self::$c['size']['headers'] + (($i + 1) * (self::$c['size']['sub_headers'] - 4));
-				$this->svg_dom->add_text_element($sub_title, array('x' => 6, 'y' => $vertical_offset, 'font-size' => self::$c['size']['sub_headers'], 'fill' => self::$c['color']['background'], 'text-anchor' => 'start'));
+				$this->svg_dom->add_element_with_value('text', $sub_title, array('x' => 6, 'y' => $vertical_offset, 'font-size' => self::$c['size']['sub_headers'], 'fill' => self::$c['color']['background'], 'text-anchor' => 'start'));
 			}
 
-			$this->svg_dom->add_element('image', array('http_link' => 'http://www.phoronix-test-suite.com/', 'xlink:href' => pts_svg_dom::embed_png_image(PTS_CORE_STATIC_PATH . 'images/pts-77x40-white.png'), 'x' => ($this->i['graph_left_end'] - 77), 'y' => (($this->i['top_heading_height'] / 40 + 2)), 'width' => 77, 'height' => 40));
+			$encoded_image = pts_svg_dom::embed_png_image(PTS_CORE_STATIC_PATH . 'images/pts-77x40-white.png');
+			$this->svg_dom->add_anchored_element('http://www.phoronix-test-suite.com/', 'image',
+												 array('xlink:href' => $encoded_image,
+													   'x' => ($this->i['graph_left_end'] - 77),
+													   'y' => (($this->i['top_heading_height'] / 40 + 2)),
+													   'width' => 77, 'height' => 40));
 		}
 		else
 		{
-			$this->svg_dom->add_text_element($this->graph_title, array('x' => round($this->i['graph_left_end'] / 2), 'y' => (self::$c['size']['headers'] + 2), 'font-size' => self::$c['size']['headers'], 'fill' => self::$c['color']['main_headers'], 'text-anchor' => 'middle', 'xlink:show' => 'new', 'xlink:href' => $href));
+			$this->svg_dom->add_anchored_element_with_value($href, 'text', $this->graph_title,
+															array('x' => round($this->i['graph_left_end'] / 2), 'y' => (self::$c['size']['headers'] + 2),
+																  'font-size' => self::$c['size']['headers'], 'fill' => self::$c['color']['main_headers'],
+																  'text-anchor' => 'middle'));
 
 			foreach($this->graph_sub_titles as $i => $sub_title)
 			{
-				$this->svg_dom->add_text_element($sub_title, array('x' => round($this->i['graph_left_end'] / 2), 'y' => (31 + (($i + 1) * 18)), 'font-size' => self::$c['size']['sub_headers'], 'fill' => self::$c['color']['main_headers'], 'text-anchor' => 'middle'));
+				$this->svg_dom->add_element_with_value('text', $sub_title, array('x' => round($this->i['graph_left_end'] / 2), 'y' => (31 + (($i + 1) * 18)), 'font-size' => self::$c['size']['sub_headers'], 'fill' => self::$c['color']['main_headers'], 'text-anchor' => 'middle'));
 			}
 
 			if($with_version)
 			{
-				$this->svg_dom->add_text_element($this->i['graph_version'], array('x' => $this->i['graph_left_end'] , 'y' => ($this->i['top_start'] - 3), 'font-size' => 7, 'fill' => self::$c['color']['body_light'], 'text-anchor' => 'end', 'xlink:show' => 'new', 'xlink:href' => 'http://www.phoronix-test-suite.com/'));
+				$this->svg_dom->add_anchored_element_with_value('http://www.phoronix-test-suite.com/', 'text', $this->i['graph_version'],
+																array('x' => $this->i['graph_left_end'], 'y' => ($this->i['top_start'] - 3),
+																	  'font-size' => 7, 'fill' => self::$c['color']['body_light'],
+																	  'text-anchor' => 'end'));
 			}
 		}
 	}
@@ -588,12 +602,19 @@ abstract class pts_Graph
 		{
 			$bottom_heading_start = $this->i['graph_top_end'] + $this->i['bottom_offset'] + 22;
 			$this->svg_dom->add_element('rect', array('x' => 0, 'y' => $bottom_heading_start, 'width' => $this->i['graph_width'], 'height' => ($this->i['graph_height'] - $bottom_heading_start), 'fill' => self::$c['color']['main_headers']));
-			$this->svg_dom->add_text_element($this->i['graph_version'], array('x' => $this->i['graph_left_end'], 'y' => ($bottom_heading_start + self::$c['size']['key'] + 3), 'font-size' => self::$c['size']['key'], 'fill' => self::$c['color']['background'], 'text-anchor' => 'end', 'xlink:show' => 'new', 'xlink:href' => 'http://www.phoronix-test-suite.com/'));
+			$this->svg_dom->add_anchored_element_with_value('http://www.phoronix-test-suite.com/', 'text', 'Powered By ' . $this->i['graph_version'],
+															array('x' => $this->i['graph_left_end'], 'y' => ($bottom_heading_start + self::$c['size']['key'] + 3),
+																  'font-size' => self::$c['size']['key'], 'fill' => self::$c['color']['background'],
+																  'text-anchor' => 'end'));
 
 			if(isset($this->d['link_alternate_view']) && $this->d['link_alternate_view'])
 			{
 				// offer link of image to $this->d['link_alternate_view']
-				$this->svg_dom->add_element('image', array('http_link' => $this->d['link_alternate_view'], 'xlink:href' => pts_svg_dom::embed_png_image(PTS_CORE_STATIC_PATH . 'images/ob-10x16.png'), 'x' => 4, 'y' => ($bottom_heading_start + 1), 'width' => 10, 'height' => 16));
+				$encoded_image = pts_svg_dom::embed_png_image(PTS_CORE_STATIC_PATH . 'images/ob-10x16.png');
+				$this->svg_dom->add_anchored_element($this->d['link_alternate_view'], 'image',
+													 array('xlink:href' => $encoded_image,
+														   'x' => 4, 'y' => ($bottom_heading_start + 1),
+														   'width' => 10, 'height' => 16));
 			}
 
 			if(!empty($this->i['notes']))
@@ -615,7 +636,10 @@ abstract class pts_Graph
 
 			if(!empty(self::$c['text']['watermark']))
 			{
-				$this->svg_dom->add_text_element(self::$c['text']['watermark'], array('x' => $left_end, 'y' => ($top_start - 5), 'font-size' => 7, 'fill' => self::$c['color']['text'], 'text-anchor' => 'end', 'xlink:show' => 'new', 'xlink:href' => self::$c['text']['watermark_url']));
+				$this->svg_dom->add_anchored_element_with_value(self::$c['text']['watermark_url'], 'text', self::$c['text']['watermark'],
+																array('x' => $left_end, 'y' => ($top_start - 5),
+																	  'font-size' => 7, 'fill' => self::$c['color']['text'],
+																	  'text-anchor' => 'end'));
 			}
 		}
 		else
@@ -624,7 +648,10 @@ abstract class pts_Graph
 
 			if(self::$c['text']['watermark'] != null)
 			{
-				$this->svg_dom->add_text_element(self::$c['text']['watermark'], array('x' => ($left_end - 2), 'y' => ($top_start + 12), 'font-size' => 10, 'fill' => self::$c['color']['text'], 'text-anchor' => 'end', 'xlink:show' => 'new', 'xlink:href' => self::$c['text']['watermark_url']));
+				$this->svg_dom->add_anchored_element_with_value(self::$c['text']['watermark_url'], 'text', self::$c['text']['watermark'],
+																array('x' => ($left_end - 2), 'y' => ($top_start + 12),
+																	  'font-size' => 10, 'fill' => self::$c['color']['text'],
+																	  'text-anchor' => 'end'));
 			}
 		}
 
@@ -676,7 +703,7 @@ abstract class pts_Graph
 				}
 			}
 
-			$this->svg_dom->add_text_element($str, array('x' => ($left_start + $offset), 'y' => ($top_start - 5), 'font-size' => 7, 'fill' => self::$c['color']['text'], 'text-anchor' => 'start'));
+			$this->svg_dom->add_element_with_value('text', $str, array('x' => ($left_start + $offset), 'y' => ($top_start - 5), 'font-size' => 7, 'fill' => self::$c['color']['text'], 'text-anchor' => 'start'));
 		}
 	}
 	protected function render_graph_value_ticks($left_start, $top_start, $left_end, $top_end, $show_numbers = true)
@@ -694,7 +721,7 @@ abstract class pts_Graph
 
 				if($i != 0)
 				{
-					$show_numbers && $this->svg_dom->add_text_element($display_value, array('x' => $px_from_left, 'y' => ($top_end + 5 + self::$c['size']['tick_mark']), 'font-size' => self::$c['size']['tick_mark'], 'fill' => self::$c['color']['text'], 'text-anchor' => 'middle'));
+					$show_numbers && $this->svg_dom->add_element_with_value('text', $display_value, array('x' => $px_from_left, 'y' => ($top_end + 5 + self::$c['size']['tick_mark']), 'font-size' => self::$c['size']['tick_mark'], 'fill' => self::$c['color']['text'], 'text-anchor' => 'middle'));
 					$this->svg_dom->draw_svg_line($px_from_left + 2, $top_start, $px_from_left + 2, $top_end - 5, self::$c['color']['body'], 1, array('stroke-dasharray' => '5,5'));
 					$this->svg_dom->draw_svg_line($px_from_left + 2, $top_end - 4, $px_from_left + 2, $top_end + 4, self::$c['color']['notches'], 1);
 				}
@@ -717,7 +744,7 @@ abstract class pts_Graph
 
 				if($i != 0)
 				{
-					$show_numbers && $this->svg_dom->add_text_element($display_value, array('x' => ($px_from_left_start - 4), 'y' => round($px_from_top + (self::$c['size']['tick_mark'] / 2)), 'font-size' => self::$c['size']['tick_mark'], 'fill' =>  self::$c['color']['text'], 'text-anchor' => 'end'));
+					$show_numbers && $this->svg_dom->add_element_with_value('text', 0, array('x' => ($px_from_left_start - 4), 'y' => round($top_end + (self::$c['size']['tick_mark'] / 2)), 'font-size' => self::$c['size']['tick_mark'], 'fill' =>  self::$c['color']['text'], 'text-anchor' => 'end'));
 
 					if($this->i['show_background_lines'])
 					{
@@ -776,7 +803,7 @@ abstract class pts_Graph
 				$x = $this->i['left_start'] + 13 + ($this->i['key_item_width'] * ($i % $this->i['keys_per_line']));
 
 				$this->svg_dom->add_element('rect', array('x' => ($x - 13), 'y' => ($y - 5), 'width' => 10, 'height' => 10, 'fill' => $this_color, 'stroke' => self::$c['color']['notches'], 'stroke-width' => 1));
-				$this->svg_dom->add_text_element($this->graph_data_title[$i], array('x' => $x, 'y' => ($y + 4), 'font-size' => self::$c['size']['key'], 'fill' => $this_color, 'text-anchor' => 'start'));
+				$this->svg_dom->add_element_with_value('text', $this->graph_data_title[$i], array('x' => $x, 'y' => ($y + 4), 'font-size' => self::$c['size']['key'], 'fill' => $this_color, 'text-anchor' => 'start'));
 			}
 		}
 	}
