@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2013, Phoronix Media
-	Copyright (C) 2009 - 2013, Michael Larabel
+	Copyright (C) 2009 - 2014, Phoronix Media
+	Copyright (C) 2009 - 2014, Michael Larabel
 	Copyright (C) 2014, Lauri Kasanen
 
 	This program is free software; you can redistribute it and/or modify
@@ -102,9 +102,9 @@ class gpu_usage implements phodevi_sensor
 		}
 		else if(phodevi::is_nvidia_graphics())
 		{
-			$util = phodevi_parser::read_nvidia_extension('GPUUtilization');
+			$util = self::read_nvidia_settings_gpu_utilization();
 
-			if(is_numeric($util) && $util >= 0 && $util <= 100)
+			if($util !== false)
 			{
 				self::$probe_nvidia_settings = true;
 				return true;
@@ -131,7 +131,7 @@ class gpu_usage implements phodevi_sensor
 		}
 		else if(self::$probe_nvidia_settings)
 		{
-			return phodevi_parser::read_nvidia_extension('GPUUtilization');
+			return self::read_nvidia_settings_gpu_utilization();
 		}
 		else if(self::$probe_nvidia_smi)
 		{
@@ -149,6 +149,30 @@ class gpu_usage implements phodevi_sensor
 		{
 			return self::intel_command_speed();
 		}
+	}
+	public static function read_nvidia_settings_gpu_utilization()
+	{
+		$util = phodevi_parser::read_nvidia_extension('GPUUtilization');
+
+		if(is_numeric($util) && $util >= 0 && $util <= 100)
+		{
+			return $util;
+		}
+		else
+		{
+			if(($x = stripos($util, 'graphics=')) !== false)
+			{
+				$util = substr($util, ($x + 9));
+				$util = substr($util, strpos($util, ','));
+
+				if(is_numeric($util) && $util >= 0 && $util <= 100)
+				{
+					return $util;
+				}
+			}
+		}
+
+		return false;
 	}
 	public static function ati_overdrive_core_usage()
 	{
