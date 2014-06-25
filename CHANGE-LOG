@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Add VDPAU as a dependency to the xorg-video external dependency on more platforms
+- pts-core: Don't check OpenBenchmarking.org credentials when the network is down
 - phodevi: Improve NVIDIA binary driver GPU utilization detection
 - pts_Graph: Few minor graph alignment corrections
 

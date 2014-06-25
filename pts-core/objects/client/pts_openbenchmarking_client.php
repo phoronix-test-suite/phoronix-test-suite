@@ -306,7 +306,7 @@ class pts_openbenchmarking_client
 	{
 		if(isset($openbenchmarking['user_name']) && isset($openbenchmarking['communication_id']) && isset($openbenchmarking['sav']))
 		{
-			if(IS_FIRST_RUN_TODAY)
+			if(IS_FIRST_RUN_TODAY && pts_network::network_support_available())
 			{
 				// Might as well make sure OpenBenchmarking.org account has the latest system info
 				// But don't do it everytime to preserve bandwidth
