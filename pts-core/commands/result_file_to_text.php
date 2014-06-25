@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2012, Phoronix Media
-	Copyright (C) 2009 - 2012, Michael Larabel
+	Copyright (C) 2009 - 2014, Phoronix Media
+	Copyright (C) 2009 - 2014, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -49,6 +49,9 @@ class result_file_to_text implements pts_option_interface
 			$result_output .= "\t" . $system_hardware[$i] . PHP_EOL . PHP_EOL . "\t" . $system_software[$i] . PHP_EOL . PHP_EOL;
 		}
 
+		$longest_identifier_length = $result_file->get_system_identifiers();
+		$longest_identifier_length = strlen(pts_strings::find_longest_string($longest_identifier_length)) + 2;
+
 		foreach($result_file->get_result_objects() as $result_object)
 		{
 			$result_output .= trim($result_object->test_profile->get_title() . ' ' . $result_object->test_profile->get_app_version() . PHP_EOL . $result_object->get_arguments_description());
@@ -58,9 +61,51 @@ class result_file_to_text implements pts_option_interface
 				$result_output .= PHP_EOL . '  ' .  $result_object->test_profile->get_result_scale();
 			}
 
-			foreach($result_object->test_result_buffer->get_buffer_items() as $buffer_item)
+			foreach($result_object->test_result_buffer as &$buffers)
 			{
-				$result_output .= PHP_EOL . '    ' . $buffer_item->get_result_identifier() . ': ' . $buffer_item->get_result_value();
+				$max_value = 0;
+				$min_value = pts_arrays::first_element($buffers)->get_result_value();
+				foreach($buffers as &$buffer_item)
+				{
+					if($buffer_item->get_result_value() > $max_value)
+					{
+						$max_value = $buffer_item->get_result_value();
+					}
+					else if($buffer_item->get_result_value() < $min_value)
+					{
+						$min_value = $buffer_item->get_result_value();
+					}
+				}
+
+				$longest_result = strlen($max_value) + 1;
+				foreach($buffers as &$buffer_item)
+				{
+					$val = $buffer_item->get_result_value();
+
+					if(stripos($val, ',') !== false)
+					{
+						$vals = explode(',', $val);
+						$val = 'MIN: ' . min($vals) . ' / AVG: ' . round(array_sum($vals) / count($vals), 2) . ' MAX: ' . max($vals);
+					}
+
+					$result_output .= PHP_EOL . '    ' . $buffer_item->get_result_identifier() . ' ';
+
+					$result_length_offset = $longest_identifier_length - strlen($buffer_item->get_result_identifier());
+					if($result_length_offset > 0)
+					{
+						$result_output .= str_repeat('.', $result_length_offset) . ' ';
+					}
+					$result_output .= $val;
+
+
+					if(is_numeric($val))
+					{
+						$result_output .= str_repeat(' ', $longest_result - strlen($val))  . '|';
+						$current_line_length = strlen(substr($result_output, strrpos($result_output, PHP_EOL) + 1)) + 1;
+						$result_output .= str_repeat('=', round(($val / $max_value) * (pts_client::terminal_width() - $current_line_length)));
+
+					}
+				}
 			}
 
 			$result_output .= PHP_EOL . PHP_EOL;
@@ -77,7 +122,10 @@ class result_file_to_text implements pts_option_interface
 		*/
 
 		echo $result_output;
-
+	}
+	public static function invalid_command($passed_args = null)
+	{
+		pts_tests::recently_saved_results();
 	}
 }
 

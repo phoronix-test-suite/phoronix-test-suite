@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2011, Phoronix Media
-	Copyright (C) 2009 - 2011, Michael Larabel
+	Copyright (C) 2009 - 2014, Phoronix Media
+	Copyright (C) 2009 - 2014, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -126,6 +126,10 @@ class result_file_to_pdf implements pts_option_interface
 
 		$pdf->Output($pdf_file);
 		echo PHP_EOL . 'Saved To: ' . $pdf_file . PHP_EOL;
+	}
+	public static function invalid_command($passed_args = null)
+	{
+		pts_tests::recently_saved_results();
 	}
 }
 
