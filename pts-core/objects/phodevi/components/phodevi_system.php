@@ -1109,6 +1109,12 @@ class phodevi_system extends phodevi_device_interface
 			$desktop_environment = 'KDE Frameworks 5';
 			$desktop_version = null; // TODO XXX
 		}
+		else if(($dde = pts_client::is_process_running('dde-desktop')))
+		{
+			// KDE 5.x
+			$desktop_environment = 'Deepin Desktop Environment';
+			$desktop_version = null; // TODO XXX
+		}
 		else if(($kde4 = pts_client::is_process_running('kded4')) || pts_client::is_process_running('kded'))
 		{
 			// KDE 4.x

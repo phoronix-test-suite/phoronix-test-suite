@@ -6,6 +6,7 @@ Phoronix Test Suite (Git)
 - pts-core: Don't check OpenBenchmarking.org credentials when the network is down
 - pts-core: Rework result-file-to-text sub-command, show text-based graph results
 - phodevi: Improve NVIDIA binary driver GPU utilization detection
+- phodevi: Add DDE / Deepin Desktop Environment detection
 - pts_Graph: Few minor graph alignment corrections
 
 Phoronix Test Suite 5.2.0-Khanino
