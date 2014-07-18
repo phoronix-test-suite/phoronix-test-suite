@@ -38,6 +38,17 @@ class pts_result_file
 	{
 		return $this->get_identifier();
 	}
+	public function sanitize_user_strings($value)
+	{
+		if(is_array($value))
+		{
+			return array_map(array($this, 'sanitize_user_strings'), $value);
+		}
+		else
+		{
+			return strip_tags($value);
+		}
+	}
 	public static function is_test_result_file($identifier)
 	{
 		return is_file(PTS_SAVE_RESULTS_PATH . $identifier . '/composite.xml');
@@ -56,35 +67,35 @@ class pts_result_file
 	}
 	public function get_system_hardware()
 	{
-		return $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/System/Hardware');
+		return $this->sanitize_user_strings($this->xml_parser->getXMLArrayValues('PhoronixTestSuite/System/Hardware'));
 	}
 	public function get_system_software()
 	{
-		return $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/System/Software');
+		return $this->sanitize_user_strings($this->xml_parser->getXMLArrayValues('PhoronixTestSuite/System/Software'));
 	}
 	public function get_system_json()
 	{
-		return array_map(array('pts_arrays', 'json_decode'), $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/System/JSON'));
+		return $this->sanitize_user_strings(array_map(array('pts_arrays', 'json_decode'), $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/System/JSON')));
 	}
 	public function get_system_user()
 	{
-		return $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/System/User');
+		return $this->sanitize_user_strings($this->xml_parser->getXMLArrayValues('PhoronixTestSuite/System/User'));
 	}
 	public function get_system_notes()
 	{
-		return $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/System/Notes');
+		return $this->sanitize_user_strings($this->xml_parser->getXMLArrayValues('PhoronixTestSuite/System/Notes'));
 	}
 	public function get_system_date()
 	{
-		return $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/System/TimeStamp');
+		return $this->sanitize_user_strings($this->xml_parser->getXMLArrayValues('PhoronixTestSuite/System/TimeStamp'));
 	}
 	public function get_system_pts_version()
 	{
-		return $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/System/TestClientVersion');
+		return $this->sanitize_user_strings($this->xml_parser->getXMLArrayValues('PhoronixTestSuite/System/TestClientVersion'));
 	}
 	public function get_system_identifiers()
 	{
-		return $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/System/Identifier');
+		return $this->sanitize_user_strings($this->xml_parser->getXMLArrayValues('PhoronixTestSuite/System/Identifier'));
 	}
 	public function get_system_count()
 	{
@@ -92,23 +103,23 @@ class pts_result_file
 	}
 	public function get_title()
 	{
-		return $this->xml_parser->getXMLValue('PhoronixTestSuite/Generated/Title');
+		return $this->sanitize_user_strings($this->xml_parser->getXMLValue('PhoronixTestSuite/Generated/Title'));
 	}
 	public function get_description()
 	{
-		return $this->xml_parser->getXMLValue('PhoronixTestSuite/Generated/Description');
+		return $this->sanitize_user_strings($this->xml_parser->getXMLValue('PhoronixTestSuite/Generated/Description'));
 	}
 	public function get_notes()
 	{
-		return $this->xml_parser->getXMLValue('PhoronixTestSuite/Generated/Notes');
+		return $this->sanitize_user_strings($this->xml_parser->getXMLValue('PhoronixTestSuite/Generated/Notes'));
 	}
 	public function get_internal_tags()
 	{
-		return $this->xml_parser->getXMLValue('PhoronixTestSuite/Generated/InternalTags');
+		return $this->sanitize_user_strings($this->xml_parser->getXMLValue('PhoronixTestSuite/Generated/InternalTags'));
 	}
 	public function get_reference_id()
 	{
-		return $this->xml_parser->getXMLValue('PhoronixTestSuite/Generated/ReferenceID');
+		return $this->sanitize_user_strings($this->xml_parser->getXMLValue('PhoronixTestSuite/Generated/ReferenceID'));
 	}
 	public function get_preset_environment_variables()
 	{
