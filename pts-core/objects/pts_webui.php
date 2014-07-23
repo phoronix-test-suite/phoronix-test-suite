@@ -95,15 +95,19 @@ class pts_webui
 	{
 		$pts_ws_port = getenv('PTS_WEBSOCKET_PORT');
 
-		// For some reason websockets don't seem to like ::1 which is ipv6 localhost.
-		// So we will work around it by just pointing to localhost instead.
-		if($_SERVER['REMOTE_ADDR'] === '::1')
+		// http://www.phoronix.com/forums/showthread.php?102512-Remote-gui-not-accessible-in-Phoronix-Test-Suite-5-2&p=430312#post430312
+		if(!isset($_SERVER['SERVER_ADDR']))
+		{
+			$_SERVER['SERVER_ADDR'] = gethostbyname(gethostname());
+		}
+
+		if($_SERVER['SERVER_ADDR'] === '::1')
 		{
 			$server_address = 'localhost';
 		}
 		else
 		{
-			$server_address = $_SERVER['REMOTE_ADDR'];
+			$server_address = $_SERVER['SERVER_ADDR'];
 		}
 
 		define('PTS_WEBSOCKET_SERVER', 'ws://' . $server_address . ':' . $pts_ws_port . '/');
