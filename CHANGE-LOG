@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Sanitize pts_result_file user strings
+- system_monitor: Correct perf-per-Watt calculation for LIB results
 - phodevi: Support Nouveau's pstate formatting changes to read core/mem MHz on newer kernels
 
 Phoronix Test Suite 5.2.1-Khanino
