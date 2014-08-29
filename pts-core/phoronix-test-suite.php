@@ -34,7 +34,10 @@ if(!defined('PTS_MODE'))
 }
 
 // Any PHP default memory limit should be fine for PTS, until you run image quality comparison tests that begins to consume memory
-ini_set('memory_limit', '256M');
+if(stripos(phpversion(), 'hhvm') === false)
+{
+	ini_set('memory_limit', '256M');
+}
 
 if(getenv('PTS_MODE') == 'CLIENT' && ini_get('open_basedir') != false)
 {

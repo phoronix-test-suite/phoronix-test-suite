@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Sanitize pts_result_file user strings
+- pts-core: Don't set memory_limit with HHVM
 - system_monitor: Correct perf-per-Watt calculation for LIB results
 - phodevi: Support Nouveau's pstate formatting changes to read core/mem MHz on newer kernels
 
