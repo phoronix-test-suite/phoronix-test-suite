@@ -45,6 +45,8 @@ class phodevi_monitor extends phodevi_device_interface
 	}
 	public static function monitor_string()
 	{
+		$monitor = null;
+
 		if(phodevi::is_macosx())
 		{
 			$system_profiler = shell_exec('system_profiler SPDisplaysDataType 2>&1');
@@ -132,17 +134,18 @@ class phodevi_monitor extends phodevi_device_interface
 				while($x = strpos($edid, '00fc', $x))
 				{
 					// 00fc indicates start of EDID monitor descriptor block
-					$hex = substr($edid, $x + 4, 36);
+					$encoded = substr($edid, $x + 4, 36);
 					$edid_monitor_name_block = null;
-					for($i = 0; $i < strlen($hex); $i += 2)
+					for($i = 0; $i < strlen($encoded); $i += 2)
 					{
-						$ch = chr(hexdec(substr($hex, $i, 2)));
+						$hex = substr($encoded, $i, 2);
 
-						if($ch == PHP_EOL)
+						if($hex == 15 || $hex == '0a')
 						{
 							break;
 						}
 
+						$ch = chr(hexdec($hex));
 						$edid_monitor_name_block .= $ch;
 					}
 					$edid_monitor_name_block = trim($edid_monitor_name_block);
