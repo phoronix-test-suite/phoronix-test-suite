@@ -116,6 +116,7 @@ class phodevi_monitor extends phodevi_device_interface
 		{
 			// Attempt to find the EDID over sysfs and then decode it for monitor name (0xFC)
 			// For at least Intel DRM drivers there is e.g. /sys/class/drm/card0-HDMI-A-2/edid
+			// Also works at least for Radeon DRM driver too
 			foreach(glob('/sys/class/drm/*/edid') as $edid_file)
 			{
 				$edid_file = pts_file_io::file_get_contents($edid_file);
