@@ -190,11 +190,14 @@ class pts_test_result
 				}
 			}
 
-			foreach($keys as $k)
+			if($divide_value != 0)
 			{
-				$normalized = pts_math::set_precision(($this->test_result_buffer->buffer_items[$k]->get_result_value() / $divide_value), $this->result_precision);
-				$this->test_result_buffer->buffer_items[$k]->reset_result_value($normalized);
-				$this->test_result_buffer->buffer_items[$k]->reset_raw_value(0);
+				foreach($keys as $k)
+				{
+					$normalized = pts_math::set_precision(($this->test_result_buffer->buffer_items[$k]->get_result_value() / $divide_value), $this->result_precision);
+					$this->test_result_buffer->buffer_items[$k]->reset_result_value($normalized);
+					$this->test_result_buffer->buffer_items[$k]->reset_raw_value(0);
+				}
 			}
 		}
 
