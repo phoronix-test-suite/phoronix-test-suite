@@ -163,7 +163,7 @@ class pts_OverviewGraph extends pts_Graph
 					switch($result_object->test_profile->get_result_proportion())
 					{
 						case 'HIB':
-							$value = $buffer_item->get_result_value() / $divide_value;
+							$value = $divide_value != 0 ? $buffer_item->get_result_value() / $divide_value : 0;
 							break;
 						case 'LIB':
 							$value = $divide_value / $buffer_item->get_result_value();
