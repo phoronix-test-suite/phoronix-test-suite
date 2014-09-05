@@ -8,6 +8,7 @@ Phoronix Test Suite (Git)
 - system_monitor: Correct perf-per-Watt calculation for LIB results
 - phodevi: Support Nouveau's pstate formatting changes to read core/mem MHz on newer kernels
 - phodevi: Support for reading monitor EDID over sysfs, decoding descriptors, and obtaining monitor name (should improve monitor name reporting for Intel Linux systems)
+- phodevi: Improved SoC detection
 - pts_LineGraph: Alignment fix for keys
 
 Phoronix Test Suite 5.2.1-Khanino
