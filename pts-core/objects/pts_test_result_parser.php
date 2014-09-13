@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2013, Phoronix Media
-	Copyright (C) 2010 - 2013, Michael Larabel
+	Copyright (C) 2010 - 2014, Phoronix Media
+	Copyright (C) 2010 - 2014, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -495,6 +495,7 @@ class pts_test_result_parser
 		$result_line_before_hint = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/ResultsParser/LineBeforeHint');
 		$result_line_after_hint = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/ResultsParser/LineAfterHint');
 		$result_before_string = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/ResultsParser/ResultBeforeString');
+		$result_after_string = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/ResultsParser/ResultAfterString');
 		$result_divide_by = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/ResultsParser/DivideResultBy');
 		$result_multiply_by = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/ResultsParser/MultiplyResultBy');
 		$strip_from_result = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/ResultsParser/StripFromResult');
@@ -558,11 +559,11 @@ class pts_test_result_parser
 			if($result_template_r_pos === false)
 			{
 				// Look for an element that partially matches, if like a '.' or '/sec' or some other pre/post-fix is present
-				foreach($result_template_r as $i => $r_check)
+				foreach($result_template_r as $x => $r_check)
 				{
-					if(isset($result_key[$i]) && strpos($r_check, $result_key[$i]) !== false)
+					if(isset($result_key[$x]) && strpos($r_check, $result_key[$x]) !== false)
 					{
-						$result_template_r_pos = $i;
+						$result_template_r_pos = $x;
 						break;
 					}
 				}
@@ -672,6 +673,26 @@ class pts_test_result_parser
 						if($result_before_this !== false)
 						{
 							array_push($test_results, $result_r[($result_before_this - 1)]);
+						}
+					}
+					else if(!empty($result_after_string[$i]))
+					{
+						// Using ResultBeforeString tag
+						$result_after_this = array_search($result_after_string[$i], $result_r);
+
+						if($result_after_this !== false)
+						{
+							$result_after_this++;
+							for($f = $result_after_this; $f < count($result_r); $f++)
+							{
+								if(in_array($result_r[$f], array(':', ',', '-', '=')))
+								{
+									continue;
+								}
+
+								array_push($test_results, $result_r[$f]);
+								break;
+							}
 						}
 					}
 					else if(isset($result_r[$result_template_r_pos]))

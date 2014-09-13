@@ -21,6 +21,7 @@
 			<xs:element name="LineBeforeHint" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="LineAfterHint" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="ResultBeforeString" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="ResultAfterString" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="StripFromResult" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="StripResultPostfix" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="MultiMatch" type="xs:string" minOccurs="0" maxOccurs="1" />
