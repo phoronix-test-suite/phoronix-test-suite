@@ -148,11 +148,11 @@ This option will list various details about installed tests and their usage.
 This option will list all available test profiles that are available from the enabled OpenBenchmarking.org repositories but are NOT SUPPORTED on the given hardware/software platform. This is mainly a debugging option for those looking for test profiles to potentially port to new platforms, etc.
 .TP
 .SH ASSET CREATION
+.B debug-benchmark [Test | Suite | OpenBenchmarking.org ID | Test Result]  ...
+This option is intended for use by test profile writers and is identical to the <em>run</em> option but will yield more information during the run process that can be used to debug issues with a test profile or to verify the test profile is functioning correctly.
+.TP
 .B debug-install [Test | Suite | OpenBenchmarking.org ID | Test Result]  ...
 This option is intended for use by test profile writers and is identical to the install option but will yield more information during the run process that can be used to debug issues with a test profile installer or to verify the test profile is functioning correctly.
-.TP
-.B debug-run [Test | Suite | OpenBenchmarking.org ID | Test Result]  ...
-This option is intended for use by test profile writers and is identical to the <em>run</em> option but will yield more information during the run process that can be used to debug issues with a test profile or to verify the test profile is functioning correctly.
 .TP
 .B debug-test-download-links [Test | Suite]
 This option will check all download links within the specified test profile(s) to ensure there are no broken URLs.
