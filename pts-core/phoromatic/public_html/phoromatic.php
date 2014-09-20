@@ -39,6 +39,7 @@ $environmental_variables = array(
 	'a' => 'ACTIVITY',
 	'r' => 'REQUEST',
 	'pts' => 'CLIENT_VERSION',
+	'pts_core' => 'CLIENT_CORE_VERSION',
 	'h' => 'CLIENT_HARDWARE',
 	's' => 'CLIENT_SOFTWARE',
 	'i' => 'ID',
@@ -63,6 +64,14 @@ foreach($environmental_variables as $get_var => $to_var)
 	{
 		$$to_var = null;
 	}
+}
+
+if($CLIENT_CORE_VERSION < 5312)
+{
+	// Due to major PTS 5.4 development changes, client version bump will be necessary
+	$json['phoromatic']['error'] = 'You must update your Phoronix Test Suite clients for compatibility with this Phoromatic server.';
+	echo json_encode($json);
+	exit;
 }
 
 if($GSID == null || $ACCOUNT_ID == null)

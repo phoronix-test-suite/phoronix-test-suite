@@ -112,20 +112,20 @@ class phoromatic_systems implements pts_webui_interface
 					$main .= '<h2>Test Results</h2>';
 					$main .= '<div class="pts_phoromatic_info_box_area">';
 					$main .= '<div style="float: left; width: 100%;"><ul><li><h1>Recent Test Results</h1></li>';
-				}
 
-				do
-				{
-					if($results > 20)
+					do
 					{
-						break;
+						if($results > 20)
+						{
+							break;
+						}
+
+						$main .= '<a href="?results/' . $test_result_row['UploadID'] . '"><li>' . $test_result_row['Title'] . '<br /><span style="color: #065695;"><em>' . phoromatic_system_id_to_name($test_result_row['SystemID']) . ' - ' . phoromatic_user_friendly_timedate($test_result_row['UploadTime']) .  '</em></span></li></a>';
+						$results++;
+
 					}
-
-					$main .= '<a href="?results/' . $test_result_row['UploadID'] . '"><li>' . $test_result_row['Title'] . '<br /><span style="color: #065695;"><em>' . phoromatic_system_id_to_name($test_result_row['SystemID']) . ' - ' . phoromatic_user_friendly_timedate($test_result_row['UploadTime']) .  '</em></span></li></a>';
-					$results++;
-
+					while($test_result_row = $test_result_result->fetchArray());
 				}
-				while($test_result_row = $test_result_result->fetchArray());
 
 				if($results > 0)
 				{

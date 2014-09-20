@@ -180,7 +180,7 @@ class phoromatic extends pts_module_interface
 						{
 							$test_run_manager = new pts_test_run_manager($test_flags);
 							pts_test_run_manager::set_batch_mode(array(
-								'UploadResults' => true,
+								'UploadResults' => false, // TODO XXX: give option back on Phoromatic web UI whether to upload results to OpenBenchmarking.org global too...
 								'SaveResults' => true,
 								'RunAllTestCombinations' => false,
 								'OpenBrowser' => false
@@ -205,15 +205,98 @@ class phoromatic extends pts_module_interface
 								phoromatic::update_system_status('Benchmarks Completed For Schedule: ' . $phoromatic_save_identifier . ' - ' . $phoromatic_schedule_id);
 								$test_run_manager->post_execution_process();
 
-								// Upload to Phoromatic
-								$ob_data = $test_run_manager->get_result_upload_data();
+								// Handle uploading data to server
+								$result_file = new pts_result_file($test_run_manage->get_file_name());
+								$local_file_name = $object->get_file_name();
+								$results_identifier = $object->get_results_identifier();
+								$composite_xml = $result_file->xml_parser->getXML();
+								$system_log_dir = PTS_SAVE_RESULTS_PATH . $result_file->get_identifier() . '/system-logs/';
 
+								if($json['phoromatic']['settings']['UploadSystemLogs'])
+								{
+									$upload_system_logs = true;
+								}
+
+								// TODO: Potentially integrate this code below shared with pts_openbenchmarking_client into a unified function for validating system log files
+								$system_logs = null;
+								$system_logs_hash = null;
+								if(is_dir($system_log_dir) && $upload_system_logs)
+								{
+									$is_valid_log = true;
+									$finfo = function_exists('finfo_open') ? finfo_open(FILEINFO_MIME_TYPE) : false;
+
+									foreach(pts_file_io::glob($system_log_dir . '*') as $log_dir)
+									{
+										if($is_valid_log == false || !is_dir($log_dir))
+										{
+											$is_valid_log = false;
+											break;
+										}
+
+										foreach(pts_file_io::glob($log_dir . '/*') as $log_file)
+										{
+											if(!is_file($log_file))
+											{
+												$is_valid_log = false;
+												break;
+											}
+
+											if($finfo && substr(finfo_file($finfo, $log_file), 0, 5) != 'text/')
+											{
+												$is_valid_log = false;
+												break;
+											}
+										}
+									}
+
+									if($is_valid_log)
+									{
+										$system_logs_zip = pts_client::create_temporary_file();
+										pts_compression::zip_archive_create($system_logs_zip, $system_log_dir);
+
+										if(filesize($system_logs_zip) < 2097152)
+										{
+											// If it's over 2MB, probably too big
+											$system_logs = base64_encode(file_get_contents($system_logs_zip));
+											$system_logs_hash = sha1($system_logs);
+										}
+										else
+										{
+										//	trigger_error('The systems log attachment is too large to upload to OpenBenchmarking.org.', E_USER_WARNING);
+										}
+
+										unlink($system_logs_zip);
+									}
+								}
+
+								$composite_xml_hash = sha1($composite_xml);
+								$composite_xml_type = 'composite_xml';
+
+								// Compress the result file XML if it's big
+								if(isset($composite_xml[50000]) && function_exists('gzdeflate'))
+								{
+									$composite_xml_gz = gzdeflate($composite_xml);
+
+									if($composite_xml_gz != false)
+									{
+										$composite_xml = $composite_xml_gz;
+										$composite_xml_type = 'composite_xml_gz';
+									}
+								}
+
+								// Upload to Phoromatic
 								$server_response = phoromatic::upload_to_remote_server(array(
 									'r' => 'result_upload',
-									'ob' => $ob_data['id'],
+									//'ob' => $ob_data['id'],
 									'sched' => $json['phoromatic']['schedule_id'],
 									'o' => $phoromatic_save_identifier,
 									'ts' => $json['phoromatic']['trigger_id'],
+									$composite_xml_type => base64_encode($composite_xml),
+									'composite_xml_hash' => $composite_xml_hash,
+									'local_file_name' => $local_file_name,
+									'this_results_identifier' => $results_identifier,
+									'system_logs_zip' => $system_logs,
+									'system_logs_hash' => $system_logs_hash
 									));
 
 								if(!$json['phoromatic']['settings']['ArchiveResultsLocally'])
