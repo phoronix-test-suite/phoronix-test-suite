@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add "ResultAfterString" to test result parser XML schema
 - pts-core: Other result file parsing improvements/fixes
 - pts-core: Rename debug-run mode to debug-benchmark, add extra features
+- phoromatic: Begin allowing results to be stored locally, not dependent on OpenBenchmarking.org storage
 
 Phoronix Test Suite 5.4 Milestone 1
 5 September 2014
