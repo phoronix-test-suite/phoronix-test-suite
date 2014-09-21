@@ -51,8 +51,14 @@ class phoromatic_results implements pts_webui_interface
 				if($row)
 				{
 					$main .= '<h1>' . $row['Title'] . '</h1>';
-					pts_openbenchmarking::clone_openbenchmarking_result($row['OpenBenchmarkingID']);
-					$result_file = new pts_result_file($row['OpenBenchmarkingID']);
+					$composite_xml = phoromatic_server::phoromatic_account_result_path($_SESSION['AccountID'], $PATH[0]) . 'composite.xml';
+					if(!is_file($composite_xml))
+					{
+						echo 'File Not Found.';
+						return false;
+					}
+
+					$result_file = new pts_result_file($composite_xml);
 
 					$extra_attributes = array();
 					$intent = null;

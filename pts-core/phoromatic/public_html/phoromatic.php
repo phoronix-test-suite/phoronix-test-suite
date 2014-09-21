@@ -51,7 +51,12 @@ $environmental_variables = array(
 	'c' => 'COMPOSITE_XML',
 	'ob' => 'OPENBENCHMARKING_ID',
 	'sched' => 'SCHEDULE_ID',
-	'lip' => 'LOCAL_IP'
+	'lip' => 'LOCAL_IP',
+	'composite_xml' => 'COMPOSITE_XML',
+	'composite_xml_gz' => 'COMPOSITE_XML_GZ',
+	'composite_xml_hash' => 'COMPOSITE_XML_HASH',
+	'system_logs_zip' => 'SYSTEM_LOGS_ZIP',
+	'system_logs_hash' => 'SYSTEM_LOGS_HASH',
 	);
 
 foreach($environmental_variables as $get_var => $to_var)

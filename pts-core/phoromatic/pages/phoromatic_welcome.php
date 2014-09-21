@@ -159,10 +159,8 @@ class phoromatic_welcome implements pts_webui_interface
 					$account_salt = phoromatic_server::$db->exec('UPDATE phoromatic_users SET LastIP = \'' . $_SERVER['REMOTE_ADDR'] . '\', LastLogin = \'' . phoromatic_server::current_time() . ' WHERE UserName = \'' . $matching_user['UserName'] . '\'');
 					session_write_close();
 
-					if(!is_dir(phoromatic_server::phoromatic_account_path($account_id)))
-					{
-						mkdir(phoromatic_server::phoromatic_account_path($account_id));
-					}
+					pts_file_io::mkdir(phoromatic_server::phoromatic_account_path($account_id));
+					pts_file_io::mkdir(phoromatic_server::phoromatic_account_result_path($account_id));
 
 					echo phoromatic_webui_header(array('Welcome, ' . $user), '');
 					$box = '<h1>Log-In Successful</h1>

@@ -190,7 +190,7 @@ class phoromatic extends pts_module_interface
 							if($test_run_manager->load_tests_to_run($suite_identifier))
 							{
 								phoromatic::set_user_context($json['phoromatic']['pre_run_set_context'], $phoromatic_trigger, $phoromatic_schedule_id, 'PRE_RUN');
-								if(true)
+								if(false)
 								{
 									$test_run_manager->auto_upload_to_openbenchmarking();
 									pts_openbenchmarking_client::override_client_setting('UploadSystemLogsByDefault', $json['phoromatic']['settings']['UploadSystemLogs']);
@@ -206,16 +206,11 @@ class phoromatic extends pts_module_interface
 								$test_run_manager->post_execution_process();
 
 								// Handle uploading data to server
-								$result_file = new pts_result_file($test_run_manage->get_file_name());
-								$local_file_name = $object->get_file_name();
-								$results_identifier = $object->get_results_identifier();
+								$result_file = new pts_result_file($test_run_manager->get_file_name());
 								$composite_xml = $result_file->xml_parser->getXML();
 								$system_log_dir = PTS_SAVE_RESULTS_PATH . $result_file->get_identifier() . '/system-logs/';
 
-								if($json['phoromatic']['settings']['UploadSystemLogs'])
-								{
-									$upload_system_logs = true;
-								}
+								$upload_system_logs = $json['phoromatic']['settings']['UploadSystemLogs'];
 
 								// TODO: Potentially integrate this code below shared with pts_openbenchmarking_client into a unified function for validating system log files
 								$system_logs = null;
@@ -293,12 +288,11 @@ class phoromatic extends pts_module_interface
 									'ts' => $json['phoromatic']['trigger_id'],
 									$composite_xml_type => base64_encode($composite_xml),
 									'composite_xml_hash' => $composite_xml_hash,
-									'local_file_name' => $local_file_name,
-									'this_results_identifier' => $results_identifier,
 									'system_logs_zip' => $system_logs,
 									'system_logs_hash' => $system_logs_hash
 									));
-
+								echo PHP_EOL . 'DEBUG TEST: ' . PHP_EOL;
+								var_dump($server_response);
 								if(!$json['phoromatic']['settings']['ArchiveResultsLocally'])
 								{
 									pts_client::remove_saved_result_file($test_run_manager->get_file_name());
@@ -384,14 +378,9 @@ class phoromatic extends pts_module_interface
 		}*/
 	}
 
-
 	//
 	// TODO XXX: The code below here is Phoromatic legacy code still needing to be ported to the new interfaces of PTS 5.2 Khanino
 	//
-
-
-
-
 
 	public static function module_setup_validate($options)
 	{

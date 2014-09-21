@@ -44,6 +44,10 @@ class phoromatic_server
 	{
 		return self::phoromatic_path() . 'accounts/' . $account_id . '/';
 	}
+	public static function phoromatic_account_result_path($account_id, $result_id = null)
+	{
+		return self::phoromatic_account_path($account_id) . 'results/' . ($result_id != null ? $result_id . '/' : null);
+	}
 	public static function prepare_database()
 	{
 		self::$db = new SQLite3(self::phoromatic_path() . 'phoromatic.db');
@@ -72,13 +76,13 @@ class phoromatic_server
 				self::$db->exec('ALTER TABLE phoromatic_results ADD COLUMN Description TEXT');
 				self::$db->exec('ALTER TABLE phoromatic_results ADD COLUMN SystemCount INTEGER');
 				self::$db->exec('ALTER TABLE phoromatic_results ADD COLUMN ResultCount INTEGER');
-				self::$db->exec('ALTER TABLE phoromatic_results ADD COLUMN DisplayStatus INTEGER');
-				self::$db->exec('ALTER TABLE phoromatic_results ADD COLUMN TimesViewed INTEGER');
+				self::$db->exec('ALTER TABLE phoromatic_results ADD COLUMN DisplayStatus INTEGER DEFAULT 1');
+				self::$db->exec('ALTER TABLE phoromatic_results ADD COLUMN TimesViewed INTEGER DEFAULT 0');
 				self::$db->exec('ALTER TABLE phoromatic_results ADD COLUMN XmlUploadHash TEXT');
 				self::$db->exec('ALTER TABLE phoromatic_results ADD COLUMN ComparisonHash TEXT');
 				// Add phoromatic_results_results as test_results_results equivalent from OB
 				self::$db->exec('CREATE TABLE phoromatic_results_results (AccountID TEXT, UploadID INTEGER, AbstractID INTEGER, TestProfile TEXT, ComparisonHash TEXT, UNIQUE(AccountID, UploadID, AbstractID) ON CONFLICT IGNORE)');
-				self::$db->exec('CREATE TABLE phoromatic_results_systems (AccountID TEXT, UploadID INTEGER, SystemID INTEGER, Hardware TEXT, Software TEXT, UNIQUE(AccountID, UploadID, SystemID) ON CONFLICT IGNORE)');
+				self::$db->exec('CREATE TABLE phoromatic_results_systems (AccountID TEXT, UploadID INTEGER, SystemIdentifier TEXT, Hardware TEXT, Software TEXT, UNIQUE(AccountID, UploadID, SystemIdentifier) ON CONFLICT IGNORE)');
 				self::$db->exec('PRAGMA user_version = 2');
 		}
 	}

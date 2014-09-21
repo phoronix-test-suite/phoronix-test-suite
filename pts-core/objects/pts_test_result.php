@@ -100,7 +100,7 @@ class pts_test_result
 	{
 		return $this->result_max;
 	}
-	public function get_comparison_hash($show_version_and_attributes = true)
+	public function get_comparison_hash($show_version_and_attributes = true, $raw_output = true)
 	{
 		if($show_version_and_attributes)
 		{
@@ -109,11 +109,11 @@ class pts_test_result
 			// this removal is done since the zz segment should be maintainable between comparisons
 			$tp = substr($tp, 0, strrpos($tp, '.'));
 
-			return pts_test_profile::generate_comparison_hash($tp, $this->get_arguments(), $this->get_arguments_description(), $this->test_profile->get_app_version());
+			return pts_test_profile::generate_comparison_hash($tp, $this->get_arguments(), $this->get_arguments_description(), $this->test_profile->get_app_version(), $raw_output);
 		}
 		else
 		{
-			return pts_test_profile::generate_comparison_hash($this->test_profile->get_identifier(false), $this->get_arguments());
+			return pts_test_profile::generate_comparison_hash($this->test_profile->get_identifier(false), $this->get_arguments(), null, null, $raw_output);
 		}
 	}
 	public function __toString()

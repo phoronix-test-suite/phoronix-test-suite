@@ -141,11 +141,11 @@ class pts_result_file
 	{
 		return count($this->get_unique_test_titles());
 	}
-	public function get_contained_tests_hash()
+	public function get_contained_tests_hash($raw_output = true)
 	{
 		$result_object_hashes = $this->get_result_object_hashes();
 		sort($result_object_hashes);
-		return sha1(implode(',', $result_object_hashes), true);
+		return sha1(implode(',', $result_object_hashes), $raw_output);
 	}
 	public function get_result_object_hashes()
 	{

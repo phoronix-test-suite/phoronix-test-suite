@@ -304,7 +304,7 @@ class pts_test_profile extends pts_test_profile_parser
 
 		return $supported;
 	}
-	public static function generate_comparison_hash($test_identifier, $arguments, $attributes = null, $version = null)
+	public static function generate_comparison_hash($test_identifier, $arguments, $attributes = null, $version = null, $raw_output = true)
 	{
 		$hash_table = array(
 		$test_identifier,
@@ -313,7 +313,7 @@ class pts_test_profile extends pts_test_profile_parser
 		$version
 		);
 
-		return sha1(implode(',', $hash_table), true);
+		return sha1(implode(',', $hash_table), $raw_output);
 	}
 	public function get_test_executable_dir()
 	{
