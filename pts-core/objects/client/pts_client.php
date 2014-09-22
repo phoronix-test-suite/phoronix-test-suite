@@ -693,7 +693,10 @@ class pts_client
 						$detected_phoromatic_servers = array();
 					}
 
-					array_push($detected_phoromatic_servers, $potential_server);
+					if(!in_array($potential_server, $detected_phoromatic_servers))
+					{
+						array_push($detected_phoromatic_servers, $potential_server);
+					}
 				}
 			}
 		}

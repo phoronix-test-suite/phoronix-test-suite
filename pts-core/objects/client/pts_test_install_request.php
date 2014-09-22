@@ -113,9 +113,10 @@ class pts_test_install_request
 		$remote_files = pts_test_install_manager::remote_files_available_in_download_caches();
 		$local_download_caches = pts_test_install_manager::local_download_caches();
 		$remote_download_caches = pts_test_install_manager::remote_download_caches();
+		$phoromatic_server_caches = pts_test_install_manager::phoromatic_download_server_caches();
 
 		$install_request->generate_download_object_list();
-		$install_request->scan_download_caches($local_download_caches, $remote_download_caches, $remote_files);
+		$install_request->scan_download_caches($local_download_caches, $remote_download_caches, $remote_files, $phoromatic_server_caches);
 
 		foreach($install_request->get_download_objects() as $download_object)
 		{
@@ -135,7 +136,7 @@ class pts_test_install_request
 
 		return true;
 	}
-	public function scan_download_caches($local_download_caches, $remote_download_caches, $remote_files)
+	public function scan_download_caches($local_download_caches, $remote_download_caches, $remote_files, $phoromatic_server_caches)
 	{
 		$download_location = $this->test_profile->get_install_dir();
 		$main_download_cache = pts_strings::add_trailing_slash(pts_client::parse_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Installation/CacheDirectory', PTS_DOWNLOAD_CACHE_PATH)));
@@ -194,6 +195,19 @@ class pts_test_install_request
 					}
 
 					$download_package->set_download_location('LOOKASIDE_DOWNLOAD_CACHE', array($lookaside_copy));
+				}
+
+				// Check Phoromatic server caches
+				if($download_package->get_download_location_type() == null && $phoromatic_server_caches)
+				{
+					foreach($phoromatic_server_caches as $server_url => $repo)
+					{
+						if(isset($repo[$package_filename]) && ($repo[$package_filename]['md5'] == $download_package->get_md5() || $repo[$package_filename]['sha256'] == $download_package->get_sha256()))
+						{
+							$download_package->set_download_location('REMOTE_DOWNLOAD_CACHE', array($server_url . '/download-cache.php?download=' . $package_filename));
+							break;
+						}
+					}
 				}
 
 				// If still not found, check remote download caches

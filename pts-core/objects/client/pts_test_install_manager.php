@@ -72,10 +72,11 @@ class pts_test_install_manager
 		$remote_files = self::remote_files_available_in_download_caches();
 		$local_download_caches = self::local_download_caches();
 		$remote_download_caches = self::remote_download_caches();
+		$phoromatic_server_caches = pts_test_install_manager::phoromatic_download_server_caches();
 
 		foreach($this->tests_to_install as $i => &$test_install_request)
 		{
-			$test_install_request->scan_download_caches($local_download_caches, $remote_download_caches, $remote_files);
+			$test_install_request->scan_download_caches($local_download_caches, $remote_download_caches, $remote_files, $phoromatic_server_caches);
 			pts_client::$display->test_install_progress_update(($i / $test_count));
 		}
 		pts_client::$display->test_install_progress_completed();
@@ -216,6 +217,36 @@ class pts_test_install_manager
 		}
 
 		return $cache_directories;
+	}
+	public static function phoromatic_download_server_caches()
+	{
+		static $caches = null;
+
+		if($caches == null)
+		{
+			$caches = array();
+			$pso = pts_storage_object::recover_from_file(PTS_CORE_STORAGE);
+			$archived_servers = $pso->read_object('detected_phoromatic_servers');
+
+			if(is_array($archived_servers))
+			{
+				foreach($archived_servers as $server_url_and_port)
+				{
+					$repo = pts_network::http_get_contents('http://' . $server_url_and_port[0] . ':' . $server_url_and_port[1] . '/download-cache.php?repo');
+
+					if(!empty($repo))
+					{
+						$repo = json_decode($repo, true);
+						if($repo && isset($repo['phoronix-test-suite']['download-cache']))
+						{
+							$caches[$server_url_and_port[0] . ':' . $server_url_and_port[1]] = $repo['phoronix-test-suite']['download-cache'];
+						}
+					}
+				}
+			}
+		}
+
+		return $caches;
 	}
 }
 
