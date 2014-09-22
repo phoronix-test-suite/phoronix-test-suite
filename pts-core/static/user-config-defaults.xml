@@ -55,6 +55,7 @@
 			<Configured>FALSE</Configured>
 		</BatchMode>
 		<Networking>
+			<NoInternetCommunication>FALSE</NoInternetCommunication>
 			<NoNetworkCommunication>FALSE</NoNetworkCommunication>
 			<Timeout>20</Timeout>
 			<ProxyAddress></ProxyAddress>

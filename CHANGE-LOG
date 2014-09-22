@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add "ResultAfterString" to test result parser XML schema
 - pts-core: Other result file parsing improvements/fixes
 - pts-core: Rename debug-run mode to debug-benchmark, add extra features
+- pts-core: Separate out NoNetworkCommunication user option into NoInternetCommunication/NoNetworkCommunication user config options for those still wanting LAN/intranet support
 - phoromatic: Begin allowing results to be stored locally, not dependent on OpenBenchmarking.org storage
 - phoromatic: Advertise Phoromatic Server using Advahi zero-conf networking service when avahi-publish available and AdvertiseServiceZeroConf user config option is TRUE
 

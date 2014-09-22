@@ -122,6 +122,7 @@ class pts_config
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/BatchMode/RunAllTestCombinations', $read_config);
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/BatchMode/Configured', $read_config);
 
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Networking/NoInternetCommunication', $read_config);
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Networking/NoNetworkCommunication', $read_config);
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Networking/Timeout', $read_config);
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Networking/ProxyAddress', $read_config);

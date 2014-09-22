@@ -446,7 +446,7 @@ class pts_openbenchmarking
 			{
 				foreach(array_keys($repo_index['tests']) as $identifier)
 				{
-					if($download_tests && pts_network::network_support_available())
+					if($download_tests && pts_network::internet_support_available())
 					{
 						$version = array_shift($repo_index['tests'][$identifier]['versions']);
 						if(self::download_test_profile($repo . '/' . $identifier . '-' . $version) == false)
@@ -475,7 +475,7 @@ class pts_openbenchmarking
 			{
 				foreach(array_keys($repo_index['suites']) as $identifier)
 				{
-					if($download_suites && pts_network::network_support_available())
+					if($download_suites && pts_network::internet_support_available())
 					{
 						$version = array_shift($repo_index['suites'][$identifier]['versions']);
 						if(self::download_test_suite($repo . '/' . $identifier . '-' . $version) == false)

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2013, Phoronix Media
-	Copyright (C) 2008 - 2013, Michael Larabel
+	Copyright (C) 2008 - 2014, Phoronix Media
+	Copyright (C) 2008 - 2014, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -23,11 +23,16 @@
 class pts_network
 {
 	private static $disable_network_support = false;
+	private static $disable_internet_support = false;
 	private static $network_proxy = false;
 
 	public static function is_proxy_setup()
 	{
 		return self::$network_proxy == false;
+	}
+	public static function internet_support_available()
+	{
+		return self::network_support_available() && self::$disable_internet_support == false;
 	}
 	public static function network_support_available()
 	{
@@ -262,6 +267,11 @@ class pts_network
 			echo PHP_EOL . 'The allow_url_fopen option in your PHP configuration must be enabled for network support.' . PHP_EOL . PHP_EOL;
 			self::$disable_network_support = true;
 		}
+		else if(pts_config::read_bool_config('PhoronixTestSuite/Options/Networking/NoInternetCommunication', 'FALSE'))
+		{
+			echo PHP_EOL . 'Internet Communication Is Disabled For Your User Configuration.' . PHP_EOL . PHP_EOL;
+			self::$disable_internet_support = true;
+		}
 		else if(pts_config::read_bool_config('PhoronixTestSuite/Options/Networking/NoNetworkCommunication', 'FALSE'))
 		{
 			echo PHP_EOL . 'Network Communication Is Disabled For Your User Configuration.' . PHP_EOL . PHP_EOL;
@@ -286,8 +296,8 @@ class pts_network
 				if(gethostbyname('google.com') == 'google.com')
 				{
 					echo PHP_EOL;
-					trigger_error('No Network Connectivity', E_USER_WARNING);
-					self::$disable_network_support = true;
+					trigger_error('No Internet Connectivity', E_USER_WARNING);
+					self::$disable_internet_support = true;
 				}
 			}
 		}

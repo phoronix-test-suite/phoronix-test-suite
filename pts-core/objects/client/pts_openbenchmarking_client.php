@@ -56,7 +56,7 @@ class pts_openbenchmarking_client
 			return false;
 		}
 
-		if(pts_network::network_support_available() == false)
+		if(pts_network::internet_support_available() == false)
 		{
 			echo PHP_EOL . 'No network support available.' . PHP_EOL;
 			return false;
@@ -306,7 +306,7 @@ class pts_openbenchmarking_client
 	{
 		if(isset($openbenchmarking['user_name']) && isset($openbenchmarking['communication_id']) && isset($openbenchmarking['sav']))
 		{
-			if(IS_FIRST_RUN_TODAY && pts_network::network_support_available())
+			if(IS_FIRST_RUN_TODAY && pts_network::internet_support_available())
 			{
 				// Might as well make sure OpenBenchmarking.org account has the latest system info
 				// But don't do it everytime to preserve bandwidth

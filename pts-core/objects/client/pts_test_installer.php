@@ -317,31 +317,38 @@ class pts_test_installer
 
 						do
 						{
-							if((pts_c::$test_flags ^ pts_c::batch_mode) && (pts_c::$test_flags ^ pts_c::auto_mode) && pts_config::read_bool_config('PhoronixTestSuite/Options/Installation/PromptForDownloadMirror', 'FALSE') && count($package_urls) > 1)
+							if(pts_network::internet_support_available())
 							{
-								// Prompt user to select mirror
-								do
+								if((pts_c::$test_flags ^ pts_c::batch_mode) && (pts_c::$test_flags ^ pts_c::auto_mode) && pts_config::read_bool_config('PhoronixTestSuite/Options/Installation/PromptForDownloadMirror', 'FALSE') && count($package_urls) > 1)
 								{
-									echo PHP_EOL . 'Available Download Mirrors:' . PHP_EOL . PHP_EOL;
-									$url = pts_user_io::prompt_text_menu('Select Preferred Mirror', $package_urls, false);
+									// Prompt user to select mirror
+									do
+									{
+										echo PHP_EOL . 'Available Download Mirrors:' . PHP_EOL . PHP_EOL;
+										$url = pts_user_io::prompt_text_menu('Select Preferred Mirror', $package_urls, false);
+									}
+									while(pts_strings::is_url($url) == false);
 								}
-								while(pts_strings::is_url($url) == false);
+								else
+								{
+									// Auto-select mirror
+									shuffle($package_urls);
+									do
+									{
+										$url = array_pop($package_urls);
+									}
+									while(pts_strings::is_url($url) == false && !empty($package_urls));
+								}
+
+								pts_client::$display->test_install_download_file('DOWNLOAD', $download_package);
+								$download_start = time();
+								pts_network::download_file($url, $download_destination_temp);
+								$download_end = time();
 							}
 							else
 							{
-								// Auto-select mirror
-								shuffle($package_urls);
-								do
-								{
-									$url = array_pop($package_urls);
-								}
-								while(pts_strings::is_url($url) == false && !empty($package_urls));
+								pts_client::$display->test_install_error('Internet support is needed and it\'s disabled or not available.');
 							}
-
-							pts_client::$display->test_install_download_file('DOWNLOAD', $download_package);
-							$download_start = time();
-							pts_network::download_file($url, $download_destination_temp);
-							$download_end = time();
 
 							if(pts_test_installer::validate_md5_download_file($download_destination_temp, $package_md5))
 							{

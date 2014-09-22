@@ -86,8 +86,10 @@
 			<p>If this option is set to <em>TRUE</em>, when running in batch mode the user will be prompted to enter a test name. If this option is set to <em>FALSE</em>, a test name will be automatically generated.</p>
 
 			<h1>Networking Options</h1>
+			<h3>NoInternetCommunication: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/Networking/NoInternetCommunication" /></span></h3>
+			<p>If you wish to disable Internet communication within the Phoronix Test Suite by default, set this option to <em>TRUE</em>. The default value is <em>FALSE</em>. Setting this to <em>FALSE</em> will still allow Phoromatic to communicate with network servers such as for intranet-based download caches or a Phoromatic Server. Internet support is generally required for downloading test profiles from OpenBenchmarking.org, acquiring necessary test files from their respective sources, etc.</p>
 			<h3>NoNetworkCommunication: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/Networking/NoNetworkCommunication" /></span></h3>
-			<p>If you wish to disable network support entirely within the Phoronix Test Suite, set this option to <em>TRUE</em>. The default value is <em>FALSE</em>.</p>
+			<p>If you wish to disable network support (including Internet access) entirely within the Phoronix Test Suite, set this option to <em>TRUE</em>. The default value is <em>FALSE</em>.</p>
 			<h3>Timeout: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/Networking/Timeout" /></span></h3>
 			<p>This is the read timeout (in seconds) for network connections. The default value is <em>20</em>.</p>
 			<h3>ProxyAddress: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/Networking/ProxyAddress" /></span></h3>
