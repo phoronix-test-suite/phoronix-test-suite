@@ -98,7 +98,11 @@ class pts_test_file_download
 	}
 	public function check_file_hash($file)
 	{
-		if(pts_client::read_env('NO_FILE_HASH_CHECKS') != false || pts_flags::skip_md5_checks())
+		if(!is_file($file))
+		{
+			return false;
+		}
+		else if(pts_client::read_env('NO_FILE_HASH_CHECKS') != false || pts_flags::skip_md5_checks())
 		{
 			return true;
 		}
