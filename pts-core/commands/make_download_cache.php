@@ -23,7 +23,7 @@
 class make_download_cache implements pts_option_interface
 {
 	const doc_section = 'Test Installation';
-	const doc_description = 'This option will create a download cache for use by the Phoronix Test Suite.';
+	const doc_description = 'This option will create a download cache for use by the Phoronix Test Suite. The download cache is created of test files already downloaded to the local system. If passing any test/suite names to make-download-cache, the needed files for those test profiles will first be automatically downloaded before creating the cache.';
 
 	public static function run($r)
 	{
