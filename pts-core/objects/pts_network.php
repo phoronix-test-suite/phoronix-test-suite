@@ -38,14 +38,14 @@ class pts_network
 	{
 		return self::$disable_network_support == false;
 	}
-	public static function http_get_contents($url, $override_proxy = false, $override_proxy_port = false)
+	public static function http_get_contents($url, $override_proxy = false, $override_proxy_port = false, $http_timeout = -1)
 	{
 		if(!pts_network::network_support_available())
 		{
 			return false;
 		}
 
-		$stream_context = pts_network::stream_context_create(null, $override_proxy, $override_proxy_port);
+		$stream_context = pts_network::stream_context_create(null, $override_proxy, $override_proxy_port, $http_timeout);
 		$contents = pts_file_io::file_get_contents($url, 0, $stream_context);
 
 		return $contents;
@@ -90,14 +90,14 @@ class pts_network
 			pts_client::$display->test_install_progress_completed();
 		}
 	}
-	public static function curl_download($download, $download_to)
+	public static function curl_download($download, $download_to, $download_port_number = false)
 	{
 		if(!function_exists('curl_init'))
 		{
 			return false;
 		}
 
-		// with curl_multi_init we could do multiple downloads at once...
+		// XXX: with curl_multi_init we could do multiple downloads at once...
 		$cr = curl_init();
 		$fh = fopen($download_to, 'w');
 
@@ -109,6 +109,11 @@ class pts_network
 		curl_setopt($cr, CURLOPT_CAPATH, PTS_CORE_STATIC_PATH . 'certificates/');
 		curl_setopt($cr, CURLOPT_BUFFERSIZE, 64000);
 		curl_setopt($cr, CURLOPT_USERAGENT, pts_codename(true));
+
+		if($download_port_number)
+		{
+			curl_setopt($ch, CURLOPT_PORT, $port);
+		}
 
 		if(stripos($download, 'sourceforge') === false)
 		{
@@ -177,7 +182,7 @@ class pts_network
 
 		return false;
 	}
-	public static function stream_context_create($parameters = null, $proxy_address = false, $proxy_port = false)
+	public static function stream_context_create($parameters = null, $proxy_address = false, $proxy_port = false, $http_timeout = -1)
 	{
 		if(!is_array($parameters))
 		{
@@ -196,7 +201,15 @@ class pts_network
 			$parameters['http']['request_fulluri'] = true;
 		}
 
-		$parameters['http']['timeout'] = defined('NETWORK_TIMEOUT') ? NETWORK_TIMEOUT : 20;
+		if(is_numeric($http_timeout) && $http_timeout > 1)
+		{
+			$parameters['http']['timeout'] = $http_timeout;
+		}
+		else
+		{
+			$parameters['http']['timeout'] = defined('NETWORK_TIMEOUT') ? NETWORK_TIMEOUT : 20;
+		}
+
 		$parameters['http']['user_agent'] = pts_codename(true);
 		$parameters['http']['header'] = "Content-Type: application/x-www-form-urlencoded\r\n";
 
@@ -330,6 +343,46 @@ class pts_network
 		}
 
 		return $local_ip;
+	}
+	public static function find_zeroconf_phoromatic_servers($find_multiple = false)
+	{
+		if(!pts_network::network_support_available())
+		{
+			return null;
+		}
+
+		$hosts = $find_multiple ? array() : null;
+
+		if(PTS_IS_CLIENT && pts_client::executable_in_path('avahi-browse'))
+		{
+			$avahi_browse = explode(PHP_EOL, shell_exec('avahi-browse -p -r -t _http._tcp 2>&1'));
+			foreach(array_reverse($avahi_browse) as $avahi_line)
+			{
+				if(strrpos($avahi_line, 'phoromatic-server') !== false)
+				{
+					$avahi_line = explode(';', $avahi_line);
+
+					if(isset($avahi_line[8]) && ip2long($avahi_line[7]) !== false && is_numeric($avahi_line[8]))
+					{
+						$server_ip = $avahi_line[7];
+						$server_port = $avahi_line[8];
+						//echo $server_ip . ':' . $server_port;
+
+						if($find_multiple)
+						{
+							array_push($hosts, array($server_ip, $server_port));
+						}
+						else
+						{
+							$hosts = array($server_ip, $server_port);
+							break;
+						}
+					}
+				}
+			}
+		}
+
+		return $hosts;
 	}
 }
 

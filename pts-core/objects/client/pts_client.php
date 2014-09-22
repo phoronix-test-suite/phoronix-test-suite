@@ -635,7 +635,7 @@ class pts_client
 		$last_run = $pso->read_object('last_run_time');
 		pts_define('IS_FIRST_RUN_TODAY', (substr($last_run, 0, 10) != date('Y-m-d')));
 		$pso->add_object('last_run_time', date('Y-m-d H:i:s')); // Time PTS was last run
-
+		pts_define('TIME_SINCE_LAST_RUN', ceil((time() - strtotime($last_run)) / 60)); // TIME_SINCE_LAST_RUN is in minutes
 
 		// User Agreement Checking
 		$agreement_cs = $pso->read_object('user_agreement_cs');
@@ -676,6 +676,28 @@ class pts_client
 				}
 			}
 		}
+
+		$detected_phoromatic_servers = $pso->read_object('detected_phoromatic_servers');
+		if($detected_phoromatic_servers || TIME_SINCE_LAST_RUN > 30 || true)
+		{
+			// Rescan network for Phoromatic Server if previously one was detected or it's been over 120 minutes since last running PTS...
+			foreach(pts_network::find_zeroconf_phoromatic_servers(true) as $potential_server)
+			{
+				$server_response = pts_network::http_get_contents('http://' . $potential_server[0] . ':' . $potential_server[1] . '/server.php', false, false, 3);
+
+				if(stripos($server_response, 'Phoromatic') !== false)
+				{
+					trigger_error('Phoromatic Server Auto-Detected At: ' . $potential_server[0] . ':' . $potential_server[1], E_USER_WARNING);
+					if(!is_array($detected_phoromatic_servers))
+					{
+						$detected_phoromatic_servers = array();
+					}
+
+					array_push($detected_phoromatic_servers, $potential_server);
+				}
+			}
+		}
+		$pso->add_object('detected_phoromatic_servers', $detected_phoromatic_servers);
 
 		// Archive to disk
 		$pso->save_to_file(PTS_CORE_STORAGE);
