@@ -93,13 +93,23 @@ class start_phoromatic_server implements pts_option_interface
 		}
 		$server_launcher .= 'http_server_pid=$!'. PHP_EOL;
 		$server_launcher .= 'sleep 1' . PHP_EOL;
-
 		$server_launcher .= 'echo "The Phoromatic Web Interface Is Accessible At: http://localhost:' . $web_port . '"' . PHP_EOL;
-		$server_launcher .= PHP_EOL . 'echo -n "Press [ENTER] to kill server..."' . PHP_EOL . 'read var_name';
+
+		// Avahi for zeroconf network discovery support
+		if(pts_config::read_user_config('PhoronixTestSuite/Options/Server/AdvertiseServiceZeroConf', 'TRUE') && pts_client::executable_in_path('avahi-publish'))
+		{
+			$server_launcher .= 'avahi-publish -s phoromatic-server _http._tcp ' . $web_port . ' "Phoronix Test Suite Phoromatic" > /dev/null 2>&1 &' . PHP_EOL;
+			$server_launcher .= 'avahi_publish_pid=$!'. PHP_EOL;
+		}
+
+		// Wait for input to shutdown process..
+		$server_launcher .= PHP_EOL . 'echo -n "Press [ENTER] to kill server..."' . PHP_EOL;
+		$server_launcher .= PHP_EOL . 'read var_name';
 
 		// Shutdown / Kill Servers
 		$server_launcher .= PHP_EOL . 'kill $http_server_pid';
 		$server_launcher .= PHP_EOL . 'kill $websocket_server_pid';
+		$server_launcher .= PHP_EOL . 'kill $avahi_publish_pid';
 		$server_launcher .= PHP_EOL . 'rm -f ~/.phoronix-test-suite/run-lock*';
 		file_put_contents(PTS_USER_PATH . 'phoromatic-server-launcher', $server_launcher);
 	}

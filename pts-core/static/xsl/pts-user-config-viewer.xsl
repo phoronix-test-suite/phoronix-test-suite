@@ -102,7 +102,8 @@
 			<p>If you wish to require a password when entering the web-based interface to the Phoronix Test Suite -- either locally or remotely -- specify the password here using the password's SHA256 sum as the value.</p>
 			<h3>WebSocketPort: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/Server/WebSocketPort" /></span></h3>
 			<p>The default port to use when running a WebSocket server. If no port is assigned, a random port will be chosen.</p>
-
+			<h3>AdvertiseServiceZeroConf: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/Server/AdvertiseServiceZeroConf" /></span></h3>
+			<p>If this option is set to <em>TRUE</em> when starting a Phoromatic Server instance, the software will attempt to broadcast its service using zeroconf networking (Avahi on Linux assuming <em>avahi-publish</em> is present).</p>
 		</div>
 		<div style="text-align: center; font-size: 12px;">Copyright &#xA9; 2008 - 2014 by <a href="http://www.phoronix-media.com/" style="text-decoration: none; color: #000;">Phoronix Media</a>.</div>
 	</body>

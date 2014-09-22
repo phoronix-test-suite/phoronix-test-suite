@@ -130,6 +130,7 @@ class pts_config
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Server/RemoteAccessPort', $read_config);
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Server/Password', $read_config);
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Server/WebSocketPort', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Server/AdvertiseServiceZeroConf', $read_config);
 
 		$config->saveXMLFile(PTS_USER_PATH . 'user-config.xml');
 	}
