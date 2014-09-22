@@ -7,6 +7,7 @@ Phoronix Test Suite (Git)
 - pts-core: Rename debug-run mode to debug-benchmark, add extra features
 - pts-core: Separate out NoNetworkCommunication user option into NoInternetCommunication/NoNetworkCommunication user config options for those still wanting LAN/intranet support
 - pts-core: Add support to PTS clients for automatically finding Phoromatic Servers using Avahi zero-conf network discovery
+- pts-core: Improvements to make-download-cache
 - phoromatic: Begin allowing results to be stored locally, not dependent on OpenBenchmarking.org storage
 - phoromatic: Advertise Phoromatic Server using Avahi zero-conf networking service when avahi-publish available and AdvertiseServiceZeroConf user config option is TRUE
 
