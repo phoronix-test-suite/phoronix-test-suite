@@ -86,34 +86,32 @@ class pts_test_install_manager
 
 		foreach(self::remote_download_caches() as $dc_directory)
 		{
-			if(($xml_dc_file = pts_network::http_get_contents($dc_directory . 'pts-download-cache.xml')) != false)
+			if(($json_dc_file = pts_network::http_get_contents($dc_directory . 'pts-download-cache.xml')) != false)
 			{
-				$xml_dc_parser = new nye_XmlReader($xml_dc_file);
-				$dc_file = $xml_dc_parser->getXMLArrayValues('PhoronixTestSuite/DownloadCache/Package/FileName');
-				$dc_md5 = $xml_dc_parser->getXMLArrayValues('PhoronixTestSuite/DownloadCache/Package/MD5');
+				$json_dc = json_decode($json_dc_file, true);
 
-				foreach(array_keys($dc_file) as $i)
+				foreach($json_download_cache['phoronix-test-suite']['download-cache'] as $cached_file)
 				{
-					if(!isset($remote_download_files[$dc_md5[$i]]))
+					if(!isset($remote_download_files[$cached_file['file_name']]))
 					{
-						$remote_download_files[$dc_md5[$i]] = array();
+						$remote_download_files[$cached_file['file_name']] = array();
 					}
 
-					array_push($remote_download_files[$dc_md5[$i]], $dc_directory . $dc_file[$i]);
+					array_push($remote_download_files[$cached_file['file_name']], $dc_directory . $cached_file['file_name']);
 				}
 			}
 		}
 
 		return $remote_download_files;
 	}
-	public static function file_lookaside_test_installations($package_filename, $package_md5, $package_sha256)
+	public static function file_lookaside_test_installations(&$test_file_download)
 	{
 		// Check to see if the same package name with the same package check-sum is already present in another test installation
 		$package_match = false;
-		foreach(pts_file_io::glob(pts_client::test_install_root_path() . '*/*/' . $package_filename) as $possible_package_match)
+		foreach(pts_file_io::glob(pts_client::test_install_root_path() . '*/*/' . $test_file_download->get_filename()) as $possible_package_match)
 		{
 			// Check to see if the same package name with the same package check-sum is already present in another test installation
-			if(pts_test_installer::validate_sha256_download_file($possible_package_match, $package_sha256) || pts_test_installer::validate_md5_download_file($possible_package_match, $package_md5))
+			if($test_file_download->check_file_hash($possible_package_match))
 			{
 				$package_match = $possible_package_match;
 				break;

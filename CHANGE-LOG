@@ -9,6 +9,8 @@ Phoronix Test Suite (Git)
 - pts-core: Add support to PTS clients for automatically finding Phoromatic Servers using Avahi zero-conf network discovery
 - pts-core: Improvements to make-download-cache
 - pts-core: Improved detection of file downloads that fail and serve HTML 404/not found responses
+- pts-core: Convert to a JSON-based representation instead of XML for the pts-download-cache file
+- pts-core: Various file hash checking improvements during test installation
 - phoromatic: Begin allowing results to be stored locally, not dependent on OpenBenchmarking.org storage
 - phoromatic: Advertise Phoromatic Server using Avahi zero-conf networking service when avahi-publish available and AdvertiseServiceZeroConf user config option is TRUE
 

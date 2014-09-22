@@ -214,15 +214,13 @@ class pts_test_installer
 		foreach($test_install_request->get_download_objects() as $download_package)
 		{
 			$package_filename = $download_package->get_filename();
-			$package_md5 = $download_package->get_md5();
-			$package_sha256 = $download_package->get_sha256();
 			$download_destination = $download_location . $package_filename;
 			$download_destination_temp = $download_destination . '.pts';
 
 			if($download_package->get_download_location_type() == null)
 			{
 				// Attempt a possible last-minute look-aside copy cache in case a previous test in the install queue downloaded this file already
-				$lookaside_copy = pts_test_install_manager::file_lookaside_test_installations($package_filename, $package_md5, $package_sha256);
+				$lookaside_copy = pts_test_install_manager::file_lookaside_test_installations($download_package);
 				if($lookaside_copy)
 				{
 					if($download_package->get_filesize() == 0)
@@ -245,7 +243,7 @@ class pts_test_installer
 						pts_client::$display->test_install_download_file('DOWNLOAD_FROM_CACHE', $download_package);
 						pts_network::download_file($remote_download_cache_file, $download_destination_temp);
 
-						if(pts_test_installer::validate_md5_download_file($download_destination_temp, $package_md5))
+						if($download_package->check_file_hash($download_destination_temp))
 						{
 							rename($download_destination_temp, $download_destination);
 							continue;
@@ -286,7 +284,7 @@ class pts_test_installer
 								pts_client::$display->test_install_progress_completed();
 
 								// Verify that the file was copied fine
-								if(pts_test_installer::validate_md5_download_file($download_destination_temp, $package_md5))
+								if($download_package->check_file_hash($download_destination_temp))
 								{
 									rename($download_destination_temp, $download_destination);
 									break;
@@ -350,7 +348,7 @@ class pts_test_installer
 								pts_client::$display->test_install_error('Internet support is needed and it\'s disabled or not available.');
 							}
 
-							if(pts_test_installer::validate_md5_download_file($download_destination_temp, $package_md5))
+							if($download_package->check_file_hash($download_destination_temp))
 							{
 								// Download worked
 								if(is_file($download_destination_temp))
@@ -795,94 +793,6 @@ class pts_test_installer
 		echo PHP_EOL;
 
 		return $installed;
-	}
-	public static function validate_md5_download_file($filename, $verified_md5)
-	{
-		$valid = false;
-
-		if(is_file($filename))
-		{
-			if(pts_flags::skip_md5_checks())
-			{
-				$valid = true;
-			}
-			else if(!empty($verified_md5))
-			{
-				$real_md5 = md5_file($filename);
-
-				if(pts_strings::is_url($verified_md5))
-				{
-					foreach(pts_strings::trim_explode("\n", pts_network::http_get_contents($verified_md5)) as $md5_line)
-					{
-						list($md5, $file) = explode(' ', $md5_line);
-
-						if($file == $filename)
-						{
-							if($md5 == $real_md5)
-							{
-								$valid = true;
-							}
-
-							break;
-						}
-					}
-				}
-				else if($real_md5 == $verified_md5)
-				{
-					$valid = true;
-				}
-			}
-			else
-			{
-				$valid = true;
-			}
-		}
-
-		return $valid;
-	}
-	public static function validate_sha256_download_file($filename, $verified_sha256)
-	{
-		$valid = false;
-
-		if(is_file($filename))
-		{
-			if(pts_flags::skip_md5_checks())
-			{
-				$valid = true;
-			}
-			else if(!empty($verified_sha256))
-			{
-				$real_sha256 = hash_file('sha256', $filename);
-
-				if(pts_strings::is_url($verified_sha256))
-				{
-					foreach(pts_strings::trim_explode("\n", pts_network::http_get_contents($verified_sha256)) as $sha256_line)
-					{
-						list($sha256, $file) = explode(' ', $sha256_line);
-
-						if($file == $filename)
-						{
-							if($sha256 == $real_sha256)
-							{
-								$valid = true;
-							}
-
-							break;
-						}
-					}
-				}
-				else if($real_sha256 == $verified_sha256)
-				{
-					$valid = true;
-				}
-			}
-			else
-			{
-				$valid = true;
-			}
-		}
-
-		return $valid;
 	}
 	protected static function setup_test_install_directory(&$test_install_request, $remove_old_files = false)
 	{

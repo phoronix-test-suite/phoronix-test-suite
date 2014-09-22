@@ -38,7 +38,6 @@ class make_download_cache implements pts_option_interface
 			}
 		}
 
-
 		// Generates a PTS Download Cache
 		$dc_write_directory = pts_strings::add_trailing_slash(pts_client::parse_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Installation/CacheDirectory', PTS_DOWNLOAD_CACHE_PATH)));
 		if($dc_write_directory == null || !is_writable($dc_write_directory))
@@ -49,7 +48,11 @@ class make_download_cache implements pts_option_interface
 
 		echo PHP_EOL . 'Download Cache Directory: ' . $dc_write_directory . PHP_EOL;
 
-		$xml_writer = new nye_XmlWriter();
+		$json_download_cache = array('phoronix-test-suite' => array(
+			'main' => array('generated' => time()),
+			'download-cache' => array()
+			));
+
 		foreach(pts_tests::installed_tests() as $test)
 		{
 			$test_profile = new pts_test_profile($test);
@@ -57,11 +60,11 @@ class make_download_cache implements pts_option_interface
 
 			foreach(pts_test_install_request::read_download_object_list($test_profile, false) as $file)
 			{
-				$cached = false;
+				$cached_valid = false;
 				if(is_file($dc_write_directory . $file->get_filename()) && $file->check_file_hash($dc_write_directory . $file->get_filename()))
 				{
 					echo '   Previously Cached: ' . $file->get_filename() . PHP_EOL;
-					$cached = true;
+					$cached_valid = true;
 				}
 				else if(is_dir($test_profile->get_install_dir()))
 				{
@@ -70,22 +73,48 @@ class make_download_cache implements pts_option_interface
 						echo '   Caching: ' . $file->get_filename() . PHP_EOL;
 						if(copy($test_profile->get_install_dir() . $file->get_filename(), $dc_write_directory . $file->get_filename()))
 						{
-							$cached = true;
+							$cached_valid = true;
 						}
 					}
 				}
 
-				if($cached)
+				if($cached_valid)
 				{
-					$xml_writer->addXmlNode('PhoronixTestSuite/DownloadCache/Package/FileName', $file->get_filename());
-					$xml_writer->addXmlNodeWNE('PhoronixTestSuite/DownloadCache/Package/MD5', $file->get_md5());
-					$xml_writer->addXmlNodeWNE('PhoronixTestSuite/DownloadCache/Package/SHA256', $file->get_sha256());
-					$xml_writer->addXmlNodeWNE('PhoronixTestSuite/DownloadCache/Package/AssociatedTest', $test_profile->get_identifier());
+					if(!isset($json_download_cache['phoronix-test-suite']['download-cache'][$file->get_filename()]))
+					{
+						$json_download_cache['phoronix-test-suite']['download-cache'][$file->get_filename()] = array(
+							'file_name' => $file->get_filename(),
+							'file_size' => $file->get_filesize(),
+							'associated_tests' => array($test_profile->get_identifier()),
+							'md5' => $file->get_md5(),
+							'sha256' => $file->get_sha256(),
+							);
+					}
+					else if($file->get_md5() == $json_download_cache['phoronix-test-suite']['download-cache'][$file->get_filename()]['md5'] && $file->get_sha256() == $json_download_cache['phoronix-test-suite']['download-cache'][$file->get_filename()]['sha256'])
+					{
+						array_push($json_download_cache['phoronix-test-suite']['download-cache'][$file->get_filename()]['associated_tests'], $test_profile->get_identifier());
+					}
 				}
 			}
 		}
 
-		file_put_contents($dc_write_directory . 'pts-download-cache.xml', $xml_writer->getXML());
+		// Find files in download-cache/ that weren't part of an installed test (but could have just been tossed in there) to cache
+		foreach(glob($dc_write_directory . '/*') as $cached_file)
+		{
+			$file_name = basename($cached_file);
+			if(!isset($json_download_cache['phoronix-test-suite']['download-cache'][$file_name]) && $file_name != 'pts-download-cache.json')
+			{
+				$json_download_cache['phoronix-test-suite']['download-cache'][$file_name] = array(
+					'file_name' => $file_name,
+					'file_size' => filesize($cached_file),
+					'associated_tests' => array(),
+					'md5' => md5_file($cached_file),
+					'sha256' => hash_file('sha256', $cached_file),
+					);
+			}
+		}
+
+		file_put_contents($dc_write_directory . 'pts-download-cache.json', json_encode($json_download_cache, JSON_PRETTY_PRINT));
 		echo PHP_EOL;
 	}
 }

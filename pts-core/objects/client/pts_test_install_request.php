@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2013, Phoronix Media
-	Copyright (C) 2010 - 2013, Michael Larabel
+	Copyright (C) 2010 - 2014, Phoronix Media
+	Copyright (C) 2010 - 2014, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -143,8 +143,6 @@ class pts_test_install_request
 		foreach($this->test_files as &$download_package)
 		{
 			$package_filename = $download_package->get_filename();
-			$package_md5 = $download_package->get_md5();
-			$package_sha256 = $download_package->get_sha256();
 
 			if(is_file($download_location . $package_filename))
 			{
@@ -173,7 +171,7 @@ class pts_test_install_request
 				// Scan the local download caches
 				foreach($local_download_caches as &$cache_directory)
 				{
-					if(pts_test_installer::validate_sha256_download_file($cache_directory . $package_filename, $package_sha256) || pts_test_installer::validate_md5_download_file($cache_directory . $package_filename, $package_md5))
+					if(is_file($cache_directory . $package_filename) && $download_package->check_file_hash($cache_directory . $package_filename))
 					{
 						if($download_package->get_filesize() == 0)
 						{
@@ -187,7 +185,7 @@ class pts_test_install_request
 
 				// Look-aside download cache copy
 				// Check to see if the same package name with the same package check-sum is already present in another test installation
-				$lookaside_copy = pts_test_install_manager::file_lookaside_test_installations($package_filename, $package_md5, $package_sha256);
+				$lookaside_copy = pts_test_install_manager::file_lookaside_test_installations($download_package);
 				if($lookaside_copy)
 				{
 					if($download_package->get_filesize() == 0)
@@ -201,9 +199,9 @@ class pts_test_install_request
 				// If still not found, check remote download caches
 				if($download_package->get_download_location_type() == null)
 				{
-					if(!empty($package_md5) && isset($remote_files[$package_md5]))
+					if(isset($remote_files[$package_filename]))
 					{
-						$download_package->set_download_location('REMOTE_DOWNLOAD_CACHE', $remote_files[$package_md5]);
+						$download_package->set_download_location('REMOTE_DOWNLOAD_CACHE', $remote_files[$package_filename]);
 					}
 					else
 					{
