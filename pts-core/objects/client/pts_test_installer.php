@@ -366,7 +366,12 @@ class pts_test_installer
 							else
 							{
 								// Download failed
-								if(is_file($download_destination_temp) && filesize($download_destination_temp) > 0)
+								if(is_file($download_destination_temp) && filesize($download_destination_temp) < 500 && (stripos(file_get_contents($download_destination_temp), 'not found') !== false || stripos(file_get_contents($download_destination_temp), 404) !== false))
+								{
+									pts_client::$display->test_install_error('File Not Found: ' . $url);
+									$md5_failed = false;
+								}
+								else if(is_file($download_destination_temp) && filesize($download_destination_temp) > 0)
 								{
 									pts_client::$display->test_install_error('MD5 Failed: ' . $url);
 									$md5_failed = true;
