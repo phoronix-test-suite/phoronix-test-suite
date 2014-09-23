@@ -114,9 +114,13 @@ class pts_test_file_download
 		{
 			return md5_file($file) == $this->md5;
 		}
-		else
+		else if(filesize($file) > 0)
 		{
 			return true;
+		}
+		else
+		{
+			return false;
 		}
 	}
 	public function set_filesize($size)

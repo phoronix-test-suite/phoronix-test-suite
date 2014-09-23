@@ -23,7 +23,7 @@
 		</Package>
 		<Package>
 			<GenericName>sdl2-development</GenericName>
-			<PackageName>SDL2 SDL2_image SDL2_mixer SDL2_ttf</PackageName>
+			<PackageName>SDL2 SDL2_image SDL2_mixer SDL2_ttf SDL2-devel SDL2_image-devel</PackageName>
 		</Package>
 		<Package>
 			<GenericName>tiff</GenericName>
