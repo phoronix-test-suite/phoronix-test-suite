@@ -3,7 +3,7 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2011, Phoronix Media
+	Copyright (C) 2008 - 2014, Phoronix Media
 	Copyright (C) 2008, Andrew Schofield
 
 	This program is free software; you can redistribute it and/or modify
@@ -20,12 +20,18 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-if(!is_file("phoronix-test-suite") || !is_dir("pts/") || !is_dir("pts-core/"))
+if(!is_file("phoronix-test-suite") || !is_dir("pts-core/"))
 {
        echo "\nYou must run this script from the root directory of the phoronix-test-suite/ folder!\n";
        echo "Example: php5 pts-core/scripts/package-build-rpm.php\n";
        exit(0);
 }
+if(!is_executable('/usr/bin/rpmbuild'))
+{
+	echo PHP_EOL . "rpmbuild must be present on the system. Try: yum install rpm-build." . PHP_EOL . PHP_EOL;
+	exit;
+}
+
 @require("pts-core/pts-core.php");
 
 if(!defined("PTS_VERSION"))
@@ -48,7 +54,7 @@ $spec_file .= "Group: Utilities\n";
 $spec_file .= "URL: http://www.phoronix-test-suite.com/\n";
 $spec_file .= "Source: phoronix-test-suite-" . PTS_VERSION . ".tar.bz2\n";
 $spec_file .= "Packager: Phoronix Media <trondheim-pts@phoronix-test-suite.com>\n";
-$spec_file .= "Requires: php-cli, php-gd\n";
+$spec_file .= "Requires: php-cli, php-xml\n";
 $spec_file .= "BuildArch: noarch\n";
 $spec_file .= "BuildRoot: %{_tmppath}/%{name}-%{version}-root\n";
 $spec_file .= "%description\n";
@@ -65,18 +71,23 @@ $spec_file .= "rm -rf %{buildroot}\n";
 $spec_file .= "%files\n";
 $spec_file .= "%{_bindir}/phoronix-test-suite\n";
 $spec_file .= "%{_datadir}/phoronix-test-suite/*\n";
+$spec_file .= "%{_datadir}/applications/*\n";
+$spec_file .= "%{_datadir}/icons/hicolor/*\n";
+$spec_file .= "%{_datadir}/appdata/%{name}.appdata.xml\n";
 $spec_file .= "%{_datadir}/doc/*\n";
+$spec_file .= "%{_mandir}/man1/%{name}.1*\n";
+$spec_file .= "%config(noreplace) %{_sysconfdir}/bash_completion.d\n";
 $spec_file .= "%changelog\n";
-$spec_file .= "* Fri Jun 06 2008 Andrew Schofield <andrew_s@fahmon.net>\n";
+$spec_file .= "* " . date('D M d Y') . " Phoronix Media <phoronix@phoronix.com>\n";
 $spec_file .= "- Initial release.";
 
 file_put_contents("/tmp/pts-rpm-builder/SPECS/pts.spec", $spec_file);
-shell_exec("mv -f " . pts_client::user_home_directory() . ".rpmmacros /tmp/pts-rpm-builder");
-file_put_contents(pts_client::user_home_directory() .".rpmmacros", "%_topdir /tmp/pts-rpm-builder");
+shell_exec("mv -f " . getenv('HOME') . "/.rpmmacros /tmp/pts-rpm-builder 2>&1");
+file_put_contents(getenv('HOME') ."/.rpmmacros", "%_topdir /tmp/pts-rpm-builder");
 shell_exec("rpmbuild -ba --verbose /tmp/pts-rpm-builder/SPECS/pts.spec");
 shell_exec("cp /tmp/pts-rpm-builder/RPMS/noarch/phoronix-test-suite-" . PTS_VERSION . "-1.noarch.rpm ./");
-shell_exec("rm -f " . pts_client::user_home_directory() . "/.rpmmacros");
-shell_exec("mv -f /tmp/pts-rpm-builder/.rpmmacros " . pts_client::user_home_directory());
+shell_exec("rm -f " . getenv('HOME') . "/.rpmmacros");
+shell_exec("mv -f /tmp/pts-rpm-builder/.rpmmacros " . getenv('HOME') . ' 2>1');
 shell_exec("rm -rf /tmp/pts-rpm-builder");
 
 ?>
