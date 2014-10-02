@@ -15,6 +15,7 @@ Phoronix Test Suite (Git)
 - phoromatic: Begin allowing results to be stored locally, not dependent on OpenBenchmarking.org storage
 - phoromatic: Advertise Phoromatic Server using Avahi zero-conf networking service when avahi-publish available and AdvertiseServiceZeroConf user config option is TRUE
 - phoromatic: Automatically setup download-cache over Phoromatic HTTP with the system's local download-cache archive
+- phodevi: Allow GPU frequency detection for DRM/KMS drivers when no X Server DDX is detected
 
 Phoronix Test Suite 5.4 Milestone 1
 5 September 2014

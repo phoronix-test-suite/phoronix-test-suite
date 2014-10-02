@@ -818,8 +818,10 @@ class phodevi_gpu extends phodevi_device_interface
 		}
 		else if(phodevi::is_mesa_graphics())
 		{
-			switch(phodevi::read_property('system', 'display-driver'))
+			$display_driver = phodevi::read_property('system', 'display-driver');
+			switch($display_driver)
 			{
+				case '':
 				case 'nouveau':
 					if(is_file('/sys/class/drm/card0/device/performance_level'))
 					{
@@ -913,7 +915,10 @@ class phodevi_gpu extends phodevi_device_interface
 						}
 
 					}
-					break;
+					if($display_driver != null)
+					{
+						break;
+					}
 				case 'radeon':
 					if(isset(phodevi::$vfs->radeon_pm_info))
 					{
@@ -1025,7 +1030,10 @@ class phodevi_gpu extends phodevi_device_interface
 							}
 						}
 					}
-					break;
+					if($display_driver != null)
+					{
+						break;
+					}
 				case 'intel':
 					// try to read the maximum dynamic frequency
 					if(is_file('/sys/class/drm/card0/gt_max_freq_mhz'))
@@ -1077,7 +1085,10 @@ class phodevi_gpu extends phodevi_device_interface
 							}
 						}
 					}
-					break;
+					if($display_driver != null)
+					{
+						break;
+					}
 			}
 		}
 
