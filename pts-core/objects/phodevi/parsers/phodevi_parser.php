@@ -149,6 +149,7 @@ class phodevi_parser
 		if(isset(phodevi::$vfs->xorg_log))
 		{
 			$xorg_log = phodevi::$vfs->xorg_log;
+
 			if(($module_start = strpos($xorg_log, $module)) > 0)
 			{
 				$xorg_log = substr($xorg_log, $module_start);

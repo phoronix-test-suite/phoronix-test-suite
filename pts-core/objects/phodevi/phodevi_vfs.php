@@ -45,7 +45,11 @@ class phodevi_vfs
 		'i915_capabilities' => array('type' => 'F', 'F' => '/sys/kernel/debug/dri/0/i915_capabilities', 'cacheable' => true, 'preserve' => true, 'subsystem' => 'GPU'),
 		'i915_cur_delayinfo' => array('type' => 'F', 'F' => '/sys/kernel/debug/dri/0/i915_cur_delayinfo', 'cacheable' => false, 'preserve' => true, 'subsystem' => 'GPU'),
 		'i915_drpc_info' => array('type' => 'F', 'F' => '/sys/kernel/debug/dri/0/i915_drpc_info', 'cacheable' => false, 'preserve' => true, 'subsystem' => 'GPU'),
-		'xorg_log' => array('type' => 'F', 'F' => '/var/log/Xorg.0.log', 'cacheable' => true, 'preserve' => true, 'subsystem' => 'System', 'remove_timestamps' => true),
+		'xorg_log' => array(
+			array('type' => 'F', 'F' => '/var/log/Xorg.0.log', 'cacheable' => true, 'preserve' => true, 'subsystem' => 'System', 'remove_timestamps' => true),
+			array('type' => 'C', 'C' => 'journalctl -o cat /usr/bin/Xorg', 'cacheable' => true, 'preserve' => true, 'subsystem' => 'System', 'remove_timestamps' => true),
+			array('type' => 'C', 'C' => 'journalctl -o cat /usr/libexec/Xorg.bin', 'cacheable' => true, 'preserve' => true, 'subsystem' => 'System', 'remove_timestamps' => true)
+			),
 		'xorg_conf' => array('type' => 'F', 'F' => '/etc/X11/xorg.conf', 'cacheable' => true, 'preserve' => true, 'subsystem' => 'System'),
 		'dmesg' => array('type' => 'C', 'C' => 'dmesg', 'cacheable' => false, 'preserve' => true, 'subsystem' => 'System', 'remove_timestamps' => true),
 		);
@@ -130,36 +134,58 @@ class phodevi_vfs
 		}
 		else if(PTS_IS_CLIENT && isset($this->options[$name]))
 		{
-			if($this->options[$name]['type'] == 'F')
+			if(isset($this->options[$name]['type']))
 			{
-				$contents = file_get_contents($this->options[$name]['F']);
+				$tries = array($this->options[$name]);
 			}
-			else if($this->options[$name]['type'] == 'C')
+			else
 			{
-				$command = pts_client::executable_in_path(pts_strings::first_in_string($this->options[$name]['C']));
-				$descriptor_spec = array(
-					0 => array('pipe', 'r'),
-					1 => array('pipe', 'w'),
-					2 => array('pipe', 'w')
-					);
-				$proc = proc_open($command, $descriptor_spec, $pipes, null, null);
-				$contents = stream_get_contents($pipes[1]);
-				fclose($pipes[1]);
-				$return_value = proc_close($proc);
+				$tries = $this->options[$name];
 			}
 
-			if(isset($this->options[$name]['remove_timestamps']) && $this->options[$name]['remove_timestamps'])
-			{
-				// remove leading timestamps such as from dmesg and Xorg.0.log
-				$contents = pts_strings::remove_line_timestamps($contents);
-			}
+			$contents = null;
 
-			if($this->options[$name]['cacheable'])
+			foreach($tries as &$try)
 			{
-				$this->cache[$name] = $contents;
-			}
 
-			return PHP_EOL . $contents . PHP_EOL;
+				if($try['type'] == 'F' && is_file($try['F']))
+				{
+					$contents = file_get_contents($try['F']);
+				}
+				else if($try['type'] == 'C')
+				{
+					$command = pts_client::executable_in_path(pts_strings::first_in_string($try['C']));
+
+					if($command != null)
+					{
+						$descriptor_spec = array(
+							0 => array('pipe', 'r'),
+							1 => array('pipe', 'w'),
+							2 => array('pipe', 'w')
+							);
+						$proc = proc_open($try['C'], $descriptor_spec, $pipes, null, null);
+						$contents = stream_get_contents($pipes[1]);
+						fclose($pipes[1]);
+						$return_value = proc_close($proc);
+					}
+				}
+
+				if(isset($try['remove_timestamps']) && $try['remove_timestamps'])
+				{
+					// remove leading timestamps such as from dmesg and Xorg.0.log
+					$contents = pts_strings::remove_line_timestamps($contents);
+				}
+
+				if($contents != null)
+				{
+					if($try['cacheable'])
+					{
+						$this->cache[$name] = $contents;
+					}
+
+					return PHP_EOL . $contents . PHP_EOL;
+				}
+			}
 		}
 
 		return false;
@@ -179,7 +205,22 @@ class phodevi_vfs
 
 		if(!isset($isset_cache[$name]))
 		{
-			$isset_cache[$name] = ($this->options[$name]['type'] == 'F' && is_readable($this->options[$name]['F'])) || ($this->options[$name]['type'] == 'C' && pts_client::executable_in_path(pts_strings::first_in_string($this->options[$name]['C'])));
+			if(isset($this->options[$name]['type']))
+			{
+				$isset_cache[$name] = ($this->options[$name]['type'] == 'F' && is_readable($this->options[$name]['F'])) || ($this->options[$name]['type'] == 'C' && pts_client::executable_in_path(pts_strings::first_in_string($this->options[$name]['C'])));
+			}
+			else
+			{
+				$isset_cache[$name] = false;
+				foreach($this->options[$name] as $try)
+				{
+					$isset_cache[$name] = ($try['type'] == 'F' && is_readable($try['F'])) || ($try['type'] == 'C' && pts_client::executable_in_path(pts_strings::first_in_string($try['C'])));
+					if($isset_cache[$name])
+					{
+						break;
+					}
+				}
+			}
 		}
 
 		return $isset_cache[$name];

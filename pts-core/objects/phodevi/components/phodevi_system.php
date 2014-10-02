@@ -1258,7 +1258,7 @@ class phodevi_system extends phodevi_device_interface
 
 			}
 
-			if(($x_bin = pts_client::executable_in_path('Xorg')) || ($x_bin = pts_client::executable_in_path('X')))
+			if(($x_bin = (is_executable('/usr/libexec/Xorg.bin') ? '/usr/libexec/Xorg.bin' : false)) || ($x_bin = pts_client::executable_in_path('Xorg')) || ($x_bin = pts_client::executable_in_path('X')))
 			{
 				// Find graphics subsystem version
 				$info = shell_exec($x_bin . ' ' . (phodevi::is_solaris() ? ':0' : '') . ' -version 2>&1');
@@ -1648,7 +1648,7 @@ class phodevi_system extends phodevi_device_interface
 		}
 		else if(is_file('/sys/class/drm/card0/device/vendor'))
 		{
-			$vendor_id = file_get_contents('/sys/class/drm/card0/device/vendor');
+			$vendor_id = pts_file_io::file_get_contents('/sys/class/drm/card0/device/vendor');
 
 			switch($vendor_id)
 			{
