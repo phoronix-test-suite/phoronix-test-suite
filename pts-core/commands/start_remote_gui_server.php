@@ -23,7 +23,7 @@
 class start_remote_gui_server implements pts_option_interface
 {
 	const doc_section = 'Web / GUI Support';
-	const doc_description = 'Start the GUI web server and WebSocket server processes for remote (or local) access via the web-browser. The settings can be configured via the Phoronix Test Suite\'s user-config.xml configuration file.';
+	const doc_description = 'Start the GUI web server and WebSocket server processes for remote (or local) access via the web-browser. The settings can be configured via the Phoronix Test Suite\'s XML configuration file.';
 
 	public static function run($r)
 	{
@@ -50,7 +50,7 @@ class start_remote_gui_server implements pts_option_interface
 
 			if(($fp = fsockopen('127.0.0.1', $remote_access, $errno, $errstr, 5)) != false)
 			{
-				trigger_error('Port ' . $remote_access . ' is already in use by another server process. Close that process or change the Phoronix Test Suite server port via ~/.phoronix-test-suite/user-config.xml to proceed.', E_USER_ERROR);
+				trigger_error('Port ' . $remote_access . ' is already in use by another server process. Close that process or change the Phoronix Test Suite server port via ' . pts_config::get_config_file_location() . ' to proceed.', E_USER_ERROR);
 				fclose($fp);
 				return false;
 			}
@@ -67,7 +67,7 @@ class start_remote_gui_server implements pts_option_interface
 		}
 		else
 		{
-			echo PHP_EOL . PHP_EOL . 'You must first configure the remote GUI/WEBUI settings via the ~/.phoronix-test-suite/user-config.xml.' . PHP_EOL . PHP_EOL;
+			echo PHP_EOL . PHP_EOL . 'You must first configure the remote GUI/WEBUI settings via:' . pts_config::get_config_file_location() . PHP_EOL . PHP_EOL;
 			return false;
 		}
 

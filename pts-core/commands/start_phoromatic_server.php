@@ -50,7 +50,7 @@ class start_phoromatic_server implements pts_option_interface
 
 			if(($fp = fsockopen('127.0.0.1', $remote_access, $errno, $errstr, 5)) != false)
 			{
-				trigger_error('Port ' . $remote_access . ' is already in use by another server process. Close that process or change the Phoronix Test Suite server port via ~/.phoronix-test-suite/user-config.xml to proceed.', E_USER_ERROR);
+				trigger_error('Port ' . $remote_access . ' is already in use by another server process. Close that process or change the Phoronix Test Suite server port via' . pts_config::get_config_file_location() . ' to proceed.', E_USER_ERROR);
 				fclose($fp);
 				return false;
 			}
@@ -67,7 +67,7 @@ class start_phoromatic_server implements pts_option_interface
 		}
 		else
 		{
-			echo PHP_EOL . PHP_EOL . 'You must first configure the remote web / Phoromatic settings via:' . PHP_EOL . '    ~/.phoronix-test-suite/user-config.xml.' . PHP_EOL . PHP_EOL . 'The RemoteAccessPort should be a network port to use for HTTP communication while WebSocketPort should be set to another available network port.' . PHP_EOL . PHP_EOL;
+			echo PHP_EOL . PHP_EOL . 'You must first configure the remote web / Phoromatic settings via:' . PHP_EOL . '    ' . pts_config::get_config_file_location() . PHP_EOL . PHP_EOL . 'The RemoteAccessPort should be a network port to use for HTTP communication while WebSocketPort should be set to another available network port.' . PHP_EOL . PHP_EOL;
 			return false;
 		}
 

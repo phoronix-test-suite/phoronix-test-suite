@@ -30,7 +30,17 @@ class pts_config
 {
 	static $init_process_ran = false;
 	static $xml_user_config = null;
+	private static $config_file_location = null;
 
+	public static function get_config_file_location()
+	{
+		if(self::$config_file_location == null)
+		{
+			self::$config_file_location = PTS_USER_PATH . 'user-config.xml';
+		}
+
+		return self::$config_file_location;
+	}
 	public static function init_files()
 	{
 		// Don't let the process run multiple times...
@@ -133,7 +143,7 @@ class pts_config
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Server/WebSocketPort', $read_config);
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Server/AdvertiseServiceZeroConf', $read_config);
 
-		$config->saveXMLFile(PTS_USER_PATH . 'user-config.xml');
+		$config->saveXMLFile(pts_config::get_config_file_location());
 	}
 	public static function bool_to_string($bool)
 	{

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2011, Phoronix Media
-	Copyright (C) 2010 - 2011, Michael Larabel
+	Copyright (C) 2010 - 2014, Phoronix Media
+	Copyright (C) 2010 - 2014, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -26,7 +26,11 @@ class pts_config_nye_XmlReader extends nye_XmlReader
 
 	public function __construct($new_values = null)
 	{
-		if(is_file(PTS_USER_PATH . 'user-config.xml'))
+		if(is_file(pts_config::get_config_file_location()))
+		{
+			$file = pts_config::get_config_file_location();
+		}
+		else if(PTS_USER_PATH . 'user-config.xml' != pts_config::get_config_file_location() && is_file(PTS_USER_PATH . 'user-config.xml'))
 		{
 			$file = PTS_USER_PATH . 'user-config.xml';
 		}
