@@ -167,6 +167,16 @@ class pts_test_install_request
 
 				$download_package->set_download_location('MAIN_DOWNLOAD_CACHE', array($main_download_cache . $package_filename));
 			}
+			else if(is_file(PTS_SHARE_PATH . 'download-cache/' . $package_filename))
+			{
+				// In system's /usr/share download cache
+				if($download_package->get_filesize() == 0)
+				{
+					$download_package->set_filesize(filesize(PTS_SHARE_PATH . 'download-cache/' . $package_filename));
+				}
+
+				$download_package->set_download_location('MAIN_DOWNLOAD_CACHE', array(PTS_SHARE_PATH . 'download-cache/' . $package_filename));
+			}
 			else
 			{
 				// Scan the local download caches

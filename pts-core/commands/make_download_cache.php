@@ -39,7 +39,18 @@ class make_download_cache implements pts_option_interface
 		}
 
 		// Generates a PTS Download Cache
-		$dc_write_directory = pts_strings::add_trailing_slash(pts_client::parse_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Installation/CacheDirectory', PTS_DOWNLOAD_CACHE_PATH)));
+		if(is_writable(PTS_SHARE_PATH))
+		{
+			// If running as root, might as well write it to the /usr/share PTS download cache so other users on system could benefit too
+			$dc_write_directory = PTS_SHARE_PATH . 'download-cache/'
+			pts_file_io::mkdir($dc_write_directory);
+		}
+		else
+		{
+			// The user's local cache
+			$dc_write_directory = pts_strings::add_trailing_slash(pts_client::parse_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Installation/CacheDirectory', PTS_DOWNLOAD_CACHE_PATH)));
+		}
+
 		if($dc_write_directory == null || !is_writable($dc_write_directory))
 		{
 			echo 'No writable download cache directory was found. A download cache cannot be created.' . PHP_EOL . PHP_EOL;

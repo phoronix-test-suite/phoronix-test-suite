@@ -13,6 +13,7 @@ Phoronix Test Suite (Git)
 - pts-core: Various file hash checking improvements during test installation
 - pts-core: Allow Phoronix Test Suite clients to automatically discover Phoromatic download-cache archives
 - pts-core: Rewrite most of the RPM package generator
+- pts-core: Support /usr/share/phoronix-test-suite/download-cache as another download cache by default
 - phoromatic: Begin allowing results to be stored locally, not dependent on OpenBenchmarking.org storage
 - phoromatic: Advertise Phoromatic Server using Avahi zero-conf networking service when avahi-publish available and AdvertiseServiceZeroConf user config option is TRUE
 - phoromatic: Automatically setup download-cache over Phoromatic HTTP with the system's local download-cache archive

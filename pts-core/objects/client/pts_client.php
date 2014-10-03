@@ -81,6 +81,28 @@ class pts_client
 			self::build_temp_cache();
 		}
 
+		//XXX
+		pts_define('PTS_ETC_PATH', is_dir('/etc') ?'/etc/phoronix-test-suite/' : false);
+
+		if(is_dir('/usr/local/share/phoronix-test-suite/'))
+		{
+			pts_define('PTS_SHARE_PATH', '/usr/local/share/phoronix-test-suite/');
+		}
+		else if(is_dir('/usr/share/'))
+		{
+			pts_define('PTS_SHARE_PATH', '/usr/share/phoronix-test-suite/');
+
+			if(is_writable('/usr/share') && !is_dir(PTS_SHARE_PATH))
+			{
+				mkdir(PTS_SHARE_PATH);
+			}
+		}
+		else
+		{
+			pts_define('PTS_SHARE_PATH', false);
+		}
+
+
 		// XXX: technically the config init_files line shouldn't be needed since it should be dynamically called
 		// pts_config::init_files();
 		pts_define('PTS_TEST_INSTALL_DEFAULT_PATH', pts_client::parse_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Installation/EnvironmentDirectory', '~/.phoronix-test-suite/installed-tests/')));
