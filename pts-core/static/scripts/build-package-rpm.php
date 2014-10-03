@@ -77,6 +77,7 @@ $spec_file .= "%{_datadir}/appdata/%{name}.appdata.xml\n";
 $spec_file .= "%{_datadir}/doc/*\n";
 $spec_file .= "%{_mandir}/man1/%{name}.1*\n";
 $spec_file .= "%config(noreplace) %{_sysconfdir}/bash_completion.d\n";
+$spec_file .= "%config(noreplace) %{_sysconfdir}/systemd/system/*\n";
 $spec_file .= "%changelog\n";
 $spec_file .= "* " . date('D M d Y') . " Phoronix Media <phoronix@phoronix.com>\n";
 $spec_file .= "- Initial release.";

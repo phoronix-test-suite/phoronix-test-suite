@@ -101,6 +101,11 @@ fi
 exit
 fi
 
+if [ ! -f pts-core/phoronix-test-suite.php ] && [ -f `dirname $0`/pts-core/phoronix-test-suite.php ]
+then
+	cd `dirname $0`
+fi
+
 # Ensure the user is in the correct directory
 if [ ! -f pts-core/phoronix-test-suite.php ]
 then
