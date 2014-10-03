@@ -38,6 +38,10 @@ if(isset($_GET['repo']))
 	{
 		readfile(PTS_DOWNLOAD_CACHE_PATH . 'pts-download-cache.json');
 	}
+	else if(is_file(PTS_SHARE_PATH . 'download-cache/pts-download-cache.json'))
+	{
+		readfile(PTS_SHARE_PATH . 'download-cache/pts-download-cache.json');
+	}
 }
 else if(isset($_GET['download']))
 {
@@ -46,6 +50,10 @@ else if(isset($_GET['download']))
 	if(is_file(PTS_DOWNLOAD_CACHE_PATH . $requested_file))
 	{
 		readfile(PTS_DOWNLOAD_CACHE_PATH . $requested_file);
+	}
+	else if(is_file(PTS_SHARE_PATH . 'download-cache/' . $requested_file))
+	{
+		readfile(PTS_SHARE_PATH . 'download-cache/' . $requested_file);
 	}
 }
 
