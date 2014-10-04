@@ -20,6 +20,7 @@ Phoronix Test Suite (Git)
 - phodevi: Allow GPU frequency detection for DRM/KMS drivers when no X Server DDX is detected
 - phodevi: Allow multiple providers for one VFS entry in case of failure in prior commands/files
 - phodevi: Allow reading X Server log from the systemd journalctl
+- phodevi: Restructure when /etc/os-release is parsed for obtaining OS name/version information
 
 Phoronix Test Suite 5.4 Milestone 1
 5 September 2014

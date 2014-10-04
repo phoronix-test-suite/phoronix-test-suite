@@ -912,6 +912,21 @@ class phodevi_system extends phodevi_device_interface
 		else if(phodevi::is_linux())
 		{
 			$os_version = phodevi_linux_parser::read_lsb('Release');
+
+			if($os_version == null && is_readable('/etc/os-release'))
+			{
+				$os_release = parse_ini_file('/etc/os-release');
+
+				if(isset($os_release['VERSION_ID']) && !empty($os_release['VERSION_ID']))
+				{
+					$os_version = $os_release['VERSION_ID'];
+				}
+				else if(isset($os_release['VERSION']) && !empty($os_release['VERSION']))
+				{
+					$os_version = $os_release['VERSION'];
+				}
+				$os_version = pts_strings::keep_in_string($os_version, pts_strings::CHAR_LETTER | pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DECIMAL | pts_strings::CHAR_SPACE | pts_strings::CHAR_DASH | pts_strings::CHAR_UNDERSCORE);
+			}
 		}
 		else
 		{
@@ -932,6 +947,20 @@ class phodevi_system extends phodevi_device_interface
 		if(phodevi::is_linux())
 		{
 			$vendor = phodevi_linux_parser::read_lsb_distributor_id();
+
+			if($vendor == null && is_readable('/etc/os-release'))
+			{
+				$os_release = parse_ini_file('/etc/os-release');
+
+				if(isset($os_release['PRETTY_NAME']) && !empty($os_release['PRETTY_NAME']))
+				{
+					$vendor = $os_release['PRETTY_NAME'];
+				}
+				else if(isset($os_release['NAME']) && !empty($os_release['NAME']))
+				{
+					$vendor = $os_release['NAME'];
+				}
+			}
 		}
 		else if(phodevi::is_hurd())
 		{
@@ -1020,9 +1049,13 @@ class phodevi_system extends phodevi_device_interface
 				}
 			}
 		}
-		else
+		else if(stripos($vendor, $version) === false)
 		{
 			$os = $vendor . ' ' . $version;
+		}
+		else
+		{
+			$os = $vendor;
 		}
 
 		if(($break_point = strpos($os, ':')) > 0)
