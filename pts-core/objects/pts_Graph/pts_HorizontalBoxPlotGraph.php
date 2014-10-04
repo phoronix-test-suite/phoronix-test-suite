@@ -124,7 +124,7 @@ class pts_HorizontalBoxPlotGraph extends pts_HorizontalBarGraph
 			}
 		}
 
-		$maximum = (ceil(round($real_maximum * 1.01) / $this->i['mark_count']) + 1) * $this->i['mark_count'];
+		$maximum = (ceil(round($real_maximum * 1.03) / $this->i['mark_count']) + 1) * $this->i['mark_count'];
 		$maximum = round(ceil($maximum / $this->i['mark_count']), (0 - strlen($maximum) + 2)) * $this->i['mark_count'];
 		return $maximum;
 	}
