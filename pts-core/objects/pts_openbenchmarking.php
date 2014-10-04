@@ -467,6 +467,11 @@ class pts_openbenchmarking
 
 			if(!is_file($file) && $test_profile = self::phoromatic_server_ob_cache_request('test', substr($qualified_identifier, 0, strpos($qualified_identifier, '/')), substr($qualified_identifier, strpos($qualified_identifier, '/') + 1)))
 			{
+				if($gz_inflate = gzinflate($test_profile))
+				{
+					$test_profile = $gz_inflate;
+				}
+
 				file_put_contents($file, $test_profile);
 			}
 
@@ -482,7 +487,17 @@ class pts_openbenchmarking
 			// extract it
 			pts_file_io::mkdir(PTS_TEST_PROFILE_PATH . dirname($qualified_identifier));
 			pts_file_io::mkdir(PTS_TEST_PROFILE_PATH . $qualified_identifier);
-			return pts_compression::zip_archive_extract($file, PTS_TEST_PROFILE_PATH . $qualified_identifier);
+			pts_compression::zip_archive_extract($file, PTS_TEST_PROFILE_PATH . $qualified_identifier);
+
+			if(is_file(PTS_TEST_PROFILE_PATH . $qualified_identifier . '/test-definition.xml'))
+			{
+				return true;
+			}
+			else
+			{
+				unlink($file);
+				return false;
+			}
 		}
 
 		return false;
@@ -604,6 +619,11 @@ class pts_openbenchmarking
 
 			if(!is_file($file) && $test_suite = self::phoromatic_server_ob_cache_request('suite', substr($qualified_identifier, 0, strpos($qualified_identifier, '/')), substr($qualified_identifier, strpos($qualified_identifier, '/') + 1)))
 			{
+				if($gz_inflate = gzinflate($test_suite))
+				{
+					$test_suite = $gz_inflate;
+				}
+
 				file_put_contents($file, $test_suite);
 			}
 
@@ -619,7 +639,17 @@ class pts_openbenchmarking
 			// extract it
 			pts_file_io::mkdir(PTS_TEST_SUITE_PATH . dirname($qualified_identifier));
 			pts_file_io::mkdir(PTS_TEST_SUITE_PATH . $qualified_identifier);
-			return pts_compression::zip_archive_extract($file, PTS_TEST_SUITE_PATH . $qualified_identifier);
+			pts_compression::zip_archive_extract($file, PTS_TEST_SUITE_PATH . $qualified_identifier);
+
+			if(is_file(PTS_TEST_SUITE_PATH . $qualified_identifier . '/suite-definition.xml'))
+			{
+				return true;
+			}
+			else
+			{
+				unlink($file);
+				return false;
+			}
 		}
 
 		return false;
