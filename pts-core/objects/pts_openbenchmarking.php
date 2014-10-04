@@ -111,7 +111,7 @@ class pts_openbenchmarking
 	{
 		$is_id = false;
 
-		if(self::is_string_openbenchmarking_result_id_compliant($id))
+		if(self::is_string_openbenchmarking_result_id_compliant($id) && pts_network::internet_support_available())
 		{
 			$json_response = pts_openbenchmarking::make_openbenchmarking_request('is_openbenchmarking_result', array('i' => $id));
 			$json_response = json_decode($json_response, true);
@@ -126,6 +126,11 @@ class pts_openbenchmarking
 	}
 	public static function clone_openbenchmarking_result(&$id, $return_xml = false)
 	{
+		if(!pts_network::internet_support_available())
+		{
+			return false;
+		}
+
 		$json_response = pts_openbenchmarking::make_openbenchmarking_request('clone_openbenchmarking_result', array('i' => $id));
 		$json_response = json_decode($json_response, true);
 		$valid = false;
@@ -166,6 +171,11 @@ class pts_openbenchmarking
 	}
 	public static function clone_openbenchmarking_result_system_logs(&$id, $extract_to, $sha1_compare = null)
 	{
+		if(!pts_network::internet_support_available())
+		{
+			return false;
+		}
+
 		$system_log_response = pts_openbenchmarking::make_openbenchmarking_request('clone_openbenchmarking_system_logs', array('i' => $id));
 		$extracted = false;
 
@@ -277,6 +287,7 @@ class pts_openbenchmarking
 			}
 
 			$index_file = PTS_OPENBENCHMARKING_SCRATCH_PATH . $repo_name . '.index';
+			$server_index = null;
 
 			if(is_file($index_file))
 			{
@@ -304,17 +315,39 @@ class pts_openbenchmarking
 					// The index is new enough
 					continue;
 				}
+				if(pts_network::internet_support_available())
+				{
+					$server_index = pts_openbenchmarking::make_openbenchmarking_request('repo_index', array('repo' => $repo_name));
+					self::$openbenchmarking_index_refreshed = true;
+				}
+				if(!$server_index && $phoromatic_cache_index = self::phoromatic_server_ob_cache_request('index', $repo_name))
+				{
+					// Ensure the Phoromatic cache has a newer version of the index than what's currently on the system
+					$repo_index = json_decode($phoromatic_cache_index, true);
+					if(isset($repo_index['main']['generated']))
+					{
+						$cache_generated_time = $repo_index['main']['generated'];
 
-				$server_index = pts_openbenchmarking::make_openbenchmarking_request('repo_index', array('repo' => $repo_name));
-				self::$openbenchmarking_index_refreshed = true;
+						if($cache_generated_time > $generated_time)
+						{
+							$server_index = $phoromatic_cache_index;
+						}
+						self::$openbenchmarking_index_refreshed = true;
+					}
+				}
 			}
-			else
+			else if(pts_network::internet_support_available())
 			{
 				$server_index = pts_openbenchmarking::make_openbenchmarking_request('repo_index', array('repo' => $repo_name));
 				self::$openbenchmarking_index_refreshed = true;
 			}
 
-			if(json_decode($server_index) != false)
+			if(!$server_index && $phoromatic_cache_index = self::phoromatic_server_ob_cache_request('index', $repo_name))
+			{
+				$server_index = $phoromatic_cache_index;
+			}
+
+			if($server_index != null && json_decode($server_index) != false)
 			{
 				file_put_contents($index_file, $server_index);
 			}
@@ -367,14 +400,26 @@ class pts_openbenchmarking
 
 		return pts_network::http_upload_via_post($url, $to_post);
 	}
-	public static function read_repository_index($repo_name)
+	public static function is_repository($repo_name)
+	{
+		return is_file(PTS_OPENBENCHMARKING_SCRATCH_PATH . $repo_name . '.index');
+	}
+	public static function read_repository_index($repo_name, $do_decode = true)
 	{
 		$index_file = PTS_OPENBENCHMARKING_SCRATCH_PATH . $repo_name . '.index';
 
 		if(is_file($index_file))
 		{
 			$index_file = file_get_contents($index_file);
-			$index_file = json_decode($index_file, true);
+
+			if($do_decode)
+			{
+				$index_file = json_decode($index_file, true);
+			}
+		}
+		else
+		{
+			$index_file = null;
 		}
 
 		return $index_file;
@@ -404,20 +449,28 @@ class pts_openbenchmarking
 
 		if(!is_file($file))
 		{
-			// TODO cache this somewhere
-			$hash_json = pts_openbenchmarking::make_openbenchmarking_request('test_hash', array('i' => $qualified_identifier));
-			$hash_json = json_decode($hash_json, true);
-			$hash_check = isset($hash_json['openbenchmarking']['test']['hash']) ? $hash_json['openbenchmarking']['test']['hash'] : null;  // should also check for ['openbenchmarking']['test']['error'] problems
-
-			$test_profile = pts_openbenchmarking::make_openbenchmarking_request('download_test', array('i' => $qualified_identifier));
-
-			if($test_profile != null && ($hash_check == null || $hash_check == sha1($test_profile)))
+			if(pts_network::internet_support_available())
 			{
-				// save it
-				file_put_contents($file, $test_profile);
-				$hash_check = null;
+				$hash_json = pts_openbenchmarking::make_openbenchmarking_request('test_hash', array('i' => $qualified_identifier));
+				$hash_json = json_decode($hash_json, true);
+				$hash_check = isset($hash_json['openbenchmarking']['test']['hash']) ? $hash_json['openbenchmarking']['test']['hash'] : null;  // should also check for ['openbenchmarking']['test']['error'] problems
+
+				$test_profile = pts_openbenchmarking::make_openbenchmarking_request('download_test', array('i' => $qualified_identifier));
+
+				if($test_profile != null && ($hash_check == null || $hash_check == sha1($test_profile)))
+				{
+					// save it
+					file_put_contents($file, $test_profile);
+					$hash_check = null;
+				}
 			}
-			else if(PTS_IS_CLIENT && $test_profile === false)
+
+			if(!is_file($file) && $test_profile = self::phoromatic_server_ob_cache_request('test', substr($qualified_identifier, 0, strpos($qualified_identifier, '/')), substr($qualified_identifier, strpos($qualified_identifier, '/') + 1)))
+			{
+				file_put_contents($file, $test_profile);
+			}
+
+			if(PTS_IS_CLIENT && !is_file($file))
 			{
 				trigger_error('Network support is needed to obtain ' . $qualified_identifier . ' data.' . PHP_EOL, E_USER_ERROR);
 				return false;
@@ -434,6 +487,31 @@ class pts_openbenchmarking
 
 		return false;
 	}
+	public static function phoromatic_server_ob_cache_request($type_request, $repo = null, $test = null)
+	{
+		if(PTS_IS_CLIENT == false)
+		{
+			return null;
+		}
+
+		$pso = pts_storage_object::recover_from_file(PTS_CORE_STORAGE);
+		$archived_servers = $pso->read_object('detected_phoromatic_servers');
+
+		if(is_array($archived_servers))
+		{
+			foreach($archived_servers as $server_url_and_port)
+			{
+				$cache = pts_network::http_get_contents('http://' . $server_url_and_port[0] . ':' . $server_url_and_port[1] . '/openbenchmarking-cache.php?' . $type_request . '&repo=' . $repo . '&test=' . $test);
+
+				if(!empty($repo))
+				{
+					return $cache;
+				}
+			}
+		}
+
+		return null;
+	}
 	public static function available_tests($download_tests = true)
 	{
 		$available_tests = array();
@@ -446,7 +524,7 @@ class pts_openbenchmarking
 			{
 				foreach(array_keys($repo_index['tests']) as $identifier)
 				{
-					if($download_tests && pts_network::internet_support_available())
+					if($download_tests)
 					{
 						$version = array_shift($repo_index['tests'][$identifier]['versions']);
 						if(self::download_test_profile($repo . '/' . $identifier . '-' . $version) == false)
@@ -499,32 +577,44 @@ class pts_openbenchmarking
 
 		$file = PTS_OPENBENCHMARKING_SCRATCH_PATH . $qualified_identifier . '.zip';
 
-		$hash_json = pts_openbenchmarking::make_openbenchmarking_request('suite_hash', array('i' => $qualified_identifier));
-		$hash_json = json_decode($hash_json, true);
-		$hash_check = isset($hash_json['openbenchmarking']['suite']['hash']) ? $hash_json['openbenchmarking']['suite']['hash'] : null;  // should also check for ['openbenchmarking']['suite']['error'] problems
+		if(pts_network::internet_support_available())
+		{
+			$hash_json = pts_openbenchmarking::make_openbenchmarking_request('suite_hash', array('i' => $qualified_identifier));
+			$hash_json = json_decode($hash_json, true);
+			$hash_check = isset($hash_json['openbenchmarking']['suite']['hash']) ? $hash_json['openbenchmarking']['suite']['hash'] : null;  // should also check for ['openbenchmarking']['suite']['error'] problems
+		}
 
 		if(!is_file($file))
 		{
-			$test_suite = pts_openbenchmarking::make_openbenchmarking_request('download_suite', array('i' => $qualified_identifier));
+			if(pts_network::internet_support_available())
+			{
+				$test_suite = pts_openbenchmarking::make_openbenchmarking_request('download_suite', array('i' => $qualified_identifier));
 
-			if($test_suite != null && ($hash_check == null || $hash_check == sha1($test_suite)))
+				if($test_suite != null && ($hash_check == null || $hash_check == sha1($test_suite)))
+				{
+					// save it
+					file_put_contents($file, $test_suite);
+					$hash_check = null;
+				}
+				else if(is_file('/var/cache/phoronix-test-suite/openbenchmarking.org/' . $qualified_identifier . '.zip') && ($hash_check == null || sha1_file('/var/cache/phoronix-test-suite/openbenchmarking.org/' . $qualified_identifier . '.zip') == $hash_check))
+				{
+					copy('/var/cache/phoronix-test-suite/openbenchmarking.org/' . $qualified_identifier . '.zip', $file);
+				}
+			}
+
+			if(!is_file($file) && $test_suite = self::phoromatic_server_ob_cache_request('suite', substr($qualified_identifier, 0, strpos($qualified_identifier, '/')), substr($qualified_identifier, strpos($qualified_identifier, '/') + 1)))
 			{
-				// save it
 				file_put_contents($file, $test_suite);
-				$hash_check = null;
 			}
-			else if(is_file('/var/cache/phoronix-test-suite/openbenchmarking.org/' . $qualified_identifier . '.zip') && ($hash_check == null || sha1_file('/var/cache/phoronix-test-suite/openbenchmarking.org/' . $qualified_identifier . '.zip') == $hash_check))
-			{
-				copy('/var/cache/phoronix-test-suite/openbenchmarking.org/' . $qualified_identifier . '.zip', $file);
-			}
-			else if(PTS_IS_CLIENT && $test_suite === false)
+
+			if(PTS_IS_CLIENT && !is_file($file))
 			{
 				trigger_error('Network support is needed to obtain ' . $qualified_identifier . ' data.' . PHP_EOL, E_USER_ERROR);
 				return false;
 			}
 		}
 
-		if(!is_file(PTS_TEST_SUITE_PATH . $qualified_identifier . '/suite-definition.xml') && ($hash_check == null || (is_file($file) && sha1_file($file) == $hash_check)))
+		if(!is_file(PTS_TEST_SUITE_PATH . $qualified_identifier . '/suite-definition.xml') && is_file($file) && ($hash_check == null || (is_file($file) && sha1_file($file) == $hash_check)))
 		{
 			// extract it
 			pts_file_io::mkdir(PTS_TEST_SUITE_PATH . dirname($qualified_identifier));
