@@ -42,7 +42,7 @@ class make_download_cache implements pts_option_interface
 		if(is_writable(PTS_SHARE_PATH))
 		{
 			// If running as root, might as well write it to the /usr/share PTS download cache so other users on system could benefit too
-			$dc_write_directory = PTS_SHARE_PATH . 'download-cache/'
+			$dc_write_directory = PTS_SHARE_PATH . 'download-cache/';
 			pts_file_io::mkdir($dc_write_directory);
 		}
 		else
