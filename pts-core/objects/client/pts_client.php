@@ -1573,11 +1573,11 @@ class pts_client
 
 		return shell_exec($var_string . $exec);
 	}
-	public static function executable_in_path($executable)
+	public static function executable_in_path($executable, $ignore_paths_with = false)
 	{
 		static $cache = null;
 
-		if(!isset($cache[$executable]))
+		if(!isset($cache[$executable]) || $ignore_paths_with)
 		{
 			$paths = pts_strings::trim_explode((phodevi::is_windows() ? ';' : ':'), (($path = pts_client::read_env('PATH')) == false ? '/usr/bin:/usr/local/bin' : $path));
 			$executable_path = false;
@@ -1588,9 +1588,20 @@ class pts_client
 
 				if(is_executable($path . $executable))
 				{
+					if($ignore_paths_with && stripos($path, $ignore_paths_with) !== false)
+					{
+						continue;
+					}
+
 					$executable_path = $path . $executable;
 					break;
 				}
+			}
+
+			if($ignore_paths_with)
+			{
+				// Don't cache calls using the $ignore_paths_with parameter
+				return $executable_path;
 			}
 
 			$cache[$executable] = $executable_path;
