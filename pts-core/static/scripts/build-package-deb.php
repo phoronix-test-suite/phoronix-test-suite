@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2013, Phoronix Media
-	Copyright (C) 2008 - 2013, Michael Larabel
+	Copyright (C) 2008 - 2014, Phoronix Media
+	Copyright (C) 2008 - 2014, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -26,6 +26,12 @@ if(!is_executable("phoronix-test-suite") || !is_dir("pts-core/"))
 	echo "Example: php5 pts-core/static/scripts/package-build-deb.php\n";
 	exit(0);
 }
+if(!is_executable('/usr/bin/dpkg'))
+{
+	echo PHP_EOL . "dpkg must be present on the system to generate the phoronix-test-suite Debian package." . PHP_EOL . PHP_EOL;
+	exit;
+}
+
 @require("pts-core/pts-core.php");
 
 if(!defined("PTS_VERSION"))
