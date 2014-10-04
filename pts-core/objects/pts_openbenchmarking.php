@@ -467,9 +467,9 @@ class pts_openbenchmarking
 
 			if(!is_file($file) && $test_profile = self::phoromatic_server_ob_cache_request('test', substr($qualified_identifier, 0, strpos($qualified_identifier, '/')), substr($qualified_identifier, strpos($qualified_identifier, '/') + 1)))
 			{
-				if($gz_inflate = gzinflate($test_profile))
+				if($b64 = base64_decode($test_profile))
 				{
-					$test_profile = $gz_inflate;
+					$test_profile = $b64;
 				}
 
 				file_put_contents($file, $test_profile);
@@ -619,9 +619,9 @@ class pts_openbenchmarking
 
 			if(!is_file($file) && $test_suite = self::phoromatic_server_ob_cache_request('suite', substr($qualified_identifier, 0, strpos($qualified_identifier, '/')), substr($qualified_identifier, strpos($qualified_identifier, '/') + 1)))
 			{
-				if($gz_inflate = gzinflate($test_suite))
+				if($b64 = base64_decode($test_suite))
 				{
-					$test_suite = $gz_inflate;
+					$test_suite = $b64;
 				}
 
 				file_put_contents($file, $test_suite);
