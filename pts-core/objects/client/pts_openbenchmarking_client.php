@@ -413,6 +413,11 @@ class pts_openbenchmarking_client
 	}
 	public static function upload_usage_data($task, $data)
 	{
+		if(!pts_network::internet_support_available())
+		{
+			return false;
+		}
+
 		switch($task)
 		{
 			case 'test_install':
@@ -434,7 +439,7 @@ class pts_openbenchmarking_client
 	}
 	public static function upload_hwsw_data($to_report)
 	{
-		if(!defined('PTS_GSID'))
+		if(!defined('PTS_GSID') || !pts_network::internet_support_available())
 		{
 			return false;
 		}
@@ -455,7 +460,7 @@ class pts_openbenchmarking_client
 	}
 	public static function upload_pci_data($to_report)
 	{
-		if(!defined('PTS_GSID'))
+		if(!defined('PTS_GSID') || !pts_network::internet_support_available())
 		{
 			return false;
 		}
@@ -472,7 +477,7 @@ class pts_openbenchmarking_client
 	}
 	public static function upload_usb_data($to_report)
 	{
-		if(!defined('PTS_GSID'))
+		if(!defined('PTS_GSID') || !pts_network::internet_support_available())
 		{
 			return false;
 		}
