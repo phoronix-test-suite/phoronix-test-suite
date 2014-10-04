@@ -26,6 +26,7 @@ Phoronix Test Suite (Git)
 - phodevi: Allow multiple providers for one VFS entry in case of failure in prior commands/files
 - phodevi: Allow reading X Server log from the systemd journalctl
 - phodevi: Restructure when /etc/os-release is parsed for obtaining OS name/version information
+- system_monitor: Allow user-set time interval period between sensor measurements using MONITOR_INTERVAL environment variable
 
 Phoronix Test Suite 5.4 Milestone 1
 5 September 2014

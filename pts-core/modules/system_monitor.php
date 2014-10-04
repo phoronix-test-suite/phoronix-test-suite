@@ -26,7 +26,7 @@
 class system_monitor extends pts_module_interface
 {
 	const module_name = 'System Monitor';
-	const module_version = '3.1.1';
+	const module_version = '3.1.2';
 	const module_description = 'This module contains sensor monitoring support.';
 	const module_author = 'Michael Larabel';
 
@@ -46,7 +46,7 @@ class system_monitor extends pts_module_interface
 
 	public static function module_environmental_variables()
 	{
-		return array('MONITOR', 'PERFORMANCE_PER_WATT');
+		return array('MONITOR', 'PERFORMANCE_PER_WATT', 'MONITOR_INTERVAL');
 	}
 	public static function module_info()
 	{
@@ -112,6 +112,15 @@ class system_monitor extends pts_module_interface
 				echo PHP_EOL . '   - ' . phodevi::sensor_name($sensor);
 			}
 			echo PHP_EOL;
+
+			if(pts_module::read_variable('MONITOR_INTERVAL') != null)
+			{
+				$proposed_interval = pts_module::read_variable('MONITOR_INTERVAL');
+				if(is_numeric($proposed_interval) && $proposed_interval >= 1)
+				{
+					self::$sensor_monitoring_frequency = $proposed_interval;
+				}
+			}
 
 			// Pad some idling sensor results at the start
 			sleep((self::$sensor_monitoring_frequency * 8));
