@@ -281,13 +281,17 @@ class pts_test_run_manager
 				pts_tests::recently_saved_results();
 
 			}
-
-			while(empty($save_name) || ($is_reserved_word = pts_types::is_test_or_suite($save_name)))
+			$save_name_length = strlen($save_name);
+			while(empty($save_name) || ($is_reserved_word = pts_types::is_test_or_suite($save_name)) || $save_name_length > 126)
 			{
 				if($is_reserved_word)
 				{
 					echo PHP_EOL . 'The name of the saved file cannot be the same as a test/suite: ' . $save_name . PHP_EOL;
 					$is_reserved_word = false;
+				}
+				if($save_name_length > 126)
+				{
+					echo PHP_EOL . 'The name of the saved file must have between 2 and 126 characters in length.' . PHP_EOL;
 				}
 
 				pts_client::$display->generic_prompt('Enter a name to save these results under: ');
@@ -698,6 +702,11 @@ class pts_test_run_manager
 		if($is_new_save)
 		{
 			$input = strtolower($input);
+		}
+
+		if(strlen($input) > 126)
+		{
+			$input = substr($input, 0, 126);
 		}
 
 		return $input;

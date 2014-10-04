@@ -7,10 +7,16 @@
 		Copyright (C) 2008 - 2014, Michael Larabel
 	</xs:documentation>
 </xs:annotation>
+<xs:simpleType name="ResultTitleString">
+	<xs:restriction base="xs:string">
+		<xs:minLength value="2" />
+		<xs:maxLength value="126" />
+	</xs:restriction>
+</xs:simpleType>
 <xs:simpleType name="TitleString">
 	<xs:restriction base="xs:string">
 		<xs:minLength value="2" />
-		<xs:maxLength value="64" />
+		<xs:maxLength value="50" />
 	</xs:restriction>
 </xs:simpleType>
 <xs:simpleType name="SystemIdentifier">

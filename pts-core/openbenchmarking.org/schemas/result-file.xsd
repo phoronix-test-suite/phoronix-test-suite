@@ -14,7 +14,7 @@
 		<xs:element name="Generated">
 		<xs:complexType>
 		<xs:sequence>
-			<xs:element name="Title" type="TitleString" />
+			<xs:element name="Title" type="ResultTitleString" />
 			<xs:element name="LastModified" type="TimeStamp" />
 			<xs:element name="TestClient" type="xs:string" />
 			<xs:element name="Description" type="DescriptionString" />
