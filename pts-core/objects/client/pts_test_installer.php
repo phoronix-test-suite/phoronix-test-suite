@@ -346,6 +346,7 @@ class pts_test_installer
 							else
 							{
 								pts_client::$display->test_install_error('Internet support is needed and it\'s disabled or not available.');
+								return false;
 							}
 
 							if($download_package->check_file_hash($download_destination_temp))

@@ -212,7 +212,7 @@ class pts_test_install_request
 				{
 					foreach($phoromatic_server_caches as $server_url => $repo)
 					{
-						if(isset($repo[$package_filename]) && ($repo[$package_filename]['md5'] == $download_package->get_md5() || $repo[$package_filename]['sha256'] == $download_package->get_sha256()))
+						if(isset($repo[$package_filename]) && ($repo[$package_filename]['md5'] == $download_package->get_md5() || $repo[$package_filename]['sha256'] == $download_package->get_sha256() || ($download_package->get_sha256() == null && $download_package->get_md5() == null)))
 						{
 							$download_package->set_download_location('REMOTE_DOWNLOAD_CACHE', array($server_url . '/download-cache.php?download=' . $package_filename));
 							break;
