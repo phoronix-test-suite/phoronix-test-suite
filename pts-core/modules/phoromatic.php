@@ -27,14 +27,15 @@ class phoromatic extends pts_module_interface
 	const module_description = 'The Phoromatic client is used for connecting to a Phoromatic server (Phoromatic.com or a locally run server) to facilitate the automatic running of tests, generally across multiple test nodes in a routine manner. For more details visit http://www.phoromatic.com/. This module is intended to be used with Phoronix Test Suite 5.2+ clients and servers.';
 	const module_author = 'Phoronix Media';
 
-	static $account_id = null;
-	static $server_address = null;
-	static $server_http_port = null;
-	static $server_ws_port = null;
+	private static $account_id = null;
+	private static $server_address = null;
+	private static $server_http_port = null;
+	private static $server_ws_port = null;
+	private static $is_running_as_phoromatic_node = false;
 
 	public static function module_info()
 	{
-		return 'The Phoromatic module contains the client support for interacting with Phoromatic and Phoromatic Tracker services. A public, free reference implementation of Phoromatic can be found at http://www.phoromatic.com/. A commercial version is available to enterprise customers for installation onto their intranet. For more information, contact Phoronix Media.';
+		return 'The Phoromatic module contains the client support for interacting with Phoromatic and Phoromatic Tracker services.';
 	}
 	public static function user_commands()
 	{
@@ -101,6 +102,12 @@ class phoromatic extends pts_module_interface
 				'time' => $estimated_time_remaining
 				));
 	}
+	public static function startup_ping_check($server_ip, $http_port)
+	{
+		$server_response = phoromatic::upload_to_remote_server(array(
+				'r' => 'ping',
+				), $server_ip, $http_port);
+	}
 	public static function run_connection($args)
 	{
 		if(pts_client::create_lock(PTS_USER_PATH . 'phoromatic_lock') == false)
@@ -151,6 +158,7 @@ class phoromatic extends pts_module_interface
 				switch(isset($json['phoromatic']['task']) ? $json['phoromatic']['task'] : null)
 				{
 					case 'benchmark':
+						self::$is_running_as_phoromatic_node = true;
 						$test_flags = pts_c::auto_mode | pts_c::batch_mode;
 						$suite_identifier = sha1(time() . rand(0, 100));
 						pts_suite_nye_XmlReader::set_temporary_suite($suite_identifier, $json['phoromatic']['test_suite']);
@@ -300,6 +308,7 @@ class phoromatic extends pts_module_interface
 							}
 							phoromatic::set_user_context($json['phoromatic']['post_install_set_context'], $phoromatic_trigger, $phoromatic_schedule_id, 'POST_RUN');
 						}
+						self::$is_running_as_phoromatic_node = false;
 					break;
 					case 'exit':
 						echo PHP_EOL . 'Phoromatic received a remote command to exit.' . PHP_EOL;
@@ -351,6 +360,11 @@ class phoromatic extends pts_module_interface
 	}
 	public static function __pre_test_install($test_identifier)
 	{
+		if(!self::$is_running_as_phoromatic_node)
+		{
+			return false;
+		}
+
 		static $last_update_time = 0;
 
 		if(time() > ($last_update_time + 600))
@@ -361,12 +375,20 @@ class phoromatic extends pts_module_interface
 	}
 	public static function __pre_test_run($pts_test_result)
 	{
+		if(!self::$is_running_as_phoromatic_node)
+		{
+			return false;
+		}
 		// TODO: need a way to get the estimated time remaining from the test_run_manager so we can pass that back to the update_system_status parameter so server can read it
 		// TODO: report name of test identifier/run i.e. . ' For ' . PHOROMATIC_TITLE
 		phoromatic::update_system_status('Running ' . $pts_test_result->test_profile->get_identifier());
 	}
 	public static function __event_user_error($user_error)
 	{
+		if(!self::$is_running_as_phoromatic_node)
+		{
+			return false;
+		}
 		// Report PTS user error warnings to Phoromatic server
 		phoromatic::report_warning_to_phoromatic($user_error->get_error_string());
 	}
