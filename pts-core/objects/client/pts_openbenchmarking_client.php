@@ -494,6 +494,11 @@ class pts_openbenchmarking_client
 	}
 	public static function request_gsid()
 	{
+		if(!pts_network::internet_support_available())
+		{
+			return false;
+		}
+
 		$payload = array(
 			'client_version' => PTS_VERSION,
 			'client_os' => phodevi::read_property('system', 'vendor-identifier')
@@ -505,6 +510,11 @@ class pts_openbenchmarking_client
 	}
 	public static function update_gsid()
 	{
+		if(!pts_network::internet_support_available())
+		{
+			return false;
+		}
+
 		$payload = array(
 			'client_version' => PTS_VERSION,
 			'client_os' => phodevi::read_property('system', 'vendor-identifier')
@@ -513,6 +523,11 @@ class pts_openbenchmarking_client
 	}
 	public static function retrieve_gsid()
 	{
+		if(!pts_network::internet_support_available())
+		{
+			return false;
+		}
+
 		// If the GSID_E and GSID_P are not known due to being from an old client
 		$json = pts_openbenchmarking::make_openbenchmarking_request('retrieve_gsid', array());
 		$json = json_decode($json, true);
