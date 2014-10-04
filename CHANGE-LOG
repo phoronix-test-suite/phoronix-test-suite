@@ -16,10 +16,12 @@ Phoronix Test Suite (Git)
 - pts-core: Support /usr/share/phoronix-test-suite/download-cache as another download cache by default
 - pts-core: Client support for being able to obtain OpenBenchmarking.org index/test/suite data from local Phoromatic Servers
 - pts-core: Improved dump-core-storage output
+- pts-core: Introduce machine_self_id as UUIDv5 compliant self-generated unique identifier for each PTS client
 - phoromatic: Begin allowing results to be stored locally, not dependent on OpenBenchmarking.org storage
 - phoromatic: Advertise Phoromatic Server using Avahi zero-conf networking service when avahi-publish available and AdvertiseServiceZeroConf user config option is TRUE
 - phoromatic: Automatically setup download-cache over Phoromatic HTTP with the system's local download-cache archive
 - phoromatic: Allow sharing OpenBenchmarking.org index/test/suite cache data from server with local Phoromatic clients
+- phoromatic: Support pts-core's machine_self_id for system identification as an alternative to OpenBenchmarking.org GSID
 - phodevi: Allow GPU frequency detection for DRM/KMS drivers when no X Server DDX is detected
 - phodevi: Allow multiple providers for one VFS entry in case of failure in prior commands/files
 - phodevi: Allow reading X Server log from the systemd journalctl

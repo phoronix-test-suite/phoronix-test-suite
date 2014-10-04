@@ -627,6 +627,25 @@ class pts_client
 			$requested_gsid = false;
 		}
 
+		$machine_self_id = $pso->read_object('machine_self_id');
+		if(empty($machine_self_id))
+		{
+			$ns = md5('phoronix-test-suite');
+			$binary_ns = null;
+
+			for($i = 0; $i < strlen($ns); $i += 2)
+			{
+				$binary_ns .= chr(hexdec($ns[$i] . $ns[$i + 1]));
+			}
+
+			$msi_hash = sha1($binary_ns . uniqid(PTS_CORE_VERSION, true) . getenv('USERNAME') . getenv('USER') . getenv('HOSTNAME') . pts_network::get_local_ip());
+
+			$machine_self_id = sprintf('%08s-%04s-%04x-%04x-%12s', substr($msi_hash, 0, 8), substr($msi_hash, 8, 4), (hexdec(substr($msi_hash, 12, 4)) & 0x0fff) | 0x5000, (hexdec(substr($msi_hash, 16, 4)) & 0x3fff) | 0x8000, substr($msi_hash, 20, 12));
+			// machine_self_id is self-generated unique name for Phoromatic/OB purposes in UUIDv5 format
+			$pso->add_object('machine_self_id', $machine_self_id);
+		}
+		pts_define('PTS_MACHINE_SELF_ID', $machine_self_id);
+
 		// Last Run Processing
 		$last_core_version = $pso->read_object('last_core_version');
 		pts_define('FIRST_RUN_ON_PTS_UPGRADE', ($last_core_version != PTS_CORE_VERSION));

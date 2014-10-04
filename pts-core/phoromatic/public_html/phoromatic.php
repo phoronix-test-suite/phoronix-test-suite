@@ -57,6 +57,7 @@ $environmental_variables = array(
 	'composite_xml_hash' => 'COMPOSITE_XML_HASH',
 	'system_logs_zip' => 'SYSTEM_LOGS_ZIP',
 	'system_logs_hash' => 'SYSTEM_LOGS_HASH',
+	'msi' => 'PTS_MACHINE_SELF_ID',
 	);
 
 foreach($environmental_variables as $get_var => $to_var)
@@ -79,7 +80,7 @@ if($CLIENT_CORE_VERSION < 5312)
 	exit;
 }
 
-if($GSID == null || $ACCOUNT_ID == null)
+if(($GSID == null && $PTS_MACHINE_SELF_ID == null) || $ACCOUNT_ID == null)
 {
 	$json['phoromatic']['error'] = 'Invalid Credentials';
 	echo json_encode($json);
@@ -106,11 +107,27 @@ define('ACCOUNT_ID', $ACCOUNT_ID);
 
 // CHECK IF SYSTEM IS ALREADY CONNECTED TO THE ACCOUNT
 // self::$db->exec('CREATE TABLE phoromatic_systems (AccountID TEXT UNIQUE, SystemID TEXT UNIQUE, Title TEXT, Description TEXT, Groups TEXT Hardware TEXT, Software TEXT, ClientVersion TEXT, GSID TEXT, CurrentTask TEXT, EstimatedTimeForTask TEXT, CreatedOn TEXT, LastCommunication TEXT, LastIP TEXT, LocalIP TEXT)');
-$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, Groups, State FROM phoromatic_systems WHERE AccountID = :account_id AND GSID = :gsid');
-$stmt->bindValue(':account_id', ACCOUNT_ID);
-$stmt->bindValue(':gsid', $GSID);
-$result = $stmt->execute();
-$result = $result->fetchArray();
+if($PTS_MACHINE_SELF_ID != null)
+{
+	$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, Groups, State FROM phoromatic_systems WHERE AccountID = :account_id AND MachineSelfID = :machine_self_id');
+	$stmt->bindValue(':account_id', ACCOUNT_ID);
+	$stmt->bindValue(':machine_self_id', $PTS_MACHINE_SELF_ID);
+	$result = $stmt->execute();
+	$result = $result->fetchArray();
+}
+
+if(!isset($result) || empty($result))
+{
+	// TODO XXX: This block of code can be dropped when doing away with older PTS client support... pre-5.4 support
+	// See if before the client was connecting from an older PTS version without a MachineSelfID....
+	$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, Groups, State FROM phoromatic_systems WHERE AccountID = :account_id AND GSID = :gsid AND MachineSelfID = :machine_self_id');
+	$stmt->bindValue(':account_id', ACCOUNT_ID);
+	$stmt->bindValue(':gsid', $GSID);
+	$stmt->bindValue(':machine_self_id', null);
+	$result = $stmt->execute();
+	$result = $result->fetchArray();
+}
+
 if(empty($result))
 {
 	// APPARENT FIRST TIME FOR THIS SYSTEM CONNECTING TO THIS ACCOUNT
@@ -120,7 +137,7 @@ if(empty($result))
 		$matching_system = phoromatic_server::$db->querySingle('SELECT AccountID FROM phoromatic_systems WHERE SystemID = \'' . $system_id . '\'');
 	}
 	while(!empty($matching_system));
-	$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_systems (AccountID, SystemID, Hardware, Software, ClientVersion, GSID, CurrentTask, CreatedOn, LastCommunication, LastIP, LocalIP, Title, State) VALUES (:account_id, :system_id, :client_hardware, :client_software, :client_version, :gsid, \'Awaiting Authorization\', :current_time, :current_time, :access_ip, :local_ip, :title, 0)');
+	$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_systems (AccountID, SystemID, Hardware, Software, ClientVersion, GSID, CurrentTask, CreatedOn, LastCommunication, LastIP, LocalIP, Title, State, MachineSelfID) VALUES (:account_id, :system_id, :client_hardware, :client_software, :client_version, :gsid, \'Awaiting Authorization\', :current_time, :current_time, :access_ip, :local_ip, :title, 0, :machine_self_id)');
 	$stmt->bindValue(':account_id', $ACCOUNT_ID);
 	$stmt->bindValue(':system_id', $system_id);
 	$stmt->bindValue(':client_hardware', $CLIENT_HARDWARE);
@@ -131,6 +148,7 @@ if(empty($result))
 	$stmt->bindValue(':local_ip', $LOCAL_IP);
 	$stmt->bindValue(':title', $HOSTNAME);
 	$stmt->bindValue(':current_time', phoromatic_server::current_time());
+	$stmt->bindValue(':machine_self_id', $PTS_MACHINE_SELF_ID);
 	$result = $stmt->execute();
 	$json['phoromatic']['response'] = 'Information Added; Waiting For Approval From Administrator.';
 	echo json_encode($json);
@@ -142,7 +160,7 @@ define('SYSTEM_GROUPS', $result['Groups']);
 $SYSTEM_STATE = $result['State'];
 define('GSID', $GSID);
 
-$stmt = phoromatic_server::$db->prepare('UPDATE phoromatic_systems SET LastIP = :access_ip, LocalIP = :local_ip, LastCommunication = :current_time, Hardware = :client_hardware, Software = :client_software, ClientVersion = :client_version WHERE AccountID = :account_id AND SystemID = :system_id');
+$stmt = phoromatic_server::$db->prepare('UPDATE phoromatic_systems SET LastIP = :access_ip, LocalIP = :local_ip, LastCommunication = :current_time, Hardware = :client_hardware, Software = :client_software, ClientVersion = :client_version, MachineSelfID = :machine_self_id WHERE AccountID = :account_id AND SystemID = :system_id');
 $stmt->bindValue(':account_id', $ACCOUNT_ID);
 $stmt->bindValue(':system_id', SYSTEM_ID);
 $stmt->bindValue(':client_hardware', $CLIENT_HARDWARE);
@@ -151,6 +169,7 @@ $stmt->bindValue(':client_version', $CLIENT_VERSION);
 $stmt->bindValue(':access_ip', $_SERVER['REMOTE_ADDR']);
 $stmt->bindValue(':local_ip', $LOCAL_IP);
 $stmt->bindValue(':current_time', phoromatic_server::current_time());
+$stmt->bindValue(':machine_self_id', $PTS_MACHINE_SELF_ID);
 $stmt->execute();
 //echo phoromatic_server::$db->lastErrorMsg();
 if($SYSTEM_STATE < 1)
