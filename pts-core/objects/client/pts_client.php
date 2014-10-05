@@ -729,7 +729,7 @@ class pts_client
 		$user_config_phoromatic_servers = pts_config::read_user_config('PhoronixTestSuite/Options/General/PhoromaticServers', '');
 		foreach(explode(',', $user_config_phoromatic_servers) as $static_server)
 		{
-			$static_server = explode(':', $static_server)
+			$static_server = explode(':', $static_server);
 			if(count($static_server) == 2)
 			{
 				array_push($possible_servers, array($static_server[0], $static_server[1]));
