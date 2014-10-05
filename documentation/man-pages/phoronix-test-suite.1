@@ -17,7 +17,7 @@ This option will install the selected test(s) inside the testing environment dir
 This option will install the external dependencies needed by the selected test(s) using the distribution's package management system. For example, some tests depend upon GCC for compiling code. If GCC is not detected on the system, the Phoronix Test Suite will attempt to install GCC using the distribution's package management system. If you are running this command as a local user, you may be prompted for the root password while the process is running. For unsupported distributions, the dependency names will be displayed along with common names for the package. The install-dependencies option needs to be supplied with the test name or suite as an argument. When using the install option, the external dependencies are automatically checked.
 .TP
 .B make-download-cache
-This option will create a download cache for use by the Phoronix Test Suite.
+This option will create a download cache for use by the Phoronix Test Suite. The download cache is created of test files already downloaded to the local system. If passing any test/suite names to make-download-cache, the needed files for those test profiles will first be automatically downloaded before creating the cache.
 .TP
 .B remove-installed-test [Test]
 This option will permanently remove a installed test by the Phoronix Test Suite.
@@ -69,6 +69,9 @@ This option will download a local copy of a file that was saved to OpenBenchmark
 .TP
 .B list-recommended-tests
 This option will list recommended test profiles for benchmarking sorted by hardware sub-system. The recommended tests are determined via querying OpenBenchmarking.org and determining the most popular tests for a given environment based upon the number of times a test profile has been downloaded, the number of test results available on OpenBenchmarking.org for a given test profile, the age of the test profile, and other weighted factors.
+.TP
+.B make-openbenchmarking-cache
+This option will attempt to cache the test profile/suite meta-data from OpenBenchmarking.org for all linked repositories. This is useful if you're going to be running the Phoronix Test Suite / Phoromatic behind a firewall or without any Internet connection. Those with unrestricted Internet access or not utilizing a large local deployment of the Phoronix Test Suite / Phoromatic shouldn't need to run this command.
 .TP
 .B openbenchmarking-changes
 This option will list recent changes to test profiles of enabled OpenBenchmarking.org repositories.
@@ -261,7 +264,7 @@ This option will display the Phoronix Test Suite client version.
 Launch the Phoronix Test Suite HTML5 web user-interface in the local GUI mode (no remote web support) and attempt to auto-launch the web-browser.
 .TP
 .B start-remote-gui-server
-Start the GUI web server and WebSocket server processes for remote (or local) access via the web-browser. The settings can be configured via the Phoronix Test Suite's user-config.xml configuration file.
+Start the GUI web server and WebSocket server processes for remote (or local) access via the web-browser. The settings can be configured via the Phoronix Test Suite's XML configuration file.
 .TP
 .B start-ws-server
 Manually start a WebSocket server for communication by remote Phoronix Test Suite GUIs, the Phoronix Test Suite Multi-System Commander, and other functionality.

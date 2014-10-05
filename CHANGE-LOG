@@ -18,6 +18,9 @@ Phoronix Test Suite (Git)
 - pts-core: Improved dump-core-storage output
 - pts-core: Introduce machine_self_id as UUIDv5 compliant self-generated unique identifier for each PTS client
 - pts-core: Allow result file titles up to 126 characters in length
+- pts-core: Add start of basic Phoromatic Server systemd service file
+- pts-core: Add start of basic Phoromatic Server Upstart conf file
+- pts-core: Introduce make-openbenchmarking-cache sub-command for trying to cache all test/suite meta-data from OpenBenchmarking.org
 - phoromatic: Begin allowing results to be stored locally, not dependent on OpenBenchmarking.org storage
 - phoromatic: Advertise Phoromatic Server using Avahi zero-conf networking service when avahi-publish available and AdvertiseServiceZeroConf user config option is TRUE
 - phoromatic: Automatically setup download-cache over Phoromatic HTTP with the system's local download-cache archive
