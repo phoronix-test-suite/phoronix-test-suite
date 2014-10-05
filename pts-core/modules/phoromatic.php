@@ -140,7 +140,7 @@ class phoromatic extends pts_module_interface
 		$to_post['aid'] = $account_id;
 		$to_post['pts'] = PTS_VERSION;
 		$to_post['pts_core'] = PTS_CORE_VERSION;
-		$to_post['gsid'] = PTS_GSID;
+		$to_post['gsid'] = define('PTS_GSID') ? PTS_GSID : null;
 		$to_post['lip'] = pts_network::get_local_ip();
 		$to_post['h'] = phodevi::system_hardware(true);
 		$to_post['s'] = phodevi::system_software(true);
