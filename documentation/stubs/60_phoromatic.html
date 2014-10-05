@@ -4,14 +4,6 @@
 </head>
 <body>
 <h1>Overview</h1>
-<p><em>Phoromatic is a remote management system for the Phoronix Test Suite. Phoromatic allows the automatic (hence the name Phoromatic) scheduling of tests, remote installation of new tests, and the management of multiple test systems all through an intuitive, easy-to-use web interface. Tests can be scheduled to automatically run on a routine basis across multiple test systems. The test results are then available from this central, secure location.</em></p>
-<h1>Basic Instructions</h1>
-<ol>
-<li>Create a free account at <a href="http://www.phoromatic.com/">Phoromatic.com</a>. Phoromatic can also be installed on a LAN / intranet for professional and enterprise support customers of the Phoronix Test Suite.</li>
-<li>On each test system, install the latest version of the Phoronix Test Suite and then run <em>phoronix-test-suite module-setup phoromatic</em>. During this process it will ask the user for an account code and activiation ID that are shown from the <em>Systems</em> page of your Phoromatic account.</li>
-<li>Phoromatic cannot install external dependencies for a test if the Phoronix Test Suite is not running as root, so it would be recommended to now run <em>phoronix-test-suite install-dependencies all</em>. Alternatively, you can also run <em>phoronix-test-suite install all</em> to install all tests at this time, or begin selectively installing the tests you wish to use. Phoromatic can install tests automatically though, it just cannot install external dependencies when the user is not root.</li>
-<li>When you are all set, run <em>phoronix-test-suite phoromatic.start</em>, which begins the process of the Phoronix Test Suite listening to the Phoromatic server waiting for installation and run commands, etc. The installed system software/hardware is also reported all automatically, etc.</li>
-</ol>
-<p>For more information on Phoromatic and a detailed guide, read <a href="http://www.phoronix.com/vr.php?view=14347">Building A Benchmarking Test Farm With Phoromatic</a>.</p>
+<p>The Phoronix Test Suite now features its own built-in Phoromatic server and client implementations. See the <em>phoromatic.pdf</em> / <em>phoromatic.html</em> documentation for more information on this advanced capability.</p>
 </body>
 </html>

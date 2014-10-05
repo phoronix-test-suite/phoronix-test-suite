@@ -22,6 +22,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add start of basic Phoromatic Server Upstart conf file
 - pts-core: Introduce make-openbenchmarking-cache sub-command for trying to cache all test/suite meta-data from OpenBenchmarking.org
 - pts-core: Allow PhoromaticServers user-config.xml to specify static Phoromatic Server IP:port information
+- pts-core: Initial Upstart and systemd configurations for the Phoromatic clients
 - phoromatic: Begin allowing results to be stored locally, not dependent on OpenBenchmarking.org storage
 - phoromatic: Advertise Phoromatic Server using Avahi zero-conf networking service when avahi-publish available and AdvertiseServiceZeroConf user config option is TRUE
 - phoromatic: Automatically setup download-cache over Phoromatic HTTP with the system's local download-cache archive

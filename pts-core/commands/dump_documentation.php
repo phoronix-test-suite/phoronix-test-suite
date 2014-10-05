@@ -285,6 +285,7 @@ class dump_documentation implements pts_option_interface
 		$pdf->html_to_pdf(PTS_PATH . 'documentation/phoromatic.html');
 		$pdf_file = PTS_PATH . 'documentation/phoromatic.pdf';
 		$pdf->Output($pdf_file);
+		echo PHP_EOL . 'Saved To: ' . $pdf_file . PHP_EOL . PHP_EOL;
 
 	}
 }
