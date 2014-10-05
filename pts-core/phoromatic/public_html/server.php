@@ -20,8 +20,32 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-include('../../pts-core.php');
+if(isset($_GET['phoromatic_info']))
+{
+	define('PHOROMATIC_SERVER', true);
+	define('REMOTE_ACCESS', true); // XXX TODO: Is this still used with new Phoromatic?
+	//ini_set('memory_limit', '64M');
+	define('PTS_MODE', 'WEB_CLIENT');
+	define('PTS_AUTO_LOAD_OBJECTS', true);
+	error_reporting(E_ALL);
+	include('../../pts-core.php');
+	pts_client::init();
 
-echo pts_title(true) . ' Phoromatic Server [' . $_SERVER['SERVER_SOFTWARE'] . ']';
+	$json_info = array(
+		'http_server' => $_SERVER['SERVER_SOFTWARE'],
+		'pts' => pts_title(),
+		'pts_core' => PTS_CORE_VERSION,
+		'ws_port' => getenv('PTS_WEBSOCKET_PORT'),
+		'download_cache' => '/download-cache.php',
+		'openbenchmarking_cache' => '/openbenchmarking-cache.php',
+		);
+
+	echo json_encode($json_info);
+}
+else
+{
+	include('../../pts-core.php');
+	echo pts_title(true) . ' Phoromatic Server [' . $_SERVER['SERVER_SOFTWARE'] . ']';
+}
 
 ?>

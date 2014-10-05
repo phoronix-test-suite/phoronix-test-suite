@@ -719,7 +719,7 @@ class pts_client
 		}
 
 		$detected_phoromatic_servers = $pso->read_object('detected_phoromatic_servers');
-		if($detected_phoromatic_servers || TIME_SINCE_LAST_RUN > 3)
+		if($detected_phoromatic_servers || TIME_SINCE_LAST_RUN > 3 || true)
 		{
 			if(is_array($detected_phoromatic_servers))
 			{

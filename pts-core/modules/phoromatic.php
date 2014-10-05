@@ -23,7 +23,7 @@
 class phoromatic extends pts_module_interface
 {
 	const module_name = 'Phoromatic Client';
-	const module_version = '0.1.0';
+	const module_version = '0.2.0';
 	const module_description = 'The Phoromatic client is used for connecting to a Phoromatic server (Phoromatic.com or a locally run server) to facilitate the automatic running of tests, generally across multiple test nodes in a routine manner. For more details visit http://www.phoromatic.com/. This module is intended to be used with Phoronix Test Suite 5.2+ clients and servers.';
 	const module_author = 'Phoronix Media';
 
@@ -39,16 +39,69 @@ class phoromatic extends pts_module_interface
 	}
 	public static function user_commands()
 	{
-		return array('connect' => 'run_connection'); //explore => explore_network
+		return array('connect' => 'run_connection', 'explore' => 'explore_network'); //explore => explore_network
 	}
-	public static function module_setup()
+	public static function explore_network()
 	{
-		return array(
-		new pts_module_option('remote_host', 'Enter the URL to host', 'HTTP_URL', 'http://www.phoromatic.com/'),
-		new pts_module_option('remote_account', 'Enter the account code', 'ALPHA_NUMERIC'),
-		new pts_module_option('remote_verifier', 'Enter the verification code', 'ALPHA_NUMERIC'),
-		new pts_module_option('system_description', 'Enter a short (optional) description for this system', null, null, null, false)
-		);
+		pts_client::$display->generic_heading('Phoromatic Servers');
+
+		$archived_servers = pts_client::available_phoromatic_servers();
+		foreach($archived_servers as $archived_server)
+		{
+			$response = pts_network::http_get_contents('http://' . $archived_server['ip'] . ':' . $archived_server['http_port'] . '/server.php?phoromatic_info');
+
+			if(!empty($response))
+			{
+				$response = json_decode($response, true);
+				if($response && isset($response['pts']))
+				{
+					echo PHP_EOL . 'IP: ' . $archived_server['ip'] . PHP_EOL;
+					echo 'HTTP PORT: ' . $archived_server['http_port'] . PHP_EOL;
+					echo 'WEBSOCKET PORT: ' . $response['ws_port'] . PHP_EOL;
+					echo 'SERVER: ' . $response['http_server'] . PHP_EOL;
+					echo 'PHORONIX TEST SUITE: ' . $response['pts'] . ' [' . $response['pts_core'] . ']' . PHP_EOL;
+				}
+
+				$repo = pts_network::http_get_contents('http://' . $archived_server['ip'] . ':' . $archived_server['http_port'] . '/download-cache.php?repo');
+				echo 'DOWNLOAD CACHE: ';
+				if(!empty($repo))
+				{
+					$repo = json_decode($repo, true);
+					if($repo && isset($repo['phoronix-test-suite']['download-cache']))
+					{
+						$total_file_size = 0;
+						foreach($repo['phoronix-test-suite']['download-cache'] as $file_name => $inf)
+						{
+							$total_file_size += $repo['phoronix-test-suite']['download-cache'][$file_name]['file_size'];
+						}
+						echo count($repo['phoronix-test-suite']['download-cache']) . ' FILES / ' . round($total_file_size / 1000000) . ' MB CACHE SIZE';
+					}
+				}
+				else
+				{
+					echo 'N/A';
+				}
+				echo PHP_EOL;
+
+				$repo = pts_network::http_get_contents('http://' . $archived_server['ip'] . ':' . $archived_server['http_port'] . '/openbenchmarking-cache.php?repos');
+				echo 'SUPPORTED OPENBENCHMARKING.ORG REPOSITORIES: ' . PHP_EOL;
+				if(!empty($repo))
+				{
+					$repo = json_decode($repo, true);
+					if($repo && is_array($repo['repos']))
+					{
+						foreach($repo['repos'] as $data)
+						{
+							echo '      ' . $data['title'] . ' - Last Generated: ' . date('d M Y H:i', $data['generated']) . PHP_EOL;
+						}
+					}
+				}
+				else
+				{
+					echo '      N/A' . PHP_EOL;
+				}
+			}
+		}
 	}
 	protected static function upload_to_remote_server($to_post, $server_address = null, $server_http_port = null, $account_id = null)
 	{
@@ -404,39 +457,6 @@ class phoromatic extends pts_module_interface
 	//
 	// TODO XXX: The code below here is Phoromatic legacy code still needing to be ported to the new interfaces of PTS 5.2 Khanino
 	//
-
-	public static function module_setup_validate($options)
-	{
-		if(substr($options['remote_host'], -14) != 'phoromatic.php')
-		{
-			$options['remote_host'] = pts_strings::add_trailing_slash($options['remote_host']) . 'phoromatic.php';
-		}
-
-		$server_response = phoromatic::upload_to_remote_server(array(
-			'r' => 'start',
-			'h' => phodevi::system_hardware(true),
-			's' => phodevi::system_software(true),
-			'n' => phodevi::read_property('system', 'hostname'),
-			),
-			$options['remote_host'], $options['remote_account'], $options['remote_verifier']);
-
-		$returned_id = self::read_xml_value($server_response, 'PhoronixTestSuite/Phoromatic/General/Response');
-
-		unset($options['system_description']); // No reason to have this locally just pass it to the server
-
-		if(!empty($returned_id))
-		{
-			$options['remote_system'] = $returned_id;
-			echo PHP_EOL . 'Run Phoromatic by entering: phoronix-test-suite phoromatic.start' . PHP_EOL;
-		}
-		else
-		{
-			echo PHP_EOL . 'Configuration Failed!' . PHP_EOL;
-			$options = array();
-		}
-
-		return $options;
-	}
 
 	//
 	// User Run Commands

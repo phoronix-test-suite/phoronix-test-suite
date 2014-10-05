@@ -37,6 +37,21 @@ if(isset($_GET['index']))
 	$repo_index = pts_openbenchmarking::read_repository_index($requested_repo, false);
 	echo $repo_index;
 }
+else if(isset($_GET['repos']))
+{
+	$index_files = pts_file_io::glob(PTS_OPENBENCHMARKING_SCRATCH_PATH . '*.index');
+	$json_repos = array();
+
+	foreach($index_files as $index_file)
+	{
+		$index_data = json_decode(file_get_contents($index_file), true);
+		$json_repos['repos'][basename($index_file, '.index')] = array(
+			'title' => basename($index_file, '.index'),
+			'generated' => $index_data['main']['generated'],
+			);
+	}
+	echo json_encode($json_repos);
+}
 else if(isset($_GET['test']))
 {
 	$repo = str_replace(array('..', '/'), null, $_GET['repo']);
