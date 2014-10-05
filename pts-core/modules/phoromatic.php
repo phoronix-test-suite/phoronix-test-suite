@@ -169,11 +169,38 @@ class phoromatic extends pts_module_interface
 			trigger_error('Phoromatic is already running.', E_USER_ERROR);
 			return false;
 		}
+		if(isset($args[0]) && $args[0] && strpos($args[0], '/', strpos($args[0], ':')) > 6)
+		{
+			self::$account_id = substr($args[0], strrpos($args[0], '/') + 1);
+			self::$server_address = substr($args[0], 0, strpos($args[0], ':'));
+			self::$server_http_port = substr($args[0], strlen(self::$server_address) + 1, -1 - strlen(self::$account_id));
+			pts_client::$display->generic_heading('Server IP: ' . self::$server_address . PHP_EOL . 'Server HTTP Port: ' . self::$server_http_port . PHP_EOL . 'Account ID: ' . self::$account_id);
+		}
+		else
+		{
+			$archived_servers = pts_client::available_phoromatic_servers();
+			foreach($archived_servers as $archived_server)
+			{
+				$server_response = phoromatic::upload_to_remote_server(array(
+					'r' => 'ping',
+					), $archived_server['ip'], $archived_server['http_port']);
 
-		self::$account_id = substr($args[0], strrpos($args[0], '/') + 1);
-		self::$server_address = substr($args[0], 0, strpos($args[0], ':'));
-		self::$server_http_port = substr($args[0], strlen(self::$server_address) + 1, -1 - strlen(self::$account_id));
-		pts_client::$display->generic_heading('Server IP: ' . self::$server_address . PHP_EOL . 'Server HTTP Port: ' . self::$server_http_port . PHP_EOL . 'Account ID: ' . self::$account_id);
+				$server_response = json_decode($server_response, true);
+				if($server_response && isset($server_response['phoromatic']['account_id']))
+				{
+					self::$server_address = $archived_server['ip'];
+					self::$server_http_port = $archived_server['http_port'];
+					self::$account_id = $server_response['phoromatic']['account_id'];
+				}
+			}
+		}
+
+		if(self::$server_address == null || self::$server_http_port == null || self::$account_id == null)
+		{
+			echo PHP_EOL . 'You must pass the Phoromatic Server information as an argument to phoromatic.connect, or otherwise configure your network setup.' . PHP_EOL . '      e.g. phoronix-test-suite phoromatic.connect 192.168.1.2:5555/I0SSJY' . PHP_EOL . PHP_EOL;
+			return false;
+		}
+
 		$times_failed = 0;
 
 		while(1)

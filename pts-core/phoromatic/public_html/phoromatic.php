@@ -80,15 +80,32 @@ if($CLIENT_CORE_VERSION < 5312)
 	exit;
 }
 
+// DATABASE SETUP
+phoromatic_server::prepare_database();
+
+if($ACCOUNT_ID == null && $PTS_MACHINE_SELF_ID != null)
+{
+	// Try to find the account
+	$stmt = phoromatic_server::$db->prepare('SELECT AccountID FROM phoromatic_systems WHERE MachineSelfID = :machine_self_id');
+	$stmt->bindValue(':machine_self_id', $PTS_MACHINE_SELF_ID);
+	$result = $stmt->execute();
+
+	if(!empty($result))
+	{
+		$result = $result->fetchArray();
+		$ACCOUNT_ID = $result['AccountID'];
+		$json['phoromatic']['account_id'] = $result['AccountID'];
+		echo json_encode($json);
+		exit;
+	}
+}
+
 if(($GSID == null && $PTS_MACHINE_SELF_ID == null) || $ACCOUNT_ID == null)
 {
 	$json['phoromatic']['error'] = 'Invalid Credentials';
 	echo json_encode($json);
 	exit;
 }
-
-// DATABASE SETUP
-phoromatic_server::prepare_database();
 
 // CHECK FOR VALID ACCOUNT
 $stmt = phoromatic_server::$db->prepare('SELECT AccountID FROM phoromatic_accounts WHERE AccountID = :account_id');
