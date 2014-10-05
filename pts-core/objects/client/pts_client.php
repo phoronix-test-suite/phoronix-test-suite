@@ -758,9 +758,9 @@ class pts_client
 		$pso = pts_storage_object::recover_from_file(PTS_CORE_STORAGE);
 		$archived_servers = $pso->read_object('detected_phoromatic_servers');
 		$phoromatic_servers = array();
-		foreach($archived_servers as $ip => $port)
+		foreach($archived_servers as $i)
 		{
-			array_push($phoromatic_servers, array('ip' => $ip, 'http_port' => $port));
+			array_push($phoromatic_servers, array('ip' => $i[0], 'http_port' => $i[1]));
 		}
 
 		return $phoromatic_servers;
