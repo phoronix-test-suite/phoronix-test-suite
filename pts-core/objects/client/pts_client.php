@@ -718,49 +718,27 @@ class pts_client
 			}
 		}
 
-		$detected_phoromatic_servers = $pso->read_object('detected_phoromatic_servers');
-		if($detected_phoromatic_servers || TIME_SINCE_LAST_RUN > 3 || true)
-		{
-			if(is_array($detected_phoromatic_servers))
-			{
-				$check_servers = array_merge($detected_phoromatic_servers, pts_network::find_zeroconf_phoromatic_servers(true));
-			}
-			else
-			{
-				$check_servers = pts_network::find_zeroconf_phoromatic_servers(true);
-			}
-			$detected_phoromatic_servers = array();
-
-			// Rescan network for Phoromatic Server if previously one was detected or it's been over 120 minutes since last running PTS...
-			foreach($check_servers as $potential_server)
-			{
-				if(in_array($potential_server, $detected_phoromatic_servers))
-				{
-					continue;
-				}
-
-				$server_response = pts_network::http_get_contents('http://' . $potential_server[0] . ':' . $potential_server[1] . '/server.php', false, false, 3);
-
-				if(stripos($server_response, 'Phoromatic') !== false)
-				{
-					trigger_error('Phoromatic Server Auto-Detected At: ' . $potential_server[0] . ':' . $potential_server[1], E_USER_NOTICE);
-					array_push($detected_phoromatic_servers, $potential_server);
-				}
-			}
-		}
-		$pso->add_object('detected_phoromatic_servers', $detected_phoromatic_servers);
-
 		// Archive to disk
 		$pso->save_to_file(PTS_CORE_STORAGE);
 	}
 	public static function available_phoromatic_servers()
 	{
-		$pso = pts_storage_object::recover_from_file(PTS_CORE_STORAGE);
-		$archived_servers = $pso->read_object('detected_phoromatic_servers');
+		$possible_servers = pts_network::find_zeroconf_phoromatic_servers(true);
 		$phoromatic_servers = array();
-		foreach($archived_servers as $i)
+		foreach($possible_servers as $possible_server)
 		{
-			array_push($phoromatic_servers, array('ip' => $i[0], 'http_port' => $i[1]));
+			if(in_array($possible_server[0], array_keys($phoromatic_servers)))
+			{
+				continue;
+			}
+
+			$server_response = pts_network::http_get_contents('http://' . $possible_server[0] . ':' . $possible_server[1] . '/server.php', false, false, 3);
+			if(stripos($server_response, 'Phoromatic') !== false)
+			{
+				trigger_error('Phoromatic Server Auto-Detected At: ' . $possible_server[0] . ':' . $possible_server[1], E_USER_NOTICE);
+				$phoromatic_servers[$possible_server[0]] = array('ip' => $possible_server[0], 'http_port' => $possible_server[1]);
+			}
+
 		}
 
 		return $phoromatic_servers;

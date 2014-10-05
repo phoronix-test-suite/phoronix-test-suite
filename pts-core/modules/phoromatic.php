@@ -84,7 +84,7 @@ class phoromatic extends pts_module_interface
 				echo PHP_EOL;
 
 				$repo = pts_network::http_get_contents('http://' . $archived_server['ip'] . ':' . $archived_server['http_port'] . '/openbenchmarking-cache.php?repos');
-				echo 'SUPPORTED OPENBENCHMARKING.ORG REPOSITORIES: ' . PHP_EOL;
+				echo 'SUPPORTED OPENBENCHMARKING.ORG REPOSITORIES:' . PHP_EOL;
 				if(!empty($repo))
 				{
 					$repo = json_decode($repo, true);
