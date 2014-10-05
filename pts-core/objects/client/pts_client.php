@@ -723,10 +723,24 @@ class pts_client
 	}
 	public static function available_phoromatic_servers()
 	{
-		$possible_servers = pts_network::find_zeroconf_phoromatic_servers(true);
 		$phoromatic_servers = array();
+		$possible_servers = pts_network::find_zeroconf_phoromatic_servers(true);
+
+		$user_config_phoromatic_servers = pts_config::read_user_config('PhoronixTestSuite/Options/General/PhoromaticServers', '');
+		foreach(explode(',', $user_config_phoromatic_servers) as $static_server)
+		{
+			$static_server = explode(':', $static_server)
+			if(count($static_server) == 2)
+			{
+				array_push($possible_servers, array($static_server[0], $static_server[1]));
+			}
+		}
+
 		foreach($possible_servers as $possible_server)
 		{
+			// possible_server[0] is the Phoromatic Server IP
+			// possible_server[1] is the Phoromatic Server HTTP PORT
+
 			if(in_array($possible_server[0], array_keys($phoromatic_servers)))
 			{
 				continue;
