@@ -39,7 +39,7 @@ class phoromatic extends pts_module_interface
 	}
 	public static function user_commands()
 	{
-		return array('connect' => 'run_connection');
+		return array('connect' => 'run_connection'); //explore => explore_network
 	}
 	public static function module_setup()
 	{

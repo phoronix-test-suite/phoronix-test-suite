@@ -719,20 +719,26 @@ class pts_client
 		}
 
 		$detected_phoromatic_servers = $pso->read_object('detected_phoromatic_servers');
-		if($detected_phoromatic_servers || TIME_SINCE_LAST_RUN > 30 || true)
+		if($detected_phoromatic_servers || TIME_SINCE_LAST_RUN > 3)
 		{
+			if(is_array($detected_phoromatic_servers))
+			{
+				$check_servers = array_merge($detected_phoromatic_servers, pts_network::find_zeroconf_phoromatic_servers(true));
+			}
+			else
+			{
+				$check_servers = pts_network::find_zeroconf_phoromatic_servers(true);
+			}
+			$detected_phoromatic_servers = array();
+
 			// Rescan network for Phoromatic Server if previously one was detected or it's been over 120 minutes since last running PTS...
-			foreach(pts_network::find_zeroconf_phoromatic_servers(true) as $potential_server)
+			foreach($check_servers as $potential_server)
 			{
 				$server_response = pts_network::http_get_contents('http://' . $potential_server[0] . ':' . $potential_server[1] . '/server.php', false, false, 3);
 
 				if(stripos($server_response, 'Phoromatic') !== false)
 				{
 					trigger_error('Phoromatic Server Auto-Detected At: ' . $potential_server[0] . ':' . $potential_server[1], E_USER_WARNING);
-					if(!is_array($detected_phoromatic_servers))
-					{
-						$detected_phoromatic_servers = array();
-					}
 
 					if(!in_array($potential_server, $detected_phoromatic_servers))
 					{
@@ -1420,7 +1426,7 @@ class pts_client
 				}
 				else
 				{
-					$pci = array_diff($pci, $pci_prev);
+					$pci = @array_diff($pci, $pci_prev);
 				}
 			}
 
