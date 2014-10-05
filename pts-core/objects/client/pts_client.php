@@ -734,15 +734,17 @@ class pts_client
 			// Rescan network for Phoromatic Server if previously one was detected or it's been over 120 minutes since last running PTS...
 			foreach($check_servers as $potential_server)
 			{
+				if(in_array($potential_server, $detected_phoromatic_servers))
+				{
+					continue;
+				}
+
 				$server_response = pts_network::http_get_contents('http://' . $potential_server[0] . ':' . $potential_server[1] . '/server.php', false, false, 3);
 
 				if(stripos($server_response, 'Phoromatic') !== false)
 				{
-					if(!in_array($potential_server, $detected_phoromatic_servers))
-					{
-						trigger_error('Phoromatic Server Auto-Detected At: ' . $potential_server[0] . ':' . $potential_server[1], E_USER_WARNING);
-						array_push($detected_phoromatic_servers, $potential_server);
-					}
+					trigger_error('Phoromatic Server Auto-Detected At: ' . $potential_server[0] . ':' . $potential_server[1], E_USER_NOTICE);
+					array_push($detected_phoromatic_servers, $potential_server);
 				}
 			}
 		}
