@@ -738,10 +738,9 @@ class pts_client
 
 				if(stripos($server_response, 'Phoromatic') !== false)
 				{
-					trigger_error('Phoromatic Server Auto-Detected At: ' . $potential_server[0] . ':' . $potential_server[1], E_USER_WARNING);
-
 					if(!in_array($potential_server, $detected_phoromatic_servers))
 					{
+						trigger_error('Phoromatic Server Auto-Detected At: ' . $potential_server[0] . ':' . $potential_server[1], E_USER_WARNING);
 						array_push($detected_phoromatic_servers, $potential_server);
 					}
 				}
@@ -751,6 +750,18 @@ class pts_client
 
 		// Archive to disk
 		$pso->save_to_file(PTS_CORE_STORAGE);
+	}
+	public static function available_phoromatic_servers()
+	{
+		$pso = pts_storage_object::recover_from_file(PTS_CORE_STORAGE);
+		$archived_servers = $pso->read_object('detected_phoromatic_servers');
+		$phoromatic_servers = array();
+		foreach($archived_server as $ip => $port)
+		{
+			array_push($phoromatic_servers, array('ip' => $ip, 'http_port' => $port));
+		}
+
+		return $phoromatic_servers;
 	}
 	public static function user_agreement_check($command)
 	{

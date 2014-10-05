@@ -509,19 +509,15 @@ class pts_openbenchmarking
 			return null;
 		}
 
-		$pso = pts_storage_object::recover_from_file(PTS_CORE_STORAGE);
-		$archived_servers = $pso->read_object('detected_phoromatic_servers');
+		$archived_servers = pts_client::available_phoromatic_servers();
 
-		if(is_array($archived_servers))
+		foreach($archived_servers as $archived_server)
 		{
-			foreach($archived_servers as $server_url_and_port)
-			{
-				$cache = pts_network::http_get_contents('http://' . $server_url_and_port[0] . ':' . $server_url_and_port[1] . '/openbenchmarking-cache.php?' . $type_request . '&repo=' . $repo . '&test=' . $test);
+			$cache = pts_network::http_get_contents('http://' . $archived_server['ip'] . ':' . $archived_server['http_port'] . '/openbenchmarking-cache.php?' . $type_request . '&repo=' . $repo . '&test=' . $test);
 
-				if(!empty($repo))
-				{
-					return $cache;
-				}
+			if(!empty($cache))
+			{
+				return $cache;
 			}
 		}
 
