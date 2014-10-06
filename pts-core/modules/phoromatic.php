@@ -155,7 +155,7 @@ class phoromatic extends pts_module_interface
 
 		// Avoid an endless flow of "idling" messages, etc
 		if($current_task != $last_msg)
-			self::$log_file->log($current_task);
+			pts_client::$pts_logger->log($current_task);
 		$last_msg = $current_task;
 
 		return $server_response = phoromatic::upload_to_remote_server(array(
@@ -178,12 +178,15 @@ class phoromatic extends pts_module_interface
 			return false;
 		}
 
-		self::$log_file = new pts_logger();
-		self::$log_file->log(pts_codename(true) . ' starting Phoromatic client.');
+		if(pts_client::$pts_logger == false)
+		{
+			pts_client::$pts_logger = new pts_logger();
+		}
+		pts_client::$pts_logger->log(pts_title(true) . ' starting Phoromatic client');
 
 		if(isset($args[0]) && $args[0] && strpos($args[0], '/', strpos($args[0], ':')) > 6)
 		{
-			self::$log_file->log('Attempting to connect to Phoromatic Server: ' . $args[0]);
+			pts_client::$pts_logger->log('Attempting to connect to Phoromatic Server: ' . $args[0]);
 			self::$account_id = substr($args[0], strrpos($args[0], '/') + 1);
 			self::$server_address = substr($args[0], 0, strpos($args[0], ':'));
 			self::$server_http_port = substr($args[0], strlen(self::$server_address) + 1, -1 - strlen(self::$account_id));
@@ -191,7 +194,7 @@ class phoromatic extends pts_module_interface
 		}
 		else
 		{
-			self::$log_file->log('Attempting to auto-discover Phoromatic Server');
+			pts_client::$pts_logger->log('Attempting to auto-discover Phoromatic Server');
 			$archived_servers = pts_client::available_phoromatic_servers();
 			foreach($archived_servers as $archived_server)
 			{
@@ -229,7 +232,7 @@ class phoromatic extends pts_module_interface
 
 				if($times_failed > 2)
 				{
-					self::$log_file->log('Communication attempt to server failed');
+					pts_client::$pts_logger->log('Communication attempt to server failed');
 					trigger_error('Communication with server failed.', E_USER_ERROR);
 					return false;
 				}
@@ -394,7 +397,7 @@ class phoromatic extends pts_module_interface
 									'system_logs_zip' => $system_logs,
 									'system_logs_hash' => $system_logs_hash
 									));
-								self::$log_file->log('XXX TEMP DEBUG MESSAGE: ' . $server_response);
+								pts_client::$pts_logger->log('XXX TEMP DEBUG MESSAGE: ' . $server_response);
 								if(!$json['phoromatic']['settings']['ArchiveResultsLocally'])
 								{
 									pts_client::remove_saved_result_file($test_run_manager->get_file_name());

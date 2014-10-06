@@ -73,6 +73,32 @@ class pts_logger
 
 		$logger->log($message);
 	}
+	public function report_error($level, $message, $file, $line)
+	{
+		$error_string = '[' . $level . '] ';
+		if(strpos($message, PHP_EOL) === false)
+		{
+			$error_string .= $message . ' ';
+		}
+		else
+		{
+			foreach(pts_strings::trim_explode(PHP_EOL, $message) as $line_count => $line_string)
+			{
+				$error_string .= $line_string . PHP_EOL . str_repeat(' ', strlen($level) + 3);
+			}
+		}
+
+		if($file != null)
+		{
+			$error_string .= 'in ' . basename($file, '.php');
+		}
+		if($line != 0)
+		{
+			$error_string .=  ':' . $line;
+		}
+
+		$this->log($error_string);
+	}
 }
 
 ?>

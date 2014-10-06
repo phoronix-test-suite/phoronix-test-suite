@@ -23,6 +23,7 @@
 class pts_client
 {
 	public static $display = false;
+	public static $pts_logger = false;
 	private static $current_command = null;
 	protected static $lock_pointers = null;
 	private static $forked_pids = array();
@@ -1886,6 +1887,11 @@ class pts_client
 			default:
 				$error_type = $error_code;
 				break;
+		}
+
+		if(pts_client::$pts_logger != false)
+		{
+			pts_client::$pts_logger->report_error($error_type, $error_string, $error_file, $error_line);
 		}
 
 		if(pts_client::$display != false)
