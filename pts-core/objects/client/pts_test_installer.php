@@ -238,21 +238,32 @@ class pts_test_installer
 					pts_client::$display->test_install_download_file('FILE_FOUND', $download_package);
 					continue;
 				case 'REMOTE_DOWNLOAD_CACHE':
-					foreach($download_package->get_download_location_path() as $remote_download_cache_file)
+					$download_tries = 0;
+					do
 					{
-						pts_client::$display->test_install_download_file('DOWNLOAD_FROM_CACHE', $download_package);
-						pts_network::download_file($remote_download_cache_file, $download_destination_temp);
+						foreach($download_package->get_download_location_path() as $remote_download_cache_file)
+						{
+							pts_client::$display->test_install_download_file('DOWNLOAD_FROM_CACHE', $download_package);
+							pts_network::download_file($remote_download_cache_file, $download_destination_temp);
 
-						if($download_package->check_file_hash($download_destination_temp))
-						{
-							rename($download_destination_temp, $download_destination);
-							continue;
+							if($download_package->check_file_hash($download_destination_temp))
+							{
+								rename($download_destination_temp, $download_destination);
+								break;
+							}
+							else
+							{
+								pts_client::$display->test_install_error('The check-sum of the downloaded file failed.');
+								pts_file_io::unlink($download_destination_temp);
+							}
 						}
-						else
-						{
-							pts_client::$display->test_install_error('The check-sum of the downloaded file failed.');
-							pts_file_io::unlink($download_destination_temp);
-						}
+						$download_tries++;
+					}
+					while(!is_file($download_destination) && $download_tries < 2)
+
+					if(is_file($download_destination))
+					{
+						continue;
 					}
 				case 'MAIN_DOWNLOAD_CACHE':
 				case 'LOCAL_DOWNLOAD_CACHE':

@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Introduce basic system logging capabilities for services
+- pts-core: Try downloading files from remote download caches up to two times in event of failure / checksum issues
 - phoromatic: Start a basic logger of Phoromatic Server events
 
 Phoronix Test Suite 5.4 Milestone 2
