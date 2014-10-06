@@ -203,13 +203,28 @@ class phoromatic_welcome implements pts_webui_interface
 			<h1>Register</h1>
 			<p>Creating a new Phoromatic account is free and easy. The public, open-source version of the Phoronix Test Suite client is limited in its Phoromatic server abilities when it comes to result management and local storage outside of the OpenBenchmarking.org cloud. For organizations looking for behind-the-firewall support and other enterprise features, <a href="http://www.phoronix-test-suite.com/?k=commercial">contact us</a>. To create a new account for this Phoromatic server, simply fill out the form below.</p>';
 
-			$register = array(
-				array('Username', 'Password', 'Confirm Password', 'Email'),
-				array('<input type="text" name="register_username" />', '<input type="password" name="register_password" />', '<input type="password" name="register_password_confirm" />', '<input type="text" name="register_email" />'),
-				array('&nbsp;', '&nbsp;', '&nbsp;', '&nbsp;'),
-				array(' ', ' ', ' ', '<input type="submit" value="Submit" />')
-				);
-			$box .= '<form name="register_form" id="register_form" action="?register" method="post" onsubmit="return phoromatic_initial_registration(this);">' . pts_webui::r2d_array_to_table($register) . '</form>';
+			$box .= '<form name="register_form" id="register_form" action="?register" method="post" onsubmit="return phoromatic_initial_registration(this);">
+
+			<div style="clear: both; font-weight: bold;">
+			<div style="float: left; width: 25%;">Username</div>
+			<div style="float: left; width: 25%;">Password</div>
+			<div style="float: left; width: 25%;">Confirm Password</div>
+			<div style="float: left; width: 25%;">Email Address</div>
+			</div>
+
+			<div style="clear: both;">
+			<div style="float: left; width: 25%;"><input type="text" name="register_username" /> <sup>1</sup></div>
+			<div style="float: left; width: 25%;"><input type="password" name="register_password" /> <sup>2</sup></div>
+			<div style="float: left; width: 25%;"><input type="password" name="register_password_confirm" /></div>
+			<div style="float: left; width: 25%;"><input type="text" name="register_email" /> <sup>3</sup><br /><br /><input type="submit" value="Create Account" /></div>
+			</div>
+
+			</form>';
+
+			$box .= '<p style="font-size: 11px;"><sup>1</sup> Usernames shall be at least four characters long, not contain any spaces, and only be composed of normal ASCII characters.<br />
+				<sup>2</sup> Passwords shall be at least six characters long.<br />
+				<sup>3</sup> A valid email address is required for notifications, password reset, and other verification purposes.<br />
+				</p>';
 
 			$box .= '<hr /><hr />';
 

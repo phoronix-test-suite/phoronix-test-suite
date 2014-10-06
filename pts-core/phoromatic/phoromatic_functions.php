@@ -178,6 +178,7 @@ function phoromatic_error_page($title, $description)
 }
 function phoromatic_systems_needing_attention()
 {
+	$main = null;
 	$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, State, LastIP, LocalIP, LastCommunication FROM phoromatic_systems WHERE AccountID = :account_id AND State = 0 ORDER BY LastCommunication DESC');
 	$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 	$result = $stmt->execute();

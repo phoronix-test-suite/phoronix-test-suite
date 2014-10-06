@@ -359,6 +359,11 @@ input, select, textarea, checkbox
 	box-shadow: 1px 1px 4px #222;
 	-moz-box-shadow: 1px 1px 4px #222;
 	-webkit-box-shadow: 1px 1px 4px #222;
+	transition: all 0.3s;
+}
+input:focus
+{
+	background: #666; color: #FFF;
 }
 button
 {
