@@ -140,6 +140,10 @@ class phoromatic_settings implements pts_webui_interface
 			$main .= '<p><input type="submit" value="Save Account Settings" /></p>';
 			$main .= '</form>';
 
+			$main .= '<hr />
+			<h2>Cache Settings</h2>
+			<p>Proceed to the <a href="?caches">download cache page</a> for information about the Phoromatic Server\'s download caches.</p>';
+
 			echo phoromatic_webui_main($main, phoromatic_webui_right_panel_logged_in());
 			echo phoromatic_webui_footer();
 	}

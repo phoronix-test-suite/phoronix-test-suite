@@ -388,3 +388,40 @@ table.pts_phoromatic_schedule_type tr td:last-child
 {
 	min-width: 80%;
 }
+table
+{
+	color: #333;
+	border-collapse: collapse;
+	border-spacing: 0;
+	margin-bottom: 10px;
+}
+td, th
+{
+	border: 1px solid transparent;
+	transition: all 0.2s;
+}
+th
+{
+	background: #DFDFDF;
+	font-weight: bold;
+	padding: 0 4px;
+	text-align: center;
+}
+td
+{
+	background: #FAFAFA;
+	text-align: left;
+	padding: 0 4px;
+}
+tr:nth-child(even) td
+{
+	background: #F1F1F1;
+}
+tr:nth-child(odd) td
+{
+	background: #FEFEFE;
+}
+tr:hover td
+{
+	background: #666; color: #FFF;
+}
