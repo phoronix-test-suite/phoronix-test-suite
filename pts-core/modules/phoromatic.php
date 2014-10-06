@@ -151,7 +151,13 @@ class phoromatic extends pts_module_interface
 	}
 	protected static function update_system_status($current_task, $estimated_time_remaining = 0)
 	{
-		self::$log_file->log($current_task);
+		static $last_msg = null;
+
+		// Avoid an endless flow of "idling" messages, etc
+		if($current_task != $last_msg)
+			self::$log_file->log($current_task);
+		$last_msg = $current_task;
+
 		return $server_response = phoromatic::upload_to_remote_server(array(
 				'r' => 'update_system_status',
 				'a' => $current_task,
