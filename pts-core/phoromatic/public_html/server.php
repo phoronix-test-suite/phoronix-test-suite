@@ -41,6 +41,7 @@ if(isset($_GET['phoromatic_info']))
 		);
 
 	echo json_encode($json_info);
+	pts_logger::add_to_log($_SERVER['REMOTE_ADDR'] . ' requested the Phoromatic Server deployment details');
 }
 else
 {

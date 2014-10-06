@@ -1,5 +1,10 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- pts-core: Introduce basic system logging capabilities for services
+- phoromatic: Start a basic logger of Phoromatic Server events
+
 Phoronix Test Suite 5.4 Milestone 2
 5 October 2014
 

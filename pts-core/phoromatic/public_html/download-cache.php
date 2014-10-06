@@ -42,11 +42,13 @@ if(isset($_GET['repo']))
 	{
 		readfile(PTS_SHARE_PATH . 'download-cache/pts-download-cache.json');
 	}
+	pts_logger::add_to_log($_SERVER['REMOTE_ADDR'] . ' requested a copy of the download cache JSON');
 }
 else if(isset($_GET['download']))
 {
 	$requested_file = str_replace(array('..', '/'), null, $_GET['download']);
 
+	pts_logger::add_to_log($_SERVER['REMOTE_ADDR'] . ' is attempting to download ' . $requested_file . ' from the download cache');
 	if(is_file(PTS_DOWNLOAD_CACHE_PATH . $requested_file))
 	{
 		readfile(PTS_DOWNLOAD_CACHE_PATH . $requested_file);

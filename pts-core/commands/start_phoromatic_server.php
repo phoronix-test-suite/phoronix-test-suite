@@ -27,6 +27,12 @@ class start_phoromatic_server implements pts_option_interface
 
 	public static function run($r)
 	{
+		if(pts_client::create_lock(PTS_USER_PATH . 'phoromatic_server_lock') == false)
+		{
+			trigger_error('The Phoromatic Server is already running.', E_USER_ERROR);
+			return false;
+		}
+
 		pts_file_io::unlink(PTS_USER_PATH . 'phoromatic-server-launcher');
 		if(PHP_VERSION_ID < 50400)
 		{
@@ -77,23 +83,34 @@ class start_phoromatic_server implements pts_option_interface
 			return false;
 		}
 
+		// Setup server logger
+		define('PHOROMATIC_SERVER', true);
+		$pts_logger = new pts_logger();
+		$pts_logger->clear_log();
+		$pts_logger->log(pts_title(true) . ' starting Phoromatic Server on ' . pts_network::get_local_ip());
+		// Just create the logger so now it will flush it out
+
 		// WebSocket Server Setup
 		$server_launcher .= 'export PTS_WEBSOCKET_PORT=' . $web_socket_port . PHP_EOL;
+		$server_launcher .= 'export PTS_NO_FLUSH_LOGGER=1' . PHP_EOL;
+		$server_launcher .= 'export PTS_PHOROMATIC_LOG_LOCATION=' . $pts_logger->get_log_file_location() . PHP_EOL;
 		$server_launcher .= 'cd ' . getenv('PTS_DIR') . ' && PTS_MODE="CLIENT" ' . getenv('PHP_BIN') . ' pts-core/phoronix-test-suite.php start-ws-server &' . PHP_EOL;
 		$server_launcher .= 'websocket_server_pid=$!'. PHP_EOL;
+		$pts_logger->log('Starting WebSocket process on port ' . $web_socket_port);
 
 		// HTTP Server Setup
 		if(strpos(getenv('PHP_BIN'), 'hhvm'))
 		{
-			$server_launcher .= 'cd ' . PTS_CORE_PATH . 'phoromatic/public_html/ && ' . getenv('PHP_BIN') . ' --config ' . PTS_CORE_PATH . 'static/hhvm-server.hdf -m server -vServer.Port=' . $web_port . ' -vServer.IP=' . $server_ip . ' -vServer.SourceRoot=' . PTS_CORE_PATH . 'phoromatic/' . ' &' . PHP_EOL;
+			$server_launcher .= 'cd ' . PTS_CORE_PATH . 'phoromatic/public_html/ && ' . getenv('PHP_BIN') . ' --config ' . PTS_CORE_PATH . 'static/hhvm-server.hdf -m server -vServer.Port=' . $web_port . ' -vServer.IP=' . $server_ip . ' -vServer.SourceRoot=' . PTS_CORE_PATH . 'phoromatic/ > /dev/null 2>> $PTS_PHOROMATIC_LOG_LOCATION &' . PHP_EOL;
 		}
 		else
 		{
-			$server_launcher .= getenv('PHP_BIN') . ' -S ' . $server_ip . ':' . $web_port . ' -t ' . PTS_CORE_PATH . 'phoromatic/public_html/  &' . PHP_EOL; //2> /dev/null
+			$server_launcher .= getenv('PHP_BIN') . ' -S ' . $server_ip . ':' . $web_port . ' -t ' . PTS_CORE_PATH . 'phoromatic/public_html/ > /dev/null 2>> $PTS_PHOROMATIC_LOG_LOCATION &' . PHP_EOL; //2> /dev/null
 		}
 		$server_launcher .= 'http_server_pid=$!'. PHP_EOL;
 		$server_launcher .= 'sleep 1' . PHP_EOL;
 		$server_launcher .= 'echo "The Phoromatic Web Interface Is Accessible At: http://localhost:' . $web_port . '"' . PHP_EOL;
+		$pts_logger->log('Starting HTTP process @ http://localhost:' . $web_port);
 
 		// Avahi for zeroconf network discovery support
 		if(pts_config::read_user_config('PhoronixTestSuite/Options/Server/AdvertiseServiceZeroConf', 'TRUE') && pts_client::executable_in_path('avahi-publish'))

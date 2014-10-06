@@ -36,6 +36,7 @@ if(isset($_GET['index']))
 	$requested_repo = str_replace(array('..', '/'), null, $_GET['repo']);
 	$repo_index = pts_openbenchmarking::read_repository_index($requested_repo, false);
 	echo $repo_index;
+		pts_logger::add_to_log($_SERVER['REMOTE_ADDR'] . ' downloaded a copy of the ' . $requested_repo . ' OpenBenchmarking.org repository index');
 }
 else if(isset($_GET['repos']))
 {
@@ -59,6 +60,7 @@ else if(isset($_GET['test']))
 
 	if(pts_openbenchmarking::is_repository($repo))
 	{
+		pts_logger::add_to_log($_SERVER['REMOTE_ADDR'] . ' requested a copy of the ' . $repo . '/' . $test . ' test profile');
 		$realpath_file = realpath(PTS_OPENBENCHMARKING_SCRATCH_PATH . $repo . '/' . $test . '.zip');
 
 		if(is_file($realpath_file) && strpos($realpath_file, PTS_OPENBENCHMARKING_SCRATCH_PATH) === 0)
@@ -74,6 +76,7 @@ else if(isset($_GET['suite']))
 
 	if(pts_openbenchmarking::is_repository($repo))
 	{
+		pts_logger::add_to_log($_SERVER['REMOTE_ADDR'] . ' requested a copy of the ' . $repo . '/' . $test . ' test suite');
 		$realpath_file = realpath(PTS_OPENBENCHMARKING_SCRATCH_PATH . $repo . '/' . $test . '.zip');
 
 		if(is_file($realpath_file) && strpos($realpath_file, PTS_OPENBENCHMARKING_SCRATCH_PATH) === 0)

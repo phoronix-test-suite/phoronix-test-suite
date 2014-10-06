@@ -73,5 +73,7 @@ SUPPORTED OPENBENCHMARKING.ORG REPOSITORIES:<br />
 <p>Packaged with the Phoronix Test Suite are basic <em>phoromatic-client</em> and <em>phoromatic-server</em> configurations for both Upstart and systemd init systems. The <em>phoromatic-server</em> configuration will launch the Phoronix Test Suite's Phoromatic Server and the <em>phoromatic-client</em> service will attempt to connect to a <u>pre-configured</u> Phoromatic Server.</p>
 <h3>Cache Verification</h3>
 <p>To confirm the files accessible to Phoronix Test Suite client systems, from the Phoromatic Server web user-interface go to the <em>settings</em> page followed by the <em>cache settings</em> link to view information about the download and OpenBenchmarking.org caches. From the client systems, running <strong>phoronix-test-suite phoromatic.explore</strong> will also supply cache statistics.</p>
+<h3>Log Files</h3>
+<p>The Phoromatic Server will produce a log file of events / debugging information to <em>~/.phoronix-test-suite/phoromatic.log</em> or <em>/var/log/phoromatic.log</em> depending upon the service's permissions. When running the Phoronix Test Suite Phoromatic client, the log will be written to one of the respective locations in <em>phoronix-test-suite.log</em>.</p>
 </body>
 </html>
