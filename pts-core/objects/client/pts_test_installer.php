@@ -259,7 +259,7 @@ class pts_test_installer
 						}
 						$download_tries++;
 					}
-					while(!is_file($download_destination) && $download_tries < 2)
+					while(!is_file($download_destination) && $download_tries < 2);
 
 					if(is_file($download_destination))
 					{
