@@ -32,6 +32,7 @@ class phoromatic extends pts_module_interface
 	private static $server_http_port = null;
 	private static $server_ws_port = null;
 	private static $is_running_as_phoromatic_node = false;
+	private static $log_file = null;
 
 	public static function module_info()
 	{
@@ -150,6 +151,7 @@ class phoromatic extends pts_module_interface
 	}
 	protected static function update_system_status($current_task, $estimated_time_remaining = 0)
 	{
+		self::$log_file->log($current_task);
 		return $server_response = phoromatic::upload_to_remote_server(array(
 				'r' => 'update_system_status',
 				'a' => $current_task,
@@ -169,8 +171,13 @@ class phoromatic extends pts_module_interface
 			trigger_error('Phoromatic is already running.', E_USER_ERROR);
 			return false;
 		}
+
+		self::$log_file = new pts_logger();
+		self::$log_file->log(pts_codename(true) . ' starting Phoromatic client.');
+
 		if(isset($args[0]) && $args[0] && strpos($args[0], '/', strpos($args[0], ':')) > 6)
 		{
+			self::$log_file->log('Attempting to connect to Phoromatic Server: ' . $args[0]);
 			self::$account_id = substr($args[0], strrpos($args[0], '/') + 1);
 			self::$server_address = substr($args[0], 0, strpos($args[0], ':'));
 			self::$server_http_port = substr($args[0], strlen(self::$server_address) + 1, -1 - strlen(self::$account_id));
@@ -178,6 +185,7 @@ class phoromatic extends pts_module_interface
 		}
 		else
 		{
+			self::$log_file->log('Attempting to auto-discover Phoromatic Server');
 			$archived_servers = pts_client::available_phoromatic_servers();
 			foreach($archived_servers as $archived_server)
 			{
@@ -215,6 +223,7 @@ class phoromatic extends pts_module_interface
 
 				if($times_failed > 2)
 				{
+					self::$log_file->log('Communication attempt to server failed');
 					trigger_error('Communication with server failed.', E_USER_ERROR);
 					return false;
 				}
@@ -243,7 +252,6 @@ class phoromatic extends pts_module_interface
 						$test_flags = pts_c::auto_mode | pts_c::batch_mode;
 						$suite_identifier = sha1(time() . rand(0, 100));
 						pts_suite_nye_XmlReader::set_temporary_suite($suite_identifier, $json['phoromatic']['test_suite']);
-
 						$phoromatic_schedule_id = $json['phoromatic']['trigger_id'];
 						$phoromatic_results_identifier = $phoromatic_schedule_id;
 						$phoromatic_save_identifier = $json['phoromatic']['save_identifier'];

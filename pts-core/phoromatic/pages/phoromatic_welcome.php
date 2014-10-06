@@ -89,6 +89,8 @@ class phoromatic_welcome implements pts_webui_interface
 			$user_id = pts_strings::random_characters(4, true);
 			$salted_password = hash('sha256', $account_salt . $_POST['register_password']);
 
+			pts_logger::add_to_log($_SERVER['REMOTE_ADDR'] . ' created a new account: ' . $user_id . ' - ' . $account_id);
+
 			$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_accounts (AccountID, ValidateID, CreatedOn, Salt) VALUES (:account_id, :validate_id, :current_time, :salt)');
 			$stmt->bindValue(':account_id', $account_id);
 			$stmt->bindValue(':validate_id', pts_strings::random_characters(4, true));
@@ -167,15 +169,18 @@ class phoromatic_welcome implements pts_webui_interface
 					<p><strong>' . $user . '</strong>, we are now redirecting you to your account portal. If you are not redirected within a few seconds, please <a href="?main">click here</a>.<script type="text/javascript">window.location.href = "?main";</script></p>';
 					echo phoromatic_webui_box($box);
 					echo phoromatic_webui_footer();
+					pts_logger::add_to_log($_SERVER['REMOTE_ADDR'] . ' successfully logged in as user: ' . $user);
 				}
 				else
 				{
+					pts_logger::add_to_log($_SERVER['REMOTE_ADDR'] . ' failed a log-in attempt as: ' . $_POST['username']);
 					phoromatic_error_page('Invalid Information', 'The user-name or password did not match our records.');
 					return false;
 				}
 			}
 			else
 			{
+				pts_logger::add_to_log($_SERVER['REMOTE_ADDR'] . ' failed a log-in attempt as: ' . $_POST['username']);
 				phoromatic_error_page('Invalid Information', 'The user-name was not found within our system.');
 				return false;
 			}
