@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 5.4 Milestone 2
+5 October 2014
 
 - pts-core: Add "ResultAfterString" to test result parser XML schema
 - pts-core: Other result file parsing improvements/fixes
