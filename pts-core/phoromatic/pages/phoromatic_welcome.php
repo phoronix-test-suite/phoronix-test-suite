@@ -45,6 +45,11 @@ class phoromatic_welcome implements pts_webui_interface
 				phoromatic_error_page('Oops!', 'Please go back and ensure the supplied username is at least four characters long and contains no spaces.');
 				return false;
 			}
+			if(in_array(strtolower($_POST['register_username']), array('admin', 'administrator')))
+			{
+				phoromatic_error_page('Oops!', $_POST['register_username'] . ' is a reserved and common username that may be used for other purposes, please make a different selection.');
+				return false;
+			}
 			if(strlen($_POST['register_password']) < 6)
 			{
 				phoromatic_error_page('Oops!', 'Please go back and ensure the supplied password is at least six characters long.');
