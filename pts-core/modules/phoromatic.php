@@ -388,8 +388,7 @@ class phoromatic extends pts_module_interface
 									'system_logs_zip' => $system_logs,
 									'system_logs_hash' => $system_logs_hash
 									));
-								echo PHP_EOL . 'DEBUG TEST: ' . PHP_EOL;
-								var_dump($server_response);
+								self::$log_file->log('XXX TEMP DEBUG MESSAGE: ' . $server_response);
 								if(!$json['phoromatic']['settings']['ArchiveResultsLocally'])
 								{
 									pts_client::remove_saved_result_file($test_run_manager->get_file_name());
