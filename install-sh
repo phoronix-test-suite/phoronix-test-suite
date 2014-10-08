@@ -76,12 +76,14 @@ cp pts-core/static/phoronix-test-suite.desktop $DESTDIR$INSTALL_PREFIX/share/app
 cp pts-core/static/phoronix-test-suite-launcher.desktop $DESTDIR$INSTALL_PREFIX/share/applications/
 cp pts-core/static/phoronix-test-suite.appdata.xml $DESTDIR$INSTALL_PREFIX/share/appdata/
 
-if [ -d $DESTDIR$INSTALL_PREFIX/../etc/systemd/system/ ]
+if [ -d $INSTALL_PREFIX/../etc/systemd/system/ ]
 then
+	mkdir -p $DESTDIR$INSTALL_PREFIX/../etc/systemd/system/
 	cp pts-core/static/*.service $DESTDIR$INSTALL_PREFIX/../etc/systemd/system/
 fi
-if [ -d $DESTDIR$INSTALL_PREFIX/../etc/init ]
+if [ -d $INSTALL_PREFIX/../etc/init ]
 then
+	mkdir -p $DESTDIR$INSTALL_PREFIX/../etc/init/
 	cp pts-core/static/upstart/*.conf $DESTDIR$INSTALL_PREFIX/../etc/init/
 fi
 
