@@ -153,7 +153,7 @@ class phoromatic_schedules implements pts_webui_interface
 						$result = $stmt->execute();
 					}
 				}
-				else if($PATH[1] == 'remove' && !empty($PATH[2]))
+				else if(isset($PATH[1]) && $PATH[1] == 'remove' && !empty($PATH[2]))
 				{
 					// REMOVE TEST
 					$to_remove = explode(PHP_EOL, base64_decode($PATH[2]));
@@ -187,7 +187,7 @@ class phoromatic_schedules implements pts_webui_interface
 						}
 					}
 
-					$main .= '<p>This test is scheduled to run on <strong>' . implode(', ', $active_days) . '</strong> at <strong>' . str_replace('.', ':', $row['RunAt']) . '</strong>.';
+					$main .= '<p>This test is scheduled to run every <strong>' . implode(', ', $active_days) . '</strong> at <strong>' . str_replace('.', ':', $row['RunAt']) . '</strong>.';
 				}
 				else
 				{
