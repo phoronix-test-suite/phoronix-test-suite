@@ -37,6 +37,10 @@ function phoromatic_webui_header($left_items, $right)
 
 	return $ret;
 }
+function phoromatic_get_posted_var($name, $default_value = null)
+{
+	return isset($_POST[$name]) ? $_POST[$name] : null;
+}
 function phoromatic_webui_main($main, $right)
 {
 	return '<div id="pts_phoromatic_main"><div id="pts_phoromatic_menu_right">' . $right . '</div><div id="pts_phoromatic_main_area">' . $main . '</div><div style="clear: both;"></div></div>';

@@ -28,6 +28,31 @@ $stmt->bindValue(':account_id', ACCOUNT_ID);
 $result = $stmt->execute();
 while($result && $row = $result->fetchArray())
 {
+	// Make sure this test schedule is supposed to work on given system
+	if(!in_array(SYSTEM_ID, explode(',', $row['RunTargetSystems'])))
+	{
+		// The system ID isn't in the run target but see if system ID belongs to a group in the run target
+
+		$stmt = phoromatic_server::$db->prepare('SELECT Groups FROM phoromatic_systems WHERE AccountID = :account_id AND SystemID = :system_id LIMIT 1');
+		$stmt->bindValue(':account_id', ACCOUNT_ID);
+		$stmt->bindValue(':system_id', SYSTEM_ID);
+		$sys_result = $stmt->execute();
+		$sys_row = $sys_result->fetchArray();
+
+		$matches_to_group = false;
+		foreach(explode(',', $row['RunTargetGroups']) as $group)
+		{
+			if(stripos($sys_row['Groups'], '#' . $group . '#') !== false)
+			{
+				$matches_to_group = true;
+				break;
+			}
+		}
+
+		if($matches_to_group == false)
+			continue;
+	}
+
 	// See if test is a time-based schedule due to run today and now or past the time scheduled to run
 	if(strpos($row['ActiveOn'], strval($day_of_week_int)) !== false && $row['RunAt'] <= date('H.i'))
 	{
