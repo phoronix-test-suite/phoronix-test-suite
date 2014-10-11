@@ -29,6 +29,11 @@ function phoromatic_webui_header($left_items, $right)
 	$ret = '<div id="pts_phoromatic_top_header">
 	<div id="pts_phoromatic_logo"><a href="?"><img src="/images/phoromatic_logo.png" /></a></div><ul>';
 
+	if(isset($_SESSION['AdminLevel']) && $_SESSION['AdminLevel'] == 1)
+	{
+		array_push($left_items, ' <a href="?administrator">Account Administration</a>');
+	}
+
 	foreach($left_items as $item)
 	{
 		$ret .= '<li>' . $item . '</li>';

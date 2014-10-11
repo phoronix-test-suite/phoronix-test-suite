@@ -19,24 +19,24 @@ div#pts_phoromatic_top_header
 		linear,
 		left top,
 		left bottom,
-		color-stop(0, #065695),
-		color-stop(1, #043e6d)
+		color-stop(0, #0983E0),
+		color-stop(1, #076DBA)
 	);
-	background-image: -o-linear-gradient(bottom, #065695 0%, #043e6d 100%);
-	background-image: -moz-linear-gradient(bottom, #065695 0%, #043e6d 100%);
-	background-image: -webkit-linear-gradient(bottom, #065695 0%, #043e6d 100%);
-	background-image: -ms-linear-gradient(bottom, #065695 0%, #043e6d 100%);
-	background-image: linear-gradient(to bottom, #065695 0%, #043e6d 100%);
-	border: #000 1px solid;
+	background-image: -o-linear-gradient(bottom, #0983E0 0%, #076DBA 100%);
+	background-image: -moz-linear-gradient(bottom, #0983E0 0%, #076DBA 100%);
+	background-image: -webkit-linear-gradient(bottom, #0983E0 0%, #076DBA 100%);
+	background-image: -ms-linear-gradient(bottom, #0983E0 0%, #076DBA 100%);
+	background-image: linear-gradient(to bottom, #0983E0 0%, #076DBA 100%);
+	border: #1F1F1F 1px solid;
 	border-top-left-radius: 14px;
 	border-bottom-left-radius: 14px;
 	border-top-right-radius: 14px;
 	overflow: hidden;
-	line-height: 78px;
+	line-height: 80px;
 	margin: 20px 20px 0;
-	box-shadow: 1px 1px 4px #000;
-	-moz-box-shadow: 1px 1px 4px #000;
-	-webkit-box-shadow: 1px 1px 4px #000;
+	box-shadow: 1px 1px 4px #1F1F1F;
+	-moz-box-shadow: 1px 1px 4px #1F1F1F;
+	-webkit-box-shadow: 1px 1px 4px #1F1F1F;
 }
 div#pts_phoromatic_top_header input, div#pts_phoromatic_top_header button
 {
@@ -44,8 +44,19 @@ div#pts_phoromatic_top_header input, div#pts_phoromatic_top_header button
 }
 div#pts_phoromatic_bottom_footer
 {
-	background: #272727;
-	border: #000 1px solid;
+	background-image: -webkit-gradient(
+		linear,
+		left top,
+		left bottom,
+		color-stop(0, #0983E0),
+		color-stop(1, #076DBA)
+	);
+	background-image: -o-linear-gradient(bottom, #0983E0 0%, #076DBA 100%);
+	background-image: -moz-linear-gradient(bottom, #0983E0 0%, #076DBA 100%);
+	background-image: -webkit-linear-gradient(bottom, #0983E0 0%, #076DBA 100%);
+	background-image: -ms-linear-gradient(bottom, #0983E0 0%, #076DBA 100%);
+	background-image: linear-gradient(to bottom, #0983E0 0%, #076DBA 100%);
+	border: #1F1F1F 1px solid;
 	border-bottom-left-radius: 14px;
 	border-bottom-right-radius: 14px;
 	border-top-left-radius: 14px;
@@ -54,15 +65,15 @@ div#pts_phoromatic_bottom_footer
 	overflow: hidden;
 	font-size: 55%;
 	line-height: 150%;
-	color: #BDBDBD;
+	color: #E0E0E0;
 	margin: 0 20px 20px;
-	box-shadow: 1px 1px 4px #000;
-	-moz-box-shadow: 1px 1px 4px #000;
-	-webkit-box-shadow: 1px 1px 4px #000;
+	box-shadow: 1px 1px 4px #1F1F1F;
+	-moz-box-shadow: 1px 1px 4px #1F1F1F;
+	-webkit-box-shadow: 1px 1px 4px #1F1F1F;
 }
 div#pts_phoromatic_bottom_footer a img
 {
-	opacity: 0.5;
+	opacity: 0.6;
 }
 div#pts_phoromatic_bottom_footer a:hover img
 {
@@ -92,8 +103,8 @@ div#pts_phoromatic_top_header ul
 div#pts_phoromatic_top_header ul li u
 {
 	text-decoration: none;
-	color: #DDD;
-	border-bottom: 1px solid #DDD;
+	color: #E0E0E0;
+	border-bottom: 1px solid #E0E0E0;
 	padding-bottom: 6px;
 }
 div#pts_phoromatic_top_header ul li
@@ -106,7 +117,7 @@ div#pts_phoromatic_top_header ul li
 }
 div#pts_phoromatic_top_header ul li a:hover
 {
-	color: #CCC;
+	color: #E0E0E0;
 	text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
 }
 div#pts_phoromatic_menu_right p
@@ -121,14 +132,14 @@ div#pts_phoromatic_menu_right
 		linear,
 		left top,
 		right top,
-		color-stop(0, #065695),
-		color-stop(1, #043e6d)
+		color-stop(0, #0983E0),
+		color-stop(1, #076DBA)
 	);
-	background-image: -o-linear-gradient(left, #065695 0%, #043e6d 100%);
-	background-image: -moz-linear-gradient(left, #065695 0%, #043e6d 100%);
-	background-image: -webkit-linear-gradient(left, #065695 0%, #043e6d 100%);
-	background-image: -ms-linear-gradient(left, #065695 0%, #043e6d 100%);
-	background-image: linear-gradient(to left, #065695 0%, #043e6d 100%);
+	background-image: -o-linear-gradient(left, #0983E0 0%, #076DBA 100%);
+	background-image: -moz-linear-gradient(left, #0983E0 0%, #076DBA 100%);
+	background-image: -webkit-linear-gradient(left, #0983E0 0%, #076DBA 100%);
+	background-image: -ms-linear-gradient(left, #0983E0 0%, #076DBA 100%);
+	background-image: linear-gradient(to left, #0983E0 0%, #076DBA 100%);
 	width: 15%;
 	height: 100%;
 	float: right;
@@ -138,9 +149,9 @@ div#pts_phoromatic_menu_right
 	color: #e4e4e4;
 	margin: 0 0 -2500px;
 	padding-bottom: 2500px;
-	box-shadow: 1px 1px 4px #000;
-	-moz-box-shadow: 1px 1px 4px #000;
-	-webkit-box-shadow: 1px 1px 4px #000;
+	box-shadow: 1px 1px 4px #1F1F1F;
+	-moz-box-shadow: 1px 1px 4px #1F1F1F;
+	-webkit-box-shadow: 1px 1px 4px #1F1F1F;
 }
 div#pts_phoromatic_menu_right ul
 {
@@ -167,9 +178,9 @@ div#pts_phoromatic_menu_right ul li a:hover, div#pts_phoromatic_menu_right p a:h
 }
 div#pts_phoromatic_menu_right hr
 {
-	border: #949494 1px solid;
+	border: #E0E0E0 1px solid;
 	border-width: 0 0 1px 0;
-	background-color: #949494;
+	background-color: #E0E0E0;
 	width: 96%;
 	height: 1px;
 	opacity: 0.5;
@@ -182,8 +193,6 @@ div#pts_phoromatic_main_box
 {
 	margin: 0 20px;
 	padding: 30px 0;
-	border: #eee 1px solid;
-	border-width: 0 1px 0 0;
 }
 div#pts_phoromatic_main_box hr
 {
@@ -193,16 +202,15 @@ div#pts_phoromatic_main_box hr
 }
 div#pts_phoromatic_main_box_inside
 {
-	width: 90%;
 	margin: 0 auto;
 	padding: 10px 20px;
-	background: #e4e4e4;
-	border: #000 1px solid;
+	background: #f5f5f5;
+	border: #1F1F1F 1px solid;
 	border-radius: 14px;
 	min-height: 500px;
-	box-shadow: 1px 1px 4px #000;
-	-moz-box-shadow: 1px 1px 4px #000;
-	-webkit-box-shadow: 1px 1px 4px #000;
+	box-shadow: 1px 1px 4px #1F1F1F;
+	-moz-box-shadow: 1px 1px 4px #1F1F1F;
+	-webkit-box-shadow: 1px 1px 4px #1F1F1F;
 }
 div#pts_phoromatic_main
 {
@@ -216,7 +224,7 @@ div#pts_phoromatic_main_area
 	min-height: 1000px;
 	background: #FFF;
 	overflow: hidden;
-	color: #555555;
+	color: #555;
 	margin: 5px 5px -1000px 0;
 	padding-bottom: 1000px;
 }
@@ -252,7 +260,7 @@ div#pts_phoromatic_main_area h2 a
 }
 div#pts_phoromatic_main_area h2 a.phx_alt
 {
-	color: #FF0000;
+	color: #e08a09;
 }
 div#pts_phoromatic_main_area h2 a:hover
 {
@@ -321,7 +329,7 @@ div.pts_phoromatic_info_box_area ul:last-child a:last-child li
 div.pts_phoromatic_info_box_area ul h1
 {
 	font-size: 120%;
-	color: #212121;
+	color: #1F1F1F;
 	margin: 1px 0;
 	font-weight: normal;
 	text-align: center;
@@ -338,11 +346,13 @@ div.pts_phoromatic_info_box_area ul a li, div.pts_phoromatic_info_box_area ul li
 }
 div.pts_phoromatic_info_box_area ul a li em
 {
+	color: #076DBA;
+	font-size: 80%;
 	font-weight: normal;
 }
 div#pts_phoromatic_main_area div.pts_phoromatic_info_box_area ul a:hover li, div#pts_phoromatic_main_area  div.pts_phoromatic_info_box_area ul:hover a
 {
-	background: #d2d2d2;
+	background: #E0E0E0;
 	text-decoration: none;
 }
 input[type=submit]
@@ -351,9 +361,9 @@ input[type=submit]
 }
 input, select, textarea, checkbox
 {
-	border: solid #000 1px;
-	background-color: #edd2ab;
-	color: #000;
+	border: solid #1F1F1F 1px;
+	background-color: #E0E0E0;
+	color: #1F1F1F;
 	padding: 4px 10px;
 	border-radius: 10px;
 	box-shadow: 1px 1px 4px #222;
@@ -361,13 +371,17 @@ input, select, textarea, checkbox
 	-webkit-box-shadow: 1px 1px 4px #222;
 	transition: all 0.3s;
 }
-input:focus
+textarea
+{
+	font-weight: bold;
+}
+input:focus, textarea:focus
 {
 	background: #666; color: #FFF;
 }
 button
 {
-	border: solid #000 1px;
+	border: solid #1F1F1F 1px;
 	background-color: #272727;
 	color: #E08A09;
 }
@@ -375,23 +389,28 @@ table.pts_phoromatic_schedule_type
 {
 	padding: 10px 0;
 }
-table.pts_phoromatic_schedule_type td
+table.pts_phoromatic_schedule_type td, table.pts_phoromatic_schedule_type tr:nth-child(odd) td
 {
 	border: 5px solid transparent;
 	border-width: 0 5px;
 	border-collapse: collapse;
+	background: #f1f1f1;
+	border: solid #d2d2d2 1px;
+	padding: 2px 10px;
 }
 table.pts_phoromatic_schedule_type tr td:first-child
 {
 	vertical-align: top;
-	background: #f1f1f1;
-	border: solid #d2d2d2 1px;
-	padding: 2px 10px;
 	max-width: 20%;
 }
 table.pts_phoromatic_schedule_type tr td:last-child
 {
 	min-width: 80%;
+}
+table.pts_phoromatic_schedule_type tr:hover td
+{
+	background: inherit;
+	color: inherit;
 }
 table
 {
@@ -428,5 +447,6 @@ tr:nth-child(odd) td
 }
 tr:hover td
 {
-	background: #666; color: #FFF;
+	background: #666;
+	color: #FFF;
 }

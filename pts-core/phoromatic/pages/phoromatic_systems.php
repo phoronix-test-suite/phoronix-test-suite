@@ -120,7 +120,7 @@ class phoromatic_systems implements pts_webui_interface
 							break;
 						}
 
-						$main .= '<a href="?results/' . $test_result_row['UploadID'] . '"><li>' . $test_result_row['Title'] . '<br /><span style="color: #065695;"><em>' . phoromatic_system_id_to_name($test_result_row['SystemID']) . ' - ' . phoromatic_user_friendly_timedate($test_result_row['UploadTime']) .  '</em></span></li></a>';
+						$main .= '<a href="?results/' . $test_result_row['UploadID'] . '"><li>' . $test_result_row['Title'] . '<br /><em>' . phoromatic_system_id_to_name($test_result_row['SystemID']) . ' - ' . phoromatic_user_friendly_timedate($test_result_row['UploadTime']) .  '</em></li></a>';
 						$results++;
 
 					}
@@ -193,7 +193,7 @@ class phoromatic_systems implements pts_webui_interface
 					{
 						do
 						{
-							$main .= '<a href="?systems/' . $row['SystemID'] . '"><li>' . $row['Title'] . '<br /><span style="color: #065695;"><em>' . $row['LocalIP'] . ' - ' . $row['CurrentTask'] . ' - Last Activity: ' . $row['LastCommunication'] . '</em></span></li></a>';
+							$main .= '<a href="?systems/' . $row['SystemID'] . '"><li>' . $row['Title'] . '<br /><em>' . $row['LocalIP'] . ' - ' . $row['CurrentTask'] . ' - Last Activity: ' . $row['LastCommunication'] . '</em></li></a>';
 						}
 						while($row = $result->fetchArray());
 					}

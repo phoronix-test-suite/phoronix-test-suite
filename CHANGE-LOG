@@ -10,6 +10,7 @@ Phoronix Test Suite (Git)
 - phoromatic: Support for editing schedules from the web UI
 - phoromatic: Support for activating/deactivating "deleting" test schedules from the web UI
 - phoromatic: Support for reporting the network MAC address (for later WoL purposes)
+- phoromatic: Update the CSS style
 
 Phoronix Test Suite 5.4 Milestone 2
 5 October 2014

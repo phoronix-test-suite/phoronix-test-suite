@@ -93,6 +93,10 @@ class phoromatic_server
 				self::$db->exec('ALTER TABLE phoromatic_schedules ADD COLUMN RunTargetSystems TEXT');
 				self::$db->exec('ALTER TABLE phoromatic_schedules ADD COLUMN RunTargetGroups TEXT');
 				self::$db->exec('PRAGMA user_version = 4');
+			case 4:
+				// Change made 11 October for administrative level
+				self::$db->exec('ALTER TABLE phoromatic_users ADD COLUMN AdminLevel INTEGER DEFAULT 1');
+				self::$db->exec('PRAGMA user_version = 5');
 		}
 	}
 	public static function send_email($to, $subject, $from, $body)
