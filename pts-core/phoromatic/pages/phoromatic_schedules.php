@@ -120,7 +120,7 @@ class phoromatic_schedules implements pts_webui_interface
 
 				$main = '<h1>' . $row['Title'] . '</h1>';
 				$main .= '<h3>' . $row['Description'] . '</h3>';
-				$main .= '<p>This schedule was last modified at <strong>' . $row['LastModifiedOn'] . '</strong> by <strong>' . $row['LastModifiedBy'] . '</strong>.';
+				$main .= '<p>This schedule was last modified on <strong>' . date('j F Y \a\t H:i', strtotime($row['LastModifiedOn'])) . '</strong> by <strong>' . $row['LastModifiedBy'] . '</strong>.';
 				$main .= '<p><a href="?sched/' . $PATH[0] . '">Edit Schedule</a> | ';
 
 				if($row['State'] == 1)
@@ -134,7 +134,7 @@ class phoromatic_schedules implements pts_webui_interface
 
 				$main .= '</p>';
 				$main .= '<hr />';
-				$main .= '<h2>Active On</h2>';
+				$main .= '<h2>Schedule</h2>';
 				if(!empty($row['ActiveOn']))
 				{
 					$active_days = explode(',', $row['ActiveOn']);
@@ -151,7 +151,17 @@ class phoromatic_schedules implements pts_webui_interface
 						}
 					}
 
-					$main .= '<p>This test is scheduled to run every <strong>' . implode(', ', $active_days) . '</strong> at <strong>' . str_replace('.', ':', $row['RunAt']) . '</strong>.';
+					switch(count($active_days))
+					{
+						case 2:
+							$day_show = implode(' and ', $active_days);
+							break;
+						default:
+							$day_show = implode(', ', $active_days);
+							break;
+					}
+
+					$main .= '<p>This test is scheduled to run every <strong>' . $day_show . '</strong> at <strong>' . str_replace('.', ':', $row['RunAt']) . '</strong>.';
 				}
 				else
 				{

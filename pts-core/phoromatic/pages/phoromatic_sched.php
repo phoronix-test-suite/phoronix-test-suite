@@ -163,8 +163,7 @@ class phoromatic_sched implements pts_webui_interface
 		<h3><em>Post-Run Set Context Script:</em></h3>
 		<p><input type="file" name="post_run_set_context" /></p>
 		<h3>System Targets:</h3>
-		<p>
-		<input type="checkbox" id="system_all" name="system_all" value="yes"  checked="checked" onChange="javascript:pts_rmm_schedule_days_toggle(this);" /> <strong>All Systems</strong>';
+		<p>';
 
 		$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID FROM phoromatic_systems WHERE AccountID = :account_id AND State >= 0 ORDER BY Title ASC');
 		$stmt->bindValue(':account_id', $_SESSION['AccountID']);

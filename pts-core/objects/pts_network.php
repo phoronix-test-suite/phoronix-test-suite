@@ -344,6 +344,31 @@ class pts_network
 
 		return $local_ip;
 	}
+	public static function get_network_mac()
+	{
+		$mac = false;
+
+		if(($ifconfig = pts_client::executable_in_path('ifconfig')))
+		{
+			$ifconfig = shell_exec($ifconfig . ' 2>&1');
+			$offset = 0;
+			while(($hwaddr_pos = strpos($ifconfig, 'HWaddr ', $offset)) !== false || ($hwaddr_pos = strpos($ifconfig, 'ether ', $offset)) !== false)
+			{
+				$hw_addr = substr($ifconfig, $hwaddr_pos);
+				$hw_addr = substr($hw_addr, (strpos($hw_addr, ' ') + 1));
+				$hw_addr = substr($hw_addr, 0, strpos($hw_addr, ' '));
+				$mac = $hw_addr;
+
+				if($mac != null)
+				{
+					break;
+				}
+				$offset = $hwaddr_pos + 1;
+			}
+		}
+
+		return $mac;
+	}
 	public static function find_zeroconf_phoromatic_servers($find_multiple = false)
 	{
 		if(!pts_network::network_support_available())
