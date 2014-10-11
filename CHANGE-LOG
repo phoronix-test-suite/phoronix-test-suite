@@ -7,6 +7,7 @@ Phoronix Test Suite (Git)
 - phoromatic: Start a basic logger of Phoromatic Server events
 - phoromatic: Add new create schedule interface
 - phoromatic: Properly hook in system ID / group validation for test schedules
+- phoromatic: Support for editing schedules from the web UI
 
 Phoronix Test Suite 5.4 Milestone 2
 5 October 2014

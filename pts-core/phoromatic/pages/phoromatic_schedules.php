@@ -100,6 +100,7 @@ class phoromatic_schedules implements pts_webui_interface
 				$main = '<h1>' . $row['Title'] . '</h1>';
 				$main .= '<h3>' . $row['Description'] . '</h3>';
 				$main .= '<p>This schedule was last modified at <strong>' . $row['LastModifiedOn'] . '</strong> by <strong>' . $row['LastModifiedBy'] . '</strong>.';
+				$main .= '<p><a href="?sched/' . $PATH[0] . '">Edit Schedule</a></p>';
 				$main .= '<hr />';
 				$main .= '<h2>Active On</h2>';
 				if(!empty($row['ActiveOn']))

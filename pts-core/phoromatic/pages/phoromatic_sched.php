@@ -37,6 +37,21 @@ class phoromatic_sched implements pts_webui_interface
 	}
 	public static function render_page_process($PATH)
 	{
+		$is_new = true;
+		if(!empty($PATH[0]) && is_numeric($PATH[0]))
+		{
+			$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_schedules WHERE AccountID = :account_id AND ScheduleID = :schedule_id');
+			$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+			$stmt->bindValue(':schedule_id', $PATH[0]);
+			$result = $stmt->execute();
+			$e_schedule = $result->fetchArray();
+
+			if(!empty($e_schedule))
+			{
+				$is_new = false;
+			}
+		}
+
 		if(isset($_POST['schedule_title']) && !empty($_POST['schedule_title']))
 		{
 			$title = phoromatic_get_posted_var('schedule_title');
@@ -58,9 +73,9 @@ class phoromatic_sched implements pts_webui_interface
 			$schedule_minute = phoromatic_get_posted_var('schedule_minute');
 			$days_active = phoromatic_get_posted_var('days_active');
 
-			$context_files = array('pre_install_set_context', 'post_install_set_context', 'pre_run_set_context', 'post_run_set_context');
-			foreach($context_files as $context)
-				$$context = null;
+			$context_files = array('SetContextPreInstall' => 'pre_install_set_context', 'SetContextPostInstall' => 'post_install_set_context', 'SetContextPreRun' => 'pre_run_set_context', 'SetContextPostRun' => 'post_run_set_context');
+			foreach($context_files as $i => $context)
+				$$context = $is_new ? null : $e_schedule[$i];
 			foreach($context_files as $context)
 			{
 				$$context = null;
@@ -81,20 +96,28 @@ class phoromatic_sched implements pts_webui_interface
 			// TODO XXX: Validation of input
 
 			// Need a unique schedule ID
-			do
+			if($is_new)
 			{
-				$schedule_id = rand(10, 9999);
-				$matching_schedules = phoromatic_server::$db->querySingle('SELECT ScheduleID FROM phoromatic_schedules WHERE AccountID = \'' . $_SESSION['AccountID'] . '\' AND ScheduleID = \'' . $schedule_id . '\'');
-			}
-			while(!empty($matching_schedules));
+				do
+				{
+					$schedule_id = rand(10, 9999);
+					$matching_schedules = phoromatic_server::$db->querySingle('SELECT ScheduleID FROM phoromatic_schedules WHERE AccountID = \'' . $_SESSION['AccountID'] . '\' AND ScheduleID = \'' . $schedule_id . '\'');
+				}
+				while(!empty($matching_schedules));
 
-			// Need a unique public ID
-			do
-			{
-				$public_key = pts_strings::random_characters(12, true);;
-				$matching_schedules = phoromatic_server::$db->querySingle('SELECT ScheduleID FROM phoromatic_schedules WHERE AccountID = \'' . $_SESSION['AccountID'] . '\' AND PublicKey = \'' . $public_key . '\'');
+				// Need a unique public ID
+				do
+				{
+					$public_key = pts_strings::random_characters(12, true);;
+					$matching_schedules = phoromatic_server::$db->querySingle('SELECT ScheduleID FROM phoromatic_schedules WHERE AccountID = \'' . $_SESSION['AccountID'] . '\' AND PublicKey = \'' . $public_key . '\'');
+				}
+				while(!empty($matching_schedules));
 			}
-			while(!empty($matching_schedules));
+			else
+			{
+				$schedule_id = $e_schedule['ScheduleID'];
+				$public_key = $e_schedule['PublicKey'];
+			}
 
 			// Add schedule
 			$stmt = phoromatic_server::$db->prepare('INSERT OR REPLACE INTO phoromatic_schedules (AccountID, ScheduleID, Title, Description, State, ActiveOn, RunAt, SetContextPreInstall, SetContextPostInstall, SetContextPreRun, SetContextPostRun, LastModifiedBy, LastModifiedOn, PublicKey, RunTargetGroups, RunTargetSystems) VALUES (:account_id, :schedule_id, :title, :description, :state, :active_on, :run_at, :context_pre_install, :context_post_install, :context_pre_run, :context_post_run, :modified_by, :modified_on, :public_key, :run_target_groups, :run_target_systems)');
@@ -125,12 +148,12 @@ class phoromatic_sched implements pts_webui_interface
 		echo phoromatic_webui_header_logged_in();
 		$main = '
 		<hr />
-		<h2>Create A Schedule</h2>
-		<p>Account settings are system-wide, in cases where there are multiple individuals/accounts managing the same test systems and data.</p>';
+		<h2>' . ($is_new ? 'Create' : 'Edit') . ' A Schedule</h2>
+		<p>A test schedule is used to facilitate automatically running a set of test(s)/suite(s) on either a routine timed basis or whenever triggered by an external script.</p>';
 
-		$main .= '<form action="?sched" name="add_test" id="add_test" method="post" enctype="multipart/form-data" onsubmit="return validate_schedule();">
+		$main .= '<form action="' . $_SERVER['REQUEST_URI'] . '" name="add_test" id="add_test" method="post" enctype="multipart/form-data" onsubmit="return validate_schedule();">
 		<h3>Title</h3>
-		<p><input type="text" name="schedule_title" /></p>
+		<p><input type="text" name="schedule_title" value="' . (!$is_new ? $e_schedule['Title'] : null) . '" /></p>
 		<h3><em>Pre-Install Set Context Script:</em></h3>
 		<p><input type="file" name="pre_install_set_context" /></p>
 		<h3><em>Post-Install Set Context Script:</em></h3>
@@ -147,12 +170,19 @@ class phoromatic_sched implements pts_webui_interface
 		$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 		$result = $stmt->execute();
 
+
+		if(!$is_new)
+		{
+			$e_schedule['RunTargetSystems'] = explode(',', $e_schedule['RunTargetSystems']);
+			$e_schedule['RunTargetGroups'] = explode(',', $e_schedule['RunTargetGroups']);
+		}
+
 		if($row = $result->fetchArray())
 		{
 			$main .= '<h4>Systems: ';
 			do
 			{
-				$main .= '<input type="checkbox" name="run_on_systems[]" value="' . $row['SystemID'] . '" /> ' . $row['Title'] . ' ';
+				$main .= '<input type="checkbox" name="run_on_systems[]" value="' . $row['SystemID'] . '" ' . (!$is_new && in_array($row['SystemID'], $e_schedule['RunTargetSystems']) ? 'checked="checked" ' : null) . '/> ' . $row['Title'] . ' ';
 			}
 			while($row = $result->fetchArray());
 			$main .= '</h4>';
@@ -167,7 +197,7 @@ class phoromatic_sched implements pts_webui_interface
 			$main .= '<h4>Groups: ';
 			do
 			{
-				$main .= '<input type="checkbox" name="run_on_groups[]" value="' . $row['GroupName'] . '" /> ' . $row['GroupName'] . ' ';
+				$main .= '<input type="checkbox" name="run_on_groups[]" value="' . $row['GroupName'] . '" ' . (!$is_new && in_array($row['GroupName'], $e_schedule['RunTargetGroups']) ? 'checked="checked" ' : null) . '/> ' . $row['GroupName'] . ' ';
 			}
 			while($row = $result->fetchArray());
 			$main .= '</h4>';
@@ -175,16 +205,23 @@ class phoromatic_sched implements pts_webui_interface
 
 		$main .= '</p>
 		<h3>Description:</h3>
-		<p><textarea name="schedule_description" id="schedule_description" cols="50" rows="3"></textarea></p>
+		<p><textarea name="schedule_description" id="schedule_description" cols="50" rows="3">' . (!$is_new ? $e_schedule['Description'] : null) . '</textarea></p>
 		<table class="pts_phoromatic_schedule_type">
 <tr>
   <td><h3>Time-Based Testing</h3><em>Time-based testing allows tests to automatically commence at a given time on a defined cycle each day/week. This option is primarly aimed for those wishing to run a set of benchmarks every morning or night or at another defined period.</em></td>
   <td><h3>Run Time:</h3>
 			<p><select name="schedule_hour" id="schedule_hour">';
+
+			if(!$is_new)
+			{
+				$run_at = explode('.', $e_schedule['RunAt']);
+				$days_active = explode(',', $e_schedule['ActiveOn']);
+			}
+
 			for($i = 0; $i <= 23; $i++)
 			{
 				$i_f = (strlen($i) == 1 ? '0' . $i : $i);
-				$main .= '<option value="' . $i_f . '">' . $i_f . '</option>';
+				$main .= '<option value="' . $i_f . '"' . (!$is_new && $run_at[0] == $i ? 'selected="selected" ' : null) . '>' . $i_f . '</option>';
 			}
 
 			$main .= '</select> <select name="schedule_minute" id="schedule_minute">';
@@ -192,7 +229,7 @@ class phoromatic_sched implements pts_webui_interface
 			for($i = 0; $i < 60; $i += 10)
 			{
 				$i_f = (strlen($i) == 1 ? '0' . $i : $i);
-				$main .= '<option value="' . $i_f . '">' . $i_f . '</option>';
+				$main .= '<option value="' . $i_f . '"' . (!$is_new && $run_at[1] == $i ? 'selected="selected" ' : null) . '>' . $i_f . '</option>';
 			}
 
 			$main .= '</select><h3>Active On:</h3><p>';
@@ -200,7 +237,7 @@ class phoromatic_sched implements pts_webui_interface
 			$week = array('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday');
 			foreach($week as $index => $day)
 			{
-				$main .= '<input type="checkbox" name="days_active[]" value="' . $index . '" /> ' . $day;
+				$main .= '<input type="checkbox" name="days_active[]" value="' . $index . '"' . (!$is_new && in_array($index, $days_active) ? 'checked="checked" ' : null) . '/> ' . $day;
 			}
 
 			$main .= '</p></td>
@@ -212,7 +249,7 @@ class phoromatic_sched implements pts_webui_interface
 </table>
 
 			<h3><em>Indicates optional field.</em></h3>
-			<p align="right"><input name="submit" value="Add Schedule" type="submit" onclick="return pts_rmm_validate_schedule();" /></p>
+			<p align="right"><input name="submit" value="' . ($is_new ? 'Create' : 'Edit') . ' Schedule" type="submit" onclick="return pts_rmm_validate_schedule();" /></p>
 			</form>';
 			echo phoromatic_webui_main($main, phoromatic_webui_right_panel_logged_in());
 			echo phoromatic_webui_footer();

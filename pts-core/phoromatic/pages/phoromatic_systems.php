@@ -62,7 +62,7 @@ class phoromatic_systems implements pts_webui_interface
 			{
 				$row = $result->fetchArray();
 
-				if($PATH[1] == 'edit')
+				if(isset($PATH[1]) && $PATH[1] == 'edit')
 				{
 					$main = '<h1>' . $row['Title'] . '</h1>';
 					$main .= '<form name="system_form" id="system_form" action="?systems/' . $PATH[0] . '" method="post" onsubmit="return phoromatic_system_edit(this);">
