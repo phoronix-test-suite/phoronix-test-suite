@@ -95,12 +95,44 @@ class phoromatic_schedules implements pts_webui_interface
 					$stmt->bindValue(':test_args', $to_remove[1]);
 					$result = $stmt->execute();
 				}
+				else if(isset($PATH[1]) && in_array($PATH[1], array('activate', 'deactivate')))
+				{
+					switch($PATH[1])
+					{
+						case 'deactivate':
+							$new_state = 0;
+							break;
+						case 'activate':
+						default:
+							$new_state = 1;
+							break;
+					}
+
+					// REMOVE TEST
+					$stmt = phoromatic_server::$db->prepare('UPDATE phoromatic_schedules SET State = :new_state WHERE AccountID = :account_id AND ScheduleID = :schedule_id');
+					$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+					$stmt->bindValue(':schedule_id', $PATH[0]);
+					$stmt->bindValue(':new_state', $new_state);
+					$result = $stmt->execute();
+					$row['State'] = $new_state;
+				}
 
 
 				$main = '<h1>' . $row['Title'] . '</h1>';
 				$main .= '<h3>' . $row['Description'] . '</h3>';
 				$main .= '<p>This schedule was last modified at <strong>' . $row['LastModifiedOn'] . '</strong> by <strong>' . $row['LastModifiedBy'] . '</strong>.';
-				$main .= '<p><a href="?sched/' . $PATH[0] . '">Edit Schedule</a></p>';
+				$main .= '<p><a href="?sched/' . $PATH[0] . '">Edit Schedule</a> | ';
+
+				if($row['State'] == 1)
+				{
+					$main .= '<a href="?schedules/' . $PATH[0] . '/deactivate">Deactivate Schedule</a>';
+				}
+				else
+				{
+					$main .= '<a href="?schedules/' . $PATH[0] . '/activate">Activate Schedule</a>';
+				}
+
+				$main .= '</p>';
 				$main .= '<hr />';
 				$main .= '<h2>Active On</h2>';
 				if(!empty($row['ActiveOn']))
