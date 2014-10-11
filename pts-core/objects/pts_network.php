@@ -340,6 +340,21 @@ class pts_network
 				}
 				$offset = $ipv4_pos + 1;
 			}
+			if($local_ip == null)
+			{
+				while(($ipv4_pos = strpos($ifconfig, 'inet ', $offset)) !== false)
+				{
+					$ipv4 = substr($ifconfig, $ipv4_pos + strlen('inet '));
+					$ipv4 = substr($ipv4, 0, strpos($ipv4, ' '));
+					$local_ip = $ipv4;
+
+					if($local_ip != '127.0.0.1' && $local_ip != null)
+					{
+						break;
+					}
+					$offset = $ipv4_pos + 1;
+				}
+			}
 		}
 
 		return $local_ip;
