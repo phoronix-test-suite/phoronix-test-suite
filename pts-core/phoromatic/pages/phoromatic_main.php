@@ -64,7 +64,7 @@ class phoromatic_main implements pts_webui_interface
 
 		// ACTIVE TEST SCHEDULES
 		$main .= '<div style="float: left; width: 100%;"><ul><li><h1>Active Test Schedules</h1></li>';
-		$stmt = phoromatic_server::$db->prepare('SELECT Title, ScheduleID, Description FROM phoromatic_schedules WHERE AccountID = :account_id AND State >= 1 ORDER BY Title ASC');
+		$stmt = phoromatic_server::$db->prepare('SELECT Title, ScheduleID, Description, RunTargetSystems, RunTargetGroups FROM phoromatic_schedules WHERE AccountID = :account_id AND State >= 1 ORDER BY Title ASC');
 		$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 		$result = $stmt->execute();
 		$row = $result->fetchArray();
@@ -77,7 +77,9 @@ class phoromatic_main implements pts_webui_interface
 		{
 			do
 			{
-				$main .= '<a href="?schedules/' . $row['ScheduleID'] . '"><li>' . $row['Title'] . '<br /><em>' . $row['Description'] . '</em></li></a>';
+				$system_count = empty($row['RunTargetSystems']) ? 0 : count(explode(',', $row['RunTargetSystems']));
+				$group_count = empty($row['RunTargetGroups']) ? 0 : count(explode(',', $row['RunTargetGroups']));
+				$main .= '<a href="?schedules/' . $row['ScheduleID'] . '"><li>' . $row['Title'] . '<br /><em><strong>' . $system_count . ' Systems | ' . $group_count . ' Groups</strong> ' . $row['Description'] . ' </em></li></a>';
 			}
 			while($row = $result->fetchArray());
 		}
