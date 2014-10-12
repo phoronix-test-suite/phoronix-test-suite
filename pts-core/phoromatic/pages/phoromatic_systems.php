@@ -175,6 +175,30 @@ class phoromatic_systems implements pts_webui_interface
 					}
 				}
 			}
+			else if(!PHOROMATIC_USER_IS_VIEWER && isset($_POST['system_group_update']))
+			{
+				$stmt = phoromatic_server::$db->prepare('SELECT SystemID FROM phoromatic_systems WHERE AccountID = :account_id');
+				$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+				$result = $stmt->execute();
+
+				while($row = $result->fetchArray())
+				{
+					if(isset($_POST['groups_' . $row['SystemID']]))
+					{
+						$group_string = null;
+						foreach($_POST['groups_' . $row['SystemID']] as $group)
+						{
+							$group_string .= '#' . $group . '#';
+						}
+
+							$stmt1 = phoromatic_server::$db->prepare('UPDATE phoromatic_systems SET Groups = :new_groups WHERE AccountID = :account_id AND SystemID = :system_id');
+							$stmt1->bindValue(':account_id', $_SESSION['AccountID']);
+							$stmt1->bindValue(':system_id', $row['SystemID']);
+							$stmt1->bindValue(':new_groups', $group_string);
+							$stmt1->execute();
+					}
+				}
+			}
 
 			$main = '<h1>Test Systems</h1>';
 			if(!PHOROMATIC_USER_IS_VIEWER)
@@ -269,6 +293,41 @@ class phoromatic_systems implements pts_webui_interface
 					while($row = $result->fetchArray());
 
 					$main .= '</div>';
+
+					$main .= '<hr /><h2>System Group Editing</h2><div style="text-align: center;"><form action="' . $_SERVER['REQUEST_URI'] . '" name="update_groups" method="post"><input type="hidden" name="system_group_update"  value="1" />';
+					$main .= '<table style="margin: 5px auto; overflow: auto;">';
+					$main .= '<tr>';
+					$main .= '<th></th>';
+
+					$stmt = phoromatic_server::$db->prepare('SELECT GroupName FROM phoromatic_groups WHERE AccountID = :account_id ORDER BY GroupName ASC');
+					$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+					$result = $stmt->execute();
+					$cols = array();
+					while($row = $result->fetchArray())
+					{
+						$main .= '<th>' . $row['GroupName'] . '</th>';
+						array_push($cols, $row['GroupName']);
+					}
+
+					$main .= '</tr>';
+
+					$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, Groups FROM phoromatic_systems WHERE AccountID = :account_id ORDER BY Title ASC');
+					$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+					$result = $stmt->execute();
+					while($row = $result->fetchArray())
+					{
+						$main .= '<tr>';
+						$main .= '<th>' . $row['Title'] . '</th>';
+
+						foreach($cols as $group)
+						{
+							$checked = stripos($row['Groups'], '#' . $group . '#') !== false ? 'checked="checked" ' : null;
+							$main .= '<td><input type="checkbox" name="groups_' . $row['SystemID'] . '[]" value="' . $group . '" ' . $checked . '/></td>';
+						}
+						$main .= '</tr>';
+					}
+
+					$main .= '</table><p><input name="submit" value="Update Groups" type="submit" /></p></form></div>';
 				}
 			}
 		}

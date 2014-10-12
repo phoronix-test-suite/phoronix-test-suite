@@ -14,6 +14,7 @@ Phoronix Test Suite (Git)
 - phoromatic: Add support for the main administrator to create multiple users associated with the same account
 - phoromatic: Add support for "viewer accounts" where they can view data but not alter/write data
 - phoromatic: Fix for adding systems to groups
+- phoromatic: Support for mass editing of systems in groups via the systems page
 
 Phoronix Test Suite 5.4 Milestone 2
 5 October 2014

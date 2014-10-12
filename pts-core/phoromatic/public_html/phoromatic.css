@@ -439,13 +439,12 @@ th
 {
 	background: #DFDFDF;
 	font-weight: bold;
-	padding: 0 4px;
+	padding: 2px 6px;
 	text-align: left;
 }
 td
 {
 	background: #FAFAFA;
-	text-align: left;
 	padding: 0 4px;
 }
 tr:nth-child(even) td
