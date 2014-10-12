@@ -199,6 +199,28 @@ class phoromatic_systems implements pts_webui_interface
 					}
 				}
 			}
+			else if(!PHOROMATIC_USER_IS_VIEWER && isset($_POST['remove_group']))
+			{
+				$stmt = phoromatic_server::$db->prepare('DELETE FROM phoromatic_groups WHERE AccountID = :account_id AND GroupName = :group_name');
+				$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+				$stmt->bindValue(':group_name', $_POST['remove_group']);
+				$stmt->execute();
+
+
+				$stmt = phoromatic_server::$db->prepare('SELECT SystemID, Groups FROM phoromatic_systems WHERE AccountID = :account_id AND Groups LIKE \'%#' . $_POST['remove_group'] . '#%\'');
+				$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+				$result = $stmt->execute();
+				while($row = $result->fetchArray())
+				{
+					$revised_groups = str_replace('#' . $_POST['remove_group'] . '#', null, $row['Groups']);
+
+					$stmt1 = phoromatic_server::$db->prepare('UPDATE phoromatic_systems SET Groups = :new_groups WHERE AccountID = :account_id AND SystemID = :system_id');
+					$stmt1->bindValue(':account_id', $_SESSION['AccountID']);
+					$stmt1->bindValue(':system_id', $row['SystemID']);
+					$stmt1->bindValue(':new_groups', $revised_groups);
+					$stmt1->execute();
+				}
+			}
 
 			$main = '<h1>Test Systems</h1>';
 			if(!PHOROMATIC_USER_IS_VIEWER)
@@ -206,7 +228,7 @@ class phoromatic_systems implements pts_webui_interface
 				$main .= phoromatic_systems_needing_attention();
 				$main .= '<h2>Add A System</h2>
 				<p>To connect a <a href="http://www.phoronix-test-suite.com/">Phoronix Test Suite</a> test system to this account for remotely managing and/or carrying out routine automated benchmarking, follow these simple and quick steps:</p>
-				<ol><li>From a system with <em>Phoronix Test Suite 5.2 or newer</em> run <strong>phoronix-test-suite phoromatic.connect ' . phoromatic_web_socket_server_addr() . '</strong>. (The test system must be able to access this server\'s correct IP address / domain name.)</li><li>When you have run the command from the test system, you will need to log into this page on Phoromatic server again where you can approve the system and configure the system settings so you can begin using it as part of this Phoromatic account.</li><li>Repeat the two steps for as many systems as you would like! When you are all done -- if you haven\'t done so already, you can start creating test schedules, groups, and other Phoromatic events.</li></ol>';
+				<ol><li>From a system with <em>Phoronix Test Suite 5.4 or newer</em> run <strong>phoronix-test-suite phoromatic.connect ' . phoromatic_web_socket_server_addr() . '</strong>. (The test system must be able to access this server\'s correct IP address / domain name.)</li><li>When you have run the command from the test system, you will need to log into this page on Phoromatic server again where you can approve the system and configure the system settings so you can begin using it as part of this Phoromatic account.</li><li>Repeat the two steps for as many systems as you would like! When you are all done -- if you haven\'t done so already, you can start creating test schedules, groups, and other Phoromatic events.</li></ol>';
 
 			}
 			$main .= '<hr />
@@ -302,11 +324,11 @@ class phoromatic_systems implements pts_webui_interface
 					$stmt = phoromatic_server::$db->prepare('SELECT GroupName FROM phoromatic_groups WHERE AccountID = :account_id ORDER BY GroupName ASC');
 					$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 					$result = $stmt->execute();
-					$cols = array();
+					$all_groups = array();
 					while($row = $result->fetchArray())
 					{
 						$main .= '<th>' . $row['GroupName'] . '</th>';
-						array_push($cols, $row['GroupName']);
+						array_push($all_groups, $row['GroupName']);
 					}
 
 					$main .= '</tr>';
@@ -319,7 +341,7 @@ class phoromatic_systems implements pts_webui_interface
 						$main .= '<tr>';
 						$main .= '<th>' . $row['Title'] . '</th>';
 
-						foreach($cols as $group)
+						foreach($all_groups as $group)
 						{
 							$checked = stripos($row['Groups'], '#' . $group . '#') !== false ? 'checked="checked" ' : null;
 							$main .= '<td><input type="checkbox" name="groups_' . $row['SystemID'] . '[]" value="' . $group . '" ' . $checked . '/></td>';
@@ -328,6 +350,16 @@ class phoromatic_systems implements pts_webui_interface
 					}
 
 					$main .= '</table><p><input name="submit" value="Update Groups" type="submit" /></p></form></div>';
+
+					$main .= '<hr /><h2>Remove A Group</h2><p>Removing a group is a permanent action that cannot be undone.</p>';
+
+					$main .= '<p><form action="' . $_SERVER['REQUEST_URI'] . '" name="remove_group" method="post"><select name="remove_group" id="remove_group">';
+
+					foreach($all_groups as $group)
+					{
+						$main .= '<option value="' . $group . '">' . $group . '</option>';
+					}
+					$main .= '</select> <input name="submit" value="Remove Group" type="submit" /></form></p>';
 				}
 			}
 		}

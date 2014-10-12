@@ -15,6 +15,7 @@ Phoronix Test Suite (Git)
 - phoromatic: Add support for "viewer accounts" where they can view data but not alter/write data
 - phoromatic: Fix for adding systems to groups
 - phoromatic: Support for mass editing of systems in groups via the systems page
+- phoromatic: Support for removing system groups
 
 Phoronix Test Suite 5.4 Milestone 2
 5 October 2014
