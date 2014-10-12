@@ -37,6 +37,9 @@ class phoromatic_sched implements pts_webui_interface
 	}
 	public static function render_page_process($PATH)
 	{
+		if(PHOROMATIC_USER_IS_VIEWER)
+			return;
+
 		$is_new = true;
 		if(!empty($PATH[0]) && is_numeric($PATH[0]))
 		{

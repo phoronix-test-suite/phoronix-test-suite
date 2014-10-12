@@ -121,18 +121,23 @@ class phoromatic_schedules implements pts_webui_interface
 				$main = '<h1>' . $row['Title'] . '</h1>';
 				$main .= '<h3>' . $row['Description'] . '</h3>';
 				$main .= '<p>This schedule was last modified on <strong>' . date('j F Y \a\t H:i', strtotime($row['LastModifiedOn'])) . '</strong> by <strong>' . $row['LastModifiedBy'] . '</strong>.';
-				$main .= '<p><a href="?sched/' . $PATH[0] . '">Edit Schedule</a> | ';
 
-				if($row['State'] == 1)
+				if(!PHOROMATIC_USER_IS_VIEWER)
 				{
-					$main .= '<a href="?schedules/' . $PATH[0] . '/deactivate">Deactivate Schedule</a>';
-				}
-				else
-				{
-					$main .= '<a href="?schedules/' . $PATH[0] . '/activate">Activate Schedule</a>';
+					$main .= '<p><a href="?sched/' . $PATH[0] . '">Edit Schedule</a> | ';
+
+					if($row['State'] == 1)
+					{
+						$main .= '<a href="?schedules/' . $PATH[0] . '/deactivate">Deactivate Schedule</a>';
+					}
+					else
+					{
+						$main .= '<a href="?schedules/' . $PATH[0] . '/activate">Activate Schedule</a>';
+					}
+
+					$main .= '</p>';
 				}
 
-				$main .= '</p>';
 				$main .= '<hr />';
 				$main .= '<h2>Schedule</h2>';
 				if(!empty($row['ActiveOn']))
@@ -181,7 +186,7 @@ class phoromatic_schedules implements pts_webui_interface
 				while($row = $result->fetchArray())
 				{
 					$test_count++;
-					$main .= '<h3>' . $row['TestProfile'] . ($row['TestDescription'] != null ? ' - <em>' . $row['TestDescription'] . '</em>' : '') . ' <a href="?schedules/' . $PATH[0] . '/remove/' . base64_encode(implode(PHP_EOL, array($row['TestProfile'], $row['TestArguments']))) . '">Remove Test</a>' . '</h3>';
+					$main .= '<h3>' . $row['TestProfile'] . ($row['TestDescription'] != null ? ' - <em>' . $row['TestDescription'] . '</em>' : '') . (!PHOROMATIC_USER_IS_VIEWER ? ' <a href="?schedules/' . $PATH[0] . '/remove/' . base64_encode(implode(PHP_EOL, array($row['TestProfile'], $row['TestArguments']))) . '">Remove Test</a>' : null) . '</h3>';
 				}
 
 				if($test_count == 0)
@@ -189,16 +194,18 @@ class phoromatic_schedules implements pts_webui_interface
 					$main .= '<h3 style="text-transform: uppercase;">No tests have been added yet for this test schedule.</h3>';
 				}
 
-				$main .= '<hr /><h2>Add A Test</h2>';
-				$main .= '<form action="?schedules/' . $PATH[0] . '" name="add_test" id="add_test" method="post">';
-				$main .= '<select name="add_to_schedule_select_test" id="add_to_schedule_select_test" onchange="phoromatic_schedule_test_details();">';
-				foreach(pts_openbenchmarking::available_tests() as $test) {
-					$main .= '<option value="' . $test . '">' . $test . '</option>';
+				if(!PHOROMATIC_USER_IS_VIEWER)
+				{
+					$main .= '<hr /><h2>Add A Test</h2>';
+					$main .= '<form action="?schedules/' . $PATH[0] . '" name="add_test" id="add_test" method="post">';
+					$main .= '<select name="add_to_schedule_select_test" id="add_to_schedule_select_test" onchange="phoromatic_schedule_test_details();">';
+					foreach(pts_openbenchmarking::available_tests() as $test) {
+						$main .= '<option value="' . $test . '">' . $test . '</option>';
+					}
+					$main .= '</select>';
+					$main .= '<p><div id="test_details"></div></p>';
+					$main .= '</form>';
 				}
-				$main .= '</select>';
-				$main .= '<p><div id="test_details"></div></p>';
-				$main .= '</form>';
-
 
 				$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, ScheduleID, UploadID, UploadTime FROM phoromatic_results WHERE AccountID = :account_id AND ScheduleID = :schedule_id ORDER BY UploadTime DESC');
 				$stmt->bindValue(':account_id', $_SESSION['AccountID']);
@@ -266,10 +273,13 @@ class phoromatic_schedules implements pts_webui_interface
 				</div>
 			</div>';
 
-			$main .= '
-			<hr />
-			<h2>Create A Schedule</h2>
-			<p><a href="?sched">Create a schedule</a> followed by adding tests/suites to run for that schedule on the selected systems.</p>';
+			if(!PHOROMATIC_USER_IS_VIEWER)
+			{
+				$main .= '
+				<hr />
+				<h2>Create A Schedule</h2>
+				<p><a href="?sched">Create a schedule</a> followed by adding tests/suites to run for that schedule on the selected systems.</p>';
+			}
 			echo phoromatic_webui_main($main, phoromatic_webui_right_panel_logged_in());
 			echo phoromatic_webui_footer();
 	}

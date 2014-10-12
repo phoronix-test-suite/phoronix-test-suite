@@ -293,6 +293,17 @@ div#pts_phoromatic_main_area hr
 	height: 1px;
 	margin: 20px 0;
 }
+
+div#pts_phoromatic_main_area ol
+{
+	list-style: none;
+	margin: 10px 10px 20px 0;
+	padding: 0;
+}
+div#pts_phoromatic_main_area ol li
+{
+	margin: 0 0 10px;
+}
 div#pts_phoromatic_main_area p a, div#pts_phoromatic_main_area a, div#pts_phoromatic_main_area h6 a, div#pts_phoromatic_main_area h5 a, div#pts_phoromatic_main_box p a
 {
 	color: #e08a09;

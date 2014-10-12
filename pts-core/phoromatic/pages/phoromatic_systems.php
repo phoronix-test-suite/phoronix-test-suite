@@ -40,7 +40,7 @@ class phoromatic_systems implements pts_webui_interface
 		echo phoromatic_webui_header_logged_in();
 		$main = null;
 
-		if(!empty($PATH[0]) && isset($_POST['system_title']) && !empty($_POST['system_title']) && isset($_POST['system_description']) && isset($_POST['system_state']))
+		if(!PHOROMATIC_USER_IS_VIEWER && !empty($PATH[0]) && isset($_POST['system_title']) && !empty($_POST['system_title']) && isset($_POST['system_description']) && isset($_POST['system_state']))
 		{
 			$stmt = phoromatic_server::$db->prepare('UPDATE phoromatic_systems SET Title = :title, Description = :description, State = :state, CurrentTask = \'Awaiting Task\' WHERE AccountID = :account_id AND SystemID = :system_id');
 			$stmt->bindValue(':account_id', $_SESSION['AccountID']);
@@ -62,7 +62,7 @@ class phoromatic_systems implements pts_webui_interface
 			{
 				$row = $result->fetchArray();
 
-				if(isset($PATH[1]) && $PATH[1] == 'edit')
+				if(!PHOROMATIC_USER_IS_VIEWER && isset($PATH[1]) && $PATH[1] == 'edit')
 				{
 					$main = '<h1>' . $row['Title'] . '</h1>';
 					$main .= '<form name="system_form" id="system_form" action="?systems/' . $PATH[0] . '" method="post" onsubmit="return phoromatic_system_edit(this);">
@@ -74,7 +74,10 @@ class phoromatic_systems implements pts_webui_interface
 				else
 				{
 					$main = '<h1>' . $row['Title'] . '</h1><p><em>' . ($row['Description'] != null ? $row['Description'] : 'No system description.') . '</em></p>';
-					$main .= '<p><a href="?systems/' . $PATH[0] . '/edit">Edit Task & Enable/Disable System</a></p>';
+					if(!PHOROMATIC_USER_IS_VIEWER)
+					{
+						$main .= '<p><a href="?systems/' . $PATH[0] . '/edit">Edit Task & Enable/Disable System</a></p>';
+					}
 				}
 
 				switch($row['State'])
@@ -139,7 +142,7 @@ class phoromatic_systems implements pts_webui_interface
 
 		if($main == null)
 		{
-			if(isset($_POST['new_group']) && !empty($_POST['new_group']))
+			if(!PHOROMATIC_USER_IS_VIEWER && isset($_POST['new_group']) && !empty($_POST['new_group']))
 			{
 				$group = trim($_POST['new_group']);
 
@@ -165,13 +168,15 @@ class phoromatic_systems implements pts_webui_interface
 			}
 
 			$main = '<h1>Test Systems</h1>';
-			$main .= phoromatic_systems_needing_attention();
-			$main .= '<h2>Add A System</h2>
+			if(!PHOROMATIC_USER_IS_VIEWER)
+			{
+				$main .= phoromatic_systems_needing_attention();
+				$main .= '<h2>Add A System</h2>
 				<p>To connect a <a href="http://www.phoronix-test-suite.com/">Phoronix Test Suite</a> test system to this account for remotely managing and/or carrying out routine automated benchmarking, follow these simple and quick steps:</p>
-				<ol><li>From a system with <em>Phoronix Test Suite 5.2 or newer</em> run <strong>phoronix-test-suite phoromatic.connect ' . phoromatic_web_socket_server_addr() . '</strong>. (The test system must be able to access this server\'s correct IP address / domain name.)</li><li>When you have run the command from the test system, you will need to log into this page on Phoromatic server again where you can approve the system and configure the system settings so you can begin using it as part of this Phoromatic account.</li><li>Repeat the two steps for as many systems as you would like! When you are all done -- if you haven\'t done so already, you can start creating test schedules, groups, and other Phoromatic events.</li></ol>
+				<ol><li>From a system with <em>Phoronix Test Suite 5.2 or newer</em> run <strong>phoronix-test-suite phoromatic.connect ' . phoromatic_web_socket_server_addr() . '</strong>. (The test system must be able to access this server\'s correct IP address / domain name.)</li><li>When you have run the command from the test system, you will need to log into this page on Phoromatic server again where you can approve the system and configure the system settings so you can begin using it as part of this Phoromatic account.</li><li>Repeat the two steps for as many systems as you would like! When you are all done -- if you haven\'t done so already, you can start creating test schedules, groups, and other Phoromatic events.</li></ol>';
 
-
-				<hr />
+			}
+			$main .= '<hr />
 
 			<h2>Systems</h2>
 			<div class="pts_phoromatic_info_box_area">
@@ -193,7 +198,7 @@ class phoromatic_systems implements pts_webui_interface
 					{
 						do
 						{
-							$main .= '<a href="?systems/' . $row['SystemID'] . '"><li>' . $row['Title'] . '<br /><em>' . $row['LocalIP'] . ' - ' . $row['CurrentTask'] . ' - Last Activity: ' . $row['LastCommunication'] . '</em></li></a>';
+							$main .= '<a href="?systems/' . $row['SystemID'] . '"><li>' . $row['Title'] . '<br /><em>' . $row['LocalIP'] . ' - ' . $row['CurrentTask'] . ' - Last Activity: ' . date('j F Y H:i', strtotime($row['LastCommunication'])) . '</em></li></a>';
 						}
 						while($row = $result->fetchArray());
 					}
@@ -201,58 +206,61 @@ class phoromatic_systems implements pts_webui_interface
 
 			$main .= '</ul>
 				</div>
-			</div>
+			</div>';
 
-			<hr />
-			<h2>System Groups</h2>
-			<p>System groups make it very easy to organize multiple test systems for targeting by test schedules. You can always add/remove systems to groups, create new groups, and add systems to multiple groups. After creating a group and adding systems to the group, you can begin targeting tests against a particular group of systems. Systems can always be added/removed from groups later and a system can belong to multiple groups.</p>';
-
-
-			$main .= '<div style="float: left;"><form name="new_group_form" id="new_group_form" action="?systems" method="post" onsubmit="return phoromatic_new_group(this);">
-			<p><div style="width: 200px; font-weight: bold; float: left;">New Group Name:</div> <input type="text" style="width: 300px;" name="new_group" value="" /></p>
-			<p><div style="width: 200px; font-weight: bold; float: left;">Select System(s) To Add To Group:</div><select name="systems_for_group[]" multiple="multiple" style="width: 300px;">';
-
-			$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID FROM phoromatic_systems WHERE AccountID = :account_id AND State >= 0 ORDER BY Title ASC');
-			$stmt->bindValue(':account_id', $_SESSION['AccountID']);
-			$result = $stmt->execute();
-			$row = $result->fetchArray();
-
-			if($row != false)
+			if(!PHOROMATIC_USER_IS_VIEWER)
 			{
-				do
+				$main .= '<hr />
+				<h2>System Groups</h2>
+				<p>System groups make it very easy to organize multiple test systems for targeting by test schedules. You can always add/remove systems to groups, create new groups, and add systems to multiple groups. After creating a group and adding systems to the group, you can begin targeting tests against a particular group of systems. Systems can always be added/removed from groups later and a system can belong to multiple groups.</p>';
+
+
+				$main .= '<div style="float: left;"><form name="new_group_form" id="new_group_form" action="?systems" method="post" onsubmit="return phoromatic_new_group(this);">
+				<p><div style="width: 200px; font-weight: bold; float: left;">New Group Name:</div> <input type="text" style="width: 300px;" name="new_group" value="" /></p>
+				<p><div style="width: 200px; font-weight: bold; float: left;">Select System(s) To Add To Group:</div><select name="systems_for_group[]" multiple="multiple" style="width: 300px;">';
+
+				$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID FROM phoromatic_systems WHERE AccountID = :account_id AND State >= 0 ORDER BY Title ASC');
+				$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+				$result = $stmt->execute();
+				$row = $result->fetchArray();
+
+				if($row != false)
 				{
-					$main .= '<option value="' . $row['SystemID'] . '">' . $row['Title'] . '</option>';
+					do
+					{
+						$main .= '<option value="' . $row['SystemID'] . '">' . $row['Title'] . '</option>';
+					}
+					while($row = $result->fetchArray());
 				}
-				while($row = $result->fetchArray());
-			}
 
 
-			$main .= '</select></p>
-			<p><div style="width: 200px; font-weight: bold; float: left;">&nbsp;</div> <input type="submit" value="Create Group" /></p></form></div>';
+				$main .= '</select></p>
+				<p><div style="width: 200px; font-weight: bold; float: left;">&nbsp;</div> <input type="submit" value="Create Group" /></p></form></div>';
 
-			$stmt = phoromatic_server::$db->prepare('SELECT GroupName FROM phoromatic_groups WHERE AccountID = :account_id ORDER BY GroupName ASC');
-			$stmt->bindValue(':account_id', $_SESSION['AccountID']);
-			$result = $stmt->execute();
-			$row = $result->fetchArray();
+				$stmt = phoromatic_server::$db->prepare('SELECT GroupName FROM phoromatic_groups WHERE AccountID = :account_id ORDER BY GroupName ASC');
+				$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+				$result = $stmt->execute();
+				$row = $result->fetchArray();
 
-			if($row != false)
-			{
-				$main .= '<div style="float: left; margin-left: 90px;"><h3>Current System Groups</h3>';
-
-				do
+				if($row != false)
 				{
-					$stmt_count = phoromatic_server::$db->prepare('SELECT COUNT(SystemID) AS system_count FROM phoromatic_systems WHERE AccountID = :account_id AND Groups LIKE \'%#' . $row['GroupName'] . '#%\'');
-					$stmt_count->bindValue(':account_id', $_SESSION['AccountID']);
-					$result_count = $stmt_count->execute();
-					$row_count = $result_count->fetchArray();
-					$row_count['system_count'] = isset($row_count['system_count']) ? $row_count['system_count'] : 0;
+					$main .= '<div style="float: left; margin-left: 90px;"><h3>Current System Groups</h3>';
 
-					$main .= '<p><div style="width: 200px; float: left; font-weight: bold;">' . $row['GroupName'] . '</div> ' . $row_count['system_count'] . ' System' . ($row_count['system_count'] != 1 ? 's' : '') . '</p>';
+					do
+					{
+						$stmt_count = phoromatic_server::$db->prepare('SELECT COUNT(SystemID) AS system_count FROM phoromatic_systems WHERE AccountID = :account_id AND Groups LIKE \'%#' . $row['GroupName'] . '#%\'');
+						$stmt_count->bindValue(':account_id', $_SESSION['AccountID']);
+						$result_count = $stmt_count->execute();
+						$row_count = $result_count->fetchArray();
+						$row_count['system_count'] = isset($row_count['system_count']) ? $row_count['system_count'] : 0;
 
+						$main .= '<p><div style="width: 200px; float: left; font-weight: bold;">' . $row['GroupName'] . '</div> ' . $row_count['system_count'] . ' System' . ($row_count['system_count'] != 1 ? 's' : '') . '</p>';
+
+					}
+					while($row = $result->fetchArray());
+
+					$main .= '</div>';
 				}
-				while($row = $result->fetchArray());
-
-				$main .= '</div>';
 			}
 		}
 

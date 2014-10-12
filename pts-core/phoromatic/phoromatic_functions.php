@@ -20,6 +20,8 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+define('PHOROMATIC_USER_IS_VIEWER', !isset($_SESSION['AdminLevel']) || $_SESSION['AdminLevel'] >= 10 || $_SESSION['AdminLevel'] < 1 ? true : false);
+
 function phoromatic_user_friendly_timedate($time)
 {
 	return date('j F H:i', strtotime($time));
@@ -28,11 +30,6 @@ function phoromatic_webui_header($left_items, $right)
 {
 	$ret = '<div id="pts_phoromatic_top_header">
 	<div id="pts_phoromatic_logo"><a href="?"><img src="/images/phoromatic_logo.png" /></a></div><ul>';
-
-	if(isset($_SESSION['AdminLevel']) && $_SESSION['AdminLevel'] == 1)
-	{
-		array_push($left_items, ' <a href="?administrator">Account Administration</a>');
-	}
 
 	foreach($left_items as $item)
 	{
@@ -65,6 +62,12 @@ function phoromatic_webui_header_logged_in()
 {
 	$html_links = array();
 	$pages = array('Main', 'Systems', 'Settings', 'Schedules', 'Results');
+
+	if(isset($_SESSION['AdminLevel']) && $_SESSION['AdminLevel'] == 1)
+	{
+		array_push($pages, 'Users');
+	}
+
 	foreach($pages as $page)
 	{
 		if(strtolower($page) == PAGE_REQUEST)

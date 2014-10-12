@@ -103,7 +103,7 @@ class phoromatic_welcome implements pts_webui_interface
 			$stmt->bindValue(':current_time', phoromatic_server::current_time());
 			$result = $stmt->execute();
 
-			$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_users (UserID, AccountID, UserName, Email, Password, CreatedOn, LastIP) VALUES (:user_id, :account_id, :user_name, :email, :password, :current_time, :last_ip)');
+			$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_users (UserID, AccountID, UserName, Email, Password, CreatedOn, LastIP, AdminLevel) VALUES (:user_id, :account_id, :user_name, :email, :password, :current_time, :last_ip, :admin_level)');
 			$stmt->bindValue(':user_id', $user_id);
 			$stmt->bindValue(':account_id', $account_id);
 			$stmt->bindValue(':user_name', $_POST['register_username']);
@@ -111,6 +111,7 @@ class phoromatic_welcome implements pts_webui_interface
 			$stmt->bindValue(':password', $salted_password);
 			$stmt->bindValue(':last_ip', $_SERVER['REMOTE_ADDR']);
 			$stmt->bindValue(':current_time', phoromatic_server::current_time());
+			$stmt->bindValue(':admin_level', 1);
 			$result = $stmt->execute();
 
 			$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_user_settings (UserID, AccountID) VALUES (:user_id, :account_id)');

@@ -90,55 +90,58 @@ class phoromatic_settings implements pts_webui_interface
 			$main .= '<p><input type="submit" value="Save User Settings" /></p>';
 			$main .= '</form>';
 
-			$main .= '<hr />
-			<h2>Account Settings</h2>
-			<p>Account settings are system-wide, in cases where there are multiple individuals/accounts managing the same test systems and data.</p>';
-
-			$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_account_settings WHERE AccountID = :account_id');
-			$stmt->bindValue(':account_id', $_SESSION['AccountID']);
-			$result = $stmt->execute();
-			$row = $result->fetchArray();
-
-			$account_settings = array(
-				'Email' => array(
-					'ArchiveResultsLocally' => 'Archive test results on local test systems after the results have been uploaded.',
-					'UploadSystemLogs' => 'Upload system logs when uploading test results.',
-					'RunInstallCommand' => 'Always run the install command for test(s) prior to running them on the system.',
-					'ForceInstallTests' => 'Force the test installation/re-installation of tests each time prior to running the test.',
-					'SystemSensorMonitoring' => 'Enable the system sensor monitoring while tests are taking place.'
-					)
-				);
-
-			$main .= '<form name="system_form" id="system_form" action="?settings" method="post">';
-			foreach($account_settings as $section => $section_settings)
+			if(!PHOROMATIC_USER_IS_VIEWER)
 			{
-				$main .= '<h3>' . $section . '</h3><p>';
-				foreach($section_settings as $key => $setting)
+				$main .= '<hr />
+				<h2>Account Settings</h2>
+				<p>Account settings are system-wide, in cases where there are multiple individuals/accounts managing the same test systems and data.</p>';
+
+				$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_account_settings WHERE AccountID = :account_id');
+				$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+				$result = $stmt->execute();
+				$row = $result->fetchArray();
+
+				$account_settings = array(
+					'Email' => array(
+						'ArchiveResultsLocally' => 'Archive test results on local test systems after the results have been uploaded.',
+						'UploadSystemLogs' => 'Upload system logs when uploading test results.',
+						'RunInstallCommand' => 'Always run the install command for test(s) prior to running them on the system.',
+						'ForceInstallTests' => 'Force the test installation/re-installation of tests each time prior to running the test.',
+						'SystemSensorMonitoring' => 'Enable the system sensor monitoring while tests are taking place.'
+						)
+					);
+
+				$main .= '<form name="system_form" id="system_form" action="?settings" method="post">';
+				foreach($account_settings as $section => $section_settings)
 				{
-					if(isset($_POST[$key]))
+					$main .= '<h3>' . $section . '</h3><p>';
+					foreach($section_settings as $key => $setting)
 					{
-						if($_POST[$key] == 'yes')
+						if(isset($_POST[$key]))
 						{
-							$row[$key] = 1;
-						}
-						else
-						{
-							$row[$key] = 0;
+							if($_POST[$key] == 'yes')
+							{
+								$row[$key] = 1;
+							}
+							else
+							{
+								$row[$key] = 0;
+							}
+
+							$stmt = phoromatic_server::$db->prepare('UPDATE phoromatic_account_settings SET ' . $key . ' = :val WHERE AccountID = :account_id');
+							$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+							$stmt->bindValue(':val', $row[$key]);
+							$stmt->execute();
+							//echo phoromatic_server::$db->lastErrorMsg();
 						}
 
-						$stmt = phoromatic_server::$db->prepare('UPDATE phoromatic_account_settings SET ' . $key . ' = :val WHERE AccountID = :account_id');
-						$stmt->bindValue(':account_id', $_SESSION['AccountID']);
-						$stmt->bindValue(':val', $row[$key]);
-						$stmt->execute();
-						//echo phoromatic_server::$db->lastErrorMsg();
+						$main .= '<input type="checkbox" name="' . $key . '" ' . (isset($row[$key]) && $row[$key] == 1 ? 'checked="checked" ' : '') . 'value="yes" /> ' . $setting . '<br />';
 					}
-
-					$main .= '<input type="checkbox" name="' . $key . '" ' . (isset($row[$key]) && $row[$key] == 1 ? 'checked="checked" ' : '') . 'value="yes" /> ' . $setting . '<br />';
+					$main .= '</p>';
 				}
-				$main .= '</p>';
+				$main .= '<p><input type="submit" value="Save Account Settings" /></p>';
+				$main .= '</form>';
 			}
-			$main .= '<p><input type="submit" value="Save Account Settings" /></p>';
-			$main .= '</form>';
 
 			$main .= '<hr />
 			<h2>Cache Settings</h2>
