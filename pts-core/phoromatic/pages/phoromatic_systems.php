@@ -157,10 +157,19 @@ class phoromatic_systems implements pts_webui_interface
 					{
 						foreach($_POST['systems_for_group'] as $sid)
 						{
-							$stmt = phoromatic_server::$db->prepare('UPDATE phoromatic_systems SET Groups = Groups || :new_group WHERE AccountID = :account_id AND SystemID = :system_id');
+							// Find current groups
+							$stmt = phoromatic_server::$db->prepare('SELECT Groups FROM phoromatic_systems WHERE AccountID = :account_id AND SystemID = :system_id ORDER BY LastCommunication DESC');
 							$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 							$stmt->bindValue(':system_id', $sid);
-							$stmt->bindValue(':new_group', '#' . $group . '#');
+							$result = $stmt->execute();
+							$row = $result->fetchArray();
+							$existing_groups = $row != false ? $row['Groups'] : null;
+
+							// Append new Group
+							$stmt = phoromatic_server::$db->prepare('UPDATE phoromatic_systems SET Groups = :new_group WHERE AccountID = :account_id AND SystemID = :system_id');
+							$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+							$stmt->bindValue(':system_id', $sid);
+							$stmt->bindValue(':new_group', $existing_groups . '#' . $group . '#');
 							$stmt->execute();
 						}
 					}
