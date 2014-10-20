@@ -120,6 +120,8 @@ class phoromatic_users implements pts_webui_interface
 			$stmt->bindValue(':user_id', $user_id);
 			$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 			$result = $stmt->execute();
+
+			phoromatic_add_activity_stream_event('users', $_POST['username'], 'added');
 		}
 
 		$main = '<h2>Users</h2>
@@ -158,7 +160,7 @@ class phoromatic_users implements pts_webui_interface
 								break;
 						}
 
-						$main .= '<a href="#"><li>' . $row['UserName'] . '<br /><em><strong>' . $level . '</strong> - Last Login: ' . date('j F Y H:i', strtotime($row['LastLogin'])) . '</em></li></a>';
+						$main .= '<a href="#"><li>' . $row['UserName'] . '<br /><em><strong>' . $level . '</strong> - Last Login: ' . (empty($row['LastLogin']) ? 'Never' : date('j F Y H:i', strtotime($row['LastLogin']))) . '</em></li></a>';
 					}
 					while($row = $result->fetchArray());
 

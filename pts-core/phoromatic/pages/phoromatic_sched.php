@@ -141,6 +141,7 @@ class phoromatic_sched implements pts_webui_interface
 			$stmt->bindValue(':run_target_groups', $run_target_groups);
 			$stmt->bindValue(':run_target_systems', $run_target_systems);
 			$result = $stmt->execute();
+			phoromatic_add_activity_stream_event('schedule', $schedule_id, ($is_new ? 'added' : 'modified'));
 
 			if($result)
 			{

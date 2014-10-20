@@ -152,6 +152,7 @@ class phoromatic_systems implements pts_webui_interface
 					$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 					$stmt->bindValue(':group_name', $group);
 					$result = $stmt->execute();
+					phoromatic_add_activity_stream_event('groups', $group, 'added');
 
 					if(!empty($_POST['systems_for_group']) && is_array($_POST['systems_for_group']))
 					{
@@ -180,6 +181,7 @@ class phoromatic_systems implements pts_webui_interface
 				$stmt = phoromatic_server::$db->prepare('SELECT SystemID FROM phoromatic_systems WHERE AccountID = :account_id');
 				$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 				$result = $stmt->execute();
+				phoromatic_add_activity_stream_event('groups', null, 'modified');
 
 				while($row = $result->fetchArray())
 				{
@@ -205,7 +207,7 @@ class phoromatic_systems implements pts_webui_interface
 				$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 				$stmt->bindValue(':group_name', $_POST['remove_group']);
 				$stmt->execute();
-
+				phoromatic_add_activity_stream_event('groups', $group, 'removed');
 
 				$stmt = phoromatic_server::$db->prepare('SELECT SystemID, Groups FROM phoromatic_systems WHERE AccountID = :account_id AND Groups LIKE \'%#' . $_POST['remove_group'] . '#%\'');
 				$stmt->bindValue(':account_id', $_SESSION['AccountID']);
@@ -316,7 +318,7 @@ class phoromatic_systems implements pts_webui_interface
 
 					$main .= '</div>';
 
-					$main .= '<hr /><h2>System Group Editing</h2><div style="text-align: center;"><form action="' . $_SERVER['REQUEST_URI'] . '" name="update_groups" method="post"><input type="hidden" name="system_group_update"  value="1" />';
+					$main .= '<hr /><a name="group_edit"></a><h2>System Group Editing</h2><div style="text-align: center;"><form action="' . $_SERVER['REQUEST_URI'] . '" name="update_groups" method="post"><input type="hidden" name="system_group_update"  value="1" />';
 					$main .= '<table style="margin: 5px auto; overflow: auto;">';
 					$main .= '<tr>';
 					$main .= '<th></th>';

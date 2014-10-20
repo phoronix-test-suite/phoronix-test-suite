@@ -58,6 +58,18 @@ function phoromatic_webui_footer()
 <p style="margin: 6px 15px;">Copyright &copy; 2008 - ' . date('Y') . ' by <a href="http://www.phoronix-media.com/">Phoronix Media</a>. All rights reserved.<br />
 All trademarks used are properties of their respective owners.<br />' . pts_title(true) . ' - Core Version ' . PTS_CORE_VERSION . ' - PHP ' . PHP_VERSION . '</p></div>';
 }
+function phoromatic_add_activity_stream_event($activity_event, $activity_event_id, $activity_event_type)
+{
+	$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_activity_stream (AccountID, ActivityTime, ActivityCreator, ActivityCreatorType, ActivityEvent, ActivityEventID, ActivityEventType) VALUES (:account_id, :activity_time, :activity_creator, :activity_creator_type, :activity_event, :activity_event_id, :activity_event_type)');
+	$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+	$stmt->bindValue(':activity_time', phoromatic_server::current_time());
+	$stmt->bindValue(':activity_creator', $_SESSION['UserName']);
+	$stmt->bindValue(':activity_creator_type', 'USER');
+	$stmt->bindValue(':activity_event', $activity_event);
+	$stmt->bindValue(':activity_event_id', $activity_event_id);
+	$stmt->bindValue(':activity_event_type', $activity_event_type);
+	return $stmt->execute();
+}
 function phoromatic_webui_header_logged_in()
 {
 	$html_links = array();
@@ -150,7 +162,13 @@ function phoromatic_webui_right_panel_logged_in($add = null)
 	$result = $stmt->execute();
 	$row = $result->fetchArray();
 	$result_count = $row['ResultCount'];
-	$right .= '<hr /><p><strong>' . date('H:i T - j F Y') . '</strong><br />' . $system_count . ' System' . ($system_count == 1 ? '' : 's') . '<br />' . $schedule_count . ' Schedule' . ($schedule_count == 1 ? '' : 's') . '<br />' . $result_count . ' Result' . ($result_count == 1 ? '' : 's') .'<br /><a href="?logout"><strong>Log-Out</strong></a></p>';
+	$stmt = phoromatic_server::$db->prepare('SELECT COUNT(ActivityTime) AS ActivityCount FROM phoromatic_activity_stream WHERE AccountID = :account_id AND ActivityTime LIKE :today_date');
+	$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+	$stmt->bindValue(':today_date', date('Y-m-d') . '%');
+	$result = $stmt->execute();
+	$row = $result->fetchArray();
+	$activity_count = $row['ActivityCount'];
+	$right .= '<hr /><p><strong>' . date('H:i T - j F Y') . '</strong><br /><a href="?systems">' . $system_count . ' System' . ($system_count == 1 ? '' : 's') . '</a><br /><a href="?schedules">' . $schedule_count . ' Schedule' . ($schedule_count == 1 ? '' : 's') . '</a><br /><a href="?results">' . $result_count . ' Result' . ($result_count == 1 ? '' : 's') . '</a><br /><a href="?account_activity">' . $activity_count . ' Activity Events Today</a><br /><a href="?logout"><strong>Log-Out</strong></a></p>';
 
 	return $right;
 }

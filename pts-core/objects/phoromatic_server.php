@@ -97,6 +97,9 @@ class phoromatic_server
 				// Change made 11 October for administrative level
 				self::$db->exec('ALTER TABLE phoromatic_users ADD COLUMN AdminLevel INTEGER DEFAULT 1');
 				self::$db->exec('PRAGMA user_version = 5');
+			case 5:
+				self::$db->exec('CREATE TABLE phoromatic_activity_stream (AccountID TEXT, ActivityTime TEXT, ActivityCreator TEXT, ActivityCreatorType TEXT, ActivityEvent TEXT, ActivityEventID TEXT, ActivityEventType TEXT)');
+				self::$db->exec('PRAGMA user_version = 6');
 		}
 	}
 	public static function send_email($to, $subject, $from, $body)

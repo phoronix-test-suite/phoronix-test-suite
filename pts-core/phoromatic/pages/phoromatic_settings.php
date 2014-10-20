@@ -112,6 +112,7 @@ class phoromatic_settings implements pts_webui_interface
 					);
 
 				$main .= '<form name="system_form" id="system_form" action="?settings" method="post">';
+				$settings_updated = false;
 				foreach($account_settings as $section => $section_settings)
 				{
 					$main .= '<h3>' . $section . '</h3><p>';
@@ -132,6 +133,12 @@ class phoromatic_settings implements pts_webui_interface
 							$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 							$stmt->bindValue(':val', $row[$key]);
 							$stmt->execute();
+
+							if($settings_updated == false)
+							{
+								phoromatic_add_activity_stream_event('settings', null, 'modified');
+								$settings_updated = true;
+							}
 							//echo phoromatic_server::$db->lastErrorMsg();
 						}
 

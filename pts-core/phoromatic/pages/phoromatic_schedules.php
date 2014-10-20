@@ -82,6 +82,7 @@ class phoromatic_schedules implements pts_webui_interface
 						$stmt->bindValue(':test_arguments', $args);
 						$stmt->bindValue(':test_description', $args_name);
 						$result = $stmt->execute();
+						phoromatic_add_activity_stream_event('tests_for_schedule', $PATH[0], 'added');
 					}
 				}
 				else if(isset($PATH[1]) && $PATH[1] == 'remove' && !empty($PATH[2]))
@@ -94,6 +95,7 @@ class phoromatic_schedules implements pts_webui_interface
 					$stmt->bindValue(':test', $to_remove[0]);
 					$stmt->bindValue(':test_args', $to_remove[1]);
 					$result = $stmt->execute();
+					phoromatic_add_activity_stream_event('tests_for_schedule', $to_remove[0] . ' - ' . $to_remove[1], 'removed');
 				}
 				else if(isset($PATH[1]) && in_array($PATH[1], array('activate', 'deactivate')))
 				{
@@ -115,6 +117,7 @@ class phoromatic_schedules implements pts_webui_interface
 					$stmt->bindValue(':new_state', $new_state);
 					$result = $stmt->execute();
 					$row['State'] = $new_state;
+					phoromatic_add_activity_stream_event('schedule', $PATH[0], $PATH[1]);
 				}
 
 

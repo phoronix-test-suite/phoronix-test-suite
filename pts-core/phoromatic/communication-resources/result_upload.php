@@ -97,6 +97,7 @@ $result = $stmt->execute();
 //echo phoromatic_server::$db->lastErrorMsg();
 $result_directory = phoromatic_server::phoromatic_account_result_path(ACCOUNT_ID, $upload_id);
 pts_file_io::mkdir($result_directory);
+//phoromatic_add_activity_stream_event('result', $upload_id, 'uploaded');
 
 file_put_contents($result_directory . 'composite.xml', $composite_xml);
 
