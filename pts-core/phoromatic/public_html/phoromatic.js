@@ -12,12 +12,18 @@ function phoromatic_click_results(new_id)
 		phoromatic_results_clicked.push(new_id);
 	}
 
-	var new_button_area = "";
+	var new_button_area = "<p>";
 
-	if(phoromatic_results_clicked.length > 1)
+	if(phoromatic_results_clicked.length > 0)
 	{
-		new_button_area += "<button type=\"button\" onclick=\"javascript:phoromatic_compare_results();\">Compare Results</button>";
+		var plurality = "";
+		if(phoromatic_results_clicked.length > 1)
+			plurality = "s";
+
+		new_button_area += " <button type=\"button\" onclick=\"javascript:phoromatic_delete_results();\">Delete Result" + plurality + "</button>";
+		new_button_area += " <button type=\"button\" onclick=\"javascript:phoromatic_compare_results();\">Compare Result" + plurality + "</button>";
 	}
+	new_button_area += "</p>";
 
 	document.getElementById("pts_phoromatic_bottom_result_button_area").innerHTML = new_button_area;
 	document.getElementById("pts_phoromatic_top_result_button_area").innerHTML = new_button_area;
@@ -27,6 +33,13 @@ function phoromatic_compare_results()
 	if(phoromatic_results_clicked.length > 1)
 	{
 		window.location.href = "?result/" + phoromatic_results_clicked.join(",");
+	}
+}
+function phoromatic_delete_results()
+{
+	if(phoromatic_results_clicked.length > 0 && confirm("Press OK to delete these results!"))
+	{
+		window.location.href = "?results/delete/" + phoromatic_results_clicked.join(",");
 	}
 }
 function phoromatic_initial_registration(form)

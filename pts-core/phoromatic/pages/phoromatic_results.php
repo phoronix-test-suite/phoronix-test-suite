@@ -40,6 +40,22 @@ class phoromatic_results implements pts_webui_interface
 			echo phoromatic_webui_header_logged_in();
 			$main = null;
 
+			if(!PHOROMATIC_USER_IS_VIEWER && isset($PATH[0]) && $PATH[0] == 'delete')
+			{
+				$upload_ids = explode(',', $PATH[1]);
+
+				foreach($upload_ids as $upload_id)
+				{
+					$stmt = phoromatic_server::$db->prepare('DELETE FROM phoromatic_results WHERE AccountID = :account_id AND UploadID = :upload_id LIMIT 1');
+					$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+					$stmt->bindValue(':upload_id', $upload_id);
+					$result = $stmt->execute();
+
+					$upload_dir = phoromatic_server::phoromatic_account_result_path($_SESSION['AccountID'], $upload_id);
+					pts_file_io::delete($upload_dir);
+				}
+			}
+
 			if($main == null)
 			{
 				$main = '<h1>Test Results</h1>';

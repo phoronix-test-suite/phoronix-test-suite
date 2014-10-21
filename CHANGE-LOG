@@ -18,6 +18,7 @@ Phoronix Test Suite (Git)
 - phoromatic: Support for removing system groups
 - phoromatic: Introduce activity stream and logging of user events / display from "activity events" page
 - phoromatic: Support for merging result files from the results page by clicking on each of them once
+- phoromatic: Support for deleting results from the web UI's results page
 
 Phoronix Test Suite 5.4 Milestone 2
 5 October 2014

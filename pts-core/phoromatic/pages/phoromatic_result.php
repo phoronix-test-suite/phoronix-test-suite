@@ -47,7 +47,7 @@ class phoromatic_result implements pts_webui_interface
 			{
 				$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_results WHERE AccountID = :account_id AND UploadID = :upload_id LIMIT 1');
 				$stmt->bindValue(':account_id', $_SESSION['AccountID']);
-				$stmt->bindValue(':upload_id', $PATH[0]);
+				$stmt->bindValue(':upload_id', $upload_id);
 				$result = $stmt->execute();
 				$row = $result->fetchArray();
 
