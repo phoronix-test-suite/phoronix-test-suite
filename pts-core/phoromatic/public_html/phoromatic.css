@@ -374,7 +374,7 @@ input[type=submit]
 {
 	font-weight: bold;
 }
-input, select, textarea, checkbox
+input, select, textarea, checkbox, button
 {
 	border: solid #1F1F1F 1px;
 	background-color: #E0E0E0;
@@ -393,12 +393,6 @@ textarea
 input:focus, textarea:focus
 {
 	background: #666; color: #FFF;
-}
-button
-{
-	border: solid #1F1F1F 1px;
-	background-color: #272727;
-	color: #E08A09;
 }
 table.pts_phoromatic_schedule_type
 {

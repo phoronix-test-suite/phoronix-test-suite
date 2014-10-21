@@ -40,54 +40,10 @@ class phoromatic_results implements pts_webui_interface
 			echo phoromatic_webui_header_logged_in();
 			$main = null;
 
-			if(isset($PATH[0]))
-			{
-				$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_results WHERE AccountID = :account_id AND UploadID = :upload_id LIMIT 1');
-				$stmt->bindValue(':account_id', $_SESSION['AccountID']);
-				$stmt->bindValue(':upload_id', $PATH[0]);
-				$result = $stmt->execute();
-				$row = $result->fetchArray();
-
-				if($row)
-				{
-					$main .= '<h1>' . $row['Title'] . '</h1>';
-					$composite_xml = phoromatic_server::phoromatic_account_result_path($_SESSION['AccountID'], $PATH[0]) . 'composite.xml';
-					if(!is_file($composite_xml))
-					{
-						echo 'File Not Found.';
-						return false;
-					}
-
-					$result_file = new pts_result_file($composite_xml);
-
-					$extra_attributes = array();
-					$intent = null;
-
-					if($result_file->get_system_count() == 1 || ($intent = pts_result_file_analyzer::analyze_result_file_intent($result_file, $intent, true)))
-					{
-						$table = new pts_ResultFileCompactSystemsTable($result_file, $intent);
-
-					}
-					else
-					{
-						$table = new pts_ResultFileSystemsTable($result_file);
-					}
-
-					$main .= '<p class="result_object">' . pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes) . '</p>';
-
-					foreach($result_file->get_result_objects() as $i => $result_object)
-					{
-						$main .= '<h2><a name="r-' . $i . '"></a>' . $result_object->test_profile->get_title() . '</h2>';
-						$main .= '<p class="result_object">';
-						$main .= pts_render::render_graph_inline_embed($result_object, $result_file, $extra_attributes);
-						$main .= '</p>';
-					}
-				}
-			}
-
 			if($main == null)
 			{
 				$main = '<h1>Test Results</h1>';
+				$main .= '<div id="pts_phoromatic_top_result_button_area"></div>';
 				$main .= '<div class="pts_phoromatic_info_box_area">';
 				$main .= '<div style="float: left; width: 100%;"><ul><li><h1>Recent Test Results</h1></li>';
 				$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, ScheduleID, UploadID, UploadTime FROM phoromatic_results WHERE AccountID = :account_id ORDER BY UploadTime DESC');
@@ -100,7 +56,7 @@ class phoromatic_results implements pts_webui_interface
 					{
 						break;
 					}
-					$main .= '<a href="?results/' . $test_result_row['UploadID'] . '"><li>' . $test_result_row['Title'] . '<br /><em>' . phoromatic_system_id_to_name($test_result_row['SystemID']) . ' - ' . phoromatic_user_friendly_timedate($test_result_row['UploadTime']) .  '</em></li></a>';
+					$main .= '<a onclick="javascript:phoromatic_click_results(\'' . $test_result_row['UploadID'] . '\');"><li id="result_select_' . $test_result_row['UploadID'] . '">' . $test_result_row['Title'] . '<br /><em>' . phoromatic_system_id_to_name($test_result_row['SystemID']) . ' - ' . phoromatic_user_friendly_timedate($test_result_row['UploadTime']) .  '</em></li></a>';
 					$results++;
 
 				}
@@ -109,7 +65,8 @@ class phoromatic_results implements pts_webui_interface
 					$main .= '<li class="light" style="text-align: center;">No Results Found</li>';
 				}
 				$main .= '</ul></div>';
-				$main .= '</div><h3>TODO A lot of other result analysis functionality powered by OpenBenchmarking.org to come in next few days...';
+				$main .= '</div>';
+				$main .= '<div id="pts_phoromatic_bottom_result_button_area"></div>';
 			}
 
 			echo phoromatic_webui_main($main, phoromatic_webui_right_panel_logged_in());

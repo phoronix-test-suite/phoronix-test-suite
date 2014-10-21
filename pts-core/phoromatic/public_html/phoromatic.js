@@ -1,3 +1,34 @@
+var phoromatic_results_clicked = new Array();
+
+function phoromatic_click_results(new_id)
+{
+	if(phoromatic_results_clicked.indexOf(new_id) != -1)
+	{
+		window.location.href = "?result/" + new_id;
+	}
+	else
+	{
+		document.getElementById("result_select_" + new_id).style.background = "#949494";
+		phoromatic_results_clicked.push(new_id);
+	}
+
+	var new_button_area = "";
+
+	if(phoromatic_results_clicked.length > 1)
+	{
+		new_button_area += "<button type=\"button\" onclick=\"javascript:phoromatic_compare_results();\">Compare Results</button>";
+	}
+
+	document.getElementById("pts_phoromatic_bottom_result_button_area").innerHTML = new_button_area;
+	document.getElementById("pts_phoromatic_top_result_button_area").innerHTML = new_button_area;
+}
+function phoromatic_compare_results()
+{
+	if(phoromatic_results_clicked.length > 1)
+	{
+		window.location.href = "?result/" + phoromatic_results_clicked.join(",");
+	}
+}
 function phoromatic_initial_registration(form)
 {
 	if(form.register_username.value.length < 4 || form.register_username.value.indexOf(" ") != -1)
