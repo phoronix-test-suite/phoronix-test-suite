@@ -57,7 +57,7 @@ mkdir -p $DESTDIR$INSTALL_PREFIX/share/man/man1/
 mkdir -p $DESTDIR$INSTALL_PREFIX/share/phoronix-test-suite/
 mkdir -p $DESTDIR$INSTALL_PREFIX/share/doc/phoronix-test-suite/
 mkdir -p $DESTDIR$INSTALL_PREFIX/../etc/bash_completion.d/
-#mkdir -p $DESTDIR$INSTALL_PREFIX/../etc/systemd/system/
+#mkdir -p $DESTDIR$INSTALL_PREFIX/../usr/lib/systemd/system/
 #mkdir -p $DESTDIR$INSTALL_PREFIX/../etc/init/
 
 cp CHANGE-LOG $DESTDIR$INSTALL_PREFIX/share/doc/phoronix-test-suite/
@@ -76,8 +76,8 @@ cp pts-core/static/phoronix-test-suite.desktop $DESTDIR$INSTALL_PREFIX/share/app
 cp pts-core/static/phoronix-test-suite-launcher.desktop $DESTDIR$INSTALL_PREFIX/share/applications/
 cp pts-core/static/phoronix-test-suite.appdata.xml $DESTDIR$INSTALL_PREFIX/share/appdata/
 
-mkdir -p $DESTDIR$INSTALL_PREFIX/../etc/systemd/system/
-cp pts-core/static/*.service $DESTDIR$INSTALL_PREFIX/../etc/systemd/system/
+mkdir -p $DESTDIR$INSTALL_PREFIX/../usr/lib/systemd/system/
+cp pts-core/static/*.service $DESTDIR$INSTALL_PREFIX/../usr/lib/systemd/system/
 
 mkdir -p $DESTDIR$INSTALL_PREFIX/../etc/init/
 cp pts-core/static/upstart/*.conf $DESTDIR$INSTALL_PREFIX/../etc/init/
