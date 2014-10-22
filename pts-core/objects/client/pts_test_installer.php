@@ -22,6 +22,12 @@
 
 class pts_test_installer
 {
+	protected static function test_install_error(&$test_run_manager, &$test_run_request, $error_msg)
+	{
+		$error_obj = array($test_run_manager, $test_run_request, $error_msg);
+		pts_module_manager::module_process('__event_run_error', $error_obj);
+		pts_client::$display->test_install_error($error_msg);
+	}
 	public static function standard_install($items_to_install, $test_flags = 0)
 	{
 		// Refresh the pts_client::$display in case we need to run in debug mode
@@ -253,7 +259,7 @@ class pts_test_installer
 							}
 							else
 							{
-								pts_client::$display->test_install_error('The check-sum of the downloaded file failed.');
+								self::test_install_error(null, $test_install_request, 'The check-sum of the downloaded file failed.');
 								pts_file_io::unlink($download_destination_temp);
 							}
 						}
@@ -302,7 +308,7 @@ class pts_test_installer
 								}
 								else
 								{
-									pts_client::$display->test_install_error('The check-sum of the copied file failed.');
+									self::test_install_error(null, $test_install_request, 'The check-sum of the copied file failed.');
 									pts_file_io::unlink($download_destination_temp);
 								}
 
@@ -356,7 +362,7 @@ class pts_test_installer
 							}
 							else
 							{
-								pts_client::$display->test_install_error('Internet support is needed and it\'s disabled or not available.');
+								self::test_install_error(null, $test_install_request, 'Internet support is needed and it\'s disabled or not available.');
 								return false;
 							}
 
@@ -378,17 +384,17 @@ class pts_test_installer
 								// Download failed
 								if(is_file($download_destination_temp) && filesize($download_destination_temp) < 500 && (stripos(file_get_contents($download_destination_temp), 'not found') !== false || strpos(file_get_contents($download_destination_temp), 404) !== false))
 								{
-									pts_client::$display->test_install_error('File Not Found: ' . $url);
+									self::test_install_error(null, $test_install_request, 'File Not Found: ' . $url);
 									$md5_failed = false;
 								}
 								else if(is_file($download_destination_temp) && filesize($download_destination_temp) > 0)
 								{
-									pts_client::$display->test_install_error('MD5 Failed: ' . $url);
+									self::test_install_error(null, $test_install_request, 'MD5 Failed: ' . $url);
 									$md5_failed = true;
 								}
 								else
 								{
-									pts_client::$display->test_install_error('Download Failed: ' . $url);
+									self::test_install_error(null, $test_install_request, 'Download Failed: ' . $url);
 									$md5_failed = false;
 								}
 
@@ -403,7 +409,7 @@ class pts_test_installer
 								{
 									if(count($package_urls) > 0 && $package_urls[0] != null)
 									{
-										pts_client::$display->test_install_error('Attempting to download from alternate mirror.');
+										self::test_install_error(null, $test_install_request, 'Attempting to download from alternate mirror.');
 										$try_again = true;
 									}
 									else
@@ -430,7 +436,7 @@ class pts_test_installer
 
 								if(!$try_again)
 								{
-									//pts_client::$display->test_install_error('Download of Needed Test Dependencies Failed!');
+									//self::test_install_error(null, $test_install_request, 'Download of Needed Test Dependencies Failed!');
 									return false;
 								}
 							}
@@ -668,11 +674,11 @@ class pts_test_installer
 
 		if(ceil(disk_free_space($test_install_directory) / 1048576) < ($test_install_request->test_profile->get_download_size() + 128))
 		{
-			pts_client::$display->test_install_error('There is not enough space at ' . $test_install_directory . ' for the test files.');
+			self::test_install_error(null, $test_install_request, 'There is not enough space at ' . $test_install_directory . ' for the test files.');
 		}
 		else if(ceil(disk_free_space($test_install_directory) / 1048576) < ($test_install_request->test_profile->get_environment_size(false) + 128))
 		{
-			pts_client::$display->test_install_error('There is not enough space at ' . $test_install_directory . ' for this test.');
+			self::test_install_error(null, $test_install_request, 'There is not enough space at ' . $test_install_directory . ' for this test.');
 		}
 		else
 		{
@@ -683,7 +689,7 @@ class pts_test_installer
 
 			if($download_test_files == false)
 			{
-				pts_client::$display->test_install_error('Downloading of needed test files failed.');
+				self::test_install_error(null, $test_install_request, 'Downloading of needed test files failed.');
 				return false;
 			}
 
@@ -705,7 +711,7 @@ class pts_test_installer
 
 						if(empty($install_agreement))
 						{
-							pts_client::$display->test_install_error('The user agreement could not be found. Test installation aborted.');
+							self::test_install_error(null, $test_install_request, 'The user agreement could not be found. Test installation aborted.');
 							return false;
 						}
 					}
@@ -715,7 +721,7 @@ class pts_test_installer
 
 					if(!$user_agrees)
 					{
-						pts_client::$display->test_install_error('User agreement failed; this test will not be installed.');
+						self::test_install_error(null, $test_install_request, 'User agreement failed; this test will not be installed.');
 						return false;
 					}
 				}
@@ -754,14 +760,14 @@ class pts_test_installer
 						}
 
 						//pts_test_installer::setup_test_install_directory($test_install_request, true); // Remove installed files from the bunked installation
-						pts_client::$display->test_install_error('The installer exited with a non-zero exit status.');
+						self::test_install_error(null, $test_install_request, 'The installer exited with a non-zero exit status.');
 						if($install_error != null)
 						{
 							$test_install_request->install_error = pts_tests::pretty_error_string($install_error);
 
 							if($test_install_request->install_error != null)
 							{
-								pts_client::$display->test_install_error('ERROR: ' . $test_install_request->install_error);
+								self::test_install_error(null, $test_install_request, 'ERROR: ' . $test_install_request->install_error);
 							}
 						}
 						pts_client::$display->test_install_error('LOG: ' . str_replace(pts_client::user_home_directory(), '~/', $test_install_directory) . 'install-failed.log' . PHP_EOL);
