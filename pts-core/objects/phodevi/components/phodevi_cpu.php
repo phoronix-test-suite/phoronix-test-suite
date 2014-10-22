@@ -186,6 +186,12 @@ class phodevi_cpu extends phodevi_device_interface
 		{
 			$cpu_mhz = self::read_cpuinfo_line('cpu MHz');
 			$info = $cpu_mhz / 1000;
+
+			if(empty($info))
+			{
+				$cpu_mhz = self::read_cpuinfo_line('clock');
+				$info = $cpu_mhz / 1000;
+			}
 		}
 		else if($info == null && phodevi::is_bsd())
 		{
@@ -258,18 +264,18 @@ class phodevi_cpu extends phodevi_device_interface
 			$physical_cpu_ids = phodevi_linux_parser::read_cpuinfo('physical id');
 			$physical_cpu_count = count(array_unique($physical_cpu_ids));
 
-			$cpu_strings = phodevi_linux_parser::read_cpuinfo(array('model name', 'Processor'));
+			$cpu_strings = phodevi_linux_parser::read_cpuinfo(array('model name', 'Processor', 'cpu'));
 			$cpu_strings_unique = array_unique($cpu_strings);
 
 			if($physical_cpu_count == 1 || empty($physical_cpu_count))
 			{
 				// Just one processor
-				if(($cut = strpos($cpu_strings[0], ' (')) !== false)
+				if(isset($cpu_strings[0]) && ($cut = strpos($cpu_strings[0], ' (')) !== false)
 				{
 					$cpu_strings[0] = substr($cpu_strings[0], 0, $cut);
 				}
 
-				$info = $cpu_strings[0];
+				$info = isset($cpu_strings[0]) ? $cpu_strings[0] : null;
 
 				if(strpos($info, 'ARM') !== false)
 				{

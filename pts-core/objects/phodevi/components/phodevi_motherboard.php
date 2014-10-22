@@ -413,6 +413,16 @@ class phodevi_motherboard extends phodevi_device_interface
 				{
 					$info = $bios_vendor . ' ' . $bios_version;
 				}
+
+				if($info == null)
+				{
+					$hw_string = phodevi_linux_parser::read_cpuinfo('machine');
+
+					if(count($hw_string) == 1)
+					{
+						$info = $hw_string[0];
+					}
+				}
 			}
 
 			if(empty($info))

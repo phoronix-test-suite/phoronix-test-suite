@@ -6,6 +6,7 @@ Phoronix Test Suite 5.4 (Git)
 - phoromatic: Report benchmarking / test run errors to server
 - phoromatic: Show system errors/warnings from the Phoromatic web UI
 - phoromatic: Don't attempt to re-run test schedules on clients if they previously reported errors/warnings for that schedule / trigger ID combination
+- phodevi: IBM POWER hardware detection improvements
 
 Phoronix Test Suite 5.4 Milestone 3
 20 October 2014
