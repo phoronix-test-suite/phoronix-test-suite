@@ -51,7 +51,7 @@ class phoromatic_account_activity implements pts_webui_interface
 			if($prev_date != substr($row['ActivityTime'], 0, 10))
 			{
 				if($prev_date != null)
-					$main .= '<hr />';
+					$main .= '</p><hr />';
 
 				$prev_date = substr($row['ActivityTime'], 0, 10);
 				$new_date = strtotime($row['ActivityTime']);
@@ -68,6 +68,7 @@ class phoromatic_account_activity implements pts_webui_interface
 				{
 					$main .= '<h2>' . date('j F Y', $new_date) . '</h2>';
 				}
+				$main .= '<p>';
 			}
 
 			$id_link_format = $row['ActivityEventID'];
@@ -109,18 +110,21 @@ class phoromatic_account_activity implements pts_webui_interface
 
 			if($row['ActivityCreatorType'] == 'USER')
 			{
-				$main .= '<p><em>' . date('H:i', strtotime($row['ActivityTime'])) . '</em> &nbsp; <strong>' . $row['ActivityCreator'] . '</strong> <strong> ' . $row['ActivityEventType'] . '</strong> <strong>' . $event_link_format . '</strong>';
+				$main .= '<em>' . date('H:i', strtotime($row['ActivityTime'])) . '</em> &nbsp; <strong>' . $row['ActivityCreator'] . '</strong> <strong> ' . $row['ActivityEventType'] . '</strong> <strong>' . $event_link_format . '</strong>';
 
 				if($id_link_format != null)
 					$main .= ': ' . $id_link_format;
 
-				$main .= '</p>' . PHP_EOL;
+				$main .= '<br />' . PHP_EOL;
 
 			}
 
 			//$main .= '<p>' .  $row['ActivityCreator'] . ' ' . $row['ActivityCreatorType'] . ' ' . $row['ActivityEvent'] . ' ' . $row['ActivityEventID'] . ' ' . $row['ActivityEventType'] . '</p>';
 		}
 		while($row = $result->fetchArray());
+
+		if($prev_date != null)
+			$main .= '</p>';
 
 		echo phoromatic_webui_header_logged_in();
 		echo phoromatic_webui_main($main, phoromatic_webui_right_panel_logged_in());
