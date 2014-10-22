@@ -22,7 +22,7 @@
 
 class pts_test_installer
 {
-	protected static function test_install_error(&$test_run_manager, &$test_run_request, $error_msg)
+	protected static function test_install_error($test_run_manager, &$test_run_request, $error_msg)
 	{
 		$error_obj = array($test_run_manager, $test_run_request, $error_msg);
 		pts_module_manager::module_process('__event_run_error', $error_obj);
