@@ -51,6 +51,16 @@ function phoromatic_webui_box(&$box)
 {
 	return '<div id="pts_phoromatic_main_box"><div id="pts_phoromatic_main_box_inside">' . $box . '</div></div>';
 }
+function phoromatic_results_for_schedule($schedule_id)
+{
+	$stmt = phoromatic_server::$db->prepare('SELECT COUNT(UploadID) As UploadCount FROM phoromatic_results WHERE AccountID = :account_id AND ScheduleID = :schedule_id');
+	$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+	$stmt->bindValue(':schedule_id', $schedule_id);
+	$test_result_result = $stmt->execute();
+	$row = $test_result_result->fetchArray();
+
+	return empty($row) ? 0 : $row['UploadCount'];
+}
 function phoromatic_webui_footer()
 {
 	return '<div id="pts_phoromatic_bottom_footer">

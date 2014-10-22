@@ -208,6 +208,7 @@ class phoromatic_schedules implements pts_webui_interface
 					$main .= '</select>';
 					$main .= '<p><div id="test_details"></div></p>';
 					$main .= '</form>';
+					$main .= '<hr />';
 				}
 
 				$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, ScheduleID, UploadID, UploadTime FROM phoromatic_results WHERE AccountID = :account_id AND ScheduleID = :schedule_id ORDER BY UploadTime DESC');
@@ -227,7 +228,7 @@ class phoromatic_schedules implements pts_webui_interface
 						{
 							break;
 						}
-						$main .= '<a href="?results/' . $test_result_row['UploadID'] . '"><li>' . $test_result_row['Title'] . '<br /><em>' . phoromatic_system_id_to_name($test_result_row['SystemID']) . ' - ' . phoromatic_user_friendly_timedate($test_result_row['UploadTime']) .  '</em></li></a>';
+						$main .= '<a href="?result/' . $test_result_row['UploadID'] . '"><li>' . $test_result_row['Title'] . '<br /><em>' . phoromatic_system_id_to_name($test_result_row['SystemID']) . ' - ' . phoromatic_user_friendly_timedate($test_result_row['UploadTime']) .  '</em></li></a>';
 						$results++;
 
 					}
@@ -235,6 +236,8 @@ class phoromatic_schedules implements pts_webui_interface
 					$main .= '</ul></div>';
 					$main .= '</div>';
 				}
+
+				$main .= '<p><strong>' . phoromatic_results_for_schedule($PATH[0]) . ' Test Results Available For This Schedule.</strong></p>';
 			}
 
 			echo phoromatic_webui_main($main, phoromatic_webui_right_panel_logged_in());
@@ -268,7 +271,7 @@ class phoromatic_schedules implements pts_webui_interface
 						{
 							$system_count = empty($row['RunTargetSystems']) ? 0 : count(explode(',', $row['RunTargetSystems']));
 							$group_count = empty($row['RunTargetGroups']) ? 0 : count(explode(',', $row['RunTargetGroups']));
-							$main .= '<a href="?schedules/' . $row['ScheduleID'] . '"><li>' . $row['Title'] . '<br /><em><strong>' . $system_count . ' Systems | ' . $group_count . ' Groups</strong> ' . $row['Description'] . ' </em></li></a>';
+							$main .= '<a href="?schedules/' . $row['ScheduleID'] . '"><li>' . $row['Title'] . '<br /><em><strong>' . $system_count . ' Systems | ' . $group_count . ' Groups | ' . phoromatic_results_for_schedule($row['ScheduleID']) . ' Results</strong> ' . $row['Description'] . ' </em></li></a>';
 						}
 						while($row = $result->fetchArray());
 					}
