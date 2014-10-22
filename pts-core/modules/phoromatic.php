@@ -497,6 +497,12 @@ class phoromatic extends pts_module_interface
 			phoromatic::upload_unscheduled_test_results($test_run_manager->get_file_name());
 		}*/
 	}
+	public static function __event_run_error($error)
+	{
+		// TODO XXX report $error_msg to server
+		// Passed is an array where the first element is a copy of the test_run_manager, the second elemnt is the test_run_request, and the third element is the error_msg string
+		return;
+	}
 
 	//
 	// TODO XXX: The code below here is Phoromatic legacy code still needing to be ported to the new interfaces of PTS 5.2 Khanino
