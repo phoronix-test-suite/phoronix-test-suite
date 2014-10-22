@@ -4,6 +4,7 @@ Phoronix Test Suite 5.4 (Git)
 
 - phoromatic: Reporting of overall result counts for given test schedules
 - phoromatic: Report benchmarking / test run errors to server
+- phoromatic: Show system errors/warnings from the Phoromatic web UI
 
 Phoronix Test Suite 5.4 Milestone 3
 20 October 2014

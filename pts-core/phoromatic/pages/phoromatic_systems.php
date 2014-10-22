@@ -136,6 +136,22 @@ class phoromatic_systems implements pts_webui_interface
 				}
 
 
+				// Any System Errors?
+				$stmt = phoromatic_server::$db->prepare('SELECT ErrorMessage, UploadTime, SystemID, TestIdentifier FROM phoromatic_system_client_errors WHERE AccountID = :account_id AND SystemID = :system_id ORDER BY UploadTime DESC LIMIT 10');
+				$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+				$stmt->bindValue(':system_id', $PATH[0]);
+				$result = $stmt->execute();
+				$row = $result->fetchArray();
+				if($row != false)
+				{
+					$main .= '<hr /><ul><li><h1>Recent System Warnings &amp; Errors</h1></li>';
+					do
+					{
+						$main .= '<a href="#"><li>' . $row['ErrorMessage'] . '<br /><em>' . $row['UploadTime'] . ' - ' . $row['TestIdentifier'] . '</em></li></a>';
+					}
+					while($row = $result->fetchArray());
+					$main .= '	</ul>';
+				}
 			}
 		}
 

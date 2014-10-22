@@ -172,9 +172,28 @@ class phoromatic_main implements pts_webui_interface
 				</div>
 				<div style="float: left; width: 50%;">
 					<ul>
-						<li><h1>Recent System Warnings &amp; Errors</h1></li>
-						<li class="light" style="text-align: center;">No Warnings Or Errors At This Time</li>
-					</ul>
+						<li><h1>Recent System Warnings &amp; Errors</h1></li>';
+
+		$stmt = phoromatic_server::$db->prepare('SELECT ErrorMessage, UploadTime, SystemID, TestIdentifier FROM phoromatic_system_client_errors WHERE AccountID = :account_id ORDER BY UploadTime DESC LIMIT 10');
+		$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+		$result = $stmt->execute();
+		$row = $result->fetchArray();
+
+		if($row == false)
+		{
+			$main .= '<li class="light" style="text-align: center;">No Warnings Or Errors At This Time</li>';
+		}
+		else
+		{
+			do
+			{
+				$main .= '<a href="?systems/' . $row['SystemID'] . '"><li>' . $row['ErrorMessage'] . '<br /><em>' . $row['UploadTime'] . ' - ' . $row['TestIdentifier'] . '</em></li></a>';
+			}
+			while($row = $result->fetchArray());
+		}
+
+
+		$main .= '	</ul>
 				</div>
 			</div>';
 
