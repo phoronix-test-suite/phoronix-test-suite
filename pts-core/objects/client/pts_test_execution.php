@@ -22,14 +22,16 @@
 
 class pts_test_execution
 {
-	protected static function test_run_error($test_run_manager, $test_run_request, $error_msg)
+	protected static function test_run_error(&$test_run_manager, &$test_run_request, $error_msg)
 	{
-		pts_module_manager::module_process('__event_run_error', array($test_run_manager, $test_run_request, $error_msg));
+		$error_obj = array($test_run_manager, $test_run_request, $error_msg);
+		pts_module_manager::module_process('__event_run_error', $error_obj);
 		pts_client::$display->test_run_error($error_msg);
 	}
-	protected static function test_run_instance_error($test_run_manager, $test_run_request, $error_msg)
+	protected static function test_run_instance_error(&$test_run_manager, &$test_run_request, $error_msg)
 	{
-		pts_module_manager::module_process('__event_run_error', array($test_run_manager, $test_run_request, $error_msg));
+		$error_obj = array($test_run_manager, $test_run_request, $error_msg);
+		pts_module_manager::module_process('__event_run_error', $error_obj);
 		pts_client::$display->test_run_instance_error($error_msg);
 	}
 	public static function run_test(&$test_run_manager, &$test_run_request)
