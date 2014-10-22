@@ -100,6 +100,9 @@ class phoromatic_server
 			case 5:
 				self::$db->exec('CREATE TABLE phoromatic_activity_stream (AccountID TEXT, ActivityTime TEXT, ActivityCreator TEXT, ActivityCreatorType TEXT, ActivityEvent TEXT, ActivityEventID TEXT, ActivityEventType TEXT)');
 				self::$db->exec('PRAGMA user_version = 6');
+			case 6:
+				self::$db->exec('CREATE TABLE phoromatic_system_client_errors (AccountID TEXT, SystemID TEXT, UploadTime TEXT, ScheduleID INTEGER, TriggerID TEXT, ErrorMessage TEXT, TestIdentifier TEXT, TestArguments TEXT)');
+				self::$db->exec('PRAGMA user_version = 7');
 		}
 	}
 	public static function send_email($to, $subject, $from, $body)

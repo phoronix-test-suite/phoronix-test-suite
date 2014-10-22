@@ -34,6 +34,10 @@ class phoromatic extends pts_module_interface
 	private static $is_running_as_phoromatic_node = false;
 	private static $log_file = null;
 
+	private static $p_save_identifier = null;
+	private static $p_schedule_id = null;
+	private static $p_trigger_id = null;
+
 	public static function module_info()
 	{
 		return 'The Phoromatic module contains the client support for interacting with Phoromatic and Phoromatic Tracker services.';
@@ -262,15 +266,16 @@ class phoromatic extends pts_module_interface
 						$test_flags = pts_c::auto_mode | pts_c::batch_mode;
 						$suite_identifier = sha1(time() . rand(0, 100));
 						pts_suite_nye_XmlReader::set_temporary_suite($suite_identifier, $json['phoromatic']['test_suite']);
-						$phoromatic_schedule_id = $json['phoromatic']['trigger_id'];
-						$phoromatic_results_identifier = $phoromatic_schedule_id;
+						self::$p_save_identifier = $json['phoromatic']['trigger_id'];
+						$phoromatic_results_identifier = self::$p_save_identifier;
 						$phoromatic_save_identifier = $json['phoromatic']['save_identifier'];
-						$phoromatic_trigger = $phoromatic_schedule_id;
-						phoromatic::update_system_status('Running Benchmarks For Schedule: ' . $phoromatic_save_identifier . ' - ' . $phoromatic_schedule_id);
+						self::$p_schedule_id = $json['phoromatic']['schedule_id'];
+						self::$p_trigger_id = self::$p_save_identifier;
+						phoromatic::update_system_status('Running Benchmarks For Schedule: ' . $phoromatic_save_identifier . ' - ' . self::$p_save_identifier);
 
 						if($json['phoromatic']['settings']['RunInstallCommand'])
 						{
-							phoromatic::set_user_context($json['phoromatic']['pre_install_set_context'], $phoromatic_trigger, $phoromatic_schedule_id, 'PRE_INSTALL');
+							phoromatic::set_user_context($json['phoromatic']['pre_install_set_context'], self::$p_trigger_id, self::$p_save_identifier, 'PRE_INSTALL');
 
 							if($json['phoromatic']['settings']['ForceInstallTests'])
 							{
@@ -279,7 +284,7 @@ class phoromatic extends pts_module_interface
 
 							pts_client::set_test_flags($test_flags);
 							pts_test_installer::standard_install($suite_identifier);
-							phoromatic::set_user_context($json['phoromatic']['post_install_set_context'], $phoromatic_trigger, $phoromatic_schedule_id, 'POST_INSTALL');
+							phoromatic::set_user_context($json['phoromatic']['post_install_set_context'], self::$p_trigger_id, self::$p_save_identifier, 'POST_INSTALL');
 						}
 
 						// Do the actual running
@@ -296,7 +301,7 @@ class phoromatic extends pts_module_interface
 							// Load the tests to run
 							if($test_run_manager->load_tests_to_run($suite_identifier))
 							{
-								phoromatic::set_user_context($json['phoromatic']['pre_run_set_context'], $phoromatic_trigger, $phoromatic_schedule_id, 'PRE_RUN');
+								phoromatic::set_user_context($json['phoromatic']['pre_run_set_context'], self::$p_trigger_id, self::$p_save_identifier, 'PRE_RUN');
 								if(false)
 								{
 									$test_run_manager->auto_upload_to_openbenchmarking();
@@ -309,7 +314,7 @@ class phoromatic extends pts_module_interface
 								// Run the actual tests
 								$test_run_manager->pre_execution_process();
 								$test_run_manager->call_test_runs();
-								phoromatic::update_system_status('Benchmarks Completed For Schedule: ' . $phoromatic_save_identifier . ' - ' . $phoromatic_schedule_id);
+								phoromatic::update_system_status('Benchmarks Completed For Schedule: ' . $phoromatic_save_identifier . ' - ' . self::$p_save_identifier);
 								$test_run_manager->post_execution_process();
 
 								// Handle uploading data to server
@@ -404,7 +409,7 @@ class phoromatic extends pts_module_interface
 									pts_client::remove_saved_result_file($test_run_manager->get_file_name());
 								}
 							}
-							phoromatic::set_user_context($json['phoromatic']['post_install_set_context'], $phoromatic_trigger, $phoromatic_schedule_id, 'POST_RUN');
+							phoromatic::set_user_context($json['phoromatic']['post_install_set_context'], self::$p_trigger_id, self::$p_save_identifier, 'POST_RUN');
 						}
 						self::$is_running_as_phoromatic_node = false;
 					break;
@@ -497,11 +502,19 @@ class phoromatic extends pts_module_interface
 			phoromatic::upload_unscheduled_test_results($test_run_manager->get_file_name());
 		}*/
 	}
-	public static function __event_run_error($error)
+	public static function __event_run_error($error_obj)
 	{
-		// TODO XXX report $error_msg to server
-		// Passed is an array where the first element is a copy of the test_run_manager, the second elemnt is the test_run_request, and the third element is the error_msg string
-		return;
+		list($test_run_manager, $test_run_request, $error_msg) = $error_obj;
+
+		$server_response = phoromatic::upload_to_remote_server(array(
+			'r' => 'error_report',
+			'sched' => self::$p_schedule_id,
+			'ts' => self::$p_trigger_id,
+			'err' => $error_msg,
+			'ti' => $test_run_request->test_profile->get_identifier(),
+			'o' => $test_run_request->get_arguments_description()
+			));
+		pts_client::$pts_logger->log('XXX TEMP DEBUG MESSAGE: ' . $server_response);
 	}
 
 	//
@@ -595,15 +608,15 @@ class phoromatic extends pts_module_interface
 					pts_file_io::mkdir(PTS_TEST_SUITE_PATH . 'local/' . $suite_identifier);
 					file_put_contents(PTS_TEST_SUITE_PATH . 'local/' . $suite_identifier . '/suite-definition.xml', $server_response);
 
-					$phoromatic_schedule_id = $xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/ID');
+					self::$p_save_identifier = $xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/ID');
 					$phoromatic_results_identifier = $xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/SystemName');
-					$phoromatic_trigger = $xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/Trigger');
+					self::$p_trigger_id = $xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/Trigger');
 					self::$openbenchmarking_upload_json = null;
 
 					$suite_identifier = 'local/' . $suite_identifier;
 					if(pts_strings::string_bool($xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/RunInstallCommand', 'TRUE')))
 					{
-						phoromatic::set_user_context($xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/SetContextPreInstall'), $phoromatic_trigger, $phoromatic_schedule_id, 'INSTALL');
+						phoromatic::set_user_context($xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/SetContextPreInstall'), self::$p_trigger_id, self::$p_save_identifier, 'INSTALL');
 
 						if(pts_strings::string_bool($xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/ForceInstallTests', 'TRUE')))
 						{
@@ -614,7 +627,7 @@ class phoromatic extends pts_module_interface
 						pts_test_installer::standard_install($suite_identifier);
 					}
 
-					phoromatic::set_user_context($xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/SetContextPreRun'), $phoromatic_trigger, $phoromatic_schedule_id, 'INSTALL');
+					phoromatic::set_user_context($xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/SetContextPreRun'), self::$p_trigger_id, $phoromatic_schedule_id, 'INSTALL');
 
 
 					// Do the actual running
@@ -665,7 +678,7 @@ class phoromatic extends pts_module_interface
 										sleep(60);
 									}
 
-									$uploaded_test_results = phoromatic::upload_test_results($test_run_manager->get_file_name(), $phoromatic_schedule_id, $phoromatic_results_identifier, $phoromatic_trigger, $xml_parser);
+									$uploaded_test_results = phoromatic::upload_test_results($test_run_manager->get_file_name(), $phoromatic_schedule_id, $phoromatic_results_identifier, self::$p_trigger_id, $xml_parser);
 									$times_tried++;
 								}
 								while($uploaded_test_results == false && $times_tried < 5);
