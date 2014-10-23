@@ -34,9 +34,9 @@ div#pts_phoromatic_top_header
 	overflow: hidden;
 	line-height: 80px;
 	margin: 20px 20px 0;
-	box-shadow: 1px 1px 4px #1F1F1F;
-	-moz-box-shadow: 1px 1px 4px #1F1F1F;
-	-webkit-box-shadow: 1px 1px 4px #1F1F1F;
+	box-shadow: 1px 1px 2px #1F1F1F;
+	-moz-box-shadow: 1px 1px 2px #1F1F1F;
+	-webkit-box-shadow: 1px 1px 2px #1F1F1F;
 }
 div#pts_phoromatic_top_header input, div#pts_phoromatic_top_header button
 {
@@ -67,9 +67,9 @@ div#pts_phoromatic_bottom_footer
 	line-height: 150%;
 	color: #E0E0E0;
 	margin: 0 20px 20px;
-	box-shadow: 1px 1px 4px #1F1F1F;
-	-moz-box-shadow: 1px 1px 4px #1F1F1F;
-	-webkit-box-shadow: 1px 1px 4px #1F1F1F;
+	box-shadow: 1px 1px 2px #1F1F1F;
+	-moz-box-shadow: 1px 1px 2px #1F1F1F;
+	-webkit-box-shadow: 1px 1px 2px #1F1F1F;
 }
 div#pts_phoromatic_bottom_footer a img
 {
@@ -149,9 +149,9 @@ div#pts_phoromatic_menu_right
 	color: #e4e4e4;
 	margin: 0 0 -2500px;
 	padding-bottom: 2500px;
-	box-shadow: 1px 1px 4px #1F1F1F;
-	-moz-box-shadow: 1px 1px 4px #1F1F1F;
-	-webkit-box-shadow: 1px 1px 4px #1F1F1F;
+	box-shadow: 1px 1px 2px #1F1F1F;
+	-moz-box-shadow: 1px 1px 2px #1F1F1F;
+	-webkit-box-shadow: 1px 1px 2px #1F1F1F;
 }
 div#pts_phoromatic_menu_right ul
 {
@@ -208,9 +208,9 @@ div#pts_phoromatic_main_box_inside
 	border: #1F1F1F 1px solid;
 	border-radius: 14px;
 	min-height: 500px;
-	box-shadow: 1px 1px 4px #1F1F1F;
-	-moz-box-shadow: 1px 1px 4px #1F1F1F;
-	-webkit-box-shadow: 1px 1px 4px #1F1F1F;
+	box-shadow: 1px 1px 2px #1F1F1F;
+	-moz-box-shadow: 1px 1px 2px #1F1F1F;
+	-webkit-box-shadow: 1px 1px 2px #1F1F1F;
 }
 div#pts_phoromatic_main
 {
@@ -369,6 +369,7 @@ div#pts_phoromatic_main_area div.pts_phoromatic_info_box_area ul a:hover li, div
 {
 	background: #E0E0E0;
 	text-decoration: none;
+	transition: all 0.4s;
 }
 input[type=submit]
 {
@@ -381,9 +382,9 @@ input, select, textarea, checkbox, button
 	color: #1F1F1F;
 	padding: 4px 10px;
 	border-radius: 10px;
-	box-shadow: 1px 1px 4px #222;
-	-moz-box-shadow: 1px 1px 4px #222;
-	-webkit-box-shadow: 1px 1px 4px #222;
+	box-shadow: 1px 1px 2px #222;
+	-moz-box-shadow: 1px 1px 2px #222;
+	-webkit-box-shadow: 1px 1px 2px #222;
 	transition: all 0.3s;
 }
 textarea

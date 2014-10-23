@@ -123,7 +123,7 @@ class phoromatic_systems implements pts_webui_interface
 							break;
 						}
 
-						$main .= '<a href="?results/' . $test_result_row['UploadID'] . '"><li>' . $test_result_row['Title'] . '<br /><em>' . phoromatic_system_id_to_name($test_result_row['SystemID']) . ' - ' . phoromatic_user_friendly_timedate($test_result_row['UploadTime']) .  '</em></li></a>';
+						$main .= '<a href="?result/' . $test_result_row['UploadID'] . '"><li>' . $test_result_row['Title'] . '<br /><em>' . phoromatic_system_id_to_name($test_result_row['SystemID']) . ' - ' . phoromatic_user_friendly_timedate($test_result_row['UploadTime']) .  '</em></li></a>';
 						$results++;
 
 					}
