@@ -54,6 +54,7 @@ PHORONIX TEST SUITE PUBLIC TODO LIST:
 - https://github.com/facebook/linkbench
 - https://github.com/vasi/pixz
 - http://nondot.org/sabre/LLVMNotes/#benchmarks
+- http://benchmarksgame.alioth.debian.org/u32/performance.php?test=fasta / http://benchmarksgame.alioth.debian.org/u32/program.php?test=nbody&lang=gcc&id=1#sourcecode
 
 ### WEB SOCKET / HTML5 USER INTERFACE WORK ###
 
