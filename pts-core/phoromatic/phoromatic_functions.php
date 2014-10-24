@@ -134,10 +134,11 @@ function phoromatic_webui_right_panel_logged_in($add = null)
 
 		$right .= '<hr />
 			<ul>
-				<li>Active Test Events</li>';
+				<li>Today\'s Scheduled Events</li>';
 
-			$stmt = phoromatic_server::$db->prepare('SELECT Title, ScheduleID FROM phoromatic_schedules WHERE AccountID = :account_id AND State >= 1 ORDER BY Title ASC');
+			$stmt = phoromatic_server::$db->prepare('SELECT Title, ScheduleID, RunAt FROM phoromatic_schedules WHERE AccountID = :account_id AND State >= 1  AND ActiveOn LIKE :active_on ORDER BY RunAt,Title ASC');
 			$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+			$stmt->bindValue(':active_on', '%' . (date('N') - 1) . '%');
 			$result = $stmt->execute();
 			$row = $result->fetchArray();
 
@@ -149,7 +150,7 @@ function phoromatic_webui_right_panel_logged_in($add = null)
 			{
 				do
 				{
-					$right .= '<li><a href="?schedules/' . $row['ScheduleID'] . '">' . $row['Title'] . '</a></li>';
+					$right .= '<li>' . $row['RunAt'] . ' <a href="?schedules/' . $row['ScheduleID'] . '">' . $row['Title'] . '</a></li>';
 				}
 				while($row = $result->fetchArray());
 				$right .= '</ul>';
