@@ -89,9 +89,9 @@ function phoromatic_initial_registration(form)
 }
 function phoromatic_login(form)
 {
-	if(form.username.value.length < 6)
+	if(form.username.value.length < 4)
 	{
-		alert("Please enter a valid username; it should be at least six characters long.");
+		alert("Please enter a valid username; it should be at least four characters long.");
 		return false;
 	}
 	if(form.password.value.length < 4)
