@@ -63,7 +63,7 @@ class phoromatic_main implements pts_webui_interface
 			<div class="pts_phoromatic_info_box_area">';
 
 		// ACTIVE TEST SCHEDULES
-		$main .= '<div style="float: left; width: 100%;"><ul><li><h1>Active Test Schedules</h1></li>';
+		$main .= '<div style="float: left; width: 50%;"><ul><li><h1>Active Test Schedules</h1></li>';
 		$stmt = phoromatic_server::$db->prepare('SELECT Title, ScheduleID, Description, RunTargetSystems, RunTargetGroups FROM phoromatic_schedules WHERE AccountID = :account_id AND State >= 1 ORDER BY Title ASC');
 		$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 		$result = $stmt->execute();
@@ -85,7 +85,7 @@ class phoromatic_main implements pts_webui_interface
 		}
 		$main .= '</ul></div>';
 		// TODAY'S TEST RESULTS
-		$main .= '<div style="float: left; width: 100%;"><ul><li><h1>Today\'s Test Results</h1></li>';
+		$main .= '<div style="float: left; width: 50%;"><ul><li><h1>Today\'s Test Results</h1></li>';
 		$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, ScheduleID, UploadID, UploadTime FROM phoromatic_results WHERE AccountID = :account_id ORDER BY UploadTime DESC');
 		$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 		$test_result_result = $stmt->execute();
@@ -143,7 +143,6 @@ class phoromatic_main implements pts_webui_interface
 		}
 
 		$main .= '</div>
-			<h2>Systems</h2>
 			<div class="pts_phoromatic_info_box_area">
 
 				<div style="float: left; width: 50%;">

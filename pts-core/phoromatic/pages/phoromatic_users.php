@@ -133,7 +133,7 @@ class phoromatic_users implements pts_webui_interface
 			</ol>
 			<div class="pts_phoromatic_info_box_area">
 
-				<div style="float: left; width: 100%;">
+				<div style="margin: 0 20%;">
 					<ul>
 						<li><h1>All Users</h1></li>';
 

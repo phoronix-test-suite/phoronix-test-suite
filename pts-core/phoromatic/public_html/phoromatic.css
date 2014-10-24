@@ -28,12 +28,9 @@ div#pts_phoromatic_top_header
 	background-image: -ms-linear-gradient(bottom, #0983E0 0%, #076DBA 100%);
 	background-image: linear-gradient(to bottom, #0983E0 0%, #076DBA 100%);
 	border: #1F1F1F 1px solid;
-	border-top-left-radius: 14px;
-	border-bottom-left-radius: 14px;
-	border-top-right-radius: 14px;
 	overflow: hidden;
 	line-height: 80px;
-	margin: 20px 20px 0;
+	margin: 0;
 	box-shadow: 1px 1px 2px #1F1F1F;
 	-moz-box-shadow: 1px 1px 2px #1F1F1F;
 	-webkit-box-shadow: 1px 1px 2px #1F1F1F;
@@ -57,16 +54,11 @@ div#pts_phoromatic_bottom_footer
 	background-image: -ms-linear-gradient(bottom, #0983E0 0%, #076DBA 100%);
 	background-image: linear-gradient(to bottom, #0983E0 0%, #076DBA 100%);
 	border: #1F1F1F 1px solid;
-	border-bottom-left-radius: 14px;
-	border-bottom-right-radius: 14px;
-	border-top-left-radius: 14px;
-	border-top-right-radius: 0;
 	font-weight: bold;
 	overflow: hidden;
 	font-size: 55%;
 	line-height: 150%;
 	color: #E0E0E0;
-	margin: 0 20px 20px;
 	box-shadow: 1px 1px 2px #1F1F1F;
 	-moz-box-shadow: 1px 1px 2px #1F1F1F;
 	-webkit-box-shadow: 1px 1px 2px #1F1F1F;
@@ -216,7 +208,7 @@ div#pts_phoromatic_main
 {
 	font-size: 100%;
 	overflow: hidden;
-	padding: 0 20px;
+	padding: 0 0 0 10px;
 }
 div#pts_phoromatic_main_area
 {
@@ -340,9 +332,9 @@ div.pts_phoromatic_info_box_area ul:last-child a:last-child li
 div.pts_phoromatic_info_box_area ul h1
 {
 	font-size: 120%;
-	color: #1F1F1F;
+color: #e08a09;
 	margin: 1px 0;
-	font-weight: normal;
+	font-weight: bold;
 	text-align: center;
 	text-transform: uppercase;
 }
@@ -445,6 +437,7 @@ td
 {
 	background: #FAFAFA;
 	padding: 0 4px;
+	color: #076DBA;
 }
 tr:nth-child(even) td
 {
