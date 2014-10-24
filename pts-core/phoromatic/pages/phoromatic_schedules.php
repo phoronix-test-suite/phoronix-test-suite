@@ -281,6 +281,33 @@ class phoromatic_schedules implements pts_webui_interface
 				</div>
 			</div>';
 
+			$main .= '<hr /><h2>Schedule Overview</h2>';
+			$week = array('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday');
+
+			foreach($week as $i => $day)
+			{
+				$stmt = phoromatic_server::$db->prepare('SELECT Title, ScheduleID, RunAt, RunTargetGroups, RunTargetSystems FROM phoromatic_schedules WHERE AccountID = :account_id AND State >= 1 AND ActiveOn LIKE :active_on ORDER BY RunAt,ActiveOn,Title ASC');
+				$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+				$stmt->bindValue(':active_on', '%' . $i . '%');
+				$result = $stmt->execute();
+				$has_matched = false;
+				while($row = $result->fetchArray())
+				{
+					if(!$has_matched)
+					{
+						$main .= '<h3>' . $day . '</h3>' . PHP_EOL . '<p>';
+						$has_matched = true;
+					}
+					$main .= '<em>' . $row['RunAt'] . '</em> <a href="?schedules/' . $row['ScheduleID'] . '">' . $row['Title'] . '</a>';
+					//$main .= $row['RunTargetSystems'] . ' ' . $row['RunTargetGroups'];
+					$main .= '<br />';
+				}
+
+				if($has_matched)
+					$main .= '</p>' . PHP_EOL;
+
+			}
+
 			if(!PHOROMATIC_USER_IS_VIEWER)
 			{
 				$main .= '
@@ -288,6 +315,7 @@ class phoromatic_schedules implements pts_webui_interface
 				<h2>Create A Schedule</h2>
 				<p><a href="?sched">Create a schedule</a> followed by adding tests/suites to run for that schedule on the selected systems.</p>';
 			}
+
 			echo phoromatic_webui_main($main, phoromatic_webui_right_panel_logged_in());
 			echo phoromatic_webui_footer();
 	}

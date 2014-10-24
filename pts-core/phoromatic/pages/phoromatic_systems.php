@@ -271,7 +271,7 @@ class phoromatic_systems implements pts_webui_interface
 					{
 						do
 						{
-							$main .= '<a href="?systems/' . $row['SystemID'] . '"><li>' . $row['Title'] . '<br /><em>' . $row['LocalIP'] . ' - ' . $row['CurrentTask'] . ' - Last Activity: ' . date('j F Y H:i', strtotime($row['LastCommunication'])) . '</em></li></a>';
+							$main .= '<a href="?systems/' . $row['SystemID'] . '"><li>' . $row['Title'] . '<br /><em>' . $row['LocalIP'] . ' - <strong>Current State:</strong> ' . $row['CurrentTask'] . ' - <strong>Last Communication:</strong> ' . date('j F Y H:i', strtotime($row['LastCommunication'])) . '</em></li></a>';
 						}
 						while($row = $result->fetchArray());
 					}

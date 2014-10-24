@@ -50,7 +50,7 @@ class phoromatic_caches implements pts_webui_interface
 			if($cache_json && isset($cache_json['phoronix-test-suite']['download-cache']))
 			{
 				$total_file_size = 0;
-				$main .= '<table><tr><th>File</th><th>Size</th></tr>';
+				$main .= '<table style="margin: 0 auto;"><tr><th>File</th><th>Size</th></tr>';
 				foreach($cache_json['phoronix-test-suite']['download-cache'] as $file_name => $inf)
 				{
 					$total_file_size += $cache_json['phoronix-test-suite']['download-cache'][$file_name]['file_size'];
@@ -69,7 +69,7 @@ class phoromatic_caches implements pts_webui_interface
 		$main .= '<p>Below is information pertaining to the OpenBenchmarking.org cache present on the Phoromatic Server. To update this cache, run <strong>phoronix-test-suite make-openbenchmarking-cache</strong> from the server.</p>';
 
 		$index_files = pts_file_io::glob(PTS_OPENBENCHMARKING_SCRATCH_PATH . '*.index');
-		$main .= '<table><tr><th>Repository</th><th>Last Updated</th></tr>';
+		$main .= '<table style="margin: 0 auto;"><tr><th>Repository</th><th>Last Updated</th></tr>';
 		foreach($index_files as $index_file)
 		{
 			$index_data = json_decode(file_get_contents($index_file), true);
