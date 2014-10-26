@@ -43,6 +43,11 @@ class phoromatic_result implements pts_webui_interface
 			$upload_ids = explode(',', $PATH[0]);
 			$result_file = array();
 
+			$display_rows = array();
+			$system_types = array();
+			$schedule_types = array();
+			$trigger_types = array();
+
 			foreach($upload_ids as $upload_id)
 			{
 				$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_results WHERE AccountID = :account_id AND UploadID = :upload_id LIMIT 1');
@@ -57,14 +62,65 @@ class phoromatic_result implements pts_webui_interface
 					echo 'File Not Found: ' . $composite_xml;
 					return false;
 				}
+				$display_rows[$composite_xml] = $row;
+				pts_arrays::unique_push($system_types, $row['SystemID']);
+				pts_arrays::unique_push($schedule_types, $row['ScheduleID']);
+				pts_arrays::unique_push($trigger_types, $row['Trigger']);
+			}
 
-				array_push($result_file, new pts_result_merge_select($composite_xml));
+			$result_file_title = null;
+			if(count($system_types) == 1)
+			{
+				$result_file_title = phoromatic_system_id_to_name($system_types[0]) . ' Tests';
+			}
+
+			if(count($display_rows) == 1)
+			{
+				$system_name_format = 'SYSTEM_NAME';
+			}
+			else if(count($schedule_types) == 1 && count($system_types) == 1)
+			{
+				$system_name_format = 'TRIGGER';
+				$result_file_title = phoromatic_schedule_id_to_name($schedule_types[0]);
+			}
+			else if(count($schedule_types) == 1)
+			{
+				$system_name_format = 'TRIGGER_AND_SYSTEM';
+			}
+			else if(count($trigger_types) == 1)
+			{
+				$system_name_format = 'SYSTEM_AND_SCHEDULE';
+			}
+
+			foreach($display_rows as $composite_xml => $row)
+			{
+				//  $row['SystemID'] . ' ' . $row['ScheduleID'] . ' ' . $row['Trigger']
+
+				switch($system_name_format)
+				{
+					case 'SYSTEM_NAME':
+						$system_name = phoromatic_system_id_to_name($row['SystemID']);
+						break;
+					case 'TRIGGER':
+						$system_name = $row['Trigger'];
+						break;
+					case 'TRIGGER_AND_SYSTEM':
+						$system_name = phoromatic_system_id_to_name($row['SystemID']) . ': ' . $row['Trigger'];
+						break;
+					case 'SYSTEM_AND_SCHEDULE':
+						$system_name = phoromatic_schedule_id_to_name($row['ScheduleID']) . ': ' . $row['Trigger'];
+						break;
+					default:
+						$system_name = phoromatic_system_id_to_name($row['SystemID']) . ' - ' . phoromatic_schedule_id_to_name($row['ScheduleID']) . ' - ' . $row['Trigger'];
+				}
+
+
+				array_push($result_file, new pts_result_merge_select($composite_xml, null, $system_name));
 			}
 
 			$writer = new pts_result_file_writer(null);
-			$attributes = array();
+			$attributes = array('new_result_file_title' => $result_file_title);
 			pts_merge::merge_test_results_process($writer, $result_file, $attributes);
-
 			$result_file = new pts_result_file($writer->get_xml());
 			$extra_attributes = array();
 			$intent = null;

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009, Phoronix Media
-	Copyright (C) 2009, Michael Larabel
+	Copyright (C) 2009 - 2014, Phoronix Media
+	Copyright (C) 2009 - 2014, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -26,11 +26,11 @@ class pts_result_merge_select
 	private $selected_identifiers;
 	private $rename_identifier;
 
-	public function __construct($result_file, $selected_identifiers = null)
+	public function __construct($result_file, $selected_identifiers = null, $rename_identifier = null)
 	{
 		$this->result_file = $result_file;
 		$this->selected_identifiers = ($selected_identifiers != null ? pts_arrays::to_array($selected_identifiers) : null);
-		$this->rename_identifier = null;
+		$this->rename_identifier = $rename_identifier;
 	}
 	public function get_result_file()
 	{

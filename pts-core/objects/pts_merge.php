@@ -90,7 +90,8 @@ class pts_merge
 		{
 			for($i = ($result_file_count - 1); $i >= 0; $i--)
 			{
-				$ret = $result_file_writer->add_result_file_meta_data($result_files[$i]);
+				$new_title = isset($pass_attributes['new_result_file_title']) && !empty($pass_attributes['new_result_file_title']) ? $pass_attributes['new_result_file_title'] : null;
+				$ret = $result_file_writer->add_result_file_meta_data($result_files[$i], null, $new_title, null);
 
 				if($ret)
 				{

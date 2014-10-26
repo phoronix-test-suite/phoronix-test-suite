@@ -261,4 +261,21 @@ function phoromatic_system_id_to_name($system_id)
 	return $system_names[$system_id];
 }
 
+function phoromatic_schedule_id_to_name($schedule_id)
+{
+	static $schedule_names;
+
+	if(!isset($schedule_names[$schedule_id]))
+	{
+		$stmt = phoromatic_server::$db->prepare('SELECT Title FROM phoromatic_schedules WHERE AccountID = :account_id AND ScheduleID = :schedule_id');
+		$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+		$stmt->bindValue(':schedule_id', $schedule_id);
+		$result = $stmt->execute();
+		$row = $result->fetchArray();
+		$schedule_names[$schedule_id] = $row['Title'];
+	}
+
+	return $schedule_names[$schedule_id];
+}
+
 ?>
