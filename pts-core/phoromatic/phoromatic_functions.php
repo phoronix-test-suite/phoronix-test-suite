@@ -85,7 +85,7 @@ function phoromatic_webui_header_logged_in()
 	$html_links = array();
 	$pages = array('Main', 'Systems', 'Settings', 'Schedules', 'Results');
 
-	if(isset($_SESSION['AdminLevel']) && $_SESSION['AdminLevel'] == 1)
+	if(isset($_SESSION['AdminLevel']) && $_SESSION['AdminLevel'] < 4)
 	{
 		array_push($pages, 'Users');
 	}

@@ -37,7 +37,7 @@ class phoromatic_users implements pts_webui_interface
 	}
 	public static function render_page_process($PATH)
 	{
-		if($_SESSION['AdminLevel'] !== 1)
+		if($_SESSION['AdminLevel'] > 3)
 		{
 			echo phoromatic_error_page('Unauthorized Access', 'You aren\'t an account administrator!');
 			return;
@@ -155,6 +155,9 @@ class phoromatic_users implements pts_webui_interface
 							case 2:
 								$level = 'Administrator';
 								break;
+							case 3:
+								$level = 'Power User';
+								break;
 							case 10:
 								$level = 'Viewer';
 								break;
@@ -180,9 +183,17 @@ class phoromatic_users implements pts_webui_interface
 			<h3>Email</h3>
 			<p><input type="text" name="email" /></p>
 			<h3>Administration Level</h3>
-			<p><select name="admin_level">
-			<option value="2">Administrator</option>
-			<option value="10">Viewer</option>
+			<p><select name="admin_level">';
+
+		if($_SESSION['AdminLevel'] == 1)
+			$main .= '<option value="2">Administrator</option>';
+
+		if($_SESSION['AdminLevel'] <= 2)
+			$main .= '<option value="3">Power User</option>';
+		if($_SESSION['AdminLevel'] <= 3)
+			$main .= '<option value="10">Viewer</option>';
+
+		$main .= '
 			</select></p>
 			<p><input name="submit" value="Add User" type="submit" /></p>
 			</form>';

@@ -10,6 +10,7 @@ Phoronix Test Suite 5.4 (Git)
 - phoromatic: Add a schedule overview to the schedules page
 - phoromatic: Add today's scheduled events to the side bar
 - phoromatic: Improve result identifier / title reporting for results
+- phoromatic: Implement "Power User" account level
 - phodevi: IBM POWER hardware detection improvements
 
 Phoronix Test Suite 5.4 Milestone 3
