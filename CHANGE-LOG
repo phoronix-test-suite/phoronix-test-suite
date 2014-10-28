@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite 5.4 (Git)
 
+- pts-core: Add 3840 x 2160 (4K UHD) to more of the mode-setting fall-back modes
 - phoromatic: Reporting of overall result counts for given test schedules
 - phoromatic: Report benchmarking / test run errors to server
 - phoromatic: Show system errors/warnings from the Phoromatic web UI
