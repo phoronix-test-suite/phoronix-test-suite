@@ -36,7 +36,10 @@ class pts_config
 	{
 		if(self::$config_file_location == null)
 		{
-			self::$config_file_location = PTS_USER_PATH . 'user-config.xml';
+			if(PTS_IS_DAEMONIZED_SERVER_PROCESS)
+				self::$config_file_location = '/etc/phoronix-test-suite.xml';
+			else
+				self::$config_file_location = PTS_USER_PATH . 'user-config.xml';
 		}
 
 		return self::$config_file_location;

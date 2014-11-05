@@ -314,6 +314,7 @@ class pts_client
 					'/proc/mounts',
 					'/proc/cmdline',
 					'/proc/version',
+					'/proc/mdstat',
 					'/etc/X11/xorg.conf',
 					'/sys/kernel/debug/dri/0/radeon_pm_info',
 					'/sys/kernel/debug/dri/0/i915_capabilities',
