@@ -127,6 +127,12 @@ class phoromatic_result implements pts_webui_interface
 			pts_merge::merge_test_results_process($writer, $result_file, $attributes);
 			$result_file = new pts_result_file($writer->get_xml());
 			$extra_attributes = array();
+
+			if(isset($_POST['normalize_results']))
+			{
+				$extra_attributes['normalize_result_buffer'] = true;
+			}
+
 			$intent = null;
 
 			$main .= '<h1>' . $result_file->get_title() . '</h1>';
@@ -140,7 +146,10 @@ class phoromatic_result implements pts_webui_interface
 				$table = new pts_ResultFileSystemsTable($result_file);
 			}
 
-			$main .= '<p class="result_object">' . pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes) . '</p>';
+			$main .= '<p style="text-align: center; overflow: auto;" class="result_object">' . pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes) . '</p>';
+
+			$table = new pts_ResultFileTable($result_file, $intent);
+			$main .= '<p style="text-align: center; overflow: auto;" class="result_object">' . pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes) . '</p>';
 
 			foreach($result_file->get_result_objects() as $i => $result_object)
 			{
@@ -155,8 +164,19 @@ class phoromatic_result implements pts_webui_interface
 			// No result
 		}
 
+		$checkbox_options = array(
+			'normalize_results' => 'Normalize Results',
+			);
+
+		$right = '<form action="' . $_SERVER['REQUEST_URI'] . '" name="update_result_view" method="post"><ul><li><h3>Result Analysis Options</h3></li>' . PHP_EOL;
+		foreach($checkbox_options as $val => $name)
+		{
+			$right .= '<li><input type="checkbox" name="' . $val . '" value="1" ' . (isset($_POST[$val]) ? 'checked="checked" ' : null) . '/> ' . $name . '</li>';
+		}
+		$right .= '<li><input type="submit" name="Submit" /></li></ul></form>';
+
 		echo phoromatic_webui_header_logged_in();
-		echo phoromatic_webui_main($main, phoromatic_webui_right_panel_logged_in());
+		echo phoromatic_webui_main($main, phoromatic_webui_right_panel_logged_in($right));
 		echo phoromatic_webui_footer();
 	}
 }
