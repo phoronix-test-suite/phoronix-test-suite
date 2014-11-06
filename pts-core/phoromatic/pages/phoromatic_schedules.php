@@ -224,9 +224,10 @@ class phoromatic_schedules implements pts_webui_interface
 					$results = 0;
 					do
 					{
+						$oldest_upload_time = $test_result_row['UploadTime'];
 						if($results > 100)
 						{
-							break;
+							continue;
 						}
 						$main .= '<a href="?result/' . $test_result_row['UploadID'] . '"><li>' . $test_result_row['Title'] . '<br /><em>' . phoromatic_system_id_to_name($test_result_row['SystemID']) . ' - ' . phoromatic_user_friendly_timedate($test_result_row['UploadTime']) .  '</em></li></a>';
 						$results++;
@@ -236,8 +237,32 @@ class phoromatic_schedules implements pts_webui_interface
 					$main .= '</ul></div>';
 					$main .= '</div>';
 				}
+				$num_results = phoromatic_results_for_schedule($PATH[0]);
 
-				$main .= '<p><strong>' . phoromatic_results_for_schedule($PATH[0]) . ' Test Results Available For This Schedule.</strong></p>';
+				if($num_results > 1)
+				{
+					$main .= '<p>Jump to the latest results from the past: ';
+					$main .= '<select name="view_results_from_past" id="view_results_from_past" onchange="phoromatic_jump_to_results_from(\'' . $PATH[0] . '\', \'view_results_from_past\');">';
+					echo $oldest_upload_time = strtotime($oldest_upload_time);
+					$opts = array(
+						'Week' => 7,
+						'Three Weeks' => 21,
+						'Month' => 30,
+						'Quarter' => 90,
+						'Six Months' => 180,
+						'Year' => 365,
+						);
+					foreach($opts as $str_name => $time_offset)
+					{
+						if($oldest_upload_time > (time() - (86400 * $time_offset)))
+							break;
+						$main .= '<option value="' . $time_offset . '">' . $str_name . '</option>';
+					}
+					$main .= '<option value="all">All Results</option>';
+					$main .= '</select>';
+					$main .= '</p><hr />';
+				}
+				$main .= '<p><strong>' . $num_results . ' Test Results Available For This Schedule.</strong></p>';
 			}
 
 			echo phoromatic_webui_main($main, phoromatic_webui_right_panel_logged_in());

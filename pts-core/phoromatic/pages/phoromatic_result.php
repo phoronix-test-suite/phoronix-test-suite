@@ -41,6 +41,30 @@ class phoromatic_result implements pts_webui_interface
 		if(isset($PATH[0]))
 		{
 			$upload_ids = explode(',', $PATH[0]);
+
+			foreach($upload_ids as $i => $upload_id)
+			{
+				if(isset($upload_id[5]) && substr($upload_id, 0, 2) == 'S:')
+				{
+					$t = explode(':', $upload_id);
+					$stmt = phoromatic_server::$db->prepare('SELECT UploadID, UploadTime FROM phoromatic_results WHERE AccountID = :account_id AND ScheduleID = :schedule_id ORDER BY UploadTime DESC');
+					$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+					$stmt->bindValue(':schedule_id', $t[1]);
+					$test_result_result = $stmt->execute();
+					$cutoff_time = is_numeric($t[2]) ? strtotime('today -' . $t[2] . ' days') : false;
+					while($test_result_row = $test_result_result->fetchArray())
+					{
+						if($cutoff_time !== false && strtotime($test_result_row['UploadTime']) < $cutoff_time)
+							break;
+
+						array_push($upload_ids, $test_result_row['UploadID']);
+					}
+
+					unset($upload_ids[$i]);
+				}
+			}
+			$upload_ids = array_unique($upload_ids);
+
 			$result_file = array();
 
 			$display_rows = array();
