@@ -67,6 +67,7 @@
 			<Password></Password>
 			<WebSocketPort></WebSocketPort>
 			<AdvertiseServiceZeroConf>TRUE</AdvertiseServiceZeroConf>
+			<PhoromaticStorage>~/.phoronix-test-suite/phoromatic/</PhoromaticStorage>
 		</Server>
 	</Options>
 </PhoronixTestSuite>

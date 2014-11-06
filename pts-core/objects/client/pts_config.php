@@ -146,6 +146,7 @@ class pts_config
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Server/Password', $read_config);
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Server/WebSocketPort', $read_config);
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Server/AdvertiseServiceZeroConf', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Server/PhoromaticStorage', $read_config);
 
 		$config->saveXMLFile(pts_config::get_config_file_location());
 	}

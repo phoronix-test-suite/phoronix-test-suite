@@ -4,6 +4,7 @@ Phoronix Test Suite 5.4 (Git)
 
 - pts-core: Add 3840 x 2160 (4K UHD) to more of the mode-setting fall-back modes
 - pts-core: Start working on support for using standard Linux file-system hierarchy when running as root as a service
+- pts-core: Add PhoromaticStorage option to Phoronix Test Suite user configuration XML file
 - phoromatic: Reporting of overall result counts for given test schedules
 - phoromatic: Report benchmarking / test run errors to server
 - phoromatic: Show system errors/warnings from the Phoromatic web UI
