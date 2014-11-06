@@ -246,7 +246,10 @@ class pts_test_install_request
 				}
 			}
 		}
-
+	}
+	public function get_arguments_description()
+	{
+		return null;
 	}
 }
 
