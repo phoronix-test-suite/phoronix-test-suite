@@ -125,7 +125,7 @@ class phoromatic_welcome implements pts_webui_interface
 
 			mkdir(phoromatic_server::phoromatic_account_path($account_id));
 
-			phoromatic_server::send_email($_POST['register_email'], 'no-reply@phoromatic', 'Phoromatic Account Registration', '<p><strong>' . $_POST['register_username'] . '</strong>:</p><p>Your Phoromatic account has been created and is now active.</p>');
+			phoromatic_server::send_email($_POST['register_email'], 'Phoromatic Account Registration', 'no-reply@phoromatic.com', '<p><strong>' . $_POST['register_username'] . '</strong>:</p><p>Your Phoromatic account has been created and is now active.</p>');
 
 
 			echo phoromatic_webui_header(array('Account Created'), '');

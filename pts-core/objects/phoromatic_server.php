@@ -113,7 +113,11 @@ class phoromatic_server
 	}
 	public static function send_email($to, $subject, $from, $body)
 	{
-		$msg = '<html><body>' . $body . '</body></html>';
+		$msg = '<html><body>' . $body . '
+		<hr />
+		<p><img src="http://www.phoronix-test-suite.com/web/pts-logo-60.png" /></p>
+		<h6><em>The <a href="http://www.phoronix-test-suite.com/">Phoronix Test Suite</a>, <a href="http://www.phoromatic.com/">Phoromatic</a>, and <a href="http://openbenchmarking.org/">OpenBenchmarking.org</a> are products of <a href="http://www.phoronix-media.com/">Phoronix Media</a>.<br />The Phoronix Test Suite is open-source under terms of the GNU GPL. Commercial support, custom engineering, and other services are available by contacting Phoronix Media.<br />&copy; ' . date('Y') . ' Phoronix Media.</em></h6>
+		</body></html>';
 		$headers = "MIME-Version: 1.0\r\n";
 		$headers .= "Content-type:text/html;charset=UTF-8\r\n";
 		$headers .= "From: <" . $from . ">\r\n";
