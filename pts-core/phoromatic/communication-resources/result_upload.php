@@ -150,7 +150,6 @@ if($relative_id > 0)
 	$json['phoromatic']['response'] = 'Result Upload: ' . $upload_id;
 	echo json_encode($json);
 
-
 	// Email notifications
 	$stmt = phoromatic_server::$db->prepare('SELECT UserName, Email FROM phoromatic_users WHERE UserID IN (SELECT UserID FROM phoromatic_user_settings WHERE AccountID = :account_id AND NotifyOnResultUploads = 1) AND AccountID = :account_id');
 	$stmt->bindValue(':account_id', ACCOUNT_ID);

@@ -171,6 +171,17 @@ if(empty($result))
 	$result = $stmt->execute();
 	$json['phoromatic']['response'] = 'Information Added; Waiting For Approval From Administrator.';
 	echo json_encode($json);
+
+
+	// Email notifications
+	$stmt = phoromatic_server::$db->prepare('SELECT UserName, Email FROM phoromatic_users WHERE UserID IN (SELECT UserID FROM phoromatic_user_settings WHERE AccountID = :account_id AND NotifyOnNewSystems = 1) AND AccountID = :account_id');
+	$stmt->bindValue(':account_id', ACCOUNT_ID);
+	$result = $stmt->execute();
+	while($row = $result->fetchArray())
+	{
+		phoromatic_server::send_email($row['Email'], 'Phoromatic New System Added', 'no-reply@phoromatic.com', '<p><strong>' . $row['UserName'] . ':</strong></p><p>A new system is attempting to associate with a Phoromatic account for which you\'re associated.</p><p>Title: ' . $HOSTNAME . '<br />IP: ' . $LOCAL_IP . '<br />System Info: ' . $CLIENT_HARDWARE . ' ' . $CLIENT_SOFTWARE . '</p>');
+	}
+
 	exit;
 }
 define('SYSTEM_ID', $result['SystemID']);
