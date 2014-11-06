@@ -27,7 +27,7 @@ class start_remote_gui_server implements pts_option_interface
 
 	public static function run($r)
 	{
-		pts_file_io::unlink(PTS_USER_PATH . 'web-server-launcher');
+		pts_file_io::unlink(getenv('PTS_EXT_LAUNCH_SCRIPT_DIR') . '/web-server-launcher');
 		if(PHP_VERSION_ID < 50400)
 		{
 			echo 'Running an unsupported PHP version. PHP 5.4+ is required to use this feature.' . PHP_EOL . PHP_EOL;
@@ -95,7 +95,7 @@ class start_remote_gui_server implements pts_option_interface
 		$server_launcher .= PHP_EOL . 'kill $http_server_pid';
 		$server_launcher .= PHP_EOL . 'kill $websocket_server_pid';
 		$server_launcher .= PHP_EOL . 'rm -f ~/.phoronix-test-suite/run-lock*';
-		file_put_contents(PTS_USER_PATH . 'web-server-launcher', $server_launcher);
+		file_put_contents(getenv('PTS_EXT_LAUNCH_SCRIPT_DIR') . '/web-server-launcher', $server_launcher);
 	}
 }
 

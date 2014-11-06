@@ -125,13 +125,7 @@ case "$1" in
 	;;
 esac
 
-if [ -f $HOME/.phoronix-test-suite/web-server-launcher ]
-then
-	rm -f $HOME/.phoronix-test-suite/web-server-launcher
-elif [ -f $HOME/.phoronix-test-suite/phoromatic-server-launcher ]
-then
-	rm -f $HOME/.phoronix-test-suite/phoromatic-server-launcher
-fi
+export PTS_EXT_LAUNCH_SCRIPT_DIR=`mktemp -d`
 
 # Run The Phoronix Test Suite
 PTS_EXIT_STATUS=8
@@ -140,14 +134,15 @@ while [ $PTS_EXIT_STATUS -eq 8 ]; do
 	PTS_EXIT_STATUS=$?
 done
 
-if [ -f $HOME/.phoronix-test-suite/web-server-launcher ]
+if [ -f $PTS_EXT_LAUNCH_SCRIPT_DIR/web-server-launcher ]
 then
-	chmod +x $HOME/.phoronix-test-suite/web-server-launcher
-	exec $HOME/.phoronix-test-suite/web-server-launcher
-	rm -f $HOME/.phoronix-test-suite/web-server-launcher
-elif [ -f $HOME/.phoronix-test-suite/phoromatic-server-launcher ]
+	chmod +x $PTS_EXT_LAUNCH_SCRIPT_DIR/web-server-launcher
+	exec $PTS_EXT_LAUNCH_SCRIPT_DIR/web-server-launcher
+	rm -f $PTS_EXT_LAUNCH_SCRIPT_DIR/web-server-launcher
+elif [ -f $PTS_EXT_LAUNCH_SCRIPT_DIR/phoromatic-server-launcher ]
 then
-	chmod +x $HOME/.phoronix-test-suite/phoromatic-server-launcher
-	exec $HOME/.phoronix-test-suite/phoromatic-server-launcher
-	rm -f $HOME/.phoronix-test-suite/phoromatic-server-launcher
+	chmod +x $PTS_EXT_LAUNCH_SCRIPT_DIR/phoromatic-server-launcher
+	exec $PTS_EXT_LAUNCH_SCRIPT_DIR/phoromatic-server-launcher
+	rm -f $PTS_EXT_LAUNCH_SCRIPT_DIR/phoromatic-server-launcher
 fi
+# rm -rf $PTS_EXT_LAUNCH_SCRIPT_DIR

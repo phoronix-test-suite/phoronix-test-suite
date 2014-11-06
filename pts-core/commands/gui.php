@@ -104,7 +104,7 @@ class gui implements pts_option_interface
 			// Shutdown / Kill Servers (Might want to find a cleaner way)
 			$server_launcher .= PHP_EOL . 'taskkill /f /im php.exe';
 			// For now lets clean this up.
-			$server_launcher .= PHP_EOL . 'del /f ' . PTS_USER_PATH . 'run*' . PHP_EOL;
+			$server_launcher .= PHP_EOL . 'del /f ' . getenv('PTS_EXT_LAUNCH_SCRIPT_DIR') . 'run*' . PHP_EOL;
 			$server_launcher .= 'exit /B' . PHP_EOL . PHP_EOL;
 
 			// HTTP Server Setup
@@ -131,7 +131,7 @@ class gui implements pts_option_interface
 		} 
 		else
 		{
-			$script_path = PTS_USER_PATH . 'web-server-launcher';
+			$script_path = getenv('PTS_EXT_LAUNCH_SCRIPT_DIR') . '/web-server-launcher';
 			pts_file_io::unlink($script_path);
 
 			$server_launcher = '#!/bin/sh' . PHP_EOL;
