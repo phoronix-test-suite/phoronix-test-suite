@@ -120,8 +120,19 @@ class start_phoromatic_server implements pts_option_interface
 		}
 
 		// Wait for input to shutdown process..
-		$server_launcher .= PHP_EOL . 'echo -n "Press [ENTER] to kill server..."' . PHP_EOL;
-		$server_launcher .= PHP_EOL . 'read var_name';
+		if(!PTS_IS_DAEMONIZED_SERVER_PROCESS)
+		{
+			$server_launcher .= PHP_EOL . 'echo -n "Press [ENTER] to kill server..."' . PHP_EOL;
+			$server_launcher .= PHP_EOL . 'read var_name';
+		}
+		else
+		{
+			$server_launcher .= PHP_EOL . 'while [ ! -f "/var/lib/phoronix-test-suite/end-phoromatic-server" ];';
+			$server_launcher .= PHP_EOL . 'do';
+			$server_launcher .= PHP_EOL . 'sleep 1';
+			$server_launcher .= PHP_EOL . 'done';
+			$server_launcher .= PHP_EOL . 'rm -f /var/lib/phoronix-test-suite/end-phoromatic-server' . PHP_EOL;
+		}
 
 		// Shutdown / Kill Servers
 		$server_launcher .= PHP_EOL . 'kill $http_server_pid';

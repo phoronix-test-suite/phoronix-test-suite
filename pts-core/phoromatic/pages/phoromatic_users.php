@@ -129,6 +129,7 @@ class phoromatic_users implements pts_webui_interface
 			<ol>
 				<li><strong>Main Administrator:</strong> The user with full control over the account, the one who originally signed up for the Phoromatic account.</li>
 				<li><strong>Administrator:</strong> Additional users created by the main administrator with the same access rights as the main administrator.</li>
+				<li><strong>Power Users:</strong> Additional users created by the main administrator with read/write/modify access to all standard Phoromatic functionality, aside from being able to create additional users.</li>
 				<li><strong>Viewer:</strong> Additional users created by the main administrator that have access to view data but not to create new schedules, alter system settings, etc.</li>
 			</ol>
 			<div class="pts_phoromatic_info_box_area">

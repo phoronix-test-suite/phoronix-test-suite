@@ -771,7 +771,7 @@ class pts_client
 		$config_md5 = $pso->read_object('user_agreement_cs');
 		$current_md5 = md5_file(PTS_PATH . 'pts-core/user-agreement.txt');
 
-		if($config_md5 != $current_md5 || pts_config::read_user_config('PhoronixTestSuite/Options/OpenBenchmarking/AnonymousUsageReporting', 'UNKNOWN') == 'UNKNOWN')
+		if(($config_md5 != $current_md5 || pts_config::read_user_config('PhoronixTestSuite/Options/OpenBenchmarking/AnonymousUsageReporting', 'UNKNOWN') == 'UNKNOWN') && !PTS_IS_DAEMONIZED_SERVER_PROCESS)
 		{
 			$prompt_in_method = pts_client::check_command_for_function($command, 'pts_user_agreement_prompt');
 			$user_agreement = file_get_contents(PTS_PATH . 'pts-core/user-agreement.txt');
@@ -943,7 +943,10 @@ class pts_client
 			}
 			else
 			{
-				echo PHP_EOL . 'ERROR: Cannot find home directory.' . PHP_EOL;
+				if(!is_writable('/'))
+				{
+					echo PHP_EOL . 'ERROR: Cannot find home directory.' . PHP_EOL;
+				}
 				$userhome = null;
 			}
 
