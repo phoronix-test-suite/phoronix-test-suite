@@ -128,9 +128,24 @@ class phoromatic_result implements pts_webui_interface
 			$result_file = new pts_result_file($writer->get_xml());
 			$extra_attributes = array();
 
-			if(isset($_POST['normalize_results']))
+			$attribute_options = array(
+				'normalize_results' => 'normalize_result_buffer',
+				'sort_by_performance' => 'sort_result_buffer_values',
+				'sort_by_reverse' => 'reverse_result_buffer',
+				'sort_by_name' => 'sort_result_buffer',
+				'condense_comparison' => 'condense_multi_way',
+				);
+			foreach($attribute_options as $web_var => $attr_var)
 			{
-				$extra_attributes['normalize_result_buffer'] = true;
+				if(isset($_POST[$web_var]))
+				{
+					$extra_attributes[$attr_var] = true;
+				}
+			}
+
+			if(isset($_POST['transpose_comparison']))
+			{
+				$result_file->invert_multi_way_invert();
 			}
 
 			$intent = null;
@@ -166,7 +181,16 @@ class phoromatic_result implements pts_webui_interface
 
 		$checkbox_options = array(
 			'normalize_results' => 'Normalize Results',
+			'sort_by_performance' => 'Sort Results By Performance',
+			'sort_by_name' => 'Reverse Result By Identifier',
+			'sort_by_reverse' => 'Reverse Result Order',
 			);
+
+		if($result_file->is_multi_way_comparison())
+		{
+			$checkbox_options['condense_comparison'] = 'Condense Comparison';
+			$checkbox_options['transpose_comparison'] = 'Transpose Comparison';
+		}
 
 		$right = '<form action="' . $_SERVER['REQUEST_URI'] . '" name="update_result_view" method="post"><ul><li><h3>Result Analysis Options</h3></li>' . PHP_EOL;
 		foreach($checkbox_options as $val => $name)
