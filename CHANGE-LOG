@@ -2,9 +2,11 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+- pts-core: Improvements when running as a systemd service / daemon
 - phoromatic: Implement email notifications on result uploads
 - phoromatic: Implement email notifications on system generated errors/warnings
 - phoromatic: Implement email notifications on new systems added
+- pts_Graph: Shrink size of sub title text strings when they're too long
 
 Phoronix Test Suite 5.4 Milestone 4
 5 November 2014

@@ -152,7 +152,7 @@ class pts_ResultFileCompactSystemsTable extends pts_Graph
 
 		// Footer
 		$this->svg_dom->add_element('rect', array('x' => 1, 'y' => ($this->i['graph_height'] - $bottom_footer), 'width' => ($this->i['graph_width'] - 2), 'height' => $bottom_footer, 'fill' => self::$c['color']['main_headers']));
-		$this->svg_dom->add_element('image', array('http_link' => 'http://www.phoronix-test-suite.com/', 'xlink:href' => pts_svg_dom::embed_png_image(PTS_CORE_STATIC_PATH . 'images/pts-80x42-white.png'), 'x' => 10, 'y' => ($this->i['graph_height'] - 46), 'width' => 80, 'height' => 42));
+		//$this->svg_dom->add_element('image', array('http_link' => 'http://www.phoronix-test-suite.com/', 'xlink:href' => pts_svg_dom::embed_png_image(PTS_CORE_STATIC_PATH . 'images/pts-80x42-white.png'), 'x' => 10, 'y' => ($this->i['graph_height'] - 46), 'width' => 80, 'height' => 42));
 
 		if(defined('OPENBENCHMARKING_IDS'))
 		{

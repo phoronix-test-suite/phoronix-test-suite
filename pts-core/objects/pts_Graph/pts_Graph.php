@@ -551,7 +551,7 @@ abstract class pts_Graph
 			if(isset($this->graph_title[36]))
 			{
 				// If it's a long string make sure it won't run over the side...
-				while(self::text_string_width($this->graph_title, self::$c['size']['headers']) > ($this->i['graph_left_end'] - 60))
+				while(self::text_string_width($this->graph_title, self::$c['size']['headers']) > ($this->i['graph_left_end'] - 20))
 				{
 					self::$c['size']['headers'] -= 0.5;
 				}
@@ -562,7 +562,13 @@ abstract class pts_Graph
 			foreach($this->graph_sub_titles as $i => $sub_title)
 			{
 				$vertical_offset = 12 + self::$c['size']['headers'] + (($i + 1) * (self::$c['size']['sub_headers'] - 4));
-				$this->svg_dom->add_text_element($sub_title, array('x' => 6, 'y' => $vertical_offset, 'font-size' => self::$c['size']['sub_headers'], 'fill' => self::$c['color']['background'], 'text-anchor' => 'start'));
+				$sub_title_size = self::$c['size']['sub_headers'];
+				if(isset($sub_title[69]))
+				{
+					while($this->text_string_width($sub_title, $sub_title_size) > ($this->i['graph_left_end'] - 20))
+						$sub_title_size -= 0.5;
+				}
+				$this->svg_dom->add_text_element($sub_title, array('x' => 6, 'y' => $vertical_offset, 'font-size' => $sub_title_size, 'fill' => self::$c['color']['background'], 'text-anchor' => 'start'));
 			}
 
 			$this->svg_dom->add_element('image', array('http_link' => 'http://www.phoronix-test-suite.com/', 'xlink:href' => pts_svg_dom::embed_png_image(PTS_CORE_STATIC_PATH . 'images/pts-77x40-white.png'), 'x' => ($this->i['graph_left_end'] - 77), 'y' => (($this->i['top_heading_height'] / 40 + 2)), 'width' => 77, 'height' => 40));
