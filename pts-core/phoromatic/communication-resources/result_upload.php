@@ -149,6 +149,17 @@ if($relative_id > 0)
 
 	$json['phoromatic']['response'] = 'Result Upload: ' . $upload_id;
 	echo json_encode($json);
+
+
+	// Email notifications
+	$stmt = phoromatic_server::$db->prepare('SELECT UserName, Email FROM phoromatic_users WHERE UserID IN (SELECT UserID FROM phoromatic_user_settings WHERE AccountID = :account_id AND NotifyOnResultUploads = 1) AND AccountID = :account_id');
+	$stmt->bindValue(':account_id', ACCOUNT_ID);
+	$result = $stmt->execute();
+	while($row = $result->fetchArray())
+	{
+		phoromatic_server::send_email($row['Email'], 'Phoromatic Result Upload', 'no-reply@phoromatic.com', '<p><strong>' . $row['UserName'] . ':</strong></p><p>A new result file has been uploaded to Phoromatic.</p><p>Upload ID: ' . $upload_id . '<br />Upload Time: ' . phoromatic_server::current_time() . '<br />Title: ' . sqlite_escape_string($result_file->get_title()) . '<br />System: ' . SYSTEM_NAME . '</p>');
+	}
+
 	return true;
 }
 

@@ -243,7 +243,7 @@ class phoromatic_schedules implements pts_webui_interface
 				{
 					$main .= '<p>Jump to the latest results from the past: ';
 					$main .= '<select name="view_results_from_past" id="view_results_from_past" onchange="phoromatic_jump_to_results_from(\'' . $PATH[0] . '\', \'view_results_from_past\');">';
-					echo $oldest_upload_time = strtotime($oldest_upload_time);
+					$oldest_upload_time = strtotime($oldest_upload_time);
 					$opts = array(
 						'Week' => 7,
 						'Three Weeks' => 21,
