@@ -6,7 +6,8 @@ Phoronix Test Suite (Git)
 - phoromatic: Implement email notifications on result uploads
 - phoromatic: Implement email notifications on system generated errors/warnings
 - phoromatic: Implement email notifications on new systems added
-- pts_Graph: Shrink size of sub title text strings when they're too long
+- phoromatic: Allow easily comparing a result file to other results for that given schedule ID
+- pts_Graph: Shrink size of sub-title text strings when they're too long
 
 Phoronix Test Suite 5.4 Milestone 4
 5 November 2014

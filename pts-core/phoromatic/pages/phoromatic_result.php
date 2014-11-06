@@ -23,6 +23,8 @@
 
 class phoromatic_result implements pts_webui_interface
 {
+	protected static $schedule_id = false;
+
 	public static function page_title()
 	{
 		return 'Result';
@@ -120,6 +122,11 @@ class phoromatic_result implements pts_webui_interface
 				$system_name_format = null;
 			}
 
+			if(count($schedule_types) == 1 && $schedule_types[0] != 0)
+			{
+				self::$schedule_id = $schedule_types[0];
+			}
+
 			foreach($display_rows as $composite_xml => $row)
 			{
 				//  $row['SystemID'] . ' ' . $row['ScheduleID'] . ' ' . $row['Trigger']
@@ -204,6 +211,58 @@ class phoromatic_result implements pts_webui_interface
 		}
 
 		$right = null;
+		if(self::$schedule_id)
+		{
+			$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_schedules WHERE AccountID = :account_id AND ScheduleID = :schedule_id LIMIT 1');
+			$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+			$stmt->bindValue(':schedule_id', self::$schedule_id);
+			$result = $stmt->execute();
+			$row = $result->fetchArray();
+
+			if(!empty($row))
+			{
+				$right .= '<h3 align="center"><a href="?schedules/' . $row['ScheduleID'] . '">' . $row['Title'] . '</a></h3>';
+
+				if(!empty($row['ActiveOn']))
+				{
+					$active_days = explode(',', $row['ActiveOn']);
+					$week = array('M', 'T', 'W', 'TH', 'F', 'S', 'SU');
+					foreach($active_days as $i => &$day)
+					{
+						if(!isset($week[$day]))
+						{
+							unset($active_days[$i]);
+						}
+						else
+						{
+							$day = $week[$day];
+						}
+					}
+					$right .= '<p align="center">' . implode(' ', $active_days) . (!empty($row['RunAt']) ? ' @ ' . str_replace('.', ':', $row['RunAt']) : null ) . '</p>';
+				}
+
+				$right .= '<p>Compare this result file to the latest results from the past: ';
+				$right .= '<select name="view_results_from_past" id="view_results_from_past" onchange="phoromatic_jump_to_results_from(\'' . $row['ScheduleID'] . '\', \'view_results_from_past\', \'' . $PATH[0] . ',\');">';
+				$oldest_upload_time = strtotime(phoromatic_oldest_result_for_schedule(self::$schedule_id));
+				$opts = array(
+					'Week' => 7,
+					'Three Weeks' => 21,
+					'Month' => 30,
+					'Quarter' => 90,
+					'Six Months' => 180,
+					'Year' => 365,
+					);
+				foreach($opts as $str_name => $time_offset)
+				{
+					if($oldest_upload_time > (time() - (86400 * $time_offset)))
+						break;
+					$right .= '<option value="' . $time_offset . '">' . $str_name . '</option>';
+				}
+				$right .= '<option value="all">All Results</option>';
+				$right .= '</select>';
+				$right .= '</p>';
+			}
+		}
 		if(count($upload_ids) > 1)
 		{
 			$checkbox_options = array(
@@ -219,7 +278,7 @@ class phoromatic_result implements pts_webui_interface
 				$checkbox_options['transpose_comparison'] = 'Transpose Comparison';
 			}
 
-			$right = '<form action="' . $_SERVER['REQUEST_URI'] . '" name="update_result_view" method="post"><ul><li><h3>Result Analysis Options</h3></li>' . PHP_EOL;
+			$right .= '<form action="' . $_SERVER['REQUEST_URI'] . '" name="update_result_view" method="post"><ul><li><h3>Result Analysis Options</h3></li>' . PHP_EOL;
 			foreach($checkbox_options as $val => $name)
 			{
 				$right .= '<li><input type="checkbox" name="' . $val . '" value="1" ' . (isset($_POST[$val]) ? 'checked="checked" ' : null) . '/> ' . $name . '</li>';

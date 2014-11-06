@@ -169,7 +169,7 @@ class phoromatic_schedules implements pts_webui_interface
 							break;
 					}
 
-					$main .= '<p>This test is scheduled to run every <strong>' . $day_show . '</strong> at <strong>' . str_replace('.', ':', $row['RunAt']) . '</strong>.';
+					$main .= '<p>This test is scheduled to run every <strong>' . $day_show . '</strong> at <strong>' . str_replace('.', ':', $row['RunAt']) . '</strong>.</p>';
 				}
 				else
 				{

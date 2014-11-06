@@ -260,7 +260,22 @@ function phoromatic_system_id_to_name($system_id)
 
 	return $system_names[$system_id];
 }
+function phoromatic_oldest_result_for_schedule($schedule_id)
+{
+	static $old_time;
 
+	if(!isset($old_time[$schedule_id]))
+	{
+		$stmt = phoromatic_server::$db->prepare('SELECT UploadTime FROM phoromatic_results WHERE AccountID = :account_id AND ScheduleID = :schedule_id ORDER BY UploadTime ASC LIMIT 1');
+		$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+		$stmt->bindValue(':schedule_id', $schedule_id);
+		$result = $stmt->execute();
+		$row = $result->fetchArray();
+		$old_time[$schedule_id] = $row['UploadTime'];
+	}
+
+	return $old_time[$schedule_id];
+}
 function phoromatic_schedule_id_to_name($schedule_id)
 {
 	static $schedule_names;
