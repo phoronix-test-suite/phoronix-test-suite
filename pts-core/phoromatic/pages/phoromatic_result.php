@@ -203,25 +203,29 @@ class phoromatic_result implements pts_webui_interface
 			// No result
 		}
 
-		$checkbox_options = array(
-			'normalize_results' => 'Normalize Results',
-			'sort_by_performance' => 'Sort Results By Performance',
-			'sort_by_name' => 'Reverse Result By Identifier',
-			'sort_by_reverse' => 'Reverse Result Order',
-			);
-
-		if($result_file->is_multi_way_comparison())
+		$right = null;
+		if(count($upload_ids) > 1)
 		{
-			$checkbox_options['condense_comparison'] = 'Condense Comparison';
-			$checkbox_options['transpose_comparison'] = 'Transpose Comparison';
-		}
+			$checkbox_options = array(
+				'normalize_results' => 'Normalize Results',
+				'sort_by_performance' => 'Sort Results By Performance',
+				'sort_by_name' => 'Reverse Result By Identifier',
+				'sort_by_reverse' => 'Reverse Result Order',
+				);
 
-		$right = '<form action="' . $_SERVER['REQUEST_URI'] . '" name="update_result_view" method="post"><ul><li><h3>Result Analysis Options</h3></li>' . PHP_EOL;
-		foreach($checkbox_options as $val => $name)
-		{
-			$right .= '<li><input type="checkbox" name="' . $val . '" value="1" ' . (isset($_POST[$val]) ? 'checked="checked" ' : null) . '/> ' . $name . '</li>';
+			if($result_file->is_multi_way_comparison())
+			{
+				$checkbox_options['condense_comparison'] = 'Condense Comparison';
+				$checkbox_options['transpose_comparison'] = 'Transpose Comparison';
+			}
+
+			$right = '<form action="' . $_SERVER['REQUEST_URI'] . '" name="update_result_view" method="post"><ul><li><h3>Result Analysis Options</h3></li>' . PHP_EOL;
+			foreach($checkbox_options as $val => $name)
+			{
+				$right .= '<li><input type="checkbox" name="' . $val . '" value="1" ' . (isset($_POST[$val]) ? 'checked="checked" ' : null) . '/> ' . $name . '</li>';
+			}
+			$right .= '<li><input type="submit" value="Refresh Results"></li></ul></form>';
 		}
-		$right .= '<li><input type="submit" name="Submit" /></li></ul></form>';
 
 		echo phoromatic_webui_header_logged_in();
 		echo phoromatic_webui_main($main, phoromatic_webui_right_panel_logged_in($right));

@@ -25,7 +25,7 @@ class phoromatic_systems implements pts_webui_interface
 {
 	public static function page_title()
 	{
-		return 'Main';
+		return 'Systems';
 	}
 	public static function page_header()
 	{
