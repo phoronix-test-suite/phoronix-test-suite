@@ -49,4 +49,13 @@ $stmt->bindValue(':test_identifier', $TEST_IDENTIFIER);
 $stmt->bindValue(':test_arguments', $OTHER);
 $result = $stmt->execute();
 
+// Email notifications
+$stmt = phoromatic_server::$db->prepare('SELECT UserName, Email FROM phoromatic_users WHERE UserID IN (SELECT UserID FROM phoromatic_user_settings WHERE AccountID = :account_id AND NotifyOnWarnings = 1) AND AccountID = :account_id');
+$stmt->bindValue(':account_id', ACCOUNT_ID);
+$result = $stmt->execute();
+while($row = $result->fetchArray())
+{
+	phoromatic_server::send_email($row['Email'], 'Phoromatic System Error/Warning', 'no-reply@phoromatic.com', '<p><strong>' . $row['UserName'] . ':</strong></p><p>A warning or error has been reported by a system associated with the Phoromatic account.</p><p>System: ' . SYSTEM_NAME . '<br />Trigger String: ' . sqlite_escape_string($TRIGGER_STRING) . '<br />Test Identifier: ' . sqlite_escape_string($TEST_IDENTIFIER) . '<br />Message: ' . sqlite_escape_string($ERROR_MSG) . '</p>');
+}
+
 ?>

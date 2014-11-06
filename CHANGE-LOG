@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - phoromatic: Implement email notifications on result uploads
+- phoromatic: Implement email notifications on system generated errors/warnings
 
 Phoronix Test Suite 5.4 Milestone 4
 5 November 2014
