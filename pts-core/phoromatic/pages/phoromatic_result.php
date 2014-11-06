@@ -91,6 +91,10 @@ class phoromatic_result implements pts_webui_interface
 			{
 				$system_name_format = 'SYSTEM_AND_SCHEDULE';
 			}
+			else
+			{
+				$system_name_format = null;
+			}
 
 			foreach($display_rows as $composite_xml => $row)
 			{

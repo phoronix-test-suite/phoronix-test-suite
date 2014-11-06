@@ -111,6 +111,7 @@ div#pts_phoromatic_top_header ul li a:hover
 {
 	color: #E0E0E0;
 	text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+	transition: all 0.3s;
 }
 div#pts_phoromatic_menu_right p
 {
@@ -167,6 +168,7 @@ div#pts_phoromatic_menu_right ul li a:hover, div#pts_phoromatic_menu_right p a:h
 {
 	color: #CCC;
 	text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+	transition: all 0.3s;
 }
 div#pts_phoromatic_menu_right hr
 {
