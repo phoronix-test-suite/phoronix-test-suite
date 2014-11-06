@@ -118,6 +118,15 @@ div#pts_phoromatic_menu_right p
 	text-transform: uppercase;
 	letter-spacing: 2px;
 	text-align: center;
+	margin: 1px 5px;
+	font-size: 90%;
+}
+div#pts_phoromatic_menu_right h3
+{
+	color: #E08A09;
+	font-size: 15px;
+	margin: 10px 0 0;
+	text-align: center;
 }
 div#pts_phoromatic_menu_right
 {

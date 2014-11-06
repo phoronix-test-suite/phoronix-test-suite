@@ -221,7 +221,7 @@ class phoromatic_result implements pts_webui_interface
 
 			if(!empty($row))
 			{
-				$right .= '<h3 align="center"><a href="?schedules/' . $row['ScheduleID'] . '">' . $row['Title'] . '</a></h3>';
+				$right .= '<h3><a href="?schedules/' . $row['ScheduleID'] . '">' . $row['Title'] . '</a></h3>';
 
 				if(!empty($row['ActiveOn']))
 				{
@@ -238,7 +238,7 @@ class phoromatic_result implements pts_webui_interface
 							$day = $week[$day];
 						}
 					}
-					$right .= '<p align="center">' . implode(' ', $active_days) . (!empty($row['RunAt']) ? ' @ ' . str_replace('.', ':', $row['RunAt']) : null ) . '</p>';
+					$right .= '<p align="center"><strong>' . implode(' ', $active_days) . (!empty($row['RunAt']) ? ' @ ' . str_replace('.', ':', $row['RunAt']) : null ) . '</strong></p>';
 				}
 
 				$right .= '<p>Compare this result file to the latest results from the past: ';
@@ -278,12 +278,12 @@ class phoromatic_result implements pts_webui_interface
 				$checkbox_options['transpose_comparison'] = 'Transpose Comparison';
 			}
 
-			$right .= '<form action="' . $_SERVER['REQUEST_URI'] . '" name="update_result_view" method="post"><ul><li><h3>Result Analysis Options</h3></li>' . PHP_EOL;
+			$right .= '<form action="' . $_SERVER['REQUEST_URI'] . '" name="update_result_view" method="post"><h3>Result Analysis Options</h3><p align="left">' . PHP_EOL;
 			foreach($checkbox_options as $val => $name)
 			{
-				$right .= '<li><input type="checkbox" name="' . $val . '" value="1" ' . (isset($_POST[$val]) ? 'checked="checked" ' : null) . '/> ' . $name . '</li>';
+				$right .= '<input type="checkbox" name="' . $val . '" value="1" ' . (isset($_POST[$val]) ? 'checked="checked" ' : null) . '/> ' . $name . '<br />';
 			}
-			$right .= '<li><input type="submit" value="Refresh Results"></li></ul></form>';
+			$right .= '<br /><input type="submit" value="Refresh Results"></p></form>';
 		}
 
 		echo phoromatic_webui_header_logged_in();
