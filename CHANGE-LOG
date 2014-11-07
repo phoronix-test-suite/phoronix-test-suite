@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Improvements when running as a systemd service / daemon
+- pts-core: Prefer firefox over Epiphany browser
 - phoromatic: Implement email notifications on result uploads
 - phoromatic: Implement email notifications on system generated errors/warnings
 - phoromatic: Implement email notifications on new systems added
