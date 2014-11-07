@@ -54,11 +54,11 @@ div#pts_phoromatic_bottom_footer
 	background-image: -ms-linear-gradient(bottom, #0983E0 0%, #076DBA 100%);
 	background-image: linear-gradient(to bottom, #0983E0 0%, #076DBA 100%);
 	border: #1F1F1F 1px solid;
-	font-weight: bold;
+	font-weight: 400;
 	overflow: hidden;
 	font-size: 55%;
 	line-height: 150%;
-	color: #E0E0E0;
+	color: #FFF;
 	box-shadow: 1px 1px 2px #1F1F1F;
 	-moz-box-shadow: 1px 1px 2px #1F1F1F;
 	-webkit-box-shadow: 1px 1px 2px #1F1F1F;
@@ -123,8 +123,9 @@ div#pts_phoromatic_menu_right p
 }
 div#pts_phoromatic_menu_right h3
 {
+	font-weight: 500;
 	color: #E08A09;
-	font-size: 15px;
+	font-size: 110%;
 	margin: 10px 0 0;
 	text-align: center;
 }
@@ -165,12 +166,12 @@ div#pts_phoromatic_menu_right ul
 div#pts_phoromatic_menu_right ul li
 {
 	margin-bottom: 2px;
-	font-weight: bold;
+	font-weight: 500;
 	color: #E08A09;
 }
 div#pts_phoromatic_menu_right ul li a
 {
-	font-weight: normal;
+	font-weight: 300;
 	color: #FFF;
 }
 div#pts_phoromatic_menu_right ul li a:hover, div#pts_phoromatic_menu_right p a:hover
@@ -233,6 +234,7 @@ div#pts_phoromatic_main_area
 }
 h1
 {
+	font-weight: 500;
 	font-size: 140%;
 }
 div#pts_phoromatic_main_area h1
@@ -252,6 +254,7 @@ div#pts_phoromatic_main_area h2
 	margin: 1px 0 5px;
 	clear: both;
 	font-size: 120%;
+	font-weight: 500;
 }
 sup
 {
@@ -288,7 +291,7 @@ div#pts_phoromatic_main_area h5
 }
 div#pts_phoromatic_main_area h3
 {
-	font-size: 15px;
+	font-size: 105%;
 }
 div#pts_phoromatic_main_area hr
 {
@@ -314,7 +317,7 @@ div#pts_phoromatic_main_area ol li
 div#pts_phoromatic_main_area p a, div#pts_phoromatic_main_area a, div#pts_phoromatic_main_area h6 a, div#pts_phoromatic_main_area h5 a, div#pts_phoromatic_main_box p a
 {
 	color: #e08a09;
-	font-weight: 600;
+	font-weight: 500;
 }
 div#pts_phoromatic_main_area p a:hover, div#pts_phoromatic_main_area a:hover, div#pts_phoromatic_main_area h6 a:hover, div#pts_phoromatic_main_area h5 a:hover, div#pts_phoromatic_main_box p a:hover
 {
@@ -327,7 +330,7 @@ div#pts_phoromatic_main_area p
 div.pts_phoromatic_info_box_area a, div.pts_phoromatic_info_box_area ul a, div.pts_phoromatic_info_box_area ul a li
 {
 	color: #272727;
-	font-weight: normal;
+	font-weight: 300;
 }
 div.pts_phoromatic_info_box_area ul
 {
@@ -349,7 +352,7 @@ div.pts_phoromatic_info_box_area ul h1
 	font-size: 120%;
 	color: #e08a09;
 	margin: 1px 0;
-	font-weight: bold;
+	font-weight: 500;
 	text-align: center;
 	text-transform: uppercase;
 }
@@ -360,7 +363,7 @@ div.pts_phoromatic_info_box_area ul a li, div.pts_phoromatic_info_box_area ul li
 	border-width: 1px 0 0;
 	padding: 3px 6px;
 	margin: 0;
-	font-weight: bold;
+	font-weight: 500;
 }
 div#pts_phoromatic_main_area div.pts_phoromatic_info_box_area ul a:hover li, div#pts_phoromatic_main_area  div.pts_phoromatic_info_box_area ul:hover a
 {
@@ -370,7 +373,7 @@ div#pts_phoromatic_main_area div.pts_phoromatic_info_box_area ul a:hover li, div
 }
 input[type=submit]
 {
-	font-weight: bold;
+	font-weight: 500;
 }
 input, select, textarea, checkbox, button
 {
@@ -386,7 +389,7 @@ input, select, textarea, checkbox, button
 }
 textarea
 {
-	font-weight: bold;
+	font-weight: 500;
 }
 input:focus, textarea:focus
 {
@@ -397,9 +400,9 @@ div.pts_phoromatic_info_box_area table
 	text-align: left;
 	width: 100%;
 	padding: 1px;
-	margin: 0;
+	margin: 1px 0 0;
 	table-layout: fixed;
-	font-weight: normal;
+	font-weight: 300;
 	text-transform: uppercase;
 	font-size: 75%;
 }
@@ -456,7 +459,7 @@ td, th
 th
 {
 	background: #DFDFDF;
-	font-weight: bold;
+	font-weight: 500;
 	padding: 2px 6px;
 	text-align: left;
 }

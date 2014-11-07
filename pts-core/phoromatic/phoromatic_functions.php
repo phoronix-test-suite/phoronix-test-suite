@@ -29,7 +29,7 @@ function phoromatic_user_friendly_timedate($time)
 function phoromatic_webui_header($left_items, $right)
 {
 	$ret = '<div id="pts_phoromatic_top_header">
-	<div id="pts_phoromatic_logo"><a href="?"><img src="/images/phoromatic_logo.png" /></a></div><ul>';
+	<div id="pts_phoromatic_logo"><a href="?"><img src="data:image/png;base64,' . base64_encode(file_get_contents('images/phoromatic_logo.png')) . '" /></a></div><ul>';
 
 	foreach($left_items as $item)
 	{
@@ -84,7 +84,7 @@ function phoromatic_schedule_activeon_string($active_on, $active_at = null)
 function phoromatic_webui_footer()
 {
 	return '<div id="pts_phoromatic_bottom_footer">
-<div style="float: right; padding: 2px 10px; overflow: hidden;"><a href="http://openbenchmarking.org/" style="margin-right: 20px;"><img src="/images/ob-white-logo.png" /></a> <a href="http://www.phoronix-test-suite.com/"><img src="/images/pts-white-logo.png" /></a></div>
+<div style="float: right; padding: 2px 10px; overflow: hidden;"><a href="http://openbenchmarking.org/" style="margin-right: 20px;"><img src="data:image/png;base64,' . base64_encode(file_get_contents('images/ob-white-logo.png')) . '" /></a> <a href="http://www.phoronix-test-suite.com/"><img src="data:image/png;base64,' . base64_encode(file_get_contents('images/pts-white-logo.png')) . '" /></a></div>
 <p style="margin: 6px 15px;">Copyright &copy; 2008 - ' . date('Y') . ' by <a href="http://www.phoronix-media.com/">Phoronix Media</a>. All rights reserved.<br />
 All trademarks used are properties of their respective owners.<br />' . pts_title(true) . ' - Core Version ' . PTS_CORE_VERSION . ' - PHP ' . PHP_VERSION . '</p></div>';
 }
