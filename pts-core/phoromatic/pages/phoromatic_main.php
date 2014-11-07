@@ -156,12 +156,15 @@ class phoromatic_main implements pts_webui_interface
 
 		if($row == false)
 		{
-			$main .= '<li class="light" style="text-align: center;">No Systems Found</li>';
+			$main .= '<li class="light" style="text-align: center;">No Recent Activity</li>';
 		}
 		else
 		{
 			do
 			{
+				if(strtotime($row['LastCommunication']) < (time() - 86400))
+					break;
+
 				$main .= '<a href="?systems/' . $row['SystemID'] . '"><li>' . $row['Title'] . '<br /><table><tr><td>' . $row['CurrentTask'] . '</td><td>' . $row['LocalIP'] . '</td><td>' . phoromatic_user_friendly_timedate($row['LastCommunication']) . '</td></tr></table></li></a>';
 			}
 			while($row = $result->fetchArray());

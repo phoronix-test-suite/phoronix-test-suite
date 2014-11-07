@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2012, Phoronix Media
-	Copyright (C) 2009 - 2012, Michael Larabel
+	Copyright (C) 2009 - 2014, Phoronix Media
+	Copyright (C) 2009 - 2014, Michael Larabel
 	pts_ResultFileTable.php: The result file table object
 
 	This program is free software; you can redistribute it and/or modify
@@ -38,7 +38,10 @@ class pts_ResultFileTable extends pts_Table
 		else
 		{
 			$result_object = $result_file->get_result_objects($result_object_index);
-			$this->graph_title = $result_object[0]->test_profile->get_title();
+			if(isset($result_object[0]))
+			{
+				$this->graph_title = $result_object[0]->test_profile->get_title();
+			}
 			array_push($this->graph_sub_titles, $result_object[0]->get_arguments_description());
 		}
 
