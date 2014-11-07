@@ -38,7 +38,7 @@ class phoromatic_main implements pts_webui_interface
 	public static function render_page_process($PATH)
 	{
 		echo phoromatic_webui_header_logged_in();
-		$main = '<h2 style="">Phoromatic is under very active development right now for this version of the Phoronix Test Suite. Please keep up with the latest Git activity via <a href="https://github.com/phoronix-test-suite/phoronix-test-suite">GitHub</a>. All basic functionality should be implemented while other features are forthcoming (<em>see the TODO list for more details</em>). Your code contributions are welcome via our GitHub. We also accept <a href="http://www.phoronix-test-suite.com/?k=commercial">custom engineering work / commercial sponsorship</a> and other forms of support to continue its public, open-source development.</h2><hr />';
+		$main = '<h2 style="">The next-generation Phoromatic is under very active development for Phoronix Test Suite 5.4. Please keep up with the latest Git activity via <a href="https://github.com/phoronix-test-suite/phoronix-test-suite">GitHub</a>. All key functionality should be implemented while other features are forthcoming (<em>see the TODO list for more details</em>). Your code contributions are welcome via our GitHub. We also accept <a href="http://www.phoronix-test-suite.com/?k=commercial">custom engineering work / commercial sponsorship</a> and other forms of support to continue its public, open-source development.</h2><hr />';
 		$main .= '<h1>Phoromatic</h1>';
 
 		$main .= phoromatic_systems_needing_attention();

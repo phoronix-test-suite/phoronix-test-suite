@@ -156,15 +156,15 @@ class phoromatic_sched implements pts_webui_interface
 		<p>A test schedule is used to facilitate automatically running a set of test(s)/suite(s) on either a routine timed basis or whenever triggered by an external script.</p>';
 
 		$main .= '<form action="' . $_SERVER['REQUEST_URI'] . '" name="add_test" id="add_test" method="post" enctype="multipart/form-data" onsubmit="return validate_schedule();">
-		<h3>Title</h3>
+		<h3>Title:</h3>
 		<p><input type="text" name="schedule_title" value="' . (!$is_new ? $e_schedule['Title'] : null) . '" /></p>
-		<h3><em>Pre-Install Set Context Script:</em></h3>
+		<h3><sup>1</sup> Pre-Install Set Context Script:</h3>
 		<p><input type="file" name="pre_install_set_context" /></p>
-		<h3><em>Post-Install Set Context Script:</em></h3>
+		<h3><sup>1</sup> Post-Install Set Context Script:</h3>
 		<p><input type="file" name="post_install_set_context" /></p>
-		<h3><em>Pre-Run Set Context Script:</em></h3>
+		<h3><sup>1</sup> Pre-Run Set Context Script:</h3>
 		<p><input type="file" name="pre_run_set_context" /></p>
-		<h3><em>Post-Run Set Context Script:</em></h3>
+		<h3><sup>1</sup>Post-Run Set Context Script:</h3>
 		<p><input type="file" name="post_run_set_context" /></p>
 		<h3>System Targets:</h3>
 		<p>';
@@ -251,7 +251,7 @@ class phoromatic_sched implements pts_webui_interface
 </tr>
 </table>
 
-			<h3><em>Indicates optional field.</em></h3>
+			<p><sup>1</sup> <em>Indicates optional field.</em></p>
 			<p align="right"><input name="submit" value="' . ($is_new ? 'Create' : 'Edit') . ' Schedule" type="submit" onclick="return pts_rmm_validate_schedule();" /></p>
 			</form>';
 			echo phoromatic_webui_main($main, phoromatic_webui_right_panel_logged_in());
