@@ -229,7 +229,7 @@ class phoromatic_schedules implements pts_webui_interface
 						{
 							continue;
 						}
-						$main .= '<a href="?result/' . $test_result_row['UploadID'] . '"><li>' . $test_result_row['Title'] . '<br /><em>' . phoromatic_system_id_to_name($test_result_row['SystemID']) . ' - ' . phoromatic_user_friendly_timedate($test_result_row['UploadTime']) .  '</em></li></a>';
+						$main .= '<a href="?result/' . $test_result_row['UploadID'] . '"><li>' . $test_result_row['Title'] . '<br /><table><tr><td>' . phoromatic_system_id_to_name($test_result_row['SystemID']) . '</td><td>' . phoromatic_user_friendly_timedate($test_result_row['UploadTime']) .  '</td></tr></table></li></a>';
 						$results++;
 
 					}
@@ -296,7 +296,7 @@ class phoromatic_schedules implements pts_webui_interface
 						{
 							$system_count = empty($row['RunTargetSystems']) ? 0 : count(explode(',', $row['RunTargetSystems']));
 							$group_count = empty($row['RunTargetGroups']) ? 0 : count(explode(',', $row['RunTargetGroups']));
-							$main .= '<a href="?schedules/' . $row['ScheduleID'] . '"><li>' . $row['Title'] . '<br /><em><strong>' . $system_count . ' Systems | ' . $group_count . ' Groups | ' . phoromatic_results_for_schedule($row['ScheduleID']) . ' Results</strong> ' . $row['Description'] . ' </em></li></a>';
+							$main .= '<a href="?schedules/' . $row['ScheduleID'] . '"><li>' . $row['Title'] . '<br /><table><tr><td>' . $system_count . ' Systems</td><td>' . $group_count . ' Groups</td><td>' . phoromatic_results_for_schedule($row['ScheduleID']) . ' Results</td></tr></table></li></a>';
 						}
 						while($row = $result->fetchArray());
 					}

@@ -219,7 +219,7 @@ div#pts_phoromatic_main
 {
 	font-size: 100%;
 	overflow: hidden;
-	padding: 0 0 0 10px;
+	padding: 0 0 40px 10px;
 }
 div#pts_phoromatic_main_area
 {
@@ -252,6 +252,10 @@ div#pts_phoromatic_main_area h2
 	margin: 1px 0 5px;
 	clear: both;
 	font-size: 120%;
+}
+sup
+{
+	font-size: 60%;
 }
 p.result_object
 {
@@ -358,16 +362,6 @@ div.pts_phoromatic_info_box_area ul a li, div.pts_phoromatic_info_box_area ul li
 	margin: 0;
 	font-weight: bold;
 }
-div.pts_phoromatic_info_box_area ul a li em
-{
-	color: #076DBA;
-	font-size: 80%;
-	font-weight: normal;
-}
-div.pts_phoromatic_info_box_area ul a li em strong
-{
-	text-transform: uppercase;
-}
 div#pts_phoromatic_main_area div.pts_phoromatic_info_box_area ul a:hover li, div#pts_phoromatic_main_area  div.pts_phoromatic_info_box_area ul:hover a
 {
 	background: #E0E0E0;
@@ -397,6 +391,28 @@ textarea
 input:focus, textarea:focus
 {
 	background: #666; color: #FFF;
+}
+div.pts_phoromatic_info_box_area table
+{
+	text-align: left;
+	width: 100%;
+	padding: 1px;
+	margin: 0;
+	table-layout: fixed;
+	font-weight: normal;
+	text-transform: uppercase;
+	font-size: 75%;
+}
+div.pts_phoromatic_info_box_area table td
+{
+	background: transparent;
+	border: 1px;
+	transition: none;
+}
+div.pts_phoromatic_info_box_area table tr:hover td
+{
+	background: transparent;
+	color: #076DBA;
 }
 table.pts_phoromatic_schedule_type
 {

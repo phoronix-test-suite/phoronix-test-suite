@@ -123,7 +123,7 @@ class phoromatic_systems implements pts_webui_interface
 							break;
 						}
 
-						$main .= '<a href="?result/' . $test_result_row['UploadID'] . '"><li>' . $test_result_row['Title'] . '<br /><em>' . phoromatic_system_id_to_name($test_result_row['SystemID']) . ' - ' . phoromatic_user_friendly_timedate($test_result_row['UploadTime']) .  '</em></li></a>';
+						$main .= '<a href="?result/' . $test_result_row['UploadID'] . '"><li>' . $test_result_row['Title'] . '<br /><table><tr><td>' . phoromatic_system_id_to_name($test_result_row['SystemID']) . '</td><td>' . phoromatic_user_friendly_timedate($test_result_row['UploadTime']) .  '</td></tr></table></li></a>';
 						$results++;
 
 					}
@@ -147,7 +147,7 @@ class phoromatic_systems implements pts_webui_interface
 					$main .= '<hr /><div style="margin: 0 10%;"><ul><li><h1>Recent System Warnings &amp; Errors</h1></li>';
 					do
 					{
-						$main .= '<a href="#"><li>' . $row['ErrorMessage'] . '<br /><em>' . $row['UploadTime'] . ' - ' . $row['TestIdentifier'] . '</em></li></a>';
+						$main .= '<a href="#"><li>' . $row['ErrorMessage'] . '<br /><table><tr><td>' . $row['UploadTime'] . '</td><td>' . $row['TestIdentifier'] . '</td></tr></table></li></a>';
 					}
 					while($row = $result->fetchArray());
 					$main .= '	</ul></div>';
@@ -271,7 +271,7 @@ class phoromatic_systems implements pts_webui_interface
 					{
 						do
 						{
-							$main .= '<a href="?systems/' . $row['SystemID'] . '"><li>' . $row['Title'] . '<br /><em>' . $row['LocalIP'] . ' - <strong>Current State:</strong> ' . $row['CurrentTask'] . ' - <strong>Last Communication:</strong> ' . date('j F Y H:i', strtotime($row['LastCommunication'])) . '</em></li></a>';
+							$main .= '<a href="?systems/' . $row['SystemID'] . '"><li>' . $row['Title'] . '<br /><table><tr><td>' . $row['LocalIP'] . '</td><td><strong>Current State:</strong> ' . $row['CurrentTask'] . '</td><td><strong>Last Communication:</strong> ' . date('j F Y H:i', strtotime($row['LastCommunication'])) . '</td></tr></table></li></a>';
 						}
 						while($row = $result->fetchArray());
 					}

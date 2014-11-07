@@ -72,7 +72,7 @@ class phoromatic_results implements pts_webui_interface
 					{
 						break;
 					}
-					$main .= '<a onclick="javascript:phoromatic_click_results(\'' . $test_result_row['UploadID'] . '\');"><li id="result_select_' . $test_result_row['UploadID'] . '">' . $test_result_row['Title'] . '<br /><em><strong>' . phoromatic_system_id_to_name($test_result_row['SystemID']) . '</strong> - ' . phoromatic_user_friendly_timedate($test_result_row['UploadTime']) .  '</em></li></a>';
+					$main .= '<a onclick="javascript:phoromatic_click_results(\'' . $test_result_row['UploadID'] . '\');"><li id="result_select_' . $test_result_row['UploadID'] . '">' . $test_result_row['Title'] . '<br /><table><tr><td>' . phoromatic_system_id_to_name($test_result_row['SystemID']) . '</td><td>' . phoromatic_user_friendly_timedate($test_result_row['UploadTime']) .  '</td></tr></table></li></a>';
 					$results++;
 
 				}
