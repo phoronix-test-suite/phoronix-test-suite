@@ -288,15 +288,29 @@ class pts_result_file
 			}
 		}
 
-		if($select_indexes != -1)
+		if($select_indexes != -1 && $select_indexes !== null)
 		{
 			$objects = array();
 
-			foreach(pts_arrays::to_array($select_indexes) as $index)
+			if($select_indexes == 'ONLY_CHANGED_RESULTS')
 			{
-				if(isset($this->result_objects[$index]))
+				foreach($this->result_objects as &$result)
 				{
-					array_push($objects, $this->result_objects[$index]);
+					// Only show results where the variation was greater than or equal to 1%
+					if($result->largest_result_variation(0.01) >= 0.01)
+					{
+						array_push($objects, $result);
+					}
+				}
+			}
+			else
+			{
+				foreach(pts_arrays::to_array($select_indexes) as $index)
+				{
+					if(isset($this->result_objects[$index]))
+					{
+						array_push($objects, $this->result_objects[$index]);
+					}
 				}
 			}
 

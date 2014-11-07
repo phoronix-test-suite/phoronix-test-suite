@@ -203,7 +203,7 @@ class phoromatic_result implements pts_webui_interface
 			$table = new pts_ResultFileTable($result_file, $intent);
 			$main .= '<p style="text-align: center; overflow: auto;" class="result_object">' . pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes) . '</p>';
 
-			foreach($result_file->get_result_objects() as $i => $result_object)
+			foreach($result_file->get_result_objects((isset($_POST['show_only_changed_results']) ? 'ONLY_CHANGED_RESULTS' : -1)) as $i => $result_object)
 			{
 				$main .= '<h2><a name="r-' . $i . '"></a>' . $result_object->test_profile->get_title() . '</h2>';
 				$main .= '<p class="result_object">';
@@ -264,6 +264,7 @@ class phoromatic_result implements pts_webui_interface
 				'sort_by_performance' => 'Sort Results By Performance',
 				'sort_by_name' => 'Reverse Result By Identifier',
 				'sort_by_reverse' => 'Reverse Result Order',
+				'show_only_changed_results' => 'Show Only Results With Result Variation',
 				);
 
 			if($result_file->is_multi_way_comparison())

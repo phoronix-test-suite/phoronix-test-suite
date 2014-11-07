@@ -604,7 +604,7 @@ class pts_strings
 	}
 	public static function plural_handler($count, $base)
 	{
-		return $count . ' ' . $base . ($count > 1 ? 's' : null);
+		return $count . ' ' . $base . ($count != 1 ? 's' : null);
 	}
 	public static function days_ago_format_string($days_ago)
 	{
