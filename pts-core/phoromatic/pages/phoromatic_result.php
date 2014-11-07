@@ -92,6 +92,12 @@ class phoromatic_result implements pts_webui_interface
 				pts_arrays::unique_push($system_types, $row['SystemID']);
 				pts_arrays::unique_push($schedule_types, $row['ScheduleID']);
 				pts_arrays::unique_push($trigger_types, $row['Trigger']);
+
+				// Update view counter
+				$stmt_view = phoromatic_server::$db->prepare('UPDATE phoromatic_results SET TimesViewed = (TimesViewed + 1) WHERE AccountID = :account_id AND UploadID = :upload_id LIMIT 1');
+				$stmt_view->bindValue(':account_id', $_SESSION['AccountID']);
+				$stmt_view->bindValue(':upload_id', $upload_id);
+				$stmt_view->execute();
 			}
 
 			$result_file_title = null;

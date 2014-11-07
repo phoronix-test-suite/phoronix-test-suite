@@ -62,7 +62,7 @@ class phoromatic_results implements pts_webui_interface
 				$main .= '<div id="pts_phoromatic_top_result_button_area"></div>';
 				$main .= '<div class="pts_phoromatic_info_box_area">';
 				$main .= '<div style="margin: 0 10%;"><ul><li><h1>Recent Test Results</h1></li>';
-				$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, ScheduleID, UploadID, UploadTime FROM phoromatic_results WHERE AccountID = :account_id ORDER BY UploadTime DESC');
+				$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, ScheduleID, UploadID, UploadTime, TimesViewed FROM phoromatic_results WHERE AccountID = :account_id ORDER BY UploadTime DESC');
 				$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 				$test_result_result = $stmt->execute();
 				$results = 0;
@@ -72,7 +72,7 @@ class phoromatic_results implements pts_webui_interface
 					{
 						break;
 					}
-					$main .= '<a onclick="javascript:phoromatic_click_results(\'' . $test_result_row['UploadID'] . '\');"><li id="result_select_' . $test_result_row['UploadID'] . '">' . $test_result_row['Title'] . '<br /><table><tr><td>' . phoromatic_system_id_to_name($test_result_row['SystemID']) . '</td><td>' . phoromatic_user_friendly_timedate($test_result_row['UploadTime']) .  '</td></tr></table></li></a>';
+					$main .= '<a onclick="javascript:phoromatic_click_results(\'' . $test_result_row['UploadID'] . '\');"><li id="result_select_' . $test_result_row['UploadID'] . '">' . $test_result_row['Title'] . '<br /><table><tr><td>' . phoromatic_system_id_to_name($test_result_row['SystemID']) . '</td><td>' . phoromatic_user_friendly_timedate($test_result_row['UploadTime']) .  '</td><td>' . $test_result_row['TimesViewed'] . ' Times Viewed</tr></table></li></a>';
 					$results++;
 
 				}
