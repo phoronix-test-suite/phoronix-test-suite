@@ -3,8 +3,8 @@ body
 	text-align: left;
 	margin: 0;
 	padding: 0;
-	font-family: museo-sans, sans-serif, 'Open Sans', 'helvetica neue', helvetica;
-	font-weight: 400;
+	font-family: 'DejaVu Sans', museo-sans, sans-serif, 'Open Sans', 'helvetica neue', helvetica;
+	font-weight: 300;
 	font-size: 100%;
 	color: #212121;
 }
