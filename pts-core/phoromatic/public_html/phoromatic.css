@@ -29,7 +29,7 @@ div#pts_phoromatic_top_header
 	background-image: linear-gradient(to bottom, #0983E0 0%, #076DBA 100%);
 	border: #1F1F1F 1px solid;
 	overflow: hidden;
-	line-height: 80px;
+	line-height: 70px;
 	margin: 0;
 	box-shadow: 1px 1px 2px #1F1F1F;
 	-moz-box-shadow: 1px 1px 2px #1F1F1F;
@@ -263,6 +263,17 @@ sup
 p.result_object
 {
 	text-align: center;
+}
+div#pts_phoromatic_main_area a[href*="www"]
+{
+	color: #945B06;
+	border-bottom: 1px dotted #945B06;
+	display: inline;
+}
+div#pts_phoromatic_main_area a[href*="www"]:hover
+{
+	text-decoration: none;
+	border-bottom: 1px solid #945B06;
 }
 div#pts_phoromatic_main_area h2 a
 {
