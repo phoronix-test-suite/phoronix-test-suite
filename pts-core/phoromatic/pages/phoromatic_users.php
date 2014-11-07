@@ -164,7 +164,7 @@ class phoromatic_users implements pts_webui_interface
 								break;
 						}
 
-						$main .= '<a href="#"><li>' . $row['UserName'] . '<br /><em><strong>' . $level . '</strong> - Last Login: ' . (empty($row['LastLogin']) ? 'Never' : date('j F Y H:i', strtotime($row['LastLogin']))) . '</em></li></a>';
+						$main .= '<a href="#"><li>' . $row['UserName'] . '<br /><table><tr><td><strong>' . $level . '</strong></td><td>Last Login: ' . (empty($row['LastLogin']) ? 'Never' : date('j F Y H:i', strtotime($row['LastLogin']))) . '</td></tr></table></li></a>';
 					}
 					while($row = $result->fetchArray());
 
