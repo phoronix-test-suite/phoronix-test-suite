@@ -61,6 +61,26 @@ function phoromatic_results_for_schedule($schedule_id)
 
 	return empty($row) ? 0 : $row['UploadCount'];
 }
+function phoromatic_schedule_activeon_string($active_on, $active_at = null)
+{
+	if(!empty($active_on))
+	{
+		$active_days = explode(',', $active_on);
+		$week = array('M', 'T', 'W', 'TH', 'F', 'S', 'SU');
+		foreach($active_days as $i => &$day)
+		{
+			if(!isset($week[$day]))
+			{
+				unset($active_days[$i]);
+			}
+			else
+			{
+				$day = $week[$day];
+			}
+		}
+		return implode(' ', $active_days) . (!empty($active_at) ? ' @ ' . str_replace('.', ':', $active_at) : null );
+	}
+}
 function phoromatic_webui_footer()
 {
 	return '<div id="pts_phoromatic_bottom_footer">

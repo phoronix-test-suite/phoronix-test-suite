@@ -281,7 +281,7 @@ class phoromatic_schedules implements pts_webui_interface
 					<ul>
 						<li><h1>Active Test Schedules</h1></li>';
 
-					$stmt = phoromatic_server::$db->prepare('SELECT Title, ScheduleID, Description, RunTargetSystems, RunTargetGroups FROM phoromatic_schedules WHERE AccountID = :account_id AND State >= 1 ORDER BY Title ASC');
+					$stmt = phoromatic_server::$db->prepare('SELECT Title, ScheduleID, Description, RunTargetSystems, RunTargetGroups, RunAt, ActiveOn FROM phoromatic_schedules WHERE AccountID = :account_id AND State >= 1 ORDER BY Title ASC');
 					$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 					$result = $stmt->execute();
 					$row = $result->fetchArray();
@@ -296,7 +296,7 @@ class phoromatic_schedules implements pts_webui_interface
 						{
 							$system_count = empty($row['RunTargetSystems']) ? 0 : count(explode(',', $row['RunTargetSystems']));
 							$group_count = empty($row['RunTargetGroups']) ? 0 : count(explode(',', $row['RunTargetGroups']));
-							$main .= '<a href="?schedules/' . $row['ScheduleID'] . '"><li>' . $row['Title'] . '<br /><table><tr><td>' . $system_count . ' Systems</td><td>' . $group_count . ' Groups</td><td>' . phoromatic_results_for_schedule($row['ScheduleID']) . ' Results</td></tr></table></li></a>';
+							$main .= '<a href="?schedules/' . $row['ScheduleID'] . '"><li>' . $row['Title'] . '<br /><table><tr><td>' . $system_count . ' Systems</td><td>' . $group_count . ' Groups</td><td>' . phoromatic_results_for_schedule($row['ScheduleID']) . ' Results</td><td><strong>' . phoromatic_schedule_activeon_string($row['ActiveOn'], $row['RunAt']) . '</strong></td></tr></table></li></a>';
 						}
 						while($row = $result->fetchArray());
 					}

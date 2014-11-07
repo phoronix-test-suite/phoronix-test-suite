@@ -231,20 +231,8 @@ class phoromatic_result implements pts_webui_interface
 
 				if(!empty($row['ActiveOn']))
 				{
-					$active_days = explode(',', $row['ActiveOn']);
-					$week = array('M', 'T', 'W', 'TH', 'F', 'S', 'SU');
-					foreach($active_days as $i => &$day)
-					{
-						if(!isset($week[$day]))
-						{
-							unset($active_days[$i]);
-						}
-						else
-						{
-							$day = $week[$day];
-						}
-					}
-					$right .= '<p align="center"><strong>' . implode(' ', $active_days) . (!empty($row['RunAt']) ? ' @ ' . str_replace('.', ':', $row['RunAt']) : null ) . '</strong></p>';
+
+					$right .= '<p align="center"><strong>' . phoromatic_schedule_activeon_string($row['ActiveOn'], $row['RunAt']) . '</strong></p>';
 				}
 
 				$right .= '<p>Compare this result file to the latest results from the past: ';
