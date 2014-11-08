@@ -41,8 +41,8 @@ class pts_ResultFileTable extends pts_Table
 			if(isset($result_object[0]))
 			{
 				$this->graph_title = $result_object[0]->test_profile->get_title();
+				array_push($this->graph_sub_titles, $result_object[0]->get_arguments_description());
 			}
-			array_push($this->graph_sub_titles, $result_object[0]->get_arguments_description());
 		}
 
 		// where to start the table values
