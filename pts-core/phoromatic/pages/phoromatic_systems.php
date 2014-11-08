@@ -327,7 +327,7 @@ class phoromatic_systems implements pts_webui_interface
 						$row_count = $result_count->fetchArray();
 						$row_count['system_count'] = isset($row_count['system_count']) ? $row_count['system_count'] : 0;
 
-						$main .= '<p><div style="width: 200px; float: left; font-weight: bold;">' . $row['GroupName'] . '</div> ' . $row_count['system_count'] . ' System' . ($row_count['system_count'] != 1 ? 's' : '') . '</p>';
+						$main .= '<div style="clear: both;"><div style="width: 200px; float: left; font-weight: bold;">' . $row['GroupName'] . '</div> ' . $row_count['system_count'] . ' System' . ($row_count['system_count'] != 1 ? 's' : '') . '</div>';
 
 					}
 					while($row = $result->fetchArray());

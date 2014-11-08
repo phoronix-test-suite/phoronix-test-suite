@@ -264,12 +264,12 @@ p.result_object
 {
 	text-align: center;
 }
-div#pts_phoromatic_main_area a[href*="www"]
+div#pts_phoromatic_main_area a[href*="http"]
 {
 	border-bottom: 1px dotted #e08a09;
 	display: inline;
 }
-div#pts_phoromatic_main_area a[href*="www"]:hover
+div#pts_phoromatic_main_area a[href*="http"]:hover
 {
 	text-decoration: none;
 	border-bottom: 1px solid #e08a09;
