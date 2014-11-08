@@ -520,15 +520,6 @@ class phoromatic extends pts_module_interface
 		// TODO: report name of test identifier/run i.e. . ' For ' . PHOROMATIC_TITLE
 		phoromatic::update_system_status('Running ' . $pts_test_result->test_profile->get_identifier());
 	}
-	public static function __event_user_error($user_error)
-	{
-		if(!self::$is_running_as_phoromatic_node)
-		{
-			return false;
-		}
-		// Report PTS user error warnings to Phoromatic server
-		phoromatic::report_warning_to_phoromatic($user_error->get_error_string());
-	}
 	public static function __event_results_saved($test_run_manager)
 	{
 		/*if(pts_module::read_variable('AUTO_UPLOAD_RESULTS_TO_PHOROMATIC') && pts_module::is_module_setup())
@@ -539,6 +530,9 @@ class phoromatic extends pts_module_interface
 	public static function __event_run_error($error_obj)
 	{
 		list($test_run_manager, $test_run_request, $error_msg) = $error_obj;
+
+		if(stripos('Download Failed', $error_msg) !== false || stripos('check-sum of the downloaded file failed', $error_msg) !== false)
+			return false;
 
 		$server_response = phoromatic::upload_to_remote_server(array(
 			'r' => 'error_report',

@@ -203,9 +203,9 @@ class phoromatic_welcome implements pts_webui_interface
 			<hr />
 			<h1>Log-In</h1>
 			<form name="login_form" id="login_form" action="?login" method="post" onsubmit="return phoromatic_login(this);">
-			<p><div style="width: 200px; font-weight: bold; float: left;">User:</div> <input type="text" name="username" /></p>
-			<p><div style="width: 200px; font-weight: bold; float: left;">Password:</div> <input type="password" name="password" /></p>
-			<p><div style="width: 200px; font-weight: bold; float: left;">&nbsp;</div> <input type="submit" value="Submit" /></p>
+			<p><div style="width: 200px; font-weight: 500; float: left;">User:</div> <input type="text" name="username" /></p>
+			<p><div style="width: 200px; font-weight: 500; float: left;">Password:</div> <input type="password" name="password" /></p>
+			<p><div style="width: 200px; font-weight: 500; float: left;">&nbsp;</div> <input type="submit" value="Submit" /></p>
 			</form>
 			<hr />
 			<h1>Register</h1>
@@ -213,7 +213,7 @@ class phoromatic_welcome implements pts_webui_interface
 
 			$box .= '<form name="register_form" id="register_form" action="?register" method="post" onsubmit="return phoromatic_initial_registration(this);">
 
-			<div style="clear: both; font-weight: bold;">
+			<div style="clear: both; font-weight: 500;">
 			<div style="float: left; width: 25%;">Username</div>
 			<div style="float: left; width: 25%;">Password</div>
 			<div style="float: left; width: 25%;">Confirm Password</div>
