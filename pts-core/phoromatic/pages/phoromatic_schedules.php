@@ -294,9 +294,16 @@ class phoromatic_schedules implements pts_webui_interface
 					{
 						do
 						{
+							$stmt_tests = phoromatic_server::$db->prepare('SELECT COUNT(*) AS TestCount FROM phoromatic_schedules_tests WHERE AccountID = :account_id AND ScheduleID = :schedule_id ORDER BY TestProfile ASC');
+							$stmt_tests->bindValue(':account_id', $_SESSION['AccountID']);
+							$stmt_tests->bindValue(':schedule_id', $row['ScheduleID']);
+							$result_tests = $stmt_tests->execute();
+							$row_tests = $result_tests->fetchArray();
+							$test_count = !empty($row_tests) ? $row_tests['TestCount'] : 0;
+
 							$system_count = empty($row['RunTargetSystems']) ? 0 : count(explode(',', $row['RunTargetSystems']));
 							$group_count = empty($row['RunTargetGroups']) ? 0 : count(explode(',', $row['RunTargetGroups']));
-							$main .= '<a href="?schedules/' . $row['ScheduleID'] . '"><li>' . $row['Title'] . '<br /><table><tr><td>' . $system_count . ' Systems</td><td>' . $group_count . ' Groups</td><td>' . phoromatic_results_for_schedule($row['ScheduleID']) . ' Results</td><td><strong>' . phoromatic_schedule_activeon_string($row['ActiveOn'], $row['RunAt']) . '</strong></td></tr></table></li></a>';
+							$main .= '<a href="?schedules/' . $row['ScheduleID'] . '"><li>' . $row['Title'] . '<br /><table><tr><td>' . $system_count . ' Systems</td><td>' . $group_count . ' Groups</td><td>' . pts_strings::plural_handler($test_count, 'Test') . '</td><td>' . phoromatic_results_for_schedule($row['ScheduleID']) . ' Results</td><td><strong>' . phoromatic_schedule_activeon_string($row['ActiveOn'], $row['RunAt']) . '</strong></td></tr></table></li></a>';
 						}
 						while($row = $result->fetchArray());
 					}

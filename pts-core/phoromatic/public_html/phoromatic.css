@@ -266,14 +266,13 @@ p.result_object
 }
 div#pts_phoromatic_main_area a[href*="www"]
 {
-	color: #945B06;
-	border-bottom: 1px dotted #945B06;
+	border-bottom: 1px dotted #e08a09;
 	display: inline;
 }
 div#pts_phoromatic_main_area a[href*="www"]:hover
 {
 	text-decoration: none;
-	border-bottom: 1px solid #945B06;
+	border-bottom: 1px solid #e08a09;
 }
 div#pts_phoromatic_main_area h2 a
 {
