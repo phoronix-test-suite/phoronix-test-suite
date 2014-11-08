@@ -44,7 +44,34 @@ class phoromatic extends pts_module_interface
 	}
 	public static function user_commands()
 	{
-		return array('connect' => 'run_connection', 'explore' => 'explore_network'); //explore => explore_network
+		return array('connect' => 'run_connection', 'explore' => 'explore_network', 'upload_result' => 'upload_unscheduled_result');
+	}
+	public static function upload_unscheduled_result($args)
+	{
+		$server_setup = self::setup_server_addressing($args);
+
+		if(!$server_setup)
+			return false;
+
+		$uploads = 0;
+		foreach($args as $arg)
+		{
+			if(pts_types::is_result_file($arg))
+			{
+				$uploads++;
+				echo PHP_EOL . 'Uploading: ' . $arg . PHP_EOL;
+				$result_file = pts_types::identifier_to_object($arg);
+				$server_response = self::upload_test_result($result_file);
+				$server_response = json_decode($server_response, true);
+				if(isset($server_response['phoromatic']['response']))
+					echo '   Result Uploaded' . PHP_EOL;
+				else
+					echo '   Upload Failed' . PHP_EOL;
+			}
+		}
+
+		if($uploads == 0)
+			echo PHP_EOL . 'No Result Files Found To Upload.' . PHP_EOL;
 	}
 	public static function explore_network()
 	{
@@ -175,31 +202,19 @@ class phoromatic extends pts_module_interface
 				'r' => 'ping',
 				), $server_ip, $http_port);
 	}
-	public static function run_connection($args)
+	protected static function setup_server_addressing($server_string)
 	{
-		if(pts_client::create_lock(PTS_USER_PATH . 'phoromatic_lock') == false)
+		if(isset($server_string[0]) && $server_string[0] && strpos($server_string[0], '/', strpos($server_string[0], ':')) > 6)
 		{
-			trigger_error('Phoromatic is already running.', E_USER_ERROR);
-			return false;
-		}
-
-		if(pts_client::$pts_logger == false)
-		{
-			pts_client::$pts_logger = new pts_logger();
-		}
-		pts_client::$pts_logger->log(pts_title(true) . ' starting Phoromatic client');
-
-		if(isset($args[0]) && $args[0] && strpos($args[0], '/', strpos($args[0], ':')) > 6)
-		{
-			pts_client::$pts_logger->log('Attempting to connect to Phoromatic Server: ' . $args[0]);
-			self::$account_id = substr($args[0], strrpos($args[0], '/') + 1);
-			self::$server_address = substr($args[0], 0, strpos($args[0], ':'));
-			self::$server_http_port = substr($args[0], strlen(self::$server_address) + 1, -1 - strlen(self::$account_id));
+			pts_client::$pts_logger && pts_client::$pts_logger->log('Attempting to connect to Phoromatic Server: ' . $server_string[0]);
+			self::$account_id = substr($server_string[0], strrpos($server_string[0], '/') + 1);
+			self::$server_address = substr($server_string[0], 0, strpos($server_string[0], ':'));
+			self::$server_http_port = substr($server_string[0], strlen(self::$server_address) + 1, -1 - strlen(self::$account_id));
 			pts_client::$display->generic_heading('Server IP: ' . self::$server_address . PHP_EOL . 'Server HTTP Port: ' . self::$server_http_port . PHP_EOL . 'Account ID: ' . self::$account_id);
 		}
 		else
 		{
-			pts_client::$pts_logger->log('Attempting to auto-discover Phoromatic Server');
+			pts_client::$pts_logger && pts_client::$pts_logger->log('Attempting to auto-discover Phoromatic Server');
 			$archived_servers = pts_client::available_phoromatic_servers();
 			foreach($archived_servers as $archived_server)
 			{
@@ -222,6 +237,27 @@ class phoromatic extends pts_module_interface
 			echo PHP_EOL . 'You must pass the Phoromatic Server information as an argument to phoromatic.connect, or otherwise configure your network setup.' . PHP_EOL . '      e.g. phoronix-test-suite phoromatic.connect 192.168.1.2:5555/I0SSJY' . PHP_EOL . PHP_EOL;
 			return false;
 		}
+
+		return true;
+	}
+	public static function run_connection($args)
+	{
+		if(pts_client::create_lock(PTS_USER_PATH . 'phoromatic_lock') == false)
+		{
+			trigger_error('Phoromatic is already running.', E_USER_ERROR);
+			return false;
+		}
+
+		if(pts_client::$pts_logger == false)
+		{
+			pts_client::$pts_logger = new pts_logger();
+		}
+		pts_client::$pts_logger->log(pts_title(true) . ' starting Phoromatic client');
+
+		$server_setup = self::setup_server_addressing($args);
+
+		if(!$server_setup)
+			return false;
 
 		$times_failed = 0;
 
@@ -319,90 +355,8 @@ class phoromatic extends pts_module_interface
 
 								// Handle uploading data to server
 								$result_file = new pts_result_file($test_run_manager->get_file_name());
-								$composite_xml = $result_file->xml_parser->getXML();
-								$system_log_dir = PTS_SAVE_RESULTS_PATH . $result_file->get_identifier() . '/system-logs/';
-
 								$upload_system_logs = $json['phoromatic']['settings']['UploadSystemLogs'];
-
-								// TODO: Potentially integrate this code below shared with pts_openbenchmarking_client into a unified function for validating system log files
-								$system_logs = null;
-								$system_logs_hash = null;
-								if(is_dir($system_log_dir) && $upload_system_logs)
-								{
-									$is_valid_log = true;
-									$finfo = function_exists('finfo_open') ? finfo_open(FILEINFO_MIME_TYPE) : false;
-
-									foreach(pts_file_io::glob($system_log_dir . '*') as $log_dir)
-									{
-										if($is_valid_log == false || !is_dir($log_dir))
-										{
-											$is_valid_log = false;
-											break;
-										}
-
-										foreach(pts_file_io::glob($log_dir . '/*') as $log_file)
-										{
-											if(!is_file($log_file))
-											{
-												$is_valid_log = false;
-												break;
-											}
-
-											if($finfo && substr(finfo_file($finfo, $log_file), 0, 5) != 'text/')
-											{
-												$is_valid_log = false;
-												break;
-											}
-										}
-									}
-
-									if($is_valid_log)
-									{
-										$system_logs_zip = pts_client::create_temporary_file();
-										pts_compression::zip_archive_create($system_logs_zip, $system_log_dir);
-
-										if(filesize($system_logs_zip) < 2097152)
-										{
-											// If it's over 2MB, probably too big
-											$system_logs = base64_encode(file_get_contents($system_logs_zip));
-											$system_logs_hash = sha1($system_logs);
-										}
-										else
-										{
-										//	trigger_error('The systems log attachment is too large to upload to OpenBenchmarking.org.', E_USER_WARNING);
-										}
-
-										unlink($system_logs_zip);
-									}
-								}
-
-								$composite_xml_hash = sha1($composite_xml);
-								$composite_xml_type = 'composite_xml';
-
-								// Compress the result file XML if it's big
-								if(isset($composite_xml[50000]) && function_exists('gzdeflate'))
-								{
-									$composite_xml_gz = gzdeflate($composite_xml);
-
-									if($composite_xml_gz != false)
-									{
-										$composite_xml = $composite_xml_gz;
-										$composite_xml_type = 'composite_xml_gz';
-									}
-								}
-
-								// Upload to Phoromatic
-								$server_response = phoromatic::upload_to_remote_server(array(
-									'r' => 'result_upload',
-									//'ob' => $ob_data['id'],
-									'sched' => $json['phoromatic']['schedule_id'],
-									'o' => $phoromatic_save_identifier,
-									'ts' => $json['phoromatic']['trigger_id'],
-									$composite_xml_type => base64_encode($composite_xml),
-									'composite_xml_hash' => $composite_xml_hash,
-									'system_logs_zip' => $system_logs,
-									'system_logs_hash' => $system_logs_hash
-									));
+								$server_response = self::upload_test_result($result_file, $upload_system_logs, $json['phoromatic']['schedule_id'], $phoromatic_save_identifier, $json['phoromatic']['trigger_id']);
 								pts_client::$pts_logger->log('XXX TEMP DEBUG MESSAGE: ' . $server_response);
 								if(!$json['phoromatic']['settings']['ArchiveResultsLocally'])
 								{
@@ -423,6 +377,86 @@ class phoromatic extends pts_module_interface
 			sleep(60);
 		}
 		pts_client::release_lock(PTS_USER_PATH . 'phoromatic_lock');
+	}
+	private static function upload_test_result(&$result_file, $upload_system_logs = true, $schedule_id = 0, $save_identifier = null, $trigger = null)
+	{
+		$system_logs = null;
+		$system_logs_hash = null;
+		// TODO: Potentially integrate this code below shared with pts_openbenchmarking_client into a unified function for validating system log files
+		$system_log_dir = PTS_SAVE_RESULTS_PATH . $result_file->get_identifier() . '/system-logs/';
+		if(is_dir($system_log_dir) && $upload_system_logs)
+		{
+			$is_valid_log = true;
+			$finfo = function_exists('finfo_open') ? finfo_open(FILEINFO_MIME_TYPE) : false;
+			foreach(pts_file_io::glob($system_log_dir . '*') as $log_dir)
+			{
+				if($is_valid_log == false || !is_dir($log_dir))
+				{
+					$is_valid_log = false;
+					break;
+				}
+
+				foreach(pts_file_io::glob($log_dir . '/*') as $log_file)
+				{
+					if(!is_file($log_file))
+					{
+						$is_valid_log = false;
+						break;
+					}
+					if($finfo && substr(finfo_file($finfo, $log_file), 0, 5) != 'text/')
+					{
+						$is_valid_log = false;
+						break;
+					}
+				}
+			}
+
+			if($is_valid_log)
+			{
+				$system_logs_zip = pts_client::create_temporary_file();
+				pts_compression::zip_archive_create($system_logs_zip, $system_log_dir);
+
+				if(filesize($system_logs_zip) < 2097152)
+				{
+					// If it's over 2MB, probably too big
+					$system_logs = base64_encode(file_get_contents($system_logs_zip));
+					$system_logs_hash = sha1($system_logs);
+				}
+				else
+				{
+					//	trigger_error('The systems log attachment is too large to upload to OpenBenchmarking.org.', E_USER_WARNING);
+				}
+				unlink($system_logs_zip);
+			}
+		}
+
+		$composite_xml = $result_file->xml_parser->getXML();
+		$composite_xml_hash = sha1($composite_xml);
+		$composite_xml_type = 'composite_xml';
+
+		// Compress the result file XML if it's big
+		if(isset($composite_xml[50000]) && function_exists('gzdeflate'))
+		{
+			$composite_xml_gz = gzdeflate($composite_xml);
+			if($composite_xml_gz != false)
+			{
+				$composite_xml = $composite_xml_gz;
+				$composite_xml_type = 'composite_xml_gz';
+			}
+		}
+
+		// Upload to Phoromatic
+		return phoromatic::upload_to_remote_server(array(
+			'r' => 'result_upload',
+			//'ob' => $ob_data['id'],
+			'sched' => $schedule_id,
+			'o' => $save_identifier,
+			'ts' => $trigger,
+			$composite_xml_type => base64_encode($composite_xml),
+			'composite_xml_hash' => $composite_xml_hash,
+			'system_logs_zip' => $system_logs,
+			'system_logs_hash' => $system_logs_hash
+			));
 	}
 	private static function set_user_context($context_script, $trigger, $schedule_id, $process)
 	{
@@ -524,7 +558,7 @@ class phoromatic extends pts_module_interface
 	//
 	// User Run Commands
 	//
-
+/*
 	public static function user_system_process()
 	{
 		define('PHOROMATIC_PROCESS', true);
@@ -780,7 +814,7 @@ class phoromatic extends pts_module_interface
 
 		return $data;
 	}
-	protected static function upload_test_results($save_identifier, $phoromatic_schedule_id, $results_identifier, $phoromatic_trigger, &$xml_parser = null)
+	protected static function upload_test_results($save_identifier, $phoromatic_schedule_id = 0, $results_identifier, $phoromatic_trigger, &$xml_parser = null)
 	{
 		$composite_xml = file_get_contents(PTS_SAVE_RESULTS_PATH . $save_identifier . '/composite.xml');
 
@@ -830,6 +864,7 @@ class phoromatic extends pts_module_interface
 		pts_module_manager::attach_module($phoromatic);
 		return true;
 	}
+	*/
 }
 
 ?>

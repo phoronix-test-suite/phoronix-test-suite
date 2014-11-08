@@ -217,7 +217,7 @@ class phoromatic_result implements pts_webui_interface
 		}
 
 		$right = null;
-		if(self::$schedule_id)
+		if(self::$schedule_id && !empty(self::$schedule_id))
 		{
 			$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_schedules WHERE AccountID = :account_id AND ScheduleID = :schedule_id LIMIT 1');
 			$stmt->bindValue(':account_id', $_SESSION['AccountID']);

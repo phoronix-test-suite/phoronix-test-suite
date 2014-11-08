@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2011, Phoronix Media
-	Copyright (C) 2008 - 2011, Michael Larabel
+	Copyright (C) 2008 - 2014, Phoronix Media
+	Copyright (C) 2008 - 2014, Michael Larabel
 	pts_module_interface.php: The generic Phoronix Test Suite module object that is extended by the specific modules/plug-ins
 
 	This program is free software; you can redistribute it and/or modify
@@ -116,7 +116,7 @@ class pts_module
 		}
 
 		$all_options = pts_module_manager::module_call($module, 'user_commands');
-		$valid = count($all_options) > 0 && ((isset($all_options[$command]) && method_exists($module, $all_options[$command])) || in_array($command, array('help')));
+		$valid = count($all_options) > 0 && ((isset($all_options[$command]) && method_exists($module, $all_options[$command])) || !empty($all_options));
 
 		return $valid ? array($module, $command) : false;
 	}
@@ -299,7 +299,7 @@ class pts_module
 	}
 	private static function module_name()
 	{
-		$module_name = "unknown";
+		$module_name = 'unknown';
 
 		if(($current = pts_module_manager::get_current_module()) != null)
 		{

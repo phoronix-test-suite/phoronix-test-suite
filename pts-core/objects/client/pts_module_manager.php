@@ -139,7 +139,7 @@ class pts_module_manager
 
 			echo PHP_EOL . 'User commands for the ' . $module . ' module:' . PHP_EOL . PHP_EOL;
 
-			foreach($all_options as $option)
+			foreach($all_options as $option => $func)
 			{
 				echo '- ' . $module . '.' . str_replace('_', '-', $option) . PHP_EOL;
 			}
