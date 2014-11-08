@@ -161,13 +161,16 @@ class pts_test_result
 					$divide_value = $this->test_result_buffer->buffer_items[$k]->get_result_value();
 					continue;
 				}
-				$variation = abs(($this->test_result_buffer->buffer_items[$k]->get_result_value() / $divide_value) - 1);
+				$variation = ($this->test_result_buffer->buffer_items[$k]->get_result_value() / $divide_value) - 1;
 
-				if($variation > $largest_variation)
+				if(abs($variation) > $largest_variation)
 				{
 					$largest_variation = $variation;
 
-					if($break_if_greater_than !== false && $largest_variation > $break_if_greater_than)
+					if($this->test_profile->get_result_proportion() == 'LIB')
+						$largest_variation = 0 - $largest_variation;
+
+					if($break_if_greater_than !== false && abs($largest_variation) > $break_if_greater_than)
 					{
 						return $largest_variation;
 					}

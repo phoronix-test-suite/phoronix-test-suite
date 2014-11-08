@@ -304,6 +304,11 @@ div#pts_phoromatic_main_area h3
 	font-size: 110%;
 	font-weight: 500;
 }
+div#pts_phoromatic_main_area h4
+{
+	font-size: 100%;
+	font-weight: 500;
+}
 div#pts_phoromatic_main_area hr
 {
 	border: #f1f1f1 1px solid;

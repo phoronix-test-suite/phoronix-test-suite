@@ -58,6 +58,87 @@ class phoromatic_main implements pts_webui_interface
 
 		}
 
+
+		$has_flagged_results = false;
+		$stmt = phoromatic_server::$db->prepare('SELECT ScheduleID, GROUP_CONCAT(SystemID,\',\') AS Systems FROM phoromatic_results WHERE AccountID = :account_id AND ScheduleID NOT LIKE 0 GROUP BY ScheduleID ORDER BY UploadTime DESC');
+		$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+		$test_result_result = $stmt->execute();
+		while($test_result_row = $test_result_result->fetchArray())
+		{
+			$systems = array_count_values(explode(',', $test_result_row['Systems']));
+
+			foreach($systems as $system_id => $system_count)
+			{
+				if($system_count < 2)
+					unset($systems[$system_id]);
+			}
+
+			$printed_schedule_name = false;
+			if(!empty($systems))
+			{
+				foreach(array_keys($systems) as $system_id)
+				{
+					$stmt_uploads = phoromatic_server::$db->prepare('SELECT UploadID FROM phoromatic_results WHERE AccountID = :account_id AND SystemID = :system_id AND ScheduleID = :schedule_id ORDER BY UploadTime DESC LIMIT 2');
+					$stmt_uploads->bindValue(':account_id', $_SESSION['AccountID']);
+					$stmt_uploads->bindValue(':system_id', $system_id);
+					$stmt_uploads->bindValue(':schedule_id', $test_result_row['ScheduleID']);
+					$result_uploads = $stmt_uploads->execute();
+
+					$upload_ids = array();
+					while($result_uploads_row = $result_uploads->fetchArray())
+					{
+						array_push($upload_ids, $result_uploads_row['UploadID']);
+					}
+					$upload_ids = array_reverse($upload_ids);
+
+					$result_file = array();
+					foreach($upload_ids as $upload_id)
+					{
+						$composite_xml = phoromatic_server::phoromatic_account_result_path($_SESSION['AccountID'], $upload_id) . 'composite.xml';
+						if(is_file($composite_xml))
+						{
+							array_push($result_file, new pts_result_merge_select($composite_xml));
+						}
+					}
+
+					if(count($result_file) == 2)
+					{
+						$writer = new pts_result_file_writer(null);
+						$attributes = array();
+						pts_merge::merge_test_results_process($writer, $result_file, $attributes);
+						$result_file = new pts_result_file($writer->get_xml());
+
+						foreach($result_file->get_result_objects('ONLY_CHANGED_RESULTS') as $i => $result_object)
+						{
+							$vari = round($result_object->largest_result_variation(), 3);
+							if($vari < 0.01 && false)
+								continue;
+							if(!$has_flagged_results)
+							{
+								$main .= '<hr /><h2>Flagged Results</h2>';
+								$main .= '<p>Displayed are results for each system of each scheduled test where there is a measurable change (currently set to a 0.1% threshold) when comparing the most recent result to the previous result for that system for that test schedule. Click on the change to jump to that individualized result file comparison.</p>';
+								$main .= '<span style="font-size: 80%;">';
+								$has_flagged_results = true;
+							}
+							if(!$printed_schedule_name)
+							{
+								$main .= '<h3>' . phoromatic_schedule_id_to_name($test_result_row['ScheduleID']) . '</h3><p>';
+								$printed_schedule_name = true;
+							}
+
+							$pcolor = $vari > 0 ? 'green' : 'red';
+
+							$main .= '<a href="?result/' . implode(',', $upload_ids) . '#' . $result_object->get_comparison_hash(true, false) . '"><span style="color: ' . $pcolor . ';"><strong>' . phoromatic_system_id_to_name($system_id) . ' - ' . $result_object->test_profile->get_title() . ':</strong> ' . implode(' &gt; ', $result_file->get_system_identifiers()) . ': ' . ($vari * 100) . '%</span></a><br />';
+						}
+					}
+				}
+			}
+			if($printed_schedule_name)
+				$main .= '</p>';
+		}
+		if($has_flagged_results)
+			$main .= '</span>';
+
 		$main .= '<hr />
 
 			<div class="pts_phoromatic_info_box_area">';

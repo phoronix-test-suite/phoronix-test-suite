@@ -297,7 +297,7 @@ class pts_result_file
 				foreach($this->result_objects as &$result)
 				{
 					// Only show results where the variation was greater than or equal to 1%
-					if($result->largest_result_variation(0.01) >= 0.01)
+					if(abs($result->largest_result_variation(0.01)) >= 0.01)
 					{
 						array_push($objects, $result);
 					}
