@@ -106,7 +106,11 @@ class phoromatic_result implements pts_webui_interface
 				$result_file_title = phoromatic_system_id_to_name($system_types[0]) . ' Tests';
 			}
 
-			if(count($display_rows) == 1)
+			if(empty($schedule_types[0]))
+			{
+				$system_name_format = 'ORIGINAL_DATA';
+			}
+			else if(count($display_rows) == 1)
 			{
 				$system_name_format = 'SYSTEM_NAME';
 			}
@@ -139,6 +143,9 @@ class phoromatic_result implements pts_webui_interface
 
 				switch($system_name_format)
 				{
+					case 'ORIGINAL_DATA':
+						$system_name = null;
+						break;
 					case 'SYSTEM_NAME':
 						$system_name = phoromatic_system_id_to_name($row['SystemID']);
 						break;
