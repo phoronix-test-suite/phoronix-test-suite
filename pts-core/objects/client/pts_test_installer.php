@@ -252,7 +252,13 @@ class pts_test_installer
 							pts_client::$display->test_install_download_file('DOWNLOAD_FROM_CACHE', $download_package);
 							pts_network::download_file($remote_download_cache_file, $download_destination_temp);
 
-							if($download_package->check_file_hash($download_destination_temp))
+							if(filesize($download_destination_temp) == 0)
+							{
+								self::test_install_error(null, $test_install_request, 'The file failed to download from the cache.');
+								pts_file_io::unlink($download_destination_temp);
+								break;
+							}
+							else if($download_package->check_file_hash($download_destination_temp))
 							{
 								rename($download_destination_temp, $download_destination);
 								break;
