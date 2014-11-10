@@ -110,6 +110,7 @@ class start_phoromatic_server implements pts_option_interface
 
 		echo 'Phoronix Test Suite User-Data Directory Path: ' . PTS_USER_PATH . PHP_EOL;
 		echo 'Phoronix Test Suite Configuration File: ' . pts_config::get_config_file_location() . PHP_EOL;
+		echo 'Phoromatic Server Log File: ' . $pts_logger->get_log_file_location() . PHP_EOL;
 		$pts_logger->log('PTS_USER_PATH = ' . PTS_USER_PATH);
 		$pts_logger->log('PTS_DOWNLOAD_CACHE_PATH = ' . PTS_DOWNLOAD_CACHE_PATH);
 		$pts_logger->log('XML Configuration File = ' . pts_config::get_config_file_location());
@@ -139,7 +140,7 @@ class start_phoromatic_server implements pts_option_interface
 		// Avahi for zeroconf network discovery support
 		if(pts_config::read_user_config('PhoronixTestSuite/Options/Server/AdvertiseServiceZeroConf', 'TRUE') && pts_client::executable_in_path('avahi-publish'))
 		{
-			$server_launcher .= 'avahi-publish -s phoromatic-server _http._tcp ' . $web_port . ' "Phoronix Test Suite Phoromatic" > /dev/null 2>&1 &' . PHP_EOL;
+			$server_launcher .= 'avahi-publish -s phoromatic-server _http._tcp ' . $web_port . ' "Phoronix Test Suite Phoromatic" > /dev/null &' . PHP_EOL;
 			$server_launcher .= 'avahi_publish_pid=$!'. PHP_EOL;
 		}
 
