@@ -78,6 +78,7 @@ class phoromatic extends pts_module_interface
 		pts_client::$display->generic_heading('Phoromatic Servers');
 
 		$archived_servers = pts_client::available_phoromatic_servers();
+		$server_count = 0;
 		foreach($archived_servers as $archived_server)
 		{
 			$response = pts_network::http_get_contents('http://' . $archived_server['ip'] . ':' . $archived_server['http_port'] . '/server.php?phoromatic_info');
@@ -87,6 +88,7 @@ class phoromatic extends pts_module_interface
 				$response = json_decode($response, true);
 				if($response && isset($response['pts']))
 				{
+					$server_count++;
 					echo PHP_EOL . 'IP: ' . $archived_server['ip'] . PHP_EOL;
 					echo 'HTTP PORT: ' . $archived_server['http_port'] . PHP_EOL;
 					echo 'WEBSOCKET PORT: ' . $response['ws_port'] . PHP_EOL;
@@ -133,6 +135,11 @@ class phoromatic extends pts_module_interface
 					echo '      N/A' . PHP_EOL;
 				}
 			}
+		}
+
+		if($server_count == 0)
+		{
+			echo PHP_EOL . 'No Phoromatic Servers detected.' . PHP_EOL . PHP_EOL;
 		}
 	}
 	protected static function upload_to_remote_server($to_post, $server_address = null, $server_http_port = null, $account_id = null)
