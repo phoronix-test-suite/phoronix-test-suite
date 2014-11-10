@@ -101,11 +101,11 @@
 
 			<h1>Server Options</h1>
 			<h3>RemoteAccessPort: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/Server/RemoteAccessPort" /></span></h3>
-			<p>If you wish to allow remote access to the built-in web-based interface to the Phoronix Test Suite when running its built-in web server, set the port number for remote access here. Port 80 is the common HTTP port but the Phoronix Test Suite web-interface can be easily set to other port numbers. If you do not wish to allow remote access, use the default value of <em>FALSE</em> or <em>-1</em>.</p>
+			<p>If you wish to allow remote access to the built-in web-based interface to the Phoronix Test Suite when running its built-in web server, set the port number for remote access here. Port 80 is the common HTTP port but the Phoronix Test Suite web-interface can be easily set to other port numbers. If you do not wish to allow remote access, use the default value of <em>FALSE</em> or <em>-1</em>. If the value is set to <em>RANDOM</em>, a random port number will be chosen.</p>
 			<h3>Password: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/Server/Password" /></span></h3>
 			<p>If you wish to require a password when entering the web-based interface to the Phoronix Test Suite -- either locally or remotely -- specify the password here using the password's SHA256 sum as the value.</p>
 			<h3>WebSocketPort: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/Server/WebSocketPort" /></span></h3>
-			<p>The default port to use when running a WebSocket server. If no port is assigned, a random port will be chosen.</p>
+			<p>The default port to use when running a WebSocket server. If no port is assigned or <em>RANDOM</em> is set, a random port will be chosen.</p>
 			<h3>AdvertiseServiceZeroConf: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/Server/AdvertiseServiceZeroConf" /></span></h3>
 			<p>If this option is set to <em>TRUE</em> when starting a Phoromatic Server instance, the software will attempt to broadcast its service using zeroconf networking (Avahi on Linux assuming <em>avahi-publish</em> is present).</p>
 			<h3>PhoromaticStorage: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/Server/PhoromaticStorage" /></span></h3>

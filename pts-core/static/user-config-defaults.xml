@@ -63,9 +63,9 @@
 			<ProxyPort></ProxyPort>
 		</Networking>
 		<Server>
-			<RemoteAccessPort>-1</RemoteAccessPort>
+			<RemoteAccessPort>RANDOM</RemoteAccessPort>
 			<Password></Password>
-			<WebSocketPort></WebSocketPort>
+			<WebSocketPort>RANDOM</WebSocketPort>
 			<AdvertiseServiceZeroConf>TRUE</AdvertiseServiceZeroConf>
 			<PhoromaticStorage>~/.phoronix-test-suite/phoromatic/</PhoromaticStorage>
 		</Server>

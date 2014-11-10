@@ -42,7 +42,25 @@ class start_phoromatic_server implements pts_option_interface
 
 		$server_launcher = '#!/bin/sh' . PHP_EOL;
 		$web_port = 0;
-		$remote_access = pts_config::read_user_config('PhoronixTestSuite/Options/Server/RemoteAccessPort', 'FALSE');
+		$remote_access = pts_config::read_user_config('PhoronixTestSuite/Options/Server/RemoteAccessPort', 'RANDOM');
+
+		$fp = false;
+		$errno = null;
+		$errstr = null;
+
+		if($remote_access == 'RANDOM')
+		{
+			do
+			{
+				if($fp)
+					fclose($fp);
+
+				$remote_access = rand(8000, 8999);
+			}
+			while(($fp = fsockopen('127.0.0.1', $remote_access, $errno, $errstr, 5)) != false);
+			echo 'Port ' . $remote_access . ' chosen as random port for this instance. Change the default port via the Phoronix Test Suite user configuration file.' . PHP_EOL;
+		}
+
 		$remote_access = is_numeric($remote_access) && $remote_access > 1 ? $remote_access : false;
 		$blocked_ports = array(2049, 3659, 4045, 6000);
 
@@ -50,9 +68,6 @@ class start_phoromatic_server implements pts_option_interface
 		{
 			// ALLOWING SERVER TO BE REMOTELY ACCESSIBLE
 			$server_ip = '0.0.0.0';
-			$fp = false;
-			$errno = null;
-			$errstr = null;
 
 			if(($fp = fsockopen('127.0.0.1', $remote_access, $errno, $errstr, 5)) != false)
 			{
@@ -67,13 +82,19 @@ class start_phoromatic_server implements pts_option_interface
 
 				if($web_socket_port == null || !is_numeric($web_socket_port))
 				{
-					$web_socket_port = $web_port - 1;
+					$web_socket_port = rand(8000, 8999);
+				}
+
+				while(($fp = fsockopen('127.0.0.1', $web_socket_port, $errno, $errstr, 5)) != false);
+				{
+					fclose($fp);
+					$web_socket_port = rand(8000, 8999);
 				}
 			}
 		}
 		else
 		{
-			echo PHP_EOL . PHP_EOL . 'You must first configure the remote web / Phoromatic settings via:' . PHP_EOL . '    ' . pts_config::get_config_file_location() . PHP_EOL . PHP_EOL . 'The RemoteAccessPort should be a network port to use for HTTP communication while WebSocketPort should be set to another available network port.' . PHP_EOL . PHP_EOL;
+			echo PHP_EOL . PHP_EOL . 'You must first configure the remote web / Phoromatic settings via:' . PHP_EOL . '    ' . pts_config::get_config_file_location() . PHP_EOL . PHP_EOL . 'The RemoteAccessPort should be a network port to use for HTTP communication while WebSocketPort should be set to another available network port. Set to RANDOM if wishing to use randomly chosen available ports.' . PHP_EOL . PHP_EOL;
 			return false;
 		}
 
