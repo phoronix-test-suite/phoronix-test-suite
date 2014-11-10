@@ -56,7 +56,9 @@ class phoromatic_server
 	}
 	public static function prepare_database()
 	{
-		self::$db = new SQLite3(self::phoromatic_path() . 'phoromatic.db');
+		$db_file = self::phoromatic_path() . 'phoromatic.db';
+		chmod($db_file, 0600);
+		self::$db = new SQLite3($db_file);
 
 		switch(self::read_database_version())
 		{
