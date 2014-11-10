@@ -531,7 +531,7 @@ class phoromatic extends pts_module_interface
 	{
 		list($test_run_manager, $test_run_request, $error_msg) = $error_obj;
 
-		if(stripos('Download Failed', $error_msg) !== false || stripos('check-sum of the downloaded file failed', $error_msg) !== false)
+		if(stripos('Download Failed', $error_msg) !== false || stripos('check-sum of the downloaded file failed', $error_msg) !== false || stripos('attempting', $error_msg) !== false)
 			return false;
 
 		$server_response = phoromatic::upload_to_remote_server(array(
