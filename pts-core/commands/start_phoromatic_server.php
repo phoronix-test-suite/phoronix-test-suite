@@ -145,7 +145,7 @@ class start_phoromatic_server implements pts_option_interface
 				file_put_contents('/etc/avahi/services/phoromatic-server.service', '<?xml version="1.0" standalone=\'no\'?>
 <!DOCTYPE service-group SYSTEM "avahi-service.dtd">
 <service-group>
-  <name replace-wildcards="yes">Phoronix Test Suite Phoromatic</name>
+  <name replace-wildcards="yes">phoromatic-server</name>
   <service>
     <type>_http._tcp</type>
     <port>' . $web_port . '</port>
