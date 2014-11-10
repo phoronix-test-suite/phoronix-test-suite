@@ -140,8 +140,23 @@ class start_phoromatic_server implements pts_option_interface
 		// Avahi for zeroconf network discovery support
 		if(pts_config::read_user_config('PhoronixTestSuite/Options/Server/AdvertiseServiceZeroConf', 'TRUE') && pts_client::executable_in_path('avahi-publish'))
 		{
-			$server_launcher .= 'avahi-publish -s phoromatic-server _http._tcp ' . $web_port . ' "Phoronix Test Suite Phoromatic" > /dev/null &' . PHP_EOL;
-			$server_launcher .= 'avahi_publish_pid=$!'. PHP_EOL;
+			if(is_dir('/etc/avahi/services') && is_writable('/etc/avahi/services'))
+			{
+				file_put_contents('/etc/avahi/services/phoromatic-server.service', '<?xml version="1.0" standalone=\'no\'?>
+<!DOCTYPE service-group SYSTEM "avahi-service.dtd">
+<service-group>
+  <name replace-wildcards="yes">Phoronix Test Suite Phoromatic</name>
+  <service>
+    <type>_http._tcp</type>
+    <port>' . $web_port . '</port>
+  </service>
+</service-group>');
+			}
+			else
+			{
+				$server_launcher .= 'avahi-publish -s phoromatic-server _http._tcp ' . $web_port . ' "Phoronix Test Suite Phoromatic" > /dev/null &' . PHP_EOL;
+				$server_launcher .= 'avahi_publish_pid=$!'. PHP_EOL;
+			}
 		}
 
 		// Wait for input to shutdown process..
@@ -162,7 +177,14 @@ class start_phoromatic_server implements pts_option_interface
 		// Shutdown / Kill Servers
 		$server_launcher .= PHP_EOL . 'kill $http_server_pid';
 		$server_launcher .= PHP_EOL . 'kill $websocket_server_pid';
-		$server_launcher .= PHP_EOL . 'kill $avahi_publish_pid';
+		if(is_writable('/etc/avahi/services') && is_file('/etc/avahi/services/phoromatic-server.service'))
+		{
+			$server_launcher .= PHP_EOL . 'rm -f /etc/avahi/services/phoromatic-server.service';
+		}
+		else
+		{
+			$server_launcher .= PHP_EOL . 'kill $avahi_publish_pid';
+		}
 		$server_launcher .= PHP_EOL . 'rm -f ~/.phoronix-test-suite/run-lock*';
 		file_put_contents(getenv('PTS_EXT_LAUNCH_SCRIPT_DIR') . '/phoromatic-server-launcher', $server_launcher);
 	}
