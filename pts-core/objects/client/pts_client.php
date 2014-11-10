@@ -539,7 +539,7 @@ class pts_client
 				}
 				else
 				{
-					if($only_show_required && $printed_required_header == false)
+					if(($only_show_required || PTS_IS_DAEMONIZED_SERVER_PROCESS) && $printed_required_header == false)
 					{
 						continue;
 					}
