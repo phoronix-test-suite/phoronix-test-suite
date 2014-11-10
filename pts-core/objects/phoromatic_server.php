@@ -57,7 +57,6 @@ class phoromatic_server
 	public static function prepare_database()
 	{
 		$db_file = self::phoromatic_path() . 'phoromatic.db';
-		chmod($db_file, 0600);
 		self::$db = new SQLite3($db_file);
 
 		switch(self::read_database_version())
@@ -112,6 +111,7 @@ class phoromatic_server
 				self::$db->exec('CREATE TABLE phoromatic_system_client_errors (AccountID TEXT, SystemID TEXT, UploadTime TEXT, ScheduleID INTEGER, TriggerID TEXT, ErrorMessage TEXT, TestIdentifier TEXT, TestArguments TEXT)');
 				self::$db->exec('PRAGMA user_version = 7');
 		}
+		chmod($db_file, 0600);
 	}
 	public static function send_email($to, $subject, $from, $body)
 	{
