@@ -96,7 +96,7 @@ class start_phoromatic_server implements pts_option_interface
 
 		if(!extension_loaded('sqlite3'))
 		{
-			echo PHP_EOL . PHP_EOL . 'PHP SQLite3 support must first be enabled before accessing the Phoromatic server (e.g. installing the php5-sqlite package).' . PHP_EOL . PHP_EOL;
+			echo PHP_EOL . PHP_EOL . 'PHP SQLite3 support must first be enabled before accessing the Phoromatic server (e.g. installing the php5-sqlite or php-pdo package depending on the distribution).' . PHP_EOL . PHP_EOL;
 			return false;
 		}
 
