@@ -85,10 +85,17 @@ class start_phoromatic_server implements pts_option_interface
 
 		// Setup server logger
 		define('PHOROMATIC_SERVER', true);
+		// Just create the logger so now it will flush it out
 		$pts_logger = new pts_logger();
 		$pts_logger->clear_log();
+		echo pts_title(true) . ' starting Phoromatic Server' . PHP_EOL;
 		$pts_logger->log(pts_title(true) . ' starting Phoromatic Server on ' . pts_network::get_local_ip());
-		// Just create the logger so now it will flush it out
+
+		echo 'Phoronix Test Suite User-Data Directory Path: ' . PTS_USER_PATH . PHP_EOL;
+		echo 'Phoronix Test Suite Configuration File: ' . pts_config::get_config_file_location() . PHP_EOL;
+		$pts_logger->log('PTS_USER_PATH = ' . PTS_USER_PATH);
+		$pts_logger->log('PTS_DOWNLOAD_CACHE_PATH = ' . PTS_DOWNLOAD_CACHE_PATH);
+		$pts_logger->log('XML Configuration File = ' . pts_config::get_config_file_location());
 
 		// WebSocket Server Setup
 		$server_launcher .= 'export PTS_WEBSOCKET_PORT=' . $web_socket_port . PHP_EOL;

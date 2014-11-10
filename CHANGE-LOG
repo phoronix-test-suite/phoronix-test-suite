@@ -13,6 +13,7 @@ Phoronix Test Suite (Git)
 - phoromatic: Add "show only results with variation" to result viewing page
 - phoromatic: Add result flagging to the main page
 - phoromatic: Allow other/unscheduled test results to be uploaded to the Phoromatic Server using the phoromatic.upload-result sub-command
+- phoromatic: Show file/path locations when starting the Phoromatic Server
 - pts_Graph: Shrink size of sub-title text strings when they're too long
 
 Phoronix Test Suite 5.4 Milestone 4
