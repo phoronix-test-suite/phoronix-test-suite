@@ -80,7 +80,7 @@ class start_phoromatic_server implements pts_option_interface
 				$web_port = $remote_access;
 				$web_socket_port = pts_config::read_user_config('PhoronixTestSuite/Options/Server/WebSocketPort', '');
 
-				while(($web_socket_port == null || !is_numeric($web_socket_port)) || (($fp = fsockopen('127.0.0.1', $web_socket_port, $errno, $errstr, 5)) != false));
+				while($web_socket_port == null || !is_numeric($web_socket_port) || (($fp = fsockopen('127.0.0.1', $web_socket_port, $errno, $errstr, 5)) != false))
 				{
 					if($fp)
 						fclose($fp);
