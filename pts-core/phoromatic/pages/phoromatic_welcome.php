@@ -45,7 +45,7 @@ class phoromatic_welcome implements pts_webui_interface
 				phoromatic_error_page('Oops!', 'Please go back and ensure the supplied username is at least four characters long and contains no spaces.');
 				return false;
 			}
-			if(in_array(strtolower($_POST['register_username']), array('admin', 'administrator')))
+			if(in_array(strtolower($_POST['register_username']), array('admin', 'administrator', 'rootadmin')))
 			{
 				phoromatic_error_page('Oops!', $_POST['register_username'] . ' is a reserved and common username that may be used for other purposes, please make a different selection.');
 				return false;
@@ -138,6 +138,38 @@ class phoromatic_welcome implements pts_webui_interface
 			</form>';
 			echo phoromatic_webui_box($box);
 			echo phoromatic_webui_footer();
+		}
+		else if(isset($_POST['username']) && isset($_POST['password']) && strtolower($_POST['username']) == 'rootadmin')
+		{
+			$admin_pw = phoromatic_server::read_setting('root_admin_pw');
+			if(empty($admin_pw))
+			{
+				echo phoromatic_webui_header(array('Action Required'), '');
+				$box = '<h1>Root Admin Password Not Set</h1>
+				<p>The root admin password has not yet been set for this system. It can be set by running on the system: <strong>phoronix-test-suite phoromatic.set-root-admin-password</strong>.</p>';
+				echo phoromatic_webui_box($box);
+				echo phoromatic_webui_footer();
+				return false;
+			}
+			else if(hash('sha256', 'PTS' . $_POST['password']) != $admin_pw)
+			{
+				echo phoromatic_webui_header(array('Invalid Password'), '');
+				$box = '<h1>Root Admin Password Incorrect</h1>
+				<p>The root admin password is incorrect.</p>';
+				echo phoromatic_webui_box($box);
+				echo phoromatic_webui_footer();
+				return false;
+			}
+			else
+			{
+				session_regenerate_id();
+				$_SESSION['UserID'] = 0;
+				$_SESSION['UserName'] = 'RootAdmin';
+				$_SESSION['AccountID'] = 0;
+				$_SESSION['AdminLevel'] = -40;
+				session_write_close();
+				header('Location: /?admin');
+			}
 		}
 		else if(isset($_POST['username']) && isset($_POST['password']))
 		{

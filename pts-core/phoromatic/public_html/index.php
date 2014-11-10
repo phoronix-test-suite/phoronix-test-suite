@@ -62,6 +62,19 @@ else
 {
 	$PAGE_REQUEST = 'main';
 }
+
+if(isset($_SESSION['AdminLevel']))
+{
+	if($_SESSION['AdminLevel'] == -40 && stripos($PAGE_REQUEST, 'admin') === false && $PAGE_REQUEST != 'logout')
+	{
+		$PAGE_REQUEST = 'admin';
+	}
+	else if($_SESSION['AdminLevel'] >= 0 && stripos($PAGE_REQUEST, 'admin') !== false)
+	{
+		$PAGE_REQUEST = 'main';
+	}
+}
+
 define('PAGE_REQUEST', $PAGE_REQUEST);
 $page_class = 'phoromatic_' . PAGE_REQUEST;
 

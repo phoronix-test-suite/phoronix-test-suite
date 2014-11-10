@@ -44,7 +44,7 @@ class phoromatic extends pts_module_interface
 	}
 	public static function user_commands()
 	{
-		return array('connect' => 'run_connection', 'explore' => 'explore_network', 'upload_result' => 'upload_unscheduled_result');
+		return array('connect' => 'run_connection', 'explore' => 'explore_network', 'upload_result' => 'upload_unscheduled_result', 'set_root_admin_password' => 'set_root_admin_password');
 	}
 	public static function upload_unscheduled_result($args)
 	{
@@ -72,6 +72,30 @@ class phoromatic extends pts_module_interface
 
 		if($uploads == 0)
 			echo PHP_EOL . 'No Result Files Found To Upload.' . PHP_EOL;
+	}
+	public static function set_root_admin_password()
+	{
+		phoromatic_server::prepare_database();
+		$root_admin_pw = phoromatic_server::read_setting('root_admin_pw');
+
+		if($root_admin_pw != null)
+		{
+			do
+			{
+				$check_root_pw = pts_user_io::prompt_user_input('Please enter the existing root-admin password');
+			}
+			while(hash('sha256', 'PTS' . $check_root_pw) != $root_admin_pw);
+		}
+
+		echo PHP_EOL . 'The new root-admin password must be at least six characters long.' . PHP_EOL;
+		do
+		{
+			$new_root_pw = pts_user_io::prompt_user_input('Please enter the new root-admin password');
+		}
+		while(strlen($new_root_pw) < 6);
+
+		$new_root_pw = hash('sha256', 'PTS' . $new_root_pw);
+		$root_admin_pw = phoromatic_server::save_setting('root_admin_pw', $new_root_pw);
 	}
 	public static function explore_network()
 	{

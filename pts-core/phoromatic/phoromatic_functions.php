@@ -103,11 +103,18 @@ function phoromatic_add_activity_stream_event($activity_event, $activity_event_i
 function phoromatic_webui_header_logged_in()
 {
 	$html_links = array();
-	$pages = array('Main', 'Systems', 'Settings', 'Schedules', 'Results');
-
-	if(isset($_SESSION['AdminLevel']) && $_SESSION['AdminLevel'] < 4)
+	if($_SESSION['AdminLevel'] == -40)
 	{
-		array_push($pages, 'Users');
+		$pages = array('Admin');
+	}
+	else
+	{
+		$pages = array('Main', 'Systems', 'Settings', 'Schedules', 'Results');
+
+		if(isset($_SESSION['AdminLevel']) && $_SESSION['AdminLevel'] < 4)
+		{
+			array_push($pages, 'Users');
+		}
 	}
 
 	foreach($pages as $page)
@@ -127,79 +134,85 @@ function phoromatic_webui_header_logged_in()
 function phoromatic_webui_right_panel_logged_in($add = null)
 {
 	$right = $add;
-
-	if($add == null)
+	if($_SESSION['AdminLevel'] == -40)
 	{
-		$right .= '<ul><li>Recently Active Systems</li>';
-
-		$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID FROM phoromatic_systems WHERE AccountID = :account_id AND State >= 0 ORDER BY LastCommunication DESC');
-		$stmt->bindValue(':account_id', $_SESSION['AccountID']);
-		$result = $stmt->execute();
-		$row = $result->fetchArray();
-
-		if($row == false)
+		$right .= '<h3>Phoromatic Server</h3><hr /><p><strong>' . date('H:i T - j F Y') . '</p><p align="center"><a href="?logout"><strong>Log-Out</strong></a></p>';
+	}
+	else
+	{
+		if($add == null)
 		{
-			$right .= '</ul><p style="text-align: left; margin: 6px 10px;">No Systems Found</p>';
-		}
-		else
-		{
-			do
-			{
-				$right .= '<li><a href="?systems/' . $row['SystemID'] . '">' . $row['Title'] . '</a></li>';
-			}
-			while($row = $result->fetchArray());
-			$right .= '</ul>';
-		}
+			$right .= '<ul><li>Recently Active Systems</li>';
 
-
-		$right .= '<hr />
-			<ul>
-				<li>Today\'s Scheduled Events</li>';
-
-			$stmt = phoromatic_server::$db->prepare('SELECT Title, ScheduleID, RunAt FROM phoromatic_schedules WHERE AccountID = :account_id AND State >= 1  AND ActiveOn LIKE :active_on ORDER BY RunAt,Title ASC');
+			$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID FROM phoromatic_systems WHERE AccountID = :account_id AND State >= 0 ORDER BY LastCommunication DESC');
 			$stmt->bindValue(':account_id', $_SESSION['AccountID']);
-			$stmt->bindValue(':active_on', '%' . (date('N') - 1) . '%');
 			$result = $stmt->execute();
 			$row = $result->fetchArray();
 
 			if($row == false)
 			{
-				$right .= '</ul><p style="text-align: left; margin: 6px 10px;">No Events Found</p>';
+				$right .= '</ul><p style="text-align: left; margin: 6px 10px;">No Systems Found</p>';
 			}
 			else
 			{
 				do
 				{
-					$right .= '<li>' . $row['RunAt'] . ' <a href="?schedules/' . $row['ScheduleID'] . '">' . $row['Title'] . '</a></li>';
+					$right .= '<li><a href="?systems/' . $row['SystemID'] . '">' . $row['Title'] . '</a></li>';
 				}
 				while($row = $result->fetchArray());
 				$right .= '</ul>';
 			}
 
-	}
 
-	$stmt = phoromatic_server::$db->prepare('SELECT COUNT(Title) AS SystemCount FROM phoromatic_systems WHERE AccountID = :account_id AND State >= 0');
-	$stmt->bindValue(':account_id', $_SESSION['AccountID']);
-	$result = $stmt->execute();
-	$row = $result->fetchArray();
-	$system_count = $row['SystemCount'];
-	$stmt = phoromatic_server::$db->prepare('SELECT COUNT(Title) AS ScheduleCount FROM phoromatic_schedules WHERE AccountID = :account_id AND State >= 1');
-	$stmt->bindValue(':account_id', $_SESSION['AccountID']);
-	$result = $stmt->execute();
-	$row = $result->fetchArray();
-	$schedule_count = $row['ScheduleCount'];
-	$stmt = phoromatic_server::$db->prepare('SELECT COUNT(UploadID) AS ResultCount FROM phoromatic_results WHERE AccountID = :account_id');
-	$stmt->bindValue(':account_id', $_SESSION['AccountID']);
-	$result = $stmt->execute();
-	$row = $result->fetchArray();
-	$result_count = $row['ResultCount'];
-	$stmt = phoromatic_server::$db->prepare('SELECT COUNT(ActivityTime) AS ActivityCount FROM phoromatic_activity_stream WHERE AccountID = :account_id AND ActivityTime LIKE :today_date');
-	$stmt->bindValue(':account_id', $_SESSION['AccountID']);
-	$stmt->bindValue(':today_date', date('Y-m-d') . '%');
-	$result = $stmt->execute();
-	$row = $result->fetchArray();
-	$activity_count = $row['ActivityCount'];
-	$right .= '<hr /><p><strong>' . date('H:i T - j F Y') . '</strong><br /><a href="?systems">' . $system_count . ' System' . ($system_count == 1 ? '' : 's') . '</a><br /><a href="?schedules">' . $schedule_count . ' Schedule' . ($schedule_count == 1 ? '' : 's') . '</a><br /><a href="?results">' . $result_count . ' Result' . ($result_count == 1 ? '' : 's') . '</a><br /><a href="?account_activity">' . $activity_count . ' Activity Events Today</a><br /><a href="?logout"><strong>Log-Out</strong></a></p>';
+			$right .= '<hr />
+				<ul>
+					<li>Today\'s Scheduled Events</li>';
+
+				$stmt = phoromatic_server::$db->prepare('SELECT Title, ScheduleID, RunAt FROM phoromatic_schedules WHERE AccountID = :account_id AND State >= 1  AND ActiveOn LIKE :active_on ORDER BY RunAt,Title ASC');
+				$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+				$stmt->bindValue(':active_on', '%' . (date('N') - 1) . '%');
+				$result = $stmt->execute();
+				$row = $result->fetchArray();
+
+				if($row == false)
+				{
+					$right .= '</ul><p style="text-align: left; margin: 6px 10px;">No Events Found</p>';
+				}
+				else
+				{
+					do
+					{
+						$right .= '<li>' . $row['RunAt'] . ' <a href="?schedules/' . $row['ScheduleID'] . '">' . $row['Title'] . '</a></li>';
+					}
+					while($row = $result->fetchArray());
+					$right .= '</ul>';
+				}
+
+		}
+
+		$stmt = phoromatic_server::$db->prepare('SELECT COUNT(Title) AS SystemCount FROM phoromatic_systems WHERE AccountID = :account_id AND State >= 0');
+		$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+		$result = $stmt->execute();
+		$row = $result->fetchArray();
+		$system_count = $row['SystemCount'];
+		$stmt = phoromatic_server::$db->prepare('SELECT COUNT(Title) AS ScheduleCount FROM phoromatic_schedules WHERE AccountID = :account_id AND State >= 1');
+		$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+		$result = $stmt->execute();
+		$row = $result->fetchArray();
+		$schedule_count = $row['ScheduleCount'];
+		$stmt = phoromatic_server::$db->prepare('SELECT COUNT(UploadID) AS ResultCount FROM phoromatic_results WHERE AccountID = :account_id');
+		$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+		$result = $stmt->execute();
+		$row = $result->fetchArray();
+		$result_count = $row['ResultCount'];
+		$stmt = phoromatic_server::$db->prepare('SELECT COUNT(ActivityTime) AS ActivityCount FROM phoromatic_activity_stream WHERE AccountID = :account_id AND ActivityTime LIKE :today_date');
+		$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+		$stmt->bindValue(':today_date', date('Y-m-d') . '%');
+		$result = $stmt->execute();
+		$row = $result->fetchArray();
+		$activity_count = $row['ActivityCount'];
+		$right .= '<hr /><p><strong>' . date('H:i T - j F Y') . '</strong><br /><a href="?systems">' . $system_count . ' System' . ($system_count == 1 ? '' : 's') . '</a><br /><a href="?schedules">' . $schedule_count . ' Schedule' . ($schedule_count == 1 ? '' : 's') . '</a><br /><a href="?results">' . $result_count . ' Result' . ($result_count == 1 ? '' : 's') . '</a><br /><a href="?account_activity">' . $activity_count . ' Activity Events Today</a><br /><a href="?logout"><strong>Log-Out</strong></a></p>';
+	}
 
 	return $right;
 }

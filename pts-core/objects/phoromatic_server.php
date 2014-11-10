@@ -23,6 +23,7 @@
 class phoromatic_server
 {
 	public static $db = null;
+	private static $json_storage = null;
 
 	public static function current_time()
 	{
@@ -54,8 +55,23 @@ class phoromatic_server
 	{
 		return self::phoromatic_account_path($account_id) . 'results/' . ($result_id != null ? $result_id . '/' : null);
 	}
+	public static function read_setting($setting)
+	{
+		return pts_storage_object::read_from_file(self::$json_storage, $setting);
+	}
+	public static function save_setting($setting, $value)
+	{
+		return pts_storage_object::set_in_file(self::$json_storage, $setting, $value);
+	}
 	public static function prepare_database()
 	{
+		self::$json_storage = self::phoromatic_path() . 'phoromatic-settings.pt2so';
+		if(!is_file(self::$json_storage))
+		{
+			$pt2so = new pts_storage_object();
+			$pt2so->save_to_file(self::$json_storage);
+		}
+
 		$db_file = self::phoromatic_path() . 'phoromatic.db';
 		self::$db = new SQLite3($db_file);
 
