@@ -941,6 +941,10 @@ class pts_client
 			{
 				$userhome = pts_client::read_env('HOMEDRIVE') . $home;
 			}
+			else if(PTS_IS_DAEMONIZED_SERVER_PROCESS)
+			{
+				$userhome = PTS_USER_PATH;
+			}
 			else
 			{
 				if(!is_writable('/'))
