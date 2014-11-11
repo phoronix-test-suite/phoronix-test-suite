@@ -146,7 +146,7 @@ class start_phoromatic_server implements pts_option_interface
 				file_put_contents('/etc/avahi/services/phoromatic-server.service', '<?xml version="1.0" standalone=\'no\'?>
 <!DOCTYPE service-group SYSTEM "avahi-service.dtd">
 <service-group>
-  <name replace-wildcards="yes">phoromatic-server</name>
+  <name replace-wildcards="yes">phoromatic-server-%h</name>
   <service>
     <type>_http._tcp</type>
     <port>' . $web_port . '</port>
@@ -155,7 +155,9 @@ class start_phoromatic_server implements pts_option_interface
 			}
 			else
 			{
-				$server_launcher .= 'avahi-publish -s phoromatic-server _http._tcp ' . $web_port . ' "Phoronix Test Suite Phoromatic" > /dev/null &' . PHP_EOL;
+				$hostname = phodevi::read_property('system', 'hostname');
+				$hostname = $hostname == null ? rand(0, 99) : $hostname;
+				$server_launcher .= 'avahi-publish -s phoromatic-server-' . $hostname . ' _http._tcp ' . $web_port . ' "Phoronix Test Suite Phoromatic" > /dev/null &' . PHP_EOL;
 				$server_launcher .= 'avahi_publish_pid=$!'. PHP_EOL;
 			}
 		}
