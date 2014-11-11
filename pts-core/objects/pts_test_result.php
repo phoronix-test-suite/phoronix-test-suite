@@ -105,15 +105,28 @@ class pts_test_result
 		if($show_version_and_attributes)
 		{
 			$tp = $this->test_profile->get_identifier(true);
-			// remove the last segment of the test profile version that should be in xx.yy.zz format
-			// this removal is done since the zz segment should be maintainable between comparisons
-			$tp = substr($tp, 0, strrpos($tp, '.'));
+			if($tp == null)
+			{
+				$tp = $this->test_profile->get_title();
+			}
+			else
+			{
+				// remove the last segment of the test profile version that should be in xx.yy.zz format
+				// this removal is done since the zz segment should be maintainable between comparisons
+				$tp = substr($tp, 0, strrpos($tp, '.'));
+			}
 
 			return pts_test_profile::generate_comparison_hash($tp, $this->get_arguments(), $this->get_arguments_description(), $this->test_profile->get_app_version(), $raw_output);
 		}
 		else
 		{
-			return pts_test_profile::generate_comparison_hash($this->test_profile->get_identifier(false), $this->get_arguments(), null, null, $raw_output);
+			$tp = $this->test_profile->get_identifier(false);
+			if($tp == null)
+			{
+				$tp = $this->test_profile->get_title();
+			}
+
+			return pts_test_profile::generate_comparison_hash($tp, $this->get_arguments(), null, null, $raw_output);
 		}
 	}
 	public function __toString()
