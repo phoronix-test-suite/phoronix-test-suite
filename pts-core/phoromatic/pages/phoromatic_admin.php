@@ -47,6 +47,30 @@ class phoromatic_admin implements pts_webui_interface
 		$main .= '<hr /><h2>Server Information</h2>';
 		$main .= '<p><strong>HTTP Server Port:</strong> ' . getenv('PTS_WEB_PORT') . '<br /><strong>WebSocket Server Port:</strong> ' . getenv('PTS_WEBSOCKET_PORT') . '<br /><strong>Phoromatic Server Path:</strong> ' . phoromatic_server::phoromatic_path() . '</p>';
 
+		$main .= '<hr /><h2>Statistics</h2>';
+		$stmt = phoromatic_server::$db->prepare('SELECT COUNT(Title) AS SystemCount FROM phoromatic_systems WHERE State >= 0');
+		$result = $stmt->execute();
+		$row = $result->fetchArray();
+		$stats['Total System Count'] = $row['SystemCount'];
+		$stmt = phoromatic_server::$db->prepare('SELECT COUNT(Title) AS ScheduleCount FROM phoromatic_schedules WHERE State >= 1');
+		$result = $stmt->execute();
+		$row = $result->fetchArray();
+		$stats['Total Schedule Count'] = $row['ScheduleCount'];
+		$stmt = phoromatic_server::$db->prepare('SELECT COUNT(UploadID) AS ResultCount FROM phoromatic_results');
+		$result = $stmt->execute();
+		$row = $result->fetchArray();
+		$stats['Total Result Count'] = $row['ResultCount'];
+		$stmt = phoromatic_server::$db->prepare('SELECT COUNT(ActivityTime) AS ActivityCount FROM phoromatic_activity_stream');
+		$stmt->bindValue(':today_date', date('Y-m-d') . '%');
+		$result = $stmt->execute();
+		$row = $result->fetchArray();
+		$stats['Total Activity Count'] = $row['ActivityCount'];
+
+		$main .= '<p>';
+		foreach($stats as $what => $c)
+			$main .= '<strong>' . $what . ':</strong> ' . $c . '<br />';
+
+
 		$main .= '<hr /><h2>Accounts</h2>';
 		$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_users ORDER BY AccountID,AdminLevel ASC');
 		$result = $stmt->execute();
