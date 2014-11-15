@@ -37,6 +37,7 @@ class phoromatic_schedules implements pts_webui_interface
 	}
 	public static function render_page_process($PATH)
 	{
+		$main = null;
 		echo phoromatic_webui_header_logged_in();
 
 		if(!empty($PATH[0]) && is_numeric($PATH[0]))
@@ -55,73 +56,87 @@ class phoromatic_schedules implements pts_webui_interface
 			else
 			{
 
-				if(isset($_POST['add_to_schedule_select_test']))
+				if(!PHOROMATIC_USER_IS_VIEWER)
 				{
-					$name = $_POST['add_to_schedule_select_test'];
-					$args = array();
-					$args_name = array();
 
-					foreach($_POST as $i => $v)
+					if(isset($_POST['add_to_schedule_select_test']))
 					{
-						if(substr($i, 0, 12) == 'test_option_' && substr($i, -9) != '_selected')
+						$name = $_POST['add_to_schedule_select_test'];
+						$args = array();
+						$args_name = array();
+
+						foreach($_POST as $i => $v)
 						{
-							array_push($args, $v);
-							array_push($args_name, $_POST[$i . '_selected']);
+							if(substr($i, 0, 12) == 'test_option_' && substr($i, -9) != '_selected')
+							{
+								array_push($args, $v);
+								array_push($args_name, $_POST[$i . '_selected']);
+							}
+						}
+
+						$args_name = implode(' - ', $args_name);
+						$args = implode(' ', $args);
+
+						if(!empty($name))
+						{
+							$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_schedules_tests (AccountID, ScheduleID, TestProfile, TestArguments, TestDescription) VALUES (:account_id, :schedule_id, :test_profile, :test_arguments, :test_description)');
+							$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+							$stmt->bindValue(':schedule_id', $PATH[0]);
+							$stmt->bindValue(':test_profile', $name);
+							$stmt->bindValue(':test_arguments', $args);
+							$stmt->bindValue(':test_description', $args_name);
+							$result = $stmt->execute();
+							phoromatic_add_activity_stream_event('tests_for_schedule', $PATH[0], 'added');
 						}
 					}
-
-					$args_name = implode(' - ', $args_name);
-					$args = implode(' ', $args);
-
-					if(!empty($name))
+					else if(isset($PATH[1]) && $PATH[1] == 'remove' && !empty($PATH[2]))
 					{
-						$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_schedules_tests (AccountID, ScheduleID, TestProfile, TestArguments, TestDescription) VALUES (:account_id, :schedule_id, :test_profile, :test_arguments, :test_description)');
+						// REMOVE TEST
+						$to_remove = explode(PHP_EOL, base64_decode($PATH[2]));
+						$stmt = phoromatic_server::$db->prepare('DELETE FROM phoromatic_schedules_tests WHERE AccountID = :account_id AND ScheduleID = :schedule_id AND TestProfile = :test AND TestArguments = :test_args');
 						$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 						$stmt->bindValue(':schedule_id', $PATH[0]);
-						$stmt->bindValue(':test_profile', $name);
-						$stmt->bindValue(':test_arguments', $args);
-						$stmt->bindValue(':test_description', $args_name);
+						$stmt->bindValue(':test', $to_remove[0]);
+						$stmt->bindValue(':test_args', $to_remove[1]);
 						$result = $stmt->execute();
-						phoromatic_add_activity_stream_event('tests_for_schedule', $PATH[0], 'added');
+						phoromatic_add_activity_stream_event('tests_for_schedule', $to_remove[0] . ' - ' . $to_remove[1], 'removed');
 					}
-				}
-				else if(isset($PATH[1]) && $PATH[1] == 'remove' && !empty($PATH[2]))
-				{
-					// REMOVE TEST
-					$to_remove = explode(PHP_EOL, base64_decode($PATH[2]));
-					$stmt = phoromatic_server::$db->prepare('DELETE FROM phoromatic_schedules_tests WHERE AccountID = :account_id AND ScheduleID = :schedule_id AND TestProfile = :test AND TestArguments = :test_args');
-					$stmt->bindValue(':account_id', $_SESSION['AccountID']);
-					$stmt->bindValue(':schedule_id', $PATH[0]);
-					$stmt->bindValue(':test', $to_remove[0]);
-					$stmt->bindValue(':test_args', $to_remove[1]);
-					$result = $stmt->execute();
-					phoromatic_add_activity_stream_event('tests_for_schedule', $to_remove[0] . ' - ' . $to_remove[1], 'removed');
-				}
-				else if(isset($PATH[1]) && in_array($PATH[1], array('activate', 'deactivate')))
-				{
-					switch($PATH[1])
+					else if(isset($PATH[1]) && in_array($PATH[1], array('activate', 'deactivate')))
 					{
-						case 'deactivate':
-							$new_state = 0;
-							break;
-						case 'activate':
-						default:
-							$new_state = 1;
-							break;
-					}
+						switch($PATH[1])
+						{
+							case 'deactivate':
+								$new_state = 0;
+								break;
+							case 'activate':
+							default:
+								$new_state = 1;
+								break;
+						}
 
-					// REMOVE TEST
-					$stmt = phoromatic_server::$db->prepare('UPDATE phoromatic_schedules SET State = :new_state WHERE AccountID = :account_id AND ScheduleID = :schedule_id');
-					$stmt->bindValue(':account_id', $_SESSION['AccountID']);
-					$stmt->bindValue(':schedule_id', $PATH[0]);
-					$stmt->bindValue(':new_state', $new_state);
-					$result = $stmt->execute();
-					$row['State'] = $new_state;
-					phoromatic_add_activity_stream_event('schedule', $PATH[0], $PATH[1]);
+						// REMOVE TEST
+						$stmt = phoromatic_server::$db->prepare('UPDATE phoromatic_schedules SET State = :new_state WHERE AccountID = :account_id AND ScheduleID = :schedule_id');
+						$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+						$stmt->bindValue(':schedule_id', $PATH[0]);
+						$stmt->bindValue(':new_state', $new_state);
+						$result = $stmt->execute();
+						$row['State'] = $new_state;
+						phoromatic_add_activity_stream_event('schedule', $PATH[0], $PATH[1]);
+					}
+					else if(isset($_POST['do_manual_test_run']))
+					{
+						$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_schedules_triggers (AccountID, ScheduleID, Trigger, TriggeredOn) VALUES (:account_id, :schedule_id, :trigger, :triggered_on)');
+						$stmt->bindValue(':account_id',	$_SESSION['AccountID']);
+						$stmt->bindValue(':schedule_id', $PATH[0]);
+						$stmt->bindValue(':trigger', $_SESSION['UserName'] . ' - Manual Test Run -' . date('H:i j M Y'));
+						$stmt->bindValue(':triggered_on', phoromatic_server::current_time());
+						$stmt->execute();
+						$main .= '<h2 style="color: red;">Manual Test Run Triggered</h2>';
+					}
 				}
 
 
-				$main = '<h1>' . $row['Title'] . '</h1>';
+				$main .= '<h1>' . $row['Title'] . '</h1>';
 				$main .= '<h3>' . $row['Description'] . '</h3>';
 				$main .= '<p>This schedule was last modified on <strong>' . date('j F Y \a\t H:i', strtotime($row['LastModifiedOn'])) . '</strong> by <strong>' . $row['LastModifiedBy'] . '</strong>.';
 
@@ -176,7 +191,12 @@ class phoromatic_schedules implements pts_webui_interface
 					$main .= '<p>This test schedule is not currently set to run a pre-defined time-based schedule.</p>';
 				}
 				$trigger_url = 'http://' . phoromatic_web_socket_server_ip() . '/event.php?type=trigger&user=' . $_SESSION['UserName'] . '&public_key=' . $row['PublicKey'] . '&trigger=XXX';
-				$main .= '<p>This test schedule can be manually triggered to run at any time by calling <a href="#">' . $trigger_url . '</a> where <em>XXX</em> is the trigger value to be used (if relevant, such as a time-stamp, Git/SVN commit number or hash, etc.)';
+				$main .= '<p>This test schedule can be manually triggered to run at any time by calling <strong>' . $trigger_url . '</strong> where <em>XXX</em> is the trigger value to be used (if relevant, such as a time-stamp, Git/SVN commit number or hash, etc.)</p>';
+				$main .= '<p>If you wish to run this test schedule now, click the following button and the schedule will be run on all intended systems at their next earliest possible convenience.</p>';
+				$main .= '<p><form action="?schedules/' . $PATH[0] . '" name="manual_run" method="post">';
+				$main .= '<input type="hidden" name="do_manual_test_run" value="1" /><input type="submit" value="Run Test Schedule Now" onclick="return confirm(\'Run this test schedule now?\');" />';
+				$main .= '</form></p>';
+
 				$main .= '<hr />';
 				$main .= '<h2>Tests To Run</h2>';
 
@@ -272,7 +292,17 @@ class phoromatic_schedules implements pts_webui_interface
 
 
 		$main = '<h1>Test Schedules</h1>
-			<h2>Current Schedules</h2>';
+			<p>Test schedules are used for tests that are intended to be run on a recurring basis -- either daily or other defined time period -- or whenever a trigger/event occurs, like a new Git commit to a software repository being tracked. Test schedules can be run on any given system(s)/group(s) and can be later edited.</p>';
+
+			if(!PHOROMATIC_USER_IS_VIEWER)
+			{
+				$main .= '
+				<hr />
+				<h2>Create A Schedule</h2>
+				<p><a href="?sched">Create a schedule</a> followed by adding tests/suites to run for that schedule on the selected systems.</p>';
+			}
+
+			$main .= '<hr /><h2>Current Schedules</h2>';
 
 
 			$main .= '<div class="pts_phoromatic_info_box_area">
@@ -338,14 +368,6 @@ class phoromatic_schedules implements pts_webui_interface
 				if($has_matched)
 					$main .= '</p>' . PHP_EOL;
 
-			}
-
-			if(!PHOROMATIC_USER_IS_VIEWER)
-			{
-				$main .= '
-				<hr />
-				<h2>Create A Schedule</h2>
-				<p><a href="?sched">Create a schedule</a> followed by adding tests/suites to run for that schedule on the selected systems.</p>';
 			}
 
 			echo phoromatic_webui_main($main, phoromatic_webui_right_panel_logged_in());

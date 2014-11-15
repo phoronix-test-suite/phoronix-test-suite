@@ -121,11 +121,11 @@ function phoromatic_webui_header_logged_in()
 	{
 		if(strtolower($page) == PAGE_REQUEST)
 		{
-			array_push($html_links, '<a href="?' . strtolower($page) . '"><u>' . $page . '</u></a>');
+			array_push($html_links, '<a href="?' . strtolower($page) . '"><u>' . str_replace('_', ' ', $page) . '</u></a>');
 		}
 		else
 		{
-			array_push($html_links, '<a href="?' . strtolower($page) . '">' . $page . '</a>');
+			array_push($html_links, '<a href="?' . strtolower($page) . '">' . str_replace('_', ' ', $page) . '</a>');
 		}
 	}
 

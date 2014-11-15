@@ -110,7 +110,7 @@ class phoromatic_admin implements pts_webui_interface
 				$main .= '<p>';
 			}
 
-			$main .= $offset . ' <strong>' . $row['UserName'] . '</strong> (<em>' . $level . '</em>) <strong>Created On:</strong> ' . $row['CreatedOn'] . ' <strong>Last Log-In:</strong> ' . ($row['LastLogin'] != null ? $row['LastLogin'] : 'N/A') . '<br />';
+			$main .= $offset . ' <strong>' . $row['UserName'] . '</strong> (<em>' . $level . '</em>) <strong>Created On:</strong> ' . phoromatic_user_friendly_timedate($row['CreatedOn']) . ' <strong>Last Log-In:</strong> ' . ($row['LastLogin'] != null ? phoromatic_user_friendly_timedate($row['LastLogin']) : 'N/A') . '<br />';
 			$plevel = $row['AdminLevel'];
 		}
 		if($plevel != -1)

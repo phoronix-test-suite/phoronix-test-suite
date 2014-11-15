@@ -26,7 +26,7 @@ class pts_config_nye_XmlReader extends nye_XmlReader
 
 	public function __construct($new_values = null)
 	{
-		if(is_file(pts_config::get_config_file_location()))
+		if(PTS_IS_CLIENT && is_file(pts_config::get_config_file_location()))
 		{
 			$file = pts_config::get_config_file_location();
 		}

@@ -234,12 +234,9 @@ class phoromatic_main implements pts_webui_interface
 		$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 		$result = $stmt->execute();
 		$row = $result->fetchArray();
+		$sys_act = false;
 
-		if($row == false)
-		{
-			$main .= '<li class="light" style="text-align: center;">No Recent Activity</li>';
-		}
-		else
+		if($row)
 		{
 			do
 			{
@@ -247,8 +244,14 @@ class phoromatic_main implements pts_webui_interface
 					break;
 
 				$main .= '<a href="?systems/' . $row['SystemID'] . '"><li>' . $row['Title'] . '<br /><table><tr><td>' . $row['CurrentTask'] . '</td><td>' . $row['LocalIP'] . '</td><td>' . phoromatic_user_friendly_timedate($row['LastCommunication']) . '</td></tr></table></li></a>';
+				$sys_act = true;
 			}
 			while($row = $result->fetchArray());
+		}
+
+		if(!$sys_act)
+		{
+			$main .= '<li class="light" style="text-align: center;">No Recent Activity</li>';
 		}
 
 		$main .= '</ul>

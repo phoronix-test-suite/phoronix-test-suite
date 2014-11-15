@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Fix result merging when PTS test identifier is null, use title string instead as identifier
+- phoromatic: Add "Run Test Schedule Now" button to test schedule page to allow for easy one-time/manual testing
 - phoromatic: Add some basic statistics to the rootadmin page
 
 Phoronix Test Suite 5.4 Milestone 5

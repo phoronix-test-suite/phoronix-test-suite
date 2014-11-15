@@ -140,11 +140,11 @@ function phoromatic_new_group(form)
 	}
 	return true;
 }
-function phoromatic_schedule_test_details()
+function phoromatic_schedule_test_details(append_args = "")
 {
 	document.getElementById("test_details").innerHTML = "";
 	var test_target = pts_get_list_item("add_to_schedule_select_test");
-	phoromatic_ajax_update_element("r_add_test_details/&tp=" + test_target, "test_details");
+	phoromatic_ajax_update_element("r_add_test_details/&tp=" + test_target + append_args, "test_details");
 }
 function pts_get_list_item(select_id)
 {
