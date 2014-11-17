@@ -39,6 +39,11 @@ class start_phoromatic_server implements pts_option_interface
 			echo 'Running an unsupported PHP version. PHP 5.4+ is required to use this feature.' . PHP_EOL . PHP_EOL;
 			return false;
 		}
+		if(!function_exists('socket_create_listen'))
+		{
+			echo 'PHP Sockets support is needed to use the Phoromatic Server.' . PHP_EOL . PHP_EOL;
+			return false;
+		}
 
 		$server_launcher = '#!/bin/sh' . PHP_EOL;
 		$web_port = 0;

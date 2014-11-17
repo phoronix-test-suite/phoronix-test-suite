@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Fix result merging when PTS test identifier is null, use title string instead as identifier
+- pts-core: Check for PHP Sockets support
 - phoromatic: Add "Run Test Schedule Now" button to test schedule page to allow for easy one-time/manual testing
 - phoromatic: Add some basic statistics to the rootadmin page
 - phoromatic: Allow the PhoromaticStorage location to be modified from the webUI when logging in as rootadmin
