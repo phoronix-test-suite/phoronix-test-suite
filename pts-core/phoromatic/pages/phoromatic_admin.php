@@ -132,6 +132,20 @@ class phoromatic_admin implements pts_webui_interface
 				}
 			}
 		}
+		if(isset($_POST['new_proxy_address']) && isset($_POST['new_proxy_port']))
+		{
+			if(pts_network::http_get_contents('http://www.phoronix-test-suite.com/PTS', $_POST['new_proxy_address'], $_POST['new_proxy_port']) == 'PTS')
+			{
+				pts_config::user_config_generate(array(
+					'PhoronixTestSuite/Options/Networking/ProxyAddress' => $_POST['new_proxy_address'],
+					'PhoronixTestSuite/Options/Networking/ProxyPort' => $_POST['new_proxy_port']
+					));
+			}
+			else
+			{
+				$main .= '<h2 style="color: red;">Failed to connect via proxy server.</h2>';
+			}
+		}
 
 		$main .= '<h1>Phoromatic Server Administration</h1>';
 
@@ -221,6 +235,14 @@ class phoromatic_admin implements pts_webui_interface
 		$main .= '<form action="' . $_SERVER['REQUEST_URI'] . '" name="update_dc_path" method="post">';
 		$main .= '<p><input type="text" name="new_dc_path" value="' . (isset($_POST['new_dc_path']) ? $_POST['new_dc_path'] : null) . '" /></p>';
 		$main .= '<p><input name="submit" value="Update Download Cache Location" type="submit" /></p>';
+		$main .= '</form>';
+
+		$main .= '<hr /><h2>Network Proxy</h2>';
+		$main .= '<p>If a network proxy is needed for the Phoromatic Server to access the open Internet, please provide the IP address and HTTP port address below.</p>';
+		$main .= '<form action="' . $_SERVER['REQUEST_URI'] . '" name="update_proxy" method="post">';
+		$main .= '<p><strong>Proxy HTTP Port:</strong> <input type="text" name="new_proxy_port" size="4" value="' . (isset($_POST['new_proxy_port']) ? $_POST['new_proxy_port'] : pts_config::read_user_config('PhoronixTestSuite/Options/Networking/ProxyPort')) . '" /></p>';
+		$main .= '<p><strong>Proxy IP Address:</strong> <input type="text" name="new_proxy_address" value="' . (isset($_POST['new_proxy_address']) ? $_POST['new_proxy_address'] : pts_config::read_user_config('PhoronixTestSuite/Options/Networking/ProxyAddress')) . '" /></p>';
+		$main .= '<p><input name="submit" value="Update Network Proxy" type="submit" /></p>';
 		$main .= '</form>';
 
 
