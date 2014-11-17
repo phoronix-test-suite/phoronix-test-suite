@@ -41,8 +41,61 @@ class phoromatic_admin implements pts_webui_interface
 		{
 			header('Location: /?main');
 		}
+		$main = null;
 
-		$main = '<h1>Phoromatic Server Administration</h1>';
+		if(isset($_POST['new_phoromatic_path']) && !empty($_POST['new_phoromatic_path']))
+		{
+			$new_dir = dirname($_POST['new_phoromatic_path']);
+
+			if(!is_dir($new_dir))
+			{
+				$main .= '<h2 style="color: red;"><em>' . $new_dir . '</em> must be a valid directory.</h2>';
+			}
+			else if(!is_writable($new_dir))
+			{
+				$main .= '<h2 style="color: red;"><em>' . $new_dir . '</em> is not a writable location.</h2>';
+			}
+			else
+			{
+				if(!is_dir($_POST['new_phoromatic_path']))
+				{
+					if(mkdir($_POST['new_phoromatic_path']) == false)
+					{
+						$main .= '<h2 style="color: red;">Failed to make directory <em>' . $_POST['new_phoromatic_path'] . '</em>.</h2>';
+					}
+				}
+
+				if(is_dir($_POST['new_phoromatic_path']))
+				{
+					$new_phoromatic_dir = pts_strings::add_trailing_slash($_POST['new_phoromatic_path']);
+
+					if(!empty(glob($new_phoromatic_dir . '*')))
+					{
+						$new_phoromatic_dir .= 'phoromatic/';
+						pts_file_io::mkdir($new_phoromatic_dir);
+					}
+
+					if(!empty(glob($new_phoromatic_dir . '*')))
+					{
+						$main .= '<h2 style="color: red;"><em>' . $new_phoromatic_dir . '</em> must be an empty directory.</h2>';
+					}
+					else
+					{
+						if(pts_file_io::copy(phoromatic_server::phoromatic_path(), $new_phoromatic_dir))
+						{
+							pts_config::user_config_generate(array('PhoromaticStorage' => $new_phoromatic_dir));
+							header('Location: /?admin');
+						}
+						else
+						{
+							$main .= '<h2 style="color: red;"><em>Failed to copy old Phoromatic data to new location.</h2>';
+						}
+					}
+				}
+			}
+		}
+
+		$main .= '<h1>Phoromatic Server Administration</h1>';
 
 		$main .= '<hr /><h2>Server Information</h2>';
 		$main .= '<p><strong>HTTP Server Port:</strong> ' . getenv('PTS_WEB_PORT') . '<br /><strong>WebSocket Server Port:</strong> ' . getenv('PTS_WEBSOCKET_PORT') . '<br /><strong>Phoromatic Server Path:</strong> ' . phoromatic_server::phoromatic_path() . '</p>';
@@ -115,6 +168,15 @@ class phoromatic_admin implements pts_webui_interface
 		}
 		if($plevel != -1)
 			$main .= '</p>';
+
+		$main .= '<hr /><h2>Phoromatic Storage Location</h2>';
+		$main .= '<p>The Phoromatic Storage location is where all Phoromatic-specific test results, account data, and other information is archived. This path is controlled via the <em>' . pts_config::get_config_file_location() . '</em> configuration file with the <em>PhoromaticStorage</em> element. Adjusting the directory from the user configuration XML file is the recommended way to adjust the Phoromatic storage path when the Phoromatic Server is not running, while using the below form is an alternative method to attempt to live migrate the storage path.</p>';
+		$main .= '<p><strong>Current Storage Path:</strong> ' . phoromatic_server::phoromatic_path() . '</p>';
+		$main .= '<form action="' . $_SERVER['REQUEST_URI'] . '" name="update_phoromatic_path" method="post">';
+		$main .= '<p><input type="text" name="new_phoromatic_path" value="' . (isset($_POST['new_phoromatic_path']) ? $_POST['new_phoromatic_path'] : null) . '" /></p>';
+		$main .= '<p><input name="submit" value="Update Phoromatic Storage Location" type="submit" /></p>';
+		$main .= '</form>';
+
 
 		$server_log = explode(PHP_EOL, file_get_contents(getenv('PTS_PHOROMATIC_LOG_LOCATION')));
 		foreach($server_log as $i => $line_item)
