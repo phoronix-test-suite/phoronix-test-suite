@@ -94,6 +94,44 @@ class phoromatic_admin implements pts_webui_interface
 				}
 			}
 		}
+		if(isset($_POST['new_dc_path']) && !empty($_POST['new_dc_path']))
+		{
+			$new_dir = dirname($_POST['new_dc_path']);
+
+			if(!is_dir($new_dir))
+			{
+				$main .= '<h2 style="color: red;"><em>' . $new_dir . '</em> must be a valid directory.</h2>';
+			}
+			else if(!is_writable($new_dir))
+			{
+				$main .= '<h2 style="color: red;"><em>' . $new_dir . '</em> is not a writable location.</h2>';
+			}
+			else
+			{
+				if(!is_dir($_POST['new_dc_path']))
+				{
+					if(mkdir($_POST['new_dc_path']) == false)
+					{
+						$main .= '<h2 style="color: red;">Failed to make directory <em>' . $_POST['new_dc_path'] . '</em>.</h2>';
+					}
+				}
+
+				if(is_dir($_POST['new_dc_path']))
+				{
+					$new_dc_dir = pts_strings::add_trailing_slash($_POST['new_dc_path']);
+
+					if(pts_file_io::copy(pts_strings::add_trailing_slash(pts_client::parse_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Installation/CacheDirectory', PTS_DOWNLOAD_CACHE_PATH))), $new_dc_dir))
+					{
+						pts_config::user_config_generate(array('CacheDirectory' => $new_dc_dir));
+						header('Location: /?admin');
+					}
+					else
+					{
+						$main .= '<h2 style="color: red;"><em>Failed to copy old Phoromatic data to new location.</h2>';
+					}
+				}
+			}
+		}
 
 		$main .= '<h1>Phoromatic Server Administration</h1>';
 
@@ -175,6 +213,14 @@ class phoromatic_admin implements pts_webui_interface
 		$main .= '<form action="' . $_SERVER['REQUEST_URI'] . '" name="update_phoromatic_path" method="post">';
 		$main .= '<p><input type="text" name="new_phoromatic_path" value="' . (isset($_POST['new_phoromatic_path']) ? $_POST['new_phoromatic_path'] : null) . '" /></p>';
 		$main .= '<p><input name="submit" value="Update Phoromatic Storage Location" type="submit" /></p>';
+		$main .= '</form>';
+
+		$main .= '<hr /><h2>Download Cache Location</h2>';
+		$main .= '<p>The download cache is where the Phoronix Test Suite is able to make an archive of files needed by test profiles. The Phoromatic Server is then able to allow Phoronix Test Suite client systems on the intranet. To add test files to this cache on the Phoromatic Server, run <strong>phoronix-test-suite make-download-cache <em>&lt;the test identifers you wish to download and cache&gt;</em></strong>.</p>';
+		$main .= '<p><strong>Current Download Cache Path:</strong> ' . pts_strings::add_trailing_slash(pts_client::parse_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Installation/CacheDirectory', PTS_DOWNLOAD_CACHE_PATH))) . '</p>';
+		$main .= '<form action="' . $_SERVER['REQUEST_URI'] . '" name="update_dc_path" method="post">';
+		$main .= '<p><input type="text" name="new_dc_path" value="' . (isset($_POST['new_dc_path']) ? $_POST['new_dc_path'] : null) . '" /></p>';
+		$main .= '<p><input name="submit" value="Update Download Cache Location" type="submit" /></p>';
 		$main .= '</form>';
 
 
