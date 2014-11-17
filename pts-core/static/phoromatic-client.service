@@ -1,7 +1,6 @@
 [Unit]
 Description=Phoronix Test Suite Phoromatic Client
-After=syslog.target
-After=network.target
+After=syslog.target network.target
 
 [Service]
 TimeoutStartSec=300

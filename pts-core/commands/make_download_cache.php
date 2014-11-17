@@ -39,10 +39,10 @@ class make_download_cache implements pts_option_interface
 		}
 
 		// Generates a PTS Download Cache
-		if(is_writable(PTS_SHARE_PATH))
+		if(is_writable('/var/cache/phoronix-test-suite/download-cache/'))
 		{
-			// If running as root, might as well write it to the /usr/share PTS download cache so other users on system could benefit too
-			$dc_write_directory = PTS_SHARE_PATH . 'download-cache/';
+			// If running as root, might as well write it to the global PTS download cache so other users on system could benefit too
+			$dc_write_directory = '/var/cache/phoronix-test-suite/download-cache/';
 			pts_file_io::mkdir($dc_write_directory);
 		}
 		else
