@@ -19,9 +19,23 @@
 	You should have received a copy of the GNU General Public License
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
+
+// This is needed since on at least EL6 by default there is no session_save_path set
+
 if(session_save_path() == null)
 {
-	session_save_path('/tmp');
+	if(is_dir('/var/lib/php'))
+	{
+		session_save_path('/var/lib/php');
+	}
+	else if(is_dir('/var/lib/php5'))
+	{
+		session_save_path('/var/lib/php5');
+	}
+	else
+	{
+		session_save_path('/tmp');
+	}
 }
 
 define('PHOROMATIC_SERVER', true);
