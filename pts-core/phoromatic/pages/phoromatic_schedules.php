@@ -128,7 +128,7 @@ class phoromatic_schedules implements pts_webui_interface
 						$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_schedules_triggers (AccountID, ScheduleID, Trigger, TriggeredOn) VALUES (:account_id, :schedule_id, :trigger, :triggered_on)');
 						$stmt->bindValue(':account_id',	$_SESSION['AccountID']);
 						$stmt->bindValue(':schedule_id', $PATH[0]);
-						$stmt->bindValue(':trigger', $_SESSION['UserName'] . ' - Manual Test Run -' . date('H:i j M Y'));
+						$stmt->bindValue(':trigger', $_SESSION['UserName'] . ' - Manual Test Run - ' . date('H:i j M Y'));
 						$stmt->bindValue(':triggered_on', phoromatic_server::current_time());
 						$stmt->execute();
 						$main .= '<h2 style="color: red;">Manual Test Run Triggered</h2>';

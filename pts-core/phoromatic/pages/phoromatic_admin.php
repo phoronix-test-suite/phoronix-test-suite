@@ -116,8 +116,18 @@ class phoromatic_admin implements pts_webui_interface
 		if($plevel != -1)
 			$main .= '</p>';
 
+		$server_log = explode(PHP_EOL, file_get_contents(getenv('PTS_PHOROMATIC_LOG_LOCATION')));
+		foreach($server_log as $i => $line_item)
+		{
+			if(strpos($line_item, '[200]') !== false || strpos($line_item, '[302]') !== false)
+			{
+				unset($server_log[$i]);
+			}
+		}
+		$server_log = implode(PHP_EOL, $server_log);
+
 		$main .= '<hr /><h2>Phoromatic Server Log</h2>';
-		$main .= '<p><textarea style="width: 80%; height: 400px;">' . file_get_contents(getenv('PTS_PHOROMATIC_LOG_LOCATION'))  . '</textarea></p>';
+		$main .= '<p><textarea style="width: 80%; height: 400px;">' . $server_log  . '</textarea></p>';
 
 		echo phoromatic_webui_header_logged_in();
 		echo phoromatic_webui_main($main, phoromatic_webui_right_panel_logged_in());
