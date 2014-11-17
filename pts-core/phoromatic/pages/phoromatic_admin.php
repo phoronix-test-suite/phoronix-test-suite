@@ -146,11 +146,26 @@ class phoromatic_admin implements pts_webui_interface
 				$main .= '<h2 style="color: red;">Failed to connect via proxy server.</h2>';
 			}
 		}
+		if(isset($_POST['new_http_port']) && isset($_POST['new_ws_port']))
+		{
+			if(empty($_POST['new_http_port']) || (!is_numeric($_POST['new_http_port']) && $_POST['new_http_port'] != 'RANDOM'))
+			{
+				$main .= '<h2 style="color: red;">The HTTP port must be a valid port number or <em>RANDOM</em>.</h2>';
+			}
+			if(empty($_POST['new_ws_port']) || (!is_numeric($_POST['new_ws_port']) && $_POST['new_ws_port'] != 'RANDOM'))
+			{
+				$main .= '<h2 style="color: red;">The WebSocket port must be a valid port number or <em>RANDOM</em>.</h2>';
+			}
+			pts_config::user_config_generate(array(
+				'PhoronixTestSuite/Options/Server/RemoteAccessPort' => $_POST['new_http_port'],
+				'PhoronixTestSuite/Options/Server/WebSocketPort' => $_POST['new_ws_port']
+				));
+		}
 
 		$main .= '<h1>Phoromatic Server Administration</h1>';
 
 		$main .= '<hr /><h2>Server Information</h2>';
-		$main .= '<p><strong>HTTP Server Port:</strong> ' . getenv('PTS_WEB_PORT') . '<br /><strong>WebSocket Server Port:</strong> ' . getenv('PTS_WEBSOCKET_PORT') . '<br /><strong>Phoromatic Server Path:</strong> ' . phoromatic_server::phoromatic_path() . '</p>';
+		$main .= '<p><strong>HTTP Server Port:</strong> ' . getenv('PTS_WEB_PORT') . '<br /><strong>WebSocket Server Port:</strong> ' . getenv('PTS_WEBSOCKET_PORT') . '<br /><strong>Phoromatic Server Path:</strong> ' . phoromatic_server::phoromatic_path() . '<br /><strong>Configuration File:</strong>: ' . pts_config::get_config_file_location() . '</p>';
 
 		$main .= '<hr /><h2>Statistics</h2>';
 		$stmt = phoromatic_server::$db->prepare('SELECT COUNT(Title) AS SystemCount FROM phoromatic_systems WHERE State >= 0');
@@ -243,6 +258,14 @@ class phoromatic_admin implements pts_webui_interface
 		$main .= '<p><strong>Proxy HTTP Port:</strong> <input type="text" name="new_proxy_port" size="4" value="' . (isset($_POST['new_proxy_port']) ? $_POST['new_proxy_port'] : pts_config::read_user_config('PhoronixTestSuite/Options/Networking/ProxyPort')) . '" /></p>';
 		$main .= '<p><strong>Proxy IP Address:</strong> <input type="text" name="new_proxy_address" value="' . (isset($_POST['new_proxy_address']) ? $_POST['new_proxy_address'] : pts_config::read_user_config('PhoronixTestSuite/Options/Networking/ProxyAddress')) . '" /></p>';
 		$main .= '<p><input name="submit" value="Update Network Proxy" type="submit" /></p>';
+		$main .= '</form>';
+
+		$main .= '<hr /><h2>Phoromatic Server Ports</h2>';
+		$main .= '<p>The HTTP and WebSocket ports for the Phoromatic Server can be adjusted via this form or the user configuration XML file. The new ports will not go into effect until the Phoromatic Server instance has been restarted.</p>';
+		$main .= '<form action="' . $_SERVER['REQUEST_URI'] . '" name="update_ports" method="post">';
+		$main .= '<p><strong>HTTP Port:</strong> <input type="text" name="new_http_port" size="4" value="' . (isset($_POST['new_http_port']) ? $_POST['new_http_port'] : pts_config::read_user_config('PhoronixTestSuite/Options/Server/RemoteAccessPort')) . '" /></p>';
+		$main .= '<p><strong>WebSocket Port:</strong> <input type="text" name="new_ws_port" size="4" value="' . (isset($_POST['new_ws_port']) ? $_POST['new_ws_port'] : pts_config::read_user_config('PhoronixTestSuite/Options/Server/WebSocketPort')) . '" /></p>';
+		$main .= '<p><input name="submit" value="Update Web Ports" type="submit" /></p>';
 		$main .= '</form>';
 
 
