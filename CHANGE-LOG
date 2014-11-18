@@ -18,6 +18,7 @@ Phoronix Test Suite (Git)
 - phoromatic: Show recent triggers on a test schedule's page
 - phoromatic: Add "Upload results to OpenBenchmarking.org" option to settings page
 - phoromatic: Fix for deactivating options on settings page
+- phoromatic: Remember last successful Phoromatic Server connection
 
 Phoronix Test Suite 5.4 Milestone 5
 10 November 2014

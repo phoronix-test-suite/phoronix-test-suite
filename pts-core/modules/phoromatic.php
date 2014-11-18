@@ -243,7 +243,33 @@ class phoromatic extends pts_module_interface
 			self::$server_http_port = substr($server_string[0], strlen(self::$server_address) + 1, -1 - strlen(self::$account_id));
 			pts_client::$display->generic_heading('Server IP: ' . self::$server_address . PHP_EOL . 'Server HTTP Port: ' . self::$server_http_port . PHP_EOL . 'Account ID: ' . self::$account_id);
 		}
-		else
+		else if(($last_server = pts_module::read_file('last-phoromatic-server')))
+		{
+			pts_client::$pts_logger && pts_client::$pts_logger->log('Attempting to connect to last server connection: ' . $last_server);
+			$last_account_id = substr($last_server, strrpos($last_server, '/') + 1);
+			$last_server_address = substr($last_server, 0, strpos($last_server, ':'));
+			$last_server_http_port = substr($last_server, strlen($last_server_address) + 1, -1 - strlen($last_account_id));
+			pts_client::$display->generic_heading('Last Server IP: ' . $last_server_address . PHP_EOL . 'Last Server HTTP Port: ' . $last_server_http_port . PHP_EOL . 'Last Account ID: ' . $last_account_id);
+
+			$server_response = phoromatic::upload_to_remote_server(array(
+				'r' => 'ping',
+				), $last_server_address, $last_server_http_port, $last_account_id);
+
+			$server_response = json_decode($server_response, true);
+			if($server_response && isset($server_response['phoromatic']['account_id']) && $server_response['phoromatic']['account_id'] == $last_account_id)
+			{
+				self::$server_address = $last_server_address;
+				self::$server_http_port = $last_server_http_port;
+				self::$account_id = $last_account_id;
+				pts_client::$pts_logger && pts_client::$pts_logger->log('Phoromatic Server connection restored.');
+			}
+			else
+			{
+				pts_client::$pts_logger && pts_client::$pts_logger->log('Phoromatic Server connection failed.');
+			}
+		}
+
+		if(self::$server_address == null)
 		{
 			pts_client::$pts_logger && pts_client::$pts_logger->log('Attempting to auto-discover Phoromatic Server');
 			$archived_servers = pts_client::available_phoromatic_servers();
@@ -298,6 +324,7 @@ class phoromatic extends pts_module_interface
 			return false;
 
 		$times_failed = 0;
+		$has_success = false;
 
 		while(1)
 		{
@@ -320,6 +347,12 @@ class phoromatic extends pts_module_interface
 			{
 				$times_failed = 0;
 				$json = json_decode($server_response, true);
+
+				if(!$has_success)
+				{
+					$has_success = true;
+					pts_module::save_file('last-phoromatic-server', self::$server_address. ':' . self::$server_http_port . '/' . self::$account_id);
+				}
 
 				if($json != null)
 				{
