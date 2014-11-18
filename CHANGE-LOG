@@ -14,6 +14,7 @@ Phoronix Test Suite (Git)
 - phoromatic: Allow the HTTP / WebSocket ports to be modified from the webUI when logging in as rootadmin
 - phoromatic: Increase memory_limit on download cache downloads
 - phoromatic: Expose all possible video modes as test options
+- phoromatic: Show recent triggers on a test schedule's page
 
 Phoronix Test Suite 5.4 Milestone 5
 10 November 2014

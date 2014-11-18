@@ -231,6 +231,29 @@ class phoromatic_schedules implements pts_webui_interface
 					$main .= '<hr />';
 				}
 
+				$stmt = phoromatic_server::$db->prepare('SELECT Trigger, TriggeredOn FROM phoromatic_schedules_triggers WHERE AccountID = :account_id AND ScheduleID = :schedule_id ORDER BY TriggeredOn DESC LIMIT 10');
+				$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+				$stmt->bindValue(':schedule_id', $PATH[0]);
+				$test_result_result = $stmt->execute();
+				$test_result_row = $test_result_result->fetchArray();
+
+				if($test_result_row)
+				{
+					$main .= '<div class="pts_phoromatic_info_box_area">';
+					$main .= '<div style="float: left; width: 100%;"><ul><li><h1>Recent Triggers For This Schedule</h1></li>';
+
+					do
+					{
+						$main .= '<a href="#"><li>' . $test_result_row['Trigger'] . '<br /><table><tr><td>' . phoromatic_user_friendly_timedate($test_result_row['TriggeredOn']) . '</td></tr></table></li></a>';
+
+					}
+					while($test_result_row = $test_result_result->fetchArray());
+					$main .= '</ul></div>';
+					$main .= '</div>';
+				}
+
+
+
 				$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, ScheduleID, UploadID, UploadTime FROM phoromatic_results WHERE AccountID = :account_id AND ScheduleID = :schedule_id ORDER BY UploadTime DESC');
 				$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 				$stmt->bindValue(':schedule_id', $PATH[0]);
@@ -239,7 +262,7 @@ class phoromatic_schedules implements pts_webui_interface
 
 				if($test_result_row)
 				{
-					$main .= '<hr /><div class="pts_phoromatic_info_box_area">';
+					$main .= '<div class="pts_phoromatic_info_box_area">';
 					$main .= '<div style="float: left; width: 100%;"><ul><li><h1>Recent Test Results For This Schedule</h1></li>';
 					$results = 0;
 					do
