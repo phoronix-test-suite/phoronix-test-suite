@@ -126,6 +126,10 @@ class phoromatic_server
 			case 6:
 				self::$db->exec('CREATE TABLE phoromatic_system_client_errors (AccountID TEXT, SystemID TEXT, UploadTime TEXT, ScheduleID INTEGER, TriggerID TEXT, ErrorMessage TEXT, TestIdentifier TEXT, TestArguments TEXT)');
 				self::$db->exec('PRAGMA user_version = 7');
+			case 7:
+				// Change made 11 October for administrative level
+				self::$db->exec('ALTER TABLE phoromatic_account_settings ADD COLUMN UploadResultsToOpenBenchmarking INTEGER DEFAULT 0');
+				self::$db->exec('PRAGMA user_version = 8');
 		}
 		chmod($db_file, 0600);
 	}

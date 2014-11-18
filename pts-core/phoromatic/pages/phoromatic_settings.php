@@ -107,7 +107,8 @@ class phoromatic_settings implements pts_webui_interface
 						'UploadSystemLogs' => 'Upload system logs when uploading test results.',
 						'RunInstallCommand' => 'Always run the install command for test(s) prior to running them on the system.',
 						'ForceInstallTests' => 'Force the test installation/re-installation of tests each time prior to running the test.',
-						'SystemSensorMonitoring' => 'Enable the system sensor monitoring while tests are taking place.'
+						'SystemSensorMonitoring' => 'Enable the system sensor monitoring while tests are taking place.',
+						'UploadResultsToOpenBenchmarking' => 'Also upload test results to OpenBenchmarking.org.'
 						)
 					);
 

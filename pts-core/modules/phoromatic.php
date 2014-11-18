@@ -375,7 +375,7 @@ class phoromatic extends pts_module_interface
 							if($test_run_manager->load_tests_to_run($suite_identifier))
 							{
 								phoromatic::set_user_context($json['phoromatic']['pre_run_set_context'], self::$p_trigger_id, self::$p_save_identifier, 'PRE_RUN');
-								if(false)
+								if(isset($json['phoromatic']['settings']['UploadResultsToOpenBenchmarking']) && $json['phoromatic']['settings']['UploadResultsToOpenBenchmarking'])
 								{
 									$test_run_manager->auto_upload_to_openbenchmarking();
 									pts_openbenchmarking_client::override_client_setting('UploadSystemLogsByDefault', $json['phoromatic']['settings']['UploadSystemLogs']);
