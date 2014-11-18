@@ -256,7 +256,7 @@ class phoromatic extends pts_module_interface
 				), $last_server_address, $last_server_http_port, $last_account_id);
 
 			$server_response = json_decode($server_response, true);
-			if($server_response && isset($server_response['phoromatic']['account_id']))
+			if($server_response && isset(['phoromatic']['ping']))
 			{
 				self::$server_address = $last_server_address;
 				self::$server_http_port = $last_server_http_port;

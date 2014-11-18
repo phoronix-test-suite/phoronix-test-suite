@@ -20,4 +20,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+$json['phoromatic']['ping'] = 'ping';
+echo json_encode($json);
+
 ?>
