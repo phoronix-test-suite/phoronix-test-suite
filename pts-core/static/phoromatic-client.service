@@ -5,6 +5,7 @@ After=syslog.target network.target
 [Service]
 TimeoutStartSec=300
 ExecStart=/usr/bin/phoronix-test-suite phoromatic.connect
+Environment=DISPLAY=:0
 
 [Install]
 WantedBy=multi-user.target
