@@ -25,6 +25,7 @@ class pts_network
 	private static $disable_network_support = false;
 	private static $disable_internet_support = false;
 	private static $network_proxy = false;
+	private static $network_timeout = 20;
 
 	public static function is_proxy_setup()
 	{
@@ -105,7 +106,7 @@ class pts_network
 		curl_setopt($cr, CURLOPT_URL, $download);
 		curl_setopt($cr, CURLOPT_HEADER, false);
 		curl_setopt($cr, CURLOPT_FOLLOWLOCATION, true);
-		curl_setopt($cr, CURLOPT_CONNECTTIMEOUT, (defined('NETWORK_TIMEOUT') ? NETWORK_TIMEOUT : 20));
+		curl_setopt($cr, CURLOPT_CONNECTTIMEOUT, self::$network_timeout);
 		curl_setopt($cr, CURLOPT_CAPATH, PTS_CORE_STATIC_PATH . 'certificates/');
 		curl_setopt($cr, CURLOPT_BUFFERSIZE, 64000);
 		curl_setopt($cr, CURLOPT_USERAGENT, pts_codename(true));
@@ -207,7 +208,7 @@ class pts_network
 		}
 		else
 		{
-			$parameters['http']['timeout'] = defined('NETWORK_TIMEOUT') ? NETWORK_TIMEOUT : 20;
+			$parameters['http']['timeout'] = self::$network_timeout;
 		}
 
 		$parameters['http']['user_agent'] = pts_codename(true);
@@ -273,7 +274,7 @@ class pts_network
 			self::$network_proxy['port'] = $env_proxy[1];
 		}
 
-		pts_define('NETWORK_TIMEOUT', pts_config::read_user_config('PhoronixTestSuite/Options/Networking/Timeout', 20));
+		self::$network_timeout = pts_config::read_user_config('PhoronixTestSuite/Options/Networking/Timeout', 20);
 
 		if(ini_get('allow_url_fopen') == 'Off')
 		{
