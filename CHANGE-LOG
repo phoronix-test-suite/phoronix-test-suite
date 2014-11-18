@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 - pts-core: Fix result merging when PTS test identifier is null, use title string instead as identifier
 - pts-core: Check for PHP Sockets support
 - pts-core: Enhanced make-download-cache
+- pts-core: Enhance PHP_BIN detection
 - phoromatic: Upstart phoromatic-server job is working (tested on Scientific Linux 6.6)
 - phoromatic: Add "Run Test Schedule Now" button to test schedule page to allow for easy one-time/manual testing
 - phoromatic: Add some basic statistics to the rootadmin page
