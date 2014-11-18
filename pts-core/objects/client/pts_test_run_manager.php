@@ -1081,7 +1081,7 @@ class pts_test_run_manager
 
 		$to_run_objects = $tests_verified;
 
-		if(count($tests_missing) > 0)
+		if(count($tests_missing) > 0 && !defined('PHOROMATIC_PROCESS'))
 		{
 			$tests_missing = array_unique($tests_missing);
 
@@ -1097,9 +1097,6 @@ class pts_test_run_manager
 				//$message .= PHP_EOL . 'To install, run: phoronix-test-suite install ' . implode(' ', $tests_missing) . PHP_EOL . PHP_EOL;
 				echo $message;
 			}
-
-			if(defined('PHOROMATIC_PROCESS', true))
-				return true;
 
 			if((pts_c::$test_flags & pts_c::batch_mode) == false && (pts_c::$test_flags & pts_c::auto_mode) == false && pts_flags::is_live_cd() == false && pts_client::current_command() != 'benchmark')
 			{
