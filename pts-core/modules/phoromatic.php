@@ -346,11 +346,11 @@ class phoromatic extends pts_module_interface
 						self::$p_trigger_id = self::$p_save_identifier;
 						phoromatic::update_system_status('Running Benchmarks For Schedule: ' . $phoromatic_save_identifier . ' - ' . self::$p_save_identifier);
 
-						if($json['phoromatic']['settings']['RunInstallCommand'])
+						if(pts_strings::string_bool($json['phoromatic']['settings']['RunInstallCommand']))
 						{
 							phoromatic::set_user_context($json['phoromatic']['pre_install_set_context'], self::$p_trigger_id, self::$p_save_identifier, 'PRE_INSTALL');
 
-							if($json['phoromatic']['settings']['ForceInstallTests'])
+							if(pts_strings::string_bool($json['phoromatic']['settings']['ForceInstallTests']))
 							{
 								$test_flags |= pts_c::force_install;
 							}
@@ -375,10 +375,10 @@ class phoromatic extends pts_module_interface
 							if($test_run_manager->load_tests_to_run($suite_identifier))
 							{
 								phoromatic::set_user_context($json['phoromatic']['pre_run_set_context'], self::$p_trigger_id, self::$p_save_identifier, 'PRE_RUN');
-								if(isset($json['phoromatic']['settings']['UploadResultsToOpenBenchmarking']) && $json['phoromatic']['settings']['UploadResultsToOpenBenchmarking'])
+								if(isset($json['phoromatic']['settings']['UploadResultsToOpenBenchmarking']) && pts_strings::string_bool($json['phoromatic']['settings']['UploadResultsToOpenBenchmarking']))
 								{
 									$test_run_manager->auto_upload_to_openbenchmarking();
-									pts_openbenchmarking_client::override_client_setting('UploadSystemLogsByDefault', $json['phoromatic']['settings']['UploadSystemLogs']);
+									pts_openbenchmarking_client::override_client_setting('UploadSystemLogsByDefault', pts_strings::string_bool($json['phoromatic']['settings']['UploadSystemLogs']));
 								}
 
 								// Save results?
@@ -392,10 +392,10 @@ class phoromatic extends pts_module_interface
 
 								// Handle uploading data to server
 								$result_file = new pts_result_file($test_run_manager->get_file_name());
-								$upload_system_logs = $json['phoromatic']['settings']['UploadSystemLogs'];
+								$upload_system_logs = pts_strings::string_bool($json['phoromatic']['settings']['UploadSystemLogs']);
 								$server_response = self::upload_test_result($result_file, $upload_system_logs, $json['phoromatic']['schedule_id'], $phoromatic_save_identifier, $json['phoromatic']['trigger_id']);
 								pts_client::$pts_logger->log('XXX TEMP DEBUG MESSAGE: ' . $server_response);
-								if(!$json['phoromatic']['settings']['ArchiveResultsLocally'])
+								if(!pts_strings::string_bool($json['phoromatic']['settings']['ArchiveResultsLocally']))
 								{
 									pts_client::remove_saved_result_file($test_run_manager->get_file_name());
 								}
