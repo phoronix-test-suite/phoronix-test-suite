@@ -278,6 +278,7 @@ class phoromatic extends pts_module_interface
 			trigger_error('Phoromatic is already running.', E_USER_ERROR);
 			return false;
 		}
+		define('PHOROMATIC_PROCESS', true);
 
 		if(pts_client::$pts_logger == false)
 		{
