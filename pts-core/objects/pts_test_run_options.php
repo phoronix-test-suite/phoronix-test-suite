@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2013, Phoronix Media
-	Copyright (C) 2010 - 2013, Michael Larabel
+	Copyright (C) 2010 - 2014, Phoronix Media
+	Copyright (C) 2010 - 2014, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -225,12 +225,12 @@ class pts_test_run_options
 				// Base options off available screen resolutions
 				if(count($option_names) == 1 && count($option_values) == 1)
 				{
-					if(PTS_IS_CLIENT && pts_flags::is_live_cd())
+					if(PTS_IS_CLIENT && pts_flags::is_live_cd() && !defined('PHOROMATIC_SERVER'))
 					{
 						// Just use the stock resolution when operating from a LiveCD
 						$available_video_modes = array(phodevi::read_property('gpu', 'screen-resolution'));
 					}
-					else if(PTS_IS_CLIENT && phodevi::read_property('gpu', 'screen-resolution') && phodevi::read_property('gpu', 'screen-resolution') != array(-1, -1))
+					else if(PTS_IS_CLIENT && phodevi::read_property('gpu', 'screen-resolution') && phodevi::read_property('gpu', 'screen-resolution') != array(-1, -1) && !defined('PHOROMATIC_SERVER'))
 					{
 						$available_video_modes = phodevi::read_property('gpu', 'available-modes');
 					}
