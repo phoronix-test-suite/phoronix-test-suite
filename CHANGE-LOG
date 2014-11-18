@@ -19,6 +19,7 @@ Phoronix Test Suite (Git)
 - phoromatic: Add "Upload results to OpenBenchmarking.org" option to settings page
 - phoromatic: Fix for deactivating options on settings page
 - phoromatic: Remember last successful Phoromatic Server connection
+- phoromatic: Add reboot and shutdown commands to Phoromatic module
 
 Phoronix Test Suite 5.4 Milestone 5
 10 November 2014
