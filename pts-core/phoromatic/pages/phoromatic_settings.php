@@ -64,9 +64,9 @@ class phoromatic_settings implements pts_webui_interface
 				$main .= '<h3>' . $section . '</h3><p>';
 				foreach($section_settings as $key => $setting)
 				{
-					if(isset($_POST[$key]))
+					if(isset($_POST['user_settings_update']))
 					{
-						if($_POST[$key] == 'yes')
+						if(isset($_POST[$key]) && $_POST[$key] == 'yes')
 						{
 							$row[$key] = 1;
 						}
@@ -87,7 +87,7 @@ class phoromatic_settings implements pts_webui_interface
 				}
 				$main .= '</p>';
 			}
-			$main .= '<p><input type="submit" value="Save User Settings" /></p>';
+			$main .= '<p><input type="hidden" value="1" name="user_settings_update" /><input type="submit" value="Save User Settings" /></p>';
 			$main .= '</form>';
 
 			if(!PHOROMATIC_USER_IS_VIEWER)
@@ -119,9 +119,9 @@ class phoromatic_settings implements pts_webui_interface
 					$main .= '<h3>' . $section . '</h3><p>';
 					foreach($section_settings as $key => $setting)
 					{
-						if(isset($_POST[$key]))
+						if(isset($_POST['account_settings_update']))
 						{
-							if($_POST[$key] == 'yes')
+							if(isset($_POST[$key]) && $_POST[$key] == 'yes')
 							{
 								$row[$key] = 1;
 							}
@@ -143,11 +143,12 @@ class phoromatic_settings implements pts_webui_interface
 							//echo phoromatic_server::$db->lastErrorMsg();
 						}
 
-						$main .= '<input type="checkbox" name="' . $key . '" ' . (isset($row[$key]) && $row[$key] == 1 ? 'checked="checked" ' : '') . 'value="yes" /> ' . $setting . '<br />';
+						$main .= '<input type="checkbox" name="' . $key . '" ' . (isset($row[$key]) && $row[$key] === 1 ? 'checked="checked" ' : '') . 'value="yes" /> ' . $setting . '<br />';
 					}
 					$main .= '</p>';
 				}
-				$main .= '<p><input type="submit" value="Save Account Settings" /></p>';
+
+				$main .= '<p><input type="hidden" value="1" name="account_settings_update" /><input type="submit" value="Save Account Settings" /></p>';
 				$main .= '</form>';
 			}
 
