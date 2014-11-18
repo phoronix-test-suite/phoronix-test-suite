@@ -235,7 +235,7 @@ class phoromatic extends pts_module_interface
 	}
 	protected static function setup_server_addressing($server_string)
 	{
-		if(isset($server_string[0]) && $server_string[0] && strpos($server_string[0], '/', strpos($server_string[0], ':')) > 6)
+		if(isset($server_string[0]) && isset($server_string[7]) && strpos($server_string[0], '/', strpos($server_string[0], ':')) > 6)
 		{
 			pts_client::$pts_logger && pts_client::$pts_logger->log('Attempting to connect to Phoromatic Server: ' . $server_string[0]);
 			self::$account_id = substr($server_string[0], strrpos($server_string[0], '/') + 1);
@@ -243,7 +243,7 @@ class phoromatic extends pts_module_interface
 			self::$server_http_port = substr($server_string[0], strlen(self::$server_address) + 1, -1 - strlen(self::$account_id));
 			pts_client::$display->generic_heading('Server IP: ' . self::$server_address . PHP_EOL . 'Server HTTP Port: ' . self::$server_http_port . PHP_EOL . 'Account ID: ' . self::$account_id);
 		}
-		else if(($last_server = pts_module::read_file('last-phoromatic-server')))
+		else if(($last_server = pts_module::read_file('last-phoromatic-server')) && !empty($last_server))
 		{
 			pts_client::$pts_logger && pts_client::$pts_logger->log('Attempting to connect to last server connection: ' . $last_server);
 			$last_account_id = substr($last_server, strrpos($last_server, '/') + 1);
@@ -348,10 +348,10 @@ class phoromatic extends pts_module_interface
 				$times_failed = 0;
 				$json = json_decode($server_response, true);
 
-				if(!$has_success)
+				if($has_success == false)
 				{
 					$has_success = true;
-					pts_module::save_file('last-phoromatic-server', self::$server_address. ':' . self::$server_http_port . '/' . self::$account_id);
+					pts_module::save_file('last-phoromatic-server', self::$server_address . ':' . self::$server_http_port . '/' . self::$account_id);
 				}
 
 				if($json != null)

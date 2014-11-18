@@ -29,7 +29,7 @@ class pts_logger
 	{
 		if($log_file == null)
 		{
-			if(is_writable('/var/log') && (PTS_MODE == 'WEB_CLIENT' || defined('PHOROMATIC_SERVER') || getenv('PTS_SERVER_PROCESS')))
+			if(is_writable('/var/log') && (PTS_MODE == 'WEB_CLIENT' || defined('PHOROMATIC_SERVER') || defined('PTS_IS_DAEMONIZED_SERVER_PROCESS') || getenv('PTS_SERVER_PROCESS')))
 				$log_file = '/var/log/';
 			else
 				$log_file = PTS_USER_PATH;
