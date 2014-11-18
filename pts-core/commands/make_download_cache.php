@@ -64,7 +64,7 @@ class make_download_cache implements pts_option_interface
 			'download-cache' => array()
 			));
 
-		foreach(pts_tests::installed_tests() as $test)
+		foreach(pts_tests::partially_installed_tests() as $test)
 		{
 			$test_profile = new pts_test_profile($test);
 			echo PHP_EOL . 'Checking Downloads For: ' . $test . PHP_EOL;

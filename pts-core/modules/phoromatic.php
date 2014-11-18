@@ -121,6 +121,7 @@ class phoromatic extends pts_module_interface
 				}
 
 				$repo = pts_network::http_get_contents('http://' . $archived_server['ip'] . ':' . $archived_server['http_port'] . '/download-cache.php?repo');
+var_dump($repo);
 				echo 'DOWNLOAD CACHE: ';
 				if(!empty($repo))
 				{

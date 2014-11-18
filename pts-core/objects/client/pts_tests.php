@@ -35,6 +35,19 @@ class pts_tests
 
 		return $cleaned_tests;
 	}
+	public static function partially_installed_tests()
+	{
+		$cleaned_tests = array();
+		$repo = '*';
+		$install_root_path = pts_client::test_install_root_path();
+		$install_root_path_length = strlen($install_root_path);
+		foreach(pts_file_io::glob($install_root_path . $repo . '/*') as $identifier_path)
+		{
+			array_push($cleaned_tests, substr($identifier_path, $install_root_path_length));
+		}
+
+		return $cleaned_tests;
+	}
 	public static function scan_for_error($log_file, $strip_string)
 	{
 		$error = null;
