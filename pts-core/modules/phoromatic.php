@@ -243,7 +243,7 @@ class phoromatic extends pts_module_interface
 			self::$server_http_port = substr($server_string[0], strlen(self::$server_address) + 1, -1 - strlen(self::$account_id));
 			pts_client::$display->generic_heading('Server IP: ' . self::$server_address . PHP_EOL . 'Server HTTP Port: ' . self::$server_http_port . PHP_EOL . 'Account ID: ' . self::$account_id);
 		}
-		else if(($last_server = pts_module::read_file('last-phoromatic-server')) && !empty($last_server))
+		else if(($last_server = trim(pts_module::read_file('last-phoromatic-server'))) && !empty($last_server))
 		{
 			pts_client::$pts_logger && pts_client::$pts_logger->log('Attempting to connect to last server connection: ' . $last_server);
 			$last_account_id = substr($last_server, strrpos($last_server, '/') + 1);
