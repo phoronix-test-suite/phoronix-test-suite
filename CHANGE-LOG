@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 5.4 Milestone 6
+19 November 2014
 
 - pts-core: Fix result merging when PTS test identifier is null, use title string instead as identifier
 - pts-core: Check for PHP Sockets support
