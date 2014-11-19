@@ -6,6 +6,7 @@ Phoronix Test Suite (Git)
 - pts-core: Check for PHP Sockets support
 - pts-core: Enhanced make-download-cache
 - pts-core: Enhance PHP_BIN detection
+- pts-core: Use system's zip library if PHP ZIP is not available
 - phoromatic: Upstart phoromatic-server job is working (tested on Scientific Linux 6.6)
 - phoromatic: Add "Run Test Schedule Now" button to test schedule page to allow for easy one-time/manual testing
 - phoromatic: Add some basic statistics to the rootadmin page

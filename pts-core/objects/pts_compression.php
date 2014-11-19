@@ -137,6 +137,16 @@ class pts_compression
 	{
 		if(!class_exists('ZipArchive'))
 		{
+			if(pts_client::executable_in_path('zip'))
+			{
+				shell_exec('cd ' . dirname($add_files) . ' && zip -r ' . $zip_file . ' ' . basename($zip_file));
+
+				if(is_file($zip_file) && filesize($zip_file) > 0)
+				{
+					return true;
+				}
+			}
+
 			return false;
 		}
 
