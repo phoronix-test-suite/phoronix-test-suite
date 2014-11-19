@@ -138,26 +138,26 @@ class phoromatic extends pts_module_interface
 					{
 						echo 'N/A';
 					}
-				}
 
-				echo PHP_EOL;
+					echo PHP_EOL;
 
-				$repo = pts_network::http_get_contents('http://' . $archived_server['ip'] . ':' . $archived_server['http_port'] . '/openbenchmarking-cache.php?repos');
-				echo 'SUPPORTED OPENBENCHMARKING.ORG REPOSITORIES:' . PHP_EOL;
-				if(!empty($repo))
-				{
-					$repo = json_decode($repo, true);
-					if($repo && is_array($repo['repos']))
+					$repo = pts_network::http_get_contents('http://' . $archived_server['ip'] . ':' . $archived_server['http_port'] . '/openbenchmarking-cache.php?repos');
+					echo 'SUPPORTED OPENBENCHMARKING.ORG REPOSITORIES:' . PHP_EOL;
+					if(!empty($repo))
 					{
-						foreach($repo['repos'] as $data)
+						$repo = json_decode($repo, true);
+						if($repo && is_array($repo['repos']))
 						{
-							echo '      ' . $data['title'] . ' - Last Generated: ' . date('d M Y H:i', $data['generated']) . PHP_EOL;
+							foreach($repo['repos'] as $data)
+							{
+								echo '      ' . $data['title'] . ' - Last Generated: ' . date('d M Y H:i', $data['generated']) . PHP_EOL;
+							}
 						}
 					}
-				}
-				else
-				{
-					echo '      N/A' . PHP_EOL;
+					else
+					{
+						echo '      N/A' . PHP_EOL;
+					}
 				}
 			}
 		}
