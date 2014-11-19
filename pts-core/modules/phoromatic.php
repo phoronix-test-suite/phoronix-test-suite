@@ -219,7 +219,7 @@ class phoromatic extends pts_module_interface
 
 		// Avoid an endless flow of "idling" messages, etc
 		if($current_task != $last_msg)
-			pts_client::$pts_logger->log($current_task);
+			pts_client::$pts_logger && pts_client::$pts_logger->log($current_task);
 		$last_msg = $current_task;
 
 		return $server_response = phoromatic::upload_to_remote_server(array(
@@ -505,7 +505,7 @@ class phoromatic extends pts_module_interface
 
 				if(filesize($system_logs_zip) == 0)
 				{
-					pts_client::$pts_logger->log('System log ZIP file failed to generate. Missing PHP ZIP support?');
+					pts_client::$pts_logger && pts_client::$pts_logger->log('System log ZIP file failed to generate. Missing PHP ZIP support?');
 				}
 				else if(filesize($system_logs_zip) < 2097152)
 				{
@@ -633,7 +633,7 @@ class phoromatic extends pts_module_interface
 			'ti' => $test_run_request->test_profile->get_identifier(),
 			'o' => $test_run_request->get_arguments_description()
 			));
-		pts_client::$pts_logger->log('TEMP DEBUG MESSAGE: ' . $server_response);
+		pts_client::$pts_logger && pts_client::$pts_logger->log('TEMP DEBUG MESSAGE: ' . $server_response);
 	}
 }
 
