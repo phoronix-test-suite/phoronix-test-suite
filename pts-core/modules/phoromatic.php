@@ -118,27 +118,28 @@ class phoromatic extends pts_module_interface
 					echo 'WEBSOCKET PORT: ' . $response['ws_port'] . PHP_EOL;
 					echo 'SERVER: ' . $response['http_server'] . PHP_EOL;
 					echo 'PHORONIX TEST SUITE: ' . $response['pts'] . ' [' . $response['pts_core'] . ']' . PHP_EOL;
-				}
 
-				$repo = pts_network::http_get_contents('http://' . $archived_server['ip'] . ':' . $archived_server['http_port'] . '/download-cache.php?repo');
-				echo 'DOWNLOAD CACHE: ';
-				if(!empty($repo))
-				{
-					$repo = json_decode($repo, true);
-					if($repo && isset($repo['phoronix-test-suite']['download-cache']))
+					$repo = pts_network::http_get_contents('http://' . $archived_server['ip'] . ':' . $archived_server['http_port'] . '/download-cache.php?repo');
+					echo 'DOWNLOAD CACHE: ';
+					if(!empty($repo))
 					{
-						$total_file_size = 0;
-						foreach($repo['phoronix-test-suite']['download-cache'] as $file_name => $inf)
+						$repo = json_decode($repo, true);
+						if($repo && isset($repo['phoronix-test-suite']['download-cache']))
 						{
-							$total_file_size += $repo['phoronix-test-suite']['download-cache'][$file_name]['file_size'];
+							$total_file_size = 0;
+							foreach($repo['phoronix-test-suite']['download-cache'] as $file_name => $inf)
+							{
+								$total_file_size += $repo['phoronix-test-suite']['download-cache'][$file_name]['file_size'];
+							}
+							echo count($repo['phoronix-test-suite']['download-cache']) . ' FILES / ' . round($total_file_size / 1000000) . ' MB CACHE SIZE';
 						}
-						echo count($repo['phoronix-test-suite']['download-cache']) . ' FILES / ' . round($total_file_size / 1000000) . ' MB CACHE SIZE';
+					}
+					else
+					{
+						echo 'N/A';
 					}
 				}
-				else
-				{
-					echo 'N/A';
-				}
+
 				echo PHP_EOL;
 
 				$repo = pts_network::http_get_contents('http://' . $archived_server['ip'] . ':' . $archived_server['http_port'] . '/openbenchmarking-cache.php?repos');
