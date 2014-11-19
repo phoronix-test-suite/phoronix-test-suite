@@ -236,7 +236,7 @@ class phoromatic extends pts_module_interface
 	}
 	protected static function setup_server_addressing($server_string)
 	{
-		if(isset($server_string[0]) && isset($server_string[7]) && strpos($server_string[0], '/', strpos($server_string[0], ':')) > 6)
+		if(isset($server_string[0]) && strpos($server_string[0], '/', strpos($server_string[0], ':')) > 6)
 		{
 			pts_client::$pts_logger && pts_client::$pts_logger->log('Attempting to connect to Phoromatic Server: ' . $server_string[0]);
 			self::$account_id = substr($server_string[0], strrpos($server_string[0], '/') + 1);
