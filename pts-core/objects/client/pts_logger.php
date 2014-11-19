@@ -37,8 +37,6 @@ class pts_logger
 			$log_file .= (defined('PHOROMATIC_SERVER') ? 'phoromatic' : 'phoronix-test-suite') . '.log';
 		}
 
-		echo PHP_EOL . 'Logging Events To: ' . $log_file . PHP_EOL . PHP_EOL;
-
 	//	if(file_exists($log_file))
 	//		unlink($log_file);
 
