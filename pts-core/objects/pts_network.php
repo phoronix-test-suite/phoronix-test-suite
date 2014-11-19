@@ -73,6 +73,11 @@ class pts_network
 			return false;
 		}
 
+		if(strpos($download, '://') === false)
+		{
+			$download = 'http://' . $download;
+		}
+
 		if(function_exists('curl_init') && stripos(PTS_PHP_VERSION, 'hiphop') === false)
 		{
 			// XXX: Facebook HipHop HHVM currently seems to have problems with PHP CURL
