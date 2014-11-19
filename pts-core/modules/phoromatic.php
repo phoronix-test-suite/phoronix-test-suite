@@ -339,7 +339,6 @@ class phoromatic extends pts_module_interface
 
 				if($times_failed > 2)
 				{
-					pts_client::$pts_logger->log('Communication attempt to server failed');
 					trigger_error('Communication with server failed.', E_USER_ERROR);
 					return false;
 				}
@@ -504,7 +503,11 @@ class phoromatic extends pts_module_interface
 				$system_logs_zip = pts_client::create_temporary_file();
 				pts_compression::zip_archive_create($system_logs_zip, $system_log_dir);
 
-				if(filesize($system_logs_zip) < 2097152)
+				if(filesize($system_logs_zip) == 0)
+				{
+					pts_client::$pts_logger->log('System log ZIP file failed to generate. Missing PHP ZIP support?');
+				}
+				else if(filesize($system_logs_zip) < 2097152)
 				{
 					// If it's over 2MB, probably too big
 					$system_logs = base64_encode(file_get_contents($system_logs_zip));
