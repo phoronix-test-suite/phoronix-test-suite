@@ -144,7 +144,7 @@ class start_phoromatic_server implements pts_option_interface
 		$pts_logger->log('Starting HTTP process @ http://localhost:' . $web_port);
 
 		// Avahi for zeroconf network discovery support
-		if(pts_config::read_user_config('PhoronixTestSuite/Options/Server/AdvertiseServiceZeroConf', 'TRUE') && pts_client::executable_in_path('avahi-publish'))
+		if(pts_config::read_user_config('PhoronixTestSuite/Options/Server/AdvertiseServiceZeroConf', 'TRUE'))
 		{
 			if(is_dir('/etc/avahi/services') && is_writable('/etc/avahi/services'))
 			{
@@ -158,7 +158,7 @@ class start_phoromatic_server implements pts_option_interface
   </service>
 </service-group>');
 			}
-			else
+			else if(pts_client::executable_in_path('avahi-publish'))
 			{
 				$hostname = phodevi::read_property('system', 'hostname');
 				$hostname = $hostname == null ? rand(0, 99) : $hostname;

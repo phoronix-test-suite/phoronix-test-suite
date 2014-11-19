@@ -399,7 +399,7 @@ class phoromatic extends pts_module_interface
 						{
 							$test_run_manager = new pts_test_run_manager($test_flags);
 							pts_test_run_manager::set_batch_mode(array(
-								'UploadResults' => false, // TODO XXX: give option back on Phoromatic web UI whether to upload results to OpenBenchmarking.org global too...
+								'UploadResults' => (isset($json['phoromatic']['settings']['UploadResultsToOpenBenchmarking']) && pts_strings::string_bool($json['phoromatic']['settings']['UploadResultsToOpenBenchmarking'])),
 								'SaveResults' => true,
 								'RunAllTestCombinations' => false,
 								'OpenBrowser' => false
@@ -428,7 +428,7 @@ class phoromatic extends pts_module_interface
 								$result_file = new pts_result_file($test_run_manager->get_file_name());
 								$upload_system_logs = pts_strings::string_bool($json['phoromatic']['settings']['UploadSystemLogs']);
 								$server_response = self::upload_test_result($result_file, $upload_system_logs, $json['phoromatic']['schedule_id'], $phoromatic_save_identifier, $json['phoromatic']['trigger_id']);
-								pts_client::$pts_logger->log('XXX TEMP DEBUG MESSAGE: ' . $server_response);
+								pts_client::$pts_logger->log('TEMP DEBUG MESSAGE: ' . $server_response);
 								if(!pts_strings::string_bool($json['phoromatic']['settings']['ArchiveResultsLocally']))
 								{
 									pts_client::remove_saved_result_file($test_run_manager->get_file_name());
@@ -629,7 +629,7 @@ class phoromatic extends pts_module_interface
 			'ti' => $test_run_request->test_profile->get_identifier(),
 			'o' => $test_run_request->get_arguments_description()
 			));
-		pts_client::$pts_logger->log('XXX TEMP DEBUG MESSAGE: ' . $server_response);
+		pts_client::$pts_logger->log('TEMP DEBUG MESSAGE: ' . $server_response);
 	}
 }
 
