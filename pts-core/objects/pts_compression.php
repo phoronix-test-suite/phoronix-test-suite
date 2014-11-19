@@ -139,7 +139,7 @@ class pts_compression
 		{
 			if(pts_client::executable_in_path('zip'))
 			{
-				shell_exec('cd ' . dirname($add_files) . ' && zip -r ' . $zip_file . ' ' . basename($zip_file));
+				shell_exec('cd ' . dirname($add_files) . ' && zip -r ' . $zip_file . ' ' . basename($add_files));
 
 				if(is_file($zip_file) && filesize($zip_file) > 0)
 				{

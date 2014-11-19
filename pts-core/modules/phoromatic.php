@@ -500,7 +500,7 @@ class phoromatic extends pts_module_interface
 
 			if($is_valid_log)
 			{
-				$system_logs_zip = pts_client::create_temporary_file();
+				$system_logs_zip = pts_client::create_temporary_file('.zip');
 				pts_compression::zip_archive_create($system_logs_zip, $system_log_dir);
 
 				if(filesize($system_logs_zip) == 0)

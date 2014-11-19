@@ -1536,9 +1536,21 @@ class pts_client
 
 		return $values;
 	}
-	public static function create_temporary_file()
+	public static function create_temporary_file($file_extension = null)
 	{
-		return tempnam(pts_client::temporary_directory(), 'PTS');
+		$temp_file = tempnam(pts_client::temporary_directory(), 'PTS');
+
+		if($file_extension)
+		{
+			$extended_file = pts_client::temporary_directory() . basename($temp_file) . $file_extension;
+
+			if(rename($temp_file, $extended_file))
+			{
+				$temp_file = $extended_file;
+			}
+		}
+
+		return $temp_file;
 	}
 	public static function create_temporary_directory($prefix = null)
 	{
