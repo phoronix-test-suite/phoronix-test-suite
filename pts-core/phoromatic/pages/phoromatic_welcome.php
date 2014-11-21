@@ -104,6 +104,7 @@ class phoromatic_welcome implements pts_webui_interface
 			if($is_new_account)
 			{
 				pts_logger::add_to_log($_SERVER['REMOTE_ADDR'] . ' created a new account: ' . $user_id . ' - ' . $account_id);
+				$account_salt = pts_strings::random_characters(12, true);
 
 				$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_accounts (AccountID, ValidateID, CreatedOn, Salt) VALUES (:account_id, :validate_id, :current_time, :salt)');
 				$stmt->bindValue(':account_id', $account_id);
@@ -120,8 +121,6 @@ class phoromatic_welcome implements pts_webui_interface
 				$stmt->bindValue(':user_id', $user_id);
 				$stmt->bindValue(':account_id', $account_id);
 				$result = $stmt->execute();
-
-				$account_salt = pts_strings::random_characters(12, true);
 			}
 			else
 			{
