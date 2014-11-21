@@ -123,6 +123,20 @@ class phoromatic_users implements pts_webui_interface
 
 			phoromatic_add_activity_stream_event('users', $_POST['username'], 'added');
 		}
+		if($_SESSION['AdminLevel'] == 1 && isset($_POST['update_user_levels']))
+		{
+			foreach(explode(',', $_POST['update_user_levels']) as $user_id)
+			{
+				if(isset($_POST['admin_level_' . $user_id]) && is_numeric($_POST['admin_level_' . $user_id]))
+				{
+					$stmt = phoromatic_server::$db->prepare('UPDATE phoromatic_users SET AdminLevel = :admin_level WHERE AccountID = :account_id AND UserID = :user_id');
+					$stmt->bindValue(':admin_level', $_POST['admin_level_' . $user_id]);
+					$stmt->bindValue(':user_id', $user_id);
+					$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+					$result = $stmt->execute();
+				}
+			}
+		}
 
 		$main = '<h2>Users</h2>
 			<p>Users associated with this account. Phoromatic users can be one of several tiers with varying privileges:</p>
@@ -134,7 +148,7 @@ class phoromatic_users implements pts_webui_interface
 			</ol>
 			<div class="pts_phoromatic_info_box_area">
 
-				<div style="margin: 0 20%;">
+				<div style="margin: 0 20%;"><form action="' . $_SERVER['REQUEST_URI'] . '" name="edit_user" id="edit_user" method="post">
 					<ul>
 						<li><h1>All Users</h1></li>';
 
@@ -142,6 +156,7 @@ class phoromatic_users implements pts_webui_interface
 					$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 					$result = $stmt->execute();
 					$row = $result->fetchArray();
+					$user_ids = array();
 
 					do
 					{
@@ -164,12 +179,28 @@ class phoromatic_users implements pts_webui_interface
 								break;
 						}
 
-						$main .= '<a href="#"><li>' . $row['UserName'] . '<br /><table><tr><td><strong>' . $level . '</strong></td><td>Last Login: ' . (empty($row['LastLogin']) ? 'Never' : date('j F Y H:i', strtotime($row['LastLogin']))) . '</td></tr></table></li></a>';
+						$main .= '<a href="#"><li>' . $row['UserName'] . '<br /><table><tr><td>';
+
+						if($row['AdminLevel'] == 1 || $_SESSION['AdminLevel'] != 1)
+							$main .= '<strong>' . $level . '</strong>';
+						else
+						{
+							$main .= '<select name="admin_level_' . $row['UserID'] . '">';
+
+							foreach(array(0 => 'Disabled', 2 => 'Administrator', 3 => 'Power User', 10 => 'Viewer') as $level_id => $level_string)
+							{
+								$main .= '<option value="' . $level_id . '"' . ($row['AdminLevel'] == $level_id ? ' selected="selected"' : null) . '>' . $level_string . '</option>';
+							}
+
+							$main .= '</select>';
+							array_push($user_ids, $row['UserID']);
+						}
+						$main .= '</td><td>Last Login: ' . (empty($row['LastLogin']) ? 'Never' : date('j F Y H:i', strtotime($row['LastLogin']))) . '</td></tr></table></li></a>';
 					}
 					while($row = $result->fetchArray());
 
 
-			$main .= '</ul>
+			$main .= '</ul> &nbsp; <input type="hidden" name="update_user_levels" value="' . implode(',', $user_ids) . '" /> <input name="submit" value="Update User Levels" type="submit" /></form>
 				</div>
 			</div>';
 
