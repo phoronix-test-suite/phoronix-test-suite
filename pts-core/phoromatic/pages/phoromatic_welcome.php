@@ -83,25 +83,53 @@ class phoromatic_welcome implements pts_webui_interface
 				return false;
 			}
 
-			do
+			if(phoromatic_server::read_setting('add_new_users_to_account') != null)
 			{
-				$account_id = pts_strings::random_characters(6, true);
-				$matching_accounts = phoromatic_server::$db->querySingle('SELECT AccountID FROM phoromatic_accounts WHERE AccountID = \'' . $account_id . '\'');
+				$account_id = phoromatic_server::read_setting('add_new_users_to_account');
+				$is_new_account = false;
 			}
-			while(!empty($matching_accounts));
+			else
+			{
+				do
+				{
+					$account_id = pts_strings::random_characters(6, true);
+					$matching_accounts = phoromatic_server::$db->querySingle('SELECT AccountID FROM phoromatic_accounts WHERE AccountID = \'' . $account_id . '\'');
+				}
+				while(!empty($matching_accounts));
+				$is_new_account = true;
+			}
 
-			$account_salt = pts_strings::random_characters(12, true);
 			$user_id = pts_strings::random_characters(4, true);
+
+			if($is_new_account)
+			{
+				pts_logger::add_to_log($_SERVER['REMOTE_ADDR'] . ' created a new account: ' . $user_id . ' - ' . $account_id);
+
+				$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_accounts (AccountID, ValidateID, CreatedOn, Salt) VALUES (:account_id, :validate_id, :current_time, :salt)');
+				$stmt->bindValue(':account_id', $account_id);
+				$stmt->bindValue(':validate_id', pts_strings::random_characters(4, true));
+				$stmt->bindValue(':salt', $account_salt);
+				$stmt->bindValue(':current_time', phoromatic_server::current_time());
+				$result = $stmt->execute();
+
+				$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_account_settings (AccountID) VALUES (:account_id)');
+				$stmt->bindValue(':account_id', $account_id);
+				$result = $stmt->execute();
+
+				$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_user_settings (UserID, AccountID) VALUES (:user_id, :account_id)');
+				$stmt->bindValue(':user_id', $user_id);
+				$stmt->bindValue(':account_id', $account_id);
+				$result = $stmt->execute();
+
+				$account_salt = pts_strings::random_characters(12, true);
+			}
+			else
+			{
+				pts_logger::add_to_log($_SERVER['REMOTE_ADDR'] . ' being added to an account: ' . $user_id . ' - ' . $account_id);
+				$account_salt = phoromatic_server::$db->querySingle('SELECT Salt FROM phoromatic_accounts WHERE AccountID = \'' . $account_id . '\'');
+			}
+
 			$salted_password = hash('sha256', $account_salt . $_POST['register_password']);
-
-			pts_logger::add_to_log($_SERVER['REMOTE_ADDR'] . ' created a new account: ' . $user_id . ' - ' . $account_id);
-
-			$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_accounts (AccountID, ValidateID, CreatedOn, Salt) VALUES (:account_id, :validate_id, :current_time, :salt)');
-			$stmt->bindValue(':account_id', $account_id);
-			$stmt->bindValue(':validate_id', pts_strings::random_characters(4, true));
-			$stmt->bindValue(':salt', $account_salt);
-			$stmt->bindValue(':current_time', phoromatic_server::current_time());
-			$result = $stmt->execute();
 
 			$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_users (UserID, AccountID, UserName, Email, Password, CreatedOn, LastIP, AdminLevel) VALUES (:user_id, :account_id, :user_name, :email, :password, :current_time, :last_ip, :admin_level)');
 			$stmt->bindValue(':user_id', $user_id);
@@ -111,19 +139,10 @@ class phoromatic_welcome implements pts_webui_interface
 			$stmt->bindValue(':password', $salted_password);
 			$stmt->bindValue(':last_ip', $_SERVER['REMOTE_ADDR']);
 			$stmt->bindValue(':current_time', phoromatic_server::current_time());
-			$stmt->bindValue(':admin_level', 1);
+			$stmt->bindValue(':admin_level', ($is_new_account ? 1 : 10));
 			$result = $stmt->execute();
 
-			$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_user_settings (UserID, AccountID) VALUES (:user_id, :account_id)');
-			$stmt->bindValue(':user_id', $user_id);
-			$stmt->bindValue(':account_id', $account_id);
-			$result = $stmt->execute();
-
-			$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_account_settings (AccountID) VALUES (:account_id)');
-			$stmt->bindValue(':account_id', $account_id);
-			$result = $stmt->execute();
-
-			mkdir(phoromatic_server::phoromatic_account_path($account_id));
+			pts_file_io::mkdir(phoromatic_server::phoromatic_account_path($account_id));
 
 			phoromatic_server::send_email($_POST['register_email'], 'Phoromatic Account Registration', 'no-reply@phoromatic.com', '<p><strong>' . $_POST['register_username'] . '</strong>:</p><p>Your Phoromatic account has been created and is now active.</p>');
 

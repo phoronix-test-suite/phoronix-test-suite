@@ -105,7 +105,7 @@ function phoromatic_webui_header_logged_in()
 	$html_links = array();
 	if($_SESSION['AdminLevel'] == -40)
 	{
-		$pages = array('Admin');
+		$pages = array('Admin', 'Admin_Config');
 	}
 	else
 	{

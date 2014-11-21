@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- phoromatic: Add add_new_users_to_account option for adding new users automatically to existing account
+
 Phoronix Test Suite 5.4 Milestone 6
 19 November 2014
 
