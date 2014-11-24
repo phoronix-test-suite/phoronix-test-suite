@@ -7,6 +7,7 @@ Phoronix Test Suite (Git)
 - phoromatic: Report systems MAC address from the systems page
 - phoromatic: Report network's Wake-On-LAN information to Phoromatic Server
 - phoromatic: Add notification option to email to users when systems appear hung for more than an hour
+- phoromatic: Add option to power off systems when no more scheduled tests are scheduled for the day
 
 Phoronix Test Suite 5.4 Milestone 6
 19 November 2014

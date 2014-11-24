@@ -22,10 +22,19 @@
 
 $day_of_week_int = date('N') - 1;
 
+$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_account_settings WHERE AccountID = :account_id');
+$stmt->bindValue(':account_id', ACCOUNT_ID);
+$result = $stmt->execute();
+$phoromatic_account_settings = $result->fetchArray(SQLITE3_ASSOC);
+unset($phoromatic_account_settings['AccountID']);
+
 $stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_schedules WHERE AccountID = :account_id AND State = 1 AND (SELECT COUNT(*) FROM phoromatic_schedules_tests WHERE AccountID = :account_id AND ScheduleID = phoromatic_schedules.ScheduleID) > 0');
 //echo phoromatic_server::$db->lastErrorMsg();
 $stmt->bindValue(':account_id', ACCOUNT_ID);
 $result = $stmt->execute();
+
+$tests_expected_later_today = false;
+
 while($result && $row = $result->fetchArray())
 {
 	// Make sure this test schedule is supposed to work on given system
@@ -54,16 +63,24 @@ while($result && $row = $result->fetchArray())
 	}
 
 	// See if test is a time-based schedule due to run today and now or past the time scheduled to run
-	if(strpos($row['ActiveOn'], strval($day_of_week_int)) !== false && $row['RunAt'] <= date('H.i'))
+	if(strpos($row['ActiveOn'], strval($day_of_week_int)) !== false)
 	{
-		$trigger_id = date('Y-m-d');
-		if(!phoromatic_check_for_triggered_result($row['ScheduleID'], $trigger_id))
+		if($row['RunAt'] <= date('H.i'))
 		{
-			$res = phoromatic_generate_test_suite($row, $json, $trigger_id);
-			if($res)
+			$trigger_id = date('Y-m-d');
+			if(!phoromatic_check_for_triggered_result($row['ScheduleID'], $trigger_id))
 			{
-				return;
+				$res = phoromatic_generate_test_suite($row, $json, $trigger_id, $phoromatic_account_settings);
+				if($res)
+				{
+					return;
+				}
 			}
+		}
+		else
+		{
+			// Test is scheduled to run later today
+			$tests_expected_later_today = true;
 		}
 	}
 
@@ -78,7 +95,7 @@ while($result && $row = $result->fetchArray())
 		{
 			if(!phoromatic_check_for_triggered_result($row['ScheduleID'], $trigger_row['Trigger']))
 			{
-				$res = phoromatic_generate_test_suite($row, $json, $trigger_row['Trigger']);
+				$res = phoromatic_generate_test_suite($row, $json, $trigger_row['Trigger'], $phoromatic_account_settings);
 				if($res)
 				{
 					return;
@@ -86,6 +103,14 @@ while($result && $row = $result->fetchArray())
 			}
 		}
 	}
+}
+
+if($tests_expected_later_today == false && $phoromatic_account_settings['PowerOffWhenDone'] == 1)
+{
+	$json['phoromatic']['response'] = '[' . date('H:i:s') . '] Shutting system down per user settings as no more tests scheduled for today...';
+	$json['phoromatic']['task'] = 'shutdown';
+	echo json_encode($json);
+	return;
 }
 
 $json['phoromatic']['response'] = '[' . date('H:i:s') . '] Idling, waiting for task assignment...';
@@ -121,7 +146,7 @@ function phoromatic_check_for_triggered_result($schedule_id, $trigger_id)
 
 	return false;
 }
-function phoromatic_generate_test_suite(&$test_schedule, &$json, $trigger_id)
+function phoromatic_generate_test_suite(&$test_schedule, &$json, $trigger_id, $phoromatic_account_settings)
 {
 	$suite_writer = new pts_test_suite_writer();
 	$suite_writer->add_suite_information($test_schedule['Title'], '1.0.0', $test_schedule['LastModifiedBy'], 'System', 'An automated Phoromatic test schedule.');
@@ -160,11 +185,7 @@ function phoromatic_generate_test_suite(&$test_schedule, &$json, $trigger_id)
 		}
 	}
 
-	$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_account_settings WHERE AccountID = :account_id');
-	$stmt->bindValue(':account_id', ACCOUNT_ID);
-	$result = $stmt->execute();
-	$json['phoromatic']['settings'] = $result->fetchArray(SQLITE3_ASSOC);
-	unset($json['phoromatic']['settings']['AccountID']);
+	$json['phoromatic']['settings'] = $phoromatic_account_settings;
 
 	/*
 	$xml_writer->addXmlNode('PhoronixTestSuite/Phoromatic/General/UploadToGlobal', (pts_rmm_get_settings_value("UploadResultsToGlobal") == 1 ? "TRUE" : "FALSE"));
