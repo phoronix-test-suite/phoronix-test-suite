@@ -45,6 +45,7 @@ $environmental_variables = array(
 	'i' => 'ID',
 	'o' => 'OTHER',
 	'nm' => 'NETWORK_CLIENT_MAC',
+	'nw' => 'NETWORK_CLIENT_WOL',
 	'n' => 'HOSTNAME',
 	'ti' => 'TEST_IDENTIFIER',
 	'ts' => 'TRIGGER_STRING',
@@ -190,7 +191,7 @@ define('SYSTEM_GROUPS', $result['Groups']);
 $SYSTEM_STATE = $result['State'];
 define('GSID', $GSID);
 
-$stmt = phoromatic_server::$db->prepare('UPDATE phoromatic_systems SET LastIP = :access_ip, LocalIP = :local_ip, LastCommunication = :current_time, Hardware = :client_hardware, Software = :client_software, ClientVersion = :client_version, MachineSelfID = :machine_self_id, NetworkMAC = :network_mac WHERE AccountID = :account_id AND SystemID = :system_id');
+$stmt = phoromatic_server::$db->prepare('UPDATE phoromatic_systems SET LastIP = :access_ip, LocalIP = :local_ip, LastCommunication = :current_time, Hardware = :client_hardware, Software = :client_software, ClientVersion = :client_version, MachineSelfID = :machine_self_id, NetworkMAC = :network_mac, NetworkWakeOnLAN = :network_wol WHERE AccountID = :account_id AND SystemID = :system_id');
 $stmt->bindValue(':account_id', $ACCOUNT_ID);
 $stmt->bindValue(':system_id', SYSTEM_ID);
 $stmt->bindValue(':client_hardware', $CLIENT_HARDWARE);
@@ -201,6 +202,7 @@ $stmt->bindValue(':local_ip', $LOCAL_IP);
 $stmt->bindValue(':current_time', phoromatic_server::current_time());
 $stmt->bindValue(':machine_self_id', $PTS_MACHINE_SELF_ID);
 $stmt->bindValue(':network_mac', $NETWORK_CLIENT_MAC);
+$stmt->bindValue(':network_wol', $NETWORK_CLIENT_WOL);
 $stmt->execute();
 //echo phoromatic_server::$db->lastErrorMsg();
 if($SYSTEM_STATE < 1)

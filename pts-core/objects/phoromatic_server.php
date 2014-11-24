@@ -130,6 +130,10 @@ class phoromatic_server
 				// Change made 11 October for administrative level
 				self::$db->exec('ALTER TABLE phoromatic_account_settings ADD COLUMN UploadResultsToOpenBenchmarking INTEGER DEFAULT 0');
 				self::$db->exec('PRAGMA user_version = 8');
+			case 8:
+				// Change made 24 November 2014 Wake On LAN info for client systems
+				self::$db->exec('ALTER TABLE phoromatic_systems ADD COLUMN NetworkWakeOnLAN TEXT');
+				self::$db->exec('PRAGMA user_version = 9');
 		}
 		chmod($db_file, 0600);
 	}

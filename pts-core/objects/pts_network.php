@@ -390,6 +390,36 @@ class pts_network
 
 		return $mac;
 	}
+	public static function get_network_wol()
+	{
+		static $wol_support = null;
+
+		if($wol_support === null)
+		{
+			if(is_dir('/sys/class/net') && pts_client::executable_in_path('ethtool'))
+			{
+				foreach(pts_file_io::glob('/sys/class/net/*') as $net_device)
+				{
+					if(is_readable($net_device . '/operstate') && trim(file_get_contents($net_device . '/operstate')) != 'up')
+					{
+						continue;
+					}
+
+					$net_name = basename($net_device);
+					$ethtool_output = shell_exec('ethtool ' . $net_name . ' 2>&1');
+					if(($x = stripos($ethtool_output, 'Supports Wake-on: ')) !== false)
+					{
+						$ethtool_output = substr($ethtool_output, $x + strlen('Supports Wake-on: '));
+						$ethtool_output = trim(substr($ethtool_output, 0, strpos($ethtool_output, PHP_EOL)));
+						$wol_support[$net_name] = $net_name . ': ' . $ethtool_output;
+					}
+
+				}
+			}
+		}
+
+		return $wol_support;
+	}
 	public static function find_zeroconf_phoromatic_servers($find_multiple = false)
 	{
 		if(!pts_network::network_support_available())
