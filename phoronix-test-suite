@@ -131,7 +131,7 @@ case "$1" in
 	;;
 esac
 
-export PTS_EXT_LAUNCH_SCRIPT_DIR=`mktemp -d`
+export PTS_EXT_LAUNCH_SCRIPT_DIR=`mktemp -d 2>/dev/null || mktemp -d -t ptstmp`
 
 # Run The Phoronix Test Suite
 PTS_EXIT_STATUS=8
