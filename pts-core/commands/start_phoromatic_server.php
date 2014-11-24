@@ -162,7 +162,7 @@ class start_phoromatic_server implements pts_option_interface
 			{
 				$hostname = phodevi::read_property('system', 'hostname');
 				$hostname = $hostname == null ? rand(0, 99) : $hostname;
-				$server_launcher .= 'avahi-publish -s phoromatic-server-' . $hostname . ' _http._tcp ' . $web_port . ' "Phoronix Test Suite Phoromatic" > /dev/null &' . PHP_EOL;
+				$server_launcher .= 'avahi-publish -s phoromatic-server-' . $hostname . ' _http._tcp ' . $web_port . ' "Phoronix Test Suite Phoromatic" > /dev/null 2> /dev/null &' . PHP_EOL;
 				$server_launcher .= 'avahi_publish_pid=$!'. PHP_EOL;
 			}
 		}
