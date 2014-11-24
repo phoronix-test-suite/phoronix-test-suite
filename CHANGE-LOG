@@ -6,6 +6,7 @@ Phoronix Test Suite (Git)
 - phoromatic: Allow changing the admin level for users by the main administrator from the Users page
 - phoromatic: Report systems MAC address from the systems page
 - phoromatic: Report network's Wake-On-LAN information to Phoromatic Server
+- phoromatic: Add notification option to email to users when systems appear hung for more than an hour
 
 Phoronix Test Suite 5.4 Milestone 6
 19 November 2014

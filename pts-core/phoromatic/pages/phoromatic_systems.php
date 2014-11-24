@@ -94,7 +94,7 @@ class phoromatic_systems implements pts_webui_interface
 				}
 
 				$main .= '<hr />';
-				$info_table = array('Status:' => $row['CurrentTask'], 'State:' => $state, 'Phoronix Test Suite Client:' => $row['ClientVersion'], 'Last IP:' => $row['LastIP'], 'Initial Creation:' => phoromatic_user_friendly_timedate($row['CreatedOn']), 'Last Communication:' => phoromatic_user_friendly_timedate($row['LastCommunication']), 'System ID:' => $row['SystemID'], 'MAC Address' => $row['NetworkMAC'], 'Wake-On-LAN Information' => $row['NetworkWakeOnLAN']);
+				$info_table = array('Status:' => $row['CurrentTask'], 'State:' => $state, 'Phoronix Test Suite Client:' => $row['ClientVersion'], 'Last IP:' => $row['LastIP'], 'Initial Creation:' => phoromatic_user_friendly_timedate($row['CreatedOn']), 'Last Communication:' => phoromatic_user_friendly_timedate($row['LastCommunication']), 'System ID:' => $row['SystemID'], 'MAC Address' => $row['NetworkMAC'], 'Wake-On-LAN Information' => (empty($row['NetworkWakeOnLAN']) ? 'N/A' : $row['NetworkWakeOnLAN']));
 				$main .= '<h2>System State</h2>' . pts_webui::r2d_array_to_table($info_table, 'auto');
 
 				$main .= '<hr /><h2>System Components</h2><div style="float: left; width: 50%;">';
@@ -112,7 +112,7 @@ class phoromatic_systems implements pts_webui_interface
 
 				if($test_result_row != false)
 				{
-					$main .= '<h2>Test Results</h2>';
+					$main .= '<hr /><h2>Test Results</h2>';
 					$main .= '<div class="pts_phoromatic_info_box_area">';
 					$main .= '<div style="margin: 0 10%;"><ul><li><h1>Recent Test Results</h1></li>';
 

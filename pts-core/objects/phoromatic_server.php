@@ -134,6 +134,12 @@ class phoromatic_server
 				// Change made 24 November 2014 Wake On LAN info for client systems
 				self::$db->exec('ALTER TABLE phoromatic_systems ADD COLUMN NetworkWakeOnLAN TEXT');
 				self::$db->exec('PRAGMA user_version = 9');
+			case 9:
+				// Change made 24 November 2014 for new user/account settings
+				self::$db->exec('ALTER TABLE phoromatic_user_settings ADD COLUMN NotifyOnHungSystems INTEGER DEFAULT 0');
+				self::$db->exec('ALTER TABLE phoromatic_account_settings ADD COLUMN PowerOffWhenDone INTEGER DEFAULT 0');
+				self::$db->exec('ALTER TABLE phoromatic_account_settings ADD COLUMN NetworkPowerUpWhenNeeded INTEGER DEFAULT 0');
+				self::$db->exec('PRAGMA user_version = 10');
 		}
 		chmod($db_file, 0600);
 	}
@@ -149,6 +155,22 @@ class phoromatic_server
 		$headers .= "From: <" . $from . ">\r\n";
 
 		mail($to, $subject, $msg, $headers);
+	}
+	public static function system_id_to_name($system_id, $aid = false)
+	{
+		static $system_names;
+
+		if(!isset($system_names[$system_id]))
+		{
+			$stmt = phoromatic_server::$db->prepare('SELECT Title FROM phoromatic_systems WHERE AccountID = :account_id AND SystemID = :system_id');
+			$stmt->bindValue(':account_id', ($aid ? $aid : $_SESSION['AccountID']));
+			$stmt->bindValue(':system_id', $system_id);
+			$result = $stmt->execute();
+			$row = $result->fetchArray();
+			$system_names[$system_id] = $row['Title'];
+		}
+
+		return $system_names[$system_id];
 	}
 }
 

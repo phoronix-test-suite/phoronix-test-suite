@@ -578,6 +578,8 @@ class phoromatic extends pts_module_interface
 			$storage_object->add_object('last_set_context_process', $process);
 			$storage_object->save_to_file($storage_path);
 
+			phoromatic::update_system_status('Setting context for: ' . $schedule_id . ' - ' . $trigger . ' - ' . $process);
+
 			// Run the set context script
 			exec('./' . $context_script . ' ' . $trigger);
 

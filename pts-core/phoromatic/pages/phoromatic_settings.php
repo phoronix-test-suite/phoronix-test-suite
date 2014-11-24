@@ -54,7 +54,8 @@ class phoromatic_settings implements pts_webui_interface
 				'Email' => array(
 					'NotifyOnResultUploads' => 'Send notification when test results are uploaded to Phoromatic.',
 					'NotifyOnWarnings' => 'Send notification when any warnings are generated on a test system.',
-					'NotifyOnNewSystems' => 'Send notification when new test systems are added.'
+					'NotifyOnNewSystems' => 'Send notification when new test systems are added.',
+					'NotifyOnHungSystems' => 'Send notification when system(s) appear hung.'
 					)
 				);
 

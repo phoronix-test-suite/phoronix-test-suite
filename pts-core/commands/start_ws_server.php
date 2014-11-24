@@ -40,6 +40,32 @@ class start_ws_server implements pts_option_interface
 			$web_socket_port = '80';
 		}
 
+		/*
+		if(getenv('PTS_PHOROMATIC_SERVER'))
+		{
+			if(function_exists('pcntl_fork'))
+			{
+				$pid = pcntl_fork();
+
+				if($pid != -1)
+				{
+					if($pid)
+					{
+						$new_pid = $pid;
+					}
+					else
+					{
+						$event_server = new pts_phoromatic_event_server();
+						exit(0);
+					}
+				}
+			}
+			else
+			{
+				echo PHP_EOL . 'Phoromatic Event Server Fails To Start Due To Lacking PCNTL Support.' . PHP_EOL . PHP_EOL;
+			}
+		} */
+
 		$websocket = new pts_web_socket_server('localhost', $web_socket_port);
 	}
 }

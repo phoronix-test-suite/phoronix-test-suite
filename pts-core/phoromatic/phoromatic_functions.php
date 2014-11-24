@@ -277,21 +277,9 @@ function phoromatic_systems_needing_attention()
 
 	return $main;
 }
-function phoromatic_system_id_to_name($system_id)
+function phoromatic_system_id_to_name($system_id, $aid = false)
 {
-	static $system_names;
-
-	if(!isset($system_names[$system_id]))
-	{
-		$stmt = phoromatic_server::$db->prepare('SELECT Title FROM phoromatic_systems WHERE AccountID = :account_id AND SystemID = :system_id');
-		$stmt->bindValue(':account_id', $_SESSION['AccountID']);
-		$stmt->bindValue(':system_id', $system_id);
-		$result = $stmt->execute();
-		$row = $result->fetchArray();
-		$system_names[$system_id] = $row['Title'];
-	}
-
-	return $system_names[$system_id];
+	return phoromatic_server::system_id_to_name($system_id, $aid);
 }
 function phoromatic_oldest_result_for_schedule($schedule_id)
 {

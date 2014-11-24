@@ -124,10 +124,13 @@ class start_phoromatic_server implements pts_option_interface
 		$server_launcher .= 'export PTS_WEB_PORT=' . $web_port . PHP_EOL;
 		$server_launcher .= 'export PTS_WEBSOCKET_PORT=' . $web_socket_port . PHP_EOL;
 		$server_launcher .= 'export PTS_NO_FLUSH_LOGGER=1' . PHP_EOL;
+		$server_launcher .= 'export PTS_PHOROMATIC_SERVER=1' . PHP_EOL;
 		$server_launcher .= 'export PTS_PHOROMATIC_LOG_LOCATION=' . $pts_logger->get_log_file_location() . PHP_EOL;
 		$server_launcher .= 'cd ' . getenv('PTS_DIR') . ' && PTS_MODE="CLIENT" ' . getenv('PHP_BIN') . ' pts-core/phoronix-test-suite.php start-ws-server &' . PHP_EOL;
 		$server_launcher .= 'websocket_server_pid=$!'. PHP_EOL;
 		$pts_logger->log('Starting WebSocket process on port ' . $web_socket_port);
+		$server_launcher .= 'cd ' . getenv('PTS_DIR') . ' && PTS_MODE="CLIENT" ' . getenv('PHP_BIN') . ' pts-core/phoronix-test-suite.php start-phoromatic-event-server &' . PHP_EOL;
+		$server_launcher .= 'event_server_pid=$!'. PHP_EOL;
 
 		// HTTP Server Setup
 		if(strpos(getenv('PHP_BIN'), 'hhvm'))
@@ -185,6 +188,7 @@ class start_phoromatic_server implements pts_option_interface
 		// Shutdown / Kill Servers
 		$server_launcher .= PHP_EOL . 'kill $http_server_pid';
 		$server_launcher .= PHP_EOL . 'kill $websocket_server_pid';
+		$server_launcher .= PHP_EOL . 'kill $event_server_pid';
 		if(is_writable('/etc/avahi/services') && is_file('/etc/avahi/services/phoromatic-server.service'))
 		{
 			$server_launcher .= PHP_EOL . 'rm -f /etc/avahi/services/phoromatic-server.service';
