@@ -47,9 +47,9 @@ class phoromatic_logs implements pts_webui_interface
 				$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 				$stmt->bindValue(':system_id', $attribs[0]);
 				$stmt->bindValue(':schedule_id', $attribs[1]);
-				$stmt->bindValue(':trigger_id', $attribs[2]);
+				$stmt->bindValue(':trigger_id', base64_decode($attribs[2]));
 				$result = $stmt->execute();
-				while($row = $result->fetchArray());
+				while($row = $result->fetchArray())
 				{
 					$main .= '<h2>' . $row['UserContextStep'] . '</h2><p>' . str_replace(PHP_EOL, '<br />', $row['UserContextLog']) . '</p><hr />';
 				}
