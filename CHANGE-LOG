@@ -10,6 +10,7 @@ Phoronix Test Suite (Git)
 - phoromatic: Add option to power off systems when no more scheduled tests are scheduled for the day
 - phoromatic: Add option to network wake on lan (WoL) systems when needed for testing
 - phoromatic: Allow logging of Phoromatic set user context execution
+- phoromatic: Add support for viewing system logs from the result page link on right hand side
 
 Phoronix Test Suite 5.4 Milestone 6
 19 November 2014

@@ -307,6 +307,11 @@ class phoromatic_result implements pts_webui_interface
 			}
 		}
 
+		if(is_file(phoromatic_server::phoromatic_account_result_path($_SESSION['AccountID'], $upload_id) . 'system-logs.zip'))
+		{
+				$right .= '<hr /><p><a href="?logs/system/' . $upload_id . '">View System Logs</a></p>';
+		}
+
 		echo phoromatic_webui_header_logged_in();
 		echo phoromatic_webui_main($main, phoromatic_webui_right_panel_logged_in($right));
 		echo phoromatic_webui_footer();

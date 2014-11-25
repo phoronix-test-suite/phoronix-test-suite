@@ -54,6 +54,27 @@ class phoromatic_logs implements pts_webui_interface
 					$main .= '<h2>' . $row['UserContextStep'] . '</h2><p>' . str_replace(PHP_EOL, '<br />', $row['UserContextLog']) . '</p><hr />';
 				}
 			}
+			else if($PATH[0] == 'system' && isset($PATH[1]))
+			{
+				$zip_file = phoromatic_server::phoromatic_account_result_path($_SESSION['AccountID'], $PATH[1]) . 'system-logs.zip';
+				if(is_file($zip_file))
+				{
+					$zip = new ZipArchive();
+					$res = $zip->open($zip_file);
+
+					if($res === true)
+					{
+						for($i = 0; $i < $zip->numFiles; $i++)
+						{
+							if($zip->getFromIndex($i) != null)
+							{
+								$main .= '<h2>' . basename($zip->getNameIndex($i)) . '</h2><p>' . str_replace(PHP_EOL, '<br />', $zip->getFromIndex($i)) . '</p><hr />';
+							}
+						}
+						$zip->close();
+					}
+				}
+			}
 		}
 
 		echo phoromatic_webui_header_logged_in();
