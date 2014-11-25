@@ -298,7 +298,7 @@ class phoromatic_result implements pts_webui_interface
 			$result = $stmt->execute();
 			if($row = $result->fetchArray())
 			{
-				$right .= '<br /><h3>User Context Logs</h3>';
+				$right .= '<hr /><h3>User Context Logs</h3>';
 				do
 				{
 					$right .= '<p><a href="?logs/context/' . $system_types[0] . ',' . self::$schedule_id . ',' . $trigger_types[0] . '">' . $row['UserContextStep'] . '</a></p>';
