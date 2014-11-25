@@ -288,6 +288,25 @@ class phoromatic_result implements pts_webui_interface
 			$right .= '<br /><input type="submit" value="Refresh Results"></p></form>';
 		}
 
+		if(self::$schedule_id && !empty(self::$schedule_id) && $system_types[0] && $trigger_types[0])
+		{
+			$stmt = phoromatic_server::$db->prepare('SELECT UserContextStep FROM phoromatic_system_context_logs WHERE AccountID = :account_id AND ScheduleID = :schedule_id AND SystemID = :system_id AND TriggerID = :trigger_id');
+			$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+			$stmt->bindValue(':system_id', $system_types[0]);
+			$stmt->bindValue(':schedule_id', self::$schedule_id);
+			$stmt->bindValue(':trigger_id', $trigger_types[0]);
+			$result = $stmt->execute();
+			if($row = $result->fetchArray())
+			{
+				$right .= '<br /><h3>User Context Logs</h3>';
+				do
+				{
+					$right .= '<p><a href="?logs/context/' . $system_types[0] . ',' . self::$schedule_id . ',' . $trigger_types[0] . '">' . $row['UserContextStep'] . '</a></p>';
+				}
+				while($row = $result->fetchArray());
+			}
+		}
+
 		echo phoromatic_webui_header_logged_in();
 		echo phoromatic_webui_main($main, phoromatic_webui_right_panel_logged_in($right));
 		echo phoromatic_webui_footer();
