@@ -81,7 +81,7 @@ class phoromatic_server
 
 		$db_file = self::phoromatic_path() . 'phoromatic.db';
 
-		$db_flags = null;
+		$db_flags = SQLITE3_OPEN_READWRITE | SQLITE3_OPEN_CREATE;
 		if($read_only)
 		{
 			$db_flags = SQLITE3_OPEN_READONLY;
