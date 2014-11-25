@@ -25,13 +25,12 @@ class pts_phoromatic_event_server
 {
 	public function __construct()
 	{
-		phoromatic_server::prepare_database(true);
-
 		while(true)
 		{
 			$hour = date('G');
 			$minute = date('i');
 
+			phoromatic_server::prepare_database(true);
 			if($minute == 0)
 			{
 				$stmt = phoromatic_server::$db->prepare('SELECT LastCommunication, CurrentTask, SystemID, AccountID, LastIP FROM phoromatic_systems WHERE State > 0 ORDER BY LastCommunication DESC');
@@ -99,6 +98,7 @@ class pts_phoromatic_event_server
 					}
 				}
 			}
+			phoromatic_server::close_database();
 
 			sleep((60 - date('s') + 1));
 		}

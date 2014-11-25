@@ -103,7 +103,7 @@ class phoromatic_settings implements pts_webui_interface
 				$row = $result->fetchArray();
 
 				$account_settings = array(
-					'Email' => array(
+					'Account Settings' => array(
 						'ArchiveResultsLocally' => 'Archive test results on local test systems after the results have been uploaded.',
 						'UploadSystemLogs' => 'Upload system logs when uploading test results.',
 						'RunInstallCommand' => 'Always run the install command for test(s) prior to running them on the system.',
