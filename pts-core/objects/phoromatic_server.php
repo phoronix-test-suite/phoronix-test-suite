@@ -63,7 +63,14 @@ class phoromatic_server
 	{
 		return pts_storage_object::set_in_file(self::$json_storage, $setting, $value);
 	}
-	public static function prepare_database()
+	public static function close_database()
+	{
+		if(self::$db != null)
+		{
+			self::$db->close();
+		}
+	}
+	public static function prepare_database($read_only = false)
 	{
 		self::$json_storage = self::phoromatic_path() . 'phoromatic-settings.pt2so';
 		if(!is_file(self::$json_storage))
@@ -73,7 +80,16 @@ class phoromatic_server
 		}
 
 		$db_file = self::phoromatic_path() . 'phoromatic.db';
-		self::$db = new SQLite3($db_file);
+
+		$db_flags = null;
+		if($read_only)
+		{
+			$db_flags = SQLITE3_OPEN_READONLY;
+		}
+
+		self::$db = new SQLite3($db_file, $db_flags);
+		if($read_only)
+			return true;
 
 		switch(self::read_database_version())
 		{

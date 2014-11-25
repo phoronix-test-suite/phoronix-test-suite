@@ -25,7 +25,7 @@ class pts_phoromatic_event_server
 {
 	public function __construct()
 	{
-		phoromatic_server::prepare_database();
+		phoromatic_server::prepare_database(true);
 
 		while(true)
 		{
