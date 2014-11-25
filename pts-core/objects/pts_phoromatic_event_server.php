@@ -61,7 +61,7 @@ class pts_phoromatic_event_server
 					}
 				}
 			}
-			if($minute % 5 == 0)
+			if($minute % 3 == 0)
 			{
 				$stmt = phoromatic_server::$db->prepare('SELECT LastCommunication, SystemID, AccountID, NetworkMAC FROM phoromatic_systems WHERE State > 0 AND NetworkMAC NOT LIKE \'\' AND NetworkWakeOnLAN LIKE \'%g%\' ORDER BY LastCommunication DESC');
 				$result = $stmt->execute();
