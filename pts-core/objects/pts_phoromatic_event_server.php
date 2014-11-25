@@ -63,7 +63,7 @@ class pts_phoromatic_event_server
 			}
 			if($minute % 3 == 0)
 			{
-				$stmt = phoromatic_server::$db->prepare('SELECT LastCommunication, SystemID, AccountID, NetworkMAC FROM phoromatic_systems WHERE State > 0 AND NetworkMAC NOT LIKE \'\' AND NetworkWakeOnLAN LIKE \'%g%\' ORDER BY LastCommunication DESC');
+				$stmt = phoromatic_server::$db->prepare('SELECT LastCommunication, CurrentTask, SystemID, AccountID, NetworkMAC FROM phoromatic_systems WHERE State > 0 AND NetworkMAC NOT LIKE \'\' AND NetworkWakeOnLAN LIKE \'%g%\' ORDER BY LastCommunication DESC');
 				$result = $stmt->execute();
 
 				while($row = $result->fetchArray())
@@ -71,7 +71,7 @@ class pts_phoromatic_event_server
 					$last_comm = strtotime($row['LastCommunication']);
 					if($last_comm < (time() - (3600 * 25)))
 						break; // System likely has some other issue if beyond a day it's been offline
-					if($last_comm < (time() - 600))
+					if($last_comm < (time() - 600) || stripos($row['CurrentTask'], 'Shutdown') !== false)
 					{
 						// System hasn't communicated in a number of minutes so it might be powered off
 
