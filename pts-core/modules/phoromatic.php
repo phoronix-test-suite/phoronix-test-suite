@@ -581,7 +581,10 @@ class phoromatic extends pts_module_interface
 			phoromatic::update_system_status('Setting context for: ' . $schedule_id . ' - ' . $trigger . ' - ' . $process);
 
 			// Run the set context script
-			exec('./' . $context_script . ' ' . $trigger);
+			$env_vars['PHOROMATIC_TRIGGER'] = $trigger;
+			$env_vars['PHOROMATIC_SCHEDULE_ID'] = $schedule_id;
+			$env_vars['PHOROMATIC_SCHEDULE_PROCESS'] = $process;
+			pts_client::shell_exec('./' . $context_script . ' ' . $trigger, $env_vars);
 
 			// Just simply return true for now, perhaps check exit code status and do something
 			return true;
