@@ -561,6 +561,7 @@ class phoromatic extends pts_module_interface
 			pts_file_io::mkdir(pts_module::save_dir());
 			$storage_path = pts_module::save_dir() . 'memory.pt2so';
 			$storage_object = pts_storage_object::recover_from_file($storage_path);
+			$notes_log_file = pts_module::save_dir() . sha1($trigger . $schedule_id . $process);
 
 			// We check to see if the context was already set but the system rebooted or something in that script
 			if($storage_object == false)
@@ -570,6 +571,7 @@ class phoromatic extends pts_module_interface
 			else if($storage_object->read_object('last_set_context_trigger') == $trigger && $storage_object->read_object('last_set_context_schedule') == $schedule_id && $storage_object->read_object('last_set_context_process') == $process)
 			{
 				// If the script already ran once for this trigger, don't run it again
+				self::check_user_context_log($trigger, $schedule_id, $process, $notes_log_file, null);
 				return false;
 			}
 
@@ -584,13 +586,38 @@ class phoromatic extends pts_module_interface
 			$env_vars['PHOROMATIC_TRIGGER'] = $trigger;
 			$env_vars['PHOROMATIC_SCHEDULE_ID'] = $schedule_id;
 			$env_vars['PHOROMATIC_SCHEDULE_PROCESS'] = $process;
-			pts_client::shell_exec('./' . $context_script . ' ' . $trigger, $env_vars);
+			$env_vars['PHOROMATIC_LOG_FILE'] = $notes_log_file;
+			$log_output = pts_client::shell_exec('./' . $context_script . ' ' . $trigger . ' 2>&1', $env_vars);
+			self::check_user_context_log($trigger, $schedule_id, $process, $notes_log_file, $log_output);
 
 			// Just simply return true for now, perhaps check exit code status and do something
 			return true;
 		}
 
 		return false;
+	}
+	private static function check_user_context_log($trigger, $schedule_id, $process, $log_file, $log_output)
+	{
+		if(is_file($log_file) && ($lf_conts = pts_file_io::file_get_contents($log_file)) != null)
+		{
+			$context_log = $lf_conts;
+			unlink($log_file);
+		}
+		else
+		{
+			$context_log = trim($log_output);
+		}
+
+		if($context_log != null)
+		{
+			$server_response = phoromatic::upload_to_remote_server(array(
+				'r' => 'user_context_log',
+				'sched' => $schedule_id,
+				'ts' => $trigger,
+				'i' => $process,
+				'o' => $context_log,
+				));
+		}
 	}
 	public static function __pre_test_install($test_identifier)
 	{
@@ -639,7 +666,7 @@ class phoromatic extends pts_module_interface
 			'ti' => $test_run_request->test_profile->get_identifier(),
 			'o' => $test_run_request->get_arguments_description()
 			));
-		pts_client::$pts_logger && pts_client::$pts_logger->log('TEMP DEBUG MESSAGE: ' . $server_response);
+		//pts_client::$pts_logger && pts_client::$pts_logger->log('TEMP DEBUG MESSAGE: ' . $server_response);
 	}
 }
 

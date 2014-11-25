@@ -85,5 +85,7 @@ SUPPORTED OPENBENCHMARKING.ORG REPOSITORIES:<br />
 <p>When running the Phoronix Test Suite Phoromatic Server as root, rather than using the <em>~/.phoronix-test-suite/</em> directory, the standard Linux file-system hierarchy standard is honored. The main storage path is <em>/var/lib/phoronix-test-suite/</em>, the user configuration file is <em>/etc/phoronix-test-suite.xml</em>, and <em>/var/cache/phoronix-test-suite/</em> for cache files.</p>
 <h3>Uploading Other Test Results</h3>
 <p>Unscheduled test results and other results found on connected systems to a Phoromatic account can upload the data to the Phoromatic Server using the <em>phoronix-test-suite phoromatic.upload-result &lt;result file identifier &gt;</em> sub-command.</p>
+<h3>User Context File Logging</h3>
+<p>For those utilizing custom set context script files as part of the Phoromatic test schedule, any important notes / log information can be written to the file specified by the <em>PHOROMATIC_LOG_FILE</em> environment variable set while running the user context scripts. The contents of that file is then sent to the Phoromatic Server otherwise the standard output of the script's execution is submitted to the Phoromatic Server for logging. These logs can then be viewed by the Phoromatic Server along with the test results. Other environment variables accessible when running a user context script include <em>PHOROMATIC_TRIGGER</em>, <em>PHOROMATIC_SCHEDULE_ID</em>, and <em>PHOROMATIC_SCHEDULE_PROCESS</em>.</p>
 </body>
 </html>

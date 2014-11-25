@@ -158,6 +158,10 @@ class phoromatic_server
 				self::$db->exec('ALTER TABLE phoromatic_account_settings ADD COLUMN PowerOffWhenDone INTEGER DEFAULT 0');
 				self::$db->exec('ALTER TABLE phoromatic_account_settings ADD COLUMN NetworkPowerUpWhenNeeded INTEGER DEFAULT 0');
 				self::$db->exec('PRAGMA user_version = 10');
+			case 10:
+				// Change made 25 November for user context logging
+				self::$db->exec('CREATE TABLE phoromatic_system_context_logs (AccountID TEXT, SystemID TEXT, UploadTime TEXT, ScheduleID INTEGER, TriggerID TEXT, UserContextStep TEXT, UserContextLog TEXT)');
+				self::$db->exec('PRAGMA user_version = 11');
 		}
 		chmod($db_file, 0600);
 	}
