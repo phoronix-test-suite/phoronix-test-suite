@@ -41,7 +41,6 @@ while($result && $row = $result->fetchArray())
 	if(!in_array(SYSTEM_ID, explode(',', $row['RunTargetSystems'])))
 	{
 		// The system ID isn't in the run target but see if system ID belongs to a group in the run target
-
 		$stmt = phoromatic_server::$db->prepare('SELECT Groups FROM phoromatic_systems WHERE AccountID = :account_id AND SystemID = :system_id LIMIT 1');
 		$stmt->bindValue(':account_id', ACCOUNT_ID);
 		$stmt->bindValue(':system_id', SYSTEM_ID);
@@ -68,7 +67,7 @@ while($result && $row = $result->fetchArray())
 		if($row['RunAt'] <= date('H.i'))
 		{
 			$trigger_id = date('Y-m-d');
-			if(!phoromatic_check_for_triggered_result($row['ScheduleID'], $trigger_id))
+			if(!phoromatic_server::check_for_triggered_result_match($row['ScheduleID'], $trigger_id, ACCOUNT_ID, SYSTEM_ID))
 			{
 				$res = phoromatic_generate_test_suite($row, $json, $trigger_id, $phoromatic_account_settings);
 				if($res)
@@ -93,7 +92,7 @@ while($result && $row = $result->fetchArray())
 	{
 		if(substr($trigger_row['TriggeredOn'], 0, 10) == date('Y-m-d') || substr($trigger_row['TriggeredOn'], 0, 10) == date('Y-m-d', (time() - 60 * 60 * 24)))
 		{
-			if(!phoromatic_check_for_triggered_result($row['ScheduleID'], $trigger_row['Trigger']))
+			if(!phoromatic_server::check_for_triggered_result_match($row['ScheduleID'], $trigger_row['Trigger'], ACCOUNT_ID, SYSTEM_ID))
 			{
 				$res = phoromatic_generate_test_suite($row, $json, $trigger_row['Trigger'], $phoromatic_account_settings);
 				if($res)
@@ -117,35 +116,6 @@ $json['phoromatic']['response'] = '[' . date('H:i:s') . '] Idling, waiting for t
 echo json_encode($json);
 return;
 
-function phoromatic_check_for_triggered_result($schedule_id, $trigger_id)
-{
-	$stmt = phoromatic_server::$db->prepare('SELECT UploadID FROM phoromatic_results WHERE AccountID = :account_id AND ScheduleID = :schedule_id AND Trigger = :trigger AND SystemID = :system_id');
-	$stmt->bindValue(':account_id', ACCOUNT_ID);
-	$stmt->bindValue(':system_id', SYSTEM_ID);
-	$stmt->bindValue(':schedule_id', $schedule_id);
-	$stmt->bindValue(':trigger', $trigger_id);
-	$result = $stmt->execute();
-
-	if($result != false && $result->fetchArray() != false)
-	{
-		return true;
-	}
-
-	// See if the system attempted to run the trigger/schedule combination but reported an error during the process....
-	$stmt = phoromatic_server::$db->prepare('SELECT ErrorMessage FROM phoromatic_system_client_errors WHERE AccountID = :account_id AND SystemID = :system_id AND ScheduleID = :schedule_id AND TriggerID = :trigger ORDER BY UploadTime DESC LIMIT 10');
-	$stmt->bindValue(':account_id', ACCOUNT_ID);
-	$stmt->bindValue(':system_id', SYSTEM_ID);
-	$stmt->bindValue(':schedule_id', $schedule_id);
-	$stmt->bindValue(':trigger', $trigger_id);
-	$result = $stmt->execute();
-
-	if($result != false && $result->fetchArray() != false)
-	{
-		return true;
-	}
-
-	return false;
-}
 function phoromatic_generate_test_suite(&$test_schedule, &$json, $trigger_id, $phoromatic_account_settings)
 {
 	$suite_writer = new pts_test_suite_writer();

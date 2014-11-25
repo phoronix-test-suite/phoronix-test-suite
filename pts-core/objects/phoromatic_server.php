@@ -172,6 +172,35 @@ class phoromatic_server
 
 		return $system_names[$system_id];
 	}
+	public static function check_for_triggered_result_match($schedule_id, $trigger_id, $account_id, $system_id)
+	{
+		$stmt = phoromatic_server::$db->prepare('SELECT UploadID FROM phoromatic_results WHERE AccountID = :account_id AND ScheduleID = :schedule_id AND Trigger = :trigger AND SystemID = :system_id');
+		$stmt->bindValue(':account_id', $account_id);
+		$stmt->bindValue(':system_id', $system_id);
+		$stmt->bindValue(':schedule_id', $schedule_id);
+		$stmt->bindValue(':trigger', $trigger_id);
+		$result = $stmt->execute();
+
+		if($result != false && $result->fetchArray() != false)
+		{
+			return true;
+		}
+
+		// See if the system attempted to run the trigger/schedule combination but reported an error during the process....
+		$stmt = phoromatic_server::$db->prepare('SELECT ErrorMessage FROM phoromatic_system_client_errors WHERE AccountID = :account_id AND SystemID = :system_id AND ScheduleID = :schedule_id AND TriggerID = :trigger ORDER BY UploadTime DESC LIMIT 10');
+		$stmt->bindValue(':account_id', $account_id);
+		$stmt->bindValue(':system_id', $system_id);
+		$stmt->bindValue(':schedule_id', $schedule_id);
+		$stmt->bindValue(':trigger', $trigger_id);
+		$result = $stmt->execute();
+
+		if($result != false && $result->fetchArray() != false)
+		{
+			return true;
+		}
+
+		return false;
+	}
 }
 
 if(!is_dir(phoromatic_server::phoromatic_path() . 'accounts'))

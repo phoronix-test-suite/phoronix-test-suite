@@ -110,7 +110,8 @@ class phoromatic_settings implements pts_webui_interface
 						'ForceInstallTests' => 'Force the test installation/re-installation of tests each time prior to running the test.',
 						'SystemSensorMonitoring' => 'Enable the system sensor monitoring while tests are taking place.',
 						'UploadResultsToOpenBenchmarking' => 'Also upload test results to OpenBenchmarking.org.',
-						'PowerOffWhenDone' => 'Power off system(s) when scheduled tests are completed for the day.'
+						'PowerOffWhenDone' => 'Power off system(s) when scheduled tests are completed for the day.',
+						'NetworkPowerUpWhenNeeded' => 'Use network Wake-On-LAN to power on systems when needed.',
 						)
 					);
 
