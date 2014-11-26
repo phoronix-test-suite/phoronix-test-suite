@@ -103,13 +103,13 @@ class phoromatic_settings implements pts_webui_interface
 				$row = $result->fetchArray();
 
 				$account_settings = array(
-					'Account Settings' => array(
+					'Global Settings' => array(
 						'ArchiveResultsLocally' => 'Archive test results on local test systems after the results have been uploaded.',
 						'UploadSystemLogs' => 'Upload system logs when uploading test results.',
-						'RunInstallCommand' => 'Always run the install command for test(s) prior to running them on the system.',
-						'ForceInstallTests' => 'Force the test installation/re-installation of tests each time prior to running the test.',
+						'RunInstallCommand' => 'For all test schedules, always run the install command for test(s) prior to running them on the system.',
+						'ForceInstallTests' => 'For all test schedules, force the test installation/re-installation of tests each time prior to running the test.',
 						'SystemSensorMonitoring' => 'Enable the system sensor monitoring while tests are taking place.',
-						'UploadResultsToOpenBenchmarking' => 'Also upload test results to OpenBenchmarking.org.',
+						'UploadResultsToOpenBenchmarking' => 'For all test schedules, also upload test results to OpenBenchmarking.org.',
 						'PowerOffWhenDone' => 'Power off system(s) when scheduled tests are completed for the day.',
 						'NetworkPowerUpWhenNeeded' => 'Use network Wake-On-LAN to power on systems when needed.'
 						)

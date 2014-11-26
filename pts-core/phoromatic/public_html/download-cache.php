@@ -55,16 +55,21 @@ else if(isset($_GET['download']))
 	pts_logger::add_to_log($_SERVER['REMOTE_ADDR'] . ' is attempting to download ' . $requested_file . ' from the download cache');
 	if(is_file(PTS_DOWNLOAD_CACHE_PATH . $requested_file))
 	{
-		readfile(PTS_DOWNLOAD_CACHE_PATH . $requested_file);
+		$file_path = PTS_DOWNLOAD_CACHE_PATH . $requested_file;
 	}
 	else if(is_file(PTS_SHARE_PATH . 'download-cache/' . $requested_file))
 	{
-		readfile(PTS_SHARE_PATH . 'download-cache/' . $requested_file);
+		$file_path = PTS_SHARE_PATH . 'download-cache/' . $requested_file;
 	}
 	else if(is_file('/var/cache/phoronix-test-suite/download-cache/' . $requested_file))
 	{
-		readfile('/var/cache/phoronix-test-suite/download-cache/' . $requested_file);
+		$file_path = '/var/cache/phoronix-test-suite/download-cache/' . $requested_file;
 	}
+
+	ob_clean();
+	flush();
+	readfile($file_path);
+	exit;
 }
 
 ?>
