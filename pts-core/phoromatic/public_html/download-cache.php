@@ -66,8 +66,7 @@ else if(isset($_GET['download']))
 		$file_path = '/var/cache/phoronix-test-suite/download-cache/' . $requested_file;
 	}
 
-	ob_clean();
-	flush();
+	ob_end_clean();
 	readfile($file_path);
 	exit;
 }
