@@ -341,7 +341,11 @@ class phoromatic extends pts_module_interface
 				if($times_failed > 2)
 				{
 					trigger_error('Communication with server failed.', E_USER_ERROR);
-					return false;
+
+					if(PTS_IS_DAEMONIZED_SERVER_PROCESS == false && $times_failed > 4)
+					{
+						return false;
+					}
 				}
 			}
 			else if(substr($server_response, 0, 1) == '{')
@@ -429,7 +433,7 @@ class phoromatic extends pts_module_interface
 								$result_file = new pts_result_file($test_run_manager->get_file_name());
 								$upload_system_logs = pts_strings::string_bool($json['phoromatic']['settings']['UploadSystemLogs']);
 								$server_response = self::upload_test_result($result_file, $upload_system_logs, $json['phoromatic']['schedule_id'], $phoromatic_save_identifier, $json['phoromatic']['trigger_id']);
-								pts_client::$pts_logger->log('TEMP DEBUG MESSAGE: ' . $server_response);
+								pts_client::$pts_logger->log('DEBUG RESPONSE MESSAGE: ' . $server_response);
 								if(!pts_strings::string_bool($json['phoromatic']['settings']['ArchiveResultsLocally']))
 								{
 									pts_client::remove_saved_result_file($test_run_manager->get_file_name());
@@ -447,6 +451,18 @@ class phoromatic extends pts_module_interface
 							shell_exec('reboot');
 						}
 						break;
+					case 'shutdown-if-supports-wake':
+						$supports_wol = false;
+						foreach(pts_network::get_network_wol() as $net_device)
+						{
+							if(strpos($net_device, 'g') !== false)
+							{
+								$supports_wol = true;
+								break;
+							}
+						}
+						if(!$supports_wol)
+							break;
 					case 'shutdown':
 						echo PHP_EOL . 'Phoromatic received a remote command to shutdown.' . PHP_EOL;
 						phoromatic::update_system_status('Attempting System Shutdown');
