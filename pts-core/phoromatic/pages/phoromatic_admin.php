@@ -75,7 +75,6 @@ class phoromatic_admin implements pts_webui_interface
 		$main .= '<hr /><h2>Account Topology</h2>';
 		$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_users ORDER BY AccountID,AdminLevel ASC');
 		$result = $stmt->execute();
-		$row = $result->fetchArray();
 
 		$plevel = -1;
 		while($row = $result->fetchArray())
