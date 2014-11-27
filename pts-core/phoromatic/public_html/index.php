@@ -88,7 +88,7 @@ if(isset($_SESSION['AdminLevel']))
 	{
 		$PAGE_REQUEST = 'admin';
 	}
-	else if($_SESSION['AdminLevel'] >= 0 && stripos($PAGE_REQUEST, 'admin') !== false)
+	else if($_SESSION['AdminLevel'] > 0 && stripos($PAGE_REQUEST, 'admin') !== false)
 	{
 		$PAGE_REQUEST = 'main';
 	}

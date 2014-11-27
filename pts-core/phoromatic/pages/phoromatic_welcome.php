@@ -200,6 +200,13 @@ class phoromatic_welcome implements pts_webui_interface
 				$account_id = $matching_user['AccountID'];
 				$admin_level = $matching_user['AdminLevel'];
 
+				if($admin_level < 1)
+				{
+					pts_logger::add_to_log($_SERVER['REMOTE_ADDR'] . ' attempted to log-in to a disabled account: ' . $_POST['username']);
+					phoromatic_error_page('Disabled Account', 'The log-in is not possible as this account has been disabled.');
+					return false;
+				}
+
 				if($user == $_POST['username'])
 				{
 					$account_salt = phoromatic_server::$db->querySingle('SELECT Salt FROM phoromatic_accounts WHERE AccountID = \'' . $account_id . '\'');

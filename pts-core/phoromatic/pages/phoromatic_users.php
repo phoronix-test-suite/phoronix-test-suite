@@ -162,9 +162,6 @@ class phoromatic_users implements pts_webui_interface
 					{
 						switch($row['AdminLevel'])
 						{
-							case 0:
-								$level = 'Disabled';
-								break;
 							case 1:
 								$level = 'Main Administrator';
 								break;
@@ -177,6 +174,12 @@ class phoromatic_users implements pts_webui_interface
 							case 10:
 								$level = 'Viewer';
 								break;
+							default:
+								if($level < 1)
+									$level = 'Disabled';
+								else
+									$level = 'Unknown';
+								break;
 						}
 
 						$main .= '<a href="#"><li>' . $row['UserName'] . '<br /><table><tr><td>';
@@ -187,7 +190,7 @@ class phoromatic_users implements pts_webui_interface
 						{
 							$main .= '<select name="admin_level_' . $row['UserID'] . '">';
 
-							foreach(array(0 => 'Disabled', 2 => 'Administrator', 3 => 'Power User', 10 => 'Viewer') as $level_id => $level_string)
+							foreach(array(($row['AdminLevel'] * -1) => 'Disabled', 2 => 'Administrator', 3 => 'Power User', 10 => 'Viewer') as $level_id => $level_string)
 							{
 								$main .= '<option value="' . $level_id . '"' . ($row['AdminLevel'] == $level_id ? ' selected="selected"' : null) . '>' . $level_string . '</option>';
 							}

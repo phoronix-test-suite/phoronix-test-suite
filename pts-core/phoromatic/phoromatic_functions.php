@@ -107,7 +107,7 @@ function phoromatic_webui_header_logged_in()
 	{
 		$pages = array('Admin', 'Admin_Config');
 	}
-	else
+	else if($_SESSION['AdminLevel'] > 0)
 	{
 		$pages = array('Main', 'Systems', 'Settings', 'Schedules', 'Results');
 
@@ -138,7 +138,7 @@ function phoromatic_webui_right_panel_logged_in($add = null)
 	{
 		$right .= '<h3>Phoromatic Server</h3><hr /><p><strong>' . date('H:i T - j F Y') . '</p><p align="center"><a href="?logout"><strong>Log-Out</strong></a></p>';
 	}
-	else
+	else if($_SESSION['AdminLevel'] > 0)
 	{
 		if($add == null)
 		{

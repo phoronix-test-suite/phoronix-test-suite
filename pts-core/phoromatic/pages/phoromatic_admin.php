@@ -81,10 +81,6 @@ class phoromatic_admin implements pts_webui_interface
 		{
 			switch($row['AdminLevel'])
 			{
-				case 0:
-					$level = 'Disabled';
-					$offset = null;
-					break;
 				case 1:
 					$level = 'Main Administrator';
 					$offset = null;
@@ -100,6 +96,14 @@ class phoromatic_admin implements pts_webui_interface
 				case 10:
 					$level = 'Viewer';
 					$offset = str_repeat('-', 30);
+					break;
+				default:
+					if($row['AdminLevel'] < 1)
+						$level = 'Disabled';
+					else
+						$level = 'Unknown';
+
+					$offset = null;
 					break;
 			}
 
