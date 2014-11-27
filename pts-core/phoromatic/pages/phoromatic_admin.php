@@ -42,6 +42,13 @@ class phoromatic_admin implements pts_webui_interface
 			header('Location: /?main');
 		}
 		$main = null;
+		if(isset($_POST['disable_user']))
+		{
+			$stmt = phoromatic_server::$db->prepare('UPDATE phoromatic_users SET AdminLevel = (AdminLevel * -1) WHERE UserName = :user_name');
+			$stmt->bindValue(':user_name', $_POST['disable_user']);
+			$result = $stmt->execute();
+			$main .= '<h2>Disabled Account: ' . $_POST['disable_user'] . '</h2>';
+		}
 
 		$main .= '<h1>Phoromatic Server Administration</h1>';
 
@@ -77,6 +84,7 @@ class phoromatic_admin implements pts_webui_interface
 		$result = $stmt->execute();
 
 		$plevel = -1;
+		$user_list = array();
 		while($row = $result->fetchArray())
 		{
 			switch($row['AdminLevel'])
@@ -116,9 +124,21 @@ class phoromatic_admin implements pts_webui_interface
 
 			$main .= $offset . ' <strong>' . $row['UserName'] . '</strong> (<em>' . $level . '</em>) <strong>Created On:</strong> ' . phoromatic_user_friendly_timedate($row['CreatedOn']) . ' <strong>Last Log-In:</strong> ' . ($row['LastLogin'] != null ? phoromatic_user_friendly_timedate($row['LastLogin']) : 'N/A') . ($row['AdminLevel'] == 1 ? ' [<strong>ACCOUNT ID:</strong> ' . $row['AccountID'] . ']' : null) . '<br />';
 			$plevel = $row['AdminLevel'];
+			$user_list[$row['UserName']] = $row['AdminLevel'];
 		}
 		if($plevel != -1)
 			$main .= '</p>';
+
+		$main .= '<hr /><h2>Disable Account</h2>';
+		$main .= '<form action="' . $_SERVER['REQUEST_URI'] . '" name="disable_user" id="disable_user" method="post"><p><select name="disable_user">';
+		foreach($user_list as $user_name => $user_level)
+		{
+			if($user_level > 0)
+			{
+				$main .= '<option value="' . $user_name . '">' . $user_name . '</option>';
+			}
+		}
+		$main .= '</select></p><p><input name="submit" value="Disable User" type="submit" /></p></form>';
 
 		$server_log = explode(PHP_EOL, file_get_contents(getenv('PTS_PHOROMATIC_LOG_LOCATION')));
 		foreach($server_log as $i => $line_item)
