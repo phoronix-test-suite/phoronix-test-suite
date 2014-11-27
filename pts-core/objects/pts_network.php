@@ -396,6 +396,7 @@ class pts_network
 
 		if($wol_support === null)
 		{
+			$wol_support = array();
 			if(is_dir('/sys/class/net') && pts_client::executable_in_path('ethtool'))
 			{
 				foreach(pts_file_io::glob('/sys/class/net/*') as $net_device)

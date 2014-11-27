@@ -738,6 +738,19 @@ class pts_client
 			}
 		}
 
+		if(is_file(PTS_USER_PATH . 'phoromatic-servers'))
+		{
+			$phoromatic_servers_file = pts_file_io::file_get_contents(PTS_USER_PATH . 'phoromatic-servers');
+			foreach(explode(PHP_EOL, $phoromatic_servers_file) as $ps_file_line)
+			{
+				$ps_file_line = explode(':', trim($ps_file_line));
+				if(count($ps_file_line) == 2 && ip2long($ps_file_line[0]) !== false && is_numeric($ps_file_line) && $ps_file_line > 100)
+				{
+					array_push($possible_servers, array($ps_file_line[0], $ps_file_line[1]));
+				}
+			}
+		}
+
 		foreach($possible_servers as $possible_server)
 		{
 			// possible_server[0] is the Phoromatic Server IP
