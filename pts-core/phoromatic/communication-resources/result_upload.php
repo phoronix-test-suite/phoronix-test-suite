@@ -79,7 +79,7 @@ $result = $stmt->execute();
 $row = $result->fetchArray();
 $upload_id = (isset($row['UploadID']) ? $row['UploadID'] : 0) + 1;
 
-$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_results (AccountID, SystemID, UploadID, ScheduleID, Trigger, UploadTime, Title, Description, SystemCount, ResultCount, DisplayStatus, XmlUploadHash, ComparisonHash) VALUES (:account_id, :system_id, :upload_id, :schedule_id, :trigger, :upload_time, :title, :description, :system_count, :result_count, :display_status, :xml_upload_hash, :comparison_hash)');
+$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_results (AccountID, SystemID, UploadID, ScheduleID, Trigger, UploadTime, Title, Description, SystemCount, ResultCount, DisplayStatus, XmlUploadHash, ComparisonHash, ElapsedTime) VALUES (:account_id, :system_id, :upload_id, :schedule_id, :trigger, :upload_time, :title, :description, :system_count, :result_count, :display_status, :xml_upload_hash, :comparison_hash, :elapsed_time)');
 $stmt->bindValue(':account_id', ACCOUNT_ID);
 $stmt->bindValue(':system_id', SYSTEM_ID);
 $stmt->bindValue(':upload_id', $upload_id);
@@ -93,6 +93,7 @@ $stmt->bindValue(':result_count', $result_file->get_test_count());
 $stmt->bindValue(':display_status', 1);
 $stmt->bindValue(':xml_upload_hash', sha1($composite_xml));
 $stmt->bindValue(':comparison_hash', $result_file->get_contained_tests_hash(false));
+$stmt->bindValue(':elapsed_time', (empty($ELAPSED_TIME) || !is_numeric($ELAPSED_TIME) || $ELAPSED_TIME < 0 ? 0 : $ELAPSED_TIME));
 $result = $stmt->execute();
 //echo phoromatic_server::$db->lastErrorMsg();
 $result_directory = phoromatic_server::phoromatic_account_result_path(ACCOUNT_ID, $upload_id);

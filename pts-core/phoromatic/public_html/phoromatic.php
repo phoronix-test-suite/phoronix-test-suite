@@ -61,6 +61,7 @@ $environmental_variables = array(
 	'system_logs_hash' => 'SYSTEM_LOGS_HASH',
 	'msi' => 'PTS_MACHINE_SELF_ID',
 	'err' => 'ERROR_MSG',
+	'et' => 'ELAPSED_TIME',
 	);
 
 foreach($environmental_variables as $get_var => $to_var)

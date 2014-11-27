@@ -12,6 +12,7 @@ Phoronix Test Suite (Git)
 - phoromatic: Allow logging of Phoromatic set user context execution
 - phoromatic: Add support for viewing system logs from the result page link on right hand side
 - phoromatic: Support for disabling accounts via rootadmin
+- phoromatic: Track elapsed time during the testing process, report to Phoromatic Server
 
 Phoronix Test Suite 5.4 Milestone 6
 19 November 2014

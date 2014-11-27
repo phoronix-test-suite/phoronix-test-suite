@@ -162,6 +162,10 @@ class phoromatic_server
 				// Change made 25 November for user context logging
 				self::$db->exec('CREATE TABLE phoromatic_system_context_logs (AccountID TEXT, SystemID TEXT, UploadTime TEXT, ScheduleID INTEGER, TriggerID TEXT, UserContextStep TEXT, UserContextLog TEXT)');
 				self::$db->exec('PRAGMA user_version = 11');
+			case 11:
+				// Change made 27 November for time elapsed during benchmarking
+				self::$db->exec('ALTER TABLE phoromatic_results ADD COLUMN ElapsedTime INTEGER DEFAULT 0');
+				self::$db->exec('PRAGMA user_version = 12');
 		}
 		chmod($db_file, 0600);
 	}

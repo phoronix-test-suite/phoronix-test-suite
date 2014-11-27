@@ -374,6 +374,7 @@ class phoromatic extends pts_module_interface
 				switch(isset($json['phoromatic']['task']) ? $json['phoromatic']['task'] : null)
 				{
 					case 'benchmark':
+						$benchmark_timer = time();
 						self::$is_running_as_phoromatic_node = true;
 						$test_flags = pts_c::auto_mode | pts_c::batch_mode;
 						$suite_identifier = sha1(time() . rand(0, 100));
@@ -428,6 +429,7 @@ class phoromatic extends pts_module_interface
 								$test_run_manager->call_test_runs();
 								phoromatic::update_system_status('Benchmarks Completed For Schedule: ' . $phoromatic_save_identifier . ' - ' . self::$p_save_identifier);
 								$test_run_manager->post_execution_process();
+								$elapsed_benchmark_time = time() - $benchmark_timer;
 
 								// Handle uploading data to server
 								$result_file = new pts_result_file($test_run_manager->get_file_name());
@@ -482,7 +484,7 @@ class phoromatic extends pts_module_interface
 		}
 		pts_client::release_lock(PTS_USER_PATH . 'phoromatic_lock');
 	}
-	private static function upload_test_result(&$result_file, $upload_system_logs = true, $schedule_id = 0, $save_identifier = null, $trigger = null)
+	private static function upload_test_result(&$result_file, $upload_system_logs = true, $schedule_id = 0, $save_identifier = null, $trigger = null, $elapsed_time = 0)
 	{
 		$system_logs = null;
 		$system_logs_hash = null;
@@ -560,6 +562,7 @@ class phoromatic extends pts_module_interface
 			'sched' => $schedule_id,
 			'o' => $save_identifier,
 			'ts' => $trigger,
+			'et' => $elapsed_time,
 			$composite_xml_type => base64_encode($composite_xml),
 			'composite_xml_hash' => $composite_xml_hash,
 			'system_logs_zip' => $system_logs,
