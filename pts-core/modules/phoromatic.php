@@ -288,12 +288,12 @@ class phoromatic extends pts_module_interface
 
 			if(PTS_IS_DAEMONIZED_SERVER_PROCESS && !empty($archived_servers))
 			{
-				echo 'The Phoromatic client appears to be running as a system service/daemon so will attempt to continue auto-polling to find the Phoromatic Server.';
+				echo 'The Phoromatic client appears to be running as a system service/daemon so will attempt to continue auto-polling to find the Phoromatic Server.' . PHP_EOL . PHP_EOL;
 
 				$success = false;
-
 				do
 				{
+					pts_client::$pts_logger && pts_client::$pts_logger->log('Will auto-poll connected servers every 90 seconds looking for a claim by a Phoromatic Server');
 					sleep(90);
 					$success = self::attempt_phoromatic_server_auto_discover($archived_servers);
 				}

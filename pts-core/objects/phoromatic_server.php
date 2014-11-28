@@ -166,6 +166,10 @@ class phoromatic_server
 				// Change made 27 November for time elapsed during benchmarking
 				self::$db->exec('ALTER TABLE phoromatic_results ADD COLUMN ElapsedTime INTEGER DEFAULT 0');
 				self::$db->exec('PRAGMA user_version = 12');
+			case 12:
+				// Change made 27 November for IP/MAC address claiming to accounts
+				self::$db->exec('CREATE TABLE phoromatic_system_association_claims (AccountID TEXT, IPAddress TEXT, NetworkMAC TEXT, CreationTime TEXT, UNIQUE(IPAddress, NetworkMAC) ON CONFLICT IGNORE)');
+				self::$db->exec('PRAGMA user_version = 13');
 		}
 		chmod($db_file, 0600);
 	}

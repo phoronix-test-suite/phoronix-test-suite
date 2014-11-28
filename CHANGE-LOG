@@ -15,6 +15,7 @@ Phoronix Test Suite (Git)
 - phoromatic: Track elapsed time during the testing process, report to Phoromatic Server
 - phoromatic: Allow Phoromatic Servers to be specified via a simple text file at PTS_USER_PATH/phoromatic-servers
 - phoromatic: Add "configure Phoromatic client via SSH" to Phoromatic Server
+- phoromatic: Allow IP/MAC based system claiming from Phoromatic Server UI
 
 Phoronix Test Suite 5.4 Milestone 6
 19 November 2014

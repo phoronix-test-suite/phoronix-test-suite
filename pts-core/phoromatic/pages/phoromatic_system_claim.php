@@ -21,11 +21,11 @@
 */
 
 
-class phoromatic_system_ssh implements pts_webui_interface
+class phoromatic_system_claim implements pts_webui_interface
 {
 	public static function page_title()
 	{
-		return 'Add Phoromatic Server Information Via SSH';
+		return 'Phoromatic Client System Claim';
 	}
 	public static function page_header()
 	{
@@ -73,10 +73,36 @@ echo "' . phoromatic_web_socket_server_addr() . '" > $PHORO_FILE_PATH/modules-da
 		ssh2_exec($connection, 'rm' . $tmp_remote_file);
 	}
 }
+if((isset($_POST['ip_claim']) && !empty($_POST['ip_claim'])) || (isset($_POST['mac_claim']) && !empty($_POST['mac_claim'])))
+{
+	$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_system_association_claims (AccountID, IPAddress, NetworkMAC, CreationTime) VALUES (:account_id, :ip_address, :mac_address, :creation_time)');
+	$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+	$stmt->bindValue(':ip_address', $_POST['ip_claim']);
+	$stmt->bindValue(':mac_address', $_POST['mac_claim']);
+	$stmt->bindValue(':creation_time', phoromatic_server::current_time());
+	$result = $stmt->execute();
+}
+
+			$main .= '<h2>Add Phoromatic Server Info Via IP/MAC</h2>
+			<p>If deploying a Phoromatic Server within an organization, you can attempt for automatic configuration of Phoromatic clients if you know the system\'s IP or MAC addresses. When specifying either of these fields, if a Phoromatic client attempts to connect to this Phoromatic system without being associated to an account, it will be claimed by this account as long as no other Phoromatic accounts are attempting to claim the IP/MAC. This method can be particularly useful if running the Phoromatic client as a systemd/Upstart service where it will continually poll every 90 seconds auto-detected Phoromatic Servers on the LAN via zero-conf networking. For this feature to work, the zero-conf networking (Avahi) support must be enabled and working.</p>';
+			$main .= '<form action="' . $_SERVER['REQUEST_URI'] . '" name="auto_associate" method="post">
+			<p><strong>IP Address Claim:</strong> <input type="text" name="ip_claim" /></p>
+			<p><strong>MAC Address Claim:</strong> <input type="text" name="mac_claim" /></p>
+			<p><input name="submit" value="Submit Claim" type="submit" /></p>
+			</form>';
+
+			$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_system_association_claims WHERE AccountID = :account_id ORDER BY CreationTime ASC');
+			$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+			$result = $stmt->execute();
+			while($row = $result->fetchArray())
+			{
+				$main .= '<p>' . $row['IPAddress'] . ' ' . $row['NetworkMAC'] . '</p>';
+			}
+
+			$main .= '<hr />';
 
 			$main .= '<h2>Add Phoromatic Server Info Via SSH</h2>
 			<p>If your Phoromatic client systems are SSH-enabled, you can specify their SSH connection information below. In doing so, the Phoromatic Server will do a one-time connection to it immediately to pre-seed the system with the Phoromatic Server account information for this account. This should allow the client systems to then find the server automatically next time the phoronix-test-suite is run. This command assumes the Phoronix Test Suite is already pre-installed on the client system in your desired configuration.</p>';
-			$main .= '<hr />';
 
 			if(function_exists('ssh2_connect'))
 			{
@@ -93,6 +119,7 @@ echo "' . phoromatic_web_socket_server_addr() . '" > $PHORO_FILE_PATH/modules-da
 			{
 				$main .= '<h3>PHP SSH2 Must Be Installed For This Feature</h3>';
 			}
+			$main .= '<hr />';
 		}
 
 		$right = null;
