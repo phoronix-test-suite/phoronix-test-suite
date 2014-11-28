@@ -132,7 +132,7 @@ class phoromatic_systems implements pts_webui_interface
 
 				if($results > 0)
 				{
-					$main .= '</ul></div>';
+					$main .= '</ul></div></div>';
 				}
 
 
@@ -144,13 +144,13 @@ class phoromatic_systems implements pts_webui_interface
 				$row = $result->fetchArray();
 				if($row != false)
 				{
-					$main .= '<hr /><div style="margin: 0 10%;"><ul><li><h1>Recent System Warnings &amp; Errors</h1></li>';
+					$main .= '<hr /><div class="pts_phoromatic_info_box_area"><div style="margin: 0 10%;"><ul><li><h1>Recent System Warnings &amp; Errors</h1></li>';
 					do
 					{
 						$main .= '<a href="#"><li>' . $row['ErrorMessage'] . '<br /><table><tr><td>' . $row['UploadTime'] . '</td><td>' . $row['TestIdentifier'] . '</td></tr></table></li></a>';
 					}
 					while($row = $result->fetchArray());
-					$main .= '	</ul></div>';
+					$main .= '	</ul></div></div>';
 				}
 			}
 		}
