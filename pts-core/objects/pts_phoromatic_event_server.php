@@ -90,6 +90,7 @@ class pts_phoromatic_event_server
 									if(pts_client::executable_in_path($etherwake))
 									{
 										shell_exec($etherwake . ' ' . $row['NetworkMAC']);
+										sleep(5);
 										break;
 									}
 								}
