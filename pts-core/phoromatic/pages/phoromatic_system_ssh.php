@@ -75,7 +75,7 @@ echo "' . phoromatic_web_socket_server_addr() . '" > $PHORO_FILE_PATH/modules-da
 }
 
 			$main .= '<h2>Add Phoromatic Server Info Via SSH</h2>
-			<p>If your Phoromatic client systems are SSH-enabled, you can specify their SSH connection information below. In doing so, the Phoromatic Server will do a one-time connection to it immediately to pre-seed the system with the Phoromatic Server account information for this account. This should allow the client systems to then find the server automatically next time the phoronix-test-suite is run. This command assumes the Phoronix Test Suite is already pre-installed on the client system.</p>';
+			<p>If your Phoromatic client systems are SSH-enabled, you can specify their SSH connection information below. In doing so, the Phoromatic Server will do a one-time connection to it immediately to pre-seed the system with the Phoromatic Server account information for this account. This should allow the client systems to then find the server automatically next time the phoronix-test-suite is run. This command assumes the Phoronix Test Suite is already pre-installed on the client system in your desired configuration.</p>';
 			$main .= '<hr />';
 
 			if(function_exists('ssh2_connect'))

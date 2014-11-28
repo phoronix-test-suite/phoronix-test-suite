@@ -273,31 +273,60 @@ class phoromatic extends pts_module_interface
 
 		if(self::$server_address == null)
 		{
-			pts_client::$pts_logger && pts_client::$pts_logger->log('Attempting to auto-discover Phoromatic Server');
 			$archived_servers = pts_client::available_phoromatic_servers();
-			foreach($archived_servers as $archived_server)
+			if(!empty($archived_servers))
 			{
-				$server_response = phoromatic::upload_to_remote_server(array(
-					'r' => 'ping',
-					), $archived_server['ip'], $archived_server['http_port']);
-
-				$server_response = json_decode($server_response, true);
-				if($server_response && isset($server_response['phoromatic']['account_id']))
-				{
-					self::$server_address = $archived_server['ip'];
-					self::$server_http_port = $archived_server['http_port'];
-					self::$account_id = $server_response['phoromatic']['account_id'];
-				}
+				pts_client::$pts_logger && pts_client::$pts_logger->log('Attempting to auto-discover Phoromatic Servers');
+				self::attempt_phoromatic_server_auto_discover($archived_servers);
 			}
 		}
 
 		if(self::$server_address == null || self::$server_http_port == null || self::$account_id == null)
 		{
+			pts_client::$pts_logger && pts_client::$pts_logger->log('Phoromatic Server connection setup failed');
 			echo PHP_EOL . 'You must pass the Phoromatic Server information as an argument to phoromatic.connect, or otherwise configure your network setup.' . PHP_EOL . '      e.g. phoronix-test-suite phoromatic.connect 192.168.1.2:5555/I0SSJY' . PHP_EOL . PHP_EOL;
-			return false;
+
+			if(PTS_IS_DAEMONIZED_SERVER_PROCESS && !empty($archived_servers))
+			{
+				echo 'The Phoromatic client appears to be running as a system service/daemon so will attempt to continue auto-polling to find the Phoromatic Server.';
+
+				$success = false;
+
+				do
+				{
+					sleep(90);
+					$success = self::attempt_phoromatic_server_auto_discover($archived_servers);
+				}
+				while($success == false);
+			}
+			else
+			{
+				return false;
+			}
 		}
 
 		return true;
+	}
+	protected static function attempt_phoromatic_server_auto_discover(&$phoromatic_servers)
+	{
+		foreach($phoromatic_servers as &$archived_server)
+		{
+			pts_client::$pts_logger && pts_client::$pts_logger->log('Attempting to auto-discover Phoromatic Server on: ' . $archived_server['ip'] . ': ' . $archived_server['http_port']);
+			$server_response = phoromatic::upload_to_remote_server(array(
+				'r' => 'ping',
+				), $archived_server['ip'], $archived_server['http_port']);
+
+			$server_response = json_decode($server_response, true);
+			if($server_response && isset($server_response['phoromatic']['account_id']))
+			{
+				self::$server_address = $archived_server['ip'];
+				self::$server_http_port = $archived_server['http_port'];
+				self::$account_id = $server_response['phoromatic']['account_id'];
+				return true;
+			}
+		}
+
+		return false;
 	}
 	public static function run_connection($args)
 	{
@@ -337,6 +366,8 @@ class phoromatic extends pts_module_interface
 			if($server_response == false)
 			{
 				$times_failed++;
+
+				pts_client::$pts_logger->log('Server response failed');
 
 				if($times_failed > 2)
 				{
