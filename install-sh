@@ -79,8 +79,8 @@ cp pts-core/static/phoronix-test-suite.appdata.xml $DESTDIR$INSTALL_PREFIX/share
 mkdir -p $DESTDIR$INSTALL_PREFIX/../usr/lib/systemd/system/
 cp pts-core/static/*.service $DESTDIR$INSTALL_PREFIX/../usr/lib/systemd/system/
 
-mkdir -p $DESTDIR$INSTALL_PREFIX/../etc/init/
-cp pts-core/static/upstart/*.conf $DESTDIR$INSTALL_PREFIX/../etc/init/
+# mkdir -p $DESTDIR$INSTALL_PREFIX/../etc/init/
+# cp pts-core/static/upstart/*.conf $DESTDIR$INSTALL_PREFIX/../etc/init/
 
 
 rm -f $DESTDIR$INSTALL_PREFIX/share/phoronix-test-suite/pts/etc/scripts/package-build-*
