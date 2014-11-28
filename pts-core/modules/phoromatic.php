@@ -263,11 +263,11 @@ class phoromatic extends pts_module_interface
 				self::$server_address = $last_server_address;
 				self::$server_http_port = $last_server_http_port;
 				self::$account_id = $last_account_id;
-				pts_client::$pts_logger && pts_client::$pts_logger->log('Phoromatic Server connection restored.');
+				pts_client::$pts_logger && pts_client::$pts_logger->log('Phoromatic Server connection restored');
 			}
 			else
 			{
-				pts_client::$pts_logger && pts_client::$pts_logger->log('Phoromatic Server connection failed.');
+				pts_client::$pts_logger && pts_client::$pts_logger->log('Phoromatic Server connection failed');
 			}
 		}
 
