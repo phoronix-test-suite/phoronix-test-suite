@@ -484,6 +484,7 @@ class phoromatic extends pts_module_interface
 						{
 							shell_exec('reboot');
 							$going_down = true;
+							sleep(5);
 						}
 						break;
 					case 'shutdown-if-supports-wake':
@@ -509,6 +510,7 @@ class phoromatic extends pts_module_interface
 						{
 							$going_down = true;
 							shell_exec('poweroff');
+							sleep(5);
 						}
 						break;
 					case 'exit':
