@@ -382,6 +382,7 @@ class phoromatic extends pts_module_interface
 			else if(substr($server_response, 0, 1) == '{')
 			{
 				$times_failed = 0;
+				$going_down = false;
 				$json = json_decode($server_response, true);
 
 				if($has_success == false)
@@ -482,6 +483,7 @@ class phoromatic extends pts_module_interface
 						if(pts_client::executable_in_path('reboot'))
 						{
 							shell_exec('reboot');
+							$going_down = true;
 						}
 						break;
 					case 'shutdown-if-supports-wake':
@@ -497,20 +499,29 @@ class phoromatic extends pts_module_interface
 						if(!$supports_wol)
 							break;
 					case 'shutdown':
+						if(pts_module::read_file('block-poweroff'))
+						{
+							break;
+						}
 						echo PHP_EOL . 'Phoromatic received a remote command to shutdown.' . PHP_EOL;
 						phoromatic::update_system_status('Attempting System Shutdown');
 						if(pts_client::executable_in_path('poweroff'))
 						{
+							$going_down = true;
 							shell_exec('poweroff');
 						}
 						break;
 					case 'exit':
 						echo PHP_EOL . 'Phoromatic received a remote command to exit.' . PHP_EOL;
 						phoromatic::update_system_status('Exiting Phoromatic');
-						break;
+						$going_down = true;
+						return 0;
 				}
 			}
-			phoromatic::update_system_status('Idling, Waiting For Task');
+			if(!$going_down)
+			{
+				phoromatic::update_system_status('Idling, Waiting For Task');
+			}
 			sleep(60);
 		}
 		pts_client::release_lock(PTS_USER_PATH . 'phoromatic_lock');
