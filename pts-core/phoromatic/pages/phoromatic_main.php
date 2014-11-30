@@ -244,7 +244,7 @@ class phoromatic_main implements pts_webui_interface
 				if(stripos($row['CurrentTask'], 'shutdown') !== false || stripos($row['CurrentTask'], 'exit') !== false)
 					continue;
 
-				$main .= '<a href="?systems/' . $row['SystemID'] . '"><li>' . $row['Title'] . '<br /><table><tr><td>' . $row['CurrentTask'] . '</td><td>' . ($row['EstimatedTimeForTask'] > 0 ? '~' . pts_string::plural_handler($row['EstimatedTimeForTask'], 'Minute') . ' Remaining' : ' ') . '</td><td>' . $row['LocalIP'] . '</td><td>' . phoromatic_user_friendly_timedate($row['LastCommunication']) . '</td></tr></table></li></a>';
+				$main .= '<a href="?systems/' . $row['SystemID'] . '"><li>' . $row['Title'] . '<br /><table><tr><td>' . $row['CurrentTask'] . '</td><td>' . phoromatic_compute_estimated_time_remaining_string($row['EstimatedTimeForTask'], $row['LastCommunication']) . '</td><td>' . $row['LocalIP'] . '</td><td>' . phoromatic_user_friendly_timedate($row['LastCommunication']) . '</td></tr></table></li></a>';
 				$sys_act = true;
 			}
 			while($row = $result->fetchArray());

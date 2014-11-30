@@ -26,6 +26,26 @@ function phoromatic_user_friendly_timedate($time)
 {
 	return phoromatic_server::user_friendly_timedate($time);
 }
+function phoromatic_compute_estimated_time_remaining_string($estimated_minutes, $last_comm)
+{
+	$remaining = phoromatic_compute_estimated_time_remaining($estimated_minutes, $last_comm);
+	return $remaining > 0 ? '~' . pts_strings::plural_handler($remaining, 'Minute') . ' Remaining' : ' ';
+}
+function phoromatic_compute_estimated_time_remaining($estimated_minutes, $last_comm)
+{
+	if($estimated_minutes > 0)
+	{
+		$estimated_completion = strtotime($last_comm) + ($estimated_minutes * 60);
+
+		if(time() < $estimated_completion)
+		{
+			return ceil(($estimated_completion - time()) / 60);
+		}
+
+	}
+
+	return 0;
+}
 function phoromatic_webui_header($left_items, $right)
 {
 	$ret = '<div id="pts_phoromatic_top_header">
