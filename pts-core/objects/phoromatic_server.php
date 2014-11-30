@@ -295,6 +295,30 @@ class phoromatic_server
 
 		return false;
 	}
+	public static function systems_appearing_down($account_id = null)
+	{
+		if(isset($_SESSION['AccountID']))
+			$account_id = $_SESSION['AccountID'];
+
+		$systems = array();
+		$stmt = phoromatic_server::$db->prepare('SELECT SystemID, Title, LastCommunication, CurrentTask FROM phoromatic_systems WHERE AccountID = :account_id AND State >= 0 ORDER BY LastCommunication DESC');
+		$stmt->bindValue(':account_id', $account_id);
+		$result = $stmt->execute();
+		while($row = $result->fetchArray())
+		{
+			if(phoromatic_server::system_check_if_down($_SESSION['AccountID'], $row['SystemID'], $row['LastCommunication'], $row['CurrentTask']))
+			{
+				array_push($systems, $row['SystemID']);
+			}
+		}
+
+		return $systems;
+	}
+	public static function system_check_if_down($account_id, $system_id, $last_communication, $current_task)
+	{
+		$last_comm = strtotime($last_communication);
+		return phoromatic_server::system_has_outstanding_jobs($account_id, $system_id) && (($last_comm < (time() - 3600) && stripos($current_task, 'Running') === false) || $last_comm < (time() - 7200) || ($last_comm < (time() - 600) && stripos($current_task, 'Shutdown') !== false));
+	}
 }
 
 if(!is_dir(phoromatic_server::phoromatic_path() . 'accounts'))
