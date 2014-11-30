@@ -231,6 +231,70 @@ class phoromatic_server
 
 		return false;
 	}
+	public static function system_has_outstanding_jobs($account_id, $system_id)
+	{
+		$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_schedules WHERE AccountID = :account_id AND State = 1 AND (SELECT COUNT(*) FROM phoromatic_schedules_tests WHERE AccountID = :account_id AND ScheduleID = phoromatic_schedules.ScheduleID) > 0');
+		$stmt->bindValue(':account_id', $account_id);
+		$result = $stmt->execute();
+		$day_of_week_int = date('N') - 1;
+
+		while($result && $row = $result->fetchArray())
+		{
+			// Make sure this test schedule is supposed to work on given system
+			if(!in_array($system_id, explode(',', $row['RunTargetSystems'])))
+			{
+				$stmt = phoromatic_server::$db->prepare('SELECT Groups FROM phoromatic_systems WHERE AccountID = :account_id AND SystemID = :system_id LIMIT 1');
+				$stmt->bindValue(':account_id', $account_id);
+				$stmt->bindValue(':system_id', $system_id);
+				$sys_result = $stmt->execute();
+				$sys_row = $sys_result->fetchArray();
+
+				$matches_to_group = false;
+				foreach(explode(',', $row['RunTargetGroups']) as $group)
+				{
+					if(stripos($sys_row['Groups'], '#' . $group . '#') !== false)
+					{
+						$matches_to_group = true;
+						break;
+					}
+				}
+
+				if($matches_to_group == false)
+					continue;
+			}
+
+			// See if test is a time-based schedule due to run today and now or past the time scheduled to run
+			if(strpos($row['ActiveOn'], strval($day_of_week_int)) !== false)
+			{
+				if($row['RunAt'] <= date('H.i'))
+				{
+					$trigger_id = date('Y-m-d');
+					if(!phoromatic_server::check_for_triggered_result_match($row['ScheduleID'], $trigger_id, $account_id, $system_id))
+					{
+						return $row['ScheduleID'];
+					}
+				}
+			}
+
+			// See if custom trigger...
+			$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_schedules_triggers WHERE AccountID = :account_id AND ScheduleID = :schedule_id ORDER BY TriggeredOn DESC');
+			$stmt->bindValue(':account_id', $account_id);
+			$stmt->bindValue(':schedule_id', $row['ScheduleID']);
+			$trigger_result = $stmt->execute();
+			while($trigger_result && $trigger_row = $trigger_result->fetchArray())
+			{
+				if(substr($trigger_row['TriggeredOn'], 0, 10) == date('Y-m-d') || substr($trigger_row['TriggeredOn'], 0, 10) == date('Y-m-d', (time() - 60 * 60 * 24)))
+				{
+					if(!phoromatic_server::check_for_triggered_result_match($row['ScheduleID'], $trigger_row['Trigger'], $account_id, $system_id))
+					{
+						return $row['ScheduleID'];
+					}
+				}
+			}
+		}
+
+		return false;
+	}
 }
 
 if(!is_dir(phoromatic_server::phoromatic_path() . 'accounts'))

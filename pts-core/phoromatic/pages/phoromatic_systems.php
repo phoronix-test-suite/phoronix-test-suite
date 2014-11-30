@@ -74,6 +74,12 @@ class phoromatic_systems implements pts_webui_interface
 				else
 				{
 					$main = '<h1>' . $row['Title'] . '</h1><p><em>' . ($row['Description'] != null ? $row['Description'] : 'No system description.') . '</em></p>';
+
+					if(phoromatic_system_check_if_down($_SESSION['AccountID'], $row['SystemID'], $row['LastCommunication'], $row['CurrentTask']))
+					{
+						$main .= '<h3 style="text-align: center; color: red;">This system appears to be offline/inactive and there are pending tests scheduled to be run on this system that have yet to be completed. This system has not communicated with the Phoromatic Server in ' . pts_strings::format_time((time() - strtotime($row['LastCommunication'])), 'SECONDS', true, 60) . '.</h3>';
+					}
+
 					if(!PHOROMATIC_USER_IS_VIEWER)
 					{
 						$main .= '<p><a href="?systems/' . $PATH[0] . '/edit">Edit Task & Enable/Disable System</a></p>';
@@ -94,7 +100,7 @@ class phoromatic_systems implements pts_webui_interface
 				}
 
 				$main .= '<hr />';
-				$info_table = array('Status:' => $row['CurrentTask'], 'Last Communication:' => phoromatic_user_friendly_timedate($row['LastCommunication']), 'State:' => $state, 'Phoronix Test Suite Client:' => $row['ClientVersion'], 'Last IP:' => $row['LastIP'], 'Initial Creation:' => phoromatic_user_friendly_timedate($row['CreatedOn']), 'System ID:' => $row['SystemID'], 'MAC Address' => $row['NetworkMAC'], 'Wake-On-LAN Information' => (empty($row['NetworkWakeOnLAN']) ? 'N/A' : $row['NetworkWakeOnLAN']));
+				$info_table = array('Status:' => $row['CurrentTask'], 'Last Communication:' => phoromatic_user_friendly_timedate($row['LastCommunication']), 'State:' => $state, 'Phoronix Test Suite Client:' => $row['ClientVersion'], 'Initial Creation:' => phoromatic_user_friendly_timedate($row['CreatedOn']), 'System ID:' => $row['SystemID'], 'Last IP:' => $row['LastIP'], 'MAC Address' => $row['NetworkMAC'], 'Wake-On-LAN Information' => (empty($row['NetworkWakeOnLAN']) ? 'N/A' : $row['NetworkWakeOnLAN']));
 				$main .= '<h2>System State</h2>' . pts_webui::r2d_array_to_table($info_table, 'auto');
 
 				$main .= '<hr /><h2>System Components</h2><div style="float: left; width: 50%;">';

@@ -175,7 +175,7 @@ class phoromatic_users implements pts_webui_interface
 								$level = 'Viewer';
 								break;
 							default:
-								if($level < 1)
+								if($row['AdminLevel'] < 1)
 									$level = 'Disabled';
 								else
 									$level = 'Unknown';

@@ -17,6 +17,7 @@ Phoronix Test Suite (Git)
 - phoromatic: Add "configure Phoromatic client via SSH" to Phoromatic Server
 - phoromatic: Allow IP/MAC based system claiming from Phoromatic Server UI
 - phoromatic: Allow blocking poweroffs by touching modules-data/phoromatic/block-poweroff
+- phoromatic: Prominently show "systems needing attention" from the server UI
 
 Phoronix Test Suite 5.4 Milestone 6
 19 November 2014
