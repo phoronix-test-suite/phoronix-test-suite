@@ -189,7 +189,7 @@ class pts_test_run_manager
 	}
 	public function get_percent_complete()
 	{
-		return round($this->last_test_run_index / count($this->tests_to_run));
+		return round($this->last_test_run_index / count($this->tests_to_run) * 100);
 	}
 	public function get_test_to_run($index)
 	{

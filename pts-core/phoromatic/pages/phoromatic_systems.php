@@ -294,7 +294,7 @@ class phoromatic_systems implements pts_webui_interface
 					<ul>
 						<li><h1>Active Systems</h1></li>';
 
-					$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, LocalIP, CurrentTask, LastCommunication, EstimatedTimeForTask FROM phoromatic_systems WHERE AccountID = :account_id AND State >= 0 ORDER BY LastCommunication DESC');
+					$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, LocalIP, CurrentTask, LastCommunication, EstimatedTimeForTask, TaskPercentComplete FROM phoromatic_systems WHERE AccountID = :account_id AND State >= 0 ORDER BY LastCommunication DESC');
 					$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 					$result = $stmt->execute();
 					$row = $result->fetchArray();
@@ -307,7 +307,7 @@ class phoromatic_systems implements pts_webui_interface
 					{
 						do
 						{
-							$main .= '<a href="?systems/' . $row['SystemID'] . '"><li>' . $row['Title'] . '<br /><table><tr><td>' . $row['LocalIP'] . '</td><td><strong>Current State:</strong> ' . $row['CurrentTask'] . '</td><td>' . phoromatic_compute_estimated_time_remaining_string($row['EstimatedTimeForTask'], $row['LastCommunication']) . '</td><td><strong>Last Communication:</strong> ' . date('j F Y H:i', strtotime($row['LastCommunication'])) . '</td></tr></table></li></a>';
+							$main .= '<a href="?systems/' . $row['SystemID'] . '"><li>' . $row['Title'] . '<br /><table><tr><td>' . $row['LocalIP'] . '</td><td><strong>Current State:</strong> ' . $row['CurrentTask'] . '</td><td>' . phoromatic_compute_estimated_time_remaining_string($row['EstimatedTimeForTask'], $row['LastCommunication']) . ($row['TaskPercentComplete'] > 0 ? ' ' . $row['TaskPercentComplete'] . '% Complete' : null) . '</td><td><strong>Last Communication:</strong> ' . date('j F Y H:i', strtotime($row['LastCommunication'])) . '</td></tr></table></li></a>';
 						}
 						while($row = $result->fetchArray());
 					}
