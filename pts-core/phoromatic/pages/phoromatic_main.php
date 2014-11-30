@@ -189,7 +189,7 @@ class phoromatic_main implements pts_webui_interface
 		$main .= '</ul></div>';
 
 		// YESTERDAY'S RESULTS
-		if($test_result_row && substr($test_result_row['UploadTime'], 0, 10) == date('Y-m-d', (time() - 60 * 60 * 24)))
+		if(false && $test_result_row && substr($test_result_row['UploadTime'], 0, 10) == date('Y-m-d', (time() - 60 * 60 * 24)))
 		{
 			$main .= '<div style="float: left; width: 50%;"><ul><li><h1>Yesterday\'s Test Results</h1></li>';
 
@@ -207,7 +207,7 @@ class phoromatic_main implements pts_webui_interface
 
 		// THIS WEEK'S RESULTS
 		$one_week_ago = strtotime('-1 week');
-		if($test_result_row && strtotime($test_result_row['UploadTime']) > $one_week_ago)
+		if(false && $test_result_row && strtotime($test_result_row['UploadTime']) > $one_week_ago)
 		{
 			$main .= '<div style="float: left; width: 50%;"><ul><li><h1>Other Test Results This Week</h1></li>';
 
