@@ -147,41 +147,27 @@ function phoromatic_webui_right_panel_logged_in($add = null)
 			{
 				$right .= '<li><a href="?systems/' . $system . '">' . phoromatic_server::system_id_to_name($system) . '</a></li>';
 			}
-			$right .= '</ul>';
+			$right .= '</ul><hr />';
 		}
 
 		$right .= $add;
 
 		if($add == null)
 		{
-			$right .= '<ul><li>Recently Active Systems</li>';
-
-			$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, LastCommunication, CurrentTask FROM phoromatic_systems WHERE AccountID = :account_id AND State >= 0 ORDER BY LastCommunication DESC');
-			$stmt->bindValue(':account_id', $_SESSION['AccountID']);
-			$result = $stmt->execute();
-			$row = $result->fetchArray();
-
-			if($row == false)
+			$recently_active_systems = phoromatic_server::recently_active_systems($_SESSION['AccountID']);
+			if(!empty($recently_active_systems))
 			{
-				$right .= '</ul><p style="text-align: left; margin: 6px 10px;">No Systems Found</p>';
-			}
-			else
-			{
-				do
+				$right .= '<ul><li>Recently Active Systems</li>';
+
+				foreach($recently_active_systems as &$row)
 				{
-					if(strtotime($row['LastCommunication']) < (time() - 21600))
-						break;
-					if(stripos($row['CurrentTask'], 'shutdown') !== false || stripos($row['CurrentTask'], 'exit') !== false)
-						continue;
-
 					$right .= '<li><a href="?systems/' . $row['SystemID'] . '">' . $row['Title'] . '</a></li>';
 				}
-				while($row = $result->fetchArray());
-				$right .= '</ul>';
+
+				$right .= '</ul><hr />';
 			}
 
-
-			$right .= '<hr />
+			$right .= '
 				<ul>
 					<li>Today\'s Scheduled Events</li>';
 

@@ -218,6 +218,25 @@ class phoromatic_server
 
 		return $schedule_names[$schedule_id];
 	}
+	public static function recently_active_systems($account_id)
+	{
+		$systems = array();
+		$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_systems WHERE AccountID = :account_id AND State >= 0 ORDER BY LastCommunication DESC');
+		$stmt->bindValue(':account_id', $account_id);
+		$result = $stmt->execute();
+
+		while($row = $result->fetchArray())
+		{
+			if(strtotime($row['LastCommunication']) < (time() - 21600))
+				break;
+			if(stripos($row['CurrentTask'], 'shutdown') !== false || stripos($row['CurrentTask'], 'exit') !== false)
+				continue;
+
+			array_push($systems, $row);
+		}
+
+		return $systems;
+	}
 	public static function check_for_triggered_result_match($schedule_id, $trigger_id, $account_id, $system_id)
 	{
 		$stmt = phoromatic_server::$db->prepare('SELECT UploadID FROM phoromatic_results WHERE AccountID = :account_id AND ScheduleID = :schedule_id AND Trigger = :trigger AND SystemID = :system_id');
