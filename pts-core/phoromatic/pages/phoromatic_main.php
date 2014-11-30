@@ -111,7 +111,7 @@ class phoromatic_main implements pts_webui_interface
 						foreach($result_file->get_result_objects('ONLY_CHANGED_RESULTS') as $i => $result_object)
 						{
 							$vari = round($result_object->largest_result_variation(), 3);
-							if($vari < 0.025 && false)
+							if(abs($vari) < 0.025 && false)
 								continue;
 							if(!$has_flagged_results)
 							{
