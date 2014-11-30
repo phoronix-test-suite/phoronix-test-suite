@@ -157,6 +157,11 @@ function phoromatic_webui_right_panel_logged_in($add = null)
 			{
 				do
 				{
+					if(strtotime($row['LastCommunication']) < (time() - 21600))
+						break;
+					if(stripos($row['CurrentTask'], 'shutdown') !== false || stripos($row['CurrentTask'], 'exit') !== false)
+						continue;
+
 					$right .= '<li><a href="?systems/' . $row['SystemID'] . '">' . $row['Title'] . '</a></li>';
 				}
 				while($row = $result->fetchArray());
