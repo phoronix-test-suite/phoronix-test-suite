@@ -25,6 +25,8 @@ class pts_phoromatic_event_server
 {
 	public function __construct()
 	{
+		$systems_already_reported = array();
+
 		while(true)
 		{
 			$hour = date('G');
@@ -33,6 +35,7 @@ class pts_phoromatic_event_server
 			phoromatic_server::prepare_database(true);
 			if($minute == 0)
 			{
+				// Check for basic hung systems
 				$stmt = phoromatic_server::$db->prepare('SELECT LastCommunication, CurrentTask, SystemID, AccountID, LastIP FROM phoromatic_systems WHERE State > 0 ORDER BY LastCommunication DESC');
 				$result = $stmt->execute();
 
@@ -63,6 +66,7 @@ class pts_phoromatic_event_server
 			}
 			if($minute % 3 == 0)
 			{
+				// Check for systems to wake
 				$stmt = phoromatic_server::$db->prepare('SELECT LastCommunication, CurrentTask, SystemID, AccountID, NetworkMAC FROM phoromatic_systems WHERE State > 0 AND NetworkMAC NOT LIKE \'\' AND NetworkWakeOnLAN LIKE \'%g%\' ORDER BY LastCommunication DESC');
 				$result = $stmt->execute();
 
@@ -96,6 +100,36 @@ class pts_phoromatic_event_server
 								}
 							}
 						}
+					}
+				}
+			}
+			if($minute % 8 == 0)
+			{
+				// See if system appears down
+				$stmt = phoromatic_server::$db->prepare('SELECT LastCommunication, CurrentTask, SystemID, AccountID, LastIP FROM phoromatic_systems WHERE State > 0 ORDER BY LastCommunication DESC');
+				$result = $stmt->execute();
+
+				while($row = $result->fetchArray())
+				{
+					$sys_hash = sha1($row['AccountID'] . $row['SystemID']);
+
+					// Avoid sending duplicate messages over time
+					if(isset($systems_already_reported[$sys_hash]) && $systems_already_reported[$sys_hash] > (time() - (3600 * 24)))
+						continue;
+
+					if(phoromatic_server::system_check_if_down($row['AccountID'], $row['SystemID'], $row['LastCommunication'], $row['CurrentTask']))
+					{
+						$stmt_email = phoromatic_server::$db->prepare('SELECT UserName, Email FROM phoromatic_users WHERE UserID IN (SELECT UserID FROM phoromatic_user_settings WHERE AccountID = :account_id AND NotifyOnHungSystems = 1) AND AccountID = :account_id');
+						$stmt_email->bindValue(':account_id', $row['AccountID']);
+						$result_email = $stmt_email->execute();
+						while($row_email = $result_email->fetchArray())
+						{
+							if(empty($row_email['Email']))
+								continue;
+
+							phoromatic_server::send_email($row_email['Email'], 'Phoromatic System Potential Problem: ' . phoromatic_server::system_id_to_name($row['SystemID'], $row['AccountID']), 'no-reply@phoromatic.com', '<p><strong>' . $row_email['UserName'] . ':</strong></p><p>One of the systems associated with your Phoromatic account has not been communicating with the Phoromatic Server and is part of a current active test schedule. Below is the system information details:</p><p><strong>System:</strong> ' . phoromatic_server::system_id_to_name($row['SystemID'], $row['AccountID']) . '<br /><strong>Last Communication:</strong> ' . $row['LastCommunication'] . '<br /><strong>Last Task:</strong> ' . $row['CurrentTask'] . '<br /><strong>Local IP:</strong> ' . $row['LastIP'] . '</p>');
+						}
+						$systems_already_reported[$sys_hash] = time();
 					}
 				}
 			}

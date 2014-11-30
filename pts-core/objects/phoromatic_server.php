@@ -202,6 +202,22 @@ class phoromatic_server
 
 		return $system_names[$system_id];
 	}
+	public static function schedule_id_to_name($schedule_id, $aid = false)
+	{
+		static $schedule_names;
+
+		if(!isset($schedule_names[$schedule_id]))
+		{
+			$stmt = phoromatic_server::$db->prepare('SELECT Title FROM phoromatic_schedules WHERE AccountID = :account_id AND ScheduleID = :schedule_id');
+			$stmt->bindValue(':account_id', ($aid ? $aid : $_SESSION['AccountID']));
+			$stmt->bindValue(':schedule_id', $schedule_id);
+			$result = $stmt->execute();
+			$row = $result->fetchArray();
+			$schedule_names[$schedule_id] = $row['Title'];
+		}
+
+		return $schedule_names[$schedule_id];
+	}
 	public static function check_for_triggered_result_match($schedule_id, $trigger_id, $account_id, $system_id)
 	{
 		$stmt = phoromatic_server::$db->prepare('SELECT UploadID FROM phoromatic_results WHERE AccountID = :account_id AND ScheduleID = :schedule_id AND Trigger = :trigger AND SystemID = :system_id');
