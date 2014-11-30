@@ -144,7 +144,7 @@ function phoromatic_webui_right_panel_logged_in($add = null)
 		{
 			$right .= '<ul><li>Recently Active Systems</li>';
 
-			$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID FROM phoromatic_systems WHERE AccountID = :account_id AND State >= 0 ORDER BY LastCommunication DESC');
+			$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, LastCommunication, CurrentTask FROM phoromatic_systems WHERE AccountID = :account_id AND State >= 0 ORDER BY LastCommunication DESC');
 			$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 			$result = $stmt->execute();
 			$row = $result->fetchArray();
