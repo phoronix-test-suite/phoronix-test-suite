@@ -201,6 +201,17 @@ class phoromatic_schedules implements pts_webui_interface
 				}
 
 				$main .= '<hr />';
+
+				$contexts = array('SetContextPreInstall' => 'Pre-Install', 'SetContextPostInstall' => 'Post-Install', 'SetContextPreRun' => 'Pre-Test-Run', 'SetContextPostRun' => 'Post-Test-Run');
+				foreach($contexts as $context => $v)
+				{
+					if(isset($row[$context]) && !empty($row[$context]) && is_file(phoromatic_server::phoromatic_account_path($_SESSION['AccountID']) . 'context_' . $row[$context]))
+					{
+						$main .= '<h2>' . $v . '</h2>';
+						$main .= '<blockquote>' . str_replace(PHP_EOL, '<br />', htmlentities(file_get_contents(phoromatic_server::phoromatic_account_path($_SESSION['AccountID']) . 'context_' . $row[$context]))) . '</blockquote>';
+					}
+				}
+
 				$main .= '<h2>Tests To Run</h2>';
 
 				$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_schedules_tests WHERE AccountID = :account_id AND ScheduleID = :schedule_id ORDER BY TestProfile ASC');
