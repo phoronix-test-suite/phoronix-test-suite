@@ -203,14 +203,19 @@ class phoromatic_schedules implements pts_webui_interface
 				$main .= '<hr />';
 
 				$contexts = array('SetContextPreInstall' => 'Pre-Install', 'SetContextPostInstall' => 'Post-Install', 'SetContextPreRun' => 'Pre-Test-Run', 'SetContextPostRun' => 'Post-Test-Run');
+				$scripts = 0;
 				foreach($contexts as $context => $v)
 				{
 					if(isset($row[$context]) && !empty($row[$context]) && is_file(phoromatic_server::phoromatic_account_path($_SESSION['AccountID']) . 'context_' . $row[$context]))
 					{
-						$main .= '<h2>' . $v . '</h2>';
+						$scripts++;
+						$main .= '<h2>' . $v . ' Context Script</h2>';
 						$main .= '<blockquote>' . str_replace(PHP_EOL, '<br />', htmlentities(file_get_contents(phoromatic_server::phoromatic_account_path($_SESSION['AccountID']) . 'context_' . $row[$context]))) . '</blockquote>';
 					}
 				}
+
+				if($scripts > 0)
+					$main .= '<hr />';
 
 				$main .= '<h2>Tests To Run</h2>';
 

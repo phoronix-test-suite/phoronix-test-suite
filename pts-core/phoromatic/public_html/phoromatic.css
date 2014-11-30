@@ -326,6 +326,14 @@ div#pts_phoromatic_main_area p
 {
 	margin-top: 0;
 }
+blockquote
+{
+	background: #e4e4e4;
+	margin: 10px 10px 20px 10px;
+	border: #d2d2d2 1px solid;
+	border-radius: 14px;
+	padding: 0;
+}
 div.pts_phoromatic_info_box_area a, div.pts_phoromatic_info_box_area ul a, div.pts_phoromatic_info_box_area ul a li
 {
 	color: #272727;
