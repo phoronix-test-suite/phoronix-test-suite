@@ -111,7 +111,7 @@ class phoromatic_main implements pts_webui_interface
 						foreach($result_file->get_result_objects('ONLY_CHANGED_RESULTS') as $i => $result_object)
 						{
 							$vari = round($result_object->largest_result_variation(), 3);
-							if(abs($vari) < 0.025 && false)
+							if(abs($vari) < 0.03)
 								continue;
 							if(!$has_flagged_results)
 							{
@@ -230,7 +230,7 @@ class phoromatic_main implements pts_webui_interface
 					<ul>
 						<li><h1>Recent System Activity</h1></li>';
 
-		$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, LocalIP, CurrentTask, LastCommunication FROM phoromatic_systems WHERE AccountID = :account_id AND State >= 0 ORDER BY LastCommunication DESC LIMIT 10');
+		$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, LocalIP, CurrentTask, LastCommunication FROM phoromatic_systems WHERE AccountID = :account_id AND State >= 0 ORDER BY LastCommunication');
 		$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 		$result = $stmt->execute();
 		$row = $result->fetchArray();
@@ -241,6 +241,8 @@ class phoromatic_main implements pts_webui_interface
 			do
 			{
 				if(strtotime($row['LastCommunication']) < (time() - 86400))
+					break;
+				if(stripos($row['CurrentTask'], 'shutdown') !== false || stripos($row['CurrentTask'], 'exit') !== false)
 					break;
 
 				$main .= '<a href="?systems/' . $row['SystemID'] . '"><li>' . $row['Title'] . '<br /><table><tr><td>' . $row['CurrentTask'] . '</td><td>' . $row['LocalIP'] . '</td><td>' . phoromatic_user_friendly_timedate($row['LastCommunication']) . '</td></tr></table></li></a>';
