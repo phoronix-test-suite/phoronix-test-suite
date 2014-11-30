@@ -421,6 +421,40 @@ class pts_network
 
 		return $wol_support;
 	}
+	function send_wol_packet($ip_address, $mac_address)
+	{
+		$hwaddr = null;
+		foreach(split(':', $mac_address) as $o)
+		{
+			$hwaddr .= chr(hexdec($o));
+		}
+
+		$packet = null;
+		for($i = 1; $i <= 6; $i++)
+		{
+			$packet .= chr(255);
+		}
+
+		for($i = 1; $i <= 16; $i++)
+		{
+			$packet .= $hwaddr;
+		}
+
+		$sock = socket_create(AF_INET, SOCK_DGRAM, SOL_UDP);
+		if($sock)
+		{
+			$options = socket_set_option($sock, 1, 6, true);
+
+			if($options >= 0)
+			{
+				$sendto = socket_sendto($sock, $packet, strlen($packet), 0, $ip_address, 7);
+				socket_close($sock);
+				return $sendto;
+			}
+		}
+
+		return false;
+	}
 	public static function find_zeroconf_phoromatic_servers($find_multiple = false)
 	{
 		if(!pts_network::network_support_available())

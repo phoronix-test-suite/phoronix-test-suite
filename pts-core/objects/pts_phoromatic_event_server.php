@@ -67,7 +67,7 @@ class pts_phoromatic_event_server
 			if($minute % 3 == 0)
 			{
 				// Check for systems to wake
-				$stmt = phoromatic_server::$db->prepare('SELECT LastCommunication, CurrentTask, SystemID, AccountID, NetworkMAC FROM phoromatic_systems WHERE State > 0 AND NetworkMAC NOT LIKE \'\' AND NetworkWakeOnLAN LIKE \'%g%\' ORDER BY LastCommunication DESC');
+				$stmt = phoromatic_server::$db->prepare('SELECT LastCommunication, CurrentTask, SystemID, AccountID, NetworkMAC, LastIP FROM phoromatic_systems WHERE State > 0 AND NetworkMAC NOT LIKE \'\' AND NetworkWakeOnLAN LIKE \'%g%\' ORDER BY LastCommunication DESC');
 				$result = $stmt->execute();
 
 				while($row = $result->fetchArray())
@@ -89,14 +89,24 @@ class pts_phoromatic_event_server
 
 							if(isset($phoromatic_account_settings['NetworkPowerUpWhenNeeded']) && $phoromatic_account_settings['NetworkPowerUpWhenNeeded'] == 1)
 							{
-								foreach(array('etherwake', 'ether-wake') as $etherwake)
+								$sent_wol_request = false;
+								if(PTS_IS_DAEMONIZED_SERVER_PROCESS)
 								{
-									if(pts_client::executable_in_path($etherwake))
+									foreach(array('etherwake', 'ether-wake') as $etherwake)
 									{
-										shell_exec($etherwake . ' ' . $row['NetworkMAC']);
-										sleep(5);
-										break;
+										if(pts_client::executable_in_path($etherwake))
+										{
+											shell_exec($etherwake . ' ' . $row['NetworkMAC'] . ' 2>&1');
+											$sent_wol_request = true;
+											sleep(5);
+											break;
+										}
 									}
+								}
+								if($sent_wol_request == false)
+								{
+									pts_network::send_wol_packet($row['LastIP'], $row['NetworkMAC']);
+									$sent_wol_request = true;
 								}
 							}
 						}

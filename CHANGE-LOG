@@ -19,6 +19,7 @@ Phoronix Test Suite (Git)
 - phoromatic: Allow blocking poweroffs by touching modules-data/phoromatic/block-poweroff
 - phoromatic: Prominently show "systems needing attention" from the server UI
 - phoromatic: More email reporting of hung systems / systems not running tests when they should
+- phoromatic: Add custom Wake-On-LAN packet generator if etherwake isn't found on server
 
 Phoronix Test Suite 5.4 Milestone 6
 19 November 2014
