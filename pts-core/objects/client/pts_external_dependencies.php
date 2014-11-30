@@ -147,7 +147,7 @@ class pts_external_dependencies
 
 
 		// Find the dependencies that are still missing from the system
-		if((pts_c::$test_flags ^ pts_c::batch_mode) && (pts_c::$test_flags ^ pts_c::auto_mode))
+		if((pts_c::$test_flags ^ pts_c::batch_mode) && (pts_c::$test_flags ^ pts_c::auto_mode) && !defined('PHOROMATIC_PROCESS'))
 		{
 			$generic_packages_needed = array();
 			$required_test_dependencies = $required_test_dependencies_copy;
