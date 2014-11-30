@@ -50,6 +50,7 @@ $environmental_variables = array(
 	'ti' => 'TEST_IDENTIFIER',
 	'ts' => 'TRIGGER_STRING',
 	'time' => 'ESTIMATED_TIME',
+	'pc' => 'PERCENT_COMPLETE',
 	'c' => 'COMPOSITE_XML',
 	'ob' => 'OPENBENCHMARKING_ID',
 	'sched' => 'SCHEDULE_ID',

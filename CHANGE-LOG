@@ -22,6 +22,7 @@ Phoronix Test Suite (Git)
 - phoromatic: Add custom Wake-On-LAN packet generator if etherwake isn't found on server
 - phoromatic: Show schedules/group on system page
 - phoromatic: Hook in estimated time remaining for task
+- phoromatic: Report percent complete of task to server
 
 Phoronix Test Suite 5.4 Milestone 6
 19 November 2014

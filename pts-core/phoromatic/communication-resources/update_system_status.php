@@ -32,12 +32,18 @@ if(empty($ESTIMATED_TIME) || !is_numeric($ESTIMATED_TIME))
 	$ESTIMATED_TIME = -1;
 }
 
+if(empty($PERCENT_COMPLETE) || !is_numeric($PERCENT_COMPLETE))
+{
+	$PERCENT_COMPLETE = 0;
+}
 
-$stmt = phoromatic_server::$db->prepare('UPDATE phoromatic_systems SET CurrentTask = :current_task, EstimatedTimeForTask = :time_for_task WHERE AccountID = :account_id AND SystemID = :system_id');
+
+$stmt = phoromatic_server::$db->prepare('UPDATE phoromatic_systems SET CurrentTask = :current_task, EstimatedTimeForTask = :time_for_task, TaskPercentComplete = :percent_complete WHERE AccountID = :account_id AND SystemID = :system_id');
 $stmt->bindValue(':account_id', $ACCOUNT_ID);
 $stmt->bindValue(':system_id', SYSTEM_ID);
 $stmt->bindValue(':current_task', $ACTIVITY);
 $stmt->bindValue(':time_for_task', $ESTIMATED_TIME);
+$stmt->bindValue(':percent_complete', $PERCENT_COMPLETE);
 $stmt->execute();
 
 $json['phoromatic']['response'] = 'Status Updated';

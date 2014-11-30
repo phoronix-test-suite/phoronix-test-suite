@@ -216,7 +216,7 @@ class phoromatic extends pts_module_interface
 		$to_post['msi'] = PTS_MACHINE_SELF_ID;
 		return pts_network::http_upload_via_post('http://' . $server_address . ':' . $server_http_port .  '/phoromatic.php', $to_post);
 	}
-	protected static function update_system_status($current_task, $estimated_time_remaining = 0)
+	protected static function update_system_status($current_task, $estimated_time_remaining = 0, $percent_complete = 0)
 	{
 		static $last_msg = null;
 
@@ -228,7 +228,8 @@ class phoromatic extends pts_module_interface
 		return $server_response = phoromatic::upload_to_remote_server(array(
 				'r' => 'update_system_status',
 				'a' => $current_task,
-				'time' => $estimated_time_remaining
+				'time' => $estimated_time_remaining,
+				'pc' => $percent_complete
 				));
 	}
 	public static function startup_ping_check($server_ip, $http_port)
@@ -706,7 +707,9 @@ class phoromatic extends pts_module_interface
 			return false;
 		}
 
-		phoromatic::update_system_status('Running: ' . $pts_test_result->test_profile->get_identifier(), ceil(self::$test_run_manager->get_estimated_run_time() / 60));
+		phoromatic::update_system_status('Running: ' . $pts_test_result->test_profile->get_identifier(),
+			ceil(self::$test_run_manager->get_estimated_run_time() / 60),
+			self::$test_run_manager->get_percent_complete());
 	}
 	public static function __event_results_saved($test_run_manager)
 	{

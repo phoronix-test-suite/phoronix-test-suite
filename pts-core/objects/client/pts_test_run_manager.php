@@ -187,6 +187,10 @@ class pts_test_run_manager
 
 		return $estimated_time;
 	}
+	public function get_percent_complete()
+	{
+		return round($this->last_test_run_index / count($this->tests_to_run));
+	}
 	public function get_test_to_run($index)
 	{
 		$this->last_test_run_index = $index;

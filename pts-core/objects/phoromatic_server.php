@@ -170,6 +170,10 @@ class phoromatic_server
 				// Change made 27 November for IP/MAC address claiming to accounts
 				self::$db->exec('CREATE TABLE phoromatic_system_association_claims (AccountID TEXT, IPAddress TEXT, NetworkMAC TEXT, CreationTime TEXT, UNIQUE(IPAddress, NetworkMAC) ON CONFLICT IGNORE)');
 				self::$db->exec('PRAGMA user_version = 13');
+			case 13:
+				// Change made 30 November for percent complete
+				self::$db->exec('ALTER TABLE phoromatic_systems ADD COLUMN TaskPercentComplete INTEGER DEFAULT 0');
+				self::$db->exec('PRAGMA user_version = 14');
 		}
 		chmod($db_file, 0600);
 	}
