@@ -129,7 +129,7 @@ class pts_phoromatic_event_server
 
 					if(phoromatic_server::system_check_if_down($row['AccountID'], $row['SystemID'], $row['LastCommunication'], $row['CurrentTask']))
 					{
-						if(strtotime($row['LastCommunication']) < (strtotime() - (86400 * 7)))
+						if(strtotime($row['LastCommunication']) < (time() - (86400 * 7)))
 						{
 							// If system hasn't been online in a week, likely has bigger worries...
 							continue;

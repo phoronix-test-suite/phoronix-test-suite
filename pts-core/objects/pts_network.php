@@ -421,10 +421,10 @@ class pts_network
 
 		return $wol_support;
 	}
-	function send_wol_packet($ip_address, $mac_address)
+	public static function send_wol_packet($ip_address, $mac_address)
 	{
 		$hwaddr = null;
-		foreach(split(':', $mac_address) as $o)
+		foreach(explode(':', $mac_address) as $o)
 		{
 			$hwaddr .= chr(hexdec($o));
 		}
