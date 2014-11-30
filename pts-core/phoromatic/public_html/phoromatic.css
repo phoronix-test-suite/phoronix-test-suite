@@ -41,22 +41,11 @@ div#pts_phoromatic_top_header input, div#pts_phoromatic_top_header button
 }
 div#pts_phoromatic_bottom_footer
 {
-	background-image: -webkit-gradient(
-		linear,
-		left top,
-		left bottom,
-		color-stop(0, #1976d2),
-		color-stop(1, #0d47a1)
-	);
-	background-image: -o-linear-gradient(bottom, #1976d2 0%, #0d47a1 100%);
-	background-image: -moz-linear-gradient(bottom, #1976d2 0%, #0d47a1 100%);
-	background-image: -webkit-linear-gradient(bottom, #1976d2 0%, #0d47a1 100%);
-	background-image: -ms-linear-gradient(bottom, #1976d2 0%, #0d47a1 100%);
-	background-image: linear-gradient(to bottom, #1976d2 0%, #0d47a1 100%);
+	background: #0d47a1;
 	border: #1F1F1F 1px solid;
 	font-weight: 400;
 	overflow: hidden;
-	font-size: 55%;
+	font-size: 60%;
 	line-height: 150%;
 	color: #FFF;
 	box-shadow: 1px 1px 2px #1F1F1F;
@@ -131,18 +120,7 @@ div#pts_phoromatic_menu_right h3
 }
 div#pts_phoromatic_menu_right
 {
-	background-image: -webkit-gradient(
-		linear,
-		left top,
-		right top,
-		color-stop(0, #1976d2),
-		color-stop(1, #0d47a1)
-	);
-	background-image: -o-linear-gradient(left, #1976d2 0%, #0d47a1 100%);
-	background-image: -moz-linear-gradient(left, #1976d2 0%, #0d47a1 100%);
-	background-image: -webkit-linear-gradient(left, #1976d2 0%, #0d47a1 100%);
-	background-image: -ms-linear-gradient(left, #1976d2 0%, #0d47a1 100%);
-	background-image: linear-gradient(to left, #1976d2 0%, #0d47a1 100%);
+	background: #0d47a1;
 	width: 15%;
 	height: 100%;
 	float: right;
@@ -177,7 +155,7 @@ div#pts_phoromatic_menu_right ul li a
 div#pts_phoromatic_menu_right ul li a:hover, div#pts_phoromatic_menu_right p a:hover
 {
 	color: #CCC;
-	text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+	text-shadow: -1px 0 #333, 0 1px #333, 1px 0 #333, 0 -1px #333;
 	transition: all 0.3s;
 }
 div#pts_phoromatic_menu_right hr
@@ -258,7 +236,7 @@ div#pts_phoromatic_main_area h2
 }
 .alert
 {
-	color: #ad1457;
+	color: #f44336;
 	font-weight: bold;
 }
 sup
