@@ -79,7 +79,7 @@ class pts_phoromatic_event_server
 					{
 						// System hasn't communicated in a number of minutes so it might be powered off
 
-						if(phoromatic_server::system_has_outstanding_jobs($row['AccountID'], $row['SystemID']) !== false)
+						if(phoromatic_server::system_has_outstanding_jobs($row['AccountID'], $row['SystemID'], 120) !== false)
 						{
 							// Make sure account has network WoL enabled
 							$stmt1 = phoromatic_server::$db->prepare('SELECT NetworkPowerUpWhenNeeded FROM phoromatic_account_settings WHERE AccountID = :account_id');

@@ -109,6 +109,36 @@ class phoromatic_systems implements pts_webui_interface
 				$components = pts_result_file_analyzer::system_component_string_to_array($row['Software']);
 				$main .= pts_webui::r2d_array_to_table($components) . '</div>';
 
+				$groups = explode('#', $row['Groups']);
+				foreach($groups as $i => $group)
+				{
+					if(empty($group))
+						unset($groups[$i]);
+				}
+				$schedules = phoromatic_server::schedules_that_run_on_system($_SESSION['AccountID'], $row['SystemID']);
+				if(!empty($groups) || !empty($schedules))
+				{
+					$main .= '<hr /><h2>Schedules</h2>';
+					if(!empty($groups))
+						$group_msg = 'This system belongs to the following groups: <strong>' . implode(', ', $groups) . '</strong>.';
+					else
+						$group_msg = 'This system does not currently belong to any groups.';
+
+					$main .= '<p>' . $group_msg . ' Manage groups via the <a href="http://localhost:8444/?systems">systems page</a>.</p>';
+
+					if(!empty($schedules))
+					{
+						$main .= '<div class="pts_phoromatic_info_box_area" style="margin: 0 10%;"><ul><li><h1>Schedules Running On This System</h1></li>';
+						foreach($schedules as &$row)
+						{
+							$system_count = empty($row['RunTargetSystems']) ? 0 : count(explode(',', $row['RunTargetSystems']));
+							$group_count = empty($row['RunTargetGroups']) ? 0 : count(explode(',', $row['RunTargetGroups']));
+							$main .= '<a href="?schedules/' . $row['ScheduleID'] . '"><li>' . $row['Title'] . '<br /><table><tr><td>' . $system_count . ' Systems</td><td>' . $group_count . ' Groups</td><td>' . phoromatic_results_for_schedule($row['ScheduleID']) . ' Results</td><td><strong>' . phoromatic_schedule_activeon_string($row['ActiveOn'], $row['RunAt']) . '</strong></td></tr></table></li></a>';
+						}
+						$main .= '</ul></div>';
+					}
+				}
+
 				$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, ScheduleID, UploadID, UploadTime FROM phoromatic_results WHERE AccountID = :account_id AND SystemID = :system_id ORDER BY UploadTime DESC');
 				$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 				$stmt->bindValue(':system_id', $PATH[0]);
@@ -119,8 +149,8 @@ class phoromatic_systems implements pts_webui_interface
 				if($test_result_row != false)
 				{
 					$main .= '<hr /><h2>Test Results</h2>';
-					$main .= '<div class="pts_phoromatic_info_box_area">';
-					$main .= '<div style="margin: 0 10%;"><ul><li><h1>Recent Test Results</h1></li>';
+					$main .= '<div class="pts_phoromatic_info_box_area" style="margin: 0 10%;">';
+					$main .= '<ul><li><h1>Recent Test Results</h1></li>';
 
 					do
 					{
@@ -138,7 +168,7 @@ class phoromatic_systems implements pts_webui_interface
 
 				if($results > 0)
 				{
-					$main .= '</ul></div></div>';
+					$main .= '</ul></div>';
 				}
 
 
@@ -150,13 +180,13 @@ class phoromatic_systems implements pts_webui_interface
 				$row = $result->fetchArray();
 				if($row != false)
 				{
-					$main .= '<hr /><div class="pts_phoromatic_info_box_area"><div style="margin: 0 10%;"><ul><li><h1>Recent System Warnings &amp; Errors</h1></li>';
+					$main .= '<hr /><div class="pts_phoromatic_info_box_area" style="margin: 0 10%;"><ul><li><h1>Recent System Warnings &amp; Errors</h1></li>';
 					do
 					{
 						$main .= '<a href="#"><li>' . $row['ErrorMessage'] . '<br /><table><tr><td>' . $row['UploadTime'] . '</td><td>' . $row['TestIdentifier'] . '</td></tr></table></li></a>';
 					}
 					while($row = $result->fetchArray());
-					$main .= '	</ul></div></div>';
+					$main .= '	</ul></div>';
 				}
 			}
 		}

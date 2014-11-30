@@ -20,6 +20,7 @@ Phoronix Test Suite (Git)
 - phoromatic: Prominently show "systems needing attention" from the server UI
 - phoromatic: More email reporting of hung systems / systems not running tests when they should
 - phoromatic: Add custom Wake-On-LAN packet generator if etherwake isn't found on server
+- phoromatic: Show schedules/group on system page
 
 Phoronix Test Suite 5.4 Milestone 6
 19 November 2014

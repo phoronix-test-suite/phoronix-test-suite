@@ -251,7 +251,44 @@ class phoromatic_server
 	{
 		return date('j F H:i', strtotime($time));
 	}
-	public static function system_has_outstanding_jobs($account_id, $system_id)
+	public static function schedules_that_run_on_system($account_id, $system_id)
+	{
+		$schedules = array();
+		$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_schedules WHERE AccountID = :account_id AND State = 1 ORDER BY TITLE ASC');
+		$stmt->bindValue(':account_id', $account_id);
+		$result = $stmt->execute();
+
+		while($result && $row = $result->fetchArray())
+		{
+			// Make sure this test schedule is supposed to work on given system
+			if(!in_array($system_id, explode(',', $row['RunTargetSystems'])))
+			{
+				$stmt = phoromatic_server::$db->prepare('SELECT Groups FROM phoromatic_systems WHERE AccountID = :account_id AND SystemID = :system_id LIMIT 1');
+				$stmt->bindValue(':account_id', $account_id);
+				$stmt->bindValue(':system_id', $system_id);
+				$sys_result = $stmt->execute();
+				$sys_row = $sys_result->fetchArray();
+
+				$matches_to_group = false;
+				foreach(explode(',', $row['RunTargetGroups']) as $group)
+				{
+					if(stripos($sys_row['Groups'], '#' . $group . '#') !== false)
+					{
+						$matches_to_group = true;
+						break;
+					}
+				}
+
+				if($matches_to_group == false)
+					continue;
+			}
+
+			array_push($schedules, $row);
+		}
+
+		return $schedules;
+	}
+	public static function system_has_outstanding_jobs($account_id, $system_id, $time_offset = 0)
 	{
 		$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_schedules WHERE AccountID = :account_id AND State = 1 AND (SELECT COUNT(*) FROM phoromatic_schedules_tests WHERE AccountID = :account_id AND ScheduleID = phoromatic_schedules.ScheduleID) > 0');
 		$stmt->bindValue(':account_id', $account_id);
@@ -286,7 +323,7 @@ class phoromatic_server
 			// See if test is a time-based schedule due to run today and now or past the time scheduled to run
 			if(strpos($row['ActiveOn'], strval($day_of_week_int)) !== false)
 			{
-				if($row['RunAt'] <= date('H.i'))
+				if($row['RunAt'] <= date('H.i', (time() + $time_offset)))
 				{
 					$trigger_id = date('Y-m-d');
 					if(!phoromatic_server::check_for_triggered_result_match($row['ScheduleID'], $trigger_id, $account_id, $system_id))
@@ -337,7 +374,7 @@ class phoromatic_server
 	public static function system_check_if_down($account_id, $system_id, $last_communication, $current_task)
 	{
 		$last_comm = strtotime($last_communication);
-		return phoromatic_server::system_has_outstanding_jobs($account_id, $system_id) && (($last_comm < (time() - 3600) && stripos($current_task, 'Running') === false) || $last_comm < (time() - 7200) || ($last_comm < (time() - 600) && stripos($current_task, 'Shutdown') !== false));
+		return phoromatic_server::system_has_outstanding_jobs($account_id, $system_id, -600) && (($last_comm < (time() - 3600) && stripos($current_task, 'Running') === false) || $last_comm < (time() - 7200) || ($last_comm < (time() - 600) && stripos($current_task, 'Shutdown') !== false));
 	}
 }
 
