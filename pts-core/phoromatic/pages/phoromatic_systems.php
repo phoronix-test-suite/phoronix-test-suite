@@ -289,9 +289,8 @@ class phoromatic_systems implements pts_webui_interface
 			$main .= '<hr />
 
 			<h2>Systems</h2>
-			<div class="pts_phoromatic_info_box_area">
+			<div class="pts_phoromatic_info_box_area" style="margin: 0 10%;">
 
-				<div style="margin: 0 10%;">
 					<ul>
 						<li><h1>Active Systems</h1></li>';
 
@@ -315,7 +314,6 @@ class phoromatic_systems implements pts_webui_interface
 
 
 			$main .= '</ul>
-				</div>
 			</div>';
 
 			if(!PHOROMATIC_USER_IS_VIEWER)

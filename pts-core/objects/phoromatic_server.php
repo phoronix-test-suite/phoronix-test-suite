@@ -270,6 +270,47 @@ class phoromatic_server
 	{
 		return date('j F H:i', strtotime($time));
 	}
+	public static function get_system_details($account_id, $system_id)
+	{
+		$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_systems WHERE AccountID = :account_id AND SystemID = :system_id LIMIT 1');
+		$stmt->bindValue(':account_id', $account_id);
+		$stmt->bindValue(':system_id', $system_id);
+		$result = $stmt->execute();
+		$row = $result->fetchArray();
+
+		return $row;
+	}
+	public static function systems_associated_with_schedule($account_id, $schedule_id)
+	{
+		$system_ids = array();
+		$stmt = phoromatic_server::$db->prepare('SELECT RunTargetSystems, RunTargetGroups FROM phoromatic_schedules WHERE AccountID = :account_id AND ScheduleID = :schedule_id LIMIT 1');
+		$stmt->bindValue(':account_id', $account_id);
+		$stmt->bindValue(':schedule_id', $schedule_id);
+		$result = $stmt->execute();
+
+		if($result && $row = $result->fetchArray())
+		{
+			foreach(explode(',', $row['RunTargetSystems']) as $sys)
+			{
+				array_push($system_ids, $sys);
+			}
+
+			foreach(explode(',', $row['RunTargetGroups']) as $group)
+			{
+				$stmt = phoromatic_server::$db->prepare('SELECT SystemID FROM phoromatic_systems WHERE AccountID = :account_id AND Groups LIKE :sgroup');
+				$stmt->bindValue(':account_id', $account_id);
+				$stmt->bindValue(':sgroup', '%#' . $group . '#%');
+				$result = $stmt->execute();
+
+				while($result && $row = $result->fetchArray())
+				{
+					array_push($system_ids, $row['SystemID']);
+				}
+			}
+		}
+
+		return array_unique($system_ids);
+	}
 	public static function schedules_that_run_on_system($account_id, $system_id)
 	{
 		$schedules = array();

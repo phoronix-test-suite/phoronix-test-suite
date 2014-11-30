@@ -231,7 +231,24 @@ class phoromatic_schedules implements pts_webui_interface
 					$main .= '</select>';
 					$main .= '<p><div id="test_details"></div></p>';
 					$main .= '</form>';
-					$main .= '<hr />';
+				}
+
+				$systems_in_schedule = phoromatic_server::systems_associated_with_schedule($_SESSION['AccountID'], $PATH[0]);
+				if(!empty($systems_in_schedule))
+				{
+					$main .= '<hr /><h2>Systems In Schedule</h2>';
+					if(!PHOROMATIC_USER_IS_VIEWER)
+					{
+						$main .= '<p>To run this schedule on more systems, <a href="?sched/' . $PATH[0] . '">edit the schedule</a>.</p>';
+					}
+					$main .= '<div class="pts_phoromatic_info_box_area" style="margin: 0 10%;"><ul><li><h1>Systems</h1></li>';
+
+					foreach($systems_in_schedule as $system_id)
+					{
+						$row = phoromatic_server::get_system_details($_SESSION['AccountID'], $system_id);
+						$main .= '<a href="?systems/' . $row['SystemID'] . '"><li>' . $row['Title'] . '<br /><table><tr><td>' . $row['LocalIP'] . '</td><td><strong>Current State:</strong> ' . $row['CurrentTask'] . '</td><td><strong>Last Communication:</strong> ' . date('j F Y H:i', strtotime($row['LastCommunication'])) . '</td></tr></table></li></a>';
+					}
+					$main .= '</ul></div><hr />';
 				}
 
 				$stmt = phoromatic_server::$db->prepare('SELECT Trigger, TriggeredOn FROM phoromatic_schedules_triggers WHERE AccountID = :account_id AND ScheduleID = :schedule_id ORDER BY TriggeredOn DESC LIMIT 10');
@@ -242,8 +259,8 @@ class phoromatic_schedules implements pts_webui_interface
 
 				if($test_result_row)
 				{
-					$main .= '<div class="pts_phoromatic_info_box_area">';
-					$main .= '<div style="float: left; width: 100%;"><ul><li><h1>Recent Triggers For This Schedule</h1></li>';
+					$main .= '<div class="pts_phoromatic_info_box_area" style="margin: 0 10%;">';
+					$main .= '<ul><li><h1>Recent Triggers For This Schedule</h1></li>';
 
 					do
 					{
@@ -251,7 +268,7 @@ class phoromatic_schedules implements pts_webui_interface
 
 					}
 					while($test_result_row = $test_result_result->fetchArray());
-					$main .= '</ul></div>';
+					$main .= '</ul>';
 					$main .= '</div>';
 				}
 
@@ -265,8 +282,8 @@ class phoromatic_schedules implements pts_webui_interface
 
 				if($test_result_row)
 				{
-					$main .= '<div class="pts_phoromatic_info_box_area">';
-					$main .= '<div style="float: left; width: 100%;"><ul><li><h1>Recent Test Results For This Schedule</h1></li>';
+					$main .= '<div class="pts_phoromatic_info_box_area" style="margin: 0 10%;">';
+					$main .= '<ul><li><h1>Recent Test Results For This Schedule</h1></li>';
 					$results = 0;
 					do
 					{
@@ -280,7 +297,7 @@ class phoromatic_schedules implements pts_webui_interface
 
 					}
 					while($test_result_row = $test_result_result->fetchArray());
-					$main .= '</ul></div>';
+					$main .= '</ul>';
 					$main .= '</div>';
 				}
 				$num_results = phoromatic_results_for_schedule($PATH[0]);
