@@ -75,7 +75,7 @@ class phoromatic_systems implements pts_webui_interface
 				{
 					$main = '<h1>' . $row['Title'] . '</h1><p><em>' . ($row['Description'] != null ? $row['Description'] : 'No system description.') . '</em></p>';
 
-					if(phoromatic_system_check_if_down($_SESSION['AccountID'], $row['SystemID'], $row['LastCommunication'], $row['CurrentTask']))
+					if(phoromatic_server::system_check_if_down($_SESSION['AccountID'], $row['SystemID'], $row['LastCommunication'], $row['CurrentTask']))
 					{
 						$main .= '<h3 style="text-align: center; color: red;">This system appears to be offline or inactive and there are pending tests scheduled to be run on this system that have yet to be completed. This system has not communicated with the Phoromatic Server in ' . pts_strings::format_time((time() - strtotime($row['LastCommunication'])), 'SECONDS', true, 60) . '.</h3>';
 					}
