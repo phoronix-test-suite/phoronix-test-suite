@@ -146,7 +146,6 @@ define('ACCOUNT_ID', $ACCOUNT_ID);
 
 
 // CHECK IF SYSTEM IS ALREADY CONNECTED TO THE ACCOUNT
-// self::$db->exec('CREATE TABLE phoromatic_systems (AccountID TEXT UNIQUE, SystemID TEXT UNIQUE, Title TEXT, Description TEXT, Groups TEXT Hardware TEXT, Software TEXT, ClientVersion TEXT, GSID TEXT, CurrentTask TEXT, EstimatedTimeForTask TEXT, CreatedOn TEXT, LastCommunication TEXT, LastIP TEXT, LocalIP TEXT)');
 if($PTS_MACHINE_SELF_ID != null)
 {
 	$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, Groups, State FROM phoromatic_systems WHERE AccountID = :account_id AND MachineSelfID = :machine_self_id');

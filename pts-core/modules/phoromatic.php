@@ -38,6 +38,8 @@ class phoromatic extends pts_module_interface
 	private static $p_schedule_id = null;
 	private static $p_trigger_id = null;
 
+	private static $test_run_manager = null;
+
 	public static function module_info()
 	{
 		return 'The Phoromatic module contains the client support for interacting with Phoromatic and Phoromatic Tracker services.';
@@ -435,7 +437,7 @@ class phoromatic extends pts_module_interface
 						// Do the actual running
 						if(pts_test_run_manager::initial_checks($suite_identifier))
 						{
-							$test_run_manager = new pts_test_run_manager($test_flags);
+							self::$test_run_manager = new pts_test_run_manager($test_flags);
 							pts_test_run_manager::set_batch_mode(array(
 								'UploadResults' => (isset($json['phoromatic']['settings']['UploadResultsToOpenBenchmarking']) && pts_strings::string_bool($json['phoromatic']['settings']['UploadResultsToOpenBenchmarking'])),
 								'SaveResults' => true,
@@ -444,33 +446,33 @@ class phoromatic extends pts_module_interface
 								));
 
 							// Load the tests to run
-							if($test_run_manager->load_tests_to_run($suite_identifier))
+							if(self::$test_run_manager->load_tests_to_run($suite_identifier))
 							{
 								phoromatic::set_user_context($json['phoromatic']['pre_run_set_context'], self::$p_trigger_id, self::$p_schedule_id, 'PRE_RUN');
 								if(isset($json['phoromatic']['settings']['UploadResultsToOpenBenchmarking']) && pts_strings::string_bool($json['phoromatic']['settings']['UploadResultsToOpenBenchmarking']))
 								{
-									$test_run_manager->auto_upload_to_openbenchmarking();
+									self::$test_run_manager->auto_upload_to_openbenchmarking();
 									pts_openbenchmarking_client::override_client_setting('UploadSystemLogsByDefault', pts_strings::string_bool($json['phoromatic']['settings']['UploadSystemLogs']));
 								}
 
 								// Save results?
-								$test_run_manager->auto_save_results($phoromatic_save_identifier, $phoromatic_results_identifier, 'A Phoromatic run.');
+								self::$test_run_manager->auto_save_results($phoromatic_save_identifier, $phoromatic_results_identifier, 'A Phoromatic run.');
 
 								// Run the actual tests
-								$test_run_manager->pre_execution_process();
-								$test_run_manager->call_test_runs();
+								self::$test_run_manager->pre_execution_process();
+								self::$test_run_manager->call_test_runs();
 								phoromatic::update_system_status('Benchmarks Completed For: ' . $phoromatic_save_identifier);
-								$test_run_manager->post_execution_process();
+								self::$test_run_manager->post_execution_process();
 								$elapsed_benchmark_time = time() - $benchmark_timer;
 
 								// Handle uploading data to server
-								$result_file = new pts_result_file($test_run_manager->get_file_name());
+								$result_file = new pts_result_file(self::$test_run_manager->get_file_name());
 								$upload_system_logs = pts_strings::string_bool($json['phoromatic']['settings']['UploadSystemLogs']);
 								$server_response = self::upload_test_result($result_file, $upload_system_logs, $json['phoromatic']['schedule_id'], $phoromatic_save_identifier, $json['phoromatic']['trigger_id'], $elapsed_benchmark_time);
 								pts_client::$pts_logger->log('DEBUG RESPONSE MESSAGE: ' . $server_response);
 								if(!pts_strings::string_bool($json['phoromatic']['settings']['ArchiveResultsLocally']))
 								{
-									pts_client::remove_saved_result_file($test_run_manager->get_file_name());
+									pts_client::remove_saved_result_file(self::$test_run_manager->get_file_name());
 								}
 							}
 							phoromatic::set_user_context($json['phoromatic']['post_install_set_context'], self::$p_trigger_id, self::$p_schedule_id, 'POST_RUN');
@@ -703,9 +705,8 @@ class phoromatic extends pts_module_interface
 		{
 			return false;
 		}
-		// TODO: need a way to get the estimated time remaining from the test_run_manager so we can pass that back to the update_system_status parameter so server can read it
-		// TODO: report name of test identifier/run i.e. . ' For ' . PHOROMATIC_TITLE
-		phoromatic::update_system_status('Running: ' . $pts_test_result->test_profile->get_identifier());
+
+		phoromatic::update_system_status('Running: ' . $pts_test_result->test_profile->get_identifier(), ceil(self::$test_run_manager->get_estimated_run_time() / 60));
 	}
 	public static function __event_results_saved($test_run_manager)
 	{
