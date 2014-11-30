@@ -346,7 +346,7 @@ div.pts_phoromatic_info_box_area ul
 	margin: 10px 10px 20px 10px;
 	border: #d2d2d2 1px solid;
 	border-radius: 14px;
-	padding: 0;
+	padding: 10px 14px;
 }
 div.pts_phoromatic_info_box_area ul:last-child a:last-child li
 {

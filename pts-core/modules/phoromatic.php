@@ -416,7 +416,7 @@ class phoromatic extends pts_module_interface
 						$phoromatic_save_identifier = $json['phoromatic']['save_identifier'];
 						self::$p_schedule_id = $json['phoromatic']['schedule_id'];
 						self::$p_trigger_id = self::$p_save_identifier;
-						phoromatic::update_system_status('Running Benchmarks For Schedule: ' . $phoromatic_save_identifier . ' - ' . self::$p_save_identifier);
+						phoromatic::update_system_status('Running Benchmarks For Schedule: ' . $phoromatic_save_identifier);
 
 						if(pts_strings::string_bool($json['phoromatic']['settings']['RunInstallCommand']))
 						{
@@ -459,7 +459,7 @@ class phoromatic extends pts_module_interface
 								// Run the actual tests
 								$test_run_manager->pre_execution_process();
 								$test_run_manager->call_test_runs();
-								phoromatic::update_system_status('Benchmarks Completed For Schedule: ' . $phoromatic_save_identifier . ' - ' . self::$p_save_identifier);
+								phoromatic::update_system_status('Benchmarks Completed For: ' . $phoromatic_save_identifier);
 								$test_run_manager->post_execution_process();
 								$elapsed_benchmark_time = time() - $benchmark_timer;
 
@@ -691,9 +691,9 @@ class phoromatic extends pts_module_interface
 
 		static $last_update_time = 0;
 
-		if(time() > ($last_update_time + 600))
+		if(time() > ($last_update_time + 30))
 		{
-			phoromatic::update_system_status('Installing Tests');
+			phoromatic::update_system_status('Installing: ' . $test_identifier);
 			$last_update_time = time();
 		}
 	}
@@ -705,7 +705,7 @@ class phoromatic extends pts_module_interface
 		}
 		// TODO: need a way to get the estimated time remaining from the test_run_manager so we can pass that back to the update_system_status parameter so server can read it
 		// TODO: report name of test identifier/run i.e. . ' For ' . PHOROMATIC_TITLE
-		phoromatic::update_system_status('Running ' . $pts_test_result->test_profile->get_identifier());
+		phoromatic::update_system_status('Running: ' . $pts_test_result->test_profile->get_identifier());
 	}
 	public static function __event_results_saved($test_run_manager)
 	{
