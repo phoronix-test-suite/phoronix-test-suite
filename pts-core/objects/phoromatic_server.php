@@ -292,11 +292,17 @@ class phoromatic_server
 		{
 			foreach(explode(',', $row['RunTargetSystems']) as $sys)
 			{
+				if(empty($sys))
+					continue;
+
 				array_push($system_ids, $sys);
 			}
 
 			foreach(explode(',', $row['RunTargetGroups']) as $group)
 			{
+				if(empty($group))
+					continue;
+
 				$stmt = phoromatic_server::$db->prepare('SELECT SystemID FROM phoromatic_systems WHERE AccountID = :account_id AND Groups LIKE :sgroup');
 				$stmt->bindValue(':account_id', $account_id);
 				$stmt->bindValue(':sgroup', '%#' . $group . '#%');
