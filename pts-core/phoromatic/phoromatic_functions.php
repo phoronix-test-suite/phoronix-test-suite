@@ -51,9 +51,19 @@ function phoromatic_webui_box(&$box)
 {
 	return '<div id="pts_phoromatic_main_box"><div id="pts_phoromatic_main_box_inside">' . $box . '</div></div>';
 }
-function phoromatic_results_for_schedule($schedule_id)
+function phoromatic_results_for_schedule($schedule_id, $limit_results = false)
 {
-	$stmt = phoromatic_server::$db->prepare('SELECT COUNT(UploadID) As UploadCount FROM phoromatic_results WHERE AccountID = :account_id AND ScheduleID = :schedule_id');
+	switch($limit_results)
+	{
+		case 'TODAY':
+			$stmt = phoromatic_server::$db->prepare('SELECT COUNT(UploadID) As UploadCount FROM phoromatic_results WHERE AccountID = :account_id AND ScheduleID = :schedule_id AND UploadTime LIKE :today_date');
+			$stmt->bindValue(':today_date', date('Y-m-d') . '%');
+			break;
+		default:
+			$stmt = phoromatic_server::$db->prepare('SELECT COUNT(UploadID) As UploadCount FROM phoromatic_results WHERE AccountID = :account_id AND ScheduleID = :schedule_id');
+			break;
+	}
+
 	$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 	$stmt->bindValue(':schedule_id', $schedule_id);
 	$test_result_result = $stmt->execute();
