@@ -24,7 +24,7 @@ define('PHOROMATIC_USER_IS_VIEWER', !isset($_SESSION['AdminLevel']) || $_SESSION
 
 function phoromatic_user_friendly_timedate($time)
 {
-	return date('j F H:i', strtotime($time));
+	return phoromatic_server::user_friendly_timedate($time);
 }
 function phoromatic_webui_header($left_items, $right)
 {

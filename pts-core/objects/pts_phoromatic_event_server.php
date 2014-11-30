@@ -60,7 +60,7 @@ class pts_phoromatic_event_server
 						if(empty($row_email['Email']))
 							continue;
 
-						phoromatic_server::send_email($row_email['Email'], 'Phoromatic System Potential Hang: ' . phoromatic_server::system_id_to_name($row['SystemID'], $row['AccountID']), 'no-reply@phoromatic.com', '<p><strong>' . $row_email['UserName'] . ':</strong></p><p>One of the systems associated with your Phoromatic account has not been communicating with the Phoromatic Server in more than sixty minutes. Below is the system information details:</p><p><strong>System:</strong> ' . phoromatic_server::system_id_to_name($row['SystemID'], $row['AccountID']) . '<br /><strong>Last Communication:</strong> ' . $row['LastCommunication'] . '<br /><strong>Last Task:</strong> ' . $row['CurrentTask'] . '<br /><strong>Local IP:</strong> ' . $row['LastIP'] . '</p>');
+						phoromatic_server::send_email($row_email['Email'], 'Phoromatic System Potential Hang: ' . phoromatic_server::system_id_to_name($row['SystemID'], $row['AccountID']), 'no-reply@phoromatic.com', '<p><strong>' . $row_email['UserName'] . ':</strong></p><p>One of the systems associated with your Phoromatic account has not been communicating with the Phoromatic Server in more than sixty minutes. Below is the system information details:</p><p><strong>System:</strong> ' . phoromatic_server::system_id_to_name($row['SystemID'], $row['AccountID']) . '<br /><strong>Last Communication:</strong> ' . phoromatic_server::user_friendly_timedate($row['LastCommunication']) . '<br /><strong>Last Task:</strong> ' . $row['CurrentTask'] . '<br /><strong>Local IP:</strong> ' . $row['LastIP'] . '</p>');
 					}
 				}
 			}
@@ -129,6 +129,12 @@ class pts_phoromatic_event_server
 
 					if(phoromatic_server::system_check_if_down($row['AccountID'], $row['SystemID'], $row['LastCommunication'], $row['CurrentTask']))
 					{
+						if(strtotime($row['LastCommunication']) < (strtotime() - (86400 * 7)))
+						{
+							// If system hasn't been online in a week, likely has bigger worries...
+							continue;
+						}
+
 						$stmt_email = phoromatic_server::$db->prepare('SELECT UserName, Email FROM phoromatic_users WHERE UserID IN (SELECT UserID FROM phoromatic_user_settings WHERE AccountID = :account_id AND NotifyOnHungSystems = 1) AND AccountID = :account_id');
 						$stmt_email->bindValue(':account_id', $row['AccountID']);
 						$result_email = $stmt_email->execute();
@@ -137,7 +143,7 @@ class pts_phoromatic_event_server
 							if(empty($row_email['Email']))
 								continue;
 
-							phoromatic_server::send_email($row_email['Email'], 'Phoromatic System Potential Problem: ' . phoromatic_server::system_id_to_name($row['SystemID'], $row['AccountID']), 'no-reply@phoromatic.com', '<p><strong>' . $row_email['UserName'] . ':</strong></p><p>One of the systems associated with your Phoromatic account has not been communicating with the Phoromatic Server and is part of a current active test schedule. Below is the system information details:</p><p><strong>System:</strong> ' . phoromatic_server::system_id_to_name($row['SystemID'], $row['AccountID']) . '<br /><strong>Last Communication:</strong> ' . $row['LastCommunication'] . '<br /><strong>Last Task:</strong> ' . $row['CurrentTask'] . '<br /><strong>Local IP:</strong> ' . $row['LastIP'] . '</p>');
+							phoromatic_server::send_email($row_email['Email'], 'Phoromatic System Potential Problem: ' . phoromatic_server::system_id_to_name($row['SystemID'], $row['AccountID']), 'no-reply@phoromatic.com', '<p><strong>' . $row_email['UserName'] . ':</strong></p><p>One of the systems associated with your Phoromatic account has not been communicating with the Phoromatic Server and is part of a current active test schedule. Below is the system information details:</p><p><strong>System:</strong> ' . phoromatic_server::system_id_to_name($row['SystemID'], $row['AccountID']) . '<br /><strong>Last Communication:</strong> ' . phoromatic_server::user_friendly_timedate($row['LastCommunication']) . '<br /><strong>Last Task:</strong> ' . $row['CurrentTask'] . '<br /><strong>Local IP:</strong> ' . $row['LastIP'] . '</p>');
 						}
 						$systems_already_reported[$sys_hash] = time();
 					}

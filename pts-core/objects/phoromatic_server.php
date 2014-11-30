@@ -247,6 +247,10 @@ class phoromatic_server
 
 		return false;
 	}
+	public static function user_friendly_timedate($time)
+	{
+		return date('j F H:i', strtotime($time));
+	}
 	public static function system_has_outstanding_jobs($account_id, $system_id)
 	{
 		$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_schedules WHERE AccountID = :account_id AND State = 1 AND (SELECT COUNT(*) FROM phoromatic_schedules_tests WHERE AccountID = :account_id AND ScheduleID = phoromatic_schedules.ScheduleID) > 0');
