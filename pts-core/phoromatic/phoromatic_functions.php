@@ -142,7 +142,7 @@ function phoromatic_webui_right_panel_logged_in($add = null)
 	{
 		if(($bad_systems = phoromatic_server::systems_appearing_down()) != false)
 		{
-			$right .= '<ul><li style="color: red;">Systems Needing Attention</li>';
+			$right .= '<ul><li><span class="alert">Systems Needing Attention</span></li>';
 			foreach($bad_systems as $system)
 			{
 				$right .= '<li><a href="?systems/' . $system . '">' . phoromatic_server::system_id_to_name($system) . '</a></li>';

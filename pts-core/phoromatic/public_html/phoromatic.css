@@ -19,14 +19,14 @@ div#pts_phoromatic_top_header
 		linear,
 		left top,
 		left bottom,
-		color-stop(0, #0983E0),
-		color-stop(1, #076DBA)
+		color-stop(0, #1976d2),
+		color-stop(1, #0d47a1)
 	);
-	background-image: -o-linear-gradient(bottom, #0983E0 0%, #076DBA 100%);
-	background-image: -moz-linear-gradient(bottom, #0983E0 0%, #076DBA 100%);
-	background-image: -webkit-linear-gradient(bottom, #0983E0 0%, #076DBA 100%);
-	background-image: -ms-linear-gradient(bottom, #0983E0 0%, #076DBA 100%);
-	background-image: linear-gradient(to bottom, #0983E0 0%, #076DBA 100%);
+	background-image: -o-linear-gradient(bottom, #1976d2 0%, #0d47a1 100%);
+	background-image: -moz-linear-gradient(bottom, #1976d2 0%, #0d47a1 100%);
+	background-image: -webkit-linear-gradient(bottom, #1976d2 0%, #0d47a1 100%);
+	background-image: -ms-linear-gradient(bottom, #1976d2 0%, #0d47a1 100%);
+	background-image: linear-gradient(to bottom, #1976d2 0%, #0d47a1 100%);
 	border: #1F1F1F 1px solid;
 	overflow: hidden;
 	line-height: 70px;
@@ -45,14 +45,14 @@ div#pts_phoromatic_bottom_footer
 		linear,
 		left top,
 		left bottom,
-		color-stop(0, #0983E0),
-		color-stop(1, #076DBA)
+		color-stop(0, #1976d2),
+		color-stop(1, #0d47a1)
 	);
-	background-image: -o-linear-gradient(bottom, #0983E0 0%, #076DBA 100%);
-	background-image: -moz-linear-gradient(bottom, #0983E0 0%, #076DBA 100%);
-	background-image: -webkit-linear-gradient(bottom, #0983E0 0%, #076DBA 100%);
-	background-image: -ms-linear-gradient(bottom, #0983E0 0%, #076DBA 100%);
-	background-image: linear-gradient(to bottom, #0983E0 0%, #076DBA 100%);
+	background-image: -o-linear-gradient(bottom, #1976d2 0%, #0d47a1 100%);
+	background-image: -moz-linear-gradient(bottom, #1976d2 0%, #0d47a1 100%);
+	background-image: -webkit-linear-gradient(bottom, #1976d2 0%, #0d47a1 100%);
+	background-image: -ms-linear-gradient(bottom, #1976d2 0%, #0d47a1 100%);
+	background-image: linear-gradient(to bottom, #1976d2 0%, #0d47a1 100%);
 	border: #1F1F1F 1px solid;
 	font-weight: 400;
 	overflow: hidden;
@@ -124,7 +124,7 @@ div#pts_phoromatic_menu_right p
 div#pts_phoromatic_menu_right h3
 {
 	font-weight: 500;
-	color: #E08A09;
+	color: #ff9800;
 	font-size: 110%;
 	margin: 10px 0 0;
 	text-align: center;
@@ -135,14 +135,14 @@ div#pts_phoromatic_menu_right
 		linear,
 		left top,
 		right top,
-		color-stop(0, #0983E0),
-		color-stop(1, #076DBA)
+		color-stop(0, #1976d2),
+		color-stop(1, #0d47a1)
 	);
-	background-image: -o-linear-gradient(left, #0983E0 0%, #076DBA 100%);
-	background-image: -moz-linear-gradient(left, #0983E0 0%, #076DBA 100%);
-	background-image: -webkit-linear-gradient(left, #0983E0 0%, #076DBA 100%);
-	background-image: -ms-linear-gradient(left, #0983E0 0%, #076DBA 100%);
-	background-image: linear-gradient(to left, #0983E0 0%, #076DBA 100%);
+	background-image: -o-linear-gradient(left, #1976d2 0%, #0d47a1 100%);
+	background-image: -moz-linear-gradient(left, #1976d2 0%, #0d47a1 100%);
+	background-image: -webkit-linear-gradient(left, #1976d2 0%, #0d47a1 100%);
+	background-image: -ms-linear-gradient(left, #1976d2 0%, #0d47a1 100%);
+	background-image: linear-gradient(to left, #1976d2 0%, #0d47a1 100%);
 	width: 15%;
 	height: 100%;
 	float: right;
@@ -167,7 +167,7 @@ div#pts_phoromatic_menu_right ul li
 {
 	margin-bottom: 2px;
 	font-weight: 500;
-	color: #E08A09;
+	color: #ff9800;
 }
 div#pts_phoromatic_menu_right ul li a
 {
@@ -191,7 +191,7 @@ div#pts_phoromatic_menu_right hr
 }
 div#pts_phoromatic_main_box h1
 {
-	color: #E08A09;
+	color: #ff9800;
 }
 div#pts_phoromatic_main_box
 {
@@ -256,6 +256,11 @@ div#pts_phoromatic_main_area h2
 	font-size: 120%;
 	font-weight: 500;
 }
+.alert
+{
+	color: #ad1457;
+	font-weight: bold;
+}
 sup
 {
 	font-size: 60%;
@@ -266,25 +271,25 @@ p.result_object
 }
 div#pts_phoromatic_main_area a[href*="http"]
 {
-	border-bottom: 1px dotted #e08a09;
+	border-bottom: 1px dotted #ff9800;
 	display: inline;
 }
 div#pts_phoromatic_main_area a[href*="http"]:hover
 {
 	text-decoration: none;
-	border-bottom: 1px solid #e08a09;
+	border-bottom: 1px solid #ff9800;
 }
 div#pts_phoromatic_main_area h2 a
 {
-	color: #e08a09;
+	color: #ff9800;
 }
 div#pts_phoromatic_main_area h2 a.phx_alt
 {
-	color: #e08a09;
+	color: #ff9800;
 }
 div#pts_phoromatic_main_area h2 a:hover
 {
-	color: #945B06;
+	color: #e65100;
 	text-decoration: underline;
 }
 div#pts_phoromatic_main_area h6
@@ -332,7 +337,7 @@ div#pts_phoromatic_main_area ol li
 }
 div#pts_phoromatic_main_area p a, div#pts_phoromatic_main_area a, div#pts_phoromatic_main_area h6 a, div#pts_phoromatic_main_area h5 a, div#pts_phoromatic_main_box p a
 {
-	color: #e08a09;
+	color: #ff9800;
 	font-weight: 500;
 }
 div#pts_phoromatic_main_area p a:hover, div#pts_phoromatic_main_area a:hover, div#pts_phoromatic_main_area h6 a:hover, div#pts_phoromatic_main_area h5 a:hover, div#pts_phoromatic_main_box p a:hover
@@ -366,7 +371,7 @@ div.pts_phoromatic_info_box_area ul:last-child a:last-child li
 div.pts_phoromatic_info_box_area ul h1
 {
 	font-size: 120%;
-	color: #e08a09;
+	color: #ff9800;
 	margin: 1px 0;
 	font-weight: 500;
 	text-align: center;
@@ -431,7 +436,7 @@ div.pts_phoromatic_info_box_area table td
 div.pts_phoromatic_info_box_area table tr:hover td
 {
 	background: transparent;
-	color: #076DBA;
+	color: #0d47a1;
 }
 table.pts_phoromatic_schedule_type
 {
@@ -483,7 +488,7 @@ td
 {
 	background: #FAFAFA;
 	padding: 0 4px;
-	color: #076DBA;
+	color: #0d47a1;
 }
 tr:nth-child(even) td
 {
