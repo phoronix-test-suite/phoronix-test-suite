@@ -305,9 +305,29 @@ class phoromatic_systems implements pts_webui_interface
 					}
 					else
 					{
+						$acti = phoromatic_compute_estimated_time_remaining_string($row['EstimatedTimeForTask'], $row['LastCommunication']) . ($row['TaskPercentComplete'] > 0 ? ' [' . $row['TaskPercentComplete'] . '% Complete]' : null);
+						if(empty($acti))
+						{
+							$next_job_in = phoromatic_server::time_to_next_scheduled_job($_SESSION['AccountID'], $row['SystemID']);
+							if($next_job_in > 0)
+							{
+								if($next_job_in > 600)
+								{
+									$next_job_in = round($next_job_in / 60);
+									$next_unit = 'hours';
+								}
+								else
+								{
+									$next_unit = 'minutes';
+								}
+
+								$acti = 'Next job in ' . $next_job_in . ' ' . $next_unit;
+							}
+						}
+
 						do
 						{
-							$main .= '<a href="?systems/' . $row['SystemID'] . '"><li>' . $row['Title'] . '<br /><table><tr><td>' . $row['LocalIP'] . '</td><td><strong>' . $row['CurrentTask'] . '</strong></td><td><strong>' . phoromatic_compute_estimated_time_remaining_string($row['EstimatedTimeForTask'], $row['LastCommunication']) . ($row['TaskPercentComplete'] > 0 ? ' [' . $row['TaskPercentComplete'] . '% Complete]' : null) . '</strong></td><td><strong>Last Communication:</strong> ' . date('j F Y H:i', strtotime($row['LastCommunication'])) . '</td></tr></table></li></a>';
+							$main .= '<a href="?systems/' . $row['SystemID'] . '"><li>' . $row['Title'] . '<br /><table><tr><td>' . $row['LocalIP'] . '</td><td><strong>' . $row['CurrentTask'] . '</strong></td><td><strong>' . $acti . '</strong></td><td><strong>Last Communication:</strong> ' . date('j F Y H:i', strtotime($row['LastCommunication'])) . '</td></tr></table></li></a>';
 							$active_system_count++;
 						}
 						while($row = $result->fetchArray());

@@ -29,7 +29,7 @@ function phoromatic_user_friendly_timedate($time)
 function phoromatic_compute_estimated_time_remaining_string($estimated_minutes, $last_comm, $append = 'Remaining')
 {
 	$remaining = phoromatic_compute_estimated_time_remaining($estimated_minutes, $last_comm);
-	return $remaining > 0 ? '~' . pts_strings::plural_handler($remaining, 'Minute') . ' ' . $append : ' ';
+	return $remaining > 0 ? '~' . pts_strings::plural_handler($remaining, 'Minute') . ' ' . $append : null;
 }
 function phoromatic_compute_estimated_time_remaining($estimated_minutes, $last_comm)
 {
