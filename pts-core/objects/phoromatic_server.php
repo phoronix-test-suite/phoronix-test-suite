@@ -438,6 +438,60 @@ class phoromatic_server
 
 		return false;
 	}
+	public static function time_to_next_scheduled_job($account_id, $system_id)
+	{
+		$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_schedules WHERE AccountID = :account_id AND State = 1 AND (SELECT COUNT(*) FROM phoromatic_schedules_tests WHERE AccountID = :account_id AND ScheduleID = phoromatic_schedules.ScheduleID) > 0');
+		$stmt->bindValue(':account_id', $account_id);
+		$result = $stmt->execute();
+		$day_of_week_int = date('N') - 1;
+		$scheduled_times = array();
+
+		while($result && $row = $result->fetchArray())
+		{
+			// Make sure this test schedule is supposed to work on given system
+			if(!in_array($system_id, explode(',', $row['RunTargetSystems'])))
+			{
+				$stmt = phoromatic_server::$db->prepare('SELECT Groups FROM phoromatic_systems WHERE AccountID = :account_id AND SystemID = :system_id LIMIT 1');
+				$stmt->bindValue(':account_id', $account_id);
+				$stmt->bindValue(':system_id', $system_id);
+				$sys_result = $stmt->execute();
+				$sys_row = $sys_result->fetchArray();
+
+				$matches_to_group = false;
+				foreach(explode(',', $row['RunTargetGroups']) as $group)
+				{
+					if(stripos($sys_row['Groups'], '#' . $group . '#') !== false)
+					{
+						$matches_to_group = true;
+						break;
+					}
+				}
+
+				if($matches_to_group == false)
+					continue;
+			}
+
+			foreach(explode(',', $row['ActiveOn']) as $active_day)
+			{
+				list($hour, $minute) = explode('.', $row['RunAt']);
+				array_push($scheduled_times, (($active_day * 1440) + ($hour * 60) + $minute ));
+			}
+		}
+
+		sort($scheduled_times);
+
+		$now_time = ((date('N') - 1) * 1440) + (date('G') * 60) + date('i');
+		foreach($scheduled_times as $i => $time_to_next_job)
+		{
+			if($now_time > $time_to_next_job)
+				unset($scheduled_times[$i]);
+		}
+
+		if(!empty($scheduled_times))
+			return array_shift($scheduled_times) - $now_time;
+
+		return false;
+	}
 	public static function systems_appearing_down($account_id = null)
 	{
 		if(isset($_SESSION['AccountID']))

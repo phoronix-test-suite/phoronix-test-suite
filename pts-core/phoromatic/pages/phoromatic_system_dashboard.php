@@ -47,9 +47,15 @@ class phoromatic_system_dashboard implements pts_webui_interface
 		{
 			// stripos($row['CurrentTask'], 'idling') !== false ||
 			if(stripos($row['CurrentTask'], 'waiting') !== false || stripos($row['CurrentTask'], 'shutdown') !== false)
+			{
+				$not_testing = true;
 				$opacity = ' style="opacity: 0.3;"';
+			}
 			else
+			{
+				$not_testing = false;
 				$opacity = null;
+			}
 
 			echo '<a href="?systems/' . $row['SystemID'] . '"><div class="phoromatic_dashboard_block"' . $opacity . '>';
 			echo '<div style="float: left; width: 30%;">';
@@ -89,6 +95,17 @@ class phoromatic_system_dashboard implements pts_webui_interface
 				echo '<div style="float: left; margin: 0 0 0 10px;">';
 				echo '<h2>' . phoromatic_server::schedule_id_to_name($row['CurrentProcessSchedule']) . '</h2>';
 				echo '</div>';
+			}
+
+			if($not_testing)
+			{
+				$next_job_in = phoromatic_server::time_to_next_scheduled_job($_SESSION['AccountID'], $row['SystemID']);
+				if($next_job_in > 0)
+				{
+					echo '<div style="float: left; margin: 0 0 0 10px;">';
+					echo '<h2>' . $next_job_in . ' Minutes To Next Scheduled Run</h2>';
+					echo '</div>';
+				}
 			}
 
 			echo '<hr style="width: ' . $row['TaskPercentComplete'] . '%;" />';
