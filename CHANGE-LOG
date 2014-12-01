@@ -26,6 +26,7 @@ Phoronix Test Suite (Git)
 - phoromatic: Add system component table
 - phoromatic: Add new reporting features to server
 - phoromatic: Add system dashboard
+- phoromatic: Add legacy init.d script support
 
 Phoronix Test Suite 5.4 Milestone 6
 19 November 2014
