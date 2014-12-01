@@ -42,6 +42,7 @@ class phoromatic_system_dashboard implements pts_webui_interface
 		$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_systems WHERE AccountID = :account_id AND State >= 0 ORDER BY LastCommunication DESC');
 		$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 		$result = $stmt->execute();
+		echo '<script type="text/javascript"> setInterval(function() { window.location.reload(); }, 79000); </script>';
 		echo '<div style="margin: 10px 0 30px; clear: both; padding-bottom: 40px;">';
 		while($row = $result->fetchArray())
 		{
