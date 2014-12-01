@@ -361,8 +361,9 @@ class phoromatic extends pts_module_interface
 
 		$times_failed = 0;
 		$has_success = false;
+		$do_exit = false;
 
-		while(1)
+		while($do_exit == false)
 		{
 			$server_response = phoromatic::upload_to_remote_server(array(
 				'r' => 'start',
@@ -387,7 +388,6 @@ class phoromatic extends pts_module_interface
 			else if(substr($server_response, 0, 1) == '{')
 			{
 				$times_failed = 0;
-				$going_down = false;
 				$json = json_decode($server_response, true);
 
 				if($has_success == false)
@@ -489,7 +489,6 @@ class phoromatic extends pts_module_interface
 						if(pts_client::executable_in_path('reboot'))
 						{
 							shell_exec('reboot');
-							$going_down = true;
 							sleep(5);
 						}
 						break;
@@ -514,24 +513,33 @@ class phoromatic extends pts_module_interface
 						phoromatic::update_system_status('Attempting System Shutdown');
 						if(pts_client::executable_in_path('poweroff'))
 						{
-							$going_down = true;
 							shell_exec('poweroff');
 							sleep(5);
 						}
 						break;
+					case 'maintenance':
+						echo PHP_EOL . 'Idling, system maintenance mode set by Phoromatic Server.' . PHP_EOL;
+						phoromatic::update_system_status('Maintenance Mode');
+						sleep(60);
+						break;
+					case 'idle':
+						//echo PHP_EOL . 'Idling, waiting for task.' . PHP_EOL;
+						phoromatic::update_system_status('Idling, Waiting For Task');
+						break;
 					case 'exit':
 						echo PHP_EOL . 'Phoromatic received a remote command to exit.' . PHP_EOL;
 						phoromatic::update_system_status('Exiting Phoromatic');
-						$going_down = true;
-						return 0;
+						$do_exit = true;
+						break;
 				}
 			}
-			if(!$going_down)
+
+			if(!$do_exit)
 			{
-				phoromatic::update_system_status('Idling, Waiting For Task');
+				sleep(60);
 			}
-			sleep(60);
 		}
+
 		pts_client::release_lock(PTS_USER_PATH . 'phoromatic_lock');
 	}
 	private static function upload_test_result(&$result_file, $upload_system_logs = true, $schedule_id = 0, $save_identifier = null, $trigger = null, $elapsed_time = 0)

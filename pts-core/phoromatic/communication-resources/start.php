@@ -112,6 +112,7 @@ if($tests_expected_later_today == false && $phoromatic_account_settings['PowerOf
 	return;
 }
 
+$json['phoromatic']['task'] = 'idle';
 $json['phoromatic']['response'] = '[' . date('H:i:s') . '] Idling, waiting for task assignment...';
 echo json_encode($json);
 return;
@@ -157,18 +158,6 @@ function phoromatic_generate_test_suite(&$test_schedule, &$json, $trigger_id, $p
 
 	$json['phoromatic']['settings'] = $phoromatic_account_settings;
 
-	/*
-	$xml_writer->addXmlNode('PhoronixTestSuite/Phoromatic/General/UploadToGlobal', (pts_rmm_get_settings_value("UploadResultsToGlobal") == 1 ? "TRUE" : "FALSE"));
-	$xml_writer->addXmlNode('PhoronixTestSuite/Phoromatic/General/ArchiveResultsLocally', (pts_rmm_get_settings_value("ArchiveResultsLocally") == 1 ? "TRUE" : "FALSE"));
-	$xml_writer->addXmlNode('PhoronixTestSuite/Phoromatic/General/UploadTestLogs', (pts_rmm_get_settings_value("UploadTestLogsToServer") == 1 ? "TRUE" : "FALSE"));
-	$xml_writer->addXmlNode('PhoronixTestSuite/Phoromatic/General/UploadSystemLogs', (pts_rmm_get_settings_value("UploadSystemLogsToServer") == 1 ? "TRUE" : "FALSE"));
-	$xml_writer->addXmlNode('PhoronixTestSuite/Phoromatic/General/RunInstallCommand', (pts_rmm_get_settings_value("RunInstallCommand") == 1 ? "TRUE" : "FALSE"));
-	$xml_writer->addXmlNode('PhoronixTestSuite/Phoromatic/General/ForceInstallTests', (pts_rmm_get_settings_value("ForceInstallTests") == 1 ? "TRUE" : "FALSE"));
-	$xml_writer->addXmlNode('PhoronixTestSuite/Phoromatic/General/SetContextPreInstall', $record->SetContextPreInstall);
-	$xml_writer->addXmlNode('PhoronixTestSuite/Phoromatic/General/SetContextPreRun', $record->SetContextPreRun);
-	$xml_writer->addXmlNode('PhoronixTestSuite/Phoromatic/General/Trigger', $trigger_string);
-	$xml_writer->addXmlNode('PhoronixTestSuite/Phoromatic/General/ID', $schedule_id);
-	*/
 	echo json_encode($json);
 	return true;
 }
