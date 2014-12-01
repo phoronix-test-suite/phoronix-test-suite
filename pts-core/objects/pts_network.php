@@ -369,7 +369,21 @@ class pts_network
 	{
 		$mac = false;
 
-		if(($ifconfig = pts_client::executable_in_path('ifconfig')))
+		foreach(pts_file_io::glob('/sys/class/net/*/operstate') as $net_device_state)
+		{
+			if(pts_file_io::file_get_contents($net_device_state) == 'up')
+			{
+				$addr = dirname($net_device_state) . '/address';
+
+				if(is_file($addr))
+				{
+					$mac = pts_file_io::file_get_contents($addr);
+					break;
+				}
+			}
+		}
+
+		if(empty($mac) && ($ifconfig = pts_client::executable_in_path('ifconfig')))
 		{
 			$ifconfig = shell_exec($ifconfig . ' 2>&1');
 			$offset = 0;
