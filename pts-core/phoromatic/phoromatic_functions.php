@@ -26,10 +26,10 @@ function phoromatic_user_friendly_timedate($time)
 {
 	return phoromatic_server::user_friendly_timedate($time);
 }
-function phoromatic_compute_estimated_time_remaining_string($estimated_minutes, $last_comm)
+function phoromatic_compute_estimated_time_remaining_string($estimated_minutes, $last_comm, $append = 'Remaining')
 {
 	$remaining = phoromatic_compute_estimated_time_remaining($estimated_minutes, $last_comm);
-	return $remaining > 0 ? '~' . pts_strings::plural_handler($remaining, 'Minute') . ' Remaining' : ' ';
+	return $remaining > 0 ? '~' . pts_strings::plural_handler($remaining, 'Minute') . ' ' . $append : ' ';
 }
 function phoromatic_compute_estimated_time_remaining($estimated_minutes, $last_comm)
 {

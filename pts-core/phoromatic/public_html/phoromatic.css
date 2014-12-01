@@ -44,6 +44,7 @@ div#pts_phoromatic_bottom_footer
 	background: #0d47a1;
 	border: #1F1F1F 1px solid;
 	font-weight: 400;
+	clear: both;
 	overflow: hidden;
 	font-size: 60%;
 	line-height: 150%;
@@ -486,6 +487,7 @@ tr:hover td
 div.phoromatic_dashboard_block
 {
 	display: block;
+	clear: both;
 	padding: 10px 20px;
 }
 div.phoromatic_dashboard_block p
@@ -501,9 +503,27 @@ div.phoromatic_dashboard_block p em
 {
 	color: #272727;
 	font-style: normal;
+	font-size: 90%;
 }
 div.phoromatic_dashboard_block h1
 {
 	color: #ff9800;
 	margin: 2px 0;
+	font-size: 160%;
+}
+div.phoromatic_dashboard_block h2
+{
+	color: #272727;
+	font-weight: 400;
+	margin: 2px 0;
+	font-size: 140%;
+}
+div.phoromatic_dashboard_block hr
+{
+	text-align: center;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background: #ff9800;
+	height: 3px;
 }
