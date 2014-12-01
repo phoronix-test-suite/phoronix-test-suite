@@ -262,7 +262,7 @@ class phoromatic_schedules implements pts_webui_interface
 					foreach($systems_in_schedule as $system_id)
 					{
 						$row = phoromatic_server::get_system_details($_SESSION['AccountID'], $system_id);
-						$main .= '<a href="?systems/' . $row['SystemID'] . '"><li>' . $row['Title'] . '<br /><table><tr><td>' . $row['LocalIP'] . '</td><td><strong>Current State:</strong> ' . $row['CurrentTask'] . '</td><td><strong>Last Communication:</strong> ' . date('j F Y H:i', strtotime($row['LastCommunication'])) . '</td></tr></table></li></a>';
+						$main .= '<a href="?systems/' . $row['SystemID'] . '"><li>' . $row['Title'] . '<br /><table><tr><td>' . $row['LocalIP'] . '</td><td><strong>' . $row['CurrentTask'] . '</strong></td><td><strong>Last Communication:</strong> ' . date('j F Y H:i', strtotime($row['LastCommunication'])) . '</td></tr></table></li></a>';
 					}
 					$main .= '</ul></div><hr />';
 				}

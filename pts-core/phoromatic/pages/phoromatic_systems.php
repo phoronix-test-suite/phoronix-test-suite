@@ -297,6 +297,7 @@ class phoromatic_systems implements pts_webui_interface
 					$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 					$result = $stmt->execute();
 					$row = $result->fetchArray();
+					$active_system_count = 0;
 
 					if($row == false)
 					{
@@ -307,6 +308,7 @@ class phoromatic_systems implements pts_webui_interface
 						do
 						{
 							$main .= '<a href="?systems/' . $row['SystemID'] . '"><li>' . $row['Title'] . '<br /><table><tr><td>' . $row['LocalIP'] . '</td><td><strong>' . $row['CurrentTask'] . '</strong></td><td><strong>' . phoromatic_compute_estimated_time_remaining_string($row['EstimatedTimeForTask'], $row['LastCommunication']) . ($row['TaskPercentComplete'] > 0 ? ' [' . $row['TaskPercentComplete'] . '% Complete]' : null) . '</strong></td><td><strong>Last Communication:</strong> ' . date('j F Y H:i', strtotime($row['LastCommunication'])) . '</td></tr></table></li></a>';
+							$active_system_count++;
 						}
 						while($row = $result->fetchArray());
 					}
@@ -314,6 +316,11 @@ class phoromatic_systems implements pts_webui_interface
 
 			$main .= '</ul>
 			</div>';
+
+			if($active_system_count > 2)
+			{
+				$main .= '<h3 align="center"><a href="/?component_table">System Component Table</a></h3>';
+			}
 
 			if(!PHOROMATIC_USER_IS_VIEWER)
 			{

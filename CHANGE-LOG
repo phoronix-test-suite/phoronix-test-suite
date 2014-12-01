@@ -23,6 +23,7 @@ Phoronix Test Suite (Git)
 - phoromatic: Show schedules/group on system page
 - phoromatic: Hook in estimated time remaining for task
 - phoromatic: Report percent complete of task to server
+- phoromatic: Add system component table
 
 Phoronix Test Suite 5.4 Milestone 6
 19 November 2014
