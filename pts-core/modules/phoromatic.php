@@ -714,7 +714,7 @@ class phoromatic extends pts_module_interface
 			ceil(self::$test_run_manager->get_estimated_run_time() / 60),
 			self::$test_run_manager->get_percent_complete(),
 			null,
-			$pts_test_result->test_profile->get_estimated_run_time());
+			ceil($pts_test_result->test_profile->get_estimated_run_time() / 60));
 	}
 	public static function __event_results_saved($test_run_manager)
 	{

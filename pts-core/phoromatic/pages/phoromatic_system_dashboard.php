@@ -49,7 +49,7 @@ class phoromatic_system_dashboard implements pts_webui_interface
 			echo '<div style="float: left; width: 35%;">';
 			echo '<h1>' . $row['Title'] . '</h1>';
 
-			$components = array_merge(pts_result_file_analyzer::system_component_string_to_array($row['Hardware'], array('Processor', 'Motherboard')), pts_result_file_analyzer::system_component_string_to_array($row['Software'], array('OS', 'Kernel', 'File-System')));
+			$components = array_merge(pts_result_file_analyzer::system_component_string_to_array($row['Hardware'], array('Processor', 'Motherboard')), pts_result_file_analyzer::system_component_string_to_array($row['Software'], array('OS', 'Kernel')));
 			foreach($components as &$c)
 			{
 				if(($x = stripos($c, ' @')) !== false)
@@ -70,7 +70,7 @@ class phoromatic_system_dashboard implements pts_webui_interface
 				echo '<p class="font-size: 90%;"><em>Estimated Time Remaining</em></p>';
 				if(!empty($row['TimeToNextCommunication']))
 				{
-					echo '<p><em>' . phoromatic_compute_estimated_time_remaining($row['TimeToNextCommunication'], $row['LastCommunication'], 'To Next Communication') . '</em></p>';
+					echo '<p><em>' . phoromatic_compute_estimated_time_remaining_string($row['TimeToNextCommunication'], $row['LastCommunication'], 'To Next Communication') . '</em></p>';
 				}
 				echo '</div>';
 			}
