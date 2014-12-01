@@ -64,7 +64,17 @@ class phoromatic_component_table implements pts_webui_interface
 			$main .= '<th><a href="/?systems/' . $system_ids[$system_id] . '">' . $system_ids[$system_id] . '</a></th>';
 			foreach($component_types as $type)
 			{
-				$main .= '<td>' . (isset($component_array[$type]) ? $component_array[$type] : '<em>N/A</em>') . '</td>';
+				$c = (isset($component_array[$type]) ? $component_array[$type] : 'N/A');
+				if(($x = stripos($c, ' @ ')) !== false)
+				{
+					$c = substr($c, 0, $x);
+				}
+				if(($x = stripos($c, ' (')) !== false)
+				{
+					$c = substr($c, 0, $x);
+				}
+
+				$main .= '<td>' . $c . '</td>';
 			}
 
 			$main .= '</tr>';
