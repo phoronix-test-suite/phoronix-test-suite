@@ -45,8 +45,9 @@ class phoromatic_system_dashboard implements pts_webui_interface
 		echo '<div style="margin: 10px 0 30px; clear: both; padding-bottom: 40px;">';
 		while($row = $result->fetchArray())
 		{
-			if(stripos($row['CurrentTask'], 'idling') !== false || stripos($row['CurrentTask'], 'waiting') !== false || stripos($row['CurrentTask'], 'shutdown') !== false)
-				$opacity = ' style="opacity: 0.4;"';
+			// stripos($row['CurrentTask'], 'idling') !== false ||
+			if(stripos($row['CurrentTask'], 'waiting') !== false || stripos($row['CurrentTask'], 'shutdown') !== false)
+				$opacity = ' style="opacity: 0.3;"';
 			else
 				$opacity = null;
 
@@ -73,7 +74,7 @@ class phoromatic_system_dashboard implements pts_webui_interface
 			$time_remaining = phoromatic_compute_estimated_time_remaining($row['EstimatedTimeForTask'], $row['LastCommunication']);
 			if($time_remaining)
 			{
-				echo '<div style="float: left;">';
+				echo '<div style="float: left; text-align: center; margin: 0 6px;">';
 				echo '<h2>~ ' . $time_remaining . ' <sub>mins</sub></h2>';
 				echo '<p class="font-size: 90%;"><em>Estimated Time Remaining</em></p>';
 				if(!empty($row['TimeToNextCommunication']))
@@ -85,7 +86,7 @@ class phoromatic_system_dashboard implements pts_webui_interface
 
 			if(!empty($row['CurrentProcessSchedule']))
 			{
-				echo '<div style="float: left;">';
+				echo '<div style="float: left; margin: 0 0 0 10px;">';
 				echo '<h2>' . phoromatic_server::schedule_id_to_name($row['CurrentProcessSchedule']) . '</h2>';
 				echo '</div>';
 			}
