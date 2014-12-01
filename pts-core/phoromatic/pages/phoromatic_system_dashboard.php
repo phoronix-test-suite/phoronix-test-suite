@@ -45,8 +45,13 @@ class phoromatic_system_dashboard implements pts_webui_interface
 		echo '<div style="margin: 10px 0 30px; clear: both; padding-bottom: 40px;">';
 		while($row = $result->fetchArray())
 		{
-			echo '<a href="?systems/' . $row['SystemID'] . '"><div class="phoromatic_dashboard_block">';
-			echo '<div style="float: left; width: 35%;">';
+			if(stripos($row['CurrentTask'], 'idling') !== false || stripos($row['CurrentTask'], 'waiting') !== false || stripos($row['CurrentTask'], 'shutdown') !== false)
+				$opacity = ' style="opacity: 0.4;"';
+			else
+				$opacity = null;
+
+			echo '<a href="?systems/' . $row['SystemID'] . '"><div class="phoromatic_dashboard_block"' . $opacity . '>';
+			echo '<div style="float: left; width: 30%;">';
 			echo '<h1>' . $row['Title'] . '</h1>';
 
 			$components = array_merge(pts_result_file_analyzer::system_component_string_to_array($row['Hardware'], array('Processor', 'Motherboard')), pts_result_file_analyzer::system_component_string_to_array($row['Software'], array('OS', 'Kernel')));
@@ -61,11 +66,14 @@ class phoromatic_system_dashboard implements pts_webui_interface
 			echo '<h2>' . $row['CurrentTask'] . '</h2>';
 			echo '</div>';
 
-			$time_remaining = phoromatic_compute_estimated_time_remaining($row['EstimatedTimeForTask'], $row['LastCommunication']);
+			echo '<div style="float: left;">';
+			echo '<h2>' . $row['LastIP'] . '</h2>';
+			echo '</div>';
 
+			$time_remaining = phoromatic_compute_estimated_time_remaining($row['EstimatedTimeForTask'], $row['LastCommunication']);
 			if($time_remaining)
 			{
-				echo '<div style="float: left; width: 40%;">';
+				echo '<div style="float: left;">';
 				echo '<h2>~ ' . $time_remaining . ' <sub>mins</sub></h2>';
 				echo '<p class="font-size: 90%;"><em>Estimated Time Remaining</em></p>';
 				if(!empty($row['TimeToNextCommunication']))
@@ -75,9 +83,16 @@ class phoromatic_system_dashboard implements pts_webui_interface
 				echo '</div>';
 			}
 
+			if(!empty($row['CurrentProcessSchedule']))
+			{
+				echo '<div style="float: left;">';
+				echo '<h2>' . phoromatic_server::schedule_id_to_name($row['CurrentProcessSchedule']) . '</h2>';
+				echo '</div>';
+			}
+
 			echo '<hr style="width: ' . $row['TaskPercentComplete'] . '%;" />';
 			echo '</div></a>';
-			$system_ids[$row['SystemID']] = $row['Title'];
+
 		}
 		echo '</div>';
 		echo phoromatic_webui_footer();
