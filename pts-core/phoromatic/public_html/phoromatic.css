@@ -213,11 +213,7 @@ div#pts_phoromatic_main_area
 h1
 {
 	font-weight: 400;
-	font-size: 140%;
-}
-div#pts_phoromatic_main_area h1
-{
-	margin-left: -15px;
+	font-size: 160%;
 }
 div#pts_phoromatic_main_area ol
 {
@@ -297,12 +293,10 @@ div#pts_phoromatic_main_area hr
 	border: #f1f1f1 1px solid;
 	border-width: 0 0 1px 0;
 	background-color: #f1f1f1;
-	width: 90%;
 	clear: both;
 	height: 1px;
-	margin: 20px 0;
+	margin: 14px 0;
 }
-
 div#pts_phoromatic_main_area ol
 {
 	list-style: none;

@@ -256,16 +256,27 @@ class phoromatic_server
 		}
 
 		// See if the system attempted to run the trigger/schedule combination but reported an error during the process....
-		$stmt = phoromatic_server::$db->prepare('SELECT ErrorMessage FROM phoromatic_system_client_errors WHERE AccountID = :account_id AND SystemID = :system_id AND ScheduleID = :schedule_id AND TriggerID = :trigger ORDER BY UploadTime DESC LIMIT 10');
+		$stmt = phoromatic_server::$db->prepare('SELECT COUNT(ErrorMessage) AS ErrorCount FROM phoromatic_system_client_errors WHERE AccountID = :account_id AND SystemID = :system_id AND ScheduleID = :schedule_id AND TriggerID = :trigger');
 		$stmt->bindValue(':account_id', $account_id);
 		$stmt->bindValue(':system_id', $system_id);
 		$stmt->bindValue(':schedule_id', $schedule_id);
 		$stmt->bindValue(':trigger', $trigger_id);
 		$result = $stmt->execute();
 
-		if($result != false && $result->fetchArray() != false)
+		if($result != false && ($row = $result->fetchArray()) != false)
 		{
-			return true;
+			$error_count = $row['ErrorCount'];
+			$stmt = phoromatic_server::$db->prepare('SELECT COUNT(*) AS TestCount FROM phoromatic_schedules_tests WHERE AccountID = :account_id AND ScheduleID = :schedule_id');
+			$stmt->bindValue(':account_id', $account_id);
+			$stmt->bindValue(':schedule_id', $schedule_id);
+			$result = $stmt->execute();
+			$row = $result->fetchArray();
+
+			// See if error count was greater than test count, meaning all of the tests might have failed
+			if($error_count >= $row['TestCount'])
+			{
+				return true;
+			}
 		}
 
 		return false;
