@@ -47,12 +47,12 @@ class phoromatic_component_table implements pts_webui_interface
 
 		while($row = $result->fetchArray())
 		{
-			$components[$row['SystemID']] = array_merge(pts_result_file_analyzer::system_component_string_to_array($row['Software'], array('OS', 'Kernel', 'OpenGL', 'File-System')), pts_result_file_analyzer::system_component_string_to_array($row['Hardware'], array('Processor', 'Motherboard', 'Disk', 'Graphics')));
+			$components[$row['SystemID']] = array_merge(pts_result_file_analyzer::system_component_string_to_array($row['Software'], array('OS', 'Kernel', 'OpenGL', 'File-System')), pts_result_file_analyzer::system_component_string_to_array($row['Hardware'], array('Processor', 'Motherboard', 'Memory', 'Disk', 'Graphics')));
 			$system_ids[$row['SystemID']] = $row['Title'];
 		}
 
 		$main .= '<div style="margin: 10px auto; overflow: auto;"><table>';
-		$component_types = array('Processor', 'Motherboard', 'Disk', 'Graphics', 'OS', 'Kernel', 'OpenGL', 'File-System');
+		$component_types = array('Processor', 'Motherboard', 'Memory', 'Disk', 'Graphics', 'OS', 'Kernel', 'OpenGL', 'File-System');
 		$main .= '<tr><th>&nbsp;</th>';
 		foreach($component_types as $type)
 		{

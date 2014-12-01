@@ -135,6 +135,7 @@ class start_phoromatic_server implements pts_option_interface
 		// HTTP Server Setup
 		if(strpos(getenv('PHP_BIN'), 'hhvm'))
 		{
+			echo PHP_EOL . 'Unfortunately, the HHVM built-in web server has abandoned upstream. Users will need to use the PHP binary or other alternatives.' . PHP_EOL . PHP_EOL;
 			$server_launcher .= 'cd ' . PTS_CORE_PATH . 'phoromatic/public_html/ && ' . getenv('PHP_BIN') . ' --config ' . PTS_CORE_PATH . 'static/hhvm-server.hdf -m server -vServer.Port=' . $web_port . ' -vServer.IP=' . $server_ip . ' -vServer.SourceRoot=' . PTS_CORE_PATH . 'phoromatic/ > /dev/null 2>> $PTS_PHOROMATIC_LOG_LOCATION &' . PHP_EOL;
 		}
 		else

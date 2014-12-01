@@ -216,7 +216,7 @@ class phoromatic extends pts_module_interface
 		$to_post['msi'] = PTS_MACHINE_SELF_ID;
 		return pts_network::http_upload_via_post('http://' . $server_address . ':' . $server_http_port .  '/phoromatic.php', $to_post);
 	}
-	protected static function update_system_status($current_task, $estimated_time_remaining = 0, $percent_complete = 0)
+	protected static function update_system_status($current_task, $estimated_time_remaining = 0, $percent_complete = 0, $for_schedule = null, $estimate_to_next_comm = 0)
 	{
 		static $last_msg = null;
 
@@ -229,7 +229,9 @@ class phoromatic extends pts_module_interface
 				'r' => 'update_system_status',
 				'a' => $current_task,
 				'time' => $estimated_time_remaining,
-				'pc' => $percent_complete
+				'pc' => $percent_complete,
+				'sched' => (!empty($for_schedule) ? $for_schedule : self::$p_schedule_id),
+				'o' => $estimate_to_next_comm
 				));
 	}
 	public static function startup_ping_check($server_ip, $http_port)
@@ -478,6 +480,7 @@ class phoromatic extends pts_module_interface
 							}
 							phoromatic::set_user_context($json['phoromatic']['post_install_set_context'], self::$p_trigger_id, self::$p_schedule_id, 'POST_RUN');
 						}
+						self::$p_schedule_id = null;
 						self::$is_running_as_phoromatic_node = false;
 						break;
 					case 'reboot':
@@ -700,7 +703,7 @@ class phoromatic extends pts_module_interface
 			$last_update_time = time();
 		}
 	}
-	public static function __pre_test_run($pts_test_result)
+	public static function __pre_test_run(&$pts_test_result)
 	{
 		if(!self::$is_running_as_phoromatic_node)
 		{
@@ -709,7 +712,9 @@ class phoromatic extends pts_module_interface
 
 		phoromatic::update_system_status('Running: ' . $pts_test_result->test_profile->get_identifier(),
 			ceil(self::$test_run_manager->get_estimated_run_time() / 60),
-			self::$test_run_manager->get_percent_complete());
+			self::$test_run_manager->get_percent_complete(),
+			null,
+			$pts_test_result->test_profile->get_estimated_run_time());
 	}
 	public static function __event_results_saved($test_run_manager)
 	{

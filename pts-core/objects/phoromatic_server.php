@@ -174,6 +174,11 @@ class phoromatic_server
 				// Change made 30 November for percent complete
 				self::$db->exec('ALTER TABLE phoromatic_systems ADD COLUMN TaskPercentComplete INTEGER DEFAULT 0');
 				self::$db->exec('PRAGMA user_version = 14');
+			case 14:
+				// Change made 1 December for more reporting features
+				self::$db->exec('ALTER TABLE phoromatic_systems ADD COLUMN CurrentProcessSchedule INTEGER');
+				self::$db->exec('ALTER TABLE phoromatic_systems ADD COLUMN TimeToNextCommunication INTEGER DEFAULT 0');
+				self::$db->exec('PRAGMA user_version = 15');
 		}
 		chmod($db_file, 0600);
 	}

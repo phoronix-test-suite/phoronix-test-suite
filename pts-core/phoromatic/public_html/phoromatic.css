@@ -483,3 +483,27 @@ tr:hover td
 	background: #666;
 	color: #FFF;
 }
+div.phoromatic_dashboard_block
+{
+	display: block;
+	padding: 10px 20px;
+}
+div.phoromatic_dashboard_block p
+{
+	margin: 0;
+	padding: 0;
+}
+div.phoromatic_dashboard_block p strong
+{
+	color: #0d47a1;
+}
+div.phoromatic_dashboard_block p em
+{
+	color: #272727;
+	font-style: normal;
+}
+div.phoromatic_dashboard_block h1
+{
+	color: #ff9800;
+	margin: 2px 0;
+}
