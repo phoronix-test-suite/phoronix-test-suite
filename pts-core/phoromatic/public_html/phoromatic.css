@@ -520,6 +520,7 @@ div.phoromatic_dashboard_block h2
 }
 div.phoromatic_dashboard_block hr
 {
+	clear: both;
 	text-align: center;
 	margin: 0;
 	padding: 0;

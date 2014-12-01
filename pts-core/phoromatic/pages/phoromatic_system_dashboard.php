@@ -62,12 +62,12 @@ class phoromatic_system_dashboard implements pts_webui_interface
 			echo '</div>';
 
 			$time_remaining = phoromatic_compute_estimated_time_remaining($row['EstimatedTimeForTask'], $row['LastCommunication']);
-$time_remaining = rand(1, 100);
+
 			if($time_remaining)
 			{
 				echo '<div style="float: left; width: 40%;">';
 				echo '<h2>~ ' . $time_remaining . ' <sub>mins</sub></h2>';
-				echo '<p><em>Estimated Time Remaining</em></p>';
+				echo '<p class="font-size: 90%;"><em>Estimated Time Remaining</em></p>';
 				if(!empty($row['TimeToNextCommunication']))
 				{
 					echo '<p><em>' . phoromatic_compute_estimated_time_remaining($row['TimeToNextCommunication'], $row['LastCommunication'], 'To Next Communication') . '</em></p>';
