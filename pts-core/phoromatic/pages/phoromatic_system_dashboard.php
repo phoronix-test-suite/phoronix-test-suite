@@ -108,8 +108,18 @@ class phoromatic_system_dashboard implements pts_webui_interface
 				$next_job_in = phoromatic_server::time_to_next_scheduled_job($_SESSION['AccountID'], $row['SystemID']);
 				if($next_job_in > 0)
 				{
+					if($next_job_in > 600)
+					{
+						$next_job_in = round($next_job_in / 60);
+						$next_unit = 'hours';
+					}
+					else
+					{
+						$next_unit = 'mins';
+					}
+
 					echo '<div style="float: left; margin: 0 0 0 10px; text-align: center;">';
-					echo '<h2>' . $next_job_in . ' <sub>mins</sub></h2>';
+					echo '<h2>' . $next_job_in . ' <sub>' . $next_unit . '</sub></h2>';
 					echo '<p class="font-size: 90%;"><em>Time To Next Scheduled Task</em></p>';
 					echo '</div>';
 				}
