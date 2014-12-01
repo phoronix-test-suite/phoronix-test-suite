@@ -50,7 +50,7 @@ class phoromatic_system_dashboard implements pts_webui_interface
 			if(phoromatic_server::system_check_if_down($_SESSION['AccountID'], $row['SystemID'], $row['LastCommunication'], $row['CurrentTask']))
 			{
 				$not_testing = false;
-				$opacity = ' background: #f44336; color: #FFF; '
+				$opacity = ' style="background: #f44336; color: #FFF;"';
 			}
 			else if(stripos($row['CurrentTask'], 'waiting') !== false || stripos($row['CurrentTask'], 'shutdown') !== false)
 			{
