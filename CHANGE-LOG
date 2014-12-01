@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+- pts-core: Improve MAC address acquisition on systems with multiple NICs
 - phoromatic: Add add_new_users_to_account option for adding new users automatically to existing account
 - phoromatic: Allow changing the admin level for users by the main administrator from the Users page
 - phoromatic: Report systems MAC address from the systems page

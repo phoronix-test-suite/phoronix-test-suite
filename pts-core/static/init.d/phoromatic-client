@@ -10,6 +10,12 @@
 # config: /etc/phoronix-test-suite.xml
 
 # source function library
+description     "Phoronix Test Suite Phoromatic Client"
+author          "Phoronix Media"
+
+start on runlevel [35]
+stop on runlevel [0126]
+
 . /etc/rc.d/init.d/functions
 
 RETVAL=0
@@ -17,6 +23,7 @@ prog="phoromatic-client"
 
 start() {
 	echo -n $"Starting $prog:"
+	env DISPLAY=:0
 	/usr/bin/phoronix-test-suite phoromatic.connect
 	RETVAL=$?
 	[ "$RETVAL" = 0 ] && touch /var/lock/subsys/$prog
@@ -38,7 +45,7 @@ reload() {
 	echo
 }
 
-case "$1" in	(9)
+case "$1" in
 	start)
 		start
 		;;
