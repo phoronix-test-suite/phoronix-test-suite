@@ -73,15 +73,25 @@ echo "' . phoromatic_web_socket_server_addr() . '" > $PHORO_FILE_PATH/modules-da
 		ssh2_exec($connection, 'rm' . $tmp_remote_file);
 	}
 }
-if((isset($_POST['ip_claim']) && !empty($_POST['ip_claim'])) || (isset($_POST['mac_claim']) && !empty($_POST['mac_claim'])))
-{
-	$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_system_association_claims (AccountID, IPAddress, NetworkMAC, CreationTime) VALUES (:account_id, :ip_address, :mac_address, :creation_time)');
-	$stmt->bindValue(':account_id', $_SESSION['AccountID']);
-	$stmt->bindValue(':ip_address', $_POST['ip_claim']);
-	$stmt->bindValue(':mac_address', $_POST['mac_claim']);
-	$stmt->bindValue(':creation_time', phoromatic_server::current_time());
-	$result = $stmt->execute();
-}
+			if((isset($_POST['ip_claim']) && !empty($_POST['ip_claim'])) || (isset($_POST['mac_claim']) && !empty($_POST['mac_claim'])))
+			{
+				$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_system_association_claims (AccountID, IPAddress, NetworkMAC, CreationTime) VALUES (:account_id, :ip_address, :mac_address, :creation_time)');
+				$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+				$stmt->bindValue(':ip_address', $_POST['ip_claim']);
+				$stmt->bindValue(':mac_address', $_POST['mac_claim']);
+				$stmt->bindValue(':creation_time', phoromatic_server::current_time());
+				$result = $stmt->execute();
+			}
+			if(isset($_POST['remove_claim']) && !empty($_POST['remove_claim']))
+			{
+				list($ipc, $macc) = explode(',', $_POST['remove_claim']);
+				$stmt = phoromatic_server::$db->prepare('DELETE FROM phoromatic_system_association_claims WHERE AccountID = :account_id AND NetworkMAC = :mac_address AND IPAddress = :ip_address LIMIT 1');
+				$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+				$stmt->bindValue(':ip_address', $ipc);
+				$stmt->bindValue(':mac_address', $macc);
+				$stmt->bindValue(':creation_time', phoromatic_server::current_time());
+				$result = $stmt->execute();
+			}
 
 			$main .= '<h2>Add Phoromatic Server Info Via IP/MAC</h2>
 			<p>If deploying a Phoromatic Server within an organization, you can attempt for automatic configuration of Phoromatic clients if you know the system\'s IP or MAC addresses. When specifying either of these fields, if a Phoromatic client attempts to connect to this Phoromatic system without being associated to an account, it will be claimed by this account as long as no other Phoromatic accounts are attempting to claim the IP/MAC. This method can be particularly useful if running the Phoromatic client as a systemd/Upstart service where it will continually poll every 90 seconds auto-detected Phoromatic Servers on the LAN via zero-conf networking. For this feature to work, the zero-conf networking (Avahi) support must be enabled and working.</p>';
@@ -94,12 +104,27 @@ if((isset($_POST['ip_claim']) && !empty($_POST['ip_claim'])) || (isset($_POST['m
 			$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_system_association_claims WHERE AccountID = :account_id ORDER BY CreationTime ASC');
 			$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 			$result = $stmt->execute();
+			$claims = array();
 			while($row = $result->fetchArray())
 			{
 				$main .= '<p>' . $row['IPAddress'] . ' ' . $row['NetworkMAC'] . '</p>';
+				array_push($claims, $row['IPAddress'] . ',' . $row['NetworkMAC']);
+			}
+
+			if(!empty($claims))
+			{
+				$main .= '<hr /><h2>Remove Claim</h2><p>Removing a claimed IP / MAC address.</p>';
+				$main .= '<p><form action="' . $_SERVER['REQUEST_URI'] . '" name="remove_claim" method="post"><select name="remove_claim" id="remove_claim">';
+
+				foreach($claims as $claim)
+				{
+					$main .= '<option value="' . $claim . '">' . str_replace(',', ' ', $claim) . '</option>';
+				}
+				$main .= '</select> <input name="submit" value="Remove Claim" type="submit" /></form></p>';
 			}
 
 			$main .= '<hr />';
+
 
 			$main .= '<h2>Add Phoromatic Server Info Via SSH</h2>
 			<p>If your Phoromatic client systems are SSH-enabled, you can specify their SSH connection information below. In doing so, the Phoromatic Server will do a one-time connection to it immediately to pre-seed the system with the Phoromatic Server account information for this account. This should allow the client systems to then find the server automatically next time the phoronix-test-suite is run. This command assumes the Phoronix Test Suite is already pre-installed on the client system in your desired configuration.</p>';

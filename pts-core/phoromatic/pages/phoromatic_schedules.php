@@ -365,8 +365,6 @@ class phoromatic_schedules implements pts_webui_interface
 
 
 			$main .= '<div class="pts_phoromatic_info_box_area">
-
-				<div style="float: left; width: 100%;">
 					<ul>
 						<li><h1>Active Test Schedules</h1></li>';
 
@@ -398,7 +396,6 @@ class phoromatic_schedules implements pts_webui_interface
 
 
 			$main .= '</ul>
-				</div>
 			</div>';
 
 			$main .= '<hr /><h2>Schedule Overview</h2>';
@@ -427,6 +424,40 @@ class phoromatic_schedules implements pts_webui_interface
 					$main .= '</p>' . PHP_EOL;
 
 			}
+
+			$main .= '<div class="pts_phoromatic_info_box_area">
+					<ul>
+						<li><h1>Deactivated Test Schedules</h1></li>';
+
+					$stmt = phoromatic_server::$db->prepare('SELECT Title, ScheduleID, Description, RunTargetSystems, RunTargetGroups, RunAt, ActiveOn FROM phoromatic_schedules WHERE AccountID = :account_id AND State < 1 ORDER BY Title ASC');
+					$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+					$result = $stmt->execute();
+					$row = $result->fetchArray();
+
+					if($row == false)
+					{
+						$main .= '<li class="light" style="text-align: center;">No Schedules Found</li>';
+					}
+					else
+					{
+						do
+						{
+							$stmt_tests = phoromatic_server::$db->prepare('SELECT COUNT(*) AS TestCount FROM phoromatic_schedules_tests WHERE AccountID = :account_id AND ScheduleID = :schedule_id ORDER BY TestProfile ASC');
+							$stmt_tests->bindValue(':account_id', $_SESSION['AccountID']);
+							$stmt_tests->bindValue(':schedule_id', $row['ScheduleID']);
+							$result_tests = $stmt_tests->execute();
+							$row_tests = $result_tests->fetchArray();
+							$test_count = !empty($row_tests) ? $row_tests['TestCount'] : 0;
+
+							$group_count = empty($row['RunTargetGroups']) ? 0 : count(explode(',', $row['RunTargetGroups']));
+							$main .= '<a href="?schedules/' . $row['ScheduleID'] . '"><li>' . $row['Title'] . '<br /><table><tr><td>' . pts_strings::plural_handler(count(phoromatic_server::systems_associated_with_schedule($_SESSION['AccountID'], $row['ScheduleID'])), 'System') . '</td><td>' . pts_strings::plural_handler($group_count, 'Group') . '</td><td>' . pts_strings::plural_handler($test_count, 'Test') . '</td><td>' . pts_strings::plural_handler(phoromatic_results_for_schedule($row['ScheduleID']), 'Result') . ' Total</td><td>' . pts_strings::plural_handler(phoromatic_results_for_schedule($row['ScheduleID'], 'TODAY'), 'Result') . ' Today</td><td><strong>' . phoromatic_schedule_activeon_string($row['ActiveOn'], $row['RunAt']) . '</strong></td></tr></table></li></a>';
+						}
+						while($row = $result->fetchArray());
+					}
+
+
+			$main .= '</ul>
+			</div>';
 
 			echo phoromatic_webui_main($main, phoromatic_webui_right_panel_logged_in());
 			echo phoromatic_webui_footer();

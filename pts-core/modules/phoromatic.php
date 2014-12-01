@@ -438,6 +438,7 @@ class phoromatic extends pts_module_interface
 						}
 
 						// Do the actual running
+						phodevi::clear_cache();
 						if(pts_test_run_manager::initial_checks($suite_identifier))
 						{
 							self::$test_run_manager = new pts_test_run_manager($test_flags);
