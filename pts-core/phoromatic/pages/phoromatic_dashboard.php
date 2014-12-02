@@ -21,7 +21,7 @@
 */
 
 
-class phoromatic_system_dashboard implements pts_webui_interface
+class phoromatic_dashboard implements pts_webui_interface
 {
 	public static function page_title()
 	{

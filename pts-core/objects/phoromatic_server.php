@@ -179,6 +179,10 @@ class phoromatic_server
 				self::$db->exec('ALTER TABLE phoromatic_systems ADD COLUMN CurrentProcessSchedule INTEGER');
 				self::$db->exec('ALTER TABLE phoromatic_systems ADD COLUMN TimeToNextCommunication INTEGER DEFAULT 0');
 				self::$db->exec('PRAGMA user_version = 15');
+			case 15:
+				// Change made 1 December for maintenance mode
+				self::$db->exec('ALTER TABLE phoromatic_systems ADD COLUMN MaintenanceMode INTEGER DEFAULT 0');
+				self::$db->exec('PRAGMA user_version = 16');
 		}
 		chmod($db_file, 0600);
 	}
