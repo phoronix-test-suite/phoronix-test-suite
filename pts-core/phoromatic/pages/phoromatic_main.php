@@ -45,6 +45,14 @@ class phoromatic_main implements pts_webui_interface
 		$result = $stmt->execute();
 		return $result && ($row = $result->fetchArray()) ? $row['UploadID'] : false;
 	}
+	protected static function system_info($system_id, $info = '*')
+	{
+		$stmt = phoromatic_server::$db->prepare('SELECT ' . $info . ' FROM phoromatic_systems WHERE AccountID = :account_id AND SystemID = :system_id LIMIT 1');
+		$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+		$stmt->bindValue(':system_id', $system_id);
+		$result = $stmt->execute();
+		return $result && ($row = $result->fetchArray()) ? $row : false;
+	}
 	public static function render_page_process($PATH)
 	{
 		echo phoromatic_webui_header_logged_in();
@@ -79,7 +87,7 @@ class phoromatic_main implements pts_webui_interface
 			$stmt->bindValue(':active_day', '%' . $show_day_of_week . '%');
 			$result = $stmt->execute();
 
-			$main .= '<hr /><h2>Today\'s Scheduled Workload</h2>';
+			$main .= '<hr /><h2>Today\'s Testing Workload</h2>';
 			$main .= '<div style="margin: 10px 0 30px; clear: both; padding-bottom: 40px; display: block;">';
 
 			while($row = $result->fetchArray())
@@ -89,6 +97,17 @@ class phoromatic_main implements pts_webui_interface
 
 				$main .= '<div style="margin-left: ' . $offset . '%;" class="phoromatic_overview_box">';
 				$main .= '<h1><a href="?schedules/' . $row['ScheduleID'] . '">' . $row['Title'] . '</a></h1>';
+
+				if($row['RunAt'] > date('H.i'))
+				{
+					$run_in_future = treue;
+					$main .= '<h3>Runs In ' . pts_strings::format_time(($h * 60) + $m, 'MINUTES') . '</h3>';
+				}
+				else
+				{
+					$run_in_future = false;
+					$main .= '<h3>Triggered ' . pts_strings::format_time((date('H') * 60) + date('i') - (($h * 60) + $m), 'MINUTES') . ' Ago</h3>';
+				}
 
 				foreach(phoromatic_server::systems_associated_with_schedule($_SESSION['AccountID'], $row['ScheduleID']) as $system_id)
 				{
@@ -101,6 +120,20 @@ class phoromatic_main implements pts_webui_interface
 
 					if($upload_id)
 						$main .= '</a>';
+					else if(!$run_in_future)
+					{
+						$sys_info = self::system_info($system_id);
+						$last_comm_diff = time() - strtotime($sys_info['LastCommunication']);
+
+						if($last_comm_diff > 3600 && false)
+						{
+							$main .= ' [Last Communication: ' . pts_strings::format_time($last_comm_diff, 'SECONDS', true, 60) . ' Ago]';
+						}
+						else
+						{
+							$main .= ' [<strong>' . $sys_info['CurrentTask'] . '</strong>]';
+						}
+					}
 
 					$main .= '<br />';
 				}
@@ -198,6 +231,7 @@ class phoromatic_main implements pts_webui_interface
 			<div class="pts_phoromatic_info_box_area">';
 
 		// ACTIVE TEST SCHEDULES
+		/*
 		$main .= '<div style="float: left; width: 50%;"><ul><li><h1>Active Test Schedules</h1></li>';
 		$stmt = phoromatic_server::$db->prepare('SELECT Title, ScheduleID, Description, RunTargetSystems, RunTargetGroups, ActiveOn, RunAt FROM phoromatic_schedules WHERE AccountID = :account_id AND State >= 1 ORDER BY Title ASC');
 		$stmt->bindValue(':account_id', $_SESSION['AccountID']);
@@ -218,6 +252,7 @@ class phoromatic_main implements pts_webui_interface
 			while($row = $result->fetchArray());
 		}
 		$main .= '</ul></div>';
+		*/
 		// TODAY'S TEST RESULTS
 		$main .= '<div style="float: left; width: 50%;"><ul><li><h1>Today\'s Test Results</h1></li>';
 		$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, ScheduleID, UploadID, UploadTime, TimesViewed FROM phoromatic_results WHERE AccountID = :account_id ORDER BY UploadTime DESC');
