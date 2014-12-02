@@ -228,16 +228,8 @@ function phoromatic_webui_right_panel_logged_in($add = null)
 
 		}
 
-		$stmt = phoromatic_server::$db->prepare('SELECT COUNT(Title) AS SystemCount FROM phoromatic_systems WHERE AccountID = :account_id AND State >= 0');
-		$stmt->bindValue(':account_id', $_SESSION['AccountID']);
-		$result = $stmt->execute();
-		$row = $result->fetchArray();
 		$system_count = phoromatic_account_system_count();
-		$stmt = phoromatic_server::$db->prepare('SELECT COUNT(Title) AS ScheduleCount FROM phoromatic_schedules WHERE AccountID = :account_id AND State >= 1');
-		$stmt->bindValue(':account_id', $_SESSION['AccountID']);
-		$result = $stmt->execute();
-		$row = $result->fetchArray();
-		$schedule_count = $row['ScheduleCount'];
+		$schedule_count = phoromatic_account_schedule_count();
 		$stmt = phoromatic_server::$db->prepare('SELECT COUNT(UploadID) AS ResultCount FROM phoromatic_results WHERE AccountID = :account_id');
 		$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 		$result = $stmt->execute();
@@ -253,6 +245,21 @@ function phoromatic_webui_right_panel_logged_in($add = null)
 	}
 
 	return $right;
+}
+function phoromatic_account_schedule_count()
+{
+	static $schedule_count = 0;
+
+	if($schedule_count == 0)
+	{
+		$stmt = phoromatic_server::$db->prepare('SELECT COUNT(Title) AS ScheduleCount FROM phoromatic_schedules WHERE AccountID = :account_id AND State >= 1');
+		$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+		$result = $stmt->execute();
+		$row = $result->fetchArray();
+		$schedule_count = $row['ScheduleCount'];
+	}
+
+	return $schedule_count;
 }
 function phoromatic_account_system_count()
 {

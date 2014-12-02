@@ -35,6 +35,16 @@ class phoromatic_main implements pts_webui_interface
 	{
 		return true;
 	}
+	protected static function result_match($schedule_id, $system_id, $date)
+	{
+		$stmt = phoromatic_server::$db->prepare('SELECT UploadID FROM phoromatic_results WHERE AccountID = :account_id AND ScheduleID = :schedule_id AND SystemID = :system_id AND UploadTime LIKE :upload_time LIMIT 1');
+		$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+		$stmt->bindValue(':schedule_id', $schedule_id);
+		$stmt->bindValue(':system_id', $system_id);
+		$stmt->bindValue(':upload_time', '%' . $date);
+		$result = $stmt->execute();
+		return $result && $row = $result->fetchArray() ? $row['UploadID'] : false;
+	}
 	public static function render_page_process($PATH)
 	{
 		echo phoromatic_webui_header_logged_in();
@@ -56,6 +66,50 @@ class phoromatic_main implements pts_webui_interface
 					<li>If you like Phoromatic and the Phoronix Test Suite for enterprise testing, please <a href="http://commercial.phoronix-test-suite.com/">contact us</a> for commercial support, our behind-the-firewall licensed versions of Phoromatic and OpenBenchmarking.org, custom engineering services, and other professional services. It\'s not without corporate support that we can continue to develop this leading Linux benchmarking software in our Phoronix mission of enriching the Linux hardware experience. If you run into any problems with our open-source software or would like to contribute patches, you can do so via our <a href="https://www.github.com/phoronix-test-suite/phoronix-test-suite">GitHub</a>.</li>
 				</ol>';
 
+		}
+
+		if(phoromatic_account_system_count() > 3 && phoromatic_account_schedule_count() > 3)
+		{
+			//////////
+			$show_date = date('Y-m-d');
+			$show_day_of_week = date('N') - 1;
+
+			$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_schedules WHERE AccountID = :account_id AND State = 1 AND (SELECT COUNT(*) FROM phoromatic_schedules_tests WHERE AccountID = :account_id AND ScheduleID = phoromatic_schedules.ScheduleID) > 0 AND ActiveOn LIKE :active_day ORDER BY RunAt ASC');
+			$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+			$stmt->bindValue(':active_day', '%' . $show_day_of_week . '%');
+			$result = $stmt->execute();
+
+			$main .= '<hr /><h2>Today\'s Scheduled Workload</h2>';
+			$main .= '<div style="margin: 10px 0 30px; clear: both; padding-bottom: 40px; display: block;">';
+
+			while($row = $result->fetchArray())
+			{
+				list($h, $m) = explode('.', $row['RunAt']);
+				$offset = (($h * 60) + $m) / 1440 * 100;
+
+				$main .= '<div style="margin-left: ' . $offset . '%;" class="phoromatic_overview_box">';
+				$main .= '<h1><a href="?schedules/' . $row['ScheduleID'] . '">' . $row['Title'] . '</a></h1>';
+
+				foreach(phoromatic_server::systems_associated_with_schedule($_SESSION['AccountID'], $row['ScheduleID']) as $system_id)
+				{
+					$upload_id = self::result_match($row['ScheduleID'], $system_id, $show_date);
+
+					if($upload_id)
+						$main .= '<a href="?result/' . $upload_id . '">';
+
+					$main .= phoromatic_server::system_id_to_name($system_id);
+
+					if($upload_id)
+						$main .= '</a>';
+
+					$main .= '<br />';
+				}
+
+				$main .= '</div>';
+			}
+
+			$main .= '</div>';
+			/////////
 		}
 
 

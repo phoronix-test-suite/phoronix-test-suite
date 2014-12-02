@@ -528,3 +528,19 @@ div.phoromatic_dashboard_block hr
 	background: #ff9800;
 	height: 3px;
 }
+div.phoromatic_overview_box
+{
+	background: #f1f1f1;
+	border-radius: 14px;
+	padding: 4px 12px;
+	margin: 10px 0;
+	float: left;
+	clear: both;
+	border: #ff9800 1px solid;"
+}
+div.phoromatic_overview_box h1
+{
+	color: #ff9800;
+	padding: 0;
+	margin: 1px 0 4px;
+}

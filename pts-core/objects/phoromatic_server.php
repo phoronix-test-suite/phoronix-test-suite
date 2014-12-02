@@ -447,7 +447,6 @@ class phoromatic_server
 		$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_schedules WHERE AccountID = :account_id AND State = 1 AND (SELECT COUNT(*) FROM phoromatic_schedules_tests WHERE AccountID = :account_id AND ScheduleID = phoromatic_schedules.ScheduleID) > 0');
 		$stmt->bindValue(':account_id', $account_id);
 		$result = $stmt->execute();
-		$day_of_week_int = date('N') - 1;
 		$scheduled_times = array();
 
 		while($result && $row = $result->fetchArray())
