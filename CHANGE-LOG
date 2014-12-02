@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 5.4 Milestone 7
+1 December 2014
 
 - pts-core: Improve MAC address acquisition on systems with multiple NICs
 - phoromatic: Add add_new_users_to_account option for adding new users automatically to existing account
