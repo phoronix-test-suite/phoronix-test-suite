@@ -68,7 +68,7 @@ class phoromatic_main implements pts_webui_interface
 
 		}
 
-		if(phoromatic_account_system_count() > 3 && phoromatic_account_schedule_count() > 3)
+		if(phoromatic_account_system_count() > 2 && phoromatic_account_schedule_count() > 2)
 		{
 			//////////
 			$show_date = date('Y-m-d');
