@@ -544,3 +544,8 @@ div.phoromatic_overview_box h1
 	padding: 0;
 	margin: 1px 0 4px;
 }
+div.phoromatic_overview_box h2, div.phoromatic_overview_box h3
+{
+	padding: 0;
+	margin: 1px 0 2px;
+}

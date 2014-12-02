@@ -37,11 +37,11 @@ class phoromatic_main implements pts_webui_interface
 	}
 	protected static function result_match($schedule_id, $system_id, $date)
 	{
-		$stmt = phoromatic_server::$db->prepare('SELECT UploadID FROM phoromatic_results WHERE AccountID = :account_id AND ScheduleID = :schedule_id AND SystemID = :system_id AND UploadTime LIKE :upload_time LIMIT 1');
+		$stmt = phoromatic_server::$db->prepare('SELECT UploadID FROM phoromatic_results WHERE AccountID = :account_id AND ScheduleID = :schedule_id AND SystemID = :system_id AND Trigger = :trigger LIMIT 1');
 		$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 		$stmt->bindValue(':schedule_id', $schedule_id);
 		$stmt->bindValue(':system_id', $system_id);
-		$stmt->bindValue(':upload_time', $date . '%');
+		$stmt->bindValue(':trigger', $date);
 		$result = $stmt->execute();
 		return $result && ($row = $result->fetchArray()) ? $row['UploadID'] : false;
 	}
@@ -125,7 +125,7 @@ class phoromatic_main implements pts_webui_interface
 						$sys_info = self::system_info($system_id);
 						$last_comm_diff = time() - strtotime($sys_info['LastCommunication']);
 
-						if($last_comm_diff > 3600 && false)
+						if($last_comm_diff > 3600)
 						{
 							$main .= ' [Last Communication: ' . pts_strings::format_time($last_comm_diff, 'SECONDS', true, 60) . ' Ago]';
 						}
