@@ -149,7 +149,7 @@ define('ACCOUNT_ID', $ACCOUNT_ID);
 // CHECK IF SYSTEM IS ALREADY CONNECTED TO THE ACCOUNT
 if($PTS_MACHINE_SELF_ID != null)
 {
-	$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, Groups, State FROM phoromatic_systems WHERE AccountID = :account_id AND MachineSelfID = :machine_self_id');
+	$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, Groups, State, MaintenanceMode FROM phoromatic_systems WHERE AccountID = :account_id AND MachineSelfID = :machine_self_id');
 	$stmt->bindValue(':account_id', ACCOUNT_ID);
 	$stmt->bindValue(':machine_self_id', $PTS_MACHINE_SELF_ID);
 	$result = $stmt->execute();
@@ -160,7 +160,7 @@ if(!isset($result) || empty($result))
 {
 	// TODO XXX: This block of code can be dropped when doing away with older PTS client support... pre-5.4 support
 	// See if before the client was connecting from an older PTS version without a MachineSelfID....
-	$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, Groups, State FROM phoromatic_systems WHERE AccountID = :account_id AND GSID = :gsid AND MachineSelfID = :machine_self_id');
+	$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, Groups, State, MaintenanceMode FROM phoromatic_systems WHERE AccountID = :account_id AND GSID = :gsid AND MachineSelfID = :machine_self_id');
 	$stmt->bindValue(':account_id', ACCOUNT_ID);
 	$stmt->bindValue(':gsid', $GSID);
 	$stmt->bindValue(':machine_self_id', null);
@@ -205,11 +205,13 @@ if(empty($result))
 
 	exit;
 }
+
 define('SYSTEM_ID', $result['SystemID']);
 define('SYSTEM_NAME', $result['Title']);
 define('SYSTEM_GROUPS', $result['Groups']);
 $SYSTEM_STATE = $result['State'];
 define('GSID', $GSID);
+define('SYSTEM_IN_MAINTENANCE_MODE', ($result['MaintenanceMode'] == 1));
 
 $stmt = phoromatic_server::$db->prepare('UPDATE phoromatic_systems SET LastIP = :access_ip, LocalIP = :local_ip, LastCommunication = :current_time, Hardware = :client_hardware, Software = :client_software, ClientVersion = :client_version, MachineSelfID = :machine_self_id, NetworkMAC = :network_mac, NetworkWakeOnLAN = :network_wol WHERE AccountID = :account_id AND SystemID = :system_id');
 $stmt->bindValue(':account_id', $ACCOUNT_ID);

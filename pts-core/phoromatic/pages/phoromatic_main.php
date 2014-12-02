@@ -41,9 +41,9 @@ class phoromatic_main implements pts_webui_interface
 		$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 		$stmt->bindValue(':schedule_id', $schedule_id);
 		$stmt->bindValue(':system_id', $system_id);
-		$stmt->bindValue(':upload_time', '%' . $date);
+		$stmt->bindValue(':upload_time', $date . '%');
 		$result = $stmt->execute();
-		return $result && $row = $result->fetchArray() ? $row['UploadID'] : false;
+		return $result && ($row = $result->fetchArray()) ? $row['UploadID'] : false;
 	}
 	public static function render_page_process($PATH)
 	{

@@ -29,6 +29,7 @@ Phoronix Test Suite (Git)
 - phoromatic: Add system dashboard
 - phoromatic: Add legacy init.d script support
 - phoromatic: Rework idle support and add maintenance mode support to client
+- phoromatic: Implement maintenance mode on server side
 
 Phoronix Test Suite 5.4 Milestone 6
 19 November 2014

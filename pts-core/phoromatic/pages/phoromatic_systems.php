@@ -50,6 +50,14 @@ class phoromatic_systems implements pts_webui_interface
 			$stmt->bindValue(':state', $_POST['system_state']);
 			$stmt->execute();
 		}
+		if(!PHOROMATIC_USER_IS_VIEWER && !empty($PATH[0]) && isset($_POST['maintenance_mode']))
+		{
+			$stmt = phoromatic_server::$db->prepare('UPDATE phoromatic_systems SET MaintenanceMode = :maintenance_mode WHERE AccountID = :account_id AND SystemID = :system_id');
+			$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+			$stmt->bindValue(':system_id', $PATH[0]);
+			$stmt->bindValue(':maintenance_mode', $_POST['maintenance_mode']);
+			$stmt->execute();
+		}
 
 		if(!empty($PATH[0]))
 		{
@@ -102,6 +110,24 @@ class phoromatic_systems implements pts_webui_interface
 				$main .= '<hr />';
 				$info_table = array('Status:' => $row['CurrentTask'], 'Last Communication:' => phoromatic_user_friendly_timedate($row['LastCommunication']), 'Estimated Time Left For Task: ' => phoromatic_compute_estimated_time_remaining_string($row['EstimatedTimeForTask'], $row['LastCommunication']), 'State:' => $state, 'Phoronix Test Suite Client:' => $row['ClientVersion'], 'Initial Creation:' => phoromatic_user_friendly_timedate($row['CreatedOn']), 'System ID:' => $row['SystemID'], 'Last IP:' => $row['LastIP'], 'MAC Address' => $row['NetworkMAC'], 'Wake-On-LAN Information' => (empty($row['NetworkWakeOnLAN']) ? 'N/A' : $row['NetworkWakeOnLAN']));
 				$main .= '<h2>System State</h2>' . pts_webui::r2d_array_to_table($info_table, 'auto');
+
+				if(!PHOROMATIC_USER_IS_VIEWER)
+				{
+					if($row['MaintenanceMode'] == 1)
+					{
+						$mm_str = 'Disable Maintenance Mode';
+						$mm_val = 0;
+						$mm_onclick = 'return true;';
+					}
+					else
+					{
+						$mm_str = 'Enter Maintenance Mode';
+						$mm_val = 1;
+						$mm_onclick = 'return confirm(\'Enter maintenance mode now?\');';
+					}
+
+					$main .= '<p><form action="' . $_SERVER['REQUEST_URI'] . '" name="update_groups" method="post"><input type="hidden" name="maintenance_mode" value="' . $mm_val . '" /><input type="submit" value="' . $mm_str . '" onclick="' . $mm_onclick . '" style="float: left; margin: 0 20px 5px 0;" /></form> Putting the system into maintenance mode will power up the system (if supported and applicable) and cause the Phoronix Test Suite Phoromatic client to idle and block all testing until the mode has been disabled. If a test is already running on the system, the maintenance mode will not be entered until after the testing has completed. The maintenance mode can be used if wishing to update the system software or carry out other tasks without interfering with the Phoromatic client process. Once disabled, the Phoronix Test Suite will continue to function as normal.</p>';
+				}
 
 				$main .= '<hr /><h2>System Components</h2><div style="float: left; width: 50%;">';
 				$components = pts_result_file_analyzer::system_component_string_to_array($row['Hardware']);

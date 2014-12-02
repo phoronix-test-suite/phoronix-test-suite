@@ -23,6 +23,30 @@
 
 class pts_phoromatic_event_server
 {
+	protected function send_wol_wakeup($mac, $ip)
+	{
+		$sent_wol_request = false;
+		if(PTS_IS_DAEMONIZED_SERVER_PROCESS)
+		{
+			foreach(array('etherwake', 'ether-wake') as $etherwake)
+			{
+				if(pts_client::executable_in_path($etherwake))
+				{
+					shell_exec($etherwake . ' ' . $mac . ' 2>&1');
+					$sent_wol_request = true;
+					sleep(5);
+					break;
+				}
+			}
+		}
+		if($sent_wol_request == false)
+		{
+			pts_network::send_wol_packet($ip, $mac);
+			$sent_wol_request = true;
+		}
+
+		return $sent_wol_request;
+	}
 	public function __construct()
 	{
 		$systems_already_reported = array();
@@ -67,14 +91,19 @@ class pts_phoromatic_event_server
 			if($minute % 3 == 0)
 			{
 				// Check for systems to wake
-				$stmt = phoromatic_server::$db->prepare('SELECT LastCommunication, CurrentTask, SystemID, AccountID, NetworkMAC, LastIP FROM phoromatic_systems WHERE State > 0 AND NetworkMAC NOT LIKE \'\' AND NetworkWakeOnLAN LIKE \'%g%\' ORDER BY LastCommunication DESC');
+				$stmt = phoromatic_server::$db->prepare('SELECT LastCommunication, CurrentTask, SystemID, AccountID, NetworkMAC, LastIP, MaintenanceMode FROM phoromatic_systems WHERE State > 0 AND NetworkMAC NOT LIKE \'\' AND NetworkWakeOnLAN LIKE \'%g%\' ORDER BY LastCommunication DESC');
 				$result = $stmt->execute();
 
 				while($row = $result->fetchArray())
 				{
 					$last_comm = strtotime($row['LastCommunication']);
+					if($last_comm < (time() - 360) && $row['MaintenanceMode'] == 1)
+					{
+						self::send_wol_wakeup($row['NetworkMAC'], $row['LastIP']);
+						continue;
+					}
 					if($last_comm < (time() - (3600 * 25)))
-						break; // System likely has some other issue if beyond a day it's been offline
+						continue; // System likely has some other issue if beyond a day it's been offline
 					if($last_comm < (time() - 600) || stripos($row['CurrentTask'], 'Shutdown') !== false)
 					{
 						// System hasn't communicated in a number of minutes so it might be powered off
@@ -89,25 +118,7 @@ class pts_phoromatic_event_server
 
 							if(isset($phoromatic_account_settings['NetworkPowerUpWhenNeeded']) && $phoromatic_account_settings['NetworkPowerUpWhenNeeded'] == 1)
 							{
-								$sent_wol_request = false;
-								if(PTS_IS_DAEMONIZED_SERVER_PROCESS)
-								{
-									foreach(array('etherwake', 'ether-wake') as $etherwake)
-									{
-										if(pts_client::executable_in_path($etherwake))
-										{
-											shell_exec($etherwake . ' ' . $row['NetworkMAC'] . ' 2>&1');
-											$sent_wol_request = true;
-											sleep(5);
-											break;
-										}
-									}
-								}
-								if($sent_wol_request == false)
-								{
-									pts_network::send_wol_packet($row['LastIP'], $row['NetworkMAC']);
-									$sent_wol_request = true;
-								}
+								$sent_wol_request = self::send_wol_wakeup($row['NetworkMAC'], $row['LastIP']);
 							}
 						}
 					}

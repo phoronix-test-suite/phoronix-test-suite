@@ -20,6 +20,14 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+if(SYSTEM_IN_MAINTENANCE_MODE)
+{
+	$json['phoromatic']['task'] = 'maintenance';
+	//$json['phoromatic']['response'] = '[' . date('H:i:s') . '] System in maintenance mode.';
+	echo json_encode($json);
+	return;
+}
+
 $day_of_week_int = date('N') - 1;
 
 $stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_account_settings WHERE AccountID = :account_id');
