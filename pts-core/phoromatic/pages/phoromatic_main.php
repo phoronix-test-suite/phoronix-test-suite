@@ -100,7 +100,7 @@ class phoromatic_main implements pts_webui_interface
 
 				if($row['RunAt'] > date('H.i'))
 				{
-					$run_in_future = treue;
+					$run_in_future = true;
 					$main .= '<h3>Runs In ' . pts_strings::format_time(($h * 60) + $m, 'MINUTES') . '</h3>';
 				}
 				else

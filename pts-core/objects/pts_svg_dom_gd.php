@@ -57,9 +57,9 @@ class pts_svg_dom_gd
 			{
 				putenv('GDFONTPATH=' . $font_env);
 			}
-			else
+			else if(is_dir('/usr/share/fonts'))
 			{
-				putenv('GDFONTPATH=' . getcwd());
+				putenv('GDFONTPATH=/usr/share/fonts');
 			}
 		}
 	}
