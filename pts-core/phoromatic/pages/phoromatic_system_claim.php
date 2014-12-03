@@ -85,7 +85,7 @@ echo "' . phoromatic_web_socket_server_addr() . '" > $PHORO_FILE_PATH/modules-da
 			if(isset($_POST['remove_claim']) && !empty($_POST['remove_claim']))
 			{
 				list($ipc, $macc) = explode(',', $_POST['remove_claim']);
-				$stmt = phoromatic_server::$db->prepare('DELETE FROM phoromatic_system_association_claims WHERE AccountID = :account_id AND NetworkMAC = :mac_address AND IPAddress = :ip_address LIMIT 1');
+				$stmt = phoromatic_server::$db->prepare('DELETE FROM phoromatic_system_association_claims WHERE AccountID = :account_id AND NetworkMAC = :mac_address AND IPAddress = :ip_address');
 				$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 				$stmt->bindValue(':ip_address', $ipc);
 				$stmt->bindValue(':mac_address', $macc);
