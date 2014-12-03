@@ -124,7 +124,7 @@ class pts_phoromatic_event_server
 					}
 				}
 			}
-			if($minute % 8 == 0)
+			if($minute % 8 == 0 && $hour > 1)
 			{
 				// See if system appears down
 				$stmt = phoromatic_server::$db->prepare('SELECT LastCommunication, CurrentTask, SystemID, AccountID, LastIP FROM phoromatic_systems WHERE State > 0 ORDER BY LastCommunication DESC');
