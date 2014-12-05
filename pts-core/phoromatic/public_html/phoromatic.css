@@ -224,7 +224,7 @@ div#pts_phoromatic_main_area ol li
 {
 	margin-bottom: 4px;
 }
-div#pts_phoromatic_main_area h2
+div#pts_phoromatic_main_box h2
 {
 	margin: 1px 0 10px;
 	clear: both;
@@ -244,52 +244,52 @@ p.result_object
 {
 	text-align: center;
 }
-div#pts_phoromatic_main_area a[href*="http"]
+div#pts_phoromatic_main_box a[href*="http"]
 {
 	border-bottom: 1px dotted #ff9800;
 	display: inline;
 }
-div#pts_phoromatic_main_area a[href*="http"]:hover
+div#pts_phoromatic_main_box a[href*="http"]:hover
 {
 	text-decoration: none;
 	border-bottom: 1px solid #ff9800;
 }
-div#pts_phoromatic_main_area h2 a
+div#pts_phoromatic_main_box h2 a
 {
 	color: #ff9800;
 }
-div#pts_phoromatic_main_area h2 a.phx_alt
+div#pts_phoromatic_main_box h2 a.phx_alt
 {
 	color: #ff9800;
 }
-div#pts_phoromatic_main_area h2 a:hover
+div#pts_phoromatic_main_box h2 a:hover
 {
 	color: #e65100;
 	text-decoration: underline;
 }
-div#pts_phoromatic_main_area h6
+div#pts_phoromatic_main_box h6
 {
 	margin: 0;
 	padding: 0;
 	font-size: 85%;
 	color: #afafaf;
 }
-div#pts_phoromatic_main_area h5
+div#pts_phoromatic_main_box h5
 {
 	font-size: 80%;
 	color: #afafaf;
 }
-div#pts_phoromatic_main_area h3
+div#pts_phoromatic_main_box h3
 {
 	font-size: 110%;
 	font-weight: 500;
 }
-div#pts_phoromatic_main_area h4
+div#pts_phoromatic_main_box h4
 {
 	font-size: 100%;
 	font-weight: 500;
 }
-div#pts_phoromatic_main_area hr
+div#pts_phoromatic_main_box hr
 {
 	border: #f1f1f1 1px solid;
 	border-width: 0 0 1px 0;
