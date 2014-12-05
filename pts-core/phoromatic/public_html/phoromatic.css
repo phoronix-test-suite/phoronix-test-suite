@@ -177,12 +177,6 @@ div#pts_phoromatic_main_box
 	margin: 0 20px;
 	padding: 30px 0;
 }
-div#pts_phoromatic_main_box hr
-{
-	background: transparent;
-	border: transparent;
-	height: 30px;
-}
 div#pts_phoromatic_main_box_inside
 {
 	margin: 0 auto;
@@ -289,7 +283,7 @@ div#pts_phoromatic_main_box h4
 	font-size: 100%;
 	font-weight: 500;
 }
-div#pts_phoromatic_main_box hr
+div#pts_phoromatic_main_area hr, div#pts_phoromatic_main_box hr
 {
 	border: #f1f1f1 1px solid;
 	border-width: 0 0 1px 0;
