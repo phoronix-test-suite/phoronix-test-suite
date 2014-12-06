@@ -88,6 +88,10 @@
 			<PackageName>libjpeg</PackageName>
 		</Package>
 		<Package>
+			<GenericName>bc</GenericName>
+			<PackageName>bc</PackageName>
+		</Package>
+		<Package>
 			<GenericName>perl</GenericName>
 			<PackageName>perl</PackageName>
 			<FileCheck>/usr/bin/perl</FileCheck>

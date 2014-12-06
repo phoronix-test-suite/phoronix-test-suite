@@ -104,6 +104,10 @@
 			<PackageName>lib3ds-dev</PackageName>
 		</Package>
 		<Package>
+			<GenericName>bc</GenericName>
+			<PackageName>bc</PackageName>
+		</Package>
+		<Package>
 			<GenericName>freeimage</GenericName>
 			<PackageName>libfreeimage3 libfreeimage-dev</PackageName>
 		</Package>

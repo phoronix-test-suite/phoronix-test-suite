@@ -92,6 +92,12 @@
 			<FileCheck>flex</FileCheck>
 		</Package>
 		<Package>
+			<GenericName>bc</GenericName>
+			<Title>BC</Title>
+			<PossibleNames>bc</PossibleNames>
+			<FileCheck>bc</FileCheck>
+		</Package>
+		<Package>
 			<GenericName>p7zip</GenericName>
 			<Title>7-Zip / p7zip</Title>
 			<PossibleNames>p7zip, p7zip-full</PossibleNames>

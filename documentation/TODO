@@ -20,7 +20,6 @@ PHORONIX TEST SUITE PUBLIC TODO LIST:
 - Improve rendering of large data-sets, e.g. http://openbenchmarking.org/result/1205231-LI-BL460G6BE41
 - Rotated text alignment for some PNG graphixs is sometimes off by 90/180 degrees compared to SVG, e.g. http://openbenchmarking.org/s/Compiler
 - SVG graph improvements
-- WebP image support
 
 ### OPENBENCHMARKING.ORG ###
 
@@ -66,14 +65,9 @@ PHORONIX TEST SUITE PUBLIC TODO LIST:
 
 ### PHOROMATIC ####
 
-- Hookup the email notifications
-- Group handling
 - Get the Phoromatic search box implemented/working
-- Editing/deleting lots of different possible items like scheduling meta-data
 - Implement the complementary WebSocket communication to HTTP pulls
 - More mobile form factor optimizations
 - Ensure sane validating of more user input / resource uploads
-- Hook up the system targeting / groups support for test schedules
-- Restore some of the older phoromatic code for allowing reboots to happen during context script execution
 - Hook up TriggerTarget for allowing event.php to optionally specify a sub-set of systems/groups to target for a given trigger
 - Clean up the code and modularize more of the code into functions
