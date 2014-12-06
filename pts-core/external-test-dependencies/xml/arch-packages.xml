@@ -16,7 +16,7 @@
 		</Package>
 		<Package>
 			<GenericName>sdl2-development</GenericName>
-			<PackageName>sdl2 sdl2_net sdl2_gfx sdl2_image sdl2_ttf</PackageName>
+			<PackageName>sdl2 sdl2_net sdl2_gfx sdl2_image sdl2_ttf sdl2_mixer</PackageName>
 		</Package>
 		<Package>
 			<GenericName>glut</GenericName>
