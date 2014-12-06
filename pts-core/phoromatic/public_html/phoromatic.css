@@ -218,7 +218,7 @@ div#pts_phoromatic_main_area ol li
 {
 	margin-bottom: 4px;
 }
-div#pts_phoromatic_main_box h2
+div#pts_phoromatic_main_box h2, div#pts_phoromatic_main_area h2
 {
 	margin: 1px 0 10px;
 	clear: both;
@@ -238,12 +238,12 @@ p.result_object
 {
 	text-align: center;
 }
-div#pts_phoromatic_main_box a[href*="http"]
+div#pts_phoromatic_main_area a[href*="http"], div#pts_phoromatic_main_box a[href*="http"]
 {
 	border-bottom: 1px dotted #ff9800;
 	display: inline;
 }
-div#pts_phoromatic_main_box a[href*="http"]:hover
+div#pts_phoromatic_main_area a[href*="http"]:hover, div#pts_phoromatic_main_box a[href*="http"]:hover
 {
 	text-decoration: none;
 	border-bottom: 1px solid #ff9800;

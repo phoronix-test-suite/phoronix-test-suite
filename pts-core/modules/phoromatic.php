@@ -276,7 +276,7 @@ class phoromatic extends pts_module_interface
 				else
 				{
 					pts_client::$pts_logger && pts_client::$pts_logger->log('Phoromatic Server connection failed');
-					sleep(10);
+					sleep((10 * ($i + 1)));
 				}
 			}
 		}

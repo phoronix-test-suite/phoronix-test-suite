@@ -571,9 +571,10 @@ class pts_strings
 		if($time_in_seconds > 0)
 		{
 			$time_r = array();
-			$time_r[0] = array(floor($time_in_seconds / 3600), 'Hour');
-			$time_r[1] = array(floor(($time_in_seconds % 3600) / 60), 'Minute');
-			$time_r[2] = array($time_in_seconds % 60, 'Second');
+			$time_r[0] = array(floor($time_in_seconds / 86400), 'Day');
+			$time_r[1] = array(floor(($time_in_seconds % 86400) / 3600), 'Hour');
+			$time_r[2] = array(floor(($time_in_seconds % 3600) / 60), 'Minute');
+			$time_r[3] = array($time_in_seconds % 60, 'Second');
 
 			foreach($time_r as $time_segment)
 			{
