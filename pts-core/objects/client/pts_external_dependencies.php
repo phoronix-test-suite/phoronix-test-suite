@@ -326,7 +326,7 @@ class pts_external_dependencies
 				{
 					$file_is_there = true;
 				}
-				else if(isset($file[$i][2]) && $file[$i][0] != '/')
+				else if(isset($file[$i][1]) && $file[$i][0] != '/')
 				{
 					// See if it's some relative command/path
 
