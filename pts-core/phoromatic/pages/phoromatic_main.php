@@ -125,14 +125,16 @@ class phoromatic_main implements pts_webui_interface
 						$sys_info = self::system_info($system_id);
 						$last_comm_diff = time() - strtotime($sys_info['LastCommunication']);
 
+						$main .= '[<a href="?systems/' . $system_id . '">';
 						if($last_comm_diff > 3600)
 						{
-							$main .= ' [Last Communication: ' . pts_strings::format_time($last_comm_diff, 'SECONDS', true, 60) . ' Ago]';
+							$main .= ' Last Communication: ' . pts_strings::format_time($last_comm_diff, 'SECONDS', true, 60) . ' Ago';
 						}
 						else
 						{
-							$main .= ' [<strong>' . $sys_info['CurrentTask'] . '</strong>]';
+							$main .= ' <strong>' . $sys_info['CurrentTask'] . '</strong>';
 						}
+						$main .= '</a>]';
 					}
 
 					$main .= '<br />';

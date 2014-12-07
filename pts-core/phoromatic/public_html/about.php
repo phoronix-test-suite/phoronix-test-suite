@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-<title>Phoronix Test Suite - Phoromatic - Automated Linux Benchmarking</title>
+<title>Phoronix Test Suite - Phoromatic - Automated Linux Benchmark Management &amp; Testing</title>
 <link href="phoromatic.css?201412045370" rel="stylesheet" type="text/css" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="keywords" content="Phoronix Test Suite, open-source benchmarking, Linux benchmarking, automated testing, performance tuning, Linux test orchestration, benchmark management, multi system benchmarking" />
@@ -9,7 +9,7 @@
 </head>
 <body>
 <div id="pts_phoromatic_top_header">
-	<div id="pts_phoromatic_logo"><a href="?"><img src="images/phoromatic_logo.png" /></a></div><ul><li>Automated Linux Benchmarking &amp; Test Orchestration</li></ul><div style="float: right; padding: 25px 70px 0 0;"></div></div>
+	<div id="pts_phoromatic_logo"><a href="?"><img src="images/phoromatic_logo.png" /></a></div><ul><li>Automated Linux Benchmark Management &amp; Test Orchestration</li></ul><div style="float: right; padding: 25px 70px 0 0;"></div></div>
 <div id="pts_phoromatic_main_box"><h1>Phoromatic</h1>
 <p><img style="float: right;" src="images/phoromatic-graph.jpg" />
 
@@ -37,6 +37,10 @@ Phoromatic is the remote management system of the <a href="http://www.phoronix-t
 <p>If deploying a Phoromatic Server within an organization, there's also support for allowing multiple user accounts to be associated with the same data and other systems. This was previously an enterprise-only feature that's now supported via the open-source code as of Phoronix Test Suite 5.4</p>
 <h3>Local Caching</h3>
 <p>The Phoromatic Server automatically allows for caching of Phoronix Test Suite files and OpenBenchmarking.org test profile/suite caches. This allows for the Phoronix Test Suite to be more easily deployed within organizations where the systems otherwise do not have Internet access for obtaining the necessary support files.</p>
+<h3>Dashboard</h3>
+<p>The Phoromatic Dashboard allows viewing the state of all connected systems in one concise view from seeing their test state to hardware/software details, estimated time to completion, and other system information.</p>
+<h3>E-Mail Notifications</h3>
+<p>The Phoromatic Server is able to send out notifications of new results being available, systems that appear hung, immediate alerts of system errors, and other important information so that it can be dealt with in a timely manner.</p>
 <h3>Open-Source</h3>
 <p>The Phoronix Test Suite is licensed under the GNU GPL. With being open-source, the client and server can be easily extended to suit your organization's needs. Phoronix Media is able to provide custom engineering and support services around the Phoronix Test Suite and Phoromatic.</p>
 <h1>Getting Started</h1>
@@ -46,7 +50,7 @@ Phoromatic is the remote management system of the <a href="http://www.phoronix-t
 <p>Commercial support, custom engineering, and other services are available via <a href="http://www.phoronix-test-suite.com/?k=contact">contacting Phoronix Media</a>. Community-based support is provided by the <a href="http://www.phoronix.com/forums/forumdisplay.php?49-Phoronix-Test-Suite">Phoronix Forums</a>.</p>
 </div><div id="pts_phoromatic_bottom_footer">
 <div style="float: right; padding: 2px 10px; overflow: hidden;"><a href="http://openbenchmarking.org/" style="margin-right: 20px;"><img src="images/ob-white-logo.png" /></a> <a href="http://www.phoronix-test-suite.com/"><img src="images/pts-white-logo.png" /></a></div>
-<p style="margin: 6px 15px;">Copyright &copy; 2008 - <?php echo ('Y'); ?> by <a href="http://www.phoronix-media.com/">Phoronix Media</a>. All rights reserved.<br />
+<p style="margin: 6px 15px;">Copyright &copy; 2008 - <?php echo date('Y'); ?> by <a href="http://www.phoronix-media.com/">Phoronix Media</a>. All rights reserved.<br />
 All trademarks used are properties of their respective owners.<br />The Phoronix Test Suite, Phoromatic, and OpenBenchmarking.org are products of Phoronix Media.</p></div></body>
 </html>
 
