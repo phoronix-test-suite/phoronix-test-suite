@@ -105,11 +105,13 @@ echo "' . phoromatic_web_socket_server_addr() . '" > $PHORO_FILE_PATH/modules-da
 			$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 			$result = $stmt->execute();
 			$claims = array();
+			$main .= '<p>';
 			while($row = $result->fetchArray())
 			{
-				$main .= '<p>' . $row['IPAddress'] . ' ' . $row['NetworkMAC'] . '</p>';
+				$main .= $row['IPAddress'] . ' ' . $row['NetworkMAC'] . '<br />';
 				array_push($claims, $row['IPAddress'] . ',' . $row['NetworkMAC']);
 			}
+			$main .= '</p>';
 
 			if(!empty($claims))
 			{
