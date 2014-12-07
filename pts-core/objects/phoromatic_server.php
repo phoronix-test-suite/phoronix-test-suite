@@ -517,7 +517,7 @@ class phoromatic_server
 	public static function system_check_if_down($account_id, $system_id, $last_communication, $current_task)
 	{
 		$last_comm = strtotime($last_communication);
-		return phoromatic_server::system_has_outstanding_jobs($account_id, $system_id, -600) && (($last_comm < (time() - 3600) && stripos($current_task, 'Running') === false) || $last_comm < (time() - 7200) || ($last_comm < (time() - 600) && stripos($current_task, 'Shutdown') !== false));
+		return phoromatic_server::system_has_outstanding_jobs($account_id, $system_id, -600) && (($last_comm < (time() - 5400) && stripos($current_task, 'Running') === false) || $last_comm < (time() - 7200) || ($last_comm < (time() - 600) && stripos($current_task, 'Shutdown') !== false));
 	}
 }
 

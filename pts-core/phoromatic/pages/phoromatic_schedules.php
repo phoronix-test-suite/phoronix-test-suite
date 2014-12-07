@@ -225,11 +225,13 @@ class phoromatic_schedules implements pts_webui_interface
 				$result = $stmt->execute();
 
 				$test_count = 0;
+				$main .= '<p>';
 				while($row = $result->fetchArray())
 				{
 					$test_count++;
-					$main .= '<h3>' . $row['TestProfile'] . ($row['TestDescription'] != null ? ' - <em>' . $row['TestDescription'] . '</em>' : '') . (!PHOROMATIC_USER_IS_VIEWER ? ' <a href="?schedules/' . $PATH[0] . '/remove/' . base64_encode(implode(PHP_EOL, array($row['TestProfile'], $row['TestArguments']))) . '">Remove Test</a>' : null) . '</h3>';
+					$main .= $row['TestProfile'] . ($row['TestDescription'] != null ? ' - <em>' . $row['TestDescription'] . '</em>' : '') . (!PHOROMATIC_USER_IS_VIEWER ? ' <a href="?schedules/' . $PATH[0] . '/remove/' . base64_encode(implode(PHP_EOL, array($row['TestProfile'], $row['TestArguments']))) . '">Remove Test</a>' : null) . '<br />';
 				}
+				$main .= '</p>';
 
 				if($test_count == 0)
 				{
