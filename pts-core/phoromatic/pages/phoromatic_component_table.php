@@ -41,7 +41,7 @@ class phoromatic_component_table implements pts_webui_interface
 
 		$main = '<h1>System Components</h1>';
 		$main .= '<p>Detected hardware/software components via Phoronix Test Suite\'s Phodevi implementation on the Phoromatic client systems.</p>';
-		$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, Hardware, Software, ClientVersion FROM phoromatic_systems WHERE AccountID = :account_id AND State >= 0 ORDER BY Title ASC');
+		$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, Hardware, Software, ClientVersion, NetworkWakeOnLAN, NetworkMAC FROM phoromatic_systems WHERE AccountID = :account_id AND State >= 0 ORDER BY Title ASC');
 		$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 		$result = $stmt->execute();
 
@@ -49,11 +49,13 @@ class phoromatic_component_table implements pts_webui_interface
 		{
 			$components[$row['SystemID']] = array_merge(pts_result_file_analyzer::system_component_string_to_array($row['Software'], array('OS', 'Kernel', 'OpenGL', 'File-System')), pts_result_file_analyzer::system_component_string_to_array($row['Hardware'], array('Processor', 'Motherboard', 'Memory', 'Disk', 'Graphics')));
 			$components[$row['SystemID']]['Phoronix Test Suite'] = $row['ClientVersion'];
+			$components[$row['SystemID']]['WoL Info'] = $row['NetworkWakeOnLAN'];
+			$components[$row['SystemID']]['MAC'] = $row['NetworkMAC'];
 			$system_ids[$row['SystemID']] = $row['Title'];
 		}
 
 		$main .= '<div style="margin: 10px auto; overflow: auto;"><table>';
-		$component_types = array('Processor', 'Motherboard', 'Memory', 'Disk', 'Graphics', 'OS', 'Kernel', 'OpenGL', 'File-System', 'Phoronix Test Suite');
+		$component_types = array('MAC', 'Processor', 'Motherboard', 'Memory', 'Disk', 'Graphics', 'OS', 'Kernel', 'OpenGL', 'File-System', 'Phoronix Test Suite', 'WoL Info');
 		$main .= '<tr><th>&nbsp;</th>';
 		foreach($component_types as $type)
 		{
