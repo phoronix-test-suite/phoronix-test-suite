@@ -1093,14 +1093,8 @@ class phodevi_gpu extends phodevi_device_interface
 			}
 		}
 
-		if(!is_numeric($core_freq))
-		{
-			$core_freq = 0;
-		}
-		if(!is_numeric($mem_freq))
-		{
-			$mem_freq = 0;
-		}
+		$core_freq = !is_numeric($core_freq) ? 0 : round($core_freq);
+		$mem_freq = !is_numeric($mem_freq) ? 0 : round($mem_freq);
 
 		return array($core_freq, $mem_freq);
 	}

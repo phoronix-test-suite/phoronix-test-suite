@@ -8,6 +8,11 @@
 			<PackageManager>zypper</PackageManager>
 		</Information>
 		<Package>
+			<GenericName>common-dependencies</GenericName>
+			<PackageName>dmidecode Mesa-demo-x</PackageName>
+			<FileCheck>dmidecode, glxinfo</FileCheck>
+		</Package>
+		<Package>
 			<GenericName>gtk-development</GenericName>
 			<PackageName>gtk2-devel</PackageName>
 		</Package>
