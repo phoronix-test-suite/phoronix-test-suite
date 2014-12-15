@@ -123,8 +123,10 @@ class phoromatic_result implements pts_webui_interface
 			{
 				$system_name_format = 'TRIGGER_AND_SYSTEM';
 			}
-			else if(count($trigger_types) == 1)
+			else if(false && count($trigger_types) == 1)
 			{
+				// TODO XXX: this approach yields garbage strings generally without refining the selector
+				// i.e. first make sure all the schedules match or are comparable
 				$system_name_format = 'SYSTEM_AND_SCHEDULE';
 			}
 			else
