@@ -108,12 +108,9 @@ echo "' . phoromatic_web_socket_server_addr() . '" > $PHORO_FILE_PATH/modules-da
 			$main .= '<p>';
 			while($row = $result->fetchArray())
 			{
-				if($row['IPAddress'] == null)
-				{
-					$row['IPAddress'] = '<em>' . pts_network::mac_to_ip($row['NetworkMAC']) . '</em>';
-				}
+				$ip = $row['IPAddress'] != null ? $row['IPAddress'] : '<em>' . pts_network::mac_to_ip($row['NetworkMAC']) . '</em>';
 
-				$main .= $row['IPAddress'] . ' ' . $row['NetworkMAC'] . '<br />';
+				$main .= $ip . ' ' . $row['NetworkMAC'] . '<br />';
 				array_push($claims, $row['IPAddress'] . ',' . $row['NetworkMAC']);
 			}
 			$main .= '</p>';
