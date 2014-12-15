@@ -509,6 +509,29 @@ class pts_network
 
 		return $hosts;
 	}
+	public static function mac_to_ip($mac)
+	{
+		$ip = false;
+
+		if(is_readable('/proc/net/arp') && function_exists('preg_replace'))
+		{
+			$arp = file_get_contents('/proc/net/arp');
+
+			if(($x = strpos($arp, $mac)) !== false)
+			{
+				$li = substr($arp, strrpos($arp, PHP_EOL, (0 - strlen($arp) + $x)) + 1);
+				$li = substr($li, 0, strpos($li, PHP_EOL));
+				$li = explode(' ', preg_replace('!\s+!', ' ', $li));
+
+				if(isset($li[0]) && ip2long($li[0]) !== false)
+				{
+					$ip = $li[0];
+				}
+			}
+		}
+
+		return $ip;
+	}
 }
 
 ?>

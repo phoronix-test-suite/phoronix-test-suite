@@ -71,3 +71,5 @@ PHORONIX TEST SUITE PUBLIC TODO LIST:
 - Ensure sane validating of more user input / resource uploads
 - Hook up TriggerTarget for allowing event.php to optionally specify a sub-set of systems/groups to target for a given trigger
 - Clean up the code and modularize more of the code into functions
+- Sharing results between independent accounts
+- Allow new Phoromatic installation to re-find old system association based on MAC address or similar
