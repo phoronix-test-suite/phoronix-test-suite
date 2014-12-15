@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - phoromatic: Improve formatting of result strings when merging random result files together
+- phoromatic: Add enterprise-setup sub-command
 
 Phoronix Test Suite 5.4-Lipki
 9 December 2014

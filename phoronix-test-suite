@@ -129,6 +129,9 @@ case "$1" in
 "test-module" | "debug-module" | "webui")
 	export PTS_IGNORE_MODULES=1
 	;;
+"enterprise-setup")
+	export PTS_SILENT_MODE=1
+	;;
 esac
 
 export PTS_EXT_LAUNCH_SCRIPT_DIR=`mktemp -d 2>/dev/null || mktemp -d -t ptstmp`
