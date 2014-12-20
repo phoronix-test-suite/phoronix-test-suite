@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+- pts-core: Add csv-dump-frame-latencies support to result parser
 - phoromatic: Improve formatting of result strings when merging random result files together
 - phoromatic: Add enterprise-setup sub-command
 - phoromatic: Attempt to detect and report IP address next to requested MAC address claim on the system claim page

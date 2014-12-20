@@ -246,22 +246,43 @@ class pts_test_result_parser
 
 			switch($id)
 			{
-				case 'com-speeds-frame-latency-totals':
-					$log_file = pts_file_io::file_get_contents($test_log_file);
+				case 'csv-dump-frame-latencies':
+					// Civ Beyond Earth
+					$csv_values = explode(',', pts_file_io::file_get_contents($test_log_file));
 					$frame_all_times = array();
-					while(($log_file = strstr($log_file, 'frame:')))
+					if(!empty($csv_values) && isset($csv_values[3]))
 					{
-						if(($a = strpos($log_file, ' all: ')) !== false && $a < strpos($log_file, "\n"))
+						foreach($csv_values as $i => &$v)
 						{
-							$all = ltrim(substr($log_file, $a + 6));
-							$all = substr($all, 0, strpos($all, ' '));
-
-							if(is_numeric($all) && $all > 0)
+							if(!is_numeric($v))
 							{
-								array_push($frame_all_times, $all);
+								unset($csv_values[$i]);
+								continue;
 							}
+
+							array_push($frame_all_times, $v);
 						}
-						$log_file = strstr($log_file, 'bk:');
+					}
+				case 'com-speeds-frame-latency-totals':
+					// id Tech Games
+					if(!isset($frame_all_times) || empty($frame_all_times))
+					{
+						$log_file = pts_file_io::file_get_contents($test_log_file);
+						$frame_all_times = array();
+						while(($log_file = strstr($log_file, 'frame:')))
+						{
+							if(($a = strpos($log_file, ' all: ')) !== false && $a < strpos($log_file, "\n"))
+							{
+								$all = ltrim(substr($log_file, $a + 6));
+								$all = substr($all, 0, strpos($all, ' '));
+
+								if(is_numeric($all) && $all > 0)
+								{
+									array_push($frame_all_times, $all);
+								}
+							}
+							$log_file = strstr($log_file, 'bk:');
+						}
 					}
 
 					if(isset($frame_all_times[60]))
@@ -622,8 +643,53 @@ class pts_test_result_parser
 			}
 
 			$test_results = array();
+			$already_processed = false;
 
-			if($search_key != null || (isset($result_line_before_hint[$i]) && $result_line_before_hint[$i] != null) || (isset($result_line_after_hint[$i]) && $result_line_after_hint[$i]) != null || (isset($result_key[$i]) && $result_template_r[0] == $result_key[$i]))
+			if($result_template[$i] == 'csv-dump-frame-latencies')
+			{
+				$already_processed = true;
+				$csv_values = explode(',', $result_output);
+
+				if(!empty($csv_values) && isset($csv_values[3]))
+				{
+					if($csv_values[0] = 0)
+					{
+						array_shift($csv_values);
+					}
+
+					foreach($csv_values as $f => &$v)
+					{
+						if(!is_numeric($v) || $v == 0)
+						{
+							unset($csv_values[$f]);
+							continue;
+						}
+
+						$v = 1000 / $v;
+					}
+
+					switch($prefix)
+					{
+						case 'MIN_':
+							$val = min($csv_values);
+							break;
+						case 'MAX_':
+							$val = max($csv_values);
+							break;
+						case 'AVG_':
+						default:
+							$val = array_sum($csv_values) / count($csv_values);
+							break;
+					}
+
+					if($val != 0)
+					{
+						array_push($test_results, $val);
+					}
+				}
+			}
+
+			if(($search_key != null || (isset($result_line_before_hint[$i]) && $result_line_before_hint[$i] != null) || (isset($result_line_after_hint[$i]) && $result_line_after_hint[$i]) != null || (isset($result_key[$i]) && $result_template_r[0] == $result_key[$i])) && $already_processed == false)
 			{
 				$is_multi_match = !empty($multi_match[$i]) && $multi_match[$i] != 'NONE';
 
