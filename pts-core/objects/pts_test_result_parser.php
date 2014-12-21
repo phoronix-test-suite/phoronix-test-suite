@@ -557,7 +557,7 @@ class pts_test_result_parser
 			// The actual parsing here
 			$start_result_pos = strrpos($result_template[$i], $result_key[$i]);
 
-			if($prefix != null && $start_result_pos === false)
+			if($prefix != null && $start_result_pos === false && $result_template[$i] != 'csv-dump-frame-latencies')
 			{
 				// XXX: technically the $prefix check shouldn't be needed, verify whether safe to have this check be unconditional on start_result_pos failing...
 				return false;
