@@ -11,7 +11,7 @@
   <p>Phoronix Test Suite tests and suites are obtained via OpenBenchmarking.org and there exists support for optionally sharing your results via OpenBenchmarking.org.</p>
  </description>
  <screenshots>
-  <screenshot type="default" width="1920" height="1331">http://www.phoronix-test-suite.com/images/phoromatic_541.png</screenshot>
+  <screenshot type="default" width="1400" height="788">http://www.phoronix-test-suite.com/images/phoromatic_541.png</screenshot>
  </screenshots>
  <url type="homepage">http://www.phoronix-test-suite.com/</url>
  <updatecontact>michael_at_phoronix.com</updatecontact>
