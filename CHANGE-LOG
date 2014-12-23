@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 5.4.1-Lipki
+23 December 2014
 
 - pts-core: Update AppData and systemd service files
 - pts-core: Add csv-dump-frame-latencies support to result parser
@@ -8,7 +9,7 @@ Phoronix Test Suite (Git)
 - phoromatic: Add enterprise-setup sub-command
 - phoromatic: Attempt to detect and report IP address next to requested MAC address claim on the system claim page
 
-Phoronix Test Suite 5.4-Lipki
+Phoronix Test Suite 5.4.0-Lipki
 9 December 2014
 
 - phoromatic: Main page update
