@@ -43,7 +43,7 @@ class phoromatic_tracker implements pts_webui_interface
 		if(isset($PATH[0]) && !empty($PATH[0]))
 		{
 			$cut_duration = 180;
-			$stmt = phoromatic_server::$db->prepare('SELECT UploadID, UploadTime, ScheduleID, Trigger FROM phoromatic_results WHERE AccountID = :account_id AND ScheduleID = :schedule_id ORDER BY UploadTime DESC');
+			$stmt = phoromatic_server::$db->prepare('SELECT UploadID, UploadTime, ScheduleID, Trigger, SystemID FROM phoromatic_results WHERE AccountID = :account_id AND ScheduleID = :schedule_id ORDER BY UploadTime DESC');
 			$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 			$stmt->bindValue(':schedule_id', $PATH[0]);
 			$test_result_result = $stmt->execute();
