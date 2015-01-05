@@ -69,7 +69,7 @@ class phoromatic_tracker implements pts_webui_interface
 				$stmt_view->execute(); */
 
 				// Add to result file
-				$system_name = phoromatic_schedule_id_to_name($row['ScheduleID']) . ': ' . $row['Trigger'];
+				$system_name = phoromatic_system_id_to_name($row['SystemID']) . ': ' . $row['Trigger'];
 				array_push($result_file, new pts_result_merge_select($composite_xml, null, $system_name));
 			}
 
