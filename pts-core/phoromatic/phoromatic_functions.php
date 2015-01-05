@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2013 - 2014, Phoronix Media
-	Copyright (C) 2013 - 2014, Michael Larabel
+	Copyright (C) 2013 - 2015, Phoronix Media
+	Copyright (C) 2013 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -130,6 +130,27 @@ function phoromatic_add_activity_stream_event($activity_event, $activity_event_i
 	$stmt->bindValue(':activity_event_type', $activity_event_type);
 	return $stmt->execute();
 }
+function phoromatic_tracker_page_relevant()
+{
+	$stmt = phoromatic_server::$db->prepare('SELECT RunTargetSystems, RunTargetGroups, (SELECT COUNT(*) FROM phoromatic_results WHERE ScheduleID = phoromatic_schedules.ScheduleID) AS UploadedResultCount FROM phoromatic_schedules WHERE AccountID = :account_id AND State >= 1 ORDER BY Title ASC');
+	$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+	$result = $stmt->execute();
+	$row = $result->fetchArray();
+
+	if($row)
+	{
+		do
+		{
+			if($row['UploadedResultCount'] > (($row['RunTargetSystems'] + $row['RunTargetGroups'] + 1) * 7))
+			{
+				return true;
+			}
+		}
+		while($row = $result->fetchArray());
+	}
+
+	return false;
+}
 function phoromatic_webui_header_logged_in()
 {
 	$html_links = array();
@@ -145,6 +166,12 @@ function phoromatic_webui_header_logged_in()
 			array_push($pages, 'Dashboard');
 
 		array_push($pages, 'Systems', 'Settings', 'Schedules', 'Results');
+
+		if(phoromatic_tracker_page_relevant())
+		{
+			array_push($pages, 'Tracker');
+		}
+
 
 		if(isset($_SESSION['AdminLevel']) && $_SESSION['AdminLevel'] < 4)
 		{
