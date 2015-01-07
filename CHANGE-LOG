@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Add "short" display mode
+- pts-core: Add stress-run command to allow for concurrent stress testing / burn-in / torture testing
 - phoromatic: Initial commit of basic tracker page
 
 Phoronix Test Suite 5.4.1-Lipki
