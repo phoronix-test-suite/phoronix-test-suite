@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+- pts-core: Add "short" display mode
 - phoromatic: Initial commit of basic tracker page
 
 Phoronix Test Suite 5.4.1-Lipki

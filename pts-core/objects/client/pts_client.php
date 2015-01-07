@@ -471,6 +471,9 @@ class pts_client
 			case 'CONCISE':
 				self::$display = new pts_concise_display_mode();
 				break;
+			case 'SHORT':
+				self::$display = new pts_short_display_mode();
+				break;
 			case 'DEFAULT':
 			default:
 				self::$display = new pts_concise_display_mode();
