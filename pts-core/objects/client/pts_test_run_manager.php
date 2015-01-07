@@ -571,7 +571,7 @@ class pts_test_run_manager
 	{
 		return self::$test_run_process_active = true;
 	}
-	private function process_test_run_request($run_index)
+	public function process_test_run_request($run_index)
 	{
 		$result = false;
 
@@ -586,6 +586,11 @@ class pts_test_run_manager
 		{
 			// Sleep for six seconds between tests by default
 			sleep(6);
+		}
+
+		if($test_run_request == false)
+		{
+			return;
 		}
 
 		pts_test_execution::run_test($this, $test_run_request);
@@ -715,13 +720,13 @@ class pts_test_run_manager
 
 		return $input;
 	}
-	public static function initial_checks(&$to_run, $test_flags = 0)
+	public static function initial_checks(&$to_run, $test_flags = 0, $override_display_mode = false)
 	{
 		// Refresh the pts_client::$display in case we need to run in debug mode
 		$test_flags |= pts_c::is_run_process;
 		if(pts_client::$display == false || ($test_flags != 0 && !(pts_client::$display instanceof pts_websocket_display_mode)))
 		{
-			pts_client::init_display_mode($test_flags);
+			pts_client::init_display_mode($test_flags, $override_display_mode);
 		}
 		pts_client::set_test_flags($test_flags);
 		$to_run = pts_types::identifiers_to_objects($to_run);

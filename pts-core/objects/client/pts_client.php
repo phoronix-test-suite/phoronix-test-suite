@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2014, Phoronix Media
-	Copyright (C) 2008 - 2014, Michael Larabel
+	Copyright (C) 2008 - 2015, Phoronix Media
+	Copyright (C) 2008 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -452,7 +452,7 @@ class pts_client
 
 		return $real_name;
 	}
-	public static function init_display_mode($flags = 0)
+	public static function init_display_mode($flags = 0, $override_display_mode = false)
 	{
 		if(PTS_IS_WEB_CLIENT && !defined('PHOROMATIC_SERVER'))
 		{
@@ -460,7 +460,7 @@ class pts_client
 			return;
 		}
 
-		$env_mode = ($flags & pts_c::debug_mode) ? 'BASIC' : false;
+		$env_mode = ($flags & pts_c::debug_mode) ? 'BASIC' : $override_display_mode;
 
 		switch(($env_mode != false || ($env_mode = pts_client::read_env('PTS_DISPLAY_MODE')) != false ? $env_mode : pts_config::read_user_config('PhoronixTestSuite/Options/General/DefaultDisplayMode', 'DEFAULT')))
 		{

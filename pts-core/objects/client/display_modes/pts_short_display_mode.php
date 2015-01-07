@@ -289,7 +289,7 @@ class pts_short_display_mode implements pts_display_mode_interface
 	}
 	public function test_run_start(&$test_run_manager, &$test_result)
 	{
-		echo PHP_EOL . $test_result->test_profile->get_identifier();
+		echo $test_result->test_profile->get_identifier();
 
 		if(($test_description = $test_result->get_arguments_description()) != false)
 		{
@@ -297,7 +297,6 @@ class pts_short_display_mode implements pts_display_mode_interface
 		}
 
 		echo PHP_EOL;
-		echo $test_result->test_profile->get_identifier() . ': Test ' . $test_run_manager->get_test_run_position() . ' of ' . $test_run_manager->get_test_run_count_reported() . PHP_EOL;
 
 		$this->trial_run_count_current = 0;
 		$this->expected_trial_run_count = $test_result->test_profile->get_times_to_run();
