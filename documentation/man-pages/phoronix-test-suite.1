@@ -1,4 +1,4 @@
-.TH phoronix-test-suite 1  "www.phoronix-test-suite.com" "5.4.1"
+.TH phoronix-test-suite 1  "www.phoronix-test-suite.com" "5.6.0m0"
 .SH NAME
 phoronix-test-suite \- The Phoronix Test Suite is an extensible open-source platform for performing testing and performance evaluation.
 .SH SYNOPSIS
@@ -11,7 +11,7 @@ The Phoronix Test Suite is the most comprehensive testing and benchmarking platf
 .TP
 .SH TEST INSTALLATION
 .B install [Test | Suite | OpenBenchmarking.org ID | Test Result]  ...
-This option will install the selected test(s) inside the testing environment directory). The install process from downloading of the test files to the installation is fully automated. The install option needs to be supplied with the test name or suite as an argument. Optionally, a OpenBenchmarking.org ID or the name of a saved results file can be supplied as well and the test(s) to install will automatically be extracted from that information. If the test is already installed and was run by the latest version of the installation process, no action will be taken. Multiple arguments can be supplied to install additional tests at the same time.
+This option will install the selected test(s) inside the testing environment directory. The install process from downloading of the test files to the installation is fully automated. The install option needs to be supplied with the test name or suite as an argument. Optionally, a OpenBenchmarking.org ID or the name of a saved results file can be supplied as well and the test(s) to install will automatically be extracted from that information. If the test is already installed and was run by the latest version of the installation process, no action will be taken. Multiple arguments can be supplied to install additional tests at the same time.
 .TP
 .B install-dependencies [Test | Suite | OpenBenchmarking.org ID | Test Result]  ...
 This option will install the external dependencies needed by the selected test(s) using the distribution's package management system. For example, some tests depend upon GCC for compiling code. If GCC is not detected on the system, the Phoronix Test Suite will attempt to install GCC using the distribution's package management system. If you are running this command as a local user, you may be prompted for the root password while the process is running. For unsupported distributions, the dependency names will be displayed along with common names for the package. The install-dependencies option needs to be supplied with the test name or suite as an argument. When using the install option, the external dependencies are automatically checked.
@@ -40,6 +40,9 @@ This option will query OpenBenchmarking.org to run random benchmarks and result 
 .TP
 .B run-tests-in-suite
 This option can be used if you wish to run all of the tests found in a supplied suite, but you wish to re-configure each of the test options rather than using the defaults supplied by the suite.
+.TP
+.B stress-run [Test | Suite | OpenBenchmarking.org ID | Test Result]  ...
+This option will run the passed tests/suites in the multi-process stress-testing mode. The stress-run mode will not produce a result file but is rather intended for running multiple test profiles concurrently to stress / burn-in the system. The number of tests to run concurrently can be toggled via the PTS_CONCURRENT_TEST_RUNS environment variable and by default is set to a value of 2.
 .TP
 .SH BATCH TESTING
 .B batch-benchmark [Test | Suite | OpenBenchmarking.org ID | Test Result]  ...
@@ -302,5 +305,5 @@ http://www.phoronix.com/
 .br
 http://www.phoronix.com/forums/
 .SH AUTHORS
-Copyright 2008 - 2014 by Phoronix Media, Michael Larabel.
+Copyright 2008 - 2015 by Phoronix Media, Michael Larabel.
 .TP
