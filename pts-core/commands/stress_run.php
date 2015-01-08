@@ -72,16 +72,22 @@ class stress_run implements pts_option_interface
 		}
 
 		// Run the actual tests
+		$total_loop_time = (($t = pts_client::read_env('TOTAL_LOOP_TIME')) && is_numeric($t) && $t > 10) ? ($t * 60) : -1;
+		$loop_until_time = $total_loop_time != -1 ? (time() + $total_loop_time) : false;
+		if($loop_until_time)
+		{
+			echo 'PTS: TOTAL_LOOP_TIME set; running tests for ' . $loop_until_time . ' minutes.' . PHP_EOL;
+		}
 		//$test_run_manager->pre_execution_process();
 
 		$continue_test_flag = true;
 		pts_client::$display->test_run_process_start($test_run_manager);
 		$test_run_manager->disable_dynamic_run_count();
-		$tests_left_to_run = $test_run_manager->get_tests_to_run();
+		$possible_tests_to_run = $test_run_manager->get_tests_to_run();
 
 		$tests_pids_active = array();
 
-		while(!empty($tests_left_to_run) || !empty($tests_pids_active))
+		while(!empty($possible_tests_to_run) || !empty($tests_pids_active))
 		{
 			if($continue_test_flag == false)
 				break;
@@ -103,11 +109,13 @@ class stress_run implements pts_option_interface
 				array_push($test_types_active, $test->test_profile->get_test_hardware_type());
 			}
 
-			if(!empty($tests_left_to_run) && count($tests_pids_active) < $tests_to_run_concurrently)
+			if(!empty($possible_tests_to_run) && count($tests_pids_active) < $tests_to_run_concurrently)
 			{
+				shuffle($possible_tests_to_run);
+
 				$test_to_run = false;
 				$test_run_index = -1;
-				foreach($tests_left_to_run as $i => $test)
+				foreach($possible_tests_to_run as $i => $test)
 				{
 					if(!in_array($test->test_profile->get_test_hardware_type(), $test_types_active))
 					{
@@ -117,8 +125,8 @@ class stress_run implements pts_option_interface
 				}
 				if($test_run_index == -1)
 				{
-					$test_run_index = array_rand(array_keys($tests_left_to_run));
-					$test_to_run = $tests_left_to_run[$test_run_index];
+					$test_run_index = array_rand(array_keys($possible_tests_to_run));
+					$test_to_run = $possible_tests_to_run[$test_run_index];
 				}
 
 				$pid = pcntl_fork();
@@ -136,7 +144,23 @@ class stress_run implements pts_option_interface
 					return;
 				}
 
-				unset($tests_left_to_run[$test_run_index]);
+				if(!$loop_until_time)
+				{
+					unset($possible_tests_to_run[$test_run_index]);
+				}
+				else
+				{
+					if($loop_until_time > time())
+					{
+						$time_left = ceil((time() - $loop_unti_time) / 60);
+						echo 'PTS: Continuing to test for ' . $time_left . ' more minutes.' . PHP_EOL;
+					}
+					else
+					{
+						echo 'PTS: TOTAL_LOOP_TIME elapsed; quitting....' . PHP_EOL;
+						break;
+					}
+				}
 			}
 
 			sleep(1);
