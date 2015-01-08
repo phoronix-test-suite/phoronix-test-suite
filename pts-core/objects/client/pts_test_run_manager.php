@@ -580,7 +580,14 @@ class pts_test_run_manager
 			$this->result_file_writer->save_xml(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . '/active.xml');
 		}
 
-		$test_run_request = $this->get_test_to_run($run_index);
+		if($run_index instanceof pts_test_run_request)
+		{
+			$test_run_request = $run_index;
+		}
+		else
+		{
+			$test_run_request = $this->get_test_to_run($run_index);
+		}
 
 		if(($run_index != 0 && count(pts_file_io::glob($test_run_request->test_profile->get_install_dir() . 'cache-share-*.pt2so')) == 0))
 		{

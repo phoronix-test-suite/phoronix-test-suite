@@ -105,17 +105,18 @@ class stress_run implements pts_option_interface
 
 			if(!empty($tests_left_to_run) && count($tests_pids_active) < $tests_to_run_concurrently)
 			{
-				$test_id = -1;
+				$test_to_run = -1;
 				foreach($tests_left_to_run as $i => $test)
 				{
 					if(!in_array($test->test_profile->get_test_hardware_type(), $test_types_active))
 					{
-						$test_id = $i;
+						$test_to_run = $test;
 					}
 				}
-				if($test_id == -1)
+				if($test_to_run == -1)
 				{
-					$test_id = array_rand($tests_left_to_run);
+					$i = array_rand(array_keys($tests_left_to_run));
+					$test_to_run = $tests_left_to_run[$i];
 				}
 
 				$pid = pcntl_fork();
@@ -125,15 +126,15 @@ class stress_run implements pts_option_interface
 				}
 				else if($pid)
 				{
-					$tests_pids_active[$pid] = $test_id;
+					$tests_pids_active[$pid] = $test_to_run;
 				}
 				else
 				{
-					$continue_test_flag = $test_run_manager->process_test_run_request($test_id);
+					$continue_test_flag = $test_run_manager->process_test_run_request($test_to_run);
 					return;
 				}
 
-				unset($tests_left_to_run[$test_id]);
+				unset($tests_left_to_run[$i]);
 			}
 
 			sleep(1);
