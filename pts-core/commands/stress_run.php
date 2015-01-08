@@ -87,7 +87,7 @@ class stress_run implements pts_option_interface
 				break;
 
 			$test_types_active = array();
-			foreach($tests_pids_active as $pid => &$test_index)
+			foreach($tests_pids_active as $pid => &$test)
 			{
 				$ret = pcntl_waitpid($pid, $status, WNOHANG | WUNTRACED);
 
@@ -100,7 +100,7 @@ class stress_run implements pts_option_interface
 					}
 				}
 
-				array_push($test_types_active, $test_run_manager->get_test_to_run($test_index)->test_profile->get_test_hardware_type());
+				array_push($test_types_active, $test->test_profile->get_test_hardware_type());
 			}
 
 			if(!empty($tests_left_to_run) && count($tests_pids_active) < $tests_to_run_concurrently)
