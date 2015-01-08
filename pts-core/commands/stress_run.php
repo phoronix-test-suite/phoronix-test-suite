@@ -47,7 +47,8 @@ class stress_run implements pts_option_interface
 
 		if(($j = getenv('PTS_CONCURRENT_TEST_RUNS')) && is_numeric($j) && $j > 1)
 		{
-			$test_to_run_concurrently = $j;
+			$tests_to_run_concurrently = $j;
+			echo 'PTS_CONCURRENT_TEST_RUNS set; running ' . $tests_to_run_concurrently . ' tests concurrently.' . PHP_EOL;
 		}
 
 		$test_flags = pts_c::batch_mode;
@@ -76,7 +77,7 @@ class stress_run implements pts_option_interface
 		$loop_until_time = $total_loop_time != -1 ? (time() + $total_loop_time) : false;
 		if($loop_until_time)
 		{
-			echo 'PTS: TOTAL_LOOP_TIME set; running tests for ' . $total_loop_time . ' minutes.' . PHP_EOL;
+			echo 'TOTAL_LOOP_TIME set; running tests for ' . ($total_loop_time / 60) . ' minutes.' . PHP_EOL;
 		}
 		//$test_run_manager->pre_execution_process();
 
@@ -153,11 +154,11 @@ class stress_run implements pts_option_interface
 					if($loop_until_time > time())
 					{
 						$time_left = ceil(($loop_until_time - time()) / 60);
-						echo 'PTS: Continuing to test for ' . $time_left . ' more minutes.' . PHP_EOL;
+						echo 'Continuing to test for ' . $time_left . ' more minutes' . PHP_EOL;
 					}
 					else
 					{
-						echo 'PTS: TOTAL_LOOP_TIME elapsed; quitting....' . PHP_EOL;
+						echo 'TOTAL_LOOP_TIME elapsed; quitting....' . PHP_EOL;
 						break;
 					}
 				}
