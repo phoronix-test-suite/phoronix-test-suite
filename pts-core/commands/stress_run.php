@@ -167,7 +167,7 @@ class stress_run implements pts_option_interface
 			sleep(1);
 		}
 
-		foreach($test_run_manager->get_tests_to_run() as &$run_request)
+		foreach($test_run_manager->get_tests_to_run() as $run_request)
 		{
 			// Remove cache shares
 			foreach(pts_file_io::glob($run_request->test_profile->get_install_dir() . 'cache-share-*.pt2so') as $cache_share_file)
