@@ -45,7 +45,7 @@ class pts_short_display_mode extends pts_concise_display_mode
 	}
 	public function test_run_start(&$test_run_manager, &$test_result)
 	{
-		echo print_test_identifier_prefix($test_result);
+		echo $this->print_test_identifier_prefix($test_result);
 
 		if(($test_description = $test_result->get_arguments_description()) != false)
 		{
@@ -80,7 +80,7 @@ class pts_short_display_mode extends pts_concise_display_mode
 	public function test_run_instance_header(&$test_result)
 	{
 		$this->trial_run_count_current++;
-		echo print_test_identifier_prefix($test_result) . 'Started Run ' . $this->trial_run_count_current . ' @ ' . date('H:i:s') . PHP_EOL;
+		echo $this->print_test_identifier_prefix($test_result) . 'Started Run ' . $this->trial_run_count_current . ' @ ' . date('H:i:s') . PHP_EOL;
 	}
 	public function test_run_instance_complete(&$test_result)
 	{
@@ -116,7 +116,7 @@ class pts_short_display_mode extends pts_concise_display_mode
 			$end_print = pts_strings::result_quantifier_to_string($test_result->test_profile->get_result_quantifier()) . ': ' . $test_result->get_result() . ' ' . $test_result->test_profile->get_result_scale();
 		}
 
-		echo print_test_identifier_prefix($test_result) . $end_print;
+		echo $this->print_test_identifier_prefix($test_result) . $end_print;
 	}
 }
 
