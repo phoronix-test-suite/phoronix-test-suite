@@ -580,7 +580,7 @@ class pts_test_run_manager
 			$this->result_file_writer->save_xml(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . '/active.xml');
 		}
 
-		if($run_index instanceof pts_test_run_request)
+		if($run_index instanceof pts_test_result)
 		{
 			$test_run_request = $run_index;
 		}
