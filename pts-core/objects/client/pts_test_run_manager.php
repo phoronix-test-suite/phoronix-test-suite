@@ -194,7 +194,7 @@ class pts_test_run_manager
 	public function get_test_to_run($index)
 	{
 		$this->last_test_run_index = $index;
-		return isset($this->tests_to_run[$index]) ? $this->tests_to_run[$index] : false;
+		return is_numeric($index) && isset($this->tests_to_run[$index]) ? $this->tests_to_run[$index] : false;
 	}
 	public function get_test_count()
 	{
@@ -580,9 +580,10 @@ class pts_test_run_manager
 			$this->result_file_writer->save_xml(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . '/active.xml');
 		}
 
-		if($run_index instanceof pts_test_result)
+		if(is_object($run_index))
 		{
 			$test_run_request = $run_index;
+			$run_index = 0;
 		}
 		else
 		{
