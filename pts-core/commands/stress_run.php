@@ -109,7 +109,7 @@ class stress_run implements pts_option_interface
 				array_push($test_types_active, $test->test_profile->get_test_hardware_type());
 			}
 
-			if(!empty($possible_tests_to_run) && count($tests_pids_active) < $tests_to_run_concurrently)
+			if(!empty($possible_tests_to_run) && count($tests_pids_active) < $tests_to_run_concurrently && (!$loop_until_time || $loop_until_time > time()))
 			{
 				shuffle($possible_tests_to_run);
 
