@@ -76,7 +76,7 @@ class stress_run implements pts_option_interface
 		$loop_until_time = $total_loop_time != -1 ? (time() + $total_loop_time) : false;
 		if($loop_until_time)
 		{
-			echo 'PTS: TOTAL_LOOP_TIME set; running tests for ' . $loop_until_time . ' minutes.' . PHP_EOL;
+			echo 'PTS: TOTAL_LOOP_TIME set; running tests for ' . $total_loop_time . ' minutes.' . PHP_EOL;
 		}
 		//$test_run_manager->pre_execution_process();
 
@@ -152,7 +152,7 @@ class stress_run implements pts_option_interface
 				{
 					if($loop_until_time > time())
 					{
-						$time_left = ceil((time() - $loop_unti_time) / 60);
+						$time_left = ceil((time() - $loop_until_time) / 60);
 						echo 'PTS: Continuing to test for ' . $time_left . ' more minutes.' . PHP_EOL;
 					}
 					else
