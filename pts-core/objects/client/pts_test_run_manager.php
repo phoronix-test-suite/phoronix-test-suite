@@ -487,7 +487,7 @@ class pts_test_run_manager
 		pts_client::$display->test_run_process_start($this);
 
 		$total_loop_count = (($t = pts_client::read_env('TOTAL_LOOP_COUNT')) && is_numeric($t) && $t > 0) ? $t : 1;
-		$total_loop_time = (($t = pts_client::read_env('TOTAL_LOOP_TIME')) && is_numeric($t) && $t > 10) ? ($t * 60) : -1;
+		$total_loop_time = (($t = pts_client::read_env('TOTAL_LOOP_TIME')) && is_numeric($t) && $t > 9) ? ($t * 60) : -1;
 		$loop_end_time = $total_loop_time != -1 ? (time() + $total_loop_time) : false;
 		$this->test_run_count = ($tests_to_run_count * $total_loop_count);
 
