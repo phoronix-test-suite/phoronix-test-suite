@@ -73,11 +73,21 @@ class stress_run implements pts_option_interface
 		}
 
 		// Run the actual tests
-		$total_loop_time = (($t = pts_client::read_env('TOTAL_LOOP_TIME')) && is_numeric($t) && $t > 9) ? ($t * 60) : -1;
-		$loop_until_time = $total_loop_time != -1 ? (time() + $total_loop_time) : false;
-		if($loop_until_time)
+		$total_loop_time = pts_client::read_env('TOTAL_LOOP_TIME');
+		if($total_loop_time == 'infinite')
 		{
-			echo 'TOTAL_LOOP_TIME set; running tests for ' . ($total_loop_time / 60) . ' minutes.' . PHP_EOL;
+			$loop_until_time = 'infinite';
+			echo 'TOTAL_LOOP_TIME set; running tests in an infinite loop until otherwise triggered' . PHP_EOL;
+		}
+		else if($total_loop_time && is_numeric($total_loop_time) && $total_loop_time > 9)
+		{
+			$total_loop_time = $total_loop_time * 60;
+			$loop_until_time = time() + $total_loop_time;
+			echo 'TOTAL_LOOP_TIME set; running tests for ' . ($total_loop_time / 60) . ' minutes' . PHP_EOL;
+		}
+		else
+		{
+			$loop_until_time = false;
 		}
 		//$test_run_manager->pre_execution_process();
 
@@ -145,9 +155,13 @@ class stress_run implements pts_option_interface
 					return;
 				}
 
-				if(!$loop_until_time)
+				if($loop_until_time == false)
 				{
 					unset($possible_tests_to_run[$test_run_index]);
+				}
+				else if($loop_until_time == 'infinite')
+				{
+						echo 'Continuing to test indefinitely' . PHP_EOL;
 				}
 				else
 				{
