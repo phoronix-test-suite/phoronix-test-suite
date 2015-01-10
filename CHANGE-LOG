@@ -6,6 +6,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add stress-run command to allow for concurrent stress testing / burn-in / torture testing
 - pts-core: Add TOTAL_LOOP_TIME support to stress-run
 - pts-core: Add TOTAL_LOOP_TIME=infinite support to stress-run for testing in an infinite loop
+- pts-core: Add support for libframetime output result parsing
 - phoromatic: Initial commit of basic tracker page
 
 Phoronix Test Suite 5.4.1-Lipki

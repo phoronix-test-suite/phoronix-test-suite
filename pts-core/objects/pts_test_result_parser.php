@@ -243,13 +243,34 @@ class pts_test_result_parser
 		foreach(array_keys($extra_data_identifiers) as $i)
 		{
 			$id = $extra_data_identifiers[$i];
+			$frame_all_times = array();
 
 			switch($id)
 			{
+				case 'libframetime-output':
+					// libframetime output
+					$line_values = explode(PHP_EOL, file_get_contents($test_log_file));
+					if(!empty($line_values) && isset($line_values[3]))
+					{
+						foreach($line_values as &$v)
+						{
+							if(substr($v, -3) == ' us' && substr($v, 0, 10) == 'Frametime ')
+							{
+								$frametime = substr($v, 10);
+								$frametime = substr($frametime, 0, -3);
+								if($frametime > 2000)
+								{
+									$frametime = $frametime / 1000;
+									array_push($frame_all_times, $frametime);
+								}
+							}
+						}
+						$frame_all_times = pts_math::remove_outliers($frame_all_times);
+					}
+					break;
 				case 'csv-dump-frame-latencies':
 					// Civ Beyond Earth
 					$csv_values = explode(',', pts_file_io::file_get_contents($test_log_file));
-					$frame_all_times = array();
 					if(!empty($csv_values) && isset($csv_values[3]))
 					{
 						foreach($csv_values as $i => &$v)
@@ -263,44 +284,42 @@ class pts_test_result_parser
 							array_push($frame_all_times, $v);
 						}
 					}
+					break;
 				case 'com-speeds-frame-latency-totals':
 					// id Tech Games
-					if(!isset($frame_all_times) || empty($frame_all_times))
+					$log_file = pts_file_io::file_get_contents($test_log_file);
+					$frame_all_times = array();
+					while(($log_file = strstr($log_file, 'frame:')))
 					{
-						$log_file = pts_file_io::file_get_contents($test_log_file);
-						$frame_all_times = array();
-						while(($log_file = strstr($log_file, 'frame:')))
+						if(($a = strpos($log_file, ' all: ')) !== false && $a < strpos($log_file, "\n"))
 						{
-							if(($a = strpos($log_file, ' all: ')) !== false && $a < strpos($log_file, "\n"))
+							$all = ltrim(substr($log_file, $a + 6));
+							$all = substr($all, 0, strpos($all, ' '));
+
+							if(is_numeric($all) && $all > 0)
 							{
-								$all = ltrim(substr($log_file, $a + 6));
-								$all = substr($all, 0, strpos($all, ' '));
-
-								if(is_numeric($all) && $all > 0)
-								{
-									array_push($frame_all_times, $all);
-								}
+								array_push($frame_all_times, $all);
 							}
-							$log_file = strstr($log_file, 'bk:');
 						}
-					}
-
-					if(isset($frame_all_times[60]))
-					{
-						// Take off the first frame as it's likely to have taken much longer when game just starting off...
-						array_shift($frame_all_times);
-						$tp = clone $test_result->test_profile;
-						$tp->set_result_scale('Milliseconds');
-						$tp->set_result_proportion('LIB');
-						$tp->set_display_format('LINE_GRAPH');
-						$tp->set_identifier(null);
-						$extra_result = new pts_test_result($tp);
-						$extra_result->set_used_arguments_description('Total Frame Time');
-						$extra_result->set_result(implode(',', $frame_all_times));
-						array_push($extra_results, $extra_result);
-						//$extra_result->set_used_arguments(phodevi::sensor_name($sensor) . ' ' . $test_result->get_arguments());
+						$log_file = strstr($log_file, 'bk:');
 					}
 					break;
+			}
+
+			if(isset($frame_all_times[60]))
+			{
+				// Take off the first frame as it's likely to have taken much longer when game just starting off...
+				array_shift($frame_all_times);
+				$tp = clone $test_result->test_profile;
+				$tp->set_result_scale('Milliseconds');
+				$tp->set_result_proportion('LIB');
+				$tp->set_display_format('LINE_GRAPH');
+				$tp->set_identifier(null);
+				$extra_result = new pts_test_result($tp);
+				$extra_result->set_used_arguments_description('Total Frame Time');
+				$extra_result->set_result(implode(',', $frame_all_times));
+				array_push($extra_results, $extra_result);
+				//$extra_result->set_used_arguments(phodevi::sensor_name($sensor) . ' ' . $test_result->get_arguments());
 			}
 		}
 
@@ -557,7 +576,7 @@ class pts_test_result_parser
 			// The actual parsing here
 			$start_result_pos = strrpos($result_template[$i], $result_key[$i]);
 
-			if($prefix != null && $start_result_pos === false && $result_template[$i] != 'csv-dump-frame-latencies')
+			if($prefix != null && $start_result_pos === false && $result_template[$i] != 'csv-dump-frame-latencies' && $result_template[$i] != 'libframetime-output')
 			{
 				// XXX: technically the $prefix check shouldn't be needed, verify whether safe to have this check be unconditional on start_result_pos failing...
 				return false;
@@ -644,48 +663,69 @@ class pts_test_result_parser
 
 			$test_results = array();
 			$already_processed = false;
+			$frame_time_values = null;
 
-			if($result_template[$i] == 'csv-dump-frame-latencies')
+			if($result_template[$i] == 'libframetime-output')
 			{
 				$already_processed = true;
-				$csv_values = explode(',', $result_output);
-
-				if(!empty($csv_values) && isset($csv_values[3]))
+				$frame_time_values = array();
+				$line_values = explode(PHP_EOL, $result_output);
+				if(!empty($line_values) && isset($line_values[3]))
 				{
-					if($csv_values[0] = 0)
+					foreach($line_values as &$v)
 					{
-						array_shift($csv_values);
-					}
-
-					foreach($csv_values as $f => &$v)
-					{
-						if(!is_numeric($v) || $v == 0)
+						if(substr($v, -3) == ' us' && substr($v, 0, 10) == 'Frametime ')
 						{
-							unset($csv_values[$f]);
-							continue;
+							$frametime = substr($v, 10);
+							$frametime = substr($frametime, 0, -3);
+							if($frametime > 2000)
+							{
+								$frametime = $frametime / 1000;
+								array_push($frame_time_values, $frametime);
+							}
 						}
-
-						$v = 1000 / $v;
 					}
+					$frame_time_values = pts_math::remove_outliers($frame_time_values);
+				}
+			}
+			else if($result_template[$i] == 'csv-dump-frame-latencies')
+			{
+				$already_processed = true;
+				$frame_time_values = explode(',', $result_output);
+			}
 
-					switch($prefix)
+			if(!empty($frame_time_values) && isset($frame_time_values[3]))
+			{
+				// Get rid of the first value
+				array_shift($frame_time_values);
+
+				foreach($frame_time_values as $f => &$v)
+				{
+					if(!is_numeric($v) || $v == 0)
 					{
-						case 'MIN_':
-							$val = min($csv_values);
-							break;
-						case 'MAX_':
-							$val = max($csv_values);
-							break;
-						case 'AVG_':
+						unset($frame_time_values[$f]);
+						continue;
+					}
+					$v = 1000 / $v;
+				}
+
+				switch($prefix)
+				{
+					case 'MIN_':
+						$val = min($frame_time_values);
+						break;
+					case 'MAX_':
+						$val = max($frame_time_values);
+						break;
+					case 'AVG_':
 						default:
-							$val = array_sum($csv_values) / count($csv_values);
-							break;
-					}
+						$val = array_sum($frame_time_values) / count($frame_time_values);
+						break;
+				}
 
-					if($val != 0)
-					{
-						array_push($test_results, $val);
-					}
+				if($val != 0)
+				{
+					array_push($test_results, $val);
 				}
 			}
 

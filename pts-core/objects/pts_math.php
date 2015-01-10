@@ -48,6 +48,22 @@ class pts_math
 
 		return empty($values) ? 0 : (self::standard_deviation($values) / sqrt(count($values)));
 	}
+	public static function remove_outliers($values, $mag = 2)
+	{
+		$ret = array();
+		$mean = array_sum($values) / count($values);
+		$std_dev = self::standard_deviation($values);
+		$outlier = $mag * $std_dev;
+		foreach($values as $i)
+		{
+			if(abs($i - $mean) < $outlier)
+			{
+				array_push($ret, $i);
+			}
+		}
+
+		return $ret;
+	}
 	public static function standard_deviation($values)
 	{
 		self::clean_numeric_array($values);
