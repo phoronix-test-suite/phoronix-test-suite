@@ -8,6 +8,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add TOTAL_LOOP_TIME=infinite support to stress-run for testing in an infinite loop
 - pts-core: Add support for libframetime output result parsing
 - phoromatic: Initial commit of basic tracker page
+- phoromatic: Better recovery of existing Phoromatic accounts on reloaded systems where the machine self ID changed
 
 Phoronix Test Suite 5.4.1-Lipki
 23 December 2014

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2014, Phoronix Media
-	Copyright (C) 2009 - 2014, Michael Larabel
+	Copyright (C) 2009 - 2015, Phoronix Media
+	Copyright (C) 2009 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -164,6 +164,17 @@ if(!isset($result) || empty($result))
 	$stmt->bindValue(':account_id', ACCOUNT_ID);
 	$stmt->bindValue(':gsid', $GSID);
 	$stmt->bindValue(':machine_self_id', null);
+	$result = $stmt->execute();
+	$result = $result->fetchArray();
+}
+
+if(!isset($result) || empty($result))
+{
+	// If system was reloaded and MachineSelfID no longer matches but there is existing IP or MAC address claim against it
+	$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, Groups, State, MaintenanceMode FROM phoromatic_systems WHERE AccountID = :account_id AND (IPAddress = :ip_address OR NetworkMAC = :network_mac)');
+	$stmt->bindValue(':account_id', ACCOUNT_ID);
+	$stmt->bindValue(':ip_address', $_SERVER['REMOTE_ADDR']);
+	$stmt->bindValue(':network_mac', $NETWORK_CLIENT_MAC);
 	$result = $stmt->execute();
 	$result = $result->fetchArray();
 }
