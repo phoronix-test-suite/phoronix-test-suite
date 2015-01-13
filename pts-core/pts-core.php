@@ -58,7 +58,7 @@ function pts_define_directories()
 
 		pts_define('PTS_USER_PATH', '/var/lib/phoronix-test-suite/');
 		pts_define('PTS_CORE_STORAGE', PTS_USER_PATH . 'core.pt2so');
-		pts_define('PTS_TEMP_STORAGE', tempnam('/tmp', 'phoronix-test-suite-temp'));
+		pts_define('PTS_TEMP_STORAGE', PTS_USER_PATH . 'temp.pt2so');
 		pts_define('PTS_MODULE_LOCAL_PATH', PTS_USER_PATH . 'modules/');
 		pts_define('PTS_MODULE_DATA_PATH', PTS_USER_PATH . 'modules-data/');
 		pts_define('PTS_DOWNLOAD_CACHE_PATH', '/var/cache/phoronix-test-suite/download-cache/');
