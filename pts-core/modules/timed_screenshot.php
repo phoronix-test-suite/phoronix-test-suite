@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2012, Phoronix Media
-	Copyright (C) 2008 - 2012, Michael Larabel
+	Copyright (C) 2008 - 2015, Phoronix Media
+	Copyright (C) 2008 - 2015, Michael Larabel
 	timed_screenshot.php: A PTS module that takes a screenshot at a pre-defined interval.
 
 	This program is free software; you can redistribute it and/or modify
@@ -24,7 +24,7 @@
 class timed_screenshot extends pts_module_interface
 {
 	const module_name = 'Timed Screenshot';
-	const module_version = '1.0.0';
+	const module_version = '1.0.1';
 	const module_description = 'This is a module that will take a screenshot of the system at a pre-defined interval. ImageMagick must be installed onto the system prior to using this module.';
 	const module_author = 'Michael Larabel';
 
@@ -81,7 +81,7 @@ class timed_screenshot extends pts_module_interface
 		foreach($screenshots as $screenshot)
 		{
 			// Compress the PNGs a bit
-			pts_image::compres_png_image($screenshot, 9);
+			pts_image::compress_png_image($screenshot, 9);
 		}
 
 		return $screenshots;

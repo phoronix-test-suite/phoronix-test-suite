@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2012, Phoronix Media
-	Copyright (C) 2010 - 2012, Michael Larabel
+	Copyright (C) 2010 - 2015, Phoronix Media
+	Copyright (C) 2010 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -131,15 +131,18 @@ class pts_image
 
 		return $color;
 	}
-	public static function compres_png_image($png_file, $compression_level = 8)
+	public static function compress_png_image($png_file, $compression_level = 8)
 	{
-		$img = imagecreatefrompng($png_file);
-
-		if($img)
+		if(function_exists('imagecreatefrompng'))
 		{
-			imagepng($img, $png_file, $compression_level);
-			imagedestroy($img);
-			return true;
+			$img = imagecreatefrompng($png_file);
+
+			if($img)
+			{
+				imagepng($img, $png_file, $compression_level);
+				imagedestroy($img);
+				return true;
+			}
 		}
 
 		return false;

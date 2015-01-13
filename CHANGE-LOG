@@ -9,6 +9,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add support for libframetime output result parsing
 - phoromatic: Initial commit of basic tracker page
 - phoromatic: Better recovery of existing Phoromatic accounts on reloaded systems where the machine self ID changed
+- timed_screenshot: Fix for crash when PHP GD missing
 
 Phoronix Test Suite 5.4.1-Lipki
 23 December 2014
