@@ -77,7 +77,7 @@ class upload_test_suite implements pts_option_interface
 				}
 				if(isset($json['openbenchmarking']['upload']['url']) && !empty($json['openbenchmarking']['upload']['url']))
 				{
-					pts_openbenchmarking_client::refresh_repository_lists(null, true);
+					pts_openbenchmarking::refresh_repository_lists(null, true);
 					echo 'URL: ' . $json['openbenchmarking']['upload']['url'] . PHP_EOL;
 				}
 				echo PHP_EOL;
