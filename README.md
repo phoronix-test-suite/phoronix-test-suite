@@ -1,7 +1,7 @@
 # Phoronix Test Suite 5.6.0m1
 http://www.phoronix-test-suite.com/
 
-The Phoronix Test Suite is the most comprehensive testing and benchmarking
+The **Phoronix Test Suite** is the most comprehensive testing and benchmarking
 platform available for Linux, Solaris, Mac OS X, and BSD operating systems. The
 Phoronix Test Suite allows for carrying out tests in a fully automated manner
 from test installation to execution and reporting. All tests are meant to be
@@ -30,10 +30,10 @@ seamless collection of test profiles and/or additional test suites. A test
 profile consists of a set of bash/shell scripts and XML files while a test suite
 is a single XML file.
 
-OpenBenchmarking.org <http://www.openbenchmarking.org/> also allows for
+[OpenBenchmarking.org](http://www.openbenchmarking.org/) also allows for
 conducting side-by-side result comparisons, a central location for storing and
-sharing test results, and collaborating over test data. Phoromatic
-<http://www.phoromatic.com/> is a complementary platform to OpenBenchmarking.org
+sharing test results, and collaborating over test data. [Phoromatic](http://www.phoromatic.com/)
+is a complementary platform to OpenBenchmarking.org
 and the Phoronix Test Suite for interfacing with Phoronix Test Suite client(s)
 to automatically execute test runs on a timed, per-commit, or other
 trigger-driven basis. Phoromatic is designed for enterprise and allows for the
@@ -46,7 +46,7 @@ Phoromatic, and OpenBenchmarking.org is available by contacting
 
 Full details on the Phoronix Test Suite setup and usage is available from the
 included HTML/PDF documentation within the phoronix-test-suite package and from
-the Phoronix Test Suite web-site.
+the Phoronix Test Suite website.
 
 ## Installation & setup
 
@@ -61,7 +61,7 @@ architectures.
 The Phoronix Test Suite can be installed for system-wide usage or run locally
 without installation from the extracted tar.gz/zip package. The only hard
 dependency on the Phoronix Test Suite is having command-line support for PHP
-(PHP 5.2+) installed. A complete PHP stack (e.g. with web-server) is *not* needed,
+(PHP 5.2+) installed. A complete PHP stack (e.g. with web server) is **not** needed,
 but merely the PHP command-line support, which is widely available from
 operating system package managers under the name `php`, `php5-cli`, or `php5`.
 
@@ -84,7 +84,7 @@ running, for example, `phoronix-test-suite benchmark 1204293-BY-PHORONIX357` if
 wishing to compare the results of the
 `http://openbenchmarking.org/result/1204293-BY-PHORONIX357` result file.
 
-Additional information is available from the Phoronix Test Suite web-site
+Additional information is available from the Phoronix Test Suite website
 <http://www.phoronix-test-suite.com/> and the material bundled within the
 `phoronix-test-suite/documentation/` directory. A man page is also bundled with
 the phoronix-test-suite software.
