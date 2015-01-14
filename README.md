@@ -1,6 +1,5 @@
-Phoronix Test Suite 5.6.0m1
+# Phoronix Test Suite 5.6.0m1
 http://www.phoronix-test-suite.com/
-#####################################
 
 The Phoronix Test Suite is the most comprehensive testing and benchmarking
 platform available for Linux, Solaris, Mac OS X, and BSD operating systems. The
@@ -49,8 +48,7 @@ Full details on the Phoronix Test Suite setup and usage is available from the
 included HTML/PDF documentation within the phoronix-test-suite package and from
 the Phoronix Test Suite web-site.
 
-INSTALLATION & SETUP:
-#####################
+## Installation & setup
 
 The Phoronix Test Suite is supported on Linux, *BSD, Solaris, Mac OS X, and
 Windows systems. However, the most full-featured and well supported operating
@@ -67,8 +65,7 @@ dependency on the Phoronix Test Suite is having command-line support for PHP
 but merely the PHP command-line support, which is widely available from
 operating system package managers under the name `php`, `php5-cli`, or `php5`.
 
-USAGE:
-######
+## Usage
 
 The process to download, install/setup, execute, and report the results of a
 benchmark can be as simple as a command such as `phoronix-test-suite benchmark
