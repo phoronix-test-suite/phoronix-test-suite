@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 5.6 Milestone 1
+13 January 2015
 
 - pts-core: Add "short" display mode
 - pts-core: Add stress-run command to allow for concurrent stress testing / burn-in / torture testing
