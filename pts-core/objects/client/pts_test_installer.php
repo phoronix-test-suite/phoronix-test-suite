@@ -395,7 +395,7 @@ class pts_test_installer
 								}
 								else if(is_file($download_destination_temp) && filesize($download_destination_temp) > 0)
 								{
-									self::test_install_error(null, $test_install_request, 'MD5 Failed: ' . $url);
+									self::test_install_error(null, $test_install_request, 'Checksum Failed: ' . $url);
 									$md5_failed = true;
 								}
 								else
