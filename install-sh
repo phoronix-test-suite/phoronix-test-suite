@@ -83,7 +83,7 @@ cp pts-core/static/*.service $DESTDIR$INSTALL_PREFIX/../usr/lib/systemd/system/
 # cp pts-core/static/upstart/*.conf $DESTDIR$INSTALL_PREFIX/../etc/init/
 
 
-rm -f $DESTDIR$INSTALL_PREFIX/share/phoronix-test-suite/pts/etc/scripts/package-build-*
+rm -f $DESTDIR$INSTALL_PREFIX/share/phoronix-test-suite/pts/etc/scripts/build-package-*
 cp -r pts-core $DESTDIR$INSTALL_PREFIX/share/phoronix-test-suite/
 rm -f $DESTDIR$INSTALL_PREFIX/share/phoronix-test-suite/pts-core/static/phoronix-test-suite.desktop
 rm -f $DESTDIR$INSTALL_PREFIX/share/phoronix-test-suite/pts-core/static/phoronix-test-suite-launcher.desktop

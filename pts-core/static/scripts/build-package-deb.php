@@ -23,7 +23,7 @@
 if(!is_executable("phoronix-test-suite") || !is_dir("pts-core/"))
 {
 	echo "\nYou must run this script from the root directory of the phoronix-test-suite/ folder!\n";
-	echo "Example: php5 pts-core/static/scripts/package-build-deb.php\n";
+	echo "Example: php5 pts-core/static/scripts/build-package-deb.php\n";
 	exit(0);
 }
 if(!is_executable('/usr/bin/dpkg'))
