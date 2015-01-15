@@ -31,6 +31,11 @@ if(!is_executable('/usr/bin/dpkg'))
 	echo PHP_EOL . "dpkg must be present on the system to generate the phoronix-test-suite Debian package." . PHP_EOL . PHP_EOL;
 	exit;
 }
+if(!is_executable('/usr/bin/fakeroot'))
+{
+	echo PHP_EOL . "fakeroot must be present on the system to generate the phoronix-test-suite Debian package." . PHP_EOL . PHP_EOL;
+	exit;
+}
 
 @require("pts-core/pts-core.php");
 
@@ -55,6 +60,7 @@ shell_exec("chmod +x /tmp/pts-deb-builder/usr/bin/phoronix-test-suite");
 $control_file = "Package: phoronix-test-suite\n";
 $control_file .= "Version: " . $pts_version . "\n";
 $control_file .= "Section: Utilities\n";
+$control_file .= "Installed-Size: " . shell_exec("cd /tmp/pts-deb-builder/; du -s | cut -f 1");
 $control_file .= "Priority: optional\n";
 $control_file .= "Architecture: all\n";
 $control_file .= "Depends: php5-cli, php5-gd, php5-json\n";
@@ -64,7 +70,7 @@ $control_file .= "Description: An Automated, Open-Source Testing Framework\n " .
 $control_file .= "Homepage: http://www.phoronix-test-suite.com/ \n";
 file_put_contents("/tmp/pts-deb-builder/DEBIAN/control", $control_file);
 
-shell_exec("dpkg --build /tmp/pts-deb-builder ../phoronix-test-suite_" . $pts_version . "_all.deb");
+shell_exec("fakeroot dpkg --build /tmp/pts-deb-builder ../phoronix-test-suite_" . $pts_version . "_all.deb");
 shell_exec("rm -rf /tmp/pts-deb-builder");
 
 ?>
