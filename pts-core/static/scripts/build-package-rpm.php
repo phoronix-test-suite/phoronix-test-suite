@@ -23,7 +23,7 @@
 if(!is_file("phoronix-test-suite") || !is_dir("pts-core/"))
 {
        echo "\nYou must run this script from the root directory of the phoronix-test-suite/ folder!\n";
-       echo "Example: php5 pts-core/scripts/package-build-rpm.php\n";
+       echo "Example: php5 pts-core/static/scripts/build-package-rpm.php\n";
        exit(0);
 }
 if(!is_executable('/usr/bin/rpmbuild'))
