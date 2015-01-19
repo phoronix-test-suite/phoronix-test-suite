@@ -1769,7 +1769,7 @@ class pts_client
 			return;
 		}
 
-		if(function_exists('pcntl_fork'))
+		if(function_exists('pcntl_fork') && function_exists('posix_setsid'))
 		{
 			$current_pid = function_exists('posix_getpid') ? posix_getpid() : -1;
 			$pid = pcntl_fork();
@@ -1815,7 +1815,7 @@ class pts_client
 				$function = implode(':', $function);
 			}
 
-			trigger_error('php-pcntl must be installed for calling ' . $function . '.', E_USER_ERROR);
+			trigger_error('php-pcntl and php-posix must be installed for calling ' . $function . '.', E_USER_ERROR);
 		}
 	}
 	public static function fork($fork_function, $fork_function_parameters)
