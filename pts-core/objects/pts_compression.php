@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2014, Phoronix Media
-	Copyright (C) 2008 - 2014, Michael Larabel
+	Copyright (C) 2008 - 2015, Phoronix Media
+	Copyright (C) 2008 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -139,7 +139,14 @@ class pts_compression
 		{
 			if(pts_client::executable_in_path('zip'))
 			{
-				shell_exec('cd ' . dirname($add_files) . ' && rm -f ' . $zip_file . ' && zip -r ' . $zip_file . ' ' . basename($add_files));
+				if(is_array($add_files))
+				{
+					shell_exec('cd ' . dirname($add_files[0]) . ' && rm -f ' . $zip_file . ' && zip -r ' . $zip_file . ' ' . implode(' ', array_map('basename', $add_files)));
+				}
+				else
+				{
+					shell_exec('cd ' . dirname($add_files) . ' && rm -f ' . $zip_file . ' && zip -r ' . $zip_file . ' ' . basename($add_files));
+				}
 
 				if(is_file($zip_file) && filesize($zip_file) > 0)
 				{
