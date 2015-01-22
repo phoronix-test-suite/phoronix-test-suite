@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 - pts-core: Various fixes
 - pts-core: Deb/RPM build packaging improvements.
 - pts-core: Add Markdown Readme file
+- pts-core: Add hidden ?seed_accountid= option to the welcome / account creation page for custom 6 character ID
 
 Phoronix Test Suite 5.6 Milestone 1
 13 January 2015

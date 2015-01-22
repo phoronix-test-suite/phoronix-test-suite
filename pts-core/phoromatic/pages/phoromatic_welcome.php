@@ -90,10 +90,20 @@ class phoromatic_welcome implements pts_webui_interface
 			}
 			else
 			{
+				$id_tries = 0;
 				do
 				{
-					$account_id = pts_strings::random_characters(6, true);
+					if($id_tries == 0 && isset($_POST['seed_accountid']) && isset($_POST['seed_accountid'][5]))
+					{
+						$account_id = substr($_POST['seed_accountid'], 0, 6);
+					}
+					else
+					{
+						$account_id = pts_strings::random_characters(6, true);
+					}
+
 					$matching_accounts = phoromatic_server::$db->querySingle('SELECT AccountID FROM phoromatic_accounts WHERE AccountID = \'' . $account_id . '\'');
+					$id_tries++;
 				}
 				while(!empty($matching_accounts));
 				$is_new_account = true;
@@ -279,7 +289,7 @@ class phoromatic_welcome implements pts_webui_interface
 			</div>
 
 			<div style="clear: both;">
-			<div style="float: left; width: 25%;"><input type="text" name="register_username" /> <sup>1</sup></div>
+			<div style="float: left; width: 25%;"><input type="hidden" name="seed_accountid" value="' . (isset($_GET['seed_accountid']) ? $_GET['seed_accountid'] : null) . '" /><input type="text" name="register_username" /> <sup>1</sup></div>
 			<div style="float: left; width: 25%;"><input type="password" name="register_password" /> <sup>2</sup></div>
 			<div style="float: left; width: 25%;"><input type="password" name="register_password_confirm" /></div>
 			<div style="float: left; width: 25%;"><input type="text" name="register_email" /> <sup>3</sup><br /><br /><input type="submit" value="Create Account" /></div>
