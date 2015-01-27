@@ -64,23 +64,27 @@ class pts_openbenchmarking_client
 
 		$composite_xml = $result_file->xml_parser->getXML();
 		$system_log_dir = PTS_SAVE_RESULTS_PATH . $result_file->get_identifier() . '/system-logs/';
+		$upload_system_logs = false;
 
-		if(pts_config::read_bool_config('PhoronixTestSuite/Options/OpenBenchmarking/AlwaysUploadSystemLogs', 'FALSE'))
+		if(is_dir($system_log_dir))
 		{
-			$upload_system_logs = true;
-		}
-		else if(isset(self::$client_settings['UploadSystemLogsByDefault']))
-		{
-			$upload_system_logs = self::$client_settings['UploadSystemLogsByDefault'];
-		}
-		else if(is_dir($system_log_dir))
-		{
-			$upload_system_logs = pts_user_io::prompt_bool_input('Would you like to attach the system logs (lspci, dmesg, lsusb, etc) to the test result', true, 'UPLOAD_SYSTEM_LOGS');
+			if(pts_config::read_bool_config('PhoronixTestSuite/Options/OpenBenchmarking/AlwaysUploadSystemLogs', 'FALSE'))
+			{
+				$upload_system_logs = true;
+			}
+			else if(isset(self::$client_settings['UploadSystemLogsByDefault']))
+			{
+				$upload_system_logs = self::$client_settings['UploadSystemLogsByDefault'];
+			}
+			else if(is_dir($system_log_dir))
+			{
+				$upload_system_logs = pts_user_io::prompt_bool_input('Would you like to attach the system logs (lspci, dmesg, lsusb, etc) to the test result', true, 'UPLOAD_SYSTEM_LOGS');
+			}
 		}
 
 		$system_logs = null;
 		$system_logs_hash = null;
-		if(is_dir($system_log_dir) && $upload_system_logs)
+		if($upload_system_logs)
 		{
 			$is_valid_log = true;
 			$finfo = function_exists('finfo_open') ? finfo_open(FILEINFO_MIME_TYPE) : false;

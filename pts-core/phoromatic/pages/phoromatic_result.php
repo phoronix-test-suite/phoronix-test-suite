@@ -178,6 +178,15 @@ class phoromatic_result implements pts_webui_interface
 			$result_file = new pts_result_file($writer->get_xml());
 			$extra_attributes = array();
 
+			if(isset($_GET['upload_to_openbenchmarking']))
+			{
+				$ob_url = pts_openbenchmarking_client::upload_test_result($result_file, false);
+				if($ob_url)
+				{
+					header('Location: ' . $ob_url);
+				}
+			}
+
 			$attribute_options = array(
 				'normalize_results' => 'normalize_result_buffer',
 				'sort_by_performance' => 'sort_result_buffer_values',
@@ -317,6 +326,7 @@ class phoromatic_result implements pts_webui_interface
 		{
 			$right .= '<hr /><h3>Result Export</h3>';
 			$right .= '<p><a href="/public.php?t=result&ut='  . base64_encode($upload_times[0]) . '&h=' . $xml_result_hash[0] . '">Public Viewer</a></p>';
+			$right .= '<p><a href="?' . $_SERVER['QUERY_STRING'] . '/&upload_to_openbenchmarking">Upload To OpenBenchmarking.org</a></p>';
 		}
 
 		if(is_file(phoromatic_server::phoromatic_account_result_path($_SESSION['AccountID'], $upload_id) . 'system-logs.zip'))

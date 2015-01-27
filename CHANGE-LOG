@@ -7,7 +7,8 @@ Phoronix Test Suite (Git)
 - pts-core: Add Markdown Readme file
 - pts-core: Add hidden ?seed_accountid= option to the welcome / account creation page for custom 6 character ID
 - pts-core: Fix for session save path on Fedora when running as normal user
-- pts-core: Add a public view of test results by going to result page entry -> Result Export -> Public Viewer
+- phoromatic: Add a public view of test results by going to result page entry -> Result Export -> Public Viewer
+- phoromatic: Add basic "Upload To OpenBenchmarking.org" link from test result page
 
 Phoronix Test Suite 5.6 Milestone 1
 13 January 2015
