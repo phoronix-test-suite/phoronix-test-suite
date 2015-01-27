@@ -54,9 +54,9 @@ function phoromatic_initial_registration(form)
 		alert("Please enter a user-name of at least four characters, without spaces.");
 		return false;
 	}
-	if(form.register_password.value.length < 4)
+	if(form.register_password.value.length < 6)
 	{
-		alert("Please enter a password of at least four characters.");
+		alert("Please enter a password of at least six characters.");
 		return false;
 	}
 	if(form.register_password_confirm.value != form.register_password.value)
@@ -92,6 +92,26 @@ function phoromatic_initial_registration(form)
 
 	return true;
 }
+function phoromatic_password_reset(form)
+{
+	if(form.old_password.value.length < 6)
+	{
+		alert("Please enter a valid password; it should be at least six characters long.");
+		return false;
+	}
+	if(form.register_password.value.length < 6)
+	{
+		alert("Please enter a valid password; it should be at least six characters long.");
+		return false;
+	}
+	if(form.register_password.value != form.register_password_confirm.value)
+	{
+		alert("The new passwords do not match.");
+		return false;
+	}
+
+	return true;
+}
 function phoromatic_login(form)
 {
 	if(form.username.value.length < 4)
@@ -99,9 +119,9 @@ function phoromatic_login(form)
 		alert("Please enter a valid username; it should be at least four characters long.");
 		return false;
 	}
-	if(form.password.value.length < 4)
+	if(form.password.value.length < 6)
 	{
-		alert("Please enter a valid password; it should be at least four characters long.");
+		alert("Please enter a valid password; it should be at least six characters long.");
 		return false;
 	}
 

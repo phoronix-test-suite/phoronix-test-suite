@@ -159,6 +159,10 @@ class phoromatic_settings implements pts_webui_interface
 			<h2>Cache Settings</h2>
 			<p>Proceed to the <a href="?caches">download cache page</a> for information about the Phoromatic Server\'s download caches.</p>';
 
+			$main .= '<hr />
+			<h2>User Password</h2>
+			<p>Proceed to the <a href="?password">password page</a> if you wish to update your account\'s password.</p>';
+
 			echo phoromatic_webui_main($main, phoromatic_webui_right_panel_logged_in());
 			echo phoromatic_webui_footer();
 	}
