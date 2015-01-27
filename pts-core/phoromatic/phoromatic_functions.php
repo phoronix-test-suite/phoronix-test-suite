@@ -22,6 +22,36 @@
 
 define('PHOROMATIC_USER_IS_VIEWER', !isset($_SESSION['AdminLevel']) || $_SESSION['AdminLevel'] >= 10 || $_SESSION['AdminLevel'] < 1 ? true : false);
 
+
+function phoromatic_init_web_page_setup()
+{
+	if(session_save_path() == null)
+	{
+		// This is needed since on at least EL6 by default there is no session_save_path set
+		if(is_writable('/var/lib/php') && is_dir('/var/lib/php'))
+		{
+			session_save_path('/var/lib/php');
+		}
+		else if(is_writable('/var/lib/php5') && is_dir('/var/lib/php5'))
+		{
+			session_save_path('/var/lib/php5');
+		}
+		else
+		{
+			session_save_path('/tmp');
+		}
+	}
+
+	define('PHOROMATIC_SERVER', true);
+	error_reporting(E_ALL);
+	session_start();
+
+	define('PTS_MODE', 'WEB_CLIENT');
+	define('PTS_AUTO_LOAD_OBJECTS', true);
+
+	include('../../pts-core.php');
+	pts_client::init();
+}
 function phoromatic_user_friendly_timedate($time)
 {
 	return phoromatic_server::user_friendly_timedate($time);

@@ -73,6 +73,8 @@ class phoromatic_result implements pts_webui_interface
 			$system_types = array();
 			$schedule_types = array();
 			$trigger_types = array();
+			$upload_times = array();
+			$xml_result_hash = array();
 
 			foreach($upload_ids as $upload_id)
 			{
@@ -89,6 +91,8 @@ class phoromatic_result implements pts_webui_interface
 					return false;
 				}
 				$display_rows[$composite_xml] = $row;
+				pts_arrays::unique_push($upload_times, $row['UploadTime']);
+				pts_arrays::unique_push($xml_result_hash, $row['XmlUploadHash']);
 				pts_arrays::unique_push($system_types, $row['SystemID']);
 				pts_arrays::unique_push($schedule_types, $row['ScheduleID']);
 				pts_arrays::unique_push($trigger_types, $row['Trigger']);
@@ -307,6 +311,12 @@ class phoromatic_result implements pts_webui_interface
 				}
 				while($row = $result->fetchArray());
 			}
+		}
+
+		if(count($xml_result_hash) == 1)
+		{
+			$right .= '<hr /><h3>Result Export</h3>';
+			$right .= '<p><a href="/public.php?t=result&ut='  . base64_encode($upload_times[0]) . '&h=' . $xml_result_hash[0] . '">Public Viewer</a></p>';
 		}
 
 		if(is_file(phoromatic_server::phoromatic_account_result_path($_SESSION['AccountID'], $upload_id) . 'system-logs.zip'))

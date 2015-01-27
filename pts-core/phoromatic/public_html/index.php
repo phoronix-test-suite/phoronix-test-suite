@@ -20,34 +20,8 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-// This is needed since on at least EL6 by default there is no session_save_path set
-
-if(session_save_path() == null)
-{
-	if(is_writable('/var/lib/php') && is_dir('/var/lib/php'))
-	{
-		session_save_path('/var/lib/php');
-	}
-	else if(is_writable('/var/lib/php5') && is_dir('/var/lib/php5'))
-	{
-		session_save_path('/var/lib/php5');
-	}
-	else
-	{
-		session_save_path('/tmp');
-	}
-}
-
-define('PHOROMATIC_SERVER', true);
-error_reporting(E_ALL);
-session_start();
 include('../phoromatic_functions.php');
-
-define('PTS_MODE', 'WEB_CLIENT');
-define('PTS_AUTO_LOAD_OBJECTS', true);
-
-include('../../pts-core.php');
-pts_client::init();
+phoromatic_init_web_page_setup();
 
 interface pts_webui_interface
 {
