@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2013 - 2014, Phoronix Media
-	Copyright (C) 2013 - 2014, Michael Larabel
+	Copyright (C) 2013 - 2015, Phoronix Media
+	Copyright (C) 2013 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -24,11 +24,11 @@
 
 if(session_save_path() == null)
 {
-	if(is_dir('/var/lib/php'))
+	if(is_writable('/var/lib/php') && is_dir('/var/lib/php'))
 	{
 		session_save_path('/var/lib/php');
 	}
-	else if(is_dir('/var/lib/php5'))
+	else if(is_writable('/var/lib/php5') && is_dir('/var/lib/php5'))
 	{
 		session_save_path('/var/lib/php5');
 	}
