@@ -20,9 +20,6 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-define('PHOROMATIC_USER_IS_VIEWER', !isset($_SESSION['AdminLevel']) || $_SESSION['AdminLevel'] >= 10 || $_SESSION['AdminLevel'] < 1 ? true : false);
-
-
 function phoromatic_init_web_page_setup()
 {
 	if(session_save_path() == null)
@@ -48,6 +45,7 @@ function phoromatic_init_web_page_setup()
 
 	define('PTS_MODE', 'WEB_CLIENT');
 	define('PTS_AUTO_LOAD_OBJECTS', true);
+	define('PHOROMATIC_USER_IS_VIEWER', !isset($_SESSION['AdminLevel']) || $_SESSION['AdminLevel'] >= 10 || $_SESSION['AdminLevel'] < 1 ? true : false);
 
 	include('../../pts-core.php');
 	pts_client::init();
