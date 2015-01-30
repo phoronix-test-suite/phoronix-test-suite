@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2014, Phoronix Media
-	Copyright (C) 2014, Michael Larabel
+	Copyright (C) 2014 - 2015, Phoronix Media
+	Copyright (C) 2014 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -90,7 +90,7 @@ class phoromatic_admin implements pts_webui_interface
 			switch($row['AdminLevel'])
 			{
 				case 1:
-					$level = 'Main Administrator';
+					$level = 'Group Administrator';
 					$offset = null;
 					break;
 				case 2:

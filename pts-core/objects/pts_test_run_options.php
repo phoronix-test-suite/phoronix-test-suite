@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2014, Phoronix Media
-	Copyright (C) 2010 - 2014, Michael Larabel
+	Copyright (C) 2010 - 2015, Phoronix Media
+	Copyright (C) 2010 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -285,7 +285,7 @@ class pts_test_run_options
 				{
 					$all_devices = array();
 				}*/
-				$all_devices = array_merge(pts_file_io::glob('/dev/hd*'), pts_file_io::glob('/dev/sd*'));
+				$all_devices = array_merge(pts_file_io::glob('/dev/hd*'), pts_file_io::glob('/dev/sd*'), pts_file_io::glob('/dev/md*'));
 
 				foreach($all_devices as &$device)
 				{
@@ -340,7 +340,7 @@ class pts_test_run_options
 					return;
 				}
 
-				$all_devices = array_merge(pts_file_io::glob('/dev/hd*'), pts_file_io::glob('/dev/sd*'));
+				$all_devices = array_merge(pts_file_io::glob('/dev/hd*'), pts_file_io::glob('/dev/sd*'), pts_file_io::glob('/dev/md*'));
 
 				foreach($all_devices as &$device)
 				{

@@ -336,6 +336,8 @@ div.pts_phoromatic_info_box_area ul
 	border: #d2d2d2 1px solid;
 	border-radius: 14px;
 	padding: 0;
+	max-height: 500px;
+	overflow-y: auto;
 }
 div.pts_phoromatic_info_box_area ul:last-child a:last-child li
 {
@@ -482,7 +484,7 @@ div.phoromatic_dashboard_block
 {
 	display: block;
 	clear: both;
-	padding: 10px 20px;
+	padding: 5px 10px;
 }
 div.phoromatic_dashboard_block p
 {
@@ -503,14 +505,14 @@ div.phoromatic_dashboard_block h1
 {
 	color: #ff9800;
 	margin: 2px 0;
-	font-size: 160%;
+	font-size: 140%;
 }
 div.phoromatic_dashboard_block h2
 {
 	color: #272727;
 	font-weight: 400;
 	margin: 2px 0;
-	font-size: 140%;
+	font-size: 120%;
 }
 div.phoromatic_dashboard_block hr
 {

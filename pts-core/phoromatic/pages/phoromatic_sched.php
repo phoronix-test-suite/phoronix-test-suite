@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2014, Phoronix Media
-	Copyright (C) 2014, Michael Larabel
+	Copyright (C) 2014 - 2015, Phoronix Media
+	Copyright (C) 2014 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -218,7 +218,7 @@ class phoromatic_sched implements pts_webui_interface
 			if(!$is_new)
 			{
 				$run_at = explode('.', $e_schedule['RunAt']);
-				$days_active = explode(',', $e_schedule['ActiveOn']);
+				$days_active = !empty($e_schedule['ActiveOn']) ? explode(',', $e_schedule['ActiveOn']) : array();
 			}
 
 			for($i = 0; $i <= 23; $i++)
@@ -236,7 +236,6 @@ class phoromatic_sched implements pts_webui_interface
 			}
 
 			$main .= '</select><h3>Active On:</h3><p>';
-
 			$week = array('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday');
 			foreach($week as $index => $day)
 			{

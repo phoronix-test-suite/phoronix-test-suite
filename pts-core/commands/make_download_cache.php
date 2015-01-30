@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2014, Phoronix Media
-	Copyright (C) 2008 - 2014, Michael Larabel
+	Copyright (C) 2008 - 2015, Phoronix Media
+	Copyright (C) 2008 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -39,7 +39,7 @@ class make_download_cache implements pts_option_interface
 		}
 
 		// Generates a PTS Download Cache
-		if(is_writable('/var/cache/phoronix-test-suite/download-cache/'))
+		if(false && is_writable('/var/cache/phoronix-test-suite/download-cache/')) // XXX: potentially remove this override
 		{
 			// If running as root, might as well write it to the global PTS download cache so other users on system could benefit too
 			$dc_write_directory = '/var/cache/phoronix-test-suite/download-cache/';

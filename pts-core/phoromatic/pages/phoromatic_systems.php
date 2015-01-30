@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2014, Phoronix Media
-	Copyright (C) 2008 - 2014, Michael Larabel
+	Copyright (C) 2008 - 2015, Phoronix Media
+	Copyright (C) 2008 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -360,8 +360,27 @@ class phoromatic_systems implements pts_webui_interface
 					}
 
 
-			$main .= '</ul>
-			</div>';
+			$main .= '</ul>';
+
+			$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, LocalIP, CurrentTask, LastCommunication, EstimatedTimeForTask, TaskPercentComplete FROM phoromatic_systems WHERE AccountID = :account_id AND State < 0 ORDER BY LastCommunication DESC');
+			$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+			$result = $stmt->execute();
+			$row = $result->fetchArray();
+
+			if($row != false)
+			{
+				$main .= '<ul>
+				<li><h1>Inactive Systems</h1></li>';
+				do
+				{
+					$main .= '<a href="?systems/' . $row['SystemID'] . '"><li>' . $row['Title'] . '<br /><table><tr><td>' . $row['LocalIP'] . '</td><td><strong>' . $row['CurrentTask'] . '</strong></td><td><strong>Deactivated</strong></td><td><strong>Last Communication:</strong> ' . date('j F Y H:i', strtotime($row['LastCommunication'])) . '</td></tr></table></li></a>';
+				}
+				while($row = $result->fetchArray());
+				$main .= '</ul>';
+			}
+
+
+			$main .= '</div>';
 
 			if($active_system_count > 2)
 			{

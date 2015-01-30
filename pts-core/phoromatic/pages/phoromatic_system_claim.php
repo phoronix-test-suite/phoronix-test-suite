@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2014, Phoronix Media
-	Copyright (C) 2008 - 2014, Michael Larabel
+	Copyright (C) 2008 - 2015, Phoronix Media
+	Copyright (C) 2008 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -93,6 +93,25 @@ echo "' . phoromatic_web_socket_server_addr() . '" > $PHORO_FILE_PATH/modules-da
 				$result = $stmt->execute();
 			}
 
+			$main .= '<h2>Add Phoromatic Server Info Via SSH</h2>
+			<p>If your Phoromatic client systems are SSH-enabled, you can specify their SSH connection information below. In doing so, the Phoromatic Server will do a one-time connection to it immediately to pre-seed the system with the Phoromatic Server account information for this account. This should allow the client systems to then find the server automatically next time the phoronix-test-suite is run. This command assumes the Phoronix Test Suite is already pre-installed on the client system in your desired configuration.</p>';
+
+			if(function_exists('ssh2_connect'))
+			{
+				$main .= '<h3>Phoromatic Client SSH Information:</h3>';
+				$main .= '<form action="' . $_SERVER['REQUEST_URI'] . '" name="ssh_connect" method="post">
+				<p><strong>IP Address:</strong> <input type="text" name="ip" /></p>
+				<p><strong>SSH Port:</strong> <input type="text" name="port" value="22" /></p>
+				<p><strong>Username:</strong> <input type="text" name="username" /></p>
+				<p><strong>Password:</strong> <input type="password" name="password" /></p>
+				<p><input name="submit" value="Seed Phoromatic Server Account Information" type="submit" /></p>
+				</form>';
+			}
+			else
+			{
+				$main .= '<h3>PHP SSH2 Must Be Installed For This Feature</h3>';
+			}
+			$main .= '<hr />';
 			$main .= '<h2>Add Phoromatic Server Info Via IP/MAC</h2>
 			<p>If deploying a Phoromatic Server within an organization, you can attempt for automatic configuration of Phoromatic clients if you know the system\'s IP or MAC addresses. When specifying either of these fields, if a Phoromatic client attempts to connect to this Phoromatic system without being associated to an account, it will be claimed by this account as long as no other Phoromatic accounts are attempting to claim the IP/MAC. This method can be particularly useful if running the Phoromatic client as a systemd/Upstart service where it will continually poll every 90 seconds auto-detected Phoromatic Servers on the LAN via zero-conf networking. For this feature to work, the zero-conf networking (Avahi) support must be enabled and working.</p>';
 			$main .= '<form action="' . $_SERVER['REQUEST_URI'] . '" name="auto_associate" method="post">
@@ -101,11 +120,11 @@ echo "' . phoromatic_web_socket_server_addr() . '" > $PHORO_FILE_PATH/modules-da
 			<p><input name="submit" value="Submit Claim" type="submit" /></p>
 			</form>';
 
-			$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_system_association_claims WHERE AccountID = :account_id ORDER BY CreationTime ASC');
+			$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_system_association_claims WHERE AccountID = :account_id ORDER BY IPAddress ASC');
 			$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 			$result = $stmt->execute();
 			$claims = array();
-			$main .= '<p>';
+			$main .= '<p style="max-height: 500px; overflow-y: auto;">';
 			while($row = $result->fetchArray())
 			{
 				$ip = $row['IPAddress'] != null ? $row['IPAddress'] : '<em>' . pts_network::mac_to_ip($row['NetworkMAC']) . '</em>';
@@ -127,27 +146,6 @@ echo "' . phoromatic_web_socket_server_addr() . '" > $PHORO_FILE_PATH/modules-da
 				$main .= '</select> <input name="submit" value="Remove Claim" type="submit" /></form></p>';
 			}
 
-			$main .= '<hr />';
-
-
-			$main .= '<h2>Add Phoromatic Server Info Via SSH</h2>
-			<p>If your Phoromatic client systems are SSH-enabled, you can specify their SSH connection information below. In doing so, the Phoromatic Server will do a one-time connection to it immediately to pre-seed the system with the Phoromatic Server account information for this account. This should allow the client systems to then find the server automatically next time the phoronix-test-suite is run. This command assumes the Phoronix Test Suite is already pre-installed on the client system in your desired configuration.</p>';
-
-			if(function_exists('ssh2_connect'))
-			{
-				$main .= '<h3>Phoromatic Client SSH Information:</h3>';
-				$main .= '<form action="' . $_SERVER['REQUEST_URI'] . '" name="ssh_connect" method="post">
-				<p><strong>IP Address:</strong> <input type="text" name="ip" /></p>
-				<p><strong>SSH Port:</strong> <input type="text" name="port" value="22" /></p>
-				<p><strong>Username:</strong> <input type="text" name="username" /></p>
-				<p><strong>Password:</strong> <input type="password" name="password" /></p>
-				<p><input name="submit" value="Seed Phoromatic Server Account Information" type="submit" /></p>
-				</form>';
-			}
-			else
-			{
-				$main .= '<h3>PHP SSH2 Must Be Installed For This Feature</h3>';
-			}
 			$main .= '<hr />';
 		}
 

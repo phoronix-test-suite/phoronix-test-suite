@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2014, Phoronix Media
-	Copyright (C) 2014, Michael Larabel
+	Copyright (C) 2014 - 2015, Phoronix Media
+	Copyright (C) 2014 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -141,10 +141,10 @@ class phoromatic_users implements pts_webui_interface
 		$main = '<h2>Users</h2>
 			<p>Users associated with this account. Phoromatic users can be one of several tiers with varying privileges:</p>
 			<ol>
-				<li><strong>Main Administrator:</strong> The user with full control over the account, the one who originally signed up for the Phoromatic account.</li>
-				<li><strong>Administrator:</strong> Additional users created by the main administrator with the same access rights as the main administrator.</li>
-				<li><strong>Power Users:</strong> Additional users created by the main administrator with read/write/modify access to all standard Phoromatic functionality, aside from being able to create additional users.</li>
-				<li><strong>Viewer:</strong> Additional users created by the main administrator that have access to view data but not to create new schedules, alter system settings, etc.</li>
+				<li><strong>Group Administrator:</strong> The user with full control over the account, the one who originally signed up for the Phoromatic account.</li>
+				<li><strong>Administrator:</strong> Additional users created by the group administrator with the same access rights as the group administrator.</li>
+				<li><strong>Power Users:</strong> Additional users created by the group administrator with read/write/modify access to all standard Phoromatic functionality, aside from being able to create additional users.</li>
+				<li><strong>Viewer:</strong> Additional users created by the group administrator that have access to view data but not to create new schedules, alter system settings, etc.</li>
 			</ol>
 			<div class="pts_phoromatic_info_box_area">
 
@@ -163,7 +163,7 @@ class phoromatic_users implements pts_webui_interface
 						switch($row['AdminLevel'])
 						{
 							case 1:
-								$level = 'Main Administrator';
+								$level = 'Group Administrator';
 								break;
 							case 2:
 								$level = 'Administrator';

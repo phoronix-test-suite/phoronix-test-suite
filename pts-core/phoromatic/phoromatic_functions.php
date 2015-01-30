@@ -193,7 +193,7 @@ function phoromatic_webui_header_logged_in()
 		if(phoromatic_account_system_count() > 3)
 			array_push($pages, 'Dashboard');
 
-		array_push($pages, 'Systems', 'Settings', 'Schedules', 'Results');
+		array_push($pages, 'Systems', 'Schedules', 'Results');
 
 		if(phoromatic_tracker_page_relevant())
 		{
@@ -205,6 +205,7 @@ function phoromatic_webui_header_logged_in()
 		{
 			array_push($pages, 'Users');
 		}
+		array_push($pages, 'Settings');
 	}
 
 	foreach($pages as $page)
