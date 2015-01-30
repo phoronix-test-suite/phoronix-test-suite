@@ -46,6 +46,14 @@ if(isset($_GET['repo']))
 	{
 		readfile(PTS_SHARE_PATH . 'download-cache/pts-download-cache.json');
 	}
+	else
+	{
+		$dc = pts_strings::add_trailing_slash(pts_client::parse_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Installation/CacheDirectory', PTS_DOWNLOAD_CACHE_PATH)));
+		if(is_file($dc . 'pts-download-cache.json'))
+		{
+			readfile($dc . 'pts-download-cache.json');
+		}
+	}
 	pts_logger::add_to_log($_SERVER['REMOTE_ADDR'] . ' requested a copy of the download cache JSON');
 }
 else if(isset($_GET['download']))
@@ -64,6 +72,14 @@ else if(isset($_GET['download']))
 	else if(is_file('/var/cache/phoronix-test-suite/download-cache/' . $requested_file))
 	{
 		$file_path = '/var/cache/phoronix-test-suite/download-cache/' . $requested_file;
+	}
+	else
+	{
+		$dc = pts_strings::add_trailing_slash(pts_client::parse_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Installation/CacheDirectory', PTS_DOWNLOAD_CACHE_PATH)));
+		if(is_file($dc . $requested_file))
+		{
+			readfile($dc . $requested_file);
+		}
 	}
 
 	ob_end_clean();

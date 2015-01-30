@@ -3,7 +3,7 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2014, Phoronix Media
+	Copyright (C) 2008 - 2015, Phoronix Media
 	Copyright (C) 2008, Andrew Schofield
 
 	This program is free software; you can redistribute it and/or modify
@@ -40,19 +40,21 @@ if(!defined("PTS_VERSION"))
        exit(0);
 }
 
+$rpm_v = PTS_VERSION . '-' . date('YmdHi');
+
 shell_exec("rm -rf /tmp/pts-rpm-builder/");
-shell_exec("mkdir -p /tmp/pts-rpm-builder/{BUILD,RPMS,S{OURCE,PEC,RPM}S,phoronix-test-suite-" . PTS_VERSION . "}");
-shell_exec("cp -R ./ /tmp/pts-rpm-builder/phoronix-test-suite-" . PTS_VERSION . "/");
-shell_exec("tar --exclude=.git -C /tmp/pts-rpm-builder/ -cjvf /tmp/pts-rpm-builder/SOURCES/phoronix-test-suite-" . PTS_VERSION . ".tar.bz2 phoronix-test-suite-" . PTS_VERSION . "/");
+shell_exec("mkdir -p /tmp/pts-rpm-builder/{BUILD,RPMS,S{OURCE,PEC,RPM}S,phoronix-test-suite-" . $rpm_v . "}");
+shell_exec("cp -R ./ /tmp/pts-rpm-builder/phoronix-test-suite-" . $rpm_v . "/");
+shell_exec("tar --exclude=.git -C /tmp/pts-rpm-builder/ -cjvf /tmp/pts-rpm-builder/SOURCES/phoronix-test-suite-" . $rpm_v . ".tar.bz2 phoronix-test-suite-" . $rpm_v . "/");
 
 $spec_file = "Summary: A Comprehensive Linux Benchmarking System\n";
 $spec_file .= "Name: phoronix-test-suite\n";
-$spec_file .= "Version: " . PTS_VERSION . "\n";
+$spec_file .= "Version: " . $rpm_v . "\n";
 $spec_file .= "Release: 1\n";
 $spec_file .= "License: GPL\n";
 $spec_file .= "Group: Utilities\n";
 $spec_file .= "URL: http://www.phoronix-test-suite.com/\n";
-$spec_file .= "Source: phoronix-test-suite-" . PTS_VERSION . ".tar.bz2\n";
+$spec_file .= "Source: phoronix-test-suite-" . $rpm_v . ".tar.bz2\n";
 $spec_file .= "Packager: Phoronix Media <trondheim-pts@phoronix-test-suite.com>\n";
 $spec_file .= "Requires: php-cli, php-xml\n";
 $spec_file .= "BuildArch: noarch\n";
@@ -87,7 +89,7 @@ file_put_contents("/tmp/pts-rpm-builder/SPECS/pts.spec", $spec_file);
 shell_exec("mv -f " . getenv('HOME') . "/.rpmmacros /tmp/pts-rpm-builder 2>&1");
 file_put_contents(getenv('HOME') ."/.rpmmacros", "%_topdir /tmp/pts-rpm-builder");
 shell_exec("rpmbuild -ba --verbose /tmp/pts-rpm-builder/SPECS/pts.spec");
-shell_exec("cp /tmp/pts-rpm-builder/RPMS/noarch/phoronix-test-suite-" . PTS_VERSION . "-1.noarch.rpm ./");
+shell_exec("cp /tmp/pts-rpm-builder/RPMS/noarch/phoronix-test-suite-" . $rpm_v . "-1.noarch.rpm ./");
 shell_exec("rm -f " . getenv('HOME') . "/.rpmmacros");
 shell_exec("mv -f /tmp/pts-rpm-builder/.rpmmacros " . getenv('HOME') . ' 2>1');
 shell_exec("rm -rf /tmp/pts-rpm-builder");

@@ -42,7 +42,7 @@ fi
 mkdir -p $DESTDIR$INSTALL_PREFIX
 if [ ! -w $DESTDIR$INSTALL_PREFIX ]
 then
-	echo "\nERROR: $DESTDIR$INSTALL_PREFIX is not writable. Run this installer as root or specify a different directory prefix as the first argument sent to this script.\n"
+	echo "ERROR: $DESTDIR$INSTALL_PREFIX is not writable. Run this installer as root or specify a different directory prefix as the first argument sent to this script."
 	exit
 fi
 
