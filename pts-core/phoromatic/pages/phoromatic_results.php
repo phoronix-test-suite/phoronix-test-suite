@@ -42,17 +42,18 @@ class phoromatic_results implements pts_webui_interface
 
 			if(!PHOROMATIC_USER_IS_VIEWER && isset($PATH[0]) && $PATH[0] == 'delete')
 			{
-				$upload_ids = explode(',', $PATH[1]);
+				$pprids = explode(',', $PATH[1]);
 
-				foreach($upload_ids as $upload_id)
+				foreach($pprids as $pprid)
 				{
-					$stmt = phoromatic_server::$db->prepare('DELETE FROM phoromatic_results WHERE AccountID = :account_id AND UploadID = :upload_id');
+					$stmt = phoromatic_server::$db->prepare('DELETE FROM phoromatic_results WHERE AccountID = :account_id AND PPRID = :pprid');
 					$stmt->bindValue(':account_id', $_SESSION['AccountID']);
-					$stmt->bindValue(':upload_id', $upload_id);
+					$stmt->bindValue(':pprid', $pprid);
 					$result = $stmt->execute();
 
-					$upload_dir = phoromatic_server::phoromatic_account_result_path($_SESSION['AccountID'], $upload_id);
-					pts_file_io::delete($upload_dir);
+					// TODO XXX fix below
+					//$upload_dir = phoromatic_server::phoromatic_account_result_path($_SESSION['AccountID'], $upload_id);
+					//pts_file_io::delete($upload_dir);
 				}
 			}
 
@@ -62,7 +63,7 @@ class phoromatic_results implements pts_webui_interface
 				$main .= '<div id="pts_phoromatic_top_result_button_area"></div>';
 				$main .= '<div class="pts_phoromatic_info_box_area">';
 				$main .= '<div style="margin: 0 10%;"><ul><li><h1>Recent Test Results</h1></li>';
-				$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, ScheduleID, UploadID, UploadTime, TimesViewed FROM phoromatic_results WHERE AccountID = :account_id ORDER BY UploadTime DESC');
+				$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, ScheduleID, PPRID, UploadTime, TimesViewed FROM phoromatic_results WHERE AccountID = :account_id ORDER BY UploadTime DESC');
 				$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 				$test_result_result = $stmt->execute();
 				$results = 0;
@@ -72,7 +73,7 @@ class phoromatic_results implements pts_webui_interface
 					{
 						break;
 					}
-					$main .= '<a onclick="javascript:phoromatic_click_results(\'' . $test_result_row['UploadID'] . '\');"><li id="result_select_' . $test_result_row['UploadID'] . '">' . $test_result_row['Title'] . '<br /><table><tr><td>' . phoromatic_system_id_to_name($test_result_row['SystemID']) . '</td><td>' . phoromatic_user_friendly_timedate($test_result_row['UploadTime']) .  '</td><td>' . $test_result_row['TimesViewed'] . ' Times Viewed</tr></table></li></a>';
+					$main .= '<a onclick="javascript:phoromatic_click_results(\'' . $test_result_row['PPRID'] . '\');"><li id="result_select_' . $test_result_row['PPRID'] . '">' . $test_result_row['Title'] . '<br /><table><tr><td>' . phoromatic_system_id_to_name($test_result_row['SystemID']) . '</td><td>' . phoromatic_user_friendly_timedate($test_result_row['UploadTime']) .  '</td><td>' . $test_result_row['TimesViewed'] . ' Times Viewed</tr></table></li></a>';
 					$results++;
 
 				}

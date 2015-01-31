@@ -292,7 +292,7 @@ class phoromatic_schedules implements pts_webui_interface
 
 
 
-				$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, ScheduleID, UploadID, UploadTime FROM phoromatic_results WHERE AccountID = :account_id AND ScheduleID = :schedule_id ORDER BY UploadTime DESC');
+				$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, ScheduleID, PPRID, UploadTime FROM phoromatic_results WHERE AccountID = :account_id AND ScheduleID = :schedule_id ORDER BY UploadTime DESC');
 				$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 				$stmt->bindValue(':schedule_id', $PATH[0]);
 				$test_result_result = $stmt->execute();
@@ -310,7 +310,7 @@ class phoromatic_schedules implements pts_webui_interface
 						{
 							continue;
 						}
-						$main .= '<a href="?result/' . $test_result_row['UploadID'] . '"><li>' . $test_result_row['Title'] . '<br /><table><tr><td>' . phoromatic_system_id_to_name($test_result_row['SystemID']) . '</td><td>' . phoromatic_user_friendly_timedate($test_result_row['UploadTime']) .  '</td></tr></table></li></a>';
+						$main .= '<a href="?result/' . $test_result_row['PPRID'] . '"><li>' . $test_result_row['Title'] . '<br /><table><tr><td>' . phoromatic_system_id_to_name($test_result_row['SystemID']) . '</td><td>' . phoromatic_user_friendly_timedate($test_result_row['UploadTime']) .  '</td></tr></table></li></a>';
 						$results++;
 
 					}

@@ -187,6 +187,15 @@ class phoromatic_server
 				// Change made 31 January for group name
 				self::$db->exec('ALTER TABLE phoromatic_accounts ADD COLUMN GroupName TEXT');
 				self::$db->exec('PRAGMA user_version = 17');
+			case 17:
+				// Change made 31 January for Phoromatic Public Result ID
+				self::$db->exec('ALTER TABLE phoromatic_results ADD COLUMN PPRID TEXT');
+				self::$db->exec('PRAGMA user_version = 18');
+			case 18:
+				// Change made 31 January for Phoromatic Public Result ID
+				self::rebuild_pprid_entries();
+				self::$db->exec('CREATE UNIQUE INDEX IF NOT EXISTS public_result_id ON phoromatic_results (PPRID)');
+				self::$db->exec('PRAGMA user_version = 19');
 		}
 		chmod($db_file, 0600);
 	}
@@ -202,6 +211,24 @@ class phoromatic_server
 		$headers .= "From: <" . $from . ">\r\n";
 
 		mail($to, $subject, $msg, $headers);
+	}
+	protected static function rebuild_pprid_entries()
+	{
+		$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_results ORDER BY UploadTime ASC');
+		$result = $stmt->execute();
+
+		while($row = $result->fetchArray())
+		{
+			$stmt = phoromatic_server::$db->prepare('UPDATE phoromatic_results SET PPRID = :pprid WHERE AccountID = :account_id AND UploadID = :upload_id');
+			$stmt->bindValue(':account_id', $row['AccountID']);
+			$stmt->bindValue(':upload_id', $row['UploadID']);
+			$stmt->bindValue(':pprid', phoromatic_server::compute_pprid($row['AccountID'], $row['SystemID'], $row['UploadTime'], $row['XmlUploadHash']));
+			$stmt->execute();
+		}
+	}
+	public static function compute_pprid($account_id, $system_id, $upload_time, $xml_upload_hash)
+	{
+		return base_convert(sha1($account_id . ' ' . $system_id . ' ' . $xml_upload_hash . ' ' . $upload_time), 10, 36);
 	}
 	public static function system_id_to_name($system_id, $aid = false)
 	{

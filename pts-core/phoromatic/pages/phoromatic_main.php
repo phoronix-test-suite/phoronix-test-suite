@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2014, Phoronix Media
-	Copyright (C) 2008 - 2014, Michael Larabel
+	Copyright (C) 2008 - 2015, Phoronix Media
+	Copyright (C) 2008 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -37,13 +37,13 @@ class phoromatic_main implements pts_webui_interface
 	}
 	protected static function result_match($schedule_id, $system_id, $date)
 	{
-		$stmt = phoromatic_server::$db->prepare('SELECT UploadID FROM phoromatic_results WHERE AccountID = :account_id AND ScheduleID = :schedule_id AND SystemID = :system_id AND Trigger = :trigger LIMIT 1');
+		$stmt = phoromatic_server::$db->prepare('SELECT PPRID FROM phoromatic_results WHERE AccountID = :account_id AND ScheduleID = :schedule_id AND SystemID = :system_id AND Trigger = :trigger LIMIT 1');
 		$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 		$stmt->bindValue(':schedule_id', $schedule_id);
 		$stmt->bindValue(':system_id', $system_id);
 		$stmt->bindValue(':trigger', $date);
 		$result = $stmt->execute();
-		return $result && ($row = $result->fetchArray()) ? $row['UploadID'] : false;
+		return $result && ($row = $result->fetchArray()) ? $row['PPRID'] : false;
 	}
 	protected static function system_info($system_id, $info = '*')
 	{
@@ -117,14 +117,14 @@ class phoromatic_main implements pts_webui_interface
 
 				foreach(phoromatic_server::systems_associated_with_schedule($_SESSION['AccountID'], $row['ScheduleID']) as $system_id)
 				{
-					$upload_id = self::result_match($row['ScheduleID'], $system_id, $show_date);
+					$pprid = self::result_match($row['ScheduleID'], $system_id, $show_date);
 
-					if($upload_id)
-						$main .= '<a href="?result/' . $upload_id . '">';
+					if($pprid)
+						$main .= '<a href="?result/' . $pprid . '">';
 
 					$main .= phoromatic_server::system_id_to_name($system_id);
 
-					if($upload_id)
+					if($pprid)
 						$main .= '</a>';
 					else if(!$run_in_future)
 					{
@@ -173,28 +173,24 @@ class phoromatic_main implements pts_webui_interface
 			{
 				foreach(array_keys($systems) as $system_id)
 				{
-					$stmt_uploads = phoromatic_server::$db->prepare('SELECT UploadID FROM phoromatic_results WHERE AccountID = :account_id AND SystemID = :system_id AND ScheduleID = :schedule_id ORDER BY UploadTime DESC LIMIT 2');
+					$stmt_uploads = phoromatic_server::$db->prepare('SELECT PPRID, UploadID FROM phoromatic_results WHERE AccountID = :account_id AND SystemID = :system_id AND ScheduleID = :schedule_id ORDER BY UploadTime DESC LIMIT 2');
 					$stmt_uploads->bindValue(':account_id', $_SESSION['AccountID']);
 					$stmt_uploads->bindValue(':system_id', $system_id);
 					$stmt_uploads->bindValue(':schedule_id', $test_result_row['ScheduleID']);
 					$result_uploads = $stmt_uploads->execute();
 
-					$upload_ids = array();
+					$result_file = array();
+					$pprids = array();
 					while($result_uploads_row = $result_uploads->fetchArray())
 					{
-						array_push($upload_ids, $result_uploads_row['UploadID']);
-					}
-					$upload_ids = array_reverse($upload_ids);
-
-					$result_file = array();
-					foreach($upload_ids as $upload_id)
-					{
-						$composite_xml = phoromatic_server::phoromatic_account_result_path($_SESSION['AccountID'], $upload_id) . 'composite.xml';
+						$composite_xml = phoromatic_server::phoromatic_account_result_path($_SESSION['AccountID'], $result_uploads_row['UploadID']) . 'composite.xml';
 						if(is_file($composite_xml))
 						{
 							array_push($result_file, new pts_result_merge_select($composite_xml));
 						}
+						array_push($pprids, $result_uploads_row['PPRID']);
 					}
+					$result_file = array_reverse($result_file);
 
 					if(count($result_file) == 2)
 					{
@@ -223,7 +219,7 @@ class phoromatic_main implements pts_webui_interface
 
 							$pcolor = $vari > 0 ? 'green' : 'red';
 
-							$main .= '<a href="?result/' . implode(',', $upload_ids) . '#' . $result_object->get_comparison_hash(true, false) . '"><span style="color: ' . $pcolor . ';"><strong>' . phoromatic_system_id_to_name($system_id) . ' - ' . $result_object->test_profile->get_title() . ':</strong> ' . implode(' &gt; ', $result_file->get_system_identifiers()) . ': ' . ($vari * 100) . '%</span></a><br />';
+							$main .= '<a href="?result/' . implode(',', $pprids) . '#' . $result_object->get_comparison_hash(true, false) . '"><span style="color: ' . $pcolor . ';"><strong>' . phoromatic_system_id_to_name($system_id) . ' - ' . $result_object->test_profile->get_title() . ':</strong> ' . implode(' &gt; ', $result_file->get_system_identifiers()) . ': ' . ($vari * 100) . '%</span></a><br />';
 						}
 					}
 				}
@@ -263,7 +259,7 @@ class phoromatic_main implements pts_webui_interface
 		*/
 		// TODAY'S TEST RESULTS
 		$main .= '<div style="float: left; width: 48%;"><ul><li><h1>Today\'s Test Results</h1></li>';
-		$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, ScheduleID, UploadID, UploadTime, TimesViewed FROM phoromatic_results WHERE AccountID = :account_id ORDER BY UploadTime DESC');
+		$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, ScheduleID, PPRID, UploadTime, TimesViewed FROM phoromatic_results WHERE AccountID = :account_id ORDER BY UploadTime DESC');
 		$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 		$test_result_result = $stmt->execute();
 
@@ -274,7 +270,7 @@ class phoromatic_main implements pts_webui_interface
 			{
 				break;
 			}
-			$main .= '<a href="?result/' . $test_result_row['UploadID'] . '"><li>' . $test_result_row['Title'] . '<br /><table><tr><td>' . phoromatic_system_id_to_name($test_result_row['SystemID']) . '</td><td>' . pts_strings::plural_handler($test_result_row['TimesViewed'], 'View') . '</td></tr></table></li></a>';
+			$main .= '<a href="?result/' . $test_result_row['PPRID'] . '"><li>' . $test_result_row['Title'] . '<br /><table><tr><td>' . phoromatic_system_id_to_name($test_result_row['SystemID']) . '</td><td>' . pts_strings::plural_handler($test_result_row['TimesViewed'], 'View') . '</td></tr></table></li></a>';
 			$results_today++;
 
 		}
@@ -295,7 +291,7 @@ class phoromatic_main implements pts_webui_interface
 				{
 					break;
 				}
-				$main .= '<a href="?result/' . $test_result_row['UploadID'] . '"><li>' . $test_result_row['Title'] . '<br /><table><tr><td>' . phoromatic_system_id_to_name($test_result_row['SystemID']) . '</td><td>' . pts_strings::plural_handler($test_result_row['TimesViewed'], 'View') . '</td></tr></table></li></a>';
+				$main .= '<a href="?result/' . $test_result_row['PPRID'] . '"><li>' . $test_result_row['Title'] . '<br /><table><tr><td>' . phoromatic_system_id_to_name($test_result_row['SystemID']) . '</td><td>' . pts_strings::plural_handler($test_result_row['TimesViewed'], 'View') . '</td></tr></table></li></a>';
 			}
 			while($test_result_row = $test_result_result->fetchArray());
 			$main .= '</ul></div>';
@@ -313,7 +309,7 @@ class phoromatic_main implements pts_webui_interface
 				{
 					break;
 				}
-				$main .= '<a href="?result/' . $test_result_row['UploadID'] . '"><li>' . $test_result_row['Title'] . '<br /><table><tr><td>' . phoromatic_system_id_to_name($test_result_row['SystemID']) . '</td><td>' . phoromatic_user_friendly_timedate($test_result_row['UploadTime']) .  '</td><td>' . pts_strings::plural_handler($test_result_row['TimesViewed'], 'View') . '</td></tr></table></li></a>';
+				$main .= '<a href="?result/' . $test_result_row['PPRID'] . '"><li>' . $test_result_row['Title'] . '<br /><table><tr><td>' . phoromatic_system_id_to_name($test_result_row['SystemID']) . '</td><td>' . phoromatic_user_friendly_timedate($test_result_row['UploadTime']) .  '</td><td>' . pts_strings::plural_handler($test_result_row['TimesViewed'], 'View') . '</td></tr></table></li></a>';
 			}
 			while($test_result_row = $test_result_result->fetchArray());
 			$main .= '</ul></div>';

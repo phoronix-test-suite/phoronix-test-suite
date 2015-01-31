@@ -18,6 +18,7 @@ Phoronix Test Suite (Git)
 - phoromatic: Allow setting a main page message string to show users once logging into their account, via rootadmin's config page
 - phoromatic: Don't show idling systems on the dashboard
 - phoromatic: Add IP ping test to system claim page
+- phoromatic: Introduce PPRID structure as universal unique identifier for results between accounts
 
 Phoronix Test Suite 5.6 Milestone 1
 13 January 2015

@@ -76,15 +76,29 @@ class phoromatic_result implements pts_webui_interface
 			$upload_times = array();
 			$xml_result_hash = array();
 
-			foreach($upload_ids as $upload_id)
+			foreach($upload_ids as $id)
 			{
-				$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_results WHERE AccountID = :account_id AND UploadID = :upload_id LIMIT 1');
-				$stmt->bindValue(':account_id', $_SESSION['AccountID']);
-				$stmt->bindValue(':upload_id', $upload_id);
+				// XXX: add AccountID security check here TODO
+				$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_results WHERE PPRID = :pprid LIMIT 1');
+				$stmt->bindValue(':pprid', $id);
 				$result = $stmt->execute();
 				$row = $result->fetchArray();
 
-				$composite_xml = phoromatic_server::phoromatic_account_result_path($_SESSION['AccountID'], $upload_id) . 'composite.xml';
+				if(empty($row))
+				{
+					// TODO XXX
+					// XXX this code is ultimately dead
+					$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_results WHERE AccountID = :account_id AND UploadID = :upload_id LIMIT 1');
+					$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+					$stmt->bindValue(':upload_id', $id);
+					$result = $stmt->execute();
+					$row = $result->fetchArray();
+				}
+
+				if(empty($row))
+					continue;
+
+				$composite_xml = phoromatic_server::phoromatic_account_result_path($_SESSION['AccountID'], $row['UploadID']) . 'composite.xml';
 				if(!is_file($composite_xml))
 				{
 					echo 'File Not Found: ' . $composite_xml;
@@ -100,7 +114,7 @@ class phoromatic_result implements pts_webui_interface
 				// Update view counter
 				$stmt_view = phoromatic_server::$db->prepare('UPDATE phoromatic_results SET TimesViewed = (TimesViewed + 1) WHERE AccountID = :account_id AND UploadID = :upload_id');
 				$stmt_view->bindValue(':account_id', $_SESSION['AccountID']);
-				$stmt_view->bindValue(':upload_id', $upload_id);
+				$stmt_view->bindValue(':upload_id', $row['UploadID']);
 				$stmt_view->execute();
 			}
 
@@ -394,9 +408,9 @@ class phoromatic_result implements pts_webui_interface
 			$right .= '<p><a href="?' . $_SERVER['QUERY_STRING'] . '/&pdf">Download As PDF</a></p>';
 		}
 
-		if(is_file(phoromatic_server::phoromatic_account_result_path($_SESSION['AccountID'], $upload_id) . 'system-logs.zip'))
+		if(is_file(phoromatic_server::phoromatic_account_result_path($_SESSION['AccountID'], $row['UploadID']) . 'system-logs.zip'))
 		{
-				$right .= '<hr /><p><a href="?logs/system/' . $upload_id . '">View System Logs</a></p>';
+				$right .= '<hr /><p><a href="?logs/system/' . $row['UploadID'] . '">View System Logs</a></p>';
 		}
 
 		echo phoromatic_webui_header_logged_in();
