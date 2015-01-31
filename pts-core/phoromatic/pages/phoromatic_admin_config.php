@@ -187,6 +187,10 @@ class phoromatic_admin_config implements pts_webui_interface
 		{
 			phoromatic_server::save_setting('account_creation_alt', $_POST['account_creation_alt']);
 		}
+		if(isset($_POST['main_page_message']))
+		{
+			phoromatic_server::save_setting('main_page_message', $_POST['main_page_message']);
+		}
 
 		$main .= '<h1>Phoromatic Server Configuration</h1>';
 
@@ -234,6 +238,13 @@ class phoromatic_admin_config implements pts_webui_interface
 		$main .= '<form action="' . $_SERVER['REQUEST_URI'] . '" name="account_creation_text" method="post">';
 		$main .= '<p><strong>Account Creation String:</strong> <textarea name="account_creation_alt" cols="50" rows="4">' . phoromatic_server::read_setting('account_creation_alt') . '</textarea></p>';
 		$main .= '<p><input name="submit" value="Update Account Handling" type="submit" /></p>';
+		$main .= '</form>';
+
+		$main .= '<hr /><h1>Main Page Message</h1>';
+		$main .= '<p>If you wish to present users with a custom message once logging into their Phoromatic account, set the HTML-allowed string below and it will be shown on the main page once logging in.</p>';
+		$main .= '<form action="' . $_SERVER['REQUEST_URI'] . '" name="main_page_message" method="post">';
+		$main .= '<p><strong>Main Page Message String:</strong> <textarea name="main_page_message" cols="50" rows="4">' . phoromatic_server::read_setting('main_page_message') . '</textarea></p>';
+		$main .= '<p><input name="submit" value="Update Main Page Message" type="submit" /></p>';
 		$main .= '</form>';
 
 		echo phoromatic_webui_header_logged_in();
