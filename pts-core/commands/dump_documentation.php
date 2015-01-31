@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2014, Phoronix Media
-	Copyright (C) 2010 - 2014, Michael Larabel
+	Copyright (C) 2010 - 2015, Phoronix Media
+	Copyright (C) 2010 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -24,16 +24,6 @@ class dump_documentation implements pts_option_interface
 {
 	public static function run($r)
 	{
-		if(is_file('/usr/share/php/fpdf/fpdf.php'))
-		{
-			include_once('/usr/share/php/fpdf/fpdf.php');
-		}
-		else
-		{
-			echo PHP_EOL . 'The FPDF library must be installed.' . PHP_EOL . PHP_EOL;
-			return;
-		}
-
 		$pdf = new pts_pdf_template(pts_title(false), 'Test Client Documentation');
 		$html_doc = new pts_html_template(pts_title(false), 'Test Client Documentation');
 

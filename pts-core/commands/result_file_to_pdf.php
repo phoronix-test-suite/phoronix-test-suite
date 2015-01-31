@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2014, Phoronix Media
-	Copyright (C) 2009 - 2014, Michael Larabel
+	Copyright (C) 2009 - 2015, Phoronix Media
+	Copyright (C) 2009 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -33,16 +33,6 @@ class result_file_to_pdf implements pts_option_interface
 	}
 	public static function run($r)
 	{
-		if(is_file('/usr/share/php/fpdf/fpdf.php'))
-		{
-			include_once('/usr/share/php/fpdf/fpdf.php');
-		}
-		else
-		{
-			echo PHP_EOL . 'The FPDF library must be installed.' . PHP_EOL;
-			return false;
-		}
-
 		$_REQUEST['force_format'] = 'PNG'; // Force to PNG renderer
 		$_REQUEST['svg_dom_gd_no_interlacing'] = true; // Otherwise FPDF will fail
 		pts_client::generate_result_file_graphs($r[0], PTS_SAVE_RESULTS_PATH . $r[0] . '/');
