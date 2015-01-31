@@ -52,6 +52,10 @@ class phoromatic_dashboard implements pts_webui_interface
 				$not_testing = false;
 				$opacity = ' style="background: #f44336; color: #FFF;"';
 			}
+			else if(stripos($row['CurrentTask'], 'idling') !== false)
+			{
+				continue;
+			}
 			else if(stripos($row['CurrentTask'], 'waiting') !== false || stripos($row['CurrentTask'], 'shutdown') !== false)
 			{
 				$not_testing = true;

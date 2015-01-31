@@ -16,6 +16,7 @@ Phoronix Test Suite (Git)
 - phoromatic: Allow downloading results as PDF
 - phoromatic: Allow disabling new account registration by setting custom string via rootadmin's config page
 - phoromatic: Allow setting a main page message string to show users once logging into their account, via rootadmin's config page
+- phoromatic: Don't show idling systems on the dashboard
 
 Phoronix Test Suite 5.6 Milestone 1
 13 January 2015
