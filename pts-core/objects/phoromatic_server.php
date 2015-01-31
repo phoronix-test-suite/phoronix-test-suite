@@ -183,6 +183,10 @@ class phoromatic_server
 				// Change made 1 December for maintenance mode
 				self::$db->exec('ALTER TABLE phoromatic_systems ADD COLUMN MaintenanceMode INTEGER DEFAULT 0');
 				self::$db->exec('PRAGMA user_version = 16');
+			case 16:
+				// Change made 31 January for group name
+				self::$db->exec('ALTER TABLE phoromatic_accounts ADD COLUMN GroupName TEXT');
+				self::$db->exec('PRAGMA user_version = 17');
 		}
 		chmod($db_file, 0600);
 	}

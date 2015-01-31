@@ -297,7 +297,14 @@ function phoromatic_webui_right_panel_logged_in($add = null)
 		$result = $stmt->execute();
 		$row = $result->fetchArray();
 		$activity_count = $row['ActivityCount'];
-		$right .= '<hr /><p><strong>' . date('H:i T - j F Y') . '</strong><br /><a href="?systems">' . $system_count . ' System' . ($system_count == 1 ? '' : 's') . '</a><br /><a href="?schedules">' . $schedule_count . ' Schedule' . ($schedule_count == 1 ? '' : 's') . '</a><br /><a href="?results">' . $result_count . ' Result' . ($result_count == 1 ? '' : 's') . '</a><br /><a href="?account_activity">' . $activity_count . ' Activity Events Today</a><br /><a href="?logout"><strong>Log-Out</strong></a></p>';
+
+		$group_name = phoromatic_account_id_to_group_name($_SESSION['AccountID']);
+		if($group_name != null)
+		{
+			$group_name = '<strong>' . $group_name . '</strong><br />';
+		}
+
+		$right .= '<hr /><p><strong>' . date('H:i T - j F Y') . '</strong><br />' . $group_name . '<a href="?systems">' . $system_count . ' System' . ($system_count == 1 ? '' : 's') . '</a><br /><a href="?schedules">' . $schedule_count . ' Schedule' . ($schedule_count == 1 ? '' : 's') . '</a><br /><a href="?results">' . $result_count . ' Result' . ($result_count == 1 ? '' : 's') . '</a><br /><a href="?account_activity">' . $activity_count . ' Activity Events Today</a><br /><a href="?logout"><strong>Log-Out</strong></a></p>';
 	}
 
 	return $right;
@@ -427,6 +434,21 @@ function phoromatic_schedule_id_to_name($schedule_id)
 	}
 
 	return $schedule_names[$schedule_id];
+}
+function phoromatic_account_id_to_group_name($account_id)
+{
+	static $group_names;
+
+	if(!isset($group_names[$account_id]))
+	{
+		$stmt = phoromatic_server::$db->prepare('SELECT GroupName FROM phoromatic_accounts WHERE AccountID = :account_id');
+		$stmt->bindValue(':account_id', $account_id);
+		$result = $stmt->execute();
+		$row = $result->fetchArray();
+		$group_names[$account_id] = $row['GroupName'];
+	}
+
+	return $group_names[$account_id];
 }
 
 ?>

@@ -43,6 +43,13 @@ class phoromatic_users implements pts_webui_interface
 			return;
 		}
 
+		if(isset($_POST['group_name']))
+		{
+			$stmt = phoromatic_server::$db->prepare('UPDATE phoromatic_accounts SET GroupName = :group_name WHERE AccountID = :account_id');
+			$stmt->bindValue(':group_name', $_POST['group_name']);
+			$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+			$result = $stmt->execute();
+		}
 		if(isset($_POST['username']) && isset($_POST['password']) && isset($_POST['confirm_password']) && isset($_POST['email']))
 		{
 			// REGISTER NEW USER
@@ -231,6 +238,14 @@ class phoromatic_users implements pts_webui_interface
 		$main .= '
 			</select></p>
 			<p><input name="submit" value="Add User" type="submit" /></p>
+			</form>';
+
+		$group_name = phoromatic_account_id_to_group_name($_SESSION['AccountID']);
+		$main .= '<hr /><form action="' . $_SERVER['REQUEST_URI'] . '" name="group_name" id="group_name" method="post"><h2>Group Name</h2>
+			<p>A group name is an alternative, user-facing name for this set of accounts. The group name feature is primarily useful for being able to better distinguish results between groups when sharing of data within a large organization, etc. The group name is showed next to test results when viewing results from multiple groups/accounts.</p>
+			<h3>Group Name</h3>
+			<p><input type="text" name="group_name" value="' . $group_name . '" /></p>
+			<p><input name="submit" value="Update Group Name" type="submit" /></p>
 			</form>';
 
 		echo phoromatic_webui_header_logged_in();
