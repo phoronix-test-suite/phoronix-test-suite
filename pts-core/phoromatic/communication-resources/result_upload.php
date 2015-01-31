@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2014, Phoronix Media
-	Copyright (C) 2009 - 2014, Michael Larabel
+	Copyright (C) 2009 - 2015, Phoronix Media
+	Copyright (C) 2009 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -78,22 +78,26 @@ $stmt->bindValue(':account_id', ACCOUNT_ID);
 $result = $stmt->execute();
 $row = $result->fetchArray();
 $upload_id = (isset($row['UploadID']) ? $row['UploadID'] : 0) + 1;
+$upload_time = phoromatic_server::current_time();
+$xml_upload_hash = sha1($composite_xml);
 
-$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_results (AccountID, SystemID, UploadID, ScheduleID, Trigger, UploadTime, Title, Description, SystemCount, ResultCount, DisplayStatus, XmlUploadHash, ComparisonHash, ElapsedTime) VALUES (:account_id, :system_id, :upload_id, :schedule_id, :trigger, :upload_time, :title, :description, :system_count, :result_count, :display_status, :xml_upload_hash, :comparison_hash, :elapsed_time)');
+$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_results (AccountID, SystemID, UploadID, ScheduleID, Trigger, UploadTime, Title, Description, SystemCount, ResultCount, DisplayStatus, XmlUploadHash, ComparisonHash, ElapsedTime, PPRID) VALUES (:account_id, :system_id, :upload_id, :schedule_id, :trigger, :upload_time, :title, :description, :system_count, :result_count, :display_status, :xml_upload_hash, :comparison_hash, :elapsed_time, :pprid)');
 $stmt->bindValue(':account_id', ACCOUNT_ID);
 $stmt->bindValue(':system_id', SYSTEM_ID);
 $stmt->bindValue(':upload_id', $upload_id);
 $stmt->bindValue(':schedule_id', $SCHEDULE_ID);
 $stmt->bindValue(':trigger', $TRIGGER_STRING);
-$stmt->bindValue(':upload_time', phoromatic_server::current_time());
+$stmt->bindValue(':upload_time', $upload_time);
 $stmt->bindValue(':title', sqlite_escape_string($result_file->get_title()));
 $stmt->bindValue(':description', sqlite_escape_string($result_file->get_description()));
 $stmt->bindValue(':system_count', $result_file->get_system_count());
 $stmt->bindValue(':result_count', $result_file->get_test_count());
 $stmt->bindValue(':display_status', 1);
-$stmt->bindValue(':xml_upload_hash', sha1($composite_xml));
+$stmt->bindValue(':xml_upload_hash', $xml_upload_hash);
 $stmt->bindValue(':comparison_hash', $result_file->get_contained_tests_hash(false));
 $stmt->bindValue(':elapsed_time', (empty($ELAPSED_TIME) || !is_numeric($ELAPSED_TIME) || $ELAPSED_TIME < 0 ? 0 : $ELAPSED_TIME));
+$stmt->bindValue(':pprid', phoromatic_server::compute_pprid(ACCOUNT_ID, SYSTEM_ID, $upload_time, $xml_upload_hash));
+
 $result = $stmt->execute();
 //echo phoromatic_server::$db->lastErrorMsg();
 $result_directory = phoromatic_server::phoromatic_account_result_path(ACCOUNT_ID, $upload_id);
