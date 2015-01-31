@@ -37,7 +37,10 @@ class phoromatic_welcome implements pts_webui_interface
 	}
 	public static function render_page_process($PATH)
 	{
-		if(isset($_POST['register_username']) && isset($_POST['register_password']) && isset($_POST['register_password_confirm']) && isset($_POST['register_email']))
+		$account_creation_string = phoromatic_server::read_setting('account_creation_alt');
+		$account_creation_enabled = $account_creation_string == null;
+
+		if($account_creation_enabled && isset($_POST['register_username']) && isset($_POST['register_password']) && isset($_POST['register_password_confirm']) && isset($_POST['register_email']))
 		{
 			// REGISTER NEW USER
 			if(strlen($_POST['register_username']) < 4 || strpos($_POST['register_username'], ' ') !== false)
@@ -276,33 +279,43 @@ class phoromatic_welcome implements pts_webui_interface
 			<p><div style="width: 200px; font-weight: 500; float: left;">&nbsp;</div> <input type="submit" value="Submit" /></p>
 			</form>
 			<hr />
-			<h1>Register</h1>
-			<p>Creating a new Phoromatic account is free and easy. The public, open-source version of the Phoronix Test Suite client is limited in its Phoromatic server abilities when it comes to result management and local storage outside of the OpenBenchmarking.org cloud. For organizations looking for behind-the-firewall support and other enterprise features, <a href="http://www.phoronix-test-suite.com/?k=commercial">contact us</a>. To create a new account for this Phoromatic server, simply fill out the form below.</p>';
+			<h1>Register</h1>';
 
-			$box .= '<form name="register_form" id="register_form" action="?register" method="post" onsubmit="return phoromatic_initial_registration(this);">
+			if(!empty($account_creation_string))
+			{
+				$box .= '<p>' . $account_creation_string . '</p>';
+			}
+			else
+			{
 
-			<div style="clear: both; font-weight: 500;">
-			<div style="float: left; width: 25%;">Username</div>
-			<div style="float: left; width: 25%;">Password</div>
-			<div style="float: left; width: 25%;">Confirm Password</div>
-			<div style="float: left; width: 25%;">Email Address</div>
-			</div>
+				$box .= '
+					<p>Creating a new Phoromatic account is free and easy. The public, open-source version of the Phoronix Test Suite client is limited in its Phoromatic server abilities when it comes to result management and local storage outside of the OpenBenchmarking.org cloud. For organizations looking for behind-the-firewall support and other enterprise features, <a href="http://www.phoronix-test-suite.com/?k=commercial">contact us</a>. To create a new account for this Phoromatic server, simply fill out the form below.</p>';
 
-			<div style="clear: both;">
-			<div style="float: left; width: 25%;"><input type="hidden" name="seed_accountid" value="' . (isset($_GET['seed_accountid']) ? $_GET['seed_accountid'] : null) . '" /><input type="text" name="register_username" /> <sup>1</sup></div>
-			<div style="float: left; width: 25%;"><input type="password" name="register_password" /> <sup>2</sup></div>
-			<div style="float: left; width: 25%;"><input type="password" name="register_password_confirm" /></div>
-			<div style="float: left; width: 25%;"><input type="text" name="register_email" /> <sup>3</sup><br /><br /><input type="submit" value="Create Account" /></div>
-			</div>
+					$box .= '<form name="register_form" id="register_form" action="?register" method="post" onsubmit="return phoromatic_initial_registration(this);">
 
-			</form>';
+					<div style="clear: both; font-weight: 500;">
+					<div style="float: left; width: 25%;">Username</div>
+					<div style="float: left; width: 25%;">Password</div>
+					<div style="float: left; width: 25%;">Confirm Password</div>
+					<div style="float: left; width: 25%;">Email Address</div>
+					</div>
 
-			$box .= '<p style="font-size: 11px;"><sup>1</sup> Usernames shall be at least four characters long, not contain any spaces, and only be composed of normal ASCII characters.<br />
-				<sup>2</sup> Passwords shall be at least six characters long.<br />
-				<sup>3</sup> A valid email address is required for notifications, password reset, and other verification purposes.<br />
-				</p>';
+					<div style="clear: both;">
+					<div style="float: left; width: 25%;"><input type="hidden" name="seed_accountid" value="' . (isset($_GET['seed_accountid']) ? $_GET['seed_accountid'] : null) . '" /><input type="text" name="register_username" /> <sup>1</sup></div>
+					<div style="float: left; width: 25%;"><input type="password" name="register_password" /> <sup>2</sup></div>
+					<div style="float: left; width: 25%;"><input type="password" name="register_password_confirm" /></div>
+					<div style="float: left; width: 25%;"><input type="text" name="register_email" /> <sup>3</sup><br /><br /><input type="submit" value="Create Account" /></div>
+					</div>
 
-			$box .= '<hr /><hr />';
+					</form>';
+
+					$box .= '<p style="font-size: 11px;"><sup>1</sup> Usernames shall be at least four characters long, not contain any spaces, and only be composed of normal ASCII characters.<br />
+						<sup>2</sup> Passwords shall be at least six characters long.<br />
+						<sup>3</sup> A valid email address is required for notifications, password reset, and other verification purposes.<br />
+						</p>';
+			}
+
+			$box .= '<hr />';
 
 			echo phoromatic_webui_box($box);
 			echo phoromatic_webui_footer();

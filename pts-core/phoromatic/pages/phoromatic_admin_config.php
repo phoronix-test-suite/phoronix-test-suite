@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2014, Phoronix Media
-	Copyright (C) 2014, Michael Larabel
+	Copyright (C) 2014 - 2015, Phoronix Media
+	Copyright (C) 2014 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -183,6 +183,10 @@ class phoromatic_admin_config implements pts_webui_interface
 				}
 			}
 		}
+		if(isset($_POST['account_creation_alt']))
+		{
+			phoromatic_server::save_setting('account_creation_alt', $_POST['account_creation_alt']);
+		}
 
 		$main .= '<h1>Phoromatic Server Configuration</h1>';
 
@@ -222,6 +226,13 @@ class phoromatic_admin_config implements pts_webui_interface
 		$main .= '<h2>Add To Existing Account</h2><p>Whenever a new account is created via the main log-in page, rather than creating a new group account, you can opt to have the account added as a viewer to an existing group of accounts. To do so, enter the account ID in the field below. The user is added to that account ID with viewer privileges while the main administrator for that account can elevate the privileges from their account\'s Users page. You can find the list of account IDs via the main rootadmin page account listing. Leave this field blank to disable the feature. This option only affects the creation of new accounts.</p>';
 		$main .= '<form action="' . $_SERVER['REQUEST_URI'] . '" name="add_accounts_to_one" method="post">';
 		$main .= '<p><strong>Main Account ID:</strong> <input type="text" name="add_new_users_to_account" size="6" value="' . phoromatic_server::read_setting('add_new_users_to_account') . '" /></p>';
+		$main .= '<p><input name="submit" value="Update Account Handling" type="submit" /></p>';
+		$main .= '</form>';
+
+		$main .= '<hr /><h1>Account Creation</h1>';
+		$main .= '<p>By default, new accounts can be created at-will from the main page of the Phoromatic Server web interface. To disable the ability to create new accounts from the main welcome page, enter a message in the field below -- e.g. account creation disabled, contact XYZ department via email to request a new account, or other string to present to the user in place of the account creation box. Leave this box empty to allow new accounts to be created. HTML input is allowed.</p>';
+		$main .= '<form action="' . $_SERVER['REQUEST_URI'] . '" name="account_creation_text" method="post">';
+		$main .= '<p><strong>Account Creation String:</strong> <textarea name="account_creation_alt" cols="50" rows="4">' . phoromatic_server::read_setting('account_creation_alt') . '</textarea></p>';
 		$main .= '<p><input name="submit" value="Update Account Handling" type="submit" /></p>';
 		$main .= '</form>';
 
