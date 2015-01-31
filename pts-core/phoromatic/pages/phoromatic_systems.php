@@ -427,7 +427,7 @@ class phoromatic_systems implements pts_webui_interface
 
 					do
 					{
-						$stmt_count = phoromatic_server::$db->prepare('SELECT COUNT(SystemID) AS system_count FROM phoromatic_systems WHERE AccountID = :account_id AND Groups LIKE \'%#' . $row['GroupName'] . '#%\'');
+						$stmt_count = phoromatic_server::$db->prepare('SELECT COUNT(SystemID) AS system_count FROM phoromatic_systems WHERE AccountID = :account_id AND State >= 0 AND Groups LIKE \'%#' . $row['GroupName'] . '#%\'');
 						$stmt_count->bindValue(':account_id', $_SESSION['AccountID']);
 						$result_count = $stmt_count->execute();
 						$row_count = $result_count->fetchArray();
@@ -457,7 +457,7 @@ class phoromatic_systems implements pts_webui_interface
 
 					$main .= '</tr>';
 
-					$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, Groups FROM phoromatic_systems WHERE AccountID = :account_id ORDER BY Title ASC');
+					$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, Groups FROM phoromatic_systems WHERE AccountID = :account_id AND State >= 0 ORDER BY Title ASC');
 					$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 					$result = $stmt->execute();
 					while($row = $result->fetchArray())
