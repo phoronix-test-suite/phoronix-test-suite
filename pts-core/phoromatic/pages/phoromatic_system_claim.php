@@ -73,7 +73,18 @@ echo "' . phoromatic_web_socket_server_addr() . '" > $PHORO_FILE_PATH/modules-da
 		ssh2_exec($connection, 'rm' . $tmp_remote_file);
 	}
 }
-			if((isset($_POST['ip_claim']) && !empty($_POST['ip_claim'])) || (isset($_POST['mac_claim']) && !empty($_POST['mac_claim'])))
+			if((isset($_POST['ip_claim']) && !empty($_POST['ip_claim'])) && isset($_POST['ping']))
+			{
+				$ip_ping = ip2long($_POST['ip_claim']) !== false ? $_POST['ip_claim'] : null;
+				if($ip_ping)
+				{
+					echo '<h3>Ping Test: ' . $ip_ping . '</h3>';
+					echo '<pre>';
+					echo shell_exec('ping -c 1 ' . $ip_ping);
+					echo '</pre>';
+				}
+			}
+			else if((isset($_POST['ip_claim']) && !empty($_POST['ip_claim'])) || (isset($_POST['mac_claim']) && !empty($_POST['mac_claim'])))
 			{
 				$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_system_association_claims (AccountID, IPAddress, NetworkMAC, CreationTime) VALUES (:account_id, :ip_address, :mac_address, :creation_time)');
 				$stmt->bindValue(':account_id', $_SESSION['AccountID']);
@@ -117,7 +128,7 @@ echo "' . phoromatic_web_socket_server_addr() . '" > $PHORO_FILE_PATH/modules-da
 			$main .= '<form action="' . $_SERVER['REQUEST_URI'] . '" name="auto_associate" method="post">
 			<p><strong>IP Address Claim:</strong> <input type="text" name="ip_claim" /></p>
 			<p><strong>MAC Address Claim:</strong> <input type="text" name="mac_claim" /></p>
-			<p><input name="submit" value="Submit Claim" type="submit" /></p>
+			<p><input name="ping" value="Ping Test" type="submit" /> &nbsp; <input name="submit" value="Submit Claim" type="submit" /></p>
 			</form>';
 
 			$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_system_association_claims WHERE AccountID = :account_id ORDER BY IPAddress ASC');
