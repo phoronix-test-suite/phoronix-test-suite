@@ -256,7 +256,7 @@ class phoromatic_main implements pts_webui_interface
 		$main .= '</ul></div>';
 		*/
 		// TODAY'S TEST RESULTS
-		$main .= '<div style="float: left; width: 50%;"><ul><li><h1>Today\'s Test Results</h1></li>';
+		$main .= '<div style="float: left; width: 48%;"><ul><li><h1>Today\'s Test Results</h1></li>';
 		$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, ScheduleID, UploadID, UploadTime, TimesViewed FROM phoromatic_results WHERE AccountID = :account_id ORDER BY UploadTime DESC');
 		$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 		$test_result_result = $stmt->execute();
@@ -281,7 +281,7 @@ class phoromatic_main implements pts_webui_interface
 		// YESTERDAY'S RESULTS
 		if(false && $test_result_row && substr($test_result_row['UploadTime'], 0, 10) == date('Y-m-d', (time() - 60 * 60 * 24)))
 		{
-			$main .= '<div style="float: left; width: 50%;"><ul><li><h1>Yesterday\'s Test Results</h1></li>';
+			$main .= '<div style="float: left; width: 48%;"><ul><li><h1>Yesterday\'s Test Results</h1></li>';
 
 			do
 			{
@@ -299,7 +299,7 @@ class phoromatic_main implements pts_webui_interface
 		$one_week_ago = strtotime('-1 week');
 		if(false && $test_result_row && strtotime($test_result_row['UploadTime']) > $one_week_ago)
 		{
-			$main .= '<div style="float: left; width: 50%;"><ul><li><h1>Other Test Results This Week</h1></li>';
+			$main .= '<div style="float: left; width: 48%;"><ul><li><h1>Other Test Results This Week</h1></li>';
 
 			do
 			{
@@ -313,10 +313,7 @@ class phoromatic_main implements pts_webui_interface
 			$main .= '</ul></div>';
 		}
 
-		$main .= '</div>
-			<div class="pts_phoromatic_info_box_area">
-
-				<div style="float: left; width: 50%;">
+		$main .= '				<div style="float: left; width: 48%;">
 					<ul>
 						<li><h1>Recent System Activity</h1></li>';
 
@@ -348,7 +345,7 @@ class phoromatic_main implements pts_webui_interface
 
 		$main .= '</ul>
 				</div>
-				<div style="float: left; width: 50%;">
+				<div style="float: left; width: 48%;">
 					<ul>
 						<li><h1>Recent System Warnings &amp; Errors</h1></li>';
 

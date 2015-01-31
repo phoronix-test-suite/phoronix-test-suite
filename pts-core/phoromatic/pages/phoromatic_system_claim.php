@@ -124,7 +124,7 @@ echo "' . phoromatic_web_socket_server_addr() . '" > $PHORO_FILE_PATH/modules-da
 			$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 			$result = $stmt->execute();
 			$claims = array();
-			$main .= '<p style="max-height: 500px; overflow-y: auto;">';
+			$main .= '<p style="max-height: 500px; overflow-y: auto; ">';
 			while($row = $result->fetchArray())
 			{
 				$ip = $row['IPAddress'] != null ? $row['IPAddress'] : '<em>' . pts_network::mac_to_ip($row['NetworkMAC']) . '</em>';
