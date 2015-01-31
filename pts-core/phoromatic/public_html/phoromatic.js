@@ -28,7 +28,7 @@ function phoromatic_click_results(new_id)
 	document.getElementById("pts_phoromatic_bottom_result_button_area").innerHTML = new_button_area;
 	document.getElementById("pts_phoromatic_top_result_button_area").innerHTML = new_button_area;
 }
-function phoromatic_jump_to_results_from(schedule_id, select_id, prepend_results = "")
+function phoromatic_jump_to_results_from(schedule_id, select_id, prepend_results)
 {
 	var time_since = pts_get_list_item(select_id);
 	window.location.href = "?result/" + prepend_results + "S:" + schedule_id + ":" + time_since;
@@ -160,7 +160,7 @@ function phoromatic_new_group(form)
 	}
 	return true;
 }
-function phoromatic_schedule_test_details(append_args = "")
+function phoromatic_schedule_test_details(append_args)
 {
 	document.getElementById("test_details").innerHTML = "";
 	var test_target = pts_get_list_item("add_to_schedule_select_test");
