@@ -196,6 +196,10 @@ class phoromatic_server
 				self::rebuild_pprid_entries();
 				self::$db->exec('CREATE UNIQUE INDEX IF NOT EXISTS public_result_id ON phoromatic_results (PPRID)');
 				self::$db->exec('PRAGMA user_version = 19');
+			case 19:
+				// Change made 31 January
+				self::$db->exec('ALTER TABLE phoromatic_account_settings ADD COLUMN LetOtherGroupsViewResults INTEGER DEFAULT 0');
+				self::$db->exec('PRAGMA user_version = 20');
 		}
 		chmod($db_file, 0600);
 	}

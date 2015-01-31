@@ -79,12 +79,13 @@ class phoromatic_result implements pts_webui_interface
 			foreach($upload_ids as $id)
 			{
 				// XXX: add AccountID security check here TODO
-				$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_results WHERE PPRID = :pprid LIMIT 1');
+				$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_results WHERE PPRID = :pprid AND (AccountID = :account_id OR AccountID = (SELECT AccountID FROM phoromatic_account_settings WHERE LetOtherGroupsViewResults = "1" AND AccountID = phoromatic_results.AccountID)) LIMIT 1');
 				$stmt->bindValue(':pprid', $id);
+				$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 				$result = $stmt->execute();
 				$row = $result->fetchArray();
 
-				if(empty($row))
+				if(false && empty($row))
 				{
 					// TODO XXX
 					// XXX this code is ultimately dead
@@ -98,7 +99,7 @@ class phoromatic_result implements pts_webui_interface
 				if(empty($row))
 					continue;
 
-				$composite_xml = phoromatic_server::phoromatic_account_result_path($_SESSION['AccountID'], $row['UploadID']) . 'composite.xml';
+				$composite_xml = phoromatic_server::phoromatic_account_result_path($row['AccountID'], $row['UploadID']) . 'composite.xml';
 				if(!is_file($composite_xml))
 				{
 					echo 'File Not Found: ' . $composite_xml;

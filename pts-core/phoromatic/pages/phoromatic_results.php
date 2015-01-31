@@ -84,6 +84,28 @@ class phoromatic_results implements pts_webui_interface
 				$main .= '</ul></div>';
 				$main .= '</div>';
 				$main .= '<div id="pts_phoromatic_bottom_result_button_area"></div>';
+
+				$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, ScheduleID, PPRID, UploadTime, TimesViewed, AccountID FROM phoromatic_results WHERE AccountID IN (SELECT AccountID FROM phoromatic_account_settings WHERE LetOtherGroupsViewResults = "1") AND AccountID != :account_id ORDER BY UploadTime DESC');
+				$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+				$test_result_result = $stmt->execute();
+				if(!empty($test_result_result) && ($test_result_row = $test_result_result->fetchArray()))
+				{
+					$main .= '<div class="pts_phoromatic_info_box_area">';
+					$main .= '<div style="margin: 0 10%;"><ul><li><h1>Results Shared By Other Groups</h1></li>';
+					$results = 0;
+					do
+					{
+						if($results > 100)
+						{
+							break;
+						}
+
+						$main .= '<a onclick="javascript:phoromatic_click_results(\'' . $test_result_row['PPRID'] . '\');"><li id="result_select_' . $test_result_row['PPRID'] . '">' . $test_result_row['Title'] . '<br /><table><tr><td><strong>' . phoromatic_account_id_to_group_name($test_result_row['AccountID']) . '</strong></td><td>' . phoromatic_system_id_to_name($test_result_row['SystemID'], $test_result_row['AccountID']) . '</td><td>' . phoromatic_user_friendly_timedate($test_result_row['UploadTime']) .  '</td><td>' . $test_result_row['TimesViewed'] . ' Times Viewed</tr></table></li></a>';
+						$results++;
+					}
+					while($test_result_row = $test_result_result->fetchArray());
+					$main .= '</ul></div>';
+				}
 			}
 
 			echo phoromatic_webui_main($main, phoromatic_webui_right_panel_logged_in());

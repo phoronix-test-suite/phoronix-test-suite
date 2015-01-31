@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2014, Phoronix Media
-	Copyright (C) 2008 - 2014, Michael Larabel
+	Copyright (C) 2008 - 2015, Phoronix Media
+	Copyright (C) 2008 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -111,7 +111,8 @@ class phoromatic_settings implements pts_webui_interface
 						'SystemSensorMonitoring' => 'Enable the system sensor monitoring while tests are taking place.',
 						'UploadResultsToOpenBenchmarking' => 'For all test schedules, also upload test results to OpenBenchmarking.org.',
 						'PowerOffWhenDone' => 'Power off system(s) when scheduled tests are completed for the day.',
-						'NetworkPowerUpWhenNeeded' => 'Use network Wake-On-LAN to power on systems when needed.'
+						'NetworkPowerUpWhenNeeded' => 'Use network Wake-On-LAN to power on systems when needed.',
+						'LetOtherGroupsViewResults' => 'Let other accounts/groups on this Phoromatic Server view (read-only) this account\'s results.',
 						)
 					);
 
