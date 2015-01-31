@@ -24,6 +24,25 @@ include('../phoromatic_functions.php');
 phoromatic_init_web_page_setup();
 phoromatic_server::prepare_database();
 
+?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<script src="/phoromatic.js?<?php echo date('Ymd') . PTS_CORE_VERSION; ?>" type="text/javascript"></script>
+<title>Phoronix Test Suite - Phoromatic </title>
+<link href="/phoromatic.css?<?php echo date('Ymd') . PTS_CORE_VERSION; ?>" rel="stylesheet" type="text/css" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="keywords" content="Phoronix Test Suite, open-source benchmarking, Linux benchmarking, automated testing" />
+<meta name="Description" content="Phoronix Test Suite local control server." />
+<link rel="shortcut icon" href="favicon.ico" />
+<!-- PHXCMS-7.2 (phoronix.com) -->
+</head>
+<body>
+
+<?php
+
+echo phoromatic_webui_header(array(''), '');
 $result_ids = array();
 $account_id = false;
 
@@ -194,4 +213,7 @@ if(!empty($result_ids))
 
 echo $main;
 
+echo phoromatic_webui_footer();
 ?>
+</body>
+</html>

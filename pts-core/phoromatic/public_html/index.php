@@ -74,7 +74,7 @@ $page_class = 'phoromatic_' . PAGE_REQUEST;
 pts_webui::websocket_setup_defines();
 $page_class = pts_webui::load_web_interface($page_class, $PATH, '../pages/');
 
-if(substr($PAGE_REQUEST, 0, 2) == 'r_')
+if(substr($PAGE_REQUEST, 0, 2) == 'r_' || isset($_GET['pdf']))
 {
 	// RESOURCE
 	phoromatic_server::prepare_database();
@@ -98,7 +98,6 @@ if(substr($PAGE_REQUEST, 0, 2) == 'r_')
 <meta name="keywords" content="Phoronix Test Suite, open-source benchmarking, Linux benchmarking, automated testing" />
 <meta name="Description" content="Phoronix Test Suite local control server." />
 <link rel="shortcut icon" href="favicon.ico" />
-<!-- PHXCMS-7.2 (phoronix.com) -->
 </head>
 <body>
 <?php

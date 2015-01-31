@@ -1029,7 +1029,14 @@ class pts_client
 			}
 		}
 
-		$result_file = new pts_result_file($test_results_identifier);
+		if($test_results_identifier instanceof pts_result_file)
+		{
+			$result_file = &$test_results_identifier;
+		}
+		else
+		{
+			$result_file = new pts_result_file($test_results_identifier);
+		}
 
 		$generated_graphs = array();
 		$generated_graph_tables = false;

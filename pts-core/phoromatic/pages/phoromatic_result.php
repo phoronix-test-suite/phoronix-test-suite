@@ -209,6 +209,70 @@ class phoromatic_result implements pts_webui_interface
 
 			$intent = null;
 
+			if(isset($_GET['pdf']))
+			{
+				$_REQUEST['force_format'] = 'PNG'; // Force to PNG renderer
+				$_REQUEST['svg_dom_gd_no_interlacing'] = true; // Otherwise FPDF will fail
+				$tdir = pts_client::create_temporary_directory();
+				pts_client::generate_result_file_graphs($result_file, $tdir);
+
+				$pdf = new pts_pdf_template($result_file->get_title(), null);
+
+				$pdf->AddPage();
+				$pdf->Image(PTS_CORE_STATIC_PATH . 'images/pts-308x160.png', 69, 85, 73, 38);
+				$pdf->Ln(120);
+				$pdf->WriteStatementCenter('www.phoronix-test-suite.com');
+				$pdf->Ln(15);
+				$pdf->WriteBigHeaderCenter($result_file->get_title());
+				$pdf->WriteText($result_file->get_description());
+
+				$pdf->AddPage();
+				$pdf->Ln(15);
+
+				$identifiers = $result_file->get_system_identifiers();
+				$hardware_r = $result_file->get_system_hardware();
+				$software_r = $result_file->get_system_software();
+				$notes_r = $result_file->get_system_notes();
+				$tests = $result_file->get_test_titles();
+
+				$pdf->SetSubject($result_file->get_title() . ' Benchmarks');
+				$pdf->SetKeywords(implode(', ', $identifiers));
+
+				$pdf->WriteHeader('Test Systems:');
+				for($i = 0; $i < count($identifiers); $i++)
+				{
+					$pdf->WriteMiniHeader($identifiers[$i]);
+					$pdf->WriteText($hardware_r[$i]);
+					$pdf->WriteText($software_r[$i]);
+				}
+
+				$pdf->AddPage();
+				$placement = 1;
+				for($i = 1; $i <= count($tests); $i++)
+				{
+					if(is_file($tdir . 'result-graphs/' . $i . '.png'))
+					{
+						$pdf->Ln(100);
+						$pdf->Image($tdir . 'result-graphs/' . $i . '.png', 50, 40 + (($placement - 1) * 120), 120);
+					}
+
+					if($placement == 2)
+					{
+						$placement = 0;
+
+						if($i != count($tests))
+						{
+							$pdf->AddPage();
+						}
+					}
+					$placement++;
+				}
+
+				$pdf->Output('phoromatic.pdf', 'I');
+				//pts_file_io::delete($tdir, null, true);
+				return;
+			}
+
 			$main .= '<h1>' . $result_file->get_title() . '</h1>';
 
 			if($result_file->get_system_count() == 1 || ($intent = pts_result_file_analyzer::analyze_result_file_intent($result_file, $intent, true)))
@@ -327,6 +391,7 @@ class phoromatic_result implements pts_webui_interface
 			$right .= '<hr /><h3>Result Export</h3>';
 			$right .= '<p><a href="/public.php?t=result&ut='  . base64_encode($upload_times[0]) . '&h=' . $xml_result_hash[0] . '">Public Viewer</a></p>';
 			$right .= '<p><a href="?' . $_SERVER['QUERY_STRING'] . '/&upload_to_openbenchmarking">Upload To OpenBenchmarking.org</a></p>';
+			$right .= '<p><a href="?' . $_SERVER['QUERY_STRING'] . '/&pdf">Download As PDF</a></p>';
 		}
 
 		if(is_file(phoromatic_server::phoromatic_account_result_path($_SESSION['AccountID'], $upload_id) . 'system-logs.zip'))
