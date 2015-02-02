@@ -83,6 +83,7 @@ else if(isset($_GET['download']))
 		exit;
 	}
 
+	pts_logger::add_to_log($requested_file . ' to be downloaded from ' . $file_path);
 	ob_end_clean();
 	readfile($file_path);
 	exit;
