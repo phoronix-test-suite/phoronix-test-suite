@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2014, Phoronix Media
-	Copyright (C) 2009 - 2014, Michael Larabel
+	Copyright (C) 2009 - 2015, Phoronix Media
+	Copyright (C) 2009 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -61,7 +61,11 @@ else if(isset($_GET['download']))
 	$requested_file = str_replace(array('..', '/'), null, $_GET['download']);
 
 	pts_logger::add_to_log($_SERVER['REMOTE_ADDR'] . ' is attempting to download ' . $requested_file . ' from the download cache');
-	if(is_file(PTS_DOWNLOAD_CACHE_PATH . $requested_file))
+	if(($dc = pts_strings::add_trailing_slash(pts_client::parse_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Installation/CacheDirectory', PTS_DOWNLOAD_CACHE_PATH)))) && is_file($dc . $requested_file))
+	{
+		readfile($dc . $requested_file);
+	}
+	else if(is_file(PTS_DOWNLOAD_CACHE_PATH . $requested_file))
 	{
 		$file_path = PTS_DOWNLOAD_CACHE_PATH . $requested_file;
 	}
@@ -75,11 +79,8 @@ else if(isset($_GET['download']))
 	}
 	else
 	{
-		$dc = pts_strings::add_trailing_slash(pts_client::parse_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Installation/CacheDirectory', PTS_DOWNLOAD_CACHE_PATH)));
-		if(is_file($dc . $requested_file))
-		{
-			readfile($dc . $requested_file);
-		}
+		pts_logger::add_to_log($requested_file . ' could not be found in the download cache');
+		exit;
 	}
 
 	ob_end_clean();
