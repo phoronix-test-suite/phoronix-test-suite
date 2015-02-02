@@ -40,7 +40,7 @@ if(!defined("PTS_VERSION"))
        exit(0);
 }
 
-$rpm_v = PTS_VERSION . '-' . date('YmdHi');
+$rpm_v = PTS_VERSION . '.' . date('YmdHi');
 
 shell_exec("rm -rf /tmp/pts-rpm-builder/");
 shell_exec("mkdir -p /tmp/pts-rpm-builder/{BUILD,RPMS,S{OURCE,PEC,RPM}S,phoronix-test-suite-" . $rpm_v . "}");
