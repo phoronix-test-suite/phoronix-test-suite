@@ -63,7 +63,7 @@ else if(isset($_GET['download']))
 	pts_logger::add_to_log($_SERVER['REMOTE_ADDR'] . ' is attempting to download ' . $requested_file . ' from the download cache');
 	if(($dc = pts_strings::add_trailing_slash(pts_client::parse_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Installation/CacheDirectory', PTS_DOWNLOAD_CACHE_PATH)))) && is_file($dc . $requested_file))
 	{
-		readfile($dc . $requested_file);
+		$file_path = $dc . $requested_file;
 	}
 	else if(is_file(PTS_DOWNLOAD_CACHE_PATH . $requested_file))
 	{
