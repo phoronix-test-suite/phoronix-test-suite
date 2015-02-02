@@ -20,6 +20,7 @@ Phoronix Test Suite (Git)
 - phoromatic: Add IP ping test to system claim page
 - phoromatic: Introduce PPRID structure as universal unique identifier for results between accounts
 - phoromatic: Allow optional result sharing between groups / unique accounts (controlled via settings)
+- phoromatic: Add "force result sharing" option to rootadmin to override per-account settings
 
 Phoronix Test Suite 5.6 Milestone 1
 13 January 2015

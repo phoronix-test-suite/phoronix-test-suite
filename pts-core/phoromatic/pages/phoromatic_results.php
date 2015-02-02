@@ -85,7 +85,8 @@ class phoromatic_results implements pts_webui_interface
 				$main .= '</div>';
 				$main .= '<div id="pts_phoromatic_bottom_result_button_area"></div>';
 
-				$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, ScheduleID, PPRID, UploadTime, TimesViewed, AccountID FROM phoromatic_results WHERE AccountID IN (SELECT AccountID FROM phoromatic_account_settings WHERE LetOtherGroupsViewResults = "1") AND AccountID != :account_id ORDER BY UploadTime DESC');
+				$result_share_opt = phoromatic_server::read_setting('force_result_sharing') ? '1 = 1' : 'AccountID IN (SELECT AccountID FROM phoromatic_account_settings WHERE LetOtherGroupsViewResults = "1")';
+				$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, ScheduleID, PPRID, UploadTime, TimesViewed, AccountID FROM phoromatic_results WHERE ' . $result_share_opt . ' AND AccountID != :account_id ORDER BY UploadTime DESC');
 				$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 				$test_result_result = $stmt->execute();
 				if(!empty($test_result_result) && ($test_result_row = $test_result_result->fetchArray()))

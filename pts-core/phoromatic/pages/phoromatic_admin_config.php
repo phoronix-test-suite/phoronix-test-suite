@@ -191,6 +191,10 @@ class phoromatic_admin_config implements pts_webui_interface
 		{
 			phoromatic_server::save_setting('main_page_message', $_POST['main_page_message']);
 		}
+		if(isset($_POST['force_result_sharing']))
+		{
+			phoromatic_server::save_setting('force_result_sharing', $_POST['force_result_sharing']);
+		}
 
 		$main .= '<h1>Phoromatic Server Configuration</h1>';
 
@@ -244,6 +248,13 @@ class phoromatic_admin_config implements pts_webui_interface
 		$main .= '<p>If you wish to present users with a custom message once logging into their Phoromatic account, set the HTML-allowed string below and it will be shown on the main page once logging in.</p>';
 		$main .= '<form action="' . $_SERVER['REQUEST_URI'] . '" name="main_page_message" method="post">';
 		$main .= '<p><strong>Main Page Message String:</strong> <textarea name="main_page_message" cols="50" rows="4">' . phoromatic_server::read_setting('main_page_message') . '</textarea></p>';
+		$main .= '<p><input name="submit" value="Update Main Page Message" type="submit" /></p>';
+		$main .= '</form>';
+
+		$main .= '<hr /><h1>Force Results To Be Shared</h1>';
+		$main .= '<p>If you wish to force that all accounts/groups on this Phoromatic Server instance are shared/viewable amongst other groups on this server, set this value to True. Otherwise the result sharing is limited to each group\'s selected option on the account settings page.</p>';
+		$main .= '<form action="' . $_SERVER['REQUEST_URI'] . '" name="force_result_share" method="post">';
+		$main .= '<p><strong>Force Result Sharing:</strong> <select name="force_result_sharing"><option value="0">False</option><option value="1" ' . (phoromatic_server::read_setting('force_result_sharing') ? 'selected="selected"' : null) . '>True</option></select></p>';
 		$main .= '<p><input name="submit" value="Update Main Page Message" type="submit" /></p>';
 		$main .= '</form>';
 

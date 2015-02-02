@@ -78,8 +78,8 @@ class phoromatic_result implements pts_webui_interface
 
 			foreach($upload_ids as $id)
 			{
-				// XXX: add AccountID security check here TODO
-				$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_results WHERE PPRID = :pprid AND (AccountID = :account_id OR AccountID = (SELECT AccountID FROM phoromatic_account_settings WHERE LetOtherGroupsViewResults = "1" AND AccountID = phoromatic_results.AccountID)) LIMIT 1');
+				$result_share_opt = phoromatic_server::read_setting('force_result_sharing') ? '1 = 1' : 'AccountID = (SELECT AccountID FROM phoromatic_account_settings WHERE LetOtherGroupsViewResults = "1" AND AccountID = phoromatic_results.AccountID)';
+				$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_results WHERE PPRID = :pprid AND (AccountID = :account_id OR ' . $result_share_opt . ') LIMIT 1');
 				$stmt->bindValue(':pprid', $id);
 				$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 				$result = $stmt->execute();
