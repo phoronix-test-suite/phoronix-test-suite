@@ -43,22 +43,8 @@ phoromatic_server::prepare_database();
 <?php
 
 echo phoromatic_webui_header(array(''), '');
-$result_ids = array();
+$result_ids = explode(',', $_GET['ut']);
 $account_id = false;
-
-if(isset($_GET['t']) && $_GET['t'] == 'result' && isset($_GET['h']) && isset($_GET['ut']))
-{
-	$stmt = phoromatic_server::$db->prepare('SELECT UploadID, AccountID FROM phoromatic_results WHERE XmlUploadHash = :hash AND UploadTime = :time');
-	$stmt->bindValue(':hash', $_GET['h']);
-	$stmt->bindValue(':time', base64_decode($_GET['ut']));
-	$test_result_result = $stmt->execute();
-
-	while($test_result_row = $test_result_result->fetchArray())
-	{
-		array_push($result_ids, $test_result_row['UploadID']);
-		$account_id = $test_result_row['AccountID'];
-	}
-}
 
 $main = null;
 if(!empty($result_ids))
@@ -71,13 +57,12 @@ if(!empty($result_ids))
 
 	foreach($result_ids as $upload_id)
 	{
-		$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_results WHERE AccountID = :account_id AND UploadID = :upload_id LIMIT 1');
-		$stmt->bindValue(':account_id', $account_id);
-		$stmt->bindValue(':upload_id', $upload_id);
+		$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_results WHERE PPRID = :pprid LIMIT 1');
+		$stmt->bindValue(':pprid', $upload_id);
 		$result = $stmt->execute();
 		$row = $result->fetchArray();
 
-		$composite_xml = phoromatic_server::phoromatic_account_result_path($account_id, $upload_id) . 'composite.xml';
+		$composite_xml = phoromatic_server::phoromatic_account_result_path($row['AccountID'], $row['UploadID']) . 'composite.xml';
 		if(!is_file($composite_xml))
 		{
 			echo 'File Not Found: ' . $composite_xml;

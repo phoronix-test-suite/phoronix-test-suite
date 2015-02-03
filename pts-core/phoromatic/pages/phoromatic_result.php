@@ -425,12 +425,12 @@ class phoromatic_result implements pts_webui_interface
 			}
 		}
 
+		$right .= '<hr /><h3>Result Export</h3>';
+		$right .= '<p><a href="/public.php?t=result&ut='  . implode(',', $upload_ids) . '">Public Viewer</a></p>';
+		$right .= '<p><a href="?' . $_SERVER['QUERY_STRING'] . '/&pdf">Download As PDF</a></p>';
 		if(count($xml_result_hash) == 1)
 		{
-			$right .= '<hr /><h3>Result Export</h3>';
-			$right .= '<p><a href="/public.php?t=result&ut='  . base64_encode($upload_times[0]) . '&h=' . $xml_result_hash[0] . '">Public Viewer</a></p>';
 			$right .= '<p><a href="?' . $_SERVER['QUERY_STRING'] . '/&upload_to_openbenchmarking">Upload To OpenBenchmarking.org</a></p>';
-			$right .= '<p><a href="?' . $_SERVER['QUERY_STRING'] . '/&pdf">Download As PDF</a></p>';
 		}
 
 		if(is_file(phoromatic_server::phoromatic_account_result_path($_SESSION['AccountID'], $row['UploadID']) . 'system-logs.zip'))
