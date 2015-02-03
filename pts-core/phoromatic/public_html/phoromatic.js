@@ -55,7 +55,7 @@ function phoromatic_add_to_result_comparison(pprid)
 				}
 			}
 
-			document.getElementById("phoromatic_result_compare_info_box").innerHTML = ids.length + " Results To Compare";
+			document.getElementById("phoromatic_result_compare_info_box").innerHTML = "Compare Selected Results (" + ids.length + ")";
 			document.getElementById("phoromatic_result_compare_info_box").style.display = 'block';
 		}
 		else

@@ -231,7 +231,7 @@ function phoromatic_webui_right_panel_logged_in($add = null)
 	}
 	else if($_SESSION['AdminLevel'] > 0)
 	{
-		$right .= '<a onclick="javascript:phoromatic_generate_comparison();"><div id="phoromatic_result_compare_info_box"></div></a>';
+		$right .= '<a href="#" onclick="javascript:phoromatic_generate_comparison();"><div id="phoromatic_result_compare_info_box"></div></a>';
 		if(($bad_systems = phoromatic_server::systems_appearing_down()) != false)
 		{
 			$right .= '<ul><li><span class="alert">Systems Needing Attention</span></li>';

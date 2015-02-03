@@ -106,10 +106,16 @@ class phoromatic_results implements pts_webui_interface
 				$main .= '</div>';
 				$main .= '<div style="text-align: right;">Show Results For: <select id="result_time_limit" onchange="javascript:document.location.href = \'/?results/&time=\' + document.getElementById(\'result_time_limit\').options[document.getElementById(\'result_time_limit\').options.selectedIndex].value;">
 				<option value=""></option>
+				<option value="24 hours">Past 24 Hours</option>
 				<option value="3 days">Past Three Days</option>
 				<option value="1 week">Past Week</option>
+				<option value="2 week">Past Two Weeks</option>
 				<option value="1 month">Past Month</option>
-				<option value="3 months">Past Quarter</option></select></div>';
+				<option value="2 months">Past Two Months</option>
+				<option value="3 months">Past Quarter</option>
+				<option value="6 months">Past Six Months</option>
+				<option value="1 year">Past Year</option>
+				</select></div>';
 
 				$result_share_opt = phoromatic_server::read_setting('force_result_sharing') ? '1 = 1' : 'AccountID IN (SELECT AccountID FROM phoromatic_account_settings WHERE LetOtherGroupsViewResults = "1")';
 				$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, ScheduleID, PPRID, UploadTime, TimesViewed, AccountID FROM phoromatic_results WHERE ' . $result_share_opt . ' AND AccountID != :account_id ORDER BY UploadTime DESC');
