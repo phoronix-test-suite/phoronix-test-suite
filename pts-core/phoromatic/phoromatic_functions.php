@@ -144,7 +144,7 @@ function phoromatic_webui_footer()
 	return '<div id="pts_phoromatic_bottom_footer">
 <div style="float: right; padding: 2px 10px; overflow: hidden;"><a href="http://openbenchmarking.org/" style="margin-right: 20px;"><img src="data:image/png;base64,' . base64_encode(file_get_contents('images/ob-white-logo.png')) . '" /></a> <a href="http://www.phoronix-test-suite.com/"><img src="data:image/png;base64,' . base64_encode(file_get_contents('images/pts-white-logo.png')) . '" /></a></div>
 <p style="margin: 6px 15px;">Copyright &copy; 2008 - ' . date('Y') . ' by <a href="http://www.phoronix-media.com/">Phoronix Media</a>. All rights reserved.<br />
-All trademarks used are properties of their respective owners.<br />' . pts_title(true) . ' - Core Version ' . PTS_CORE_VERSION . ' - PHP ' . PHP_VERSION . '</p></div>';
+All trademarks used are properties of their respective owners.<br />' . pts_title(true) . ' - Core Version ' . PTS_CORE_VERSION . ' - PHP ' . PHP_VERSION . '</p></div> <script type="text/javascript"> phoromatic_add_to_result_comparison(\'\'); </script>';
 }
 function phoromatic_add_activity_stream_event($activity_event, $activity_event_id, $activity_event_type)
 {
@@ -231,6 +231,7 @@ function phoromatic_webui_right_panel_logged_in($add = null)
 	}
 	else if($_SESSION['AdminLevel'] > 0)
 	{
+		$right .= '<a onclick="javascript:phoromatic_generate_comparison();"><div id="phoromatic_result_compare_info_box"></div></a>';
 		if(($bad_systems = phoromatic_server::systems_appearing_down()) != false)
 		{
 			$right .= '<ul><li><span class="alert">Systems Needing Attention</span></li>';

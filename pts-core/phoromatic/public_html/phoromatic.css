@@ -393,21 +393,34 @@ input:focus, textarea:focus
 {
 	background: #666; color: #FFF;
 }
+div.pts_phoromatic_info_box_area ul li:hover table tbody tr.tb_compare_bar
+{
+	display: block;
+}
+div.pts_phoromatic_info_box_area ul li table tbody tr.tb_compare_bar
+{
+	margin-top: 3px;
+	padding: 6px 3px 2px;
+	color: #FFF;
+	font-weight: bold;
+	display: none;
+}
 div.pts_phoromatic_info_box_area table
 {
 	text-align: left;
 	width: 100%;
-	padding: 1px;
-	margin: 1px 0 0;
+	padding: 2px;
+	margin: 0;
 	table-layout: fixed;
 	font-weight: 300;
 	text-transform: uppercase;
 	font-size: 75%;
 }
-div.pts_phoromatic_info_box_area table td
+div.pts_phoromatic_info_box_area table td, div.pts_phoromatic_info_box_area table tr
 {
 	background: transparent;
-	border: 1px;
+	border: 0;
+	padding: 0;
 	transition: none;
 }
 div.pts_phoromatic_info_box_area table tr:hover td
@@ -533,6 +546,16 @@ div.phoromatic_overview_box
 	float: left;
 	clear: both;
 	border: #ff9800 1px solid;"
+}
+div#phoromatic_result_compare_info_box
+{
+	font-size: 160%;
+	color: #FFF;
+	text-align: center;
+	border: 1px solid #FFF;
+	margin: 10px 30px;
+	padding: 4px 0;
+	display: none;
 }
 div.phoromatic_overview_box h1
 {

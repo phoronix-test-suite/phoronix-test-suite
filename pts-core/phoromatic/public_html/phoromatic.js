@@ -1,5 +1,72 @@
 var phoromatic_results_clicked = new Array();
 
+function phoromatic_add_to_result_comparison(pprid)
+{
+	if(typeof(Storage) !== 'undefined')
+	{
+		if(localStorage.comparison_pprids)
+		{
+			var ids = JSON.parse(localStorage.comparison_pprids);
+		}
+		else
+		{
+			var ids = [];
+		}
+
+		if(pprid != '')
+		{
+			if(ids.indexOf(pprid) == -1)
+			{
+				ids.push(pprid);
+			}
+			else
+			{
+				ids.splice(ids.indexOf(pprid), 1);
+				if(document.getElementById("result_select_" + pprid))
+				{
+					document.getElementById("result_select_" + pprid).style.background = "#f1f1f1";
+				}
+				if(document.getElementById("result_compare_link_" + pprid))
+				{
+					document.getElementById("result_compare_link_" + pprid).innerHTML = "Add To Comparison";
+				}
+			}
+
+			localStorage.comparison_pprids = JSON.stringify(ids);
+		}
+
+		if(ids.length > 0)
+		{
+			for(var i = 0; i < ids.length; i++)
+			{
+				if(document.getElementById("result_select_" + ids[i]))
+				{
+					document.getElementById("result_select_" + ids[i]).style.background = "#949494";
+				}
+				if(document.getElementById("result_compare_link_" + ids[i]))
+				{
+					document.getElementById("result_compare_link_" + ids[i]).innerHTML = "Remove From Comparison";
+				}
+			}
+
+			document.getElementById("phoromatic_result_compare_info_box").innerHTML = ids.length + " Results To Compare";
+			document.getElementById("phoromatic_result_compare_info_box").style.display = 'block';
+		}
+		else
+		{
+			document.getElementById("phoromatic_result_compare_info_box").style.display = 'none';
+		}
+	}
+}
+function phoromatic_generate_comparison()
+{
+	if(typeof(Storage) !== 'undefined' && localStorage.comparison_pprids)
+	{
+		var ids = JSON.parse(localStorage.comparison_pprids);
+		localStorage.removeItem("comparison_pprids");
+		window.location.href = "?result/" + ids.join();
+	}
+}
 function phoromatic_click_results(new_id)
 {
 	if(phoromatic_results_clicked.indexOf(new_id) != -1)
