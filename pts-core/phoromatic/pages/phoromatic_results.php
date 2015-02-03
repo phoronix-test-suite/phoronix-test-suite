@@ -76,7 +76,7 @@ class phoromatic_results implements pts_webui_interface
 					$main .= '<a href="?result/' . $test_result_row['PPRID'] . '"><li id="result_select_' . $test_result_row['PPRID'] . '">' . $test_result_row['Title'] . '<br /><table><tr><td>' . phoromatic_system_id_to_name($test_result_row['SystemID']) . '</td><td>' . phoromatic_user_friendly_timedate($test_result_row['UploadTime']) .  '</td><td>' . $test_result_row['TimesViewed'] . ' Times Viewed</tr>
 
 
-<tr class="tb_compare_bar"><td><a id="result_compare_link_' . $test_result_row['PPRID'] . '" onclick="javascript:phoromatic_add_to_result_comparison(\'' . $test_result_row['PPRID'] . '\'); return false;">Add To Comparison</a></td></tr>
+<tr class="tb_compare_bar"><td><a id="result_compare_link_' . $test_result_row['PPRID'] . '" onclick="javascript:phoromatic_add_to_result_comparison(\'' . $test_result_row['PPRID'] . '\'); return false;">Add To Comparison</a> &nbsp; &nbsp; <a id="result_delete_link_' . $test_result_row['PPRID'] . '" onclick="javascript:phoromatic_delete_result(\'' . $test_result_row['PPRID'] . '\'); return false;">Delete Result</a></td></tr>
 
 </table></li></a>';
 					$results++;

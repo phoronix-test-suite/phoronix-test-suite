@@ -30,6 +30,10 @@ function phoromatic_add_to_result_comparison(pprid)
 				{
 					document.getElementById("result_compare_link_" + pprid).innerHTML = "Add To Comparison";
 				}
+				if(document.getElementById("result_delete_link_" + pprid))
+				{
+					document.getElementById("result_delete_link_" + pprid).style.visibility = 'visible';
+				}
 			}
 
 			localStorage.comparison_pprids = JSON.stringify(ids);
@@ -46,6 +50,10 @@ function phoromatic_add_to_result_comparison(pprid)
 				if(document.getElementById("result_compare_link_" + ids[i]))
 				{
 					document.getElementById("result_compare_link_" + ids[i]).innerHTML = "Remove From Comparison";
+				}
+				if(document.getElementById("result_delete_link_" + ids[i]))
+				{
+					document.getElementById("result_delete_link_" + ids[i]).style.visibility = 'hidden';
 				}
 			}
 
@@ -67,34 +75,6 @@ function phoromatic_generate_comparison()
 		window.location.href = "?result/" + ids.join();
 	}
 }
-function phoromatic_click_results(new_id)
-{
-	if(phoromatic_results_clicked.indexOf(new_id) != -1)
-	{
-		window.location.href = "?result/" + new_id;
-	}
-	else
-	{
-		document.getElementById("result_select_" + new_id).style.background = "#949494";
-		phoromatic_results_clicked.push(new_id);
-	}
-
-	var new_button_area = "<p>";
-
-	if(phoromatic_results_clicked.length > 0)
-	{
-		var plurality = "";
-		if(phoromatic_results_clicked.length > 1)
-			plurality = "s";
-
-		new_button_area += " <button type=\"button\" onclick=\"javascript:phoromatic_delete_results();\">Delete Result" + plurality + "</button>";
-		new_button_area += " <button type=\"button\" onclick=\"javascript:phoromatic_compare_results();\">Compare Result" + plurality + "</button>";
-	}
-	new_button_area += "</p>";
-
-	document.getElementById("pts_phoromatic_bottom_result_button_area").innerHTML = new_button_area;
-	document.getElementById("pts_phoromatic_top_result_button_area").innerHTML = new_button_area;
-}
 function phoromatic_jump_to_results_from(schedule_id, select_id, prepend_results)
 {
 	var time_since = pts_get_list_item(select_id);
@@ -107,11 +87,11 @@ function phoromatic_compare_results()
 		window.location.href = "?result/" + phoromatic_results_clicked.join(",");
 	}
 }
-function phoromatic_delete_results()
+function phoromatic_delete_result(pprid)
 {
-	if(phoromatic_results_clicked.length > 0 && confirm("Press OK to delete these results!"))
+	if(confirm("Press OK to delete result!"))
 	{
-		window.location.href = "?results/delete/" + phoromatic_results_clicked.join(",");
+		window.location.href = "?results/delete/" + pprid;
 	}
 }
 function phoromatic_initial_registration(form)
