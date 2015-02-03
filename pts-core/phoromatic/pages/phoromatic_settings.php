@@ -164,6 +164,13 @@ class phoromatic_settings implements pts_webui_interface
 			<h2>User Password</h2>
 			<p>Proceed to the <a href="?password">password page</a> if you wish to update your account\'s password.</p>';
 
+			if(!PHOROMATIC_USER_IS_VIEWER)
+			{
+				$main .= '<hr />
+				<h2>Build A Suite</h2>
+				<p><a href="?build_suite">Create a custom test suite</a>.</p>';
+			}
+
 			echo phoromatic_webui_main($main, phoromatic_webui_right_panel_logged_in());
 			echo phoromatic_webui_footer();
 	}
