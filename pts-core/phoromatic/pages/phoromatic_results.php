@@ -59,16 +59,32 @@ class phoromatic_results implements pts_webui_interface
 
 			if($main == null)
 			{
-				$main = '<h1>Test Results</h1>';
-				$main .= '<div id="pts_phoromatic_top_result_button_area"></div>';
+				$time_limit = false;
+				$time_str = false;
+				if(isset($_GET['time']))
+				{
+					$time_str = $_GET['time'];
+					$time_limit = strtotime('- ' . $time_str);
+				}
+				if($time_limit == false)
+				{
+					$time_str = '2 weeks';
+					$time_limit = strtotime('- ' . $time_str);
+				}
+
+				$main = '<h1>Test Results For The Past ' . ucwords($time_str) . '</h1>';
 				$main .= '<div class="pts_phoromatic_info_box_area">';
-				$main .= '<div style="margin: 0 10%;"><ul><li><h1>Recent Test Results</h1></li>';
+				$main .= '<div style="margin: 0 5%;"><ul><li><h1>Recent Test Results</h1></li>';
 				$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, ScheduleID, PPRID, UploadTime, TimesViewed FROM phoromatic_results WHERE AccountID = :account_id ORDER BY UploadTime DESC');
 				$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 				$test_result_result = $stmt->execute();
 				$results = 0;
 				while($test_result_row = $test_result_result->fetchArray())
 				{
+					if(strtotime($test_result_row['UploadTime']) < $time_limit)
+					{
+						break;
+					}
 					if($results > 100)
 					{
 						break;
@@ -88,7 +104,12 @@ class phoromatic_results implements pts_webui_interface
 				}
 				$main .= '</ul></div>';
 				$main .= '</div>';
-				$main .= '<div id="pts_phoromatic_bottom_result_button_area"></div>';
+				$main .= '<div style="text-align: right;">Show Results For: <select id="result_time_limit" onchange="javascript:document.location.href = \'/?results/&time=\' + document.getElementById(\'result_time_limit\').options[document.getElementById(\'result_time_limit\').options.selectedIndex].value;">
+				<option value=""></option>
+				<option value="3 days">Past Three Days</option>
+				<option value="1 week">Past Week</option>
+				<option value="1 month">Past Month</option>
+				<option value="3 months">Past Quarter</option></select></div>';
 
 				$result_share_opt = phoromatic_server::read_setting('force_result_sharing') ? '1 = 1' : 'AccountID IN (SELECT AccountID FROM phoromatic_account_settings WHERE LetOtherGroupsViewResults = "1")';
 				$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, ScheduleID, PPRID, UploadTime, TimesViewed, AccountID FROM phoromatic_results WHERE ' . $result_share_opt . ' AND AccountID != :account_id ORDER BY UploadTime DESC');
@@ -97,10 +118,14 @@ class phoromatic_results implements pts_webui_interface
 				if(!empty($test_result_result) && ($test_result_row = $test_result_result->fetchArray()))
 				{
 					$main .= '<div class="pts_phoromatic_info_box_area">';
-					$main .= '<div style="margin: 0 10%;"><ul><li><h1>Results Shared By Other Groups</h1></li>';
+					$main .= '<div style="margin: 0 5%;"><ul><li><h1>Results Shared By Other Groups</h1></li>';
 					$results = 0;
 					do
 					{
+						if(strtotime($test_result_row['UploadTime']) < $time_limit)
+						{
+							break;
+						}
 						if($results > 100)
 						{
 							break;
