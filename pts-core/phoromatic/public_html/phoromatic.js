@@ -1,5 +1,3 @@
-var phoromatic_results_clicked = new Array();
-
 function phoromatic_add_to_result_comparison(pprid)
 {
 	if(typeof(Storage) !== 'undefined')
@@ -79,13 +77,6 @@ function phoromatic_jump_to_results_from(schedule_id, select_id, prepend_results
 {
 	var time_since = pts_get_list_item(select_id);
 	window.location.href = "?result/" + prepend_results + "S:" + schedule_id + ":" + time_since;
-}
-function phoromatic_compare_results()
-{
-	if(phoromatic_results_clicked.length > 1)
-	{
-		window.location.href = "?result/" + phoromatic_results_clicked.join(",");
-	}
 }
 function phoromatic_delete_result(pprid)
 {
