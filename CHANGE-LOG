@@ -23,6 +23,7 @@ Phoronix Test Suite (Git)
 - phoromatic: Add "force result sharing" option to rootadmin to override per-account settings
 - phoromatic: New result compare functionality
 - phoromatic: Support for limiting results to a certain time period
+- phoromatic: Add comparable results listing on individual result pages
 
 Phoronix Test Suite 5.6 Milestone 1
 13 January 2015

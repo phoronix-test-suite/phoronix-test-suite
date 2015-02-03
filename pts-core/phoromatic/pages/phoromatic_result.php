@@ -358,6 +358,30 @@ class phoromatic_result implements pts_webui_interface
 				$right .= '</p>';
 			}
 		}
+		if(true)
+		{
+			$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_results WHERE AccountID = :account_id AND ComparisonHash = :comparison_hash AND instr(:pprid, PPRID) = 0 ORDER BY UploadTime DESC LIMIT 10');
+			$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+			$stmt->bindValue(':comparison_hash', $result_file->get_contained_tests_hash(false));
+			$stmt->bindValue(':pprid', implode(',', $upload_ids));
+			$result = $stmt->execute();
+			$row = $result->fetchArray();
+
+			if(!empty($row))
+			{
+				$right .= '<hr /><h3>Comparable Results</h3><form name="compare_similar_results" onsubmit="return false;">
+						<input type="hidden" value="' . implode(',', $upload_ids) . '" id="compare_similar_results_this" />';
+
+				do
+				{
+					$right .= '<p><input type="checkbox" value="' . $row['PPRID'] . '" name="compare_results" /> ' . $row['Title'] . '<br /><em>' . phoromatic_system_id_to_name($row['SystemID'], $row['AccountID']) . '</em></p>';
+				}
+				while($row = $result->fetchArray());
+
+				$right .= '<p><input type="submit" value="Compare Results" id="compare_results_submit" onclick="javascript:phoromatic_do_custom_compare_results(this); return false;" /></p></form>';
+			}
+		}
+
 		if(count($upload_ids) > 1)
 		{
 			$checkbox_options = array(
@@ -374,7 +398,7 @@ class phoromatic_result implements pts_webui_interface
 				$checkbox_options['transpose_comparison'] = 'Transpose Comparison';
 			}
 
-			$right .= '<form action="' . $_SERVER['REQUEST_URI'] . '" name="update_result_view" method="post"><h3>Result Analysis Options</h3><p align="left">' . PHP_EOL;
+			$right .= '<form action="' . $_SERVER['REQUEST_URI'] . '" name="update_result_view" method="post"><hr /><h3>Result Analysis Options</h3><p align="left">' . PHP_EOL;
 			foreach($checkbox_options as $val => $name)
 			{
 				$right .= '<input type="checkbox" name="' . $val . '" value="1" ' . (isset($_POST[$val]) ? 'checked="checked" ' : null) . '/> ' . $name . '<br />';

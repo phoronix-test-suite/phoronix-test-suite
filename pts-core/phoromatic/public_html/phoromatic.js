@@ -85,6 +85,18 @@ function phoromatic_delete_result(pprid)
 		window.location.href = "?results/delete/" + pprid;
 	}
 }
+function phoromatic_do_custom_compare_results(form)
+{
+	var compare_boxes = document.getElementsByName('compare_results');
+	var pprids_compare = [];
+
+	for(var i = 0; i < compare_boxes.length; i++)
+	{
+		if(compare_boxes[i].checked)
+			pprids_compare.push(compare_boxes[i].value);
+	}
+	window.location.href = "?result/" + document.getElementById('compare_similar_results_this').value + "," + pprids_compare.join();
+}
 function phoromatic_initial_registration(form)
 {
 	if(form.register_username.value.length < 4 || form.register_username.value.indexOf(" ") != -1)
