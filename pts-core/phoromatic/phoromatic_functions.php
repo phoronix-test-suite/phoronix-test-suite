@@ -220,7 +220,7 @@ function phoromatic_webui_header_logged_in()
 		}
 	}
 
-	return phoromatic_webui_header($html_links, '<form action="#" id="search"><input type="search" name="q" size="14" disabled="disabled" /><input type="submit" name="sa" value="Search" disabled="disabled" /></form>');
+	return phoromatic_webui_header($html_links, '<form action="#" id="search" style="visibility: hidden;"><input type="search" name="q" size="14" disabled="disabled" /><input type="submit" name="sa" value="Search" disabled="disabled" /></form>');
 }
 function phoromatic_webui_right_panel_logged_in($add = null)
 {

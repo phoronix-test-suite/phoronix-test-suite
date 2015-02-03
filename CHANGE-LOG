@@ -21,6 +21,8 @@ Phoronix Test Suite (Git)
 - phoromatic: Introduce PPRID structure as universal unique identifier for results between accounts
 - phoromatic: Allow optional result sharing between groups / unique accounts (controlled via settings)
 - phoromatic: Add "force result sharing" option to rootadmin to override per-account settings
+- phoromatic: New result compare functionality
+- phoromatic: Support for limiting results to a certain time period
 
 Phoronix Test Suite 5.6 Milestone 1
 13 January 2015
