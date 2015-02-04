@@ -200,6 +200,10 @@ class phoromatic_server
 				// Change made 31 January
 				self::$db->exec('ALTER TABLE phoromatic_account_settings ADD COLUMN LetOtherGroupsViewResults INTEGER DEFAULT 0');
 				self::$db->exec('PRAGMA user_version = 20');
+			case 20:
+				// Change made 4 February
+				self::$db->exec('ALTER TABLE phoromatic_account_settings ADD COLUMN PreSeedTestInstalls INTEGER DEFAULT 0');
+				self::$db->exec('PRAGMA user_version = 21');
 		}
 		chmod($db_file, 0600);
 	}

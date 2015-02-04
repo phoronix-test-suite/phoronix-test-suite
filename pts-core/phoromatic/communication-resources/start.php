@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2014, Phoronix Media
-	Copyright (C) 2009 - 2014, Michael Larabel
+	Copyright (C) 2009 - 2015, Phoronix Media
+	Copyright (C) 2009 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -112,8 +112,9 @@ while($result && $row = $result->fetchArray())
 	}
 }
 
-if($CLIENT_CORE_VERSION >= 5511 && phoromatic_pre_seed_tests_to_install($json, $phoromatic_account_settings))
+if($CLIENT_CORE_VERSION >= 5511 && date('i') == 0 && $phoromatic_account_settings['PreSeedTestInstalls'] == 1 && phoromatic_pre_seed_tests_to_install($json, $phoromatic_account_settings))
 {
+	// XXX TODO: with WS backend won't need to limit to on the hour attempt
 	return;
 }
 

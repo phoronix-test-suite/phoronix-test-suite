@@ -111,6 +111,7 @@ class phoromatic_settings implements pts_webui_interface
 						'SystemSensorMonitoring' => 'Enable the system sensor monitoring while tests are taking place.',
 						'UploadResultsToOpenBenchmarking' => 'For all test schedules, also upload test results to OpenBenchmarking.org.',
 						'PowerOffWhenDone' => 'Power off system(s) when scheduled tests are completed for the day.',
+						'PreSeedTestInstalls' => 'Attempt to pre-install commonly used tests on client systems while idling.',
 						'NetworkPowerUpWhenNeeded' => 'Use network Wake-On-LAN to power on systems when needed.',
 						'LetOtherGroupsViewResults' => 'Let other accounts/groups on this Phoromatic Server view (read-only) this account\'s results.',
 						)

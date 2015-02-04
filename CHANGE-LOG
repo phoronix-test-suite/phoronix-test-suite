@@ -27,6 +27,7 @@ Phoronix Test Suite (Git)
 - phoromatic: Register module-discovered Phoromatic Servers with pts-core
 - phoromatic: Add "Only Advertise Cached Tests" option to rootadmin
 - phoromatic: Download latest OpenBenchmarking.org test suites/profiles in background thread from the event server
+- phoromatic: Add option to pre-seed test installs to systems when otherwise idling
 
 Phoronix Test Suite 5.6 Milestone 1
 13 January 2015
