@@ -112,6 +112,11 @@ while($result && $row = $result->fetchArray())
 	}
 }
 
+if($CLIENT_CORE_VERSION >= 5511 && phoromatic_pre_seed_tests_to_install($json, $phoromatic_account_settings))
+{
+	return;
+}
+
 if($tests_expected_later_today == false && $phoromatic_account_settings['PowerOffWhenDone'] == 1)
 {
 	$json['phoromatic']['response'] = '[' . date('H:i:s') . '] Shutting system down per user settings as no more tests scheduled for today...';
@@ -164,6 +169,34 @@ function phoromatic_generate_test_suite(&$test_schedule, &$json, $trigger_id, $p
 		}
 	}
 
+	$json['phoromatic']['settings'] = $phoromatic_account_settings;
+
+	echo json_encode($json);
+	return true;
+}
+function phoromatic_pre_seed_tests_to_install(&$json, $phoromatic_account_settings)
+{
+	$suite_writer = new pts_test_suite_writer();
+	$suite_writer->add_suite_information('Pre-Seed', '1.0.0', 'Phoromatic', 'System', 'An automated Phoromatic test schedule.');
+
+	$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_schedules_tests WHERE AccountID = :account_id');
+	$stmt->bindValue(':account_id', ACCOUNT_ID);
+	$result = $stmt->execute();
+
+	$test_count = 0;
+	while($row = $result->fetchArray())
+	{
+		$suite_writer->add_to_suite($row['TestProfile'], null, null);
+		$test_count++;
+	}
+
+	if($test_count == 0)
+	{
+		return false;
+	}
+
+	$json['phoromatic']['task'] = 'install';
+	$json['phoromatic']['test_suite'] = $suite_writer->get_xml();
 	$json['phoromatic']['settings'] = $phoromatic_account_settings;
 
 	echo json_encode($json);

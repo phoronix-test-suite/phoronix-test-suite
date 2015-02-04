@@ -417,6 +417,11 @@ class phoromatic extends pts_module_interface
 
 				switch(isset($json['phoromatic']['task']) ? $json['phoromatic']['task'] : null)
 				{
+					case 'install':
+						phoromatic::update_system_status('Installing Tests');
+						pts_suite_nye_XmlReader::set_temporary_suite('pre-seed', $json['phoromatic']['test_suite']);
+						pts_test_installer::standard_install('pre-seed');
+						break;
 					case 'benchmark':
 						$benchmark_timer = time();
 						self::$is_running_as_phoromatic_node = true;
