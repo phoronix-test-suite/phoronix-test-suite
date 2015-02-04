@@ -32,6 +32,10 @@ function phoromatic_add_to_result_comparison(pprid)
 				{
 					document.getElementById("result_delete_link_" + pprid).style.visibility = 'visible';
 				}
+				if(ids.length > 2 && document.getElementById("result_run_compare_link_" + ids[i]))
+				{
+					document.getElementById("result_run_compare_link_" + ids[i]).style.visibility = 'hidden';
+				}
 			}
 
 			localStorage.comparison_pprids = JSON.stringify(ids);
@@ -52,6 +56,11 @@ function phoromatic_add_to_result_comparison(pprid)
 				if(document.getElementById("result_delete_link_" + ids[i]))
 				{
 					document.getElementById("result_delete_link_" + ids[i]).style.visibility = 'hidden';
+				}
+				if(ids.length > 1 && document.getElementById("result_run_compare_link_" + ids[i]))
+				{
+					document.getElementById("result_run_compare_link_" + ids[i]).innerHTML = 'Compare Results (' + ids.length + ')';
+					document.getElementById("result_run_compare_link_" + ids[i]).style.visibility = 'visible';
 				}
 			}
 
