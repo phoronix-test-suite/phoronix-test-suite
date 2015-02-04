@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2014, Phoronix Media
-	Copyright (C) 2014, Michael Larabel
+	Copyright (C) 2014 - 2015, Phoronix Media
+	Copyright (C) 2014 - 2015, Michael Larabel
 	pts-web-socket: A simple WebSocket implementation, inspired by designs of https://github.com/varspool/Wrench and http://code.google.com/p/phpwebsocket/
 
 	This program is free software; you can redistribute it and/or modify
@@ -47,9 +47,15 @@ class pts_phoromatic_event_server
 
 		return $sent_wol_request;
 	}
+	public static function ob_cache_run()
+	{
+		pts_openbenchmarking::available_tests(true);
+		pts_openbenchmarking::available_suites(true);
+	}
 	public function __construct()
 	{
 		$systems_already_reported = array();
+		pts_client::fork(array('pts_phoromatic_event_server', 'ob_cache_run'), null);
 
 		while(true)
 		{
@@ -59,6 +65,11 @@ class pts_phoromatic_event_server
 			phoromatic_server::prepare_database(true);
 			if($minute == 0)
 			{
+				if($hour == 8)
+				{
+					pts_client::fork(array('pts_phoromatic_event_server', 'ob_cache_run'), null);
+				}
+
 				// Check for basic hung systems
 				$stmt = phoromatic_server::$db->prepare('SELECT LastCommunication, CurrentTask, SystemID, AccountID, LastIP FROM phoromatic_systems WHERE State > 0 ORDER BY LastCommunication DESC');
 				$result = $stmt->execute();
