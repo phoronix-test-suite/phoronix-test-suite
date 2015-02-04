@@ -243,7 +243,13 @@ class phoromatic_schedules implements pts_webui_interface
 					$main .= '<hr /><h2>Add A Test</h2>';
 					$main .= '<form action="?schedules/' . $PATH[0] . '" name="add_test" id="add_test" method="post">';
 					$main .= '<select name="add_to_schedule_select_test" id="add_to_schedule_select_test" onchange="phoromatic_schedule_test_details(\'\');">';
-					foreach(pts_openbenchmarking::available_tests() as $test) {
+					foreach(pts_openbenchmarking::available_tests() as $test)
+					{
+						if(phoromatic_server::read_setting('show_local_tests_only') && pts_test_install_request::test_files_in_cache($test, true, true) == false)
+						{
+							continue;
+						}
+
 						$main .= '<option value="' . $test . '">' . $test . '</option>';
 					}
 					$main .= '</select>';

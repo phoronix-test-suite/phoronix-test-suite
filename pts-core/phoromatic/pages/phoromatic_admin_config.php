@@ -195,6 +195,10 @@ class phoromatic_admin_config implements pts_webui_interface
 		{
 			phoromatic_server::save_setting('force_result_sharing', $_POST['force_result_sharing']);
 		}
+		if(isset($_POST['show_local_tests_only']))
+		{
+			phoromatic_server::save_setting('show_local_tests_only', $_POST['show_local_tests_only']);
+		}
 
 		$main .= '<h1>Phoromatic Server Configuration</h1>';
 
@@ -255,6 +259,13 @@ class phoromatic_admin_config implements pts_webui_interface
 		$main .= '<p>If you wish to force that all accounts/groups on this Phoromatic Server instance are shared/viewable amongst other groups on this server, set this value to True. Otherwise the result sharing is limited to each group\'s selected option on the account settings page.</p>';
 		$main .= '<form action="' . $_SERVER['REQUEST_URI'] . '" name="force_result_share" method="post">';
 		$main .= '<p><strong>Force Result Sharing:</strong> <select name="force_result_sharing"><option value="0">False</option><option value="1" ' . (phoromatic_server::read_setting('force_result_sharing') ? 'selected="selected"' : null) . '>True</option></select></p>';
+		$main .= '<p><input name="submit" value="Update" type="submit" /></p>';
+		$main .= '</form>';
+
+		$main .= '<hr /><h1>Only Advertise Tests With Files Locally Cached</h1>';
+		$main .= '<p>Enabling this option will only advertise test profiles on the Phoromatic Server web interface if the needed files for that test are present within the Phoromatic Server\'s PTS download cache. This feature is particularly useful for environments where the client test system lacks direct Internet access.</p>';
+		$main .= '<form action="' . $_SERVER['REQUEST_URI'] . '" name="show_local_tests_only" method="post">';
+		$main .= '<p><strong>Only Advertise Cached Tests:</strong> <select name="show_local_tests_only"><option value="0">False</option><option value="1" ' . (phoromatic_server::read_setting('show_local_tests_only') ? 'selected="selected"' : null) . '>True</option></select></p>';
 		$main .= '<p><input name="submit" value="Update" type="submit" /></p>';
 		$main .= '</form>';
 

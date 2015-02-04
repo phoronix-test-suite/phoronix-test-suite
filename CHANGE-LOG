@@ -25,6 +25,7 @@ Phoronix Test Suite (Git)
 - phoromatic: Support for limiting results to a certain time period
 - phoromatic: Add comparable results listing on individual result pages
 - phoromatic: Register module-discovered Phoromatic Servers with pts-core
+- phoromatic: Add "Only Advertise Cached Tests" option to rootadmin
 
 Phoronix Test Suite 5.6 Milestone 1
 13 January 2015
