@@ -27,6 +27,7 @@ class pts_client
 	private static $current_command = null;
 	protected static $lock_pointers = null;
 	private static $forked_pids = array();
+	protected static $phoromatic_servers = array();
 
 	public static function create_lock($lock_file)
 	{
@@ -726,10 +727,19 @@ class pts_client
 		// Archive to disk
 		$pso->save_to_file(PTS_CORE_STORAGE);
 	}
+	public static function register_phoromatic_server($server_ip, $http_port)
+	{
+		array_push(self::$phoromatic_servers, array('ip' => $server_ip, 'http_port' => $http_port));
+	}
 	public static function available_phoromatic_servers()
 	{
 		$phoromatic_servers = array();
 		$possible_servers = pts_network::find_zeroconf_phoromatic_servers(true);
+
+		foreach(self::$phoromatic_servers as $server)
+		{
+			array_push($possible_servers, array($server['ip'], $server['http_port']));
+		}
 
 		$user_config_phoromatic_servers = pts_config::read_user_config('PhoronixTestSuite/Options/General/PhoromaticServers', '');
 		foreach(explode(',', $user_config_phoromatic_servers) as $static_server)
