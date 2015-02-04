@@ -224,7 +224,37 @@ class phoromatic_result implements pts_webui_interface
 
 			$intent = null;
 
-			if(isset($_GET['pdf']))
+			if(isset($_GET['download']) && $_GET['download'] == 'csv')
+			{
+				$result_csv = pts_result_file_output::result_file_to_csv($result_file);
+				header('Content-Description: File Transfer');
+				header('Content-Type: application/csv');
+				header('Content-Disposition: attachment; filename=phoromatic-result.csv');
+				header('Expires: 0');
+				header('Cache-Control: must-revalidate');
+				header('Pragma: public');
+				header('Content-Length: ' . strlen($result_csv));
+				ob_clean();
+				flush();
+				echo $result_csv;
+				return;
+			}
+			else if(isset($_GET['download']) && $_GET['download'] == 'txt')
+			{
+				$result_txt = pts_result_file_output::result_file_to_text($result_file);
+				header('Content-Description: File Transfer');
+				header('Content-Type: application/txt');
+				header('Content-Disposition: attachment; filename=phoromatic-result.txt');
+				header('Expires: 0');
+				header('Cache-Control: must-revalidate');
+				header('Pragma: public');
+				header('Content-Length: ' . strlen($result_txt));
+				ob_clean();
+				flush();
+				echo $result_txt;
+				return;
+			}
+			else if(isset($_GET['download']) && $_GET['download'] == 'pdf')
 			{
 				$_REQUEST['force_format'] = 'PNG'; // Force to PNG renderer
 				$_REQUEST['svg_dom_gd_no_interlacing'] = true; // Otherwise FPDF will fail
@@ -427,7 +457,9 @@ class phoromatic_result implements pts_webui_interface
 
 		$right .= '<hr /><h3>Result Export</h3>';
 		$right .= '<p><a href="/public.php?t=result&ut='  . implode(',', $upload_ids) . '">Public Viewer</a></p>';
-		$right .= '<p><a href="?' . $_SERVER['QUERY_STRING'] . '/&pdf">Download As PDF</a></p>';
+		$right .= '<p><a href="?' . $_SERVER['QUERY_STRING'] . '/&download=pdf">Download As PDF</a></p>';
+		$right .= '<p><a href="?' . $_SERVER['QUERY_STRING'] . '/&download=csv">Download As CSV</a></p>';
+		$right .= '<p><a href="?' . $_SERVER['QUERY_STRING'] . '/&download=txt">Download As TEXT</a></p>';
 		if(count($xml_result_hash) == 1)
 		{
 			$right .= '<p><a href="?' . $_SERVER['QUERY_STRING'] . '/&upload_to_openbenchmarking">Upload To OpenBenchmarking.org</a></p>';
