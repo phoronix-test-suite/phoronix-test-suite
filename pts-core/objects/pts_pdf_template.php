@@ -22,7 +22,7 @@
 
 if(is_file('/usr/share/php/fpdf/fpdf.php'))
 {
-	include_once('/usr/share/php/fpdf/fpdf.php')
+	include_once('/usr/share/php/fpdf/fpdf.php');
 }
 
 class pts_pdf_template extends FPDF
