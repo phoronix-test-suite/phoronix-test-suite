@@ -46,7 +46,7 @@ class phoromatic extends pts_module_interface
 	}
 	public static function user_commands()
 	{
-		return array('connect' => 'run_connection', 'explore' => 'explore_network', 'upload_result' => 'upload_unscheduled_result', 'set_root_admin_password' => 'set_root_admin_password', 'list_results' => 'recent_phoromatic_server_results');
+		return array('connect' => 'run_connection', 'explore' => 'explore_network', 'upload_result' => 'upload_unscheduled_result', 'set_root_admin_password' => 'set_root_admin_password', 'list_results' => 'recent_phoromatic_server_results', 'clone' => 'clone_phoromatic_server_result');
 	}
 	public static function upload_unscheduled_result($args)
 	{
@@ -557,7 +557,6 @@ class phoromatic extends pts_module_interface
 	}
 	private static function upload_test_result(&$result_file, $upload_system_logs = true, $schedule_id = 0, $save_identifier = null, $trigger = null, $elapsed_time = 0)
 	{
-		self::setup_server_addressing();
 		$system_logs = null;
 		$system_logs_hash = null;
 		// TODO: Potentially integrate this code below shared with pts_openbenchmarking_client into a unified function for validating system log files
@@ -659,6 +658,33 @@ class phoromatic extends pts_module_interface
 			echo PHP_EOL . 'No Phoromatic Server results discovered.';
 
 		echo PHP_EOL;
+	}
+	public static function clone_phoromatic_server_result($args)
+	{
+		self::setup_server_addressing();
+
+		$id = $args;
+		$server_response = phoromatic::upload_to_remote_server(array('r' => 'clone_result', 'i' => $id));
+		$server_response = json_decode($server_response, true);
+
+		if(isset($server_response['phoromatic']['result']['composite_xml']) && !empty($server_response['phoromatic']['result']['composite_xml']))
+		{
+			$composite_xml = $server_response['phoromatic']['result']['composite_xml'];
+			$result_file = new pts_result_file($composite_xml);
+
+			if($result_file->xml_parser->validate())
+			{
+				$result_file_writer = new pts_result_file_writer();
+				$result_file_writer->add_result_file_meta_data($result_file, $id);
+				$result_file_writer->add_system_information_from_result_file($result_file);
+				$result_file_writer->add_results_from_result_file($result_file);
+
+				pts_client::save_test_result($id . '/composite.xml', $result_file_writer->get_xml(), true);
+				echo PHP_EOL . 'Result File Saved As: ' . $id . PHP_EOL . PHP_EOL;
+			}
+		}
+		else
+			echo PHP_EOL . 'No Phoromatic Server results discovered.' . PHP_EOL;
 	}
 	private static function set_user_context($context_script, $trigger, $schedule_id, $process)
 	{
