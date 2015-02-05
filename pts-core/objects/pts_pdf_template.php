@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2014, Phoronix Media
-	Copyright (C) 2009 - 2014, Michael Larabel
+	Copyright (C) 2009 - 2015, Phoronix Media
+	Copyright (C) 2009 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -19,6 +19,11 @@
 	You should have received a copy of the GNU General Public License
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
+
+if(is_file('/usr/share/php/fpdf/fpdf.php'))
+{
+	include_once('/usr/share/php/fpdf/fpdf.php')
+}
 
 class pts_pdf_template extends FPDF
 {
