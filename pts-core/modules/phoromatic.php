@@ -663,14 +663,15 @@ class phoromatic extends pts_module_interface
 	{
 		self::setup_server_addressing();
 
-		$id = $args;
+		$id = $args[0];
 		$server_response = phoromatic::upload_to_remote_server(array('r' => 'clone_result', 'i' => $id));
 		$server_response = json_decode($server_response, true);
 
 		if(isset($server_response['phoromatic']['result']['composite_xml']) && !empty($server_response['phoromatic']['result']['composite_xml']))
 		{
-			$composite_xml = $server_response['phoromatic']['result']['composite_xml'];
+			$composite_xml = base64_decode($server_response['phoromatic']['result']['composite_xml']);
 			$result_file = new pts_result_file($composite_xml);
+			// TODO XXX: Add system log downloading support
 
 			if($result_file->xml_parser->validate())
 			{

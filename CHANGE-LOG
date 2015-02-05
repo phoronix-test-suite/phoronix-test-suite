@@ -29,7 +29,8 @@ Phoronix Test Suite (Git)
 - phoromatic: Download latest OpenBenchmarking.org test suites/profiles in background thread from the event server
 - phoromatic: Add option to pre-seed test installs to systems when otherwise idling
 - phoromatic: Support for exporting result files to download as CSV or TXT
-- phoromatic: Add phoromatic.list-results sub-command for clients
+- phoromatic: Add phoromatic.list-results sub-command for clients to view recent results
+- phoromatic: Add phoromatic.clone sub-command for clients to clone viewable test results
 
 Phoronix Test Suite 5.6 Milestone 1
 13 January 2015
