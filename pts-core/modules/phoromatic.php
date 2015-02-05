@@ -23,7 +23,7 @@
 class phoromatic extends pts_module_interface
 {
 	const module_name = 'Phoromatic Client';
-	const module_version = '0.2.0';
+	const module_version = '0.3.0';
 	const module_description = 'The Phoromatic client is used for connecting to a Phoromatic server (Phoromatic.com or a locally run server) to facilitate the automatic running of tests, generally across multiple test nodes in a routine manner. For more details visit http://www.phoromatic.com/. This module is intended to be used with Phoronix Test Suite 5.2+ clients and servers.';
 	const module_author = 'Phoronix Media';
 
@@ -46,7 +46,7 @@ class phoromatic extends pts_module_interface
 	}
 	public static function user_commands()
 	{
-		return array('connect' => 'run_connection', 'explore' => 'explore_network', 'upload_result' => 'upload_unscheduled_result', 'set_root_admin_password' => 'set_root_admin_password');
+		return array('connect' => 'run_connection', 'explore' => 'explore_network', 'upload_result' => 'upload_unscheduled_result', 'set_root_admin_password' => 'set_root_admin_password', 'list_results' => 'recent_phoromatic_server_results');
 	}
 	public static function upload_unscheduled_result($args)
 	{
@@ -639,6 +639,23 @@ class phoromatic extends pts_module_interface
 			'system_logs_zip' => $system_logs,
 			'system_logs_hash' => $system_logs_hash
 			));
+	}
+	protected static function recent_phoromatic_server_results()
+	{
+		$server_response = phoromatic::upload_to_remote_server(array('r' => 'list_results'));
+
+		if(isset($server_response['phoromatic']['results']) && !empty($server_response['phoromatic']['results']))
+		{
+			foreach($server_response['phoromatic']['results'] as $pprid => $result)
+			{
+				echo PHP_EOL . sprintf('%-26ls - %-25ls - %-30ls' . PHP_EOL, $result['Title'], $pprid, date('j M H:i', strtotime($result['UploadTime']))) . PHP_EOL;
+				echo sprintf('    %-20ls - %-25ls - %-30ls' . PHP_EOL, $result['SystemName'], $result['GroupName']) . PHP_EOL;
+			}
+		}
+		else
+			echo PHP_EOL . 'No Phoromatic Server results discovered.';
+
+		echo PHP_EOL;
 	}
 	private static function set_user_context($context_script, $trigger, $schedule_id, $process)
 	{
