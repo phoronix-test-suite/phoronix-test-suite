@@ -270,6 +270,21 @@ class phoromatic_server
 
 		return $schedule_names[$schedule_id];
 	}
+	public static function account_id_to_group_name($account_id)
+	{
+		static $group_names;
+
+		if(!isset($group_names[$account_id]))
+		{
+			$stmt = phoromatic_server::$db->prepare('SELECT GroupName FROM phoromatic_accounts WHERE AccountID = :account_id');
+			$stmt->bindValue(':account_id', $account_id);
+			$result = $stmt->execute();
+			$row = $result->fetchArray();
+			$group_names[$account_id] = $row['GroupName'];
+		}
+
+		return $group_names[$account_id];
+	}
 	public static function recently_active_systems($account_id)
 	{
 		$systems = array();

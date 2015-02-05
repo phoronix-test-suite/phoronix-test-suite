@@ -240,7 +240,7 @@ class phoromatic extends pts_module_interface
 				'r' => 'ping',
 				), $server_ip, $http_port);
 	}
-	protected static function setup_server_addressing($server_string)
+	protected static function setup_server_addressing($server_string = null)
 	{
 		if(isset($server_string[0]) && strpos($server_string[0], '/', strpos($server_string[0], ':')) > 6)
 		{
@@ -557,6 +557,7 @@ class phoromatic extends pts_module_interface
 	}
 	private static function upload_test_result(&$result_file, $upload_system_logs = true, $schedule_id = 0, $save_identifier = null, $trigger = null, $elapsed_time = 0)
 	{
+		self::setup_server_addressing();
 		$system_logs = null;
 		$system_logs_hash = null;
 		// TODO: Potentially integrate this code below shared with pts_openbenchmarking_client into a unified function for validating system log files
@@ -640,16 +641,18 @@ class phoromatic extends pts_module_interface
 			'system_logs_hash' => $system_logs_hash
 			));
 	}
-	protected static function recent_phoromatic_server_results()
+	public static function recent_phoromatic_server_results()
 	{
+		self::setup_server_addressing();
 		$server_response = phoromatic::upload_to_remote_server(array('r' => 'list_results'));
+		$server_response = json_decode($server_response, true);
 
 		if(isset($server_response['phoromatic']['results']) && !empty($server_response['phoromatic']['results']))
 		{
 			foreach($server_response['phoromatic']['results'] as $pprid => $result)
 			{
-				echo PHP_EOL . sprintf('%-26ls - %-25ls - %-30ls' . PHP_EOL, $result['Title'], $pprid, date('j M H:i', strtotime($result['UploadTime']))) . PHP_EOL;
-				echo sprintf('    %-20ls - %-25ls - %-30ls' . PHP_EOL, $result['SystemName'], $result['GroupName']) . PHP_EOL;
+				echo sprintf('%-26ls - %-25ls - %-30ls', $result['Title'], $pprid, date('j M H:i', strtotime($result['UploadTime']))) . PHP_EOL;
+				echo sprintf('    %-20ls - %-25ls' . PHP_EOL, $result['SystemName'], $result['GroupName']) . PHP_EOL;
 			}
 		}
 		else

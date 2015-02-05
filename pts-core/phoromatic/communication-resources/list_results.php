@@ -27,11 +27,11 @@ $result = $stmt->execute();
 $results = array();
 while($row = $result->fetchArray())
 {
-	$results[$row['PPRID'] = array(
+	$results[$row['PPRID']] = array(
 		'Title' => $row['Title'],
-		'SystemName' => phoromatic_system_id_to_name($row['SystemID'], $row['AccountID']),
+		'SystemName' => phoromatic_server::system_id_to_name($row['SystemID'], $row['AccountID']),
 		'UploadTime' => $row['UploadTime'],
-		'GroupName' => phoromatic_account_id_to_group_name($row['AccountID']),
+		'GroupName' => phoromatic_server::account_id_to_group_name($row['AccountID']),
 		);
 }
 
