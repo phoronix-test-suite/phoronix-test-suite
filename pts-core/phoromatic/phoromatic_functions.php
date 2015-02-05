@@ -190,7 +190,7 @@ function phoromatic_webui_header_logged_in()
 	{
 		$pages = array('Main');
 
-		if(phoromatic_account_system_count() > 3)
+		if(phoromatic_account_system_count() > 0)
 			array_push($pages, 'Dashboard');
 
 		array_push($pages, 'Systems', 'Schedules', 'Results');
