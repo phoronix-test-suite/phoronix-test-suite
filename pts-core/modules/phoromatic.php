@@ -685,7 +685,7 @@ class phoromatic extends pts_module_interface
 			}
 		}
 		else
-			echo PHP_EOL . 'No Phoromatic Server results discovered.' . PHP_EOL;
+			echo PHP_EOL . 'No Phoromatic result found.' . PHP_EOL;
 	}
 	private static function set_user_context($context_script, $trigger, $schedule_id, $process)
 	{
