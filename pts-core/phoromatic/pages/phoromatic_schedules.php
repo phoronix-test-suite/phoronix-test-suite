@@ -101,6 +101,18 @@ class phoromatic_schedules implements pts_webui_interface
 						$result = $stmt->execute();
 						phoromatic_add_activity_stream_event('tests_for_schedule', $to_remove[0] . ' - ' . $to_remove[1], 'removed');
 					}
+					else if(isset($PATH[1]) && $PATH[1] == 'delete-trigger' && !empty($PATH[2]))
+					{
+						// REMOVE TRIGGER
+						$trigger = base64_decode($PATH[2]);
+						$stmt = phoromatic_server::$db->prepare('DELETE FROM phoromatic_schedules_triggers WHERE AccountID = :account_id AND Trigger = :trigger AND ScheduleID = :schedule_id');
+						$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+						$stmt->bindValue(':schedule_id', $PATH[0]);
+						$stmt->bindValue(':trigger', $trigger);
+						$result = $stmt->execute();
+						if($result)
+							$main .= '<h2 style="color: red;">Trigger Removed: ' . $trigger . '</h2>';
+					}
 					else if(isset($PATH[1]) && in_array($PATH[1], array('activate', 'deactivate')))
 					{
 						switch($PATH[1])
@@ -288,7 +300,7 @@ class phoromatic_schedules implements pts_webui_interface
 
 					do
 					{
-						$main .= '<a href="#"><li>' . $test_result_row['Trigger'] . '<br /><table><tr><td>' . phoromatic_user_friendly_timedate($test_result_row['TriggeredOn']) . '</td></tr></table></li></a>';
+						$main .= '<a href="#"><li>' . $test_result_row['Trigger'] . '<br /><table><tr><td>' . phoromatic_user_friendly_timedate($test_result_row['TriggeredOn']) . '</td><td><a href="?schedules/' . $PATH[0] . '/delete-trigger/' . base64_encode($test_result_row['Trigger']) . '">Remove Trigger</a></td></tr></table></li></a>';
 
 					}
 					while($test_result_row = $test_result_result->fetchArray());
