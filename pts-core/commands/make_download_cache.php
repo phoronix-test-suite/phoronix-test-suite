@@ -125,6 +125,17 @@ class make_download_cache implements pts_option_interface
 			}
 		}
 
+		$cached_tests = array();
+		foreach(pts_openbenchmarking::available_tests() as $test)
+		{
+			if(pts_test_install_request::test_files_in_cache($test, true, true) == false)
+			{
+				continue;
+			}
+			array_push($cached_tests, $test);
+		}
+		$json_download_cache['phoronix-test-suite']['cached-tests'] = $cached_tests;
+
 		file_put_contents($dc_write_directory . 'pts-download-cache.json', json_encode($json_download_cache, JSON_PRETTY_PRINT));
 		echo PHP_EOL;
 	}
