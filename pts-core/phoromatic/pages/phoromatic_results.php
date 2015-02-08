@@ -68,11 +68,11 @@ class phoromatic_results implements pts_webui_interface
 				}
 				if($time_limit == false)
 				{
-					$time_str = '2 week';
+					$time_str = '1 month';
 					$time_limit = strtotime('- ' . $time_str);
 				}
 
-				$result_limit = isset($_POST['result_limit']) && is_numeric($_POST['result_limit']) && $_POST['result_limit'] > 9 ? $_POST['result_limit'] : 25;
+				$result_limit = isset($_POST['result_limit']) && is_numeric($_POST['result_limit']) && $_POST['result_limit'] > 9 ? $_POST['result_limit'] : 50;
 
 				$main .= '<form action="?results" method="post"><div style="text-align: left; font-weight: bold;">Show Results For <select id="result_time_limit" name="time">';
 
