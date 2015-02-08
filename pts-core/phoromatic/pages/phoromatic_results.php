@@ -61,22 +61,54 @@ class phoromatic_results implements pts_webui_interface
 			{
 				$time_limit = false;
 				$time_str = false;
-				if(isset($_GET['time']))
+				if(isset($_POST['time']))
 				{
-					$time_str = $_GET['time'];
+					$time_str = $_POST['time'];
 					$time_limit = strtotime('- ' . $time_str);
 				}
 				if($time_limit == false)
 				{
-					$time_str = '2 weeks';
+					$time_str = '2 week';
 					$time_limit = strtotime('- ' . $time_str);
 				}
 
-				$main = '<h1>Test Results For The Past ' . ucwords($time_str) . '</h1>';
+				$result_limit = isset($_POST['result_limit']) && is_numeric($_POST['result_limit']) && $_POST['result_limit'] > 9 ? $_POST['result_limit'] : 25;
+
+				$main .= '<form action="?results" method="post"><div style="text-align: left; font-weight: bold;">Show Results For <select id="result_time_limit" name="time">';
+
+				$results_for_length = array(
+					'24 hours' => '24 Hours',
+					'3 days' => '3 Days',
+					'1 week' => 'Week',
+					'2 week' => '2 Weeks',
+					'1 month' => 'Month',
+					'2 months' => '2 Months',
+					'3 months' => 'Quarter',
+					'6 months' => '6 Months',
+					'1 year' => 'Year',
+					'2 year' => 'Two Years',
+					);
+
+				foreach($results_for_length as $val => $str)
+				{
+					$main .= '<option value="' . $val . '"' . ($time_str == $val ? ' selected="selected"' : null) . '>Past ' . $str . '</option>';
+				}
+
+				$main .= '</select> Search For <input type="text" name="search" value="' . (isset($_POST['search']) ? $_POST['search'] : null) . '" /> &nbsp; Limit Results To <select id="result_limit" name="result_limit">';
+				for($i = 25; $i <= 150; $i += 25)
+				{
+					$main .= '<option value="' . $i . '"' . ($result_limit == $i ? ' selected="selected"' : null) . '>' . $i . '</option>';
+				}
+
+				$main .= '</select> &nbsp; <input type="submit" value="Update" /></div></form>';
+
+				$main .= '<h1>Account Test Test Results</h1>';
 				$main .= '<div class="pts_phoromatic_info_box_area">';
+				$search_for = (!isset($_POST['search']) || empty($_POST['search']) ? null : 'AND (Title LIKE :search OR Description LIKE :search)');
 				$main .= '<div style="margin: 0 5%;"><ul style="max-height: 100%;"><li><h1>Recent Test Results</h1></li>';
-				$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, ScheduleID, PPRID, UploadTime, TimesViewed FROM phoromatic_results WHERE AccountID = :account_id ORDER BY UploadTime DESC');
+				$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, ScheduleID, PPRID, UploadTime, TimesViewed FROM phoromatic_results WHERE AccountID = :account_id ' . $search_for. ' ORDER BY UploadTime DESC LIMIT ' . $result_limit);
 				$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+				$stmt->bindValue(':search', (isset($_POST['search']) ? '%' . $_POST['search'] . '%' : null));
 				$test_result_result = $stmt->execute();
 				$results = 0;
 				while($test_result_row = $test_result_result->fetchArray())
@@ -85,7 +117,7 @@ class phoromatic_results implements pts_webui_interface
 					{
 						break;
 					}
-					if($results > 100)
+					if($results > 150)
 					{
 						break;
 					}
@@ -104,22 +136,11 @@ class phoromatic_results implements pts_webui_interface
 				}
 				$main .= '</ul></div>';
 				$main .= '</div>';
-				$main .= '<div style="text-align: right;">Show Results For: <select id="result_time_limit" onchange="javascript:document.location.href = \'/?results/&time=\' + document.getElementById(\'result_time_limit\').options[document.getElementById(\'result_time_limit\').options.selectedIndex].value;">
-				<option value=""></option>
-				<option value="24 hours">Past 24 Hours</option>
-				<option value="3 days">Past Three Days</option>
-				<option value="1 week">Past Week</option>
-				<option value="2 week">Past Two Weeks</option>
-				<option value="1 month">Past Month</option>
-				<option value="2 months">Past Two Months</option>
-				<option value="3 months">Past Quarter</option>
-				<option value="6 months">Past Six Months</option>
-				<option value="1 year">Past Year</option>
-				</select></div>';
 
 				$result_share_opt = phoromatic_server::read_setting('force_result_sharing') ? '1 = 1' : 'AccountID IN (SELECT AccountID FROM phoromatic_account_settings WHERE LetOtherGroupsViewResults = "1")';
-				$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, ScheduleID, PPRID, UploadTime, TimesViewed, AccountID FROM phoromatic_results WHERE ' . $result_share_opt . ' AND AccountID != :account_id ORDER BY UploadTime DESC');
+				$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, ScheduleID, PPRID, UploadTime, TimesViewed, AccountID FROM phoromatic_results WHERE ' . $result_share_opt . ' AND AccountID != :account_id ' . $search_for. ' ORDER BY UploadTime DESC LIMIT ' . $result_limit);
 				$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+				$stmt->bindValue(':search', (isset($_POST['search']) ? '%' . $_POST['search'] . '%' : null));
 				$test_result_result = $stmt->execute();
 				if(!empty($test_result_result) && ($test_result_row = $test_result_result->fetchArray()))
 				{
@@ -132,7 +153,7 @@ class phoromatic_results implements pts_webui_interface
 						{
 							break;
 						}
-						if($results > 100)
+						if($results > 150)
 						{
 							break;
 						}
