@@ -100,7 +100,8 @@ class phoromatic_build_suite implements pts_webui_interface
 			echo '<h2>Saved As ' . $suite_id . '</h2>';
 		}
 		echo phoromatic_webui_header_logged_in();
-		$main = '<h1>Build Suite</h1><p>A test suite in the realm of the Phoronix Test Suite, OpenBenchmarking.org, and Phoromatic is <strong>a collection of test profiles with predefined settings</strong>. Establishing a test suite makes it easy to run repetitive testing on the same set of test profiles by simply referencing the test suite name.</p>';
+		$main = '<h1>Local Suites</h1><p>Find already created local test suites by your account/group via the <a href="/?local_suites">local suites</a> page.</p>';
+		$main .= '<h1>Build Suite</h1><p>A test suite in the realm of the Phoronix Test Suite, OpenBenchmarking.org, and Phoromatic is <strong>a collection of test profiles with predefined settings</strong>. Establishing a test suite makes it easy to run repetitive testing on the same set of test profiles by simply referencing the test suite name.</p>';
 		$main .= '<form action="' . $_SERVER['REQUEST_URI'] . '" name="build_suite" id="build_suite" method="post" onsubmit="return validate_suite();">
 		<h3>Title:</h3>
 		<p><input type="text" name="suite_title" /></p>
