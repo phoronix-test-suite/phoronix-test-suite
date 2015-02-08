@@ -7,6 +7,7 @@ Phoronix Test Suite (Git)
 - phoromatic: Add result RSS support
 - phoromatic: Add new option to results page
 - phoromatic: Enforce new PTS sign-on whenever the PTS core version changes due to potential interface changes
+- phoromatic: Working build suite page
 
 Phoronix Test Suite 5.6 Milestone 2
 4 February 2015

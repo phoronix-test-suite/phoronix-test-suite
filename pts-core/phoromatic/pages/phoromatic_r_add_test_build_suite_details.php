@@ -21,7 +21,7 @@
 */
 
 
-class phoromatic_r_add_test_details implements pts_webui_interface
+class phoromatic_r_add_test_build_suite_details implements pts_webui_interface
 {
 	public static function page_title()
 	{
@@ -47,6 +47,11 @@ class phoromatic_r_add_test_details implements pts_webui_interface
 
 		$test_options = $test_profile->get_test_option_objects();
 
+		echo '<input type="hidden" name="test_add[]" value="' . $test_profile->get_identifier() . '" />';
+		$test_prefix = "test_option_" . str_replace('.', '-', microtime(true)) . "_";
+		echo '<input type="hidden" name="test_prefix[]" value="' . $test_prefix . '" />';
+
+
 		if(count($test_options) == 0)
 		{
 			echo '<p><strong>No configurable user options for this test.</strong></p>';
@@ -57,16 +62,6 @@ class phoromatic_r_add_test_details implements pts_webui_interface
 			{
 				$o = $test_options[$i];
 				$option_count = $o->option_count();
-
-				echo '<input type="hidden" name="test_add[]" value="' . $test_profile->get_identifier() . '" />';
-
-				if(isset($_GET['build_suite']))
-				{
-					$test_prefix = "test_option_" . microtime() . "_";
-					echo '<input type="hidden" name="test_prefix[]" value="' . $test_prefix . '" />';
-				}
-				else
-					$test_prefix = "test_option_" . $_GET['tp'] . "_";
 
 				echo '<p id="' . $test_prefix . $o->get_identifier() . '_name">' . $o->get_name() . '</p>';
 
@@ -88,7 +83,6 @@ class phoromatic_r_add_test_details implements pts_webui_interface
 				}
 			}
 		}
-		echo '<br /><br /><p><input name="submit" value="Add" type="submit" onclick="" /></p>';
 	}
 }
 

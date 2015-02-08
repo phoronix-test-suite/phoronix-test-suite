@@ -37,16 +37,78 @@ class phoromatic_build_suite implements pts_webui_interface
 	}
 	public static function render_page_process($PATH)
 	{
+		if(isset($_POST['suite_title']))
+		{
+		//	echo '<pre>';
+		//	var_dump($_POST);
+		//	echo '</pre>';
+
+			if(strlen($_POST['suite_title']) < 3)
+			{
+				echo '<h2>Suite title must be at least three characters.</h2>';
+			}
+
+			//echo 'TEST SUITE: ' . $_POST['suite_title'] . '<br />';
+			//echo 'TEST SUITE: ' . $_POST['suite_description'] . '<br />';
+			$tests = array();
+
+			foreach($_POST['test_add'] as $i => $test_identifier)
+			{
+				$test_prefix = $_POST['test_prefix'][$i];
+				$args = array();
+				$args_name = array();
+
+				foreach($_POST as $i => $v)
+				{
+					if(strpos($i, $test_prefix) !== false && substr($i, -9) != '_selected')
+					{
+						array_push($args, $v);
+						array_push($args_name, $_POST[$i . '_selected']);
+					}
+				}
+
+				$args_name = implode(' - ', $args_name);
+				$args = implode(' ', $args);
+				array_push($tests, array('test' => $test_identifier, 'description' => $args_name, 'args' => $args));
+			}
+
+			if(count($tests) < 1)
+			{
+				echo '<h2>You must add at least one test to the suite.</h2>';
+			}
+
+			$suite_writer = new pts_test_suite_writer();
+			$version_bump = 0;
+
+			do
+			{
+				$suite_version = '1.' . $version_bump . '.0';
+				$suite_id = $suite_writer->clean_save_name_string($_POST['suite_title']) . '-' . $suite_version;
+				$suite_dir = phoromatic_server::phoromatic_account_suite_path($_SESSION['AccountID'], $suite_id);
+			}
+			while(is_dir($suite_dir));
+			pts_file_io::mkdir($suite_dir);
+			$save_to = $suite_dir . '/suite-definition.xml';
+
+			$suite_writer->add_suite_information($_POST['suite_title'], $suite_version,  $_SESSION['UserName'], 'System', $_POST['suite_description']);
+			foreach($tests as $m)
+			{
+				$suite_writer->add_to_suite($m['test'], $m['args'], $m['description']);
+			}
+
+			$suite_writer->save_xml($save_to);
+			echo '<h2>Saved As ' . $suite_id . '</h2>';
+		}
 		echo phoromatic_webui_header_logged_in();
 		$main = '<h1>Build Suite</h1><p>A test suite in the realm of the Phoronix Test Suite, OpenBenchmarking.org, and Phoromatic is <strong>a collection of test profiles with predefined settings</strong>. Establishing a test suite makes it easy to run repetitive testing on the same set of test profiles by simply referencing the test suite name.</p>';
-		$main .= '<form action="' . $_SERVER['REQUEST_URI'] . '" name="add_suite" id="add_suite" method="post" onsubmit="return validate_suite();">
+		$main .= '<form action="' . $_SERVER['REQUEST_URI'] . '" name="build_suite" id="build_suite" method="post" onsubmit="return validate_suite();">
 		<h3>Title:</h3>
 		<p><input type="text" name="suite_title" /></p>
 		<h3>Description:</h3>
-		<p><textarea name="suite_description" id="suite_description" cols="50" rows="3"></textarea></p>
+		<p><textarea name="suite_description" id="suite_description" cols="60" rows="2"></textarea></p>
 		<h3>Add A Test</h3>';
 
-		$main .= '<select name="add_to_schedule_select_test" id="add_to_schedule_select_test" onchange="phoromatic_schedule_test_details(\'\');">';
+		$main .= '<select name="add_to_suite_select_test" id="add_to_suite_select_test" onchange="phoromatic_build_suite_test_details();">';
 		foreach(pts_openbenchmarking::available_tests() as $test)
 		{
 			$main .= '<option value="' . $test . '">' . $test . '</option>';

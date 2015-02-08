@@ -225,6 +225,11 @@ function phoromatic_schedule_test_details(append_args)
 	var test_target = pts_get_list_item("add_to_schedule_select_test");
 	phoromatic_ajax_update_element("r_add_test_details/&tp=" + test_target + append_args, "test_details");
 }
+function phoromatic_build_suite_test_details()
+{
+	var test_target = pts_get_list_item("add_to_suite_select_test");
+	phoromatic_ajax_append_element("r_add_test_build_suite_details/&tp=" + test_target, "test_details");
+}
 function pts_get_list_item(select_id)
 {
 	var item_value = document.getElementById(select_id).options[document.getElementById(select_id).selectedIndex].value;
@@ -284,6 +289,22 @@ function phoromatic_ajax_update_element(r, d)
 			if(http[rnow].status == 200 || http[rnow].status == 304)
 			{
 				document.getElementById(d).innerHTML = http[rnow].responseText;
+			}
+		}}
+	http[rnow].send(null);
+}
+function phoromatic_ajax_append_element(r, d)
+{
+	var http = new Array();
+	var rnow = new Date();
+	http[rnow] = pts_ajax_request_object();
+	http[rnow].open("get", "index.php?" + r, true);
+	http[rnow].onreadystatechange = function(){
+		if(http[rnow].readyState == 4)
+		{
+			if(http[rnow].status == 200 || http[rnow].status == 304)
+			{
+				document.getElementById(d).innerHTML = document.getElementById(d).innerHTML + http[rnow].responseText;
 			}
 		}}
 	http[rnow].send(null);

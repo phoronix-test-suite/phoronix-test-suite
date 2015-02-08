@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2011, Phoronix Media
-	Copyright (C) 2010 - 2011, Michael Larabel
+	Copyright (C) 2010 - 2015, Phoronix Media
+	Copyright (C) 2010 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -45,6 +45,18 @@ class pts_test_suite_writer
 	public function save_xml($to_save)
 	{
 		return $this->xml_writer->saveXMLFile($to_save);
+	}
+	public function clean_save_name_string($input)
+	{
+		$input = strtolower($input);
+		$input = pts_strings::remove_redundant(pts_strings::keep_in_string(str_replace(' ', '-', trim($input)), pts_strings::CHAR_LETTER | pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DASH), '-');
+
+		if(strlen($input) > 126)
+		{
+			$input = substr($input, 0, 126);
+		}
+
+		return $input;
 	}
 	public function add_suite_information_from_reader(&$xml_reader)
 	{

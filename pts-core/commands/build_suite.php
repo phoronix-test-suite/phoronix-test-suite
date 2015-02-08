@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2013, Phoronix Media
-	Copyright (C) 2008 - 2013, Michael Larabel
+	Copyright (C) 2008 - 2015, Phoronix Media
+	Copyright (C) 2008 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -87,7 +87,7 @@ class build_suite implements pts_option_interface
 		}
 		while($input_option != 'Save & Exit');
 
-		$suite_identifier = pts_test_run_manager::clean_save_name($suite_name);
+		$suite_identifier = $suite_writer->clean_save_name_string($suite_name);
 		$save_to = PTS_TEST_SUITE_PATH . 'local/' . $suite_identifier . '/suite-definition.xml';
 		mkdir(dirname($save_to));
 
