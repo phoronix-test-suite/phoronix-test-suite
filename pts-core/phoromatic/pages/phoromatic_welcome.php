@@ -204,10 +204,11 @@ class phoromatic_welcome implements pts_webui_interface
 		}
 		else if(isset($_POST['username']) && isset($_POST['password']))
 		{
-			$matching_user = phoromatic_server::$db->querySingle('SELECT UserName, Password, AccountID, UserID, AdminLevel FROM phoromatic_users WHERE UserName = \'' . SQLite3::escapeString($_POST['username']) . '\'', true);
+			$matching_user = phoromatic_server::$db->querySingle('SELECT UserName, Password, AccountID, UserID, AdminLevel, CreatedOn FROM phoromatic_users WHERE UserName = \'' . SQLite3::escapeString($_POST['username']) . '\'', true);
 			if(!empty($matching_user))
 			{
 				$user_id = $matching_user['UserID'];
+				$created_on = $matching_user['CreatedOn'];
 				$user = $matching_user['UserName'];
 				$hashed_password = $matching_user['Password'];
 				$account_id = $matching_user['AccountID'];
@@ -236,6 +237,7 @@ class phoromatic_welcome implements pts_webui_interface
 					$_SESSION['UserName'] = $user;
 					$_SESSION['AccountID'] = $account_id;
 					$_SESSION['AdminLevel'] = $admin_level;
+					$_SESSION['CreatedOn'] = $created_on;
 					$account_salt = phoromatic_server::$db->exec('UPDATE phoromatic_users SET LastIP = \'' . $_SERVER['REMOTE_ADDR'] . '\', LastLogin = \'' . phoromatic_server::current_time() . '\' WHERE UserName = "' . $matching_user['UserName'] . '"');
 					session_write_close();
 

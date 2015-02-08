@@ -98,6 +98,13 @@ if(substr($PAGE_REQUEST, 0, 2) == 'r_' || isset($_GET['download']))
 <meta name="keywords" content="Phoronix Test Suite, open-source benchmarking, Linux benchmarking, automated testing" />
 <meta name="Description" content="Phoronix Test Suite local control server." />
 <link rel="shortcut icon" href="favicon.ico" />
+<?php
+
+if(isset($_SESSION['UserID']))
+{
+	echo '<link rel="alternate" type="application/rss+xml" title="RSS - Test Results" href="/rss.php?user=' . $_SESSION['UserID'] . '&amp;v=' . sha1($_SESSION['CreatedOn']) . '" />';
+}
+?>
 </head>
 <body>
 <?php

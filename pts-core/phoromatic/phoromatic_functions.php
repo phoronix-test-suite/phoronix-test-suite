@@ -305,7 +305,12 @@ function phoromatic_webui_right_panel_logged_in($add = null)
 			$group_name = '<strong>' . $group_name . '</strong><br />';
 		}
 
-		$right .= '<hr /><p><strong>' . date('H:i T - j F Y') . '</strong><br />' . $group_name . '<a href="?systems">' . $system_count . ' System' . ($system_count == 1 ? '' : 's') . '</a><br /><a href="?schedules">' . $schedule_count . ' Schedule' . ($schedule_count == 1 ? '' : 's') . '</a><br /><a href="?results">' . $result_count . ' Result' . ($result_count == 1 ? '' : 's') . '</a><br /><a href="?account_activity">' . $activity_count . ' Activity Events Today</a><br /><a href="?logout"><strong>Log-Out</strong></a></p>';
+		$right .= '<hr /><p><strong>' . date('H:i T - j F Y') . '</strong><br />' . $group_name . '<a href="?systems">' . $system_count . ' System' . ($system_count == 1 ? '' : 's') . '</a><br /><a href="?schedules">' . $schedule_count . ' Schedule' . ($schedule_count == 1 ? '' : 's') . '</a><br /><a href="?results">' . $result_count . ' Result' . ($result_count == 1 ? '' : 's') . '</a>';
+
+
+$right .= ' <a href="/rss.php?user=' . $_SESSION['UserID'] . '&amp;v=' . sha1($_SESSION['CreatedOn']) . '"><img src="images/rss.png" /></a>';
+
+		$right .= '<br /><a href="?account_activity">' . $activity_count . ' Activity Events Today</a><br /><a href="?logout"><strong>Log-Out</strong></a></p>';
 	}
 
 	return $right;
