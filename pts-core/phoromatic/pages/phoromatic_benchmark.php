@@ -193,7 +193,7 @@ class phoromatic_benchmark implements pts_webui_interface
 			$main .= '<h3>Description:</h3>
 			<p>The description is an optional way to add more details about the intent or objective of this test run.</p>
 			<p><textarea name="benchmark_description" id="benchmark_description" cols="50" rows="3">' . (!$is_new ? $e_schedule['Description'] : null) . '</textarea></p>
-			<h3>System Targets:</h3>
+			<hr /><h3>System Targets:</h3>
 			<p>Select the systems that should be benchmarked at their next earliest convenience.</p>
 			<p>';
 
@@ -235,8 +235,31 @@ class phoromatic_benchmark implements pts_webui_interface
 			}
 
 			$main .= '</p>
+			<hr /><h3>Environment Options</h3>
+			<h4>Stress Testing</h4>
+			<p>If you wish to test systems for stability/reliability rather than performance, use this option and specify the number of tests to run concurrently (two or more) and (optionally) for the total period of time to continue looping the benchmarks. These options are intended to just stress the system and will not record any benchmark results. From the command-line this testing mode can be used via the <em>phoronix-test-suite stress-run</em> sub-command.</p>
+			<p><strong>Concurrent Number Of Test Processes:</strong> <select name="PTS_CONCURRENT_TEST_RUNS"><option value="0">Disabled</option>';
+			for($i = 2; $i < 10; $i++)
+			{
+				$main .= '<option value="' . $i . '">' . $i . '</option>';
+			}
+			$main .= '</select></p>
+			<p><strong>Force Loop Time:</strong> <select name="PTS_CONCURRENT_TEST_RUNS"><option value="0">Disabled</option>';
+			for($i = 60; $i <= (60 * 48); $i += 60)
+			{
+				$main .= '<option value="' . $i . '">' . pts_strings::format_time($i, 'MINUTES') . '</option>';
+			}
+			$main .= '</select></p>
 
-				<p align="right"><input name="submit" value="' . ($is_new ? 'Run' : 'Edit') . ' Benchmark" type="submit" onclick="return pts_rmm_validate_schedule();" /></p>
+			<h4>System Monitoring</h4>
+			<p>The Phoronix Test Suite system monitor module allows for select hardware/software sensors to be logged in real-time while running the selected test suite. The supported sensors are then shown within the result file upon the test\'s completion.</p>';
+
+			foreach(phodevi::available_sensors() as $sensor)
+			{
+				$main .= '<input type="checkbox" name="MONITOR" value="' . phodevi::sensor_identifier($sensor) . '" /> ' . phodevi::sensor_name($sensor) . ' &nbsp; ';
+			}
+
+			$main .= '<hr /><p align="left"><input name="submit" value="' . ($is_new ? 'Run' : 'Edit') . ' Benchmark" type="submit" onclick="return pts_rmm_validate_schedule();" /></p>
 				</form>';
 		}
 
