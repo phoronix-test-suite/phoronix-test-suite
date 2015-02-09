@@ -500,7 +500,7 @@ class phoromatic extends pts_module_interface
 								// Handle uploading data to server
 								$result_file = new pts_result_file(self::$test_run_manager->get_file_name());
 								$upload_system_logs = pts_strings::string_bool($json['phoromatic']['settings']['UploadSystemLogs']);
-								$server_response = self::upload_test_result($result_file, $upload_system_logs, $json['phoromatic']['schedule_id'], $phoromatic_save_identifier, $json['phoromatic']['trigger_id'], $elapsed_benchmark_time, $benchmark_ticket_id);
+								$server_response = self::upload_test_result($result_file, $upload_system_logs, (isset($json['phoromatic']['schedule_id']) ? $json['phoromatic']['schedule_id'] : null), $phoromatic_save_identifier, $json['phoromatic']['trigger_id'], $elapsed_benchmark_time, $benchmark_ticket_id);
 								pts_client::$pts_logger->log('DEBUG RESPONSE MESSAGE: ' . $server_response);
 								if(!pts_strings::string_bool($json['phoromatic']['settings']['ArchiveResultsLocally']))
 								{
