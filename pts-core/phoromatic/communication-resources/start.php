@@ -149,7 +149,7 @@ while($result && $row = $result->fetchArray())
 
 	if(!phoromatic_server::check_for_benchmark_ticket_result_match($row['TicketID'], ACCOUNT_ID, SYSTEM_ID, $row['Title']))
 	{
-		$res = phoromatic_generate_benchmark_ticket($row, $json, $trigger_row['Trigger'], $phoromatic_account_settings);
+		$res = phoromatic_generate_benchmark_ticket($row, $json, $phoromatic_account_settings);
 		if($res)
 		{
 			return;
@@ -222,7 +222,7 @@ function phoromatic_generate_test_suite(&$test_schedule, &$json, $trigger_id, $p
 	echo json_encode($json);
 	return true;
 }
-function phoromatic_generate_benchmark_ticket(&$ticket_row, &$json)
+function phoromatic_generate_benchmark_ticket(&$ticket_row, &$json, $phoromatic_account_settings)
 {
 	$test_suite = phoromatic_server::phoromatic_account_suite_path(ACCOUNT_ID, $ticket_row['SuiteToRun']) . 'suite-definition.xml';
 	if(!is_file($test_suite))
