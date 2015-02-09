@@ -67,6 +67,9 @@ while($result && $row = $result->fetchArray())
 
 		if($matches_to_group == false)
 			continue;
+
+
+		pts_logger::add_to_log(SYSTEM_ID . ' - matches to RunTargetSystems of ' . $row['Title']);
 	}
 
 	// See if test is a time-based schedule due to run today and now or past the time scheduled to run
@@ -107,7 +110,7 @@ while($result && $row = $result->fetchArray())
 				{
 					return;
 				}
-			}
+			} else 	pts_logger::add_to_log(SYSTEM_ID . ' - has outstanding trigger match of ' . $trigger_row['Trigger']);
 		}
 	}
 }
@@ -149,12 +152,13 @@ while($result && $row = $result->fetchArray())
 
 	if(!phoromatic_server::check_for_benchmark_ticket_result_match($row['TicketID'], ACCOUNT_ID, SYSTEM_ID, $row['Title']))
 	{
+		pts_logger::add_to_log(SYSTEM_ID . ' - needs to benchmark ticket for ' . $row['Title']);
 		$res = phoromatic_generate_benchmark_ticket($row, $json, $phoromatic_account_settings);
 		if($res)
 		{
 			return;
 		}
-	}
+	} else 	pts_logger::add_to_log(SYSTEM_ID . ' - already has benchmark ticket completed for ' . $row['Title']);
 }
 
 // END OF BENCHMARK TICKET
