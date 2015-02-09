@@ -382,11 +382,11 @@ class phoromatic extends pts_module_interface
 
 				pts_client::$pts_logger->log('Server response failed');
 
-				if($times_failed > 2)
+				if($times_failed >= 2)
 				{
 					trigger_error('Communication with server failed.', E_USER_ERROR);
 
-					if(PTS_IS_DAEMONIZED_SERVER_PROCESS == false && $times_failed > 4)
+					if(PTS_IS_DAEMONIZED_SERVER_PROCESS == false && $times_failed > 5)
 					{
 						return false;
 					}
@@ -569,7 +569,10 @@ class phoromatic extends pts_module_interface
 
 			if(!$do_exit)
 			{
-				sleep(60);
+				if($server_response == false)
+					sleep(rand(10, 30));
+				else
+					sleep(60);
 			}
 		}
 
