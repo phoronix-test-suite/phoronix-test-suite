@@ -650,19 +650,33 @@ class phoromatic extends pts_module_interface
 		}
 
 		// Upload to Phoromatic
-		return phoromatic::upload_to_remote_server(array(
-			'r' => 'result_upload',
-			//'ob' => $ob_data['id'],
-			'sched' => $schedule_id,
-			'bid' => $benchmark_ticket_id,
-			'o' => $save_identifier,
-			'ts' => $trigger,
-			'et' => $elapsed_time,
-			$composite_xml_type => base64_encode($composite_xml),
-			'composite_xml_hash' => $composite_xml_hash,
-			'system_logs_zip' => $system_logs,
-			'system_logs_hash' => $system_logs_hash
-			));
+		$times_tried = 0;
+		do
+		{
+			if($times_tried > 0)
+			{
+				sleep(5, 17);
+			}
+
+			$res = phoromatic::upload_to_remote_server(array(
+				'r' => 'result_upload',
+				//'ob' => $ob_data['id'],
+				'sched' => $schedule_id,
+				'bid' => $benchmark_ticket_id,
+				'o' => $save_identifier,
+				'ts' => $trigger,
+				'et' => $elapsed_time,
+				$composite_xml_type => base64_encode($composite_xml),
+				'composite_xml_hash' => $composite_xml_hash,
+				'system_logs_zip' => $system_logs,
+				'system_logs_hash' => $system_logs_hash
+				));
+
+			$times_tried++;
+		}
+		while($res == false && $times_tried < 4);
+
+		return $res;
 	}
 	public static function recent_phoromatic_server_results()
 	{
