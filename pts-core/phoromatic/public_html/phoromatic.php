@@ -34,6 +34,7 @@ pts_client::init();
 $environmental_variables = array(
 	'aid' => 'ACCOUNT_ID',
 	'sid' => 'SYSTEM_ID',
+	'bid' => 'BENCHMARK_TICKET_ID',
 //	'vid' => 'VALIDATE_ID',
 	'gsid' => 'GSID',
 	'a' => 'ACTIVITY',

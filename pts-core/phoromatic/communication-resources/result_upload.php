@@ -81,11 +81,12 @@ $upload_id = (isset($row['UploadID']) ? $row['UploadID'] : 0) + 1;
 $upload_time = phoromatic_server::current_time();
 $xml_upload_hash = sha1($composite_xml);
 
-$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_results (AccountID, SystemID, UploadID, ScheduleID, Trigger, UploadTime, Title, Description, SystemCount, ResultCount, DisplayStatus, XmlUploadHash, ComparisonHash, ElapsedTime, PPRID) VALUES (:account_id, :system_id, :upload_id, :schedule_id, :trigger, :upload_time, :title, :description, :system_count, :result_count, :display_status, :xml_upload_hash, :comparison_hash, :elapsed_time, :pprid)');
+$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_results (AccountID, SystemID, UploadID, ScheduleID, BenchmarkTicketID, Trigger, UploadTime, Title, Description, SystemCount, ResultCount, DisplayStatus, XmlUploadHash, ComparisonHash, ElapsedTime, PPRID) VALUES (:account_id, :system_id, :upload_id, :schedule_id, :benchmark_ticket_id, :trigger, :upload_time, :title, :description, :system_count, :result_count, :display_status, :xml_upload_hash, :comparison_hash, :elapsed_time, :pprid)');
 $stmt->bindValue(':account_id', ACCOUNT_ID);
 $stmt->bindValue(':system_id', SYSTEM_ID);
 $stmt->bindValue(':upload_id', $upload_id);
 $stmt->bindValue(':schedule_id', $SCHEDULE_ID);
+$stmt->bindValue(':schedule_id', $BENCHMARK_TICKET_ID);
 $stmt->bindValue(':trigger', $TRIGGER_STRING);
 $stmt->bindValue(':upload_time', $upload_time);
 $stmt->bindValue(':title', sqlite_escape_string($result_file->get_title()));

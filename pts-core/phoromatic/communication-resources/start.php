@@ -112,6 +112,53 @@ while($result && $row = $result->fetchArray())
 	}
 }
 
+// BENCHMARK TICKET
+
+$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_benchmark_tickets WHERE AccountID = :account_id AND State = 1 AND TicketIssueTime < :current_time AND TicketIssueTime > :yesterday');
+//echo phoromatic_server::$db->lastErrorMsg();
+$stmt->bindValue(':account_id', ACCOUNT_ID);
+$stmt->bindValue(':current_time', time());
+$stmt->bindValue(':yesterday', (time() - (60 * 60 * 24)));
+$result = $stmt->execute();
+
+while($result && $row = $result->fetchArray())
+{
+	// Make sure this test schedule is supposed to work on given system
+	if(!in_array(SYSTEM_ID, explode(',', $row['RunTargetSystems'])))
+	{
+		// The system ID isn't in the run target but see if system ID belongs to a group in the run target
+		$stmt = phoromatic_server::$db->prepare('SELECT Groups FROM phoromatic_systems WHERE AccountID = :account_id AND SystemID = :system_id LIMIT 1');
+		$stmt->bindValue(':account_id', ACCOUNT_ID);
+		$stmt->bindValue(':system_id', SYSTEM_ID);
+		$sys_result = $stmt->execute();
+		$sys_row = $sys_result->fetchArray();
+
+		$matches_to_group = false;
+		foreach(explode(',', $row['RunTargetGroups']) as $group)
+		{
+			if(stripos($sys_row['Groups'], '#' . $group . '#') !== false)
+			{
+				$matches_to_group = true;
+				break;
+			}
+		}
+
+		if($matches_to_group == false)
+			continue;
+	}
+
+	if(!phoromatic_server::check_for_benchmark_ticket_result_match($row['TicketID'], ACCOUNT_ID, SYSTEM_ID, $row['Title']))
+	{
+		$res = phoromatic_generate_benchmark_ticket($row, $json, $trigger_row['Trigger'], $phoromatic_account_settings);
+		if($res)
+		{
+			return;
+		}
+	}
+}
+
+// END OF BENCHMARK TICKET
+
 if($CLIENT_CORE_VERSION >= 5511 && date('i') == 0 && $phoromatic_account_settings['PreSeedTestInstalls'] == 1 && phoromatic_pre_seed_tests_to_install($json, $phoromatic_account_settings))
 {
 	// XXX TODO: with WS backend won't need to limit to on the hour attempt
@@ -170,6 +217,26 @@ function phoromatic_generate_test_suite(&$test_schedule, &$json, $trigger_id, $p
 		}
 	}
 
+	$json['phoromatic']['settings'] = $phoromatic_account_settings;
+
+	echo json_encode($json);
+	return true;
+}
+function phoromatic_generate_benchmark_ticket(&$ticket_row, &$json)
+{
+	$test_suite = phoromatic_server::phoromatic_account_suite_path(ACCOUNT_ID, $ticket_row['SuiteToRun']) . 'suite-definition.xml';
+	if(!is_file($test_suite))
+	{
+		return false;
+	}
+
+	$json['phoromatic']['task'] = 'benchmark';
+	$json['phoromatic']['save_identifier'] = $ticket_row['Title'];
+	$json['phoromatic']['test_description'] = $ticket_row['Description'];
+	$json['phoromatic']['trigger_id'] = $ticket_row['ResultIdentifier'];
+	$json['phoromatic']['benchmark_ticket_id'] = $ticket_row['TicketID'];
+	$json['phoromatic']['result_identifier'] = $ticket_row['ResultIdentifier'];
+	$json['phoromatic']['test_suite'] = file_get_contents($test_suite);
 	$json['phoromatic']['settings'] = $phoromatic_account_settings;
 
 	echo json_encode($json);

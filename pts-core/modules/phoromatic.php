@@ -426,14 +426,15 @@ class phoromatic extends pts_module_interface
 						$benchmark_timer = time();
 						self::$is_running_as_phoromatic_node = true;
 						$test_flags = pts_c::auto_mode | pts_c::batch_mode;
-						$suite_identifier = sha1(time() . rand(0, 100));
+						$suite_identifier = sha1(time() . rand(2, 1000));
 						pts_suite_nye_XmlReader::set_temporary_suite($suite_identifier, $json['phoromatic']['test_suite']);
 						self::$p_save_identifier = $json['phoromatic']['trigger_id'];
 						$phoromatic_results_identifier = self::$p_save_identifier;
 						$phoromatic_save_identifier = $json['phoromatic']['save_identifier'];
-						self::$p_schedule_id = $json['phoromatic']['schedule_id'];
+						self::$p_schedule_id = isset($json['phoromatic']['schedule_id']) ? $json['phoromatic']['schedule_id'] : false;
 						self::$p_trigger_id = self::$p_save_identifier;
-						phoromatic::update_system_status('Running Benchmarks For Schedule: ' . $phoromatic_save_identifier);
+						$benchmark_ticket_id = isset($json['phoromatic']['benchmark_ticket_id']) ? $json['phoromatic']['benchmark_ticket_id'] : null;
+						phoromatic::update_system_status('Running Benchmarks For: ' . $phoromatic_save_identifier);
 
 						if(pts_strings::string_bool($json['phoromatic']['settings']['RunInstallCommand']))
 						{
@@ -472,7 +473,7 @@ class phoromatic extends pts_module_interface
 								}
 
 								// Save results?
-								self::$test_run_manager->auto_save_results($phoromatic_save_identifier, $phoromatic_results_identifier, 'A Phoromatic run.');
+								self::$test_run_manager->auto_save_results($phoromatic_save_identifier, $phoromatic_results_identifier, ($json['phoromatic']['test_description'] ? $json['phoromatic']['test_description'] : 'A Phoromatic run.'));
 
 								// Run the actual tests
 								self::$test_run_manager->pre_execution_process();
@@ -484,7 +485,7 @@ class phoromatic extends pts_module_interface
 								// Handle uploading data to server
 								$result_file = new pts_result_file(self::$test_run_manager->get_file_name());
 								$upload_system_logs = pts_strings::string_bool($json['phoromatic']['settings']['UploadSystemLogs']);
-								$server_response = self::upload_test_result($result_file, $upload_system_logs, $json['phoromatic']['schedule_id'], $phoromatic_save_identifier, $json['phoromatic']['trigger_id'], $elapsed_benchmark_time);
+								$server_response = self::upload_test_result($result_file, $upload_system_logs, $json['phoromatic']['schedule_id'], $phoromatic_save_identifier, $json['phoromatic']['trigger_id'], $elapsed_benchmark_time, $benchmark_ticket_id);
 								pts_client::$pts_logger->log('DEBUG RESPONSE MESSAGE: ' . $server_response);
 								if(!pts_strings::string_bool($json['phoromatic']['settings']['ArchiveResultsLocally']))
 								{
@@ -555,7 +556,7 @@ class phoromatic extends pts_module_interface
 
 		pts_client::release_lock(PTS_USER_PATH . 'phoromatic_lock');
 	}
-	private static function upload_test_result(&$result_file, $upload_system_logs = true, $schedule_id = 0, $save_identifier = null, $trigger = null, $elapsed_time = 0)
+	private static function upload_test_result(&$result_file, $upload_system_logs = true, $schedule_id = 0, $save_identifier = null, $trigger = null, $elapsed_time = 0, $benchmark_ticket_id = null)
 	{
 		$system_logs = null;
 		$system_logs_hash = null;
@@ -631,6 +632,7 @@ class phoromatic extends pts_module_interface
 			'r' => 'result_upload',
 			//'ob' => $ob_data['id'],
 			'sched' => $schedule_id,
+			'bid' => $benchmark_ticket_id,
 			'o' => $save_identifier,
 			'ts' => $trigger,
 			'et' => $elapsed_time,

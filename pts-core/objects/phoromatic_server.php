@@ -212,6 +212,10 @@ class phoromatic_server
 				// Change made 8 February
 				self::$db->exec('CREATE TABLE phoromatic_benchmark_tickets (AccountID TEXT, TicketID INTEGER, TicketIssueTime TEXT, Title TEXT, ResultIdentifier TEXT, SuiteToRun TEXT, Description TEXT, State INTEGER DEFAULT 1, LastModifiedBy TEXT, LastModifiedOn TEXT, RunTargetSystems TEXT, RunTargetGroups TEXT, UNIQUE(AccountID, TicketID) ON CONFLICT IGNORE)');
 				self::$db->exec('PRAGMA user_version = 22');
+			case 22:
+				// Change made 8 February
+				self::$db->exec('ALTER TABLE phoromatic_results ADD COLUMN BenchmarkTicketID INTEGER');
+				self::$db->exec('PRAGMA user_version = 23');
 
 		}
 		chmod($db_file, 0600);
@@ -312,6 +316,23 @@ class phoromatic_server
 		}
 
 		return $systems;
+	}
+	public static function check_for_benchmark_ticket_result_match($benchmark_id, $account_id, $system_id, $title)
+	{
+		$stmt = phoromatic_server::$db->prepare('SELECT UploadID FROM phoromatic_results WHERE AccountID = :account_id AND SystemID = :system_id AND (BenchmarkTicketID = :benchmark_id OR Title = :title)');
+		$stmt->bindValue(':account_id', $account_id);
+		$stmt->bindValue(':system_id', $system_id);
+		$stmt->bindValue(':benchmark_id', $benchmark_id);
+		$stmt->bindValue(':title', $title);
+
+		$result = $stmt->execute();
+
+		if($result != false && $result->fetchArray() != false)
+		{
+			return true;
+		}
+
+		return false;
 	}
 	public static function check_for_triggered_result_match($schedule_id, $trigger_id, $account_id, $system_id)
 	{
