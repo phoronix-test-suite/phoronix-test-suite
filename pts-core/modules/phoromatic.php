@@ -446,7 +446,7 @@ class phoromatic extends pts_module_interface
 							if(isset($json['phoromatic']['pre_install_set_context']))
 							{
 								phoromatic::set_user_context($json['phoromatic']['pre_install_set_context'], self::$p_trigger_id, self::$p_schedule_id, 'PRE_INSTALL');
-							{
+							}
 
 							if(pts_strings::string_bool($json['phoromatic']['settings']['ForceInstallTests']))
 							{
