@@ -181,7 +181,7 @@ class phoromatic_benchmark implements pts_webui_interface
 			<p>The test run identifier is the per-system name for the system(s) being benchmarked. The following variables may be used: </p>
 			<p><input type="text" name="benchmark_identifier" value="' . (!$is_new ? $e_schedule['Identifier'] : null) . '" /></p>
 			<h3>Test Suite To Run:</h3>
-			<p><a href="?build_suite">Build a suite</a> to add/select more tests to run or <a href="?local_suites">view local suites</a> for more information on a particular suite.</p>';
+			<p><a href="?build_suite">Build a suite</a> to add/select more tests to run or <a href="?local_suites">view local suites</a> for more information on a particular suite. A test suite is a set of test profiles to run in a pre-defined manner.</p>';
 			$main .= '<p><select name="suite_to_run">';
 			foreach(pts_file_io::glob(phoromatic_server::phoromatic_account_suite_path($_SESSION['AccountID']) . '*/suite-definition.xml') as $xml_path)
 			{
