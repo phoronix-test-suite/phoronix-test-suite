@@ -473,7 +473,7 @@ class phoromatic extends pts_module_interface
 								}
 
 								// Save results?
-								self::$test_run_manager->auto_save_results($phoromatic_save_identifier, $phoromatic_results_identifier, ($json['phoromatic']['test_description'] ? $json['phoromatic']['test_description'] : 'A Phoromatic run.'));
+								self::$test_run_manager->auto_save_results($phoromatic_save_identifier, $phoromatic_results_identifier, (isset($json['phoromatic']['test_description']) ? $json['phoromatic']['test_description'] : 'A Phoromatic run.'));
 
 								// Run the actual tests
 								self::$test_run_manager->pre_execution_process();

@@ -86,7 +86,7 @@ $stmt->bindValue(':account_id', ACCOUNT_ID);
 $stmt->bindValue(':system_id', SYSTEM_ID);
 $stmt->bindValue(':upload_id', $upload_id);
 $stmt->bindValue(':schedule_id', $SCHEDULE_ID);
-$stmt->bindValue(':schedule_id', $BENCHMARK_TICKET_ID);
+$stmt->bindValue(':benchmark_ticket_id', $BENCHMARK_TICKET_ID);
 $stmt->bindValue(':trigger', $TRIGGER_STRING);
 $stmt->bindValue(':upload_time', $upload_time);
 $stmt->bindValue(':title', sqlite_escape_string($result_file->get_title()));
