@@ -23,7 +23,7 @@
 class phoromatic extends pts_module_interface
 {
 	const module_name = 'Phoromatic Client';
-	const module_version = '0.3.0';
+	const module_version = '0.4.0';
 	const module_description = 'The Phoromatic client is used for connecting to a Phoromatic server (Phoromatic.com or a locally run server) to facilitate the automatic running of tests, generally across multiple test nodes in a routine manner. For more details visit http://www.phoromatic.com/. This module is intended to be used with Phoronix Test Suite 5.2+ clients and servers.';
 	const module_author = 'Phoronix Media';
 
@@ -392,6 +392,11 @@ class phoromatic extends pts_module_interface
 					}
 				}
 			}
+			else if(substr($server_response, 0, 1) == '[')
+			{
+				// Likely a notice/warning from server
+				echo PHP_EOL . substr($server_response, 0, strpos($server_response, PHP_EOL)) . PHP_EOL;
+			}
 			else if(substr($server_response, 0, 1) == '{')
 			{
 				$times_failed = 0;
@@ -438,7 +443,10 @@ class phoromatic extends pts_module_interface
 
 						if(pts_strings::string_bool($json['phoromatic']['settings']['RunInstallCommand']))
 						{
-							phoromatic::set_user_context($json['phoromatic']['pre_install_set_context'], self::$p_trigger_id, self::$p_schedule_id, 'PRE_INSTALL');
+							if(isset($json['phoromatic']['pre_install_set_context']))
+							{
+								phoromatic::set_user_context($json['phoromatic']['pre_install_set_context'], self::$p_trigger_id, self::$p_schedule_id, 'PRE_INSTALL');
+							{
 
 							if(pts_strings::string_bool($json['phoromatic']['settings']['ForceInstallTests']))
 							{
@@ -447,7 +455,10 @@ class phoromatic extends pts_module_interface
 
 							pts_client::set_test_flags($test_flags);
 							pts_test_installer::standard_install($suite_identifier);
-							phoromatic::set_user_context($json['phoromatic']['post_install_set_context'], self::$p_trigger_id, self::$p_schedule_id, 'POST_INSTALL');
+							if(isset($json['phoromatic']['post_install_set_context']))
+							{
+								phoromatic::set_user_context($json['phoromatic']['post_install_set_context'], self::$p_trigger_id, self::$p_schedule_id, 'POST_INSTALL');
+							}
 						}
 
 						// Do the actual running
@@ -465,7 +476,11 @@ class phoromatic extends pts_module_interface
 							// Load the tests to run
 							if(self::$test_run_manager->load_tests_to_run($suite_identifier))
 							{
-								phoromatic::set_user_context($json['phoromatic']['pre_run_set_context'], self::$p_trigger_id, self::$p_schedule_id, 'PRE_RUN');
+								if(isset($json['phoromatic']['pre_run_set_context']))
+								{
+									phoromatic::set_user_context($json['phoromatic']['pre_run_set_context'], self::$p_trigger_id, self::$p_schedule_id, 'PRE_RUN');
+								}
+
 								if(isset($json['phoromatic']['settings']['UploadResultsToOpenBenchmarking']) && pts_strings::string_bool($json['phoromatic']['settings']['UploadResultsToOpenBenchmarking']))
 								{
 									self::$test_run_manager->auto_upload_to_openbenchmarking();
@@ -492,7 +507,11 @@ class phoromatic extends pts_module_interface
 									pts_client::remove_saved_result_file(self::$test_run_manager->get_file_name());
 								}
 							}
-							phoromatic::set_user_context($json['phoromatic']['post_install_set_context'], self::$p_trigger_id, self::$p_schedule_id, 'POST_RUN');
+
+							if(isset($json['phoromatic']['post_install_set_context']))
+							{
+								phoromatic::set_user_context($json['phoromatic']['post_install_set_context'], self::$p_trigger_id, self::$p_schedule_id, 'POST_RUN');
+							}
 						}
 						self::$p_schedule_id = null;
 						self::$is_running_as_phoromatic_node = false;
