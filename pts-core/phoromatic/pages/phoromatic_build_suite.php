@@ -112,15 +112,15 @@ class phoromatic_build_suite implements pts_webui_interface
 			<p><input type="text" name="suite_title" /></p>
 			<h3>Description:</h3>
 			<p><textarea name="suite_description" id="suite_description" cols="60" rows="2"></textarea></p>
-			<h3>Add A Test</h3>';
-
+			<h3>Tests In Schedule:</h3>
+			<p><div id="test_details"></div></p>
+			<h3>Add Another Test</h3>';
 			$main .= '<select name="add_to_suite_select_test" id="add_to_suite_select_test" onchange="phoromatic_build_suite_test_details();">';
 			foreach(pts_openbenchmarking::available_tests() as $test)
 			{
 				$main .= '<option value="' . $test . '">' . $test . '</option>';
 			}
 			$main .= '</select>';
-			$main .= '<p><div id="test_details"></div></p>';
 			$main .= '<p align="right"><input name="submit" value="Create Suite" type="submit" onclick="return pts_rmm_validate_suite();" /></p>';
 		}
 
