@@ -83,6 +83,7 @@ class phoromatic_r_add_test_build_suite_details implements pts_webui_interface
 				}
 			}
 		}
+		echo '<hr />';
 	}
 }
 
