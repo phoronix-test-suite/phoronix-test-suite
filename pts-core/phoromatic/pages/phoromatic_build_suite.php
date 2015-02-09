@@ -85,6 +85,7 @@ class phoromatic_build_suite implements pts_webui_interface
 				$suite_version = '1.' . $version_bump . '.0';
 				$suite_id = $suite_writer->clean_save_name_string($_POST['suite_title']) . '-' . $suite_version;
 				$suite_dir = phoromatic_server::phoromatic_account_suite_path($_SESSION['AccountID'], $suite_id);
+				$version_bump++;
 			}
 			while(is_dir($suite_dir));
 			pts_file_io::mkdir($suite_dir);
