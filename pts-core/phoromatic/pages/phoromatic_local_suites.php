@@ -49,7 +49,7 @@ class phoromatic_local_suites implements pts_webui_interface
 
 			$main .= '<h1>' . $test_suite->get_title() . ' [' . $id . ']</h1>';
 			$main .= '<p><strong>' . $test_suite->get_maintainer() . '</strong></p>';
-			$main .= '<p>' . $test_suite->get_description() . '</p>';
+			$main .= '<p><em>' . $test_suite->get_description() . '</em></p>';
 
 			foreach($test_suite->get_contained_test_result_objects() as $tro)
 			{

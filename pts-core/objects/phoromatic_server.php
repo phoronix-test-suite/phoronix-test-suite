@@ -208,6 +208,11 @@ class phoromatic_server
 				// Change made 4 February
 				self::$db->exec('ALTER TABLE phoromatic_account_settings ADD COLUMN PreSeedTestInstalls INTEGER DEFAULT 0');
 				self::$db->exec('PRAGMA user_version = 21');
+			case 21:
+				// Change made 8 February
+				self::$db->exec('CREATE TABLE phoromatic_benchmark_tickets (AccountID TEXT, TicketID INTEGER, TicketIssueTime TEXT, Title TEXT, ResultIdentifier TEXT, SuiteToRun TEXT, Description TEXT, State INTEGER DEFAULT 1, LastModifiedBy TEXT, LastModifiedOn TEXT, RunTargetSystems TEXT, RunTargetGroups TEXT, UNIQUE(AccountID, TicketID) ON CONFLICT IGNORE)');
+				self::$db->exec('PRAGMA user_version = 22');
+
 		}
 		chmod($db_file, 0600);
 	}

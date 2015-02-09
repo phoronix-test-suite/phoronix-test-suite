@@ -101,22 +101,27 @@ class phoromatic_build_suite implements pts_webui_interface
 		}
 		echo phoromatic_webui_header_logged_in();
 		$main = '<h1>Local Suites</h1><p>Find already created local test suites by your account/group via the <a href="/?local_suites">local suites</a> page.</p>';
-		$main .= '<h1>Build Suite</h1><p>A test suite in the realm of the Phoronix Test Suite, OpenBenchmarking.org, and Phoromatic is <strong>a collection of test profiles with predefined settings</strong>. Establishing a test suite makes it easy to run repetitive testing on the same set of test profiles by simply referencing the test suite name.</p>';
-		$main .= '<form action="' . $_SERVER['REQUEST_URI'] . '" name="build_suite" id="build_suite" method="post" onsubmit="return validate_suite();">
-		<h3>Title:</h3>
-		<p><input type="text" name="suite_title" /></p>
-		<h3>Description:</h3>
-		<p><textarea name="suite_description" id="suite_description" cols="60" rows="2"></textarea></p>
-		<h3>Add A Test</h3>';
 
-		$main .= '<select name="add_to_suite_select_test" id="add_to_suite_select_test" onchange="phoromatic_build_suite_test_details();">';
-		foreach(pts_openbenchmarking::available_tests() as $test)
+
+		if(!PHOROMATIC_USER_IS_VIEWER)
 		{
-			$main .= '<option value="' . $test . '">' . $test . '</option>';
+			$main .= '<h1>Build Suite</h1><p>A test suite in the realm of the Phoronix Test Suite, OpenBenchmarking.org, and Phoromatic is <strong>a collection of test profiles with predefined settings</strong>. Establishing a test suite makes it easy to run repetitive testing on the same set of test profiles by simply referencing the test suite name.</p>';
+			$main .= '<form action="' . $_SERVER['REQUEST_URI'] . '" name="build_suite" id="build_suite" method="post" onsubmit="return validate_suite();">
+			<h3>Title:</h3>
+			<p><input type="text" name="suite_title" /></p>
+			<h3>Description:</h3>
+			<p><textarea name="suite_description" id="suite_description" cols="60" rows="2"></textarea></p>
+			<h3>Add A Test</h3>';
+
+			$main .= '<select name="add_to_suite_select_test" id="add_to_suite_select_test" onchange="phoromatic_build_suite_test_details();">';
+			foreach(pts_openbenchmarking::available_tests() as $test)
+			{
+				$main .= '<option value="' . $test . '">' . $test . '</option>';
+			}
+			$main .= '</select>';
+			$main .= '<p><div id="test_details"></div></p>';
+			$main .= '<p align="right"><input name="submit" value="Create Suite" type="submit" onclick="return pts_rmm_validate_suite();" /></p>';
 		}
-		$main .= '</select>';
-		$main .= '<p><div id="test_details"></div></p>';
-		$main .= '<p align="right"><input name="submit" value="Create Suite" type="submit" onclick="return pts_rmm_validate_suite();" /></p>';
 
 		echo phoromatic_webui_main($main, phoromatic_webui_right_panel_logged_in());
 		echo phoromatic_webui_footer();

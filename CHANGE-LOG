@@ -9,6 +9,7 @@ Phoronix Test Suite (Git)
 - phoromatic: Enforce new PTS sign-on whenever the PTS core version changes due to potential interface changes
 - phoromatic: Working build suite page
 - phoromatic: Add support for local suites page
+- phoromatic: Add benchmark page
 
 Phoronix Test Suite 5.6 Milestone 2
 4 February 2015

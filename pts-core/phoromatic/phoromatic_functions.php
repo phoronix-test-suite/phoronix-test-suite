@@ -193,7 +193,7 @@ function phoromatic_webui_header_logged_in()
 		if(phoromatic_account_system_count() > 0)
 			array_push($pages, 'Dashboard');
 
-		array_push($pages, 'Systems', 'Schedules', 'Results');
+		array_push($pages, 'Systems', 'Schedules', 'Benchmark', 'Results');
 
 		if(phoromatic_tracker_page_relevant())
 		{
