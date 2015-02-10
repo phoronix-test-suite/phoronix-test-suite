@@ -263,9 +263,9 @@ class phoromatic_benchmark implements pts_webui_interface
 				</form>';
 		}
 
-		$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_benchmark_tickets WHERE AccountID = :account_id AND State = 1 AND TicketIssueTime > :time_cutoff');
+		$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_benchmark_tickets WHERE AccountID = :account_id AND State = 1 AND TicketIssueTime > :time_cutoff ORDER BY TicketIssueTime DESC LIMIT 30');
 		$stmt->bindValue(':account_id', $_SESSION['AccountID']);
-		$stmt->bindValue(':time_cutoff', (time() - (60 * 60 * 24 * 30)));
+		$stmt->bindValue(':time_cutoff', (time() - (60 * 60 * 24 * 14)));
 		$result = $stmt->execute();
 
 		$right = '<ul><li>Benchmark Tickets</li>';
