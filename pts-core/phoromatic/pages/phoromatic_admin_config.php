@@ -199,6 +199,51 @@ class phoromatic_admin_config implements pts_webui_interface
 		{
 			phoromatic_server::save_setting('show_local_tests_only', $_POST['show_local_tests_only']);
 		}
+		if(isset($_POST['rebuild_results_db']))
+		{
+			foreach(pts_file_io::glob(phoromatic_server::phoromatic_path() . 'accounts/*/results/*/composite.xml') as $composite_xml)
+			{
+				$account_id = basename(dirname(dirname(dirname($composite_xml))));
+				$upload_id = basename(dirname($composite_xml));
+
+				$result_file = new pts_result_file($composite_xml);
+
+				// Validate the XML
+				if($result_file->xml_parser->validate())
+				{
+					$relative_id = 0;
+					foreach($result_file->get_result_objects() as $result_object)
+					{
+						$relative_id++;
+						$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_results_results (AccountID, UploadID, AbstractID, TestProfile, ComparisonHash) VALUES (:account_id, :upload_id, :abstract_id, :test_profile, :comparison_hash)');
+						$stmt->bindValue(':account_id', $account_id);
+						$stmt->bindValue(':upload_id', $upload_id);
+						$stmt->bindValue(':abstract_id', $relative_id);
+						$stmt->bindValue(':test_profile', $result_object->test_profile->get_identifier());
+						$stmt->bindValue(':comparison_hash', $result_object->get_comparison_hash(true, false));
+						$result = $stmt->execute();
+					}
+
+					if($relative_id > 0)
+					{
+						$ids = $result_file->get_system_identifiers();
+						$hw = $result_file->get_system_hardware();
+						$sw = $result_file->get_system_software();
+
+						for($i = 0; $i < count($ids) && $i < count($hw) && $i < count($sw); $i++)
+						{
+							$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_results_systems (AccountID, UploadID, SystemIdentifier, Hardware, Software) VALUES (:account_id, :upload_id, :system_identifier, :hardware, :software)');
+							$stmt->bindValue(':account_id', $account_id);
+							$stmt->bindValue(':upload_id', $upload_id);
+							$stmt->bindValue(':system_identifier', $ids[$i]);
+							$stmt->bindValue(':hardware', $hw[$i]);
+							$stmt->bindValue(':software', $sw[$i]);
+							$result = $stmt->execute();
+						}
+					}
+				}
+			}
+		}
 
 		$main .= '<h1>Phoromatic Server Configuration</h1>';
 
@@ -267,6 +312,13 @@ class phoromatic_admin_config implements pts_webui_interface
 		$main .= '<form action="' . $_SERVER['REQUEST_URI'] . '" name="show_local_tests_only" method="post">';
 		$main .= '<p><strong>Only Advertise Cached Tests:</strong> <select name="show_local_tests_only"><option value="0">False</option><option value="1" ' . (phoromatic_server::read_setting('show_local_tests_only') ? 'selected="selected"' : null) . '>True</option></select></p>';
 		$main .= '<p><input name="submit" value="Update" type="submit" /></p>';
+		$main .= '</form>';
+
+		$main .= '<hr /><h1>Rebuild Results/Systems SQLite Tables</h1>';
+		$main .= '<p>If you somehow damaged some of your SQLite tables, this option will attempt to rebuild the phoromatic_results_results and phoromatic_results_systems tables.</p>';
+		$main .= '<form action="' . $_SERVER['REQUEST_URI'] . '" name="rebuild_results_db" method="post">';
+		$main .= '<p><strong>Force Results Table Rebuild:</strong> <select name="rebuild_results_db"><option value="0">False</option><option value="1" ' . (phoromatic_server::read_setting('rebuild_results_db') ? 'selected="selected"' : null) . '>True</option></select></p>';
+		$main .= '<p><input name="submit" value="Rebuild Results Table" type="submit" /></p>';
 		$main .= '</form>';
 
 		echo phoromatic_webui_header_logged_in();

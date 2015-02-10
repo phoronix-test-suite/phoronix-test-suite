@@ -198,6 +198,8 @@ class phoromatic_welcome implements pts_webui_interface
 				$_SESSION['UserName'] = 'RootAdmin';
 				$_SESSION['AccountID'] = 0;
 				$_SESSION['AdminLevel'] = -40;
+				$_SESSION['CreatedOn'] = null;
+				$_SESSION['CoreVersionOnSignOn'] = PTS_CORE_VERSION;
 				session_write_close();
 				header('Location: /?admin');
 			}
