@@ -655,7 +655,7 @@ class phoromatic extends pts_module_interface
 		{
 			if($times_tried > 0)
 			{
-				sleep(5, 17);
+				sleep(rand(5, 20));
 			}
 
 			$res = phoromatic::upload_to_remote_server(array(
