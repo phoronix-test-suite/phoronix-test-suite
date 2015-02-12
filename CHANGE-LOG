@@ -12,6 +12,7 @@ Phoronix Test Suite (Git)
 - phoromatic: Add benchmark page
 - phoromatic: Add support for viewing issued benchmark tickets
 - phoromatic: Add option to force rebuild of results databases
+- phoromatic: Prepend system ID to result string when running multiple tests without variables
 
 Phoronix Test Suite 5.6 Milestone 2
 4 February 2015

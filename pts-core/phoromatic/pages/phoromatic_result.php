@@ -74,6 +74,7 @@ class phoromatic_result implements pts_webui_interface
 			$schedule_types = array();
 			$trigger_types = array();
 			$upload_times = array();
+			$benchmark_tickets = array();
 			$xml_result_hash = array();
 
 			foreach($upload_ids as $id)
@@ -106,6 +107,7 @@ class phoromatic_result implements pts_webui_interface
 					return false;
 				}
 				$display_rows[$composite_xml] = $row;
+				pts_arrays::unique_push($benchmark_tickets, $row['BenchmarkTicketID']);
 				pts_arrays::unique_push($upload_times, $row['UploadTime']);
 				pts_arrays::unique_push($xml_result_hash, $row['XmlUploadHash']);
 				pts_arrays::unique_push($system_types, $row['SystemID']);
@@ -125,7 +127,11 @@ class phoromatic_result implements pts_webui_interface
 				$result_file_title = phoromatic_system_id_to_name($system_types[0]) . ' Tests';
 			}
 
-			if(empty($schedule_types[0]))
+			if(count($trigger_types) == 1 && $trigger_types[0] != null && $benchmark_tickets[0] != null && count($display_rows) > 1)
+			{
+				$system_name_format = 'TRIGGER_AND_SYSTEM';
+			}
+			else if(empty($schedule_types[0]))
 			{
 				$system_name_format = 'ORIGINAL_DATA';
 			}
