@@ -136,7 +136,7 @@ class make_download_cache implements pts_option_interface
 		}
 		$json_download_cache['phoronix-test-suite']['cached-tests'] = $cached_tests;
 
-		file_put_contents($dc_write_directory . 'pts-download-cache.json', json_encode($json_download_cache, JSON_PRETTY_PRINT));
+		file_put_contents($dc_write_directory . 'pts-download-cache.json', json_encode($json_download_cache, (defined('JSON_PRETTY_PRINT') ? JSON_PRETTY_PRINT : 0)));
 		echo PHP_EOL;
 	}
 }
