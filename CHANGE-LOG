@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 5.6 Milestone 3
+15 February 2015
 
 - phoromatic: Allow triggers to be deleted
 - phoromatic: Rely on caching for determining pre-existing cached test profiles from the web UI
