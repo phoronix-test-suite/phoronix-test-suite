@@ -75,6 +75,13 @@ class phoromatic_admin_data implements pts_webui_interface
 						$stmt->bindValue(':system_id', $PATH[3]);
 						$result = $stmt->execute();
 					}
+					else if($PATH[1] == 'ticket')
+					{
+						$stmt = phoromatic_server::$db->prepare('DELETE FROM phoromatic_benchmark_tickets WHERE AccountID = :account_id AND TicketID = :ticket_id');
+						$stmt->bindValue(':account_id', $PATH[2]);
+						$stmt->bindValue(':ticket_id', $PATH[3]);
+						$result = $stmt->execute();
+					}
 					break;
 			}
 		}
@@ -179,7 +186,7 @@ class phoromatic_admin_data implements pts_webui_interface
 			<div class="pts_phoromatic_info_box_area">
 
 					<ul>
-						<li><h1>Active Systems</h1></li>';
+						<li><h1>Inactive Systems</h1></li>';
 
 					$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, LocalIP, CurrentTask, LastCommunication, EstimatedTimeForTask, TaskPercentComplete, AccountID FROM phoromatic_systems WHERE State < 0 ORDER BY LastCommunication DESC');
 					$result = $stmt->execute();
@@ -202,6 +209,17 @@ class phoromatic_admin_data implements pts_webui_interface
 
 
 			$main .= '</ul></div>';
+
+		$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_benchmark_tickets ORDER BY TicketIssueTime DESC');
+		$result = $stmt->execute();
+
+		$main .= '<hr /><h1>Benchmark Tickets</h1>
+			<div class="pts_phoromatic_info_box_area"><ul><li><h1>Tickets</h1></li>';
+		while($result && $row = $result->fetchArray())
+		{
+				$main .= '<a href="#"><li>' . $row['Title'] . '<br /><table><tr><td><a onclick="return confirm(\'Permanently remove this system?\');" href="/?admin_data/delete/ticket/' . $row['AccountID'] . '/' . $row['TicketID'] . '">Permanently Remove</a></td></tr></table></li></a>';
+		}
+		$main .= '</ul></div>';
 
 		echo phoromatic_webui_header_logged_in();
 		echo phoromatic_webui_main($main, phoromatic_webui_right_panel_logged_in());
