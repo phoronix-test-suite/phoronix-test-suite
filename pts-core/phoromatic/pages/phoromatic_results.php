@@ -102,7 +102,7 @@ class phoromatic_results implements pts_webui_interface
 
 				$main .= '</select> &nbsp; <input type="submit" value="Update" /></div></form>';
 
-				$main .= '<h1>Account Test Test Results</h1>';
+				$main .= '<h1>Account Test Results</h1>';
 				$main .= '<div class="pts_phoromatic_info_box_area">';
 				$search_for = (!isset($_POST['search']) || empty($_POST['search']) ? null : 'AND (Title LIKE :search OR Description LIKE :search)');
 				$main .= '<div style="margin: 0 5%;"><ul style="max-height: 100%;"><li><h1>Recent Test Results</h1></li>';
@@ -122,8 +122,6 @@ class phoromatic_results implements pts_webui_interface
 						break;
 					}
 					$main .= '<a href="?result/' . $test_result_row['PPRID'] . '"><li id="result_select_' . $test_result_row['PPRID'] . '">' . $test_result_row['Title'] . '<br /><table><tr><td>' . phoromatic_system_id_to_name($test_result_row['SystemID']) . '</td><td>' . phoromatic_user_friendly_timedate($test_result_row['UploadTime']) .  '</td><td>' . $test_result_row['TimesViewed'] . ' Times Viewed</tr>
-
-
 <tr class="tb_compare_bar"><td><a id="result_compare_link_' . $test_result_row['PPRID'] . '" onclick="javascript:phoromatic_add_to_result_comparison(\'' . $test_result_row['PPRID'] . '\'); return false;">Add To Comparison</a> &nbsp; &nbsp; <a id="result_run_compare_link_' . $test_result_row['PPRID'] . '" onclick="javascript:phoromatic_generate_comparison(); return false;" style="visibility: hidden;">Compare Results</a> &nbsp; &nbsp; <a id="result_delete_link_' . $test_result_row['PPRID'] . '" onclick="javascript:phoromatic_delete_result(\'' . $test_result_row['PPRID'] . '\'); return false;">Delete Result</a></td></tr>
 
 </table></li></a>';

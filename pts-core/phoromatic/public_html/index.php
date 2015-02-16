@@ -58,7 +58,7 @@ else
 
 if(isset($_SESSION['AdminLevel']))
 {
-	if($_SESSION['AdminLevel'] == -40 && stripos($PAGE_REQUEST, 'admin') === false && $PAGE_REQUEST != 'logout')
+	if($_SESSION['AdminLevel'] == -40 && (stripos($PAGE_REQUEST, 'admin') === false && stripos($PAGE_REQUEST, 'result') === false) && $PAGE_REQUEST != 'logout')
 	{
 		$PAGE_REQUEST = 'admin';
 	}
