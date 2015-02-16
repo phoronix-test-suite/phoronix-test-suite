@@ -48,8 +48,17 @@ class phoromatic_admin_data implements pts_webui_interface
 				case 'delete':
 					if($PATH[1] == 'result')
 					{
-						$stmt = phoromatic_server::$db->prepare('DELETE FROM phoromatic_results WHERE PPRID = :pprid');
-						$stmt->bindValue(':pprid', $PATH[2]);
+						$stmt = phoromatic_server::$db->prepare('DELETE FROM phoromatic_results WHERE AccountID = :account_id AND UploadID = :upload_id');
+						$stmt->bindValue(':account_id', $PATH[2]);
+						$stmt->bindValue(':upload_id', $PATH[3]);
+						$result = $stmt->execute();
+						$stmt = phoromatic_server::$db->prepare('DELETE FROM phoromatic_results_results WHERE AccountID = :account_id AND UploadID = :upload_id');
+						$stmt->bindValue(':account_id', $PATH[2]);
+						$stmt->bindValue(':upload_id', $PATH[3]);
+						$result = $stmt->execute();
+						$stmt = phoromatic_server::$db->prepare('DELETE FROM phoromatic_results_systems WHERE AccountID = :account_id AND UploadID = :upload_id');
+						$stmt->bindValue(':account_id', $PATH[2]);
+						$stmt->bindValue(':upload_id', $PATH[3]);
 						$result = $stmt->execute();
 					}
 					else if($PATH[1] == 'schedule')
@@ -74,12 +83,12 @@ class phoromatic_admin_data implements pts_webui_interface
 		$main .= '<h1>Test Results</h1>';
 		$main .= '<div class="pts_phoromatic_info_box_area">';
 		$main .= '<div style="height: 500px;"><ul style="max-height: 100%;"><li><h1>Recent Test Results</h1></li>';
-		$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, ScheduleID, PPRID, UploadTime, TimesViewed, AccountID FROM phoromatic_results ORDER BY UploadTime DESC LIMIT 100');
+		$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, ScheduleID, PPRID, UploadTime, TimesViewed, AccountID, UploadID FROM phoromatic_results ORDER BY UploadTime DESC');
 		$test_result_result = $stmt->execute();
 		$results = 0;
 		while($test_result_row = $test_result_result->fetchArray())
 		{
-			$main .= '<a href="?result/' . $test_result_row['PPRID'] . '"><li id="result_select_' . $test_result_row['PPRID'] . '">' . $test_result_row['Title'] . '<br /><table><tr><td>' . phoromatic_system_id_to_name($test_result_row['SystemID'], $test_result_row['AccountID']) . '</td><td>' . phoromatic_account_id_to_group_name($test_result_row['AccountID']) . '</td><td>' . phoromatic_user_friendly_timedate($test_result_row['UploadTime']) .  '</td><td><a onclick="return confirm(\'Permanently remove this test?\');" href="/?admin_data/delete/result/' . $test_result_row['PPRID'] . '">Permanently Remove</a></td></tr>
+			$main .= '<a href="?result/' . $test_result_row['PPRID'] . '"><li id="result_select_' . $test_result_row['PPRID'] . '">' . $test_result_row['Title'] . '<br /><table><tr><td>' . phoromatic_system_id_to_name($test_result_row['SystemID'], $test_result_row['AccountID']) . '</td><td>' . phoromatic_account_id_to_group_name($test_result_row['AccountID']) . '</td><td>' . phoromatic_user_friendly_timedate($test_result_row['UploadTime']) .  '</td><td><a onclick="return confirm(\'Permanently remove this test?\');" href="/?admin_data/delete/result/' . $test_result_row['AccountID'] . '/' . $test_result_row['UploadID'] . '">Permanently Remove</a></td></tr>
 </table></li></a>';
 			$results++;
 
