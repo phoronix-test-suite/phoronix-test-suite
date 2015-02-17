@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 - phoromatic: Add "admin data" page to let the rootadmin permanently delete schedules/results/systems
 - phoromatic: Allow for system identifier variable in benchmark tickets of .SYSTEM
 - phoromatic: Allow for system identifier variable in benchmark tickets of .GROUP
+- phoromatic: Allow tickets to be removed from the individual benchmark page
 
 Phoronix Test Suite 5.6 Milestone 3
 15 February 2015
