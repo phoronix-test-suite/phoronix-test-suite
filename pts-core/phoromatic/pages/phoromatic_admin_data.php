@@ -60,6 +60,12 @@ class phoromatic_admin_data implements pts_webui_interface
 						$stmt->bindValue(':account_id', $PATH[2]);
 						$stmt->bindValue(':upload_id', $PATH[3]);
 						$result = $stmt->execute();
+
+						$result_dir = phoromatic_server::phoromatic_account_result_path($PATH[2], $PATH[3]);
+						if(is_dir($result_dir))
+						{
+							pts_file_io::delete($result_dir, null, true);
+						}
 					}
 					else if($PATH[1] == 'schedule')
 					{
