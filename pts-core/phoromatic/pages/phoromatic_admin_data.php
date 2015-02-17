@@ -88,6 +88,14 @@ class phoromatic_admin_data implements pts_webui_interface
 						$stmt->bindValue(':ticket_id', $PATH[3]);
 						$result = $stmt->execute();
 					}
+					else if($PATH[1] == 'trigger')
+					{
+						$stmt = phoromatic_server::$db->prepare('DELETE FROM phoromatic_schedules_triggers WHERE AccountID = :account_id AND ScheduleID = :schedule_id AND Trigger = :trigger');
+						$stmt->bindValue(':account_id', $PATH[2]);
+						$stmt->bindValue(':schedule_id', $PATH[3]);
+						$stmt->bindValue(':trigger', $PATH[4]);
+						$result = $stmt->execute(); var_dump($result);
+					}
 					break;
 			}
 		}
@@ -131,7 +139,7 @@ class phoromatic_admin_data implements pts_webui_interface
 						do
 						{
 
-							$main .= '<a href="#"><li>' . $row['Title'] . '<br /><table><tr><td>' . phoromatic_account_id_to_group_name($test_result_row['AccountID']) . '</td><td>' . pts_strings::plural_handler(count(phoromatic_server::systems_associated_with_schedule($row['AccountID'], $row['ScheduleID'])), 'System') . '</td><td><strong>' . phoromatic_schedule_activeon_string($row['ActiveOn'], $row['RunAt']) . '</strong></td><td><a onclick="return confirm(\'Permanently remove this schedule?\');" href="/?admin_data/delete/schedule/' . $row['AccountID'] . '/' . $row['ScheduleID'] . '">Permanently Remove</a></td></tr></table></li></a>';
+							$main .= '<a href="#"><li>' . $row['Title'] . '<br /><table><tr><td>' . phoromatic_account_id_to_group_name($row['AccountID']) . '</td><td>' . pts_strings::plural_handler(count(phoromatic_server::systems_associated_with_schedule($row['AccountID'], $row['ScheduleID'])), 'System') . '</td><td><strong>' . phoromatic_schedule_activeon_string($row['ActiveOn'], $row['RunAt']) . '</strong></td><td><a onclick="return confirm(\'Permanently remove this schedule?\');" href="/?admin_data/delete/schedule/' . $row['AccountID'] . '/' . $row['ScheduleID'] . '">Permanently Remove</a></td></tr></table></li></a>';
 						}
 						while($row = $result->fetchArray());
 					}
@@ -154,7 +162,30 @@ class phoromatic_admin_data implements pts_webui_interface
 						do
 						{
 
-							$main .= '<a href="#"><li>' . $row['Title'] . '<br /><table><tr><td>' . phoromatic_account_id_to_group_name($test_result_row['AccountID']) . '</td><td>' . pts_strings::plural_handler(count(phoromatic_server::systems_associated_with_schedule($row['AccountID'], $row['ScheduleID'])), 'System') . '</td><td><strong>' . phoromatic_schedule_activeon_string($row['ActiveOn'], $row['RunAt']) . '</strong></td><td><a onclick="return confirm(\'Permanently remove this schedule?\');" href="/?admin_data/delete/schedule/' . $row['AccountID'] . '/' . $row['ScheduleID'] . '">Permanently Remove</a></td></tr></table></li></a>';
+							$main .= '<a href="#"><li>' . $row['Title'] . '<br /><table><tr><td>' . phoromatic_account_id_to_group_name($row['AccountID']) . '</td><td>' . pts_strings::plural_handler(count(phoromatic_server::systems_associated_with_schedule($row['AccountID'], $row['ScheduleID'])), 'System') . '</td><td><strong>' . phoromatic_schedule_activeon_string($row['ActiveOn'], $row['RunAt']) . '</strong></td><td><a onclick="return confirm(\'Permanently remove this schedule?\');" href="/?admin_data/delete/schedule/' . $row['AccountID'] . '/' . $row['ScheduleID'] . '">Permanently Remove</a></td></tr></table></li></a>';
+						}
+						while($row = $result->fetchArray());
+					}
+		$main .= '</ul></div>';
+
+		$main .= '<hr /><h2>Schedule Triggers</h2>';
+		$main .= '<div class="pts_phoromatic_info_box_area">
+				<ul>
+					<li><h1>Triggers</h1></li>';
+					$stmt = phoromatic_server::$db->prepare('SELECT Trigger, TriggeredOn, AccountID, ScheduleID FROM phoromatic_schedules_triggers ORDER BY TriggeredOn DESC');
+					$result = $stmt->execute();
+					$row = $result->fetchArray();
+
+					if($row == false)
+					{
+						$main .= '<li class="light" style="text-align: center;">No Triggers Found</li>';
+					}
+					else
+					{
+						do
+						{
+
+							$main .= '<a href="#"><li>' . $row['Trigger'] . '<br /><table><tr><td>' . $row['TriggeredOn'] . '</td><td>' . phoromatic_account_id_to_group_name($row['AccountID']) . '</td><td><a onclick="return confirm(\'Permanently remove this trigger?\');" href="/?admin_data/delete/trigger/' . $row['AccountID'] . '/' . $row['ScheduleID'] . '/' . $row['Trigger'] . '">Permanently Remove</a></td></tr></table></li></a>';
 						}
 						while($row = $result->fetchArray());
 					}
