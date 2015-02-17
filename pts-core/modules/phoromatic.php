@@ -355,7 +355,7 @@ class phoromatic extends pts_module_interface
 		}
 		pts_client::$pts_logger->log(pts_title(true) . ' starting Phoromatic client');
 
-		if(phodevi::system_uptime() < 300)
+		if(phodevi::system_uptime() < 60)
 		{
 			pts_client::$pts_logger->log('Sleeping for 60 seconds as system freshly started');
 			sleep(60);
