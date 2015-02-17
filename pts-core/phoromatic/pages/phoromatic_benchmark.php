@@ -178,7 +178,7 @@ class phoromatic_benchmark implements pts_webui_interface
 			<p>The title is the name of the result file for this test run.</p>
 			<p><input type="text" name="benchmark_title" value="' . (!$is_new ? $e_schedule['Title'] : null) . '" /></p>
 			<h3>Test Run Identifier:</h3>
-			<p>The test run identifier is the per-system name for the system(s) being benchmarked. The following variables may be used: </p>
+			<p>The test run identifier is the per-system name for the system(s) being benchmarked. The following variables may be used: <strong>.SYSTEM</strong>, </p>
 			<p><input type="text" name="benchmark_identifier" value="' . (!$is_new ? $e_schedule['Identifier'] : null) . '" /></p>
 			<h3>Test Suite To Run:</h3>
 			<p><a href="?build_suite">Build a suite</a> to add/select more tests to run or <a href="?local_suites">view local suites</a> for more information on a particular suite. A test suite is a set of test profiles to run in a pre-defined manner.</p>';

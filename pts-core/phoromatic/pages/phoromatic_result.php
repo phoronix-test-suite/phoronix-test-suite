@@ -189,6 +189,18 @@ class phoromatic_result implements pts_webui_interface
 						$system_name = phoromatic_system_id_to_name($row['SystemID']) . ' - ' . phoromatic_schedule_id_to_name($row['ScheduleID']) . ' - ' . $row['Trigger'];
 				}
 
+				if($system_name == null)
+				{
+					$rf = new pts_result_file($composite_xml);
+					$identifiers = $rf->get_system_identifiers();
+					if(count($identifiers) == 1)
+					{
+						$system_name = $identifiers[0];
+					}
+				}
+
+				$system_name = str_replace('.SYSTEM', phoromatic_system_id_to_name($row['SystemID']), $system_name);
+
 
 				array_push($result_file, new pts_result_merge_select($composite_xml, null, $system_name));
 			}
