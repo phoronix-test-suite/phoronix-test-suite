@@ -200,6 +200,7 @@ class phoromatic_result implements pts_webui_interface
 				}
 
 				$system_name = str_replace('.SYSTEM', phoromatic_system_id_to_name($row['SystemID']), $system_name);
+				$system_name = str_replace('.GROUP', phoromatic_account_id_to_group_name($row['AccountID']), $system_name);
 
 
 				array_push($result_file, new pts_result_merge_select($composite_xml, null, $system_name));
