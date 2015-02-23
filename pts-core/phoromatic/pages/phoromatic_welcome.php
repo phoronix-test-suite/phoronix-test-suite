@@ -42,133 +42,21 @@ class phoromatic_welcome implements pts_webui_interface
 
 		if($account_creation_enabled && isset($_POST['register_username']) && isset($_POST['register_password']) && isset($_POST['register_password_confirm']) && isset($_POST['register_email']))
 		{
-			// REGISTER NEW USER
-			if(strlen($_POST['register_username']) < 4 || strpos($_POST['register_username'], ' ') !== false)
+			$new_account = create_new_phoromatic_account($_POST['register_username'], $_POST['register_password'], $_POST['register_password_confirm'], $_POST['register_email'], (isset($_POST['seed_accountid']) ? $_POST['seed_accountid'] : null));
+
+			if($new_account)
 			{
-				phoromatic_error_page('Oops!', 'Please go back and ensure the supplied username is at least four characters long and contains no spaces.');
-				return false;
+				echo phoromatic_webui_header(array('Account Created'), '');
+				$box = '<h1>Account Created</h1>
+				<p>Your account has been created. You may now log-in to begin utilizing the Phoronix Test Suite\'s Phoromatic.</p>
+				<form name="login_form" id="login_form" action="?login" method="post" onsubmit="return phoromatic_login(this);">
+				<p><div style="width: 200px; font-weight: bold; float: left;">User:</div> <input type="text" name="username" /></p>
+				<p><div style="width: 200px; font-weight: bold; float: left;">Password:</div> <input type="password" name="password" /></p>
+				<p><div style="width: 200px; font-weight: bold; float: left;">&nbsp;</div> <input type="submit" value="Submit" /></p>
+				</form>';
+				echo phoromatic_webui_box($box);
+				echo phoromatic_webui_footer();
 			}
-			if(in_array(strtolower($_POST['register_username']), array('admin', 'administrator', 'rootadmin')))
-			{
-				phoromatic_error_page('Oops!', $_POST['register_username'] . ' is a reserved and common username that may be used for other purposes, please make a different selection.');
-				return false;
-			}
-			if(strlen($_POST['register_password']) < 6)
-			{
-				phoromatic_error_page('Oops!', 'Please go back and ensure the supplied password is at least six characters long.');
-				return false;
-			}
-			if($_POST['register_password'] != $_POST['register_password_confirm'])
-			{
-				phoromatic_error_page('Oops!', 'Please go back and ensure the supplied password matches the password confirmation.');
-				return false;
-			}
-			if($_POST['register_email'] == null || filter_var($_POST['register_email'], FILTER_VALIDATE_EMAIL) == false)
-			{
-				phoromatic_error_page('Oops!', 'Please enter a valid email address.');
-				return false;
-			}
-
-			$valid_user_name_chars = '1234567890-_.abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-			for($i = 0; $i < count($_POST['register_username']); $i++)
-			{
-				if(strpos($valid_user_name_chars, substr($_POST['register_username'], $i, 1)) === false)
-				{
-					phoromatic_error_page('Oops!', 'Please go back and ensure a valid user-name. The character <em>' . substr($_POST['register_username'], $i, 1) . '</em> is not allowed.');
-					return false;
-				}
-			}
-
-			$matching_users = phoromatic_server::$db->querySingle('SELECT UserName FROM phoromatic_users WHERE UserName = \'' . SQLite3::escapeString($_POST['register_username']) . '\'');
-			if(!empty($matching_users))
-			{
-				phoromatic_error_page('Oops!', 'The user-name is already taken.');
-				return false;
-			}
-
-			if(phoromatic_server::read_setting('add_new_users_to_account') != null)
-			{
-				$account_id = phoromatic_server::read_setting('add_new_users_to_account');
-				$is_new_account = false;
-			}
-			else
-			{
-				$id_tries = 0;
-				do
-				{
-					if($id_tries == 0 && isset($_POST['seed_accountid']) && isset($_POST['seed_accountid'][5]))
-					{
-						$account_id = substr($_POST['seed_accountid'], 0, 6);
-					}
-					else
-					{
-						$account_id = pts_strings::random_characters(6, true);
-					}
-
-					$matching_accounts = phoromatic_server::$db->querySingle('SELECT AccountID FROM phoromatic_accounts WHERE AccountID = \'' . $account_id . '\'');
-					$id_tries++;
-				}
-				while(!empty($matching_accounts));
-				$is_new_account = true;
-			}
-
-			$user_id = pts_strings::random_characters(4, true);
-
-			if($is_new_account)
-			{
-				pts_logger::add_to_log($_SERVER['REMOTE_ADDR'] . ' created a new account: ' . $user_id . ' - ' . $account_id);
-				$account_salt = pts_strings::random_characters(12, true);
-
-				$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_accounts (AccountID, ValidateID, CreatedOn, Salt) VALUES (:account_id, :validate_id, :current_time, :salt)');
-				$stmt->bindValue(':account_id', $account_id);
-				$stmt->bindValue(':validate_id', pts_strings::random_characters(4, true));
-				$stmt->bindValue(':salt', $account_salt);
-				$stmt->bindValue(':current_time', phoromatic_server::current_time());
-				$result = $stmt->execute();
-
-				$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_account_settings (AccountID) VALUES (:account_id)');
-				$stmt->bindValue(':account_id', $account_id);
-				$result = $stmt->execute();
-
-				$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_user_settings (UserID, AccountID) VALUES (:user_id, :account_id)');
-				$stmt->bindValue(':user_id', $user_id);
-				$stmt->bindValue(':account_id', $account_id);
-				$result = $stmt->execute();
-			}
-			else
-			{
-				pts_logger::add_to_log($_SERVER['REMOTE_ADDR'] . ' being added to an account: ' . $user_id . ' - ' . $account_id);
-				$account_salt = phoromatic_server::$db->querySingle('SELECT Salt FROM phoromatic_accounts WHERE AccountID = \'' . $account_id . '\'');
-			}
-
-			$salted_password = hash('sha256', $account_salt . $_POST['register_password']);
-
-			$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_users (UserID, AccountID, UserName, Email, Password, CreatedOn, LastIP, AdminLevel) VALUES (:user_id, :account_id, :user_name, :email, :password, :current_time, :last_ip, :admin_level)');
-			$stmt->bindValue(':user_id', $user_id);
-			$stmt->bindValue(':account_id', $account_id);
-			$stmt->bindValue(':user_name', $_POST['register_username']);
-			$stmt->bindValue(':email', $_POST['register_email']);
-			$stmt->bindValue(':password', $salted_password);
-			$stmt->bindValue(':last_ip', $_SERVER['REMOTE_ADDR']);
-			$stmt->bindValue(':current_time', phoromatic_server::current_time());
-			$stmt->bindValue(':admin_level', ($is_new_account ? 1 : 10));
-			$result = $stmt->execute();
-
-			pts_file_io::mkdir(phoromatic_server::phoromatic_account_path($account_id));
-
-			phoromatic_server::send_email($_POST['register_email'], 'Phoromatic Account Registration', 'no-reply@phoromatic.com', '<p><strong>' . $_POST['register_username'] . '</strong>:</p><p>Your Phoromatic account has been created and is now active.</p>');
-
-
-			echo phoromatic_webui_header(array('Account Created'), '');
-			$box = '<h1>Account Created</h1>
-			<p>Your account has been created. You may now log-in to begin utilizing the Phoronix Test Suite\'s Phoromatic.</p>
-			<form name="login_form" id="login_form" action="?login" method="post" onsubmit="return phoromatic_login(this);">
-			<p><div style="width: 200px; font-weight: bold; float: left;">User:</div> <input type="text" name="username" /></p>
-			<p><div style="width: 200px; font-weight: bold; float: left;">Password:</div> <input type="password" name="password" /></p>
-			<p><div style="width: 200px; font-weight: bold; float: left;">&nbsp;</div> <input type="submit" value="Submit" /></p>
-			</form>';
-			echo phoromatic_webui_box($box);
-			echo phoromatic_webui_footer();
 		}
 		else if(isset($_POST['username']) && isset($_POST['password']) && strtolower($_POST['username']) == 'rootadmin')
 		{
