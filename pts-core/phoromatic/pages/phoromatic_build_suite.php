@@ -62,14 +62,37 @@ class phoromatic_build_suite implements pts_webui_interface
 				{
 					if(strpos($i, $test_prefix) !== false && substr($i, -9) != '_selected')
 					{
-						array_push($args, $v);
-						array_push($args_name, $_POST[$i . '_selected']);
+						if(strpos($v, '||') !== false)
+						{
+							$opts = explode('||', $v);
+							$a = array();
+							$d = array();
+							foreach($opts as $opt)
+							{
+								$t = explode('::', $opt);
+								array_push($a, $t[1]);
+								array_push($d, $t[0]);
+							}
+							array_push($args, $a);
+							array_push($args_name, $d);
+						}
+						else
+						{
+							array_push($args, array($v));
+							array_push($args_name, array($_POST[$i . '_selected']));
+						}
 					}
 				}
 
-				$args_name = implode(' - ', $args_name);
-				$args = implode(' ', $args);
-				array_push($tests, array('test' => $test_identifier, 'description' => $args_name, 'args' => $args));
+				$test_args = array();
+				$test_args_description = array();
+				pts_test_run_options::compute_all_combinations($test_args, null, $args, 0);
+				pts_test_run_options::compute_all_combinations($test_args_description, null, $args_name, 0, ' - ');
+
+				foreach(array_keys($test_args) as $i)
+				{
+					array_push($tests, array('test' => $test_identifier, 'description' => $test_args_description[$i], 'args' => $test_args[$i]));
+				}
 			}
 
 			if(count($tests) < 1)

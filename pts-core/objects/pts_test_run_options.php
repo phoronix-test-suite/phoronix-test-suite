@@ -192,7 +192,7 @@ class pts_test_run_options
 
 		return array($test_args, $test_args_description);
 	}
-	protected static function compute_all_combinations(&$return_arr, $current_string, $options, $counter, $delimiter = ' ')
+	public static function compute_all_combinations(&$return_arr, $current_string, $options, $counter, $delimiter = ' ')
 	{
 		// In batch mode, find all possible combinations for test options
 		if(count($options) <= $counter)

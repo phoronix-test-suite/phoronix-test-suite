@@ -74,9 +74,16 @@ class phoromatic_r_add_test_build_suite_details implements pts_webui_interface
 					echo '<input name="' . $test_prefix . $o->get_identifier() . '_selected" id="' . $test_prefix . $o->get_identifier() . '_selected" type="hidden" value="' . $o->get_name() . ': ' . $o->get_option_name(0) . '" />';
 					echo '<p><select name="' . $test_prefix . $o->get_identifier() . '" id="' . $test_prefix . $o->get_identifier() . '" onChange="phoromatic_test_select_update_selected_name(this);">';
 
+					$opts = array();
 					for($j = 0; $j < $option_count; $j++)
 					{
-						echo '<option value="' . $o->format_option_value_from_input($o->get_option_value($j)) . '">' . $o->get_option_name($j) . '</option>';
+						$v = $o->format_option_value_from_input($o->get_option_value($j));
+						echo '<option value="' . $v . '">' . $o->get_option_name($j) . '</option>';
+						array_push($opts, $o->get_name() . ': ' . $o->get_option_name($j) . '::' . $v);
+					}
+					if($j > 1)
+					{
+						echo '<option value="' . implode('||', $opts) . '">Test All Options</option>';
 					}
 
 					echo '</select></p>';
