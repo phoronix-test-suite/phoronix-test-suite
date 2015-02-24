@@ -216,6 +216,10 @@ class phoromatic_server
 				// Change made 8 February
 				self::$db->exec('ALTER TABLE phoromatic_results ADD COLUMN BenchmarkTicketID INTEGER');
 				self::$db->exec('PRAGMA user_version = 23');
+			case 23:
+				// Change made 24 February
+				self::$db->exec('ALTER TABLE phoromatic_systems ADD COLUMN SystemVariables TEXT');
+				self::$db->exec('PRAGMA user_version = 24');
 
 		}
 		chmod($db_file, 0600);
@@ -266,6 +270,15 @@ class phoromatic_server
 		}
 
 		return $system_names[$system_id];
+	}
+	public static function system_id_variables($system_id, $aid = false)
+	{
+		$stmt = phoromatic_server::$db->prepare('SELECT SystemVariables FROM phoromatic_systems WHERE AccountID = :account_id AND SystemID = :system_id');
+		$stmt->bindValue(':account_id', ($aid ? $aid : $_SESSION['AccountID']));
+		$stmt->bindValue(':system_id', $system_id);
+		$result = $stmt->execute();
+		$row = $result->fetchArray();
+		return $row['SystemVariables'];
 	}
 	public static function schedule_id_to_name($schedule_id, $aid = false)
 	{

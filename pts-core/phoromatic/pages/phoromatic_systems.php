@@ -58,6 +58,34 @@ class phoromatic_systems implements pts_webui_interface
 			$stmt->bindValue(':maintenance_mode', $_POST['maintenance_mode']);
 			$stmt->execute();
 		}
+		if(!PHOROMATIC_USER_IS_VIEWER && !empty($PATH[0]) && isset($_POST['system_var_names'])&& isset($_POST['system_var_values']))
+		{
+			$vars = array();
+			foreach($_POST['system_var_names'] as $i => $name)
+			{
+				if(isset($_POST['system_var_values'][$i]))
+				{
+					$name = pts_strings::keep_in_string(strtoupper($name), pts_strings::CHAR_LETTER | pts_strings::CHAR_NUMERIC | pts_strings::CHAR_UNDERSCORE);
+					$val = pts_strings::keep_in_string($_POST['system_var_values'][$i], pts_strings::CHAR_LETTER | pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DASH | pts_strings::CHAR_UNDERSCORE | pts_strings::CHAR_COMMA | pts_strings::CHAR_SLASH | pts_strings::CHAR_SPACE | pts_strings::CHAR_DECIMAL | pts_strings::CHAR_PLUS | pts_strings::CHAR_EQUAL);
+
+					if($name != null)
+					{
+						$vars[$name] = $val;
+					}
+				}
+			}
+
+			$var_string = null;
+			foreach($vars as $name => $val)
+			{
+				$var_string .= $name . '=' . $val . ';';
+			}
+			$stmt = phoromatic_server::$db->prepare('UPDATE phoromatic_systems SET SystemVariables = :system_variables WHERE AccountID = :account_id AND SystemID = :system_id');
+			$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+			$stmt->bindValue(':system_id', $PATH[0]);
+			$stmt->bindValue(':system_variables', $var_string);
+			$stmt->execute();
+		}
 
 		if(!empty($PATH[0]))
 		{
@@ -128,6 +156,30 @@ class phoromatic_systems implements pts_webui_interface
 
 					$main .= '<p><form action="' . $_SERVER['REQUEST_URI'] . '" name="update_groups" method="post"><input type="hidden" name="maintenance_mode" value="' . $mm_val . '" /><input type="submit" value="' . $mm_str . '" onclick="' . $mm_onclick . '" style="float: left; margin: 0 20px 5px 0;" /></form> Putting the system into maintenance mode will power up the system (if supported and applicable) and cause the Phoronix Test Suite Phoromatic client to idle and block all testing until the mode has been disabled. If a test is already running on the system, the maintenance mode will not be entered until after the testing has completed. The maintenance mode can be used if wishing to update the system software or carry out other tasks without interfering with the Phoromatic client process. Once disabled, the Phoronix Test Suite will continue to function as normal.</p>';
 				}
+
+				$main .= '<hr /><h2>System Variables</h2><p>System variables are a new feature of Phoronix Test Suite 5.6 to allow for providing per-system information in an easy-to-use manner for other parts of the Phoromatic system. Initially these named variables can be used for the results identifier when <a href="/?benchmark">creating a benchmark ticket</a> and in the future the system variables may be used elsewhere. Examples of system variables could include providing a <em>.SERIAL</em> variable to acknowledge the system\'s serial number that may not be presented elsewhere by the Phoronix Test Suite, <em>.ADMIN</em> for the system\'s local administrator, etc. Variable names can only be alpha-numeric strings while their values are also alpha-numeric strings but with spaces allowed. System variables are always prefixed by a period.</p>';
+
+				$system_variables = explode(';', $row['SystemVariables']);
+
+				$main .= '<form action="' . $_SERVER['REQUEST_URI'] . '" name="update_system_variables" method="post">';
+				$main .= '<table width="80%"><tr><th>Variable Name</th><th>Value</th></tr>';
+				foreach($system_variables as $i => $v_string)
+				{
+					$var = explode('=', $v_string);
+					if(count($var) == 2)
+					{
+						$main .= '<tr id="system_var_' . $i . '">';
+						$main .= '<td><span style="font-weight: 800; font-size: 16px;">.</span><input name="system_var_names[]" value="' . $var[0]. '" readonly /></td>';
+						$main .= '<td><input name="system_var_values[]" value="' . $var[1]. '" readonly /></td>';
+						$main .= '</tr>';
+					}
+				}
+				$main .= '<tr id="system_var_' . ($i + 1) . '">';
+				$main .= '<td><span style="font-weight: 800; font-size: 16px;">.</span><input name="system_var_names[]" /></td>';
+				$main .= '<td><input name="system_var_values[]" /></td>';
+				$main .= '</tr>';
+				$main .= '</table>';
+				$main .= '<p><input name="submit" value="Update System Variables" type="submit" /></p></form>';
 
 				$main .= '<hr /><h2>System Components</h2><div style="float: left; width: 50%;">';
 				$components = pts_result_file_analyzer::system_component_string_to_array($row['Hardware']);

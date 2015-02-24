@@ -9,6 +9,7 @@ Phoronix Test Suite (Git)
 - phoromatic: Allow tickets to be removed from the individual benchmark page
 - phoromatic: Allow creating new group accounts from the rootadmin page
 - phoromatic: Add support for repeating tickets
+- phoromatic: Add basic support for system variables
 
 Phoronix Test Suite 5.6 Milestone 3
 15 February 2015

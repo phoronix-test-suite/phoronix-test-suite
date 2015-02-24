@@ -357,6 +357,7 @@ class phoromatic extends pts_module_interface
 
 		if(phodevi::system_uptime() < 60)
 		{
+			echo 'PHOROMATIC: Sleeping for 60 seconds as system freshly started.' . PHP_EOL;
 			pts_client::$pts_logger->log('Sleeping for 60 seconds as system freshly started');
 			sleep(60);
 		}
