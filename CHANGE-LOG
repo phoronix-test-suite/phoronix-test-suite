@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+- pts-core: Improvements to phoronix-test-suite make-download-cache
 - phoromatic: Add "admin data" page to let the rootadmin permanently delete schedules/results/systems
 - phoromatic: Allow for system identifier variable in benchmark tickets of .SYSTEM
 - phoromatic: Allow for system identifier variable in benchmark tickets of .GROUP
@@ -22,6 +23,7 @@ Phoronix Test Suite 5.6 Milestone 3
 - phoromatic: Add support for viewing issued benchmark tickets
 - phoromatic: Add option to force rebuild of results databases
 - phoromatic: Prepend system ID to result string when running multiple tests without variables
+- phoromatic: Add "Test All Options" opton to build suite page
 
 Phoronix Test Suite 5.6 Milestone 2
 4 February 2015

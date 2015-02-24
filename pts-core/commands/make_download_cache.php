@@ -27,18 +27,10 @@ class make_download_cache implements pts_option_interface
 
 	public static function run($r)
 	{
-		if(!empty($r))
-		{
-			$test_profiles = pts_types::identifiers_to_test_profile_objects($r, true, true);
+		// Force refresh of OB repository to ensure the latest profiles
+		pts_openbenchmarking::refresh_repository_lists(null, true);
 
-			if(count($test_profiles) > 0)
-			{
-				echo PHP_EOL . 'Downloading Test Files For: ' . implode(' ', $test_profiles);
-				pts_test_installer::only_download_test_files($test_profiles);
-			}
-		}
-
-		// Generates a PTS Download Cache
+		// Determine cache location
 		if(false && is_writable('/var/cache/phoronix-test-suite/download-cache/')) // XXX: potentially remove this override
 		{
 			// If running as root, might as well write it to the global PTS download cache so other users on system could benefit too
@@ -50,6 +42,7 @@ class make_download_cache implements pts_option_interface
 			// The user's local cache
 			$dc_write_directory = pts_strings::add_trailing_slash(pts_client::parse_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Installation/CacheDirectory', PTS_DOWNLOAD_CACHE_PATH)));
 		}
+		echo PHP_EOL . 'Download Cache Directory: ' . $dc_write_directory . PHP_EOL;
 
 		if($dc_write_directory == null || !is_writable($dc_write_directory))
 		{
@@ -57,7 +50,16 @@ class make_download_cache implements pts_option_interface
 			return false;
 		}
 
-		echo PHP_EOL . 'Download Cache Directory: ' . $dc_write_directory . PHP_EOL;
+		if(!empty($r))
+		{
+			$test_profiles = pts_types::identifiers_to_test_profile_objects($r, true, true);
+
+			if(count($test_profiles) > 0)
+			{
+				echo PHP_EOL . 'Downloading Test Files For: ' . implode(' ', $test_profiles);
+				pts_test_installer::only_download_test_files($test_profiles, $dc_write_directory);
+			}
+		}
 
 		$json_download_cache = array('phoronix-test-suite' => array(
 			'main' => array('generated' => time()),
