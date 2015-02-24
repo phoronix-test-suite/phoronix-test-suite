@@ -31,17 +31,7 @@ class make_download_cache implements pts_option_interface
 		pts_openbenchmarking::refresh_repository_lists(null, true);
 
 		// Determine cache location
-		if(false && is_writable('/var/cache/phoronix-test-suite/download-cache/')) // XXX: potentially remove this override
-		{
-			// If running as root, might as well write it to the global PTS download cache so other users on system could benefit too
-			$dc_write_directory = '/var/cache/phoronix-test-suite/download-cache/';
-			pts_file_io::mkdir($dc_write_directory);
-		}
-		else
-		{
-			// The user's local cache
-			$dc_write_directory = pts_strings::add_trailing_slash(pts_client::parse_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Installation/CacheDirectory', PTS_DOWNLOAD_CACHE_PATH)));
-		}
+		$dc_write_directory = pts_strings::add_trailing_slash(pts_client::parse_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Installation/CacheDirectory', PTS_DOWNLOAD_CACHE_PATH)));
 		echo PHP_EOL . 'Download Cache Directory: ' . $dc_write_directory . PHP_EOL;
 
 		if($dc_write_directory == null || !is_writable($dc_write_directory))
@@ -128,7 +118,7 @@ class make_download_cache implements pts_option_interface
 		}
 
 		$cached_tests = array();
-		foreach(pts_openbenchmarking::available_tests() as $test)
+		foreach(pts_openbenchmarking::available_tests(true, true) as $test)
 		{
 			if(pts_test_install_request::test_files_in_cache($test, true, true) == false)
 			{

@@ -523,7 +523,7 @@ class pts_openbenchmarking
 
 		return null;
 	}
-	public static function available_tests($download_tests = true)
+	public static function available_tests($download_tests = true, $all_versions = false)
 	{
 		$available_tests = array();
 
@@ -535,16 +535,28 @@ class pts_openbenchmarking
 			{
 				foreach(array_keys($repo_index['tests']) as $identifier)
 				{
-					if($download_tests)
+					if($all_versions)
 					{
-						$version = array_shift($repo_index['tests'][$identifier]['versions']);
-						if(self::download_test_profile($repo . '/' . $identifier . '-' . $version) == false)
-						{
-							continue;
-						}
+						$versions = $repo_index['tests'][$identifier]['versions'];
+					}
+					else
+					{
+						// Just get the latest version by default
+						$versions = array(array_shift($repo_index['tests'][$identifier]['versions']));
 					}
 
-					array_push($available_tests, $repo . '/' . $identifier);
+					foreach($versions as $version)
+					{
+						if($download_tests)
+						{
+							if(self::download_test_profile($repo . '/' . $identifier . '-' . $version) == false)
+							{
+								continue;
+							}
+						}
+
+						array_push($available_tests, $repo . '/' . $identifier . '-' . $version);
+					}
 				}
 			}
 		}
