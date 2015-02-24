@@ -150,7 +150,7 @@ while($result && $row = $result->fetchArray())
 			continue;
 	}
 
-	if(!phoromatic_server::check_for_benchmark_ticket_result_match($row['TicketID'], ACCOUNT_ID, SYSTEM_ID))
+	if(!phoromatic_server::check_for_benchmark_ticket_result_match($row['TicketID'], ACCOUNT_ID, SYSTEM_ID, $row['TicketIssueTime']))
 	{
 		pts_logger::add_to_log(SYSTEM_ID . ' - needs to benchmark ticket for ' . $row['Title']);
 		$res = phoromatic_generate_benchmark_ticket($row, $json, $phoromatic_account_settings);

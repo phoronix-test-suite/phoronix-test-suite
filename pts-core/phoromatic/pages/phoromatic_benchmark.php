@@ -59,12 +59,20 @@ class phoromatic_benchmark implements pts_webui_interface
 					$result = $stmt->execute();
 					header('Location: /?benchmark');
 				}
+				else if(isset($_GET['repeat']))
+				{
+					$stmt = phoromatic_server::$db->prepare('UPDATE phoromatic_benchmark_tickets SET TicketIssueTime = :new_ticket_time WHERE AccountID = :account_id AND TicketID = :ticket_id');
+					$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+					$stmt->bindValue(':ticket_id', $PATH[0]);
+					$stmt->bindValue(':new_ticket_time', time());
+					$result = $stmt->execute();
+				}
 
 				$main = null;
 				$main .= '<h1>' . $row['Title'] . '</h1>';
 				$main .= '<h3>' . $row['Description'] . '</h3>';
-				$main .= '<p>This benchmark ticket was issued on <strong>' . date('j F Y \a\t H:i', strtotime($row['LastModifiedOn'])) . '</strong> by <strong>' . $row['LastModifiedBy'] . '.</strong>.';
-				$main .= '<p><a href="/?benchmark/' . $PATH[0] . '/&remove">Remove Ticket</a></p>';
+				$main .= '<p>This benchmark ticket was created on <strong>' . date('j F Y \a\t H:i', strtotime($row['LastModifiedOn'])) . '</strong> by <strong>' . $row['LastModifiedBy'] . '. The ticket was last issued for testing at ' . date('j F Y \a\t H:i', $row['TicketIssueTime']) . '</strong>.';
+				$main .= '<p> <a href="/?benchmark/' . $PATH[0] . '/&repeat">Repeat Ticket</a> &nbsp; &nbsp; &nbsp; <a href="/?benchmark/' . $PATH[0] . '/&remove">Remove Ticket</a></p>';
 				$main .= '<hr /><h1>Ticket Payload</h1>';
 				$main .= '<p>This ticket runs the <strong>' . $row['SuiteToRun'] . '</strong> test suite:</p>';
 

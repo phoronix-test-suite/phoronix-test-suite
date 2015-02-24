@@ -317,13 +317,13 @@ class phoromatic_server
 
 		return $systems;
 	}
-	public static function check_for_benchmark_ticket_result_match($benchmark_id, $account_id, $system_id)
+	public static function check_for_benchmark_ticket_result_match($benchmark_id, $account_id, $system_id, $ticket_issue_time)
 	{
-		$stmt = phoromatic_server::$db->prepare('SELECT UploadID FROM phoromatic_results WHERE AccountID = :account_id AND SystemID = :system_id AND BenchmarkTicketID = :benchmark_id');
+		$stmt = phoromatic_server::$db->prepare('SELECT UploadID FROM phoromatic_results WHERE AccountID = :account_id AND SystemID = :system_id AND BenchmarkTicketID = :benchmark_id AND UploadTime > :ticket_issue_time');
 		$stmt->bindValue(':account_id', $account_id);
 		$stmt->bindValue(':system_id', $system_id);
 		$stmt->bindValue(':benchmark_id', $benchmark_id);
-
+		$stmt->bindValue(':ticket_issue_time', $ticket_issue_time);
 		$result = $stmt->execute();
 
 		if($result != false && $result->fetchArray() != false)
