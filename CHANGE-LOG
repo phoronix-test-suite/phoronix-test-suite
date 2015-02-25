@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite Milestone 4
+25 February 2015
 
 - pts-core: Improvements to phoronix-test-suite make-download-cache
 - phoromatic: Add "admin data" page to let the rootadmin permanently delete schedules/results/systems
