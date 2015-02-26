@@ -523,7 +523,7 @@ class pts_openbenchmarking
 
 		return null;
 	}
-	public static function available_tests($download_tests = true, $all_versions = false)
+	public static function available_tests($download_tests = true, $all_versions = false, $append_version = false)
 	{
 		$available_tests = array();
 
@@ -538,6 +538,7 @@ class pts_openbenchmarking
 					if($all_versions)
 					{
 						$versions = $repo_index['tests'][$identifier]['versions'];
+						$append_versions = true;
 					}
 					else
 					{
@@ -555,7 +556,7 @@ class pts_openbenchmarking
 							}
 						}
 
-						array_push($available_tests, $repo . '/' . $identifier . '-' . $version);
+						array_push($available_tests, $repo . '/' . $identifier . ($append_versions ? '-' . $version : null));
 					}
 				}
 			}

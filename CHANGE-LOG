@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- phoromatic: Finish hooking-up multi-test/stress-run functionality via the benchmark page
+
 Phoronix Test Suite Milestone 4
 25 February 2015
 
