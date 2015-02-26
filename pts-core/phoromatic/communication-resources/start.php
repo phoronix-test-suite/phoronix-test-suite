@@ -242,6 +242,7 @@ function phoromatic_generate_benchmark_ticket(&$ticket_row, &$json, $phoromatic_
 	$json['phoromatic']['result_identifier'] = $ticket_row['ResultIdentifier'];
 	$json['phoromatic']['test_suite'] = file_get_contents($test_suite);
 	$json['phoromatic']['settings'] = $phoromatic_account_settings;
+	$json['phoromatic']['environment_variables'] = $ticket_row['EnvironmentVariables'];
 
 	echo json_encode($json);
 	return true;

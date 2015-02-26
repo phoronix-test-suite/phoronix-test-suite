@@ -162,8 +162,21 @@ class phoromatic_benchmark implements pts_webui_interface
 					while(!empty($matching_tickets));
 				}
 
+				$env_vars = array();
+
+				if(is_numeric($_POST['PTS_CONCURRENT_TEST_RUNS']) && $_POST['PTS_CONCURRENT_TEST_RUNS'] > 0)
+				{
+					array_push($env_vars, 'PTS_CONCURRENT_TEST_RUNS=' . $_POST['PTS_CONCURRENT_TEST_RUNS']);
+				}
+				if(is_numeric($_POST['TOTAL_LOOP_TIME']) && $_POST['TOTAL_LOOP_TIME'] > 0)
+				{
+					array_push($env_vars, 'TOTAL_LOOP_TIME=' . $_POST['TOTAL_LOOP_TIME']);
+				}
+
+				$env_vars = implode(';', $env_vars);
+
 				// Add benchmark
-				$stmt = phoromatic_server::$db->prepare('INSERT OR REPLACE INTO phoromatic_benchmark_tickets (AccountID, TicketID, TicketIssueTime, Title, ResultIdentifier, SuiteToRun, Description, State, LastModifiedBy, LastModifiedOn, RunTargetGroups, RunTargetSystems) VALUES (:account_id, :ticket_id, :ticket_time, :title, :result_identifier, :suite_to_run, :description, :state, :modified_by, :modified_on, :run_target_groups, :run_target_systems)');
+				$stmt = phoromatic_server::$db->prepare('INSERT OR REPLACE INTO phoromatic_benchmark_tickets (AccountID, TicketID, TicketIssueTime, Title, ResultIdentifier, SuiteToRun, Description, State, LastModifiedBy, LastModifiedOn, RunTargetGroups, RunTargetSystems, EnvironmentVariables) VALUES (:account_id, :ticket_id, :ticket_time, :title, :result_identifier, :suite_to_run, :description, :state, :modified_by, :modified_on, :run_target_groups, :run_target_systems, :environment_variables)');
 				$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 				$stmt->bindValue(':ticket_id', $ticket_id);
 				$stmt->bindValue(':ticket_time', time());
@@ -177,6 +190,7 @@ class phoromatic_benchmark implements pts_webui_interface
 				$stmt->bindValue(':public_key', $public_key);
 				$stmt->bindValue(':run_target_groups', $run_target_groups);
 				$stmt->bindValue(':run_target_systems', $run_target_systems);
+				$stmt->bindValue(':environment_variables', $env_vars);
 				$result = $stmt->execute();
 				phoromatic_add_activity_stream_event('benchmark', $benchmark_id, ($is_new ? 'added' : 'modified'));
 
@@ -262,7 +276,7 @@ class phoromatic_benchmark implements pts_webui_interface
 				$main .= '<option value="' . $i . '">' . $i . '</option>';
 			}
 			$main .= '</select></p>
-			<p><strong>Force Loop Time:</strong> <select name="PTS_CONCURRENT_TEST_RUNS"><option value="0">Disabled</option>';
+			<p><strong>Force Loop Time:</strong> <select name="TOTAL_LOOP_TIME"><option value="0">Disabled</option>';
 			for($i = 60; $i <= (60 * 48); $i += 60)
 			{
 				$main .= '<option value="' . $i . '">' . pts_strings::format_time($i, 'MINUTES') . '</option>';

@@ -461,6 +461,7 @@ class phoromatic extends pts_module_interface
 								phoromatic::set_user_context($json['phoromatic']['post_install_set_context'], self::$p_trigger_id, self::$p_schedule_id, 'POST_INSTALL');
 							}
 						}
+						$env_vars = isset($json['phoromatic']['environment_variables']) ? pts_strings::parse_value_string_vars($json['phoromatic']['environment_variables']) : array();
 
 						// Do the actual running
 						phodevi::clear_cache();
@@ -493,6 +494,12 @@ class phoromatic extends pts_module_interface
 
 								// Run the actual tests
 								self::$test_run_manager->pre_execution_process();
+								if(isset($env_vars['PTS_CONCURRENT_TEST_RUNS']) && $env_vars['PTS_CONCURRENT_TEST_RUNS'] > 1)
+								{
+									$total_loop_time = isset($env_vars['TOTAL_LOOP_TIME']) ? $env_vars['TOTAL_LOOP_TIME'] : false;
+									self::$test_run_manager->multi_test_stress_run_execute($env_vars['PTS_CONCURRENT_TEST_RUNS'], $total_loop_time);
+								}
+
 								self::$test_run_manager->call_test_runs();
 								phoromatic::update_system_status('Benchmarks Completed For: ' . $phoromatic_save_identifier);
 								self::$test_run_manager->post_execution_process();

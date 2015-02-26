@@ -76,119 +76,20 @@ class stress_run implements pts_option_interface
 		$total_loop_time = pts_client::read_env('TOTAL_LOOP_TIME');
 		if($total_loop_time == 'infinite')
 		{
-			$loop_until_time = 'infinite';
+			$total_loop_time = 'infinite';
 			echo 'TOTAL_LOOP_TIME set; running tests in an infinite loop until otherwise triggered' . PHP_EOL;
 		}
 		else if($total_loop_time && is_numeric($total_loop_time) && $total_loop_time > 9)
 		{
 			$total_loop_time = $total_loop_time * 60;
-			$loop_until_time = time() + $total_loop_time;
 			echo 'TOTAL_LOOP_TIME set; running tests for ' . ($total_loop_time / 60) . ' minutes' . PHP_EOL;
 		}
 		else
 		{
-			$loop_until_time = false;
+			$total_loop_time = false;
 		}
 		//$test_run_manager->pre_execution_process();
-
-		$continue_test_flag = true;
-		pts_client::$display->test_run_process_start($test_run_manager);
-		$test_run_manager->disable_dynamic_run_count();
-		$possible_tests_to_run = $test_run_manager->get_tests_to_run();
-
-		$tests_pids_active = array();
-
-		while(!empty($possible_tests_to_run) || !empty($tests_pids_active))
-		{
-			if($continue_test_flag == false)
-				break;
-
-			$test_types_active = array();
-			foreach($tests_pids_active as $pid => &$test)
-			{
-				$ret = pcntl_waitpid($pid, $status, WNOHANG | WUNTRACED);
-
-				if($ret)
-				{
-					if(pcntl_wifexited($status) || !posix_getsid($pid))
-					{
-						unset($tests_pids_active[$pid]);
-						continue;
-					}
-				}
-
-				array_push($test_types_active, $test->test_profile->get_test_hardware_type());
-			}
-
-			if(!empty($possible_tests_to_run) && count($tests_pids_active) < $tests_to_run_concurrently && (!$loop_until_time || $loop_until_time > time()))
-			{
-				shuffle($possible_tests_to_run);
-
-				$test_to_run = false;
-				$test_run_index = -1;
-				foreach($possible_tests_to_run as $i => $test)
-				{
-					if(!in_array($test->test_profile->get_test_hardware_type(), $test_types_active))
-					{
-						$test_run_index = $i;
-						$test_to_run = $test;
-					}
-				}
-				if($test_run_index == -1)
-				{
-					$test_run_index = array_rand(array_keys($possible_tests_to_run));
-					$test_to_run = $possible_tests_to_run[$test_run_index];
-				}
-
-				$pid = pcntl_fork();
-				if($pid == -1)
-				{
-					echo 'Forking failure.';
-				}
-				else if($pid)
-				{
-					$tests_pids_active[$pid] = $test_to_run;
-				}
-				else
-				{
-					$continue_test_flag = $test_run_manager->process_test_run_request($test_to_run);
-					return;
-				}
-
-				if($loop_until_time == false)
-				{
-					unset($possible_tests_to_run[$test_run_index]);
-				}
-				else if($loop_until_time == 'infinite')
-				{
-						echo 'Continuing to test indefinitely' . PHP_EOL;
-				}
-				else
-				{
-					if($loop_until_time > time())
-					{
-						$time_left = ceil(($loop_until_time - time()) / 60);
-						echo 'Continuing to test for ' . $time_left . ' more minutes' . PHP_EOL;
-					}
-					else
-					{
-						echo 'TOTAL_LOOP_TIME elapsed; quitting....' . PHP_EOL;
-						break;
-					}
-				}
-			}
-
-			sleep(1);
-		}
-
-		foreach($test_run_manager->get_tests_to_run() as $run_request)
-		{
-			// Remove cache shares
-			foreach(pts_file_io::glob($run_request->test_profile->get_install_dir() . 'cache-share-*.pt2so') as $cache_share_file)
-			{
-				unlink($cache_share_file);
-			}
-		}
+		$test_run_manager->multi_test_stress_run_execute($tests_to_run_concurrently, $total_loop_time);
 	}
 	public static function invalid_command($passed_args = null)
 	{
