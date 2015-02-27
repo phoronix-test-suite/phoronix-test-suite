@@ -199,6 +199,10 @@ class phoromatic_admin_config implements pts_webui_interface
 		{
 			phoromatic_server::save_setting('show_local_tests_only', $_POST['show_local_tests_only']);
 		}
+		if(isset($_POST['new_admin_support_email']))
+		{
+			phoromatic_server::save_setting('admin_support_email', $_POST['new_admin_support_email']);
+		}
 		if(isset($_POST['rebuild_results_db']))
 		{
 			foreach(pts_file_io::glob(phoromatic_server::phoromatic_path() . 'accounts/*/results/*/composite.xml') as $composite_xml)
@@ -277,6 +281,13 @@ class phoromatic_admin_config implements pts_webui_interface
 		$main .= '<p><strong>HTTP Port:</strong> <input type="text" name="new_http_port" size="4" value="' . (isset($_POST['new_http_port']) ? $_POST['new_http_port'] : pts_config::read_user_config('PhoronixTestSuite/Options/Server/RemoteAccessPort')) . '" /></p>';
 		$main .= '<p><strong>WebSocket Port:</strong> <input type="text" name="new_ws_port" size="4" value="' . (isset($_POST['new_ws_port']) ? $_POST['new_ws_port'] : pts_config::read_user_config('PhoronixTestSuite/Options/Server/WebSocketPort')) . '" /></p>';
 		$main .= '<p><input name="submit" value="Update Web Ports" type="submit" /></p>';
+		$main .= '</form>';
+
+		$main .= '<hr /><h2>Support Email Address</h2>';
+		$main .= '<p>This email address will be shown as the sender of emails regarding new account registration and other non-group-related messages. This email address may also be shown as a support email address in case of user problems.</p>';
+		$main .= '<form action="' . $_SERVER['REQUEST_URI'] . '" name="support_email" method="post">';
+		$main .= '<p><strong>E-Mail:</strong> <input type="text" name="new_admin_support_email" value="' . phoromatic_server::read_setting('admin_support_email') . '" /></p>';
+		$main .= '<p><input name="submit" value="Update E-Mail Address" type="submit" /></p>';
 		$main .= '</form>';
 
 		$main .= '<hr /><h1>Account Creation</h1>';

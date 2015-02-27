@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2014, Phoronix Media
-	Copyright (C) 2014, Michael Larabel
+	Copyright (C) 2014 - 2015, Phoronix Media
+	Copyright (C) 2014 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -55,7 +55,7 @@ $stmt->bindValue(':account_id', ACCOUNT_ID);
 $result = $stmt->execute();
 while($row = $result->fetchArray())
 {
-	phoromatic_server::send_email($row['Email'], 'Phoromatic System Error/Warning', 'no-reply@phoromatic.com', '<p><strong>' . $row['UserName'] . ':</strong></p><p>A warning or error has been reported by a system associated with the Phoromatic account.</p><p>System: ' . SYSTEM_NAME . '<br />Trigger String: ' . sqlite_escape_string($TRIGGER_STRING) . '<br />Test Identifier: ' . sqlite_escape_string($TEST_IDENTIFIER) . '<br />Message: ' . sqlite_escape_string($ERROR_MSG) . '</p>');
+	phoromatic_server::send_email($row['Email'], 'Phoromatic System Error/Warning', phoromatic_server::account_id_to_group_admin_email(ACCOUNT_ID), '<p><strong>' . $row['UserName'] . ':</strong></p><p>A warning or error has been reported by a system associated with the Phoromatic account.</p><p>System: ' . SYSTEM_NAME . '<br />Trigger String: ' . sqlite_escape_string($TRIGGER_STRING) . '<br />Test Identifier: ' . sqlite_escape_string($TEST_IDENTIFIER) . '<br />Message: ' . sqlite_escape_string($ERROR_MSG) . '</p>');
 }
 
 ?>

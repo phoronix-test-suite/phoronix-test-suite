@@ -558,7 +558,7 @@ function create_new_phoromatic_account($register_username, $register_password, $
 	$result = $stmt->execute();
 
 	pts_file_io::mkdir(phoromatic_server::phoromatic_account_path($account_id));
-	phoromatic_server::send_email($register_email, 'Phoromatic Account Registration', 'no-reply@phoromatic.com', '<p><strong>' . $register_username . '</strong>:</p><p>Your Phoromatic account has been created and is now active.</p>');
+	phoromatic_server::send_email($register_email, 'Phoromatic Account Registration', (($e = phoromatic_server::read_setting('admin_support_email')) != null ? $e : 'no-reply@phoromatic.com'), '<p><strong>' . $register_username . '</strong>:</p><p>Your Phoromatic account has been created and is now active.</p>');
 	return true;
 }
 

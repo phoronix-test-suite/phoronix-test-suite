@@ -212,7 +212,7 @@ if(empty($result))
 	$result = $stmt->execute();
 	while($row = $result->fetchArray())
 	{
-		phoromatic_server::send_email($row['Email'], 'Phoromatic New System Added', 'no-reply@phoromatic.com', '<p><strong>' . $row['UserName'] . ':</strong></p><p>A new system is attempting to associate with a Phoromatic account for which you\'re associated.</p><p>Title: ' . $HOSTNAME . '<br />IP: ' . $LOCAL_IP . '<br />System Info: ' . $CLIENT_HARDWARE . ' ' . $CLIENT_SOFTWARE . '</p>');
+		phoromatic_server::send_email($row['Email'], 'Phoromatic New System Added', phoromatic_server::account_id_to_group_admin_email(ACCOUNT_ID), '<p><strong>' . $row['UserName'] . ':</strong></p><p>A new system is attempting to associate with a Phoromatic account for which you\'re associated.</p><p>Title: ' . $HOSTNAME . '<br />IP: ' . $LOCAL_IP . '<br />System Info: ' . $CLIENT_HARDWARE . ' ' . $CLIENT_SOFTWARE . '</p>');
 	}
 
 	exit;

@@ -301,6 +301,14 @@ class phoromatic_server
 
 		return $schedule_names[$schedule_id];
 	}
+	public static function account_id_to_group_admin_email($account_id)
+	{
+		$stmt = phoromatic_server::$db->prepare('SELECT Email FROM phoromatic_users WHERE AccountID = :account_id AND AdminLevel = 1 ORDER BY CreatedOn ASC LIMIT 1');
+		$stmt->bindValue(':account_id', $account_id);
+		$result = $stmt->execute();
+		$row = $result->fetchArray();
+		return $row['Email'];
+	}
 	public static function account_id_to_group_name($account_id)
 	{
 		static $group_names;
