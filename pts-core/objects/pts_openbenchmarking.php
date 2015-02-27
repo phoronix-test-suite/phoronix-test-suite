@@ -523,7 +523,7 @@ class pts_openbenchmarking
 
 		return null;
 	}
-	public static function available_tests($download_tests = true, $all_versions = false, $append_version = false)
+	public static function available_tests($download_tests = true, $all_versions = false, $append_versions = false)
 	{
 		$available_tests = array();
 
