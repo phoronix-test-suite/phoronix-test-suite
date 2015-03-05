@@ -284,8 +284,16 @@ class phoromatic_benchmark implements pts_webui_interface
 			}
 			$main .= '</select></p>
 			<p><strong>Force Loop Time:</strong> <select name="TOTAL_LOOP_TIME"><option value="0">Disabled</option>';
-			for($i = 60; $i <= (60 * 48); $i += 60)
+			$s = true;
+			for($i = 60; $i <= (60 * 240); $i += 60)
 			{
+				if($i > 1440)
+				{
+					$s = !$s;
+					if(!$s)
+						continue;
+				}
+
 				$main .= '<option value="' . $i . '">' . pts_strings::format_time($i, 'MINUTES') . '</option>';
 			}
 			$main .= '</select></p>
