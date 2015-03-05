@@ -285,9 +285,15 @@ class phoromatic_benchmark implements pts_webui_interface
 			$main .= '</select></p>
 			<p><strong>Force Loop Time:</strong> <select name="TOTAL_LOOP_TIME"><option value="0">Disabled</option>';
 			$s = true;
-			for($i = 60; $i <= (60 * 240); $i += 60)
+			for($i = 60; $i <= (60 * 24 * 90); $i += 60)
 			{
-				if($i > 1440)
+				if($i > 10080)
+				{
+					// 7 days
+					if(($i % 1440) != 0)
+						continue;
+				}
+				else if($i > 480)
 				{
 					$s = !$s;
 					if(!$s)
