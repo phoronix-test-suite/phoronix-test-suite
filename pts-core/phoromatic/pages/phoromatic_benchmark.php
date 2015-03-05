@@ -61,10 +61,17 @@ class phoromatic_benchmark implements pts_webui_interface
 				}
 				else if(isset($_GET['repeat']))
 				{
-					$stmt = phoromatic_server::$db->prepare('UPDATE phoromatic_benchmark_tickets SET TicketIssueTime = :new_ticket_time WHERE AccountID = :account_id AND TicketID = :ticket_id');
+					$stmt = phoromatic_server::$db->prepare('UPDATE phoromatic_benchmark_tickets SET TicketIssueTime = :new_ticket_time, State = 1 WHERE AccountID = :account_id AND TicketID = :ticket_id');
 					$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 					$stmt->bindValue(':ticket_id', $PATH[0]);
 					$stmt->bindValue(':new_ticket_time', time());
+					$result = $stmt->execute();
+				}
+				else if(isset($_GET['disable']))
+				{
+					$stmt = phoromatic_server::$db->prepare('UPDATE phoromatic_benchmark_tickets SET State = 0 WHERE AccountID = :account_id AND TicketID = :ticket_id');
+					$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+					$stmt->bindValue(':ticket_id', $PATH[0]);
 					$result = $stmt->execute();
 				}
 
@@ -72,10 +79,10 @@ class phoromatic_benchmark implements pts_webui_interface
 				$main .= '<h1>' . $row['Title'] . '</h1>';
 				$main .= '<h3>' . $row['Description'] . '</h3>';
 				$main .= '<p>This benchmark ticket was created on <strong>' . date('j F Y \a\t H:i', strtotime($row['LastModifiedOn'])) . '</strong> by <strong>' . $row['LastModifiedBy'] . '. The ticket was last issued for testing at ' . date('j F Y \a\t H:i', $row['TicketIssueTime']) . '</strong>.';
-				$main .= '<p> <a href="/?benchmark/' . $PATH[0] . '/&repeat">Repeat Ticket</a> &nbsp; &nbsp; &nbsp; <a href="/?benchmark/' . $PATH[0] . '/&remove">Remove Ticket</a></p>';
+				$main .= '<p> <a href="/?benchmark/' . $PATH[0] . '/&repeat">Repeat Ticket</a> &nbsp; &nbsp; &nbsp; <a href="/?benchmark/' . $PATH[0] . '/&remove">Remove Ticket</a>' . (!isset($_GET['disable']) && $row['State'] > 0 ? ' &nbsp; &nbsp; &nbsp; <a href="/?benchmark/' . $PATH[0] . '/&disable">End Ticket</a>' : null) . '</p>';
 				$main .= '<hr /><h1>Ticket Payload</h1>';
 				$main .= '<p>This ticket runs the <strong>' . $row['SuiteToRun'] . '</strong> test suite:</p>';
-
+				$main .= '<div style="max-height: 400px; overflow-y: scroll;">';
 				$xml_path = phoromatic_server::phoromatic_account_suite_path($_SESSION['AccountID'], $row['SuiteToRun']) . 'suite-definition.xml';
 				if(is_file($xml_path))
 				{
@@ -94,7 +101,7 @@ class phoromatic_benchmark implements pts_webui_interface
 					//$main .= '<hr />';
 				}
 
-				$main .= '<hr />';
+				$main .= '</div><hr />';
 				$main .= '<div class="pts_phoromatic_info_box_area">';
 				$main .= '<div style="margin: 0 5%;"><ul style="max-height: 100%;"><li><h1>Test Results</h1></li>';
 				$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, ScheduleID, PPRID, UploadTime, TimesViewed FROM phoromatic_results WHERE AccountID = :account_id AND BenchmarkTicketID = :ticket_id ORDER BY UploadTime DESC');
@@ -295,7 +302,7 @@ class phoromatic_benchmark implements pts_webui_interface
 				</form>';
 		}
 
-		$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_benchmark_tickets WHERE AccountID = :account_id AND State = 1 AND TicketIssueTime > :time_cutoff ORDER BY TicketIssueTime DESC LIMIT 30');
+		$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_benchmark_tickets WHERE AccountID = :account_id AND State >= 0 AND TicketIssueTime > :time_cutoff ORDER BY TicketIssueTime DESC LIMIT 30');
 		$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 		$stmt->bindValue(':time_cutoff', (time() - (60 * 60 * 24 * 14)));
 		$result = $stmt->execute();
