@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2014, Phoronix Media
-	Copyright (C) 2009 - 2014, Michael Larabel
+	Copyright (C) 2009 - 2015, Phoronix Media
+	Copyright (C) 2009 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -48,6 +48,7 @@ class pts_test_run_manager
 	private $dynamic_run_count_on_length_or_less;
 	private $dynamic_run_count_std_deviation_threshold;
 	private $dynamic_run_count_export_script;
+	private $multi_test_stress_run = false;
 
 	private static $test_run_process_active = false;
 	private static $batch_mode_options = false;
@@ -1382,11 +1383,16 @@ class pts_test_run_manager
 		// Is there something to run?
 		return $this->get_test_count() > 0;
 	}
+	public function is_multi_test_stress_run()
+	{
+		return $this->multi_test_stress_run;
+	}
 	public function multi_test_stress_run_execute($tests_to_run_concurrently = 3, $total_loop_time = false)
 	{
 		$continue_test_flag = true;
 		pts_client::$display->test_run_process_start($this);
 		$this->disable_dynamic_run_count();
+		$this->multi_test_stress_run = $tests_to_run_concurrently;
 		$possible_tests_to_run = $this->get_tests_to_run();
 		$tests_pids_active = array();
 		$loop_until_time = is_numeric($total_loop_time) && $total_loop_time > 1 ? time() + $total_loop_time : false;
