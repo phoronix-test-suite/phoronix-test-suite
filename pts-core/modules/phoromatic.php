@@ -23,7 +23,7 @@
 class phoromatic extends pts_module_interface
 {
 	const module_name = 'Phoromatic Client';
-	const module_version = '0.4.0';
+	const module_version = '0.5.0';
 	const module_description = 'The Phoromatic client is used for connecting to a Phoromatic server (Phoromatic.com or a locally run server) to facilitate the automatic running of tests, generally across multiple test nodes in a routine manner. For more details visit http://www.phoromatic.com/. This module is intended to be used with Phoronix Test Suite 5.2+ clients and servers.';
 	const module_author = 'Phoronix Media';
 
@@ -497,10 +497,16 @@ class phoromatic extends pts_module_interface
 								if(isset($env_vars['PTS_CONCURRENT_TEST_RUNS']) && $env_vars['PTS_CONCURRENT_TEST_RUNS'] > 1)
 								{
 									$total_loop_time = isset($env_vars['TOTAL_LOOP_TIME']) ? $env_vars['TOTAL_LOOP_TIME'] : false;
+									pts_client::$pts_logger->log('STRESS / MULTI-TEST EXECUTION STARTED @ ' . date('Y-m-d H:i:s'));
+									pts_client::$pts_logger->log('CONCURRENT RUNS = ' . $env_vars['PTS_CONCURRENT_TEST_RUNS'] . ' TOTAL LOOP TIME = ' . $total_loop_time);
 									self::$test_run_manager->multi_test_stress_run_execute($env_vars['PTS_CONCURRENT_TEST_RUNS'], $total_loop_time);
+									pts_client::$pts_logger->log('STRESS / MULTI-TEST EXECUTION ENDED @ ' . date('Y-m-d H:i:s'));
+								}
+								else
+								{
+									self::$test_run_manager->call_test_runs();
 								}
 
-								self::$test_run_manager->call_test_runs();
 								phoromatic::update_system_status('Benchmarks Completed For: ' . $phoromatic_save_identifier);
 								self::$test_run_manager->post_execution_process();
 								$elapsed_benchmark_time = time() - $benchmark_timer;
@@ -509,7 +515,7 @@ class phoromatic extends pts_module_interface
 								$result_file = new pts_result_file(self::$test_run_manager->get_file_name());
 								$upload_system_logs = pts_strings::string_bool($json['phoromatic']['settings']['UploadSystemLogs']);
 								$server_response = self::upload_test_result($result_file, $upload_system_logs, (isset($json['phoromatic']['schedule_id']) ? $json['phoromatic']['schedule_id'] : null), $phoromatic_save_identifier, $json['phoromatic']['trigger_id'], $elapsed_benchmark_time, $benchmark_ticket_id);
-								pts_client::$pts_logger->log('DEBUG RESPONSE MESSAGE: ' . $server_response);
+								//pts_client::$pts_logger->log('DEBUG RESPONSE MESSAGE: ' . $server_response);
 								if(!pts_strings::string_bool($json['phoromatic']['settings']['ArchiveResultsLocally']))
 								{
 									pts_client::remove_saved_result_file(self::$test_run_manager->get_file_name());
