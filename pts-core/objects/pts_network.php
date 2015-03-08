@@ -315,8 +315,23 @@ class pts_network
 				if(gethostbyname('google.com') == 'google.com')
 				{
 					echo PHP_EOL;
-					trigger_error('No Internet Connectivity', E_USER_WARNING);
-					self::$disable_internet_support = true;
+
+					if(!PTS_IS_DAEMONIZED_SERVER_PROCESS)
+					{
+						trigger_error('No Internet Connectivity', E_USER_WARNING);
+						self::$disable_internet_support = true;
+					}
+					else
+					{
+						// Wait 20 seconds in case network is still coming up
+						sleep(20);
+						$server_response = pts_network::http_get_contents('http://www.phoronix-test-suite.com/PTS', false, false);
+						if($server_response != 'PTS' && gethostbyname('google.com') == 'google.com')
+						{
+							trigger_error('No Internet Connectivity After Wait', E_USER_WARNING);
+							self::$disable_internet_support = true;
+						}
+					}
 				}
 			}
 		}
