@@ -278,7 +278,7 @@ class phoromatic_benchmark implements pts_webui_interface
 			<h4>Stress Testing</h4>
 			<p>If you wish to test systems for stability/reliability rather than performance, use this option and specify the number of tests to run concurrently (two or more) and (optionally) for the total period of time to continue looping the benchmarks. These options are intended to just stress the system and will not record any benchmark results. From the command-line this testing mode can be used via the <em>phoronix-test-suite stress-run</em> sub-command.</p>
 			<p><strong>Concurrent Number Of Test Processes:</strong> <select name="PTS_CONCURRENT_TEST_RUNS"><option value="0">Disabled</option>';
-			for($i = 2; $i < 10; $i++)
+			for($i = 2; $i <= 24; $i++)
 			{
 				$main .= '<option value="' . $i . '">' . $i . '</option>';
 			}

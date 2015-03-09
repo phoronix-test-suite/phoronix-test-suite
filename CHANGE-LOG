@@ -9,6 +9,7 @@ Phoronix Test Suite (Git)
 - phoromatic: Scroll bar on local suites page condensing
 - phoromatic: Add "End Ticket" option to benchmark page
 - phoromatic: Allow stress tests up to 90 days
+- phoromatic: Allow stress runs up to 24 concurrent tests
 
 Phoronix Test Suite Milestone 4
 25 February 2015
