@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Ignore test run locking in stress/multi-run mode
+- pts-core: Allow 128 character result identifier strings
 - phoromatic: Change the custom From email sender to Reply-To
 - phoromatic: Finish hooking-up multi-test/stress-run functionality via the benchmark page
 - phoromatic: Send emails from rootadmin or group admin's email address where applicable rather than no-reply@
