@@ -20,6 +20,51 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+function phoromatic_annotate_entry($type, $id, $secondary_id)
+{
+	$annotate_hash = sha1($id . $secondary_id);
+
+	if(isset($_POST['add_annotation_' . $annotate_hash]) && !empty($_POST['add_annotation_' . $annotate_hash]))
+	{
+		$annotation = $_POST['add_annotation_' . $annotate_hash];
+		$user_name = isset($_SESSION['UserName']) ? $_SESSION['UserName'] : null;
+
+		$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_annotations (AccountID, Type, ID, SecondaryID, AnnotatedTime, AnnotatedBy, Annotation) VALUES (:account_id, :type, :id, :secondary_id, :annotated_time, :user_name, :annotation)');
+		$stmt->bindValue(':account_id', (isset($_SESSION['AccountID']) ? $_SESSION['AccountID'] : null));
+		$stmt->bindValue(':type', $type);
+		$stmt->bindValue(':id', $id);
+		$stmt->bindValue(':secondary_id', $secondary_id);
+		$stmt->bindValue(':annotated_time', phoromatic_server::current_time());
+		$stmt->bindValue(':user_name', $user_name);
+		$stmt->bindValue(':annotation', $annotation);
+		$result = $stmt->execute();
+	}
+
+	// XXX:  AccountID = :account_id AND
+	$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_annotations WHERE Type = :type AND ID = :id AND SecondaryID = :secondary_id ORDER BY AnnotatedTime ASC');
+	$stmt->bindValue(':account_id', (isset($_SESSION['AccountID']) ? $_SESSION['AccountID'] : null));
+	$stmt->bindValue(':type', $type);
+	$stmt->bindValue(':id', $id);
+	$stmt->bindValue(':secondary_id', $secondary_id);
+	$result = $stmt->execute();
+	$row = $result->fetchArray();
+
+	$output = null;
+
+	if($row)
+	{
+		do
+		{
+			$output .= '<p>' . $row['Annotation'] . '<br /><em>Annotation By <strong>' . ($row['AnnotatedBy'] != null ? $row['AnnotatedBy'] : 'Unknown') . '</strong> at <strong>' . phoromatic_user_friendly_timedate($row['AnnotatedTime']) . '</strong>.</em></p>';
+		}
+		while($row = $result->fetchArray());
+	}
+
+	$output .= '<p id="annotation_link_' . $annotate_hash . '"><a onclick="javascript:toggle_annotate_area(\'' . $annotate_hash . '\');" style="font-size: 80%;">Add Annotation</a></p>';
+	$output .= '<form method="post" action="' . $_SERVER['REQUEST_URI'] . '"><p style="display: none;" id="annotation_area_' . $annotate_hash . '"><textarea name="add_annotation_' . $annotate_hash . '" cols="50" rows="4"></textarea><br /><input name="submit" value="Add Annotation" type="submit" /</p></form>';
+
+	return $output;
+}
 function phoromatic_init_web_page_setup()
 {
 	if(session_save_path() == null)

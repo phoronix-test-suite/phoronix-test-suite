@@ -347,6 +347,7 @@ class phoromatic_result implements pts_webui_interface
 			}
 
 			$main .= '<h1>' . $result_file->get_title() . '</h1>';
+			$main .= phoromatic_annotate_entry('RESULT', implode(',', $upload_ids), 'TOP');
 
 			if($result_file->get_system_count() == 1 || ($intent = pts_result_file_analyzer::analyze_result_file_intent($result_file, $intent, true)))
 			{
@@ -365,6 +366,7 @@ class phoromatic_result implements pts_webui_interface
 			foreach($result_file->get_result_objects((isset($_POST['show_only_changed_results']) ? 'ONLY_CHANGED_RESULTS' : -1)) as $i => $result_object)
 			{
 				$main .= '<h2><a name="r-' . $i . '"></a><a name="' . $result_object->get_comparison_hash(true, false) . '"></a>' . $result_object->test_profile->get_title() . '</h2>';
+				$main .= phoromatic_annotate_entry('RESULT', implode(',', $upload_ids), $result_object->get_comparison_hash(true, false));
 				$main .= '<p class="result_object">';
 				$main .= pts_render::render_graph_inline_embed($result_object, $result_file, $extra_attributes);
 				$main .= '</p>';

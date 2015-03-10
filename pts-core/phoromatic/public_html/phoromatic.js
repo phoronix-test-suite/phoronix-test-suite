@@ -73,6 +73,11 @@ function phoromatic_add_to_result_comparison(pprid)
 		}
 	}
 }
+function toggle_annotate_area(annotate_hash)
+{
+	document.getElementById("annotation_link_" + annotate_hash).style.display = 'none';
+	document.getElementById("annotation_area_" + annotate_hash).style.display = 'block';
+}
 function phoromatic_generate_comparison()
 {
 	if(typeof(Storage) !== 'undefined' && localStorage.comparison_pprids)

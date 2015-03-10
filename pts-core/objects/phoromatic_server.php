@@ -220,11 +220,14 @@ class phoromatic_server
 				// Change made 24 February
 				self::$db->exec('ALTER TABLE phoromatic_systems ADD COLUMN SystemVariables TEXT');
 				self::$db->exec('PRAGMA user_version = 24');
-
 			case 24:
 				// Change made 24 February
 				self::$db->exec('ALTER TABLE phoromatic_benchmark_tickets ADD COLUMN EnvironmentVariables TEXT');
 				self::$db->exec('PRAGMA user_version = 25');
+			case 25:
+				// Change made 10 March
+				self::$db->exec('CREATE TABLE phoromatic_annotations (AccountID TEXT, Type TEXT, ID TEXT, SecondaryID TEXT, AnnotatedTime TEXT, AnnotatedBy TEXT, Annotation TEXT)');
+				self::$db->exec('PRAGMA user_version = 26');
 
 		}
 		chmod($db_file, 0600);
