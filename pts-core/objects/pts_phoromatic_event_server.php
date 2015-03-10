@@ -39,7 +39,7 @@ class pts_phoromatic_event_server
 				}
 			}
 		}
-		if($sent_wol_request == false)
+		if(true || $sent_wol_request == false) // TODO XXX: right now sending both packets while debugging network issues
 		{
 			pts_network::send_wol_packet($ip, $mac);
 			$sent_wol_request = true;
