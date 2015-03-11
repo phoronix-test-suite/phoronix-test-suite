@@ -13,6 +13,7 @@ Phoronix Test Suite (Git)
 - phoromatic: Allow stress tests up to 90 days
 - phoromatic: Allow stress runs up to 24 concurrent tests
 - phoromatic: Add basic support for annotating/commenting on result files and individual graphs
+- phoromatic: Add support for the user to delete annotations
 
 Phoronix Test Suite Milestone 4
 25 February 2015

@@ -24,7 +24,19 @@ function phoromatic_annotate_entry($type, $id, $secondary_id)
 {
 	$annotate_hash = sha1($id . $secondary_id);
 
-	if(isset($_POST['add_annotation_' . $annotate_hash]) && !empty($_POST['add_annotation_' . $annotate_hash]))
+	if(isset($_GET['da_' . $annotate_hash]))
+	{
+		$user_name = isset($_SESSION['UserName']) ? $_SESSION['UserName'] : null;
+		$stmt = phoromatic_server::$db->prepare('DELETE FROM phoromatic_annotations WHERE Type = :type AND ID = :id AND SecondaryID = :secondary_id AND AnnotatedBy = :user_name AND AccountID = :account_id AND AnnotatedTime = :annotated_time');
+		$stmt->bindValue(':account_id', (isset($_SESSION['AccountID']) ? $_SESSION['AccountID'] : null));
+		$stmt->bindValue(':type', $type);
+		$stmt->bindValue(':id', $id);
+		$stmt->bindValue(':secondary_id', $secondary_id);
+		$stmt->bindValue(':user_name', $user_name);
+		$stmt->bindValue(':annotated_time', $_GET['da_' . $annotate_hash]);
+		$result = $stmt->execute();
+	}
+	else if(isset($_POST['add_annotation_' . $annotate_hash]) && !empty($_POST['add_annotation_' . $annotate_hash]))
 	{
 		$annotation = $_POST['add_annotation_' . $annotate_hash];
 		$user_name = isset($_SESSION['UserName']) ? $_SESSION['UserName'] : null;
@@ -55,7 +67,14 @@ function phoromatic_annotate_entry($type, $id, $secondary_id)
 	{
 		do
 		{
-			$output .= '<p>' . $row['Annotation'] . '<br /><em>Annotation By <strong>' . ($row['AnnotatedBy'] != null ? $row['AnnotatedBy'] : 'Unknown') . '</strong> at <strong>' . phoromatic_user_friendly_timedate($row['AnnotatedTime']) . '</strong>.</em></p>';
+			$output .= '<p>' . $row['Annotation'] . '<br /><em>Annotation By <strong>' . ($row['AnnotatedBy'] != null ? $row['AnnotatedBy'] : 'Unknown') . '</strong> at <strong>' . phoromatic_user_friendly_timedate($row['AnnotatedTime']) . '</strong>.</em>';
+
+			if(isset($_SESSION['UserName']) && !empty($_SESSION['UserName']) && $_SESSION['UserName'] == $row['AnnotatedBy'])
+			{
+				$output .= ' <a href="' . $_SERVER['REQUEST_URI'] . '/&da_' . $annotate_hash . '=' . $row['AnnotatedTime'] . '">Delete Annotation</a>';
+			}
+
+			$output .= '</p>';
 		}
 		while($row = $result->fetchArray());
 	}
