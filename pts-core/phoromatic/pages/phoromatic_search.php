@@ -195,35 +195,46 @@ class phoromatic_search implements pts_webui_interface
 		else
 		{
 			$main .= '<h1>Search Results For: ' . $search_query . '</h1>';
+			$category_matches = 0;
 
 			$tests = self::search_test_profiles($search_query);
 			if($tests != null)
 			{
+				$category_matches++;
 				$main .= '<h2>Test Profile Matches</h2>' . $tests . '<hr />';
 			}
 
 			$local_suites = self::search_local_test_suites($search_query);
 			if($local_suites != null)
 			{
+				$category_matches++;
 				$main .= '<h2>Local Test Suite Matches</h2>' . $local_suites . '<hr />';
 			}
 
 			$test_schedules = self::search_test_schedules($search_query);
 			if($test_schedules != null)
 			{
+				$category_matches++;
 				$main .= '<h2>Test Schedule Matches</h2>' . $test_schedules . '<hr />';
 			}
 
 			$test_results = self::search_test_results($search_query);
 			if($test_results != null)
 			{
+				$category_matches++;
 				$main .= '<h2>Test Result Matches</h2>' . $test_results . '<hr />';
 			}
 
 			$test_systems = self::search_test_systems($search_query);
 			if($test_systems != null)
 			{
+				$category_matches++;
 				$main .= '<h2>Test System Matches</h2>' . $test_systems . '<hr />';
+			}
+
+			if($category_matches == 0)
+			{
+				$main .= '<h2>No Matches Found</h2>';
 			}
 		}
 
