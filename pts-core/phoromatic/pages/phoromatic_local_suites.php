@@ -47,7 +47,7 @@ class phoromatic_local_suites implements pts_webui_interface
 			$id = basename(dirname($xml_path));
 			$test_suite = new pts_test_suite($xml_path);
 
-			$main .= '<h1>' . $test_suite->get_title() . ' [' . $id . ']</h1>';
+			$main .= '<a name="' . $id . '"></a><h1>' . $test_suite->get_title() . ' [' . $id . ']</h1>';
 			$main .= '<p><strong>' . $test_suite->get_maintainer() . '</strong></p>';
 			$main .= '<p><em>' . $test_suite->get_description() . '</em></p>';
 			$main .= '<div style="max-height: 200px; overflow-y: scroll;">';
