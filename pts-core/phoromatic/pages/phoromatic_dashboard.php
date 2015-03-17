@@ -54,7 +54,7 @@ class phoromatic_dashboard implements pts_webui_interface
 			}
 			else if(stripos($row['CurrentTask'], 'idling') !== false)
 			{
-				continue;
+			//	continue;
 			}
 			else if(stripos($row['CurrentTask'], 'waiting') !== false || stripos($row['CurrentTask'], 'shutdown') !== false)
 			{
