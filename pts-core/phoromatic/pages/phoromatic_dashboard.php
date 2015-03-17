@@ -46,6 +46,7 @@ class phoromatic_dashboard implements pts_webui_interface
 		echo '<div style="margin: 10px 0 30px; clear: both; padding-bottom: 40px;">';
 		while($row = $result->fetchArray())
 		{
+			$opacity = null;
 			// stripos($row['CurrentTask'], 'idling') !== false ||
 			if(phoromatic_server::system_check_if_down($_SESSION['AccountID'], $row['SystemID'], $row['LastCommunication'], $row['CurrentTask']))
 			{
@@ -54,6 +55,7 @@ class phoromatic_dashboard implements pts_webui_interface
 			}
 			else if(stripos($row['CurrentTask'], 'idling') !== false)
 			{
+				$not_testing = true;
 			//	continue;
 			}
 			else if(stripos($row['CurrentTask'], 'waiting') !== false || stripos($row['CurrentTask'], 'shutdown') !== false)
@@ -64,7 +66,6 @@ class phoromatic_dashboard implements pts_webui_interface
 			else
 			{
 				$not_testing = false;
-				$opacity = null;
 			}
 
 			echo '<a href="?systems/' . $row['SystemID'] . '"><div class="phoromatic_dashboard_block"' . $opacity . '>';
