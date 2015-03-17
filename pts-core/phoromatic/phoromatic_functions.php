@@ -40,6 +40,7 @@ function phoromatic_annotate_entry($type, $id, $secondary_id)
 	{
 		$annotation = $_POST['add_annotation_' . $annotate_hash];
 		$user_name = isset($_SESSION['UserName']) ? $_SESSION['UserName'] : null;
+		$annotation = str_replace("\n", '<br />', $annotation);
 
 		$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_annotations (AccountID, Type, ID, SecondaryID, AnnotatedTime, AnnotatedBy, Annotation) VALUES (:account_id, :type, :id, :secondary_id, :annotated_time, :user_name, :annotation)');
 		$stmt->bindValue(':account_id', (isset($_SESSION['AccountID']) ? $_SESSION['AccountID'] : null));
