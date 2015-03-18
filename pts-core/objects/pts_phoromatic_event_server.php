@@ -56,16 +56,17 @@ class pts_phoromatic_event_server
 	{
 		$systems_already_reported = array();
 		pts_client::fork(array('pts_phoromatic_event_server', 'ob_cache_run'), null);
+		$is_first_run = true;
 
 		while(true)
 		{
 			$hour = date('G');
 			$minute = date('i');
 
-			phoromatic_server::prepare_database(true);
-			if($minute == 0)
+			phoromatic_server::prepare_database();
+			if($is_first_run || $minute == 0)
 			{
-				if($hour == 8)
+				if($is_first_run || $hour == 8)
 				{
 					pts_client::fork(array('pts_phoromatic_event_server', 'ob_cache_run'), null);
 				}
@@ -81,11 +82,19 @@ class pts_phoromatic_event_server
 					if($last_comm > (time() - 3600))
 						continue; // if last comm time is less than an hour, still might be busy testing
 
-					if($last_comm < (time() - (3600 * 3)))
+					if($last_comm < (time() - (3600 * 3)) && !$is_first_run)
 						break; // it's already been reported enough for now...
 
 					if(stripos($row['CurrentTask'], 'shutdown') !== false || stripos($row['CurrentTask'], 'shutting down') !== false)
 						continue; // if the system shutdown, no reason to report it
+
+					// UPDATE SYSTEM STATUS TO "UNKNOWN"
+					$stmt_unknown = phoromatic_server::$db->prepare('UPDATE phoromatic_systems SET CurrentTask = :unknown_state WHERE AccountID = :account_id AND SystemID = :system_id');
+					$stmt_unknown->bindValue(':account_id', $row['AccountID']);
+					$stmt_unknown->bindValue(':system_id', $row['SystemID']);
+					$stmt_unknown->bindValue(':unknown_state', 'Unknown');
+					$stmt_unknown->execute();
+
 
 					$stmt_email = phoromatic_server::$db->prepare('SELECT UserName, Email FROM phoromatic_users WHERE UserID IN (SELECT UserID FROM phoromatic_user_settings WHERE AccountID = :account_id AND NotifyOnHungSystems = 1) AND AccountID = :account_id');
 					$stmt_email->bindValue(':account_id', $row['AccountID']);
@@ -99,7 +108,7 @@ class pts_phoromatic_event_server
 					}
 				}
 			}
-			if($minute % 3 == 0)
+			if($is_first_run || $minute % 3 == 0)
 			{
 				// Check for systems to wake
 				$stmt = phoromatic_server::$db->prepare('SELECT LastCommunication, CurrentTask, SystemID, AccountID, NetworkMAC, LastIP, MaintenanceMode FROM phoromatic_systems WHERE State > 0 AND NetworkMAC NOT LIKE \'\' AND NetworkWakeOnLAN LIKE \'%g%\' ORDER BY LastCommunication DESC');
@@ -172,8 +181,8 @@ class pts_phoromatic_event_server
 				}
 			}
 			phoromatic_server::close_database();
-
 			sleep((60 - date('s') + 1));
+			$is_first_run = false;
 		}
 	}
 }

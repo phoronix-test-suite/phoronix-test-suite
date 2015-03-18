@@ -48,7 +48,7 @@ class phoromatic_dashboard implements pts_webui_interface
 		{
 			$opacity = null;
 			// stripos($row['CurrentTask'], 'idling') !== false ||
-			if(phoromatic_server::system_check_if_down($_SESSION['AccountID'], $row['SystemID'], $row['LastCommunication'], $row['CurrentTask']))
+			if(phoromatic_server::system_check_if_down($_SESSION['AccountID'], $row['SystemID'], $row['LastCommunication'], $row['CurrentTask']) || stripos($row['CurrentTask'], 'Unknown') !== false)
 			{
 				$not_testing = false;
 				$opacity = ' style="background: #f44336; color: #FFF;"';
