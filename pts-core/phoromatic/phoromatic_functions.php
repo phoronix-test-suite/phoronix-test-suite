@@ -69,9 +69,9 @@ function phoromatic_annotate_entry($type, $id, $secondary_id)
 		do
 		{
 			$annotation = $row['Annotation'];
-			$annotation = str_replace("\n", '<br />', $annotation);
+			$annotation = str_replace("\n", 'XXXX', $annotation);
 			$annotation = str_replace("\t", ' &nbsp; &nbsp; &nbsp;', $annotation);
-			$annotation = str_replace(' ', '&nbsp;', $annotation);
+			$annotation = str_replace('  ', '&nbsp;', $annotation);
 
 			$output .= '<p>' . $annotation . '<br /><em>Annotation By <strong>' . ($row['AnnotatedBy'] != null ? $row['AnnotatedBy'] : 'Unknown') . '</strong> at <strong>' . phoromatic_user_friendly_timedate($row['AnnotatedTime']) . '</strong>.</em>';
 
