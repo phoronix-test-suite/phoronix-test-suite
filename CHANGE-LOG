@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+- pts-core: Drop bilde_renderer since it's been deprecated for a while
 - phoromatic: Add universal search functionality from web interface
 - phoromatic: Improve formatting of annotations
 
