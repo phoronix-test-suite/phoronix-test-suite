@@ -295,6 +295,8 @@ class pts_test_run_options
 					}
 				}
 
+				$all_devices = array_merge($all_devices, pts_file_io::glob('/dev/mapper/*'));
+
 				$option_values = array();
 				foreach($all_devices as $partition)
 				{
@@ -321,7 +323,7 @@ class pts_test_run_options
 							if(is_dir($mount_point) && is_writable($mount_point) && $mount_point != '/boot')
 							{
 								array_push($option_values, $mount_point);
-								array_push($option_names, $mount_point . ' [' . $partition_d . ']');
+								array_push($option_names, $mount_point); // ' [' . $partition_d . ']'
 							}
 						}
 					}
