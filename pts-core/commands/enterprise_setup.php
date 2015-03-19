@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2014, Phoronix Media
-	Copyright (C) 2014, Michael Larabel
+	Copyright (C) 2014 - 2015, Phoronix Media
+	Copyright (C) 2014 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -32,6 +32,12 @@ class enterprise_setup implements pts_option_interface
 			'PhoronixTestSuite/Options/OpenBenchmarking/AnonymousSoftwareReporting' => 'FALSE',
 			'PhoronixTestSuite/Options/OpenBenchmarking/AnonymousHardwareReporting' => 'FALSE'
 			);
+
+		if(pts_network::internet_support_available() == false)
+		{
+			$force_options['PhoronixTestSuite/Options/Networking/NoInternetCommunication'] = 'TRUE';
+		}
+
 		pts_config::user_config_generate($force_options);
 
 		$pso = pts_storage_object::recover_from_file(PTS_CORE_STORAGE);
