@@ -81,10 +81,6 @@ if(!empty($result_ids))
 	}
 
 	$result_file_title = null;
-	if(count($system_types) == 1)
-	{
-		$result_file_title = phoromatic_system_id_to_name($system_types[0]) . ' Tests';
-	}
 	if(empty($schedule_types[0]))
 	{
 		$system_name_format = 'ORIGINAL_DATA';
@@ -126,19 +122,19 @@ if(!empty($result_ids))
 				$system_name = null;
 				break;
 			case 'SYSTEM_NAME':
-				$system_name = phoromatic_system_id_to_name($row['SystemID']);
+				$system_name = phoromatic_system_id_to_name($row['SystemID'], $row['AccountID']);
 				break;
 			case 'TRIGGER':
 				$system_name = $row['Trigger'];
 				break;
 			case 'TRIGGER_AND_SYSTEM':
-				$system_name = phoromatic_system_id_to_name($row['SystemID']) . ': ' . $row['Trigger'];
+				$system_name = phoromatic_system_id_to_name($row['SystemID'], $row['AccountID']) . ': ' . $row['Trigger'];
 				break;
 			case 'SYSTEM_AND_SCHEDULE':
 				$system_name = phoromatic_schedule_id_to_name($row['ScheduleID']) . ': ' . $row['Trigger'];
 				break;
 			default:
-				$system_name = phoromatic_system_id_to_name($row['SystemID']) . ' - ' . phoromatic_schedule_id_to_name($row['ScheduleID']) . ' - ' . $row['Trigger'];
+				$system_name = phoromatic_system_id_to_name($row['SystemID'], $row['AccountID']) . ' - ' . phoromatic_schedule_id_to_name($row['ScheduleID']) . ' - ' . $row['Trigger'];
 		}
 
 		array_push($result_file, new pts_result_merge_select($composite_xml, null, $system_name));
