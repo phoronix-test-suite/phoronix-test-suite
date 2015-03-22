@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2011 - 2012, Phoronix Media
-	Copyright (C) 2011 - 2012, Michael Larabel
+	Copyright (C) 2011 - 2015, Phoronix Media
+	Copyright (C) 2011 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -47,7 +47,7 @@ class detailed_system_info implements pts_option_interface
 		echo 'Virtualization: ' . (phodevi_cpu::virtualization_technology() ? phodevi_cpu::virtualization_technology() : 'NO') . PHP_EOL;
 
 		// Other info
-		foreach(pts_test_run_manager::pull_test_notes(true) as $test_note_head => $test_note)
+		foreach(pts_arrays::to_array(pts_test_run_manager::pull_test_notes(true)) as $test_note_head => $test_note)
 		{
 			echo ucwords(str_replace('-', ' ', $test_note_head)) . ': ' . $test_note . PHP_EOL;
 		}

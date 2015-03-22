@@ -6,6 +6,7 @@ Phoronix Test Suite (Git)
 - pts-core: Yield /dev/mapper/* points in auto-disk-mount-points
 - pts-core: Detect Internet presence for enterprise-setup
 - pts-core: cli_set_process_title() still emits error on OS X so block its usage
+- pts-core: Fix potential warning in detailed-system-info sub-command
 - phodevi: HFS+ file-system fallback detection on OS X
 - phodevi: Workaround Hyper Threading detection on OS X
 - phoromatic: Add universal search functionality from web interface
