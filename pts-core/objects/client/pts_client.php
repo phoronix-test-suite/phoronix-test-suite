@@ -45,7 +45,7 @@ class pts_client
 		set_time_limit(0);
 		pts_define_directories(); // Define directories
 
-		if(function_exists('cli_set_process_title'))
+		if(function_exists('cli_set_process_title') && !phodevi::is_macosx())
 		{
 			cli_set_process_title('Phoronix Test Suite');
 		}

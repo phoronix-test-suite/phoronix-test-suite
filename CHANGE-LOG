@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 - pts-core: Drop bilde_renderer since it's been deprecated for a while
 - pts-core: Yield /dev/mapper/* points in auto-disk-mount-points
 - pts-core: Detect Internet presence for enterprise-setup
+- pts-core: cli_set_process_title() still emits error on OS X so block its usage
 - phoromatic: Add universal search functionality from web interface
 - phoromatic: Improve formatting of annotations
 - phoromatic: Mark system state as unknown when communication fails and hits the event server check
