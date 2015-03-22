@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2013, Phoronix Media
-	Copyright (C) 2008 - 2013, Michael Larabel
+	Copyright (C) 2008 - 2015, Phoronix Media
+	Copyright (C) 2008 - 2015, Michael Larabel
 	phodevi_cpu.php: The PTS Device Interface object for the CPU / processor
 
 	This program is free software; you can redistribute it and/or modify
@@ -107,7 +107,12 @@ class phodevi_cpu extends phodevi_device_interface
 		}
 		else if(phodevi::is_macosx())
 		{
-			$info = phodevi_osx_parser::read_osx_system_profiler('SPHardwareDataType', 'TotalNumberOfCores');
+			$info = intval(phodevi_bsd_parser::read_sysctl(array('hw.ncpu')));
+
+			if(empty($info))
+			{
+				$info = phodevi_osx_parser::read_osx_system_profiler('SPHardwareDataType', 'TotalNumberOfCores');
+			}
 		}
 		else if(phodevi::is_windows())
 		{
