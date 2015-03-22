@@ -182,7 +182,7 @@ class phodevi_system extends phodevi_device_interface
 				{
 					$fs = 'Journaled HFS+';
 				}
-				else if(stripos($mount, ' on / (hfs, local, journaled)') !== false)
+				else if(stripos($mount, ' on / (hfs') !== false)
 				{
 					$fs = 'HFS+';
 				}
