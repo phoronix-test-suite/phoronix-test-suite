@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2014, Phoronix Media
-	Copyright (C) 2008 - 2014, Michael Larabel
+	Copyright (C) 2008 - 2015, Phoronix Media
+	Copyright (C) 2008 - 2015, Michael Larabel
 	phodevi_system.php: The PTS Device Interface object for the system software
 
 	This program is free software; you can redistribute it and/or modify
@@ -174,6 +174,19 @@ class phodevi_system extends phodevi_device_interface
 		if(phodevi::is_macosx())
 		{
 			$fs = phodevi_osx_parser::read_osx_system_profiler('SPSerialATADataType', 'FileSystem');
+
+			if($fs == null && pts_client::executable_in_path('mount'))
+			{
+				$mount = shell_exec('mount 2>&1');
+				if(stripos($mount, ' on / (hfs, local, journaled)') !== false)
+				{
+					$fs = 'Journaled HFS+';
+				}
+				else if(stripos($mount, ' on / (hfs, local, journaled)') !== false)
+				{
+					$fs = 'HFS+';
+				}
+			}
 		}
 		else if(phodevi::is_bsd())
 		{
