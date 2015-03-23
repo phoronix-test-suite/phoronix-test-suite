@@ -84,9 +84,9 @@ class phoromatic_server
 		}
 
 		$db_file = self::phoromatic_path() . 'phoromatic.db';
-
 		$db_flags = SQLITE3_OPEN_READWRITE | SQLITE3_OPEN_CREATE;
-		if($read_only)
+
+		if($read_only && is_file($db_file))
 		{
 			$db_flags = SQLITE3_OPEN_READONLY;
 		}
@@ -94,8 +94,10 @@ class phoromatic_server
 		self::$db = new SQLite3($db_file, $db_flags);
 		self::$db->busyTimeout(5000);
 
-		if($read_only)
+		if($read_only && is_file($db_file))
+		{
 			return true;
+		}
 
 		switch(self::read_database_version())
 		{
