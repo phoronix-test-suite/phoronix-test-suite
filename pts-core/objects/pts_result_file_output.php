@@ -39,9 +39,9 @@ class pts_result_file_output
 			{
 				foreach($buffers as &$buffer)
 				{
-				$json['results'][$result_object->test_profile->get_identifier()]['results'][$buffer->get_result_identifier()] = array(
-					'value' => $buffer->get_result_value()
-					);
+					$json['results'][$result_object->test_profile->get_identifier()]['results'][$buffer->get_result_identifier()] = array(
+						'value' => $buffer->get_result_value()
+						);
 				}
 			}
 		}
