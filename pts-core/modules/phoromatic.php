@@ -259,7 +259,7 @@ class phoromatic extends pts_module_interface
 			$last_server_http_port = substr($last_server, strlen($last_server_address) + 1, -1 - strlen($last_account_id));
 			pts_client::$pts_logger && pts_client::$pts_logger->log('Last Server IP: ' . $last_server_address . ' Last Server HTTP Port: ' . $last_server_http_port . ' Last Account ID: ' . $last_account_id);
 
-			for($i = 0; $i < 9; $i++)
+			for($i = 0; $i < 12; $i++)
 			{
 				$server_response = phoromatic::upload_to_remote_server(array(
 					'r' => 'ping',
@@ -278,7 +278,7 @@ class phoromatic extends pts_module_interface
 				else
 				{
 					pts_client::$pts_logger && pts_client::$pts_logger->log('Phoromatic Server connection failed');
-					sleep((10 * ($i + 1)));
+					sleep((12 * ($i + 1)));
 				}
 			}
 		}

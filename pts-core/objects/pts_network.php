@@ -316,21 +316,29 @@ class pts_network
 				{
 					echo PHP_EOL;
 
-					if(!PTS_IS_DAEMONIZED_SERVER_PROCESS)
+					if(PTS_IS_DAEMONIZED_SERVER_PROCESS)
 					{
-						trigger_error('No Internet Connectivity', E_USER_WARNING);
-						self::$disable_internet_support = true;
+						// Wait some seconds in case network is still coming up
+						foreach(array(20, 40) as $time_to_wait)
+						{
+							sleep($time_to_wait);
+							$server_response = pts_network::http_get_contents('http://www.phoronix-test-suite.com/PTS', false, false);
+							if($server_response != 'PTS' && gethostbyname('google.com') == 'google.com')
+							{
+								trigger_error('No Internet Connectivity After Wait', E_USER_WARNING);
+								self::$disable_internet_support = true;
+							}
+							else
+							{
+								self::$disable_internet_support = false;
+								break;
+							}
+						}
 					}
 					else
 					{
-						// Wait 20 seconds in case network is still coming up
-						sleep(20);
-						$server_response = pts_network::http_get_contents('http://www.phoronix-test-suite.com/PTS', false, false);
-						if($server_response != 'PTS' && gethostbyname('google.com') == 'google.com')
-						{
-							trigger_error('No Internet Connectivity After Wait', E_USER_WARNING);
-							self::$disable_internet_support = true;
-						}
+						trigger_error('No Internet Connectivity', E_USER_WARNING);
+						self::$disable_internet_support = true;
 					}
 				}
 			}
