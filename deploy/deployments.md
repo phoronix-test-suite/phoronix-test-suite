@@ -7,3 +7,7 @@ Running `php deploy/deb-package/build-package-deb.php` from the main `phoronix-t
 ## rpm-package: Generate A RedHat/Fedora RPM Package
 
 Running `php deploy/rpm-package/build-package-rpm.php` from the main `phoronix-test-suite/` directory will generate a basic Phoronix-Test-Suite RPM package for Red Hat / Fedora based distributions. This script depends upon `rpmbuild` being present on the system.
+
+## phoromatic-upstart: Reference Upstart job files for Phoromatic
+
+The `*.conf` files provide basic `phoromatic-client` and `phoromatic-server` job files for Upstart-powered Linux systems looking to deploy the Phoromatic on either the front or back-end. Read the Phoronix Test Suite documentation for more details.

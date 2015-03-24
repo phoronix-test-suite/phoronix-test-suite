@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Start moving possible deployment scripts into deploy/ directory
+- pts-core: Move phoromatic-client and phoromatic-server Upstart job files to deploy/
 
 Phoronix Test Suite 5.6.0-Dedilovo
 24 March 2015
