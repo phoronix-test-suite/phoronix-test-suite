@@ -11,3 +11,7 @@ Running `php deploy/rpm-package/build-package-rpm.php` from the main `phoronix-t
 ## phoromatic-upstart: Reference Upstart job files for Phoromatic
 
 The `*.conf` files provide basic `phoromatic-client` and `phoromatic-server` job files for Upstart-powered Linux systems looking to deploy the Phoromatic on either the front or back-end. Read the Phoronix Test Suite documentation for more details.
+
+## phoromatic-systemd: Reference systemd service files for Phoromatic
+
+The `*.service` files provide basic `phoromatic-client` and `phoromatic-server` job files for systemd-based Linux systems looking to deploy Phoromatic for controlling the Phoronix Test Suite.
