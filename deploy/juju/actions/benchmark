@@ -1,0 +1,23 @@
+#!/bin/bash
+
+set -e
+
+run_benchmark() {
+    chlp benchmark-start || true
+
+    params="$@"
+
+    mkdir -p /opt/pts/results
+    rm -rf /root/.phoronix-test-suite
+    cp -Rpf files/dotfile-phoronix-test-suite /root/.phoronix-test-suite
+
+    run=`date +%s`
+
+    phoronix-test-suite batch-install $params > /dev/null 2>&1
+
+    phoronix-test-suite batch-run $params
+    rsync -aqz /root/.phoronix-test-suite /opt/pts/results/$run
+
+    scripts/parse /opt/pts/results/$run/.phoronix-test-suite/test-results/$(date +%Y)-*/test-1.xml
+    chlp benchmark-finish || true
+}
