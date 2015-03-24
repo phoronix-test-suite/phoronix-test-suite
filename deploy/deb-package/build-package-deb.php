@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2014, Phoronix Media
-	Copyright (C) 2008 - 2014, Michael Larabel
+	Copyright (C) 2008 - 2015, Phoronix Media
+	Copyright (C) 2008 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
 if(!is_executable("phoronix-test-suite") || !is_dir("pts-core/"))
 {
 	echo "\nYou must run this script from the root directory of the phoronix-test-suite/ folder!\n";
-	echo "Example: php5 pts-core/static/scripts/build-package-deb.php\n";
+	echo "Example: php5 deploy/deb-package/build-package-deb.php\n";
 	exit(0);
 }
 if(!is_executable('/usr/bin/dpkg'))
