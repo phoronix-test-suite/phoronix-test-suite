@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite 5.6.0-Dedilovo
+24 March 2015
 
 - pts-core: Drop bilde_renderer since it's been deprecated for a while
 - pts-core: Yield /dev/mapper/* points in auto-disk-mount-points
