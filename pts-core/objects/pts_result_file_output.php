@@ -22,6 +22,32 @@
 
 class pts_result_file_output
 {
+	public static function result_file_to_json(&$result_file)
+	{
+		$json = array();
+		$json['title'] = $result_file->get_title();
+
+		$json['results'] = array();
+		foreach($result_file->get_result_objects() as $result_object)
+		{
+			$json['results'][$result_object->test_profile->get_identifier()] = array(
+				'arguments' => $result_object->get_arguments_description(),
+				'units' => $result_object->test_profile->get_result_scale(),
+				);
+
+			foreach($result_object->test_result_buffer as &$buffers)
+			{
+				foreach($buffers as &$buffer)
+				{
+				$json['results'][$result_object->test_profile->get_identifier()]['results'][$buffer->get_result_identifier()] = array(
+					'value' => $buffer->get_result_value()
+					);
+				}
+			}
+		}
+
+		return json_encode($json, JSON_PRETTY_PRINT);
+	}
 	public static function result_file_to_csv(&$result_file)
 	{
 		$csv_output = null;
