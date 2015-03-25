@@ -122,7 +122,7 @@ class phoromatic_main implements pts_webui_interface
 					else
 					{
 						$run_in_future = false;
-						$main .= '<h3>Triggered ' . pts_strings::format_time(ceil(1, (date('H') * 60) + date('i') - (($h * 60) + $m)), 'MINUTES') . ' Ago</h3>';
+						$main .= '<h3>Triggered ' . pts_strings::format_time(max(1, (date('H') * 60) + date('i') - (($h * 60) + $m)), 'MINUTES') . ' Ago</h3>';
 					}
 				}
 
