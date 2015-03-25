@@ -98,10 +98,18 @@ class phoromatic_main implements pts_webui_interface
 
 			while($row = $result->fetchArray())
 			{
+				$systems_for_schedule = phoromatic_server::systems_associated_with_schedule($_SESSION['AccountID'], $row['ScheduleID']);
+
+				$extra_css = null;
+				if(empty($systems_for_schedule))
+				{
+					$extra_css = ' opacity: 0.4;';
+				}
+
 				list($h, $m) = explode('.', $row['RunAt']);
 				$offset = (($h * 60) + $m) / 1440 * 100;
 
-				$main .= '<div style="margin-left: ' . $offset . '%;" class="phoromatic_overview_box">';
+				$main .= '<div style="margin-left: ' . $offset . '%;' . $extra_css . '" class="phoromatic_overview_box">';
 				$main .= '<h1><a href="?schedules/' . $row['ScheduleID'] . '">' . $row['Title'] . '</a></h1>';
 
 				if($row['RunAt'] > date('H.i'))
@@ -115,7 +123,7 @@ class phoromatic_main implements pts_webui_interface
 					$main .= '<h3>Triggered ' . pts_strings::format_time((date('H') * 60) + date('i') - (($h * 60) + $m), 'MINUTES') . ' Ago</h3>';
 				}
 
-				foreach(phoromatic_server::systems_associated_with_schedule($_SESSION['AccountID'], $row['ScheduleID']) as $system_id)
+				foreach($systems_for_schedule as $system_id)
 				{
 					$pprid = self::result_match($row['ScheduleID'], $system_id, $show_date);
 

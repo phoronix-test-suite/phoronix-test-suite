@@ -8,6 +8,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add very basic result-file-to-json sub-command
 - Pull in JuJu scripts from https://github.com/juju-solutions/pts to deploy/juju
 - phodevi: More allowance for clients to recover Internet connection / server communication failure
+- phoromatic: Clean-up main page schedule for schedules with no associated systems
 
 Phoronix Test Suite 5.6.0-Dedilovo
 24 March 2015
