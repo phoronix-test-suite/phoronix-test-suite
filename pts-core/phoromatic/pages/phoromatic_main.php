@@ -112,15 +112,18 @@ class phoromatic_main implements pts_webui_interface
 				$main .= '<div style="margin-left: ' . $offset . '%;' . $extra_css . '" class="phoromatic_overview_box">';
 				$main .= '<h1><a href="?schedules/' . $row['ScheduleID'] . '">' . $row['Title'] . '</a></h1>';
 
-				if($row['RunAt'] > date('H.i'))
+				if(!empty($systems_for_schedule))
 				{
-					$run_in_future = true;
-					$main .= '<h3>Runs In ' . pts_strings::format_time((($h * 60) + $m) - ((date('H') * 60) + date('i')), 'MINUTES') . '</h3>';
-				}
-				else
-				{
-					$run_in_future = false;
-					$main .= '<h3>Triggered ' . pts_strings::format_time((date('H') * 60) + date('i') - (($h * 60) + $m), 'MINUTES') . ' Ago</h3>';
+					if($row['RunAt'] > date('H.i'))
+					{
+						$run_in_future = true;
+						$main .= '<h3>Runs In ' . pts_strings::format_time((($h * 60) + $m) - ((date('H') * 60) + date('i')), 'MINUTES') . '</h3>';
+					}
+					else
+					{
+						$run_in_future = false;
+						$main .= '<h3>Triggered ' . pts_strings::format_time((date('H') * 60) + date('i') - (($h * 60) + $m), 'MINUTES') . ' Ago</h3>';
+					}
 				}
 
 				foreach($systems_for_schedule as $system_id)
@@ -142,11 +145,11 @@ class phoromatic_main implements pts_webui_interface
 						$main .= ' [<a href="?systems/' . $system_id . '">';
 						if($last_comm_diff > 3600)
 						{
-							$main .= 'Last Communication: ' . pts_strings::format_time($last_comm_diff, 'SECONDS', true, 60) . ' Ago';
+							$main .= '<strong>Last Communication: ' . pts_strings::format_time($last_comm_diff, 'SECONDS', true, 60) . ' Ago</strong>';
 						}
 						else
 						{
-							$main .= '<strong>' . $sys_info['CurrentTask'] . '</strong>';
+							$main .= $sys_info['CurrentTask'];
 						}
 						$main .= '</a>]';
 					}
