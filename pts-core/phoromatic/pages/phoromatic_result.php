@@ -421,6 +421,8 @@ class phoromatic_result implements pts_webui_interface
 		if(true)
 		{
 			$compare_results = array();
+			$hash_matches = 0;
+			$ticket_matches = 0;
 
 			$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_results WHERE AccountID = :account_id AND ComparisonHash = :comparison_hash AND instr(:pprid, PPRID) = 0 ORDER BY UploadTime DESC LIMIT 12');
 			$stmt->bindValue(':account_id', $_SESSION['AccountID']);
@@ -430,6 +432,7 @@ class phoromatic_result implements pts_webui_interface
 			while($row = $result->fetchArray())
 			{
 				$compare_results[$row['PPRID']] = $row;
+				$hash_matches++;
 			}
 
 			foreach($benchmark_tickets as $ticket_id)
@@ -443,6 +446,7 @@ class phoromatic_result implements pts_webui_interface
 				while($row = $result->fetchArray())
 				{
 					$compare_results[$row['PPRID']] = $row;
+					$ticket_matches++;
 				}
 			}
 
@@ -457,6 +461,15 @@ class phoromatic_result implements pts_webui_interface
 				}
 
 				$right .= '<p><input type="submit" value="Compare Results" id="compare_results_submit" onclick="javascript:phoromatic_do_custom_compare_results(this); return false;" /></p></form>';
+
+				if($ticket_matches > 3)
+				{
+					$right .= '<p><a href="/results/ticket/' . $ticket_id . '">Find All Matching Results</a>';
+				}
+				else if($hash_matches > 3)
+				{
+					$right .= '<p><a href="/results/hash/' . $result_file->get_contained_tests_hash(false) . '">Find All Matching Results</a>';
+				}
 			}
 		}
 

@@ -74,7 +74,7 @@ class phoromatic_results implements pts_webui_interface
 
 				$result_limit = isset($_POST['result_limit']) && is_numeric($_POST['result_limit']) && $_POST['result_limit'] > 9 ? $_POST['result_limit'] : 50;
 
-				$main .= '<form action="?results" method="post"><div style="text-align: left; font-weight: bold;">Show Results For <select id="result_time_limit" name="time">';
+				$main .= '<form action="' . $_SERVER['REQUEST_URI'] . '" method="post"><div style="text-align: left; font-weight: bold;">Show Results For <select id="result_time_limit" name="time">';
 
 				$results_for_length = array(
 					'24 hours' => '24 Hours',
@@ -106,7 +106,24 @@ class phoromatic_results implements pts_webui_interface
 				$main .= '<div class="pts_phoromatic_info_box_area">';
 				$search_for = (!isset($_POST['search']) || empty($_POST['search']) ? null : 'AND (Title LIKE :search OR Description LIKE :search)');
 				$main .= '<div style="margin: 0 5%;"><ul style="max-height: 100%;"><li><h1>Recent Test Results</h1></li>';
-				$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, ScheduleID, PPRID, UploadTime, TimesViewed FROM phoromatic_results WHERE AccountID = :account_id ' . $search_for. ' ORDER BY UploadTime DESC LIMIT ' . $result_limit);
+
+				if(isset($PATH[1]) && $PATH[0] == 'hash')
+				{
+					// Find matching comparison hashes
+					$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, ScheduleID, PPRID, UploadTime, TimesViewed FROM phoromatic_results WHERE AccountID = :account_id ' . $search_for. ' AND ComparisonHash = :comparison_hash ORDER BY UploadTime DESC LIMIT ' . $result_limit);
+					$stmt->bindValue(':comparison_hash', $PATH[1]);
+				}
+				else if(isset($PATH[1]) && $PATH[0] == 'ticket')
+				{
+					// Find matching ticket results
+					$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, ScheduleID, PPRID, UploadTime, TimesViewed FROM phoromatic_results WHERE AccountID = :account_id ' . $search_for. ' AND BenchmarkTicketID = :ticket_id ORDER BY UploadTime DESC LIMIT ' . $result_limit);
+					$stmt->bindValue(':ticket_id', $PATH[1]);
+				}
+				else
+				{
+					$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, ScheduleID, PPRID, UploadTime, TimesViewed FROM phoromatic_results WHERE AccountID = :account_id ' . $search_for. ' ORDER BY UploadTime DESC LIMIT ' . $result_limit);
+				}
+
 				$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 				$stmt->bindValue(':search', (isset($_POST['search']) ? '%' . $_POST['search'] . '%' : null));
 				$test_result_result = $stmt->execute();

@@ -10,6 +10,7 @@ Phoronix Test Suite (Git)
 - phodevi: More allowance for clients to recover Internet connection / server communication failure
 - phoromatic: Clean-up main page schedule for schedules with no associated systems
 - phoromatic: Show matching ticket results in the compare results column on results page
+- phoromatic: Allow results page to be limited to particular hash or ticket matches
 
 Phoronix Test Suite 5.6.0-Dedilovo
 24 March 2015
