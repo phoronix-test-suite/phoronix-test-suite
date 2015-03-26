@@ -116,45 +116,16 @@ while($result && $row = $result->fetchArray())
 }
 
 // BENCHMARK TICKET
-
-$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_benchmark_tickets WHERE AccountID = :account_id AND State = 1 AND TicketIssueTime < :current_time AND TicketIssueTime > :yesterday');
-//echo phoromatic_server::$db->lastErrorMsg();
-$stmt->bindValue(':account_id', ACCOUNT_ID);
-$stmt->bindValue(':current_time', time());
-$stmt->bindValue(':yesterday', (time() - (60 * 60 * 24)));
-$result = $stmt->execute();
-
-while($result && $row = $result->fetchArray())
+$ticket_row = self::system_check_for_open_benchmark_ticket(ACCOUNT_ID, SYSTEM_ID, $sys_row);
+if($ticket_row != false)
 {
-	// Make sure this test schedule is supposed to work on given system
-	if(!in_array(SYSTEM_ID, explode(',', $row['RunTargetSystems'])))
+	pts_logger::add_to_log(SYSTEM_ID . ' - needs to benchmark ticket for ' . $ticket_row['Title']);
+	$res = phoromatic_generate_benchmark_ticket($ticket_row, $json, $phoromatic_account_settings);
+	if($res)
 	{
-		// The system ID isn't in the run target but see if system ID belongs to a group in the run target
-		$matches_to_group = false;
-		foreach(explode(',', $row['RunTargetGroups']) as $group)
-		{
-			if(stripos($sys_row['Groups'], '#' . $group . '#') !== false)
-			{
-				$matches_to_group = true;
-				break;
-			}
-		}
-
-		if($matches_to_group == false)
-			continue;
+		return;
 	}
-
-	if(!phoromatic_server::check_for_benchmark_ticket_result_match($row['TicketID'], ACCOUNT_ID, SYSTEM_ID, $row['TicketIssueTime']))
-	{
-		pts_logger::add_to_log(SYSTEM_ID . ' - needs to benchmark ticket for ' . $row['Title']);
-		$res = phoromatic_generate_benchmark_ticket($row, $json, $phoromatic_account_settings);
-		if($res)
-		{
-			return;
-		}
-	} else 	pts_logger::add_to_log(SYSTEM_ID . ' - already has benchmark ticket completed for ' . $row['Title']);
 }
-
 // END OF BENCHMARK TICKET
 
 if($CLIENT_CORE_VERSION >= 5511 && date('i') == 0 && $phoromatic_account_settings['PreSeedTestInstalls'] == 1 && phoromatic_pre_seed_tests_to_install($json, $phoromatic_account_settings))

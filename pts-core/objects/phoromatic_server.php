@@ -560,8 +560,8 @@ class phoromatic_server
 		}
 
 		// See if there's an open benchmark ticket for system
-		$t = self::system_check_for_open_benchmark_ticket($account_id, $system_id, $sys_row);
-		if($t != false)
+		$ticket_row = self::system_check_for_open_benchmark_ticket($account_id, $system_id, $sys_row);
+		if($ticket_row != false)
 		{
 			return $t;
 		}
@@ -598,7 +598,7 @@ class phoromatic_server
 
 			if(!phoromatic_server::check_for_benchmark_ticket_result_match($row['TicketID'], $account_id, $system_id, $row['TicketIssueTime']))
 			{
-				return $row['TicketID'];
+				return $row;
 			}
 		}
 
