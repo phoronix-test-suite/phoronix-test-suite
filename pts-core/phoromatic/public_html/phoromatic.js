@@ -73,6 +73,81 @@ function phoromatic_add_to_result_comparison(pprid)
 		}
 	}
 }
+function phoromatic_window_redirect(url)
+{
+	window.location.href = url;
+}
+function phoromatic_checkbox_toggle_result_comparison(pprid)
+{
+	var is_checked = document.getElementById("result_compare_checkbox_" + pprid).checked;
+
+	if(typeof(Storage) !== 'undefined')
+	{
+		if(localStorage.comparison_pprids)
+		{
+			var ids = JSON.parse(localStorage.comparison_pprids);
+		}
+		else
+		{
+			var ids = [];
+		}
+
+		if(pprid != '')
+		{
+			if(ids.indexOf(pprid) == -1)
+			{
+				// Add the PPRID to comparison
+				ids.push(pprid);
+				document.getElementById("result_compare_checkbox_" + pprid).checked = true;
+			}
+			else
+			{
+				ids.splice(ids.indexOf(pprid), 1);
+				if(document.getElementById("result_select_" + pprid))
+				{
+					document.getElementById("result_select_" + pprid).style.background = "#f1f1f1";
+				}
+				document.getElementById("result_compare_checkbox_" + pprid).checked = false;
+				document.getElementById("result_run_compare_link_" + ids[i]).style.visibility = 'hidden';
+			}
+
+			localStorage.comparison_pprids = JSON.stringify(ids);
+		}
+
+		if(ids.length > 0)
+		{
+			for(var i = 0; i < ids.length; i++)
+			{
+				if(document.getElementById("result_select_" + ids[i]))
+				{
+					document.getElementById("result_select_" + ids[i]).style.background = "#949494";
+				}
+				if(document.getElementById("result_compare_link_" + ids[i]))
+				{
+					document.getElementById("result_compare_link_" + ids[i]).innerHTML = "Remove From Comparison";
+				}
+				if(document.getElementById("result_delete_link_" + ids[i]))
+				{
+					document.getElementById("result_delete_link_" + ids[i]).style.visibility = 'hidden';
+				}
+				if(ids.length > 1 && document.getElementById("result_run_compare_link_" + ids[i]))
+				{
+					document.getElementById("result_run_compare_link_" + ids[i]).innerHTML = 'Compare Results (' + ids.length + ')';
+					document.getElementById("result_run_compare_link_" + ids[i]).style.visibility = 'visible';
+				}
+			}
+
+			document.getElementById("phoromatic_result_compare_info_box").innerHTML = "Compare Selected Results (" + ids.length + ")";
+			document.getElementById("phoromatic_result_compare_info_box").style.display = 'block';
+		}
+		else
+		{
+			document.getElementById("phoromatic_result_compare_info_box").style.display = 'none';
+		}
+	}
+
+	return false;
+}
 function toggle_annotate_area(annotate_hash)
 {
 	document.getElementById("annotation_link_" + annotate_hash).style.display = 'none';
