@@ -69,13 +69,15 @@ class phoromatic_admin_config implements pts_webui_interface
 				{
 					$new_phoromatic_dir = pts_strings::add_trailing_slash($_POST['new_phoromatic_path']);
 
-					if(!empty(glob($new_phoromatic_dir . '*')))
+					$d = glob($new_phoromatic_dir . '*');
+					if(!empty($d))
 					{
 						$new_phoromatic_dir .= 'phoromatic/';
 						pts_file_io::mkdir($new_phoromatic_dir);
 					}
 
-					if(!empty(glob($new_phoromatic_dir . '*')))
+					$d = glob($new_phoromatic_dir . '*');
+					if(!empty($d))
 					{
 						$main .= '<h2 style="color: red;"><em>' . $new_phoromatic_dir . '</em> must be an empty directory.</h2>';
 					}
@@ -298,7 +300,7 @@ class phoromatic_admin_config implements pts_webui_interface
 		$main .= '</form>';
 
 		$main .= '<hr /><h1>Account Creation</h1>';
-		$main .= '<p>By default, new accounts can be created at-will from the main page of the Phoromatic Server web interface. To disable the ability to create new accounts from the main welcome page, enter a message in the field below -- e.g. account creation disabled, contact XYZ department via email to request a new account, or other string to present to the user in place of the account creation box. Leave this box empty to allow new accounts to be created. HTML input is allowed.</p>';
+		$main .= '<p>By default, new accounts can be created at-will from the main page of the Phoromatic Server web interface. <strong>To disable the ability to create new accounts from the main welcome page</strong>, enter a message in the field below -- e.g. account creation disabled, contact XYZ department via email to request a new account, or other string to present to the user in place of the account creation box. Leave this box empty to allow new accounts to be created. HTML input is allowed.</p>';
 		$main .= '<form action="' . $_SERVER['REQUEST_URI'] . '" name="account_creation_text" method="post">';
 		$main .= '<p><strong>Account Creation String:</strong> <textarea name="account_creation_alt" cols="50" rows="4">' . phoromatic_server::read_setting('account_creation_alt') . '</textarea></p>';
 		$main .= '<p><input name="submit" value="Update Account Handling" type="submit" /></p>';
