@@ -321,12 +321,21 @@ class phoromatic_benchmark implements pts_webui_interface
 		$stmt->bindValue(':time_cutoff', (time() - (60 * 60 * 24 * 14)));
 		$result = $stmt->execute();
 
-		$right = '<ul><li>Benchmark Tickets</li>';
-		while($result && $row = $result->fetchArray())
+		if($result)
 		{
-			$right .= '<li><a href="?benchmark/' . $row['TicketID'] . '">' . $row['Title'] . '</a></li>';
+			$row = $result->fetchArray();
+
+			if(!empty($row))
+			{
+				$right = '<ul><li>Benchmark Tickets</li>';
+				do
+				{
+					$right .= '<li><a href="?benchmark/' . $row['TicketID'] . '">' . $row['Title'] . '</a></li>';
+				}
+				while($row = $result->fetchArray());
+				$right .= '</ul>';
+			}
 		}
-		$right .= '</ul>';
 
 		echo phoromatic_webui_header_logged_in();
 		echo phoromatic_webui_main($main, phoromatic_webui_right_panel_logged_in($right));
