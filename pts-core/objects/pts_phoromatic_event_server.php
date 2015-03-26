@@ -124,7 +124,7 @@ class pts_phoromatic_event_server
 						self::send_wol_wakeup($row['NetworkMAC'], $row['LastIP']);
 						continue;
 					}
-					if($last_comm < (time() - (3600 * 25)))
+					if($last_comm < (time() - (3600 * 26)))
 						continue; // System likely has some other issue if beyond a day it's been offline
 					if($last_comm < (time() - 600) || stripos($row['CurrentTask'], 'Shutdown') !== false)
 					{

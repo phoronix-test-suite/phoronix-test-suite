@@ -15,3 +15,11 @@ The `*.conf` files provide basic `phoromatic-client` and `phoromatic-server` job
 ## phoromatic-systemd: Reference systemd service files for Phoromatic
 
 The `*.service` files provide basic `phoromatic-client` and `phoromatic-server` job files for systemd-based Linux systems looking to deploy Phoromatic for controlling the Phoronix Test Suite.
+
+## JuJu
+
+Ubuntu JuJu deployment charm for the Phoronix Test Suite.
+
+## farm-system-customizations: Example files of common system changes made to systems in the LinuxBenchmarking.com farm
+
+Various scripts commonly used by the Phoronix reference farm / LinuxBenchmarking.com for reference purposes.

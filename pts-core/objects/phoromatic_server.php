@@ -504,17 +504,17 @@ class phoromatic_server
 		$result = $stmt->execute();
 		$day_of_week_int = date('N') - 1;
 
+		$stmt = phoromatic_server::$db->prepare('SELECT Groups FROM phoromatic_systems WHERE AccountID = :account_id AND SystemID = :system_id LIMIT 1');
+		$stmt->bindValue(':account_id', $account_id);
+		$stmt->bindValue(':system_id', $system_id);
+		$sys_result = $stmt->execute();
+		$sys_row = $sys_result->fetchArray();
+
 		while($result && $row = $result->fetchArray())
 		{
 			// Make sure this test schedule is supposed to work on given system
 			if(!in_array($system_id, explode(',', $row['RunTargetSystems'])))
 			{
-				$stmt = phoromatic_server::$db->prepare('SELECT Groups FROM phoromatic_systems WHERE AccountID = :account_id AND SystemID = :system_id LIMIT 1');
-				$stmt->bindValue(':account_id', $account_id);
-				$stmt->bindValue(':system_id', $system_id);
-				$sys_result = $stmt->execute();
-				$sys_row = $sys_result->fetchArray();
-
 				$matches_to_group = false;
 				foreach(explode(',', $row['RunTargetGroups']) as $group)
 				{
@@ -556,6 +556,49 @@ class phoromatic_server
 						return $row['ScheduleID'];
 					}
 				}
+			}
+		}
+
+		// See if there's an open benchmark ticket for system
+		$t = self::system_check_for_open_benchmark_ticket($account_id, $system_id, $sys_row);
+		if($t != false)
+		{
+			return $t;
+		}
+
+		return false;
+	}
+	public static function system_check_for_open_benchmark_ticket($account_id, $system_id, &$sys_row)
+	{
+		$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_benchmark_tickets WHERE AccountID = :account_id AND State = 1 AND TicketIssueTime < :current_time AND TicketIssueTime > :yesterday');
+		//echo phoromatic_server::$db->lastErrorMsg();
+		$stmt->bindValue(':account_id', $account_id);
+		$stmt->bindValue(':current_time', time());
+		$stmt->bindValue(':yesterday', (time() - (60 * 60 * 24)));
+		$result = $stmt->execute();
+
+		while($result && $row = $result->fetchArray())
+		{
+			// Make sure this test schedule is supposed to work on given system
+			if(!in_array($system_id, explode(',', $row['RunTargetSystems'])))
+			{
+				$matches_to_group = false;
+				foreach(explode(',', $row['RunTargetGroups']) as $group)
+				{
+					if(stripos($sys_row['Groups'], '#' . $group . '#') !== false)
+					{
+						$matches_to_group = true;
+						break;
+					}
+				}
+
+				if($matches_to_group == false)
+					continue;
+			}
+
+			if(!phoromatic_server::check_for_benchmark_ticket_result_match($row['TicketID'], $account_id, $system_id, $row['TicketIssueTime']))
+			{
+				return $row['TicketID'];
 			}
 		}
 
