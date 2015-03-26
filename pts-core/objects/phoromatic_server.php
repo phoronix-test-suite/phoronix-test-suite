@@ -610,6 +610,18 @@ class phoromatic_server
 
 		return false;
 	}
+	public static function estimated_time_remaining_diff($estimated_minutes, $last_comm)
+	{
+		if($estimated_minutes > 0)
+		{
+			$estimated_completion = strtotime($last_comm) + ($estimated_minutes * 60);
+
+			// Positive if ahead, negative number if the task elapsed
+			return ceil(($estimated_completion - time()) / 60);
+		}
+
+		return 0;
+	}
 	public static function systems_appearing_down($account_id = null)
 	{
 		if(isset($_SESSION['AccountID']))

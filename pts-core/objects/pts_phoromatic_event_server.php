@@ -72,7 +72,7 @@ class pts_phoromatic_event_server
 				}
 
 				// Check for basic hung systems
-				$stmt = phoromatic_server::$db->prepare('SELECT LastCommunication, CurrentTask, SystemID, AccountID, LastIP FROM phoromatic_systems WHERE State > 0 ORDER BY LastCommunication DESC');
+				$stmt = phoromatic_server::$db->prepare('SELECT LastCommunication, CurrentTask, EstimatedTimeForTask, SystemID, AccountID, LastIP FROM phoromatic_systems WHERE State > 0 ORDER BY LastCommunication DESC');
 				$result = $stmt->execute();
 
 				while($row = $result->fetchArray())
@@ -83,10 +83,13 @@ class pts_phoromatic_event_server
 						continue; // if last comm time is less than an hour, still might be busy testing
 
 					if($last_comm < (time() - (3600 * 3)) && !$is_first_run)
-						break; // it's already been reported enough for now...
+						continue; // it's already been reported enough for now...
 
 					if(stripos($row['CurrentTask'], 'shutdown') !== false || stripos($row['CurrentTask'], 'shutting down') !== false)
 						continue; // if the system shutdown, no reason to report it
+
+					if(phoromatic_server::estimated_time_remaining_diff($row['EstimatedTimeForTask'], $row['LastCommunication']) > 0)
+						continue; // system task time didn't run out yet
 
 					// UPDATE SYSTEM STATUS TO "UNKNOWN"
 					$stmt_unknown = phoromatic_server::$db->prepare('UPDATE phoromatic_systems SET CurrentTask = :unknown_state WHERE AccountID = :account_id AND SystemID = :system_id');
@@ -94,7 +97,6 @@ class pts_phoromatic_event_server
 					$stmt_unknown->bindValue(':system_id', $row['SystemID']);
 					$stmt_unknown->bindValue(':unknown_state', 'Unknown');
 					$stmt_unknown->execute();
-
 
 					$stmt_email = phoromatic_server::$db->prepare('SELECT UserName, Email FROM phoromatic_users WHERE UserID IN (SELECT UserID FROM phoromatic_user_settings WHERE AccountID = :account_id AND NotifyOnHungSystems = 1) AND AccountID = :account_id');
 					$stmt_email->bindValue(':account_id', $row['AccountID']);
