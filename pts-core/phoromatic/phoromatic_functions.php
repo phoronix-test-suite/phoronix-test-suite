@@ -36,7 +36,7 @@ function phoromatic_annotate_entry($type, $id, $secondary_id)
 		$stmt->bindValue(':annotated_time', $_GET['da_' . $annotate_hash]);
 		$result = $stmt->execute();
 	}
-	else if(isset($_POST['add_annotation_' . $annotate_hash]) && !empty($_POST['add_annotation_' . $annotate_hash]))
+	if(isset($_POST['add_annotation_' . $annotate_hash]) && !empty($_POST['add_annotation_' . $annotate_hash]))
 	{
 		$annotation = $_POST['add_annotation_' . $annotate_hash];
 		$user_name = isset($_SESSION['UserName']) ? $_SESSION['UserName'] : null;
