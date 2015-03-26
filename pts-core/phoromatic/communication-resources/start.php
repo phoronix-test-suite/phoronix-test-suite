@@ -42,8 +42,6 @@ $sys_stmt->bindValue(':system_id', SYSTEM_ID);
 $sys_result = $sys_stmt->execute();
 $sys_row = $sys_result->fetchArray();
 
-$tests_expected_later_today = false;
-
 // SEE IF SCHEDULE NEEDS TO RUN
 $schedule_row = phoromatic_server::system_check_for_open_schedule_run(ACCOUNT_ID, SYSTEM_ID, 0, $sys_row);
 if($schedule_row != false)
@@ -75,7 +73,7 @@ if($CLIENT_CORE_VERSION >= 5511 && date('i') == 0 && $phoromatic_account_setting
 	return;
 }
 
-if($tests_expected_later_today == false && $phoromatic_account_settings['PowerOffWhenDone'] == 1 && $sys_row['BlockPowerOffs'] != 1)
+if($phoromatic_account_settings['PowerOffWhenDone'] == 1 && $sys_row['BlockPowerOffs'] != 1)
 {
 	$json['phoromatic']['response'] = '[' . date('H:i:s') . '] Shutting system down per user settings as no more tests scheduled for today...';
 	$json['phoromatic']['task'] = 'shutdown';
