@@ -319,7 +319,10 @@ class phoromatic_systems implements pts_webui_interface
 						$group_string = null;
 						foreach($_POST['groups_' . $row['SystemID']] as $group)
 						{
-							$group_string .= '#' . $group . '#';
+							if($group != null)
+							{
+								$group_string .= '#' . $group . '#';
+							}
 						}
 
 							$stmt1 = phoromatic_server::$db->prepare('UPDATE phoromatic_systems SET Groups = :new_groups WHERE AccountID = :account_id AND SystemID = :system_id');
@@ -517,6 +520,7 @@ class phoromatic_systems implements pts_webui_interface
 					{
 						$main .= '<tr>';
 						$main .= '<th>' . $row['Title'] . '</th>';
+						$main .= '<input type="hidden" name="groups_' . $row['SystemID'] . '[]" value="" />';
 
 						foreach($all_groups as $group)
 						{

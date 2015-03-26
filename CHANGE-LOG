@@ -12,6 +12,7 @@ Phoronix Test Suite (Git)
 - phoromatic: Show matching ticket results in the compare results column on results page
 - phoromatic: Allow results page to be limited to particular hash or ticket matches
 - phoromatic: Allow results page search box to also search system's hardware/software components
+- phoromatic: Fix for removing a system from all groups on the "system group editing" systems page
 
 Phoronix Test Suite 5.6.0-Dedilovo
 24 March 2015
