@@ -320,6 +320,7 @@ class phoromatic_benchmark implements pts_webui_interface
 		$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 		$stmt->bindValue(':time_cutoff', (time() - (60 * 60 * 24 * 14)));
 		$result = $stmt->execute();
+		$right = null;
 
 		if($result)
 		{
@@ -327,7 +328,7 @@ class phoromatic_benchmark implements pts_webui_interface
 
 			if(!empty($row))
 			{
-				$right = '<ul><li>Benchmark Tickets</li>';
+				$right .= '<ul><li>Benchmark Tickets</li>';
 				do
 				{
 					$right .= '<li><a href="?benchmark/' . $row['TicketID'] . '">' . $row['Title'] . '</a></li>';
