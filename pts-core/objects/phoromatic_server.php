@@ -230,6 +230,10 @@ class phoromatic_server
 				// Change made 10 March
 				self::$db->exec('CREATE TABLE phoromatic_annotations (AccountID TEXT, Type TEXT, ID TEXT, SecondaryID TEXT, AnnotatedTime TEXT, AnnotatedBy TEXT, Annotation TEXT)');
 				self::$db->exec('PRAGMA user_version = 26');
+			case 26:
+				// Change made 26 March
+				self::$db->exec('ALTER TABLE phoromatic_systems ADD COLUMN BlockPowerOffs INTEGER DEFAULT 0');
+				self::$db->exec('PRAGMA user_version = 27');
 
 		}
 		chmod($db_file, 0600);

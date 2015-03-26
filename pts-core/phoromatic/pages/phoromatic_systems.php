@@ -42,12 +42,13 @@ class phoromatic_systems implements pts_webui_interface
 
 		if(!PHOROMATIC_USER_IS_VIEWER && !empty($PATH[0]) && isset($_POST['system_title']) && !empty($_POST['system_title']) && isset($_POST['system_description']) && isset($_POST['system_state']))
 		{
-			$stmt = phoromatic_server::$db->prepare('UPDATE phoromatic_systems SET Title = :title, Description = :description, State = :state, CurrentTask = \'Awaiting Task\' WHERE AccountID = :account_id AND SystemID = :system_id');
+			$stmt = phoromatic_server::$db->prepare('UPDATE phoromatic_systems SET Title = :title, Description = :description, State = :state, CurrentTask = \'Awaiting Task\', BlockPowerOffs = :block_power_offs WHERE AccountID = :account_id AND SystemID = :system_id');
 			$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 			$stmt->bindValue(':system_id', $PATH[0]);
 			$stmt->bindValue(':title', $_POST['system_title']);
 			$stmt->bindValue(':description', $_POST['system_description']);
 			$stmt->bindValue(':state', $_POST['system_state']);
+			$stmt->bindValue(':block_power_offs', $_POST['block_power_offs']);
 			$stmt->execute();
 		}
 		if(!PHOROMATIC_USER_IS_VIEWER && !empty($PATH[0]) && isset($_POST['maintenance_mode']))
@@ -105,6 +106,7 @@ class phoromatic_systems implements pts_webui_interface
 			<p><div style="width: 200px; font-weight: bold; float: left;">System Title:</div> <input type="text" style="width: 400px;" name="system_title" value="' . $row['Title'] . '" /></p>
 			<p><div style="width: 200px; font-weight: bold; float: left;">System Description:</div> <textarea style="width: 400px;" name="system_description">' . $row['Description'] . '</textarea></p>
 			<p><div style="width: 200px; font-weight: bold; float: left;">System State:</div><select name="system_state" style="width: 200px;"><option value="-1">Disabled</option><option value="1" selected="selected">Enabled</option></select></p>
+			<p><div style="width: 200px; font-weight: bold; float: left;">Allow Phoromatic To Power Off System When Testing Complete:</div><select name="block_power_offs" style="width: 200px;"><option value="0">Permitted</option><option value="1">Block Power-Off Signaling For This System</option></select> <sup>Assuming the power-off setting is enabled from the account settings page.</sup></p>
 			<p><div style="width: 200px; font-weight: bold; float: left;">&nbsp;</div> <input type="submit" value="Submit" /></p></form>';
 				}
 				else
@@ -136,7 +138,7 @@ class phoromatic_systems implements pts_webui_interface
 				}
 
 				$main .= '<hr />';
-				$info_table = array('Status:' => $row['CurrentTask'], 'Last Communication:' => phoromatic_user_friendly_timedate($row['LastCommunication']), 'Estimated Time Left For Task: ' => phoromatic_compute_estimated_time_remaining_string($row['EstimatedTimeForTask'], $row['LastCommunication']), 'State:' => $state, 'Phoronix Test Suite Client:' => $row['ClientVersion'], 'Initial Creation:' => phoromatic_user_friendly_timedate($row['CreatedOn']), 'System ID:' => $row['SystemID'], 'Last IP:' => $row['LastIP'], 'MAC Address' => $row['NetworkMAC'], 'Wake-On-LAN Information' => (empty($row['NetworkWakeOnLAN']) ? 'N/A' : $row['NetworkWakeOnLAN']));
+				$info_table = array('Status:' => $row['CurrentTask'], 'Last Communication:' => phoromatic_user_friendly_timedate($row['LastCommunication']), 'Estimated Time Left For Task: ' => phoromatic_compute_estimated_time_remaining_string($row['EstimatedTimeForTask'], $row['LastCommunication']), 'State:' => $state, 'Phoronix Test Suite Client:' => $row['ClientVersion'], 'Initial Creation:' => phoromatic_user_friendly_timedate($row['CreatedOn']), 'System ID:' => $row['SystemID'], 'Last IP:' => $row['LastIP'], 'MAC Address:' => $row['NetworkMAC'], 'Wake-On-LAN Information:' => (empty($row['NetworkWakeOnLAN']) ? 'N/A' : $row['NetworkWakeOnLAN']), 'Power-Off Sequence Permitted: ' => ($row['BlockPowerOffs'] == 1 ? 'Blocked' : 'Permitted'));
 				$main .= '<h2>System State</h2>' . pts_webui::r2d_array_to_table($info_table, 'auto');
 
 				if(!PHOROMATIC_USER_IS_VIEWER)

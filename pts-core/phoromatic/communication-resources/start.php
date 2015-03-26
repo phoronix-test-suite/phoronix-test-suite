@@ -41,6 +41,12 @@ $stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_schedules WHER
 $stmt->bindValue(':account_id', ACCOUNT_ID);
 $result = $stmt->execute();
 
+$sys_stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_systems WHERE AccountID = :account_id AND SystemID = :system_id LIMIT 1');
+$sys_stmt->bindValue(':account_id', ACCOUNT_ID);
+$sys_stmt->bindValue(':system_id', SYSTEM_ID);
+$sys_result = $sys_stmt->execute();
+$sys_row = $sys_result->fetchArray();
+
 $tests_expected_later_today = false;
 
 while($result && $row = $result->fetchArray())
@@ -49,12 +55,6 @@ while($result && $row = $result->fetchArray())
 	if(!in_array(SYSTEM_ID, explode(',', $row['RunTargetSystems'])))
 	{
 		// The system ID isn't in the run target but see if system ID belongs to a group in the run target
-		$stmt = phoromatic_server::$db->prepare('SELECT Groups FROM phoromatic_systems WHERE AccountID = :account_id AND SystemID = :system_id LIMIT 1');
-		$stmt->bindValue(':account_id', ACCOUNT_ID);
-		$stmt->bindValue(':system_id', SYSTEM_ID);
-		$sys_result = $stmt->execute();
-		$sys_row = $sys_result->fetchArray();
-
 		$matches_to_group = false;
 		foreach(explode(',', $row['RunTargetGroups']) as $group)
 		{
@@ -130,12 +130,6 @@ while($result && $row = $result->fetchArray())
 	if(!in_array(SYSTEM_ID, explode(',', $row['RunTargetSystems'])))
 	{
 		// The system ID isn't in the run target but see if system ID belongs to a group in the run target
-		$stmt = phoromatic_server::$db->prepare('SELECT Groups FROM phoromatic_systems WHERE AccountID = :account_id AND SystemID = :system_id LIMIT 1');
-		$stmt->bindValue(':account_id', ACCOUNT_ID);
-		$stmt->bindValue(':system_id', SYSTEM_ID);
-		$sys_result = $stmt->execute();
-		$sys_row = $sys_result->fetchArray();
-
 		$matches_to_group = false;
 		foreach(explode(',', $row['RunTargetGroups']) as $group)
 		{
@@ -169,7 +163,7 @@ if($CLIENT_CORE_VERSION >= 5511 && date('i') == 0 && $phoromatic_account_setting
 	return;
 }
 
-if($tests_expected_later_today == false && $phoromatic_account_settings['PowerOffWhenDone'] == 1)
+if($tests_expected_later_today == false && $phoromatic_account_settings['PowerOffWhenDone'] == 1 && $sys_row['BlockPowerOffs'] != 1)
 {
 	$json['phoromatic']['response'] = '[' . date('H:i:s') . '] Shutting system down per user settings as no more tests scheduled for today...';
 	$json['phoromatic']['task'] = 'shutdown';
