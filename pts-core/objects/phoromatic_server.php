@@ -499,16 +499,35 @@ class phoromatic_server
 	}
 	public static function system_has_outstanding_jobs($account_id, $system_id, $time_offset = 0)
 	{
-		$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_schedules WHERE AccountID = :account_id AND State = 1 AND (SELECT COUNT(*) FROM phoromatic_schedules_tests WHERE AccountID = :account_id AND ScheduleID = phoromatic_schedules.ScheduleID) > 0');
-		$stmt->bindValue(':account_id', $account_id);
-		$result = $stmt->execute();
-		$day_of_week_int = date('N') - 1;
-
 		$stmt = phoromatic_server::$db->prepare('SELECT Groups FROM phoromatic_systems WHERE AccountID = :account_id AND SystemID = :system_id LIMIT 1');
 		$stmt->bindValue(':account_id', $account_id);
 		$stmt->bindValue(':system_id', $system_id);
 		$sys_result = $stmt->execute();
 		$sys_row = $sys_result->fetchArray();
+
+
+		// See if there's an open schedule to run for system
+		$schedule_row = self::system_check_for_open_schedule_run($account_id, $system_id, $time_offset, $sys_row);
+		if($schedule_row != false)
+		{
+			return $schedule_row;
+		}
+
+		// See if there's an open benchmark ticket for system
+		$ticket_row = self::system_check_for_open_benchmark_ticket($account_id, $system_id, $sys_row);
+		if($ticket_row != false)
+		{
+			return $ticket_row;
+		}
+
+		return false;
+	}
+	public static function system_check_for_open_schedule_run($account_id, $system_id, $time_offset = 0, &$sys_row)
+	{
+		$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_schedules WHERE AccountID = :account_id AND State = 1 AND (SELECT COUNT(*) FROM phoromatic_schedules_tests WHERE AccountID = :account_id AND ScheduleID = phoromatic_schedules.ScheduleID) > 0');
+		$stmt->bindValue(':account_id', $account_id);
+		$result = $stmt->execute();
+		$day_of_week_int = date('N') - 1;
 
 		while($result && $row = $result->fetchArray())
 		{
@@ -537,7 +556,7 @@ class phoromatic_server
 					$trigger_id = date('Y-m-d');
 					if(!phoromatic_server::check_for_triggered_result_match($row['ScheduleID'], $trigger_id, $account_id, $system_id))
 					{
-						return $row['ScheduleID'];
+						return $row;
 					}
 				}
 			}
@@ -553,17 +572,11 @@ class phoromatic_server
 				{
 					if(!phoromatic_server::check_for_triggered_result_match($row['ScheduleID'], $trigger_row['Trigger'], $account_id, $system_id))
 					{
-						return $row['ScheduleID'];
+						$row['Trigger'] = $trigger_row['Trigger'];
+						return $row;
 					}
 				}
 			}
-		}
-
-		// See if there's an open benchmark ticket for system
-		$ticket_row = self::system_check_for_open_benchmark_ticket($account_id, $system_id, $sys_row);
-		if($ticket_row != false)
-		{
-			return $t;
 		}
 
 		return false;

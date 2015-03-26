@@ -19,7 +19,7 @@
 	You should have received a copy of the GNU General Public License
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
-
+$json = array();
 if(SYSTEM_IN_MAINTENANCE_MODE)
 {
 	$json['phoromatic']['task'] = 'maintenance';
@@ -36,11 +36,6 @@ $result = $stmt->execute();
 $phoromatic_account_settings = $result->fetchArray(SQLITE3_ASSOC);
 unset($phoromatic_account_settings['AccountID']);
 
-$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_schedules WHERE AccountID = :account_id AND State = 1 AND (SELECT COUNT(*) FROM phoromatic_schedules_tests WHERE AccountID = :account_id AND ScheduleID = phoromatic_schedules.ScheduleID) > 0');
-//echo phoromatic_server::$db->lastErrorMsg();
-$stmt->bindValue(':account_id', ACCOUNT_ID);
-$result = $stmt->execute();
-
 $sys_stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_systems WHERE AccountID = :account_id AND SystemID = :system_id LIMIT 1');
 $sys_stmt->bindValue(':account_id', ACCOUNT_ID);
 $sys_stmt->bindValue(':system_id', SYSTEM_ID);
@@ -49,74 +44,20 @@ $sys_row = $sys_result->fetchArray();
 
 $tests_expected_later_today = false;
 
-while($result && $row = $result->fetchArray())
+// SEE IF SCHEDULE NEEDS TO RUN
+$schedule_row = phoromatic_server::system_check_for_open_schedule_run(ACCOUNT_ID, SYSTEM_ID, 0, $sys_row);
+if($schedule_row != false)
 {
-	// Make sure this test schedule is supposed to work on given system
-	if(!in_array(SYSTEM_ID, explode(',', $row['RunTargetSystems'])))
+	$res = phoromatic_generate_test_suite($schedule_row, $json, $phoromatic_account_settings);
+	if($res)
 	{
-		// The system ID isn't in the run target but see if system ID belongs to a group in the run target
-		$matches_to_group = false;
-		foreach(explode(',', $row['RunTargetGroups']) as $group)
-		{
-			if(stripos($sys_row['Groups'], '#' . $group . '#') !== false)
-			{
-				$matches_to_group = true;
-				break;
-			}
-		}
-
-		if($matches_to_group == false)
-			continue;
-
-
-		pts_logger::add_to_log(SYSTEM_ID . ' - matches to RunTargetSystems of ' . $row['Title']);
-	}
-
-	// See if test is a time-based schedule due to run today and now or past the time scheduled to run
-	if(strpos($row['ActiveOn'], strval($day_of_week_int)) !== false)
-	{
-		if($row['RunAt'] <= date('H.i'))
-		{
-			$trigger_id = date('Y-m-d');
-			if(!phoromatic_server::check_for_triggered_result_match($row['ScheduleID'], $trigger_id, ACCOUNT_ID, SYSTEM_ID))
-			{
-				$res = phoromatic_generate_test_suite($row, $json, $trigger_id, $phoromatic_account_settings);
-				if($res)
-				{
-					return;
-				}
-			}
-		}
-		else
-		{
-			// Test is scheduled to run later today
-			$tests_expected_later_today = true;
-		}
-	}
-
-	// See if custom trigger...
-	$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_schedules_triggers WHERE AccountID = :account_id AND ScheduleID = :schedule_id ORDER BY TriggeredOn DESC');
-	$stmt->bindValue(':account_id', ACCOUNT_ID);
-	$stmt->bindValue(':schedule_id', $row['ScheduleID']);
-	$trigger_result = $stmt->execute();
-	while($trigger_result && $trigger_row = $trigger_result->fetchArray())
-	{
-		if(substr($trigger_row['TriggeredOn'], 0, 10) == date('Y-m-d') || substr($trigger_row['TriggeredOn'], 0, 10) == date('Y-m-d', (time() - 60 * 60 * 24)))
-		{
-			if(!phoromatic_server::check_for_triggered_result_match($row['ScheduleID'], $trigger_row['Trigger'], ACCOUNT_ID, SYSTEM_ID))
-			{
-				$res = phoromatic_generate_test_suite($row, $json, $trigger_row['Trigger'], $phoromatic_account_settings);
-				if($res)
-				{
-					return;
-				}
-			} else 	pts_logger::add_to_log(SYSTEM_ID . ' - has outstanding trigger match of ' . $trigger_row['Trigger']);
-		}
+		return;
 	}
 }
+// END OF SCHEDULE RUN
 
 // BENCHMARK TICKET
-$ticket_row = self::system_check_for_open_benchmark_ticket(ACCOUNT_ID, SYSTEM_ID, $sys_row);
+$ticket_row = phoromatic_server::system_check_for_open_benchmark_ticket(ACCOUNT_ID, SYSTEM_ID, $sys_row);
 if($ticket_row != false)
 {
 	pts_logger::add_to_log(SYSTEM_ID . ' - needs to benchmark ticket for ' . $ticket_row['Title']);
@@ -147,8 +88,17 @@ $json['phoromatic']['response'] = '[' . date('H:i:s') . '] Idling, waiting for t
 echo json_encode($json);
 return;
 
-function phoromatic_generate_test_suite(&$test_schedule, &$json, $trigger_id, $phoromatic_account_settings)
+function phoromatic_generate_test_suite(&$test_schedule, &$json, $phoromatic_account_settings)
 {
+	if(isset($test_schedule['Trigger']))
+	{
+		$trigger_id = $test_schedule['Trigger'];
+	}
+	else
+	{
+		$trigger_id = date('Y-m-d');
+	}
+
 	$suite_writer = new pts_test_suite_writer();
 	$suite_writer->add_suite_information($test_schedule['Title'], '1.0.0', $test_schedule['LastModifiedBy'], 'System', 'An automated Phoromatic test schedule.');
 
