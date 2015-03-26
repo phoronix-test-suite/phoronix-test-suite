@@ -104,7 +104,7 @@ class phoromatic_results implements pts_webui_interface
 
 				$main .= '<h1>Account Test Results</h1>';
 				$main .= '<div class="pts_phoromatic_info_box_area">';
-				$search_for = (!isset($_POST['search']) || empty($_POST['search']) ? null : 'AND (Title LIKE :search OR Description LIKE :search)');
+				$search_for = (!isset($_POST['search']) || empty($_POST['search']) ? null : 'AND (Title LIKE :search OR Description LIKE :search OR UploadID IN (SELECT UploadID FROM phoromatic_results_systems WHERE AccountID = :account_id AND (Software LIKE :search OR Hardware LIKE :search)))');
 				$main .= '<div style="margin: 0 5%;"><ul style="max-height: 100%;"><li><h1>Recent Test Results</h1></li>';
 
 				if(isset($PATH[1]) && $PATH[0] == 'hash')
