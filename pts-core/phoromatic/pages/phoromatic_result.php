@@ -420,23 +420,41 @@ class phoromatic_result implements pts_webui_interface
 		}
 		if(true)
 		{
-			$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_results WHERE AccountID = :account_id AND ComparisonHash = :comparison_hash AND instr(:pprid, PPRID) = 0 ORDER BY UploadTime DESC LIMIT 10');
+			$compare_results = array();
+
+			$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_results WHERE AccountID = :account_id AND ComparisonHash = :comparison_hash AND instr(:pprid, PPRID) = 0 ORDER BY UploadTime DESC LIMIT 12');
 			$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 			$stmt->bindValue(':comparison_hash', $result_file->get_contained_tests_hash(false));
 			$stmt->bindValue(':pprid', implode(',', $upload_ids));
 			$result = $stmt->execute();
-			$row = $result->fetchArray();
-
-			if(!empty($row))
+			while($row = $result->fetchArray())
 			{
-				$right .= '<hr /><h3>Comparable Results</h3><form name="compare_similar_results" onsubmit="return false;">
+				$compare_results[$row['PPRID']] = $row;
+			}
+
+			foreach($benchmark_tickets as $ticket_id)
+			{
+				$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_results WHERE AccountID = :account_id AND BenchmarkTicketID = :ticket_id AND instr(:pprid, PPRID) = 0 ORDER BY UploadTime DESC LIMIT 12');
+				$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+				$stmt->bindValue(':ticket_id', $ticket_id);
+				$stmt->bindValue(':pprid', implode(',', $upload_ids));
+				$result = $stmt->execute();
+
+				while($row = $result->fetchArray())
+				{
+					$compare_results[$row['PPRID']] = $row;
+				}
+			}
+
+			if(!empty($compare_results))
+			{
+				$right .= '<hr /><h3>Compare Results</h3><form name="compare_similar_results" onsubmit="return false;">
 						<input type="hidden" value="' . implode(',', $upload_ids) . '" id="compare_similar_results_this" />';
 
-				do
+				foreach($compare_results as &$row)
 				{
 					$right .= '<p><input type="checkbox" value="' . $row['PPRID'] . '" name="compare_results" /> ' . $row['Title'] . '<br /><em>' . phoromatic_system_id_to_name($row['SystemID'], $row['AccountID']) . '</em></p>';
 				}
-				while($row = $result->fetchArray());
 
 				$right .= '<p><input type="submit" value="Compare Results" id="compare_results_submit" onclick="javascript:phoromatic_do_custom_compare_results(this); return false;" /></p></form>';
 			}
