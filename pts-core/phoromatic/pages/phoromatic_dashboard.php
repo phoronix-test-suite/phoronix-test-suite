@@ -113,7 +113,7 @@ class phoromatic_dashboard implements pts_webui_interface
 				$next_job_in = phoromatic_server::time_to_next_scheduled_job($_SESSION['AccountID'], $row['SystemID']);
 				if($next_job_in > 0)
 				{
-					if($next_job_in > 600)
+					if($next_job_in > 240)
 					{
 						$next_job_in = round($next_job_in / 60);
 						$next_unit = 'hours';
