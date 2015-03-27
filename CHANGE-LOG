@@ -17,6 +17,7 @@ Phoronix Test Suite (Git)
 - phoromatic: Get rid of block-poweroff file check in client module now that it can be done per-system from server-side
 - phoromatic: Allow WoL power-ups for honoring benchmark tickets
 - phoromatic: Unify more code from start.php into phoromatic_server
+- phoromatic: Always unset the GRUB recordfail when applicable
 
 Phoronix Test Suite 5.6.0-Dedilovo
 24 March 2015

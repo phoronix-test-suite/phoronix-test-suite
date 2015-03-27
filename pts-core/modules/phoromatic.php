@@ -340,6 +340,14 @@ class phoromatic extends pts_module_interface
 
 		return false;
 	}
+	protected static function setup_system_environment()
+	{
+		if(is_writable('/boot/grub/grubenv') && pts_client::executable_in_path('grub-editenv'))
+		{
+			// In case system fails or reboots in process and don't want to hang on GRUB recordfail
+			shell_exec('grub-editenv /boot/grub/grubenv unset recordfail 2>&1');
+		}
+	}
 	public static function run_connection($args)
 	{
 		if(pts_client::create_lock(PTS_USER_PATH . 'phoromatic_lock') == false)
@@ -370,6 +378,8 @@ class phoromatic extends pts_module_interface
 		$times_failed = 0;
 		$has_success = false;
 		$do_exit = false;
+
+		self::setup_system_environment();
 
 		while($do_exit == false)
 		{
