@@ -18,6 +18,7 @@ Phoronix Test Suite (Git)
 - phoromatic: Allow WoL power-ups for honoring benchmark tickets
 - phoromatic: Unify more code from start.php into phoromatic_server
 - phoromatic: Always unset the GRUB recordfail when applicable
+- phoromatic: Add "System Maintenance Table"
 
 Phoronix Test Suite 5.6.0-Dedilovo
 24 March 2015

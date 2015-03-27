@@ -442,7 +442,7 @@ class phoromatic_systems implements pts_webui_interface
 
 			if($active_system_count > 2)
 			{
-				$main .= '<h3 align="center"><a href="/?component_table">System Component Table</a> | <a href="/?dashboard">System Dashboard</a></h3>';
+				$main .= '<h3 align="center"><a href="/?component_table">System Component Table</a> | <a href="/?maintenance_table">System Maintenance Table</a> | <a href="/?dashboard">System Dashboard</a></h3>';
 			}
 
 			if(!PHOROMATIC_USER_IS_VIEWER)
