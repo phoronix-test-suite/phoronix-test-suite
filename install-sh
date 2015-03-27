@@ -83,6 +83,7 @@ cp deploy/*-systemd/*.service $DESTDIR$INSTALL_PREFIX/../usr/lib/systemd/system/
 # cp pts-core/static/upstart/*.conf $DESTDIR$INSTALL_PREFIX/../etc/init/
 
 cp -r pts-core $DESTDIR$INSTALL_PREFIX/share/phoronix-test-suite/
+cp -r deploy $DESTDIR$INSTALL_PREFIX/share/phoronix-test-suite/
 rm -f $DESTDIR$INSTALL_PREFIX/share/phoronix-test-suite/pts-core/static/phoronix-test-suite.desktop
 rm -f $DESTDIR$INSTALL_PREFIX/share/phoronix-test-suite/pts-core/static/phoronix-test-suite-launcher.desktop
 rm -f $DESTDIR$INSTALL_PREFIX/share/phoronix-test-suite/pts-core/openbenchmarking.org/openbenchmarking-mime.xml
