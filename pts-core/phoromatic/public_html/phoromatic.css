@@ -394,10 +394,6 @@ input:focus, textarea:focus
 {
 	background: #666; color: #FFF;
 }
-div.pts_phoromatic_info_box_area ul li:hover table tbody tr.tb_compare_bar
-{
-	display: block;
-}
 div.pts_phoromatic_info_box_area ul li table tbody tr.tb_compare_bar
 {
 	margin-top: 3px;
@@ -551,6 +547,16 @@ div.phoromatic_overview_box
 div#phoromatic_result_compare_info_box
 {
 	font-size: 160%;
+	color: #FFF;
+	text-align: center;
+	border: 1px solid #FFF;
+	margin: 10px 30px;
+	padding: 4px 0;
+	display: none;
+}
+div#phoromatic_result_delete_box
+{
+	font-size: 110%;
 	color: #FFF;
 	text-align: center;
 	border: 1px solid #FFF;
