@@ -19,6 +19,7 @@ Phoronix Test Suite (Git)
 - phoromatic: Unify more code from start.php into phoromatic_server
 - phoromatic: Always unset the GRUB recordfail when applicable
 - phoromatic: Add "System Maintenance Table"
+- phoromatic: Add "PowerOnSystemDaily" setting option to ensure regardless of schedule that systems will at least power-up/communicate daily if enabled
 
 Phoronix Test Suite 5.6.0-Dedilovo
 24 March 2015

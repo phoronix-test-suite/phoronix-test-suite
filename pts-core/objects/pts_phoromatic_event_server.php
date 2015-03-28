@@ -110,7 +110,7 @@ class pts_phoromatic_event_server
 					}
 				}
 			}
-			if($is_first_run || $minute % 3 == 0)
+			if($is_first_run || $minute % 2 == 0)
 			{
 				// Check for systems to wake
 				$stmt = phoromatic_server::$db->prepare('SELECT LastCommunication, CurrentTask, SystemID, AccountID, NetworkMAC, LastIP, MaintenanceMode FROM phoromatic_systems WHERE State > 0 AND NetworkMAC NOT LIKE \'\' AND NetworkWakeOnLAN LIKE \'%g%\' ORDER BY LastCommunication DESC');
@@ -118,29 +118,38 @@ class pts_phoromatic_event_server
 
 				while($row = $result->fetchArray())
 				{
+					if(!isset($phoromatic_account_settings[$row['AccountID']]))
+					{
+						$stmt1 = phoromatic_server::$db->prepare('SELECT NetworkPowerUpWhenNeeded, PowerOnSystemDaily FROM phoromatic_account_settings WHERE AccountID = :account_id');
+						$stmt1->bindValue(':account_id', $row['AccountID']);
+						$result1 = $stmt1->execute();
+						$phoromatic_account_settings[$row['AccountID']] = $result1->fetchArray(SQLITE3_ASSOC);
+					}
+
 					$last_comm = strtotime($row['LastCommunication']);
 					if($last_comm < (time() - 360) && $row['MaintenanceMode'] == 1)
 					{
 						self::send_wol_wakeup($row['NetworkMAC'], $row['LastIP']);
 						continue;
 					}
-					if($last_comm < (time() - (3600 * 26)))
-						continue; // System likely has some other issue if beyond a day it's been offline
+					if($minute % 20 == 0 && $last_comm < (time() - (3600 * 18)) && $phoromatic_account_settings[$row['AccountID']]['PowerOnSystemDaily'] == 1)
+					{
+						// Daily power on test if system hasn't communicated / powered on in a day
+						// XXX right now the "daily" power on test is 18 hours. change or make user value in future?
+						// Just doing this check every 20 minutes as not too vital
+						self::send_wol_wakeup($row['NetworkMAC'], $row['LastIP']);
+						continue;
+					}
 					if($last_comm < (time() - 600) || stripos($row['CurrentTask'], 'Shutdown') !== false)
 					{
 						// System hasn't communicated in a number of minutes so it might be powered off
 
-						if(phoromatic_server::system_has_outstanding_jobs($row['AccountID'], $row['SystemID'], 120) !== false)
+						if(phoromatic_server::system_has_outstanding_jobs($row['AccountID'], $row['SystemID']) !== false)
 						{
 							// Make sure account has network WoL enabled
-							$stmt1 = phoromatic_server::$db->prepare('SELECT NetworkPowerUpWhenNeeded FROM phoromatic_account_settings WHERE AccountID = :account_id');
-							$stmt1->bindValue(':account_id', $row['AccountID']);
-							$result1 = $stmt1->execute();
-							$phoromatic_account_settings = $result1->fetchArray(SQLITE3_ASSOC);
-
-							if(isset($phoromatic_account_settings['NetworkPowerUpWhenNeeded']) && $phoromatic_account_settings['NetworkPowerUpWhenNeeded'] == 1)
+							if($phoromatic_account_settings[$row['AccountID']]['NetworkPowerUpWhenNeeded'] == 1)
 							{
-								$sent_wol_request = self::send_wol_wakeup($row['NetworkMAC'], $row['LastIP']);
+								self::send_wol_wakeup($row['NetworkMAC'], $row['LastIP']);
 							}
 						}
 					}

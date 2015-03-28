@@ -234,6 +234,10 @@ class phoromatic_server
 				// Change made 26 March
 				self::$db->exec('ALTER TABLE phoromatic_systems ADD COLUMN BlockPowerOffs INTEGER DEFAULT 0');
 				self::$db->exec('PRAGMA user_version = 27');
+			case 27:
+				// Change made 27 March
+				self::$db->exec('ALTER TABLE phoromatic_account_settings ADD COLUMN PowerOnSystemDaily INTEGER DEFAULT 0');
+				self::$db->exec('PRAGMA user_version = 28');
 
 		}
 		chmod($db_file, 0600);
