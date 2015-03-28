@@ -147,7 +147,7 @@ class phoromatic_build_suite implements pts_webui_interface
 			$main .= '<p align="right"><input name="submit" value="Create Suite" type="submit" onclick="return pts_rmm_validate_suite();" /></p>';
 		}
 
-		echo phoromatic_webui_main($main, phoromatic_webui_right_panel_logged_in());
+		echo '<div id="pts_phoromatic_main_area">' . $main . '</div>';
 		echo phoromatic_webui_footer();
 	}
 }

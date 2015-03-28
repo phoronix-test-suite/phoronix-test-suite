@@ -65,7 +65,7 @@ class phoromatic_local_suites implements pts_webui_interface
 			$main .= '<h1>No Test Suites Found</h1>';
 
 		echo phoromatic_webui_header_logged_in();
-		echo phoromatic_webui_main($main, phoromatic_webui_right_panel_logged_in());
+		echo '<div id="pts_phoromatic_main_area">' . $main . '</div>';
 		echo phoromatic_webui_footer();
 	}
 }
