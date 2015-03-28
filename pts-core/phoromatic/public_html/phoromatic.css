@@ -36,7 +36,7 @@ div#pts_phoromatic_bottom_footer
 	font-weight: 300;
 	clear: both;
 	overflow: hidden;
-	font-size: 60%;
+	font-size: 0.6em;
 	line-height: 150%;
 	color: #FFF;
 	box-shadow: 1px 1px 2px #1F1F1F;
@@ -66,7 +66,7 @@ div#pts_phoromatic_logo
 }
 div#pts_phoromatic_top_header ul
 {
-	font-size: 170%;
+	font-size: 1.6em;
 	color: #fff;
 	list-style: none;
 	margin: 0 2px;
@@ -97,13 +97,13 @@ div#pts_phoromatic_menu_right p
 	letter-spacing: 2px;
 	text-align: center;
 	margin: 1px 5px;
-	font-size: 90%;
+	font-size: 0.8em;
 }
 div#pts_phoromatic_menu_right h3
 {
 	font-weight: 500;
 	color: #ff9800;
-	font-size: 110%;
+	font-size: 1em;
 	margin: 10px 0 0;
 	text-align: center;
 }
@@ -128,7 +128,7 @@ div#pts_phoromatic_menu_right ul
 	list-style: none;
 	margin: 8px 10px;
 	padding: 0;
-	font-size: 110%;
+	font-size: 1.1em;
 }
 div#pts_phoromatic_menu_right ul li
 {
@@ -179,7 +179,7 @@ div#pts_phoromatic_main_box_inside
 }
 div#pts_phoromatic_main
 {
-	font-size: 100%;
+	font-size: 1em;
 	overflow: hidden;
 	padding: 0 0 40px 10px;
 }
@@ -196,7 +196,7 @@ div#pts_phoromatic_main_area
 h1
 {
 	font-weight: 400;
-	font-size: 160%;
+	font-size: 1.6em;
 }
 div#pts_phoromatic_main_area ol
 {
@@ -204,13 +204,14 @@ div#pts_phoromatic_main_area ol
 }
 div#pts_phoromatic_main_area ol li
 {
-	margin-bottom: 4px;
+	padding-bottom: 8px;
+	margin-bottom: 6px;
 }
 div#pts_phoromatic_main_box h2, div#pts_phoromatic_main_area h2
 {
 	margin: 1px 0 10px;
 	clear: both;
-	font-size: 120%;
+	font-size: 1.2em;
 	font-weight: 500;
 }
 .alert
@@ -220,7 +221,7 @@ div#pts_phoromatic_main_box h2, div#pts_phoromatic_main_area h2
 }
 sup
 {
-	font-size: 60%;
+	font-size: 0.6em;
 }
 p.result_object
 {
@@ -253,22 +254,22 @@ div#pts_phoromatic_main_box h6
 {
 	margin: 0;
 	padding: 0;
-	font-size: 85%;
+	font-size: 0.8em;
 	color: #afafaf;
 }
 div#pts_phoromatic_main_box h5
 {
-	font-size: 80%;
+	font-size: 0.8em;
 	color: #afafaf;
 }
 div#pts_phoromatic_main_box h3
 {
-	font-size: 110%;
+	font-size: 1.1em;
 	font-weight: 500;
 }
 div#pts_phoromatic_main_box h4
 {
-	font-size: 100%;
+	font-size: 1em;
 	font-weight: 500;
 }
 div#pts_phoromatic_main_area hr, div#pts_phoromatic_main_box hr
@@ -335,7 +336,7 @@ div.pts_phoromatic_info_box_area ul:last-child a:last-child li
 }
 div.pts_phoromatic_info_box_area ul h1
 {
-	font-size: 120%;
+	font-size: 1.2em;
 	color: #ff9800;
 	margin: 1px 0;
 	font-weight: 400;
@@ -363,14 +364,11 @@ input[type=submit]
 }
 input, select, textarea, checkbox, button
 {
-	border: solid #1F1F1F 1px;
+	border: solid #1f1f1f 1px;
 	background-color: #E0E0E0;
 	color: #1F1F1F;
 	padding: 2px 4px;
 	border-radius: 6px;
-	box-shadow: 1px 1px 2px #222;
-	-moz-box-shadow: 1px 1px 2px #222;
-	-webkit-box-shadow: 1px 1px 2px #222;
 	transition: all 0.3s;
 }
 textarea
@@ -380,6 +378,9 @@ textarea
 input:focus, textarea:focus
 {
 	background: #666; color: #FFF;
+	box-shadow: 1px 1px 2px #222;
+	-moz-box-shadow: 1px 1px 2px #222;
+	-webkit-box-shadow: 1px 1px 2px #222;
 }
 div.pts_phoromatic_info_box_area ul li table tbody tr.tb_compare_bar
 {
@@ -398,7 +399,7 @@ div.pts_phoromatic_info_box_area table
 	table-layout: fixed;
 	font-weight: 300;
 	text-transform: uppercase;
-	font-size: 75%;
+	font-size: 0.8em;
 }
 div.pts_phoromatic_info_box_area table td, div.pts_phoromatic_info_box_area table tr
 {
@@ -496,20 +497,20 @@ div.phoromatic_dashboard_block p em
 {
 	color: #272727;
 	font-style: normal;
-	font-size: 90%;
+	font-size: 0.8em;
 }
 div.phoromatic_dashboard_block h1
 {
 	color: #ff9800;
 	margin: 2px 0;
-	font-size: 140%;
+	font-size: 1.3em;
 }
 div.phoromatic_dashboard_block h2
 {
 	color: #272727;
 	font-weight: 400;
 	margin: 2px 0;
-	font-size: 120%;
+	font-size: 1.1em;
 }
 div.phoromatic_dashboard_block hr
 {
@@ -533,7 +534,7 @@ div.phoromatic_overview_box
 }
 div#phoromatic_result_compare_info_box
 {
-	font-size: 160%;
+	font-size: 1.5em;
 	color: #FFF;
 	text-align: center;
 	border: 1px solid #FFF;
@@ -543,7 +544,7 @@ div#phoromatic_result_compare_info_box
 }
 div#phoromatic_result_delete_box
 {
-	font-size: 110%;
+	font-size: 1.1em;
 	color: #FFF;
 	text-align: center;
 	border: 1px solid #FFF;
