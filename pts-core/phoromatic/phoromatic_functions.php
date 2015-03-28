@@ -298,7 +298,7 @@ function phoromatic_webui_header_logged_in()
 		$link = '<a href="?' . $link . '">' . $link . '</a>';
 	}
 
-	return phoromatic_webui_header($html_links, '<form action="/?search" method="post" id="search"><input type="search" name="search" size="14" /><input type="submit" name="sa" value="Search" /></form> ' . implode(' - ', $sub_links));
+	return phoromatic_webui_header($html_links, '<form action="/?search" method="post" id="search"><input type="search" name="search" size="16" /><input type="submit" name="sa" value="Search" /></form> ' . implode('&nbsp; &nbsp;', $sub_links));
 }
 function phoromatic_webui_right_panel_logged_in($add = null)
 {

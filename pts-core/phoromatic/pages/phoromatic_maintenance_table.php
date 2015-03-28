@@ -58,7 +58,7 @@ class phoromatic_maintenance_table implements pts_webui_interface
 			$components[$row['SystemID']]['Last IP'] = $row['LastIP'];
 			$components[$row['SystemID']]['Phoronix Test Suite'] = $row['ClientVersion'];
 			$components[$row['SystemID']]['MAC'] = $row['NetworkMAC'];
-			$components[$row['SystemID']]['Latest Result Upload'] = date('d F', strtotime($latest_result));
+			$components[$row['SystemID']]['Latest Result Upload'] = $latest_result != null ? date('d F', strtotime($latest_result)) : 'N/A';
 			$system_ids[$row['SystemID']] = $row['Title'];
 		}
 

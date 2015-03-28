@@ -208,112 +208,120 @@ class phoromatic_benchmark implements pts_webui_interface
 			}
 
 			$main = '
-			<hr />
 			<h2>' . ($is_new ? 'Create' : 'Edit') . ' A Benchmark</h2>
 			<p>This page allows you to run a test suite -- consisting of a single or multiple test suites -- on a given set/group of systems right away at their next earliest possibility. This benchmark mode is an alternative to the <a href="?schedules">benchmark schedules</a> for reptitive/routine testing.</p>';
 
-			$main .= '<form action="' . $_SERVER['REQUEST_URI'] . '" name="run_benchmark" id="run_benchmark" method="post" enctype="multipart/form-data" onsubmit="return validate_run_benchmark();">
-			<h3>Title:</h3>
-			<p>The title is the name of the result file for this test run.</p>
-			<p><input type="text" name="benchmark_title" value="' . (!$is_new ? $e_schedule['Title'] : null) . '" /></p>
-			<h3>Test Run Identifier:</h3>
-			<p>The test run identifier is the per-system name for the system(s) being benchmarked. The following variables may be used: <strong>.SYSTEM</strong>, <strong>.GROUP</strong>. Any custom per-user system variables set via the individual system pages can also be used.</p>
-			<p><input type="text" name="benchmark_identifier" value="' . (!$is_new ? $e_schedule['Identifier'] : null) . '" /></p>
-			<h3>Test Suite To Run:</h3>
-			<p><a href="?build_suite">Build a suite</a> to add/select more tests to run or <a href="?local_suites">view local suites</a> for more information on a particular suite. A test suite is a set of test profiles to run in a pre-defined manner.</p>';
-			$main .= '<p><select name="suite_to_run">';
-			foreach(pts_file_io::glob(phoromatic_server::phoromatic_account_suite_path($_SESSION['AccountID']) . '*/suite-definition.xml') as $xml_path)
+			$local_suites = pts_file_io::glob(phoromatic_server::phoromatic_account_suite_path($_SESSION['AccountID']) . '*/suite-definition.xml');
+
+			if(empty($local_suites))
 			{
-				$id = basename(dirname($xml_path));
-				$test_suite = new pts_test_suite($xml_path);
-				$main .= '<option value="' . $id . '">' . $test_suite->get_title() . ' - ' . $id . '</option>';
+				$main .= '<p><strong>Before creating a benchmark ticket you must first <a href="?build_suite">create a test suite</a> with the tests you wish to run.</strong></p>';
 			}
-			$main .= '</select></p>';
-			$main .= '<h3>Description:</h3>
-			<p>The description is an optional way to add more details about the intent or objective of this test run.</p>
-			<p><textarea name="benchmark_description" id="benchmark_description" cols="50" rows="3">' . (!$is_new ? $e_schedule['Description'] : null) . '</textarea></p>
-			<hr /><h3>System Targets:</h3>
-			<p>Select the systems that should be benchmarked at their next earliest convenience.</p>
-			<p>';
-
-			$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID FROM phoromatic_systems WHERE AccountID = :account_id AND State >= 0 ORDER BY Title ASC');
-			$stmt->bindValue(':account_id', $_SESSION['AccountID']);
-			$result = $stmt->execute();
-
-
-			if(!$is_new)
+			else
 			{
-				$e_schedule['RunTargetSystems'] = explode(',', $e_schedule['RunTargetSystems']);
-				$e_schedule['RunTargetGroups'] = explode(',', $e_schedule['RunTargetGroups']);
-			}
-
-			if($row = $result->fetchArray())
-			{
-				$main .= '<h4>Systems: ';
-				do
+				$main .= '<form action="' . $_SERVER['REQUEST_URI'] . '" name="run_benchmark" id="run_benchmark" method="post" enctype="multipart/form-data" onsubmit="return validate_run_benchmark();">
+				<h3>Title:</h3>
+				<p>The title is the name of the result file for this test run.</p>
+				<p><input type="text" name="benchmark_title" value="' . (!$is_new ? $e_schedule['Title'] : null) . '" /></p>
+				<h3>Test Run Identifier:</h3>
+				<p>The test run identifier is the per-system name for the system(s) being benchmarked. The following variables may be used: <strong>.SYSTEM</strong>, <strong>.GROUP</strong>. Any custom per-user system variables set via the individual system pages can also be used.</p>
+				<p><input type="text" name="benchmark_identifier" value="' . (!$is_new ? $e_schedule['Identifier'] : null) . '" /></p>
+				<h3>Test Suite To Run:</h3>
+				<p><a href="?build_suite">Build a suite</a> to add/select more tests to run or <a href="?local_suites">view local suites</a> for more information on a particular suite. A test suite is a set of test profiles to run in a pre-defined manner.</p>';
+				$main .= '<p><select name="suite_to_run">';
+				foreach($local_suites as $xml_path)
 				{
-					$main .= '<input type="checkbox" name="run_on_systems[]" value="' . $row['SystemID'] . '" ' . (!$is_new && in_array($row['SystemID'], $e_schedule['RunTargetSystems']) ? 'checked="checked" ' : null) . '/> ' . $row['Title'] . ' ';
+					$id = basename(dirname($xml_path));
+					$test_suite = new pts_test_suite($xml_path);
+					$main .= '<option value="' . $id . '">' . $test_suite->get_title() . ' - ' . $id . '</option>';
 				}
-				while($row = $result->fetchArray());
-				$main .= '</h4>';
-			}
+				$main .= '</select></p>';
+				$main .= '<h3>Description:</h3>
+				<p>The description is an optional way to add more details about the intent or objective of this test run.</p>
+				<p><textarea name="benchmark_description" id="benchmark_description" cols="50" rows="3">' . (!$is_new ? $e_schedule['Description'] : null) . '</textarea></p>
+				<hr /><h3>System Targets:</h3>
+				<p>Select the systems that should be benchmarked at their next earliest convenience.</p>
+				<p>';
 
-			$stmt = phoromatic_server::$db->prepare('SELECT GroupName FROM phoromatic_groups WHERE AccountID = :account_id ORDER BY GroupName ASC');
-			$stmt->bindValue(':account_id', $_SESSION['AccountID']);
-			$result = $stmt->execute();
+				$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID FROM phoromatic_systems WHERE AccountID = :account_id AND State >= 0 ORDER BY Title ASC');
+				$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+				$result = $stmt->execute();
 
-			if($row = $result->fetchArray())
-			{
-				$main .= '<h4>Groups: ';
-				do
-				{
-					$main .= '<input type="checkbox" name="run_on_groups[]" value="' . $row['GroupName'] . '" ' . (!$is_new && in_array($row['GroupName'], $e_schedule['RunTargetGroups']) ? 'checked="checked" ' : null) . '/> ' . $row['GroupName'] . ' ';
-				}
-				while($row = $result->fetchArray());
-				$main .= '</h4>';
-			}
 
-			$main .= '</p>
-			<hr /><h3>Environment Options</h3>
-			<h4>Stress Testing</h4>
-			<p>If you wish to test systems for stability/reliability rather than performance, use this option and specify the number of tests to run concurrently (two or more) and (optionally) for the total period of time to continue looping the benchmarks. These options are intended to just stress the system and will not record any benchmark results. From the command-line this testing mode can be used via the <em>phoronix-test-suite stress-run</em> sub-command.</p>
-			<p><strong>Concurrent Number Of Test Processes:</strong> <select name="PTS_CONCURRENT_TEST_RUNS"><option value="0">Disabled</option>';
-			for($i = 2; $i <= 24; $i++)
-			{
-				$main .= '<option value="' . $i . '">' . $i . '</option>';
-			}
-			$main .= '</select></p>
-			<p><strong>Force Loop Time:</strong> <select name="TOTAL_LOOP_TIME"><option value="0">Disabled</option>';
-			$s = true;
-			for($i = 60; $i <= (60 * 24 * 90); $i += 60)
-			{
-				if($i > 10080)
+				if(!$is_new)
 				{
-					// 7 days
-					if(($i % 1440) != 0)
-						continue;
-				}
-				else if($i > 480)
-				{
-					$s = !$s;
-					if(!$s)
-						continue;
+					$e_schedule['RunTargetSystems'] = explode(',', $e_schedule['RunTargetSystems']);
+					$e_schedule['RunTargetGroups'] = explode(',', $e_schedule['RunTargetGroups']);
 				}
 
-				$main .= '<option value="' . $i . '">' . pts_strings::format_time($i, 'MINUTES') . '</option>';
+				if($row = $result->fetchArray())
+				{
+					$main .= '<h4>Systems: ';
+					do
+					{
+						$main .= '<input type="checkbox" name="run_on_systems[]" value="' . $row['SystemID'] . '" ' . (!$is_new && in_array($row['SystemID'], $e_schedule['RunTargetSystems']) ? 'checked="checked" ' : null) . '/> ' . $row['Title'] . ' ';
+					}
+					while($row = $result->fetchArray());
+					$main .= '</h4>';
+				}
+
+				$stmt = phoromatic_server::$db->prepare('SELECT GroupName FROM phoromatic_groups WHERE AccountID = :account_id ORDER BY GroupName ASC');
+				$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+				$result = $stmt->execute();
+
+				if($row = $result->fetchArray())
+				{
+					$main .= '<h4>Groups: ';
+					do
+					{
+						$main .= '<input type="checkbox" name="run_on_groups[]" value="' . $row['GroupName'] . '" ' . (!$is_new && in_array($row['GroupName'], $e_schedule['RunTargetGroups']) ? 'checked="checked" ' : null) . '/> ' . $row['GroupName'] . ' ';
+					}
+					while($row = $result->fetchArray());
+					$main .= '</h4>';
+				}
+
+				$main .= '</p>
+				<hr /><h3>Environment Options</h3>
+				<h4>Stress Testing</h4>
+				<p>If you wish to test systems for stability/reliability rather than performance, use this option and specify the number of tests to run concurrently (two or more) and (optionally) for the total period of time to continue looping the benchmarks. These options are intended to just stress the system and will not record any benchmark results. From the command-line this testing mode can be used via the <em>phoronix-test-suite stress-run</em> sub-command.</p>
+				<p><strong>Concurrent Number Of Test Processes:</strong> <select name="PTS_CONCURRENT_TEST_RUNS"><option value="0">Disabled</option>';
+				for($i = 2; $i <= 24; $i++)
+				{
+					$main .= '<option value="' . $i . '">' . $i . '</option>';
+				}
+				$main .= '</select></p>
+				<p><strong>Force Loop Time:</strong> <select name="TOTAL_LOOP_TIME"><option value="0">Disabled</option>';
+				$s = true;
+				for($i = 60; $i <= (60 * 24 * 90); $i += 60)
+				{
+					if($i > 10080)
+					{
+						// 7 days
+						if(($i % 1440) != 0)
+							continue;
+					}
+					else if($i > 480)
+					{
+						$s = !$s;
+						if(!$s)
+							continue;
+					}
+
+					$main .= '<option value="' . $i . '">' . pts_strings::format_time($i, 'MINUTES') . '</option>';
+				}
+				$main .= '</select></p>
+
+				<h4>System Monitoring</h4>
+				<p>The Phoronix Test Suite system monitor module allows for select hardware/software sensors to be logged in real-time while running the selected test suite. The supported sensors are then shown within the result file upon the test\'s completion.</p>';
+
+				foreach(phodevi::available_sensors() as $sensor)
+				{
+					$main .= '<input type="checkbox" name="MONITOR" value="' . phodevi::sensor_identifier($sensor) . '" /> ' . phodevi::sensor_name($sensor) . ' &nbsp; ';
+				}
+
+				$main .= '<hr /><p align="left"><input name="submit" value="' . ($is_new ? 'Run' : 'Edit') . ' Benchmark" type="submit" onclick="return pts_rmm_validate_schedule();" /></p>
+					</form>';
 			}
-			$main .= '</select></p>
-
-			<h4>System Monitoring</h4>
-			<p>The Phoronix Test Suite system monitor module allows for select hardware/software sensors to be logged in real-time while running the selected test suite. The supported sensors are then shown within the result file upon the test\'s completion.</p>';
-
-			foreach(phodevi::available_sensors() as $sensor)
-			{
-				$main .= '<input type="checkbox" name="MONITOR" value="' . phodevi::sensor_identifier($sensor) . '" /> ' . phodevi::sensor_name($sensor) . ' &nbsp; ';
-			}
-
-			$main .= '<hr /><p align="left"><input name="submit" value="' . ($is_new ? 'Run' : 'Edit') . ' Benchmark" type="submit" onclick="return pts_rmm_validate_schedule();" /></p>
-				</form>';
 		}
 
 		$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_benchmark_tickets WHERE AccountID = :account_id AND State >= 0 AND TicketIssueTime > :time_cutoff ORDER BY TicketIssueTime DESC LIMIT 30');
