@@ -147,7 +147,7 @@ function phoromatic_compute_estimated_time_remaining($estimated_minutes, $last_c
 function phoromatic_webui_header($left_items, $right)
 {
 	$ret = '<div id="pts_phoromatic_top_header">
-	<div id="pts_phoromatic_logo"><a href="?"><img src="data:image/png;base64,' . base64_encode(file_get_contents('images/phoromatic_logo.png')) . '" /></a></div><ul>';
+	<div id="pts_phoromatic_logo"><a href="?"><img style="height: 50px; width: auto;" src="data:image/png;base64,' . base64_encode(file_get_contents('images/phoromatic_logo.png')) . '" /></a></div><ul>';
 
 	foreach($left_items as $item)
 	{
