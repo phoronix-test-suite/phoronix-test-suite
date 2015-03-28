@@ -706,10 +706,100 @@ class phoromatic_server
 
 		return $systems;
 	}
+	public static function schedules_today($account_id)
+	{
+		$schedules = array();
+		$show_day_of_week = date('N') - 1;
+		$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_schedules WHERE AccountID = :account_id AND State = 1 AND (SELECT COUNT(*) FROM phoromatic_schedules_tests WHERE AccountID = :account_id AND ScheduleID = phoromatic_schedules.ScheduleID) > 0 AND ActiveOn LIKE :active_day ORDER BY RunAt ASC');
+		$stmt->bindValue(':account_id', $account_id);
+		$stmt->bindValue(':active_day', '%' . $show_day_of_week . '%');
+		$result = $stmt->execute();
+
+		while($row = $result->fetchArray())
+		{
+			array_push($schedules, $row);
+		}
+
+		return $schedules;
+	}
+	public static function schedules_total($account_id)
+	{
+		$schedules = array();
+		$show_day_of_week = date('N') - 1;
+		$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_schedules WHERE AccountID = :account_id AND State = 1 AND (SELECT COUNT(*) FROM phoromatic_schedules_tests WHERE AccountID = :account_id AND ScheduleID = phoromatic_schedules.ScheduleID) > 0 ORDER BY RunAt ASC');
+		$stmt->bindValue(':account_id', $account_id);
+		$result = $stmt->execute();
+
+		while($row = $result->fetchArray())
+		{
+			array_push($schedules, $row);
+		}
+
+		return $schedules;
+	}
+	public static function benchmark_tickets_today($account_id)
+	{
+		$tickets = array();
+		$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_benchmark_tickets WHERE AccountID = :account_id AND State >= 0 AND TicketIssueTime > :time_cutoff ORDER BY TicketIssueTime DESC');
+		$stmt->bindValue(':account_id', $account_id);
+		$stmt->bindValue(':time_cutoff', (time() - (60 * 60 * 24 * 14)));
+		$result = $stmt->execute();
+
+		while($row = $result->fetchArray())
+		{
+			array_push($tickets, $row);
+		}
+
+		return $tickets;
+	}
+	public static function systems_idling_or_offline($account_id)
+	{
+		$systems = array();
+		$stmt = phoromatic_server::$db->prepare('SELECT SystemID FROM phoromatic_systems WHERE AccountID = :account_id AND State >= 0 AND (CurrentTask LIKE \'%Idling%\' OR CurrentTask LIKE \'%Shutdown%\') ORDER BY LastCommunication DESC');
+		$stmt->bindValue(':account_id', $account_id);
+		$result = $stmt->execute();
+		while($row = $result->fetchArray())
+		{
+			array_push($systems, $row);
+		}
+
+		return $systems;
+	}
+	public static function systems_running_tests($account_id)
+	{
+		$systems = array();
+		$stmt = phoromatic_server::$db->prepare('SELECT SystemID FROM phoromatic_systems WHERE AccountID = :account_id AND State >= 0 AND (CurrentTask LIKE \'%Running%\' OR CurrentTask LIKE \'%Installing%\' OR CurrentTask LIKE \'%Benchmark%\') ORDER BY LastCommunication DESC');
+		$stmt->bindValue(':account_id', $account_id);
+		$result = $stmt->execute();
+		while($row = $result->fetchArray())
+		{
+			array_push($systems, $row);
+		}
+
+		return $systems;
+	}
+	public static function test_results($account_id, $time_limit = false)
+	{
+		$results = array();
+		$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_results WHERE AccountID = :account_id ORDER BY UploadTime DESC');
+		$stmt->bindValue(':account_id', $account_id);
+		$result = $stmt->execute();
+		while($row = $result->fetchArray())
+		{
+			if($time_limit != false && strtotime($row['UploadTime']) < $time_limit)
+			{
+				break;
+			}
+
+			array_push($results, $row);
+		}
+
+		return $results;
+	}
 	public static function system_check_if_down($account_id, $system_id, $last_communication, $current_task)
 	{
 		$last_comm = strtotime($last_communication);
-		return (phoromatic_server::system_has_outstanding_jobs($account_id, $system_id, -600) && (($last_comm < (time() - 5400) && stripos($current_task, 'Running') === false) || $last_comm < (time() - 7200) || ($last_comm < (time() - 600) && stripos($current_task, 'Shutdown') !== false))) || ($last_comm < (time() -7200) && (stripos($current_task, 'running') !== false ||  stripos($current_task, 'setting') !== false));
+		return ((phoromatic_server::system_has_outstanding_jobs($account_id, $system_id, -600) && (($last_comm < (time() - 5400) && stripos($current_task, 'Running') === false) || $last_comm < (time() - 7200) || ($last_comm < (time() - 600) && stripos($current_task, 'Shutdown') !== false))) || ($last_comm < (time() -7200) && (stripos($current_task, 'running') !== false ||  stripos($current_task, 'setting') !== false))) || $current_task == 'Unknown';
 	}
 }
 

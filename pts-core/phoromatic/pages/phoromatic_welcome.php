@@ -158,7 +158,7 @@ class phoromatic_welcome implements pts_webui_interface
 		}
 		else
 		{
-			echo phoromatic_webui_header(array('Sign-In'), '');
+			echo phoromatic_webui_header(array(), '');
 
 			$box = '<h1>Welcome</h1>
 			<p>You must log-in to your Phoromatic account or create an account to access this service. Phoromatic is a remote management system for the Phoronix Test Suite. Phoromatic allows the automatic scheduling of tests, remote installation of new tests, and the management of multiple test systems all through an intuitive, easy-to-use web interface. Tests can be scheduled to automatically run on a routine basis across multiple test systems. The test results are then available from this central, secure location.</p>

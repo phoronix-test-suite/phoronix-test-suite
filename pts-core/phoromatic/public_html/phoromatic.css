@@ -102,6 +102,7 @@ div#pts_phoromatic_top_header ul li u
 }
 div#pts_phoromatic_top_header ul li
 {
+	text-transform: uppercase;
 	list-style-type: none;
 	padding: 0 20px 0 0;
 	text-align: center;
@@ -208,6 +209,7 @@ div#pts_phoromatic_main
 }
 div#pts_phoromatic_main_area
 {
+	font-size: 1.1em;
 	padding: 10px 20px 10px;
 	min-height: 1000px;
 	background: #FFF;
@@ -287,8 +289,8 @@ div#pts_phoromatic_main_box h5
 }
 div#pts_phoromatic_main_box h3
 {
-	font-size: 1.1em;
-	font-weight: 500;
+	font-size: 1.05em;
+	font-weight: 400;
 }
 div#pts_phoromatic_main_box h4
 {
@@ -585,4 +587,15 @@ div.phoromatic_overview_box h2, div.phoromatic_overview_box h3
 {
 	padding: 0;
 	margin: 1px 0 2px;
+}
+div#phoromatic_fixed_main_table
+{
+	display: table;
+	table-layout: fixed;
+	width: 100%;
+}
+div#phoromatic_main_table_cell
+{
+	padding: 16px 10px;
+	display: table-cell;
 }
