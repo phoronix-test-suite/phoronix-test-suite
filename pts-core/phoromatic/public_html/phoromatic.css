@@ -33,7 +33,7 @@ div#pts_phoromatic_bottom_footer
 {
 	background: #0d47a1;
 	border: #1F1F1F 1px solid;
-	font-weight: 400;
+	font-weight: 300;
 	clear: both;
 	overflow: hidden;
 	font-size: 60%;
@@ -169,7 +169,7 @@ div#pts_phoromatic_main_box_inside
 {
 	margin: 0 auto;
 	padding: 10px 20px;
-	background: #f5f5f5;
+	background: #f1f1f1;
 	border: #1F1F1F 1px solid;
 	border-radius: 14px;
 	min-height: 500px;
