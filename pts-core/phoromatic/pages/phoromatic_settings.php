@@ -173,7 +173,7 @@ class phoromatic_settings implements pts_webui_interface
 				<p><a href="?build_suite">Create a custom test suite</a>.</p>';
 			}
 
-			echo phoromatic_webui_main($main, phoromatic_webui_right_panel_logged_in());
+			echo '<div id="pts_phoromatic_main_area">' . $main . '</div>';
 			echo phoromatic_webui_footer();
 	}
 }

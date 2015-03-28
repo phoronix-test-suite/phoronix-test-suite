@@ -567,7 +567,7 @@ class phoromatic_systems implements pts_webui_interface
 			while($row = $result->fetchArray());
 			$right .= '</ul>';
 		}
-		echo phoromatic_webui_main($main, phoromatic_webui_right_panel_logged_in($right));
+		echo '<div id="pts_phoromatic_main_area">' . $main . '</div>';
 		echo phoromatic_webui_footer();
 	}
 }

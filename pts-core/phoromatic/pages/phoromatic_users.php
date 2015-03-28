@@ -249,7 +249,7 @@ class phoromatic_users implements pts_webui_interface
 			</form>';
 
 		echo phoromatic_webui_header_logged_in();
-		echo phoromatic_webui_main($main, phoromatic_webui_right_panel_logged_in());
+		echo '<div id="pts_phoromatic_main_area">' . $main . '</div>';
 		echo phoromatic_webui_footer();
 	}
 }

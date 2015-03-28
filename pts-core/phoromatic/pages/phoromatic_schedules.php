@@ -496,7 +496,7 @@ class phoromatic_schedules implements pts_webui_interface
 			$main .= '</ul>
 			</div>';
 
-			echo phoromatic_webui_main($main, phoromatic_webui_right_panel_logged_in());
+			echo '<div id="pts_phoromatic_main_area">' . $main . '</div>';
 			echo phoromatic_webui_footer();
 	}
 }
