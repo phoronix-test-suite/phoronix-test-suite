@@ -215,7 +215,7 @@ class phoromatic_benchmark implements pts_webui_interface
 
 			if(empty($local_suites))
 			{
-				$main .= '<p><strong>Before creating a benchmark ticket you must first <a href="?build_suite">create a test suite</a> with the tests you wish to run.</strong></p>';
+				$main .= '<p><strong>Before you can create a benchmark ticket you must first <a href="?build_suite">create a test suite</a> with the tests you wish to run.</strong></p>';
 			}
 			else
 			{

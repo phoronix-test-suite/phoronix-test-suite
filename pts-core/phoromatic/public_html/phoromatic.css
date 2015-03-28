@@ -26,7 +26,7 @@ div#pts_phoromatic_top_header
 }
 div#pts_phoromatic_top_header_right
 {
-	color: #fff;
+	color: #e88f09;
 	height: 50px;
 	text-align: right;
 	width: 100%;
@@ -35,17 +35,19 @@ div#pts_phoromatic_top_header_right
 	padding: 5px 30px 0 0;
 	font-size: 0.9em;
 	line-height: 140%;
-	font-weight: 600;
+	font-weight: 400;
 }
 div#pts_phoromatic_top_header_right a
 {
-	color: #FFF;
+	color: #fff;
 	text-transform: uppercase;
 }
 div#pts_phoromatic_top_header input, div#pts_phoromatic_top_header button
 {
-	background: #FFF;
+	background: #e88f09;
 	color: #000;
+	font-weight: 400;
+	text-transform: uppercase;
 }
 div#pts_phoromatic_bottom_footer
 {
