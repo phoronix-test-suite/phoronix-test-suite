@@ -244,6 +244,7 @@ class phoromatic_server
 	}
 	public static function send_email($to, $subject, $from, $body)
 	{
+	//	return;
 		$msg = '<html><body>' . $body . '
 		<hr />
 		<p><img src="http://www.phoronix-test-suite.com/web/pts-logo-60.png" /></p>

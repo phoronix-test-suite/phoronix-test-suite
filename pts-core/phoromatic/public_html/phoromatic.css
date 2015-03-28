@@ -15,18 +15,7 @@ a, a:visited, a:hover, a:active
 }
 div#pts_phoromatic_top_header
 {
-	background-image: -webkit-gradient(
-		linear,
-		left top,
-		left bottom,
-		color-stop(0, #1976d2),
-		color-stop(1, #0d47a1)
-	);
-	background-image: -o-linear-gradient(bottom, #1976d2 0%, #0d47a1 100%);
-	background-image: -moz-linear-gradient(bottom, #1976d2 0%, #0d47a1 100%);
-	background-image: -webkit-linear-gradient(bottom, #1976d2 0%, #0d47a1 100%);
-	background-image: -ms-linear-gradient(bottom, #1976d2 0%, #0d47a1 100%);
-	background-image: linear-gradient(to bottom, #1976d2 0%, #0d47a1 100%);
+	background: #1976d2;
 	border: #1F1F1F 1px solid;
 	overflow: hidden;
 	line-height: 70px;
@@ -122,7 +111,7 @@ div#pts_phoromatic_menu_right h3
 }
 div#pts_phoromatic_menu_right
 {
-	background: #0d47a1;
+	background: #0863BB;
 	width: 15%;
 	height: 100%;
 	float: right;
