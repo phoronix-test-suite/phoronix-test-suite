@@ -153,7 +153,7 @@ function phoromatic_webui_header($left_items, $right)
 	{
 		$ret .= '<li>' . $item . '</li>';
 	}
-	$ret .= '</ul><div style="float: right; padding: 25px 70px 0 0;">' . $right .'</div></div>';
+	$ret .= '</ul><div id="pts_phoromatic_top_header_right">' . $right .'</div></div>';
 
 	return $ret;
 }
@@ -251,6 +251,7 @@ function phoromatic_tracker_page_relevant()
 }
 function phoromatic_webui_header_logged_in()
 {
+	$sub_links = array();
 	$html_links = array();
 	if($_SESSION['AdminLevel'] == -40)
 	{
@@ -273,10 +274,12 @@ function phoromatic_webui_header_logged_in()
 
 		if(isset($_SESSION['AdminLevel']) && $_SESSION['AdminLevel'] < 4)
 		{
-			array_push($pages, 'Users');
+			array_push($sub_links, 'Users');
 		}
-		array_push($pages, 'Settings');
+
+		array_push($sub_links, 'Settings');
 	}
+	array_push($sub_links, 'Logout');
 
 	foreach($pages as $page)
 	{
@@ -290,14 +293,19 @@ function phoromatic_webui_header_logged_in()
 		}
 	}
 
-	return phoromatic_webui_header($html_links, '<form action="/?search" method="post" id="search"><input type="search" name="search" size="14" /><input type="submit" name="sa" value="Search" /></form>');
+	foreach($sub_links as &$link)
+	{
+		$link = '<a href="?' . $link . '">' . $link . '</a>';
+	}
+
+	return phoromatic_webui_header($html_links, '<form action="/?search" method="post" id="search"><input type="search" name="search" size="14" /><input type="submit" name="sa" value="Search" /></form> ' . implode(' - ', $sub_links));
 }
 function phoromatic_webui_right_panel_logged_in($add = null)
 {
 	$right = null;
 	if($_SESSION['AdminLevel'] == -40)
 	{
-		$right .= '<h3>Phoromatic Server</h3><hr /><p><strong>' . date('H:i T - j F Y') . '</p><p align="center"><a href="?logout"><strong>Log-Out</strong></a></p>';
+		$right .= '<h3>Phoromatic Server</h3><hr /><p><strong>' . date('H:i T - j F Y') . '</p>';
 	}
 	else if($_SESSION['AdminLevel'] > 0)
 	{
@@ -380,7 +388,7 @@ function phoromatic_webui_right_panel_logged_in($add = null)
 
 $right .= ' <a href="/rss.php?user=' . $_SESSION['UserID'] . '&amp;v=' . sha1($_SESSION['CreatedOn']) . '"><img src="images/rss.png" /></a>';
 
-		$right .= '<br /><a href="?account_activity">' . $activity_count . ' Activity Events Today</a><br /><a href="?logout"><strong>Log-Out</strong></a></p>';
+		$right .= '<br /><a href="?account_activity">' . $activity_count . ' Activity Events Today</a></p>';
 	}
 
 	return $right;

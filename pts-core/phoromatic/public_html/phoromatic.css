@@ -18,11 +18,29 @@ div#pts_phoromatic_top_header
 	background: #1976d2;
 	border: #1F1F1F 1px solid;
 	overflow: hidden;
-	line-height: 70px;
 	margin: 0;
+	width: 100%;
 	box-shadow: 1px 1px 2px #1F1F1F;
 	-moz-box-shadow: 1px 1px 2px #1F1F1F;
 	-webkit-box-shadow: 1px 1px 2px #1F1F1F;
+}
+div#pts_phoromatic_top_header_right
+{
+	color: #fff;
+	height: 50px;
+	text-align: right;
+	width: 100%;
+	vertical-align: middle;
+	display: table-cell;
+	padding: 5px 30px 0 0;
+	font-size: 0.9em;
+	line-height: 140%;
+	font-weight: 600;
+}
+div#pts_phoromatic_top_header_right a
+{
+	color: #FFF;
+	text-transform: uppercase;
 }
 div#pts_phoromatic_top_header input, div#pts_phoromatic_top_header button
 {
@@ -61,17 +79,19 @@ div#pts_phoromatic_bottom_footer a:hover
 }
 div#pts_phoromatic_logo
 {
+	display: table-cell;
 	color: #e88f09;
 	margin: 10px 2px 0 10px;
 	float: left;
 }
 div#pts_phoromatic_top_header ul
 {
+	line-height: 70px;
 	font-size: 1.5em;
 	color: #fff;
 	list-style: none;
 	margin: 0 2px;
-	float: left;
+	display: table-cell;
 }
 div#pts_phoromatic_top_header ul li u
 {
@@ -86,7 +106,7 @@ div#pts_phoromatic_top_header ul li
 	display: inline;
 	vertical-align: top;
 }
-div#pts_phoromatic_top_header ul li a:hover
+div#pts_phoromatic_top_header ul li a:hover, div#pts_phoromatic_top_header_right a:hover
 {
 	color: #E0E0E0;
 	text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
