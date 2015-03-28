@@ -593,6 +593,7 @@ div#phoromatic_fixed_main_table
 	display: table;
 	table-layout: fixed;
 	width: 100%;
+	margin: 5px;
 }
 div#phoromatic_main_table_cell
 {

@@ -21,6 +21,7 @@ Phoronix Test Suite (Git)
 - phoromatic: Add "System Maintenance Table"
 - phoromatic: Add "PowerOnSystemDaily" setting option to ensure regardless of schedule that systems will at least power-up/communicate daily if enabled
 - phoromatic: New checkbox handling on results page to manage comparisons and multi-delete results
+- phoromatic: Start work on new main page
 
 Phoronix Test Suite 5.6.0-Dedilovo
 24 March 2015
