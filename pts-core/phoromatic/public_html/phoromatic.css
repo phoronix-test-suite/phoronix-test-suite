@@ -75,9 +75,7 @@ div#pts_phoromatic_top_header ul
 div#pts_phoromatic_top_header ul li u
 {
 	text-decoration: none;
-	color: #E0E0E0;
-	border-bottom: 1px solid #E0E0E0;
-	padding-bottom: 6px;
+	font-weight: 400;
 }
 div#pts_phoromatic_top_header ul li
 {
