@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2014, Phoronix Media
-	Copyright (C) 2010 - 2014, Michael Larabel
+	Copyright (C) 2010 - 2015, Phoronix Media
+	Copyright (C) 2010 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -440,61 +440,6 @@ class pts_openbenchmarking_client
 				pts_network::http_upload_via_post(pts_openbenchmarking::openbenchmarking_host() . 'extern/statistics/report-test-install-failure.php', $upload_data);
 				break;
 		}
-	}
-	public static function upload_hwsw_data($to_report)
-	{
-		if(!defined('PTS_GSID') || !pts_network::internet_support_available())
-		{
-			return false;
-		}
-
-		foreach($to_report as $component => &$value)
-		{
-			if(empty($value))
-			{
-				unset($to_report[$component]);
-				continue;
-			}
-
-			$value = $component . '=' . $value;
-		}
-
-		$upload_data = array('report_hwsw' => implode(';', $to_report), 'gsid' => PTS_GSID);
-		pts_network::http_upload_via_post(pts_openbenchmarking::openbenchmarking_host() . 'extern/statistics/report-installed-hardware-software.php', $upload_data);
-	}
-	public static function upload_pci_data($to_report)
-	{
-		if(!defined('PTS_GSID') || !pts_network::internet_support_available())
-		{
-			return false;
-		}
-
-		if(!is_array($to_report))
-		{
-			return false;
-		}
-
-		$to_report = base64_encode(serialize($to_report));
-
-		$upload_data = array('report_pci_data' => $to_report, 'gsid' => PTS_GSID);
-		pts_network::http_upload_via_post(pts_openbenchmarking::openbenchmarking_host() . 'extern/statistics/report-pci-data.php', $upload_data);
-	}
-	public static function upload_usb_data($to_report)
-	{
-		if(!defined('PTS_GSID') || !pts_network::internet_support_available())
-		{
-			return false;
-		}
-
-		if(!is_array($to_report))
-		{
-			return false;
-		}
-
-		$to_report = base64_encode(serialize($to_report));
-
-		$upload_data = array('report_usb_data' => $to_report, 'gsid' => PTS_GSID);
-		pts_network::http_upload_via_post(pts_openbenchmarking::openbenchmarking_host() . 'extern/statistics/report-usb-data.php', $upload_data);
 	}
 	public static function request_gsid()
 	{

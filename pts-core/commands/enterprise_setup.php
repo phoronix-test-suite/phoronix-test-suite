@@ -28,9 +28,7 @@ class enterprise_setup implements pts_option_interface
 	public static function run($r)
 	{
 		$force_options = array(
-			'PhoronixTestSuite/Options/OpenBenchmarking/AnonymousUsageReporting' => 'FALSE',
-			'PhoronixTestSuite/Options/OpenBenchmarking/AnonymousSoftwareReporting' => 'FALSE',
-			'PhoronixTestSuite/Options/OpenBenchmarking/AnonymousHardwareReporting' => 'FALSE'
+			'PhoronixTestSuite/Options/OpenBenchmarking/AnonymousUsageReporting' => 'FALSE'
 			);
 
 		if(pts_network::internet_support_available() == false)

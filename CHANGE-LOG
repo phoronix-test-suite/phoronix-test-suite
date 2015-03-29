@@ -6,6 +6,7 @@ Phoronix Test Suite (Git)
 - pts-core: Move phoromatic-client and phoromatic-server Upstart job files to deploy/
 - pts-core: Move phoromatic-client and phoromatic-server systemd service files to deploy/
 - pts-core: Add very basic result-file-to-json sub-command
+- pts-core: Drop AnonymousHardwareReporting / AnonymousSoftwareReporting as no longer used on OpenBenchmarking.org
 - Pull in JuJu scripts from https://github.com/juju-solutions/pts to deploy/juju
 - phodevi: More allowance for clients to recover Internet connection / server communication failure
 - phoromatic: Clean-up main page schedule for schedules with no associated systems

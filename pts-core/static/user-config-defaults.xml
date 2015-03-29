@@ -4,8 +4,6 @@
 	<Options>
 		<OpenBenchmarking>
 			<AnonymousUsageReporting>TRUE</AnonymousUsageReporting>
-			<AnonymousHardwareReporting>TRUE</AnonymousHardwareReporting>
-			<AnonymousSoftwareReporting>TRUE</AnonymousSoftwareReporting>
 			<IndexCacheTTL>3</IndexCacheTTL>
 			<AlwaysUploadSystemLogs>FALSE</AlwaysUploadSystemLogs>
 		</OpenBenchmarking>

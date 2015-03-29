@@ -810,24 +810,22 @@ class pts_client
 				{
 					if(count($user_agreement_return) == 3)
 					{
-						list($agree, $usage_reporting, $hwsw_reporting) = $user_agreement_return;
+						list($agree, $usage_reporting) = $user_agreement_return;
 					}
 					else
 					{
 						$agree = array_shift($user_agreement_return);
 						$usage_reporting = -1;
-						$hwsw_reporting = -1;
 					}
 				}
 				else
 				{
 					$agree = $user_agreement_return;
 					$usage_reporting = -1;
-					$hwsw_reporting = -1;
 				}
 			}
 
-			if($prompt_in_method == false || $usage_reporting == -1 || $hwsw_reporting == -1)
+			if($prompt_in_method == false || $usage_reporting == -1)
 			{
 				pts_client::$display->generic_heading('User Agreement');
 				echo wordwrap($user_agreement, 65);
@@ -836,12 +834,10 @@ class pts_client
 				if(pts_flags::no_openbenchmarking_reporting())
 				{
 					$usage_reporting = false;
-					$hwsw_reporting = false;
 				}
 				else
 				{
 					$usage_reporting = $agree ? pts_user_io::prompt_bool_input('Enable anonymous usage / statistics reporting', true) : -1;
-					$hwsw_reporting = $agree ? pts_user_io::prompt_bool_input('Enable anonymous statistical reporting of installed software / hardware', true) : -1;
 				}
 			}
 
@@ -857,10 +853,7 @@ class pts_client
 			}
 
 			pts_config::user_config_generate(array(
-				'PhoronixTestSuite/Options/OpenBenchmarking/AnonymousUsageReporting' => pts_config::bool_to_string($usage_reporting),
-				'PhoronixTestSuite/Options/OpenBenchmarking/AnonymousHardwareReporting' => pts_config::bool_to_string($hwsw_reporting),
-				'PhoronixTestSuite/Options/OpenBenchmarking/AnonymousSoftwareReporting' => pts_config::bool_to_string($hwsw_reporting)
-				));
+				'PhoronixTestSuite/Options/OpenBenchmarking/AnonymousUsageReporting' => pts_config::bool_to_string($usage_reporting)));
 		}
 	}
 	public static function swap_variables($user_str, $replace_call)
@@ -1422,106 +1415,6 @@ class pts_client
 		}
 
 		return $terminal_width;
-	}
-	public static function user_hardware_software_reporting()
-	{
-		$hw_reporting = pts_config::read_bool_config('PhoronixTestSuite/Options/OpenBenchmarking/AnonymousHardwareReporting', 'FALSE');
-		$sw_reporting = pts_config::read_bool_config('PhoronixTestSuite/Options/OpenBenchmarking/AnonymousSoftwareReporting', 'FALSE');
-
-		if($hw_reporting == false && $sw_reporting == false)
-		{
-			return;
-		}
-
-		$hw = array();
-		$sw = array();
-		$pso = pts_storage_object::recover_from_file(PTS_CORE_STORAGE);
-
-		if($hw_reporting)
-		{
-			$hw = array();
-			foreach(pts_openbenchmarking::stats_hardware_list() as $key => $value)
-			{
-				if(count($value) == 2)
-				{
-					$hw[$key] = phodevi::read_property($value[0], $value[1]);
-				}
-				else
-				{
-					$hw[$key] = phodevi::read_name($value[0]);
-				}
-			}
-
-			$hw_prev = $pso->read_object('global_reported_hw');
-			$pso->add_object('global_reported_hw', $hw);
-
-			if(is_array($hw_prev))
-			{
-				$hw = array_diff_assoc($hw, $hw_prev);
-			}
-
-			// Check the PCI devices
-			$pci = phodevi::read_property('motherboard', 'pci-devices');
-			$pci_prev = $pso->read_object('global_reported_pci');
-			$pso->add_object('global_reported_pci', $pci);
-
-			if(!empty($pci_prev) && is_array($pci_prev) && is_array($pci))
-			{
-				if($pci == $pci_prev)
-				{
-					$pci = null;
-				}
-				else
-				{
-					$pci = @array_diff($pci, $pci_prev);
-				}
-			}
-
-			if(!empty($pci))
-			{
-				pts_openbenchmarking_client::upload_pci_data($pci);
-			}
-
-			// Check the USB devices
-			$usb = phodevi::read_property('motherboard', 'usb-devices');
-			$usb_prev = $pso->read_object('global_reported_usb');
-			$pso->add_object('global_reported_usb', $usb);
-
-			if(!empty($usb_prev) && is_array($usb_prev) && is_array($usb) && $usb != $usb_prev)
-			{
-				pts_openbenchmarking_client::upload_usb_data($usb);
-			}
-		}
-		if($sw_reporting)
-		{
-			$sw = array();
-			foreach(pts_openbenchmarking::stats_software_list() as $key => $value)
-			{
-				if(count($value) == 2)
-				{
-					$sw[$key] = phodevi::read_property($value[0], $value[1]);
-				}
-				else
-				{
-					$sw[$key] = phodevi::read_name($value[0]);
-				}
-			}
-			$sw_prev = $pso->read_object('global_reported_sw');
-			$pso->add_object('global_reported_sw', $sw);
-
-			if(is_array($sw_prev))
-			{
-				$sw = array_diff_assoc($sw, $sw_prev);
-			}
-		}
-
-		$to_report = array_merge($hw, $sw);
-		$pso->save_to_file(PTS_CORE_STORAGE);
-
-		if(!empty($to_report))
-		{
-			pts_openbenchmarking_client::upload_hwsw_data($to_report);
-		}				
 	}
 	public static function is_process_running($process)
 	{

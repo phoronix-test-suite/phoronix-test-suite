@@ -164,7 +164,6 @@ for($i = 2; $i < $argc && isset($argv[$i]); $i++)
 if(QUICK_START == false)
 {
 	pts_client::user_agreement_check($sent_command);
-	pts_client::user_hardware_software_reporting();
 
 	// OpenBenchmarking.org
 	pts_openbenchmarking::refresh_repository_lists();
