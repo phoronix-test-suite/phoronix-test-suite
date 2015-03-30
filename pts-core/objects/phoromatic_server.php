@@ -588,7 +588,7 @@ class phoromatic_server
 	}
 	public static function system_check_for_open_benchmark_ticket($account_id, $system_id, &$sys_row)
 	{
-		$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_benchmark_tickets WHERE AccountID = :account_id AND State = 1 AND TicketIssueTime < :current_time AND TicketIssueTime > :yesterday');
+		$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_benchmark_tickets WHERE AccountID = :account_id AND State = 1 AND TicketIssueTime < :current_time AND TicketIssueTime > :yesterday ORDER BY TicketIssueTime ASC');
 		//echo phoromatic_server::$db->lastErrorMsg();
 		$stmt->bindValue(':account_id', $account_id);
 		$stmt->bindValue(':current_time', time());
