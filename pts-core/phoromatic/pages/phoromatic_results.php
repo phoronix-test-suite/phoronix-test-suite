@@ -169,13 +169,7 @@ class phoromatic_results implements pts_webui_interface
 						{
 							break;
 						}
-
-						$main .= '<a href="?result/' . $test_result_row['PPRID'] . '"><li id="result_select_' . $test_result_row['PPRID'] . '">' . $test_result_row['Title'] . '<br /><table><tr><td><strong>' . phoromatic_account_id_to_group_name($test_result_row['AccountID']) . '</strong></td><td>' . phoromatic_system_id_to_name($test_result_row['SystemID'], $test_result_row['AccountID']) . '</td><td>' . phoromatic_user_friendly_timedate($test_result_row['UploadTime']) .  '</td></tr>
-
-
-<tr class="tb_compare_bar"><td><a id="result_compare_link_' . $test_result_row['PPRID'] . '" onclick="javascript:phoromatic_add_to_result_comparison(\'' . $test_result_row['PPRID'] . '\'); return false;">Add To Comparison</a> &nbsp; &nbsp; <a id="result_run_compare_link_' . $test_result_row['PPRID'] . '" onclick="javascript:phoromatic_generate_comparison(); return false;" style="visibility: hidden;">Compare Results</a></td></tr>
-
-</table></li></a>';
+						$main .= '<a href="#"><li id="result_select_' . $test_result_row['PPRID'] . '"><input type="checkbox" id="result_compare_checkbox_' . $test_result_row['PPRID'] . '" onclick="javascript:phoromatic_checkbox_toggle_result_comparison(\'' . $test_result_row['PPRID'] . '\');" onchange="return false;"></input> <span onclick="javascript:phoromatic_window_redirect(\'?result/' . $test_result_row['PPRID'] . '\');">' . $test_result_row['Title'] . '</span><br /><table><tr><td><strong>' . phoromatic_account_id_to_group_name($test_result_row['AccountID']) . '</strong></td><td>' . phoromatic_system_id_to_name($test_result_row['SystemID']) . '</td><td>' . phoromatic_user_friendly_timedate($test_result_row['UploadTime']) .  '</td><td>' . $test_result_row['TimesViewed'] . ' Times Viewed</td></table></li></a>';
 						$results++;
 					}
 					while($test_result_row = $test_result_result->fetchArray());
