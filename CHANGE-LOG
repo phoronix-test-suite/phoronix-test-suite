@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 5.8 Milestone 1
+2 April 2015
 
 - pts-core: Start moving possible deployment scripts into deploy/ directory
 - pts-core: Move phoromatic-client and phoromatic-server Upstart job files to deploy/
