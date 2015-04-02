@@ -424,10 +424,10 @@ class phoromatic_result implements pts_webui_interface
 			$hash_matches = 0;
 			$ticket_matches = 0;
 
-			$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_results WHERE AccountID = :account_id AND ComparisonHash = :comparison_hash AND instr(:pprid, PPRID) = 0 ORDER BY UploadTime DESC LIMIT 12');
+			$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_results WHERE AccountID = :account_id AND ComparisonHash = :comparison_hash AND PPRID LIKE :pprid ORDER BY UploadTime DESC LIMIT 12');
 			$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 			$stmt->bindValue(':comparison_hash', $result_file->get_contained_tests_hash(false));
-			$stmt->bindValue(':pprid', implode(',', $upload_ids));
+			$stmt->bindValue(':pprid', implode(',', $upload_ids)."%");
 			$result = $stmt->execute();
 			while($row = $result->fetchArray())
 			{
