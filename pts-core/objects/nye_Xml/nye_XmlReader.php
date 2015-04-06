@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2011, Phoronix Media
-	Copyright (C) 2010 - 2011, Michael Larabel
+	Copyright (C) 2010 - 2015, Phoronix Media
+	Copyright (C) 2010 - 2015, Michael Larabel
 	nye_XmlReader.php: The XML reading object for the Phoronix Test Suite succeeding tandem_XmlReader
 
 	This program is free software; you can redistribute it and/or modify
@@ -33,7 +33,7 @@ class nye_XmlReader
 		$this->dom = new DOMDocument();
 
 		// TODO: investigate whether using the LIBXML_COMPACT option on loading actually increases performance
-		if(!isset($xml_file[1024]) && is_file($xml_file))
+		if(!is_object($xml_file) && !isset($xml_file[1024]) && is_file($xml_file))
 		{
 			$this->dom->load($xml_file);
 			$this->file_location = $xml_file;
