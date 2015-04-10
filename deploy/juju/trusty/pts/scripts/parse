@@ -12,10 +12,13 @@ import xml.etree.ElementTree as ET
 # Description keys to strip for multi-test readability
 strips = ['Test: ', 'Type: ', 'PHP Benchmark Suite', ' ']
 
+
 def action_set(key, val):
     action_cmd = ['action-set']
     if isinstance(val, dict):
         for k, v in val.iteritems():
+            k = k.strip().replace(' ', '-')
+            v = v.strip().replace(' ', '-')
             action_set('%s.%s' % (key, k), v)
         return
 
@@ -37,10 +40,10 @@ for result in root.iter('Result'):
         desc = desc.replace(s, '')
 
     test = result.find('Title').text.lower()
-    # desc = re.sub(r'[\W]', '_', desc.lower())
     desc = re.sub(r'[\W]', '-', desc.lower())
     value = result.find('Data').find('Entry').find('Value').text
     units = result.find('Scale').text
+
     print(test, desc, value, units)
     key = 'results.%s-%s' % (test, desc) if desc else 'results.%s' % test
     action_set(key, {'value': value, 'units': units})
