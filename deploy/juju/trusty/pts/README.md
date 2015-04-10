@@ -15,7 +15,16 @@ First bootstrap Juju and then deploy pts:
     juju bootstrap
     juju deploy pts
 
+From source:
+
+  cd phoronix-test-suite/deploy/juju
+  juju deploy --repository=. local:trusty/pts
+
 # Configuration
+
+  juju set pts user-config="`cat /path/to/user-config.xml`"
+
+# Running benchmarks
 
 You can list all of the actions available with the following command:
 
@@ -44,6 +53,10 @@ You can also run benchmarks across the entire pts service:
     juju add-unit -n10 pts      # Add 10 more nodes
     juju action do pts memory   # Exec the memory benchmark on all 11 pts nodes
 
+If you want to run custom benchmarks:
+
+    juju action do pts/0 smoke tests='pts/apache pts/nginx'
+
 # Check on actions
 
 `juju action status` allows you to see the current status of an action. The benchmark results will be available once the action status has changed to `completed`.
@@ -57,9 +70,11 @@ actions:
 ```
 
 # Get results
-Once an action has completed, you can fetch the results in yaml or json, in addition to the default *smart* format.
+
+Once an action has completed, you can fetch the results in yaml or json, in addition to the default *smart* format. The `wait` flag allows you to tell fetch how long to wait for results. This is useful if you want to block while waiting for an action to finish.
+
 ```
-juju action fetch 7707a291-be29-46aa-8d02-2daa8ee24ebf
+juju action fetch --wait 0 7707a291-be29-46aa-8d02-2daa8ee24ebf
 results:
   results:
     cachebench-read:
@@ -92,6 +107,8 @@ timing:
   enqueued: 2015-03-23 17:51:59 +0000 UTC
   started: 2015-03-23 17:52:03 +0000 UTC
 ```
+
+The raw output from pts will be stored on the unit, in timestamped directories under /opt/pts/results.
 
 # Contact Information
 
