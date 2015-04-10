@@ -15,10 +15,11 @@ strips = ['Test: ', 'Type: ', 'PHP Benchmark Suite', ' ']
 
 def action_set(key, val):
     action_cmd = ['action-set']
+    key = key.strip().replace(' ', '-')
+
     if isinstance(val, dict):
         for k, v in val.iteritems():
             k = k.strip().replace(' ', '-')
-            v = v.strip().replace(' ', '-')
             action_set('%s.%s' % (key, k), v)
         return
 
