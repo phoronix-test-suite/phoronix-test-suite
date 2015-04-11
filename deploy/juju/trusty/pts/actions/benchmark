@@ -13,6 +13,11 @@ run_benchmark() {
 
     run=`date +%s`
 
+    userconfig=`config-get user-config`
+    if [ ! -z "$userconfig" ]; then
+        echo $userconfig > /root/.phoronix-test-suite/user-config.xml
+    fi
+
     phoronix-test-suite batch-install $params > /dev/null 2>&1
 
     phoronix-test-suite batch-run $params
