@@ -238,6 +238,10 @@ class phoromatic_server
 				// Change made 27 March
 				self::$db->exec('ALTER TABLE phoromatic_account_settings ADD COLUMN PowerOnSystemDaily INTEGER DEFAULT 0');
 				self::$db->exec('PRAGMA user_version = 28');
+			case 28:
+				// Change made 13 April
+				self::$db->exec('ALTER TABLE phoromatic_account_settings ADD COLUMN LetPublicViewResults INTEGER DEFAULT 0');
+				self::$db->exec('PRAGMA user_version = 29');
 
 		}
 		chmod($db_file, 0600);

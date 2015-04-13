@@ -207,8 +207,9 @@ class phoromatic_welcome implements pts_webui_interface
 						<sup>3</sup> A valid email address is required for notifications, password reset, and other verification purposes.<br />
 						</p>';
 			}
-
-			$box .= '<hr />';
+			$box .= '<hr />
+			<h1>View Public Results</h1>
+			<p>For accounts that opted to share their test results publicly (adjustable via each account\'s setting page, the public results can be <a href="public.php">viewed here</a>.</p><hr />';
 
 			echo phoromatic_webui_box($box);
 			echo phoromatic_webui_footer();

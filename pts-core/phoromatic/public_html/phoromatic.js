@@ -152,13 +152,13 @@ function toggle_annotate_area(annotate_hash)
 	document.getElementById("annotation_link_" + annotate_hash).style.display = 'none';
 	document.getElementById("annotation_area_" + annotate_hash).style.display = 'block';
 }
-function phoromatic_generate_comparison()
+function phoromatic_generate_comparison(ext)
 {
 	if(typeof(Storage) !== 'undefined' && localStorage.comparison_pprids)
 	{
 		var ids = JSON.parse(localStorage.comparison_pprids);
 		localStorage.removeItem("comparison_pprids");
-		window.location.href = "?result/" + ids.join();
+		window.location.href = ext + ids.join();
 	}
 }
 function phoromatic_jump_to_results_from(schedule_id, select_id, prepend_results)
