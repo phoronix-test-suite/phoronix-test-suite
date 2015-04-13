@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Fix potential crash in list-installed-suites sub-command
+- phoromatic: Workaround for instr() usage in SQLite that caused issues with older distributions
 
 Phoronix Test Suite 5.8 Milestone 1
 2 April 2015
