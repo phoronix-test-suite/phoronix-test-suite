@@ -424,7 +424,7 @@ class phoromatic_result implements pts_webui_interface
 			$hash_matches = 0;
 			$ticket_matches = 0;
 
-			$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_results WHERE AccountID = :account_id AND ComparisonHash = :comparison_hash AND instr(:pprid, PPRID) = 0 ORDER BY UploadTime DESC LIMIT 12');
+			$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_results WHERE AccountID = :account_id AND ComparisonHash = :comparison_hash AND PPRID NOT IN (:pprid) ORDER BY UploadTime DESC LIMIT 12');
 			$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 			$stmt->bindValue(':comparison_hash', $result_file->get_contained_tests_hash(false));
 			$stmt->bindValue(':pprid', implode(',', $upload_ids));
@@ -437,7 +437,7 @@ class phoromatic_result implements pts_webui_interface
 
 			foreach($benchmark_tickets as $ticket_id)
 			{
-				$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_results WHERE AccountID = :account_id AND BenchmarkTicketID = :ticket_id AND instr(:pprid, PPRID) = 0 ORDER BY UploadTime DESC LIMIT 12');
+				$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_results WHERE AccountID = :account_id AND BenchmarkTicketID = :ticket_id AND PPRID NOT IN (:pprid) ORDER BY UploadTime DESC LIMIT 12');
 				$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 				$stmt->bindValue(':ticket_id', $ticket_id);
 				$stmt->bindValue(':pprid', implode(',', $upload_ids));
