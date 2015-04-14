@@ -61,7 +61,7 @@ function phoromatic_window_redirect(url)
 {
 	window.location.href = url;
 }
-function phoromatic_delete_results()
+function phoromatic_delete_results(ext)
 {
 	if(typeof(Storage) !== 'undefined' && localStorage.comparison_pprids)
 	{
@@ -70,7 +70,7 @@ function phoromatic_delete_results()
 		if(ids.length > 0 && confirm("Press OK to delete the " + ids.length + " selected results."))
 		{
 			localStorage.removeItem("comparison_pprids");
-			window.location.href = "?results/delete/" + ids.join();
+			window.location.href = ext + ids.join();
 		}
 	}
 }
