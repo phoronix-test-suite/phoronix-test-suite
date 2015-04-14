@@ -209,7 +209,7 @@ class phoromatic_welcome implements pts_webui_interface
 			}
 			$box .= '<hr />
 			<h1>View Public Results</h1>
-			<p>For accounts that opted to share their test results publicly (adjustable via each account\'s setting page, the public results can be <a href="public.php">viewed here</a>.</p><hr />';
+			<p>For accounts that opted to share their test results publicly, you can directly <a href="public.php">viewed the public test results</a>.</p><hr />';
 
 			echo phoromatic_webui_box($box);
 			echo phoromatic_webui_footer();
