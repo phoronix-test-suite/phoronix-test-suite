@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2014, Phoronix Media
-	Copyright (C) 2008 - 2014, Michael Larabel
+	Copyright (C) 2008 - 2015, Phoronix Media
+	Copyright (C) 2008 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -136,7 +136,8 @@ class pts_tests
 		$extra_vars['LANG'] = '';
 		$extra_vars['PHP_BIN'] = PHP_BIN;
 
-		$extra_vars['vblank_mode'] = '0';
+		// Safe guards
+		$extra_vars['vblank_mode'] = '0'; // Avoid sync to vblank with the open-source drivers
 		$extra_vars['CCACHE_DISABLE'] = '1'; // Should avoid ccache being used in compiler tests
 
 		foreach($test_profile->extended_test_profiles() as $i => $this_test_profile)
