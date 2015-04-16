@@ -134,8 +134,10 @@ class pts_tests
 		$extra_vars['LC_CTYPE'] = '';
 		$extra_vars['LC_MESSAGES'] = '';
 		$extra_vars['LANG'] = '';
-		$extra_vars['vblank_mode'] = '0';
 		$extra_vars['PHP_BIN'] = PHP_BIN;
+
+		$extra_vars['vblank_mode'] = '0';
+		$extra_vars['CCACHE_DISABLE'] = '1'; // Should avoid ccache being used in compiler tests
 
 		foreach($test_profile->extended_test_profiles() as $i => $this_test_profile)
 		{

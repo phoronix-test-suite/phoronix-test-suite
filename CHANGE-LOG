@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Fix potential crash in list-installed-suites sub-command
+- pts-core: Enforce CCACHE_DISABLE=1 during install/runtime testing
 - phoromatic: Workaround for instr() usage in SQLite that caused issues with older distributions
 - phoromatic: Add LetPublicViewResults option and new public results listing page
 - phoromatic: Update results selection on rootadmin data page
