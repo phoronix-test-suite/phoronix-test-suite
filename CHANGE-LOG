@@ -6,6 +6,7 @@ Phoronix Test Suite (Git)
 - phoromatic: Workaround for instr() usage in SQLite that caused issues with older distributions
 - phoromatic: Add LetPublicViewResults option and new public results listing page
 - phoromatic: Update results selection on rootadmin data page
+- phoromatic: Start work on nginx server configuration (not yet working)
 
 Phoronix Test Suite 5.8 Milestone 1
 2 April 2015
