@@ -843,16 +843,14 @@ class pts_test_run_manager
 			}
 
 			$mount_options = phodevi::read_property('disk', 'mount-options');
-			if(isset($mount_options['mount-options']) && $mount_options['mount-options'] != null)
+			if($mount_options['mount-options'] != null)
 			{
-				$extra = phodevi::read_property('disk', 'extra-disk-details');
-
 				$notes['disk-mount-options'] = $mount_options['mount-options'];
-
-				if($extra != null)
-				{
-					$notes['disk-mount-options'] = $notes['disk-mount-options'] . ' / ' . $extra;
-				}
+			}
+			$extra = phodevi::read_property('disk', 'extra-disk-details');
+			if($extra != null)
+			{
+				$notes['disk-details'] = $extra;
 			}
 		}
 		if(true || $show_all || in_array('Processor', $test_hardware_types) || in_array('System', $test_hardware_types))

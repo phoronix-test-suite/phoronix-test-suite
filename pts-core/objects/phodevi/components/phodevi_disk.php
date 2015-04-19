@@ -376,7 +376,6 @@ class phodevi_disk extends phodevi_device_interface
 	}
 	public static function extra_disk_details()
 	{
-		$scheduler = null;
 		$device = self::proc_mount_options();
 		$mount_point = basename($device['mount-point']);
 		$extra_details = null;
