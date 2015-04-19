@@ -385,7 +385,7 @@ class phodevi_disk extends phodevi_device_interface
 			$btrfs_fi_df = shell_exec('btrfs fi df ' . $mount_point . ' 2>&1');
 			if(($f = strpos($btrfs_fi_df, 'Data, ')) !== false)
 			{
-				$btrfs_fi_df = $f + strlen('Data, ');
+				$btrfs_fi_df = substr($btrfs_fi_df, ($f + strlen('Data, ')));
 				$btrfs_fi_df = substr($btrfs_fi_df, 0, strpos($btrfs_fi_df, ': '));
 
 				if(strpos($btrfs_fi_df, 'RAID') !== false)
