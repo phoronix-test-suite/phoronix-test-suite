@@ -377,10 +377,10 @@ class phodevi_disk extends phodevi_device_interface
 	public static function extra_disk_details()
 	{
 		$device = self::proc_mount_options();
-		$mount_point = basename($device['mount-point']);
+		$mount_point = $device['mount-point'];
 		$extra_details = null;
 
-		if(strtolower(phodevi::read_property('system', 'filesystem')) == 'btrfs' && pts_client::executable_in_path('btrfs'))
+		if(strtolower($device['file-system']) == 'btrfs' && pts_client::executable_in_path('btrfs'))
 		{
 			$btrfs_fi_df = shell_exec('btrfs fi df ' . $mount_point . ' 2>&1');
 			if(($f = strpos($btrfs_fi_df, 'Data, ')) !== false)
