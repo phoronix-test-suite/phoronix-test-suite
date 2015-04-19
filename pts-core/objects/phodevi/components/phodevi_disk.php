@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2014, Phoronix Media
-	Copyright (C) 2008 - 2014, Michael Larabel
+	Copyright (C) 2008 - 2015, Phoronix Media
+	Copyright (C) 2008 - 2015, Michael Larabel
 	phodevi_disk.php: The PTS Device Interface object for the system disk(s)
 
 	This program is free software; you can redistribute it and/or modify
@@ -35,6 +35,9 @@ class phodevi_disk extends phodevi_device_interface
 				break;
 			case 'mount-options':
 				$property = new phodevi_device_property('proc_mount_options', phodevi::no_caching);
+				break;
+			case 'extra-disk-details':
+				$property = new phodevi_device_property('extra_disk_details', phodevi::no_caching);
 				break;
 		}
 
@@ -370,6 +373,30 @@ class phodevi_disk extends phodevi_device_interface
 		}
 
 		return $scheduler;
+	}
+	public static function extra_disk_details()
+	{
+		$scheduler = null;
+		$device = self::proc_mount_options();
+		$mount_point = basename($device['mount-point']);
+		$extra_details = null;
+
+		if(strtolower(phodevi::read_property('system', 'filesystem')) == 'btrfs' && pts_client::executable_in_path('btrfs'))
+		{
+			$btrfs_fi_df = shell_exec('btrfs fi df ' . $mount_point . ' 2>&1');
+			if(($f = strpos($btrfs_fi_df, 'Data, ')) !== false)
+			{
+				$btrfs_fi_df = $f + strlen('Data, ');
+				$btrfs_fi_df = substr($btrfs_fi_df, 0, strpos($btrfs_fi_df, ': '));
+
+				if(strpos($btrfs_fi_df, 'RAID') !== false)
+				{
+					$extra_details = $btrfs_fi_df;
+				}
+			}
+		}
+
+		return $extra_details;
 	}
 }
 

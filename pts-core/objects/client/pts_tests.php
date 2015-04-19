@@ -136,7 +136,7 @@ class pts_tests
 		$extra_vars['LANG'] = '';
 		$extra_vars['PHP_BIN'] = PHP_BIN;
 
-		// Safe guards
+		// Safe-guards to try to ensure more accurate testing
 		$extra_vars['vblank_mode'] = '0'; // Avoid sync to vblank with the open-source drivers
 		$extra_vars['CCACHE_DISABLE'] = '1'; // Should avoid ccache being used in compiler tests
 
