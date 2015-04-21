@@ -11,6 +11,7 @@ Phoronix Test Suite (Git)
 - phoromatic: Add LetPublicViewResults option and new public results listing page
 - phoromatic: Update results selection on rootadmin data page
 - phoromatic: Start work on nginx server configuration (not yet working)
+- phoromatic: Add "System Targets" info to benchmark ticket page & "View All Past Tickets"
 
 Phoronix Test Suite 5.8 Milestone 1
 2 April 2015

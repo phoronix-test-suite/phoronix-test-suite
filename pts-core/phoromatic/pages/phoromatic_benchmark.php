@@ -41,7 +41,35 @@ class phoromatic_benchmark implements pts_webui_interface
 			return;
 
 		$is_new = true;
-		if(!empty($PATH[0]) && is_numeric($PATH[0]))
+		if(!empty($PATH[0]) && $PATH[0] == 'all')
+		{
+			$main = '<h1>Past Benchmark Tickets</h1>';
+			$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_benchmark_tickets WHERE AccountID = :account_id AND State >= 0 ORDER BY TicketIssueTime DESC');
+			$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+			$result = $stmt->execute();
+			$main .= '<ol>';
+
+			if($result)
+			{
+				$row = $result->fetchArray();
+
+				if(!empty($row))
+				{
+					do
+					{
+						$main .= '<li><a href="?benchmark/' . $row['TicketID'] . '">' . $row['Title'] . '</a></li>';
+					}
+					while($row = $result->fetchArray());
+				}
+			}
+			else
+			{
+				$main .= '<li>No Benchmark Tickets Found</li>';
+			}
+
+			$main .= '</ol>';
+		}
+		else if(!empty($PATH[0]) && is_numeric($PATH[0]))
 		{
 			$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_benchmark_tickets WHERE AccountID = :account_id AND TicketID = :ticket_id');
 			$stmt->bindValue(':account_id', $_SESSION['AccountID']);
@@ -80,6 +108,14 @@ class phoromatic_benchmark implements pts_webui_interface
 				$main .= '<h3>' . $row['Description'] . '</h3>';
 				$main .= '<p>This benchmark ticket was created on <strong>' . date('j F Y \a\t H:i', strtotime($row['LastModifiedOn'])) . '</strong> by <strong>' . $row['LastModifiedBy'] . '. The ticket was last issued for testing at ' . date('j F Y \a\t H:i', $row['TicketIssueTime']) . '</strong>.';
 				$main .= '<p> <a href="/?benchmark/' . $PATH[0] . '/&repeat">Repeat Ticket</a> &nbsp; &nbsp; &nbsp; <a href="/?benchmark/' . $PATH[0] . '/&remove">Remove Ticket</a>' . (!isset($_GET['disable']) && $row['State'] > 0 ? ' &nbsp; &nbsp; &nbsp; <a href="/?benchmark/' . $PATH[0] . '/&disable">End Ticket</a>' : null) . '</p>';
+				$main .= '<hr /><h1>System Targets</h1><ol>';
+
+				foreach(explode(',', $row['RunTargetSystems']) as $system_id)
+				{
+					$main .= '<li><a href="?systems/' . $system_id . '">' . phoromatic_server::system_id_to_name($system_id) . '</a></li>';
+				}
+				$main .= '</ol>';
+
 				$main .= '<hr /><h1>Ticket Payload</h1>';
 				$main .= '<p>This ticket runs the <strong>' . $row['SuiteToRun'] . '</strong> test suite:</p>';
 				$main .= '<div style="max-height: 400px; overflow-y: scroll;">';
@@ -328,7 +364,7 @@ class phoromatic_benchmark implements pts_webui_interface
 		$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 		$stmt->bindValue(':time_cutoff', (time() - (60 * 60 * 24 * 14)));
 		$result = $stmt->execute();
-		$right = null;
+		$right = '<ul><li>Benchmark Tickets</li>';
 
 		if($result)
 		{
@@ -336,15 +372,15 @@ class phoromatic_benchmark implements pts_webui_interface
 
 			if(!empty($row))
 			{
-				$right .= '<ul><li>Benchmark Tickets</li>';
 				do
 				{
 					$right .= '<li><a href="?benchmark/' . $row['TicketID'] . '">' . $row['Title'] . '</a></li>';
 				}
 				while($row = $result->fetchArray());
-				$right .= '</ul>';
 			}
 		}
+		$right .= '<li><em><a href="?benchmark/all">View All Past Tickets</a></em></li>';
+		$right .= '</ul>';
 
 		echo phoromatic_webui_header_logged_in();
 		echo phoromatic_webui_main($main, phoromatic_webui_right_panel_logged_in($right));
