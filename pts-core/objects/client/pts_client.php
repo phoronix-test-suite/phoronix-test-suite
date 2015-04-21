@@ -1537,7 +1537,7 @@ class pts_client
 
 		if(!isset($cache[$executable]) || $ignore_paths_with)
 		{
-			$paths = pts_strings::trim_explode((phodevi::is_windows() ? ';' : ':'), (($path = pts_client::read_env('PATH')) == false ? '/usr/bin:/usr/local/bin' : $path));
+			$paths = pts_strings::trim_explode((phodevi::is_windows() ? ';' : ':'), (($path = pts_client::read_env('PATH')) == false ? '/usr/local/bin:/usr/bin:/usr/sbin:/bin' : $path));
 			$executable_path = false;
 
 			foreach($paths as $path)
