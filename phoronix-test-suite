@@ -31,6 +31,15 @@ then
 	cd $PTS_DIR
 fi
 
+# Run any start-up hooks, such as to pre-seed environment variables or other non-default behaviors / customizations
+if [ -d pts-core/hooks/startup ]
+then
+	for file in pts-core/hooks/startup/*.sh
+	do
+		./$file
+	done
+fi
+
 # Determine PHP binary location
 if [ ! "X$PHP_BIN" = "X" ] && [ -x $PHP_BIN ]
 then
