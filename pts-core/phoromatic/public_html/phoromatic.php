@@ -173,7 +173,8 @@ if(!isset($result) || empty($result))
 if(!isset($result) || empty($result))
 {
 	// If system was reloaded and MachineSelfID no longer matches but there is existing IP or MAC address claim against it
-	$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, Groups, State, MaintenanceMode FROM phoromatic_systems WHERE AccountID = :account_id AND (LastIP = :ip_address OR NetworkMAC = :network_mac)');
+	// XXX dropped LastIP = :ip_address OR
+	$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, Groups, State, MaintenanceMode FROM phoromatic_systems WHERE AccountID = :account_id AND NetworkMAC = :network_mac');
 	$stmt->bindValue(':account_id', ACCOUNT_ID);
 	$stmt->bindValue(':ip_address', $_SERVER['REMOTE_ADDR']);
 	$stmt->bindValue(':network_mac', $NETWORK_CLIENT_MAC);
