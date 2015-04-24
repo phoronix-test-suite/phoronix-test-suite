@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2014, Phoronix Media
-	Copyright (C) 2008 - 2014, Michael Larabel
+	Copyright (C) 2008 - 2015, Phoronix Media
+	Copyright (C) 2008 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -317,7 +317,7 @@ class phoromatic_schedules implements pts_webui_interface
 
 					do
 					{
-						$main .= '<a href="#"><li>' . $test_result_row['Trigger'] . '<br /><table><tr><td>' . phoromatic_user_friendly_timedate($test_result_row['TriggeredOn']) . '</td><td><a href="?schedules/' . $PATH[0] . '/delete-trigger/' . base64_encode($test_result_row['Trigger']) . '">Remove Trigger</a></td></tr></table></li></a>';
+						$main .= '<a onclick=""><li>' . $test_result_row['Trigger'] . '<br /><table><tr><td>' . phoromatic_user_friendly_timedate($test_result_row['TriggeredOn']) . '</td><td><a href="?schedules/' . $PATH[0] . '/delete-trigger/' . base64_encode($test_result_row['Trigger']) . '">Remove Trigger</a></td></tr></table></li></a>';
 
 					}
 					while($test_result_row = $test_result_result->fetchArray());

@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- phoromatic: Fix jumping on page on checkbox selection when scrolling
+
 Phoronix Test Suite 5.8 Milestone 2
 21 April 2015
 

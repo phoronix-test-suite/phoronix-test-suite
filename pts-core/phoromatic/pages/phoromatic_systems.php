@@ -262,7 +262,7 @@ class phoromatic_systems implements pts_webui_interface
 					$main .= '<hr /><div class="pts_phoromatic_info_box_area" style="margin: 0 10%;"><ul><li><h1>Recent System Warnings &amp; Errors</h1></li>';
 					do
 					{
-						$main .= '<a href="#"><li>' . $row['ErrorMessage'] . '<br /><table><tr><td>' . $row['UploadTime'] . '</td><td>' . $row['TestIdentifier'] . '</td></tr></table></li></a>';
+						$main .= '<a onclick=""><li>' . $row['ErrorMessage'] . '<br /><table><tr><td>' . $row['UploadTime'] . '</td><td>' . $row['TestIdentifier'] . '</td></tr></table></li></a>';
 					}
 					while($row = $result->fetchArray());
 					$main .= '	</ul></div>';
