@@ -112,5 +112,5 @@ The raw output from pts will be stored on the unit, in timestamped directories u
 
 # Contact Information
 
-- Maintainer: Adam Israel <aisrael@canonical.com>
+- Maintainer: Adam Israel <adam.israel@canonical.com>
 - [Phoronix Test Suite](http://www.phoronix-test-suite.com/) homepage
