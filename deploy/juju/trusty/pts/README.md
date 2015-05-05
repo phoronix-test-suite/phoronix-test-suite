@@ -17,12 +17,12 @@ First bootstrap Juju and then deploy pts:
 
 From source:
 
-  cd phoronix-test-suite/deploy/juju
-  juju deploy --repository=. local:trusty/pts
+    cd phoronix-test-suite/deploy/juju
+    juju deploy --repository=. local:trusty/pts
 
 # Configuration
 
-  juju set pts user-config="`cat /path/to/user-config.xml`"
+    juju set pts user-config="`cat /path/to/user-config.xml`"
 
 # Running benchmarks
 
@@ -48,11 +48,11 @@ or in this case, do a io test on pts unit 3:
     juju action do pts/3 io
 
 You can also run benchmarks across the entire pts service:
-
-    juju deploy pts             # Deploys one unit
-    juju add-unit -n10 pts      # Add 10 more nodes
-    juju action do pts memory   # Exec the memory benchmark on all 11 pts nodes
-
+```sh
+juju deploy pts             # Deploys one unit
+juju add-unit -n10 pts      # Add 10 more nodes
+juju action do pts memory   # Exec the memory benchmark on all 11 pts nodes
+```
 If you want to run custom benchmarks:
 
     juju action do pts/0 smoke tests='pts/apache pts/nginx'
