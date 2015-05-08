@@ -4,6 +4,7 @@ Phoronix Test Suite (Git)
 
 - phoromatic: Honor show_local_tests_only option via the build suite page
 - phoromatic: Fix jumping on page on checkbox selection when scrolling
+- phoromatic: Don't print network connectivity messages
 
 Phoronix Test Suite 5.8 Milestone 2
 21 April 2015

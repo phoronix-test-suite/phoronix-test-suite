@@ -283,17 +283,26 @@ class pts_network
 
 		if(ini_get('allow_url_fopen') == 'Off')
 		{
-			echo PHP_EOL . 'The allow_url_fopen option in your PHP configuration must be enabled for network support.' . PHP_EOL . PHP_EOL;
+			if(!defined('PHOROMATIC_SERVER'))
+			{
+				echo PHP_EOL . 'The allow_url_fopen option in your PHP configuration must be enabled for network support.' . PHP_EOL . PHP_EOL;
+			}
 			self::$disable_network_support = true;
 		}
 		else if(pts_config::read_bool_config('PhoronixTestSuite/Options/Networking/NoInternetCommunication', 'FALSE'))
 		{
-			echo PHP_EOL . 'Internet Communication Is Disabled For Your User Configuration.' . PHP_EOL . PHP_EOL;
+			if(!defined('PHOROMATIC_SERVER'))
+			{
+				echo PHP_EOL . 'Internet Communication Is Disabled For Your User Configuration.' . PHP_EOL . PHP_EOL;
+			}
 			self::$disable_internet_support = true;
 		}
 		else if(pts_config::read_bool_config('PhoronixTestSuite/Options/Networking/NoNetworkCommunication', 'FALSE'))
 		{
-			echo PHP_EOL . 'Network Communication Is Disabled For Your User Configuration.' . PHP_EOL . PHP_EOL;
+			if(!defined('PHOROMATIC_SERVER'))
+			{
+				echo PHP_EOL . 'Network Communication Is Disabled For Your User Configuration.' . PHP_EOL . PHP_EOL;
+			}
 			self::$disable_network_support = true;
 		}
 		else if(pts_flags::no_network_communication() == true)
