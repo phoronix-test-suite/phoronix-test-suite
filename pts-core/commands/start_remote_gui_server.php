@@ -73,6 +73,7 @@ class start_remote_gui_server implements pts_option_interface
 
 		// WebSocket Server Setup
 		$server_launcher .= 'export PTS_WEBSOCKET_PORT=' . $web_socket_port . PHP_EOL;
+		$server_launcher .= 'export PTS_WEBSOCKET_SERVER=GUI' . PHP_EOL;
 		$server_launcher .= 'cd ' . getenv('PTS_DIR') . ' && PTS_MODE="CLIENT" ' . getenv('PHP_BIN') . ' pts-core/phoronix-test-suite.php start-ws-server &' . PHP_EOL;
 		$server_launcher .= 'websocket_server_pid=$!'. PHP_EOL;
 

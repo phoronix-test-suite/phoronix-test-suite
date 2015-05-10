@@ -123,6 +123,7 @@ class start_phoromatic_server implements pts_option_interface
 		// WebSocket Server Setup
 		$server_launcher .= 'export PTS_WEB_PORT=' . $web_port . PHP_EOL;
 		$server_launcher .= 'export PTS_WEBSOCKET_PORT=' . $web_socket_port . PHP_EOL;
+		$server_launcher .= 'export PTS_WEBSOCKET_SERVER=GUI' . PHP_EOL;
 		$server_launcher .= 'export PTS_NO_FLUSH_LOGGER=1' . PHP_EOL;
 		$server_launcher .= 'export PTS_PHOROMATIC_SERVER=1' . PHP_EOL;
 		$server_launcher .= 'export PTS_PHOROMATIC_LOG_LOCATION=' . $pts_logger->get_log_file_location() . PHP_EOL;

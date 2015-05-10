@@ -3,9 +3,9 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2013 - 2014, Phoronix Media
-	Copyright (C) 2013 - 2014, Michael Larabel
-	pts-web-socket_server: Build upon pts_web_socket
+	Copyright (C) 2013 - 2015, Phoronix Media
+	Copyright (C) 2013 - 2015, Michael Larabel
+	pts-web-socket_server_gui: Build upon pts_web_socket with functionality for the web GUI
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class pts_web_socket_server extends pts_web_socket
+class pts_web_socket_server_gui extends pts_web_socket
 {
 	private $sensor_logging = false;
 	private $phodevi_vfs = false;
