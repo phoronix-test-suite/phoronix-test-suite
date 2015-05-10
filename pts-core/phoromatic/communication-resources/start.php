@@ -46,7 +46,7 @@ $sys_row = $sys_result->fetchArray();
 $schedule_row = phoromatic_server::system_check_for_open_schedule_run(ACCOUNT_ID, SYSTEM_ID, 0, $sys_row);
 if($schedule_row != false)
 {
-	$res = phoromatic_generate_test_suite($schedule_row, $json, $phoromatic_account_settings);
+	$res = phoromatic_generate_test_suite($schedule_row, $json, $phoromatic_account_settings, $sys_row);
 	if($res)
 	{
 		return;
@@ -59,7 +59,7 @@ $ticket_row = phoromatic_server::system_check_for_open_benchmark_ticket(ACCOUNT_
 if($ticket_row != false)
 {
 	pts_logger::add_to_log(SYSTEM_ID . ' - needs to benchmark ticket for ' . $ticket_row['Title']);
-	$res = phoromatic_generate_benchmark_ticket($ticket_row, $json, $phoromatic_account_settings);
+	$res = phoromatic_generate_benchmark_ticket($ticket_row, $json, $phoromatic_account_settings, $sys_row);
 	if($res)
 	{
 		return;
@@ -67,7 +67,7 @@ if($ticket_row != false)
 }
 // END OF BENCHMARK TICKET
 
-if($CLIENT_CORE_VERSION >= 5511 && date('i') == 0 && $phoromatic_account_settings['PreSeedTestInstalls'] == 1 && phoromatic_pre_seed_tests_to_install($json, $phoromatic_account_settings))
+if($CLIENT_CORE_VERSION >= 5511 && date('i') == 0 && $phoromatic_account_settings['PreSeedTestInstalls'] == 1 && phoromatic_pre_seed_tests_to_install($json, $phoromatic_account_settings, $sys_row))
 {
 	// XXX TODO: with WS backend won't need to limit to on the hour attempt
 	return;
@@ -86,7 +86,7 @@ $json['phoromatic']['response'] = '[' . date('H:i:s') . '] Idling, waiting for t
 echo json_encode($json);
 return;
 
-function phoromatic_generate_test_suite(&$test_schedule, &$json, $phoromatic_account_settings)
+function phoromatic_generate_test_suite(&$test_schedule, &$json, $phoromatic_account_settings, &$sys_row)
 {
 	if(isset($test_schedule['Trigger']))
 	{
@@ -122,6 +122,7 @@ function phoromatic_generate_test_suite(&$test_schedule, &$json, $phoromatic_acc
 	$json['phoromatic']['trigger_id'] = $trigger_id;
 	$json['phoromatic']['schedule_id'] = $test_schedule['ScheduleID'];
 	$json['phoromatic']['test_suite'] = $suite_writer->get_xml();
+	$json['phoromatic']['pre_set_sys_env_vars'] = $sys_row['SystemVariables'];
 
 	$contexts = array('SetContextPreInstall' => 'pre_install_set_context', 'SetContextPostInstall' => 'post_install_set_context', 'SetContextPreRun' => 'pre_run_set_context', 'SetContextPostRun' => 'post_run_set_context');
 	foreach($contexts as $context => $v)
@@ -139,7 +140,7 @@ function phoromatic_generate_test_suite(&$test_schedule, &$json, $phoromatic_acc
 	echo json_encode($json);
 	return true;
 }
-function phoromatic_generate_benchmark_ticket(&$ticket_row, &$json, $phoromatic_account_settings)
+function phoromatic_generate_benchmark_ticket(&$ticket_row, &$json, $phoromatic_account_settings, &$sys_row)
 {
 	$test_suite = phoromatic_server::phoromatic_account_suite_path(ACCOUNT_ID, $ticket_row['SuiteToRun']) . 'suite-definition.xml';
 	if(!is_file($test_suite))
@@ -156,11 +157,12 @@ function phoromatic_generate_benchmark_ticket(&$ticket_row, &$json, $phoromatic_
 	$json['phoromatic']['test_suite'] = file_get_contents($test_suite);
 	$json['phoromatic']['settings'] = $phoromatic_account_settings;
 	$json['phoromatic']['environment_variables'] = $ticket_row['EnvironmentVariables'];
+	$json['phoromatic']['pre_set_sys_env_vars'] = $sys_row['SystemVariables'];
 
 	echo json_encode($json);
 	return true;
 }
-function phoromatic_pre_seed_tests_to_install(&$json, $phoromatic_account_settings)
+function phoromatic_pre_seed_tests_to_install(&$json, $phoromatic_account_settings, &$sys_row)
 {
 	$suite_writer = new pts_test_suite_writer();
 	$suite_writer->add_suite_information('Pre-Seed', '1.0.0', 'Phoromatic', 'System', 'An automated Phoromatic test schedule.');
@@ -184,6 +186,7 @@ function phoromatic_pre_seed_tests_to_install(&$json, $phoromatic_account_settin
 	$json['phoromatic']['task'] = 'install';
 	$json['phoromatic']['test_suite'] = $suite_writer->get_xml();
 	$json['phoromatic']['settings'] = $phoromatic_account_settings;
+	$json['phoromatic']['pre_set_sys_env_vars'] = $sys_row['SystemVariables'];
 
 	echo json_encode($json);
 	return true;

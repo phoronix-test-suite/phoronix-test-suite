@@ -431,6 +431,20 @@ class phoromatic extends pts_module_interface
 					}
 				}
 
+				if(isset($json['phoromatic']['pre_set_sys_env_vars']) && !empty($json['phoromatic']['pre_set_sys_env_vars']))
+				{
+					// pre_set_sys_env_vars was added during PTS 5.8 development
+					// Sets environment variables on client as specified via the Phoromatic Server's systems page
+					foreach(explode(';', $json['phoromatic']['pre_set_sys_env_vars']) as $i => $v_string)
+					{
+						$var = explode('=', $v_string);
+						if(count($var) == 2)
+						{
+							putenv($var[0] . '=' . $var[1]);
+						}
+					}
+				}
+
 				switch(isset($json['phoromatic']['task']) ? $json['phoromatic']['task'] : null)
 				{
 					case 'install':
