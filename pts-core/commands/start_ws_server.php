@@ -68,6 +68,9 @@ class start_ws_server implements pts_option_interface
 
 		switch(getenv('PTS_WEBSOCKET_SERVER'))
 		{
+			case 'PHOROMATIC':
+				$websocket = new pts_web_socket_server_phoromatic('localhost', $web_socket_port);
+				break;
 			default:
 			case 'GUI':
 				$websocket = new pts_web_socket_server_gui('localhost', $web_socket_port);
