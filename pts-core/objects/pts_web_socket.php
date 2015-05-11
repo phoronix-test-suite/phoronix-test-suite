@@ -49,7 +49,7 @@ class pts_web_socket
 			$this->socket_master = socket_create(AF_INET, SOCK_STREAM, getprotobyname('tcp'));
 			socket_set_option($this->socket_master, SOL_SOCKET, SO_REUSEADDR, 1);
 			socket_bind($this->socket_master, $address, $port);
-			socket_listen($this->socket_master);
+			socket_listen($this->socket_master); // TODO XXX potentially set the 'backlog' parameter
 		}
 		array_push($this->sockets, $this->socket_master);
 		$this->callback_on_data_receive = $callback_on_data_receive;

@@ -293,7 +293,7 @@ class pts_network
 		{
 			if(!defined('PHOROMATIC_SERVER'))
 			{
-				echo PHP_EOL . 'Internet Communication Is Disabled For Your User Configuration.' . PHP_EOL . PHP_EOL;
+				echo PHP_EOL . 'Internet Communication Is Disabled Per Your User Configuration.' . PHP_EOL . PHP_EOL;
 			}
 			self::$disable_internet_support = true;
 		}
@@ -301,13 +301,13 @@ class pts_network
 		{
 			if(!defined('PHOROMATIC_SERVER'))
 			{
-				echo PHP_EOL . 'Network Communication Is Disabled For Your User Configuration.' . PHP_EOL . PHP_EOL;
+				echo PHP_EOL . 'Network Communication Is Disabled Per Your User Configuration.' . PHP_EOL . PHP_EOL;
 			}
 			self::$disable_network_support = true;
 		}
 		else if(pts_flags::no_network_communication() == true)
 		{
-			//echo PHP_EOL . 'Network Communication Is Disabled For Your User Configuration.' . PHP_EOL . PHP_EOL;
+			//echo PHP_EOL . 'Network Communication Is Disabled Per Your User Configuration.' . PHP_EOL . PHP_EOL;
 			self::$disable_network_support = true;
 		}
 		else if(!PTS_IS_WEB_CLIENT)
