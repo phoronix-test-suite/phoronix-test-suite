@@ -417,7 +417,7 @@ class phoromatic extends pts_module_interface
 		}
 
 		$server_setup = self::setup_server_addressing($args);
-		$http_comm = new phoromatic_client_comm_http();
+		//$http_comm = new phoromatic_client_comm_http();
 
 		if(!$server_setup)
 			return false;
