@@ -69,6 +69,7 @@ class start_ws_server implements pts_option_interface
 		switch(getenv('PTS_WEBSOCKET_SERVER'))
 		{
 			case 'PHOROMATIC':
+				pts_web_socket::$mask_send = true;
 				$websocket = new pts_web_socket_server_phoromatic('localhost', $web_socket_port);
 				break;
 			default:

@@ -22,9 +22,9 @@
 
 interface phoromatic_client_comm_backend
 {
-	public function connect();
+	public function __construct($ip, $port);
 	public function disconnect();
-	public function send();
+	public function send($arr);
 }
 
 ?>

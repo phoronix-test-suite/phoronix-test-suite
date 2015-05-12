@@ -33,27 +33,7 @@ pts_client::init();
 
 if(isset($_GET['repo']))
 {
-	// Supply the JSON repository listing to the client
-	if(is_file(PTS_DOWNLOAD_CACHE_PATH . 'pts-download-cache.json'))
-	{
-		readfile(PTS_DOWNLOAD_CACHE_PATH . 'pts-download-cache.json');
-	}
-	else if(is_file('/var/cache/phoronix-test-suite/download-cache/pts-download-cache.json'))
-	{
-		readfile('/var/cache/phoronix-test-suite/download-cache/pts-download-cache.json');
-	}
-	else if(is_file(PTS_SHARE_PATH . 'download-cache/pts-download-cache.json'))
-	{
-		readfile(PTS_SHARE_PATH . 'download-cache/pts-download-cache.json');
-	}
-	else
-	{
-		$dc = pts_strings::add_trailing_slash(pts_client::parse_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Installation/CacheDirectory', PTS_DOWNLOAD_CACHE_PATH)));
-		if(is_file($dc . 'pts-download-cache.json'))
-		{
-			readfile($dc . 'pts-download-cache.json');
-		}
-	}
+	readfile(phoromatic_server::find_download_cache());
 	pts_logger::add_to_log($_SERVER['REMOTE_ADDR'] . ' requested a copy of the download cache JSON');
 }
 else if(isset($_GET['download']))

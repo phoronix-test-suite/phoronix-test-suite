@@ -47,6 +47,31 @@ class phoromatic_server
 		pts_file_io::mkdir($PHOROMATIC_PATH);
 		return $PHOROMATIC_PATH;
 	}
+	public static function find_download_cache()
+	{
+		if(is_file(PTS_DOWNLOAD_CACHE_PATH . 'pts-download-cache.json'))
+		{
+			$dc_file = PTS_DOWNLOAD_CACHE_PATH . 'pts-download-cache.json';
+		}
+		else if(is_file('/var/cache/phoronix-test-suite/download-cache/pts-download-cache.json'))
+		{
+			$dc_file = '/var/cache/phoronix-test-suite/download-cache/pts-download-cache.json';
+		}
+		else if(is_file(PTS_SHARE_PATH . 'download-cache/pts-download-cache.json'))
+		{
+			$dc_file = PTS_SHARE_PATH . 'download-cache/pts-download-cache.json';
+		}
+		else
+		{
+			$dc = pts_strings::add_trailing_slash(pts_client::parse_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Installation/CacheDirectory', PTS_DOWNLOAD_CACHE_PATH)));
+			if(is_file($dc . 'pts-download-cache.json'))
+			{
+				$dc_file = $dc . 'pts-download-cache.json';
+			}
+		}
+
+		return $dc_file;
+	}
 	public static function phoromatic_account_path($account_id)
 	{
 		return self::phoromatic_path() . 'accounts/' . $account_id . '/';
