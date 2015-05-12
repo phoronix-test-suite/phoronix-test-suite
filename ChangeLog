@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- pts-core: Support for using DNF directly when available on Fedora
+
 Phoronix Test Suite 5.8 Milestone 3
 12 May 2015
 
