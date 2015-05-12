@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 5.8 Milestone 3
+12 May 2015
 
 - pts-core: Separate out WebSocket server back-ends
 - phoromatic: Honor show_local_tests_only option via the build suite page
