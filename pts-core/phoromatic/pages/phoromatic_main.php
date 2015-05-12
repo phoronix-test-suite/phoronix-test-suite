@@ -185,7 +185,7 @@ class phoromatic_main implements pts_webui_interface
 		$main .= '</div>';
 		$main .= '</div>';
 
-
+/*
 		$has_flagged_results = false;
 		$stmt = phoromatic_server::$db->prepare('SELECT ScheduleID, GROUP_CONCAT(SystemID,\',\') AS Systems FROM phoromatic_results WHERE AccountID = :account_id AND ScheduleID NOT LIKE 0 GROUP BY ScheduleID ORDER BY UploadTime DESC');
 		$stmt->bindValue(':account_id', $_SESSION['AccountID']);
@@ -261,6 +261,7 @@ class phoromatic_main implements pts_webui_interface
 		}
 		if($has_flagged_results)
 			$main .= '</span>';
+*/
 
 		// ACTIVE TEST SCHEDULES
 		/*
