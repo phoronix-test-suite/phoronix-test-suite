@@ -23,7 +23,7 @@
 class phoromatic extends pts_module_interface
 {
 	const module_name = 'Phoromatic Client';
-	const module_version = '0.5.1';
+	const module_version = '0.6.0';
 	const module_description = 'The Phoromatic client is used for connecting to a Phoromatic server (Phoromatic.com or a locally run server) to facilitate the automatic running of tests, generally across multiple test nodes in a routine manner. For more details visit http://www.phoromatic.com/. This module is intended to be used with Phoronix Test Suite 5.2+ clients and servers.';
 	const module_author = 'Phoronix Media';
 
@@ -109,6 +109,7 @@ class phoromatic extends pts_module_interface
 		foreach($archived_servers as $archived_server)
 		{
 			$response = pts_network::http_get_contents('http://' . $archived_server['ip'] . ':' . $archived_server['http_port'] . '/server.php?phoromatic_info');
+
 			if(!empty($response))
 			{
 				$response = json_decode($response, true);
@@ -182,6 +183,36 @@ class phoromatic extends pts_module_interface
 		if($server_count == 0)
 		{
 			echo PHP_EOL . 'No Phoromatic Servers detected.' . PHP_EOL . PHP_EOL;
+		}
+	}
+	protected static function tick_thread()
+	{
+		while(true)
+		{
+			static $last_phoromatic_log = 0;
+			$j = array();
+
+			$log_size = pts_client::$pts_logger->get_log_file_size();
+			if($log_size != $last_phoromatic_log)
+			{
+				$phoromatic_log = file_get_contents(pts_client::$pts_logger->get_log_file_location());
+				$last_phoromatic_log = $log_size;
+				$j['phoromatic']['client-log-file'] = $phoromatic_log;
+			}
+
+			foreach(phodevi::supported_sensors() as $sensor)
+			{
+				$j['phoromatic']['stats']['sensors'][phodevi::sensor_name($sensor)] = phodevi::read_sensor($sensor) . ' ' . phodevi::read_sensor_unit($sensor) . PHP_EOL;
+			}
+
+			$j['phoromatic']['stats']['uptime'] = ceil(phodevi::system_uptime() / 60);
+
+			$server_response = phoromatic::upload_to_remote_server(array(
+					'r' => 'tick',
+					'j' => json_encode($j),
+					));
+
+			sleep(60);
 		}
 	}
 	protected static function upload_to_remote_server($to_post, $server_address = null, $server_http_port = null, $account_id = null)
@@ -394,6 +425,7 @@ class phoromatic extends pts_module_interface
 		$times_failed = 0;
 		$has_success = false;
 		$do_exit = false;
+		$just_started = true;
 
 		self::setup_system_environment();
 
@@ -445,6 +477,21 @@ class phoromatic extends pts_module_interface
 					{
 						echo PHP_EOL . $json['phoromatic']['response'] . PHP_EOL;
 					}
+				}
+
+				if($just_started)
+				{
+					if(PTS_IS_DAEMONIZED_SERVER_PROCESS)
+					{
+						$pid = pcntl_fork();
+						if($pid == 0)
+						{
+							// Start the tick thread
+							self::tick_thread();
+						}
+					}
+
+					$just_started = false;
 				}
 
 				if(isset($json['phoromatic']['pre_set_sys_env_vars']) && !empty($json['phoromatic']['pre_set_sys_env_vars']))

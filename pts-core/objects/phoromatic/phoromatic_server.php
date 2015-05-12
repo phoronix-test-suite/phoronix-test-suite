@@ -84,6 +84,10 @@ class phoromatic_server
 	{
 		return self::phoromatic_account_path($account_id) . 'suites/' . ($suite_id != null ? $suite_id . '/' : null);
 	}
+	public static function phoromatic_account_system_path($account_id, $system_id = null)
+	{
+		return self::phoromatic_account_path($account_id) . 'systems/' . ($system_id != null ? $system_id . '/' : null);
+	}
 	public static function read_setting($setting)
 	{
 		return pts_storage_object::read_from_file(self::$json_storage, $setting);

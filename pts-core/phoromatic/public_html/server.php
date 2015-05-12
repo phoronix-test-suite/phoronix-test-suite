@@ -32,7 +32,7 @@ if(isset($_GET['phoromatic_info']))
 	pts_client::init();
 
 	$json_info = array(
-		'http_server' => $_SERVER['SERVER_SOFTWARE'],
+		'http_server' => (isset($_SERVER['SERVER_SOFTWARE']) ? $_SERVER['SERVER_SOFTWARE'] : null),
 		'pts' => pts_title(),
 		'pts_core' => PTS_CORE_VERSION,
 		'ws_port' => getenv('PTS_WEBSOCKET_PORT'),

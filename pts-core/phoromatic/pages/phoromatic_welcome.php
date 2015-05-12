@@ -134,6 +134,8 @@ class phoromatic_welcome implements pts_webui_interface
 
 					pts_file_io::mkdir(phoromatic_server::phoromatic_account_path($account_id));
 					pts_file_io::mkdir(phoromatic_server::phoromatic_account_result_path($account_id));
+					pts_file_io::mkdir(phoromatic_server::phoromatic_account_system_path($account_id));
+					pts_file_io::mkdir(phoromatic_server::phoromatic_account_suite_path($account_id));
 
 					echo phoromatic_webui_header(array('Welcome, ' . $user), '');
 					$box = '<h1>Log-In Successful</h1>

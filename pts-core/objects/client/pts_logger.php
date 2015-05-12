@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2014, Phoronix Media
-	Copyright (C) 2014, Michael Larabel
+	Copyright (C) 2014 - 2015, Phoronix Media
+	Copyright (C) 2014 - 2015, Michael Larabel
 	pts_logger.php: A simple log file generator
 
 	This program is free software; you can redistribute it and/or modify
@@ -59,6 +59,10 @@ class pts_logger
 			return;
 
 		file_put_contents($this->log_file, '[' . date('D M ' . str_pad(date('j'), 2, ' ', STR_PAD_LEFT) . ' H:i:s Y') . '] ' . $message . PHP_EOL, FILE_APPEND);
+	}
+	public function get_log_file_size()
+	{
+		return is_file($this->log_file) ? filesize($this->log_file) : 0;
 	}
 	public function get_log_file_location()
 	{

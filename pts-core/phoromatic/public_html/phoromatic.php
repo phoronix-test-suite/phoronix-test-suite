@@ -56,6 +56,7 @@ $environmental_variables = array(
 	'ob' => 'OPENBENCHMARKING_ID',
 	'sched' => 'SCHEDULE_ID',
 	'lip' => 'LOCAL_IP',
+	'j' => 'JSON',
 	'composite_xml' => 'COMPOSITE_XML',
 	'composite_xml_gz' => 'COMPOSITE_XML_GZ',
 	'composite_xml_hash' => 'COMPOSITE_XML_HASH',
