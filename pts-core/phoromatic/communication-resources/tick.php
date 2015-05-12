@@ -42,8 +42,38 @@ if(isset($J['phoromatic']['stats']))
 	file_put_contents($system_path . 'sensors.json', json_encode($J['phoromatic']['stats']));
 }
 
+$stmt = phoromatic_server::$db->prepare('SELECT TickThreadEvent FROM phoromatic_systems WHERE AccountID = :account_id AND SystemID = :system_id');
+$stmt->bindValue(':account_id', ACCOUNT_ID);
+$stmt->bindValue(':system_id', SYSTEM_ID);
+$result = $stmt->execute();
+
+if(!empty($result))
+{
+	$row = $result->fetchArray();
+	$tte = $row['TickThreadEvent'];
+	$send_event = null;
+
+	if(!empty($tte) && strpos($tte, ':') !== false)
+	{
+		list($time, $event) = explode(':', $tte);
+		if($time > (time() - 3600))
+		{
+			$send_event = $event;
+		}
+	}
+
+	if(!empty($tte))
+	{
+		$stmt = phoromatic_server::$db->prepare('UPDATE phoromatic_systems SET TickThreadEvent = :event WHERE AccountID = :account_id AND SystemID = :system_id');
+		$stmt->bindValue(':account_id', ACCOUNT_ID);
+		$stmt->bindValue(':system_id', SYSTEM_ID);
+		$stmt->bindValue(':event', '');
+		$stmt->execute();
+	}
+}
+
 $json['phoromatic']['response'] = 'tick';
-$json['phoromatic']['tick_thread'] = '';
+$json['phoromatic']['tick_thread'] = $send_event;
 echo json_encode($json);
 exit;
 

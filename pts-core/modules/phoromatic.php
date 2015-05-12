@@ -224,6 +224,9 @@ class phoromatic extends pts_module_interface
 							shell_exec('reboot');
 						}
 						break;
+					case 'halt-testing':
+						touch(PTS_USER_PATH . 'halt-testing');
+						break;
 				}
 			}
 

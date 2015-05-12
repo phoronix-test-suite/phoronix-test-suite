@@ -11,6 +11,7 @@ Phoronix Test Suite (Git)
 - phoromatic: Initial support for the Mongoose Embedded Web Server, used by default if php-cgi and mongoose binaries are found in PATH
 - phoromatic: Support for tick thread
 - phoromatic: Support for reporting system sensors and client log to systems page
+- phoromatic: Add support for real-time halt testing and rebooting from the Phoromatic Web UI
 
 Phoronix Test Suite 5.8 Milestone 2
 21 April 2015

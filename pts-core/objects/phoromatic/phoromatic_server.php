@@ -271,6 +271,10 @@ class phoromatic_server
 				// Change made 13 April
 				self::$db->exec('ALTER TABLE phoromatic_account_settings ADD COLUMN LetPublicViewResults INTEGER DEFAULT 0');
 				self::$db->exec('PRAGMA user_version = 29');
+			case 29:
+				// Change made 12 May
+				self::$db->exec('ALTER TABLE phoromatic_systems ADD COLUMN TickThreadEvent TEXT');
+				self::$db->exec('PRAGMA user_version = 30');
 
 		}
 		chmod($db_file, 0600);
