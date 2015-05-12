@@ -31,6 +31,12 @@ interface pts_webui_interface
 	public static function render_page_process($PATH);
 }
 
+// Workaround for some web servers like Mongoose with currently broken REQUEST_URI for our purposes, https://code.google.com/p/phpdesktop/issues/detail?id=137
+if(strpos($_SERVER['REQUEST_URI'], '?') === false && isset($_SERVER['QUERY_STRING']))
+{
+	$_SERVER['REQUEST_URI'] .= '?' . $_SERVER['QUERY_STRING'];
+}
+
 $URI = substr($_SERVER['REQUEST_URI'], strpos($_SERVER['REQUEST_URI'], '?') + 1);
 $PATH = explode('/', $URI);
 $PAGE_REQUEST = str_replace('.', null, array_shift($PATH));

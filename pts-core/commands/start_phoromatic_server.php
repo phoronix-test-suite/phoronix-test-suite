@@ -183,6 +183,12 @@ class start_phoromatic_server implements pts_option_interface
 
 			$server_launcher .= 'nginx -c ' . $nginx_conf_file . PHP_EOL . 'rm -f ' . $nginx_conf_file . PHP_EOL;
 		}
+		else if(($mongoose = pts_client::executable_in_path('mongoose')) && ($php_cgi = pts_client::executable_in_path('php-cgi')))
+		{
+			// Mongoose Embedded Web Server
+			$server_launcher .= $mongoose . ' -p ' . $web_port . ' -r ' . PTS_CORE_PATH . 'phoromatic/public_html/ -I ' . $php_cgi . ' -i index.php > /dev/null 2>> $PTS_PHOROMATIC_LOG_LOCATION &' . PHP_EOL; //2> /dev/null
+
+		}
 		else if(strpos(getenv('PHP_BIN'), 'hhvm'))
 		{
 			echo PHP_EOL . 'Unfortunately, the HHVM built-in web server has abandoned upstream. Users will need to use the PHP binary or other alternatives.' . PHP_EOL . PHP_EOL;
@@ -190,6 +196,7 @@ class start_phoromatic_server implements pts_option_interface
 		}
 		else
 		{
+			// PHP Web Server
 			$server_launcher .= getenv('PHP_BIN') . ' -S ' . $server_ip . ':' . $web_port . ' -t ' . PTS_CORE_PATH . 'phoromatic/public_html/ > /dev/null 2>> $PTS_PHOROMATIC_LOG_LOCATION &' . PHP_EOL; //2> /dev/null
 		}
 		$server_launcher .= 'http_server_pid=$!'. PHP_EOL;

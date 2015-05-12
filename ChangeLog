@@ -8,6 +8,7 @@ Phoronix Test Suite (Git)
 - phoromatic: Don't print network connectivity messages
 - phoromatic: Set Phoromatic System Variables set by server on Phoromatic clients as env vars
 - phoromatic: Lots of early Web Sockets work
+- phoromatic: Initial support for the Mongoose Embedded Web Server, used by default if php-cgi and mongoose binaries are found in PATH
 
 Phoronix Test Suite 5.8 Milestone 2
 21 April 2015
