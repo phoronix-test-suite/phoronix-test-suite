@@ -189,6 +189,38 @@ class phoromatic_systems implements pts_webui_interface
 				$components = pts_result_file_analyzer::system_component_string_to_array($row['Software']);
 				$main .= pts_webui::r2d_array_to_table($components) . '</div>';
 
+				$sensor_file = phoromatic_server::phoromatic_account_system_path($_SESSION['AccountID'], $row['SystemID']) . 'sensors.json';
+				if(is_file($sensor_file))
+				{
+					$sensor_file = file_get_contents($sensor_file);
+					$sensor_file = json_decode($sensor_file, true);
+					if($sensor_file && isset($sensor_file['sensors']) && !empty($sensor_file['sensors']))
+					{
+						$i = 0;
+						$col = array(1 => array(), 2 => array(), 3 => array(), 0 => array());
+						foreach($sensor_file['sensors'] as $name => $sensor)
+						{
+							array_push($col[($i % 4)], '<strong>' . $name . ':</strong> ' . $sensor);
+							$i++;
+						}
+
+						$main .= '<hr /><h2>System Sensors</h2>';
+						foreach($col as $sensors)
+						{
+							$main .= '<div style="float: left; width: 25%;">';
+							foreach($sensors as $sensor)
+								$main .= '<p>' . $sensor . '</p>';
+							$main .= '</div>';
+						}
+					}
+				}
+				$log_file = phoromatic_server::phoromatic_account_system_path($_SESSION['AccountID'], $row['SystemID']) . 'phoronix-test-suite.log';
+				if(is_file($log_file))
+				{
+					$main .= '<hr /><h2>Phoronix Test Suite Client Log</h2>';
+					$main .= '<p><textarea style="width: 60%; height: 200px;">' . file_get_contents($log_file)  . '</textarea></p>';
+				}
+
 				$groups = explode('#', $row['Groups']);
 				foreach($groups as $i => $group)
 				{
