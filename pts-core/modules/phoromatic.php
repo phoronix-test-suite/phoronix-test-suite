@@ -187,9 +187,10 @@ class phoromatic extends pts_module_interface
 	}
 	protected static function tick_thread()
 	{
+		static $last_phoromatic_log = 0;
+
 		while(true)
 		{
-			static $last_phoromatic_log = 0;
 			$j = array();
 
 			$log_size = pts_client::$pts_logger->get_log_file_size();
@@ -197,7 +198,7 @@ class phoromatic extends pts_module_interface
 			{
 				$phoromatic_log = file_get_contents(pts_client::$pts_logger->get_log_file_location());
 				$last_phoromatic_log = $log_size;
-				$j['phoromatic']['client-log-file'] = $phoromatic_log;
+				$j['phoromatic']['client-log'] = $phoromatic_log;
 			}
 
 			foreach(phodevi::supported_sensors() as $sensor)
@@ -212,6 +213,20 @@ class phoromatic extends pts_module_interface
 					'j' => json_encode($j),
 					));
 
+			$server_response = json_decode($server_response, true);
+			if($server_response && isset($server_response['phoromatic']['tick_thread']))
+			{
+				switch($server_response['phoromatic']['tick_thread'])
+				{
+					case 'reboot':
+						if(pts_client::executable_in_path('reboot'))
+						{
+							shell_exec('reboot');
+						}
+						break;
+				}
+			}
+
 			sleep(60);
 		}
 	}
@@ -220,7 +235,7 @@ class phoromatic extends pts_module_interface
 		static $last_communication_minute = null;
 		static $communication_attempts = 0;
 
-		if($last_communication_minute == date('i') && $communication_attempts > 3)
+		if($last_communication_minute == date('i') && $communication_attempts > 8)
 		{
 				// Something is wrong, Phoromatic shouldn't be communicating with server more than four times a minute
 				return false;
@@ -271,7 +286,7 @@ class phoromatic extends pts_module_interface
 			pts_client::$pts_logger && pts_client::$pts_logger->log($current_task);
 		$last_msg = $current_task;
 
-		return $server_response = phoromatic::upload_to_remote_server(array(
+		return phoromatic::upload_to_remote_server(array(
 				'r' => 'update_system_status',
 				'a' => $current_task,
 				'time' => $estimated_time_remaining,
