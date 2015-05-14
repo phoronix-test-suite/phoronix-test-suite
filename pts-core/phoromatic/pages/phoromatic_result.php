@@ -284,6 +284,7 @@ class phoromatic_result implements pts_webui_interface
 			}
 			else if(isset($_GET['download']) && $_GET['download'] == 'pdf')
 			{
+				ob_start();
 				$_REQUEST['force_format'] = 'PNG'; // Force to PNG renderer
 				$_REQUEST['svg_dom_gd_no_interlacing'] = true; // Otherwise FPDF will fail
 				$tdir = pts_client::create_temporary_directory();
@@ -340,7 +341,7 @@ class phoromatic_result implements pts_webui_interface
 					}
 					$placement++;
 				}
-
+				ob_get_clean();
 				$pdf->Output('phoromatic.pdf', 'I');
 				//pts_file_io::delete($tdir, null, true);
 				return;

@@ -1421,7 +1421,11 @@ class pts_test_run_manager
 					}
 				}
 
-				array_push($test_types_active, $test->test_profile->get_test_hardware_type());
+				if(!in_array($test->test_profile->get_test_hardware_type(), $test_types_active))
+				{
+					array_push($test_types_active, $test->test_profile->get_test_hardware_type());
+				}
+
 			}
 
 			if(!empty($possible_tests_to_run) && count($tests_pids_active) < $tests_to_run_concurrently && (!$total_loop_time || $loop_until_time > time()))
@@ -1456,7 +1460,7 @@ class pts_test_run_manager
 				else
 				{
 					$continue_test_flag = $this->process_test_run_request($test_to_run);
-					return;
+					return false;
 				}
 
 				if($total_loop_time == false)
@@ -1493,6 +1497,8 @@ class pts_test_run_manager
 				unlink($cache_share_file);
 			}
 		}
+
+		return true;
 	}
 	protected function test_prompts_to_result_objects(&$test_profile)
 	{

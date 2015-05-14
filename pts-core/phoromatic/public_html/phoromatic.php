@@ -112,7 +112,7 @@ if($ACCOUNT_ID == null && $PTS_MACHINE_SELF_ID != null)
 	if(!empty($_SERVER['REMOTE_ADDR']) && !empty($NETWORK_CLIENT_MAC))
 	{
 		// IPAddress = :ip_address OR
-		$stmt = phoromatic_server::$db->prepare('SELECT AccountID FROM phoromatic_system_association_claims WHERE NetworkMAC = :network_mac ORDER BY CreationTime ASC LIMIT 1');
+		$stmt = phoromatic_server::$db->prepare('SELECT AccountID FROM phoromatic_system_association_claims WHERE NetworkMAC = :network_mac OR IPAddress = :ip_address ORDER BY CreationTime ASC LIMIT 1');
 		$stmt->bindValue(':ip_address', $_SERVER['REMOTE_ADDR']);
 		$stmt->bindValue(':network_mac', $NETWORK_CLIENT_MAC);
 		$result = $stmt->execute();

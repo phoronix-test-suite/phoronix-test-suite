@@ -446,6 +446,8 @@ class phoromatic extends pts_module_interface
 		$just_started = true;
 
 		self::setup_system_environment();
+		pts_client::$pts_logger->log('SYSTEM HARDWARE: ' . phodevi::system_hardware(true));
+		pts_client::$pts_logger->log('SYSTEM SOFTWARE: ' . phodevi::system_software(true));
 
 		while($do_exit == false)
 		{
@@ -583,6 +585,7 @@ class phoromatic extends pts_module_interface
 							// Load the tests to run
 							if(self::$test_run_manager->load_tests_to_run($suite_identifier))
 							{
+								phoromatic::update_system_status('Tests In Run Queue ' . implode(', ', self::$test_run_manager->get_tests_to_run_identifiers()));
 								if(isset($json['phoromatic']['pre_run_set_context']))
 								{
 									phoromatic::set_user_context($json['phoromatic']['pre_run_set_context'], self::$p_trigger_id, self::$p_schedule_id, 'PRE_RUN');
@@ -595,7 +598,6 @@ class phoromatic extends pts_module_interface
 								}
 
 								// Save results?
-								self::$test_run_manager->auto_save_results($phoromatic_save_identifier, $phoromatic_results_identifier, (isset($json['phoromatic']['test_description']) ? $json['phoromatic']['test_description'] : 'A Phoromatic run.'));
 
 								// Run the actual tests
 								self::$test_run_manager->pre_execution_process();
@@ -604,11 +606,17 @@ class phoromatic extends pts_module_interface
 									$total_loop_time = isset($env_vars['TOTAL_LOOP_TIME']) ? $env_vars['TOTAL_LOOP_TIME'] : false;
 									pts_client::$pts_logger->log('STRESS / MULTI-TEST EXECUTION STARTED @ ' . date('Y-m-d H:i:s'));
 									pts_client::$pts_logger->log('CONCURRENT RUNS = ' . $env_vars['PTS_CONCURRENT_TEST_RUNS'] . ' TOTAL LOOP TIME = ' . $total_loop_time);
-									self::$test_run_manager->multi_test_stress_run_execute($env_vars['PTS_CONCURRENT_TEST_RUNS'], $total_loop_time);
+									$r = self::$test_run_manager->multi_test_stress_run_execute($env_vars['PTS_CONCURRENT_TEST_RUNS'], $total_loop_time);
+									if($r == false)
+									{
+										return;
+									}
+
 									pts_client::$pts_logger->log('STRESS / MULTI-TEST EXECUTION ENDED @ ' . date('Y-m-d H:i:s'));
 								}
 								else
 								{
+									self::$test_run_manager->auto_save_results($phoromatic_save_identifier, $phoromatic_results_identifier, (isset($json['phoromatic']['test_description']) ? $json['phoromatic']['test_description'] : 'A Phoromatic run.'));
 									self::$test_run_manager->call_test_runs();
 								}
 
