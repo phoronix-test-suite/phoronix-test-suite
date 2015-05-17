@@ -116,7 +116,7 @@ class pts_phoromatic_event_server
 				$stmt = phoromatic_server::$db->prepare('SELECT LastCommunication, CurrentTask, SystemID, AccountID, NetworkMAC, LastIP, MaintenanceMode FROM phoromatic_systems WHERE State > 0 AND NetworkMAC NOT LIKE \'\' AND NetworkWakeOnLAN LIKE \'%g%\' ORDER BY LastCommunication DESC');
 				$result = $stmt->execute();
 
-				while($row = $result->fetchArray())
+				while($result && $row = $result->fetchArray())
 				{
 					if(!isset($phoromatic_account_settings[$row['AccountID']]))
 					{
