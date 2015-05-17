@@ -301,7 +301,7 @@ class phoromatic_server
 	protected static function rebuild_pprid_entries()
 	{
 		$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_results ORDER BY UploadTime ASC');
-		$result = $stmt && $stmt->execute();
+		$result = $stmt ? $stmt->execute() : false;
 
 		while($result && ($row = $result->fetchArray()))
 		{
