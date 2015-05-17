@@ -32,7 +32,7 @@ class phoromatic_server
 	public static function read_database_version()
 	{
 		$result = self::$db->query('PRAGMA user_version');
-		$result = $result->fetchArray();
+		$result = $result ? $result->fetchArray() : null;
 		return isset($result['user_version']) && is_numeric($result['user_version']) ? $result['user_version'] : 0;
 	}
 	public static function phoromatic_path()
