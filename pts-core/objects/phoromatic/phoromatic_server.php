@@ -303,7 +303,7 @@ class phoromatic_server
 		$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_results ORDER BY UploadTime ASC');
 		$result = $stmt && $stmt->execute();
 
-		while($result && $row = $result->fetchArray())
+		while($result && ($row = $result->fetchArray()))
 		{
 			$stmt = phoromatic_server::$db->prepare('UPDATE phoromatic_results SET PPRID = :pprid WHERE AccountID = :account_id AND UploadID = :upload_id');
 			$stmt->bindValue(':account_id', $row['AccountID']);
