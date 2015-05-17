@@ -73,7 +73,7 @@ class pts_phoromatic_event_server
 
 				// Check for basic hung systems
 				$stmt = phoromatic_server::$db->prepare('SELECT LastCommunication, CurrentTask, EstimatedTimeForTask, SystemID, AccountID, LastIP FROM phoromatic_systems WHERE State > 0 ORDER BY LastCommunication DESC');
-				$result = $stmt->execute();
+				$result = $stmt ? $stmt->execute() : false;
 
 				while($result && $row = $result->fetchArray())
 				{
