@@ -32,7 +32,11 @@ class phoromatic_server
 	public static function read_database_version()
 	{
 		$result = self::$db->query('PRAGMA user_version');
-		$result = $result ? $result->fetchArray() : null;
+
+		if($result == false)
+			return -1;
+
+		$result = $result->fetchArray();
 		return isset($result['user_version']) && is_numeric($result['user_version']) ? $result['user_version'] : 0;
 	}
 	public static function phoromatic_path()
@@ -297,9 +301,9 @@ class phoromatic_server
 	protected static function rebuild_pprid_entries()
 	{
 		$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_results ORDER BY UploadTime ASC');
-		$result = $stmt->execute();
+		$result = $stmt && $stmt->execute();
 
-		while($row = $result->fetchArray())
+		while($result && $row = $result->fetchArray())
 		{
 			$stmt = phoromatic_server::$db->prepare('UPDATE phoromatic_results SET PPRID = :pprid WHERE AccountID = :account_id AND UploadID = :upload_id');
 			$stmt->bindValue(':account_id', $row['AccountID']);
