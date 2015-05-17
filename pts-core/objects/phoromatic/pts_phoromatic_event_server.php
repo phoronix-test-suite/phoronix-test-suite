@@ -75,7 +75,7 @@ class pts_phoromatic_event_server
 				$stmt = phoromatic_server::$db->prepare('SELECT LastCommunication, CurrentTask, EstimatedTimeForTask, SystemID, AccountID, LastIP FROM phoromatic_systems WHERE State > 0 ORDER BY LastCommunication DESC');
 				$result = $stmt->execute();
 
-				while($row && $row = $result->fetchArray())
+				while($result && $row = $result->fetchArray())
 				{
 					$last_comm = strtotime($row['LastCommunication']);
 
