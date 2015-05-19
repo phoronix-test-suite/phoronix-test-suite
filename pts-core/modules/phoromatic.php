@@ -600,7 +600,6 @@ class phoromatic extends pts_module_interface
 								// Save results?
 
 								// Run the actual tests
-								self::$test_run_manager->pre_execution_process();
 								if(isset($env_vars['PTS_CONCURRENT_TEST_RUNS']) && $env_vars['PTS_CONCURRENT_TEST_RUNS'] > 1)
 								{
 									$total_loop_time = isset($env_vars['TOTAL_LOOP_TIME']) ? $env_vars['TOTAL_LOOP_TIME'] : false;
@@ -617,6 +616,7 @@ class phoromatic extends pts_module_interface
 								else
 								{
 									self::$test_run_manager->auto_save_results($phoromatic_save_identifier, $phoromatic_results_identifier, (isset($json['phoromatic']['test_description']) ? $json['phoromatic']['test_description'] : 'A Phoromatic run.'));
+									self::$test_run_manager->pre_execution_process();
 									self::$test_run_manager->call_test_runs();
 								}
 
