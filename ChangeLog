@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 5.8 Milestone 4
+20 May 2015
 
 - pts-core: Support for using DNF directly when available on Fedora
 - phodevi: Report kernel's build date when detected it's running on a daily/devel/RC kernel
