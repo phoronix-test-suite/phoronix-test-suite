@@ -73,6 +73,13 @@ if($CLIENT_CORE_VERSION >= 5511 && date('i') == 0 && $phoromatic_account_setting
 	return;
 }
 
+// Provide client with update script to ensure client is updated if it's doing nothing besides idling/shutting down
+$update_script_path = phoromatic_server::phoromatic_account_path(ACCOUNT_ID) . 'client-update-script.sh';
+if(is_file($update_script_path))
+{
+	$json['phoromatic']['client_update_script'] = file_get_contents($update_script_path);
+}
+
 if($phoromatic_account_settings['PowerOffWhenDone'] == 1 && $sys_row['BlockPowerOffs'] != 1)
 {
 	$json['phoromatic']['response'] = '[' . date('H:i:s') . '] Shutting system down per user settings as no more tests scheduled for today...';

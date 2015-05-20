@@ -7,6 +7,7 @@ Phoronix Test Suite (Git)
 - phodevi: Fix for Radeon GPU voltage reporting
 - phodevi: Improved open-source GPU frequency detection when X Server not active
 - phoromatic: Various fixes
+- phoromatic: Add support for specifying custom client update script via account settings page to keep clients PTS updated
 
 Phoronix Test Suite 5.8 Milestone 3
 12 May 2015

@@ -665,6 +665,11 @@ class phoromatic extends pts_module_interface
 						if(!$supports_wol)
 							break;
 					case 'shutdown':
+						if(isset($json['phoromatic']['client_update_script']) && !empty($json['phoromatic']['client_update_script']))
+						{
+							self::run_client_update_script($json['phoromatic']['client_update_script']);
+						}
+
 						echo PHP_EOL . 'Phoromatic received a remote command to shutdown.' . PHP_EOL;
 						phoromatic::update_system_status('Attempting System Shutdown');
 						if(pts_client::executable_in_path('poweroff'))
@@ -679,6 +684,10 @@ class phoromatic extends pts_module_interface
 						sleep(60);
 						break;
 					case 'idle':
+						if(isset($json['phoromatic']['client_update_script']) && !empty($json['phoromatic']['client_update_script']))
+						{
+							self::run_client_update_script($json['phoromatic']['client_update_script']);
+						}
 						//echo PHP_EOL . 'Idling, waiting for task.' . PHP_EOL;
 						phoromatic::update_system_status('Idling, Waiting For Task');
 						break;
@@ -847,6 +856,22 @@ class phoromatic extends pts_module_interface
 		}
 		else
 			echo PHP_EOL . 'No Phoromatic result found.' . PHP_EOL;
+	}
+	private static function run_client_update_script($update_script)
+	{
+		static $last_update_script_check_time = 0;
+
+		// Don't keep checking it so check no more than every ten minutes
+		if($last_update_script_check_time < (time() - 600) && !empty($update_script))
+		{
+			$last_update_script_check_time = time();
+			$update_file = pts_client::create_temporary_file();
+			file_put_contents($update_file, $update_script);
+			chmod($update_file, 0755);
+			phoromatic::update_system_status('Running Phoronix Test Suite Update Script');
+			$env_vars = array();
+			pts_client::shell_exec('./' . $update_file . ' 2>&1', $env_vars);
+		}
 	}
 	private static function set_user_context($context_script, $trigger, $schedule_id, $process)
 	{
