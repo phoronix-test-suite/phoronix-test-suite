@@ -7,7 +7,7 @@
 exit
 
 # The Git revision you wish to sync the systems to, or empty for riding latest git
-GIT_COMMIT_TO_USE="7910383f8356b1873ff88c202998e4466f0ea33a"
+GIT_COMMIT_TO_USE="ceabd81039c33579a1ba1802038263572de935b6"
 
 if [ ! -w /root ]
 then
