@@ -41,7 +41,7 @@ class phoromatic_maintenance_table implements pts_webui_interface
 
 		$main = '<h1>Systems</h1>';
 		$main .= '<p>Various system interaction vitals for the Phoronix Test Suite systems associated with this account.</p>';
-		$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, Hardware, Software, ClientVersion, LastIP, NetworkMAC, LastCommunication FROM phoromatic_systems WHERE AccountID = :account_id AND State >= 0 ORDER BY LastCommunication DESC');
+		$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, Hardware, Software, ClientVersion, LastIP, NetworkMAC, LastCommunication, CurrentTask FROM phoromatic_systems WHERE AccountID = :account_id AND State >= 0 ORDER BY LastCommunication DESC');
 		$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 		$result = $stmt->execute();
 
@@ -54,7 +54,8 @@ class phoromatic_maintenance_table implements pts_webui_interface
 			$latest_result = $latest_result->fetchArray();
 			$latest_result = $latest_result['UploadTime'];
 
-			$components[$row['SystemID']]['Last Communication'] = date('H:i - d F', strtotime($row['LastCommunication']));
+			$components[$row['SystemID']]['Last Communication'] = date('H:i d F', strtotime($row['LastCommunication']));
+			$components[$row['SystemID']]['Current Task'] = $row['CurrentTask'];
 			$components[$row['SystemID']]['Last IP'] = $row['LastIP'];
 			$components[$row['SystemID']]['Phoronix Test Suite'] = $row['ClientVersion'];
 			$components[$row['SystemID']]['MAC'] = $row['NetworkMAC'];
