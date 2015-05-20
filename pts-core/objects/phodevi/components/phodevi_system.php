@@ -84,6 +84,9 @@ class phodevi_system extends phodevi_device_interface
 			case 'kernel-architecture':
 				$property = new phodevi_device_property('sw_kernel_architecture', phodevi::smart_caching);
 				break;
+			case 'kernel-date':
+				$property = new phodevi_device_property('sw_kernel_date', phodevi::smart_caching);
+				break;
 			case 'kernel-string':
 				$property = new phodevi_device_property('sw_kernel_string', phodevi::smart_caching);
 				break;
@@ -832,7 +835,29 @@ class phodevi_system extends phodevi_device_interface
 	}
 	public static function sw_kernel_string()
 	{
-		return phodevi::read_property('system', 'kernel') . ' (' . phodevi::read_property('system', 'kernel-architecture') . ')';
+		return trim(phodevi::read_property('system', 'kernel') . ' (' . phodevi::read_property('system', 'kernel-architecture') . ') ' . phodevi::read_property('system', 'kernel-date'));
+	}
+	public static function sw_kernel_date()
+	{
+		$date = null;
+		$k = phodevi::read_property('system', 'kernel');
+
+		if(strpos($k, '99') !== false || stripos($k, 'rc') !== false)
+		{
+			// For now at least only report kernel build date when it looks like it's a devel kernel
+			$v = php_uname('v');
+			if(($x = stripos($v, 'SMP ')) !== false)
+			{
+				$v = substr($v, ($x + 4));
+				$date = strtotime($v);
+				if($date != false)
+				{
+					$date = date('Ymd', $date);
+				}
+			}
+		}
+
+		return $date;
 	}
 	public static function sw_kernel()
 	{
