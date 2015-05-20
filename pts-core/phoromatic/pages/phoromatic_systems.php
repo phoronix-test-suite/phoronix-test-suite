@@ -220,7 +220,7 @@ class phoromatic_systems implements pts_webui_interface
 						$col = array(1 => array(), 2 => array(), 3 => array(), 0 => array());
 						foreach($sensor_file['sensors'] as $name => $sensor)
 						{
-							array_push($col[($i % 4)], '<strong>' . $name . ':</strong> ' . $sensor);
+							array_push($col[($i % 4)], '<strong>' . $name . ':</strong> ' . $sensor['value'] . ' ' . $sensor['unit']);
 							$i++;
 						}
 
@@ -232,7 +232,7 @@ class phoromatic_systems implements pts_webui_interface
 								$main .= '<p>' . $sensor . '</p>';
 							$main .= '</div>';
 						}
-						$main .= '<p><em><strong>Last Updated:</strong>' . date ('d F H:i', filemtime(phoromatic_server::phoromatic_account_system_path($_SESSION['AccountID'], $row['SystemID']) . 'sensors.json')) . '</em></p>';
+						$main .= '<p><em><strong>Last Updated:</strong>' . date('d F H:i', filemtime(phoromatic_server::phoromatic_account_system_path($_SESSION['AccountID'], $row['SystemID']) . 'sensors.json')) . '<strong>System Uptime:</strong> ' . $sensor_file['uptime'] . ' Minutes</em></p>';
 					}
 				}
 				$log_file = phoromatic_server::phoromatic_account_system_path($_SESSION['AccountID'], $row['SystemID']) . 'phoronix-test-suite.log';

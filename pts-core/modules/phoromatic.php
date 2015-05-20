@@ -203,7 +203,7 @@ class phoromatic extends pts_module_interface
 
 			foreach(phodevi::supported_sensors() as $sensor)
 			{
-				$j['phoromatic']['stats']['sensors'][phodevi::sensor_name($sensor)] = phodevi::read_sensor($sensor) . ' ' . phodevi::read_sensor_unit($sensor) . PHP_EOL;
+				$j['phoromatic']['stats']['sensors'][phodevi::sensor_name($sensor)] = array('value' => phodevi::read_sensor($sensor), 'unit' => phodevi::read_sensor_unit($sensor));
 			}
 
 			$j['phoromatic']['stats']['uptime'] = ceil(phodevi::system_uptime() / 60);
