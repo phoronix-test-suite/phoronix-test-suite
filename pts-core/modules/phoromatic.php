@@ -585,7 +585,7 @@ class phoromatic extends pts_module_interface
 							// Load the tests to run
 							if(self::$test_run_manager->load_tests_to_run($suite_identifier))
 							{
-								phoromatic::update_system_status('Tests In Run Queue ' . implode(', ', self::$test_run_manager->get_tests_to_run_identifiers()));
+								phoromatic::update_system_status('Tests In Run Queue: ' . implode(', ', self::$test_run_manager->get_tests_to_run_identifiers()));
 								if(isset($json['phoromatic']['pre_run_set_context']))
 								{
 									phoromatic::set_user_context($json['phoromatic']['pre_run_set_context'], self::$p_trigger_id, self::$p_schedule_id, 'PRE_RUN');
@@ -964,7 +964,7 @@ class phoromatic extends pts_module_interface
 			return false;
 		}
 
-		phoromatic::update_system_status('Running: ' . $pts_test_result->test_profile->get_identifier(),
+		phoromatic::update_system_status('Running: ' . $pts_test_result->test_profile->get_identifier() . ' [' . $pts_test_result->get_arguments_description() . ']',
 			ceil(self::$test_run_manager->get_estimated_run_time() / 60),
 			self::$test_run_manager->get_percent_complete(),
 			null,
