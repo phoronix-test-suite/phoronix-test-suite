@@ -58,11 +58,13 @@ class stress_run implements pts_option_interface
 			return false;
 		}
 
+		/*
 		if(count($to_run) < $tests_to_run_concurrently)
 		{
 			echo PHP_EOL . 'More tests must be specified in order to run ' . $tests_to_run_concurrently . ' tests concurrently.';
 			return false;
 		}
+		*/
 
 		$test_run_manager = new pts_test_run_manager($test_flags);
 

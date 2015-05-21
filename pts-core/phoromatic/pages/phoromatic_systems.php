@@ -232,7 +232,7 @@ class phoromatic_systems implements pts_webui_interface
 								$main .= '<p>' . $sensor . '</p>';
 							$main .= '</div>';
 						}
-						$main .= '<p><em><strong>Last Updated:</strong>' . date('d F H:i', filemtime(phoromatic_server::phoromatic_account_system_path($_SESSION['AccountID'], $row['SystemID']) . 'sensors.json')) . '<strong>System Uptime:</strong> ' . $sensor_file['uptime'] . ' Minutes</em></p>';
+						$main .= '<p><em><strong>Last Updated:</strong>' . date('d F H:i', filemtime(phoromatic_server::phoromatic_account_system_path($_SESSION['AccountID'], $row['SystemID']) . 'sensors.json')) . ' <strong>System Uptime:</strong> ' . $sensor_file['uptime'] . ' Minutes</em></p>';
 					}
 				}
 				$log_file = phoromatic_server::phoromatic_account_system_path($_SESSION['AccountID'], $row['SystemID']) . 'phoronix-test-suite.log';
