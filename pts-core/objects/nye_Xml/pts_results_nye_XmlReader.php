@@ -68,7 +68,7 @@ class pts_results_nye_XmlReader extends nye_XmlReader
 
 		$x = parent::getXMLArrayValues($xml_tag, $break_depth);
 
-		if($this->do_caching && $x != $fallback_value)
+		if($this->do_caching)
 		{
 			$this->c[$xml_tag . $break_depth] = $x;
 		}
