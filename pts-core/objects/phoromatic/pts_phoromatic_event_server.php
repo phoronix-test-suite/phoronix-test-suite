@@ -114,7 +114,7 @@ class pts_phoromatic_event_server
 			{
 				// Check for systems to wake
 				$stmt = phoromatic_server::$db->prepare('SELECT LastCommunication, CurrentTask, SystemID, AccountID, NetworkMAC, LastIP, MaintenanceMode FROM phoromatic_systems WHERE State > 0 AND NetworkMAC NOT LIKE \'\' AND NetworkWakeOnLAN LIKE \'%g%\' ORDER BY LastCommunication DESC');
-				$result = $stmt->execute();
+				$result = $stmt ? $stmt->execute() : false;
 
 				while($result && $row = $result->fetchArray())
 				{

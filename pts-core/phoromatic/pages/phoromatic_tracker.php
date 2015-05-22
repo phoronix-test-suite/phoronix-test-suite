@@ -63,26 +63,20 @@ class phoromatic_tracker implements pts_webui_interface
 					continue;
 				}
 
-				// Update view counter
-			/*	$stmt_view = phoromatic_server::$db->prepare('UPDATE phoromatic_results SET TimesViewed = (TimesViewed + 1) WHERE AccountID = :account_id AND UploadID = :upload_id');
-				$stmt_view->bindValue(':account_id', $_SESSION['AccountID']);
-				$stmt_view->bindValue(':upload_id', $upload_id);
-				$stmt_view->execute(); */
-
 				// Add to result file
-				$system_name = phoromatic_system_id_to_name($row['SystemID']) . ': ' . $row['Trigger'];
+				$system_name = phoromatic_server::system_id_to_name($row['SystemID']) . ': ' . $row['Trigger'];
 				array_push($result_file, new pts_result_merge_select($composite_xml, null, $system_name));
 			}
 
 			$writer = new pts_result_file_writer(null);
-			$attributes = array('new_result_file_title' => phoromatic_schedule_id_to_name($row['ScheduleID']));
+			$attributes = array('only_render_results_xml' => true, 'new_result_file_title' => phoromatic_schedule_id_to_name($row['ScheduleID']));
 			pts_merge::merge_test_results_process($writer, $result_file, $attributes);
 			$result_file = new pts_result_file($writer->get_xml());
 			$extra_attributes = array('reverse_result_buffer' => true);
 
 
 			$main .= '<h1>' . $result_file->get_title() . '</h1>';
-
+/*
 			if($result_file->get_system_count() == 1 || ($intent = pts_result_file_analyzer::analyze_result_file_intent($result_file, $intent, true)))
 			{
 				$table = new pts_ResultFileCompactSystemsTable($result_file, $intent);
@@ -91,7 +85,7 @@ class phoromatic_tracker implements pts_webui_interface
 			{
 				$table = new pts_ResultFileSystemsTable($result_file);
 			}
-
+*/
 			$main .= '<p style="text-align: center; overflow: auto;" class="result_object">' . pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes) . '</p>';
 
 			$table = new pts_ResultFileTable($result_file, $intent);
