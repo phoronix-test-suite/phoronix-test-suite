@@ -141,8 +141,7 @@ div#pts_phoromatic_menu_right
 	border: #1e1e1e 1px solid;
 	border-width: 0 1px;
 	color: #e4e4e4;
-	margin: 0 0 -2500px;
-	padding-bottom: 2500px;
+	margin: 0;
 	box-shadow: 1px 1px 2px #1F1F1F;
 	-moz-box-shadow: 1px 1px 2px #1F1F1F;
 	-webkit-box-shadow: 1px 1px 2px #1F1F1F;
@@ -215,8 +214,7 @@ div#pts_phoromatic_main_area
 	background: #FFF;
 	overflow: hidden;
 	color: #555;
-	margin: 5px 5px -1000px 0;
-	padding-bottom: 1000px;
+	margin: 5px 5px 0 0;
 }
 h1
 {
