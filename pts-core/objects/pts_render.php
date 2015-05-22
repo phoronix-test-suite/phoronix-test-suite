@@ -322,6 +322,10 @@ class pts_render
 		{
 			$graph->highlight_values($extra_attributes['highlight_graph_values']);
 		}
+		if(isset($extra_attributes['force_simple_keys']))
+		{
+			$graph->override_i_value('force_simple_keys', true);
+		}
 		else if(PTS_IS_CLIENT && pts_client::read_env('GRAPH_HIGHLIGHT') != false)
 		{
 			$graph->highlight_values(pts_strings::comma_explode(pts_client::read_env('GRAPH_HIGHLIGHT')));

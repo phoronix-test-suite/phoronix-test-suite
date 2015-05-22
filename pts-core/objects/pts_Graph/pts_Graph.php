@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2014, Phoronix Media
-	Copyright (C) 2008 - 2014, Michael Larabel
+	Copyright (C) 2008 - 2015, Phoronix Media
+	Copyright (C) 2008 - 2015, Michael Larabel
 	pts_Graph.php: The core graph object that is used by the different graphing objects.
 
 	This program is free software; you can redistribute it and/or modify
@@ -109,6 +109,10 @@ abstract class pts_Graph
 		}
 
 		$this->i['graph_version'] = 'Phoronix Test Suite ' . $pts_version;
+	}
+	public function override_i_value($key, $val)
+	{
+		$this->i[$key] = $val;
 	}
 	public static function init_graph_config($external_config = null)
 	{

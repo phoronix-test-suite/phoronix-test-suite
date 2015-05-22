@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2014, Phoronix Media
-	Copyright (C) 2008 - 2014, Michael Larabel
+	Copyright (C) 2008 - 2015, Phoronix Media
+	Copyright (C) 2008 - 2015, Michael Larabel
 	pts_LineGraph.php: The line graph object that extends pts_Graph.php.
 
 	This program is free software; you can redistribute it and/or modify
@@ -147,6 +147,11 @@ class pts_LineGraph extends pts_Graph
 	}
 	protected function render_graph_key()
 	{
+		if(isset($this->i['force_simple_keys']) && $this->i['force_simple_keys'])
+		{
+			return parent::render_graph_key();
+		}
+
 		if($this->i['key_line_height'] == 0)
 		{
 			return;
