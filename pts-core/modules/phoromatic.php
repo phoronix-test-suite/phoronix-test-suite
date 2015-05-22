@@ -425,7 +425,7 @@ class phoromatic extends pts_module_interface
 		{
 			pts_client::$pts_logger = new pts_logger();
 		}
-		pts_client::$pts_logger->log(pts_title(true) . ' starting Phoromatic client');
+		pts_client::$pts_logger->log(pts_title(true) . ' [' . PTS_CORE_VERSION . '] starting Phoromatic client');
 
 		if(phodevi::system_uptime() < 60)
 		{
@@ -964,7 +964,7 @@ class phoromatic extends pts_module_interface
 			return false;
 		}
 
-		phoromatic::update_system_status('Running: ' . $pts_test_result->test_profile->get_identifier() . ' [' . $pts_test_result->get_arguments_description() . ']',
+		phoromatic::update_system_status('Running: ' . $pts_test_result->test_profile->get_identifier() . ($pts_test_result->get_arguments_description() != null ? ' [' . $pts_test_result->get_arguments_description() . ']' : null),
 			ceil(self::$test_run_manager->get_estimated_run_time() / 60),
 			self::$test_run_manager->get_percent_complete(),
 			null,
