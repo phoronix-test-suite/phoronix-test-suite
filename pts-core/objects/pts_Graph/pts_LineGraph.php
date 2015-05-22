@@ -400,6 +400,10 @@ class pts_LineGraph extends pts_Graph
 	}
 	protected function graph_key_height()
 	{
+		if(isset($this->i['force_simple_keys']) && $this->i['force_simple_keys'])
+		{
+			return parent::graph_key_height();
+		}
 		if(count($this->graph_data_title) < 2 && $this->i['show_graph_key'] == false)
 		{
 			return 0;
