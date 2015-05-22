@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2014, Phoronix Media
-	Copyright (C) 2008 - 2014, Michael Larabel
+	Copyright (C) 2008 - 2015, Phoronix Media
+	Copyright (C) 2008 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -92,9 +92,10 @@ class pts_render
 
 		// XXX: removed || $result_file->is_results_tracker() from below and should be added
 		// Removing the command fixes cases like: 1210053-BY-MYRESULTS43
-		if($result_file->is_multi_way_comparison() || isset($extra_attributes['compact_to_scalar']))
+		$result_identifiers = $result_object->test_result_buffer->get_identifiers();
+		if($result_file->is_multi_way_comparison($result_identifiers) || isset($extra_attributes['compact_to_scalar']))
 		{
-			if((isset($extra_attributes['compact_to_scalar']) || (false && $result_file->is_multi_way_comparison())) && in_array($result_object->test_profile->get_display_format(), array('LINE_GRAPH', 'FILLED_LINE_GRAPH')))
+			if((isset($extra_attributes['compact_to_scalar']) || (false && $result_file->is_multi_way_comparison($result_identifiers))) && in_array($result_object->test_profile->get_display_format(), array('LINE_GRAPH', 'FILLED_LINE_GRAPH')))
 			{
 				// Convert multi-way line graph into horizontal box plot
 				if(stripos($result_object->get_arguments_description(), 'frame time') !== false || true)

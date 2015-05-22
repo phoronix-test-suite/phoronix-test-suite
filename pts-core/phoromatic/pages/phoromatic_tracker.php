@@ -85,11 +85,12 @@ class phoromatic_tracker implements pts_webui_interface
 			{
 				$table = new pts_ResultFileSystemsTable($result_file);
 			}
-*/
+
 			$main .= '<p style="text-align: center; overflow: auto;" class="result_object">' . pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes) . '</p>';
 
 			$table = new pts_ResultFileTable($result_file, $intent);
 			$main .= '<p style="text-align: center; overflow: auto;" class="result_object">' . pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes) . '</p>';
+*/
 
 			foreach($result_file->get_result_objects((isset($_POST['show_only_changed_results']) ? 'ONLY_CHANGED_RESULTS' : -1)) as $i => $result_object)
 			{

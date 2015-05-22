@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2014, Phoronix Media
-	Copyright (C) 2008 - 2014, Michael Larabel
+	Copyright (C) 2008 - 2015, Phoronix Media
+	Copyright (C) 2008 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -203,14 +203,19 @@ class pts_result_file
 
 		return $is_tracker;
 	}
-	public function is_multi_way_comparison()
+	public function is_multi_way_comparison($identifiers = false)
 	{
 		static $is_multi_way = -1;
 
 		if($is_multi_way === -1)
 		{
-			$hw = $this->get_system_hardware();
-			$is_multi_way = count($hw) < 2 ? false : pts_render::multi_way_identifier_check($this->get_system_identifiers(), $hw, $this);
+			$hw = null; // XXX: this isn't used anymore at least for now $this->get_system_hardware();
+			if($identifiers == false)
+			{
+				$identifiers = $this->get_system_identifiers();
+			}
+
+			$is_multi_way = count($identifiers) < 2 ? false : pts_render::multi_way_identifier_check($identifiers, $hw, $this);
 			$this->is_multi_way_inverted = $is_multi_way && $is_multi_way[1];
 		}
 

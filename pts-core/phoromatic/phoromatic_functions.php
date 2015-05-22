@@ -215,7 +215,7 @@ function phoromatic_webui_footer()
 {
 	return '<div id="pts_phoromatic_bottom_footer">
 <div style="float: right; padding: 2px 10px; overflow: hidden;"><a href="http://openbenchmarking.org/" style="margin-right: 20px;"><img src="data:image/png;base64,' . base64_encode(file_get_contents('images/ob-white-logo.png')) . '" /></a> <a href="http://www.phoronix-test-suite.com/"><img src="data:image/png;base64,' . base64_encode(file_get_contents('images/pts-white-logo.png')) . '" /></a></div>
-<p style="margin: 6px 15px;"><strong>' . date('H:i T - j F Y') . '</strong>' . (PTS_IS_DEV_BUILD ? '[' . round(microtime(true) - PAGE_LOAD_START_TIME, 2) . 's Page Load Time]' : null) . '<br />Copyright &copy; 2008 - ' . date('Y') . ' by <a href="http://www.phoronix-media.com/">Phoronix Media</a>. All rights reserved.<br />
+<p style="margin: 6px 15px;"><strong>' . date('H:i T - j F Y') . '</strong>' . (PTS_IS_DEV_BUILD ? ' &nbsp; [' . round(microtime(true) - PAGE_LOAD_START_TIME, 2) . 's Page Load Time]' : null) . '<br />Copyright &copy; 2008 - ' . date('Y') . ' by <a href="http://www.phoronix-media.com/">Phoronix Media</a>. All rights reserved.<br />
 All trademarks used are properties of their respective owners.<br />' . pts_title(true) . ' - Core Version ' . PTS_CORE_VERSION . ' - PHP ' . PHP_VERSION . '</p></div> <script type="text/javascript"> phoromatic_checkbox_toggle_result_comparison(\'\'); </script>';
 }
 function phoromatic_add_activity_stream_event($activity_event, $activity_event_id, $activity_event_type)
