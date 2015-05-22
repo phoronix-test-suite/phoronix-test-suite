@@ -43,7 +43,7 @@ class phoromatic_tracker implements pts_webui_interface
 		if(isset($PATH[0]) && !empty($PATH[0]))
 		{
 			ini_set('memory_limit', '512M');
-			$cut_duration = 180;
+			$cut_duration = 30;
 			$stmt = phoromatic_server::$db->prepare('SELECT UploadID, UploadTime, ScheduleID, Trigger, SystemID FROM phoromatic_results WHERE AccountID = :account_id AND ScheduleID = :schedule_id ORDER BY UploadTime DESC');
 			$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 			$stmt->bindValue(':schedule_id', $PATH[0]);
@@ -51,7 +51,7 @@ class phoromatic_tracker implements pts_webui_interface
 			$cutoff_time = is_numeric($cut_duration) ? strtotime('today -' . $cut_duration . ' days') : false;
 
 			$result_file = array();
-			while($row = $test_result_result->fetchArray())
+			while($test_result_result && $row = $test_result_result->fetchArray())
 			{
 				if($cutoff_time !== false && strtotime($row['UploadTime']) < $cutoff_time)
 					break;
@@ -78,7 +78,7 @@ class phoromatic_tracker implements pts_webui_interface
 			$attributes = array('new_result_file_title' => phoromatic_schedule_id_to_name($row['ScheduleID']));
 			pts_merge::merge_test_results_process($writer, $result_file, $attributes);
 			$result_file = new pts_result_file($writer->get_xml());
-			$extra_attributes = array();
+			$extra_attributes = array('reverse_result_buffer' => true);
 
 
 			$main .= '<h1>' . $result_file->get_title() . '</h1>';
