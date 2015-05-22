@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2011, Phoronix Media
-	Copyright (C) 2010 - 2011, Michael Larabel
+	Copyright (C) 2010 - 2015, Phoronix Media
+	Copyright (C) 2010 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -22,6 +22,9 @@
 
 class pts_results_nye_XmlReader extends nye_XmlReader
 {
+	private $do_caching = false;
+	private $c = null;
+
 	public function __construct($read_xml)
 	{
 		if(!isset($read_xml[1024]) && defined('PTS_SAVE_RESULTS_PATH') && is_file(PTS_SAVE_RESULTS_PATH . $read_xml . '/composite.xml'))
@@ -35,8 +38,42 @@ class pts_results_nye_XmlReader extends nye_XmlReader
 			$read_xml = file_get_contents($read_xml);
 			$read_xml = substr($read_xml, strpos($read_xml, '<PhoronixTestSuite>'));
 		}
+		if(defined('PTS_CACHING_XML_READER'))
+			$this->do_caching = true;
 
 		parent::__construct($read_xml);
+	}
+	public function getXMLValue($xml_tag, $fallback_value = -1)
+	{
+		if($this->do_caching && isset($this->c[$xml_tag]))
+		{
+			return $this->c[$xml_tag];
+		}
+
+		$x = parent::getXMLValue($xml_tag, $fallback_value);
+
+		if($this->do_caching && $x != $fallback_value)
+		{
+			$this->c[$xml_tag] = $x;
+		}
+
+		return $x;
+	}
+	public function getXMLArrayValues($xml_tag, $break_depth = -1)
+	{
+		if($this->do_caching && isset($this->c[$xml_tag . $break_depth]))
+		{
+			return $this->c[$xml_tag . $break_depth];
+		}
+
+		$x = parent::getXMLArrayValues($xml_tag, $break_depth);
+
+		if($this->do_caching && $x != $fallback_value)
+		{
+			$this->c[$xml_tag . $break_depth] = $x;
+		}
+
+		return $x;
 	}
 	public function validate()
 	{

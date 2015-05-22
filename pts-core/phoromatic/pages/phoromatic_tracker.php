@@ -39,6 +39,7 @@ class phoromatic_tracker implements pts_webui_interface
 	{
 		echo phoromatic_webui_header_logged_in();
 		$main = null;
+		define('PTS_CACHING_XML_READER', true);
 
 		if(isset($PATH[0]) && !empty($PATH[0]))
 		{
