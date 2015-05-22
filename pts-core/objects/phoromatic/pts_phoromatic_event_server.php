@@ -159,9 +159,9 @@ class pts_phoromatic_event_server
 			{
 				// See if system appears down
 				$stmt = phoromatic_server::$db->prepare('SELECT LastCommunication, CurrentTask, SystemID, AccountID, LastIP FROM phoromatic_systems WHERE State > 0 ORDER BY LastCommunication DESC');
-				$result = $stmt->execute();
+				$result = $stmt ? $stmt->execute() : false;
 
-				while($row = $result->fetchArray())
+				while($result && ($row = $result->fetchArray()))
 				{
 					$sys_hash = sha1($row['AccountID'] . $row['SystemID']);
 
