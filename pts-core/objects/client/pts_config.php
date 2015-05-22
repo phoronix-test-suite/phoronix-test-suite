@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2014, Phoronix Media
-	Copyright (C) 2008 - 2014, Michael Larabel
+	Copyright (C) 2008 - 2015, Phoronix Media
+	Copyright (C) 2008 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -30,19 +30,17 @@ class pts_config
 {
 	static $init_process_ran = false;
 	static $xml_user_config = null;
-	private static $config_file_location = null;
 
 	public static function get_config_file_location()
 	{
-		if(self::$config_file_location == null)
+		if(PTS_IS_DAEMONIZED_SERVER_PROCESS || (is_file('/etc/phoronix-test-suite.xml') && is_writable('/etc/phoronix-test-suite.xml')))
 		{
-			if(PTS_IS_DAEMONIZED_SERVER_PROCESS)
-				self::$config_file_location = '/etc/phoronix-test-suite.xml';
-			else
-				self::$config_file_location = PTS_USER_PATH . 'user-config.xml';
+			return '/etc/phoronix-test-suite.xml';
 		}
-
-		return self::$config_file_location;
+		else
+		{
+			return PTS_USER_PATH . 'user-config.xml';
+		}
 	}
 	public static function init_files()
 	{
