@@ -82,7 +82,7 @@ class pts_result_file
 		$hw = array();
 		foreach($this->xml->System as $sys)
 		{
-				array_push($hw, $sys->Hardware);
+				array_push($hw, $sys->Hardware->__toString());
 		}
 
 		return $this->sanitize_user_strings($hw);
@@ -92,7 +92,7 @@ class pts_result_file
 		$sw = array();
 		foreach($this->xml->System as $sys)
 		{
-				array_push($sw, $sys->Software);
+				array_push($sw, $sys->Software->__toString());
 		}
 
 		return $this->sanitize_user_strings($sw);
@@ -112,7 +112,7 @@ class pts_result_file
 		$users = array();
 		foreach($this->xml->System as $sys)
 		{
-				array_push($users, $sys->User);
+				array_push($users, $sys->User->__toString());
 		}
 
 		return $this->sanitize_user_strings($users);
@@ -122,7 +122,7 @@ class pts_result_file
 		$notes = array();
 		foreach($this->xml->System as $sys)
 		{
-				array_push($notes, $sys->Notes);
+				array_push($notes, $sys->Notes->__toString());
 		}
 
 		return $this->sanitize_user_strings($notes);
@@ -132,7 +132,7 @@ class pts_result_file
 		$times = array();
 		foreach($this->xml->System as $sys)
 		{
-				array_push($times, $sys->TimeStamp);
+				array_push($times, $sys->TimeStamp->__toString());
 		}
 
 		return $this->sanitize_user_strings($times);
@@ -142,7 +142,7 @@ class pts_result_file
 		$versions = array();
 		foreach($this->xml->System as $sys)
 		{
-				array_push($versions, $sys->TestClientVersion);
+				array_push($versions, $sys->TestClientVersion->__toString());
 		}
 
 		return $this->sanitize_user_strings($versions);
@@ -151,7 +151,7 @@ class pts_result_file
 	{
 		$identifiers = array();
 		foreach($this->xml->System as $sys)
-			array_push($identifiers, $sys->Identifier);
+			array_push($identifiers, $sys->Identifier->__toString());
 
 		return $this->sanitize_user_strings($identifiers);
 	}
@@ -161,34 +161,34 @@ class pts_result_file
 	}
 	public function get_title()
 	{
-		return $this->sanitize_user_strings($this->xml->Generated->Title);
+		return $this->sanitize_user_strings($this->xml->Generated->Title->__toString());
 	}
 	public function get_description()
 	{
-		return $this->sanitize_user_strings($this->xml->Generated->Description);
+		return $this->sanitize_user_strings($this->xml->Generated->Description->__toString());
 	}
 	public function get_notes()
 	{
-		return $this->sanitize_user_strings($this->xml->Generated->Notes);
+		return $this->sanitize_user_strings($this->xml->Generated->Notes->__toString());
 	}
 	public function get_internal_tags()
 	{
-		return $this->sanitize_user_strings($this->xml->Generated->InternalTags);
+		return $this->sanitize_user_strings($this->xml->Generated->InternalTags->__toString());
 	}
 	public function get_reference_id()
 	{
-		return $this->sanitize_user_strings($this->xml->Generated->ReferenceID);
+		return $this->sanitize_user_strings($this->xml->Generated->ReferenceID->__toString());
 	}
 	public function get_preset_environment_variables()
 	{
-		return $this->xml->Generated->PreSetEnvironmentVariables;
+		return $this->xml->Generated->PreSetEnvironmentVariables->__toString();
 	}
 	public function get_test_titles()
 	{
 		$titles = array();
 		foreach($this->xml->Result as $result)
 		{
-			array_push($titles, $result->Title);
+			array_push($titles, $result->Title->__toString());
 		}
 
 		return $titles;
@@ -313,7 +313,7 @@ class pts_result_file
 		$ids = array();
 		foreach($this->xml->Result as $result)
 		{
-			array_push($ids, $result->Identifier);
+			array_push($ids, $result->Identifier->__toString());
 		}
 
 		return $ids;
@@ -325,14 +325,14 @@ class pts_result_file
 			$this->result_objects = array();
 			foreach($this->xml->Result as $result)
 			{
-				$results_name = $result->Title;
-				$results_version = $result->AppVersion;
-				$results_attributes = $result->Description;
-				$results_scale = $result->Scale;
-				$results_test_name = $result->Identifier;
-				$results_arguments = $result->Arguments;
-				$results_proportion = $result->Proportion;
-				$results_format = $result->DisplayFormat;
+				$results_name = $result->Title->__toString();
+				$results_version = $result->AppVersion->__toString();
+				$results_attributes = $result->Description->__toString();
+				$results_scale = $result->Scale->__toString();
+				$results_test_name = $result->Identifier->__toString();
+				$results_arguments = $result->Arguments->__toString();
+				$results_proportion = $result->Proportion->__toString();
+				$results_format = $result->DisplayFormat->__toString();
 
 				$test_profile = new pts_test_profile($results_test_name);
 				$test_profile->set_test_title($results_name);
@@ -348,7 +348,7 @@ class pts_result_file
 				$result_buffer = new pts_test_result_buffer();
 				foreach($result->Data->Entry as $entry)
 				{
-					$result_buffer->add_test_result($entry->Identifier->__toString(), $entry->Value->__toString(), $entry->RawString->__toString(), (isset($entry->JSON) ? $entry->JSON : null));
+					$result_buffer->add_test_result($entry->Identifier->__toString(), $entry->Value->__toString(), $entry->RawString->__toString(), (isset($entry->JSON) ? $entry->JSON->__toString() : null));
 				}
 
 				$test_result->set_test_result_buffer($result_buffer);
