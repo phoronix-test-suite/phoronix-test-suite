@@ -161,27 +161,27 @@ class pts_result_file
 	}
 	public function get_title()
 	{
-		return $this->sanitize_user_strings($this->xml->Generated->Title->__toString());
+		return $this->sanitize_user_strings($this->xml->Generated->Title);
 	}
 	public function get_description()
 	{
-		return $this->sanitize_user_strings($this->xml->Generated->Description->__toString());
+		return $this->sanitize_user_strings($this->xml->Generated->Description);
 	}
 	public function get_notes()
 	{
-		return $this->sanitize_user_strings($this->xml->Generated->Notes->__toString());
+		return $this->sanitize_user_strings($this->xml->Generated->Notes);
 	}
 	public function get_internal_tags()
 	{
-		return $this->sanitize_user_strings($this->xml->Generated->InternalTags->__toString());
+		return $this->sanitize_user_strings($this->xml->Generated->InternalTags);
 	}
 	public function get_reference_id()
 	{
-		return $this->sanitize_user_strings($this->xml->Generated->ReferenceID->__toString());
+		return $this->sanitize_user_strings($this->xml->Generated->ReferenceID);
 	}
 	public function get_preset_environment_variables()
 	{
-		return $this->xml->Generated->PreSetEnvironmentVariables->__toString();
+		return $this->xml->Generated->PreSetEnvironmentVariables;
 	}
 	public function get_test_titles()
 	{
