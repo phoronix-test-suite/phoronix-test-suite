@@ -46,7 +46,7 @@ class pts_result_file
 			$this->raw_xml = $result_file;
 		}
 
-		$this->xml = simplexml_load_string($result_file);
+		$this->xml = simplexml_load_string($this->raw_xml);
 	}
 	public function getRawXml()
 	{
@@ -329,7 +329,7 @@ class pts_result_file
 		if($this->result_objects == null)
 		{
 			$this->result_objects = array();
-	var_dump($this->xml);
+
 			foreach($this->xml->Result as $result)
 			{
 				$test_profile = new pts_test_profile($result->Identifier);
