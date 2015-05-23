@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2013 - 2014, Phoronix Media
-	Copyright (C) 2013 - 2014, Michael Larabel
+	Copyright (C) 2013 - 2015, Phoronix Media
+	Copyright (C) 2013 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -41,7 +41,7 @@ class pts_sys_graph
 		'text_size_sub' => 10
 		);
 	protected $computed = array(
-		'graph_area_y_end' => 40,
+		'graph_area_y_end' => 20,
 		'graph_area_y_start' => null,
 		'graph_area_x_end' => null,
 		'graph_area_x_start' => 40,

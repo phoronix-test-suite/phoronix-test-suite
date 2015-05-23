@@ -142,7 +142,7 @@ class phoromatic_dashboard implements pts_webui_interface
 						continue;
 					}
 
-					$graph = new pts_sys_graph(array('title' => $s, 'x_scale' => 'm', 'y_scale' => $sensors[$s]['unit'], 'text_size' => 12, 'reverse_x_direction' => false, 'width' => 300, 'height' => 150));
+					$graph = new pts_sys_graph(array('title' => $s, 'x_scale' => 'm', 'y_scale' => $sensors[$s]['unit'], 'text_size' => 12, 'reverse_x_direction' => false, 'width' => 300, 'height' => 120));
 					$graph->render_base();
 					$svg_dom = $graph->render_graph_data($sensors[$s]['values']);
 					if($svg_dom === false)
