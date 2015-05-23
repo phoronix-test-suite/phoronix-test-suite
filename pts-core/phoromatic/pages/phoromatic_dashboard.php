@@ -135,25 +135,28 @@ class phoromatic_dashboard implements pts_webui_interface
 
 				echo '<div style="float: right; margin: 0 10px 0 10px;">';
 				$g_count = 0;
-				foreach(array('CPU Usage', 'Memory Usage', 'CPU Temperature', 'System Temperature') as $s)
+				foreach(array('CPU Usage', 'Memory Usage', 'CPU Temperature', 'System Temperature', 'GPU Temperature', 'Swap Usage', 'System Iowait', 'CPU Frequency') as $s)
 				{
-					if(!isset($sensors[$s]))
-					{
-						continue;
-					}
-
-					$graph = new pts_sys_graph(array('title' => $s, 'x_scale' => 'm', 'y_scale' => $sensors[$s]['unit'], 'text_size' => 12, 'reverse_x_direction' => false, 'width' => 300, 'height' => 120));
-					$graph->render_base();
-					$svg_dom = $graph->render_graph_data($sensors[$s]['values']);
-					if($svg_dom === false)
+					if(!isset($sensors[$s]) && isset($sensors[$s]['values']) && count($sensors[$s]['values']) > 5)
 					{
 						continue;
 					}
 					$g_count++;
-					$output_type = 'SVG';
-					$graph = $svg_dom->output(null, $output_type);
-					echo substr($graph, strpos($graph, '<svg'));
-					if($g_count == 3)
+
+					if($g_count <= 3)
+					{
+						$graph = new pts_sys_graph(array('title' => $s, 'x_scale' => 'm', 'y_scale' => $sensors[$s]['unit'], 'text_size' => 10, 'reverse_x_direction' => false, 'width' => 300, 'height' => 120));
+						$graph->render_base();
+						$svg_dom = $graph->render_graph_data($sensors[$s]['values']);
+						if($svg_dom === false)
+						{
+							continue;
+						}
+						$output_type = 'SVG';
+						$graph = $svg_dom->output(null, $output_type);
+						echo substr($graph, strpos($graph, '<svg'));
+					}
+					else
 					{
 						break;
 					}
