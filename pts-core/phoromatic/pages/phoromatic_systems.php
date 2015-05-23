@@ -209,10 +209,34 @@ class phoromatic_systems implements pts_webui_interface
 				$components = pts_result_file_analyzer::system_component_string_to_array($row['Software']);
 				$main .= pts_webui::r2d_array_to_table($components) . '</div>';
 
-				$sensor_file = phoromatic_server::phoromatic_account_system_path($_SESSION['AccountID'], $row['SystemID']) . 'sensors.json';
-				if(is_file($sensor_file))
+				$system_path = phoromatic_server::phoromatic_account_system_path($_SESSION['AccountID'], $row['SystemID']);
+				if(is_file($system_path . 'sensors-pool.json'))
 				{
-					$sensor_file = file_get_contents($sensor_file);
+					$sensors = file_get_contents($system_path . 'sensors-pool.json');
+					$sensors = json_decode($sensors, true);
+
+					foreach($sensors as $title => $s)
+					{
+						if(!isset($s['values']) || count($s['values']) < 5)
+						{
+							continue;
+						}
+
+						$graph = new pts_sys_graph(array('title' => $title, 'x_scale' => 'm', 'y_scale' => $s['unit'], 'text_size' => 12, 'reverse_x_direction' => false, 'width' => 720, 'height' => 400));
+						$graph->render_base();
+						$svg_dom = $graph->render_graph_data($s['values']);
+						if($svg_dom === false)
+						{
+							continue;
+						}
+						$output_type = 'SVG';
+						$graph = $svg_dom->output(null, $output_type);
+						$main .= '<p align="center">' . substr($graph, strpos($graph, '<svg')) . '</p>';
+					}
+				}
+				else if(is_file($system_path . 'sensors.json'))
+				{
+					$sensor_file = file_get_contents($system_path . 'sensors.json');
 					$sensor_file = json_decode($sensor_file, true);
 					if($sensor_file && isset($sensor_file['sensors']) && !empty($sensor_file['sensors']))
 					{
