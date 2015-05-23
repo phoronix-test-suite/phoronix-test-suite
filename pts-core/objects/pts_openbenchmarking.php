@@ -705,6 +705,9 @@ class pts_openbenchmarking
 			$version = null;
 		}
 
+		if($test == null)
+			return false;
+
 		foreach($repos as $repo)
 		{
 			if($repo == 'local')
