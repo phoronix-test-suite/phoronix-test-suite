@@ -29,7 +29,7 @@ class pts_test_profile_parser
 	{
 		if(strpos($identifier, '<?xml version="1.0"?>') === false)
 		{
-			if(PTS_IS_CLIENT)
+			if(PTS_IS_CLIENT && (!defined('PTS_TEST_PROFILE_PATH') || !is_file(PTS_TEST_PROFILE_PATH . $identifier . '/test-definition.xml')))
 			{
 				$identifier = pts_openbenchmarking::evaluate_string_to_qualifier($identifier, true, 'test');
 
