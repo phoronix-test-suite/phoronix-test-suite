@@ -148,7 +148,7 @@ class pts_result_file_merge_manager
 	{
 		$contained = false;
 
-		foreach($mto_compare->test_result_buffer->get_buffer_items() as $check_buffer_item)
+		foreach($mto_compare->test_result_buffer->get_buffer_items() as &$check_buffer_item)
 		{
 			if($buffer_item->get_result_identifier() == $check_buffer_item->get_result_identifier() && $buffer_item->get_result_value() == $check_buffer_item->get_result_value())
 			{
