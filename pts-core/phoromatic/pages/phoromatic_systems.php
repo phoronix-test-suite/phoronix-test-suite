@@ -210,6 +210,7 @@ class phoromatic_systems implements pts_webui_interface
 				$main .= pts_webui::r2d_array_to_table($components) . '</div>';
 
 				$system_path = phoromatic_server::phoromatic_account_system_path($_SESSION['AccountID'], $row['SystemID']);
+				$main .= '<hr />';
 				if(is_file($system_path . 'sensors-pool.json'))
 				{
 					$sensors = file_get_contents($system_path . 'sensors-pool.json');
@@ -217,12 +218,12 @@ class phoromatic_systems implements pts_webui_interface
 
 					foreach($sensors as $title => $s)
 					{
-						if(!isset($s['values']) || count($s['values']) < 5)
+						if(!isset($s['values']) || count($s['values']) < 5 || max($s['values']) == min($s['values']))
 						{
 							continue;
 						}
 
-						$graph = new pts_sys_graph(array('title' => $title, 'x_scale' => 'm', 'y_scale' => $s['unit'], 'text_size' => 12, 'reverse_x_direction' => false, 'width' => 720, 'height' => 400));
+						$graph = new pts_sys_graph(array('title' => $title, 'x_scale' => 'm', 'y_scale' => $s['unit'], 'text_size' => 12, 'reverse_x_direction' => false, 'width' => 920, 'height' => 400));
 						$graph->render_base();
 						$svg_dom = $graph->render_graph_data($s['values']);
 						if($svg_dom === false)
@@ -248,7 +249,7 @@ class phoromatic_systems implements pts_webui_interface
 							$i++;
 						}
 
-						$main .= '<hr /><h2>System Sensors</h2>';
+						$main .= '<h2>System Sensors</h2>';
 						foreach($col as $sensors)
 						{
 							$main .= '<div style="float: left; width: 25%;">';
