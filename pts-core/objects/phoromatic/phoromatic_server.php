@@ -125,7 +125,7 @@ class phoromatic_server
 		}
 
 		self::$db = new SQLite3($db_file, $db_flags);
-		self::$db->busyTimeout(5000);
+		self::$db->busyTimeout(10000);
 
 		if($read_only && is_file($db_file))
 		{
