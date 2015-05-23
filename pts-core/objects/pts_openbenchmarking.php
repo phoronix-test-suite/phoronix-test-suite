@@ -398,8 +398,15 @@ class pts_openbenchmarking
 	}
 	public static function read_repository_index($repo_name, $do_decode = true)
 	{
-		$index_file = PTS_OPENBENCHMARKING_SCRATCH_PATH . $repo_name . '.index';
+		static $caches;
+		static $last_cache_times;
 
+		if($do_decode && isset($caches[$repo_name]) && $last_cache_times[$repo_name] > (time() - 60))
+		{
+			return $caches[$repo_name];
+		}
+
+		$index_file = PTS_OPENBENCHMARKING_SCRATCH_PATH . $repo_name . '.index';
 		if(is_file($index_file))
 		{
 			$index_file = file_get_contents($index_file);
@@ -412,6 +419,12 @@ class pts_openbenchmarking
 		else
 		{
 			$index_file = null;
+		}
+
+		if($do_decode)
+		{
+			$caches[$repo_name] = $index_file;
+			$last_cache_times[$repo_name] = time();
 		}
 
 		return $index_file;
