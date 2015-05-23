@@ -325,25 +325,16 @@ class pts_result_file
 			$this->result_objects = array();
 			foreach($this->xml->Result as $result)
 			{
-				$results_name = $result->Title->__toString();
-				$results_version = $result->AppVersion->__toString();
-				$results_attributes = $result->Description->__toString();
-				$results_scale = $result->Scale->__toString();
-				$results_test_name = $result->Identifier->__toString();
-				$results_arguments = $result->Arguments->__toString();
-				$results_proportion = $result->Proportion->__toString();
-				$results_format = $result->DisplayFormat->__toString();
-
-				$test_profile = new pts_test_profile($results_test_name);
-				$test_profile->set_test_title($results_name);
-				$test_profile->set_version($results_version);
-				$test_profile->set_result_scale($results_scale);
-				$test_profile->set_result_proportion($results_proportion);
-				$test_profile->set_display_format($results_format);
+				$test_profile = new pts_test_profile($result->Identifier->__toString());
+				$test_profile->set_test_title($result->Title->__toString());
+				$test_profile->set_version($result->AppVersion->__toString());
+				$test_profile->set_result_scale($result->Scale->__toString());
+				$test_profile->set_result_proportion($result->Proportion->__toString());
+				$test_profile->set_display_format($result->DisplayFormat->__toString());
 
 				$test_result = new pts_test_result($test_profile);
-				$test_result->set_used_arguments_description($results_attributes);
-				$test_result->set_used_arguments($results_arguments);
+				$test_result->set_used_arguments_description($result->Description->__toString());
+				$test_result->set_used_arguments($result->Arguments->__toString());
 
 				$result_buffer = new pts_test_result_buffer();
 				foreach($result->Data->Entry as $entry)
