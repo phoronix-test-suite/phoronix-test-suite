@@ -115,9 +115,12 @@ class pts_module_manager
 		{
 			foreach(explode(';', $env_var_string) as $ev)
 			{
-				list($var, $value) = pts_strings::trim_explode('=', $ev);
-				pts_client::set_environment_variable($var, $value);
-				pts_module_manager::var_store_add($var, $value);
+				if(strpos($ev, '=') != false)
+				{
+					list($var, $value) = pts_strings::trim_explode('=', $ev);
+					pts_client::set_environment_variable($var, $value);
+					pts_module_manager::var_store_add($var, $value);
+				}
 			}
 
 			pts_module_manager::detect_modules_to_load();
