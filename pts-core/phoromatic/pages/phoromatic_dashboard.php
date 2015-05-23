@@ -82,6 +82,10 @@ class phoromatic_dashboard implements pts_webui_interface
 			}
 			echo '<p><em>' . implode(' - ', $components) . '</em></p>';
 			echo '<h2>' . $row['CurrentTask'] . '</h2>';
+			if(!empty($row['CurrentProcessSchedule']))
+			{
+				echo '<h2>' . phoromatic_server::schedule_id_to_name($row['CurrentProcessSchedule']) . '</h2>';
+			}
 			echo '</div>';
 
 			echo '<div style="float: left;">';
@@ -98,13 +102,6 @@ class phoromatic_dashboard implements pts_webui_interface
 				{
 					echo '<p><em>' . phoromatic_compute_estimated_time_remaining_string($row['TimeToNextCommunication'], $row['LastCommunication'], 'To Next Communication') . '</em></p>';
 				}
-				echo '</div>';
-			}
-
-			if(!empty($row['CurrentProcessSchedule']))
-			{
-				echo '<div style="float: left; margin: 0 0 0 10px;">';
-				echo '<h2>' . phoromatic_server::schedule_id_to_name($row['CurrentProcessSchedule']) . '</h2>';
 				echo '</div>';
 			}
 
@@ -128,6 +125,40 @@ class phoromatic_dashboard implements pts_webui_interface
 					echo '<p class="font-size: 90%;"><em>Time To Next Scheduled Task</em></p>';
 					echo '</div>';
 				}
+			}
+
+			$system_path = phoromatic_server::phoromatic_account_system_path($_SESSION['AccountID'], $row['SystemID']);
+			if(is_file($system_path . 'sensors-pool.json'))
+			{
+				$sensors = file_get_contents($system_path . 'sensors-pool.json');
+				$sensors = json_decode($sensors, true);
+
+				echo '<div style="float: left; margin: 0 0 0 10px;">';
+				$g_count = 0;
+				foreach(array('CPU Usage', 'Memory Usage', 'CPU Temperature', 'System Temperature') as $s)
+				{
+					if(!isset($sensors[$s]))
+					{
+						continue;
+					}
+
+					$graph = new pts_sys_graph(array('title' => $s, 'x_scale' => 'm', 'y_scale' => $sensors[$s]['unit'], 'reverse_x_direction' => false, 'width' => 300, 'height' => 150));
+					$graph->render_base();
+					$svg_dom = $graph->render_graph_data($sensors[$s]['values']);
+					if($svg_dom === false)
+					{
+						continue;
+					}
+					$g_count++;
+					$output_type = 'SVG';
+					$graph = $svg_dom->output(null, $output_type);
+					echo substr($graph, strpos($graph, '<svg'));
+					if($g_count == 3)
+					{
+						break;
+					}
+				}
+				echo '</div>';
 			}
 
 			echo '<hr style="width: ' . $row['TaskPercentComplete'] . '%;" />';
