@@ -42,7 +42,7 @@ class phoromatic_tracker implements pts_webui_interface
 
 		if(isset($PATH[0]) && !empty($PATH[0]))
 		{
-			ini_set('memory_limit', '512M');
+			ini_set('memory_limit', '4G');
 			$cut_duration = 30;
 			$stmt = phoromatic_server::$db->prepare('SELECT UploadID, UploadTime, ScheduleID, Trigger, SystemID FROM phoromatic_results WHERE AccountID = :account_id AND ScheduleID = :schedule_id ORDER BY UploadTime DESC');
 			$stmt->bindValue(':account_id', $_SESSION['AccountID']);

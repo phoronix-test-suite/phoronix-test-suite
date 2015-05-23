@@ -42,6 +42,45 @@ if(isset($J['phoromatic']['stats']))
 	file_put_contents($system_path . 'sensors.json', json_encode($J['phoromatic']['stats']));
 }
 
+if(is_file($system_path . 'sensors-pool.json'))
+{
+	$sensor_file = file_get_contents($system_path . 'sensors-pool.json');
+	$sensor_file = json_decode($sensor_file, true);
+
+	if($sensor_file && !empty($sensor_file))
+	{
+		foreach($sensor_file as $name => $sensor)
+		{
+			if(isset($sensor['last-updated']) < (time() - 600))
+			{
+				unset($sensor_file['sensors'][$name]);
+			}
+		}
+	}
+}
+
+$sensors = $sensor_file;
+foreach($J['phoromatic']['stats']['sensors'] as $name => $sensor)
+{
+		if(!isset($sensors[$name]))
+		{
+			$sensors[$name] = $sensor;
+			$sensors[$name]['values'] = array($sensors[$name]['value']);
+			unset($sensors[$name]['value']);
+		}
+		else
+		{
+			array_unshift($sensors[$name]['values'], $sensor['value']);
+		}
+		if(count($sensors[$name]['values']) > 60)
+		{
+			$sensors[$name]['values'] = array_slice($sensors[$name]['values'], 0, 60);
+		}
+		$sensors[$name]['last-updated'] = time();
+}
+
+file_put_contents($system_path . 'sensors-pool.json', json_encode($sensors));
+
 $stmt = phoromatic_server::$db->prepare('SELECT TickThreadEvent FROM phoromatic_systems WHERE AccountID = :account_id AND SystemID = :system_id');
 $stmt->bindValue(':account_id', ACCOUNT_ID);
 $stmt->bindValue(':system_id', SYSTEM_ID);

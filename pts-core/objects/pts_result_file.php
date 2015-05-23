@@ -387,17 +387,11 @@ class pts_result_file
 	}
 	public function to_json()
 	{
-		return false;
-		//$file = $this->xml_parser->getFileLocation();
-
-		if(is_file($file))
-		{
-			$file = file_get_contents($file);
-			$file = str_replace(array("\n", "\r", "\t"), '', $file);
-			$file = trim(str_replace('"', "'", $file));
-			$simple_xml = simplexml_load_string($file);
-			return json_encode($simple_xml);
-		}
+		$file = $this->raw_xml;
+		$file = str_replace(array("\n", "\r", "\t"), '', $file);
+		$file = trim(str_replace('"', "'", $file));
+		$simple_xml = simplexml_load_string($file);
+		return json_encode($simple_xml);
 	}
 }
 

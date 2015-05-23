@@ -108,6 +108,7 @@ function pts_needed_extensions()
 		array(1, extension_loaded('dom'), 'DOM', 'The PHP Document Object Model (DOM) is required for XML operations.'),
 		array(1, extension_loaded('zip') || extension_loaded('zlib'), 'ZIP', 'PHP Zip support is required for file compression and decompression.'),
 		array(1, function_exists('json_decode'), 'JSON', 'PHP JSON support is required for OpenBenchmarking.org communication.'),
+		array(1, function_exists('simplexml_load_string'), 'SimpleXML', 'PHP SimpleXML is required for the Phoronix Test Suite'),
 		// Optional but recommended extensions
 		array(0, extension_loaded('openssl'), 'OpenSSL', 'PHP OpenSSL support is recommended to support HTTPS traffic.'),
 		array(0, extension_loaded('gd'), 'GD', 'The PHP GD library is recommended for improved graph rendering.'),
