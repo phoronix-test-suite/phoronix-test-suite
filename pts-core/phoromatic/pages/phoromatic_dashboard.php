@@ -137,7 +137,7 @@ class phoromatic_dashboard implements pts_webui_interface
 				$g_count = 0;
 				foreach(array('CPU Usage', 'Memory Usage', 'CPU Temperature', 'System Temperature', 'GPU Temperature', 'Swap Usage', 'System Iowait', 'CPU Frequency') as $s)
 				{
-					if(!isset($sensors[$s]) && isset($sensors[$s]['values']) && count($sensors[$s]['values']) > 5)
+					if(!isset($sensors[$s]) || !isset($sensors[$s]['values']) || count($sensors[$s]['values']) < 5)
 					{
 						continue;
 					}
