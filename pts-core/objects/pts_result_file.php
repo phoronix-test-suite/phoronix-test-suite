@@ -332,7 +332,7 @@ class pts_result_file
 
 			foreach($this->xml->Result as $result)
 			{
-				$test_profile = new pts_test_profile($result->Identifier);
+				$test_profile = new pts_test_profile(($result->Identifier != null ? $result->Identifier->__toString() : null));
 				$test_profile->set_test_title($result->Title->__toString());
 				$test_profile->set_version($result->AppVersion->__toString());
 				$test_profile->set_result_scale($result->Scale->__toString());
