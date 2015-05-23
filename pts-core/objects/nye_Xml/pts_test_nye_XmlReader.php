@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2012, Phoronix Media
-	Copyright (C) 2010 - 2012, Michael Larabel
+	Copyright (C) 2010 - 2015, Phoronix Media
+	Copyright (C) 2010 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ class pts_test_nye_XmlReader extends nye_XmlReader
 
 	public function __construct($read_xml)
 	{
-		if(!isset($read_xml[512]))
+		if(!isset($read_xml[512]) && !is_file($read_xml))
 		{
 			if(defined('PTS_TEST_PROFILE_PATH') && is_file(PTS_TEST_PROFILE_PATH . $read_xml . '/test-definition.xml'))
 			{
