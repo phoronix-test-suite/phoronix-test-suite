@@ -141,25 +141,17 @@ class pts_openbenchmarking
 
 			$result_file = new pts_result_file($composite_xml);
 
-			if($result_file->xml_parser->validate())
-			{
-				$result_file_writer = new pts_result_file_writer();
-				$result_file_writer->add_result_file_meta_data($result_file, $id);
-				$result_file_writer->add_system_information_from_result_file($result_file);
-				$result_file_writer->add_results_from_result_file($result_file);
-				//$id = strtolower($id);
+			$result_file_writer = new pts_result_file_writer();
+			$result_file_writer->add_result_file_meta_data($result_file, $id);
+			$result_file_writer->add_system_information_from_result_file($result_file);
+			$result_file_writer->add_results_from_result_file($result_file);
+			//$id = strtolower($id);
+			$valid = $return_xml ? $result_file_writer->get_xml() : pts_client::save_test_result($id . '/composite.xml', $result_file_writer->get_xml(), true);
 
-				$valid = $return_xml ? $result_file_writer->get_xml() : pts_client::save_test_result($id . '/composite.xml', $result_file_writer->get_xml(), true);
-
-				if(PTS_IS_CLIENT && $json_response['openbenchmarking']['result']['system_logs_available'])
-				{
-					// Fetch the system logs and toss them into the results directory system-logs/
-					pts_openbenchmarking::clone_openbenchmarking_result_system_logs($id, pts_client::setup_test_result_directory($id), $json_response['openbenchmarking']['result']['system_logs_available']);
-				}
-			}
-			else
+			if(PTS_IS_CLIENT && $json_response['openbenchmarking']['result']['system_logs_available'])
 			{
-				trigger_error('Validating the result file schema failed.', E_USER_ERROR);
+				// Fetch the system logs and toss them into the results directory system-logs/
+				pts_openbenchmarking::clone_openbenchmarking_result_system_logs($id, pts_client::setup_test_result_directory($id), $json_response['openbenchmarking']['result']['system_logs_available']);
 			}
 		}
 		else if(PTS_IS_CLIENT && isset($json_response['openbenchmarking']['result']['error']))

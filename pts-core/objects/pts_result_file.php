@@ -27,6 +27,7 @@ class pts_result_file
 	private $extra_attributes = null;
 	private $is_multi_way_inverted = false;
 	private $xml;
+	private $raw_xml;
 
 	public function __construct($result_file)
 	{
@@ -38,13 +39,18 @@ class pts_result_file
 		$this->extra_attributes = array();
 		if(is_file($result_file))
 		{
-			$this->xml = simplexml_load_file($result_file);
+			$this->raw_xml = file_get_contents($result_file);
 		}
 		else
 		{
-			$this->xml = simplexml_load_string($result_file);
+			$this->raw_xml = $result_file;
 		}
 
+		$this->xml = simplexml_load_string($result_file);
+	}
+	public function getRawXml()
+	{
+		return $this->raw_xml;
 	}
 	public function __toString()
 	{
@@ -323,9 +329,10 @@ class pts_result_file
 		if($this->result_objects == null)
 		{
 			$this->result_objects = array();
+	var_dump($this->xml);
 			foreach($this->xml->Result as $result)
 			{
-				$test_profile = new pts_test_profile($result->Identifier->__toString());
+				$test_profile = new pts_test_profile($result->Identifier);
 				$test_profile->set_test_title($result->Title->__toString());
 				$test_profile->set_version($result->AppVersion->__toString());
 				$test_profile->set_result_scale($result->Scale->__toString());

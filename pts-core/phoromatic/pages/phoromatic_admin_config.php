@@ -215,37 +215,34 @@ class phoromatic_admin_config implements pts_webui_interface
 				$result_file = new pts_result_file($composite_xml);
 
 				// Validate the XML
-				if($result_file->xml_parser->validate())
+				$relative_id = 0;
+				foreach($result_file->get_result_objects() as $result_object)
 				{
-					$relative_id = 0;
-					foreach($result_file->get_result_objects() as $result_object)
+					$relative_id++;
+					$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_results_results (AccountID, UploadID, AbstractID, TestProfile, ComparisonHash) VALUES (:account_id, :upload_id, :abstract_id, :test_profile, :comparison_hash)');
+					$stmt->bindValue(':account_id', $account_id);
+					$stmt->bindValue(':upload_id', $upload_id);
+					$stmt->bindValue(':abstract_id', $relative_id);
+					$stmt->bindValue(':test_profile', $result_object->test_profile->get_identifier());
+					$stmt->bindValue(':comparison_hash', $result_object->get_comparison_hash(true, false));
+					$result = $stmt->execute();
+				}
+
+				if($relative_id > 0)
+				{
+					$ids = $result_file->get_system_identifiers();
+					$hw = $result_file->get_system_hardware();
+					$sw = $result_file->get_system_software();
+
+					for($i = 0; $i < count($ids) && $i < count($hw) && $i < count($sw); $i++)
 					{
-						$relative_id++;
-						$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_results_results (AccountID, UploadID, AbstractID, TestProfile, ComparisonHash) VALUES (:account_id, :upload_id, :abstract_id, :test_profile, :comparison_hash)');
+						$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_results_systems (AccountID, UploadID, SystemIdentifier, Hardware, Software) VALUES (:account_id, :upload_id, :system_identifier, :hardware, :software)');
 						$stmt->bindValue(':account_id', $account_id);
 						$stmt->bindValue(':upload_id', $upload_id);
-						$stmt->bindValue(':abstract_id', $relative_id);
-						$stmt->bindValue(':test_profile', $result_object->test_profile->get_identifier());
-						$stmt->bindValue(':comparison_hash', $result_object->get_comparison_hash(true, false));
+						$stmt->bindValue(':system_identifier', $ids[$i]);
+						$stmt->bindValue(':hardware', $hw[$i]);
+						$stmt->bindValue(':software', $sw[$i]);
 						$result = $stmt->execute();
-					}
-
-					if($relative_id > 0)
-					{
-						$ids = $result_file->get_system_identifiers();
-						$hw = $result_file->get_system_hardware();
-						$sw = $result_file->get_system_software();
-
-						for($i = 0; $i < count($ids) && $i < count($hw) && $i < count($sw); $i++)
-						{
-							$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_results_systems (AccountID, UploadID, SystemIdentifier, Hardware, Software) VALUES (:account_id, :upload_id, :system_identifier, :hardware, :software)');
-							$stmt->bindValue(':account_id', $account_id);
-							$stmt->bindValue(':upload_id', $upload_id);
-							$stmt->bindValue(':system_identifier', $ids[$i]);
-							$stmt->bindValue(':hardware', $hw[$i]);
-							$stmt->bindValue(':software', $sw[$i]);
-							$result = $stmt->execute();
-						}
 					}
 				}
 			}

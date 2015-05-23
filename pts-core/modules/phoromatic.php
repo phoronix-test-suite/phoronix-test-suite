@@ -766,7 +766,7 @@ class phoromatic extends pts_module_interface
 			}
 		}
 
-		$composite_xml = $result_file->xml_parser->getXML();
+		$composite_xml = $result_file->getRawXml();
 		$composite_xml_hash = sha1($composite_xml);
 		$composite_xml_type = 'composite_xml';
 
@@ -843,16 +843,12 @@ class phoromatic extends pts_module_interface
 			$result_file = new pts_result_file($composite_xml);
 			// TODO XXX: Add system log downloading support
 
-			if($result_file->xml_parser->validate())
-			{
-				$result_file_writer = new pts_result_file_writer();
-				$result_file_writer->add_result_file_meta_data($result_file, $id);
-				$result_file_writer->add_system_information_from_result_file($result_file);
-				$result_file_writer->add_results_from_result_file($result_file);
-
-				pts_client::save_test_result($id . '/composite.xml', $result_file_writer->get_xml(), true);
-				echo PHP_EOL . 'Result File Saved As: ' . $id . PHP_EOL . PHP_EOL;
-			}
+			$result_file_writer = new pts_result_file_writer();
+			$result_file_writer->add_result_file_meta_data($result_file, $id);
+			$result_file_writer->add_system_information_from_result_file($result_file);
+			$result_file_writer->add_results_from_result_file($result_file);
+			pts_client::save_test_result($id . '/composite.xml', $result_file_writer->get_xml(), true);
+			echo PHP_EOL . 'Result File Saved As: ' . $id . PHP_EOL . PHP_EOL;
 		}
 		else
 			echo PHP_EOL . 'No Phoromatic result found.' . PHP_EOL;

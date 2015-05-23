@@ -40,16 +40,6 @@ class pts_openbenchmarking_client
 			$results_identifier = null;
 		}
 
-		// Validate the XML
-		// Rely upon server-side validation in case of additions to the spec later on as might be a problem with the JSON addition
-		/*
-		if($result_file->xml_parser->validate() == false)
-		{
-			echo PHP_EOL . 'Errors occurred parsing the result file XML.' . PHP_EOL;
-			return false;
-		}
-		*/
-
 		// Ensure the results can be shared
 		if(self::result_upload_supported($result_file) == false)
 		{
@@ -62,7 +52,7 @@ class pts_openbenchmarking_client
 			return false;
 		}
 
-		$composite_xml = $result_file->xml_parser->getXML();
+		$composite_xml = $result_file->getRawXml();
 		$system_log_dir = PTS_SAVE_RESULTS_PATH . $result_file->get_identifier() . '/system-logs/';
 		$upload_system_logs = false;
 
