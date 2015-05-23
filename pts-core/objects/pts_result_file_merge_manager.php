@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2011, Phoronix Media
-	Copyright (C) 2009 - 2011, Michael Larabel
+	Copyright (C) 2009 - 2015, Phoronix Media
+	Copyright (C) 2009 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -87,7 +87,7 @@ class pts_result_file_merge_manager
 						$this_identifier = $renamed;
 					}
 
-					if($this->result_already_contained($this->test_results[$mto_hash], $buffer_item) == false)
+					if($this->test_results[$mto_hash]->test_result_buffer->buffer_contained($buffer_item) == false)
 					{
 						$this->test_results[$mto_hash]->test_result_buffer->add_test_result($this_identifier, $buffer_item->get_result_value(), $buffer_item->get_result_raw(), $buffer_item->get_result_json());
 					}
@@ -143,21 +143,6 @@ class pts_result_file_merge_manager
 				$this->test_results[$mto_hash] = $merge_test_object;
 			}
 		}
-	}
-	protected function result_already_contained(&$mto_compare, &$buffer_item)
-	{
-		$contained = false;
-
-		foreach($mto_compare->test_result_buffer->get_buffer_items() as &$check_buffer_item)
-		{
-			if($buffer_item->get_result_identifier() == $check_buffer_item->get_result_identifier() && $buffer_item->get_result_value() == $check_buffer_item->get_result_value())
-			{
-				$contained = true;
-				break;
-			}
-		}
-
-		return $contained;
 	}
 	public function get_results()
 	{
