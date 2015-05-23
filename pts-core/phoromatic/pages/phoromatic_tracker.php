@@ -77,7 +77,7 @@ class phoromatic_tracker implements pts_webui_interface
 
 
 			$main .= '<h1>' . $result_file->get_title() . '</h1>';
-/*
+
 			if($result_file->get_system_count() == 1 || ($intent = pts_result_file_analyzer::analyze_result_file_intent($result_file, $intent, true)))
 			{
 				$table = new pts_ResultFileCompactSystemsTable($result_file, $intent);
@@ -91,7 +91,7 @@ class phoromatic_tracker implements pts_webui_interface
 
 			$table = new pts_ResultFileTable($result_file, $intent);
 			$main .= '<p style="text-align: center; overflow: auto;" class="result_object">' . pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes) . '</p>';
-*/
+
 
 			foreach($result_file->get_result_objects((isset($_POST['show_only_changed_results']) ? 'ONLY_CHANGED_RESULTS' : -1)) as $i => $result_object)
 			{
