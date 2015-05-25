@@ -66,14 +66,23 @@ if(empty($REQUESTED) || !isset($export_index_json['phoromatic'][$REQUESTED]))
 {
 	$keys = array_keys($export_index_json['phoromatic']);
 	$REQUESTED = array_shift($keys);
+	$title = PHOROMATIC_VIEWER_TITLE;
+	$meta_desc = 'Phoronix Test Suite\'s open-source Phoromatic result viewer for automated performance benchmark results.';
+}
+else
+{
+	$title = $export_index_json['phoromatic'][$REQUESTED]['title'];
+	$meta_desc = substr($export_index_json['phoromatic'][$REQUESTED]['description'], 0, (strpos($export_index_json['phoromatic'][$REQUESTED]['description'], '. ') + 1));
 }
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-<title>Phoronix Test Suite + Phoromatic - <?php echo PHOROMATIC_VIEWER_TITLE ?></title>
+<title>Phoronix Test Suite Phoromatic - Benchmark Viewer - <?php echo $title; ?></title>
 <link href="phoromatic-export-viewer.css" rel="stylesheet" type="text/css" />
+<meta name="keywords" content="Linux benchmarks, open-source benchmarks, benchmark viewer, Phoronix Test Suite, Phoromatic, Phoromatic viewer" />
+<meta name="Description" content="<?php echo $meta_desc; ?>" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>

@@ -18,7 +18,7 @@ div#top_list
 	display: table;
 	width: 100%;
 	text-transform: uppercase;
-	padding: 20px 0 40px;
+	padding: 20px 10px 40px;
 }
 div#top_list ul
 {
