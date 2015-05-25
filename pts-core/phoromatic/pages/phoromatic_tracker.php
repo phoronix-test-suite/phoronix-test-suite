@@ -43,7 +43,14 @@ class phoromatic_tracker implements pts_webui_interface
 		if(isset($PATH[0]) && !empty($PATH[0]))
 		{
 			ini_set('memory_limit', '4G');
-			$cut_duration = 30;
+			if(isset($_POST['view_results_from_past']) && is_numeric($_POST['view_results_from_past']))
+			{
+				$cut_duration = $_POST['view_results_from_past'];
+			}
+			else
+			{
+				$cut_duration = 21;
+			}
 			$stmt = phoromatic_server::$db->prepare('SELECT UploadID, UploadTime, ScheduleID, Trigger, SystemID FROM phoromatic_results WHERE AccountID = :account_id AND ScheduleID = :schedule_id ORDER BY UploadTime DESC');
 			$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 			$stmt->bindValue(':schedule_id', $PATH[0]);
@@ -81,7 +88,12 @@ class phoromatic_tracker implements pts_webui_interface
 			$attributes = array('new_result_file_title' => phoromatic_schedule_id_to_name($row['ScheduleID']));
 			pts_merge::merge_test_results_process($writer, $result_file, $attributes);
 			$result_file = new pts_result_file($writer->get_xml());
-			$extra_attributes = array('reverse_result_buffer' => true, 'force_simple_keys' => true);
+			$extra_attributes = array('reverse_result_buffer' => true, 'force_simple_keys' => true, 'force_line_graph_compact' => true);
+
+			if(isset($_POST['normalize_results']) && $_POST['normalize_results'])
+			{
+				$extra_attributes['normalize_result_buffer'] = true;
+			}
 
 
 			$main .= '<h1>' . $result_file->get_title() . '</h1>';
@@ -121,6 +133,31 @@ class phoromatic_tracker implements pts_webui_interface
 				$main .= '</p>';
 			}
 			$main .= '</div>';
+
+			$right = '<form action="' . $_SERVER['REQUEST_URI'] . '" name="update_result_view" method="post">';
+			$right .= '<p>Compare results for the past: ';
+			$right .= '<select name="view_results_from_past" id="view_results_from_past">';
+			$oldest_upload_time = strtotime(phoromatic_oldest_result_for_schedule($PATH[0]));
+			$opts = array(
+				'Two Weeks' => 14,
+				'Three Weeks' => 21,
+				'One Month' => 30,
+				'Two Months' => 60,
+				'Quarter' => 90,
+				'Six Months' => 180,
+				'Year' => 365,
+				);
+			foreach($opts as $str_name => $time_offset)
+			{
+				if($oldest_upload_time > (time() - (86400 * $time_offset)))
+					break;
+				$right .= '<option value="' . $time_offset . '">' . $str_name . '</option>';
+			}
+			$right .= '<option value="all">All Results</option>';
+			$right .= '</select>';
+			$right .= '</p>';
+			$right .= '<p><input type="checkbox" name="normalize_results" value="1" ' . (isset($_POST['normalize_results']) ? 'checked="checked" ' : null) . '/> Normalize Results?</p>';
+			$right .= '<p><input type="submit" value="Refresh Results"></p></form>';
 
 		}
 		else if(empty($PATH))
@@ -165,7 +202,7 @@ class phoromatic_tracker implements pts_webui_interface
 			</div>';
 		}
 
-		echo phoromatic_webui_main($main, phoromatic_webui_right_panel_logged_in());
+		echo phoromatic_webui_main($main, $right);
 		echo phoromatic_webui_footer();
 	}
 }
