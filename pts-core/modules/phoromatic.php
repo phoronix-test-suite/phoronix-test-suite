@@ -46,7 +46,7 @@ class phoromatic extends pts_module_interface
 	}
 	public static function user_commands()
 	{
-		return array('connect' => 'run_connection', 'explore' => 'explore_network', 'upload_result' => 'upload_unscheduled_result', 'set_root_admin_password' => 'set_root_admin_password', 'list_results' => 'recent_phoromatic_server_results', 'clone' => 'clone_phoromatic_server_result');
+		return array('connect' => 'run_connection', 'explore' => 'explore_network', 'upload_result' => 'upload_unscheduled_result', 'set_root_admin_password' => 'set_root_admin_password', 'list_results' => 'recent_phoromatic_server_results', 'clone' => 'clone_phoromatic_server_result', 'export_results_for_account_schedules' => 'generate_export_result_schedule_dump');
 	}
 	public static function upload_unscheduled_result($args)
 	{
@@ -98,6 +98,14 @@ class phoromatic extends pts_module_interface
 
 		$new_root_pw = hash('sha256', 'PTS' . $new_root_pw);
 		$root_admin_pw = phoromatic_server::save_setting('root_admin_pw', $new_root_pw);
+	}
+	public static function generate_export_result_schedule_dump($r)
+	{
+		phoromatic_server::prepare_database();
+		if(isset($r[0]) && !empty(isset($r[0])))
+		{
+			phoromatic_server::generate_result_export_dump($r[0]);
+		}
 	}
 	public static function explore_network()
 	{

@@ -283,6 +283,51 @@ class phoromatic_server
 		}
 		chmod($db_file, 0600);
 	}
+	public static function generate_result_export_dump($account_id)
+	{
+		pts_file_io::mkdir(self::phoromatic_path() . 'result-export/');
+		$export_path = self::phoromatic_path() . 'result-export/' . $account_id . '/';
+		pts_file_io::mkdir($export_path);
+
+		$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_schedules WHERE AccountID = :account_id AND State = 1 AND (SELECT COUNT(*) FROM phoromatic_schedules_tests WHERE AccountID = :account_id AND ScheduleID = phoromatic_schedules.ScheduleID) > 0 AND (SELECT COUNT(*) FROM phoromatic_results WHERE AccountID = :account_id AND ScheduleID = phoromatic_schedules.ScheduleID) > 14 ORDER BY Title ASC');
+		$stmt->bindValue(':account_id', $account_id);
+		$result = $stmt->execute();
+
+		$exported_result_index = array('phoromatic' => array());
+		while($row = $result->fetchArray())
+		{
+			$id = str_replace(' ', '-', strtolower($row['Title']));
+			$triggers = array();
+			$stmt2 = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_results WHERE AccountID = :account_id AND ScheduleID = :schedule_id ORDER BY UploadTime DESC');
+			$stmt2->bindValue(':account_id', $row['AccountID']);
+			$stmt2->bindValue(':schedule_id', $row['ScheduleID']);
+			$result2 = $stmt2->execute();
+			pts_file_io::mkdir($export_path);
+
+			while($row2 = $result2->fetchArray())
+			{
+				$composite_xml = phoromatic_server::phoromatic_account_result_path($row2['AccountID'], $row2['UploadID']) . 'composite.xml';
+				if(is_file($composite_xml))
+				{
+					pts_file_io::mkdir($export_path . $id . '/' . $row2['Trigger']);
+					pts_file_io::mkdir($export_path . $id . '/' . $row2['Trigger'] . '/' . phoromatic_server::system_id_to_name($row2['SystemID'], $row2['AccountID']));
+					copy($composite_xml, $export_path . $id . '/' . $row2['Trigger'] . '/' . phoromatic_server::system_id_to_name($row2['SystemID'], $row2['AccountID']) . '/composite.xml');
+				}
+				pts_arrays::unique_push($triggers, $row2['Trigger']);
+			}
+
+			array_push($exported_result_index['phoromatic'], array(
+				'title' => $row['Title'],
+				'id' => $id,
+				'description' => $row['Description'],
+				'triggers' => $triggers,
+				));
+
+		}
+		$exported_result_index = json_encode($exported_result_index, JSON_PRETTY_PRINT);
+		file_put_contents($export_path. '/export-index.json', $exported_result_index);
+
+	}
 	public static function send_email($to, $subject, $from, $body)
 	{
 	//	return;
