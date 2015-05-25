@@ -316,12 +316,12 @@ class phoromatic_server
 				pts_arrays::unique_push($triggers, $row2['Trigger']);
 			}
 
-			array_push($exported_result_index['phoromatic'], array(
+			$exported_result_index['phoromatic'][$id] = array(
 				'title' => $row['Title'],
 				'id' => $id,
 				'description' => $row['Description'],
 				'triggers' => $triggers,
-				));
+				);
 
 		}
 		$exported_result_index = json_encode($exported_result_index, JSON_PRETTY_PRINT);
