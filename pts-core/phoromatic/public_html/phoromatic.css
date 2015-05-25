@@ -596,3 +596,9 @@ div#phoromatic_main_table_cell
 	padding: 16px 10px;
 	display: table-cell;
 }
+div#pts_results_area svg
+{
+	min-width: 600px;
+	width: 80%;
+	height: auto;
+}
