@@ -31,6 +31,7 @@ div#top_list ul li
 	display: table-cell;
 	list-style-type: none;
 	font-size: 140%;
+	font-weight: 500;
 }
 div#top_list ul li#alt a
 {
@@ -38,6 +39,7 @@ div#top_list ul li#alt a
 }
 div#top_list ul li a
 {
+	font-weight: 300;
 	color: #1976d2;
 }
 div#top_list ul li a:hover

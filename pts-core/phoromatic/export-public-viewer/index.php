@@ -128,6 +128,7 @@ foreach(array(14 => 'Two Weeks', 21 => 'Three Weeks', 30 => 'One Month',  60 => 
 
 	echo '<option value="' . $days . '" ' . (isset($_POST['view_results_limit']) && $_POST['view_results_limit'] == $days ? 'selected="selected"' : null) . ' >' . $st . '</option>';
 }
+echo '<option value="' . count($tracker['triggers']) . '">All Results</option>';
 ?>
 </select> Days. <input type="checkbox" name="normalize_results" value="1" <?php echo (isset($_POST['normalize_results']) && $_POST['normalize_results'] == 1 ? 'checked="checked"' : null); ?> /> Normalize Results? <input type="submit" value="Refresh Results">
 </form>
