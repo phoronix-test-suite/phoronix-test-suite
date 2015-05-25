@@ -50,14 +50,14 @@ class phoromatic_tracker implements pts_webui_interface
 			$test_result_result = $stmt->execute();
 			$cutoff_time = is_numeric($cut_duration) ? strtotime('today -' . $cut_duration . ' days') : false;
 
+			$show_only_latest_systems = array();
 			$result_file = array();
 			while($test_result_result && $row = $test_result_result->fetchArray())
 			{
 				if($cutoff_time !== false && strtotime($row['UploadTime']) < $cutoff_time)
 					break;
 
-				$upload_id = $row['UploadID'];
-				$composite_xml = phoromatic_server::phoromatic_account_result_path($_SESSION['AccountID'], $upload_id) . 'composite.xml';
+				$composite_xml = phoromatic_server::phoromatic_account_result_path($_SESSION['AccountID'], $row['UploadID']) . 'composite.xml';
 				if(!is_file($composite_xml))
 				{
 					continue;
@@ -66,6 +66,15 @@ class phoromatic_tracker implements pts_webui_interface
 				// Add to result file
 				$system_name = phoromatic_server::system_id_to_name($row['SystemID']) . ': ' . $row['Trigger'];
 				array_push($result_file, new pts_result_merge_select($composite_xml, null, $system_name));
+				if(!isset($show_only_latest_systems[$_SESSION['AccountID'] . $row['SystemID']]))
+				{
+					$show_only_latest_systems[$_SESSION['AccountID'] . $row['SystemID']] = new pts_result_merge_select($composite_xml, null, $system_name);
+				}
+			}
+
+			if(count($result_file) < 21)
+			{
+				$show_only_latest_systems = null;
 			}
 
 			$writer = new pts_result_file_writer(null);
@@ -77,13 +86,25 @@ class phoromatic_tracker implements pts_webui_interface
 
 			$main .= '<h1>' . $result_file->get_title() . '</h1>';
 
-			if($result_file->get_system_count() == 1 || ($intent = pts_result_file_analyzer::analyze_result_file_intent($result_file, $intent, true)))
+			if(!empty($show_only_latest_systems) && false) // TODO XXX: Finish up
 			{
-				$table = new pts_ResultFileCompactSystemsTable($result_file, $intent);
+				$main .= '<h2>Latest System States:</h2>';
+				$writer2 = new pts_result_file_writer(null);
+				$a = array();
+				pts_merge::merge_test_results_process($writer2, $show_only_latest_systems, $a);
+				$result_file2 = new pts_result_file($writer2->get_xml());
+				$table = new pts_ResultFileSystemsTable($result_file2);
 			}
 			else
 			{
-				$table = new pts_ResultFileSystemsTable($result_file);
+				if($result_file->get_system_count() == 1 || ($intent = pts_result_file_analyzer::analyze_result_file_intent($result_file, $intent, true)))
+				{
+					$table = new pts_ResultFileCompactSystemsTable($result_file, $intent);
+				}
+				else
+				{
+					$table = new pts_ResultFileSystemsTable($result_file);
+				}
 			}
 
 			$main .= '<p style="text-align: center; overflow: auto;" class="result_object">' . pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes) . '</p>';
