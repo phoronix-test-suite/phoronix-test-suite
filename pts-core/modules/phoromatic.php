@@ -871,10 +871,9 @@ class phoromatic extends pts_module_interface
 			$last_update_script_check_time = time();
 			$update_file = pts_client::create_temporary_file();
 			file_put_contents($update_file, $update_script);
-			chmod($update_file, 0755);
 			phoromatic::update_system_status('Running Phoronix Test Suite Update Script');
 			$env_vars = array();
-			pts_client::shell_exec('./' . $update_file . ' 2>&1', $env_vars);
+			pts_client::shell_exec('bash ' . $update_file . ' 2>&1', $env_vars);
 		}
 	}
 	private static function set_user_context($context_script, $trigger, $schedule_id, $process)
