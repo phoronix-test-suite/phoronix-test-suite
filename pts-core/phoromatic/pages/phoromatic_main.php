@@ -175,6 +175,7 @@ class phoromatic_main implements pts_webui_interface
 		<h2>' . pts_strings::plural_handler(count($results_today), 'Test Result') . ' Today</h2>
 		<h2>' . pts_strings::plural_handler(count($results_this_week), 'Test Result') . ' This Week</h2>
 		<h2>' . pts_strings::plural_handler(count($results_total), 'Test Result') . ' Total</h2>
+		<h2>' . pts_strings::plural_handler(phoromatic_server::test_results_benchmark_count($_SESSION['AccountID']), 'Benchmark Result') . ' Total</h2>
 		<hr />';
 
 		foreach($results_today as $result)

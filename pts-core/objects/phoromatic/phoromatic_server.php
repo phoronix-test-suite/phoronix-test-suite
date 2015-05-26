@@ -882,6 +882,19 @@ class phoromatic_server
 
 		return $results;
 	}
+	public static function test_results_benchmark_count($account_id)
+	{
+		$results = array();
+		$stmt = phoromatic_server::$db->prepare('SELECT COUNT(*) AS BenchmarkCount FROM phoromatic_results_results WHERE AccountID = :account_id');
+		$stmt->bindValue(':account_id', $account_id);
+		$result = $stmt->execute();
+		if($result && $row = $result->fetchArray())
+		{
+			return $row['BenchmarkCount'];
+		}
+
+		return 0;
+	}
 	public static function system_check_if_down($account_id, $system_id, $last_communication, $current_task)
 	{
 		$last_comm = strtotime($last_communication);
