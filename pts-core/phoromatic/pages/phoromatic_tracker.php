@@ -200,6 +200,7 @@ class phoromatic_tracker implements pts_webui_interface
 
 			$main .= '</ul>
 			</div>';
+			$right = null;
 		}
 
 		echo phoromatic_webui_main($main, $right);

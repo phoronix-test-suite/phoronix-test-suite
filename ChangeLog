@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 5.8 Milestone 5
+28 May 2015
 
 - pts-core: Major performance improvements when merging many result files
 - pts-core: Faster result file parsing
