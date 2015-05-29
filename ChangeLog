@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- phoromatic: Reboot system if comm fails 10+ times on client
+
 Phoronix Test Suite 5.8 Milestone 5
 28 May 2015
 
