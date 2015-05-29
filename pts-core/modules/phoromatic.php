@@ -477,6 +477,14 @@ class phoromatic extends pts_module_interface
 					{
 						return false;
 					}
+					else if(PTS_IS_DAEMONIZED_SERVER_PROCESS && $times_failed > 10)
+					{
+						if(pts_client::executable_in_path('reboot'))
+						{
+							shell_exec('reboot');
+							sleep(5);
+						}
+					}
 				}
 			}
 			else if(substr($server_response, 0, 1) == '[')
