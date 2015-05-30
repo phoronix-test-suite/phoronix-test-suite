@@ -294,7 +294,7 @@ class phoromatic_server
 		$result = $stmt->execute();
 
 		$exported_result_index = array('phoromatic' => array());
-		while($row = $result->fetchArray())
+		while($result && $row = $result->fetchArray())
 		{
 			$id = str_replace(' ', '-', strtolower($row['Title']));
 			$triggers = array();
@@ -304,7 +304,7 @@ class phoromatic_server
 			$result2 = $stmt2->execute();
 			pts_file_io::mkdir($export_path);
 
-			while($row2 = $result2->fetchArray())
+			while($result2 && $row2 = $result2->fetchArray())
 			{
 				$composite_xml = phoromatic_server::phoromatic_account_result_path($row2['AccountID'], $row2['UploadID']) . 'composite.xml';
 				if(is_file($composite_xml))
@@ -365,14 +365,14 @@ class phoromatic_server
 	{
 		static $system_names;
 
-		if(!isset($system_names[$system_id]))
+		if(!isset($system_names[$system_id]) || empty($system_names[$system_id]))
 		{
 			$stmt = phoromatic_server::$db->prepare('SELECT Title FROM phoromatic_systems WHERE AccountID = :account_id AND SystemID = :system_id');
 			$stmt->bindValue(':account_id', ($aid ? $aid : $_SESSION['AccountID']));
 			$stmt->bindValue(':system_id', $system_id);
 			$result = $stmt->execute();
-			$row = $result->fetchArray();
-			$system_names[$system_id] = $row['Title'];
+			$row = $result ? $result->fetchArray() : false;
+			$system_names[$system_id] = isset($row['Title']) ? $row['Title'] : false;
 		}
 
 		return $system_names[$system_id];
@@ -383,21 +383,21 @@ class phoromatic_server
 		$stmt->bindValue(':account_id', ($aid ? $aid : $_SESSION['AccountID']));
 		$stmt->bindValue(':system_id', $system_id);
 		$result = $stmt->execute();
-		$row = $result->fetchArray();
-		return $row['SystemVariables'];
+		$row = $result ? $result->fetchArray() : false;
+		return isset($row['SystemVariables']) ? $row['SystemVariables'] : null;
 	}
 	public static function schedule_id_to_name($schedule_id, $aid = false)
 	{
 		static $schedule_names;
 
-		if(!isset($schedule_names[$schedule_id]))
+		if(!isset($schedule_names[$schedule_id]) || empty($schedule_names[$schedule_id]))
 		{
 			$stmt = phoromatic_server::$db->prepare('SELECT Title FROM phoromatic_schedules WHERE AccountID = :account_id AND ScheduleID = :schedule_id');
 			$stmt->bindValue(':account_id', ($aid ? $aid : $_SESSION['AccountID']));
 			$stmt->bindValue(':schedule_id', $schedule_id);
 			$result = $stmt->execute();
-			$row = $result->fetchArray();
-			$schedule_names[$schedule_id] = $row['Title'];
+			$row = $result ? $result->fetchArray() : false;
+			$schedule_names[$schedule_id] = isset($row['Title']) ? $row['Title'] : false;
 		}
 
 		return $schedule_names[$schedule_id];
@@ -407,20 +407,20 @@ class phoromatic_server
 		$stmt = phoromatic_server::$db->prepare('SELECT Email FROM phoromatic_users WHERE AccountID = :account_id AND AdminLevel = 1 ORDER BY CreatedOn ASC LIMIT 1');
 		$stmt->bindValue(':account_id', $account_id);
 		$result = $stmt->execute();
-		$row = $result->fetchArray();
-		return $row['Email'];
+		$row = $result ? $result->fetchArray() : false;
+		return isset($row['Email']) ? $row['Email'] : false;
 	}
 	public static function account_id_to_group_name($account_id)
 	{
 		static $group_names;
 
-		if(!isset($group_names[$account_id]))
+		if(!isset($group_names[$account_id]) || empty($group_names[$account_id]))
 		{
 			$stmt = phoromatic_server::$db->prepare('SELECT GroupName FROM phoromatic_accounts WHERE AccountID = :account_id');
 			$stmt->bindValue(':account_id', $account_id);
 			$result = $stmt->execute();
-			$row = $result->fetchArray();
-			$group_names[$account_id] = $row['GroupName'];
+			$row = $result ? $result->fetchArray() : false;
+			$group_names[$account_id] = isset($row['GroupName']) ? $row['GroupName'] : null;
 		}
 
 		return $group_names[$account_id];
@@ -432,7 +432,7 @@ class phoromatic_server
 		$stmt->bindValue(':account_id', $account_id);
 		$result = $stmt->execute();
 
-		while($row = $result->fetchArray())
+		while($result && $row = $result->fetchArray())
 		{
 			if(strtotime($row['LastCommunication']) < (time() - 21600))
 				break;
@@ -453,7 +453,7 @@ class phoromatic_server
 		$stmt->bindValue(':ticket_issue_time', $ticket_issue_time);
 		$result = $stmt->execute();
 
-		if($result != false && $result->fetchArray() != false)
+		if($result && $result->fetchArray() != false)
 		{
 			return true;
 		}
@@ -469,7 +469,7 @@ class phoromatic_server
 		$stmt->bindValue(':trigger', $trigger_id);
 		$result = $stmt->execute();
 
-		if($result != false && $result->fetchArray() != false)
+		if($result && $result->fetchArray() != false)
 		{
 			return true;
 		}
@@ -489,7 +489,7 @@ class phoromatic_server
 			$stmt->bindValue(':account_id', $account_id);
 			$stmt->bindValue(':schedule_id', $schedule_id);
 			$result = $stmt->execute();
-			$row = $result->fetchArray();
+			$row = $result ? $result->fetchArray() : null;
 
 			// See if error count was greater than test count, meaning all of the tests might have failed
 			if($error_count >= $row['TestCount'])
@@ -510,7 +510,7 @@ class phoromatic_server
 		$stmt->bindValue(':account_id', $account_id);
 		$stmt->bindValue(':system_id', $system_id);
 		$result = $stmt->execute();
-		$row = $result->fetchArray();
+		$row = $result ? $result->fetchArray() : null;
 
 		return $row;
 	}
@@ -567,7 +567,7 @@ class phoromatic_server
 				$stmt->bindValue(':account_id', $account_id);
 				$stmt->bindValue(':system_id', $system_id);
 				$sys_result = $stmt->execute();
-				$sys_row = $sys_result->fetchArray();
+				$sys_row = $sys_result ? $sys_result->fetchArray() : null;
 
 				$matches_to_group = false;
 				foreach(explode(',', $row['RunTargetGroups']) as $group)
@@ -594,7 +594,7 @@ class phoromatic_server
 		$stmt->bindValue(':account_id', $account_id);
 		$stmt->bindValue(':system_id', $system_id);
 		$sys_result = $stmt->execute();
-		$sys_row = $sys_result->fetchArray();
+		$sys_row = $sys_result ? $sys_result->fetchArray() : null;
 
 
 		// See if there's an open schedule to run for system
@@ -724,7 +724,7 @@ class phoromatic_server
 				$stmt->bindValue(':account_id', $account_id);
 				$stmt->bindValue(':system_id', $system_id);
 				$sys_result = $stmt->execute();
-				$sys_row = $sys_result->fetchArray();
+				$sys_row = $sys_result ? $sys_result->fetchArray() : null;
 
 				$matches_to_group = false;
 				foreach(explode(',', $row['RunTargetGroups']) as $group)
@@ -782,7 +782,7 @@ class phoromatic_server
 		$stmt = phoromatic_server::$db->prepare('SELECT SystemID, Title, LastCommunication, CurrentTask FROM phoromatic_systems WHERE AccountID = :account_id AND State >= 0 ORDER BY LastCommunication DESC');
 		$stmt->bindValue(':account_id', $account_id);
 		$result = $stmt->execute();
-		while($row = $result->fetchArray())
+		while($result && $row = $result->fetchArray())
 		{
 			if(phoromatic_server::system_check_if_down($_SESSION['AccountID'], $row['SystemID'], $row['LastCommunication'], $row['CurrentTask']))
 			{
@@ -801,7 +801,7 @@ class phoromatic_server
 		$stmt->bindValue(':active_day', '%' . $show_day_of_week . '%');
 		$result = $stmt->execute();
 
-		while($row = $result->fetchArray())
+		while($result && $row = $result->fetchArray())
 		{
 			array_push($schedules, $row);
 		}
@@ -816,7 +816,7 @@ class phoromatic_server
 		$stmt->bindValue(':account_id', $account_id);
 		$result = $stmt->execute();
 
-		while($row = $result->fetchArray())
+		while($result && $row = $result->fetchArray())
 		{
 			array_push($schedules, $row);
 		}
@@ -831,7 +831,7 @@ class phoromatic_server
 		$stmt->bindValue(':time_cutoff', (time() - (60 * 60 * 24 * 14)));
 		$result = $stmt->execute();
 
-		while($row = $result->fetchArray())
+		while($result && $row = $result->fetchArray())
 		{
 			array_push($tickets, $row);
 		}
@@ -844,7 +844,7 @@ class phoromatic_server
 		$stmt = phoromatic_server::$db->prepare('SELECT SystemID FROM phoromatic_systems WHERE AccountID = :account_id AND State >= 0 AND (CurrentTask LIKE \'%Idling%\' OR CurrentTask LIKE \'%Shutdown%\') ORDER BY LastCommunication DESC');
 		$stmt->bindValue(':account_id', $account_id);
 		$result = $stmt->execute();
-		while($row = $result->fetchArray())
+		while($result && $row = $result->fetchArray())
 		{
 			array_push($systems, $row);
 		}
@@ -857,7 +857,7 @@ class phoromatic_server
 		$stmt = phoromatic_server::$db->prepare('SELECT SystemID FROM phoromatic_systems WHERE AccountID = :account_id AND State >= 0 AND (CurrentTask LIKE \'%Running%\' OR CurrentTask LIKE \'%Installing%\' OR CurrentTask LIKE \'%Benchmark%\') ORDER BY LastCommunication DESC');
 		$stmt->bindValue(':account_id', $account_id);
 		$result = $stmt->execute();
-		while($row = $result->fetchArray())
+		while($result && $row = $result->fetchArray())
 		{
 			array_push($systems, $row);
 		}
@@ -870,7 +870,7 @@ class phoromatic_server
 		$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_results WHERE AccountID = :account_id ORDER BY UploadTime DESC');
 		$stmt->bindValue(':account_id', $account_id);
 		$result = $stmt->execute();
-		while($row = $result->fetchArray())
+		while($result && $row = $result->fetchArray())
 		{
 			if($time_limit != false && strtotime($row['UploadTime']) < $time_limit)
 			{
