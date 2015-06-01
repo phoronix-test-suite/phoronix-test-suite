@@ -17,20 +17,18 @@ PHORONIX TEST SUITE PUBLIC TODO LIST:
 
 ### PTS-GRAPH ###
 
-- Improve rendering of large data-sets, e.g. http://openbenchmarking.org/result/1205231-LI-BL460G6BE41
 - Rotated text alignment for some PNG graphixs is sometimes off by 90/180 degrees compared to SVG, e.g. http://openbenchmarking.org/s/Compiler
 - SVG graph improvements
 
 ### OPENBENCHMARKING.ORG ###
 
 - Shorten long change-logs on test profile pages - e.g. http://openbenchmarking.org/test/pts/hpcc
-[ REST SUBJECT TO PHORONIX MEDIA NDA ]
 
 ### NEW TEST PROFILES ###
 
 - Python-libmemcached [http://code.google.com/p/python-libmemcached/]
 - Intel HiBench [https://github.com/intel-hadoop/HiBench]
-- Hadoop Benchmarks
+- Hadoop Benchmarks / TeraSort
 - LATT Latency Tests [git://git.kernel.dk/latt.git]
 - QMC Beaver [http://qmcbeaver.sourceforge.net/]
 - Some potential interesting GPGPU tests [http://www.bealto.com/gpu-benchmarks.html]
@@ -54,6 +52,10 @@ PHORONIX TEST SUITE PUBLIC TODO LIST:
 - https://github.com/vasi/pixz
 - http://nondot.org/sabre/LLVMNotes/#benchmarks
 - http://benchmarksgame.alioth.debian.org/u32/performance.php?test=fasta / http://benchmarksgame.alioth.debian.org/u32/program.php?test=nbody&lang=gcc&id=1#sourcecode
+- https://openfoamwiki.net/index.php/Benchmarks_standard_v1
+- Cassandra 1.2 stress - http://docs.datastax.com/en/cassandra/1.2/cassandra/tools/toolsCStress_t.html
+- http://gcc.opensuse.org/c++bench-frescobaldi/
+
 
 ### WEB SOCKET / HTML5 USER INTERFACE WORK ###
 
@@ -70,4 +72,3 @@ PHORONIX TEST SUITE PUBLIC TODO LIST:
 - Ensure sane validating of more user input / resource uploads
 - Hook up TriggerTarget for allowing event.php to optionally specify a sub-set of systems/groups to target for a given trigger
 - Clean up the code and modularize more of the code into functions
-- Sharing results between independent accounts
