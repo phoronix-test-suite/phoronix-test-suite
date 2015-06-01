@@ -102,7 +102,7 @@ class phoromatic extends pts_module_interface
 	public static function generate_export_result_schedule_dump($r)
 	{
 		phoromatic_server::prepare_database();
-		if(isset($r[0]) && !empty(isset($r[0])))
+		if(!empty(isset($r[0])))
 		{
 			phoromatic_server::generate_result_export_dump($r[0]);
 		}
