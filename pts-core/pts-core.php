@@ -155,6 +155,12 @@ function pts_version_codenames()
 		'5.4' => 'Lipki',
 		'5.6' => 'Dedilovo',
 		'5.8' => 'Belev',
+		// Finnmark - Norway
+		'6.0' => 'Hammerfest',
+		'6.2' => 'Gamvik',
+		'6.4' => 'Hasvik',
+		'6.6' => 'Loppa',
+		'6.8' => 'Tana',
 		);
 }
 
