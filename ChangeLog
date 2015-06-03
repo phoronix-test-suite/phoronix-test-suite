@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 - pts-core: Don't needlessly write out config file each time if nothing relevant has changed
 - phoromatic: Reboot system if comm fails 10+ times on client
 - phoromatic: Add global checkbox to key pages
+- phoromatic: Track core version of clients in database
 - phodevi: Some basic hardware reporting improvements that help the MIPS Creator CI20
 
 Phoronix Test Suite 5.8 Milestone 5

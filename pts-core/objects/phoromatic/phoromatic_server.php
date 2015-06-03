@@ -279,6 +279,10 @@ class phoromatic_server
 				// Change made 12 May
 				self::$db->exec('ALTER TABLE phoromatic_systems ADD COLUMN TickThreadEvent TEXT');
 				self::$db->exec('PRAGMA user_version = 30');
+			case 30:
+				// Change made 3 June
+				self::$db->exec('ALTER TABLE phoromatic_systems ADD COLUMN CoreVersion INTEGER');
+				self::$db->exec('PRAGMA user_version = 31');
 
 		}
 		chmod($db_file, 0600);

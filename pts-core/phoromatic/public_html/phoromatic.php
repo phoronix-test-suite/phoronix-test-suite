@@ -192,7 +192,7 @@ if(empty($result))
 		$matching_system = phoromatic_server::$db->querySingle('SELECT AccountID FROM phoromatic_systems WHERE SystemID = \'' . $system_id . '\'');
 	}
 	while(!empty($matching_system));
-	$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_systems (AccountID, SystemID, Hardware, Software, ClientVersion, GSID, CurrentTask, CreatedOn, LastCommunication, LastIP, LocalIP, Title, State, MachineSelfID) VALUES (:account_id, :system_id, :client_hardware, :client_software, :client_version, :gsid, \'Awaiting Authorization\', :current_time, :current_time, :access_ip, :local_ip, :title, 0, :machine_self_id)');
+	$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_systems (AccountID, SystemID, Hardware, Software, ClientVersion, GSID, CurrentTask, CreatedOn, LastCommunication, LastIP, LocalIP, Title, State, MachineSelfID, CoreVersion) VALUES (:account_id, :system_id, :client_hardware, :client_software, :client_version, :gsid, \'Awaiting Authorization\', :current_time, :current_time, :access_ip, :local_ip, :title, 0, :machine_self_id, :core_version)');
 	$stmt->bindValue(':account_id', $ACCOUNT_ID);
 	$stmt->bindValue(':system_id', $system_id);
 	$stmt->bindValue(':client_hardware', $CLIENT_HARDWARE);
@@ -204,6 +204,8 @@ if(empty($result))
 	$stmt->bindValue(':title', $HOSTNAME);
 	$stmt->bindValue(':current_time', phoromatic_server::current_time());
 	$stmt->bindValue(':machine_self_id', $PTS_MACHINE_SELF_ID);
+	$stmt->bindValue(':core_version', $CLIENT_CORE_VERSION);
+
 	$result = $stmt->execute();
 	$json['phoromatic']['response'] = 'Information Added; Waiting For Approval From Administrator.';
 	echo json_encode($json);
@@ -228,12 +230,13 @@ $SYSTEM_STATE = $result['State'];
 define('GSID', $GSID);
 define('SYSTEM_IN_MAINTENANCE_MODE', ($result['MaintenanceMode'] == 1));
 
-$stmt = phoromatic_server::$db->prepare('UPDATE phoromatic_systems SET LastIP = :access_ip, LocalIP = :local_ip, LastCommunication = :current_time, Hardware = :client_hardware, Software = :client_software, ClientVersion = :client_version, MachineSelfID = :machine_self_id, NetworkMAC = :network_mac, NetworkWakeOnLAN = :network_wol WHERE AccountID = :account_id AND SystemID = :system_id');
+$stmt = phoromatic_server::$db->prepare('UPDATE phoromatic_systems SET LastIP = :access_ip, LocalIP = :local_ip, LastCommunication = :current_time, Hardware = :client_hardware, Software = :client_software, ClientVersion = :client_version, MachineSelfID = :machine_self_id, NetworkMAC = :network_mac, NetworkWakeOnLAN = :network_wol, CoreVersion = :core_version WHERE AccountID = :account_id AND SystemID = :system_id');
 $stmt->bindValue(':account_id', $ACCOUNT_ID);
 $stmt->bindValue(':system_id', SYSTEM_ID);
 $stmt->bindValue(':client_hardware', $CLIENT_HARDWARE);
 $stmt->bindValue(':client_software', $CLIENT_SOFTWARE);
 $stmt->bindValue(':client_version', $CLIENT_VERSION);
+$stmt->bindValue(':core_version', $CLIENT_CORE_VERSION);
 $stmt->bindValue(':access_ip', $_SERVER['REMOTE_ADDR']);
 $stmt->bindValue(':local_ip', $LOCAL_IP);
 $stmt->bindValue(':current_time', phoromatic_server::current_time());
