@@ -76,6 +76,7 @@ class phoromatic_result implements pts_webui_interface
 			$upload_times = array();
 			$benchmark_tickets = array();
 			$xml_result_hash = array();
+			$tickets = array();
 
 			foreach($upload_ids as $id)
 			{
@@ -113,6 +114,7 @@ class phoromatic_result implements pts_webui_interface
 				pts_arrays::unique_push($system_types, $row['SystemID']);
 				pts_arrays::unique_push($schedule_types, $row['ScheduleID']);
 				pts_arrays::unique_push($trigger_types, $row['Trigger']);
+				pts_arrays::unique_push($tickets, $row['BenchmarkTicketID']);
 
 				// Update view counter
 				$stmt_view = phoromatic_server::$db->prepare('UPDATE phoromatic_results SET TimesViewed = (TimesViewed + 1) WHERE AccountID = :account_id AND UploadID = :upload_id');
@@ -127,7 +129,11 @@ class phoromatic_result implements pts_webui_interface
 				$result_file_title = phoromatic_system_id_to_name($system_types[0]) . ' Tests';
 			}
 
-			if(count($trigger_types) == 1 && $trigger_types[0] != null && $benchmark_tickets[0] != null && count($display_rows) > 1)
+			if(!empty($tickets)
+			{
+				$system_name_format = 'ORIGINAL_DATA';
+			}
+			else if(count($trigger_types) == 1 && $trigger_types[0] != null && $benchmark_tickets[0] != null && count($display_rows) > 1)
 			{
 				$system_name_format = 'TRIGGER_AND_SYSTEM';
 			}
