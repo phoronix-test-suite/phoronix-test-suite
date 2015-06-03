@@ -177,7 +177,7 @@ class phoromatic_settings implements pts_webui_interface
 				$update_script_path = phoromatic_server::phoromatic_account_path($_SESSION['AccountID']) . 'client-update-script.sh';
 				if(isset($_POST['client_update_script']))
 				{
-					file_put_contents($update_script_path, str_replace("\r", PHP_EOL, $_POST['client_update_script']));
+					file_put_contents($update_script_path, str_replace("\r\n", PHP_EOL, $_POST['client_update_script']));
 				}
 
 				if(!is_file($update_script_path))
