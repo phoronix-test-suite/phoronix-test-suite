@@ -77,6 +77,9 @@ class pts_config_nye_XmlReader extends nye_XmlReader
 			echo "\nUndefined Config Option: $xml_tag\n";
 		}
 
+		if($fallback_value != null)
+			$this->times_fallback++;
+
 		return $fallback_value;
 	}
 	public function getXMLValue($xml_tag, $fallback_value = false)

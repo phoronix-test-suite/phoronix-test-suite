@@ -89,7 +89,6 @@ class pts_config
 		// Validate the config files, update them (or write them) if needed, and other configuration file tasks
 
 		$read_config = new pts_config_nye_XmlReader($new_config_values);
-
 		$config = new nye_XmlWriter('xsl/pts-user-config-viewer.xsl');
 
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/OpenBenchmarking/AnonymousUsageReporting', $read_config);
@@ -144,7 +143,12 @@ class pts_config
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Server/AdvertiseServiceZeroConf', $read_config);
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Server/PhoromaticStorage', $read_config);
 
-		$config->saveXMLFile(pts_config::get_config_file_location());
+		$config_file = pts_config::get_config_file_location();
+		if($read_config->times_fallback() > 0 || !is_file($config_file))
+		{
+			// Something changed, so write out file, otherwise don't bother writing file
+			$config->saveXMLFile($config_file);
+		}
 	}
 	public static function bool_to_string($bool)
 	{

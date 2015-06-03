@@ -26,6 +26,7 @@ class nye_XmlReader
 	protected $tag_fallback = false; // Fallback value if tag is not present
 	protected $file_location = false;
 	public $dom; // The DOM
+	protected $times_fallback = 0;
 
 	public function __construct($xml_file)
 	{
@@ -104,12 +105,21 @@ class nye_XmlReader
 
 		return $values;
 	}
+	public function times_fallback()
+	{
+		return $this->times_fallback;
+	}
 	protected function handleXmlZeroTagFallback($xml_tag, $fallback_value)
 	{
+		if($fallback_value != null)
+			$this->times_fallback++;
+
 		return $fallback_value;
 	}
 	protected function handleXmlZeroTagArrayFallback($xml_tag, $fallback_value, $break_depth = -1)
 	{
+		if($fallback_value != null)
+			$this->times_fallback++;
 		return $fallback_value;
 	}
 	public function getXML()
