@@ -877,8 +877,8 @@ class phoromatic extends pts_module_interface
 	{
 		static $last_update_script_check_time = 0;
 
-		// Don't keep checking it so check no more than every ten minutes
-		if($last_update_script_check_time < (time() - 600) && !empty($update_script))
+		// Don't keep checking it so check no more than every 20 minutes
+		if($last_update_script_check_time < (time() - 1200) && !empty($update_script))
 		{
 			$last_update_script_check_time = time();
 			$update_file = pts_client::create_temporary_file();
