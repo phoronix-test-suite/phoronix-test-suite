@@ -7,24 +7,22 @@
 exit
 
 # The Git revision you wish to sync the systems to, or empty for riding latest git
-GIT_COMMIT_TO_USE="ceabd81039c33579a1ba1802038263572de935b6"
+GIT_COMMIT_TO_USE="df9be063f20db32866f7bded158be3fc649e04d8"
+FRESH_CLONE=0
 
-if [ ! -w /root ]
+if [ ! -d /phoronix-test-suite ]
 then
-	exit
-fi
-
-if [ ! -d /root/phoronix-test-suite ]
-then
-	cd /root
+	cd /
 	git clone https://github.com/phoronix-test-suite/phoronix-test-suite.git
+	FRESH_CLONE=1
 fi
 
-cd /root/phoronix-test-suite
+cd /phoronix-test-suite
 CURRENT_GIT_COMMIT=`git rev-parse HEAD`
 
-if [ "$GIT_COMMIT_TO_USE" != "$CURRENT_GIT_COMMIT" ]
+if [ "$GIT_COMMIT_TO_USE" != "$CURRENT_GIT_COMMIT" ] || [ "$FRESH_CLONE" == "1" ]
 then
+	git checkout master
 	git pull
 	git checkout $GIT_COMMIT_TO_USE
 	./install-sh

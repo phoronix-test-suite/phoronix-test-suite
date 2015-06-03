@@ -165,7 +165,7 @@ function pts_version_codenames()
 }
 
 pts_define('PTS_VERSION', '5.8.0m5');
-pts_define('PTS_CORE_VERSION', 5751);
+pts_define('PTS_CORE_VERSION', 5752);
 pts_define('PTS_CODENAME', 'BELEV');
 pts_define('PTS_IS_CLIENT', (defined('PTS_MODE') && strstr(PTS_MODE, 'CLIENT') !== false));
 pts_define('PTS_IS_WEB_CLIENT', (defined('PTS_MODE') && PTS_MODE == 'WEB_CLIENT'));
