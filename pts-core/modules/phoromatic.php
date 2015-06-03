@@ -878,6 +878,7 @@ class phoromatic extends pts_module_interface
 		{
 			$last_update_script_check_time = time();
 			$update_file = pts_client::create_temporary_file();
+			$update_script = str_replace("\r", PHP_EOL, $update_script);
 			file_put_contents($update_file, $update_script);
 			phoromatic::update_system_status('Running Phoronix Test Suite Update Script');
 			$env_vars = array();
