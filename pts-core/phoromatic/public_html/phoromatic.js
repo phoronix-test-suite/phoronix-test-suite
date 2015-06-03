@@ -57,6 +57,31 @@ function phoromatic_add_to_result_comparison(pprid)
 		}
 	}
 }
+function phoromatic_toggle_checkboxes_on_page(global_checkbox)
+{
+	var inputs = document.getElementsByTagName("input");
+	var pprid;
+	var check_boxes = global_checkbox.checked;
+	for(var i = 0; i < inputs.length; i++)
+	{
+		if(inputs[i].type == "checkbox" && inputs[i].id.indexOf("result_compare_checkbox_") != -1)
+		{
+			pprid = inputs[i].id.substr(24);
+			if(check_boxes && inputs[i].checked == false)
+			{
+				// check the box
+				inputs[i].checked = true;
+				phoromatic_checkbox_toggle_result_comparison(pprid);
+			}
+			else if(check_boxes == false && inputs[i].checked)
+			{
+				// uncheck the box
+				inputs[i].checked = false;
+				phoromatic_checkbox_toggle_result_comparison(pprid);
+			}
+		}
+	}
+}
 function phoromatic_window_redirect(url)
 {
 	window.location.href = url;

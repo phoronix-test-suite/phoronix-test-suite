@@ -155,6 +155,10 @@ class phoromatic_benchmark implements pts_webui_interface
 				{
 					$main .= '<li class="light" style="text-align: center;">No Results Found</li>';
 				}
+				else if($results > 3)
+				{
+					$main .= '<a onclick=""><li id="global_bottom_totals"><input type="checkbox" id="global_checkbox" onclick="javascript:phoromatic_toggle_checkboxes_on_page(this);" onchange="return false;"></input> <strong>' . $results . ' Results</strong></li></a>';
+				}
 				$main .= '</ul></div>';
 				$main .= '</div>';
 			}
