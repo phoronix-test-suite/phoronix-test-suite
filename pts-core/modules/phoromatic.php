@@ -23,7 +23,7 @@
 class phoromatic extends pts_module_interface
 {
 	const module_name = 'Phoromatic Client';
-	const module_version = '0.6.0';
+	const module_version = '1.0.0';
 	const module_description = 'The Phoromatic client is used for connecting to a Phoromatic server (Phoromatic.com or a locally run server) to facilitate the automatic running of tests, generally across multiple test nodes in a routine manner. For more details visit http://www.phoromatic.com/. This module is intended to be used with Phoronix Test Suite 5.2+ clients and servers.';
 	const module_author = 'Phoronix Media';
 
@@ -552,6 +552,10 @@ class phoromatic extends pts_module_interface
 						pts_test_installer::standard_install('pre-seed');
 						break;
 					case 'benchmark':
+
+						// Make sure all latest tests are available
+						pts_openbenchmarking::refresh_repository_lists(null, true);
+
 						$benchmark_timer = time();
 						self::$is_running_as_phoromatic_node = true;
 						$test_flags = pts_c::auto_mode | pts_c::batch_mode;
