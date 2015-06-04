@@ -402,7 +402,7 @@
 			<GenericName>attr</GenericName>
 			<Title>Attr</Title>
 			<PossibleNames>attr, libattr1-dev</PossibleNames>
-			<FileCheck>xattr.h</FileCheck>
+			<FileCheck>attr/xattr.h</FileCheck>
 		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

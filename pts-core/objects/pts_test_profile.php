@@ -133,7 +133,6 @@ class pts_test_profile extends pts_test_profile_parser
 			{
 				$package_data = $exdep_generic_parser->get_package_data($dependency);
 				array_push($dependency_names, $package_data['title']);
-				break;
 			}
 		}
 
