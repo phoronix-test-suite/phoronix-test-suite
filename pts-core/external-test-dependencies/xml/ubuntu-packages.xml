@@ -295,5 +295,9 @@
 			<GenericName>opencl</GenericName>
 			<PackageName>opencl-headers ocl-icd-libopencl1</PackageName>
 		</Package>
+		<Package>
+			<GenericName>attr</GenericName>
+			<PackageName>libattr1-dev</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

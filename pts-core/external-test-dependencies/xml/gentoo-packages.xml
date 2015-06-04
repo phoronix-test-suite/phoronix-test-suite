@@ -240,5 +240,9 @@
 			<GenericName>opencl</GenericName>
 			<PackageName>dev-util/opencl-headers</PackageName>
 		</Package>
+		<Package>
+			<GenericName>attr</GenericName>
+			<PackageName>sys-apps/attr</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

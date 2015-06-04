@@ -398,5 +398,11 @@
 			<PossibleNames>tinyxml-dev</PossibleNames>
 			<FileCheck>tinyxml.h</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>attr</GenericName>
+			<Title>Attr</Title>
+			<PossibleNames>attr, libattr1-dev</PossibleNames>
+			<FileCheck>xattr.h</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

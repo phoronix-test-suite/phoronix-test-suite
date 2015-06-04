@@ -246,5 +246,9 @@
 			<GenericName>tinyxml</GenericName>
 			<PackageName>tinyxml-devel</PackageName>
 		</Package>
+		<Package>
+			<GenericName>attr</GenericName>
+			<PackageName>attr</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
