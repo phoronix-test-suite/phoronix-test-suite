@@ -65,7 +65,7 @@ $REQUESTED = str_replace('.', null, array_shift($PATH));
 if(empty($REQUESTED) || !isset($export_index_json['phoromatic'][$REQUESTED]))
 {
 	$keys = array_keys($export_index_json['phoromatic']);
-	$REQUESTED = array_pop($keys);
+	$REQUESTED = array_shift($keys);
 	$title = PHOROMATIC_VIEWER_TITLE;
 	$meta_desc = 'Phoronix Test Suite\'s open-source Phoromatic result viewer for automated performance benchmark results.';
 }
@@ -177,9 +177,6 @@ if(isset($_POST['normalize_results']) && $_POST['normalize_results'])
 	$extra_attributes['normalize_result_buffer'] = true;
 }
 
-$table = new pts_ResultFileSystemsTable($result_file);
-echo '<p style="text-align: center; overflow: auto;" class="result_object">' . pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes) . '</p>';
-
 $intent = null;
 $table = new pts_ResultFileTable($result_file, $intent);
 echo '<p style="text-align: center; overflow: auto;" class="result_object">' . pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes) . '</p>';
@@ -197,6 +194,11 @@ foreach($result_file->get_result_objects((isset($_POST['show_only_changed_result
 	echo '</p>';
 }
 echo '</div>';
+
+$table = new pts_ResultFileSystemsTable($result_file);
+echo '<p style="text-align: center; overflow: auto;" class="result_object">' . pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes) . '</p>';
+
+
 ?>
 
 <p id="footer"><em><?php echo pts_title(true); ?></em><br />Phoronix Test Suite, Phoromatic, and OpenBenchmarking.org are copyright &copy; 2004 - 2015 by Phoronix Media.<br />The Phoronix Test Suite / Phoromatic is open-source under the GNU GPL.<br />For more information, visit <a href="http://www.phoronix-test-suite.com/">Phoronix-Test-Suite.com</a> or contact <a href="http://www.phoronix-media.com/">Phoronix Media</a>.</p>
