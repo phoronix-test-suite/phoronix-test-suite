@@ -63,6 +63,13 @@ if(false && $result_file->xml_parser->validate() == false) // TODO XXX investiga
 	return false;
 }
 
+if($result_file->get_title() == null || $result_file->get_system_count() == 0 || $result_file->get_test_count() == 0)
+{
+	$json['phoromatic']['error'] = 'Invalid Result File';
+	echo json_encode($json);
+	return false;
+}
+
 /*$Featured_Results = -1;
 $Featured = pts_result_file_analyzer::analyze_result_file_intent($result_file, $Featured_Results);
 

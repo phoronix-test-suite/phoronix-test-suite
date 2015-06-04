@@ -8,6 +8,7 @@ Phoronix Test Suite (Git)
 - phoromatic: Add global checkbox to key pages
 - phoromatic: Track core version of clients in database
 - phoromatic: Refresh OB repository lists prior to benchmarks
+- phoromatic: Additional validation on result uploads
 - phodevi: Some basic hardware reporting improvements that help the MIPS Creator CI20
 
 Phoronix Test Suite 5.8 Milestone 5
