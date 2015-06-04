@@ -65,7 +65,7 @@ $REQUESTED = str_replace('.', null, array_shift($PATH));
 if(empty($REQUESTED) || !isset($export_index_json['phoromatic'][$REQUESTED]))
 {
 	$keys = array_keys($export_index_json['phoromatic']);
-	$REQUESTED = array_shift($keys);
+	$REQUESTED = array_pop($keys);
 	$title = PHOROMATIC_VIEWER_TITLE;
 	$meta_desc = 'Phoronix Test Suite\'s open-source Phoromatic result viewer for automated performance benchmark results.';
 }
@@ -74,6 +74,9 @@ else
 	$title = $export_index_json['phoromatic'][$REQUESTED]['title'];
 	$meta_desc = substr($export_index_json['phoromatic'][$REQUESTED]['description'], 0, (strpos($export_index_json['phoromatic'][$REQUESTED]['description'], '. ') + 1));
 }
+
+$tracker = &$export_index_json['phoromatic'][$REQUESTED];
+$length = count($tracker['triggers']);
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -106,11 +109,6 @@ foreach($export_index_json['phoromatic'] as &$schedule)
 ?>
 </ul>
 </div>
-<?php
-
-$tracker = &$export_index_json['phoromatic'][$REQUESTED];
-$length = count($tracker['triggers']);
-?>
 <hr />
 <h1><?php echo $tracker['title'] ?></h1>
 <p id="phoromatic_descriptor"><?php echo $tracker['description'] ?></p>
@@ -147,7 +145,7 @@ if(isset($_POST['view_results_limit']) && is_numeric($_POST['view_results_limit'
 }
 else
 {
-	$cut_duration = 14;
+	$cut_duration = 21;
 }
 
 $result_file = array();

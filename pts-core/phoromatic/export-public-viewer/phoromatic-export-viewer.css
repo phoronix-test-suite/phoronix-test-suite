@@ -132,7 +132,7 @@ div#pts_results_area
 div#pts_results_area svg
 {
 	min-width: 600px;
-	max-width: 1600px;
+	max-width: 1400px;
 	width: 60%;
 	height: auto;
 }
