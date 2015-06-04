@@ -22,7 +22,7 @@
 
 class start_phoromatic_server implements pts_option_interface
 {
-	const doc_section = 'GUI / Web Support';
+	const doc_section = 'Phoromatic';
 	const doc_description = 'Start the Phoromatic web server for controlling local Phoronix Test Suite client systems to facilitate automated and repeated test orchestration and other automated features targeted at the enterprise.';
 
 	public static function run($r)
