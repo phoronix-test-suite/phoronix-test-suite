@@ -688,6 +688,7 @@ class phoromatic extends pts_module_interface
 						if(isset($json['phoromatic']['client_update_script']) && !empty($json['phoromatic']['client_update_script']))
 						{
 							self::run_client_update_script($json['phoromatic']['client_update_script']);
+							sleep(10);
 						}
 
 						echo PHP_EOL . 'Phoromatic received a remote command to shutdown.' . PHP_EOL;

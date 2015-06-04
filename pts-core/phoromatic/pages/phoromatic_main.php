@@ -74,7 +74,7 @@ class phoromatic_main implements pts_webui_interface
 			if(!empty($main_page_message))
 				$main .= '<li><strong>' . $main_page_message . '</strong></li>';
 			else
-				$main .= '<li>If you like Phoromatic and the Phoronix Test Suite for enterprise testing, please <a href="http://commercial.phoronix-test-suite.com/">contact us</a> for commercial support, our behind-the-firewall licensed versions of Phoromatic and OpenBenchmarking.org, custom engineering services, and other professional services. It\'s not without corporate support that we can continue to develop this leading Linux benchmarking software in our Phoronix mission of enriching the Linux hardware experience. If you run into any problems with our open-source software or would like to contribute patches, you can do so via our <a href="https://www.github.com/phoronix-test-suite/phoronix-test-suite">GitHub project</a>.</li>
+				$main .= '<li><strong>If you are interested in Phoromatic and the Phoronix Test Suite for enterprise testing, please <a href="http://commercial.phoronix-test-suite.com/">contact us</a> for commercial support, custom test development, custom engineering services, and other professional services. It\'s not without corporate support and sponsorship that we can continue to develop this leading open-source Linux benchmarking software. If you run into any problems with our open-source software or would like to contribute patches, you can do so via our <a href="https://www.github.com/phoronix-test-suite/phoronix-test-suite">GitHub project</a>.</strong></li>
 				</ol>';
 
 		}
