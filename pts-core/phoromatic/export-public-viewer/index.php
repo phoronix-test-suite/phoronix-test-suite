@@ -145,7 +145,7 @@ if(isset($_POST['view_results_limit']) && is_numeric($_POST['view_results_limit'
 }
 else
 {
-	$cut_duration = 21;
+	$cut_duration = 30;
 }
 
 $result_file = array();

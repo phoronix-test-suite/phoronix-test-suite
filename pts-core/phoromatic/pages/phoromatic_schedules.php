@@ -145,6 +145,15 @@ class phoromatic_schedules implements pts_webui_interface
 						$stmt->execute();
 						$main .= '<h2 style="color: red;">Manual Test Run Triggered</h2>';
 					}
+					else if(isset($_POST['skip_current_ticket']))
+					{
+						$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_schedules_trigger_skips (AccountID, ScheduleID, Trigger) VALUES (:account_id, :schedule_id, :trigger)');
+						$stmt->bindValue(':account_id',	$_SESSION['AccountID']);
+						$stmt->bindValue(':schedule_id', $PATH[0]);
+						$stmt->bindValue(':trigger', date('Y-m-d'));
+						$stmt->execute();
+						$main .= '<h2 style="color: red;">Current Trigger To Be Ignored</h2>';
+					}
 				}
 
 
@@ -209,6 +218,9 @@ class phoromatic_schedules implements pts_webui_interface
 				$main .= '<p>If you wish to run this test schedule now, click the following button and the schedule will be run on all intended systems at their next earliest possible convenience.</p>';
 				$main .= '<p><form action="?schedules/' . $PATH[0] . '" name="manual_run" method="post">';
 				$main .= '<input type="hidden" name="do_manual_test_run" value="1" /><input type="submit" value="Run Test Schedule Now" onclick="return confirm(\'Run this test schedule now?\');" />';
+				$main .= '</form></p>';
+				$main .= '<p><form action="?schedules/' . $PATH[0] . '" name="skip_run" method="post">';
+				$main .= '<input type="hidden" name="skip_current_ticket" value="1" /><input type="submit" value="Skip Current Test Ticket" onclick="return confirm(\'Skip any currently active test ticket on all systems?\');" />';
 				$main .= '</form></p>';
 				}
 

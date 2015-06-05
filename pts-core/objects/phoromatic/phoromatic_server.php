@@ -283,6 +283,10 @@ class phoromatic_server
 				// Change made 3 June
 				self::$db->exec('ALTER TABLE phoromatic_systems ADD COLUMN CoreVersion INTEGER');
 				self::$db->exec('PRAGMA user_version = 31');
+			case 31:
+				// Change made 5 June
+				self::$db->exec('CREATE TABLE phoromatic_schedules_trigger_skips (AccountID TEXT, ScheduleID INTEGER, Trigger TEXT, UNIQUE(AccountID, ScheduleID, Trigger) ON CONFLICT IGNORE)');
+				self::$db->exec('PRAGMA user_version = 32');
 
 		}
 		chmod($db_file, 0600);
@@ -500,6 +504,17 @@ class phoromatic_server
 			{
 				return true;
 			}
+		}
+
+		$stmt = phoromatic_server::$db->prepare('SELECT UploadID FROM phoromatic_schedules_trigger_skips WHERE AccountID = :account_id AND ScheduleID = :schedule_id AND Trigger = :trigger');
+		$stmt->bindValue(':account_id', $account_id);
+		$stmt->bindValue(':schedule_id', $schedule_id);
+		$stmt->bindValue(':trigger', $trigger_id);
+		$result = $stmt->execute();
+
+		if($result && $result->fetchArray() != false)
+		{
+			return true;
 		}
 
 		return false;
