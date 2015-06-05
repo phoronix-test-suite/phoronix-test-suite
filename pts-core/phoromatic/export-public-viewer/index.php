@@ -178,8 +178,8 @@ if(isset($_POST['normalize_results']) && $_POST['normalize_results'])
 }
 
 $intent = null;
-$table = new pts_ResultFileTable($result_file, $intent);
-echo '<p style="text-align: center; overflow: auto;" class="result_object">' . pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes) . '</p>';
+//$table = new pts_ResultFileTable($result_file, $intent);
+//echo '<p style="text-align: center; overflow: auto;" class="result_object">' . pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes) . '</p>';
 
 echo '<div id="pts_results_area">';
 foreach($result_file->get_result_objects((isset($_POST['show_only_changed_results']) ? 'ONLY_CHANGED_RESULTS' : -1)) as $i => $result_object)
