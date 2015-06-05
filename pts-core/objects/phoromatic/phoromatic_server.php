@@ -506,7 +506,7 @@ class phoromatic_server
 			}
 		}
 
-		$stmt = phoromatic_server::$db->prepare('SELECT UploadID FROM phoromatic_schedules_trigger_skips WHERE AccountID = :account_id AND ScheduleID = :schedule_id AND Trigger = :trigger');
+		$stmt = phoromatic_server::$db->prepare('SELECT ScheduleID FROM phoromatic_schedules_trigger_skips WHERE AccountID = :account_id AND ScheduleID = :schedule_id AND Trigger = :trigger');
 		$stmt->bindValue(':account_id', $account_id);
 		$stmt->bindValue(':schedule_id', $schedule_id);
 		$stmt->bindValue(':trigger', $trigger_id);
