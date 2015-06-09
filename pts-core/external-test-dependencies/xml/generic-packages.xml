@@ -263,7 +263,7 @@
 			<GenericName>blas-development</GenericName>
 			<Title>Basic Linear Algebra Sub-Routine Library</Title>
 			<PossibleNames>libblas-dev, libblas-devel, blas-devel, blas</PossibleNames>
-			<FileCheck>cblas.h</FileCheck>
+			<FileCheck>libblas.so</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>lapack-development</GenericName>
