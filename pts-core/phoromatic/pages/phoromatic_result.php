@@ -294,7 +294,7 @@ class phoromatic_result implements pts_webui_interface
 				$_REQUEST['force_format'] = 'PNG'; // Force to PNG renderer
 				$_REQUEST['svg_dom_gd_no_interlacing'] = true; // Otherwise FPDF will fail
 				$tdir = pts_client::create_temporary_directory();
-				pts_client::generate_result_file_graphs($result_file, $tdir);
+				pts_client::generate_result_file_graphs($result_file, $tdir, $extra_attributes);
 
 				$pdf = new pts_pdf_template($result_file->get_title(), null);
 

@@ -1018,7 +1018,7 @@ class pts_client
 
 		return $raw_xsl;
 	}
-	public static function generate_result_file_graphs($test_results_identifier, $save_to_dir = false)
+	public static function generate_result_file_graphs($test_results_identifier, $save_to_dir = false, $extra_attributes = null)
 	{
 		if($save_to_dir)
 		{
@@ -1108,7 +1108,7 @@ class pts_client
 				}
 			}
 
-			$graph = pts_render::render_graph($result_object, $result_file, $save_to);
+			$graph = pts_render::render_graph($result_object, $result_file, $save_to, $extra_attributes);
 			array_push($generated_graphs, $graph);
 		}
 

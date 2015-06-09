@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - phoromatic: Add button to schedules page to allow skipping current trigger
+- phoromatic: Pass extra attributes during PDF generation to allow for PDF sorting, etc
 
 Phoronix Test Suite 5.8-Belev
 5 June 2015
