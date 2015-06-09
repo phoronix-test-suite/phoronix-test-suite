@@ -243,11 +243,13 @@ class phoromatic_result implements pts_webui_interface
 				'sort_by_name' => 'sort_result_buffer',
 				'condense_comparison' => 'condense_multi_way',
 				);
+			$url_append = null;
 			foreach($attribute_options as $web_var => $attr_var)
 			{
-				if(isset($_POST[$web_var]))
+				if(isset($_REQUEST[$web_var]))
 				{
 					$extra_attributes[$attr_var] = true;
+					$url_append .= '&' . $web_var . '=1';
 				}
 			}
 
@@ -527,7 +529,7 @@ class phoromatic_result implements pts_webui_interface
 
 		$right .= '<hr /><h3>Result Export</h3>';
 		$right .= '<p><a href="/public.php?t=result&ut='  . implode(',', $upload_ids) . '">Public Viewer</a></p>';
-		$right .= '<p><a href="?' . $_SERVER['QUERY_STRING'] . '/&download=pdf">Download As PDF</a></p>';
+		$right .= '<p><a href="?' . $_SERVER['QUERY_STRING'] . '/&download=pdf' . $url_append . '">Download As PDF</a></p>';
 		$right .= '<p><a href="?' . $_SERVER['QUERY_STRING'] . '/&download=csv">Download As CSV</a></p>';
 		$right .= '<p><a href="?' . $_SERVER['QUERY_STRING'] . '/&download=txt">Download As TEXT</a></p>';
 		$right .= '<p><a href="?' . $_SERVER['QUERY_STRING'] . '/&upload_to_openbenchmarking">Upload To OpenBenchmarking.org</a></p>';
