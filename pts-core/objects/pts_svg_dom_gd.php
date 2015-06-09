@@ -90,6 +90,7 @@ class pts_svg_dom_gd
 				'/usr/share/fonts/TTF/liberation/LiberationSans-Regular.ttf',
 				'/usr/X11/lib/X11/fonts/TrueType/arphic/uming.ttf',
 				'/usr/local/lib/X11/fonts/bitstream-vera/Vera.ttf',
+				'/usr/share/fonts/aajohan-comfortaa/Comfortaa-Regular.ttf',
 				'/Library/Fonts/Courier New.ttf',
 				'/Library/Fonts/Trebuchet MS.ttf'
 				);
