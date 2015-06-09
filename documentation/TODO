@@ -39,7 +39,9 @@ PHORONIX TEST SUITE PUBLIC TODO LIST:
 - http://hashcat.net/oclhashcat/
 - Handbrake [http://handbrake.fr/]
 - libMicro [https://github.com/portante/libMicro]
+- http://markjstock.org/pages/rad_bench.html
 - https://code.google.com/p/pyrit/
+- https://github.com/acangiano/ruby-benchmark-suite
 - http://www.nwchem-sw.org/index.php/Compiling_NWChem
 - http://sourceforge.net/projects/ffsb/
 - http://www.ratgpu.com/
@@ -50,7 +52,9 @@ PHORONIX TEST SUITE PUBLIC TODO LIST:
 - http://www.capsl.udel.edu/splash/Download.html
 - https://github.com/facebook/linkbench
 - https://github.com/vasi/pixz
+- stephentu/silo
 - http://nondot.org/sabre/LLVMNotes/#benchmarks
+- https://code.google.com/p/smhasher/wiki/SMHasher
 - http://benchmarksgame.alioth.debian.org/u32/performance.php?test=fasta / http://benchmarksgame.alioth.debian.org/u32/program.php?test=nbody&lang=gcc&id=1#sourcecode
 - https://openfoamwiki.net/index.php/Benchmarks_standard_v1
 - Cassandra 1.2 stress - http://docs.datastax.com/en/cassandra/1.2/cassandra/tools/toolsCStress_t.html

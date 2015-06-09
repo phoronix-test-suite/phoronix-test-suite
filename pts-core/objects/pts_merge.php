@@ -107,7 +107,9 @@ class pts_merge
 				$result_file_writer->add_system_information_from_result_file($result_file, $result_merge_selects[$i]);
 			}
 
-			$test_result_manager->add_test_result_set($result_file->get_result_objects(), $result_merge_selects[$i]);
+			$r = $result_file->get_result_objects();
+			//$r = array_reverse($r);
+			$test_result_manager->add_test_result_set($r, $result_merge_selects[$i]);
 		}
 
 		// Write the actual test results

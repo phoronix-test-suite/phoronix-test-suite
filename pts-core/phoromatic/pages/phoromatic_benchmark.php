@@ -277,7 +277,7 @@ class phoromatic_benchmark implements pts_webui_interface
 				<p><textarea name="benchmark_description" id="benchmark_description" cols="50" rows="3">' . (!$is_new ? $e_schedule['Description'] : null) . '</textarea></p>
 				<hr /><h3>System Targets:</h3>
 				<p>Select the systems that should be benchmarked at their next earliest convenience.</p>
-				<p>';
+				<p style="white-space: nowrap;">';
 
 				$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID FROM phoromatic_systems WHERE AccountID = :account_id AND State >= 0 ORDER BY Title ASC');
 				$stmt->bindValue(':account_id', $_SESSION['AccountID']);
