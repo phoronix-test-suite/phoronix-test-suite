@@ -115,7 +115,7 @@ class phoromatic_main implements pts_webui_interface
 			$time_remaining = phoromatic_compute_estimated_time_remaining($row['EstimatedTimeForTask'], $row['LastCommunication']);
 			if($time_remaining)
 			{
-				$main .= '<em>~ ' . pts_strings::plural_handler($time_remaining, 'Minute') . ' Remaining';
+				$main .= '<em>~ ' . pts_strings::plural_handler($time_remaining, 'Minute') . ' Remaining</em>';
 			}
 			$main .= '</div>';
 		}
