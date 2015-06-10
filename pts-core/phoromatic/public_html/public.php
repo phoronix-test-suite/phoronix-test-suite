@@ -155,7 +155,7 @@ if(!empty($result_ids))
 		);
 	foreach($attribute_options as $web_var => $attr_var)
 	{
-		if(isset($_POST[$web_var]))
+		if(isset($_REQUEST[$web_var]))
 		{
 			$extra_attributes[$attr_var] = true;
 		}
