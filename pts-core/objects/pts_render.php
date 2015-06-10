@@ -888,7 +888,7 @@ class pts_render
 					break;
 				default:
 					$line_graph_type = isset($extra_attributes['filled_line_graph']) ? 'FILLED_LINE_GRAPH' : 'LINE_GRAPH';
-					$mto->test_profile->set_display_format((count($days) < 5 || ($is_tracking == false && !isset($extra_attributes['force_line_graph_compact'])) ? 'BAR_ANALYZE_GRAPH' : $line_graph_type));
+					$mto->test_profile->set_display_format((!isset($extra_attributes['force_tracking_line_graph']) && (count($days) < 5 || ($is_tracking == false && !isset($extra_attributes['force_line_graph_compact']))) ? 'BAR_ANALYZE_GRAPH' : $line_graph_type));
 					break;
 			}
 
