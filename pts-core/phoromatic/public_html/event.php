@@ -66,12 +66,32 @@ switch($_GET['type'])
 			return;
 		}
 		$schedule_row = $result->fetchArray();
+		$sub_target = null;
 
-		$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_schedules_triggers (AccountID, ScheduleID, Trigger, TriggeredOn) VALUES (:account_id, :schedule_id, :trigger, :triggered_on)');
+		if(isset($_GET['sub_target_this_ip']))
+		{
+			$stmt = phoromatic_server::$db->prepare('SELECT SystemID FROM phoromatic_systems WHERE AccountID = :account_id AND LastIP = :this_ip');
+			$stmt->bindValue(':account_id', $user_row['AccountID']);
+			$stmt->bindValue(':this_ip', $_SERVER['REMOTE_ADDR']);
+			$result = $stmt->execute();
+			if(empty($result))
+			{
+				echo 'No system found associated to this IP address [' . $_SERVER['REMOTE_ADDR'] . '].';
+				return;
+			}
+			else
+			{
+				$sys_row = $result->fetchArray();
+				$sub_target = $sys_row['SystemID'];
+			}
+		}
+
+		$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_schedules_triggers (AccountID, ScheduleID, Trigger, TriggeredOn, SubTarget) VALUES (:account_id, :schedule_id, :trigger, :triggered_on, :sub_target)');
 		$stmt->bindValue(':account_id',	$user_row['AccountID']);
 		$stmt->bindValue(':schedule_id', $schedule_row['ScheduleID']);
 		$stmt->bindValue(':trigger', $_GET['trigger']);
 		$stmt->bindValue(':triggered_on', phoromatic_server::current_time());
+		$stmt->bindValue(':sub_target', $sub_target);
 		if($stmt->execute())
 		{
 			echo 'Trigger ' . $_GET['trigger'] . ' added!';

@@ -287,7 +287,10 @@ class phoromatic_server
 				// Change made 5 June
 				self::$db->exec('CREATE TABLE phoromatic_schedules_trigger_skips (AccountID TEXT, ScheduleID INTEGER, Trigger TEXT, UNIQUE(AccountID, ScheduleID, Trigger) ON CONFLICT IGNORE)');
 				self::$db->exec('PRAGMA user_version = 32');
-
+			case 32:
+				// Change made 10 June
+				self::$db->exec('ALTER TABLE phoromatic_schedules_triggers ADD COLUMN SubTarget TEXT');
+				self::$db->exec('PRAGMA user_version = 33');
 		}
 		chmod($db_file, 0600);
 	}
@@ -678,6 +681,17 @@ class phoromatic_server
 			$trigger_result = $stmt->execute();
 			while($trigger_result && $trigger_row = $trigger_result->fetchArray())
 			{
+				// See if any sub-targeting is happening
+				if($trigger_row['SubTarget'] !== null)
+				{
+					$sub_targets = explode(',', $trigger_row['SubTarget']);
+					if(!empty($sub_targets) && !in_array($system_id, $sub_targets))
+					{
+						// This system isn't part of the sub-targeted trigger
+						continue;
+					}
+				}
+
 				if(substr($trigger_row['TriggeredOn'], 0, 10) == date('Y-m-d') || substr($trigger_row['TriggeredOn'], 0, 10) == date('Y-m-d', (time() - 60 * 60 * 24)))
 				{
 					if(!phoromatic_server::check_for_triggered_result_match($row['ScheduleID'], $trigger_row['Trigger'], $account_id, $system_id))
