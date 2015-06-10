@@ -62,7 +62,11 @@ class make_openbenchmarking_cache implements pts_option_interface
 				{
 					$file_size = round(filesize(PTS_OPENBENCHMARKING_SCRATCH_PATH . $qualified_identifier . '.zip') / 1024, 2);
 					$info = $file_size . 'KB - ' . sha1_file(PTS_OPENBENCHMARKING_SCRATCH_PATH . $qualified_identifier . '.zip');
-					echo ' ' . str_repeat('.', $terminal_width - strlen($qualified_identifier) - 3 - strlen($info)) . ' ' . $info . PHP_EOL;
+					$r_size = $terminal_width - strlen($qualified_identifier) - 3 - strlen($info);
+					if($r_size > 0)
+					{
+						echo ' ' . str_repeat('.', $terminal_width - strlen($qualified_identifier) - 3 - strlen($info)) . ' ' . $info . PHP_EOL;
+					}
 					$total_cache_count++;
 					$total_cache_size += $file_size;
 				}

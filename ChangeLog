@@ -2,6 +2,8 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+- pts-core: Misc warning fixes
+- pts-core: Never show /boot/efi as possible benchmark writable mount point
 - phoromatic: Add button to schedules page to allow skipping current trigger
 - phoromatic: Pass extra attributes during PDF generation to allow for PDF sorting, etc
 
