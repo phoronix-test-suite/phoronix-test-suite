@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2011, Phoronix Media
-	Copyright (C) 2009 - 2011, Michael Larabel
+	Copyright (C) 2009 - 2015, Phoronix Media
+	Copyright (C) 2009 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ class validate_result_file implements pts_option_interface
 		{
 			$result_file = new pts_result_file($r[0]);
 			pts_client::$display->generic_heading($r[0]);
-			$valid = $result_file->xml_parser->validate();
+			$valid = $result_file->validate();
 
 			if($valid == false)
 			{

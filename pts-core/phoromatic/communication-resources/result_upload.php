@@ -56,7 +56,7 @@ if($composite_xml == null || sha1($composite_xml) != $COMPOSITE_XML_HASH)
 $result_file = new pts_result_file($composite_xml);
 
 // Validate the XML
-if(false && $result_file->xml_parser->validate() == false) // TODO XXX investigate
+if($result_file->validate() == false)
 {
 	$json['phoromatic']['error'] = 'XML Did Not Match Schema Definition';
 	echo json_encode($json);

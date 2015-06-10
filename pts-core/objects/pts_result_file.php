@@ -48,6 +48,12 @@ class pts_result_file
 
 		$this->xml = simplexml_load_string($this->raw_xml);
 	}
+	public function validate()
+	{
+		$dom = new DOMDocument();
+		$dom->loadXML($this->raw_xml);
+		return $dom->schemaValidate(PTS_OPENBENCHMARKING_PATH . 'schemas/result-file.xsd');
+	}
 	public function getRawXml()
 	{
 		return $this->raw_xml;
