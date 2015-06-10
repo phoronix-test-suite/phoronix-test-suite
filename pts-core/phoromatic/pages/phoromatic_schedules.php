@@ -254,6 +254,24 @@ class phoromatic_schedules implements pts_webui_interface
 				{
 					$test_count++;
 					$main .= $row['TestProfile'] . ($row['TestDescription'] != null ? ' - <em>' . $row['TestDescription'] . '</em>' : '') . (!PHOROMATIC_USER_IS_VIEWER ? ' <a href="?schedules/' . $PATH[0] . '/remove/' . base64_encode(implode(PHP_EOL, array($row['TestProfile'], $row['TestArguments']))) . '">Remove Test</a>' : null) . '<br />';
+
+					/*
+					if(!PHOROMATIC_USER_IS_VIEWER && isset($_REQUEST['make_version_lock_tests']))
+					{
+						if(strpos($row['TestProfile'], '.') == false)
+						{
+							$test_profile = new pts_test_profile($row['TestProfile']);
+							$full_identifier = $test_profile->get_identifier(true);
+
+							$stmt = phoromatic_server::$db->prepare('UPDATE phoromatic_schedules_tests SET TestProfile = :version_locked_tp WHERE AccountID = :account_id AND ScheduleID = :schedule_id AND TestProfile = :test');
+							$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+							$stmt->bindValue(':schedule_id', $PATH[0]);
+							$stmt->bindValue(':test', $row['TestProfile']);
+							$stmt->bindValue(':version_locked_tp', $full_identifier);
+							$result2 = $stmt->execute();
+						}
+					}
+					*/
 				}
 				$main .= '</p>';
 
