@@ -86,12 +86,14 @@ class phoromatic_main implements pts_webui_interface
 		$main .= '<hr /><div id="phoromatic_fixed_main_table">';
 
 		$systems_needing_attention = phoromatic_server::systems_appearing_down($_SESSION['AccountID']);
-		$systems_idling = phoromatic_server::systems_idling_or_offline($_SESSION['AccountID']);
+		$systems_idling = phoromatic_server::systems_idling($_SESSION['AccountID']);
+		$systems_shutdown = phoromatic_server::systems_shutdown($_SESSION['AccountID']);
 		$systems_running_tests = phoromatic_server::systems_running_tests($_SESSION['AccountID']);
 
 		$main .= '<div id="phoromatic_main_table_cell">
 			<h2>' . pts_strings::plural_handler(count($systems_running_tests), 'System') . ' Running Tests</h2>
-			<h2>' . pts_strings::plural_handler(count($systems_idling), 'System') . ' Idling Or Shutdown</h2>
+			<h2>' . pts_strings::plural_handler(count($systems_idling), 'System') . ' Idling</h2>
+			<h2>' . pts_strings::plural_handler(count($systems_shutdown), 'System') . ' Shutdown</h2>
 			<h2>' . pts_strings::plural_handler(count($systems_needing_attention), 'System') . ' Needing Attention</h2>
 			<hr />
 			</div>';
@@ -102,7 +104,8 @@ class phoromatic_main implements pts_webui_interface
 		$main .= '<div id="phoromatic_main_table_cell">
 		<h2>' . pts_strings::plural_handler(count($schedules_today), 'Schedule') . ' Active Today</h2>
 		<h2>' . pts_strings::plural_handler(count($schedules_total), 'Schedule') . ' In Total</h2>
-		<h2>' . pts_strings::plural_handler(count($benchmark_tickets_today), 'Active Benchmark Ticket') . '</h2>';
+		<h2>' . pts_strings::plural_handler(count($benchmark_tickets_today), 'Active Benchmark Ticket') . '</h2>
+		<h2> &nbsp; </h2>';
 		$main .= '<hr /><h2>Today\'s Scheduled Tests</h2>';
 
 		foreach($schedules_today as &$row)

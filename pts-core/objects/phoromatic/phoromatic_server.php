@@ -871,10 +871,23 @@ class phoromatic_server
 
 		return $tickets;
 	}
-	public static function systems_idling_or_offline($account_id)
+	public static function systems_idling($account_id)
 	{
 		$systems = array();
-		$stmt = phoromatic_server::$db->prepare('SELECT SystemID FROM phoromatic_systems WHERE AccountID = :account_id AND State >= 0 AND (CurrentTask LIKE \'%Idling%\' OR CurrentTask LIKE \'%Shutdown%\') ORDER BY LastCommunication DESC');
+		$stmt = phoromatic_server::$db->prepare('SELECT SystemID FROM phoromatic_systems WHERE AccountID = :account_id AND State >= 0 AND CurrentTask LIKE \'%Idling%\' ORDER BY LastCommunication DESC');
+		$stmt->bindValue(':account_id', $account_id);
+		$result = $stmt->execute();
+		while($result && $row = $result->fetchArray())
+		{
+			array_push($systems, $row);
+		}
+
+		return $systems;
+	}
+	public static function systems_shutdown($account_id)
+	{
+		$systems = array();
+		$stmt = phoromatic_server::$db->prepare('SELECT SystemID FROM phoromatic_systems WHERE AccountID = :account_id AND State >= 0 AND CurrentTask LIKE \'%Shutdown%\' ORDER BY LastCommunication DESC');
 		$stmt->bindValue(':account_id', $account_id);
 		$result = $stmt->execute();
 		while($result && $row = $result->fetchArray())
