@@ -94,9 +94,32 @@ class phoromatic_main implements pts_webui_interface
 			<h2>' . pts_strings::plural_handler(count($systems_running_tests), 'System') . ' Running Tests</h2>
 			<h2>' . pts_strings::plural_handler(count($systems_idling), 'System') . ' Idling</h2>
 			<h2>' . pts_strings::plural_handler(count($systems_shutdown), 'System') . ' Shutdown</h2>
-			<h2>' . pts_strings::plural_handler(count($systems_needing_attention), 'System') . ' Needing Attention</h2>
-			<hr />
-			</div>';
+			<h2>' . pts_strings::plural_handler(count($systems_needing_attention), 'System') . ' Needing Attention</h2>';
+		$main .= '<hr /><h2>Systems Running Tests</h2>';
+
+		$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_systems WHERE AccountID = :account_id AND State >= 0 AND CurrentTask NOT LIKE \'%Idling%\' AND CurrentTask NOT LIKE \'%Shutdown%\' ORDER BY LastCommunication DESC');
+		$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+		$result = $stmt->execute();
+
+		while($result && $row = $result->fetchArray())
+		{
+			$main .= '<div class="phoromatic_overview_box">';
+			$main .= '<h1><a href="?systems/' . $row['SystemID'] . '">' . $row['Title'] . '</a></h1>';
+			$main .= $row['CurrentTask'] . '<br />';
+
+			if(!empty($row['CurrentProcessSchedule']))
+			{
+				$main .= '<a href="?schedules/' . $row['CurrentProcessSchedule'] . '">' . phoromatic_server::schedule_id_to_name($row['CurrentProcessSchedule']) . '</a><br />';
+			}
+
+			$time_remaining = phoromatic_compute_estimated_time_remaining($row['EstimatedTimeForTask'], $row['LastCommunication']);
+			if($time_remaining)
+			{
+				$main .= '<em>~ ' . pts_strings::plural_handler($time_remaining, 'Minute') . ' Remaining';
+			}
+			$main .= '</div>';
+		}
+		$main .= '</div>';
 
 		$schedules_today = phoromatic_server::schedules_today($_SESSION['AccountID']);
 		$schedules_total = phoromatic_server::schedules_total($_SESSION['AccountID']);
