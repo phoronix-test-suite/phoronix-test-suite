@@ -279,20 +279,29 @@ class pts_result_file
 
 		return $is_tracker;
 	}
-	public function is_multi_way_comparison($identifiers = false)
+	public function is_multi_way_comparison($identifiers = false, $extra_attributes = null)
 	{
 		static $is_multi_way = -1;
 
 		if($is_multi_way === -1)
 		{
-			$hw = null; // XXX: this isn't used anymore at least for now $this->get_system_hardware();
-			if($identifiers == false)
+			if(isset($extra_attributes['force_tracking_line_graph']))
 			{
-				$identifiers = $this->get_system_identifiers();
+				// Phoromatic result tracker
+				$is_multi_way = true;
+				$this->is_multi_way_inverted = true;
 			}
+			else
+			{
+				$hw = null; // XXX: this isn't used anymore at least for now $this->get_system_hardware();
+				if($identifiers == false)
+				{
+					$identifiers = $this->get_system_identifiers();
+				}
 
-			$is_multi_way = count($identifiers) < 2 ? false : pts_render::multi_way_identifier_check($identifiers, $hw, $this);
-			$this->is_multi_way_inverted = $is_multi_way && $is_multi_way[1];
+				$is_multi_way = count($identifiers) < 2 ? false : pts_render::multi_way_identifier_check($identifiers, $hw, $this);
+				$this->is_multi_way_inverted = $is_multi_way && $is_multi_way[1];
+			}
 		}
 
 		return $is_multi_way;

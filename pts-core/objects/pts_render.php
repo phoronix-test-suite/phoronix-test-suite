@@ -93,9 +93,9 @@ class pts_render
 		// XXX: removed || $result_file->is_results_tracker() from below and should be added
 		// Removing the command fixes cases like: 1210053-BY-MYRESULTS43
 		$result_identifiers = $result_object->test_result_buffer->get_identifiers();
-		if($result_file->is_multi_way_comparison($result_identifiers) || isset($extra_attributes['compact_to_scalar']))
+		if($result_file->is_multi_way_comparison($result_identifiers, $extra_attributes) || isset($extra_attributes['compact_to_scalar']))
 		{
-			if((isset($extra_attributes['compact_to_scalar']) || (false && $result_file->is_multi_way_comparison($result_identifiers))) && in_array($result_object->test_profile->get_display_format(), array('LINE_GRAPH', 'FILLED_LINE_GRAPH')))
+			if((isset($extra_attributes['compact_to_scalar']) || (false && $result_file->is_multi_way_comparison($result_identifiers, $extra_attributes))) && in_array($result_object->test_profile->get_display_format(), array('LINE_GRAPH', 'FILLED_LINE_GRAPH')))
 			{
 				// Convert multi-way line graph into horizontal box plot
 				if(stripos($result_object->get_arguments_description(), 'frame time') !== false || true)

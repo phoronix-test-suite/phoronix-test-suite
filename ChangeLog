@@ -9,6 +9,7 @@ Phoronix Test Suite (Git)
 - phoromatic: Pass extra attributes during PDF generation to allow for PDF sorting, etc
 - phoromatic: Allow basic sub-targeting as part of test schedule trigger URLs
 - phoromatic: Enhancements to the main page
+- phoromatic: Result tracker detection improvements
 
 Phoronix Test Suite 5.8-Belev
 5 June 2015

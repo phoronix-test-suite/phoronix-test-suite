@@ -1083,7 +1083,7 @@ class pts_client
 
 				if(PTS_IS_CLIENT)
 				{
-					if($result_file->is_multi_way_comparison() || pts_client::read_env('GRAPH_GROUP_SIMILAR'))
+					if($result_file->is_multi_way_comparison(null, $extra_attributes) || pts_client::read_env('GRAPH_GROUP_SIMILAR'))
 					{
 						$table_keys = array();
 						$titles = $result_file->get_test_titles();
