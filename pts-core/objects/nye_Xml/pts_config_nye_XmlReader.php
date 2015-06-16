@@ -88,10 +88,12 @@ class pts_config_nye_XmlReader extends nye_XmlReader
 		{
 			if(isset($this->override_values[$xml_tag]))
 			{
+				$this->times_fallback++;
 				return $this->override_values[$xml_tag];
 			}
 			else if(isset($this->override_values[($bn = basename($xml_tag))]))
 			{
+				$this->times_fallback++;
 				return $this->override_values[$bn];
 			}
 		}
