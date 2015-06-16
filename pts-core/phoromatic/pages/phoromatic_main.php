@@ -176,7 +176,7 @@ class phoromatic_main implements pts_webui_interface
 					$sys_info = self::system_info($system_id);
 					$last_comm_diff = time() - strtotime($sys_info['LastCommunication']);
 
-					$main .= ' &nbsp; <sup><a href="?systems/' . $system_id . '">';
+					$main .= ' <sup><a href="?systems/' . $system_id . '">';
 					if($last_comm_diff > 3600)
 					{
 						$main .= '<strong>Last Communication: ' . pts_strings::format_time($last_comm_diff, 'SECONDS', true, 60) . ' Ago</strong>';
@@ -202,8 +202,7 @@ class phoromatic_main implements pts_webui_interface
 		<h2>' . pts_strings::plural_handler(count($results_this_week), 'Test Result') . ' This Week</h2>
 		<h2>' . pts_strings::plural_handler(count($results_total), 'Test Result') . ' Total</h2>
 		<h2>' . pts_strings::plural_handler(phoromatic_server::test_results_benchmark_count($_SESSION['AccountID']), 'Benchmark Result') . ' Total</h2>
-		<hr />';
-		$main .= '<hr /><h2>Today\'s Results</h2>';
+		<hr /><h2>Today\'s Results</h2>';
 
 		foreach($results_today as $result)
 		{
