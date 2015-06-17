@@ -3,9 +3,9 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Misc warning fixes
-- pts-core: Fix batch-setup not writing out changes
 - pts-core: Fix result file validation against XML schema
 - pts-core: Never show /boot/efi as possible benchmark writable mount point
+- pts-core: Don't report which errors on launcher
 - phoromatic: Add button to schedules page to allow skipping current trigger
 - phoromatic: Pass extra attributes during PDF generation to allow for PDF sorting, etc
 - phoromatic: Allow basic sub-targeting as part of test schedule trigger URLs

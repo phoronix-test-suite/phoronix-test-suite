@@ -62,15 +62,18 @@ then
 elif [ -x /usr/pkg/libexec/cgi-bin/php ]
 then
 	export PHP_BIN="/usr/pkg/libexec/cgi-bin/php"
-elif which php >/dev/null ;
+elif which php >/dev/null 2>&1 ;
 then
 	export PHP_BIN="php"
-elif which php5 >/dev/null ;
+elif which php5 >/dev/null 2>&1 ;
 then
 	export PHP_BIN="php5"
 elif [ -x /usr/bin/hhvm ]
 then
 	export PHP_BIN="/usr/bin/hhvm"
+elif which hhvm >/dev/null 2>&1 ;
+then
+	export PHP_BIN="hhvm"
 else
 	export PHP_BIN=""
 fi
