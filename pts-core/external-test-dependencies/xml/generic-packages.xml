@@ -377,8 +377,8 @@
 		<Package>
 			<GenericName>superlu</GenericName>
 			<Title>SuperLU</Title>
-			<PossibleNames>superlu, libsuperlu3-dev</PossibleNames>
-			<FileCheck>superlu/slu_util.h</FileCheck>
+			<PossibleNames>superlu, libsuperlu3-dev, SuperLU-devel</PossibleNames>
+			<FileCheck>superlu/slu_util.h OR SuperLU/slu_util.h, libsuperlu.so</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>suitesparse</GenericName>

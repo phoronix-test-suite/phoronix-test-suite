@@ -236,7 +236,7 @@
 		</Package>
 		<Package>
 			<GenericName>superlu</GenericName>
-			<PackageName>superlu libsuperlu3</PackageName>
+			<PackageName>superlu-devel</PackageName>
 		</Package>
 		<Package>
 			<GenericName>suitesparse</GenericName>
