@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 5.8.1
+23 June 2015
 
 - pts-core: Misc warning fixes
 - pts-core: Fix result file validation against XML schema
