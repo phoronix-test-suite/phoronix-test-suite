@@ -197,6 +197,8 @@ foreach($result_file->get_result_objects((isset($_POST['show_only_changed_result
 	echo '<p class="result_object">';
 	echo pts_render::render_graph_inline_embed($result_object, $result_file, $extra_attributes);
 	echo '</p>';
+	unset($result_object);
+	flush();
 }
 echo '</div>';
 

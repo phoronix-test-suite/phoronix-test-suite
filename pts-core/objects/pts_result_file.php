@@ -339,6 +339,32 @@ class pts_result_file
 
 		return $ids;
 	}
+	public function get_result_object(&$result)
+	{
+		$test_profile = new pts_test_profile(($result->Identifier != null ? $result->Identifier->__toString() : null));
+		$test_profile->set_test_title($result->Title->__toString());
+		$test_profile->set_version($result->AppVersion->__toString());
+		$test_profile->set_result_scale($result->Scale->__toString());
+		$test_profile->set_result_proportion($result->Proportion->__toString());
+		$test_profile->set_display_format($result->DisplayFormat->__toString());
+
+		$test_result = new pts_test_result($test_profile);
+		$test_result->set_used_arguments_description($result->Description->__toString());
+		$test_result->set_used_arguments($result->Arguments->__toString());
+
+		$result_buffer = new pts_test_result_buffer();
+		foreach($result->Data->Entry as $entry)
+		{
+			$result_buffer->add_test_result($entry->Identifier->__toString(), $entry->Value->__toString(), $entry->RawString->__toString(), (isset($entry->JSON) ? $entry->JSON->__toString() : null));
+		}
+		$test_result->set_test_result_buffer($result_buffer);
+
+		return $test_result;
+	}
+	public function get_result_iterator()
+	{
+		return $this->xml->Result;
+	}
 	public function get_result_objects($select_indexes = -1)
 	{
 		if($this->result_objects == null)
@@ -347,25 +373,7 @@ class pts_result_file
 
 			foreach($this->xml->Result as $result)
 			{
-				$test_profile = new pts_test_profile(($result->Identifier != null ? $result->Identifier->__toString() : null));
-				$test_profile->set_test_title($result->Title->__toString());
-				$test_profile->set_version($result->AppVersion->__toString());
-				$test_profile->set_result_scale($result->Scale->__toString());
-				$test_profile->set_result_proportion($result->Proportion->__toString());
-				$test_profile->set_display_format($result->DisplayFormat->__toString());
-
-				$test_result = new pts_test_result($test_profile);
-				$test_result->set_used_arguments_description($result->Description->__toString());
-				$test_result->set_used_arguments($result->Arguments->__toString());
-
-				$result_buffer = new pts_test_result_buffer();
-				foreach($result->Data->Entry as $entry)
-				{
-					$result_buffer->add_test_result($entry->Identifier->__toString(), $entry->Value->__toString(), $entry->RawString->__toString(), (isset($entry->JSON) ? $entry->JSON->__toString() : null));
-				}
-
-				$test_result->set_test_result_buffer($result_buffer);
-				array_push($this->result_objects, $test_result);
+				array_push($this->result_objects, $this->get_result_object($result));
 			}
 		}
 
