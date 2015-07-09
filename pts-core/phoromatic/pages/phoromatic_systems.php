@@ -286,7 +286,7 @@ class phoromatic_systems implements pts_webui_interface
 					else
 						$group_msg = 'This system does not currently belong to any groups.';
 
-					$main .= '<p>' . $group_msg . ' Manage groups via the <a href="http://localhost:8444/?systems">systems page</a>.</p>';
+					$main .= '<p>' . $group_msg . ' Manage groups via the <a href="?systems">systems page</a>.</p>';
 
 					if(!empty($schedules))
 					{
