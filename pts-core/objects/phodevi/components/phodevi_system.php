@@ -986,9 +986,14 @@ class phodevi_system extends phodevi_device_interface
 		{
 			$vendor = phodevi_linux_parser::read_lsb_distributor_id();
 
-			if($vendor == null && is_readable('/etc/os-release'))
+			if($vendor == null)
 			{
-				$os_release = parse_ini_file('/etc/os-release');
+				if(is_readable('/etc/os-release'))
+					$os_release = parse_ini_file('/etc/os-release');
+				else if(is_readable('/usr/lib/os-release'))
+					$os_release = parse_ini_file('/usr/lib/os-release');
+				else
+					$os_release = null;
 
 				if(isset($os_release['PRETTY_NAME']) && !empty($os_release['PRETTY_NAME']))
 				{

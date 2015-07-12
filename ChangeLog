@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - phoromatic: Improvements when server addressing setup fails
+- pts-core: Support /usr/lib/os-release for stateless systems
 
 Phoronix Test Suite 5.8.1
 23 June 2015
