@@ -238,7 +238,7 @@ class phoromatic extends pts_module_interface
 				}
 			}
 
-			sleep(60);
+			sleep(rand(60, 90));
 		}
 	}
 	protected static function upload_to_remote_server($to_post, $server_address = null, $server_http_port = null, $account_id = null)
