@@ -411,7 +411,7 @@ class pts_test_run_manager
 		foreach($subsystems_to_test as $subsystem)
 		{
 			$components = pts_result_file_analyzer::system_component_string_to_array(phodevi::system_hardware(true) . ', ' . phodevi::system_software(true));
-			if(isset($components[$subsystem]))
+			if($subsystem != null && isset($components[$subsystem]))
 			{
 				$subsystem_name = pts_strings::trim_search_query($components[$subsystem]);
 

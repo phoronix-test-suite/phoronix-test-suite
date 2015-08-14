@@ -121,7 +121,7 @@ class pts_test_profile_parser
 			return $this->overrides[$xpath];
 		}
 
-		$r = $this->xml->xpath($xpath);
+		$r = $this->xml ? $this->xml->xpath($xpath) : null;
 
 		if(empty($r))
 		{
