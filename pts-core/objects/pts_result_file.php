@@ -26,6 +26,7 @@ class pts_result_file
 	private $result_objects = null;
 	private $extra_attributes = null;
 	private $is_multi_way_inverted = false;
+	private $file_location = false;
 	private $xml;
 	private $raw_xml;
 
@@ -37,25 +38,32 @@ class pts_result_file
 			$result_file = PTS_SAVE_RESULTS_PATH . $result_file . '/composite.xml';
 		}
 		$this->extra_attributes = array();
+
 		if(is_file($result_file))
 		{
-			$this->raw_xml = file_get_contents($result_file);
+			$this->file_location = $result_file;
+			$result_file = file_get_contents($result_file);
 		}
 		else
 		{
 			$this->raw_xml = $result_file;
 		}
 
-		$this->xml = simplexml_load_string($this->raw_xml);
+		$this->xml = simplexml_load_string($result_file);
 	}
 	public function validate()
 	{
 		$dom = new DOMDocument();
-		$dom->loadXML($this->raw_xml);
+		$dom->loadXML($this->getRawXml());
 		return $dom->schemaValidate(PTS_OPENBENCHMARKING_PATH . 'schemas/result-file.xsd');
 	}
 	public function getRawXml()
 	{
+		if($this->file_location)
+		{
+			return file_get_contents($this->file_location);
+		}
+
 		return $this->raw_xml;
 	}
 	public function __toString()
@@ -410,7 +418,7 @@ class pts_result_file
 	}
 	public function to_json()
 	{
-		$file = $this->raw_xml;
+		$file = $this->getRawXml();
 		$file = str_replace(array("\n", "\r", "\t"), '', $file);
 		$file = trim(str_replace('"', "'", $file));
 		$simple_xml = simplexml_load_string($file);

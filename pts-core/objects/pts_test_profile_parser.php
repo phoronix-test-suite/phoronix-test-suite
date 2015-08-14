@@ -411,7 +411,6 @@ class pts_test_profile_parser
 			$user_option->set_option_default($option->DefaultEntry->__toString());
 
 			array_push($test_options, $user_option);
-
 		}
 
 		return $test_options;
