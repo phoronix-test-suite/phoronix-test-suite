@@ -146,7 +146,7 @@ class pts_test_profile_parser
 				$tp_identifier = $this->get_test_extension();
 				if($tp_identifier != null && PTS_IS_CLIENT)
 				{
-					$this->tp_extends = new pts_test_profile($tp_identifier);
+					$this->tp_extends = new pts_test_profile_parser($tp_identifier);
 				}
 				else
 				{
@@ -429,31 +429,31 @@ class pts_test_profile_parser
 
 	public function set_times_to_run($times)
 	{
-		$this->xs('PhoronixTestSuite/TestInformation/TimesToRun', $times);
+		$this->xs('TestInformation/TimesToRun', $times);
 	}
 	public function set_result_scale($scale)
 	{
-		$this->xs('PhoronixTestSuite/TestInformation/ResultScale', $scale);
+		$this->xs('TestInformation/ResultScale', $scale);
 	}
 	public function set_result_proportion($proportion)
 	{
-		$this->xs('PhoronixTestSuite/TestInformation/Proportion', $proportion);
+		$this->xs('TestInformation/Proportion', $proportion);
 	}
 	public function set_display_format($format)
 	{
-		$this->xs('PhoronixTestSuite/TestInformation/DisplayFormat', $format);
+		$this->xs('TestInformation/DisplayFormat', $format);
 	}
 	public function set_result_quantifier($quantifier)
 	{
-		$this->xs('PhoronixTestSuite/TestInformation/ResultQuantifier', $quantifier);
+		$this->xs('TestInformation/ResultQuantifier', $quantifier);
 	}
 	public function set_version($version)
 	{
-		$this->xs('PhoronixTestSuite/TestInformation/AppVersion', $version);
+		$this->xs('TestInformation/AppVersion', $version);
 	}
 	public function set_test_title($title)
 	{
-		$this->xs('PhoronixTestSuite/TestInformation/Title', $title);
+		$this->xs('TestInformation/Title', $title);
 	}
 	public function set_identifier($identifier)
 	{
