@@ -231,7 +231,7 @@ class phodevi extends phodevi_base
 	{
 		$devices = phodevi::available_hardware_devices();
 
-		if(isset($devices[$device]))
+		if($device != null && isset($devices[$device]))
 		{
 			$notes_r = call_user_func(array('phodevi_' . $devices[$device], 'device_notes'));
 		}
