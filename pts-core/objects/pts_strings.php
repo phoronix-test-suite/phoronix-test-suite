@@ -117,7 +117,7 @@ class pts_strings
 	public static function string_bool($string)
 	{
 		// Used for evaluating if the user inputted a string that evaluates to true
-		return filter_var($string, FILTER_VALIDATE_BOOLEAN);
+		return $string != null && filter_var($string, FILTER_VALIDATE_BOOLEAN);
 	}
 	public static function add_trailing_slash($path)
 	{
