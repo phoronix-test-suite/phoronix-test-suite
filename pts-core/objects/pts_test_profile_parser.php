@@ -135,7 +135,7 @@ class pts_test_profile_parser
 			if(!isset($r[1]))
 			{
 				// Single
-				$r = $r[0];
+				$r = $r[0]->__toString();
 			}
 		}
 
@@ -384,36 +384,39 @@ class pts_test_profile_parser
 	{
 		$test_options = array();
 
-		foreach($this->xml->TestSettings->Option as $option)
+		if($this->xml->TestSettings->Option)
 		{
-			$names = array();
-			$messages = array();
-			$values = array();
-
-			foreach($option->Menu->Entry as $entry)
+			foreach($this->xml->TestSettings->Option as $option)
 			{
-				array_push($names, $entry->Name->__toString());
-				array_push($messages, $entry->Message->__toString());
-				array_push($values, $entry->Value->__toString());
+				$names = array();
+				$messages = array();
+				$values = array();
+
+				foreach($option->Menu->Entry as $entry)
+				{
+					array_push($names, $entry->Name->__toString());
+					array_push($messages, $entry->Message->__toString());
+					array_push($values, $entry->Value->__toString());
+				}
+
+				if($auto_process)
+				{
+					pts_test_run_options::auto_process_test_option($this->identifier, $option->Identifier, $names, $values, $messages);
+				}
+
+				$user_option = new pts_test_option($option->Identifier->__toString(), $option->DisplayName->__toString());
+				$user_option->set_option_prefix($option->ArgumentPrefix->__toString());
+				$user_option->set_option_postfix($option->ArgumentPostfix->__toString());
+
+				for($i = 0; $i < count($names); $i++)
+				{
+					$user_option->add_option($names[$i], (isset($values[$i]) ? $values[$i] : null), (isset($messages[$i]) ? $messages[$i] : null));
+				}
+
+				$user_option->set_option_default($option->DefaultEntry->__toString());
+
+				array_push($test_options, $user_option);
 			}
-
-			if($auto_process)
-			{
-				pts_test_run_options::auto_process_test_option($this->identifier, $option->Identifier, $names, $values, $messages);
-			}
-
-			$user_option = new pts_test_option($option->Identifier->__toString(), $option->DisplayName->__toString());
-			$user_option->set_option_prefix($option->ArgumentPrefix->__toString());
-			$user_option->set_option_postfix($option->ArgumentPostfix->__toString());
-
-			for($i = 0; $i < count($names); $i++)
-			{
-				$user_option->add_option($names[$i], (isset($values[$i]) ? $values[$i] : null), (isset($messages[$i]) ? $messages[$i] : null));
-			}
-
-			$user_option->set_option_default($option->DefaultEntry->__toString());
-
-			array_push($test_options, $user_option);
 		}
 
 		return $test_options;
