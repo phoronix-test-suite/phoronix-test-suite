@@ -20,7 +20,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class pts_test_profile_parser_wip
+class pts_test_profile_parser
 {
 	protected $identifier;
 	private $xml;
