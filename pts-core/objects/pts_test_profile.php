@@ -24,9 +24,9 @@ class pts_test_profile extends pts_test_profile_parser
 {
 	public $test_installation = false;
 
-	public function __construct($identifier = null, $override_values = null)
+	public function __construct($identifier = null, $override_values = null, $normal_init = true)
 	{
-		parent::__construct($identifier);
+		parent::__construct($identifier, $normal_init);
 
 		if($override_values != null && is_array($override_values))
 		{

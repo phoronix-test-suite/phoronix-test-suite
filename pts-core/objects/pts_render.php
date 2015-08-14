@@ -698,7 +698,7 @@ class pts_render
 			}
 		}
 
-		$test_profile = new pts_test_profile(null);
+		$test_profile = new pts_test_profile(null, null, false);
 		$test_profile->set_test_title($title);
 		$test_profile->set_result_scale($title);
 		$test_profile->set_display_format('BAR_GRAPH');

@@ -30,8 +30,17 @@ class pts_test_profile_parser
 	protected $block_test_extension_support = false;
 	private $file_location = false;
 
-	public function __construct($read = null)
+	public function __construct($read = null, $normal_init = true)
 	{
+		$this->overrides = array();
+		$this->tp_extends = null;
+
+		if($normal_init == false)
+		{
+			$this->identifier = $read;
+			return;
+		}
+
 		if(strpos($read, '<?xml version="1.0"?>') === false)
 		{
 			if(PTS_IS_CLIENT && (!defined('PTS_TEST_PROFILE_PATH') || !is_file(PTS_TEST_PROFILE_PATH . $read . '/test-definition.xml')))
@@ -82,8 +91,6 @@ class pts_test_profile_parser
 		}
 
 		$this->xml = simplexml_load_string($read);
-		$this->overrides = array();
-		$this->tp_extends = null;
 	}
 	public function get_raw_xml()
 	{
