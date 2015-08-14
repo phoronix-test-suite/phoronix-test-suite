@@ -102,12 +102,6 @@ class pts_test_profile_parser
 	{
 		return $this->get_identifier();
 	}
-	public function __clone()
-	{
-		$this->xml = clone $this->xml;
-		$this->overrides = clone $this->overrides;
-		$this->tp_extends = clone $this->tp_extends;
-	}
 	public function block_test_extension_support()
 	{
 		$this->block_test_extension_support = true;
