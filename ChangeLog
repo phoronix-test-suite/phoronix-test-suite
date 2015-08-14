@@ -5,6 +5,8 @@ Phoronix Test Suite (Git)
 - phoromatic: Improvements when server addressing setup fails
 - pts-core: Show estimated date/time next to estimated duration left on tests
 - pts-core: Support /usr/lib/os-release for stateless systems
+- pts-core: Allow listing multiple items via the info sub-command
+- pts-core: Add new test profile parsing back-end
 
 Phoronix Test Suite 5.8.1
 23 June 2015

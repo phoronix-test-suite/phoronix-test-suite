@@ -86,6 +86,20 @@ class nye_XmlWriter
 			$pointer = &$pointer[$nodes[$i]];
 		}
 	}
+	public function addXmlNodeFromXG($xml_location, &$test_profile, $default_value = null)
+	{
+		$value = $test_profile->xg($xml_location);
+
+		if(empty($value))
+		{
+			$value = $default_value;
+
+			if($default_value != null)
+				$this->times_fallback++;
+		}
+
+		$this->addXmlNode($xml_location, $value);
+	}
 	public function addXmlNodeFromReader($xml_location, &$xml, $default_value = null)
 	{
 		$value = $xml->getXmlValue($xml_location);
@@ -100,14 +114,19 @@ class nye_XmlWriter
 
 		$this->addXmlNode($xml_location, $value);
 	}
-	public function times_fallback()
+	public function addXmlNodeFromReaderXGWNE($xml_location, &$test_profile)
 	{
-		return $this->times_fallback;
+		$value = $xml->xg($xml_location);
+		$this->addXmlNodeWNE($xml_location, $value);
 	}
 	public function addXmlNodeFromReaderWNE($xml_location, &$xml)
 	{
 		$value = $xml->getXmlValue($xml_location);
 		$this->addXmlNodeWNE($xml_location, $value);
+	}
+	public function times_fallback()
+	{
+		return $this->times_fallback;
 	}
 	public function saveXMLFile($to_file)
 	{

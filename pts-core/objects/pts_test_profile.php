@@ -30,13 +30,19 @@ class pts_test_profile extends pts_test_profile_parser
 
 		if($override_values != null && is_array($override_values))
 		{
-			$this->xml_parser->overrideXMLValues($override_values);
+			$this->set_override_values($override_values);
 		}
 
 		if(PTS_IS_CLIENT && is_file($this->get_install_dir() . 'pts-install.xml'))
 		{
 			$this->test_installation = new pts_installed_test($this);
 		}
+	}
+	public function validate()
+	{
+		$dom = new DOMDocument();
+		$dom->loadXML($this->get_raw_xml());
+		return $dom->schemaValidate(PTS_OPENBENCHMARKING_PATH . 'schemas/test-profile.xsd');
 	}
 	public static function is_test_profile($identifier)
 	{
@@ -49,13 +55,16 @@ class pts_test_profile extends pts_test_profile_parser
 	}
 	public function get_override_values()
 	{
-		return $this->xml_parser->getOverrideValues();
+		return $this->overrides;
 	}
 	public function set_override_values($override_values)
 	{
 		if(is_array($override_values))
 		{
-			$this->xml_parser->overrideXMLValues($override_values);
+			foreach($override_values as $xml_tag => $value)
+			{
+				$this->xs($xml_tag, $value);
+			}
 		}
 	}
 	public function get_download_size($include_extensions = true, $divider = 1048576)
@@ -257,15 +266,8 @@ class pts_test_profile extends pts_test_profile_parser
 	public function is_test_architecture_supported()
 	{
 		// Check if the system's architecture is supported by a test
-		$supported = true;
 		$archs = $this->get_supported_architectures();
-
-		if(!empty($archs))
-		{
-			$supported = phodevi::cpu_arch_compatible($archs);
-		}
-
-		return $supported;
+		return !empty($archs) ? phodevi::cpu_arch_compatible($archs) : true;
 	}
 	public function is_core_version_supported()
 	{
@@ -387,16 +389,11 @@ class pts_test_profile extends pts_test_profile_parser
 	}
 	public function to_json()
 	{
-		$file = $this->xml_parser->getFileLocation();
-
-		if(is_file($file))
-		{
-			$file = file_get_contents($file);
-			$file = str_replace(array("\n", "\r", "\t"), '', $file);
-			$file = trim(str_replace('"', "'", $file));
-			$simple_xml = simplexml_load_string($file);
-			return json_encode($simple_xml);
-		}
+		$file = $this->get_raw_xml();
+		$file = str_replace(array("\n", "\r", "\t"), '', $file);
+		$file = trim(str_replace('"', "'", $file));
+		$simple_xml = simplexml_load_string($file);
+		return json_encode($simple_xml);
 	}
 }
 

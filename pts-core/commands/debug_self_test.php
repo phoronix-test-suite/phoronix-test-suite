@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2013, Phoronix Media
-	Copyright (C) 2013, Michael Larabel
+	Copyright (C) 2013 - 2015, Phoronix Media
+	Copyright (C) 2013 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ class debug_self_test implements pts_option_interface
 			'detailed_system_info' => null,
 			'list_available_tests' => null,
 			'list_available_suites' => null,
-			'info' => array('xonotic'),
+			'info' => array('pts/all'),
 			'clone_openbenchmarking_result' => array('1107247-LI-MESACOMMI48'),
 		//	'refresh_graphs' => array('1107247-LI-MESACOMMI48'),
 			'result_file_to_text' => array('1107247-LI-MESACOMMI48'),
