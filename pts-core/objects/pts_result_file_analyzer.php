@@ -313,10 +313,9 @@ class pts_result_file_analyzer
 	}
 	public static function system_value_to_ir_value($value, $index)
 	{
-		$ir = new pts_graph_ir_value($value);
-
-		if(!in_array($index, array('Memory', 'System Memory', 'Desktop', 'Screen Resolution', 'System Layer')) && $value != 'Unknown')
-		{
+		// TODO XXX: Move this logic off to OpenBenchmarking.org script
+		/*
+		!in_array($index, array('Memory', 'System Memory', 'Desktop', 'Screen Resolution', 'System Layer')) &&
 			$search_break_characters = array('@', '(', '/', '+', '[', '<', '*', '"');
 			for($i = 0, $x = strlen($value); $i < $x; $i++)
 			{
@@ -326,11 +325,12 @@ class pts_result_file_analyzer
 					break;
 				}
 			}
+		*/
+		$ir = new pts_graph_ir_value($value);
 
-			if($value != null)
-			{
-				$ir->set_attribute('href', 'http://openbenchmarking.org/s/' . $value);
-			}
+		if($value != 'Unknown' && $value != null)
+		{
+			$ir->set_attribute('href', 'http://openbenchmarking.org/s/' . $value);
 		}
 
 		return $ir;
