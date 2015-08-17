@@ -584,6 +584,11 @@ class pts_render
 			{
 				$graph->addGraphIdentifierNote($identifier, 'MIN: ' . $data['min-result'] . ' / MAX: ' . $data['max-result']);
 			}
+			else if(isset($data['min-result']))
+			{
+				$graph->addGraphIdentifierNote($identifier, 'MIN: ' . $data['min-result']);
+			}
+
 			if(isset($data['install-footnote']) && $data['install-footnote'] != null)
 			{
 				$graph->addTestNote($identifier . ': ' . $data['install-footnote']);

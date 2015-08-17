@@ -8,6 +8,7 @@ Phoronix Test Suite (Git)
 - pts-core: Allow listing multiple items via the info sub-command
 - pts-core: Add new test profile parsing back-end
 - pts-core: Unconditionally always ensure __GL_SYNC_TO_VBLANK=0
+- pts_Graph: Support reporting a min result on graphs when there is no max value to be reported
 - toggle_screensaver: GNOME 3 update
 
 Phoronix Test Suite 5.8.1
