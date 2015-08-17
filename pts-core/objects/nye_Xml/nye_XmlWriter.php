@@ -116,7 +116,7 @@ class nye_XmlWriter
 	}
 	public function addXmlNodeFromXGWNE($xml_location, &$test_profile)
 	{
-		$value = $test+[rpfo;e->xg($xml_location);
+		$value = $test_profile->xg($xml_location);
 		$this->addXmlNodeWNE($xml_location, $value);
 	}
 	public function addXmlNodeFromReaderWNE($xml_location, &$xml)
