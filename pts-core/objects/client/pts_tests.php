@@ -138,6 +138,7 @@ class pts_tests
 
 		// Safe-guards to try to ensure more accurate testing
 		$extra_vars['vblank_mode'] = '0'; // Avoid sync to vblank with the open-source drivers
+		$extra_vars['__GL_SYNC_TO_VBLANK'] = '0'; // Avoid sync to vblank with the NVIDIA binary drivers
 		$extra_vars['CCACHE_DISABLE'] = '1'; // Should avoid ccache being used in compiler tests
 
 		foreach($test_profile->extended_test_profiles() as $i => $this_test_profile)
