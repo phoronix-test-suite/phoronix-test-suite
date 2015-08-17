@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2014, Phoronix Media
-	Copyright (C) 2008 - 2014, Michael Larabel
+	Copyright (C) 2008 - 2015, Phoronix Media
+	Copyright (C) 2008 - 2015, Michael Larabel
 	toggle_screensaver.php: A module to toggle the screensaver while tests are running on GNOME
 
 	This program is free software; you can redistribute it and/or modify
@@ -24,7 +24,7 @@
 class toggle_screensaver extends pts_module_interface
 {
 	const module_name = 'Toggle Screensaver';
-	const module_version = '1.5.1';
+	const module_version = '1.5.2';
 	const module_description = 'This module toggles the system\'s screensaver while the Phoronix Test Suite is running. At this time, the GNOME and KDE screensavers are supported.';
 	const module_author = 'Phoronix Media';
 
@@ -33,6 +33,7 @@ class toggle_screensaver extends pts_module_interface
 	static $screensaver_halted = false;
 	static $gnome2_screensaver_halted = false;
 	static $gnome3_screensaver_halted = false;
+	static $gnome3_lockscreen_disabled = false;
 	static $gnome3_screensaver_halted_old = false;
 	static $kde_screensaver_halted = false;
 	static $gnome_gconftool = false;
@@ -107,6 +108,16 @@ class toggle_screensaver extends pts_module_interface
 				// Stop the GNOME 3.x Screensaver
 				shell_exec('gsettings set org.gnome.desktop.session idle-delay 0 2>&1');
 				self::$gnome3_screensaver_halted = pts_strings::last_in_string($is_gnome3_screensaver_enabled);
+			}
+
+			// GNOME 3.x Lock-Screen
+			$is_gnome3_lockscreen_enabled = trim(shell_exec('gsettings get org.gnome.desktop.lockdown disable-lock-screen 2>&1'));
+
+			if(stripos($is_gnome3_lockscreen_enabled, 'no such key') === false && pts_strings::last_in_string($is_gnome3_lockscreen_enabled) == 'false')
+			{
+				// Stop the GNOME 3.x Lock Screen
+				shell_exec('gsettings set org.gnome.desktop.lockdown disable-lock-screen true 2>&1');
+				self::$gnome3_lockscreen_disabled = true;
 			}
 
 			// This GNOME3 GSettings method is deprecated on distributions like GNOME 3.8 with Fedora 19
@@ -188,6 +199,11 @@ class toggle_screensaver extends pts_module_interface
 		{
 			// Restore the GNOME Screensaver
 			shell_exec('gsettings set org.gnome.desktop.session idle-delay ' . self::$gnome3_screensaver_halted . ' 2>&1');
+		}
+		if(self::$gnome3_lockscreen_disabled)
+		{
+			// Restore the lock screen
+			shell_exec('gsettings set org.gnome.desktop.lockdown disable-lock-screen false 2>&1');
 		}
 		if(self::$gnome3_screensaver_halted_old == true)
 		{
