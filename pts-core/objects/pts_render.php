@@ -580,13 +580,16 @@ class pts_render
 		foreach($json as $identifier => &$data)
 		{
 			// TODO XXX: Ultimately merge this data into the SE +/- line...
-			if(isset($data['min-result']) && isset($data['max-result']))
+			if(isset($data['min-result']))
 			{
-				$graph->addGraphIdentifierNote($identifier, 'MIN: ' . $data['min-result'] . ' / MAX: ' . $data['max-result']);
-			}
-			else if(isset($data['min-result']))
-			{
-				$graph->addGraphIdentifierNote($identifier, 'MIN: ' . $data['min-result']);
+				if(isset($data['max-result']))
+				{
+					$graph->addGraphIdentifierNote($identifier, 'MIN: ' . $data['min-result'] . ' / MAX: ' . $data['max-result']);
+				}
+				else
+				{
+					$graph->addGraphIdentifierNote($identifier, 'MIN: ' . $data['min-result']);
+				}
 			}
 
 			if(isset($data['install-footnote']) && $data['install-footnote'] != null)

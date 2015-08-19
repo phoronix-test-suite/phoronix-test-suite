@@ -2,12 +2,13 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
-- phoromatic: Improvements when server addressing setup fails
 - pts-core: Show estimated date/time next to estimated duration left on tests
 - pts-core: Support /usr/lib/os-release for stateless systems
 - pts-core: Allow listing multiple items via the info sub-command
 - pts-core: Add new test profile parsing back-end
 - pts-core: Unconditionally always ensure __GL_SYNC_TO_VBLANK=0
+- pts-core: Fixes for test profile validation following recent restructuring
+- phoromatic: Improvements when server addressing setup fails
 - pts_Graph: Support reporting a min result on graphs when there is no max value to be reported
 - toggle_screensaver: GNOME 3 update
 

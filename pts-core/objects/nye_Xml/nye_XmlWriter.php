@@ -116,7 +116,12 @@ class nye_XmlWriter
 	}
 	public function addXmlNodeFromXGWNE($xml_location, &$test_profile)
 	{
-		$value = $test_profile->xg($xml_location);
+		$xg = $xml_location;
+		if(substr($xg, 0, 18) == 'PhoronixTestSuite/')
+		{
+			$xg = substr($xg, 18);
+		}
+		$value = $test_profile->xg($xg);
 		$this->addXmlNodeWNE($xml_location, $value);
 	}
 	public function addXmlNodeFromReaderWNE($xml_location, &$xml)
