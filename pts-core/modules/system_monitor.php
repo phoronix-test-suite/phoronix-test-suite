@@ -26,7 +26,7 @@
 class system_monitor extends pts_module_interface
 {
 	const module_name = 'System Monitor';
-	const module_version = '3.1.2';
+	const module_version = '3.2.0';
 	const module_description = 'This module contains sensor monitoring support.';
 	const module_author = 'Michael Larabel';
 
@@ -41,7 +41,7 @@ class system_monitor extends pts_module_interface
 
 	private static $sensor_monitoring_frequency = 2;
 	private static $test_run_timer = 0;
-
+	private static $perf_per_watt_collection;
 	private static $monitor_i915_energy = false; // special case of monitoring since it's not tapping Phodevi (right now at least)
 
 	public static function module_environmental_variables()
@@ -84,6 +84,7 @@ class system_monitor extends pts_module_interface
 			// We need to ensure the system power consumption is being tracked to get performance-per-Watt
 			pts_arrays::unique_push($to_show, 'sys.power');
 			self::$individual_monitoring = true;
+			self::$perf_per_watt_collection = array();
 			echo PHP_EOL . 'To Provide Performance-Per-Watt Outputs.' . PHP_EOL;
 		}
 
@@ -210,9 +211,10 @@ class system_monitor extends pts_module_interface
 					{
 						$test_result->test_profile->set_result_proportion('HIB');
 						$test_result->test_profile->set_result_scale('Performance Per Watt');
-						$test_result->set_result(pts_math::set_precision((1 / $test_result->get_result()) / $watt_average) / 1);
+						$test_result->set_result(pts_math::set_precision((1 / $test_result->get_result()) / $watt_average));
 						$result_file_writer->add_result_from_result_object_with_value_string($test_result, $test_result->get_result());
 					}
+					array_push(self::$perf_per_watt_collection, $test_result->get_result());
 				}
 			}
 		}
@@ -270,6 +272,24 @@ class system_monitor extends pts_module_interface
 	}
 	public static function __event_results_process(&$test_run_manager)
 	{
+		if(count(self::$perf_per_watt_collection) > 2)
+		{
+			// Performance per watt overall
+			$avg = array_sum(self::$perf_per_watt_collection) / count(self::$perf_per_watt_collection);
+			$test_profile = new pts_test_profile();
+			$test_result = new pts_test_result($test_profile);
+			$test_result->test_profile->set_test_title('Meta Performance Per Watt');
+			$test_result->test_profile->set_identifier(null);
+			$test_result->test_profile->set_version(null);
+			$test_result->test_profile->set_result_proportion(null);
+			$test_result->test_profile->set_display_format('BAR_GRAPH');
+			$test_result->test_profile->set_result_scale('Performance Per Watt');
+			$test_result->test_profile->set_result_proportion('HIB');
+			$test_result->set_used_arguments_description('Performance Per Watt');
+			$test_result->set_used_arguments('Per-Per-Watt');
+			$test_run_manager->result_file_writer->add_result_from_result_object_with_value_string($test_result, $avg);
+		}
+
 		echo PHP_EOL . 'Finishing System Sensor Monitoring Process' . PHP_EOL;
 		sleep((self::$sensor_monitoring_frequency * 4));
 		foreach(self::$to_monitor as $sensor)
