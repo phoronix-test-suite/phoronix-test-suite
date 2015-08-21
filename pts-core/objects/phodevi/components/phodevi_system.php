@@ -338,6 +338,7 @@ class phodevi_system extends phodevi_device_interface
 							'0xaad7aaea' => 'PanFS', // Panasas FS
 							'0xf2f52010' => 'F2FS',
 							'0xc36400' => 'CephFS',
+							'0xca451a4e' => 'BcacheFS'
 							);
 
 						foreach($known_magic_blocks as $hex => $name)

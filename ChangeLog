@@ -13,6 +13,7 @@ Phoronix Test Suite (Git)
 - toggle_screensaver: GNOME 3 update
 - perf_per_dollar: Add performance-per-dollar calculator module based on environment variable input
 - system_monitor: Support reporting a meta/overall performance-per-Watt result at end of result file when activated
+- phodevi: Add BcacheFS superblock
 
 Phoronix Test Suite 5.8.1
 23 June 2015
