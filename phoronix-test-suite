@@ -92,9 +92,9 @@ EOT
 if [ -x /usr/bin/apt-get ]
 then
 	echo "The command to likely run for your operating system is: "
-	echo "# apt-get install php5-cli php5-json php5-gd"
+	echo "# apt-get install php5-cli"
 	echo " "
-elif [ -x /usr/bin/yum ]
+elif [ -x /usr/bin/yum ] ||  [ -x /usr/bin/dnf ]
 then
 	echo "The command to likely run for your operating system is: "
 	echo "# yum install php-cli php-xml"
