@@ -23,7 +23,7 @@
 class reorder_result_file implements pts_option_interface
 {
 	const doc_section = 'Result Management';
-	const doc_description = 'This option is used if you wish to change the order in which test results are shown in the Phoronix Test Suite Results Viewer and the contained graphs. The user must specify a saved results file and then they will be prompted to select the results identifiers one at a time in the order they would like them to be displayed from left to right.';
+	const doc_description = 'This option is used if you wish to manually change the order in which test results are shown in the Phoronix Test Suite Results Viewer and the contained graphs. The user must specify a saved results file and then they will be prompted to select the results identifiers one at a time in the order they would like them to be displayed from left to right.';
 
 	public static function argument_checks()
 	{

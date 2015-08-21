@@ -147,6 +147,14 @@ class pts_svg_dom
 		$attributes['d'] = "M$center_x,$center_y L$p1_x,$p1_y A$radius,$radius 0 $arc,1 $p2_x,$p2_y Z";
 		$this->add_element('path', $attributes);
 	}
+	public function draw_svg_circle($center_x, $center_y, $radius, $color, $extra_attributes = null)
+	{
+		$extra_attributes['cx'] = $center_x;
+		$extra_attributes['cy'] = $center_y;
+		$extra_attributes['r'] = $radius;
+		$extra_attributes['fill'] = $color;
+		$this->add_element('circle', $extra_attributes);
+	}
 	public function add_element($element_type, $attributes = array())
 	{
 		$el = $this->dom->createElement($element_type);

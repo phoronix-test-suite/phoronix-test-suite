@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2013, Phoronix Media
-	Copyright (C) 2009 - 2013, Michael Larabel
+	Copyright (C) 2009 - 2015, Phoronix Media
+	Copyright (C) 2009 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -23,674 +23,230 @@
 class phoromatic extends pts_module_interface
 {
 	const module_name = 'Phoromatic Client';
-	const module_version = '2.0.0';
-	const module_description = 'The Phoromatic client is used for connecting to a Phoromatic server (Phoromatic.com or a locally run server) to facilitate the automatic running of tests, generally across multiple test nodes in a routine manner. For more details visit http://www.phoromatic.com/';
+	const module_version = '1.0.0';
+	const module_description = 'The Phoromatic client is used for connecting to a Phoromatic server (Phoromatic.com or a locally run server) to facilitate the automatic running of tests, generally across multiple test nodes in a routine manner. For more details visit http://www.phoromatic.com/. This module is intended to be used with Phoronix Test Suite 5.2+ clients and servers.';
 	const module_author = 'Phoronix Media';
 
-	static $phoromatic_server_build = false;
+	private static $account_id = null;
+	private static $server_address = null;
+	private static $server_http_port = null;
+	private static $server_ws_port = null;
+	private static $is_running_as_phoromatic_node = false;
+	private static $log_file = null;
 
-	static $phoromatic_host = null;
-	static $phoromatic_account = null;
-	static $phoromatic_verifier = null;
-	static $phoromatic_system = null;
-	static $openbenchmarking_upload_json = null;
+	private static $p_save_identifier = null;
+	private static $p_schedule_id = null;
+	private static $p_trigger_id = null;
+
+	private static $test_run_manager = null;
 
 	public static function module_info()
 	{
-		return 'The Phoromatic module contains the client support for interacting with Phoromatic and Phoromatic Tracker services. A public, free reference implementation of Phoromatic can be found at http://www.phoromatic.com/. A commercial version is available to enterprise customers for installation onto their intranet. For more information, contact Phoronix Media.';
-	}
-	public static function module_setup()
-	{
-		return array(
-		new pts_module_option('remote_host', 'Enter the URL to host', 'HTTP_URL', 'http://www.phoromatic.com/'),
-		new pts_module_option('remote_account', 'Enter the account code', 'ALPHA_NUMERIC'),
-		new pts_module_option('remote_verifier', 'Enter the verification code', 'ALPHA_NUMERIC'),
-		new pts_module_option('system_description', 'Enter a short (optional) description for this system', null, null, null, false)
-		);
-	}
-	public static function module_setup_validate($options)
-	{
-		if(substr($options['remote_host'], -14) != 'phoromatic.php')
-		{
-			$options['remote_host'] = pts_strings::add_trailing_slash($options['remote_host']) . 'phoromatic.php';
-		}
-
-		$server_response = phoromatic::upload_to_remote_server(array(
-			'r' => 'setup',
-			'h' => phodevi::system_hardware(true),
-			's' => phodevi::system_software(true),
-			'o' => phodevi::read_property('system', 'hostname'),
-			'sys_desc' => $options['system_description']
-			),
-			$options['remote_host'], $options['remote_account'], $options['remote_verifier']);
-
-		$returned_id = self::read_xml_value($server_response, 'PhoronixTestSuite/Phoromatic/General/Response');
-
-		unset($options['system_description']); // No reason to have this locally just pass it to the server
-
-		if(!empty($returned_id))
-		{
-			$options['remote_system'] = $returned_id;
-			echo PHP_EOL . 'Run Phoromatic by entering: phoronix-test-suite phoromatic.start' . PHP_EOL;
-		}
-		else
-		{
-			echo PHP_EOL . 'Configuration Failed!' . PHP_EOL;
-			$options = array();
-		}
-
-		return $options;
+		return 'The Phoromatic module contains the client support for interacting with Phoromatic and Phoromatic Tracker services.';
 	}
 	public static function user_commands()
 	{
-		return array(
-			'start' => 'user_start',
-			'user_system_return' => 'user_system_return',
-			'upload_results' => 'upload_unscheduled_results',
-			'clone_results' => 'clone_results',
-			'system_schedule' => 'system_schedule',
-			'system_schedule_today' => 'system_schedule_today',
-			'send_message' => 'report_message_to_server'
-			);
+		return array('connect' => 'run_connection', 'explore' => 'explore_network', 'upload_result' => 'upload_unscheduled_result', 'set_root_admin_password' => 'set_root_admin_password', 'list_results' => 'recent_phoromatic_server_results', 'clone' => 'clone_phoromatic_server_result', 'export_results_for_account_schedules' => 'generate_export_result_schedule_dump');
 	}
-
-	//
-	// User Run Commands
-	//
-
-	public static function user_start()
+	public static function upload_unscheduled_result($args)
 	{
-		if(pts_client::create_lock(PTS_USER_PATH . 'phoromatic_lock') == false)
-		{
-			trigger_error('Phoromatic is already running.', E_USER_ERROR);
+		$server_setup = self::setup_server_addressing($args);
+
+		if(!$server_setup)
 			return false;
-		}
-		if(!phoromatic::phoromatic_setup_module())
-		{
-			return false;
-		}
 
-		phoromatic::user_system_process();
-	}
-	public static function upload_unscheduled_results($to_upload)
-	{
-		if(!phoromatic::phoromatic_setup_module())
+		$uploads = 0;
+		foreach($args as $arg)
 		{
-			return false;
-		}
-
-		if(!isset($to_upload[0]) || pts_result_file::is_test_result_file($to_upload[0]) == false)
-		{
-			echo PHP_EOL . 'No test result file was found to upload.' . PHP_EOL;
-			return false;
-		}
-
-		phoromatic::upload_unscheduled_test_results($to_upload[0]);
-	}
-	public static function clone_results($to_clone)
-	{
-		if(!phoromatic::phoromatic_setup_module())
-		{
-			return false;
-		}
-
-		if(!isset($to_clone[0]) || empty($to_clone[0]))
-		{
-			echo PHP_EOL . 'No clone string was provided.' . PHP_EOL;
-			return false;
-		}
-
-		$server_response = phoromatic::upload_to_remote_server(array(
-			'r' => 'clone_test_results',
-			'i' => $to_clone[0]
-			));
-
-		switch(self::read_xml_value($server_response, 'PhoronixTestSuite/Phoromatic/General/Response'))
-		{
-			case 'TRUE':
-				$identifier = 'phoromatic-clone-' . str_replace(array('_', ':'), null, $to_clone[0]);
-				pts_client::save_test_result($identifier . '/composite.xml', $server_response); // TODO: regenerate the XML so that the Phoromatic response bits are not included
-				echo PHP_EOL . 'Result Saved To: ' . PTS_SAVE_RESULTS_PATH . $identifier . '/composite.xml' . PHP_EOL . PHP_EOL;
-				pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . $identifier . '/index.html');
-				break;
-			case 'SETTING_DISABLED':
-				echo PHP_EOL . 'You need to enable this support from your Phoromatic account web interface.' . PHP_EOL;
-				break;
-			default:
-			case 'ERROR':
-				echo PHP_EOL . 'An Error Occurred.' . PHP_EOL;
-				break;
-		}
-	}
-	public static function system_schedule()
-	{
-		if(!phoromatic::phoromatic_setup_module())
-		{
-			return false;
-		}
-
-		$server_response = phoromatic::upload_to_remote_server(array(
-			'r' => 'system_schedule'
-			));
-
-		$schedule_xml = new nye_XmlReader($server_response);
-		$schedule_titles = $schedule_xml->getXmlArrayValues('PhoronixTestSuite/Phoromatic/Schedules/TestSchedule/Title');
-		$schedule_description = $schedule_xml->getXmlArrayValues('PhoronixTestSuite/Phoromatic/Schedules/TestSchedule/Description');
-		$schedule_active_on = $schedule_xml->getXmlArrayValues('PhoronixTestSuite/Phoromatic/Schedules/TestSchedule/ActiveOn');
-		$schedule_start_time = $schedule_xml->getXmlArrayValues('PhoronixTestSuite/Phoromatic/Schedules/TestSchedule/RunAt');
-
-		if(count($schedule_titles) == 0)
-		{
-			echo PHP_EOL . 'No test schedules for this system were found on the Phoromatic Server.' . PHP_EOL;
-		}
-		else
-		{
-			for($i = 0; $i < count($schedule_titles); $i++)
+			if(pts_types::is_result_file($arg))
 			{
-				echo self::phoromatic_schedule_entry_string($schedule_titles[$i], $schedule_description[$i], $schedule_start_time[$i], $schedule_active_on[$i]);
+				$uploads++;
+				echo PHP_EOL . 'Uploading: ' . $arg . PHP_EOL;
+				$result_file = pts_types::identifier_to_object($arg);
+				$server_response = self::upload_test_result($result_file);
+				$server_response = json_decode($server_response, true);
+				if(isset($server_response['phoromatic']['response']))
+					echo '   Result Uploaded' . PHP_EOL;
+				else
+					echo '   Upload Failed' . PHP_EOL;
 			}
 		}
 
-		echo PHP_EOL;
+		if($uploads == 0)
+			echo PHP_EOL . 'No Result Files Found To Upload.' . PHP_EOL;
 	}
-	public static function system_schedule_today()
+	public static function set_root_admin_password()
 	{
-		if(!phoromatic::phoromatic_setup_module())
+		phoromatic_server::prepare_database();
+		$root_admin_pw = phoromatic_server::read_setting('root_admin_pw');
+
+		if($root_admin_pw != null)
 		{
-			return false;
-		}
-
-		$server_response = phoromatic::upload_to_remote_server(array(
-			'r' => 'system_schedule'
-			));
-
-		$schedule_xml = new nye_XmlReader($server_response);
-		$schedule_titles = $schedule_xml->getXmlArrayValues('PhoronixTestSuite/Phoromatic/Schedules/TestSchedule/Title');
-		$schedule_description = $schedule_xml->getXmlArrayValues('PhoronixTestSuite/Phoromatic/Schedules/TestSchedule/Description');
-		$schedule_active_on = $schedule_xml->getXmlArrayValues('PhoronixTestSuite/Phoromatic/Schedules/TestSchedule/ActiveOn');
-		$schedule_start_time = $schedule_xml->getXmlArrayValues('PhoronixTestSuite/Phoromatic/Schedules/TestSchedule/RunAt');
-
-		if(count($schedule_titles) == 0)
-		{
-			echo PHP_EOL . 'No test schedules for this system were found on the Phoromatic Server.' . PHP_EOL;
-		}
-		else
-		{
-			for($i = 0; $i < count($schedule_titles); $i++)
-			{
-				if($schedule_active_on[$i][(date('w'))] != 1)
-				{
-					continue;
-				}
-
-				echo self::phoromatic_schedule_entry_string($schedule_titles[$i], $schedule_description[$i], $schedule_start_time[$i], $schedule_active_on[$i]);
-			}
-		}
-
-		echo PHP_EOL;
-	}
-	public static function send_message_to_server($msg)
-	{
-		if(!phoromatic::phoromatic_setup_module())
-		{
-			return false;
-		}
-
-		if(empty($msg))
-		{
-			echo PHP_EOL . 'Pass the message as the first argument.' . PHP_EOL;
-			return false;
-		}
-
-		if(self::report_warning_to_phoromatic('MESSAGE: ' . implode(' ', $msg)))
-		{
-			echo PHP_EOL . 'Message Sent To Phoromatic Server.' . PHP_EOL;
-		}
-		else
-		{
-			echo PHP_EOL . 'Message Failed To Send.' . PHP_EOL;
-		}
-	}
-
-	//
-	// Core Functions
-	//
-
-	public static function user_system_process()
-	{
-		define('PHOROMATIC_PROCESS', true);
-		$last_communication_minute = date('i');
-		$communication_attempts = 0;
-		static $current_hw = null;
-		static $current_sw = null;
-
-		if(define('PHOROMATIC_START', true))
-		{
-			echo PHP_EOL . 'Registering Status With Phoromatic Server @ ' . date('H:i:s') . PHP_EOL;
-
-			$times_tried = 0;
 			do
 			{
-				if($times_tried > 0)
-				{
-					echo PHP_EOL . 'Connection to server failed. Trying again in 60 seconds...' . PHP_EOL;
-					sleep(60);
-				}
-
-				$update_sd = phoromatic::update_system_details();
-				$times_tried++;
+				$check_root_pw = pts_user_io::prompt_user_input('Please enter the existing root-admin password');
 			}
-			while(!$update_sd && $times_tried < 5);
-
-			if(!$update_sd)
-			{
-				echo 'Server connection still failed. Exiting...' . PHP_EOL;
-				return false;
-			}
-
-			$current_hw = phodevi::system_hardware(true);
-			$current_sw = phodevi::system_software(true);
-
-			echo PHP_EOL . 'Idling 30 seconds for system to settle...' . PHP_EOL;
-			sleep(30);
+			while(hash('sha256', 'PTS' . $check_root_pw) != $root_admin_pw);
 		}
 
+		echo PHP_EOL . 'The new root-admin password must be at least six characters long.' . PHP_EOL;
 		do
 		{
-			$exit_loop = false;
-			echo PHP_EOL . 'Checking Status From Phoromatic Server @ ' . date('H:i:s');
+			$new_root_pw = pts_user_io::prompt_user_input('Please enter the new root-admin password');
+		}
+		while(strlen($new_root_pw) < 6);
 
-			if($last_communication_minute == date('i') && $communication_attempts > 2)
-			{
-				// Something is wrong, Phoromatic shouldn't be communicating with server more than three times a minute
-				$response = 'idle';
-			}
-			else
-			{
-				$server_response = phoromatic::upload_to_remote_server(array('r' => 'status_check'));
-				$xml_parser = new nye_XmlReader($server_response);
-				$response = $xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/Response');
+		$new_root_pw = hash('sha256', 'PTS' . $new_root_pw);
+		$root_admin_pw = phoromatic_server::save_setting('root_admin_pw', $new_root_pw);
+	}
+	public static function generate_export_result_schedule_dump($r)
+	{
+		phoromatic_server::prepare_database();
+		if(isset($r[0]) && !empty($r[0]))
+		{
+			phoromatic_server::generate_result_export_dump($r[0]);
+		}
+	}
+	public static function explore_network()
+	{
+		pts_client::$display->generic_heading('Phoromatic Servers');
 
-				if(date('i') != $last_communication_minute)
+		$archived_servers = pts_client::available_phoromatic_servers();
+
+		$server_count = 0;
+		foreach($archived_servers as $archived_server)
+		{
+			$response = pts_network::http_get_contents('http://' . $archived_server['ip'] . ':' . $archived_server['http_port'] . '/server.php?phoromatic_info');
+
+			if(!empty($response))
+			{
+				$response = json_decode($response, true);
+				if($response && isset($response['pts']))
 				{
-					$last_communication_minute = date('i');
-					$communication_attempts = 0;
-				}
+					$server_count++;
+					echo PHP_EOL . 'IP: ' . $archived_server['ip'] . PHP_EOL;
+					echo 'HTTP PORT: ' . $archived_server['http_port'] . PHP_EOL;
+					echo 'WEBSOCKET PORT: ' . $response['ws_port'] . PHP_EOL;
+					echo 'SERVER: ' . $response['http_server'] . PHP_EOL;
+					echo 'PHORONIX TEST SUITE: ' . $response['pts'] . ' [' . $response['pts_core'] . ']' . PHP_EOL;
 
-				$communication_attempts++;
-			}
-
-			if($response != null)
-			{
-				echo ' [' . $response . ']' . PHP_EOL;
-			}
-
-			switch($response)
-			{
-				case 'benchmark':
-					$test_flags = pts_c::auto_mode;
-
-					do
+					// TODO XXX fix/finish below code...
+					if(false && ($ws = new phoromatic_client_comm_ws($archived_server['ip'], $response['ws_port'])))
 					{
-						$suite_identifier = 'phoromatic-' . rand(1000, 9999);
+						// Query the WebSocket Server for some Phoromatic Server details
+						$s = $ws->send(array('phoromatic' => array('event' => 'pts-version')));
+						$s = $ws->send(array('phoromatic' => array('event' => 'download-cache')));
+						$r = $ws->receive_until('download-cache');
+						var_dump($r);
 					}
-					while(is_file(PTS_TEST_SUITE_PATH . 'local/' . $suite_identifier . '/suite-definition.xml'));
-
-					pts_file_io::mkdir(PTS_TEST_SUITE_PATH . 'local/' . $suite_identifier);
-					file_put_contents(PTS_TEST_SUITE_PATH . 'local/' . $suite_identifier . '/suite-definition.xml', $server_response);
-
-					$phoromatic_schedule_id = $xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/ID');
-					$phoromatic_results_identifier = $xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/SystemName');
-					$phoromatic_trigger = $xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/Trigger');
-					self::$openbenchmarking_upload_json = null;
-
-					$suite_identifier = 'local/' . $suite_identifier;
-					if(pts_strings::string_bool($xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/RunInstallCommand', 'TRUE')))
+					else
 					{
-						phoromatic::set_user_context($xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/SetContextPreInstall'), $phoromatic_trigger, $phoromatic_schedule_id, 'INSTALL');
 
-						if(pts_strings::string_bool($xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/ForceInstallTests', 'TRUE')))
+						// Provide some other server info via HTTP
+
+						$repo = pts_network::http_get_contents('http://' . $archived_server['ip'] . ':' . $archived_server['http_port'] . '/download-cache.php?repo');
+						echo 'DOWNLOAD CACHE: ';
+						if(!empty($repo))
 						{
-							$test_flags |= pts_c::force_install;
-						}
-
-						pts_client::set_test_flags($test_flags);
-						pts_test_installer::standard_install($suite_identifier);
-					}
-
-					phoromatic::set_user_context($xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/SetContextPreRun'), $phoromatic_trigger, $phoromatic_schedule_id, 'INSTALL');
-
-
-					// Do the actual running
-					if(pts_test_run_manager::initial_checks($suite_identifier))
-					{
-						$test_run_manager = new pts_test_run_manager($test_flags);
-
-						// Load the tests to run
-						if($test_run_manager->load_tests_to_run($suite_identifier))
-						{
-
-							if(pts_strings::string_bool($xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/UploadToGlobal', 'FALSE')))
+							$repo = json_decode($repo, true);
+							if($repo && isset($repo['phoronix-test-suite']['download-cache']))
 							{
-								$test_run_manager->auto_upload_to_openbenchmarking();
-								pts_openbenchmarking_client::override_client_setting('UploadSystemLogsByDefault', pts_strings::string_bool($xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/UploadSystemLogs', 'TRUE')));
+								$total_file_size = 0;
+								foreach($repo['phoronix-test-suite']['download-cache'] as $file_name => $inf)
+								{
+									$total_file_size += $repo['phoronix-test-suite']['download-cache'][$file_name]['file_size'];
+								}
+								echo count($repo['phoronix-test-suite']['download-cache']) . ' FILES / ' . round($total_file_size / 1000000) . ' MB CACHE SIZE';
 							}
+						}
+						else
+						{
+							echo 'N/A';
+						}
+					}
 
-							// Save results?
-							$save_identifier = date('Y-m-d H:i:s');
-							$test_run_manager->auto_save_results($save_identifier, $phoromatic_results_identifier, 'A Phoromatic run.');
+					echo PHP_EOL;
 
-							// Run the actual tests
-							$test_run_manager->pre_execution_process();
-							$test_run_manager->call_test_runs();
-							$test_run_manager->post_execution_process();
-
-							// Upload to Phoromatic
-							pts_file_io::unlink(PTS_TEST_SUITE_PATH . $suite_identifier . '/suite-definition.xml');
-
-							// Upload test results
-
-							if(is_file(PTS_SAVE_RESULTS_PATH . $test_run_manager->get_file_name() . '/composite.xml'))
+					$repo = pts_network::http_get_contents('http://' . $archived_server['ip'] . ':' . $archived_server['http_port'] . '/openbenchmarking-cache.php?repos');
+					echo 'SUPPORTED OPENBENCHMARKING.ORG REPOSITORIES:' . PHP_EOL;
+					if(!empty($repo))
+					{
+						$repo = json_decode($repo, true);
+						if($repo && is_array($repo['repos']))
+						{
+							foreach($repo['repos'] as $data)
 							{
-								phoromatic::update_system_status('Uploading Test Results');
-
-								$times_tried = 0;
-								do
-								{
-									if($times_tried > 0)
-									{
-										echo PHP_EOL . 'Connection to server failed. Trying again in 60 seconds...' . PHP_EOL;
-										sleep(60);
-									}
-
-									$uploaded_test_results = phoromatic::upload_test_results($test_run_manager->get_file_name(), $phoromatic_schedule_id, $phoromatic_results_identifier, $phoromatic_trigger, $xml_parser);
-									$times_tried++;
-								}
-								while($uploaded_test_results == false && $times_tried < 5);
-
-								if($uploaded_test_results == false)
-								{
-									echo 'Server connection failed. Exiting...' . PHP_EOL;
-									return false;
-								}
-
-								if(pts_strings::string_bool($xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/ArchiveResultsLocally', 'TRUE')) == false)
-								{
-									pts_client::remove_saved_result_file($test_run_manager->get_file_name());
-								}
+								echo '      ' . $data['title'] . ' - Last Generated: ' . date('d M Y H:i', $data['generated']) . PHP_EOL;
 							}
 						}
 					}
-					break;
-				case 'exit':
-					echo PHP_EOL . 'Phoromatic received a remote command to exit.' . PHP_EOL;
-					phoromatic::update_system_status('Exiting Phoromatic');
-					pts_client::release_lock(PTS_USER_PATH . 'phoromatic_lock');
-					$exit_loop = true;
-					break;
-				case 'server_maintenance':
-					// The Phoromatic server is down for maintenance, so don't bother updating system status and wait longer before checking back
-					echo PHP_EOL . 'The Phoromatic server is currently down for maintenance. Waiting for service to be restored.' . PHP_EOL;
-					sleep((15 - (date('i') % 15)) * 60);
-					break;
-				case 'SHUTDOWN':
-					echo PHP_EOL . 'Shutting down the system.' . PHP_EOL;
-					$exit_loop = true;
-					shell_exec('poweroff'); // Currently assuming root
-					break;
-				case 'REBOOT':
-					echo PHP_EOL . 'Rebooting the system.' . PHP_EOL;
-					$exit_loop = true;
-					shell_exec('reboot'); // Currently assuming root
-					break;
-				case 'idle':
-				default:
-					phoromatic::update_system_status('Idling, Waiting For Task');
-					sleep((10 - (date('i') % 10)) * 60); // Check with server every 10 minutes
-					break;
-			}
-
-			if(phodevi::system_hardware(true) != $current_hw || phodevi::system_software(true) != $current_sw)
-			{
-				// Hardware and/or software has changed while PTS/Phoromatic has been running, update the Phoromatic Server
-				echo 'Updating Installed Hardware / Software With Phoromatic Server' . PHP_EOL;
-				phoromatic::update_system_details();
-				$current_hw = phodevi::system_hardware(true);
-				$current_sw = phodevi::system_software(true);
+					else
+					{
+						echo '      N/A' . PHP_EOL;
+					}
+				}
 			}
 		}
-		while($exit_loop == false);
 
-		phoromatic::update_system_status('Offline');
-	}
-
-	//
-	// Process Functions
-	//
-
-
-	public static function __pre_test_install($test_identifier)
-	{
-		static $last_update_time = 0;
-
-		if(time() > ($last_update_time + 600))
+		if($server_count == 0)
 		{
-			phoromatic::update_system_status('Installing Tests');
-			$last_update_time = time();
+			echo PHP_EOL . 'No Phoromatic Servers detected.' . PHP_EOL . PHP_EOL;
 		}
 	}
-	public static function __pre_test_run($pts_test_result)
+	protected static function tick_thread()
 	{
-		// TODO: need a way to get the estimated time remaining from the test_run_manager so we can pass that back to the update_system_status parameter so server can read it
-		// TODO: report name of test identifier/run i.e. . ' For ' . PHOROMATIC_TITLE
-		phoromatic::update_system_status('Running ' . $pts_test_result->test_profile->get_identifier());
-	}
-	public static function __event_user_error($user_error)
-	{
-		// Report PTS user error warnings to Phoromatic server
-		phoromatic::report_warning_to_phoromatic($user_error->get_error_string());
-	}
-	public static function __event_results_saved($test_run_manager)
-	{
-		if(pts_module::read_variable('AUTO_UPLOAD_RESULTS_TO_PHOROMATIC') && pts_module::is_module_setup())
-		{
-			phoromatic::upload_unscheduled_test_results($test_run_manager->get_file_name());
-		}
-	}
-	public static function __event_openbenchmarking_upload($json)
-	{
-		self::$openbenchmarking_upload_json = $json;
-	}
+		static $last_phoromatic_log = 0;
 
-	//
-	// Other Functions
-	//
-
-	protected static function read_xml_value($file, $xml_option)
-	{
-	 	$xml_parser = new nye_XmlReader($file);
-		return $xml_parser->getXMLValue($xml_option);
-	}
-	private static function set_user_context($context_script, $trigger, $schedule_id, $process)
-	{
-		if(!empty($context_script))
+		while(true)
 		{
-			if(!is_executable($context_script))
+			$j = array();
+
+			$log_size = pts_client::$pts_logger->get_log_file_size();
+			if($log_size != $last_phoromatic_log)
 			{
-				if(($context_script = pts_client::executable_in_path($context_script)) == false || !is_executable($context_script))
+				$phoromatic_log = file_get_contents(pts_client::$pts_logger->get_log_file_location());
+				$last_phoromatic_log = $log_size;
+				$j['phoromatic']['client-log'] = $phoromatic_log;
+			}
+
+			foreach(phodevi::supported_sensors() as $sensor)
+			{
+				$j['phoromatic']['stats']['sensors'][phodevi::sensor_name($sensor)] = array('value' => phodevi::read_sensor($sensor), 'unit' => phodevi::read_sensor_unit($sensor));
+			}
+
+			$j['phoromatic']['stats']['uptime'] = ceil(phodevi::system_uptime() / 60);
+
+			$server_response = phoromatic::upload_to_remote_server(array(
+					'r' => 'tick',
+					'j' => json_encode($j),
+					));
+
+			$server_response = json_decode($server_response, true);
+			if($server_response && isset($server_response['phoromatic']['tick_thread']))
+			{
+				switch($server_response['phoromatic']['tick_thread'])
 				{
-					return false;
+					case 'reboot':
+						if(pts_client::executable_in_path('reboot'))
+						{
+							shell_exec('reboot');
+						}
+						break;
+					case 'halt-testing':
+						touch(PTS_USER_PATH . 'halt-testing');
+						break;
 				}
 			}
 
-			$storage_path = pts_module::save_dir() . 'memory.pt2so';
-			$storage_object = pts_storage_object::recover_from_file($storage_path);
-
-			// We check to see if the context was already set but the system rebooted or something in that script
-			if($storage_object == false)
-			{
-				$storage_object = new pts_storage_object(true, true);
-			}
-			else if($storage_object->read_object('last_set_context_trigger') == $trigger && $storage_object->read_object('last_set_context_schedule') == $schedule_id && $storage_object->read_object('last_set_context_process') == $process)
-			{
-				// If the script already ran once for this trigger, don't run it again
-				return false;
-			}
-
-			$storage_object->add_object('last_set_context_trigger', $trigger);
-			$storage_object->add_object('last_set_context_schedule', $schedule_id);
-			$storage_object->add_object('last_set_context_process', $process);
-			$storage_object->save_to_file($storage_path);
-
-			// Run the set context script
-			exec($context_script . ' ' . $trigger);
-
-			// Just simply return true for now, perhaps check exit code status and do something
-			return true;
+			sleep(rand(60, 90));
 		}
-
-		return false;
 	}
-	protected static function update_system_details()
-	{
-		$server_response = phoromatic::upload_to_remote_server(array('r' => 'update_system_details', 'h' => phodevi::system_hardware(true), 's' => phodevi::system_software(true)));
-		self::$phoromatic_server_build = self::read_xml_value($server_response, 'PhoronixTestSuite/Phoromatic/Server/ServerBuild');
-
-		return self::read_xml_value($server_response, 'PhoronixTestSuite/Phoromatic/General/Response') == 'TRUE';
-	}
-	protected static function update_system_status($current_task, $estimated_time_remaining = 0)
-	{
-		$server_response = phoromatic::upload_to_remote_server(array('r' => 'update_system_status', 'a' => $current_task, 'time' => $estimated_time_remaining));
-
-		return self::read_xml_value($server_response, 'PhoronixTestSuite/Phoromatic/General/Response') == 'TRUE';
-	}
-	protected static function report_warning_to_phoromatic($warning)
-	{
-		$server_response = phoromatic::upload_to_remote_server(array('r' => 'report_pts_warning', 'a' => $warning));
-
-		return self::read_xml_value($server_response, 'PhoronixTestSuite/Phoromatic/General/Response') == 'TRUE';
-	}
-	private static function capture_test_logs($save_identifier, &$xml_parser = null)
-	{
-		$data = array('system-logs' => null, 'test-logs' => null);
-
-		if(is_dir(PTS_SAVE_RESULTS_PATH . $save_identifier . '/system-logs/') && ($xml_parser == null || $xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/UploadSystemLogs', 'FALSE')))
-		{
-			$system_logs_zip = pts_client::create_temporary_file();
-			pts_compression::zip_archive_create($system_logs_zip, PTS_SAVE_RESULTS_PATH . $save_identifier . '/system-logs/');
-			$data['system-logs'] = base64_encode(file_get_contents($system_logs_zip));
-			unlink($system_logs_zip);
-		}
-
-		if(is_dir(PTS_SAVE_RESULTS_PATH . $save_identifier . '/test-logs/') && ($xml_parser == null || $xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/UploadTestLogs', 'FALSE')))
-		{
-			$test_logs_zip = pts_client::create_temporary_file();
-			pts_compression::zip_archive_create($test_logs_zip, PTS_SAVE_RESULTS_PATH . $save_identifier . '/test-logs/');
-			$data['test-logs'] = base64_encode(file_get_contents($test_logs_zip));
-			unlink($test_logs_zip);
-		}
-
-		return $data;
-	}
-	protected static function upload_test_results($save_identifier, $phoromatic_schedule_id, $results_identifier, $phoromatic_trigger, &$xml_parser = null)
-	{
-		$composite_xml = file_get_contents(PTS_SAVE_RESULTS_PATH . $save_identifier . '/composite.xml');
-
-		if(self::$openbenchmarking_upload_json != null && isset(self::$openbenchmarking_upload_json['openbenchmarking']['upload']['id']))
-		{
-			$openbenchmarking_id = self::$openbenchmarking_upload_json['openbenchmarking']['upload']['id'];
-		}
-		else
-		{
-			$openbenchmarking_id = null;
-		}
-
-		$logs = self::capture_test_logs($save_identifier, $xml_parser);
-		$server_response = phoromatic::upload_to_remote_server(array(
-			'r' => 'upload_test_results',
-			'c' => $composite_xml,
-			'i' => $phoromatic_schedule_id,
-			'ti' => $results_identifier,
-			'ts' => $phoromatic_trigger,
-			'sl' => $logs['system-logs'],
-			'tl' => $logs['test-logs'],
-			'ob' => $openbenchmarking_id,
-			));
-
-		return self::read_xml_value($server_response, 'PhoronixTestSuite/Phoromatic/General/Response') == 'TRUE';
-	}
-	protected static function upload_unscheduled_test_results($save_identifier)
-	{
-		$composite_xml = file_get_contents(PTS_SAVE_RESULTS_PATH . $save_identifier . '/composite.xml');
-
-		$logs = self::capture_test_logs($save_identifier);
-		$server_response = phoromatic::upload_to_remote_server(array(
-			'r' => 'upload_test_results_unscheduled',
-			'c' => $composite_xml,
-			'i' => 0,
-			'ti' => 'Unknown',
-			'sl' => $logs['system-logs'],
-			'tl' => $logs['test-logs']
-			));
-
-		$xml_parser = new nye_XmlReader($server_response);
-
-		switch($xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/Response'))
-		{
-			case 'TRUE':
-				echo PHP_EOL . 'Uploaded To Phoromatic.' . PHP_EOL;
-				break;
-			case 'ERROR':
-				echo PHP_EOL . 'An Error Occurred.' . PHP_EOL;
-				break;
-			case 'SETTING_DISABLED':
-				echo PHP_EOL . 'You need to enable this support from your Phoromatic account web interface.' . PHP_EOL;
-				break;
-		}
-
-		return $xml_parser->getXMLValue('PhoronixTestSuite/Phoromatic/General/Response') == 'TRUE';
-	}
-	protected static function phoromatic_setup_module()
-	{
-		if(!pts_module::is_module_setup())
-		{
-			echo PHP_EOL . 'You first must run:' . PHP_EOL . PHP_EOL . 'phoronix-test-suite module-setup phoromatic' . PHP_EOL . PHP_EOL;
-			return false;
-		}
-
-		self::$phoromatic_host = pts_module::read_option('remote_host');
-		self::$phoromatic_account = pts_module::read_option('remote_account');
-		self::$phoromatic_verifier = pts_module::read_option('remote_verifier');
-		self::$phoromatic_system = pts_module::read_option('remote_system');
-
-		if(extension_loaded('openssl') == false)
-		{
-			// OpenSSL is not supported therefore no HTTPS support
-			self::$phoromatic_host = str_replace('https://', 'http://', self::$phoromatic_host);
-		}
-
-		$phoromatic = 'phoromatic';
-		pts_module_manager::attach_module($phoromatic);
-		return true;
-	}
-	protected static function phoromatic_schedule_entry_string($title, $description, $start_time, $active_on)
-	{
-		echo PHP_EOL . $title . ':' . PHP_EOL;
-		echo "\t" . $description . PHP_EOL;
-		echo "\t" . 'Runs at ' . $start_time . ' on ' . pts_strings::parse_week_string($active_on) . '.' . PHP_EOL;
-	}
-
-
-	//
-	// Connection
-	// 
-
-	protected static function upload_to_remote_server($to_post, $host = null, $account = null, $verifier = null, $system = null)
+	protected static function upload_to_remote_server($to_post, $server_address = null, $server_http_port = null, $account_id = null)
 	{
 		static $last_communication_minute = null;
 		static $communication_attempts = 0;
 
-		if($last_communication_minute == date('i') && $communication_attempts > 3)
+		if($last_communication_minute == date('i') && $communication_attempts > 8)
 		{
 				// Something is wrong, Phoromatic shouldn't be communicating with server more than four times a minute
 				return false;
@@ -706,31 +262,765 @@ class phoromatic extends pts_module_interface
 			$communication_attempts++;
 		}
 
-		if($host != null)
+		if($server_address == null && self::$server_address != null)
 		{
-			//$host = $host;
-			$to_post['aid'] = $account;
-			$to_post['vid'] = $verifier;
-			$to_post['sid'] = $system;
+			$server_address = self::$server_address;
 		}
-		else if(self::$phoromatic_host != null)
+		if($server_http_port == null && self::$server_http_port != null)
 		{
-			$host = self::$phoromatic_host;
-			$to_post['aid'] = self::$phoromatic_account;
-			$to_post['vid'] = self::$phoromatic_verifier;
-			$to_post['sid'] = self::$phoromatic_system;
+			$server_http_port = self::$server_http_port;
+		}
+		if($account_id == null && self::$account_id != null)
+		{
+			$account_id = self::$account_id;
+		}
+
+		$to_post['aid'] = $account_id;
+		$to_post['pts'] = PTS_VERSION;
+		$to_post['pts_core'] = PTS_CORE_VERSION;
+		$to_post['gsid'] = defined('PTS_GSID') ? PTS_GSID : null;
+		$to_post['lip'] = pts_network::get_local_ip();
+		$to_post['h'] = phodevi::system_hardware(true);
+		$to_post['nm'] = pts_network::get_network_mac();
+		$to_post['nw'] = implode(', ', pts_network::get_network_wol());
+		$to_post['s'] = phodevi::system_software(true);
+		$to_post['n'] = phodevi::read_property('system', 'hostname');
+		$to_post['msi'] = PTS_MACHINE_SELF_ID;
+		return pts_network::http_upload_via_post('http://' . $server_address . ':' . $server_http_port .  '/phoromatic.php', $to_post);
+	}
+	protected static function update_system_status($current_task, $estimated_time_remaining = 0, $percent_complete = 0, $for_schedule = null, $estimate_to_next_comm = 0)
+	{
+		static $last_msg = null;
+
+		// Avoid an endless flow of "idling" messages, etc
+		if($current_task != $last_msg)
+			pts_client::$pts_logger && pts_client::$pts_logger->log($current_task);
+		$last_msg = $current_task;
+
+		return phoromatic::upload_to_remote_server(array(
+				'r' => 'update_system_status',
+				'a' => $current_task,
+				'time' => $estimated_time_remaining,
+				'pc' => $percent_complete,
+				'sched' => (!empty($for_schedule) ? $for_schedule : self::$p_schedule_id),
+				'o' => $estimate_to_next_comm
+				));
+	}
+	public static function startup_ping_check($server_ip, $http_port)
+	{
+		$server_response = phoromatic::upload_to_remote_server(array(
+				'r' => 'ping',
+				), $server_ip, $http_port);
+	}
+	protected static function setup_server_addressing($server_string = null)
+	{
+		if(isset($server_string[0]) && strpos($server_string[0], '/', strpos($server_string[0], ':')) > 6)
+		{
+			pts_client::$pts_logger && pts_client::$pts_logger->log('Attempting to connect to Phoromatic Server: ' . $server_string[0]);
+			self::$account_id = substr($server_string[0], strrpos($server_string[0], '/') + 1);
+			self::$server_address = substr($server_string[0], 0, strpos($server_string[0], ':'));
+			self::$server_http_port = substr($server_string[0], strlen(self::$server_address) + 1, -1 - strlen(self::$account_id));
+			pts_client::$display->generic_heading('Server IP: ' . self::$server_address . PHP_EOL . 'Server HTTP Port: ' . self::$server_http_port . PHP_EOL . 'Account ID: ' . self::$account_id);
+			pts_client::register_phoromatic_server(self::$server_address, self::$server_http_port);
+		}
+		else if(($last_server = trim(pts_module::read_file('last-phoromatic-server'))) && !empty($last_server))
+		{
+			pts_client::$pts_logger && pts_client::$pts_logger->log('Attempting to connect to last server connection: ' . $last_server);
+			$last_account_id = substr($last_server, strrpos($last_server, '/') + 1);
+			$last_server_address = substr($last_server, 0, strpos($last_server, ':'));
+			$last_server_http_port = substr($last_server, strlen($last_server_address) + 1, -1 - strlen($last_account_id));
+			pts_client::$pts_logger && pts_client::$pts_logger->log('Last Server IP: ' . $last_server_address . ' Last Server HTTP Port: ' . $last_server_http_port . ' Last Account ID: ' . $last_account_id);
+
+			for($i = 0; $i < 10; $i++)
+			{
+				$server_response = phoromatic::upload_to_remote_server(array(
+					'r' => 'ping',
+					), $last_server_address, $last_server_http_port, $last_account_id);
+
+				$server_response = json_decode($server_response, true);
+				if($server_response && isset($server_response['phoromatic']['ping']))
+				{
+					self::$server_address = $last_server_address;
+					self::$server_http_port = $last_server_http_port;
+					self::$account_id = $last_account_id;
+					pts_client::$pts_logger && pts_client::$pts_logger->log('Phoromatic Server connection restored');
+					pts_client::register_phoromatic_server(self::$server_address, self::$server_http_port);
+					break;
+				}
+				else
+				{
+					pts_client::$pts_logger && pts_client::$pts_logger->log('Phoromatic Server connection failed');
+					sleep((12 * ($i + 1)));
+				}
+			}
+		}
+
+		if(self::$server_address == null)
+		{
+			$archived_servers = pts_client::available_phoromatic_servers();
+			if(!empty($archived_servers))
+			{
+				pts_client::$pts_logger && pts_client::$pts_logger->log('Attempting to auto-discover Phoromatic Servers');
+				self::attempt_phoromatic_server_auto_discover($archived_servers);
+			}
+		}
+
+		if(self::$server_address == null || self::$server_http_port == null || self::$account_id == null)
+		{
+			pts_client::$pts_logger && pts_client::$pts_logger->log('Phoromatic Server connection setup failed');
+			echo PHP_EOL . 'You must pass the Phoromatic Server information as an argument to phoromatic.connect, or otherwise configure your network setup.' . PHP_EOL . '      e.g. phoronix-test-suite phoromatic.connect 192.168.1.2:5555/I0SSJY' . PHP_EOL . PHP_EOL;
+
+			if(PTS_IS_DAEMONIZED_SERVER_PROCESS && !empty($archived_servers))
+			{
+				echo 'The Phoromatic client appears to be running as a system service/daemon so will attempt to continue auto-polling to find the Phoromatic Server.' . PHP_EOL . PHP_EOL;
+
+				$success = false;
+				do
+				{
+					pts_client::$pts_logger && pts_client::$pts_logger->log('Will auto-poll connected servers every 90 seconds looking for a claim by a Phoromatic Server');
+					sleep(90);
+					$success = self::attempt_phoromatic_server_auto_discover($archived_servers);
+				}
+				while($success == false);
+			}
+			else
+			{
+				return false;
+			}
+		}
+
+		return true;
+	}
+	protected static function attempt_phoromatic_server_auto_discover(&$phoromatic_servers)
+	{
+		foreach($phoromatic_servers as &$archived_server)
+		{
+			pts_client::$pts_logger && pts_client::$pts_logger->log('Attempting to auto-discover Phoromatic Server on: ' . $archived_server['ip'] . ': ' . $archived_server['http_port']);
+			$server_response = phoromatic::upload_to_remote_server(array(
+				'r' => 'ping',
+				), $archived_server['ip'], $archived_server['http_port']);
+
+			$server_response = json_decode($server_response, true);
+			if($server_response && isset($server_response['phoromatic']['account_id']))
+			{
+				self::$server_address = $archived_server['ip'];
+				self::$server_http_port = $archived_server['http_port'];
+				self::$account_id = $server_response['phoromatic']['account_id'];
+				return true;
+			}
+		}
+
+		return false;
+	}
+	protected static function setup_system_environment()
+	{
+		if(is_writable('/boot/grub/grubenv') && pts_client::executable_in_path('grub-editenv'))
+		{
+			// In case system fails or reboots in process and don't want to hang on GRUB recordfail
+			shell_exec('grub-editenv /boot/grub/grubenv unset recordfail 2>&1');
+		}
+	}
+	public static function run_connection($args)
+	{
+		if(pts_client::create_lock(PTS_USER_PATH . 'phoromatic_lock') == false)
+		{
+			trigger_error('Phoromatic is already running.', E_USER_ERROR);
+			return false;
+		}
+		define('PHOROMATIC_PROCESS', true);
+
+		if(pts_client::$pts_logger == false)
+		{
+			pts_client::$pts_logger = new pts_logger();
+		}
+		pts_client::$pts_logger->log(pts_title(true) . ' [' . PTS_CORE_VERSION . '] starting Phoromatic client');
+
+		if(phodevi::system_uptime() < 60)
+		{
+			echo 'PHOROMATIC: Sleeping for 60 seconds as system freshly started.' . PHP_EOL;
+			pts_client::$pts_logger->log('Sleeping for 60 seconds as system freshly started');
+			sleep(60);
+		}
+
+		$server_setup = self::setup_server_addressing($args);
+		//$http_comm = new phoromatic_client_comm_http();
+
+		if(!$server_setup)
+		{
+			if(PTS_IS_DAEMONIZED_SERVER_PROCESS)
+			{
+				if(pts_client::executable_in_path('reboot'))
+				{
+					shell_exec('reboot');
+					sleep(5);
+				}
+			}
+
+			return false;
+		}
+
+		$times_failed = 0;
+		$has_success = false;
+		$do_exit = false;
+		$just_started = true;
+
+		self::setup_system_environment();
+		pts_client::$pts_logger->log('SYSTEM HARDWARE: ' . phodevi::system_hardware(true));
+		pts_client::$pts_logger->log('SYSTEM SOFTWARE: ' . phodevi::system_software(true));
+
+		while($do_exit == false)
+		{
+			$server_response = phoromatic::upload_to_remote_server(array(
+				'r' => 'start',
+				));
+
+			if($server_response == false)
+			{
+				$times_failed++;
+
+				pts_client::$pts_logger->log('Server response failed');
+
+				if($times_failed >= 2)
+				{
+					trigger_error('Communication with server failed.', E_USER_ERROR);
+
+					if(PTS_IS_DAEMONIZED_SERVER_PROCESS == false && $times_failed > 5)
+					{
+						return false;
+					}
+					else if(PTS_IS_DAEMONIZED_SERVER_PROCESS && $times_failed > 10)
+					{
+						if(pts_client::executable_in_path('reboot'))
+						{
+							shell_exec('reboot');
+							sleep(5);
+						}
+					}
+				}
+			}
+			else if(substr($server_response, 0, 1) == '[')
+			{
+				// Likely a notice/warning from server
+				echo PHP_EOL . substr($server_response, 0, strpos($server_response, PHP_EOL)) . PHP_EOL;
+			}
+			else if(substr($server_response, 0, 1) == '{')
+			{
+				$times_failed = 0;
+				$json = json_decode($server_response, true);
+
+				if($has_success == false)
+				{
+					$has_success = true;
+					pts_module::save_file('last-phoromatic-server', self::$server_address . ':' . self::$server_http_port . '/' . self::$account_id);
+				}
+
+				if($json != null)
+				{
+					if(isset($json['phoromatic']['error']) && !empty($json['phoromatic']['error']))
+					{
+						trigger_error($json['phoromatic']['error'], E_USER_ERROR);
+					}
+					if(isset($json['phoromatic']['response']) && !empty($json['phoromatic']['response']))
+					{
+						echo PHP_EOL . $json['phoromatic']['response'] . PHP_EOL;
+					}
+				}
+
+				if($just_started)
+				{
+					if(PTS_IS_DAEMONIZED_SERVER_PROCESS)
+					{
+						$pid = pcntl_fork();
+						if($pid == 0)
+						{
+							// Start the tick thread
+							self::tick_thread();
+						}
+					}
+
+					$just_started = false;
+				}
+
+				if(isset($json['phoromatic']['pre_set_sys_env_vars']) && !empty($json['phoromatic']['pre_set_sys_env_vars']))
+				{
+					// pre_set_sys_env_vars was added during PTS 5.8 development
+					// Sets environment variables on client as specified via the Phoromatic Server's systems page
+					foreach(explode(';', $json['phoromatic']['pre_set_sys_env_vars']) as $i => $v_string)
+					{
+						$var = explode('=', $v_string);
+						if(count($var) == 2)
+						{
+							putenv($var[0] . '=' . $var[1]);
+						}
+					}
+				}
+
+				switch(isset($json['phoromatic']['task']) ? $json['phoromatic']['task'] : null)
+				{
+					case 'install':
+						phoromatic::update_system_status('Installing Tests');
+						pts_suite_nye_XmlReader::set_temporary_suite('pre-seed', $json['phoromatic']['test_suite']);
+						pts_test_installer::standard_install('pre-seed');
+						break;
+					case 'benchmark':
+
+						// Make sure all latest tests are available
+						pts_openbenchmarking::refresh_repository_lists(null, true);
+
+						$benchmark_timer = time();
+						self::$is_running_as_phoromatic_node = true;
+						$test_flags = pts_c::auto_mode | pts_c::batch_mode;
+						$suite_identifier = sha1(time() . rand(2, 1000));
+						pts_suite_nye_XmlReader::set_temporary_suite($suite_identifier, $json['phoromatic']['test_suite']);
+						self::$p_save_identifier = $json['phoromatic']['trigger_id'];
+						$phoromatic_results_identifier = self::$p_save_identifier;
+						$phoromatic_save_identifier = $json['phoromatic']['save_identifier'];
+						self::$p_schedule_id = isset($json['phoromatic']['schedule_id']) ? $json['phoromatic']['schedule_id'] : false;
+						self::$p_trigger_id = self::$p_save_identifier;
+						$benchmark_ticket_id = isset($json['phoromatic']['benchmark_ticket_id']) ? $json['phoromatic']['benchmark_ticket_id'] : null;
+						phoromatic::update_system_status('Running Benchmarks For: ' . $phoromatic_save_identifier);
+
+						if(pts_strings::string_bool($json['phoromatic']['settings']['RunInstallCommand']))
+						{
+							if(isset($json['phoromatic']['pre_install_set_context']))
+							{
+								phoromatic::set_user_context($json['phoromatic']['pre_install_set_context'], self::$p_trigger_id, self::$p_schedule_id, 'PRE_INSTALL');
+							}
+
+							if(pts_strings::string_bool($json['phoromatic']['settings']['ForceInstallTests']))
+							{
+								$test_flags |= pts_c::force_install;
+							}
+
+							pts_client::set_test_flags($test_flags);
+							pts_test_installer::standard_install($suite_identifier);
+							if(isset($json['phoromatic']['post_install_set_context']))
+							{
+								phoromatic::set_user_context($json['phoromatic']['post_install_set_context'], self::$p_trigger_id, self::$p_schedule_id, 'POST_INSTALL');
+							}
+						}
+						$env_vars = isset($json['phoromatic']['environment_variables']) ? pts_strings::parse_value_string_vars($json['phoromatic']['environment_variables']) : array();
+
+						// Do the actual running
+						phodevi::clear_cache();
+						if(pts_test_run_manager::initial_checks($suite_identifier, 0, 'SHORT'))
+						{
+							self::$test_run_manager = new pts_test_run_manager($test_flags);
+							pts_test_run_manager::set_batch_mode(array(
+								'UploadResults' => (isset($json['phoromatic']['settings']['UploadResultsToOpenBenchmarking']) && pts_strings::string_bool($json['phoromatic']['settings']['UploadResultsToOpenBenchmarking'])),
+								'SaveResults' => true,
+								'RunAllTestCombinations' => false,
+								'OpenBrowser' => false
+								));
+
+							// Load the tests to run
+							if(self::$test_run_manager->load_tests_to_run($suite_identifier))
+							{
+								phoromatic::update_system_status('Tests In Run Queue: ' . implode(', ', self::$test_run_manager->get_tests_to_run_identifiers()));
+								if(isset($json['phoromatic']['pre_run_set_context']))
+								{
+									phoromatic::set_user_context($json['phoromatic']['pre_run_set_context'], self::$p_trigger_id, self::$p_schedule_id, 'PRE_RUN');
+								}
+
+								if(isset($json['phoromatic']['settings']['UploadResultsToOpenBenchmarking']) && pts_strings::string_bool($json['phoromatic']['settings']['UploadResultsToOpenBenchmarking']))
+								{
+									self::$test_run_manager->auto_upload_to_openbenchmarking();
+									pts_openbenchmarking_client::override_client_setting('UploadSystemLogsByDefault', pts_strings::string_bool($json['phoromatic']['settings']['UploadSystemLogs']));
+								}
+
+								// Save results?
+
+								// Run the actual tests
+								if(isset($env_vars['PTS_CONCURRENT_TEST_RUNS']) && $env_vars['PTS_CONCURRENT_TEST_RUNS'] > 1)
+								{
+									$total_loop_time = isset($env_vars['TOTAL_LOOP_TIME']) ? $env_vars['TOTAL_LOOP_TIME'] : false;
+									pts_client::$pts_logger->log('STRESS / MULTI-TEST EXECUTION STARTED @ ' . date('Y-m-d H:i:s'));
+									pts_client::$pts_logger->log('CONCURRENT RUNS = ' . $env_vars['PTS_CONCURRENT_TEST_RUNS'] . ' TOTAL LOOP TIME = ' . $total_loop_time);
+									$r = self::$test_run_manager->multi_test_stress_run_execute($env_vars['PTS_CONCURRENT_TEST_RUNS'], $total_loop_time);
+									if($r == false)
+									{
+										return;
+									}
+
+									pts_client::$pts_logger->log('STRESS / MULTI-TEST EXECUTION ENDED @ ' . date('Y-m-d H:i:s'));
+								}
+								else
+								{
+									self::$test_run_manager->auto_save_results($phoromatic_save_identifier, $phoromatic_results_identifier, (isset($json['phoromatic']['test_description']) ? $json['phoromatic']['test_description'] : 'A Phoromatic run.'));
+									self::$test_run_manager->pre_execution_process();
+									self::$test_run_manager->call_test_runs();
+								}
+
+								phoromatic::update_system_status('Benchmarks Completed For: ' . $phoromatic_save_identifier);
+								self::$test_run_manager->post_execution_process();
+								$elapsed_benchmark_time = time() - $benchmark_timer;
+
+								// Handle uploading data to server
+								$result_file = new pts_result_file(self::$test_run_manager->get_file_name());
+								$upload_system_logs = pts_strings::string_bool($json['phoromatic']['settings']['UploadSystemLogs']);
+								$server_response = self::upload_test_result($result_file, $upload_system_logs, (isset($json['phoromatic']['schedule_id']) ? $json['phoromatic']['schedule_id'] : null), $phoromatic_save_identifier, $json['phoromatic']['trigger_id'], $elapsed_benchmark_time, $benchmark_ticket_id);
+								//pts_client::$pts_logger->log('DEBUG RESPONSE MESSAGE: ' . $server_response);
+								if(!pts_strings::string_bool($json['phoromatic']['settings']['ArchiveResultsLocally']))
+								{
+									pts_client::remove_saved_result_file(self::$test_run_manager->get_file_name());
+								}
+							}
+
+							if(isset($json['phoromatic']['post_install_set_context']))
+							{
+								phoromatic::set_user_context($json['phoromatic']['post_install_set_context'], self::$p_trigger_id, self::$p_schedule_id, 'POST_RUN');
+							}
+						}
+						self::$p_schedule_id = null;
+						self::$is_running_as_phoromatic_node = false;
+						break;
+					case 'reboot':
+						echo PHP_EOL . 'Phoromatic received a remote command to reboot.' . PHP_EOL;
+						phoromatic::update_system_status('Attempting System Reboot');
+						if(pts_client::executable_in_path('reboot'))
+						{
+							shell_exec('reboot');
+							sleep(5);
+						}
+						break;
+					case 'shutdown-if-supports-wake':
+						$supports_wol = false;
+						foreach(pts_network::get_network_wol() as $net_device)
+						{
+							if(strpos($net_device, 'g') !== false)
+							{
+								$supports_wol = true;
+								break;
+							}
+						}
+						if(!$supports_wol)
+							break;
+					case 'shutdown':
+						if(isset($json['phoromatic']['client_update_script']) && !empty($json['phoromatic']['client_update_script']))
+						{
+							self::run_client_update_script($json['phoromatic']['client_update_script']);
+							sleep(10);
+						}
+
+						echo PHP_EOL . 'Phoromatic received a remote command to shutdown.' . PHP_EOL;
+						phoromatic::update_system_status('Attempting System Shutdown');
+						if(pts_client::executable_in_path('poweroff'))
+						{
+							shell_exec('poweroff');
+							sleep(5);
+						}
+						break;
+					case 'maintenance':
+						echo PHP_EOL . 'Idling, system maintenance mode set by Phoromatic Server.' . PHP_EOL;
+						phoromatic::update_system_status('Maintenance Mode');
+						sleep(60);
+						break;
+					case 'idle':
+						if(isset($json['phoromatic']['client_update_script']) && !empty($json['phoromatic']['client_update_script']))
+						{
+							self::run_client_update_script($json['phoromatic']['client_update_script']);
+						}
+						//echo PHP_EOL . 'Idling, waiting for task.' . PHP_EOL;
+						phoromatic::update_system_status('Idling, Waiting For Task');
+						break;
+					case 'exit':
+						echo PHP_EOL . 'Phoromatic received a remote command to exit.' . PHP_EOL;
+						phoromatic::update_system_status('Exiting Phoromatic');
+						$do_exit = true;
+						break;
+				}
+			}
+
+			if(!$do_exit)
+			{
+				if($server_response == false)
+					sleep(rand(10, 30));
+				else
+					sleep(60);
+			}
+		}
+
+		pts_client::release_lock(PTS_USER_PATH . 'phoromatic_lock');
+	}
+	private static function upload_test_result(&$result_file, $upload_system_logs = true, $schedule_id = 0, $save_identifier = null, $trigger = null, $elapsed_time = 0, $benchmark_ticket_id = null)
+	{
+		$system_logs = null;
+		$system_logs_hash = null;
+		// TODO: Potentially integrate this code below shared with pts_openbenchmarking_client into a unified function for validating system log files
+		$system_log_dir = PTS_SAVE_RESULTS_PATH . $result_file->get_identifier() . '/system-logs/';
+		if(is_dir($system_log_dir) && $upload_system_logs)
+		{
+			$is_valid_log = true;
+			$finfo = function_exists('finfo_open') ? finfo_open(FILEINFO_MIME_TYPE) : false;
+			foreach(pts_file_io::glob($system_log_dir . '*') as $log_dir)
+			{
+				if($is_valid_log == false || !is_dir($log_dir))
+				{
+					$is_valid_log = false;
+					break;
+				}
+
+				foreach(pts_file_io::glob($log_dir . '/*') as $log_file)
+				{
+					if(!is_file($log_file))
+					{
+						$is_valid_log = false;
+						break;
+					}
+					if($finfo && substr(finfo_file($finfo, $log_file), 0, 5) != 'text/')
+					{
+						$is_valid_log = false;
+						break;
+					}
+				}
+			}
+
+			if($is_valid_log)
+			{
+				$system_logs_zip = pts_client::create_temporary_file('.zip');
+				pts_compression::zip_archive_create($system_logs_zip, $system_log_dir);
+
+				if(filesize($system_logs_zip) == 0)
+				{
+					pts_client::$pts_logger && pts_client::$pts_logger->log('System log ZIP file failed to generate. Missing PHP ZIP support?');
+				}
+				else if(filesize($system_logs_zip) < 2097152)
+				{
+					// If it's over 2MB, probably too big
+					$system_logs = base64_encode(file_get_contents($system_logs_zip));
+					$system_logs_hash = sha1($system_logs);
+				}
+				else
+				{
+					//	trigger_error('The systems log attachment is too large to upload to OpenBenchmarking.org.', E_USER_WARNING);
+				}
+				unlink($system_logs_zip);
+			}
+		}
+
+		$composite_xml = $result_file->getRawXml();
+		$composite_xml_hash = sha1($composite_xml);
+		$composite_xml_type = 'composite_xml';
+
+		// Compress the result file XML if it's big
+		if(isset($composite_xml[50000]) && function_exists('gzdeflate'))
+		{
+			$composite_xml_gz = gzdeflate($composite_xml);
+			if($composite_xml_gz != false)
+			{
+				$composite_xml = $composite_xml_gz;
+				$composite_xml_type = 'composite_xml_gz';
+			}
+		}
+
+		// Upload to Phoromatic
+		$times_tried = 0;
+		do
+		{
+			if($times_tried > 0)
+			{
+				sleep(rand(5, 20));
+			}
+
+			$res = phoromatic::upload_to_remote_server(array(
+				'r' => 'result_upload',
+				//'ob' => $ob_data['id'],
+				'sched' => $schedule_id,
+				'bid' => $benchmark_ticket_id,
+				'o' => $save_identifier,
+				'ts' => $trigger,
+				'et' => $elapsed_time,
+				$composite_xml_type => base64_encode($composite_xml),
+				'composite_xml_hash' => $composite_xml_hash,
+				'system_logs_zip' => $system_logs,
+				'system_logs_hash' => $system_logs_hash
+				));
+
+			$times_tried++;
+		}
+		while($res == false && $times_tried < 4);
+
+		return $res;
+	}
+	public static function recent_phoromatic_server_results()
+	{
+		self::setup_server_addressing();
+		$server_response = phoromatic::upload_to_remote_server(array('r' => 'list_results'));
+		$server_response = json_decode($server_response, true);
+
+		if(isset($server_response['phoromatic']['results']) && !empty($server_response['phoromatic']['results']))
+		{
+			foreach($server_response['phoromatic']['results'] as $pprid => $result)
+			{
+				echo sprintf('%-26ls - %-25ls - %-30ls', $result['Title'], $pprid, date('j M H:i', strtotime($result['UploadTime']))) . PHP_EOL;
+				echo sprintf('    %-20ls - %-25ls' . PHP_EOL, $result['SystemName'], $result['GroupName']) . PHP_EOL;
+			}
+		}
+		else
+			echo PHP_EOL . 'No Phoromatic Server results discovered.';
+
+		echo PHP_EOL;
+	}
+	public static function clone_phoromatic_server_result($args)
+	{
+		self::setup_server_addressing();
+
+		$id = $args[0];
+		$server_response = phoromatic::upload_to_remote_server(array('r' => 'clone_result', 'i' => $id));
+		$server_response = json_decode($server_response, true);
+
+		if(isset($server_response['phoromatic']['result']['composite_xml']) && !empty($server_response['phoromatic']['result']['composite_xml']))
+		{
+			$composite_xml = base64_decode($server_response['phoromatic']['result']['composite_xml']);
+			$result_file = new pts_result_file($composite_xml);
+			// TODO XXX: Add system log downloading support
+
+			$result_file_writer = new pts_result_file_writer();
+			$result_file_writer->add_result_file_meta_data($result_file, $id);
+			$result_file_writer->add_system_information_from_result_file($result_file);
+			$result_file_writer->add_results_from_result_file($result_file);
+			pts_client::save_test_result($id . '/composite.xml', $result_file_writer->get_xml(), true);
+			echo PHP_EOL . 'Result File Saved As: ' . $id . PHP_EOL . PHP_EOL;
+		}
+		else
+			echo PHP_EOL . 'No Phoromatic result found.' . PHP_EOL;
+	}
+	private static function run_client_update_script($update_script)
+	{
+		static $last_update_script_check_time = 0;
+
+		// Don't keep checking it so check no more than every 20 minutes
+		if($last_update_script_check_time < (time() - 1200) && !empty($update_script))
+		{
+			$last_update_script_check_time = time();
+			$update_file = pts_client::create_temporary_file();
+			$update_script = str_replace("\r", PHP_EOL, $update_script);
+			file_put_contents($update_file, $update_script);
+			phoromatic::update_system_status('Running Phoronix Test Suite Update Script');
+			$env_vars = array();
+			pts_client::shell_exec('bash ' . $update_file . ' 2>&1', $env_vars);
+		}
+	}
+	private static function set_user_context($context_script, $trigger, $schedule_id, $process)
+	{
+		if(!empty($context_script))
+		{
+			$context_file = pts_client::create_temporary_file();
+			file_put_contents($context_file, $context_script);
+			chmod($context_file, 0755);
+
+			pts_file_io::mkdir(pts_module::save_dir());
+			$storage_path = pts_module::save_dir() . 'memory.pt2so';
+			$storage_object = pts_storage_object::recover_from_file($storage_path);
+			$notes_log_file = pts_module::save_dir() . sha1($trigger . $schedule_id . $process);
+
+			// We check to see if the context was already set but the system rebooted or something in that script
+			if($storage_object == false)
+			{
+				$storage_object = new pts_storage_object(true, true);
+			}
+			else if($storage_object->read_object('last_set_context_trigger') == $trigger && $storage_object->read_object('last_set_context_schedule') == $schedule_id && $storage_object->read_object('last_set_context_process') == $process)
+			{
+				// If the script already ran once for this trigger, don't run it again
+				self::check_user_context_log($trigger, $schedule_id, $process, $notes_log_file, null);
+				return false;
+			}
+
+			$storage_object->add_object('last_set_context_trigger', $trigger);
+			$storage_object->add_object('last_set_context_schedule', $schedule_id);
+			$storage_object->add_object('last_set_context_process', $process);
+			$storage_object->save_to_file($storage_path);
+
+			phoromatic::update_system_status('Setting context for: ' . $schedule_id . ' - ' . $trigger . ' - ' . $process);
+
+			// Run the set context script
+			$env_vars['PHOROMATIC_TRIGGER'] = $trigger;
+			$env_vars['PHOROMATIC_SCHEDULE_ID'] = $schedule_id;
+			$env_vars['PHOROMATIC_SCHEDULE_PROCESS'] = $process;
+			$env_vars['PHOROMATIC_LOG_FILE'] = $notes_log_file;
+			$log_output = pts_client::shell_exec('./' . $context_script . ' ' . $trigger . ' 2>&1', $env_vars);
+			self::check_user_context_log($trigger, $schedule_id, $process, $notes_log_file, $log_output);
+
+			// Just simply return true for now, perhaps check exit code status and do something
+			return true;
+		}
+
+		return false;
+	}
+	private static function check_user_context_log($trigger, $schedule_id, $process, $log_file, $log_output)
+	{
+		if(is_file($log_file) && ($lf_conts = pts_file_io::file_get_contents($log_file)) != null)
+		{
+			$context_log = $lf_conts;
+			unlink($log_file);
 		}
 		else
 		{
-			echo PHP_EOL . 'Phoromatic isn\'t configured. Run: phoronix-test-suite module-setup phoromatic' . PHP_EOL . PHP_EOL;
-			return;
+			$context_log = trim($log_output);
 		}
 
-		$to_post['pts'] = PTS_VERSION;
-		$to_post['pts_core'] = PTS_CORE_VERSION;
-		$to_post['gsid'] = PTS_GSID;
+		if($context_log != null)
+		{
+			$server_response = phoromatic::upload_to_remote_server(array(
+				'r' => 'user_context_log',
+				'sched' => $schedule_id,
+				'ts' => $trigger,
+				'i' => $process,
+				'o' => $context_log,
+				));
+		}
+	}
+	public static function __pre_test_install($test_identifier)
+	{
+		if(!self::$is_running_as_phoromatic_node)
+		{
+			return false;
+		}
 
-		return pts_network::http_upload_via_post($host, $to_post);
+		static $last_update_time = 0;
+
+		if(time() > ($last_update_time + 30))
+		{
+			phoromatic::update_system_status('Installing: ' . $test_identifier);
+			$last_update_time = time();
+		}
+	}
+	public static function __pre_test_run(&$pts_test_result)
+	{
+		if(!self::$is_running_as_phoromatic_node)
+		{
+			return false;
+		}
+
+		phoromatic::update_system_status('Running: ' . $pts_test_result->test_profile->get_identifier() . ($pts_test_result->get_arguments_description() != null ? ' [' . $pts_test_result->get_arguments_description() . ']' : null),
+			ceil(self::$test_run_manager->get_estimated_run_time() / 60),
+			self::$test_run_manager->get_percent_complete(),
+			null,
+			ceil($pts_test_result->test_profile->get_estimated_run_time() / 60));
+	}
+	public static function __event_results_saved($test_run_manager)
+	{
+		/*if(pts_module::read_variable('AUTO_UPLOAD_RESULTS_TO_PHOROMATIC') && pts_module::is_module_setup())
+		{
+			phoromatic::upload_unscheduled_test_results($test_run_manager->get_file_name());
+		}*/
+	}
+	public static function __event_run_error($error_obj)
+	{
+		list($test_run_manager, $test_run_request, $error_msg) = $error_obj;
+
+		if(stripos('Download Failed', $error_msg) !== false || stripos('check-sum of the downloaded file failed', $error_msg) !== false || stripos('attempting', $error_msg) !== false)
+			return false;
+
+		$server_response = phoromatic::upload_to_remote_server(array(
+			'r' => 'error_report',
+			'sched' => self::$p_schedule_id,
+			'ts' => self::$p_trigger_id,
+			'err' => $error_msg,
+			'ti' => $test_run_request->test_profile->get_identifier(),
+			'o' => $test_run_request->get_arguments_description()
+			));
+		//pts_client::$pts_logger && pts_client::$pts_logger->log('TEMP DEBUG MESSAGE: ' . $server_response);
 	}
 }
 

@@ -1,5 +1,0 @@
-- WebSocket security
-- HTTP security
-- Ensuring only one session at a time, at least for benchmarking
-- Handle test installations and external dependencies (prompting for root password handling?)
-- Porting more of the web-interface code to the new JavaScript + WebSocket design rather than original PHP design [Originally with the 5.0 UI design it wasn't settled for mostly JS + WebSocket but some of the original code is with a traditional PHP-based + web server design... so slowly move over to new design.]

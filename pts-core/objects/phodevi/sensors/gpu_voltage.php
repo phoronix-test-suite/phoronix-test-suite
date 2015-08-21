@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2011 - 2013, Phoronix Media
-	Copyright (C) 2011 - 2013, Michael Larabel
+	Copyright (C) 2011 - 2015, Phoronix Media
+	Copyright (C) 2011 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -50,7 +50,7 @@ class gpu_voltage implements phodevi_sensor
 			// voltage: 1140 mV
 			if(($x = strpos(phodevi::$vfs->radeon_pm_info, 'voltage: ')) !== false)
 			{
-				$radeon_pm_info = substr($radeon_pm_info, ($x + 9));
+				$radeon_pm_info = substr(phodevi::$vfs->radeon_pm_info, ($x + 9));
 
 				if(($x = stripos($radeon_pm_info, ' mV')) !== false)
 				{

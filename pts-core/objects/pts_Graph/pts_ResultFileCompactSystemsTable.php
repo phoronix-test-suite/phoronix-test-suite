@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2011 - 2012, Phoronix Media
-	Copyright (C) 2011 - 2012, Michael Larabel
+	Copyright (C) 2011 - 2015, Phoronix Media
+	Copyright (C) 2011 - 2015, Michael Larabel
 	pts_Table.php: A charting table object for pts_Graph
 
 	This program is free software; you can redistribute it and/or modify
@@ -134,7 +134,7 @@ class pts_ResultFileCompactSystemsTable extends pts_Graph
 				$this->svg_dom->add_element('rect', array('x' => 1, 'y' => ($offset + 1), 'width' => ($this->i['graph_width'] - 2), 'height' => ($next_offset - $offset - 1), 'fill' => 'none', 'stroke-width' => 1, 'stroke' => self::$c['color']['highlight']));
 			}
 
-			$text = $type . (isset($component[1]) && substr($type, -1) != 'y' ? 's' : null);
+			$text = $type . (isset($component[1]) && substr($type, -1) != 'y' && substr($type, -1) != 's' ? 's' : null);
 			$this->svg_dom->add_text_element($text, array('x' => ($this->i['graph_width'] - 4), 'y' => ($offset + 9), 'font-size' => 7, 'fill' => self::$c['color']['text'], 'text-anchor' => 'end'));
 			$offset += 2;
 
@@ -152,7 +152,7 @@ class pts_ResultFileCompactSystemsTable extends pts_Graph
 
 		// Footer
 		$this->svg_dom->add_element('rect', array('x' => 1, 'y' => ($this->i['graph_height'] - $bottom_footer), 'width' => ($this->i['graph_width'] - 2), 'height' => $bottom_footer, 'fill' => self::$c['color']['main_headers']));
-		$this->svg_dom->add_element('image', array('http_link' => 'http://www.phoronix-test-suite.com/', 'xlink:href' => pts_svg_dom::embed_png_image(PTS_CORE_STATIC_PATH . 'images/pts-80x42-white.png'), 'x' => 10, 'y' => ($this->i['graph_height'] - 46), 'width' => 80, 'height' => 42));
+		//$this->svg_dom->add_element('image', array('http_link' => 'http://www.phoronix-test-suite.com/', 'xlink:href' => pts_svg_dom::embed_png_image(PTS_CORE_STATIC_PATH . 'images/pts-80x42-white.png'), 'x' => 10, 'y' => ($this->i['graph_height'] - 46), 'width' => 80, 'height' => 42));
 
 		if(defined('OPENBENCHMARKING_IDS'))
 		{

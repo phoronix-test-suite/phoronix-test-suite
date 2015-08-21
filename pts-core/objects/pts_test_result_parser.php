@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2013, Phoronix Media
-	Copyright (C) 2010 - 2013, Michael Larabel
+	Copyright (C) 2010 - 2015, Phoronix Media
+	Copyright (C) 2010 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -243,10 +243,50 @@ class pts_test_result_parser
 		foreach(array_keys($extra_data_identifiers) as $i)
 		{
 			$id = $extra_data_identifiers[$i];
+			$frame_all_times = array();
 
 			switch($id)
 			{
+				case 'libframetime-output':
+					// libframetime output
+					$line_values = explode(PHP_EOL, file_get_contents($test_log_file));
+					if(!empty($line_values) && isset($line_values[3]))
+					{
+						foreach($line_values as &$v)
+						{
+							if(substr($v, -3) == ' us' && substr($v, 0, 10) == 'Frametime ')
+							{
+								$frametime = substr($v, 10);
+								$frametime = substr($frametime, 0, -3);
+								if($frametime > 2000)
+								{
+									$frametime = $frametime / 1000;
+									array_push($frame_all_times, $frametime);
+								}
+							}
+						}
+						$frame_all_times = pts_math::remove_outliers($frame_all_times);
+					}
+					break;
+				case 'csv-dump-frame-latencies':
+					// Civ Beyond Earth
+					$csv_values = explode(',', pts_file_io::file_get_contents($test_log_file));
+					if(!empty($csv_values) && isset($csv_values[3]))
+					{
+						foreach($csv_values as $i => &$v)
+						{
+							if(!is_numeric($v))
+							{
+								unset($csv_values[$i]);
+								continue;
+							}
+
+							array_push($frame_all_times, $v);
+						}
+					}
+					break;
 				case 'com-speeds-frame-latency-totals':
+					// id Tech Games
 					$log_file = pts_file_io::file_get_contents($test_log_file);
 					$frame_all_times = array();
 					while(($log_file = strstr($log_file, 'frame:')))
@@ -263,23 +303,23 @@ class pts_test_result_parser
 						}
 						$log_file = strstr($log_file, 'bk:');
 					}
-
-					if(isset($frame_all_times[60]))
-					{
-						// Take off the first frame as it's likely to have taken much longer when game just starting off...
-						array_shift($frame_all_times);
-						$tp = clone $test_result->test_profile;
-						$tp->set_result_scale('Milliseconds');
-						$tp->set_result_proportion('LIB');
-						$tp->set_display_format('LINE_GRAPH');
-						$tp->set_identifier(null);
-						$extra_result = new pts_test_result($tp);
-						$extra_result->set_used_arguments_description('Total Frame Time');
-						$extra_result->set_result(implode(',', $frame_all_times));
-						array_push($extra_results, $extra_result);
-						//$extra_result->set_used_arguments(phodevi::sensor_name($sensor) . ' ' . $test_result->get_arguments());
-					}
 					break;
+			}
+
+			if(isset($frame_all_times[60]))
+			{
+				// Take off the first frame as it's likely to have taken much longer when game just starting off...
+				array_shift($frame_all_times);
+				$tp = clone $test_result->test_profile;
+				$tp->set_result_scale('Milliseconds');
+				$tp->set_result_proportion('LIB');
+				$tp->set_display_format('LINE_GRAPH');
+				$tp->set_identifier(null);
+				$extra_result = new pts_test_result($tp);
+				$extra_result->set_used_arguments_description('Total Frame Time');
+				$extra_result->set_result(implode(',', $frame_all_times));
+				array_push($extra_results, $extra_result);
+				//$extra_result->set_used_arguments(phodevi::sensor_name($sensor) . ' ' . $test_result->get_arguments());
 			}
 		}
 
@@ -495,6 +535,7 @@ class pts_test_result_parser
 		$result_line_before_hint = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/ResultsParser/LineBeforeHint');
 		$result_line_after_hint = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/ResultsParser/LineAfterHint');
 		$result_before_string = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/ResultsParser/ResultBeforeString');
+		$result_after_string = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/ResultsParser/ResultAfterString');
 		$result_divide_by = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/ResultsParser/DivideResultBy');
 		$result_multiply_by = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/ResultsParser/MultiplyResultBy');
 		$strip_from_result = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/ResultsParser/StripFromResult');
@@ -535,7 +576,7 @@ class pts_test_result_parser
 			// The actual parsing here
 			$start_result_pos = strrpos($result_template[$i], $result_key[$i]);
 
-			if($prefix != null && $start_result_pos === false)
+			if($prefix != null && $start_result_pos === false && $result_template[$i] != 'csv-dump-frame-latencies' && $result_template[$i] != 'libframetime-output')
 			{
 				// XXX: technically the $prefix check shouldn't be needed, verify whether safe to have this check be unconditional on start_result_pos failing...
 				return false;
@@ -558,11 +599,11 @@ class pts_test_result_parser
 			if($result_template_r_pos === false)
 			{
 				// Look for an element that partially matches, if like a '.' or '/sec' or some other pre/post-fix is present
-				foreach($result_template_r as $i => $r_check)
+				foreach($result_template_r as $x => $r_check)
 				{
-					if(isset($result_key[$i]) && strpos($r_check, $result_key[$i]) !== false)
+					if(isset($result_key[$x]) && strpos($r_check, $result_key[$x]) !== false)
 					{
-						$result_template_r_pos = $i;
+						$result_template_r_pos = $x;
 						break;
 					}
 				}
@@ -621,8 +662,74 @@ class pts_test_result_parser
 			}
 
 			$test_results = array();
+			$already_processed = false;
+			$frame_time_values = null;
 
-			if($search_key != null || (isset($result_line_before_hint[$i]) && $result_line_before_hint[$i] != null) || (isset($result_line_after_hint[$i]) && $result_line_after_hint[$i]) != null || (isset($result_key[$i]) && $result_template_r[0] == $result_key[$i]))
+			if($result_template[$i] == 'libframetime-output')
+			{
+				$already_processed = true;
+				$frame_time_values = array();
+				$line_values = explode(PHP_EOL, $result_output);
+				if(!empty($line_values) && isset($line_values[3]))
+				{
+					foreach($line_values as &$v)
+					{
+						if(substr($v, -3) == ' us' && substr($v, 0, 10) == 'Frametime ')
+						{
+							$frametime = substr($v, 10);
+							$frametime = substr($frametime, 0, -3);
+							if($frametime > 2000)
+							{
+								$frametime = $frametime / 1000;
+								array_push($frame_time_values, $frametime);
+							}
+						}
+					}
+					$frame_time_values = pts_math::remove_outliers($frame_time_values);
+				}
+			}
+			else if($result_template[$i] == 'csv-dump-frame-latencies')
+			{
+				$already_processed = true;
+				$frame_time_values = explode(',', $result_output);
+			}
+
+			if(!empty($frame_time_values) && isset($frame_time_values[3]))
+			{
+				// Get rid of the first value
+				array_shift($frame_time_values);
+
+				foreach($frame_time_values as $f => &$v)
+				{
+					if(!is_numeric($v) || $v == 0)
+					{
+						unset($frame_time_values[$f]);
+						continue;
+					}
+					$v = 1000 / $v;
+				}
+
+				switch($prefix)
+				{
+					case 'MIN_':
+						$val = min($frame_time_values);
+						break;
+					case 'MAX_':
+						$val = max($frame_time_values);
+						break;
+					case 'AVG_':
+						default:
+						$val = array_sum($frame_time_values) / count($frame_time_values);
+						break;
+				}
+
+				if($val != 0)
+				{
+					array_push($test_results, $val);
+				}
+			}
+
+			if(($search_key != null || (isset($result_line_before_hint[$i]) && $result_line_before_hint[$i] != null) || (isset($result_line_after_hint[$i]) && $result_line_after_hint[$i]) != null || (isset($result_key[$i]) && $result_template_r[0] == $result_key[$i])) && $already_processed == false)
 			{
 				$is_multi_match = !empty($multi_match[$i]) && $multi_match[$i] != 'NONE';
 
@@ -672,6 +779,26 @@ class pts_test_result_parser
 						if($result_before_this !== false)
 						{
 							array_push($test_results, $result_r[($result_before_this - 1)]);
+						}
+					}
+					else if(!empty($result_after_string[$i]))
+					{
+						// Using ResultBeforeString tag
+						$result_after_this = array_search($result_after_string[$i], $result_r);
+
+						if($result_after_this !== false)
+						{
+							$result_after_this++;
+							for($f = $result_after_this; $f < count($result_r); $f++)
+							{
+								if(in_array($result_r[$f], array(':', ',', '-', '=')))
+								{
+									continue;
+								}
+
+								array_push($test_results, $result_r[$f]);
+								break;
+							}
 						}
 					}
 					else if(isset($result_r[$result_template_r_pos]))

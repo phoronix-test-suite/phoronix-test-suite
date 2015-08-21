@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2012, Phoronix Media
-	Copyright (C) 2008 - 2012, Michael Larabel
+	Copyright (C) 2008 - 2015, Phoronix Media
+	Copyright (C) 2008 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -120,14 +120,15 @@ class pts_compression
 				$success = true;
 			}
 		}
-		else
+		else if(pts_client::executable_in_path('unzip'))
 		{
 			// Fallback to using external unzip command
-			if(pts_client::executable_in_path('unzip'))
-			{
-				shell_exec('unzip -o ' . $zip_file . ' -d ' . $extract_to . ' 2>&1');
-				$success = true;
-			}
+			shell_exec('unzip -o ' . $zip_file . ' -d ' . $extract_to . ' 2>&1');
+			$success = true;
+		}
+		else if(PTS_IS_CLIENT)
+		{
+			trigger_error('Failed to find ZIP support for extracting file: ' . $zip_file . '. Install PHP ZIP support or the unzip utility.', E_USER_ERROR);
 		}
 
 		return $success;
@@ -136,6 +137,23 @@ class pts_compression
 	{
 		if(!class_exists('ZipArchive'))
 		{
+			if(pts_client::executable_in_path('zip'))
+			{
+				if(is_array($add_files))
+				{
+					shell_exec('cd ' . dirname($add_files[0]) . ' && rm -f ' . $zip_file . ' && zip -r ' . $zip_file . ' ' . implode(' ', array_map('basename', $add_files)));
+				}
+				else
+				{
+					shell_exec('cd ' . dirname($add_files) . ' && rm -f ' . $zip_file . ' && zip -r ' . $zip_file . ' ' . basename($add_files));
+				}
+
+				if(is_file($zip_file) && filesize($zip_file) > 0)
+				{
+					return true;
+				}
+			}
+
 			return false;
 		}
 

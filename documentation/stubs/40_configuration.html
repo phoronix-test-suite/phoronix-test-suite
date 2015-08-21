@@ -28,11 +28,13 @@
 <p><strong>TEST_RESULTS_DESCRIPTION</strong></p>
 <p>When this variable is set, the value will be used as the test results description when saving the test results.</p>
 <p><strong>PRESET_OPTIONS</strong></p>
-<p>For setting any test option(s) from an environment variable rather than being prompted for the options when running a test. Example: <em>PRESET_OPTIONS=&quot;stream.run-type=Add&quot; ./phoronix-test-suite benchmark stream</em></p>
+<p>For setting any test option(s) from an environment variable rather than being prompted for the options when running a test. Example: <em>PRESET_OPTIONS=&quot;stream.run-type=Add&quot; ./phoronix-test-suite benchmark stream</em>. Multiple options can be passed to this environment variable when delimited by a semicolon.</p>
 <p><strong>SKIP_TESTS</strong></p>
 <p>If there are any test(s) to exempt from the testing process, specify them in this variable. Multiple tests can be waived by delimiting each test identifier by a comma. A test hardware type (i.e. Graphics) can also be supplied for skipping a range of tests.</p>
-<p><strong>ONLY_TEST_TYPES</strong></p>
-<p>If you are running a set of benchmarks (namely a result file) but wish to skip some of the tests that don't belong to a certain test type group, you can set the hardware types to test via this environment variable. E.g. setting <em>ONLY_TEST_TYPE=Graphics</em> will skip all test profiles to run that are not of the graphics test group. Multiple types should be delimited by a comma.</p>
+<p><strong>RUN_TESTS_IN_RANDOM_ORDER</strong></p>
+<p>Setting this environment variable will cause the tests to be run in a random order.</p>
+<p><strong>SKIP_TESTING_SUBSYSTEMS</strong></p>
+<p>If you are running a set of benchmarks (namely a result file) but wish to skip some of the tests that don't belong to a certain test type group, you can set the hardware types to test via this environment variable. E.g. setting <em>SKIP_TESTING_SUBSYSTEMS=Graphics</em> will skip all test profiles to run that are not of the graphics test group. Multiple types should be delimited by a comma.</p>
 <p><strong>PTS_MODULE_SETUP</strong></p>
 <p>This variable can be used to load Phoronix Test Suite module settings automatically when using the <em>module-setup</em> option. An example would be: <em>PTS_MODULE_SETUP=&quot;phoromatic.remote_host=http://www.phoromatic.com/; phoromatic.remote_account=123456; phoromatic.remote_verifier=ABCD&quot; phoronix-test-suite module-setup phoromatic</em>.</p>
 <p><strong>PTS_MODULES</strong></p>
@@ -44,7 +46,7 @@
 <p><strong>PTS_DISPLAY_MODE</strong></p>
 <p>If you wish to load a non-default display mode for a single instance, specify the mode in this variable.</p>
 <p><strong>TOTAL_LOOP_TIME</strong></p>
-<p>When running any test(s), if you would like the test(s) to continue running as a loop until a certain time has been reached, this variable can be used. The value should be the number of minutes to run the testing process before the loop is ended.</p>
+<p>When running any test(s), if you would like the test(s) to continue running as a loop until a certain time has been reached, this variable can be used. The value should be the number of minutes to run the testing process before the loop is ended. The testing will finish whenever the currently active test has finished once the time has elapsed. The minimum value allowed is 10 minutes.</p>
 <p><strong>LIMIT_ELAPSED_TEST_TIME</strong></p>
 <p>If you want to ensure that the time for a given Phoronix Test Suite process doesn't elapse past a certain number of minutes, specify the number of minutes for this environment variable. When the amount of time spent testing exceeds that amount, the testing will end prematurely while still saving the tests that were completed in time.</p>
 <p><strong>TOTAL_LOOP_COUNT</strong></p>

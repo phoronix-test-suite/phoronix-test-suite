@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009, Phoronix Media
-	Copyright (C) 2009, Michael Larabel
+	Copyright (C) 2009 - 2015, Phoronix Media
+	Copyright (C) 2009 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -19,6 +19,11 @@
 	You should have received a copy of the GNU General Public License
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
+
+if(is_file('/usr/share/php/fpdf/fpdf.php'))
+{
+	include_once('/usr/share/php/fpdf/fpdf.php');
+}
 
 class pts_pdf_template extends FPDF
 {
@@ -84,10 +89,12 @@ class pts_pdf_template extends FPDF
 				case 'h2':
 					$this->CreateBookmark($value, 2);
 					$this->SetLeftMargin(10);
-					$this->SetFont('Arial', 'B', 13);
+					$this->SetFont('Arial', 'B', 14);
 					$this->SetTextColor(50, 51, 49);
 					$this->Ln();
+					$this->SetTopMargin(30);
 					$this->html_text_interpret('h2', $dom_item);
+					$this->Ln();
 					break;
 				case 'h3':
 					$this->SetLeftMargin(10);
@@ -95,6 +102,8 @@ class pts_pdf_template extends FPDF
 					$this->SetTextColor(97, 99, 96);
 					$this->Ln();
 					$this->html_text_interpret('h3', $dom_item);
+					$this->SetLeftMargin(10);
+					$this->Ln();
 					break;
 				case 'ol':
 				case 'ul':
@@ -152,6 +161,9 @@ class pts_pdf_template extends FPDF
 				case 'em':
 					$this->SetFont(null, 'I', (substr($apply_as_tag, 0, 1) == 'h' ? '12' : null));
 					break;
+				case 'u':
+					$this->SetFont(null, 'U', (substr($apply_as_tag, 0, 1) == 'h' ? '12' : null));
+					break;
 				case 'strong':
 					$this->SetFont(null, 'B');
 					break;
@@ -165,7 +177,7 @@ class pts_pdf_template extends FPDF
 					$this->SetTextColor(0, 0, 0);
 					break;
 				default:
-					echo "UNSUPPORTED: $name\n";
+					//echo "UNSUPPORTED: $name: $value\n";
 					break;
 			}
 

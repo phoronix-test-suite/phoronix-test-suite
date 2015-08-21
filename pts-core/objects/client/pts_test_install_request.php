@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2013, Phoronix Media
-	Copyright (C) 2010 - 2013, Michael Larabel
+	Copyright (C) 2010 - 2015, Phoronix Media
+	Copyright (C) 2010 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -113,9 +113,10 @@ class pts_test_install_request
 		$remote_files = pts_test_install_manager::remote_files_available_in_download_caches();
 		$local_download_caches = pts_test_install_manager::local_download_caches();
 		$remote_download_caches = pts_test_install_manager::remote_download_caches();
+		$phoromatic_server_caches = pts_test_install_manager::phoromatic_download_server_caches();
 
 		$install_request->generate_download_object_list();
-		$install_request->scan_download_caches($local_download_caches, $remote_download_caches, $remote_files);
+		$install_request->scan_download_caches($local_download_caches, $remote_download_caches, $remote_files, $phoromatic_server_caches);
 
 		foreach($install_request->get_download_objects() as $download_object)
 		{
@@ -125,7 +126,7 @@ class pts_test_install_request
 			}
 		}
 
-		foreach($test_profile->extended_test_profiles() as $extended_test_profile)
+		foreach($install_request->test_profile->extended_test_profiles() as $extended_test_profile)
 		{
 			if(self::test_files_available_locally($extended_test_profile) == false)
 			{
@@ -135,7 +136,37 @@ class pts_test_install_request
 
 		return true;
 	}
-	public function scan_download_caches($local_download_caches, $remote_download_caches, $remote_files)
+	public static function test_files_in_cache(&$test_profile, $include_extended_test_profiles = true, $skip_hash_checks = false)
+	{
+		$install_request = new pts_test_install_request($test_profile);
+
+		$remote_files = false;
+		$local_download_caches = pts_test_install_manager::local_download_caches();
+		$remote_download_caches = false;
+		$phoromatic_server_caches = false;
+
+		$install_request->generate_download_object_list();
+		$install_request->scan_download_caches($local_download_caches, $remote_download_caches, $remote_files, $phoromatic_server_caches, $skip_hash_checks);
+
+		foreach($install_request->get_download_objects() as $download_object)
+		{
+			if($download_object->get_download_location_type() == null)
+			{
+				return false;
+			}
+		}
+
+		foreach($install_request->test_profile->extended_test_profiles() as $extended_test_profile)
+		{
+			if(self::test_files_available_locally($extended_test_profile) == false)
+			{
+				return false;
+			}
+		}
+
+		return true;
+	}
+	public function scan_download_caches($local_download_caches, $remote_download_caches, $remote_files, $phoromatic_server_caches, $skip_hash_checks = false)
 	{
 		$download_location = $this->test_profile->get_install_dir();
 		$main_download_cache = pts_strings::add_trailing_slash(pts_client::parse_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Installation/CacheDirectory', PTS_DOWNLOAD_CACHE_PATH)));
@@ -143,8 +174,6 @@ class pts_test_install_request
 		foreach($this->test_files as &$download_package)
 		{
 			$package_filename = $download_package->get_filename();
-			$package_md5 = $download_package->get_md5();
-			$package_sha256 = $download_package->get_sha256();
 
 			if(is_file($download_location . $package_filename))
 			{
@@ -168,12 +197,22 @@ class pts_test_install_request
 
 				$download_package->set_download_location('MAIN_DOWNLOAD_CACHE', array($main_download_cache . $package_filename));
 			}
+			else if(is_file(PTS_SHARE_PATH . 'download-cache/' . $package_filename))
+			{
+				// In system's /usr/share download cache
+				if($download_package->get_filesize() == 0)
+				{
+					$download_package->set_filesize(filesize(PTS_SHARE_PATH . 'download-cache/' . $package_filename));
+				}
+
+				$download_package->set_download_location('MAIN_DOWNLOAD_CACHE', array(PTS_SHARE_PATH . 'download-cache/' . $package_filename));
+			}
 			else
 			{
 				// Scan the local download caches
 				foreach($local_download_caches as &$cache_directory)
 				{
-					if(pts_test_installer::validate_sha256_download_file($cache_directory . $package_filename, $package_sha256) || pts_test_installer::validate_md5_download_file($cache_directory . $package_filename, $package_md5))
+					if(is_file($cache_directory . $package_filename) && ($skip_hash_checks || $download_package->check_file_hash($cache_directory . $package_filename)))
 					{
 						if($download_package->get_filesize() == 0)
 						{
@@ -187,7 +226,7 @@ class pts_test_install_request
 
 				// Look-aside download cache copy
 				// Check to see if the same package name with the same package check-sum is already present in another test installation
-				$lookaside_copy = pts_test_install_manager::file_lookaside_test_installations($package_filename, $package_md5, $package_sha256);
+				$lookaside_copy = pts_test_install_manager::file_lookaside_test_installations($download_package);
 				if($lookaside_copy)
 				{
 					if($download_package->get_filesize() == 0)
@@ -198,14 +237,27 @@ class pts_test_install_request
 					$download_package->set_download_location('LOOKASIDE_DOWNLOAD_CACHE', array($lookaside_copy));
 				}
 
+				// Check Phoromatic server caches
+				if($download_package->get_download_location_type() == null && $phoromatic_server_caches)
+				{
+					foreach($phoromatic_server_caches as $server_url => $repo)
+					{
+						if(isset($repo[$package_filename]) && ($skip_hash_checks || $repo[$package_filename]['md5'] == $download_package->get_md5() || $repo[$package_filename]['sha256'] == $download_package->get_sha256() || ($download_package->get_sha256() == null && $download_package->get_md5() == null)))
+						{
+							$download_package->set_download_location('REMOTE_DOWNLOAD_CACHE', array($server_url . '/download-cache.php?download=' . $package_filename));
+							break;
+						}
+					}
+				}
+
 				// If still not found, check remote download caches
 				if($download_package->get_download_location_type() == null)
 				{
-					if(!empty($package_md5) && isset($remote_files[$package_md5]))
+					if(isset($remote_files[$package_filename]))
 					{
-						$download_package->set_download_location('REMOTE_DOWNLOAD_CACHE', $remote_files[$package_md5]);
+						$download_package->set_download_location('REMOTE_DOWNLOAD_CACHE', $remote_files[$package_filename]);
 					}
-					else
+					else if(!empty($remote_download_caches))
 					{
 						// Check for files manually
 						foreach($remote_download_caches as $remote_dir)
@@ -224,7 +276,10 @@ class pts_test_install_request
 				}
 			}
 		}
-
+	}
+	public function get_arguments_description()
+	{
+		return null;
 	}
 }
 

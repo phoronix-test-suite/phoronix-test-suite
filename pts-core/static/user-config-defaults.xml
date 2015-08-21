@@ -4,8 +4,6 @@
 	<Options>
 		<OpenBenchmarking>
 			<AnonymousUsageReporting>TRUE</AnonymousUsageReporting>
-			<AnonymousHardwareReporting>TRUE</AnonymousHardwareReporting>
-			<AnonymousSoftwareReporting>TRUE</AnonymousSoftwareReporting>
 			<IndexCacheTTL>3</IndexCacheTTL>
 			<AlwaysUploadSystemLogs>FALSE</AlwaysUploadSystemLogs>
 		</OpenBenchmarking>
@@ -13,6 +11,7 @@
 			<DefaultBrowser></DefaultBrowser>
 			<UsePhodeviCache>TRUE</UsePhodeviCache>
 			<DefaultDisplayMode>DEFAULT</DefaultDisplayMode>
+			<PhoromaticServers></PhoromaticServers>
 		</General>
 		<Modules>
 			<LoadModules>toggle_screensaver, update_checker, graphics_event_checker</LoadModules>
@@ -55,15 +54,18 @@
 			<Configured>FALSE</Configured>
 		</BatchMode>
 		<Networking>
+			<NoInternetCommunication>FALSE</NoInternetCommunication>
 			<NoNetworkCommunication>FALSE</NoNetworkCommunication>
 			<Timeout>20</Timeout>
 			<ProxyAddress></ProxyAddress>
 			<ProxyPort></ProxyPort>
 		</Networking>
 		<Server>
-			<RemoteAccessAllowed>FALSE</RemoteAccessAllowed>
+			<RemoteAccessPort>RANDOM</RemoteAccessPort>
 			<Password></Password>
-			<WebSocketPort></WebSocketPort>
+			<WebSocketPort>RANDOM</WebSocketPort>
+			<AdvertiseServiceZeroConf>TRUE</AdvertiseServiceZeroConf>
+			<PhoromaticStorage>~/.phoronix-test-suite/phoromatic/</PhoromaticStorage>
 		</Server>
 	</Options>
 </PhoronixTestSuite>

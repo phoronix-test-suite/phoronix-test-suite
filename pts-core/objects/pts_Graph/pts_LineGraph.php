@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2013, Phoronix Media
-	Copyright (C) 2008 - 2013, Michael Larabel
+	Copyright (C) 2008 - 2015, Phoronix Media
+	Copyright (C) 2008 - 2015, Michael Larabel
 	pts_LineGraph.php: The line graph object that extends pts_Graph.php.
 
 	This program is free software; you can redistribute it and/or modify
@@ -30,7 +30,6 @@ class pts_LineGraph extends pts_Graph
 		$this->i['show_background_lines'] = true;
 		$this->i['iveland_view'] = true;
 		$this->i['identifier_width'] = -1;
-		$this->i['graph_max_value_multiplier'] = 1.38; // make room for the average/peak/low table embedded to the top
 		$this->i['min_identifier_size'] = 6.5;
 		$this->i['plot_overview_text'] = true;
 		$this->i['display_select_identifiers'] = false;
@@ -71,6 +70,16 @@ class pts_LineGraph extends pts_Graph
 				$this->i['display_select_identifiers'] = ceil(($text_height + 4) / $this->i['identifier_width']);
 			}
 		}
+
+		$max_value = 0;
+		foreach($this->graph_data as $dataset)
+		{
+			$data_max = max($dataset);
+			$max_value = $max_value > $data_max ? $max_value : $data_max;
+		}
+
+		$max_value *= 1.25; // leave room at top of graph
+		$this->i['graph_max_value'] = round($max_value, $max_value < 10 ? 1 : 0);
 	}
 	protected function render_graph_identifiers()
 	{
@@ -136,6 +145,131 @@ class pts_LineGraph extends pts_Graph
 
 		return $line_color_cache[$identifier];
 	}
+	protected function render_graph_key()
+	{
+		if(isset($this->i['force_simple_keys']) && $this->i['force_simple_keys'])
+		{
+			return parent::render_graph_key();
+		}
+
+		if($this->i['key_line_height'] == 0)
+		{
+			return;
+		}
+
+		$square_length = 10;
+		$precision = $this->getPrecision($this->graph_data);
+
+		$num_rows = max(1, ceil(count($this->graph_data_title) / $this->i['keys_per_line']));
+		$num_cols = ceil(count($this->graph_data_title) / $num_rows);
+
+		$y_start = $this->i['top_start'] - $this->graph_key_height() + $this->getStatisticsHeaderHeight();
+		$y_end = $y_start + $this->i['key_line_height'] * ($num_rows - 1);
+		$x_start = $this->i['left_start'];
+		$x_end = $x_start + $this->i['key_item_width'] * ($num_cols - 1);
+
+		// draw the "Min Avg Max" text
+		$stat_header_offset = $this->i['key_longest_string_width'] + $square_length + 10;
+		for($x = $x_start + $stat_header_offset; $x <= $x_end + $stat_header_offset; $x += $this->i['key_item_width'])
+		{
+			$this->draw_stat_text($x, array('y' => $y_start - 14, 'font-size' => 6.5, 'fill' => self::$c['color']['notches']));
+		}
+
+		// draw the keys and the min,avg,max values
+		for($i = 0, $x = $x_start; $x <= $x_end; $x += $this->i['key_item_width'])
+		{
+			for ($y = $y_start; $y <= $y_end; $y += $this->i['key_line_height'], ++$i)
+			{
+				if(empty($this->graph_data_title[$i]))
+				{
+					continue;
+				}
+
+				$this_color = $this->get_special_paint_color($this->graph_data_title[$i]);
+
+				// draw square
+				$this->svg_dom->add_element('rect',
+								array('x' => $x, 'y' => $y - $square_length, 'width' => $square_length,
+								  'height' => $square_length, 'fill' => $this_color,
+								  'stroke' => self::$c['color']['notches'], 'stroke-width' => 1));
+
+				// draw text
+				$this->svg_dom->add_text_element($this->graph_data_title[$i],
+								 array('x' => $x + $square_length + 4, 'y' => $y,
+									   'font-size' => self::$c['size']['key'], 'fill' => $this_color));
+
+				// draw min/avg/max
+				$x_stat_loc = $x + $square_length + $this->i['key_longest_string_width'] + 10;
+				$this->draw_result_stats($this->graph_data[$i], $precision, $x_stat_loc,
+								   array('y' => $y, 'font-size' => self::$c['size']['key'], 'fill' => $this_color));
+			}
+		}
+	}
+	private function draw_stat_text($x, $attributes)
+	{
+		if(!$this->i['plot_overview_text'])
+		{
+			return;
+		}
+
+		$stat_words = array('Min', 'Avg', 'Max');
+		$stat_word_width = $this->get_stat_word_width();
+
+		foreach($stat_words as &$stat_word)
+		{
+			$attributes['x'] = $x;
+			$this->svg_dom->add_text_element($stat_word, $attributes);
+			$x += $stat_word_width;
+		}
+	}
+	private function draw_result_stats(&$data_set, $precision, $x, $attributes)
+	{
+		if(!$this->i['plot_overview_text'])
+		{
+			return;
+		}
+
+		$stat_word_width = $this->get_stat_word_width();
+		$stat_array = $this->calc_min_avg_max($data_set);
+
+		$precise_stat_array = array();
+		foreach($stat_array as $stat_value)
+		{
+			array_push($precise_stat_array, pts_math::set_precision($stat_value, $precision));
+		}
+
+		foreach($precise_stat_array as $stat_value)
+		{
+			$attributes['x'] = $x;
+			$this->svg_dom->add_text_element(strval($stat_value), $attributes);
+			$x += $stat_word_width;
+		}
+	}
+	private static function calc_min_avg_max(&$data_set)
+	{
+		if(empty($data_set))
+		{
+			return array(0, 0, 0);
+		}
+
+		$min_value = min($data_set);
+		$max_value = max($data_set);
+		$avg_value = array_sum($data_set) / count($data_set);
+
+		return array($min_value, $avg_value, $max_value);
+	}
+	private static function getPrecision(&$data)
+	{
+		// get the maximum value
+		$max = 0;
+		foreach($data as &$data_set)
+		{
+			$data_set_max = max($data_set);
+			$max = $max > $data_set_max ? $max : $data_set_max;
+		}
+
+		return $max > 999 ? 0 : 1;
+	}
 	protected function renderGraphLines()
 	{
 		$calculations_r = array();
@@ -181,7 +315,6 @@ class pts_LineGraph extends pts_Graph
 
 				if($px_from_left > $this->i['graph_left_end'])
 				{
-					//$px_from_left = $this->i['graph_left_end'] - 1;
 					break;
 				}
 
@@ -205,86 +338,6 @@ class pts_LineGraph extends pts_Graph
 
 			$this->draw_graph_line_process($poly_points, $paint_color, $regression_plots, $point_counter);
 		}
-
-		if($this->i['plot_overview_text'])
-		{
-			$to_display = array();
-			$to_display[self::$c['color']['notches']] = array();
-
-			foreach(array_keys($calculations_r) as $color)
-			{
-				$to_display[$color] = array();
-			}
-
-			// in_array($this->graph_y_title, array('Percent', 'Milliwatts', 'Megabytes', 'Celsius', 'MB/s', 'Frames Per Second', 'Seconds', 'Iterations Per Minute'))
-			if(!empty($calculations_r))
-			{
-				array_push($to_display[self::$c['color']['notches']], 'Average:');
-
-				foreach($calculations_r as $color => &$values)
-				{
-					array_push($to_display[$color], (array_sum($values) / count($values)));
-				}
-
-				// in_array($this->graph_y_title, array('Megabytes', 'Milliwatts', 'Celsius', 'MB/s', 'Frames Per Second', 'Seconds', 'Iterations Per Minute'))
-				if(($this->graph_y_title != 'Percent' || $max_value < 100) && $max_value != $min_value)
-				{
-					array_push($to_display[self::$c['color']['notches']], 'Peak:');
-
-					foreach($calculations_r as $color => &$values)
-					{
-						array_push($to_display[$color], max($values));
-					}
-				}
-				if($min_value > 0 && $max_value != $min_value)
-				{
-					array_push($to_display[self::$c['color']['notches']], 'Low:');
-
-					foreach($calculations_r as $color => &$values)
-					{
-						array_push($to_display[$color], min($values));
-					}
-				}
-				/*if($point_counter > 9 && !in_array($this->graph_y_title, array('Percent')))
-				{
-					array_push($to_display[self::$c['color']['body_text']], 'Last:');
-
-					foreach($calculations_r as $color => &$values)
-					{
-						array_push($to_display[$color], $values[count($values) - 1]);
-					}
-				}*/
-
-				// Do the actual rendering of avg / low / med high identifiers
-				$from_left = $this->i['left_start'] + 6;
-				foreach($to_display as $color_key => &$column)
-				{
-					$from_top = $this->i['top_start'] + 10;
-					$longest_string_width = 0;
-					$precision = isset($column[0]) && max($column) > 999 ? 0 : 1;
-
-					foreach($column as &$write)
-					{
-						if(is_numeric($write))
-						{
-							$write = pts_math::set_precision($write, $precision);
-						}
-
-						$this->svg_dom->add_text_element($write, array('x' => $from_left, 'y' => $from_top, 'font-size' => 6.5, 'fill' => $color_key, 'text-anchor' => 'start'));
-						$string_width = $this->text_string_width($write, 6.5);
-
-						if($string_width > $longest_string_width)
-						{
-							$longest_string_width = $string_width;
-						}
-
-						$from_top += 10;
-					}
-
-					$from_left += $longest_string_width + 3;
-				}
-			}
-		}
 	}
 	protected function draw_graph_line_process(&$poly_points, &$paint_color, &$regression_plots, $point_counter)
 	{
@@ -304,6 +357,7 @@ class pts_LineGraph extends pts_Graph
 		$svg_poly = implode(' ', $svg_poly);
 		$this->svg_dom->add_element('polyline', array('points' => $svg_poly, 'fill' => 'none', 'stroke' => $paint_color, 'stroke-width' => 2));
 
+		// plot error bars if needed
 		foreach($poly_points as $i => $x_y_pair)
 		{
 			if($x_y_pair[0] < ($this->i['left_start'] + 2) || $x_y_pair[0] > ($this->i['graph_left_end'] - 2))
@@ -343,6 +397,46 @@ class pts_LineGraph extends pts_Graph
 	protected function render_graph_result()
 	{
 		$this->renderGraphLines();
+	}
+	protected function graph_key_height()
+	{
+		if(isset($this->i['force_simple_keys']) && $this->i['force_simple_keys'])
+		{
+			return parent::graph_key_height();
+		}
+		if(count($this->graph_data_title) < 2 && $this->i['show_graph_key'] == false)
+		{
+			return 0;
+		}
+
+		$this->i['key_line_height'] = 16;
+		$this->i['key_longest_string_width'] = $this->text_string_width(pts_strings::find_longest_string($this->graph_data_title), self::$c['size']['key']);
+
+		$item_width_spacing = 32;
+		$this->i['key_item_width'] = $this->i['key_longest_string_width'] + $this->get_stat_word_width() * 3 + $item_width_spacing;
+
+		// if there are <=4 data sets, then use a single column, otherwise, try and multi-col it
+		if (count($this->graph_data_title) <= 3)
+		{
+			$this->i['keys_per_line'] = 1;
+		}
+		else
+		{
+			$this->i['keys_per_line'] = max(1, floor(($this->i['graph_left_end'] - $this->i['left_start']) / $this->i['key_item_width']));
+		}
+
+		$statistics_header_height = $this->getStatisticsHeaderHeight();
+		$extra_spacing = 4;
+		return ceil(count($this->graph_data_title) / $this->i['keys_per_line']) * $this->i['key_line_height']
+			+ $statistics_header_height + $extra_spacing;
+	}
+	private function get_stat_word_width()
+	{
+		return ceil(2.6 * $this->text_string_width($this->i['graph_max_value'] + 0.1, $this->i['min_identifier_size'] + 0.5));
+	}
+	private function getStatisticsHeaderHeight()
+	{
+		return $this->i['plot_overview_text'] ? 10 : 0;
 	}
 }
 

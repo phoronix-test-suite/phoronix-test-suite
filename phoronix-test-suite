@@ -3,8 +3,8 @@
 #
 #	Phoronix Test Suite
 #	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-#	Copyright (C) 2008 - 2014, Phoronix Media
-#	Copyright (C) 2008 - 2014, Michael Larabel
+#	Copyright (C) 2008 - 2015, Phoronix Media
+#	Copyright (C) 2008 - 2015, Michael Larabel
 #	phoronix-test-suite: The Phoronix Test Suite is an extensible open-source testing / benchmarking platform
 #
 #	This program is free software; you can redistribute it and/or modify
@@ -26,9 +26,18 @@
 export PTS_DIR=`pwd`
 export PTS_MODE="CLIENT"
 
-if [ $PTS_DIR != `pwd` ]
+if [ $PTS_DIR != "`pwd`" ]
 then
 	cd $PTS_DIR
+fi
+
+# Run any start-up hooks, such as to pre-seed environment variables or other non-default behaviors / customizations
+if [ -d pts-core/hooks/startup ]
+then
+	for file in pts-core/hooks/startup/*.sh
+	do
+		./$file
+	done
 fi
 
 # Determine PHP binary location
@@ -53,9 +62,18 @@ then
 elif [ -x /usr/pkg/libexec/cgi-bin/php ]
 then
 	export PHP_BIN="/usr/pkg/libexec/cgi-bin/php"
+elif which php >/dev/null 2>&1 ;
+then
+	export PHP_BIN="php"
+elif which php5 >/dev/null 2>&1 ;
+then
+	export PHP_BIN="php5"
 elif [ -x /usr/bin/hhvm ]
 then
 	export PHP_BIN="/usr/bin/hhvm"
+elif which hhvm >/dev/null 2>&1 ;
+then
+	export PHP_BIN="hhvm"
 else
 	export PHP_BIN=""
 fi
@@ -74,9 +92,9 @@ EOT
 if [ -x /usr/bin/apt-get ]
 then
 	echo "The command to likely run for your operating system is: "
-	echo "# apt-get install php5-cli php5-json php5-gd"
+	echo "# apt-get install php5-cli"
 	echo " "
-elif [ -x /usr/bin/yum ]
+elif [ -x /usr/bin/yum ] ||  [ -x /usr/bin/dnf ]
 then
 	echo "The command to likely run for your operating system is: "
 	echo "# yum install php-cli php-xml"
@@ -91,9 +109,19 @@ then
 	echo "The command to likely run for your operating system is: "
 	echo "# pkg_radd php5 php5-json php5-zip php5-dom"
 	echo " "
+elif [ -x /usr/bin/pacman ]
+then
+	echo "The command to likely run for your operating system is: "
+	echo "# pacman -S php"
+	echo " "
 fi
 
 exit
+fi
+
+if [ ! -f pts-core/phoronix-test-suite.php ] && [ -f `dirname $0`/pts-core/phoronix-test-suite.php ]
+then
+	cd `dirname $0`
 fi
 
 # Ensure the user is in the correct directory
@@ -113,12 +141,12 @@ case "$1" in
 "test-module" | "debug-module" | "webui")
 	export PTS_IGNORE_MODULES=1
 	;;
+"enterprise-setup")
+	export PTS_SILENT_MODE=1
+	;;
 esac
 
-if [ -f $HOME/.phoronix-test-suite/web-server-launcher ]
-then
-	rm -f $HOME/.phoronix-test-suite/web-server-launcher
-fi
+export PTS_EXT_LAUNCH_SCRIPT_DIR=`mktemp -d 2>/dev/null || mktemp -d -t ptstmp`
 
 # Run The Phoronix Test Suite
 PTS_EXIT_STATUS=8
@@ -127,9 +155,15 @@ while [ $PTS_EXIT_STATUS -eq 8 ]; do
 	PTS_EXIT_STATUS=$?
 done
 
-if [ -f $HOME/.phoronix-test-suite/web-server-launcher ]
+if [ -f $PTS_EXT_LAUNCH_SCRIPT_DIR/web-server-launcher ]
 then
-	chmod +x $HOME/.phoronix-test-suite/web-server-launcher
-	exec $HOME/.phoronix-test-suite/web-server-launcher
-	rm -f $HOME/.phoronix-test-suite/web-server-launcher
+	chmod +x $PTS_EXT_LAUNCH_SCRIPT_DIR/web-server-launcher
+	exec $PTS_EXT_LAUNCH_SCRIPT_DIR/web-server-launcher
+	rm -f $PTS_EXT_LAUNCH_SCRIPT_DIR/web-server-launcher
+elif [ -f $PTS_EXT_LAUNCH_SCRIPT_DIR/phoromatic-server-launcher ]
+then
+	chmod +x $PTS_EXT_LAUNCH_SCRIPT_DIR/phoromatic-server-launcher
+	exec $PTS_EXT_LAUNCH_SCRIPT_DIR/phoromatic-server-launcher
+	rm -f $PTS_EXT_LAUNCH_SCRIPT_DIR/phoromatic-server-launcher
 fi
+# rm -rf $PTS_EXT_LAUNCH_SCRIPT_DIR

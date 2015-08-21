@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2013, Phoronix Media
-	Copyright (C) 2009 - 2013, Michael Larabel
+	Copyright (C) 2009 - 2015, Phoronix Media
+	Copyright (C) 2009 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -23,10 +23,17 @@
 class pts_test_result_buffer
 {
 	public $buffer_items;
+	protected $buffer_contains;
 
 	public function __construct($buffer_items = array())
 	{
 		$this->buffer_items = $buffer_items;
+		$this->buffer_contains = array();
+
+		foreach($buffer_items as $buffer_item)
+		{
+			$this->buffer_contains[$buffer_item->get_result_identifier() . $buffer_item->get_result_value()] = 1;
+		}
 	}
 	public function get_buffer_items()
 	{
@@ -52,6 +59,11 @@ class pts_test_result_buffer
 	public function add_buffer_item($buffer_item)
 	{
 		array_push($this->buffer_items, $buffer_item);
+		$this->buffer_contains[$buffer_item->get_result_identifier() . $buffer_item->get_result_value()] = 1;
+	}
+	public function buffer_contained(&$buffer_item)
+	{
+		return isset($this->buffer_contains[$buffer_item->get_result_identifier() . $buffer_item->get_result_value()]);
 	}
 	public function get_buffer_item($i)
 	{

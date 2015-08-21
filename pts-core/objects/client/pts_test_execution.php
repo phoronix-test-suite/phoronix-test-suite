@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2013, Phoronix Media
-	Copyright (C) 2008 - 2013, Michael Larabel
+	Copyright (C) 2008 - 2015, Phoronix Media
+	Copyright (C) 2008 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -22,6 +22,18 @@
 
 class pts_test_execution
 {
+	protected static function test_run_error(&$test_run_manager, &$test_run_request, $error_msg)
+	{
+		$error_obj = array($test_run_manager, $test_run_request, $error_msg);
+		pts_module_manager::module_process('__event_run_error', $error_obj);
+		pts_client::$display->test_run_error($error_msg);
+	}
+	protected static function test_run_instance_error(&$test_run_manager, &$test_run_request, $error_msg)
+	{
+		$error_obj = array($test_run_manager, $test_run_request, $error_msg);
+		pts_module_manager::module_process('__event_run_error', $error_obj);
+		pts_client::$display->test_run_instance_error($error_msg);
+	}
 	public static function run_test(&$test_run_manager, &$test_run_request)
 	{
 		$test_identifier = $test_run_request->test_profile->get_identifier();
@@ -37,9 +49,9 @@ class pts_test_execution
 		}
 
 		$lock_file = $test_directory . 'run_lock';
-		if(pts_client::create_lock($lock_file) == false)
+		if(pts_client::create_lock($lock_file) == false && $test_run_manager->is_multi_test_stress_run() == false)
 		{
-			pts_client::$display->test_run_error('The ' . $test_identifier . ' test is already running.');
+			self::test_run_error($test_run_manager, $test_run_request, 'The ' . $test_identifier . ' test is already running.');
 			return false;
 		}
 
@@ -55,7 +67,7 @@ class pts_test_execution
 		if($test_run_request->test_profile->get_environment_testing_size() > 1 && ceil(disk_free_space($test_directory) / 1048576) < $test_run_request->test_profile->get_environment_testing_size())
 		{
 			// Ensure enough space is available on disk during testing process
-			pts_client::$display->test_run_error('There is not enough space (at ' . $test_directory . ') for this test to run.');
+			self::test_run_error($test_run_manager, $test_run_request, 'There is not enough space (at ' . $test_directory . ') for this test to run.');
 			pts_client::release_lock($lock_file);
 			return false;
 		}
@@ -89,7 +101,7 @@ class pts_test_execution
 
 		if(!$cache_share_present && $test_run_request->test_profile->is_root_required())
 		{
-			$execute_binary_prepend = PTS_CORE_STATIC_PATH . 'scripts/root-access.sh ';
+			$execute_binary_prepend = PTS_CORE_STATIC_PATH . 'root-access.sh ';
 		}
 
 		if($allow_cache_share && !is_file($cache_share_pt2so))
@@ -185,7 +197,7 @@ class pts_test_execution
 
 				if($exit_status != 0)
 				{
-					pts_client::$display->test_run_instance_error('The test exited with a non-zero exit status.');
+					self::test_run_instance_error($test_run_manager, $test_run_request, 'The test exited with a non-zero exit status.');
 					if($is_expected_last_run && is_file($test_log_file))
 					{
 						$scan_log = pts_file_io::file_get_contents($test_log_file);
@@ -193,7 +205,7 @@ class pts_test_execution
 
 						if($test_run_error)
 						{
-							pts_client::$display->test_run_instance_error('E: ' . $test_run_error);
+							self::test_run_instance_error($test_run_manager, $test_run_request, 'E: ' . $test_run_error);
 						}
 					}
 					$exit_status_pass = false;
@@ -218,7 +230,7 @@ class pts_test_execution
 					if($test_run_time < 3 && intval($test_run_request->active_result) == $test_run_request->active_result && $test_run_request->test_profile->get_estimated_run_time() > 60)
 					{
 						// If the test ended in less than 3 seconds, outputted some int, and normally the test takes much longer, then it's likely some invalid run
-						pts_client::$display->test_run_instance_error('The test run ended prematurely.');
+						self::test_run_instance_error($test_run_manager, $test_run_request, 'The test run ended prematurely.');
 						if($is_expected_last_run && is_file($test_log_file))
 						{
 							$scan_log = pts_file_io::file_get_contents($test_log_file);
@@ -226,7 +238,7 @@ class pts_test_execution
 
 							if($test_run_error)
 							{
-								pts_client::$display->test_run_instance_error('E: ' . $test_run_error);
+								self::test_run_instance_error($test_run_manager, $test_run_request, 'E: ' . $test_run_error);
 							}
 						}
 					}
@@ -237,7 +249,7 @@ class pts_test_execution
 				}
 				else if($test_run_request->test_profile->get_display_format() != 'NO_RESULT')
 				{
-					pts_client::$display->test_run_instance_error('The test run did not produce a result.');
+					self::test_run_instance_error($test_run_manager, $test_run_request, 'The test run did not produce a result.');
 					if($is_expected_last_run && is_file($test_log_file))
 					{
 						$scan_log = pts_file_io::file_get_contents($test_log_file);
@@ -245,7 +257,7 @@ class pts_test_execution
 
 						if($test_run_error)
 						{
-							pts_client::$display->test_run_instance_error('E: ' . $test_run_error);
+							self::test_run_instance_error($test_run_manager, $test_run_request, 'E: ' . $test_run_error);
 						}
 					}
 				}
@@ -258,7 +270,7 @@ class pts_test_execution
 				}
 			}
 
-			if($is_expected_last_run && $test_run_request->test_result_buffer->get_count() > floor(($i - 2) / 2) && !$cache_share_present)
+			if($is_expected_last_run && $test_run_request->test_result_buffer->get_count() > floor(($i - 2) / 2) && !$cache_share_present && $test_run_manager->do_dynamic_run_count())
 			{
 				// The later check above ensures if the test is failing often the run count won't uselessly be increasing
 				// Should we increase the run count?
@@ -269,7 +281,7 @@ class pts_test_execution
 					// At least one run passed, but at least one run failed to produce a result. Increase count to try to get more successful runs
 					$increase_run_count = $defined_times_to_run - $test_run_request->test_result_buffer->get_count();
 				}
-				else if($test_run_request->test_result_buffer->get_count() >= 2 && $test_run_manager->do_dynamic_run_count())
+				else if($test_run_request->test_result_buffer->get_count() >= 2)
 				{
 					// Dynamically increase run count if needed for statistical significance or other reasons
 					$increase_run_count = $test_run_manager->increase_run_count_check($test_run_request, $defined_times_to_run, $test_run_time);
@@ -352,7 +364,7 @@ class pts_test_execution
 
 		if($abort_testing)
 		{
-			pts_client::$display->test_run_error('This test execution has been abandoned.');
+			self::test_run_error($test_run_manager, $test_run_request, 'This test execution has been abandoned.');
 			return false;
 		}
 
@@ -366,7 +378,7 @@ class pts_test_execution
 			if($min_length > $time_test_elapsed_actual)
 			{
 				// The test ended too quickly, results are not valid
-				pts_client::$display->test_run_error('This test ended prematurely.');
+				self::test_run_error($test_run_manager, $test_run_request, 'This test ended prematurely.');
 				return false;
 			}
 		}
@@ -376,7 +388,7 @@ class pts_test_execution
 			if($max_length < $time_test_elapsed_actual)
 			{
 				// The test took too much time, results are not valid
-				pts_client::$display->test_run_error('This test run was exhausted.');
+				self::test_run_error($test_run_manager, $test_run_request, 'This test run was exhausted.');
 				return false;
 			}
 		}

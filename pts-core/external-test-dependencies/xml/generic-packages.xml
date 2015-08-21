@@ -21,9 +21,15 @@
 		</Package>
 		<Package>
 			<GenericName>sdl-development</GenericName>
-			<Title>SDL Development Files</Title>
+			<Title>SDL 1.x Development Files</Title>
 			<PossibleNames>libsdl1.2-dev, sdl-net, sdl-image</PossibleNames>
 			<FileCheck>SDL/SDL.h, SDL/SDL_net.h, SDL/SDL_image.h</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>sdl2-development</GenericName>
+			<Title>SDL 2.x Development Files</Title>
+			<PossibleNames>libsdl2-dev</PossibleNames>
+			<FileCheck>SDL2/SDL.h, SDL2/SDL_image.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>glut</GenericName>
@@ -84,6 +90,12 @@
 			<Title>Flex</Title>
 			<PossibleNames>flex</PossibleNames>
 			<FileCheck>flex</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>bc</GenericName>
+			<Title>BC</Title>
+			<PossibleNames>bc</PossibleNames>
+			<FileCheck>bc</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>p7zip</GenericName>
@@ -156,6 +168,12 @@
 			<Title>Linux Kernel AIO Development Files</Title>
 			<PossibleNames>libaio-dev, libaio-devel</PossibleNames>
 			<FileCheck>libaio.h</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>pcre</GenericName>
+			<Title>Perl Compatible Regular Expressions</Title>
+			<PossibleNames>perl, libpcre-devel, libpcre3-dev</PossibleNames>
+			<FileCheck>pcre.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>perl</GenericName>
@@ -245,7 +263,7 @@
 			<GenericName>blas-development</GenericName>
 			<Title>Basic Linear Algebra Sub-Routine Library</Title>
 			<PossibleNames>libblas-dev, libblas-devel, blas-devel, blas</PossibleNames>
-			<FileCheck>cblas.h</FileCheck>
+			<FileCheck>libblas.so</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>lapack-development</GenericName>
@@ -359,14 +377,14 @@
 		<Package>
 			<GenericName>superlu</GenericName>
 			<Title>SuperLU</Title>
-			<PossibleNames>superlu, libsuperlu3-dev</PossibleNames>
-			<FileCheck>superlu/slu_util.h</FileCheck>
+			<PossibleNames>superlu, libsuperlu3-dev, SuperLU-devel</PossibleNames>
+			<FileCheck>superlu/slu_util.h OR SuperLU/slu_util.h, libsuperlu.so</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>suitesparse</GenericName>
 			<Title>SuiteSparse</Title>
 			<PossibleNames>libsuitesparse-dev, suitesparse-devel</PossibleNames>
-			<FileCheck>suitesparse/cs.h, libcsparse.so</FileCheck>
+			<FileCheck>suitesparse/cs.h OR cs.h, libcxsparse.so</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>dune</GenericName>
@@ -379,6 +397,12 @@
 			<Title>TinyXML Library</Title>
 			<PossibleNames>tinyxml-dev</PossibleNames>
 			<FileCheck>tinyxml.h</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>attr</GenericName>
+			<Title>Attr</Title>
+			<PossibleNames>attr, libattr1-dev</PossibleNames>
+			<FileCheck>attr/xattr.h</FileCheck>
 		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

@@ -15,8 +15,16 @@
 			<PackageName>sdl sdl_net sdl_gfx sdl_image sdl_ttf</PackageName>
 		</Package>
 		<Package>
+			<GenericName>sdl2-development</GenericName>
+			<PackageName>sdl2 sdl2_net sdl2_gfx sdl2_image sdl2_ttf sdl2_mixer</PackageName>
+		</Package>
+		<Package>
 			<GenericName>glut</GenericName>
 			<PackageName>freeglut</PackageName>
+		</Package>
+		<Package>
+			<GenericName>pcre</GenericName>
+			<PackageName>pcre</PackageName>
 		</Package>
 		<Package>
 			<GenericName>libpng-development</GenericName>
@@ -80,13 +88,17 @@
 			<PackageName>libjpeg</PackageName>
 		</Package>
 		<Package>
+			<GenericName>bc</GenericName>
+			<PackageName>bc</PackageName>
+		</Package>
+		<Package>
 			<GenericName>perl</GenericName>
 			<PackageName>perl</PackageName>
 			<FileCheck>/usr/bin/perl</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>xorg-video</GenericName>
-			<PackageName>xorg</PackageName>
+			<PackageName>xorg libvdpau</PackageName>
 		</Package>
 		<Package>
 			<GenericName>libstdcpp5</GenericName>
@@ -140,6 +152,11 @@
 		<Package>
 			<GenericName>cmake</GenericName>
 			<PackageName>cmake</PackageName>
+		</Package>
+		<Package>
+			<GenericName>common-dependencies</GenericName>
+			<PackageName>unzip</PackageName>
+			<FileCheck>unzip</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>boost-development</GenericName>
@@ -200,6 +217,10 @@
 		<Package>
 			<GenericName>opencl</GenericName>
 			<PackageName>opencl-headers</PackageName>
+		</Package>
+		<Package>
+			<GenericName>attr</GenericName>
+			<PackageName>attr</PackageName>
 		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

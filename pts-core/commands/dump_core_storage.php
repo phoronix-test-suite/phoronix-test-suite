@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009, Phoronix Media
-	Copyright (C) 2009, Michael Larabel
+	Copyright (C) 2009 - 2014, Phoronix Media
+	Copyright (C) 2009 - 2014, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -29,27 +29,30 @@ class dump_core_storage implements pts_option_interface
 
 		foreach($pso->get_objects() as $pso_index => $pso_object)
 		{
-			if($pso_index != 'phodevi_smart_cache')
+			if(!in_array($pso_index, array('global_reported_hw', 'global_reported_sw', 'global_reported_usb', 'global_reported_pci', 'phodevi_smart_cache')))
 			{
-				echo $pso_index . ': ';
-
-				if(is_array($pso_object))
-				{
-					foreach($pso_object as $key => $element)
-					{
-						echo PHP_EOL . "\t" . $key . ': ' . $element;
-					}
-				}
-				else
-				{
-					echo $pso_object;
-				}
-
-				echo PHP_EOL;
+				self::print_element($pso_index, $pso_object, 0);
 			}
 		}
 
 		echo PHP_EOL;
+	}
+	private static function print_element($in, $el, $depth)
+	{
+		//echo $in . ': ';
+
+		if(is_array($el))
+		{
+			foreach($el as $key => $element)
+			{
+				echo PHP_EOL . str_repeat("\t", $depth) . $in . ': ';
+				self::print_element($key, $element, ($depth + 1));
+			}
+		}
+		else
+		{
+			echo PHP_EOL . str_repeat("\t", $depth) . $in . ': ' . $el;
+		}
 	}
 }
 

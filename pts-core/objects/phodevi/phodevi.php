@@ -213,14 +213,25 @@ class phodevi extends phodevi_base
 	}
 	public static function system_id_string()
 	{
-		$components = array(phodevi::read_property('cpu', 'model'), phodevi::read_name('motherboard'), phodevi::read_property('system', 'operating-system'), phodevi::read_property('system', 'compiler'));
+		$extra = null;
+		foreach(array('CC', 'CXX', 'CFLAGS', 'CPPFLAGS', 'CXXFLAGS') as $env)
+		{
+			$val = getenv($env);
+
+			if(!empty($val))
+			{
+				$extra .= $env . '=' . $val . ';';
+			}
+		}
+
+		$components = array(phodevi::read_property('cpu', 'model'), phodevi::read_property('system', 'operating-system'), phodevi::read_property('system', 'compiler'), $extra);
 		return base64_encode(implode('__', $components));
 	}
 	public static function read_device_notes($device)
 	{
 		$devices = phodevi::available_hardware_devices();
 
-		if(isset($devices[$device]))
+		if($device != null && isset($devices[$device]))
 		{
 			$notes_r = call_user_func(array('phodevi_' . $devices[$device], 'device_notes'));
 		}

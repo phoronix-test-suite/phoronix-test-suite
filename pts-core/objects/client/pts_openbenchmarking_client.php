@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2014, Phoronix Media
-	Copyright (C) 2010 - 2014, Michael Larabel
+	Copyright (C) 2010 - 2015, Phoronix Media
+	Copyright (C) 2010 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@ class pts_openbenchmarking_client
 	private static $openbenchmarking_account = false;
 	private static $client_settings = null;
 
-	public static function upload_test_result(&$object)
+	public static function upload_test_result(&$object, $return_json_data = false)
 	{
 		if($object instanceof pts_test_run_manager)
 		{
@@ -40,47 +40,41 @@ class pts_openbenchmarking_client
 			$results_identifier = null;
 		}
 
-		// Validate the XML
-		// Rely upon server-side validation in case of additions to the spec later on as might be a problem with the JSON addition
-		/*
-		if($result_file->xml_parser->validate() == false)
-		{
-			echo PHP_EOL . 'Errors occurred parsing the result file XML.' . PHP_EOL;
-			return false;
-		}
-		*/
-
 		// Ensure the results can be shared
 		if(self::result_upload_supported($result_file) == false)
 		{
 			return false;
 		}
 
-		if(pts_network::network_support_available() == false)
+		if(pts_network::internet_support_available() == false)
 		{
 			echo PHP_EOL . 'No network support available.' . PHP_EOL;
 			return false;
 		}
 
-		$composite_xml = $result_file->xml_parser->getXML();
+		$composite_xml = $result_file->getRawXml();
 		$system_log_dir = PTS_SAVE_RESULTS_PATH . $result_file->get_identifier() . '/system-logs/';
+		$upload_system_logs = false;
 
-		if(pts_config::read_bool_config('PhoronixTestSuite/Options/OpenBenchmarking/AlwaysUploadSystemLogs', 'FALSE'))
+		if(is_dir($system_log_dir))
 		{
-			$upload_system_logs = true;
-		}
-		else if(isset(self::$client_settings['UploadSystemLogsByDefault']))
-		{
-			$upload_system_logs = self::$client_settings['UploadSystemLogsByDefault'];
-		}
-		else if(is_dir($system_log_dir))
-		{
-			$upload_system_logs = pts_user_io::prompt_bool_input('Would you like to attach the system logs (lspci, dmesg, lsusb, etc) to the test result', true, 'UPLOAD_SYSTEM_LOGS');
+			if(pts_config::read_bool_config('PhoronixTestSuite/Options/OpenBenchmarking/AlwaysUploadSystemLogs', 'FALSE'))
+			{
+				$upload_system_logs = true;
+			}
+			else if(isset(self::$client_settings['UploadSystemLogsByDefault']))
+			{
+				$upload_system_logs = self::$client_settings['UploadSystemLogsByDefault'];
+			}
+			else if(is_dir($system_log_dir))
+			{
+				$upload_system_logs = pts_user_io::prompt_bool_input('Would you like to attach the system logs (lspci, dmesg, lsusb, etc) to the test result', true, 'UPLOAD_SYSTEM_LOGS');
+			}
 		}
 
 		$system_logs = null;
 		$system_logs_hash = null;
-		if(is_dir($system_log_dir) && $upload_system_logs)
+		if($upload_system_logs)
 		{
 			$is_valid_log = true;
 			$finfo = function_exists('finfo_open') ? finfo_open(FILEINFO_MIME_TYPE) : false;
@@ -111,7 +105,7 @@ class pts_openbenchmarking_client
 
 			if($is_valid_log)
 			{
-				$system_logs_zip = pts_client::create_temporary_file();
+				$system_logs_zip = pts_client::create_temporary_file('.zip');
 				pts_compression::zip_archive_create($system_logs_zip, $system_log_dir);
 
 				if(filesize($system_logs_zip) < 2097152)
@@ -129,9 +123,23 @@ class pts_openbenchmarking_client
 			}
 		}
 
+		$composite_xml_hash = sha1($composite_xml);
+		$composite_xml_type = 'composite_xml';
+
+		// Compress the result file XML if it's big
+		if(isset($composite_xml[50000]) && function_exists('gzdeflate'))
+		{
+			$composite_xml_gz = gzdeflate($composite_xml);
+
+			if($composite_xml_gz != false)
+			{
+				$composite_xml = $composite_xml_gz;
+				$composite_xml_type = 'composite_xml_gz';
+			}
+		}
 		$to_post = array(
-			'composite_xml' => base64_encode($composite_xml),
-			'composite_xml_hash' => sha1($composite_xml),
+			$composite_xml_type => base64_encode($composite_xml),
+			'composite_xml_hash' => $composite_xml_hash,
 			'local_file_name' => $local_file_name,
 			'this_results_identifier' => $results_identifier,
 			'system_logs_zip' => $system_logs,
@@ -146,7 +154,6 @@ class pts_openbenchmarking_client
 
 		$json_response = pts_openbenchmarking::make_openbenchmarking_request('upload_test_result', $to_post);
 		$json_response = json_decode($json_response, true);
-
 		if(!is_array($json_response))
 		{
 			trigger_error('Unhandled Exception', E_USER_ERROR);
@@ -167,6 +174,11 @@ class pts_openbenchmarking_client
 		if(isset(self::$client_settings['RemoveLocalResultsOnUpload']) && self::$client_settings['RemoveLocalResultsOnUpload'] && $local_file_name != null)
 		{
 			pts_client::remove_saved_result_file($local_file_name);
+		}
+
+		if($return_json_data)
+		{
+			return isset($json_response['openbenchmarking']['upload']) ? $json_response['openbenchmarking']['upload'] : false;
 		}
 
 		return isset($json_response['openbenchmarking']['upload']['url']) ? $json_response['openbenchmarking']['upload']['url'] : false;
@@ -288,7 +300,7 @@ class pts_openbenchmarking_client
 	{
 		if(isset($openbenchmarking['user_name']) && isset($openbenchmarking['communication_id']) && isset($openbenchmarking['sav']))
 		{
-			if(IS_FIRST_RUN_TODAY)
+			if(IS_FIRST_RUN_TODAY && pts_network::internet_support_available())
 			{
 				// Might as well make sure OpenBenchmarking.org account has the latest system info
 				// But don't do it everytime to preserve bandwidth
@@ -353,6 +365,25 @@ class pts_openbenchmarking_client
 
 		return isset($repo_index['tests'][$tp][$attribute]) ? $repo_index['tests'][$tp][$attribute] : null;
 	}
+	public static function popular_openbenchmarking_results()
+	{
+		$index_file = PTS_OPENBENCHMARKING_SCRATCH_PATH . 'popular.results';
+
+		if(!is_file($index_file) || filemtime($index_file) < (time() - 1800))
+		{
+			// Refresh the repository change-log just once a day should be fine
+			$server_index = pts_openbenchmarking::make_openbenchmarking_request('interesting_results');
+
+			if(json_decode($server_index) != false)
+			{
+				file_put_contents($index_file, $server_index);
+			}
+		}
+
+		$results = is_file($index_file) ? json_decode(file_get_contents($index_file), true) : false;
+
+		return $results ? $results['results'] : false;
+	}
 	public static function fetch_repository_changelog($repo_name)
 	{
 		$index_file = PTS_OPENBENCHMARKING_SCRATCH_PATH . $repo_name . '.changes';
@@ -376,6 +407,11 @@ class pts_openbenchmarking_client
 	}
 	public static function upload_usage_data($task, $data)
 	{
+		if(!pts_network::internet_support_available())
+		{
+			return false;
+		}
+
 		switch($task)
 		{
 			case 'test_install':
@@ -395,63 +431,13 @@ class pts_openbenchmarking_client
 				break;
 		}
 	}
-	public static function upload_hwsw_data($to_report)
-	{
-		if(!defined('PTS_GSID'))
-		{
-			return false;
-		}
-
-		foreach($to_report as $component => &$value)
-		{
-			if(empty($value))
-			{
-				unset($to_report[$component]);
-				continue;
-			}
-
-			$value = $component . '=' . $value;
-		}
-
-		$upload_data = array('report_hwsw' => implode(';', $to_report), 'gsid' => PTS_GSID);
-		pts_network::http_upload_via_post(pts_openbenchmarking::openbenchmarking_host() . 'extern/statistics/report-installed-hardware-software.php', $upload_data);
-	}
-	public static function upload_pci_data($to_report)
-	{
-		if(!defined('PTS_GSID'))
-		{
-			return false;
-		}
-
-		if(!is_array($to_report))
-		{
-			return false;
-		}
-
-		$to_report = base64_encode(serialize($to_report));
-
-		$upload_data = array('report_pci_data' => $to_report, 'gsid' => PTS_GSID);
-		pts_network::http_upload_via_post(pts_openbenchmarking::openbenchmarking_host() . 'extern/statistics/report-pci-data.php', $upload_data);
-	}
-	public static function upload_usb_data($to_report)
-	{
-		if(!defined('PTS_GSID'))
-		{
-			return false;
-		}
-
-		if(!is_array($to_report))
-		{
-			return false;
-		}
-
-		$to_report = base64_encode(serialize($to_report));
-
-		$upload_data = array('report_usb_data' => $to_report, 'gsid' => PTS_GSID);
-		pts_network::http_upload_via_post(pts_openbenchmarking::openbenchmarking_host() . 'extern/statistics/report-usb-data.php', $upload_data);
-	}
 	public static function request_gsid()
 	{
+		if(!pts_network::internet_support_available())
+		{
+			return false;
+		}
+
 		$payload = array(
 			'client_version' => PTS_VERSION,
 			'client_os' => phodevi::read_property('system', 'vendor-identifier')
@@ -463,6 +449,11 @@ class pts_openbenchmarking_client
 	}
 	public static function update_gsid()
 	{
+		if(!pts_network::internet_support_available())
+		{
+			return false;
+		}
+
 		$payload = array(
 			'client_version' => PTS_VERSION,
 			'client_os' => phodevi::read_property('system', 'vendor-identifier')
@@ -471,6 +462,11 @@ class pts_openbenchmarking_client
 	}
 	public static function retrieve_gsid()
 	{
+		if(!pts_network::internet_support_available())
+		{
+			return false;
+		}
+
 		// If the GSID_E and GSID_P are not known due to being from an old client
 		$json = pts_openbenchmarking::make_openbenchmarking_request('retrieve_gsid', array());
 		$json = json_decode($json, true);

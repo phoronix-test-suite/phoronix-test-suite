@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2012, Phoronix Media
-	Copyright (C) 2008 - 2012, Michael Larabel
+	Copyright (C) 2008 - 2014, Phoronix Media
+	Copyright (C) 2008 - 2014, Michael Larabel
 	phodevi_motherboard.php: The PTS Device Interface object for the motherboard
 
 	This program is free software; you can redistribute it and/or modify
@@ -413,11 +413,36 @@ class phodevi_motherboard extends phodevi_device_interface
 				{
 					$info = $bios_vendor . ' ' . $bios_version;
 				}
+
+				if($info == null)
+				{
+					$hw_string = phodevi_linux_parser::read_cpuinfo('machine');
+
+					if(count($hw_string) == 1)
+					{
+						$info = $hw_string[0];
+					}
+				}
 			}
 
 			if(empty($info))
 			{
 				$info = phodevi_linux_parser::read_sys_dmi('product_name');
+			}
+
+			if(empty($info) && is_file('/sys/bus/soc/devices/soc0/machine'))
+			{
+				$info = pts_file_io::file_get_contents('/sys/bus/soc/devices/soc0/machine');
+			}
+			if(empty($info))
+			{
+				// Works on the MIPS Creator CI20
+				$hardware = phodevi_linux_parser::read_cpuinfo('Hardware');
+
+				if(!empty($hardware))
+				{
+					$info = array_pop($hardware);
+				}
 			}
 		}
 		else if(phodevi::is_windows())

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2013, Phoronix Media
-	Copyright (C) 2010 - 2013, Michael Larabel
+	Copyright (C) 2010 - 2015, Phoronix Media
+	Copyright (C) 2010 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -50,7 +50,7 @@ class pts_strings
 	}
 	public static function trim_search_query($value)
 	{
-		$search_break_characters = array('@', '(', '/', '+', '[', '<', '/', '*', '"');
+		$search_break_characters = array('@', '(', '/', '+', '[', '<', '*', '"');
 		for($i = 0, $x = strlen($value); $i < $x; $i++)
 		{
 			if(in_array($value[$i], $search_break_characters))
@@ -117,7 +117,7 @@ class pts_strings
 	public static function string_bool($string)
 	{
 		// Used for evaluating if the user inputted a string that evaluates to true
-		return in_array(strtolower($string), array('true', '1'));
+		return $string != null && filter_var($string, FILTER_VALIDATE_BOOLEAN);
 	}
 	public static function add_trailing_slash($path)
 	{
@@ -200,13 +200,27 @@ class pts_strings
 
 		return $has_in_string;
 	}
-	public static function random_characters($length)
+	public static function random_characters($length, $with_numbers = false)
 	{
 		$random = null;
 
-		for($i = 0; $i < $length; $i++)
+		if($with_numbers)
 		{
-			$random .= chr(rand(65, 90));
+			for($i = 0; $i < $length; $i++)
+			{
+				$r = rand(0, 35);
+				if($r < 10)
+					$random .= $r;
+				else
+					$random .= chr(55 + $r);
+			}
+		}
+		else
+		{
+			for($i = 0; $i < $length; $i++)
+			{
+				$random .= chr(rand(65, 90));
+			}
 		}
 
 		return $random;
@@ -358,7 +372,7 @@ class pts_strings
 			$str = str_ireplace($original_phrase, $new_phrase, $str);
 		}
 
-		$remove_phrases = array('incorporation', 'corporation', 'corp.', 'invalid', 'technologies', 'technology', 'version', ' project ', 'computer', 'To Be Filled By', 'ODM', 'O.E.M.', 'Desktop Reference Platform', 'small form factor', 'convertible', ' group', 'chipset', 'community', 'reference', 'communications', 'semiconductor', 'processor', 'host bridge', 'adapter', ' CPU', 'platform', 'international', 'express', 'graphics', 'none', 'electronics', 'integrated', 'alternate', 'quad-core', 'memory', 'series', 'network', 'motherboard', 'electric ', 'industrial ', 'serverengines', 'Manufacturer', 'x86/mmx/sse2', '/AGP/SSE/3DNOW!', '/AGP/SSE2', 'controller', '(extreme graphics innovation)', 'pci-e_gfx and ht3 k8 part', 'pci-e_gfx and ht1 k8 part', 'Northbridge only', 'dual slot', 'dual-core', 'dual core', 'microsystems', 'not specified', 'single slot', 'genuine', 'unknown device', 'systemberatung', 'gmbh', 'graphics adapter', 'video device', 'http://', 'www.', '.com', '.tw/', '/pci/sse2/3dnow!', '/pcie/sse2', '/pci/sse2', 'balloon', 'network connection', 'ethernet', 'limited.', ' system', 'compliant', 'co. ltd', 'co.', 'ltd.', 'LTD ', ' LTD', '\AE', '(r)', '(tm)', 'inc.', 'inc', '6.00 PG', ',', '\'', '_ ', '_ ', 'corp', 'product name', 'base board', 'mainboard', 'pci to pci', ' release ', 'nee ', ' AG ', 'with Radeon HD');
+		$remove_phrases = array('incorporation', 'corporation', 'corp.', 'invalid', 'technologies', 'technology', 'version', ' project ', 'computer', 'To Be Filled By', 'ODM', 'O.E.M.', 'Desktop Reference Platform', 'small form factor', 'convertible', ' group', 'chipset', 'community', 'reference', 'communications', 'semiconductor', 'processor', 'host bridge', 'adapter', ' CPU', 'platform', 'international', 'express', 'graphics', 'none', 'electronics', 'integrated', 'alternate', 'quad-core', 'memory', 'series', 'network', 'motherboard', 'electric ', 'industrial ', 'serverengines', 'Manufacturer', 'x86/mmx/sse2', '/AGP/SSE/3DNOW!', '/AGP/SSE2', 'controller', '(extreme graphics innovation)', 'pci-e_gfx and ht3 k8 part', 'pci-e_gfx and ht1 k8 part', 'Northbridge only', 'dual slot', 'dual-core', 'dual core', 'microsystems', 'not specified', 'single slot', 'genuine', 'unknown device', 'systemberatung', 'gmbh', 'graphics adapter', 'video device', 'http://', 'www.', '.com', '.tw/', '/pci/sse2/3dnow!', '/pcie/sse2', '/pci/sse2', 'balloon', 'network connection', 'ethernet', 'limited.', ' system', 'compliant', 'co. ltd', 'co.', 'ltd.', 'LTD ', ' LTD', '\AE', '(r)', '(tm)', 'inc.', 'inc', '6.00 PG', ',', '\'', '_ ', '_ ', 'corp', 'product name', 'base board', 'mainboard', 'pci to pci', ' release ', 'nee ', ' AG ', 'with Radeon HD', '/DRAM');
 		$str = str_ireplace($remove_phrases, ' ', $str);
 
 		if(($w = stripos($str, 'WARNING')) !== false)
@@ -557,9 +571,10 @@ class pts_strings
 		if($time_in_seconds > 0)
 		{
 			$time_r = array();
-			$time_r[0] = array(floor($time_in_seconds / 3600), 'Hour');
-			$time_r[1] = array(floor(($time_in_seconds % 3600) / 60), 'Minute');
-			$time_r[2] = array($time_in_seconds % 60, 'Second');
+			$time_r[0] = array(floor($time_in_seconds / 86400), 'Day');
+			$time_r[1] = array(floor(($time_in_seconds % 86400) / 3600), 'Hour');
+			$time_r[2] = array(floor(($time_in_seconds % 3600) / 60), 'Minute');
+			$time_r[3] = array($time_in_seconds % 60, 'Second');
 
 			foreach($time_r as $time_segment)
 			{
@@ -590,7 +605,7 @@ class pts_strings
 	}
 	public static function plural_handler($count, $base)
 	{
-		return $count . ' ' . $base . ($count > 1 ? 's' : null);
+		return $count . ' ' . $base . ($count != 1 ? 's' : null);
 	}
 	public static function days_ago_format_string($days_ago)
 	{
@@ -634,6 +649,19 @@ class pts_strings
 	{
 		$categories = array('Graphics' => 'GPU', 'Processor' => 'CPU', 'System' => 'CPU', 'File-System' => 'File System');
 		return isset($categories[$category]) ? $categories[$category] : $category;
+	}
+	public static function parse_value_string_vars($value_string)
+	{
+		$values = array();
+		foreach(explode(';', $value_string) as $preset)
+		{
+			if(count($preset = pts_strings::trim_explode('=', $preset)) == 2)
+			{
+				$values[$preset[0]] = $preset[1];
+			}
+		}
+
+		return $values;
 	}
 }
 

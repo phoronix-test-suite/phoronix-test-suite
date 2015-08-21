@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2011, Phoronix Media
-	Copyright (C) 2009 - 2011, Michael Larabel
+	Copyright (C) 2009 - 2015, Phoronix Media
+	Copyright (C) 2009 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -33,19 +33,10 @@ class result_file_to_pdf implements pts_option_interface
 	}
 	public static function run($r)
 	{
-		if(is_file('/usr/share/php/fpdf/fpdf.php'))
-		{
-			include_once('/usr/share/php/fpdf/fpdf.php');
-		}
-		else
-		{
-			echo PHP_EOL . 'The FPDF library must be installed.' . PHP_EOL;
-			return false;
-		}
-
 		$_REQUEST['force_format'] = 'PNG'; // Force to PNG renderer
 		$_REQUEST['svg_dom_gd_no_interlacing'] = true; // Otherwise FPDF will fail
-		pts_client::generate_result_file_graphs($r[0], PTS_SAVE_RESULTS_PATH . $r[0] . '/');
+		$tdir = pts_client::create_temporary_directory();
+		pts_client::generate_result_file_graphs($r[0], $tdir);
 
 		$result_file = new pts_result_file($r[0]);
 		$pdf = new pts_pdf_template($result_file->get_title(), null);
@@ -81,11 +72,11 @@ class result_file_to_pdf implements pts_option_interface
 		}
 
 		/*
-		if(count($identifiers) > 1 && is_file(PTS_SAVE_RESULTS_PATH . $r[0] . '/result-graphs/overview.jpg'))
+		if(count($identifiers) > 1 && is_file($tdir . 'result-graphs/overview.jpg'))
 		{
 			$pdf->AddPage();
 			$pdf->Ln(100);
-			$pdf->Image(PTS_SAVE_RESULTS_PATH . $r[0] . '/result-graphs/overview.jpg', 15, 40, 180);
+			$pdf->Image($tdir . 'result-graphs/overview.jpg', 15, 40, 180);
 		}
 		*/
 
@@ -94,10 +85,10 @@ class result_file_to_pdf implements pts_option_interface
 		$placement = 1;
 		for($i = 1; $i <= count($tests); $i++)
 		{
-			if(is_file(PTS_SAVE_RESULTS_PATH . $r[0] . '/result-graphs/' . $i . '.png'))
+			if(is_file($tdir . 'result-graphs/' . $i . '.png'))
 			{
 				$pdf->Ln(100);
-				$pdf->Image(PTS_SAVE_RESULTS_PATH . $r[0] . '/result-graphs/' . $i . '.png', 50, 40 + (($placement - 1) * 120), 120);
+				$pdf->Image($tdir . 'result-graphs/' . $i . '.png', 50, 40 + (($placement - 1) * 120), 120);
 			}
 
 			if($placement == 2)
@@ -123,9 +114,13 @@ class result_file_to_pdf implements pts_option_interface
 		}
 		*/
 		$pdf_file = pts_client::user_home_directory() . $r[0] . '.pdf';
-
 		$pdf->Output($pdf_file);
+		pts_file_io::delete($tdir, null, true);
 		echo PHP_EOL . 'Saved To: ' . $pdf_file . PHP_EOL;
+	}
+	public static function invalid_command($passed_args = null)
+	{
+		pts_tests::recently_saved_results();
 	}
 }
 

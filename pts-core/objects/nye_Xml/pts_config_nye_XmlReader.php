@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2011, Phoronix Media
-	Copyright (C) 2010 - 2011, Michael Larabel
+	Copyright (C) 2010 - 2015, Phoronix Media
+	Copyright (C) 2010 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -26,7 +26,15 @@ class pts_config_nye_XmlReader extends nye_XmlReader
 
 	public function __construct($new_values = null)
 	{
-		if(is_file(PTS_USER_PATH . 'user-config.xml'))
+		if(PTS_IS_DAEMONIZED_SERVER_PROCESS || (is_file('/etc/phoronix-test-suite.xml') && is_writable('/etc/phoronix-test-suite.xml')))
+		{
+			$file = '/etc/phoronix-test-suite.xml';
+		}
+		else if(PTS_IS_CLIENT && is_file(pts_config::get_config_file_location()))
+		{
+			$file = pts_config::get_config_file_location();
+		}
+		else if(PTS_USER_PATH . 'user-config.xml' != pts_config::get_config_file_location() && is_file(PTS_USER_PATH . 'user-config.xml'))
 		{
 			$file = PTS_USER_PATH . 'user-config.xml';
 		}
@@ -69,6 +77,9 @@ class pts_config_nye_XmlReader extends nye_XmlReader
 			echo "\nUndefined Config Option: $xml_tag\n";
 		}
 
+		if($fallback_value != null)
+			$this->times_fallback++;
+
 		return $fallback_value;
 	}
 	public function getXMLValue($xml_tag, $fallback_value = false)
@@ -77,10 +88,12 @@ class pts_config_nye_XmlReader extends nye_XmlReader
 		{
 			if(isset($this->override_values[$xml_tag]))
 			{
+				$this->times_fallback++;
 				return $this->override_values[$xml_tag];
 			}
 			else if(isset($this->override_values[($bn = basename($xml_tag))]))
 			{
+				$this->times_fallback++;
 				return $this->override_values[$bn];
 			}
 		}

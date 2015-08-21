@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2014, Phoronix Media
-	Copyright (C) 2008 - 2014, Michael Larabel
+	Copyright (C) 2008 - 2015, Phoronix Media
+	Copyright (C) 2008 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -26,17 +26,60 @@ class pts_result_file
 	private $result_objects = null;
 	private $extra_attributes = null;
 	private $is_multi_way_inverted = false;
-	public $xml_parser = null;
+	private $file_location = false;
+	private $xml;
+	private $raw_xml;
 
 	public function __construct($result_file)
 	{
 		$this->save_identifier = $result_file;
-		$this->xml_parser = new pts_results_nye_XmlReader($result_file);
+		if(!isset($result_file[1024]) && defined('PTS_SAVE_RESULTS_PATH') && is_file(PTS_SAVE_RESULTS_PATH . $result_file . '/composite.xml'))
+		{
+			$result_file = PTS_SAVE_RESULTS_PATH . $result_file . '/composite.xml';
+		}
 		$this->extra_attributes = array();
+
+		if(is_file($result_file))
+		{
+			$this->file_location = $result_file;
+			$result_file = file_get_contents($result_file);
+		}
+		else
+		{
+			$this->raw_xml = $result_file;
+		}
+
+		$this->xml = simplexml_load_string($result_file);
+	}
+	public function validate()
+	{
+		$dom = new DOMDocument();
+		$dom->loadXML($this->getRawXml());
+		return $dom->schemaValidate(PTS_OPENBENCHMARKING_PATH . 'schemas/result-file.xsd');
+	}
+	public function getRawXml()
+	{
+		if($this->file_location)
+		{
+			return file_get_contents($this->file_location);
+		}
+
+		return $this->raw_xml;
 	}
 	public function __toString()
 	{
 		return $this->get_identifier();
+	}
+	public function sanitize_user_strings($value)
+	{
+		if(is_array($value))
+		{
+			return array_map(array($this, 'sanitize_user_strings'), $value);
+		}
+		else
+		{
+			return strip_tags($value);
+		}
 	}
 	public static function is_test_result_file($identifier)
 	{
@@ -56,35 +99,81 @@ class pts_result_file
 	}
 	public function get_system_hardware()
 	{
-		return $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/System/Hardware');
+		$hw = array();
+		foreach($this->xml->System as $sys)
+		{
+				array_push($hw, $sys->Hardware->__toString());
+		}
+
+		return $this->sanitize_user_strings($hw);
 	}
 	public function get_system_software()
 	{
-		return $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/System/Software');
+		$sw = array();
+		foreach($this->xml->System as $sys)
+		{
+				array_push($sw, $sys->Software->__toString());
+		}
+
+		return $this->sanitize_user_strings($sw);
 	}
 	public function get_system_json()
 	{
-		return array_map(array('pts_arrays', 'json_decode'), $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/System/JSON'));
+		$js = array();
+		foreach($this->xml->System as $sys)
+		{
+				array_push($js, $sys->JSON);
+		}
+
+		return $this->sanitize_user_strings(array_map(array('pts_arrays', 'json_decode'), $js));
 	}
 	public function get_system_user()
 	{
-		return $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/System/User');
+		$users = array();
+		foreach($this->xml->System as $sys)
+		{
+				array_push($users, $sys->User->__toString());
+		}
+
+		return $this->sanitize_user_strings($users);
 	}
 	public function get_system_notes()
 	{
-		return $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/System/Notes');
+		$notes = array();
+		foreach($this->xml->System as $sys)
+		{
+				array_push($notes, $sys->Notes->__toString());
+		}
+
+		return $this->sanitize_user_strings($notes);
 	}
 	public function get_system_date()
 	{
-		return $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/System/TimeStamp');
+		$times = array();
+		foreach($this->xml->System as $sys)
+		{
+				array_push($times, $sys->TimeStamp->__toString());
+		}
+
+		return $this->sanitize_user_strings($times);
 	}
 	public function get_system_pts_version()
 	{
-		return $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/System/TestClientVersion');
+		$versions = array();
+		foreach($this->xml->System as $sys)
+		{
+				array_push($versions, $sys->TestClientVersion->__toString());
+		}
+
+		return $this->sanitize_user_strings($versions);
 	}
 	public function get_system_identifiers()
 	{
-		return $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/System/Identifier');
+		$identifiers = array();
+		foreach($this->xml->System as $sys)
+			array_push($identifiers, $sys->Identifier->__toString());
+
+		return $this->sanitize_user_strings($identifiers);
 	}
 	public function get_system_count()
 	{
@@ -92,31 +181,37 @@ class pts_result_file
 	}
 	public function get_title()
 	{
-		return $this->xml_parser->getXMLValue('PhoronixTestSuite/Generated/Title');
+		return $this->sanitize_user_strings($this->xml->Generated->Title);
 	}
 	public function get_description()
 	{
-		return $this->xml_parser->getXMLValue('PhoronixTestSuite/Generated/Description');
+		return $this->sanitize_user_strings($this->xml->Generated->Description);
 	}
 	public function get_notes()
 	{
-		return $this->xml_parser->getXMLValue('PhoronixTestSuite/Generated/Notes');
+		return $this->sanitize_user_strings($this->xml->Generated->Notes);
 	}
 	public function get_internal_tags()
 	{
-		return $this->xml_parser->getXMLValue('PhoronixTestSuite/Generated/InternalTags');
+		return $this->sanitize_user_strings($this->xml->Generated->InternalTags);
 	}
 	public function get_reference_id()
 	{
-		return $this->xml_parser->getXMLValue('PhoronixTestSuite/Generated/ReferenceID');
+		return $this->sanitize_user_strings($this->xml->Generated->ReferenceID);
 	}
 	public function get_preset_environment_variables()
 	{
-		return $this->xml_parser->getXMLValue('PhoronixTestSuite/Generated/PreSetEnvironmentVariables');
+		return $this->xml->Generated->PreSetEnvironmentVariables;
 	}
 	public function get_test_titles()
 	{
-		return $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/Result/Title');
+		$titles = array();
+		foreach($this->xml->Result as $result)
+		{
+			array_push($titles, $result->Title->__toString());
+		}
+
+		return $titles;
 	}
 	public function get_unique_test_titles()
 	{
@@ -130,11 +225,11 @@ class pts_result_file
 	{
 		return count($this->get_unique_test_titles());
 	}
-	public function get_contained_tests_hash()
+	public function get_contained_tests_hash($raw_output = true)
 	{
 		$result_object_hashes = $this->get_result_object_hashes();
 		sort($result_object_hashes);
-		return sha1(implode(',', $result_object_hashes), true);
+		return sha1(implode(',', $result_object_hashes), $raw_output);
 	}
 	public function get_result_object_hashes()
 	{
@@ -192,15 +287,29 @@ class pts_result_file
 
 		return $is_tracker;
 	}
-	public function is_multi_way_comparison()
+	public function is_multi_way_comparison($identifiers = false, $extra_attributes = null)
 	{
 		static $is_multi_way = -1;
 
 		if($is_multi_way === -1)
 		{
-			$hw = $this->get_system_hardware();
-			$is_multi_way = count($hw) < 2 ? false : pts_render::multi_way_identifier_check($this->get_system_identifiers(), $hw, $this);
-			$this->is_multi_way_inverted = $is_multi_way && $is_multi_way[1];
+			if(isset($extra_attributes['force_tracking_line_graph']))
+			{
+				// Phoromatic result tracker
+				$is_multi_way = true;
+				$this->is_multi_way_inverted = true;
+			}
+			else
+			{
+				$hw = null; // XXX: this isn't used anymore at least for now $this->get_system_hardware();
+				if($identifiers == false)
+				{
+					$identifiers = $this->get_system_identifiers();
+				}
+
+				$is_multi_way = count($identifiers) < 2 ? false : pts_render::multi_way_identifier_check($identifiers, $hw, $this);
+				$this->is_multi_way_inverted = $is_multi_way && $is_multi_way[1];
+			}
 		}
 
 		return $is_multi_way;
@@ -230,7 +339,39 @@ class pts_result_file
 	}
 	public function get_result_identifiers()
 	{
-		return $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/Result/Identifier');;
+		$ids = array();
+		foreach($this->xml->Result as $result)
+		{
+			array_push($ids, $result->Identifier->__toString());
+		}
+
+		return $ids;
+	}
+	public function get_result_object(&$result)
+	{
+		$test_profile = new pts_test_profile(($result->Identifier != null ? $result->Identifier->__toString() : null), null, !defined('PHOROMATIC_EXPORT_VIEWER'));
+		$test_profile->set_test_title($result->Title->__toString());
+		$test_profile->set_version($result->AppVersion->__toString());
+		$test_profile->set_result_scale($result->Scale->__toString());
+		$test_profile->set_result_proportion($result->Proportion->__toString());
+		$test_profile->set_display_format($result->DisplayFormat->__toString());
+
+		$test_result = new pts_test_result($test_profile);
+		$test_result->set_used_arguments_description($result->Description->__toString());
+		$test_result->set_used_arguments($result->Arguments->__toString());
+
+		$result_buffer = new pts_test_result_buffer();
+		foreach($result->Data->Entry as $entry)
+		{
+			$result_buffer->add_test_result($entry->Identifier->__toString(), $entry->Value->__toString(), $entry->RawString->__toString(), (isset($entry->JSON) ? $entry->JSON->__toString() : null));
+		}
+		$test_result->set_test_result_buffer($result_buffer);
+
+		return $test_result;
+	}
+	public function get_result_iterator()
+	{
+		return $this->xml->Result;
 	}
 	public function get_result_objects($select_indexes = -1)
 	{
@@ -238,54 +379,35 @@ class pts_result_file
 		{
 			$this->result_objects = array();
 
-			$results_name = $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/Result/Title');
-			$results_version = $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/Result/AppVersion');
-			$results_attributes = $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/Result/Description');
-			$results_scale = $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/Result/Scale');
-			$results_test_name = $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/Result/Identifier');
-			$results_arguments = $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/Result/Arguments');
-			$results_proportion = $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/Result/Proportion');
-			$results_format = $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/Result/DisplayFormat');
-
-			$results_identifiers = $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/Result/Data/Entry/Identifier', 0);
-			$results_values = $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/Result/Data/Entry/Value', 0);
-			$results_raw = $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/Result/Data/Entry/RawString', 0);
-			$results_json = $this->xml_parser->getXMLArrayValues('PhoronixTestSuite/Result/Data/Entry/JSON', 0);
-
-			for($i = 0; $i < count($results_name); $i++)
+			foreach($this->xml->Result as $result)
 			{
-				$test_profile = new pts_test_profile($results_test_name[$i]);
-				$test_profile->set_test_title($results_name[$i]);
-				$test_profile->set_version($results_version[$i]);
-				$test_profile->set_result_scale($results_scale[$i]);
-				$test_profile->set_result_proportion($results_proportion[$i]);
-				$test_profile->set_display_format($results_format[$i]);
-
-				$test_result = new pts_test_result($test_profile);
-				$test_result->set_used_arguments_description($results_attributes[$i]);
-				$test_result->set_used_arguments($results_arguments[$i]);
-
-				$result_buffer = new pts_test_result_buffer();
-				for($j = 0; $j < count($results_identifiers[$i]); $j++)
-				{
-					$result_buffer->add_test_result($results_identifiers[$i][$j], $results_values[$i][$j], $results_raw[$i][$j], (isset($results_json[$i][$j]) ? $results_json[$i][$j] : null));
-				}
-
-				$test_result->set_test_result_buffer($result_buffer);
-
-				array_push($this->result_objects, $test_result);
+				array_push($this->result_objects, $this->get_result_object($result));
 			}
 		}
 
-		if($select_indexes != -1)
+		if($select_indexes != -1 && $select_indexes !== null)
 		{
 			$objects = array();
 
-			foreach(pts_arrays::to_array($select_indexes) as $index)
+			if($select_indexes == 'ONLY_CHANGED_RESULTS')
 			{
-				if(isset($this->result_objects[$index]))
+				foreach($this->result_objects as &$result)
 				{
-					array_push($objects, $this->result_objects[$index]);
+					// Only show results where the variation was greater than or equal to 1%
+					if(abs($result->largest_result_variation(0.01)) >= 0.01)
+					{
+						array_push($objects, $result);
+					}
+				}
+			}
+			else
+			{
+				foreach(pts_arrays::to_array($select_indexes) as $index)
+				{
+					if(isset($this->result_objects[$index]))
+					{
+						array_push($objects, $this->result_objects[$index]);
+					}
 				}
 			}
 
@@ -296,16 +418,11 @@ class pts_result_file
 	}
 	public function to_json()
 	{
-		$file = $this->xml_parser->getFileLocation();
-
-		if(is_file($file))
-		{
-			$file = file_get_contents($file);
-			$file = str_replace(array("\n", "\r", "\t"), '', $file);
-			$file = trim(str_replace('"', "'", $file));
-			$simple_xml = simplexml_load_string($file);
-			return json_encode($simple_xml);
-		}
+		$file = $this->getRawXml();
+		$file = str_replace(array("\n", "\r", "\t"), '', $file);
+		$file = trim(str_replace('"', "'", $file));
+		$simple_xml = simplexml_load_string($file);
+		return json_encode($simple_xml);
 	}
 }
 

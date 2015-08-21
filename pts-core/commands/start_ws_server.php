@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2013 - 2014, Phoronix Media
-	Copyright (C) 2013 - 2014, Michael Larabel
+	Copyright (C) 2013 - 2015, Phoronix Media
+	Copyright (C) 2013 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -22,8 +22,8 @@
 
 class start_ws_server implements pts_option_interface
 {
-	const doc_section = 'Web / UI Support';
-	const doc_description = 'Manually start a WebSocket server for communication by remote Phoronix Test Suite GUIs, the Phoronix Test Suite Multi-System Commander, and other functionality.';
+	const doc_section = 'Web / GUI Support';
+	const doc_description = 'Manually start a WebSocket server for communication by remote Phoronix Test Suite GUIs, the Phoronix Test Suite Multi-System Commander, and other functionality. This function checks the PTS_WEBSOCKET_PORT and PTS_WEBSOCKET_SERVER environment variables for configuration.';
 
 	public static function run($r)
 	{
@@ -40,7 +40,43 @@ class start_ws_server implements pts_option_interface
 			$web_socket_port = '80';
 		}
 
-		$websocket = new pts_web_socket_server('localhost', $web_socket_port);
+		/*
+		if(getenv('PTS_PHOROMATIC_SERVER'))
+		{
+			if(function_exists('pcntl_fork'))
+			{
+				$pid = pcntl_fork();
+
+				if($pid != -1)
+				{
+					if($pid)
+					{
+						$new_pid = $pid;
+					}
+					else
+					{
+						$event_server = new pts_phoromatic_event_server();
+						exit(0);
+					}
+				}
+			}
+			else
+			{
+				echo PHP_EOL . 'Phoromatic Event Server Fails To Start Due To Lacking PCNTL Support.' . PHP_EOL . PHP_EOL;
+			}
+		} */
+
+		switch(getenv('PTS_WEBSOCKET_SERVER'))
+		{
+			case 'PHOROMATIC':
+				pts_web_socket::$mask_send = true;
+				$websocket = new pts_web_socket_server_phoromatic('localhost', $web_socket_port);
+				break;
+			default:
+			case 'GUI':
+				$websocket = new pts_web_socket_server_gui('localhost', $web_socket_port);
+				break;
+		}
 	}
 }
 

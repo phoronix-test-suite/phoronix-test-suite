@@ -59,6 +59,7 @@ class pts_storage_object
 		$this->object_cs = md5(serialize($this->get_objects())); // Checksum
 		$string_version = base64_encode(serialize($this));
 		file_put_contents($destination, wordwrap($string_version, 80, PHP_EOL, true));
+		chmod($destination, 0600);
 	}
 	public function get_pts_version()
 	{

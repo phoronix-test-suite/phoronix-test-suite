@@ -17,6 +17,10 @@
 			<PackageName>gtk2</PackageName>
 		</Package>
 		<Package>
+			<GenericName>sdl2-development</GenericName>
+			<PackageName>libsdl2-devel libsdl2_gfx libsdl2_image libsdl2_mixer libsdl2_sound libsdl2_ttf</PackageName>
+		</Package>
+		<Package>
 			<GenericName>sdl-development</GenericName>
 			<PackageName>libsdl-devel libsdl_gfx libsdl_image libsdl_mixer libsdl_sound libsdl_ttf</PackageName>
 		</Package>

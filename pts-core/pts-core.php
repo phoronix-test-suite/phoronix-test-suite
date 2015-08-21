@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2014, Phoronix Media
-	Copyright (C) 2008 - 2014, Michael Larabel
+	Copyright (C) 2008 - 2015, Phoronix Media
+	Copyright (C) 2008 - 2015, Michael Larabel
 	pts-core.php: To boot-strap the Phoronix Test Suite start-up
 
 	This program is free software; you can redistribute it and/or modify
@@ -47,10 +47,29 @@ function pts_define_directories()
 {
 	// User's home directory for storing results, module files, test installations, etc.
 	pts_define('PTS_CORE_PATH', PTS_PATH . 'pts-core/');
+	pts_define('PTS_IS_DAEMONIZED_SERVER_PROCESS', PTS_IS_CLIENT && is_dir('/var/lib/') && is_writable('/') ? true : false);
 
-	if(PTS_IS_CLIENT)
+	if(PTS_IS_DAEMONIZED_SERVER_PROCESS)
 	{
-		pts_define('PTS_USER_PATH', pts_client::user_home_directory() . '.phoronix-test-suite/');
+		if(!is_dir('/var/cache/phoronix-test-suite/'))
+		{
+			mkdir('/var/cache/phoronix-test-suite/');
+		}
+
+		pts_define('PTS_USER_PATH', '/var/lib/phoronix-test-suite/');
+		pts_define('PTS_CORE_STORAGE', PTS_USER_PATH . 'core.pt2so');
+		pts_define('PTS_TEMP_STORAGE', PTS_USER_PATH . 'temp.pt2so');
+		pts_define('PTS_MODULE_LOCAL_PATH', PTS_USER_PATH . 'modules/');
+		pts_define('PTS_MODULE_DATA_PATH', PTS_USER_PATH . 'modules-data/');
+		pts_define('PTS_DOWNLOAD_CACHE_PATH', '/var/cache/phoronix-test-suite/download-cache/');
+		pts_define('PTS_OPENBENCHMARKING_SCRATCH_PATH', '/var/cache/phoronix-test-suite/openbenchmarking.org/');
+		pts_define('PTS_TEST_PROFILE_PATH', PTS_USER_PATH . 'test-profiles/');
+		pts_define('PTS_TEST_SUITE_PATH', PTS_USER_PATH . 'test-suites/');
+		pts_define('PTS_RESULTS_VIEWER_PATH', PTS_CORE_PATH . 'results-viewer/');
+	}
+	else if(PTS_IS_CLIENT)
+	{
+		pts_define('PTS_USER_PATH', pts_client::user_home_directory() . '.phoronix-test-suite' . DIRECTORY_SEPARATOR);
 		pts_define('PTS_CORE_STORAGE', PTS_USER_PATH . 'core.pt2so');
 		pts_define('PTS_TEMP_STORAGE', PTS_USER_PATH . 'temp.pt2so');
 		pts_define('PTS_MODULE_LOCAL_PATH', PTS_USER_PATH . 'modules/');
@@ -89,14 +108,17 @@ function pts_needed_extensions()
 		array(1, extension_loaded('dom'), 'DOM', 'The PHP Document Object Model (DOM) is required for XML operations.'),
 		array(1, extension_loaded('zip') || extension_loaded('zlib'), 'ZIP', 'PHP Zip support is required for file compression and decompression.'),
 		array(1, function_exists('json_decode'), 'JSON', 'PHP JSON support is required for OpenBenchmarking.org communication.'),
+		array(1, function_exists('simplexml_load_string'), 'SimpleXML', 'PHP SimpleXML is required for the Phoronix Test Suite'),
 		// Optional but recommended extensions
 		array(0, extension_loaded('openssl'), 'OpenSSL', 'PHP OpenSSL support is recommended to support HTTPS traffic.'),
 		array(0, extension_loaded('gd'), 'GD', 'The PHP GD library is recommended for improved graph rendering.'),
 		array(0, extension_loaded('zlib'), 'Zlib', 'The PHP Zlib extension can be used for greater file compression.'),
+		array(0, extension_loaded('sqlite3'), 'SQLite3', 'The PHP SQLite3 extension is required when running a Phoromatic server.'),
 		array(0, function_exists('pcntl_fork'), 'PCNTL', 'PHP PCNTL is highly recommended as it is required by some tests.'),
 		array(0, function_exists('posix_getpwuid'), 'POSIX', 'PHP POSIX support is highly recommended.'),
 		array(0, function_exists('curl_init'), 'CURL', 'PHP CURL is recommended for an enhanced download experience.'),
-		array(0, is_file('/usr/share/php/fpdf/fpdf.php'), 'PHP FPDF', 'PHP FPDF is recommended if wishing to generate PDF reports.')
+		//array(0, is_file('/usr/share/php/fpdf/fpdf.php'), 'PHP FPDF', 'PHP FPDF is recommended if wishing to generate PDF reports.'),
+		array(0, function_exists('socket_create_listen'), 'Sockets', 'PHP Sockets is needed when running the Phoromatic Server.'),
 		);
 }
 function pts_version_codenames()
@@ -133,12 +155,18 @@ function pts_version_codenames()
 		'5.4' => 'Lipki',
 		'5.6' => 'Dedilovo',
 		'5.8' => 'Belev',
+		// Finnmark - Norway
+		'6.0' => 'Hammerfest',
+		'6.2' => 'Gamvik',
+		'6.4' => 'Hasvik',
+		'6.6' => 'Loppa',
+		'6.8' => 'Tana',
 		);
 }
 
-pts_define('PTS_VERSION', '5.0.0m2');
-pts_define('PTS_CORE_VERSION', 4920);
-pts_define('PTS_CODENAME', 'PLAVSK');
+pts_define('PTS_VERSION', '6.0.0m0');
+pts_define('PTS_CORE_VERSION', 5900);
+pts_define('PTS_CODENAME', 'HAMMERFEST');
 pts_define('PTS_IS_CLIENT', (defined('PTS_MODE') && strstr(PTS_MODE, 'CLIENT') !== false));
 pts_define('PTS_IS_WEB_CLIENT', (defined('PTS_MODE') && PTS_MODE == 'WEB_CLIENT'));
 pts_define('PTS_IS_DEV_BUILD', (substr(PTS_VERSION, -2, 1) == 'm'));

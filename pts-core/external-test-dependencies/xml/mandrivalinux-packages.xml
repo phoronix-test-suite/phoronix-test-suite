@@ -36,6 +36,10 @@
 			<PackageName>tcsh</PackageName>
 		</Package>
 		<Package>
+			<GenericName>pcre</GenericName>
+			<PackageName>libpcre-devel</PackageName>
+		</Package>
+		<Package>
 			<GenericName>libpng-development</GenericName>
 			<PackageName>png-devel</PackageName>
 		</Package>

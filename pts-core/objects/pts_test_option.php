@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2011, Phoronix Media
-	Copyright (C) 2008 - 2011, Michael Larabel
+	Copyright (C) 2008 - 2015, Phoronix Media
+	Copyright (C) 2008 - 2015, Michael Larabel
 	pts_test_option: An object used for storing a test option and its possible values
 
 	This program is free software; you can redistribute it and/or modify
@@ -45,6 +45,9 @@ class pts_test_option
 	}
 	public function set_option_default($default_node)
 	{
+		if($default_node == null)
+			$default_node = 1;
+
 		$default_node--;
 		if(isset($this->options[$default_node]))
 		{

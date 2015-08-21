@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2012, Phoronix Media
-	Copyright (C) 2010 - 2012, Michael Larabel
+	Copyright (C) 2010 - 2014, Phoronix Media
+	Copyright (C) 2010 - 2014, Michael Larabel
 	pts_OverviewGraph.php: A graping object to create an "overview" / mini graphs of a pts_result_file for pts_Graph
 
 	This program is free software; you can redistribute it and/or modify
@@ -30,7 +30,7 @@ class pts_OverviewGraph extends pts_Graph
 	protected $graphs_per_row;
 	protected $graph_item_width;
 
-	protected $graph_row_height = 100;
+	protected $graph_row_height = 120;
 	protected $graph_row_count;
 
 	public $skip_graph = false;
@@ -82,11 +82,11 @@ class pts_OverviewGraph extends pts_Graph
 		list($longest_title_width, $longest_title_height) = pts_svg_dom::estimate_text_dimensions(pts_strings::find_longest_string($titles), $this->i['identifier_size']);
 
 		$this->i['left_start'] += 20;
-		$this->graphs_per_row = floor(($this->i['graph_width'] - $this->i['left_start'] - $this->i['left_end_right']) / ($longest_title_width + 2));
+		$this->graphs_per_row = min((count($this->system_identifiers) > 10 ? 6 : 10), floor(($this->i['graph_width'] - $this->i['left_start'] - $this->i['left_end_right']) / ($longest_title_width + 4)));
 		$this->graph_item_width = floor(($this->i['graph_width'] - $this->i['left_start'] - $this->i['left_end_right']) / $this->graphs_per_row);
 		$this->graph_row_count = ceil($result_object_count / $this->graphs_per_row);
 
-		$this->i['top_start'] += 14;
+		$this->i['top_start'] += 20 + (count($this->system_identifiers) / 3 * $this->i['identifier_size']);
 		$height = $this->i['top_start'] + ($this->graph_row_count * ($this->graph_row_height + 15));
 
 		$this->graph_title = $result_file->get_title();
@@ -106,8 +106,7 @@ class pts_OverviewGraph extends pts_Graph
 	public function renderGraph()
 	{
 		$this->graph_data_title = &$this->system_identifiers;
-		$this->i['mark_count'] = 6;
-		$this->i['graph_max_value'] = 1.2;
+		$this->i['graph_max_value'] = 1.0;
 		$l_height = 15;
 		$this->i['key_line_height'] = $l_height;
 
@@ -123,7 +122,7 @@ class pts_OverviewGraph extends pts_Graph
 		for($i = 0; $i < $this->graph_row_count; $i++)
 		{
 			$this->render_graph_base($this->i['left_start'], $this->i['top_start'] + ($i * ($this->graph_row_height + $l_height)), $this->i['graph_left_end'], $this->i['top_start'] + ($i * ($this->graph_row_height + $l_height)) + $this->graph_row_height);
-			$this->render_graph_value_ticks($this->i['left_start'], $this->i['top_start'] + ($i * ($this->graph_row_height + $l_height)), $this->i['graph_left_end'], $this->i['top_start'] + ($i * ($this->graph_row_height + $l_height)) + $this->graph_row_height);
+			$this->render_graph_value_ticks($this->i['left_start'], $this->i['top_start'] + ($i * ($this->graph_row_height + $l_height)), $this->i['graph_left_end'], $this->i['top_start'] + ($i * ($this->graph_row_height + $l_height)) + $this->graph_row_height, false);
 		}
 
 		$row = 0;
@@ -164,7 +163,7 @@ class pts_OverviewGraph extends pts_Graph
 					switch($result_object->test_profile->get_result_proportion())
 					{
 						case 'HIB':
-							$value = $buffer_item->get_result_value() / $divide_value;
+							$value = $divide_value != 0 ? $buffer_item->get_result_value() / $divide_value : 0;
 							break;
 						case 'LIB':
 							$value = $divide_value / $buffer_item->get_result_value();

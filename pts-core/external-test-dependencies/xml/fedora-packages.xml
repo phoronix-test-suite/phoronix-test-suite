@@ -22,6 +22,10 @@
 			<PackageName>SDL-devel SDL_gfx-devel SDL_image-devel SDL_net-devel SDL_sound-devel SDL_ttf-devel</PackageName>
 		</Package>
 		<Package>
+			<GenericName>sdl2-development</GenericName>
+			<PackageName>SDL2 SDL2_image SDL2_mixer SDL2_ttf SDL2-devel SDL2_image-devel</PackageName>
+		</Package>
+		<Package>
 			<GenericName>tiff</GenericName>
 			<PackageName>libtiff-devel</PackageName>
 		</Package>
@@ -102,12 +106,20 @@
 			<PackageName>libaio-devel</PackageName>
 		</Package>
 		<Package>
+			<GenericName>bc</GenericName>
+			<PackageName>bc</PackageName>
+		</Package>
+		<Package>
+			<GenericName>pcre</GenericName>
+			<PackageName>pcre-devel</PackageName>
+		</Package>
+		<Package>
 			<GenericName>perl</GenericName>
-			<PackageName>perl perl-SDL pcre-devel</PackageName>
+			<PackageName>perl perl-SDL</PackageName>
 		</Package>
 		<Package>
 			<GenericName>xorg-video</GenericName>
-			<PackageName>libXv-devel libXvMC-devel</PackageName>
+			<PackageName>libXv-devel libXvMC-devel libvdpau-devel</PackageName>
 		</Package>
 		<Package>
 			<GenericName>libstdcpp5</GenericName>
@@ -224,7 +236,7 @@
 		</Package>
 		<Package>
 			<GenericName>superlu</GenericName>
-			<PackageName>superlu libsuperlu3</PackageName>
+			<PackageName>superlu-devel</PackageName>
 		</Package>
 		<Package>
 			<GenericName>suitesparse</GenericName>
@@ -237,6 +249,10 @@
 		<Package>
 			<GenericName>opencl</GenericName>
 			<PackageName>opencl-headers</PackageName>
+		</Package>
+		<Package>
+			<GenericName>attr</GenericName>
+			<PackageName>attr</PackageName>
 		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

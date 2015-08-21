@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2014, Phoronix Media
-	Copyright (C) 2008 - 2014, Michael Larabel
+	Copyright (C) 2008 - 2015, Phoronix Media
+	Copyright (C) 2008 - 2015, Michael Larabel
 	phoronix-test-suite.php: The main code for initalizing the Phoronix Test Suite
 
 	This program is free software; you can redistribute it and/or modify
@@ -34,7 +34,45 @@ if(!defined('PTS_MODE'))
 }
 
 // Any PHP default memory limit should be fine for PTS, until you run image quality comparison tests that begins to consume memory
-ini_set('memory_limit', '256M');
+if(stripos(phpversion(), 'hhvm') === false)
+{
+	ini_set('memory_limit', '256M');
+}
+
+if(getenv('PTS_MODE') == 'CLIENT' && ini_get('open_basedir') != false)
+{
+	$passes = true;
+	$open_basedir = ini_get('open_basedir');
+
+	if($open_basedir != false)
+	{
+		$is_in_allowed_dir = false;
+		foreach(explode(':', $open_basedir) as $allowed_dir)
+		{
+			if(strpos(PTS_PATH, $allowed_dir) === 0)
+			{
+				$is_in_allowed_dir = true;
+				break;
+			}
+		}
+
+		if($is_in_allowed_dir == false)
+		{
+			$passes = false;
+		}
+	}
+
+
+	if($passes == false)
+	{
+		echo PHP_EOL . 'ERROR: The php.ini configuration open_basedir directive is preventing ' . PTS_PATH . ' from loading.' . PHP_EOL;
+		return false;
+	}
+	else
+	{
+		echo PHP_EOL . 'NOTICE: The php.ini configuration is using the "open_basedir" directive, which may prevent some parts of the Phoronix Test Suite from working. See the Phoronix Test Suite documentation for more details and to disable this setting.' . PHP_EOL;
+	}
+}
 
 require(PTS_PATH . 'pts-core/pts-core.php');
 
@@ -46,19 +84,6 @@ if(!PTS_IS_CLIENT)
 
 // Default to C locale
 setlocale(LC_ALL, 'C');
-
-if(ini_get('open_basedir') != false)
-{
-	if(pts_client::open_basedir_check() == false)
-	{
-		echo PHP_EOL . 'ERROR: The php.ini configuration open_basedir directive is preventing ' . PTS_PATH . ' from loading.' . PHP_EOL;
-		return false;
-	}
-	else
-	{
-		trigger_error('The php.ini configuration is using the "open_basedir" directive, which may prevent some parts of the Phoronix Test Suite from working. See the Phoronix Test Suite documentation for more details and to disable this setting.', E_USER_WARNING);
-	}
-}
 
 // Needed for shutdown functions
 // declare(ticks = 1);
@@ -139,7 +164,6 @@ for($i = 2; $i < $argc && isset($argv[$i]); $i++)
 if(QUICK_START == false)
 {
 	pts_client::user_agreement_check($sent_command);
-	pts_client::user_hardware_software_reporting();
 
 	// OpenBenchmarking.org
 	pts_openbenchmarking::refresh_repository_lists();

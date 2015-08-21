@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2013, Phoronix Media
-	Copyright (C) 2008 - 2013, Michael Larabel
+	Copyright (C) 2008 - 2015, Phoronix Media
+	Copyright (C) 2008 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -100,25 +100,98 @@ class pts_test_result
 	{
 		return $this->result_max;
 	}
-	public function get_comparison_hash($show_version_and_attributes = true)
+	public function get_comparison_hash($show_version_and_attributes = true, $raw_output = true)
 	{
 		if($show_version_and_attributes)
 		{
 			$tp = $this->test_profile->get_identifier(true);
-			// remove the last segment of the test profile version that should be in xx.yy.zz format
-			// this removal is done since the zz segment should be maintainable between comparisons
-			$tp = substr($tp, 0, strrpos($tp, '.'));
+			if($tp == null)
+			{
+				$tp = $this->test_profile->get_title();
+			}
+			else
+			{
+				// remove the last segment of the test profile version that should be in xx.yy.zz format
+				// this removal is done since the zz segment should be maintainable between comparisons
+				$tp = substr($tp, 0, strrpos($tp, '.'));
+			}
 
-			return pts_test_profile::generate_comparison_hash($tp, $this->get_arguments(), $this->get_arguments_description(), $this->test_profile->get_app_version());
+			return pts_test_profile::generate_comparison_hash($tp, $this->get_arguments(), $this->get_arguments_description(), $this->test_profile->get_app_version(), $raw_output);
 		}
 		else
 		{
-			return pts_test_profile::generate_comparison_hash($this->test_profile->get_identifier(false), $this->get_arguments());
+			$tp = $this->test_profile->get_identifier(false);
+			if($tp == null)
+			{
+				$tp = $this->test_profile->get_title();
+			}
+
+			return pts_test_profile::generate_comparison_hash($tp, $this->get_arguments(), null, null, $raw_output);
 		}
 	}
 	public function __toString()
 	{
 		return $this->test_profile->get_identifier(false) . ' ' . $this->get_arguments() . ' ' . $this->get_arguments_description() . ' ' . $this->test_profile->get_override_values();
+	}
+	public function largest_result_variation($break_if_greater_than = false)
+	{
+		if($this->test_profile->get_display_format() != 'BAR_GRAPH') // BAR_ANALYZE_GRAPH is currently unsupported
+		{
+			return false;
+		}
+
+		$is_multi_way = pts_render::multi_way_identifier_check($this->test_result_buffer->get_identifiers());
+		$keys = array_keys($this->test_result_buffer->buffer_items);
+
+		if($is_multi_way)
+		{
+			$key_sets = array();
+			foreach($keys as $k)
+			{
+				$identifier_r = pts_strings::trim_explode(': ', $this->test_result_buffer->buffer_items[$k]->get_result_identifier());
+
+				if(!isset($key_sets[$identifier_r[0]]))
+				{
+					$key_sets[$identifier_r[0]] = array();
+				}
+
+				array_push($key_sets[$identifier_r[0]], $k);
+			}
+		}
+		else
+		{
+			$key_sets = array($keys);
+		}
+
+		$largest_variation = 0;
+		foreach($key_sets as $keys)
+		{
+			$divide_value = 0;
+			foreach($keys as $k)
+			{
+				if($divide_value == 0)
+				{
+					$divide_value = $this->test_result_buffer->buffer_items[$k]->get_result_value();
+					continue;
+				}
+				$variation = ($this->test_result_buffer->buffer_items[$k]->get_result_value() / $divide_value) - 1;
+
+				if(abs($variation) > $largest_variation)
+				{
+					$largest_variation = $variation;
+
+					if($this->test_profile->get_result_proportion() == 'LIB')
+						$largest_variation = 0 - $largest_variation;
+
+					if($break_if_greater_than !== false && abs($largest_variation) > $break_if_greater_than)
+					{
+						return $largest_variation;
+					}
+				}
+			}
+		}
+
+		return $largest_variation;
 	}
 	public function normalize_buffer_values($normalize_against = false)
 	{
@@ -190,11 +263,14 @@ class pts_test_result
 				}
 			}
 
-			foreach($keys as $k)
+			if($divide_value != 0)
 			{
-				$normalized = pts_math::set_precision(($this->test_result_buffer->buffer_items[$k]->get_result_value() / $divide_value), $this->result_precision);
-				$this->test_result_buffer->buffer_items[$k]->reset_result_value($normalized);
-				$this->test_result_buffer->buffer_items[$k]->reset_raw_value(0);
+				foreach($keys as $k)
+				{
+					$normalized = pts_math::set_precision(($this->test_result_buffer->buffer_items[$k]->get_result_value() / $divide_value), max(3, $this->result_precision));
+					$this->test_result_buffer->buffer_items[$k]->reset_result_value($normalized);
+					$this->test_result_buffer->buffer_items[$k]->reset_raw_value(0);
+				}
 			}
 		}
 

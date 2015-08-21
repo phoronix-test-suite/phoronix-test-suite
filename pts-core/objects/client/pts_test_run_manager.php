@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2014, Phoronix Media
-	Copyright (C) 2009 - 2014, Michael Larabel
+	Copyright (C) 2009 - 2015, Phoronix Media
+	Copyright (C) 2009 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -42,12 +42,13 @@ class pts_test_run_manager
 	private $allow_sharing_of_results = true;
 	private $auto_upload_to_openbenchmarking = false;
 	private $is_pcqs = false;
-	private $openbenchmarking_results_url = false;
+	private $openbenchmarking_results_data = false;
 
 	private $do_dynamic_run_count = false;
 	private $dynamic_run_count_on_length_or_less;
 	private $dynamic_run_count_std_deviation_threshold;
 	private $dynamic_run_count_export_script;
+	private $multi_test_stress_run = false;
 
 	private static $test_run_process_active = false;
 	private static $batch_mode_options = false;
@@ -187,10 +188,14 @@ class pts_test_run_manager
 
 		return $estimated_time;
 	}
+	public function get_percent_complete()
+	{
+		return round($this->last_test_run_index / count($this->tests_to_run) * 100);
+	}
 	public function get_test_to_run($index)
 	{
 		$this->last_test_run_index = $index;
-		return isset($this->tests_to_run[$index]) ? $this->tests_to_run[$index] : false;
+		return is_numeric($index) && isset($this->tests_to_run[$index]) ? $this->tests_to_run[$index] : false;
 	}
 	public function get_test_count()
 	{
@@ -281,13 +286,17 @@ class pts_test_run_manager
 				pts_tests::recently_saved_results();
 
 			}
-
-			while(empty($save_name) || ($is_reserved_word = pts_types::is_test_or_suite($save_name)))
+			$save_name_length = strlen($save_name);
+			while(empty($save_name) || ($is_reserved_word = pts_types::is_test_or_suite($save_name)) || $save_name_length > 126)
 			{
 				if($is_reserved_word)
 				{
 					echo PHP_EOL . 'The name of the saved file cannot be the same as a test/suite: ' . $save_name . PHP_EOL;
 					$is_reserved_word = false;
+				}
+				if($save_name_length > 126)
+				{
+					echo PHP_EOL . 'The name of the saved file must have between 2 and 126 characters in length.' . PHP_EOL;
 				}
 
 				pts_client::$display->generic_prompt('Enter a name to save these results under: ');
@@ -348,8 +357,8 @@ class pts_test_run_manager
 			{
 				if($times_tried == 0 && ($env_identifier = pts_client::read_env('TEST_RESULTS_IDENTIFIER')))
 				{
-					$results_identifier = isset($env_identifier) ? $env_identifier : null;
-					echo 'Test Identifier: ' . self::clean_results_identifier($results_identifier) . PHP_EOL;
+					$results_identifier = isset($env_identifier) ? self::clean_results_identifier($env_identifier) : null;
+					echo 'Test Identifier: ' . $results_identifier . PHP_EOL;
 				}
 				else if((pts_c::$test_flags ^ pts_c::auto_mode))
 				{
@@ -368,54 +377,79 @@ class pts_test_run_manager
 			}
 			while((!$no_repeated_tests && $identifier_pos != -1) || (isset($current_hardware[$identifier_pos]) && $current_hardware[$identifier_pos] != phodevi::system_hardware(true)) || (isset($current_software[$identifier_pos]) && $current_software[$identifier_pos] != phodevi::system_software(true)));
 		}
+		else if(($env_identifier = pts_client::read_env('TEST_RESULTS_IDENTIFIER')))
+		{
+			$results_identifier = self::clean_results_identifier($env_identifier);
+		}
+
 
 		if(empty($results_identifier))
 		{
-			// If the save result identifier is empty, try to come up with something based upon the tests being run.
-			$subsystem_r = array();
-			$subsystems_to_test = $this->subsystems_under_test();
-
-			if(pts_result_file::is_test_result_file($this->file_name))
-			{
-				$result_file = new pts_result_file($this->file_name);
-				$result_file_intent = pts_result_file_analyzer::analyze_result_file_intent($result_file);
-
-				if(is_array($result_file_intent) && $result_file_intent[0] != 'Unknown')
-				{
-					array_unshift($subsystems_to_test, $result_file_intent[0]);
-				}
-			}
-
-			foreach($subsystems_to_test as $subsystem)
-			{
-				$components = pts_result_file_analyzer::system_component_string_to_array(phodevi::system_hardware(true) . ', ' . phodevi::system_software(true));
-				if(isset($components[$subsystem]))
-				{
-					$subsystem_name = pts_strings::trim_search_query($components[$subsystem]);
-
-					if(phodevi::is_vendor_string($subsystem_name) && !in_array($subsystem_name, $subsystem_r))
-					{
-						array_push($subsystem_r, $subsystem_name);
-					}
-					if(isset($subsystem_r[2]) || isset($subsystem_name[19]))
-					{
-						break;
-					}
-				}
-			}
-
-			if(isset($subsystem_r[0]))
-			{
-				$results_identifier = implode(' - ', $subsystem_r);
-			}
-
-			if(empty($results_identifier))
-			{
-				$results_identifier = date('Y-m-d H:i');
-			}
+			$results_identifier = $this->auto_generate_results_identifier();
 		}
 
 		$this->results_identifier = $results_identifier;
+	}
+	public function auto_generate_results_identifier()
+	{
+		// If the save result identifier is empty, try to come up with something based upon the tests being run.
+		$results_identifier = null;
+		$subsystem_r = array();
+		$subsystems_to_test = $this->subsystems_under_test();
+
+		if(pts_result_file::is_test_result_file($this->file_name))
+		{
+			$result_file = new pts_result_file($this->file_name);
+			$result_file_intent = pts_result_file_analyzer::analyze_result_file_intent($result_file);
+
+			if(is_array($result_file_intent) && $result_file_intent[0] != 'Unknown')
+			{
+				array_unshift($subsystems_to_test, $result_file_intent[0]);
+			}
+		}
+
+		foreach($subsystems_to_test as $subsystem)
+		{
+			$components = pts_result_file_analyzer::system_component_string_to_array(phodevi::system_hardware(true) . ', ' . phodevi::system_software(true));
+			if($subsystem != null && isset($components[$subsystem]))
+			{
+				$subsystem_name = pts_strings::trim_search_query($components[$subsystem]);
+
+				if(phodevi::is_vendor_string($subsystem_name) && !in_array($subsystem_name, $subsystem_r))
+				{
+					array_push($subsystem_r, $subsystem_name);
+				}
+				if(isset($subsystem_r[2]) || isset($subsystem_name[19]))
+				{
+					break;
+				}
+			}
+		}
+
+		if(isset($subsystem_r[0]))
+		{
+			$results_identifier = implode(' - ', $subsystem_r);
+		}
+
+		if(empty($results_identifier) && (pts_c::$test_flags ^ pts_c::batch_mode))
+		{
+			$results_identifier = phodevi::read_property('cpu', 'model') . ' - ' . phodevi::read_property('gpu', 'model') . ' - ' . phodevi::read_property('motherboard', 'identifier');
+		}
+
+		if(strlen($results_identifier) > 55)
+		{
+			$results_identifier = substr($results_identifier, 0, 54);
+			$results_identifier = substr($results_identifier, 0, strrpos($results_identifier, ' '));
+		}
+
+		if(empty($results_identifier))
+		{
+			$results_identifier = date('Y-m-d H:i');
+		}
+
+		$this->results_identifier = $results_identifier;
+
+		return $results_identifier;
 	}
 	public static function clean_results_identifier($results_identifier)
 	{
@@ -454,7 +488,7 @@ class pts_test_run_manager
 		pts_client::$display->test_run_process_start($this);
 
 		$total_loop_count = (($t = pts_client::read_env('TOTAL_LOOP_COUNT')) && is_numeric($t) && $t > 0) ? $t : 1;
-		$total_loop_time = (($t = pts_client::read_env('TOTAL_LOOP_TIME')) && is_numeric($t) && $t > 60) ? ($t * 60) : -1;
+		$total_loop_time = (($t = pts_client::read_env('TOTAL_LOOP_TIME')) && is_numeric($t) && $t > 9) ? ($t * 60) : -1;
 		$loop_end_time = $total_loop_time != -1 ? (time() + $total_loop_time) : false;
 		$this->test_run_count = ($tests_to_run_count * $total_loop_count);
 
@@ -538,7 +572,7 @@ class pts_test_run_manager
 	{
 		return self::$test_run_process_active = true;
 	}
-	private function process_test_run_request($run_index)
+	public function process_test_run_request($run_index)
 	{
 		$result = false;
 
@@ -547,12 +581,25 @@ class pts_test_run_manager
 			$this->result_file_writer->save_xml(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . '/active.xml');
 		}
 
-		$test_run_request = $this->get_test_to_run($run_index);
+		if(is_object($run_index))
+		{
+			$test_run_request = $run_index;
+			$run_index = 0;
+		}
+		else
+		{
+			$test_run_request = $this->get_test_to_run($run_index);
+		}
 
 		if(($run_index != 0 && count(pts_file_io::glob($test_run_request->test_profile->get_install_dir() . 'cache-share-*.pt2so')) == 0))
 		{
 			// Sleep for six seconds between tests by default
 			sleep(6);
+		}
+
+		if($test_run_request == false)
+		{
+			return;
 		}
 
 		pts_test_execution::run_test($this, $test_run_request);
@@ -675,15 +722,20 @@ class pts_test_run_manager
 			$input = strtolower($input);
 		}
 
+		if(strlen($input) > 126)
+		{
+			$input = substr($input, 0, 126);
+		}
+
 		return $input;
 	}
-	public static function initial_checks(&$to_run, $test_flags = 0)
+	public static function initial_checks(&$to_run, $test_flags = 0, $override_display_mode = false)
 	{
 		// Refresh the pts_client::$display in case we need to run in debug mode
 		$test_flags |= pts_c::is_run_process;
 		if(pts_client::$display == false || ($test_flags != 0 && !(pts_client::$display instanceof pts_websocket_display_mode)))
 		{
-			pts_client::init_display_mode($test_flags);
+			pts_client::init_display_mode($test_flags, $override_display_mode);
 		}
 		pts_client::set_test_flags($test_flags);
 		$to_run = pts_types::identifiers_to_objects($to_run);
@@ -791,13 +843,19 @@ class pts_test_run_manager
 			}
 
 			$mount_options = phodevi::read_property('disk', 'mount-options');
-			if(isset($mount_options['mount-options']) && $mount_options['mount-options'] != null)
+			if($mount_options['mount-options'] != null)
 			{
 				$notes['disk-mount-options'] = $mount_options['mount-options'];
 			}
+			$extra = phodevi::read_property('disk', 'extra-disk-details');
+			if($extra != null)
+			{
+				$notes['disk-details'] = $extra;
+			}
 		}
-		if($show_all || in_array('Processor', $test_hardware_types) || in_array('System', $test_hardware_types))
+		if(true || $show_all || in_array('Processor', $test_hardware_types) || in_array('System', $test_hardware_types))
 		{
+			// XXX probably makes sense always reporting the CPU scaling governor
 			$scaling_governor = phodevi::read_property('cpu', 'scaling-governor');
 			if($scaling_governor)
 			{
@@ -860,13 +918,22 @@ class pts_test_run_manager
 			pts_module_manager::module_process('__event_results_saved', $this);
 			//echo PHP_EOL . 'Results Saved To: ; . PTS_SAVE_RESULTS_PATH . $this->get_file_name() . ;/composite.xml' . PHP_EOL;
 
-			if((pts_c::$test_flags ^ pts_c::auto_mode) && ((pts_c::$test_flags ^ pts_c::batch_mode) || self::$batch_mode_options['OpenBrowser'] == true))
+			if(!(pts_c::$test_flags & pts_c::auto_mode))
 			{
-				$auto_open = (pts_c::$test_flags & pts_c::batch_mode) ? self::$batch_mode_options['OpenBrowser'] : false;
-				pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . '/index.html', null, true, $auto_open);
+				if((pts_c::$test_flags & pts_c::batch_mode))
+				{
+					if(self::$batch_mode_options['OpenBrowser'])
+					{
+						pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . '/index.html', null, true, true);
+					}
+				}
+				else
+				{
+					pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . '/index.html', null, true, false);
+				}
 			}
 
-			if($this->allow_sharing_of_results && pts_network::network_support_available())
+			if($this->allow_sharing_of_results && pts_network::internet_support_available())
 			{
 				if($this->auto_upload_to_openbenchmarking || pts_openbenchmarking_client::auto_upload_results() || pts_flags::upload_to_openbenchmarking())
 				{
@@ -876,7 +943,7 @@ class pts_test_run_manager
 				{
 					$upload_results = self::$batch_mode_options['UploadResults'];
 				}
-				else if((pts_c::$test_flags ^ pts_c::auto_mode))
+				else if(!(pts_c::$test_flags & pts_c::auto_mode))
 				{
 					$upload_results = pts_user_io::prompt_bool_input('Would you like to upload the results to OpenBenchmarking.org', true);
 				}
@@ -887,13 +954,13 @@ class pts_test_run_manager
 
 				if($upload_results)
 				{
-					$this->openbenchmarking_results_url = pts_openbenchmarking::upload_test_result($this);
+					$this->openbenchmarking_results_data = pts_openbenchmarking::upload_test_result($this, true);
 
-					if(!empty($this->openbenchmarking_results_url))
+					if($this->get_results_url())
 					{
-						if((pts_c::$test_flags ^ pts_c::auto_mode) && pts_openbenchmarking_client::auto_upload_results() == false)
+						if(!(pts_c::$test_flags & pts_c::auto_mode) && pts_openbenchmarking_client::auto_upload_results() == false)
 						{
-							pts_client::display_web_page($this->openbenchmarking_results_url, 'Do you want to launch OpenBenchmarking.org', true);
+							pts_client::display_web_page($this->get_results_url(), 'Do you want to launch OpenBenchmarking.org', true);
 						}
 					}
 					else
@@ -906,13 +973,17 @@ class pts_test_run_manager
 	}
 	public function get_results_url()
 	{
-		return $this->openbenchmarking_results_url;
+		return isset($this->openbenchmarking_results_data['url']) ? $this->openbenchmarking_results_data['url'] : false;
+	}
+	public function get_result_upload_data()
+	{
+		return $this->openbenchmarking_results_data;
 	}
 	public static function set_batch_mode($custom_preset = false)
 	{
 		self::$batch_mode_options = array(
 			'UploadResults' => pts_config::read_bool_config('PhoronixTestSuite/Options/BatchMode/UploadResults', 'TRUE'),
-			'SaveResults' => pts_config::read_user_config('PhoronixTestSuite/Options/BatchMode/SaveResults', 'TRUE'),
+			'SaveResults' => pts_config::read_bool_config('PhoronixTestSuite/Options/BatchMode/SaveResults', 'TRUE'),
 			'PromptForTestDescription' => pts_config::read_bool_config('PhoronixTestSuite/Options/BatchMode/PromptForTestDescription', 'FALSE'),
 			'RunAllTestCombinations' => pts_config::read_bool_config('PhoronixTestSuite/Options/BatchMode/RunAllTestCombinations', 'TRUE'),
 			'PromptSaveName' => pts_config::read_bool_config('PhoronixTestSuite/Options/BatchMode/PromptSaveName', 'FALSE'),
@@ -941,14 +1012,14 @@ class pts_test_run_manager
 		{
 			if($skip_tests && (in_array($run_object->get_identifier(false), $skip_tests) || ($run_object instanceof pts_test_profile && in_array($run_object->get_identifier_base_name(), $skip_tests))))
 			{
-				echo 'Skipping: ' . $run_object->get_identifier() . PHP_EOL;
+				pts_client::$display->generic_sub_heading('Skipping: ' . $run_object->get_identifier());
 				continue;
 			}
 			else if($run_object instanceof pts_test_profile)
 			{
 				if($run_object->get_title() == null)
 				{
-					echo 'Not A Test: ' . $run_object . PHP_EOL;
+					pts_client::$display->generic_sub_heading('Not A Test: ' . $run_object);
 					continue;
 				}
 				else
@@ -994,7 +1065,7 @@ class pts_test_run_manager
 			{
 				if($run_object->is_core_version_supported() == false)
 				{
-					echo $run_object->get_title() . ' is a suite not supported by this version of the Phoronix Test Suite.' . PHP_EOL;
+					pts_client::$display->generic_sub_heading($run_object->get_title() . ' is a suite not supported by this version of the Phoronix Test Suite.');
 					continue;
 				}
 
@@ -1024,7 +1095,7 @@ class pts_test_run_manager
 			}
 			else
 			{
-				echo 'Not Recognized: ' . $run_object . PHP_EOL;
+				pts_client::$display->generic_sub_heading('Not Recognized: ' . $run_object);
 				continue;
 			}
 
@@ -1033,7 +1104,7 @@ class pts_test_run_manager
 
 		$to_run_objects = $tests_verified;
 
-		if(count($tests_missing) > 0)
+		if(count($tests_missing) > 0 && !defined('PHOROMATIC_PROCESS'))
 		{
 			$tests_missing = array_unique($tests_missing);
 
@@ -1050,7 +1121,7 @@ class pts_test_run_manager
 				echo $message;
 			}
 
-			if((pts_c::$test_flags & pts_c::auto_mode) == false && (pts_c::$test_flags & pts_c::batch_mode) == false && pts_flags::is_live_cd() == false && pts_client::current_command() != 'benchmark')
+			if((pts_c::$test_flags & pts_c::batch_mode) == false && (pts_c::$test_flags & pts_c::auto_mode) == false && pts_flags::is_live_cd() == false && pts_client::current_command() != 'benchmark')
 			{
 				$stop_and_install = pts_user_io::prompt_bool_input('Would you like to stop and install these tests now', true);
 
@@ -1224,6 +1295,7 @@ class pts_test_run_manager
 					}
 					else if((pts_c::$test_flags ^ pts_c::auto_mode))
 					{
+						//echo PHP_EOL . 'Current Title: ' . $this->file_name_title . PHP_EOL;
 						pts_client::$display->generic_heading('If you wish, enter a new description below to better describe this result set / system configuration under test.' . PHP_EOL . 'Press ENTER to proceed without changes.');
 						echo 'Current Description: ' . $this->run_description . PHP_EOL . PHP_EOL . 'New Description: ';
 						$new_test_description = pts_user_io::read_user_input();
@@ -1316,6 +1388,118 @@ class pts_test_run_manager
 		// Is there something to run?
 		return $this->get_test_count() > 0;
 	}
+	public function is_multi_test_stress_run()
+	{
+		return $this->multi_test_stress_run;
+	}
+	public function multi_test_stress_run_execute($tests_to_run_concurrently = 3, $total_loop_time = false)
+	{
+		$continue_test_flag = true;
+		pts_client::$display->test_run_process_start($this);
+		$this->disable_dynamic_run_count();
+		$this->multi_test_stress_run = $tests_to_run_concurrently;
+		$possible_tests_to_run = $this->get_tests_to_run();
+		$tests_pids_active = array();
+		$loop_until_time = is_numeric($total_loop_time) && $total_loop_time > 1 ? time() + $total_loop_time : false;
+
+		while(!empty($possible_tests_to_run) || !empty($tests_pids_active))
+		{
+			if($continue_test_flag == false)
+				break;
+
+			$test_types_active = array();
+			foreach($tests_pids_active as $pid => &$test)
+			{
+				$ret = pcntl_waitpid($pid, $status, WNOHANG | WUNTRACED);
+
+				if($ret)
+				{
+					if(pcntl_wifexited($status) || !posix_getsid($pid))
+					{
+						unset($tests_pids_active[$pid]);
+						continue;
+					}
+				}
+
+				if(!in_array($test->test_profile->get_test_hardware_type(), $test_types_active))
+				{
+					array_push($test_types_active, $test->test_profile->get_test_hardware_type());
+				}
+
+			}
+
+			if(!empty($possible_tests_to_run) && count($tests_pids_active) < $tests_to_run_concurrently && (!$total_loop_time || $loop_until_time > time()))
+			{
+				shuffle($possible_tests_to_run);
+
+				$test_to_run = false;
+				$test_run_index = -1;
+				foreach($possible_tests_to_run as $i => $test)
+				{
+					if(!in_array($test->test_profile->get_test_hardware_type(), $test_types_active))
+					{
+						$test_run_index = $i;
+						$test_to_run = $test;
+					}
+				}
+				if($test_run_index == -1)
+				{
+					$test_run_index = array_rand(array_keys($possible_tests_to_run));
+					$test_to_run = $possible_tests_to_run[$test_run_index];
+				}
+
+				$pid = pcntl_fork();
+				if($pid == -1)
+				{
+					echo 'Forking failure.';
+				}
+				else if($pid)
+				{
+					$tests_pids_active[$pid] = $test_to_run;
+				}
+				else
+				{
+					$continue_test_flag = $this->process_test_run_request($test_to_run);
+					return false;
+				}
+
+				if($total_loop_time == false)
+				{
+					unset($possible_tests_to_run[$test_run_index]);
+				}
+				else if($total_loop_time == 'infinite')
+				{
+						echo 'Continuing to test indefinitely' . PHP_EOL;
+				}
+				else
+				{
+					if($loop_until_time > time())
+					{
+						$time_left = ceil(($loop_until_time - time()) / 60);
+						echo 'Continuing to test for ' . $time_left . ' more minutes' . PHP_EOL;
+					}
+					else
+					{
+						echo 'TOTAL_LOOP_TIME elapsed; quitting....' . PHP_EOL;
+						break;
+					}
+				}
+			}
+
+			sleep(1);
+		}
+
+		foreach($this->get_tests_to_run() as $run_request)
+		{
+			// Remove cache shares
+			foreach(pts_file_io::glob($run_request->test_profile->get_install_dir() . 'cache-share-*.pt2so') as $cache_share_file)
+			{
+				unlink($cache_share_file);
+			}
+		}
+
+		return true;
+	}
 	protected function test_prompts_to_result_objects(&$test_profile)
 	{
 		$result_objects = array();
@@ -1403,6 +1587,7 @@ class pts_test_run_manager
 				$result_objects = $run_object->get_result_objects();
 
 				$this->set_save_name($run_object->get_identifier(), false);
+				$this->file_name_title = $run_object->get_title();
 
 				pts_module_manager::process_environment_variables_string_to_set($preset_vars);
 
@@ -1482,6 +1667,10 @@ class pts_test_run_manager
 			// Sort the run order so that all tests that are similar are grouped together, etc
 			usort($this->tests_to_run, array('pts_test_run_manager', 'cmp_result_object_sort'));
 		}
+		if(pts_client::read_env('RUN_TESTS_IN_RANDOM_ORDER'))
+		{
+			shuffle($this->tests_to_run);
+		}
 
 		$this->prompt_save_results = $run_contains_a_no_result_type == false || $unique_test_count > 1;
 		$this->force_save_results = $this->force_save_results || $request_results_save;
@@ -1511,7 +1700,7 @@ class pts_test_run_manager
 		$valid_test_profile = true;
 		$test_type = $test_profile->get_test_hardware_type();
 		$skip_tests = pts_client::read_env('SKIP_TESTS') ? pts_strings::comma_explode(pts_client::read_env('SKIP_TESTS')) : false;
-		$only_test_types = ($e = pts_client::read_env('ONLY_TEST_TYPES')) ? pts_strings::comma_explode($e) : false;
+		$skip_test_subsystems = pts_client::read_env('SKIP_TESTING_SUBSYSTEMS') ? pts_strings::comma_explode(strtolower(pts_client::read_env('SKIP_TESTING_SUBSYSTEMS'))) : false;
 		$display_driver = phodevi::read_property('system', 'display-driver');
 		$gpu = phodevi::read_name('gpu');
 
@@ -1540,7 +1729,7 @@ class pts_test_run_manager
 			$report_errors && pts_client::$display->test_run_error('Due to a pre-set environmental variable, skipping ' . $test_profile);
 			$valid_test_profile = false;
 		}
-		else if($only_test_types && !in_array($test_profile->get_test_hardware_type(), $only_test_types))
+		else if($skip_test_subsystems && in_array(strtolower($test_profile->get_test_hardware_type()), $skip_test_subsystems))
 		{
 			$report_errors && pts_client::$display->test_run_error('Due to a pre-set environmental variable, skipping ' . $test_profile);
 			$valid_test_profile = false;

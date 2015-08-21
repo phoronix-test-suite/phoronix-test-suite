@@ -129,7 +129,7 @@ class pts_validation
 	public static function validate_test_profile(&$test_profile)
 	{
 
-		if($test_profile->xml_parser->getFileLocation() == null)
+		if($test_profile->get_file_location() == null)
 		{
 			echo PHP_EOL . 'ERROR: The file location of the XML test profile source could not be determined.' . PHP_EOL;
 			return false;
@@ -138,14 +138,25 @@ class pts_validation
 		// Validate the XML against the XSD Schemas
 		libxml_clear_errors();
 
-		// First rewrite the main XML file to ensure it is properly formatted, elements are ordered according to the schema, etc...
+		// Now re-create the pts_test_profile object around the rewritten XML
+		$test_profile = new pts_test_profile($test_profile->get_identifier());
+		$valid = $test_profile->validate();
+
+		if($valid == false)
+		{
+			echo PHP_EOL . 'Errors occurred parsing the main XML.' . PHP_EOL;
+			pts_validation::process_libxml_errors();
+			return false;
+		}
+
+		// Rewrite the main XML file to ensure it is properly formatted, elements are ordered according to the schema, etc...
 		$test_profile_writer = new pts_test_profile_writer();
 		$test_profile_writer->rebuild_test_profile($test_profile);
-		$test_profile_writer->save_xml($test_profile->xml_parser->getFileLocation());
+		$test_profile_writer->save_xml($test_profile->get_file_location());
 
 		// Now re-create the pts_test_profile object around the rewritten XML
 		$test_profile = new pts_test_profile($test_profile->get_identifier());
-		$valid = $test_profile->xml_parser->validate();
+		$valid = $test_profile->validate();
 
 		if($valid == false)
 		{

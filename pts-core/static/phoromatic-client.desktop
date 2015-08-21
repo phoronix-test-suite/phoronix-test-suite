@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Phoronix Test Suite Phoromatic Client
+GenericName=Phoronix Test Suite Phoromatic Client
+Exec=phoronix-test-suite phoromatic.connect
+StartupNotify=true
+Icon=phoronix-test-suite
+Terminal=true
+Type=Application
+Categories=System;Monitor;
+Name[en_US]=phoromatic-client.desktop

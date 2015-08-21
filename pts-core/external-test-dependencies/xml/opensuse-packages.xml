@@ -8,12 +8,21 @@
 			<PackageManager>zypper</PackageManager>
 		</Information>
 		<Package>
+			<GenericName>common-dependencies</GenericName>
+			<PackageName>dmidecode Mesa-demo-x</PackageName>
+			<FileCheck>dmidecode, glxinfo</FileCheck>
+		</Package>
+		<Package>
 			<GenericName>gtk-development</GenericName>
 			<PackageName>gtk2-devel</PackageName>
 		</Package>
 		<Package>
 			<GenericName>sdl-development</GenericName>
 			<PackageName>libSDL-devel libSDL_image-devel libSDL_gfx-devel libSDL_net-devel libSDL_ttf-devel</PackageName>
+		</Package>
+		<Package>
+			<GenericName>sdl2-development</GenericName>
+			<PackageName>libSDL2-devel libSDL2_image-devel libSDL2_gfx-devel libSDL2_net-devel libSDL2_ttf-devel</PackageName>
 		</Package>
 		<Package>
 			<GenericName>glut</GenericName>
@@ -26,6 +35,10 @@
 		<Package>
 			<GenericName>csh</GenericName>
 			<PackageName>tcsh</PackageName>
+		</Package>
+		<Package>
+			<GenericName>pcre</GenericName>
+			<PackageName>pcre-devel</PackageName>
 		</Package>
 		<Package>
 			<GenericName>libpng-development</GenericName>
@@ -232,6 +245,10 @@
 		<Package>
 			<GenericName>tinyxml</GenericName>
 			<PackageName>tinyxml-devel</PackageName>
+		</Package>
+		<Package>
+			<GenericName>attr</GenericName>
+			<PackageName>attr</PackageName>
 		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

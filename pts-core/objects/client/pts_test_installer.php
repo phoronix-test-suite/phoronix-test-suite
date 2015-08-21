@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2014, Phoronix Media
-	Copyright (C) 2010 - 2014, Michael Larabel
+	Copyright (C) 2010 - 2015, Phoronix Media
+	Copyright (C) 2010 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -22,6 +22,12 @@
 
 class pts_test_installer
 {
+	protected static function test_install_error($test_run_manager, &$test_run_request, $error_msg)
+	{
+		$error_obj = array($test_run_manager, $test_run_request, $error_msg);
+		pts_module_manager::module_process('__event_run_error', $error_obj);
+		pts_client::$display->test_install_error($error_msg);
+	}
 	public static function standard_install($items_to_install, $test_flags = 0)
 	{
 		// Refresh the pts_client::$display in case we need to run in debug mode
@@ -214,15 +220,13 @@ class pts_test_installer
 		foreach($test_install_request->get_download_objects() as $download_package)
 		{
 			$package_filename = $download_package->get_filename();
-			$package_md5 = $download_package->get_md5();
-			$package_sha256 = $download_package->get_sha256();
 			$download_destination = $download_location . $package_filename;
 			$download_destination_temp = $download_destination . '.pts';
 
 			if($download_package->get_download_location_type() == null)
 			{
 				// Attempt a possible last-minute look-aside copy cache in case a previous test in the install queue downloaded this file already
-				$lookaside_copy = pts_test_install_manager::file_lookaside_test_installations($package_filename, $package_md5, $package_sha256);
+				$lookaside_copy = pts_test_install_manager::file_lookaside_test_installations($download_package);
 				if($lookaside_copy)
 				{
 					if($download_package->get_filesize() == 0)
@@ -240,21 +244,38 @@ class pts_test_installer
 					pts_client::$display->test_install_download_file('FILE_FOUND', $download_package);
 					continue;
 				case 'REMOTE_DOWNLOAD_CACHE':
-					foreach($download_package->get_download_location_path() as $remote_download_cache_file)
+					$download_tries = 0;
+					do
 					{
-						pts_client::$display->test_install_download_file('DOWNLOAD_FROM_CACHE', $download_package);
-						pts_network::download_file($remote_download_cache_file, $download_destination_temp);
+						foreach($download_package->get_download_location_path() as $remote_download_cache_file)
+						{
+							pts_client::$display->test_install_download_file('DOWNLOAD_FROM_CACHE', $download_package);
+							pts_network::download_file($remote_download_cache_file, $download_destination_temp);
 
-						if(pts_test_installer::validate_md5_download_file($download_destination_temp, $package_md5))
-						{
-							rename($download_destination_temp, $download_destination);
-							continue;
+							if(!is_file($download_destination_temp) || filesize($download_destination_temp) == 0)
+							{
+								self::test_install_error(null, $test_install_request, 'The file failed to download from the cache.');
+								pts_file_io::unlink($download_destination_temp);
+								break;
+							}
+							else if($download_package->check_file_hash($download_destination_temp))
+							{
+								rename($download_destination_temp, $download_destination);
+								break;
+							}
+							else
+							{
+								self::test_install_error(null, $test_install_request, 'The check-sum of the downloaded file failed.');
+								pts_file_io::unlink($download_destination_temp);
+							}
 						}
-						else
-						{
-							pts_client::$display->test_install_error('The check-sum of the downloaded file failed.');
-							pts_file_io::unlink($download_destination_temp);
-						}
+						$download_tries++;
+					}
+					while(!is_file($download_destination) && $download_tries < 2);
+
+					if(is_file($download_destination))
+					{
+						continue;
 					}
 				case 'MAIN_DOWNLOAD_CACHE':
 				case 'LOCAL_DOWNLOAD_CACHE':
@@ -286,14 +307,14 @@ class pts_test_installer
 								pts_client::$display->test_install_progress_completed();
 
 								// Verify that the file was copied fine
-								if(pts_test_installer::validate_md5_download_file($download_destination_temp, $package_md5))
+								if($download_package->check_file_hash($download_destination_temp))
 								{
 									rename($download_destination_temp, $download_destination);
 									break;
 								}
 								else
 								{
-									pts_client::$display->test_install_error('The check-sum of the copied file failed.');
+									self::test_install_error(null, $test_install_request, 'The check-sum of the copied file failed.');
 									pts_file_io::unlink($download_destination_temp);
 								}
 
@@ -317,33 +338,41 @@ class pts_test_installer
 
 						do
 						{
-							if((pts_c::$test_flags ^ pts_c::batch_mode) && (pts_c::$test_flags ^ pts_c::auto_mode) && pts_config::read_bool_config('PhoronixTestSuite/Options/Installation/PromptForDownloadMirror', 'FALSE') && count($package_urls) > 1)
+							if(pts_network::internet_support_available())
 							{
-								// Prompt user to select mirror
-								do
+								if((pts_c::$test_flags ^ pts_c::batch_mode) && (pts_c::$test_flags ^ pts_c::auto_mode) && pts_config::read_bool_config('PhoronixTestSuite/Options/Installation/PromptForDownloadMirror', 'FALSE') && count($package_urls) > 1)
 								{
-									echo PHP_EOL . 'Available Download Mirrors:' . PHP_EOL . PHP_EOL;
-									$url = pts_user_io::prompt_text_menu('Select Preferred Mirror', $package_urls, false);
+									// Prompt user to select mirror
+									do
+									{
+										echo PHP_EOL . 'Available Download Mirrors:' . PHP_EOL . PHP_EOL;
+										$url = pts_user_io::prompt_text_menu('Select Preferred Mirror', $package_urls, false);
+									}
+									while(pts_strings::is_url($url) == false);
 								}
-								while(pts_strings::is_url($url) == false);
+								else
+								{
+									// Auto-select mirror
+									shuffle($package_urls);
+									do
+									{
+										$url = array_pop($package_urls);
+									}
+									while(pts_strings::is_url($url) == false && !empty($package_urls));
+								}
+
+								pts_client::$display->test_install_download_file('DOWNLOAD', $download_package);
+								$download_start = time();
+								pts_network::download_file($url, $download_destination_temp);
+								$download_end = time();
 							}
 							else
 							{
-								// Auto-select mirror
-								shuffle($package_urls);
-								do
-								{
-									$url = array_pop($package_urls);
-								}
-								while(pts_strings::is_url($url) == false && !empty($package_urls));
+								self::test_install_error(null, $test_install_request, 'Internet support is needed and it\'s disabled or not available.');
+								return false;
 							}
 
-							pts_client::$display->test_install_download_file('DOWNLOAD', $download_package);
-							$download_start = time();
-							pts_network::download_file($url, $download_destination_temp);
-							$download_end = time();
-
-							if(pts_test_installer::validate_md5_download_file($download_destination_temp, $package_md5))
+							if($download_package->check_file_hash($download_destination_temp))
 							{
 								// Download worked
 								if(is_file($download_destination_temp))
@@ -359,14 +388,19 @@ class pts_test_installer
 							else
 							{
 								// Download failed
-								if(is_file($download_destination_temp) && filesize($download_destination_temp) > 0)
+								if(is_file($download_destination_temp) && filesize($download_destination_temp) < 500 && (stripos(file_get_contents($download_destination_temp), 'not found') !== false || strpos(file_get_contents($download_destination_temp), 404) !== false))
 								{
-									pts_client::$display->test_install_error('MD5 Failed: ' . $url);
+									self::test_install_error(null, $test_install_request, 'File Not Found: ' . $url);
+									$md5_failed = false;
+								}
+								else if(is_file($download_destination_temp) && filesize($download_destination_temp) > 0)
+								{
+									self::test_install_error(null, $test_install_request, 'Checksum Failed: ' . $url);
 									$md5_failed = true;
 								}
 								else
 								{
-									pts_client::$display->test_install_error('Download Failed: ' . $url);
+									self::test_install_error(null, $test_install_request, 'Download Failed: ' . $url);
 									$md5_failed = false;
 								}
 
@@ -381,7 +415,7 @@ class pts_test_installer
 								{
 									if(count($package_urls) > 0 && $package_urls[0] != null)
 									{
-										pts_client::$display->test_install_error('Attempting to download from alternate mirror.');
+										self::test_install_error(null, $test_install_request, 'Attempting to download from alternate mirror.');
 										$try_again = true;
 									}
 									else
@@ -408,7 +442,7 @@ class pts_test_installer
 
 								if(!$try_again)
 								{
-									//pts_client::$display->test_install_error('Download of Needed Test Dependencies Failed!');
+									//self::test_install_error(null, $test_install_request, 'Download of Needed Test Dependencies Failed!');
 									return false;
 								}
 							}
@@ -459,7 +493,7 @@ class pts_test_installer
 			foreach($possible_compilers as $i => $possible_compiler)
 			{
 				// first check to ensure not null sent to executable_in_path from env variable
-				if($possible_compiler && (($compiler_path = is_executable($possible_compiler)) || ($compiler_path = pts_client::executable_in_path($possible_compiler))))
+				if($possible_compiler && (($compiler_path = is_executable($possible_compiler)) || ($compiler_path = pts_client::executable_in_path($possible_compiler, 'ccache'))))
 				{
 					// Replace the array of possible compilers with a string to the detected compiler executable
 					$compilers[$compiler_type] = $compiler_path;
@@ -646,11 +680,11 @@ class pts_test_installer
 
 		if(ceil(disk_free_space($test_install_directory) / 1048576) < ($test_install_request->test_profile->get_download_size() + 128))
 		{
-			pts_client::$display->test_install_error('There is not enough space at ' . $test_install_directory . ' for the test files.');
+			self::test_install_error(null, $test_install_request, 'There is not enough space at ' . $test_install_directory . ' for the test files.');
 		}
 		else if(ceil(disk_free_space($test_install_directory) / 1048576) < ($test_install_request->test_profile->get_environment_size(false) + 128))
 		{
-			pts_client::$display->test_install_error('There is not enough space at ' . $test_install_directory . ' for this test.');
+			self::test_install_error(null, $test_install_request, 'There is not enough space at ' . $test_install_directory . ' for this test.');
 		}
 		else
 		{
@@ -661,7 +695,7 @@ class pts_test_installer
 
 			if($download_test_files == false)
 			{
-				pts_client::$display->test_install_error('Downloading of needed test files failed.');
+				self::test_install_error(null, $test_install_request, 'Downloading of needed test files failed.');
 				return false;
 			}
 
@@ -683,7 +717,7 @@ class pts_test_installer
 
 						if(empty($install_agreement))
 						{
-							pts_client::$display->test_install_error('The user agreement could not be found. Test installation aborted.');
+							self::test_install_error(null, $test_install_request, 'The user agreement could not be found. Test installation aborted.');
 							return false;
 						}
 					}
@@ -693,7 +727,7 @@ class pts_test_installer
 
 					if(!$user_agrees)
 					{
-						pts_client::$display->test_install_error('User agreement failed; this test will not be installed.');
+						self::test_install_error(null, $test_install_request, 'User agreement failed; this test will not be installed.');
 						return false;
 					}
 				}
@@ -732,14 +766,14 @@ class pts_test_installer
 						}
 
 						//pts_test_installer::setup_test_install_directory($test_install_request, true); // Remove installed files from the bunked installation
-						pts_client::$display->test_install_error('The installer exited with a non-zero exit status.');
+						self::test_install_error(null, $test_install_request, 'The installer exited with a non-zero exit status.');
 						if($install_error != null)
 						{
 							$test_install_request->install_error = pts_tests::pretty_error_string($install_error);
 
 							if($test_install_request->install_error != null)
 							{
-								pts_client::$display->test_install_error('ERROR: ' . $test_install_request->install_error);
+								self::test_install_error(null, $test_install_request, 'ERROR: ' . $test_install_request->install_error);
 							}
 						}
 						pts_client::$display->test_install_error('LOG: ' . str_replace(pts_client::user_home_directory(), '~/', $test_install_directory) . 'install-failed.log' . PHP_EOL);
@@ -783,94 +817,6 @@ class pts_test_installer
 		echo PHP_EOL;
 
 		return $installed;
-	}
-	public static function validate_md5_download_file($filename, $verified_md5)
-	{
-		$valid = false;
-
-		if(is_file($filename))
-		{
-			if(pts_flags::skip_md5_checks())
-			{
-				$valid = true;
-			}
-			else if(!empty($verified_md5))
-			{
-				$real_md5 = md5_file($filename);
-
-				if(pts_strings::is_url($verified_md5))
-				{
-					foreach(pts_strings::trim_explode("\n", pts_network::http_get_contents($verified_md5)) as $md5_line)
-					{
-						list($md5, $file) = explode(' ', $md5_line);
-
-						if($file == $filename)
-						{
-							if($md5 == $real_md5)
-							{
-								$valid = true;
-							}
-
-							break;
-						}
-					}
-				}
-				else if($real_md5 == $verified_md5)
-				{
-					$valid = true;
-				}
-			}
-			else
-			{
-				$valid = true;
-			}
-		}
-
-		return $valid;
-	}
-	public static function validate_sha256_download_file($filename, $verified_sha256)
-	{
-		$valid = false;
-
-		if(is_file($filename))
-		{
-			if(pts_flags::skip_md5_checks())
-			{
-				$valid = true;
-			}
-			else if(!empty($verified_sha256))
-			{
-				$real_sha256 = hash_file('sha256', $filename);
-
-				if(pts_strings::is_url($verified_sha256))
-				{
-					foreach(pts_strings::trim_explode("\n", pts_network::http_get_contents($verified_sha256)) as $sha256_line)
-					{
-						list($sha256, $file) = explode(' ', $sha256_line);
-
-						if($file == $filename)
-						{
-							if($sha256 == $real_sha256)
-							{
-								$valid = true;
-							}
-
-							break;
-						}
-					}
-				}
-				else if($real_sha256 == $verified_sha256)
-				{
-					$valid = true;
-				}
-			}
-			else
-			{
-				$valid = true;
-			}
-		}
-
-		return $valid;
 	}
 	protected static function setup_test_install_directory(&$test_install_request, $remove_old_files = false)
 	{

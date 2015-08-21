@@ -21,6 +21,11 @@
 			<FileCheck>/usr/pkg/include/SDL/SDL.h, /usr/pkg/include/SDL/SDL_image.h</FileCheck>
 		</Package>
 		<Package>
+			<GenericName>sdl2-development</GenericName>
+			<PackageName>devel/SDL2 devel/SDL2_gfx devel/SDL2_image</PackageName>
+			<FileCheck>/usr/pkg/include/SDL2/SDL.h, /usr/pkg/include/SDL2/SDL_image.h</FileCheck>
+		</Package>
+		<Package>
 			<GenericName>libpng-development</GenericName>
 			<PackageName>graphics/png</PackageName>
 			<FileCheck>/usr/pkg/include/png.h</FileCheck>
@@ -34,6 +39,11 @@
 			<GenericName>build-utilities</GenericName>
 			<PackageName>devel/autoconf</PackageName>
 			<FileCheck>/usr/pkg/bin/autoconf</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>pcre</GenericName>
+			<PackageName>devel/pcre</PackageName>
+			<FileCheck>/usr/pkg/include/pcre.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>cairo-development</GenericName>

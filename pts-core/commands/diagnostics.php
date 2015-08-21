@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2013, Phoronix Media
-	Copyright (C) 2008 - 2013, Michael Larabel
+	Copyright (C) 2008 - 2014, Phoronix Media
+	Copyright (C) 2008 - 2014, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -29,6 +29,11 @@ class diagnostics implements pts_option_interface
 	{
 		foreach(pts_define(-1) as $constant => $constant_value)
 		{
+			if(strpos($constant, 'GSID') !== false || strpos($constant, '_ID') !== false)
+			{
+				continue;
+			}
+
 			echo $constant . ' = ' . $constant_value . PHP_EOL;
 		}
 

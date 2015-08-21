@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2012, Phoronix Media
-	Copyright (C) 2008 - 2012, Michael Larabel
+	Copyright (C) 2008 - 2014, Phoronix Media
+	Copyright (C) 2008 - 2014, Michael Larabel
 	pts_module_interface.php: The generic Phoronix Test Suite module object that is extended by the specific modules/plug-ins
 
 	This program is free software; you can redistribute it and/or modify
@@ -194,6 +194,11 @@ class pts_module_interface
 	public static function __event_user_error($obj = null)
 	{
 		// TODO use __event_user_error
+		return;
+	}
+	public static function __event_run_error($obj = null)
+	{
+		// Passed is an array where the first element is a copy of the test_run_manager, the second elemnt is the test_run_request, and the third element is the error_msg string
 		return;
 	}
 

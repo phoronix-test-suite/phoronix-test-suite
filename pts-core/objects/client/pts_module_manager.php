@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2011, Phoronix Media
-	Copyright (C) 2009 - 2011, Michael Larabel
+	Copyright (C) 2009 - 2014, Phoronix Media
+	Copyright (C) 2009 - 2014, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -78,7 +78,7 @@ class pts_module_manager
 			$class_vars = get_class_vars($module);
 			$module_val = isset($class_vars[$process]) ? $class_vars[$process] : false;
 
-			if($module_val == null)
+			if($module_val == null && defined($module . '::' . $process))
 			{
 				eval('$module_val = ' . $module . '::' . $process . ';');
 			}
@@ -115,9 +115,12 @@ class pts_module_manager
 		{
 			foreach(explode(';', $env_var_string) as $ev)
 			{
-				list($var, $value) = pts_strings::trim_explode('=', $ev);
-				pts_client::set_environment_variable($var, $value);
-				pts_module_manager::var_store_add($var, $value);
+				if(strpos($ev, '=') != false)
+				{
+					list($var, $value) = pts_strings::trim_explode('=', $ev);
+					pts_client::set_environment_variable($var, $value);
+					pts_module_manager::var_store_add($var, $value);
+				}
 			}
 
 			pts_module_manager::detect_modules_to_load();
@@ -139,7 +142,7 @@ class pts_module_manager
 
 			echo PHP_EOL . 'User commands for the ' . $module . ' module:' . PHP_EOL . PHP_EOL;
 
-			foreach($all_options as $option)
+			foreach($all_options as $option => $func)
 			{
 				echo '- ' . $module . '.' . str_replace('_', '-', $option) . PHP_EOL;
 			}

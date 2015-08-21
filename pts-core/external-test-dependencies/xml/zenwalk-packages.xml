@@ -105,6 +105,10 @@
 			<FileCheck>/usr/include/jpeglib.h</FileCheck>
 		</Package>
 		<Package>
+			<GenericName>attr</GenericName>
+			<PackageName>attr</PackageName>
+		</Package>
+		<Package>
 			<GenericName>libaio-development</GenericName>
 			<PackageName>libaio</PackageName>
 			<FileCheck>/usr/include/libaio.h</FileCheck>

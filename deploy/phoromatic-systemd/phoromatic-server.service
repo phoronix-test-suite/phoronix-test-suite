@@ -1,0 +1,14 @@
+[Unit]
+Description=Phoronix Test Suite Phoromatic Server
+After=syslog.target network.target
+Documentation=man:phoronix-test-suite(1)
+
+[Service]
+TimeoutStartSec=300
+ExecStart=/usr/bin/phoronix-test-suite start-phoromatic-server
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+
+

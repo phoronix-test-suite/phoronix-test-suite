@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2013, Phoronix Media
-	Copyright (C) 2010 - 2013, Michael Larabel
+	Copyright (C) 2010 - 2015, Phoronix Media
+	Copyright (C) 2010 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -313,16 +313,24 @@ class pts_result_file_analyzer
 	}
 	public static function system_value_to_ir_value($value, $index)
 	{
+		// TODO XXX: Move this logic off to OpenBenchmarking.org script
+		/*
+		!in_array($index, array('Memory', 'System Memory', 'Desktop', 'Screen Resolution', 'System Layer')) &&
+			$search_break_characters = array('@', '(', '/', '+', '[', '<', '*', '"');
+			for($i = 0, $x = strlen($value); $i < $x; $i++)
+			{
+				if(in_array($value[$i], $search_break_characters))
+				{
+					$value = substr($value, 0, $i);
+					break;
+				}
+			}
+		*/
 		$ir = new pts_graph_ir_value($value);
 
-		if(!in_array($index, array('Memory', 'System Memory', 'Desktop', 'Screen Resolution', 'System Layer')) && $value != 'Unknown')
+		if($value != 'Unknown' && $value != null)
 		{
-			$value = pts_strings::trim_search_query($value);
-
-			if($value != null)
-			{
-				$ir->set_attribute('href', 'http://openbenchmarking.org/s/' . $value);
-			}
+			$ir->set_attribute('href', 'http://openbenchmarking.org/s/' . $value);
 		}
 
 		return $ir;

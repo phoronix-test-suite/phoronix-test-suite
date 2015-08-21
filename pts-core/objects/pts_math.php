@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2011, Phoronix Media
-	Copyright (C) 2009 - 2011, Michael Larabel
+	Copyright (C) 2009 - 2015, Phoronix Media
+	Copyright (C) 2009 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -47,6 +47,22 @@ class pts_math
 		self::clean_numeric_array($values);
 
 		return empty($values) ? 0 : (self::standard_deviation($values) / sqrt(count($values)));
+	}
+	public static function remove_outliers($values, $mag = 2)
+	{
+		$ret = array();
+		$mean = array_sum($values) / count($values);
+		$std_dev = self::standard_deviation($values);
+		$outlier = $mag * $std_dev;
+		foreach($values as $i)
+		{
+			if(abs($i - $mean) < $outlier)
+			{
+				array_push($ret, $i);
+			}
+		}
+
+		return $ret;
 	}
 	public static function standard_deviation($values)
 	{

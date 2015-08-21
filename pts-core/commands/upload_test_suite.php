@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2011, Phoronix Media
-	Copyright (C) 2010 - 2011, Michael Larabel
+	Copyright (C) 2010 - 2015, Phoronix Media
+	Copyright (C) 2010 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -77,7 +77,7 @@ class upload_test_suite implements pts_option_interface
 				}
 				if(isset($json['openbenchmarking']['upload']['url']) && !empty($json['openbenchmarking']['upload']['url']))
 				{
-					pts_openbenchmarking_client::refresh_repository_lists(null, true);
+					pts_openbenchmarking::refresh_repository_lists(null, true);
 					echo 'URL: ' . $json['openbenchmarking']['upload']['url'] . PHP_EOL;
 				}
 				echo PHP_EOL;

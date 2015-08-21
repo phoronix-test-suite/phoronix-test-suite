@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2013, Phoronix Media
-	Copyright (C) 2008 - 2013, Michael Larabel
+	Copyright (C) 2008 - 2015, Phoronix Media
+	Copyright (C) 2008 - 2015, Michael Larabel
 	phodevi_gpu.php: The PTS Device Interface object for the graphics processor
 
 	This program is free software; you can redistribute it and/or modify
@@ -557,7 +557,8 @@ class phodevi_gpu extends phodevi_device_interface
 				array(1600, 1200),
 				array(1920, 1080),
 				array(1920, 1200),
-				array(2560, 1600));
+				array(2560, 1600),
+				array(3840, 2160));
 			$available_modes = array();
 
 			for($i = 0; $i < count($stock_modes); $i++)
@@ -795,10 +796,16 @@ class phodevi_gpu extends phodevi_device_interface
 		{
 			// GPUDefault3DClockFreqs is the default and does not show under/over-clocking
 			$clock_freqs_3d = pts_strings::comma_explode(phodevi_parser::read_nvidia_extension('GPU3DClockFreqs'));
+			$clock_freqs_current = pts_strings::comma_explode(phodevi_parser::read_nvidia_extension('GPUCurrentClockFreqs'));
 
 			if(is_array($clock_freqs_3d) && isset($clock_freqs_3d[1]))
 			{
 				list($core_freq, $mem_freq) = $clock_freqs_3d;
+			}
+			if(is_array($clock_freqs_current) && isset($clock_freqs_current[1]))
+			{
+				$core_freq = max($core_freq, $clock_freqs_current[0]);
+				$mem_freq = max($mem_freq, $clock_freqs_current[1]);
 			}
 		}
 		else if(phodevi::is_ati_graphics() && phodevi::is_linux()) // ATI GPU
@@ -810,10 +817,12 @@ class phodevi_gpu extends phodevi_device_interface
 				list($core_freq, $mem_freq) = $od_clocks;
 			}
 		}
-		else if(phodevi::is_mesa_graphics())
+		else if(phodevi::is_linux()) // More liberally attempt open-source freq detection than phodevi::is_mesa_graphics()
 		{
-			switch(phodevi::read_property('system', 'display-driver'))
+			$display_driver = phodevi::read_property('system', 'display-driver');
+			switch($display_driver)
 			{
+				case '':
 				case 'nouveau':
 					if(is_file('/sys/class/drm/card0/device/performance_level'))
 					{
@@ -852,13 +861,36 @@ class phodevi_gpu extends phodevi_device_interface
 						// pstate is present with Linux 3.13 as the new performance states on Fermi/Kepler
 						$performance_state = pts_file_io::file_get_contents('/sys/class/drm/card0/device/pstate');
 						$performance_level = substr($performance_state, 0, strpos($performance_state, ' *'));
-						$performance_level = substr($performance_level, strrpos($performance_level, ': ') + 2);
+						if($performance_level == null)
+						{
+							// Method for Linux 3.17+
+							$performance_level = substr($performance_state, strpos($performance_state, 'AC: ') + 4);
+
+							if(($t = strpos($performance_level, PHP_EOL)))
+							{
+								$performance_level = substr($performance_level, 0, $t);
+							}
+						}
+						else
+						{
+							// Method for Linux ~3.13 through Linux 3.16
+							$performance_level = substr($performance_level, strrpos($performance_level, ': ') + 2);
+						}
+
 						$performance_level = explode(' ', $performance_level);
 
 						$core_string = array_search('core', $performance_level);
 						if($core_string !== false && isset($performance_level[($core_string + 1)]))
 						{
 							$core_string = str_ireplace('MHz', null, $performance_level[($core_string + 1)]);
+
+							if(strpos($core_string, '-') !== false)
+							{
+								// to work around a range of values, e.g.
+								// 0a: core 405-1032 MHz memory 1620 MHz AC DC *
+								$core_string = max(explode('-', $core_string));
+							}
+
 							if(is_numeric($core_string))
 							{
 								$core_freq = $core_string;
@@ -869,6 +901,14 @@ class phodevi_gpu extends phodevi_device_interface
 						if($mem_string !== false && isset($performance_level[($mem_string + 1)]))
 						{
 							$mem_string = str_ireplace('MHz', null, $performance_level[($mem_string + 1)]);
+
+							if(strpos($mem_string, '-') !== false)
+							{
+								// to work around a range of values, e.g.
+								// 0a: core 405-1032 MHz memory 1620 MHz AC DC *
+								$mem_string = max(explode('-', $mem_string));
+							}
+
 							if(is_numeric($mem_string))
 							{
 								$mem_freq = $mem_string;
@@ -876,7 +916,10 @@ class phodevi_gpu extends phodevi_device_interface
 						}
 
 					}
-					break;
+					if($display_driver != null)
+					{
+						break;
+					}
 				case 'radeon':
 					if(isset(phodevi::$vfs->radeon_pm_info))
 					{
@@ -900,6 +943,33 @@ class phodevi_gpu extends phodevi_device_interface
 									case 'default memory clock':
 										$mem_freq = pts_arrays::first_element(explode(' ', $value)) / 1000;
 										break;
+								}
+							}
+						}
+						if($core_freq == 0 && ($x = stripos(phodevi::$vfs->radeon_pm_info, 'sclk: ')) != false)
+						{
+							$x = substr(phodevi::$vfs->radeon_pm_info, $x + strlen('sclk: '));
+							$x = substr($x, 0, strpos($x, ' '));
+							if(is_numeric($x) && $x > 100)
+							{
+								if($x > 10000)
+								{
+									$x = $x / 100;
+								}
+								$core_freq = $x;
+							}
+
+							if(($x = stripos(phodevi::$vfs->radeon_pm_info, 'mclk: ')) != false)
+							{
+								$x = substr(phodevi::$vfs->radeon_pm_info, $x + strlen('mclk: '));
+								$x = substr($x, 0, strpos($x, ' '));
+								if(is_numeric($x) && $x > 100)
+								{
+									if($x > 10000)
+									{
+										$x = $x / 100;
+									}
+									$mem_freq = $x;
 								}
 							}
 						}
@@ -961,7 +1031,10 @@ class phodevi_gpu extends phodevi_device_interface
 							}
 						}
 					}
-					break;
+					if($display_driver != null)
+					{
+						break;
+					}
 				case 'intel':
 					// try to read the maximum dynamic frequency
 					if(is_file('/sys/class/drm/card0/gt_max_freq_mhz'))
@@ -1013,18 +1086,15 @@ class phodevi_gpu extends phodevi_device_interface
 							}
 						}
 					}
-					break;
+					if($display_driver != null)
+					{
+						break;
+					}
 			}
 		}
 
-		if(!is_numeric($core_freq))
-		{
-			$core_freq = 0;
-		}
-		if(!is_numeric($mem_freq))
-		{
-			$mem_freq = 0;
-		}
+		$core_freq = !is_numeric($core_freq) ? 0 : round($core_freq);
+		$mem_freq = !is_numeric($mem_freq) ? 0 : round($mem_freq);
 
 		return array($core_freq, $mem_freq);
 	}

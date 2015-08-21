@@ -17,21 +17,18 @@ PHORONIX TEST SUITE PUBLIC TODO LIST:
 
 ### PTS-GRAPH ###
 
-- Improve rendering of large data-sets, e.g. http://openbenchmarking.org/result/1205231-LI-BL460G6BE41
 - Rotated text alignment for some PNG graphixs is sometimes off by 90/180 degrees compared to SVG, e.g. http://openbenchmarking.org/s/Compiler
 - SVG graph improvements
-- WebP image support
 
 ### OPENBENCHMARKING.ORG ###
 
 - Shorten long change-logs on test profile pages - e.g. http://openbenchmarking.org/test/pts/hpcc
-[ REST SUBJECT TO PHORONIX MEDIA NDA ]
 
 ### NEW TEST PROFILES ###
 
 - Python-libmemcached [http://code.google.com/p/python-libmemcached/]
 - Intel HiBench [https://github.com/intel-hadoop/HiBench]
-- Hadoop Benchmarks
+- Hadoop Benchmarks / TeraSort
 - LATT Latency Tests [git://git.kernel.dk/latt.git]
 - QMC Beaver [http://qmcbeaver.sourceforge.net/]
 - Some potential interesting GPGPU tests [http://www.bealto.com/gpu-benchmarks.html]
@@ -42,7 +39,9 @@ PHORONIX TEST SUITE PUBLIC TODO LIST:
 - http://hashcat.net/oclhashcat/
 - Handbrake [http://handbrake.fr/]
 - libMicro [https://github.com/portante/libMicro]
+- http://markjstock.org/pages/rad_bench.html
 - https://code.google.com/p/pyrit/
+- https://github.com/acangiano/ruby-benchmark-suite
 - http://www.nwchem-sw.org/index.php/Compiling_NWChem
 - http://sourceforge.net/projects/ffsb/
 - http://www.ratgpu.com/
@@ -51,7 +50,29 @@ PHORONIX TEST SUITE PUBLIC TODO LIST:
 - http://code.google.com/p/lz4/
 - http://parsec.cs.princeton.edu/parsec3-doc.htm
 - http://www.capsl.udel.edu/splash/Download.html
-- http://tesseract.gg/
 - https://github.com/facebook/linkbench
 - https://github.com/vasi/pixz
-- Update download links on build-imagemagick
+- stephentu/silo
+- http://nondot.org/sabre/LLVMNotes/#benchmarks
+- https://code.google.com/p/smhasher/wiki/SMHasher
+- http://benchmarksgame.alioth.debian.org/u32/performance.php?test=fasta / http://benchmarksgame.alioth.debian.org/u32/program.php?test=nbody&lang=gcc&id=1#sourcecode
+- https://openfoamwiki.net/index.php/Benchmarks_standard_v1
+- Cassandra 1.2 stress - http://docs.datastax.com/en/cassandra/1.2/cassandra/tools/toolsCStress_t.html
+- http://gcc.opensuse.org/c++bench-frescobaldi/
+
+
+### WEB SOCKET / HTML5 USER INTERFACE WORK ###
+
+- Implement WebSocket security - add the password prompts from ~/.phoronix-test-suite/user-config.xml, etc
+- HTTPS support
+- Ensuring only one session at a time, at least for benchmarking
+- Handle test installations and external dependencies (prompting for root password handling?)
+- Porting more of the web-interface code to the new JavaScript + WebSocket design rather than original PHP design [Originally with the 5.0 UI design it wasn't settled for mostly JS + WebSocket but some of the original code is with a traditional PHP-based + web server design... so slowly move over to newer design.]
+
+### PHOROMATIC ####
+
+- Implement the complementary WebSocket communication to HTTP pulls
+- More mobile form factor optimizations
+- Ensure sane validating of more user input / resource uploads
+- Hook up TriggerTarget for allowing event.php to optionally specify a sub-set of systems/groups to target for a given trigger
+- Clean up the code and modularize more of the code into functions

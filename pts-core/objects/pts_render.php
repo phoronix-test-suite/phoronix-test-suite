@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2013, Phoronix Media
-	Copyright (C) 2008 - 2013, Michael Larabel
+	Copyright (C) 2008 - 2015, Phoronix Media
+	Copyright (C) 2008 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -92,12 +92,13 @@ class pts_render
 
 		// XXX: removed || $result_file->is_results_tracker() from below and should be added
 		// Removing the command fixes cases like: 1210053-BY-MYRESULTS43
-		if($result_file->is_multi_way_comparison() || isset($extra_attributes['compact_to_scalar']))
+		$result_identifiers = $result_object->test_result_buffer->get_identifiers();
+		if($result_file->is_multi_way_comparison($result_identifiers, $extra_attributes) || isset($extra_attributes['compact_to_scalar']))
 		{
-			if((isset($extra_attributes['compact_to_scalar']) || (false && $result_file->is_multi_way_comparison())) && in_array($result_object->test_profile->get_display_format(), array('LINE_GRAPH', 'FILLED_LINE_GRAPH')))
+			if((isset($extra_attributes['compact_to_scalar']) || (false && $result_file->is_multi_way_comparison($result_identifiers, $extra_attributes))) && in_array($result_object->test_profile->get_display_format(), array('LINE_GRAPH', 'FILLED_LINE_GRAPH')))
 			{
 				// Convert multi-way line graph into horizontal box plot
-				if(false)
+				if(stripos($result_object->get_arguments_description(), 'frame time') !== false || true)
 				{
 					$result_object->test_profile->set_display_format('HORIZONTAL_BOX_PLOT');
 				}
@@ -111,7 +112,19 @@ class pts_render
 					{
 						$values = pts_strings::comma_explode($buffer_item->get_result_value());
 						$avg_value = pts_math::set_precision(array_sum($values) / count($values), 2);
-						$result_object->test_result_buffer->add_test_result($buffer_item->get_result_identifier(), $avg_value);
+						$j = null;
+						if(count($values) > 2)
+						{
+							$j['min-result'] = min($values);
+							$j['max-result'] = max($values);
+
+							if($j['min-result'] == $j['max-result'])
+							{
+								$json = null;
+							}
+						}
+
+						$result_object->test_result_buffer->add_test_result($buffer_item->get_result_identifier(), $avg_value, null, $j, $j['min-result'], $j['max-result']);
 					}
 
 					$result_object->test_profile->set_display_format('BAR_GRAPH');
@@ -308,6 +321,10 @@ class pts_render
 		if(isset($extra_attributes['highlight_graph_values']))
 		{
 			$graph->highlight_values($extra_attributes['highlight_graph_values']);
+		}
+		if(isset($extra_attributes['force_simple_keys']))
+		{
+			$graph->override_i_value('force_simple_keys', true);
 		}
 		else if(PTS_IS_CLIENT && pts_client::read_env('GRAPH_HIGHLIGHT') != false)
 		{
@@ -563,10 +580,18 @@ class pts_render
 		foreach($json as $identifier => &$data)
 		{
 			// TODO XXX: Ultimately merge this data into the SE +/- line...
-			if(isset($data['min-result']) && isset($data['max-result']))
+			if(isset($data['min-result']))
 			{
-				$graph->addGraphIdentifierNote($identifier, 'MIN: ' . $data['min-result'] . ' / MAX: ' . $data['max-result']);
+				if(isset($data['max-result']))
+				{
+					$graph->addGraphIdentifierNote($identifier, 'MIN: ' . $data['min-result'] . ' / MAX: ' . $data['max-result']);
+				}
+				else
+				{
+					$graph->addGraphIdentifierNote($identifier, 'MIN: ' . $data['min-result']);
+				}
 			}
+
 			if(isset($data['install-footnote']) && $data['install-footnote'] != null)
 			{
 				$graph->addTestNote($identifier . ': ' . $data['install-footnote']);
@@ -681,7 +706,7 @@ class pts_render
 			}
 		}
 
-		$test_profile = new pts_test_profile(null);
+		$test_profile = new pts_test_profile(null, null, false);
 		$test_profile->set_test_title($title);
 		$test_profile->set_result_scale($title);
 		$test_profile->set_display_format('BAR_GRAPH');
@@ -871,7 +896,7 @@ class pts_render
 					break;
 				default:
 					$line_graph_type = isset($extra_attributes['filled_line_graph']) ? 'FILLED_LINE_GRAPH' : 'LINE_GRAPH';
-					$mto->test_profile->set_display_format((count($days) < 5 || ($is_tracking == false && !isset($extra_attributes['force_line_graph_compact'])) ? 'BAR_ANALYZE_GRAPH' : $line_graph_type));
+					$mto->test_profile->set_display_format((!isset($extra_attributes['force_tracking_line_graph']) && (count($days) < 5 || ($is_tracking == false && !isset($extra_attributes['force_line_graph_compact']))) ? 'BAR_ANALYZE_GRAPH' : $line_graph_type));
 					break;
 			}
 

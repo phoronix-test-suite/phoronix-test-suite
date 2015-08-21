@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2013, Phoronix Media
-	Copyright (C) 2008 - 2013, Michael Larabel
+	Copyright (C) 2008 - 2014, Phoronix Media
+	Copyright (C) 2008 - 2014, Michael Larabel
 	phodevi_monitor.php: The PTS Device Interface object for the display monitor
 
 	This program is free software; you can redistribute it and/or modify
@@ -45,6 +45,8 @@ class phodevi_monitor extends phodevi_device_interface
 	}
 	public static function monitor_string()
 	{
+		$monitor = null;
+
 		if(phodevi::is_macosx())
 		{
 			$system_profiler = shell_exec('system_profiler SPDisplaysDataType 2>&1');
@@ -110,6 +112,58 @@ class phodevi_monitor extends phodevi_device_interface
 			$monitor = array_unique($monitor);
 
 			$monitor = implode(' + ', $monitor);
+		}
+
+		if($monitor == null && phodevi::is_linux())
+		{
+			// Attempt to find the EDID over sysfs and then decode it for monitor name (0xFC)
+			// For at least Intel DRM drivers there is e.g. /sys/class/drm/card0-HDMI-A-2/edid
+			// Also works at least for Radeon DRM driver too
+			foreach(glob('/sys/class/drm/*/edid') as $edid_file)
+			{
+				$edid_file = pts_file_io::file_get_contents($edid_file);
+
+				if($edid_file == null)
+				{
+					continue;
+				}
+
+				$edid = bin2hex($edid_file);
+
+				$x = 0;
+				while($x = strpos($edid, '00fc', $x))
+				{
+					// 00fc indicates start of EDID monitor descriptor block
+					$encoded = substr($edid, $x + 4, 36);
+					$edid_monitor_name_block = null;
+					for($i = 0; $i < strlen($encoded); $i += 2)
+					{
+						$hex = substr($encoded, $i, 2);
+
+						if($hex == 15 || $hex == '0a')
+						{
+							break;
+						}
+
+						$ch = chr(hexdec($hex));
+						$edid_monitor_name_block .= $ch;
+					}
+					$edid_monitor_name_block = trim($edid_monitor_name_block);
+
+					if(pts_strings::string_only_contains($edid_monitor_name_block, (pts_strings::CHAR_LETTER | pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DECIMAL | pts_strings::CHAR_SPACE | pts_strings::CHAR_DASH)))
+					{
+						$monitor = $edid_monitor_name_block;
+						break;
+					}
+
+					$x++;
+				}
+
+				if($monitor != null)
+				{
+					break;
+				}
+			}
 		}
 
 		return empty($monitor) ? false : $monitor;

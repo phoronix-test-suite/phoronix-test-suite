@@ -14,7 +14,7 @@
 		</Package>
 		<Package>
 			<GenericName>32bit-compatibility</GenericName>
-			<PackageName>libc6-i386 libc6:i386 libstdc++6:i386 libstdc++5:i386 libx11-6:i386 libxext6:i386 libxrandr2:i386 libxinerama1:i386 libxdamage-dev:i386 libgl1-mesa-dev:i386 libsdl-sound1.2:i386 libjpeg62:i386</PackageName>
+			<PackageName>libc6-i386 libc6:i386 libstdc++6:i386 libstdc++5:i386 libx11-6:i386 libxext6:i386 libxrandr2:i386 libxinerama1:i386 libxdamage-dev:i386 libgl1-mesa-dev:i386 libsdl-sound1.2:i386 libjpeg62:i386 libudev1:i386</PackageName>
 			<ArchitectureSpecific>x86_64</ArchitectureSpecific>
 			<FileCheck>/lib32/libc.so.6, /lib/i386-linux-gnu/libc.so.6, /usr/lib/i386-linux-gnu/libX11.so.6</FileCheck>
 		</Package>
@@ -28,6 +28,10 @@
 		<Package>
 			<GenericName>gtk-development</GenericName>
 			<PackageName>libgtk2.0-dev</PackageName>
+		</Package>
+		<Package>
+			<GenericName>sdl2-development</GenericName>
+			<PackageName>libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev</PackageName>
 		</Package>
 		<Package>
 			<GenericName>sdl-development</GenericName>
@@ -100,6 +104,10 @@
 			<PackageName>lib3ds-dev</PackageName>
 		</Package>
 		<Package>
+			<GenericName>bc</GenericName>
+			<PackageName>bc</PackageName>
+		</Package>
+		<Package>
 			<GenericName>freeimage</GenericName>
 			<PackageName>libfreeimage3 libfreeimage-dev</PackageName>
 		</Package>
@@ -121,9 +129,13 @@
 			<PackageName>libaio-dev</PackageName>
 		</Package>
 		<Package>
+			<GenericName>pcre</GenericName>
+			<PackageName>libpcre3-dev</PackageName>
+		</Package>
+		<Package>
 			<GenericName>perl</GenericName>
-			<PackageName>perl perl-base perl-modules libsdl-perl libperl-dev libpcre3-dev</PackageName>
-			<FileCheck>perl, /etc/perl/CPAN, perl5/auto/SDL_perl/SDL_perl.so, pcre.h</FileCheck>
+			<PackageName>perl perl-base perl-modules libsdl-perl libperl-dev</PackageName>
+			<FileCheck>perl, /etc/perl/CPAN</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>perl-opengl</GenericName>
@@ -132,7 +144,7 @@
 		</Package>
 		<Package>
 			<GenericName>xorg-video</GenericName>
-			<PackageName>libxv-dev libxvmc-dev</PackageName>
+			<PackageName>libxv-dev libxvmc-dev libvdpau-dev</PackageName>
 		</Package>
 		<Package>
 			<GenericName>libstdcpp5</GenericName>
@@ -282,6 +294,10 @@
 		<Package>
 			<GenericName>opencl</GenericName>
 			<PackageName>opencl-headers ocl-icd-libopencl1</PackageName>
+		</Package>
+		<Package>
+			<GenericName>attr</GenericName>
+			<PackageName>libattr1-dev</PackageName>
 		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

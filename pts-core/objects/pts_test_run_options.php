@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2013, Phoronix Media
-	Copyright (C) 2010 - 2013, Michael Larabel
+	Copyright (C) 2010 - 2015, Phoronix Media
+	Copyright (C) 2010 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -27,15 +27,18 @@ class pts_test_run_options
 		$user_args = array();
 		$text_args = array();
 
-		// Rather than using AUTO_TEST_OPTION_SELECTIONS, pass it to the $preset_selections argument
 		if(($cli_presets_env = pts_client::read_env('PRESET_OPTIONS')) != false)
 		{
 			// To specify test options externally from an environment variable
 			// i.e. PRESET_OPTIONS='stream.run-type=Add' ./phoronix-test-suite benchmark stream
+			// The string format is <test-name>.<test-option-name-from-XML-file>=<test-option-value>
+			// The test-name can either be the short/base name (e.g. stream) or the full identifier (pts/stream) without version postfix
+			// Multiple preset options can be delimited with the PRESET_OPTIONS environment variable via a semicolon ;
 			$preset_selections = pts_client::parse_value_string_double_identifier($cli_presets_env);
 		}
 
-		$identifier = $test_profile->get_identifier_base_name();
+		$identifier_short = $test_profile->get_identifier_base_name();
+		$identifier_full = $test_profile->get_identifier(false);
 
 		if(count($test_profile->get_test_option_objects()) > 0)
 		{
@@ -49,9 +52,15 @@ class pts_test_run_options
 			if($o->option_count() == 0)
 			{
 				// User inputs their option as there is nothing to select
-				if(isset($preset_selections[$identifier][$option_identifier]))
+				if(isset($preset_selections[$identifier_short][$option_identifier]))
 				{
-					$value = $preset_selections[$identifier][$option_identifier];
+					$value = $preset_selections[$identifier_short][$option_identifier];
+					echo PHP_EOL . '    Using Pre-Set Run Option: ' . $value . PHP_EOL;
+				}
+				else if(isset($preset_selections[$identifier_full][$option_identifier]))
+				{
+					$value = $preset_selections[$identifier_full][$option_identifier];
+					echo PHP_EOL . '    Using Pre-Set Run Option: ' . $value . PHP_EOL;
 				}
 				else
 				{
@@ -65,9 +74,15 @@ class pts_test_run_options
 			else
 			{
 				// Have the user select the desired option
-				if(isset($preset_selections[$identifier][$option_identifier]))
+				if(isset($preset_selections[$identifier_short][$option_identifier]))
 				{
-					$bench_choice = $preset_selections[$identifier][$option_identifier];
+					$bench_choice = $preset_selections[$identifier_short][$option_identifier];
+					echo PHP_EOL . '    Using Pre-Set Run Option: ' . $bench_choice . PHP_EOL;
+				}
+				else if(isset($preset_selections[$identifier_full][$option_identifier]))
+				{
+					$bench_choice = $preset_selections[$identifier_full][$option_identifier];
+					echo PHP_EOL . '    Using Pre-Set Run Option: ' . $bench_choice . PHP_EOL;
 				}
 				else
 				{
@@ -177,7 +192,7 @@ class pts_test_run_options
 
 		return array($test_args, $test_args_description);
 	}
-	protected static function compute_all_combinations(&$return_arr, $current_string, $options, $counter, $delimiter = ' ')
+	public static function compute_all_combinations(&$return_arr, $current_string, $options, $counter, $delimiter = ' ')
 	{
 		// In batch mode, find all possible combinations for test options
 		if(count($options) <= $counter)
@@ -210,12 +225,12 @@ class pts_test_run_options
 				// Base options off available screen resolutions
 				if(count($option_names) == 1 && count($option_values) == 1)
 				{
-					if(PTS_IS_CLIENT && pts_flags::is_live_cd())
+					if(PTS_IS_CLIENT && pts_flags::is_live_cd() && !defined('PHOROMATIC_SERVER'))
 					{
 						// Just use the stock resolution when operating from a LiveCD
 						$available_video_modes = array(phodevi::read_property('gpu', 'screen-resolution'));
 					}
-					else if(PTS_IS_CLIENT && phodevi::read_property('gpu', 'screen-resolution') && phodevi::read_property('gpu', 'screen-resolution') != array(-1, -1))
+					else if(PTS_IS_CLIENT && phodevi::read_property('gpu', 'screen-resolution') && phodevi::read_property('gpu', 'screen-resolution') != array(-1, -1) && !defined('PHOROMATIC_SERVER'))
 					{
 						$available_video_modes = phodevi::read_property('gpu', 'available-modes');
 					}
@@ -228,7 +243,7 @@ class pts_test_run_options
 					{
 						// Use hard-coded defaults
 						$available_video_modes = array(array(800, 600), array(1024, 768), array(1280, 768), array(1280, 960), array(1280, 1024), array(1366, 768),
-							array(1400, 1050), array(1600, 900), array(1680, 1050), array(1600, 1200), array(1920, 1080), array(2560, 1600));
+							array(1400, 1050), array(1600, 900), array(1680, 1050), array(1600, 1200), array(1920, 1080), array(2560, 1600), array(3840, 2160));
 					}
 
 					$format_name = $option_names[0];
@@ -270,7 +285,7 @@ class pts_test_run_options
 				{
 					$all_devices = array();
 				}*/
-				$all_devices = array_merge(pts_file_io::glob('/dev/hd*'), pts_file_io::glob('/dev/sd*'));
+				$all_devices = array_merge(pts_file_io::glob('/dev/hd*'), pts_file_io::glob('/dev/sd*'), pts_file_io::glob('/dev/md*'));
 
 				foreach($all_devices as &$device)
 				{
@@ -279,6 +294,8 @@ class pts_test_run_options
 						unset($device);
 					}
 				}
+
+				$all_devices = array_merge($all_devices, pts_file_io::glob('/dev/mapper/*'));
 
 				$option_values = array();
 				foreach($all_devices as $partition)
@@ -303,10 +320,10 @@ class pts_test_run_options
 						{
 							$mount_point = substr(($a = substr($mounts, strpos($mounts, $partition_d) + strlen($partition_d) + 1)), 0, strpos($a, ' '));
 
-							if(is_dir($mount_point) && is_writable($mount_point) && $mount_point != '/boot')
+							if(is_dir($mount_point) && is_writable($mount_point) && !in_array($mount_point, array('/boot', '/boot/efi')))
 							{
 								array_push($option_values, $mount_point);
-								array_push($option_names, $mount_point . ' [' . $partition_d . ']');
+								array_push($option_names, $mount_point); // ' [' . $partition_d . ']'
 							}
 						}
 					}
@@ -325,7 +342,7 @@ class pts_test_run_options
 					return;
 				}
 
-				$all_devices = array_merge(pts_file_io::glob('/dev/hd*'), pts_file_io::glob('/dev/sd*'));
+				$all_devices = array_merge(pts_file_io::glob('/dev/hd*'), pts_file_io::glob('/dev/sd*'), pts_file_io::glob('/dev/md*'));
 
 				foreach($all_devices as &$device)
 				{

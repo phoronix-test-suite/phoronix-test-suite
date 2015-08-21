@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2013, Phoronix Media
-	Copyright (C) 2008 - 2013, Michael Larabel
+	Copyright (C) 2008 - 2015, Phoronix Media
+	Copyright (C) 2008 - 2015, Michael Larabel
 	pts_Graph.php: The core graph object that is used by the different graphing objects.
 
 	This program is free software; you can redistribute it and/or modify
@@ -66,6 +66,7 @@ abstract class pts_Graph
 		$this->i['graph_max_value'] = 0;
 		$this->i['bottom_offset'] = 0;
 		$this->i['hide_y_title'] = false;
+		$this->i['compact_result_view'] = false;
 		$this->i['key_line_height'] = 0;
 		$this->i['graph_height'] = 0;
 		$this->i['graph_width'] = 0;
@@ -108,6 +109,10 @@ abstract class pts_Graph
 		}
 
 		$this->i['graph_version'] = 'Phoronix Test Suite ' . $pts_version;
+	}
+	public function override_i_value($key, $val)
+	{
+		$this->i[$key] = $val;
 	}
 	public static function init_graph_config($external_config = null)
 	{
@@ -349,6 +354,12 @@ abstract class pts_Graph
 	}
 	public function render_graph_start()
 	{
+		$this->render_graph_dimensions();
+		$this->render_graph_pre_init();
+		$this->render_graph_init();
+	}
+	public function render_graph_dimensions()
+	{
 		$this->i['graph_max_value'] = $this->maximum_graph_value();
 
 		// Make room for tick markings, left hand side
@@ -388,7 +399,7 @@ abstract class pts_Graph
 					$longest_identifier_width = $this->text_string_width(pts_strings::find_longest_string($this->graph_identifiers), $this->i['identifier_size']) + 8;
 				}
 
-				$longest_identifier_max = $this->i['graph_width'] * 0.5;
+				$longest_identifier_max = ($this->i['graph_width'] * 0.5) + 0.01;
 
 				$this->i['left_start'] = min($longest_identifier_max, max($longest_identifier_width, 70));
 				$this->i['left_end_right'] = 15;
@@ -396,7 +407,7 @@ abstract class pts_Graph
 			}
 			else if($this->i['graph_value_type'] == 'NUMERICAL')
 			{
-				$this->i['left_start'] += max(20, $this->text_string_width($this->i['graph_max_value'], self::$c['size']['tick_mark']) + 2);
+				$this->i['left_start'] += max(20, $this->text_string_width($this->i['graph_max_value'] + 0.01, self::$c['size']['tick_mark']) + 2);
 			}
 
 			// Pad 8px on top and bottom + title bar + sub-headings
@@ -437,7 +448,25 @@ abstract class pts_Graph
 				else
 				{
 					// If there's too much to plot, reduce the size so each graph doesn't take too much room
-					$per_identifier_height = count($this->graph_data[0]) > 10 ? 36 : 46;
+					$id_count = count($this->graph_data[0]);
+					if($id_count < 10)
+					{
+						$per_identifier_height = 46;
+					}
+					else if($id_count < 20)
+					{
+						$per_identifier_height = 36;
+					}
+					else if($id_count <= 38)
+					{
+						$this->i['compact_result_view'] = true;
+						$per_identifier_height = 30;
+					}
+					else
+					{
+						$this->i['compact_result_view'] = true;
+						$per_identifier_height = 26;
+					}
 				}
 
 
@@ -456,10 +485,6 @@ abstract class pts_Graph
 				$this->i['graph_height'] += $this->note_display_height();
 			}
 		}
-
-		// Do the actual work
-		$this->render_graph_pre_init();
-		$this->render_graph_init();
 	}
 	public function setAlternateLocation($url)
 	{
@@ -530,7 +555,7 @@ abstract class pts_Graph
 			if(isset($this->graph_title[36]))
 			{
 				// If it's a long string make sure it won't run over the side...
-				while(self::text_string_width($this->graph_title, self::$c['size']['headers']) > ($this->i['graph_left_end'] - 60))
+				while(self::text_string_width($this->graph_title, self::$c['size']['headers']) > ($this->i['graph_left_end'] - 20))
 				{
 					self::$c['size']['headers'] -= 0.5;
 				}
@@ -541,7 +566,13 @@ abstract class pts_Graph
 			foreach($this->graph_sub_titles as $i => $sub_title)
 			{
 				$vertical_offset = 12 + self::$c['size']['headers'] + (($i + 1) * (self::$c['size']['sub_headers'] - 4));
-				$this->svg_dom->add_text_element($sub_title, array('x' => 6, 'y' => $vertical_offset, 'font-size' => self::$c['size']['sub_headers'], 'fill' => self::$c['color']['background'], 'text-anchor' => 'start'));
+				$sub_title_size = self::$c['size']['sub_headers'];
+				if(isset($sub_title[69]))
+				{
+					while($this->text_string_width($sub_title, $sub_title_size) > ($this->i['graph_left_end'] - 20))
+						$sub_title_size -= 0.5;
+				}
+				$this->svg_dom->add_text_element($sub_title, array('x' => 6, 'y' => $vertical_offset, 'font-size' => $sub_title_size, 'fill' => self::$c['color']['background'], 'text-anchor' => 'start'));
 			}
 
 			$this->svg_dom->add_element('image', array('http_link' => 'http://www.phoronix-test-suite.com/', 'xlink:href' => pts_svg_dom::embed_png_image(PTS_CORE_STATIC_PATH . 'images/pts-77x40-white.png'), 'x' => ($this->i['graph_left_end'] - 77), 'y' => (($this->i['top_heading_height'] / 40 + 2)), 'width' => 77, 'height' => 40));
@@ -567,7 +598,7 @@ abstract class pts_Graph
 		{
 			$bottom_heading_start = $this->i['graph_top_end'] + $this->i['bottom_offset'] + 22;
 			$this->svg_dom->add_element('rect', array('x' => 0, 'y' => $bottom_heading_start, 'width' => $this->i['graph_width'], 'height' => ($this->i['graph_height'] - $bottom_heading_start), 'fill' => self::$c['color']['main_headers']));
-			$this->svg_dom->add_text_element('Powered By ' . $this->i['graph_version'], array('x' => $this->i['graph_left_end'], 'y' => ($bottom_heading_start + self::$c['size']['key'] + 3), 'font-size' => self::$c['size']['key'], 'fill' => self::$c['color']['background'], 'text-anchor' => 'end', 'xlink:show' => 'new', 'xlink:href' => 'http://www.phoronix-test-suite.com/'));
+			$this->svg_dom->add_text_element($this->i['graph_version'], array('x' => $this->i['graph_left_end'], 'y' => ($bottom_heading_start + self::$c['size']['key'] + 3), 'font-size' => self::$c['size']['key'], 'fill' => self::$c['color']['background'], 'text-anchor' => 'end', 'xlink:show' => 'new', 'xlink:href' => 'http://www.phoronix-test-suite.com/'));
 
 			if(isset($this->d['link_alternate_view']) && $this->d['link_alternate_view'])
 			{
@@ -658,7 +689,7 @@ abstract class pts_Graph
 			$this->svg_dom->add_text_element($str, array('x' => ($left_start + $offset), 'y' => ($top_start - 5), 'font-size' => 7, 'fill' => self::$c['color']['text'], 'text-anchor' => 'start'));
 		}
 	}
-	protected function render_graph_value_ticks($left_start, $top_start, $left_end, $top_end)
+	protected function render_graph_value_ticks($left_start, $top_start, $left_end, $top_end, $show_numbers = true)
 	{
 		$increment = round($this->i['graph_max_value'] / $this->i['mark_count'], $this->i['graph_max_value'] < 10 ? 4 : 2);
 
@@ -673,7 +704,7 @@ abstract class pts_Graph
 
 				if($i != 0)
 				{
-					$this->svg_dom->add_text_element($display_value, array('x' => $px_from_left, 'y' => ($top_end + 5 + self::$c['size']['tick_mark']), 'font-size' => self::$c['size']['tick_mark'], 'fill' => self::$c['color']['text'], 'text-anchor' => 'middle'));
+					$show_numbers && $this->svg_dom->add_text_element($display_value, array('x' => $px_from_left, 'y' => ($top_end + 5 + self::$c['size']['tick_mark']), 'font-size' => self::$c['size']['tick_mark'], 'fill' => self::$c['color']['text'], 'text-anchor' => 'middle'));
 					$this->svg_dom->draw_svg_line($px_from_left + 2, $top_start, $px_from_left + 2, $top_end - 5, self::$c['color']['body'], 1, array('stroke-dasharray' => '5,5'));
 					$this->svg_dom->draw_svg_line($px_from_left + 2, $top_end - 4, $px_from_left + 2, $top_end + 4, self::$c['color']['notches'], 1);
 				}
@@ -696,7 +727,7 @@ abstract class pts_Graph
 
 				if($i != 0)
 				{
-					$this->svg_dom->add_text_element($display_value, array('x' => ($px_from_left_start - 4), 'y' => round($px_from_top + (self::$c['size']['tick_mark'] / 2)), 'font-size' => self::$c['size']['tick_mark'], 'fill' =>  self::$c['color']['text'], 'text-anchor' => 'end'));
+					$show_numbers && $this->svg_dom->add_text_element($display_value, array('x' => ($px_from_left_start - 4), 'y' => round($px_from_top + (self::$c['size']['tick_mark'] / 2)), 'font-size' => self::$c['size']['tick_mark'], 'fill' =>  self::$c['color']['text'], 'text-anchor' => 'end'));
 
 					if($this->i['show_background_lines'])
 					{
@@ -802,9 +833,7 @@ abstract class pts_Graph
 	}
 	public static function color_cache($ns, $id, &$colors)
 	{
-		//return array_shift($colors);
 		static $color_shift = 0;
-		static $color_shift_size = 120;
 		$i = count(self::$color_cache);
 		$color_shift_size = ($i == 0 ? 120 : 360 / $i); // can't be assigned directly to static var
 

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2013, Phoronix Media
-	Copyright (C) 2008 - 2013, Michael Larabel
+	Copyright (C) 2008 - 2015, Phoronix Media
+	Copyright (C) 2008 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -31,6 +31,17 @@ class pts_config
 	static $init_process_ran = false;
 	static $xml_user_config = null;
 
+	public static function get_config_file_location()
+	{
+		if(PTS_IS_DAEMONIZED_SERVER_PROCESS || (is_file('/etc/phoronix-test-suite.xml') && is_writable('/etc/phoronix-test-suite.xml')))
+		{
+			return '/etc/phoronix-test-suite.xml';
+		}
+		else
+		{
+			return PTS_USER_PATH . 'user-config.xml';
+		}
+	}
 	public static function init_files()
 	{
 		// Don't let the process run multiple times...
@@ -78,18 +89,16 @@ class pts_config
 		// Validate the config files, update them (or write them) if needed, and other configuration file tasks
 
 		$read_config = new pts_config_nye_XmlReader($new_config_values);
-
 		$config = new nye_XmlWriter('xsl/pts-user-config-viewer.xsl');
 
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/OpenBenchmarking/AnonymousUsageReporting', $read_config);
-		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/OpenBenchmarking/AnonymousSoftwareReporting', $read_config);
-		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/OpenBenchmarking/AnonymousHardwareReporting', $read_config);
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/OpenBenchmarking/IndexCacheTTL', $read_config);
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/OpenBenchmarking/AlwaysUploadSystemLogs', $read_config);
 
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/General/DefaultBrowser', $read_config);
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/General/UsePhodeviCache', $read_config);
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/General/DefaultDisplayMode', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/General/PhoromaticServers', $read_config);
 
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Modules/LoadModules', $read_config);
 
@@ -122,16 +131,24 @@ class pts_config
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/BatchMode/RunAllTestCombinations', $read_config);
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/BatchMode/Configured', $read_config);
 
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Networking/NoInternetCommunication', $read_config);
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Networking/NoNetworkCommunication', $read_config);
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Networking/Timeout', $read_config);
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Networking/ProxyAddress', $read_config);
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Networking/ProxyPort', $read_config);
 
-		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Server/RemoteAccessAllowed', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Server/RemoteAccessPort', $read_config);
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Server/Password', $read_config);
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Server/WebSocketPort', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Server/AdvertiseServiceZeroConf', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Server/PhoromaticStorage', $read_config);
 
-		$config->saveXMLFile(PTS_USER_PATH . 'user-config.xml');
+		$config_file = pts_config::get_config_file_location();
+		if($read_config->times_fallback() > 0 || !is_file($config_file))
+		{
+			// Something changed, so write out file, otherwise don't bother writing file
+			$config->saveXMLFile($config_file);
+		}
 	}
 	public static function bool_to_string($bool)
 	{
@@ -152,6 +169,11 @@ class pts_config
 			}
 
 			$read_value = self::$xml_user_config->getXmlValue($xml_pointer);
+		}
+
+		if(PTS_IS_DAEMONIZED_SERVER_PROCESS)
+		{
+			$read_value = str_replace('~/.phoronix-test-suite/', PTS_USER_PATH, $read_value);
 		}
 
 		return !empty($read_value) ? $read_value : $predefined_value;

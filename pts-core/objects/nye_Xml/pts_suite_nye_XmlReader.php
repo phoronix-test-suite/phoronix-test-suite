@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2012, Phoronix Media
-	Copyright (C) 2010 - 2012, Michael Larabel
+	Copyright (C) 2010 - 2014, Phoronix Media
+	Copyright (C) 2010 - 2014, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -22,6 +22,8 @@
 
 class pts_suite_nye_XmlReader extends nye_XmlReader
 {
+	static $temp_suite = null;
+
 	public function __construct($read_xml)
 	{
 		if(!isset($xml_file[512]) && defined('PTS_TEST_SUITE_PATH') && is_file(PTS_TEST_SUITE_PATH . $read_xml . '/suite-definition.xml'))
@@ -38,12 +40,24 @@ class pts_suite_nye_XmlReader extends nye_XmlReader
 				$zip->close();
 			}
 		}
+		else if(isset(self::$temp_suite[$read_xml]))
+		{
+			$read_xml = self::$temp_suite[$read_xml];
+		}
 
 		parent::__construct($read_xml);
 	}
 	public function validate()
 	{
 		return $this->dom->schemaValidate(PTS_OPENBENCHMARKING_PATH . 'schemas/test-suite.xsd');
+	}
+	public static function set_temporary_suite($name, $suite_xml)
+	{
+		self::$temp_suite[$name] = $suite_xml;
+	}
+	public static function is_temporary_suite($name)
+	{
+		return isset(self::$temp_suite[$name]);
 	}
 }
 ?>

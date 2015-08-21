@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2014, Phoronix Media
-	Copyright (C) 2008 - 2014, Michael Larabel
+	Copyright (C) 2008 - 2015, Phoronix Media
+	Copyright (C) 2008 - 2015, Michael Larabel
 	phodevi_system.php: The PTS Device Interface object for the system software
 
 	This program is free software; you can redistribute it and/or modify
@@ -83,6 +83,9 @@ class phodevi_system extends phodevi_device_interface
 				break;
 			case 'kernel-architecture':
 				$property = new phodevi_device_property('sw_kernel_architecture', phodevi::smart_caching);
+				break;
+			case 'kernel-date':
+				$property = new phodevi_device_property('sw_kernel_date', phodevi::smart_caching);
 				break;
 			case 'kernel-string':
 				$property = new phodevi_device_property('sw_kernel_string', phodevi::smart_caching);
@@ -174,6 +177,19 @@ class phodevi_system extends phodevi_device_interface
 		if(phodevi::is_macosx())
 		{
 			$fs = phodevi_osx_parser::read_osx_system_profiler('SPSerialATADataType', 'FileSystem');
+
+			if($fs == null && pts_client::executable_in_path('mount'))
+			{
+				$mount = shell_exec('mount 2>&1');
+				if(stripos($mount, ' on / (hfs, local, journaled)') !== false)
+				{
+					$fs = 'Journaled HFS+';
+				}
+				else if(stripos($mount, ' on / (hfs') !== false)
+				{
+					$fs = 'HFS+';
+				}
+			}
 		}
 		else if(phodevi::is_bsd())
 		{
@@ -322,6 +338,7 @@ class phodevi_system extends phodevi_device_interface
 							'0xaad7aaea' => 'PanFS', // Panasas FS
 							'0xf2f52010' => 'F2FS',
 							'0xc36400' => 'CephFS',
+							'0xca451a4e' => 'BcacheFS'
 							);
 
 						foreach($known_magic_blocks as $hex => $name)
@@ -519,7 +536,7 @@ class phodevi_system extends phodevi_device_interface
 			{
 				foreach($check_variables as $var)
 				{
-					if(stripos($name, $var) !== false)
+					if(stripos($name, $var) !== false && $name != '__GL_SYNC_TO_VBLANK')
 					{
 						array_push($to_report, $name . '=' . $value);
 						break;
@@ -557,6 +574,24 @@ class phodevi_system extends phodevi_device_interface
 							// On development versions the release date is expressed
 							// e.g. gcc version 4.7.0 20120314 (prerelease) (GCC)
 							$version .= ' ' . $v;
+						}
+						else
+						{
+							$v = shell_exec('gcc --version 2>&1');
+							if(($t = strrpos($v, $version)) !== false)
+							{
+								$v = substr($v, $t);
+								$v = substr($v, 0, strpos(str_replace(PHP_EOL, ' ', $v), ' '));
+								if(($t = strpos($v, ')')) !== false)
+								{
+									$v = substr($v, 0, $t);
+								}
+
+								if(pts_strings::is_version($version))
+								{
+									$version = $v;
+								}
+							}
 						}
 					}
 
@@ -801,7 +836,29 @@ class phodevi_system extends phodevi_device_interface
 	}
 	public static function sw_kernel_string()
 	{
-		return phodevi::read_property('system', 'kernel') . ' (' . phodevi::read_property('system', 'kernel-architecture') . ')';
+		return trim(phodevi::read_property('system', 'kernel') . ' (' . phodevi::read_property('system', 'kernel-architecture') . ') ' . phodevi::read_property('system', 'kernel-date'));
+	}
+	public static function sw_kernel_date()
+	{
+		$date = null;
+		$k = phodevi::read_property('system', 'kernel');
+
+		if(strpos($k, '99') !== false || stripos($k, 'rc') !== false)
+		{
+			// For now at least only report kernel build date when it looks like it's a devel kernel
+			$v = php_uname('v');
+			if(($x = stripos($v, 'SMP ')) !== false)
+			{
+				$v = substr($v, ($x + 4));
+				$date = strtotime($v);
+				if($date != false)
+				{
+					$date = date('Ymd', $date);
+				}
+			}
+		}
+
+		return $date;
 	}
 	public static function sw_kernel()
 	{
@@ -894,6 +951,21 @@ class phodevi_system extends phodevi_device_interface
 		else if(phodevi::is_linux())
 		{
 			$os_version = phodevi_linux_parser::read_lsb('Release');
+
+			if($os_version == null && is_readable('/etc/os-release'))
+			{
+				$os_release = parse_ini_file('/etc/os-release');
+
+				if(isset($os_release['VERSION_ID']) && !empty($os_release['VERSION_ID']))
+				{
+					$os_version = $os_release['VERSION_ID'];
+				}
+				else if(isset($os_release['VERSION']) && !empty($os_release['VERSION']))
+				{
+					$os_version = $os_release['VERSION'];
+				}
+				$os_version = pts_strings::keep_in_string($os_version, pts_strings::CHAR_LETTER | pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DECIMAL | pts_strings::CHAR_SPACE | pts_strings::CHAR_DASH | pts_strings::CHAR_UNDERSCORE);
+			}
 		}
 		else
 		{
@@ -914,6 +986,25 @@ class phodevi_system extends phodevi_device_interface
 		if(phodevi::is_linux())
 		{
 			$vendor = phodevi_linux_parser::read_lsb_distributor_id();
+
+			if($vendor == null)
+			{
+				if(is_readable('/etc/os-release'))
+					$os_release = parse_ini_file('/etc/os-release');
+				else if(is_readable('/usr/lib/os-release'))
+					$os_release = parse_ini_file('/usr/lib/os-release');
+				else
+					$os_release = null;
+
+				if(isset($os_release['PRETTY_NAME']) && !empty($os_release['PRETTY_NAME']))
+				{
+					$vendor = $os_release['PRETTY_NAME'];
+				}
+				else if(isset($os_release['NAME']) && !empty($os_release['NAME']))
+				{
+					$vendor = $os_release['NAME'];
+				}
+			}
 		}
 		else if(phodevi::is_hurd())
 		{
@@ -1002,9 +1093,13 @@ class phodevi_system extends phodevi_device_interface
 				}
 			}
 		}
-		else
+		else if(stripos($vendor, $version) === false)
 		{
 			$os = $vendor . ' ' . $version;
+		}
+		else
+		{
+			$os = $vendor;
 		}
 
 		if(($break_point = strpos($os, ':')) > 0)
@@ -1031,8 +1126,19 @@ class phodevi_system extends phodevi_device_interface
 		$desktop = null;
 		$desktop_environment = null;
 		$desktop_version = null;
+		$desktop_session = pts_client::read_env('DESKTOP_SESSION');
 
-		if(pts_client::is_process_running('gnome-panel'))
+		if(pts_client::is_process_running('gnome-shell'))
+		{
+			// GNOME 3.0 / GNOME Shell
+			$desktop_environment = 'GNOME Shell';
+
+			if(pts_client::executable_in_path('gnome-shell'))
+			{
+				$desktop_version = pts_strings::last_in_string(trim(shell_exec('gnome-shell --version 2> /dev/null')));
+			}
+		}
+		else if(pts_client::is_process_running('gnome-panel') || $desktop_session == 'gnome')
 		{
 			// GNOME
 			$desktop_environment = 'GNOME';
@@ -1046,17 +1152,7 @@ class phodevi_system extends phodevi_device_interface
 				$desktop_version = pts_strings::last_in_string(trim(shell_exec('gnome-session --version 2> /dev/null')));
 			}
 		}
-		else if(pts_client::is_process_running('gnome-shell'))
-		{
-			// GNOME 3.0 / GNOME Shell
-			$desktop_environment = 'GNOME Shell';
-
-			if(pts_client::executable_in_path('gnome-shell'))
-			{
-				$desktop_version = pts_strings::last_in_string(trim(shell_exec('gnome-shell --version 2> /dev/null')));
-			}
-		}
-		else if(pts_client::is_process_running('unity-2d-panel'))
+		else if(pts_client::is_process_running('unity-2d-panel') || $desktop_session == 'ubuntu-2d')
 		{
 			// Canonical / Ubuntu Unity 2D Desktop
 			$desktop_environment = 'Unity 2D';
@@ -1066,7 +1162,7 @@ class phodevi_system extends phodevi_device_interface
 				$desktop_version = pts_strings::last_in_string(trim(shell_exec('unity --version 2> /dev/null')));
 			}
 		}
-		else if(pts_client::is_process_running('unity-panel-service'))
+		else if(pts_client::is_process_running('unity-panel-service') || $desktop_session == 'ubuntu')
 		{
 			// Canonical / Ubuntu Unity Desktop
 			$desktop_environment = 'Unity';
@@ -1075,6 +1171,26 @@ class phodevi_system extends phodevi_device_interface
 			{
 				$desktop_version = pts_strings::last_in_string(trim(shell_exec('unity --version 2> /dev/null')));
 			}
+		}
+		else if($desktop_session == 'mate')
+		{
+			$desktop_environment = 'MATE';
+			if(pts_client::executable_in_path('mate-about'))
+			{
+				$desktop_version = pts_strings::last_in_string(trim(shell_exec('mate-about --version 2> /dev/null')));
+			}
+		}
+		else if(($kde5 = pts_client::is_process_running('kded5')))
+		{
+			// KDE 5.x
+			$desktop_environment = 'KDE Frameworks 5';
+			$desktop_version = null; // TODO XXX
+		}
+		else if(($dde = pts_client::is_process_running('dde-desktop')))
+		{
+			// KDE 5.x
+			$desktop_environment = 'Deepin Desktop Environment';
+			$desktop_version = null; // TODO XXX
 		}
 		else if(($kde4 = pts_client::is_process_running('kded4')) || pts_client::is_process_running('kded'))
 		{
@@ -1112,7 +1228,7 @@ class phodevi_system extends phodevi_device_interface
 
 			$desktop_environment = $chrome_output;
 		}
-		else if(pts_client::is_process_running('lxsession'))
+		else if(pts_client::is_process_running('lxsession') || $desktop_session == 'lxde')
 		{
 			$lx_output = trim(shell_exec('lxpanel --version'));
 			$version = substr($lx_output, strpos($lx_output, ' ') + 1);
@@ -1120,7 +1236,7 @@ class phodevi_system extends phodevi_device_interface
 			$desktop_environment = 'LXDE';
 			$desktop_version = $version;
 		}
-		else if(pts_client::is_process_running('xfce4-session') || pts_client::is_process_running('xfce-mcs-manager'))
+		else if(pts_client::is_process_running('xfce4-session') || pts_client::is_process_running('xfce-mcs-manager') || $desktop_session == 'xfce')
 		{
 			// Xfce 4.x
 			$desktop_environment = 'Xfce';
@@ -1219,7 +1335,7 @@ class phodevi_system extends phodevi_device_interface
 
 			}
 
-			if(($x_bin = pts_client::executable_in_path('Xorg')) || ($x_bin = pts_client::executable_in_path('X')))
+			if(($x_bin = (is_executable('/usr/libexec/Xorg.bin') ? '/usr/libexec/Xorg.bin' : false)) || ($x_bin = pts_client::executable_in_path('Xorg')) || ($x_bin = pts_client::executable_in_path('X')))
 			{
 				// Find graphics subsystem version
 				$info = shell_exec($x_bin . ' ' . (phodevi::is_solaris() ? ':0' : '') . ' -version 2>&1');
@@ -1254,7 +1370,10 @@ class phodevi_system extends phodevi_device_interface
 				array_push($display_servers, 'GNOME Shell Wayland');
 			}
 
-
+			if(empty($display_servers) && getenv('WAYLAND_DISPLAY') != false)
+			{
+				array_push($display_servers, 'Wayland');
+			}
 		}
 
 		return implode(' + ', $display_servers);
@@ -1274,7 +1393,7 @@ class phodevi_system extends phodevi_device_interface
 			{
 				$display_driver = 'fglrx';
 			}
-			else if(phodevi::is_nvidia_graphics())
+			else if(phodevi::is_nvidia_graphics() || is_file('/proc/driver/nvidia/version'))
 			{
 				$display_driver = 'nvidia';
 			}
@@ -1593,7 +1712,11 @@ class phodevi_system extends phodevi_device_interface
 	{
 		$dri_driver = false;
 
-		if(is_file('/proc/dri/0/name'))
+		if(is_file('/proc/driver/nvidia/version'))
+		{
+			$dri_driver = 'nvidia';
+		}
+		else if(is_file('/proc/dri/0/name'))
 		{
 			$driver_info = file_get_contents('/proc/dri/0/name');
 			$dri_driver = substr($driver_info, 0, strpos($driver_info, ' '));
@@ -1605,7 +1728,7 @@ class phodevi_system extends phodevi_device_interface
 		}
 		else if(is_file('/sys/class/drm/card0/device/vendor'))
 		{
-			$vendor_id = file_get_contents('/sys/class/drm/card0/device/vendor');
+			$vendor_id = pts_file_io::file_get_contents('/sys/class/drm/card0/device/vendor');
 
 			switch($vendor_id)
 			{

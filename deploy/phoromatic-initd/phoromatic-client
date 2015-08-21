@@ -1,0 +1,73 @@
+#!/bin/sh
+#
+# /etc/init.d/phoromatic-client
+# Init script for Phoronix Test Suite Phoromatic client
+#
+# chkconfig: 2345 95 05
+# description: Starting the Phoronix Test Suite Phoromatic client
+#
+# processname: phoromatic-client
+# config: /etc/phoronix-test-suite.xml
+
+# source function library
+
+. /etc/rc.d/init.d/functions
+
+RETVAL=0
+prog="phoromatic-client"
+
+start() {
+	echo -n $"Starting $prog:"
+	env DISPLAY=:0
+	/usr/bin/phoronix-test-suite phoromatic.connect
+	RETVAL=$?
+	[ "$RETVAL" = 0 ] && touch /var/lock/subsys/$prog
+	echo
+}
+
+stop() {
+	echo -n $"Stopping $prog:"
+	killproc $prog -TERM
+	RETVAL=$?
+	[ "$RETVAL" = 0 ] && rm -f /var/lock/subsys/$prog
+	echo
+}
+
+reload() {
+	echo -n $"Reloading $prog:"
+	killproc $prog -HUP
+	RETVAL=$?
+	echo
+}
+
+case "$1" in
+	start)
+		start
+		;;
+	stop)
+		stop
+		;;
+	restart)
+		stop
+		start
+		;;
+	reload)
+		reload
+		;;
+	condrestart)
+		if [ -f /var/lock/subsys/$prog ] ; then
+			stop
+			sleep 6
+			start
+		fi
+		;;
+	status)
+		status $prog
+		RETVAL=$?
+		;;
+	*)
+		echo $"Usage: $0 {start|stop|restart|reload|condrestart|status}"
+		RETVAL=1
+esac
+exit $RETVAL
+

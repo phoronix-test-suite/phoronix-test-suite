@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2011 - 2013, Phoronix Media
-	Copyright (C) 2011 - 2013, Michael Larabel
+	Copyright (C) 2011 - 2014, Phoronix Media
+	Copyright (C) 2011 - 2014, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -57,9 +57,9 @@ class pts_svg_dom_gd
 			{
 				putenv('GDFONTPATH=' . $font_env);
 			}
-			else
+			else if(is_dir('/usr/share/fonts'))
 			{
-				putenv('GDFONTPATH=' . getcwd());
+				putenv('GDFONTPATH=/usr/share/fonts');
 			}
 		}
 	}
@@ -90,6 +90,7 @@ class pts_svg_dom_gd
 				'/usr/share/fonts/TTF/liberation/LiberationSans-Regular.ttf',
 				'/usr/X11/lib/X11/fonts/TrueType/arphic/uming.ttf',
 				'/usr/local/lib/X11/fonts/bitstream-vera/Vera.ttf',
+				'/usr/share/fonts/aajohan-comfortaa/Comfortaa-Regular.ttf',
 				'/Library/Fonts/Courier New.ttf',
 				'/Library/Fonts/Trebuchet MS.ttf'
 				);
@@ -288,6 +289,11 @@ class pts_svg_dom_gd
 						// TODO: implement $a['stroke-width']
 						imagerectangle($gd, $a['x'], $a['y'], ($a['x'] + $a['width']), ($a['y'] + $a['height']), self::gd_color_allocate($gd, $a['stroke']));
 					}
+					break;
+				case 'circle':
+					// Draw a circle
+					$a = self::attributes_to_array($node, array('cx', 'cy', 'r', 'fill'));
+					imagefilledellipse($gd, $a['cx'], $a['cy'], ($a['r'] * 2), ($a['r'] * 2), self::gd_color_allocate($gd, $a['fill']));
 					break;
 				case 'ellipse':
 					// Draw a ellipse/circle

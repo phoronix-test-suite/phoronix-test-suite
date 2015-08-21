@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2013, Phoronix Media
-	Copyright (C) 2008 - 2013, Michael Larabel
+	Copyright (C) 2008 - 2015, Phoronix Media
+	Copyright (C) 2008 - 2015, Michael Larabel
 	phodevi_cpu.php: The PTS Device Interface object for the CPU / processor
 
 	This program is free software; you can redistribute it and/or modify
@@ -107,7 +107,12 @@ class phodevi_cpu extends phodevi_device_interface
 		}
 		else if(phodevi::is_macosx())
 		{
-			$info = phodevi_osx_parser::read_osx_system_profiler('SPHardwareDataType', 'TotalNumberOfCores');
+			$info = intval(phodevi_bsd_parser::read_sysctl(array('hw.ncpu')));
+
+			if(empty($info))
+			{
+				$info = phodevi_osx_parser::read_osx_system_profiler('SPHardwareDataType', 'TotalNumberOfCores');
+			}
 		}
 		else if(phodevi::is_windows())
 		{
@@ -186,6 +191,12 @@ class phodevi_cpu extends phodevi_device_interface
 		{
 			$cpu_mhz = self::read_cpuinfo_line('cpu MHz');
 			$info = $cpu_mhz / 1000;
+
+			if(empty($info))
+			{
+				$cpu_mhz = self::read_cpuinfo_line('clock');
+				$info = $cpu_mhz / 1000;
+			}
 		}
 		else if($info == null && phodevi::is_bsd())
 		{
@@ -258,18 +269,18 @@ class phodevi_cpu extends phodevi_device_interface
 			$physical_cpu_ids = phodevi_linux_parser::read_cpuinfo('physical id');
 			$physical_cpu_count = count(array_unique($physical_cpu_ids));
 
-			$cpu_strings = phodevi_linux_parser::read_cpuinfo(array('model name', 'Processor'));
+			$cpu_strings = phodevi_linux_parser::read_cpuinfo(array('model name', 'Processor', 'cpu', 'cpu model'));
 			$cpu_strings_unique = array_unique($cpu_strings);
 
 			if($physical_cpu_count == 1 || empty($physical_cpu_count))
 			{
 				// Just one processor
-				if(($cut = strpos($cpu_strings[0], ' (')) !== false)
+				if(isset($cpu_strings[0]) && ($cut = strpos($cpu_strings[0], ' (')) !== false)
 				{
 					$cpu_strings[0] = substr($cpu_strings[0], 0, $cut);
 				}
 
-				$info = $cpu_strings[0];
+				$info = isset($cpu_strings[0]) ? $cpu_strings[0] : null;
 
 				if(strpos($info, 'ARM') !== false)
 				{

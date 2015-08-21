@@ -25,6 +25,8 @@
 			<p>If this option is set to <em>TRUE</em>, the Phoronix Test Suite will use the Phodevi smart cache (if available). The Phodevi smart cache will automatically cache relevant system hardware/software attributes that can be safely stored and will be used until the system's software/hardware has changed or the system rebooted. Enabling this option will speed up the detection of installed hardware and software through the Phoronix Test Suite. If this option is set to <em>FALSE</em>, Phodevi will not generate a smart cache. The default value is <em>TRUE</em>.</p>
 			<h3>DefaultDisplayMode: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/General/DefaultDisplayMode" /></span></h3>
 			<p>This option affects how text is displayed on the command-line interface during the testing process. If this option is set to <em>DEFAULT</em>, the text interface will be the traditional Phoronix Test Suite output. If this option is set to <em>CONCISE</em>, the display mode is shorter and more concise. This is the default mode used during batch testing. The default value is <em>DEFAULT</em>.</p>
+			<h3>PhoromaticServers: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/General/PhoromaticServers" /></span></h3>
+			<p>This option can be used to specify the IP address(es) and port(s) of any Phoromatic Servers you wish to connect to for obtaining cached data, connecting to Phoromatic as a client test system, etc. The Phoronix Test Suite will attempt zero-conf network discovery but if that fails you can add the <em>IP:port</em> (the Phoromatic Server's HTTP port) to this element for targeted probing by the Phoronix Test Suite. Multiple Phoromatic Servers can be added if delimited by a comma; e.g. <em>IP:port,IP:port, IP:port</em>.</p>
 
 			<h1>Modules Options</h1>
 			<h3>LoadModules: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/Modules/LoadModules" /></span></h3>
@@ -86,8 +88,10 @@
 			<p>If this option is set to <em>TRUE</em>, when running in batch mode the user will be prompted to enter a test name. If this option is set to <em>FALSE</em>, a test name will be automatically generated.</p>
 
 			<h1>Networking Options</h1>
+			<h3>NoInternetCommunication: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/Networking/NoInternetCommunication" /></span></h3>
+			<p>If you wish to disable Internet communication within the Phoronix Test Suite by default, set this option to <em>TRUE</em>. The default value is <em>FALSE</em>. Setting this to <em>FALSE</em> will still allow Phoromatic to communicate with network servers such as for intranet-based download caches or a Phoromatic Server. Internet support is generally required for downloading test profiles from OpenBenchmarking.org, acquiring necessary test files from their respective sources, etc.</p>
 			<h3>NoNetworkCommunication: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/Networking/NoNetworkCommunication" /></span></h3>
-			<p>If you wish to disable network support entirely within the Phoronix Test Suite, set this option to <em>TRUE</em>. The default value is <em>FALSE</em>.</p>
+			<p>If you wish to disable network support (including Internet access) entirely within the Phoronix Test Suite, set this option to <em>TRUE</em>. The default value is <em>FALSE</em>.</p>
 			<h3>Timeout: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/Networking/Timeout" /></span></h3>
 			<p>This is the read timeout (in seconds) for network connections. The default value is <em>20</em>.</p>
 			<h3>ProxyAddress: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/Networking/ProxyAddress" /></span></h3>
@@ -96,13 +100,16 @@
 			<p>If using a proxy server, enter the TCP port in this tag.</p>
 
 			<h1>Server Options</h1>
-			<h3>RemoteAccessAllowed: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/Server/RemoteAccessAllowed" /></span></h3>
-			<p>If you wish to allow remote access to the built-in web-based interface to the Phoronix Test Suite when running its built-in web server, set the port number for remote access here. Port 80 is the common HTTP port but the Phoronix Test Suite web-interface can be easily set to other port numbers. If you do not wish to allow remote access, use the default value of <em>FALSE</em>.</p>
+			<h3>RemoteAccessPort: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/Server/RemoteAccessPort" /></span></h3>
+			<p>If you wish to allow remote access to the built-in web-based interface to the Phoronix Test Suite when running its built-in web server, set the port number for remote access here. Port 80 is the common HTTP port but the Phoronix Test Suite web-interface can be easily set to other port numbers. If you do not wish to allow remote access, use the default value of <em>FALSE</em> or <em>-1</em>. If the value is set to <em>RANDOM</em>, a random port number will be chosen.</p>
 			<h3>Password: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/Server/Password" /></span></h3>
 			<p>If you wish to require a password when entering the web-based interface to the Phoronix Test Suite -- either locally or remotely -- specify the password here using the password's SHA256 sum as the value.</p>
 			<h3>WebSocketPort: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/Server/WebSocketPort" /></span></h3>
-			<p>The default port to use when running a WebSocket server. If no port is assigned, a random port will be chosen.</p>
-
+			<p>The default port to use when running a WebSocket server. If no port is assigned or <em>RANDOM</em> is set, a random port will be chosen.</p>
+			<h3>AdvertiseServiceZeroConf: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/Server/AdvertiseServiceZeroConf" /></span></h3>
+			<p>If this option is set to <em>TRUE</em> when starting a Phoromatic Server instance, the software will attempt to broadcast its service using zeroconf networking (Avahi on Linux assuming <em>avahi-publish</em> is present).</p>
+			<h3>PhoromaticStorage: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/Server/PhoromaticStorage" /></span></h3>
+			<p>The location for the Phoromatic Server to store test results of connected systems, account information, etc. The default location is <em>~/.phoronix-test-suite/phoromatic/</em>.</p>
 		</div>
 		<div style="text-align: center; font-size: 12px;">Copyright &#xA9; 2008 - 2014 by <a href="http://www.phoronix-media.com/" style="text-decoration: none; color: #000;">Phoronix Media</a>.</div>
 	</body>

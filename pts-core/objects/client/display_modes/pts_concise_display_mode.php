@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2013, Phoronix Media
-	Copyright (C) 2009 - 2013, Michael Larabel
+	Copyright (C) 2009 - 2015, Phoronix Media
+	Copyright (C) 2009 - 2015, Michael Larabel
 	pts_concise_display_mode.php: The batch / concise display mode
 
 	This program is free software; you can redistribute it and/or modify
@@ -315,7 +315,19 @@ class pts_concise_display_mode implements pts_display_mode_interface
 
 		if($remaining_length > 1)
 		{
-			array_push($display_table, array($this->tab . 'Estimated Time To Completion:', pts_strings::format_time($remaining_length, 'SECONDS', true, 60)));
+			$est_end_time = null;
+
+			if((time() % 86400) + $remaining_length > 86400)
+			{
+				// If test run is past current calendar date
+				$est_end_time = date(' (H:i T M j)', time() + $remaining_length);
+			}
+			else
+			{
+				$est_end_time = date(' (H:i T)', time() + $remaining_length);
+			}
+
+			array_push($display_table, array($this->tab . 'Estimated Time To Completion:', pts_strings::format_time($remaining_length, 'SECONDS', true, 60) . $est_end_time));
 		}
 
 		echo pts_user_io::display_text_table($display_table);

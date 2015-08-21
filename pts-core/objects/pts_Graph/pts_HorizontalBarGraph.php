@@ -1,5 +1,4 @@
 <?php
-
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
@@ -58,6 +57,12 @@ class pts_HorizontalBarGraph extends pts_Graph
 			}
 			else
 			{
+				/*$v_offset = 0;
+				if(!isset($this->graph_data_raw[0][$i]) || count($this->graph_data_raw[0][$i]) < 2)
+				{
+				//	$v_offset += 4;
+				}*/
+
 				$this->svg_dom->add_text_element($this->graph_identifiers[$i], array('x' => ($this->i['left_start'] - 5), 'y' => $middle_of_vert, 'font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['headers'], 'text-anchor' => 'end'));
 			}
 		}
@@ -69,6 +74,7 @@ class pts_HorizontalBarGraph extends pts_Graph
 		$multi_way = $this->is_multi_way_comparison && count($this->graph_data) > 1;
 		$bar_height = floor(($this->i['identifier_height'] - ($multi_way ? 4 : 0) - $separator_height - ($bar_count * $separator_height)) / $bar_count);
 		$this->i['graph_max_value'] = $this->i['graph_max_value'] != 0 ? $this->i['graph_max_value'] : 1;
+		$work_area_width = $this->i['graph_left_end'] - $this->i['left_start'];
 
 		for($i_o = 0; $i_o < $bar_count; $i_o++)
 		{
@@ -77,7 +83,7 @@ class pts_HorizontalBarGraph extends pts_Graph
 			foreach(array_keys($this->graph_data[$i_o]) as $i)
 			{
 				$value = $this->graph_data[$i_o][$i];
-				$graph_size = max(0, round(($value / $this->i['graph_max_value']) * ($this->i['graph_left_end'] - $this->i['left_start'])));
+				$graph_size = max(0, round(($value / $this->i['graph_max_value']) * $work_area_width));
 				$value_end_right = max($this->i['left_start'] + $graph_size, 1);
 
 				$px_bound_top = $this->i['top_start'] + ($multi_way ? 5 : 0) + ($this->i['identifier_height'] * $i) + ($bar_height * $i_o) + ($separator_height * ($i_o + 1));
@@ -128,7 +134,7 @@ class pts_HorizontalBarGraph extends pts_Graph
 
 				if(($this->text_string_width($value, $this->i['identifier_size']) + 2) < $graph_size)
 				{
-					if(isset($this->d['identifier_notes'][$this->graph_identifiers[$i]]))
+					if(isset($this->d['identifier_notes'][$this->graph_identifiers[$i]]) && $this->i['compact_result_view'] == false)
 					{
 						$note_size = self::$c['size']['key'] - 2;
 						$this->svg_dom->add_text_element($this->d['identifier_notes'][$this->graph_identifiers[$i]], array('x' => ($this->i['left_start'] + 4), 'y' => ($px_bound_top + self::$c['size']['key']), 'font-size' => $note_size, 'fill' => self::$c['color']['body_text'], 'text-anchor' => 'start'));

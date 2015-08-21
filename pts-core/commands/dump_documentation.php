@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2014, Phoronix Media
-	Copyright (C) 2010 - 2014, Michael Larabel
+	Copyright (C) 2010 - 2015, Phoronix Media
+	Copyright (C) 2010 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -24,16 +24,6 @@ class dump_documentation implements pts_option_interface
 {
 	public static function run($r)
 	{
-		if(is_file('/usr/share/php/fpdf/fpdf.php'))
-		{
-			include_once('/usr/share/php/fpdf/fpdf.php');
-		}
-		else
-		{
-			echo PHP_EOL . 'The FPDF library must be installed.' . PHP_EOL . PHP_EOL;
-			return;
-		}
-
 		$pdf = new pts_pdf_template(pts_title(false), 'Test Client Documentation');
 		$html_doc = new pts_html_template(pts_title(false), 'Test Client Documentation');
 
@@ -263,11 +253,30 @@ class dump_documentation implements pts_option_interface
 
 
 		// simple README
-		$readme = 'Phoronix Test Suite ' . PTS_VERSION . PHP_EOL . 'http://www.phoronix-test-suite.com/' . PHP_EOL . '#####################################' . PHP_EOL . PHP_EOL;
+		$readme = '# Phoronix Test Suite ' . PTS_VERSION . PHP_EOL . 'http://www.phoronix-test-suite.com/' . PHP_EOL . PHP_EOL;
 		$readme .= pts_documentation::basic_description() . PHP_EOL . PHP_EOL;
 		$readme .= pts_file_io::file_get_contents(PTS_PATH . 'documentation/stubs/readme-basics.txt') . PHP_EOL . PHP_EOL;
 		$readme = wordwrap($readme, 80, PHP_EOL);
-		file_put_contents(PTS_PATH . 'README', $readme);
+		file_put_contents(PTS_PATH . 'README.md', $readme);
+
+		// Phoromatic Documentation
+		$pdf = new pts_pdf_template(pts_title(false), 'Phoromatic Documentation');
+		$html_doc = new pts_html_template(pts_title(false), 'Phoromatic Documentation');
+
+		$pdf->AddPage();
+		$pdf->Image(PTS_CORE_STATIC_PATH . 'images/pts-308x160.png', 69, 85, 73, 38, 'PNG', 'http://www.phoronix-test-suite.com/');
+		$pdf->Ln(120);
+		$pdf->WriteStatement('www.phoronix-test-suite.com', 'C', 'http://www.phoronix-test-suite.com/');
+		$pdf->Ln(15);
+		$pdf->Image(PTS_CORE_STATIC_PATH . 'images/phoromatic-390x56.png', 55, 250, 0, 0, 'PNG', 'http://www.phoronix-test-suite.com/');
+		//$pdf->Image(PTS_CORE_STATIC_PATH . 'images/phoromatic-390x56.png', 69, 85, 73, 38, 'PNG', 'http://www.phoromatic.com/');
+		$pdf->WriteBigHeaderCenter(pts_title(true));
+		$pdf->WriteHeaderCenter('Phoromatic User Manual');
+		$pdf->html_to_pdf(PTS_PATH . 'documentation/phoromatic.html');
+		$pdf_file = PTS_PATH . 'documentation/phoromatic.pdf';
+		$pdf->Output($pdf_file);
+		echo PHP_EOL . 'Saved To: ' . $pdf_file . PHP_EOL . PHP_EOL;
+
 	}
 }
 
