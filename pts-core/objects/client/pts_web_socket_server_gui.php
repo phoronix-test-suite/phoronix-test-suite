@@ -280,7 +280,7 @@ class pts_web_socket_server_gui extends pts_web_socket
 		$j['pts']['msg']['result_url'] = $test_run_manager->get_results_url();
 		$this->send_json_data($user->socket, $j);
 	}
-        exit(0);
+//        exit(0);
 	}
 	protected function search_pts(&$user, $search)
 	{

@@ -33,6 +33,7 @@ class pts_web_socket
 
 	public function __construct($address = 'localhost', $port = 80, $callback_on_data_receive = null, $callback_on_hand_shake = null)
 	{
+		pcntl_signal(SIGCHLD, SIG_IGN);
 		ob_implicit_flush();
 		if($address == 'localhost')
 		{
@@ -62,7 +63,7 @@ class pts_web_socket
 		{
 			$changed = $this->sockets;
 			$null = null;
-			if(socket_select($changed, $null, $null, 0) < 1)
+			if(socket_select($changed, $null, $null, null) < 1)
 				continue;
 			//if($s == false) echo socket_strerror(socket_last_error());
 
@@ -125,19 +126,23 @@ class pts_web_socket
 						}
 						else
 						{
-							$id = pcntl_fork();
-							if($id == -1)
-							{
-								echo 'forking error';
-							}
-							else if($id)
-							{
-								// parent process
-								continue;
-							}
+							if(function_exists('pcntl_fork')) {
+								$id = pcntl_fork();
+								if ($id == -1) {
+									echo 'forking error';
+								} else if ($id) {
+									// parent process
+									continue;
+								}
 
-							// child process
-							$this->process_data($user, $buffer);
+								// child process
+								$this->process_data($user, $buffer);
+								posix_kill(posix_getpid(), SIGINT);
+							}
+							else
+							{
+								$this->process_data($user, $buffer);
+							}
 						}
 					}
 				}
