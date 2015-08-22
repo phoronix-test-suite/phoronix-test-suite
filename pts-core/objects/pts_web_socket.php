@@ -62,7 +62,7 @@ class pts_web_socket
 		{
 			$changed = $this->sockets;
 			$null = null;
-			if(socket_select($changed, $null, $null, 0) < 1)
+			if(socket_select($changed, $null, $null, null) < 1)
 				continue;
 			//if($s == false) echo socket_strerror(socket_last_error());
 
