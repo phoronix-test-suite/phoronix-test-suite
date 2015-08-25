@@ -1,5 +1,5 @@
 have phoronix-test-suite &&
-_phoronix-test-suite-show()
+_phoronix_test_suite_show()
 {
         local cur
 
@@ -7,5 +7,5 @@ _phoronix-test-suite-show()
         cur=${COMP_WORDS[COMP_CWORD]}
         COMPREPLY=($( compgen -W "$(phoronix-test-suite dump-possible-options)" -- "$cur" ))
 }
-complete -F _phoronix-test-suite-show phoronix-test-suite
+complete -F _phoronix_test_suite_show phoronix-test-suite
 

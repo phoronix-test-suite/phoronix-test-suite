@@ -9,6 +9,7 @@ Phoronix Test Suite (Git)
 - pts-core: Unconditionally always ensure __GL_SYNC_TO_VBLANK=0
 - pts-core: Fixes for test profile validation following recent restructuring
 - pts-core: WebSocket fixes
+- pts-core: Fix bash completion
 - phoromatic: Improvements when server addressing setup fails
 - pts_Graph: Support reporting a min result on graphs when there is no max value to be reported
 - toggle_screensaver: GNOME 3 update
