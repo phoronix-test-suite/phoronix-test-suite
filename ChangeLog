@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 6.0 Milestone 1
+26 August 2015
 
 - pts-core: Show estimated date/time next to estimated duration left on tests
 - pts-core: Support /usr/lib/os-release for stateless systems
