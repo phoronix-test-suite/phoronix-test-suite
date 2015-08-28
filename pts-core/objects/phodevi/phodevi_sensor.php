@@ -20,13 +20,35 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-interface phodevi_sensor
+abstract class phodevi_sensor
 {
-	public static function get_type();
-	public static function get_sensor();
-	public static function get_unit();
-	public static function support_check();
-	public static function read_sensor();
+	const SENSOR_TYPE = '';			//eg. cpu
+	const SENSOR_SENSES = '';		//eg. power-usage
+	const SENSOR_UNIT = '';			//eg. miliwatts
+        protected $instance_number;
+
+	public static function get_type()
+	{
+			return static::SENSOR_TYPE;
+	}
+
+	public static function get_sensor()
+	{
+			return static::SENSOR_SENSES;
+	}
+
+	public static function get_unit()
+	{
+			return static::SENSOR_UNIT;
+	}
+        public function get_instance()
+	{
+			return $this->instance_number;
+	}
+
+	abstract public function support_check();	// for checking if sensor is supported on the current platform
+	abstract public function get_readable_params();
+        abstract public function read_sensor();
 }
 
 ?>
