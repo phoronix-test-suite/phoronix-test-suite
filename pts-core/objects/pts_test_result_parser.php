@@ -541,6 +541,7 @@ class pts_test_result_parser
 		$strip_from_result = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/ResultsParser/StripFromResult');
 		$strip_result_postfix = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/ResultsParser/StripResultPostfix');
 		$multi_match = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/ResultsParser/MultiMatch');
+		$file_format = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/ResultsParser/FileFormat');
 		$test_result = false;
 
 		if($prefix != null && substr($prefix, -1) != '_')
@@ -583,6 +584,11 @@ class pts_test_result_parser
 			}
 
 			$space_out_chars = array('(', ')', "\t");
+
+			if(isset($file_format[$i]) && $file_format[$i] == 'CSV')
+			{
+				array_push($space_out_chars, ',');
+			}
 
 			if((isset($result_template[$i][($start_result_pos - 1)]) && $result_template[$i][($start_result_pos - 1)] == '/') || (isset($result_template[$i][($start_result_pos + strlen($result_key[$i]))]) && $result_template[$i][($start_result_pos + strlen($result_key[$i]))] == '/'))
 			{
