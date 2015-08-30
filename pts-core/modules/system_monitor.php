@@ -78,7 +78,7 @@ class system_monitor extends pts_module_interface
 		self::$individual_monitoring = pts_module::read_variable('MONITOR_INDIVIDUAL') !== '0';
 		self::$to_monitor = array();
 
-                $sensor_parameters = self::prepare_sensor_parameters();
+        $sensor_parameters = self::prepare_sensor_parameters();
 
 //		if(pts_module::read_variable('PERFORMANCE_PER_WATT'))
 //		{
@@ -140,7 +140,8 @@ class system_monitor extends pts_module_interface
 			sleep((self::$sensor_monitoring_frequency * 8));
 		}
 
-		pts_module::pts_timed_function('pts_monitor_update', self::$sensor_monitoring_frequency);
+		//pts_module::pts_timed_function('pts_monitor_update', self::$sensor_monitoring_frequency);
+		self::pts_start_monitoring();
 	}
 	public static function __pre_test_run($test_run_request)
 	{
@@ -328,16 +329,22 @@ class system_monitor extends pts_module_interface
 			}
 		}
 	}
-	public static function pts_monitor_update()
+	private static function pts_start_monitoring()
 	{
 		foreach(self::$to_monitor as $sensor)
 		{
-			$sensor_value = phodevi::read_sensor($sensor);
+			$pid = pts_module::pts_timed_function('pts_monitor_update', self::$sensor_monitoring_frequency, $sensor);
+		}
+	}
 
-			if($sensor_value != -1 && pts_module::is_file('logs/' . phodevi::sensor_object_identifier($sensor)))
-			{
-				pts_module::save_file('logs/' . phodevi::sensor_object_identifier($sensor), $sensor_value, true);
-			}
+	// Updates single sensor.
+	public static function pts_monitor_update($sensor)
+	{
+		$sensor_value = phodevi::read_sensor($sensor);
+
+		if ($sensor_value != -1 && pts_module::is_file('logs/' . phodevi::sensor_object_identifier($sensor)))
+		{
+			pts_module::save_file('logs/' . phodevi::sensor_object_identifier($sensor), $sensor_value, true);
 		}
 	}
 
