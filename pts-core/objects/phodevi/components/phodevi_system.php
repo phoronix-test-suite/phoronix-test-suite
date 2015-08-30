@@ -1434,6 +1434,13 @@ class phodevi_system extends phodevi_device_interface
 						{
 							$display_driver = 'radeon';
 						}
+						// See if it's the newer AMDGPU driver
+						$driver_version = phodevi_parser::read_xorg_module_version('amdgpu_drv');
+
+						if($driver_version != false)
+						{
+							$display_driver = 'amdgpu';
+						}
 						break;
 					case 'vmwgfx':
 						// See if it's VMware driver
@@ -1451,6 +1458,12 @@ class phodevi_system extends phodevi_device_interface
 						if($driver_version != false)
 						{
 							$display_driver = 'radeonhd';
+						}
+						$driver_version = phodevi_parser::read_xorg_module_version('amdgpu_drv');
+
+						if($driver_version != false)
+						{
+							$display_driver = 'amdgpu';
 						}
 						break;
 					case 'nvidia':

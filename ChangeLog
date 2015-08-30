@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Add FileFormat optional tag to result parser with CSV support
+- phodevi: AMDGPU Linux detection improvements
 
 Phoronix Test Suite 6.0 Milestone 1
 26 August 2015
