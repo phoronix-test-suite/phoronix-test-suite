@@ -347,9 +347,9 @@ class pts_result_file
 
 		return $ids;
 	}
-	public function get_result_object(&$result)
+	public function get_result_object(&$result, $read_only_objects = false)
 	{
-		$test_profile = new pts_test_profile(($result->Identifier != null ? $result->Identifier->__toString() : null), null, false);
+		$test_profile = new pts_test_profile(($result->Identifier != null ? $result->Identifier->__toString() : null), null, !$read_only_objects);
 		$test_profile->set_test_title($result->Title->__toString());
 		$test_profile->set_version($result->AppVersion->__toString());
 		$test_profile->set_result_scale($result->Scale->__toString());
@@ -373,7 +373,7 @@ class pts_result_file
 	{
 		return $this->xml->Result;
 	}
-	public function get_result_objects($select_indexes = -1)
+	public function get_result_objects($select_indexes = -1, $read_only_objects = false)
 	{
 		if($this->result_objects == null)
 		{
