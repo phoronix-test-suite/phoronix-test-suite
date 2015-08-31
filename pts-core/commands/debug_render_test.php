@@ -37,7 +37,7 @@ class debug_render_test implements pts_option_interface
 		define('PATH_TO_EXPORTED_PHOROMATIC_DATA', $render_dir . 'mega-render-test-310815/');
 
 		error_reporting(E_ALL);
-		//ini_set('memory_limit','2048M');
+		ini_set('memory_limit','2048M');
 
 		$export_index_json = file_get_contents(PATH_TO_EXPORTED_PHOROMATIC_DATA . 'export-index.json');
 		$export_index_json = json_decode($export_index_json, true);

@@ -37,6 +37,7 @@ class debug_self_test implements pts_option_interface
 			'result_file_to_text' => array('1107247-LI-MESACOMMI48'),
 			'diagnostics' => null,
 			'dump_possible_options' => null,
+			'debug_render_test' => null,
 			);
 
 		$individual_times = array();

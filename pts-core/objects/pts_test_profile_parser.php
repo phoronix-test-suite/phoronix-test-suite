@@ -118,7 +118,7 @@ class pts_test_profile_parser
 	{
 		$this->block_test_extension_support = true;
 	}
-	public function xs($xpath, $value)
+	public function xs($xpath, &$value)
 	{
 		$this->overrides[$xpath] = $value;
 	}
