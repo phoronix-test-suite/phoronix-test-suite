@@ -29,7 +29,7 @@ class pts_test_result_buffer_item
 	private $result_min;
 	private $result_max;
 
-	public function __construct($identifier, $final, $raw = null, $json = null, $min_value = null, $max_value = null)
+	public function __construct(&$identifier, &$final, $raw = null, $json = null, $min_value = null, $max_value = null)
 	{
 		$this->result_identifier = $identifier;
 		$this->result_final = $final;
