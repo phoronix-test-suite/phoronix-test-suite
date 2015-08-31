@@ -49,7 +49,8 @@ class pts_result_file
 			$this->raw_xml = $result_file;
 		}
 
-		$this->xml = simplexml_load_string($result_file);
+		$xml_options = LIBXML_COMPACT | LIBXML_PARSEHUGE;
+		$this->xml = simplexml_load_string($result_file, 'SimpleXMLElement', $xml_options);
 	}
 	public function validate()
 	{

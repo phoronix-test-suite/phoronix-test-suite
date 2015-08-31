@@ -83,7 +83,7 @@ class pts_test_profile_parser
 		//$xml_options = 0;
 		//if(defined('LIBXML_COMPACT'))
 		//{
-			$xml_options = LIBXML_COMPACT;
+			$xml_options = LIBXML_COMPACT | LIBXML_PARSEHUGE;
 		//}
 
 		if(is_file($read))

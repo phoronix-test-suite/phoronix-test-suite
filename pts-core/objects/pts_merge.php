@@ -110,6 +110,8 @@ class pts_merge
 			$r = $result_file->get_result_objects(-1, true);
 			//$r = array_reverse($r);
 			$test_result_manager->add_test_result_set($r, $result_merge_selects[$i]);
+			unset($result_file);
+			unset($result_merge_selects[$i]);
 		}
 
 		// Write the actual test results
