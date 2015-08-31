@@ -82,11 +82,6 @@ class pts_test_result_buffer_item
 	}
 	public function get_result_json()
 	{
-		if(!isset($this->r['result-json']))
-		{
-			return null;
-		}
-
 		if($this->r['result-json'] != null && !is_array($this->r['result-json']))
 		{
 			$this->r['result-json'] = json_decode($this->r['result-json'], true);
