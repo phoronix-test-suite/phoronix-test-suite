@@ -85,7 +85,7 @@ class debug_render_test implements pts_option_interface
 				if(stripos($result_object->get_arguments_description(), 'frame time') !== false)
 					continue;
 
-				echo $result_object->test_profile->get_title() . PHP_EOL;
+				echo $result_object->test_profile->get_title() . ' ';
 				//echo '<h3>' . $result_object->get_arguments_description() . '</h3>';
 				pts_render::render_graph_inline_embed($result_object, $result_file, $extra_attributes);
 				unset($result_object);
@@ -93,7 +93,7 @@ class debug_render_test implements pts_option_interface
 
 			$table = new pts_ResultFileSystemsTable($result_file);
 			pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes);
-			echo 'RENDER TEST ON: ' . $REQUESTED . ' TOOK ' . (time() - $this_render_test) . PHP_EOL;
+			echo PHP_EOL . PHP_EOL . 'RENDER TEST ON: ' . $REQUESTED . ' TOOK ' . (time() - $this_render_test) . PHP_EOL;
 		}
 		echo PHP_EOL . 'RENDER TEST TOOK: ' . (time() - $start) . PHP_EOL . PHP_EOL;
 	}

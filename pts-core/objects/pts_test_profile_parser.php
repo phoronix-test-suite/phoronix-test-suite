@@ -41,7 +41,7 @@ class pts_test_profile_parser
 			return;
 		}
 
-		if(strpos($read, '<?xml version="1.0"?>') === false)
+		if(!isset($read[200]) && strpos($read, '<?xml version="1.0"?>') === false)
 		{
 			if(PTS_IS_CLIENT && (!defined('PTS_TEST_PROFILE_PATH') || !is_file(PTS_TEST_PROFILE_PATH . $read . '/test-definition.xml')))
 			{
@@ -80,17 +80,22 @@ class pts_test_profile_parser
 			}
 		}
 
+		//$xml_options = 0;
+		//if(defined('LIBXML_COMPACT'))
+		//{
+			$xml_options = LIBXML_COMPACT;
+		//}
+
 		if(is_file($read))
 		{
 			$this->file_location = $read;
-			$read = file_get_contents($read);
+			$this->xml = simplexml_load_file($read, 'SimpleXMLElement', $xml_options);
 		}
 		else
 		{
 			$this->raw_xml = $read;
+			$this->xml = simplexml_load_string($read, 'SimpleXMLElement', $xml_options);
 		}
-
-		$this->xml = simplexml_load_string($read);
 	}
 	public function get_raw_xml()
 	{
