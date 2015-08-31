@@ -69,7 +69,7 @@ class pts_test_result_buffer
 	{
 		return isset($this->buffer_items[$i]) ? $this->buffer_items[$i] : false;
 	}
-	public function add_test_result(&$identifier, &$value, $raw_value = null, $json = null, $min_value = null, $max_value = null)
+	public function add_test_result($identifier, $value, $raw_value = null, $json = null, $min_value = null, $max_value = null)
 	{
 		array_push($this->buffer_items, new pts_test_result_buffer_item($identifier, $value, $raw_value, $json, $min_value, $max_value));
 	}
