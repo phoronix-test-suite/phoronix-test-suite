@@ -187,7 +187,7 @@ $intent = null;
 //echo '<p style="text-align: center; overflow: auto;" class="result_object">' . pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes) . '</p>';
 
 echo '<div id="pts_results_area">';
-foreach($result_file->get_result_objects((isset($_POST['show_only_changed_results']) ? 'ONLY_CHANGED_RESULTS' : -1)) as $i => $result_object)
+foreach($result_file->get_result_objects((isset($_POST['show_only_changed_results']) ? 'ONLY_CHANGED_RESULTS' : -1), true) as $i => $result_object)
 {
 	if(stripos($result_object->get_arguments_description(), 'frame time') !== false)
 		continue;
