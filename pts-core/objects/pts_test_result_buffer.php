@@ -30,9 +30,12 @@ class pts_test_result_buffer
 		$this->buffer_items = $buffer_items;
 		$this->buffer_contains = array();
 
-		foreach($buffer_items as $buffer_item)
+		if(!empty($buffer_items))
 		{
-			$this->buffer_contains[$buffer_item->get_result_identifier() . $buffer_item->get_result_value()] = 1;
+			foreach($buffer_items as $buffer_item)
+			{
+				$this->buffer_contains[$buffer_item->get_result_identifier() . $buffer_item->get_result_value()] = 1;
+			}
 		}
 	}
 	public function get_buffer_items()
