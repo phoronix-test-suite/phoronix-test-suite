@@ -640,9 +640,9 @@ class pts_test_run_manager
 				{
 					$this->result_file_writer->add_result_from_result_object_with_value_string($test_run_request, $test_run_request->get_result(), $test_run_request->test_result_buffer->get_values_as_string(), self::process_json_report_attributes($test_run_request));
 
-					if(isset($test_result->active['secondary-results']) && $test_result->active['secondary-results'] != null && is_array($test_result->active['secondary-results']))
+					if($test_run_request->secondary_linked_results != null && is_array($test_run_request->secondary_linked_results))
 					{
-						foreach($test_result->active['secondary-results'] as &$run_request_minor)
+						foreach($test_run_request->secondary_linked_results as &$run_request_minor)
 						{
 							if(strpos($run_request_minor->get_arguments_description(), $test_run_request->get_arguments_description()) === false)
 							{
