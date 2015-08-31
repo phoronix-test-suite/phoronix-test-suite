@@ -252,7 +252,11 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	}
 	public function test_install_progress_completed()
 	{
-		echo $this->progress_last_float != -1 ? str_repeat('.', $this->progress_char_count - $this->progress_char_pos) . PHP_EOL : null;
+		$rep = $this->progress_char_count - $this->progress_char_pos;
+		if($this->progress_last_float != -1 && $rep >= 0)
+		{
+			echo str_repeat('.', $rep) . PHP_EOL;
+		}
 		$this->progress_last_float == -1;
 	}
 	public function test_install_begin($test_install_request)
