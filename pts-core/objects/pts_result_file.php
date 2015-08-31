@@ -382,7 +382,7 @@ class pts_result_file
 
 			foreach($this->xml->Result as $result)
 			{
-				array_push($this->result_objects, $this->get_result_object($result));
+				array_push($this->result_objects, $this->get_result_object($result, $read_only_objects));
 			}
 		}
 
