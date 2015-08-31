@@ -349,7 +349,7 @@ class pts_result_file
 	}
 	public function get_result_object(&$result)
 	{
-		$test_profile = new pts_test_profile(($result->Identifier != null ? $result->Identifier->__toString() : null), null, !defined('PHOROMATIC_EXPORT_VIEWER'));
+		$test_profile = new pts_test_profile(($result->Identifier != null ? $result->Identifier->__toString() : null), null, false);
 		$test_profile->set_test_title($result->Title->__toString());
 		$test_profile->set_version($result->AppVersion->__toString());
 		$test_profile->set_result_scale($result->Scale->__toString());
