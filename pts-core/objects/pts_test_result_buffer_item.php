@@ -22,62 +22,72 @@
 
 class pts_test_result_buffer_item
 {
-	private $result_identifier;
-	private $result_final;
-	private $result_raw;
-	private $result_json;
-	private $result_min;
-	private $result_max;
+	private $r;
 
 	public function __construct(&$identifier, &$final, $raw = null, $json = null, $min_value = null, $max_value = null)
 	{
-		$this->result_identifier = $identifier;
-		$this->result_final = $final;
-		$this->result_raw = $raw;
-		$this->result_min = $min_value;
-		$this->result_max = $max_value;
-		$this->result_json = $json;
+		$this->r['identifier'] = $identifier;
+		$this->r['result-final'] = $final;
+		if($raw != null)
+		{
+			$this->r['result-raw'] = $raw;
+		}
+		if($min_value != null)
+		{
+			$this->r['result-min'] = $min_value;
+		}
+		if($max_value != null)
+		{
+			$this->r['result-max'] = $max_value;
+		}
+		if($json != null)
+		{
+			$this->r['result-json'] = $json;
+		}
 	}
 	public function reset_result_identifier($identifier)
 	{
-		$this->result_identifier = $identifier;
+		$this->r['identifier'] = $identifier;
 	}
 	public function reset_result_value($value)
 	{
-		$this->result_final = $value;
+		$this->r['result-final'] = $value;
 	}
 	public function reset_raw_value($value)
 	{
-		$this->result_raw = $value;
+		if($value != null || $this->r['result-raw'] != null)
+		{
+			$this->r['result-raw'] = $value;
+		}
 	}
 	public function get_result_identifier()
 	{
-		return $this->result_identifier;
+		return $this->r['identifier'];
 	}
 	public function get_result_value()
 	{
-		return $this->result_final;
+		return $this->r['result-final'];
 	}
 	public function get_min_result_value()
 	{
-		return $this->result_min;
+		return isset($this->r['result-min']) ? $this->r['result-min'] : null;
 	}
 	public function get_max_result_value()
 	{
-		return $this->result_max;
+		return isset($this->r['result-max']) ? $this->r['result-max'] : null;
 	}
 	public function get_result_raw()
 	{
-		return $this->result_raw;
+		return isset($this->r['result-raw']) ? $this->r['result-raw'] : null;
 	}
 	public function get_result_json()
 	{
-		if($this->result_json != null && !is_array($this->result_json))
+		if($this->r['result-json'] != null && !is_array($this->r['result-json']))
 		{
-			$this->result_json = json_decode($this->result_json, true);
+			$this->r['result-json'] = json_decode($this->r['result-json'], true);
 		}
 
-		return $this->result_json;
+		return $this->r['result-json'];
 	}
 	public function __toString()
 	{

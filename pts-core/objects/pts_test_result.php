@@ -24,25 +24,14 @@ class pts_test_result
 {
 	// Note in most pts-core code the initialized var is called $result_object
 	// Note in pts-core code the initialized var is also called $test_run_request
-	private $result = 0;
-	private $result_min = 0;
-	private $result_max = 0;
-	private $used_arguments;
-	private $used_arguments_description;
-	private $result_precision = 2;
-
 	public $test_profile;
 	public $test_result_buffer;
-
-	public $active_result = null;
-	public $active_min_result = null;
-	public $active_max_result = null;
-	public $secondary_linked_results = null;
+	public $active = null;
+	private $r;
 
 	public function __construct(&$test_profile)
 	{
 		$this->test_profile = $test_profile;
-		$this->result = 0;
 	}
 	public function __clone()
 	{
@@ -52,53 +41,59 @@ class pts_test_result
 	{
 		$this->test_result_buffer = $test_result_buffer;
 	}
-	public function set_used_arguments_description($arguments_description)
-	{
-		$this->used_arguments_description = $arguments_description;
-	}
 	public function set_result_precision($precision = 2)
 	{
-		$this->result_precision = $precision;
+		$this->r['result-precision'] = $precision;
 	}
 	public function get_result_precision()
 	{
-		return $this->result_precision;
+		return isset($this->r['result-precision']) ? $this->r['result-precision'] : 2;
 	}
 	public function set_used_arguments($used_arguments)
 	{
-		$this->used_arguments = $used_arguments;
+		if($used_arguments != null)
+		{
+			$this->r['args'] = $used_arguments;
+		}
 	}
 	public function get_arguments()
 	{
-		return $this->used_arguments;
+		return isset($this->r['args']) ? $this->r['args'] : null;
+	}
+	public function set_used_arguments_description($arguments_description)
+	{
+		$this->r['args-d'] = $arguments_description;
 	}
 	public function get_arguments_description()
 	{
-		return $this->used_arguments_description;
+		return isset($this->r['args-d']) ? $this->r['args-d'] : null;
 	}
 	public function set_result($result)
 	{
-		$this->result = $result;
+		if($result != 0)
+		{
+			$this->r['result'] = $result;
+		}
 	}
 	public function set_min_result($result)
 	{
-		$this->result_min = $result;
+		$this->r['min-result'] = $result;
 	}
 	public function set_max_result($result)
 	{
-		$this->result_max = $result;
+		$this->r['max-result'] = $result;
 	}
 	public function get_result()
 	{
-		return $this->result;
+		return isset($this->r['result']) ? $this->r['result'] : 0;
 	}
 	public function get_min_result()
 	{
-		return $this->result_min;
+		return isset($this->r['min-result']) ? $this->r['min-result'] : 0;
 	}
 	public function get_max_result()
 	{
-		return $this->result_max;
+		return isset($this->r['max-result']) ? $this->r['max-result'] : 0;
 	}
 	public function get_comparison_hash($show_version_and_attributes = true, $raw_output = true)
 	{
@@ -267,7 +262,7 @@ class pts_test_result
 			{
 				foreach($keys as $k)
 				{
-					$normalized = pts_math::set_precision(($this->test_result_buffer->buffer_items[$k]->get_result_value() / $divide_value), max(3, $this->result_precision));
+					$normalized = pts_math::set_precision(($this->test_result_buffer->buffer_items[$k]->get_result_value() / $divide_value), max(3, $this->get_result_precision()));
 					$this->test_result_buffer->buffer_items[$k]->reset_result_value($normalized);
 					$this->test_result_buffer->buffer_items[$k]->reset_raw_value(0);
 				}

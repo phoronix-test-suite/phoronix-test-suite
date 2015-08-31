@@ -205,24 +205,24 @@ class pts_test_result_parser
 		switch($test_run_request->test_profile->get_display_format())
 		{
 			case 'IMAGE_COMPARISON':
-				$test_run_request->active_result = self::parse_iqc_result($test_run_request->test_profile, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments);
+				$test_run_request->active['result'] = self::parse_iqc_result($test_run_request->test_profile, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments);
 				break;
 			case 'PASS_FAIL':
 			case 'MULTI_PASS_FAIL':
-				$test_run_request->active_result = self::parse_generic_result($test_run_request, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments);
+				$test_run_request->active['result'] = self::parse_generic_result($test_run_request, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments);
 				break;
 			case 'BAR_GRAPH':
 			default:
-				$test_run_request->active_result = self::parse_numeric_result($test_run_request, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments);
+				$test_run_request->active['result'] = self::parse_numeric_result($test_run_request, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments);
 
-				if($test_run_request->test_profile->get_display_format() == 'BAR_GRAPH' && !is_numeric($test_run_request->active_result))
+				if($test_run_request->test_profile->get_display_format() == 'BAR_GRAPH' && !is_numeric($test_run_request->active['result']))
 				{
-					$test_run_request->active_result = false;
+					$test_run_request->active['result'] = false;
 				}
 				else
 				{
-					$test_run_request->active_min_result = self::parse_numeric_result($test_run_request, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments, 'MIN');
-					$test_run_request->active_max_result = self::parse_numeric_result($test_run_request, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments, 'MAX');
+					$test_run_request->active['min-result'] = self::parse_numeric_result($test_run_request, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments, 'MIN');
+					$test_run_request->active['max-result'] = self::parse_numeric_result($test_run_request, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments, 'MAX');
 				}
 				break;
 		}
@@ -325,7 +325,7 @@ class pts_test_result_parser
 
 		if(!empty($extra_results))
 		{
-			$test_result->secondary_linked_results = $extra_results;
+			$test_result->active['secondary-results'] = $extra_results;
 		}
 	}
 	public static function calculate_end_result(&$test_result)
