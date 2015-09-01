@@ -71,7 +71,7 @@ class pts_result_file
 	{
 		return $this->get_identifier();
 	}
-	protected static function clean_input($input)
+	protected static function clean_input($value)
 	{
 		if(is_array($value))
 		{
