@@ -27,7 +27,6 @@ class pts_result_file
 	protected $extra_attributes = null;
 	protected $is_multi_way_inverted = false;
 	protected $file_location = false;
-	private $xml = null;
 	protected $raw_xml = null;
 
 	private $title = null;
@@ -38,7 +37,7 @@ class pts_result_file
 	private $preset_environment_variables = null;
 	private $systems = null;
 
-	public function __construct($result_file)
+	public function __construct($result_file, $read_only_result_objects = false)
 	{
 		$this->save_identifier = $result_file;
 		if(!isset($result_file[1024]) && defined('PTS_SAVE_RESULTS_PATH') && is_file(PTS_SAVE_RESULTS_PATH . $result_file . '/composite.xml'))
@@ -58,7 +57,46 @@ class pts_result_file
 		}
 
 		$xml_options = LIBXML_COMPACT | LIBXML_PARSEHUGE;
-		$this->xml = simplexml_load_string($result_file, 'SimpleXMLElement', $xml_options);
+		$xml = simplexml_load_string($result_file, 'SimpleXMLElement', $xml_options);
+
+		$this->title = self::clean_input($xml->Generated->Title);
+		$this->description = self::clean_input($xml->Generated->Description);
+		$this->notes = self::clean_input($xml->Generated->Notes);
+		$this->internal_tags = self::clean_input($xml->Generated->InternalTags);
+		$this->reference_id = self::clean_input($xml->Generated->ReferenceID);
+		$this->preset_environment_variables = self::clean_input($xml->Generated->PreSetEnvironmentVariables);
+
+		$this->systems = array();
+		foreach($xml->System as $s)
+		{
+			$system = new pts_result_file_system(self::clean_input($s->Identifier->__toString()), self::clean_input($s->Hardware->__toString()), self::clean_input($s->Software->__toString()), json_decode(self::clean_input($s->JSON), true), self::clean_input($s->User->__toString()), self::clean_input($s->Notes->__toString()), self::clean_input($s->TimeStamp->__toString()), self::clean_input($s->ClientVersion->__toString()));
+			array_push($this->systems, $system);
+		}
+
+		$this->result_objects = array();
+		foreach($xml->Result as $result)
+		{
+			$test_profile = new pts_test_profile(($result->Identifier != null ? $result->Identifier->__toString() : null), null, !$read_only_result_objects);
+			$test_profile->set_test_title($result->Title->__toString());
+			$test_profile->set_version($result->AppVersion->__toString());
+			$test_profile->set_result_scale($result->Scale->__toString());
+			$test_profile->set_result_proportion($result->Proportion->__toString());
+			$test_profile->set_display_format($result->DisplayFormat->__toString());
+
+			$test_result = new pts_test_result($test_profile);
+			$test_result->set_used_arguments_description($result->Description->__toString());
+			$test_result->set_used_arguments($result->Arguments->__toString());
+
+			$result_buffer = new pts_test_result_buffer();
+			foreach($result->Data->Entry as $entry)
+			{
+				$result_buffer->add_test_result($entry->Identifier->__toString(), $entry->Value->__toString(), $entry->RawString->__toString(), (isset($entry->JSON) ? $entry->JSON->__toString() : null));
+			}
+			$test_result->set_test_result_buffer($result_buffer);
+			array_push($this->result_objects, $test_result);
+		}
+
+		unset($xml);
 	}
 	public function validate()
 	{
@@ -108,16 +146,6 @@ class pts_result_file
 	}
 	public function get_systems()
 	{
-		if($this->systems == null)
-		{
-			$this->systems = array();
-			foreach($this->xml->System as $s)
-			{
-				$system = new pts_result_file_system(self::clean_input($s->Identifier->__toString()), self::clean_input($s->Hardware->__toString()), self::clean_input($s->Software->__toString()), json_decode(self::clean_input($s->JSON), true), self::clean_input($s->User->__toString()), self::clean_input($s->Notes->__toString()), self::clean_input($s->TimeStamp->__toString()), self::clean_input($s->ClientVersion->__toString()));
-				array_push($this->systems, $system);
-			}
-		}
-
 		return $this->systems;
 	}
 	public function get_system_hardware()
@@ -157,27 +185,27 @@ class pts_result_file
 	}
 	public function get_title()
 	{
-		return $this->title == null ? $this->get_title = self::clean_input($this->xml->Generated->Title) : $this->title;
+		return $this->title;
 	}
 	public function get_description()
 	{
-		return $this->description == null ? $this->description = self::clean_input($this->xml->Generated->Description) : $this->description;
+		return $this->description;
 	}
 	public function get_notes()
 	{
-		return $this->notes == null ? $this->notes = self::clean_input($this->xml->Generated->Notes) : $this->notes;
+		return $this->notes;
 	}
 	public function get_internal_tags()
 	{
-		return $this->internal_tags == null ? $this->internal_tags = self::clean_input($this->xml->Generated->InternalTags) : $this->internal_tags;
+		return $this->internal_tags;
 	}
 	public function get_reference_id()
 	{
-		return $this->reference_id == null ? $this->reference_id = self::clean_input($this->xml->Generated->ReferenceID) : $this->reference_id;
+		return $this->reference_id;
 	}
 	public function get_preset_environment_variables()
 	{
-		return $this->preset_environment_variables == null ? $this->preset_environment_variables = $this->xml->Generated->PreSetEnvironmentVariables : $this->preset_environment_variables;
+		return $this->preset_environment_variables;
 	}
 	public function get_test_count()
 	{
