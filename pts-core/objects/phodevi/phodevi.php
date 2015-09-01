@@ -135,7 +135,6 @@ class phodevi extends phodevi_base
 	}
 	public static function read_sensor($sensor)
 	{
-		$value = false;
 		$value = $sensor->read_sensor();
 
 		return $value;

@@ -89,28 +89,30 @@ class system_monitor extends pts_module_interface
 //		}
 
 		$monitor_all = in_array('all', $sensor_parameters);
-		foreach(phodevi::supported_sensors() as $sensor)
+		foreach (phodevi::supported_sensors() as $sensor)
 		{
 			// add sensor to monitoring list if:
-                        // a) we want to monitor all the available sensors,
-                        // b) we want to monitor all the available sensors of the specified type,
-                        // c) parameter array contains this sensor, eg. there exists value for $sensor_parameters[sens_type][sens_name]
-                        // ($sensor[0] is the type, $sensor[1] is the name, $sensor[2] is the class name)
-                        if($monitor_all || array_key_exists('all', $sensor_parameters[$sensor[0]])
-                                || (array_key_exists($sensor[0], $sensor_parameters) && array_key_exists($sensor[1], $sensor_parameters[$sensor[0]]) ) )
+			// a) we want to monitor all the available sensors,
+			// b) we want to monitor all the available sensors of the specified type,
+			// c) parameter array contains this sensor, eg. there exists value for $sensor_parameters[sens_type][sens_name]
+			// ($sensor[0] is the type, $sensor[1] is the name, $sensor[2] is the class name)
+			if ($monitor_all  || (array_key_exists($sensor[0], $sensor_parameters) 
+				&& (array_key_exists($sensor[1], $sensor_parameters[$sensor[0]]) || array_key_exists('all', $sensor_parameters[$sensor[0]]) )))
 			{
 				// create objects for all specified instances of the sensor
-                                foreach ($sensor_parameters[$sensor[0]][$sensor[1]] as $instance => $params)
-                                {
-                                        $sensor_object = new $sensor[2]($instance, $params);
-                                        array_push(self::$to_monitor, $sensor_object);
-                                        pts_module::save_file('logs/' . phodevi::sensor_object_identifier($sensor_object));
-                                }
-
+				foreach ($sensor_parameters[$sensor[0]][$sensor[1]] as $instance => $params)
+				{
+					if (call_user_func(array($sensor[2], 'parameter_check'), $params) === true)
+					{
+						$sensor_object = new $sensor[2]($instance, $params);
+						array_push(self::$to_monitor, $sensor_object);
+						pts_module::save_file('logs/' . phodevi::sensor_object_identifier($sensor_object));
+					}	
+				}
 			}
 		}
 
-                //TODO rewrite when new monitoring system is finished
+		//TODO rewrite when new monitoring system is finished
 //		if(in_array('i915_energy', $to_show) && is_readable('/sys/kernel/debug/dri/0/i915_energy'))
 //		{
 //			// For now the Intel monitoring is a special case separate from the rest
@@ -398,7 +400,6 @@ class system_monitor extends pts_module_interface
         // parse JSON file containing parameters of monitored sensors
         private static function prepare_sensor_parameters()
         {
-
                 if (!is_file(pts_module::read_variable('MONITOR_PARAM_FILE')))
                 {
                         return null;

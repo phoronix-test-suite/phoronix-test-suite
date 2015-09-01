@@ -27,40 +27,71 @@ class cpu_usage_per_core extends phodevi_sensor
 	const SENSOR_UNIT = 'Percent';
 
 	const PROC_STAT_IDLE_COL = 3;		//CPU idle time - it's the third number in the line (starting from 0)
-
-	private $core_to_monitor = -1;          //by default load summary of all CPUs is calculated
+	const CPU_SUMMARY = -1;
+	
+	private $core_to_monitor;
 
 	function __construct($instance, $parameter_array)
 	{
-                $cpu_number = 0;    //TODO change to summary
-                $this->instance_number = intval($instance);
+		parent::__construct($instance, $parameter_array);
+		$cpu_number = self::CPU_SUMMARY;
 
-                if ($parameter_array != null && array_key_exists('core_number', $parameter_array))
-                {
-                        $cpu_number = $parameter_array['core_number'];
-                }
-                //core number correctness check
+		if ($parameter_array != null && array_key_exists('core_number', $parameter_array))
+		{
+			$cpu_number = $parameter_array['core_number'];
+		}
+		//core number correctness check
 		if ($cpu_number === "summary")
-                {
-                        $this->core_to_monitor = -1;
-                }
-                elseif ($cpu_number >= 0 || $cpu_number < phodevi_cpu::cpu_core_count())
-                {
-                        $this->core_to_monitor = intval($cpu_number);
-                }
-        }
+		{
+			$this->core_to_monitor = self::CPU_SUMMARY;
+		} 
+		elseif ($cpu_number >= 0 || $cpu_number < phodevi_cpu::cpu_core_count())
+		{
+			$this->core_to_monitor = intval($cpu_number);
+		}
+	}
+	
+	public static function parameter_check($parameter_array)
+	{
+		if ($parameter_array === null)
+		{
+			return true;
+		}
+		
+		if (is_array($parameter_array) && array_key_exists('core_number', $parameter_array))
+		{
+			$cpu_number = $parameter_array['core_number'];
+			
+			if ($cpu_number === "summary")
+			{
+				return true;
+			}
+			
+			if (phodevi::is_linux())
+			{
+				$cpu_count = intval(shell_exec("nproc"));
+				
+				if (is_numeric($cpu_number) && $cpu_number >= 0 && $cpu_number < $cpu_count)
+				{
+					return true;
+				}
+			}
+		}
+		
+		return false;
+	}
 
-        public function get_readable_params()
-        {
-                if ($this->core_to_monitor === -1)
-                {
-                        return 'Summary';
-                }
-                else
-                {
-                        return 'Core: ' . $this->core_to_monitor;
-                }
-        }
+	public function get_readable_params()
+	{
+		if ($this->core_to_monitor === self::CPU_SUMMARY)
+		{
+			return 'Summary';
+		}
+		else
+		{
+			return 'Core: ' . $this->core_to_monitor;
+		}
+	}
 
 	public function support_check()
 	{
