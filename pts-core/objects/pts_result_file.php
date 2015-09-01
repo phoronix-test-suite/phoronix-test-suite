@@ -73,13 +73,9 @@ class pts_result_file
 	}
 	protected static function clean_input($input)
 	{
-		return strip_tags($input);
-	}
-	public function sanitize_user_strings($value)
-	{
 		if(is_array($value))
 		{
-			return array_map(array($this, 'sanitize_user_strings'), $value);
+			return array_map(array($this, 'clean_input'), $value);
 		}
 		else
 		{
@@ -109,9 +105,7 @@ class pts_result_file
 		{
 			$system = new pts_result_file_system(self::clean_input($s->Identifier->__toString()), self::clean_input($s->Hardware->__toString()), self::clean_input($s->Software->__toString()), json_decode(self::clean_input($s->JSON), true), self::clean_input($s->User->__toString()), self::clean_input($s->Notes->__toString()), self::clean_input($s->TimeStamp->__toString()), self::clean_input($s->ClientVersion->__toString()));
 			array_push($systems, $system);
-
 		}
-
 		return $systems;
 	}
 	public function get_system_hardware()
@@ -122,7 +116,6 @@ class pts_result_file
 		{
 			array_push($hw, $s->get_hardware());
 		}
-
 		return $hw;
 	}
 	public function get_system_software()
@@ -133,7 +126,6 @@ class pts_result_file
 		{
 			array_push($sw, $s->get_software());
 		}
-
 		return $sw;
 	}
 	public function get_system_identifiers()
@@ -144,7 +136,6 @@ class pts_result_file
 		{
 			array_push($ids, $s->get_identifier());
 		}
-
 		return $ids;
 	}
 	public function get_system_count()
@@ -154,23 +145,23 @@ class pts_result_file
 	}
 	public function get_title()
 	{
-		return $this->sanitize_user_strings($this->xml->Generated->Title);
+		return self::clean_input($this->xml->Generated->Title);
 	}
 	public function get_description()
 	{
-		return $this->sanitize_user_strings($this->xml->Generated->Description);
+		return self::clean_input($this->xml->Generated->Description);
 	}
 	public function get_notes()
 	{
-		return $this->sanitize_user_strings($this->xml->Generated->Notes);
+		return self::clean_input($this->xml->Generated->Notes);
 	}
 	public function get_internal_tags()
 	{
-		return $this->sanitize_user_strings($this->xml->Generated->InternalTags);
+		return self::clean_input($this->xml->Generated->InternalTags);
 	}
 	public function get_reference_id()
 	{
-		return $this->sanitize_user_strings($this->xml->Generated->ReferenceID);
+		return self::clean_input($this->xml->Generated->ReferenceID);
 	}
 	public function get_preset_environment_variables()
 	{
