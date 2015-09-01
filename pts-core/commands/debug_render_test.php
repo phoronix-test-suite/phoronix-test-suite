@@ -103,6 +103,9 @@ class debug_render_test implements pts_option_interface
 			file_put_contents(PATH_TO_EXPORTED_PHOROMATIC_DATA . $REQUESTED . '.html', $html_dump . '</body></html>');
 		}
 		echo PHP_EOL . 'RENDER TEST TOOK: ' . (time() - $start) . PHP_EOL . PHP_EOL;
+		echo PHP_EOL . 'PEAK MEMORY USAGE: ' . (str_repeat(' ', $longest_c - strlen('PEAK MEMORY USAGE'))) . round(memory_get_peak_usage(true) / 1048576, 3) . ' MB';
+		echo PHP_EOL . 'PEAK MEMORY USAGE (emalloc): ' . (str_repeat(' ', $longest_c - strlen('PEAK MEMORY USAGE (emalloc)'))) . round(memory_get_peak_usage() / 1048576, 3) . ' MB';
+		echo PHP_EOL;
 	}
 }
 
