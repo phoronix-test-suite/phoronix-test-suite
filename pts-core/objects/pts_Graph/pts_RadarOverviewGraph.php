@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2012, Phoronix Media
-	Copyright (C) 2010 - 2012, Michael Larabel
+	Copyright (C) 2010 - 2015, Phoronix Media
+	Copyright (C) 2010 - 2015, Michael Larabel
 	pts_RadarOverviewGraph.php: New display type being derived from pts_OverviewGraph... WIP
 
 	This program is free software; you can redistribute it and/or modify
@@ -41,7 +41,7 @@ class pts_RadarOverviewGraph extends pts_Graph
 
 		// System Identifiers
 		$system_identifiers = $result_file->get_system_identifiers();
-		if($result_file->is_multi_way_comparison() || count($result_file->get_test_titles()) < 3 || count($system_identifiers) < 3)
+		if($result_file->is_multi_way_comparison() || count($system_identifiers) < 3)
 		{
 			// Multi way comparisons currently render the overview graph as blank
 			// If there aren't more than 3 tests then don't render

@@ -407,8 +407,11 @@ class pts_tests
 			if($search == 'ALL' || $search == 'RESULTS')
 			{
 				$matched = false;
-				foreach($result_file->get_result_identifiers() as $result_identifier)
+				$result_titles = array();
+				foreach($result_file->get_result_objects() as $result_object)
 				{
+					$result_identifier = $result_object->test_profile->get_title();
+
 					if(stripos($result_identifier, $query) !== false)
 					{
 						array_push($matches, $file);

@@ -57,7 +57,7 @@ class result_file_to_pdf implements pts_option_interface
 		$hardware_r = $result_file->get_system_hardware();
 		$software_r = $result_file->get_system_software();
 		$notes_r = $result_file->get_system_notes();
-		$tests = $result_file->get_test_titles();
+		$results = $result_file->get_result_objects();
 
 		$pdf->SetSubject($result_file->get_title() . ' Benchmarks');
 		$pdf->SetKeywords(implode(', ', $identifiers));
@@ -83,7 +83,7 @@ class result_file_to_pdf implements pts_option_interface
 
 		$pdf->AddPage();
 		$placement = 1;
-		for($i = 1; $i <= count($tests); $i++)
+		for($i = 1; $i <= count($results); $i++)
 		{
 			if(is_file($tdir . 'result-graphs/' . $i . '.png'))
 			{
@@ -95,7 +95,7 @@ class result_file_to_pdf implements pts_option_interface
 			{
 				$placement = 0;
 
-				if($i != count($tests))
+				if($i != count($results))
 				{
 					$pdf->AddPage();
 				}

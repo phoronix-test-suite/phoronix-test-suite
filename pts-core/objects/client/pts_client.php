@@ -1072,8 +1072,14 @@ class pts_client
 				}
 			}
 		}
+		$result_objects = $result_file->get_result_objects();
+		$test_titles = array();
+		foreach($result_objects as &$result_object)
+		{
+			array_push($test_titles, $result_object->test_profile->get_title());
+		}
 
-		foreach($result_file->get_result_objects() as $key => $result_object)
+		foreach($result_objects as $key => &$result_object)
 		{
 			$save_to = $save_to_dir;
 
@@ -1086,11 +1092,10 @@ class pts_client
 					if($result_file->is_multi_way_comparison(null, $extra_attributes) || pts_client::read_env('GRAPH_GROUP_SIMILAR'))
 					{
 						$table_keys = array();
-						$titles = $result_file->get_test_titles();
 
-						foreach($titles as $this_title_index => $this_title)
+						foreach($test_titles as $this_title_index => $this_title)
 						{
-							if($this_title == $titles[$key])
+							if($this_title == $test_titles[$key])
 							{
 								array_push($table_keys, $this_title_index);
 							}

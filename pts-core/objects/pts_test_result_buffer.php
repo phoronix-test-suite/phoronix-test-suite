@@ -28,7 +28,6 @@ class pts_test_result_buffer
 	public function __construct($buffer_items = array())
 	{
 		$this->buffer_items = $buffer_items;
-		$this->buffer_contains = array();
 
 		if(!empty($buffer_items))
 		{

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2014, Phoronix Media
-	Copyright (C) 2010 - 2014, Michael Larabel
+	Copyright (C) 2010 - 2015, Phoronix Media
+	Copyright (C) 2010 - 2015, Michael Larabel
 	pts_OverviewGraph.php: A graping object to create an "overview" / mini graphs of a pts_result_file for pts_Graph
 
 	This program is free software; you can redistribute it and/or modify
@@ -57,11 +57,13 @@ class pts_OverviewGraph extends pts_Graph
 		}
 
 		$result_objects = array();
+		$test_titles = array();
 		foreach($result_file->get_result_objects() as $result_object)
 		{
 			if($result_object->test_profile->get_display_format() == 'BAR_GRAPH')
 			{
 				array_push($result_objects, $result_object);
+				array_push($test_titles, $result_object->test_profile->get_title());
 			}
 		}
 
@@ -78,8 +80,7 @@ class pts_OverviewGraph extends pts_Graph
 		$this->i['identifier_size'] = 6.5;
 		$this->i['graph_width'] = 1000;
 
-		$titles = $result_file->get_test_titles();
-		list($longest_title_width, $longest_title_height) = pts_svg_dom::estimate_text_dimensions(pts_strings::find_longest_string($titles), $this->i['identifier_size']);
+		list($longest_title_width, $longest_title_height) = pts_svg_dom::estimate_text_dimensions(pts_strings::find_longest_string($test_titles), $this->i['identifier_size']);
 
 		$this->i['left_start'] += 20;
 		$this->graphs_per_row = min((count($this->system_identifiers) > 10 ? 6 : 10), floor(($this->i['graph_width'] - $this->i['left_start'] - $this->i['left_end_right']) / ($longest_title_width + 4)));

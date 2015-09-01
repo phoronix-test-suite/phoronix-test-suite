@@ -51,7 +51,7 @@ class pts_result_file_analyzer
 		{
 			// The hardware and software is maintained throughout the testing, so if there's a change in results its something we aren't monitoring
 			// TODO XXX: Not sure this below check is needed anymore...
-			if(true || (count($hw) > 2 && $result_file->get_unique_test_count() != count($hw) && $result_file->get_test_count() != count($hw)))
+			if(true || (count($hw) > 2 && $result_file->get_test_count() != count($hw)))
 			{
 				$desc = array('Unknown', implode(', ', $identifiers));
 			}

@@ -22,13 +22,13 @@
 
 class pts_result_file
 {
-	private $save_identifier = null;
-	private $result_objects = null;
-	private $extra_attributes = null;
-	private $is_multi_way_inverted = false;
-	private $file_location = false;
+	protected $save_identifier = null;
+	protected $result_objects = null;
+	protected $extra_attributes = null;
+	protected $is_multi_way_inverted = false;
+	protected $file_location = false;
 	private $xml;
-	private $raw_xml;
+	protected $raw_xml;
 
 	public function __construct($result_file)
 	{
@@ -103,7 +103,7 @@ class pts_result_file
 		$hw = array();
 		foreach($this->xml->System as $sys)
 		{
-				array_push($hw, $sys->Hardware->__toString());
+			array_push($hw, $sys->Hardware->__toString());
 		}
 
 		return $this->sanitize_user_strings($hw);
@@ -113,7 +113,7 @@ class pts_result_file
 		$sw = array();
 		foreach($this->xml->System as $sys)
 		{
-				array_push($sw, $sys->Software->__toString());
+			array_push($sw, $sys->Software->__toString());
 		}
 
 		return $this->sanitize_user_strings($sw);
@@ -123,7 +123,7 @@ class pts_result_file
 		$js = array();
 		foreach($this->xml->System as $sys)
 		{
-				array_push($js, $sys->JSON);
+			array_push($js, $sys->JSON);
 		}
 
 		return $this->sanitize_user_strings(array_map(array('pts_arrays', 'json_decode'), $js));
@@ -133,7 +133,7 @@ class pts_result_file
 		$users = array();
 		foreach($this->xml->System as $sys)
 		{
-				array_push($users, $sys->User->__toString());
+			array_push($users, $sys->User->__toString());
 		}
 
 		return $this->sanitize_user_strings($users);
@@ -143,7 +143,7 @@ class pts_result_file
 		$notes = array();
 		foreach($this->xml->System as $sys)
 		{
-				array_push($notes, $sys->Notes->__toString());
+			array_push($notes, $sys->Notes->__toString());
 		}
 
 		return $this->sanitize_user_strings($notes);
@@ -153,7 +153,7 @@ class pts_result_file
 		$times = array();
 		foreach($this->xml->System as $sys)
 		{
-				array_push($times, $sys->TimeStamp->__toString());
+			array_push($times, $sys->TimeStamp->__toString());
 		}
 
 		return $this->sanitize_user_strings($times);
@@ -163,7 +163,7 @@ class pts_result_file
 		$versions = array();
 		foreach($this->xml->System as $sys)
 		{
-				array_push($versions, $sys->TestClientVersion->__toString());
+			array_push($versions, $sys->TestClientVersion->__toString());
 		}
 
 		return $this->sanitize_user_strings($versions);
@@ -204,27 +204,9 @@ class pts_result_file
 	{
 		return $this->xml->Generated->PreSetEnvironmentVariables;
 	}
-	public function get_test_titles()
-	{
-		$titles = array();
-		foreach($this->xml->Result as $result)
-		{
-			array_push($titles, $result->Title->__toString());
-		}
-
-		return $titles;
-	}
-	public function get_unique_test_titles()
-	{
-		return array_unique($this->get_test_titles());
-	}
 	public function get_test_count()
 	{
-		return count($this->get_test_titles());
-	}
-	public function get_unique_test_count()
-	{
-		return count($this->get_unique_test_titles());
+		return count($this->get_result_objects());
 	}
 	public function get_contained_tests_hash($raw_output = true)
 	{
@@ -338,17 +320,7 @@ class pts_result_file
 	{
 		$this->result_objects = $result_objects;
 	}
-	public function get_result_identifiers()
-	{
-		$ids = array();
-		foreach($this->xml->Result as $result)
-		{
-			array_push($ids, $result->Identifier->__toString());
-		}
-
-		return $ids;
-	}
-	public function get_result_object(&$result, $read_only_objects = false)
+	protected function get_result_object(&$result, $read_only_objects = false)
 	{
 		$test_profile = new pts_test_profile(($result->Identifier != null ? $result->Identifier->__toString() : null), null, !$read_only_objects);
 		$test_profile->set_test_title($result->Title->__toString());
@@ -369,10 +341,6 @@ class pts_result_file
 		$test_result->set_test_result_buffer($result_buffer);
 
 		return $test_result;
-	}
-	public function get_result_iterator()
-	{
-		return $this->xml->Result;
 	}
 	public function get_result_objects($select_indexes = -1, $read_only_objects = false)
 	{

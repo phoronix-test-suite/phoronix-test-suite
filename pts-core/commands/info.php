@@ -137,10 +137,19 @@ class info implements pts_option_interface
 				echo PHP_EOL . 'Test Result Identifiers:' . PHP_EOL;
 				echo pts_user_io::display_text_list($o->get_system_identifiers());
 
-				if(count(($tests = $o->get_unique_test_titles())) > 0)
+				$test_titles = array();
+				foreach($o->get_result_objects() as $result_object)
+				{
+					if($result_object->test_profile->get_display_format() == 'BAR_GRAPH')
+					{
+						array_push($test_titles, $result_object->test_profile->get_title());
+					}
+				}
+
+				if(count($test_titles) > 0)
 				{
 					echo PHP_EOL . 'Contained Tests:' . PHP_EOL;
-					echo pts_user_io::display_text_list($tests);
+					echo pts_user_io::display_text_list(array_unique($test_titles));
 				}
 				echo PHP_EOL;
 			}
