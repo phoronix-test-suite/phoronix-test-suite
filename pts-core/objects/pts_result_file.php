@@ -94,7 +94,7 @@ class pts_result_file
 				$result_buffer->add_test_result($entry->Identifier->__toString(), $entry->Value->__toString(), $entry->RawString->__toString(), (isset($entry->JSON) ? $entry->JSON->__toString() : null));
 			}
 			$test_result->set_test_result_buffer($result_buffer);
-			$this->result_objects[$test_result->get_comparison_hash()] = $test_result;
+			$this->result_objects[$test_result->get_comparison_hash(true, false)] = $test_result;
 		}
 
 		unset($xml);
@@ -348,16 +348,6 @@ class pts_result_file
 	}
 	public function get_result_objects($select_indexes = -1, $read_only_objects = false)
 	{
-		if($this->result_objects == null)
-		{
-			$this->result_objects = array();
-
-			foreach($this->xml->Result as $result)
-			{
-				array_push($this->result_objects, $this->get_result_object($result, $read_only_objects));
-			}
-		}
-
 		if($select_indexes != -1 && $select_indexes !== null)
 		{
 			$objects = array();
@@ -420,7 +410,7 @@ class pts_result_file
 			}
 		}
 
-		foreach($this->result_objects as $result)
+		foreach($this->result_objects as &$result)
 		{
 			$result->test_result_buffer->rename_buffer_item($from, $to);
 		}
@@ -435,19 +425,19 @@ class pts_result_file
 			}
 		}
 
-		foreach($result_file->get_result_objects as $result)
+		foreach($result_file->get_result_objects() as $result)
 		{
-			$ch = $result->get_comparison_hash();
-			if(isset($this->result_object[$ch]))
+			$ch = $result->get_comparison_hash(true, false);
+			if(isset($this->result_objects[$ch]) && isset($this->result_objects[$ch]->test_result_buffer))
 			{
 				foreach($result->test_result_buffer->get_buffer_items() as $bi)
 				{
-					$this->result_object[$ch]->test_result_buffer->add_buffer_item($bi);
+					$this->result_objects[$ch]->test_result_buffer->add_buffer_item($bi);
 				}
 			}
 			else
 			{
-				$this->result_object[$ch] = $ch;
+				$this->result_objects[$ch] = $result;
 			}
 		}
 	}

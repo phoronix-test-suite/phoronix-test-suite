@@ -50,7 +50,7 @@ class debug_render_test implements pts_option_interface
 			$triggers = $tracker['triggers'];
 			echo PHP_EOL . 'STARTING RENDER TEST ON: ' . $REQUESTED . ' (' . count($triggers) . ' Triggers)' . PHP_EOL;
 			$length = count($tracker['triggers']);
-			$result_file = array();
+			$result_files = array();
 
 			foreach($triggers as $trigger)
 			{
@@ -63,16 +63,12 @@ class debug_render_test implements pts_option_interface
 				{
 					// Add to result file
 					$system_name = basename(dirname($composite_xml)) . ': ' . $trigger;
-					array_push($result_file, new pts_result_merge_select($composite_xml, null, $system_name));
+					array_push($result_files, new pts_result_merge_select($composite_xml, null, $system_name));
 				}
 			}
-			echo 'STARTING WRITER; ';
-			$writer = new pts_result_file_writer(null);
-			$attributes = array();
 			echo 'STARTING MERGE; ';
-			pts_merge::merge_test_results_process($writer, $result_file, $attributes);
+			$result_file = pts_result_file_merger::merge($result_files);
 			echo 'MAKING NEW RESULT FILE; ';
-			$result_file = new pts_result_file($writer->get_xml());
 			$extra_attributes = array('reverse_result_buffer' => true, 'force_simple_keys' => true, 'force_line_graph_compact' => true, 'force_tracking_line_graph' => true);
 			//$extra_attributes['normalize_result_buffer'] = true;
 
@@ -88,9 +84,6 @@ class debug_render_test implements pts_option_interface
 <body>';
 			foreach($result_file->get_result_objects((isset($_POST['show_only_changed_results']) ? 'ONLY_CHANGED_RESULTS' : -1)) as $i => $result_object)
 			{
-				if(stripos($result_object->get_arguments_description(), 'frame time') !== false)
-					continue;
-
 				echo $result_object->test_profile->get_title() . ' ';
 				$html_dump .= '<h3>' . $result_object->get_arguments_description() . '</h3>';
 				$html_dump .= pts_render::render_graph_inline_embed($result_object, $result_file, $extra_attributes);
