@@ -28,7 +28,7 @@ class cpu_usage_per_core extends phodevi_sensor
 
 	const PROC_STAT_IDLE_COL = 3;		//CPU idle time - it's the third number in the line (starting from 0)
 	const CPU_SUMMARY = -1;
-	
+
 	private $core_to_monitor;
 
 	function __construct($instance, $parameter_array)
@@ -44,40 +44,40 @@ class cpu_usage_per_core extends phodevi_sensor
 		if ($cpu_number === "summary")
 		{
 			$this->core_to_monitor = self::CPU_SUMMARY;
-		} 
+		}
 		elseif ($cpu_number >= 0 || $cpu_number < phodevi_cpu::cpu_core_count())
 		{
 			$this->core_to_monitor = intval($cpu_number);
 		}
 	}
-	
+
 	public static function parameter_check($parameter_array)
 	{
 		if ($parameter_array === null)
 		{
 			return true;
 		}
-		
+
 		if (is_array($parameter_array) && array_key_exists('core_number', $parameter_array))
 		{
 			$cpu_number = $parameter_array['core_number'];
-			
+
 			if ($cpu_number === "summary")
 			{
 				return true;
 			}
-			
+
 			if (phodevi::is_linux())
 			{
 				$cpu_count = intval(shell_exec("nproc"));
-				
+
 				if (is_numeric($cpu_number) && $cpu_number >= 0 && $cpu_number < $cpu_count)
 				{
 					return true;
 				}
 			}
 		}
-		
+
 		return false;
 	}
 
@@ -106,7 +106,8 @@ class cpu_usage_per_core extends phodevi_sensor
 		if(phodevi::is_linux() || phodevi::is_bsd())
 		{
 			$start_load = self::cpu_load_array($this->core_to_monitor);
-			sleep(1);
+			//sleep(1);
+			usleep(500000);
 			$end_load = self::cpu_load_array($this->core_to_monitor);
 
 			for($i = 0; $i < count($end_load); $i++)
