@@ -153,7 +153,7 @@ else
 	$cut_duration = 30;
 }
 
-$result_file = array();
+$result_files = array();
 $triggers = array_splice($tracker['triggers'], 0, $cut_duration);
 
 foreach($triggers as $trigger)
@@ -167,14 +167,15 @@ foreach($triggers as $trigger)
 	{
 		// Add to result file
 		$system_name = basename(dirname($composite_xml)) . ': ' . $trigger;
-		array_push($result_file, new pts_result_merge_select($composite_xml, null, $system_name));
+		array_push($result_files, new pts_result_merge_select($composite_xml, null, $system_name));
 	}
 }
 
-$writer = new pts_result_file_writer(null);
 $attributes = array();
-pts_merge::merge_test_results_process($writer, $result_file, $attributes);
-$result_file = new pts_result_file($writer->get_xml());
+$result_file = pts_result_file_merger::merge($result_files);
+//$writer = new pts_result_file_writer(null);
+//pts_merge::merge_test_results_process($writer, $result_files, $attributes);
+//$result_file = new pts_result_file($writer->get_xml());
 $extra_attributes = array('reverse_result_buffer' => true, 'force_simple_keys' => true, 'force_line_graph_compact' => true, 'force_tracking_line_graph' => true);
 
 if(isset($_POST['normalize_results']) && $_POST['normalize_results'])
@@ -202,7 +203,7 @@ foreach($result_file->get_result_objects((isset($_POST['show_only_changed_result
 }
 echo '</div>';
 
-$table = new pts_ResultFileSystemsTable($result_file);
+//$table = new pts_ResultFileSystemsTable($result_file);
 echo '<p style="text-align: center; overflow: auto;" class="result_object">' . pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes) . '</p>';
 
 

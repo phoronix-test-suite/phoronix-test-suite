@@ -36,6 +36,7 @@ class pts_result_file
 	private $reference_id = null;
 	private $preset_environment_variables = null;
 	private $systems = null;
+	private $is_tracker = -1;
 
 	public function __construct($result_file, $read_only_result_objects = false)
 	{
@@ -233,10 +234,7 @@ class pts_result_file
 	{
 		// If there are more than five results and the only changes in the system identifier names are numeric changes, assume it's a tracker
 		// i.e. different dates or different versions of a package being tested
-
-		static $is_tracker = -1;
-
-		if($is_tracker === -1)
+		if($this->is_tracker === -1)
 		{
 			$identifiers = $this->get_system_identifiers();
 
@@ -252,27 +250,27 @@ class pts_result_file
 					$identifier = pts_strings::remove_from_string($identifier, pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DASH | pts_strings::CHAR_DECIMAL);
 				}
 
-				$is_tracker = count(array_unique($identifiers)) <= 1 || $is_sha1_hash || $has_sha1_shorthash;
+				$this->is_tracker = count(array_unique($identifiers)) <= 1 || $is_sha1_hash || $has_sha1_shorthash;
 
-				if($is_tracker)
+				if($this->is_tracker)
 				{
 					$hw = $this->get_system_hardware();
 
 					if(isset($hw[1]) && count($hw) == count(array_unique($hw)))
 					{
 						// it can't be a results tracker if the hardware is always different
-						$is_tracker = false;
+						$this->is_tracker = false;
 					}
 				}
 			}
 			else
 			{
 				// Definitely not a tracker as not over 5 results
-				$is_tracker = false;
+				$this->is_tracker = false;
 			}
 		}
 
-		return $is_tracker;
+		return $this->is_tracker;
 	}
 	public function is_multi_way_comparison($identifiers = false, $extra_attributes = null)
 	{

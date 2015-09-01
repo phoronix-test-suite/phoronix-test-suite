@@ -51,6 +51,7 @@ class pts_result_file_merger
 			$merge_to_result_file->add_to_result_file($result_file);
 			unset($result_file);
 		}
+		//$result_file->handle_attributes($pass_attributes);
 		return $merge_to_result_file;
 	}
 }

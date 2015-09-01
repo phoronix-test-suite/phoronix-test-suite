@@ -91,7 +91,7 @@ class debug_render_test implements pts_option_interface
 			}
 
 			$table = new pts_ResultFileSystemsTable($result_file);
-			$html_dump .= pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes);
+			//$html_dump .= pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes);
 			echo PHP_EOL . PHP_EOL . 'RENDER TEST ON: ' . $REQUESTED . ' TOOK ' . (time() - $this_render_test) . PHP_EOL;
 			file_put_contents(PATH_TO_EXPORTED_PHOROMATIC_DATA . $REQUESTED . '.html', $html_dump . '</body></html>');
 		}
