@@ -78,6 +78,10 @@ class pts_result_file_system
 	{
 		return $this->client_version;
 	}
+	public function set_identifier($new_id)
+	{
+		$this->identifier = $new_id;
+	}
 }
 
 ?>

@@ -83,6 +83,29 @@ class pts_test_result_buffer
 	{
 		pts_test_result_buffer_extra::add_composite_result($this, $force);
 	}
+	public function rename_buffer_item($from, $to)
+	{
+		if($from == null && count($this->buffer_items) == 1)
+		{
+			foreach($this->buffer_items as &$buffer_item)
+			{
+				$buffer_item->reset_result_identifier($to);
+			}
+			return true;
+		}
+		else
+		{
+			foreach($this->buffer_items as &$buffer_item)
+			{
+				if($buffer_item->get_result_identifier() == $from)
+				{
+					$buffer_item->reset_result_identifier($to);
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 	public function auto_shorten_buffer_identifiers($identifier_shorten_index = false)
 	{
 		// If there's a lot to plot, try to auto-shorten the identifiers

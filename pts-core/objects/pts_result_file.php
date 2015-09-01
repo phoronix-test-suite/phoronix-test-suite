@@ -397,6 +397,34 @@ class pts_result_file
 		$simple_xml = simplexml_load_string($file);
 		return json_encode($simple_xml);
 	}
+	public function rename_run_in_result_file($from, $to)
+	{
+		if($from == null)
+		{
+			if(count($this->systems) == 1)
+			{
+				foreach($this->systems as &$s)
+				{
+					$s->set_identifier($to);
+				}
+			}
+		}
+		else
+		{
+			foreach($this->systems as &$s)
+			{
+				if($s->get_identifier() == $from)
+				{
+					$s->set_identifier($to);
+				}
+			}
+		}
+
+		foreach($this->result_objects as $result)
+		{
+			$result->test_result_buffer->rename_buffer_item($from, $to);
+		}
+	}
 	public function add_to_result_file(&$result_file)
 	{
 		foreach($result_file->get_systems() as $s)
@@ -412,7 +440,7 @@ class pts_result_file
 			$ch = $result->get_comparison_hash();
 			if(isset($this->result_object[$ch]))
 			{
-				foreach($result->get_buffer_items() as $bi)
+				foreach($result->test_result_buffer->get_buffer_items() as $bi)
 				{
 					$this->result_object[$ch]->test_result_buffer->add_buffer_item($bi);
 				}
