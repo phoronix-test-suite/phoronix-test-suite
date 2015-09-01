@@ -24,7 +24,15 @@ class pts_result_file_analyzer
 {
 	public static function analyze_result_file_intent(&$result_file, &$flagged_results = -1, $return_all_changed_indexes = false)
 	{
-		$identifiers = $result_file->get_system_identifiers();
+		$identifiers = array();
+		$hw = array();
+		$sw = array();
+		foreach($result_file->get_systems() as $system)
+		{
+			array_push($identifiers, $system->get_identifier());
+			array_push($hw, $system->get_hardware());
+			array_push($sw, $system->get_software());
+		}
 
 		if(count($identifiers) < 2)
 		{
@@ -41,9 +49,7 @@ class pts_result_file_analyzer
 			}
 		}
 
-		$hw = $result_file->get_system_hardware();
 		$hw_unique = array_unique($hw);
-		$sw = $result_file->get_system_software();
 		$sw_unique = array_unique($sw);
 		$desc = false;
 

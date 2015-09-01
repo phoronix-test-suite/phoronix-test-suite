@@ -244,7 +244,14 @@ class pts_test_run_manager
 	public function result_already_contains_identifier()
 	{
 		$result_file = new pts_result_file($this->file_name);
-		return in_array($this->results_identifier, $result_file->get_system_identifiers());
+		$existing_identifiers = array();
+
+		foreach($result_file->get_systems() as $s)
+		{
+			array_push($existing_identifiers, $s->get_identifier());
+		}
+
+		return in_array($this->results_identifier, $existing_identifiers);
 	}
 	public function set_save_name($save_name, $is_new_save = true)
 	{
@@ -316,9 +323,16 @@ class pts_test_run_manager
 		if(pts_result_file::is_test_result_file($this->file_name))
 		{
 			$result_file = new pts_result_file($this->file_name);
-			$current_identifiers = $result_file->get_system_identifiers();
-			$current_hardware = $result_file->get_system_hardware();
-			$current_software = $result_file->get_system_software();
+			$current_identifiers = array();
+			$current_hardware = array();
+			$current_software = array();
+
+			foreach($result_file->get_systems() as $s)
+			{
+				array_push($current_hardware, $s->get_hardware());
+				array_push($current_software, $s->get_software());
+				array_push($current_identifiers, $s->get_identifier());
+			}
 
 			$result_objects = $result_file->get_result_objects();
 
@@ -1163,16 +1177,18 @@ class pts_test_run_manager
 		if(pts_result_file::is_test_result_file($this->file_name))
 		{
 			$result_file = new pts_result_file($this->file_name);
-			$existing_identifier_count = count($result_file->get_system_identifiers());
+			$existing_identifiers = array();
+			$hw_components = array();
+			$sw_components = array();
 
-			foreach($result_file->get_system_hardware() as $component_string)
+			foreach($result_file->get_systems() as $s)
 			{
-				array_push($hw_components, pts_result_file_analyzer::system_component_string_to_array($component_string));
+				array_push($hw_components, pts_result_file_analyzer::system_component_string_to_array($s->get_hardware()));
+				array_push($sw_components, pts_result_file_analyzer::system_component_string_to_array($s->get_software()));
+				array_push($existing_identifiers, $s->get_identifier());
 			}
-			foreach($result_file->get_system_software() as $component_string)
-			{
-				array_push($sw_components, pts_result_file_analyzer::system_component_string_to_array($component_string));
-			}
+
+			$existing_identifier_count = count($existing_identifiers);
 		}
 		else
 		{

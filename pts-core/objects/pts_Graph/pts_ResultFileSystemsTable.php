@@ -25,12 +25,21 @@ class pts_ResultFileSystemsTable extends pts_Table
 {
 	public function __construct(&$result_file)
 	{
-		$columns = $result_file->get_system_identifiers();
+		$columns = array();
+		$hw = array();
+		$sw = array();
+		foreach($result_file->get_systems() as $system)
+		{
+			array_push($columns, $system->get_identifier());
+			array_push($hw, $system->get_hardware());
+			array_push($sw, $system->get_software());
+		}
+
 		$rows = array();
 		$table_data = array();
 
-		pts_result_file_analyzer::system_components_to_table($table_data, $columns, $rows, $result_file->get_system_hardware());
-		pts_result_file_analyzer::system_components_to_table($table_data, $columns, $rows, $result_file->get_system_software());
+		pts_result_file_analyzer::system_components_to_table($table_data, $columns, $rows, $hw);
+		pts_result_file_analyzer::system_components_to_table($table_data, $columns, $rows, $sw);
 
 		pts_result_file_analyzer::compact_result_table_data($table_data, $columns, true); // TODO: see if this true value works fine but if rendering starts messing up, disable it
 

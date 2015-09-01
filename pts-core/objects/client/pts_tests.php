@@ -383,14 +383,10 @@ class pts_tests
 
 			if($search == 'ALL' || $search == 'SYSTEM_INFO')
 			{
-				$hw = $result_file->get_system_hardware();
-				$sw = $result_file->get_system_software();
-				$ids = $result_file->get_system_identifiers();
-
 				$matched = false;
-				for($i = 0; $i < count($ids); $i++)
+				foreach($result_file->get_systems() as $s)
 				{
-					if(stripos($sw[$i], $query) !== false || stripos($ids[$i], $query) !== false || stripos($hw[$i], $query) !== false)
+					if(stripos($s->get_software(), $query) !== false || stripos($s->get_identifier(), $query) !== false || stripos($s->get_hardware(), $query) !== false)
 					{
 						array_push($matches, $file);
 						$matched = true;

@@ -393,32 +393,34 @@ class pts_render
 	}
 	public static function report_system_notes_to_table(&$result_file, &$table)
 	{
-		$system_json = $result_file->get_system_json();
-		$identifiers = $result_file->get_system_identifiers();
-		$identifier_count = count($identifiers);
+		$identifier_count = 0;
 		$system_attributes = array();
 
-		foreach($system_json as $i => $json)
+		foreach($result_file->get_systems() as $s)
 		{
+			$json = $s->get_json();
+			$identifier = $s->get_identifier();
+			$identifier_count++;
+
 			if(isset($json['kernel-parameters']) && $json['kernel-parameters'] != null)
 			{
-				$system_attributes['Kernel'][$identifiers[$i]] = $json['kernel-parameters'];
+				$system_attributes['Kernel'][$identifier] = $json['kernel-parameters'];
 			}
 			if(isset($json['environment-variables']) && $json['environment-variables'] != null)
 			{
-				$system_attributes['Environment'][$identifiers[$i]] = $json['environment-variables'];
+				$system_attributes['Environment'][$identifier] = $json['environment-variables'];
 			}
 			if(isset($json['compiler-configuration']) && $json['compiler-configuration'] != null)
 			{
-				$system_attributes['Compiler'][$identifiers[$i]] = $json['compiler-configuration'];
+				$system_attributes['Compiler'][$identifier] = $json['compiler-configuration'];
 			}
 			if(isset($json['disk-scheduler']) && isset($json['disk-mount-options']))
 			{
-				$system_attributes['Disk'][$identifiers[$i]] = $json['disk-scheduler'] . ' / ' . $json['disk-mount-options'];
+				$system_attributes['Disk'][$identifier] = $json['disk-scheduler'] . ' / ' . $json['disk-mount-options'];
 			}
 			if(isset($json['cpu-scaling-governor']))
 			{
-				$system_attributes['Processor'][$identifiers[$i]] = 'Scaling Governor: ' . $json['cpu-scaling-governor'];
+				$system_attributes['Processor'][$identifier] = 'Scaling Governor: ' . $json['cpu-scaling-governor'];
 			}
 			if(isset($json['graphics-2d-acceleration']) || isset($json['graphics-aa']) || isset($json['graphics-af']))
 			{
@@ -431,11 +433,11 @@ class pts_render
 					}
 				}
 
-				$system_attributes['Graphics'][$identifiers[$i]] = implode(' - ' , $report);
+				$system_attributes['Graphics'][$identifier] = implode(' - ' , $report);
 			}
 			if(isset($json['graphics-compute-cores']))
 			{
-				$system_attributes['OpenCL'][$identifiers[$i]] = 'GPU Compute Cores: ' . $json['graphics-compute-cores'];
+				$system_attributes['OpenCL'][$identifier] = 'GPU Compute Cores: ' . $json['graphics-compute-cores'];
 			}
 		}
 

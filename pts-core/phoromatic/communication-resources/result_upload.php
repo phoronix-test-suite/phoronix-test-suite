@@ -145,18 +145,14 @@ foreach($result_file->get_result_objects() as $result_object)
 
 if($relative_id > 0)
 {
-	$ids = $result_file->get_system_identifiers();
-	$hw = $result_file->get_system_hardware();
-	$sw = $result_file->get_system_software();
-
-	for($i = 0; $i < count($ids) && $i < count($hw) && $i < count($sw); $i++)
+	foreach($result_file->get_systems() as $s)
 	{
 		$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_results_systems (AccountID, UploadID, SystemIdentifier, Hardware, Software) VALUES (:account_id, :upload_id, :system_identifier, :hardware, :software)');
 		$stmt->bindValue(':account_id', ACCOUNT_ID);
 		$stmt->bindValue(':upload_id', $upload_id);
-		$stmt->bindValue(':system_identifier', sqlite_escape_string($ids[$i]));
-		$stmt->bindValue(':hardware', sqlite_escape_string($hw[$i]));
-		$stmt->bindValue(':software', sqlite_escape_string($sw[$i]));
+		$stmt->bindValue(':system_identifier', sqlite_escape_string($s->get_identifier()));
+		$stmt->bindValue(':hardware', sqlite_escape_string($s->get_hardware()));
+		$stmt->bindValue(':software', sqlite_escape_string($s->get_software()));
 		$result = $stmt->execute();
 	}
 

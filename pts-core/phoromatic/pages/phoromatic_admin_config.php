@@ -230,18 +230,14 @@ class phoromatic_admin_config implements pts_webui_interface
 
 				if($relative_id > 0)
 				{
-					$ids = $result_file->get_system_identifiers();
-					$hw = $result_file->get_system_hardware();
-					$sw = $result_file->get_system_software();
-
-					for($i = 0; $i < count($ids) && $i < count($hw) && $i < count($sw); $i++)
+					foreach($result_file->get_systems() as $s)
 					{
 						$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_results_systems (AccountID, UploadID, SystemIdentifier, Hardware, Software) VALUES (:account_id, :upload_id, :system_identifier, :hardware, :software)');
 						$stmt->bindValue(':account_id', $account_id);
 						$stmt->bindValue(':upload_id', $upload_id);
-						$stmt->bindValue(':system_identifier', $ids[$i]);
-						$stmt->bindValue(':hardware', $hw[$i]);
-						$stmt->bindValue(':software', $sw[$i]);
+						$stmt->bindValue(':system_identifier', $s->get_identifier());
+						$stmt->bindValue(':hardware', $s->get_hardware());
+						$stmt->bindValue(':software', $s->get_software());
 						$result = $stmt->execute();
 					}
 				}

@@ -40,7 +40,12 @@ class pts_RadarOverviewGraph extends pts_Graph
 		parent::__construct($result_object, $result_file);
 
 		// System Identifiers
-		$system_identifiers = $result_file->get_system_identifiers();
+		$system_identifiers = array();
+		foreach($result_file->get_systems() as $system)
+		{
+			array_push($system_identifiers, $system->get_identifier());
+		}
+
 		if($result_file->is_multi_way_comparison() || count($system_identifiers) < 3)
 		{
 			// Multi way comparisons currently render the overview graph as blank
@@ -213,8 +218,13 @@ class pts_RadarOverviewGraph extends pts_Graph
 			}
 		}
 
-		$hw = $this->result_file->get_system_hardware();
-		$sw = $this->result_file->get_system_software();
+		$hw = array();
+		$sw = array();
+		foreach($result_file->get_systems() as $system)
+		{
+			array_push($hw, $system->get_hardware());
+			array_push($sw, $system->get_software());
+		}
 		$shw = array();
 
 		foreach($this->graph_data_title as $i => $title)

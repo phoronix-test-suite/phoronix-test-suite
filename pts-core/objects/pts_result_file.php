@@ -71,6 +71,10 @@ class pts_result_file
 	{
 		return $this->get_identifier();
 	}
+	protected static function clean_input($input)
+	{
+		return strip_tags($input);
+	}
 	public function sanitize_user_strings($value)
 	{
 		if(is_array($value))
@@ -98,87 +102,55 @@ class pts_result_file
 	{
 		$this->extra_attributes[$key] = $value;
 	}
-	public function get_system_hardware()
+	public function get_systems()
 	{
-		$hw = array();
-		foreach($this->xml->System as $sys)
+		$systems = array();
+		foreach($this->xml->System as $s)
 		{
-			array_push($hw, $sys->Hardware->__toString());
+			$system = new pts_result_file_system(self::clean_input($s->Identifier->__toString()), self::clean_input($s->Hardware->__toString()), self::clean_input($s->Software->__toString()), json_decode(self::clean_input($s->JSON), true), self::clean_input($s->User->__toString()), self::clean_input($s->Notes->__toString()), self::clean_input($s->TimeStamp->__toString()), self::clean_input($s->ClientVersion->__toString()));
+			array_push($systems, $system);
+
 		}
 
-		return $this->sanitize_user_strings($hw);
+		return $systems;
+	}
+	public function get_system_hardware()
+	{
+		// XXX this is deprecated
+		$hw = array();
+		foreach($this->get_systems() as $s)
+		{
+			array_push($hw, $s->get_hardware());
+		}
+
+		return $hw;
 	}
 	public function get_system_software()
 	{
+		// XXX this is deprecated
 		$sw = array();
-		foreach($this->xml->System as $sys)
+		foreach($this->get_systems() as $s)
 		{
-			array_push($sw, $sys->Software->__toString());
+			array_push($sw, $s->get_software());
 		}
 
-		return $this->sanitize_user_strings($sw);
-	}
-	public function get_system_json()
-	{
-		$js = array();
-		foreach($this->xml->System as $sys)
-		{
-			array_push($js, $sys->JSON);
-		}
-
-		return $this->sanitize_user_strings(array_map(array('pts_arrays', 'json_decode'), $js));
-	}
-	public function get_system_user()
-	{
-		$users = array();
-		foreach($this->xml->System as $sys)
-		{
-			array_push($users, $sys->User->__toString());
-		}
-
-		return $this->sanitize_user_strings($users);
-	}
-	public function get_system_notes()
-	{
-		$notes = array();
-		foreach($this->xml->System as $sys)
-		{
-			array_push($notes, $sys->Notes->__toString());
-		}
-
-		return $this->sanitize_user_strings($notes);
-	}
-	public function get_system_date()
-	{
-		$times = array();
-		foreach($this->xml->System as $sys)
-		{
-			array_push($times, $sys->TimeStamp->__toString());
-		}
-
-		return $this->sanitize_user_strings($times);
-	}
-	public function get_system_pts_version()
-	{
-		$versions = array();
-		foreach($this->xml->System as $sys)
-		{
-			array_push($versions, $sys->TestClientVersion->__toString());
-		}
-
-		return $this->sanitize_user_strings($versions);
+		return $sw;
 	}
 	public function get_system_identifiers()
 	{
-		$identifiers = array();
-		foreach($this->xml->System as $sys)
-			array_push($identifiers, $sys->Identifier->__toString());
+		// XXX this is deprecated
+		$ids = array();
+		foreach($this->get_systems() as $s)
+		{
+			array_push($ids, $s->get_identifier());
+		}
 
-		return $this->sanitize_user_strings($identifiers);
+		return $ids;
 	}
 	public function get_system_count()
 	{
-		return count($this->get_system_identifiers());
+		// XXX this is deprecated
+		return count($this->get_systems());
 	}
 	public function get_title()
 	{
@@ -284,7 +256,7 @@ class pts_result_file
 			}
 			else
 			{
-				$hw = null; // XXX: this isn't used anymore at least for now $this->get_system_hardware();
+				$hw = null; // XXX: this isn't used anymore at least for now on system hardware
 				if($identifiers == false)
 				{
 					$identifiers = $this->get_system_identifiers();

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2012, Phoronix Media
-	Copyright (C) 2010 - 2012, Michael Larabel
+	Copyright (C) 2010 - 2015, Phoronix Media
+	Copyright (C) 2010 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -161,43 +161,35 @@ class pts_result_file_writer
 	}
 	public function add_system_information_from_result_file(&$result_file, $result_merge_select = null)
 	{
-		$system_hardware = $result_file->get_system_hardware();
-		$system_software = $result_file->get_system_software();
-		$system_user = $result_file->get_system_user();
-		$system_date = $result_file->get_system_date();
-		$pts_version = $result_file->get_system_pts_version();
-		$system_notes = $result_file->get_system_notes();
-		$associated_identifiers = $result_file->get_system_identifiers();
-		$system_json = $result_file->get_system_json();
-
 		// Write the system hardware/software information
-		foreach(array_keys($system_hardware) as $i)
+		foreach($result_file->get_systems() as $s)
 		{
-			if(!($is_pts_rms = ($result_merge_select instanceof pts_result_merge_select)) || $result_merge_select->get_selected_identifiers() == null || in_array($associated_identifiers[$i], $result_merge_select->get_selected_identifiers()))
+			if(!($is_pts_rms = ($result_merge_select instanceof pts_result_merge_select)) || $result_merge_select->get_selected_identifiers() == null || in_array($s->get_identifier(), $result_merge_select->get_selected_identifiers()))
 			{
 				// Prevents any information from being repeated
-				$this_hash = md5($associated_identifiers[$i] . ';' . $system_hardware[$i] . ';' . $system_software[$i] . ';' . $system_date[$i]);
+				$this_hash = md5($s->get_identifier() . ';' . $s->get_hardware() . ';' . $s->get_software() . ';' . $s->get_timestamp());
 
 				if(!in_array($this_hash, $this->added_hashes))
 				{
+					$identifier = $s->get_identifier();
 					if($is_pts_rms && ($renamed = $result_merge_select->get_rename_identifier()) != null)
 					{
-						$associated_identifiers[$i] = $renamed;
+						$identifier = $renamed;
 					}
 
-					$this->xml_writer->addXmlNode('PhoronixTestSuite/System/Identifier', $associated_identifiers[$i]);
-					$this->xml_writer->addXmlNode('PhoronixTestSuite/System/Hardware', $system_hardware[$i]);
-					$this->xml_writer->addXmlNode('PhoronixTestSuite/System/Software', $system_software[$i]);
-					$this->xml_writer->addXmlNode('PhoronixTestSuite/System/User', $system_user[$i]);
-					$this->xml_writer->addXmlNode('PhoronixTestSuite/System/TimeStamp', $system_date[$i]);
-					$this->xml_writer->addXmlNode('PhoronixTestSuite/System/TestClientVersion', $pts_version[$i]);
-					$this->xml_writer->addXmlNode('PhoronixTestSuite/System/Notes', $system_notes[$i]);
+					$this->xml_writer->addXmlNode('PhoronixTestSuite/System/Identifier', $identifier);
+					$this->xml_writer->addXmlNode('PhoronixTestSuite/System/Hardware', $s->get_hardware());
+					$this->xml_writer->addXmlNode('PhoronixTestSuite/System/Software', $s->get_software());
+					$this->xml_writer->addXmlNode('PhoronixTestSuite/System/User', $s->get_username());
+					$this->xml_writer->addXmlNode('PhoronixTestSuite/System/TimeStamp', $s->get_timestamp());
+					$this->xml_writer->addXmlNode('PhoronixTestSuite/System/TestClientVersion', $s->get_client_version());
+					$this->xml_writer->addXmlNode('PhoronixTestSuite/System/Notes', $s->get_notes());
 
 					if(!defined('USER_PTS_CORE_VERSION') || USER_PTS_CORE_VERSION > 3722)
 					{
 						// Ensure that a supported result file schema is being written...
 						// USER_PTS_CORE_VERSION is set by OpenBenchmarking.org so if the requested client is old, don't write this data to send back to their version
-						$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/System/JSON', ($system_json[$i] ? json_encode($system_json[$i]) : null));
+						$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/System/JSON', ($s->get_json() ? json_encode($s->get_json()) : null));
 					}
 
 					array_push($this->added_hashes, $this_hash);

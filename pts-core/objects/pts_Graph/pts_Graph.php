@@ -99,16 +99,9 @@ abstract class pts_Graph
 
 		if($result_file != null && $result_file instanceof pts_result_file)
 		{
-			$pts_version = pts_arrays::last_element($result_file->get_system_pts_version());
 			$this->is_multi_way_comparison = $result_file->is_multi_way_comparison();
 		}
-
-		if(!isset($pts_version) || empty($pts_version))
-		{
-			$pts_version = PTS_VERSION;
-		}
-
-		$this->i['graph_version'] = 'Phoronix Test Suite ' . $pts_version;
+		$this->i['graph_version'] = 'Phoronix Test Suite ' . PTS_VERSION;
 	}
 	public function override_i_value($key, $val)
 	{

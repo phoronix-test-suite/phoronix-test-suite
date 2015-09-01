@@ -33,8 +33,13 @@ class pts_ResultFileCompactSystemsTable extends pts_Graph
 		$this->intent = is_array($intent) ? $intent : array(array(), array());
 		$this->graph_title = $result_file->get_title();
 
-		$hw = $result_file->get_system_hardware();
-		$sw = $result_file->get_system_software();
+		$hw = array();
+		$sw = array();
+		foreach($result_file->get_systems() as $system)
+		{
+			array_push($hw, $system->get_hardware());
+			array_push($sw, $system->get_software());
+		}
 		$hw = pts_result_file_analyzer::system_component_string_to_array(array_shift($hw));
 		$sw = pts_result_file_analyzer::system_component_string_to_array(array_shift($sw));
 		$this->components = array_merge($hw, $sw);
