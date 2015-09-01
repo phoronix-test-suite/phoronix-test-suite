@@ -42,6 +42,10 @@ class pts_result_file_system
 		$this->timestamp = $timestamp;
 		$this->client_version = $client_version;
 	}
+	public function __toString()
+	{
+		return $this->get_identifier() . ' ' . $this->get_hardware() . ' ' . $this->get_software();
+	}
 	public function get_identifier()
 	{
 		return $this->identifier;

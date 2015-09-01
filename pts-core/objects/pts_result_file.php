@@ -94,7 +94,7 @@ class pts_result_file
 				$result_buffer->add_test_result($entry->Identifier->__toString(), $entry->Value->__toString(), $entry->RawString->__toString(), (isset($entry->JSON) ? $entry->JSON->__toString() : null));
 			}
 			$test_result->set_test_result_buffer($result_buffer);
-			array_push($this->result_objects, $test_result);
+			$this->result_objects[$test_result->get_comparison_hash()] = $test_result;
 		}
 
 		unset($xml);
@@ -396,6 +396,32 @@ class pts_result_file
 		$file = trim(str_replace('"', "'", $file));
 		$simple_xml = simplexml_load_string($file);
 		return json_encode($simple_xml);
+	}
+	public function add_to_result_file(&$result_file)
+	{
+		foreach($result_file->get_systems() as $s)
+		{
+			if(!in_array($s, $this->systems))
+			{
+				array_push($this->systems, $s);
+			}
+		}
+
+		foreach($result_file->get_result_objects as $result)
+		{
+			$ch = $result->get_comparison_hash();
+			if(isset($this->result_object[$ch]))
+			{
+				foreach($result->get_buffer_items() as $bi)
+				{
+					$this->result_object[$ch]->test_result_buffer->add_buffer_item($bi);
+				}
+			}
+			else
+			{
+				$this->result_object[$ch] = $ch;
+			}
+		}
 	}
 }
 

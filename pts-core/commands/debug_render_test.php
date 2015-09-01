@@ -80,20 +80,27 @@ class debug_render_test implements pts_option_interface
 			//$table = new pts_ResultFileTable($result_file, $intent);
 			//echo '<p style="text-align: center; overflow: auto;" class="result_object">' . pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes) . '</p>';
 			echo 'STARTING RESULT LOOP; ';
+			$html_dump = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>';
 			foreach($result_file->get_result_objects((isset($_POST['show_only_changed_results']) ? 'ONLY_CHANGED_RESULTS' : -1)) as $i => $result_object)
 			{
 				if(stripos($result_object->get_arguments_description(), 'frame time') !== false)
 					continue;
 
 				echo $result_object->test_profile->get_title() . ' ';
-				//echo '<h3>' . $result_object->get_arguments_description() . '</h3>';
-				pts_render::render_graph_inline_embed($result_object, $result_file, $extra_attributes);
+				$html_dump .= '<h3>' . $result_object->get_arguments_description() . '</h3>';
+				$html_dump .= pts_render::render_graph_inline_embed($result_object, $result_file, $extra_attributes);
 				unset($result_object);
 			}
 
 			$table = new pts_ResultFileSystemsTable($result_file);
-			pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes);
+			$html_dump .= pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes);
 			echo PHP_EOL . PHP_EOL . 'RENDER TEST ON: ' . $REQUESTED . ' TOOK ' . (time() - $this_render_test) . PHP_EOL;
+			file_put_contents(PATH_TO_EXPORTED_PHOROMATIC_DATA . $REQUESTED . '.html', $html_dump . '</body></html>');
 		}
 		echo PHP_EOL . 'RENDER TEST TOOK: ' . (time() - $start) . PHP_EOL . PHP_EOL;
 	}
