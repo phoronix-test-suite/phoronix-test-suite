@@ -49,8 +49,7 @@ class pts_result_file
 		}
 		else if(!isset($result_file[1024]) && defined('PTS_SAVE_RESULTS_PATH') && is_file(PTS_SAVE_RESULTS_PATH . $result_file . '/composite.xml'))
 		{
-			$result_file = PTS_SAVE_RESULTS_PATH . $result_file . '/composite.xml';
-			$this->file_location = $result_file;
+			$this->file_location = PTS_SAVE_RESULTS_PATH . $result_file . '/composite.xml';
 			$result_file = file_get_contents($this->file_location);
 		}
 		else
