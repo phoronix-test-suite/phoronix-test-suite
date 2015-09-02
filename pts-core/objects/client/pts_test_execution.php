@@ -168,7 +168,19 @@ class pts_test_execution
 				}
 				else
 				{
-					$test_result = pts_client::shell_exec($test_run_command, $test_extra_runtime_variables);
+					//$test_result = pts_client::shell_exec($test_run_command, $test_extra_runtime_variables);
+					$descriptorspec = array(0 => array('pipe', 'r'), 1 => array('pipe', 'w'), 2 => array('pipe', 'w'));
+					$test_process = proc_open('exec ' . $execute_binary_prepend . './' . $execute_binary . ' ' . $pts_test_arguments . ' 2>&1', $descriptorspec, $pipes, $to_execute, array_merge(pts_client::environmental_variables(), $test_extra_runtime_variables));
+
+					if(is_resource($test_process))
+					{
+						//echo proc_get_status($test_process)['pid'];
+						pts_module_manager::module_process('__test_running', $test_process);
+						$test_result = stream_get_contents($pipes[1]);
+						fclose($pipes[1]);
+						fclose($pipes[2]);
+						$return_value = proc_close($test_process);
+					}
 				}
 
 				$test_run_time = time() - $test_run_time_start;
