@@ -103,10 +103,10 @@ class pts_result_file
 	public function validate()
 	{
 		$dom = new DOMDocument();
-		$dom->loadXML($this->getRawXml());
+		$dom->loadXML($this->get_raw_xml());
 		return $dom->schemaValidate(PTS_OPENBENCHMARKING_PATH . 'schemas/result-file.xsd');
 	}
-	public function getRawXml()
+	public function get_raw_xml()
 	{
 		if($this->file_location)
 		{
@@ -379,7 +379,7 @@ class pts_result_file
 	}
 	public function to_json()
 	{
-		$file = $this->getRawXml();
+		$file = $this->get_raw_xml();
 		$file = str_replace(array("\n", "\r", "\t"), '', $file);
 		$file = trim(str_replace('"', "'", $file));
 		$simple_xml = simplexml_load_string($file);

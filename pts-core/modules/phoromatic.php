@@ -798,7 +798,7 @@ class phoromatic extends pts_module_interface
 			}
 		}
 
-		$composite_xml = $result_file->getRawXml();
+		$composite_xml = $result_file->get_raw_xml();
 		$composite_xml_hash = sha1($composite_xml);
 		$composite_xml_type = 'composite_xml';
 
