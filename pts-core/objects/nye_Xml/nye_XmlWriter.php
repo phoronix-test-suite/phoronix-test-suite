@@ -40,7 +40,7 @@ class nye_XmlWriter
 
 		if(PTS_IS_CLIENT && stripos(PTS_PHP_VERSION, 'hiphop') === false)
 		{
-			$pts_comment = $this->dom->createComment(pts_title(true));
+			$pts_comment = $this->dom->createComment(pts_title(false));
 			$this->dom->appendChild($pts_comment);
 		}
 
