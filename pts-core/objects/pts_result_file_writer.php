@@ -27,6 +27,18 @@ class pts_result_file_writer
 	private $result_identifier = null;
 	private $result_count = 0;
 
+	public static function result_file_to_xml(&$result_file, $to = null)
+	{
+		$result_file_writer = new pts_result_file_writer();
+		$result_file_writer->add_result_file_meta_data($result_file);
+		$result_file_writer->add_system_information_from_result_file($result_file);
+		foreach($result_file->get_result_objects() as $result_object)
+		{
+			$result_file_writer->add_result_from_result_object_with_value($result_object);
+		}
+
+		return $to == null ? $result_file_writer->get_xml() : $result_file_writer->save_xml($to);
+	}
 	public function __construct($result_identifier = null, &$xml_writer = null)
 	{
 		$this->result_identifier = $result_identifier;

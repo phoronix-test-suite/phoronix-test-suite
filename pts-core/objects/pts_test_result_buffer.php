@@ -106,6 +106,17 @@ class pts_test_result_buffer
 		}
 		return false;
 	}
+	public function remove_buffer_item($remove)
+	{
+		$remove = pts_arrays::to_array($remove);
+		foreach($this->buffer_items as $i => &$buffer_item)
+		{
+			if(in_array($buffer_item->get_result_identifier(), $remove))
+			{
+				unset($this->buffer_items[$i]);
+			}
+		}
+	}
 	public function auto_shorten_buffer_identifiers($identifier_shorten_index = false)
 	{
 		// If there's a lot to plot, try to auto-shorten the identifiers

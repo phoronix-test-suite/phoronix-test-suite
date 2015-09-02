@@ -27,7 +27,6 @@ class pts_result_file
 	protected $extra_attributes = null;
 	protected $is_multi_way_inverted = false;
 	protected $file_location = false;
-	protected $raw_xml = null;
 
 	private $title = null;
 	private $description = null;
@@ -45,7 +44,11 @@ class pts_result_file
 		$this->systems = array();
 		$this->result_objects = array();
 
-		if(is_file($result_file))
+		if($result_file == null)
+		{
+			return;
+		}
+		else if(is_file($result_file))
 		{
 			$this->file_location = $result_file;
 			$result_file = file_get_contents($result_file);
@@ -54,10 +57,6 @@ class pts_result_file
 		{
 			$this->file_location = PTS_SAVE_RESULTS_PATH . $result_file . '/composite.xml';
 			$result_file = file_get_contents($this->file_location);
-		}
-		else
-		{
-			$this->raw_xml = $result_file;
 		}
 
 		$xml = simplexml_load_string($result_file, 'SimpleXMLElement', LIBXML_COMPACT | LIBXML_PARSEHUGE);
@@ -98,6 +97,10 @@ class pts_result_file
 
 		unset($xml);
 	}
+	public function get_file_location()
+	{
+		return $this->file_location;
+	}
 	public function validate()
 	{
 		$dom = new DOMDocument();
@@ -106,12 +109,7 @@ class pts_result_file
 	}
 	public function get_raw_xml()
 	{
-		if($this->file_location)
-		{
-			return file_get_contents($this->file_location);
-		}
-
-		return $this->raw_xml;
+		return pts_result_file_writer::result_file_to_xml($this);
 	}
 	public function __toString()
 	{
@@ -183,9 +181,17 @@ class pts_result_file
 		// XXX this is deprecated
 		return count($this->get_systems());
 	}
+	public function set_title($new_title)
+	{
+		$this->title = $new_title;
+	}
 	public function get_title()
 	{
 		return $this->title;
+	}
+	public function set_description($new_description)
+	{
+		$this->description = $new_description;
 	}
 	public function get_description()
 	{
@@ -198,6 +204,10 @@ class pts_result_file
 	public function get_internal_tags()
 	{
 		return $this->internal_tags;
+	}
+	public function set_reference_id($new_reference_id)
+	{
+		$this->reference_id = $new_reference_id;
 	}
 	public function get_reference_id()
 	{
@@ -389,6 +399,22 @@ class pts_result_file
 			$result->test_result_buffer->rename_buffer_item($from, $to);
 		}
 	}
+	public function remove_run_from_result_file($remove)
+	{
+		$remove = pts_arrays::to_array($remove);
+		foreach($this->systems as $i => &$s)
+		{
+			if(in_array($s->get_identifier(), $remove))
+			{
+				unset($this->systems[$i]);
+			}
+		}
+
+		foreach($this->result_objects as $i => &$result)
+		{
+			$result->test_result_buffer->remove_buffer_item($remove);
+		}
+	}
 	public function add_to_result_file(&$result_file)
 	{
 		foreach($result_file->get_systems() as $s)
@@ -401,18 +427,22 @@ class pts_result_file
 
 		foreach($result_file->get_result_objects() as $result)
 		{
-			$ch = $result->get_comparison_hash(true, false);
-			if(isset($this->result_objects[$ch]) && isset($this->result_objects[$ch]->test_result_buffer))
+			$this->add_result_object($result);
+		}
+	}
+	public function add_result_object(&$result_object)
+	{
+		$ch = $result_object->get_comparison_hash(true, false);
+		if(isset($this->result_objects[$ch]) && isset($this->result_objects[$ch]->test_result_buffer))
+		{
+			foreach($result_object->test_result_buffer->get_buffer_items() as $bi)
 			{
-				foreach($result->test_result_buffer->get_buffer_items() as $bi)
-				{
-					$this->result_objects[$ch]->test_result_buffer->add_buffer_item($bi);
-				}
+				$this->result_objects[$ch]->test_result_buffer->add_buffer_item($bi);
 			}
-			else
-			{
-				$this->result_objects[$ch] = $result;
-			}
+		}
+		else
+		{
+			$this->result_objects[$ch] = $result_object;
 		}
 	}
 }
