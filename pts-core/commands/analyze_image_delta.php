@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2011, Phoronix Media
-	Copyright (C) 2009 - 2011, Michael Larabel
+	Copyright (C) 2009 - 2015, Phoronix Media
+	Copyright (C) 2009 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -56,8 +56,8 @@ class analyze_image_delta implements pts_option_interface
 		}
 		while(is_dir(PTS_SAVE_RESULTS_PATH . $extract_to));
 
-		$extract_result = pts_merge::merge_test_results($base_select, $compare_select);
-		pts_client::save_test_result($extract_to . '/composite.xml', $extract_result);
+		$extract_result = pts_result_file_merger::merge($base_select, $compare_select);
+		pts_client::save_test_result($extract_to . '/composite.xml', pts_result_file_writer::result_file_to_xml($result_file));
 
 		$compare_file = new pts_result_file($extract_to);
 		$result_file_writer = new pts_result_file_writer('Image Delta');

@@ -999,7 +999,7 @@ class pts_render
 					array_push($to_order, new pts_result_merge_select($result_file, $identifier));
 				}
 
-				$ordered_xml = pts_merge::merge_test_results_array($to_order);
+				$ordered_xml = // ORDER THE XML CODE WITH PTS MERGER
 				$result_file = new pts_result_file($ordered_xml);
 				$is_multi_way = true;
 			}

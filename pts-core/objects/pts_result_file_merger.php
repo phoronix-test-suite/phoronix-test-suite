@@ -38,7 +38,14 @@ class pts_result_file_merger
 
 			if(!is_file($merge_select->get_result_file()))
 			{
-				unset($result_merges_to_combine[$i]);
+				if(defined('PTS_SAVE_RESULTS_PATH') && is_file(PTS_SAVE_RESULTS_PATH . $merge_select->get_result_file() . '/composite.xml'))
+				{
+					$merge_select->set_result_file(PTS_SAVE_RESULTS_PATH . $merge_select->get_result_file() . '/composite.xml');
+				}
+				else
+				{
+					unset($result_merges_to_combine[$i]);
+				}
 			}
 		}
 

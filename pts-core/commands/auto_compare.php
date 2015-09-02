@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2012, Phoronix Media
-	Copyright (C) 2012, Michael Larabel
+	Copyright (C) 2012 - 2015, Phoronix Media
+	Copyright (C) 2012 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -113,11 +113,10 @@ class auto_compare implements pts_option_interface
 
 			foreach($json['auto_compare']['public_ids'] as $public_id)
 			{
-				$result_xml = pts_openbenchmarking::clone_openbenchmarking_result($public_id, true);
-
-				if($result_xml)
+				$ret = pts_openbenchmarking::clone_openbenchmarking_result($public_id);
+				if($ret)
 				{
-					$result_file = new pts_result_file($result_xml);
+					$result_file = new pts_result_file($public_id);
 					$result_objects = $result_file->get_result_objects();
 
 					foreach($result_objects as $i => &$result_object)
@@ -140,49 +139,42 @@ class auto_compare implements pts_option_interface
 						continue;
 					}
 					$result_file->override_result_objects($result_objects);
-
-					array_push($compare_results, $result_file);
+					pts_client::save_test_result($result_file->get_file_location(), pts_result_file_writer::result_file_to_xml($result_file));
+					array_push($compare_results, $public_id);
 				}
 			}
 
 			if(count($compare_results) > 0)
 			{
-				$result_xml = pts_merge::merge_test_results_array($compare_results);
+				$result_file = pts_result_file_merger::merge($compare_results);
+				$result_objects = $result_file->get_result_objects();
+				$system_count = $result_file->get_system_count();
+				$result_count = count($result_objects);
+				$result_match_count = array();
 
-				if(count($compare_results) > 2)
+				if($result_count > 3)
 				{
-					$result_file = new pts_result_file($result_xml);
-					$result_objects = $result_file->get_result_objects();
-					$system_count = $result_file->get_system_count();
-					$result_count = count($result_objects);
-					$result_match_count = array();
-
-					if($result_count > 3)
+					foreach($result_objects as $i => &$result_object)
 					{
-						foreach($result_objects as $i => &$result_object)
-						{
-							$result_match_count[$i] = $result_object->test_result_buffer->get_count();
-						}
+						$result_match_count[$i] = $result_object->test_result_buffer->get_count();
+					}
 
-						arsort($result_match_count);
-						$biggest_size = pts_arrays::first_element($result_match_count);
-						if($biggest_size == $system_count || $biggest_size > 3)
+					arsort($result_match_count);
+					$biggest_size = pts_arrays::first_element($result_match_count);
+					if($biggest_size == $system_count || $biggest_size > 3)
+					{
+						foreach($result_match_count as $key => $value)
 						{
-							foreach($result_match_count as $key => $value)
+							if($value < 2)
 							{
-								if($value < 2)
-								{
-									unset($result_objects[$key]);
-								}
+								unset($result_objects[$key]);
 							}
 						}
-
-						$result_file->override_result_objects($result_objects);
-						$result_xml = pts_merge::merge_test_results_array(array($result_file));
 					}
+					$result_file->override_result_objects($result_objects);
 				}
 
-				pts_client::save_test_result('auto-comparison/composite.xml', $result_xml);
+				pts_client::save_test_result('auto-comparison/composite.xml', pts_result_file_writer::result_file_to_xml($result_file));
 			}
 		}
 

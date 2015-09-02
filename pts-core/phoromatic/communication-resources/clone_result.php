@@ -31,7 +31,6 @@ if($result && ($row = $result->fetchArray()))
 	$composite_xml = phoromatic_server::phoromatic_account_result_path($row['AccountID'], $row['UploadID']) . 'composite.xml';
 	if($composite_xml)
 	{
-		$composite_xml = pts_merge::merge_test_results_array(array($composite_xml));
 		$json['phoromatic']['result']['composite_xml'] = base64_encode($composite_xml);
 		//$json['phoromatic']['result']['system_logs_available'] = is_file($sys_log_file) ? sha1_file($sys_log_file) : false;
 		echo json_encode($json);

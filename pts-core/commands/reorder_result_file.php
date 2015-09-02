@@ -31,6 +31,10 @@ class reorder_result_file implements pts_option_interface
 		new pts_argument_check(0, array('pts_types', 'is_result_file'), null)
 		);
 	}
+	public static function command_aliases()
+	{
+		return array('sort_result_file');
+	}
 	public static function run($args)
 	{
 		$result_file = new pts_result_file($args[0]);
