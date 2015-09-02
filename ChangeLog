@@ -9,6 +9,7 @@ Phoronix Test Suite (Git)
 - pts-core: Start on a new, faster result merger
 - pts-core: Do test execution with proc_open(), allow modules to tap the process
 - phodevi: AMDGPU Linux detection improvements
+- pts_Graph: Don't embed the PNG logo directly into the SVG file, but rely on HTTPS link
 
 Phoronix Test Suite 6.0 Milestone 1
 26 August 2015

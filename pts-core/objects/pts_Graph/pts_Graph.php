@@ -568,7 +568,7 @@ abstract class pts_Graph
 				$this->svg_dom->add_text_element($sub_title, array('x' => 6, 'y' => $vertical_offset, 'font-size' => $sub_title_size, 'fill' => self::$c['color']['background'], 'text-anchor' => 'start'));
 			}
 
-			$this->svg_dom->add_element('image', array('http_link' => 'http://www.phoronix-test-suite.com/', 'xlink:href' => pts_svg_dom::embed_png_image(PTS_CORE_STATIC_PATH . 'images/pts-77x40-white.png'), 'x' => ($this->i['graph_left_end'] - 77), 'y' => (($this->i['top_heading_height'] / 40 + 2)), 'width' => 77, 'height' => 40));
+			$this->svg_dom->add_element('image', array('http_link' => 'http://www.phoronix-test-suite.com/', 'xlink:href' => 'https://openbenchmarking.org/static/images/pts-77x40-white.png', 'x' => ($this->i['graph_left_end'] - 77), 'y' => (($this->i['top_heading_height'] / 40 + 2)), 'width' => 77, 'height' => 40));
 		}
 		else
 		{
@@ -596,7 +596,7 @@ abstract class pts_Graph
 			if(isset($this->d['link_alternate_view']) && $this->d['link_alternate_view'])
 			{
 				// offer link of image to $this->d['link_alternate_view']
-				$this->svg_dom->add_element('image', array('http_link' => $this->d['link_alternate_view'], 'xlink:href' => pts_svg_dom::embed_png_image(PTS_CORE_STATIC_PATH . 'images/ob-10x16.png'), 'x' => 4, 'y' => ($bottom_heading_start + 1), 'width' => 10, 'height' => 16));
+				$this->svg_dom->add_element('image', array('http_link' => $this->d['link_alternate_view'], 'xlink:href' => 'https://openbenchmarking.org/static/images/ob-10x16.png', 'x' => 4, 'y' => ($bottom_heading_start + 1), 'width' => 10, 'height' => 16));
 			}
 
 			if(!empty($this->i['notes']))

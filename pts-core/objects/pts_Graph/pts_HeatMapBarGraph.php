@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2011 - 2012, Phoronix Media
-	Copyright (C) 2011 - 2012, Michael Larabel
+	Copyright (C) 2011 - 2015, Phoronix Media
+	Copyright (C) 2011 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -123,7 +123,7 @@ class pts_HeatMapBarGraph extends pts_Graph
 		$end_x = $start_x + $bar_width;
 
 		// Title bar
-		$this->svg_dom->add_element('image', array('xlink:href' => pts_svg_dom::embed_png_image(PTS_CORE_STATIC_PATH . 'images/ob-fulltext-183x32.png'), 'x' => ($end_x - 190), 'y' => 10, 'width' => 183, 'height' => 32));
+		$this->svg_dom->add_element('image', array('xlink:href' => 'https://openbenchmarking.org/static/images/ob-fulltext-183x32.png', 'x' => ($end_x - 190), 'y' => 10, 'width' => 183, 'height' => 32));
 
 
 		if(!empty($this->keys))
