@@ -33,9 +33,7 @@ class remove_from_result_file implements pts_option_interface
 	}
 	public static function run($r)
 	{
-		$result = $r[0];
-
-		$result_file = new pts_result_file($result);
+		$result_file = new pts_result_file($r[0]);
 		$result_file_identifiers = $result_file->get_system_identifiers();
 
 		if(count($result_file_identifiers) < 2)
@@ -45,7 +43,7 @@ class remove_from_result_file implements pts_option_interface
 		}
 
 		$remove_identifiers = explode(',', pts_user_io::prompt_text_menu('Select the test run(s) to remove', $result_file_identifiers, true));
-		$result_file->remove_run_from_result_file($remove_identifiers);
+		$result_file->remove_run($remove_identifiers);
 		$result_dir = dirname($result_file->get_file_location()) . '/';
 
 		foreach(array('test-logs', 'system-logs', 'installation-logs') as $dir_name)
@@ -60,7 +58,7 @@ class remove_from_result_file implements pts_option_interface
 		}
 
 		pts_client::save_test_result($result_file->get_file_location(), pts_result_file_writer::result_file_to_xml($result_file));
-		pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . $r[0] . '/index.html');
+		pts_client::display_web_page($result_dir . '/index.html');
 	}
 }
 

@@ -371,7 +371,7 @@ class pts_result_file
 		$simple_xml = simplexml_load_string($file);
 		return json_encode($simple_xml);
 	}
-	public function rename_run_in_result_file($from, $to)
+	public function rename_run($from, $to)
 	{
 		if($from == null)
 		{
@@ -396,10 +396,30 @@ class pts_result_file
 
 		foreach($this->result_objects as &$result)
 		{
-			$result->test_result_buffer->rename_buffer_item($from, $to);
+			$result->test_result_buffer->rename($from, $to);
 		}
 	}
-	public function remove_run_from_result_file($remove)
+	public function reorder_runs($new_order)
+	{
+		foreach($new_order as $identifier)
+		{
+			foreach($this->systems as $i => $s)
+			{
+				if($s->get_identifier() == $identifier)
+				{
+					$c = $s;
+					unset($this->systems[$i]);
+					array_push($this->systems, $c);
+				}
+			}
+		}
+
+		foreach($this->result_objects as &$result)
+		{
+			$result->test_result_buffer->reorder($new_order);
+		}
+	}
+	public function remove_run($remove)
 	{
 		$remove = pts_arrays::to_array($remove);
 		foreach($this->systems as $i => &$s)
@@ -410,9 +430,9 @@ class pts_result_file
 			}
 		}
 
-		foreach($this->result_objects as $i => &$result)
+		foreach($this->result_objects as &$result)
 		{
-			$result->test_result_buffer->remove_buffer_item($remove);
+			$result->test_result_buffer->remove($remove);
 		}
 	}
 	public function add_to_result_file(&$result_file)
@@ -427,10 +447,10 @@ class pts_result_file
 
 		foreach($result_file->get_result_objects() as $result)
 		{
-			$this->add_result_object($result);
+			$this->add_result($result);
 		}
 	}
-	public function add_result_object(&$result_object)
+	public function add_result(&$result_object)
 	{
 		$ch = $result_object->get_comparison_hash(true, false);
 		if(isset($this->result_objects[$ch]) && isset($this->result_objects[$ch]->test_result_buffer))

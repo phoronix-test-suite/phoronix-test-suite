@@ -83,7 +83,7 @@ class pts_test_result_buffer
 	{
 		pts_test_result_buffer_extra::add_composite_result($this, $force);
 	}
-	public function rename_buffer_item($from, $to)
+	public function rename($from, $to)
 	{
 		if($from == null && count($this->buffer_items) == 1)
 		{
@@ -106,7 +106,22 @@ class pts_test_result_buffer
 		}
 		return false;
 	}
-	public function remove_buffer_item($remove)
+	public function reorder($new_order)
+	{
+		foreach($new_order as $identifier)
+		{
+			foreach($this->buffer_items as $i => &$buffer_item)
+			{
+				if($buffer_item->get_result_identifier() == $identifier)
+				{
+					$c = $buffer_item;
+					unset($this->buffer_items[$i]);
+					array_push($this->buffer_items, $c);
+				}
+			}
+		}
+	}
+	public function remove($remove)
 	{
 		$remove = pts_arrays::to_array($remove);
 		foreach($this->buffer_items as $i => &$buffer_item)

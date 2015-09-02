@@ -45,7 +45,7 @@ class pts_result_file_merger
 
 			if($merge_select->get_rename_identifier())
 			{
-				$result_file->rename_run_in_result_file(null, $merge_select->get_rename_identifier());
+				$result_file->rename_run(null, $merge_select->get_rename_identifier());
 			}
 
 			$merge_to_result_file->add_to_result_file($result_file);
