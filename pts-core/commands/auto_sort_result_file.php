@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2014, Phoronix Media
-	Copyright (C) 2014, Michael Larabel
+	Copyright (C) 2014 - 2015, Phoronix Media
+	Copyright (C) 2014 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -33,9 +33,7 @@ class auto_sort_result_file implements pts_option_interface
 	}
 	public static function run($args)
 	{
-		$result = $args[0];
-
-		$result_file = new pts_result_file($result);
+		$result_file = new pts_result_file($args[0]);
 		$result_file_identifiers = $result_file->get_system_identifiers();
 
 		if(count($result_file_identifiers) < 2)
@@ -48,14 +46,8 @@ class auto_sort_result_file implements pts_option_interface
 		echo PHP_EOL . 'Automatically sorting the results...' . PHP_EOL;
 
 		sort($result_file_identifiers);
-
-		foreach($result_file_identifiers as $identifier)
-		{
-			array_push($extract_selects, new pts_result_merge_select($result, $identifier));
-		}
-
-		$ordered_result = pts_merge::merge_test_results_array($extract_selects);
-		pts_client::save_test_result($args[0] . '/composite.xml', $ordered_result);
+		$result_file->reorder_runs($result_file_identifiers);
+		pts_client::save_test_result($result_file->get_file_location(), pts_result_file_writer::result_file_to_xml($result_file));
 		pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . $args[0] . '/index.html');
 	}
 	public static function invalid_command($passed_args = null)
