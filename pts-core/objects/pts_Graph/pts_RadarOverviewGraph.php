@@ -220,7 +220,7 @@ class pts_RadarOverviewGraph extends pts_Graph
 
 		$hw = array();
 		$sw = array();
-		foreach($result_file->get_systems() as $system)
+		foreach($this->result_file->get_systems() as $system)
 		{
 			array_push($hw, $system->get_hardware());
 			array_push($sw, $system->get_software());
