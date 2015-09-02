@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2010, Phoronix Media
-	Copyright (C) 2008 - 2010, Michael Larabel
+	Copyright (C) 2008 - 2015, Phoronix Media
+	Copyright (C) 2008 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -39,7 +39,7 @@ class merge_results implements pts_option_interface
 		{
 			if(pts_types::is_result_file($result_file))
 			{
-				array_push($result_files_to_merge, $result_file);
+				array_push($result_files_to_merge, PTS_SAVE_RESULTS_PATH . $result_file . '/composite.xml');
 			}
 		}
 
@@ -58,9 +58,8 @@ class merge_results implements pts_option_interface
 		$merge_to_file .= 'composite.xml';
 
 		// Merge Results
-		$merged_results = call_user_func(array('pts_merge', 'merge_test_results_array'), $result_files_to_merge);
-		pts_client::save_test_result($merge_to_file, $merged_results);
-
+		$result_file = pts_result_file_merger::merge($result_files_to_merge);
+		pts_client::save_test_result($merge_to_file, pts_result_file_writer::result_file_to_xml($result_file));
 		echo 'Merged Results Saved To: ' . PTS_SAVE_RESULTS_PATH . $merge_to_file . PHP_EOL . PHP_EOL;
 		pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . dirname($merge_to_file) . '/index.html');
 	}

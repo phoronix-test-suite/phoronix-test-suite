@@ -31,10 +31,20 @@ class pts_result_file_merger
 
 		foreach($result_merges_to_combine as $i => &$merge_select)
 		{
+			if(!($merge_select instanceof $merge_select))
+			{
+				$merge_select = new pts_result_merge_select($merge_select);
+			}
+
 			if(!is_file($merge_select->get_result_file()))
 			{
 				unset($result_merges_to_combine[$i]);
 			}
+		}
+
+		if(empty($result_merges_to_combine))
+		{
+			return false;
 		}
 
 		$merge_to_result_file = new pts_result_file(array_shift($result_merges_to_combine)->get_result_file(), true);
