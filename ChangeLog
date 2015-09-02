@@ -7,6 +7,7 @@ Phoronix Test Suite (Git)
 - pts-core: Rendering optimizations when handling lots of result files / graphs / result identifiers
 - pts-core: Rework and optimize the pts_result_file
 - pts-core: Start on a new, faster result merger
+- pts-core: Do test execution with proc_open(), allow modules to tap the process
 - phodevi: AMDGPU Linux detection improvements
 
 Phoronix Test Suite 6.0 Milestone 1
