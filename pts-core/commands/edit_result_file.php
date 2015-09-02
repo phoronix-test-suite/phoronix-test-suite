@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2014, Phoronix Media
-	Copyright (C) 2014, Michael Larabel
+	Copyright (C) 2014 - 2015, Phoronix Media
+	Copyright (C) 2014 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -38,30 +38,21 @@ class edit_result_file implements pts_option_interface
 	public static function run($r)
 	{
 		$result_file = new pts_result_file($r[0]);
-
 		$result_title = $result_file->get_title();
 		echo PHP_EOL . 'Current Result Title: ' . $result_title . PHP_EOL;
 		$new_title = pts_user_io::prompt_user_input('Enter New Title');
-
 		if(!empty($new_title))
 		{
-			$result_title = $new_title;
+			$result_file->set_title($new_title);
 		}
-
 		$result_description = $result_file->get_description();
 		echo PHP_EOL . 'Current Result Description: ' . $result_description . PHP_EOL;
 		$new_description = pts_user_io::prompt_user_input('Enter New Description');
-
 		if(!empty($new_description))
 		{
-			$result_description = $new_description;
+			$result_file->set_description($new_description);
 		}
-
-		$result_file_writer = new pts_result_file_writer();
-		$result_file_writer->add_result_file_meta_data($result_file, null, $new_title, $new_description);
-		$result_file_writer->add_system_information_from_result_file($result_file);
-		$result_file_writer->add_results_from_result_file($result_file);
-		pts_client::save_test_result($r[0] . '/composite.xml', $result_file_writer->get_xml());
+		pts_client::save_test_result($result_file->get_file_location(), pts_result_file_writer::result_file_to_xml($result_file));
 		pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . $r[0] . '/index.html');
 	}
 }
