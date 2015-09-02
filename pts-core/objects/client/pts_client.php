@@ -1079,13 +1079,15 @@ class pts_client
 			array_push($test_titles, $result_object->test_profile->get_title());
 		}
 
+		$offset = 0;
 		foreach($result_objects as $key => &$result_object)
 		{
 			$save_to = $save_to_dir;
+			$offset++;
 
 			if($save_to_dir && is_dir($save_to_dir))
 			{
-				$save_to .= '/result-graphs/' . ($key + 1) . '.BILDE_EXTENSION';
+				$save_to .= '/result-graphs/' . $offset . '.BILDE_EXTENSION';
 
 				if(PTS_IS_CLIENT)
 				{
@@ -1107,7 +1109,7 @@ class pts_client
 					}
 
 					$chart = new pts_ResultFileTable($result_file, null, $table_keys);
-					$chart->renderChart($save_to_dir . '/result-graphs/' . ($key + 1) . '_table.BILDE_EXTENSION');
+					$chart->renderChart($save_to_dir . '/result-graphs/' . $offset . '_table.BILDE_EXTENSION');
 					unset($chart);
 					$generated_graph_tables = true;
 				}
