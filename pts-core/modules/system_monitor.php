@@ -38,8 +38,10 @@ class system_monitor extends pts_module_interface
 	static $successful_test_run_request = null;
 	static $individual_test_run_offsets = null;
 	static $test_run_tries_offsets = null;
+
 	static $individual_monitoring = null;
 	static $per_test_run_monitoring = null;
+	static $cgroup_monitoring = null;
 
 	private static $test_run_try_number = null;
 	private static $sensor_monitoring_frequency = 2;
@@ -178,6 +180,13 @@ class system_monitor extends pts_module_interface
 		}
 
 		self::$test_run_timer = time();
+	}
+
+	public static function __test_running($test_process)
+	{
+		//that needs higher PHP version
+		$parent_pid = proc_get_status($test_process)['pid'];
+		file_put_contents('/sys/fs/cgroup/cpu,cpuacct/abc/tasks', $parent_pid);
 	}
 
 	public static function __interim_test_run()
