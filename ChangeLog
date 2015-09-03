@@ -6,7 +6,8 @@ Phoronix Test Suite (Git)
 - pts-core: Add debug-render-test for helping to optimize the graph/result rendering process
 - pts-core: Rendering optimizations when handling lots of result files / graphs / result identifiers
 - pts-core: Rework and optimize the pts_result_file
-- pts-core: Start on a new, faster result merger
+- pts-core: Implement new, faster result merger
+- pts-core: Allow the test_run_manager to run directly with a result_file
 - pts-core: Do test execution with proc_open(), allow modules to tap the process
 - phodevi: AMDGPU Linux detection improvements
 - pts_Graph: Don't embed the PNG logo directly into the SVG file, but rely on HTTPS link

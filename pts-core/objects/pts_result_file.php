@@ -434,6 +434,7 @@ class pts_result_file
 					$c = $s;
 					unset($this->systems[$i]);
 					array_push($this->systems, $c);
+					break;
 				}
 			}
 		}

@@ -117,6 +117,7 @@ class pts_test_result_buffer
 					$c = $buffer_item;
 					unset($this->buffer_items[$i]);
 					array_push($this->buffer_items, $c);
+					break;
 				}
 			}
 		}
