@@ -28,6 +28,7 @@ class pts_client
 	protected static $lock_pointers = null;
 	private static $forked_pids = array();
 	protected static $phoromatic_servers = array();
+	protected static $debug_mode = false;
 
 	public static function create_lock($lock_file)
 	{
@@ -300,7 +301,7 @@ class pts_client
 
 			$bool = file_put_contents(PTS_SAVE_RESULTS_PATH . $save_to, $save_results);
 
-			if($result_identifier != null && (pts_config::read_bool_config('PhoronixTestSuite/Options/Testing/SaveSystemLogs', 'TRUE') || (pts_c::$test_flags & pts_c::batch_mode) || (pts_c::$test_flags & pts_c::auto_mode)))
+			if($result_identifier != null && pts_config::read_bool_config('PhoronixTestSuite/Options/Testing/SaveSystemLogs', 'TRUE'))
 			{
 				// Save verbose system information here
 				$system_log_dir = $save_to_dir . '/system-logs/' . $result_identifier . '/';
@@ -427,7 +428,7 @@ class pts_client
 
 		return $bool;
 	}
-	public static function init_display_mode($flags = 0, $override_display_mode = false)
+	public static function init_display_mode($override_display_mode = false)
 	{
 		if(PTS_IS_WEB_CLIENT && !defined('PHOROMATIC_SERVER'))
 		{
@@ -435,7 +436,7 @@ class pts_client
 			return;
 		}
 
-		$env_mode = ($flags & pts_c::debug_mode) ? 'BASIC' : $override_display_mode;
+		$env_mode = pts_client::is_debug_mode() ? 'BASIC' : $override_display_mode;
 
 		switch(($env_mode != false || ($env_mode = pts_client::read_env('PTS_DISPLAY_MODE')) != false ? $env_mode : pts_config::read_user_config('PhoronixTestSuite/Options/General/DefaultDisplayMode', 'DEFAULT')))
 		{
@@ -666,7 +667,7 @@ class pts_client
 		// Phodevi Cache Handling
 		$phodevi_cache = $pso->read_object('phodevi_smart_cache');
 
-		if($phodevi_cache instanceof phodevi_cache && pts_flags::no_phodevi_cache() == false)
+		if($phodevi_cache instanceof phodevi_cache && pts_client::read_env('NO_PHODEVI_CACHE') == false)
 		{
 			$phodevi_cache = $phodevi_cache->restore_cache(PTS_USER_PATH, PTS_CORE_VERSION);
 			phodevi::set_device_cache($phodevi_cache);
@@ -803,16 +804,9 @@ class pts_client
 			{
 				pts_client::$display->generic_heading('User Agreement');
 				echo wordwrap($user_agreement, 65);
-				$agree = pts_flags::user_agreement_skip() || pts_user_io::prompt_bool_input('Do you agree to these terms and wish to proceed', true);
+				$agree = pts_user_io::prompt_bool_input('Do you agree to these terms and wish to proceed', true);
 
-				if(pts_flags::no_openbenchmarking_reporting())
-				{
-					$usage_reporting = false;
-				}
-				else
-				{
-					$usage_reporting = $agree ? pts_user_io::prompt_bool_input('Enable anonymous usage / statistics reporting', true) : -1;
-				}
+				$usage_reporting = $agree ? pts_user_io::prompt_bool_input('Enable anonymous usage / statistics reporting', true) : -1;
 			}
 
 			if($agree)
@@ -956,7 +950,7 @@ class pts_client
 	{
 		$reported = false;
 
-		if((pts_c::$test_flags & pts_c::debug_mode))
+		if(pts_client::is_debug_mode())
 		{
 			pts_client::$display->test_run_instance_error($message);
 			$reported = true;
@@ -1145,7 +1139,7 @@ class pts_client
 	{
 		// TODO: possibly do something like posix_getpid() != pts_client::$startup_pid in case shutdown function is called from a child process
 		// Generate Phodevi Smart Cache
-		if(pts_flags::no_phodevi_cache() == false && pts_client::read_env('EXTERNAL_PHODEVI_CACHE') == false)
+		if(pts_client::read_env('NO_PHODEVI_CACHE') == false && pts_client::read_env('EXTERNAL_PHODEVI_CACHE') == false)
 		{
 			if(pts_config::read_bool_config('PhoronixTestSuite/Options/General/UsePhodeviCache', 'TRUE'))
 			{
@@ -1225,10 +1219,6 @@ class pts_client
 		}
 
 		return $generated;
-	}
-	public static function set_test_flags($test_flags = 0)
-	{
-		pts_c::$test_flags = $test_flags;
 	}
 	public static function execute_command($command, $pass_args = null)
 	{
@@ -1550,7 +1540,7 @@ class pts_client
 	}
 	public static function display_web_page($URL, $alt_text = null, $default_open = true, $auto_open = false)
 	{
-		if(((pts_c::$test_flags & pts_c::auto_mode) && $auto_open == false && $default_open == false) || (pts_client::read_env('DISPLAY') == false && pts_client::read_env('WAYLAND_DISPLAY') == false && phodevi::is_windows() == false && phodevi::is_macosx() == false) || defined('PHOROMATIC_PROCESS'))
+		if((pts_client::read_env('DISPLAY') == false && pts_client::read_env('WAYLAND_DISPLAY') == false && phodevi::is_windows() == false && phodevi::is_macosx() == false) || defined('PHOROMATIC_PROCESS'))
 		{
 			return;
 		}
@@ -1758,14 +1748,14 @@ class pts_client
 		{
 			case E_USER_ERROR:
 				$error_type = 'PROBLEM';
-				if(pts_client::is_client_debug_mode() == false)
+				if(pts_client::is_debug_mode() == false)
 				{
 					$error_file = null;
 					$error_line = 0;
 				}
 				break;
 			case E_USER_NOTICE:
-				if(pts_client::is_client_debug_mode() == false)
+				if(pts_client::is_debug_mode() == false)
 				{
 					return;
 				}
@@ -1773,7 +1763,7 @@ class pts_client
 				break;
 			case E_USER_WARNING:
 				$error_type = 'NOTICE'; // Yes, report warnings as a notice
-				if(pts_client::is_client_debug_mode() == false)
+				if(pts_client::is_debug_mode() == false)
 				{
 					$error_file = null;
 					$error_line = 0;
@@ -1843,16 +1833,20 @@ class pts_client
 			exit(1);
 		}
 	}
-	public static function is_client_debug_mode()
+	public static function set_debug_mode($dmode)
 	{
-		return false; // TODO
+		self::$debug_mode = ($dmode == true);
+	}
+	public static function is_debug_mode()
+	{
+		return self::$debug_mode == true;
 	}
 }
 
 // Some extra magic
 set_error_handler(array('pts_client', 'code_error_handler'));
 
-if(PTS_IS_CLIENT && (PTS_IS_DEV_BUILD || pts_client::is_client_debug_mode()))
+if(PTS_IS_CLIENT && (PTS_IS_DEV_BUILD || pts_client::is_debug_mode()))
 {
 	// Enable more verbose error reporting only when PTS is in development with milestone (alpha/beta) releases but no release candidate (r) or gold versions
 	error_reporting(E_ALL | E_NOTICE | E_STRICT);

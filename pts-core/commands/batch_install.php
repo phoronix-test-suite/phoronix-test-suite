@@ -33,7 +33,7 @@ class batch_install implements pts_option_interface
 	}
 	public static function run($r)
 	{
-		pts_test_installer::standard_install($r, pts_c::batch_mode);
+		pts_test_installer::standard_install($r, false, true);
 	}
 }
 

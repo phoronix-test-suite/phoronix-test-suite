@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2014, Phoronix Media
-	Copyright (C) 2010 - 2014, Michael Larabel
+	Copyright (C) 2010 - 2015, Phoronix Media
+	Copyright (C) 2010 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -22,11 +22,11 @@
 
 class pts_external_dependencies
 {
-	public static function install_dependencies(&$test_profiles)
+	public static function install_dependencies(&$test_profiles, $no_prompts = false, $skip_tests_with_missing_dependencies = false)
 	{
 		// PTS External Dependencies install on distribution
 
-		if(phodevi::is_windows() || phodevi::is_macosx() || pts_flags::no_external_dependencies())
+		if(phodevi::is_windows() || phodevi::is_macosx() || pts_client::read_env('NO_EXTERNAL_DEPENDENCIES') != false || pts_client::read_env('SKIP_EXTERNAL_DEPENDENCIES') == 1)
 		{
 			// Windows doesn't use any external dependencies
 			return true;
@@ -62,7 +62,7 @@ class pts_external_dependencies
 			}
 		}
 
-		if((pts_c::$test_flags & pts_c::skip_tests_with_missing_dependencies))
+		if($skip_tests_with_missing_dependencies)
 		{
 			// Remove tests that have external dependencies that aren't satisfied and then return
 			$generic_packages_needed = array();
@@ -100,7 +100,7 @@ class pts_external_dependencies
 		$dependencies_to_install = self::check_dependencies_missing_from_system($required_test_dependencies);
 
 		// If it's automated and can't install without root, return true if there are no dependencies to do otherwise false
-		if((pts_c::$test_flags & pts_c::auto_mode) && phodevi::is_root() == false)
+		if($no_prompts && phodevi::is_root() == false)
 		{
 			return count($dependencies_to_install) == 0;
 		}
@@ -136,7 +136,7 @@ class pts_external_dependencies
 					pts_client::$display->generic_heading($report);
 				}
 
-				if((pts_c::$test_flags ^ pts_c::batch_mode) && (pts_c::$test_flags ^ pts_c::auto_mode))
+				if(!$no_prompts)
 				{
 					echo 'The above dependencies should be installed before proceeding. Press any key when you\'re ready to continue.';
 					pts_user_io::read_user_input();
@@ -147,7 +147,7 @@ class pts_external_dependencies
 
 
 		// Find the dependencies that are still missing from the system
-		if((pts_c::$test_flags ^ pts_c::batch_mode) && (pts_c::$test_flags ^ pts_c::auto_mode) && !defined('PHOROMATIC_PROCESS'))
+		if(!$no_prompts && !defined('PHOROMATIC_PROCESS'))
 		{
 			$generic_packages_needed = array();
 			$required_test_dependencies = $required_test_dependencies_copy;

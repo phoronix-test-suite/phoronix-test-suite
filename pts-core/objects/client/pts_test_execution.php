@@ -90,7 +90,7 @@ class pts_test_execution
 		{
 			$pre_output = pts_tests::call_test_script($test_run_request->test_profile, 'pre', 'Running Pre-Test Script', $pts_test_arguments, $extra_runtime_variables, true);
 
-			if($pre_output != null && (pts_c::$test_flags & pts_c::debug_mode))
+			if($pre_output != null && pts_client::is_debug_mode())
 			{
 				pts_client::$display->test_run_instance_output($pre_output);
 			}
@@ -189,12 +189,12 @@ class pts_test_execution
 			}
 		
 
-			if(!isset($test_result[10240]) || (pts_c::$test_flags & pts_c::debug_mode))
+			if(!isset($test_result[10240]) || pts_client::is_debug_mode())
 			{
 				pts_client::$display->test_run_instance_output($test_result);
 			}
 
-			if(is_file($test_log_file) && trim($test_result) == null && (filesize($test_log_file) < 10240 || (pts_c::$test_flags & pts_c::debug_mode)))
+			if(is_file($test_log_file) && trim($test_result) == null && (filesize($test_log_file) < 10240 || pts_client::is_debug_mode()))
 			{
 				$test_log_file_contents = file_get_contents($test_log_file);
 				pts_client::$display->test_run_instance_output($test_log_file_contents);
@@ -325,7 +325,7 @@ class pts_test_execution
 				{
 					$interim_output = pts_tests::call_test_script($test_run_request->test_profile, 'interim', 'Running Interim Test Script', $pts_test_arguments, $extra_runtime_variables, true);
 
-					if($interim_output != null && (pts_c::$test_flags & pts_c::debug_mode))
+					if($interim_output != null && pts_client::is_debug_mode())
 					{
 						pts_client::$display->test_run_instance_output($interim_output);
 					}
@@ -370,7 +370,7 @@ class pts_test_execution
 		{
 			$post_output = pts_tests::call_test_script($test_run_request->test_profile, 'post', 'Running Post-Test Script', $pts_test_arguments, $extra_runtime_variables, true);
 
-			if($post_output != null && (pts_c::$test_flags & pts_c::debug_mode))
+			if($post_output != null && pts_client::is_debug_mode())
 			{
 				pts_client::$display->test_run_instance_output($post_output);
 			}

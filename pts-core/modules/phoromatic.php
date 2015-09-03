@@ -560,7 +560,7 @@ class phoromatic extends pts_module_interface
 					case 'install':
 						phoromatic::update_system_status('Installing Tests');
 						pts_suite_nye_XmlReader::set_temporary_suite('pre-seed', $json['phoromatic']['test_suite']);
-						pts_test_installer::standard_install('pre-seed');
+						pts_test_installer::standard_install('pre-seed', false, true);
 						break;
 					case 'benchmark':
 
@@ -569,7 +569,6 @@ class phoromatic extends pts_module_interface
 
 						$benchmark_timer = time();
 						self::$is_running_as_phoromatic_node = true;
-						$test_flags = pts_c::auto_mode | pts_c::batch_mode;
 						$suite_identifier = sha1(time() . rand(2, 1000));
 						pts_suite_nye_XmlReader::set_temporary_suite($suite_identifier, $json['phoromatic']['test_suite']);
 						self::$p_save_identifier = $json['phoromatic']['trigger_id'];
@@ -587,13 +586,7 @@ class phoromatic extends pts_module_interface
 								phoromatic::set_user_context($json['phoromatic']['pre_install_set_context'], self::$p_trigger_id, self::$p_schedule_id, 'PRE_INSTALL');
 							}
 
-							if(pts_strings::string_bool($json['phoromatic']['settings']['ForceInstallTests']))
-							{
-								$test_flags |= pts_c::force_install;
-							}
-
-							pts_client::set_test_flags($test_flags);
-							pts_test_installer::standard_install($suite_identifier);
+							pts_test_installer::standard_install($suite_identifier, pts_strings::string_bool($json['phoromatic']['settings']['ForceInstallTests']), true);
 							if(isset($json['phoromatic']['post_install_set_context']))
 							{
 								phoromatic::set_user_context($json['phoromatic']['post_install_set_context'], self::$p_trigger_id, self::$p_schedule_id, 'POST_INSTALL');
@@ -603,16 +596,14 @@ class phoromatic extends pts_module_interface
 
 						// Do the actual running
 						phodevi::clear_cache();
-						if(pts_test_run_manager::initial_checks($suite_identifier, 0, 'SHORT'))
+						self::$test_run_manager = new pts_test_run_manager(array(
+							'UploadResults' => (isset($json['phoromatic']['settings']['UploadResultsToOpenBenchmarking']) && pts_strings::string_bool($json['phoromatic']['settings']['UploadResultsToOpenBenchmarking'])),
+							'SaveResults' => true,
+							'RunAllTestCombinations' => false,
+							'OpenBrowser' => false
+							), true);
+						if(self::$test_run_manager->initial_checks($suite_identifier, 'SHORT'))
 						{
-							self::$test_run_manager = new pts_test_run_manager($test_flags);
-							pts_test_run_manager::set_batch_mode(array(
-								'UploadResults' => (isset($json['phoromatic']['settings']['UploadResultsToOpenBenchmarking']) && pts_strings::string_bool($json['phoromatic']['settings']['UploadResultsToOpenBenchmarking'])),
-								'SaveResults' => true,
-								'RunAllTestCombinations' => false,
-								'OpenBrowser' => false
-								));
-
 							// Load the tests to run
 							if(self::$test_run_manager->load_tests_to_run($suite_identifier))
 							{

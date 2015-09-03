@@ -238,7 +238,7 @@ class pts_web_socket_server_gui extends pts_web_socket
 
 		if(isset($json['pts']['msg']['error']) && $json['pts']['msg']['error'] != null)
 		{
-            exit(1);
+			exit(1);
 		}
 		pts_client::$display = new pts_websocket_display_mode();
 		pts_client::$display->set_web_socket($this, $user->id);
@@ -248,39 +248,37 @@ class pts_web_socket_server_gui extends pts_web_socket
 		{
 			$virtual_test_queue[0]->add_to_queue($test['test_profile_id'], $test['test_options_title'], $test['test_options_value']);
 		}
-		$test_flags = pts_c::auto_mode; // | pts_c::debug_mode
-		pts_client::set_test_flags($test_flags);
-		pts_test_installer::standard_install($virtual_test_queue);
-        if(pts_test_run_manager::initial_checks($virtual_test_queue, $test_flags) == false)
-        {
-            $j['pts']['msg']['name'] = 'benchmark_state';
-            $j['pts']['msg']['current_state'] = 'failed';
-            $j['pts']['msg']['error'] = 'Failed to install test.';
-            $this->send_json_data($user->socket, $j);
-            exit(1);
-        }
-        $test_run_manager = new pts_test_run_manager($test_flags);
-        if($test_run_manager->load_tests_to_run($virtual_test_queue))
-	{
-		// SETUP
-		$test_run_manager->auto_upload_to_openbenchmarking();
-		pts_openbenchmarking_client::override_client_setting('UploadSystemLogsByDefault', true);
-		$test_run_manager->auto_save_results($json_queue['title'], $json_queue['identifier'], $json_queue['description'], true);
+		$test_run_manager = new pts_test_run_manager(false, true);
+		pts_test_installer::standard_install($virtual_test_queue, false, true);
+		if($test_run_manager->initial_checks($virtual_test_queue) == false)
+		{
+			$j['pts']['msg']['name'] = 'benchmark_state';
+			$j['pts']['msg']['current_state'] = 'failed';
+			$j['pts']['msg']['error'] = 'Failed to install test.';
+			$this->send_json_data($user->socket, $j);
+			exit(1);
+		}
+		if($test_run_manager->load_tests_to_run($virtual_test_queue))
+		{
+			// SETUP
+			$test_run_manager->auto_upload_to_openbenchmarking();
+			pts_openbenchmarking_client::override_client_setting('UploadSystemLogsByDefault', true);
+			$test_run_manager->auto_save_results($json_queue['title'], $json_queue['identifier'], $json_queue['description'], true);
 
-		// BENCHMARK
-		$test_run_manager->pre_execution_process();
-		$test_run_manager->call_test_runs();
-		$test_run_manager->post_execution_process();
+			// BENCHMARK
+			$test_run_manager->pre_execution_process();
+			$test_run_manager->call_test_runs();
+			$test_run_manager->post_execution_process();
 
-		$j['pts']['msg']['name'] = 'benchmark_state';
-		$j['pts']['msg']['current_state'] = 'complete';
-		$j['pts']['msg']['result_title'] = $test_run_manager->get_title();
-		$j['pts']['msg']['result_file_name'] = $test_run_manager->get_file_name();
-		$j['pts']['msg']['result_identifier'] = $test_run_manager->get_results_identifier();
-		$j['pts']['msg']['result_url'] = $test_run_manager->get_results_url();
-		$this->send_json_data($user->socket, $j);
-	}
-//        exit(0);
+			$j['pts']['msg']['name'] = 'benchmark_state';
+			$j['pts']['msg']['current_state'] = 'complete';
+			$j['pts']['msg']['result_title'] = $test_run_manager->get_title();
+			$j['pts']['msg']['result_file_name'] = $test_run_manager->get_file_name();
+			$j['pts']['msg']['result_identifier'] = $test_run_manager->get_results_identifier();
+			$j['pts']['msg']['result_url'] = $test_run_manager->get_results_url();
+			$this->send_json_data($user->socket, $j);
+		}
+		// exit(0);
 	}
 	protected function search_pts(&$user, $search)
 	{

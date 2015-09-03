@@ -180,7 +180,8 @@ class auto_compare implements pts_option_interface
 		}
 
 		pts_test_installer::standard_install(array('auto-comparison'));
-		pts_test_run_manager::standard_run(array('auto-comparison'));
+		$test_run_manager = new pts_test_run_manager();
+		$test_run_manager->standard_run(array('auto-comparison'));
 	}
 	protected static function system_component_to_format(&$system_info, &$to_array, $component_types, $allow_trim_extra = false)
 	{

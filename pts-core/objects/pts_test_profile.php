@@ -385,7 +385,7 @@ class pts_test_profile extends pts_test_profile_parser
 	public function needs_updated_install()
 	{
 		// Checks if test needs updating
-		return $this->test_installation == false || $this->get_test_profile_version() != $this->test_installation->get_installed_version() || $this->get_installer_checksum() != $this->test_installation->get_installed_checksum() || (pts_c::$test_flags & pts_c::force_install) || $this->test_installation->get_installed_system_identifier() != phodevi::system_id_string();
+		return $this->test_installation == false || $this->get_test_profile_version() != $this->test_installation->get_installed_version() || $this->get_installer_checksum() != $this->test_installation->get_installed_checksum() || $this->test_installation->get_installed_system_identifier() != phodevi::system_id_string();
 	}
 	public function to_json()
 	{

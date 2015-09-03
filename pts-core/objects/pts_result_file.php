@@ -192,7 +192,10 @@ class pts_result_file
 	}
 	public function set_title($new_title)
 	{
-		$this->title = $new_title;
+		if($new_title != null)
+		{
+			$this->title = $new_title;
+		}
 	}
 	public function get_title()
 	{
@@ -200,7 +203,10 @@ class pts_result_file
 	}
 	public function set_description($new_description)
 	{
-		$this->description = $new_description;
+		if($new_description != null)
+		{
+			$this->description = $new_description;
+		}
 	}
 	public function get_description()
 	{
@@ -208,7 +214,10 @@ class pts_result_file
 	}
 	public function set_notes($notes)
 	{
-		$this->notes = $notes;
+		if($notes != null)
+		{
+			$this->notes = $notes;
+		}
 	}
 	public function get_notes()
 	{
@@ -216,7 +225,10 @@ class pts_result_file
 	}
 	public function set_internal_tags($tags)
 	{
-		$this->internal_tags = $tags;
+		if($tags != null)
+		{
+			$this->internal_tags = $tags;
+		}
 	}
 	public function get_internal_tags()
 	{
@@ -235,7 +247,10 @@ class pts_result_file
 	}
 	public function set_preset_environment_variables($env)
 	{
-		$this->preset_environment_variables = $env;
+		if($env != null)
+		{
+			$this->preset_environment_variables = $env;
+		}
 	}
 	public function get_preset_environment_variables()
 	{

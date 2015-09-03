@@ -52,16 +52,23 @@ class pts_test_run_manager
 	private $multi_test_stress_run = false;
 
 	private static $test_run_process_active = false;
-	private static $batch_mode_options = false;
+	private $batch_mode = false;
+	private $auto_mode = false;
 
-	public function __construct($test_flags = 0)
+	public function __construct($batch_mode = false, $auto_mode = false)
 	{
-		pts_client::set_test_flags($test_flags);
-
 		$this->do_dynamic_run_count = pts_config::read_bool_config('PhoronixTestSuite/Options/TestResultValidation/DynamicRunCount', 'TRUE');
 		$this->dynamic_run_count_on_length_or_less = pts_config::read_user_config('PhoronixTestSuite/Options/TestResultValidation/LimitDynamicToTestLength', 20);
 		$this->dynamic_run_count_std_deviation_threshold = pts_config::read_user_config('PhoronixTestSuite/Options/TestResultValidation/StandardDeviationThreshold', 3.50);
 		$this->dynamic_run_count_export_script = pts_config::read_user_config('PhoronixTestSuite/Options/TestResultValidation/ExportResultsTo', null);
+
+		if($batch_mode)
+		{
+			$this->set_batch_mode($batch_mode);
+		}
+
+		// 1/true is normal auto mode, 2 = auto + default benchmark mode
+		$this->auto_mode = $auto_mode;
 
 		pts_module_manager::module_process('__run_manager_setup', $this);
 	}
@@ -244,17 +251,18 @@ class pts_test_run_manager
 	}
 	public function result_already_contains_identifier()
 	{
-		$existing_identifiers = array();
-
 		if($this->result_file)
 		{
 			foreach($this->result_file->get_systems() as $s)
 			{
-				array_push($existing_identifiers, $s->get_identifier());
+				if($s->get_identifier() == $this->results_identifier)
+				{
+					return true;
+				}
 			}
 		}
 
-		return in_array($this->results_identifier, $existing_identifiers);
+		return false;
 	}
 	public function set_save_name($save_name, $is_new_save = true)
 	{
@@ -289,7 +297,7 @@ class pts_test_run_manager
 			//echo 'Saving Results To: ' . $proposed_name . PHP_EOL;
 		}
 
-		if((pts_c::$test_flags ^ pts_c::batch_mode) || self::$batch_mode_options['PromptSaveName'])
+		if(!$this->batch_mode || $this->batch_mode['PromptSaveName'])
 		{
 			$is_reserved_word = false;
 			// Be of help to the user by showing recently saved test results
@@ -357,7 +365,7 @@ class pts_test_run_manager
 			$current_software = array();
 		}
 
-		if((pts_c::$test_flags ^ pts_c::batch_mode) || self::$batch_mode_options['PromptForTestIdentifier'] && (pts_c::$test_flags ^ pts_c::auto_mode) && (pts_c::$test_flags ^ pts_c::is_recovering))
+		if((!$this->batch_mode || $this->batch_mode['PromptForTestIdentifier']) && !$this->auto_mode)
 		{
 			if(count($current_identifiers) > 0)
 			{
@@ -374,7 +382,7 @@ class pts_test_run_manager
 					$results_identifier = isset($env_identifier) ? self::clean_results_identifier($env_identifier) : null;
 					echo 'Test Identifier: ' . $results_identifier . PHP_EOL;
 				}
-				else if((pts_c::$test_flags ^ pts_c::auto_mode))
+				else
 				{
 					pts_client::$display->generic_prompt('Enter a unique name to describe this test run / configuration: ');
 					$results_identifier = self::clean_results_identifier(pts_user_io::read_user_input());
@@ -382,12 +390,6 @@ class pts_test_run_manager
 				$times_tried++;
 
 				$identifier_pos = (($p = array_search($results_identifier, $current_identifiers)) !== false ? $p : -1);
-
-				if((pts_c::$test_flags & pts_c::auto_mode))
-				{
-					// Make sure if in auto-mode we don't get stuck in a loop
-					break;
-				}
 			}
 			while((!$no_repeated_tests && $identifier_pos != -1) || (isset($current_hardware[$identifier_pos]) && $current_hardware[$identifier_pos] != phodevi::system_hardware(true)) || (isset($current_software[$identifier_pos]) && $current_software[$identifier_pos] != phodevi::system_software(true)));
 		}
@@ -444,7 +446,7 @@ class pts_test_run_manager
 			$results_identifier = implode(' - ', $subsystem_r);
 		}
 
-		if(empty($results_identifier) && (pts_c::$test_flags ^ pts_c::batch_mode))
+		if(empty($results_identifier) && !$this->batch_mode)
 		{
 			$results_identifier = phodevi::read_property('cpu', 'model') . ' - ' . phodevi::read_property('gpu', 'model') . ' - ' . phodevi::read_property('motherboard', 'identifier');
 		}
@@ -512,7 +514,7 @@ class pts_test_run_manager
 				$this->test_run_pos = $i;
 				$continue_test_flag = $this->process_test_run_request($i);
 
-				if(pts_flags::remove_test_on_completion())
+				if(pts_config::read_bool_config('PhoronixTestSuite/Options/Testing/RemoveTestInstallOnCompletion', 'FALSE'))
 				{
 					// Remove the installed test if it's no longer needed in this run queue
 					$this_test_profile_identifier = $this->get_test_to_run($this->test_run_pos)->test_profile->get_identifier();
@@ -568,7 +570,7 @@ class pts_test_run_manager
 		pts_client::release_lock($lock_path);
 
 		// Report any tests that failed to properly run
-		if((pts_c::$test_flags ^ pts_c::batch_mode) || (pts_c::$test_flags & pts_c::debug_mode) || $this->get_test_count() > 3)
+		if(pts_client::is_debug_mode() || $this->get_test_count() > 3)
 		{
 			if(count($this->failed_tests_to_run) > 0)
 			{
@@ -746,29 +748,19 @@ class pts_test_run_manager
 
 		return $input;
 	}
-	public static function initial_checks(&$to_run, $test_flags = 0, $override_display_mode = false)
+	public function initial_checks(&$to_run, $override_display_mode = false)
 	{
 		// Refresh the pts_client::$display in case we need to run in debug mode
-		$test_flags |= pts_c::is_run_process;
-		if(pts_client::$display == false || ($test_flags != 0 && !(pts_client::$display instanceof pts_websocket_display_mode)))
+		if(pts_client::$display == false || !(pts_client::$display instanceof pts_websocket_display_mode))
 		{
-			pts_client::init_display_mode($test_flags, $override_display_mode);
+			pts_client::init_display_mode($override_display_mode);
 		}
-		pts_client::set_test_flags($test_flags);
 		$to_run = pts_types::identifiers_to_objects($to_run);
 
-		if((pts_c::$test_flags & pts_c::batch_mode))
+		if($this->batch_mode && $this->batch_mode['Configured'] == false && !$this->auto_mode)
 		{
-			if(self::$batch_mode_options === false)
-			{
-				self::set_batch_mode();
-			}
-
-			if(self::$batch_mode_options['Configured'] == false && (pts_c::$test_flags ^ pts_c::auto_mode))
-			{
-				trigger_error('The batch mode must first be configured.' . PHP_EOL . 'To configure, run phoronix-test-suite batch-setup', E_USER_ERROR);
-				return false;
-			}
+			trigger_error('The batch mode must first be configured.' . PHP_EOL . 'To configure, run phoronix-test-suite batch-setup', E_USER_ERROR);
+			return false;
 		}
 
 		if(!is_writable(pts_client::test_install_root_path()))
@@ -794,7 +786,7 @@ class pts_test_run_manager
 	{
 		if($this->do_save_results())
 		{
-			if((pts_c::$test_flags ^ pts_c::is_recovering) && ($this->is_new_result_file || $this->result_already_contains_identifier() == false))
+			if($this->is_new_result_file || $this->result_already_contains_identifier() == false)
 			{
 				$this->result_file->set_title($this->file_name_title);
 				$this->result_file->set_description($this->run_description);
@@ -918,7 +910,7 @@ class pts_test_run_manager
 	{
 		if($this->do_save_results())
 		{
-			if($this->result_file->get_test_count() == 0 && $this->is_new_result_file && (pts_c::$test_flags ^ pts_c::is_recovering) && (pts_c::$test_flags ^ pts_c::remote_mode))
+			if($this->result_file->get_test_count() == 0 && $this->is_new_result_file)
 			{
 				pts_file_io::delete(PTS_SAVE_RESULTS_PATH . $this->get_file_name());
 				return false;
@@ -926,7 +918,7 @@ class pts_test_run_manager
 
 			pts_file_io::delete(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . '/test-logs/active/', null, true);
 
-			if((pts_c::$test_flags ^ pts_c::is_recovering) && ($this->is_new_result_file || $this->result_already_contains_identifier() == false))
+			if($this->is_new_result_file || $this->result_already_contains_identifier() == false)
 			{
 				// TODO XXX JSON In null and notes
 				$sys = new pts_result_file_system($this->results_identifier, phodevi::system_hardware(true), phodevi::system_software(true), $this->generate_json_system_attributes(), pts_client::current_user(), pts_test_notes_manager::generate_test_notes($this->tests_to_run), date('Y-m-d H:i:s'), PTS_VERSION);
@@ -939,11 +931,11 @@ class pts_test_run_manager
 			pts_module_manager::module_process('__event_results_saved', $this);
 			//echo PHP_EOL . 'Results Saved To: ; . PTS_SAVE_RESULTS_PATH . $this->get_file_name() . ;/composite.xml' . PHP_EOL;
 
-			if(!(pts_c::$test_flags & pts_c::auto_mode))
+			if(!$this->auto_mode)
 			{
-				if((pts_c::$test_flags & pts_c::batch_mode))
+				if($this->batch_mode)
 				{
-					if(self::$batch_mode_options['OpenBrowser'])
+					if($this->batch_mode['OpenBrowser'])
 					{
 						pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . '/index.html', null, true, true);
 					}
@@ -956,15 +948,15 @@ class pts_test_run_manager
 
 			if($this->allow_sharing_of_results && pts_network::internet_support_available())
 			{
-				if($this->auto_upload_to_openbenchmarking || pts_openbenchmarking_client::auto_upload_results() || pts_flags::upload_to_openbenchmarking())
+				if($this->auto_upload_to_openbenchmarking || pts_openbenchmarking_client::auto_upload_results() || pts_config::read_bool_config('PhoronixTestSuite/Options/Testing/AlwaysUploadResultsToOpenBenchmarking', 'FALSE'))
 				{
 					$upload_results = true;
 				}
-				else if((pts_c::$test_flags & pts_c::batch_mode))
+				else if($this->batch_mode)
 				{
-					$upload_results = self::$batch_mode_options['UploadResults'];
+					$upload_results = $this->batch_mode['UploadResults'];
 				}
-				else if(!(pts_c::$test_flags & pts_c::auto_mode))
+				else if(!$this->auto_mode)
 				{
 					$upload_results = pts_user_io::prompt_bool_input('Would you like to upload the results to OpenBenchmarking.org', true);
 				}
@@ -979,7 +971,7 @@ class pts_test_run_manager
 
 					if($this->get_results_url())
 					{
-						if(!(pts_c::$test_flags & pts_c::auto_mode) && pts_openbenchmarking_client::auto_upload_results() == false)
+						if(!$this->auto_mode && !$this->batcj_mode && pts_openbenchmarking_client::auto_upload_results() == false)
 						{
 							pts_client::display_web_page($this->get_results_url(), 'Do you want to launch OpenBenchmarking.org', true);
 						}
@@ -1000,9 +992,9 @@ class pts_test_run_manager
 	{
 		return $this->openbenchmarking_results_data;
 	}
-	public static function set_batch_mode($custom_preset = false)
+	public function set_batch_mode($custom_preset = false)
 	{
-		self::$batch_mode_options = array(
+		$this->batch_mode = array(
 			'UploadResults' => pts_config::read_bool_config('PhoronixTestSuite/Options/BatchMode/UploadResults', 'TRUE'),
 			'SaveResults' => pts_config::read_bool_config('PhoronixTestSuite/Options/BatchMode/SaveResults', 'TRUE'),
 			'PromptForTestDescription' => pts_config::read_bool_config('PhoronixTestSuite/Options/BatchMode/PromptForTestDescription', 'FALSE'),
@@ -1017,10 +1009,10 @@ class pts_test_run_manager
 		{
 			foreach($custom_preset as $key => $value)
 			{
-				self::$batch_mode_options[$key] = $value;
+				$this->batch_mode[$key] = $value;
 			}
 
-			self::$batch_mode_options['Configured'] = true;
+			$this->batch_mode['Configured'] = true;
 		}
 	}
 	public static function cleanup_tests_to_run(&$to_run_objects)
@@ -1142,13 +1134,13 @@ class pts_test_run_manager
 				echo $message;
 			}
 
-			if((pts_c::$test_flags & pts_c::batch_mode) == false && (pts_c::$test_flags & pts_c::auto_mode) == false && pts_flags::is_live_cd() == false && pts_client::current_command() != 'benchmark')
+			if(!$this->batch_mode && !$this->auto_mode && pts_client::current_command() != 'benchmark')
 			{
 				$stop_and_install = pts_user_io::prompt_bool_input('Would you like to stop and install these tests now', true);
 
 				if($stop_and_install)
 				{
-					pts_test_installer::standard_install($tests_missing, pts_c::$test_flags);
+					pts_test_installer::standard_install($tests_missing);
 					self::cleanup_tests_to_run($to_run_objects);
 				}
 			}
@@ -1257,7 +1249,7 @@ class pts_test_run_manager
 	}
 	public function save_results_prompt()
 	{
-		if((pts_c::$test_flags ^ pts_c::auto_mode))
+		if(!$this->auto_mode)
 		{
 			pts_client::$display->generic_heading('System Information');
 			echo 'Hardware:' . PHP_EOL . phodevi::system_hardware(true) . PHP_EOL . PHP_EOL;
@@ -1270,11 +1262,11 @@ class pts_test_run_manager
 			{
 				$save_results = true;
 			}
-			else if((pts_c::$test_flags & pts_c::batch_mode))
+			else if($this->batch_mode)
 			{
-				$save_results = self::$batch_mode_options['SaveResults'];
+				$save_results = $this->batch_mode['SaveResults'];
 			}
-			else if((pts_c::$test_flags & pts_c::debug_mode))
+			else if(pts_client::is_debug_mode())
 			{
 				$save_results = false;
 			}
@@ -1298,7 +1290,7 @@ class pts_test_run_manager
 				}
 
 				// Prompt Description
-				if((pts_c::$test_flags ^ pts_c::batch_mode) || self::$batch_mode_options['PromptForTestDescription'])
+				if(!$this->batch_mode || $this->batch_mode['PromptForTestDescription'])
 				{
 					if($this->run_description == null)
 					{
@@ -1313,7 +1305,7 @@ class pts_test_run_manager
 							echo 'Test Description: ' . $this->run_description . PHP_EOL;
 						}
 					}
-					else if((pts_c::$test_flags ^ pts_c::auto_mode))
+					else if(!$this->auto_mode)
 					{
 						//echo PHP_EOL . 'Current Title: ' . $this->file_name_title . PHP_EOL;
 						pts_client::$display->generic_heading('If you wish, enter a new description below to better describe this result set / system configuration under test.' . PHP_EOL . 'Press ENTER to proceed without changes.');
@@ -1524,11 +1516,11 @@ class pts_test_run_manager
 	{
 		$result_objects = array();
 
-		if((pts_c::$test_flags & pts_c::batch_mode) && self::$batch_mode_options['RunAllTestCombinations'])
+		if($this->batch_mode && $this->batch_mode['RunAllTestCombinations'])
 		{
 			list($test_arguments, $test_arguments_description) = pts_test_run_options::batch_user_options($test_profile);
 		}
-		else if((pts_c::$test_flags & pts_c::defaults_mode))
+		else if($this->auto_mode == 2)
 		{
 			list($test_arguments, $test_arguments_description) = pts_test_run_options::default_user_options($test_profile);
 		}
@@ -1642,9 +1634,16 @@ class pts_test_run_manager
 					array_push($virtual_suite_tests, 'All Tests In Suite');
 				}
 
-				$run_index = explode(',', pts_user_io::prompt_text_menu('Select the tests in the virtual suite to run', $virtual_suite_tests, true, true));
+				if(!$this->auto_mode && !$this->batch_mode)
+				{
+					$run_index = explode(',', pts_user_io::prompt_text_menu('Select the tests in the virtual suite to run', $virtual_suite_tests, true, true));
+				}
+				else
+				{
+					$run_index = -1;
+				}
 
-				if(count($virtual_suite_tests) > 2 && in_array((count($virtual_suite_tests) - 1), $run_index))
+				if((count($virtual_suite_tests) > 2 && in_array((count($virtual_suite_tests) - 1), $run_index)) || $run_index == -1)
 				{
 					// The appended 'All Tests In Suite' was selected, so run all
 				}
@@ -1754,7 +1753,7 @@ class pts_test_run_manager
 			$report_errors && pts_client::$display->test_run_error('Due to a pre-set environmental variable, skipping ' . $test_profile);
 			$valid_test_profile = false;
 		}
-		else if($test_profile->is_root_required() && (pts_c::$test_flags & pts_c::batch_mode) && phodevi::is_root() == false)
+		else if($test_profile->is_root_required() && $this->batch_mode && phodevi::is_root() == false)
 		{
 			$report_errors && pts_client::$display->test_run_error('Cannot run ' . $test_profile . ' in batch mode as root access is required.');
 			$valid_test_profile = false;
@@ -1796,30 +1795,26 @@ class pts_test_run_manager
 
 		return $test_checks[$test_profile->get_identifier()];
 	}
-	public static function standard_run($to_run, $test_flags = 0)
+	public function standard_run($to_run)
 	{
-		if(pts_test_run_manager::initial_checks($to_run, $test_flags) == false)
+		if($this->initial_checks($to_run) == false)
 		{
 			return false;
 		}
 
-		$test_run_manager = new pts_test_run_manager($test_flags);
-
 		// Load the tests to run
-		if($test_run_manager->load_tests_to_run($to_run) == false)
+		if($this->load_tests_to_run($to_run) == false)
 		{
 			return false;
 		}
 
 		// Save results?
-		$test_run_manager->save_results_prompt();
+		$this->save_results_prompt();
 
 		// Run the actual tests
-		$test_run_manager->pre_execution_process();
-		$test_run_manager->call_test_runs();
-		$test_run_manager->post_execution_process();
-
-		return $test_run_manager;
+		$this->pre_execution_process();
+		$this->call_test_runs();
+		$this->post_execution_process();
 	}
 }
 

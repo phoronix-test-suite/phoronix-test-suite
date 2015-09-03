@@ -81,7 +81,7 @@ class pts_basic_display_mode implements pts_display_mode_interface
 	}
 	public function test_install_output(&$to_output)
 	{
-		if(!isset($to_output[10240]) || (pts_c::$test_flags & pts_c::debug_mode))
+		if(!isset($to_output[10240]) || pts_client::is_debug_mode())
 		{
 			// Not worth printing files over 10kb to screen
 			echo $to_output;

@@ -73,14 +73,13 @@ class finish_run implements pts_option_interface
 		}
 
 		$selected = pts_user_io::prompt_text_menu('Select which incomplete test run you would like to finish', $incomplete_identifiers);
+		$test_run_manager = new pts_test_run_manager();
 
 		// Now run it
-		if(pts_test_run_manager::initial_checks($args[0]) == false)
+		if($test_run_manager->initial_checks($args[0]) == false)
 		{
 			return false;
 		}
-
-		$test_run_manager = new pts_test_run_manager(pts_c::is_recovering);
 
 		// Load the tests to run
 		if($test_run_manager->load_result_file_to_run($save_name, $selected, $result_file, $test_positions[$selected]) == false)

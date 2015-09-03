@@ -305,11 +305,6 @@ class pts_network
 			}
 			self::$disable_network_support = true;
 		}
-		else if(pts_flags::no_network_communication() == true)
-		{
-			//echo PHP_EOL . 'Network Communication Is Disabled Per Your User Configuration.' . PHP_EOL . PHP_EOL;
-			self::$disable_network_support = true;
-		}
 		else if(!PTS_IS_WEB_CLIENT)
 		{
 			$server_response = pts_network::http_get_contents('http://www.phoronix-test-suite.com/PTS', false, false);

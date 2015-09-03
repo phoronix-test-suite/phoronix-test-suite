@@ -85,8 +85,9 @@ class ob_test_profile_analyze implements pts_option_interface
 			// So for any compiling tasks they will try to use the most aggressive instructions possible
 			putenv('CFLAGS=-march=native -O3');
 			putenv('CXXFLAGS=-march=native -O3');
-			pts_test_installer::standard_install($qualified_identifier, pts_c::force_install);
-			pts_test_run_manager::standard_run($qualified_identifier, (pts_c::defaults_mode | pts_c::auto_mode));
+			pts_test_installer::standard_install($qualified_identifier, true);
+			$run_manager = new pts_test_run_manager(false, 2);
+			$run_manager->standard_run($qualified_identifier);
 
 			if($apitrace)
 			{
@@ -206,7 +207,7 @@ var_dump($screenshots);
 					// So for any compiling tasks they will try to use the most aggressive instructions possible
 					putenv('CFLAGS=-march=' . $march . ' -O3');
 					putenv('CXXFLAGS=-march=' . $march . ' -O3');
-					pts_test_installer::standard_install($qualified_identifier, pts_c::force_install);
+					pts_test_installer::standard_install($qualified_identifier, true);
 					$instruction_usage[$march] = self::analyze_binary_instruction_usage($test_binary);
 
 					if($instruction_usage[$march] == null)

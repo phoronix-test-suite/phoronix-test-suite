@@ -351,7 +351,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	}
 	public function test_run_instance_output(&$to_output)
 	{
-		if((pts_c::$test_flags & pts_c::debug_mode))
+		if(pts_client::is_debug_mode())
 		{
 			echo $to_output;
 		}

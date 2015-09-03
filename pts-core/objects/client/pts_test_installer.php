@@ -28,26 +28,24 @@ class pts_test_installer
 		pts_module_manager::module_process('__event_run_error', $error_obj);
 		pts_client::$display->test_install_error($error_msg);
 	}
-	public static function standard_install($items_to_install, $test_flags = 0)
+	public static function standard_install($items_to_install, $force_install = false, $no_prompts = false, $skip_tests_with_missing_dependencies = false)
 	{
 		// Refresh the pts_client::$display in case we need to run in debug mode
-		if(pts_client::$display == false || ($test_flags != 0 && !(pts_client::$display instanceof pts_websocket_display_mode)))
+		if(pts_client::$display == false || !(pts_client::$display instanceof pts_websocket_display_mode))
 		{
-			pts_client::init_display_mode($test_flags);
+			pts_client::init_display_mode();
 		}
 
 		// Create a lock
 		$lock_path = pts_client::temporary_directory() . '/phoronix-test-suite.active';
 		pts_client::create_lock($lock_path);
 
-		pts_client::set_test_flags($test_flags);
-
 		// Get the test profiles
 		$unknown_tests = array();
 		$test_profiles = pts_types::identifiers_to_test_profile_objects($items_to_install, true, true, $unknown_tests);
 
 		// Any external dependencies?
-		pts_external_dependencies::install_dependencies($test_profiles);
+		pts_external_dependencies::install_dependencies($test_profiles, $no_prompts, $skip_tests_with_missing_dependencies);
 
 		// Install tests
 		if(!is_writable(pts_client::test_install_root_path()))
@@ -56,12 +54,12 @@ class pts_test_installer
 			return false;
 		}
 
-		pts_test_installer::start_install($test_profiles, $unknown_tests);
+		pts_test_installer::start_install($test_profiles, $unknown_tests, $force_install, $no_prompts);
 		pts_client::release_lock($lock_path);
 
 		return $test_profiles;
 	}
-	public static function start_install(&$test_profiles, &$unknown_tests = null)
+	public static function start_install(&$test_profiles, &$unknown_tests = null, $force_install = false, $no_prompts = false)
 	{
 		if(count($test_profiles) == 0)
 		{
@@ -79,7 +77,7 @@ class pts_test_installer
 				continue;
 			}
 
-			if($test_profile->needs_updated_install())
+			if($test_profile->needs_updated_install() || $force_install)
 			{
 				if($test_profile->is_supported(false) == false)
 				{
@@ -123,7 +121,7 @@ class pts_test_installer
 		{
 			pts_client::$display->test_install_start($test_install_request->test_profile->get_identifier());
 			$test_install_request->special_environment_vars['INSTALL_FOOTNOTE'] = $test_install_request->test_profile->get_install_dir() . 'install-footnote';
-			$installed = pts_test_installer::install_test_process($test_install_request);
+			$installed = pts_test_installer::install_test_process($test_install_request, $no_prompts);
 			$compiler_data = pts_test_installer::end_compiler_mask($test_install_request);
 
 			if($installed)
@@ -197,7 +195,7 @@ class pts_test_installer
 			pts_test_installer::download_test_files($test_install_request, $to_dir);
 		}
 	}
-	protected static function download_test_files(&$test_install_request, $download_location = false)
+	protected static function download_test_files(&$test_install_request, $download_location = false, $no_prompts = false)
 	{
 		// Download needed files for a test
 		if($test_install_request->get_download_object_count() == 0)
@@ -284,7 +282,7 @@ class pts_test_installer
 
 					if(is_file($download_cache_file))
 					{
-						if((pts_config::read_bool_config('PhoronixTestSuite/Options/Installation/SymLinkFilesFromCache', 'FALSE') && $download_package->get_download_location_type() != 'LOOKASIDE_DOWNLOAD_CACHE') || pts_flags::is_live_cd())
+						if((pts_config::read_bool_config('PhoronixTestSuite/Options/Installation/SymLinkFilesFromCache', 'FALSE') && $download_package->get_download_location_type() != 'LOOKASIDE_DOWNLOAD_CACHE'))
 						{
 							// For look-aside copies never symlink (unless a pre-packaged LiveCD) in case the other test ends up being un-installed
 							// SymLinkFilesFromCache is disabled by default
@@ -340,7 +338,7 @@ class pts_test_installer
 						{
 							if(pts_network::internet_support_available())
 							{
-								if((pts_c::$test_flags ^ pts_c::batch_mode) && (pts_c::$test_flags ^ pts_c::auto_mode) && pts_config::read_bool_config('PhoronixTestSuite/Options/Installation/PromptForDownloadMirror', 'FALSE') && count($package_urls) > 1)
+								if(!$no_prompts && pts_config::read_bool_config('PhoronixTestSuite/Options/Installation/PromptForDownloadMirror', 'FALSE') && count($package_urls) > 1)
 								{
 									// Prompt user to select mirror
 									do
@@ -420,7 +418,7 @@ class pts_test_installer
 									}
 									else
 									{
-										if((pts_c::$test_flags & pts_c::batch_mode) || (pts_c::$test_flags & pts_c::auto_mode))
+										if($no_prompts)
 										{
 											$try_again = false;
 										}
@@ -669,7 +667,7 @@ class pts_test_installer
 
 		return $compiler;
 	}
-	protected static function install_test_process(&$test_install_request)
+	protected static function install_test_process(&$test_install_request, $no_prompts)
 	{
 		// Install a test
 		$identifier = $test_install_request->test_profile->get_identifier();
@@ -691,7 +689,7 @@ class pts_test_installer
 			pts_test_installer::setup_test_install_directory($test_install_request, true);
 
 			// Download test files
-			$download_test_files = pts_test_installer::download_test_files($test_install_request);
+			$download_test_files = pts_test_installer::download_test_files($test_install_request, false, $no_prompts);
 
 			if($download_test_files == false)
 			{
@@ -723,12 +721,15 @@ class pts_test_installer
 					}
 
 					echo $install_agreement . PHP_EOL;
-					$user_agrees = pts_user_io::prompt_bool_input('Do you agree to these terms', false, 'INSTALL_AGREEMENT');
-
-					if(!$user_agrees)
+					if(!$no_prompts)
 					{
-						self::test_install_error(null, $test_install_request, 'User agreement failed; this test will not be installed.');
-						return false;
+						$user_agrees = pts_user_io::prompt_bool_input('Do you agree to these terms', false, 'INSTALL_AGREEMENT');
+
+						if(!$user_agrees)
+						{
+							self::test_install_error(null, $test_install_request, 'User agreement failed; this test will not be installed.');
+							return false;
+						}
 					}
 				}
 

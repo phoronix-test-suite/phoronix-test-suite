@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2012, Phoronix Media
-	Copyright (C) 2009 - 2012, Michael Larabel
+	Copyright (C) 2009 - 2015, Phoronix Media
+	Copyright (C) 2009 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -33,7 +33,8 @@ class batch_run implements pts_option_interface
 	}
 	public static function run($r)
 	{
-		pts_test_run_manager::standard_run($r, pts_c::batch_mode);
+		$test_run_manager = new pts_test_run_manager(true);
+		$test_run_manager->standard_run($r);
 	}
 	public static function invalid_command($passed_args = null)
 	{

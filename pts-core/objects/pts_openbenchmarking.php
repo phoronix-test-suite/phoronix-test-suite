@@ -781,16 +781,16 @@ class pts_openbenchmarking
 					$available_versions = $repo_index['tests'][$test]['versions'];
 					$version = $available_versions[0]; // the latest version available
 
-					if((pts_c::$test_flags & pts_c::is_run_process))
+					if(PTS_IS_CLIENT && pts_client::current_command() == 'pts_test_run_manager')
 					{
-						// Check to see if an older version of the test profile is currently installed
+						// Check to see if an older version of the test profile is currently installed to ru nthat since no version specified
 						foreach($available_versions as $i => $v)
 						{
 							if(is_file(pts_client::test_install_root_path() . $repo . '/' . $test . '-' . $v . '/pts-install.xml'))
 							{
 								$version = $v;
 
-								if($i > 0 && (pts_c::$test_flags ^ pts_c::batch_mode))
+								if($i > 0)
 								{
 									// It's not the latest test profile version available
 									trigger_error($repo . '/' . $test . ': The latest test profile version available for upgrade is ' . $available_versions[0] . ' but version ' . $version . ' is the latest currently installed.', E_USER_WARNING);
