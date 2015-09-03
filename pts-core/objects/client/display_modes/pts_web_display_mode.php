@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2013, Phoronix Media
-	Copyright (C) 2009 - 2013, Michael Larabel
+	Copyright (C) 2009 - 2015, Phoronix Media
+	Copyright (C) 2009 - 2015, Michael Larabel
 	pts_concise_display_mode.php: The batch / concise display mode
 
 	This program is free software; you can redistribute it and/or modify
@@ -346,7 +346,7 @@ class pts_web_display_mode implements pts_display_mode_interface
 	{
 		if($this->expected_trial_run_count > 1 && $this->trial_run_count_current >= $this->expected_trial_run_count)
 		{
-			$values = $test_result->test_result_buffer->get_values();
+			$values = $test_result->active->results;
 
 			if(count($values) > 1)
 			{
@@ -385,7 +385,7 @@ class pts_web_display_mode implements pts_display_mode_interface
 		{
 			$end_print = PHP_EOL . $this->tab . 'Test Results:' . PHP_EOL;
 
-			foreach($test_result->test_result_buffer->get_values() as $result)
+			foreach($test_result->active->results as $result)
 			{
 				$end_print .= $this->tab . $this->tab . $result . PHP_EOL;
 			}

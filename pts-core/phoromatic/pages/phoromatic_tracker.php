@@ -84,10 +84,8 @@ class phoromatic_tracker implements pts_webui_interface
 				$show_only_latest_systems = null;
 			}
 
-			$writer = new pts_result_file_writer(null);
 			$attributes = array('new_result_file_title' => phoromatic_schedule_id_to_name($row['ScheduleID']));
-			pts_merge::merge_test_results_process($writer, $result_file, $attributes);
-			$result_file = new pts_result_file($writer->get_xml());
+			$result_file = pts_result_file_merger::merge($result_file, $attributes);
 			$extra_attributes = array('reverse_result_buffer' => true, 'force_simple_keys' => true, 'force_line_graph_compact' => true, 'force_tracking_line_graph' => true);
 
 			if(isset($_POST['normalize_results']) && $_POST['normalize_results'])
@@ -98,25 +96,13 @@ class phoromatic_tracker implements pts_webui_interface
 
 			$main .= '<h1>' . $result_file->get_title() . '</h1>';
 
-			if(!empty($show_only_latest_systems) && false) // TODO XXX: Finish up
+			if($result_file->get_system_count() == 1 || ($intent = pts_result_file_analyzer::analyze_result_file_intent($result_file, $intent, true)))
 			{
-				$main .= '<h2>Latest System States:</h2>';
-				$writer2 = new pts_result_file_writer(null);
-				$a = array();
-				pts_merge::merge_test_results_process($writer2, $show_only_latest_systems, $a);
-				$result_file2 = new pts_result_file($writer2->get_xml());
-				$table = new pts_ResultFileSystemsTable($result_file2);
+				$table = new pts_ResultFileCompactSystemsTable($result_file, $intent);
 			}
 			else
 			{
-				if($result_file->get_system_count() == 1 || ($intent = pts_result_file_analyzer::analyze_result_file_intent($result_file, $intent, true)))
-				{
-					$table = new pts_ResultFileCompactSystemsTable($result_file, $intent);
-				}
-				else
-				{
-					$table = new pts_ResultFileSystemsTable($result_file);
-				}
+				$table = new pts_ResultFileSystemsTable($result_file);
 			}
 
 			$main .= '<p style="text-align: center; overflow: auto;" class="result_object">' . pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes) . '</p>';

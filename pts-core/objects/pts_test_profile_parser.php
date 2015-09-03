@@ -25,7 +25,7 @@ class pts_test_profile_parser
 	protected $identifier;
 	private $xml;
 	private $raw_xml;
-	private $overrides;
+	protected $overrides;
 	private $tp_extends;
 	protected $block_test_extension_support = false;
 	private $file_location = false;
@@ -428,7 +428,7 @@ class pts_test_profile_parser
 	}
 	public function get_reference_id()
 	{
-		// This isn't needed for test profiles, but keep this here for compatibility when passing a test_profile to pts_result_file_writer
+		// This isn't needed for test profiles, but keep this here for compatibility when passing a test_profile to pts result file writer
 		return null;
 	}
 

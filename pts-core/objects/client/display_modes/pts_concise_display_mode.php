@@ -358,11 +358,11 @@ class pts_concise_display_mode implements pts_display_mode_interface
 
 		return;
 	}
-	public function test_run_instance_complete(&$test_result)
+	public function test_run_instance_complete(&$result)
 	{
 		if($this->expected_trial_run_count > 1 && $this->trial_run_count_current >= $this->expected_trial_run_count)
 		{
-			$values = $test_result->test_result_buffer->get_values();
+			$values = $result->active->results;
 
 			if(count($values) > 1)
 			{
@@ -401,7 +401,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 		{
 			$end_print = PHP_EOL . $this->tab . 'Test Results:' . PHP_EOL;
 
-			foreach($test_result->test_result_buffer->get_values() as $result)
+			foreach($test_result->active->results as $result)
 			{
 				$end_print .= $this->tab . $this->tab . $result . PHP_EOL;
 			}

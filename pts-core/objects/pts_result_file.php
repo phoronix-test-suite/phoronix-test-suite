@@ -60,39 +60,48 @@ class pts_result_file
 		}
 
 		$xml = simplexml_load_string($result_file, 'SimpleXMLElement', LIBXML_COMPACT | LIBXML_PARSEHUGE);
-		$this->title = self::clean_input($xml->Generated->Title);
-		$this->description = self::clean_input($xml->Generated->Description);
-		$this->notes = self::clean_input($xml->Generated->Notes);
-		$this->internal_tags = self::clean_input($xml->Generated->InternalTags);
-		$this->reference_id = self::clean_input($xml->Generated->ReferenceID);
-		$this->preset_environment_variables = self::clean_input($xml->Generated->PreSetEnvironmentVariables);
-
-		foreach($xml->System as $s)
+		if(isset($xml->Generated))
 		{
-			$system = new pts_result_file_system(self::clean_input($s->Identifier->__toString()), self::clean_input($s->Hardware->__toString()), self::clean_input($s->Software->__toString()), json_decode(self::clean_input($s->JSON), true), self::clean_input($s->User->__toString()), self::clean_input($s->Notes->__toString()), self::clean_input($s->TimeStamp->__toString()), self::clean_input($s->ClientVersion->__toString()));
-			array_push($this->systems, $system);
+			$this->title = self::clean_input($xml->Generated->Title);
+			$this->description = self::clean_input($xml->Generated->Description);
+			$this->notes = self::clean_input($xml->Generated->Notes);
+			$this->internal_tags = self::clean_input($xml->Generated->InternalTags);
+			$this->reference_id = self::clean_input($xml->Generated->ReferenceID);
+			$this->preset_environment_variables = self::clean_input($xml->Generated->PreSetEnvironmentVariables);
 		}
 
-		foreach($xml->Result as $result)
+		if(isset($xml->System))
 		{
-			$test_profile = new pts_test_profile(($result->Identifier != null ? $result->Identifier->__toString() : null), null, !$read_only_result_objects);
-			$test_profile->set_test_title($result->Title->__toString());
-			$test_profile->set_version($result->AppVersion->__toString());
-			$test_profile->set_result_scale($result->Scale->__toString());
-			$test_profile->set_result_proportion($result->Proportion->__toString());
-			$test_profile->set_display_format($result->DisplayFormat->__toString());
-
-			$test_result = new pts_test_result($test_profile);
-			$test_result->set_used_arguments_description($result->Description->__toString());
-			$test_result->set_used_arguments($result->Arguments->__toString());
-
-			$result_buffer = new pts_test_result_buffer();
-			foreach($result->Data->Entry as $entry)
+			foreach($xml->System as $s)
 			{
-				$result_buffer->add_test_result($entry->Identifier->__toString(), $entry->Value->__toString(), $entry->RawString->__toString(), (isset($entry->JSON) ? $entry->JSON->__toString() : null));
+				$system = new pts_result_file_system(self::clean_input($s->Identifier->__toString()), self::clean_input($s->Hardware->__toString()), self::clean_input($s->Software->__toString()), json_decode(self::clean_input($s->JSON), true), self::clean_input($s->User->__toString()), self::clean_input($s->Notes->__toString()), self::clean_input($s->TimeStamp->__toString()), self::clean_input($s->ClientVersion->__toString()));
+				array_push($this->systems, $system);
 			}
-			$test_result->set_test_result_buffer($result_buffer);
-			$this->result_objects[$test_result->get_comparison_hash(true, false)] = $test_result;
+		}
+
+		if(isset($xml->Result))
+		{
+			foreach($xml->Result as $result)
+			{
+				$test_profile = new pts_test_profile(($result->Identifier != null ? $result->Identifier->__toString() : null), null, !$read_only_result_objects);
+				$test_profile->set_test_title($result->Title->__toString());
+				$test_profile->set_version($result->AppVersion->__toString());
+				$test_profile->set_result_scale($result->Scale->__toString());
+				$test_profile->set_result_proportion($result->Proportion->__toString());
+				$test_profile->set_display_format($result->DisplayFormat->__toString());
+
+				$test_result = new pts_test_result($test_profile);
+				$test_result->set_used_arguments_description($result->Description->__toString());
+				$test_result->set_used_arguments($result->Arguments->__toString());
+
+				$result_buffer = new pts_test_result_buffer();
+				foreach($result->Data->Entry as $entry)
+				{
+					$result_buffer->add_test_result($entry->Identifier->__toString(), $entry->Value->__toString(), $entry->RawString->__toString(), (isset($entry->JSON) ? $entry->JSON->__toString() : null));
+				}
+				$test_result->set_test_result_buffer($result_buffer);
+				$this->result_objects[$test_result->get_comparison_hash(true, false)] = $test_result;
+			}
 		}
 
 		unset($xml);
@@ -108,6 +117,11 @@ class pts_result_file
 		return $dom->schemaValidate(PTS_OPENBENCHMARKING_PATH . 'schemas/result-file.xsd');
 	}
 	public function get_raw_xml()
+	{
+		// TODO deprecate this for get_xml()
+		return pts_result_file_writer::result_file_to_xml($this);
+	}
+	public function get_xml()
 	{
 		return pts_result_file_writer::result_file_to_xml($this);
 	}
@@ -141,6 +155,10 @@ class pts_result_file
 	public function set_extra_attribute($key, $value)
 	{
 		$this->extra_attributes[$key] = $value;
+	}
+	public function add_system($system)
+	{
+		array_push($this->systems, $system);
 	}
 	public function get_systems()
 	{
@@ -197,9 +215,17 @@ class pts_result_file
 	{
 		return $this->description;
 	}
+	public function set_notes($notes)
+	{
+		$this->notes = $notes;
+	}
 	public function get_notes()
 	{
 		return $this->notes;
+	}
+	public function set_internal_tags($tags)
+	{
+		$this->internal_tags = $tags;
 	}
 	public function get_internal_tags()
 	{
@@ -207,11 +233,18 @@ class pts_result_file
 	}
 	public function set_reference_id($new_reference_id)
 	{
-		$this->reference_id = $new_reference_id;
+		if($new_reference_id != null)
+		{
+			$this->reference_id = $new_reference_id;
+		}
 	}
 	public function get_reference_id()
 	{
 		return $this->reference_id;
+	}
+	public function set_preset_environment_variables($env)
+	{
+		$this->preset_environment_variables = $env;
 	}
 	public function get_preset_environment_variables()
 	{

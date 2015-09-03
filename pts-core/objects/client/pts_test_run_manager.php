@@ -22,7 +22,8 @@
 
 class pts_test_run_manager
 {
-	public $result_file_writer = null;
+	public $result_file = null;
+	private $is_new_result_file = true;
 
 	private $tests_to_run = array();
 	private $failed_tests_to_run = array();
@@ -80,7 +81,7 @@ class pts_test_run_manager
 	{
 		$this->auto_upload_to_openbenchmarking = ($do == true);
 	}
-	public function increase_run_count_check(&$test_results, $scheduled_times_to_run, $latest_test_run_time)
+	public function increase_run_count_check(&$active_result_buffer, $scheduled_times_to_run, $latest_test_run_time)
 	{
 		// First make sure this test doesn't take too long to run where we don't want dynamic handling
 		if(floor($latest_test_run_time / 60) > $this->dynamic_run_count_on_length_or_less)
@@ -89,12 +90,12 @@ class pts_test_run_manager
 		}
 
 		// Determine if results are statistically significant, otherwise up the run count
-		$std_dev = pts_math::percent_standard_deviation($test_results->test_result_buffer->get_values());
+		$std_dev = pts_math::percent_standard_deviation($active_result_buffer->results);
 		if($std_dev >= $this->dynamic_run_count_std_deviation_threshold)
 		{
 			static $last_run_count = 128; // just a number that should always cause the first check below to be true
 			static $run_std_devs;
-			$times_already_ran = $test_results->test_result_buffer->get_count();
+			$times_already_ran = $active_result_buffer->get_trial_run_count();
 
 			if($times_already_ran <= $last_run_count)
 			{
@@ -129,7 +130,7 @@ class pts_test_run_manager
 		// Check to see if there is an external/custom script to export the results to in determining whether results are valid
 		if(($ex_file = $this->dynamic_run_count_export_script) != null && is_executable($ex_file) || is_executable(($ex_file = PTS_USER_PATH . $this->dynamic_run_count_export_script)))
 		{
-			$exit_status = trim(shell_exec($ex_file . ' ' . $test_results->test_result_buffer->get_values_as_string() . ' > /dev/null 2>&1; echo $?'));
+			$exit_status = trim(shell_exec($ex_file . ' ' . $active_result_buffer->get_values_as_string() . ' > /dev/null 2>&1; echo $?'));
 
 			switch($exit_status)
 			{
@@ -243,12 +244,14 @@ class pts_test_run_manager
 	}
 	public function result_already_contains_identifier()
 	{
-		$result_file = new pts_result_file($this->file_name);
 		$existing_identifiers = array();
 
-		foreach($result_file->get_systems() as $s)
+		if($this->result_file)
 		{
-			array_push($existing_identifiers, $s->get_identifier());
+			foreach($this->result_file->get_systems() as $s)
+			{
+				array_push($existing_identifiers, $s->get_identifier());
+			}
 		}
 
 		return in_array($this->results_identifier, $existing_identifiers);
@@ -263,6 +266,8 @@ class pts_test_run_manager
 		$this->file_name = self::clean_save_name($save_name, $is_new_save);
 		$this->file_name_title = $save_name;
 		$this->force_save_results = true;
+		$this->result_file = new pts_result_file($this->file_name);
+		$this->is_new_result_file = $this->result_file->get_system_count() == 0;
 	}
 	public function set_results_identifier($identifier)
 	{
@@ -320,30 +325,24 @@ class pts_test_run_manager
 		$show_identifiers = array();
 		$no_repeated_tests = true;
 
-		if(pts_result_file::is_test_result_file($this->file_name))
+		if(!$this->is_new_result_file)
 		{
-			$result_file = new pts_result_file($this->file_name);
+			// Running on an already-saved result
 			$current_identifiers = array();
 			$current_hardware = array();
 			$current_software = array();
 
-			foreach($result_file->get_systems() as $s)
+			foreach($this->result_file->get_systems() as $s)
 			{
 				array_push($current_hardware, $s->get_hardware());
 				array_push($current_software, $s->get_software());
 				array_push($current_identifiers, $s->get_identifier());
 			}
 
-			$result_objects = $result_file->get_result_objects();
-
-			foreach(array_keys($result_objects) as $result_key)
-			{
-				$result_objects[$result_key] = $result_objects[$result_key]->get_comparison_hash(false);
-			}
-
+			$hashes = array_keys($this->result_file->get_result_objects());
 			foreach($this->tests_to_run as &$run_request)
 			{
-				if($run_request instanceof pts_test_result && in_array($run_request->get_comparison_hash(), $result_objects))
+				if($run_request instanceof pts_test_result && in_array($run_request->get_comparison_hash(true, false), $hashes))
 				{
 					$no_repeated_tests = false;
 					break;
@@ -352,6 +351,7 @@ class pts_test_run_manager
 		}
 		else
 		{
+			// Fresh run
 			$current_identifiers = array();
 			$current_hardware = array();
 			$current_software = array();
@@ -411,10 +411,9 @@ class pts_test_run_manager
 		$subsystem_r = array();
 		$subsystems_to_test = $this->subsystems_under_test();
 
-		if(pts_result_file::is_test_result_file($this->file_name))
+		if(!$this->is_new_result_file)
 		{
-			$result_file = new pts_result_file($this->file_name);
-			$result_file_intent = pts_result_file_analyzer::analyze_result_file_intent($result_file);
+			$result_file_intent = pts_result_file_analyzer::analyze_result_file_intent($this->result_file);
 
 			if(is_array($result_file_intent) && $result_file_intent[0] != 'Unknown')
 			{
@@ -590,9 +589,9 @@ class pts_test_run_manager
 	{
 		$result = false;
 
-		if($this->get_file_name() != null)
+		if($this->result_file && $this->result_file->get_test_count() > 0)
 		{
-			$this->result_file_writer->save_xml(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . '/active.xml');
+			pts_result_file_writer::result_file_to_xml($this->result_file, PTS_SAVE_RESULTS_PATH . $this->get_file_name() . '/composite.xml');
 		}
 
 		if(is_object($run_index))
@@ -616,7 +615,7 @@ class pts_test_run_manager
 			return;
 		}
 
-		pts_test_execution::run_test($this, $test_run_request);
+		$active_result_buffer = pts_test_execution::run_test($this, $test_run_request);
 
 		if(pts_file_io::unlink(PTS_USER_PATH . 'halt-testing'))
 		{
@@ -652,7 +651,9 @@ class pts_test_run_manager
 
 				if(!empty($test_identifier))
 				{
-					$this->result_file_writer->add_result_from_result_object_with_value_string($test_run_request, $test_run_request->get_result(), $test_run_request->test_result_buffer->get_values_as_string(), self::process_json_report_attributes($test_run_request));
+					$test_run_request->test_result_buffer = new pts_test_result_buffer();
+					$test_run_request->test_result_buffer->add_test_result($this->results_identifier, $test_run_request->get_result(), $active_result_buffer->get_values_as_string(), self::process_json_report_attributes($test_run_request), $test_run_request->get_min_result(), $test_run_request->get_max_result());
+					$this->result_file->add_result($test_run_request);
 
 					if($test_run_request->secondary_linked_results != null && is_array($test_run_request->secondary_linked_results))
 					{
@@ -662,7 +663,9 @@ class pts_test_run_manager
 							{
 								$run_request_minor->set_used_arguments_description($test_run_request->get_arguments_description() . ' - ' . $run_request_minor->get_arguments_description());
 							}
-							$this->result_file_writer->add_result_from_result_object_with_value_string($run_request_minor, $run_request_minor->get_result(), null, self::process_json_report_attributes($run_request_minor));
+
+							$test_run_request->test_result_buffer->add_test_result($this->results_identifier, $run_request_minor->get_result(), $run_request_minor->get_values_as_string(), self::process_json_report_attributes($test_run_request),$run_request_minor->get_min_result(), $run_request_minor->get_max_result());
+							$this->result_file->add_result($test_run_request);
 						}
 					}
 
@@ -698,7 +701,7 @@ class pts_test_run_manager
 			pts_file_io::delete(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . '/test-logs/active/' . $this->get_results_identifier() . '/', null, true);
 		}
 
-		pts_module_manager::module_process('__post_test_run_process', $this->result_file_writer);
+		pts_module_manager::module_process('__post_test_run_process', $this->result_file);
 
 		return true;
 	}
@@ -791,12 +794,14 @@ class pts_test_run_manager
 	{
 		if($this->do_save_results())
 		{
-			$this->result_file_writer = new pts_result_file_writer($this->get_results_identifier());
-
-			if((pts_c::$test_flags ^ pts_c::is_recovering) && (!pts_result_file::is_test_result_file($this->get_file_name()) || $this->result_already_contains_identifier() == false))
+			if((pts_c::$test_flags ^ pts_c::is_recovering) && ($this->is_new_result_file || $this->result_already_contains_identifier() == false))
 			{
-				$this->result_file_writer->add_result_file_meta_data($this);
-				$this->result_file_writer->add_current_system_information();
+				$this->result_file->set_title($this->file_name_title);
+				$this->result_file->set_description($this->run_description);
+				$this->result_file->set_notes($this->get_notes());
+				$this->result_file->set_internal_tags($this->get_internal_tags());
+				$this->result_file->set_reference_id($this->get_reference_id());
+				$this->result_file->set_preset_environment_variables($this->get_preset_environment_variables());
 			}
 
 			pts_client::setup_test_result_directory($this->get_file_name());
@@ -913,7 +918,7 @@ class pts_test_run_manager
 	{
 		if($this->do_save_results())
 		{
-			if($this->result_file_writer->get_result_count() == 0 && !pts_result_file::is_test_result_file($this->get_file_name()) && (pts_c::$test_flags ^ pts_c::is_recovering) && (pts_c::$test_flags ^ pts_c::remote_mode))
+			if($this->result_file->get_test_count() == 0 && $this->is_new_result_file && (pts_c::$test_flags ^ pts_c::is_recovering) && (pts_c::$test_flags ^ pts_c::remote_mode))
 			{
 				pts_file_io::delete(PTS_SAVE_RESULTS_PATH . $this->get_file_name());
 				return false;
@@ -921,14 +926,16 @@ class pts_test_run_manager
 
 			pts_file_io::delete(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . '/test-logs/active/', null, true);
 
-			if((pts_c::$test_flags ^ pts_c::is_recovering) && (!pts_result_file::is_test_result_file($this->get_file_name()) || $this->result_already_contains_identifier() == false))
+			if((pts_c::$test_flags ^ pts_c::is_recovering) && ($this->is_new_result_file || $this->result_already_contains_identifier() == false))
 			{
-				$this->result_file_writer->add_test_notes(pts_test_notes_manager::generate_test_notes($this->tests_to_run), $this->generate_json_system_attributes());
+				// TODO XXX JSON In null and notes
+				$sys = new pts_result_file_system($this->results_identifier, phodevi::system_hardware(true), phodevi::system_software(true), $this->generate_json_system_attributes(), pts_client::current_user(), pts_test_notes_manager::generate_test_notes($this->tests_to_run), date('Y-m-d H:i:s'), PTS_VERSION);
+				$this->result_file->add_system($sys);
 			}
 
 			echo PHP_EOL;
 			pts_module_manager::module_process('__event_results_process', $this);
-			pts_client::save_result_file($this->result_file_writer, $this->get_file_name());
+			pts_client::save_test_result($this->get_file_name() . '/composite.xml', pts_result_file_writer::result_file_to_xml($this->result_file), true, null, $this->results_identifier);
 			pts_module_manager::module_process('__event_results_saved', $this);
 			//echo PHP_EOL . 'Results Saved To: ; . PTS_SAVE_RESULTS_PATH . $this->get_file_name() . ;/composite.xml' . PHP_EOL;
 
@@ -1170,18 +1177,16 @@ class pts_test_run_manager
 	}
 	protected function auto_generate_description()
 	{
-
 		$hw_components = array(pts_result_file_analyzer::system_component_string_to_array(phodevi::system_hardware(true)));
 		$sw_components = array(pts_result_file_analyzer::system_component_string_to_array(phodevi::system_software(true)));
 
-		if(pts_result_file::is_test_result_file($this->file_name))
+		if($this->is_new_result_file)
 		{
-			$result_file = new pts_result_file($this->file_name);
 			$existing_identifiers = array();
 			$hw_components = array();
 			$sw_components = array();
 
-			foreach($result_file->get_systems() as $s)
+			foreach($this->result_file->get_systems() as $s)
 			{
 				array_push($hw_components, pts_result_file_analyzer::system_component_string_to_array($s->get_hardware()));
 				array_push($sw_components, pts_result_file_analyzer::system_component_string_to_array($s->get_software()));
@@ -1235,10 +1240,9 @@ class pts_test_run_manager
 		}
 		else
 		{
-			if(pts_result_file::is_test_result_file($this->file_name))
+			if($this->is_new_result_file)
 			{
-				$result_file = new pts_result_file($this->file_name);
-				$result_file_intent = pts_result_file_analyzer::analyze_result_file_intent($result_file);
+				$result_file_intent = pts_result_file_analyzer::analyze_result_file_intent($this->result_file);
 
 				if(is_array($result_file_intent) && $result_file_intent[0] != 'Unknown')
 				{

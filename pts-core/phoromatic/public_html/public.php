@@ -140,10 +140,8 @@ if(!empty($result_ids))
 		array_push($result_file, new pts_result_merge_select($composite_xml, null, $system_name));
 	}
 
-	$writer = new pts_result_file_writer(null);
 	$attributes = array('new_result_file_title' => $result_file_title);
-	pts_merge::merge_test_results_process($writer, $result_file, $attributes);
-	$result_file = new pts_result_file($writer->get_xml());
+	$result_file = pts_result_file_merger::merge($result_file, $attributes);
 	$extra_attributes = array();
 
 	$attribute_options = array(

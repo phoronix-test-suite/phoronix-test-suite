@@ -55,7 +55,8 @@ class pts_test_execution
 			return false;
 		}
 
-		$test_run_request->test_result_buffer = new pts_test_result_buffer();
+		$active_result_buffer = new pts_test_result_buffer_active();
+		$test_run_request->active = &$active_result_buffer;
 		$execute_binary = $test_run_request->test_profile->get_test_executable();
 		$times_to_run = $test_run_request->test_profile->get_times_to_run();
 		$ignore_runs = $test_run_request->test_profile->get_runs_to_ignore();
@@ -256,7 +257,8 @@ class pts_test_execution
 					}
 					else
 					{
-						$test_run_request->test_result_buffer->add_test_result(null, $test_run_request->active_result, null, null, $test_run_request->active_min_result, $test_run_request->active_max_result);
+						// TODO integrate active_result into active buffer
+						$active_result_buffer->add_trial_run_result($test_run_request->active_result, $test_run_request->active_min_result, $test_run_request->active_max_result);
 					}
 				}
 				else if($test_run_request->test_profile->get_display_format() != 'NO_RESULT')
@@ -282,21 +284,21 @@ class pts_test_execution
 				}
 			}
 
-			if($is_expected_last_run && $test_run_request->test_result_buffer->get_count() > floor(($i - 2) / 2) && !$cache_share_present && $test_run_manager->do_dynamic_run_count())
+			if($is_expected_last_run && $active_result_buffer->get_trial_run_count() > floor(($i - 2) / 2) && !$cache_share_present && $test_run_manager->do_dynamic_run_count())
 			{
 				// The later check above ensures if the test is failing often the run count won't uselessly be increasing
 				// Should we increase the run count?
 				$increase_run_count = false;
 
-				if($defined_times_to_run == ($i + 1) && $test_run_request->test_result_buffer->get_count() > 0 && $test_run_request->test_result_buffer->get_count() < $defined_times_to_run && $i < 64)
+				if($defined_times_to_run == ($i + 1) && $active_result_buffer->get_trial_run_count() > 0 && $active_result_buffer->get_trial_run_count() < $defined_times_to_run && $i < 64)
 				{
 					// At least one run passed, but at least one run failed to produce a result. Increase count to try to get more successful runs
-					$increase_run_count = $defined_times_to_run - $test_run_request->test_result_buffer->get_count();
+					$increase_run_count = $defined_times_to_run - $active_result_buffer->get_trial_run_count();
 				}
-				else if($test_run_request->test_result_buffer->get_count() >= 2)
+				else if($active_result_buffer->get_trial_run_count() >= 2)
 				{
 					// Dynamically increase run count if needed for statistical significance or other reasons
-					$increase_run_count = $test_run_manager->increase_run_count_check($test_run_request, $defined_times_to_run, $test_run_time);
+					$increase_run_count = $test_run_manager->increase_run_count_check($active_result_buffer, $defined_times_to_run, $test_run_time);
 
 					if($increase_run_count === -1)
 					{
@@ -500,7 +502,7 @@ class pts_test_execution
 		// Result Calculation
 		$test_run_request->set_used_arguments_description($arguments_description);
 		$test_run_request->set_used_arguments($extra_arguments);
-		pts_test_result_parser::calculate_end_result($test_run_request); // Process results
+		pts_test_result_parser::calculate_end_result($test_run_request, $active_result_buffer); // Process results
 
 		pts_client::$display->test_run_end($test_run_request);
 
@@ -518,6 +520,7 @@ class pts_test_execution
 
 		// Remove lock
 		pts_client::release_lock($lock_file);
+		return $active_result_buffer;
 	}
 }
 

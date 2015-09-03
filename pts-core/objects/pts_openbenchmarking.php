@@ -140,13 +140,8 @@ class pts_openbenchmarking
 			$composite_xml = $json_response['openbenchmarking']['result']['composite_xml'];
 
 			$result_file = new pts_result_file($composite_xml);
-
-			$result_file_writer = new pts_result_file_writer();
-			$result_file_writer->add_result_file_meta_data($result_file, $id);
-			$result_file_writer->add_system_information_from_result_file($result_file);
-			$result_file_writer->add_results_from_result_file($result_file);
 			//$id = strtolower($id);
-			$valid = $return_xml ? $result_file_writer->get_xml() : pts_client::save_test_result($id . '/composite.xml', $result_file_writer->get_xml(), true);
+			$valid = $return_xml ? pts_result_file_writer::result_file_to_xml($result_file) : pts_client::save_test_result($id . '/composite.xml', pts_result_file_writer::result_file_to_xml($result_file), true);
 
 			if(PTS_IS_CLIENT && $json_response['openbenchmarking']['result']['system_logs_available'])
 			{

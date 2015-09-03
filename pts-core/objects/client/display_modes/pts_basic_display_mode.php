@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2013, Phoronix Media
-	Copyright (C) 2009 - 2013, Michael Larabel
+	Copyright (C) 2009 - 2015, Phoronix Media
+	Copyright (C) 2009 - 2015, Michael Larabel
 	pts_basic_display_mode.php: The basic display mode
 
 	This program is free software; you can redistribute it and/or modify
@@ -136,7 +136,7 @@ class pts_basic_display_mode implements pts_display_mode_interface
 	{
 		echo $to_output;
 	}
-	public function test_run_instance_complete(&$test_result)
+	public function test_run_instance_complete(&$result)
 	{
 		// Do nothing here
 	}
@@ -155,7 +155,7 @@ class pts_basic_display_mode implements pts_display_mode_interface
 		}
 		else
 		{
-			foreach($test_result->test_result_buffer->get_values() as $result)
+			foreach($test_result->active->results as $result)
 			{
 				$end_print .= $result . ' ' . $test_result->test_profile->get_result_scale() . PHP_EOL;
 			}

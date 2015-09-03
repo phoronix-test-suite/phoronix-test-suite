@@ -168,7 +168,7 @@ class pts_module_interface
 	}
 	public static function __post_test_run_process($obj = null)
 	{
-		// Passed is a copy of the pts_result_file_writer
+		// Passed is a copy of the pts_result_file
 		return;
 	}
 	public static function __post_run_process($obj = null)

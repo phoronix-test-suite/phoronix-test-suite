@@ -34,6 +34,7 @@ class pts_test_result
 	public $test_profile;
 	public $test_result_buffer;
 
+	public $active = null;
 	public $active_result = null;
 	public $active_min_result = null;
 	public $active_max_result = null;

@@ -22,12 +22,12 @@
 
 class pts_test_result_buffer_item
 {
-	private $result_identifier;
-	private $result_final;
-	private $result_raw;
-	private $result_json;
-	private $result_min;
-	private $result_max;
+	protected $result_identifier;
+	protected $result_final;
+	protected $result_raw;
+	protected $result_json;
+	protected $result_min;
+	protected $result_max;
 
 	public function __construct(&$identifier, &$final, $raw = null, $json = null, $min_value = null, $max_value = null)
 	{

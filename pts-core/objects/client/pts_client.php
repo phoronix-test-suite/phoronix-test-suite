@@ -427,33 +427,6 @@ class pts_client
 
 		return $bool;
 	}
-	public static function save_result_file(&$result_file_writer, $save_name)
-	{
-		// Save the test file
-		// TODO: clean this up with pts_client::save_test_result
-		$j = 1;
-		while(is_file(PTS_SAVE_RESULTS_PATH . $save_name . '/test-' . $j . '.xml'))
-		{
-			$j++;
-		}
-
-		$real_name = $save_name . '/test-' . $j . '.xml';
-
-		pts_client::save_test_result($real_name, $result_file_writer->get_xml());
-
-		if(!is_file(PTS_SAVE_RESULTS_PATH . $save_name . '/composite.xml'))
-		{
-			pts_client::save_test_result($save_name . '/composite.xml', file_get_contents(PTS_SAVE_RESULTS_PATH . $real_name), true, $result_file_writer->get_result_identifier());
-		}
-		else
-		{
-			// Merge Results
-			$merged_results = pts_merge::merge_test_results(file_get_contents(PTS_SAVE_RESULTS_PATH . $save_name . '/composite.xml'), file_get_contents(PTS_SAVE_RESULTS_PATH . $real_name));
-			pts_client::save_test_result($save_name . '/composite.xml', $merged_results, true, $result_file_writer->get_result_identifier());
-		}
-
-		return $real_name;
-	}
 	public static function init_display_mode($flags = 0, $override_display_mode = false)
 	{
 		if(PTS_IS_WEB_CLIENT && !defined('PHOROMATIC_SERVER'))

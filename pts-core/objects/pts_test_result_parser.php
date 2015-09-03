@@ -328,9 +328,9 @@ class pts_test_result_parser
 			$test_result->secondary_linked_results = $extra_results;
 		}
 	}
-	public static function calculate_end_result(&$test_result)
+	public static function calculate_end_result(&$test_result, &$active_result_buffer)
 	{
-		$trial_results = $test_result->test_result_buffer->get_values();
+		$trial_results = $active_result_buffer->results;
 
 		if(count($trial_results) == 0)
 		{
@@ -433,7 +433,7 @@ class pts_test_result_parser
 							$END_RESULT = round($END_RESULT);
 						}
 
-						if(count($min = $test_result->test_result_buffer->get_min_values()) > 0)
+						if(count($min = $active_result_buffer->min_results) > 0)
 						{
 							$min = round(min($min), 2);
 
@@ -442,7 +442,7 @@ class pts_test_result_parser
 								$test_result->set_min_result($min);
 							}
 						}
-						if(count($max = $test_result->test_result_buffer->get_max_values()) > 0)
+						if(count($max = $active_result_buffer->max_results) > 0)
 						{
 							$max = round(max($max), 2);
 

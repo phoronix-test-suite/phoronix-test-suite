@@ -42,7 +42,6 @@ class system_monitor extends pts_module_interface
 	private static $sensor_monitoring_frequency = 2;
 	private static $test_run_timer = 0;
 	private static $perf_per_watt_collection;
-	private static $monitor_i915_energy = false; // special case of monitoring since it's not tapping Phodevi (right now at least)
 
 	public static function module_environmental_variables()
 	{
@@ -98,13 +97,6 @@ class system_monitor extends pts_module_interface
 			}
 		}
 
-		if(in_array('i915_energy', $to_show) && is_readable('/sys/kernel/debug/dri/0/i915_energy'))
-		{
-			// For now the Intel monitoring is a special case separate from the rest
-			// of the unified sensor monitoring since we're not polling it every time but just pre/post test.
-			self::$monitor_i915_energy = true;
-		}
-
 		if(count(self::$to_monitor) > 0)
 		{
 			echo PHP_EOL . 'Sensors To Be Logged:';
@@ -148,21 +140,15 @@ class system_monitor extends pts_module_interface
 		// Just to pad in some idling into the run process
 		sleep(self::$sensor_monitoring_frequency);
 
-		if(self::$monitor_i915_energy)
-		{
-			// Just read i915_energy to reset the joule counter
-			file_get_contents('/sys/kernel/debug/dri/0/i915_energy');
-		}
-
 		self::$test_run_timer = time();
 	}
 	public static function __post_test_run_success($test_run_request)
 	{
 		self::$successful_test_run_request = clone $test_run_request;
 	}
-	public static function __post_test_run_process(&$result_file_writer)
+	public static function __post_test_run_process(&$result_file)
 	{
-		if((self::$individual_monitoring == false || count(self::$to_monitor) == 0) && self::$monitor_i915_energy == false)
+		if((self::$individual_monitoring == false || count(self::$to_monitor) == 0))
 		{
 			return;
 		}
@@ -200,19 +186,20 @@ class system_monitor extends pts_module_interface
 					$test_result->test_profile->set_identifier(null);
 					//$test_result->set_used_arguments_description(phodevi::sensor_name('sys.power') . ' Monitor');
 					//$test_result->set_used_arguments(phodevi::sensor_name('sys.power') . ' ' . $test_result->get_arguments());
+					$test_result->test_result_buffer = new pts_test_result_buffer();
 
 					if($test_result->test_profile->get_result_proportion() == 'HIB')
 					{
 						$test_result->test_profile->set_result_scale($test_result->test_profile->get_result_scale() . ' Per Watt');
-						$test_result->set_result(pts_math::set_precision($test_result->get_result() / $watt_average));
-						$result_file_writer->add_result_from_result_object_with_value_string($test_result, $test_result->get_result());
+						$test_result->test_result_buffer->add_test_result(self::$result_identifier, pts_math::set_precision($test_result->get_result() / $watt_average));
+						$result_file->add_result($test_result);
 					}
 					else if($test_result->test_profile->get_result_proportion() == 'LIB')
 					{
 						$test_result->test_profile->set_result_proportion('HIB');
 						$test_result->test_profile->set_result_scale('Performance Per Watt');
-						$test_result->set_result(pts_math::set_precision((1 / $test_result->get_result()) / $watt_average));
-						$result_file_writer->add_result_from_result_object_with_value_string($test_result, $test_result->get_result());
+						$test_result->test_result_buffer->add_test_result(self::$result_identifier, pts_math::set_precision((1 / $test_result->get_result()) / $watt_average));
+						$result_file->add_result($test_result);
 					}
 					array_push(self::$perf_per_watt_collection, $test_result->get_result());
 				}
@@ -234,33 +221,11 @@ class system_monitor extends pts_module_interface
 				$test_result->test_profile->set_result_scale(phodevi::read_sensor_unit($sensor));
 				$test_result->set_used_arguments_description(phodevi::sensor_name($sensor) . ' Monitor');
 				$test_result->set_used_arguments(phodevi::sensor_name($sensor) . ' ' . $test_result->get_arguments());
-
-				$result_file_writer->add_result_from_result_object_with_value_string($test_result, implode(',', $sensor_results), implode(',', $sensor_results));
+				$test_result->test_result_buffer = new pts_test_result_buffer();
+				$test_result->test_result_buffer->add_test_result(self::$result_identifier, implode(',', $sensor_results), implode(',', $sensor_results));
+				$result_file->add_result($test_result);
 			}
 			self::$individual_test_run_offsets[phodevi::sensor_identifier($sensor)] = array();
-		}
-
-		if(self::$monitor_i915_energy)
-		{
-			$i915_energy = file_get_contents('/sys/kernel/debug/dri/0/i915_energy');
-
-			if(($uj = strpos($i915_energy, ' uJ')))
-			{
-				$uj = substr($i915_energy, 0, $uj);
-				$uj = substr($uj, (strrpos($uj, ' ') + 1));
-
-				if(is_numeric($uj))
-				{
-					$test_result = clone self::$individual_test_run_request;
-					$test_result->test_profile->set_identifier(null);
-					$test_result->test_profile->set_result_proportion('LIB');
-					$test_result->test_profile->set_display_format('BAR_GRAPH');
-					$test_result->test_profile->set_result_scale('micro Joules');
-					$test_result->set_used_arguments_description('i915_energy Monitor');
-					$test_result->set_used_arguments('i915_energy ' . $test_result->get_arguments());
-					$result_file_writer->add_result_from_result_object_with_value_string($test_result, $uj);
-				}
-			}
 		}
 
 		self::$successful_test_run_request = null;
@@ -287,7 +252,9 @@ class system_monitor extends pts_module_interface
 			$test_result->test_profile->set_result_proportion('HIB');
 			$test_result->set_used_arguments_description('Performance Per Watt');
 			$test_result->set_used_arguments('Per-Per-Watt');
-			$test_run_manager->result_file_writer->add_result_from_result_object_with_value_string($test_result, $avg);
+$			$test_result->test_result_buffer = new pts_test_result_buffer();
+			$test_result->test_result_buffer->add_test_result(self::$result_identifier, pts_math::set_precision($avg));
+			$test_run_manager->result_file->add_result($test_result);
 		}
 
 		echo PHP_EOL . 'Finishing System Sensor Monitoring Process' . PHP_EOL;
@@ -310,7 +277,9 @@ class system_monitor extends pts_module_interface
 				$test_result->test_profile->set_result_scale(phodevi::read_sensor_unit($sensor));
 				$test_result->set_used_arguments_description('Phoronix Test Suite System Monitoring');
 				$test_result->set_used_arguments(phodevi::sensor_identifier($sensor));
-				$test_run_manager->result_file_writer->add_result_from_result_object_with_value_string($test_result, implode(',', $sensor_results), implode(',', $sensor_results));
+$				$test_result->test_result_buffer = new pts_test_result_buffer();
+				$test_result->test_result_buffer->add_test_result(self::$result_identifier, implode(',', $sensor_results), implode(',', $sensor_results), implode(',', $sensor_results), implode(',', $sensor_results));
+				$test_run_manager->result_file->add_result($test_result);
 			}
 		}
 	}

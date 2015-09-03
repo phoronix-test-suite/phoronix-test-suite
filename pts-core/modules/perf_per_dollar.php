@@ -31,6 +31,7 @@ class perf_per_dollar extends pts_module_interface
 	private static $COST_PERF_PER_DOLLAR = 0;
 	private static $successful_test_run_request = null;
 	private static $perf_per_dollar_collection;
+	private static $result_identifier;
 
 	public static function module_environmental_variables()
 	{
@@ -56,11 +57,15 @@ class perf_per_dollar extends pts_module_interface
 		// This module won't be too useful if you're not saving the results to see the graphs
 		$test_run_manager->force_results_save();
 	}
+	public static function __pre_run_process(&$test_run_manager)
+	{
+		self::$result_identifier = $test_run_manager->get_results_identifier();
+	}
 	public static function __post_test_run_success($test_run_request)
 	{
 		self::$successful_test_run_request = clone $test_run_request;
 	}
-	public static function __post_test_run_process(&$result_file_writer)
+	public static function __post_test_run_process(&$result_file)
 	{
 		if(self::$successful_test_run_request && self::$successful_test_run_request->test_profile->get_display_format() == 'BAR_GRAPH' && self::$successful_test_run_request->test_profile->get_result_proportion() == 'HIB')
 		{
@@ -70,8 +75,9 @@ class perf_per_dollar extends pts_module_interface
 			$test_result->set_used_arguments_description('Performance / Cost - ' . $test_result->get_arguments_description());
 			$test_result->set_used_arguments('dollar comparison ' . $test_result->get_arguments());
 			$test_result->test_profile->set_result_scale($test_result->test_profile->get_result_scale() . ' Per Dollar');
-			$test_result->set_result(pts_math::set_precision($test_result->get_result() / self::$COST_PERF_PER_DOLLAR));
-			$result_file_writer->add_result_from_result_object_with_value_string($test_result, $test_result->get_result(), null, array('install-footnote' => '$' . self::$COST_PERF_PER_DOLLAR . ' reported cost.'));
+			$test_result->test_result_buffer = new pts_test_result_buffer();
+			$test_result->test_result_buffer->add_test_result(self::$result_identifier, pts_math::set_precision($test_result->get_result() / self::$COST_PERF_PER_DOLLAR), null, array('install-footnote' => '$' . self::$COST_PERF_PER_DOLLAR . ' reported cost.'));
+			$result_file->add_result($test_result);
 			array_push(self::$perf_per_dollar_collection, $test_result->get_result());
 		}
 		self::$successful_test_run_request = null;
@@ -92,7 +98,9 @@ class perf_per_dollar extends pts_module_interface
 			$test_result->test_profile->set_result_proportion('HIB');
 			$test_result->set_used_arguments_description('Performance Per Dollar');
 			$test_result->set_used_arguments('Per-Per-Dollar');
-			$test_run_manager->result_file_writer->add_result_from_result_object_with_value_string($test_result, $avg, null, array('install-footnote' => '$' . self::$COST_PERF_PER_DOLLAR . ' reported cost.'));
+$			$test_result->test_result_buffer = new pts_test_result_buffer();
+			$test_result->test_result_buffer->add_test_result(self::$result_identifier, pts_math::set_precision($avg), null, array('install-footnote' => '$' . self::$COST_PERF_PER_DOLLAR . ' reported cost.'));
+			$test_run_manager->result_file->add_result($test_result);
 		}
 	}
 }
