@@ -75,13 +75,16 @@ class pts_test_result_buffer
 	{
 		array_push($this->buffer_items, new pts_test_result_buffer_item($identifier, $value, $raw_value, $json, $min_value, $max_value));
 	}
-	public function clear_outlier_results($add_to_other = true, $value_below = false)
+	public function clear_outlier_results($value_below)
 	{
-		pts_test_result_buffer_extra::clear_outlier_results($this->buffer_items, $add_to_other, $value_below);
-	}
-	public function add_composite_result($force = false)
-	{
-		pts_test_result_buffer_extra::add_composite_result($this, $force);
+		foreach($this->buffer_items as $key => &$buffer_item)
+		{
+			if($buffer_item->get_result_value() < $value_below)
+			{
+				$other_value += $buffer_item->get_result_value();
+				unset($buffer_items[$key]);
+			}
+		}
 	}
 	public function rename($from, $to)
 	{
@@ -166,7 +169,67 @@ class pts_test_result_buffer
 	}
 	public function clear_iqr_outlier_results()
 	{
-		pts_test_result_buffer_extra::clear_iqr_outlier_results($this);
+		$is_multi_way = pts_render::multi_way_identifier_check($this->get_identifiers());
+
+		if($is_multi_way)
+		{
+			$group_values = array();
+			$group_keys = array();
+
+			foreach($this->buffer_items as $key => &$buffer_item)
+			{
+				$identifier_r = pts_strings::trim_explode(': ', $buffer_item->get_result_identifier());
+
+				if(!isset($group_values[$identifier_r[1]]))
+				{
+					$group_values[$identifier_r[1]] = array();
+					$group_keys[$identifier_r[1]] = array();
+				}
+
+				array_push($group_values[$identifier_r[1]], $buffer_item->get_result_value());
+				array_push($group_keys[$identifier_r[1]], $key);
+			}
+
+			foreach($group_values as $group_key => $values)
+			{
+				// From: http://www.mathwords.com/o/outlier.htm
+				$fqr = pts_math::first_quartile($values);
+				$tqr = pts_math::third_quartile($values);
+				$iqr_cut = ($tqr - $fqr) * 1.5;
+				$bottom_cut = $fqr - $iqr_cut;
+				$top_cut = $tqr + $iqr_cut;
+
+				foreach($group_keys[$group_key] as $key)
+				{
+					$value = $this->buffer_items[$key]->get_result_value();
+
+					if($value > $top_cut || $value < $bottom_cut)
+					{
+						unset($this->buffer_items[$key]);
+					}
+				}
+			}
+		}
+		else
+		{
+			// From: http://www.mathwords.com/o/outlier.htm
+			$values = $this->get_values();
+			$fqr = pts_math::first_quartile($values);
+			$tqr = pts_math::third_quartile($values);
+			$iqr_cut = ($tqr - $fqr) * 1.5;
+			$bottom_cut = $fqr - $iqr_cut;
+			$top_cut = $tqr + $iqr_cut;
+
+			foreach($this->buffer_items as $key => &$buffer_item)
+			{
+				$value = $buffer_item->get_result_value();
+
+				if($value > $top_cut || $value < $bottom_cut)
+				{
+					unset($this->buffer_items[$key]);
+				}
+			}
+		}
 	}
 	public function buffer_values_sort()
 	{
