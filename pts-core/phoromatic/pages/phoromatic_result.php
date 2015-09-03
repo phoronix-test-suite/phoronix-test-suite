@@ -221,11 +221,11 @@ class phoromatic_result implements pts_webui_interface
 				array_push($result_files, new pts_result_merge_select($composite_xml, null, $system_name));
 			}
 
-			if(!empty($result_file))
+			$result_file = new pts_result_file(null, true);
+			$result_file->set_title('Phoromatic Results');
+			if(!empty($result_files))
 			{
 				$attributes = array('new_result_file_title' => $result_file_title);
-				$result_file = new pts_result_file(array_shift($result_files), true);
-
 				if(!empty($result_files))
 				{
 					$result_file->merge($result_files, $attributes);
