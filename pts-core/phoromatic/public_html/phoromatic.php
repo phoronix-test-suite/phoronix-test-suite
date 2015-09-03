@@ -152,7 +152,7 @@ define('ACCOUNT_ID', $ACCOUNT_ID);
 // CHECK IF SYSTEM IS ALREADY CONNECTED TO THE ACCOUNT
 if($PTS_MACHINE_SELF_ID != null)
 {
-	$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, Groups, State, MaintenanceMode FROM phoromatic_systems WHERE AccountID = :account_id AND MachineSelfID = :machine_self_id');
+	$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, Groups, State, MaintenanceMode, LastCommunication FROM phoromatic_systems WHERE AccountID = :account_id AND MachineSelfID = :machine_self_id');
 	$stmt->bindValue(':account_id', ACCOUNT_ID);
 	$stmt->bindValue(':machine_self_id', $PTS_MACHINE_SELF_ID);
 	$result = $stmt->execute();
@@ -163,7 +163,7 @@ if(!isset($result) || empty($result))
 {
 	// TODO XXX: This block of code can be dropped when doing away with older PTS client support... pre-5.4 support
 	// See if before the client was connecting from an older PTS version without a MachineSelfID....
-	$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, Groups, State, MaintenanceMode FROM phoromatic_systems WHERE AccountID = :account_id AND GSID = :gsid AND MachineSelfID = :machine_self_id');
+	$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, Groups, State, MaintenanceMode, LastCommunication FROM phoromatic_systems WHERE AccountID = :account_id AND GSID = :gsid AND MachineSelfID = :machine_self_id');
 	$stmt->bindValue(':account_id', ACCOUNT_ID);
 	$stmt->bindValue(':gsid', $GSID);
 	$stmt->bindValue(':machine_self_id', null);
@@ -175,7 +175,7 @@ if(!isset($result) || empty($result))
 {
 	// If system was reloaded and MachineSelfID no longer matches but there is existing IP or MAC address claim against it
 	// XXX dropped LastIP = :ip_address OR
-	$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, Groups, State, MaintenanceMode FROM phoromatic_systems WHERE AccountID = :account_id AND NetworkMAC = :network_mac');
+	$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, Groups, State, MaintenanceMode, LastCommunication FROM phoromatic_systems WHERE AccountID = :account_id AND NetworkMAC = :network_mac');
 	$stmt->bindValue(':account_id', ACCOUNT_ID);
 	$stmt->bindValue(':ip_address', $_SERVER['REMOTE_ADDR']);
 	$stmt->bindValue(':network_mac', $NETWORK_CLIENT_MAC);
@@ -230,20 +230,25 @@ $SYSTEM_STATE = $result['State'];
 define('GSID', $GSID);
 define('SYSTEM_IN_MAINTENANCE_MODE', ($result['MaintenanceMode'] == 1));
 
-$stmt = phoromatic_server::$db->prepare('UPDATE phoromatic_systems SET LastIP = :access_ip, LocalIP = :local_ip, LastCommunication = :current_time, Hardware = :client_hardware, Software = :client_software, ClientVersion = :client_version, MachineSelfID = :machine_self_id, NetworkMAC = :network_mac, NetworkWakeOnLAN = :network_wol, CoreVersion = :core_version WHERE AccountID = :account_id AND SystemID = :system_id');
-$stmt->bindValue(':account_id', $ACCOUNT_ID);
-$stmt->bindValue(':system_id', SYSTEM_ID);
-$stmt->bindValue(':client_hardware', $CLIENT_HARDWARE);
-$stmt->bindValue(':client_software', $CLIENT_SOFTWARE);
-$stmt->bindValue(':client_version', $CLIENT_VERSION);
-$stmt->bindValue(':core_version', $CLIENT_CORE_VERSION);
-$stmt->bindValue(':access_ip', $_SERVER['REMOTE_ADDR']);
-$stmt->bindValue(':local_ip', $LOCAL_IP);
-$stmt->bindValue(':current_time', phoromatic_server::current_time());
-$stmt->bindValue(':machine_self_id', $PTS_MACHINE_SELF_ID);
-$stmt->bindValue(':network_mac', $NETWORK_CLIENT_MAC);
-$stmt->bindValue(':network_wol', $NETWORK_CLIENT_WOL);
-$stmt->execute();
+if(strtotime($result['LastCommunication']) < (time() - 300))
+{
+	// Avoid useless updates to the database if it's close to the same info in past 2 minutes
+	$stmt = phoromatic_server::$db->prepare('UPDATE phoromatic_systems SET LastIP = :access_ip, LocalIP = :local_ip, LastCommunication = :current_time, Hardware = :client_hardware, Software = :client_software, ClientVersion = :client_version, MachineSelfID = :machine_self_id, NetworkMAC = :network_mac, NetworkWakeOnLAN = :network_wol, CoreVersion = :core_version WHERE AccountID = :account_id AND SystemID = :system_id');
+	$stmt->bindValue(':account_id', $ACCOUNT_ID);
+	$stmt->bindValue(':system_id', SYSTEM_ID);
+	$stmt->bindValue(':client_hardware', $CLIENT_HARDWARE);
+	$stmt->bindValue(':client_software', $CLIENT_SOFTWARE);
+	$stmt->bindValue(':client_version', $CLIENT_VERSION);
+	$stmt->bindValue(':core_version', $CLIENT_CORE_VERSION);
+	$stmt->bindValue(':access_ip', $_SERVER['REMOTE_ADDR']);
+	$stmt->bindValue(':local_ip', $LOCAL_IP);
+	$stmt->bindValue(':current_time', phoromatic_server::current_time());
+	$stmt->bindValue(':machine_self_id', $PTS_MACHINE_SELF_ID);
+	$stmt->bindValue(':network_mac', $NETWORK_CLIENT_MAC);
+	$stmt->bindValue(':network_wol', $NETWORK_CLIENT_WOL);
+	$stmt->execute();
+}
+
 //echo phoromatic_server::$db->lastErrorMsg();
 if($SYSTEM_STATE < 1)
 {
