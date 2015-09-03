@@ -45,7 +45,7 @@ class clone_openbenchmarking_result implements pts_option_interface
 			if($xml)
 			{
 				$result_file = new pts_result_file($xml);
-				pts_client::save_test_result($id . '/composite.xml', pts_result_file_writer::result_file_to_xml($result_file), true);
+				pts_client::save_test_result($id . '/composite.xml', $result_file->get_xml(), true);
 				echo PHP_EOL . 'Result Saved To: ' . PTS_SAVE_RESULTS_PATH . $id . '/composite.xml' . PHP_EOL;
 			}
 		}

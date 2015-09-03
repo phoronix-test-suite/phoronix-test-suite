@@ -41,7 +41,7 @@ class pts_test_profile extends pts_test_profile_parser
 	public function validate()
 	{
 		$dom = new DOMDocument();
-		$dom->loadXML($this->get_raw_xml());
+		$dom->loadXML($this->get_xml());
 		return $dom->schemaValidate(PTS_OPENBENCHMARKING_PATH . 'schemas/test-profile.xsd');
 	}
 	public static function is_test_profile($identifier)
@@ -389,7 +389,7 @@ class pts_test_profile extends pts_test_profile_parser
 	}
 	public function to_json()
 	{
-		$file = $this->get_raw_xml();
+		$file = $this->get_xml();
 		$file = str_replace(array("\n", "\r", "\t"), '', $file);
 		$file = trim(str_replace('"', "'", $file));
 		$simple_xml = simplexml_load_string($file);

@@ -254,7 +254,12 @@ class phoromatic_main implements pts_webui_interface
 					if(count($result_file) == 2)
 					{
 						$attributes = array();
-						$result_file = pts_result_file_merger::merge($result_file, $attributes);
+						$result_file = new pts_result_file(array_shift($result_files), true);
+
+						if(!empty($result_files))
+						{
+							$result_file->merge($result_files, $attributes);
+						}
 
 						foreach($result_file->get_result_objects('ONLY_CHANGED_RESULTS') as $i => $result_object)
 						{

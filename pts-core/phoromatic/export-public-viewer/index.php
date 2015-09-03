@@ -172,7 +172,8 @@ foreach($triggers as $trigger)
 }
 
 $attributes = array();
-$result_file = pts_result_file_merger::merge($result_files);
+$result_file = new pts_result_file(null, true);
+$result_file->merge($result_files);
 $extra_attributes = array('reverse_result_buffer' => true, 'force_simple_keys' => true, 'force_line_graph_compact' => true, 'force_tracking_line_graph' => true);
 
 if(isset($_POST['normalize_results']) && $_POST['normalize_results'])

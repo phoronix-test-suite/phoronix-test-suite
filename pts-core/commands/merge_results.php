@@ -58,10 +58,15 @@ class merge_results implements pts_option_interface
 		$merge_to_file .= 'composite.xml';
 
 		// Merge Results
-		$result_file = pts_result_file_merger::merge($result_files_to_merge);
-		pts_client::save_test_result($merge_to_file, pts_result_file_writer::result_file_to_xml($result_file));
+		$result_file = new pts_result_file(array_shift($result_files_to_merge), true);
+		$result_file->merge($result_files_to_merge);
+		pts_client::save_test_result($merge_to_file, $result_file->get_xml());
 		echo 'Merged Results Saved To: ' . PTS_SAVE_RESULTS_PATH . $merge_to_file . PHP_EOL . PHP_EOL;
 		pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . dirname($merge_to_file) . '/index.html');
+	}
+	public static function invalid_command($passed_args = null)
+	{
+		pts_tests::recently_saved_results();
 	}
 }
 

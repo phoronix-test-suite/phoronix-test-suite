@@ -139,14 +139,15 @@ class auto_compare implements pts_option_interface
 						continue;
 					}
 					$result_file->override_result_objects($result_objects);
-					pts_client::save_test_result($result_file->get_file_location(), pts_result_file_writer::result_file_to_xml($result_file));
+					pts_client::save_test_result($result_file->get_file_location(), $result_file->get_xml());
 					array_push($compare_results, $public_id);
 				}
 			}
 
 			if(count($compare_results) > 0)
 			{
-				$result_file = pts_result_file_merger::merge($compare_results);
+				$result_file = new pts_result_file(null, true);
+				$result_file->merge($compare_results);
 				$result_objects = $result_file->get_result_objects();
 				$system_count = $result_file->get_system_count();
 				$result_count = count($result_objects);
@@ -174,7 +175,7 @@ class auto_compare implements pts_option_interface
 					$result_file->override_result_objects($result_objects);
 				}
 
-				pts_client::save_test_result('auto-comparison/composite.xml', pts_result_file_writer::result_file_to_xml($result_file));
+				pts_client::save_test_result('auto-comparison/composite.xml', $result_file->get_xml());
 			}
 		}
 

@@ -54,7 +54,7 @@ class extract_from_result_file implements pts_option_interface
 		}
 		while(empty($extract_to));
 
-		pts_client::save_test_result($extract_to . '/composite.xml', pts_result_file_writer::result_file_to_xml($result_file));
+		pts_client::save_test_result($extract_to . '/composite.xml', $result_file->get_xml());
 		pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . $extract_to . '/index.html');
 	}
 }

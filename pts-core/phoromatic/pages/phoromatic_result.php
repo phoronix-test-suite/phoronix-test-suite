@@ -67,7 +67,7 @@ class phoromatic_result implements pts_webui_interface
 			}
 			$upload_ids = array_unique($upload_ids);
 
-			$result_file = array();
+			$result_files = array();
 
 			$display_rows = array();
 			$system_types = array();
@@ -218,11 +218,20 @@ class phoromatic_result implements pts_webui_interface
 				}
 
 
-				array_push($result_file, new pts_result_merge_select($composite_xml, null, $system_name));
+				array_push($result_files, new pts_result_merge_select($composite_xml, null, $system_name));
 			}
 
-			$attributes = array('new_result_file_title' => $result_file_title);
-			$result_file = pts_result_file_merger::merge($result_file, $attributes);
+			if(!empty($result_file))
+			{
+				$attributes = array('new_result_file_title' => $result_file_title);
+				$result_file = new pts_result_file(array_shift($result_files), true);
+
+				if(!empty($result_files))
+				{
+					$result_file->merge($result_files, $attributes);
+				}
+			}
+
 			$extra_attributes = array();
 
 			if(isset($_GET['upload_to_openbenchmarking']))

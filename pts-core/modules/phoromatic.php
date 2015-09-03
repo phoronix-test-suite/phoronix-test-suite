@@ -798,7 +798,7 @@ class phoromatic extends pts_module_interface
 			}
 		}
 
-		$composite_xml = $result_file->get_raw_xml();
+		$composite_xml = $result_file->get_xml();
 		$composite_xml_hash = sha1($composite_xml);
 		$composite_xml_type = 'composite_xml';
 
@@ -874,7 +874,7 @@ class phoromatic extends pts_module_interface
 			$composite_xml = base64_decode($server_response['phoromatic']['result']['composite_xml']);
 			$result_file = new pts_result_file($composite_xml);
 			// TODO XXX: Add system log downloading support
-			pts_client::save_test_result($id . '/composite.xml', pts_result_file_writer::result_file_to_xml($result_file_writer), true);
+			pts_client::save_test_result($id . '/composite.xml', $result_file->get_xml(), true);
 			echo PHP_EOL . 'Result File Saved As: ' . $id . PHP_EOL . PHP_EOL;
 		}
 		else

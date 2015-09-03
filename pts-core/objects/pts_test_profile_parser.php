@@ -97,7 +97,7 @@ class pts_test_profile_parser
 			$this->xml = simplexml_load_string($read, 'SimpleXMLElement', $xml_options);
 		}
 	}
-	public function get_raw_xml()
+	public function get_xml()
 	{
 		if($this->file_location)
 		{

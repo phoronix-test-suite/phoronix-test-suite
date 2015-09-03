@@ -49,7 +49,7 @@ $account_id = false;
 $main = null;
 if(!empty($result_ids))
 {
-	$result_file = array();
+	$result_files = array();
 	$display_rows = array();
 	$system_types = array();
 	$schedule_types = array();
@@ -137,11 +137,12 @@ if(!empty($result_ids))
 				$system_name = phoromatic_system_id_to_name($row['SystemID'], $row['AccountID']) . ' - ' . phoromatic_schedule_id_to_name($row['ScheduleID']) . ' - ' . $row['Trigger'];
 		}
 
-		array_push($result_file, new pts_result_merge_select($composite_xml, null, $system_name));
+		array_push($result_files, new pts_result_merge_select($composite_xml, null, $system_name));
 	}
 
 	$attributes = array('new_result_file_title' => $result_file_title);
-	$result_file = pts_result_file_merger::merge($result_file, $attributes);
+	$result_file = new pts_result_file(null, true);
+	$result_file->merge($result_files, $attributes);
 	$extra_attributes = array();
 
 	$attribute_options = array(

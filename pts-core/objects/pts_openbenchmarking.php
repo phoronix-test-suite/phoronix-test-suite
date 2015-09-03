@@ -141,7 +141,7 @@ class pts_openbenchmarking
 
 			$result_file = new pts_result_file($composite_xml);
 			//$id = strtolower($id);
-			$valid = $return_xml ? pts_result_file_writer::result_file_to_xml($result_file) : pts_client::save_test_result($id . '/composite.xml', pts_result_file_writer::result_file_to_xml($result_file), true);
+			$valid = $return_xml ? $result_file->get_xml() : pts_client::save_test_result($id . '/composite.xml', $result_file->get_xml(), true);
 
 			if(PTS_IS_CLIENT && $json_response['openbenchmarking']['result']['system_logs_available'])
 			{

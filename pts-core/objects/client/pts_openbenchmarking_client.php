@@ -52,7 +52,7 @@ class pts_openbenchmarking_client
 			return false;
 		}
 
-		$composite_xml = $result_file->get_raw_xml();
+		$composite_xml = $result_file->get_xml();
 		$system_log_dir = PTS_SAVE_RESULTS_PATH . $result_file->get_identifier() . '/system-logs/';
 		$upload_system_logs = false;
 

@@ -85,7 +85,8 @@ class phoromatic_tracker implements pts_webui_interface
 			}
 
 			$attributes = array('new_result_file_title' => phoromatic_schedule_id_to_name($row['ScheduleID']));
-			$result_file = pts_result_file_merger::merge($result_file, $attributes);
+			$result_file = new pts_result_file(null, true);
+			$result_file->merge($result_files, $attributes);
 			$extra_attributes = array('reverse_result_buffer' => true, 'force_simple_keys' => true, 'force_line_graph_compact' => true, 'force_tracking_line_graph' => true);
 
 			if(isset($_POST['normalize_results']) && $_POST['normalize_results'])

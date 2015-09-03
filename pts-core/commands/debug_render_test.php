@@ -67,7 +67,8 @@ class debug_render_test implements pts_option_interface
 				}
 			}
 			echo 'STARTING MERGE; ';
-			$result_file = pts_result_file_merger::merge($result_files);
+			$result_file = new pts_result_file(null, true);
+			$result_file->merge($result_files);
 			echo 'MAKING NEW RESULT FILE; ';
 			$extra_attributes = array('reverse_result_buffer' => true, 'force_simple_keys' => true, 'force_line_graph_compact' => true, 'force_tracking_line_graph' => true);
 			//$extra_attributes['normalize_result_buffer'] = true;

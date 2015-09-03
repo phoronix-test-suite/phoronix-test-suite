@@ -47,7 +47,7 @@ class auto_sort_result_file implements pts_option_interface
 
 		sort($result_file_identifiers);
 		$result_file->reorder_runs($result_file_identifiers);
-		pts_client::save_test_result($result_file->get_file_location(), pts_result_file_writer::result_file_to_xml($result_file));
+		pts_client::save_test_result($result_file->get_file_location(), $result_file->get_xml());
 		pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . $args[0] . '/index.html');
 	}
 	public static function invalid_command($passed_args = null)

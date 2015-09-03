@@ -591,7 +591,7 @@ class pts_test_run_manager
 
 		if($this->result_file && $this->result_file->get_test_count() > 0)
 		{
-			pts_result_file_writer::result_file_to_xml($this->result_file, PTS_SAVE_RESULTS_PATH . $this->get_file_name() . '/composite.xml');
+			$this->result_file->get_xml(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . '/composite.xml');
 		}
 
 		if(is_object($run_index))
@@ -935,7 +935,7 @@ class pts_test_run_manager
 
 			echo PHP_EOL;
 			pts_module_manager::module_process('__event_results_process', $this);
-			pts_client::save_test_result($this->get_file_name() . '/composite.xml', pts_result_file_writer::result_file_to_xml($this->result_file), true, null, $this->results_identifier);
+			pts_client::save_test_result($this->get_file_name() . '/composite.xml', $this->result_file->get_xml(), true, null, $this->results_identifier);
 			pts_module_manager::module_process('__event_results_saved', $this);
 			//echo PHP_EOL . 'Results Saved To: ; . PTS_SAVE_RESULTS_PATH . $this->get_file_name() . ;/composite.xml' . PHP_EOL;
 
