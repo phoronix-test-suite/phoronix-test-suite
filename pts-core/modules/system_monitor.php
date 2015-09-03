@@ -41,8 +41,10 @@ class system_monitor extends pts_module_interface
 
 	static $individual_monitoring = null;
 	static $per_test_run_monitoring = null;
-	static $cgroup_monitoring = null;
-
+	
+	const cgroup_name = 'pts_monitor';		// default name for monitoring cgroup
+	static $cgroup_enabled_controllers = array();
+	
 	private static $test_run_try_number = null;
 	private static $sensor_monitoring_frequency = 2;
 	private static $test_run_timer = 0;
@@ -82,6 +84,7 @@ class system_monitor extends pts_module_interface
 		self::$result_identifier = $test_run_manager->get_results_identifier();
 		self::$individual_monitoring = pts_module::read_variable('MONITOR_INDIVIDUAL') !== '0';
 		self::$per_test_run_monitoring = pts_module::read_variable('MONITOR_PER_RUN') === '1';		//TODO change to true?
+		
 		self::$to_monitor = array();
 
 		// If tests will be repeated several times, this is the first try.
@@ -111,14 +114,29 @@ class system_monitor extends pts_module_interface
 				// create objects for all specified instances of the sensor
 				foreach ($sensor_parameters[$sensor[0]][$sensor[1]] as $instance => $params)
 				{
+					if ($sensor[0] === 'cgroup')
+					{
+						$cgroup_controller = call_user_func(array($sensor[2], 'get_cgroup_controller'));
+						array_push(self::$cgroup_enabled_controllers, $cgroup_controller );
+						self::cgroup_create(self::cgroup_name, $cgroup_controller);
+						$params['cgroup_name'] = self::cgroup_name;
+					}
+						
 					if (call_user_func(array($sensor[2], 'parameter_check'), $params) === true)
 					{
 						$sensor_object = new $sensor[2]($instance, $params);
 						array_push(self::$to_monitor, $sensor_object);
-						pts_module::save_file('logs/' . phodevi::sensor_object_identifier($sensor_object));
+						pts_module::save_file('logs/' . phodevi::sensor_object_identifier($sensor_object));	
 					}
+					//TODO show information when passed parameters are incorrect
 				}
 			}
+		}
+		
+		// create cgroups in all of the needed controllers
+		foreach (self::$cgroup_enabled_controllers as $controller)
+		{
+			self::cgroup_create(self::cgroup_name, $controller);
 		}
 
 		//TODO rewrite when new monitoring system is finished
@@ -184,9 +202,13 @@ class system_monitor extends pts_module_interface
 
 	public static function __test_running($test_process)
 	{
-		//that needs higher PHP version
-		$parent_pid = proc_get_status($test_process)['pid'];
-		file_put_contents('/sys/fs/cgroup/cpu,cpuacct/abc/tasks', $parent_pid);
+		foreach (self::$cgroup_enabled_controllers as $controller)
+		{
+			//that needs higher PHP version
+			$parent_pid = proc_get_status($test_process)['pid'];
+			file_put_contents('/sys/fs/cgroup/' . $controller . '/' . self::cgroup_name .'/tasks', $parent_pid);
+		}
+		
 	}
 
 	public static function __interim_test_run()
@@ -403,6 +425,15 @@ class system_monitor extends pts_module_interface
 			}
 		}
 	}
+	
+	public static function __post_run_process()
+	{
+		foreach (self::$cgroup_enabled_controllers as $controller)
+		{
+			self::cgroup_remove(self::cgroup_name, $controller);
+		}
+	}
+	
 	private static function pts_start_monitoring()
 	{
 		foreach(self::$to_monitor as $sensor)
@@ -473,7 +504,7 @@ class system_monitor extends pts_module_interface
 
 		return $args;
 	}
-
+	
 	// parse JSON file containing parameters of monitored sensors
 	private static function prepare_sensor_parameters()
 	{
@@ -498,6 +529,42 @@ class system_monitor extends pts_module_interface
 		return $parameters;
 	}
 
+	private static function cgroup_create($cgroup_name, $cgroup_controller)
+	{
+		//TODO if we allow custom cgroup names, we will have to add cgroup 
+		//name checking ("../../../etc" isn't a sane name)
+		
+		$sudo_cmd = PTS_CORE_STATIC_PATH . 'root-access.sh ';
+		$cgroup_path = '/sys/fs/cgroup/' . $cgroup_controller . '/' . $cgroup_name;
+		$return_val = null;
+		
+		if (!is_dir($cgroup_path))	// cgroup filesystem doesn't allow to create regular files anyway
+		{
+			$mkdir_cmd = 'mkdir ' . $cgroup_path;
+			$return_val = exec($sudo_cmd . $mkdir_cmd);
+		}
+		if ($return_val === null && is_dir($cgroup_path))	// mkdir produced no output 
+		{
+			$current_user = exec('whoami');
+			$chmod_cmd = 'chown ' . $current_user . ' ' . $cgroup_path . '/tasks';
+			exec($sudo_cmd . $chmod_cmd);
+		}
+	}
+	
+	private static function cgroup_remove($cgroup_name, $cgroup_controller)
+	{
+		$sudo_cmd = PTS_CORE_STATIC_PATH . 'root-access.sh ';
+		$cgroup_path = '/sys/fs/cgroup/' . $cgroup_controller . '/' . $cgroup_name;
+		
+		if (!is_dir($cgroup_path))	// cgroup filesystem doesn't allow to create regular files anyway
+		{
+			$rmdir_cmd = 'rmdir ' . $cgroup_path;
+			shell_exec($sudo_cmd . $rmdir_cmd);
+		}
+		
+		//TODO should probably return some result
+	}
+	
 	private static function save_try_offset()
 	{
 		foreach (self::$to_monitor as $sensor)

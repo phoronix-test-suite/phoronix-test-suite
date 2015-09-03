@@ -29,7 +29,7 @@ class cgroup_cpu_usage extends phodevi_sensor
 	const proc_stat_column_count = 10;
 	const cgroup_cpuacct_stat_load_column = 1;
 	const cgroup_cpuacct_stat_line_count = 2;
-
+	
 	private $cgroup_stat_path;
 
 	function __construct($instance, $parameter_array)
@@ -63,10 +63,15 @@ class cgroup_cpu_usage extends phodevi_sensor
 	{
 		return 'Summary';
 	}
+	
+	public static function get_cgroup_controller()
+	{
+		return 'cpu,cpuacct';
+	}
 
 	public function support_check()
 	{
-		return phodevi::is_linux() && file_exists('/sys/fs/cgroup/cpu,cpuacct/');
+		return phodevi::is_linux() && is_dir('/sys/fs/cgroup/cpu,cpuacct/');
 	}
 
 	public function read_sensor()
