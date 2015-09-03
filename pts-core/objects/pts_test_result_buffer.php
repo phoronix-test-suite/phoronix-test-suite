@@ -265,45 +265,6 @@ class pts_test_result_buffer
 
 		return $values;
 	}
-	public function get_min_values()
-	{
-		$values = array();
-
-		foreach($this->buffer_items as &$buffer_item)
-		{
-			if(($min = $buffer_item->get_min_result_value()) != null)
-			{
-				array_push($values, $min);
-			}
-		}
-
-		return $values;
-	}
-	public function get_max_values()
-	{
-		$values = array();
-
-		foreach($this->buffer_items as &$buffer_item)
-		{
-			if(($max = $buffer_item->get_max_result_value()) != null)
-			{
-				array_push($values, $max);
-			}
-		}
-
-		return $values;
-	}
-	public function get_raw_values()
-	{
-		$raw_values = array();
-
-		foreach($this->buffer_items as &$buffer_item)
-		{
-			array_push($raw_values, $buffer_item->get_result_raw());
-		}
-
-		return $raw_values;
-	}
 	public function get_values_as_string()
 	{
 		return implode(':', $this->get_values());

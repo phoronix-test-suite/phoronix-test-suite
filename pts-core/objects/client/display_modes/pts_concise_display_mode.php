@@ -380,11 +380,11 @@ class pts_concise_display_mode implements pts_display_mode_interface
 		}
 		else if(in_array($test_result->test_profile->get_display_format(), array('PASS_FAIL', 'MULTI_PASS_FAIL')))
 		{
-			$end_print = $this->tab . $this->tab . 'Final: ' . $test_result->get_result() . ' (' . $test_result->test_profile->get_result_scale() . ')' . PHP_EOL;
+			$end_print = $this->tab . $this->tab . 'Final: ' . $test_result->active->get_result() . ' (' . $test_result->test_profile->get_result_scale() . ')' . PHP_EOL;
 		}
 		else if(in_array($test_result->test_profile->get_display_format(), array('FILLED_LINE_GRAPH', 'LINE_GRAPH')))
 		{
-			$values = explode(',', $test_result->get_result());
+			$values = explode(',', $test_result->active->get_result());
 			$end_print = null;
 
 			if(count($values) > 1)
@@ -406,18 +406,18 @@ class pts_concise_display_mode implements pts_display_mode_interface
 				$end_print .= $this->tab . $this->tab . $result . PHP_EOL;
 			}
 
-			$end_print .= PHP_EOL . $this->tab . pts_strings::result_quantifier_to_string($test_result->test_profile->get_result_quantifier()) . ': ' . $test_result->get_result() . ' ' . $test_result->test_profile->get_result_scale();
+			$end_print .= PHP_EOL . $this->tab . pts_strings::result_quantifier_to_string($test_result->test_profile->get_result_quantifier()) . ': ' . $test_result->active->get_result() . ' ' . $test_result->test_profile->get_result_scale();
 
-			if($test_result->get_min_result())
+			if($test_result->active->get_min_result())
 			{
-				$end_print .= PHP_EOL . $this->tab . 'Minimum: ' . $test_result->get_min_result();
+				$end_print .= PHP_EOL . $this->tab . 'Minimum: ' . $test_result->active->get_min_result();
 			}
-			if($test_result->get_max_result())
+			if($test_result->active->get_max_result())
 			{
-				$end_print .= PHP_EOL . $this->tab . 'Maximum: ' . $test_result->get_max_result();
+				$end_print .= PHP_EOL . $this->tab . 'Maximum: ' . $test_result->active->get_max_result();
 			}
 
-			if($test_result->get_result() == 0)
+			if($test_result->active->get_result() == 0)
 			{
 				$end_print .= PHP_EOL . $this->tab . 'This test failed to run properly.';
 			}

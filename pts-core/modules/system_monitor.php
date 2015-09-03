@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2014, Phoronix Media
-	Copyright (C) 2008 - 2014, Michael Larabel
+	Copyright (C) 2008 - 2015, Phoronix Media
+	Copyright (C) 2008 - 2015, Michael Larabel
 	system_monitor.php: System sensor monitoring module for PTS
 
 	This program is free software; you can redistribute it and/or modify
@@ -191,17 +191,17 @@ class system_monitor extends pts_module_interface
 					if($test_result->test_profile->get_result_proportion() == 'HIB')
 					{
 						$test_result->test_profile->set_result_scale($test_result->test_profile->get_result_scale() . ' Per Watt');
-						$test_result->test_result_buffer->add_test_result(self::$result_identifier, pts_math::set_precision($test_result->get_result() / $watt_average));
+						$test_result->test_result_buffer->add_test_result(self::$result_identifier, pts_math::set_precision($test_result->active->get_result() / $watt_average));
 						$result_file->add_result($test_result);
 					}
 					else if($test_result->test_profile->get_result_proportion() == 'LIB')
 					{
 						$test_result->test_profile->set_result_proportion('HIB');
 						$test_result->test_profile->set_result_scale('Performance Per Watt');
-						$test_result->test_result_buffer->add_test_result(self::$result_identifier, pts_math::set_precision((1 / $test_result->get_result()) / $watt_average));
+						$test_result->test_result_buffer->add_test_result(self::$result_identifier, pts_math::set_precision((1 / $test_result->active->get_result()) / $watt_average));
 						$result_file->add_result($test_result);
 					}
-					array_push(self::$perf_per_watt_collection, $test_result->get_result());
+					array_push(self::$perf_per_watt_collection, $test_result->active->get_result());
 				}
 			}
 		}

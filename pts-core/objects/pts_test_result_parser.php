@@ -205,24 +205,24 @@ class pts_test_result_parser
 		switch($test_run_request->test_profile->get_display_format())
 		{
 			case 'IMAGE_COMPARISON':
-				$test_run_request->active_result = self::parse_iqc_result($test_run_request->test_profile, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments);
+				$test_run_request->active->active_result = self::parse_iqc_result($test_run_request->test_profile, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments);
 				break;
 			case 'PASS_FAIL':
 			case 'MULTI_PASS_FAIL':
-				$test_run_request->active_result = self::parse_generic_result($test_run_request, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments);
+				$test_run_request->active->active_result = self::parse_generic_result($test_run_request, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments);
 				break;
 			case 'BAR_GRAPH':
 			default:
-				$test_run_request->active_result = self::parse_numeric_result($test_run_request, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments);
+				$test_run_request->active->active_result = self::parse_numeric_result($test_run_request, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments);
 
-				if($test_run_request->test_profile->get_display_format() == 'BAR_GRAPH' && !is_numeric($test_run_request->active_result))
+				if($test_run_request->test_profile->get_display_format() == 'BAR_GRAPH' && !is_numeric($test_run_request->active->active_result))
 				{
-					$test_run_request->active_result = false;
+					$test_run_request->active->active_result = false;
 				}
 				else
 				{
-					$test_run_request->active_min_result = self::parse_numeric_result($test_run_request, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments, 'MIN');
-					$test_run_request->active_max_result = self::parse_numeric_result($test_run_request, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments, 'MAX');
+					$test_run_request->active->active_min_result = self::parse_numeric_result($test_run_request, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments, 'MIN');
+					$test_run_request->active->active_max_result = self::parse_numeric_result($test_run_request, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments, 'MAX');
 				}
 				break;
 		}
@@ -317,7 +317,7 @@ class pts_test_result_parser
 				$tp->set_identifier(null);
 				$extra_result = new pts_test_result($tp);
 				$extra_result->set_used_arguments_description('Total Frame Time');
-				$extra_result->set_result(implode(',', $frame_all_times));
+				$extra_result->active->set_result(implode(',', $frame_all_times));
 				array_push($extra_results, $extra_result);
 				//$extra_result->set_used_arguments(phodevi::sensor_name($sensor) . ' ' . $test_result->get_arguments());
 			}
@@ -334,7 +334,7 @@ class pts_test_result_parser
 
 		if(count($trial_results) == 0)
 		{
-			$test_result->set_result(0);
+			$test_result->active->set_result(0);
 			return false;
 		}
 
@@ -439,7 +439,7 @@ class pts_test_result_parser
 
 							if($min < $END_RESULT && is_numeric($min) && $min != 0)
 							{
-								$test_result->set_min_result($min);
+								$test_result->active->set_min_result($min);
 							}
 						}
 						if(count($max = $active_result_buffer->max_results) > 0)
@@ -448,7 +448,7 @@ class pts_test_result_parser
 
 							if($max > $END_RESULT && is_numeric($max) && $max != 0)
 							{
-								$test_result->set_max_result($max);
+								$test_result->active->set_max_result($max);
 							}
 						}
 						break;
@@ -456,7 +456,7 @@ class pts_test_result_parser
 				break;
 		}
 
-		$test_result->set_result($END_RESULT);
+		$test_result->active->set_result($END_RESULT);
 	}
 	protected static function parse_iqc_result(&$test_profile, $parse_xml_file, $log_file, $pts_test_arguments, $extra_arguments)
 	{

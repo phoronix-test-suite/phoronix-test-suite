@@ -25,6 +25,13 @@ class pts_test_result_buffer_active
 	public $results;
 	public $min_results;
 	public $max_results;
+	public $active = null;
+	public $active_result = null;
+	public $active_min_result = null;
+	public $active_max_result = null;
+	private $result = 0;
+	private $result_min = 0;
+	private $result_max = 0;
 
 	public function __construct()
 	{
@@ -45,6 +52,30 @@ class pts_test_result_buffer_active
 	public function get_values_as_string()
 	{
 		return implode(':', $this->results);
+	}
+	public function set_result($result)
+	{
+		$this->result = $result;
+	}
+	public function set_min_result($result)
+	{
+		$this->result_min = $result;
+	}
+	public function set_max_result($result)
+	{
+		$this->result_max = $result;
+	}
+	public function get_result()
+	{
+		return $this->result;
+	}
+	public function get_min_result()
+	{
+		return $this->result_min;
+	}
+	public function get_max_result()
+	{
+		return $this->result_max;
 	}
 }
 

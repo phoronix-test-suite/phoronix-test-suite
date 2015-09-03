@@ -151,7 +151,7 @@ class pts_basic_display_mode implements pts_display_mode_interface
 		}
 		else if(in_array($test_result->test_profile->get_display_format(), array('PASS_FAIL', 'MULTI_PASS_FAIL')))
 		{
-			$end_print .= PHP_EOL . 'Final: ' . $test_result->get_result() . ' (' . $test_result->test_profile->get_result_scale() . ')' . PHP_EOL;
+			$end_print .= PHP_EOL . 'Final: ' . $test_result->active->get_result() . ' (' . $test_result->test_profile->get_result_scale() . ')' . PHP_EOL;
 		}
 		else
 		{
@@ -160,7 +160,7 @@ class pts_basic_display_mode implements pts_display_mode_interface
 				$end_print .= $result . ' ' . $test_result->test_profile->get_result_scale() . PHP_EOL;
 			}
 
-			$end_print .= PHP_EOL . pts_strings::result_quantifier_to_string($test_result->test_profile->get_result_quantifier()) . ': ' . $test_result->get_result() . ' ' . $test_result->test_profile->get_result_scale();
+			$end_print .= PHP_EOL . pts_strings::result_quantifier_to_string($test_result->test_profile->get_result_quantifier()) . ': ' . $test_result->active->get_result() . ' ' . $test_result->test_profile->get_result_scale();
 		}
 
 		echo self::string_header($end_print, '#');

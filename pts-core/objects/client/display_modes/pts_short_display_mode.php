@@ -94,11 +94,11 @@ class pts_short_display_mode extends pts_concise_display_mode
 		}
 		else if(in_array($test_result->test_profile->get_display_format(), array('PASS_FAIL', 'MULTI_PASS_FAIL')))
 		{
-			$end_print = 'Final: ' . $test_result->get_result() . ' (' . $test_result->test_profile->get_result_scale() . ')';
+			$end_print = 'Final: ' . $test_result->active->get_result() . ' (' . $test_result->test_profile->get_result_scale() . ')';
 		}
 		else if(in_array($test_result->test_profile->get_display_format(), array('FILLED_LINE_GRAPH', 'LINE_GRAPH')))
 		{
-			$values = explode(',', $test_result->get_result());
+			$values = explode(',', $test_result->active->get_result());
 			$end_print = null;
 
 			if(count($values) > 1)
@@ -113,7 +113,7 @@ class pts_short_display_mode extends pts_concise_display_mode
 		}
 		else
 		{
-			$end_print = pts_strings::result_quantifier_to_string($test_result->test_profile->get_result_quantifier()) . ': ' . $test_result->get_result() . ' ' . $test_result->test_profile->get_result_scale();
+			$end_print = pts_strings::result_quantifier_to_string($test_result->test_profile->get_result_quantifier()) . ': ' . $test_result->active->get_result() . ' ' . $test_result->test_profile->get_result_scale();
 		}
 
 		echo $this->print_test_identifier_prefix($test_result) . $end_print;

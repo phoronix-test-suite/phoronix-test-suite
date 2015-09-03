@@ -347,10 +347,14 @@ class pts_test_run_manager
 				array_push($current_identifiers, $s->get_identifier());
 			}
 
-			$hashes = array_keys($this->result_file->get_result_objects());
+			$hashes = array();
+			foreach($this->result_file->get_result_objects() as $result)
+			{
+				array_push($hashes, $result->get_comparison_hash(false, false));
+			}
 			foreach($this->tests_to_run as &$run_request)
 			{
-				if($run_request instanceof pts_test_result && in_array($run_request->get_comparison_hash(true, false), $hashes))
+				if($run_request instanceof pts_test_result && in_array($run_request->get_comparison_hash(false, false), $hashes))
 				{
 					$no_repeated_tests = false;
 					break;
@@ -642,7 +646,7 @@ class pts_test_run_manager
 		}
 		else if($test_run_request instanceof pts_test_result)
 		{
-			$end_result = $test_run_request->get_result();
+			$end_result = $test_run_request->active->get_result();
 
 			// removed count($result) > 0 in the move to pts_test_result
 			if(count($test_run_request) > 0 && ((is_numeric($end_result) && $end_result > 0) || (!is_numeric($end_result) && isset($end_result[3]))))
@@ -654,7 +658,7 @@ class pts_test_run_manager
 				if(!empty($test_identifier))
 				{
 					$test_run_request->test_result_buffer = new pts_test_result_buffer();
-					$test_run_request->test_result_buffer->add_test_result($this->results_identifier, $test_run_request->get_result(), $active_result_buffer->get_values_as_string(), self::process_json_report_attributes($test_run_request), $test_run_request->get_min_result(), $test_run_request->get_max_result());
+					$test_run_request->test_result_buffer->add_test_result($this->results_identifier, $test_run_request->active->get_result(), $active_result_buffer->get_values_as_string(), self::process_json_report_attributes($test_run_request), $test_run_request->active->get_min_result(), $test_run_request->active->get_max_result());
 					$this->result_file->add_result($test_run_request);
 
 					if($test_run_request->secondary_linked_results != null && is_array($test_run_request->secondary_linked_results))
@@ -720,11 +724,11 @@ class pts_test_run_manager
 		{
 			$json_report_attributes['install-footnote'] = $t;
 		}
-		if(($t = $test_run_request->get_min_result()) != 0)
+		if(($t = $test_run_request->active->get_min_result()) != 0)
 		{
 			$json_report_attributes['min-result'] = $t;
 		}
-		if(($t = $test_run_request->get_max_result()) != 0)
+		if(($t = $test_run_request->active->get_max_result()) != 0)
 		{
 			$json_report_attributes['max-result'] = $t;
 		}

@@ -76,9 +76,9 @@ class perf_per_dollar extends pts_module_interface
 			$test_result->set_used_arguments('dollar comparison ' . $test_result->get_arguments());
 			$test_result->test_profile->set_result_scale($test_result->test_profile->get_result_scale() . ' Per Dollar');
 			$test_result->test_result_buffer = new pts_test_result_buffer();
-			$test_result->test_result_buffer->add_test_result(self::$result_identifier, pts_math::set_precision($test_result->get_result() / self::$COST_PERF_PER_DOLLAR), null, array('install-footnote' => '$' . self::$COST_PERF_PER_DOLLAR . ' reported cost.'));
+			$test_result->test_result_buffer->add_test_result(self::$result_identifier, pts_math::set_precision($test_result->active->get_result() / self::$COST_PERF_PER_DOLLAR), null, array('install-footnote' => '$' . self::$COST_PERF_PER_DOLLAR . ' reported cost.'));
 			$result_file->add_result($test_result);
-			array_push(self::$perf_per_dollar_collection, $test_result->get_result());
+			array_push(self::$perf_per_dollar_collection, $test_result->active->get_result());
 		}
 		self::$successful_test_run_request = null;
 	}
