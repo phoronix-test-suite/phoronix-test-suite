@@ -70,7 +70,7 @@ class debug_self_test implements pts_option_interface
 			echo strtoupper($component) . ': ' . (str_repeat(' ', $longest_c - strlen($component))) . pts_math::set_precision(round(array_sum($times) / count($times), 3), 3) . ' seconds' . PHP_EOL;
 		}
 
-		echo PHP_EOL . 'ELAPSED TIME: ' . (str_repeat(' ', $longest_c - strlen('ELAPSED TIME'))) . round($finish - $start, 3) . ' seconds';
+		echo PHP_EOL . 'TOTAL ELAPSED TIME: ' . (str_repeat(' ', $longest_c - strlen('ELAPSED TIME'))) . round($finish - $start, 3) . ' seconds';
 		echo PHP_EOL . 'PEAK MEMORY USAGE: ' . (str_repeat(' ', $longest_c - strlen('PEAK MEMORY USAGE'))) . round(memory_get_peak_usage(true) / 1048576, 3) . ' MB';
 		echo PHP_EOL . 'PEAK MEMORY USAGE (emalloc): ' . (str_repeat(' ', $longest_c - strlen('PEAK MEMORY USAGE (emalloc)'))) . round(memory_get_peak_usage() / 1048576, 3) . ' MB';
 		echo PHP_EOL;
