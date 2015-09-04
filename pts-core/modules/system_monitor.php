@@ -303,7 +303,7 @@ class system_monitor extends pts_module_interface
 
 					if(count($sensor_results) > 2)
 					{
-						$result_identifier = $result_file_writer->get_result_identifier() . " (try " . ($try_number + 1) . ")";
+						$result_identifier = self::$result_identifier . " (try " . ($try_number + 1) . ")";
 						$result_value = implode(',', $sensor_results);
 						$result_buffer->add_test_result($result_identifier, $result_value, $result_value);
 					}
@@ -313,7 +313,6 @@ class system_monitor extends pts_module_interface
 			{
 				$sensor_results = self::parse_monitor_log('logs/' . phodevi::sensor_object_identifier($sensor),
 									self::$individual_test_run_offsets[phodevi::sensor_object_identifier($sensor)]);
-
 			}
 
 			//TODO result count checks should probably be done before cloning the test_result
@@ -327,54 +326,21 @@ class system_monitor extends pts_module_interface
 			$test_result->test_profile->set_result_scale(phodevi::read_sensor_object_unit($sensor));
 			$test_result->set_used_arguments_description(phodevi::sensor_object_name($sensor) . ' Monitor');
 			$test_result->set_used_arguments(phodevi::sensor_object_name($sensor) . ' ' . $test_result->get_arguments());
-
+			$test_result->test_result_buffer = $result_buffer;
+			
 			if (self::$per_test_run_monitoring && $result_buffer->get_count() > 1)
 			{
 				$test_result->set_used_arguments_description(phodevi::sensor_object_name($sensor) . ' Per Test Try Monitor');
-				$test_result->test_result_buffer = $result_buffer;
-				$result_file_writer->add_result_from_result_object_with_value($test_result);
 			}
 			elseif(count($sensor_results) > 2)
 			{
-				$result_file_writer->add_result_from_result_object_with_value_string($test_result, implode(',', $sensor_results), implode(',', $sensor_results));
-				$test_result->test_profile->set_identifier(null);
-				$test_result->test_profile->set_result_proportion('LIB');
-				$test_result->test_profile->set_display_format('LINE_GRAPH');
-				$test_result->test_profile->set_result_scale(phodevi::read_sensor_unit($sensor));
-				$test_result->set_used_arguments_description(phodevi::sensor_name($sensor) . ' Monitor');
-				$test_result->set_used_arguments(phodevi::sensor_name($sensor) . ' ' . $test_result->get_arguments());
-				$test_result->test_result_buffer = new pts_test_result_buffer();
 				$test_result->test_result_buffer->add_test_result(self::$result_identifier, implode(',', $sensor_results), implode(',', $sensor_results));
-				$result_file->add_result($test_result);
 			}
+			
+			$result_file->add_result($test_result);
 
 			self::$individual_test_run_offsets[phodevi::sensor_object_identifier($sensor)] = array();
 			//TODO reset self::$test_run_tries_offsets
-
-
-		}
-
-		if(self::$monitor_i915_energy)
-		{
-			$i915_energy = file_get_contents('/sys/kernel/debug/dri/0/i915_energy');
-
-			if(($uj = strpos($i915_energy, ' uJ')))
-			{
-				$uj = substr($i915_energy, 0, $uj);
-				$uj = substr($uj, (strrpos($uj, ' ') + 1));
-
-				if(is_numeric($uj))
-				{
-					$test_result = clone self::$individual_test_run_request;
-					$test_result->test_profile->set_identifier(null);
-					$test_result->test_profile->set_result_proportion('LIB');
-					$test_result->test_profile->set_display_format('BAR_GRAPH');
-					$test_result->test_profile->set_result_scale('micro Joules');
-					$test_result->set_used_arguments_description('i915_energy Monitor');
-					$test_result->set_used_arguments('i915_energy ' . $test_result->get_arguments());
-					$result_file_writer->add_result_from_result_object_with_value_string($test_result, $uj);
-				}
-			}
 		}
 
 		self::$successful_test_run_request = null;
@@ -426,8 +392,6 @@ $			$test_result->test_result_buffer = new pts_test_result_buffer();
 				$test_result->test_profile->set_result_scale(phodevi::read_sensor_object_unit($sensor));
 				$test_result->set_used_arguments_description('Phoronix Test Suite System Monitoring');
 				$test_result->set_used_arguments(phodevi::sensor_object_identifier($sensor));
-				$test_run_manager->result_file_writer->add_result_from_result_object_with_value_string($test_result, implode(',', $sensor_results), implode(',', $sensor_results));
-				$test_result->set_used_arguments(phodevi::sensor_identifier($sensor));
 $				$test_result->test_result_buffer = new pts_test_result_buffer();
 				$test_result->test_result_buffer->add_test_result(self::$result_identifier, implode(',', $sensor_results), implode(',', $sensor_results), implode(',', $sensor_results), implode(',', $sensor_results));
 				$test_run_manager->result_file->add_result($test_result);
