@@ -670,7 +670,7 @@ class pts_test_run_manager
 								$run_request_minor->set_used_arguments_description($test_run_request->get_arguments_description() . ' - ' . $run_request_minor->get_arguments_description());
 							}
 
-							$test_run_request->test_result_buffer->add_test_result($this->results_identifier, $run_request_minor->active->get_result(), $run_request_minor->active->get_values_as_string(), self::process_json_report_attributes($test_run_request),$run_request_minor->get_min_result(), $run_request_minor->active->get_max_result());
+							$test_run_request->test_result_buffer->add_test_result($this->results_identifier, $run_request_minor->active->get_result(), $run_request_minor->active->get_values_as_string(), self::process_json_report_attributes($test_run_request),$run_request_minor->active->get_min_result(), $run_request_minor->active->get_max_result());
 							$this->result_file->add_result($test_run_request);
 						}
 					}
