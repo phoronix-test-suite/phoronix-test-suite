@@ -14,9 +14,9 @@ fi
 
 TMPRUN=`mktemp`
 
-echo -e "#!/bin/sh\n\n$@" > $TMPRUN
+/bin/echo -e "#!/bin/sh\n\n$@" > $TMPRUN
 chmod +x $TMPRUN
 
-echo -e "\nThis test requires root access to run.\n" 1>&2
+/bin/echo -e "\nThis test requires root access to run.\n" 1>&2
 $ROOT $TMPRUN
 rm -f $TMPRUN
