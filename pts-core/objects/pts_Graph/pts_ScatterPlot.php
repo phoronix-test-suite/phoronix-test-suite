@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2011 - 2012, Phoronix Media
-	Copyright (C) 2011 - 2012, Michael Larabel
+	Copyright (C) 2011 - 2015, Phoronix Media
+	Copyright (C) 2011 - 2015, Michael Larabel
 	pts_ScatterPlot.php: The scatter plot graph object that extends pts_Graph.php.
 
 	This program is free software; you can redistribute it and/or modify
@@ -128,7 +128,7 @@ class pts_ScatterPlot extends pts_Graph
 			$b = $mean_y - $mean_x * $m;
 
 			$pearson_num = $sum_xy - ($sum_x * $sum_y / $point_count);
-			$pearson_den = sqrt(($sum_x_sq - pow($x_sum, 2) / $point_count) * ($sum_y_sq - pow($sum_y, 2) / $point_count));
+			$pearson_den = sqrt(($sum_x_sq - pow($sum_x, 2) / $point_count) * ($sum_y_sq - pow($sum_y, 2) / $point_count));
 			$pearson_coefficient = $pearson_den == 0 ? 0 : $pearson_num / $pearson_den;
 
 
@@ -141,7 +141,7 @@ class pts_ScatterPlot extends pts_Graph
 				continue;
 			}
 
-			$this->svg_dom->draw_svg_line($this->i['left_start'], $start_y, $this->i['graph_left_end'], $end_y, $paint_color, 2);
+			//$this->svg_dom->draw_svg_line($this->i['left_start'], $start_y, $this->i['graph_left_end'], $end_y, $paint_color, 2);
 
 		}
 	}

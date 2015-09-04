@@ -266,7 +266,8 @@ function phoromatic_webui_header_logged_in()
 		if(phoromatic_account_system_count() > 0)
 			array_push($pages, 'Dashboard');
 
-		array_push($pages, 'Systems', 'Tests', 'Schedules', 'Benchmark', 'Results');
+		array_push($pages, 'Systems', 'Schedules', 'Benchmark', 'Results');
+		$pages['Test Profiles'] = 'Tests';
 
 		if(phoromatic_tracker_page_relevant())
 		{
@@ -283,15 +284,16 @@ function phoromatic_webui_header_logged_in()
 	}
 	array_push($sub_links, 'Logout');
 
-	foreach($pages as $page)
+	foreach($pages as $title => $page)
 	{
+		$title = is_numeric($title) ? $page : $title;
 		if(strtolower($page) == PAGE_REQUEST)
 		{
-			array_push($html_links, '<a href="?' . strtolower($page) . '"><u>' . str_replace('_', ' ', $page) . '</u></a>');
+			array_push($html_links, '<a href="?' . strtolower($page) . '"><u>' . str_replace('_', ' ', $title) . '</u></a>');
 		}
 		else
 		{
-			array_push($html_links, '<a href="?' . strtolower($page) . '">' . str_replace('_', ' ', $page) . '</a>');
+			array_push($html_links, '<a href="?' . strtolower($page) . '">' . str_replace('_', ' ', $title) . '</a>');
 		}
 	}
 

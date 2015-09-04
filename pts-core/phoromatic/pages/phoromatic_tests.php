@@ -43,17 +43,72 @@ class phoromatic_tests implements pts_webui_interface
 		if($identifier_item && pts_test_profile::is_test_profile($identifier_item))
 		{
 			$tp = new pts_test_profile($identifier_item);
+			$tp_identifier = $tp->get_identifier(false);
 			$main .= '<h1>' . $tp->get_title() . '</h1><p>' . $tp->get_description() . '</p>';
-			$main .= '<p style="font-size: 90%;"><strong>' . $tp->get_test_hardware_type() . ' - ' . phoromatic_server::test_result_count_for_test_profile($_SESSION['AccountID'], $tp->get_identifier(false)) . ' Results On This Account - ' . $tp->get_test_software_type() . ' - Maintained By: ' . $tp->get_maintainer() . ' - Supported Platforms: ' . implode(', ', $tp->get_supported_platforms()) . '</strong></p>';
+			$main .= '<p style="font-size: 90%;"><strong>' . $tp->get_test_hardware_type() . ' - ' . phoromatic_server::test_result_count_for_test_profile($_SESSION['AccountID'], $tp_identifier) . ' Results On This Account - ' . $tp->get_test_software_type() . ' - Maintained By: ' . $tp->get_maintainer() . ' - Supported Platforms: ' . implode(', ', $tp->get_supported_platforms()) . '</strong></p>';
 
 			$main .= '<h2>Recent Results With This Test</h2>';
 			$stmt = phoromatic_server::$db->prepare('SELECT Title, PPRID FROM phoromatic_results WHERE AccountID = :account_id AND UploadID IN (SELECT DISTINCT UploadID FROM phoromatic_results_results WHERE AccountID = :account_id AND TestProfile LIKE :tp) ORDER BY UploadTime DESC LIMIT 30');
 			$stmt->bindValue(':account_id', $_SESSION['AccountID']);
-			$stmt->bindValue(':tp', $tp->get_identifier(false) . '%');
+			$stmt->bindValue(':tp', $tp_identifier . '%');
 			$result = $stmt->execute();
+			$recent_result_count = 0;
 			while($result && $row = $result->fetchArray())
 			{
-				$main .= '<h2><a href="/?result/' . $row['PPRID'] . '">' . $row['Title'] . '</h2>';
+				$recent_result_count++;
+				$main .= '<h2><a href="/?result/' . $row['PPRID'] . '">' . $row['Title'] . '</a></h2>';
+			}
+
+			if($recent_result_count > 5)
+			{
+				$stmt = phoromatic_server::$db->prepare('SELECT UploadID, SystemID, UploadTime FROM phoromatic_results WHERE AccountID = :account_id AND UploadID IN (SELECT DISTINCT UploadID FROM phoromatic_results_results WHERE AccountID = :account_id AND TestProfile LIKE :tp) ORDER BY UploadTime DESC LIMIT 1000');
+				$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+				$stmt->bindValue(':tp', $tp_identifier . '%');
+				$result = $stmt->execute();
+				$recent_result_count = 0;
+				$result_file = new pts_result_file(null, true);
+				while($result && $row = $result->fetchArray())
+				{
+					$composite_xml = phoromatic_server::phoromatic_account_result_path($_SESSION['AccountID'], $row['UploadID']) . 'composite.xml';
+					if(!is_file($composite_xml))
+					{
+						continue;
+					}
+
+					// Add to result file
+					$system_name = strtotime($row['UploadTime']) . ': ' . phoromatic_server::system_id_to_name($row['SystemID']);
+					$sub_result_file = new pts_result_file($composite_xml, true);
+					foreach($sub_result_file->get_result_objects() as $obj)
+					{
+						if($obj->test_profile->get_identifier(false) == $tp_identifier)
+						{
+							$obj->test_result_buffer->rename(null, $system_name);
+							$result_file->add_result($obj);
+						}
+					}
+				}
+
+
+				$table = null;
+				$extra_attributes = array();
+				$f = false;
+				foreach($result_file->get_result_objects() as $obj)
+				{
+					$obj->test_profile->set_display_format('SCATTER_PLOT');
+
+					foreach($obj->test_result_buffer->buffer_items as $i => &$item)
+					{
+						if(!is_numeric(substr($item->get_result_identifier(), 0, strpos($item->get_result_identifier(), ':'))))
+						{
+							unset($obj->test_result_buffer->buffer_items[$i]);
+						}
+					}
+
+					pts_render::compact_result_file_test_object($obj, $table, $f, $extra_attributes);
+					$main .= '<p align="center">' . pts_render::render_graph_inline_embed($obj) . '</p>';
+				}
+
+
 			}
 		}
 		else
@@ -81,6 +136,10 @@ class phoromatic_tests implements pts_webui_interface
 					continue;
 				}
 				$tp = new pts_test_profile($test);
+
+				if($tp->get_title() == null)
+					continue;
+
 				$main .= '<h1 style="margin-bottom: 0;"><a href="/?tests/' . $tp->get_identifier(false) . '">' . $tp->get_title() . '</a></h1>';
 				$main .= '<p style="font-size: 90%;"><strong>' . $tp->get_test_hardware_type() . '</strong> <em>-</em> ' . phoromatic_server::test_result_count_for_test_profile($_SESSION['AccountID'], $tp->get_identifier(false)) . ' Results On This Account' . ' </p>';
 			}

@@ -10,7 +10,7 @@ Phoronix Test Suite (Git)
 - pts-core: Allow the test_run_manager to run directly with a result_file
 - pts-core: Do test execution with proc_open(), allow modules to tap the process
 - phodevi: AMDGPU Linux detection improvements
-- phoromatic: Add "Tests" page to Phoromatic
+- phoromatic: Add "Tests" page
 - pts_Graph: Don't embed the PNG logo directly into the SVG file, but rely on HTTPS link
 
 Phoronix Test Suite 6.0 Milestone 1
