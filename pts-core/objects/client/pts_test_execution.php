@@ -187,7 +187,7 @@ class pts_test_execution
 				$test_run_time = time() - $test_run_time_start;
 				$monitor_result = $is_monitoring ? pts_test_result_parser::system_monitor_task_post_test($test_run_request->test_profile) : 0;
 			}
-		
+
 
 			if(!isset($test_result[10240]) || pts_client::is_debug_mode())
 			{
@@ -329,7 +329,7 @@ class pts_test_execution
 					{
 						pts_client::$display->test_run_instance_output($interim_output);
 					}
-					sleep(2); // Rest for a moment between tests
+					//sleep(2); // Rest for a moment between tests
 				}
 
 				pts_module_manager::module_process('__interim_test_run', $test_run_request);

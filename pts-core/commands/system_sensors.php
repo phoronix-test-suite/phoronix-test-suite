@@ -30,7 +30,8 @@ class system_sensors implements pts_option_interface
 		pts_client::$display->generic_heading('Supported Sensors');
 		foreach(phodevi::supported_sensors() as $sensor)
 		{
-			echo phodevi::sensor_name($sensor) . ': ' . phodevi::read_sensor($sensor) . ' ' . phodevi::read_sensor_unit($sensor) . PHP_EOL;
+			$sensor_object = new $sensor[2](0, null);
+			echo phodevi::sensor_object_name($sensor_object) . ': ' . phodevi::read_sensor($sensor_object) . ' ' . phodevi::read_sensor_object_unit($sensor_object) . PHP_EOL;
 		}
 
 		pts_client::$display->generic_heading('Unsupported Sensors');

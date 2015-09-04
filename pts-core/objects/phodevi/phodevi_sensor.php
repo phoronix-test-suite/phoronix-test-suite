@@ -18,15 +18,54 @@
 
 	You should have received a copy of the GNU General Public License
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
-interface phodevi_sensor
+abstract class phodevi_sensor
 {
-	public static function get_type();
-	public static function get_sensor();
-	public static function get_unit();
-	public static function support_check();
-	public static function read_sensor();
+	const SENSOR_TYPE = '';   //eg. cpu
+	const SENSOR_SENSES = '';  //eg. power-usage
+	const SENSOR_UNIT = '';   //eg. miliwatts
+
+	protected $instance_number;
+	
+	function __construct($instance, $parameter_array)
+	{
+		$this->instance_number = intval($instance);
+	}
+
+	public static function get_type()
+	{
+		return static::SENSOR_TYPE;
+	}
+
+	public static function get_sensor()
+	{
+		return static::SENSOR_SENSES;
+	}
+
+	public static function get_unit()
+	{
+		return static::SENSOR_UNIT;
+	}
+
+	public function get_instance()
+	{
+		return $this->instance_number;
+	}
+
+	public function get_readable_params()
+	{
+		return null;
+	}
+	
+//	public static function parameter_check($parameter_array) // check if passed parameters are correct
+//	{
+//		return true;
+//	}
+
+	abstract public function support_check();	   // for checking if sensor is supported on the current platform
+
+	abstract public function read_sensor();
 }
 
 ?>

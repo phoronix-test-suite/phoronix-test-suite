@@ -37,15 +37,22 @@ class system_monitor extends pts_module_interface
 	static $individual_test_run_request = null;
 	static $successful_test_run_request = null;
 	static $individual_test_run_offsets = null;
-	static $individual_monitoring = null;
+	static $test_run_tries_offsets = null;
 
+	static $individual_monitoring = null;
+	static $per_test_run_monitoring = null;
+	
+	const cgroup_name = 'pts_monitor';		// default name for monitoring cgroup
+	static $cgroup_enabled_controllers = array();
+	
+	private static $test_run_try_number = null;
 	private static $sensor_monitoring_frequency = 2;
 	private static $test_run_timer = 0;
 	private static $perf_per_watt_collection;
 
 	public static function module_environmental_variables()
 	{
-		return array('MONITOR', 'PERFORMANCE_PER_WATT', 'MONITOR_INTERVAL');
+		return array('MONITOR_PARAM_FILE', 'PERFORMANCE_PER_WATT', 'MONITOR_INTERVAL' );
 	}
 	public static function module_info()
 	{
@@ -75,41 +82,83 @@ class system_monitor extends pts_module_interface
 	{
 		self::$result_identifier = $test_run_manager->get_results_identifier();
 		self::$individual_monitoring = pts_module::read_variable('MONITOR_INDIVIDUAL') !== '0';
+		self::$per_test_run_monitoring = pts_module::read_variable('MONITOR_PER_RUN') === '1';		//TODO change to true?
+		
 		self::$to_monitor = array();
-		$to_show = pts_strings::comma_explode(pts_module::read_variable('MONITOR'));
 
-		if(pts_module::read_variable('PERFORMANCE_PER_WATT'))
-		{
-			// We need to ensure the system power consumption is being tracked to get performance-per-Watt
-			pts_arrays::unique_push($to_show, 'sys.power');
-			self::$individual_monitoring = true;
-			self::$perf_per_watt_collection = array();
-			echo PHP_EOL . 'To Provide Performance-Per-Watt Outputs.' . PHP_EOL;
-		}
+		// If tests will be repeated several times, this is the first try.
+		self::$test_run_try_number = 0;
 
-		$monitor_all = in_array('all', $to_show);
-		foreach(phodevi::supported_sensors() as $sensor)
+        $sensor_parameters = self::prepare_sensor_parameters();
+
+//		if(pts_module::read_variable('PERFORMANCE_PER_WATT'))
+//		{
+//			// We need to ensure the system power consumption is being tracked to get performance-per-Watt
+//			pts_arrays::unique_push($to_show, 'sys.power');
+//			self::$individual_monitoring = true;
+//			echo PHP_EOL . 'To Provide Performance-Per-Watt Outputs.' . PHP_EOL;
+//		}
+
+		$monitor_all = in_array('all', $sensor_parameters);
+		foreach (phodevi::supported_sensors() as $sensor)
 		{
-			if($monitor_all || in_array(phodevi::sensor_identifier($sensor), $to_show) || in_array('all.' . $sensor[0], $to_show))
+			// add sensor to monitoring list if:
+			// a) we want to monitor all the available sensors,
+			// b) we want to monitor all the available sensors of the specified type,
+			// c) parameter array contains this sensor, eg. there exists value for $sensor_parameters[sens_type][sens_name]
+			// ($sensor[0] is the type, $sensor[1] is the name, $sensor[2] is the class name)
+			if ($monitor_all  || (array_key_exists($sensor[0], $sensor_parameters)
+				&& (array_key_exists($sensor[1], $sensor_parameters[$sensor[0]]) || array_key_exists('all', $sensor_parameters[$sensor[0]]) )))
 			{
-				array_push(self::$to_monitor, $sensor);
-				pts_module::save_file('logs/' . phodevi::sensor_identifier($sensor));
+				// create objects for all specified instances of the sensor
+				foreach ($sensor_parameters[$sensor[0]][$sensor[1]] as $instance => $params)
+				{
+					if ($sensor[0] === 'cgroup')
+					{
+						$cgroup_controller = call_user_func(array($sensor[2], 'get_cgroup_controller'));
+						array_push(self::$cgroup_enabled_controllers, $cgroup_controller );
+						self::cgroup_create(self::cgroup_name, $cgroup_controller);
+						$params['cgroup_name'] = self::cgroup_name;
+					}
+						
+					if (call_user_func(array($sensor[2], 'parameter_check'), $params) === true)
+					{
+						$sensor_object = new $sensor[2]($instance, $params);
+						array_push(self::$to_monitor, $sensor_object);
+						pts_module::save_file('logs/' . phodevi::sensor_object_identifier($sensor_object));	
+					}
+					//TODO show information when passed parameters are incorrect
+				}
 			}
 		}
+		
+		// create cgroups in all of the needed controllers
+		foreach (self::$cgroup_enabled_controllers as $controller)
+		{
+			self::cgroup_create(self::cgroup_name, $controller);
+		}
+
+		//TODO rewrite when new monitoring system is finished
+//		if(in_array('i915_energy', $to_show) && is_readable('/sys/kernel/debug/dri/0/i915_energy'))
+//		{
+//			// For now the Intel monitoring is a special case separate from the rest
+//			// of the unified sensor monitoring since we're not polling it every time but just pre/post test.
+//			self::$monitor_i915_energy = true;
+//		}
 
 		if(count(self::$to_monitor) > 0)
 		{
 			echo PHP_EOL . 'Sensors To Be Logged:';
 			foreach(self::$to_monitor as &$sensor)
 			{
-				echo PHP_EOL . '   - ' . phodevi::sensor_name($sensor);
+				echo PHP_EOL . '   - ' . phodevi::sensor_object_name($sensor);
 			}
 			echo PHP_EOL;
 
 			if(pts_module::read_variable('MONITOR_INTERVAL') != null)
 			{
 				$proposed_interval = pts_module::read_variable('MONITOR_INTERVAL');
-				if(is_numeric($proposed_interval) && $proposed_interval >= 1)
+				if(is_numeric($proposed_interval) && $proposed_interval >= 0)
 				{
 					self::$sensor_monitoring_frequency = $proposed_interval;
 				}
@@ -119,7 +168,8 @@ class system_monitor extends pts_module_interface
 			sleep((self::$sensor_monitoring_frequency * 8));
 		}
 
-		pts_module::pts_timed_function('pts_monitor_update', self::$sensor_monitoring_frequency);
+		//pts_module::pts_timed_function('pts_monitor_update', self::$sensor_monitoring_frequency);
+		self::pts_start_monitoring();
 	}
 	public static function __pre_test_run($test_run_request)
 	{
@@ -132,9 +182,9 @@ class system_monitor extends pts_module_interface
 
 		foreach(self::$to_monitor as $sensor)
 		{
-			$log_f = pts_module::read_file('logs/' . phodevi::sensor_identifier($sensor));
+			$log_f = pts_module::read_file('logs/' . phodevi::sensor_object_identifier($sensor));
 			$offset = count(explode(PHP_EOL, $log_f));
-			self::$individual_test_run_offsets[phodevi::sensor_identifier($sensor)] = $offset;
+			self::$individual_test_run_offsets[phodevi::sensor_object_identifier($sensor)] = $offset;
 		}
 
 		// Just to pad in some idling into the run process
@@ -142,8 +192,32 @@ class system_monitor extends pts_module_interface
 
 		self::$test_run_timer = time();
 	}
+
+	public static function __test_running($test_process)
+	{
+		foreach (self::$cgroup_enabled_controllers as $controller)
+		{
+			//that needs higher PHP version
+			$parent_pid = proc_get_status($test_process)['pid'];
+			file_put_contents('/sys/fs/cgroup/' . $controller . '/' . self::cgroup_name .'/tasks', $parent_pid);
+		}
+		
+	}
+
+	public static function __interim_test_run()
+	{
+		if (self::$per_test_run_monitoring)
+		{
+			self::save_try_offset();
+		}
+	}
+
 	public static function __post_test_run_success($test_run_request)
 	{
+		if (self::$per_test_run_monitoring)
+		{
+			self::save_try_offset();
+		}
 		self::$successful_test_run_request = clone $test_run_request;
 	}
 	public static function __post_test_run_process(&$result_file)
@@ -157,7 +231,7 @@ class system_monitor extends pts_module_interface
 		self::$test_run_timer = time() - self::$test_run_timer;
 
 		// Let the system return to brief idling..
-		sleep(self::$sensor_monitoring_frequency * 8);
+		//sleep(self::$sensor_monitoring_frequency * 8);
 
 		if(pts_module::read_variable('PERFORMANCE_PER_WATT'))
 		{
@@ -208,13 +282,61 @@ class system_monitor extends pts_module_interface
 
 		foreach(self::$to_monitor as $sensor)
 		{
-			$sensor_results = self::parse_monitor_log('logs/' . phodevi::sensor_identifier($sensor), self::$individual_test_run_offsets[phodevi::sensor_identifier($sensor)]);
+			$result_buffer = new pts_test_result_buffer();
 
-			if(count($sensor_results) > 2)
+			if (self::$per_test_run_monitoring)
 			{
-				// Copy the value each time as if you are directly writing the original data, each succeeding time in the loop the used arguments gets borked
-				$test_result = clone self::$individual_test_run_request;
+				foreach (self::$test_run_tries_offsets as $try_number => $try_offsets)	//TODO change to array_keys
+				{
+					if ($try_number === 0)
+					{
+						$start_offset = self::$individual_test_run_offsets[phodevi::sensor_object_identifier($sensor)];
+					}
+					else
+					{
+						$start_offset = self::$test_run_tries_offsets[$try_number - 1][phodevi::sensor_object_identifier($sensor)];
+					}
+					$end_offset = self::$test_run_tries_offsets[$try_number][phodevi::sensor_object_identifier($sensor)];
 
+					$sensor_results = self::parse_monitor_log('logs/' . phodevi::sensor_object_identifier($sensor),
+										$start_offset, $end_offset);
+
+					if(count($sensor_results) > 2)
+					{
+						$result_identifier = $result_file_writer->get_result_identifier() . " (try " . ($try_number + 1) . ")";
+						$result_value = implode(',', $sensor_results);
+						$result_buffer->add_test_result($result_identifier, $result_value, $result_value);
+					}
+				}
+			}
+			else
+			{
+				$sensor_results = self::parse_monitor_log('logs/' . phodevi::sensor_object_identifier($sensor),
+									self::$individual_test_run_offsets[phodevi::sensor_object_identifier($sensor)]);
+
+			}
+
+			//TODO result count checks should probably be done before cloning the test_result
+
+			// Copy the value each time as if you are directly writing the original data, each succeeding time in the loop the used arguments gets borked
+			$test_result = clone self::$individual_test_run_request;
+
+			$test_result->test_profile->set_identifier(null);
+			$test_result->test_profile->set_result_proportion('LIB');
+			$test_result->test_profile->set_display_format('LINE_GRAPH');
+			$test_result->test_profile->set_result_scale(phodevi::read_sensor_object_unit($sensor));
+			$test_result->set_used_arguments_description(phodevi::sensor_object_name($sensor) . ' Monitor');
+			$test_result->set_used_arguments(phodevi::sensor_object_name($sensor) . ' ' . $test_result->get_arguments());
+
+			if (self::$per_test_run_monitoring && $result_buffer->get_count() > 1)
+			{
+				$test_result->set_used_arguments_description(phodevi::sensor_object_name($sensor) . ' Per Test Try Monitor');
+				$test_result->test_result_buffer = $result_buffer;
+				$result_file_writer->add_result_from_result_object_with_value($test_result);
+			}
+			elseif(count($sensor_results) > 2)
+			{
+				$result_file_writer->add_result_from_result_object_with_value_string($test_result, implode(',', $sensor_results), implode(',', $sensor_results));
 				$test_result->test_profile->set_identifier(null);
 				$test_result->test_profile->set_result_proportion('LIB');
 				$test_result->test_profile->set_display_format('LINE_GRAPH');
@@ -225,7 +347,34 @@ class system_monitor extends pts_module_interface
 				$test_result->test_result_buffer->add_test_result(self::$result_identifier, implode(',', $sensor_results), implode(',', $sensor_results));
 				$result_file->add_result($test_result);
 			}
-			self::$individual_test_run_offsets[phodevi::sensor_identifier($sensor)] = array();
+
+			self::$individual_test_run_offsets[phodevi::sensor_object_identifier($sensor)] = array();
+			//TODO reset self::$test_run_tries_offsets
+
+
+		}
+
+		if(self::$monitor_i915_energy)
+		{
+			$i915_energy = file_get_contents('/sys/kernel/debug/dri/0/i915_energy');
+
+			if(($uj = strpos($i915_energy, ' uJ')))
+			{
+				$uj = substr($i915_energy, 0, $uj);
+				$uj = substr($uj, (strrpos($uj, ' ') + 1));
+
+				if(is_numeric($uj))
+				{
+					$test_result = clone self::$individual_test_run_request;
+					$test_result->test_profile->set_identifier(null);
+					$test_result->test_profile->set_result_proportion('LIB');
+					$test_result->test_profile->set_display_format('BAR_GRAPH');
+					$test_result->test_profile->set_result_scale('micro Joules');
+					$test_result->set_used_arguments_description('i915_energy Monitor');
+					$test_result->set_used_arguments('i915_energy ' . $test_result->get_arguments());
+					$result_file_writer->add_result_from_result_object_with_value_string($test_result, $uj);
+				}
+			}
 		}
 
 		self::$successful_test_run_request = null;
@@ -258,24 +407,26 @@ $			$test_result->test_result_buffer = new pts_test_result_buffer();
 		}
 
 		echo PHP_EOL . 'Finishing System Sensor Monitoring Process' . PHP_EOL;
-		sleep((self::$sensor_monitoring_frequency * 4));
+		//sleep((self::$sensor_monitoring_frequency * 4));
 		foreach(self::$to_monitor as $sensor)
 		{
-			$sensor_results = self::parse_monitor_log('logs/' . phodevi::sensor_identifier($sensor));
-			pts_module::remove_file('logs/' . phodevi::sensor_identifier($sensor));
+			$sensor_results = self::parse_monitor_log('logs/' . phodevi::sensor_object_identifier($sensor));
+			pts_module::remove_file('logs/' . phodevi::sensor_object_identifier($sensor));
 
 			if(count($sensor_results) > 2 && self::$monitor_test_count > 1)
 			{
 				$test_profile = new pts_test_profile();
 				$test_result = new pts_test_result($test_profile);
 
-				$test_result->test_profile->set_test_title(phodevi::sensor_name($sensor) . ' Monitor');
+				$test_result->test_profile->set_test_title(phodevi::sensor_object_name($sensor) . ' Monitor');
 				$test_result->test_profile->set_identifier(null);
 				$test_result->test_profile->set_version(null);
 				$test_result->test_profile->set_result_proportion(null);
 				$test_result->test_profile->set_display_format('LINE_GRAPH');
-				$test_result->test_profile->set_result_scale(phodevi::read_sensor_unit($sensor));
+				$test_result->test_profile->set_result_scale(phodevi::read_sensor_object_unit($sensor));
 				$test_result->set_used_arguments_description('Phoronix Test Suite System Monitoring');
+				$test_result->set_used_arguments(phodevi::sensor_object_identifier($sensor));
+				$test_run_manager->result_file_writer->add_result_from_result_object_with_value_string($test_result, implode(',', $sensor_results), implode(',', $sensor_results));
 				$test_result->set_used_arguments(phodevi::sensor_identifier($sensor));
 $				$test_result->test_result_buffer = new pts_test_result_buffer();
 				$test_result->test_result_buffer->add_test_result(self::$result_identifier, implode(',', $sensor_results), implode(',', $sensor_results), implode(',', $sensor_results), implode(',', $sensor_results));
@@ -283,19 +434,35 @@ $				$test_result->test_result_buffer = new pts_test_result_buffer();
 			}
 		}
 	}
-	public static function pts_monitor_update()
+	
+	public static function __post_run_process()
+	{
+		foreach (self::$cgroup_enabled_controllers as $controller)
+		{
+			self::cgroup_remove(self::cgroup_name, $controller);
+		}
+	}
+	
+	private static function pts_start_monitoring()
 	{
 		foreach(self::$to_monitor as $sensor)
 		{
-			$sensor_value = phodevi::read_sensor($sensor);
-
-			if($sensor_value != -1 && pts_module::is_file('logs/' . phodevi::sensor_identifier($sensor)))
-			{
-				pts_module::save_file('logs/' . phodevi::sensor_identifier($sensor), $sensor_value, true);
-			}
+			$pid = pts_module::pts_timed_function('pts_monitor_update', self::$sensor_monitoring_frequency, $sensor);
 		}
 	}
-	private static function parse_monitor_log($log_file, $start_offset = 0)
+
+	// Updates single sensor.
+	public static function pts_monitor_update($sensor)
+	{
+		$sensor_value = phodevi::read_sensor($sensor);
+
+		if ($sensor_value != -1 && pts_module::is_file('logs/' . phodevi::sensor_object_identifier($sensor)))
+		{
+			pts_module::save_file('logs/' . phodevi::sensor_object_identifier($sensor), $sensor_value, true);
+		}
+	}
+
+	private static function parse_monitor_log($log_file, $start_offset = 0, $end_offset = -1)
 	{
 		$log_f = pts_module::read_file($log_file);
 		$line_breaks = explode(PHP_EOL, $log_f);
@@ -306,8 +473,13 @@ $				$test_result->test_result_buffer = new pts_test_result_buffer();
 			unset($line_breaks[$i]);
 		}
 
-		foreach($line_breaks as $line)
+		foreach($line_breaks as $line_number => $line)
 		{
+			if ($end_offset != -1 && $line_number >= $end_offset)
+			{
+				break;
+			}
+
 			$line = trim($line);
 
 			if(!empty($line) && $line >= 0)
@@ -325,6 +497,8 @@ $				$test_result->test_result_buffer = new pts_test_result_buffer();
 	}
 	private static function monitor_arguments()
 	{
+		//TODO needs complete rewrite
+
 		$args = array('all');
 
 		foreach(phodevi::available_sensors() as $sensor)
@@ -339,6 +513,79 @@ $				$test_result->test_result_buffer = new pts_test_result_buffer();
 
 		return $args;
 	}
+	
+	// parse JSON file containing parameters of monitored sensors
+	private static function prepare_sensor_parameters()
+	{
+		if (!is_file(pts_module::read_variable('MONITOR_PARAM_FILE')))
+		{
+				return null;
+		}
+
+		$parameters = array();
+		$sensor_param_file = pts_module::read_variable('MONITOR_PARAM_FILE');
+		$json_array = json_decode(file_get_contents($sensor_param_file), true);
+
+		//TODO add exception handling
+		foreach ($json_array['sensors'] as $json_sensor)
+		{
+				foreach($json_sensor['instances'] as $instance => $json_parameters)
+				{
+						$parameters[$json_sensor['type']][$json_sensor['sensor']][$instance] = $json_parameters;
+				}
+		}
+
+		return $parameters;
+	}
+
+	private static function cgroup_create($cgroup_name, $cgroup_controller)
+	{
+		//TODO if we allow custom cgroup names, we will have to add cgroup 
+		//name checking ("../../../etc" isn't a sane name)
+		
+		$sudo_cmd = PTS_CORE_STATIC_PATH . 'root-access.sh ';
+		$cgroup_path = '/sys/fs/cgroup/' . $cgroup_controller . '/' . $cgroup_name;
+		$return_val = null;
+		
+		if (!is_dir($cgroup_path))	// cgroup filesystem doesn't allow to create regular files anyway
+		{
+			$mkdir_cmd = 'mkdir ' . $cgroup_path;
+			$return_val = exec($sudo_cmd . $mkdir_cmd);
+		}
+		if ($return_val === null && is_dir($cgroup_path))	// mkdir produced no output 
+		{
+			$current_user = exec('whoami');
+			$chmod_cmd = 'chown ' . $current_user . ' ' . $cgroup_path . '/tasks';
+			exec($sudo_cmd . $chmod_cmd);
+		}
+	}
+	
+	private static function cgroup_remove($cgroup_name, $cgroup_controller)
+	{
+		$sudo_cmd = PTS_CORE_STATIC_PATH . 'root-access.sh ';
+		$cgroup_path = '/sys/fs/cgroup/' . $cgroup_controller . '/' . $cgroup_name;
+		
+		if (!is_dir($cgroup_path))	// cgroup filesystem doesn't allow to create regular files anyway
+		{
+			$rmdir_cmd = 'rmdir ' . $cgroup_path;
+			shell_exec($sudo_cmd . $rmdir_cmd);
+		}
+		
+		//TODO should probably return some result
+	}
+	
+	private static function save_try_offset()
+	{
+		foreach (self::$to_monitor as $sensor)
+		{
+			$log_f = pts_module::read_file('logs/' . phodevi::sensor_object_identifier($sensor));
+			$offset = count(explode(PHP_EOL, $log_f));
+			self::$test_run_tries_offsets[self::$test_run_try_number][phodevi::sensor_object_identifier($sensor)] = $offset;
+		}
+
+		self::$test_run_try_number++;
+	}
+
 }
 
 ?>
