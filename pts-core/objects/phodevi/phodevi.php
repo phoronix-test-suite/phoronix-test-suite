@@ -139,7 +139,7 @@ class phodevi extends phodevi_base
 
 		return $value;
 	}
-        public static function read_sensor_object_unit($sensor_object)
+        public static function read_sensor_object_unit(&$sensor_object)
         {
                 $sensor = array($sensor_object->get_type(), $sensor_object->get_sensor(), get_class($sensor_object));
                 return self::read_sensor_unit($sensor);
@@ -154,7 +154,7 @@ class phodevi extends phodevi_base
 
 		return isset(self::$sensors[$sensor[0]][$sensor[1]]) && $sensor_object->support_check();
 	}
-        public static function sensor_object_identifier($sensor_object)
+        public static function sensor_object_identifier(&$sensor_object)
         {
                 $sensor = array($sensor_object->get_type(), $sensor_object->get_sensor(), get_class($sensor_object));
                 return self::sensor_identifier($sensor) . '.' . $sensor_object->get_instance();
@@ -163,7 +163,7 @@ class phodevi extends phodevi_base
 	{
 		return $sensor[0] . '.' . $sensor[1];
 	}
-	public static function sensor_object_name($sensor_object)
+	public static function sensor_object_name(&$sensor_object)
         {
                 $sensor = array($sensor_object->get_type(), $sensor_object->get_sensor(), get_class($sensor_object));
                 return self::sensor_name($sensor) . ' (' . $sensor_object->get_readable_params() . ')';
