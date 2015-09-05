@@ -30,20 +30,20 @@ class system_monitor extends pts_module_interface
 	const module_description = 'This module contains sensor monitoring support.';
 	const module_author = 'Michael Larabel';
 
-	static $result_identifier = null;
-	static $to_monitor = array();
-	static $monitor_test_count = 0;
+	private static $result_identifier = null;
+	private static $to_monitor = array();
+	private static $monitor_test_count = 0;
 
-	static $individual_test_run_request = null;
-	static $successful_test_run_request = null;
-	static $individual_test_run_offsets = null;
-	static $test_run_tries_offsets = null;
+	private static $individual_test_run_request = null;
+	private static $successful_test_run_request = null;
+	private static $individual_test_run_offsets = null;
+	private static $test_run_tries_offsets = null;
 
-	static $individual_monitoring = null;
-	static $per_test_run_monitoring = null;
+	private static $individual_monitoring = null;
+	private static $per_test_run_monitoring = null;
 
-	const cgroup_name = 'pts_monitor';		// default name for monitoring cgroup
-	static $cgroup_enabled_controllers = array();
+	private static $cgroup_name = 'pts_monitor';		// default name for monitoring cgroup
+	private static $cgroup_enabled_controllers = array();
 
 	private static $test_run_try_number = null;
 	private static $sensor_monitoring_frequency = 2;
@@ -117,8 +117,8 @@ class system_monitor extends pts_module_interface
 					{
 						$cgroup_controller = call_user_func(array($sensor[2], 'get_cgroup_controller'));
 						array_push(self::$cgroup_enabled_controllers, $cgroup_controller );
-						self::cgroup_create(self::cgroup_name, $cgroup_controller);
-						$params['cgroup_name'] = self::cgroup_name;
+						self::cgroup_create(self::$cgroup_name, $cgroup_controller);
+						$params['cgroup_name'] = self::$cgroup_name;
 					}
 
 					if (call_user_func(array($sensor[2], 'parameter_check'), $params) === true)
@@ -135,7 +135,7 @@ class system_monitor extends pts_module_interface
 		// create cgroups in all of the needed controllers
 		foreach (self::$cgroup_enabled_controllers as $controller)
 		{
-			self::cgroup_create(self::cgroup_name, $controller);
+			self::cgroup_create(self::$cgroup_name, $controller);
 		}
 
 		//TODO rewrite when new monitoring system is finished
@@ -199,7 +199,7 @@ class system_monitor extends pts_module_interface
 		{
 			//that needs higher PHP version
 			$parent_pid = proc_get_status($test_process)['pid'];
-			file_put_contents('/sys/fs/cgroup/' . $controller . '/' . self::cgroup_name .'/tasks', $parent_pid);
+			file_put_contents('/sys/fs/cgroup/' . $controller . '/' . self::$cgroup_name .'/tasks', $parent_pid);
 		}
 
 	}
@@ -403,7 +403,7 @@ class system_monitor extends pts_module_interface
 	{
 		foreach (self::$cgroup_enabled_controllers as $controller)
 		{
-			self::cgroup_remove(self::cgroup_name, $controller);
+			self::cgroup_remove(self::$cgroup_name, $controller);
 		}
 	}
 
