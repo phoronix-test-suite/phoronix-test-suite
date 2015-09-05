@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+- pts-core: Just mention PHP 5.3 as the new base requirement. Code still should largely work with PHP 5.2, but don't advertise it
 - pts-core: Add FileFormat optional tag to result parser with CSV support
 - pts-core: Add debug-render-test for helping to optimize the graph/result rendering process
 - pts-core: Rendering optimizations when handling lots of result files / graphs / result identifiers

@@ -61,7 +61,6 @@ class pts_client
 
 		if(!defined('PHP_VERSION_ID'))
 		{
-			// PHP_VERSION_ID is only available in PHP 5.2.6 and later
 			$php_version = explode('.', PHP_VERSION);
 			pts_define('PHP_VERSION_ID', ($php_version[0] * 10000 + $php_version[1] * 100 + $php_version[2]));
 		}
@@ -1465,16 +1464,7 @@ class pts_client
 	}
 	public static function temporary_directory()
 	{
-		if(PHP_VERSION_ID >= 50210)
-		{
-			$dir = sys_get_temp_dir();
-		}
-		else
-		{
-			$dir = '/tmp'; // Assume /tmp
-		}
-
-		return $dir;
+		return sys_get_temp_dir();
 	}
 	public static function read_env($var)
 	{
