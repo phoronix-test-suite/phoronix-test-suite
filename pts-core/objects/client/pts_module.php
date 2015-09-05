@@ -284,7 +284,8 @@ class pts_module
 //							$parameters = array();
 //						}
 
-						call_user_func(array(self::module_name(), $function), $parameters);
+						$parameter_array = pts_arrays::to_array($parameters);
+						call_user_func_array(array(self::module_name(), $function), $parameter_array);
 
 						if($time > 0)
 						{
