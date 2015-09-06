@@ -9,6 +9,8 @@
 <p>Among the tested BSD distributions are FreeBSD, PC-BSD, NetBSD, OpenBSD, Debian GNU/kFreeBSD, and DragonflyBSD. Tested Solaris distributions include OpenSolaris, Solaris Express 11, Oracle Solaris 11, OpenIndiana, Illumos, and Nexenta.</p>
 <h1>Dependencies</h1>
 <p>The only required dependency for the Phoronix Test Suite is PHP 5.3 or newer. On Linux distributions, the needed package is commonly called <em>php5-cli</em> or <em>php-cli</em> or <em>php</em>. It is important to note that only PHP for the command-line is needed and not a web server (Apache) or other packages commonly associated with PHP and its usage by web-sites. The PHP5 version required is PHP 5.3+ and can also be found at <a href="http://www.php.net/">www.php.net</a>.</p>
+
+<p>For installing PHP on Windows, the <a href="https://www.microsoft.com/web/platform/phponwindows.aspx">Microsoft Web Platform Installer</a> provides an automated alternative that will install PHP into the directory expected by Phoronix Test Suite. Users opting to install PHP manually must extract the files to <em>C:\Program Files (x86)\PHP\php</em>.</p>
 <p>As part of the PHP requirement, the following PHP extensions are required and/or highly recommended in order to take advantage of the Phoronix Test Suite capabilities:</p>
 <ul>
 <li><strong>PHP DOM</strong> is needed for XML operations and must be installed for the Phoronix Test Suite to function.</li>
@@ -51,7 +53,15 @@
 <h2>Mac OS X Installation</h2>
 <p>The Phoronix Test Suite is fully supported on Apple's Mac OS X operating system as of Mac OS X 10.5 with improved support under Mac OS X 10.6. PHP ships with Mac OS X by default so it's simply a matter of downloading the Phoronix Test Suite package, extracting it, and running the executable. For tests that rely upon a compiler, Apple's XCode with GCC and LLVM can be utilized.</p>
 <h2>Windows Installation</h2>
-<p>The Phoronix Test Suite support on Windows is in development and will function just fine, but is not yet feature complete compared to the other operating systems support. At this time the Phoronix Test Suite client is dependent upon PHP being installed to <em>C:\Program Files (x86)\PHP\php</em>. The Phoronix Test Suite also uses <a href="http://www.cpuid.com/cpuz.php">CPU-Z</a> for much of the hardware detection support on Windows and is dependent upon CPU-Z being installed to <em>C:\Program Files\CPUID\CPU-Z\cpuz.exe</em> if you wish to utilize this hardware reporting feature. In terms of the Microsoft Windows support, right now the Phoronix Test Suite is developed and solely tested against Microsoft Windows 7 x64 and Microsoft Windows 8 x64.</p>
+<p>The Phoronix Test Suite support on Microsoft Windows is in development and will function just fine, but is not yet feature complete compared to the other operating systems support. Only a small subset of test profiles, mostly related to graphics, are supported. In terms of the version support, right now the Phoronix Test Suite is developed and tested solely against Microsoft Windows 7 x64 and Microsoft Windows 8 x64.</p>
+  
+  At this time the Phoronix Test Suite client is dependent upon the <em>php.exe</em> executable being installed to <em>C:\Program Files (x86)\PHP\ </em> or one of its subdirectories (see PHP installation notes above). Once this requirement is met, simply download the Phoronix Test Suite package, extract it to a directory of your choice, and run <em>phoronix-test-suite.bat</em>
+  
+  </p>
+
+<p>The Phoronix Test Suite also uses <a href="http://www.cpuid.com/cpuz.php">CPU-Z</a> for much of the hardware detection support on Windows and is dependent upon CPU-Z being installed to <em>C:\Program Files\CPUID\CPU-Z\cpuz.exe</em> if you wish to utilize this hardware reporting feature. </p>
+
+<p>NOTE: because of lack of external dependencies support, it is necessary to manually download and install the files for some test profiles, such as the Unigine graphics benchmarks. See Troubleshooting for more information.</p>
 <h2>Facebook HipHop</h2>
 <p>The Phoronix Test Suite can use Facebook's <a href="https://github.com/facebook/hiphop-php">HopHop HHVM</a> virtual machine as an alternative to the de facto PHP implementation. The Phoronix Test Suite has been tested against HHVM 2.0. If HHVM is present on the system but not PHP, it will automatically be used by the Phoronix Test Suite. Alternatively, the <em>PHP_BIN</em> environment variable can be set to point to an alternative <em>hhvm</em> binary.</p>
 <p>The Phoronix Test Suite also supports the older version of Facebook HipHop that serves as a PHP to C++ translator and compiler with GCC. This support though is primitive and not officially supported. To compile the Phoronix Test Suite using HipHop/GCC, run <em>find . -name "*.php" > files.list && hphp --input-list=files.list -k 1 --log=3 --include-path="." --cluster-count=50 -v "AllDynamic=true" -v "AllVolatile=true"</em> from the root <em>phoronix-test-suite/</em> directory. It can then be executed in the form of <em>/tmp/hphp_XXX/program -f pts-core/phoronix-test-suite.php system-info</em>.</p>
