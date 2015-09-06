@@ -175,8 +175,12 @@
 			<PackageName>tcl</PackageName>
 		</Package>
 		<Package>
-			<GenericName>python</GenericName>
+			<GenericName>python3</GenericName>
 			<PackageName>python</PackageName>
+		</Package>
+		<Package>
+			<GenericName>python2</GenericName>
+			<PackageName>python2</PackageName>
 		</Package>
 		<Package>
 			<GenericName>yasm</GenericName>
