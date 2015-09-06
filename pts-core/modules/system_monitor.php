@@ -54,7 +54,7 @@ class system_monitor extends pts_module_interface
 	{
 		return array('MONITOR_PARAM_FILE', 'PERFORMANCE_PER_WATT', 'MONITOR_INTERVAL' );
 	}
-	
+
 	public static function module_info()
 	{
 		$info = null;
@@ -131,8 +131,8 @@ class system_monitor extends pts_module_interface
 		// Put the tested application into proper cgroups as soon as it starts.
 		foreach (self::$cgroup_enabled_controllers as $controller)
 		{
-			//FIXME this works on PHP 5.4+
-			$parent_pid = proc_get_status($test_process)['pid'];
+			$proc_status = proc_get_status($test_process);
+			$parent_pid = $proc_status['pid'];
 			file_put_contents('/sys/fs/cgroup/' . $controller . '/' . self::$cgroup_name .'/tasks', $parent_pid);
 		}
 	}
