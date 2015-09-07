@@ -22,12 +22,13 @@
 
 abstract class phodevi_sensor
 {
-	const SENSOR_TYPE = '';   //eg. cpu
-	const SENSOR_SENSES = '';  //eg. power-usage
-	const SENSOR_UNIT = '';   //eg. miliwatts
+	const SENSOR_TYPE = '';			//eg. cpu
+	const SENSOR_SENSES = '';		//eg. power-usage
+	const SENSOR_UNIT = '';			//eg. miliwatts
+	const PRIMARY_PARAM_NAME = '';	//eg. cpu_number
 
 	protected $instance_number;
-	
+
 	function __construct($instance, $parameter_array)
 	{
 		$this->instance_number = intval($instance);
@@ -48,6 +49,11 @@ abstract class phodevi_sensor
 		return static::SENSOR_UNIT;
 	}
 
+	public static function get_primary_parameter_name()
+	{
+		return static::PRIMARY_PARAM_NAME;
+	}
+
 	public function get_instance()
 	{
 		return $this->instance_number;
@@ -57,7 +63,7 @@ abstract class phodevi_sensor
 	{
 		return null;
 	}
-	
+
 //	public static function parameter_check($parameter_array) // check if passed parameters are correct
 //	{
 //		return true;

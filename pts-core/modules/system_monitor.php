@@ -52,7 +52,7 @@ class system_monitor extends pts_module_interface
 
 	public static function module_environmental_variables()
 	{
-		return array('MONITOR_PARAM_FILE', 'PERFORMANCE_PER_WATT', 'MONITOR_INTERVAL' );
+		return array('MONITOR', 'MONITOR_PARAM_FILE', 'PERFORMANCE_PER_WATT', 'MONITOR_INTERVAL' );
 	}
 
 	public static function module_info()
@@ -282,13 +282,27 @@ class system_monitor extends pts_module_interface
 	// Parse JSON file containing parameters of monitored sensors.
 	private static function prepare_sensor_parameters()
 	{
-		$sensor_param_file = pts_module::read_variable('MONITOR_PARAM_FILE');
-		if (!is_readable($sensor_param_file))
+		$config_file = pts_module::read_variable('MONITOR_PARAM_FILE');
+		if ($config_file !== '' )
 		{
-			throw new Exception('cannot open the file');
+			if (!is_readable($config_file))
+			{
+				throw new Exception('cannot open the configuration file');
+			}
+			$parameters = self::parse_json_config($config_file);
+		}
+		else
+		{
+
+			$parameters = self::parse_envvar_config();
 		}
 
-		$json_array = pts_arrays::json_decode(file_get_contents($sensor_param_file));
+		return $parameters;
+	}
+
+	private static function parse_json_config($config_file)
+	{
+		$json_array = pts_arrays::json_decode(file_get_contents($config_file));
 		if ($json_array === NULL)
 		{
 			throw new Exception('incorrect JSON syntax');
@@ -322,6 +336,35 @@ class system_monitor extends pts_module_interface
 		return $parameters;
 	}
 
+	//TODO make some comments
+	private static function parse_envvar_config()
+	{
+		$sensor_list = pts_strings::comma_explode(pts_module::read_variable('MONITOR'));
+
+		$to_monitor = array();
+
+		foreach ($sensor_list as $sensor)
+		{
+			$sensor_split = pts_strings::trim_explode('.', $sensor);
+
+			$type = &$sensor_split[0];
+			$name = &$sensor_split[1];
+			$primary_parameter = &$sensor_split[2];
+
+			if(empty($to_monitor[$type][$name]))
+			{
+				$to_monitor[$type][$name] = array();
+			}
+
+			if ($primary_parameter !== NULL)
+			{
+				array_push($to_monitor[$type][$name], array('primary' => $primary_parameter));
+			}
+		}
+
+		return $to_monitor;
+	}
+
 	private static function enable_perf_per_watt()
 	{
 //		TODO re-enable this when sys.power sensor is ported
@@ -346,10 +389,10 @@ class system_monitor extends pts_module_interface
 			// ($sensor[0] is the type, $sensor[1] is the name, $sensor[2] is the class name)
 
 			$sensor_type_exists = array_key_exists($sensor[0], $sensor_parameters);
-			$sensor_name_exists = array_key_exists($sensor[1], $sensor_parameters[$sensor[0]]);
-			$monitor_all_of_this_type = array_key_exists('all', $sensor_parameters[$sensor[0]]);
+			$sensor_name_exists = $sensor_type_exists && array_key_exists($sensor[1], $sensor_parameters[$sensor[0]]);
+			$monitor_all_of_this_type = $sensor_type_exists && array_key_exists('all', $sensor_parameters[$sensor[0]]);
 
-			if ($monitor_all  || $sensor_type_exists && ($monitor_all_of_this_type || $sensor_name_exists) )
+			if ($monitor_all  || $monitor_all_of_this_type || $sensor_name_exists )
 			{
 				self::create_sensor_instances($sensor, $sensor_parameters);
 			}
@@ -381,6 +424,12 @@ class system_monitor extends pts_module_interface
 
 	private static function create_single_sensor_instance($sensor, $instance, $params)
 	{
+		if (array_key_exists('primary', $params))
+		{
+			$primary_param_name = call_user_func(array($sensor[2], 'get_primary_parameter_name'));
+			$params[$primary_param_name] = $params['primary'];
+		}
+
 		if ($sensor[0] === 'cgroup')
 		{
 			$cgroup_controller = call_user_func(array($sensor[2], 'get_cgroup_controller'));

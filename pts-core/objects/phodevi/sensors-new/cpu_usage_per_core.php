@@ -25,6 +25,7 @@ class cpu_usage_per_core extends phodevi_sensor
 	const SENSOR_TYPE = 'cpu';
 	const SENSOR_SENSES = 'usage-per-core';
 	const SENSOR_UNIT = 'Percent';
+	const PRIMARY_PARAM_NAME = 'core_number';
 
 	const PROC_STAT_IDLE_COL = 3;		//CPU idle time - it's the third number in the line (starting from 0)
 	const CPU_SUMMARY = -1;
@@ -36,7 +37,7 @@ class cpu_usage_per_core extends phodevi_sensor
 		parent::__construct($instance, $parameter_array);
 		$cpu_number = self::CPU_SUMMARY;
 
-		if ($parameter_array != null && array_key_exists('core_number', $parameter_array))
+		if ($parameter_array != null && array_key_exists(self::PRIMARY_PARAM_NAME, $parameter_array))
 		{
 			$cpu_number = $parameter_array['core_number'];
 		}
