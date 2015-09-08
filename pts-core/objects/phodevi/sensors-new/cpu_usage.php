@@ -20,17 +20,17 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class cpu_usage_per_core extends phodevi_sensor
+class cpu_usage extends phodevi_sensor
 {
 	const SENSOR_TYPE = 'cpu';
-	const SENSOR_SENSES = 'usage-per-core';
+	const SENSOR_SENSES = 'usage';
 	const SENSOR_UNIT = 'Percent';
-	const PRIMARY_PARAM_NAME = 'core_number';
+	const PRIMARY_PARAM_NAME = 'cpu_number';
 
 	const PROC_STAT_IDLE_COL = 3;		//CPU idle time - it's the third number in the line (starting from 0)
 	const CPU_SUMMARY = -1;
 
-	private $core_to_monitor;
+	private $cpu_to_monitor;
 
 	function __construct($instance, $parameter_array)
 	{
@@ -39,16 +39,16 @@ class cpu_usage_per_core extends phodevi_sensor
 
 		if ($parameter_array != null && array_key_exists(self::PRIMARY_PARAM_NAME, $parameter_array))
 		{
-			$cpu_number = $parameter_array['core_number'];
+			$cpu_number = $parameter_array['cpu_number'];
 		}
 		//core number correctness check
 		if ($cpu_number === "summary")
 		{
-			$this->core_to_monitor = self::CPU_SUMMARY;
+			$this->cpu_to_monitor = self::CPU_SUMMARY;
 		}
 		elseif ($cpu_number >= 0 || $cpu_number < phodevi_cpu::cpu_core_count())
 		{
-			$this->core_to_monitor = intval($cpu_number);
+			$this->cpu_to_monitor = intval($cpu_number);
 		}
 	}
 
@@ -59,9 +59,9 @@ class cpu_usage_per_core extends phodevi_sensor
 			return true;
 		}
 
-		if (is_array($parameter_array) && array_key_exists('core_number', $parameter_array))
+		if (is_array($parameter_array) && array_key_exists('cpu_number', $parameter_array))
 		{
-			$cpu_number = $parameter_array['core_number'];
+			$cpu_number = $parameter_array['cpu_number'];
 
 			if ($cpu_number === "summary")
 			{
@@ -84,13 +84,13 @@ class cpu_usage_per_core extends phodevi_sensor
 
 	public function get_readable_params()
 	{
-		if ($this->core_to_monitor === self::CPU_SUMMARY)
+		if ($this->cpu_to_monitor === self::CPU_SUMMARY)
 		{
 			return 'Summary';
 		}
 		else
 		{
-			return 'Core: ' . $this->core_to_monitor;
+			return 'CPU' . $this->cpu_to_monitor;
 		}
 	}
 
@@ -106,10 +106,10 @@ class cpu_usage_per_core extends phodevi_sensor
 		// Default core to read is the first one (number 0)
 		if(phodevi::is_linux() || phodevi::is_bsd())
 		{
-			$start_load = self::cpu_load_array($this->core_to_monitor);
+			$start_load = self::cpu_load_array($this->cpu_to_monitor);
 			//sleep(1);
 			usleep(500000);
-			$end_load = self::cpu_load_array($this->core_to_monitor);
+			$end_load = self::cpu_load_array($this->cpu_to_monitor);
 
 			for($i = 0; $i < count($end_load); $i++)
 			{
@@ -139,7 +139,7 @@ class cpu_usage_per_core extends phodevi_sensor
 		{
 			$stat = file_get_contents('/proc/stat');
 
-			if($this->core_to_monitor > -1 && ($l = strpos($stat, 'cpu' . $this->core_to_monitor)) !== false)
+			if($this->cpu_to_monitor > -1 && ($l = strpos($stat, 'cpu' . $this->cpu_to_monitor)) !== false)
 			{
 				$start_line = $l;
 			}
