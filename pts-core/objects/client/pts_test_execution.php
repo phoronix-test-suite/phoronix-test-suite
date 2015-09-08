@@ -128,7 +128,9 @@ class pts_test_execution
 			$is_expected_last_run = ($i == ($times_to_run - 1));
 
 			$test_extra_runtime_variables = array_merge($extra_runtime_variables, array(
-			'LOG_FILE' => $test_log_file
+			'LOG_FILE' => $test_log_file,
+			'DISPLAY' => getenv('DISPLAY'),
+			'PATH' => getenv('PATH'),
 			));
 
 			$restored_from_cache = false;
@@ -171,7 +173,7 @@ class pts_test_execution
 				{
 					//$test_result = pts_client::shell_exec($test_run_command, $test_extra_runtime_variables);
 					$descriptorspec = array(0 => array('pipe', 'r'), 1 => array('pipe', 'w'), 2 => array('pipe', 'w'));
-					$test_process = proc_open('exec ' . $execute_binary_prepend . './' . $execute_binary . ' ' . $pts_test_arguments . ' 2>&1', $descriptorspec, $pipes, $to_execute, array_merge(pts_client::environmental_variables(), $test_extra_runtime_variables));
+					$test_process = proc_open('exec ' . $execute_binary_prepend . './' . $execute_binary . ' ' . $pts_test_arguments . ' 2>&1', $descriptorspec, $pipes, $to_execute, array_merge($_ENV, pts_client::environmental_variables(), $test_extra_runtime_variables));
 
 					if(is_resource($test_process))
 					{

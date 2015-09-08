@@ -41,10 +41,10 @@ class system_monitor extends pts_module_interface
 
 	static $individual_monitoring = null;
 	static $per_test_run_monitoring = null;
-	
+
 	const cgroup_name = 'pts_monitor';		// default name for monitoring cgroup
 	static $cgroup_enabled_controllers = array();
-	
+
 	private static $test_run_try_number = null;
 	private static $sensor_monitoring_frequency = 2;
 	private static $test_run_timer = 0;
@@ -83,7 +83,7 @@ class system_monitor extends pts_module_interface
 		self::$result_identifier = $test_run_manager->get_results_identifier();
 		self::$individual_monitoring = pts_module::read_variable('MONITOR_INDIVIDUAL') !== '0';
 		self::$per_test_run_monitoring = pts_module::read_variable('MONITOR_PER_RUN') === '1';		//TODO change to true?
-		
+
 		self::$to_monitor = array();
 
 		// If tests will be repeated several times, this is the first try.
@@ -120,18 +120,18 @@ class system_monitor extends pts_module_interface
 						self::cgroup_create(self::cgroup_name, $cgroup_controller);
 						$params['cgroup_name'] = self::cgroup_name;
 					}
-						
+
 					if (call_user_func(array($sensor[2], 'parameter_check'), $params) === true)
 					{
 						$sensor_object = new $sensor[2]($instance, $params);
 						array_push(self::$to_monitor, $sensor_object);
-						pts_module::save_file('logs/' . phodevi::sensor_object_identifier($sensor_object));	
+						pts_module::save_file('logs/' . phodevi::sensor_object_identifier($sensor_object));
 					}
 					//TODO show information when passed parameters are incorrect
 				}
 			}
 		}
-		
+
 		// create cgroups in all of the needed controllers
 		foreach (self::$cgroup_enabled_controllers as $controller)
 		{
@@ -201,7 +201,7 @@ class system_monitor extends pts_module_interface
 			$parent_pid = proc_get_status($test_process)['pid'];
 			file_put_contents('/sys/fs/cgroup/' . $controller . '/' . self::cgroup_name .'/tasks', $parent_pid);
 		}
-		
+
 	}
 
 	public static function __interim_test_run()
@@ -327,7 +327,7 @@ class system_monitor extends pts_module_interface
 			$test_result->set_used_arguments_description(phodevi::sensor_object_name($sensor) . ' Monitor');
 			$test_result->set_used_arguments(phodevi::sensor_object_name($sensor) . ' ' . $test_result->get_arguments());
 			$test_result->test_result_buffer = $result_buffer;
-			
+
 			if (self::$per_test_run_monitoring && $result_buffer->get_count() > 1)
 			{
 				$test_result->set_used_arguments_description(phodevi::sensor_object_name($sensor) . ' Per Test Try Monitor');
@@ -336,7 +336,7 @@ class system_monitor extends pts_module_interface
 			{
 				$test_result->test_result_buffer->add_test_result(self::$result_identifier, implode(',', $sensor_results), implode(',', $sensor_results));
 			}
-			
+
 			$result_file->add_result($test_result);
 
 			self::$individual_test_run_offsets[phodevi::sensor_object_identifier($sensor)] = array();
@@ -367,7 +367,7 @@ class system_monitor extends pts_module_interface
 			$test_result->test_profile->set_result_proportion('HIB');
 			$test_result->set_used_arguments_description('Performance Per Watt');
 			$test_result->set_used_arguments('Per-Per-Watt');
-$			$test_result->test_result_buffer = new pts_test_result_buffer();
+			$test_result->test_result_buffer = new pts_test_result_buffer();
 			$test_result->test_result_buffer->add_test_result(self::$result_identifier, pts_math::set_precision($avg));
 			$test_run_manager->result_file->add_result($test_result);
 		}
@@ -391,14 +391,14 @@ $			$test_result->test_result_buffer = new pts_test_result_buffer();
 				$test_result->test_profile->set_display_format('LINE_GRAPH');
 				$test_result->test_profile->set_result_scale(phodevi::read_sensor_object_unit($sensor));
 				$test_result->set_used_arguments_description('Phoronix Test Suite System Monitoring');
-				$test_result->set_used_arguments(phodevi::sensor_object_identifier($sensor));
-$				$test_result->test_result_buffer = new pts_test_result_buffer();
+				$test_result->set_used_arguments(phodevi::sensor_identifier($sensor));
+				$test_result->test_result_buffer = new pts_test_result_buffer();
 				$test_result->test_result_buffer->add_test_result(self::$result_identifier, implode(',', $sensor_results), implode(',', $sensor_results), implode(',', $sensor_results), implode(',', $sensor_results));
 				$test_run_manager->result_file->add_result($test_result);
 			}
 		}
 	}
-	
+
 	public static function __post_run_process()
 	{
 		foreach (self::$cgroup_enabled_controllers as $controller)
@@ -406,7 +406,7 @@ $				$test_result->test_result_buffer = new pts_test_result_buffer();
 			self::cgroup_remove(self::cgroup_name, $controller);
 		}
 	}
-	
+
 	private static function pts_start_monitoring()
 	{
 		foreach(self::$to_monitor as $sensor)
@@ -477,7 +477,7 @@ $				$test_result->test_result_buffer = new pts_test_result_buffer();
 
 		return $args;
 	}
-	
+
 	// parse JSON file containing parameters of monitored sensors
 	private static function prepare_sensor_parameters()
 	{
@@ -504,40 +504,40 @@ $				$test_result->test_result_buffer = new pts_test_result_buffer();
 
 	private static function cgroup_create($cgroup_name, $cgroup_controller)
 	{
-		//TODO if we allow custom cgroup names, we will have to add cgroup 
+		//TODO if we allow custom cgroup names, we will have to add cgroup
 		//name checking ("../../../etc" isn't a sane name)
-		
+
 		$sudo_cmd = PTS_CORE_STATIC_PATH . 'root-access.sh ';
 		$cgroup_path = '/sys/fs/cgroup/' . $cgroup_controller . '/' . $cgroup_name;
 		$return_val = null;
-		
+
 		if (!is_dir($cgroup_path))	// cgroup filesystem doesn't allow to create regular files anyway
 		{
 			$mkdir_cmd = 'mkdir ' . $cgroup_path;
 			$return_val = exec($sudo_cmd . $mkdir_cmd);
 		}
-		if ($return_val === null && is_dir($cgroup_path))	// mkdir produced no output 
+		if ($return_val === null && is_dir($cgroup_path))	// mkdir produced no output
 		{
 			$current_user = exec('whoami');
 			$chmod_cmd = 'chown ' . $current_user . ' ' . $cgroup_path . '/tasks';
 			exec($sudo_cmd . $chmod_cmd);
 		}
 	}
-	
+
 	private static function cgroup_remove($cgroup_name, $cgroup_controller)
 	{
 		$sudo_cmd = PTS_CORE_STATIC_PATH . 'root-access.sh ';
 		$cgroup_path = '/sys/fs/cgroup/' . $cgroup_controller . '/' . $cgroup_name;
-		
+
 		if (!is_dir($cgroup_path))	// cgroup filesystem doesn't allow to create regular files anyway
 		{
 			$rmdir_cmd = 'rmdir ' . $cgroup_path;
 			shell_exec($sudo_cmd . $rmdir_cmd);
 		}
-		
+
 		//TODO should probably return some result
 	}
-	
+
 	private static function save_try_offset()
 	{
 		foreach (self::$to_monitor as $sensor)

@@ -316,6 +316,7 @@ class pts_test_result_parser
 				$tp->set_display_format('LINE_GRAPH');
 				$tp->set_identifier(null);
 				$extra_result = new pts_test_result($tp);
+				$extra_result->active = new pts_test_result_buffer_active();
 				$extra_result->set_used_arguments_description('Total Frame Time');
 				$extra_result->active->set_result(implode(',', $frame_all_times));
 				array_push($extra_results, $extra_result);
