@@ -252,7 +252,7 @@ class system_monitor extends pts_module_interface
 			$test_result->test_profile->set_result_proportion('HIB');
 			$test_result->set_used_arguments_description('Performance Per Watt');
 			$test_result->set_used_arguments('Per-Per-Watt');
-$			$test_result->test_result_buffer = new pts_test_result_buffer();
+			$test_result->test_result_buffer = new pts_test_result_buffer();
 			$test_result->test_result_buffer->add_test_result(self::$result_identifier, pts_math::set_precision($avg));
 			$test_run_manager->result_file->add_result($test_result);
 		}
@@ -277,7 +277,7 @@ $			$test_result->test_result_buffer = new pts_test_result_buffer();
 				$test_result->test_profile->set_result_scale(phodevi::read_sensor_unit($sensor));
 				$test_result->set_used_arguments_description('Phoronix Test Suite System Monitoring');
 				$test_result->set_used_arguments(phodevi::sensor_identifier($sensor));
-$				$test_result->test_result_buffer = new pts_test_result_buffer();
+				$test_result->test_result_buffer = new pts_test_result_buffer();
 				$test_result->test_result_buffer->add_test_result(self::$result_identifier, implode(',', $sensor_results), implode(',', $sensor_results), implode(',', $sensor_results), implode(',', $sensor_results));
 				$test_run_manager->result_file->add_result($test_result);
 			}

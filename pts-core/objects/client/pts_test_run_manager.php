@@ -976,7 +976,7 @@ class pts_test_run_manager
 
 					if($this->get_results_url())
 					{
-						if(!$this->auto_mode && !$this->batcj_mode && pts_openbenchmarking_client::auto_upload_results() == false)
+						if(!$this->auto_mode && !$this->batch_mode && pts_openbenchmarking_client::auto_upload_results() == false)
 						{
 							pts_client::display_web_page($this->get_results_url(), 'Do you want to launch OpenBenchmarking.org', true);
 						}
