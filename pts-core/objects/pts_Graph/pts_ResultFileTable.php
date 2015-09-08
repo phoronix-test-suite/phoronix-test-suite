@@ -70,6 +70,11 @@ class pts_ResultFileTable extends pts_Table
 
 		foreach($result_file->get_result_objects($result_object_index) as $ri => $result_object)
 		{
+			if($result_object->test_profile->get_identifier() == null)
+			{
+				continue;
+			}
+
 			if($extra_attributes != null)
 			{
 				if(isset($extra_attributes['reverse_result_buffer']))
