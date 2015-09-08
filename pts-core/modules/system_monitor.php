@@ -324,7 +324,7 @@ class system_monitor extends pts_module_interface
 			{
 				// if no instances specified, we just set NULL to know we have to use some default parameters
 				$parameters[$type][$sensor] = NULL;
-				break;
+				continue;
 			}
 
 			foreach ($json_sensor['instances'] as $instance => $instance_parameters)

@@ -64,10 +64,10 @@ abstract class phodevi_sensor
 		return null;
 	}
 
-//	public static function parameter_check($parameter_array) // check if passed parameters are correct
-//	{
-//		return true;
-//	}
+	public static function parameter_check($parameter_array) // check if passed parameters are correct
+	{
+		return true;
+	}
 
 	abstract public function support_check();	   // for checking if sensor is supported on the current platform
 
