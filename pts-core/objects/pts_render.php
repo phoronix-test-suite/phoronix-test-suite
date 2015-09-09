@@ -77,98 +77,6 @@ class pts_render
 
 		return $graph;
 	}
-	public static function multi_way_compact(&$result_file, &$result_object, $extra_attributes = null)
-	{
-		if($result_file == null)
-		{
-			return;
-		}
-
-		if(!isset($extra_attributes['compact_to_scalar']) && $result_object->test_profile->get_display_format() == 'LINE_GRAPH' && $result_file->get_system_count() > 10)
-		{
-			// If there's too many lines being plotted on line graph, likely to look messy, so convert to scalar automatically
-			$extra_attributes['compact_to_scalar'] = true;
-		}
-
-		// XXX: removed || $result_file->is_results_tracker() from below and should be added
-		// Removing the command fixes cases like: 1210053-BY-MYRESULTS43
-		$result_identifiers = $result_object->test_result_buffer->get_identifiers();
-		if($result_file->is_multi_way_comparison($result_identifiers, $extra_attributes) || isset($extra_attributes['compact_to_scalar']))
-		{
-			if((isset($extra_attributes['compact_to_scalar']) || (false && $result_file->is_multi_way_comparison($result_identifiers, $extra_attributes))) && in_array($result_object->test_profile->get_display_format(), array('LINE_GRAPH', 'FILLED_LINE_GRAPH')))
-			{
-				// Convert multi-way line graph into horizontal box plot
-				if(stripos($result_object->get_arguments_description(), 'frame time') !== false || true)
-				{
-					$result_object->test_profile->set_display_format('HORIZONTAL_BOX_PLOT');
-				}
-				else
-				{
-					// Turn a multi-way line graph into an averaged bar graph
-					$buffer_items = $result_object->test_result_buffer->get_buffer_items();
-					$result_object->test_result_buffer = new pts_test_result_buffer();
-
-					foreach($buffer_items as $buffer_item)
-					{
-						$values = pts_strings::comma_explode($buffer_item->get_result_value());
-						$avg_value = pts_math::set_precision(array_sum($values) / count($values), 2);
-						$j = null;
-						if(count($values) > 2)
-						{
-							$j['min-result'] = min($values);
-							$j['max-result'] = max($values);
-
-							if($j['min-result'] == $j['max-result'])
-							{
-								$json = null;
-							}
-						}
-
-						$result_object->test_result_buffer->add_test_result($buffer_item->get_result_identifier(), $avg_value, null, $j, $j['min-result'], $j['max-result']);
-					}
-
-					$result_object->test_profile->set_display_format('BAR_GRAPH');
-				}
-			}
-
-			if($result_object->test_profile->get_display_format() != 'PIE_CHART')
-			{
-				$result_table = false;
-				pts_render::compact_result_file_test_object($result_object, $result_table, $result_file, $extra_attributes);
-			}
-		}
-		else if(in_array($result_object->test_profile->get_display_format(), array('LINE_GRAPH', 'FILLED_LINE_GRAPH')))
-		{
-				// Check to see for line graphs if every result is an array of the same result (i.e. a flat line for every result).
-				// If all the results are just flat lines, you might as well convert it to a bar graph
-				$buffer_items = $result_object->test_result_buffer->get_buffer_items();
-				$all_values_are_flat = false;
-				$flat_values = array();
-
-				foreach($buffer_items as $i => $buffer_item)
-				{
-					$unique_in_buffer = array_unique(explode(',', $buffer_item->get_result_value()));
-					$all_values_are_flat = count($unique_in_buffer) == 1;
-
-					if($all_values_are_flat == false)
-					{
-						break;
-					}
-					$flat_values[$i] = array_pop($unique_in_buffer);
-				}
-
-				if($all_values_are_flat)
-				{
-					$result_object->test_result_buffer = new pts_test_result_buffer();
-					foreach($buffer_items as $i => $buffer_item)
-					{
-						$result_object->test_result_buffer->add_test_result($buffer_item->get_result_identifier(), $flat_values[$i]);
-					}
-
-					$result_object->test_profile->set_display_format('BAR_GRAPH');
-				}
-		}
-	}
 	public static function render_graph_process(&$result_object, &$result_file = null, $save_as = false, $extra_attributes = null)
 	{
 		if(isset($extra_attributes['sort_result_buffer']))
@@ -207,8 +115,93 @@ class pts_render
 			{
 				$result_object->test_result_buffer->auto_shorten_buffer_identifiers($redundant_word_cache[$result_file->get_title()]);
 			}
+
+			// COMPACT PROCESS
+			if(!isset($extra_attributes['compact_to_scalar']) && $result_object->test_profile->get_display_format() == 'LINE_GRAPH' && $result_file->get_system_count() > 10)
+			{
+				// If there's too many lines being plotted on line graph, likely to look messy, so convert to scalar automatically
+				$extra_attributes['compact_to_scalar'] = true;
+			}
+
+			// XXX: removed || $result_file->is_results_tracker() from below and should be added
+			// Removing the command fixes cases like: 1210053-BY-MYRESULTS43
+			$result_identifiers = $result_object->test_result_buffer->get_identifiers();
+			if($result_file->is_multi_way_comparison($result_identifiers, $extra_attributes) || isset($extra_attributes['compact_to_scalar']) || isset($extra_attributes['compact_scatter']))
+			{
+				if((isset($extra_attributes['compact_to_scalar']) || (false && $result_file->is_multi_way_comparison($result_identifiers, $extra_attributes))) && in_array($result_object->test_profile->get_display_format(), array('LINE_GRAPH', 'FILLED_LINE_GRAPH')))
+				{
+					// Convert multi-way line graph into horizontal box plot
+					if(true) // XXX is there any cases where we don't want horizontal box plot but prefer averaged bar graph?
+					{
+						$result_object->test_profile->set_display_format('HORIZONTAL_BOX_PLOT');
+					}
+				/*	else // XXX commented out during PTS 6.0 development, TODO decide if to delete
+					{
+						// Turn a multi-way line graph into an averaged bar graph
+						$buffer_items = $result_object->test_result_buffer->get_buffer_items();
+						$result_object->test_result_buffer = new pts_test_result_buffer();
+
+						foreach($buffer_items as $buffer_item)
+						{
+							$values = pts_strings::comma_explode($buffer_item->get_result_value());
+							$avg_value = pts_math::set_precision(array_sum($values) / count($values), 2);
+							$j = null;
+							if(count($values) > 2)
+							{
+								$j['min-result'] = min($values);
+								$j['max-result'] = max($values);
+
+								if($j['min-result'] == $j['max-result'])
+								{
+									$json = null;
+								}
+							}
+
+							$result_object->test_result_buffer->add_test_result($buffer_item->get_result_identifier(), $avg_value, null, $j, $j['min-result'], $j['max-result']);
+						}
+
+						$result_object->test_profile->set_display_format('BAR_GRAPH');
+					} */
+				}
+
+				if($result_object->test_profile->get_display_format() != 'PIE_CHART')
+				{
+					$result_table = false;
+					pts_render::compact_result_file_test_object($result_object, $result_table, $result_file, $extra_attributes);
+				}
+			}
+			else if(in_array($result_object->test_profile->get_display_format(), array('LINE_GRAPH', 'FILLED_LINE_GRAPH')))
+			{
+					// Check to see for line graphs if every result is an array of the same result (i.e. a flat line for every result).
+					// If all the results are just flat lines, you might as well convert it to a bar graph
+					$buffer_items = $result_object->test_result_buffer->get_buffer_items();
+					$all_values_are_flat = false;
+					$flat_values = array();
+
+					foreach($buffer_items as $i => $buffer_item)
+					{
+						$unique_in_buffer = array_unique(explode(',', $buffer_item->get_result_value()));
+						$all_values_are_flat = count($unique_in_buffer) == 1;
+
+						if($all_values_are_flat == false)
+						{
+							break;
+						}
+						$flat_values[$i] = array_pop($unique_in_buffer);
+					}
+
+					if($all_values_are_flat)
+					{
+						$result_object->test_result_buffer = new pts_test_result_buffer();
+						foreach($buffer_items as $i => $buffer_item)
+						{
+							$result_object->test_result_buffer->add_test_result($buffer_item->get_result_identifier(), $flat_values[$i]);
+						}
+
+						$result_object->test_profile->set_display_format('BAR_GRAPH');
+					}
+			}
 		}
-		self::multi_way_compact($result_file, $result_object, $extra_attributes);
 
 		$display_format = $result_object->test_profile->get_display_format();
 		$bar_orientation = 'HORIZONTAL'; // default to horizontal bar graph
