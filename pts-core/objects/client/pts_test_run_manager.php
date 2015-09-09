@@ -933,7 +933,7 @@ class pts_test_run_manager
 
 			echo PHP_EOL;
 			pts_module_manager::module_process('__event_results_process', $this);
-			pts_client::save_test_result($this->get_file_name() . '/composite.xml', $this->result_file->get_xml(), true, null, $this->results_identifier);
+			pts_client::save_test_result($this->get_file_name() . '/composite.xml', $this->result_file->get_xml(), true, $this->results_identifier);
 			pts_module_manager::module_process('__event_results_saved', $this);
 			//echo PHP_EOL . 'Results Saved To: ; . PTS_SAVE_RESULTS_PATH . $this->get_file_name() . ;/composite.xml' . PHP_EOL;
 
