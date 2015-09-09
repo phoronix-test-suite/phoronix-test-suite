@@ -644,7 +644,7 @@ class pts_test_run_manager
 		{
 			$test_successful = true;
 		}
-		else if($test_run_request instanceof pts_test_result)
+		else if($test_run_request instanceof pts_test_result && $test_run_request->active)
 		{
 			$end_result = $test_run_request->active->get_result();
 
