@@ -1064,7 +1064,7 @@ class pts_client
 
 						foreach($test_titles as $this_title_index => $this_title)
 						{
-							if($this_title == $test_titles[$key])
+							if(isset($test_titles[$key]) && $this_title == $test_titles[$key])
 							{
 								array_push($table_keys, $this_title_index);
 							}
