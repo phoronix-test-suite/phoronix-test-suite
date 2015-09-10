@@ -63,19 +63,9 @@ class cpu_usage extends phodevi_sensor
 		{
 			$cpu_number = $parameter_array['cpu_number'];
 
-			if ($cpu_number === "summary")
+			if (in_array($cpu_number, self::get_supported_devices() ) )
 			{
 				return true;
-			}
-
-			if (phodevi::is_linux())
-			{
-				$cpu_count = intval(shell_exec("nproc"));
-
-				if (is_numeric($cpu_number) && $cpu_number >= 0 && $cpu_number < $cpu_count)
-				{
-					return true;
-				}
 			}
 		}
 
@@ -92,6 +82,17 @@ class cpu_usage extends phodevi_sensor
 		{
 			return 'CPU' . $this->cpu_to_monitor;
 		}
+	}
+
+	public static function get_supported_devices()
+	{
+		$cpu_list = shell_exec("cat /proc/stat | grep cpu | awk '{print $1}'");
+		$cpu_array = explode("\n", $cpu_list);
+
+		$supported = array_slice($cpu_array, 1, count($cpu_array) - 2);
+		array_push($supported, 'summary');
+
+		return $supported;
 	}
 
 	public function support_check()

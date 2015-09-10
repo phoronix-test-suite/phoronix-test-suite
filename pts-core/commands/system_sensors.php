@@ -30,8 +30,18 @@ class system_sensors implements pts_option_interface
 		pts_client::$display->generic_heading('Supported Sensors');
 		foreach(phodevi::supported_sensors() as $sensor)
 		{
-			$sensor_object = new $sensor[2](0, null);
-			echo phodevi::sensor_object_name($sensor_object) . ': ' . phodevi::read_sensor($sensor_object) . ' ' . phodevi::read_sensor_object_unit($sensor_object) . PHP_EOL;
+			$supported_devices = call_user_func(array($sensor[2], 'get_supported_devices'));
+
+			if ($supported_devices === NULL)
+			{
+				self::print_sensor ($sensor, NULL);
+				continue;
+			}
+
+			foreach ($supported_devices as $device)
+			{
+				self::print_sensor ($sensor, $device);
+			}
 		}
 
 		pts_client::$display->generic_heading('Unsupported Sensors');
@@ -40,6 +50,21 @@ class system_sensors implements pts_option_interface
 			echo '- ' . phodevi::sensor_name($sensor) . PHP_EOL;
 		}
 		echo PHP_EOL;
+	}
+
+	private static function print_sensor($sensor, $device)
+	{
+		if ($device === NULL)
+		{
+			$parameters = NULL;
+		}
+		else
+		{
+			$parameters = array();
+			$parameters[call_user_func(array($sensor[2], 'get_primary_parameter_name'))] = $device;
+		}
+		$sensor_object = new $sensor[2](0, $parameters);
+		echo phodevi::sensor_object_name($sensor_object) . ': ' . phodevi::read_sensor($sensor_object) . ' ' . phodevi::read_sensor_object_unit($sensor_object) . PHP_EOL;
 	}
 }
 
