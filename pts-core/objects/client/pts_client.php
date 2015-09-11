@@ -231,7 +231,7 @@ class pts_client
 			'DEBUG_REAL_HOME' => pts_client::user_home_directory()
 			);
 
-			if(!pts_client::executable_in_path('cc') && pts_client::executable_in_path('gcc'))
+			if(!pts_client::executable_in_path('cc') && pts_client::executable_in_path('gcc') && getenv('CC') == false)
 			{
 				// This helps some test profiles build correctly if they don't do a cc check internally
 				$env_variables['CC'] = 'gcc';
