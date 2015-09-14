@@ -54,17 +54,15 @@ class system_sensors implements pts_option_interface
 
 	private static function print_sensor($sensor, $device)
 	{
-		if ($device === NULL)
+		if ($sensor[0] === 'cgroup')
 		{
-			$parameters = NULL;
+			echo '- ' . phodevi::sensor_name($sensor) . PHP_EOL;
 		}
 		else
 		{
-			$parameters = array();
-			$parameters[call_user_func(array($sensor[2], 'get_primary_parameter_name'))] = $device;
+			$sensor_object = new $sensor[2](0, $device);
+			echo '- ' . phodevi::sensor_object_name($sensor_object) . ': ' . phodevi::read_sensor($sensor_object) . ' ' . phodevi::read_sensor_object_unit($sensor_object) . PHP_EOL;	
 		}
-		$sensor_object = new $sensor[2](0, $parameters);
-		echo phodevi::sensor_object_name($sensor_object) . ': ' . phodevi::read_sensor($sensor_object) . ' ' . phodevi::read_sensor_object_unit($sensor_object) . PHP_EOL;
 	}
 }
 

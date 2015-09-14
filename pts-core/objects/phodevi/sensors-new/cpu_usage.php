@@ -28,45 +28,28 @@ class cpu_usage extends phodevi_sensor
 	const PRIMARY_PARAM_NAME = 'cpu_number';
 
 	const PROC_STAT_IDLE_COL = 3;		//CPU idle time - it's the third number in the line (starting from 0)
-	const CPU_SUMMARY = -1;
 
 	private $cpu_to_monitor;
 
-	function __construct($instance, $parameter_array)
+	function __construct($instance, $parameter)
 	{
-		parent::__construct($instance, $parameter_array);
-		$cpu_number = self::CPU_SUMMARY;
+		parent::__construct($instance, $parameter);
 
-		if ($parameter_array != null && array_key_exists(self::PRIMARY_PARAM_NAME, $parameter_array))
+		if ($parameter === NULL)
 		{
-			$cpu_number = $parameter_array['cpu_number'];
+			$this->cpu_to_monitor = "summary";
 		}
-		//core number correctness check
-		if ($cpu_number === "summary")
+		else
 		{
-			$this->cpu_to_monitor = self::CPU_SUMMARY;
-		}
-		elseif ($cpu_number >= 0 || $cpu_number < phodevi_cpu::cpu_core_count())
-		{
-			$this->cpu_to_monitor = intval($cpu_number);
+			$this->cpu_to_monitor = $parameter;
 		}
 	}
 
-	public static function parameter_check($parameter_array)
+	public static function parameter_check($parameter)
 	{
-		if ($parameter_array === null)
+		if ($parameter === null || in_array($parameter, self::get_supported_devices() ) )
 		{
 			return true;
-		}
-
-		if (is_array($parameter_array) && array_key_exists('cpu_number', $parameter_array))
-		{
-			$cpu_number = $parameter_array['cpu_number'];
-
-			if (in_array($cpu_number, self::get_supported_devices() ) )
-			{
-				return true;
-			}
 		}
 
 		return false;
@@ -74,13 +57,13 @@ class cpu_usage extends phodevi_sensor
 
 	public function get_readable_params()
 	{
-		if ($this->cpu_to_monitor === self::CPU_SUMMARY)
+		if ($this->cpu_to_monitor === "summary")
 		{
 			return 'Summary';
 		}
 		else
 		{
-			return 'CPU' . $this->cpu_to_monitor;
+			return strtoupper($this->cpu_to_monitor);
 		}
 	}
 
@@ -140,17 +123,21 @@ class cpu_usage extends phodevi_sensor
 		{
 			$stat = file_get_contents('/proc/stat');
 
-			if($this->cpu_to_monitor > -1 && ($l = strpos($stat, 'cpu' . $this->cpu_to_monitor)) !== false)
+			if ($this->cpu_to_monitor === "summary")
+			{
+				$start_line = 0;
+			}
+			elseif(($l = strpos($stat, $this->cpu_to_monitor)) !== false)
 			{
 				$start_line = $l;
 			}
 			else
 			{
-				$start_line = 0;
+				return -1;
 			}
 
-			$stat = substr($stat, $start_line, strpos($stat, "\n"));
-			$stat_break = preg_split('/\s+/', $stat);
+			$stat_line = substr($stat, $start_line, strpos($stat, "\n"));
+			$stat_break = preg_split('/\s+/', $stat_line);
 
 			for($i = 1; $i < 10; $i++)
 			{

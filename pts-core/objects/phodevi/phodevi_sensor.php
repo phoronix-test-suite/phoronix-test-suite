@@ -71,7 +71,7 @@ abstract class phodevi_sensor
 
 	public static function get_supported_devices()
 	{
-		return array();
+		return NULL;
 	}
 
 	abstract public function support_check();	   // for checking if sensor is supported on the current platform

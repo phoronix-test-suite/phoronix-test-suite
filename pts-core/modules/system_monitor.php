@@ -279,65 +279,8 @@ class system_monitor extends pts_module_interface
 		return $args;
 	}
 
-	// Parse JSON file containing parameters of monitored sensors.
+	// Parse envvar containing parameters of monitored sensors.
 	private static function prepare_sensor_parameters()
-	{
-		$config_file = pts_module::read_variable('MONITOR_PARAM_FILE');
-		if ($config_file !== '' )
-		{
-			if (!is_readable($config_file))
-			{
-				throw new Exception('cannot open the configuration file');
-			}
-			$parameters = self::parse_json_config($config_file);
-		}
-		else
-		{
-
-			$parameters = self::parse_envvar_config();
-		}
-
-		return $parameters;
-	}
-
-	private static function parse_json_config($config_file)
-	{
-		$json_array = pts_arrays::json_decode(file_get_contents($config_file));
-		if ($json_array === NULL)
-		{
-			throw new Exception('incorrect JSON syntax');
-		}
-
-		$parameters = array();
-
-		foreach ($json_array['sensors'] as $json_sensor)
-		{
-			if (!array_key_exists("type", $json_sensor) || !array_key_exists("sensor", $json_sensor))
-			{
-				throw new Exception('sensor configuration is not correct');
-			}
-
-			$type = $json_sensor['type'];
-			$sensor = $json_sensor['sensor'];
-
-			if (!isset($json_sensor['instances']) )
-			{
-				// if no instances specified, we just set NULL to know we have to use some default parameters
-				$parameters[$type][$sensor] = NULL;
-				continue;
-			}
-
-			foreach ($json_sensor['instances'] as $instance => $instance_parameters)
-			{
-				$parameters[$type][$sensor][$instance] = $instance_parameters;
-			}
-		}
-
-		return $parameters;
-	}
-
-	//TODO make some comments
-	private static function parse_envvar_config()
 	{
 		$sensor_list = pts_strings::comma_explode(pts_module::read_variable('MONITOR'));
 
@@ -349,16 +292,16 @@ class system_monitor extends pts_module_interface
 
 			$type = &$sensor_split[0];
 			$name = &$sensor_split[1];
-			$primary_parameter = &$sensor_split[2];
+			$parameter = &$sensor_split[2];
 
 			if(empty($to_monitor[$type][$name]))
 			{
 				$to_monitor[$type][$name] = array();
 			}
 
-			if ($primary_parameter !== NULL)
+			if ($parameter !== NULL)
 			{
-				array_push($to_monitor[$type][$name], array('primary' => $primary_parameter));
+				array_push($to_monitor[$type][$name], $parameter);
 			}
 		}
 
@@ -411,36 +354,30 @@ class system_monitor extends pts_module_interface
 		// If no instances specified, create one with default parameters.
 		if (empty($sensor_instances) )
 		{
-			self::create_single_sensor_instance($sensor, 0, array());
+			self::create_single_sensor_instance($sensor, 0, NULL);
 			return;
 		}
 		// Create objects for all specified instances of the sensor.
-		foreach ($sensor_instances as $instance => $params)
+		foreach ($sensor_instances as $instance => $param)
 		{
-			self::create_single_sensor_instance($sensor, $instance, $params);
+			self::create_single_sensor_instance($sensor, $instance, $param);
 			//TODO show information when passed parameters are incorrect
 		}
 	}
 
-	private static function create_single_sensor_instance($sensor, $instance, $params)
+	private static function create_single_sensor_instance($sensor, $instance, $param)
 	{
-		if (array_key_exists('primary', $params))
-		{
-			$primary_param_name = call_user_func(array($sensor[2], 'get_primary_parameter_name'));
-			$params[$primary_param_name] = $params['primary'];
-		}
-
 		if ($sensor[0] === 'cgroup')
 		{
 			$cgroup_controller = call_user_func(array($sensor[2], 'get_cgroup_controller'));
 			array_push(self::$cgroup_enabled_controllers, $cgroup_controller );
 			self::cgroup_create(self::$cgroup_name, $cgroup_controller);
-			$params['cgroup_name'] = self::$cgroup_name;
+			$param = self::$cgroup_name;
 		}
 
-		if (call_user_func(array($sensor[2], 'parameter_check'), $params) === true)
+		if (call_user_func(array($sensor[2], 'parameter_check'), $param) === true)
 		{
-			$sensor_object = new $sensor[2]($instance, $params);
+			$sensor_object = new $sensor[2]($instance, $param);
 			array_push(self::$to_monitor, $sensor_object);
 			pts_module::save_file('logs/' . phodevi::sensor_object_identifier($sensor_object));
 		}

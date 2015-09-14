@@ -32,28 +32,25 @@ class cgroup_cpu_usage extends phodevi_sensor
 	
 	private $cgroup_stat_path;
 
-	function __construct($instance, $parameter_array)
+	function __construct($instance, $cgroup_name)
 	{
-		parent::__construct($instance, $parameter_array);
+		parent::__construct($instance, $cgroup_name);
 
-		$this->cgroup_stat_path = '/sys/fs/cgroup/cpu,cpuacct/' . $parameter_array['cgroup_name'] . '/cpuacct.stat' ;
+		$this->cgroup_stat_path = '/sys/fs/cgroup/cpu,cpuacct/' . $cgroup_name . '/cpuacct.stat' ;
 	}
 
-	public static function parameter_check($parameter_array)
+	public static function parameter_check($cgroup_name)
 	{
-		if ($parameter_array === null)
+		if ($cgroup_name === null)
 		{
 			return false;
 		}
 
-		if (is_array($parameter_array) && array_key_exists('cgroup_name', $parameter_array))
-		{
-			$cgroup_stat_path = '/sys/fs/cgroup/cpu,cpuacct/' . $parameter_array['cgroup_name'] . '/cpuacct.stat' ;
+		$cgroup_stat_path = '/sys/fs/cgroup/cpu,cpuacct/' . $cgroup_name . '/cpuacct.stat' ;
 
-			if (phodevi::is_linux() && is_readable($cgroup_stat_path))
-			{
-				return true;
-			}
+		if (phodevi::is_linux() && is_readable($cgroup_stat_path))
+		{
+			return true;
 		}
 
 		return false;
