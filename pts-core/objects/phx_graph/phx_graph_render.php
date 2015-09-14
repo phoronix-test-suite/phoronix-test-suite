@@ -100,6 +100,15 @@ class phx_graph_render
 
 			$result_object->normalize_buffer_values($normalize_against);
 		}
+		if(isset($extra_attributes['sort_result_buffer_values']))
+		{
+			$result_object->test_result_buffer->buffer_values_sort();
+
+			if($result_object->test_profile->get_result_proportion() == 'HIB')
+			{
+				$result_object->test_result_buffer->buffer_values_reverse();
+			}
+		}
 
 		if($result_file != null)
 		{
@@ -164,10 +173,12 @@ class phx_graph_render
 					} */
 				}
 
-				if($result_object->test_profile->get_display_format() != 'PIE_CHART')
+				if($result_object->test_profile->get_display_format() != 'PIE_CHART' && (phx_graph_render::multi_way_identifier_check($result_object->test_result_buffer->get_identifiers()) || $extra_attributes['force_tracking_line_graph']))
 				{
-					$result_table = false;
-					pts_render::compact_result_file_test_object($result_object, $result_table, $result_file, $extra_attributes);
+					//$result_table = false;
+					//pts_render::compact_result_file_test_object($result_object, $result_table, $result_file, $extra_attributes);
+					$line_graph_type = isset($extra_attributes['filled_line_graph']) ? 'FILLED_LINE_GRAPH' : 'LINE_GRAPH';
+					$result_object->test_profile->set_display_format(!isset($extra_attributes['force_tracking_line_graph']) ? 'BAR_ANALYZE_GRAPH' : $line_graph_type);
 				}
 			}
 			else if(in_array($result_object->test_profile->get_display_format(), array('LINE_GRAPH', 'FILLED_LINE_GRAPH')))
@@ -204,7 +215,6 @@ class phx_graph_render
 		}
 
 		$display_format = $result_object->test_profile->get_display_format();
-		$bar_orientation = 'HORIZONTAL'; // default to horizontal bar graph
 
 		switch($display_format)
 		{
@@ -225,14 +235,7 @@ class phx_graph_render
 				break;
 			case 'BAR_ANALYZE_GRAPH':
 			case 'BAR_GRAPH':
-				if($bar_orientation == 'VERTICAL')
-				{
-					$graph = new pts_VerticalBarGraph($result_object, $result_file);
-				}
-				else
-				{
-					$graph = new phx_graph_horizontal_bars($result_object, $result_file);
-				}
+				$graph = new phx_graph_horizontal_bars($result_object, $result_file);
 				break;
 			case 'PASS_FAIL':
 				$graph = new pts_PassFailGraph($result_object, $result_file);
@@ -281,47 +284,10 @@ class phx_graph_render
 						$graph = new pts_FilledLineGraph($result_object, $result_file);
 						break;
 					default:
-						if($bar_orientation == 'VERTICAL')
-						{
-							$graph = new pts_VerticalBarGraph($result_object, $result_file);
-						}
-						else
-						{
-							$graph = new phx_graph_horizontal_bars($result_object, $result_file);
-						}
+						$graph = new phx_graph_horizontal_bars($result_object, $result_file, $extra_attributes);
 						break;
 				}
 				break;
-		}
-
-		if(isset($extra_attributes['regression_marker_threshold']))
-		{
-			$graph->markResultRegressions($extra_attributes['regression_marker_threshold']);
-		}
-		if(isset($extra_attributes['set_alternate_view']))
-		{
-			$graph->setAlternateView($extra_attributes['set_alternate_view']);
-		}
-		if(isset($extra_attributes['sort_result_buffer_values']))
-		{
-			$result_object->test_result_buffer->buffer_values_sort();
-
-			if($result_object->test_profile->get_result_proportion() == 'HIB')
-			{
-				$result_object->test_result_buffer->buffer_values_reverse();
-			}
-		}
-		if(isset($extra_attributes['highlight_graph_values']))
-		{
-			$graph->highlight_values($extra_attributes['highlight_graph_values']);
-		}
-		if(isset($extra_attributes['force_simple_keys']))
-		{
-			$graph->override_i_value('force_simple_keys', true);
-		}
-		else if(PTS_IS_CLIENT && pts_client::read_env('GRAPH_HIGHLIGHT') != false)
-		{
-			$graph->highlight_values(pts_strings::comma_explode(pts_client::read_env('GRAPH_HIGHLIGHT')));
 		}
 
 		switch($display_format)
@@ -362,21 +328,6 @@ class phx_graph_render
 				$graph->loadGraphValues($values);
 				break;
 			default:
-				// TODO: should be able to load pts_test_result_buffer_item objects more cleanly into pts_Graph
-				$identifiers = array();
-				$values = array();
-				$raw_values = array();
-
-				foreach($result_object->test_result_buffer->get_buffer_items() as $buffer_item)
-				{
-					array_push($identifiers, $buffer_item->get_result_identifier());
-					array_push($values, $buffer_item->get_result_value());
-					array_push($raw_values, $buffer_item->get_result_raw());
-				}
-
-				$graph->loadGraphIdentifiers($identifiers);
-				$graph->loadGraphValues($values);
-				$graph->loadGraphRawValues($raw_values);
 				break;
 		}
 
@@ -939,12 +890,17 @@ class phx_graph_render
 			}
 		}
 	}
-	public static function multi_way_identifier_check($identifiers, &$system_hardware = null, &$result_file = null)
+	public static function multi_way_identifier_check($identifiers)
 	{
 		/*
 			Samples To Use For Testing:
 			1109026-LI-AMDRADEON57
 		*/
+
+		if(count($identifiers) < 2)
+		{
+			return false;
+		}
 
 		$systems = array();
 		$targets = array();
@@ -967,11 +923,6 @@ class phx_graph_render
 			{
 				// The results aren't ordered
 				$is_ordered = false;
-
-				if($result_file == null)
-				{
-					return false;
-				}
 			}
 
 			$prev_system = $identifier_r[0];
@@ -982,67 +933,9 @@ class phx_graph_render
 		if(false && $is_ordered == false && $is_multi_way)
 		{
 			// TODO: get the reordering code to work
-			if($result_file instanceof pts_result_file)
-			{
-				// Reorder the result file
-				$to_order = array();
-				sort($identifiers);
-				foreach($identifiers as $identifier)
-				{
-					array_push($to_order, new pts_result_merge_select($result_file, $identifier));
-				}
-
-				$ordered_xml = // ORDER THE XML CODE WITH PTS MERGER
-				$result_file = new pts_result_file($ordered_xml);
-				$is_multi_way = true;
-			}
-			else
-			{
-				$is_multi_way = false;
-			}
 		}
 
 		$is_multi_way_inverted = $is_multi_way && count($targets) > count($systems);
-
-		/*
-		if($is_multi_way)
-		{
-			if(count($systems) < 3 && count($systems) != count($targets))
-			{
-				$is_multi_way = false;
-			}
-		}
-		*/
-
-		// TODO XXX: for now temporarily disable inverted multi-way check to decide how to rework it appropriately
-		/*
-		if($is_multi_way)
-		{
-			$targets_count = count($targets);
-			$systems_count = count($systems);
-
-			if($targets_count > $systems_count)
-			{
-				$is_multi_way_inverted = true;
-			}
-			else if(is_array($system_hardware))
-			{
-				$hardware = array_unique($system_hardware);
-				//$software = array_unique($system_software);
-
-				if($targets_count != $systems_count && count($hardware) == $systems_count)
-				{
-					$is_multi_way_inverted = true;
-				}
-				else if(count($hardware) == ($targets_count * $systems_count))
-				{
-					$is_multi_way_inverted = true;
-				}
-			}
-		}
-		*/
-
-		// TODO: figure out what else is needed to reasonably determine if the result file is a multi-way comparison
 
 		return $is_multi_way ? array($is_multi_way, $is_multi_way_inverted) : false;
 	}

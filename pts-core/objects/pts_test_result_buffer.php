@@ -254,6 +254,36 @@ class pts_test_result_buffer
 
 		return $identifiers;
 	}
+	public function get_longest_identifier()
+	{
+		$identifier = null;
+		$length = 0;
+
+		foreach($this->buffer_items as &$buffer_item)
+		{
+			if(($l = strlen($buffer_item->get_result_identifier())) > $length)
+			{
+				$length = $l;
+				$identifier = $buffer_item->get_result_identifier();
+			}
+		}
+
+		return $identifier;
+	}
+	public function get_max_value()
+	{
+		$value = 0;
+
+		foreach($this->buffer_items as &$buffer_item)
+		{
+			if($buffer_item->get_result_value() > $value)
+			{
+				$value = $buffer_item->get_result_value();
+			}
+		}
+
+		return $value;
+	}
 	public function get_values()
 	{
 		$values = array();

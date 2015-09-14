@@ -36,18 +36,18 @@ abstract class phx_graph_core
 	public $svg_dom = null;
 
 	// TODO: Convert below variables to using $this->[XXX]
-	protected $graph_data = array();
-	protected $graph_data_raw = array();
-	protected $graph_data_title = array();
+	protected $graph_identifiers = array();
 	protected $graph_sub_titles = array();
-	protected $graph_identifiers;
 	protected $graph_title;
 	protected $graph_y_title;
 	protected $is_multi_way_comparison = false;
 	private $test_identifier = null;
 	protected $value_highlights = array();
 
-	public function __construct(&$result_object = null, &$result_file = null)
+	protected $test_result;
+	protected $results;
+
+	public function __construct(&$result_object = null, &$result_file = null, $extra_attributes = null)
 	{
 		// Initalize Colors
 		$this->i['identifier_size'] = self::$c['size']['identifiers']; // Copy this since it's commonly overwritten
@@ -91,12 +91,92 @@ abstract class phx_graph_core
 		}
 
 		$this->update_graph_dimensions(self::$c['graph']['width'], self::$c['graph']['height'], true);
-
-		if($result_file != null && $result_file instanceof pts_result_file)
+		if(isset($extra_attributes['force_tracking_line_graph']))
 		{
-			$this->is_multi_way_comparison = $result_file->is_multi_way_comparison();
+			// Phoromatic result tracker
+			$this->is_multi_way_comparison = true;
 		}
+		else
+		{
+			$this->is_multi_way_comparison = phx_graph_render::multi_way_identifier_check($result_object->test_result_buffer->get_identifiers());
+		}
+
 		$this->i['graph_version'] = 'Phoronix Test Suite ' . PTS_VERSION;
+
+		if(isset($extra_attributes['regression_marker_threshold']))
+		{
+			$this->markResultRegressions($extra_attributes['regression_marker_threshold']);
+		}
+		if(isset($extra_attributes['set_alternate_view']))
+		{
+			$this->setAlternateView($extra_attributes['set_alternate_view']);
+		}
+		if(isset($extra_attributes['highlight_graph_values']))
+		{
+			$this->highlight_values($extra_attributes['highlight_graph_values']);
+		}
+		if(isset($extra_attributes['force_simple_keys']))
+		{
+			$this->override_i_value('force_simple_keys', true);
+		}
+		else if(PTS_IS_CLIENT && pts_client::read_env('GRAPH_HIGHLIGHT') != false)
+		{
+			$this->highlight_values(pts_strings::comma_explode(pts_client::read_env('GRAPH_HIGHLIGHT')));
+		}
+
+		$this->test_result = &$result_object;
+
+		if($this->is_multi_way_comparison)
+		{
+			$this->results = array();
+			foreach($this->test_result->test_result_buffer->buffer_items as &$buffer_item)
+			{
+				$identifier = array_map('trim', explode(':', $buffer_item->get_result_identifier()));
+
+				if(true)
+				{
+					$identifier = array_reverse($identifier);
+				}
+
+				switch(count($identifier))
+				{
+					case 2:
+						$system = $identifier[0];
+						$date = $identifier[1];
+						break;
+					case 1:
+						$system = 0;
+						$date = $identifier[0];
+						break;
+					default:
+						continue;
+						break;
+				}
+
+				$buffer_item->reset_result_identifier($system);
+
+				if(!isset($this->results[$date]))
+				{
+					$this->results[$date] = array();
+				}
+
+				array_push($this->results[$date], $buffer_item);
+				pts_arrays::unique_push($this->graph_identifiers, $system);
+			}
+
+			if(count($this->results) == 1)
+			{
+				$this->is_multi_way_comparison = false;
+			}
+		}
+		else
+		{
+			$this->results = array($this->test_result->test_result_buffer->buffer_items);
+			foreach($this->test_result->test_result_buffer->buffer_items as &$buffer_item)
+			{
+				array_push($this->graph_identifiers, $buffer_item->get_result_identifier());
+			}
+		}
 	}
 	public function override_i_value($key, $val)
 	{
@@ -158,10 +238,6 @@ abstract class phx_graph_core
 	// Load Functions
 	//
 
-	public function loadGraphIdentifiers($data_array)
-	{
-		$this->graph_identifiers = $data_array;
-	}
 	public function addGraphIdentifierNote($identifier, $note)
 	{
 		if(!isset($this->d['identifier_notes'][$identifier]) || empty($this->d['identifier_notes'][$identifier]))
@@ -179,10 +255,12 @@ abstract class phx_graph_core
 	}
 	public function loadGraphData($data_array)
 	{
+		return;
 		loadGraphValues($data_array);
 	}
 	public function loadGraphValues($data_array, $data_title = null)
 	{
+		return;
 		foreach($data_array as &$data_item)
 		{
 			if(is_float($data_item))
@@ -200,6 +278,7 @@ abstract class phx_graph_core
 	}
 	public function loadGraphRawValues($data_array)
 	{
+		return;
 		foreach($data_array as &$data_item)
 		{
 			if(is_float($data_item))
@@ -263,19 +342,14 @@ abstract class phx_graph_core
 	{
 		$real_maximum = 0;
 
-		foreach($this->graph_data as &$data_r)
+		$data_max = $this->test_result->test_result_buffer->get_max_value();
+		if(!is_numeric($data_max))
 		{
-			$data_max = max($data_r);
-
-			if(!is_numeric($data_max))
-			{
-				$data_max = str_repeat(9, strlen($data_max));
-			}
-
-			if($data_max > $real_maximum)
-			{
-				$real_maximum = $data_max;
-			}
+			$data_max = str_repeat(9, strlen($data_max));
+		}
+		if($data_max > $real_maximum)
+		{
+			$real_maximum = $data_max;
 		}
 
 		if(is_numeric($real_maximum))
@@ -349,6 +423,7 @@ abstract class phx_graph_core
 	public function render_graph_dimensions()
 	{
 		$this->i['graph_max_value'] = $this->maximum_graph_value();
+		$longest_identifier = $this->test_result->test_result_buffer->get_longest_identifier();
 
 		// Make room for tick markings, left hand side
 		if($this->i['iveland_view'] == false)
@@ -369,9 +444,9 @@ abstract class phx_graph_core
 		{
 			if($this->i['graph_orientation'] == 'HORIZONTAL')
 			{
-				if($this->is_multi_way_comparison && count($this->graph_data_title) > 1)
+				if($this->is_multi_way_comparison && count($this->results) > 1)
 				{
-					$longest_r = pts_strings::find_longest_string($this->graph_identifiers);
+					$longest_r = $longest_identifier;
 					$longest_r = explode(' - ', $longest_r);
 					$plus_extra = 0;
 
@@ -384,7 +459,7 @@ abstract class phx_graph_core
 				}
 				else
 				{
-					$longest_identifier_width = $this->text_string_width(pts_strings::find_longest_string($this->graph_identifiers), $this->i['identifier_size']) + 8;
+					$longest_identifier_width = $this->text_string_width($longest_identifier, $this->i['identifier_size']) + 8;
 				}
 
 				$longest_identifier_max = ($this->i['graph_width'] * 0.5) + 0.01;
@@ -421,22 +496,22 @@ abstract class phx_graph_core
 
 			if($this->i['graph_orientation'] == 'HORIZONTAL')
 			{
-				if($this->is_multi_way_comparison && count($this->graph_data) > 1)
+				if($this->is_multi_way_comparison && count($this->results) > 1)
 				{
-					$longest_string = explode(' - ', pts_strings::find_longest_string($this->graph_identifiers));
+					$longest_string = explode(' - ', $longest_identifier);
 					$longest_string = pts_strings::find_longest_string($longest_string);
 
 					$rotated_text = round($this->text_string_width($longest_string, $this->i['identifier_size']) * 0.96);
-					$per_identifier_height = max((14 + (22 * count($this->graph_data))), $rotated_text);
+					$per_identifier_height = max((14 + (22 * count($this->results))), $rotated_text);
 				}
-				else if(count($this->graph_data_title) > 3)
+				else if(count($this->results) > 3)
 				{
-					$per_identifier_height = count($this->graph_data_title) * 18;
+					$per_identifier_height = count($this->results) * 18;
 				}
 				else
 				{
 					// If there's too much to plot, reduce the size so each graph doesn't take too much room
-					$id_count = count($this->graph_data[0]);
+					$id_count = count(pts_arrays::first_element($this->results));
 					if($id_count < 10)
 					{
 						$per_identifier_height = 46;
@@ -458,7 +533,7 @@ abstract class phx_graph_core
 				}
 
 
-				$num_identifiers = count($this->graph_identifiers);
+				$num_identifiers = $this->test_result->test_result_buffer->get_count();
 				$this->i['graph_top_end'] = $this->i['top_start'] + ($num_identifiers * $per_identifier_height);
 				// $this->i['top_end_bottom']
 				$this->i['graph_height'] = $this->i['graph_top_end'] + 25 + $bottom_heading;
@@ -740,16 +815,17 @@ abstract class phx_graph_core
 	}
 	protected function graph_key_height()
 	{
-		if(count($this->graph_data_title) < 2 && $this->i['show_graph_key'] == false)
+		if(count($this->results) < 2 && $this->i['show_graph_key'] == false)
 		{
 			return 0;
 		}
 
 		$this->i['key_line_height'] = 16;
-		$this->i['key_item_width'] = 16 + $this->text_string_width(pts_strings::find_longest_string($this->graph_data_title), self::$c['size']['key']);
+		$ak = array_keys($this->results);
+		$this->i['key_item_width'] = 16 + $this->text_string_width(pts_strings::find_longest_string($ak), self::$c['size']['key']);
 		$this->i['keys_per_line'] = max(1, floor(($this->i['graph_left_end'] - $this->i['left_start']) / $this->i['key_item_width']));
 
-		return ceil(count($this->graph_data_title) / $this->i['keys_per_line']) * $this->i['key_line_height'];
+		return ceil(count($this->results) / $this->i['keys_per_line']) * $this->i['key_line_height'];
 	}
 	protected function render_graph_key()
 	{
@@ -760,11 +836,12 @@ abstract class phx_graph_core
 
 		$y = $this->i['top_start'] - $this->graph_key_height() - 7;
 
-		for($i = 0, $key_count = count($this->graph_data_title); $i < $key_count; $i++)
+		$i = 0;
+		foreach(array_keys($this->results) as $title)
 		{
-			if(!empty($this->graph_data_title[$i]))
+			if(!empty($title))
 			{
-				$this_color = $this->get_special_paint_color($this->graph_data_title[$i]);
+				$this_color = $this->get_special_paint_color($title);
 
 				if($i != 0 && $i % $this->i['keys_per_line'] == 0)
 				{
@@ -774,8 +851,9 @@ abstract class phx_graph_core
 				$x = $this->i['left_start'] + 13 + ($this->i['key_item_width'] * ($i % $this->i['keys_per_line']));
 
 				$this->svg_dom->add_element('rect', array('x' => ($x - 13), 'y' => ($y - 5), 'width' => 10, 'height' => 10, 'fill' => $this_color, 'stroke' => self::$c['color']['notches'], 'stroke-width' => 1));
-				$this->svg_dom->add_text_element($this->graph_data_title[$i], array('x' => $x, 'y' => ($y + 4), 'font-size' => self::$c['size']['key'], 'fill' => $this_color, 'text-anchor' => 'start'));
+				$this->svg_dom->add_text_element($title, array('x' => $x, 'y' => ($y + 4), 'font-size' => self::$c['size']['key'], 'fill' => $this_color, 'text-anchor' => 'start'));
 			}
+			$i++;
 		}
 	}
 	protected function draw_arrow($tip_x1, $tip_y1, $tail_x1, $tail_y1, $background_color, $border_color = null, $border_width = 0)
