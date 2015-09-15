@@ -215,7 +215,7 @@ class system_monitor extends pts_module_interface
 		}
 	}
 
-	// Updates single sensor.
+	// Reads value of a single sensor, checks its correctness and saves it to the monitor log.
 	public static function pts_monitor_update(&$sensor)
 	{
 		$sensor_value = phodevi::read_sensor($sensor);
@@ -279,7 +279,7 @@ class system_monitor extends pts_module_interface
 		return $args;
 	}
 
-	// Parse envvar containing parameters of monitored sensors.
+	// Parse environmental variable containing parameters of monitored sensors.
 	private static function prepare_sensor_parameters()
 	{
 		$sensor_list = pts_strings::comma_explode(pts_module::read_variable('MONITOR'));
@@ -320,15 +320,17 @@ class system_monitor extends pts_module_interface
 //		}
 	}
 
+	// Create sensor objects basing on the sensor parameter array.
 	private static function process_sensor_list(&$sensor_parameters)
 	{
 		$monitor_all = array_key_exists('all', $sensor_parameters);
 		foreach (phodevi::supported_sensors() as $sensor)
 		{
-			// add sensor to monitoring list if:
+			// instantiate sensor class if:
 			// a) we want to monitor all the available sensors,
 			// b) we want to monitor all the available sensors of the specified type,
-			// c) parameter array contains this sensor, eg. there exists value for $sensor_parameters[sens_type][sens_name]
+			// c) sensor type and name was passed in an environmental variable
+
 			// ($sensor[0] is the type, $sensor[1] is the name, $sensor[2] is the class name)
 
 			$sensor_type_exists = array_key_exists($sensor[0], $sensor_parameters);
@@ -339,6 +341,7 @@ class system_monitor extends pts_module_interface
 
 			if ($monitor_all || $monitor_all_of_this_type || $sensor_name_exists )
 			{
+				// in some cases we want to create objects representing every possible device supported by the sensor
 				$create_all = $monitor_all || $monitor_all_of_this_type || $monitor_all_of_this_sensor;
 				self::create_sensor_instances($sensor, $sensor_parameters, $create_all);
 			}
@@ -374,6 +377,7 @@ class system_monitor extends pts_module_interface
 		}
 	}
 
+	// Create instances for all of the devices supported by specified sensor.
 	private static function create_all_sensor_instances(&$sensor)
 	{
 		$supported_devices = call_user_func(array($sensor[2], 'get_supported_devices'));
@@ -391,6 +395,7 @@ class system_monitor extends pts_module_interface
 		}
 	}
 
+	// Create sensor object if parameters passed to it are correct.
 	private static function create_single_sensor_instance($sensor, $instance, $param)
 	{
 		if ($sensor[0] === 'cgroup')
@@ -409,7 +414,7 @@ class system_monitor extends pts_module_interface
 		}
 	}
 
-	// Creates cgroups in all of the needed controllers.
+	// Create cgroups in all of the needed controllers.
 	private static function create_monitoring_cgroups()
 	{
 		foreach (self::$cgroup_enabled_controllers as $controller)

@@ -55,7 +55,7 @@ class cpu_usage extends phodevi_sensor
 		return false;
 	}
 
-	public function get_readable_params()
+	public function get_readable_device_name()
 	{
 		if ($this->cpu_to_monitor === "summary")
 		{

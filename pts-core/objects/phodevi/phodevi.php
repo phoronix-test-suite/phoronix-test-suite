@@ -167,7 +167,7 @@ class phodevi extends phodevi_base
         {
                 $sensor = array($sensor_object->get_type(), $sensor_object->get_sensor(), get_class($sensor_object));
 				$name = self::sensor_name($sensor);
-				$params = $sensor_object->get_readable_params();
+				$params = $sensor_object->get_readable_device_name();
 
 				if ($params !== NULL)
 				{
