@@ -125,7 +125,10 @@ abstract class phx_graph_core
 		}
 
 		$this->test_result = &$result_object;
-
+		$this->generate_results_var();
+	}
+	protected function generate_results_var()
+	{
 		if($this->is_multi_way_comparison)
 		{
 			$this->results = array();
@@ -253,42 +256,6 @@ abstract class phx_graph_core
 	{
 		$this->i['hide_graph_identifiers'] = true;
 	}
-	public function loadGraphData($data_array)
-	{
-		return;
-		loadGraphValues($data_array);
-	}
-	public function loadGraphValues($data_array, $data_title = null)
-	{
-		return;
-		foreach($data_array as &$data_item)
-		{
-			if(is_float($data_item))
-			{
-				$data_item = round($data_item, 2);
-			}
-		}
-
-		array_push($this->graph_data, $data_array);
-
-		if(!empty($data_title))
-		{
-			array_push($this->graph_data_title, $data_title);
-		}
-	}
-	public function loadGraphRawValues($data_array)
-	{
-		return;
-		foreach($data_array as &$data_item)
-		{
-			if(is_float($data_item))
-			{
-				$data_item = round($data_item, 2);
-			}
-		}
-
-		array_push($this->graph_data_raw, $data_array);
-	}
 	public function addSubTitle($sub_title)
 	{
 		$sub_titles = array_map('trim', explode('|', $sub_title));
@@ -345,6 +312,11 @@ abstract class phx_graph_core
 		$data_max = $this->test_result->test_result_buffer->get_max_value();
 		if(!is_numeric($data_max))
 		{
+			if(is_array($data_max))
+			{
+				$data_max = max($data_max);
+			}
+
 			$data_max = str_repeat(9, strlen($data_max));
 		}
 		if($data_max > $real_maximum)

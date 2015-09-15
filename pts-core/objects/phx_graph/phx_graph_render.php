@@ -219,16 +219,7 @@ class phx_graph_render
 		switch($display_format)
 		{
 			case 'LINE_GRAPH':
-				if(false && $result_object->test_result_buffer->get_count() > 5)
-				{
-					// If there's too many lines close to each other, it's likely to look cluttered so turn it into horizontal range bar / box chart graph
-					$display_format = 'HORIZONTAL_BOX_PLOT';
-					$graph = new pts_HorizontalBoxPlotGraph($result_object, $result_file);
-				}
-				else
-				{
-					$graph = new pts_LineGraph($result_object, $result_file);
-				}
+				$graph = new phx_graph_lines($result_object, $result_file, $extra_attributes);
 				break;
 			case 'HORIZONTAL_BOX_PLOT':
 				$graph = new pts_HorizontalBoxPlotGraph($result_object, $result_file);
@@ -278,7 +269,7 @@ class phx_graph_render
 						$graph = new pts_CandleStickGraph($result_object, $result_file);
 						break;
 					case 'LINE_GRAPH':
-						$graph = new pts_LineGraph($result_object, $result_file);
+						$graph = new phx_graph_lines($result_object, $result_file, $extra_attributes);
 						break;
 					case 'FILLED_LINE_GRAPH':
 						$graph = new pts_FilledLineGraph($result_object, $result_file);
@@ -292,27 +283,6 @@ class phx_graph_render
 
 		switch($display_format)
 		{
-			case 'LINE_GRAPH':
-				if(isset($extra_attributes['no_overview_text']) && $graph instanceof pts_LineGraph)
-				{
-					$graph->plot_overview_text = false;
-				}
-			case 'FILLED_LINE_GRAPH':
-			case 'BAR_ANALYZE_GRAPH':
-			case 'SCATTER_PLOT':
-				//$graph->hideGraphIdentifiers();
-				foreach($result_object->test_result_buffer->get_buffer_items() as $buffer_item)
-				{
-					$graph->loadGraphValues(pts_strings::comma_explode($buffer_item->get_result_value()), $buffer_item->get_result_identifier());
-					$graph->loadGraphRawValues(pts_strings::comma_explode($buffer_item->get_result_raw()));
-				}
-
-				$scale_special = $result_object->test_profile->get_result_scale_offset();
-				if(!empty($scale_special) && count(($ss = pts_strings::comma_explode($scale_special))) > 0)
-				{
-					$graph->loadGraphIdentifiers($ss);
-				}
-				break;
 			case 'HORIZONTAL_BOX_PLOT':
 				// TODO: should be able to load pts_test_result_buffer_item objects more cleanly into pts_Graph
 				$identifiers = array();

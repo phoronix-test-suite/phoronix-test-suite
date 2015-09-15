@@ -40,7 +40,7 @@ class pts_svg_dom
 		$this->svg = $this->dom->createElementNS('http://www.w3.org/2000/svg', 'svg');
 		$this->svg->setAttribute('xmlns:xlink', 'http://www.w3.org/1999/xlink');
 		$this->svg->setAttribute('version', '1.1');
-		$this->svg->setAttribute('font-family', 'sans-serif');
+		$this->svg->setAttribute('font-family', 'sans-serif, droid-sans, helvetica, verdana, tahoma');
 		$this->svg->setAttribute('viewbox', '0 0 ' . $width . ' ' . $height);
 		$this->svg->setAttribute('width', $width);
 		$this->svg->setAttribute('height', $height);
