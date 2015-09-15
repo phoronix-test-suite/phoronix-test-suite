@@ -52,7 +52,7 @@ class system_monitor extends pts_module_interface
 
 	public static function module_environmental_variables()
 	{
-		return array('MONITOR', 'MONITOR_PARAM_FILE', 'PERFORMANCE_PER_WATT', 'MONITOR_INTERVAL' );
+		return array('MONITOR', 'PERFORMANCE_PER_WATT', 'MONITOR_INTERVAL' );
 	}
 
 	public static function module_info()
