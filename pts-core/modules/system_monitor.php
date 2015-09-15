@@ -322,7 +322,7 @@ class system_monitor extends pts_module_interface
 
 	private static function process_sensor_list(&$sensor_parameters)
 	{
-		$monitor_all = in_array('all', $sensor_parameters);
+		$monitor_all = array_key_exists('all', $sensor_parameters);
 		foreach (phodevi::supported_sensors() as $sensor)
 		{
 			// add sensor to monitoring list if:
@@ -334,10 +334,13 @@ class system_monitor extends pts_module_interface
 			$sensor_type_exists = array_key_exists($sensor[0], $sensor_parameters);
 			$sensor_name_exists = $sensor_type_exists && array_key_exists($sensor[1], $sensor_parameters[$sensor[0]]);
 			$monitor_all_of_this_type = $sensor_type_exists && array_key_exists('all', $sensor_parameters[$sensor[0]]);
+			$monitor_all_of_this_sensor = $sensor_type_exists && $sensor_name_exists
+					&& in_array('all', $sensor_parameters[$sensor[0]][$sensor[1]]);
 
-			if ($monitor_all  || $monitor_all_of_this_type || $sensor_name_exists )
+			if ($monitor_all || $monitor_all_of_this_type || $sensor_name_exists )
 			{
-				self::create_sensor_instances($sensor, $sensor_parameters);
+				$create_all = $monitor_all || $monitor_all_of_this_type || $monitor_all_of_this_sensor;
+				self::create_sensor_instances($sensor, $sensor_parameters, $create_all);
 			}
 		}
 
@@ -347,8 +350,14 @@ class system_monitor extends pts_module_interface
 		}
 	}
 
-	private static function create_sensor_instances(&$sensor, &$sensor_parameters)
+	private static function create_sensor_instances(&$sensor, &$sensor_parameters, $create_all)
 	{
+		if ($create_all)
+		{
+			self::create_all_sensor_instances($sensor);
+			return;
+		}
+
 		$sensor_instances = $sensor_parameters[$sensor[0]][$sensor[1]];
 
 		// If no instances specified, create one with default parameters.
@@ -362,6 +371,23 @@ class system_monitor extends pts_module_interface
 		{
 			self::create_single_sensor_instance($sensor, $instance, $param);
 			//TODO show information when passed parameters are incorrect
+		}
+	}
+
+	private static function create_all_sensor_instances(&$sensor)
+	{
+		$supported_devices = call_user_func(array($sensor[2], 'get_supported_devices'));
+		$instance_no = 0;
+
+		if ($supported_devices === NULL)
+		{
+			self::create_single_sensor_instance($sensor, 0, NULL);
+			return;
+		}
+
+		foreach ($supported_devices as $device)
+		{
+			self::create_single_sensor_instance($sensor, $instance_no++, $device);
 		}
 	}
 
