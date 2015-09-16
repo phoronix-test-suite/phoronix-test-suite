@@ -800,6 +800,7 @@ class pts_test_run_manager
 				$this->result_file->set_internal_tags($this->get_internal_tags());
 				$this->result_file->set_reference_id($this->get_reference_id());
 				$this->result_file->set_preset_environment_variables($this->get_preset_environment_variables());
+				$this->result_file->add_system($sys);
 			}
 
 			pts_client::setup_test_result_directory($this->get_file_name());
@@ -928,7 +929,6 @@ class pts_test_run_manager
 			{
 				// TODO XXX JSON In null and notes
 				$sys = new pts_result_file_system($this->results_identifier, phodevi::system_hardware(true), phodevi::system_software(true), $this->generate_json_system_attributes(), pts_client::current_user(), pts_test_notes_manager::generate_test_notes($this->tests_to_run), date('Y-m-d H:i:s'), PTS_VERSION);
-				$this->result_file->add_system($sys);
 			}
 
 			echo PHP_EOL;
