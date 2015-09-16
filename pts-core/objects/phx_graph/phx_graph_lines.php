@@ -23,6 +23,7 @@
 
 class phx_graph_lines extends phx_graph_core
 {
+	private $max_count;
 	public function __construct(&$result_object, &$result_file = null, $extra_attributes = null)
 	{
 		$max_count = 0;
@@ -70,13 +71,16 @@ class phx_graph_lines extends phx_graph_core
 				// add array_values($json_r)
 				$this->test_result->test_result_buffer->add_test_result($system, array_values($result_r), array_values($raw_r));
 			}
-			$max_count = count($this->graph_identifiers);
+			$max_count = count($this->graph_identifiers) + 2;
 		}
-		$this->i['identifier_width'] = $max_count > 0 ? (($this->i['graph_left_end'] - $this->i['left_start']) / $max_count) : 1;
+
+		$this->max_count = $max_count;
 	}
 	protected function render_graph_pre_init()
 	{
 		// Do some common work to this object
+		$this->i['identifier_width'] = $this->max_count > 0 ? (($this->i['graph_left_end'] - $this->i['left_start']) / $this->max_count) : 1;
+
 		if(!$this->i['hide_graph_identifiers'])
 		{
 			$identifier_count = $this->test_result->test_result_buffer->get_count();
@@ -286,13 +290,11 @@ class phx_graph_lines extends phx_graph_core
 	}
 	protected function renderGraphLines()
 	{
-		$calculations_r = array();
 		$prev_value = 0;
 
 		foreach($this->test_result->test_result_buffer->buffer_items as &$buffer_item)
 		{
 			$paint_color = $this->get_special_paint_color($buffer_item->get_result_identifier());
-			$calculations_r[$paint_color] = array();
 			$result_array = $buffer_item->get_result_value();
 			$raw_array = $buffer_item->get_result_raw();
 			$point_counter = count($result_array);
@@ -335,7 +337,6 @@ class phx_graph_lines extends phx_graph_core
 					$regression_plots[$i] = $identifier . ': ' . $value;
 				}
 
-				array_push($calculations_r[$paint_color], $value);
 				$prev_identifier = $identifier;
 				$prev_value = $value;
 			}
