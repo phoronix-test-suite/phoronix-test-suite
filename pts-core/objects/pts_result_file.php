@@ -149,7 +149,10 @@ class pts_result_file
 	}
 	public function add_system($system)
 	{
-		array_push($this->systems, $system);
+		if(!in_array($system, $this->systems))
+		{
+			array_push($this->systems, $system);
+		}
 	}
 	public function get_systems()
 	{
