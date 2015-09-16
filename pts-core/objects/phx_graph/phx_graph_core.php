@@ -213,7 +213,7 @@ abstract class phx_graph_core
 		$config['color']['body_light'] = '#949494';
 		$config['color']['highlight'] = '#005a00';
 		$config['color']['alert'] = '#C80000';
-		$config['color']['paint'] = array('#065695', '#e12128', '#009345', '#1b75bb', '#a3365c', '#2794A9', '#ff5800', '#221914', '#AC008A', '#E00022', '#3A9137', '#00F6FF', '#8A00AC', '#949200', '#797766', '#5598b1', '#555555', '#757575', '#999999', '#CCCDDD');
+		$config['color']['paint'] = array('#2196f3', '#f44336', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5', '#00bcd4', '#009688', '#4caf50', '#ffeb3b', '#ff5722', '#795548', '#9e9e9e', '#607d8b');
 
 		// Text
 		$config['size']['tick_mark'] = 10;
@@ -289,17 +289,17 @@ abstract class phx_graph_core
 	{
 		// For now to try to improve the color handling of line graphs, first try to use a pre-defined pool of colors until falling back to the old color code once exhausted
 		// Thanks to ua=42 in the Phoronix Forums for the latest attempt at improving the automated color handling
-		static $predef_line_colors = array('#FFB300', '#803E75', '#FF6800', '#A6BDD7', '#C10020', '#CEA262', '#817066', '#007D34', '#F6768E', '#00538A', '#FF7A5C', '#53377A', '#FF8E00', '#B32851', '#F4C800', '#7F180D', '#93AA00', '#593315', '#F13A13', '#232C16');
+		static $predef_line_colors = array('#2196f3', '#f44336', '#e91e63', '#673ab7', '#01579b', '#009688', '#4caf50',  '#ffeb3b', '#ff5722', '#795548', '#9e9e9e', '#607d8b', '#FFB300', '#803E75', '#FF6800', '#A6BDD7', '#C10020', '#CEA262', '#817066', '#007D34', '#F6768E', '#00538A', '#FF7A5C', '#53377A', '#FF8E00', '#B32851', '#F4C800', '#7F180D', '#93AA00', '#593315', '#F13A13', '#232C16');
 
 		if(!isset(self::$color_cache[0][$identifier]))
 		{
 			if(!empty($predef_line_colors))
 			{
-				self::$color_cache[0][$identifier] = array_pop($predef_line_colors);
+				self::$color_cache[0][$identifier] = array_shift($predef_line_colors);
 			}
 			else
 			{
-				self::$color_cache[0][$identifier] = $this->get_paint_color($identifier);
+				self::$color_cache[0][$identifier] = sprintf('#%06X', mt_rand(0, 0xFFFFFF));
 			}
 		}
 
@@ -872,10 +872,7 @@ abstract class phx_graph_core
 	}
 	public static function color_cache($ns, $id, &$colors)
 	{
-		static $color_shift = 0;
 		$i = count(self::$color_cache);
-		$color_shift_size = ($i == 0 ? 120 : 360 / $i); // can't be assigned directly to static var
-
 		if(!isset(self::$color_cache[$ns][$id]))
 		{
 			if(!isset(self::$color_cache[$ns]))
@@ -885,30 +882,25 @@ abstract class phx_graph_core
 
 			do
 			{
-				if(empty($colors))
-				{
-					return false;
-				}
+				$this_color = $colors[array_rand($colors)];
 
-				$hsl = self::color_rgb_to_hsl($colors[0]);
-				$hsl = self::shift_hsl($hsl, $color_shift % 360);
-				$color = self::color_hsl_to_hex($hsl);
+				if(rand(0, 2) == 1)
+				{
+					$shifts = array(0, 90, 120, 180, 270);
+					$color_shift = $shifts[array_rand($shifts)];
 
-				$color_shift += $color_shift_size;
-				if($color_shift == ($color_shift_size * 3))
-				{
-					$color_shift_size *= 0.3;
-					$colors[0] = self::color_shade($colors[0], 0.9, 1);
-				}
-				else if($color_shift > 630)
-				{
-					// We have already exhausted the cache pool once
-					array_shift($colors);
-					$color_shift = 0;
+					$hsl = self::color_rgb_to_hsl($this_color);
+					$hsl = self::shift_hsl($hsl, $color_shift);
+					$this_color = self::color_hsl_to_hex($hsl);
+
+					if(rand(0, 2) == 2)
+					{
+						$this_color = self::color_shade($this_color, 0.5, 1);
+					}
 				}
 			}
-			while(in_array($color, self::$color_cache[$ns]));
-			self::$color_cache[$ns][$id] = $color;
+			while(in_array($this_color, self::$color_cache[$ns]));
+			self::$color_cache[$ns][$id] = $this_color;
 		}
 
 		return self::$color_cache[$ns][$id];

@@ -155,26 +155,6 @@ class phx_graph_lines extends phx_graph_core
 			}
 		}
 	}
-	protected function get_special_paint_color($identifier)
-	{
-		// For now to try to improve the color handling of line graphs, first try to use a pre-defined pool of colors until falling back to the old color code once exhausted
-		static $line_color_cache = null;
-		static $predef_line_colors = array('#000000', '#FFB300', '#803E75', '#FF6800', '#A6BDD7', '#C10020', '#CEA262', '#817066', '#007D34', '#F6768E', '#00538A', '#FF7A5C', '#53377A', '#FF8E00', '#B32851', '#F4C800', '#7F180D', '#93AA00', '#593315', '#F13A13', '#232C16');
-
-		if(!isset($line_color_cache[$identifier]))
-		{
-			if(!empty($predef_line_colors))
-			{
-				$line_color_cache[$identifier] = array_shift($predef_line_colors);
-			}
-			else
-			{
-				$line_color_cache[$identifier] = $this->get_paint_color($identifier);
-			}
-		}
-
-		return $line_color_cache[$identifier];
-	}
 	protected function render_graph_key()
 	{
 		if(isset($this->i['force_simple_keys']) && $this->i['force_simple_keys'])
