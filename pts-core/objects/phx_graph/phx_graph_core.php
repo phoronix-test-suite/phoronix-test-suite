@@ -818,8 +818,8 @@ abstract class phx_graph_core
 
 				$this->svg_dom->add_element('rect', array('x' => ($x - 13), 'y' => ($y - 5), 'width' => 10, 'height' => 10, 'fill' => $this_color, 'stroke' => self::$c['color']['notches'], 'stroke-width' => 1));
 				$this->svg_dom->add_text_element($title, array('x' => $x, 'y' => ($y + 4), 'font-size' => self::$c['size']['key'], 'fill' => $this_color, 'text-anchor' => 'start'));
+				$i++;
 			}
-			$i++;
 		}
 	}
 	protected function draw_arrow($tip_x1, $tip_y1, $tail_x1, $tail_y1, $background_color, $border_color = null, $border_width = 0)

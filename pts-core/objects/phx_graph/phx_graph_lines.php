@@ -172,8 +172,9 @@ class phx_graph_lines extends phx_graph_core
 		$num_rows = max(1, ceil($this->test_result->test_result_buffer->get_count() / $this->i['keys_per_line']));
 		$num_cols = ceil($this->test_result->test_result_buffer->get_count() / $num_rows);
 
-		$y_start = $this->i['top_start'] - $this->graph_key_height() + $this->getStatisticsHeaderHeight();
-		$y_end = $y_start + $this->i['key_line_height'] * ($num_rows - 1);
+		$y_start = $this->i['top_heading_height'] + 24;
+		//$y_start = $this->i['top_start'] - $this->graph_key_height() + $this->getStatisticsHeaderHeight();
+		$y_end = $y_start + $this->i['key_line_height'] * ($num_rows );
 		$x_start = $this->i['left_start'];
 		$x_end = $x_start + $this->i['key_item_width'] * ($num_cols - 1);
 
@@ -401,7 +402,7 @@ class phx_graph_lines extends phx_graph_core
 		$this->i['key_item_width'] = $this->i['key_longest_string_width'] + $this->get_stat_word_width() * 3 + $item_width_spacing;
 
 		// if there are <=4 data sets, then use a single column, otherwise, try and multi-col it
-		if($this->test_result->test_result_buffer->get_count() <= 3)
+		if($this->test_result->test_result_buffer->get_count() < 3)
 		{
 			$this->i['keys_per_line'] = 1;
 		}
