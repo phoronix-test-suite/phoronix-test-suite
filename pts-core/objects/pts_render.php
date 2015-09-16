@@ -128,7 +128,7 @@ class pts_render
 			$result_identifiers = $result_object->test_result_buffer->get_identifiers();
 			if($result_file->is_multi_way_comparison($result_identifiers, $extra_attributes) || isset($extra_attributes['compact_to_scalar']) || isset($extra_attributes['compact_scatter']))
 			{
-				if((isset($extra_attributes['compact_to_scalar']) || (false && $result_file->is_multi_way_comparison($result_identifiers, $extra_attributes))) && in_array($result_object->test_profile->get_display_format(), array('LINE_GRAPH', 'FILLED_LINE_GRAPH')))
+				if((isset($extra_attributes['compact_to_scalar']) || (false && $result_file->is_multi_way_comparison($result_identifiers, $extra_attributes))) && in_array($result_object->test_profile->get_display_format(), array('FILLED_LINE_GRAPH')))
 				{
 					// Convert multi-way line graph into horizontal box plot
 					if(true) // XXX is there any cases where we don't want horizontal box plot but prefer averaged bar graph?
@@ -170,7 +170,7 @@ class pts_render
 					pts_render::compact_result_file_test_object($result_object, $result_table, $result_file, $extra_attributes);
 				}
 			}
-			else if(in_array($result_object->test_profile->get_display_format(), array('LINE_GRAPH', 'FILLED_LINE_GRAPH')))
+			else if(in_array($result_object->test_profile->get_display_format(), array('LINE_GRAPH')))
 			{
 					// Check to see for line graphs if every result is an array of the same result (i.e. a flat line for every result).
 					// If all the results are just flat lines, you might as well convert it to a bar graph
@@ -249,9 +249,6 @@ class pts_render
 			case 'IMAGE_COMPARISON':
 				$graph = new pts_ImageComparisonGraph($result_object, $result_file);
 				break;
-			case 'FILLED_LINE_GRAPH':
-				$graph = new pts_FilledLineGraph($result_object, $result_file);
-				break;
 			case 'SCATTER_PLOT':
 				$graph = new pts_ScatterPlot($result_object, $result_file);
 				break;
@@ -276,9 +273,6 @@ class pts_render
 						break;
 					case 'LINE_GRAPH':
 						$graph = new pts_LineGraph($result_object, $result_file);
-						break;
-					case 'FILLED_LINE_GRAPH':
-						$graph = new pts_FilledLineGraph($result_object, $result_file);
 						break;
 					default:
 						if($bar_orientation == 'VERTICAL')
@@ -331,7 +325,6 @@ class pts_render
 				{
 					$graph->plot_overview_text = false;
 				}
-			case 'FILLED_LINE_GRAPH':
 			case 'BAR_ANALYZE_GRAPH':
 			case 'SCATTER_PLOT':
 				//$graph->hideGraphIdentifiers();
@@ -890,7 +883,7 @@ class pts_render
 				case 'SCATTER_PLOT';
 					break;
 				default:
-					$line_graph_type = isset($extra_attributes['filled_line_graph']) ? 'FILLED_LINE_GRAPH' : 'LINE_GRAPH';
+					$line_graph_type = 'LINE_GRAPH';
 					$mto->test_profile->set_display_format((!isset($extra_attributes['force_tracking_line_graph']) && (count($days) < 5 || ($is_tracking == false && !isset($extra_attributes['force_line_graph_compact']))) ? 'BAR_ANALYZE_GRAPH' : $line_graph_type));
 					break;
 			}

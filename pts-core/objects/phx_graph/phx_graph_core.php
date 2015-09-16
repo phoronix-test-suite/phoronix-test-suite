@@ -631,7 +631,7 @@ abstract class phx_graph_core
 
 			if(isset($this->d['link_alternate_view']) && $this->d['link_alternate_view'])
 			{
-				// offer link of image to $this->d['link_alternate_view']
+				// add SVG version: https://gist.github.com/xorgy/169a65e29a3c2cc41e7f
 				$this->svg_dom->add_element('image', array('http_link' => $this->d['link_alternate_view'], 'xlink:href' => 'https://openbenchmarking.org/static/images/ob-10x16.png', 'x' => 4, 'y' => ($bottom_heading_start + 1), 'width' => 10, 'height' => 16));
 			}
 

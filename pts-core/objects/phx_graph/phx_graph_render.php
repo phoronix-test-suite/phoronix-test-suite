@@ -179,12 +179,11 @@ class phx_graph_render
 					//pts_render::compact_result_file_test_object($result_object, $result_table, $result_file, $extra_attributes);
 					if($result_object->test_profile->get_display_format() == 'LINE_GRAPH' || $extra_attributes['force_tracking_line_graph'])
 					{
-						$line_graph_type = isset($extra_attributes['filled_line_graph']) ? 'FILLED_LINE_GRAPH' : 'LINE_GRAPH';
-						$result_object->test_profile->set_display_format(isset($extra_attributes['filled_line_graph']) ? 'FILLED_LINE_GRAPH' : 'LINE_GRAPH');
+						$result_object->test_profile->set_display_format('LINE_GRAPH');
 					}
 				}
 			}
-			else if(in_array($result_object->test_profile->get_display_format(), array('LINE_GRAPH', 'FILLED_LINE_GRAPH')))
+			else if(in_array($result_object->test_profile->get_display_format(), array('LINE_GRAPH')))
 			{
 					// Check to see for line graphs if every result is an array of the same result (i.e. a flat line for every result).
 					// If all the results are just flat lines, you might as well convert it to a bar graph
@@ -246,9 +245,6 @@ class phx_graph_render
 			case 'IMAGE_COMPARISON':
 				$graph = new pts_ImageComparisonGraph($result_object, $result_file);
 				break;
-			case 'FILLED_LINE_GRAPH':
-				$graph = new pts_FilledLineGraph($result_object, $result_file);
-				break;
 			case 'SCATTER_PLOT':
 				$graph = new pts_ScatterPlot($result_object, $result_file);
 				break;
@@ -268,14 +264,8 @@ class phx_graph_render
 
 				switch($requested_graph_type)
 				{
-					case 'CANDLESTICK':
-						$graph = new pts_CandleStickGraph($result_object, $result_file);
-						break;
 					case 'LINE_GRAPH':
 						$graph = new phx_graph_lines($result_object, $result_file, $extra_attributes);
-						break;
-					case 'FILLED_LINE_GRAPH':
-						$graph = new pts_FilledLineGraph($result_object, $result_file);
 						break;
 					default:
 						$graph = new phx_graph_horizontal_bars($result_object, $result_file, $extra_attributes);
@@ -635,233 +625,6 @@ class phx_graph_render
 		$test_result->set_test_result_buffer($result_buffer);
 
 		return $test_result;
-	}
-	public static function compact_result_file_test_object(&$mto, &$result_table = false, &$result_file, $extra_attributes = null)
-	{
-		$identifiers_inverted = $result_file && $result_file->is_multi_way_inverted();
-		// TODO: this may need to be cleaned up, its logic is rather messy
-		$condense_multi_way = isset($extra_attributes['condense_multi_way']);
-		if(count($mto->test_profile->get_result_scale_offset()) > 0)
-		{
-			// It's already doing something
-			return;
-		}
-
-		$scale_special = array();
-		$days = array();
-		$systems = array();
-		$prev_date = null;
-		$is_tracking = true;
-		$sha1_short_count = 0;
-		$buffer_count = $mto->test_result_buffer->get_count();
-
-		if($identifiers_inverted)
-		{
-			$system_index = 0;
-			$date_index = 1;
-		}
-		else
-		{
-			$system_index = 1;
-			$date_index = 0;
-		}
-
-		foreach($mto->test_result_buffer->get_buffer_items() as $buffer_item)
-		{
-			$identifier = array_map('trim', explode(':', $buffer_item->get_result_identifier()));
-
-			switch(count($identifier))
-			{
-				case 2:
-					$system = $identifier[$system_index];
-					$date = $identifier[$date_index];
-					break;
-				case 1:
-					$system = 0;
-					$date = $identifier[0];
-					break;
-				default:
-					return;
-					break;
-			}
-
-			if(!isset($systems[$system]))
-			{
-				$systems[$system] = 0;
-			}
-			if(!isset($days[$date]))
-			{
-				$days[$date] = null;
-			}
-
-			if($is_tracking)
-			{
-				// First do a dirty SHA1 hash check
-				if(strlen($date) != 40 || strpos($date, ' ') !== false)
-				{
-					if(($x = strpos($date, ' + ')) !== false)
-					{
-						$date = substr($date, 0, $x);
-					}
-
-					// Check to see if only numeric changes are being made
-					$sha1_short_hash_ending = isset($date[7]) && ctype_alnum(substr($date, -8));
-					$date = str_replace('s', null, pts_strings::remove_from_string($date, pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DASH | pts_strings::CHAR_DECIMAL));
-
-					if($sha1_short_hash_ending)
-					{
-						$sha1_short_count++;
-					}
-
-					if($prev_date != null && $date != $prev_date && $sha1_short_hash_ending == false && $sha1_short_count < 3)
-					{
-						$is_tracking = false;
-					}
-
-					$prev_date = $date;
-				}
-			}
-		}
-
-		if($is_tracking)
-		{
-			$prev_date_r = explode(' ', $prev_date);
-
-			if(count($prev_date_r) == 2 && ctype_alpha($prev_date_r[0]))
-			{
-				// This check should make it so when like testing every Ubuntu releases (Ubuntu 11.04, Ubuntu 11.10, etc) it's not in a line graph
-				$is_tracking = false;
-			}
-		}
-		else if($is_tracking == false && $sha1_short_count > 5)
-		{
-			// It's probably actually tracking..... based upon Stefan's Wine 1.4 example on 15 March 2012
-			$is_tracking = true;
-		}
-
-		foreach(array_keys($days) as $day_key)
-		{
-			$days[$day_key] = $systems;
-		}
-
-		$raw_days = $days;
-		$json_days = $days;
-
-		foreach($mto->test_result_buffer->get_buffer_items() as $buffer_item)
-		{
-			$identifier = array_map('trim', explode(':', $buffer_item->get_result_identifier()));
-
-			switch(count($identifier))
-			{
-				case 2:
-					$system = $identifier[$system_index];
-					$date = $identifier[$date_index];
-					break;
-				case 1:
-					$system = 0;
-					$date = $identifier[0];
-					break;
-				default:
-					return;
-					break;
-			}
-
-			$days[$date][$system] = $buffer_item->get_result_value();
-			$raw_days[$date][$system] = $buffer_item->get_result_raw();
-			$json_days[$date][$system] = $buffer_item->get_result_json();
-
-			if(!is_numeric($days[$date][$system]))
-			{
-				return;
-			}
-		}
-
-		$mto->test_result_buffer = new pts_test_result_buffer();
-		$day_keys = array_keys($days);
-
-		if($condense_multi_way)
-		{
-			$mto->set_used_arguments_description($mto->get_arguments_description() . ' | Composite Of: ' . implode(' - ', array_keys($days)));
-			foreach(array_keys($systems) as $system_key)
-			{
-				$sum = 0;
-				$count = 0;
-
-				foreach($day_keys as $day_key)
-				{
-					$sum += $days[$day_key][$system_key];
-					$count++;
-				}
-
-				$mto->test_result_buffer->add_test_result($system_key, ($sum / $count));
-			}
-		}
-		else
-		{
-			$mto->test_profile->set_result_scale($mto->test_profile->get_result_scale() . ' | ' . implode(',', array_keys($days)));
-
-			if($is_tracking && $buffer_count < 16 && $result_file && pts_result_file_analyzer::analyze_result_file_intent($result_file) == false)
-			{
-				// It can't be a tracker if the result file is comparing hardware/software, etc
-				$is_tracking = false;
-			}
-
-			switch($mto->test_profile->get_display_format())
-			{
-				//case 'HORIZONTAL_BOX_PLOT':
-				//	$mto->test_profile->set_display_format('HORIZONTAL_BOX_PLOT_MULTI');
-				//	break;
-				case 'SCATTER_PLOT';
-					break;
-				default:
-					$line_graph_type = isset($extra_attributes['filled_line_graph']) ? 'FILLED_LINE_GRAPH' : 'LINE_GRAPH';
-					$mto->test_profile->set_display_format((!isset($extra_attributes['force_tracking_line_graph']) && (count($days) < 5 || ($is_tracking == false && !isset($extra_attributes['force_line_graph_compact']))) ? 'BAR_ANALYZE_GRAPH' : $line_graph_type));
-					break;
-			}
-
-			foreach(array_keys($systems) as $system_key)
-			{
-				$results = array();
-				$raw_results = array();
-				$json_results = array();
-
-				foreach($day_keys as $day_key)
-				{
-					array_push($results, $days[$day_key][$system_key]);
-					array_push($raw_results, $raw_days[$day_key][$system_key]);
-					pts_arrays::unique_push($json_results, $json_days[$day_key][$system_key]);
-				}
-
-				// TODO XXX: Make JSON data work for multi-way comparisons!
-
-				if(count($json_results) == 1)
-				{
-					$json = array_shift($json_results);
-				}
-				else
-				{
-					$json = null;
-				}
-
-				$mto->test_result_buffer->add_test_result($system_key, implode(',', $results), implode(',', $raw_results), $json);
-			}
-		}
-
-		if($result_table !== false)
-		{
-			foreach(array_keys($systems) as $system_key)
-			{
-				foreach($day_keys as $day_key)
-				{
-					if(!isset($result_table[$system_key][$day_key]))
-					{
-						$result_table[$system_key][$day_key] = array();
-					}
-
-					array_push($result_table[$system_key][$day_key], $days[$day_key][$system_key], $raw_days[$day_key][$system_key]);
-				}
-			}
-		}
 	}
 	public static function multi_way_identifier_check($identifiers)
 	{
