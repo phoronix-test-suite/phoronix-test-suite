@@ -800,6 +800,9 @@ class pts_test_run_manager
 				$this->result_file->set_internal_tags($this->get_internal_tags());
 				$this->result_file->set_reference_id($this->get_reference_id());
 				$this->result_file->set_preset_environment_variables($this->get_preset_environment_variables());
+
+				// TODO XXX JSON In null and notes
+				$sys = new pts_result_file_system($this->results_identifier, phodevi::system_hardware(true), phodevi::system_software(true), $this->generate_json_system_attributes(), pts_client::current_user(), pts_test_notes_manager::generate_test_notes($this->tests_to_run), date('Y-m-d H:i:s'), PTS_VERSION);
 				$this->result_file->add_system($sys);
 			}
 
@@ -927,8 +930,7 @@ class pts_test_run_manager
 
 			if($this->is_new_result_file || $this->result_already_contains_identifier() == false)
 			{
-				// TODO XXX JSON In null and notes
-				$sys = new pts_result_file_system($this->results_identifier, phodevi::system_hardware(true), phodevi::system_software(true), $this->generate_json_system_attributes(), pts_client::current_user(), pts_test_notes_manager::generate_test_notes($this->tests_to_run), date('Y-m-d H:i:s'), PTS_VERSION);
+				// nothing to do here now
 			}
 
 			echo PHP_EOL;
