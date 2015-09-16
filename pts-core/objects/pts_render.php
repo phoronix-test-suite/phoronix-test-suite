@@ -202,7 +202,7 @@ class pts_render
 					}
 			}
 		}
-
+$result_object->test_profile->set_display_format('HORIZONTAL_BOX_PLOT');
 		$display_format = $result_object->test_profile->get_display_format();
 		$bar_orientation = 'HORIZONTAL'; // default to horizontal bar graph
 

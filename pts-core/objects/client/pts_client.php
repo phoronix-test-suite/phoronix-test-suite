@@ -1123,13 +1123,6 @@ class pts_client
 				}
 			}
 			unset($graph);
-
-			/*
-			// TODO XXX: just stuffing some debug code here temporarily while working on block diagram code...
-			$graph = new pts_BlockDiagramGraph($result_file);
-			$graph->renderGraph();
-			$graph->svg_dom->output($save_to_dir . '/result-graphs/blocks.BILDE_EXTENSION');
-			*/
 		}
 
 		// Save XSL
@@ -1215,7 +1208,7 @@ class pts_client
 	public static function regenerate_graphs($result_file_identifier, $full_process_string = false, $extra_graph_attributes = null)
 	{
 		$save_to_dir = pts_client::setup_test_result_directory($result_file_identifier);
-		$generated_graphs = pts_client::generate_result_file_graphs($result_file_identifier, $save_to_dir, false, $extra_graph_attributes);
+		$generated_graphs = pts_client::generate_result_file_graphs($result_file_identifier, $save_to_dir, $extra_graph_attributes);
 		$generated = count($generated_graphs) > 0;
 
 		if($generated && $full_process_string)

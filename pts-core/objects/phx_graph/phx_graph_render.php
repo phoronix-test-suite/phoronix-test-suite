@@ -216,6 +216,10 @@ class phx_graph_render
 			}
 		}
 
+		if(isset($extra_attributes['graph_render_type']))
+		{ echo 11111;
+			$result_object->test_profile->set_display_format($extra_attributes['graph_render_type']);
+		}
 		$display_format = $result_object->test_profile->get_display_format();
 
 		switch($display_format)
@@ -224,7 +228,7 @@ class phx_graph_render
 				$graph = new phx_graph_lines($result_object, $result_file, $extra_attributes);
 				break;
 			case 'HORIZONTAL_BOX_PLOT':
-				$graph = new pts_HorizontalBoxPlotGraph($result_object, $result_file);
+				$graph = new phx_graph_box_plot($result_object, $result_file, $extra_attributes);
 				break;
 			case 'BAR_ANALYZE_GRAPH':
 			case 'BAR_GRAPH':
@@ -249,49 +253,21 @@ class phx_graph_render
 				$graph = new pts_ScatterPlot($result_object, $result_file);
 				break;
 			default:
-				if(isset($extra_attributes['graph_render_type']))
-				{
-					$requested_graph_type = $extra_attributes['graph_render_type'];
-				}
-				else if(defined('GRAPH_RENDER_TYPE'))
-				{
-					$requested_graph_type = GRAPH_RENDER_TYPE;
-				}
-				else
-				{
-					$requested_graph_type = null;
-				}
 
 				switch($requested_graph_type)
 				{
 					case 'LINE_GRAPH':
 						$graph = new phx_graph_lines($result_object, $result_file, $extra_attributes);
 						break;
+					case 'HORIZONTAL_BOX_PLOT':
+						$graph = new phx_graph_box_plot($result_object, $result_file, $extra_attributes);
+						break;
 					default:
 						$graph = new phx_graph_horizontal_bars($result_object, $result_file, $extra_attributes);
 						break;
 				}
 				break;
-		}
 
-		switch($display_format)
-		{
-			case 'HORIZONTAL_BOX_PLOT':
-				// TODO: should be able to load pts_test_result_buffer_item objects more cleanly into pts_Graph
-				$identifiers = array();
-				$values = array();
-
-				foreach($result_object->test_result_buffer->get_buffer_items() as $buffer_item)
-				{
-					array_push($identifiers, $buffer_item->get_result_identifier());
-					array_push($values, pts_strings::comma_explode($buffer_item->get_result_value()));
-				}
-
-				$graph->loadGraphIdentifiers($identifiers);
-				$graph->loadGraphValues($values);
-				break;
-			default:
-				break;
 		}
 
 		self::report_test_notes_to_graph($graph, $result_object);
