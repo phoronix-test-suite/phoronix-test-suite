@@ -195,7 +195,7 @@ class phx_graph_lines extends phx_graph_core
 				}
 
 				$identifier_title = $this->test_result->test_result_buffer->buffer_items[$i]->get_result_identifier();
-				$this_color = $this->get_special_paint_color($identifier_title);
+				$this_color = $this->get_paint_color($identifier_title);
 
 				// draw square
 				$this->svg_dom->add_element('rect',
@@ -274,7 +274,7 @@ class phx_graph_lines extends phx_graph_core
 
 		foreach($this->test_result->test_result_buffer->buffer_items as &$buffer_item)
 		{
-			$paint_color = $this->get_special_paint_color($buffer_item->get_result_identifier());
+			$paint_color = $this->get_paint_color($buffer_item->get_result_identifier());
 			$result_array = $buffer_item->get_result_value();
 			$raw_array = $buffer_item->get_result_raw();
 			$point_counter = count($result_array);

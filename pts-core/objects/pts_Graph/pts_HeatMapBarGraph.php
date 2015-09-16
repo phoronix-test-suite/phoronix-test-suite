@@ -57,6 +57,16 @@ class pts_HeatMapBarGraph extends pts_Graph
 	{
 		return count($this->bars);
 	}
+	public static function color_hex_to_rgb($hex)
+	{
+		$color = hexdec($hex);
+
+		return array(
+			'r' => ($color >> 16) & 0xff,
+			'g' => ($color >> 8) & 0xff,
+			'b' => $color & 0xff
+			);
+	}
 	protected static function compare_bars_by_hardware_subsystem($a, $b)
 	{
 		return $a['test_data']['h'] == $b['test_data']['h'] ? strcmp($a['test_data']['t'], $b['test_data']['t']) : strcmp($a['test_data']['h'], $b['test_data']['h']);
@@ -64,6 +74,26 @@ class pts_HeatMapBarGraph extends pts_Graph
 	public function sort_results_by_hardware_subsystem()
 	{
 		usort($this->bars, array('self', 'compare_bars_by_hardware_subsystem'));
+	}
+	public static function color_rgb_to_hex($r, $g, $b)
+	{
+		$color = ($r << 16) | ($g << 8) | $b;
+		return '#' . sprintf('%06x', $color);
+	}
+	public static function color_gradient($color1, $color2, $color_weight)
+	{
+		$color1 = self::color_hex_to_rgb($color1);
+		$color2 = self::color_hex_to_rgb($color2);
+
+		$diff_r = $color2['r'] - $color1['r'];
+		$diff_g = $color2['g'] - $color1['g'];
+		$diff_b = $color2['b'] - $color1['b'];
+
+		$r = ($color1['r'] + $diff_r * $color_weight);
+		$g = ($color1['g'] + $diff_g * $color_weight);
+		$b = ($color1['b'] + $diff_b * $color_weight);
+
+		return self::color_rgb_to_hex($r, $g, $b);
 	}
 	public function generate_display()
 	{

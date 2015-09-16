@@ -213,7 +213,7 @@ abstract class phx_graph_core
 		$config['color']['body_light'] = '#949494';
 		$config['color']['highlight'] = '#005a00';
 		$config['color']['alert'] = '#C80000';
-		$config['color']['paint'] = array('#2196f3', '#f44336', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5', '#00bcd4', '#009688', '#4caf50', '#ffeb3b', '#ff5722', '#795548', '#9e9e9e', '#607d8b');
+		$config['color']['paint'] = array('#2196f3', '#f44336', '#e91e63', '#673ab7', '#01579b', '#009688', '#4caf50',  '#ffeb3b', '#ff5722', '#795548', '#9e9e9e', '#607d8b', '#FFB300', '#803E75', '#FF6800', '#A6BDD7', '#C10020', '#CEA262', '#817066', '#007D34', '#F6768E', '#00538A', '#FF7A5C', '#53377A', '#FF8E00', '#B32851', '#F4C800', '#7F180D', '#93AA00', '#593315', '#F13A13', '#232C16');
 
 		// Text
 		$config['size']['tick_mark'] = 10;
@@ -283,27 +283,20 @@ abstract class phx_graph_core
 
 	protected function get_paint_color($identifier)
 	{
-		return self::color_cache(0, $identifier, self::$c['color']['paint']);
-	}
-	protected function get_special_paint_color($identifier)
-	{
 		// For now to try to improve the color handling of line graphs, first try to use a pre-defined pool of colors until falling back to the old color code once exhausted
-		// Thanks to ua=42 in the Phoronix Forums for the latest attempt at improving the automated color handling
-		static $predef_line_colors = array('#2196f3', '#f44336', '#e91e63', '#673ab7', '#01579b', '#009688', '#4caf50',  '#ffeb3b', '#ff5722', '#795548', '#9e9e9e', '#607d8b', '#FFB300', '#803E75', '#FF6800', '#A6BDD7', '#C10020', '#CEA262', '#817066', '#007D34', '#F6768E', '#00538A', '#FF7A5C', '#53377A', '#FF8E00', '#B32851', '#F4C800', '#7F180D', '#93AA00', '#593315', '#F13A13', '#232C16');
-
-		if(!isset(self::$color_cache[0][$identifier]))
+		if(!isset(self::$color_cache[$identifier]))
 		{
-			if(!empty($predef_line_colors))
+			if(!empty(self::$c['color']['paint']))
 			{
-				self::$color_cache[0][$identifier] = array_shift($predef_line_colors);
+				self::$color_cache[$identifier] = array_shift(self::$c['color']['paint']);
 			}
 			else
 			{
-				self::$color_cache[0][$identifier] = sprintf('#%06X', mt_rand(0, 0xFFFFFF));
+				self::$color_cache[$identifier] = sprintf('#%06X', mt_rand(0, 0xFFFFFF));
 			}
 		}
 
-		return self::$color_cache[0][$identifier];
+		return self::$color_cache[$identifier];
 	}
 	protected function maximum_graph_value()
 	{
@@ -814,7 +807,7 @@ abstract class phx_graph_core
 		{
 			if(!empty($title))
 			{
-				$this_color = $this->get_special_paint_color($title);
+				$this_color = $this->get_paint_color($title);
 
 				if($i != 0 && $i % $this->i['keys_per_line'] == 0)
 				{
@@ -870,51 +863,6 @@ abstract class phx_graph_core
 		$dimensions = pts_svg_dom::estimate_text_dimensions($string, $size);
 		return $dimensions[1];
 	}
-	public static function color_cache($ns, $id, &$colors)
-	{
-		$i = count(self::$color_cache);
-		if(!isset(self::$color_cache[$ns][$id]))
-		{
-			if(!isset(self::$color_cache[$ns]))
-			{
-				self::$color_cache[$ns] = array();
-			}
-
-			do
-			{
-				$this_color = $colors[array_rand($colors)];
-
-				if(rand(0, 2) == 1)
-				{
-					$shifts = array(0, 90, 120, 180, 270);
-					$color_shift = $shifts[array_rand($shifts)];
-
-					$hsl = self::color_rgb_to_hsl($this_color);
-					$hsl = self::shift_hsl($hsl, $color_shift);
-					$this_color = self::color_hsl_to_hex($hsl);
-
-					if(rand(0, 2) == 2)
-					{
-						$this_color = self::color_shade($this_color, 0.5, 1);
-					}
-				}
-			}
-			while(in_array($this_color, self::$color_cache[$ns]));
-			self::$color_cache[$ns][$id] = $this_color;
-		}
-
-		return self::$color_cache[$ns][$id];
-	}
-	public static function color_hex_to_rgb($hex)
-	{
-		$color = hexdec($hex);
-
-		return array(
-			'r' => ($color >> 16) & 0xff,
-			'g' => ($color >> 8) & 0xff,
-			'b' => $color & 0xff
-			);
-	}
 	protected function note_display_height()
 	{
 		// This basically figures out how many lines of notes there are times the size of the font key...
@@ -938,146 +886,6 @@ abstract class phx_graph_core
 		$note_height += ((count(array_unique($sections)) + 1) * (self::$c['size']['key'] + 6));
 
 		return $note_height;
-	}
-	public static function color_hsl_to_hex($hsl)
-	{
-		if($hsl['s'] == 0)
-		{
-			$rgb['r'] = $hsl['l'] * 255;
-			$rgb['g'] = $hsl['l'] * 255;
-			$rgb['b'] = $hsl['l'] * 255;
-		}
-		else
-		{
-			$conv2 = $hsl['l'] < 0.5 ? $hsl['l'] * (1 + $hsl['s']) : ($hsl['l'] + $hsl['s']) - ($hsl['l'] * $hsl['s']);
-			$conv1 = 2 * $hsl['l'] - $conv2;
-			$rgb['r'] = round(255 * self::color_hue_convert($conv1, $conv2, $hsl['h'] + (1 / 3)));
-			$rgb['g'] = round(255 * self::color_hue_convert($conv1, $conv2, $hsl['h']));
-			$rgb['b'] = round(255 * self::color_hue_convert($conv1, $conv2, $hsl['h'] - (1 / 3)));
-		}
-
-		return self::color_rgb_to_hex($rgb['r'], $rgb['g'], $rgb['b']);
-	}
-	protected static function color_hue_convert($v1, $v2, $vh)
-	{
-		if($vh < 0)
-		{
-			$vh += 1;
-		}
-
-		if($vh > 1)
-		{
-			$vh -= 1;
-		}
-
-		if((6 * $vh) < 1)
-		{
-			return $v1 + ($v2 - $v1) * 6 * $vh;
-		}
-
-		if((2 * $vh) < 1)
-		{
-			return $v2;
-		}
-
-		if((3 * $vh) < 2)
-		{
-			return $v1 + ($v2 - $v1) * ((2 / 3 - $vh) * 6);
-		}
-
-		return $v1;
-	}
-	public static function color_rgb_to_hsl($hex)
-	{
-		$rgb = self::color_hex_to_rgb($hex);
-
-		foreach($rgb as &$value)
-		{
-			$value = $value / 255;
-		}
-
-		$min = min($rgb);
-		$max = max($rgb);
-		$delta = $max - $min;
-
-		$hsl['l'] = ($max + $min) / 2;
-
-		if($delta == 0)
-		{
-			$hsl['h'] = 0;
-			$hsl['s'] = 0;
-		}
-		else
-		{
-			$hsl['s'] = $delta / ($hsl['l'] < 0.5 ? $max + $min : 2 - $max - $min);
-
-			$delta_rgb = array();
-			foreach($rgb as $color => $value)
-			{
-				$delta_rgb[$color] = ((($max - $value) / 6) + ($max / 2)) / $delta;
-			}
-
-			switch($max)
-			{
-				case $rgb['r']:
-					$hsl['h'] = $delta_rgb['b'] - $delta_rgb['g'];
-					break;
-				case $rgb['g']:
-					$hsl['h'] = (1 / 3) + $delta_rgb['r'] - $delta_rgb['b'];
-					break;
-				case $rgb['b']:
-				default:
-					$hsl['h'] = (2 / 3) + $delta_rgb['g'] - $delta_rgb['r'];
-					break;
-			}
-
-			$hsl['h'] += $hsl['h'] < 0 ? 1 : 0;
-			$hsl['h'] -= $hsl['h'] > 1 ? 1 : 0;
-		}
-
-		return $hsl;
-	}
-	public static function shift_hsl($hsl, $rotate_h_degrees = 180)
-	{
-		if($rotate_h_degrees > 0)
-		{
-			$rotate_dec = $rotate_h_degrees / 360;
-			$hsl['h'] = $hsl['h'] <= $rotate_dec ? $hsl['h'] + $rotate_dec : $hsl['h'] - $rotate_dec;
-		}
-
-		return $hsl;
-	}
-	public static function color_rgb_to_hex($r, $g, $b)
-	{
-		$color = ($r << 16) | ($g << 8) | $b;
-		return '#' . sprintf('%06x', $color);
-	}
-	public static function color_gradient($color1, $color2, $color_weight)
-	{
-		$color1 = self::color_hex_to_rgb($color1);
-		$color2 = self::color_hex_to_rgb($color2);
-
-		$diff_r = $color2['r'] - $color1['r'];
-		$diff_g = $color2['g'] - $color1['g'];
-		$diff_b = $color2['b'] - $color1['b'];
-
-		$r = ($color1['r'] + $diff_r * $color_weight);
-		$g = ($color1['g'] + $diff_g * $color_weight);
-		$b = ($color1['b'] + $diff_b * $color_weight);
-
-		return self::color_rgb_to_hex($r, $g, $b);
-	}
-	public static function color_shade($color, $percent, $mask)
-	{
-		$color = self::color_hex_to_rgb($color);
-
-		foreach($color as &$color_value)
-		{
-			$color_value = round($color_value * $percent) + round($mask * (1 - $percent));
-			$color_value = $color_value > 255 ? 255 : $color_value;
-		}
-
-		return self::color_rgb_to_hex($color['r'], $color['g'], $color['b']);
 	}
 }
 
