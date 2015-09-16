@@ -177,8 +177,11 @@ class phx_graph_render
 				{
 					//$result_table = false;
 					//pts_render::compact_result_file_test_object($result_object, $result_table, $result_file, $extra_attributes);
-					$line_graph_type = isset($extra_attributes['filled_line_graph']) ? 'FILLED_LINE_GRAPH' : 'LINE_GRAPH';
-					$result_object->test_profile->set_display_format(!isset($extra_attributes['force_tracking_line_graph']) ? 'BAR_ANALYZE_GRAPH' : $line_graph_type);
+					if($result_object->test_profile->get_display_format() == 'LINE_GRAPH' || $extra_attributes['force_tracking_line_graph'])
+					{
+						$line_graph_type = isset($extra_attributes['filled_line_graph']) ? 'FILLED_LINE_GRAPH' : 'LINE_GRAPH';
+						$result_object->test_profile->set_display_format(isset($extra_attributes['filled_line_graph']) ? 'FILLED_LINE_GRAPH' : 'LINE_GRAPH');
+					}
 				}
 			}
 			else if(in_array($result_object->test_profile->get_display_format(), array('LINE_GRAPH', 'FILLED_LINE_GRAPH')))
