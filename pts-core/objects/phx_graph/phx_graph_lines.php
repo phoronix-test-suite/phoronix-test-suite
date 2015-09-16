@@ -69,8 +69,8 @@ class phx_graph_lines extends phx_graph_core
 				}
 				// add array_values($json_r)
 				$this->test_result->test_result_buffer->add_test_result($system, array_values($result_r), array_values($raw_r));
-				$max_count = max($max_count, count($result_r));
 			}
+			//$max_count = count($this->graph_identifiers);
 		}
 		$this->i['identifier_width'] = $max_count > 0 ? (($this->i['graph_left_end'] - $this->i['left_start']) / $max_count) : 1;
 	}

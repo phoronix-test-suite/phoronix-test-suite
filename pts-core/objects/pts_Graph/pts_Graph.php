@@ -568,7 +568,8 @@ abstract class pts_Graph
 				$this->svg_dom->add_text_element($sub_title, array('x' => 6, 'y' => $vertical_offset, 'font-size' => $sub_title_size, 'fill' => self::$c['color']['background'], 'text-anchor' => 'start'));
 			}
 
-			$this->svg_dom->add_element('image', array('http_link' => 'http://www.phoronix-test-suite.com/', 'xlink:href' => 'https://openbenchmarking.org/static/images/pts-77x40-white.png', 'x' => ($this->i['graph_left_end'] - 77), 'y' => (($this->i['top_heading_height'] / 40 + 2)), 'width' => 77, 'height' => 40));
+			// SVG version of PTS thanks to https://gist.github.com/xorgy/65c6d0e87757dbb56a75
+			$this->svg_dom->add_element('path', array('http_link' => 'http://www.phoronix-test-suite.com/', 'd' => 'm74 22v9m-5-16v16m-5-28v28m-23-2h12.5c2.485281 0 4.5-2.014719 4.5-4.5s-2.014719-4.5-4.5-4.5h-8c-2.485281 0-4.5-2.014719-4.5-4.5s2.014719-4.5 4.5-4.5h12.5m-21 5h-11m11 13h-2c-4.970563 0-9-4.029437-9-9v-20m-24 40v-20c0-4.970563 4.0294373-9 9-9 4.970563 0 9 4.029437 9 9s-4.029437 9-9 9h-9', 'stroke' => '#ffffff', 'stroke-width' => 4, 'fill' => 'none', 'transform' => 'translate(' . ($this->i['graph_left_end'] - 77) . ',' . (($this->i['top_heading_height'] / 40 + 2)) . ')'));
 		}
 		else
 		{
