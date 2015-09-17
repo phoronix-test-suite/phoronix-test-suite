@@ -100,7 +100,7 @@ class phx_graph_render
 
 			$result_object->normalize_buffer_values($normalize_against);
 		}
-		if(true || isset($extra_attributes['sort_result_buffer_values']))
+		if(isset($extra_attributes['sort_result_buffer_values']))
 		{
 			$result_object->test_result_buffer->buffer_values_sort();
 
