@@ -13,6 +13,7 @@ Phoronix Test Suite (Git)
 - phodevi: AMDGPU Linux detection improvements
 - phoromatic: Add "Tests" page
 - pts_Graph: Don't embed the PNG logo directly into the SVG file, but rely on HTTPS link
+- pts_Graph: Support coloring based on brand
 
 Phoronix Test Suite 6.0 Milestone 1
 26 August 2015

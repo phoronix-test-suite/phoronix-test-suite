@@ -85,6 +85,25 @@ class phx_graph_horizontal_bars extends phx_graph_core
 			$paint_color = $this->get_paint_color($identifier);
 			foreach($group as &$buffer_item)
 			{
+				// if identifier is 0, not a multi-way comparison or anything special
+				if($identifier == 0)
+				{
+					// See if the result identifier matches something to be color-coded better
+					$result_identifier = strtolower($buffer_item->get_result_identifier());
+					if(strpos($result_identifier, 'geforce') !== false || strpos($result_identifier, 'nvidia') !== false)
+					{
+						$paint_color = '#75b900';
+					}
+					else if(strpos($result_identifier, 'radeon') !== false || strpos($result_identifier, 'amd ') !== false)
+					{
+						$paint_color = '#f1052d';
+					}
+					else if(strpos($result_identifier, 'intel ') !== false)
+					{
+						$paint_color = '#0b5997';
+					}
+				}
+
 				$i_o = $this->calc_offset($group_offsets, $identifier);
 				$i = $this->calc_offset($id_offsets, $buffer_item->get_result_identifier());
 				$value = $buffer_item->get_result_value();
