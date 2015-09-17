@@ -125,7 +125,7 @@ class phx_graph_box_plot extends phx_graph_horizontal_bars
 	public function render_graph_dimensions()
 	{
 		parent::render_graph_dimensions();
-		$longest_sub_identifier_width = $this->text_string_width('Min: ' . $this->i['graph_max_value'] . ' / Avg: XX / Max: ' . $this->i['graph_max_value'], $this->i['identifier_size']);
+		$longest_sub_identifier_width = self::text_string_width('Min: ' . $this->i['graph_max_value'] . ' / Avg: XX / Max: ' . $this->i['graph_max_value'], $this->i['identifier_size']);
 		$this->i['left_start'] = max($this->i['left_start'], $longest_sub_identifier_width);
 	}
 	protected function maximum_graph_value()

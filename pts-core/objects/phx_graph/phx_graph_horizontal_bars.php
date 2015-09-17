@@ -152,7 +152,7 @@ class phx_graph_horizontal_bars extends phx_graph_core
 					$this->svg_dom->add_text_element('SE +/- ' . pts_math::set_precision($std_error, 2), array('x' => ($this->i['left_start'] - 5), 'y' => $bar_offset_34, 'font-size' => ($this->i['identifier_size'] - 2), 'fill' => self::$c['color']['text'], 'text-anchor' => 'end'));
 				}
 
-				if(($this->text_string_width($value, $this->i['identifier_size']) + 2) < $graph_size)
+				if((self::text_string_width($value, $this->i['identifier_size']) + 2) < $graph_size)
 				{
 					if(isset($this->d['identifier_notes'][$buffer_item->get_result_identifier()]) && $this->i['compact_result_view'] == false)
 					{

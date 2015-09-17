@@ -105,23 +105,23 @@ abstract class phx_graph_core
 
 		if(isset($extra_attributes['regression_marker_threshold']))
 		{
-			$this->markResultRegressions($extra_attributes['regression_marker_threshold']);
+			$this->d['regression_marker_threshold'] = $extra_attributes['regression_marker_threshold'];
 		}
 		if(isset($extra_attributes['set_alternate_view']))
 		{
-			$this->setAlternateView($extra_attributes['set_alternate_view']);
+			$this->d['link_alternate_view'] = $extra_attributes['set_alternate_view'];
 		}
 		if(isset($extra_attributes['highlight_graph_values']))
 		{
-			$this->highlight_values($extra_attributes['highlight_graph_values']);
+			$this->value_highlights = $extra_attributes['highlight_graph_values'];
+		}
+		else if(PTS_IS_CLIENT && pts_client::read_env('GRAPH_HIGHLIGHT') != false)
+		{
+			$this->value_highlights = pts_strings::comma_explode(pts_client::read_env('GRAPH_HIGHLIGHT'));
 		}
 		if(isset($extra_attributes['force_simple_keys']))
 		{
 			$this->override_i_value('force_simple_keys', true);
-		}
-		else if(PTS_IS_CLIENT && pts_client::read_env('GRAPH_HIGHLIGHT') != false)
-		{
-			$this->highlight_values(pts_strings::comma_explode(pts_client::read_env('GRAPH_HIGHLIGHT')));
 		}
 
 		$this->test_result = &$result_object;
@@ -252,10 +252,6 @@ abstract class phx_graph_core
 			$this->d['identifier_notes'][$identifier] .= ' - ' . $note;
 		}
 	}
-	public function hideGraphIdentifiers()
-	{
-		$this->i['hide_graph_identifiers'] = true;
-	}
 	public function addSubTitle($sub_title)
 	{
 		$sub_titles = array_map('trim', explode('|', $sub_title));
@@ -271,10 +267,6 @@ abstract class phx_graph_core
 	public function addTestNote($note, $hover_title = null, $section = null)
 	{
 		array_push($this->i['notes'], array('note' => $note, 'hover-title' => $hover_title, 'section' => $section));
-	}
-	public function markResultRegressions($threshold)
-	{
-		$this->d['regression_marker_threshold'] = $threshold;
 	}
 
 	//
@@ -353,10 +345,6 @@ abstract class phx_graph_core
 
 		return $font_size;
 	}
-	public function highlight_values($values)
-	{
-		$this->value_highlights = $values;
-	}
 	protected function update_graph_dimensions($width = -1, $height = -1, $recalculate_offsets = false)
 	{
 		// Allow render area to be increased, but not decreased
@@ -395,7 +383,7 @@ abstract class phx_graph_core
 		{
 			if($this->i['graph_value_type'] == 'NUMERICAL')
 			{
-				$this->i['left_start'] += $this->text_string_width($this->i['graph_max_value'], self::$c['size']['tick_mark']) + 2;
+				$this->i['left_start'] += self::text_string_width($this->i['graph_max_value'], self::$c['size']['tick_mark']) + 2;
 			}
 
 			if($this->i['hide_graph_identifiers'])
@@ -420,11 +408,11 @@ abstract class phx_graph_core
 						$plus_extra = count($longest_r) * $this->i['identifier_size'] * 1.2;
 					}
 
-					$longest_identifier_width = $this->text_string_width($this->i['graph_max_value'], $this->i['identifier_size']) + 60 + $plus_extra;
+					$longest_identifier_width = self::text_string_width($this->i['graph_max_value'], $this->i['identifier_size']) + 60 + $plus_extra;
 				}
 				else
 				{
-					$longest_identifier_width = $this->text_string_width($longest_identifier, $this->i['identifier_size']) + 8;
+					$longest_identifier_width = self::text_string_width($longest_identifier, $this->i['identifier_size']) + 8;
 				}
 
 				$longest_identifier_max = ($this->i['graph_width'] * 0.5) + 0.01;
@@ -435,7 +423,7 @@ abstract class phx_graph_core
 			}
 			else if($this->i['graph_value_type'] == 'NUMERICAL')
 			{
-				$this->i['left_start'] += max(20, $this->text_string_width($this->i['graph_max_value'] + 0.01, self::$c['size']['tick_mark']) + 2);
+				$this->i['left_start'] += max(20, self::text_string_width($this->i['graph_max_value'] + 0.01, self::$c['size']['tick_mark']) + 2);
 			}
 
 			// Pad 8px on top and bottom + title bar + sub-headings
@@ -466,7 +454,7 @@ abstract class phx_graph_core
 					$longest_string = explode(' - ', $longest_identifier);
 					$longest_string = pts_strings::find_longest_string($longest_string);
 
-					$rotated_text = round($this->text_string_width($longest_string, $this->i['identifier_size']) * 0.96);
+					$rotated_text = round(self::text_string_width($longest_string, $this->i['identifier_size']) * 0.96);
 					$per_identifier_height = max((14 + (22 * count($this->results))), $rotated_text);
 				}
 				else if(count($this->results) > 3)
@@ -513,15 +501,6 @@ abstract class phx_graph_core
 				$this->i['graph_height'] += $this->note_display_height();
 			}
 		}
-	}
-	public function setAlternateLocation($url)
-	{
-		// this has been replaced by setAlternateView
-		return false;
-	}
-	public function setAlternateView($url)
-	{
-		$this->d['link_alternate_view'] = $url;
 	}
 	public function render_graph_finish()
 	{
@@ -597,7 +576,7 @@ abstract class phx_graph_core
 				$sub_title_size = self::$c['size']['sub_headers'];
 				if(isset($sub_title[69]))
 				{
-					while($this->text_string_width($sub_title, $sub_title_size) > ($this->i['graph_left_end'] - 20))
+					while(self::text_string_width($sub_title, $sub_title_size) > ($this->i['graph_left_end'] - 20))
 						$sub_title_size -= 0.5;
 				}
 				$this->svg_dom->add_text_element($sub_title, array('x' => 6, 'y' => $vertical_offset, 'font-size' => $sub_title_size, 'fill' => self::$c['color']['background'], 'text-anchor' => 'start'));
@@ -788,7 +767,7 @@ abstract class phx_graph_core
 
 		$this->i['key_line_height'] = 16;
 		$ak = array_keys($this->results);
-		$this->i['key_item_width'] = 16 + $this->text_string_width(pts_strings::find_longest_string($ak), self::$c['size']['key']);
+		$this->i['key_item_width'] = 16 + self::text_string_width(pts_strings::find_longest_string($ak), self::$c['size']['key']);
 		$this->i['keys_per_line'] = max(1, floor(($this->i['graph_left_end'] - $this->i['left_start']) / $this->i['key_item_width']));
 
 		return ceil(count($this->results) / $this->i['keys_per_line']) * $this->i['key_line_height'];
@@ -853,12 +832,12 @@ abstract class phx_graph_core
 
 		$this->svg_dom->add_element('polygon', array('points' => implode(' ', $arrow_points), 'fill' => $background_color, 'stroke' => $border_color, 'stroke-width' => $border_width));
 	}
-	protected function text_string_width($string, $size)
+	protected static function text_string_width($string, $size)
 	{
 		$dimensions = pts_svg_dom::estimate_text_dimensions($string, $size);
 		return $dimensions[0];
 	}
-	protected function text_string_height($string, $size)
+	protected static function text_string_height($string, $size)
 	{
 		$dimensions = pts_svg_dom::estimate_text_dimensions($string, $size);
 		return $dimensions[1];
@@ -874,7 +853,7 @@ abstract class phx_graph_core
 			foreach($this->i['notes'] as $note)
 			{
 				// If the note isn't at least 36 characters long, assume it's not long enough to word-wrap, so take short-cut for efficiency
-				$note_height += !isset($note['note'][36]) ? (self::$c['size']['key'] + 2) : (ceil($this->text_string_width($note['note'], self::$c['size']['key']) / ($this->i['graph_width'] - 14))) * self::$c['size']['key'];
+				$note_height += !isset($note['note'][36]) ? (self::$c['size']['key'] + 2) : (ceil(self::text_string_width($note['note'], self::$c['size']['key']) / ($this->i['graph_width'] - 14))) * self::$c['size']['key'];
 
 				if($note['section'] != null)
 				{

@@ -396,7 +396,7 @@ class phx_graph_lines extends phx_graph_core
 		}
 
 		$this->i['key_line_height'] = 16;
-		$this->i['key_longest_string_width'] = $this->text_string_width($this->test_result->test_result_buffer->get_longest_identifier(), self::$c['size']['key']);
+		$this->i['key_longest_string_width'] = self::text_string_width($this->test_result->test_result_buffer->get_longest_identifier(), self::$c['size']['key']);
 
 		$item_width_spacing = 32;
 		$this->i['key_item_width'] = $this->i['key_longest_string_width'] + $this->get_stat_word_width() * 3 + $item_width_spacing;
@@ -418,7 +418,7 @@ class phx_graph_lines extends phx_graph_core
 	}
 	private function get_stat_word_width()
 	{
-		return ceil(2.6 * $this->text_string_width($this->i['graph_max_value'] + 0.1, $this->i['min_identifier_size'] + 0.5));
+		return ceil(2.6 * self::text_string_width($this->i['graph_max_value'] + 0.1, $this->i['min_identifier_size'] + 0.5));
 	}
 	private function getStatisticsHeaderHeight()
 	{
