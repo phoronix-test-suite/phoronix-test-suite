@@ -100,7 +100,7 @@ class phx_graph_render
 
 			$result_object->normalize_buffer_values($normalize_against);
 		}
-		if(isset($extra_attributes['sort_result_buffer_values']))
+		if(true || isset($extra_attributes['sort_result_buffer_values']))
 		{
 			$result_object->test_result_buffer->buffer_values_sort();
 
@@ -217,7 +217,7 @@ class phx_graph_render
 		}
 
 		if(isset($extra_attributes['graph_render_type']))
-		{ echo 11111;
+		{
 			$result_object->test_profile->set_display_format($extra_attributes['graph_render_type']);
 		}
 		$display_format = $result_object->test_profile->get_display_format();
