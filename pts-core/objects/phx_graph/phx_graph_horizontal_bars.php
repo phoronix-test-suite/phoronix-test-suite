@@ -41,6 +41,7 @@ class phx_graph_horizontal_bars extends phx_graph_core
 		$this->svg_dom->draw_svg_line($this->i['left_start'] + 0.5, $this->i['top_start'] + $this->i['identifier_height'], $this->i['left_start'] + 0.5, $this->i['graph_top_end'] - ($this->i['graph_height'] % $this->i['identifier_height']), self::$c['color']['notches'], 11, array('stroke-dasharray' => 1 . ',' . ($this->i['identifier_height'] - 1)));
 		$middle_of_vert = $this->i['top_start'] + ($this->is_multi_way_comparison ? 5 : 0) - ($this->i['identifier_height'] * 0.5) - 2;
 
+		$g = $this->svg_dom->make_g(array('font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['headers']));
 		foreach($this->graph_identifiers as $identifier)
 		{
 			$middle_of_vert += $this->i['identifier_height'];
@@ -49,12 +50,12 @@ class phx_graph_horizontal_bars extends phx_graph_core
 				foreach(explode(' - ', $identifier) as $i => $identifier_line)
 				{
 					$x = 8;
-					$this->svg_dom->add_text_element($identifier_line, array('x' => $x, 'y' => $middle_of_vert, 'font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['headers'], 'text-anchor' => 'middle', 'transform' => 'rotate(90 ' . $x . ' ' . $middle_of_vert . ')'));
+					$this->svg_dom->add_text_element($identifier_line, array('x' => $x, 'y' => $middle_of_vert, 'text-anchor' => 'middle', 'transform' => 'rotate(90 ' . $x . ' ' . $middle_of_vert . ')'), $g);
 				}
 			}
 			else
 			{
-				$this->svg_dom->add_text_element($identifier, array('x' => ($this->i['left_start'] - 5), 'y' => $middle_of_vert, 'font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['headers'], 'text-anchor' => 'end'));
+				$this->svg_dom->add_text_element($identifier, array('x' => ($this->i['left_start'] - 5), 'y' => $middle_of_vert, 'text-anchor' => 'end'), $g);
 			}
 		}
 	}
@@ -80,6 +81,10 @@ class phx_graph_horizontal_bars extends phx_graph_core
 
 		$group_offsets = array();
 		$id_offsets = array();
+		$g_bars = $this->svg_dom->make_g(array('stroke' => self::$c['color']['body_light'], 'stroke-width' => 1));
+		$g_se = $this->svg_dom->make_g(array('font-size' => ($this->i['identifier_size'] - 2), 'fill' => self::$c['color']['text'], 'text-anchor' => 'end'));
+		$g_values = $this->svg_dom->make_g(array('font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['body_text']));
+		$bar_x = $this->i['left_start'] + 0.5;
 		foreach($this->results as $identifier => &$group)
 		{
 			$paint_color = $this->get_paint_color($identifier);
@@ -133,7 +138,7 @@ class phx_graph_horizontal_bars extends phx_graph_core
 					}
 				}
 
-				$this->svg_dom->add_element('rect', array('x' => $this->i['left_start'] + 0.5, 'y' => $px_bound_top + 0.5, 'width' => $graph_size, 'height' => $bar_height, 'fill' => (in_array($buffer_item->get_result_identifier(), $this->value_highlights) ? self::$c['color']['highlight'] : $paint_color), 'stroke' => self::$c['color']['body_light'], 'stroke-width' => 1, 'xlink:title' => $title_tooltip));
+				$this->svg_dom->add_element('rect', array('x' => $bar_x, 'y' => $px_bound_top + 0.5, 'height' => $bar_height, 'width' => $graph_size, 'fill' => (in_array($buffer_item->get_result_identifier(), $this->value_highlights) ? self::$c['color']['highlight'] : $paint_color), 'xlink:title' => $title_tooltip), $g_bars);
 
 				if($std_error != -1 && $value != null)
 				{
@@ -151,7 +156,7 @@ class phx_graph_horizontal_bars extends phx_graph_core
 						}
 					}
 					$bar_offset_34 = round($middle_of_bar + ($this->is_multi_way_comparison ? 0 : ($bar_height / 5) + 1));
-					$this->svg_dom->add_text_element('SE +/- ' . pts_math::set_precision($std_error, 2), array('x' => ($this->i['left_start'] - 5), 'y' => $bar_offset_34, 'font-size' => ($this->i['identifier_size'] - 2), 'fill' => self::$c['color']['text'], 'text-anchor' => 'end'));
+					$this->svg_dom->add_text_element('SE +/- ' . pts_math::set_precision($std_error, 2), array('y' => $bar_offset_34, 'x' => ($this->i['left_start'] - 5)), $g_se);
 				}
 
 				if((self::text_string_width($value, $this->i['identifier_size']) + 2) < $graph_size)
@@ -162,12 +167,12 @@ class phx_graph_horizontal_bars extends phx_graph_core
 						$this->svg_dom->add_text_element($this->d['identifier_notes'][$buffer_item->get_result_identifier()], array('x' => ($this->i['left_start'] + 4), 'y' => ($px_bound_top + self::$c['size']['key']), 'font-size' => $note_size, 'fill' => self::$c['color']['body_text'], 'text-anchor' => 'start'));
 					}
 
-					$this->svg_dom->add_text_element($value, array('x' => ($value_end_right - 5), 'y' => $middle_of_bar, 'font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['body_text'], 'text-anchor' => 'end'));
+					$this->svg_dom->add_text_element($value, array('x' => ($value_end_right - 5), 'y' => $middle_of_bar, 'text-anchor' => 'end'), $g_values);
 				}
 				else if($value > 0)
 				{
 					// Write it in front of the result
-					$this->svg_dom->add_text_element($value, array('x' => ($value_end_right + 6), 'y' => $middle_of_bar, 'font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['text'], 'text-anchor' => 'start'));
+					$this->svg_dom->add_text_element($value, array('x' => ($value_end_right + 6), 'y' => $middle_of_bar, 'fill' => self::$c['color']['text'], 'text-anchor' => 'start'), $g_values);
 				}
 			}
 		}

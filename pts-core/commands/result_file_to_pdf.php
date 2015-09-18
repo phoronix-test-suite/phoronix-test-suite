@@ -54,7 +54,7 @@ class result_file_to_pdf implements pts_option_interface
 		$pdf->Ln(15);
 
 		$pdf->SetSubject($result_file->get_title() . ' Benchmarks');
-		$pdf->SetKeywords(implode(', ', $identifiers));
+		//$pdf->SetKeywords(implode(', ', $identifiers));
 
 		$pdf->WriteHeader('Test Systems:');
 		foreach($result_file->get_systems() as $s)

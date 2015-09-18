@@ -32,6 +32,7 @@ class phx_graph_box_plot extends phx_graph_horizontal_bars
 
 		$group_offsets = array();
 		$id_offsets = array();
+		$g_bars = $this->svg_dom->make_g(array('stroke' => self::$c['color']['body_light'], 'stroke-width' => 1));
 		foreach($this->results as $identifier => &$group)
 		{
 			$paint_color = $this->get_paint_color($identifier);
@@ -104,7 +105,7 @@ class phx_graph_box_plot extends phx_graph_horizontal_bars
 				$box_middle = $this->i['left_start'] + round(($median / $this->i['graph_max_value']) * $work_area_width);
 				$box_right = $this->i['left_start'] + round((pts_math::find_percentile($values, 0.75) / $this->i['graph_max_value']) * $work_area_width);
 
-				$this->svg_dom->add_element('rect', array('x' => $box_left, 'y' => $px_bound_top, 'width' => ($box_right - $box_left), 'height' => $bar_height, 'fill' => $box_color, 'stroke' => self::$c['color']['body_light'], 'stroke-width' => 1, 'xlink:title' => $title_tooltip));
+				$this->svg_dom->add_element('rect', array('x' => $box_left, 'y' => $px_bound_top, 'width' => ($box_right - $box_left), 'height' => $bar_height, 'fill' => $box_color, 'xlink:title' => $title_tooltip), $g_bars);
 				$this->svg_dom->draw_svg_line($box_middle, $px_bound_top, $box_middle, $px_bound_bottom, self::$c['color']['notches'], 2, array('xlink:title' => $title_tooltip));
 
 				$this->svg_dom->add_text_element($stat_value, array('x' => ($this->i['left_start'] - 5), 'y' => ceil($px_bound_top + ($bar_height * 0.8) + 6), 'font-size' => ($this->i['identifier_size'] - 2), 'fill' => self::$c['color']['text'], 'text-anchor' => 'end'));

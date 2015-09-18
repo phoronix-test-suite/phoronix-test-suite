@@ -152,7 +152,16 @@ class pts_svg_dom
 		$extra_attributes['fill'] = $color;
 		$this->add_element('circle', $extra_attributes);
 	}
-	public function add_element($element_type, $attributes = array())
+	public function make_g($attributes = array())
+	{
+		$el = $this->dom->createElement('g');
+		foreach($attributes as $name => $value)
+		{
+			$el->setAttribute($name, $value);
+		}
+		return $this->svg->appendChild($el);
+	}
+	public function add_element($element_type, $attributes = array(), $append_to = false)
 	{
 		$el = $this->dom->createElement($element_type);
 
@@ -164,12 +173,26 @@ class pts_svg_dom
 			$link->setAttribute('xlink:href', $attributes[$link_key]);
 			$link->setAttribute('xlink:show', 'new');
 			$link->appendChild($el);
-			$this->svg->appendChild($link);
+			if($append_to)
+			{
+				$append_to->appendChild($link);
+			}
+			else
+			{
+				$this->svg->appendChild($link);
+			}
 			unset($attributes[$link_key]);
 		}
 		else
 		{
-			$this->svg->appendChild($el);
+			if($append_to)
+			{
+				$append_to->appendChild($el);
+			}
+			else
+			{
+				$this->svg->appendChild($el);
+			}
 		}
 
 		foreach($attributes as $name => $value)
@@ -177,7 +200,7 @@ class pts_svg_dom
 			$el->setAttribute($name, $value);
 		}
 	}
-	public function add_text_element($text_string, $attributes)
+	public function add_text_element($text_string, $attributes, $append_to = false)
 	{
 		$el = $this->dom->createElement('text');
 		$text_node = $this->dom->createTextNode($text_string);
@@ -189,12 +212,26 @@ class pts_svg_dom
 			$link->setAttribute('xlink:href', $attributes['xlink:href']);
 			$link->setAttribute('xlink:show', 'new');
 			$link->appendChild($el);
-			$this->svg->appendChild($link);
+			if($append_to)
+			{
+				$append_to->appendChild($link);
+			}
+			else
+			{
+				$this->svg->appendChild($link);
+			}
 			unset($attributes['xlink:href']);
 		}
 		else
 		{
-			$this->svg->appendChild($el);
+			if($append_to)
+			{
+				$append_to->appendChild($el);
+			}
+			else
+			{
+				$this->svg->appendChild($el);
+			}
 		}
 
 		foreach($attributes as $name => $value)

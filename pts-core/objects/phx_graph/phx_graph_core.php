@@ -706,13 +706,14 @@ abstract class phx_graph_core
 			$tick_width = round(($left_end - $left_start) / $this->i['mark_count']);
 			$display_value = 0;
 
+			$g = $this->svg_dom->make_g(array('font-size' => self::$c['size']['tick_mark'], 'fill' => self::$c['color']['text'], 'text-anchor' => 'middle'));
 			for($i = 0; $i < $this->i['mark_count']; $i++)
 			{
 				$px_from_left = $left_start + ($tick_width * $i);
 
 				if($i != 0)
 				{
-					$show_numbers && $this->svg_dom->add_text_element($display_value, array('x' => $px_from_left + 2.5, 'y' => ($top_end + 5 + self::$c['size']['tick_mark']), 'font-size' => self::$c['size']['tick_mark'], 'fill' => self::$c['color']['text'], 'text-anchor' => 'middle'));
+					$show_numbers && $this->svg_dom->add_text_element($display_value, array('x' => $px_from_left + 2.5, 'y' => ($top_end + 5 + self::$c['size']['tick_mark'])), $g);
 					$this->svg_dom->draw_svg_line($px_from_left + 2.5, $top_start, $px_from_left + 2.5, $top_end - 5, self::$c['color']['body'], 1, array('stroke-dasharray' => '5,5'));
 					$this->svg_dom->draw_svg_line($px_from_left + 2.5, $top_end - 4, $px_from_left + 2.5, $top_end + 5, self::$c['color']['notches'], 1);
 				}
