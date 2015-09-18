@@ -186,6 +186,8 @@ class phx_graph_lines extends phx_graph_core
 		}
 
 		// draw the keys and the min,avg,max values
+		$g_rect = $this->svg_dom->make_g(array('stroke' => self::$c['color']['notches'], 'stroke-width' => 1));
+		$g_text = $this->svg_dom->make_g(array('font-size' => self::$c['size']['key']));
 		for($i = 0, $x = $x_start; $x <= $x_end; $x += $this->i['key_item_width'])
 		{
 			for ($y = $y_start; $y <= $y_end; $y += $this->i['key_line_height'], ++$i)
@@ -201,13 +203,11 @@ class phx_graph_lines extends phx_graph_core
 				// draw square
 				$this->svg_dom->add_element('rect',
 								array('x' => $x, 'y' => $y - $square_length, 'width' => $square_length,
-								  'height' => $square_length, 'fill' => $this_color,
-								  'stroke' => self::$c['color']['notches'], 'stroke-width' => 1));
+								  'height' => $square_length, 'fill' => $this_color), $g_rect);
 
 				// draw text
 				$this->svg_dom->add_text_element($identifier_title,
-								 array('x' => $x + $square_length + 4, 'y' => $y,
-									   'font-size' => self::$c['size']['key'], 'fill' => $this_color));
+								 array('x' => $x + $square_length + 4, 'y' => $y, 'fill' => $this_color), $g_text);
 
 				// draw min/avg/max
 				$x_stat_loc = $x + $square_length + $this->i['key_longest_string_width'] + 10;
