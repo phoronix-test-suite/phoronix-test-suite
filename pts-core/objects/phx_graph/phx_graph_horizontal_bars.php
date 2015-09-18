@@ -38,7 +38,7 @@ class phx_graph_horizontal_bars extends phx_graph_core
 	{
 		$px_from_top_end = $this->i['graph_top_end'] + 5;
 
-		$this->svg_dom->draw_svg_line($this->i['left_start'], $this->i['top_start'] + $this->i['identifier_height'], $this->i['left_start'], $this->i['graph_top_end'] - ($this->i['graph_height'] % $this->i['identifier_height']), self::$c['color']['notches'], 10, array('stroke-dasharray' => 1 . ',' . ($this->i['identifier_height'] - 1)));
+		$this->svg_dom->draw_svg_line($this->i['left_start'] + 0.5, $this->i['top_start'] + $this->i['identifier_height'], $this->i['left_start'] + 0.5, $this->i['graph_top_end'] - ($this->i['graph_height'] % $this->i['identifier_height']), self::$c['color']['notches'], 11, array('stroke-dasharray' => 1 . ',' . ($this->i['identifier_height'] - 1)));
 		$middle_of_vert = $this->i['top_start'] + ($this->is_multi_way_comparison ? 5 : 0) - ($this->i['identifier_height'] * 0.5) - 2;
 
 		foreach($this->graph_identifiers as $identifier)
@@ -133,7 +133,7 @@ class phx_graph_horizontal_bars extends phx_graph_core
 					}
 				}
 
-				$this->svg_dom->add_element('rect', array('x' => $this->i['left_start'], 'y' => $px_bound_top, 'width' => $graph_size, 'height' => $bar_height, 'fill' => (in_array($buffer_item->get_result_identifier(), $this->value_highlights) ? self::$c['color']['highlight'] : $paint_color), 'stroke' => self::$c['color']['body_light'], 'stroke-width' => 1, 'xlink:title' => $title_tooltip));
+				$this->svg_dom->add_element('rect', array('x' => $this->i['left_start'] + 0.5, 'y' => $px_bound_top + 0.5, 'width' => $graph_size, 'height' => $bar_height, 'fill' => (in_array($buffer_item->get_result_identifier(), $this->value_highlights) ? self::$c['color']['highlight'] : $paint_color), 'stroke' => self::$c['color']['body_light'], 'stroke-width' => 1, 'xlink:title' => $title_tooltip));
 
 				if($std_error != -1 && $value != null)
 				{
@@ -143,9 +143,11 @@ class phx_graph_horizontal_bars extends phx_graph_core
 						$std_error_rel_size = round(($std_error / $this->i['graph_max_value']) * ($this->i['graph_left_end'] - $this->i['left_start']));
 						if($std_error_rel_size > 4)
 						{
-							$this->svg_dom->draw_svg_line(($value_end_right - $std_error_rel_size), $px_bound_top, ($value_end_right - $std_error_rel_size), $px_bound_top + $std_error_height, self::$c['color']['notches'], 1);
-							$this->svg_dom->draw_svg_line(($value_end_right + $std_error_rel_size), $px_bound_top, ($value_end_right + $std_error_rel_size), $px_bound_top + $std_error_height, self::$c['color']['notches'], 1);
-							$this->svg_dom->draw_svg_line(($value_end_right - $std_error_rel_size), $px_bound_top, ($value_end_right + $std_error_rel_size), $px_bound_top, self::$c['color']['notches'], 1);
+							$std_error_base_left = ($value_end_right - $std_error_rel_size) + 0.5;
+							$std_error_base_right = ($value_end_right + $std_error_rel_size) + 0.5;
+							$this->svg_dom->draw_svg_line($std_error_base_left, $px_bound_top, $std_error_base_left, $px_bound_top + $std_error_height, self::$c['color']['notches'], 1);
+							$this->svg_dom->draw_svg_line($std_error_base_right, $px_bound_top, $std_error_base_right, $px_bound_top + $std_error_height, self::$c['color']['notches'], 1);
+							$this->svg_dom->draw_svg_line($std_error_base_left, $px_bound_top + 0.5, $std_error_base_right, $px_bound_top + 0.5, self::$c['color']['notches'], 1);
 						}
 					}
 					$bar_offset_34 = $middle_of_bar + ($this->is_multi_way_comparison ? 0 : ($bar_height / 5) + 1);
@@ -169,9 +171,6 @@ class phx_graph_horizontal_bars extends phx_graph_core
 				}
 			}
 		}
-
-		// write a new line along the bottom since the draw_rectangle_with_border above had written on top of it
-		$this->svg_dom->draw_svg_line($this->i['left_start'], $this->i['graph_top_end'], $this->i['graph_left_end'], $this->i['graph_top_end'], self::$c['color']['notches'], 1);
 	}
 	protected function render_graph_result()
 	{
