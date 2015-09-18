@@ -237,7 +237,7 @@ class pts_svg_dom
 
 		foreach($attributes as $name => $value)
 		{
-			if($value === null)
+			if($value == null && $value !== 0)
 			{
 				continue;
 			}

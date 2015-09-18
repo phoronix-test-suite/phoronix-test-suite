@@ -215,6 +215,7 @@ class pts_Table extends pts_Graph
 
 		// Write the rows
 		$row = 1;
+		$g = $this->svg_dom->make_g(array('font-size' => $this->i['identifier_size'], 'font-weight' => 'bold', 'text-anchor' => 'end'));
 		foreach($this->rows as $i => $row_string)
 		{
 			if(($row_string instanceof pts_graph_ir_value) == false)
@@ -225,7 +226,7 @@ class pts_Table extends pts_Graph
 			$text_color = $row_string->get_attribute('alert') ? self::$c['color']['alert'] : self::$c['color']['text'];
 
 			$v = round($top_identifier_height + $this->i['top_heading_height'] + ($row * $table_line_height) - 4);
-			$this->svg_dom->add_text_element($row_string, array('x' => ($this->i['left_start'] - 2), 'y' => $v, 'font-size' => $this->i['identifier_size'], 'fill' => $text_color, 'font-weight' => 'bold', 'text-anchor' => 'end', 'xlink:href' => $row_string->get_attribute('href')));
+			$this->svg_dom->add_text_element($row_string, array('x' => ($this->i['left_start'] - 2), 'y' => $v, 'fill' => $text_color, 'xlink:href' => $row_string->get_attribute('href')), $g);
 			$row++;
 		}
 
@@ -276,23 +277,26 @@ class pts_Table extends pts_Graph
 		}
 
 		$table_identifier_offset = ($table_item_width / 2) + ($table_identifier_width / 2) - 1;
+		$g = $this->svg_dom->make_g(array('font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['text'], 'font-weight' => 'bold'));
 		foreach($this->columns as $i => $col_string)
 		{
 			if($this->column_heading_vertical)
 			{
 				$x = $this->i['left_start'] + ($i * $table_item_width) + $table_identifier_offset;
 				$y = $this->i['top_heading_height'] + $top_identifier_height - 4;
-				$this->svg_dom->add_text_element($col_string, array('x' => $x, 'y' => $y, 'font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['text'], 'font-weight' => 'bold', 'text-anchor' => 'end', 'transform' => 'rotate(90 ' . $x . ' ' . $y . ')'));
+				$this->svg_dom->add_text_element($col_string, array('x' => $x, 'y' => $y, 'text-anchor' => 'end', 'transform' => 'rotate(90 ' . $x . ' ' . $y . ')'), $g);
 			}
 			else
 			{
 				$x = $this->i['left_start'] + ($i * $table_item_width) + ($table_item_width / 2);
 				$y = $this->i['top_heading_height'] + ($top_identifier_height / 2);
-				$this->svg_dom->add_text_element($col_string, array('x' => $x, 'y' => $y, 'font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['text'], 'font-weight' => 'bold', 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
+				$this->svg_dom->add_text_element($col_string, array('x' => $x, 'y' => $y, 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'), $g);
 			}
 		}
 
 		// Write the columns
+		$g_background = $this->svg_dom->make_g(array());
+		$g = $this->svg_dom->make_g(array('text-anchor' => 'middle', 'font-size' => $this->i['identifier_size']));
 		foreach($this->table_data as $index => &$table_values)
 		{
 			if(!is_array($table_values))
@@ -380,11 +384,11 @@ class pts_Table extends pts_Graph
 					}
 
 					$y = round($this->i['top_heading_height'] + $top_identifier_height + (($row + 1) * $table_line_height));
-					$this->svg_dom->add_element('rect', array('x' => $left_bounds, 'y' => $y + 1, 'width' => ($right_bounds - $left_bounds), 'height' => $table_line_height, 'fill' => $background_paint));
+					$this->svg_dom->add_element('rect', array('x' => $left_bounds, 'y' => $y + 1, 'width' => ($right_bounds - $left_bounds), 'height' => $table_line_height, 'fill' => $background_paint), $g_background);
 				}
 
 				$x = $left_bounds + (($right_bounds - $left_bounds) / 2);
-				$this->svg_dom->add_text_element($result_table_value, array('x' => $x, 'y' => round($this->i['top_heading_height'] + $top_identifier_height + (($row + 2) * $table_line_height) - 3), 'font-size' => $this->i['identifier_size'], 'fill' => $text_color, 'text-anchor' => 'middle', 'xlink:title' => implode('; ', $hover), 'xlink:href' => $result_table_value->get_attribute('href')));
+				$this->svg_dom->add_text_element($result_table_value, array('x' => $x, 'y' => round($this->i['top_heading_height'] + $top_identifier_height + (($row + 2) * $table_line_height) - 3), 'fill' => $text_color, 'xlink:title' => implode('; ', $hover), 'xlink:href' => $result_table_value->get_attribute('href')), $g);
 				//$row++;
 			}
 		}
