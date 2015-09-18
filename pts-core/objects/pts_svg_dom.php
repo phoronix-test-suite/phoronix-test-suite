@@ -121,6 +121,7 @@ class pts_svg_dom
 	}
 	public function draw_svg_line($start_x, $start_y, $end_x, $end_y, $color, $line_width = 1, $extra_elements = null)
 	{
+		// this function is equivalent to $this->svg_dom->add_element('line', array('x1' => , 'y1' => , 'x2' => , 'y2' => , 'stroke' => , 'stroke-width' => ));
 		$attributes = array('x1' => $start_x, 'y1' => $start_y, 'x2' => $end_x, 'y2' => $end_y, 'stroke' => $color, 'stroke-width' => $line_width);
 
 		if($extra_elements != null)

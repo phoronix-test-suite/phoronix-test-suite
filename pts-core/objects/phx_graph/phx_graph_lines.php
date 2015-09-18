@@ -341,7 +341,8 @@ class phx_graph_lines extends phx_graph_core
 			array_push($svg_poly, round($x_y[0]) . ',' . round($x_y[1]));
 		}
 		$svg_poly = implode(' ', $svg_poly);
-		$this->svg_dom->add_element('polyline', array('points' => $svg_poly, 'fill' => 'none', 'stroke' => $paint_color, 'stroke-width' => 2));
+		$g = $this->svg_dom->make_g(array('stroke' => $paint_color, 'stroke-width' => 1));
+		$this->svg_dom->add_element('polyline', array('points' => $svg_poly, 'fill' => 'none', 'stroke-width' => 2), $g);
 
 		// plot error bars if needed
 		foreach($poly_points as $i => $x_y_pair)
@@ -360,9 +361,9 @@ class phx_graph_lines extends phx_graph_core
 
 				if($std_error_rel_size > 3)
 				{
-					$this->svg_dom->draw_svg_line($x_y_pair[0], $x_y_pair[1] + $std_error_rel_size, $x_y_pair[0], $x_y_pair[1] - $std_error_rel_size, $paint_color, 1);
-					$this->svg_dom->draw_svg_line($x_y_pair[0] - $std_error_width, $x_y_pair[1] - $std_error_rel_size, $x_y_pair[0] + $std_error_width, $x_y_pair[1] - $std_error_rel_size, $paint_color, 1);
-					$this->svg_dom->draw_svg_line($x_y_pair[0] - $std_error_width, $x_y_pair[1] + $std_error_rel_size, $x_y_pair[0] + $std_error_width, $x_y_pair[1] + $std_error_rel_size, $paint_color, 1);
+					$this->svg_dom->add_element('line', array('x1' => $x_y_pair[0], 'y1' => ($x_y_pair[1] + $std_error_rel_size), 'x2' => $x_y_pair[0], 'y2' => ($x_y_pair[1] - $std_error_rel_size)), $g);
+					$this->svg_dom->add_element('line', array('x1' => ($x_y_pair[0] - $std_error_width), 'y1' => ($x_y_pair[1] - $std_error_rel_size), 'x2' => ($x_y_pair[0] + $std_error_width), 'y2' => ($x_y_pair[1] - $std_error_rel_size)), $g);
+					$this->svg_dom->add_element('line', array('x1' => ($x_y_pair[0] - $std_error_width), 'y1' => ($x_y_pair[1] + $std_error_rel_size), 'x2' => ($x_y_pair[0] + $std_error_width), 'y2' => ($x_y_pair[1] + $std_error_rel_size)), $g);
 					$plotted_error_bar = true;
 				}
 			}
@@ -374,7 +375,7 @@ class phx_graph_lines extends phx_graph_core
 
 			if($point_counter < 6 || $plotted_error_bar || $i == 0 || $i == ($poly_points_count  - 1))
 			{
-				$this->svg_dom->add_element('ellipse', array('cx' => $x_y_pair[0], 'cy' => $x_y_pair[1], 'rx' => 3, 'ry' => 3, 'fill' => $paint_color, 'stroke' => $paint_color, 'stroke-width' => 1, 'xlink:title' => $x_y_pair[2]));
+				$this->svg_dom->add_element('ellipse', array('cx' => $x_y_pair[0], 'cy' => $x_y_pair[1], 'rx' => 3, 'ry' => 3, 'fill' => $paint_color, 'xlink:title' => $x_y_pair[2]), $g);
 			}
 		}
 
