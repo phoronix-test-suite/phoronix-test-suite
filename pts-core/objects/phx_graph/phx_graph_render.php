@@ -173,11 +173,11 @@ class phx_graph_render
 					} */
 				}
 
-				if($result_object->test_profile->get_display_format() != 'PIE_CHART' && (phx_graph_render::multi_way_identifier_check($result_object->test_result_buffer->get_identifiers()) || $extra_attributes['force_tracking_line_graph']))
+				if($result_object->test_profile->get_display_format() != 'PIE_CHART' && (phx_graph_render::multi_way_identifier_check($result_object->test_result_buffer->get_identifiers()) || (isset($extra_attributes['force_tracking_line_graph']) && $extra_attributes['force_tracking_line_graph'])))
 				{
 					//$result_table = false;
 					//pts_render::compact_result_file_test_object($result_object, $result_table, $result_file, $extra_attributes);
-					if($result_object->test_profile->get_display_format() == 'LINE_GRAPH' || $extra_attributes['force_tracking_line_graph'])
+					if($result_object->test_profile->get_display_format() == 'LINE_GRAPH' || (isset($extra_attributes['force_tracking_line_graph']) && $extra_attributes['force_tracking_line_graph']))
 					{
 						$result_object->test_profile->set_display_format('LINE_GRAPH');
 					}

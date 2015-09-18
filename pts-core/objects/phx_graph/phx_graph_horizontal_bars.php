@@ -150,7 +150,7 @@ class phx_graph_horizontal_bars extends phx_graph_core
 							$this->svg_dom->draw_svg_line($std_error_base_left, $px_bound_top + 0.5, $std_error_base_right, $px_bound_top + 0.5, self::$c['color']['notches'], 1);
 						}
 					}
-					$bar_offset_34 = $middle_of_bar + ($this->is_multi_way_comparison ? 0 : ($bar_height / 5) + 1);
+					$bar_offset_34 = round($middle_of_bar + ($this->is_multi_way_comparison ? 0 : ($bar_height / 5) + 1));
 					$this->svg_dom->add_text_element('SE +/- ' . pts_math::set_precision($std_error, 2), array('x' => ($this->i['left_start'] - 5), 'y' => $bar_offset_34, 'font-size' => ($this->i['identifier_size'] - 2), 'fill' => self::$c['color']['text'], 'text-anchor' => 'end'));
 				}
 

@@ -135,7 +135,7 @@ class phx_graph_box_plot extends phx_graph_horizontal_bars
 		{
 			$val = $buffer_item->get_result_value();
 			if(strpos($val, ','))
-			{ echo 1111;
+			{
 				$val = max(explode(',', $val));
 			}
 			$raw = explode(':', $buffer_item->get_result_raw());
