@@ -149,24 +149,6 @@ class pts_svg_dom_gd
 		self::$color_table = array();
 		foreach($dom->childNodes->item(2)->childNodes as $node)
 		{
-			if($node->nodeName == 'a')
-			{
-				// This is just a link so get whatever is the child of the embedded link to display
-				$node = $node->childNodes->item(0);
-			}
-			else if($node->nodeName == 'g')
-			{
-				// Special handling for g
-				$g = self::attributes_to_array($node);
-var_dump($g);
-				for ($i = 0; $i < $node->childNodes->length; $i++)
-				{
-					$n = $node->childNodes->item($i);
-					self::evaluate_node($n, $gd, $g);
-				}
-				continue;
-			}
-
 			self::evaluate_node($node, $gd);
 			// imagejpeg($this->image, $output_file, $quality);
 			//var_dump($node->attributes);
@@ -193,6 +175,19 @@ var_dump($g);
 	{
 		switch($node->nodeName)
 		{
+			case 'g':
+				// Special handling for g
+				$g = self::attributes_to_array($node, false, $preset);
+				for($i = 0; $i < $node->childNodes->length; $i++)
+				{
+					$n = $node->childNodes->item($i);
+					self::evaluate_node($n, $gd, $g);
+				}
+				break;
+			case 'a':
+				$node = $node->childNodes->item(0);
+				self::evaluate_node($node, $gd, $preset);
+				break;
 			case 'svg':
 				// Not relevant at this point to GD rendering
 				break;
