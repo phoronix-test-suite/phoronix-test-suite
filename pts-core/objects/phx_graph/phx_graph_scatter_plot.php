@@ -33,6 +33,7 @@ class phx_graph_scatter_plot extends phx_graph_core
 		$this->i['max_time'] = 0;
 		$this->i['spread_time'] = 0;
 		$this->i['plot_overview_text'] = true;
+		$this->i['min_identifier_size'] = 6.5;
 		//$this->i['graph_width'] = 1400;
 		//$this->i['graph_height'] = 600;
 		//$this->update_graph_dimensions(-1, -1, true);
@@ -44,7 +45,7 @@ class phx_graph_scatter_plot extends phx_graph_core
 		$this->i['spread_time'] = $this->i['max_time'] - $this->i['min_time'];
 
 		// Do some common work to this object
-/*
+
 		$graph_identifiers_count = count($this->graph_identifiers);
 		$identifier_count = $graph_identifiers_count > 1 ? $graph_identifiers_count : count($this->graph_data[0]);
 		$this->i['identifier_width'] = ($this->i['graph_left_end'] - $this->i['left_start']) / ($identifier_count + 1);
@@ -64,10 +65,13 @@ class phx_graph_scatter_plot extends phx_graph_core
 				$this->i['display_select_identifiers'] = ceil(($text_height + 4) / $this->i['identifier_width']);
 			}
 		}
-*/
+
 	}
 	protected function render_graph_result()
 	{
+		if($this->i['spread_time'] == 0)
+			return;
+
 		$bar_count = count($this->results);
 		$g = $this->svg_dom->make_g(array('stroke-width' => 1));
 		foreach($this->results as $identifier => &$group)
@@ -136,7 +140,7 @@ class phx_graph_scatter_plot extends phx_graph_core
 	}
 	protected function render_graph_identifiers()
 	{
-		return;
+		//return;
 		$px_from_top_end = $this->i['graph_top_end'] + 5;
 
 		if(!is_array($this->graph_identifiers))
@@ -149,12 +153,6 @@ class phx_graph_scatter_plot extends phx_graph_core
 		$i = 0;
 		foreach($this->test_result->test_result_buffer->buffer_items as &$buffer_item)
 		{
-			if($this->i['display_select_identifiers'] && ($i % $this->i['display_select_identifiers']) != 0)
-			{
-				// $this->i['display_select_identifiers'] contains the value of how frequently to display identifiers
-				continue;
-			}
-
 			$px_from_left = $this->i['left_start'] + ($this->i['identifier_width'] * ($i + 1));
 
 			if($this->i['identifier_size'] <= $this->i['min_identifier_size'])

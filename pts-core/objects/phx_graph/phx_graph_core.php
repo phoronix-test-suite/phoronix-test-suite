@@ -70,6 +70,7 @@ abstract class phx_graph_core
 		$this->i['top_start'] = 62;
 		$this->i['top_end_bottom'] = 22;
 		$this->i['mark_count'] = 6; // Number of marks to make on vertical axis
+		$this->i['multi_way_comparison_invert_default'] = true;
 		$this->i['notes'] = array();
 
 		// Reset of setup besides config
@@ -123,6 +124,10 @@ abstract class phx_graph_core
 		{
 			$this->override_i_value('force_simple_keys', true);
 		}
+		if(isset($extra_attributes['multi_way_comparison_invert_default']))
+		{
+			$this->i['multi_way_comparison_invert_default'] = $extra_attributes['multi_way_comparison_invert_default'];
+		}
 
 		$this->test_result = &$result_object;
 		$this->generate_results_var();
@@ -136,7 +141,7 @@ abstract class phx_graph_core
 			{
 				$identifier = array_map('trim', explode(':', $buffer_item->get_result_identifier()));
 
-				if(true)
+				if($this->i['multi_way_comparison_invert_default'])
 				{
 					$identifier = array_reverse($identifier);
 				}

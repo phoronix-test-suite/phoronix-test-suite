@@ -90,7 +90,7 @@ class phoromatic_tests implements pts_webui_interface
 
 
 				$table = null;
-				$extra_attributes = array();
+				$extra_attributes = array('multi_way_comparison_invert_default' => false);
 				$f = false;
 				foreach($result_file->get_result_objects() as $obj)
 				{
@@ -104,8 +104,8 @@ class phoromatic_tests implements pts_webui_interface
 						}
 					}
 
-					pts_render::compact_result_file_test_object($obj, $table, $f, $extra_attributes);
-					$main .= '<p align="center">' . pts_render::render_graph_inline_embed($obj) . '</p>';
+					$result_file = null;
+					$main .= '<p align="center">' . pts_render::render_graph_inline_embed($obj, $result_file, $extra_attributes) . '</p>';
 				}
 
 

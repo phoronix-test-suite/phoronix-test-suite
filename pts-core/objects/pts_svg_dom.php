@@ -245,7 +245,7 @@ class pts_svg_dom
 			$el->setAttribute($name, $value);
 		}
 	}
-	public function add_textarea_element($text_string, $attributes, &$estimated_height = 0)
+	public function add_textarea_element($text_string, $attributes, &$estimated_height = 0, &$append_to = false)
 	{
 		if(!isset($attributes['width']))
 		{
@@ -303,12 +303,26 @@ class pts_svg_dom
 			$link->setAttribute('xlink:href', $attributes['xlink:href']);
 			$link->setAttribute('xlink:show', 'new');
 			$link->appendChild($el);
-			$this->svg->appendChild($link);
+			if($append_to)
+			{
+				$append_to->appendChild($link);
+			}
+			else
+			{
+				$this->svg->appendChild($link);
+			}
 			unset($attributes['xlink:href']);
 		}
 		else
 		{
-			$this->svg->appendChild($el);
+			if($append_to)
+			{
+				$append_to->appendChild($el);
+			}
+			else
+			{
+				$this->svg->appendChild($el);
+			}
 		}
 
 		foreach($attributes as $name => $value)
