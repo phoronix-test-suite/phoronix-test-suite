@@ -135,6 +135,7 @@ class phx_graph_lines extends phx_graph_core
 			$this->svg_dom->draw_svg_line($this->i['left_start'] + ($this->i['identifier_width'] * $this->i['display_select_identifiers']), $this->i['graph_top_end'], $this->i['graph_left_end'], $this->i['graph_top_end'], self::$c['color']['notches'], 10, array('stroke-dasharray' => '1,' . (($this->i['identifier_width'] * $this->i['display_select_identifiers']) - 1)));
 		}
 
+		$g = $this->svg_dom->make_g(array('fill' => self::$c['color']['headers'], 'font-size' => ($this->i['identifier_size'] <= $this->i['min_identifier_size'] ? 9 : $this->i['identifier_size']), 'text-anchor' => ($this->i['identifier_size'] <= $this->i['min_identifier_size'] ? 'start' : 'middle')));
 		foreach(array_keys($this->graph_identifiers) as $i)
 		{
 			if($this->i['display_select_identifiers'] && ($i % $this->i['display_select_identifiers']) != 0)
@@ -143,15 +144,15 @@ class phx_graph_lines extends phx_graph_core
 				continue;
 			}
 
-			$px_from_left = $this->i['left_start'] + ($this->i['identifier_width'] * ($i + (count($this->graph_identifiers) > 1 ? 1 : 0)));
+			$px_from_left = floor($this->i['left_start'] + ($this->i['identifier_width'] * ($i + (count($this->graph_identifiers) > 1 ? 1 : 0))));
 
 			if($this->i['identifier_size'] <= $this->i['min_identifier_size'])
 			{
-				$this->svg_dom->add_text_element($this->graph_identifiers[$i], array('x' => $px_from_left, 'y' => ($px_from_top_end + 2), 'font-size' => 9, 'fill' => self::$c['color']['headers'], 'text-anchor' => 'start', 'transform' => 'rotate(90 ' . $px_from_left . ' ' . ($px_from_top_end + 2) . ')'));
+				$this->svg_dom->add_text_element($this->graph_identifiers[$i], array('x' => $px_from_left, 'y' => ($px_from_top_end + 2), 'transform' => 'rotate(90 ' . $px_from_left . ' ' . ($px_from_top_end + 2) . ')'), $g);
 			}
 			else
 			{
-				$this->svg_dom->add_text_element($this->graph_identifiers[$i], array('x' => $px_from_left, 'y' => ($px_from_top_end + 10), 'font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['headers'], 'text-anchor' => 'middle'));
+				$this->svg_dom->add_text_element($this->graph_identifiers[$i], array('x' => $px_from_left, 'y' => ($px_from_top_end + 10), 'fill' => self::$c['color']['headers']), $g);
 			}
 		}
 	}
@@ -341,7 +342,7 @@ class phx_graph_lines extends phx_graph_core
 			array_push($svg_poly, round($x_y[0]) . ',' . round($x_y[1]));
 		}
 		$svg_poly = implode(' ', $svg_poly);
-		$g = $this->svg_dom->make_g(array('stroke' => $paint_color, 'stroke-width' => 1));
+		$g = $this->svg_dom->make_g(array('stroke' => $paint_color, 'stroke-width' => 1, 'fill' => $paint_color));
 		$this->svg_dom->add_element('polyline', array('points' => $svg_poly, 'fill' => 'none', 'stroke-width' => 2), $g);
 
 		// plot error bars if needed
@@ -375,7 +376,7 @@ class phx_graph_lines extends phx_graph_core
 
 			if($point_counter < 6 || $plotted_error_bar || $i == 0 || $i == ($poly_points_count  - 1))
 			{
-				$this->svg_dom->add_element('ellipse', array('cx' => $x_y_pair[0], 'cy' => $x_y_pair[1], 'rx' => 3, 'ry' => 3, 'fill' => $paint_color, 'xlink:title' => $x_y_pair[2]), $g);
+				$this->svg_dom->add_element('ellipse', array('cx' => $x_y_pair[0], 'cy' => $x_y_pair[1], 'rx' => 3, 'ry' => 3, 'xlink:title' => $x_y_pair[2]), $g);
 			}
 		}
 
