@@ -35,7 +35,7 @@ class pts_render
 		{
 			$graph = self::render_graph_process($object, $result_file, false, $extra_attributes);
 		}
-		else if($object instanceof phx_graph)
+		else if($object instanceof pts_graph_core)
 		{
 			$graph = $object;
 		}
@@ -225,37 +225,37 @@ class pts_render
 		switch($display_format)
 		{
 			case 'LINE_GRAPH':
-				$graph = new phx_graph_lines($result_object, $result_file, $extra_attributes);
+				$graph = new pts_graph_lines($result_object, $result_file, $extra_attributes);
 				break;
 			case 'HORIZONTAL_BOX_PLOT':
-				$graph = new phx_graph_box_plot($result_object, $result_file, $extra_attributes);
+				$graph = new pts_graph_box_plot($result_object, $result_file, $extra_attributes);
 				break;
 			case 'BAR_ANALYZE_GRAPH':
 			case 'BAR_GRAPH':
-				$graph = new phx_graph_horizontal_bars($result_object, $result_file, $extra_attributes);
+				$graph = new pts_graph_horizontal_bars($result_object, $result_file, $extra_attributes);
 				break;
 			case 'PASS_FAIL':
 			case 'MULTI_PASS_FAIL':
-				$graph = new phx_graph_passfail($result_object, $result_file, $extra_attributes);
+				$graph = new pts_graph_passfail($result_object, $result_file, $extra_attributes);
 				break;
 			case 'IMAGE_COMPARISON':
-				$graph = new phx_graph_iqc($result_object, $result_file, $extra_attributes);
+				$graph = new pts_graph_iqc($result_object, $result_file, $extra_attributes);
 				break;
 			case 'SCATTER_PLOT':
-				$graph = new phx_graph_scatter_plot($result_object, $result_file, $extra_attributes);
+				$graph = new pts_graph_scatter_plot($result_object, $result_file, $extra_attributes);
 				break;
 			default:
 
 				switch($requested_graph_type)
 				{
 					case 'LINE_GRAPH':
-						$graph = new phx_graph_lines($result_object, $result_file, $extra_attributes);
+						$graph = new pts_graph_lines($result_object, $result_file, $extra_attributes);
 						break;
 					case 'HORIZONTAL_BOX_PLOT':
-						$graph = new phx_graph_box_plot($result_object, $result_file, $extra_attributes);
+						$graph = new pts_graph_box_plot($result_object, $result_file, $extra_attributes);
 						break;
 					default:
-						$graph = new phx_graph_horizontal_bars($result_object, $result_file, $extra_attributes);
+						$graph = new pts_graph_horizontal_bars($result_object, $result_file, $extra_attributes);
 						break;
 				}
 				break;

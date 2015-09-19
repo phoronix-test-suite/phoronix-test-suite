@@ -20,7 +20,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class phx_graph_box_plot extends phx_graph_horizontal_bars
+class pts_graph_box_plot extends pts_graph_horizontal_bars
 {
 	protected function render_graph_bars()
 	{

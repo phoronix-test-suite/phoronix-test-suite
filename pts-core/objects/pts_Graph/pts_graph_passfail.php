@@ -21,7 +21,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class phx_graph_passfail extends pts_graph_core
+class pts_graph_passfail extends pts_graph_core
 {
 	public function __construct(&$result_object, &$result_file = null, $extra_attributes = null)
 	{

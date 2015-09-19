@@ -21,7 +21,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class phx_graph_iqc extends pts_graph_core
+class pts_graph_iqc extends pts_graph_core
 {
 	protected $img_width = 0;
 	protected $img_height = 0;
