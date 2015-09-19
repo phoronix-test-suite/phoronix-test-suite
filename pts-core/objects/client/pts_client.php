@@ -1082,14 +1082,7 @@ class pts_client
 				}
 			}
 
-			if(getenv('USE_PHX_GRAPH'))
-			{
-				$graph = phx_graph_render::render_graph($result_object, $result_file, $save_to, $extra_attributes);
-			}
-			else
-			{
-				$graph = pts_render::render_graph($result_object, $result_file, $save_to, $extra_attributes);
-			}
+			$graph = pts_render::render_graph($result_object, $result_file, $save_to, $extra_attributes);
 			array_push($generated_graphs, $graph);
 		}
 

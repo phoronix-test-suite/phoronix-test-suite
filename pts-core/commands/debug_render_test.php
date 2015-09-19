@@ -87,14 +87,7 @@ class debug_render_test implements pts_option_interface
 			{
 				echo $result_object->test_profile->get_title() . ' ';
 				$html_dump .= '<h3>' . $result_object->get_arguments_description() . '</h3>';
-				if(getenv('USE_PHX_GRAPH'))
-				{
-					$html_dump .= phx_graph_render::render_graph_inline_embed($result_object, $result_file, $extra_attributes);
-				}
-				else
-				{
-					$html_dump .= pts_render::render_graph_inline_embed($result_object, $result_file, $extra_attributes);
-				}
+				$html_dump .= pts_render::render_graph_inline_embed($result_object, $result_file, $extra_attributes);
 				unset($result_object);
 			}
 

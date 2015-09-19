@@ -17,6 +17,7 @@ Phoronix Test Suite (Git)
 - phoromatic: Add "Tests" page
 - pts_Graph: Don't embed the PNG logo directly into the SVG file, but rely on HTTPS link
 - pts_Graph: Support coloring based on brand
+- pts_Graph: Implement new internal graph rendering interfaces, other major rewrites
 
 Phoronix Test Suite 6.0 Milestone 1
 26 August 2015

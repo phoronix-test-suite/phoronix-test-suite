@@ -99,7 +99,7 @@ abstract class phx_graph_core
 		}
 		else
 		{
-			$this->is_multi_way_comparison = phx_graph_render::multi_way_identifier_check($result_object->test_result_buffer->get_identifiers());
+			$this->is_multi_way_comparison = pts_render::multi_way_identifier_check($result_object->test_result_buffer->get_identifiers());
 		}
 
 		$this->i['graph_version'] = 'Phoronix Test Suite ' . PTS_VERSION;
