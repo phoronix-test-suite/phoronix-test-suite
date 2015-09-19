@@ -28,12 +28,6 @@ class memory_usage extends phodevi_sensor
 
 	private static $page_size = -1;
 
-	public function support_check()
-	{
-		$test = self::read_sensor();
-		return is_numeric($test) && $test != -1;
-	}
-
 	public function read_sensor()
 	{
 		return $this->mem_usage();

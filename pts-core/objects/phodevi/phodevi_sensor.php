@@ -87,8 +87,13 @@ abstract class phodevi_sensor
 		return NULL;
 	}
 
-	// Check if sensor is supported on the current platform.
-	abstract public function support_check();
+	// Check if sensor is supported on the current platform. In most cases you
+    // do not need to override this one.
+	public function support_check()
+	{
+		$test = $this->read_sensor();
+		return is_numeric($test) && $test != -1;
+	}
 
 	// Read the sensor value and return it.
 	abstract public function read_sensor();

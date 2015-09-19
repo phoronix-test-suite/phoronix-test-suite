@@ -25,13 +25,7 @@ class cpu_power extends phodevi_sensor
 	const SENSOR_TYPE = 'cpu';
 	const SENSOR_SENSES = 'power';
 	const SENSOR_UNIT = 'Watts';
-
-        //TODO move support_check to parent phodevi_sensor class
-	public function support_check()
-	{
-		$test = self::read_sensor();
-		return is_numeric($test) && $test != -1;
-	}
+    
 
 	public function read_sensor()
 	{

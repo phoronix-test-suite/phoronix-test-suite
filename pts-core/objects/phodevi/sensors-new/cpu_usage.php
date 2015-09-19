@@ -78,12 +78,6 @@ class cpu_usage extends phodevi_sensor
 		return $supported;
 	}
 
-	public function support_check()
-	{
-		$test = $this->read_sensor();
-		return is_numeric($test) && $test != -1;
-	}
-
 	public function read_sensor()
 	{
 		// Determine current percentage for core usage
