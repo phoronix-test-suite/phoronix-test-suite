@@ -32,7 +32,7 @@ class pts_svg_dom
 		$dom = new DOMImplementation();
 		$dtd = $dom->createDocumentType('svg', '-//W3C//DTD SVG 1.1//EN', 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd');
 		$this->dom = $dom->createDocument(null, null, $dtd);
-		$this->dom->formatOutput = PTS_IS_CLIENT;
+		$this->dom->formatOutput = PTS_IS_CLIENT && PTS_IS_DEV_BUILD;
 
 		$pts_comment = $this->dom->createComment(pts_title(false) . ' [ http://www.phoronix-test-suite.com/ ]');
 		$this->dom->appendChild($pts_comment);

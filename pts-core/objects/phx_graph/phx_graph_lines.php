@@ -282,6 +282,7 @@ class phx_graph_lines extends phx_graph_core
 			$point_counter = count($result_array);
 			$regression_plots = array();
 			$poly_points = array();
+			$g = $this->svg_dom->make_g(array('stroke' => $paint_color, 'stroke-width' => 1, 'fill' => $paint_color));
 
 			for($i = 0; $i < $point_counter; $i++)
 			{
@@ -290,7 +291,7 @@ class phx_graph_lines extends phx_graph_core
 				if($value < 0 || ($value == 0 && $this->graph_identifiers != null))
 				{
 					// Draw whatever is needed of the line so far, since there is no result here
-					$this->draw_graph_line_process($poly_points, $paint_color, $regression_plots, $point_counter);
+					$this->draw_graph_line_process($poly_points, $paint_color, $regression_plots, $point_counter, $g);
 					continue;
 				}
 
@@ -323,10 +324,10 @@ class phx_graph_lines extends phx_graph_core
 				$prev_value = $value;
 			}
 
-			$this->draw_graph_line_process($poly_points, $paint_color, $regression_plots, $point_counter);
+			$this->draw_graph_line_process($poly_points, $paint_color, $regression_plots, $point_counter, $g);
 		}
 	}
-	protected function draw_graph_line_process(&$poly_points, &$paint_color, &$regression_plots, $point_counter)
+	protected function draw_graph_line_process(&$poly_points, &$paint_color, &$regression_plots, $point_counter, &$g)
 	{
 		$poly_points_count = count($poly_points);
 
@@ -342,7 +343,6 @@ class phx_graph_lines extends phx_graph_core
 			array_push($svg_poly, round($x_y[0]) . ',' . round($x_y[1]));
 		}
 		$svg_poly = implode(' ', $svg_poly);
-		$g = $this->svg_dom->make_g(array('stroke' => $paint_color, 'stroke-width' => 1, 'fill' => $paint_color));
 		$this->svg_dom->add_element('polyline', array('points' => $svg_poly, 'fill' => 'none', 'stroke-width' => 2), $g);
 
 		// plot error bars if needed
