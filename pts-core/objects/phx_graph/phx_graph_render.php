@@ -232,20 +232,17 @@ class phx_graph_render
 				break;
 			case 'BAR_ANALYZE_GRAPH':
 			case 'BAR_GRAPH':
-				$graph = new phx_graph_horizontal_bars($result_object, $result_file);
+				$graph = new phx_graph_horizontal_bars($result_object, $result_file, $extra_attributes);
 				break;
 			case 'PASS_FAIL':
 			case 'MULTI_PASS_FAIL':
 				$graph = new phx_graph_passfail($result_object, $result_file, $extra_attributes);
 				break;
-			case 'TEST_COUNT_PASS':
-				$graph = new pts_TestCountPassGraph($result_object, $result_file);
-				break;
 			case 'IMAGE_COMPARISON':
 				$graph = new phx_graph_iqc($result_object, $result_file, $extra_attributes);
 				break;
 			case 'SCATTER_PLOT':
-				$graph = new pts_ScatterPlot($result_object, $result_file);
+				$graph = new phx_graph_scatter_plot($result_object, $result_file, $extra_attributes);
 				break;
 			default:
 
