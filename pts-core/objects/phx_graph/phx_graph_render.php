@@ -235,10 +235,8 @@ class phx_graph_render
 				$graph = new phx_graph_horizontal_bars($result_object, $result_file);
 				break;
 			case 'PASS_FAIL':
-				$graph = new pts_PassFailGraph($result_object, $result_file);
-				break;
 			case 'MULTI_PASS_FAIL':
-				$graph = new pts_MultiPassFailGraph($result_object, $result_file);
+				$graph = new phx_graph_passfail($result_object, $result_file, $extra_attributes);
 				break;
 			case 'TEST_COUNT_PASS':
 				$graph = new pts_TestCountPassGraph($result_object, $result_file);
