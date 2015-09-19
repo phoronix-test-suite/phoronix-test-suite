@@ -247,7 +247,7 @@ class phx_graph_render
 				$graph = new pts_PieChart($result_object, $result_file);
 				break;
 			case 'IMAGE_COMPARISON':
-				$graph = new pts_ImageComparisonGraph($result_object, $result_file);
+				$graph = new phx_graph_iqc($result_object, $result_file, $extra_attributes);
 				break;
 			case 'SCATTER_PLOT':
 				$graph = new pts_ScatterPlot($result_object, $result_file);
