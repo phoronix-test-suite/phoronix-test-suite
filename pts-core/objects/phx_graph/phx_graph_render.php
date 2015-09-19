@@ -173,7 +173,7 @@ class phx_graph_render
 					} */
 				}
 
-				if($result_object->test_profile->get_display_format() != 'PIE_CHART' && (phx_graph_render::multi_way_identifier_check($result_object->test_result_buffer->get_identifiers()) || (isset($extra_attributes['force_tracking_line_graph']) && $extra_attributes['force_tracking_line_graph'])))
+				if((phx_graph_render::multi_way_identifier_check($result_object->test_result_buffer->get_identifiers()) || (isset($extra_attributes['force_tracking_line_graph']) && $extra_attributes['force_tracking_line_graph'])))
 				{
 					//$result_table = false;
 					//pts_render::compact_result_file_test_object($result_object, $result_table, $result_file, $extra_attributes);
@@ -240,9 +240,6 @@ class phx_graph_render
 				break;
 			case 'TEST_COUNT_PASS':
 				$graph = new pts_TestCountPassGraph($result_object, $result_file);
-				break;
-			case 'PIE_CHART':
-				$graph = new pts_PieChart($result_object, $result_file);
 				break;
 			case 'IMAGE_COMPARISON':
 				$graph = new phx_graph_iqc($result_object, $result_file, $extra_attributes);

@@ -68,7 +68,6 @@
 	<xs:restriction base="xs:string">
 		<xs:enumeration value="NO_RESULT" />
 		<xs:enumeration value="BAR_GRAPH" />
-		<xs:enumeration value="PIE_CHART" />
 		<xs:enumeration value="LINE_GRAPH" />
 		<xs:enumeration value="SCATTER_PLOT" />
 		<xs:enumeration value="PASS_FAIL" />
