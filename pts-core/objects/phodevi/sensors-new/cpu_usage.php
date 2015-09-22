@@ -25,7 +25,6 @@ class cpu_usage extends phodevi_sensor
 	const SENSOR_TYPE = 'cpu';
 	const SENSOR_SENSES = 'usage';
 	const SENSOR_UNIT = 'Percent';
-	const PRIMARY_PARAM_NAME = 'cpu_number';
 
 	const PROC_STAT_IDLE_COL = 3;		//CPU idle time - it's the third number in the line (starting from 0)
 
