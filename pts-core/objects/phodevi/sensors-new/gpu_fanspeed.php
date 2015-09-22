@@ -20,7 +20,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class cpu_voltage extends phodevi_sensor
+class gpu_fanspeed extends phodevi_sensor
 {
 	const SENSOR_TYPE = 'gpu';
 	const SENSOR_SENSES = 'fan-speed';

@@ -20,26 +20,15 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class gpu_freq implements phodevi_sensor
+//TODO refactor and fix returning of two values
+class gpu_freq extends phodevi_sensor
 {
-	public static function get_type()
-	{
-		return 'gpu';
-	}
-	public static function get_sensor()
-	{
-		return 'freq';
-	}
-	public static function get_unit()
-	{
-		return 'Megahertz';
-	}
-	public static function support_check()
-	{
-		$test = self::read_sensor();
-		return is_numeric($test) && $test > 0;
-	}
-	public static function read_sensor()
+	const SENSOR_TYPE = 'gpu';
+	const SENSOR_SENSES = 'freq';
+	const SENSOR_UNIT = 'Megahertz';
+    
+    
+	public function read_sensor()
 	{
 		// Graphics processor real/current frequency
 		$show_memory = false;
@@ -192,6 +181,7 @@ class gpu_freq implements phodevi_sensor
 
 		return $show_memory ? array($core_freq, $mem_freq) : $core_freq;
 	}
+	
 }
 
 ?>
