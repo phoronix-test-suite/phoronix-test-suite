@@ -20,38 +20,41 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class sys_v12 implements phodevi_sensor
+class gpu_power extends phodevi_sensor
 {
-	public static function get_type()
+	const SENSOR_TYPE = 'gpu';
+	const SENSOR_SENSES = 'power';
+	const SENSOR_UNIT = 'Milliwatts';
+
+	public function read_sensor()
 	{
-		return 'sys';
-	}
-	public static function get_sensor()
-	{
-		return 'v12-voltage';
-	}
-	public static function get_unit()
-	{
-		return 'Volts';
-	}
-	public static function support_check()
-	{
-		$test = self::read_sensor();
-		return is_numeric($test) && $test != -1;
-	}
-	public static function read_sensor()
-	{
-		if(phodevi::is_linux())
+		$gpu_power = -1;
+
+		if(is_readable('/sys/kernel/debug/dri/0/i915_emon_status'))
 		{
-			$sensor = phodevi_linux_parser::read_sensors(array('V12', '+12V'));
-		}
-		else
-		{
-			$sensor = -1;
+			$i915_emon_status = file_get_contents('/sys/kernel/debug/dri/0/i915_emon_status');
+			$power = strpos($i915_emon_status, 'Total power: ');
+
+			if($power !== false)
+			{
+				$power = substr($i915_emon_status, $power + 13);
+				$power = substr($power, 0, strpos($power, PHP_EOL));
+
+				if(is_numeric($power))
+				{
+					if($power > 10000000)
+					{
+						$power /= 1000;
+					}
+
+					$gpu_power = $power;
+				}
+			}
 		}
 
-		return $sensor;
+		return $gpu_power;
 	}
+
 }
 
 ?>

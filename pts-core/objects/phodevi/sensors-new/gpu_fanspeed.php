@@ -20,38 +20,32 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class cpu_voltage implements phodevi_sensor
+class gpu_fanspeed extends phodevi_sensor
 {
-	public static function get_type()
+	const SENSOR_TYPE = 'gpu';
+	const SENSOR_SENSES = 'fan-speed';
+	const SENSOR_UNIT = 'Percent';
+
+	public function read_sensor()
 	{
-		return 'cpu';
-	}
-	public static function get_sensor()
-	{
-		return 'voltage';
-	}
-	public static function get_unit()
-	{
-		return 'Volts';
-	}
-	public static function support_check()
-	{
-		$test = self::read_sensor();
-		return is_numeric($test) && $test != -1;
-	}
-	public static function read_sensor()
-	{
-		if(phodevi::is_linux())
+		// Report graphics processor fan speed as a percent
+		$fan_speed = -1;
+
+		if(phodevi::is_nvidia_graphics())
 		{
-			$sensor = phodevi_linux_parser::read_sensors('VCore');
+			// NVIDIA fan speed reading support in NVIDIA 190.xx and newer
+			// TODO: support for multiple fans, also for reading GPUFanTarget to get appropriate fan
+			// nvidia-settings --describe GPUFanTarget 
+			$fan_speed = phodevi_parser::read_nvidia_extension('[fan:0]/GPUCurrentFanSpeed');
 		}
-		else
+		else if(phodevi::is_ati_graphics() && phodevi::is_linux())
 		{
-			$sensor = -1;
+			$fan_speed = phodevi_linux_parser::read_ati_overdrive('FanSpeed');
 		}
 
-		return $sensor;
+		return $fan_speed;
 	}
+
 }
 
 ?>

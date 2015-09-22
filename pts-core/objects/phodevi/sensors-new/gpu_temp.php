@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2015, Phoronix Media
-	Copyright (C) 2009 - 2015, Michael Larabel
+	Copyright (C) 2009 - 2011, Phoronix Media
+	Copyright (C) 2009 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -20,26 +20,13 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class gpu_temp implements phodevi_sensor
+class gpu_temp extends phodevi_sensor
 {
-	public static function get_type()
-	{
-		return 'gpu';
-	}
-	public static function get_sensor()
-	{
-		return 'temp';
-	}
-	public static function get_unit()
-	{
-		return 'Celsius';
-	}
-	public static function support_check()
-	{
-		$test = self::read_sensor();
-		return is_numeric($test) && $test != -1;
-	}
-	public static function read_sensor()
+	const SENSOR_TYPE = 'gpu';
+	const SENSOR_SENSES = 'temp';
+	const SENSOR_UNIT = 'Celsius';
+
+	public function read_sensor()
 	{
 		// Report graphics processor temperature
 		$temp_c = -1;
@@ -100,9 +87,10 @@ class gpu_temp implements phodevi_sensor
 			// Invalid data
 			return -1;
 		}
-
-		return $temp_c;
+		
+		return pts_math::set_precision($temp_c, 2);
 	}
+
 }
 
 ?>

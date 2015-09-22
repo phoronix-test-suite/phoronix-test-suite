@@ -52,7 +52,7 @@ class system_monitor extends pts_module_interface
 
 	public static function module_environmental_variables()
 	{
-		return array('MONITOR', 'MONITOR_PARAM_FILE', 'PERFORMANCE_PER_WATT', 'MONITOR_INTERVAL' );
+		return array('MONITOR', 'PERFORMANCE_PER_WATT', 'MONITOR_INTERVAL' );
 	}
 
 	public static function module_info()
@@ -215,7 +215,7 @@ class system_monitor extends pts_module_interface
 		}
 	}
 
-	// Updates single sensor.
+	// Reads value of a single sensor, checks its correctness and saves it to the monitor log.
 	public static function pts_monitor_update(&$sensor)
 	{
 		$sensor_value = phodevi::read_sensor($sensor);
@@ -279,65 +279,8 @@ class system_monitor extends pts_module_interface
 		return $args;
 	}
 
-	// Parse JSON file containing parameters of monitored sensors.
+	// Parse environmental variable containing parameters of monitored sensors.
 	private static function prepare_sensor_parameters()
-	{
-		$config_file = pts_module::read_variable('MONITOR_PARAM_FILE');
-		if ($config_file !== '' )
-		{
-			if (!is_readable($config_file))
-			{
-				throw new Exception('cannot open the configuration file');
-			}
-			$parameters = self::parse_json_config($config_file);
-		}
-		else
-		{
-
-			$parameters = self::parse_envvar_config();
-		}
-
-		return $parameters;
-	}
-
-	private static function parse_json_config($config_file)
-	{
-		$json_array = pts_arrays::json_decode(file_get_contents($config_file));
-		if ($json_array === NULL)
-		{
-			throw new Exception('incorrect JSON syntax');
-		}
-
-		$parameters = array();
-
-		foreach ($json_array['sensors'] as $json_sensor)
-		{
-			if (!array_key_exists("type", $json_sensor) || !array_key_exists("sensor", $json_sensor))
-			{
-				throw new Exception('sensor configuration is not correct');
-			}
-
-			$type = $json_sensor['type'];
-			$sensor = $json_sensor['sensor'];
-
-			if (!isset($json_sensor['instances']) )
-			{
-				// if no instances specified, we just set NULL to know we have to use some default parameters
-				$parameters[$type][$sensor] = NULL;
-				break;
-			}
-
-			foreach ($json_sensor['instances'] as $instance => $instance_parameters)
-			{
-				$parameters[$type][$sensor][$instance] = $instance_parameters;
-			}
-		}
-
-		return $parameters;
-	}
-
-	//TODO make some comments
-	private static function parse_envvar_config()
 	{
 		$sensor_list = pts_strings::comma_explode(pts_module::read_variable('MONITOR'));
 
@@ -349,16 +292,16 @@ class system_monitor extends pts_module_interface
 
 			$type = &$sensor_split[0];
 			$name = &$sensor_split[1];
-			$primary_parameter = &$sensor_split[2];
+			$parameter = &$sensor_split[2];
 
 			if(empty($to_monitor[$type][$name]))
 			{
 				$to_monitor[$type][$name] = array();
 			}
 
-			if ($primary_parameter !== NULL)
+			if ($parameter !== NULL)
 			{
-				array_push($to_monitor[$type][$name], array('primary' => $primary_parameter));
+				array_push($to_monitor[$type][$name], $parameter);
 			}
 		}
 
@@ -377,24 +320,30 @@ class system_monitor extends pts_module_interface
 //		}
 	}
 
+	// Create sensor objects basing on the sensor parameter array.
 	private static function process_sensor_list(&$sensor_parameters)
 	{
-		$monitor_all = in_array('all', $sensor_parameters);
+		$monitor_all = array_key_exists('all', $sensor_parameters);
 		foreach (phodevi::supported_sensors() as $sensor)
 		{
-			// add sensor to monitoring list if:
+			// instantiate sensor class if:
 			// a) we want to monitor all the available sensors,
 			// b) we want to monitor all the available sensors of the specified type,
-			// c) parameter array contains this sensor, eg. there exists value for $sensor_parameters[sens_type][sens_name]
+			// c) sensor type and name was passed in an environmental variable
+
 			// ($sensor[0] is the type, $sensor[1] is the name, $sensor[2] is the class name)
 
 			$sensor_type_exists = array_key_exists($sensor[0], $sensor_parameters);
 			$sensor_name_exists = $sensor_type_exists && array_key_exists($sensor[1], $sensor_parameters[$sensor[0]]);
 			$monitor_all_of_this_type = $sensor_type_exists && array_key_exists('all', $sensor_parameters[$sensor[0]]);
+			$monitor_all_of_this_sensor = $sensor_type_exists && $sensor_name_exists
+					&& in_array('all', $sensor_parameters[$sensor[0]][$sensor[1]]);
 
-			if ($monitor_all  || $monitor_all_of_this_type || $sensor_name_exists )
+			if ($monitor_all || $monitor_all_of_this_type || $sensor_name_exists )
 			{
-				self::create_sensor_instances($sensor, $sensor_parameters);
+				// in some cases we want to create objects representing every possible device supported by the sensor
+				$create_all = $monitor_all || $monitor_all_of_this_type || $monitor_all_of_this_sensor;
+				self::create_sensor_instances($sensor, $sensor_parameters, $create_all);
 			}
 		}
 
@@ -404,49 +353,68 @@ class system_monitor extends pts_module_interface
 		}
 	}
 
-	private static function create_sensor_instances(&$sensor, &$sensor_parameters)
+	private static function create_sensor_instances(&$sensor, &$sensor_parameters, $create_all)
 	{
+		if ($create_all)
+		{
+			self::create_all_sensor_instances($sensor);
+			return;
+		}
+
 		$sensor_instances = $sensor_parameters[$sensor[0]][$sensor[1]];
 
 		// If no instances specified, create one with default parameters.
 		if (empty($sensor_instances) )
 		{
-			self::create_single_sensor_instance($sensor, 0, array());
+			self::create_single_sensor_instance($sensor, 0, NULL);
 			return;
 		}
 		// Create objects for all specified instances of the sensor.
-		foreach ($sensor_instances as $instance => $params)
+		foreach ($sensor_instances as $instance => $param)
 		{
-			self::create_single_sensor_instance($sensor, $instance, $params);
+			self::create_single_sensor_instance($sensor, $instance, $param);
 			//TODO show information when passed parameters are incorrect
 		}
 	}
 
-	private static function create_single_sensor_instance($sensor, $instance, $params)
+	// Create instances for all of the devices supported by specified sensor.
+	private static function create_all_sensor_instances(&$sensor)
 	{
-		if (array_key_exists('primary', $params))
+		$supported_devices = call_user_func(array($sensor[2], 'get_supported_devices'));
+		$instance_no = 0;
+
+		if ($supported_devices === NULL)
 		{
-			$primary_param_name = call_user_func(array($sensor[2], 'get_primary_parameter_name'));
-			$params[$primary_param_name] = $params['primary'];
+			self::create_single_sensor_instance($sensor, 0, NULL);
+			return;
 		}
 
+		foreach ($supported_devices as $device)
+		{
+			self::create_single_sensor_instance($sensor, $instance_no++, $device);
+		}
+	}
+
+	// Create sensor object if parameters passed to it are correct.
+	private static function create_single_sensor_instance($sensor, $instance, $param)
+	{
 		if ($sensor[0] === 'cgroup')
 		{
 			$cgroup_controller = call_user_func(array($sensor[2], 'get_cgroup_controller'));
 			array_push(self::$cgroup_enabled_controllers, $cgroup_controller );
 			self::cgroup_create(self::$cgroup_name, $cgroup_controller);
-			$params['cgroup_name'] = self::$cgroup_name;
+			$param = self::$cgroup_name;
 		}
 
-		if (call_user_func(array($sensor[2], 'parameter_check'), $params) === true)
+		if (call_user_func(array($sensor[2], 'parameter_check'), $param) === true)
 		{
-			$sensor_object = new $sensor[2]($instance, $params);
+			$sensor_object = new $sensor[2]($instance, $param);
 			array_push(self::$to_monitor, $sensor_object);
 			pts_module::save_file('logs/' . phodevi::sensor_object_identifier($sensor_object));
 		}
 	}
 
-	// Creates cgroups in all of the needed controllers.
+	// Create cgroups in all of the needed controllers.
 	private static function create_monitoring_cgroups()
 	{
 		foreach (self::$cgroup_enabled_controllers as $controller)

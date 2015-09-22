@@ -59,18 +59,43 @@ abstract class phodevi_sensor
 		return $this->instance_number;
 	}
 
-	public function get_readable_params()
+	/*
+	 * Sensor-specific functions
+	 */
+
+	// Return human-readable string containing name of the device monitored
+	// by the sensor instance. If your sensor takes no parameters, you can
+	// leave this function as it is.
+	public function get_readable_device_name()
 	{
 		return null;
 	}
 
-//	public static function parameter_check($parameter_array) // check if passed parameters are correct
-//	{
-//		return true;
-//	}
+	// Check if passed parameters are correct. You probably want to
+	// override this function if your sensor supports parametrization.
+	public static function parameter_check($parameter_array)
+	{
+		return true;
+	}
 
-	abstract public function support_check();	   // for checking if sensor is supported on the current platform
+	// Return array containing all the device name strings supported by the sensor.
+	// They can be passed in MONITOR environmental variable to create object
+	// responsible for monitoring specific device. You probably want to
+	// override this function if your sensor supports parametrization.
+	public static function get_supported_devices()
+	{
+		return NULL;
+	}
 
+	// Check if sensor is supported on the current platform. In most cases you
+    // do not need to override this one.
+	public function support_check()
+	{
+		$test = $this->read_sensor();
+		return is_numeric($test) && $test != -1;
+	}
+
+	// Read the sensor value and return it.
 	abstract public function read_sensor();
 }
 
