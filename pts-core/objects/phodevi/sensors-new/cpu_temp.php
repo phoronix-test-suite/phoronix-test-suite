@@ -28,12 +28,7 @@ class cpu_temp extends phodevi_sensor
 	const SENSOR_SENSES = 'temp';
 	const SENSOR_UNIT = 'Celsius';
 
-	public function support_check()
-	{
-		$test = $this->read_sensor();
-		return is_numeric($test) && $test != -1;
-	}
-
+	
 	public function read_sensor()
 	{
 		// Read the processor temperature
