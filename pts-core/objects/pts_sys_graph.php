@@ -90,18 +90,20 @@ class pts_sys_graph
 		$this->svg_dom->add_element('rect', array('x' => 0, 'y' => 0, 'width' => $this->data['width'], 'height' => $this->data['height'], 'fill' => $this->data['background_color']));
 		$this->svg_dom->add_element('rect', array('x' => $this->computed['graph_area_x_start'], 'y' => $this->computed['graph_area_y_end'], 'width' => $this->computed['graph_area_width'], 'height' => $this->computed['graph_area_height'], 'fill' => $this->data['shade_color'], 'stroke-width' => 1, 'stroke' => $this->data['stroke_color']));
 
+		$g_lines = $this->svg_dom->make_g(array('stroke' => $this->data['stroke_color'], 'stroke-width' => 1));
+
 		// Plot Y
 		$y_width = ($this->computed['graph_area_height'] / $this->computed['tick_frequency_y']);
 		for($i = $this->computed['graph_area_y_start'] - $y_width; $i > $this->computed['graph_area_y_end']; $i -= $y_width)
 		{
-		$this->svg_dom->draw_svg_line($this->computed['graph_area_x_start'] - 5, $i, $this->computed['graph_area_x_end'], $i, $this->data['stroke_color'], 1, array('stroke-dasharray' => '5,10'));
+			$this->svg_dom->add_element('line', array('x1' => ($this->computed['graph_area_x_start'] - 5), 'y1' => $i, 'x2' => $this->computed['graph_area_x_end'], 'y2' => $i, 'stroke-dasharray' => '5,10'), $g_lines);
 		}
 
 		// Plot X
 		$x_width = ($this->computed['graph_area_width'] / $this->computed['tick_frequency_x']);
 		for($i = $this->computed['graph_area_x_start'] + $x_width; $i < $this->computed['graph_area_x_end']; $i += $x_width)
 		{
-		$this->svg_dom->draw_svg_line($i, $this->computed['graph_area_y_start'], $i, $this->computed['graph_area_y_end'], $this->data['stroke_color'], 1, array('stroke-dasharray' => '5,10'));
+			$this->svg_dom->add_element('line', array('x1' => $i, 'y1' => $this->computed['graph_area_y_start'], 'x2' => $i, 'y2' => $this->computed['graph_area_y_end'], 'stroke-dasharray' => '5,10'), $g_lines);
 		}
 
 		// Text
@@ -126,7 +128,7 @@ class pts_sys_graph
 		}
 		$vals_per_pixel = $max_value / $this->computed['graph_area_height'];
 
-
+		$g_text = $this->svg_dom->make_g(array('font-size' => $this->data['text_size_sub'], 'fill' => $this->data['text_color'], 'text-anchor' => 'end', 'alignment-baseline' => 'middle'));
 		for($i = $this->computed['graph_area_y_start']; $i > $this->computed['graph_area_y_end']; $i -= ($this->computed['graph_area_height'] / $this->computed['tick_frequency_y']))
 		{
 			$val = round($max_value - ($i - $this->computed['graph_area_y_end']) * $vals_per_pixel, 1);
@@ -135,10 +137,11 @@ class pts_sys_graph
 				continue;
 			}
 
-			$svg_dom->add_text_element($val, array('x' => $this->computed['graph_area_x_start'] - 8, 'y' => $i, 'font-size' => $this->data['text_size_sub'], 'fill' => $this->data['text_color'], 'text-anchor' => 'end', 'alignment-baseline' => 'middle'));
+			$svg_dom->add_text_element($val, array('x' => $this->computed['graph_area_x_start'] - 8, 'y' => $i), $g_text);
 		}
 
 		$graph_data_count = count($graph_data);
+		$g_text = $this->svg_dom->make_g(array('font-size' => ($this->data['text_size_sub'] - 1), 'fill' => $this->data['text_color'], 'alignment-baseline' => 'after-edge', 'text-anchor' => 'middle'));
 		for($i = $this->computed['graph_area_x_start']; $i < $this->computed['graph_area_x_end']; $i += ($this->computed['graph_area_width'] / $this->computed['tick_frequency_x']))
 		{
 			if($this->data['reverse_x_direction'] == true)
@@ -154,7 +157,7 @@ class pts_sys_graph
 				continue;
 			}
 
-			$this->svg_dom->add_text_element($val . $this->data['x_scale'], array('x' => $i, 'y' => $this->computed['graph_area_y_start'] + 8, 'font-size' => ($this->data['text_size_sub'] - 1), 'fill' => $this->data['text_color'], 'alignment-baseline' => 'after-edge', 'text-anchor' => 'middle'));
+			$this->svg_dom->add_text_element($val . $this->data['x_scale'], array('x' => $i, 'y' => $this->computed['graph_area_y_start'] + 8), $g_text);
 		}
 
 		$pixels_per_increment = $this->computed['graph_area_width'] / $graph_data_count;
