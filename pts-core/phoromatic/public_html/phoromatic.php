@@ -79,7 +79,7 @@ foreach($environmental_variables as $get_var => $to_var)
 	}
 }
 
-if($CLIENT_CORE_VERSION < 5312)
+if($CLIENT_CORE_VERSION < 5400)
 {
 	// Due to major PTS 5.4 development changes, client version bump will be necessary
 	$json['phoromatic']['error'] = 'You must update your Phoronix Test Suite clients for compatibility with this Phoromatic server.';
@@ -155,18 +155,6 @@ if($PTS_MACHINE_SELF_ID != null)
 	$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, Groups, State, MaintenanceMode, LastCommunication FROM phoromatic_systems WHERE AccountID = :account_id AND MachineSelfID = :machine_self_id');
 	$stmt->bindValue(':account_id', ACCOUNT_ID);
 	$stmt->bindValue(':machine_self_id', $PTS_MACHINE_SELF_ID);
-	$result = $stmt->execute();
-	$result = $result->fetchArray();
-}
-
-if(!isset($result) || empty($result))
-{
-	// TODO XXX: This block of code can be dropped when doing away with older PTS client support... pre-5.4 support
-	// See if before the client was connecting from an older PTS version without a MachineSelfID....
-	$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, Groups, State, MaintenanceMode, LastCommunication FROM phoromatic_systems WHERE AccountID = :account_id AND GSID = :gsid AND MachineSelfID = :machine_self_id');
-	$stmt->bindValue(':account_id', ACCOUNT_ID);
-	$stmt->bindValue(':gsid', $GSID);
-	$stmt->bindValue(':machine_self_id', null);
 	$result = $stmt->execute();
 	$result = $result->fetchArray();
 }
