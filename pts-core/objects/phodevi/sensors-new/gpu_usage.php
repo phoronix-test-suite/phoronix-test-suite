@@ -3,9 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2014, Phoronix Media
-	Copyright (C) 2009 - 2014, Michael Larabel
-	Copyright (C) 2014, Lauri Kasanen
+	Copyright (C) 2009 - 2011, Phoronix Media
+	Copyright (C) 2009 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -21,23 +20,20 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class gpu_usage implements phodevi_sensor
-{
-	static $probe_ati_overdrive = false;
-	static $probe_radeontop = false;
-	static $probe_radeon_fences = false;
-	static $probe_intel_commands = false;
-	static $probe_nvidia_smi = false;
-	static $probe_nvidia_settings = false;
+//TODO test this sensor on different devices
 
-	public static function get_type()
-	{
-		return 'gpu';
-	}
-	public static function get_sensor()
-	{
-		return 'usage';
-	}
+class gpu_usage extends phodevi_sensor
+{
+	const SENSOR_TYPE = 'gpu';
+	const SENSOR_SENSES = 'usage';
+	
+	private $probe_ati_overdrive = false;
+	private $probe_radeontop = false;
+	private $probe_radeon_fences = false;
+	private $probe_intel_commands = false;
+	private $probe_nvidia_smi = false;
+	private $probe_nvidia_settings = false;
+
 	public static function get_unit()
 	{
 		if(self::$probe_ati_overdrive || self::$probe_nvidia_smi || self::$probe_nvidia_settings ||
@@ -56,7 +52,9 @@ class gpu_usage implements phodevi_sensor
 
 		return $unit;
 	}
-	public static function support_check()
+	
+	//TODO rewrite support checking if possible
+	public function support_check()
 	{
 		if(phodevi::is_ati_graphics() && phodevi::is_linux())
 		{
@@ -123,7 +121,8 @@ class gpu_usage implements phodevi_sensor
 
 		return false;
 	}
-	public static function read_sensor()
+	
+	public function read_sensor()
 	{
 		if(self::$probe_ati_overdrive)
 		{
@@ -150,6 +149,7 @@ class gpu_usage implements phodevi_sensor
 			return self::intel_command_speed();
 		}
 	}
+	
 	public static function read_nvidia_settings_gpu_utilization()
 	{
 		$util = phodevi_parser::read_nvidia_extension('GPUUtilization');
@@ -174,10 +174,12 @@ class gpu_usage implements phodevi_sensor
 
 		return false;
 	}
+	
 	public static function ati_overdrive_core_usage()
 	{
 		return phodevi_linux_parser::read_ati_overdrive('GPUload');
 	}
+	
 	public static function nvidia_core_usage()
 	{
 		$nvidia_smi = shell_exec('nvidia-smi -a');
@@ -189,6 +191,7 @@ class gpu_usage implements phodevi_sensor
 
 		return $util;
 	}
+	
 	public static function radeon_fence_speed()
 	{
 		// Determine GPU usage
@@ -215,6 +218,7 @@ class gpu_usage implements phodevi_sensor
 
 		return $fence_speed;
 	}
+	
 	protected static function intel_current_sequence_count()
 	{
 		$count = 0;
@@ -234,6 +238,7 @@ class gpu_usage implements phodevi_sensor
 
 		return $count;
 	}
+	
 	public static function intel_command_speed()
 	{
 		// Determine GPU usage
@@ -243,6 +248,7 @@ class gpu_usage implements phodevi_sensor
 
 		return $second_read - $first_read;
 	}
+	
 	public static function radeontop_gpu_usage()
 	{
 		$out = shell_exec('radeontop -d - -l 1');
@@ -256,6 +262,7 @@ class gpu_usage implements phodevi_sensor
 
 		return $out;
 	}
+
 }
 
 ?>
