@@ -20,26 +20,13 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class gpu_fanspeed implements phodevi_sensor
+class cpu_voltage extends phodevi_sensor
 {
-	public static function get_type()
-	{
-		return 'gpu';
-	}
-	public static function get_sensor()
-	{
-		return 'fan-speed';
-	}
-	public static function get_unit()
-	{
-		return 'Percent';
-	}
-	public static function support_check()
-	{
-		$test = self::read_sensor();
-		return is_numeric($test) && $test != -1;
-	}
-	public static function read_sensor()
+	const SENSOR_TYPE = 'gpu';
+	const SENSOR_SENSES = 'fan-speed';
+	const SENSOR_UNIT = 'Percent';
+
+	public function read_sensor()
 	{
 		// Report graphics processor fan speed as a percent
 		$fan_speed = -1;
@@ -58,6 +45,7 @@ class gpu_fanspeed implements phodevi_sensor
 
 		return $fan_speed;
 	}
+
 }
 
 ?>
