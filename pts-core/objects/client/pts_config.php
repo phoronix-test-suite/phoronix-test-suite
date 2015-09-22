@@ -70,7 +70,7 @@ class pts_config
 		}
 
 		$json_graph = array();
-		pts_Graph::set_default_graph_values($json_graph);
+		pts_graph_core::set_default_graph_values($json_graph);
 		if($json_pre != null)
 		{
 			$json_pre = json_decode($json_pre, true);
@@ -81,7 +81,7 @@ class pts_config
 			}
 		}
 
-		pts_Graph::init_graph_config($json_graph);
+		pts_graph_core::init_graph_config($json_graph);
 		file_put_contents(PTS_USER_PATH . 'graph-config.json', pts_arrays::json_encode_pretty_string($json_graph));
 	}
 	public static function user_config_generate($new_config_values = null)

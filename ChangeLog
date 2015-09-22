@@ -10,9 +10,14 @@ Phoronix Test Suite (Git)
 - pts-core: Implement new, faster result merger
 - pts-core: Allow the test_run_manager to run directly with a result_file
 - pts-core: Do test execution with proc_open(), allow modules to tap the process
+- pts-core: Add support for emitting SVG files with g tag to save space
+- pts-core: Fix breakage of pass/fail type tests in result parser
+- pts-core: Drop unused PIE_CHART type
 - phodevi: AMDGPU Linux detection improvements
 - phoromatic: Add "Tests" page
 - pts_Graph: Don't embed the PNG logo directly into the SVG file, but rely on HTTPS link
+- pts_Graph: Support coloring based on brand
+- pts_Graph: Implement new internal graph rendering interfaces, other major rewrites
 
 Phoronix Test Suite 6.0 Milestone 1
 26 August 2015

@@ -21,7 +21,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class pts_RadarOverviewGraph extends pts_Graph
+class pts_RadarOverviewGraph extends pts_graph_core
 {
 	public $skip_graph = false;
 	private $result_objects = array();

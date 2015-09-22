@@ -856,7 +856,8 @@ class pts_test_result_parser
 					break;
 				case 'AVERAGE':
 				default:
-					$test_result = array_sum($test_results) / count($test_results);
+					if($is_numeric_check)
+						$test_result = array_sum($test_results) / count($test_results);
 					break;
 			}
 

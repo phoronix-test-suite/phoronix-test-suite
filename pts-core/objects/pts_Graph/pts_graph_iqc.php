@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2012, Phoronix Media
-	Copyright (C) 2009 - 2012, Michael Larabel
+	Copyright (C) 2009 - 2015, Phoronix Media
+	Copyright (C) 2009 - 2015, Michael Larabel
 	pts_ImageComparisonGraph.php: A graph object for image comparisons
 
 	This program is free software; you can redistribute it and/or modify
@@ -21,11 +21,13 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class pts_ImageComparisonGraph extends pts_Graph
+class pts_graph_iqc extends pts_graph_core
 {
-	public function __construct(&$result_object, &$result_file = null)
+	protected $img_width = 0;
+	protected $img_height = 0;
+	public function __construct(&$result_object, &$result_file = null, $extra_attributes = null)
 	{
-		parent::__construct($result_object, $result_file);
+		parent::__construct($result_object, $result_file, $extra_attributes);
 		$this->i['graph_value_type'] = 'ABSTRACT';
 		$this->i['hide_graph_identifiers'] = true;
 		$this->graph_data_title = array('PASSED', 'FAILED');
@@ -39,14 +41,14 @@ class pts_ImageComparisonGraph extends pts_Graph
 		}
 
 		// Do some common work to this object
-		$draw_count = count($this->graph_identifiers);
-		$img_first = imagecreatefromstring(base64_decode($this->graph_data[0][0]));
-		$img_width = imagesx($img_first);
-		$img_height = imagesy($img_first);
+		$draw_count = count($this->test_result->test_result_buffer->buffer_items);
+		$img_first = imagecreatefromstring(base64_decode($this->test_result->test_result_buffer->buffer_items[0]->get_result_value()));
+		$this->img_width = imagesx($img_first);
+		$this->img_height = imagesy($img_first);
 
 		// Assume if the images are being rendered together they are same width and height
-		$this->i['graph_height'] = 72 + ($draw_count * ($img_height + 22)); // 110 at top plus 20 px between images
-		$this->i['graph_width'] = $this->i['graph_width'] < ($img_width + 20) ? $img_width + 20 : $this->i['graph_width'];
+		$this->i['graph_height'] = 72 + ($draw_count * ($this->img_height + 22)); // 110 at top plus 20 px between images
+		$this->i['graph_width'] = $this->i['graph_width'] < ($this->img_width + 20) ? $this->img_width + 20 : $this->i['graph_width'];
 
 		$this->update_graph_dimensions($this->i['graph_width'], $this->i['graph_height']);
 	}
@@ -61,22 +63,16 @@ class pts_ImageComparisonGraph extends pts_Graph
 		$this->render_graph_pre_init();
 		$this->render_graph_init();
 		$this->render_graph_heading(false);
-
-		$img_first = imagecreatefromstring(base64_decode($this->graph_data[0][0]));
-		$img_width = imagesx($img_first);
-		$img_height = imagesy($img_first);
-		unset($img_first);
-
-		$draw_count = count($this->graph_identifiers);
+		$draw_count = count($this->test_result->test_result_buffer->buffer_items);
 
 		for($i_o = 0; $i_o < $draw_count; $i_o++)
 		{
-			$from_left = ($this->i['graph_width'] / 2) - ($img_width / 2);
-			$from_top = 60 + ($i_o * ($img_height + 22));
+			$from_left = ($this->i['graph_width'] / 2) - ($this->img_width / 2);
+			$from_top = 60 + ($i_o * ($this->img_height + 22));
 
-			$this->svg_dom->add_element('rect', array('x' => ($from_left - 1), 'y' => ($from_top - 1), 'width' => ($img_width + 2), 'height' => ($img_height + 2), 'fill' => self::$c['color']['body_light']));
-			$this->svg_dom->add_element('image', array('xlink:href' => 'data:image/png;base64,' . $this->graph_data[0][$i_o], 'x' => $from_left, 'y' => $from_top, 'width' => $img_width, 'height' => $img_height));
-			$this->svg_dom->add_text_element($this->graph_identifiers[$i_o], array('x' => round($this->i['graph_width'] / 2), 'y' => ($from_top + $img_height + 3), 'font-size' => self::$c['size']['bars'], 'fill' => self::$c['color']['main_headers'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
+			$this->svg_dom->add_element('rect', array('x' => ($from_left - 1), 'y' => ($from_top - 1), 'width' => ($this->img_width + 2), 'height' => ($this->img_height + 2), 'fill' => self::$c['color']['body_light']));
+			$this->svg_dom->add_element('image', array('xlink:href' => 'data:image/png;base64,' . $this->test_result->test_result_buffer->buffer_items[$i_o]->get_result_value(), 'x' => $from_left, 'y' => $from_top, 'width' => $this->img_width, 'height' => $this->img_height));
+			$this->svg_dom->add_text_element($this->graph_identifiers[$i_o], array('x' => round($this->i['graph_width'] / 2), 'y' => ($from_top + $this->img_height + 3), 'font-size' => self::$c['size']['bars'], 'fill' => self::$c['color']['main_headers'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
 		}
 
 		if(!empty(self::$c['text']['watermark']))

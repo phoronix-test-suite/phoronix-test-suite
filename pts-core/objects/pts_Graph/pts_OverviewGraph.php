@@ -21,7 +21,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class pts_OverviewGraph extends pts_Graph
+class pts_OverviewGraph extends pts_graph_core
 {
 	protected $result_file;
 
@@ -64,6 +64,8 @@ class pts_OverviewGraph extends pts_Graph
 			{
 				array_push($result_objects, $result_object);
 				array_push($test_titles, $result_object->test_profile->get_title());
+				foreach($result_object->test_result_buffer->buffer_items as &$buffer_item)
+				pts_arrays::unique_push($this->graph_identifiers, $buffer_item->get_result_identifier());
 			}
 		}
 

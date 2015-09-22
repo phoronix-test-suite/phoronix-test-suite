@@ -21,7 +21,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class pts_ResultFileCompactSystemsTable extends pts_Graph
+class pts_ResultFileCompactSystemsTable extends pts_graph_core
 {
 	protected $components;
 	protected $intent;

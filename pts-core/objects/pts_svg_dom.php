@@ -32,7 +32,7 @@ class pts_svg_dom
 		$dom = new DOMImplementation();
 		$dtd = $dom->createDocumentType('svg', '-//W3C//DTD SVG 1.1//EN', 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd');
 		$this->dom = $dom->createDocument(null, null, $dtd);
-		$this->dom->formatOutput = PTS_IS_CLIENT;
+		$this->dom->formatOutput = PTS_IS_CLIENT && PTS_IS_DEV_BUILD;
 
 		$pts_comment = $this->dom->createComment(pts_title(false) . ' [ http://www.phoronix-test-suite.com/ ]');
 		$this->dom->appendChild($pts_comment);
@@ -40,7 +40,7 @@ class pts_svg_dom
 		$this->svg = $this->dom->createElementNS('http://www.w3.org/2000/svg', 'svg');
 		$this->svg->setAttribute('xmlns:xlink', 'http://www.w3.org/1999/xlink');
 		$this->svg->setAttribute('version', '1.1');
-		$this->svg->setAttribute('font-family', 'sans-serif');
+		$this->svg->setAttribute('font-family', 'sans-serif, droid-sans, helvetica, verdana, tahoma');
 		$this->svg->setAttribute('viewbox', '0 0 ' . $width . ' ' . $height);
 		$this->svg->setAttribute('width', $width);
 		$this->svg->setAttribute('height', $height);
@@ -121,6 +121,7 @@ class pts_svg_dom
 	}
 	public function draw_svg_line($start_x, $start_y, $end_x, $end_y, $color, $line_width = 1, $extra_elements = null)
 	{
+		// this function is equivalent to $this->svg_dom->add_element('line', array('x1' => , 'y1' => , 'x2' => , 'y2' => , 'stroke' => , 'stroke-width' => ));
 		$attributes = array('x1' => $start_x, 'y1' => $start_y, 'x2' => $end_x, 'y2' => $end_y, 'stroke' => $color, 'stroke-width' => $line_width);
 
 		if($extra_elements != null)
@@ -152,7 +153,16 @@ class pts_svg_dom
 		$extra_attributes['fill'] = $color;
 		$this->add_element('circle', $extra_attributes);
 	}
-	public function add_element($element_type, $attributes = array())
+	public function make_g($attributes = array())
+	{
+		$el = $this->dom->createElement('g');
+		foreach($attributes as $name => $value)
+		{
+			$el->setAttribute($name, $value);
+		}
+		return $this->svg->appendChild($el);
+	}
+	public function add_element($element_type, $attributes = array(), $append_to = false)
 	{
 		$el = $this->dom->createElement($element_type);
 
@@ -164,12 +174,26 @@ class pts_svg_dom
 			$link->setAttribute('xlink:href', $attributes[$link_key]);
 			$link->setAttribute('xlink:show', 'new');
 			$link->appendChild($el);
-			$this->svg->appendChild($link);
+			if($append_to)
+			{
+				$append_to->appendChild($link);
+			}
+			else
+			{
+				$this->svg->appendChild($link);
+			}
 			unset($attributes[$link_key]);
 		}
 		else
 		{
-			$this->svg->appendChild($el);
+			if($append_to)
+			{
+				$append_to->appendChild($el);
+			}
+			else
+			{
+				$this->svg->appendChild($el);
+			}
 		}
 
 		foreach($attributes as $name => $value)
@@ -177,7 +201,7 @@ class pts_svg_dom
 			$el->setAttribute($name, $value);
 		}
 	}
-	public function add_text_element($text_string, $attributes)
+	public function add_text_element($text_string, $attributes, $append_to = false)
 	{
 		$el = $this->dom->createElement('text');
 		$text_node = $this->dom->createTextNode($text_string);
@@ -189,17 +213,31 @@ class pts_svg_dom
 			$link->setAttribute('xlink:href', $attributes['xlink:href']);
 			$link->setAttribute('xlink:show', 'new');
 			$link->appendChild($el);
-			$this->svg->appendChild($link);
+			if($append_to)
+			{
+				$append_to->appendChild($link);
+			}
+			else
+			{
+				$this->svg->appendChild($link);
+			}
 			unset($attributes['xlink:href']);
 		}
 		else
 		{
-			$this->svg->appendChild($el);
+			if($append_to)
+			{
+				$append_to->appendChild($el);
+			}
+			else
+			{
+				$this->svg->appendChild($el);
+			}
 		}
 
 		foreach($attributes as $name => $value)
 		{
-			if($value === null)
+			if($value == null && $value !== 0)
 			{
 				continue;
 			}
@@ -207,7 +245,7 @@ class pts_svg_dom
 			$el->setAttribute($name, $value);
 		}
 	}
-	public function add_textarea_element($text_string, $attributes, &$estimated_height = 0)
+	public function add_textarea_element($text_string, $attributes, &$estimated_height = 0, &$append_to = false)
 	{
 		if(!isset($attributes['width']))
 		{
@@ -265,12 +303,26 @@ class pts_svg_dom
 			$link->setAttribute('xlink:href', $attributes['xlink:href']);
 			$link->setAttribute('xlink:show', 'new');
 			$link->appendChild($el);
-			$this->svg->appendChild($link);
+			if($append_to)
+			{
+				$append_to->appendChild($link);
+			}
+			else
+			{
+				$this->svg->appendChild($link);
+			}
 			unset($attributes['xlink:href']);
 		}
 		else
 		{
-			$this->svg->appendChild($el);
+			if($append_to)
+			{
+				$append_to->appendChild($el);
+			}
+			else
+			{
+				$this->svg->appendChild($el);
+			}
 		}
 
 		foreach($attributes as $name => $value)

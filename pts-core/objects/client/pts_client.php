@@ -231,7 +231,7 @@ class pts_client
 			'DEBUG_REAL_HOME' => pts_client::user_home_directory()
 			);
 
-			if(!pts_client::executable_in_path('cc') && pts_client::executable_in_path('gcc'))
+			if(!pts_client::executable_in_path('cc') && pts_client::executable_in_path('gcc') && getenv('CC') == false)
 			{
 				// This helps some test profiles build correctly if they don't do a cc check internally
 				$env_variables['CC'] = 'gcc';
@@ -1064,7 +1064,7 @@ class pts_client
 
 						foreach($test_titles as $this_title_index => $this_title)
 						{
-							if($this_title == $test_titles[$key])
+							if(isset($test_titles[$key]) && $this_title == $test_titles[$key])
 							{
 								array_push($table_keys, $this_title_index);
 							}
@@ -1116,13 +1116,6 @@ class pts_client
 				}
 			}
 			unset($graph);
-
-			/*
-			// TODO XXX: just stuffing some debug code here temporarily while working on block diagram code...
-			$graph = new pts_BlockDiagramGraph($result_file);
-			$graph->renderGraph();
-			$graph->svg_dom->output($save_to_dir . '/result-graphs/blocks.BILDE_EXTENSION');
-			*/
 		}
 
 		// Save XSL
@@ -1208,7 +1201,7 @@ class pts_client
 	public static function regenerate_graphs($result_file_identifier, $full_process_string = false, $extra_graph_attributes = null)
 	{
 		$save_to_dir = pts_client::setup_test_result_directory($result_file_identifier);
-		$generated_graphs = pts_client::generate_result_file_graphs($result_file_identifier, $save_to_dir, false, $extra_graph_attributes);
+		$generated_graphs = pts_client::generate_result_file_graphs($result_file_identifier, $save_to_dir, $extra_graph_attributes);
 		$generated = count($generated_graphs) > 0;
 
 		if($generated && $full_process_string)

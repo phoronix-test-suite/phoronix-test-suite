@@ -21,61 +21,97 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class pts_LineGraph extends pts_Graph
+class pts_graph_lines extends pts_graph_core
 {
-	public function __construct(&$result_object, &$result_file = null)
+	private $max_count;
+	public function __construct(&$result_object, &$result_file = null, $extra_attributes = null)
 	{
-		parent::__construct($result_object, $result_file);
+		$max_count = 0;
+		if(!$extra_attributes['force_tracking_line_graph'])
+		{
+			foreach($result_object->test_result_buffer->buffer_items as &$buffer_item)
+			{
+				$values = pts_strings::comma_explode($buffer_item->get_result_value());
+				$buffer_item->reset_result_value($values);
+				$buffer_item->reset_raw_value(pts_strings::comma_explode($buffer_item->get_result_raw()));
+				$max_count = max($max_count, count($values));
+			}
+		}
+
+		parent::__construct($result_object, $result_file, $extra_attributes);
 		$this->i['show_graph_key'] = true;
 		$this->i['show_background_lines'] = true;
 		$this->i['iveland_view'] = true;
-		$this->i['identifier_width'] = -1;
 		$this->i['min_identifier_size'] = 6.5;
-		$this->i['plot_overview_text'] = true;
+		$this->i['plot_overview_text'] = isset($extra_attributes['no_overview_text']) == false;
 		$this->i['display_select_identifiers'] = false;
+		$this->i['hide_graph_identifiers'] = !isset($extra_attributes['force_tracking_line_graph']) || !$extra_attributes['force_tracking_line_graph'];
+
+		if($this->is_multi_way_comparison && $extra_attributes['force_tracking_line_graph'])
+		{
+			// need to do compacting here
+			$this->test_result->test_result_buffer = new pts_test_result_buffer();
+			foreach($this->results as $system => $results)
+			{
+				$result_r = array();
+				$raw_r = array();
+				//$json_r = array();
+				foreach($this->graph_identifiers as $d)
+				{
+					$result_r[$d] = null;
+					$raw_r[$d] = null;
+					//$json_r[$d] = null;
+				}
+				foreach($results as &$buffer_item)
+				{
+					$result_r[$buffer_item->get_result_identifier()] = $buffer_item->get_result_value();
+					$raw_r[$buffer_item->get_result_identifier()] = $buffer_item->get_result_raw();
+					$json_r[$buffer_item->get_result_identifier()] = $buffer_item->get_result_json();
+				}
+				// add array_values($json_r)
+				$this->test_result->test_result_buffer->add_test_result($system, array_values($result_r), array_values($raw_r));
+			}
+			$max_count = count($this->graph_identifiers) + 2;
+		}
+
+		$this->max_count = $max_count;
 	}
 	protected function render_graph_pre_init()
 	{
 		// Do some common work to this object
-		$graph_identifiers_count = count($this->graph_identifiers);
+		$this->i['identifier_width'] = $this->max_count > 0 ? (($this->i['graph_left_end'] - $this->i['left_start']) / $this->max_count) : 1;
 
-		if($graph_identifiers_count > 1)
+		if(!$this->i['hide_graph_identifiers'])
 		{
-			$identifier_count = $graph_identifiers_count + 1;
-		}
-		else
-		{
-			$identifier_count = 0;
+			$identifier_count = $this->test_result->test_result_buffer->get_count();
+			$longest_string = pts_strings::find_longest_string($this->graph_identifiers);
+			$this->i['identifier_size'] = $this->text_size_bounds($longest_string, $this->i['identifier_size'], $this->i['min_identifier_size'], $this->i['identifier_width'] - 4);
 
-			foreach(array_keys($this->graph_data) as $i)
+			if($this->i['identifier_size'] <= $this->i['min_identifier_size'])
 			{
-				$identifier_count = max((count($this->graph_data[$i]) - 1), $identifier_count);
-			}
-		}
+				list($text_width, $text_height) = pts_svg_dom::estimate_text_dimensions($longest_string, $this->i['min_identifier_size'] + 0.5);
+				$this->i['bottom_offset'] += $text_width;
+				$this->update_graph_dimensions($this->i['graph_width'], $this->i['graph_height'] + $text_width);
 
-		$this->i['identifier_width'] = $identifier_count > 0 ? (($this->i['graph_left_end'] - $this->i['left_start']) / $identifier_count) : 1;
-
-		$longest_string = pts_strings::find_longest_string($this->graph_identifiers);
-		$this->i['identifier_size'] = $this->text_size_bounds($longest_string, $this->i['identifier_size'], $this->i['min_identifier_size'], $this->i['identifier_width'] - 4);
-
-		if($this->i['identifier_size'] <= $this->i['min_identifier_size'])
-		{
-			list($text_width, $text_height) = pts_svg_dom::estimate_text_dimensions($longest_string, $this->i['min_identifier_size'] + 0.5);
-			$this->i['bottom_offset'] += $text_width;
-			$this->update_graph_dimensions($this->i['graph_width'], $this->i['graph_height'] + $text_width);
-
-			if(($text_height + 4) > $this->i['identifier_width'] && $graph_identifiers_count > 3)
-			{
-				// Show the identifiers as frequently as they will fit
-				$this->i['display_select_identifiers'] = ceil(($text_height + 4) / $this->i['identifier_width']);
+				if(($text_height + 4) > $this->i['identifier_width'] && $identifier_count > 3)
+				{
+					// Show the identifiers as frequently as they will fit
+					$this->i['display_select_identifiers'] = ceil(($text_height + 4) / $this->i['identifier_width']);
+				}
 			}
 		}
 
 		$max_value = 0;
-		foreach($this->graph_data as $dataset)
+		foreach($this->test_result->test_result_buffer->buffer_items as &$buffer_item)
 		{
-			$data_max = max($dataset);
-			$max_value = $max_value > $data_max ? $max_value : $data_max;
+			if(!is_array($buffer_item->get_result_value()))
+			{
+				$max_value = max($max_value,  $buffer_item->get_result_value());
+			}
+			else
+			{
+				$max_value = max($max_value,  max($buffer_item->get_result_value()));
+			}
 		}
 
 		$max_value *= 1.25; // leave room at top of graph
@@ -83,7 +119,7 @@ class pts_LineGraph extends pts_Graph
 	}
 	protected function render_graph_identifiers()
 	{
-		if(!is_array($this->graph_identifiers))
+		if($this->i['hide_graph_identifiers'])
 		{
 			return;
 		}
@@ -99,51 +135,26 @@ class pts_LineGraph extends pts_Graph
 			$this->svg_dom->draw_svg_line($this->i['left_start'] + ($this->i['identifier_width'] * $this->i['display_select_identifiers']), $this->i['graph_top_end'], $this->i['graph_left_end'], $this->i['graph_top_end'], self::$c['color']['notches'], 10, array('stroke-dasharray' => '1,' . (($this->i['identifier_width'] * $this->i['display_select_identifiers']) - 1)));
 		}
 
+		$g = $this->svg_dom->make_g(array('fill' => self::$c['color']['headers'], 'font-size' => ($this->i['identifier_size'] <= $this->i['min_identifier_size'] ? 9 : $this->i['identifier_size']), 'text-anchor' => ($this->i['identifier_size'] <= $this->i['min_identifier_size'] ? 'start' : 'middle')));
 		foreach(array_keys($this->graph_identifiers) as $i)
 		{
-			if(is_array($this->graph_identifiers[$i]))
-			{
-				break;
-			}
-
 			if($this->i['display_select_identifiers'] && ($i % $this->i['display_select_identifiers']) != 0)
 			{
 				// $this->i['display_select_identifiers'] contains the value of how frequently to display identifiers
 				continue;
 			}
 
-			$px_from_left = $this->i['left_start'] + ($this->i['identifier_width'] * ($i + (count($this->graph_identifiers) > 1 ? 1 : 0)));
+			$px_from_left = floor($this->i['left_start'] + ($this->i['identifier_width'] * ($i + (count($this->graph_identifiers) > 1 ? 1 : 0))));
 
 			if($this->i['identifier_size'] <= $this->i['min_identifier_size'])
 			{
-				$this->svg_dom->add_text_element($this->graph_identifiers[$i], array('x' => $px_from_left, 'y' => ($px_from_top_end + 2), 'font-size' => 9, 'fill' => self::$c['color']['headers'], 'text-anchor' => 'start', 'transform' => 'rotate(90 ' . $px_from_left . ' ' . ($px_from_top_end + 2) . ')'));
+				$this->svg_dom->add_text_element($this->graph_identifiers[$i], array('x' => $px_from_left, 'y' => ($px_from_top_end + 2), 'transform' => 'rotate(90 ' . $px_from_left . ' ' . ($px_from_top_end + 2) . ')'), $g);
 			}
 			else
 			{
-				$this->svg_dom->add_text_element($this->graph_identifiers[$i], array('x' => $px_from_left, 'y' => ($px_from_top_end + 10), 'font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['headers'], 'text-anchor' => 'middle'));
+				$this->svg_dom->add_text_element($this->graph_identifiers[$i], array('x' => $px_from_left, 'y' => ($px_from_top_end + 10), 'fill' => self::$c['color']['headers']), $g);
 			}
 		}
-	}
-	protected function get_special_paint_color($identifier)
-	{
-		// For now to try to improve the color handling of line graphs, first try to use a pre-defined pool of colors until falling back to the old color code once exhausted
-		// Thanks to ua=42 in the Phoronix Forums for the latest attempt at improving the automated color handling
-		static $line_color_cache = null;
-		static $predef_line_colors = array('#000000', '#FFB300', '#803E75', '#FF6800', '#A6BDD7', '#C10020', '#CEA262', '#817066', '#007D34', '#F6768E', '#00538A', '#FF7A5C', '#53377A', '#FF8E00', '#B32851', '#F4C800', '#7F180D', '#93AA00', '#593315', '#F13A13', '#232C16');
-
-		if(!isset($line_color_cache[$identifier]))
-		{
-			if(!empty($predef_line_colors))
-			{
-				$line_color_cache[$identifier] = array_shift($predef_line_colors);
-			}
-			else
-			{
-				$line_color_cache[$identifier] = $this->get_paint_color($identifier);
-			}
-		}
-
-		return $line_color_cache[$identifier];
 	}
 	protected function render_graph_key()
 	{
@@ -151,20 +162,20 @@ class pts_LineGraph extends pts_Graph
 		{
 			return parent::render_graph_key();
 		}
-
 		if($this->i['key_line_height'] == 0)
 		{
 			return;
 		}
 
 		$square_length = 10;
-		$precision = $this->getPrecision($this->graph_data);
+		$precision = $this->i['graph_max_value'] > 999 ? 0 : 1;
 
-		$num_rows = max(1, ceil(count($this->graph_data_title) / $this->i['keys_per_line']));
-		$num_cols = ceil(count($this->graph_data_title) / $num_rows);
+		$num_rows = max(1, ceil($this->test_result->test_result_buffer->get_count() / $this->i['keys_per_line']));
+		$num_cols = ceil($this->test_result->test_result_buffer->get_count() / $num_rows);
 
-		$y_start = $this->i['top_start'] - $this->graph_key_height() + $this->getStatisticsHeaderHeight();
-		$y_end = $y_start + $this->i['key_line_height'] * ($num_rows - 1);
+		$y_start = $this->i['top_heading_height'] + 24;
+		//$y_start = $this->i['top_start'] - $this->graph_key_height() + $this->getStatisticsHeaderHeight();
+		$y_end = $y_start + $this->i['key_line_height'] * ($num_rows );
 		$x_start = $this->i['left_start'];
 		$x_end = $x_start + $this->i['key_item_width'] * ($num_cols - 1);
 
@@ -176,32 +187,33 @@ class pts_LineGraph extends pts_Graph
 		}
 
 		// draw the keys and the min,avg,max values
+		$g_rect = $this->svg_dom->make_g(array('stroke' => self::$c['color']['notches'], 'stroke-width' => 1));
+		$g_text = $this->svg_dom->make_g(array('font-size' => self::$c['size']['key']));
 		for($i = 0, $x = $x_start; $x <= $x_end; $x += $this->i['key_item_width'])
 		{
 			for ($y = $y_start; $y <= $y_end; $y += $this->i['key_line_height'], ++$i)
 			{
-				if(empty($this->graph_data_title[$i]))
+				if(!isset($this->test_result->test_result_buffer->buffer_items[$i]))
 				{
-					continue;
+					break;
 				}
 
-				$this_color = $this->get_special_paint_color($this->graph_data_title[$i]);
+				$identifier_title = $this->test_result->test_result_buffer->buffer_items[$i]->get_result_identifier();
+				$this_color = $this->get_paint_color($identifier_title);
 
 				// draw square
 				$this->svg_dom->add_element('rect',
 								array('x' => $x, 'y' => $y - $square_length, 'width' => $square_length,
-								  'height' => $square_length, 'fill' => $this_color,
-								  'stroke' => self::$c['color']['notches'], 'stroke-width' => 1));
+								  'height' => $square_length, 'fill' => $this_color), $g_rect);
 
 				// draw text
-				$this->svg_dom->add_text_element($this->graph_data_title[$i],
-								 array('x' => $x + $square_length + 4, 'y' => $y,
-									   'font-size' => self::$c['size']['key'], 'fill' => $this_color));
+				$this->svg_dom->add_text_element($identifier_title,
+								 array('x' => $x + $square_length + 4, 'y' => $y, 'fill' => $this_color), $g_text);
 
 				// draw min/avg/max
 				$x_stat_loc = $x + $square_length + $this->i['key_longest_string_width'] + 10;
-				$this->draw_result_stats($this->graph_data[$i], $precision, $x_stat_loc,
-								   array('y' => $y, 'font-size' => self::$c['size']['key'], 'fill' => $this_color));
+				$vals = $this->test_result->test_result_buffer->buffer_items[$i]->get_result_value();
+				$this->draw_result_stats($vals, $precision, $x_stat_loc, array('y' => $y, 'font-size' => self::$c['size']['key'], 'fill' => $this_color));
 			}
 		}
 	}
@@ -258,60 +270,37 @@ class pts_LineGraph extends pts_Graph
 
 		return array($min_value, $avg_value, $max_value);
 	}
-	private static function getPrecision(&$data)
-	{
-		// get the maximum value
-		$max = 0;
-		foreach($data as &$data_set)
-		{
-			$data_set_max = max($data_set);
-			$max = $max > $data_set_max ? $max : $data_set_max;
-		}
-
-		return $max > 999 ? 0 : 1;
-	}
 	protected function renderGraphLines()
 	{
-		$calculations_r = array();
-		$min_value = $this->graph_data[0][0];
-		$max_value = $this->graph_data[0][0];
-		$prev_value = $this->graph_data[0][0];
+		$prev_value = 0;
 
-		foreach(array_keys($this->graph_data) as $i_o)
+		foreach($this->test_result->test_result_buffer->buffer_items as &$buffer_item)
 		{
-			$paint_color = $this->get_special_paint_color((isset($this->graph_data_title[$i_o]) ? $this->graph_data_title[$i_o] : null));
-			$calculations_r[$paint_color] = array();
-
-			$point_counter = count($this->graph_data[$i_o]);
+			$paint_color = $this->get_paint_color($buffer_item->get_result_identifier());
+			$result_array = $buffer_item->get_result_value();
+			$raw_array = $buffer_item->get_result_raw();
+			$point_counter = count($result_array);
 			$regression_plots = array();
 			$poly_points = array();
+			$g = $this->svg_dom->make_g(array('stroke' => $paint_color, 'stroke-width' => 1, 'fill' => $paint_color));
 
 			for($i = 0; $i < $point_counter; $i++)
 			{
-				$value = $this->graph_data[$i_o][$i];
+				$value = isset($result_array[$i]) ? $result_array[$i] : -1;
 
 				if($value < 0 || ($value == 0 && $this->graph_identifiers != null))
 				{
 					// Draw whatever is needed of the line so far, since there is no result here
-					$this->draw_graph_line_process($poly_points, $paint_color, $regression_plots, $point_counter);
+					$this->draw_graph_line_process($poly_points, $paint_color, $regression_plots, $point_counter, $g);
 					continue;
 				}
 
-				$identifier = isset($this->graph_identifiers[$i]) ? $this->graph_identifiers[$i] : null;
-				$std_error = isset($this->graph_data_raw[$i_o][$i]) ? pts_math::standard_error(pts_strings::colon_explode($this->graph_data_raw[$i_o][$i])) : 0;
-				$data_string = isset($this->graph_data_title[$i_o]) ? $this->graph_data_title[$i_o] . ($identifier ? ' @ ' . $identifier : null) . ': ' . $value : null;
+				$identifier = $buffer_item->get_result_identifier();
+				$std_error = isset($raw_array[$i]) ? pts_math::standard_error(pts_strings::colon_explode($raw_array[$i])) : 0;
+				$data_string = $identifier . ': ' . $value;
 
 				$value_plot_top = $this->i['graph_top_end'] + 1 - ($this->i['graph_max_value'] == 0 ? 0 : round(($value / $this->i['graph_max_value']) * ($this->i['graph_top_end'] - $this->i['top_start'])));
 				$px_from_left = round($this->i['left_start'] + ($this->i['identifier_width'] * ($i + (count($this->graph_identifiers) > 1 ? 1 : 0))));
-
-				if($value > $max_value)
-				{
-					$max_value = $value;
-				}
-				else if($value < $min_value)
-				{
-					$min_value = $value;
-				}
 
 				if($px_from_left > $this->i['graph_left_end'])
 				{
@@ -331,15 +320,14 @@ class pts_LineGraph extends pts_Graph
 					$regression_plots[$i] = $identifier . ': ' . $value;
 				}
 
-				array_push($calculations_r[$paint_color], $value);
 				$prev_identifier = $identifier;
 				$prev_value = $value;
 			}
 
-			$this->draw_graph_line_process($poly_points, $paint_color, $regression_plots, $point_counter);
+			$this->draw_graph_line_process($poly_points, $paint_color, $regression_plots, $point_counter, $g);
 		}
 	}
-	protected function draw_graph_line_process(&$poly_points, &$paint_color, &$regression_plots, $point_counter)
+	protected function draw_graph_line_process(&$poly_points, &$paint_color, &$regression_plots, $point_counter, &$g)
 	{
 		$poly_points_count = count($poly_points);
 
@@ -355,7 +343,7 @@ class pts_LineGraph extends pts_Graph
 			array_push($svg_poly, round($x_y[0]) . ',' . round($x_y[1]));
 		}
 		$svg_poly = implode(' ', $svg_poly);
-		$this->svg_dom->add_element('polyline', array('points' => $svg_poly, 'fill' => 'none', 'stroke' => $paint_color, 'stroke-width' => 2));
+		$this->svg_dom->add_element('polyline', array('points' => $svg_poly, 'fill' => 'none', 'stroke-width' => 2), $g);
 
 		// plot error bars if needed
 		foreach($poly_points as $i => $x_y_pair)
@@ -374,9 +362,9 @@ class pts_LineGraph extends pts_Graph
 
 				if($std_error_rel_size > 3)
 				{
-					$this->svg_dom->draw_svg_line($x_y_pair[0], $x_y_pair[1] + $std_error_rel_size, $x_y_pair[0], $x_y_pair[1] - $std_error_rel_size, $paint_color, 1);
-					$this->svg_dom->draw_svg_line($x_y_pair[0] - $std_error_width, $x_y_pair[1] - $std_error_rel_size, $x_y_pair[0] + $std_error_width, $x_y_pair[1] - $std_error_rel_size, $paint_color, 1);
-					$this->svg_dom->draw_svg_line($x_y_pair[0] - $std_error_width, $x_y_pair[1] + $std_error_rel_size, $x_y_pair[0] + $std_error_width, $x_y_pair[1] + $std_error_rel_size, $paint_color, 1);
+					$this->svg_dom->add_element('line', array('x1' => $x_y_pair[0], 'y1' => ($x_y_pair[1] + $std_error_rel_size), 'x2' => $x_y_pair[0], 'y2' => ($x_y_pair[1] - $std_error_rel_size)), $g);
+					$this->svg_dom->add_element('line', array('x1' => ($x_y_pair[0] - $std_error_width), 'y1' => ($x_y_pair[1] - $std_error_rel_size), 'x2' => ($x_y_pair[0] + $std_error_width), 'y2' => ($x_y_pair[1] - $std_error_rel_size)), $g);
+					$this->svg_dom->add_element('line', array('x1' => ($x_y_pair[0] - $std_error_width), 'y1' => ($x_y_pair[1] + $std_error_rel_size), 'x2' => ($x_y_pair[0] + $std_error_width), 'y2' => ($x_y_pair[1] + $std_error_rel_size)), $g);
 					$plotted_error_bar = true;
 				}
 			}
@@ -388,7 +376,7 @@ class pts_LineGraph extends pts_Graph
 
 			if($point_counter < 6 || $plotted_error_bar || $i == 0 || $i == ($poly_points_count  - 1))
 			{
-				$this->svg_dom->add_element('ellipse', array('cx' => $x_y_pair[0], 'cy' => $x_y_pair[1], 'rx' => 3, 'ry' => 3, 'fill' => $paint_color, 'stroke' => $paint_color, 'stroke-width' => 1, 'xlink:title' => $x_y_pair[2]));
+				$this->svg_dom->add_element('ellipse', array('cx' => $x_y_pair[0], 'cy' => $x_y_pair[1], 'rx' => 3, 'ry' => 3, 'xlink:title' => $x_y_pair[2]), $g);
 			}
 		}
 
@@ -404,19 +392,19 @@ class pts_LineGraph extends pts_Graph
 		{
 			return parent::graph_key_height();
 		}
-		if(count($this->graph_data_title) < 2 && $this->i['show_graph_key'] == false)
+		if($this->test_result->test_result_buffer->get_count() < 2 && $this->i['show_graph_key'] == false)
 		{
 			return 0;
 		}
 
 		$this->i['key_line_height'] = 16;
-		$this->i['key_longest_string_width'] = $this->text_string_width(pts_strings::find_longest_string($this->graph_data_title), self::$c['size']['key']);
+		$this->i['key_longest_string_width'] = self::text_string_width($this->test_result->test_result_buffer->get_longest_identifier(), self::$c['size']['key']);
 
 		$item_width_spacing = 32;
 		$this->i['key_item_width'] = $this->i['key_longest_string_width'] + $this->get_stat_word_width() * 3 + $item_width_spacing;
 
 		// if there are <=4 data sets, then use a single column, otherwise, try and multi-col it
-		if (count($this->graph_data_title) <= 3)
+		if($this->test_result->test_result_buffer->get_count() < 3)
 		{
 			$this->i['keys_per_line'] = 1;
 		}
@@ -427,12 +415,12 @@ class pts_LineGraph extends pts_Graph
 
 		$statistics_header_height = $this->getStatisticsHeaderHeight();
 		$extra_spacing = 4;
-		return ceil(count($this->graph_data_title) / $this->i['keys_per_line']) * $this->i['key_line_height']
+		return ceil($this->test_result->test_result_buffer->get_count() / $this->i['keys_per_line']) * $this->i['key_line_height']
 			+ $statistics_header_height + $extra_spacing;
 	}
 	private function get_stat_word_width()
 	{
-		return ceil(2.6 * $this->text_string_width($this->i['graph_max_value'] + 0.1, $this->i['min_identifier_size'] + 0.5));
+		return ceil(2.6 * self::text_string_width($this->i['graph_max_value'] + 0.1, $this->i['min_identifier_size'] + 0.5));
 	}
 	private function getStatisticsHeaderHeight()
 	{

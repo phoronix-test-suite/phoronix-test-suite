@@ -21,7 +21,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class pts_SideViewTable extends pts_Graph
+class pts_SideViewTable extends pts_graph_core
 {
 	protected $rows;
 	protected $columns;
@@ -33,7 +33,7 @@ class pts_SideViewTable extends pts_Graph
 
 	public function __construct($rows, $columns, $table_data)
 	{
-		pts_Graph::__construct();
+		parent::__construct();
 
 		$this->rows = $rows;
 		$this->columns = $columns;

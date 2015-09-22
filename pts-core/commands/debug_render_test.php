@@ -41,7 +41,7 @@ class debug_render_test implements pts_option_interface
 
 		$export_index_json = file_get_contents(PATH_TO_EXPORTED_PHOROMATIC_DATA . 'export-index.json');
 		$export_index_json = json_decode($export_index_json, true);
-
+		$dump_size = 0;
 		$start = microtime(true);
 		foreach(array_keys($export_index_json['phoromatic']) as $REQUESTED)
 		{
@@ -92,13 +92,15 @@ class debug_render_test implements pts_option_interface
 			}
 
 			$table = new pts_ResultFileSystemsTable($result_file);
-			//$html_dump .= pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes);
+			$html_dump .= pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes);
 			echo PHP_EOL . PHP_EOL . 'RENDER TEST ON: ' . $REQUESTED . ' TOOK ' . (time() - $this_render_test) . PHP_EOL;
+			$dump_size += strlen($html_dump);
 			file_put_contents(PATH_TO_EXPORTED_PHOROMATIC_DATA . $REQUESTED . '.html', $html_dump . '</body></html>');
 		}
 		echo PHP_EOL . 'RENDER TEST TOOK: ' . (time() - $start) . PHP_EOL . PHP_EOL;
 		echo PHP_EOL . 'PEAK MEMORY USAGE: ' . round(memory_get_peak_usage(true) / 1048576, 3) . ' MB';
 		echo PHP_EOL . 'PEAK MEMORY USAGE (emalloc): ' . round(memory_get_peak_usage() / 1048576, 3) . ' MB';
+		echo PHP_EOL . 'TOTAL FILE SIZE: ' . ceil($dump_size / 1000) . ' KB';
 		echo PHP_EOL;
 	}
 }

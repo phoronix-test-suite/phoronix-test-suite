@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2012, Phoronix Media
-	Copyright (C) 2008 - 2012, Michael Larabel
+	Copyright (C) 2008 - 2015, Phoronix Media
+	Copyright (C) 2008 - 2015, Michael Larabel
 	pts_PassFailGraph.php: An abstract graph object extending pts_Graph for showing results in a pass/fail scenario.
 
 	This program is free software; you can redistribute it and/or modify
@@ -21,18 +21,19 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class pts_MultiPassFailGraph extends pts_Graph
+class pts_graph_passfail extends pts_graph_core
 {
-	public function __construct(&$result_object, &$result_file = null)
+	public function __construct(&$result_object, &$result_file = null, $extra_attributes = null)
 	{
-		parent::__construct($result_object, $result_file);
+		parent::__construct($result_object, $result_file, $extra_attributes);
 		$this->i['hide_y_title'] = true;
 		$this->i['graph_value_type'] = 'ABSTRACT';
 		$this->i['hide_graph_identifiers'] = true;
+		$this->i['iveland_view'] = true;
 	}
 	protected function render_graph_passfail()
 	{
-		$identifier_count = count($this->graph_identifiers);
+		$identifier_count = $this->test_result->test_result_buffer->get_count();
 		$vertical_border = 20;
 		$horizontal_border = 14;
 		$heading_height = 24;
@@ -45,7 +46,7 @@ class pts_MultiPassFailGraph extends pts_Graph
 
 		$main_width = floor($graph_width * .24);
 		$main_font_size = self::$c['size']['bars'];
-		$main_greatest_length = pts_strings::find_longest_string($this->graph_identifiers);
+		$main_greatest_length = $this->test_result->test_result_buffer->get_longest_identifier();
 
 		$width = $main_width - 8;
 		$height = $line_height - 4;
@@ -66,9 +67,10 @@ class pts_MultiPassFailGraph extends pts_Graph
 			$headings_font_size -= 0.5;
 		}
 
-		for($j = 0; $j < count($this->graph_data[0]); $j++)
+		for($j = 0; $j < $this->test_result->test_result_buffer->get_count(); $j++)
 		{
-			$results = array_reverse(pts_strings::comma_explode($this->graph_data[0][$j]));
+			$results = array_reverse(pts_strings::comma_explode($this->test_result->test_result_buffer->buffer_items[$j]->get_result_value()));
+
 			$line_ttf_height = $this->text_string_height('AZ@![]()@|_', self::$c['size']['bars']);
 			for($i = 0; $i < count($headings) && $i < count($results); $i++)
 			{
@@ -79,7 +81,7 @@ class pts_MultiPassFailGraph extends pts_Graph
 				{
 					$this_bottom_end = $this->i['graph_top_end'] - $vertical_border - 1;
 				}
-				else if($j == (count($this->graph_data[0]) - 1) && $this_bottom_end < $this->i['graph_top_end'] - $vertical_border)
+				else if($j == ($this->test_result->test_result_buffer->get_count() - 1) && $this_bottom_end < $this->i['graph_top_end'] - $vertical_border)
 				{
 					$this_bottom_end = $this->i['graph_top_end'] - $vertical_border - 1;
 				}
@@ -105,13 +107,13 @@ class pts_MultiPassFailGraph extends pts_Graph
 		}
 
 		$line_ttf_height = $this->text_string_height('AZ@![]()@|_', $main_font_size);
-		for($i = 0; $i < count($this->graph_identifiers); $i++)
+		for($i = 0; $i < $this->test_result->test_result_buffer->get_count(); $i++)
 		{
 			$this->svg_dom->draw_svg_line($this->i['left_start'] + $horizontal_border, $this->i['top_start'] + $vertical_border + ($i * $line_height) + $heading_height, $this->i['graph_left_end'] - $horizontal_border, $this->i['top_start'] + $vertical_border + ($i * $line_height) + $heading_height, self::$c['color']['body_light']);
 
 			$x = $this->i['left_start'] + $horizontal_border + $main_width;
 			$y = $this->i['top_start'] + $vertical_border + ($i * $line_height) + $heading_height + ($line_height / 2) - 2;
-			$this->svg_dom->add_text_element($this->graph_identifiers[$i], array('x' => $x, 'y' => $y, 'font-size' => $main_font_size, 'fill' => self::$c['color']['headers'], 'text-anchor' => 'end', 'dominant-baseline' => 'middle'));
+			$this->svg_dom->add_text_element($this->test_result->test_result_buffer->buffer_items[$i]->get_result_identifier(), array('x' => $x, 'y' => $y, 'font-size' => $main_font_size, 'fill' => self::$c['color']['headers'], 'text-anchor' => 'end', 'dominant-baseline' => 'middle'));
 		}
 
 		$this->svg_dom->draw_svg_line($this->i['left_start'] + $horizontal_border, $this->i['top_start'] + $vertical_border, $this->i['graph_left_end'] - $horizontal_border, $this->i['top_start'] + $vertical_border, self::$c['color']['body_light']);
