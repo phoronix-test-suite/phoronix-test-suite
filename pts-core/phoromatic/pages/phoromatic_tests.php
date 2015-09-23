@@ -120,6 +120,7 @@ class phoromatic_tests implements pts_webui_interface
 				$cache_json = file_get_contents($dc . 'pts-download-cache.json');
 				$cache_json = json_decode($cache_json, true);
 			}
+			$test_counts_for_account = phoromatic_server::test_result_count_for_test_profiles($_SESSION['AccountID'])
 			foreach(pts_openbenchmarking::available_tests() as $test)
 			{
 				$cache_checked = false;
@@ -143,8 +144,19 @@ class phoromatic_tests implements pts_webui_interface
 				if($tp->get_title() == null)
 					continue;
 
+				$test_count = 0;
+				$tpid = $tp->get_identifier(false);
+				foreach($test_counts_for_account as $test => $count)
+				{
+					if(strpos($test, $tpid) !== false)
+					{
+						$test_count += $count;
+						unset($test_counts_for_account[$test]);
+					}
+				}
+
 				$main .= '<h1 style="margin-bottom: 0;"><a href="/?tests/' . $tp->get_identifier(false) . '">' . $tp->get_title() . '</a></h1>';
-				$main .= '<p style="font-size: 90%;"><strong>' . $tp->get_test_hardware_type() . '</strong> <em>-</em> ' . phoromatic_server::test_result_count_for_test_profile($_SESSION['AccountID'], $tp->get_identifier(false)) . ' Results On This Account' . ' </p>';
+				$main .= '<p style="font-size: 90%;"><strong>' . $tp->get_test_hardware_type() . '</strong> <em>-</em> ' . $test_count . ' Results On This Account' . ' </p>';
 			}
 		}
 

@@ -923,6 +923,19 @@ class phoromatic_server
 
 		return 0;
 	}
+	public static function test_result_count_for_test_profiles($account_id)
+	{
+		$stmt = phoromatic_server::$db->prepare('SELECT COUNT(*) As Count, TestProfile FROM phoromatic_results_results WHERE AccountID = :account_id GROUP BY TestProfile ORDER BY TestProfile ASC');
+		$stmt->bindValue(':account_id', $account_id);
+		$result = $stmt->execute();
+		$tests = array();
+		while($result && $row = $result->fetchArray())
+		{
+			$tests[$row['TestProfile']] = $row['Count'];
+		}
+
+		return $tests;
+	}
 	public static function test_results($account_id, $time_limit = false)
 	{
 		$results = array();
