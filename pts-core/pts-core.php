@@ -80,7 +80,7 @@ class pts_core
 
 		return ($full_string ? 'PhoronixTestSuite/' : null) . $codename;
 	}
-	function program_title($show_codename = false)
+	public static function program_title($show_codename = false)
 	{
 		return 'Phoronix Test Suite v' . PTS_VERSION . ($show_codename ? ' (' . pts_core::codename() . ')' : null);
 	}
