@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2013 - 2014, Phoronix Media
-	Copyright (C) 2013 - 2014, Michael Larabel
+	Copyright (C) 2013 - 2015, Phoronix Media
+	Copyright (C) 2013 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -39,7 +39,7 @@ class pts_webui_main implements pts_webui_interface
 	{
 		echo '<div style="background: #CCC; padding: 10px; margin: 10px 20px;">Thanks for trying out the Phoronix Test Suite GUI. With Phoronix Test Suite 5.0 the GUI is still considered in an <strong>experimental / tech preview state</strong>. The GUI should be more end-user friendly and reach feature parity with the command-line interface in forthcoming releases. Your feedback is appreciated on the GUI while the command-line interface continues to be our primary focus along with remotely-managed enterprise features like <a href="http://www.phoromatic.com/">Phoromatic</a> and <a href="http://openbenchmarking.org/">OpenBenchmarking.org</a>. <a href="/early">Read more details on the GUI</a>.</div>';
 
-		echo '<h1>' . pts_title(false) . '</h1>';
+		echo '<h1>' . pts_core::program_title(false) . '</h1>';
 
 		echo '<div id="pts_side_pane">';
 

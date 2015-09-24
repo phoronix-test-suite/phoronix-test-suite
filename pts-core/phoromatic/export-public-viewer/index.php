@@ -207,6 +207,6 @@ echo '<p style="text-align: center; overflow: auto;" class="result_object">' . p
 
 ?>
 
-<p id="footer"><em><?php echo pts_title(true); ?></em><br />Phoronix Test Suite, Phoromatic, and OpenBenchmarking.org are copyright &copy; 2004 - 2015 by Phoronix Media.<br />The Phoronix Test Suite / Phoromatic is open-source under the GNU GPL.<br />For more information, visit <a href="http://www.phoronix-test-suite.com/">Phoronix-Test-Suite.com</a> or contact <a href="http://www.phoronix-media.com/">Phoronix Media</a>.</p>
+<p id="footer"><em><?php echo pts_core::program_title(true); ?></em><br />Phoronix Test Suite, Phoromatic, and OpenBenchmarking.org are copyright &copy; 2004 - 2015 by Phoronix Media.<br />The Phoronix Test Suite / Phoromatic is open-source under the GNU GPL.<br />For more information, visit <a href="http://www.phoronix-test-suite.com/">Phoronix-Test-Suite.com</a> or contact <a href="http://www.phoronix-media.com/">Phoronix Media</a>.</p>
 </body>
 </html>

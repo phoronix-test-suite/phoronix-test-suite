@@ -29,7 +29,7 @@ define('PTS_AUTO_LOAD_OBJECTS', true);
 error_reporting(E_ALL);
 
 include('../../pts-core.php');
-pts_client::init();
+pts_core::init();
 
 if(isset($_GET['repo']))
 {
@@ -41,7 +41,7 @@ else if(isset($_GET['download']))
 	$requested_file = str_replace(array('..', '/'), null, $_GET['download']);
 
 	pts_logger::add_to_log($_SERVER['REMOTE_ADDR'] . ' is attempting to download ' . $requested_file . ' from the download cache');
-	if(($dc = pts_strings::add_trailing_slash(pts_client::parse_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Installation/CacheDirectory', PTS_DOWNLOAD_CACHE_PATH)))) && is_file($dc . $requested_file))
+	if(($dc = pts_strings::add_trailing_slash(pts_core::parse_for_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Installation/CacheDirectory', PTS_DOWNLOAD_CACHE_PATH)))) && is_file($dc . $requested_file))
 	{
 		$file_path = $dc . $requested_file;
 	}

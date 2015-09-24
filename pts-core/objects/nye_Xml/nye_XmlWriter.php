@@ -40,7 +40,7 @@ class nye_XmlWriter
 
 		if(PTS_IS_CLIENT)
 		{
-			$pts_comment = $this->dom->createComment(pts_title(false));
+			$pts_comment = $this->dom->createComment(pts_core::program_title(false));
 			$this->dom->appendChild($pts_comment);
 		}
 

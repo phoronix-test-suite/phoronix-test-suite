@@ -43,45 +43,20 @@ class pts_client
 	}
 	public static function init()
 	{
-		set_time_limit(0);
-		pts_define_directories(); // Define directories
-
-		if(function_exists('cli_set_process_title') && PHP_OS == 'Linux')
-		{
-			cli_set_process_title('Phoronix Test Suite');
-		}
-
-		if(!defined('PHP_VERSION_ID'))
-		{
-			$php_version = explode('.', PHP_VERSION);
-			pts_define('PHP_VERSION_ID', ($php_version[0] * 10000 + $php_version[1] * 100 + $php_version[2]));
-		}
-
-		if(is_dir('/usr/local/share/phoronix-test-suite/'))
-		{
-			pts_define('PTS_SHARE_PATH', '/usr/local/share/phoronix-test-suite/');
-		}
-		else if(is_dir('/usr/share/'))
-		{
-			pts_define('PTS_SHARE_PATH', '/usr/share/phoronix-test-suite/');
-
-			if(is_writable('/usr/share') && !is_dir(PTS_SHARE_PATH))
-			{
-				mkdir(PTS_SHARE_PATH);
-			}
-		}
-		else
-		{
-			pts_define('PTS_SHARE_PATH', false);
-		}
+		pts_core::init();
 
 		if(defined('QUICK_START') && QUICK_START)
 		{
 			return true;
 		}
 
+
+		if(function_exists('cli_set_process_title') && PHP_OS == 'Linux')
+		{
+			cli_set_process_title('Phoronix Test Suite');
+		}
+
 		pts_define('PHP_BIN', pts_client::read_env('PHP_BIN'));
-		pts_define('PTS_INIT_TIME', time());
 
 		$dir_init = array(PTS_USER_PATH);
 		foreach($dir_init as $dir)
@@ -103,8 +78,8 @@ class pts_client
 
 		// XXX: technically the config init_files line shouldn't be needed since it should be dynamically called
 		// pts_config::init_files();
-		pts_define('PTS_TEST_INSTALL_DEFAULT_PATH', pts_client::parse_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Installation/EnvironmentDirectory', '~/.phoronix-test-suite/installed-tests/')));
-		pts_define('PTS_SAVE_RESULTS_PATH', pts_client::parse_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Testing/ResultsDirectory', '~/.phoronix-test-suite/test-results/')));
+		pts_define('PTS_TEST_INSTALL_DEFAULT_PATH', pts_strings::parse_for_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Installation/EnvironmentDirectory', '~/.phoronix-test-suite/installed-tests/')));
+		pts_define('PTS_SAVE_RESULTS_PATH', pts_strings::parse_for_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Testing/ResultsDirectory', '~/.phoronix-test-suite/test-results/')));
 		self::extended_init_process();
 
 		$openbenchmarking = pts_storage_object::read_from_file(PTS_CORE_STORAGE, 'openbenchmarking');
@@ -265,7 +240,7 @@ class pts_client
 			'OS_ARCH' => phodevi::read_property('system', 'kernel-architecture'),
 			'OS_TYPE' => phodevi::operating_system(),
 			'THIS_RUN_TIME' => PTS_INIT_TIME,
-			'DEBUG_REAL_HOME' => pts_client::user_home_directory()
+			'DEBUG_REAL_HOME' => pts_core::user_home_directory()
 			);
 
 			if(!pts_client::executable_in_path('cc') && pts_client::executable_in_path('gcc') && getenv('CC') == false)
@@ -903,44 +878,6 @@ class pts_client
 		// Current system user
 		return ($pts_user = pts_openbenchmarking_client::user_name()) != null ? $pts_user : phodevi::read_property('system', 'username');
 	}
-	public static function user_home_directory()
-	{
-		// Gets the system user's home directory
-		static $userhome = null;
-
-		if($userhome == null)
-		{
-			if(function_exists('posix_getpwuid') && function_exists('posix_getuid'))
-			{
-				$userinfo = posix_getpwuid(posix_getuid());
-				$userhome = $userinfo['dir'];
-			}
-			else if(($home = pts_client::read_env('HOME')))
-			{
-				$userhome = $home;
-			}
-			else if(($home = pts_client::read_env('HOMEPATH')))
-			{
-				$userhome = pts_client::read_env('HOMEDRIVE') . $home;
-			}
-			else if(PTS_IS_DAEMONIZED_SERVER_PROCESS)
-			{
-				$userhome = PTS_USER_PATH;
-			}
-			else
-			{
-				if(!is_writable('/'))
-				{
-					echo PHP_EOL . 'ERROR: Cannot find home directory.' . PHP_EOL;
-				}
-				$userhome = null;
-			}
-
-			$userhome = pts_strings::add_trailing_slash($userhome);
-		}
-
-		return $userhome;
-	}
 	public static function test_profile_debug_message($message)
 	{
 		$reported = false;
@@ -952,16 +889,6 @@ class pts_client
 		}
 
 		return $reported;
-	}
-	public static function parse_home_directory($path)
-	{
-		// Find home directory if needed
-		if(strpos($path, '~/') !== false)
-		{
-			$path = str_replace('~/', pts_client::user_home_directory(), $path);
-		}
-
-		return pts_strings::add_trailing_slash($path);
 	}
 	public static function xsl_results_viewer_graph_template()
 	{

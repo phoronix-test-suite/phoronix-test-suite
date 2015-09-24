@@ -777,7 +777,7 @@ class pts_test_installer
 								self::test_install_error(null, $test_install_request, 'ERROR: ' . $test_install_request->install_error);
 							}
 						}
-						pts_client::$display->test_install_error('LOG: ' . str_replace(pts_client::user_home_directory(), '~/', $test_install_directory) . 'install-failed.log' . PHP_EOL);
+						pts_client::$display->test_install_error('LOG: ' . str_replace(pts_core::user_home_directory(), '~/', $test_install_directory) . 'install-failed.log' . PHP_EOL);
 
 						if(pts_client::do_anonymous_usage_reporting())
 						{
@@ -836,8 +836,8 @@ class pts_test_installer
 			pts_file_io::delete($test_install_request->test_profile->get_install_dir(), $ignore_files);
 		}
 
-		pts_file_io::symlink(pts_client::user_home_directory() . '.Xauthority', $test_install_request->test_profile->get_install_dir() . '.Xauthority');
-		pts_file_io::symlink(pts_client::user_home_directory() . '.drirc', $test_install_request->test_profile->get_install_dir() . '.drirc');
+		pts_file_io::symlink(pts_core::user_home_directory() . '.Xauthority', $test_install_request->test_profile->get_install_dir() . '.Xauthority');
+		pts_file_io::symlink(pts_core::user_home_directory() . '.drirc', $test_install_request->test_profile->get_install_dir() . '.drirc');
 	}
 }
 

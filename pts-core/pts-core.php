@@ -21,15 +21,69 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-function pts_codename($full_string = false)
+class pts_core
 {
-	$codename = ucwords(strtolower(PTS_CODENAME));
+	public static function init()
+	{
+		set_time_limit(0);
+		pts_define_directories(); // Define directories
 
-	return ($full_string ? 'PhoronixTestSuite/' : null) . $codename;
-}
-function pts_title($show_codename = false)
-{
-	return 'Phoronix Test Suite v' . PTS_VERSION . ($show_codename ? ' (' . pts_codename() . ')' : null);
+		pts_define('PTS_INIT_TIME', time());
+
+		if(!defined('PHP_VERSION_ID'))
+		{
+			$php_version = explode('.', PHP_VERSION);
+			pts_define('PHP_VERSION_ID', ($php_version[0] * 10000 + $php_version[1] * 100 + $php_version[2]));
+		}
+	}
+	public static function user_home_directory()
+	{
+		// Gets the system user's home directory
+		static $userhome = null;
+
+		if($userhome == null)
+		{
+			if(function_exists('posix_getpwuid') && function_exists('posix_getuid'))
+			{
+				$userinfo = posix_getpwuid(posix_getuid());
+				$userhome = $userinfo['dir'];
+			}
+			else if(($home = pts_client::read_env('HOME')))
+			{
+				$userhome = $home;
+			}
+			else if(($home = pts_client::read_env('HOMEPATH')))
+			{
+				$userhome = pts_client::read_env('HOMEDRIVE') . $home;
+			}
+			else if(PTS_IS_DAEMONIZED_SERVER_PROCESS)
+			{
+				$userhome = PTS_USER_PATH;
+			}
+			else
+			{
+				if(!is_writable('/'))
+				{
+					echo PHP_EOL . 'ERROR: Cannot find home directory.' . PHP_EOL;
+				}
+				$userhome = null;
+			}
+
+			$userhome = pts_strings::add_trailing_slash($userhome);
+		}
+
+		return $userhome;
+	}
+	public static function codename($full_string = false)
+	{
+		$codename = ucwords(strtolower(PTS_CODENAME));
+
+		return ($full_string ? 'PhoronixTestSuite/' : null) . $codename;
+	}
+	function program_title($show_codename = false)
+	{
+		return 'Phoronix Test Suite v' . PTS_VERSION . ($show_codename ? ' (' . pts_core::codename() . ')' : null);
+	}
 }
 function pts_define($name, $value = null)
 {
@@ -69,7 +123,7 @@ function pts_define_directories()
 	}
 	else if(PTS_IS_CLIENT)
 	{
-		pts_define('PTS_USER_PATH', pts_client::user_home_directory() . '.phoronix-test-suite' . DIRECTORY_SEPARATOR);
+		pts_define('PTS_USER_PATH', pts_core::user_home_directory() . '.phoronix-test-suite' . DIRECTORY_SEPARATOR);
 		pts_define('PTS_CORE_STORAGE', PTS_USER_PATH . 'core.pt2so');
 		pts_define('PTS_TEMP_STORAGE', PTS_USER_PATH . 'temp.pt2so');
 		pts_define('PTS_MODULE_LOCAL_PATH', PTS_USER_PATH . 'modules/');
@@ -99,6 +153,23 @@ function pts_define_directories()
 	pts_define('PTS_COMMAND_PATH', PTS_CORE_PATH . 'commands/');
 	pts_define('PTS_EXDEP_PATH', PTS_CORE_PATH . 'external-test-dependencies/');
 	pts_define('PTS_OPENBENCHMARKING_PATH', PTS_CORE_PATH . 'openbenchmarking.org/');
+
+	if(is_dir('/usr/local/share/phoronix-test-suite/'))
+	{
+		pts_define('PTS_SHARE_PATH', '/usr/local/share/phoronix-test-suite/');
+	}
+	else if(is_dir('/usr/share/'))
+	{
+		pts_define('PTS_SHARE_PATH', '/usr/share/phoronix-test-suite/');
+		if(is_writable('/usr/share') && !is_dir(PTS_SHARE_PATH))
+		{
+			mkdir(PTS_SHARE_PATH);
+		}
+	}
+	else
+	{
+		pts_define('PTS_SHARE_PATH', false);
+	}
 }
 function pts_needed_extensions()
 {

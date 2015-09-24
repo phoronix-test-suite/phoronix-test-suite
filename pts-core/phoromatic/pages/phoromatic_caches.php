@@ -42,7 +42,7 @@ class phoromatic_caches implements pts_webui_interface
 				<h2>Test Profile Download Cache</h2>
 				<p>Below are a list of files for verification/debugging purposes that are currently cached by the Phoromatic Server and available for Phoronix Test Suite client systems to download. These are files that are needed by various test profiles in the Phoronix Test Suite. To add more data to this Phoromatic Server cache, from the server run <strong>phoronix-test-suite make-download-cache</strong> while passing the names of any tests/suites you wish to have download and generate a cache for so they can be made available to the Phoronix Test Suite clients on your network.</p>';
 
-		$dc = pts_strings::add_trailing_slash(pts_client::parse_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Installation/CacheDirectory', PTS_DOWNLOAD_CACHE_PATH)));
+		$dc = pts_strings::add_trailing_slash(pts_core::parse_for_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Installation/CacheDirectory', PTS_DOWNLOAD_CACHE_PATH)));
 		if($dc_exists)
 		{
 			$cache_json = file_get_contents($dc . 'pts-download-cache.json');

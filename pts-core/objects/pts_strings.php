@@ -114,6 +114,16 @@ class pts_strings
 
 		return implode(' ', $words);
 	}
+	public static function parse_for_home_directory($path)
+	{
+		// Find home directory if needed
+		if(strpos($path, '~/') !== false)
+		{
+			$path = str_replace('~/', pts_core::user_home_directory(), $path);
+		}
+
+		return pts_strings::add_trailing_slash($path);
+	}
 	public static function string_bool($string)
 	{
 		// Used for evaluating if the user inputted a string that evaluates to true

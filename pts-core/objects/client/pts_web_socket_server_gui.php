@@ -198,7 +198,7 @@ class pts_web_socket_server_gui extends pts_web_socket
 					break;
 				case 'pts-version':
 					$json['pts']['msg']['name'] = 'pts_version';
-					$json['pts']['msg']['version'] = pts_title(true);
+					$json['pts']['msg']['version'] = pts_core::program_title(true);
 					$this->send_json_data($user->socket, $json);
 					break;
 				case 'core-version':

@@ -34,7 +34,7 @@ class pts_svg_dom
 		$this->dom = $dom->createDocument(null, null, $dtd);
 		$this->dom->formatOutput = PTS_IS_CLIENT && PTS_IS_DEV_BUILD;
 
-		$pts_comment = $this->dom->createComment(pts_title(false) . ' [ http://www.phoronix-test-suite.com/ ]');
+		$pts_comment = $this->dom->createComment(pts_core::program_title(false) . ' [ http://www.phoronix-test-suite.com/ ]');
 		$this->dom->appendChild($pts_comment);
 
 		$this->svg = $this->dom->createElementNS('http://www.w3.org/2000/svg', 'svg');
