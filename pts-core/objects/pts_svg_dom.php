@@ -153,14 +153,21 @@ class pts_svg_dom
 		$extra_attributes['fill'] = $color;
 		$this->add_element('circle', $extra_attributes);
 	}
-	public function make_g($attributes = array())
+	public function make_a($url)
+	{
+		$el = $this->dom->createElement('a');
+		$el->setAttribute('xlink:href', $url);
+		$el->setAttribute('xlink:show', 'new');
+		return $this->svg->appendChild($el);
+	}
+	public function make_g($attributes = array(), $append_to = false)
 	{
 		$el = $this->dom->createElement('g');
 		foreach($attributes as $name => $value)
 		{
 			$el->setAttribute($name, $value);
 		}
-		return $this->svg->appendChild($el);
+		return $append_to ? $append_to->appendChild($el) : $this->svg->appendChild($el);
 	}
 	public function add_element($element_type, $attributes = array(), $append_to = false)
 	{

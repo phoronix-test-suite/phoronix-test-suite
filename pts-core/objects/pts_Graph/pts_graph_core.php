@@ -616,7 +616,12 @@ abstract class pts_graph_core
 			if(isset($this->d['link_alternate_view']) && $this->d['link_alternate_view'])
 			{
 				// add SVG version: https://gist.github.com/xorgy/169a65e29a3c2cc41e7f
-				$this->svg_dom->add_element('image', array('http_link' => $this->d['link_alternate_view'], 'xlink:href' => 'https://openbenchmarking.org/static/images/ob-10x16.png', 'x' => 4, 'y' => ($bottom_heading_start + 1), 'width' => 10, 'height' => 16));
+				$a = $this->svg_dom->make_a($this->d['link_alternate_view']);
+				$g = $this->svg_dom->make_g(array('transform' => 'translate(' . 4 . ',' . ($bottom_heading_start + 1) . ')', 'width' => 10, 'height' => 16), $a);
+				$this->svg_dom->add_element('path', array('d' => 'M5 0v6.5L0 11l3-3-3-3.5L5 0', 'fill' => '#038bb8'), $g);
+				$this->svg_dom->add_element('path', array('d' => 'M5 0v6.5l5 4.5-3-3 3-3.5L5 0', 'fill' => '#25b3e8'), $g);
+				$this->svg_dom->add_element('path', array('d' => 'M5 16V9l5-4.5V11l-5 5', 'fill' => '#e4f4fd'), $g);
+				$this->svg_dom->add_element('path', array('d' => 'M5 16V9L0 4.5V11l5 5', 'fill' => '#65cbf4'), $g);
 			}
 
 			if(!empty($this->i['notes']))
