@@ -46,45 +46,16 @@ class pts_client
 		set_time_limit(0);
 		pts_define_directories(); // Define directories
 
-		if(function_exists('cli_set_process_title') && !phodevi::is_macosx())
+		if(function_exists('cli_set_process_title') && PHP_OS == 'Linux')
 		{
 			cli_set_process_title('Phoronix Test Suite');
 		}
-
-		if(defined('QUICK_START') && QUICK_START)
-		{
-			return true;
-		}
-
-		pts_define('PHP_BIN', pts_client::read_env('PHP_BIN'));
-		pts_define('PTS_INIT_TIME', time());
 
 		if(!defined('PHP_VERSION_ID'))
 		{
 			$php_version = explode('.', PHP_VERSION);
 			pts_define('PHP_VERSION_ID', ($php_version[0] * 10000 + $php_version[1] * 100 + $php_version[2]));
 		}
-
-		$dir_init = array(PTS_USER_PATH);
-		foreach($dir_init as $dir)
-		{
-			pts_file_io::mkdir($dir);
-		}
-
-		if(PTS_IS_CLIENT)
-		{
-			pts_network::client_startup();
-		}
-
-		self::core_storage_init_process();
-
-		if(!is_file(PTS_TEMP_STORAGE))
-		{
-			self::build_temp_cache();
-		}
-
-		//XXX
-		pts_define('PTS_ETC_PATH', is_dir('/etc') ?'/etc/phoronix-test-suite/' : false);
 
 		if(is_dir('/usr/local/share/phoronix-test-suite/'))
 		{
@@ -104,6 +75,31 @@ class pts_client
 			pts_define('PTS_SHARE_PATH', false);
 		}
 
+		if(defined('QUICK_START') && QUICK_START)
+		{
+			return true;
+		}
+
+		pts_define('PHP_BIN', pts_client::read_env('PHP_BIN'));
+		pts_define('PTS_INIT_TIME', time());
+
+		$dir_init = array(PTS_USER_PATH);
+		foreach($dir_init as $dir)
+		{
+			pts_file_io::mkdir($dir);
+		}
+
+		if(PTS_IS_CLIENT)
+		{
+			pts_network::client_startup();
+		}
+
+		self::core_storage_init_process();
+
+		if(!is_file(PTS_TEMP_STORAGE))
+		{
+			self::build_temp_cache();
+		}
 
 		// XXX: technically the config init_files line shouldn't be needed since it should be dynamically called
 		// pts_config::init_files();
@@ -121,6 +117,47 @@ class pts_client
 		}
 
 		return true;
+	}
+	private static function extended_init_process()
+	{
+		// Extended Initalization Process
+		$directory_check = array(
+			PTS_TEST_INSTALL_DEFAULT_PATH,
+			PTS_SAVE_RESULTS_PATH,
+			PTS_MODULE_LOCAL_PATH,
+			PTS_MODULE_DATA_PATH,
+			PTS_DOWNLOAD_CACHE_PATH,
+			PTS_OPENBENCHMARKING_SCRATCH_PATH,
+			PTS_TEST_PROFILE_PATH,
+			PTS_TEST_SUITE_PATH,
+			PTS_TEST_PROFILE_PATH . 'local/',
+			PTS_TEST_SUITE_PATH . 'local/'
+			);
+
+		foreach($directory_check as $dir)
+		{
+			pts_file_io::mkdir($dir);
+		}
+
+		// Setup PTS Results Viewer
+		pts_file_io::mkdir(PTS_SAVE_RESULTS_PATH . 'pts-results-viewer');
+
+		foreach(pts_file_io::glob(PTS_RESULTS_VIEWER_PATH . '*') as $result_viewer_file)
+		{
+			copy($result_viewer_file, PTS_SAVE_RESULTS_PATH . 'pts-results-viewer/' . basename($result_viewer_file));
+		}
+
+		copy(PTS_CORE_STATIC_PATH . 'images/pts-106x55.png', PTS_SAVE_RESULTS_PATH . 'pts-results-viewer/pts-106x55.png');
+
+		// Setup ~/.phoronix-test-suite/xsl/
+		pts_file_io::mkdir(PTS_USER_PATH . 'xsl/');
+		copy(PTS_CORE_STATIC_PATH . 'xsl/pts-test-installation-viewer.xsl', PTS_USER_PATH . 'xsl/' . 'pts-test-installation-viewer.xsl');
+		copy(PTS_CORE_STATIC_PATH . 'xsl/pts-user-config-viewer.xsl', PTS_USER_PATH . 'xsl/' . 'pts-user-config-viewer.xsl');
+		copy(PTS_CORE_STATIC_PATH . 'images/pts-308x160.png', PTS_USER_PATH . 'xsl/' . 'pts-logo.png');
+
+		// pts_compatibility ops here
+
+		pts_client::init_display_mode();
 	}
 	public static function module_framework_init()
 	{
@@ -454,47 +491,6 @@ class pts_client
 				self::$display = new pts_concise_display_mode();
 				break;
 		}
-	}
-	private static function extended_init_process()
-	{
-		// Extended Initalization Process
-		$directory_check = array(
-			PTS_TEST_INSTALL_DEFAULT_PATH,
-			PTS_SAVE_RESULTS_PATH,
-			PTS_MODULE_LOCAL_PATH,
-			PTS_MODULE_DATA_PATH,
-			PTS_DOWNLOAD_CACHE_PATH,
-			PTS_OPENBENCHMARKING_SCRATCH_PATH,
-			PTS_TEST_PROFILE_PATH,
-			PTS_TEST_SUITE_PATH,
-			PTS_TEST_PROFILE_PATH . 'local/',
-			PTS_TEST_SUITE_PATH . 'local/'
-			);
-
-		foreach($directory_check as $dir)
-		{
-			pts_file_io::mkdir($dir);
-		}
-
-		// Setup PTS Results Viewer
-		pts_file_io::mkdir(PTS_SAVE_RESULTS_PATH . 'pts-results-viewer');
-
-		foreach(pts_file_io::glob(PTS_RESULTS_VIEWER_PATH . '*') as $result_viewer_file)
-		{
-			copy($result_viewer_file, PTS_SAVE_RESULTS_PATH . 'pts-results-viewer/' . basename($result_viewer_file));
-		}
-
-		copy(PTS_CORE_STATIC_PATH . 'images/pts-106x55.png', PTS_SAVE_RESULTS_PATH . 'pts-results-viewer/pts-106x55.png');
-
-		// Setup ~/.phoronix-test-suite/xsl/
-		pts_file_io::mkdir(PTS_USER_PATH . 'xsl/');
-		copy(PTS_CORE_STATIC_PATH . 'xsl/pts-test-installation-viewer.xsl', PTS_USER_PATH . 'xsl/' . 'pts-test-installation-viewer.xsl');
-		copy(PTS_CORE_STATIC_PATH . 'xsl/pts-user-config-viewer.xsl', PTS_USER_PATH . 'xsl/' . 'pts-user-config-viewer.xsl');
-		copy(PTS_CORE_STATIC_PATH . 'images/pts-308x160.png', PTS_USER_PATH . 'xsl/' . 'pts-logo.png');
-
-		// pts_compatibility ops here
-
-		pts_client::init_display_mode();
 	}
 	public static function program_requirement_checks($only_show_required = false)
 	{
