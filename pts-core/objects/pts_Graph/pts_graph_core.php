@@ -633,8 +633,9 @@ abstract class pts_graph_core
 	{
 		if($this->i['graph_orientation'] == 'HORIZONTAL' || $this->i['iveland_view'])
 		{
-			$this->svg_dom->draw_svg_line($left_start + 0.5, $top_start, $left_start + 0.5, $top_end + 1, self::$c['color']['notches'], 1);
-			$this->svg_dom->draw_svg_line($left_start, $top_end + 0.5, $left_end + 1, $top_end + 0.5, self::$c['color']['notches'], 1);
+			$g = $this->svg_dom->make_g(array('stroke' => self::$c['color']['notches'], 'stroke-width' => 1));
+			$this->svg_dom->add_element('line', array('x1' => ($left_start + 0.5), 'y1' => $top_start, 'x2' => ($left_start + 0.5), 'y2' => ($top_end + 1)), $g);
+			$this->svg_dom->add_element('line', array('x1' => $left_start, 'y1' => ($top_end + 0.5), 'x2' => ($left_end + 1), 'y2' => ($top_end + 0.5)), $g);
 
 			if(!empty(self::$c['text']['watermark']))
 			{
