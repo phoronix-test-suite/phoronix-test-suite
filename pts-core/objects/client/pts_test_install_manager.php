@@ -190,7 +190,7 @@ class pts_test_install_manager
 					continue;
 				}
 
-				$dir_check = pts_client::parse_home_directory($dir_check);
+				$dir_check = pts_strings::parse_for_home_directory($dir_check);
 
 				if(pts_strings::is_url($dir_check) == false && !is_dir($dir_check))
 				{

@@ -76,8 +76,6 @@ class pts_client
 			self::build_temp_cache();
 		}
 
-		// XXX: technically the config init_files line shouldn't be needed since it should be dynamically called
-		// pts_config::init_files();
 		pts_define('PTS_TEST_INSTALL_DEFAULT_PATH', pts_strings::parse_for_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Installation/EnvironmentDirectory', '~/.phoronix-test-suite/installed-tests/')));
 		pts_define('PTS_SAVE_RESULTS_PATH', pts_strings::parse_for_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Testing/ResultsDirectory', '~/.phoronix-test-suite/test-results/')));
 		self::extended_init_process();

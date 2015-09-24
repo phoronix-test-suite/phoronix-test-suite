@@ -41,7 +41,7 @@ class phoromatic_server
 	}
 	public static function phoromatic_path()
 	{
-		$PHOROMATIC_PATH = pts_client::parse_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Server/PhoromaticStorage', ''));
+		$PHOROMATIC_PATH = pts_strings::parse_for_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Server/PhoromaticStorage', ''));
 
 		if(empty($PHOROMATIC_PATH) || ((is_dir($PHOROMATIC_PATH) && !is_writable($PHOROMATIC_PATH)) || !is_writable(dirname($PHOROMATIC_PATH))))
 		{
@@ -67,7 +67,7 @@ class phoromatic_server
 		}
 		else
 		{
-			$dc = pts_strings::add_trailing_slash(pts_client::parse_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Installation/CacheDirectory', PTS_DOWNLOAD_CACHE_PATH)));
+			$dc = pts_strings::add_trailing_slash(pts_strings::parse_for_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Installation/CacheDirectory', PTS_DOWNLOAD_CACHE_PATH)));
 			if(is_file($dc . 'pts-download-cache.json'))
 			{
 				$dc_file = $dc . 'pts-download-cache.json';
