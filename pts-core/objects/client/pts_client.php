@@ -1589,7 +1589,10 @@ class pts_client
 					}
 					clearstatcache();
 				}
-				posix_kill(posix_getpid(), SIGINT);
+				if(function_exists('posix_kill'))
+				{
+					posix_kill(posix_getpid(), SIGINT);
+				}
 				exit(0);
 			}
 		}
@@ -1629,7 +1632,10 @@ class pts_client
 					$fork_function_parameters = array($fork_function_parameters);
 				}
 				call_user_func_array($fork_function, $fork_function_parameters);
-				posix_kill(posix_getpid(), SIGINT);
+				if(function_exists('posix_kill'))
+				{
+					posix_kill(posix_getpid(), SIGINT);
+				}
 				exit(0);
 			}
 		}
