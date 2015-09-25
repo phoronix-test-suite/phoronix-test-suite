@@ -97,7 +97,7 @@ class pts_web_socket_server_phoromatic extends pts_web_socket
 						break;
 					case 'pts-version':
 						$j['phoromatic']['event'] = 'pts-version';
-						$j['phoromatic']['response'] = pts_title(true);
+						$j['phoromatic']['response'] = pts_core::program_title(true);
 						$this->send_json_data($user->socket, $j);
 						break;
 					case 'core-version':

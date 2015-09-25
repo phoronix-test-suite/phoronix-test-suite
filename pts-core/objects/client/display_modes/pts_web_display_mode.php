@@ -425,7 +425,7 @@ class pts_web_display_mode implements pts_display_mode_interface
 
 		if($shown_pts == false)
 		{
-			$string = pts_title() . PHP_EOL . $string;
+			$string = pts_core::program_title() . PHP_EOL . $string;
 			$shown_pts = true;
 		}
 

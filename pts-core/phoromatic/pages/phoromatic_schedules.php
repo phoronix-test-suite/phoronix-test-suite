@@ -285,16 +285,18 @@ class phoromatic_schedules implements pts_webui_interface
 					$main .= '<hr /><h2>Add A Test</h2>';
 					$main .= '<form action="?schedules/' . $PATH[0] . '" name="add_test" id="add_test" method="post">';
 					$main .= '<select name="add_to_schedule_select_test" id="add_to_schedule_select_test" onchange="phoromatic_schedule_test_details(\'\');">';
-					$dc = pts_strings::add_trailing_slash(pts_client::parse_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Installation/CacheDirectory', PTS_DOWNLOAD_CACHE_PATH)));
+					$dc = pts_strings::add_trailing_slash(pts_strings::parse_for_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Installation/CacheDirectory', PTS_DOWNLOAD_CACHE_PATH)));
 					$dc_exists = is_file($dc . 'pts-download-cache.json');
+					if($dc_exists)
+					{
+						$cache_json = file_get_contents($dc . 'pts-download-cache.json');
+						$cache_json = json_decode($cache_json, true);
+					}
 					foreach(pts_openbenchmarking::available_tests(false, true) as $test)
 					{
 						$cache_checked = false;
 						if($dc_exists)
 						{
-							$cache_json = file_get_contents($dc . 'pts-download-cache.json');
-							$cache_json = json_decode($cache_json, true);
-
 							if($cache_json && isset($cache_json['phoronix-test-suite']['cached-tests']))
 							{
 								$cache_checked = true;

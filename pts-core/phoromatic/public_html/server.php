@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2014, Phoronix Media
-	Copyright (C) 2014, Michael Larabel
+	Copyright (C) 2014 - 2015, Phoronix Media
+	Copyright (C) 2014 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -29,11 +29,11 @@ if(isset($_GET['phoromatic_info']))
 	define('PTS_AUTO_LOAD_OBJECTS', true);
 	error_reporting(E_ALL);
 	include('../../pts-core.php');
-	pts_client::init();
+	pts_core::init();
 
 	$json_info = array(
 		'http_server' => (isset($_SERVER['SERVER_SOFTWARE']) ? $_SERVER['SERVER_SOFTWARE'] : null),
-		'pts' => pts_title(),
+		'pts' => pts_core::program_title(),
 		'pts_core' => PTS_CORE_VERSION,
 		'ws_port' => getenv('PTS_WEBSOCKET_PORT'),
 		'download_cache' => '/download-cache.php',
@@ -46,7 +46,7 @@ if(isset($_GET['phoromatic_info']))
 else
 {
 	include('../../pts-core.php');
-	echo pts_title(true) . ' Phoromatic Server [' . $_SERVER['SERVER_SOFTWARE'] . ']';
+	echo pts_core::program_title(true) . ' Phoromatic Server [' . $_SERVER['SERVER_SOFTWARE'] . ']';
 }
 
 ?>

@@ -41,7 +41,7 @@ class pts_pdf_template extends FPDF
 
 		$this->SetTitle($Title);
 		$this->SetAuthor('Phoronix Test Suite');
-		$this->SetCreator(pts_codename(true));
+		$this->SetCreator(pts_core::codename(true));
 		$this->SetCompression(false);
 	}
 	public function html_to_pdf($html)
@@ -216,7 +216,7 @@ class pts_pdf_template extends FPDF
 
 		$this->SetY(-10);
 		$this->SetFont('Arial', 'B', 7);
-		$this->Cell(0, 0, pts_title(), 0, 0, 'L');
+		$this->Cell(0, 0, pts_core::program_title(), 0, 0, 'L');
 		$this->Cell(0, 0, 'www.phoronix-test-suite.com', 0, 0, 'R', true, 'http://www.phoronix-test-suite.com/');
 	}
 	public function WriteBigHeaderCenter($Header)

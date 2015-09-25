@@ -108,7 +108,7 @@ class result_file_to_pdf implements pts_option_interface
 			$pdf_file .= '.pdf';
 		}
 		*/
-		$pdf_file = pts_client::user_home_directory() . $r[0] . '.pdf';
+		$pdf_file = pts_core::user_home_directory() . $r[0] . '.pdf';
 		$pdf->Output($pdf_file);
 		pts_file_io::delete($tdir, null, true);
 		echo PHP_EOL . 'Saved To: ' . $pdf_file . PHP_EOL;

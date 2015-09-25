@@ -183,7 +183,7 @@ class pts_basic_display_mode implements pts_display_mode_interface
 
 		if($shown_pts == false)
 		{
-			$string = pts_title() . PHP_EOL . $string;
+			$string = pts_core::program_title() . PHP_EOL . $string;
 		}
 
 		echo self::string_header($string, '=');

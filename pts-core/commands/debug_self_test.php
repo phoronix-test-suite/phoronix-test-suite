@@ -27,6 +27,7 @@ class debug_self_test implements pts_option_interface
 
 	public static function run($r)
 	{
+		define('PHOROMATIC_PROCESS', true);
 		$commands = array(
 			'detailed_system_info' => null,
 			'list_available_tests' => null,

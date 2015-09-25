@@ -114,7 +114,7 @@ class pts_network
 		curl_setopt($cr, CURLOPT_CONNECTTIMEOUT, self::$network_timeout);
 		curl_setopt($cr, CURLOPT_CAPATH, PTS_CORE_STATIC_PATH . 'certificates/');
 		curl_setopt($cr, CURLOPT_BUFFERSIZE, 64000);
-		curl_setopt($cr, CURLOPT_USERAGENT, pts_codename(true));
+		curl_setopt($cr, CURLOPT_USERAGENT, pts_core::codename(true));
 
 		if($download_port_number)
 		{
@@ -216,7 +216,7 @@ class pts_network
 			$parameters['http']['timeout'] = self::$network_timeout;
 		}
 
-		$parameters['http']['user_agent'] = pts_codename(true);
+		$parameters['http']['user_agent'] = pts_core::codename(true);
 		$parameters['http']['header'] = "Content-Type: application/x-www-form-urlencoded\r\n";
 
 		$stream_context = stream_context_create($parameters);

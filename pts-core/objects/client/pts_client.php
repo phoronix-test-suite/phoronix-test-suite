@@ -43,27 +43,20 @@ class pts_client
 	}
 	public static function init()
 	{
-		set_time_limit(0);
-		pts_define_directories(); // Define directories
-
-		if(function_exists('cli_set_process_title') && !phodevi::is_macosx())
-		{
-			cli_set_process_title('Phoronix Test Suite');
-		}
+		pts_core::init();
 
 		if(defined('QUICK_START') && QUICK_START)
 		{
 			return true;
 		}
 
-		pts_define('PHP_BIN', pts_client::read_env('PHP_BIN'));
-		pts_define('PTS_INIT_TIME', time());
 
-		if(!defined('PHP_VERSION_ID'))
+		if(function_exists('cli_set_process_title') && PHP_OS == 'Linux')
 		{
-			$php_version = explode('.', PHP_VERSION);
-			pts_define('PHP_VERSION_ID', ($php_version[0] * 10000 + $php_version[1] * 100 + $php_version[2]));
+			cli_set_process_title('Phoronix Test Suite');
 		}
+
+		pts_define('PHP_BIN', pts_client::read_env('PHP_BIN'));
 
 		$dir_init = array(PTS_USER_PATH);
 		foreach($dir_init as $dir)
@@ -83,32 +76,8 @@ class pts_client
 			self::build_temp_cache();
 		}
 
-		//XXX
-		pts_define('PTS_ETC_PATH', is_dir('/etc') ?'/etc/phoronix-test-suite/' : false);
-
-		if(is_dir('/usr/local/share/phoronix-test-suite/'))
-		{
-			pts_define('PTS_SHARE_PATH', '/usr/local/share/phoronix-test-suite/');
-		}
-		else if(is_dir('/usr/share/'))
-		{
-			pts_define('PTS_SHARE_PATH', '/usr/share/phoronix-test-suite/');
-
-			if(is_writable('/usr/share') && !is_dir(PTS_SHARE_PATH))
-			{
-				mkdir(PTS_SHARE_PATH);
-			}
-		}
-		else
-		{
-			pts_define('PTS_SHARE_PATH', false);
-		}
-
-
-		// XXX: technically the config init_files line shouldn't be needed since it should be dynamically called
-		// pts_config::init_files();
-		pts_define('PTS_TEST_INSTALL_DEFAULT_PATH', pts_client::parse_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Installation/EnvironmentDirectory', '~/.phoronix-test-suite/installed-tests/')));
-		pts_define('PTS_SAVE_RESULTS_PATH', pts_client::parse_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Testing/ResultsDirectory', '~/.phoronix-test-suite/test-results/')));
+		pts_define('PTS_TEST_INSTALL_DEFAULT_PATH', pts_strings::parse_for_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Installation/EnvironmentDirectory', '~/.phoronix-test-suite/installed-tests/')));
+		pts_define('PTS_SAVE_RESULTS_PATH', pts_strings::parse_for_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Testing/ResultsDirectory', '~/.phoronix-test-suite/test-results/')));
 		self::extended_init_process();
 
 		$openbenchmarking = pts_storage_object::read_from_file(PTS_CORE_STORAGE, 'openbenchmarking');
@@ -121,6 +90,47 @@ class pts_client
 		}
 
 		return true;
+	}
+	private static function extended_init_process()
+	{
+		// Extended Initalization Process
+		$directory_check = array(
+			PTS_TEST_INSTALL_DEFAULT_PATH,
+			PTS_SAVE_RESULTS_PATH,
+			PTS_MODULE_LOCAL_PATH,
+			PTS_MODULE_DATA_PATH,
+			PTS_DOWNLOAD_CACHE_PATH,
+			PTS_OPENBENCHMARKING_SCRATCH_PATH,
+			PTS_TEST_PROFILE_PATH,
+			PTS_TEST_SUITE_PATH,
+			PTS_TEST_PROFILE_PATH . 'local/',
+			PTS_TEST_SUITE_PATH . 'local/'
+			);
+
+		foreach($directory_check as $dir)
+		{
+			pts_file_io::mkdir($dir);
+		}
+
+		// Setup PTS Results Viewer
+		pts_file_io::mkdir(PTS_SAVE_RESULTS_PATH . 'pts-results-viewer');
+
+		foreach(pts_file_io::glob(PTS_RESULTS_VIEWER_PATH . '*') as $result_viewer_file)
+		{
+			copy($result_viewer_file, PTS_SAVE_RESULTS_PATH . 'pts-results-viewer/' . basename($result_viewer_file));
+		}
+
+		copy(PTS_CORE_STATIC_PATH . 'images/pts-106x55.png', PTS_SAVE_RESULTS_PATH . 'pts-results-viewer/pts-106x55.png');
+
+		// Setup ~/.phoronix-test-suite/xsl/
+		pts_file_io::mkdir(PTS_USER_PATH . 'xsl/');
+		copy(PTS_CORE_STATIC_PATH . 'xsl/pts-test-installation-viewer.xsl', PTS_USER_PATH . 'xsl/' . 'pts-test-installation-viewer.xsl');
+		copy(PTS_CORE_STATIC_PATH . 'xsl/pts-user-config-viewer.xsl', PTS_USER_PATH . 'xsl/' . 'pts-user-config-viewer.xsl');
+		copy(PTS_CORE_STATIC_PATH . 'images/pts-308x160.png', PTS_USER_PATH . 'xsl/' . 'pts-logo.png');
+
+		// pts_compatibility ops here
+
+		pts_client::init_display_mode();
 	}
 	public static function module_framework_init()
 	{
@@ -228,7 +238,7 @@ class pts_client
 			'OS_ARCH' => phodevi::read_property('system', 'kernel-architecture'),
 			'OS_TYPE' => phodevi::operating_system(),
 			'THIS_RUN_TIME' => PTS_INIT_TIME,
-			'DEBUG_REAL_HOME' => pts_client::user_home_directory()
+			'DEBUG_REAL_HOME' => pts_core::user_home_directory()
 			);
 
 			if(!pts_client::executable_in_path('cc') && pts_client::executable_in_path('gcc') && getenv('CC') == false)
@@ -454,47 +464,6 @@ class pts_client
 				self::$display = new pts_concise_display_mode();
 				break;
 		}
-	}
-	private static function extended_init_process()
-	{
-		// Extended Initalization Process
-		$directory_check = array(
-			PTS_TEST_INSTALL_DEFAULT_PATH,
-			PTS_SAVE_RESULTS_PATH,
-			PTS_MODULE_LOCAL_PATH,
-			PTS_MODULE_DATA_PATH,
-			PTS_DOWNLOAD_CACHE_PATH,
-			PTS_OPENBENCHMARKING_SCRATCH_PATH,
-			PTS_TEST_PROFILE_PATH,
-			PTS_TEST_SUITE_PATH,
-			PTS_TEST_PROFILE_PATH . 'local/',
-			PTS_TEST_SUITE_PATH . 'local/'
-			);
-
-		foreach($directory_check as $dir)
-		{
-			pts_file_io::mkdir($dir);
-		}
-
-		// Setup PTS Results Viewer
-		pts_file_io::mkdir(PTS_SAVE_RESULTS_PATH . 'pts-results-viewer');
-
-		foreach(pts_file_io::glob(PTS_RESULTS_VIEWER_PATH . '*') as $result_viewer_file)
-		{
-			copy($result_viewer_file, PTS_SAVE_RESULTS_PATH . 'pts-results-viewer/' . basename($result_viewer_file));
-		}
-
-		copy(PTS_CORE_STATIC_PATH . 'images/pts-106x55.png', PTS_SAVE_RESULTS_PATH . 'pts-results-viewer/pts-106x55.png');
-
-		// Setup ~/.phoronix-test-suite/xsl/
-		pts_file_io::mkdir(PTS_USER_PATH . 'xsl/');
-		copy(PTS_CORE_STATIC_PATH . 'xsl/pts-test-installation-viewer.xsl', PTS_USER_PATH . 'xsl/' . 'pts-test-installation-viewer.xsl');
-		copy(PTS_CORE_STATIC_PATH . 'xsl/pts-user-config-viewer.xsl', PTS_USER_PATH . 'xsl/' . 'pts-user-config-viewer.xsl');
-		copy(PTS_CORE_STATIC_PATH . 'images/pts-308x160.png', PTS_USER_PATH . 'xsl/' . 'pts-logo.png');
-
-		// pts_compatibility ops here
-
-		pts_client::init_display_mode();
 	}
 	public static function program_requirement_checks($only_show_required = false)
 	{
@@ -907,44 +876,6 @@ class pts_client
 		// Current system user
 		return ($pts_user = pts_openbenchmarking_client::user_name()) != null ? $pts_user : phodevi::read_property('system', 'username');
 	}
-	public static function user_home_directory()
-	{
-		// Gets the system user's home directory
-		static $userhome = null;
-
-		if($userhome == null)
-		{
-			if(function_exists('posix_getpwuid') && function_exists('posix_getuid'))
-			{
-				$userinfo = posix_getpwuid(posix_getuid());
-				$userhome = $userinfo['dir'];
-			}
-			else if(($home = pts_client::read_env('HOME')))
-			{
-				$userhome = $home;
-			}
-			else if(($home = pts_client::read_env('HOMEPATH')))
-			{
-				$userhome = pts_client::read_env('HOMEDRIVE') . $home;
-			}
-			else if(PTS_IS_DAEMONIZED_SERVER_PROCESS)
-			{
-				$userhome = PTS_USER_PATH;
-			}
-			else
-			{
-				if(!is_writable('/'))
-				{
-					echo PHP_EOL . 'ERROR: Cannot find home directory.' . PHP_EOL;
-				}
-				$userhome = null;
-			}
-
-			$userhome = pts_strings::add_trailing_slash($userhome);
-		}
-
-		return $userhome;
-	}
 	public static function test_profile_debug_message($message)
 	{
 		$reported = false;
@@ -956,16 +887,6 @@ class pts_client
 		}
 
 		return $reported;
-	}
-	public static function parse_home_directory($path)
-	{
-		// Find home directory if needed
-		if(strpos($path, '~/') !== false)
-		{
-			$path = str_replace('~/', pts_client::user_home_directory(), $path);
-		}
-
-		return pts_strings::add_trailing_slash($path);
 	}
 	public static function xsl_results_viewer_graph_template()
 	{
@@ -1668,7 +1589,10 @@ class pts_client
 					}
 					clearstatcache();
 				}
-				posix_kill(posix_getpid(), SIGINT);
+				if(function_exists('posix_kill'))
+				{
+					posix_kill(posix_getpid(), SIGINT);
+				}
 				exit(0);
 			}
 		}
@@ -1708,7 +1632,10 @@ class pts_client
 					$fork_function_parameters = array($fork_function_parameters);
 				}
 				call_user_func_array($fork_function, $fork_function_parameters);
-				posix_kill(posix_getpid(), SIGINT);
+				if(function_exists('posix_kill'))
+				{
+					posix_kill(posix_getpid(), SIGINT);
+				}
 				exit(0);
 			}
 		}

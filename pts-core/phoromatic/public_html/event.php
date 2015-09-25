@@ -29,7 +29,7 @@ define('PTS_AUTO_LOAD_OBJECTS', true);
 error_reporting(E_ALL);
 
 include('../../pts-core.php');
-pts_client::init();
+pts_core::init();
 
 phoromatic_server::prepare_database();
 

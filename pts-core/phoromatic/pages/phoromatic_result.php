@@ -129,7 +129,7 @@ class phoromatic_result implements pts_webui_interface
 				$result_file_title = phoromatic_system_id_to_name($system_types[0]) . ' Tests';
 			}
 
-			if(!empty($tickets))
+			if(!empty($tickets) && $tickets[0] != null)
 			{
 				$system_name_format = 'ORIGINAL_DATA';
 			}
