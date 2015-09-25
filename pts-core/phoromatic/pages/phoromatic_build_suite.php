@@ -140,7 +140,7 @@ class phoromatic_build_suite implements pts_webui_interface
 			<h3>Add Another Test</h3>';
 			$main .= '<select name="add_to_suite_select_test" id="add_to_suite_select_test" onchange="phoromatic_build_suite_test_details();">';
 
-			$dc = pts_strings::add_trailing_slash(pts_core::parse_for_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Installation/CacheDirectory', PTS_DOWNLOAD_CACHE_PATH)));
+			$dc = pts_strings::add_trailing_slash(pts_strings::parse_for_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Installation/CacheDirectory', PTS_DOWNLOAD_CACHE_PATH)));
 			$dc_exists = is_file($dc . 'pts-download-cache.json');
 			if($dc_exists)
 			{

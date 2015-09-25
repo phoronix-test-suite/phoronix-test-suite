@@ -113,7 +113,7 @@ class phoromatic_tests implements pts_webui_interface
 		}
 		else
 		{
-			$dc = pts_strings::add_trailing_slash(pts_core::parse_for_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Installation/CacheDirectory', PTS_DOWNLOAD_CACHE_PATH)));
+			$dc = pts_strings::add_trailing_slash(pts_strings::parse_for_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Installation/CacheDirectory', PTS_DOWNLOAD_CACHE_PATH)));
 			$dc_exists = is_file($dc . 'pts-download-cache.json');
 			if($dc_exists)
 			{
