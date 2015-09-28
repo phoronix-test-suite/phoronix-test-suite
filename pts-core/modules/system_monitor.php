@@ -457,15 +457,12 @@ class system_monitor extends pts_module_interface
 
 		if (!is_dir($cgroup_path))	// cgroup filesystem doesn't allow to create regular files anyway
 		{
-			$mkdir_cmd = 'mkdir ' . $cgroup_path;
-			$return_val = exec($sudo_cmd . $mkdir_cmd);
-		}
-
-		if ($return_val === null && is_dir($cgroup_path))	// mkdir produced no output
-		{
 			$current_user = exec('whoami');
+			$mkdir_cmd = 'mkdir ' . $cgroup_path;
 			$chmod_cmd = 'chown ' . $current_user . ' ' . $cgroup_path . '/tasks';
-			exec($sudo_cmd . $chmod_cmd);
+            $command = $sudo_cmd . '"' . $mkdir_cmd . ' && ' . $chmod_cmd . '"';
+            var_dump($command);
+			exec($command);
 		}
 
 		if (!is_writable($cgroup_path . '/tasks'))
@@ -480,7 +477,7 @@ class system_monitor extends pts_module_interface
 		$sudo_cmd = PTS_CORE_STATIC_PATH . 'root-access.sh ';
 		$cgroup_path = '/sys/fs/cgroup/' . $cgroup_controller . '/' . $cgroup_name;
 
-		if (!is_dir($cgroup_path))	// cgroup filesystem doesn't allow to create regular files anyway
+		if (is_dir($cgroup_path))	// cgroup filesystem doesn't allow to create regular files anyway
 		{
 			$rmdir_cmd = 'rmdir ' . $cgroup_path;
 			shell_exec($sudo_cmd . $rmdir_cmd);
