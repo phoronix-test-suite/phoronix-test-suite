@@ -776,7 +776,7 @@ class pts_test_run_manager
 		}
 
 		// Cleanup tests to run
-		if(pts_test_run_manager::cleanup_tests_to_run($to_run) == false)
+		if($this->cleanup_tests_to_run($to_run) == false)
 		{
 			return false;
 		}
@@ -1023,7 +1023,7 @@ class pts_test_run_manager
 			$this->batch_mode['Configured'] = true;
 		}
 	}
-	public static function cleanup_tests_to_run(&$to_run_objects)
+	public function cleanup_tests_to_run(&$to_run_objects)
 	{
 		$skip_tests = ($e = pts_client::read_env('SKIP_TESTS')) ? pts_strings::comma_explode($e) : false;
 		$tests_verified = array();
@@ -1149,7 +1149,7 @@ class pts_test_run_manager
 				if($stop_and_install)
 				{
 					pts_test_installer::standard_install($tests_missing);
-					self::cleanup_tests_to_run($to_run_objects);
+					$this->cleanup_tests_to_run($to_run_objects);
 				}
 			}
 		}
