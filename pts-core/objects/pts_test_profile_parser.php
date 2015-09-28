@@ -393,6 +393,9 @@ class pts_test_profile_parser
 		{
 			foreach($this->xml->TestSettings->Option as $option)
 			{
+				if(!isset($option->Menu->Entry) || !is_array($option->Menu->Entry))
+					continue;
+
 				$names = array();
 				$messages = array();
 				$values = array();
