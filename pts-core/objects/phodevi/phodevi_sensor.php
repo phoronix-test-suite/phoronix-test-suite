@@ -22,10 +22,11 @@
 
 abstract class phodevi_sensor
 {
-	const SENSOR_TYPE = '';			//eg. cpu
-	const SENSOR_SENSES = '';		//eg. power-usage
-	const SENSOR_UNIT = '';			//eg. miliwatts
-	const PRIMARY_PARAM_NAME = '';	//eg. cpu_number
+    const SENSOR_TYPE = '';             //eg. cpu
+	const SENSOR_SENSES = '';           //eg. power-usage
+	const SENSOR_UNIT = '';             //eg. miliwatts
+	const PRIMARY_PARAM_NAME = '';      //eg. cpu_number
+    const INSTANT_MEASUREMENT = true; 
 
 	protected $instance_number;
 
@@ -48,6 +49,11 @@ abstract class phodevi_sensor
 	{
 		return static::SENSOR_UNIT;
 	}
+    
+    public function is_instant()
+    {
+        return static::INSTANT_MEASUREMENT;
+    }
 
 	public static function get_primary_parameter_name()
 	{
@@ -58,7 +64,7 @@ abstract class phodevi_sensor
 	{
 		return $this->instance_number;
 	}
-
+    
 	/*
 	 * Sensor-specific functions
 	 */

@@ -209,21 +209,40 @@ class system_monitor extends pts_module_interface
 
 	private static function pts_start_monitoring()
 	{
-		foreach(self::$to_monitor as $sensor)
+		$instant_sensors = array();
+        
+        foreach(self::$to_monitor as $sensor)
 		{
-			$pid = pts_module::pts_timed_function('pts_monitor_update', self::$sensor_monitoring_frequency, array(&$sensor));
-		}
+			$is_instant = $sensor->is_instant();
+            
+            if($is_instant === true)
+            {
+                $pid = pts_module::pts_timed_function('pts_monitor_update', self::$sensor_monitoring_frequency, array(array(&$sensor)));
+            }
+            else
+            {
+                array_push($instant_sensors, $sensor);  //TODO would be better to push reference
+            }
+        }
+        
+        if (!empty($instant_sensors))
+        {
+            pts_module::pts_timed_function('pts_monitor_update', self::$sensor_monitoring_frequency, array($instant_sensors));
+        }
 	}
 
 	// Reads value of a single sensor, checks its correctness and saves it to the monitor log.
-	public static function pts_monitor_update(&$sensor)
+	public static function pts_monitor_update($sensor_list)
 	{
-		$sensor_value = phodevi::read_sensor($sensor);
+		foreach ($sensor_list as $sensor)
+        {
+            $sensor_value = phodevi::read_sensor($sensor);
 
-		if ($sensor_value != -1 && pts_module::is_file('logs/' . phodevi::sensor_object_identifier($sensor)))
-		{
-			pts_module::save_file('logs/' . phodevi::sensor_object_identifier($sensor), $sensor_value, true);
-		}
+            if ($sensor_value != -1 && pts_module::is_file('logs/' . phodevi::sensor_object_identifier($sensor)))
+            {
+                pts_module::save_file('logs/' . phodevi::sensor_object_identifier($sensor), $sensor_value, true);
+            }
+        }
 	}
 
 	private static function parse_monitor_log($log_file, $start_offset = 0, $end_offset = -1)
