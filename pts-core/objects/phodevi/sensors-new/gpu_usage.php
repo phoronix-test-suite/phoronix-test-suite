@@ -26,7 +26,7 @@ class gpu_usage extends phodevi_sensor
 {
 	const SENSOR_TYPE = 'gpu';
 	const SENSOR_SENSES = 'usage';
-	
+
 	private $probe_ati_overdrive = false;
 	private $probe_radeontop = false;
 	private $probe_radeon_fences = false;
@@ -52,76 +52,78 @@ class gpu_usage extends phodevi_sensor
 
 		return $unit;
 	}
-	
+
 	//TODO rewrite support checking if possible
 	public function support_check()
 	{
-		if(phodevi::is_ati_graphics() && phodevi::is_linux())
-		{
-			$gpu_usage = self::ati_overdrive_core_usage();
+		// temporarily disabled as it needs fixing
 
-			if(is_numeric($gpu_usage))
-			{
-				self::$probe_ati_overdrive = true;
-				return true;
-			}
-		}
-		else if(phodevi::is_mesa_graphics())
-		{
-			if(pts_client::executable_in_path('radeontop'))
-			{
-				$test = self::radeontop_gpu_usage();
-
-				if(is_numeric($test) && $test >= 0)
-				{
-					self::$probe_radeontop = true;
-					return true;
-				}
-			}
-			else if(is_readable('/sys/kernel/debug/dri/0/radeon_fence_info'))
-			{
-				$fence_speed = self::radeon_fence_speed();
-
-				if(is_numeric($fence_speed) && $fence_speed >= 0)
-				{
-					self::$probe_radeon_fences = true;
-					return true;
-				}
-			}
-			else if(is_readable('/sys/kernel/debug/dri/0/i915_gem_seqno'))
-			{
-				$commands = self::intel_command_speed();
-				if(is_numeric($commands) && $commands > 0)
-				{
-					self::$probe_intel_commands = true;
-					return true;
-				}
-			}
-		}
-		else if(phodevi::is_nvidia_graphics())
-		{
-			$util = self::read_nvidia_settings_gpu_utilization();
-
-			if($util !== false)
-			{
-				self::$probe_nvidia_settings = true;
-				return true;
-			}
-			else if(pts_client::executable_in_path('nvidia-smi'))
-			{
-				$usage = self::nvidia_core_usage();
-
-				if(is_numeric($usage) && $usage >= 0 && $usage <= 100)
-				{
-					self::$probe_nvidia_smi = true;
-					return true;
-				}
-			}
-		}
+//		if(phodevi::is_ati_graphics() && phodevi::is_linux())
+//		{
+//			$gpu_usage = self::ati_overdrive_core_usage();
+//
+//			if(is_numeric($gpu_usage))
+//			{
+//				self::$probe_ati_overdrive = true;
+//				return true;
+//			}
+//		}
+//		else if(phodevi::is_mesa_graphics())
+//		{
+//			if(pts_client::executable_in_path('radeontop'))
+//			{
+//				$test = self::radeontop_gpu_usage();
+//
+//				if(is_numeric($test) && $test >= 0)
+//				{
+//					self::$probe_radeontop = true;
+//					return true;
+//				}
+//			}
+//			else if(is_readable('/sys/kernel/debug/dri/0/radeon_fence_info'))
+//			{
+//				$fence_speed = self::radeon_fence_speed();
+//
+//				if(is_numeric($fence_speed) && $fence_speed >= 0)
+//				{
+//					self::$probe_radeon_fences = true;
+//					return true;
+//				}
+//			}
+//			else if(is_readable('/sys/kernel/debug/dri/0/i915_gem_seqno'))
+//			{
+//				$commands = self::intel_command_speed();
+//				if(is_numeric($commands) && $commands > 0)
+//				{
+//					self::$probe_intel_commands = true;
+//					return true;
+//				}
+//			}
+//		}
+//		else if(phodevi::is_nvidia_graphics())
+//		{
+//			$util = self::read_nvidia_settings_gpu_utilization();
+//
+//			if($util !== false)
+//			{
+//				self::$probe_nvidia_settings = true;
+//				return true;
+//			}
+//			else if(pts_client::executable_in_path('nvidia-smi'))
+//			{
+//				$usage = self::nvidia_core_usage();
+//
+//				if(is_numeric($usage) && $usage >= 0 && $usage <= 100)
+//				{
+//					self::$probe_nvidia_smi = true;
+//					return true;
+//				}
+//			}
+//		}
 
 		return false;
 	}
-	
+
 	public function read_sensor()
 	{
 		if(self::$probe_ati_overdrive)
@@ -149,7 +151,7 @@ class gpu_usage extends phodevi_sensor
 			return self::intel_command_speed();
 		}
 	}
-	
+
 	public static function read_nvidia_settings_gpu_utilization()
 	{
 		$util = phodevi_parser::read_nvidia_extension('GPUUtilization');
@@ -174,12 +176,12 @@ class gpu_usage extends phodevi_sensor
 
 		return false;
 	}
-	
+
 	public static function ati_overdrive_core_usage()
 	{
 		return phodevi_linux_parser::read_ati_overdrive('GPUload');
 	}
-	
+
 	public static function nvidia_core_usage()
 	{
 		$nvidia_smi = shell_exec('nvidia-smi -a');
@@ -191,7 +193,7 @@ class gpu_usage extends phodevi_sensor
 
 		return $util;
 	}
-	
+
 	public static function radeon_fence_speed()
 	{
 		// Determine GPU usage
@@ -218,7 +220,7 @@ class gpu_usage extends phodevi_sensor
 
 		return $fence_speed;
 	}
-	
+
 	protected static function intel_current_sequence_count()
 	{
 		$count = 0;
@@ -238,7 +240,7 @@ class gpu_usage extends phodevi_sensor
 
 		return $count;
 	}
-	
+
 	public static function intel_command_speed()
 	{
 		// Determine GPU usage
@@ -248,7 +250,7 @@ class gpu_usage extends phodevi_sensor
 
 		return $second_read - $first_read;
 	}
-	
+
 	public static function radeontop_gpu_usage()
 	{
 		$out = shell_exec('radeontop -d - -l 1');
