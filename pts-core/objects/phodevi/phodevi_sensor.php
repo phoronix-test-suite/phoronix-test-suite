@@ -26,7 +26,7 @@ abstract class phodevi_sensor
 	const SENSOR_SENSES = '';           //eg. power-usage
 	const SENSOR_UNIT = '';             //eg. miliwatts
 	const PRIMARY_PARAM_NAME = '';      //eg. cpu_number
-    const INSTANT_MEASUREMENT = true; 
+    const INSTANT_MEASUREMENT = true;
 
 	protected $instance_number;
 
@@ -49,7 +49,7 @@ abstract class phodevi_sensor
 	{
 		return static::SENSOR_UNIT;
 	}
-    
+
     public function is_instant()
     {
         return static::INSTANT_MEASUREMENT;
@@ -64,7 +64,7 @@ abstract class phodevi_sensor
 	{
 		return $this->instance_number;
 	}
-    
+
 	/*
 	 * Sensor-specific functions
 	 */
@@ -88,6 +88,7 @@ abstract class phodevi_sensor
 	// They can be passed in MONITOR environmental variable to create object
 	// responsible for monitoring specific device. You probably want to
 	// override this function if your sensor supports parametrization.
+	// It should return NULL on platforms where parameters are unsupported.
 	public static function get_supported_devices()
 	{
 		return NULL;

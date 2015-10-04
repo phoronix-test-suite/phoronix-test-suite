@@ -210,11 +210,11 @@ class system_monitor extends pts_module_interface
 	private static function pts_start_monitoring()
 	{
 		$instant_sensors = array();
-        
+
         foreach(self::$to_monitor as $sensor)
 		{
 			$is_instant = $sensor->is_instant();
-            
+
             if($is_instant === true)
             {
                 $pid = pts_module::pts_timed_function('pts_monitor_update', self::$sensor_monitoring_frequency, array(array(&$sensor)));
@@ -224,7 +224,7 @@ class system_monitor extends pts_module_interface
                 array_push($instant_sensors, $sensor);  //TODO would be better to push reference
             }
         }
-        
+
         if (!empty($instant_sensors))
         {
             pts_module::pts_timed_function('pts_monitor_update', self::$sensor_monitoring_frequency, array($instant_sensors));
@@ -287,12 +287,24 @@ class system_monitor extends pts_module_interface
 
 		foreach(phodevi::available_sensors() as $sensor)
 		{
-			if(!in_array('all.' . $sensor[0], $args))
+			$supported_devices = call_user_func(array($sensor[2], 'get_supported_devices'));
+
+			if(!in_array($sensor[0] . '.all', $args))
 			{
-				array_push($args, 'all.' . $sensor[0]);
+				array_push($args, $sensor[0] . '.all');
 			}
 
 			array_push($args, phodevi::sensor_identifier($sensor));
+
+			if ($supported_devices !== NULL)
+			{
+				array_push($args, phodevi::sensor_identifier($sensor) . '.all');
+				foreach($supported_devices as $device)
+				{
+					array_push($args, phodevi::sensor_identifier($sensor) . '.' . $device);
+				}
+			}
+
 		}
 
 		return $args;
