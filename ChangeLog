@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts_Graph: Continued SVG optimization work
+- pts-core: Finish work on auto-authenticating clients / settings page option to automatically approve newly added systems by default
 
 Phoronix Test Suite 6.0 Milestone 2
 24 September 2015

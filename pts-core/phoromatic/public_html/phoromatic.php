@@ -173,6 +173,12 @@ if(!isset($result) || empty($result))
 
 if(empty($result))
 {
+	$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_account_settings WHERE AccountID = :account_id');
+	$stmt->bindValue(':account_id', ACCOUNT_ID);
+	$result = $stmt->execute();
+	$phoromatic_account_settings = $result->fetchArray(SQLITE3_ASSOC);
+	unset($phoromatic_account_settings['AccountID']);
+
 	// APPARENT FIRST TIME FOR THIS SYSTEM CONNECTING TO THIS ACCOUNT
 	do
 	{
@@ -180,8 +186,8 @@ if(empty($result))
 		$matching_system = phoromatic_server::$db->querySingle('SELECT AccountID FROM phoromatic_systems WHERE SystemID = \'' . $system_id . '\'');
 	}
 	while(!empty($matching_system));
-	$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_systems (AccountID, SystemID, Hardware, Software, ClientVersion, GSID, CurrentTask, CreatedOn, LastCommunication, LastIP, LocalIP, Title, State, MachineSelfID, CoreVersion) VALUES (:account_id, :system_id, :client_hardware, :client_software, :client_version, :gsid, \'Awaiting Authorization\', :current_time, :current_time, :access_ip, :local_ip, :title, 0, :machine_self_id, :core_version)');
-	$stmt->bindValue(':account_id', $ACCOUNT_ID);
+	$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_systems (AccountID, SystemID, Hardware, Software, ClientVersion, GSID, CurrentTask, CreatedOn, LastCommunication, LastIP, LocalIP, Title, State, MachineSelfID, CoreVersion) VALUES (:account_id, :system_id, :client_hardware, :client_software, :client_version, :gsid, :current_task, :current_time, :current_time, :access_ip, :local_ip, :title, :preset_state, :machine_self_id, :core_version)');
+	$stmt->bindValue(':account_id', ACCOUNT_ID);
 	$stmt->bindValue(':system_id', $system_id);
 	$stmt->bindValue(':client_hardware', $CLIENT_HARDWARE);
 	$stmt->bindValue(':client_software', $CLIENT_SOFTWARE);
@@ -194,10 +200,20 @@ if(empty($result))
 	$stmt->bindValue(':machine_self_id', $PTS_MACHINE_SELF_ID);
 	$stmt->bindValue(':core_version', $CLIENT_CORE_VERSION);
 
-	$result = $stmt->execute();
-	$json['phoromatic']['response'] = 'Information Added; Waiting For Approval From Administrator.';
-	echo json_encode($json);
+	if($phoromatic_account_settings['AutoApproveNewSystems'])
+	{
+		$stmt->bindValue(':current_task', 'System Added');
+		$stmt->bindValue(':preset_state', 1);
+		$new_response = 'System Automatically Added To Account.';
+	}
+	else
+	{
+		$stmt->bindValue(':current_task', 'Awaiting Authorization');
+		$stmt->bindValue(':preset_state', 0);
+		$new_response = 'Information Added; Waiting For Approval From Administrator.';
+	}
 
+	$result = $stmt->execute();
 
 	// Email notifications
 	$stmt = phoromatic_server::$db->prepare('SELECT UserName, Email FROM phoromatic_users WHERE UserID IN (SELECT UserID FROM phoromatic_user_settings WHERE AccountID = :account_id AND NotifyOnNewSystems = 1) AND AccountID = :account_id');
@@ -208,6 +224,9 @@ if(empty($result))
 		phoromatic_server::send_email($row['Email'], 'Phoromatic New System Added', phoromatic_server::account_id_to_group_admin_email(ACCOUNT_ID), '<p><strong>' . $row['UserName'] . ':</strong></p><p>A new system is attempting to associate with a Phoromatic account for which you\'re associated.</p><p>Title: ' . $HOSTNAME . '<br />IP: ' . $LOCAL_IP . '<br />System Info: ' . $CLIENT_HARDWARE . ' ' . $CLIENT_SOFTWARE . '</p>');
 	}
 
+	// Send response back
+	$json['phoromatic']['response'] = $new_response;
+	echo json_encode($json);
 	exit;
 }
 
