@@ -393,18 +393,18 @@ class pts_test_profile_parser
 		{
 			foreach($this->xml->TestSettings->Option as $option)
 			{
-				if(!isset($option->Menu->Entry))
-					continue;
-
 				$names = array();
 				$messages = array();
 				$values = array();
 
-				foreach($option->Menu->Entry as $entry)
+				if(isset($option->Menu->Entry))
 				{
-					array_push($names, $entry->Name->__toString());
-					array_push($messages, $entry->Message->__toString());
-					array_push($values, $entry->Value->__toString());
+					foreach($option->Menu->Entry as $entry)
+					{
+						array_push($names, $entry->Name->__toString());
+						array_push($messages, $entry->Message->__toString());
+						array_push($values, $entry->Value->__toString());
+					}
 				}
 
 				if($auto_process)
@@ -422,7 +422,6 @@ class pts_test_profile_parser
 				}
 
 				$user_option->set_option_default($option->DefaultEntry->__toString());
-
 				array_push($test_options, $user_option);
 			}
 		}
