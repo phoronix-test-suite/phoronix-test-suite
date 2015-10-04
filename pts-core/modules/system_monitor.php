@@ -215,13 +215,13 @@ class system_monitor extends pts_module_interface
 		{
 			$is_instant = $sensor->is_instant();
 
-            if($is_instant === true)
+            if($is_instant === false)
             {
-                $pid = pts_module::pts_timed_function('pts_monitor_update', self::$sensor_monitoring_frequency, array(array(&$sensor)));
+				$pid = pts_module::pts_timed_function('pts_monitor_update', self::$sensor_monitoring_frequency, array(array(&$sensor)));
             }
             else
             {
-                array_push($instant_sensors, $sensor);  //TODO would be better to push reference
+                $instant_sensors[] = &$sensor;
             }
         }
 
