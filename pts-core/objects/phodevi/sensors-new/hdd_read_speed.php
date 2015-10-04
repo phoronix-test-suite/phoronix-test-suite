@@ -25,6 +25,7 @@ class hdd_read_speed extends phodevi_sensor
 	const SENSOR_TYPE = 'hdd';
 	const SENSOR_SENSES = 'read-speed';
 	const SENSOR_UNIT = 'MB/s';
+	const INSTANT_MEASUREMENT = false;
 
     private $disk_to_monitor = NULL;
 
