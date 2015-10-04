@@ -25,10 +25,10 @@ class hdd_write_speed extends phodevi_sensor
 	const SENSOR_TYPE = 'hdd';
 	const SENSOR_SENSES = 'write-speed';
 	const SENSOR_UNIT = 'MB/s';
-    
+
     private $disk_to_monitor = NULL;
-    
-    
+
+
     function __construct($instance, $parameter)
 	{
 		parent::__construct($instance, $parameter);
@@ -53,7 +53,7 @@ class hdd_write_speed extends phodevi_sensor
 
 		return false;
 	}
-    
+
 	public function get_readable_device_name()
 	{
         return $this->disk_to_monitor;
@@ -74,13 +74,12 @@ class hdd_write_speed extends phodevi_sensor
 				if(pts_file_io::file_get_contents($stat_path) != null)
 				{
 					array_push($supported, $check_disk);
-					break;
 				}
 			}
-			
+
 			return $supported;
 		}
-		
+
 		return NULL;
 	}
 
