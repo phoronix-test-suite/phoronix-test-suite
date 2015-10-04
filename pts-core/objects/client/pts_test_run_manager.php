@@ -975,7 +975,7 @@ class pts_test_run_manager
 
 				if($upload_results)
 				{
-					$this->openbenchmarking_results_data = pts_openbenchmarking::upload_test_result($this, true);
+					$this->openbenchmarking_results_data = pts_openbenchmarking::upload_test_result($this, true, (!$this->auto_mode && !$this->batch_mode));
 
 					if($this->get_results_url())
 					{

@@ -25,7 +25,7 @@ class pts_openbenchmarking_client
 	private static $openbenchmarking_account = false;
 	private static $client_settings = null;
 
-	public static function upload_test_result(&$object, $return_json_data = false)
+	public static function upload_test_result(&$object, $return_json_data = false, $prompts = true)
 	{
 		if($object instanceof pts_test_run_manager)
 		{
@@ -68,7 +68,14 @@ class pts_openbenchmarking_client
 			}
 			else if(is_dir($system_log_dir))
 			{
-				$upload_system_logs = pts_user_io::prompt_bool_input('Would you like to attach the system logs (lspci, dmesg, lsusb, etc) to the test result', true, 'UPLOAD_SYSTEM_LOGS');
+				if($prompts == false)
+				{
+					$upload_system_logs = true;
+				}
+				else
+				{
+					$upload_system_logs = pts_user_io::prompt_bool_input('Would you like to attach the system logs (lspci, dmesg, lsusb, etc) to the test result', true, 'UPLOAD_SYSTEM_LOGS');
+				}
 			}
 		}
 
