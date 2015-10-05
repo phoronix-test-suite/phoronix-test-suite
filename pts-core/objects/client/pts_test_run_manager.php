@@ -1722,7 +1722,7 @@ class pts_test_run_manager
 
 		return strcmp($a_comp, $b_comp);
 	}
-	public static function test_profile_system_compatibility_check(&$test_profile, $report_errors = false)
+	public function test_profile_system_compatibility_check(&$test_profile, $report_errors = false)
 	{
 		$valid_test_profile = true;
 		$test_type = $test_profile->get_test_hardware_type();
@@ -1783,7 +1783,7 @@ class pts_test_run_manager
 		{
 			$valid_test_profile = true;
 
-			if(self::test_profile_system_compatibility_check($test_profile, true) == false)
+			if($this->test_profile_system_compatibility_check($test_profile, true) == false)
 			{
 				$valid_test_profile = false;
 			}
