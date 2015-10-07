@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2015, Phoronix Media
-	Copyright (C) 2009 - 2015, Michael Larabel
+	Copyright (C) 2009 - 2013, Phoronix Media
+	Copyright (C) 2009 - 2013, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -20,21 +20,17 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class sys_power implements phodevi_sensor
+class sys_power extends phodevi_sensor
 {
+	const SENSOR_TYPE = 'sys';
+	const SENSOR_SENSES = 'power';
+
 	private static $battery_sys = false;
 	private static $battery_cur = false;
 	private static $wattsup_meter = false;
 	private static $ipmitool = false;
 
-	public static function get_type()
-	{
-		return 'sys';
-	}
-	public static function get_sensor()
-	{
-		return 'power';
-	}
+
 	public static function get_unit()
 	{
 		$unit = null;
@@ -54,7 +50,8 @@ class sys_power implements phodevi_sensor
 
 		return $unit;
 	}
-	public static function support_check()
+
+	public function support_check()
 	{
 		$test = self::sys_battery_power();
 		if(is_numeric($test) && $test != -1)
@@ -92,7 +89,8 @@ class sys_power implements phodevi_sensor
 			}
 		}
 	}
-	public static function read_sensor()
+
+	public function read_sensor()
 	{
 		if(self::$battery_sys)
 		{
@@ -111,6 +109,7 @@ class sys_power implements phodevi_sensor
 			return phodevi_linux_parser::read_ipmitool_sensor('Node Power');
 		}
 	}
+
 	private static function watts_up_power_meter()
 	{
 		$output = trim(shell_exec('wattsup -c 1 ttyUSB0 watts 2>&1'));
@@ -124,6 +123,7 @@ class sys_power implements phodevi_sensor
 
 		return is_numeric($value) ? $value : -1;
 	}
+
 	private static function sys_power_current()
 	{
 		// Returns power consumption rate in uA
@@ -148,6 +148,7 @@ class sys_power implements phodevi_sensor
 
 		return $current;
 	}
+
 	private static function sys_battery_power()
 	{
 		// Returns power consumption rate in mW
@@ -183,7 +184,7 @@ class sys_power implements phodevi_sensor
 						if($voltage_unit == 'mV')
 						{
 							$rate = round(($power * $voltage) / 1000);
-						}				
+						}
 					}
 					else if($power_unit == 'mW')
 					{
