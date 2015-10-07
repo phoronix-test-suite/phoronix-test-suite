@@ -89,7 +89,7 @@ class system_monitor extends pts_module_interface
 		try
 		{
 			$sensor_parameters = self::prepare_sensor_parameters();
-			self::enable_perf_per_watt();
+			self::enable_perf_per_watt($sensor_parameters);
 			self::process_sensor_list($sensor_parameters);
 			self::create_monitoring_cgroups();
 			self::print_monitored_sensors();
@@ -171,7 +171,7 @@ class system_monitor extends pts_module_interface
 
 		if(pts_module::read_variable('PERFORMANCE_PER_WATT'))
 		{
-			self::process_perf_per_watt();
+			self::process_perf_per_watt($result_file);
 		}
 
 		foreach(self::$to_monitor as $sensor)
@@ -339,16 +339,21 @@ class system_monitor extends pts_module_interface
 		return $to_monitor;
 	}
 
-	private static function enable_perf_per_watt()
+	private static function enable_perf_per_watt(&$sensor_parameters)
 	{
-//		TODO re-enable this when sys.power sensor is ported
-//		if(pts_module::read_variable('PERFORMANCE_PER_WATT'))
-//		{
-//			// We need to ensure the system power consumption is being tracked to get performance-per-Watt
-//			pts_arrays::unique_push($to_show, 'sys.power');
-//			self::$individual_monitoring = true;
-//			echo PHP_EOL . 'To Provide Performance-Per-Watt Outputs.' . PHP_EOL;
-//		}
+		if(pts_module::read_variable('PERFORMANCE_PER_WATT'))
+		{
+			// We need to ensure the system power consumption is being tracked to get performance-per-Watt
+
+			if(empty($sensor_parameters['sys']['power']))
+			{
+				$sensor_parameters['sys']['power'] = array();
+			}
+
+			self::$perf_per_watt_collection = array();
+			self::$individual_monitoring = true;
+			echo PHP_EOL . 'To Provide Performance-Per-Watt Outputs.' . PHP_EOL;
+		}
 	}
 
 	// Create sensor objects basing on the sensor parameter array.
@@ -538,10 +543,10 @@ class system_monitor extends pts_module_interface
 		}
 	}
 
-	private static function process_perf_per_watt()
+	private static function process_perf_per_watt(&$result_file)
 	{
 		$sensor = array('sys', 'power');
-		$sensor_results = self::parse_monitor_log('logs/' . phodevi::sensor_identifier($sensor), self::$individual_test_run_offsets[phodevi::sensor_identifier($sensor)]);
+		$sensor_results = self::parse_monitor_log('logs/' . phodevi::sensor_identifier($sensor) . '.0', self::$individual_test_run_offsets[phodevi::sensor_identifier($sensor) . '.0']);
 
 		if(count($sensor_results) > 2 && self::$successful_test_run_request)
 		{
