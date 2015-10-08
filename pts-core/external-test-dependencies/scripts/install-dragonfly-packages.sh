@@ -1,6 +1,7 @@
 #!/bin/sh
 
-
+#dports pkg
+pkg install $*
 
 
 # Old dropped DragonFly pkgsrc support from older releases

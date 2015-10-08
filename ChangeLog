@@ -9,6 +9,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add extra warning about RequiresRoot=TRUE tests
 - pts-core: Detect NVMe drives when looking for block devices for disk testing
 - pts-core: Add "smartmontools" as new PTS External Dependency
+- pts-core: Rewrite the DragonFlyBSD external dependency handling to now use dports pkg rather than pkgsrc
 
 Phoronix Test Suite 6.0 Milestone 2
 24 September 2015
