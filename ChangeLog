@@ -10,6 +10,7 @@ Phoronix Test Suite (Git)
 - pts-core: Detect NVMe drives when looking for block devices for disk testing
 - pts-core: Add "smartmontools" as new PTS External Dependency
 - pts-core: Rewrite the DragonFlyBSD external dependency handling to now use dports pkg rather than pkgsrc
+- pts-core: Add NO_HTTPS environment variable option for systems that have trouble with HTTPS
 
 Phoronix Test Suite 6.0 Milestone 2
 24 September 2015

@@ -77,6 +77,11 @@ class pts_network
 		{
 			$download = 'http://' . $download;
 		}
+		else if(getenv('NO_HTTPS') != false)
+		{
+			// On some platforms like DragonFly 4.2 ran into problem of all HTTPS downloads failing
+			$download = str_replace('https://', 'http://', $download);
+		}
 
 		if(function_exists('curl_init') && stripos(PTS_PHP_VERSION, 'hiphop') === false)
 		{
