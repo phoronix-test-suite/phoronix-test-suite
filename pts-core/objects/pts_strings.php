@@ -133,7 +133,7 @@ class pts_strings
 		}
 		else
 		{
-			return $string != null && ($string == true || $string == 'true' || $string == 'yes');
+			return $string != null && ($string == true || strtolower($string) == 'true' || strtolower($string) == 'yes');
 		}
 	}
 	public static function add_trailing_slash($path)
