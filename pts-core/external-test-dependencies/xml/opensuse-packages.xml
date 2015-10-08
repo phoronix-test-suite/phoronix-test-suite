@@ -159,6 +159,10 @@
 			<PackageName>libnuma-devel</PackageName>
 		</Package>
 		<Package>
+			<GenericName>smartmontools</GenericName>
+			<PackageName>smartmontools</PackageName>
+		</Package>
+		<Package>
 			<GenericName>curl</GenericName>
 			<PackageName>curl</PackageName>
 		</Package>

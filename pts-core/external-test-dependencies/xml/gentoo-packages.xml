@@ -163,6 +163,10 @@
 			<PackageName>virtual/lapack</PackageName>
 		</Package>
 		<Package>
+			<GenericName>smartmontools</GenericName>
+			<PackageName>sys-apps/smartmontools</PackageName>
+		</Package>
+		<Package>
 			<GenericName>cmake</GenericName>
 			<PackageName>dev-util/cmake</PackageName>
 		</Package>

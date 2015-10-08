@@ -16,6 +16,10 @@
 			<PackageName>libSDL1.2_0 libSDL_gfx13 libSDL_image1.2_0 libSDL_net1.2_0 libSDL_ttf2.0_0</PackageName>
 		</Package>
 		<Package>
+			<GenericName>smartmontools</GenericName>
+			<PackageName>smartmontools</PackageName>
+		</Package>
+		<Package>
 			<GenericName>cairo-development</GenericName>
 			<PackageName>cairo-devel</PackageName>
 		</Package>

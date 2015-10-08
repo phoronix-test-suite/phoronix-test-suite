@@ -170,6 +170,10 @@
 			<PackageName>libcurl curl</PackageName>
 		</Package>
 		<Package>
+			<GenericName>smartmontools</GenericName>
+			<PackageName>smartmontools</PackageName>
+		</Package>
+		<Package>
 			<GenericName>fftw3-development</GenericName>
 			<PackageName>fftw3-devel</PackageName>
 		</Package>

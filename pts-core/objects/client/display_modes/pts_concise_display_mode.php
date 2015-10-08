@@ -380,7 +380,16 @@ class pts_concise_display_mode implements pts_display_mode_interface
 		}
 		else if(in_array($test_result->test_profile->get_display_format(), array('PASS_FAIL', 'MULTI_PASS_FAIL')))
 		{
-			$end_print = $this->tab . $this->tab . 'Final: ' . $test_result->active->get_result() . ' (' . $test_result->test_profile->get_result_scale() . ')' . PHP_EOL;
+			if($test_result->test_profile->get_result_scale())
+			{
+				$rs = ' (' . $test_result->test_profile->get_result_scale() . ')';
+			}
+			else
+			{
+				$rs = null;
+			}
+
+			$end_print = $this->tab . $this->tab . 'Final: ' . $test_result->active->get_result() . $rs . PHP_EOL;
 		}
 		else if(in_array($test_result->test_profile->get_display_format(), array('FILLED_LINE_GRAPH', 'LINE_GRAPH')))
 		{
