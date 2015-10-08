@@ -335,11 +335,11 @@ class pts_test_run_options
 
 				$all_devices = array_merge(pts_file_io::glob('/dev/hd*'), pts_file_io::glob('/dev/sd*'), pts_file_io::glob('/dev/md*'));
 
-				foreach($all_devices as &$device)
+				foreach($all_devices as $i => &$device)
 				{
 					if(is_numeric(substr($device, -1)))
 					{
-						unset($device);
+						unset($all_devices[$i]);
 					}
 				}
 
