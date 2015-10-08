@@ -376,7 +376,7 @@ class pts_test_result_parser
 				{
 					foreach($trial_results as $result)
 					{
-						if($result == 'FALSE' || $result == '0' || $result == 'FAIL')
+						if($result == 'FALSE' || $result == '0' || $result == 'FAIL' || $result == 'FAILED')
 						{
 							if($END_RESULT == -1 || $END_RESULT == 'PASS')
 							{
