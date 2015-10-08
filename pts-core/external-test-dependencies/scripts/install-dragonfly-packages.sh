@@ -1,6 +1,11 @@
 #!/bin/sh
 
+
+
+
+# Old dropped DragonFly pkgsrc support from older releases
 # DragonFlyBSD pkgsrc package installation
+exit
 
 echo "For now with this test profile script, please run: phoronix-test-suite install-dependencies xxx as root."
 
