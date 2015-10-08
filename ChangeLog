@@ -4,7 +4,9 @@ Phoronix Test Suite (Git)
 
 - pts_Graph: Continued SVG optimization work
 - pts-core: Fix "auto-disks" test option to not show partitions
+- pts-core: Various fixes
 - pts-core: Finish work on auto-authenticating clients / settings page option to automatically approve newly added systems by default
+- pts-core: Detect NVMe drives when looking for block devices for disk testing
 
 Phoronix Test Suite 6.0 Milestone 2
 24 September 2015
