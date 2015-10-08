@@ -102,6 +102,11 @@ class pts_test_execution
 
 		if(!$cache_share_present && $test_run_request->test_profile->is_root_required())
 		{
+			if(phodevi::is_root() == false)
+			{
+				pts_client::$display->test_run_error('This test must be run as the root / administrator account.');
+			}
+
 			$execute_binary_prepend = PTS_CORE_STATIC_PATH . 'root-access.sh ';
 		}
 
