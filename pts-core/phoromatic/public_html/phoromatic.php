@@ -135,12 +135,7 @@ if(($GSID == null && $PTS_MACHINE_SELF_ID == null) || $ACCOUNT_ID == null)
 }
 
 // CHECK FOR VALID ACCOUNT
-$stmt = phoromatic_server::$db->prepare('SELECT AccountID FROM phoromatic_accounts WHERE AccountID = :account_id');
-$stmt->bindValue(':account_id', $ACCOUNT_ID);
-$result = $stmt->execute();
-$result = $result->fetchArray();
-//var_dump($result = $result->fetchArray());
-if(empty($result))
+if(!phoromatic_server::is_phoromatic_account_path($ACCOUNT_ID))
 {
 	$json['phoromatic']['error'] = 'Invalid User';
 	echo json_encode($json);

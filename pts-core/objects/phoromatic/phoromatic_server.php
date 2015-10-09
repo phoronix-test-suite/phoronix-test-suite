@@ -76,6 +76,10 @@ class phoromatic_server
 
 		return $dc_file;
 	}
+	public static function is_phoromatic_account_path($account_id)
+	{
+		return $account_id != null && is_dir(self::phoromatic_path() . 'accounts/' . $account_id);
+	}
 	public static function phoromatic_account_path($account_id)
 	{
 		return self::phoromatic_path() . 'accounts/' . $account_id . '/';
