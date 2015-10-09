@@ -462,7 +462,14 @@ class pts_test_execution
 					}
 					else if($result_set_function != null)
 					{
-						call_user_func(array($test_run_request, $result_set_function), $file_contents);
+						if($result_set_function == 'set_used_arguments_description')
+						{
+							$arguments_description = $file_contents;
+						}
+						else
+						{
+							call_user_func(array($test_run_request, $result_set_function), $file_contents);
+						}
 					}
 				}
 			}
