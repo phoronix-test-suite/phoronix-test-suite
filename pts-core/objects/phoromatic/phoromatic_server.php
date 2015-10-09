@@ -105,7 +105,7 @@ class phoromatic_server
 		if(self::$db != null)
 		{
 			self::$db->close();
-			unset(self::$db);
+			self::$db = null;
 		}
 	}
 	public static function prepare_database($read_only = false)

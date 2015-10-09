@@ -277,6 +277,6 @@ else
 	echo json_encode($json);
 }
 
-phoromatic_server::close_database();
+//phoromatic_server::close_database();
 
 ?>
