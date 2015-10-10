@@ -160,7 +160,7 @@ class phoromatic_results implements pts_webui_interface
 				if(!empty($test_result_result) && ($test_result_row = $test_result_result->fetchArray()))
 				{
 					$main .= '<div class="pts_phoromatic_info_box_area">';
-					$main .= '<div style="margin: 0 5%;"><ul style="max-height: 100%;"><li><h1>Results Shared By Other Groups</h1></li>';
+					$main .= '<ul style="max-height: 100%;"><li><h1>Results Shared By Other Groups</h1></li>';
 					$results = 0;
 					do
 					{
@@ -180,7 +180,7 @@ class phoromatic_results implements pts_webui_interface
 				}
 			}
 
-			echo phoromatic_webui_main($main, phoromatic_webui_right_panel_logged_in());
+			echo phoromatic_webui_main($main);
 			echo phoromatic_webui_footer();
 	}
 }

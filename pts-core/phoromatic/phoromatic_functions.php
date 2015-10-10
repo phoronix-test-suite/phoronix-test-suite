@@ -207,9 +207,9 @@ function phoromatic_get_posted_var($name, $default_value = null)
 {
 	return isset($_POST[$name]) ? $_POST[$name] : null;
 }
-function phoromatic_webui_main($main, $right)
+function phoromatic_webui_main($main, $right = null)
 {
-	return '<div id="pts_phoromatic_main"><div id="pts_phoromatic_menu_right">' . $right . '</div><div id="pts_phoromatic_main_area">' . $main . '</div><div style="clear: both;"></div></div>';
+	return '<div id="pts_phoromatic_main">' . ($right != null ? '<div id="pts_phoromatic_menu_right">' . $right . '</div>' : null) . '<div id="pts_phoromatic_main_area">' . $main . '</div><div style="clear: both;"></div></div>';
 }
 function phoromatic_webui_box(&$box)
 {
