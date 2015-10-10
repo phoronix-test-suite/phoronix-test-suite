@@ -59,7 +59,6 @@ class phoromatic_main implements pts_webui_interface
 		$main = '<h1>Phoromatic</h1>';
 
 		$main .= phoromatic_systems_needing_attention();
-		$main .= '<p>Phoromatic is the remote management and test orchestration component to the <a href="http://www.phoronix-test-suite.com/">Phoronix Test Suite</a>. Phoromatic allows you to take advantage of the Phoronix Test Suite\'s vast feature-set across multiple systems over the LAN/WAN, manage entire test farms of systems for benchmarking via a centralized interface, centrally collect test results, and carry out other enteprise-focused tasks.</p>';
 
 		$main_page_message = phoromatic_server::read_setting('main_page_message');
 		if(!PHOROMATIC_USER_IS_VIEWER)
@@ -121,6 +120,8 @@ class phoromatic_main implements pts_webui_interface
 		}
 		$main .= '</div>';
 
+		$results_today = phoromatic_server::test_results($_SESSION['AccountID'], strtotime('today'));
+		$results_total = phoromatic_server::test_results($_SESSION['AccountID'], null);
 		$schedules_today = phoromatic_server::schedules_today($_SESSION['AccountID']);
 		$schedules_total = phoromatic_server::schedules_total($_SESSION['AccountID']);
 		$benchmark_tickets_today = phoromatic_server::benchmark_tickets_today($_SESSION['AccountID']);
@@ -128,7 +129,7 @@ class phoromatic_main implements pts_webui_interface
 		<h2>' . pts_strings::plural_handler(count($schedules_today), 'Schedule') . ' Active Today</h2>
 		<h2>' . pts_strings::plural_handler(count($schedules_total), 'Schedule') . ' In Total</h2>
 		<h2>' . pts_strings::plural_handler(count($benchmark_tickets_today), 'Active Benchmark Ticket') . '</h2>
-		<h2> &nbsp; </h2>';
+		<h2>' . pts_strings::plural_handler(count($results_today), 'Test Result') . ' Today / ' . pts_strings::plural_handler(count($results_total), 'Test Result') . ' Total</h2>';
 		$main .= '<hr /><h2>Today\'s Scheduled Tests</h2>';
 
 		foreach($schedules_today as &$row)
@@ -194,22 +195,6 @@ class phoromatic_main implements pts_webui_interface
 		}
 		$main .= '</div>';
 
-		$results_today = phoromatic_server::test_results($_SESSION['AccountID'], strtotime('today'));
-		$results_this_week = phoromatic_server::test_results($_SESSION['AccountID'], mktime(0, 0, 0, date('n'), date('j') - date('N') + 1));
-		$results_total = phoromatic_server::test_results($_SESSION['AccountID'], null);
-		$main .= '<div id="phoromatic_main_table_cell">
-		<h2>' . pts_strings::plural_handler(count($results_today), 'Test Result') . ' Today</h2>
-		<h2>' . pts_strings::plural_handler(count($results_this_week), 'Test Result') . ' This Week</h2>
-		<h2>' . pts_strings::plural_handler(count($results_total), 'Test Result') . ' Total</h2>
-		<h2>' . pts_strings::plural_handler(phoromatic_server::test_results_benchmark_count($_SESSION['AccountID']), 'Benchmark Result') . ' Total</h2>
-		<hr /><h2>Today\'s Results</h2>';
-
-		foreach($results_today as $result)
-		{
-			$main .= '<h3><a href="?result/' . $result['PPRID'] . '">' . $result['Title'] . '</a></h3>';
-		}
-
-		$main .= '</div>';
 		$main .= '</div>';
 
 /*

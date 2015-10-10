@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2014, Phoronix Media
-	Copyright (C) 2014, Michael Larabel
+	Copyright (C) 2014 - 2015, Phoronix Media
+	Copyright (C) 2014 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -38,7 +38,7 @@ class phoromatic_account_activity implements pts_webui_interface
 	public static function render_page_process($PATH)
 	{
 
-		$main = '<li><h1>Recent Account Activity</h1></li>';
+		$main = '<h1>Recent Account Activity</h1>';
 
 		$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_activity_stream WHERE AccountID = :account_id ORDER BY ActivityTime DESC');
 		$stmt->bindValue(':account_id', $_SESSION['AccountID']);

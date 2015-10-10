@@ -919,6 +919,19 @@ class phoromatic_server
 
 		return $systems;
 	}
+	public static function systems_total($account_id)
+	{
+		$systems = array();
+		$stmt = phoromatic_server::$db->prepare('SELECT SystemID FROM phoromatic_systems WHERE AccountID = :account_id AND State >= 0 ORDER BY LastCommunication DESC');
+		$stmt->bindValue(':account_id', $account_id);
+		$result = $stmt->execute();
+		while($result && $row = $result->fetchArray())
+		{
+			array_push($systems, $row);
+		}
+
+		return $systems;
+	}
 	public static function test_result_count_for_test_profile($account_id, $test_profile)
 	{
 		$stmt = phoromatic_server::$db->prepare('SELECT COUNT(*) As TotalCount FROM phoromatic_results_results WHERE AccountID = :account_id AND TestProfile LIKE :tp');
