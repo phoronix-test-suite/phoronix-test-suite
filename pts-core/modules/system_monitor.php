@@ -376,7 +376,7 @@ class system_monitor extends pts_module_interface
 					&& in_array('all', $sensor_parameters[$sensor[0]][$sensor[1]]);
 			$is_cgroup_sensor = $sensor[0] === 'cgroup';
 
-			if (($monitor_all || $monitor_all_of_this_type || $sensor_name_exists ) && !$is_cgroup_sensor)
+			if (($monitor_all && !$is_cgroup_sensor) || $monitor_all_of_this_type || $sensor_name_exists )
 			{
 				// in some cases we want to create objects representing every possible device supported by the sensor
 				$create_all = $monitor_all || $monitor_all_of_this_type || $monitor_all_of_this_sensor;
