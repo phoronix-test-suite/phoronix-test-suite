@@ -89,9 +89,8 @@ div#pts_phoromatic_logo
 }
 div#pts_phoromatic_top_header ul ul#pts_phoromatic_info li
 {
+	color: #ff9800;
 	text-align: left;
-	font-size: 0.55em;
-	height: 30px;
 }
 div#pts_phoromatic_top_header ul
 {
@@ -594,22 +593,22 @@ div.phoromatic_overview_box
 }
 div#phoromatic_result_compare_info_box
 {
-	font-size: 1.5em;
+	font-size: 0.6em;
 	color: #FFF;
 	text-align: center;
 	border: 1px solid #FFF;
 	margin: 10px 30px;
-	padding: 4px 0;
+	padding: 4px;
 	display: none;
 }
 div#phoromatic_result_delete_box
 {
-	font-size: 1.1em;
+	font-size: 0.6em;
 	color: #FFF;
 	text-align: center;
 	border: 1px solid #FFF;
 	margin: 10px 30px;
-	padding: 4px 0;
+	padding: 4px;
 	display: none;
 }
 div.phoromatic_overview_box h1
@@ -637,8 +636,7 @@ div#phoromatic_main_table_cell
 }
 div#pts_results_area svg
 {
-	min-width: 600px;
-	width: 60%;
+	min-width: 60%;
 	height: auto;
 }
 

@@ -157,11 +157,11 @@ function phoromatic_webui_header($left_items, $right = null)
 	if(isset($_SESSION['AdminLevel']) &&$_SESSION['AdminLevel'] > 0 && isset($_SESSION['AccountID']) && !empty($_SESSION['AccountID']))
 	{
 		$ret .= '<ul id="pts_phoromatic_info">';
-		$ret .= '<li>' . date('H:i T - j F Y') . '</li>';
+		$ret .= '<li><a href="#">' . date('H:i T - j F') . '</a></li>';
 		$group_name = phoromatic_account_id_to_group_name($_SESSION['AccountID']);
 		if($group_name != null)
 		{
-			$ret .= '<li>' . $group_name . '</li>';
+			$ret .= '<li><a href="#">' . $group_name . '</a></li>';
 		}
 		$ret .= '</ul>';
 	}
@@ -191,6 +191,7 @@ function phoromatic_webui_header($left_items, $right = null)
 			$ret .= '<li>' . $item . '</li>' . PHP_EOL;
 		}
 	}
+	$ret .= '<li><div id="phoromatic_result_selected_info_box"></div> <a href="#" onclick="javascript:phoromatic_generate_comparison(\'?result/\');"><div id="phoromatic_result_compare_info_box">Compare</div></a> <a href="#" onclick="javascript:phoromatic_delete_results(\'?results/delete/\'); return false;"><div id="phoromatic_result_delete_box">Delete</div></a></li>';
 	$ret .= '</ul>';
 
 	if($right != null)
@@ -387,7 +388,7 @@ function phoromatic_webui_right_panel_logged_in($add = null)
 	}
 	else if($_SESSION['AdminLevel'] > 0)
 	{
-		$right .= '<a href="#" onclick="javascript:phoromatic_generate_comparison(\'?result/\');"><div id="phoromatic_result_compare_info_box"></div></a> <a href="#" onclick="javascript:phoromatic_delete_results(\'?results/delete/\'); return false;"><div id="phoromatic_result_delete_box">Delete Selected Results</div></a>';
+		//$right .= '<a href="#" onclick="javascript:phoromatic_generate_comparison(\'?result/\');"><div id="phoromatic_result_compare_info_box"></div></a> <a href="#" onclick="javascript:phoromatic_delete_results(\'?results/delete/\'); return false;"><div id="phoromatic_result_delete_box">Delete Selected Results</div></a>';
 		if(($bad_systems = phoromatic_server::systems_appearing_down()) != false)
 		{
 			$right .= '<ul><li><span class="alert">Systems Needing Attention</span></li>';
