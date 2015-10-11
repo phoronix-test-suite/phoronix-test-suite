@@ -51,6 +51,11 @@ class cpu_freq extends phodevi_sensor
     
 	public function get_readable_device_name()
 	{
+        if (empty(self::get_supported_devices()))
+        {
+            return NULL;
+        }
+        
         return strtoupper($this->cpu_to_monitor);
 	}
 
