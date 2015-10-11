@@ -88,8 +88,9 @@ class system_monitor extends pts_module_interface
 
 		try
 		{
+			self::check_if_results_saved($test_run_manager);
 			$sensor_parameters = self::prepare_sensor_parameters();
-			self::enable_perf_per_watt();
+			self::enable_perf_per_watt($sensor_parameters);
 			self::process_sensor_list($sensor_parameters);
 			self::create_monitoring_cgroups();
 			self::print_monitored_sensors();
@@ -171,7 +172,7 @@ class system_monitor extends pts_module_interface
 
 		if(pts_module::read_variable('PERFORMANCE_PER_WATT'))
 		{
-			self::process_perf_per_watt();
+			self::process_perf_per_watt($result_file);
 		}
 
 		foreach(self::$to_monitor as $sensor)
@@ -179,6 +180,7 @@ class system_monitor extends pts_module_interface
 			self::process_test_run_results($sensor, $result_file);
 		}
 
+		self::$test_run_tries_offsets = array();
 		self::$successful_test_run_request = null;
 		self::$individual_test_run_request = null;
 		self::$monitor_test_count++;
@@ -209,21 +211,40 @@ class system_monitor extends pts_module_interface
 
 	private static function pts_start_monitoring()
 	{
-		foreach(self::$to_monitor as $sensor)
+		$instant_sensors = array();
+
+        foreach(self::$to_monitor as $sensor)
 		{
-			$pid = pts_module::pts_timed_function('pts_monitor_update', self::$sensor_monitoring_frequency, array(&$sensor));
-		}
+			$is_instant = $sensor->is_instant();
+
+            if($is_instant === false)
+            {
+				$pid = pts_module::pts_timed_function('pts_monitor_update', self::$sensor_monitoring_frequency, array(array(&$sensor)));
+            }
+            else
+            {
+                $instant_sensors[] = &$sensor;
+            }
+        }
+
+        if (!empty($instant_sensors))
+        {
+            pts_module::pts_timed_function('pts_monitor_update', self::$sensor_monitoring_frequency, array($instant_sensors));
+        }
 	}
 
 	// Reads value of a single sensor, checks its correctness and saves it to the monitor log.
-	public static function pts_monitor_update(&$sensor)
+	public static function pts_monitor_update($sensor_list)
 	{
-		$sensor_value = phodevi::read_sensor($sensor);
+		foreach ($sensor_list as $sensor)
+        {
+            $sensor_value = phodevi::read_sensor($sensor);
 
-		if ($sensor_value != -1 && pts_module::is_file('logs/' . phodevi::sensor_object_identifier($sensor)))
-		{
-			pts_module::save_file('logs/' . phodevi::sensor_object_identifier($sensor), $sensor_value, true);
-		}
+            if ($sensor_value != -1 && pts_module::is_file('logs/' . phodevi::sensor_object_identifier($sensor)))
+            {
+                pts_module::save_file('logs/' . phodevi::sensor_object_identifier($sensor), $sensor_value, true);
+            }
+        }
 	}
 
 	private static function parse_monitor_log($log_file, $start_offset = 0, $end_offset = -1)
@@ -262,21 +283,40 @@ class system_monitor extends pts_module_interface
 
 	private static function monitor_arguments()
 	{
-		//TODO needs complete rewrite
-
 		$args = array('all');
 
 		foreach(phodevi::available_sensors() as $sensor)
 		{
+			$supported_devices = call_user_func(array($sensor[2], 'get_supported_devices'));
+
 			if(!in_array('all.' . $sensor[0], $args))
 			{
 				array_push($args, 'all.' . $sensor[0]);
 			}
 
 			array_push($args, phodevi::sensor_identifier($sensor));
+
+			if ($supported_devices !== NULL)
+			{
+				array_push($args, 'all.' . phodevi::sensor_identifier($sensor));
+				foreach($supported_devices as $device)
+				{
+					array_push($args, phodevi::sensor_identifier($sensor) . '.' . $device);
+				}
+			}
+
 		}
 
 		return $args;
+	}
+
+	// Prevents system monitor from running when results are not saved to a file.
+	private static function check_if_results_saved(&$test_run_manager)
+	{
+		if (!$test_run_manager->do_save_results())
+		{
+			throw new Exception('results not saved to a file');
+		}
 	}
 
 	// Parse environmental variable containing parameters of monitored sensors.
@@ -289,6 +329,17 @@ class system_monitor extends pts_module_interface
 		foreach ($sensor_list as $sensor)
 		{
 			$sensor_split = pts_strings::trim_explode('.', $sensor);
+
+			// Set 'all' from the beginning (eg. all.cpu.frequency) as the last
+			// element (cpu.frequency.all). As sensor parameters are also supported
+			// now, it's handy to mark that we want to include all sensors of specified
+			// type (cpu.all) or just all supported parameters of specified sensor
+			// (cpu.frequency.all).
+			if ($sensor_split[0] === 'all')
+			{
+				$sensor_split[] = 'all';
+				array_shift($sensor_split);
+			}
 
 			$type = &$sensor_split[0];
 			$name = &$sensor_split[1];
@@ -308,16 +359,21 @@ class system_monitor extends pts_module_interface
 		return $to_monitor;
 	}
 
-	private static function enable_perf_per_watt()
+	private static function enable_perf_per_watt(&$sensor_parameters)
 	{
-//		TODO re-enable this when sys.power sensor is ported
-//		if(pts_module::read_variable('PERFORMANCE_PER_WATT'))
-//		{
-//			// We need to ensure the system power consumption is being tracked to get performance-per-Watt
-//			pts_arrays::unique_push($to_show, 'sys.power');
-//			self::$individual_monitoring = true;
-//			echo PHP_EOL . 'To Provide Performance-Per-Watt Outputs.' . PHP_EOL;
-//		}
+		if(pts_module::read_variable('PERFORMANCE_PER_WATT'))
+		{
+			// We need to ensure the system power consumption is being tracked to get performance-per-Watt
+
+			if(empty($sensor_parameters['sys']['power']))
+			{
+				$sensor_parameters['sys']['power'] = array();
+			}
+
+			self::$perf_per_watt_collection = array();
+			self::$individual_monitoring = true;
+			echo PHP_EOL . 'To Provide Performance-Per-Watt Outputs.' . PHP_EOL;
+		}
 	}
 
 	// Create sensor objects basing on the sensor parameter array.
@@ -338,8 +394,9 @@ class system_monitor extends pts_module_interface
 			$monitor_all_of_this_type = $sensor_type_exists && array_key_exists('all', $sensor_parameters[$sensor[0]]);
 			$monitor_all_of_this_sensor = $sensor_type_exists && $sensor_name_exists
 					&& in_array('all', $sensor_parameters[$sensor[0]][$sensor[1]]);
+			$is_cgroup_sensor = $sensor[0] === 'cgroup';
 
-			if ($monitor_all || $monitor_all_of_this_type || $sensor_name_exists )
+			if (($monitor_all && !$is_cgroup_sensor) || $monitor_all_of_this_type || $sensor_name_exists )
 			{
 				// in some cases we want to create objects representing every possible device supported by the sensor
 				$create_all = $monitor_all || $monitor_all_of_this_type || $monitor_all_of_this_sensor;
@@ -373,7 +430,6 @@ class system_monitor extends pts_module_interface
 		foreach ($sensor_instances as $instance => $param)
 		{
 			self::create_single_sensor_instance($sensor, $instance, $param);
-			//TODO show information when passed parameters are incorrect
 		}
 	}
 
@@ -457,15 +513,12 @@ class system_monitor extends pts_module_interface
 
 		if (!is_dir($cgroup_path))	// cgroup filesystem doesn't allow to create regular files anyway
 		{
-			$mkdir_cmd = 'mkdir ' . $cgroup_path;
-			$return_val = exec($sudo_cmd . $mkdir_cmd);
-		}
-
-		if ($return_val === null && is_dir($cgroup_path))	// mkdir produced no output
-		{
 			$current_user = exec('whoami');
+			$mkdir_cmd = 'mkdir ' . $cgroup_path;
 			$chmod_cmd = 'chown ' . $current_user . ' ' . $cgroup_path . '/tasks';
-			exec($sudo_cmd . $chmod_cmd);
+            $command = $sudo_cmd . '"' . $mkdir_cmd . ' && ' . $chmod_cmd . '"';
+            var_dump($command);
+			exec($command);
 		}
 
 		if (!is_writable($cgroup_path . '/tasks'))
@@ -480,7 +533,7 @@ class system_monitor extends pts_module_interface
 		$sudo_cmd = PTS_CORE_STATIC_PATH . 'root-access.sh ';
 		$cgroup_path = '/sys/fs/cgroup/' . $cgroup_controller . '/' . $cgroup_name;
 
-		if (!is_dir($cgroup_path))	// cgroup filesystem doesn't allow to create regular files anyway
+		if (is_dir($cgroup_path))	// cgroup filesystem doesn't allow to create regular files anyway
 		{
 			$rmdir_cmd = 'rmdir ' . $cgroup_path;
 			shell_exec($sudo_cmd . $rmdir_cmd);
@@ -510,10 +563,10 @@ class system_monitor extends pts_module_interface
 		}
 	}
 
-	private static function process_perf_per_watt()
+	private static function process_perf_per_watt(&$result_file)
 	{
 		$sensor = array('sys', 'power');
-		$sensor_results = self::parse_monitor_log('logs/' . phodevi::sensor_identifier($sensor), self::$individual_test_run_offsets[phodevi::sensor_identifier($sensor)]);
+		$sensor_results = self::parse_monitor_log('logs/' . phodevi::sensor_identifier($sensor) . '.0', self::$individual_test_run_offsets[phodevi::sensor_identifier($sensor) . '.0']);
 
 		if(count($sensor_results) > 2 && self::$successful_test_run_request)
 		{
@@ -603,8 +656,6 @@ class system_monitor extends pts_module_interface
 		self::write_test_run_results($result_buffer, $result_file, $sensor);
 
 		self::$individual_test_run_offsets[phodevi::sensor_object_identifier($sensor)] = array();
-		//self::$test_run_tries_offsets = array();
-		//TODO reset self::$test_run_tries_offsets
 	}
 
 	private static function write_test_run_results(&$result_buffer, &$result_file, &$sensor)

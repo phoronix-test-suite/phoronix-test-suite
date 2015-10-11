@@ -57,7 +57,7 @@ class phodevi extends phodevi_base
 	}
 	public static function load_sensors()
 	{
-		foreach(glob(dirname(__FILE__) . '/sensors-new/*') as $sensor_obj_file)
+		foreach(glob(dirname(__FILE__) . '/sensors/*') as $sensor_obj_file)
 		{
 			$sensor_obj_name = basename($sensor_obj_file, '.php');
 

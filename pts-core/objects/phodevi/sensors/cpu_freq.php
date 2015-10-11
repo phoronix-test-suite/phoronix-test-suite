@@ -51,6 +51,11 @@ class cpu_freq extends phodevi_sensor
     
 	public function get_readable_device_name()
 	{
+        if (empty(self::get_supported_devices()))
+        {
+            return NULL;
+        }
+        
         return strtoupper($this->cpu_to_monitor);
 	}
 
@@ -139,7 +144,6 @@ class cpu_freq extends phodevi_sensor
     
     private function cpu_freq_macosx()
     {
-        //TODO test this on OSX
         $info = phodevi_osx_parser::read_osx_system_profiler('SPHardwareDataType', 'ProcessorSpeed');
 
         if(($cut_point = strpos($info, ' ')) > 0)
@@ -151,7 +155,9 @@ class cpu_freq extends phodevi_sensor
         if($frequency < 100)
         {
             $frequency *= 1000;
-        }    
+        }
+
+        return pts_math::set_precision($frequency, 2);
     }
 }
 

@@ -25,11 +25,12 @@ class cgroup_cpu_usage extends phodevi_sensor
 	const SENSOR_TYPE = 'cgroup';
 	const SENSOR_SENSES = 'cpu-usage';
 	const SENSOR_UNIT = 'Percent';
+	const INSTANT_MEASUREMENT = false;
 
 	const proc_stat_column_count = 10;
 	const cgroup_cpuacct_stat_load_column = 1;
 	const cgroup_cpuacct_stat_line_count = 2;
-	
+
 	private $cgroup_stat_path;
 
 	function __construct($instance, $cgroup_name)
@@ -60,7 +61,7 @@ class cgroup_cpu_usage extends phodevi_sensor
 	{
 		return 'Summary';
 	}
-	
+
 	public static function get_cgroup_controller()
 	{
 		return 'cpu,cpuacct';
@@ -133,7 +134,7 @@ class cgroup_cpu_usage extends phodevi_sensor
 				array_push($load, $line_break[self::cgroup_cpuacct_stat_load_column]);
 			}
 		}
-		
+
 		return array_sum($load);
 	}
 }
