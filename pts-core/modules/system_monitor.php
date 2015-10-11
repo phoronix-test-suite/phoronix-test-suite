@@ -180,6 +180,7 @@ class system_monitor extends pts_module_interface
 			self::process_test_run_results($sensor, $result_file);
 		}
 
+		self::$test_run_tries_offsets = array();
 		self::$successful_test_run_request = null;
 		self::$individual_test_run_request = null;
 		self::$monitor_test_count++;
@@ -429,7 +430,6 @@ class system_monitor extends pts_module_interface
 		foreach ($sensor_instances as $instance => $param)
 		{
 			self::create_single_sensor_instance($sensor, $instance, $param);
-			//TODO show information when passed parameters are incorrect
 		}
 	}
 
@@ -656,8 +656,6 @@ class system_monitor extends pts_module_interface
 		self::write_test_run_results($result_buffer, $result_file, $sensor);
 
 		self::$individual_test_run_offsets[phodevi::sensor_object_identifier($sensor)] = array();
-		//self::$test_run_tries_offsets = array();
-		//TODO reset self::$test_run_tries_offsets
 	}
 
 	private static function write_test_run_results(&$result_buffer, &$result_file, &$sensor)
