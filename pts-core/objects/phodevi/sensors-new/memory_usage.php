@@ -41,7 +41,7 @@ class memory_usage extends phodevi_sensor
 		}
 		elseif (phodevi::is_macosx() || phodevi::is_bsd())
 		{
-			return self::mem_usage_bsd();
+			return self::mem_usage_bsd('MEMORY', 'USED');
 		}
 	}
 
@@ -66,10 +66,9 @@ class memory_usage extends phodevi_sensor
 		return pts_math::set_precision($used_mem / 1024, 0);
 	}
 
-	private function mem_usage_bsd()
+	private function mem_usage_bsd($TYPE = 'TOTAL', $READ = 'USED')
 	{
 		$vmstats = explode("\n", shell_exec('vm_stat 2>&1'));
-		$grab_line = null;
 		// buffers_and_cache
 		foreach ($vmstats as $vmstat_line)
 		{
@@ -84,7 +83,8 @@ class memory_usage extends phodevi_sensor
 					if (is_numeric($tok))
 					{
 						self::$page_size = $tok;
-					} else
+					} 
+                    else
 					{
 						$tok = strtok(' ');
 					}
@@ -108,7 +108,7 @@ class memory_usage extends phodevi_sensor
 				}
 			}
 		}
-		$mem_usage = pts_math::set_precision($mem_usage);
+		return pts_math::set_precision($mem_usage);
 	}
 }
 
