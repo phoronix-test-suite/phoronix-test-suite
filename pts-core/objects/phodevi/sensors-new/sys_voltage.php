@@ -44,7 +44,7 @@ class sys_voltage extends phodevi_sensor
 		
 		if(empty(self::get_supported_devices() ) )
 		{
-			return -1;
+			return false;
 		}
 		
 		$this->voltage_to_monitor = $devices[0];
