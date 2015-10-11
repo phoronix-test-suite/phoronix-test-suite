@@ -282,24 +282,22 @@ class system_monitor extends pts_module_interface
 
 	private static function monitor_arguments()
 	{
-		//TODO needs complete rewrite
-
 		$args = array('all');
 
 		foreach(phodevi::available_sensors() as $sensor)
 		{
 			$supported_devices = call_user_func(array($sensor[2], 'get_supported_devices'));
 
-			if(!in_array($sensor[0] . '.all', $args))
+			if(!in_array('all.' . $sensor[0], $args))
 			{
-				array_push($args, $sensor[0] . '.all');
+				array_push($args, 'all.' . $sensor[0]);
 			}
 
 			array_push($args, phodevi::sensor_identifier($sensor));
 
 			if ($supported_devices !== NULL)
 			{
-				array_push($args, phodevi::sensor_identifier($sensor) . '.all');
+				array_push($args, 'all.' . phodevi::sensor_identifier($sensor));
 				foreach($supported_devices as $device)
 				{
 					array_push($args, phodevi::sensor_identifier($sensor) . '.' . $device);
@@ -330,6 +328,17 @@ class system_monitor extends pts_module_interface
 		foreach ($sensor_list as $sensor)
 		{
 			$sensor_split = pts_strings::trim_explode('.', $sensor);
+
+			// Set 'all' from the beginning (eg. all.cpu.frequency) as the last
+			// element (cpu.frequency.all). As sensor parameters are also supported
+			// now, it's handy to mark that we want to include all sensors of specified
+			// type (cpu.all) or just all supported parameters of specified sensor
+			// (cpu.frequency.all).
+			if ($sensor_split[0] === 'all')
+			{
+				$sensor_split[] = 'all';
+				array_shift($sensor_split);
+			}
 
 			$type = &$sensor_split[0];
 			$name = &$sensor_split[1];
