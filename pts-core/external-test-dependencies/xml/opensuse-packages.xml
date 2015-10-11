@@ -10,7 +10,7 @@
 		<Package>
 			<GenericName>common-dependencies</GenericName>
 			<PackageName>dmidecode Mesa-demo-x</PackageName>
-			<FileCheck>dmidecode, glxinfo</FileCheck>
+			<FileCheck>glxinfo</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>gtk-development</GenericName>
@@ -157,6 +157,10 @@
 		<Package>
 			<GenericName>numa-development</GenericName>
 			<PackageName>libnuma-devel</PackageName>
+		</Package>
+		<Package>
+			<GenericName>smartmontools</GenericName>
+			<PackageName>smartmontools</PackageName>
 		</Package>
 		<Package>
 			<GenericName>curl</GenericName>

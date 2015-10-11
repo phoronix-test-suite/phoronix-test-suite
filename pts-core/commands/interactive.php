@@ -60,7 +60,7 @@ class interactive implements pts_option_interface
 
 					foreach($supported_tests as $i => &$test_profile)
 					{
-						if($test_profile->get_title() == null || pts_test_run_manager::test_profile_system_compatibility_check($test_profile) == false)
+						if($test_profile->get_title() == null)
 						{
 							unset($supported_tests[$i]);
 							continue;

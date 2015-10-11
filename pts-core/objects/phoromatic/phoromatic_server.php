@@ -76,6 +76,10 @@ class phoromatic_server
 
 		return $dc_file;
 	}
+	public static function is_phoromatic_account_path($account_id)
+	{
+		return $account_id != null && is_dir(self::phoromatic_path() . 'accounts/' . $account_id);
+	}
 	public static function phoromatic_account_path($account_id)
 	{
 		return self::phoromatic_path() . 'accounts/' . $account_id . '/';
@@ -105,6 +109,7 @@ class phoromatic_server
 		if(self::$db != null)
 		{
 			self::$db->close();
+			self::$db = null;
 		}
 	}
 	public static function prepare_database($read_only = false)
@@ -291,6 +296,10 @@ class phoromatic_server
 				// Change made 10 June
 				self::$db->exec('ALTER TABLE phoromatic_schedules_triggers ADD COLUMN SubTarget TEXT');
 				self::$db->exec('PRAGMA user_version = 33');
+			case 33:
+				// Change made 4 October
+				self::$db->exec('ALTER TABLE phoromatic_account_settings ADD COLUMN AutoApproveNewSystems INTEGER DEFAULT 0');
+				self::$db->exec('PRAGMA user_version = 34');
 		}
 		chmod($db_file, 0600);
 	}

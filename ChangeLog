@@ -1,8 +1,17 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 6.0 Milestone 3
+9 October 2015
 
 - pts_Graph: Continued SVG optimization work
+- pts-core: Fix "auto-disks" test option to not show partitions
+- pts-core: Various fixes
+- pts-core: Finish work on auto-authenticating clients / settings page option to automatically approve newly added systems by default
+- pts-core: Add extra warning about RequiresRoot=TRUE tests
+- pts-core: Detect NVMe drives when looking for block devices for disk testing
+- pts-core: Add "smartmontools" as new PTS External Dependency
+- pts-core: Rewrite the DragonFlyBSD external dependency handling to now use dports pkg rather than pkgsrc
+- pts-core: Add NO_HTTPS environment variable option for systems that have trouble with HTTPS
 
 Phoronix Test Suite 6.0 Milestone 2
 24 September 2015

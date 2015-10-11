@@ -134,6 +134,12 @@
 			<FileCheck>gfortran</FileCheck>
 		</Package>
 		<Package>
+			<GenericName>smartmontools</GenericName>
+			<Title>SMART Monitoring Tools</Title>
+			<PossibleNames>smartmontools</PossibleNames>
+			<FileCheck>smartctl</FileCheck>
+		</Package>
+		<Package>
 			<GenericName>glew</GenericName>
 			<Title>OpenGL Extension Wrangler</Title>
 			<PossibleNames>libglew, libglew1.5-dev, glew-devel</PossibleNames>

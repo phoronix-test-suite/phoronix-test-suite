@@ -52,6 +52,10 @@
 			<PackageName>bison</PackageName>
 		</Package>
 		<Package>
+			<GenericName>smartmontools</GenericName>
+			<PackageName>smartmontools</PackageName>
+		</Package>
+		<Package>
 			<GenericName>flex</GenericName>
 			<PackageName>flex</PackageName>
 		</Package>

@@ -776,7 +776,7 @@ class pts_test_run_manager
 		}
 
 		// Cleanup tests to run
-		if(pts_test_run_manager::cleanup_tests_to_run($to_run) == false)
+		if($this->cleanup_tests_to_run($to_run) == false)
 		{
 			return false;
 		}
@@ -975,7 +975,7 @@ class pts_test_run_manager
 
 				if($upload_results)
 				{
-					$this->openbenchmarking_results_data = pts_openbenchmarking::upload_test_result($this, true);
+					$this->openbenchmarking_results_data = pts_openbenchmarking::upload_test_result($this, true, (!$this->auto_mode && !$this->batch_mode));
 
 					if($this->get_results_url())
 					{
@@ -1023,7 +1023,7 @@ class pts_test_run_manager
 			$this->batch_mode['Configured'] = true;
 		}
 	}
-	public static function cleanup_tests_to_run(&$to_run_objects)
+	public function cleanup_tests_to_run(&$to_run_objects)
 	{
 		$skip_tests = ($e = pts_client::read_env('SKIP_TESTS')) ? pts_strings::comma_explode($e) : false;
 		$tests_verified = array();
@@ -1149,7 +1149,7 @@ class pts_test_run_manager
 				if($stop_and_install)
 				{
 					pts_test_installer::standard_install($tests_missing);
-					self::cleanup_tests_to_run($to_run_objects);
+					$this->cleanup_tests_to_run($to_run_objects);
 				}
 			}
 		}
@@ -1722,7 +1722,7 @@ class pts_test_run_manager
 
 		return strcmp($a_comp, $b_comp);
 	}
-	public static function test_profile_system_compatibility_check(&$test_profile, $report_errors = false)
+	public function test_profile_system_compatibility_check(&$test_profile, $report_errors = false)
 	{
 		$valid_test_profile = true;
 		$test_type = $test_profile->get_test_hardware_type();
@@ -1783,7 +1783,7 @@ class pts_test_run_manager
 		{
 			$valid_test_profile = true;
 
-			if(self::test_profile_system_compatibility_check($test_profile, true) == false)
+			if($this->test_profile_system_compatibility_check($test_profile, true) == false)
 			{
 				$valid_test_profile = false;
 			}

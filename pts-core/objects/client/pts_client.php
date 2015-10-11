@@ -258,6 +258,9 @@ class pts_client
 		}
 		else
 		{
+			if(!defined('PTS_TEST_INSTALL_DEFAULT_PATH'))
+				pts_define('PTS_TEST_INSTALL_DEFAULT_PATH', pts_strings::parse_for_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Installation/EnvironmentDirectory', '~/.phoronix-test-suite/installed-tests/')));
+
 			return PTS_TEST_INSTALL_DEFAULT_PATH;
 		}
 	}

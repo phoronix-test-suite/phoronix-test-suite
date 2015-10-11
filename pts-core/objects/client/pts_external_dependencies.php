@@ -333,7 +333,7 @@ class pts_external_dependencies
 					if(substr($file[$i], -2) == '.h' || substr($file[$i], -4) == '.hpp')
 					{
 						// May just be a relative header file to look for...
-						$possible_paths = array('/usr/local/include', '/usr/target/include/', '/usr/include/');
+						$possible_paths = array('/usr/local/include/', '/usr/target/include/', '/usr/include/');
 						foreach($possible_paths as $path)
 						{
 							if(is_file($path . $file[$i]) || is_link($path . $file[$i]))

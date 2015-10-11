@@ -106,7 +106,7 @@ class pts_test_file_download
 		{
 			return true;
 		}
-		else if($this->sha256)
+		else if($this->sha256 && function_exists('hash_file'))
 		{
 			return hash_file('sha256', $file) == $this->sha256;
 		}

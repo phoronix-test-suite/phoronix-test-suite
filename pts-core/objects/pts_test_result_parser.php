@@ -210,6 +210,18 @@ class pts_test_result_parser
 			case 'PASS_FAIL':
 			case 'MULTI_PASS_FAIL':
 				$test_run_request->active->active_result = self::parse_generic_result($test_run_request, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments);
+				if(str_replace(array('PASS', 'FAIL', ','), null, $test_run_request->active->active_result) == null)
+				{
+					// properly formatted multi-pass fail
+				}
+				else if($test_run_request->active->active_result == 'TRUE' || $test_run_request->active->active_result == 'PASS' || $test_run_request->active->active_result == 'PASSED')
+				{
+					$test_run_request->active->active_result = 'PASS';
+				}
+				else
+				{
+					$test_run_request->active->active_result = 'FAIL';
+				}
 				break;
 			case 'BAR_GRAPH':
 			default:
@@ -376,7 +388,7 @@ class pts_test_result_parser
 				{
 					foreach($trial_results as $result)
 					{
-						if($result == 'FALSE' || $result == '0' || $result == 'FAIL')
+						if($result == 'FALSE' || $result == '0' || $result == 'FAIL' || $result == 'FAILED')
 						{
 							if($END_RESULT == -1 || $END_RESULT == 'PASS')
 							{

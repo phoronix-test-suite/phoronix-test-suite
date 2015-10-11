@@ -94,7 +94,7 @@ then
 	echo "The command to likely run for your operating system is: "
 	echo "# apt-get install php5-cli"
 	echo " "
-elif [ -x /usr/bin/yum ] ||  [ -x /usr/bin/dnf ]
+elif [ -x /usr/bin/yum ] || [ -x /usr/bin/dnf ]
 then
 	echo "The command to likely run for your operating system is: "
 	echo "# yum install php-cli php-xml"
@@ -113,6 +113,11 @@ elif [ -x /usr/bin/pacman ]
 then
 	echo "The command to likely run for your operating system is: "
 	echo "# pacman -S php"
+	echo " "
+elif [ -x /usr/local/sbin/pkg ] || [ -x /usr/sbin/pkg ]
+then
+	echo "The command to likely run for your operating system is: "
+	echo "# pkg install php5 php5-dom php5-zip php5-json php5-simplexml"
 	echo " "
 fi
 

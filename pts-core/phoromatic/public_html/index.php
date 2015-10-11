@@ -123,11 +123,7 @@ else
 {
 	phoromatic_server::prepare_database();
 	$page_class::render_page_process($PATH);
-
-	if(phoromatic_server::$db != null)
-	{
-		phoromatic_server::$db->close();
-	}
+	phoromatic_server::close_database();
 }
 ?></body>
 </html>

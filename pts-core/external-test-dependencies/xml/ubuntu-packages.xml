@@ -116,6 +116,10 @@
 			<PackageName>scons</PackageName>
 		</Package>
 		<Package>
+			<GenericName>smartmontools</GenericName>
+			<PackageName>smartmontools</PackageName>
+		</Package>
+		<Package>
 			<GenericName>zlib-development</GenericName>
 			<PackageName>zlib1g-dev</PackageName>
 		</Package>
