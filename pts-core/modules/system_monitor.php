@@ -88,6 +88,7 @@ class system_monitor extends pts_module_interface
 
 		try
 		{
+			self::check_if_results_saved($test_run_manager);
 			$sensor_parameters = self::prepare_sensor_parameters();
 			self::enable_perf_per_watt($sensor_parameters);
 			self::process_sensor_list($sensor_parameters);
@@ -308,6 +309,15 @@ class system_monitor extends pts_module_interface
 		}
 
 		return $args;
+	}
+
+	// Prevents system monitor from running when results are not saved to a file.
+	private static function check_if_results_saved(&$test_run_manager)
+	{
+		if (!$test_run_manager->do_save_results())
+		{
+			throw new Exception('results not saved to a file');
+		}
 	}
 
 	// Parse environmental variable containing parameters of monitored sensors.

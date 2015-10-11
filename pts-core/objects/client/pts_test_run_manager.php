@@ -213,7 +213,7 @@ class pts_test_run_manager
 	{
 		$this->force_save_results = true;
 	}
-	protected function do_save_results()
+	public function do_save_results()
 	{
 		return $this->file_name != null;
 	}
