@@ -63,7 +63,7 @@ class phoromatic_maintenance_table implements pts_webui_interface
 			$system_ids[$row['SystemID']] = $row['Title'];
 		}
 
-		$main .= '<div style="margin: 10px auto; overflow: auto;"><table>';
+		$main .= '<div style="margin: 10px auto; overflow: auto;"><table width="100%">';
 		$component_types = array('Last Communication', 'Current Task', 'Phoronix Test Suite', 'Last IP', 'MAC', 'Latest Result Upload');
 		$main .= '<tr><th>&nbsp;</th>';
 		foreach($component_types as $type)
