@@ -1316,7 +1316,7 @@ class pts_test_run_manager
 					else if(!$this->auto_mode)
 					{
 						//echo PHP_EOL . 'Current Title: ' . $this->file_name_title . PHP_EOL;
-						pts_client::$display->generic_heading('If you wish, enter a new description below to better describe this result set / system configuration under test.' . PHP_EOL . 'Press ENTER to proceed without changes.');
+						pts_client::$display->generic_heading('If desired, enter a new description below to better describe this result set / system configuration under test.' . PHP_EOL . 'Press ENTER to proceed without changes.');
 						echo 'Current Description: ' . $this->run_description . PHP_EOL . PHP_EOL . 'New Description: ';
 						$new_test_description = pts_user_io::read_user_input();
 

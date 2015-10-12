@@ -334,7 +334,7 @@ function phoromatic_webui_header_logged_in()
 		{
 			array_push($sub_results_menu, 'Tracker');
 		}
-		array_push($sub_results_menu, '<a href="/rss.php?user=' . $_SESSION['UserID'] . '&amp;v=' . sha1($_SESSION['CreatedOn']) . '">Result RSS Feed <img src="images/rss.png" /></a>');
+		array_push($sub_results_menu, '<a href="/rss.php?user=' . $_SESSION['UserID'] . '&amp;v=' . sha1($_SESSION['CreatedOn']) . '">Results Feed <img src="images/rss.png" /></a>');
 
 		$pages = array('Main' => $sub_main_menu, 'Systems' => $sub_systems_menu, '<a href="#">Testing</a>' => $sub_testing_menu, 'Results' => $sub_results_menu, '<form action="/?search" method="post" id="search"><input type="search" name="search" id="seach_input" size="16" /> <input type="submit" name="sa" value="Search" /></form>');
 	}

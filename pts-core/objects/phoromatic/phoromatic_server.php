@@ -568,7 +568,7 @@ class phoromatic_server
 				if(empty($group))
 					continue;
 
-				$stmt = phoromatic_server::$db->prepare('SELECT SystemID FROM phoromatic_systems WHERE AccountID = :account_id AND Groups LIKE :sgroup ORDER BY Title ASC');
+				$stmt = phoromatic_server::$db->prepare('SELECT SystemID FROM phoromatic_systems WHERE AccountID = :account_id AND Groups LIKE :sgroup AND State > 0 ORDER BY Title ASC');
 				$stmt->bindValue(':account_id', $account_id);
 				$stmt->bindValue(':sgroup', '%#' . $group . '#%');
 				$result = $stmt->execute();
