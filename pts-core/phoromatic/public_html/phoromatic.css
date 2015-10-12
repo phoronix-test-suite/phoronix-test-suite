@@ -15,7 +15,7 @@ a, a:visited, a:hover, a:active
 }
 div#pts_phoromatic_top_header
 {
-	background: #1976d2;
+	background: #104A85;
 	border: #1F1F1F 1px solid;
 	overflow: hidden;
 	margin: 0;
@@ -53,7 +53,7 @@ div#pts_phoromatic_top_header input, div#pts_phoromatic_top_header button
 }
 div#pts_phoromatic_bottom_footer
 {
-	background: #0d47a1;
+	background: #104A85;
 	border: #1F1F1F 1px solid;
 	font-weight: 300;
 	clear: both;
@@ -149,7 +149,7 @@ div#pts_phoromatic_top_header li a, div#pts_phoromatic_top_header li form
 }
 div#pts_phoromatic_top_header li a:hover, div#pts_phoromatic_top_header_right a:hover
 {
-	color: #E0E0E0;
+	color: #fff;
 	text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
 	transition: all 0.3s;
 }
@@ -171,7 +171,7 @@ div#pts_phoromatic_menu_right h3
 }
 div#pts_phoromatic_menu_right
 {
-	background: #0863BB;
+	background: #104A85;
 	width: 15%;
 	height: 100%;
 	float: right;
