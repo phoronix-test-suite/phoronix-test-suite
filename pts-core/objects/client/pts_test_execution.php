@@ -99,6 +99,10 @@ class pts_test_execution
 		pts_client::$display->display_interrupt_message($test_run_request->test_profile->get_pre_run_message());
 		$runtime_identifier = time();
 		$execute_binary_prepend = '';
+		if($test_run_request->exec_binary_prepend != null)
+		{
+			$execute_binary_prepend = $test_run_request->exec_binary_prepend;
+		}
 
 		if(!$cache_share_present && $test_run_request->test_profile->is_root_required())
 		{
@@ -107,7 +111,7 @@ class pts_test_execution
 				pts_client::$display->test_run_error('This test must be run as the root / administrator account.');
 			}
 
-			$execute_binary_prepend = PTS_CORE_STATIC_PATH . 'root-access.sh ';
+			$execute_binary_prepend .= ' ' . PTS_CORE_STATIC_PATH . 'root-access.sh ';
 		}
 
 		if($allow_cache_share && !is_file($cache_share_pt2so))
@@ -207,6 +211,7 @@ class pts_test_execution
 				pts_client::$display->test_run_instance_output($test_log_file_contents);
 				unset($test_log_file_contents);
 			}
+			$test_run_request->test_result_standard_output = $test_result;
 
 			$exit_status_pass = true;
 			if(is_file($test_directory . 'test-exit-status'))
