@@ -4,6 +4,7 @@ Phoronix Test Suite Git
 
 - phoromatic: Start of reworking the web interface
 - phoromatic: Initial responsive design, mobile friendly
+- phoromatic: Support for exporting results as XML via the viewer
 
 Phoronix Test Suite 6.0 Milestone 3
 9 October 2015

@@ -288,7 +288,7 @@ class pts_result_file
 		{
 			$identifiers = $this->get_system_identifiers();
 
-			if(isset($identifiers[4]))
+			if(isset($identifiers[5]))
 			{
 				// dirty SHA1 hash check
 				$is_sha1_hash = strlen($identifiers[0]) == 40 && strpos($identifiers[0], ' ') === false;
@@ -313,7 +313,7 @@ class pts_result_file
 					}
 				}
 
-				if($this->is_tracker == false && count($identifiers) > 4)
+				if($this->is_tracker == false)
 				{
 					// See if only numbers are changing between runs
 					foreach($identifiers as $i => &$identifier)
