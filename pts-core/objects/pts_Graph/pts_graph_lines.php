@@ -71,7 +71,7 @@ class pts_graph_lines extends pts_graph_core
 				// add array_values($json_r)
 				$this->test_result->test_result_buffer->add_test_result($system, array_values($result_r), array_values($raw_r));
 			}
-			$max_count = count($this->graph_identifiers) + 2;
+			$max_count = count($this->graph_identifiers) + 1;
 		}
 
 		$this->max_count = $max_count;

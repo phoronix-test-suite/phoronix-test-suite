@@ -173,6 +173,11 @@ class pts_render
 					} */
 				}
 
+				if($result_file->is_results_tracker())
+				{
+					$extra_attributes['force_tracking_line_graph'] = 1;
+				}
+
 				if((self::multi_way_identifier_check($result_object->test_result_buffer->get_identifiers()) || (isset($extra_attributes['force_tracking_line_graph']) && $extra_attributes['force_tracking_line_graph'])))
 				{
 					//$result_table = false;

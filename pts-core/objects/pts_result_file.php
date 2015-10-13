@@ -312,6 +312,23 @@ class pts_result_file
 						$this->is_tracker = false;
 					}
 				}
+
+				if($this->is_tracker == false && count($identifiers) > 4)
+				{
+					// See if only numbers are changing between runs
+					foreach($identifiers as $i => &$identifier)
+					{
+						if(($x = strpos($identifier, ': ')) !== false)
+						{
+							$identifier = substr($identifier, ($x + 2));
+						}
+						if($i > 0 && pts_strings::remove_from_string($identifier, pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DECIMAL) != pts_strings::remove_from_string($identifiers[($i - 1)], pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DECIMAL))
+						{
+							return false;
+						}
+					}
+					$this->is_tracker = true;
+				}
 			}
 			else
 			{
