@@ -37,6 +37,9 @@ class pts_test_result_buffer
 			}
 		}
 	}
+	public function __clone()
+	{
+	}
 	public function get_buffer_items()
 	{
 		return $this->buffer_items;

@@ -26,7 +26,6 @@ class pts_render
 	{
 		$graph = self::render_graph_process($result_object, $result_file, $save_as, $extra_attributes);
 		$graph->renderGraph();
-
 		return $graph->svg_dom->output($save_as);
 	}
 	public static function render_graph_inline_embed(&$object, &$result_file = null, $extra_attributes = null, $nested = true)
