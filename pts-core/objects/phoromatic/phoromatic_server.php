@@ -976,6 +976,19 @@ class phoromatic_server
 
 		return $results;
 	}
+	public static function test_results_total($account_id)
+	{
+		$results = array();
+		$stmt = phoromatic_server::$db->prepare('SELECT COUNT(*) As ResultCount FROM phoromatic_results WHERE AccountID = :account_id');
+		$stmt->bindValue(':account_id', $account_id);
+		$result = $stmt->execute();
+		if($result && $row = $result->fetchArray())
+		{
+			return $row['ResultCount'];
+		}
+
+		return 0;
+	}
 	public static function test_results_benchmark_count($account_id)
 	{
 		$results = array();

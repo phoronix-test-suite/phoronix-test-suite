@@ -121,7 +121,7 @@ class phoromatic_main implements pts_webui_interface
 		$main .= '</div>';
 
 		$results_today = phoromatic_server::test_results($_SESSION['AccountID'], strtotime('today'));
-		$results_total = phoromatic_server::test_results($_SESSION['AccountID'], null);
+		$results_total = phoromatic_server::test_results_total($_SESSION['AccountID']);
 		$schedules_today = phoromatic_server::schedules_today($_SESSION['AccountID']);
 		$schedules_total = phoromatic_server::schedules_total($_SESSION['AccountID']);
 		$benchmark_tickets_today = phoromatic_server::benchmark_tickets_today($_SESSION['AccountID']);
