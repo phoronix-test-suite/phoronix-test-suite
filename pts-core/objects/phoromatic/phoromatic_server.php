@@ -978,7 +978,6 @@ class phoromatic_server
 	}
 	public static function test_results_total($account_id)
 	{
-		$results = array();
 		$stmt = phoromatic_server::$db->prepare('SELECT COUNT(*) As ResultCount FROM phoromatic_results WHERE AccountID = :account_id');
 		$stmt->bindValue(':account_id', $account_id);
 		$result = $stmt->execute();
