@@ -403,7 +403,7 @@ class pts_graph_lines extends pts_graph_core
 		}
 
 		$statistics_header_height = $this->getStatisticsHeaderHeight();
-		$extra_spacing = 4;
+		$extra_spacing = 16;
 		return ceil($this->test_result->test_result_buffer->get_count() / $this->i['keys_per_line']) * $this->i['key_line_height']
 			+ $statistics_header_height + $extra_spacing;
 	}
