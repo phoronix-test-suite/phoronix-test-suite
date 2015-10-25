@@ -88,10 +88,10 @@ class pts_graph_horizontal_bars extends pts_graph_core
 		foreach($this->results as $identifier => &$group)
 		{
 			$paint_color = $this->get_paint_color($identifier);
-			foreach($group as &$buffer_item && !$this->is_multi_way_comparison)
+			foreach($group as &$buffer_item)
 			{
 				// if identifier is 0, not a multi-way comparison or anything special
-				if($identifier == 0)
+				if($identifier == 0 && !$this->is_multi_way_comparison)
 				{
 					// See if the result identifier matches something to be color-coded better
 					$result_identifier = strtolower($buffer_item->get_result_identifier());
