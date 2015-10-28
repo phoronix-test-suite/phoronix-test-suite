@@ -149,16 +149,57 @@ function phoromatic_compute_estimated_time_remaining($estimated_minutes, $last_c
 
 	return 0;
 }
-function phoromatic_webui_header($left_items, $right)
+function phoromatic_webui_header($left_items, $right = null)
 {
-	$ret = '<div id="pts_phoromatic_top_header">
-	<div id="pts_phoromatic_logo"><a href="?"><img style="height: 50px; width: auto;" src="data:image/png;base64,' . base64_encode(file_get_contents('images/phoromatic_logo.png')) . '" /></a></div><ul>';
+	$ret = PHP_EOL . '<div id="pts_phoromatic_top_header"><ul>
+	<li><a href="?"><img style="vertical-align: middle;" src="images/phoromatic_logo.png" /></a>';
 
-	foreach($left_items as $item)
+	if(isset($_SESSION['AdminLevel']) &&$_SESSION['AdminLevel'] > 0 && isset($_SESSION['AccountID']) && !empty($_SESSION['AccountID']))
 	{
-		$ret .= '<li>' . $item . '</li>';
+		$ret .= '<ul id="pts_phoromatic_info">';
+		$ret .= '<li><a href="#">' . date('H:i T - j F') . '</a></li>';
+		$group_name = phoromatic_account_id_to_group_name($_SESSION['AccountID']);
+		if($group_name != null)
+		{
+			$ret .= '<li><a href="#">' . $group_name . '</a></li>';
+		}
+		$ret .= '</ul>';
 	}
-	$ret .= '</ul><div id="pts_phoromatic_top_header_right">' . $right .'</div></div>';
+	$ret .= '</li>';
+
+
+	//$ret .= '<ul>';
+	foreach($left_items as $i => $item)
+	{
+		if(is_array($item))
+		{
+			$ret .= '<li>' . $i;
+
+			if(!empty($item))
+			{
+				$ret .= '<ul>';
+				foreach($item as $sub_item)
+				{
+					$ret .= '<li>' . $sub_item . '</li>';
+				}
+				$ret .= '</ul>';
+			}
+			$ret .= '</li>' . PHP_EOL;
+		}
+		else
+		{
+			$ret .= '<li>' . $item . '</li>' . PHP_EOL;
+		}
+	}
+	$ret .= '<li><div id="phoromatic_result_selected_info_box"></div> <a href="#" onclick="javascript:phoromatic_generate_comparison(\'?result/\');"><div id="phoromatic_result_compare_info_box">Compare</div></a> <a href="#" onclick="javascript:phoromatic_delete_results(\'?results/delete/\'); return false;"><div id="phoromatic_result_delete_box">Delete</div></a></li>';
+	$ret .= '</ul>';
+
+	if($right != null)
+	{
+		$ret .= '<div id="pts_phoromatic_top_header_right">' . $right .'</div>';
+	}
+
+	$ret .=' </div>';
 
 	return $ret;
 }
@@ -166,9 +207,9 @@ function phoromatic_get_posted_var($name, $default_value = null)
 {
 	return isset($_POST[$name]) ? $_POST[$name] : null;
 }
-function phoromatic_webui_main($main, $right)
+function phoromatic_webui_main($main, $right = null)
 {
-	return '<div id="pts_phoromatic_main"><div id="pts_phoromatic_menu_right">' . $right . '</div><div id="pts_phoromatic_main_area">' . $main . '</div><div style="clear: both;"></div></div>';
+	return '<div id="pts_phoromatic_main">' . ($right != null ? '<div id="pts_phoromatic_menu_right">' . $right . '</div>' : null) . '<div id="pts_phoromatic_main_area">' . $main . '</div><div style="clear: both;"></div></div>';
 }
 function phoromatic_webui_box(&$box)
 {
@@ -256,56 +297,87 @@ function phoromatic_tracker_page_relevant()
 }
 function phoromatic_webui_header_logged_in()
 {
-	$sub_links = array();
 	$html_links = array();
 	if($_SESSION['AdminLevel'] == -40)
 	{
-		$pages = array('Admin', 'Admin_Config', 'Admin_Data');
+		$pages = array('Admin', 'Admin_Config', 'Admin_Data', 'Logout');
 	}
 	else if($_SESSION['AdminLevel'] > 0)
 	{
-		$pages = array('Main');
+		$sub_main_menu = array();
+		$sub_systems_menu = array();
+		$sub_testing_menu = array();
+		$sub_results_menu = array();
 
 		if(phoromatic_account_system_count() > 0)
-			array_push($pages, 'Dashboard');
+		{
+			array_push($sub_systems_menu, 'Dashboard');
+			array_push($sub_systems_menu, 'Maintenance Table');
+			array_push($sub_systems_menu, 'Component Table');
+		}
 
-		array_push($pages, 'Systems', 'Schedules', 'Benchmark', 'Results');
-		$pages['Test Profiles'] = 'Tests';
+		array_push($sub_main_menu, '<a href="?tests">Test Profiles</a>');
+		if(isset($_SESSION['AdminLevel']) && $_SESSION['AdminLevel'] < 4)
+		{
+			array_push($sub_main_menu, 'Users');
+		}
+
+		array_push($sub_main_menu, 'Settings', '<a href="?account_activity">Account Activity</a>', 'Logout');
+		array_push($sub_testing_menu, '<a href="?schedules">Test Schedules</a>');
+
+		if(!PHOROMATIC_USER_IS_VIEWER)
+		{
+		array_push($sub_testing_menu, '<a href="?sched">Create A Schedule</a>', '<a href="?benchmark">Run A Benchmark</a>');
+		}
 
 		if(phoromatic_tracker_page_relevant())
 		{
-			array_push($pages, 'Tracker');
+			array_push($sub_results_menu, 'Tracker');
 		}
+		array_push($sub_results_menu, '<a href="/rss.php?user=' . $_SESSION['UserID'] . '&amp;v=' . sha1($_SESSION['CreatedOn']) . '">Results Feed <img src="images/rss.png" /></a>');
 
-
-		if(isset($_SESSION['AdminLevel']) && $_SESSION['AdminLevel'] < 4)
-		{
-			array_push($sub_links, 'Users');
-		}
-
-		array_push($sub_links, 'Settings');
+		$pages = array('Main' => $sub_main_menu, 'Systems' => $sub_systems_menu, '<a href="#">Testing</a>' => $sub_testing_menu, 'Results' => $sub_results_menu, '<form action="/?search" method="post" id="search"><input type="search" name="search" id="seach_input" size="16" /> <input type="submit" name="sa" value="Search" /></form>');
 	}
-	array_push($sub_links, 'Logout');
 
 	foreach($pages as $title => $page)
 	{
-		$title = is_numeric($title) ? $page : $title;
-		if(strtolower($page) == PAGE_REQUEST)
+		if(is_array($page) || empty($page))
 		{
-			array_push($html_links, '<a href="?' . strtolower($page) . '"><u>' . str_replace('_', ' ', $title) . '</u></a>');
+			$menu_row = array();
+			foreach($page as $sub_page)
+			{
+				array_push($menu_row, menu_item_to_html($sub_page));
+			}
+			$html_links[menu_item_to_html($title)] = $menu_row;
 		}
 		else
 		{
-			array_push($html_links, '<a href="?' . strtolower($page) . '">' . str_replace('_', ' ', $title) . '</a>');
+			array_push($html_links, menu_item_to_html($page));
 		}
 	}
 
-	foreach($sub_links as &$link)
-	{
-		$link = '<a href="?' . strtolower($link) . '">' . $link . '</a>';
-	}
+	return phoromatic_webui_header($html_links, null);
+}
+function menu_item_to_html($page)
+{
+	if(strpos($page, '</') !== false)
+		return $page;
 
-	return phoromatic_webui_header($html_links, '<form action="/?search" method="post" id="search"><input type="search" name="search" size="16" /> <input type="submit" name="sa" value="Search" /></form> ' . implode('&nbsp; &nbsp; &nbsp; &nbsp;', $sub_links) . ' &nbsp; ');
+	$page_link = strtolower($page);
+	if(($x = strpos($page_link, '<br />')) !== false)
+	{
+		$page_link = trim(substr($page_link, $x + 6));
+	}
+	$page_link = str_replace(' ', '_', $page_link);
+
+	if(strtolower($page) == PAGE_REQUEST)
+	{
+		return '<a href="?' . $page_link . '"><u>' . str_replace('_', ' ', $page) . '</u></a>';
+	}
+	else
+	{
+		return '<a href="?' . $page_link . '">' . str_replace('_', ' ', $page) . '</a>';
+	}
 }
 function phoromatic_webui_right_panel_logged_in($add = null)
 {
@@ -316,7 +388,7 @@ function phoromatic_webui_right_panel_logged_in($add = null)
 	}
 	else if($_SESSION['AdminLevel'] > 0)
 	{
-		$right .= '<a href="#" onclick="javascript:phoromatic_generate_comparison(\'?result/\');"><div id="phoromatic_result_compare_info_box"></div></a> <a href="#" onclick="javascript:phoromatic_delete_results(\'?results/delete/\'); return false;"><div id="phoromatic_result_delete_box">Delete Selected Results</div></a>';
+		//$right .= '<a href="#" onclick="javascript:phoromatic_generate_comparison(\'?result/\');"><div id="phoromatic_result_compare_info_box"></div></a> <a href="#" onclick="javascript:phoromatic_delete_results(\'?results/delete/\'); return false;"><div id="phoromatic_result_delete_box">Delete Selected Results</div></a>';
 		if(($bad_systems = phoromatic_server::systems_appearing_down()) != false)
 		{
 			$right .= '<ul><li><span class="alert">Systems Needing Attention</span></li>';

@@ -60,6 +60,10 @@ class remove_from_result_file implements pts_option_interface
 		pts_client::save_test_result($result_file->get_file_location(), $result_file->get_xml());
 		pts_client::display_web_page($result_dir . '/index.html');
 	}
+	public static function invalid_command($passed_args = null)
+	{
+		pts_tests::invalid_command_helper($passed_args);
+	}
 }
 
 ?>

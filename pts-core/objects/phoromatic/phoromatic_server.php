@@ -568,7 +568,7 @@ class phoromatic_server
 				if(empty($group))
 					continue;
 
-				$stmt = phoromatic_server::$db->prepare('SELECT SystemID FROM phoromatic_systems WHERE AccountID = :account_id AND Groups LIKE :sgroup ORDER BY Title ASC');
+				$stmt = phoromatic_server::$db->prepare('SELECT SystemID FROM phoromatic_systems WHERE AccountID = :account_id AND Groups LIKE :sgroup AND State > 0 ORDER BY Title ASC');
 				$stmt->bindValue(':account_id', $account_id);
 				$stmt->bindValue(':sgroup', '%#' . $group . '#%');
 				$result = $stmt->execute();
@@ -919,6 +919,19 @@ class phoromatic_server
 
 		return $systems;
 	}
+	public static function systems_total($account_id)
+	{
+		$systems = array();
+		$stmt = phoromatic_server::$db->prepare('SELECT SystemID FROM phoromatic_systems WHERE AccountID = :account_id AND State >= 0 ORDER BY LastCommunication DESC');
+		$stmt->bindValue(':account_id', $account_id);
+		$result = $stmt->execute();
+		while($result && $row = $result->fetchArray())
+		{
+			array_push($systems, $row);
+		}
+
+		return $systems;
+	}
 	public static function test_result_count_for_test_profile($account_id, $test_profile)
 	{
 		$stmt = phoromatic_server::$db->prepare('SELECT COUNT(*) As TotalCount FROM phoromatic_results_results WHERE AccountID = :account_id AND TestProfile LIKE :tp');
@@ -962,6 +975,18 @@ class phoromatic_server
 		}
 
 		return $results;
+	}
+	public static function test_results_total($account_id)
+	{
+		$stmt = phoromatic_server::$db->prepare('SELECT COUNT(*) As ResultCount FROM phoromatic_results WHERE AccountID = :account_id');
+		$stmt->bindValue(':account_id', $account_id);
+		$result = $stmt->execute();
+		if($result && $row = $result->fetchArray())
+		{
+			return $row['ResultCount'];
+		}
+
+		return 0;
 	}
 	public static function test_results_benchmark_count($account_id)
 	{

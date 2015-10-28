@@ -150,9 +150,7 @@ class phoromatic_sched implements pts_webui_interface
 		}
 
 		echo phoromatic_webui_header_logged_in();
-		$main = '
-		<hr />
-		<h2>' . ($is_new ? 'Create' : 'Edit') . ' A Schedule</h2>
+		$main = '<h2>' . ($is_new ? 'Create' : 'Edit') . ' A Schedule</h2>
 		<p>A test schedule is used to facilitate automatically running a set of test(s)/suite(s) on either a routine timed basis or whenever triggered by an external script or process, e.g. Git/VCS commit, manually triggered, etc.</p>';
 
 		$main .= '<form action="' . $_SERVER['REQUEST_URI'] . '" name="add_test" id="add_test" method="post" enctype="multipart/form-data" onsubmit="return validate_schedule();">
@@ -257,7 +255,7 @@ class phoromatic_sched implements pts_webui_interface
 			<p><sup>1</sup> <em>Indicates optional field.</em></p>
 			<p align="right"><input name="submit" value="' . ($is_new ? 'Create' : 'Edit') . ' Schedule" type="submit" onclick="return pts_rmm_validate_schedule();" /></p>
 			</form>';
-			echo phoromatic_webui_main($main, phoromatic_webui_right_panel_logged_in());
+			echo phoromatic_webui_main($main);
 			echo phoromatic_webui_footer();
 	}
 }

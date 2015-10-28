@@ -26,7 +26,6 @@ class pts_render
 	{
 		$graph = self::render_graph_process($result_object, $result_file, $save_as, $extra_attributes);
 		$graph->renderGraph();
-
 		return $graph->svg_dom->output($save_as);
 	}
 	public static function render_graph_inline_embed(&$object, &$result_file = null, $extra_attributes = null, $nested = true)
@@ -171,6 +170,11 @@ class pts_render
 
 						$result_object->test_profile->set_display_format('BAR_GRAPH');
 					} */
+				}
+
+				if($result_file->is_results_tracker())
+				{
+					$extra_attributes['force_tracking_line_graph'] = 1;
 				}
 
 				if((self::multi_way_identifier_check($result_object->test_result_buffer->get_identifiers()) || (isset($extra_attributes['force_tracking_line_graph']) && $extra_attributes['force_tracking_line_graph'])))

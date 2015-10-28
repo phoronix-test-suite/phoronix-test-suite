@@ -1,5 +1,14 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite 6.0 Milestone 4
+25 October 2015
+
+- phoromatic: Start of reworking the web interface
+- phoromatic: Initial responsive design, mobile friendly
+- phoromatic: Support for exporting results as XML via the viewer
+- linux_perf: Add new module to provide perf output reporting on a per-test-run basis when LINUX_PERF=1 environment variable is set
+- pts_Graph: Tweaks
+
 Phoronix Test Suite 6.0 Milestone 3
 9 October 2015
 

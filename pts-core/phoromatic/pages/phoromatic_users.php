@@ -155,7 +155,7 @@ class phoromatic_users implements pts_webui_interface
 			</ol>
 			<div class="pts_phoromatic_info_box_area">
 
-				<div style="margin: 0 20%;"><form action="' . $_SERVER['REQUEST_URI'] . '" name="edit_user" id="edit_user" method="post">
+				<div style="margin: 0 1%;"><form action="' . $_SERVER['REQUEST_URI'] . '" name="edit_user" id="edit_user" method="post">
 					<ul>
 						<li><h1>All Users</h1></li>';
 

@@ -425,18 +425,18 @@ class pts_Table extends pts_graph_core
 		{
 			$estimated_height = 0;
 			$previous_section = null;
-			$g = $this->svg_dom->make_g(array('fill' => self::$c['color']['text'], 'text-anchor' => 'start'));
+			$g = $this->svg_dom->make_g(array('fill' => self::$c['color']['background'], 'text-anchor' => 'start'));
 			foreach($this->i['notes'] as $i => $note_r)
 			{
 				if($note_r['section'] != null && $note_r['section'] !== $previous_section)
 				{
 					$estimated_height += 2;
-					$this->svg_dom->add_textarea_element($note_r['section'] . ' Details', array('x' => 6, 'y' => ($table_proper_height + $table_line_height + $estimated_height), 'xlink:title' => $note_r['hover-title'], 'style' => 'font-weight: bold', 'font-size' => (self::$c['size']['key'] - 1)), $estimated_height, $g);
+					$this->svg_dom->add_textarea_element($note_r['section'] . ' Details', array('x' => 6, 'y' => ($table_proper_height + $table_line_height + $estimated_height), 'xlink:title' => $note_r['hover-title'], 'style' => 'font-weight: bold', 'fill' => self::$c['color']['background'], 'font-size' => (self::$c['size']['key'] - 1)), $estimated_height, $g);
 					$estimated_height += 2;
 					$previous_section = $note_r['section'];
 				}
 
-				$this->svg_dom->add_textarea_element('- ' . $note_r['note'], array('x' => 6, 'y' => ($table_proper_height + $table_line_height + $estimated_height), 'xlink:title' => $note_r['hover-title'], 'font-size' => (self::$c['size']['key'] - 1)), $estimated_height, $g);
+				$this->svg_dom->add_textarea_element('- ' . $note_r['note'], array('x' => 6, 'y' => ($table_proper_height + $table_line_height + $estimated_height), 'xlink:title' => $note_r['hover-title'], 'fill' => self::$c['color']['background'], 'font-size' => (self::$c['size']['key'] - 1)), $estimated_height, $g);
 			}
 		}
 

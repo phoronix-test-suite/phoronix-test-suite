@@ -71,7 +71,7 @@ class pts_graph_lines extends pts_graph_core
 				// add array_values($json_r)
 				$this->test_result->test_result_buffer->add_test_result($system, array_values($result_r), array_values($raw_r));
 			}
-			$max_count = count($this->graph_identifiers) + 2;
+			$max_count = count($this->graph_identifiers) + 1;
 		}
 
 		$this->max_count = $max_count;
@@ -162,6 +162,10 @@ class pts_graph_lines extends pts_graph_core
 		{
 			return parent::render_graph_key();
 		}
+		if(!$this->i['plot_overview_text'])
+		{
+			return;
+		}
 		if($this->i['key_line_height'] == 0)
 		{
 			return;
@@ -181,14 +185,23 @@ class pts_graph_lines extends pts_graph_core
 
 		// draw the "Min Avg Max" text
 		$stat_header_offset = $this->i['key_longest_string_width'] + $square_length + 10;
+		$g_text = $this->svg_dom->make_g(array('font-size' => 6.5, 'fill' => self::$c['color']['notches']));
 		for($x = $x_start + $stat_header_offset; $x <= $x_end + $stat_header_offset; $x += $this->i['key_item_width'])
 		{
-			$this->draw_stat_text($x, array('y' => $y_start - 14, 'font-size' => 6.5, 'fill' => self::$c['color']['notches']));
+			$stat_words = array('Min', 'Avg', 'Max');
+			$stat_word_width = $this->get_stat_word_width();
+			$attributes = array('y' => $y_start - 14);
+
+			foreach($stat_words as &$stat_word)
+			{
+				$attributes['x'] = $x;
+				$this->svg_dom->add_text_element($stat_word, $attributes, $g_text);
+				$x += $stat_word_width;
+			}
 		}
 
 		// draw the keys and the min,avg,max values
 		$g_rect = $this->svg_dom->make_g(array('stroke' => self::$c['color']['notches'], 'stroke-width' => 1));
-		$g_text = $this->svg_dom->make_g(array('font-size' => self::$c['size']['key']));
 		for($i = 0, $x = $x_start; $x <= $x_end; $x += $this->i['key_item_width'])
 		{
 			for ($y = $y_start; $y <= $y_end; $y += $this->i['key_line_height'], ++$i)
@@ -207,54 +220,30 @@ class pts_graph_lines extends pts_graph_core
 								  'height' => $square_length, 'fill' => $this_color), $g_rect);
 
 				// draw text
-				$this->svg_dom->add_text_element($identifier_title,
-								 array('x' => $x + $square_length + 4, 'y' => $y, 'fill' => $this_color), $g_text);
+				$g_text = $this->svg_dom->make_g(array('font-size' => self::$c['size']['key'], 'fill' => $this_color));
+				$this->svg_dom->add_text_element($identifier_title, array('x' => $x + $square_length + 4, 'y' => $y), $g_text);
 
 				// draw min/avg/max
 				$x_stat_loc = $x + $square_length + $this->i['key_longest_string_width'] + 10;
 				$vals = $this->test_result->test_result_buffer->buffer_items[$i]->get_result_value();
-				$this->draw_result_stats($vals, $precision, $x_stat_loc, array('y' => $y, 'font-size' => self::$c['size']['key'], 'fill' => $this_color));
+				$attributes = array('y' => $y);
+
+				$stat_word_width = $this->get_stat_word_width();
+				$stat_array = $this->calc_min_avg_max($vals);
+
+				$precise_stat_array = array();
+				foreach($stat_array as $stat_value)
+				{
+					array_push($precise_stat_array, pts_math::set_precision($stat_value, $precision));
+				}
+
+				$attributes['x'] = $x_stat_loc;
+				foreach($precise_stat_array as $stat_value)
+				{
+					$this->svg_dom->add_text_element(strval($stat_value), $attributes, $g_text);
+					$attributes['x'] += $stat_word_width;
+				}
 			}
-		}
-	}
-	private function draw_stat_text($x, $attributes)
-	{
-		if(!$this->i['plot_overview_text'])
-		{
-			return;
-		}
-
-		$stat_words = array('Min', 'Avg', 'Max');
-		$stat_word_width = $this->get_stat_word_width();
-
-		foreach($stat_words as &$stat_word)
-		{
-			$attributes['x'] = $x;
-			$this->svg_dom->add_text_element($stat_word, $attributes);
-			$x += $stat_word_width;
-		}
-	}
-	private function draw_result_stats(&$data_set, $precision, $x, $attributes)
-	{
-		if(!$this->i['plot_overview_text'])
-		{
-			return;
-		}
-
-		$stat_word_width = $this->get_stat_word_width();
-		$stat_array = $this->calc_min_avg_max($data_set);
-
-		$precise_stat_array = array();
-		foreach($stat_array as $stat_value)
-		{
-			array_push($precise_stat_array, pts_math::set_precision($stat_value, $precision));
-		}
-
-		foreach($precise_stat_array as $stat_value)
-		{
-			$attributes['x'] = $x;
-			$this->svg_dom->add_text_element(strval($stat_value), $attributes);
-			$x += $stat_word_width;
 		}
 	}
 	private static function calc_min_avg_max(&$data_set)
@@ -414,7 +403,7 @@ class pts_graph_lines extends pts_graph_core
 		}
 
 		$statistics_header_height = $this->getStatisticsHeaderHeight();
-		$extra_spacing = 4;
+		$extra_spacing = 16;
 		return ceil($this->test_result->test_result_buffer->get_count() / $this->i['keys_per_line']) * $this->i['key_line_height']
 			+ $statistics_header_height + $extra_spacing;
 	}

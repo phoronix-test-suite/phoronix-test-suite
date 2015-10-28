@@ -87,6 +87,7 @@ class perf_per_dollar extends pts_module_interface
 		if(count(self::$perf_per_dollar_collection) > 2)
 		{
 			$avg = array_sum(self::$perf_per_dollar_collection) / count(self::$perf_per_dollar_collection);
+			$avg_perf_dollar = $avg / self::$COST_PERF_PER_DOLLAR;
 			$test_profile = new pts_test_profile();
 			$test_result = new pts_test_result($test_profile);
 			$test_result->test_profile->set_test_title('Meta Performance Per Dollar');
@@ -99,7 +100,7 @@ class perf_per_dollar extends pts_module_interface
 			$test_result->set_used_arguments_description('Performance Per Dollar');
 			$test_result->set_used_arguments('Per-Per-Dollar');
 			$test_result->test_result_buffer = new pts_test_result_buffer();
-			$test_result->test_result_buffer->add_test_result(self::$result_identifier, pts_math::set_precision($avg), null, array('install-footnote' => '$' . self::$COST_PERF_PER_DOLLAR . ' reported cost.'));
+			$test_result->test_result_buffer->add_test_result(self::$result_identifier, pts_math::set_precision($avg_perf_dollar), null, array('install-footnote' => '$' . self::$COST_PERF_PER_DOLLAR . ' reported cost. Average result: ' . pts_math::set_precision($avg) . '.'));
 			$test_run_manager->result_file->add_result($test_result);
 		}
 	}

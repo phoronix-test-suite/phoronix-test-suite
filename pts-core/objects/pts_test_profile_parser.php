@@ -94,7 +94,10 @@ class pts_test_profile_parser
 		else
 		{
 			$this->raw_xml = $read;
-			$this->xml = simplexml_load_string($read, 'SimpleXMLElement', $xml_options);
+			if(strpos($read, '<') !== false)
+			{
+				$this->xml = simplexml_load_string($read, 'SimpleXMLElement', $xml_options);
+			}
 		}
 	}
 	public function get_xml()

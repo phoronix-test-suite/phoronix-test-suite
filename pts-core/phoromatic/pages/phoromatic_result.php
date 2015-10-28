@@ -356,6 +356,11 @@ class phoromatic_result implements pts_webui_interface
 				//pts_file_io::delete($tdir, null, true);
 				return;
 			}
+			else if(isset($_GET['download']) && $_GET['download'] == 'xml')
+			{
+				echo $result_file->get_xml();
+				return;
+			}
 
 			$main .= '<h1>' . $result_file->get_title() . '</h1>';
 			$main .= phoromatic_annotate_entry('RESULT', implode(',', $upload_ids), 'TOP');
@@ -533,6 +538,7 @@ class phoromatic_result implements pts_webui_interface
 		$right .= '<p><a href="/public.php?t=result&ut='  . implode(',', $upload_ids) . $url_append . '">Public Viewer</a></p>';
 		$right .= '<p><a href="?' . $_SERVER['QUERY_STRING'] . '/&download=pdf' . $url_append . '">Download As PDF</a></p>';
 		$right .= '<p><a href="?' . $_SERVER['QUERY_STRING'] . '/&download=csv">Download As CSV</a></p>';
+		$right .= '<p><a href="?' . $_SERVER['QUERY_STRING'] . '/&download=xml">Download As XML</a></p>';
 		$right .= '<p><a href="?' . $_SERVER['QUERY_STRING'] . '/&download=txt">Download As TEXT</a></p>';
 		$right .= '<p><a href="?' . $_SERVER['QUERY_STRING'] . '/&upload_to_openbenchmarking">Upload To OpenBenchmarking.org</a></p>';
 

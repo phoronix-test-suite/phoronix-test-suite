@@ -454,7 +454,7 @@ class phoromatic_systems implements pts_webui_interface
 			$main .= '<hr />
 
 			<h2>Systems</h2>
-			<div class="pts_phoromatic_info_box_area" style="margin: 0 10%;">
+			<div class="pts_phoromatic_info_box_area">
 
 					<ul>
 						<li><h1>Active Systems</h1></li>';
@@ -521,11 +521,6 @@ class phoromatic_systems implements pts_webui_interface
 
 
 			$main .= '</div>';
-
-			if($active_system_count > 2)
-			{
-				$main .= '<h3 align="center"><a href="/?component_table">System Component Table</a> | <a href="/?maintenance_table">System Maintenance Table</a> | <a href="/?dashboard">System Dashboard</a></h3>';
-			}
 
 			if(!PHOROMATIC_USER_IS_VIEWER)
 			{

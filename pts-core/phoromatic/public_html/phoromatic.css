@@ -3,7 +3,7 @@ body
 	text-align: left;
 	margin: 0;
 	padding: 0;
-	font-family: 'DejaVu Sans', museo-sans, sans-serif, 'Open Sans', 'helvetica neue', helvetica;
+	font-family: 'Titillium Web', 'DejaVu Sans', museo-sans, sans-serif, 'Open Sans', 'helvetica neue', helvetica;
 	font-weight: 300;
 	font-size: 100%;
 	color: #212121;
@@ -15,14 +15,17 @@ a, a:visited, a:hover, a:active
 }
 div#pts_phoromatic_top_header
 {
-	background: #1976d2;
+	background: #104A85;
 	border: #1F1F1F 1px solid;
 	overflow: hidden;
 	margin: 0;
+	padding: 4px 10px;
 	width: 100%;
 	box-shadow: 1px 1px 2px #1F1F1F;
 	-moz-box-shadow: 1px 1px 2px #1F1F1F;
 	-webkit-box-shadow: 1px 1px 2px #1F1F1F;
+	display: table;
+	font-size: 1.5em;
 }
 div#pts_phoromatic_top_header_right
 {
@@ -50,7 +53,7 @@ div#pts_phoromatic_top_header input, div#pts_phoromatic_top_header button
 }
 div#pts_phoromatic_bottom_footer
 {
-	background: #0d47a1;
+	background: #104A85;
 	border: #1F1F1F 1px solid;
 	font-weight: 300;
 	clear: both;
@@ -82,35 +85,71 @@ div#pts_phoromatic_logo
 {
 	display: table-cell;
 	color: #e88f09;
-	margin: 10px 2px 0 10px;
-	float: left;
+	vertical-align: top;
+}
+div#pts_phoromatic_top_header ul ul#pts_phoromatic_info li
+{
+	color: #ff9800;
+	text-align: left;
 }
 div#pts_phoromatic_top_header ul
 {
-	line-height: 70px;
-	font-size: 1.5em;
 	color: #fff;
 	list-style: none;
-	margin: 0 2px;
+	margin: 0 4px;
+	padding: 0;
 	display: table-cell;
 }
-div#pts_phoromatic_top_header ul li u
+div#pts_phoromatic_top_header ul ul
+{
+	display: none;
+	position: relative;
+	top: 0;
+	left: 0;
+	padding: 0 0 20px;
+	margin: 0;
+}
+div#pts_phoromatic_top_header ul ul li
+{
+	float: none;
+	width: auto;
+	font-size: 0.8em;
+	padding: 0;
+	height: 30px;
+}
+div#pts_phoromatic_top_header ul ul a
+{
+	text-align: center;
+}
+div#pts_phoromatic_top_header li u
 {
 	text-decoration: none;
-	font-weight: 400;
 }
-div#pts_phoromatic_top_header ul li
+div#pts_phoromatic_top_header li
 {
 	text-transform: uppercase;
 	list-style-type: none;
 	padding: 0 20px 0 0;
 	text-align: center;
-	display: inline;
+	float: left;
+	position: relative;
 	vertical-align: top;
+	min-width: 200px;
 }
-div#pts_phoromatic_top_header ul li a:hover, div#pts_phoromatic_top_header_right a:hover
+div#pts_phoromatic_top_header:hover ul li > ul
 {
-	color: #E0E0E0;
+	display: block;
+}
+div#pts_phoromatic_top_header li a, div#pts_phoromatic_top_header li form
+{
+	vertical-align: middle;
+	text-align: center;
+	display: table-cell;
+	height: 60px;
+}
+div#pts_phoromatic_top_header li a:hover, div#pts_phoromatic_top_header_right a:hover
+{
+	color: #fff;
 	text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
 	transition: all 0.3s;
 }
@@ -132,7 +171,7 @@ div#pts_phoromatic_menu_right h3
 }
 div#pts_phoromatic_menu_right
 {
-	background: #0863BB;
+	background: #104A85;
 	width: 15%;
 	height: 100%;
 	float: right;
@@ -554,22 +593,22 @@ div.phoromatic_overview_box
 }
 div#phoromatic_result_compare_info_box
 {
-	font-size: 1.5em;
+	font-size: 0.6em;
 	color: #FFF;
 	text-align: center;
 	border: 1px solid #FFF;
 	margin: 10px 30px;
-	padding: 4px 0;
+	padding: 4px;
 	display: none;
 }
 div#phoromatic_result_delete_box
 {
-	font-size: 1.1em;
+	font-size: 0.6em;
 	color: #FFF;
 	text-align: center;
 	border: 1px solid #FFF;
 	margin: 10px 30px;
-	padding: 4px 0;
+	padding: 4px;
 	display: none;
 }
 div.phoromatic_overview_box h1
@@ -597,7 +636,49 @@ div#phoromatic_main_table_cell
 }
 div#pts_results_area svg
 {
-	min-width: 600px;
-	width: 60%;
+	min-width: 60%;
 	height: auto;
+}
+
+
+@media screen and (max-width: 1200px) {
+	div#pts_phoromatic_top_header ul li > ul
+	{
+		display: block;
+	}
+	div.pts_phoromatic_info_box_area ul
+	{
+		margin: 10px 0;
+	}
+}
+
+@media screen and (max-width: 720px) {
+	div#pts_results_area svg
+	{
+		min-width: 300px;
+		width: 96%;
+		height: auto;
+	}
+	div#phoromatic_main_table_cell
+	{
+		display: table-row;
+	}
+	div#pts_phoromatic_top_header li
+	{
+		text-align: center;
+		float: none;
+		width: 40%;
+	}
+	div#pts_phoromatic_top_header ul
+	{
+		text-align: center;
+	}
+	input#search_input
+	{
+		width: 100%;
+	}
+	div.pts_phoromatic_info_box_area ul
+	{
+		max-height: 100%;
+	}
 }

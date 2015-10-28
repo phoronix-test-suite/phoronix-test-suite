@@ -34,6 +34,10 @@ class pts_test_result
 	public $active = null;
 	public $secondary_linked_results = null;
 
+	// Added to make it easy to have PTS modules run a custom binary prior to running a program for the test
+	public $exec_binary_prepend = null;
+	public $test_result_standard_output = null;
+
 	public function __construct(&$test_profile)
 	{
 		$this->test_profile = $test_profile;
@@ -42,6 +46,11 @@ class pts_test_result
 	public function __clone()
 	{
 		$this->test_profile = clone $this->test_profile;
+
+		if(!empty($this->test_result_buffer) && is_object($this->test_result_buffer))
+		{
+			$this->test_result_buffer = clone $this->test_result_buffer;
+		}
 	}
 	public function set_test_result_buffer(&$test_result_buffer)
 	{

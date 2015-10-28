@@ -288,7 +288,7 @@ class pts_result_file
 		{
 			$identifiers = $this->get_system_identifiers();
 
-			if(isset($identifiers[4]))
+			if(isset($identifiers[5]))
 			{
 				// dirty SHA1 hash check
 				$is_sha1_hash = strlen($identifiers[0]) == 40 && strpos($identifiers[0], ' ') === false;
@@ -311,6 +311,23 @@ class pts_result_file
 						// it can't be a results tracker if the hardware is always different
 						$this->is_tracker = false;
 					}
+				}
+
+				if($this->is_tracker == false)
+				{
+					// See if only numbers are changing between runs
+					foreach($identifiers as $i => &$identifier)
+					{
+						if(($x = strpos($identifier, ': ')) !== false)
+						{
+							$identifier = substr($identifier, ($x + 2));
+						}
+						if($i > 0 && pts_strings::remove_from_string($identifier, pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DECIMAL) != pts_strings::remove_from_string($identifiers[($i - 1)], pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DECIMAL))
+						{
+							return false;
+						}
+					}
+					$this->is_tracker = true;
 				}
 			}
 			else

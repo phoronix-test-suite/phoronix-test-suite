@@ -94,13 +94,14 @@ if(substr($PAGE_REQUEST, 0, 2) == 'r_' || isset($_GET['download']))
 }
 
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <script src="/phoromatic.js?<?php echo date('Ymd') . PTS_CORE_VERSION; ?>" type="text/javascript"></script>
 <title>Phoronix Test Suite - Phoromatic - <?php echo $page_class::page_title(); ?></title>
 <link href="/phoromatic.css?<?php echo date('Ymd') . PTS_CORE_VERSION; ?>" rel="stylesheet" type="text/css" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="keywords" content="Phoronix Test Suite, open-source benchmarking, Linux benchmarking, automated testing" />
 <meta name="Description" content="Phoronix Test Suite local control server." />
 <link rel="shortcut icon" href="favicon.ico" />
@@ -111,6 +112,7 @@ if(isset($_SESSION['UserID']))
 	echo '<link rel="alternate" type="application/rss+xml" title="RSS - Test Results" href="/rss.php?user=' . $_SESSION['UserID'] . '&amp;v=' . sha1($_SESSION['CreatedOn']) . '" />';
 }
 ?>
+<link href='https://fonts.googleapis.com/css?family=Titillium+Web' rel='stylesheet' type='text/css'>
 </head>
 <body>
 <?php
