@@ -249,6 +249,7 @@ class phoromatic_result implements pts_webui_interface
 				'sort_by_reverse' => 'reverse_result_buffer',
 				'sort_by_name' => 'sort_result_buffer',
 				'condense_comparison' => 'condense_multi_way',
+				'force_line_graph' => 'compact_to_scalar',
 				);
 			$url_append = null;
 			foreach($attribute_options as $web_var => $attr_var)
@@ -499,6 +500,7 @@ class phoromatic_result implements pts_webui_interface
 				'sort_by_name' => 'Reverse Result By Identifier',
 				'sort_by_reverse' => 'Reverse Result Order',
 				'show_only_changed_results' => 'Show Only Results With Result Variation',
+				'force_line_graph' => 'Force Line Graph',
 				);
 
 			if($result_file->is_multi_way_comparison())
