@@ -249,7 +249,7 @@ class phoromatic_result implements pts_webui_interface
 				'sort_by_reverse' => 'reverse_result_buffer',
 				'sort_by_name' => 'sort_result_buffer',
 				'condense_comparison' => 'condense_multi_way',
-				'force_line_graph' => 'compact_to_scalar',
+				'force_line_graph' => 'force_tracking_line_graph',
 				);
 			$url_append = null;
 			foreach($attribute_options as $web_var => $attr_var)
