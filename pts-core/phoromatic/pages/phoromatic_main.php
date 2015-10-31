@@ -129,7 +129,7 @@ class phoromatic_main implements pts_webui_interface
 		<h2>' . pts_strings::plural_handler(count($schedules_today), 'Schedule') . ' Active Today</h2>
 		<h2>' . pts_strings::plural_handler(count($schedules_total), 'Schedule') . ' In Total</h2>
 		<h2>' . pts_strings::plural_handler(count($benchmark_tickets_today), 'Active Benchmark Ticket') . '</h2>
-		<h2>' . pts_strings::plural_handler(count($results_today), 'Test Result') . ' Today / ' . pts_strings::plural_handler(count($results_total), 'Test Result') . ' Total</h2>';
+		<h2>' . pts_strings::plural_handler(count($results_today), 'Test Result') . ' Today / ' . pts_strings::plural_handler($results_total, 'Test Result') . ' Total</h2>';
 		$main .= '<hr /><h2>Today\'s Scheduled Tests</h2>';
 
 		foreach($schedules_today as &$row)
