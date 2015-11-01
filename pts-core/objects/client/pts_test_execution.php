@@ -252,9 +252,9 @@ class pts_test_execution
 
 				if(!empty($test_run_request->active->active_result))
 				{
-					if($test_run_time < 3 && intval($test_run_request->active->active_result) == $test_run_request->active->active_result && $test_run_request->test_profile->get_estimated_run_time() > 60)
+					if($test_run_time < 2 && intval($test_run_request->active->active_result) == $test_run_request->active->active_result && $test_run_request->test_profile->get_estimated_run_time() > 60)
 					{
-						// If the test ended in less than 3 seconds, outputted some int, and normally the test takes much longer, then it's likely some invalid run
+						// If the test ended in less than two seconds, outputted some int, and normally the test takes much longer, then it's likely some invalid run
 						self::test_run_instance_error($test_run_manager, $test_run_request, 'The test run ended prematurely.');
 						if($is_expected_last_run && is_file($test_log_file))
 						{
