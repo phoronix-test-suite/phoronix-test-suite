@@ -43,8 +43,7 @@ class finish_run implements pts_option_interface
 		$system_identifiers = $result_file->get_system_identifiers();
 		$test_positions = array();
 
-		$pos = 0;
-		foreach($result_file->get_result_objects() as $result_object)
+		foreach($result_file->get_result_objects() as $pos => $result_object)
 		{
 			$this_result_object_identifiers = $result_object->test_result_buffer->get_identifiers();
 
@@ -60,10 +59,7 @@ class finish_run implements pts_option_interface
 					array_push($test_positions[$system_identifier], $pos);
 				}
 			}
-
-			$pos++;
 		}
-
 		$incomplete_identifiers = array_keys($test_positions);
 
 		if(count($incomplete_identifiers) == 0)
