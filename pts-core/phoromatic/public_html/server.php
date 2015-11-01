@@ -23,7 +23,6 @@
 if(isset($_GET['phoromatic_info']))
 {
 	define('PHOROMATIC_SERVER', true);
-	define('REMOTE_ACCESS', true); // XXX TODO: Is this still used with new Phoromatic?
 	//ini_set('memory_limit', '64M');
 	define('PTS_MODE', 'WEB_CLIENT');
 	define('PTS_AUTO_LOAD_OBJECTS', true);
