@@ -89,11 +89,11 @@ class pts_test_result
 			{
 				$tp = $this->test_profile->get_title();
 			}
-			else
+			else if(($x = strrpos($tp, '.')) !== false)
 			{
 				// remove the last segment of the test profile version that should be in xx.yy.zz format
 				// this removal is done since the zz segment should be maintainable between comparisons
-				$tp = substr($tp, 0, strrpos($tp, '.'));
+				$tp = substr($tp, 0, $x);
 			}
 			return pts_test_profile::generate_comparison_hash($tp, $this->get_arguments(), $this->get_arguments_description(), $this->test_profile->get_app_version(), $raw_output);
 		}
