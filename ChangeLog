@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 - pts-core: Fix finish-run command functionality
 - pts-core: Fix results getting compacted into single result comparison object when using a local test without version post-fix
 - pts-core: Fix CSV result output when there are missing results
+- pts-core: Properly handle spaces in shell_exec() export
 - phodevi: Support for finding the Xorg.0.log in ~/.local/share/xorg/ with Debian now using that for non-root X Server
 - phoromatic: Tweaks
 

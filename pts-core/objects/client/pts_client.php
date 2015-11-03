@@ -1402,7 +1402,7 @@ class pts_client
 
 		foreach(array_keys($extra_vars) as $key)
 		{
-			$var_string .= 'export ' . $key . '=' . $extra_vars[$key] . ';';
+			$var_string .= 'export ' . $key . '=' . str_replace(' ', '\ ', trim($extra_vars[$key])) . ';';
 		}
 
 		$var_string .= ' ';
