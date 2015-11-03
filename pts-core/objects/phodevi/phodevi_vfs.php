@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2012 - 2014, Phoronix Media
-	Copyright (C) 2012 - 2014, Michael Larabel
+	Copyright (C) 2012 - 2015, Phoronix Media
+	Copyright (C) 2012 - 2015, Michael Larabel
 	phodevi.php: The object for an effective VFS with PTS/Phodevi
 
 	This program is free software; you can redistribute it and/or modify
@@ -47,6 +47,7 @@ class phodevi_vfs
 		'i915_drpc_info' => array('type' => 'F', 'F' => '/sys/kernel/debug/dri/0/i915_drpc_info', 'cacheable' => false, 'preserve' => true, 'subsystem' => 'GPU'),
 		'xorg_log' => array(
 			array('type' => 'F', 'F' => '/var/log/Xorg.0.log', 'cacheable' => true, 'preserve' => true, 'subsystem' => 'System', 'remove_timestamps' => true),
+			array('type' => 'F', 'F' => '~/.local/share/xorg/Xorg.0.log', 'cacheable' => true, 'preserve' => true, 'subsystem' => 'System', 'remove_timestamps' => true),
 			array('type' => 'C', 'C' => 'journalctl -o cat /usr/bin/Xorg', 'cacheable' => true, 'preserve' => true, 'subsystem' => 'System', 'remove_timestamps' => true),
 			array('type' => 'C', 'C' => 'journalctl -o cat /usr/libexec/Xorg.bin', 'cacheable' => true, 'preserve' => true, 'subsystem' => 'System', 'remove_timestamps' => true)
 			),
@@ -147,6 +148,11 @@ class phodevi_vfs
 
 			foreach($tries as &$try)
 			{
+				if($try['type'] == 'F' && isset($try['F'][4]) && substr($try['F'], 0, 2) == '~/')
+				{
+					// Set the home directory
+					$try['F'] = str_replace('~/', pts_core::user_home_directory(), $try['F']);
+				}
 
 				if($try['type'] == 'F' && is_file($try['F']))
 				{
