@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+- pts-core: Rewrite of the local results viewer, now use HTML+JS rather than XSL
 - pts-core: Fix finish-run command functionality
 - pts-core: Fix results getting compacted into single result comparison object when using a local test without version post-fix
 - pts-core: Fix CSV result output when there are missing results
