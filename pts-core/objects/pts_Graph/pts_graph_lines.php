@@ -277,7 +277,7 @@ class pts_graph_lines extends pts_graph_core
 			{
 				$value = isset($result_array[$i]) ? $result_array[$i] : -1;
 
-				if($value < 0 || ($value == 0 && $this->graph_identifiers != null))
+				if($value < 0)
 				{
 					// Draw whatever is needed of the line so far, since there is no result here
 					$this->draw_graph_line_process($poly_points, $paint_color, $regression_plots, $point_counter, $g);
