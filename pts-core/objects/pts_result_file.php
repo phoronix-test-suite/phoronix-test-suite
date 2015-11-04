@@ -521,7 +521,7 @@ class pts_result_file
 	}
 	public function get_xml($to = null)
 	{
-		$xml_writer = new nye_XmlWriter((PTS_IS_CLIENT ? 'pts-results-viewer.xsl' : null));
+		$xml_writer = new nye_XmlWriter();
 		$xml_writer->addXmlNode('PhoronixTestSuite/Generated/Title', $this->get_title());
 		$xml_writer->addXmlNode('PhoronixTestSuite/Generated/LastModified', date('Y-m-d H:i:s'));
 		$xml_writer->addXmlNode('PhoronixTestSuite/Generated/TestClient', pts_core::program_title(true));

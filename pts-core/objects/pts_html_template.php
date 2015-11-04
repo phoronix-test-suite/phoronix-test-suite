@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2011, Phoronix Media
-	Copyright (C) 2011, Michael Larabel
+	Copyright (C) 2011 - 2015, Phoronix Media
+	Copyright (C) 2011 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -29,21 +29,12 @@ class pts_html_template
 	public function __construct($Title = '', $SubTitle = '')
 	{
 		$this->dom = new DOMDocument();
-		$html = $this->dom->createElement('html');
-		$this->dom->appendChild($html);
-		$head = $this->dom->createElement('head');
-		$title = $this->dom->createElement('title', $Title . ($SubTitle != null ? ' - ' . $SubTitle : null));
-		$head->appendChild($title);
-		$html->appendChild($head);
-		$this->dom_body = $this->dom->createElement('body');
-		$html->appendChild($this->dom_body);
+		$this->dom->loadHTMLFile(PTS_CORE_STATIC_PATH . 'basic-template.html');
+		$this->dom_body = $this->dom->getElementById('pts_template_body');
 
-		$p = $this->dom->createElement('h1', 'Phoronix Test Suite');
-		$this->dom_body->appendChild($p);
-
-		$p = $this->dom->createElement('hr');
-		$p->setAttribute('style', 'height: 50px; border: 0;');
-		$this->dom_body->appendChild($p);
+		//$head = $this->dom->getElementById('pts_template_head');
+		//$title = $this->dom->createElement('title', $Title . ($SubTitle != null ? ' - ' . $SubTitle : null));
+		//$head->appendChild($title);
 
 		$this->section_list = $this->dom->createElement('ol');
 		$this->dom_body->appendChild($this->section_list);

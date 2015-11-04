@@ -53,7 +53,7 @@ class pts_webui_main implements pts_webui_interface
 			echo '</ul>';
 			echo '<hr />';
 
-			$sw_component_modal = array(1 => phodevi::read_property('system', 'operating-system'), 2 => phodevi::read_property('system', 'kernel-string'), 3 => phodevi::read_property('system', 'display-driver-string'), 4 => phodevi::read_property('system', 'opengl-driver'), 5 => phodevi::read_property('system', 'compiler'));
+			$sw_component_modal = array(1 => phodevi::read_property('system', 'operating-system'), 2 => phodevi::read_property('system', 'kernel-string'), 3 => phodevi::read_property('system', 'display-driver-string'), 4 => 'OpenGL ' . phodevi::read_property('system', 'opengl-driver'), 5 => phodevi::read_property('system', 'compiler'));
 
 			echo '<ul>';
 			foreach($sw_component_modal as $type => $component)

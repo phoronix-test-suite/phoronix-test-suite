@@ -121,7 +121,7 @@ class phoromatic_main implements pts_webui_interface
 		$main .= '</div>';
 
 		$results_today = phoromatic_server::test_results($_SESSION['AccountID'], strtotime('today'));
-		$results_total = phoromatic_server::test_results_total($_SESSION['AccountID']);
+		$results_total = phoromatic_server::test_results_benchmark_count($_SESSION['AccountID']);
 		$schedules_today = phoromatic_server::schedules_today($_SESSION['AccountID']);
 		$schedules_total = phoromatic_server::schedules_total($_SESSION['AccountID']);
 		$benchmark_tickets_today = phoromatic_server::benchmark_tickets_today($_SESSION['AccountID']);
@@ -129,7 +129,7 @@ class phoromatic_main implements pts_webui_interface
 		<h2>' . pts_strings::plural_handler(count($schedules_today), 'Schedule') . ' Active Today</h2>
 		<h2>' . pts_strings::plural_handler(count($schedules_total), 'Schedule') . ' In Total</h2>
 		<h2>' . pts_strings::plural_handler(count($benchmark_tickets_today), 'Active Benchmark Ticket') . '</h2>
-		<h2>' . pts_strings::plural_handler(count($results_today), 'Test Result') . ' Today / ' . pts_strings::plural_handler(count($results_total), 'Test Result') . ' Total</h2>';
+		<h2>' . pts_strings::plural_handler(count($results_today), 'Test Result') . ' Today / ' . pts_strings::plural_handler($results_total, 'Benchmark Result') . ' Total</h2>';
 		$main .= '<hr /><h2>Today\'s Scheduled Tests</h2>';
 
 		foreach($schedules_today as &$row)

@@ -112,16 +112,6 @@ class pts_client
 			pts_file_io::mkdir($dir);
 		}
 
-		// Setup PTS Results Viewer
-		pts_file_io::mkdir(PTS_SAVE_RESULTS_PATH . 'pts-results-viewer');
-
-		foreach(pts_file_io::glob(PTS_RESULTS_VIEWER_PATH . '*') as $result_viewer_file)
-		{
-			copy($result_viewer_file, PTS_SAVE_RESULTS_PATH . 'pts-results-viewer/' . basename($result_viewer_file));
-		}
-
-		copy(PTS_CORE_STATIC_PATH . 'images/pts-106x55.png', PTS_SAVE_RESULTS_PATH . 'pts-results-viewer/pts-106x55.png');
-
 		// Setup ~/.phoronix-test-suite/xsl/
 		pts_file_io::mkdir(PTS_USER_PATH . 'xsl/');
 		copy(PTS_CORE_STATIC_PATH . 'xsl/pts-test-installation-viewer.xsl', PTS_USER_PATH . 'xsl/' . 'pts-test-installation-viewer.xsl');
@@ -853,9 +843,7 @@ class pts_client
 		{
 			pts_file_io::mkdir($save_to_dir);
 		}
-
-		file_put_contents($save_to_dir . '/index.html', '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"><html><head><title>Phoronix Test Suite</title><meta http-equiv="REFRESH" content="0;url=composite.xml"></HEAD><BODY></BODY></HTML>');
-
+		copy(PTS_CORE_STATIC_PATH . 'result-viewer.html', $save_to_dir . '/index.html');
 		return $save_to_dir;
 	}
 	public static function remove_installed_test(&$test_profile)
@@ -890,24 +878,6 @@ class pts_client
 		}
 
 		return $reported;
-	}
-	public static function xsl_results_viewer_graph_template()
-	{
-		$raw_xsl = file_get_contents(PTS_RESULTS_VIEWER_PATH . 'pts-results-viewer.xsl');
-
-		// System Tables
-		$conversions = array('systems', 'detailed_component', 'radar', 'overview', 'visualize');
-		foreach($conversions as $convert)
-		{
-			$graph_string = pts_svg_dom::html_embed_code('result-graphs/' . $convert . '.BILDE_EXTENSION', 'SVG', array('width' => 'auto', 'height' => 'auto'), true);
-			$raw_xsl = str_replace('<!-- ' . strtoupper($convert) . ' TAG -->', $graph_string, $raw_xsl);
-		}
-
-		// Result Graphs
-		$graph_string = pts_svg_dom::html_embed_code('result-graphs/<xsl:number value="position()" />.BILDE_EXTENSION', 'SVG', array('width' => 'auto', 'height' => 'auto'), true);
-		$raw_xsl = str_replace('<!-- GRAPH TAG -->', $graph_string, $raw_xsl);
-
-		return $raw_xsl;
 	}
 	public static function generate_result_file_graphs($test_results_identifier, $save_to_dir = false, $extra_attributes = null)
 	{
@@ -1045,7 +1015,7 @@ class pts_client
 		// Save XSL
 		if(count($generated_graphs) > 0 && $save_to_dir)
 		{
-			file_put_contents($save_to_dir . '/pts-results-viewer.xsl', pts_client::xsl_results_viewer_graph_template($generated_graph_tables));
+			copy(PTS_CORE_STATIC_PATH . 'result-viewer.html', $save_to_dir . '/index.html');
 		}
 
 		return $generated_graphs;
@@ -1402,7 +1372,7 @@ class pts_client
 
 		foreach(array_keys($extra_vars) as $key)
 		{
-			$var_string .= 'export ' . $key . '=' . $extra_vars[$key] . ';';
+			$var_string .= 'export ' . $key . '=' . str_replace(' ', '\ ', trim($extra_vars[$key])) . ';';
 		}
 
 		$var_string .= ' ';

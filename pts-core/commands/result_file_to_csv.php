@@ -42,6 +42,10 @@ class result_file_to_csv implements pts_option_interface
 
 		echo $result_output;
 	}
+	public static function invalid_command($passed_args = null)
+	{
+		pts_tests::invalid_command_helper($passed_args);
+	}
 }
 
 ?>

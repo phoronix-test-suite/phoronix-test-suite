@@ -61,6 +61,18 @@ class pts_test_result_buffer
 	{
 		return strcmp($a->get_result_value(), $b->get_result_value());
 	}
+	public function find_buffer_item($identifier)
+	{
+		foreach($this->buffer_items as &$buf)
+		{
+			if($buf->get_result_identifier() == $identifier)
+			{
+				return $buf;
+			}
+		}
+
+		return false;
+	}
 	public function add_buffer_item($buffer_item)
 	{
 		if(!$this->buffer_contained($buffer_item))

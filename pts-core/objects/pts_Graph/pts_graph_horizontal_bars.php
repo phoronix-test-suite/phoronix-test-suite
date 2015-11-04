@@ -161,7 +161,7 @@ class pts_graph_horizontal_bars extends pts_graph_core
 
 				if((self::text_string_width($value, $this->i['identifier_size']) + 2) < $graph_size)
 				{
-					if(isset($this->d['identifier_notes'][$buffer_item->get_result_identifier()]) && $this->i['compact_result_view'] == false)
+					if(isset($this->d['identifier_notes'][$buffer_item->get_result_identifier()]) && $this->i['compact_result_view'] == false && !$this->is_multi_way_comparison)
 					{
 						$note_size = self::$c['size']['key'] - 2;
 						$this->svg_dom->add_text_element($this->d['identifier_notes'][$buffer_item->get_result_identifier()], array('x' => ($this->i['left_start'] + 4), 'y' => ($px_bound_top + self::$c['size']['key']), 'font-size' => $note_size, 'fill' => self::$c['color']['body_text'], 'text-anchor' => 'start'));

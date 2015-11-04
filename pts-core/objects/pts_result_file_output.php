@@ -103,8 +103,10 @@ class pts_result_file_output
 		{
 			$csv_output .= '"' . $result_object->test_profile->get_title() . ' - ' . $result_object->get_arguments_description() . '"';
 
-			foreach($result_object->test_result_buffer->get_values() as $value)
+			foreach($columns as $column)
 			{
+				$buffer_item = $result_object->test_result_buffer->find_buffer_item($column);
+				$value = $buffer_item != false ? $buffer_item->get_result_value() : null;
 				$csv_output .= $delimiter . $value;
 			}
 			$csv_output .= PHP_EOL;

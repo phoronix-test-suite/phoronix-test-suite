@@ -119,7 +119,6 @@ function pts_define_directories()
 		pts_define('PTS_OPENBENCHMARKING_SCRATCH_PATH', '/var/cache/phoronix-test-suite/openbenchmarking.org/');
 		pts_define('PTS_TEST_PROFILE_PATH', PTS_USER_PATH . 'test-profiles/');
 		pts_define('PTS_TEST_SUITE_PATH', PTS_USER_PATH . 'test-suites/');
-		pts_define('PTS_RESULTS_VIEWER_PATH', PTS_CORE_PATH . 'results-viewer/');
 	}
 	else if(PTS_IS_CLIENT)
 	{
@@ -132,7 +131,6 @@ function pts_define_directories()
 		pts_define('PTS_OPENBENCHMARKING_SCRATCH_PATH', PTS_USER_PATH . 'openbenchmarking.org/');
 		pts_define('PTS_TEST_PROFILE_PATH', PTS_USER_PATH . 'test-profiles/');
 		pts_define('PTS_TEST_SUITE_PATH', PTS_USER_PATH . 'test-suites/');
-		pts_define('PTS_RESULTS_VIEWER_PATH', PTS_CORE_PATH . 'results-viewer/');
 	}
 	else if(defined('PTS_STORAGE_PATH'))
 	{
