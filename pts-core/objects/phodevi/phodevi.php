@@ -135,9 +135,16 @@ class phodevi extends phodevi_base
 	}
 	public static function read_sensor($sensor)
 	{
-        $value = $sensor->read_sensor();
+        if ($sensor instanceof phodevi_sensor)
+		{
+			$sensor_object = $sensor;
+		}
+		else
+		{
+			$sensor_object = new self::$sensors[$sensor[0]][$sensor[1]](null, null);
+		}
 
-		return $value;
+		return $sensor_object->read_sensor();
 	}
     public static function read_sensor_object_unit(&$sensor_object)
     {
