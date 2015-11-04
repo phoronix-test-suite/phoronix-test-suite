@@ -10,6 +10,7 @@ Phoronix Test Suite (Git)
 - pts-core: Other small fixes
 - phodevi: Support for finding the Xorg.0.log in ~/.local/share/xorg/ with Debian now using that for non-root X Server
 - phoromatic: Tweaks
+- documentation: Update HTML template style
 
 Phoronix Test Suite 6.0 Milestone 4
 25 October 2015
