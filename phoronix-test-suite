@@ -99,7 +99,12 @@ then
 	echo "The command to likely run for your operating system is: "
 	echo "# apt-get install php5-cli"
 	echo " "
-elif [ -x /usr/bin/yum ] || [ -x /usr/bin/dnf ]
+elif [ -x /usr/bin/dnf ]
+then
+	echo "The command to likely run for your operating system is: "
+	echo "# dnf install php-cli php-xml"
+	echo " "
+elif [ -x /usr/bin/yum ]
 then
 	echo "The command to likely run for your operating system is: "
 	echo "# yum install php-cli php-xml"
