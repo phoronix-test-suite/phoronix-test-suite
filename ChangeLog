@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 6.0 Milestone 5
+4 November 2015
 
 - pts-core: Rewrite of the local results viewer, now use HTML+JS rather than XSL
 - pts-core: Fix finish-run command functionality
