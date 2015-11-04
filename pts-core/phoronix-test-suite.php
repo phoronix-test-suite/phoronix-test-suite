@@ -71,6 +71,7 @@ if(getenv('PTS_MODE') == 'CLIENT' && ini_get('open_basedir') != false)
 	else
 	{
 		echo PHP_EOL . 'NOTICE: The php.ini configuration is using the "open_basedir" directive, which may prevent some parts of the Phoronix Test Suite from working. See the Phoronix Test Suite documentation for more details and to disable this setting.' . PHP_EOL;
+		sleep(1);
 	}
 }
 
