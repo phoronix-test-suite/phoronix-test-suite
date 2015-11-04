@@ -29,23 +29,16 @@ class phodevi_sensor_monitor
 	{
 		if($recover_dir != false && is_dir($recover_dir) && is_array($to_monitor))
 		{
-			$this->sensors_to_monitor = $to_monitor;
+			$this->process_sensor_list($to_monitor);
 			$this->sensor_storage_dir = $recover_dir;
 		}
 		else
 		{
 			$this->sensor_storage_dir = pts_client::create_temporary_directory('sensors');
-
-			$monitor_all = in_array('all', $to_monitor);
 			$this->sensors_to_monitor = array();
-			foreach(phodevi::supported_sensors() as $sensor)
-			{
-				if($monitor_all || in_array(phodevi::sensor_identifier($sensor), $to_monitor) || in_array('all.' . $sensor[0], $to_monitor))
-				{
-					array_push($this->sensors_to_monitor, $sensor);
-					file_put_contents($this->sensor_storage_dir . phodevi::sensor_identifier($sensor), null);
-				}
-			}
+			$to_monitor['all'] = array();
+
+			$this->process_sensor_list($to_monitor);
 		}
 	}
 	public function details()
@@ -64,7 +57,7 @@ class phodevi_sensor_monitor
 			$match = explode(',', $match);
 			foreach($this->sensors_to_monitor as $sensor)
 			{
-				if(in_array(phodevi::sensor_identifier($sensor), $match) || in_array('all.' . $sensor[0], $match))
+				if(in_array(phodevi::sensor_object_identifier($sensor), $match) || in_array('all.' . $sensor[0], $match))
 				{
 					array_push($share, $sensor);
 				}
@@ -97,19 +90,19 @@ class phodevi_sensor_monitor
 			return false;
 		}
 
-		foreach($this->sensors_to_monitor as $sensor)
+		foreach($this->sensors_to_monitor as &$sensor)
 		{
 			$sensor_value = phodevi::read_sensor($sensor);
 
-			if($sensor_value != -1 && is_file($this->sensor_storage_dir . phodevi::sensor_identifier($sensor)))
+			if($sensor_value != -1 && is_file($this->sensor_storage_dir . phodevi::sensor_object_identifier($sensor)))
 			{
-				file_put_contents($this->sensor_storage_dir . phodevi::sensor_identifier($sensor), $sensor_value . PHP_EOL,  FILE_APPEND);
+				file_put_contents($this->sensor_storage_dir . phodevi::sensor_object_identifier($sensor), $sensor_value . PHP_EOL,  FILE_APPEND);
 			}
 		}
 	}
-	private function read_sensor_data($sensor, $offset = 0)
+	private function read_sensor_data(&$sensor, $offset = 0)
 	{
-		$log_f = file_get_contents($this->sensor_storage_dir . phodevi::sensor_identifier($sensor));
+		$log_f = file_get_contents($this->sensor_storage_dir . phodevi::sensor_object_identifier($sensor));
 		$lines = explode(PHP_EOL, $log_f);
 
 		if($offset != 0)
@@ -127,7 +120,7 @@ class phodevi_sensor_monitor
 
 		return array_values($lines);
 	}
-	public function read_sensor_results($sensor, $offset = 0)
+	public function read_sensor_results(&$sensor, $offset = 0)
 	{
 		$results = $this->read_sensor_data($sensor, $offset);
 
@@ -136,7 +129,93 @@ class phodevi_sensor_monitor
 			return false;
 		}
 
-		return array('id' => phodevi::sensor_identifier($sensor), 'name' => phodevi::sensor_name($sensor), 'results' => $results, 'unit' => phodevi::read_sensor_unit($sensor));
+		return array('id' => phodevi::sensor_object_identifier($sensor), 'name' => phodevi::sensor_object_name($sensor), 'results' => $results, 'unit' => phodevi::read_sensor_object_unit($sensor));
+	}
+
+	// Create sensor objects basing on the sensor parameter array.
+	private function process_sensor_list(&$sensor_parameters)
+	{
+		$monitor_all = array_key_exists('all', $sensor_parameters);
+		foreach (phodevi::supported_sensors() as $sensor)
+		{
+			// instantiate sensor class if:
+			// a) we want to monitor all the available sensors,
+			// b) we want to monitor all the available sensors of the specified type,
+			// c) sensor type and name was passed in an environmental variable
+
+			// ($sensor[0] is the type, $sensor[1] is the name, $sensor[2] is the class name)
+
+			$sensor_type_exists = array_key_exists($sensor[0], $sensor_parameters);
+			$sensor_name_exists = $sensor_type_exists && array_key_exists($sensor[1], $sensor_parameters[$sensor[0]]);
+			$monitor_all_of_this_type = $sensor_type_exists && array_key_exists('all', $sensor_parameters[$sensor[0]]);
+			$monitor_all_of_this_sensor = $sensor_type_exists && $sensor_name_exists
+					&& in_array('all', $sensor_parameters[$sensor[0]][$sensor[1]]);
+			$is_cgroup_sensor = $sensor[0] === 'cgroup';
+
+			if (($monitor_all && !$is_cgroup_sensor) || $monitor_all_of_this_type || $sensor_name_exists )
+			{
+				// in some cases we want to create objects representing every possible device supported by the sensor
+				$create_all = $monitor_all || $monitor_all_of_this_type || $monitor_all_of_this_sensor;
+				$this->create_sensor_instances($sensor, $sensor_parameters, $create_all);
+			}
+		}
+
+		if (count($this->sensors_to_monitor) == 0)
+		{
+			throw new Exception('nothing to monitor');
+		}
+	}
+
+	private function create_sensor_instances(&$sensor, &$sensor_parameters, $create_all)
+	{
+		if ($create_all)
+		{
+			$this->create_all_sensor_instances($sensor);
+			return;
+		}
+
+		$sensor_instances = $sensor_parameters[$sensor[0]][$sensor[1]];
+
+		// If no instances specified, create one with default parameters.
+		if (empty($sensor_instances) )
+		{
+			$this->create_single_sensor_instance($sensor, 0, NULL);
+			return;
+		}
+		// Create objects for all specified instances of the sensor.
+		foreach ($sensor_instances as $instance => $param)
+		{
+			$this->create_single_sensor_instance($sensor, $instance, $param);
+		}
+	}
+
+	// Create instances for all of the devices supported by specified sensor.
+	private function create_all_sensor_instances(&$sensor)
+	{
+		$supported_devices = call_user_func(array($sensor[2], 'get_supported_devices'));
+		$instance_no = 0;
+
+		if ($supported_devices === NULL)
+		{
+			$this->create_single_sensor_instance($sensor, 0, NULL);
+			return;
+		}
+
+		foreach ($supported_devices as $device)
+		{
+			$this->create_single_sensor_instance($sensor, $instance_no++, $device);
+		}
+	}
+
+	// Create sensor object if parameters passed to it are correct.
+	private function create_single_sensor_instance($sensor, $instance, $param)
+	{
+		if (call_user_func(array($sensor[2], 'parameter_check'), $param) === true)
+		{
+			$sensor_object = new $sensor[2]($instance, $param);
+			array_push($this->sensors_to_monitor, $sensor_object);
+			file_put_contents($this->sensor_storage_dir . phodevi::sensor_object_identifier($sensor_object), null);
+		}
 	}
 }
 
