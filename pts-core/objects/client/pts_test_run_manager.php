@@ -1651,7 +1651,7 @@ class pts_test_run_manager
 					$run_index = -1;
 				}
 
-				if((count($virtual_suite_tests) > 2 && in_array((count($virtual_suite_tests) - 1), $run_index)) || $run_index == -1)
+				if((count($virtual_suite_tests) > 2 && is_array($run_index) && in_array((count($virtual_suite_tests) - 1), $run_index)) || $run_index == -1)
 				{
 					// The appended 'All Tests In Suite' was selected, so run all
 				}
