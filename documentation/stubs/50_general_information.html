@@ -34,6 +34,13 @@
 <p>- If you want the specified test(s) to run in a loop for a set period of time, use the <em>TOTAL_LOOP_TIME</em> environment variable. For instance, running <em>TOTAL_LOOP_TIME=120 phoronix-test-suite benchmark ffmpeg</em> would keep running the ffmpeg test profile for 120 minutes.</p>
 <p>- If you want the specified test(s) to run in a loop for a set number of times, use the <em>TOTAL_LOOP_COUNT</em> environment variable. For instance, running <em>TOTAL_LOOP_COUNT=3 phoronix-test-suite benchmark ffmpeg</em> would keep running the ffmpeg test profile three times.</p>
 <p>- When any tests are being installed and when tests are being run, a lock is created in the system's temporary directory with the name <em>phoronix-test-suite.active</em> (i.e. <em>/tmp/phoronix-test-suite.active</em>) and is removed upon completion. Thus if you have any system scripts that you wish to run when tests are not running or being installed as to not impact the results, one simple way to handle this is by having the script check for the existence of this lock.</p>
+<h2>Troubleshooting</h2>
+In the event that a test profile fails to install or run, the following general troubleshooting steps may be helpful:
+
+<p>- If a test profile fails immediately after starting, check the test profile's directory in <em>~/.phoronix-test-suite/installed-tests/</em> to confirm that the needed files are present. On platforms without External Dependencies support (Windows), it may be necessary to download the files manually and place them in this directory. If this is the case, you will notice that the "Downloading" phase of test installation completes instantly.</p>
+<p>- Inspect the scripts inside the above test profile's directory and confirm that directories or search paths for the test correspond to those on your system</p>
+<p>- Try running the test profile with the <em>debug-benchmark</em> command, or reinstalling with the <em>debug-install</em> command and make note of any unusual output.
+
 <h2>Configuration</h2>
 <p>- The user configuration options for the Phoronix Test Suite are stored in <em>~/.phoronix-test-suite/user-config.xml</em>. The batch mode options are also stored within this file and those can be adjusted by running <em>phoronix-test-suite batch-setup</em>.</p>
 <p>- The colors, size, and other attributes for the graphs found within the Phoronix Test Suite Results Viewer can be modified via the file <em>~/.phoronix-test-suite/graph-config.json</em>.</p>
