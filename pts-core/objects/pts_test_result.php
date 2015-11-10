@@ -38,9 +38,9 @@ class pts_test_result
 	public $exec_binary_prepend = null;
 	public $test_result_standard_output = null;
 
-	public function __construct(&$test_profile)
+	public function __construct($test_profile)
 	{
-		$this->test_profile = $test_profile;
+		$this->test_profile = clone $test_profile;
 		$this->result = 0;
 	}
 	public function __clone()
