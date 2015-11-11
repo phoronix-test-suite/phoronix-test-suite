@@ -20,29 +20,30 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class sys_iowait implements phodevi_sensor
+class sys_iowait extends phodevi_sensor
 {
-	public static function get_type()
-	{
-		return 'sys';
-	}
-	public static function get_sensor()
-	{
-		return 'iowait';
-	}
-	public static function get_unit()
-	{
-		return 'Percent';
-	}
-	public static function support_check()
-	{
-		$test = self::read_sensor();
-		return is_numeric($test) && $test != -1;
-	}
-	public static function read_sensor()
-	{		$iowait = -1;
+	const SENSOR_TYPE = 'sys';
+	const SENSOR_SENSES = 'iowait';
+	const SENSOR_UNIT = 'Percent';
+	const INSTANT_MEASUREMENT = false;
 
-		if(phodevi::is_linux() && is_file('/proc/stat'))
+	public function read_sensor()
+	{
+		$iowait = -1;
+
+		if(phodevi::is_linux())
+		{
+			$iowait = $this->sys_iowait_linux();
+		}
+
+		return $iowait;
+	}
+
+	private function sys_iowait_linux()
+	{
+		$iowait = -1;
+
+		if(is_file('/proc/stat'))
 		{
 			$start_stat = pts_file_io::file_get_contents('/proc/stat');
 			sleep(1);
@@ -58,11 +59,12 @@ class sys_iowait implements phodevi_sensor
 
 			$diff_iowait = $end_stat[6] - $start_stat[6];
 
-			$iowait = pts_math::set_precision(1000 * $diff_iowait / $diff_cpu_total / 10, 2);	
+			$iowait = pts_math::set_precision(1000 * $diff_iowait / $diff_cpu_total / 10, 2);
 		}
 
 		return $iowait;
 	}
+
 }
 
 ?>

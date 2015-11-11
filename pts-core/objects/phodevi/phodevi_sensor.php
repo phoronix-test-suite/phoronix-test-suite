@@ -18,15 +18,86 @@
 
 	You should have received a copy of the GNU General Public License
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
-interface phodevi_sensor
+abstract class phodevi_sensor
 {
-	public static function get_type();
-	public static function get_sensor();
-	public static function get_unit();
-	public static function support_check();
-	public static function read_sensor();
+    const SENSOR_TYPE = '';             //eg. cpu
+	const SENSOR_SENSES = '';           //eg. power-usage
+	const SENSOR_UNIT = '';             //eg. miliwatts
+    const INSTANT_MEASUREMENT = true;
+
+	protected $instance_number;
+
+	function __construct($instance, $parameter_array)
+	{
+		$this->instance_number = intval($instance);
+	}
+
+	public static function get_type()
+	{
+		return static::SENSOR_TYPE;
+	}
+
+	public static function get_sensor()
+	{
+		return static::SENSOR_SENSES;
+	}
+
+	public static function get_unit()
+	{
+		return static::SENSOR_UNIT;
+	}
+
+    public function is_instant()
+    {
+        return static::INSTANT_MEASUREMENT;
+    }
+
+	public function get_instance()
+	{
+		return $this->instance_number;
+	}
+
+	/*
+	 * Sensor-specific functions
+	 */
+
+	// Return human-readable string containing name of the device monitored
+	// by the sensor instance. If your sensor takes no parameters, you can
+	// leave this function as it is.
+	public function get_readable_device_name()
+	{
+		return null;
+	}
+
+	// Check if passed parameters are correct. You probably want to
+	// override this function if your sensor supports parametrization.
+	public static function parameter_check($parameter_array)
+	{
+		return true;
+	}
+
+	// Return array containing all the device name strings supported by the sensor.
+	// They can be passed in MONITOR environmental variable to create object
+	// responsible for monitoring specific device. You probably want to
+	// override this function if your sensor supports parametrization.
+	// It should return NULL on platforms where parameters are unsupported.
+	public static function get_supported_devices()
+	{
+		return NULL;
+	}
+
+	// Check if sensor is supported on the current platform. In most cases you
+    // do not need to override this one.
+	public function support_check()
+	{
+		$test = $this->read_sensor();
+		return is_numeric($test) && $test != -1;
+	}
+
+	// Read the sensor value and return it.
+	abstract public function read_sensor();
 }
 
 ?>

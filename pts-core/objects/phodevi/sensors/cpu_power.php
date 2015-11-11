@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2011, Phoronix Media
-	Copyright (C) 2011, Michael Larabel
+	Copyright (C) 2009 - 2013, Phoronix Media
+	Copyright (C) 2009 - 2013, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -20,50 +20,46 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class cpu_power implements phodevi_sensor
+class cpu_power extends phodevi_sensor
 {
-	public static function get_type()
+	const SENSOR_TYPE = 'cpu';
+	const SENSOR_SENSES = 'power';
+	const SENSOR_UNIT = 'Watts';
+    
+
+	public function read_sensor()
 	{
-		return 'cpu';
+		if (phodevi::is_linux())
+        {
+            return $this->cpu_power_linux();
+        }
+        return -1;      // TODO make -1 a named constant
 	}
-	public static function get_sensor()
+
+	private function cpu_power_linux()
 	{
-		return 'power';
-	}
-	public static function get_unit()
-	{
-		return 'Watts';
-	}
-	public static function support_check()
-	{
-		$test = self::read_sensor();
-		return is_numeric($test) && $test != -1;
-	}
-	public static function read_sensor()
-	{
-		// Read the processor power consumption (not the overall system power consumption exposed by sys.power sensor)
 		$cpu_watts = -1;
+        
+        // Try hwmon interface for AMD 15h (Bulldozer FX CPUs) where this support was introduced for AMD CPUs and exposed by the fam15h_power hwmon driver
+        // The fam15h_power driver doesn't expose the power consumption on a per-core/per-package basis but only an average
+        $hwmon_watts = phodevi_linux_parser::read_sysfs_node('/sys/class/hwmon/hwmon*/device/power1_input', 'POSITIVE_NUMERIC', array('name' => 'fam15h_power'));
 
-		if(phodevi::is_linux())
-		{
-			// Try hwmon interface for AMD 15h (Bulldozer FX CPUs) where this support was introduced for AMD CPUs and exposed by the fam15h_power hwmon driver
-			// The fam15h_power driver doesn't expose the power consumption on a per-core/per-package basis but only an average
-			$hwmon_watts = phodevi_linux_parser::read_sysfs_node('/sys/class/hwmon/hwmon*/device/power1_input', 'POSITIVE_NUMERIC', array('name' => 'fam15h_power'));
+        if($hwmon_watts != -1)
+        {
+            if($hwmon_watts > 1000000)
+            {
+                // convert to Watts
+                $hwmon_watts = $hwmon_watts / 1000000;
+            }
 
-			if($hwmon_watts != -1)
-			{
-				if($hwmon_watts > 1000000)
-				{
-					// convert to Watts
-					$hwmon_watts = $hwmon_watts / 1000000;
-				}
-
-				$cpu_watts = pts_math::set_precision($hwmon_watts, 2);
-			}
-		}
-
-		return $cpu_watts;
+            $cpu_watts = pts_math::set_precision($hwmon_watts, 2);
+        }
+        
+        return $cpu_watts;
 	}
+
+
+
 }
 
 ?>

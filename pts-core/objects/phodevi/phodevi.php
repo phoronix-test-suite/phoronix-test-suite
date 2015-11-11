@@ -87,7 +87,7 @@ class phodevi extends phodevi_base
 			{
 				foreach(array_keys($sensor) as $sensor_senses)
 				{
-					array_push($available_sensors, array($sensor_type, $sensor_senses));
+					array_push($available_sensors, array($sensor_type, $sensor_senses, self::$sensors[$sensor_type][$sensor_senses]));
 				}
 			}
 		}
@@ -135,27 +135,54 @@ class phodevi extends phodevi_base
 	}
 	public static function read_sensor($sensor)
 	{
-		$value = false;
-
-		if(isset(self::$sensors[$sensor[0]][$sensor[1]]))
+        if ($sensor instanceof phodevi_sensor)
 		{
-			$value = call_user_func(array(self::$sensors[$sensor[0]][$sensor[1]], 'read_sensor'));
+			$sensor_object = $sensor;
+		}
+		else
+		{
+			$sensor_object = new self::$sensors[$sensor[0]][$sensor[1]](null, null);
 		}
 
-		return $value;
+		return $sensor_object->read_sensor();
 	}
+    public static function read_sensor_object_unit(&$sensor_object)
+    {
+        $sensor = array($sensor_object->get_type(), $sensor_object->get_sensor(), get_class($sensor_object));
+        return self::read_sensor_unit($sensor);
+    }
 	public static function read_sensor_unit($sensor)
 	{
 		return call_user_func(array(self::$sensors[$sensor[0]][$sensor[1]], 'get_unit'));
 	}
 	public static function sensor_supported($sensor)
 	{
-		return isset(self::$sensors[$sensor[0]][$sensor[1]]) && call_user_func(array(self::$sensors[$sensor[0]][$sensor[1]], 'support_check'));
+		$sensor_object = new self::$sensors[$sensor[0]][$sensor[1]](null, null);
+
+		return isset(self::$sensors[$sensor[0]][$sensor[1]]) && $sensor_object->support_check();
 	}
+    public static function sensor_object_identifier(&$sensor_object)
+    {
+        $sensor = array($sensor_object->get_type(), $sensor_object->get_sensor(), get_class($sensor_object));
+        return self::sensor_identifier($sensor) . '.' . $sensor_object->get_instance();
+    }
 	public static function sensor_identifier($sensor)
 	{
 		return $sensor[0] . '.' . $sensor[1];
 	}
+	public static function sensor_object_name(&$sensor_object)
+    {
+        $sensor = array($sensor_object->get_type(), $sensor_object->get_sensor(), get_class($sensor_object));
+        $name = self::sensor_name($sensor);
+        $params = $sensor_object->get_readable_device_name();
+
+        if ($params !== NULL)
+        {
+            $name .= ' (' . $params . ')';
+        }
+
+        return $name;
+    }
 	public static function sensor_name($sensor)
 	{
 		$type = call_user_func(array(self::$sensors[$sensor[0]][$sensor[1]], 'get_type'));

@@ -20,51 +20,47 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class sys_fanspeed implements phodevi_sensor
+class sys_fanspeed extends phodevi_sensor
 {
-	public static function get_type()
-	{
-		return 'sys';
-	}
-	public static function get_sensor()
-	{
-		return 'fan-speed';
-	}
-	public static function get_unit()
-	{
-		return 'RPMs';
-	}
-	public static function support_check()
-	{
-		$test = self::read_sensor();
-		return is_numeric($test) && $test != -1;
-	}
-	public static function read_sensor()
+	const SENSOR_TYPE = 'sys';
+	const SENSOR_SENSES = 'fan-speed';
+	const SENSOR_UNIT = 'RPM';
+
+	public function read_sensor()
 	{
 		$fan_speed = -1;
 
 		if(phodevi::is_linux())
 		{
-			$raw_fan = phodevi_linux_parser::read_sysfs_node('/sys/class/hwmon/hwmon*/device/fan2_input', 'POSITIVE_NUMERIC');
-
-			if($raw_fan == -1)
-			{
-				$raw_fan = phodevi_linux_parser::read_sysfs_node('/sys/class/hwmon/hwmon*/device/fan3_input', 'POSITIVE_NUMERIC');
-			}
-
-			if($raw_fan == -1)
-			{
-				$raw_fan = phodevi_linux_parser::read_sysfs_node('/sys/class/hwmon/hwmon*/device/fan4_input', 'POSITIVE_NUMERIC');
-			}
-
-			if($raw_fan != -1)
-			{
-				$fan_speed = $raw_fan;
-			}
+			$fan_speed = $this->sys_fanspeed_linux();
 		}
 
 		return $fan_speed;
 	}
+
+	private function sys_fanspeed_linux()
+	{
+		$fan_speed = -1;
+		$raw_fan = phodevi_linux_parser::read_sysfs_node('/sys/class/hwmon/hwmon*/fan2_input', 'POSITIVE_NUMERIC');
+
+		if($raw_fan == -1)
+		{
+			$raw_fan = phodevi_linux_parser::read_sysfs_node('/sys/class/hwmon/hwmon*/fan3_input', 'POSITIVE_NUMERIC');
+		}
+
+		if($raw_fan == -1)
+		{
+			$raw_fan = phodevi_linux_parser::read_sysfs_node('/sys/class/hwmon/hwmon*/fan4_input', 'POSITIVE_NUMERIC');
+		}
+
+		if($raw_fan != -1)
+		{
+			$fan_speed = $raw_fan;
+		}
+
+		return $fan_speed;
+	}
+
 }
 
 ?>

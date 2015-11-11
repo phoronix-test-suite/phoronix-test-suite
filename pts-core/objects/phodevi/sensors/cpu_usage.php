@@ -20,67 +20,134 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class cpu_usage implements phodevi_sensor
+class cpu_usage extends phodevi_sensor
 {
-	public static function get_type()
-	{
-		return 'cpu';
-	}
-	public static function get_sensor()
-	{
-		return 'usage';
-	}
-	public static function get_unit()
-	{
-		return 'Percent';
-	}
-	public static function support_check()
-	{
-		$test = self::read_sensor();
-		return is_numeric($test) && $test != -1;
-	}
-	public static function read_sensor()
-	{
-		// Determine current percentage for processor usage
-		if(phodevi::is_linux() || phodevi::is_bsd())
-		{
-			$start_load = self::cpu_load_array(-1);
-			sleep(1);
-			$end_load = self::cpu_load_array(-1);
-	
-			for($i = 0; $i < count($end_load); $i++)
-			{
-				$end_load[$i] -= $start_load[$i];
-			}
+	const SENSOR_TYPE = 'cpu';
+	const SENSOR_SENSES = 'usage';
+	const SENSOR_UNIT = 'Percent';
+    const INSTANT_MEASUREMENT = false;
 
-			$percent = (($sum = array_sum($end_load)) == 0 ? 0 : 100 - (($end_load[(count($end_load) - 1)] * 100) / $sum));
-		}
-		else if(phodevi::is_solaris())
+	const PROC_STAT_IDLE_COL = 3;		//CPU idle time - it's the third number in the line (starting from 0)
+
+	private $cpu_to_monitor;
+
+	function __construct($instance, $parameter)
+	{
+		parent::__construct($instance, $parameter);
+
+		if ($parameter === NULL)
 		{
-			// TODO: Add support for monitoring load on a per-core basis (through mpstat maybe?)
-			$info = explode(' ', pts_strings::trim_spaces(pts_arrays::last_element(explode("\n", trim(shell_exec('sar -u 1 1 2>&1'))))));
-			$percent = $info[1] + $info[2];
-		}
-		else if(phodevi::is_macosx())
-		{
-			// CPU usage for user
-			$top = shell_exec('top -n 1 -l 1 2>&1');
-			$top = substr($top, strpos($top, 'CPU usage: ') + 11);
-			$percent = substr($top, 0, strpos($top, '%'));
+			$this->cpu_to_monitor = "summary";
 		}
 		else
 		{
-			$percent = null;
+			$this->cpu_to_monitor = $parameter;
+		}
+	}
+
+	public static function parameter_check($parameter)
+	{
+		if ($parameter === null || in_array($parameter, self::get_supported_devices() ) )
+		{
+			return true;
 		}
 
-		if(!is_numeric($percent) || $percent < 0 || $percent > 100)
+		return false;
+	}
+
+	public function get_readable_device_name()
+	{
+		if ($this->cpu_to_monitor === "summary")
+		{
+			return 'Summary';
+		}
+		else
+		{
+			return strtoupper($this->cpu_to_monitor);
+		}
+	}
+
+	public static function get_supported_devices()
+	{
+		if (phodevi::is_linux())
+        {
+            $cpu_list = shell_exec("cat /proc/stat | grep cpu | awk '{print $1}'");
+            $cpu_array = explode("\n", $cpu_list);
+
+            $supported = array_slice($cpu_array, 1, count($cpu_array) - 2);
+            array_push($supported, 'summary');
+
+            return $supported;
+        }
+        
+        // Currently per-CPU monitoring is supported on Linux only.
+        return NULL;
+	}
+
+	public function read_sensor()
+	{
+		// Determine current percentage for core usage
+		// Default core to read is the first one (number 0)
+		if (phodevi::is_linux() || phodevi::is_bsd())
+		{
+			$percent = $this->cpu_usage_linux_bsd();
+        }
+        elseif (phodevi::is_solaris())
+        {
+            $percent = $this->cpu_usage_solaris();
+        }
+        elseif (phodevi::is_macosx())
+		{
+            $percent = $this->cpu_usage_macosx();
+        }
+
+		if(!isset($percent) || !is_numeric($percent) || $percent < 0 || $percent > 100)
 		{
 			$percent = -1;
 		}
 
 		return pts_math::set_precision($percent, 2);
 	}
-	private static function cpu_load_array($read_core = -1)
+    
+    private function cpu_usage_linux_bsd()
+    {
+        $start_load = self::cpu_load_array($this->cpu_to_monitor);
+        //TODO make sleep duration configurable by envvar
+        usleep(500000);
+        $end_load = self::cpu_load_array($this->cpu_to_monitor);
+
+        for($i = 0; $i < count($end_load); $i++)
+        {
+            $end_load[$i] -= $start_load[$i];
+        }
+
+        $percent = (($sum = array_sum($end_load)) == 0 ? 0 : 100 - (($end_load[self::PROC_STAT_IDLE_COL] * 100) / $sum));
+		return $percent;
+    }
+    
+    private function cpu_usage_solaris()
+    {
+        //TODO test this on Solaris
+        //TODO: Add support for monitoring load on a per-core basis (through mpstat maybe?)
+        $info = explode(' ', pts_strings::trim_spaces(pts_arrays::last_element(explode("\n", trim(shell_exec('sar -u 1 1 2>&1'))))));
+        $percent = $info[1] + $info[2];
+        
+        return $percent;
+    }
+    
+    private function cpu_usage_macosx()
+    {
+        //TODO test this on OSX
+        
+        // CPU usage for user
+        $top = shell_exec('top -n 1 -l 1 2>&1');
+        $usage = substr($top, strpos($top, 'CPU usage: ') + 11);
+        $percent = substr($usage, 0, strpos($usage, '%'));
+        
+        return $percent;
+    }
+    
+	private function cpu_load_array()
 	{
 		// CPU load array
 		$load = array();
@@ -89,29 +156,32 @@ class cpu_usage implements phodevi_sensor
 		{
 			$stat = file_get_contents('/proc/stat');
 
-			if($read_core > -1 && ($l = strpos($stat, 'cpu' . $read_core)) !== false)
+			if ($this->cpu_to_monitor === "summary")
+			{
+				$start_line = 0;
+			}
+			elseif(($l = strpos($stat, $this->cpu_to_monitor)) !== false)
 			{
 				$start_line = $l;
 			}
 			else
 			{
-				$start_line = 0;
+				return -1;
 			}
 
-			$stat = substr($stat, $start_line, strpos($stat, "\n"));
-			$stat_break = explode(' ', $stat);
+			$stat_line = substr($stat, $start_line, strpos($stat, "\n"));
+			$stat_break = preg_split('/\s+/', $stat_line);
 
-			for($i = 1; $i < 6; $i++)
+			for($i = 1; $i < 10; $i++)
 			{
 				array_push($load, $stat_break[$i]);
 			}
 		}
-		else if(phodevi::is_bsd())
+        elseif(phodevi::is_bsd())
 		{
 			$load = explode(' ', phodevi_bsd_parser::read_sysctl('kern.cp_time'));
 		}
-	
-
+        
 		return $load;
 	}
 }

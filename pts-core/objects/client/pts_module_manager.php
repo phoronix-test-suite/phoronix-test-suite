@@ -129,14 +129,14 @@ class pts_module_manager
 	public static function run_command($module, $command, $arguments = null)
 	{
 		$all_options = pts_module_manager::module_call($module, 'user_commands');
-	
+
 		if(isset($all_options[$command]) && method_exists($module, $all_options[$command]))
 		{
 			pts_module_manager::module_call($module, $all_options[$command], $arguments);
 		}
 		else
 		{
-			// Not a valid command, list available options for the module 
+			// Not a valid command, list available options for the module
 			// or help or list_options was called
 			$all_options = pts_module_manager::module_call($module, 'user_commands');
 
@@ -186,7 +186,20 @@ class pts_module_manager
 	{
 		if(self::is_module_attached($module))
 		{
-			unset(self::$modules[$module]);
+			$key_to_unset = array_search($module, self::$modules);
+			unset(self::$modules[$key_to_unset]); 
+
+			if(class_exists($module))
+			{
+				foreach(get_class_methods($module) as $module_method)
+				{
+					if(substr($module_method, 0, 2) == '__' && isset(self::$module_process[$module_method]))
+					{
+						$key_to_unset = array_search($module, self::$module_process[$module_method]);
+						unset(self::$module_process[$module_method][$key_to_unset]);
+					}
+				}
+			}
 		}
 	}
 	public static function attached_modules($process_name = null, $select_modules = false)
@@ -222,7 +235,7 @@ class pts_module_manager
 	}
 	public static function is_module_attached($module)
 	{
-		return isset(self::$modules[$module]);
+		return in_array($module, self::$modules);
 	}
 	public static function available_modules($only_system_modules = false)
 	{

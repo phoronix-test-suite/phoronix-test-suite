@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2011 - 2015, Phoronix Media
-	Copyright (C) 2011 - 2015, Michael Larabel
+	Copyright (C) 2009 - 2011, Phoronix Media
+	Copyright (C) 2009 - 2011, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -20,26 +20,13 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class gpu_voltage implements phodevi_sensor
+class gpu_voltage extends phodevi_sensor
 {
-	public static function get_type()
-	{
-		return 'gpu';
-	}
-	public static function get_sensor()
-	{
-		return 'voltage';
-	}
-	public static function get_unit()
-	{
-		return 'mV';
-	}
-	public static function support_check()
-	{
-		$test = self::read_sensor();
-		return is_numeric($test) && $test != -1;
-	}
-	public static function read_sensor()
+	const SENSOR_TYPE = 'gpu';
+	const SENSOR_SENSES = 'voltage';
+	const SENSOR_UNIT = 'Millivolts';
+
+	public function read_sensor()
 	{
 		$sensor = -1;
 
@@ -72,6 +59,7 @@ class gpu_voltage implements phodevi_sensor
 
 		return $sensor;
 	}
+
 }
 
 ?>

@@ -126,11 +126,7 @@ class interactive implements pts_option_interface
 					echo 'Software:' . PHP_EOL . phodevi::system_software(true) . PHP_EOL . PHP_EOL;
 					break;
 				case 'SHOW_SENSORS':
-					pts_client::$display->generic_heading('Detected System Sensors');
-					foreach(phodevi::supported_sensors() as $sensor)
-					{
-						echo phodevi::sensor_name($sensor) . ': ' . phodevi::read_sensor($sensor) . ' ' . phodevi::read_sensor_unit($sensor) . PHP_EOL;
-					}
+					pts_client::execute_command('system_sensors');
 					break;
 				case 'SET_RUN_COUNT':
 					$run_count = pts_user_io::prompt_user_input('Set the minimum number of times each test should repeat', false);
