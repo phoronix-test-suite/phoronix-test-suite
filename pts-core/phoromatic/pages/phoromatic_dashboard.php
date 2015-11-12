@@ -84,7 +84,7 @@ class phoromatic_dashboard implements pts_webui_interface
 			echo '<h2 style="color: #FFF;">' . $row['CurrentTask'] . '</h2>';
 			if(!empty($row['CurrentProcessSchedule']))
 			{
-				echo '<h2>' . phoromatic_server::schedule_id_to_name($row['CurrentProcessSchedule']) . '</h2>';
+				echo '<h2 style="color: #FFF;">' . phoromatic_server::schedule_id_to_name($row['CurrentProcessSchedule']) . '</h2>';
 			}
 			echo '</div>';
 
@@ -121,7 +121,7 @@ class phoromatic_dashboard implements pts_webui_interface
 					}
 
 					echo '<div style="float: left; margin: 0 0 0 10px; text-align: center;">';
-					echo '<h2>' . $next_job_in . ' <sub>' . $next_unit . '</sub></h2>';
+					echo '<h2 style="color: #FFF;">' . $next_job_in . ' <sub>' . $next_unit . '</sub></h2>';
 					echo '<p style="font-size: 90%; color: #FFF;"><em>Time To Next Scheduled Task</em></p>';
 					echo '</div>';
 				}
