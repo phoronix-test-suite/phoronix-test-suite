@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2010, Phoronix Media
-	Copyright (C) 2009 - 2010, Michael Larabel
+	Copyright (C) 2009 - 2015, Phoronix Media
+	Copyright (C) 2009 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -32,15 +32,15 @@ class system_sensors implements pts_option_interface
 		{
 			$supported_devices = call_user_func(array($sensor[2], 'get_supported_devices'));
 
-			if ($supported_devices === NULL)
+			if($supported_devices === NULL)
 			{
-				self::print_sensor ($sensor, NULL);
+				self::print_sensor($sensor, NULL);
 				continue;
 			}
 
-			foreach ($supported_devices as $device)
+			foreach($supported_devices as $device)
 			{
-				self::print_sensor ($sensor, $device);
+				self::print_sensor($sensor, $device);
 			}
 		}
 
@@ -54,7 +54,7 @@ class system_sensors implements pts_option_interface
 
 	private static function print_sensor($sensor, $device)
 	{
-		if ($sensor[0] === 'cgroup')
+		if($sensor[0] === 'cgroup')
 		{
 			echo '- ' . phodevi::sensor_name($sensor) . PHP_EOL;
 		}
