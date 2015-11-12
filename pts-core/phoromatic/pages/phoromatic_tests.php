@@ -45,8 +45,8 @@ class phoromatic_tests implements pts_webui_interface
 			$tp = new pts_test_profile($identifier_item);
 			$tp_identifier = $tp->get_identifier(false);
 			$main .= '<h1>' . $tp->get_title() . '</h1><p>' . $tp->get_description() . '</p>';
-			$main .= '<p style="font-size: 90%;"><strong>' . $tp->get_test_hardware_type() . ' - ' . phoromatic_server::test_result_count_for_test_profile($_SESSION['AccountID'], $tp_identifier) . ' Results On This Account - ' . $tp->get_test_software_type() . ' - Maintained By: ' . $tp->get_maintainer() . ' - Supported Platforms: ' . implode(', ', $tp->get_supported_platforms()) . '</strong></p>';
-
+			$main .= '<p><strong>' . $tp->get_test_hardware_type() . ' - ' . phoromatic_server::test_result_count_for_test_profile($_SESSION['AccountID'], $tp_identifier) . ' Results On This Account - ' . $tp->get_test_software_type() . ' - Maintained By: ' . $tp->get_maintainer() . ' - Supported Platforms: ' . implode(', ', $tp->get_supported_platforms()) . '</strong></p>';
+			$main .= '<p><a href="http://openbenchmarking.org/test/' . $tp_identifier . '">Find out more about this test profile on OpenBenchmarking.org</a>.</p>';
 			$main .= '<h2>Recent Results With This Test</h2>';
 			$stmt = phoromatic_server::$db->prepare('SELECT Title, PPRID FROM phoromatic_results WHERE AccountID = :account_id AND UploadID IN (SELECT DISTINCT UploadID FROM phoromatic_results_results WHERE AccountID = :account_id AND TestProfile LIKE :tp) ORDER BY UploadTime DESC LIMIT 30');
 			$stmt->bindValue(':account_id', $_SESSION['AccountID']);
@@ -59,7 +59,11 @@ class phoromatic_tests implements pts_webui_interface
 				$main .= '<h2><a href="/?result/' . $row['PPRID'] . '">' . $row['Title'] . '</a></h2>';
 			}
 
-			if($recent_result_count > 5)
+			if($recent_result_count == 0)
+			{
+				$main .= '<p>No results found on this Phoromatic Server for the ' . $tp->get_title() . ' test profile.</p>';
+			}
+			else if($recent_result_count > 5)
 			{
 				$stmt = phoromatic_server::$db->prepare('SELECT UploadID, SystemID, UploadTime FROM phoromatic_results WHERE AccountID = :account_id AND UploadID IN (SELECT DISTINCT UploadID FROM phoromatic_results_results WHERE AccountID = :account_id AND TestProfile LIKE :tp) ORDER BY UploadTime DESC LIMIT 1000');
 				$stmt->bindValue(':account_id', $_SESSION['AccountID']);
