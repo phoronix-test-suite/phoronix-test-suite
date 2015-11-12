@@ -43,7 +43,7 @@ class phoromatic_dashboard implements pts_webui_interface
 		$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 		$result = $stmt->execute();
 		echo '<script type="text/javascript"> setInterval(function() { window.location.reload(); }, 79000); </script>';
-		echo '<div style="margin: 10px 0 30px; clear: both; padding-bottom: 40px;">';
+		echo '<div style="margin: 10px 0 30px; background: #FFF; clear: both; padding-bottom: 40px;">';
 		while($row = $result->fetchArray())
 		{
 			$opacity = null;
