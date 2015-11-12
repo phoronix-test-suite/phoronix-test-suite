@@ -7,9 +7,9 @@
 <meta name="keywords" content="Phoronix Test Suite, open-source benchmarking, Linux benchmarking, automated testing, performance tuning, Linux test orchestration, benchmark management, multi system benchmarking" />
 <link rel="shortcut icon" href="favicon.ico" />
 </head>
-<body>
+<body style="background: #FFF;">
 <div id="pts_phoromatic_top_header">
-	<div id="pts_phoromatic_logo"><a href="?"><img src="images/phoromatic_logo.png" /></a></div><ul><li>Automated Linux Benchmark Management &amp; Test Orchestration</li></ul><div style="float: right; padding: 25px 70px 0 0;"></div></div>
+	<div id="pts_phoromatic_logo"><a href="index.php"><img src="images/phoromatic_logo.png" /></a></div><ul><li>Automated Linux Benchmark Management &amp; Test Orchestration</li></ul><div style="float: right; padding: 25px 70px 0 0;"></div></div>
 <div id="pts_phoromatic_main_box"><h1>Phoromatic</h1>
 <p><img style="float: right;" src="images/phoromatic-graph.jpg" />
 
