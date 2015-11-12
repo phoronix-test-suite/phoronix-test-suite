@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 - pts-core: Windows updates
 - pts-core: Random fixes
 - pts-core / phodevi: Merge the complete system sensors rework: https://github.com/phoronix-test-suite/phoronix-test-suite/pull/92
+- phodevi: Support reporting /sys/firmware/devicetree/base/model for part of motherboard/SBC string
 - phoromatic: Final styling for hammerfest
 
 Phoronix Test Suite 6.0 Milestone 5
