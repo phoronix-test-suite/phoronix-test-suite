@@ -1,12 +1,17 @@
 body
 {
+	background: #000;
 	text-align: left;
 	margin: 0;
 	padding: 0;
-	font-family: 'Titillium Web', 'DejaVu Sans', museo-sans, sans-serif, 'Open Sans', 'helvetica neue', helvetica;
+	font-family: 'Raleway', sans-serif;
 	font-weight: 300;
 	font-size: 100%;
 	color: #212121;
+}
+h1, h2, h3, h4, h5, h6
+{
+		font-family: 'Quicksand', sans-serif;
 }
 a, a:visited, a:hover, a:active
 {
@@ -15,7 +20,7 @@ a, a:visited, a:hover, a:active
 }
 div#pts_phoromatic_top_header
 {
-	background: #104A85;
+	background: #262626;
 	border: #1F1F1F 1px solid;
 	overflow: hidden;
 	margin: 0;
@@ -26,6 +31,7 @@ div#pts_phoromatic_top_header
 	-webkit-box-shadow: 1px 1px 2px #1F1F1F;
 	display: table;
 	font-size: 1.5em;
+	font-family: 'Quicksand', sans-serif !important;
 }
 div#pts_phoromatic_top_header_right
 {
@@ -38,22 +44,24 @@ div#pts_phoromatic_top_header_right
 	font-size: 0.9em;
 	line-height: 140%;
 	font-weight: 400;
+	font-family: 'Quicksand', sans-serif !important;
 }
 div#pts_phoromatic_top_header_right a
 {
 	color: #fff;
 	text-transform: uppercase;
+	font-family: 'Quicksand', sans-serif !important;
 }
 div#pts_phoromatic_top_header input, div#pts_phoromatic_top_header button
 {
-	background: #e88f09;
+	background: #D9D9D9;
 	color: #000;
 	font-weight: 400;
 	text-transform: uppercase;
 }
 div#pts_phoromatic_bottom_footer
 {
-	background: #104A85;
+	background: #262626;
 	border: #1F1F1F 1px solid;
 	font-weight: 300;
 	clear: both;
@@ -89,7 +97,7 @@ div#pts_phoromatic_logo
 }
 div#pts_phoromatic_top_header ul ul#pts_phoromatic_info li
 {
-	color: #ff9800;
+	color: #A4B304;
 	text-align: left;
 }
 div#pts_phoromatic_top_header ul
@@ -164,7 +172,7 @@ div#pts_phoromatic_menu_right p
 div#pts_phoromatic_menu_right h3
 {
 	font-weight: 500;
-	color: #ff9800;
+	color: #D95D04;
 	font-size: 1em;
 	margin: 10px 0 0;
 	text-align: center;
@@ -195,7 +203,7 @@ div#pts_phoromatic_menu_right ul li
 {
 	margin-bottom: 2px;
 	font-weight: 500;
-	color: #ff9800;
+	color: #D95D04;
 }
 div#pts_phoromatic_menu_right ul li a
 {
@@ -219,7 +227,7 @@ div#pts_phoromatic_menu_right hr
 }
 div#pts_phoromatic_main_box h1
 {
-	color: #ff9800;
+	color: #D95D04;
 }
 div#pts_phoromatic_main_box
 {
@@ -256,6 +264,7 @@ div#pts_phoromatic_main_area
 }
 h1
 {
+	color: #D95D04;
 	font-weight: 400;
 	font-size: 1.6em;
 }
@@ -274,6 +283,7 @@ div#pts_phoromatic_main_box h2, div#pts_phoromatic_main_area h2
 	clear: both;
 	font-size: 1.2em;
 	font-weight: 500;
+	color:#D95D04;
 }
 .alert
 {
@@ -290,25 +300,25 @@ p.result_object
 }
 div#pts_phoromatic_main_area a[href*="http"], div#pts_phoromatic_main_box a[href*="http"]
 {
-	border-bottom: 1px dotted #ff9800;
+	border-bottom: 1px dotted #A4B304;
 	display: inline;
 }
 div#pts_phoromatic_main_area a[href*="http"]:hover, div#pts_phoromatic_main_box a[href*="http"]:hover
 {
 	text-decoration: none;
-	border-bottom: 1px solid #ff9800;
+	border-bottom: 1px solid #A4B304;
 }
 div#pts_phoromatic_main_box h2 a
 {
-	color: #ff9800;
+	color: #D95D04;
 }
 div#pts_phoromatic_main_box h2 a.phx_alt
 {
-	color: #ff9800;
+	color: #D95D04;
 }
 div#pts_phoromatic_main_box h2 a:hover
 {
-	color: #e65100;
+	color: #D95D04;
 	text-decoration: underline;
 }
 div#pts_phoromatic_main_box h6
@@ -316,22 +326,24 @@ div#pts_phoromatic_main_box h6
 	margin: 0;
 	padding: 0;
 	font-size: 0.8em;
-	color: #afafaf;
+	color: #D95D04;
 }
 div#pts_phoromatic_main_box h5
 {
 	font-size: 0.8em;
-	color: #afafaf;
+	color: #D95D04;
 }
 div#pts_phoromatic_main_box h3
 {
 	font-size: 1.05em;
 	font-weight: 400;
+	color: #D95D04;
 }
 div#pts_phoromatic_main_box h4
 {
 	font-size: 1em;
 	font-weight: 500;
+	color: #D95D04;
 }
 div#pts_phoromatic_main_area hr, div#pts_phoromatic_main_box hr
 {
@@ -354,7 +366,7 @@ div#pts_phoromatic_main_area ol li
 }
 div#pts_phoromatic_main_area p a, div#pts_phoromatic_main_area a, div#pts_phoromatic_main_area h6 a, div#pts_phoromatic_main_area h5 a, div#pts_phoromatic_main_box p a
 {
-	color: #ff9800;
+	color: #A4B304;
 	font-weight: 500;
 }
 div#pts_phoromatic_main_area p a:hover, div#pts_phoromatic_main_area a:hover, div#pts_phoromatic_main_area h6 a:hover, div#pts_phoromatic_main_area h5 a:hover, div#pts_phoromatic_main_box p a:hover
@@ -398,7 +410,7 @@ div.pts_phoromatic_info_box_area ul:last-child a:last-child li
 div.pts_phoromatic_info_box_area ul h1
 {
 	font-size: 1.2em;
-	color: #ff9800;
+	color: #A4B304;
 	margin: 1px 0;
 	font-weight: 400;
 	text-align: center;
@@ -472,7 +484,7 @@ div.pts_phoromatic_info_box_area table td, div.pts_phoromatic_info_box_area tabl
 div.pts_phoromatic_info_box_area table tr:hover td
 {
 	background: transparent;
-	color: #0d47a1;
+	color: #D95D04;
 }
 table.pts_phoromatic_schedule_type
 {
@@ -524,7 +536,7 @@ td
 {
 	background: #FAFAFA;
 	padding: 0 4px;
-	color: #0d47a1;
+	color: #D95D04;
 }
 tr:nth-child(even) td
 {
@@ -552,7 +564,7 @@ div.phoromatic_dashboard_block p
 }
 div.phoromatic_dashboard_block p strong
 {
-	color: #0d47a1;
+	color: #A4B304;
 }
 div.phoromatic_dashboard_block p em
 {
@@ -562,7 +574,7 @@ div.phoromatic_dashboard_block p em
 }
 div.phoromatic_dashboard_block h1
 {
-	color: #ff9800;
+	color: #A4B304;
 	margin: 2px 0;
 	font-size: 1.3em;
 }
@@ -580,7 +592,7 @@ div.phoromatic_dashboard_block hr
 	margin: 0;
 	padding: 0;
 	border: 0;
-	background: #ff9800;
+	background: #A4B304;
 	height: 3px;
 }
 div.phoromatic_overview_box
@@ -589,7 +601,7 @@ div.phoromatic_overview_box
 	border-radius: 14px;
 	padding: 4px 12px;
 	margin: 10px 0;
-	border: #ff9800 1px solid;"
+	border: #A4B304 1px solid;"
 }
 div#phoromatic_result_compare_info_box
 {
@@ -613,7 +625,7 @@ div#phoromatic_result_delete_box
 }
 div.phoromatic_overview_box h1
 {
-	color: #ff9800;
+
 	padding: 0;
 	margin: 1px 0 4px;
 }
