@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2011, Phoronix Media
-	Copyright (C) 2009 - 2011, Michael Larabel
+	Copyright (C) 2009 - 2015, Phoronix Media
+	Copyright (C) 2009 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -39,39 +39,34 @@ class cgroup_cpu_usage extends phodevi_sensor
 
 		$this->cgroup_stat_path = '/sys/fs/cgroup/cpu,cpuacct/' . $cgroup_name . '/cpuacct.stat' ;
 	}
-
 	public static function parameter_check($cgroup_name)
 	{
-		if ($cgroup_name === null)
+		if($cgroup_name === null)
 		{
 			return false;
 		}
 
 		$cgroup_stat_path = '/sys/fs/cgroup/cpu,cpuacct/' . $cgroup_name . '/cpuacct.stat' ;
 
-		if (phodevi::is_linux() && is_readable($cgroup_stat_path))
+		if(phodevi::is_linux() && is_readable($cgroup_stat_path))
 		{
 			return true;
 		}
 
 		return false;
 	}
-
 	public function get_readable_device_name()
 	{
 		return 'Summary';
 	}
-
 	public static function get_cgroup_controller()
 	{
 		return 'cpu,cpuacct';
 	}
-
 	public function support_check()
 	{
 		return phodevi::is_linux() && is_dir('/sys/fs/cgroup/cpu,cpuacct/');
 	}
-
 	public function read_sensor()
 	{
 		$start_sys_jiffies = self::cpu_jiffies_count();
@@ -119,13 +114,13 @@ class cgroup_cpu_usage extends phodevi_sensor
 	{
 		$load = array();
 
-		if (is_readable($this->cgroup_stat_path))
+		if(is_readable($this->cgroup_stat_path))
 		{
 			$stat = file_get_contents($this->cgroup_stat_path);
 
 			foreach (explode(PHP_EOL, $stat) as $line )
 			{
-				if ($line === '')
+				if($line === '')
 				{
 					break;
 				}

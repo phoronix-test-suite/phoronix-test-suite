@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2013, Phoronix Media
-	Copyright (C) 2009 - 2013, Michael Larabel
+	Copyright (C) 2009 - 2015, Phoronix Media
+	Copyright (C) 2009 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -27,42 +27,38 @@ class hdd_read_speed extends phodevi_sensor
 	const SENSOR_UNIT = 'MB/s';
 	const INSTANT_MEASUREMENT = false;
 
-    private $disk_to_monitor = NULL;
+	private $disk_to_monitor = NULL;
 
-
-    function __construct($instance, $parameter)
+	function __construct($instance, $parameter)
 	{
 		parent::__construct($instance, $parameter);
 
-		if ($parameter !== NULL)
+		if($parameter !== NULL)
 		{
 			$this->disk_to_monitor = $parameter;
 		}
-		elseif (!empty(self::get_supported_devices() ) )
+		elseif(!empty(self::get_supported_devices() ) )
 		{
 			$disks = self::get_supported_devices();
 			$this->disk_to_monitor = $disks[0];
 		}
 	}
-
 	public static function parameter_check($parameter)
 	{
-		if ($parameter === null || in_array($parameter, self::get_supported_devices() ) )
+		if($parameter === null || in_array($parameter, self::get_supported_devices() ) )
 		{
 			return true;
 		}
 
 		return false;
 	}
-
 	public function get_readable_device_name()
 	{
-        return $this->disk_to_monitor;
+		return $this->disk_to_monitor;
 	}
-
 	public static function get_supported_devices()
 	{
-		if (phodevi::is_linux())
+		if(phodevi::is_linux())
 		{
 			$disk_list = shell_exec("ls -1 /sys/class/block | grep '^[shv]d[a-z]$'");
 			$disk_array = explode("\n", $disk_list);
@@ -83,21 +79,19 @@ class hdd_read_speed extends phodevi_sensor
 
 		return NULL;
 	}
-
 	public function read_sensor()
 	{
 		$read_speed = -1;
 
 		if(phodevi::is_linux())
 		{
-            $read_speed = $this->hdd_read_speed_linux();
+			$read_speed = $this->hdd_read_speed_linux();
 		}
 
 		return pts_math::set_precision($read_speed, 2);
 	}
-
-    private function hdd_read_speed_linux()
-    {
+	private function hdd_read_speed_linux()
+	{
 		if($this->disk_to_monitor == NULL)
 		{
 			return -1;
@@ -106,7 +100,7 @@ class hdd_read_speed extends phodevi_sensor
 		$stat_path = '/sys/class/block/' . $this->disk_to_monitor . '/stat';
 		$speed = phodevi_linux_parser::read_sys_disk_speed($stat_path, 'READ');
 		return $speed;
-    }
+	}
 }
 
 ?>

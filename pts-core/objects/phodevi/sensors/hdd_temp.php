@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2013, Phoronix Media
-	Copyright (C) 2009 - 2013, Michael Larabel
+	Copyright (C) 2009 - 2015, Phoronix Media
+	Copyright (C) 2009 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -25,43 +25,38 @@ class hdd_temp extends phodevi_sensor
 	const SENSOR_TYPE = 'hdd';
 	const SENSOR_SENSES = 'temp';
 	const SENSOR_UNIT = 'Celsius';
+	private $disk_to_monitor = NULL;
 
-    private $disk_to_monitor = NULL;
-
-
-    function __construct($instance, $parameter)
+	function __construct($instance, $parameter)
 	{
 		parent::__construct($instance, $parameter);
 
-		if ($parameter !== NULL)
+		if($parameter !== NULL)
 		{
 			$this->disk_to_monitor = $parameter;
 		}
-		elseif (!empty(self::get_supported_devices() ) )
+		else if(!empty(self::get_supported_devices()))
 		{
 			$disks = self::get_supported_devices();
 			$this->disk_to_monitor = $disks[0];
 		}
 	}
-
 	public static function parameter_check($parameter)
 	{
-		if ($parameter === null || in_array($parameter, self::get_supported_devices() ) )
+		if($parameter === null || in_array($parameter, self::get_supported_devices() ) )
 		{
 			return true;
 		}
 
 		return false;
 	}
-
 	public function get_readable_device_name()
 	{
-        return $this->disk_to_monitor;
+		return $this->disk_to_monitor;
 	}
-
 	public static function get_supported_devices()
 	{
-		if (phodevi::is_linux())
+		if(phodevi::is_linux())
 		{
 			$disk_list = shell_exec("ls -1 /sys/class/block | grep '^[sh]d[a-z]$'");
 			$disk_array = explode("\n", $disk_list);
@@ -82,25 +77,22 @@ class hdd_temp extends phodevi_sensor
 
 		return NULL;
 	}
-
 	public function read_sensor()
 	{
 		$temp = -1;
 
 		if(phodevi::is_linux())
 		{
-            $temp = $this->hdd_temp_linux();
+			$temp = $this->hdd_temp_linux();
 		}
 
 		return pts_math::set_precision($temp, 2);
 	}
-
 	private function hdd_temp_linux()
 	{
 		$disk_path = '/dev/' . $this->disk_to_monitor;
 		return phodevi_parser::read_hddtemp($disk_path);
 	}
-
 }
 
 ?>

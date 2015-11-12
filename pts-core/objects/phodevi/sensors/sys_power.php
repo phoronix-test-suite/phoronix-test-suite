@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2013, Phoronix Media
-	Copyright (C) 2009 - 2013, Michael Larabel
+	Copyright (C) 2009 - 2015, Phoronix Media
+	Copyright (C) 2009 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -30,7 +30,6 @@ class sys_power extends phodevi_sensor
 	private static $wattsup_meter = false;
 	private static $ipmitool = false;
 
-
 	public static function get_unit()
 	{
 		$unit = null;
@@ -50,7 +49,6 @@ class sys_power extends phodevi_sensor
 
 		return $unit;
 	}
-
 	public function support_check()
 	{
 		$test = self::sys_battery_power();
@@ -89,7 +87,6 @@ class sys_power extends phodevi_sensor
 			}
 		}
 	}
-
 	public function read_sensor()
 	{
 		if(self::$battery_sys)
@@ -109,7 +106,6 @@ class sys_power extends phodevi_sensor
 			return phodevi_linux_parser::read_ipmitool_sensor('Node Power');
 		}
 	}
-
 	private static function watts_up_power_meter()
 	{
 		$output = trim(shell_exec('wattsup -c 1 ttyUSB0 watts 2>&1'));
@@ -123,7 +119,6 @@ class sys_power extends phodevi_sensor
 
 		return is_numeric($value) ? $value : -1;
 	}
-
 	private static function sys_power_current()
 	{
 		// Returns power consumption rate in uA
@@ -148,7 +143,6 @@ class sys_power extends phodevi_sensor
 
 		return $current;
 	}
-
 	private static function sys_battery_power()
 	{
 		// Returns power consumption rate in mW

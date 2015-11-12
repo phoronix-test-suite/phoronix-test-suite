@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2011, Phoronix Media
-	Copyright (C) 2009 - 2011, Michael Larabel
+	Copyright (C) 2009 - 2015, Phoronix Media
+	Copyright (C) 2009 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -32,7 +32,6 @@ class gpu_usage extends phodevi_sensor
 	private $probe_radeontop = false;
 	private $probe_nvidia_smi = false;
 	private $probe_nvidia_settings = false;
-
 
 	function __construct($instance, $parameter)
 	{
@@ -143,7 +142,7 @@ class gpu_usage extends phodevi_sensor
 		$out = shell_exec('radeontop -d - -l 1');
 
 		$pos = strpos($out, 'gpu');
-		if ($pos === false)
+		if($pos === false)
 			return -1;
 
 		$out = substr($out, $pos + 4);
@@ -151,7 +150,6 @@ class gpu_usage extends phodevi_sensor
 
 		return $out;
 	}
-
 }
 
 ?>

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2013, Phoronix Media
-	Copyright (C) 2009 - 2013, Michael Larabel
+	Copyright (C) 2009 - 2015, Phoronix Media
+	Copyright (C) 2009 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -26,8 +26,7 @@ class gpu_freq extends phodevi_sensor
 	const SENSOR_TYPE = 'gpu';
 	const SENSOR_SENSES = 'freq';
 	const SENSOR_UNIT = 'Megahertz';
-    
-    
+
 	public function read_sensor()
 	{
 		// Graphics processor real/current frequency
@@ -181,7 +180,6 @@ class gpu_freq extends phodevi_sensor
 
 		return $show_memory ? array($core_freq, $mem_freq) : $core_freq;
 	}
-	
 }
 
 ?>

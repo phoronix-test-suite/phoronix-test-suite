@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2013, Phoronix Media
-	Copyright (C) 2009 - 2013, Michael Larabel
+	Copyright (C) 2009 - 2015, Phoronix Media
+	Copyright (C) 2009 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -32,19 +32,17 @@ class memory_usage extends phodevi_sensor
 	{
 		return $this->mem_usage();
 	}
-
 	private function mem_usage()
 	{
-		if (phodevi::is_linux())
+		if(phodevi::is_linux())
 		{
 			return self::mem_usage_linux();
 		}
-		elseif (phodevi::is_macosx() || phodevi::is_bsd())
+		elseif(phodevi::is_macosx() || phodevi::is_bsd())
 		{
 			return self::mem_usage_bsd('MEMORY', 'USED');
 		}
 	}
-
 	private function mem_usage_linux()
 	{
 		$proc_meminfo = explode("\n", file_get_contents('/proc/meminfo'));
@@ -65,7 +63,6 @@ class memory_usage extends phodevi_sensor
 
 		return pts_math::set_precision($used_mem / 1024, 0);
 	}
-
 	private function mem_usage_bsd($TYPE = 'TOTAL', $READ = 'USED')
 	{
 		$vmstats = explode("\n", shell_exec('vm_stat 2>&1'));
@@ -74,17 +71,17 @@ class memory_usage extends phodevi_sensor
 		{
 			$line_parts = pts_strings::colon_explode($vmstat_line);
 
-			if (self::$page_size == -1)
+			if(self::$page_size == -1)
 			{
 				strtok($vmstat_line, ':');
 				$tok = strtok(' ');
 				while (self::$page_size == -1)
 				{
-					if (is_numeric($tok))
+					if(is_numeric($tok))
 					{
 						self::$page_size = $tok;
 					} 
-                    else
+					else
 					{
 						$tok = strtok(' ');
 					}
@@ -94,14 +91,14 @@ class memory_usage extends phodevi_sensor
 			//$line_parts[1] = pts_strings::trim_spaces($line_parts[1]);
 			$line_type = strtok($vmstat_line, ':');
 			$line_value = strtok(' .');
-			if ($TYPE == 'MEMORY')
+			if($TYPE == 'MEMORY')
 			{
-				if ($line_type == 'Pages active' && $READ == 'USED')
+				if($line_type == 'Pages active' && $READ == 'USED')
 				{
 					$mem_usage = $line_value / (1048576 / self::$page_size);
 					break;
 				}
-				if ($line_type == 'Pages free' && $READ == 'FREE')
+				if($line_type == 'Pages free' && $READ == 'FREE')
 				{
 					$mem_usage = $line_value / (1048576 / self::$page_size);
 					break;

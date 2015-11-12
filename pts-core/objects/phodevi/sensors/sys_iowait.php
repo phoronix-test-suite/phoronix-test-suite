@@ -38,7 +38,6 @@ class sys_iowait extends phodevi_sensor
 
 		return $iowait;
 	}
-
 	private function sys_iowait_linux()
 	{
 		$iowait = -1;
@@ -64,7 +63,6 @@ class sys_iowait extends phodevi_sensor
 
 		return $iowait;
 	}
-
 }
 
 ?>

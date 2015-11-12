@@ -14,92 +14,85 @@ class network_usage extends phodevi_sensor
 	const SENSOR_SENSES = 'usage';
 	const SENSOR_UNIT = 'Kilobytes/second';
 
-    private $interface_to_monitor = NULL;
+	private $interface_to_monitor = NULL;
 
-
-    function __construct($instance, $parameter)
+	function __construct($instance, $parameter)
 	{
 		parent::__construct($instance, $parameter);
 
-		if ($parameter !== NULL)
+		if($parameter !== NULL)
 		{
 			$this->interface_to_monitor = $parameter;
 		}
-		elseif (!empty(self::get_supported_devices() ) )
+		elseif(!empty(self::get_supported_devices() ) )
 		{
 			$ifaces = self::get_supported_devices();
 			$this->interface_to_monitor = $ifaces[0];
 		}
 	}
-
 	public static function parameter_check($parameter)
 	{
-		if ($parameter === null || in_array($parameter, self::get_supported_devices() ) )
+		if($parameter === null || in_array($parameter, self::get_supported_devices() ) )
 		{
 			return true;
 		}
 
 		return false;
 	}
-
 	public function get_readable_device_name()
 	{
-        return $this->interface_to_monitor;
+		return $this->interface_to_monitor;
 	}
 
 	public static function get_supported_devices()
 	{
-		if (phodevi::is_linux())
+		if(phodevi::is_linux())
 		{
             //TODO write network_usage_linux function
 //			$iface_list = shell_exec("ls -1 /sys/class/net | grep -v lo");
 //			$iface_array = explode("\n", $iface_list);
 //
 //			return $iface_array;
-            return NULL;
+			return NULL;
 		}
-		if (phodevi::is_bsd() || phodevi::is_macosx())
+		if(phodevi::is_bsd() || phodevi::is_macosx())
 		{
-            $iface_list = shell_exec("ifconfig -lu | tr ' ' '\n' | grep -v 'lo0'");
-            $iface_array = pts_strings::trim_explode(" ", $iface_list);
+			$iface_list = shell_exec("ifconfig -lu | tr ' ' '\n' | grep -v 'lo0'");
+			$iface_array = pts_strings::trim_explode(" ", $iface_list);
 
-            return $iface_array;
+			return $iface_array;
 		}
 
 		return NULL;
 	}
-
 	public function read_sensor()
 	{
 		$net_speed = -1;
 
 		if(phodevi::is_bsd() || phodevi::is_macosx())
 		{
-            $net_speed = $this->network_usage_bsd();
+			$net_speed = $this->network_usage_bsd();
 		}
 
 		return pts_math::set_precision($net_speed, 2);
 	}
-
-    private function network_usage_bsd()
-    {
+	private function network_usage_bsd()
+	{
 		$net_speed = -1;
+		$counter_old = self::net_counter_bsd($this->interface_to_monitor);
+		$timestamp_old = time();
 
-        $counter_old = self::net_counter_bsd($this->interface_to_monitor);
-        $timestamp_old = time();
-
-        sleep(1);
+		sleep(1);
 
 		$counter_new = self::net_counter_bsd($this->interface_to_monitor);
 		$timestamp_new = time();
 		$net_speed = (($counter_new - $counter_old) >> 10) / ($timestamp_new - $timestamp_old);
 
 		return $net_speed;
-    }
-
+	}
 	private static function net_counter_bsd($IFACE = 'en0')
 	{
-        $net_counter = -1;
+		$net_counter = -1;
 		if(pts_client::executable_in_path('netstat') != false)
 		{
 			$netstat_lines = explode("\n", shell_exec('netstat -ib 2>&1'));
@@ -135,7 +128,6 @@ class network_usage extends phodevi_sensor
 		}
 		return $net_counter;
 	}
-
 }
 
 ?>
