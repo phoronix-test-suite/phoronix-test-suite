@@ -80,8 +80,8 @@ class phoromatic_dashboard implements pts_webui_interface
 				if(($x = stripos($c, ' (')) !== false)
 					$c = substr($c, 0, $x);
 			}
-			echo '<p><em>' . implode(' - ', $components) . '</em></p>';
-			echo '<h2>' . $row['CurrentTask'] . '</h2>';
+			echo '<p style="color: #FFF;"><em>' . implode(' - ', $components) . '</em></p>';
+			echo '<h2 style="color: #FFF;">' . $row['CurrentTask'] . '</h2>';
 			if(!empty($row['CurrentProcessSchedule']))
 			{
 				echo '<h2>' . phoromatic_server::schedule_id_to_name($row['CurrentProcessSchedule']) . '</h2>';
@@ -89,15 +89,15 @@ class phoromatic_dashboard implements pts_webui_interface
 			echo '</div>';
 
 			echo '<div style="float: left;">';
-			echo '<h2>' . $row['LastIP'] . '</h2>';
+			echo '<h2 style="color: #FFF;">' . $row['LastIP'] . '</h2>';
 			echo '</div>';
 
 			$time_remaining = phoromatic_compute_estimated_time_remaining($row['EstimatedTimeForTask'], $row['LastCommunication']);
 			if($time_remaining)
 			{
 				echo '<div style="float: left; text-align: center; margin: 0 6px;">';
-				echo '<h2>~ ' . $time_remaining . ' <sub>mins</sub></h2>';
-				echo '<p class="font-size: 90%;"><em>Estimated Time Remaining</em></p>';
+				echo '<h2 style="color: #FFF;">~ ' . $time_remaining . ' <sub>mins</sub></h2>';
+				echo '<p style="font-size: 90%; color: #FFF;"><em>Estimated Time Remaining</em></p>';
 				if(!empty($row['TimeToNextCommunication']))
 				{
 					echo '<p><em>' . phoromatic_compute_estimated_time_remaining_string($row['TimeToNextCommunication'], $row['LastCommunication'], 'To Next Communication') . '</em></p>';
@@ -122,7 +122,7 @@ class phoromatic_dashboard implements pts_webui_interface
 
 					echo '<div style="float: left; margin: 0 0 0 10px; text-align: center;">';
 					echo '<h2>' . $next_job_in . ' <sub>' . $next_unit . '</sub></h2>';
-					echo '<p class="font-size: 90%;"><em>Time To Next Scheduled Task</em></p>';
+					echo '<p style="font-size: 90%; color: #FFF;"><em>Time To Next Scheduled Task</em></p>';
 					echo '</div>';
 				}
 			}
@@ -145,7 +145,7 @@ class phoromatic_dashboard implements pts_webui_interface
 
 					if($g_count <= 3)
 					{
-						$graph = new pts_sys_graph(array('title' => $s, 'x_scale' => 'm', 'y_scale' => $sensors[$s]['unit'], 'text_size' => 10, 'reverse_x_direction' => false, 'width' => 300, 'height' => 120, 'text_color' => '#FFFFFF', 'paint_color' => '#D95D04', 'background_color' => '#000000'));
+						$graph = new pts_sys_graph(array('title' => $s, 'x_scale' => 'm', 'y_scale' => $sensors[$s]['unit'], 'text_size' => 10, 'reverse_x_direction' => false, 'width' => 300, 'height' => 120, 'text_color' => '#FFFFFF', 'paint_color' => '#D95D04', 'background_color' => '#000000', 'shade_color' => '#000000'));
 						$graph->render_base();
 						$svg_dom = $graph->render_graph_data($sensors[$s]['values']);
 						if($svg_dom === false)
