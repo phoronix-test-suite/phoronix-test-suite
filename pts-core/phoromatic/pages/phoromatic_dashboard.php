@@ -80,7 +80,7 @@ class phoromatic_dashboard implements pts_webui_interface
 				if(($x = stripos($c, ' (')) !== false)
 					$c = substr($c, 0, $x);
 			}
-			echo '<p style="color: #FFF;"><em>' . implode(' - ', $components) . '</em></p>';
+			echo '<p style="color: #FFF;"><em style="color: #FFF;">' . implode(' - ', $components) . '</em></p>';
 			echo '<h2 style="color: #FFF;">' . $row['CurrentTask'] . '</h2>';
 			if(!empty($row['CurrentProcessSchedule']))
 			{
@@ -97,10 +97,10 @@ class phoromatic_dashboard implements pts_webui_interface
 			{
 				echo '<div style="float: left; text-align: center; margin: 0 6px;">';
 				echo '<h2 style="color: #FFF;">~ ' . $time_remaining . ' <sub>mins</sub></h2>';
-				echo '<p style="font-size: 90%; color: #FFF;"><em>Estimated Time Remaining</em></p>';
+				echo '<p style="font-size: 90%; color: #FFF;"><em style="color: #FFF;">Estimated Time Remaining</em></p>';
 				if(!empty($row['TimeToNextCommunication']))
 				{
-					echo '<p><em>' . phoromatic_compute_estimated_time_remaining_string($row['TimeToNextCommunication'], $row['LastCommunication'], 'To Next Communication') . '</em></p>';
+					echo '<pstyle="color: #FFF;"><em style="color: #FFF;">' . phoromatic_compute_estimated_time_remaining_string($row['TimeToNextCommunication'], $row['LastCommunication'], 'To Next Communication') . '</em></p>';
 				}
 				echo '</div>';
 			}
@@ -122,7 +122,7 @@ class phoromatic_dashboard implements pts_webui_interface
 
 					echo '<div style="float: left; margin: 0 0 0 10px; text-align: center;">';
 					echo '<h2 style="color: #FFF;">' . $next_job_in . ' <sub>' . $next_unit . '</sub></h2>';
-					echo '<p style="font-size: 90%; color: #FFF;"><em>Time To Next Scheduled Task</em></p>';
+					echo '<p style="font-size: 90%; color: #FFF;"><em style="color: #FFF;">Time To Next Scheduled Task</em></p>';
 					echo '</div>';
 				}
 			}
