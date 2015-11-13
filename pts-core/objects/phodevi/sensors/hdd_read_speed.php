@@ -60,7 +60,7 @@ class hdd_read_speed extends phodevi_sensor
 	{
 		if(phodevi::is_linux())
 		{
-			$disk_list = shell_exec("ls -1 /sys/class/block | grep '^[shv]d[a-z]$'");
+			$disk_list = shell_exec("ls -1 /sys/class/block | grep '^[shv]d[a-z]$'"); // TODO get rid of this way and use just PHP
 			$disk_array = explode("\n", $disk_list);
 
 			$supported = array();
@@ -68,7 +68,7 @@ class hdd_read_speed extends phodevi_sensor
 			foreach($disk_array as $check_disk)
 			{
 				$stat_path = '/sys/class/block/' . $check_disk . '/stat';
-				if(pts_file_io::file_get_contents($stat_path) != null)
+				if(is_file($stat_path) && pts_file_io::file_get_contents($stat_path) != null)
 				{
 					array_push($supported, $check_disk);
 				}
