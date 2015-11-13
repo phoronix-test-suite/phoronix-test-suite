@@ -80,6 +80,38 @@ class gpu_temp extends phodevi_sensor
 					}
 				}
 			}
+
+			if($temp_c == -1)
+			{
+				foreach(pts_file_io::glob('/sys/class/hwmon/hwmon*/name') as $temp_name)
+				{
+					// This works on the NVIDIA Jetson TX1
+					if(is_readable($temp_name) == false || stripos(file_get_contents($temp_name), 'GPU') === false)
+					{
+						continue;
+					}
+
+					$temp_input_file = dirname($temp_name) . '/temp1_input';
+
+					if(!is_file($temp_input_file))
+					{
+						continue;
+					}
+
+					$temp_input = pts_file_io::file_get_contents($temp_input_file);
+
+					if(is_numeric($temp_input))
+					{
+						if($temp_input > 1000)
+						{
+							$temp_input /= 1000;
+						}
+
+						$temp_c = $temp_input;
+						break;
+					}
+				}
+			}
 		}
 
 		if($temp_c > 1000 || $temp_c < 9)
