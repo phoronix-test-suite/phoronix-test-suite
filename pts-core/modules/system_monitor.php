@@ -22,7 +22,6 @@
 */
 
 // TODO XXX: Port to new phodevi_sensor_monitor interface
-
 class system_monitor extends pts_module_interface
 {
 	const module_name = 'System Monitor';

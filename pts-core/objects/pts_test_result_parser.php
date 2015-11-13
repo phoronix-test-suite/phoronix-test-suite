@@ -47,12 +47,6 @@ class pts_test_result_parser
 			return false;
 		}
 
-		if(self::$supported_sensors == null)
-		{
-			// Cache this since this shouldn't change between tests/runs
-			self::$supported_sensors = phodevi::supported_sensors();
-		}
-
 		foreach(array_keys($monitor_sensor) as $i)
 		{
 			// TODO: Right now we are looping through SystemMonitor tags, but right now pts-core only supports providing one monitor sensor as the result
@@ -64,6 +58,12 @@ class pts_test_result_parser
 				$start_time = microtime(true);
 				array_push(self::$monitoring_sensors, array(0, $sensor, null, $start_time));
 				continue;
+			}
+
+			if(self::$supported_sensors == null)
+			{
+				// Cache this since this shouldn't change between tests/runs
+				self::$supported_sensors = phodevi::supported_sensors();
 			}
 
 			if(count($sensor) != 2 || !in_array($sensor, self::$supported_sensors))
