@@ -58,7 +58,6 @@ class system_monitor extends pts_module_interface
 	public static function module_info()
 	{
 		$info = null;
-
 		$info .= PHP_EOL . 'Monitoring these sensors is as easy as running your normal Phoronix Test Suite commands but at the beginning of the command add: MONITOR=<selected sensors> (example: MONITOR=cpu.temp,cpu.voltage phoronix-test-suite benchmark universe). For some of the sensors there is an ability to monitor specific device, e.g. cpu.usage.cpu0 or hdd.read-speed.sda. If the PERFORMANCE_PER_WATT environment variable is set, a performance per Watt graph will also be added, assuming the system\'s power consumption can be monitored. Below are all of the sensors supported by this version of the Phoronix Test Suite.' . PHP_EOL . PHP_EOL;		$info .= 'Supported Options:' . PHP_EOL . PHP_EOL;
 
 		foreach(self::monitor_arguments() as $arg)
@@ -126,37 +125,33 @@ class system_monitor extends pts_module_interface
 		self::save_log_offsets('pre-test');
 		self::$test_run_timer = time();
 	}
-
 	public static function __test_running($test_process)
 	{
 		// Put the tested application into proper cgroups as soon as it starts.
-		foreach (self::$cgroup_enabled_controllers as $controller)
+		foreach(self::$cgroup_enabled_controllers as $controller)
 		{
 			$proc_status = proc_get_status($test_process);
 			$parent_pid = $proc_status['pid'];
 			file_put_contents('/sys/fs/cgroup/' . $controller . '/' . self::$cgroup_name .'/tasks', $parent_pid);
 		}
 	}
-
 	public static function __interim_test_run()
 	{
-		if (self::$per_test_try_monitoring)
+		if(self::$per_test_try_monitoring)
 		{
 			self::save_log_offsets('interim');
 			self::$test_run_try_number++;
 		}
 	}
-
 	public static function __post_test_run_success($test_run_request)
 	{
-		if (self::$per_test_try_monitoring)
+		if(self::$per_test_try_monitoring)
 		{
 			self::save_log_offsets('interim');
 		}
 
 		self::$successful_test_run_request = clone $test_run_request;
 	}
-
 	public static function __post_test_run_process(&$result_file)
 	{
 		if(self::$individual_monitoring == false)
@@ -188,7 +183,6 @@ class system_monitor extends pts_module_interface
 		// Let the system rest before jumping to next test...
 		sleep((self::$sensor_monitoring_frequency * 6));
 	}
-
 	public static function __event_results_process(&$test_run_manager)
 	{
 		self::process_perf_per_watt_collection($test_run_manager);
@@ -200,47 +194,45 @@ class system_monitor extends pts_module_interface
 			self::process_summary_results($sensor, $test_run_manager);
 		}
 	}
-
 	public static function __post_run_process()
 	{
-		foreach (self::$cgroup_enabled_controllers as $controller)
+		foreach(self::$cgroup_enabled_controllers as $controller)
 		{
 			self::cgroup_remove(self::$cgroup_name, $controller);
 		}
 	}
-
 	private static function pts_start_monitoring()
 	{
 		$instant_sensors = array();
 
-        foreach(self::$to_monitor as $sensor)
+		foreach(self::$to_monitor as $sensor)
 		{
 			$is_instant = $sensor->is_instant();
 
-            if($is_instant === false)
-            {
+			if($is_instant === false)
+			{
 				$pid = pts_module::pts_timed_function('pts_monitor_update', self::$sensor_monitoring_frequency, array(array(&$sensor)));
-            }
-            else
-            {
-                $instant_sensors[] = &$sensor;
-            }
-        }
+			}
+			else
+			{
+				$instant_sensors[] = &$sensor;
+			}
+		}
 
-        if (!empty($instant_sensors))
-        {
-            pts_module::pts_timed_function('pts_monitor_update', self::$sensor_monitoring_frequency, array($instant_sensors));
-        }
+		if(!empty($instant_sensors))
+		{
+			pts_module::pts_timed_function('pts_monitor_update', self::$sensor_monitoring_frequency, array($instant_sensors));
+		}
 	}
 
 	// Reads value of a single sensor, checks its correctness and saves it to the monitor log.
 	public static function pts_monitor_update($sensor_list)
 	{
-		foreach ($sensor_list as $sensor)
+		foreach($sensor_list as $sensor)
         {
             $sensor_value = phodevi::read_sensor($sensor);
 
-            if ($sensor_value != -1 && pts_module::is_file('logs/' . phodevi::sensor_object_identifier($sensor)))
+            if($sensor_value != -1 && pts_module::is_file('logs/' . phodevi::sensor_object_identifier($sensor)))
             {
                 pts_module::save_file('logs/' . phodevi::sensor_object_identifier($sensor), $sensor_value, true);
             }
@@ -260,7 +252,7 @@ class system_monitor extends pts_module_interface
 
 		foreach($line_breaks as $line_number => $line)
 		{
-			if ($end_offset != -1 && $line_number >= $end_offset)
+			if($end_offset != -1 && $line_number >= $end_offset)
 			{
 				break;
 			}
@@ -296,7 +288,7 @@ class system_monitor extends pts_module_interface
 
 			array_push($args, phodevi::sensor_identifier($sensor));
 
-			if ($supported_devices !== NULL)
+			if($supported_devices !== NULL)
 			{
 				array_push($args, 'all.' . phodevi::sensor_identifier($sensor));
 				foreach($supported_devices as $device)
@@ -313,7 +305,7 @@ class system_monitor extends pts_module_interface
 	// Prevents system monitor from running when results are not saved to a file.
 	private static function check_if_results_saved(&$test_run_manager)
 	{
-		if (!$test_run_manager->do_save_results())
+		if(!$test_run_manager->do_save_results())
 		{
 			throw new Exception('results not saved to a file');
 		}
@@ -326,7 +318,7 @@ class system_monitor extends pts_module_interface
 
 		$to_monitor = array();
 
-		foreach ($sensor_list as $sensor)
+		foreach($sensor_list as $sensor)
 		{
 			$sensor_split = pts_strings::trim_explode('.', $sensor);
 
@@ -335,7 +327,7 @@ class system_monitor extends pts_module_interface
 			// now, it's handy to mark that we want to include all sensors of specified
 			// type (cpu.all) or just all supported parameters of specified sensor
 			// (cpu.frequency.all).
-			if ($sensor_split[0] === 'all')
+			if($sensor_split[0] === 'all')
 			{
 				$sensor_split[] = 'all';
 				array_shift($sensor_split);
@@ -350,7 +342,7 @@ class system_monitor extends pts_module_interface
 				$to_monitor[$type][$name] = array();
 			}
 
-			if ($parameter !== NULL)
+			if($parameter !== NULL)
 			{
 				array_push($to_monitor[$type][$name], $parameter);
 			}
@@ -380,7 +372,7 @@ class system_monitor extends pts_module_interface
 	private static function process_sensor_list(&$sensor_parameters)
 	{
 		$monitor_all = array_key_exists('all', $sensor_parameters);
-		foreach (phodevi::supported_sensors() as $sensor)
+		foreach(phodevi::supported_sensors() as $sensor)
 		{
 			// instantiate sensor class if:
 			// a) we want to monitor all the available sensors,
@@ -396,7 +388,7 @@ class system_monitor extends pts_module_interface
 					&& in_array('all', $sensor_parameters[$sensor[0]][$sensor[1]]);
 			$is_cgroup_sensor = $sensor[0] === 'cgroup';
 
-			if (($monitor_all && !$is_cgroup_sensor) || $monitor_all_of_this_type || $sensor_name_exists )
+			if(($monitor_all && !$is_cgroup_sensor) || $monitor_all_of_this_type || $sensor_name_exists )
 			{
 				// in some cases we want to create objects representing every possible device supported by the sensor
 				$create_all = $monitor_all || $monitor_all_of_this_type || $monitor_all_of_this_sensor;
@@ -404,7 +396,7 @@ class system_monitor extends pts_module_interface
 			}
 		}
 
-		if (count(self::$to_monitor) == 0)
+		if(count(self::$to_monitor) == 0)
 		{
 			throw new Exception('nothing to monitor');
 		}
@@ -412,7 +404,7 @@ class system_monitor extends pts_module_interface
 
 	private static function create_sensor_instances(&$sensor, &$sensor_parameters, $create_all)
 	{
-		if ($create_all)
+		if($create_all)
 		{
 			self::create_all_sensor_instances($sensor);
 			return;
@@ -421,13 +413,13 @@ class system_monitor extends pts_module_interface
 		$sensor_instances = $sensor_parameters[$sensor[0]][$sensor[1]];
 
 		// If no instances specified, create one with default parameters.
-		if (empty($sensor_instances) )
+		if(empty($sensor_instances) )
 		{
 			self::create_single_sensor_instance($sensor, 0, NULL);
 			return;
 		}
 		// Create objects for all specified instances of the sensor.
-		foreach ($sensor_instances as $instance => $param)
+		foreach($sensor_instances as $instance => $param)
 		{
 			self::create_single_sensor_instance($sensor, $instance, $param);
 		}
@@ -439,13 +431,13 @@ class system_monitor extends pts_module_interface
 		$supported_devices = call_user_func(array($sensor[2], 'get_supported_devices'));
 		$instance_no = 0;
 
-		if ($supported_devices === NULL)
+		if($supported_devices === NULL)
 		{
 			self::create_single_sensor_instance($sensor, 0, NULL);
 			return;
 		}
 
-		foreach ($supported_devices as $device)
+		foreach($supported_devices as $device)
 		{
 			self::create_single_sensor_instance($sensor, $instance_no++, $device);
 		}
@@ -454,7 +446,7 @@ class system_monitor extends pts_module_interface
 	// Create sensor object if parameters passed to it are correct.
 	private static function create_single_sensor_instance($sensor, $instance, $param)
 	{
-		if ($sensor[0] === 'cgroup')
+		if($sensor[0] === 'cgroup')
 		{
 			$cgroup_controller = call_user_func(array($sensor[2], 'get_cgroup_controller'));
 			array_push(self::$cgroup_enabled_controllers, $cgroup_controller );
@@ -462,7 +454,7 @@ class system_monitor extends pts_module_interface
 			$param = self::$cgroup_name;
 		}
 
-		if (call_user_func(array($sensor[2], 'parameter_check'), $param) === true)
+		if(call_user_func(array($sensor[2], 'parameter_check'), $param) === true)
 		{
 			$sensor_object = new $sensor[2]($instance, $param);
 			array_push(self::$to_monitor, $sensor_object);
@@ -473,7 +465,7 @@ class system_monitor extends pts_module_interface
 	// Create cgroups in all of the needed controllers.
 	private static function create_monitoring_cgroups()
 	{
-		foreach (self::$cgroup_enabled_controllers as $controller)
+		foreach(self::$cgroup_enabled_controllers as $controller)
 		{
 			self::cgroup_create(self::$cgroup_name, $controller);
 		}
@@ -489,10 +481,9 @@ class system_monitor extends pts_module_interface
 		echo PHP_EOL;
 
 	}
-
 	private static function set_monitoring_interval()
 	{
-		if (pts_module::read_variable('MONITOR_INTERVAL') != null)
+		if(pts_module::read_variable('MONITOR_INTERVAL') != null)
 		{
 			$proposed_interval = pts_module::read_variable('MONITOR_INTERVAL');
 			if(is_numeric($proposed_interval) && $proposed_interval >= 0.5)
@@ -501,7 +492,6 @@ class system_monitor extends pts_module_interface
 			}
 		}
 	}
-
 	private static function cgroup_create($cgroup_name, $cgroup_controller)
 	{
 		//TODO if we allow custom cgroup names, we will have to add cgroup
@@ -511,7 +501,7 @@ class system_monitor extends pts_module_interface
 		$cgroup_path = '/sys/fs/cgroup/' . $cgroup_controller . '/' . $cgroup_name;
 		$return_val = null;
 
-		if (!is_dir($cgroup_path))	// cgroup filesystem doesn't allow to create regular files anyway
+		if(!is_dir($cgroup_path))	// cgroup filesystem doesn't allow to create regular files anyway
 		{
 			$current_user = exec('whoami');
 			$mkdir_cmd = 'mkdir ' . $cgroup_path;
@@ -521,7 +511,7 @@ class system_monitor extends pts_module_interface
 			exec($command);
 		}
 
-		if (!is_writable($cgroup_path . '/tasks'))
+		if(!is_writable($cgroup_path . '/tasks'))
 		{
 			throw new Exception('could not create cgroups');
 		}
@@ -533,7 +523,7 @@ class system_monitor extends pts_module_interface
 		$sudo_cmd = PTS_CORE_STATIC_PATH . 'root-access.sh ';
 		$cgroup_path = '/sys/fs/cgroup/' . $cgroup_controller . '/' . $cgroup_name;
 
-		if (is_dir($cgroup_path))	// cgroup filesystem doesn't allow to create regular files anyway
+		if(is_dir($cgroup_path))	// cgroup filesystem doesn't allow to create regular files anyway
 		{
 			$rmdir_cmd = 'rmdir ' . $cgroup_path;
 			shell_exec($sudo_cmd . $rmdir_cmd);
@@ -547,16 +537,16 @@ class system_monitor extends pts_module_interface
 	// we need offset information to know where to start drawing chart for the individual test run from.
 	private static function save_log_offsets($type)
 	{
-		foreach (self::$to_monitor as &$sensor)
+		foreach(self::$to_monitor as &$sensor)
 		{
 			$log_f = pts_module::read_file('logs/' . phodevi::sensor_object_identifier($sensor));
 			$offset = count(explode(PHP_EOL, $log_f));
 
-			if ($type === 'interim')
+			if($type === 'interim')
 			{
 				self::$test_run_tries_offsets[self::$test_run_try_number][phodevi::sensor_object_identifier($sensor)] = $offset;
 			}
-			elseif ($type === 'pre-test')
+			else if($type === 'pre-test')
 			{
 				self::$individual_test_run_offsets[phodevi::sensor_object_identifier($sensor)] = $offset;
 			}
@@ -633,12 +623,11 @@ class system_monitor extends pts_module_interface
 			$test_run_manager->result_file->add_result($test_result);
 		}
 	}
-
 	private static function process_test_run_results(&$sensor, &$result_file)
 	{
 		$result_buffer = new pts_test_result_buffer();
 
-		if (self::$per_test_try_monitoring)
+		if(self::$per_test_try_monitoring)
 		{
 			self::prepare_per_try_results($sensor, $result_buffer);
 		}
@@ -657,7 +646,6 @@ class system_monitor extends pts_module_interface
 
 		self::$individual_test_run_offsets[phodevi::sensor_object_identifier($sensor)] = array();
 	}
-
 	private static function write_test_run_results(&$result_buffer, &$result_file, &$sensor)
 	{
 		//TODO result count checks should probably be done before cloning the test_result
@@ -672,19 +660,18 @@ class system_monitor extends pts_module_interface
 		$test_result->set_used_arguments(phodevi::sensor_object_name($sensor) . ' ' . $test_result->get_arguments());
 		$test_result->test_result_buffer = $result_buffer;
 
-		if (self::$per_test_try_monitoring && $result_buffer->get_count() > 1)
+		if(self::$per_test_try_monitoring && $result_buffer->get_count() > 1)
 		{
 			$test_result->set_used_arguments_description(phodevi::sensor_object_name($sensor) . ' Per Test Try Monitor');
 		}
 
 		$result_file->add_result($test_result);
 	}
-
 	private static function prepare_per_try_results(&$sensor, &$result_buffer)
 	{
-		foreach (array_keys(self::$test_run_tries_offsets) as $try_number)
+		foreach(array_keys(self::$test_run_tries_offsets) as $try_number)
 		{
-			if ($try_number === 0)
+			if($try_number === 0)
 			{
 				$start_offset = self::$individual_test_run_offsets[phodevi::sensor_object_identifier($sensor)];
 			}
@@ -705,7 +692,6 @@ class system_monitor extends pts_module_interface
 			}
 		}
 	}
-
 	// Generates summary result (covering all test runs) for specified sensor and adds it to the result file.
 	private static function process_summary_results(&$sensor, &$test_run_manager)
 	{
