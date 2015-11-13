@@ -4,6 +4,7 @@ Phoronix Test Suite (Git)
 
 - pts-core: Stop logging lsusb as on some systems calling the command will hang
 - pts-core: Move common dependencies later in the external dependency handling process
+- pts_Graph: Fix multi-way comparison line graphs from color collision
 
 Phoronix Test Suite 6.0 Milestone 6
 12 November 2015

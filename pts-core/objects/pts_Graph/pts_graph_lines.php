@@ -38,6 +38,7 @@ class pts_graph_lines extends pts_graph_core
 			}
 		}
 
+		$extra_attributes['no_compact_results_var'] = true;
 		parent::__construct($result_object, $result_file, $extra_attributes);
 		$this->i['show_graph_key'] = true;
 		$this->i['show_background_lines'] = true;

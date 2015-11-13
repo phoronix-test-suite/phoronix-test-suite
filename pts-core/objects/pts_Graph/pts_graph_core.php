@@ -130,7 +130,11 @@ abstract class pts_graph_core
 		}
 
 		$this->test_result = &$result_object;
-		$this->generate_results_var();
+
+		if(!isset($extra_attributes['no_compact_results_var']))
+		{
+			$this->generate_results_var();
+		}
 	}
 	protected function generate_results_var()
 	{
