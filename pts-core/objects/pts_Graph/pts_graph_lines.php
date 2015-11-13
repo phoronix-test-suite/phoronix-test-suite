@@ -27,7 +27,7 @@ class pts_graph_lines extends pts_graph_core
 	public function __construct(&$result_object, &$result_file = null, $extra_attributes = null)
 	{
 		$max_count = 0;
-		if(!$extra_attributes['force_tracking_line_graph'])
+		if(!isset($extra_attributes['force_tracking_line_graph']) || !$extra_attributes['force_tracking_line_graph'])
 		{
 			foreach($result_object->test_result_buffer->buffer_items as &$buffer_item)
 			{
@@ -48,7 +48,7 @@ class pts_graph_lines extends pts_graph_core
 		$this->i['display_select_identifiers'] = false;
 		$this->i['hide_graph_identifiers'] = !isset($extra_attributes['force_tracking_line_graph']) || !$extra_attributes['force_tracking_line_graph'];
 
-		if($this->is_multi_way_comparison && $extra_attributes['force_tracking_line_graph'])
+		if($this->is_multi_way_comparison && isset($extra_attributes['force_tracking_line_graph']) && $extra_attributes['force_tracking_line_graph'])
 		{
 			// need to do compacting here
 			$this->test_result->test_result_buffer = new pts_test_result_buffer();
