@@ -72,13 +72,6 @@ class pts_external_dependencies
 			return true;
 		}
 
-		if(!empty($required_test_dependencies))
-		{
-			// The 'common-dependencies' package is any general non-explicitly-required but nice-to-have packages like mesa-utils for providing glxinfo about the system
-			// So if we're going to be installing external dependencies anyways, might as well try to see the common-dependencies are satisfied
-			$required_test_dependencies['common-dependencies'] = array();
-		}
-
 		// Does the user wish to skip any particular dependencies?
 		if(pts_client::read_env('SKIP_EXTERNAL_DEPENDENCIES'))
 		{
@@ -103,6 +96,18 @@ class pts_external_dependencies
 		if($no_prompts && phodevi::is_root() == false)
 		{
 			return count($dependencies_to_install) == 0;
+		}
+
+		if(!empty($dependencies_to_install))
+		{
+			// The 'common-dependencies' package is any general non-explicitly-required but nice-to-have packages like mesa-utils for providing glxinfo about the system
+			// So if we're going to be installing external dependencies anyways, might as well try to see the common-dependencies are satisfied
+			$common_test_dependencies['common-dependencies'] = array();
+			$common_to_install = self::check_dependencies_missing_from_system($common_test_dependencies);
+			if(!empty($common_to_install))
+			{
+				$dependencies_to_install = array_merge($dependencies_to_install, $common_to_install);
+			}
 		}
 
 		// Do the actual dependency install process
