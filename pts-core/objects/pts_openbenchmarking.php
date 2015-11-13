@@ -523,7 +523,7 @@ class pts_openbenchmarking
 
 		return null;
 	}
-	public static function available_tests($download_tests = true, $all_versions = false, $append_versions = false)
+	public static function available_tests($download_tests = true, $all_versions = false, $append_versions = false, $show_deprecated_tests = false)
 	{
 		$available_tests = array();
 
@@ -535,6 +535,11 @@ class pts_openbenchmarking
 			{
 				foreach(array_keys($repo_index['tests']) as $identifier)
 				{
+					if(!$show_deprecated_tests && isset($repo_index['tests'][$identifier]['status']) && $repo_index['tests'][$identifier]['status'] == 'Deprecated')
+					{
+						continue;
+					}
+
 					if($all_versions)
 					{
 						$versions = $repo_index['tests'][$identifier]['versions'];

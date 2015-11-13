@@ -3,8 +3,8 @@
 <xs:annotation>
 	<xs:documentation xml:lang="en">
 		Phoronix Test Suite / OpenBenchmarking.org XML Test Profile Specification
-		Copyright (C) 2008 - 2013, Phoronix Media
-		Copyright (C) 2008 - 2013, Michael Larabel
+		Copyright (C) 2008 - 2015, Phoronix Media
+		Copyright (C) 2008 - 2015, Michael Larabel
 	</xs:documentation>
 </xs:annotation>
 <xs:include schemaLocation="types.xsd" />

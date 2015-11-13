@@ -1012,7 +1012,7 @@ class pts_client
 			unset($graph);
 		}
 
-		// Save XSL
+		// Save the result viewer
 		if(count($generated_graphs) > 0 && $save_to_dir)
 		{
 			copy(PTS_CORE_STATIC_PATH . 'result-viewer.html', $save_to_dir . '/index.html');
