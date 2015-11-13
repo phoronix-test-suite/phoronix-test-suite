@@ -352,7 +352,7 @@ class pts_client
 					'lspci -mmkvvvnn',
 					'lscpu',
 					'cc -v',
-					'lsusb',
+				//	'lsusb',
 					'lsmod',
 					'sensors',
 					'dmesg',
