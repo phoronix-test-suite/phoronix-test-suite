@@ -781,7 +781,7 @@ abstract class pts_graph_core
 	}
 	protected function graph_key_height()
 	{
-		if(count($this->results) < 2 && $this->i['show_graph_key'] == false)
+		if(count($this->results) < 2 && $this->i['show_graph_key'] == false) // TODO likely should be OR
 		{
 			return 0;
 		}

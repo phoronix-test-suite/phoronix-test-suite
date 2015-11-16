@@ -73,7 +73,7 @@ class system_monitor extends pts_module_interface
 
 	public static function __run_manager_setup(&$test_run_manager)
 	{
-		//$test_run_manager->force_results_save();
+		$test_run_manager->force_results_save();
 		$test_run_manager->disable_dynamic_run_count();
 	}
 
@@ -210,11 +210,11 @@ class system_monitor extends pts_module_interface
 
 			if($is_instant === false)
 			{
-				$pid = pts_module::pts_timed_function('pts_monitor_update', self::$sensor_monitoring_frequency, array(array(&$sensor)));
+				$pid = pts_module::pts_timed_function('pts_monitor_update', self::$sensor_monitoring_frequency, array(array($sensor)));
 			}
 			else
 			{
-				$instant_sensors[] = &$sensor;
+				$instant_sensors[] = $sensor;
 			}
 		}
 

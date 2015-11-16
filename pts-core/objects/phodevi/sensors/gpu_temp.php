@@ -86,6 +86,7 @@ class gpu_temp extends phodevi_sensor
 				foreach(pts_file_io::glob('/sys/class/hwmon/hwmon*/name') as $temp_name)
 				{
 					// This works on the NVIDIA Jetson TX1
+					// On the TX1 the name = GPU-therm
 					if(is_readable($temp_name) == false || stripos(file_get_contents($temp_name), 'GPU') === false)
 					{
 						continue;
