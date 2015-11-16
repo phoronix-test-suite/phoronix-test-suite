@@ -805,6 +805,12 @@ abstract class pts_graph_core
 		$i = 0;
 		$g_rect = $this->svg_dom->make_g(array('stroke' => self::$c['color']['notches'], 'stroke-width' => 1));
 		$g_text = $this->svg_dom->make_g(array('font-size' => self::$c['size']['key'], 'text-anchor' => 'start'));
+
+		if(!is_array($this->results))
+		{
+			return false;
+		}
+
 		foreach(array_keys($this->results) as $title)
 		{
 			if(!empty($title))
