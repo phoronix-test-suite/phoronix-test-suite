@@ -37,7 +37,7 @@ class hdd_write_speed extends phodevi_sensor
 		{
 			$this->disk_to_monitor = $parameter;
 		}
-		elseif(!empty(self::get_supported_devices() ) )
+		else if(self::get_supported_devices() != null)
 		{
 			$disks = self::get_supported_devices();
 			$this->disk_to_monitor = $disks[0];

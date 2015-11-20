@@ -41,7 +41,7 @@ class sys_voltage extends phodevi_sensor
 	{
 		$devices = self::get_supported_devices();
 		
-		if(empty(self::get_supported_devices() ) )
+		if(self::get_supported_devices() == null)
 		{
 			return false;
 		}

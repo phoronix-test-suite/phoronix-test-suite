@@ -24,7 +24,7 @@ class network_usage extends phodevi_sensor
 		{
 			$this->interface_to_monitor = $parameter;
 		}
-		elseif(!empty(self::get_supported_devices() ) )
+		else if(self::get_supported_devices() != null)
 		{
 			$ifaces = self::get_supported_devices();
 			$this->interface_to_monitor = $ifaces[0];
