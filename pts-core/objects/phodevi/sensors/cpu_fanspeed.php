@@ -30,10 +30,10 @@ class cpu_fanspeed extends phodevi_sensor
 	{
 		if(phodevi::is_linux())
 		{
-		    return $this->cpu_fanspeed_linux();
+			return $this->cpu_fanspeed_linux();
 		}
 
-		return -1;      // TODO make -1 a named constant
+		return -1;		// TODO make -1 a named constant
 	}
 
 	private function cpu_fanspeed_linux()
@@ -43,7 +43,7 @@ class cpu_fanspeed extends phodevi_sensor
 
 		if($raw_fan == -1)
 		{
-		    $raw_fan = phodevi_linux_parser::read_sysfs_node('/sys/class/hwmon/hwmon*/fan1_input', 'POSITIVE_NUMERIC');
+			$raw_fan = phodevi_linux_parser::read_sysfs_node('/sys/class/hwmon/hwmon*/fan1_input', 'POSITIVE_NUMERIC');
 		}
 
 		if($raw_fan != -1)

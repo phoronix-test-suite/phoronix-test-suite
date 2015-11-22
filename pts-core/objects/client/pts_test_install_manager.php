@@ -59,7 +59,7 @@ class pts_test_install_manager
 
 		foreach($this->tests_to_install as $i => &$test_install_request)
 		{
-            $test_install_request->generate_download_object_list();
+			$test_install_request->generate_download_object_list();
 			pts_client::$display->test_install_progress_update(($i / $test_count));
 		}
 		pts_client::$display->test_install_progress_completed();

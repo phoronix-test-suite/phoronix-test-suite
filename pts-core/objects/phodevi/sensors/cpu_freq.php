@@ -25,10 +25,10 @@ class cpu_freq extends phodevi_sensor
 	const SENSOR_TYPE = 'cpu';
 	const SENSOR_SENSES = 'freq';
 	const SENSOR_UNIT = 'Megahertz';
-    
+
 	private $cpu_to_monitor = 'cpu0';
-    
-    
+
+
 	function __construct($instance, $parameter)
 	{
 		parent::__construct($instance, $parameter);
@@ -51,7 +51,7 @@ class cpu_freq extends phodevi_sensor
 	{
 		if(self::get_supported_devices() == null)
 		{
-		    return NULL;
+			return NULL;
 		}
 
 		return strtoupper($this->cpu_to_monitor);
@@ -66,7 +66,7 @@ class cpu_freq extends phodevi_sensor
 
 			return $supported;
 		}
-        
+
 		// Per-CPU frequency monitoring is currently supported on Linux only.
 		return NULL;
 	}
@@ -101,20 +101,20 @@ class cpu_freq extends phodevi_sensor
 		// First, the ideal way, with modern CPUs using CnQ or EIST and cpuinfo reporting the current frequency.
 		if(is_file('/sys/devices/system/cpu/' . $this->cpu_to_monitor . '/cpufreq/scaling_cur_freq'))
 		{
-		    $frequency = pts_file_io::file_get_contents('/sys/devices/system/cpu/' . $this->cpu_to_monitor . '/cpufreq/scaling_cur_freq');
-		    $frequency = intval($frequency) / 1000;
+			$frequency = pts_file_io::file_get_contents('/sys/devices/system/cpu/' . $this->cpu_to_monitor . '/cpufreq/scaling_cur_freq');
+			$frequency = intval($frequency) / 1000;
 		}
 		else if(is_file('/proc/cpuinfo')) // fall back for those without cpufreq
 		{
-		    $cpu_speeds = phodevi_linux_parser::read_cpuinfo('cpu MHz');
-		    $cpu_number = intval(substr($this->cpu_to_monitor, 3) ); //cut 'cpu' from the beginning
+			$cpu_speeds = phodevi_linux_parser::read_cpuinfo('cpu MHz');
+			$cpu_number = intval(substr($this->cpu_to_monitor, 3) ); //cut 'cpu' from the beginning
 
-		    if(!isset($cpu_speeds[$cpu_number]))
-		    {
-		        return -1;
-		    }
+			if(!isset($cpu_speeds[$cpu_number]))
+			{
+				return -1;
+			}
 
-		    $frequency = intval($cpu_speeds[$cpu_number]);
+			$frequency = intval($cpu_speeds[$cpu_number]);
 		}
 
 		return $frequency;
@@ -139,13 +139,13 @@ class cpu_freq extends phodevi_sensor
 
 		if(($cut_point = strpos($info, ' ')) > 0)
 		{
-		    $cut_str = substr($info, 0, $cut_point);
-		    $frequency = str_replace(',', '.', $cut_str);
+			$cut_str = substr($info, 0, $cut_point);
+			$frequency = str_replace(',', '.', $cut_str);
 		}
 
 		if($frequency < 100)
 		{
-		    $frequency *= 1000;
+			$frequency *= 1000;
 		}
 
 		return pts_math::set_precision($frequency, 2);

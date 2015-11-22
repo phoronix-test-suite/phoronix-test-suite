@@ -22,10 +22,11 @@
 
 abstract class phodevi_sensor
 {
-    const SENSOR_TYPE = '';             //eg. cpu
-	const SENSOR_SENSES = '';           //eg. power-usage
-	const SENSOR_UNIT = '';             //eg. miliwatts
-    const INSTANT_MEASUREMENT = true;
+
+	const SENSOR_TYPE = '';			//eg. cpu
+	const SENSOR_SENSES = '';		//eg. power-usage
+	const SENSOR_UNIT = '';			//eg. miliwatts
+	const INSTANT_MEASUREMENT = true;
 
 	protected $instance_number;
 
@@ -49,10 +50,10 @@ abstract class phodevi_sensor
 		return static::SENSOR_UNIT;
 	}
 
-    public function is_instant()
-    {
-        return static::INSTANT_MEASUREMENT;
-    }
+	public function is_instant()
+	{
+		return static::INSTANT_MEASUREMENT;
+	}
 
 	public function get_instance()
 	{
@@ -89,7 +90,7 @@ abstract class phodevi_sensor
 	}
 
 	// Check if sensor is supported on the current platform. In most cases you
-    // do not need to override this one.
+	// do not need to override this one.
 	public function support_check()
 	{
 		$test = $this->read_sensor();

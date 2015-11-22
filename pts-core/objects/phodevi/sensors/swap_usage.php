@@ -31,12 +31,12 @@ class swap_usage extends phodevi_sensor
 	public function read_sensor()
 	{
 		$swap_usage = -1;
-        
+
 		if(phodevi::is_linux())
 		{
 			$swap_usage = self::swap_usage_linux();
 		}
-        
+
 		return $swap_usage;
 	}
 	private function swap_usage_linux()
