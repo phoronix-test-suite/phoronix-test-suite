@@ -912,7 +912,14 @@ class phodevi_system extends phodevi_device_interface
 		if(phodevi::is_windows())
 		{
 			//$kernel_arch = strpos($_SERVER['PROCESSOR_ARCHITECTURE'], 64) !== false || strpos($_SERVER['PROCESSOR_ARCHITEW6432'], 64 != false) ? 'x86_64' : 'i686';
-			$kernel_arch = $_SERVER['PROCESSOR_ARCHITEW6432'] == 'AMD64' ? 'x86_64' : 'i686';
+			if(isset($_SERVER['PROCESSOR_ARCHITEW6432']))
+			{
+				$kernel_arch = $_SERVER['PROCESSOR_ARCHITEW6432'] == 'AMD64' ? 'x86_64' : 'i686';
+			}
+			else
+			{
+				$kernel_arch = 'x86_64';
+			}
 		}
 		else
 		{
