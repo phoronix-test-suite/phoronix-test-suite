@@ -506,7 +506,6 @@ class system_monitor extends pts_module_interface
 			$mkdir_cmd = 'mkdir ' . $cgroup_path;
 			$chmod_cmd = 'chown ' . $current_user . ' ' . $cgroup_path . '/tasks';
 			$command = $sudo_cmd . '"' . $mkdir_cmd . ' && ' . $chmod_cmd . '"';
-			var_dump($command);
 			exec($command);
 		}
 
