@@ -539,7 +539,7 @@ class system_monitor extends pts_module_interface
 		foreach(self::$to_monitor as &$sensor)
 		{
 			$log_f = pts_module::read_file('logs/' . phodevi::sensor_object_identifier($sensor));
-			$offset = count(explode(PHP_EOL, $log_f));
+			$offset = count(explode(PHP_EOL, $log_f)) - 1;		// as log file ends with an empty line
 
 			if($type === 'interim')
 			{
