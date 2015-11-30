@@ -362,7 +362,7 @@ class pts_result_file
 	}
 	public function invert_multi_way_invert()
 	{
-		$this->is_multi_way_inverted = ($this->is_multi_way_inverted == false);
+		$this->is_multi_way_inverted = !$this->is_multi_way_inverted;
 	}
 	public function is_multi_way_inverted()
 	{

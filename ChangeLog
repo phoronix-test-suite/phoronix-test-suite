@@ -1,5 +1,10 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- phoromatic: Allow public listing of download cache files when navigating in browser to /download-cache.php
+- phodevi: Assume Windows is 64-bit when environment variable check fails
+
 Phoronix Test Suite 6.0.1
 20 November 2015
 
