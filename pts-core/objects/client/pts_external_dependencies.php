@@ -22,6 +22,17 @@
 
 class pts_external_dependencies
 {
+	public static function packages_that_provide($file)
+	{
+		$pkg_vendor = self::vendor_identifier('package-list');
+		if(is_file(PTS_EXDEP_PATH . 'dependency-handlers/' . $pkg_vendor . '_dependency_handler.php'))
+		{
+			require_once(PTS_EXDEP_PATH . 'dependency-handlers/' . $pkg_vendor . '_dependency_handler.php');
+			eval("\$provides = {$pkg_vendor}_dependency_handler::what_provides(\$file);");
+			return $provides;
+		}
+		return false;
+	}
 	public static function install_dependencies(&$test_profiles, $no_prompts = false, $skip_tests_with_missing_dependencies = false)
 	{
 		// PTS External Dependencies install on distribution
