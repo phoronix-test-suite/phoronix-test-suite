@@ -55,6 +55,7 @@
 			<xs:element name="Maintainer" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="AllowResultsSharing" type="Boolean" minOccurs="0" maxOccurs="1" />
 			<xs:element name="AutoSaveResults" type="Boolean" minOccurs="0" maxOccurs="1" />
+			<xs:element name="SystemDependencies" type="xs:string" minOccurs="0" maxOccurs="1" />
 		</xs:sequence>
 		</xs:complexType>
 		</xs:element>

@@ -466,13 +466,14 @@ class pts_test_installer
 		// or pass false to $test_install_request to bypass the test checks
 		$compilers = array();
 
-		if($test_install_request === false || in_array('build-utilities', $test_install_request->test_profile->get_dependencies()))
+		$external_dependencies = $test_install_request->test_profile->get_external_dependencies();
+		if($test_install_request === false || in_array('build-utilities', $external_dependencies))
 		{
 			// Handle C/C++ compilers for this external dependency
 			$compilers['CC'] = array(pts_strings::first_in_string(pts_client::read_env('CC'), ' '), 'gcc', 'clang', 'icc', 'pcc');
 			$compilers['CXX'] = array(pts_strings::first_in_string(pts_client::read_env('CXX'), ' '), 'g++', 'clang++', 'cpp');
 		}
-		if($test_install_request === false || in_array('fortran-compiler', $test_install_request->test_profile->get_dependencies()))
+		if($test_install_request === false || in_array('fortran-compiler', $external_dependencies))
 		{
 			// Handle Fortran for this external dependency
 			$compilers['F9X'] = array(pts_strings::first_in_string(pts_client::read_env('F9X'), ' '), pts_strings::first_in_string(pts_client::read_env('F95'), ' '), 'gfortran', 'f90', 'f95', 'fortran');

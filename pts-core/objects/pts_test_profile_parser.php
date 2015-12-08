@@ -231,7 +231,16 @@ class pts_test_profile_parser
 	}
 	public function get_dependencies()
 	{
+		// XXX should be using get_external_dependencies instead, TODO remove with PTS 6.2
+		return $this->get_external_dependencies();
+	}
+	public function get_external_dependencies()
+	{
 		return pts_strings::comma_explode($this->xg('TestProfile/ExternalDependencies'));
+	}
+	public function get_system_dependencies()
+	{
+		return pts_strings::comma_explode($this->xg('TestProfile/SystemDependencies'));
 	}
 	public function get_pre_install_message()
 	{

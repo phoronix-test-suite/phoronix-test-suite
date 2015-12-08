@@ -123,7 +123,7 @@ class info implements pts_option_interface
 					echo PHP_EOL . 'Test Installed: No' . PHP_EOL;
 				}
 
-				$dependencies = $o->get_dependencies();
+				$dependencies = $o->get_external_dependencies();
 				if(!empty($dependencies) && !empty($dependencies[0]))
 				{
 					echo PHP_EOL . 'Software Dependencies:' . PHP_EOL;

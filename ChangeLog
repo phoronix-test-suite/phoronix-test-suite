@@ -2,7 +2,8 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
-- pts-core: Begin work on distribution-specific dynamic dependency handler infrastructure
+- pts-core: Begin work on dynamic dependency handler infrastructure
+- pts-core: Add new TestProfile/SystemDependencies field to test profile specification, to be implemented
 - phoromatic: Allow public listing of download cache files when navigating in browser to /download-cache.php
 - phodevi: Assume Windows is 64-bit when environment variable check fails
 

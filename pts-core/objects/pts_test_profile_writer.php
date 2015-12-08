@@ -93,6 +93,7 @@ class pts_test_profile_writer
 		$this->xml_writer->addXmlNodeFromXGWNE('PhoronixTestSuite/TestProfile/Maintainer', $test_profile);
 		$this->xml_writer->addXmlNodeFromXGWNE('PhoronixTestSuite/TestProfile/AllowResultsSharing', $test_profile);
 		$this->xml_writer->addXmlNodeFromXGWNE('PhoronixTestSuite/TestProfile/AutoSaveResults', $test_profile);
+		$this->xml_writer->addXmlNodeFromXGWNE('PhoronixTestSuite/TestProfile/SystemDependencies', $test_profile);
 	}
 	public function add_test_settings(&$test_profile)
 	{

@@ -57,7 +57,7 @@ class pts_external_dependencies
 		$required_test_dependencies = array();
 		foreach($tests_to_check as &$test_profile)
 		{
-			foreach($test_profile->get_dependencies() as $test_dependency)
+			foreach($test_profile->get_external_dependencies() as $test_dependency)
 			{
 				if(empty($test_dependency))
 				{

@@ -136,7 +136,7 @@ class pts_test_profile extends pts_test_profile_parser
 		$dependency_names = array();
 		$exdep_generic_parser = new pts_exdep_generic_parser();
 
-		foreach($this->get_dependencies() as $dependency)
+		foreach($this->get_external_dependencies() as $dependency)
 		{
 			if($exdep_generic_parser->is_package($dependency))
 			{
