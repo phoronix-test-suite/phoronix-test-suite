@@ -367,7 +367,20 @@ class pts_test_profile extends pts_test_profile_parser
 	}
 	public function get_file_parser_spec()
 	{
-		return is_file($this->get_resource_dir() . 'results-definition.xml') ? $this->get_resource_dir() . 'results-definition.xml' : false;
+		$spec = is_file($this->get_resource_dir() . 'results-definition.xml') ? $this->get_resource_dir() . 'results-definition.xml' : false;
+
+		if(!$spec)
+		{
+			$extends = $this->get_test_extension();
+
+			if(!empty($extends))
+			{
+				$test_profile = new pts_test_profile($extends);
+				$spec = $test_profile->get_file_parser_spec();
+			}
+		}
+
+		return $spec;
 	}
 	public function extended_test_profiles()
 	{
