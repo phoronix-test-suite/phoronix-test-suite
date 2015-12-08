@@ -36,8 +36,8 @@
 		<xs:complexType>
 		<xs:sequence>
 			<xs:element name="Version" type="VersionString" />
-			<xs:element name="SupportedPlatforms" type="PlatformString" />
-			<xs:element name="SoftwareType" type="SoftwareType" />
+			<xs:element name="SupportedPlatforms" type="PlatformString" minOccurs="0" maxOccurs="1"  />
+			<xs:element name="SoftwareType" type="SoftwareType" minOccurs="0" maxOccurs="1"  />
 			<xs:element name="TestType" type="TestType" minOccurs="0" maxOccurs="1" />
 			<xs:element name="License" type="License" minOccurs="0" maxOccurs="1" />
 			<xs:element name="Status" type="ProfileStatus" minOccurs="0" maxOccurs="1" />

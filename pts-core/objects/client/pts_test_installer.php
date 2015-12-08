@@ -466,7 +466,7 @@ class pts_test_installer
 		// or pass false to $test_install_request to bypass the test checks
 		$compilers = array();
 
-		$external_dependencies = $test_install_request->test_profile->get_external_dependencies();
+		$external_dependencies = $test_install_request != false ? $test_install_request->test_profile->get_external_dependencies() : false;
 		if($test_install_request === false || in_array('build-utilities', $external_dependencies))
 		{
 			// Handle C/C++ compilers for this external dependency
