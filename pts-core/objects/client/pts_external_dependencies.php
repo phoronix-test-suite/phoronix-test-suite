@@ -25,7 +25,7 @@ class pts_external_dependencies
 	public static function packages_that_provide($file)
 	{
 		$pkg_vendor = self::vendor_identifier('package-list');
-		if(is_file(PTS_EXDEP_PATH . 'dependency-handlers/' . $pkg_vendor . '_dependency_handler.php'))
+		if($file != null && is_file(PTS_EXDEP_PATH . 'dependency-handlers/' . $pkg_vendor . '_dependency_handler.php'))
 		{
 			require_once(PTS_EXDEP_PATH . 'dependency-handlers/' . $pkg_vendor . '_dependency_handler.php');
 			eval("\$provides = {$pkg_vendor}_dependency_handler::what_provides(\$file);");
