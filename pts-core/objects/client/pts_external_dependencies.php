@@ -54,7 +54,8 @@ class pts_external_dependencies
 		}
 
 		// Find all of the POSSIBLE test dependencies
-		$required_test_dependencies = array();
+		$required_external_dependencies = array();
+		$required_system_files = array();
 		foreach($tests_to_check as &$test_profile)
 		{
 			foreach($test_profile->get_external_dependencies() as $test_dependency)
@@ -64,12 +65,26 @@ class pts_external_dependencies
 					continue;
 				}
 
-				if(isset($required_test_dependencies[$test_dependency]) == false)
+				if(isset($required_external_dependencies[$test_dependency]) == false)
 				{
-					$required_test_dependencies[$test_dependency] = array();
+					$required_external_dependencies[$test_dependency] = array();
 				}
 
-				array_push($required_test_dependencies[$test_dependency], $test_profile);
+				array_push($required_external_dependencies[$test_dependency], $test_profile);
+			}
+			foreach($test_profile->get_system_dependencies() as $test_dependency)
+			{
+				if(empty($test_dependency))
+				{
+					continue;
+				}
+
+				if(isset($required_system_files[$test_dependency]) == false)
+				{
+					$required_system_files[$test_dependency] = array();
+				}
+
+				array_push($required_system_files[$test_dependency], $test_profile);
 			}
 		}
 
@@ -77,9 +92,9 @@ class pts_external_dependencies
 		{
 			// Remove tests that have external dependencies that aren't satisfied and then return
 			$generic_packages_needed = array();
-			$required_test_dependencies_copy = $required_test_dependencies;
-			$dependencies_to_install = self::check_dependencies_missing_from_system($required_test_dependencies_copy, $generic_packages_needed);
-			self::remove_tests_with_missing_dependencies($test_profiles, $generic_packages_needed, $required_test_dependencies);
+			$required_external_dependencies_copy = $required_external_dependencies;
+			$dependencies_to_install = self::check_dependencies_missing_from_system($required_external_dependencies_copy, $generic_packages_needed);
+			self::remove_tests_with_missing_dependencies($test_profiles, $generic_packages_needed, $required_external_dependencies);
 			return true;
 		}
 
@@ -90,18 +105,22 @@ class pts_external_dependencies
 
 			foreach($dependencies_to_skip as $dependency_name)
 			{
-				if(isset($required_test_dependencies[$dependency_name]))
+				if(isset($required_external_dependencies[$dependency_name]))
 				{
-					unset($required_test_dependencies[$dependency_name]);
+					unset($required_external_dependencies[$dependency_name]);
+				}
+				if(isset($required_system_files[$dependency_name]))
+				{
+					unset($required_system_files[$dependency_name]);
 				}
 			}
 		}
 
 		// Make a copy for use to check at end of process to see if all dependencies were actually found
-		$required_test_dependencies_copy = $required_test_dependencies;
+		$required_external_dependencies_copy = $required_external_dependencies;
 
 		// Find the dependencies that are actually missing from the system
-		$dependencies_to_install = self::check_dependencies_missing_from_system($required_test_dependencies);
+		$dependencies_to_install = self::check_dependencies_missing_from_system($required_external_dependencies);
 
 		// If it's automated and can't install without root, return true if there are no dependencies to do otherwise false
 		if($no_prompts && phodevi::is_root() == false)
@@ -121,6 +140,13 @@ class pts_external_dependencies
 			}
 		}
 
+		$system_dependencies = self::check_for_missing_system_files($required_system_files);
+
+		if(!empty($system_dependencies))
+		{
+			$dependencies_to_install = array_merge($dependencies_to_install, $system_dependencies);
+		}
+
 		// Do the actual dependency install process
 		if(count($dependencies_to_install) > 0)
 		{
@@ -128,12 +154,12 @@ class pts_external_dependencies
 		}
 
 		// There were some dependencies not supported on this OS or are missing from the distro's XML file
-		if(count($required_test_dependencies) > 0 && count($dependencies_to_install) == 0)
+		if(count($required_external_dependencies) > 0 && count($dependencies_to_install) == 0)
 		{
 			$exdep_generic_parser = new pts_exdep_generic_parser();
 			$to_report = array();
 
-			foreach(array_keys($required_test_dependencies) as $dependency)
+			foreach(array_keys($required_external_dependencies) as $dependency)
 			{
 				$dependency_data = $exdep_generic_parser->get_package_data($dependency);
 
@@ -166,8 +192,8 @@ class pts_external_dependencies
 		if(!$no_prompts && !defined('PHOROMATIC_PROCESS'))
 		{
 			$generic_packages_needed = array();
-			$required_test_dependencies = $required_test_dependencies_copy;
-			$dependencies_to_install = self::check_dependencies_missing_from_system($required_test_dependencies_copy, $generic_packages_needed);
+			$required_external_dependencies = $required_external_dependencies_copy;
+			$dependencies_to_install = self::check_dependencies_missing_from_system($required_external_dependencies_copy, $generic_packages_needed);
 
 			if(count($generic_packages_needed) > 0)
 			{
@@ -189,7 +215,7 @@ class pts_external_dependencies
 						break;
 					case 'SKIP_TESTS_WITH_MISSING_DEPS':
 						// Unset the tests that have dependencies still missing
-						self::remove_tests_with_missing_dependencies($test_profiles, $generic_packages_needed, $required_test_dependencies);
+						self::remove_tests_with_missing_dependencies($test_profiles, $generic_packages_needed, $required_external_dependencies);
 						break;
 					case 'REATTEMPT_DEP_INSTALL':
 						self::install_packages_on_system($dependencies_to_install);
@@ -313,6 +339,54 @@ class pts_external_dependencies
 				if($file_present)
 				{
 					unset($required_test_dependencies[$i]);
+				}
+			}
+		}
+
+		return $needed_os_packages;
+	}
+	private static function check_for_missing_system_files(&$required_system_files)
+	{
+		$kernel_architecture = phodevi::read_property('system', 'kernel-architecture');
+		$needed_os_packages = array();
+
+		foreach(array_keys($required_system_files) as $file)
+		{
+			$present = false;
+			if(is_file($file))
+			{
+				$present = true;
+			}
+			if(strpos($file, '.h') !== false && is_file('/usr/includes/' . $file))
+			{
+				$present = true;
+			}
+			else if(strpos($file, '.so') !== false && is_file('/usr/lib/' . $file))
+			{
+				$present = true;
+			}
+			else
+			{
+				foreach(array('/usr/bin/', '/bin/', '/usr/sbin') as $possible_path)
+				{
+					if(is_file($possible_path . $file))
+					{
+						$present = true;
+						break;
+					}
+				}
+			}
+
+			if(!$present)
+			{
+				$processed_pkgs = self::packages_that_provide($file);
+
+				if(!empty($processed_pkgs))
+				{
+					foreach($processed_pkgs as $pkg)
+					{
+						array_push($needed_os_packages, $pkg);
+					}
 				}
 			}
 		}
