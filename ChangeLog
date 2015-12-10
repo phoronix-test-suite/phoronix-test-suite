@@ -7,6 +7,7 @@ Phoronix Test Suite (Git)
 - pts-core: Basic implementation of SystemDependencies for dynamically resolving system/external dependencies based on file name
 - phoromatic: Allow public listing of download cache files when navigating in browser to /download-cache.php
 - phodevi: Assume Windows is 64-bit when environment variable check fails
+- phodevi: Support sys.power sensor monitoring fallback on BAT1
 
 Phoronix Test Suite 6.0.1
 20 November 2015
