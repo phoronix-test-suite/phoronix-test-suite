@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2013, Phoronix Media
-	Copyright (C) 2010 - 2013, Michael Larabel
+	Copyright (C) 2010 - 2015, Phoronix Media
+	Copyright (C) 2010 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@ class upload_test_profile implements pts_option_interface
 			return false;
 		}
 
-		foreach(pts_types::identifiers_to_test_profile_objects($r, true, true) as $test_profile)
+		foreach(pts_types::identifiers_to_test_profile_objects($r, false, true) as $test_profile)
 		{
 			// validate_test_profile
 			if(pts_validation::validate_test_profile($test_profile))
