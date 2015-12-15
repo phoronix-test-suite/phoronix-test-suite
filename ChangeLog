@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 6.2 Milestone 1
+15 December 2015
 
 - pts-core: Begin work on dynamic dependency handler infrastructure
 - pts-core: Add new TestProfile/SystemDependencies field to test profile specification
