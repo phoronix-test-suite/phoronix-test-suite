@@ -185,6 +185,15 @@ class pts_tests
 			$test_profiles = array_merge($test_profiles, $test_profile->extended_test_profiles());
 		}
 
+		if(pts_client::executable_in_path('bash'))
+		{
+			$sh = 'bash';
+		}
+		else
+		{
+			$sh = 'sh';
+		}
+
 		foreach($test_profiles as &$this_test_profile)
 		{
 			$test_resources_location = $this_test_profile->get_resource_dir();
@@ -204,7 +213,7 @@ class pts_tests
 				}
 				else
 				{
-					$this_result = pts_client::shell_exec('cd ' .  $test_directory . ' && sh ' . $run_file . ' "' . $pass_argument . '" 2>&1', $extra_vars);
+					$this_result = pts_client::shell_exec('cd ' .  $test_directory . ' && ' . $sh . ' ' . $run_file . ' "' . $pass_argument . '" 2>&1', $extra_vars);
 				}
 
 				if(trim($this_result) != null)
