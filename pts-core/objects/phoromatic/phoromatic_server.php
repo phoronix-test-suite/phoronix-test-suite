@@ -309,7 +309,7 @@ class phoromatic_server
 		$export_path = self::phoromatic_path() . 'result-export/' . $account_id . '/';
 		pts_file_io::mkdir($export_path);
 
-		$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_schedules WHERE AccountID = :account_id AND State = 1 AND (SELECT COUNT(*) FROM phoromatic_schedules_tests WHERE AccountID = :account_id AND ScheduleID = phoromatic_schedules.ScheduleID) > 0 AND (SELECT COUNT(*) FROM phoromatic_results WHERE AccountID = :account_id AND ScheduleID = phoromatic_schedules.ScheduleID) > 14 ORDER BY Title ASC');
+		$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_schedules WHERE AccountID = :account_id AND State = 1 AND (SELECT COUNT(*) FROM phoromatic_schedules_tests WHERE AccountID = :account_id AND ScheduleID = phoromatic_schedules.ScheduleID) > 0 AND (SELECT COUNT(*) FROM phoromatic_results WHERE AccountID = :account_id AND ScheduleID = phoromatic_schedules.ScheduleID) > 4 ORDER BY Title ASC');
 		$stmt->bindValue(':account_id', $account_id);
 		$result = $stmt->execute();
 

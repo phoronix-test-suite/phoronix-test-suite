@@ -1023,7 +1023,7 @@ class phodevi_system extends phodevi_device_interface
 				$vendor = substr($vendor, 0, $x);
 			}
 
-			$vendor = str_replace(array('Software'), null, $vendor);
+			$vendor = str_replace(array(' Software'), null, $vendor);
 		}
 		else if(phodevi::is_hurd())
 		{
