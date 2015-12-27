@@ -213,6 +213,7 @@ class pts_client
 			'PTS_CODENAME' => PTS_CODENAME,
 			'PTS_DIR' => PTS_PATH,
 			'PHP_BIN' => PHP_BIN,
+			'NUM_CPU_CORES' => phodevi::read_property('cpu', 'core-count'),
 			'NUM_CPU_NODES' => phodevi::read_property('cpu', 'node-count'),
 			'NUM_CPU_JOBS' => (phodevi::read_property('cpu', 'core-count') * 2),
 			'SYS_MEMORY' => phodevi::read_property('memory', 'capacity'),
@@ -229,15 +230,6 @@ class pts_client
 			'THIS_RUN_TIME' => PTS_INIT_TIME,
 			'DEBUG_REAL_HOME' => pts_core::user_home_directory()
 			);
-			//Use NPROC env variable if defined
-			if(getenv('NPROC') == false)
-			{
-			  $env_variables['NUM_CPU_CORES'] = phodevi::read_property('cpu', 'core-count');
-			}
-			else
-			{
-			  $env_variables['NUM_CPU_CORES'] = getenv('NPROC');
-			}
 
 			if(!pts_client::executable_in_path('cc') && pts_client::executable_in_path('gcc') && getenv('CC') == false)
 			{
