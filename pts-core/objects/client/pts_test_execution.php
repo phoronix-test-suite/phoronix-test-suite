@@ -94,6 +94,19 @@ class pts_test_execution
 			{
 				pts_client::$display->test_run_instance_output($pre_output);
 			}
+			if(is_file($test_directory . 'pre-test-exit-status'))
+			{
+			  // If the pre script writes its exit status to ~/pre-test-exit-status, if it's non-zero the test run failed
+			  $exit_status = pts_file_io::file_get_contents($test_directory . 'pre-test-exit-status');
+			  unlink($test_directory . 'pre-test-exit-status');
+
+			  if($exit_status != 0)
+			  {
+					self::test_run_instance_error($test_run_manager, $test_run_request, 'The pre run script exited with a non-zero exit status.' . PHP_EOL);
+					self::test_run_error($test_run_manager, $test_run_request, 'This test execution has been abandoned.');
+					return false;
+			  }
+			}
 		}
 
 		pts_client::$display->display_interrupt_message($test_run_request->test_profile->get_pre_run_message());
@@ -385,6 +398,18 @@ class pts_test_execution
 			if($post_output != null && pts_client::is_debug_mode())
 			{
 				pts_client::$display->test_run_instance_output($post_output);
+			}
+			if(is_file($test_directory . 'post-test-exit-status'))
+			{
+			  // If the post script writes its exit status to ~/post-test-exit-status, if it's non-zero the test run failed
+			  $exit_status = pts_file_io::file_get_contents($test_directory . 'post-test-exit-status');
+			  unlink($test_directory . 'post-test-exit-status');
+
+			  if($exit_status != 0)
+			  {
+			    self::test_run_instance_error($test_run_manager, $test_run_request, 'The post run script exited with a non-zero exit status.' . PHP_EOL);
+			    $abort_testing=true;
+			  }
 			}
 		}
 
