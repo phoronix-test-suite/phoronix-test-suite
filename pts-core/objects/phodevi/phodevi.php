@@ -277,7 +277,7 @@ class phodevi extends phodevi_base
 		if ($device == 'cpu' && $read_property == 'core-count' && getenv('PTS_NPROC'))
 		{
 			$env_value = getenv('PTS_NPROC');
-			if is_numeric($env_value) && $env_value > 0)
+			if (is_numeric($env_value) && $env_value > 0)
 			{
 				return $env_value;
 			}
