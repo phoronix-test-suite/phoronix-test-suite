@@ -273,16 +273,6 @@ class phodevi extends phodevi_base
 	{
 		$value = false;
 
-		// For cpu core count, check if env is given by user
-		if ($device == 'cpu' && $read_property == 'core-count' && getenv('PTS_NPROC'))
-		{
-			$env_value = getenv('PTS_NPROC');
-			if (is_numeric($env_value) && $env_value > 0)
-			{
-				return $env_value;
-			}
-		}
-
 		if(method_exists('phodevi_' . $device, 'read_property'))
 		{
 			$property = call_user_func(array('phodevi_' . $device, 'read_property'), $read_property);
