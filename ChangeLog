@@ -3,6 +3,8 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - phodevi: Software string detection improvements
+- phodevi: Support for PTS_NPROC environment variable to override reported CPU core count
+- phoromatic: Export viewer tweaks
 
 Phoronix Test Suite 6.2 Milestone 1
 15 December 2015
