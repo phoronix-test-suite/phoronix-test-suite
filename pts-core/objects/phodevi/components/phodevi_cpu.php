@@ -75,7 +75,7 @@ class phodevi_cpu extends phodevi_device_interface
 	{
 		$info = null;
 
-		if (getenv('PTS_NPROC') && is_numeric('PTS_NPROC'))
+		if(getenv('PTS_NPROC') && is_numeric(getenv('PTS_NPROC')))
 		{
 			$info = getenv('PTS_NPROC');
 		}
