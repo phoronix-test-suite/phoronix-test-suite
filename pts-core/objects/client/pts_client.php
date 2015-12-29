@@ -29,6 +29,7 @@ class pts_client
 	private static $forked_pids = array();
 	protected static $phoromatic_servers = array();
 	protected static $debug_mode = false;
+	protected static $full_output = false;
 
 	public static function create_lock($lock_file)
 	{
