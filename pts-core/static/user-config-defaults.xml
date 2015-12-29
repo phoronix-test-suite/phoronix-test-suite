@@ -12,6 +12,7 @@
 			<UsePhodeviCache>TRUE</UsePhodeviCache>
 			<DefaultDisplayMode>DEFAULT</DefaultDisplayMode>
 			<PhoromaticServers></PhoromaticServers>
+			<FullOutput>FALSE</FullOutput>
 		</General>
 		<Modules>
 			<LoadModules>toggle_screensaver, update_checker, graphics_event_checker</LoadModules>
