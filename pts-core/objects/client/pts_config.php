@@ -122,6 +122,7 @@ class pts_config
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/TestResultValidation/LimitDynamicToTestLength', $read_config);
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/TestResultValidation/StandardDeviationThreshold', $read_config);
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/TestResultValidation/ExportResultsTo', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/TestResultValidation/MinimalTestTime', $read_config);
 
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/BatchMode/SaveResults', $read_config);
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/BatchMode/OpenBrowser', $read_config);
