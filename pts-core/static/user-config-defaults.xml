@@ -13,7 +13,6 @@
 			<DefaultDisplayMode>DEFAULT</DefaultDisplayMode>
 			<PhoromaticServers></PhoromaticServers>
 			<FullOutput>FALSE</FullOutput>
-			<MinimalTestTime>3</MinimalTestTime>
 		</General>
 		<Modules>
 			<LoadModules>toggle_screensaver, update_checker, graphics_event_checker</LoadModules>
@@ -39,6 +38,7 @@
 			<LimitDynamicToTestLength>20</LimitDynamicToTestLength>
 			<StandardDeviationThreshold>3.50</StandardDeviationThreshold>
 			<ExportResultsTo></ExportResultsTo>
+			<MinimalTestTime>3</MinimalTestTime>
 		</TestResultValidation>
 		<ExternalHooks>
 			<PreTestProcess></PreTestProcess>
