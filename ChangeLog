@@ -2,6 +2,8 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+- pts-core: Add FullOutput configuration option for dumping all pre/post/interim information to standard output
+- pts-core: Add MinimalTestTime user configuration option
 - phodevi: Software string detection improvements
 - phodevi: Support for PTS_NPROC environment variable to override reported CPU core count
 - phoromatic: Export viewer tweaks
