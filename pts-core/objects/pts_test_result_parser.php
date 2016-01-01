@@ -135,7 +135,8 @@ class pts_test_result_parser
 				// Delta time
 				$result_value = $end_time - $sensor_r[3];
 
-				if($result_value < 3)
+				$minimal_test_time = pts_config::read_user_config('PhoronixTestSuite/Options/General/MinimalTestTime', 3);
+				if($result_value < $minimal_test_time)
 				{
 					// The test ended too fast
 					$result_value = null;

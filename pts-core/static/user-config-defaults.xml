@@ -13,6 +13,7 @@
 			<DefaultDisplayMode>DEFAULT</DefaultDisplayMode>
 			<PhoromaticServers></PhoromaticServers>
 			<FullOutput>FALSE</FullOutput>
+			<MinimalTestTime>3</MinimalTestTime>
 		</General>
 		<Modules>
 			<LoadModules>toggle_screensaver, update_checker, graphics_event_checker</LoadModules>
