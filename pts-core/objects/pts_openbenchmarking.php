@@ -361,7 +361,7 @@ class pts_openbenchmarking
 	}
 	public static function linked_repositories()
 	{
-		$repos = array('local', 'pts');
+		$repos = array('local', 'pts', 'system');
 
 		if(PTS_IS_CLIENT && pts_openbenchmarking_client::user_name() != false)
 		{
