@@ -511,6 +511,11 @@ class pts_result_file
 		{
 			foreach($result_object->test_result_buffer->get_buffer_items() as $bi)
 			{
+				if($bi->get_result_value() === null)
+				{
+					continue;
+				}
+
 				$this->result_objects[$ch]->test_result_buffer->add_buffer_item($bi);
 			}
 		}

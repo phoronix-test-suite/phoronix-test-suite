@@ -141,8 +141,14 @@ abstract class pts_graph_core
 		$this->results = array();
 		if($this->is_multi_way_comparison)
 		{
-			foreach($this->test_result->test_result_buffer->buffer_items as &$buffer_item)
+			foreach($this->test_result->test_result_buffer->buffer_items as $i => &$buffer_item)
 			{
+				if($buffer_item->get_result_value() === null)
+				{
+					unset($this->test_result->test_result_buffer->buffer_items[$i]);
+					continue;
+				}
+
 				$identifier = array_map('trim', explode(':', $buffer_item->get_result_identifier()));
 
 				if($this->i['multi_way_comparison_invert_default'])
@@ -183,11 +189,17 @@ abstract class pts_graph_core
 		}
 		else if(isset($this->test_result->test_result_buffer))
 		{
-			$this->results = array($this->test_result->test_result_buffer->buffer_items);
-			foreach($this->test_result->test_result_buffer->buffer_items as &$buffer_item)
+			foreach($this->test_result->test_result_buffer->buffer_items as $i => &$buffer_item)
 			{
+				if($buffer_item->get_result_value() === null)
+				{
+					unset($this->test_result->test_result_buffer->buffer_items[$i]);
+					continue;
+				}
+
 				array_push($this->graph_identifiers, $buffer_item->get_result_identifier());
 			}
+			$this->results = array($this->test_result->test_result_buffer->buffer_items);
 		}
 	}
 	public function override_i_value($key, $val)
