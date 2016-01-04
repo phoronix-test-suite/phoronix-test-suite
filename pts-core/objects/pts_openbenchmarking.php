@@ -140,26 +140,13 @@ class pts_openbenchmarking
 			$composite_xml = $json_response['openbenchmarking']['result']['composite_xml'];
 
 			$result_file = new pts_result_file($composite_xml);
+			//$id = strtolower($id);
+			$valid = $return_xml ? $result_file->get_xml() : pts_client::save_test_result($id . '/composite.xml', $result_file->get_xml(), true);
 
-			if($result_file->xml_parser->validate())
+			if(PTS_IS_CLIENT && $json_response['openbenchmarking']['result']['system_logs_available'])
 			{
-				$result_file_writer = new pts_result_file_writer();
-				$result_file_writer->add_result_file_meta_data($result_file, $id);
-				$result_file_writer->add_system_information_from_result_file($result_file);
-				$result_file_writer->add_results_from_result_file($result_file);
-				//$id = strtolower($id);
-
-				$valid = $return_xml ? $result_file_writer->get_xml() : pts_client::save_test_result($id . '/composite.xml', $result_file_writer->get_xml(), true);
-
-				if(PTS_IS_CLIENT && $json_response['openbenchmarking']['result']['system_logs_available'])
-				{
-					// Fetch the system logs and toss them into the results directory system-logs/
-					pts_openbenchmarking::clone_openbenchmarking_result_system_logs($id, pts_client::setup_test_result_directory($id), $json_response['openbenchmarking']['result']['system_logs_available']);
-				}
-			}
-			else
-			{
-				trigger_error('Validating the result file schema failed.', E_USER_ERROR);
+				// Fetch the system logs and toss them into the results directory system-logs/
+				pts_openbenchmarking::clone_openbenchmarking_result_system_logs($id, pts_client::setup_test_result_directory($id), $json_response['openbenchmarking']['result']['system_logs_available']);
 			}
 		}
 		else if(PTS_IS_CLIENT && isset($json_response['openbenchmarking']['result']['error']))
@@ -374,7 +361,7 @@ class pts_openbenchmarking
 	}
 	public static function linked_repositories()
 	{
-		$repos = array('local', 'pts');
+		$repos = array('local', 'pts', 'system');
 
 		if(PTS_IS_CLIENT && pts_openbenchmarking_client::user_name() != false)
 		{
@@ -406,8 +393,15 @@ class pts_openbenchmarking
 	}
 	public static function read_repository_index($repo_name, $do_decode = true)
 	{
-		$index_file = PTS_OPENBENCHMARKING_SCRATCH_PATH . $repo_name . '.index';
+		static $caches;
+		static $last_cache_times;
 
+		if($do_decode && isset($caches[$repo_name]) && $last_cache_times[$repo_name] > (time() - 60))
+		{
+			return $caches[$repo_name];
+		}
+
+		$index_file = PTS_OPENBENCHMARKING_SCRATCH_PATH . $repo_name . '.index';
 		if(is_file($index_file))
 		{
 			$index_file = file_get_contents($index_file);
@@ -420,6 +414,12 @@ class pts_openbenchmarking
 		else
 		{
 			$index_file = null;
+		}
+
+		if($do_decode)
+		{
+			$caches[$repo_name] = $index_file;
+			$last_cache_times[$repo_name] = time();
 		}
 
 		return $index_file;
@@ -523,7 +523,7 @@ class pts_openbenchmarking
 
 		return null;
 	}
-	public static function available_tests($download_tests = true, $all_versions = false, $append_versions = false)
+	public static function available_tests($download_tests = true, $all_versions = false, $append_versions = false, $show_deprecated_tests = false)
 	{
 		$available_tests = array();
 
@@ -535,6 +535,11 @@ class pts_openbenchmarking
 			{
 				foreach(array_keys($repo_index['tests']) as $identifier)
 				{
+					if(!$show_deprecated_tests && isset($repo_index['tests'][$identifier]['status']) && $repo_index['tests'][$identifier]['status'] == 'Deprecated')
+					{
+						continue;
+					}
+
 					if($all_versions)
 					{
 						$versions = $repo_index['tests'][$identifier]['versions'];
@@ -713,6 +718,9 @@ class pts_openbenchmarking
 			$version = null;
 		}
 
+		if($test == null)
+			return false;
+
 		foreach($repos as $repo)
 		{
 			if($repo == 'local')
@@ -778,16 +786,16 @@ class pts_openbenchmarking
 					$available_versions = $repo_index['tests'][$test]['versions'];
 					$version = $available_versions[0]; // the latest version available
 
-					if((pts_c::$test_flags & pts_c::is_run_process))
+					if(PTS_IS_CLIENT && pts_client::current_command() == 'pts_test_run_manager')
 					{
-						// Check to see if an older version of the test profile is currently installed
+						// Check to see if an older version of the test profile is currently installed to ru nthat since no version specified
 						foreach($available_versions as $i => $v)
 						{
 							if(is_file(pts_client::test_install_root_path() . $repo . '/' . $test . '-' . $v . '/pts-install.xml'))
 							{
 								$version = $v;
 
-								if($i > 0 && (pts_c::$test_flags ^ pts_c::batch_mode))
+								if($i > 0)
 								{
 									// It's not the latest test profile version available
 									trigger_error($repo . '/' . $test . ': The latest test profile version available for upgrade is ' . $available_versions[0] . ' but version ' . $version . ' is the latest currently installed.', E_USER_WARNING);
@@ -841,9 +849,9 @@ class pts_openbenchmarking
 
 		return false;
 	}
-	public static function upload_test_result(&$object, $return_json_data = false)
+	public static function upload_test_result(&$object, $return_json_data = false, $prompts = true)
 	{
-		return pts_openbenchmarking_client::upload_test_result($object, $return_json_data);
+		return pts_openbenchmarking_client::upload_test_result($object, $return_json_data, $prompts);
 	}
 }
 

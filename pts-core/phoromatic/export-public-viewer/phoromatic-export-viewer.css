@@ -1,0 +1,172 @@
+body
+{
+	text-align: left;
+	padding: 0;
+	margin: 0;
+	font-family: 'DejaVu Sans', museo-sans, sans-serif, 'Open Sans', 'helvetica neue', helvetica;
+	font-weight: 300;
+	font-size: 100%;
+	color: #212121;
+}
+a, a:visited, a:hover, a:active
+{
+	text-decoration: none;
+	color: #1976d2;
+}
+div#top_list
+{
+	display: table;
+	width: 100%;
+	text-transform: uppercase;
+	padding: 20px 10px 40px;
+}
+div#top_list ul
+{
+	display: table-row;
+	width: 100%;
+}
+div#top_list ul li
+{
+	text-align: center;
+	display: table-cell;
+	list-style-type: none;
+	font-size: 140%;
+	font-weight: 500;
+}
+div#top_list ul li#alt a
+{
+	color: #ff9800;
+}
+div#top_list ul li a
+{
+	font-weight: 300;
+	color: #1976d2;
+}
+div#top_list ul li a:hover
+{
+	text-decoration: underline;
+}
+div#config_option_line
+{
+	font-weight: 500;
+	text-align: center;
+	padding: 0 20% 10px 20%;
+	text-transform: uppercase;
+	font-size: 120%;
+}
+div#config_option_line u
+{
+	text-decoration: none;
+	color: #ff9800;
+}
+input, select, textarea, checkbox, button
+{
+	border: solid #eee 1px;
+	background-color: #FFF;
+	color: #ff9800;
+	padding: 2px 4px;
+	border-radius: 6px;
+	transition: all 0.3s;
+}
+h1
+{
+	color: #ff9800;
+	font-size: 200%;
+	font-weight: 300;
+	text-align: center;
+}
+h2
+{
+	color: #ff9800;
+	font-size: 150%;
+	font-weight: 300;
+	text-align: center;
+}
+h3
+{
+	color: #ff9800;
+	font-size: 130%;
+	font-weight: 300;
+	text-align: center;
+}
+p#phoromatic_descriptor
+{
+	text-align: center;
+	font-size: 120%;
+}
+blockquote
+{
+	margin: 30px 0 90px;
+	padding: 10px;
+	text-align: center;
+	background: #efefef;
+}
+blockquote p
+{
+	padding: 0;
+	margin: 4px 0 10px 0;
+}
+blockquote a:hover
+{
+	text-decoration: underline;
+}
+blockquote a img
+{
+	opacity: 0.5;
+}
+blockquote a:hover img
+{
+	opacity: 1.0;
+}
+p#footer
+{
+	text-align: center;
+	font-size: 90%;
+	padding: 20px 0 5px;
+}
+div#pts_results_area
+{
+	width: 100%;
+	text-align: center;
+}
+div#pts_results_area svg
+{
+	min-width: 600px;
+	max-width: 1400px;
+	width: 60%;
+	height: auto;
+}
+hr
+{
+	border: #E0E0E0 1px solid;
+	border-width: 0 0 1px 0;
+	background-color: #E0E0E0;
+	width: 60%;
+	height: 1px;
+	opacity: 0.5;
+}
+@media screen and (max-width: 1000px)
+{
+	body
+	{
+		font-size: 160%;
+	}
+
+	div#top_list ul li
+	{
+		text-align: center;
+		display: block;
+		line-height: 250%;
+	}
+	div#config_option_line, input, select, textarea, checkbox, button
+	{
+		text-align: justify;
+		font-size: 150%;
+	}
+	div#pts_results_area, div#pts_results_area svg
+	{
+		min-width: 100%;
+		width: 100%;
+		max-width: 100%;
+	}
+}

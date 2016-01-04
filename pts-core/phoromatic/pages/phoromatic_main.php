@@ -59,7 +59,6 @@ class phoromatic_main implements pts_webui_interface
 		$main = '<h1>Phoromatic</h1>';
 
 		$main .= phoromatic_systems_needing_attention();
-		$main .= '<p>Phoromatic is the remote management and test orchestration component to the <a href="http://www.phoronix-test-suite.com/">Phoronix Test Suite</a>. Phoromatic allows you to take advantage of the Phoronix Test Suite\'s vast feature-set across multiple systems over the LAN/WAN, manage entire test farms of systems for benchmarking via a centralized interface, centrally collect test results, and carry out other enteprise-focused tasks.</p>';
 
 		$main_page_message = phoromatic_server::read_setting('main_page_message');
 		if(!PHOROMATIC_USER_IS_VIEWER)
@@ -74,7 +73,7 @@ class phoromatic_main implements pts_webui_interface
 			if(!empty($main_page_message))
 				$main .= '<li><strong>' . $main_page_message . '</strong></li>';
 			else
-				$main .= '<li>If you like Phoromatic and the Phoronix Test Suite for enterprise testing, please <a href="http://commercial.phoronix-test-suite.com/">contact us</a> for commercial support, our behind-the-firewall licensed versions of Phoromatic and OpenBenchmarking.org, custom engineering services, and other professional services. It\'s not without corporate support that we can continue to develop this leading Linux benchmarking software in our Phoronix mission of enriching the Linux hardware experience. If you run into any problems with our open-source software or would like to contribute patches, you can do so via our <a href="https://www.github.com/phoronix-test-suite/phoronix-test-suite">GitHub project</a>.</li>
+				$main .= '<li><strong>If you are interested in Phoromatic and the Phoronix Test Suite for enterprise testing, please <a href="http://commercial.phoronix-test-suite.com/">contact us</a> for commercial support, custom test development, custom engineering services, and other professional services. It\'s not without corporate support and sponsorship that we can continue to develop this leading open-source Linux benchmarking software. If you run into any problems with our open-source software or would like to contribute patches, you can do so via our <a href="https://www.github.com/phoronix-test-suite/phoronix-test-suite">GitHub project</a>.</strong></li>
 				</ol>';
 
 		}
@@ -86,23 +85,51 @@ class phoromatic_main implements pts_webui_interface
 		$main .= '<hr /><div id="phoromatic_fixed_main_table">';
 
 		$systems_needing_attention = phoromatic_server::systems_appearing_down($_SESSION['AccountID']);
-		$systems_idling = phoromatic_server::systems_idling_or_offline($_SESSION['AccountID']);
+		$systems_idling = phoromatic_server::systems_idling($_SESSION['AccountID']);
+		$systems_shutdown = phoromatic_server::systems_shutdown($_SESSION['AccountID']);
 		$systems_running_tests = phoromatic_server::systems_running_tests($_SESSION['AccountID']);
 
 		$main .= '<div id="phoromatic_main_table_cell">
 			<h2>' . pts_strings::plural_handler(count($systems_running_tests), 'System') . ' Running Tests</h2>
-			<h2>' . pts_strings::plural_handler(count($systems_idling), 'System') . ' Idling Or Shutdown</h2>
-			<h2>' . pts_strings::plural_handler(count($systems_needing_attention), 'System') . ' Needing Attention</h2>
-			<hr />
-			</div>';
+			<h2>' . pts_strings::plural_handler(count($systems_idling), 'System') . ' Idling</h2>
+			<h2>' . pts_strings::plural_handler(count($systems_shutdown), 'System') . ' Shutdown</h2>
+			<h2>' . pts_strings::plural_handler(count($systems_needing_attention), 'System') . ' Needing Attention</h2>';
+		$main .= '<hr /><h2>Systems Running Tests</h2>';
 
+		$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_systems WHERE AccountID = :account_id AND State >= 0 AND CurrentTask NOT LIKE \'%Idling%\' AND CurrentTask NOT LIKE \'%Shutdown%\' ORDER BY LastCommunication DESC');
+		$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+		$result = $stmt->execute();
+
+		while($result && $row = $result->fetchArray())
+		{
+			$main .= '<div class="phoromatic_overview_box">';
+			$main .= '<h1><a href="?systems/' . $row['SystemID'] . '">' . $row['Title'] . '</a></h1>';
+			$main .= $row['CurrentTask'] . '<br />';
+
+			if(!empty($row['CurrentProcessSchedule']))
+			{
+				$main .= '<a href="?schedules/' . $row['CurrentProcessSchedule'] . '">' . phoromatic_server::schedule_id_to_name($row['CurrentProcessSchedule']) . '</a><br />';
+			}
+
+			$time_remaining = phoromatic_compute_estimated_time_remaining($row['EstimatedTimeForTask'], $row['LastCommunication']);
+			if($time_remaining)
+			{
+				$main .= '<em>~ ' . pts_strings::plural_handler($time_remaining, 'Minute') . ' Remaining</em>';
+			}
+			$main .= '</div>';
+		}
+		$main .= '</div>';
+
+		$results_today = phoromatic_server::test_results($_SESSION['AccountID'], strtotime('today'));
+		$results_total = phoromatic_server::test_results_benchmark_count($_SESSION['AccountID']);
 		$schedules_today = phoromatic_server::schedules_today($_SESSION['AccountID']);
 		$schedules_total = phoromatic_server::schedules_total($_SESSION['AccountID']);
 		$benchmark_tickets_today = phoromatic_server::benchmark_tickets_today($_SESSION['AccountID']);
 		$main .= '<div id="phoromatic_main_table_cell">
 		<h2>' . pts_strings::plural_handler(count($schedules_today), 'Schedule') . ' Active Today</h2>
 		<h2>' . pts_strings::plural_handler(count($schedules_total), 'Schedule') . ' In Total</h2>
-		<h2>' . pts_strings::plural_handler(count($benchmark_tickets_today), 'Active Benchmark Ticket') . '</h2>';
+		<h2>' . pts_strings::plural_handler(count($benchmark_tickets_today), 'Active Benchmark Ticket') . '</h2>
+		<h2>' . pts_strings::plural_handler(count($results_today), 'Test Result') . ' Today / ' . pts_strings::plural_handler($results_total, 'Benchmark Result') . ' Total</h2>';
 		$main .= '<hr /><h2>Today\'s Scheduled Tests</h2>';
 
 		foreach($schedules_today as &$row)
@@ -150,7 +177,7 @@ class phoromatic_main implements pts_webui_interface
 					$sys_info = self::system_info($system_id);
 					$last_comm_diff = time() - strtotime($sys_info['LastCommunication']);
 
-					$main .= ' [<a href="?systems/' . $system_id . '">';
+					$main .= ' <sup><a href="?systems/' . $system_id . '">';
 					if($last_comm_diff > 3600)
 					{
 						$main .= '<strong>Last Communication: ' . pts_strings::format_time($last_comm_diff, 'SECONDS', true, 60) . ' Ago</strong>';
@@ -159,7 +186,7 @@ class phoromatic_main implements pts_webui_interface
 					{
 						$main .= $sys_info['CurrentTask'];
 					}
-					$main .= '</a>]';
+					$main .= '</a></sup>';
 				}
 				$main .= '<br />';
 			}
@@ -168,24 +195,9 @@ class phoromatic_main implements pts_webui_interface
 		}
 		$main .= '</div>';
 
-		$results_today = phoromatic_server::test_results($_SESSION['AccountID'], strtotime('today'));
-		$results_this_week = phoromatic_server::test_results($_SESSION['AccountID'], mktime(0, 0, 0, date('n'), date('j') - date('N') + 1));
-		$results_total = phoromatic_server::test_results($_SESSION['AccountID'], null);
-		$main .= '<div id="phoromatic_main_table_cell">
-		<h2>' . pts_strings::plural_handler(count($results_today), 'Test Result') . ' Today</h2>
-		<h2>' . pts_strings::plural_handler(count($results_this_week), 'Test Result') . ' This Week</h2>
-		<h2>' . pts_strings::plural_handler(count($results_total), 'Test Result') . ' Total</h2>
-		<hr />';
-
-		foreach($results_today as $result)
-		{
-			$main .= '<h3><a href="?result/' . $result['PPRID'] . '">' . $result['Title'] . '</a></h3>';
-		}
-
-		$main .= '</div>';
 		$main .= '</div>';
 
-
+/*
 		$has_flagged_results = false;
 		$stmt = phoromatic_server::$db->prepare('SELECT ScheduleID, GROUP_CONCAT(SystemID,\',\') AS Systems FROM phoromatic_results WHERE AccountID = :account_id AND ScheduleID NOT LIKE 0 GROUP BY ScheduleID ORDER BY UploadTime DESC');
 		$stmt->bindValue(':account_id', $_SESSION['AccountID']);
@@ -226,10 +238,13 @@ class phoromatic_main implements pts_webui_interface
 
 					if(count($result_file) == 2)
 					{
-						$writer = new pts_result_file_writer(null);
 						$attributes = array();
-						pts_merge::merge_test_results_process($writer, $result_file, $attributes);
-						$result_file = new pts_result_file($writer->get_xml());
+						$result_file = new pts_result_file(array_shift($result_files), true);
+
+						if(!empty($result_files))
+						{
+							$result_file->merge($result_files, $attributes);
+						}
 
 						foreach($result_file->get_result_objects('ONLY_CHANGED_RESULTS') as $i => $result_object)
 						{
@@ -261,6 +276,7 @@ class phoromatic_main implements pts_webui_interface
 		}
 		if($has_flagged_results)
 			$main .= '</span>';
+*/
 
 		// ACTIVE TEST SCHEDULES
 		/*

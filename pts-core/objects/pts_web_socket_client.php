@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2013 - 2014, Phoronix Media
-	Copyright (C) 2013 - 2014, Michael Larabel
+	Copyright (C) 2013 - 2015, Phoronix Media
+	Copyright (C) 2013 - 2015, Michael Larabel
 	pts-web-socket: A simple WebSocket implementation, inspired by designs of https://github.com/varspool/Wrench and http://code.google.com/p/phpwebsocket/
 
 	This program is free software; you can redistribute it and/or modify
@@ -27,7 +27,7 @@ class pts_web_socket_client
 {
 	private $socket_master;
 	private $user_master;
-	public static $debug_mode = false;
+	public static $debug_mode = true;
 
 	public function __construct($address = 'localhost', $port = 80)
 	{
@@ -37,24 +37,27 @@ class pts_web_socket_client
 		//socket_bind($this->socket_master, $address, $port);
 		//echo   socket_strerror(socket_last_error());
 		//socket_set_option($socket, SOL_SOCKET, SO_RCVTIMEO, array('sec' => 2, 'usec' => 0));
-		socket_connect($this->socket_master, $address, $port);
+		$sc = socket_connect($this->socket_master, $address, $port);
 
 		//	socket_listen($this->socket_master);
 		//echo   socket_strerror(socket_last_error());
 		$this->make_hand_shake($this->socket_master);
 		$this->connect($this->socket_master);
-		echo 'WebSocket Client Connected: ' . $address . ':' . $port . PHP_EOL;
-		$this->send_message('ping');
-		return;
+		//echo 'WebSocket Client Connected: ' . $address . ':' . $port . PHP_EOL;
+		$p = $this->send('ping');
+		return $sc && $p != null;
 	}
-	public function send_message($msg)
+	public function send($msg)
 	{
 		return $this->send_data($this->socket_master, $msg);
 	}
-	public function receive_message()
+	public function receive()
 	{
 		$buffer = null;
 		$bytes = socket_recv($this->socket_master, $buffer, 8192, 0);
+
+		if($bytes === false)
+			return; // error
 
 		if($bytes > 0)
 		{
@@ -101,11 +104,11 @@ class pts_web_socket_client
 		else
 		{
 			$mask = substr($data, 2, 4);
-			$encoded_data = substr($data, 2, $data_length);
+			$encoded_data = substr($data, 6, $data_length);
 		}
 
 		$decoded_data = null;
-		if(true || $user->user_agent == 'phoronix-test-suite')
+		if(false &&  $user->user_agent == 'phoronix-test-suite')
 		{
 			// The PTS WebSocket client isn't currently masking data due to bug it seems
 			$decoded_data .= $encoded_data;
@@ -137,7 +140,7 @@ class pts_web_socket_client
 
 		// FRAME THE MESSAGE
 		$encoded .= chr(0x81);
-		if(false && $data_length <= 125)
+		if($data_length <= 125)
 		{
 			$encoded .= chr($data_length);
 		}
@@ -172,7 +175,9 @@ class pts_web_socket_client
 		}
 
 		// SEND
-		return socket_write($socket, $encoded, strlen($encoded));
+		$t = socket_write($socket, $encoded, strlen($encoded));
+		usleep(100000); // XXX without this, doing lots of send() at once tends to result in only the first one getting through
+		return $t;
 	}
 	public function send_json_data_by_user_id($user_id, $msg)
 	{
@@ -196,9 +201,9 @@ class pts_web_socket_client
 	{
 		socket_close($this->socket_master);
 	}
-	protected function make_hand_shake(&$socket)
+	protected function make_hand_shake(&$socket, $get = 'phoronix-test-suite')
 	{
-		$this->send_data($socket, 'GET /mychat HTTP/1.1
+		$this->send_data($socket, 'GET /' . $get . ' HTTP/1.1
 			Host: localhost
 			Upgrade: websocket
 			Connection: Upgrade
@@ -210,7 +215,7 @@ class pts_web_socket_client
 
 		$bytes = socket_recv($socket, $buffer, 2048, 0);
 		$user = $this->connect($socket);
-		$this->process_hand_shake($user, $buffer);
+		return $this->process_hand_shake($user, $buffer);
 	}
 	protected function process_hand_shake($user, $buffer)
 	{

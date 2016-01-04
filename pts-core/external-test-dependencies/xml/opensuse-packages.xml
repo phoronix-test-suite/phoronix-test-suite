@@ -10,7 +10,7 @@
 		<Package>
 			<GenericName>common-dependencies</GenericName>
 			<PackageName>dmidecode Mesa-demo-x</PackageName>
-			<FileCheck>dmidecode, glxinfo</FileCheck>
+			<FileCheck>glxinfo</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>gtk-development</GenericName>
@@ -159,6 +159,10 @@
 			<PackageName>libnuma-devel</PackageName>
 		</Package>
 		<Package>
+			<GenericName>smartmontools</GenericName>
+			<PackageName>smartmontools</PackageName>
+		</Package>
+		<Package>
 			<GenericName>curl</GenericName>
 			<PackageName>curl</PackageName>
 		</Package>
@@ -245,6 +249,10 @@
 		<Package>
 			<GenericName>tinyxml</GenericName>
 			<PackageName>tinyxml-devel</PackageName>
+		</Package>
+		<Package>
+			<GenericName>attr</GenericName>
+			<PackageName>attr</PackageName>
 		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

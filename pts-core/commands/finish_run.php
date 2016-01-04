@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2011, Phoronix Media
-	Copyright (C) 2009 - 2011, Michael Larabel
+	Copyright (C) 2009 - 2015, Phoronix Media
+	Copyright (C) 2009 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -31,6 +31,10 @@ class finish_run implements pts_option_interface
 		new pts_argument_check(0, array('pts_result_file', 'is_test_result_file'), null)
 		);
 	}
+	public static function invalid_command($passed_args = null)
+	{
+		pts_tests::invalid_command_helper($passed_args);
+	}
 	public static function run($args)
 	{
 		$save_name = $args[0];
@@ -39,8 +43,7 @@ class finish_run implements pts_option_interface
 		$system_identifiers = $result_file->get_system_identifiers();
 		$test_positions = array();
 
-		$pos = 0;
-		foreach($result_file->get_result_objects() as $result_object)
+		foreach($result_file->get_result_objects() as $pos => $result_object)
 		{
 			$this_result_object_identifiers = $result_object->test_result_buffer->get_identifiers();
 
@@ -56,10 +59,7 @@ class finish_run implements pts_option_interface
 					array_push($test_positions[$system_identifier], $pos);
 				}
 			}
-
-			$pos++;
 		}
-
 		$incomplete_identifiers = array_keys($test_positions);
 
 		if(count($incomplete_identifiers) == 0)
@@ -69,14 +69,13 @@ class finish_run implements pts_option_interface
 		}
 
 		$selected = pts_user_io::prompt_text_menu('Select which incomplete test run you would like to finish', $incomplete_identifiers);
+		$test_run_manager = new pts_test_run_manager();
 
 		// Now run it
-		if(pts_test_run_manager::initial_checks($args[0]) == false)
+		if($test_run_manager->initial_checks($args[0]) == false)
 		{
 			return false;
 		}
-
-		$test_run_manager = new pts_test_run_manager(pts_c::is_recovering);
 
 		// Load the tests to run
 		if($test_run_manager->load_result_file_to_run($save_name, $selected, $result_file, $test_positions[$selected]) == false)

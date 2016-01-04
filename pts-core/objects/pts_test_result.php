@@ -24,9 +24,6 @@ class pts_test_result
 {
 	// Note in most pts-core code the initialized var is called $result_object
 	// Note in pts-core code the initialized var is also called $test_run_request
-	private $result = 0;
-	private $result_min = 0;
-	private $result_max = 0;
 	private $used_arguments;
 	private $used_arguments_description;
 	private $result_precision = 2;
@@ -34,21 +31,28 @@ class pts_test_result
 	public $test_profile;
 	public $test_result_buffer;
 
-	public $active_result = null;
-	public $active_min_result = null;
-	public $active_max_result = null;
+	public $active = null;
 	public $secondary_linked_results = null;
 
-	public function __construct(&$test_profile)
+	// Added to make it easy to have PTS modules run a custom binary prior to running a program for the test
+	public $exec_binary_prepend = null;
+	public $test_result_standard_output = null;
+
+	public function __construct($test_profile)
 	{
-		$this->test_profile = $test_profile;
+		$this->test_profile = clone $test_profile;
 		$this->result = 0;
 	}
 	public function __clone()
 	{
 		$this->test_profile = clone $this->test_profile;
+
+		if(!empty($this->test_result_buffer) && is_object($this->test_result_buffer))
+		{
+			$this->test_result_buffer = clone $this->test_result_buffer;
+		}
 	}
-	public function set_test_result_buffer($test_result_buffer)
+	public function set_test_result_buffer(&$test_result_buffer)
 	{
 		$this->test_result_buffer = $test_result_buffer;
 	}
@@ -76,30 +80,6 @@ class pts_test_result
 	{
 		return $this->used_arguments_description;
 	}
-	public function set_result($result)
-	{
-		$this->result = $result;
-	}
-	public function set_min_result($result)
-	{
-		$this->result_min = $result;
-	}
-	public function set_max_result($result)
-	{
-		$this->result_max = $result;
-	}
-	public function get_result()
-	{
-		return $this->result;
-	}
-	public function get_min_result()
-	{
-		return $this->result_min;
-	}
-	public function get_max_result()
-	{
-		return $this->result_max;
-	}
 	public function get_comparison_hash($show_version_and_attributes = true, $raw_output = true)
 	{
 		if($show_version_and_attributes)
@@ -109,13 +89,12 @@ class pts_test_result
 			{
 				$tp = $this->test_profile->get_title();
 			}
-			else
+			else if(($x = strrpos($tp, '.')) !== false)
 			{
 				// remove the last segment of the test profile version that should be in xx.yy.zz format
 				// this removal is done since the zz segment should be maintainable between comparisons
-				$tp = substr($tp, 0, strrpos($tp, '.'));
+				$tp = substr($tp, 0, $x);
 			}
-
 			return pts_test_profile::generate_comparison_hash($tp, $this->get_arguments(), $this->get_arguments_description(), $this->test_profile->get_app_version(), $raw_output);
 		}
 		else

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2014, Phoronix Media
-	Copyright (C) 2009 - 2014, Michael Larabel
+	Copyright (C) 2009 - 2015, Phoronix Media
+	Copyright (C) 2009 - 2015, Michael Larabel
 	pts_ResultFileTable.php: The result file table object
 
 	This program is free software; you can redistribute it and/or modify
@@ -70,6 +70,11 @@ class pts_ResultFileTable extends pts_Table
 
 		foreach($result_file->get_result_objects($result_object_index) as $ri => $result_object)
 		{
+			if($result_object->test_profile->get_identifier() == null)
+			{
+				continue;
+			}
+
 			if($extra_attributes != null)
 			{
 				if(isset($extra_attributes['reverse_result_buffer']))

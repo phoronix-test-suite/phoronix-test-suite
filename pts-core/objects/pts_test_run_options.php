@@ -225,12 +225,7 @@ class pts_test_run_options
 				// Base options off available screen resolutions
 				if(count($option_names) == 1 && count($option_values) == 1)
 				{
-					if(PTS_IS_CLIENT && pts_flags::is_live_cd() && !defined('PHOROMATIC_SERVER'))
-					{
-						// Just use the stock resolution when operating from a LiveCD
-						$available_video_modes = array(phodevi::read_property('gpu', 'screen-resolution'));
-					}
-					else if(PTS_IS_CLIENT && phodevi::read_property('gpu', 'screen-resolution') && phodevi::read_property('gpu', 'screen-resolution') != array(-1, -1) && !defined('PHOROMATIC_SERVER'))
+					if(PTS_IS_CLIENT && phodevi::read_property('gpu', 'screen-resolution') && phodevi::read_property('gpu', 'screen-resolution') != array(-1, -1) && !defined('PHOROMATIC_SERVER'))
 					{
 						$available_video_modes = phodevi::read_property('gpu', 'available-modes');
 					}
@@ -285,7 +280,7 @@ class pts_test_run_options
 				{
 					$all_devices = array();
 				}*/
-				$all_devices = array_merge(pts_file_io::glob('/dev/hd*'), pts_file_io::glob('/dev/sd*'), pts_file_io::glob('/dev/md*'));
+				$all_devices = array_merge(pts_file_io::glob('/dev/hd*'), pts_file_io::glob('/dev/sd*'), pts_file_io::glob('/dev/md*'), pts_file_io::glob('/dev/nvme*'));
 
 				foreach($all_devices as &$device)
 				{
@@ -314,17 +309,13 @@ class pts_test_run_options
 					array_push($option_values, '');
 					array_push($option_names, 'Default Test Directory');
 
-					if(pts_flags::is_live_cd() == false)
+					foreach($partitions_d as $partition_d)
 					{
-						foreach($partitions_d as $partition_d)
+						$mount_point = substr(($a = substr($mounts, strpos($mounts, $partition_d) + strlen($partition_d) + 1)), 0, strpos($a, ' '));
+						if(is_dir($mount_point) && is_writable($mount_point) && !in_array($mount_point, array('/boot', '/boot/efi')))
 						{
-							$mount_point = substr(($a = substr($mounts, strpos($mounts, $partition_d) + strlen($partition_d) + 1)), 0, strpos($a, ' '));
-
-							if(is_dir($mount_point) && is_writable($mount_point) && $mount_point != '/boot')
-							{
-								array_push($option_values, $mount_point);
-								array_push($option_names, $mount_point); // ' [' . $partition_d . ']'
-							}
+							array_push($option_values, $mount_point);
+							array_push($option_names, $mount_point); // ' [' . $partition_d . ']'
 						}
 					}
 				}
@@ -342,13 +333,13 @@ class pts_test_run_options
 					return;
 				}
 
-				$all_devices = array_merge(pts_file_io::glob('/dev/hd*'), pts_file_io::glob('/dev/sd*'), pts_file_io::glob('/dev/md*'));
+				$all_devices = array_merge(pts_file_io::glob('/dev/hd*'), pts_file_io::glob('/dev/sd*'), pts_file_io::glob('/dev/md*'), pts_file_io::glob('/dev/nvme*'));
 
-				foreach($all_devices as &$device)
+				foreach($all_devices as $i => &$device)
 				{
 					if(is_numeric(substr($device, -1)))
 					{
-						unset($device);
+						unset($all_devices[$i]);
 					}
 				}
 

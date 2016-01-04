@@ -20,104 +20,106 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class sys_temp implements phodevi_sensor
+class sys_temp extends phodevi_sensor
 {
-	public static function get_type()
+	const SENSOR_TYPE = 'sys';
+	const SENSOR_SENSES = 'temp';
+	const SENSOR_UNIT = 'Celsius';
+
+	public function read_sensor()
 	{
-		return 'sys';
-	}
-	public static function get_sensor()
-	{
-		return 'temp';
-	}
-	public static function get_unit()
-	{
-		return 'Celsius';
-	}
-	public static function support_check()
-	{
-		$test = self::read_sensor();
-		return is_numeric($test) && $test != -1;
-	}
-	public static function read_sensor()
-	{
-		// Reads the system's temperature
-		$temp_c = -1;
+		$sys_temp = -1;
 
 		if(phodevi::is_linux())
 		{
-			$raw_temp = phodevi_linux_parser::read_sysfs_node('/sys/class/hwmon/hwmon*/device/temp3_input', 'POSITIVE_NUMERIC', array('name' => '!coretemp,!radeon,!nouveau'));
+			$sys_temp = $this->sys_temp_linux();
+		}
+		elseif(phodevi::is_bsd())
+		{
+			$sys_temp = $this->sys_temp_bsd();
+		}
 
-			if($raw_temp == -1)
+		return $sys_temp;
+	}
+
+	private function sys_temp_linux()
+	{
+		$temp_c = -1;
+		$raw_temp = phodevi_linux_parser::read_sysfs_node('/sys/class/hwmon/hwmon*/device/temp3_input', 'POSITIVE_NUMERIC', array('name' => '!coretemp,!radeon,!nouveau'));
+
+		if($raw_temp == -1)
+		{
+			$raw_temp = phodevi_linux_parser::read_sysfs_node('/sys/class/hwmon/hwmon*/device/temp2_input', 'POSITIVE_NUMERIC', array('name' => '!coretemp,!radeon,!nouveau'));
+		}
+
+		if($raw_temp == -1)
+		{
+			$raw_temp = phodevi_linux_parser::read_sysfs_node('/sys/class/hwmon/hwmon*/device/temp1_input', 'POSITIVE_NUMERIC', array('name' => '!coretemp,!radeon,!nouveau'));
+		}
+
+		if($raw_temp == -1)
+		{
+			$raw_temp = phodevi_linux_parser::read_sysfs_node('/sys/class/hwmon/hwmon*/temp1_input', 'POSITIVE_NUMERIC');
+		}
+
+		if($raw_temp != -1)
+		{
+			if($raw_temp > 1000)
 			{
-				$raw_temp = phodevi_linux_parser::read_sysfs_node('/sys/class/hwmon/hwmon*/device/temp2_input', 'POSITIVE_NUMERIC', array('name' => '!coretemp,!radeon,!nouveau'));
+				$raw_temp = $raw_temp / 1000;
 			}
 
-			if($raw_temp == -1)
+			$temp_c = pts_math::set_precision($raw_temp, 2);
+		}
+
+		if($temp_c == -1)
+		{
+			$acpi = phodevi_linux_parser::read_acpi(array(
+				'/thermal_zone/THM1/temperature',
+				'/thermal_zone/TZ00/temperature',
+				'/thermal_zone/TZ01/temperature'), 'temperature');
+
+			if(($end = strpos($acpi, ' ')) > 0)
 			{
-				$raw_temp = phodevi_linux_parser::read_sysfs_node('/sys/class/hwmon/hwmon*/device/temp1_input', 'POSITIVE_NUMERIC', array('name' => '!coretemp,!radeon,!nouveau'));
-			}
-
-			if($raw_temp == -1)
-			{
-				$raw_temp = phodevi_linux_parser::read_sysfs_node('/sys/class/hwmon/hwmon*/temp1_input', 'POSITIVE_NUMERIC');
-			}
-
-			if($raw_temp != -1)
-			{
-				if($raw_temp > 1000)
-				{
-					$raw_temp = $raw_temp / 1000;
-				}
-
-				$temp_c = pts_math::set_precision($raw_temp, 2);	
-			}
-
-			if($temp_c == -1)
-			{
-				$acpi = phodevi_linux_parser::read_acpi(array(
-					'/thermal_zone/THM1/temperature',
-					'/thermal_zone/TZ00/temperature',
-					'/thermal_zone/TZ01/temperature'), 'temperature');
-
-				if(($end = strpos($acpi, ' ')) > 0)
-				{
-					$temp_c = substr($acpi, 0, $end);
-				}
-			}
-
-			if($temp_c == -1)
-			{
-				$sensors = phodevi_linux_parser::read_sensors(array('Sys Temp', 'Board Temp'));
-
-				if($sensors != false && is_numeric($sensors))
-				{
-					$temp_c = $sensors;
-				}
-			}
-
-			if($temp_c == -1 && is_file('/sys/class/thermal/thermal_zone0/temp'))
-			{
-				$temp_c = pts_file_io::file_get_contents('/sys/class/thermal/thermal_zone0/temp');
-
-				if($temp_c > 1000)
-				{
-					$temp_c = pts_math::set_precision(($temp_c / 1000), 1);
-				}
+				$temp_c = substr($acpi, 0, $end);
 			}
 		}
-		else if(phodevi::is_bsd())
+
+		if($temp_c == -1)
 		{
-			$acpi = phodevi_bsd_parser::read_sysctl(array('hw.sensors.acpi_tz1.temp0', 'hw.acpi.thermal.tz1.temperature'));
+			$sensors = phodevi_linux_parser::read_sensors(array('Sys Temp', 'Board Temp'));
 
-			if(($end = strpos($acpi, ' degC')) > 0 || ($end = strpos($acpi, 'C')) > 0)
+			if($sensors != false && is_numeric($sensors))
 			{
-				$acpi = substr($acpi, 0, $end);
+				$temp_c = $sensors;
+			}
+		}
 
-				if(is_numeric($acpi))
-				{
-					$temp_c = $acpi;
-				}
+		if($temp_c == -1 && is_file('/sys/class/thermal/thermal_zone0/temp'))
+		{
+			$temp_c = pts_file_io::file_get_contents('/sys/class/thermal/thermal_zone0/temp');
+
+			if($temp_c > 1000)
+			{
+				$temp_c = pts_math::set_precision(($temp_c / 1000), 1);
+			}
+		}
+
+		return $temp_c;
+	}
+
+	private function sys_temp_bsd()
+	{
+		$temp_c = -1;
+		$acpi = phodevi_bsd_parser::read_sysctl(array('hw.sensors.acpi_tz1.temp0', 'hw.acpi.thermal.tz1.temperature'));
+
+		if(($end = strpos($acpi, ' degC')) > 0 || ($end = strpos($acpi, 'C')) > 0)
+		{
+			$acpi = substr($acpi, 0, $end);
+
+			if(is_numeric($acpi))
+			{
+				$temp_c = $acpi;
 			}
 		}
 

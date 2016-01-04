@@ -3,8 +3,8 @@
 <xs:annotation>
 	<xs:documentation xml:lang="en">
 		Phoronix Test Suite / OpenBenchmarking.org
-		Copyright (C) 2008 - 2014, Phoronix Media
-		Copyright (C) 2008 - 2014, Michael Larabel
+		Copyright (C) 2008 - 2015, Phoronix Media
+		Copyright (C) 2008 - 2015, Michael Larabel
 	</xs:documentation>
 </xs:annotation>
 <xs:simpleType name="ResultTitleString">
@@ -68,7 +68,6 @@
 	<xs:restriction base="xs:string">
 		<xs:enumeration value="NO_RESULT" />
 		<xs:enumeration value="BAR_GRAPH" />
-		<xs:enumeration value="PIE_CHART" />
 		<xs:enumeration value="LINE_GRAPH" />
 		<xs:enumeration value="SCATTER_PLOT" />
 		<xs:enumeration value="PASS_FAIL" />
@@ -137,6 +136,7 @@
 <xs:simpleType name="URLString">
 	<xs:restriction base="xs:string">
 		<xs:pattern value="http://.*" />
+		<xs:pattern value="https://.*" />
 		<xs:minLength value="12" />
 	</xs:restriction>
 </xs:simpleType>

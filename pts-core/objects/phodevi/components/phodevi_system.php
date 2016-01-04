@@ -84,6 +84,9 @@ class phodevi_system extends phodevi_device_interface
 			case 'kernel-architecture':
 				$property = new phodevi_device_property('sw_kernel_architecture', phodevi::smart_caching);
 				break;
+			case 'kernel-date':
+				$property = new phodevi_device_property('sw_kernel_date', phodevi::smart_caching);
+				break;
 			case 'kernel-string':
 				$property = new phodevi_device_property('sw_kernel_string', phodevi::smart_caching);
 				break;
@@ -335,6 +338,7 @@ class phodevi_system extends phodevi_device_interface
 							'0xaad7aaea' => 'PanFS', // Panasas FS
 							'0xf2f52010' => 'F2FS',
 							'0xc36400' => 'CephFS',
+							'0xca451a4e' => 'BcacheFS'
 							);
 
 						foreach($known_magic_blocks as $hex => $name)
@@ -532,7 +536,7 @@ class phodevi_system extends phodevi_device_interface
 			{
 				foreach($check_variables as $var)
 				{
-					if(stripos($name, $var) !== false)
+					if(stripos($name, $var) !== false && $name != '__GL_SYNC_TO_VBLANK')
 					{
 						array_push($to_report, $name . '=' . $value);
 						break;
@@ -832,7 +836,29 @@ class phodevi_system extends phodevi_device_interface
 	}
 	public static function sw_kernel_string()
 	{
-		return phodevi::read_property('system', 'kernel') . ' (' . phodevi::read_property('system', 'kernel-architecture') . ')';
+		return trim(phodevi::read_property('system', 'kernel') . ' (' . phodevi::read_property('system', 'kernel-architecture') . ') ' . phodevi::read_property('system', 'kernel-date'));
+	}
+	public static function sw_kernel_date()
+	{
+		$date = null;
+		$k = phodevi::read_property('system', 'kernel');
+
+		if(strpos($k, '99') !== false || stripos($k, 'rc') !== false)
+		{
+			// For now at least only report kernel build date when it looks like it's a devel kernel
+			$v = php_uname('v');
+			if(($x = stripos($v, 'SMP ')) !== false)
+			{
+				$v = substr($v, ($x + 4));
+				$date = strtotime($v);
+				if($date != false)
+				{
+					$date = date('Ymd', $date);
+				}
+			}
+		}
+
+		return $date;
 	}
 	public static function sw_kernel()
 	{
@@ -886,7 +912,14 @@ class phodevi_system extends phodevi_device_interface
 		if(phodevi::is_windows())
 		{
 			//$kernel_arch = strpos($_SERVER['PROCESSOR_ARCHITECTURE'], 64) !== false || strpos($_SERVER['PROCESSOR_ARCHITEW6432'], 64 != false) ? 'x86_64' : 'i686';
-			$kernel_arch = $_SERVER['PROCESSOR_ARCHITEW6432'] == 'AMD64' ? 'x86_64' : 'i686';
+			if(isset($_SERVER['PROCESSOR_ARCHITEW6432']))
+			{
+				$kernel_arch = $_SERVER['PROCESSOR_ARCHITEW6432'] == 'AMD64' ? 'x86_64' : 'i686';
+			}
+			else
+			{
+				$kernel_arch = 'x86_64';
+			}
 		}
 		else
 		{
@@ -926,9 +959,14 @@ class phodevi_system extends phodevi_device_interface
 		{
 			$os_version = phodevi_linux_parser::read_lsb('Release');
 
-			if($os_version == null && is_readable('/etc/os-release'))
+			if($os_version == null)
 			{
-				$os_release = parse_ini_file('/etc/os-release');
+				if(is_readable('/etc/os-release'))
+					$os_release = parse_ini_file('/etc/os-release');
+				else if(is_readable('/usr/lib/os-release'))
+					$os_release = parse_ini_file('/usr/lib/os-release');
+				else
+					$os_release = null;
 
 				if(isset($os_release['VERSION_ID']) && !empty($os_release['VERSION_ID']))
 				{
@@ -961,9 +999,14 @@ class phodevi_system extends phodevi_device_interface
 		{
 			$vendor = phodevi_linux_parser::read_lsb_distributor_id();
 
-			if($vendor == null && is_readable('/etc/os-release'))
+			if($vendor == null)
 			{
-				$os_release = parse_ini_file('/etc/os-release');
+				if(is_readable('/etc/os-release'))
+					$os_release = parse_ini_file('/etc/os-release');
+				else if(is_readable('/usr/lib/os-release'))
+					$os_release = parse_ini_file('/usr/lib/os-release');
+				else
+					$os_release = null;
 
 				if(isset($os_release['PRETTY_NAME']) && !empty($os_release['PRETTY_NAME']))
 				{
@@ -974,6 +1017,13 @@ class phodevi_system extends phodevi_device_interface
 					$vendor = $os_release['NAME'];
 				}
 			}
+
+			if(($x = stripos($vendor, ' for ')) !== false)
+			{
+				$vendor = substr($vendor, 0, $x);
+			}
+
+			$vendor = str_replace(array(' Software'), null, $vendor);
 		}
 		else if(phodevi::is_hurd())
 		{
@@ -1339,7 +1389,10 @@ class phodevi_system extends phodevi_device_interface
 				array_push($display_servers, 'GNOME Shell Wayland');
 			}
 
-
+			if(empty($display_servers) && getenv('WAYLAND_DISPLAY') != false)
+			{
+				array_push($display_servers, 'Wayland');
+			}
 		}
 
 		return implode(' + ', $display_servers);
@@ -1400,6 +1453,13 @@ class phodevi_system extends phodevi_device_interface
 						{
 							$display_driver = 'radeon';
 						}
+						// See if it's the newer AMDGPU driver
+						$driver_version = phodevi_parser::read_xorg_module_version('amdgpu_drv');
+
+						if($driver_version != false)
+						{
+							$display_driver = 'amdgpu';
+						}
 						break;
 					case 'vmwgfx':
 						// See if it's VMware driver
@@ -1417,6 +1477,12 @@ class phodevi_system extends phodevi_device_interface
 						if($driver_version != false)
 						{
 							$display_driver = 'radeonhd';
+						}
+						$driver_version = phodevi_parser::read_xorg_module_version('amdgpu_drv');
+
+						if($driver_version != false)
+						{
+							$display_driver = 'amdgpu';
 						}
 						break;
 					case 'nvidia':

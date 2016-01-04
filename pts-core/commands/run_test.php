@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2011, Phoronix Media
-	Copyright (C) 2008 - 2011, Michael Larabel
+	Copyright (C) 2008 - 2015, Phoronix Media
+	Copyright (C) 2008 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -42,7 +42,8 @@ class run_test implements pts_option_interface
 	}
 	public static function run($to_run)
 	{
-		pts_test_run_manager::standard_run($to_run);
+		$run_manager = new pts_test_run_manager();
+		$run_manager->standard_run($to_run);
 	}
 }
 

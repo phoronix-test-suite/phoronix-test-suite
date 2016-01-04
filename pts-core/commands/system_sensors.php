@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2010, Phoronix Media
-	Copyright (C) 2009 - 2010, Michael Larabel
+	Copyright (C) 2009 - 2015, Phoronix Media
+	Copyright (C) 2009 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -30,7 +30,18 @@ class system_sensors implements pts_option_interface
 		pts_client::$display->generic_heading('Supported Sensors');
 		foreach(phodevi::supported_sensors() as $sensor)
 		{
-			echo phodevi::sensor_name($sensor) . ': ' . phodevi::read_sensor($sensor) . ' ' . phodevi::read_sensor_unit($sensor) . PHP_EOL;
+			$supported_devices = call_user_func(array($sensor[2], 'get_supported_devices'));
+
+			if($supported_devices === NULL)
+			{
+				self::print_sensor($sensor, NULL);
+				continue;
+			}
+
+			foreach($supported_devices as $device)
+			{
+				self::print_sensor($sensor, $device);
+			}
 		}
 
 		pts_client::$display->generic_heading('Unsupported Sensors');
@@ -39,6 +50,19 @@ class system_sensors implements pts_option_interface
 			echo '- ' . phodevi::sensor_name($sensor) . PHP_EOL;
 		}
 		echo PHP_EOL;
+	}
+
+	private static function print_sensor($sensor, $device)
+	{
+		if($sensor[0] === 'cgroup')
+		{
+			echo '- ' . phodevi::sensor_name($sensor) . PHP_EOL;
+		}
+		else
+		{
+			$sensor_object = new $sensor[2](0, $device);
+			echo '- ' . phodevi::sensor_object_name($sensor_object) . ': ' . phodevi::read_sensor($sensor_object) . ' ' . phodevi::read_sensor_object_unit($sensor_object) . PHP_EOL;	
+		}
 	}
 }
 

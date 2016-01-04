@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2013, Phoronix Media
-	Copyright (C) 2009 - 2013, Michael Larabel
+	Copyright (C) 2009 - 2015, Phoronix Media
+	Copyright (C) 2009 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -23,10 +23,22 @@
 class pts_test_result_buffer
 {
 	public $buffer_items;
+	protected $buffer_contains;
 
 	public function __construct($buffer_items = array())
 	{
 		$this->buffer_items = $buffer_items;
+
+		if(!empty($buffer_items))
+		{
+			foreach($buffer_items as $buffer_item)
+			{
+				$this->buffer_contains[$buffer_item->get_result_identifier() . $buffer_item->get_result_value()] = 1;
+			}
+		}
+	}
+	public function __clone()
+	{
 	}
 	public function get_buffer_items()
 	{
@@ -49,9 +61,29 @@ class pts_test_result_buffer
 	{
 		return strcmp($a->get_result_value(), $b->get_result_value());
 	}
+	public function find_buffer_item($identifier)
+	{
+		foreach($this->buffer_items as &$buf)
+		{
+			if($buf->get_result_identifier() == $identifier)
+			{
+				return $buf;
+			}
+		}
+
+		return false;
+	}
 	public function add_buffer_item($buffer_item)
 	{
-		array_push($this->buffer_items, $buffer_item);
+		if(!$this->buffer_contained($buffer_item))
+		{
+			array_push($this->buffer_items, $buffer_item);
+			$this->buffer_contains[$buffer_item->get_result_identifier() . $buffer_item->get_result_value()] = 1;
+		}
+	}
+	public function buffer_contained(&$buffer_item)
+	{
+		return isset($this->buffer_contains[$buffer_item->get_result_identifier() . $buffer_item->get_result_value()]);
 	}
 	public function get_buffer_item($i)
 	{
@@ -60,14 +92,74 @@ class pts_test_result_buffer
 	public function add_test_result($identifier, $value, $raw_value = null, $json = null, $min_value = null, $max_value = null)
 	{
 		array_push($this->buffer_items, new pts_test_result_buffer_item($identifier, $value, $raw_value, $json, $min_value, $max_value));
+
+		if(is_array($value))
+		{
+			$value = implode(':', $value);
+		}
+
+		$this->buffer_contains[$identifier . $value] = 1;
 	}
-	public function clear_outlier_results($add_to_other = true, $value_below = false)
+	public function clear_outlier_results($value_below)
 	{
-		pts_test_result_buffer_extra::clear_outlier_results($this->buffer_items, $add_to_other, $value_below);
+		foreach($this->buffer_items as $key => &$buffer_item)
+		{
+			if($buffer_item->get_result_value() < $value_below)
+			{
+				$other_value += $buffer_item->get_result_value();
+				unset($buffer_items[$key]);
+			}
+		}
 	}
-	public function add_composite_result($force = false)
+	public function rename($from, $to)
 	{
-		pts_test_result_buffer_extra::add_composite_result($this, $force);
+		if($from == null && count($this->buffer_items) == 1)
+		{
+			foreach($this->buffer_items as &$buffer_item)
+			{
+				$buffer_item->reset_result_identifier($to);
+			}
+			return true;
+		}
+		else
+		{
+			foreach($this->buffer_items as &$buffer_item)
+			{
+				if($buffer_item->get_result_identifier() == $from)
+				{
+					$buffer_item->reset_result_identifier($to);
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	public function reorder($new_order)
+	{
+		foreach($new_order as $identifier)
+		{
+			foreach($this->buffer_items as $i => &$buffer_item)
+			{
+				if($buffer_item->get_result_identifier() == $identifier)
+				{
+					$c = $buffer_item;
+					unset($this->buffer_items[$i]);
+					array_push($this->buffer_items, $c);
+					break;
+				}
+			}
+		}
+	}
+	public function remove($remove)
+	{
+		$remove = pts_arrays::to_array($remove);
+		foreach($this->buffer_items as $i => &$buffer_item)
+		{
+			if(in_array($buffer_item->get_result_identifier(), $remove))
+			{
+				unset($this->buffer_items[$i]);
+			}
+		}
 	}
 	public function auto_shorten_buffer_identifiers($identifier_shorten_index = false)
 	{
@@ -102,7 +194,67 @@ class pts_test_result_buffer
 	}
 	public function clear_iqr_outlier_results()
 	{
-		pts_test_result_buffer_extra::clear_iqr_outlier_results($this);
+		$is_multi_way = pts_render::multi_way_identifier_check($this->get_identifiers());
+
+		if($is_multi_way)
+		{
+			$group_values = array();
+			$group_keys = array();
+
+			foreach($this->buffer_items as $key => &$buffer_item)
+			{
+				$identifier_r = pts_strings::trim_explode(': ', $buffer_item->get_result_identifier());
+
+				if(!isset($group_values[$identifier_r[1]]))
+				{
+					$group_values[$identifier_r[1]] = array();
+					$group_keys[$identifier_r[1]] = array();
+				}
+
+				array_push($group_values[$identifier_r[1]], $buffer_item->get_result_value());
+				array_push($group_keys[$identifier_r[1]], $key);
+			}
+
+			foreach($group_values as $group_key => $values)
+			{
+				// From: http://www.mathwords.com/o/outlier.htm
+				$fqr = pts_math::first_quartile($values);
+				$tqr = pts_math::third_quartile($values);
+				$iqr_cut = ($tqr - $fqr) * 1.5;
+				$bottom_cut = $fqr - $iqr_cut;
+				$top_cut = $tqr + $iqr_cut;
+
+				foreach($group_keys[$group_key] as $key)
+				{
+					$value = $this->buffer_items[$key]->get_result_value();
+
+					if($value > $top_cut || $value < $bottom_cut)
+					{
+						unset($this->buffer_items[$key]);
+					}
+				}
+			}
+		}
+		else
+		{
+			// From: http://www.mathwords.com/o/outlier.htm
+			$values = $this->get_values();
+			$fqr = pts_math::first_quartile($values);
+			$tqr = pts_math::third_quartile($values);
+			$iqr_cut = ($tqr - $fqr) * 1.5;
+			$bottom_cut = $fqr - $iqr_cut;
+			$top_cut = $tqr + $iqr_cut;
+
+			foreach($this->buffer_items as $key => &$buffer_item)
+			{
+				$value = $buffer_item->get_result_value();
+
+				if($value > $top_cut || $value < $bottom_cut)
+				{
+					unset($this->buffer_items[$key]);
+				}
+			}
+		}
 	}
 	public function buffer_values_sort()
 	{
@@ -127,6 +279,36 @@ class pts_test_result_buffer
 
 		return $identifiers;
 	}
+	public function get_longest_identifier()
+	{
+		$identifier = null;
+		$length = 0;
+
+		foreach($this->buffer_items as &$buffer_item)
+		{
+			if(($l = strlen($buffer_item->get_result_identifier())) > $length)
+			{
+				$length = $l;
+				$identifier = $buffer_item->get_result_identifier();
+			}
+		}
+
+		return $identifier;
+	}
+	public function get_max_value()
+	{
+		$value = 0;
+
+		foreach($this->buffer_items as &$buffer_item)
+		{
+			if($buffer_item->get_result_value() > $value)
+			{
+				$value = $buffer_item->get_result_value();
+			}
+		}
+
+		return $value;
+	}
 	public function get_values()
 	{
 		$values = array();
@@ -137,45 +319,6 @@ class pts_test_result_buffer
 		}
 
 		return $values;
-	}
-	public function get_min_values()
-	{
-		$values = array();
-
-		foreach($this->buffer_items as &$buffer_item)
-		{
-			if(($min = $buffer_item->get_min_result_value()) != null)
-			{
-				array_push($values, $min);
-			}
-		}
-
-		return $values;
-	}
-	public function get_max_values()
-	{
-		$values = array();
-
-		foreach($this->buffer_items as &$buffer_item)
-		{
-			if(($max = $buffer_item->get_max_result_value()) != null)
-			{
-				array_push($values, $max);
-			}
-		}
-
-		return $values;
-	}
-	public function get_raw_values()
-	{
-		$raw_values = array();
-
-		foreach($this->buffer_items as &$buffer_item)
-		{
-			array_push($raw_values, $buffer_item->get_result_raw());
-		}
-
-		return $raw_values;
 	}
 	public function get_values_as_string()
 	{

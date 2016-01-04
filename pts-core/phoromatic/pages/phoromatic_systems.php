@@ -59,6 +59,22 @@ class phoromatic_systems implements pts_webui_interface
 			$stmt->bindValue(':maintenance_mode', $_POST['maintenance_mode']);
 			$stmt->execute();
 		}
+		if(!PHOROMATIC_USER_IS_VIEWER && !empty($PATH[0]) && isset($_POST['tick_thread_reboot']))
+		{
+			$stmt = phoromatic_server::$db->prepare('UPDATE phoromatic_systems SET TickThreadEvent = :event WHERE AccountID = :account_id AND SystemID = :system_id');
+			$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+			$stmt->bindValue(':system_id', $PATH[0]);
+			$stmt->bindValue(':event', time() . ':reboot');
+			$stmt->execute();
+		}
+		if(!PHOROMATIC_USER_IS_VIEWER && !empty($PATH[0]) && isset($_POST['tick_thread_halt']))
+		{
+			$stmt = phoromatic_server::$db->prepare('UPDATE phoromatic_systems SET TickThreadEvent = :event WHERE AccountID = :account_id AND SystemID = :system_id');
+			$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+			$stmt->bindValue(':system_id', $PATH[0]);
+			$stmt->bindValue(':event', time() . ':halt-testing');
+			$stmt->execute();
+		}
 		if(!PHOROMATIC_USER_IS_VIEWER && !empty($PATH[0]) && isset($_POST['system_var_names'])&& isset($_POST['system_var_values']))
 		{
 			$vars = array();
@@ -157,9 +173,16 @@ class phoromatic_systems implements pts_webui_interface
 					}
 
 					$main .= '<p><form action="' . $_SERVER['REQUEST_URI'] . '" name="update_groups" method="post"><input type="hidden" name="maintenance_mode" value="' . $mm_val . '" /><input type="submit" value="' . $mm_str . '" onclick="' . $mm_onclick . '" style="float: left; margin: 0 20px 5px 0;" /></form> Putting the system into maintenance mode will power up the system (if supported and applicable) and cause the Phoronix Test Suite Phoromatic client to idle and block all testing until the mode has been disabled. If a test is already running on the system, the maintenance mode will not be entered until after the testing has completed. The maintenance mode can be used if wishing to update the system software or carry out other tasks without interfering with the Phoromatic client process. Once disabled, the Phoronix Test Suite will continue to function as normal.</p>';
+
+					if($row['CoreVersion'] >= 5730)
+					{
+						$main .= '<p><form action="' . $_SERVER['REQUEST_URI'] . '" name="update_groups" method="post"><input type="hidden" name="tick_thread_reboot" value="1" /><input type="submit" value="Reboot System" style="float: left; margin: 0 20px 5px 0;" /></form> If the system is currently powered up and connected to the Phoromatic Server, this will send a message to the system to issue a reboot -- in case the system is hung on a test or you wish to otherwise manually reboot the server. This feature was added with Phoronix Test Suite 5.8.</p>';
+
+						$main .= '<p><form action="' . $_SERVER['REQUEST_URI'] . '" name="update_groups" method="post"><input type="hidden" name="tick_thread_halt" value="1" /><input type="submit" value="Halt Testing" style="float: left; margin: 0 20px 5px 0;" /></form> If the system is currently powered up and running a test/benchmark via the Phoromatic Server, this will tell the system to halt the testing prematurely as soon as the currently-active test has finished. The results successfully ran will then be uploaded to the Phoromatic Server. This feature was added with Phoronix Test Suite 5.8.</p>';
+					}
 				}
 
-				$main .= '<hr /><h2>System Variables</h2><p>System variables are a new feature of Phoronix Test Suite 5.6 to allow for providing per-system information in an easy-to-use manner for other parts of the Phoromatic system. Initially these named variables can be used for the results identifier when <a href="/?benchmark">creating a benchmark ticket</a> and in the future the system variables may be used elsewhere. Examples of system variables could include providing a <em>.SERIAL</em> variable to acknowledge the system\'s serial number that may not be presented elsewhere by the Phoronix Test Suite, <em>.ADMIN</em> for the system\'s local administrator, etc. Variable names can only be alpha-numeric strings while their values are also alpha-numeric strings but with spaces allowed. System variables are always prefixed by a period.</p>';
+				$main .= '<hr /><h2>System Variables</h2><p>System variables are a new feature of Phoronix Test Suite 5.6 to allow for providing per-system information in an easy-to-use manner for other parts of the Phoromatic system. Initially these named variables can be used for the results identifier when <a href="/?benchmark">creating a benchmark ticket</a> and in the future the system variables may be used elsewhere. Examples of system variables could include providing a <em>.SERIAL</em> variable to acknowledge the system\'s serial number that may not be presented elsewhere by the Phoronix Test Suite, <em>.ADMIN</em> for the system\'s local administrator, etc. Variable names can only be alpha-numeric strings while their values are also alpha-numeric strings but with spaces allowed. System variables are always prefixed by a period. These system variables are also automatically transferred to the Phoromatic clients and set as environment variables prior to running any scheduled tests/process via Phoromatic.</p>';
 
 				$system_variables = explode(';', $row['SystemVariables']);
 
@@ -189,6 +212,65 @@ class phoromatic_systems implements pts_webui_interface
 				$components = pts_result_file_analyzer::system_component_string_to_array($row['Software']);
 				$main .= pts_webui::r2d_array_to_table($components) . '</div>';
 
+				$system_path = phoromatic_server::phoromatic_account_system_path($_SESSION['AccountID'], $row['SystemID']);
+				$main .= '<hr />';
+				if(is_file($system_path . 'sensors-pool.json'))
+				{
+					$sensors = file_get_contents($system_path . 'sensors-pool.json');
+					$sensors = json_decode($sensors, true);
+
+					foreach($sensors as $title => $s)
+					{
+						if(!isset($s['values']) || count($s['values']) < 5 || max($s['values']) == min($s['values']))
+						{
+							continue;
+						}
+
+						$graph = new pts_sys_graph(array('title' => $title, 'x_scale' => 'm', 'y_scale' => $s['unit'], 'text_size' => 12, 'reverse_x_direction' => false, 'width' => 920, 'height' => 400));
+						$graph->render_base();
+						$svg_dom = $graph->render_graph_data($s['values']);
+						if($svg_dom === false)
+						{
+							continue;
+						}
+						$output_type = 'SVG';
+						$graph = $svg_dom->output(null, $output_type);
+						$main .= '<p align="center">' . substr($graph, strpos($graph, '<svg')) . '</p>';
+					}
+				}
+				else if(is_file($system_path . 'sensors.json'))
+				{
+					$sensor_file = file_get_contents($system_path . 'sensors.json');
+					$sensor_file = json_decode($sensor_file, true);
+					if($sensor_file && isset($sensor_file['sensors']) && !empty($sensor_file['sensors']))
+					{
+						$i = 0;
+						$col = array(1 => array(), 2 => array(), 3 => array(), 0 => array());
+						foreach($sensor_file['sensors'] as $name => $sensor)
+						{
+							array_push($col[($i % 4)], '<strong>' . $name . ':</strong> ' . $sensor['value'] . ' ' . $sensor['unit']);
+							$i++;
+						}
+
+						$main .= '<h2>System Sensors</h2>';
+						foreach($col as $sensors)
+						{
+							$main .= '<div style="float: left; width: 25%;">';
+							foreach($sensors as $sensor)
+								$main .= '<p>' . $sensor . '</p>';
+							$main .= '</div>';
+						}
+						$main .= '<p><em><strong>Last Updated:</strong>' . date('d F H:i', filemtime(phoromatic_server::phoromatic_account_system_path($_SESSION['AccountID'], $row['SystemID']) . 'sensors.json')) . ' <strong>System Uptime:</strong> ' . $sensor_file['uptime'] . ' Minutes</em></p>';
+					}
+				}
+				$log_file = phoromatic_server::phoromatic_account_system_path($_SESSION['AccountID'], $row['SystemID']) . 'phoronix-test-suite.log';
+				if(is_file($log_file))
+				{
+					$main .= '<hr /><h2>Phoronix Test Suite Client Log</h2>';
+					$main .= '<p><textarea style="width: 60%; height: 200px;">' . file_get_contents($log_file)  . '</textarea></p>';
+					$main .= '<p><em><strong>Last Updated:</strong>' . date ('d F H:i', filemtime($log_file)) . '</em></p>';
+				}
+
 				$groups = explode('#', $row['Groups']);
 				foreach($groups as $i => $group)
 				{
@@ -204,7 +286,7 @@ class phoromatic_systems implements pts_webui_interface
 					else
 						$group_msg = 'This system does not currently belong to any groups.';
 
-					$main .= '<p>' . $group_msg . ' Manage groups via the <a href="http://localhost:8444/?systems">systems page</a>.</p>';
+					$main .= '<p>' . $group_msg . ' Manage groups via the <a href="?systems">systems page</a>.</p>';
 
 					if(!empty($schedules))
 					{
@@ -262,7 +344,7 @@ class phoromatic_systems implements pts_webui_interface
 					$main .= '<hr /><div class="pts_phoromatic_info_box_area" style="margin: 0 10%;"><ul><li><h1>Recent System Warnings &amp; Errors</h1></li>';
 					do
 					{
-						$main .= '<a href="#"><li>' . $row['ErrorMessage'] . '<br /><table><tr><td>' . $row['UploadTime'] . '</td><td>' . $row['TestIdentifier'] . '</td></tr></table></li></a>';
+						$main .= '<a onclick=""><li>' . $row['ErrorMessage'] . '<br /><table><tr><td>' . $row['UploadTime'] . '</td><td>' . $row['TestIdentifier'] . '</td></tr></table></li></a>';
 					}
 					while($row = $result->fetchArray());
 					$main .= '	</ul></div>';
@@ -372,7 +454,7 @@ class phoromatic_systems implements pts_webui_interface
 			$main .= '<hr />
 
 			<h2>Systems</h2>
-			<div class="pts_phoromatic_info_box_area" style="margin: 0 10%;">
+			<div class="pts_phoromatic_info_box_area">
 
 					<ul>
 						<li><h1>Active Systems</h1></li>';
@@ -439,11 +521,6 @@ class phoromatic_systems implements pts_webui_interface
 
 
 			$main .= '</div>';
-
-			if($active_system_count > 2)
-			{
-				$main .= '<h3 align="center"><a href="/?component_table">System Component Table</a> | <a href="/?maintenance_table">System Maintenance Table</a> | <a href="/?dashboard">System Dashboard</a></h3>';
-			}
 
 			if(!PHOROMATIC_USER_IS_VIEWER)
 			{

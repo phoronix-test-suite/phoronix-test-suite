@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2013 - 2014, Phoronix Media
-	Copyright (C) 2013 - 2014, Michael Larabel
+	Copyright (C) 2013 - 2015, Phoronix Media
+	Copyright (C) 2013 - 2015, Michael Larabel
 	pts-web-socket: A simple WebSocket implementation, inspired by designs of https://github.com/varspool/Wrench and http://code.google.com/p/phpwebsocket/
 
 	This program is free software; you can redistribute it and/or modify
@@ -28,10 +28,12 @@ class pts_web_socket
 	private $users = array();
 	private $callback_on_data_receive = false;
 	private $callback_on_hand_shake = false;
-	public static $debug_mode = false;
+	public static $debug_mode = true;
+	public static $mask_send = false;
 
 	public function __construct($address = 'localhost', $port = 80, $callback_on_data_receive = null, $callback_on_hand_shake = null)
 	{
+		pcntl_signal(SIGCHLD, SIG_IGN);
 		ob_implicit_flush();
 		if($address == 'localhost')
 		{
@@ -49,8 +51,9 @@ class pts_web_socket
 			$this->socket_master = socket_create(AF_INET, SOCK_STREAM, getprotobyname('tcp'));
 			socket_set_option($this->socket_master, SOL_SOCKET, SO_REUSEADDR, 1);
 			socket_bind($this->socket_master, $address, $port);
-			socket_listen($this->socket_master);
+			socket_listen($this->socket_master, 5); // TODO XXX potentially set the 'backlog' parameter
 		}
+
 		array_push($this->sockets, $this->socket_master);
 		$this->callback_on_data_receive = $callback_on_data_receive;
 		$this->callback_on_hand_shake = $callback_on_hand_shake;
@@ -59,9 +62,10 @@ class pts_web_socket
 		while(true)
 		{
 			$changed = $this->sockets;
-			$write = null;
-			$except = null;
-			socket_select($changed, $write, $except, null);
+			$null = null;
+			if(socket_select($changed, $null, $null, null) < 1)
+				continue;
+			//if($s == false) echo socket_strerror(socket_last_error());
 
 			foreach($changed as $socket)
 			{
@@ -74,21 +78,27 @@ class pts_web_socket
 						{
 							$this->debug_msg($connection, 'Connecting');
 						}
-
 						$this->connect($connection);
 					}
 				}
 				else
 				{
+				/*	$bytes = 0;
+					$buffer = null;
+
+					while(($recv_bytes = socket_recv($socket, $recv_buffer, 1024, 0)) > 0)
+					{ echo rand(1, 9);
+						$bytes += $recv_bytes;
+						$buffer .= $recv_buffer;
+					} */
 					$bytes = socket_recv($socket, $buffer, 2048, 0);
 
-					if($bytes == false)
+					if($bytes == 0)
 					{
 						if(self::$debug_mode)
 						{
 							$this->debug_msg($socket, 'Disconnecting');
 						}
-
 						$this->disconnect($socket);
 					}
 					else
@@ -102,7 +112,6 @@ class pts_web_socket
 								break;
 							}
 						}
-
 						if($user === false)
 						{
 							continue;
@@ -110,7 +119,6 @@ class pts_web_socket
 						else if($user->handshake == false)
 						{
 							$hshake = $this->process_hand_shake($user, $buffer);
-
 							if($hshake && $this->callback_on_hand_shake != false && is_callable($this->callback_on_hand_shake))
 							{
 								$ret = call_user_func($this->callback_on_hand_shake, $user);
@@ -118,7 +126,23 @@ class pts_web_socket
 						}
 						else
 						{
-							$this->process_data($user, $buffer);
+							if(function_exists('pcntl_fork')) {
+								$id = pcntl_fork();
+								if ($id == -1) {
+									echo 'forking error';
+								} else if ($id) {
+									// parent process
+									continue;
+								}
+
+								// child process
+								$this->process_data($user, $buffer);
+								posix_kill(posix_getpid(), SIGINT);
+							}
+							else
+							{
+								$this->process_data($user, $buffer);
+							}
 						}
 					}
 				}
@@ -231,7 +255,25 @@ class pts_web_socket
 		}
 
 		// MESSAGE DATA
-		$encoded .= $data;
+		if(self::$mask_send) // XXX ugly hack
+		{
+			$mask = null;
+			for($i = 0; $i < 4; $i++)
+			{
+				$mask .= chr(rand(0, 255));
+			}
+			$encoded .= $mask;
+
+			// MESSAGE DATA
+			for($i = 0; $i < strlen($data); $i++)
+			{
+				$encoded .= $data[$i] ^ $mask[$i % 4];
+			}
+		}
+		else
+		{
+			$encoded .= $data;
+		}
 
 		// SEND
 		return socket_write($socket, $encoded, strlen($encoded));

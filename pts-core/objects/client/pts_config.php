@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2014, Phoronix Media
-	Copyright (C) 2008 - 2014, Michael Larabel
+	Copyright (C) 2008 - 2015, Phoronix Media
+	Copyright (C) 2008 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -30,19 +30,17 @@ class pts_config
 {
 	static $init_process_ran = false;
 	static $xml_user_config = null;
-	private static $config_file_location = null;
 
 	public static function get_config_file_location()
 	{
-		if(self::$config_file_location == null)
+		if(PTS_IS_DAEMONIZED_SERVER_PROCESS || (is_file('/etc/phoronix-test-suite.xml') && is_writable('/etc/phoronix-test-suite.xml')))
 		{
-			if(PTS_IS_DAEMONIZED_SERVER_PROCESS)
-				self::$config_file_location = '/etc/phoronix-test-suite.xml';
-			else
-				self::$config_file_location = PTS_USER_PATH . 'user-config.xml';
+			return '/etc/phoronix-test-suite.xml';
 		}
-
-		return self::$config_file_location;
+		else
+		{
+			return PTS_USER_PATH . 'user-config.xml';
+		}
 	}
 	public static function init_files()
 	{
@@ -72,7 +70,7 @@ class pts_config
 		}
 
 		$json_graph = array();
-		pts_Graph::set_default_graph_values($json_graph);
+		pts_graph_core::set_default_graph_values($json_graph);
 		if($json_pre != null)
 		{
 			$json_pre = json_decode($json_pre, true);
@@ -83,7 +81,7 @@ class pts_config
 			}
 		}
 
-		pts_Graph::init_graph_config($json_graph);
+		pts_graph_core::init_graph_config($json_graph);
 		file_put_contents(PTS_USER_PATH . 'graph-config.json', pts_arrays::json_encode_pretty_string($json_graph));
 	}
 	public static function user_config_generate($new_config_values = null)
@@ -91,7 +89,6 @@ class pts_config
 		// Validate the config files, update them (or write them) if needed, and other configuration file tasks
 
 		$read_config = new pts_config_nye_XmlReader($new_config_values);
-
 		$config = new nye_XmlWriter('xsl/pts-user-config-viewer.xsl');
 
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/OpenBenchmarking/AnonymousUsageReporting', $read_config);
@@ -102,6 +99,7 @@ class pts_config
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/General/UsePhodeviCache', $read_config);
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/General/DefaultDisplayMode', $read_config);
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/General/PhoromaticServers', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/General/FullOutput', $read_config);
 
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Modules/LoadModules', $read_config);
 
@@ -124,6 +122,7 @@ class pts_config
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/TestResultValidation/LimitDynamicToTestLength', $read_config);
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/TestResultValidation/StandardDeviationThreshold', $read_config);
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/TestResultValidation/ExportResultsTo', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/TestResultValidation/MinimalTestTime', $read_config);
 
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/BatchMode/SaveResults', $read_config);
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/BatchMode/OpenBrowser', $read_config);
@@ -146,7 +145,12 @@ class pts_config
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Server/AdvertiseServiceZeroConf', $read_config);
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Server/PhoromaticStorage', $read_config);
 
-		$config->saveXMLFile(pts_config::get_config_file_location());
+		$config_file = pts_config::get_config_file_location();
+		if($read_config->times_fallback() > 0 || !is_file($config_file))
+		{
+			// Something changed, so write out file, otherwise don't bother writing file
+			$config->saveXMLFile($config_file);
+		}
 	}
 	public static function bool_to_string($bool)
 	{

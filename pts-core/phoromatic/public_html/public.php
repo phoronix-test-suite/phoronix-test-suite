@@ -43,13 +43,13 @@ phoromatic_server::prepare_database();
 <?php
 
 echo phoromatic_webui_header(array(''), '');
-$result_ids = explode(',', $_GET['ut']);
+$result_ids = isset($_GET['ut']) ? explode(',', $_GET['ut']) : false;
 $account_id = false;
 
 $main = null;
 if(!empty($result_ids))
 {
-	$result_file = array();
+	$result_files = array();
 	$display_rows = array();
 	$system_types = array();
 	$schedule_types = array();
@@ -137,62 +137,155 @@ if(!empty($result_ids))
 				$system_name = phoromatic_system_id_to_name($row['SystemID'], $row['AccountID']) . ' - ' . phoromatic_schedule_id_to_name($row['ScheduleID']) . ' - ' . $row['Trigger'];
 		}
 
-		array_push($result_file, new pts_result_merge_select($composite_xml, null, $system_name));
-		}
+		array_push($result_files, new pts_result_merge_select($composite_xml, null, $system_name));
+	}
 
-		$writer = new pts_result_file_writer(null);
-		$attributes = array('new_result_file_title' => $result_file_title);
-		pts_merge::merge_test_results_process($writer, $result_file, $attributes);
-		$result_file = new pts_result_file($writer->get_xml());
-		$extra_attributes = array();
+	$attributes = array('new_result_file_title' => $result_file_title);
+	$result_file = new pts_result_file(null, true);
+	$result_file->merge($result_files, $attributes);
+	$extra_attributes = array();
 
-		$attribute_options = array(
-			'normalize_results' => 'normalize_result_buffer',
-			'sort_by_performance' => 'sort_result_buffer_values',
-			'sort_by_reverse' => 'reverse_result_buffer',
-			'sort_by_name' => 'sort_result_buffer',
-			'condense_comparison' => 'condense_multi_way',
-			);
-		foreach($attribute_options as $web_var => $attr_var)
+	$attribute_options = array(
+		'normalize_results' => 'normalize_result_buffer',
+		'sort_by_performance' => 'sort_result_buffer_values',
+		'sort_by_reverse' => 'reverse_result_buffer',
+		'sort_by_name' => 'sort_result_buffer',
+		'condense_comparison' => 'condense_multi_way',
+		);
+	foreach($attribute_options as $web_var => $attr_var)
+	{
+		if(isset($_REQUEST[$web_var]))
 		{
-			if(isset($_POST[$web_var]))
-			{
-				$extra_attributes[$attr_var] = true;
-			}
-		}
-
-		if(isset($_POST['transpose_comparison']))
-		{
-			$result_file->invert_multi_way_invert();
-		}
-		$intent = null;
-		$main .= '<h1>' . $result_file->get_title() . '</h1>';
-		$main .= '<p>' . $result_file->get_description() . '</p>';
-			$main .= phoromatic_annotate_entry('RESULT', implode(',', $result_ids), 'TOP');
-
-		if($result_file->get_system_count() == 1 || ($intent = pts_result_file_analyzer::analyze_result_file_intent($result_file, $intent, true)))
-		{
-			$table = new pts_ResultFileCompactSystemsTable($result_file, $intent);
-		}
-		else
-		{
-			$table = new pts_ResultFileSystemsTable($result_file);
-		}
-
-		$main .= '<p style="text-align: center; overflow: auto;" class="result_object">' . pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes) . '</p>';
-
-		$table = new pts_ResultFileTable($result_file, $intent);
-		$main .= '<p style="text-align: center; overflow: auto;" class="result_object">' . pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes) . '</p>';
-
-		foreach($result_file->get_result_objects((isset($_POST['show_only_changed_results']) ? 'ONLY_CHANGED_RESULTS' : -1)) as $i => $result_object)
-		{
-			$main .= '<h2><a name="r-' . $i . '"></a><a name="' . $result_object->get_comparison_hash(true, false) . '"></a>' . $result_object->test_profile->get_title() . '</h2>';
-			$main .= phoromatic_annotate_entry('RESULT', implode(',', $result_ids), $result_object->get_comparison_hash(true, false));
-			$main .= '<p style="text-align: center; overflow: auto;">';
-			$main .= pts_render::render_graph_inline_embed($result_object, $result_file, $extra_attributes);
-			$main .= '</p>';
+			$extra_attributes[$attr_var] = true;
 		}
 	}
+
+	if(isset($_POST['transpose_comparison']))
+	{
+		$result_file->invert_multi_way_invert();
+	}
+	$intent = null;
+	$main .= '<h1>' . $result_file->get_title() . '</h1>';
+	$main .= '<p>' . $result_file->get_description() . '</p>';
+	$main .= phoromatic_annotate_entry('RESULT', implode(',', $result_ids), 'TOP');
+
+	if($result_file->get_system_count() == 1 || ($intent = pts_result_file_analyzer::analyze_result_file_intent($result_file, $intent, true)))
+	{
+		$table = new pts_ResultFileCompactSystemsTable($result_file, $intent);
+	}
+	else
+	{
+		$table = new pts_ResultFileSystemsTable($result_file);
+	}
+
+	$main .= '<p style="text-align: center; overflow: auto;" class="result_object">' . pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes) . '</p>';
+
+	$table = new pts_ResultFileTable($result_file, $intent);
+	$main .= '<p style="text-align: center; overflow: auto;" class="result_object">' . pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes) . '</p>';
+	$main .= '<div id="pts_results_area">';
+	foreach($result_file->get_result_objects((isset($_POST['show_only_changed_results']) ? 'ONLY_CHANGED_RESULTS' : -1)) as $i => $result_object)
+	{
+		$main .= '<h2><a name="r-' . $i . '"></a><a name="' . $result_object->get_comparison_hash(true, false) . '"></a>' . $result_object->test_profile->get_title() . '</h2>';
+		$main .= phoromatic_annotate_entry('RESULT', implode(',', $result_ids), $result_object->get_comparison_hash(true, false));
+		$main .= '<p style="text-align: center; overflow: auto;">';
+		$main .= pts_render::render_graph_inline_embed($result_object, $result_file, $extra_attributes);
+		$main .= '</p>';
+	}
+	$main .= '</div>';
+}
+else
+{
+	$time_limit = false;
+	$time_str = false;
+	if(isset($_POST['time']))
+	{
+		$time_str = $_POST['time'];
+		$time_limit = strtotime('- ' . $time_str);
+	}
+	if($time_limit == false)
+	{
+		$time_str = '1 month';
+		$time_limit = strtotime('- ' . $time_str);
+	}
+
+	$result_limit = isset($_POST['result_limit']) && is_numeric($_POST['result_limit']) && $_POST['result_limit'] > 9 ? $_POST['result_limit'] : 50;
+	$main .= '<br /><br /><br />';
+	$main .= '<form action="' . $_SERVER['REQUEST_URI'] . '" method="post"><div style="text-align: left; font-weight: bold;">Show Results For <select id="result_time_limit" name="time">';
+	$results_for_length = array(
+		'24 hours' => '24 Hours',
+		'3 days' => '3 Days',
+		'1 week' => 'Week',
+		'2 week' => '2 Weeks',
+		'1 month' => 'Month',
+		'2 months' => '2 Months',
+		'3 months' => 'Quarter',
+		'6 months' => '6 Months',
+		'1 year' => 'Year',
+		'2 year' => 'Two Years',
+		);
+
+	foreach($results_for_length as $val => $str)
+	{
+		$main .= '<option value="' . $val . '"' . ($time_str == $val ? ' selected="selected"' : null) . '>Past ' . $str . '</option>';
+	}
+
+	$main .= '</select> Search For <input type="text" name="search" value="' . (isset($_POST['search']) ? $_POST['search'] : null) . '" /> &nbsp; Limit Results To <select id="result_limit" name="result_limit">';
+	for($i = 25; $i <= 150; $i += 25)
+	{
+		$main .= '<option value="' . $i . '"' . ($result_limit == $i ? ' selected="selected"' : null) . '>' . $i . '</option>';
+	}
+
+	$main .= '</select> &nbsp; <input type="submit" value="Update" /></div></form>';
+	$main .= '<a onclick="javascript:phoromatic_generate_comparison(\'public.php?ut=\');"><div id="phoromatic_result_compare_info_box" style="background: #1976d2; border: 1px solid #000;"></div></a>';
+	$main .= '<h1>Publicly Accessible Test Results</h1>';
+	$main .= '<p><em>Results where the accounts on this server have opted for the settings page item of making results public.</em></p>';
+	$main .= '<div class="pts_phoromatic_info_box_area">';
+	$search_for = (!isset($_POST['search']) || empty($_POST['search']) ? null : 'AND (Title LIKE :search OR Description LIKE :search OR UploadID IN (SELECT UploadID FROM phoromatic_results_systems WHERE AccountID = :account_id AND (Software LIKE :search OR Hardware LIKE :search)))');
+	$main .= '<div style="margin: 0 5%;"><ul style="max-height: 100%;"><li><h1>Recent Test Results</h1></li>';
+	$account_limit = ' AccountID IN (SELECT AccountID FROM phoromatic_account_settings WHERE LetPublicViewResults = 1) ';
+
+	if(isset($PATH[1]) && $PATH[0] == 'hash')
+	{
+		// Find matching comparison hashes
+		$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, ScheduleID, PPRID, UploadTime, TimesViewed, AccountID FROM phoromatic_results WHERE ' . $account_limit . ' ' . $search_for. ' AND ComparisonHash = :comparison_hash ORDER BY UploadTime DESC LIMIT ' . $result_limit);
+		$stmt->bindValue(':comparison_hash', $PATH[1]);
+	}
+	else if(isset($PATH[1]) && $PATH[0] == 'ticket')
+	{
+		// Find matching ticket results
+		$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, ScheduleID, PPRID, UploadTime, TimesViewed, AccountID FROM phoromatic_results WHERE ' . $account_limit . $search_for. ' AND BenchmarkTicketID = :ticket_id ORDER BY UploadTime DESC LIMIT ' . $result_limit);
+		$stmt->bindValue(':ticket_id', $PATH[1]);
+	}
+	else
+	{
+		$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, ScheduleID, PPRID, UploadTime, TimesViewed, AccountID FROM phoromatic_results WHERE ' . $account_limit . ' ' . $search_for. ' ORDER BY UploadTime DESC LIMIT ' . $result_limit);
+	}
+
+	$stmt->bindValue(':search', (isset($_POST['search']) ? '%' . $_POST['search'] . '%' : null));
+	$test_result_result = $stmt->execute();
+	$results = 0;
+	while($test_result_row = $test_result_result->fetchArray())
+	{
+		if(strtotime($test_result_row['UploadTime']) < $time_limit)
+		{
+			break;
+		}
+		if($results > 150)
+		{
+			break;
+		}
+
+		$main .= '<a onclick=""><li id="result_select_' . $test_result_row['PPRID'] . '"><input type="checkbox" id="result_compare_checkbox_' . $test_result_row['PPRID'] . '" onclick="javascript:phoromatic_checkbox_toggle_result_comparison(\'' . $test_result_row['PPRID'] . '\');" onchange="return false;"></input> <span onclick="javascript:phoromatic_window_redirect(\'public.php?ut=' . $test_result_row['PPRID'] . '\');">' . $test_result_row['Title'] . '</span><br /><table><tr><td>' . phoromatic_system_id_to_name($test_result_row['SystemID'], $test_result_row['AccountID']) . '</td><td>' . phoromatic_user_friendly_timedate($test_result_row['UploadTime']) .  '</td><td>' . $test_result_row['TimesViewed'] . ' Times Viewed</td></table></li></a>';
+		$results++;
+	}
+	if($results == 0)
+	{
+		$main .= '<li class="light" style="text-align: center;">No Results Found</li>';
+	}
+	$main .= '</ul></div>';
+	$main .= '</div>';
+}
+
 
 echo $main;
 

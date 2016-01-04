@@ -163,6 +163,10 @@
 			<PackageName>virtual/lapack</PackageName>
 		</Package>
 		<Package>
+			<GenericName>smartmontools</GenericName>
+			<PackageName>sys-apps/smartmontools</PackageName>
+		</Package>
+		<Package>
 			<GenericName>cmake</GenericName>
 			<PackageName>dev-util/cmake</PackageName>
 		</Package>
@@ -239,6 +243,10 @@
 		<Package>
 			<GenericName>opencl</GenericName>
 			<PackageName>dev-util/opencl-headers</PackageName>
+		</Package>
+		<Package>
+			<GenericName>attr</GenericName>
+			<PackageName>sys-apps/attr</PackageName>
 		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

@@ -55,12 +55,20 @@ class pts_result_file_output
 
 		$csv_output .= $result_file->get_title() . PHP_EOL . PHP_EOL;
 
-		$columns = $result_file->get_system_identifiers();
+		$columns = array();
+		$hw = array();
+		$sw = array();
+		foreach($result_file->get_systems() as $system)
+		{
+			array_push($columns, $system->get_identifier());
+			array_push($hw, $system->get_hardware());
+			array_push($sw, $system->get_software());
+		}
 		$rows = array();
 		$table_data = array();
 
-		pts_result_file_analyzer::system_components_to_table($table_data, $columns, $rows, $result_file->get_system_hardware());
-		pts_result_file_analyzer::system_components_to_table($table_data, $columns, $rows, $result_file->get_system_software());
+		pts_result_file_analyzer::system_components_to_table($table_data, $columns, $rows, $hw);
+		pts_result_file_analyzer::system_components_to_table($table_data, $columns, $rows, $sw);
 
 		$csv_output .= ' ';
 
@@ -95,8 +103,10 @@ class pts_result_file_output
 		{
 			$csv_output .= '"' . $result_object->test_profile->get_title() . ' - ' . $result_object->get_arguments_description() . '"';
 
-			foreach($result_object->test_result_buffer->get_values() as $value)
+			foreach($columns as $column)
 			{
+				$buffer_item = $result_object->test_result_buffer->find_buffer_item($column);
+				$value = $buffer_item != false ? $buffer_item->get_result_value() : null;
 				$csv_output .= $delimiter . $value;
 			}
 			$csv_output .= PHP_EOL;
@@ -112,9 +122,15 @@ class pts_result_file_output
 		$result_output .= $result_file->get_title() . PHP_EOL;
 		$result_output .= $result_file->get_description() . PHP_EOL . PHP_EOL . PHP_EOL;
 
-		$system_identifiers = $result_file->get_system_identifiers();
-		$system_hardware = $result_file->get_system_hardware();
-		$system_software = $result_file->get_system_software();
+		$system_identifiers = array();
+		$system_hardware = array();
+		$system_software = array();
+		foreach($result_file->get_systems() as $system)
+		{
+			array_push($system_identifiers, $system->get_identifier());
+			array_push($system_hardware, $system->get_hardware());
+			array_push($system_software, $system->get_software());
+		}
 
 		for($i = 0; $i < count($system_identifiers); $i++)
 		{
@@ -122,8 +138,7 @@ class pts_result_file_output
 			$result_output .= "\t" . $system_hardware[$i] . PHP_EOL . PHP_EOL . "\t" . $system_software[$i] . PHP_EOL . PHP_EOL;
 		}
 
-		$longest_identifier_length = $result_file->get_system_identifiers();
-		$longest_identifier_length = strlen(pts_strings::find_longest_string($longest_identifier_length)) + 2;
+		$longest_identifier_length = strlen(pts_strings::find_longest_string($system_identifiers)) + 2;
 
 		foreach($result_file->get_result_objects() as $result_object)
 		{

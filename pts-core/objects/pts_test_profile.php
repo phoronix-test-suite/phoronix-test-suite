@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2014, Phoronix Media
-	Copyright (C) 2008 - 2014, Michael Larabel
+	Copyright (C) 2008 - 2015, Phoronix Media
+	Copyright (C) 2008 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -24,19 +24,25 @@ class pts_test_profile extends pts_test_profile_parser
 {
 	public $test_installation = false;
 
-	public function __construct($identifier = null, $override_values = null)
+	public function __construct($identifier = null, $override_values = null, $normal_init = true)
 	{
-		parent::__construct($identifier);
+		parent::__construct($identifier, $normal_init);
 
 		if($override_values != null && is_array($override_values))
 		{
-			$this->xml_parser->overrideXMLValues($override_values);
+			$this->set_override_values($override_values);
 		}
 
-		if(PTS_IS_CLIENT && is_file($this->get_install_dir() . 'pts-install.xml'))
+		if($normal_init && PTS_IS_CLIENT && is_file($this->get_install_dir() . 'pts-install.xml'))
 		{
 			$this->test_installation = new pts_installed_test($this);
 		}
+	}
+	public function validate()
+	{
+		$dom = new DOMDocument();
+		$dom->loadXML($this->get_xml());
+		return $dom->schemaValidate(PTS_OPENBENCHMARKING_PATH . 'schemas/test-profile.xsd');
 	}
 	public static function is_test_profile($identifier)
 	{
@@ -49,13 +55,16 @@ class pts_test_profile extends pts_test_profile_parser
 	}
 	public function get_override_values()
 	{
-		return $this->xml_parser->getOverrideValues();
+		return $this->overrides;
 	}
 	public function set_override_values($override_values)
 	{
 		if(is_array($override_values))
 		{
-			$this->xml_parser->overrideXMLValues($override_values);
+			foreach($override_values as $xml_tag => $value)
+			{
+				$this->xs($xml_tag, $value);
+			}
 		}
 	}
 	public function get_download_size($include_extensions = true, $divider = 1048576)
@@ -127,13 +136,12 @@ class pts_test_profile extends pts_test_profile_parser
 		$dependency_names = array();
 		$exdep_generic_parser = new pts_exdep_generic_parser();
 
-		foreach($this->get_dependencies() as $dependency)
+		foreach($this->get_external_dependencies() as $dependency)
 		{
 			if($exdep_generic_parser->is_package($dependency))
 			{
 				$package_data = $exdep_generic_parser->get_package_data($dependency);
 				array_push($dependency_names, $package_data['title']);
-				break;
 			}
 		}
 
@@ -258,15 +266,8 @@ class pts_test_profile extends pts_test_profile_parser
 	public function is_test_architecture_supported()
 	{
 		// Check if the system's architecture is supported by a test
-		$supported = true;
 		$archs = $this->get_supported_architectures();
-
-		if(!empty($archs))
-		{
-			$supported = phodevi::cpu_arch_compatible($archs);
-		}
-
-		return $supported;
+		return !empty($archs) ? phodevi::cpu_arch_compatible($archs) : true;
 	}
 	public function is_core_version_supported()
 	{
@@ -366,7 +367,20 @@ class pts_test_profile extends pts_test_profile_parser
 	}
 	public function get_file_parser_spec()
 	{
-		return is_file($this->get_resource_dir() . 'results-definition.xml') ? $this->get_resource_dir() . 'results-definition.xml' : false;
+		$spec = is_file($this->get_resource_dir() . 'results-definition.xml') ? $this->get_resource_dir() . 'results-definition.xml' : false;
+
+		if(!$spec)
+		{
+			$extends = $this->get_test_extension();
+
+			if(!empty($extends))
+			{
+				$test_profile = new pts_test_profile($extends);
+				$spec = $test_profile->get_file_parser_spec();
+			}
+		}
+
+		return $spec;
 	}
 	public function extended_test_profiles()
 	{
@@ -384,21 +398,15 @@ class pts_test_profile extends pts_test_profile_parser
 	public function needs_updated_install()
 	{
 		// Checks if test needs updating
-		// || $this->test_installation->get_installed_system_identifier() != phodevi::system_id_string()
-		return $this->test_installation == false || $this->get_test_profile_version() != $this->test_installation->get_installed_version() || $this->get_installer_checksum() != $this->test_installation->get_installed_checksum() || (pts_c::$test_flags & pts_c::force_install);
+		return $this->test_installation == false || $this->get_test_profile_version() != $this->test_installation->get_installed_version() || $this->get_installer_checksum() != $this->test_installation->get_installed_checksum() || $this->test_installation->get_installed_system_identifier() != phodevi::system_id_string();
 	}
 	public function to_json()
 	{
-		$file = $this->xml_parser->getFileLocation();
-
-		if(is_file($file))
-		{
-			$file = file_get_contents($file);
-			$file = str_replace(array("\n", "\r", "\t"), '', $file);
-			$file = trim(str_replace('"', "'", $file));
-			$simple_xml = simplexml_load_string($file);
-			return json_encode($simple_xml);
-		}
+		$file = $this->get_xml();
+		$file = str_replace(array("\n", "\r", "\t"), '', $file);
+		$file = trim(str_replace('"', "'", $file));
+		$simple_xml = simplexml_load_string($file);
+		return json_encode($simple_xml);
 	}
 }
 

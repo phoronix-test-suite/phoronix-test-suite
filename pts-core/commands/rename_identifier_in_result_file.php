@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2014, Phoronix Media
-	Copyright (C) 2009 - 2014, Michael Larabel
+	Copyright (C) 2009 - 2015, Phoronix Media
+	Copyright (C) 2009 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -44,19 +44,6 @@ class rename_identifier_in_result_file implements pts_option_interface
 
 		$rename_identifier = pts_user_io::prompt_text_menu('Select the test run to rename', $result_file_identifiers);
 		$rename_identifier_new = pts_user_io::prompt_user_input('Enter the new identifier');
-		$merge_selects = array();
-
-		foreach($result_file_identifiers as $identifier)
-		{
-			$this_merge_select = new pts_result_merge_select($result, $identifier);
-
-			if($identifier == $rename_identifier && $rename_identifier != $rename_identifier_new)
-			{
-				$this_merge_select->rename_identifier($rename_identifier_new);
-			}
-
-			array_push($merge_selects, $this_merge_select);
-		}
 
 		foreach(array('test-logs', 'system-logs', 'installation-logs') as $dir_name)
 		{
@@ -66,8 +53,8 @@ class rename_identifier_in_result_file implements pts_option_interface
 			}
 		}
 
-		$extract_result = pts_merge::merge_test_results_array($merge_selects);
-		pts_client::save_test_result($r[0] . '/composite.xml', $extract_result);
+		$result_file->rename_run($rename_identifier, $rename_identifier_new);
+		pts_client::save_test_result($result_file->get_file_location(), $result_file->get_xml());
 		pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . $r[0] . '/index.html');
 	}
 }

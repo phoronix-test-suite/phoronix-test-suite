@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2010, Phoronix Media
-	Copyright (C) 2008 - 2010, Michael Larabel
+	Copyright (C) 2008 - 2015, Phoronix Media
+	Copyright (C) 2008 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ class clone_openbenchmarking_result implements pts_option_interface
 {
 	const doc_section = 'OpenBenchmarking.org';
 	const doc_use_alias = 'clone-result';
-	const doc_description = 'This option will download a local copy of a file that was saved to OpenBenchmarking.org, as long as a valid public ID is supplied. More than one ID can be specified and the results will then be merged.';
+	const doc_description = 'This option will download a local copy of a file that was saved to OpenBenchmarking.org, as long as a valid public ID is supplied.';
 
 	public static function command_aliases()
 	{
@@ -42,14 +42,13 @@ class clone_openbenchmarking_result implements pts_option_interface
 		foreach($args as $id)
 		{
 			$xml = pts_openbenchmarking::clone_openbenchmarking_result($id, true);
-			array_push($result_files, new pts_result_file($xml));
+			if($xml)
+			{
+				$result_file = new pts_result_file($xml);
+				pts_client::save_test_result($id . '/composite.xml', $result_file->get_xml(), true);
+				echo PHP_EOL . 'Result Saved To: ' . PTS_SAVE_RESULTS_PATH . $id . '/composite.xml' . PHP_EOL;
+			}
 		}
-
-		$writer = new pts_result_file_writer(null);
-		pts_merge::merge_test_results_process($writer, $result_files);
-		pts_client::save_test_result($args[0] . '/composite.xml', $writer->get_xml(), true);
-
-		echo PHP_EOL . 'Result Saved To: ' . PTS_SAVE_RESULTS_PATH . $args[0] . '/composite.xml' . PHP_EOL;
 	}
 }
 

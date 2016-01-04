@@ -20,21 +20,16 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class sys_power implements phodevi_sensor
+class sys_power extends phodevi_sensor
 {
+	const SENSOR_TYPE = 'sys';
+	const SENSOR_SENSES = 'power';
+
 	private static $battery_sys = false;
 	private static $battery_cur = false;
 	private static $wattsup_meter = false;
 	private static $ipmitool = false;
 
-	public static function get_type()
-	{
-		return 'sys';
-	}
-	public static function get_sensor()
-	{
-		return 'power';
-	}
 	public static function get_unit()
 	{
 		$unit = null;
@@ -54,7 +49,7 @@ class sys_power implements phodevi_sensor
 
 		return $unit;
 	}
-	public static function support_check()
+	public function support_check()
 	{
 		$test = self::sys_battery_power();
 		if(is_numeric($test) && $test != -1)
@@ -92,7 +87,7 @@ class sys_power implements phodevi_sensor
 			}
 		}
 	}
-	public static function read_sensor()
+	public function read_sensor()
 	{
 		if(self::$battery_sys)
 		{
@@ -183,7 +178,7 @@ class sys_power implements phodevi_sensor
 						if($voltage_unit == 'mV')
 						{
 							$rate = round(($power * $voltage) / 1000);
-						}				
+						}
 					}
 					else if($power_unit == 'mW')
 					{
@@ -196,6 +191,17 @@ class sys_power implements phodevi_sensor
 			{
 				$voltage_now = pts_file_io::file_get_contents('/sys/class/power_supply/BAT0/voltage_now') / 1000;
 				$current_now = pts_file_io::file_get_contents('/sys/class/power_supply/BAT0/current_now') / 1000;
+				$power_now = $voltage_now * $current_now / 1000;
+
+				if($power_now > 1)
+				{
+					$rate = $power_now;
+				}
+			}
+			if($rate == -1 && is_file('/sys/class/power_supply/BAT1/voltage_now') && is_file('/sys/class/power_supply/BAT1/current_now'))
+			{
+				$voltage_now = pts_file_io::file_get_contents('/sys/class/power_supply/BAT1/voltage_now') / 1000;
+				$current_now = pts_file_io::file_get_contents('/sys/class/power_supply/BAT1/current_now') / 1000;
 				$power_now = $voltage_now * $current_now / 1000;
 
 				if($power_now > 1)

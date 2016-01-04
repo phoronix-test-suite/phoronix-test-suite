@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2015, Phoronix Media
-	Copyright (C) 2008 - 2015, Michael Larabel
+	Copyright (C) 2008 - 2016, Phoronix Media
+	Copyright (C) 2008 - 2016, Michael Larabel
 	phoronix-test-suite.php: The main code for initalizing the Phoronix Test Suite
 
 	This program is free software; you can redistribute it and/or modify
@@ -71,6 +71,7 @@ if(getenv('PTS_MODE') == 'CLIENT' && ini_get('open_basedir') != false)
 	else
 	{
 		echo PHP_EOL . 'NOTICE: The php.ini configuration is using the "open_basedir" directive, which may prevent some parts of the Phoronix Test Suite from working. See the Phoronix Test Suite documentation for more details and to disable this setting.' . PHP_EOL;
+		sleep(1);
 	}
 }
 

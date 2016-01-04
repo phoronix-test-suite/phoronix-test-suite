@@ -41,7 +41,7 @@ class pts_pdf_template extends FPDF
 
 		$this->SetTitle($Title);
 		$this->SetAuthor('Phoronix Test Suite');
-		$this->SetCreator(pts_codename(true));
+		$this->SetCreator(pts_core::codename(true));
 		$this->SetCompression(false);
 	}
 	public function html_to_pdf($html)
@@ -81,7 +81,7 @@ class pts_pdf_template extends FPDF
 					$this->CreateBookmark($value, 1);
 					$this->SetFont('Arial', 'B', 16);
 					$this->SetLeftMargin(8.5);
-					$this->SetTextColor(50, 51, 49);
+					$this->SetTextColor(232, 143, 9);
 					$this->Ln();
 					$this->html_text_interpret('h1', $dom_item);
 					$this->Ln();
@@ -90,7 +90,7 @@ class pts_pdf_template extends FPDF
 					$this->CreateBookmark($value, 2);
 					$this->SetLeftMargin(10);
 					$this->SetFont('Arial', 'B', 14);
-					$this->SetTextColor(50, 51, 49);
+					$this->SetTextColor(129, 140, 3);
 					$this->Ln();
 					$this->SetTopMargin(30);
 					$this->html_text_interpret('h2', $dom_item);
@@ -99,7 +99,7 @@ class pts_pdf_template extends FPDF
 				case 'h3':
 					$this->SetLeftMargin(10);
 					$this->SetFont('Arial', 'B', 13);
-					$this->SetTextColor(97, 99, 96);
+					$this->SetTextColor(129, 140, 3);
 					$this->Ln();
 					$this->html_text_interpret('h3', $dom_item);
 					$this->SetLeftMargin(10);
@@ -200,6 +200,7 @@ class pts_pdf_template extends FPDF
 		}
 
 		$this->SetFont('Arial', 'B', 14);
+		$this->SetTextColor(0, 0, 0);
 		$this->Cell(80);
 		$this->Cell(30, 10, $this->pts_title, 0, 0, 'C');
 		$this->Ln(6);
@@ -216,7 +217,8 @@ class pts_pdf_template extends FPDF
 
 		$this->SetY(-10);
 		$this->SetFont('Arial', 'B', 7);
-		$this->Cell(0, 0, pts_title(), 0, 0, 'L');
+		$this->SetTextColor(0, 0, 0);
+		$this->Cell(0, 0, pts_core::program_title(), 0, 0, 'L');
 		$this->Cell(0, 0, 'www.phoronix-test-suite.com', 0, 0, 'R', true, 'http://www.phoronix-test-suite.com/');
 	}
 	public function WriteBigHeaderCenter($Header)

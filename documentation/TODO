@@ -8,7 +8,7 @@ PHORONIX TEST SUITE PUBLIC TODO LIST:
 - Support for multiple languages / internationalization.
 - BLKID fall-back support for determining file-system [e.g. /sbin/blkid -s TYPE -o value /dev/sda1].
 - Possibly restore "weighted suites" [http://phorogit.com/index.php?p=phoronix-test-suite.git&a=commitdiff&h=548e5c073cc90d92ac3f382ca4933d5f556e78c6&hb=444441f9be866f51920e0ad8ca3909951b4d90c5]
-- Integrate recover-run command into the run command, auto-detect if the result file was a partial save and then ask if to perform run recovery' [ POSSIBLY DO THE SAME FOR FINISH-RUN]
+- Integrate finish-run command into the run command, auto-detect if the result file was a partial save and then ask if to perform run recovery'
 - Multi-threaded downloading of test files
 - Numerous pts_render improvements [see in-line code comments]
 - Optimus / DRI_PRIME=1 / xrandr --listproviders better GPU detection
@@ -17,20 +17,17 @@ PHORONIX TEST SUITE PUBLIC TODO LIST:
 
 ### PTS-GRAPH ###
 
-- Improve rendering of large data-sets, e.g. http://openbenchmarking.org/result/1205231-LI-BL460G6BE41
 - Rotated text alignment for some PNG graphixs is sometimes off by 90/180 degrees compared to SVG, e.g. http://openbenchmarking.org/s/Compiler
-- SVG graph improvements
 
 ### OPENBENCHMARKING.ORG ###
 
 - Shorten long change-logs on test profile pages - e.g. http://openbenchmarking.org/test/pts/hpcc
-[ REST SUBJECT TO PHORONIX MEDIA NDA ]
 
 ### NEW TEST PROFILES ###
 
 - Python-libmemcached [http://code.google.com/p/python-libmemcached/]
 - Intel HiBench [https://github.com/intel-hadoop/HiBench]
-- Hadoop Benchmarks
+- Hadoop Benchmarks / TeraSort
 - LATT Latency Tests [git://git.kernel.dk/latt.git]
 - QMC Beaver [http://qmcbeaver.sourceforge.net/]
 - Some potential interesting GPGPU tests [http://www.bealto.com/gpu-benchmarks.html]
@@ -41,7 +38,9 @@ PHORONIX TEST SUITE PUBLIC TODO LIST:
 - http://hashcat.net/oclhashcat/
 - Handbrake [http://handbrake.fr/]
 - libMicro [https://github.com/portante/libMicro]
+- http://markjstock.org/pages/rad_bench.html
 - https://code.google.com/p/pyrit/
+- https://github.com/acangiano/ruby-benchmark-suite
 - http://www.nwchem-sw.org/index.php/Compiling_NWChem
 - http://sourceforge.net/projects/ffsb/
 - http://www.ratgpu.com/
@@ -52,8 +51,15 @@ PHORONIX TEST SUITE PUBLIC TODO LIST:
 - http://www.capsl.udel.edu/splash/Download.html
 - https://github.com/facebook/linkbench
 - https://github.com/vasi/pixz
+- stephentu/silo
 - http://nondot.org/sabre/LLVMNotes/#benchmarks
+- https://code.google.com/p/smhasher/wiki/SMHasher
 - http://benchmarksgame.alioth.debian.org/u32/performance.php?test=fasta / http://benchmarksgame.alioth.debian.org/u32/program.php?test=nbody&lang=gcc&id=1#sourcecode
+- https://openfoamwiki.net/index.php/Benchmarks_standard_v1
+- Cassandra 1.2 stress - http://docs.datastax.com/en/cassandra/1.2/cassandra/tools/toolsCStress_t.html
+- http://gcc.opensuse.org/c++bench-frescobaldi/
+- http://dacapobench.org/
+
 
 ### WEB SOCKET / HTML5 USER INTERFACE WORK ###
 
@@ -66,8 +72,6 @@ PHORONIX TEST SUITE PUBLIC TODO LIST:
 ### PHOROMATIC ####
 
 - Implement the complementary WebSocket communication to HTTP pulls
-- More mobile form factor optimizations
 - Ensure sane validating of more user input / resource uploads
 - Hook up TriggerTarget for allowing event.php to optionally specify a sub-set of systems/groups to target for a given trigger
 - Clean up the code and modularize more of the code into functions
-- Sharing results between independent accounts

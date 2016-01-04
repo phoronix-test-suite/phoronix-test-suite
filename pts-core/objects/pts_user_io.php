@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2014, Phoronix Media
-	Copyright (C) 2008 - 2014, Michael Larabel
+	Copyright (C) 2008 - 2015, Phoronix Media
+	Copyright (C) 2008 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -87,7 +87,7 @@ class pts_user_io
 	public static function prompt_bool_input($question, $default = true, $question_id = 'UNKNOWN')
 	{
 		// Prompt user for yes/no question
-		if((pts_c::$test_flags & pts_c::batch_mode))
+		/*if BATCH MODE
 		{
 			switch($question_id)
 			{
@@ -97,32 +97,27 @@ class pts_user_io
 			}
 
 			$answer = pts_strings::string_bool($auto_answer);
-		}
-		else
+		}*/
+		$question .= ' (' . ($default == true ? 'Y/n' : 'y/N') . '): ';
+
+		do
 		{
-			$question .= ' (' . ($default == true ? 'Y/n' : 'y/N') . '): ';
-
-			do
-			{
-				pts_client::$display->generic_prompt($question);
-				$input = strtolower(pts_user_io::read_user_input());
-			}
-			while($input != 'y' && $input != 'n' && $input != '');
-
-			switch($input)
-			{
-				case 'y':
-					$answer = true;
-					break;
-				case 'n':
-					$answer = false;
-					break;
-				default:
-					$answer = $default;
-					break;
-			}
+			pts_client::$display->generic_prompt($question);
+			$input = strtolower(pts_user_io::read_user_input());
 		}
-
+		while($input != 'y' && $input != 'n' && $input != '');
+		switch($input)
+		{
+			case 'y':
+				$answer = true;
+				break;
+			case 'n':
+				$answer = false;
+				break;
+			default:
+				$answer = $default;
+				break;
+		}
 		return $answer;
 	}
 	public static function prompt_text_menu($user_string, $options_r, $allow_multi_select = false, $return_index = false, $line_prefix = null)

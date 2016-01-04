@@ -134,6 +134,12 @@
 			<FileCheck>gfortran</FileCheck>
 		</Package>
 		<Package>
+			<GenericName>smartmontools</GenericName>
+			<Title>SMART Monitoring Tools</Title>
+			<PossibleNames>smartmontools</PossibleNames>
+			<FileCheck>smartctl</FileCheck>
+		</Package>
+		<Package>
 			<GenericName>glew</GenericName>
 			<Title>OpenGL Extension Wrangler</Title>
 			<PossibleNames>libglew, libglew1.5-dev, glew-devel</PossibleNames>
@@ -263,7 +269,7 @@
 			<GenericName>blas-development</GenericName>
 			<Title>Basic Linear Algebra Sub-Routine Library</Title>
 			<PossibleNames>libblas-dev, libblas-devel, blas-devel, blas</PossibleNames>
-			<FileCheck>cblas.h</FileCheck>
+			<FileCheck>libblas.so</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>lapack-development</GenericName>
@@ -377,8 +383,8 @@
 		<Package>
 			<GenericName>superlu</GenericName>
 			<Title>SuperLU</Title>
-			<PossibleNames>superlu, libsuperlu3-dev</PossibleNames>
-			<FileCheck>superlu/slu_util.h</FileCheck>
+			<PossibleNames>superlu, libsuperlu3-dev, SuperLU-devel</PossibleNames>
+			<FileCheck>superlu/slu_util.h OR SuperLU/slu_util.h, libsuperlu.so</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>suitesparse</GenericName>
@@ -397,6 +403,12 @@
 			<Title>TinyXML Library</Title>
 			<PossibleNames>tinyxml-dev</PossibleNames>
 			<FileCheck>tinyxml.h</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>attr</GenericName>
+			<Title>Attr</Title>
+			<PossibleNames>attr, libattr1-dev</PossibleNames>
+			<FileCheck>attr/xattr.h</FileCheck>
 		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

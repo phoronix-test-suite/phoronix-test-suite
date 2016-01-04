@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2012, Phoronix Media
-	Copyright (C) 2008 - 2012, Michael Larabel
+	Copyright (C) 2008 - 2015, Phoronix Media
+	Copyright (C) 2008 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -46,7 +46,7 @@ class openbenchmarking_login implements pts_option_interface
 		$login_state = pts_openbenchmarking::make_openbenchmarking_request('account_login', $login_payload);
 		$json = json_decode($login_state, true);
 
-		if(isset($json['openbenchmarking']['response']['error']))
+		if(!isset($json['openbenchmarking']) || isset($json['openbenchmarking']['response']['error']))
 		{
 			trigger_error($json['openbenchmarking']['response']['error'], E_USER_ERROR);
 			pts_storage_object::remove_in_file(PTS_CORE_STORAGE, 'openbenchmarking');

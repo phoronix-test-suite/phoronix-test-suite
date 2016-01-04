@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2011, Phoronix Media
-	Copyright (C) 2009 - 2011, Michael Larabel
+	Copyright (C) 2009 - 2015, Phoronix Media
+	Copyright (C) 2009 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -20,38 +20,29 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class cpu_voltage implements phodevi_sensor
+class cpu_voltage extends phodevi_sensor
 {
-	public static function get_type()
+	const SENSOR_TYPE = 'cpu';
+	const SENSOR_SENSES = 'voltage';
+	const SENSOR_UNIT = 'Volts';
+
+	public function read_sensor()
 	{
-		return 'cpu';
-	}
-	public static function get_sensor()
-	{
-		return 'voltage';
-	}
-	public static function get_unit()
-	{
-		return 'Volts';
-	}
-	public static function support_check()
-	{
-		$test = self::read_sensor();
-		return is_numeric($test) && $test != -1;
-	}
-	public static function read_sensor()
-	{
+		$voltage = -1;
+
 		if(phodevi::is_linux())
 		{
-			$sensor = phodevi_linux_parser::read_sensors('VCore');
-		}
-		else
-		{
-			$sensor = -1;
+			$voltage = $this->cpu_voltage_linux();
 		}
 
-		return $sensor;
+		return $voltage;
 	}
+	private function cpu_voltage_linux()
+	{
+		$voltage = phodevi_linux_parser::read_sensors(array('VCore', 'Vcore'));
+		return $voltage;
+	}
+
 }
 
 ?>

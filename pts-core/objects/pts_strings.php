@@ -50,7 +50,7 @@ class pts_strings
 	}
 	public static function trim_search_query($value)
 	{
-		$search_break_characters = array('@', '(', '/', '+', '[', '<', '/', '*', '"');
+		$search_break_characters = array('@', '(', '/', '+', '[', '<', '*', '"');
 		for($i = 0, $x = strlen($value); $i < $x; $i++)
 		{
 			if(in_array($value[$i], $search_break_characters))
@@ -114,10 +114,27 @@ class pts_strings
 
 		return implode(' ', $words);
 	}
+	public static function parse_for_home_directory($path)
+	{
+		// Find home directory if needed
+		if(strpos($path, '~/') !== false)
+		{
+			$path = str_replace('~/', pts_core::user_home_directory(), $path);
+		}
+
+		return pts_strings::add_trailing_slash($path);
+	}
 	public static function string_bool($string)
 	{
 		// Used for evaluating if the user inputted a string that evaluates to true
-		return filter_var($string, FILTER_VALIDATE_BOOLEAN);
+		if(function_exists('filter_var'))
+		{
+			return $string != null && filter_var($string, FILTER_VALIDATE_BOOLEAN);
+		}
+		else
+		{
+			return $string != null && ($string === true || $string == 1 || strtolower($string) == 'true' || strtolower($string) == 'yes');
+		}
 	}
 	public static function add_trailing_slash($path)
 	{
@@ -372,7 +389,7 @@ class pts_strings
 			$str = str_ireplace($original_phrase, $new_phrase, $str);
 		}
 
-		$remove_phrases = array('incorporation', 'corporation', 'corp.', 'invalid', 'technologies', 'technology', 'version', ' project ', 'computer', 'To Be Filled By', 'ODM', 'O.E.M.', 'Desktop Reference Platform', 'small form factor', 'convertible', ' group', 'chipset', 'community', 'reference', 'communications', 'semiconductor', 'processor', 'host bridge', 'adapter', ' CPU', 'platform', 'international', 'express', 'graphics', 'none', 'electronics', 'integrated', 'alternate', 'quad-core', 'memory', 'series', 'network', 'motherboard', 'electric ', 'industrial ', 'serverengines', 'Manufacturer', 'x86/mmx/sse2', '/AGP/SSE/3DNOW!', '/AGP/SSE2', 'controller', '(extreme graphics innovation)', 'pci-e_gfx and ht3 k8 part', 'pci-e_gfx and ht1 k8 part', 'Northbridge only', 'dual slot', 'dual-core', 'dual core', 'microsystems', 'not specified', 'single slot', 'genuine', 'unknown device', 'systemberatung', 'gmbh', 'graphics adapter', 'video device', 'http://', 'www.', '.com', '.tw/', '/pci/sse2/3dnow!', '/pcie/sse2', '/pci/sse2', 'balloon', 'network connection', 'ethernet', 'limited.', ' system', 'compliant', 'co. ltd', 'co.', 'ltd.', 'LTD ', ' LTD', '\AE', '(r)', '(tm)', 'inc.', 'inc', '6.00 PG', ',', '\'', '_ ', '_ ', 'corp', 'product name', 'base board', 'mainboard', 'pci to pci', ' release ', 'nee ', ' AG ', 'with Radeon HD');
+		$remove_phrases = array('incorporation', 'corporation', 'corp.', 'invalid', 'technologies', 'technology', 'version', ' project ', 'computer', 'To Be Filled By', 'ODM', 'O.E.M.', 'Desktop Reference Platform', 'small form factor', 'convertible', ' group', 'chipset', 'community', 'reference', 'communications', 'semiconductor', 'processor', 'host bridge', 'adapter', ' CPU', 'platform', 'international', 'express', 'graphics', 'none', 'electronics', 'integrated', 'alternate', 'quad-core', 'memory', 'series', 'network', 'motherboard', 'electric ', 'industrial ', 'serverengines', 'Manufacturer', 'x86/mmx/sse2', '/AGP/SSE/3DNOW!', '/AGP/SSE2', 'controller', '(extreme graphics innovation)', 'pci-e_gfx and ht3 k8 part', 'pci-e_gfx and ht1 k8 part', 'Northbridge only', 'dual slot', 'dual-core', 'dual core', 'microsystems', 'not specified', 'single slot', 'genuine', 'unknown device', 'systemberatung', 'gmbh', 'graphics adapter', 'video device', 'http://', 'www.', '.com', '.tw/', '/pci/sse2/3dnow!', '/pcie/sse2', '/pci/sse2', 'balloon', 'network connection', 'ethernet', 'limited.', ' system', 'compliant', 'co. ltd', 'co.', 'ltd.', 'LTD ', ' LTD', '\AE', '(r)', '(tm)', 'inc.', 'inc', '6.00 PG', ',', '\'', '_ ', '_ ', 'corp', 'product name', 'base board', 'mainboard', 'pci to pci', ' release ', 'nee ', ' AG ', 'with Radeon HD', '/DRAM');
 		$str = str_ireplace($remove_phrases, ' ', $str);
 
 		if(($w = stripos($str, 'WARNING')) !== false)

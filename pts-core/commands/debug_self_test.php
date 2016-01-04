@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2013, Phoronix Media
-	Copyright (C) 2013, Michael Larabel
+	Copyright (C) 2013 - 2015, Phoronix Media
+	Copyright (C) 2013 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -27,16 +27,19 @@ class debug_self_test implements pts_option_interface
 
 	public static function run($r)
 	{
+		define('PHOROMATIC_PROCESS', true);
 		$commands = array(
 			'detailed_system_info' => null,
 			'list_available_tests' => null,
 			'list_available_suites' => null,
-			'info' => array('xonotic'),
-			'clone_openbenchmarking_result' => array('1107247-LI-MESACOMMI48'),
-		//	'refresh_graphs' => array('1107247-LI-MESACOMMI48'),
+			'info' => array('pts/all'),
+			'clone_openbenchmarking_result' => array('1107247-LI-MESACOMMI48', '1509040-HA-GCCINTELS17', '1508201-HA-GTX95073337', '1508233-HA-INTELSKYL16'),
+			'refresh_graphs' => array('1107247-LI-MESACOMMI48'),
 			'result_file_to_text' => array('1107247-LI-MESACOMMI48'),
+			'merge_results' => array('1107247-LI-MESACOMMI48', '1509040-HA-GCCINTELS17', '1508201-HA-GTX95073337', '1508233-HA-INTELSKYL16'),
 			'diagnostics' => null,
 			'dump_possible_options' => null,
+			'debug_render_test' => null,
 			);
 
 		$individual_times = array();
@@ -68,9 +71,9 @@ class debug_self_test implements pts_option_interface
 			echo strtoupper($component) . ': ' . (str_repeat(' ', $longest_c - strlen($component))) . pts_math::set_precision(round(array_sum($times) / count($times), 3), 3) . ' seconds' . PHP_EOL;
 		}
 
-		echo PHP_EOL . 'ELAPSED TIME: ' . (str_repeat(' ', $longest_c - strlen('ELAPSED TIME'))) . round($finish - $start, 3) . ' seconds';
+		echo PHP_EOL . 'TOTAL ELAPSED TIME: ' . (str_repeat(' ', $longest_c - strlen('ELAPSED TIME'))) . round($finish - $start, 3) . ' seconds';
 		echo PHP_EOL . 'PEAK MEMORY USAGE: ' . (str_repeat(' ', $longest_c - strlen('PEAK MEMORY USAGE'))) . round(memory_get_peak_usage(true) / 1048576, 3) . ' MB';
-		echo PHP_EOL . 'PEAK MEMORY USAGE (emalloc): ' . (str_repeat(' ', $longest_c - strlen('PEAK MEMORY USAGE (emalloc)'))) . round(memory_get_peak_usage() / 1048576, 3) . ' MB';
+		echo PHP_EOL . 'PEAK MEMORY USAGE EMALLOC: ' . (str_repeat(' ', $longest_c - strlen('PEAK MEMORY USAGE (emalloc)'))) . round(memory_get_peak_usage() / 1048576, 3) . ' MB';
 		echo PHP_EOL;
 	}
 }

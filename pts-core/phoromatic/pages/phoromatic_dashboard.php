@@ -43,7 +43,7 @@ class phoromatic_dashboard implements pts_webui_interface
 		$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 		$result = $stmt->execute();
 		echo '<script type="text/javascript"> setInterval(function() { window.location.reload(); }, 79000); </script>';
-		echo '<div style="margin: 10px 0 30px; clear: both; padding-bottom: 40px;">';
+		echo '<div style="margin: 10px 0 30px; background: #262626; color: #FFF; clear: both; padding-bottom: 40px;">';
 		while($row = $result->fetchArray())
 		{
 			$opacity = null;
@@ -80,31 +80,28 @@ class phoromatic_dashboard implements pts_webui_interface
 				if(($x = stripos($c, ' (')) !== false)
 					$c = substr($c, 0, $x);
 			}
-			echo '<p><em>' . implode(' - ', $components) . '</em></p>';
-			echo '<h2>' . $row['CurrentTask'] . '</h2>';
+			echo '<p style="color: #FFF;"><em style="color: #FFF;">' . implode(' - ', $components) . '</em></p>';
+			echo '<h2 style="color: #FFF;">' . $row['CurrentTask'] . '</h2>';
+			if(!empty($row['CurrentProcessSchedule']))
+			{
+				echo '<h2 style="color: #FFF;">' . phoromatic_server::schedule_id_to_name($row['CurrentProcessSchedule']) . '</h2>';
+			}
 			echo '</div>';
 
 			echo '<div style="float: left;">';
-			echo '<h2>' . $row['LastIP'] . '</h2>';
+			echo '<h2 style="color: #FFF;">' . $row['LastIP'] . '</h2>';
 			echo '</div>';
 
 			$time_remaining = phoromatic_compute_estimated_time_remaining($row['EstimatedTimeForTask'], $row['LastCommunication']);
 			if($time_remaining)
 			{
 				echo '<div style="float: left; text-align: center; margin: 0 6px;">';
-				echo '<h2>~ ' . $time_remaining . ' <sub>mins</sub></h2>';
-				echo '<p class="font-size: 90%;"><em>Estimated Time Remaining</em></p>';
+				echo '<h2 style="color: #FFF;">~ ' . $time_remaining . ' <sub>mins</sub></h2>';
+				echo '<p style="font-size: 90%; color: #FFF;"><em style="color: #FFF;">Estimated Time Remaining</em></p>';
 				if(!empty($row['TimeToNextCommunication']))
 				{
-					echo '<p><em>' . phoromatic_compute_estimated_time_remaining_string($row['TimeToNextCommunication'], $row['LastCommunication'], 'To Next Communication') . '</em></p>';
+					echo '<pstyle="color: #FFF;"><em style="color: #FFF;">' . phoromatic_compute_estimated_time_remaining_string($row['TimeToNextCommunication'], $row['LastCommunication'], 'To Next Communication') . '</em></p>';
 				}
-				echo '</div>';
-			}
-
-			if(!empty($row['CurrentProcessSchedule']))
-			{
-				echo '<div style="float: left; margin: 0 0 0 10px;">';
-				echo '<h2>' . phoromatic_server::schedule_id_to_name($row['CurrentProcessSchedule']) . '</h2>';
 				echo '</div>';
 			}
 
@@ -124,10 +121,47 @@ class phoromatic_dashboard implements pts_webui_interface
 					}
 
 					echo '<div style="float: left; margin: 0 0 0 10px; text-align: center;">';
-					echo '<h2>' . $next_job_in . ' <sub>' . $next_unit . '</sub></h2>';
-					echo '<p class="font-size: 90%;"><em>Time To Next Scheduled Task</em></p>';
+					echo '<h2 style="color: #FFF;">' . $next_job_in . ' <sub>' . $next_unit . '</sub></h2>';
+					echo '<p style="font-size: 90%; color: #FFF;"><em style="color: #FFF;">Time To Next Scheduled Task</em></p>';
 					echo '</div>';
 				}
+			}
+
+			$system_path = phoromatic_server::phoromatic_account_system_path($_SESSION['AccountID'], $row['SystemID']);
+			if(is_file($system_path . 'sensors-pool.json'))
+			{
+				$sensors = file_get_contents($system_path . 'sensors-pool.json');
+				$sensors = json_decode($sensors, true);
+
+				echo '<div style="float: right; margin: 0 10px 0 10px;">';
+				$g_count = 0;
+				foreach(array('CPU Usage', 'Memory Usage', 'CPU Temperature', 'System Temperature', 'GPU Temperature', 'Swap Usage', 'System Iowait', 'CPU Frequency') as $s)
+				{
+					if(!isset($sensors[$s]) || !isset($sensors[$s]['values']) || count($sensors[$s]['values']) < 5)
+					{
+						continue;
+					}
+					$g_count++;
+
+					if($g_count <= 3)
+					{
+						$graph = new pts_sys_graph(array('title' => $s, 'x_scale' => 'm', 'y_scale' => $sensors[$s]['unit'], 'text_size' => 10, 'reverse_x_direction' => false, 'width' => 300, 'height' => 120, 'text_color' => '#FFFFFF', 'paint_color' => '#D95D04', 'background_color' => '#262626', 'shade_color' => '#262626'));
+						$graph->render_base();
+						$svg_dom = $graph->render_graph_data($sensors[$s]['values']);
+						if($svg_dom === false)
+						{
+							continue;
+						}
+						$output_type = 'SVG';
+						$graph = $svg_dom->output(null, $output_type);
+						echo substr($graph, strpos($graph, '<svg'));
+					}
+					else
+					{
+						break;
+					}
+				}
+				echo '</div>';
 			}
 
 			echo '<hr style="width: ' . $row['TaskPercentComplete'] . '%;" />';

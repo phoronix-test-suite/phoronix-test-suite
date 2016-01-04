@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2013, Phoronix Media
-	Copyright (C) 2010 - 2013, Michael Larabel
+	Copyright (C) 2010 - 2015, Phoronix Media
+	Copyright (C) 2010 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -24,7 +24,15 @@ class pts_result_file_analyzer
 {
 	public static function analyze_result_file_intent(&$result_file, &$flagged_results = -1, $return_all_changed_indexes = false)
 	{
-		$identifiers = $result_file->get_system_identifiers();
+		$identifiers = array();
+		$hw = array();
+		$sw = array();
+		foreach($result_file->get_systems() as $system)
+		{
+			array_push($identifiers, $system->get_identifier());
+			array_push($hw, $system->get_hardware());
+			array_push($sw, $system->get_software());
+		}
 
 		if(count($identifiers) < 2)
 		{
@@ -41,9 +49,7 @@ class pts_result_file_analyzer
 			}
 		}
 
-		$hw = $result_file->get_system_hardware();
 		$hw_unique = array_unique($hw);
-		$sw = $result_file->get_system_software();
 		$sw_unique = array_unique($sw);
 		$desc = false;
 
@@ -51,7 +57,7 @@ class pts_result_file_analyzer
 		{
 			// The hardware and software is maintained throughout the testing, so if there's a change in results its something we aren't monitoring
 			// TODO XXX: Not sure this below check is needed anymore...
-			if(true || (count($hw) > 2 && $result_file->get_unique_test_count() != count($hw) && $result_file->get_test_count() != count($hw)))
+			if(true || (count($hw) > 2 && $result_file->get_test_count() != count($hw)))
 			{
 				$desc = array('Unknown', implode(', ', $identifiers));
 			}
@@ -313,16 +319,24 @@ class pts_result_file_analyzer
 	}
 	public static function system_value_to_ir_value($value, $index)
 	{
+		// TODO XXX: Move this logic off to OpenBenchmarking.org script
+		/*
+		!in_array($index, array('Memory', 'System Memory', 'Desktop', 'Screen Resolution', 'System Layer')) &&
+			$search_break_characters = array('@', '(', '/', '+', '[', '<', '*', '"');
+			for($i = 0, $x = strlen($value); $i < $x; $i++)
+			{
+				if(in_array($value[$i], $search_break_characters))
+				{
+					$value = substr($value, 0, $i);
+					break;
+				}
+			}
+		*/
 		$ir = new pts_graph_ir_value($value);
 
-		if(!in_array($index, array('Memory', 'System Memory', 'Desktop', 'Screen Resolution', 'System Layer')) && $value != 'Unknown')
+		if($value != 'Unknown' && $value != null)
 		{
-			$value = pts_strings::trim_search_query($value);
-
-			if($value != null)
-			{
-				$ir->set_attribute('href', 'http://openbenchmarking.org/s/' . $value);
-			}
+			$ir->set_attribute('href', 'http://openbenchmarking.org/s/' . $value);
 		}
 
 		return $ir;

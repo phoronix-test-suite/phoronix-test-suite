@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2011, Phoronix Media
-	Copyright (C) 2009 - 2011, Michael Larabel
+	Copyright (C) 2009 - 2015, Phoronix Media
+	Copyright (C) 2009 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -20,50 +20,85 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class hdd_read_speed implements phodevi_sensor
+class hdd_read_speed extends phodevi_sensor
 {
-	public static function get_type()
-	{
-		return 'hdd';
-	}
-	public static function get_sensor()
-	{
-		return 'read-speed';
-	}
-	public static function get_unit()
-	{
-		return 'MB/s';
-	}
-	public static function support_check()
-	{
-		$test = self::read_sensor();
-		return is_numeric($test) && $test != -1;
-	}
-	public static function read_sensor()
-	{
-		// speed in MB/s
-		$speed = -1;
+	const SENSOR_TYPE = 'hdd';
+	const SENSOR_SENSES = 'read-speed';
+	const SENSOR_UNIT = 'MB/s';
+	const INSTANT_MEASUREMENT = false;
 
+	private $disk_to_monitor = NULL;
+
+	function __construct($instance, $parameter)
+	{
+		parent::__construct($instance, $parameter);
+
+		if($parameter !== NULL)
+		{
+			$this->disk_to_monitor = $parameter;
+		}
+		else if(self::get_supported_devices() != null)
+		{
+			$disks = self::get_supported_devices();
+			$this->disk_to_monitor = $disks[0];
+		}
+	}
+	public static function parameter_check($parameter)
+	{
+		if($parameter === null || in_array($parameter, self::get_supported_devices() ) )
+		{
+			return true;
+		}
+
+		return false;
+	}
+	public function get_readable_device_name()
+	{
+		return $this->disk_to_monitor;
+	}
+	public static function get_supported_devices()
+	{
 		if(phodevi::is_linux())
 		{
-			static $sys_disk = null;
+			$disk_list = shell_exec("ls -1 /sys/class/block | grep '^[shv]d[a-z]$'"); // TODO get rid of this way and use just PHP
+			$disk_array = explode("\n", $disk_list);
 
-			if($sys_disk == null)
+			$supported = array();
+
+			foreach($disk_array as $check_disk)
 			{
-				
-				foreach(pts_file_io::glob('/sys/class/block/sd*/stat') as $check_disk)
+				$stat_path = '/sys/class/block/' . $check_disk . '/stat';
+				if(is_file($stat_path) && pts_file_io::file_get_contents($stat_path) != null)
 				{
-					if(pts_file_io::file_get_contents($check_disk) != null)
-					{
-						$sys_disk = $check_disk;
-						break;
-					}
+					array_push($supported, $check_disk);
 				}
 			}
 
-			$speed = phodevi_linux_parser::read_sys_disk_speed($sys_disk, 'READ');
+			return $supported;
 		}
 
+		return NULL;
+	}
+	public function read_sensor()
+	{
+		$read_speed = -1;
+
+		if(phodevi::is_linux())
+		{
+			$read_speed = $this->hdd_read_speed_linux();
+		}
+
+		return pts_math::set_precision($read_speed, 2);
+	}
+	private function hdd_read_speed_linux()
+	{
+		if($this->disk_to_monitor == NULL)
+		{
+			return -1;
+		}
+
+		$stat_path = '/sys/class/block/' . $this->disk_to_monitor . '/stat';
+		$speed = phodevi_linux_parser::read_sys_disk_speed($stat_path, 'READ');
 		return $speed;
 	}
 }

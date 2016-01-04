@@ -52,6 +52,10 @@
 			<PackageName>bison</PackageName>
 		</Package>
 		<Package>
+			<GenericName>smartmontools</GenericName>
+			<PackageName>smartmontools</PackageName>
+		</Package>
+		<Package>
 			<GenericName>flex</GenericName>
 			<PackageName>flex</PackageName>
 		</Package>
@@ -217,6 +221,10 @@
 		<Package>
 			<GenericName>opencl</GenericName>
 			<PackageName>opencl-headers</PackageName>
+		</Package>
+		<Package>
+			<GenericName>attr</GenericName>
+			<PackageName>attr</PackageName>
 		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

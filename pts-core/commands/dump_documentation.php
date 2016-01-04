@@ -24,15 +24,15 @@ class dump_documentation implements pts_option_interface
 {
 	public static function run($r)
 	{
-		$pdf = new pts_pdf_template(pts_title(false), 'Test Client Documentation');
-		$html_doc = new pts_html_template(pts_title(false), 'Test Client Documentation');
+		$pdf = new pts_pdf_template(pts_core::program_title(false), 'Test Client Documentation');
+		$html_doc = new pts_html_template(pts_core::program_title(false), 'Test Client Documentation');
 
 		$pdf->AddPage();
 		$pdf->Image(PTS_CORE_STATIC_PATH . 'images/pts-308x160.png', 69, 85, 73, 38, 'PNG', 'http://www.phoronix-test-suite.com/');
 		$pdf->Ln(120);
 		$pdf->WriteStatement('www.phoronix-test-suite.com', 'C', 'http://www.phoronix-test-suite.com/');
 		$pdf->Ln(15);
-		$pdf->WriteBigHeaderCenter(pts_title(true));
+		$pdf->WriteBigHeaderCenter(pts_core::program_title(true));
 		$pdf->WriteHeaderCenter('User Manual');
 		//$pdf->WriteText($result_file->get_description());
 
@@ -260,8 +260,8 @@ class dump_documentation implements pts_option_interface
 		file_put_contents(PTS_PATH . 'README.md', $readme);
 
 		// Phoromatic Documentation
-		$pdf = new pts_pdf_template(pts_title(false), 'Phoromatic Documentation');
-		$html_doc = new pts_html_template(pts_title(false), 'Phoromatic Documentation');
+		$pdf = new pts_pdf_template(pts_core::program_title(false), 'Phoromatic Documentation');
+		$html_doc = new pts_html_template(pts_core::program_title(false), 'Phoromatic Documentation');
 
 		$pdf->AddPage();
 		$pdf->Image(PTS_CORE_STATIC_PATH . 'images/pts-308x160.png', 69, 85, 73, 38, 'PNG', 'http://www.phoronix-test-suite.com/');
@@ -270,7 +270,7 @@ class dump_documentation implements pts_option_interface
 		$pdf->Ln(15);
 		$pdf->Image(PTS_CORE_STATIC_PATH . 'images/phoromatic-390x56.png', 55, 250, 0, 0, 'PNG', 'http://www.phoronix-test-suite.com/');
 		//$pdf->Image(PTS_CORE_STATIC_PATH . 'images/phoromatic-390x56.png', 69, 85, 73, 38, 'PNG', 'http://www.phoromatic.com/');
-		$pdf->WriteBigHeaderCenter(pts_title(true));
+		$pdf->WriteBigHeaderCenter(pts_core::program_title(true));
 		$pdf->WriteHeaderCenter('Phoromatic User Manual');
 		$pdf->html_to_pdf(PTS_PATH . 'documentation/phoromatic.html');
 		$pdf_file = PTS_PATH . 'documentation/phoromatic.pdf';

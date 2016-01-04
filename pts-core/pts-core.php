@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2015, Phoronix Media
-	Copyright (C) 2008 - 2015, Michael Larabel
+	Copyright (C) 2008 - 2016, Phoronix Media
+	Copyright (C) 2008 - 2016, Michael Larabel
 	pts-core.php: To boot-strap the Phoronix Test Suite start-up
 
 	This program is free software; you can redistribute it and/or modify
@@ -21,15 +21,69 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-function pts_codename($full_string = false)
+class pts_core
 {
-	$codename = ucwords(strtolower(PTS_CODENAME));
+	public static function init()
+	{
+		set_time_limit(0);
+		pts_define_directories(); // Define directories
 
-	return ($full_string ? 'PhoronixTestSuite/' : null) . $codename;
-}
-function pts_title($show_codename = false)
-{
-	return 'Phoronix Test Suite v' . PTS_VERSION . ($show_codename ? ' (' . pts_codename() . ')' : null);
+		pts_define('PTS_INIT_TIME', time());
+
+		if(!defined('PHP_VERSION_ID'))
+		{
+			$php_version = explode('.', PHP_VERSION);
+			pts_define('PHP_VERSION_ID', ($php_version[0] * 10000 + $php_version[1] * 100 + $php_version[2]));
+		}
+	}
+	public static function user_home_directory()
+	{
+		// Gets the system user's home directory
+		static $userhome = null;
+
+		if($userhome == null)
+		{
+			if(function_exists('posix_getpwuid') && function_exists('posix_getuid'))
+			{
+				$userinfo = posix_getpwuid(posix_getuid());
+				$userhome = $userinfo['dir'];
+			}
+			else if(($home = pts_client::read_env('HOME')))
+			{
+				$userhome = $home;
+			}
+			else if(($home = pts_client::read_env('HOMEPATH')))
+			{
+				$userhome = pts_client::read_env('HOMEDRIVE') . $home;
+			}
+			else if(PTS_IS_DAEMONIZED_SERVER_PROCESS)
+			{
+				$userhome = PTS_USER_PATH;
+			}
+			else
+			{
+				if(!is_writable('/'))
+				{
+					echo PHP_EOL . 'ERROR: Cannot find home directory.' . PHP_EOL;
+				}
+				$userhome = null;
+			}
+
+			$userhome = pts_strings::add_trailing_slash($userhome);
+		}
+
+		return $userhome;
+	}
+	public static function codename($full_string = false)
+	{
+		$codename = ucwords(strtolower(PTS_CODENAME));
+
+		return ($full_string ? 'PhoronixTestSuite/' : null) . $codename;
+	}
+	public static function program_title($show_codename = false)
+	{
+		return 'Phoronix Test Suite v' . PTS_VERSION . ($show_codename ? ' (' . pts_core::codename() . ')' : null);
+	}
 }
 function pts_define($name, $value = null)
 {
@@ -47,7 +101,7 @@ function pts_define_directories()
 {
 	// User's home directory for storing results, module files, test installations, etc.
 	pts_define('PTS_CORE_PATH', PTS_PATH . 'pts-core/');
-	pts_define('PTS_IS_DAEMONIZED_SERVER_PROCESS', PTS_IS_CLIENT && is_dir('/var/lib/') && (getenv('HOME') == '/' || getenv('HOME') == null || getenv('PTS_SERVER_PROCESS') == 1) && is_writable('/') ? true : false);
+	pts_define('PTS_IS_DAEMONIZED_SERVER_PROCESS', PTS_IS_CLIENT && is_dir('/var/lib/') && is_writable('/') ? true : false);
 
 	if(PTS_IS_DAEMONIZED_SERVER_PROCESS)
 	{
@@ -65,11 +119,10 @@ function pts_define_directories()
 		pts_define('PTS_OPENBENCHMARKING_SCRATCH_PATH', '/var/cache/phoronix-test-suite/openbenchmarking.org/');
 		pts_define('PTS_TEST_PROFILE_PATH', PTS_USER_PATH . 'test-profiles/');
 		pts_define('PTS_TEST_SUITE_PATH', PTS_USER_PATH . 'test-suites/');
-		pts_define('PTS_RESULTS_VIEWER_PATH', PTS_CORE_PATH . 'results-viewer/');
 	}
 	else if(PTS_IS_CLIENT)
 	{
-		pts_define('PTS_USER_PATH', pts_client::user_home_directory() . '.phoronix-test-suite' . DIRECTORY_SEPARATOR);
+		pts_define('PTS_USER_PATH', pts_core::user_home_directory() . '.phoronix-test-suite' . DIRECTORY_SEPARATOR);
 		pts_define('PTS_CORE_STORAGE', PTS_USER_PATH . 'core.pt2so');
 		pts_define('PTS_TEMP_STORAGE', PTS_USER_PATH . 'temp.pt2so');
 		pts_define('PTS_MODULE_LOCAL_PATH', PTS_USER_PATH . 'modules/');
@@ -78,7 +131,6 @@ function pts_define_directories()
 		pts_define('PTS_OPENBENCHMARKING_SCRATCH_PATH', PTS_USER_PATH . 'openbenchmarking.org/');
 		pts_define('PTS_TEST_PROFILE_PATH', PTS_USER_PATH . 'test-profiles/');
 		pts_define('PTS_TEST_SUITE_PATH', PTS_USER_PATH . 'test-suites/');
-		pts_define('PTS_RESULTS_VIEWER_PATH', PTS_CORE_PATH . 'results-viewer/');
 	}
 	else if(defined('PTS_STORAGE_PATH'))
 	{
@@ -99,6 +151,23 @@ function pts_define_directories()
 	pts_define('PTS_COMMAND_PATH', PTS_CORE_PATH . 'commands/');
 	pts_define('PTS_EXDEP_PATH', PTS_CORE_PATH . 'external-test-dependencies/');
 	pts_define('PTS_OPENBENCHMARKING_PATH', PTS_CORE_PATH . 'openbenchmarking.org/');
+
+	if(is_dir('/usr/local/share/phoronix-test-suite/'))
+	{
+		pts_define('PTS_SHARE_PATH', '/usr/local/share/phoronix-test-suite/');
+	}
+	else if(is_dir('/usr/share/'))
+	{
+		pts_define('PTS_SHARE_PATH', '/usr/share/phoronix-test-suite/');
+		if(is_writable('/usr/share') && !is_dir(PTS_SHARE_PATH))
+		{
+			mkdir(PTS_SHARE_PATH);
+		}
+	}
+	else
+	{
+		pts_define('PTS_SHARE_PATH', false);
+	}
 }
 function pts_needed_extensions()
 {
@@ -108,6 +177,7 @@ function pts_needed_extensions()
 		array(1, extension_loaded('dom'), 'DOM', 'The PHP Document Object Model (DOM) is required for XML operations.'),
 		array(1, extension_loaded('zip') || extension_loaded('zlib'), 'ZIP', 'PHP Zip support is required for file compression and decompression.'),
 		array(1, function_exists('json_decode'), 'JSON', 'PHP JSON support is required for OpenBenchmarking.org communication.'),
+		array(1, function_exists('simplexml_load_string'), 'SimpleXML', 'PHP SimpleXML is required for the Phoronix Test Suite'),
 		// Optional but recommended extensions
 		array(0, extension_loaded('openssl'), 'OpenSSL', 'PHP OpenSSL support is recommended to support HTTPS traffic.'),
 		array(0, extension_loaded('gd'), 'GD', 'The PHP GD library is recommended for improved graph rendering.'),
@@ -154,12 +224,18 @@ function pts_version_codenames()
 		'5.4' => 'Lipki',
 		'5.6' => 'Dedilovo',
 		'5.8' => 'Belev',
+		// Finnmark - Norway
+		'6.0' => 'Hammerfest',
+		'6.2' => 'Gamvik',
+		'6.4' => 'Hasvik',
+		'6.6' => 'Loppa',
+		'6.8' => 'Tana',
 		);
 }
 
-pts_define('PTS_VERSION', '5.8.0m0');
-pts_define('PTS_CORE_VERSION', 5701);
-pts_define('PTS_CODENAME', 'BELEV');
+pts_define('PTS_VERSION', '6.2.0m2');
+pts_define('PTS_CORE_VERSION', 6120);
+pts_define('PTS_CODENAME', 'GAMVIK');
 pts_define('PTS_IS_CLIENT', (defined('PTS_MODE') && strstr(PTS_MODE, 'CLIENT') !== false));
 pts_define('PTS_IS_WEB_CLIENT', (defined('PTS_MODE') && PTS_MODE == 'WEB_CLIENT'));
 pts_define('PTS_IS_DEV_BUILD', (substr(PTS_VERSION, -2, 1) == 'm'));

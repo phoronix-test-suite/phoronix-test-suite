@@ -31,7 +31,7 @@ class make_download_cache implements pts_option_interface
 		pts_openbenchmarking::refresh_repository_lists(null, true);
 
 		// Determine cache location
-		$dc_write_directory = pts_strings::add_trailing_slash(pts_client::parse_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Installation/CacheDirectory', PTS_DOWNLOAD_CACHE_PATH)));
+		$dc_write_directory = pts_strings::add_trailing_slash(pts_strings::parse_for_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Installation/CacheDirectory', PTS_DOWNLOAD_CACHE_PATH)));
 		echo PHP_EOL . 'Download Cache Directory: ' . $dc_write_directory . PHP_EOL;
 
 		if($dc_write_directory == null || !is_writable($dc_write_directory))

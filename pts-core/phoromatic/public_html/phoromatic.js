@@ -1,59 +1,25 @@
-function phoromatic_add_to_result_comparison(pprid)
+function phoromatic_toggle_checkboxes_on_page(global_checkbox)
 {
-	if(typeof(Storage) !== 'undefined')
+	var inputs = document.getElementsByTagName("input");
+	var pprid;
+	var check_boxes = global_checkbox.checked;
+	for(var i = 0; i < inputs.length; i++)
 	{
-		if(localStorage.comparison_pprids)
+		if(inputs[i].type == "checkbox" && inputs[i].id.indexOf("result_compare_checkbox_") != -1)
 		{
-			var ids = JSON.parse(localStorage.comparison_pprids);
-		}
-		else
-		{
-			var ids = [];
-		}
-
-		if(pprid != '')
-		{
-			if(ids.indexOf(pprid) == -1)
+			pprid = inputs[i].id.substr(24);
+			if(check_boxes && inputs[i].checked == false)
 			{
-				ids.push(pprid);
+				// check the box
+				inputs[i].checked = true;
+				phoromatic_checkbox_toggle_result_comparison(pprid);
 			}
-			else
+			else if(check_boxes == false && inputs[i].checked)
 			{
-				ids.splice(ids.indexOf(pprid), 1);
-				if(document.getElementById("result_select_" + pprid))
-				{
-					document.getElementById("result_select_" + pprid).style.background = "#f1f1f1";
-				}
-				if(ids.length > 2 && document.getElementById("result_run_compare_link_" + ids[i]))
-				{
-					document.getElementById("result_run_compare_link_" + ids[i]).style.visibility = 'hidden';
-				}
+				// uncheck the box
+				inputs[i].checked = false;
+				phoromatic_checkbox_toggle_result_comparison(pprid);
 			}
-
-			localStorage.comparison_pprids = JSON.stringify(ids);
-		}
-
-		if(ids.length > 0)
-		{
-			for(var i = 0; i < ids.length; i++)
-			{
-				if(document.getElementById("result_select_" + ids[i]))
-				{
-					document.getElementById("result_select_" + ids[i]).style.background = "#949494";
-				}
-				if(ids.length > 1 && document.getElementById("result_run_compare_link_" + ids[i]))
-				{
-					document.getElementById("result_run_compare_link_" + ids[i]).innerHTML = 'Compare Results (' + ids.length + ')';
-					document.getElementById("result_run_compare_link_" + ids[i]).style.visibility = 'visible';
-				}
-			}
-
-			document.getElementById("phoromatic_result_compare_info_box").innerHTML = "Compare Selected Results (" + ids.length + ")";
-			document.getElementById("phoromatic_result_compare_info_box").style.display = 'block';
-		}
-		else
-		{
-			document.getElementById("phoromatic_result_compare_info_box").style.display = 'none';
 		}
 	}
 }
@@ -61,7 +27,7 @@ function phoromatic_window_redirect(url)
 {
 	window.location.href = url;
 }
-function phoromatic_delete_results()
+function phoromatic_delete_results(ext)
 {
 	if(typeof(Storage) !== 'undefined' && localStorage.comparison_pprids)
 	{
@@ -70,7 +36,7 @@ function phoromatic_delete_results()
 		if(ids.length > 0 && confirm("Press OK to delete the " + ids.length + " selected results."))
 		{
 			localStorage.removeItem("comparison_pprids");
-			window.location.href = "?results/delete/" + ids.join();
+			window.location.href = ext + ids.join();
 		}
 	}
 }
@@ -134,12 +100,14 @@ function phoromatic_checkbox_toggle_result_comparison(pprid)
 				}
 			}
 
-			document.getElementById("phoromatic_result_compare_info_box").innerHTML = "Compare Selected Results (" + ids.length + ")";
+			document.getElementById("phoromatic_result_selected_info_box").innerHTML = ids.length + " Selected Results";
+			document.getElementById("phoromatic_result_selected_info_box").style.display= 'block';
 			document.getElementById("phoromatic_result_compare_info_box").style.display = 'block';
 			document.getElementById("phoromatic_result_delete_box").style.display = 'block';
 		}
 		else
 		{
+			document.getElementById("phoromatic_result_selected_info_box").style.display = 'none';
 			document.getElementById("phoromatic_result_compare_info_box").style.display = 'none';
 			document.getElementById("phoromatic_result_delete_box").style.display = 'none';
 		}
@@ -152,13 +120,13 @@ function toggle_annotate_area(annotate_hash)
 	document.getElementById("annotation_link_" + annotate_hash).style.display = 'none';
 	document.getElementById("annotation_area_" + annotate_hash).style.display = 'block';
 }
-function phoromatic_generate_comparison()
+function phoromatic_generate_comparison(ext)
 {
 	if(typeof(Storage) !== 'undefined' && localStorage.comparison_pprids)
 	{
 		var ids = JSON.parse(localStorage.comparison_pprids);
 		localStorage.removeItem("comparison_pprids");
-		window.location.href = "?result/" + ids.join();
+		window.location.href = ext + ids.join();
 	}
 }
 function phoromatic_jump_to_results_from(schedule_id, select_id, prepend_results)

@@ -7,9 +7,9 @@
 <meta name="keywords" content="Phoronix Test Suite, open-source benchmarking, Linux benchmarking, automated testing, performance tuning, Linux test orchestration, benchmark management, multi system benchmarking" />
 <link rel="shortcut icon" href="favicon.ico" />
 </head>
-<body>
+<body style="background: #FFF;">
 <div id="pts_phoromatic_top_header">
-	<div id="pts_phoromatic_logo"><a href="?"><img src="images/phoromatic_logo.png" /></a></div><ul><li>Automated Linux Benchmark Management &amp; Test Orchestration</li></ul><div style="float: right; padding: 25px 70px 0 0;"></div></div>
+	<div id="pts_phoromatic_logo"><a href="index.php"><img src="images/phoromatic_logo.png" /></a></div><ul><li>Automated Linux Benchmark Management &amp; Test Orchestration</li></ul><div style="float: right; padding: 25px 70px 0 0;"></div></div>
 <div id="pts_phoromatic_main_box"><h1>Phoromatic</h1>
 <p><img style="float: right;" src="images/phoromatic-graph.jpg" />
 
@@ -49,8 +49,10 @@ Phoromatic is the remote management system of the <a href="http://www.phoronix-t
 <h1>Support &amp; Contact</h1>
 <p>Commercial support, custom engineering, and other services are available via <a href="http://www.phoronix-test-suite.com/?k=contact">contacting Phoronix Media</a>. Community-based support is provided by the <a href="http://www.phoronix.com/forums/forumdisplay.php?49-Phoronix-Test-Suite">Phoronix Forums</a>.</p>
 </div><div id="pts_phoromatic_bottom_footer">
-<div style="float: right; padding: 2px 10px; overflow: hidden;"><a href="http://openbenchmarking.org/" style="margin-right: 20px;"><img src="images/ob-white-logo.png" /></a> <a href="http://www.phoronix-test-suite.com/"><img src="images/pts-white-logo.png" /></a></div>
-<p style="margin: 6px 15px;">Copyright &copy; 2008 - <?php echo date('Y'); ?> by <a href="http://www.phoronix-media.com/">Phoronix Media</a>. All rights reserved.<br />
+<div style="float: right; padding: 2px 10px; overflow: hidden;"><a href="http://openbenchmarking.org/" style="margin-right: 20px;"><img src="images/ob-white-logo.png" /></a> <a href="http://www.phoronix-test-suite.com/"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewbox="0 0 76 41" width="76" height="41" preserveAspectRatio="xMinYMin meet">
+  <path d="m74 22v9m-5-16v16m-5-28v28m-23-2h12.5c2.485281 0 4.5-2.014719 4.5-4.5s-2.014719-4.5-4.5-4.5h-8c-2.485281 0-4.5-2.014719-4.5-4.5s2.014719-4.5 4.5-4.5h12.5m-21 5h-11m11 13h-2c-4.970563 0-9-4.029437-9-9v-20m-24 40v-20c0-4.970563 4.0294373-9 9-9 4.970563 0 9 4.029437 9 9s-4.029437 9-9 9h-9" stroke="#c8d905" stroke-width="4" fill="none" />
+</svg></a></div>
+<p style="margin: 6px 15px;">Copyright &copy; 2008 - <?php echo @date('Y'); ?> by <a href="http://www.phoronix-media.com/">Phoronix Media</a>. All rights reserved.<br />
 All trademarks used are properties of their respective owners.<br />The Phoronix Test Suite, Phoromatic, and OpenBenchmarking.org are products of Phoronix Media.</p></div></body>
 </html>
 

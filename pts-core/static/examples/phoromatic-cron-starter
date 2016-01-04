@@ -1,5 +1,0 @@
-#!/bin/sh
-# PTS Phoromatic is hopefully running since startup, but otherwise try running it to recover it.
-# PTS Phoromatic will automatically quit if it can't secure the lock meaning it's already running
-# Toss this into /etc/cron.hourly/
-DISPLAY=:0 phoronix-test-suite phoromatic.start >> /tmp/phoromatic-output

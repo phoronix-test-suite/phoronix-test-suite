@@ -77,6 +77,11 @@ class pts_network
 		{
 			$download = 'http://' . $download;
 		}
+		else if(getenv('NO_HTTPS') != false)
+		{
+			// On some platforms like DragonFly 4.2 ran into problem of all HTTPS downloads failing
+			$download = str_replace('https://', 'http://', $download);
+		}
 
 		if(function_exists('curl_init') && stripos(PTS_PHP_VERSION, 'hiphop') === false)
 		{
@@ -114,7 +119,7 @@ class pts_network
 		curl_setopt($cr, CURLOPT_CONNECTTIMEOUT, self::$network_timeout);
 		curl_setopt($cr, CURLOPT_CAPATH, PTS_CORE_STATIC_PATH . 'certificates/');
 		curl_setopt($cr, CURLOPT_BUFFERSIZE, 64000);
-		curl_setopt($cr, CURLOPT_USERAGENT, pts_codename(true));
+		curl_setopt($cr, CURLOPT_USERAGENT, pts_core::codename(true));
 
 		if($download_port_number)
 		{
@@ -140,7 +145,7 @@ class pts_network
 			curl_setopt($cr, CURLOPT_CAINFO, PTS_CORE_STATIC_PATH . 'certificates/phoromatic-com.pem');
 		}
 
-		if(PHP_VERSION_ID >= 50300 && defined('CURLOPT_PROGRESSFUNCTION'))
+		if(defined('CURLOPT_PROGRESSFUNCTION'))
 		{
 			// CURLOPT_PROGRESSFUNCTION only seems to work with PHP 5.3+, but is not working with HipHop HHVM ~2.0.1
 			curl_setopt($cr, CURLOPT_NOPROGRESS, false);
@@ -216,7 +221,7 @@ class pts_network
 			$parameters['http']['timeout'] = self::$network_timeout;
 		}
 
-		$parameters['http']['user_agent'] = pts_codename(true);
+		$parameters['http']['user_agent'] = pts_core::codename(true);
 		$parameters['http']['header'] = "Content-Type: application/x-www-form-urlencoded\r\n";
 
 		$stream_context = stream_context_create($parameters);
@@ -283,22 +288,26 @@ class pts_network
 
 		if(ini_get('allow_url_fopen') == 'Off')
 		{
-			echo PHP_EOL . 'The allow_url_fopen option in your PHP configuration must be enabled for network support.' . PHP_EOL . PHP_EOL;
+			if(!defined('PHOROMATIC_SERVER'))
+			{
+				echo PHP_EOL . 'The allow_url_fopen option in your PHP configuration must be enabled for network support.' . PHP_EOL . PHP_EOL;
+			}
 			self::$disable_network_support = true;
 		}
 		else if(pts_config::read_bool_config('PhoronixTestSuite/Options/Networking/NoInternetCommunication', 'FALSE'))
 		{
-			echo PHP_EOL . 'Internet Communication Is Disabled For Your User Configuration.' . PHP_EOL . PHP_EOL;
+			if(!defined('PHOROMATIC_SERVER'))
+			{
+				echo PHP_EOL . 'Internet Communication Is Disabled Per Your User Configuration.' . PHP_EOL . PHP_EOL;
+			}
 			self::$disable_internet_support = true;
 		}
 		else if(pts_config::read_bool_config('PhoronixTestSuite/Options/Networking/NoNetworkCommunication', 'FALSE'))
 		{
-			echo PHP_EOL . 'Network Communication Is Disabled For Your User Configuration.' . PHP_EOL . PHP_EOL;
-			self::$disable_network_support = true;
-		}
-		else if(pts_flags::no_network_communication() == true)
-		{
-			//echo PHP_EOL . 'Network Communication Is Disabled For Your User Configuration.' . PHP_EOL . PHP_EOL;
+			if(!defined('PHOROMATIC_SERVER'))
+			{
+				echo PHP_EOL . 'Network Communication Is Disabled Per Your User Configuration.' . PHP_EOL . PHP_EOL;
+			}
 			self::$disable_network_support = true;
 		}
 		else if(!PTS_IS_WEB_CLIENT)

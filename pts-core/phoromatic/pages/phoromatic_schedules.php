@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2014, Phoronix Media
-	Copyright (C) 2008 - 2014, Michael Larabel
+	Copyright (C) 2008 - 2015, Phoronix Media
+	Copyright (C) 2008 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -145,6 +145,15 @@ class phoromatic_schedules implements pts_webui_interface
 						$stmt->execute();
 						$main .= '<h2 style="color: red;">Manual Test Run Triggered</h2>';
 					}
+					else if(isset($_POST['skip_current_ticket']))
+					{
+						$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_schedules_trigger_skips (AccountID, ScheduleID, Trigger) VALUES (:account_id, :schedule_id, :trigger)');
+						$stmt->bindValue(':account_id',	$_SESSION['AccountID']);
+						$stmt->bindValue(':schedule_id', $PATH[0]);
+						$stmt->bindValue(':trigger', date('Y-m-d'));
+						$stmt->execute();
+						$main .= '<h2 style="color: red;">Current Trigger To Be Ignored</h2>';
+					}
 				}
 
 
@@ -205,10 +214,13 @@ class phoromatic_schedules implements pts_webui_interface
 				if(!PHOROMATIC_USER_IS_VIEWER)
 				{
 				$trigger_url = 'http://' . phoromatic_web_socket_server_ip() . '/event.php?type=trigger&user=' . $_SESSION['UserName'] . '&public_key=' . $row['PublicKey'] . '&trigger=XXX';
-				$main .= '<p>This test schedule can be manually triggered to run at any time by calling <strong>' . $trigger_url . '</strong> where <em>XXX</em> is the trigger value to be used (if relevant, such as a time-stamp, Git/SVN commit number or hash, etc.)</p>';
+				$main .= '<p>This test schedule can be manually triggered to run at any time by calling <strong>' . $trigger_url . '</strong> where <em>XXX</em> is the trigger value to be used (if relevant, such as a time-stamp, Git/SVN commit number or hash, etc). There\'s also the option of sub-targeting system(s) part of this schedule. One option is appending <em>&sub_target_this_ip</em> if this URL is being called from one of the client test systems to only sub-target the triggered testing on that client, among other options.</p>';
 				$main .= '<p>If you wish to run this test schedule now, click the following button and the schedule will be run on all intended systems at their next earliest possible convenience.</p>';
 				$main .= '<p><form action="?schedules/' . $PATH[0] . '" name="manual_run" method="post">';
 				$main .= '<input type="hidden" name="do_manual_test_run" value="1" /><input type="submit" value="Run Test Schedule Now" onclick="return confirm(\'Run this test schedule now?\');" />';
+				$main .= '</form></p>';
+				$main .= '<p><form action="?schedules/' . $PATH[0] . '" name="skip_run" method="post">';
+				$main .= '<input type="hidden" name="skip_current_ticket" value="1" /><input type="submit" value="Skip Current Test Ticket" onclick="return confirm(\'Skip any currently active test ticket on all systems?\');" />';
 				$main .= '</form></p>';
 				}
 
@@ -242,6 +254,24 @@ class phoromatic_schedules implements pts_webui_interface
 				{
 					$test_count++;
 					$main .= $row['TestProfile'] . ($row['TestDescription'] != null ? ' - <em>' . $row['TestDescription'] . '</em>' : '') . (!PHOROMATIC_USER_IS_VIEWER ? ' <a href="?schedules/' . $PATH[0] . '/remove/' . base64_encode(implode(PHP_EOL, array($row['TestProfile'], $row['TestArguments']))) . '">Remove Test</a>' : null) . '<br />';
+
+					/*
+					if(!PHOROMATIC_USER_IS_VIEWER && isset($_REQUEST['make_version_lock_tests']))
+					{
+						if(strpos($row['TestProfile'], '.') == false)
+						{
+							$test_profile = new pts_test_profile($row['TestProfile']);
+							$full_identifier = $test_profile->get_identifier(true);
+
+							$stmt = phoromatic_server::$db->prepare('UPDATE phoromatic_schedules_tests SET TestProfile = :version_locked_tp WHERE AccountID = :account_id AND ScheduleID = :schedule_id AND TestProfile = :test');
+							$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+							$stmt->bindValue(':schedule_id', $PATH[0]);
+							$stmt->bindValue(':test', $row['TestProfile']);
+							$stmt->bindValue(':version_locked_tp', $full_identifier);
+							$result2 = $stmt->execute();
+						}
+					}
+					*/
 				}
 				$main .= '</p>';
 
@@ -255,16 +285,18 @@ class phoromatic_schedules implements pts_webui_interface
 					$main .= '<hr /><h2>Add A Test</h2>';
 					$main .= '<form action="?schedules/' . $PATH[0] . '" name="add_test" id="add_test" method="post">';
 					$main .= '<select name="add_to_schedule_select_test" id="add_to_schedule_select_test" onchange="phoromatic_schedule_test_details(\'\');">';
-					$dc = pts_strings::add_trailing_slash(pts_client::parse_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Installation/CacheDirectory', PTS_DOWNLOAD_CACHE_PATH)));
+					$dc = pts_strings::add_trailing_slash(pts_strings::parse_for_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Installation/CacheDirectory', PTS_DOWNLOAD_CACHE_PATH)));
 					$dc_exists = is_file($dc . 'pts-download-cache.json');
+					if($dc_exists)
+					{
+						$cache_json = file_get_contents($dc . 'pts-download-cache.json');
+						$cache_json = json_decode($cache_json, true);
+					}
 					foreach(pts_openbenchmarking::available_tests(false, true) as $test)
 					{
 						$cache_checked = false;
 						if($dc_exists)
 						{
-							$cache_json = file_get_contents($dc . 'pts-download-cache.json');
-							$cache_json = json_decode($cache_json, true);
-
 							if($cache_json && isset($cache_json['phoronix-test-suite']['cached-tests']))
 							{
 								$cache_checked = true;
@@ -317,7 +349,7 @@ class phoromatic_schedules implements pts_webui_interface
 
 					do
 					{
-						$main .= '<a href="#"><li>' . $test_result_row['Trigger'] . '<br /><table><tr><td>' . phoromatic_user_friendly_timedate($test_result_row['TriggeredOn']) . '</td><td><a href="?schedules/' . $PATH[0] . '/delete-trigger/' . base64_encode($test_result_row['Trigger']) . '">Remove Trigger</a></td></tr></table></li></a>';
+						$main .= '<a onclick=""><li>' . $test_result_row['Trigger'] . '<br /><table><tr><td>' . phoromatic_user_friendly_timedate($test_result_row['TriggeredOn']) . '</td><td><a href="?schedules/' . $PATH[0] . '/delete-trigger/' . base64_encode($test_result_row['Trigger']) . '">Remove Trigger</a></td></tr></table></li></a>';
 
 					}
 					while($test_result_row = $test_result_result->fetchArray());

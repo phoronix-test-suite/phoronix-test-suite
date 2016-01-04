@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2014, Phoronix Media
-	Copyright (C) 2008 - 2014, Michael Larabel
+	Copyright (C) 2008 - 2015, Phoronix Media
+	Copyright (C) 2008 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -102,11 +102,11 @@ class pts_test_file_download
 		{
 			return false;
 		}
-		else if(pts_client::read_env('NO_FILE_HASH_CHECKS') != false || pts_flags::skip_md5_checks())
+		else if(pts_client::read_env('NO_FILE_HASH_CHECKS') != false || pts_client::read_env('NO_MD5_CHECKS') != false)
 		{
 			return true;
 		}
-		else if($this->sha256)
+		else if($this->sha256 && function_exists('hash_file'))
 		{
 			return hash_file('sha256', $file) == $this->sha256;
 		}

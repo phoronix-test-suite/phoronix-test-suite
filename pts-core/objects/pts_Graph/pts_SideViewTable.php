@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2012, Phoronix Media
-	Copyright (C) 2012, Michael Larabel
+	Copyright (C) 2012 - 2015, Phoronix Media
+	Copyright (C) 2012 - 2015, Michael Larabel
 	pts_SideViewTable.php: A charting table object for pts_Graph in a side-view manner
 
 	This program is free software; you can redistribute it and/or modify
@@ -21,7 +21,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class pts_SideViewTable extends pts_Graph
+class pts_SideViewTable extends pts_graph_core
 {
 	protected $rows;
 	protected $columns;
@@ -33,7 +33,7 @@ class pts_SideViewTable extends pts_Graph
 
 	public function __construct($rows, $columns, $table_data)
 	{
-		pts_Graph::__construct();
+		parent::__construct();
 
 		$this->rows = $rows;
 		$this->columns = $columns;
@@ -126,11 +126,11 @@ class pts_SideViewTable extends pts_Graph
 		// Start drawing
 		if($this->i['left_start'] >= 170 && $top_identifier_height >= 90)
 		{
-			$this->svg_dom->add_element('image', array('http_link' => 'http://www.phoronix-test-suite.com/', 'xlink:href' => pts_svg_dom::embed_png_image(PTS_CORE_STATIC_PATH . 'images/pts-160x83.png'), 'x' => round($this->i['left_start'] / 2 - 80), 'y' => round(($top_identifier_height / 2 - 41.5) + $this->i['top_heading_height']), 'width' => 160, 'height' => 83));
+			$this->svg_dom->add_element('image', array('http_link' => 'http://www.phoronix-test-suite.com/', 'xlink:href' => 'https://openbenchmarking.org/static/images/pts-160x83.png', 'x' => round($this->i['left_start'] / 2 - 80), 'y' => round(($top_identifier_height / 2 - 41.5) + $this->i['top_heading_height']), 'width' => 160, 'height' => 83));
 		}
 		else
 		{
-			$this->svg_dom->add_element('image', array('http_link' => 'http://www.phoronix-test-suite.com/', 'xlink:href' => pts_svg_dom::embed_png_image(PTS_CORE_STATIC_PATH . 'images/pts-80x42.png'), 'x' => round($this->i['left_start'] / 2 - 40), 'y' => round($top_identifier_height / 2 - 21 + $this->i['top_heading_height']), 'width' => 80, 'height' => 42));
+			$this->svg_dom->add_element('image', array('http_link' => 'http://www.phoronix-test-suite.com/', 'xlink:href' => 'https://openbenchmarking.org/static/images/pts-80x42.png', 'x' => round($this->i['left_start'] / 2 - 40), 'y' => round($top_identifier_height / 2 - 21 + $this->i['top_heading_height']), 'width' => 80, 'height' => 42));
 		}
 
 		// Draw the vertical table lines

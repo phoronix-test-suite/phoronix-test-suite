@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2014, Phoronix Media
-	Copyright (C) 2009 - 2014, Michael Larabel
+	Copyright (C) 2009 - 2015, Phoronix Media
+	Copyright (C) 2009 - 2015, Michael Larabel
 	pts_concise_display_mode.php: The batch / concise display mode
 
 	This program is free software; you can redistribute it and/or modify
@@ -378,15 +378,6 @@ class pts_websocket_display_mode implements pts_display_mode_interface
 	{
 		// TODO XXX: IMPLEMENT?
 		return;
-		if($this->expected_trial_run_count > 1 && $this->trial_run_count_current >= $this->expected_trial_run_count)
-		{
-			$values = $test_result->test_result_buffer->get_values();
-
-			if(count($values) > 1)
-			{
-				echo ($this->trial_run_count_current < 10 ? ' ' : null) . ' [Std. Dev: ' . pts_math::set_precision(pts_math::percent_standard_deviation($values), 2) . '%]';
-			}
-		}
 	}
 	public function test_run_end(&$test_result)
 	{
@@ -400,23 +391,23 @@ class pts_websocket_display_mode implements pts_display_mode_interface
 			// TODO XXX: At least implement line_graph support as may be fairly popular
 			$end_print = PHP_EOL . $this->tab . 'Test Results:' . PHP_EOL;
 
-			foreach($test_result->test_result_buffer->get_values() as $result)
+			foreach($test_result->active->results as $result)
 			{
 				$end_print .= $this->tab . $this->tab . $result . PHP_EOL;
 			}
 
-			$end_print .= PHP_EOL . $this->tab . pts_strings::result_quantifier_to_string($test_result->test_profile->get_result_quantifier()) . ': ' . $test_result->get_result() . ' ' . $test_result->test_profile->get_result_scale();
+			$end_print .= PHP_EOL . $this->tab . pts_strings::result_quantifier_to_string($test_result->test_profile->get_result_quantifier()) . ': ' . $test_result->active->get_result() . ' ' . $test_result->test_profile->get_result_scale();
 
-			if($test_result->get_min_result())
+			if($test_result->active->get_min_result())
 			{
-				$end_print .= PHP_EOL . $this->tab . 'Minimum: ' . $test_result->get_min_result();
+				$end_print .= PHP_EOL . $this->tab . 'Minimum: ' . $test_result->active->get_min_result();
 			}
-			if($test_result->get_max_result())
+			if($test_result->active->get_max_result())
 			{
-				$end_print .= PHP_EOL . $this->tab . 'Maximum: ' . $test_result->get_max_result();
+				$end_print .= PHP_EOL . $this->tab . 'Maximum: ' . $test_result->active->get_max_result();
 			}
 
-			if($test_result->get_result() == 0)
+			if($test_result->active->get_result() == 0)
 			{
 				$end_print .= PHP_EOL . $this->tab . 'This test failed to run properly.';
 			}
@@ -441,7 +432,7 @@ class pts_websocket_display_mode implements pts_display_mode_interface
 
 		if($shown_pts == false)
 		{
-			$string = pts_title() . PHP_EOL . $string;
+			$string = pts_core::program_title() . PHP_EOL . $string;
 			$shown_pts = true;
 		}
 

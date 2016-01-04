@@ -48,7 +48,8 @@ class openbenchmarking_launcher implements pts_option_interface
 				case 'benchmark':
 					$to_benchmark = explode(' ', $payload);
 					pts_test_installer::standard_install($to_benchmark);
-					pts_test_run_manager::standard_run($to_benchmark);
+					$run_manager = new pts_test_run_manager();
+					$run_manager->standard_run($to_benchmark);
 					break;
 
 			}

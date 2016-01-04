@@ -11,6 +11,10 @@
 			<FileCheck>/usr/include/gtk-2.0</FileCheck>
 		</Package>
 		<Package>
+			<GenericName>smartmontools</GenericName>
+			<PackageName>smartmontools</PackageName>
+		</Package>
+		<Package>
 			<GenericName>sdl-development</GenericName>
 			<PackageName>libSDL1.2-devel libSDL_gfx14-devel libSDL_net1.2-devel libSDL_image1.2-devel libSDL_ttf2.0-devel</PackageName>
 			<FileCheck>/usr/include/SDL/SDL.h, /usr/include/SDL/SDL_gfxPrimitives.h, /usr/include/SDL/SDL_net.h, /usr/include/SDL/SDL_image.h, /usr/include/SDL/SDL_ttf.h</FileCheck>

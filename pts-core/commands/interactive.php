@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2011 - 2013, Phoronix Media
-	Copyright (C) 2011 - 2013, Michael Larabel
+	Copyright (C) 2011 - 2015, Phoronix Media
+	Copyright (C) 2011 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -27,45 +27,10 @@ class interactive implements pts_option_interface
 
 	public static function run($r)
 	{
-		$is_moscow = pts_flags::os_identifier_hash() == 'b28d6a7148b34595c5b397dfcf5b12ac7932b3dc';
-
-		if($is_moscow)
-		{
-			// Auto mount?
-			$drives = pts_file_io::glob('/dev/sda*');
-			sort($drives);
-
-			if(false && count($drives) > 0 && !is_dir('/media/pts-auto-mount') && is_writable('/media/'))
-			{
-				$last_drive = array_pop($drives);
-				echo PHP_EOL . 'Attempting to auto-mount drive: ' . $last_drive . PHP_EOL;
-				mkdir('/media/pts-auto-mount');
-				exec('mount ' . $last_drive . ' /media/pts-auto-mount');
-				putenv('PTS_TEST_INSTALL_ROOT_PATH=/media/pts-auto-mount/');
-			}
-
-			// Auto save results
-			$test_results_name = phodevi::read_property('motherboard', 'serial-number');
-
-			if($test_results_name == null)
-			{
-				$test_results_name = phodevi::read_name('motherboard');
-			}
-			if($test_results_name == null)
-			{
-				$test_results_name = phodevi::read_property('system', 'vendor-identifier');
-			}
-
-			putenv('TEST_RESULTS_NAME=' . str_replace(' ', null, $test_results_name));
-			putenv('TEST_RESULTS_IDENTIFIER=' . $test_results_name);
-			putenv('TEST_RESULTS_DESCRIPTION=Tests using ' . phodevi::read_property('system', 'operating-system') . ' on ' . date('d F Y') . ' of ' . $test_results_name . '.');
-			self::select_drive_mount();
-		}
-
 		pts_openbenchmarking::refresh_repository_lists();
 		pts_client::$display->generic_heading('Interactive Benchmarking');
 		echo 'System Hardware:' . PHP_EOL . phodevi::system_hardware(true) . (phodevi::read_property('motherboard', 'serial-number') != null ? PHP_EOL . 'System Serial Number: ' . phodevi::read_property('motherboard', 'serial-number') : null) . PHP_EOL . PHP_EOL . PHP_EOL;
-		$reboot_on_exit = pts_flags::is_live_cd() && pts_client::user_home_directory() == '/root/';
+		$reboot_on_exit = false;
 
 		do
 		{
@@ -77,12 +42,6 @@ class interactive implements pts_option_interface
 				'SHOW_SENSORS' => 'Show Auto-Detected System Sensors',
 				'SET_RUN_COUNT' => 'Set Test Run Repetition'
 				);
-
-			if($is_moscow)
-			{
-				unset($options['RUN_SUITE']);
-			//	$options['SELECT_DRIVE_MOUNT'] = 'Select Disk Drive To Use For Testing';
-			}
 
 			if(count(pts_client::saved_test_results()) > 0)
 			{
@@ -101,14 +60,8 @@ class interactive implements pts_option_interface
 
 					foreach($supported_tests as $i => &$test_profile)
 					{
-						if($test_profile->get_title() == null || pts_test_run_manager::test_profile_system_compatibility_check($test_profile) == false)
+						if($test_profile->get_title() == null)
 						{
-							unset($supported_tests[$i]);
-							continue;
-						}
-						if($is_moscow && pts_test_install_request::test_files_available_locally($test_profile) == false)
-						{
-							// Don't show tests where files need to be downloaded
 							unset($supported_tests[$i]);
 							continue;
 						}
@@ -130,7 +83,8 @@ class interactive implements pts_option_interface
 					$tests_to_run = pts_user_io::prompt_text_menu('Select Test', $supported_tests, true, true);
 					$tests_to_run = explode(',', $tests_to_run);
 					pts_test_installer::standard_install($tests_to_run);
-					$run_manager = pts_test_run_manager::standard_run($tests_to_run, (pts_c::defaults_mode | pts_c::auto_mode));
+					$run_manager = new pts_test_run_manager(false, 2);
+					$run_manager->standard_run($tests_to_run);
 					if($run_manager != false)
 					{
 						pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . $run_manager->get_file_name() . '/index.html', null, true, true);
@@ -148,7 +102,8 @@ class interactive implements pts_option_interface
 					foreach(explode(',', $suites_to_run) as $suite_to_run)
 					{
 						pts_test_installer::standard_install($suite_to_run);
-						pts_test_run_manager::standard_run($suite_to_run, (pts_c::defaults_mode | pts_c::auto_mode));
+						$run_manager = new pts_test_run_manager(false, 2);
+						$run_manager->standard_run($suite_to_run);
 					}
 					break;
 				case 'SELECT_DRIVE_MOUNT':
@@ -158,7 +113,8 @@ class interactive implements pts_option_interface
 					pts_client::$display->generic_heading('System Test');
 					$system_tests = array('apache', 'c-ray', 'ramspeed', 'postmark');
 					pts_test_installer::standard_install($system_tests);
-					$run_manager = pts_test_run_manager::standard_run($system_tests, (pts_c::defaults_mode | pts_c::auto_mode));
+					$run_manager = new pts_test_run_manager(false, 2);
+					$run_manager->standard_run($system_tests);
 					if($run_manager != false)
 					{
 						pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . $run_manager->get_file_name() . '/index.html', null, true, true);
@@ -170,11 +126,7 @@ class interactive implements pts_option_interface
 					echo 'Software:' . PHP_EOL . phodevi::system_software(true) . PHP_EOL . PHP_EOL;
 					break;
 				case 'SHOW_SENSORS':
-					pts_client::$display->generic_heading('Detected System Sensors');
-					foreach(phodevi::supported_sensors() as $sensor)
-					{
-						echo phodevi::sensor_name($sensor) . ': ' . phodevi::read_sensor($sensor) . ' ' . phodevi::read_sensor_unit($sensor) . PHP_EOL;
-					}
+					pts_client::execute_command('system_sensors');
 					break;
 				case 'SET_RUN_COUNT':
 					$run_count = pts_user_io::prompt_user_input('Set the minimum number of times each test should repeat', false);
@@ -182,20 +134,6 @@ class interactive implements pts_option_interface
 					break;
 				case 'BACKUP_RESULTS_TO_USB':
 					pts_client::$display->generic_heading('Backing Up Test Results');
-
-					if($is_moscow)
-					{
-						$drives = pts_file_io::glob('/dev/sd*');
-						sort($drives);
-
-						if(count($drives) > 0 && is_writable('/media/'))
-						{
-							$select_drive = pts_user_io::prompt_text_menu('Select Drive / Partition To Save Results', $drives);
-							echo PHP_EOL . 'Attempting to mount: ' . $select_drive . PHP_EOL;
-							mkdir('/media/00-results-backup');
-							exec('mount ' . $select_drive . ' /media/00-results-backup');
-						}
-					}
 
 					foreach(pts_file_io::glob('/media/*') as $media_dir)
 					{
@@ -208,12 +146,6 @@ class interactive implements pts_option_interface
 						echo PHP_EOL . 'Writing Test Results To: ' . $media_dir . PHP_EOL;
 						pts_file_io::copy(PTS_SAVE_RESULTS_PATH, $media_dir . '/');
 						break;
-					}
-
-					if($is_moscow && is_dir('/media/00-results-backup'))
-					{
-						exec('umount /media/00-results-backup');
-						rmdir('/media/00-results-backup');
 					}
 					break;
 			}

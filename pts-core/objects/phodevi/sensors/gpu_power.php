@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2011, Phoronix Media
-	Copyright (C) 2011, Michael Larabel
+	Copyright (C) 2009 - 2015, Phoronix Media
+	Copyright (C) 2009 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -20,25 +20,13 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class gpu_power implements phodevi_sensor
+class gpu_power extends phodevi_sensor
 {
-	public static function get_type()
-	{
-		return 'gpu';
-	}
-	public static function get_sensor()
-	{
-		return 'power';
-	}
-	public static function get_unit()
-	{
-		return 'Milliwatts';
-	}
-	public static function support_check()
-	{
-		return self::read_sensor() > 0;
-	}
-	public static function read_sensor()
+	const SENSOR_TYPE = 'gpu';
+	const SENSOR_SENSES = 'power';
+	const SENSOR_UNIT = 'Milliwatts';
+
+	public function read_sensor()
 	{
 		$gpu_power = -1;
 
@@ -66,6 +54,7 @@ class gpu_power implements phodevi_sensor
 
 		return $gpu_power;
 	}
+
 }
 
 ?>

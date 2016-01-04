@@ -210,7 +210,7 @@ class pts_module
 	{
 		$file = self::save_dir() . $file;
 
-		return is_file($file) ? file_get_contents($file) : false;	
+		return is_file($file) ? file_get_contents($file) : false;
 	}
 	public static function is_file($file)
 	{
@@ -246,16 +246,18 @@ class pts_module
 
 		return false;
 	}
-	public static function pts_fork_function($function)
+	public static function pts_fork_function($function, $parameters = null)
 	{
-		self::pts_timed_function($function, -1);
+		self::pts_timed_function($function, -1, $parameters);
 	}
-	public static function pts_timed_function($function, $time)
+	public static function pts_timed_function($function, $time, $parameters = null)
 	{
 		if(($time < 0.5 && $time != -1) || $time > 300)
 		{
 			return;
 		}
+
+		//TODO improve accuracy by comparing time pre- and post- loop iteration
 
 		if(function_exists('pcntl_fork'))
 		{
@@ -277,7 +279,13 @@ class pts_module
 					*/
 					while(pts_test_run_manager::test_run_process_active() !== -1 && is_file(PTS_USER_LOCK) && $loop_continue)
 					{
-						call_user_func(array(self::module_name(), $function));
+//						if ($parameters == null || !is_array($parameters))
+//						{
+//							$parameters = array();
+//						}
+
+						$parameter_array = pts_arrays::to_array($parameters);
+						call_user_func_array(array(self::module_name(), $function), $parameter_array);
 
 						if($time > 0)
 						{

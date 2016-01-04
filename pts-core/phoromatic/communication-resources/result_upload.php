@@ -56,9 +56,16 @@ if($composite_xml == null || sha1($composite_xml) != $COMPOSITE_XML_HASH)
 $result_file = new pts_result_file($composite_xml);
 
 // Validate the XML
-if($result_file->xml_parser->validate() == false)
+if($result_file->validate() == false)
 {
 	$json['phoromatic']['error'] = 'XML Did Not Match Schema Definition';
+	echo json_encode($json);
+	return false;
+}
+
+if($result_file->get_title() == null || $result_file->get_system_count() == 0 || $result_file->get_test_count() == 0)
+{
+	$json['phoromatic']['error'] = 'Invalid Result File';
 	echo json_encode($json);
 	return false;
 }
@@ -138,18 +145,14 @@ foreach($result_file->get_result_objects() as $result_object)
 
 if($relative_id > 0)
 {
-	$ids = $result_file->get_system_identifiers();
-	$hw = $result_file->get_system_hardware();
-	$sw = $result_file->get_system_software();
-
-	for($i = 0; $i < count($ids) && $i < count($hw) && $i < count($sw); $i++)
+	foreach($result_file->get_systems() as $s)
 	{
 		$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_results_systems (AccountID, UploadID, SystemIdentifier, Hardware, Software) VALUES (:account_id, :upload_id, :system_identifier, :hardware, :software)');
 		$stmt->bindValue(':account_id', ACCOUNT_ID);
 		$stmt->bindValue(':upload_id', $upload_id);
-		$stmt->bindValue(':system_identifier', sqlite_escape_string($ids[$i]));
-		$stmt->bindValue(':hardware', sqlite_escape_string($hw[$i]));
-		$stmt->bindValue(':software', sqlite_escape_string($sw[$i]));
+		$stmt->bindValue(':system_identifier', sqlite_escape_string($s->get_identifier()));
+		$stmt->bindValue(':hardware', sqlite_escape_string($s->get_hardware()));
+		$stmt->bindValue(':software', sqlite_escape_string($s->get_software()));
 		$result = $stmt->execute();
 	}
 

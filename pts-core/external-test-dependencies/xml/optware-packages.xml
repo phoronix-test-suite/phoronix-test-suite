@@ -17,6 +17,10 @@
 			<FileCheck>/opt/include/SDL/SDL.h</FileCheck>
 		</Package>
 		<Package>
+			<GenericName>smartmontools</GenericName>
+			<PackageName>smartmontools</PackageName>
+		</Package>
+		<Package>
 			<GenericName>csh</GenericName>
 			<PackageName>tcsh</PackageName>
 			<FileCheck>/opt/bin/tcsh</FileCheck>

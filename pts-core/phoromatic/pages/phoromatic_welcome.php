@@ -134,6 +134,8 @@ class phoromatic_welcome implements pts_webui_interface
 
 					pts_file_io::mkdir(phoromatic_server::phoromatic_account_path($account_id));
 					pts_file_io::mkdir(phoromatic_server::phoromatic_account_result_path($account_id));
+					pts_file_io::mkdir(phoromatic_server::phoromatic_account_system_path($account_id));
+					pts_file_io::mkdir(phoromatic_server::phoromatic_account_suite_path($account_id));
 
 					echo phoromatic_webui_header(array('Welcome, ' . $user), '');
 					$box = '<h1>Log-In Successful</h1>
@@ -161,7 +163,8 @@ class phoromatic_welcome implements pts_webui_interface
 			echo phoromatic_webui_header(array(), '');
 
 			$box = '<h1>Welcome</h1>
-			<p>You must log-in to your Phoromatic account or create an account to access this service. Phoromatic is a remote management system for the Phoronix Test Suite. Phoromatic allows the automatic scheduling of tests, remote installation of new tests, and the management of multiple test systems all through an intuitive, easy-to-use web interface. Tests can be scheduled to automatically run on a routine basis across multiple test systems. The test results are then available from this central, secure location.</p>
+			<p>You must log-in to your Phoromatic account or create an account to access this service.</p>
+			<p>Phoromatic is the remote management and test orchestration system for the Phoronix Test Suite. Phoromatic allows the automatic scheduling of tests, remote installation of new tests, and the management of multiple test systems over a LAN or WAN all through an intuitive, easy-to-use web interface. Tests can be scheduled to automatically run on a routine basis across multiple test systems. The test results are then available from this central, secure location.</p>
 			<p>Phoromatic makes it very easy to provide for automated scheduling of tests on multiple systems, is extremely extensible, allows various remote testing possibilities, makes it very trivial to manage multiple systems, and centralizes result management within an organization.</p>
 			<p><a href="about.php">Learn more about Phoromatic</a>.</p>
 			<hr />
@@ -207,8 +210,9 @@ class phoromatic_welcome implements pts_webui_interface
 						<sup>3</sup> A valid email address is required for notifications, password reset, and other verification purposes.<br />
 						</p>';
 			}
-
-			$box .= '<hr />';
+			$box .= '<hr />
+			<h1>View Public Results</h1>
+			<p>For accounts that opted to share their test results publicly, you can directly <a href="public.php">view the public test results</a>.</p><hr />';
 
 			echo phoromatic_webui_box($box);
 			echo phoromatic_webui_footer();

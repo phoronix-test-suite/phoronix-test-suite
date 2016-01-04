@@ -1,30 +1,96 @@
 <?php
 
-// Copyright (C) 2012, ESET s.r.o. - Linux/Mac test lab
+/*
+	Copyright (C) 2012, ESET s.r.o. - Linux/Mac test lab
 
-class network_usage implements phodevi_sensor
+	Modified in 2015 by Jakub Maleszewski to make the code compatible
+	with improved monitoring subsystem.
+ */
+
+
+class network_usage extends phodevi_sensor
 {
-	private static $timestamp_old = -1;
-	private static $counter_old = -1;
+	const SENSOR_TYPE = 'network';
+	const SENSOR_SENSES = 'usage';
+	const SENSOR_UNIT = 'Kilobytes/second';
 
-	public static function get_type()
+	private $interface_to_monitor = NULL;
+
+	function __construct($instance, $parameter)
 	{
-		return 'network';
+		parent::__construct($instance, $parameter);
+
+		if($parameter !== NULL)
+		{
+			$this->interface_to_monitor = $parameter;
+		}
+		else if(self::get_supported_devices() != null)
+		{
+			$ifaces = self::get_supported_devices();
+			$this->interface_to_monitor = $ifaces[0];
+		}
 	}
-	public static function get_sensor()
+	public static function parameter_check($parameter)
 	{
-		return 'usage';
+		if($parameter === null || in_array($parameter, self::get_supported_devices() ) )
+		{
+			return true;
+		}
+
+		return false;
 	}
-	public static function get_unit()
+	public function get_readable_device_name()
 	{
-		return 'Kilobytes/second';
+		return $this->interface_to_monitor;
 	}
-	public static function support_check()
+
+	public static function get_supported_devices()
 	{
-		$test = self::read_sensor();
-		return is_numeric($test) && $test != -1;
+		if(phodevi::is_linux())
+		{
+            //TODO write network_usage_linux function
+//			$iface_list = shell_exec("ls -1 /sys/class/net | grep -v lo");
+//			$iface_array = explode("\n", $iface_list);
+//
+//			return $iface_array;
+			return NULL;
+		}
+		if(phodevi::is_bsd() || phodevi::is_macosx())
+		{
+			$iface_list = shell_exec("ifconfig -lu | tr ' ' '\n' | grep -v 'lo0'");
+			$iface_array = pts_strings::trim_explode(" ", $iface_list);
+
+			return $iface_array;
+		}
+
+		return NULL;
 	}
-	private static function net_counter($IFACE = 'en0')
+	public function read_sensor()
+	{
+		$net_speed = -1;
+
+		if(phodevi::is_bsd() || phodevi::is_macosx())
+		{
+			$net_speed = $this->network_usage_bsd();
+		}
+
+		return pts_math::set_precision($net_speed, 2);
+	}
+	private function network_usage_bsd()
+	{
+		$net_speed = -1;
+		$counter_old = self::net_counter_bsd($this->interface_to_monitor);
+		$timestamp_old = time();
+
+		sleep(1);
+
+		$counter_new = self::net_counter_bsd($this->interface_to_monitor);
+		$timestamp_new = time();
+		$net_speed = (($counter_new - $counter_old) >> 10) / ($timestamp_new - $timestamp_old);
+
+		return $net_speed;
+	}
+	private static function net_counter_bsd($IFACE = 'en0')
 	{
 		$net_counter = -1;
 		if(pts_client::executable_in_path('netstat') != false)
@@ -62,23 +128,6 @@ class network_usage implements phodevi_sensor
 		}
 		return $net_counter;
 	}
-	public static function read_sensor()
-	{
-		//chosen iterface - redo this if parameterized sensors become possible
-		$iface = 'en0';
-		$net_speed = -1;
-
-		if(self::$timestamp_old = -1)
-		{
-			self::$counter_old = self::net_counter($iface);
-			self::$timestamp_old = time();
-			sleep(1);
-		}
-
-		$counter_new = self::net_counter($iface);
-		$timestamp_new = time();
-		$net_speed = (($counter_new - self::$counter_old) >> 10) / ($timestamp_new - self::$timestamp_old);
-		return $net_speed;
-	}
 }
+
 ?>

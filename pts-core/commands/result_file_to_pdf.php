@@ -53,21 +53,15 @@ class result_file_to_pdf implements pts_option_interface
 		$pdf->AddPage();
 		$pdf->Ln(15);
 
-		$identifiers = $result_file->get_system_identifiers();
-		$hardware_r = $result_file->get_system_hardware();
-		$software_r = $result_file->get_system_software();
-		$notes_r = $result_file->get_system_notes();
-		$tests = $result_file->get_test_titles();
-
 		$pdf->SetSubject($result_file->get_title() . ' Benchmarks');
-		$pdf->SetKeywords(implode(', ', $identifiers));
+		//$pdf->SetKeywords(implode(', ', $identifiers));
 
 		$pdf->WriteHeader('Test Systems:');
-		for($i = 0; $i < count($identifiers); $i++)
+		foreach($result_file->get_systems() as $s)
 		{
-			$pdf->WriteMiniHeader($identifiers[$i]);
-			$pdf->WriteText($hardware_r[$i]);
-			$pdf->WriteText($software_r[$i]);
+			$pdf->WriteMiniHeader($s->get_identifier());
+			$pdf->WriteText($s->get_hardware());
+			$pdf->WriteText($s->get_software());
 			//$pdf->WriteText($notes_r[$i]);
 		}
 
@@ -83,7 +77,8 @@ class result_file_to_pdf implements pts_option_interface
 
 		$pdf->AddPage();
 		$placement = 1;
-		for($i = 1; $i <= count($tests); $i++)
+		$results = $result_file->get_result_objects();
+		for($i = 1; $i <= count($results); $i++)
 		{
 			if(is_file($tdir . 'result-graphs/' . $i . '.png'))
 			{
@@ -95,7 +90,7 @@ class result_file_to_pdf implements pts_option_interface
 			{
 				$placement = 0;
 
-				if($i != count($tests))
+				if($i != count($results))
 				{
 					$pdf->AddPage();
 				}
@@ -113,7 +108,7 @@ class result_file_to_pdf implements pts_option_interface
 			$pdf_file .= '.pdf';
 		}
 		*/
-		$pdf_file = pts_client::user_home_directory() . $r[0] . '.pdf';
+		$pdf_file = pts_core::user_home_directory() . $r[0] . '.pdf';
 		$pdf->Output($pdf_file);
 		pts_file_io::delete($tdir, null, true);
 		echo PHP_EOL . 'Saved To: ' . $pdf_file . PHP_EOL;

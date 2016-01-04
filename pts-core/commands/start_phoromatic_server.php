@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2014, Phoronix Media
-	Copyright (C) 2014, Michael Larabel
+	Copyright (C) 2014 - 2015, Phoronix Media
+	Copyright (C) 2014 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
 
 class start_phoromatic_server implements pts_option_interface
 {
-	const doc_section = 'GUI / Web Support';
+	const doc_section = 'Phoromatic';
 	const doc_description = 'Start the Phoromatic web server for controlling local Phoronix Test Suite client systems to facilitate automated and repeated test orchestration and other automated features targeted at the enterprise.';
 
 	public static function run($r)
@@ -67,7 +67,7 @@ class start_phoromatic_server implements pts_option_interface
 		}
 
 		$remote_access = is_numeric($remote_access) && $remote_access > 1 ? $remote_access : false;
-		$blocked_ports = array(2049, 3659, 4045, 6000);
+		$blocked_ports = array(2049, 3659, 4045, 6000, 9000);
 
 		if($remote_access)
 		{
@@ -110,8 +110,8 @@ class start_phoromatic_server implements pts_option_interface
 		// Just create the logger so now it will flush it out
 		$pts_logger = new pts_logger();
 		$pts_logger->clear_log();
-		echo pts_title(true) . ' starting Phoromatic Server' . PHP_EOL;
-		$pts_logger->log(pts_title(true) . ' starting Phoromatic Server on ' . pts_network::get_local_ip());
+		echo pts_core::program_title(true) . ' starting Phoromatic Server' . PHP_EOL;
+		$pts_logger->log(pts_core::program_title(true) . ' starting Phoromatic Server on ' . pts_network::get_local_ip());
 
 		echo 'Phoronix Test Suite User-Data Directory Path: ' . PTS_USER_PATH . PHP_EOL;
 		echo 'Phoronix Test Suite Configuration File: ' . pts_config::get_config_file_location() . PHP_EOL;
@@ -123,6 +123,7 @@ class start_phoromatic_server implements pts_option_interface
 		// WebSocket Server Setup
 		$server_launcher .= 'export PTS_WEB_PORT=' . $web_port . PHP_EOL;
 		$server_launcher .= 'export PTS_WEBSOCKET_PORT=' . $web_socket_port . PHP_EOL;
+		$server_launcher .= 'export PTS_WEBSOCKET_SERVER=PHOROMATIC' . PHP_EOL;
 		$server_launcher .= 'export PTS_NO_FLUSH_LOGGER=1' . PHP_EOL;
 		$server_launcher .= 'export PTS_PHOROMATIC_SERVER=1' . PHP_EOL;
 		$server_launcher .= 'export PTS_PHOROMATIC_LOG_LOCATION=' . $pts_logger->get_log_file_location() . PHP_EOL;
@@ -133,13 +134,69 @@ class start_phoromatic_server implements pts_option_interface
 		$server_launcher .= 'event_server_pid=$!'. PHP_EOL;
 
 		// HTTP Server Setup
-		if(strpos(getenv('PHP_BIN'), 'hhvm'))
+		if(false && pts_client::executable_in_path('nginx') && is_file('/run/php-fpm/php-fpm.pid'))
+		{
+			// NGINX
+			$nginx_conf = 'error_log /tmp/error.log;
+			pid /tmp/nginx.pid;
+			worker_processes 1;
+
+			events {
+			  worker_connections 1024;
+			}
+
+			http {
+			  client_body_temp_path /tmp/client_body;
+			  fastcgi_temp_path /tmp/fastcgi_temp;
+			  proxy_temp_path /tmp/proxy_temp;
+			  scgi_temp_path /tmp/scgi_temp;
+			  uwsgi_temp_path /tmp/uwsgi_temp;
+			  tcp_nopush on;
+			  tcp_nodelay on;
+			  keepalive_timeout 180;
+			  types_hash_max_size 2048;
+			  include /etc/nginx/mime.types;
+			  index index.php;
+
+			  server {
+			    listen ' . $web_port . ';
+			    listen [::]:' . $web_port . ' default ipv6only=on;
+			    access_log /tmp/access.log;
+			    error_log /tmp/error.log;
+			    root ' . PTS_CORE_PATH . 'phoromatic/public_html;
+				index index.php;
+			      try_files $uri $uri/ /index.php;
+				location / {
+				autoindex on;
+				}
+				location ~ \.php$ {
+				     include        /etc/nginx/fastcgi_params;
+				     fastcgi_param  SCRIPT_FILENAME  $document_root/$fastcgi_script_name;
+				     fastcgi_split_path_info ^(.+\.php)(/.+)$;
+				     fastcgi_pass   127.0.0.1:9000;
+				     fastcgi_index  index.php;
+				}
+			  }
+			}';
+			$nginx_conf_file = tempnam(PTS_USER_PATH, 'nginx_conf_');
+			file_put_contents($nginx_conf_file, $nginx_conf);
+
+			$server_launcher .= 'nginx -c ' . $nginx_conf_file . PHP_EOL . 'rm -f ' . $nginx_conf_file . PHP_EOL;
+		}
+		else if(($mongoose = pts_client::executable_in_path('mongoose')) && ($php_cgi = pts_client::executable_in_path('php-cgi')))
+		{
+			// Mongoose Embedded Web Server
+			$server_launcher .= $mongoose . ' -p ' . $web_port . ' -r ' . PTS_CORE_PATH . 'phoromatic/public_html/ -I ' . $php_cgi . ' -i index.php > /dev/null 2>> $PTS_PHOROMATIC_LOG_LOCATION &' . PHP_EOL; //2> /dev/null
+
+		}
+		else if(strpos(getenv('PHP_BIN'), 'hhvm'))
 		{
 			echo PHP_EOL . 'Unfortunately, the HHVM built-in web server has abandoned upstream. Users will need to use the PHP binary or other alternatives.' . PHP_EOL . PHP_EOL;
-			$server_launcher .= 'cd ' . PTS_CORE_PATH . 'phoromatic/public_html/ && ' . getenv('PHP_BIN') . ' --config ' . PTS_CORE_PATH . 'static/hhvm-server.hdf -m server -vServer.Port=' . $web_port . ' -vServer.IP=' . $server_ip . ' -vServer.SourceRoot=' . PTS_CORE_PATH . 'phoromatic/ > /dev/null 2>> $PTS_PHOROMATIC_LOG_LOCATION &' . PHP_EOL;
+			return;
 		}
 		else
 		{
+			// PHP Web Server
 			$server_launcher .= getenv('PHP_BIN') . ' -S ' . $server_ip . ':' . $web_port . ' -t ' . PTS_CORE_PATH . 'phoromatic/public_html/ > /dev/null 2>> $PTS_PHOROMATIC_LOG_LOCATION &' . PHP_EOL; //2> /dev/null
 		}
 		$server_launcher .= 'http_server_pid=$!'. PHP_EOL;

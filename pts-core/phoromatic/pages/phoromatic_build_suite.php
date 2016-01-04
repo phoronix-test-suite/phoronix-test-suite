@@ -139,8 +139,32 @@ class phoromatic_build_suite implements pts_webui_interface
 			<p><div id="test_details"></div></p>
 			<h3>Add Another Test</h3>';
 			$main .= '<select name="add_to_suite_select_test" id="add_to_suite_select_test" onchange="phoromatic_build_suite_test_details();">';
-			foreach(pts_openbenchmarking::available_tests() as $test)
+
+			$dc = pts_strings::add_trailing_slash(pts_strings::parse_for_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Installation/CacheDirectory', PTS_DOWNLOAD_CACHE_PATH)));
+			$dc_exists = is_file($dc . 'pts-download-cache.json');
+			if($dc_exists)
 			{
+				$cache_json = file_get_contents($dc . 'pts-download-cache.json');
+				$cache_json = json_decode($cache_json, true);
+			}
+			foreach(pts_openbenchmarking::available_tests(false, true) as $test)
+			{
+				$cache_checked = false;
+				if($dc_exists)
+				{
+					if($cache_json && isset($cache_json['phoronix-test-suite']['cached-tests']))
+					{
+						$cache_checked = true;
+						if(!in_array($test, $cache_json['phoronix-test-suite']['cached-tests']))
+						{
+							continue;
+						}
+					}
+				}
+				if(!$cache_checked && phoromatic_server::read_setting('show_local_tests_only') && pts_test_install_request::test_files_in_cache($test, true, true) == false)
+				{
+					continue;
+				}
 				$main .= '<option value="' . $test . '">' . $test . '</option>';
 			}
 			$main .= '</select>';

@@ -1,4 +1,4 @@
-# Phoronix Test Suite 5.6.0
+# Phoronix Test Suite 6.2.0m2
 http://www.phoronix-test-suite.com/
 
 The **Phoronix Test Suite** is the most comprehensive testing and benchmarking
@@ -61,7 +61,7 @@ architectures.
 The Phoronix Test Suite can be installed for system-wide usage or run locally
 without installation from the extracted tar.gz/zip package. The only hard
 dependency on the Phoronix Test Suite is having command-line support for PHP
-(PHP 5.2+) installed. A complete PHP stack (e.g. with web-server) is NOT needed,
+(PHP 5.3+) installed. A complete PHP stack (e.g. with web-server) is NOT needed,
 but merely the PHP command-line support, which is widely available from
 operating system package managers under the name `php`, `php5-cli`, or `php5`.
 

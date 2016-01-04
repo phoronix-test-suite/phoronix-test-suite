@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2013, Phoronix Media
-	Copyright (C) 2009 - 2013, Michael Larabel
+	Copyright (C) 2009 - 2015, Phoronix Media
+	Copyright (C) 2009 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -33,9 +33,7 @@ class remove_from_result_file implements pts_option_interface
 	}
 	public static function run($r)
 	{
-		$result = $r[0];
-
-		$result_file = new pts_result_file($result);
+		$result_file = new pts_result_file($r[0]);
 		$result_file_identifiers = $result_file->get_system_identifiers();
 
 		if(count($result_file_identifiers) < 2)
@@ -45,32 +43,26 @@ class remove_from_result_file implements pts_option_interface
 		}
 
 		$remove_identifiers = explode(',', pts_user_io::prompt_text_menu('Select the test run(s) to remove', $result_file_identifiers, true));
-		$keep_identifiers = array();
-
-		foreach($result_file_identifiers as $identifier)
-		{
-			if(!in_array($identifier, $remove_identifiers))
-			{
-				array_push($keep_identifiers, $identifier);
-			}
-		}
+		$result_file->remove_run($remove_identifiers);
+		$result_dir = dirname($result_file->get_file_location()) . '/';
 
 		foreach(array('test-logs', 'system-logs', 'installation-logs') as $dir_name)
 		{
 			foreach($remove_identifiers as $remove_identifier)
 			{
-				if(is_dir(PTS_SAVE_RESULTS_PATH . $r[0] . '/' . $dir_name . '/' . $remove_identifier))
+				if(is_dir($result_dir . $dir_name . '/' . $remove_identifier))
 				{
-					pts_file_io::delete(PTS_SAVE_RESULTS_PATH . $r[0] . '/' . $dir_name . '/' . $remove_identifier, null, true);
+					pts_file_io::delete($result_dir . $dir_name . '/' . $remove_identifier, null, true);
 				}
 			}
 		}
 
-		$extract_select = new pts_result_merge_select($result, $keep_identifiers);
-		$extract_result = pts_merge::merge_test_results($extract_select);
-
-		pts_client::save_test_result($r[0] . '/composite.xml', $extract_result);
-		pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . $r[0] . '/index.html');
+		pts_client::save_test_result($result_file->get_file_location(), $result_file->get_xml());
+		pts_client::display_web_page($result_dir . '/index.html');
+	}
+	public static function invalid_command($passed_args = null)
+	{
+		pts_tests::invalid_command_helper($passed_args);
 	}
 }
 

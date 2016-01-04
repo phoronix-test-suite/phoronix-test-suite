@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2014, Phoronix Media
-	Copyright (C) 2008 - 2014, Michael Larabel
+	Copyright (C) 2008 - 2015, Phoronix Media
+	Copyright (C) 2008 - 2015, Michael Larabel
 	phodevi_gpu.php: The PTS Device Interface object for the graphics processor
 
 	This program is free software; you can redistribute it and/or modify
@@ -739,6 +739,11 @@ class phodevi_gpu extends phodevi_device_interface
 				// Nouveau DRM around Linux ~3.6 reports e.g.: DRM] VRAM: 512 MiB
 				$info = substr($info, ($x + 6));
 				$info = substr($info, 0, strpos($info, ' '));
+
+				if(substr($info, -1) == 'M')
+				{
+					$info = substr($info, 0, -1);
+				}
 			}
 
 			if(is_numeric($info))
@@ -817,7 +822,7 @@ class phodevi_gpu extends phodevi_device_interface
 				list($core_freq, $mem_freq) = $od_clocks;
 			}
 		}
-		else if(phodevi::is_mesa_graphics())
+		else if(phodevi::is_linux()) // More liberally attempt open-source freq detection than phodevi::is_mesa_graphics()
 		{
 			$display_driver = phodevi::read_property('system', 'display-driver');
 			switch($display_driver)

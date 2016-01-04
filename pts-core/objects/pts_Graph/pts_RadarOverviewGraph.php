@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2012, Phoronix Media
-	Copyright (C) 2010 - 2012, Michael Larabel
+	Copyright (C) 2010 - 2015, Phoronix Media
+	Copyright (C) 2010 - 2015, Michael Larabel
 	pts_RadarOverviewGraph.php: New display type being derived from pts_OverviewGraph... WIP
 
 	This program is free software; you can redistribute it and/or modify
@@ -21,7 +21,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class pts_RadarOverviewGraph extends pts_Graph
+class pts_RadarOverviewGraph extends pts_graph_core
 {
 	public $skip_graph = false;
 	private $result_objects = array();
@@ -40,8 +40,13 @@ class pts_RadarOverviewGraph extends pts_Graph
 		parent::__construct($result_object, $result_file);
 
 		// System Identifiers
-		$system_identifiers = $result_file->get_system_identifiers();
-		if($result_file->is_multi_way_comparison() || count($result_file->get_test_titles()) < 3 || count($system_identifiers) < 3)
+		$system_identifiers = array();
+		foreach($result_file->get_systems() as $system)
+		{
+			array_push($system_identifiers, $system->get_identifier());
+		}
+
+		if($result_file->is_multi_way_comparison() || count($system_identifiers) < 3)
 		{
 			// Multi way comparisons currently render the overview graph as blank
 			// If there aren't more than 3 tests then don't render
@@ -99,7 +104,7 @@ class pts_RadarOverviewGraph extends pts_Graph
 	protected function render_graph_heading($with_version = true)
 	{
 		$this->svg_dom->add_element('rect', array('x' => 0, 'y' => 0, 'width' => $this->i['graph_width'], 'height' => $this->i['top_heading_height'], 'fill' => self::$c['color']['main_headers']));
-		$this->svg_dom->add_element('image', array('xlink:href' => pts_svg_dom::embed_png_image(PTS_CORE_STATIC_PATH . 'images/pts-77x40-white.png'), 'x' => 10, 'y' => round($this->i['top_heading_height'] / 40 + 1), 'width' => 77, 'height' => 40));
+		$this->svg_dom->add_element('image', array('xlink:href' => 'https://openbenchmarking.org/static/images/pts-77x40-white.png', 'x' => 10, 'y' => round($this->i['top_heading_height'] / 40 + 1), 'width' => 77, 'height' => 40));
 		$this->svg_dom->add_text_element($this->graph_title, array('x' => 100, 'y' => (4 + self::$c['size']['headers']), 'font-size' => self::$c['size']['headers'], 'fill' => self::$c['color']['background'], 'text-anchor' => 'start'));
 		$this->svg_dom->add_text_element($this->i['graph_version'], array('x' => 100, 'y' => (self::$c['size']['headers'] + 16), 'font-size' => self::$c['size']['key'], 'fill' => self::$c['color']['background'], 'text-anchor' => 'start', 'href' => 'http://www.phoronix-test-suite.com/'));
 	}
@@ -213,8 +218,13 @@ class pts_RadarOverviewGraph extends pts_Graph
 			}
 		}
 
-		$hw = $this->result_file->get_system_hardware();
-		$sw = $this->result_file->get_system_software();
+		$hw = array();
+		$sw = array();
+		foreach($this->result_file->get_systems() as $system)
+		{
+			array_push($hw, $system->get_hardware());
+			array_push($sw, $system->get_software());
+		}
 		$shw = array();
 
 		foreach($this->graph_data_title as $i => $title)

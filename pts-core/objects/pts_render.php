@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2014, Phoronix Media
-	Copyright (C) 2008 - 2014, Michael Larabel
+	Copyright (C) 2008 - 2015, Phoronix Media
+	Copyright (C) 2008 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -26,7 +26,6 @@ class pts_render
 	{
 		$graph = self::render_graph_process($result_object, $result_file, $save_as, $extra_attributes);
 		$graph->renderGraph();
-
 		return $graph->svg_dom->output($save_as);
 	}
 	public static function render_graph_inline_embed(&$object, &$result_file = null, $extra_attributes = null, $nested = true)
@@ -35,7 +34,7 @@ class pts_render
 		{
 			$graph = self::render_graph_process($object, $result_file, false, $extra_attributes);
 		}
-		else if($object instanceof pts_Graph)
+		else if($object instanceof pts_graph_core)
 		{
 			$graph = $object;
 		}
@@ -77,97 +76,6 @@ class pts_render
 
 		return $graph;
 	}
-	public static function multi_way_compact(&$result_file, &$result_object, $extra_attributes = null)
-	{
-		if($result_file == null)
-		{
-			return;
-		}
-
-		if(!isset($extra_attributes['compact_to_scalar']) && $result_object->test_profile->get_display_format() == 'LINE_GRAPH' && $result_file->get_system_count() > 10)
-		{
-			// If there's too many lines being plotted on line graph, likely to look messy, so convert to scalar automatically
-			$extra_attributes['compact_to_scalar'] = true;
-		}
-
-		// XXX: removed || $result_file->is_results_tracker() from below and should be added
-		// Removing the command fixes cases like: 1210053-BY-MYRESULTS43
-		if($result_file->is_multi_way_comparison() || isset($extra_attributes['compact_to_scalar']))
-		{
-			if((isset($extra_attributes['compact_to_scalar']) || (false && $result_file->is_multi_way_comparison())) && in_array($result_object->test_profile->get_display_format(), array('LINE_GRAPH', 'FILLED_LINE_GRAPH')))
-			{
-				// Convert multi-way line graph into horizontal box plot
-				if(stripos($result_object->get_arguments_description(), 'frame time') !== false || true)
-				{
-					$result_object->test_profile->set_display_format('HORIZONTAL_BOX_PLOT');
-				}
-				else
-				{
-					// Turn a multi-way line graph into an averaged bar graph
-					$buffer_items = $result_object->test_result_buffer->get_buffer_items();
-					$result_object->test_result_buffer = new pts_test_result_buffer();
-
-					foreach($buffer_items as $buffer_item)
-					{
-						$values = pts_strings::comma_explode($buffer_item->get_result_value());
-						$avg_value = pts_math::set_precision(array_sum($values) / count($values), 2);
-						$j = null;
-						if(count($values) > 2)
-						{
-							$j['min-result'] = min($values);
-							$j['max-result'] = max($values);
-
-							if($j['min-result'] == $j['max-result'])
-							{
-								$json = null;
-							}
-						}
-
-						$result_object->test_result_buffer->add_test_result($buffer_item->get_result_identifier(), $avg_value, null, $j, $j['min-result'], $j['max-result']);
-					}
-
-					$result_object->test_profile->set_display_format('BAR_GRAPH');
-				}
-			}
-
-			if($result_object->test_profile->get_display_format() != 'PIE_CHART')
-			{
-				$result_table = false;
-				pts_render::compact_result_file_test_object($result_object, $result_table, $result_file, $extra_attributes);
-			}
-		}
-		else if(in_array($result_object->test_profile->get_display_format(), array('LINE_GRAPH', 'FILLED_LINE_GRAPH')))
-		{
-				// Check to see for line graphs if every result is an array of the same result (i.e. a flat line for every result).
-				// If all the results are just flat lines, you might as well convert it to a bar graph
-				$buffer_items = $result_object->test_result_buffer->get_buffer_items();
-				$all_values_are_flat = false;
-				$flat_values = array();
-
-				foreach($buffer_items as $i => $buffer_item)
-				{
-					$unique_in_buffer = array_unique(explode(',', $buffer_item->get_result_value()));
-					$all_values_are_flat = count($unique_in_buffer) == 1;
-
-					if($all_values_are_flat == false)
-					{
-						break;
-					}
-					$flat_values[$i] = array_pop($unique_in_buffer);
-				}
-
-				if($all_values_are_flat)
-				{
-					$result_object->test_result_buffer = new pts_test_result_buffer();
-					foreach($buffer_items as $i => $buffer_item)
-					{
-						$result_object->test_result_buffer->add_test_result($buffer_item->get_result_identifier(), $flat_values[$i]);
-					}
-
-					$result_object->test_profile->set_display_format('BAR_GRAPH');
-				}
-		}
-	}
 	public static function render_graph_process(&$result_object, &$result_file = null, $save_as = false, $extra_attributes = null)
 	{
 		if(isset($extra_attributes['sort_result_buffer']))
@@ -191,123 +99,6 @@ class pts_render
 
 			$result_object->normalize_buffer_values($normalize_against);
 		}
-
-		if($result_file != null)
-		{
-			// Cache the redundant words on identifiers so it's not re-computed on every graph
-			static $redundant_word_cache;
-
-			if(!isset($redundant_word_cache[$result_file->get_title()]))
-			{
-				$redundant_word_cache[$result_file->get_title()] = pts_render::evaluate_redundant_identifier_words($result_file->get_system_identifiers());
-			}
-
-			if($redundant_word_cache[$result_file->get_title()])
-			{
-				$result_object->test_result_buffer->auto_shorten_buffer_identifiers($redundant_word_cache[$result_file->get_title()]);
-			}
-		}
-		self::multi_way_compact($result_file, $result_object, $extra_attributes);
-
-		$display_format = $result_object->test_profile->get_display_format();
-		$bar_orientation = 'HORIZONTAL'; // default to horizontal bar graph
-
-		switch($display_format)
-		{
-			case 'LINE_GRAPH':
-				if(false && $result_object->test_result_buffer->get_count() > 5)
-				{
-					// If there's too many lines close to each other, it's likely to look cluttered so turn it into horizontal range bar / box chart graph
-					$display_format = 'HORIZONTAL_BOX_PLOT';
-					$graph = new pts_HorizontalBoxPlotGraph($result_object, $result_file);
-				}
-				else
-				{
-					$graph = new pts_LineGraph($result_object, $result_file);
-				}
-				break;
-			case 'HORIZONTAL_BOX_PLOT':
-				$graph = new pts_HorizontalBoxPlotGraph($result_object, $result_file);
-				break;
-			case 'BAR_ANALYZE_GRAPH':
-			case 'BAR_GRAPH':
-				if($bar_orientation == 'VERTICAL')
-				{
-					$graph = new pts_VerticalBarGraph($result_object, $result_file);
-				}
-				else
-				{
-					$graph = new pts_HorizontalBarGraph($result_object, $result_file);
-				}
-				break;
-			case 'PASS_FAIL':
-				$graph = new pts_PassFailGraph($result_object, $result_file);
-				break;
-			case 'MULTI_PASS_FAIL':
-				$graph = new pts_MultiPassFailGraph($result_object, $result_file);
-				break;
-			case 'TEST_COUNT_PASS':
-				$graph = new pts_TestCountPassGraph($result_object, $result_file);
-				break;
-			case 'PIE_CHART':
-				$graph = new pts_PieChart($result_object, $result_file);
-				break;
-			case 'IMAGE_COMPARISON':
-				$graph = new pts_ImageComparisonGraph($result_object, $result_file);
-				break;
-			case 'FILLED_LINE_GRAPH':
-				$graph = new pts_FilledLineGraph($result_object, $result_file);
-				break;
-			case 'SCATTER_PLOT':
-				$graph = new pts_ScatterPlot($result_object, $result_file);
-				break;
-			default:
-				if(isset($extra_attributes['graph_render_type']))
-				{
-					$requested_graph_type = $extra_attributes['graph_render_type'];
-				}
-				else if(defined('GRAPH_RENDER_TYPE'))
-				{
-					$requested_graph_type = GRAPH_RENDER_TYPE;
-				}
-				else
-				{
-					$requested_graph_type = null;
-				}
-
-				switch($requested_graph_type)
-				{
-					case 'CANDLESTICK':
-						$graph = new pts_CandleStickGraph($result_object, $result_file);
-						break;
-					case 'LINE_GRAPH':
-						$graph = new pts_LineGraph($result_object, $result_file);
-						break;
-					case 'FILLED_LINE_GRAPH':
-						$graph = new pts_FilledLineGraph($result_object, $result_file);
-						break;
-					default:
-						if($bar_orientation == 'VERTICAL')
-						{
-							$graph = new pts_VerticalBarGraph($result_object, $result_file);
-						}
-						else
-						{
-							$graph = new pts_HorizontalBarGraph($result_object, $result_file);
-						}
-						break;
-				}
-				break;
-		}
-
-		if(isset($extra_attributes['regression_marker_threshold']))
-		{
-			$graph->markResultRegressions($extra_attributes['regression_marker_threshold']);
-		}
-		if(isset($extra_attributes['set_alternate_view']))
-		{
-			$graph->setAlternateView($extra_attributes['set_alternate_view']);
-		}
 		if(isset($extra_attributes['sort_result_buffer_values']))
 		{
 			$result_object->test_result_buffer->buffer_values_sort();
@@ -317,69 +108,162 @@ class pts_render
 				$result_object->test_result_buffer->buffer_values_reverse();
 			}
 		}
-		if(isset($extra_attributes['highlight_graph_values']))
+
+		if($result_file != null)
 		{
-			$graph->highlight_values($extra_attributes['highlight_graph_values']);
+			// Cache the redundant words on identifiers so it's not re-computed on every graph
+			static $redundant_word_cache;
+
+			if(!isset($redundant_word_cache[$result_file->get_title()]))
+			{
+				$redundant_word_cache[$result_file->get_title()] = self::evaluate_redundant_identifier_words($result_file->get_system_identifiers());
+			}
+
+			if($redundant_word_cache[$result_file->get_title()])
+			{
+				$result_object->test_result_buffer->auto_shorten_buffer_identifiers($redundant_word_cache[$result_file->get_title()]);
+			}
+
+			// COMPACT PROCESS
+			if(!isset($extra_attributes['compact_to_scalar']) && $result_object->test_profile->get_display_format() == 'LINE_GRAPH' && $result_file->get_system_count() > 10)
+			{
+				// If there's too many lines being plotted on line graph, likely to look messy, so convert to scalar automatically
+				$extra_attributes['compact_to_scalar'] = true;
+			}
+
+			// XXX: removed || $result_file->is_results_tracker() from below and should be added
+			// Removing the command fixes cases like: 1210053-BY-MYRESULTS43
+			$result_identifiers = $result_object->test_result_buffer->get_identifiers();
+			if($result_file->is_multi_way_comparison($result_identifiers, $extra_attributes) || isset($extra_attributes['compact_to_scalar']) || isset($extra_attributes['compact_scatter']))
+			{
+				if((isset($extra_attributes['compact_to_scalar']) || (false && $result_file->is_multi_way_comparison($result_identifiers, $extra_attributes))) && in_array($result_object->test_profile->get_display_format(), array('LINE_GRAPH', 'FILLED_LINE_GRAPH')))
+				{
+					// Convert multi-way line graph into horizontal box plot
+					if(true) // XXX is there any cases where we don't want horizontal box plot but prefer averaged bar graph?
+					{
+						$result_object->test_profile->set_display_format('HORIZONTAL_BOX_PLOT');
+					}
+				/*	else // XXX commented out during PTS 6.0 development, TODO decide if to delete
+					{
+						// Turn a multi-way line graph into an averaged bar graph
+						$buffer_items = $result_object->test_result_buffer->get_buffer_items();
+						$result_object->test_result_buffer = new pts_test_result_buffer();
+
+						foreach($buffer_items as $buffer_item)
+						{
+							$values = pts_strings::comma_explode($buffer_item->get_result_value());
+							$avg_value = pts_math::set_precision(array_sum($values) / count($values), 2);
+							$j = null;
+							if(count($values) > 2)
+							{
+								$j['min-result'] = min($values);
+								$j['max-result'] = max($values);
+
+								if($j['min-result'] == $j['max-result'])
+								{
+									$json = null;
+								}
+							}
+
+							$result_object->test_result_buffer->add_test_result($buffer_item->get_result_identifier(), $avg_value, null, $j, $j['min-result'], $j['max-result']);
+						}
+
+						$result_object->test_profile->set_display_format('BAR_GRAPH');
+					} */
+				}
+
+				if($result_file->is_results_tracker())
+				{
+					$extra_attributes['force_tracking_line_graph'] = 1;
+				}
+
+				if((self::multi_way_identifier_check($result_object->test_result_buffer->get_identifiers()) || (isset($extra_attributes['force_tracking_line_graph']) && $extra_attributes['force_tracking_line_graph'])))
+				{
+					//$result_table = false;
+					//pts_render::compact_result_file_test_object($result_object, $result_table, $result_file, $extra_attributes);
+					if($result_object->test_profile->get_display_format() == 'LINE_GRAPH' || (isset($extra_attributes['force_tracking_line_graph']) && $extra_attributes['force_tracking_line_graph']))
+					{
+						$result_object->test_profile->set_display_format('LINE_GRAPH');
+					}
+				}
+			}
+			else if(in_array($result_object->test_profile->get_display_format(), array('LINE_GRAPH')))
+			{
+					// Check to see for line graphs if every result is an array of the same result (i.e. a flat line for every result).
+					// If all the results are just flat lines, you might as well convert it to a bar graph
+					$buffer_items = $result_object->test_result_buffer->get_buffer_items();
+					$all_values_are_flat = false;
+					$flat_values = array();
+
+					foreach($buffer_items as $i => $buffer_item)
+					{
+						$unique_in_buffer = array_unique(explode(',', $buffer_item->get_result_value()));
+						$all_values_are_flat = count($unique_in_buffer) == 1;
+
+						if($all_values_are_flat == false)
+						{
+							break;
+						}
+						$flat_values[$i] = array_pop($unique_in_buffer);
+					}
+
+					if($all_values_are_flat)
+					{
+						$result_object->test_result_buffer = new pts_test_result_buffer();
+						foreach($buffer_items as $i => $buffer_item)
+						{
+							$result_object->test_result_buffer->add_test_result($buffer_item->get_result_identifier(), $flat_values[$i]);
+						}
+
+						$result_object->test_profile->set_display_format('BAR_GRAPH');
+					}
+			}
 		}
-		else if(PTS_IS_CLIENT && pts_client::read_env('GRAPH_HIGHLIGHT') != false)
+
+		if(isset($extra_attributes['graph_render_type']))
 		{
-			$graph->highlight_values(pts_strings::comma_explode(pts_client::read_env('GRAPH_HIGHLIGHT')));
+			$result_object->test_profile->set_display_format($extra_attributes['graph_render_type']);
 		}
+		$display_format = $result_object->test_profile->get_display_format();
 
 		switch($display_format)
 		{
 			case 'LINE_GRAPH':
-				if(isset($extra_attributes['no_overview_text']) && $graph instanceof pts_LineGraph)
-				{
-					$graph->plot_overview_text = false;
-				}
-			case 'FILLED_LINE_GRAPH':
-			case 'BAR_ANALYZE_GRAPH':
-			case 'SCATTER_PLOT':
-				//$graph->hideGraphIdentifiers();
-				foreach($result_object->test_result_buffer->get_buffer_items() as $buffer_item)
-				{
-					$graph->loadGraphValues(pts_strings::comma_explode($buffer_item->get_result_value()), $buffer_item->get_result_identifier());
-					$graph->loadGraphRawValues(pts_strings::comma_explode($buffer_item->get_result_raw()));
-				}
-
-				$scale_special = $result_object->test_profile->get_result_scale_offset();
-				if(!empty($scale_special) && count(($ss = pts_strings::comma_explode($scale_special))) > 0)
-				{
-					$graph->loadGraphIdentifiers($ss);
-				}
+				$graph = new pts_graph_lines($result_object, $result_file, $extra_attributes);
 				break;
 			case 'HORIZONTAL_BOX_PLOT':
-				// TODO: should be able to load pts_test_result_buffer_item objects more cleanly into pts_Graph
-				$identifiers = array();
-				$values = array();
-
-				foreach($result_object->test_result_buffer->get_buffer_items() as $buffer_item)
-				{
-					array_push($identifiers, $buffer_item->get_result_identifier());
-					array_push($values, pts_strings::comma_explode($buffer_item->get_result_value()));
-				}
-
-				$graph->loadGraphIdentifiers($identifiers);
-				$graph->loadGraphValues($values);
+				$graph = new pts_graph_box_plot($result_object, $result_file, $extra_attributes);
+				break;
+			case 'BAR_ANALYZE_GRAPH':
+			case 'BAR_GRAPH':
+				$graph = new pts_graph_horizontal_bars($result_object, $result_file, $extra_attributes);
+				break;
+			case 'PASS_FAIL':
+			case 'MULTI_PASS_FAIL':
+				$graph = new pts_graph_passfail($result_object, $result_file, $extra_attributes);
+				break;
+			case 'IMAGE_COMPARISON':
+				$graph = new pts_graph_iqc($result_object, $result_file, $extra_attributes);
+				break;
+			case 'SCATTER_PLOT':
+				$graph = new pts_graph_scatter_plot($result_object, $result_file, $extra_attributes);
 				break;
 			default:
-				// TODO: should be able to load pts_test_result_buffer_item objects more cleanly into pts_Graph
-				$identifiers = array();
-				$values = array();
-				$raw_values = array();
 
-				foreach($result_object->test_result_buffer->get_buffer_items() as $buffer_item)
+				switch($requested_graph_type)
 				{
-					array_push($identifiers, $buffer_item->get_result_identifier());
-					array_push($values, $buffer_item->get_result_value());
-					array_push($raw_values, $buffer_item->get_result_raw());
+					case 'LINE_GRAPH':
+						$graph = new pts_graph_lines($result_object, $result_file, $extra_attributes);
+						break;
+					case 'HORIZONTAL_BOX_PLOT':
+						$graph = new pts_graph_box_plot($result_object, $result_file, $extra_attributes);
+						break;
+					default:
+						$graph = new pts_graph_horizontal_bars($result_object, $result_file, $extra_attributes);
+						break;
 				}
-
-				$graph->loadGraphIdentifiers($identifiers);
-				$graph->loadGraphValues($values);
-				$graph->loadGraphRawValues($raw_values);
 				break;
+
 		}
 
 		self::report_test_notes_to_graph($graph, $result_object);
@@ -388,32 +272,34 @@ class pts_render
 	}
 	public static function report_system_notes_to_table(&$result_file, &$table)
 	{
-		$system_json = $result_file->get_system_json();
-		$identifiers = $result_file->get_system_identifiers();
-		$identifier_count = count($identifiers);
+		$identifier_count = 0;
 		$system_attributes = array();
 
-		foreach($system_json as $i => $json)
+		foreach($result_file->get_systems() as $s)
 		{
+			$json = $s->get_json();
+			$identifier = $s->get_identifier();
+			$identifier_count++;
+
 			if(isset($json['kernel-parameters']) && $json['kernel-parameters'] != null)
 			{
-				$system_attributes['Kernel'][$identifiers[$i]] = $json['kernel-parameters'];
+				$system_attributes['Kernel'][$identifier] = $json['kernel-parameters'];
 			}
 			if(isset($json['environment-variables']) && $json['environment-variables'] != null)
 			{
-				$system_attributes['Environment'][$identifiers[$i]] = $json['environment-variables'];
+				$system_attributes['Environment'][$identifier] = $json['environment-variables'];
 			}
 			if(isset($json['compiler-configuration']) && $json['compiler-configuration'] != null)
 			{
-				$system_attributes['Compiler'][$identifiers[$i]] = $json['compiler-configuration'];
+				$system_attributes['Compiler'][$identifier] = $json['compiler-configuration'];
 			}
 			if(isset($json['disk-scheduler']) && isset($json['disk-mount-options']))
 			{
-				$system_attributes['Disk'][$identifiers[$i]] = $json['disk-scheduler'] . ' / ' . $json['disk-mount-options'];
+				$system_attributes['Disk'][$identifier] = $json['disk-scheduler'] . ' / ' . $json['disk-mount-options'];
 			}
 			if(isset($json['cpu-scaling-governor']))
 			{
-				$system_attributes['Processor'][$identifiers[$i]] = 'Scaling Governor: ' . $json['cpu-scaling-governor'];
+				$system_attributes['Processor'][$identifier] = 'Scaling Governor: ' . $json['cpu-scaling-governor'];
 			}
 			if(isset($json['graphics-2d-acceleration']) || isset($json['graphics-aa']) || isset($json['graphics-af']))
 			{
@@ -426,11 +312,11 @@ class pts_render
 					}
 				}
 
-				$system_attributes['Graphics'][$identifiers[$i]] = implode(' - ' , $report);
+				$system_attributes['Graphics'][$identifier] = implode(' - ' , $report);
 			}
 			if(isset($json['graphics-compute-cores']))
 			{
-				$system_attributes['OpenCL'][$identifiers[$i]] = 'GPU Compute Cores: ' . $json['graphics-compute-cores'];
+				$system_attributes['OpenCL'][$identifier] = 'GPU Compute Cores: ' . $json['graphics-compute-cores'];
 			}
 		}
 
@@ -575,10 +461,18 @@ class pts_render
 		foreach($json as $identifier => &$data)
 		{
 			// TODO XXX: Ultimately merge this data into the SE +/- line...
-			if(isset($data['min-result']) && isset($data['max-result']))
+			if(isset($data['min-result']))
 			{
-				$graph->addGraphIdentifierNote($identifier, 'MIN: ' . $data['min-result'] . ' / MAX: ' . $data['max-result']);
+				if(isset($data['max-result']))
+				{
+					$graph->addGraphIdentifierNote($identifier, 'MIN: ' . $data['min-result'] . ' / MAX: ' . $data['max-result']);
+				}
+				else
+				{
+					$graph->addGraphIdentifierNote($identifier, 'MIN: ' . $data['min-result']);
+				}
 			}
+
 			if(isset($data['install-footnote']) && $data['install-footnote'] != null)
 			{
 				$graph->addTestNote($identifier . ': ' . $data['install-footnote']);
@@ -693,7 +587,7 @@ class pts_render
 			}
 		}
 
-		$test_profile = new pts_test_profile(null);
+		$test_profile = new pts_test_profile(null, null, false);
 		$test_profile->set_test_title($title);
 		$test_profile->set_result_scale($title);
 		$test_profile->set_display_format('BAR_GRAPH');
@@ -704,239 +598,17 @@ class pts_render
 
 		return $test_result;
 	}
-	public static function compact_result_file_test_object(&$mto, &$result_table = false, &$result_file, $extra_attributes = null)
-	{
-		$identifiers_inverted = $result_file && $result_file->is_multi_way_inverted();
-		// TODO: this may need to be cleaned up, its logic is rather messy
-		$condense_multi_way = isset($extra_attributes['condense_multi_way']);
-		if(count($mto->test_profile->get_result_scale_offset()) > 0)
-		{
-			// It's already doing something
-			return;
-		}
-
-		$scale_special = array();
-		$days = array();
-		$systems = array();
-		$prev_date = null;
-		$is_tracking = true;
-		$sha1_short_count = 0;
-		$buffer_count = $mto->test_result_buffer->get_count();
-
-		if($identifiers_inverted)
-		{
-			$system_index = 0;
-			$date_index = 1;
-		}
-		else
-		{
-			$system_index = 1;
-			$date_index = 0;
-		}
-
-		foreach($mto->test_result_buffer->get_buffer_items() as $buffer_item)
-		{
-			$identifier = array_map('trim', explode(':', $buffer_item->get_result_identifier()));
-
-			switch(count($identifier))
-			{
-				case 2:
-					$system = $identifier[$system_index];
-					$date = $identifier[$date_index];
-					break;
-				case 1:
-					$system = 0;
-					$date = $identifier[0];
-					break;
-				default:
-					return;
-					break;
-			}
-
-			if(!isset($systems[$system]))
-			{
-				$systems[$system] = 0;
-			}
-			if(!isset($days[$date]))
-			{
-				$days[$date] = null;
-			}
-
-			if($is_tracking)
-			{
-				// First do a dirty SHA1 hash check
-				if(strlen($date) != 40 || strpos($date, ' ') !== false)
-				{
-					if(($x = strpos($date, ' + ')) !== false)
-					{
-						$date = substr($date, 0, $x);
-					}
-
-					// Check to see if only numeric changes are being made
-					$sha1_short_hash_ending = isset($date[7]) && ctype_alnum(substr($date, -8));
-					$date = str_replace('s', null, pts_strings::remove_from_string($date, pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DASH | pts_strings::CHAR_DECIMAL));
-
-					if($sha1_short_hash_ending)
-					{
-						$sha1_short_count++;
-					}
-
-					if($prev_date != null && $date != $prev_date && $sha1_short_hash_ending == false && $sha1_short_count < 3)
-					{
-						$is_tracking = false;
-					}
-
-					$prev_date = $date;
-				}
-			}
-		}
-
-		if($is_tracking)
-		{
-			$prev_date_r = explode(' ', $prev_date);
-
-			if(count($prev_date_r) == 2 && ctype_alpha($prev_date_r[0]))
-			{
-				// This check should make it so when like testing every Ubuntu releases (Ubuntu 11.04, Ubuntu 11.10, etc) it's not in a line graph
-				$is_tracking = false;
-			}
-		}
-		else if($is_tracking == false && $sha1_short_count > 5)
-		{
-			// It's probably actually tracking..... based upon Stefan's Wine 1.4 example on 15 March 2012
-			$is_tracking = true;
-		}
-
-		foreach(array_keys($days) as $day_key)
-		{
-			$days[$day_key] = $systems;
-		}
-
-		$raw_days = $days;
-		$json_days = $days;
-
-		foreach($mto->test_result_buffer->get_buffer_items() as $buffer_item)
-		{
-			$identifier = array_map('trim', explode(':', $buffer_item->get_result_identifier()));
-
-			switch(count($identifier))
-			{
-				case 2:
-					$system = $identifier[$system_index];
-					$date = $identifier[$date_index];
-					break;
-				case 1:
-					$system = 0;
-					$date = $identifier[0];
-					break;
-				default:
-					return;
-					break;
-			}
-
-			$days[$date][$system] = $buffer_item->get_result_value();
-			$raw_days[$date][$system] = $buffer_item->get_result_raw();
-			$json_days[$date][$system] = $buffer_item->get_result_json();
-
-			if(!is_numeric($days[$date][$system]))
-			{
-				return;
-			}
-		}
-
-		$mto->test_result_buffer = new pts_test_result_buffer();
-		$day_keys = array_keys($days);
-
-		if($condense_multi_way)
-		{
-			$mto->set_used_arguments_description($mto->get_arguments_description() . ' | Composite Of: ' . implode(' - ', array_keys($days)));
-			foreach(array_keys($systems) as $system_key)
-			{
-				$sum = 0;
-				$count = 0;
-
-				foreach($day_keys as $day_key)
-				{
-					$sum += $days[$day_key][$system_key];
-					$count++;
-				}
-
-				$mto->test_result_buffer->add_test_result($system_key, ($sum / $count));
-			}
-		}
-		else
-		{
-			$mto->test_profile->set_result_scale($mto->test_profile->get_result_scale() . ' | ' . implode(',', array_keys($days)));
-
-			if($is_tracking && $buffer_count < 16 && $result_file && pts_result_file_analyzer::analyze_result_file_intent($result_file) == false)
-			{
-				// It can't be a tracker if the result file is comparing hardware/software, etc
-				$is_tracking = false;
-			}
-
-			switch($mto->test_profile->get_display_format())
-			{
-				//case 'HORIZONTAL_BOX_PLOT':
-				//	$mto->test_profile->set_display_format('HORIZONTAL_BOX_PLOT_MULTI');
-				//	break;
-				case 'SCATTER_PLOT';
-					break;
-				default:
-					$line_graph_type = isset($extra_attributes['filled_line_graph']) ? 'FILLED_LINE_GRAPH' : 'LINE_GRAPH';
-					$mto->test_profile->set_display_format((count($days) < 5 || ($is_tracking == false && !isset($extra_attributes['force_line_graph_compact'])) ? 'BAR_ANALYZE_GRAPH' : $line_graph_type));
-					break;
-			}
-
-			foreach(array_keys($systems) as $system_key)
-			{
-				$results = array();
-				$raw_results = array();
-				$json_results = array();
-
-				foreach($day_keys as $day_key)
-				{
-					array_push($results, $days[$day_key][$system_key]);
-					array_push($raw_results, $raw_days[$day_key][$system_key]);
-					pts_arrays::unique_push($json_results, $json_days[$day_key][$system_key]);
-				}
-
-				// TODO XXX: Make JSON data work for multi-way comparisons!
-
-				if(count($json_results) == 1)
-				{
-					$json = array_shift($json_results);
-				}
-				else
-				{
-					$json = null;
-				}
-
-				$mto->test_result_buffer->add_test_result($system_key, implode(',', $results), implode(',', $raw_results), $json);
-			}
-		}
-
-		if($result_table !== false)
-		{
-			foreach(array_keys($systems) as $system_key)
-			{
-				foreach($day_keys as $day_key)
-				{
-					if(!isset($result_table[$system_key][$day_key]))
-					{
-						$result_table[$system_key][$day_key] = array();
-					}
-
-					array_push($result_table[$system_key][$day_key], $days[$day_key][$system_key], $raw_days[$day_key][$system_key]);
-				}
-			}
-		}
-	}
-	public static function multi_way_identifier_check($identifiers, &$system_hardware = null, &$result_file = null)
+	public static function multi_way_identifier_check($identifiers)
 	{
 		/*
 			Samples To Use For Testing:
 			1109026-LI-AMDRADEON57
 		*/
+
+		if(count($identifiers) < 2)
+		{
+			return false;
+		}
 
 		$systems = array();
 		$targets = array();
@@ -959,82 +631,19 @@ class pts_render
 			{
 				// The results aren't ordered
 				$is_ordered = false;
-
-				if($result_file == null)
-				{
-					return false;
-				}
 			}
 
 			$prev_system = $identifier_r[0];
 			$systems[$identifier_r[0]] = !isset($systems[$identifier_r[0]]) ? 1 : $systems[$identifier_r[0]] + 1;
-			$targets[$identifier_r[1]] = !isset($targets[$identifier_r[1]]) ? 1 : $targets[$identifier_r[1]] + 1;	
+			$targets[$identifier_r[1]] = !isset($targets[$identifier_r[1]]) ? 1 : $targets[$identifier_r[1]] + 1;
 		}
 
 		if(false && $is_ordered == false && $is_multi_way)
 		{
 			// TODO: get the reordering code to work
-			if($result_file instanceof pts_result_file)
-			{
-				// Reorder the result file
-				$to_order = array();
-				sort($identifiers);
-				foreach($identifiers as $identifier)
-				{
-					array_push($to_order, new pts_result_merge_select($result_file, $identifier));
-				}
-
-				$ordered_xml = pts_merge::merge_test_results_array($to_order);
-				$result_file = new pts_result_file($ordered_xml);
-				$is_multi_way = true;
-			}
-			else
-			{
-				$is_multi_way = false;
-			}
 		}
 
 		$is_multi_way_inverted = $is_multi_way && count($targets) > count($systems);
-
-		/*
-		if($is_multi_way)
-		{
-			if(count($systems) < 3 && count($systems) != count($targets))
-			{
-				$is_multi_way = false;
-			}
-		}
-		*/
-
-		// TODO XXX: for now temporarily disable inverted multi-way check to decide how to rework it appropriately
-		/*
-		if($is_multi_way)
-		{
-			$targets_count = count($targets);
-			$systems_count = count($systems);
-
-			if($targets_count > $systems_count)
-			{
-				$is_multi_way_inverted = true;
-			}
-			else if(is_array($system_hardware))
-			{
-				$hardware = array_unique($system_hardware);
-				//$software = array_unique($system_software);
-
-				if($targets_count != $systems_count && count($hardware) == $systems_count)
-				{
-					$is_multi_way_inverted = true;
-				}
-				else if(count($hardware) == ($targets_count * $systems_count))
-				{
-					$is_multi_way_inverted = true;
-				}
-			}
-		}
-		*/
-
-		// TODO: figure out what else is needed to reasonably determine if the result file is a multi-way comparison
 
 		return $is_multi_way ? array($is_multi_way, $is_multi_way_inverted) : false;
 	}

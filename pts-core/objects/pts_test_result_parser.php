@@ -47,12 +47,6 @@ class pts_test_result_parser
 			return false;
 		}
 
-		if(self::$supported_sensors == null)
-		{
-			// Cache this since this shouldn't change between tests/runs
-			self::$supported_sensors = phodevi::supported_sensors();
-		}
-
 		foreach(array_keys($monitor_sensor) as $i)
 		{
 			// TODO: Right now we are looping through SystemMonitor tags, but right now pts-core only supports providing one monitor sensor as the result
@@ -64,6 +58,12 @@ class pts_test_result_parser
 				$start_time = microtime(true);
 				array_push(self::$monitoring_sensors, array(0, $sensor, null, $start_time));
 				continue;
+			}
+
+			if(self::$supported_sensors == null)
+			{
+				// Cache this since this shouldn't change between tests/runs
+				self::$supported_sensors = phodevi::supported_sensors();
 			}
 
 			if(count($sensor) != 2 || !in_array($sensor, self::$supported_sensors))
@@ -135,7 +135,8 @@ class pts_test_result_parser
 				// Delta time
 				$result_value = $end_time - $sensor_r[3];
 
-				if($result_value < 3)
+				$minimal_test_time = pts_config::read_user_config('PhoronixTestSuite/Options/TestResultValidation/MinimalTestTime', 3);
+				if($result_value < $minimal_test_time)
 				{
 					// The test ended too fast
 					$result_value = null;
@@ -205,24 +206,36 @@ class pts_test_result_parser
 		switch($test_run_request->test_profile->get_display_format())
 		{
 			case 'IMAGE_COMPARISON':
-				$test_run_request->active_result = self::parse_iqc_result($test_run_request->test_profile, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments);
+				$test_run_request->active->active_result = self::parse_iqc_result($test_run_request->test_profile, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments);
 				break;
 			case 'PASS_FAIL':
 			case 'MULTI_PASS_FAIL':
-				$test_run_request->active_result = self::parse_generic_result($test_run_request, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments);
-				break;
-			case 'BAR_GRAPH':
-			default:
-				$test_run_request->active_result = self::parse_numeric_result($test_run_request, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments);
-
-				if($test_run_request->test_profile->get_display_format() == 'BAR_GRAPH' && !is_numeric($test_run_request->active_result))
+				$test_run_request->active->active_result = self::parse_generic_result($test_run_request, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments);
+				if(str_replace(array('PASS', 'FAIL', ','), null, $test_run_request->active->active_result) == null)
 				{
-					$test_run_request->active_result = false;
+					// properly formatted multi-pass fail
+				}
+				else if($test_run_request->active->active_result == 'TRUE' || $test_run_request->active->active_result == 'PASS' || $test_run_request->active->active_result == 'PASSED')
+				{
+					$test_run_request->active->active_result = 'PASS';
 				}
 				else
 				{
-					$test_run_request->active_min_result = self::parse_numeric_result($test_run_request, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments, 'MIN');
-					$test_run_request->active_max_result = self::parse_numeric_result($test_run_request, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments, 'MAX');
+					$test_run_request->active->active_result = 'FAIL';
+				}
+				break;
+			case 'BAR_GRAPH':
+			default:
+				$test_run_request->active->active_result = self::parse_numeric_result($test_run_request, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments);
+
+				if($test_run_request->test_profile->get_display_format() == 'BAR_GRAPH' && !is_numeric($test_run_request->active->active_result))
+				{
+					$test_run_request->active->active_result = false;
+				}
+				else
+				{
+					$test_run_request->active->active_min_result = self::parse_numeric_result($test_run_request, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments, 'MIN');
+					$test_run_request->active->active_max_result = self::parse_numeric_result($test_run_request, $parse_xml_file, $test_log_file, $pts_test_arguments, $extra_arguments, 'MAX');
 				}
 				break;
 		}
@@ -316,8 +329,9 @@ class pts_test_result_parser
 				$tp->set_display_format('LINE_GRAPH');
 				$tp->set_identifier(null);
 				$extra_result = new pts_test_result($tp);
+				$extra_result->active = new pts_test_result_buffer_active();
 				$extra_result->set_used_arguments_description('Total Frame Time');
-				$extra_result->set_result(implode(',', $frame_all_times));
+				$extra_result->active->set_result(implode(',', $frame_all_times));
 				array_push($extra_results, $extra_result);
 				//$extra_result->set_used_arguments(phodevi::sensor_name($sensor) . ' ' . $test_result->get_arguments());
 			}
@@ -328,13 +342,13 @@ class pts_test_result_parser
 			$test_result->secondary_linked_results = $extra_results;
 		}
 	}
-	public static function calculate_end_result(&$test_result)
+	public static function calculate_end_result(&$test_result, &$active_result_buffer)
 	{
-		$trial_results = $test_result->test_result_buffer->get_values();
+		$trial_results = $active_result_buffer->results;
 
 		if(count($trial_results) == 0)
 		{
-			$test_result->set_result(0);
+			$test_result->active->set_result(0);
 			return false;
 		}
 
@@ -375,7 +389,7 @@ class pts_test_result_parser
 				{
 					foreach($trial_results as $result)
 					{
-						if($result == 'FALSE' || $result == '0' || $result == 'FAIL')
+						if($result == 'FALSE' || $result == '0' || $result == 'FAIL' || $result == 'FAILED')
 						{
 							if($END_RESULT == -1 || $END_RESULT == 'PASS')
 							{
@@ -433,22 +447,22 @@ class pts_test_result_parser
 							$END_RESULT = round($END_RESULT);
 						}
 
-						if(count($min = $test_result->test_result_buffer->get_min_values()) > 0)
+						if(count($min = $active_result_buffer->min_results) > 0)
 						{
 							$min = round(min($min), 2);
 
 							if($min < $END_RESULT && is_numeric($min) && $min != 0)
 							{
-								$test_result->set_min_result($min);
+								$test_result->active->set_min_result($min);
 							}
 						}
-						if(count($max = $test_result->test_result_buffer->get_max_values()) > 0)
+						if(count($max = $active_result_buffer->max_results) > 0)
 						{
 							$max = round(max($max), 2);
 
 							if($max > $END_RESULT && is_numeric($max) && $max != 0)
 							{
-								$test_result->set_max_result($max);
+								$test_result->active->set_max_result($max);
 							}
 						}
 						break;
@@ -456,7 +470,7 @@ class pts_test_result_parser
 				break;
 		}
 
-		$test_result->set_result($END_RESULT);
+		$test_result->active->set_result($END_RESULT);
 	}
 	protected static function parse_iqc_result(&$test_profile, $parse_xml_file, $log_file, $pts_test_arguments, $extra_arguments)
 	{
@@ -541,6 +555,7 @@ class pts_test_result_parser
 		$strip_from_result = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/ResultsParser/StripFromResult');
 		$strip_result_postfix = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/ResultsParser/StripResultPostfix');
 		$multi_match = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/ResultsParser/MultiMatch');
+		$file_format = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/ResultsParser/FileFormat');
 		$test_result = false;
 
 		if($prefix != null && substr($prefix, -1) != '_')
@@ -583,6 +598,11 @@ class pts_test_result_parser
 			}
 
 			$space_out_chars = array('(', ')', "\t");
+
+			if(isset($file_format[$i]) && $file_format[$i] == 'CSV')
+			{
+				array_push($space_out_chars, ',');
+			}
 
 			if((isset($result_template[$i][($start_result_pos - 1)]) && $result_template[$i][($start_result_pos - 1)] == '/') || (isset($result_template[$i][($start_result_pos + strlen($result_key[$i]))]) && $result_template[$i][($start_result_pos + strlen($result_key[$i]))] == '/'))
 			{
@@ -849,7 +869,8 @@ class pts_test_result_parser
 					break;
 				case 'AVERAGE':
 				default:
-					$test_result = array_sum($test_results) / count($test_results);
+					if($is_numeric_check)
+						$test_result = array_sum($test_results) / count($test_results);
 					break;
 			}
 

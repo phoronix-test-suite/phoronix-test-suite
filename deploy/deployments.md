@@ -16,6 +16,10 @@ The `*.conf` files provide basic `phoromatic-client` and `phoromatic-server` job
 
 The `*.service` files provide basic `phoromatic-client` and `phoromatic-server` job files for systemd-based Linux systems looking to deploy Phoromatic for controlling the Phoronix Test Suite.
 
+## phoromatic-initd: Reference sysvinit script for Phoromatic
+
+The files provide basic `phoromatic-client` /etc/init.d implementation for older Linux systems.
+
 ## JuJu
 
 Ubuntu JuJu deployment charm for the Phoronix Test Suite.

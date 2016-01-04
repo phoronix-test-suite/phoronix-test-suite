@@ -2,8 +2,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2014, Michael Larabel
-	Copyright (C) 2014, Phoronix Media
+	Copyright (C) 2014 - 2015, Michael Larabel
+	Copyright (C) 2014 - 2015, Phoronix Media
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -68,7 +68,7 @@ class pushover_net extends pts_module_interface
 			return false;
 		}
 
-		self::post_to_pushover(self::$result_identifier . ' finished ' . $test_run_request->test_profile->get_title() . ' [' . $test_run_request->get_arguments_description() . '] with a result of ' . $test_run_request->get_result() . ' ' . $test_run_request->test_profile->get_result_scale_formatted());
+		self::post_to_pushover(self::$result_identifier . ' finished ' . $test_run_request->test_profile->get_title() . ' [' . $test_run_request->get_arguments_description() . '] with a result of ' . $test_run_request->active->get_result() . ' ' . $test_run_request->test_profile->get_result_scale_formatted());
 	}
 	public static function __post_run_process(&$test_run_manager)
 	{

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2013, Phoronix Media
-	Copyright (C) 2009 - 2013, Michael Larabel
+	Copyright (C) 2009 - 2015, Phoronix Media
+	Copyright (C) 2009 - 2015, Michael Larabel
 	pts_concise_display_mode.php: The batch / concise display mode
 
 	This program is free software; you can redistribute it and/or modify
@@ -252,7 +252,11 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	}
 	public function test_install_progress_completed()
 	{
-		echo $this->progress_last_float != -1 ? str_repeat('.', $this->progress_char_count - $this->progress_char_pos) . PHP_EOL : null;
+		$rep = $this->progress_char_count - $this->progress_char_pos;
+		if($this->progress_last_float != -1 && $rep >= 0)
+		{
+			echo str_repeat('.', $rep) . PHP_EOL;
+		}
 		$this->progress_last_float == -1;
 	}
 	public function test_install_begin($test_install_request)
@@ -315,7 +319,19 @@ class pts_concise_display_mode implements pts_display_mode_interface
 
 		if($remaining_length > 1)
 		{
-			array_push($display_table, array($this->tab . 'Estimated Time To Completion:', pts_strings::format_time($remaining_length, 'SECONDS', true, 60)));
+			$est_end_time = null;
+
+			if((time() % 86400) + $remaining_length > 86400)
+			{
+				// If test run is past current calendar date
+				$est_end_time = date(' (H:i T M j)', time() + $remaining_length);
+			}
+			else
+			{
+				$est_end_time = date(' (H:i T)', time() + $remaining_length);
+			}
+
+			array_push($display_table, array($this->tab . 'Estimated Time To Completion:', pts_strings::format_time($remaining_length, 'SECONDS', true, 60) . $est_end_time));
 		}
 
 		echo pts_user_io::display_text_table($display_table);
@@ -335,18 +351,18 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	}
 	public function test_run_instance_output(&$to_output)
 	{
-		if((pts_c::$test_flags & pts_c::debug_mode))
+		if(pts_client::is_debug_mode())
 		{
 			echo $to_output;
 		}
 
 		return;
 	}
-	public function test_run_instance_complete(&$test_result)
+	public function test_run_instance_complete(&$result)
 	{
 		if($this->expected_trial_run_count > 1 && $this->trial_run_count_current >= $this->expected_trial_run_count)
 		{
-			$values = $test_result->test_result_buffer->get_values();
+			$values = $result->active->results;
 
 			if(count($values) > 1)
 			{
@@ -364,11 +380,20 @@ class pts_concise_display_mode implements pts_display_mode_interface
 		}
 		else if(in_array($test_result->test_profile->get_display_format(), array('PASS_FAIL', 'MULTI_PASS_FAIL')))
 		{
-			$end_print = $this->tab . $this->tab . 'Final: ' . $test_result->get_result() . ' (' . $test_result->test_profile->get_result_scale() . ')' . PHP_EOL;
+			if($test_result->test_profile->get_result_scale())
+			{
+				$rs = ' (' . $test_result->test_profile->get_result_scale() . ')';
+			}
+			else
+			{
+				$rs = null;
+			}
+
+			$end_print = $this->tab . $this->tab . 'Final: ' . $test_result->active->get_result() . $rs . PHP_EOL;
 		}
 		else if(in_array($test_result->test_profile->get_display_format(), array('FILLED_LINE_GRAPH', 'LINE_GRAPH')))
 		{
-			$values = explode(',', $test_result->get_result());
+			$values = explode(',', $test_result->active->get_result());
 			$end_print = null;
 
 			if(count($values) > 1)
@@ -385,23 +410,23 @@ class pts_concise_display_mode implements pts_display_mode_interface
 		{
 			$end_print = PHP_EOL . $this->tab . 'Test Results:' . PHP_EOL;
 
-			foreach($test_result->test_result_buffer->get_values() as $result)
+			foreach($test_result->active->results as $result)
 			{
 				$end_print .= $this->tab . $this->tab . $result . PHP_EOL;
 			}
 
-			$end_print .= PHP_EOL . $this->tab . pts_strings::result_quantifier_to_string($test_result->test_profile->get_result_quantifier()) . ': ' . $test_result->get_result() . ' ' . $test_result->test_profile->get_result_scale();
+			$end_print .= PHP_EOL . $this->tab . pts_strings::result_quantifier_to_string($test_result->test_profile->get_result_quantifier()) . ': ' . $test_result->active->get_result() . ' ' . $test_result->test_profile->get_result_scale();
 
-			if($test_result->get_min_result())
+			if($test_result->active->get_min_result())
 			{
-				$end_print .= PHP_EOL . $this->tab . 'Minimum: ' . $test_result->get_min_result();
+				$end_print .= PHP_EOL . $this->tab . 'Minimum: ' . $test_result->active->get_min_result();
 			}
-			if($test_result->get_max_result())
+			if($test_result->active->get_max_result())
 			{
-				$end_print .= PHP_EOL . $this->tab . 'Maximum: ' . $test_result->get_max_result();
+				$end_print .= PHP_EOL . $this->tab . 'Maximum: ' . $test_result->active->get_max_result();
 			}
 
-			if($test_result->get_result() == 0)
+			if($test_result->active->get_result() == 0)
 			{
 				$end_print .= PHP_EOL . $this->tab . 'This test failed to run properly.';
 			}
@@ -425,7 +450,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 
 		if($shown_pts == false)
 		{
-			$string = pts_title() . PHP_EOL . $string;
+			$string = pts_core::program_title() . PHP_EOL . $string;
 			$shown_pts = true;
 		}
 

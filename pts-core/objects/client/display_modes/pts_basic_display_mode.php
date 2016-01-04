@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2013, Phoronix Media
-	Copyright (C) 2009 - 2013, Michael Larabel
+	Copyright (C) 2009 - 2015, Phoronix Media
+	Copyright (C) 2009 - 2015, Michael Larabel
 	pts_basic_display_mode.php: The basic display mode
 
 	This program is free software; you can redistribute it and/or modify
@@ -81,7 +81,7 @@ class pts_basic_display_mode implements pts_display_mode_interface
 	}
 	public function test_install_output(&$to_output)
 	{
-		if(!isset($to_output[10240]) || (pts_c::$test_flags & pts_c::debug_mode))
+		if(!isset($to_output[10240]) || pts_client::is_debug_mode())
 		{
 			// Not worth printing files over 10kb to screen
 			echo $to_output;
@@ -136,7 +136,7 @@ class pts_basic_display_mode implements pts_display_mode_interface
 	{
 		echo $to_output;
 	}
-	public function test_run_instance_complete(&$test_result)
+	public function test_run_instance_complete(&$result)
 	{
 		// Do nothing here
 	}
@@ -151,16 +151,16 @@ class pts_basic_display_mode implements pts_display_mode_interface
 		}
 		else if(in_array($test_result->test_profile->get_display_format(), array('PASS_FAIL', 'MULTI_PASS_FAIL')))
 		{
-			$end_print .= PHP_EOL . 'Final: ' . $test_result->get_result() . ' (' . $test_result->test_profile->get_result_scale() . ')' . PHP_EOL;
+			$end_print .= PHP_EOL . 'Final: ' . $test_result->active->get_result() . ' (' . $test_result->test_profile->get_result_scale() . ')' . PHP_EOL;
 		}
 		else
 		{
-			foreach($test_result->test_result_buffer->get_values() as $result)
+			foreach($test_result->active->results as $result)
 			{
 				$end_print .= $result . ' ' . $test_result->test_profile->get_result_scale() . PHP_EOL;
 			}
 
-			$end_print .= PHP_EOL . pts_strings::result_quantifier_to_string($test_result->test_profile->get_result_quantifier()) . ': ' . $test_result->get_result() . ' ' . $test_result->test_profile->get_result_scale();
+			$end_print .= PHP_EOL . pts_strings::result_quantifier_to_string($test_result->test_profile->get_result_quantifier()) . ': ' . $test_result->active->get_result() . ' ' . $test_result->test_profile->get_result_scale();
 		}
 
 		echo self::string_header($end_print, '#');
@@ -183,7 +183,7 @@ class pts_basic_display_mode implements pts_display_mode_interface
 
 		if($shown_pts == false)
 		{
-			$string = pts_title() . PHP_EOL . $string;
+			$string = pts_core::program_title() . PHP_EOL . $string;
 		}
 
 		echo self::string_header($string, '=');

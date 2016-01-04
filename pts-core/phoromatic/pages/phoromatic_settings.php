@@ -114,7 +114,9 @@ class phoromatic_settings implements pts_webui_interface
 						'PreSeedTestInstalls' => 'Attempt to pre-install commonly used tests on client systems while idling.',
 						'NetworkPowerUpWhenNeeded' => 'Use network Wake-On-LAN to power on systems when needed.',
 						'LetOtherGroupsViewResults' => 'Let other accounts/groups on this Phoromatic Server view (read-only) this account\'s results.',
-						'PowerOnSystemDaily' => 'Attempt to power-on system dailys (unless there\'s a daily test schedule / trigger on the system) to maintain the DHCP lease on the network, update any software/hardware information, etc. When the daily update is done, the system will power off unless there\'s a test to run and the power-off setting above is enabled. This option is namely useful for systems that otherwise may be idling/powered-off for long periods of time between tests.'
+						'LetPublicViewResults' => 'Allow public/unauthenticated visitors to access these test results from the public viewer page.',
+						'PowerOnSystemDaily' => 'Attempt to power-on systems daily (unless there\'s a daily test schedule / trigger on the system) to maintain the DHCP lease on the network, update any software/hardware information, etc. When the daily update is done, the system will power off unless there\'s a test to run and the power-off setting above is enabled. This option is namely useful for systems that otherwise may be idling/powered-off for long periods of time between tests.',
+						'AutoApproveNewSystems' => 'Enabling this option will make new test systems immediately available for this account rather than the default behavior of first needing an administrator to approve/deny the system via the Phoromatic Server web interface. With this option enabled, the systems are automatically approved by default but can be later disabled/removed via the Phoromatic web interface.'
 						)
 					);
 
@@ -171,6 +173,28 @@ class phoromatic_settings implements pts_webui_interface
 				$main .= '<hr />
 				<h2>Build A Suite</h2>
 				<p><a href="?build_suite">Create a custom test suite</a>.</p>';
+
+
+				$update_script_path = phoromatic_server::phoromatic_account_path($_SESSION['AccountID']) . 'client-update-script.sh';
+				if(isset($_POST['client_update_script']))
+				{
+					file_put_contents($update_script_path, str_replace("\r\n", PHP_EOL, $_POST['client_update_script']));
+				}
+
+				if(!is_file($update_script_path))
+				{
+					$script_contents = pts_file_io::file_get_contents(PTS_CORE_STATIC_PATH . 'sample-pts-client-update-script.sh');
+				}
+				else
+				{
+					$script_contents = pts_file_io::file_get_contents($update_script_path);
+				}
+
+				$main .= '<form name="update_client_script_form" id="update_client_script_form" action="?settings" method="post">
+<hr /><h2>Auto-Updating Clients</h2><p>If desired, you can paste a script in the below field if you wish to have Phoronix Test Suite / Phoromatic clients attempt to auto-update themselves. Any commands copied below are automatically executed by the client upon completing a test / beginning a new idle process / prior to attempting a system shutdown. If your script determines the client is to be updated, it should <em>reboot</em> the system afterwards to ensure no issues in the upgrade of the Phoronix Test Suite installation. A reference/example script is provided by default. This update script feature does not attempt to update the Phoromatic Server software.</p>
+				<p><textarea style="width: 80%; height: 400px;" name="client_update_script" id="client_update_script">' . $script_contents . '</textarea></p>
+				<p><input type="submit" value="Save Client Auto-Update Script" /></p>
+				</form>';
 			}
 
 			echo '<div id="pts_phoromatic_main_area">' . $main . '</div>';

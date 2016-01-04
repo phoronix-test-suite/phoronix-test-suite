@@ -1,7 +1,0 @@
-#!/bin/sh
-# Example script for Phoromatic Ubuntu Tracker
-# Toss into /etc/
-echo "Dpkg::Options {\"--force-confnew\"; };" > /etc/apt/apt.conf.d/local-dpkg-forceconf
-export DEBIAN_FRONTEND=noninteractive
-apt-get update && sudo apt-get -y --ignore-missing dist-upgrade && reboot
-

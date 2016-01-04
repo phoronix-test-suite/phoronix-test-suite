@@ -31,6 +31,12 @@ interface pts_webui_interface
 	public static function render_page_process($PATH);
 }
 
+// Workaround for some web servers like Mongoose with currently broken REQUEST_URI for our purposes, https://code.google.com/p/phpdesktop/issues/detail?id=137
+if(strpos($_SERVER['REQUEST_URI'], '?') === false && isset($_SERVER['QUERY_STRING']))
+{
+	$_SERVER['REQUEST_URI'] .= '?' . $_SERVER['QUERY_STRING'];
+}
+
 $URI = substr($_SERVER['REQUEST_URI'], strpos($_SERVER['REQUEST_URI'], '?') + 1);
 $PATH = explode('/', $URI);
 $PAGE_REQUEST = str_replace('.', null, array_shift($PATH));
@@ -88,16 +94,19 @@ if(substr($PAGE_REQUEST, 0, 2) == 'r_' || isset($_GET['download']))
 }
 
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <script src="/phoromatic.js?<?php echo date('Ymd') . PTS_CORE_VERSION; ?>" type="text/javascript"></script>
 <title>Phoronix Test Suite - Phoromatic - <?php echo $page_class::page_title(); ?></title>
 <link href="/phoromatic.css?<?php echo date('Ymd') . PTS_CORE_VERSION; ?>" rel="stylesheet" type="text/css" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="keywords" content="Phoronix Test Suite, open-source benchmarking, Linux benchmarking, automated testing" />
 <meta name="Description" content="Phoronix Test Suite local control server." />
 <link rel="shortcut icon" href="favicon.ico" />
+<link href='https://fonts.googleapis.com/css?family=Quicksand:700' rel='stylesheet' type='text/css'/>
+<link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'/>
 <?php
 
 if(isset($_SESSION['UserID']))
@@ -117,11 +126,7 @@ else
 {
 	phoromatic_server::prepare_database();
 	$page_class::render_page_process($PATH);
-
-	if(phoromatic_server::$db != null)
-	{
-		phoromatic_server::$db->close();
-	}
+	phoromatic_server::close_database();
 }
 ?></body>
 </html>

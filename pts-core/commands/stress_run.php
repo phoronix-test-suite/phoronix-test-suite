@@ -51,20 +51,20 @@ class stress_run implements pts_option_interface
 			echo 'PTS_CONCURRENT_TEST_RUNS set; running ' . $tests_to_run_concurrently . ' tests concurrently.' . PHP_EOL;
 		}
 
-		$test_flags = pts_c::batch_mode;
+		$test_run_manager = new pts_test_run_manager(true);
 
-		if(pts_test_run_manager::initial_checks($to_run, $test_flags, 'SHORT') == false)
-		{
-			return false;
-		}
-
+		/*
 		if(count($to_run) < $tests_to_run_concurrently)
 		{
 			echo PHP_EOL . 'More tests must be specified in order to run ' . $tests_to_run_concurrently . ' tests concurrently.';
 			return false;
 		}
+		*/
 
-		$test_run_manager = new pts_test_run_manager($test_flags);
+		if($test_run_manager->initial_checks($to_run, 'SHORT') == false)
+		{
+			return false;
+		}
 
 		// Load the tests to run
 		if($test_run_manager->load_tests_to_run($to_run) == false)

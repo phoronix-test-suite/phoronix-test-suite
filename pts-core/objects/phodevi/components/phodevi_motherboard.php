@@ -397,6 +397,7 @@ class phodevi_motherboard extends phodevi_device_interface
 
 			if(empty($info))
 			{
+				$from_cpuinfo = false;
 				if($info == null)
 				{
 					$hw_string = phodevi_linux_parser::read_cpuinfo('Hardware');
@@ -404,6 +405,7 @@ class phodevi_motherboard extends phodevi_device_interface
 					if(count($hw_string) == 1)
 					{
 						$info = $hw_string[0];
+						$from_cpuinfo = true;
 					}
 				}
 
@@ -421,6 +423,17 @@ class phodevi_motherboard extends phodevi_device_interface
 					if(count($hw_string) == 1)
 					{
 						$info = $hw_string[0];
+						$from_cpuinfo = true;
+					}
+				}
+
+				if($from_cpuinfo && is_readable('/sys/firmware/devicetree/base/model'))
+				{
+					$dt_model = pts_file_io::file_get_contents('/sys/firmware/devicetree/base/model');
+
+					if($info == null || stripos($dt_model, $info) === false)
+					{
+						$info = trim($info . ' ' . $dt_model);
 					}
 				}
 			}
@@ -433,6 +446,16 @@ class phodevi_motherboard extends phodevi_device_interface
 			if(empty($info) && is_file('/sys/bus/soc/devices/soc0/machine'))
 			{
 				$info = pts_file_io::file_get_contents('/sys/bus/soc/devices/soc0/machine');
+			}
+			if(empty($info))
+			{
+				// Works on the MIPS Creator CI20
+				$hardware = phodevi_linux_parser::read_cpuinfo('Hardware');
+
+				if(!empty($hardware))
+				{
+					$info = array_pop($hardware);
+				}
 			}
 		}
 		else if(phodevi::is_windows())

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2014, Phoronix Media
-	Copyright (C) 2014, Michael Larabel
+	Copyright (C) 2014 - 2015, Phoronix Media
+	Copyright (C) 2014 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -114,16 +114,9 @@ class run_random_tests implements pts_option_interface
 				pts_client::pts_set_environment_variable('SKIP_TESTING_SUBSYSTEMS', implode(',', $subsystems_to_avoid));
 			}
 
-			$test_flags = pts_c::auto_mode | pts_c::defaults_mode | pts_c::batch_mode;
-			pts_client::set_test_flags($test_flags);
 			if($allow_new_tests_to_be_installed)
 			{
-				if($allow_new_dependencies_to_be_installed == false)
-				{
-					$test_flags |= pts_c::skip_tests_with_missing_dependencies;
-				}
-
-				pts_test_installer::standard_install($to_test, $test_flags);
+				pts_test_installer::standard_install($to_test, false, true, $allow_new_dependencies_to_be_installed);
 			}
 
 			$batch_mode_settings = array(
@@ -143,13 +136,13 @@ class run_random_tests implements pts_option_interface
 			}
 			pts_test_run_manager::set_batch_mode($batch_mode_settings);
 
-			if(pts_test_run_manager::initial_checks($to_test, $test_flags) != false)
+			$test_run_manager = new pts_test_run_manager($batch_mode_settings, 2);
+			if($test_run_manager->initial_checks($to_test) != false)
 			{
-				$test_run_manager = new pts_test_run_manager($test_flags);
 				if($test_run_manager->load_tests_to_run($to_test))
 				{
 					// SETUP
-					$test_run_manager->auto_save_results($title, null, 'Various open-source benchmarks by the ' . pts_title(true) . '.', true);
+					$test_run_manager->auto_save_results($title, null, 'Various open-source benchmarks by the ' . pts_core::program_title(true) . '.', true);
 					$test_run_manager->auto_generate_results_identifier();
 					echo PHP_EOL;
 					pts_client::$display->generic_sub_heading('Result File: ' . $test_run_manager->get_file_name());

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2013, Phoronix Media
-	Copyright (C) 2009 - 2013, Michael Larabel
+	Copyright (C) 2009 - 2015, Phoronix Media
+	Copyright (C) 2009 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -22,25 +22,20 @@
 
 class pts_test_result_buffer_item
 {
-	private $result_identifier;
-	private $result_final;
-	private $result_raw;
-	private $result_json;
-	private $result_min;
-	private $result_max;
+	protected $result_identifier;
+	protected $result_final;
+	protected $result_raw;
+	protected $result_json;
+	protected $result_min;
+	protected $result_max;
 
-	public function __construct($identifier, $final, $raw = null, $json = null, $min_value = null, $max_value = null)
+	public function __construct(&$identifier, &$final, $raw = null, $json = null, $min_value = null, $max_value = null)
 	{
 		$this->result_identifier = $identifier;
 		$this->result_final = $final;
 		$this->result_raw = $raw;
 		$this->result_min = $min_value;
 		$this->result_max = $max_value;
-
-		if($json && !is_array($json))
-		{
-			$json = json_decode($json, true);
-		}
 		$this->result_json = $json;
 	}
 	public function reset_result_identifier($identifier)
@@ -77,6 +72,11 @@ class pts_test_result_buffer_item
 	}
 	public function get_result_json()
 	{
+		if($this->result_json != null && !is_array($this->result_json))
+		{
+			$this->result_json = json_decode($this->result_json, true);
+		}
+
 		return $this->result_json;
 	}
 	public function __toString()

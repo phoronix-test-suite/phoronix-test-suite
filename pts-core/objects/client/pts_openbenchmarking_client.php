@@ -25,7 +25,7 @@ class pts_openbenchmarking_client
 	private static $openbenchmarking_account = false;
 	private static $client_settings = null;
 
-	public static function upload_test_result(&$object, $return_json_data = false)
+	public static function upload_test_result(&$object, $return_json_data = false, $prompts = true)
 	{
 		if($object instanceof pts_test_run_manager)
 		{
@@ -40,16 +40,6 @@ class pts_openbenchmarking_client
 			$results_identifier = null;
 		}
 
-		// Validate the XML
-		// Rely upon server-side validation in case of additions to the spec later on as might be a problem with the JSON addition
-		/*
-		if($result_file->xml_parser->validate() == false)
-		{
-			echo PHP_EOL . 'Errors occurred parsing the result file XML.' . PHP_EOL;
-			return false;
-		}
-		*/
-
 		// Ensure the results can be shared
 		if(self::result_upload_supported($result_file) == false)
 		{
@@ -62,7 +52,7 @@ class pts_openbenchmarking_client
 			return false;
 		}
 
-		$composite_xml = $result_file->xml_parser->getXML();
+		$composite_xml = $result_file->get_xml();
 		$system_log_dir = PTS_SAVE_RESULTS_PATH . $result_file->get_identifier() . '/system-logs/';
 		$upload_system_logs = false;
 
@@ -78,7 +68,14 @@ class pts_openbenchmarking_client
 			}
 			else if(is_dir($system_log_dir))
 			{
-				$upload_system_logs = pts_user_io::prompt_bool_input('Would you like to attach the system logs (lspci, dmesg, lsusb, etc) to the test result', true, 'UPLOAD_SYSTEM_LOGS');
+				if($prompts == false)
+				{
+					$upload_system_logs = true;
+				}
+				else
+				{
+					$upload_system_logs = pts_user_io::prompt_bool_input('Would you like to attach the system logs (lspci, dmesg, lsusb, etc) to the test result', true, 'UPLOAD_SYSTEM_LOGS');
+				}
 			}
 		}
 

@@ -42,43 +42,57 @@ class phoromatic_tracker implements pts_webui_interface
 
 		if(isset($PATH[0]) && !empty($PATH[0]))
 		{
-			ini_set('memory_limit', '512M');
-			$cut_duration = 180;
+			ini_set('memory_limit', '4G');
+			if(isset($_POST['view_results_from_past']) && is_numeric($_POST['view_results_from_past']))
+			{
+				$cut_duration = $_POST['view_results_from_past'];
+			}
+			else
+			{
+				$cut_duration = 21;
+			}
 			$stmt = phoromatic_server::$db->prepare('SELECT UploadID, UploadTime, ScheduleID, Trigger, SystemID FROM phoromatic_results WHERE AccountID = :account_id AND ScheduleID = :schedule_id ORDER BY UploadTime DESC');
 			$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 			$stmt->bindValue(':schedule_id', $PATH[0]);
 			$test_result_result = $stmt->execute();
 			$cutoff_time = is_numeric($cut_duration) ? strtotime('today -' . $cut_duration . ' days') : false;
 
-			$result_file = array();
-			while($row = $test_result_result->fetchArray())
+			$show_only_latest_systems = array();
+			$result_files = array();
+			while($test_result_result && $row = $test_result_result->fetchArray())
 			{
 				if($cutoff_time !== false && strtotime($row['UploadTime']) < $cutoff_time)
 					break;
 
-				$upload_id = $row['UploadID'];
-				$composite_xml = phoromatic_server::phoromatic_account_result_path($_SESSION['AccountID'], $upload_id) . 'composite.xml';
+				$composite_xml = phoromatic_server::phoromatic_account_result_path($_SESSION['AccountID'], $row['UploadID']) . 'composite.xml';
 				if(!is_file($composite_xml))
 				{
 					continue;
 				}
 
-				// Update view counter
-			/*	$stmt_view = phoromatic_server::$db->prepare('UPDATE phoromatic_results SET TimesViewed = (TimesViewed + 1) WHERE AccountID = :account_id AND UploadID = :upload_id');
-				$stmt_view->bindValue(':account_id', $_SESSION['AccountID']);
-				$stmt_view->bindValue(':upload_id', $upload_id);
-				$stmt_view->execute(); */
-
 				// Add to result file
-				$system_name = phoromatic_system_id_to_name($row['SystemID']) . ': ' . $row['Trigger'];
-				array_push($result_file, new pts_result_merge_select($composite_xml, null, $system_name));
+				$system_name = phoromatic_server::system_id_to_name($row['SystemID']) . ': ' . $row['Trigger'];
+				array_push($result_files, new pts_result_merge_select($composite_xml, null, $system_name));
+				if(!isset($show_only_latest_systems[$_SESSION['AccountID'] . $row['SystemID']]))
+				{
+					$show_only_latest_systems[$_SESSION['AccountID'] . $row['SystemID']] = new pts_result_merge_select($composite_xml, null, $system_name);
+				}
 			}
 
-			$writer = new pts_result_file_writer(null);
+			if(count($result_files) < 21)
+			{
+				$show_only_latest_systems = null;
+			}
+
 			$attributes = array('new_result_file_title' => phoromatic_schedule_id_to_name($row['ScheduleID']));
-			pts_merge::merge_test_results_process($writer, $result_file, $attributes);
-			$result_file = new pts_result_file($writer->get_xml());
-			$extra_attributes = array();
+			$result_file = new pts_result_file(null, true);
+			$result_file->merge($result_files, $attributes);
+			$extra_attributes = array('reverse_result_buffer' => true, 'force_simple_keys' => true, 'force_line_graph_compact' => true, 'force_tracking_line_graph' => true);
+
+			if(isset($_POST['normalize_results']) && $_POST['normalize_results'])
+			{
+				$extra_attributes['normalize_result_buffer'] = true;
+			}
 
 
 			$main .= '<h1>' . $result_file->get_title() . '</h1>';
@@ -97,6 +111,7 @@ class phoromatic_tracker implements pts_webui_interface
 			$table = new pts_ResultFileTable($result_file, $intent);
 			$main .= '<p style="text-align: center; overflow: auto;" class="result_object">' . pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes) . '</p>';
 
+			$main .= '<div id="pts_results_area">';
 			foreach($result_file->get_result_objects((isset($_POST['show_only_changed_results']) ? 'ONLY_CHANGED_RESULTS' : -1)) as $i => $result_object)
 			{
 				$main .= '<h2><a name="r-' . $i . '"></a><a name="' . $result_object->get_comparison_hash(true, false) . '"></a>' . $result_object->test_profile->get_title() . '</h2>';
@@ -104,6 +119,32 @@ class phoromatic_tracker implements pts_webui_interface
 				$main .= pts_render::render_graph_inline_embed($result_object, $result_file, $extra_attributes);
 				$main .= '</p>';
 			}
+			$main .= '</div>';
+
+			$right = '<form action="' . $_SERVER['REQUEST_URI'] . '" name="update_result_view" method="post">';
+			$right .= '<p>Compare results for the past: ';
+			$right .= '<select name="view_results_from_past" id="view_results_from_past">';
+			$oldest_upload_time = strtotime(phoromatic_oldest_result_for_schedule($PATH[0]));
+			$opts = array(
+				'Two Weeks' => 14,
+				'Three Weeks' => 21,
+				'One Month' => 30,
+				'Two Months' => 60,
+				'Quarter' => 90,
+				'Six Months' => 180,
+				'Year' => 365,
+				);
+			foreach($opts as $str_name => $time_offset)
+			{
+				if($oldest_upload_time > (time() - (86400 * $time_offset)))
+					break;
+				$right .= '<option value="' . $time_offset . '">' . $str_name . '</option>';
+			}
+			$right .= '<option value="all">All Results</option>';
+			$right .= '</select>';
+			$right .= '</p>';
+			$right .= '<p><input type="checkbox" name="normalize_results" value="1" ' . (isset($_POST['normalize_results']) ? 'checked="checked" ' : null) . '/> Normalize Results?</p>';
+			$right .= '<p><input type="submit" value="Refresh Results"></p></form>';
 
 		}
 		else if(empty($PATH))
@@ -146,9 +187,10 @@ class phoromatic_tracker implements pts_webui_interface
 
 			$main .= '</ul>
 			</div>';
+			$right = null;
 		}
 
-		echo phoromatic_webui_main($main, phoromatic_webui_right_panel_logged_in());
+		echo phoromatic_webui_main($main, $right);
 		echo phoromatic_webui_footer();
 	}
 }

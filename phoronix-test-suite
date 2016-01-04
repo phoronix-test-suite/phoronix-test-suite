@@ -3,8 +3,8 @@
 #
 #	Phoronix Test Suite
 #	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-#	Copyright (C) 2008 - 2015, Phoronix Media
-#	Copyright (C) 2008 - 2015, Michael Larabel
+#	Copyright (C) 2008 - 2016, Phoronix Media
+#	Copyright (C) 2008 - 2016, Michael Larabel
 #	phoronix-test-suite: The Phoronix Test Suite is an extensible open-source testing / benchmarking platform
 #
 #	This program is free software; you can redistribute it and/or modify
@@ -31,6 +31,15 @@ then
 	cd $PTS_DIR
 fi
 
+# Run any start-up hooks, such as to pre-seed environment variables or other non-default behaviors / customizations
+if [ -d pts-core/hooks/startup ]
+then
+	for file in pts-core/hooks/startup/*.sh
+	do
+		./$file
+	done
+fi
+
 # Determine PHP binary location
 if [ ! "X$PHP_BIN" = "X" ] && [ -x $PHP_BIN ]
 then
@@ -53,15 +62,18 @@ then
 elif [ -x /usr/pkg/libexec/cgi-bin/php ]
 then
 	export PHP_BIN="/usr/pkg/libexec/cgi-bin/php"
-elif which php >/dev/null ;
+elif which php >/dev/null 2>&1 ;
 then
 	export PHP_BIN="php"
-elif which php5 >/dev/null ;
+elif which php5 >/dev/null 2>&1 ;
 then
 	export PHP_BIN="php5"
 elif [ -x /usr/bin/hhvm ]
 then
 	export PHP_BIN="/usr/bin/hhvm"
+elif which hhvm >/dev/null 2>&1 ;
+then
+	export PHP_BIN="hhvm"
 else
 	export PHP_BIN=""
 fi
@@ -71,26 +83,31 @@ if [ "X$PHP_BIN" = "X" ]
 then
 	cat <<'EOT'
 
-PHP 5.2 or newer must be installed for the Phoronix Test Suite
+PHP 5.3 or newer must be installed for the Phoronix Test Suite
 The PHP command-line package is commonly called php-cli, php5-cli, or php.
 For more information visit: http://www.phoronix-test-suite.com/
 
 EOT
 
-if [ -x /usr/bin/apt-get ]
+if [ -x /usr/bin/zypper ]
 then
 	echo "The command to likely run for your operating system is: "
-	echo "# apt-get install php5-cli php5-json php5-gd"
+	echo "# zypper install php5 php5-zip"
+	echo " "
+elif [ -x /usr/bin/apt-get ]
+then
+	echo "The command to likely run for your operating system is: "
+	echo "# apt-get install php5-cli"
+	echo " "
+elif [ -x /usr/bin/dnf ]
+then
+	echo "The command to likely run for your operating system is: "
+	echo "# dnf install php-cli php-xml"
 	echo " "
 elif [ -x /usr/bin/yum ]
 then
 	echo "The command to likely run for your operating system is: "
 	echo "# yum install php-cli php-xml"
-	echo " "
-elif [ -x /usr/bin/zypper ]
-then
-	echo "The command to likely run for your operating system is: "
-	echo "# zypper install php5 php5-zip"
 	echo " "
 elif [ -x /usr/bin/pkg_radd ]
 then
@@ -101,6 +118,16 @@ elif [ -x /usr/bin/pacman ]
 then
 	echo "The command to likely run for your operating system is: "
 	echo "# pacman -S php"
+	echo " "
+elif [ -x /usr/local/sbin/pkg ] || [ -x /usr/sbin/pkg ]
+then
+	echo "The command to likely run for your operating system is: "
+	echo "# pkg install php5 php5-dom php5-zip php5-json php5-simplexml"
+	echo " "
+elif [ -x /usr/local/swupd ]
+then
+	echo "The command to likely run for your operating system is: "
+	echo "# swupd bundle-add os-testsuite-phoronix"
 	echo " "
 fi
 

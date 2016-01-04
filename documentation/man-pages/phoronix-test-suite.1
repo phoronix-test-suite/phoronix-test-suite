@@ -1,4 +1,4 @@
-.TH phoronix-test-suite 1  "www.phoronix-test-suite.com" "5.6.0"
+.TH phoronix-test-suite 1  "www.phoronix-test-suite.com" "6.2.0m2"
 .SH NAME
 phoronix-test-suite \- The Phoronix Test Suite is an extensible open-source platform for performing testing and performance evaluation.
 .SH SYNOPSIS
@@ -68,7 +68,7 @@ This option and its arguments pre-set the Phoronix Test Suite batch run mode wit
 .TP
 .SH OPENBENCHMARKING.ORG
 .B clone-result [OpenBenchmarking ID]  ...
-This option will download a local copy of a file that was saved to OpenBenchmarking.org, as long as a valid public ID is supplied. More than one ID can be specified and the results will then be merged.
+This option will download a local copy of a file that was saved to OpenBenchmarking.org, as long as a valid public ID is supplied.
 .TP
 .B list-recommended-tests
 This option will list recommended test profiles for benchmarking sorted by hardware sub-system. The recommended tests are determined via querying OpenBenchmarking.org and determining the most popular tests for a given environment based upon the number of times a test profile has been downloaded, the number of test results available on OpenBenchmarking.org for a given test profile, the age of the test profile, and other weighted factors.
@@ -160,7 +160,7 @@ This option is intended for use by test profile writers and is identical to the 
 .B debug-install [Test | Suite | OpenBenchmarking.org ID | Test Result]  ...
 This option is intended for use by test profile writers and is identical to the install option but will yield more information during the run process that can be used to debug issues with a test profile installer or to verify the test profile is functioning correctly.
 .TP
-.B debug-test-download-links [Test | Suite]
+.B debug-test-download-links [Test | Suite | OpenBenchmarking.org ID | Test Result]
 This option will check all download links within the specified test profile(s) to ensure there are no broken URLs.
 .TP
 .B download-test-files [Test | Suite | OpenBenchmarking.org ID | Test Result]  ...
@@ -184,9 +184,6 @@ This option can be used for validating a Phoronix Test Suite test suite as being
 .SH RESULT MANAGEMENT
 .B auto-sort-result-file [Test Result]
 This option is used if you wish to automatically attempt to sort the results by their result identifier string.
-.TP
-.B copy-run-in-result-file [Test Result]
-This option is used if you wish to change an existing test run within a saved results file.
 .TP
 .B edit-result-file [Test Result]
 This option is used if you wish to edit the title and description of an existing result file.
@@ -218,6 +215,9 @@ This option is used if you wish to manually change the order in which test resul
 .B result-file-to-csv [Test Result]
 This option will read a saved test results file and output the system hardware and software information along with the results to a CSV output. The CSV (Comma Separated Values) output can then be loaded into a spreadsheet for easy viewing.
 .TP
+.B result-file-to-json [Test Result]
+This option will read a saved test results file and output the basic result information to JSON (JavaScript Object Notation).
+.TP
 .B result-file-to-pdf [Test Result]
 This option will read a saved test results file and output the system hardware and software information along with the results to a PDF file.
 .TP
@@ -231,15 +231,15 @@ Open up the test results in the Phoronix Test Suite Result Viewer or on OpenBenc
 .B analyze-all-runs [Test Result]
 This option will generate a candlestick graph showing the distribution of results from all trial runs. The candlestick graph is similar to the Japanese candlestick charts used by the financial industry, except instead of representing stock data it is numerical result data from all trial runs.\n\nThe tip of the upper-wick represents the highest value of the test runs with the tip of the lower-wick representing the lowest value of all test runs. The upper-edge of the candle body represents the first or last run value and the lower-edge represents the first or last run value. Lastly, if the last run value is less than the first run value, the candle body is the same color as the graph background, otherwise the last run value is greater.
 .TP
-.B analyze-batch [Test Result]
-This option will analyze a batch results file and plot out the performance impact from the different options onto a line graph (i.e. to see the impact that changing the video resolution has on the system's performance).
-.TP
-.B analyze-image-delta [Test Result]
-This option will analyze a test result file if it contains any test results that produced an image quality comparison (IQC) and will render image deltas illustrating the difference between images from two test results.
-.TP
 .SH OTHER
 .B build-suite
 This option will guide the user through the process of generating their own test suite, which they can then run. Optionally, passed as arguments can be the test(s) or suite(s) to add to the suite to be created, instead of being prompted through the process.
+.TP
+.B debug-dependency-handler
+This option is used for testing the distribution-specific dependency handler for external dependencies.
+.TP
+.B debug-render-test
+This option is used during the development of the Phoronix Test Suite software for testing of the result and graph rendering code-paths This option will download a large number of reference test results from LinuxBenchmarking.com.
 .TP
 .B debug-self-test
 This option is used during the development of the Phoronix Test Suite software for testing of internal interfaces, commands, and other common code-paths. The produced numbers should only be comparable for the same version of the Phoronix Test Suite, on the same hardware/software system, conducted on the same day of testing. This isn't intended as any scientific benchmark but simply to stress common PHP code-paths and looking for hot areas to optimize, etc.
@@ -252,9 +252,6 @@ This option will display the list of available Phoronix Test Suite commands.
 .TP
 .B network-setup
 This option allows the user to configure how the Phoronix Test Suite connects to OpenBenchmarking.org and other web-services. Connecting through an HTTP proxy can be configured through this option.
-.TP
-.B rebuild-composite-xml [Test Result]
-This option can be used to rebuild your composite XML file in the event that the main result file was corrupted and the test-X.xml files are still present in the result file directory.
 .TP
 .B user-config-reset
 This option can be used for resetting the Phoronix Test Suite user configuration file to its default state.
@@ -273,7 +270,7 @@ Launch the Phoronix Test Suite HTML5 web user-interface in the local GUI mode (n
 Start the GUI web server and WebSocket server processes for remote (or local) access via the web-browser. The settings can be configured via the Phoronix Test Suite's XML configuration file.
 .TP
 .B start-ws-server
-Manually start a WebSocket server for communication by remote Phoronix Test Suite GUIs, the Phoronix Test Suite Multi-System Commander, and other functionality.
+Manually start a WebSocket server for communication by remote Phoronix Test Suite GUIs, the Phoronix Test Suite Multi-System Commander, and other functionality. This function checks the PTS_WEBSOCKET_PORT and PTS_WEBSOCKET_SERVER environment variables for configuration.
 .TP
 .SH MODULES
 .B list-modules
@@ -288,9 +285,9 @@ This option will allow you to configure all available end-user options for a Pho
 .B test-module [Phoronix Test Suite Module]
 This option can be used for debugging a Phoronix Test Suite module.
 .TP
-.SH GUI / WEB SUPPORT
-.B c
-o
+.SH PHOROMATIC
+.B g
+n
 .TP
 .SH SEE ALSO
 .B Websites:
@@ -305,5 +302,5 @@ http://www.phoronix.com/
 .br
 http://www.phoronix.com/forums/
 .SH AUTHORS
-Copyright 2008 - 2015 by Phoronix Media, Michael Larabel.
+Copyright 2008 - 2016 by Phoronix Media, Michael Larabel.
 .TP

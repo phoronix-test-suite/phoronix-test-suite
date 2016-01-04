@@ -41,7 +41,35 @@ class phoromatic_benchmark implements pts_webui_interface
 			return;
 
 		$is_new = true;
-		if(!empty($PATH[0]) && is_numeric($PATH[0]))
+		if(!empty($PATH[0]) && $PATH[0] == 'all')
+		{
+			$main = '<h1>Past Benchmark Tickets</h1>';
+			$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_benchmark_tickets WHERE AccountID = :account_id AND State >= 0 ORDER BY TicketIssueTime DESC');
+			$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+			$result = $stmt->execute();
+			$main .= '<ol>';
+
+			if($result)
+			{
+				$row = $result->fetchArray();
+
+				if(!empty($row))
+				{
+					do
+					{
+						$main .= '<li><a href="?benchmark/' . $row['TicketID'] . '">' . $row['Title'] . '</a></li>';
+					}
+					while($row = $result->fetchArray());
+				}
+			}
+			else
+			{
+				$main .= '<li>No Benchmark Tickets Found</li>';
+			}
+
+			$main .= '</ol>';
+		}
+		else if(!empty($PATH[0]) && is_numeric($PATH[0]))
 		{
 			$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_benchmark_tickets WHERE AccountID = :account_id AND TicketID = :ticket_id');
 			$stmt->bindValue(':account_id', $_SESSION['AccountID']);
@@ -80,6 +108,14 @@ class phoromatic_benchmark implements pts_webui_interface
 				$main .= '<h3>' . $row['Description'] . '</h3>';
 				$main .= '<p>This benchmark ticket was created on <strong>' . date('j F Y \a\t H:i', strtotime($row['LastModifiedOn'])) . '</strong> by <strong>' . $row['LastModifiedBy'] . '. The ticket was last issued for testing at ' . date('j F Y \a\t H:i', $row['TicketIssueTime']) . '</strong>.';
 				$main .= '<p> <a href="/?benchmark/' . $PATH[0] . '/&repeat">Repeat Ticket</a> &nbsp; &nbsp; &nbsp; <a href="/?benchmark/' . $PATH[0] . '/&remove">Remove Ticket</a>' . (!isset($_GET['disable']) && $row['State'] > 0 ? ' &nbsp; &nbsp; &nbsp; <a href="/?benchmark/' . $PATH[0] . '/&disable">End Ticket</a>' : null) . '</p>';
+				$main .= '<hr /><h1>System Targets</h1><ol>';
+
+				foreach(explode(',', $row['RunTargetSystems']) as $system_id)
+				{
+					$main .= '<li><a href="?systems/' . $system_id . '">' . phoromatic_server::system_id_to_name($system_id) . '</a></li>';
+				}
+				$main .= '</ol>';
+
 				$main .= '<hr /><h1>Ticket Payload</h1>';
 				$main .= '<p>This ticket runs the <strong>' . $row['SuiteToRun'] . '</strong> test suite:</p>';
 				$main .= '<div style="max-height: 400px; overflow-y: scroll;">';
@@ -111,17 +147,17 @@ class phoromatic_benchmark implements pts_webui_interface
 				$results = 0;
 				while($test_result_row = $test_result_result->fetchArray())
 				{
-					$main .= '<a href="?result/' . $test_result_row['PPRID'] . '"><li id="result_select_' . $test_result_row['PPRID'] . '">' . $test_result_row['Title'] . '<br /><table><tr><td>' . phoromatic_system_id_to_name($test_result_row['SystemID']) . '</td><td>' . phoromatic_user_friendly_timedate($test_result_row['UploadTime']) .  '</td><td>' . $test_result_row['TimesViewed'] . ' Times Viewed</tr>
-
-<tr class="tb_compare_bar"><td><a id="result_compare_link_' . $test_result_row['PPRID'] . '" onclick="javascript:phoromatic_add_to_result_comparison(\'' . $test_result_row['PPRID'] . '\'); return false;">Add To Comparison</a> &nbsp; &nbsp; <a id="result_run_compare_link_' . $test_result_row['PPRID'] . '" onclick="javascript:phoromatic_generate_comparison(); return false;" style="visibility: hidden;">Compare Results</a> &nbsp; &nbsp; <a id="result_delete_link_' . $test_result_row['PPRID'] . '" onclick="javascript:phoromatic_delete_result(\'' . $test_result_row['PPRID'] . '\'); return false;">Delete Result</a></td></tr>
-
-</table></li></a>';
+					$main .= '<a onclick=""><li id="result_select_' . $test_result_row['PPRID'] . '"><input type="checkbox" id="result_compare_checkbox_' . $test_result_row['PPRID'] . '" onclick="javascript:phoromatic_checkbox_toggle_result_comparison(\'' . $test_result_row['PPRID'] . '\');" onchange="return false;"></input> <span onclick="javascript:phoromatic_window_redirect(\'?result/' . $test_result_row['PPRID'] . '\');">' . $test_result_row['Title'] . '</span><br /><table><tr><td>' . phoromatic_system_id_to_name($test_result_row['SystemID']) . '</td><td>' . phoromatic_user_friendly_timedate($test_result_row['UploadTime']) .  '</td><td>' . $test_result_row['TimesViewed'] . ' Times Viewed</td></table></li></a>';
 					$results++;
 
 				}
 				if($results == 0)
 				{
 					$main .= '<li class="light" style="text-align: center;">No Results Found</li>';
+				}
+				else if($results > 3)
+				{
+					$main .= '<a onclick=""><li id="global_bottom_totals"><input type="checkbox" id="global_checkbox" onclick="javascript:phoromatic_toggle_checkboxes_on_page(this);" onchange="return false;"></input> <strong>' . $results . ' Results</strong></li></a>';
 				}
 				$main .= '</ul></div>';
 				$main .= '</div>';
@@ -241,7 +277,7 @@ class phoromatic_benchmark implements pts_webui_interface
 				<p><textarea name="benchmark_description" id="benchmark_description" cols="50" rows="3">' . (!$is_new ? $e_schedule['Description'] : null) . '</textarea></p>
 				<hr /><h3>System Targets:</h3>
 				<p>Select the systems that should be benchmarked at their next earliest convenience.</p>
-				<p>';
+				<p style="white-space: nowrap;">';
 
 				$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID FROM phoromatic_systems WHERE AccountID = :account_id AND State >= 0 ORDER BY Title ASC');
 				$stmt->bindValue(':account_id', $_SESSION['AccountID']);
@@ -328,7 +364,7 @@ class phoromatic_benchmark implements pts_webui_interface
 		$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 		$stmt->bindValue(':time_cutoff', (time() - (60 * 60 * 24 * 14)));
 		$result = $stmt->execute();
-		$right = null;
+		$right = '<ul><li>Benchmark Tickets</li>';
 
 		if($result)
 		{
@@ -336,15 +372,15 @@ class phoromatic_benchmark implements pts_webui_interface
 
 			if(!empty($row))
 			{
-				$right .= '<ul><li>Benchmark Tickets</li>';
 				do
 				{
 					$right .= '<li><a href="?benchmark/' . $row['TicketID'] . '">' . $row['Title'] . '</a></li>';
 				}
 				while($row = $result->fetchArray());
-				$right .= '</ul>';
 			}
 		}
+		$right .= '<li><em><a href="?benchmark/all">View All Past Tickets</a></em></li>';
+		$right .= '</ul>';
 
 		echo phoromatic_webui_header_logged_in();
 		echo phoromatic_webui_main($main, phoromatic_webui_right_panel_logged_in($right));

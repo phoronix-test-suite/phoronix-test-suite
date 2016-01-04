@@ -170,6 +170,10 @@
 			<PackageName>libcurl curl</PackageName>
 		</Package>
 		<Package>
+			<GenericName>smartmontools</GenericName>
+			<PackageName>smartmontools</PackageName>
+		</Package>
+		<Package>
 			<GenericName>fftw3-development</GenericName>
 			<PackageName>fftw3-devel</PackageName>
 		</Package>
@@ -236,7 +240,7 @@
 		</Package>
 		<Package>
 			<GenericName>superlu</GenericName>
-			<PackageName>superlu libsuperlu3</PackageName>
+			<PackageName>superlu-devel</PackageName>
 		</Package>
 		<Package>
 			<GenericName>suitesparse</GenericName>
@@ -249,6 +253,10 @@
 		<Package>
 			<GenericName>opencl</GenericName>
 			<PackageName>opencl-headers</PackageName>
+		</Package>
+		<Package>
+			<GenericName>attr</GenericName>
+			<PackageName>attr</PackageName>
 		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

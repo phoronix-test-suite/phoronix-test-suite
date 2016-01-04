@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2011, Phoronix Media
-	Copyright (C) 2008 - 2011, Michael Larabel
+	Copyright (C) 2008 - 2015, Phoronix Media
+	Copyright (C) 2008 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -64,6 +64,10 @@ class result_file_to_suite implements pts_option_interface
 		{
 			echo PHP_EOL . PHP_EOL . 'Saved To: ' . $save_to . PHP_EOL . 'To run this suite, type: phoronix-test-suite benchmark ' . $suite_identifier . PHP_EOL . PHP_EOL;
 		}
+	}
+	public static function invalid_command($passed_args = null)
+	{
+		pts_tests::recently_saved_results();
 	}
 }
 

@@ -39,6 +39,7 @@ class pts_test_execution
 		$test_identifier = $test_run_request->test_profile->get_identifier();
 		$extra_arguments = $test_run_request->get_arguments();
 		$arguments_description = $test_run_request->get_arguments_description();
+		$full_output = pts_config::read_bool_config('PhoronixTestSuite/Options/General/FullOutput', 'FALSE');
 
 		// Do the actual test running process
 		$test_directory = $test_run_request->test_profile->get_install_dir();
@@ -55,7 +56,8 @@ class pts_test_execution
 			return false;
 		}
 
-		$test_run_request->test_result_buffer = new pts_test_result_buffer();
+		$active_result_buffer = new pts_test_result_buffer_active();
+		$test_run_request->active = &$active_result_buffer;
 		$execute_binary = $test_run_request->test_profile->get_test_executable();
 		$times_to_run = $test_run_request->test_profile->get_times_to_run();
 		$ignore_runs = $test_run_request->test_profile->get_runs_to_ignore();
@@ -89,19 +91,41 @@ class pts_test_execution
 		{
 			$pre_output = pts_tests::call_test_script($test_run_request->test_profile, 'pre', 'Running Pre-Test Script', $pts_test_arguments, $extra_runtime_variables, true);
 
-			if($pre_output != null && (pts_c::$test_flags & pts_c::debug_mode))
+			if($pre_output != null && (pts_client::is_debug_mode() || $full_output))
 			{
 				pts_client::$display->test_run_instance_output($pre_output);
+			}
+			if(is_file($test_directory . 'pre-test-exit-status'))
+			{
+			  // If the pre script writes its exit status to ~/pre-test-exit-status, if it's non-zero the test run failed
+			  $exit_status = pts_file_io::file_get_contents($test_directory . 'pre-test-exit-status');
+			  unlink($test_directory . 'pre-test-exit-status');
+
+			  if($exit_status != 0)
+			  {
+					self::test_run_instance_error($test_run_manager, $test_run_request, 'The pre run script exited with a non-zero exit status.' . PHP_EOL);
+					self::test_run_error($test_run_manager, $test_run_request, 'This test execution has been abandoned.');
+					return false;
+			  }
 			}
 		}
 
 		pts_client::$display->display_interrupt_message($test_run_request->test_profile->get_pre_run_message());
 		$runtime_identifier = time();
 		$execute_binary_prepend = '';
+		if($test_run_request->exec_binary_prepend != null)
+		{
+			$execute_binary_prepend = $test_run_request->exec_binary_prepend;
+		}
 
 		if(!$cache_share_present && $test_run_request->test_profile->is_root_required())
 		{
-			$execute_binary_prepend = PTS_CORE_STATIC_PATH . 'root-access.sh ';
+			if(phodevi::is_root() == false)
+			{
+				pts_client::$display->test_run_error('This test must be run as the root / administrator account.');
+			}
+
+			$execute_binary_prepend .= ' ' . PTS_CORE_STATIC_PATH . 'root-access.sh ';
 		}
 
 		if($allow_cache_share && !is_file($cache_share_pt2so))
@@ -127,7 +151,9 @@ class pts_test_execution
 			$is_expected_last_run = ($i == ($times_to_run - 1));
 
 			$test_extra_runtime_variables = array_merge($extra_runtime_variables, array(
-			'LOG_FILE' => $test_log_file
+			'LOG_FILE' => $test_log_file,
+			'DISPLAY' => getenv('DISPLAY'),
+			'PATH' => getenv('PATH'),
 			));
 
 			$restored_from_cache = false;
@@ -168,25 +194,38 @@ class pts_test_execution
 				}
 				else
 				{
-					$test_result = pts_client::shell_exec($test_run_command, $test_extra_runtime_variables);
+					//$test_result = pts_client::shell_exec($test_run_command, $test_extra_runtime_variables);
+					$descriptorspec = array(0 => array('pipe', 'r'), 1 => array('pipe', 'w'), 2 => array('pipe', 'w'));
+					$test_process = proc_open('exec ' . $execute_binary_prepend . './' . $execute_binary . ' ' . $pts_test_arguments . ' 2>&1', $descriptorspec, $pipes, $to_execute, array_merge($_ENV, pts_client::environmental_variables(), $test_extra_runtime_variables));
+
+					if(is_resource($test_process))
+					{
+						//echo proc_get_status($test_process)['pid'];
+						pts_module_manager::module_process('__test_running', $test_process);
+						$test_result = stream_get_contents($pipes[1]);
+						fclose($pipes[1]);
+						fclose($pipes[2]);
+						$return_value = proc_close($test_process);
+					}
 				}
 
 				$test_run_time = time() - $test_run_time_start;
 				$monitor_result = $is_monitoring ? pts_test_result_parser::system_monitor_task_post_test($test_run_request->test_profile) : 0;
 			}
-		
 
-			if(!isset($test_result[10240]) || (pts_c::$test_flags & pts_c::debug_mode))
+
+			if(!isset($test_result[10240]) || pts_client::is_debug_mode() || $full_output)
 			{
 				pts_client::$display->test_run_instance_output($test_result);
 			}
 
-			if(is_file($test_log_file) && trim($test_result) == null && (filesize($test_log_file) < 10240 || (pts_c::$test_flags & pts_c::debug_mode)))
+			if(is_file($test_log_file) && trim($test_result) == null && (filesize($test_log_file) < 10240 || pts_client::is_debug_mode() || $full_output))
 			{
 				$test_log_file_contents = file_get_contents($test_log_file);
 				pts_client::$display->test_run_instance_output($test_log_file_contents);
 				unset($test_log_file_contents);
 			}
+			$test_run_request->test_result_standard_output = $test_result;
 
 			$exit_status_pass = true;
 			if(is_file($test_directory . 'test-exit-status'))
@@ -216,20 +255,20 @@ class pts_test_execution
 			{
 				if(isset($monitor_result) && $monitor_result != 0)
 				{
-					$test_run_request->active_result = $monitor_result;
+					$test_run_request->active->active_result = $monitor_result;
 				}
 				else
 				{
 					pts_test_result_parser::parse_result($test_run_request, $test_extra_runtime_variables['LOG_FILE']);
 				}
 
-				pts_client::test_profile_debug_message('Test Result Value: ' . $test_run_request->active_result);
+				pts_client::test_profile_debug_message('Test Result Value: ' . $test_run_request->active->active_result);
 
-				if(!empty($test_run_request->active_result))
+				if(!empty($test_run_request->active->active_result))
 				{
-					if($test_run_time < 3 && intval($test_run_request->active_result) == $test_run_request->active_result && $test_run_request->test_profile->get_estimated_run_time() > 60)
+					if($test_run_time < 2 && intval($test_run_request->active->active_result) == $test_run_request->active->active_result && $test_run_request->test_profile->get_estimated_run_time() > 60 && !$restored_from_cache)
 					{
-						// If the test ended in less than 3 seconds, outputted some int, and normally the test takes much longer, then it's likely some invalid run
+						// If the test ended in less than two seconds, outputted some int, and normally the test takes much longer, then it's likely some invalid run
 						self::test_run_instance_error($test_run_manager, $test_run_request, 'The test run ended prematurely.');
 						if($is_expected_last_run && is_file($test_log_file))
 						{
@@ -244,7 +283,8 @@ class pts_test_execution
 					}
 					else
 					{
-						$test_run_request->test_result_buffer->add_test_result(null, $test_run_request->active_result, null, null, $test_run_request->active_min_result, $test_run_request->active_max_result);
+						// TODO integrate active_result into active buffer
+						$active_result_buffer->add_trial_run_result($test_run_request->active->active_result, $test_run_request->active->active_min_result, $test_run_request->active->active_max_result);
 					}
 				}
 				else if($test_run_request->test_profile->get_display_format() != 'NO_RESULT')
@@ -264,27 +304,27 @@ class pts_test_execution
 
 				if($allow_cache_share && !is_file($cache_share_pt2so))
 				{
-					$cache_share->add_object('test_results_output_' . $i, $test_run_request->active_result);
+					$cache_share->add_object('test_results_output_' . $i, $test_run_request->active->active_result);
 					$cache_share->add_object('log_file_location_' . $i, $test_extra_runtime_variables['LOG_FILE']);
 					$cache_share->add_object('log_file_' . $i, (is_file($test_log_file) ? file_get_contents($test_log_file) : null));
 				}
 			}
 
-			if($is_expected_last_run && $test_run_request->test_result_buffer->get_count() > floor(($i - 2) / 2) && !$cache_share_present && $test_run_manager->do_dynamic_run_count())
+			if($is_expected_last_run && $active_result_buffer->get_trial_run_count() > floor(($i - 2) / 2) && !$cache_share_present && $test_run_manager->do_dynamic_run_count())
 			{
 				// The later check above ensures if the test is failing often the run count won't uselessly be increasing
 				// Should we increase the run count?
 				$increase_run_count = false;
 
-				if($defined_times_to_run == ($i + 1) && $test_run_request->test_result_buffer->get_count() > 0 && $test_run_request->test_result_buffer->get_count() < $defined_times_to_run && $i < 64)
+				if($defined_times_to_run == ($i + 1) && $active_result_buffer->get_trial_run_count() > 0 && $active_result_buffer->get_trial_run_count() < $defined_times_to_run && $i < 64)
 				{
 					// At least one run passed, but at least one run failed to produce a result. Increase count to try to get more successful runs
-					$increase_run_count = $defined_times_to_run - $test_run_request->test_result_buffer->get_count();
+					$increase_run_count = $defined_times_to_run - $active_result_buffer->get_trial_run_count();
 				}
-				else if($test_run_request->test_result_buffer->get_count() >= 2)
+				else if($active_result_buffer->get_trial_run_count() >= 2)
 				{
 					// Dynamically increase run count if needed for statistical significance or other reasons
-					$increase_run_count = $test_run_manager->increase_run_count_check($test_run_request, $defined_times_to_run, $test_run_time);
+					$increase_run_count = $test_run_manager->increase_run_count_check($active_result_buffer, $defined_times_to_run, $test_run_time);
 
 					if($increase_run_count === -1)
 					{
@@ -311,11 +351,11 @@ class pts_test_execution
 				{
 					$interim_output = pts_tests::call_test_script($test_run_request->test_profile, 'interim', 'Running Interim Test Script', $pts_test_arguments, $extra_runtime_variables, true);
 
-					if($interim_output != null && (pts_c::$test_flags & pts_c::debug_mode))
+					if($interim_output != null && (pts_client::is_debug_mode() || $full_output))
 					{
 						pts_client::$display->test_run_instance_output($interim_output);
 					}
-					sleep(2); // Rest for a moment between tests
+					//sleep(2); // Rest for a moment between tests
 				}
 
 				pts_module_manager::module_process('__interim_test_run', $test_run_request);
@@ -356,9 +396,21 @@ class pts_test_execution
 		{
 			$post_output = pts_tests::call_test_script($test_run_request->test_profile, 'post', 'Running Post-Test Script', $pts_test_arguments, $extra_runtime_variables, true);
 
-			if($post_output != null && (pts_c::$test_flags & pts_c::debug_mode))
+			if($post_output != null && (pts_client::is_debug_mode() || $full_output))
 			{
 				pts_client::$display->test_run_instance_output($post_output);
+			}
+			if(is_file($test_directory . 'post-test-exit-status'))
+			{
+			  // If the post script writes its exit status to ~/post-test-exit-status, if it's non-zero the test run failed
+			  $exit_status = pts_file_io::file_get_contents($test_directory . 'post-test-exit-status');
+			  unlink($test_directory . 'post-test-exit-status');
+
+			  if($exit_status != 0)
+			  {
+			    self::test_run_instance_error($test_run_manager, $test_run_request, 'The post run script exited with a non-zero exit status.' . PHP_EOL);
+			    $abort_testing=true;
+			  }
 			}
 		}
 
@@ -441,7 +493,14 @@ class pts_test_execution
 					}
 					else if($result_set_function != null)
 					{
-						call_user_func(array($test_run_request, $result_set_function), $file_contents);
+						if($result_set_function == 'set_used_arguments_description')
+						{
+							$arguments_description = $file_contents;
+						}
+						else
+						{
+							call_user_func(array($test_run_request, $result_set_function), $file_contents);
+						}
 					}
 				}
 			}
@@ -488,13 +547,13 @@ class pts_test_execution
 		// Result Calculation
 		$test_run_request->set_used_arguments_description($arguments_description);
 		$test_run_request->set_used_arguments($extra_arguments);
-		pts_test_result_parser::calculate_end_result($test_run_request); // Process results
+		pts_test_result_parser::calculate_end_result($test_run_request, $active_result_buffer); // Process results
 
 		pts_client::$display->test_run_end($test_run_request);
 
 		pts_client::$display->display_interrupt_message($test_run_request->test_profile->get_post_run_message());
 		pts_module_manager::module_process('__post_test_run', $test_run_request);
-		$report_elapsed_time = $cache_share_present == false && $test_run_request->get_result() != 0;
+		$report_elapsed_time = $cache_share_present == false && $test_run_request->active->get_result() != 0;
 		pts_tests::update_test_install_xml($test_run_request->test_profile, ($report_elapsed_time ? $time_test_elapsed : 0));
 		pts_storage_object::add_in_file(PTS_CORE_STORAGE, 'total_testing_time', ($time_test_elapsed / 60));
 
@@ -506,6 +565,7 @@ class pts_test_execution
 
 		// Remove lock
 		pts_client::release_lock($lock_file);
+		return $active_result_buffer;
 	}
 }
 

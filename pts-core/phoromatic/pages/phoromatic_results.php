@@ -138,13 +138,16 @@ class phoromatic_results implements pts_webui_interface
 					{
 						break;
 					}
-					$main .= '<a href="#"><li id="result_select_' . $test_result_row['PPRID'] . '"><input type="checkbox" id="result_compare_checkbox_' . $test_result_row['PPRID'] . '" onclick="javascript:phoromatic_checkbox_toggle_result_comparison(\'' . $test_result_row['PPRID'] . '\');" onchange="return false;"></input> <span onclick="javascript:phoromatic_window_redirect(\'?result/' . $test_result_row['PPRID'] . '\');">' . $test_result_row['Title'] . '</span><br /><table><tr><td>' . phoromatic_system_id_to_name($test_result_row['SystemID']) . '</td><td>' . phoromatic_user_friendly_timedate($test_result_row['UploadTime']) .  '</td><td>' . $test_result_row['TimesViewed'] . ' Times Viewed</td></table></li></a>';
+					$main .= '<a onclick=""><li id="result_select_' . $test_result_row['PPRID'] . '"><input type="checkbox" id="result_compare_checkbox_' . $test_result_row['PPRID'] . '" onclick="javascript:phoromatic_checkbox_toggle_result_comparison(\'' . $test_result_row['PPRID'] . '\');" onchange="return false;"></input> <span onclick="javascript:phoromatic_window_redirect(\'?result/' . $test_result_row['PPRID'] . '\');">' . $test_result_row['Title'] . '</span><br /><table><tr><td>' . phoromatic_system_id_to_name($test_result_row['SystemID']) . '</td><td>' . phoromatic_user_friendly_timedate($test_result_row['UploadTime']) .  '</td><td>' . $test_result_row['TimesViewed'] . ' Times Viewed</td></table></li></a>';
 					$results++;
-
 				}
 				if($results == 0)
 				{
 					$main .= '<li class="light" style="text-align: center;">No Results Found</li>';
+				}
+				else if($results > 3)
+				{
+					$main .= '<a onclick=""><li id="global_bottom_totals"><input type="checkbox" id="global_checkbox" onclick="javascript:phoromatic_toggle_checkboxes_on_page(this);" onchange="return false;"></input> <strong>' . $results . ' Results</strong></li></a>';
 				}
 				$main .= '</ul></div>';
 				$main .= '</div>';
@@ -157,7 +160,7 @@ class phoromatic_results implements pts_webui_interface
 				if(!empty($test_result_result) && ($test_result_row = $test_result_result->fetchArray()))
 				{
 					$main .= '<div class="pts_phoromatic_info_box_area">';
-					$main .= '<div style="margin: 0 5%;"><ul style="max-height: 100%;"><li><h1>Results Shared By Other Groups</h1></li>';
+					$main .= '<ul style="max-height: 100%;"><li><h1>Results Shared By Other Groups</h1></li>';
 					$results = 0;
 					do
 					{
@@ -169,7 +172,7 @@ class phoromatic_results implements pts_webui_interface
 						{
 							break;
 						}
-						$main .= '<a href="#"><li id="result_select_' . $test_result_row['PPRID'] . '"><input type="checkbox" id="result_compare_checkbox_' . $test_result_row['PPRID'] . '" onclick="javascript:phoromatic_checkbox_toggle_result_comparison(\'' . $test_result_row['PPRID'] . '\');" onchange="return false;"></input> <span onclick="javascript:phoromatic_window_redirect(\'?result/' . $test_result_row['PPRID'] . '\');">' . $test_result_row['Title'] . '</span><br /><table><tr><td><strong>' . phoromatic_account_id_to_group_name($test_result_row['AccountID']) . '</strong></td><td>' . phoromatic_system_id_to_name($test_result_row['SystemID'], $test_result_row['AccountID']) . '</td><td>' . phoromatic_user_friendly_timedate($test_result_row['UploadTime']) .  '</td><td>' . $test_result_row['TimesViewed'] . ' Times Viewed</td></table></li></a>';
+						$main .= '<a onclick=""><li id="result_select_' . $test_result_row['PPRID'] . '"><input type="checkbox" id="result_compare_checkbox_' . $test_result_row['PPRID'] . '" onclick="javascript:phoromatic_checkbox_toggle_result_comparison(\'' . $test_result_row['PPRID'] . '\');" onchange="return false;"></input> <span onclick="javascript:phoromatic_window_redirect(\'?result/' . $test_result_row['PPRID'] . '\');">' . $test_result_row['Title'] . '</span><br /><table><tr><td><strong>' . phoromatic_account_id_to_group_name($test_result_row['AccountID']) . '</strong></td><td>' . phoromatic_system_id_to_name($test_result_row['SystemID'], $test_result_row['AccountID']) . '</td><td>' . phoromatic_user_friendly_timedate($test_result_row['UploadTime']) .  '</td><td>' . $test_result_row['TimesViewed'] . ' Times Viewed</td></table></li></a>';
 						$results++;
 					}
 					while($test_result_row = $test_result_result->fetchArray());
@@ -177,7 +180,7 @@ class phoromatic_results implements pts_webui_interface
 				}
 			}
 
-			echo phoromatic_webui_main($main, phoromatic_webui_right_panel_logged_in());
+			echo phoromatic_webui_main($main);
 			echo phoromatic_webui_footer();
 	}
 }

@@ -201,7 +201,8 @@ class phodevi_linux_parser
 	}
 	public static function read_sys_disk_speed($path, $to_read)
 	{
-		$speed = -1; // in MB/s
+		$delta_mb = -1; // in MB/s
+		$measure_time = 1000000; // microseconds
 
 		if(is_file($path))
 		{
@@ -209,32 +210,27 @@ class phodevi_linux_parser
 			{
 				case 'WRITE':
 					$sector = 6;
-					$time = 7;
 					break;
 				case 'READ':
 					$sector = 2;
-					$time = 3;
 					break;
 				default:
-					return $speed;
+					return $delta_mb;
 					break;
 			}
 
 			$start_stat = pts_strings::trim_spaces(file_get_contents($path));
-			usleep(500000);
+			usleep($measure_time);
 			$end_stat = pts_strings::trim_spaces(file_get_contents($path));
 
 			$start_stat = explode(' ', $start_stat);
 			$end_stat = explode(' ', $end_stat);
 
 			$delta_sectors = $end_stat[$sector] - $start_stat[$sector];
-			$delta_ms_spent = $end_stat[$time] - $start_stat[$time];
 
-			// assuming 512 byte sectors
+			// TODO check sector size instead of hardcoding it
 			$delta_mb = $delta_sectors * 512 / 1048576;
-			$delta_seconds = $delta_ms_spent / 1000;
-
-			$speed = $delta_seconds != 0 ? $delta_mb / $delta_seconds : 0;
+			$speed = $delta_mb * 1000000 / $measure_time;
 		}
 
 		return pts_math::set_precision($speed, 2);

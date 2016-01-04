@@ -44,7 +44,7 @@ class phodevi_cpu extends phodevi_device_interface
 				$property = new phodevi_device_property(array('cpu_default_frequency', 0), phodevi::smart_caching);
 				break;
 			case 'core-count':
-				$property = new phodevi_device_property('cpu_core_count', phodevi::smart_caching);
+				$property = new phodevi_device_property('cpu_core_count', phodevi::std_caching);
 				break;
 			case 'node-count':
 				$property = new phodevi_device_property('cpu_node_count', phodevi::smart_caching);
@@ -75,7 +75,11 @@ class phodevi_cpu extends phodevi_device_interface
 	{
 		$info = null;
 
-		if(getenv('NUMBER_OF_PROCESSORS') && is_numeric(getenv('NUMBER_OF_PROCESSORS')))
+		if(getenv('PTS_NPROC') && is_numeric(getenv('PTS_NPROC')))
+		{
+			$info = getenv('PTS_NPROC');
+		}
+		else if(getenv('NUMBER_OF_PROCESSORS') && is_numeric(getenv('NUMBER_OF_PROCESSORS')))
 		{
 			// Should be used by Windows they have NUMBER_OF_PROCESSORS set and use this as an easy way to override CPUs exposed
 			$info = getenv('NUMBER_OF_PROCESSORS');
@@ -248,7 +252,9 @@ class phodevi_cpu extends phodevi_device_interface
 		}
 		else if($info == null)
 		{
-			$info = phodevi::read_sensor(array('cpu', 'freq'));
+			$freq_sensor = new cpu_freq(0, NULL);
+			$info = phodevi::read_sensor($freq_sensor);
+			unset($freq_sensor);
 
 			if($info > 1000)
 			{
@@ -269,7 +275,7 @@ class phodevi_cpu extends phodevi_device_interface
 			$physical_cpu_ids = phodevi_linux_parser::read_cpuinfo('physical id');
 			$physical_cpu_count = count(array_unique($physical_cpu_ids));
 
-			$cpu_strings = phodevi_linux_parser::read_cpuinfo(array('model name', 'Processor', 'cpu'));
+			$cpu_strings = phodevi_linux_parser::read_cpuinfo(array('model name', 'Processor', 'cpu', 'cpu model'));
 			$cpu_strings_unique = array_unique($cpu_strings);
 
 			if($physical_cpu_count == 1 || empty($physical_cpu_count))

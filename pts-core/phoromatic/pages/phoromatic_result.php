@@ -67,7 +67,7 @@ class phoromatic_result implements pts_webui_interface
 			}
 			$upload_ids = array_unique($upload_ids);
 
-			$result_file = array();
+			$result_files = array();
 
 			$display_rows = array();
 			$system_types = array();
@@ -76,6 +76,7 @@ class phoromatic_result implements pts_webui_interface
 			$upload_times = array();
 			$benchmark_tickets = array();
 			$xml_result_hash = array();
+			$tickets = array();
 
 			foreach($upload_ids as $id)
 			{
@@ -113,6 +114,7 @@ class phoromatic_result implements pts_webui_interface
 				pts_arrays::unique_push($system_types, $row['SystemID']);
 				pts_arrays::unique_push($schedule_types, $row['ScheduleID']);
 				pts_arrays::unique_push($trigger_types, $row['Trigger']);
+				pts_arrays::unique_push($tickets, $row['BenchmarkTicketID']);
 
 				// Update view counter
 				$stmt_view = phoromatic_server::$db->prepare('UPDATE phoromatic_results SET TimesViewed = (TimesViewed + 1) WHERE AccountID = :account_id AND UploadID = :upload_id');
@@ -127,7 +129,11 @@ class phoromatic_result implements pts_webui_interface
 				$result_file_title = phoromatic_system_id_to_name($system_types[0]) . ' Tests';
 			}
 
-			if(count($trigger_types) == 1 && $trigger_types[0] != null && $benchmark_tickets[0] != null && count($display_rows) > 1)
+			if(!empty($tickets) && $tickets[0] != null)
+			{
+				$system_name_format = 'ORIGINAL_DATA';
+			}
+			else if(count($trigger_types) == 1 && $trigger_types[0] != null && $benchmark_tickets[0] != null && count($display_rows) > 1)
 			{
 				$system_name_format = 'TRIGGER_AND_SYSTEM';
 			}
@@ -212,13 +218,20 @@ class phoromatic_result implements pts_webui_interface
 				}
 
 
-				array_push($result_file, new pts_result_merge_select($composite_xml, null, $system_name));
+				array_push($result_files, new pts_result_merge_select($composite_xml, null, $system_name));
 			}
 
-			$writer = new pts_result_file_writer(null);
-			$attributes = array('new_result_file_title' => $result_file_title);
-			pts_merge::merge_test_results_process($writer, $result_file, $attributes);
-			$result_file = new pts_result_file($writer->get_xml());
+			$result_file = new pts_result_file(null, true);
+			$result_file->set_title('Phoromatic Results');
+			if(!empty($result_files))
+			{
+				$attributes = array('new_result_file_title' => $result_file_title);
+				if(!empty($result_files))
+				{
+					$result_file->merge($result_files, $attributes);
+				}
+			}
+
 			$extra_attributes = array();
 
 			if(isset($_GET['upload_to_openbenchmarking']))
@@ -236,12 +249,15 @@ class phoromatic_result implements pts_webui_interface
 				'sort_by_reverse' => 'reverse_result_buffer',
 				'sort_by_name' => 'sort_result_buffer',
 				'condense_comparison' => 'condense_multi_way',
+				'force_line_graph' => 'force_tracking_line_graph',
 				);
+			$url_append = null;
 			foreach($attribute_options as $web_var => $attr_var)
 			{
-				if(isset($_POST[$web_var]))
+				if(isset($_REQUEST[$web_var]))
 				{
 					$extra_attributes[$attr_var] = true;
+					$url_append .= '&' . $web_var . '=1';
 				}
 			}
 
@@ -284,10 +300,11 @@ class phoromatic_result implements pts_webui_interface
 			}
 			else if(isset($_GET['download']) && $_GET['download'] == 'pdf')
 			{
+				ob_start();
 				$_REQUEST['force_format'] = 'PNG'; // Force to PNG renderer
 				$_REQUEST['svg_dom_gd_no_interlacing'] = true; // Otherwise FPDF will fail
 				$tdir = pts_client::create_temporary_directory();
-				pts_client::generate_result_file_graphs($result_file, $tdir);
+				pts_client::generate_result_file_graphs($result_file, $tdir, $extra_attributes);
 
 				$pdf = new pts_pdf_template($result_file->get_title(), null);
 
@@ -302,26 +319,21 @@ class phoromatic_result implements pts_webui_interface
 				$pdf->AddPage();
 				$pdf->Ln(15);
 
-				$identifiers = $result_file->get_system_identifiers();
-				$hardware_r = $result_file->get_system_hardware();
-				$software_r = $result_file->get_system_software();
-				$notes_r = $result_file->get_system_notes();
-				$tests = $result_file->get_test_titles();
-
 				$pdf->SetSubject($result_file->get_title() . ' Benchmarks');
-				$pdf->SetKeywords(implode(', ', $identifiers));
+				//$pdf->SetKeywords(implode(', ', $identifiers));
 
 				$pdf->WriteHeader('Test Systems:');
-				for($i = 0; $i < count($identifiers); $i++)
+				foreach($result_file->get_systems() as $s)
 				{
-					$pdf->WriteMiniHeader($identifiers[$i]);
-					$pdf->WriteText($hardware_r[$i]);
-					$pdf->WriteText($software_r[$i]);
+					$pdf->WriteMiniHeader($s->get_identifier());
+					$pdf->WriteText($s->get_hardware());
+					$pdf->WriteText($s->get_software());
 				}
 
 				$pdf->AddPage();
 				$placement = 1;
-				for($i = 1; $i <= count($tests); $i++)
+				$results = $result_file->get_result_objects();
+				for($i = 1; $i <= count($results); $i++)
 				{
 					if(is_file($tdir . 'result-graphs/' . $i . '.png'))
 					{
@@ -333,16 +345,21 @@ class phoromatic_result implements pts_webui_interface
 					{
 						$placement = 0;
 
-						if($i != count($tests))
+						if($i != count($results))
 						{
 							$pdf->AddPage();
 						}
 					}
 					$placement++;
 				}
-
+				ob_get_clean();
 				$pdf->Output('phoromatic.pdf', 'I');
 				//pts_file_io::delete($tdir, null, true);
+				return;
+			}
+			else if(isset($_GET['download']) && $_GET['download'] == 'xml')
+			{
+				echo $result_file->get_xml();
 				return;
 			}
 
@@ -363,6 +380,7 @@ class phoromatic_result implements pts_webui_interface
 			$table = new pts_ResultFileTable($result_file, $intent);
 			$main .= '<p style="text-align: center; overflow: auto;" class="result_object">' . pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes) . '</p>';
 
+			$main .= '<div id="pts_results_area">';
 			foreach($result_file->get_result_objects((isset($_POST['show_only_changed_results']) ? 'ONLY_CHANGED_RESULTS' : -1)) as $i => $result_object)
 			{
 				$main .= '<h2><a name="r-' . $i . '"></a><a name="' . $result_object->get_comparison_hash(true, false) . '"></a>' . $result_object->test_profile->get_title() . '</h2>';
@@ -371,6 +389,7 @@ class phoromatic_result implements pts_webui_interface
 				$main .= pts_render::render_graph_inline_embed($result_object, $result_file, $extra_attributes);
 				$main .= '</p>';
 			}
+			$main .= '</div>';
 		}
 		else
 		{
@@ -424,7 +443,7 @@ class phoromatic_result implements pts_webui_interface
 			$hash_matches = 0;
 			$ticket_matches = 0;
 
-			$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_results WHERE AccountID = :account_id AND ComparisonHash = :comparison_hash AND instr(:pprid, PPRID) = 0 ORDER BY UploadTime DESC LIMIT 12');
+			$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_results WHERE AccountID = :account_id AND ComparisonHash = :comparison_hash AND PPRID NOT IN (:pprid) ORDER BY UploadTime DESC LIMIT 12');
 			$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 			$stmt->bindValue(':comparison_hash', $result_file->get_contained_tests_hash(false));
 			$stmt->bindValue(':pprid', implode(',', $upload_ids));
@@ -437,7 +456,7 @@ class phoromatic_result implements pts_webui_interface
 
 			foreach($benchmark_tickets as $ticket_id)
 			{
-				$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_results WHERE AccountID = :account_id AND BenchmarkTicketID = :ticket_id AND instr(:pprid, PPRID) = 0 ORDER BY UploadTime DESC LIMIT 12');
+				$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_results WHERE AccountID = :account_id AND BenchmarkTicketID = :ticket_id AND PPRID NOT IN (:pprid) ORDER BY UploadTime DESC LIMIT 12');
 				$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 				$stmt->bindValue(':ticket_id', $ticket_id);
 				$stmt->bindValue(':pprid', implode(',', $upload_ids));
@@ -481,6 +500,7 @@ class phoromatic_result implements pts_webui_interface
 				'sort_by_name' => 'Reverse Result By Identifier',
 				'sort_by_reverse' => 'Reverse Result Order',
 				'show_only_changed_results' => 'Show Only Results With Result Variation',
+				'force_line_graph' => 'Force Line Graph',
 				);
 
 			if($result_file->is_multi_way_comparison())
@@ -517,14 +537,12 @@ class phoromatic_result implements pts_webui_interface
 		}
 
 		$right .= '<hr /><h3>Result Export</h3>';
-		$right .= '<p><a href="/public.php?t=result&ut='  . implode(',', $upload_ids) . '">Public Viewer</a></p>';
-		$right .= '<p><a href="?' . $_SERVER['QUERY_STRING'] . '/&download=pdf">Download As PDF</a></p>';
+		$right .= '<p><a href="/public.php?t=result&ut='  . implode(',', $upload_ids) . $url_append . '">Public Viewer</a></p>';
+		$right .= '<p><a href="?' . $_SERVER['QUERY_STRING'] . '/&download=pdf' . $url_append . '">Download As PDF</a></p>';
 		$right .= '<p><a href="?' . $_SERVER['QUERY_STRING'] . '/&download=csv">Download As CSV</a></p>';
+		$right .= '<p><a href="?' . $_SERVER['QUERY_STRING'] . '/&download=xml">Download As XML</a></p>';
 		$right .= '<p><a href="?' . $_SERVER['QUERY_STRING'] . '/&download=txt">Download As TEXT</a></p>';
-		if(count($xml_result_hash) == 1)
-		{
-			$right .= '<p><a href="?' . $_SERVER['QUERY_STRING'] . '/&upload_to_openbenchmarking">Upload To OpenBenchmarking.org</a></p>';
-		}
+		$right .= '<p><a href="?' . $_SERVER['QUERY_STRING'] . '/&upload_to_openbenchmarking">Upload To OpenBenchmarking.org</a></p>';
 
 		if(is_file(phoromatic_server::phoromatic_account_result_path($_SESSION['AccountID'], $row['UploadID']) . 'system-logs.zip'))
 		{
