@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2015, Phoronix Media
-	Copyright (C) 2008 - 2015, Michael Larabel
+	Copyright (C) 2008 - 2016, Phoronix Media
+	Copyright (C) 2008 - 2016, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -473,7 +473,8 @@ class pts_test_execution
 		array('pts-results-proportion', 'set_result_proportion', null),
 		array('pts-results-quantifier', 'set_result_quantifier', null),
 		array('pts-test-version', 'set_version', null),
-		array('pts-test-description', null, 'set_used_arguments_description')
+		array('pts-test-description', null, 'set_used_arguments_description'),
+		array('pts-footnote', null, null),
 		);
 
 		foreach($file_var_checks as &$file_check)
@@ -501,6 +502,10 @@ class pts_test_execution
 						{
 							call_user_func(array($test_run_request, $result_set_function), $file_contents);
 						}
+					}
+					else if($file == 'pts-footnote')
+					{
+						$test_run_request->test_profile->test_installation->set_install_footnote($file_contents);
 					}
 				}
 			}

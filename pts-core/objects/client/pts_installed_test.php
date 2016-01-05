@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2013, Phoronix Media
-	Copyright (C) 2008 - 2013, Michael Larabel
+	Copyright (C) 2008 - 2016, Phoronix Media
+	Copyright (C) 2008 - 2016, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@
 class pts_installed_test
 {
 	private $xml_parser;
+	private $footnote_override = null;
 
 	public function __construct(&$test_profile)
 	{
@@ -72,7 +73,11 @@ class pts_installed_test
 	}
 	public function get_install_footnote()
 	{
-		return $this->xml_parser->getXMLValue('PhoronixTestSuite/TestInstallation/Environment/InstallFootnote');
+		return !empty($this->footnote_override) ? $this->footnote_override : $this->xml_parser->getXMLValue('PhoronixTestSuite/TestInstallation/Environment/InstallFootnote');
+	}
+	public function set_install_footnote($f = null)
+	{
+		return $this->footnote_override = $f;
 	}
 	public function get_installed_checksum()
 	{
