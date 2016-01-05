@@ -3,8 +3,6 @@
 set -e
 
 run_benchmark() {
-    chlp benchmark-start || true
-
     params="$@"
 
     mkdir -p /opt/pts/results
@@ -20,9 +18,10 @@ run_benchmark() {
 
     phoronix-test-suite batch-install $params > /dev/null 2>&1
 
+    benchmark-start || true
     phoronix-test-suite batch-run $params
+    benchmark-finish || true
     rsync -aqz /root/.phoronix-test-suite /opt/pts/results/$run
 
     scripts/parse /opt/pts/results/$run/.phoronix-test-suite/test-results/$(date +%Y)-*/test-1.xml
-    chlp benchmark-finish || true
 }
