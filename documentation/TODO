@@ -10,10 +10,10 @@ PHORONIX TEST SUITE PUBLIC TODO LIST:
 - Possibly restore "weighted suites" [http://phorogit.com/index.php?p=phoronix-test-suite.git&a=commitdiff&h=548e5c073cc90d92ac3f382ca4933d5f556e78c6&hb=444441f9be866f51920e0ad8ca3909951b4d90c5]
 - Integrate finish-run command into the run command, auto-detect if the result file was a partial save and then ask if to perform run recovery'
 - Multi-threaded downloading of test files
-- Numerous pts_render improvements [see in-line code comments]
 - Optimus / DRI_PRIME=1 / xrandr --listproviders better GPU detection
 - NVIDIA make use of UsedDedicatedGPUMemory as new GPU sensor
 - Clean up all the WebSocket code and make it fit to spec
+- Incremental result uploads support
 
 ### PTS-GRAPH ###
 
