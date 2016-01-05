@@ -4,6 +4,7 @@ Phoronix Test Suite (Git)
 
 - pts-core: Add system to default list of repositories
 - pts_Graph: Rendering fix for collision of result identifiers
+- phoromatic: Fix in listing tests on schedules page when dealing with cache mismatch
 - deploy: JuJu update from upstream
 
 Phoronix Test Suite 6.2 Milestone 2
