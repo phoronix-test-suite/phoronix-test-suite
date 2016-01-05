@@ -110,6 +110,9 @@ install_phoronix() {
   apt-get install -qqy unzip build-essential default-jre-headless mesa-utils
   apt-get install -qqy phoronix-test-suite
 
+  apt-get install -qqy python python-pip
+  pip install --upgrade charms.benchmark
+
   # puppet helper to distribute facts between scripts
   apt-get install -qqy facter-customfacts-plugin
 
