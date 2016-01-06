@@ -31,6 +31,7 @@ class system_monitor extends pts_module_interface
 
 	private static $result_identifier = null;
 	private static $to_monitor = array();
+	private static $monitor_pids = array();
 	private static $monitor_test_count = 0;
 
 	private static $individual_test_run_request = null;
@@ -192,6 +193,14 @@ class system_monitor extends pts_module_interface
 		{
 			self::process_summary_results($sensor, $test_run_manager);
 		}
+
+		foreach(self::$monitor_pids as $pid)
+		{
+			posix_kill($pid, SIGTERM);
+			pcntl_waitpid($pid, $status);
+		}
+
+		self::$monitor_pids = array();
 	}
 	public static function __post_run_process()
 	{
@@ -211,6 +220,7 @@ class system_monitor extends pts_module_interface
 			if($is_instant === false)
 			{
 				$pid = pts_module::pts_timed_function('pts_monitor_update', self::$sensor_monitoring_frequency, array(array($sensor)));
+				array_push(self::$monitor_pids, $pid);
 			}
 			else
 			{
@@ -220,7 +230,8 @@ class system_monitor extends pts_module_interface
 
 		if(!empty($instant_sensors))
 		{
-			pts_module::pts_timed_function('pts_monitor_update', self::$sensor_monitoring_frequency, array($instant_sensors));
+			$pid = pts_module::pts_timed_function('pts_monitor_update', self::$sensor_monitoring_frequency, array($instant_sensors));
+			array_push(self::$monitor_pids, $pid);
 		}
 	}
 
@@ -448,7 +459,7 @@ class system_monitor extends pts_module_interface
 		if($sensor[0] === 'cgroup')
 		{
 			$cgroup_controller = call_user_func(array($sensor[2], 'get_cgroup_controller'));
-			array_push(self::$cgroup_enabled_controllers, $cgroup_controller );
+			pts_arrays::unique_push(self::$cgroup_enabled_controllers, $cgroup_controller );
 			self::cgroup_create(self::$cgroup_name, $cgroup_controller);
 			$param = self::$cgroup_name;
 		}
