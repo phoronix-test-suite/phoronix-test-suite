@@ -127,9 +127,9 @@ class pts_result_file_output
 		$system_software = array();
 		foreach($result_file->get_systems() as $system)
 		{
-			$system_identifiers[] = $system->get_identifier());
-			$system_hardware[] = $system->get_hardware());
-			$system_software[] = $system->get_software());
+			$system_identifiers[] = $system->get_identifier();
+			$system_hardware[] = $system->get_hardware();
+			$system_software[] = $system->get_software();
 		}
 
 		for($i = 0; $i < count($system_identifiers); $i++)
