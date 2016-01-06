@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2014, Phoronix Media
-	Copyright (C) 2008 - 2014, Michael Larabel
+	Copyright (C) 2008 - 2016, Phoronix Media
+	Copyright (C) 2008 - 2016, Michael Larabel
 	phodevi_monitor.php: The PTS Device Interface object for the display monitor
 
 	This program is free software; you can redistribute it and/or modify
@@ -79,7 +79,7 @@ class phodevi_monitor extends phodevi_device_interface
 
 				if(!empty($m) && !isset($m[32]) && isset($m[6]))
 				{
-					array_push($monitor, $m);
+					$monitor[] = $m;
 				}
 				$offset = $monitor_pos + 2;
 			}
@@ -103,7 +103,7 @@ class phodevi_monitor extends phodevi_device_interface
 
 				if(!empty($m))
 				{
-					array_push($monitor, $m);
+					$monitor[] = $m;
 				}
 			}
 
@@ -239,11 +239,11 @@ class phodevi_monitor extends phodevi_device_interface
 				}
 				else if($monitor_position_x > 0 && $monitor_position_y == 0)
 				{
-					array_push($monitor_layout, ($hit_0_0 ? 'RIGHT' : 'LEFT'));
+					$monitor_layout[] = ($hit_0_0 ? 'RIGHT' : 'LEFT');
 				}
 				else if($monitor_position_x == 0 && $monitor_position_y > 0)
 				{
-					array_push($monitor_layout, ($hit_0_0 ? 'LOWER' : 'UPPER'));
+					$monitor_layout[] = ($hit_0_0 ? 'LOWER' : 'UPPER');
 				}
 			}
 
@@ -260,16 +260,16 @@ class phodevi_monitor extends phodevi_device_interface
 						switch($card_monitor_configuration)
 						{
 							case 'horizontal':
-								array_push($monitor_layout, 'RIGHT');
+								$monitor_layout[] = 'RIGHT';
 								break;
 							case 'horizontal,reverse':
-								array_push($monitor_layout, 'LEFT');
+								$monitor_layout[] = 'LEFT';
 								break;
 							case 'vertical':
-								array_push($monitor_layout, 'ABOVE');
+								$monitor_layout[] = 'ABOVE';
 								break;
 							case 'vertical,reverse':
-								array_push($monitor_layout, 'BELOW');
+								$monitor_layout[] = 'BELOW';
 								break;
 						}
 					}
@@ -286,7 +286,7 @@ class phodevi_monitor extends phodevi_device_interface
 
 		if(phodevi::read_property('monitor', 'count') == 1)
 		{
-			array_push($resolutions, phodevi::read_property('gpu', 'screen-resolution-string'));
+			$resolutions[] = phodevi::read_property('gpu', 'screen-resolution-string');
 		}
 		else
 		{
@@ -294,7 +294,7 @@ class phodevi_monitor extends phodevi_device_interface
 			{
 				$this_resolution = substr($monitor_line, strpos($monitor_line, ':') + 2);
 				$this_resolution = substr($this_resolution, 0, strpos($this_resolution, ' '));
-				array_push($resolutions, $this_resolution);
+				$resolutions[] = $this_resolution;
 			}
 		}
 

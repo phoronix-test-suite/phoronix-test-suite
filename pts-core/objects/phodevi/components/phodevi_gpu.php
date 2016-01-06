@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2015, Phoronix Media
-	Copyright (C) 2008 - 2015, Michael Larabel
+	Copyright (C) 2008 - 2016, Phoronix Media
+	Copyright (C) 2008 - 2016, Michael Larabel
 	phodevi_gpu.php: The PTS Device Interface object for the graphics processor
 
 	This program is free software; you can redistribute it and/or modify
@@ -535,7 +535,7 @@ class phodevi_gpu extends phodevi_device_interface
 						if(!in_array($m, $available_modes))
 						{
 							// Don't repeat modes
-							array_push($available_modes, $m);
+							$available_modes[] = $m;
 						}
 					}
 				}
@@ -565,14 +565,14 @@ class phodevi_gpu extends phodevi_device_interface
 			{
 				if($stock_modes[$i][0] <= $current_resolution[0] && $stock_modes[$i][1] <= $current_resolution[1])
 				{
-					array_push($available_modes, $stock_modes[$i]);
+					$available_modes[] = $stock_modes[$i];
 				}
 			}
 		}
 
 		if(!in_array(phodevi::read_property('gpu', 'screen-resolution'), $available_modes))
 		{
-			array_push($available_modes, phodevi::read_property('gpu', 'screen-resolution'));
+			$available_modes[] = phodevi::read_property('gpu', 'screen-resolution');
 		}
 
 		foreach($available_modes as $mode_index => $mode)
@@ -610,7 +610,7 @@ class phodevi_gpu extends phodevi_device_interface
 		{
 			if(count($this_mode) == 2)
 			{
-				array_push($mode_pixel_counts, $this_mode[0] * $this_mode[1]);
+				$mode_pixel_counts[] = $this_mode[0] * $this_mode[1];
 			}
 		}
 
@@ -622,7 +622,7 @@ class phodevi_gpu extends phodevi_device_interface
 			{
 				if($mode[0] * $mode[1] == $mode_pixel_count)
 				{
-					array_push($available_modes, $mode);
+					$available_modes[] = $mode;
 					unset($unsorted_modes[$mode_index]);
 					break;
 				}
@@ -636,7 +636,7 @@ class phodevi_gpu extends phodevi_device_interface
 			{
 				if(is_array($mode) && count($mode) == 2)
 				{
-					array_push($available_modes, $mode);
+					$available_modes[] = $mode;
 				}
 			}
 		}

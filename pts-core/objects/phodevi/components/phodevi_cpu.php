@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2015, Phoronix Media
-	Copyright (C) 2008 - 2015, Michael Larabel
+	Copyright (C) 2008 - 2016, Phoronix Media
+	Copyright (C) 2008 - 2016, Michael Larabel
 	phodevi_cpu.php: The PTS Device Interface object for the CPU / processor
 
 	This program is free software; you can redistribute it and/or modify
@@ -313,7 +313,7 @@ class phodevi_cpu extends phodevi_device_interface
 				{
 					if($current_string != $cpu_strings[$i] || $i == (count($physical_cpu_ids) - 1))
 					{
-						array_push($cpus, $current_count . ' x ' . $current_string);
+						$cpus[] = $current_count . ' x ' . $current_string;
 
 						$current_string = $cpu_strings[$i];
 						$current_count = 0;

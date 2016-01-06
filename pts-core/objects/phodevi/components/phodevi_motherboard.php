@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2014, Phoronix Media
-	Copyright (C) 2008 - 2014, Michael Larabel
+	Copyright (C) 2008 - 2016, Phoronix Media
+	Copyright (C) 2008 - 2016, Michael Larabel
 	phodevi_motherboard.php: The PTS Device Interface object for the motherboard
 
 	This program is free software; you can redistribute it and/or modify
@@ -70,13 +70,13 @@ class phodevi_motherboard extends phodevi_device_interface
 					continue;
 				}
 
-				array_push($usb, array(
+				$usb[] = array(
 					'Class' => pts_file_io::file_get_contents($usb_dir . 'bDeviceClass'),
 					'Vendor' => $vendor,
 					'Device' => $device,
 					'VendorID' => pts_file_io::file_get_contents($usb_dir . 'idVendor'),
 					'DeviceID' => pts_file_io::file_get_contents($usb_dir . 'idProduct')
-					));
+					);
 			}
 		}
 
@@ -163,7 +163,7 @@ class phodevi_motherboard extends phodevi_device_interface
 
 				if(count($formatted_section) > 0 && $formatted_section['Class'] != null)
 				{
-					array_push($pci_devices, $formatted_section);
+					$pci_devices[] = $formatted_section;
 				}
 			}
 		}
@@ -231,7 +231,7 @@ class phodevi_motherboard extends phodevi_device_interface
 
 				if($temp != null)
 				{
-					array_push($drivers, $temp);
+					$drivers[] = $temp;
 				}
 			}
 			if(($s = strpos($device, 'Kernel modules:')) !== false)
@@ -245,7 +245,7 @@ class phodevi_motherboard extends phodevi_device_interface
 						$temp = str_replace(',', null, $temp);
 						if($temp != null && !in_array($temp, $drivers))
 						{
-							array_push($drivers, $temp);
+							$drivers[] = $temp;
 						}
 					}
 				}
@@ -274,7 +274,7 @@ class phodevi_motherboard extends phodevi_device_interface
 
 							if($line != null && !isset($line[128]))
 							{
-								array_push($dmesg_example, $line);
+								$dmesg_example[] = $line;
 							}
 							$offset = strpos($dmesg, "\n", ($offset + 1));
 						}

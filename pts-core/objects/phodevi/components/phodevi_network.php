@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2011, Phoronix Media
-	Copyright (C) 2011, Michael Larabel
+	Copyright (C) 2011 - 2016, Phoronix Media
+	Copyright (C) 2011 - 2016, Michael Larabel
 	phodevi_network.php: The PTS Device Interface object for network devices
 
 	This program is free software; you can redistribute it and/or modify
@@ -50,7 +50,7 @@ class phodevi_network extends phodevi_device_interface
 
 				if(!empty($pci))
 				{
-					array_push($network, $pci);
+					$network[] = $pci;
 				}
 			}
 		}
@@ -66,7 +66,7 @@ class phodevi_network extends phodevi_device_interface
 
 				if(!empty($pci))
 				{
-					array_push($network, $pci);
+					$network[] = $pci;
 				}
 			}
 		}

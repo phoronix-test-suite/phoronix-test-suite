@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2015, Phoronix Media
-	Copyright (C) 2009 - 2015, Michael Larabel
+	Copyright (C) 2009 - 2016, Phoronix Media
+	Copyright (C) 2009 - 2016, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -71,7 +71,7 @@ class cpu_usage extends phodevi_sensor
 			$cpu_list = shell_exec("cat /proc/stat | grep cpu | awk '{print $1}'");
 			$cpu_array = explode("\n", $cpu_list);
 			$supported = array_slice($cpu_array, 1, count($cpu_array) - 2);
-			array_push($supported, 'summary');
+			$supported[] = 'summary';
 			return $supported;
 		}
 
@@ -163,7 +163,7 @@ class cpu_usage extends phodevi_sensor
 
 			for($i = 1; $i < 10; $i++)
 			{
-				array_push($load, $stat_break[$i]);
+				$load[] = $stat_break[$i];
 			}
 		}
 		else if(phodevi::is_bsd())

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2015, Phoronix Media
-	Copyright (C) 2008 - 2015, Michael Larabel
+	Copyright (C) 2008 - 2016, Phoronix Media
+	Copyright (C) 2008 - 2016, Michael Larabel
 	phodevi_system.php: The PTS Device Interface object for the system software
 
 	This program is free software; you can redistribute it and/or modify
@@ -368,7 +368,7 @@ class phodevi_system extends phodevi_device_interface
 				{
 					if(strpos($mounts, $fs_module) != false)
 					{
-						array_push($fs_r, $fs_name);
+						$fs_r[] = $fs_name;
 					}
 				}
 
@@ -484,7 +484,7 @@ class phodevi_system extends phodevi_device_interface
 					{
 						$v = '.' . $v;
 					}
-					array_push($version, $v);
+					$version[] = $v;
 				}
 			}
 
@@ -527,7 +527,8 @@ class phodevi_system extends phodevi_device_interface
 
 		if(stripos(phodevi::read_property('system', 'opengl-driver'), 'Mesa'))
 		{
-			array_push($check_variables, 'MESA', 'GALLIUM');
+			$check_variables[] = 'MESA';
+			$check_variables[] = 'GALLIUM';
 		}
 
 		if(isset($_SERVER))
@@ -538,7 +539,7 @@ class phodevi_system extends phodevi_device_interface
 				{
 					if(stripos($name, $var) !== false && $name != '__GL_SYNC_TO_VBLANK')
 					{
-						array_push($to_report, $name . '=' . $value);
+						$to_report[] = $name . '=' . $value;
 						break;
 					}
 				}
@@ -878,7 +879,7 @@ class phodevi_system extends phodevi_device_interface
 
 				if(isset($module_line[0]) && !empty($module_line[0]))
 				{
-					array_push($modules, $module_line[0]);
+					$modules[] = $module_line[0];
 				}
 			}
 
@@ -892,7 +893,7 @@ class phodevi_system extends phodevi_device_interface
 					{
 						if(in_array(substr($option, 0, $t), $modules))
 						{
-							array_push($to_report, $option);
+							$to_report[] = $option;
 						}
 					}
 				}
@@ -1341,7 +1342,7 @@ class phodevi_system extends phodevi_device_interface
 				{
 					$info .= ' ' . pts_strings::last_in_string($vinfo);
 				}
-					array_push($display_servers, $info);
+				$display_servers[] = $info;
 			}
 			if(pts_client::is_process_running('unity-system-compositor'))
 			{
@@ -1349,7 +1350,7 @@ class phodevi_system extends phodevi_device_interface
 
 				if(pts_strings::is_version($unity_system_comp))
 				{
-					array_push($display_servers, 'Unity-System-Compositor ' . $unity_system_comp);
+					$display_servers[] = 'Unity-System-Compositor ' . $unity_system_comp;
 				}
 
 			}
@@ -1376,22 +1377,20 @@ class phodevi_system extends phodevi_device_interface
 
 				if($info != null)
 				{
-					array_push($display_servers, 'X Server ' . $info);
+					$display_servers[] = 'X Server ' . $info;
 				}
 			}
 			if(pts_client::is_process_running('surfaceflinger'))
 			{
-				array_push($display_servers, 'SurfaceFlinger');
+				$display_servers[] = 'SurfaceFlinger';
 			}
-
 			if(pts_client::is_process_running('gnome-shell-wayland'))
 			{
-				array_push($display_servers, 'GNOME Shell Wayland');
+				$display_servers[] = 'GNOME Shell Wayland';
 			}
-
 			if(empty($display_servers) && getenv('WAYLAND_DISPLAY') != false)
 			{
-				array_push($display_servers, 'Wayland');
+				$display_servers[] = 'Wayland';
 			}
 		}
 

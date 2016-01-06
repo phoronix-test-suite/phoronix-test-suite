@@ -1,10 +1,10 @@
-<?php
+ <?php
 
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2012 - 2015, Phoronix Media
-	Copyright (C) 2012 - 2015, Michael Larabel
+	Copyright (C) 2012 - 2016, Phoronix Media
+	Copyright (C) 2012 - 2016, Michael Larabel
 	phodevi.php: The object for an effective VFS with PTS/Phodevi
 
 	This program is free software; you can redistribute it and/or modify
@@ -69,7 +69,7 @@ class phodevi_vfs
 			{
 				if($this->cache_isset_names($name))
 				{
-					array_push($nodes, $name);
+					$nodes[] = $name;
 				}
 			}
 		}
@@ -81,7 +81,7 @@ class phodevi_vfs
 			{
 				if(in_array($node['subsystem'], $subsystem) && $this->cache_isset_names($name))
 				{
-					array_push($nodes, $name);
+					$nodes[] = $name;
 				}
 			}
 		}

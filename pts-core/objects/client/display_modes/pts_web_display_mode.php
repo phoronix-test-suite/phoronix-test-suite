@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2015, Phoronix Media
-	Copyright (C) 2009 - 2015, Michael Larabel
+	Copyright (C) 2009 - 2016, Phoronix Media
+	Copyright (C) 2009 - 2016, Michael Larabel
 	pts_concise_display_mode.php: The batch / concise display mode
 
 	This program is free software; you can redistribute it and/or modify
@@ -306,16 +306,16 @@ class pts_web_display_mode implements pts_display_mode_interface
 		$estimated_length = $test_result->test_profile->get_estimated_run_time();
 		$display_table = array();
 
-		array_push($display_table, array($this->tab . 'Estimated Trial Run Count:', $this->expected_trial_run_count));
+		$display_table[] = array($this->tab . 'Estimated Trial Run Count:', $this->expected_trial_run_count);
 
 		if($estimated_length > 1 && $estimated_length != $remaining_length)
 		{
-			array_push($display_table, array($this->tab . 'Estimated Test Run-Time:', pts_strings::format_time($estimated_length, 'SECONDS', true, 60)));
+			$display_table[] = array($this->tab . 'Estimated Test Run-Time:', pts_strings::format_time($estimated_length, 'SECONDS', true, 60));
 		}
 
 		if($remaining_length > 1)
 		{
-			array_push($display_table, array($this->tab . 'Estimated Time To Completion:', pts_strings::format_time($remaining_length, 'SECONDS', true, 60)));
+			$display_table[] = array($this->tab . 'Estimated Time To Completion:', pts_strings::format_time($remaining_length, 'SECONDS', true, 60));
 		}
 
 		echo pts_user_io::display_text_table($display_table);

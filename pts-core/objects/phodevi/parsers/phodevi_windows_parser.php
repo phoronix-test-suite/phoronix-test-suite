@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2011, Phoronix Media
-	Copyright (C) 2009 - 2011, Michael Larabel
+	Copyright (C) 2009 - 2016, Phoronix Media
+	Copyright (C) 2009 - 2016, Michael Larabel
 	phodevi_windows_parser.php: General parsing functions specific to the Windows OS
 
 	This program is free software; you can redistribute it and/or modify
@@ -67,7 +67,7 @@ class phodevi_windows_parser
 
 					if($match_multiple)
 					{
-						array_push($return, $return_match);
+						$return[] = $return_match;
 					}
 					else
 					{

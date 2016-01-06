@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2013, Phoronix Media
-	Copyright (C) 2008 - 2013, Michael Larabel
+	Copyright (C) 2008 - 2016, Phoronix Media
+	Copyright (C) 2008 - 2016, Michael Larabel
 	phodevi_parser.php: General parsing functions used by different parts of Phodevi that are supported by more than one OS
 
 	This program is free software; you can redistribute it and/or modify
@@ -64,7 +64,7 @@ class phodevi_parser
 				{
 					if(!empty($xdpyinfo_line) && strpos($xdpyinfo_line, '0x0') == false)
 					{
-						array_push($monitor_info, $xdpyinfo_line);
+						$monitor_info[] = $xdpyinfo_line;
 					}
 				}
 			}

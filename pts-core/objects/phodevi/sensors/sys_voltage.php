@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2015, Phoronix Media
-	Copyright (C) 2009 - 2015, Michael Larabel
+	Copyright (C) 2009 - 2016, Phoronix Media
+	Copyright (C) 2009 - 2016, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -53,7 +53,7 @@ class sys_voltage extends phodevi_sensor
 	}
 	public static function parameter_check($parameter)
 	{
-		if($parameter === null || in_array($parameter, self::get_supported_devices() ) )
+		if($parameter === null || in_array($parameter, self::get_supported_devices()))
 		{
 			return true;
 		}
@@ -72,17 +72,17 @@ class sys_voltage extends phodevi_sensor
 			
 			//TODO not so elegant
 			
-			if(phodevi_linux_parser::read_sensors(array('V12', '+12V')) )
+			if(phodevi_linux_parser::read_sensors(array('V12', '+12V')))
 			{
-				array_push($supported, '12v');				
+				$supported[] = '12v';
 			}
-			if(phodevi_linux_parser::read_sensors(array('V5', '+5V') ) )
+			if(phodevi_linux_parser::read_sensors(array('V5', '+5V')))
 			{
-				array_push($supported, '5v');				
+				$supported[] = '5v';
 			}
-			if(phodevi_linux_parser::read_sensors(array('V3.3', '+3.3V') ) )
+			if(phodevi_linux_parser::read_sensors(array('V3.3', '+3.3V')))
 			{
-				array_push($supported, '3v');				
+				$supported[] = '3v';
 			}
 			
 			return $supported;
