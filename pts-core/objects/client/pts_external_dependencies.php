@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2015, Phoronix Media
-	Copyright (C) 2010 - 2015, Michael Larabel
+	Copyright (C) 2010 - 2016, Phoronix Media
+	Copyright (C) 2010 - 2016, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -49,7 +49,7 @@ class pts_external_dependencies
 		{
 			if(!in_array($test_profile, $tests_to_check) && $test_profile->is_supported())
 			{
-				array_push($tests_to_check, $test_profile);
+				$tests_to_check[] = $test_profile;
 			}
 		}
 
@@ -70,7 +70,7 @@ class pts_external_dependencies
 					$required_external_dependencies[$test_dependency] = array();
 				}
 
-				array_push($required_external_dependencies[$test_dependency], $test_profile);
+				$required_external_dependencies[$test_dependency][] = $test_profile;
 			}
 			foreach($test_profile->get_system_dependencies() as $test_dependency)
 			{
@@ -84,7 +84,7 @@ class pts_external_dependencies
 					$required_system_files[$test_dependency] = array();
 				}
 
-				array_push($required_system_files[$test_dependency], $test_profile);
+				$required_system_files[$test_dependency][] = $test_profile;
 			}
 		}
 
@@ -165,7 +165,7 @@ class pts_external_dependencies
 
 				if($dependency_data['possible_packages'] != null)
 				{
-					array_push($to_report, $dependency_data['title'] . PHP_EOL . 'Possible Package Names: ' . $dependency_data['possible_packages']);
+					$to_report[] = $dependency_data['title'] . PHP_EOL . 'Possible Package Names: ' . $dependency_data['possible_packages'];
 				}
 			}
 
@@ -315,11 +315,11 @@ class pts_external_dependencies
 				{
 					if(!in_array($package_data['os_package'], $needed_os_packages))
 					{
-						array_push($needed_os_packages, $package_data['os_package']);
+						$needed_os_packages[] = $package_data['os_package'];
 					}
 					if($generic_names_of_packages_needed !== false && !in_array($package, $generic_names_of_packages_needed))
 					{
-						array_push($generic_names_of_packages_needed, $package);
+						$generic_names_of_packages_needed[] = $package;
 					}
 				}
 				else
@@ -385,7 +385,7 @@ class pts_external_dependencies
 				{
 					foreach($processed_pkgs as $pkg)
 					{
-						array_push($needed_os_packages, $pkg);
+						$needed_os_packages[] = $pkg;
 					}
 				}
 			}
@@ -441,7 +441,7 @@ class pts_external_dependencies
 						{
 							foreach(explode(':', getenv('LD_LIBRARY_PATH')) as $path)
 							{
-								array_push($possible_paths, $path . '/');
+								$possible_paths[] = $path . '/';
 							}
 						}
 
@@ -462,7 +462,7 @@ class pts_external_dependencies
 						{
 							foreach(explode(':', getenv('PATH')) as $path)
 							{
-								array_push($possible_paths, $path . '/');
+								$possible_paths[] = $path . '/';
 							}
 						}
 
@@ -566,7 +566,7 @@ class pts_external_dependencies
 			if(in_array($package, $names))
 			{
 				$package_data = $generic_dependencies_parser->get_package_data($package);
-				array_push($titles, $package_data['title']);
+				$titles[] = $package_data['title'];
 			}
 		}
 		sort($titles);

@@ -174,7 +174,7 @@ class pts_test_run_manager
 
 		foreach($this->tests_to_run as $test_run_request)
 		{
-			array_push($identifiers, $test_run_request->test_profile->get_identifier());
+			$identifiers[] = $test_run_request->test_profile->get_identifier();
 		}
 
 		array_unique($identifiers);
@@ -342,15 +342,15 @@ class pts_test_run_manager
 
 			foreach($this->result_file->get_systems() as $s)
 			{
-				array_push($current_hardware, $s->get_hardware());
-				array_push($current_software, $s->get_software());
-				array_push($current_identifiers, $s->get_identifier());
+				$current_hardware[] = $s->get_hardware();
+				$current_software[] = $s->get_software();
+				$current_identifiers[] = $s->get_identifier();
 			}
 
 			$hashes = array();
 			foreach($this->result_file->get_result_objects() as $result)
 			{
-				array_push($hashes, $result->get_comparison_hash(false, false));
+				$hashes[] = $result->get_comparison_hash(false, false);
 			}
 			foreach($this->tests_to_run as &$run_request)
 			{
@@ -436,7 +436,7 @@ class pts_test_run_manager
 
 				if(phodevi::is_vendor_string($subsystem_name) && !in_array($subsystem_name, $subsystem_r))
 				{
-					array_push($subsystem_r, $subsystem_name);
+					$subsystem_r[] = $subsystem_name;
 				}
 				if(isset($subsystem_r[2]) || isset($subsystem_name[19]))
 				{
@@ -703,8 +703,7 @@ class pts_test_run_manager
 
 		if($test_successful == false && $test_run_request->test_profile->get_identifier() != null)
 		{
-			array_push($this->failed_tests_to_run, $test_run_request);
-
+			$this->failed_tests_to_run[] = $test_run_request;
 			// For now delete the failed test log files, but it may be a good idea to keep them
 			pts_file_io::delete(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . '/test-logs/active/' . $this->get_results_identifier() . '/', null, true);
 		}
@@ -1053,7 +1052,7 @@ class pts_test_run_manager
 					{
 						// Check to see if older version of test is currently installed
 						// TODO: show change-log between installed versions and upstream
-						array_push($tests_missing, $run_object);
+						$tests_missing[] = $run_object;
 						continue;
 					}
 				}
@@ -1069,7 +1068,7 @@ class pts_test_run_manager
 					}
 					else if($test_profile->is_test_installed() == false)
 					{
-						array_push($tests_missing, $test_profile);
+						$tests_missing[] = $test_profile;
 					}
 					else
 					{
@@ -1101,7 +1100,7 @@ class pts_test_run_manager
 
 					if($test_profile->is_test_installed() == false)
 					{
-						array_push($tests_missing, $test_profile);
+						$tests_missing[] = $test_profile;
 					}
 					else
 					{
@@ -1120,7 +1119,7 @@ class pts_test_run_manager
 				continue;
 			}
 
-			array_push($tests_verified, $run_object);
+			$tests_verified[] = $run_object;
 		}
 
 		$to_run_objects = $tests_verified;
@@ -1188,9 +1187,9 @@ class pts_test_run_manager
 
 			foreach($this->result_file->get_systems() as $s)
 			{
-				array_push($hw_components, pts_result_file_analyzer::system_component_string_to_array($s->get_hardware()));
-				array_push($sw_components, pts_result_file_analyzer::system_component_string_to_array($s->get_software()));
-				array_push($existing_identifiers, $s->get_identifier());
+				$hw_components[] = pts_result_file_analyzer::system_component_string_to_array($s->get_hardware());
+				$sw_components[] = pts_result_file_analyzer::system_component_string_to_array($s->get_software());
+				$existing_identifiers[] = $s->get_identifier();
 			}
 
 			$existing_identifier_count = count($existing_identifiers);
@@ -1443,7 +1442,7 @@ class pts_test_run_manager
 
 				if(!in_array($test->test_profile->get_test_hardware_type(), $test_types_active))
 				{
-					array_push($test_types_active, $test->test_profile->get_test_hardware_type());
+					$test_types_active[] = $test->test_profile->get_test_hardware_type();
 				}
 
 			}
@@ -1542,7 +1541,7 @@ class pts_test_run_manager
 			$test_result = new pts_test_result($test_profile);
 			$test_result->set_used_arguments($test_arguments[$i]);
 			$test_result->set_used_arguments_description($test_arguments_description[$i]);
-			array_push($result_objects, $test_result);
+			$result_objects[] = $test_result;
 		}
 
 		return $result_objects;
@@ -1639,7 +1638,7 @@ class pts_test_run_manager
 
 				if(count($virtual_suite_tests) > 1)
 				{
-					array_push($virtual_suite_tests, 'All Tests In Suite');
+					$virtual_suite_tests[] = 'All Tests In Suite';
 				}
 
 				if(!$this->auto_mode && !$this->batch_mode)

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2014, Phoronix Media
-	Copyright (C) 2010 - 2014, Michael Larabel
+	Copyright (C) 2010 - 2016, Phoronix Media
+	Copyright (C) 2010 - 2016, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -98,7 +98,7 @@ class pts_test_install_manager
 						$remote_download_files[$cached_file['file_name']] = array();
 					}
 
-					array_push($remote_download_files[$cached_file['file_name']], $dc_directory . $cached_file['file_name']);
+					$remote_download_files[$cached_file['file_name']][] = $dc_directory . $cached_file['file_name'];
 				}
 			}
 		}
@@ -129,7 +129,7 @@ class pts_test_install_manager
 		{
 			if(pts_strings::is_url($dc_directory))
 			{
-				array_push($cache_directories, $dc_directory);
+				$cache_directories[] = $dc_directory;
 			}
 		}
 
@@ -143,7 +143,7 @@ class pts_test_install_manager
 		{
 			if(!pts_strings::is_url($dc_directory) && is_dir($dc_directory))
 			{
-				array_push($local_cache_directories, $dc_directory);
+				$local_cache_directories[] = $dc_directory;
 			}
 		}
 
@@ -175,7 +175,7 @@ class pts_test_install_manager
 			{
 				if(is_dir($dir_check))
 				{
-					array_push($cache_directories, $dir_check);
+					$cache_directories[] = $dir_check;
 					break;
 				}
 			}
@@ -197,7 +197,7 @@ class pts_test_install_manager
 					continue;
 				}
 
-				array_push($cache_directories, pts_strings::add_trailing_slash($dir_check));
+				$cache_directories[] = pts_strings::add_trailing_slash($dir_check);
 			}
 
 			if(pts_config::read_bool_config('PhoronixTestSuite/Options/Installation/SearchMediaForCache', 'TRUE'))
@@ -211,7 +211,7 @@ class pts_test_install_manager
 
 				foreach($download_cache_dirs as $dir)
 				{
-					array_push($cache_directories, $dir);
+					$cache_directories[] = $dir;
 				}
 			}
 		}

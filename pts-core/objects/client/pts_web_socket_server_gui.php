@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2013 - 2015, Phoronix Media
-	Copyright (C) 2013 - 2015, Michael Larabel
+	Copyright (C) 2013 - 2016, Phoronix Media
+	Copyright (C) 2013 - 2016, Michael Larabel
 	pts-web-socket_server_gui: Build upon pts_web_socket with functionality for the web GUI
 
 	This program is free software; you can redistribute it and/or modify
@@ -147,7 +147,7 @@ class pts_web_socket_server_gui extends pts_web_socket
 
 						if($result != null)
 						{
-							array_push($json['pts']['msg']['results'][current($sections)], $result);
+							$json['pts']['msg']['results'][current($sections)][] = $result;
 						}
 					}
 					$this->send_json_data($user->socket, $json);
@@ -173,9 +173,9 @@ class pts_web_socket_server_gui extends pts_web_socket
 
 					foreach($tests as $test)
 					{
-						array_push($json['pts']['msg']['tests'], $test);
+						$json['pts']['msg']['tests'][] = $test;
 						$tp = new pts_test_profile($test);
-						array_push($json['pts']['msg']['test_profiles'], base64_encode($tp->to_json()));
+						$json['pts']['msg']['test_profiles'][] = base64_encode($tp->to_json());
 					}
 					$this->send_json_data($user->socket, $json);
 					break;
@@ -309,10 +309,9 @@ class pts_web_socket_server_gui extends pts_web_socket
 
 			for($i = 0; $i < count($test_matches); $i++)
 			{
-				array_push($json['pts']['msg']['tests'], $test_matches[$i]);
-
+				$json['pts']['msg']['tests'][] = $test_matches[$i];
 				$tp = new pts_test_profile($test_matches[$i]);
-				array_push($json['pts']['msg']['test_profiles'], base64_encode($tp->to_json()));
+				$json['pts']['msg']['test_profiles'][] = base64_encode($tp->to_json());
 			}
 		}
 		else
@@ -324,10 +323,9 @@ class pts_web_socket_server_gui extends pts_web_socket
 
 			for($i = 0; $i < count($test_matches); $i++)
 			{
-				array_push($json['pts']['msg']['tests'], $test_matches[$i]);
-
+				$json['pts']['msg']['tests'][] = $test_matches[$i];
 				$tp = new pts_test_profile($test_matches[$i]);
-				array_push($json['pts']['msg']['test_profiles'], base64_encode($tp->to_json()));
+				$json['pts']['msg']['test_profiles'][] = base64_encode($tp->to_json());
 			}
 			// SEARCH TEST PROFILES
 		}
@@ -341,8 +339,8 @@ class pts_web_socket_server_gui extends pts_web_socket
 			foreach($result_matches as $result)
 			{
 				$result_file = new pts_result_file($result);
-				array_push($json['pts']['msg']['results'], $result);
-				array_push($json['pts']['msg']['result_files'], base64_encode($result_file->to_json()));
+				$json['pts']['msg']['results'][] = $result;
+				$json['pts']['msg']['result_files'][] = base64_encode($result_file->to_json());
 			}
 		}
 		else
@@ -352,8 +350,8 @@ class pts_web_socket_server_gui extends pts_web_socket
 			foreach($result_matches as $result)
 			{
 				$result_file = new pts_result_file($result);
-				array_push($json['pts']['msg']['results'], $result);
-				array_push($json['pts']['msg']['result_files'], base64_encode($result_file->to_json()));
+				$json['pts']['msg']['results'][] = $result;
+				$json['pts']['msg']['result_files'][] = base64_encode($result_file->to_json());
 			}
 
 		}

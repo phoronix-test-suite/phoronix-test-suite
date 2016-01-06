@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2015, Phoronix Media
-	Copyright (C) 2010 - 2015, Michael Larabel
+	Copyright (C) 2010 - 2016, Phoronix Media
+	Copyright (C) 2010 - 2016, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -275,11 +275,11 @@ class pts_openbenchmarking_client
 				{
 					if(stripos($identifier, $search) !== false || stripos($repo_index['tests'][$identifier]['title'], $search) !== false)
 					{
-						array_push($matching_tests, $repo . '/' . $identifier);
+						$matching_tests[] = $repo . '/' . $identifier;
 					}
 					else if($test_titles_only == false && (stripos(implode(' ', $repo_index['tests'][$identifier]['internal_tags']), $search) !== false || stripos($repo_index['tests'][$identifier]['test_type'], $search) !== false || stripos($repo_index['tests'][$identifier]['description'], $search) !== false))
 					{
-						array_push($matching_tests, $repo . '/' . $identifier);
+						$matching_tests[] = $repo . '/' . $identifier;
 					}
 				}
 			}

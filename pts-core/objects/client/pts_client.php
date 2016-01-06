@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2015, Phoronix Media
-	Copyright (C) 2008 - 2015, Michael Larabel
+	Copyright (C) 2008 - 2016, Phoronix Media
+	Copyright (C) 2008 - 2016, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -181,7 +181,7 @@ class pts_client
 				{
 					if(!in_array($store_var, $module_store_list))
 					{
-						array_push($module_store_list, $store_var);
+						$module_store_list[] = $store_var;
 					}
 				}
 			}
@@ -333,7 +333,7 @@ class pts_client
 				if(phodevi::is_linux())
 				{
 					// the kernel config file might just be too large to upload for now
-					array_push($system_log_files, '/boot/config-' . php_uname('r'));
+					$system_log_files[] = '/boot/config-' . php_uname('r');
 				}
 				*/
 
@@ -368,12 +368,12 @@ class pts_client
 
 				if(phodevi::is_bsd())
 				{
-					array_push($system_log_commands, 'sysctl -a');
-					array_push($system_log_commands, 'kenv');
+					$system_log_commands[] = 'sysctl -a';
+					$system_log_commands[] = 'kenv';
 				}
 				if(is_readable('/dev/mem'))
 				{
-					array_push($system_log_commands, 'dmidecode');
+					$system_log_commands[] = 'dmidecode';
 				}
 
 				foreach($system_log_commands as $command_string)
@@ -666,7 +666,7 @@ class pts_client
 	}
 	public static function register_phoromatic_server($server_ip, $http_port)
 	{
-		array_push(self::$phoromatic_servers, array('ip' => $server_ip, 'http_port' => $http_port));
+		self::$phoromatic_servers[] = array('ip' => $server_ip, 'http_port' => $http_port);
 	}
 	public static function available_phoromatic_servers()
 	{
@@ -675,7 +675,7 @@ class pts_client
 
 		foreach(self::$phoromatic_servers as $server)
 		{
-			array_push($possible_servers, array($server['ip'], $server['http_port']));
+			$possible_servers[] = array($server['ip'], $server['http_port']);
 		}
 
 		$user_config_phoromatic_servers = pts_config::read_user_config('PhoronixTestSuite/Options/General/PhoromaticServers', '');
@@ -684,7 +684,7 @@ class pts_client
 			$static_server = explode(':', $static_server);
 			if(count($static_server) == 2)
 			{
-				array_push($possible_servers, array($static_server[0], $static_server[1]));
+				$possible_servers[] = array($static_server[0], $static_server[1]);
 			}
 		}
 
@@ -696,7 +696,7 @@ class pts_client
 				$ps_file_line = explode(':', trim($ps_file_line));
 				if(count($ps_file_line) == 2 && ip2long($ps_file_line[0]) !== false && is_numeric($ps_file_line) && $ps_file_line > 100)
 				{
-					array_push($possible_servers, array($ps_file_line[0], $ps_file_line[1]));
+					$possible_servers[] = array($ps_file_line[0], $ps_file_line[1]);
 				}
 			}
 		}
@@ -938,7 +938,7 @@ class pts_client
 		$test_titles = array();
 		foreach($result_objects as &$result_object)
 		{
-			array_push($test_titles, $result_object->test_profile->get_title());
+			$test_titles[] = $result_object->test_profile->get_title();
 		}
 
 		$offset = 0;
@@ -961,7 +961,7 @@ class pts_client
 						{
 							if(isset($test_titles[$key]) && $this_title == $test_titles[$key])
 							{
-								array_push($table_keys, $this_title_index);
+								$table_keys[] = $this_title_index;
 							}
 						}
 					}
@@ -978,7 +978,7 @@ class pts_client
 			}
 
 			$graph = pts_render::render_graph($result_object, $result_file, $save_to, $extra_attributes);
-			array_push($generated_graphs, $graph);
+			$generated_graphs[] = $graph;
 		}
 
 		// Generate mini / overview graphs
@@ -1515,7 +1515,7 @@ class pts_client
 
 			if(!in_array($identifier, $ignore_ids))
 			{
-				array_push($results, $identifier);
+				$results[] = $identifier;
 			}
 		}
 
@@ -1539,7 +1539,7 @@ class pts_client
 			}
 			else if($pid)
 			{
-				array_push(self::$forked_pids, $pid);
+				self::$forked_pids[] = $pid;
 			}
 			else
 			{
@@ -1599,7 +1599,7 @@ class pts_client
 			else if($pid)
 			{
 				// PARENT
-				array_push(self::$forked_pids, $pid);
+				self::$forked_pids[] = $pid;
 				return true;
 			}
 			else
