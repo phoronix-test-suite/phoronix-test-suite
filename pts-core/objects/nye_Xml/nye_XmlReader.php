@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2015, Phoronix Media
-	Copyright (C) 2010 - 2015, Michael Larabel
+	Copyright (C) 2010 - 2016, Phoronix Media
+	Copyright (C) 2010 - 2016, Michael Larabel
 	nye_XmlReader.php: The XML reading object for the Phoronix Test Suite succeeding tandem_XmlReader
 
 	This program is free software; you can redistribute it and/or modify
@@ -87,7 +87,7 @@ class nye_XmlReader
 				{
 					for($j = 0; $j < $narrow->length; $j++)
 					{
-						array_push($values, $this->processXMLArraySteps($steps, $narrow->item($j)->getElementsByTagName($steps[$i + 1]), $i + 2));
+						$values[] = $this->processXMLArraySteps($steps, $narrow->item($j)->getElementsByTagName($steps[$i + 1]), $i + 2);
 					}
 				}
 				break;
@@ -97,7 +97,7 @@ class nye_XmlReader
 				for($j = 0; $j < $narrow->length; $j++)
 				{
 					$extract = $narrow->item($j)->getElementsByTagName($steps[$i + 1]);
-					array_push($values, ($extract->length > 0 ? $extract->item(0)->nodeValue : null));
+					$values[] = ($extract->length > 0 ? $extract->item(0)->nodeValue : null);
 				}
 				break;
 			}

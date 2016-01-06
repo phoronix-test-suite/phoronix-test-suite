@@ -159,7 +159,7 @@ if(QUICK_START == false)
 // Read passed arguments
 for($i = 2; $i < $argc && isset($argv[$i]); $i++)
 {
-	array_push($pass_args, $argv[$i]);
+	$pass_args[] = $argv[$i];
 }
 
 if(QUICK_START == false)

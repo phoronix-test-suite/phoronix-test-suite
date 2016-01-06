@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2015, Phoronix Media
-	Copyright (C) 2008 - 2015, Michael Larabel
+	Copyright (C) 2008 - 2016, Phoronix Media
+	Copyright (C) 2008 - 2016, Michael Larabel
 	system_monitor.php: System sensor monitoring module for PTS
 
 	This program is free software; you can redistribute it and/or modify
@@ -260,7 +260,7 @@ class system_monitor extends pts_module_interface
 
 			if(!empty($line) && $line >= 0)
 			{
-				array_push($results, $line);
+				$results[] = $line;
 			}
 		}
 
@@ -282,17 +282,17 @@ class system_monitor extends pts_module_interface
 
 			if(!in_array('all.' . $sensor[0], $args))
 			{
-				array_push($args, 'all.' . $sensor[0]);
+				$args[] = 'all.' . $sensor[0];
 			}
 
-			array_push($args, phodevi::sensor_identifier($sensor));
+			$args[] = phodevi::sensor_identifier($sensor);
 
 			if($supported_devices !== NULL)
 			{
-				array_push($args, 'all.' . phodevi::sensor_identifier($sensor));
+				$args[] = 'all.' . phodevi::sensor_identifier($sensor);
 				foreach($supported_devices as $device)
 				{
-					array_push($args, phodevi::sensor_identifier($sensor) . '.' . $device);
+					$args[] = phodevi::sensor_identifier($sensor) . '.' . $device;
 				}
 			}
 
@@ -343,7 +343,7 @@ class system_monitor extends pts_module_interface
 
 			if($parameter !== NULL)
 			{
-				array_push($to_monitor[$type][$name], $parameter);
+				$to_monitor[$type][$name][] = $parameter;
 			}
 		}
 
@@ -448,7 +448,7 @@ class system_monitor extends pts_module_interface
 		if($sensor[0] === 'cgroup')
 		{
 			$cgroup_controller = call_user_func(array($sensor[2], 'get_cgroup_controller'));
-			array_push(self::$cgroup_enabled_controllers, $cgroup_controller );
+			self::$cgroup_enabled_controllers[] = $cgroup_controller;
 			self::cgroup_create(self::$cgroup_name, $cgroup_controller);
 			$param = self::$cgroup_name;
 		}
@@ -456,7 +456,7 @@ class system_monitor extends pts_module_interface
 		if(call_user_func(array($sensor[2], 'parameter_check'), $param) === true)
 		{
 			$sensor_object = new $sensor[2]($instance, $param);
-			array_push(self::$to_monitor, $sensor_object);
+			self::$to_monitor[] = $sensor_object;
 			pts_module::save_file('logs/' . phodevi::sensor_object_identifier($sensor_object));
 		}
 	}
@@ -594,7 +594,7 @@ class system_monitor extends pts_module_interface
 					$test_result->test_result_buffer->add_test_result(self::$result_identifier, pts_math::set_precision((1 / $test_result->active->get_result()) / $watt_average));
 					$result_file->add_result($test_result);
 				}
-				array_push(self::$perf_per_watt_collection, $test_result->active->get_result());
+				self::$perf_per_watt_collection[] = $test_result->active->get_result();
 			}
 		}
 	}

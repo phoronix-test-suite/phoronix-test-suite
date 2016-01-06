@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2011 - 2015, Phoronix Media
-	Copyright (C) 2011 - 2015, Michael Larabel
+	Copyright (C) 2011 - 2016, Phoronix Media
+	Copyright (C) 2011 - 2016, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -95,7 +95,7 @@ class interactive implements pts_option_interface
 
 					foreach(array_map('strtolower', pts_types::subsystem_targets()) as $subsystem)
 					{
-						array_push($possible_suites, 'pts/' . $subsystem);
+						$possible_suites[] = 'pts/' . $subsystem;
 					}
 
 					$suites_to_run = pts_user_io::prompt_text_menu('Select Suite', $possible_suites, true);
@@ -174,7 +174,7 @@ class interactive implements pts_option_interface
 		}
 		else
 		{
-			array_push($drives, 'No HDD');
+			$drives[] = 'No HDD';
 			$to_mount = pts_user_io::prompt_text_menu('Select Drive / Partition To Mount', $drives);
 
 			if($to_mount != 'No HDD')

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2012, Phoronix Media
-	Copyright (C) 2012, Michael Larabel
+	Copyright (C) 2012 - 2016, Phoronix Media
+	Copyright (C) 2012 - 2016, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -195,7 +195,7 @@ var_dump($screenshots);
 
 					if(count($line) == 2)
 					{
-						array_push($shared_library_dependencies, trim(basename($line[0])));
+						$shared_library_dependencies[] = trim(basename($line[0]));
 					}
 				}
 

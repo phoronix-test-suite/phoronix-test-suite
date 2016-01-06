@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2015, Phoronix Media
-	Copyright (C) 2008 - 2015, Michael Larabel
+	Copyright (C) 2008 - 2016, Phoronix Media
+	Copyright (C) 2008 - 2016, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -95,7 +95,7 @@ class make_download_cache implements pts_option_interface
 					}
 					else if($file->get_md5() == $json_download_cache['phoronix-test-suite']['download-cache'][$file->get_filename()]['md5'] && $file->get_sha256() == $json_download_cache['phoronix-test-suite']['download-cache'][$file->get_filename()]['sha256'])
 					{
-						array_push($json_download_cache['phoronix-test-suite']['download-cache'][$file->get_filename()]['associated_tests'], $test_profile->get_identifier());
+						$json_download_cache['phoronix-test-suite']['download-cache'][$file->get_filename()]['associated_tests'][] = $test_profile->get_identifier();
 					}
 				}
 			}
@@ -124,7 +124,7 @@ class make_download_cache implements pts_option_interface
 			{
 				continue;
 			}
-			array_push($cached_tests, $test);
+			$cached_tests[] = $test;
 		}
 		$json_download_cache['phoronix-test-suite']['cached-tests'] = $cached_tests;
 

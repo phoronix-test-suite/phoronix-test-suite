@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2015, Phoronix Media
-	Copyright (C) 2009 - 2015, Michael Larabel
+	Copyright (C) 2009 - 2016, Phoronix Media
+	Copyright (C) 2009 - 2016, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -52,7 +52,7 @@ class reorder_result_file implements pts_option_interface
 		do
 		{
 			$extract_identifier = pts_user_io::prompt_text_menu('Select the test run to be showed next', $result_file_identifiers);
-			array_push($sorted_identifiers, $extract_identifier);
+			$sorted_identifiers[] = $extract_identifier;
 
 			$old_identifiers = $result_file_identifiers;
 			$result_file_identifiers = array();
@@ -61,7 +61,7 @@ class reorder_result_file implements pts_option_interface
 			{
 				if($identifier != $extract_identifier)
 				{
-					array_push($result_file_identifiers, $identifier);
+					$result_file_identifiers[] = $identifier;
 				}
 			}
 		}

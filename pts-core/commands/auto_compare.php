@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2012 - 2015, Phoronix Media
-	Copyright (C) 2012 - 2015, Michael Larabel
+	Copyright (C) 2012 - 2016, Phoronix Media
+	Copyright (C) 2012 - 2016, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -39,7 +39,7 @@ class auto_compare implements pts_option_interface
 
 			if($test_object instanceof pts_test_profile)
 			{
-				array_push($compare_tests, $test_object->get_identifier(false));
+				$compare_tests[] = $test_object->get_identifier(false);
 
 				if(!isset($compare_subsystems[$test_object->get_test_hardware_type()]))
 				{
@@ -140,7 +140,7 @@ class auto_compare implements pts_option_interface
 					}
 					$result_file->override_result_objects($result_objects);
 					pts_client::save_test_result($result_file->get_file_location(), $result_file->get_xml());
-					array_push($compare_results, $public_id);
+					$compare_results[] = $public_id;
 				}
 			}
 
@@ -197,10 +197,10 @@ class auto_compare implements pts_option_interface
 					{
 						$value_r = explode(' ', str_replace('-', ' ', $value));
 						array_pop($value_r);
-						array_push($to_array, $component_type . ':' . implode(' ', $value_r));
+						$to_array[] = $component_type . ':' . implode(' ', $value_r);
 					}
 
-					array_push($to_array, $component_type . ':' . $value);
+					$to_array[] = $component_type . ':' . $value;
 				}
 			}
 		}

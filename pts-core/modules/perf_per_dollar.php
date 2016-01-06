@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2015, Phoronix Media
-	Copyright (C) 2015, Michael Larabel
+	Copyright (C) 2015 - 2016, Phoronix Media
+	Copyright (C) 2015 - 2016, Michael Larabel
 	perf_per_dollar.php: This module is derived from the system_monitor module
 
 	This program is free software; you can redistribute it and/or modify
@@ -78,7 +78,7 @@ class perf_per_dollar extends pts_module_interface
 			$test_result->test_result_buffer = new pts_test_result_buffer();
 			$test_result->test_result_buffer->add_test_result(self::$result_identifier, pts_math::set_precision($test_result->active->get_result() / self::$COST_PERF_PER_DOLLAR), null, array('install-footnote' => '$' . self::$COST_PERF_PER_DOLLAR . ' reported cost.'));
 			$result_file->add_result($test_result);
-			array_push(self::$perf_per_dollar_collection, $test_result->active->get_result());
+			self::$perf_per_dollar_collection[] = $test_result->active->get_result();
 		}
 		self::$successful_test_run_request = null;
 	}

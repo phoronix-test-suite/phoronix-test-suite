@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2010, Phoronix Media
-	Copyright (C) 2009 - 2010, Michael Larabel
+	Copyright (C) 2009 - 2016, Phoronix Media
+	Copyright (C) 2009 - 2016, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@ class dump_possible_options implements pts_option_interface
 
 			if(!in_array(pts_strings::first_in_string($name, '-'), array('dump', 'debug', 'task')))
 			{
-				array_push($options, $name);
+				$options[] = $name;
 			}
 		}
 
