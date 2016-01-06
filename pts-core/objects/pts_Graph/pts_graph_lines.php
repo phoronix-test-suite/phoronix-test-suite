@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2015, Phoronix Media
-	Copyright (C) 2008 - 2015, Michael Larabel
+	Copyright (C) 2008 - 2016, Phoronix Media
+	Copyright (C) 2008 - 2016, Michael Larabel
 	pts_LineGraph.php: The line graph object that extends pts_Graph.php.
 
 	This program is free software; you can redistribute it and/or modify
@@ -235,7 +235,7 @@ class pts_graph_lines extends pts_graph_core
 				$precise_stat_array = array();
 				foreach($stat_array as $stat_value)
 				{
-					array_push($precise_stat_array, pts_math::set_precision($stat_value, $precision));
+					$precise_stat_array[] = pts_math::set_precision($stat_value, $precision);
 				}
 
 				$attributes['x'] = $x_stat_loc;
@@ -302,7 +302,7 @@ class pts_graph_lines extends pts_graph_core
 					$value_plot_top = $this->i['graph_top_end'] - 1;
 				}
 
-				array_push($poly_points, array($px_from_left, $value_plot_top, $data_string, $std_error));
+				$poly_points[] = array($px_from_left, $value_plot_top, $data_string, $std_error);
 
 				if(isset($this->d['regression_marker_threshold']) && $this->d['regression_marker_threshold'] > 0 && $i > 0 && abs(1 - ($value / $prev_value)) > $this->d['regression_marker_threshold'])
 				{
@@ -330,7 +330,7 @@ class pts_graph_lines extends pts_graph_core
 		$svg_poly = array();
 		foreach($poly_points as $x_y)
 		{
-			array_push($svg_poly, round($x_y[0]) . ',' . round($x_y[1]));
+			$svg_poly[] = round($x_y[0]) . ',' . round($x_y[1]);
 		}
 		$svg_poly = implode(' ', $svg_poly);
 		$this->svg_dom->add_element('polyline', array('points' => $svg_poly, 'fill' => 'none', 'stroke-width' => 2), $g);

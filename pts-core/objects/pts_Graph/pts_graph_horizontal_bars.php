@@ -67,7 +67,7 @@ class pts_graph_horizontal_bars extends pts_graph_core
 		}
 		else
 		{
-			array_push($r, $a);
+			$r[] = $a;
 			return (count($r) - 1);
 		}
 	}

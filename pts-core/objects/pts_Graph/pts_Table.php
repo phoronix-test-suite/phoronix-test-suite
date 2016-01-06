@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2015, Phoronix Media
-	Copyright (C) 2009 - 2015, Michael Larabel
+	Copyright (C) 2009 - 2016, Phoronix Media
+	Copyright (C) 2009 - 2016, Michael Larabel
 	pts_Table.php: A charting table object for pts_Graph
 
 	This program is free software; you can redistribute it and/or modify
@@ -239,7 +239,7 @@ class pts_Table extends pts_graph_core
 			$last_identifier = null;
 			$last_changed_col = 0;
 			$show_keys = array_keys($this->table_data);
-			array_push($show_keys, 'Temp: Temp');
+			$show_keys[] = 'Temp: Temp';
 
 			$g1 = $this->svg_dom->make_g(array());
 			$g2 = $this->svg_dom->make_g(array('font-size' => self::$c['size']['axis_headers'], 'fill' => self::$c['color']['background'], 'font-weight' => 'bold', 'text-anchor' => 'middle'));
@@ -353,18 +353,18 @@ class pts_Table extends pts_graph_core
 				{
 					if(($t = $result_table_value->get_attribute('std_percent')) > 0)
 					{
-						array_push($hover, 'STD Dev: ' . $t . '%');
+						$hover[] = 'STD Dev: ' . $t . '%';
 					}
 					if(($t = $result_table_value->get_attribute('std_error')) != 0)
 					{
-						array_push($hover, ' STD Error: ' . $t);
+						$hover[] = ' STD Error: ' . $t;
 					}
 
 					if(defined('PHOROMATIC_TRACKER') && ($t = $result_table_value->get_attribute('delta')) != 0)
 					{
 						$bold = true;
 						$text_color = $t < 0 ? self::$c['color']['alert'] : self::$c['color']['headers'];
-						array_push($hover, ' Change: ' . pts_math::set_precision(100 * $t, 2) . '%');
+						$hover[] = ' Change: ' . pts_math::set_precision(100 * $t, 2) . '%';
 					}
 					else if($result_table_value->get_attribute('highlight') == true)
 					{

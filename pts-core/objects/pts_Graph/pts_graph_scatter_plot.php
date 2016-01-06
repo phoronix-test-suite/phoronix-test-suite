@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2011 - 2015, Phoronix Media
-	Copyright (C) 2011 - 2015, Michael Larabel
+	Copyright (C) 2011 - 2016, Phoronix Media
+	Copyright (C) 2011 - 2016, Michael Larabel
 	pts_ScatterPlot.php: The scatter plot graph object that extends pts_Graph.php.
 
 	This program is free software; you can redistribute it and/or modify
@@ -91,7 +91,7 @@ class pts_graph_scatter_plot extends pts_graph_core
 				$x = $this->i['left_start'] + (($this->i['graph_left_end'] - $this->i['left_start']) * (($key_time - $this->i['min_time']) / $this->i['spread_time']));
 				$y = $this->i['graph_top_end'] + 1 - round(($value / $this->i['graph_max_value']) * ($this->i['graph_top_end'] - $this->i['top_start']));
 				$this->svg_dom->add_element('ellipse', array('cx' => $x, 'cy' => $y, 'rx' => 2, 'ry' => 2, 'fill' => $paint_color, 'stroke' => $paint_color), $g);
-				array_push($points, array($x, $y));
+				$points[] = array($x, $y);
 			}
 
 			$sum_x = 0;

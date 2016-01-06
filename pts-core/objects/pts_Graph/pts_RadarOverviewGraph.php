@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2015, Phoronix Media
-	Copyright (C) 2010 - 2015, Michael Larabel
+	Copyright (C) 2010 - 2016, Phoronix Media
+	Copyright (C) 2010 - 2016, Michael Larabel
 	pts_RadarOverviewGraph.php: New display type being derived from pts_OverviewGraph... WIP
 
 	This program is free software; you can redistribute it and/or modify
@@ -43,7 +43,7 @@ class pts_RadarOverviewGraph extends pts_graph_core
 		$system_identifiers = array();
 		foreach($result_file->get_systems() as $system)
 		{
-			array_push($system_identifiers, $system->get_identifier());
+			$system_identifiers[] = $system->get_identifier();
 		}
 
 		if($result_file->is_multi_way_comparison() || count($system_identifiers) < 3)
@@ -77,7 +77,7 @@ class pts_RadarOverviewGraph extends pts_graph_core
 
 			$this->i['graph_max_value'] = max($this->i['graph_max_value'], $r_multiple);
 			$r->test_result_buffer->sort_buffer_values(false);
-			array_push($this->result_objects, $r);
+			$this->result_objects[] = $r;
 		}
 
 		if(count($this->result_objects) < 3)
@@ -174,7 +174,7 @@ class pts_RadarOverviewGraph extends pts_graph_core
 				$svg_poly = array();
 				foreach($points as $point_pair)
 				{
-					array_push($svg_poly, implode(',', $point_pair));
+					$svg_poly[] = implode(',', $point_pair);
 				}
 				$this->svg_dom->add_element('polygon', array('points' => implode(' ', $svg_poly), 'fill' => $this->get_paint_color($result_identifier), 'stroke' => self::$c['color']['text'], 'stroke-width' => 2, 'xlink:title' => $tooltip));
 			}
@@ -212,7 +212,7 @@ class pts_RadarOverviewGraph extends pts_graph_core
 
 				$this->svg_dom->add_text_element($last_hardware_type, array('x' => $cos_unit, 'y' => $sin_unit, 'font-size' => self::$c['size']['bars'], 'fill' => self::$c['color']['alert'], 'text-anchor' => 'end', 'dominant-baseline' => 'middle'));
 
-				array_push($hw_types, $last_hardware_type);
+				$hw_types[] = $last_hardware_type;
 				$last_hardware_type = $hardware_type;
 				$last_hardware_type_i = $i;
 			}
@@ -222,8 +222,8 @@ class pts_RadarOverviewGraph extends pts_graph_core
 		$sw = array();
 		foreach($this->result_file->get_systems() as $system)
 		{
-			array_push($hw, $system->get_hardware());
-			array_push($sw, $system->get_software());
+			$hw[] = $system->get_hardware();
+			$sw[] = $system->get_software();
 		}
 		$shw = array();
 

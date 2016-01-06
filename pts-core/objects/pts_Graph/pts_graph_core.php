@@ -178,7 +178,7 @@ abstract class pts_graph_core
 					$this->results[$date] = array();
 				}
 
-				array_push($this->results[$date], $buffer_item);
+				$this->results[$date][] = $buffer_item;
 				pts_arrays::unique_push($this->graph_identifiers, $system);
 			}
 
@@ -197,7 +197,7 @@ abstract class pts_graph_core
 					continue;
 				}
 
-				array_push($this->graph_identifiers, $buffer_item->get_result_identifier());
+				$this->graph_identifiers[] = $buffer_item->get_result_identifier();
 			}
 			$this->results = array($this->test_result->test_result_buffer->buffer_items);
 		}
@@ -281,13 +281,13 @@ abstract class pts_graph_core
 		{
 			if(!empty($sub_title))
 			{
-				array_push($this->graph_sub_titles, $sub_title);
+				$this->graph_sub_titles[] = $sub_title;
 			}
 		}
 	}
 	public function addTestNote($note, $hover_title = null, $section = null)
 	{
-		array_push($this->i['notes'], array('note' => $note, 'hover-title' => $hover_title, 'section' => $section));
+		$this->i['notes'][] = array('note' => $note, 'hover-title' => $hover_title, 'section' => $section);
 	}
 
 	//
@@ -898,7 +898,7 @@ abstract class pts_graph_core
 
 				if($note['section'] != null)
 				{
-					array_push($sections, $note['section']);
+					$sections[] = $note['section'];
 				}
 			}
 			$note_height += self::$c['size']['key'];

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2015, Phoronix Media
-	Copyright (C) 2009 - 2015, Michael Larabel
+	Copyright (C) 2009 - 2016, Phoronix Media
+	Copyright (C) 2009 - 2016, Michael Larabel
 	pts_ResultFileTable.php: The result file table object
 
 	This program is free software; you can redistribute it and/or modify
@@ -30,9 +30,9 @@ class pts_ResultFileSystemsTable extends pts_Table
 		$sw = array();
 		foreach($result_file->get_systems() as $system)
 		{
-			array_push($columns, $system->get_identifier());
-			array_push($hw, $system->get_hardware());
-			array_push($sw, $system->get_software());
+			$columns[] = $system->get_identifier();
+			$hw[] = $system->get_hardware();
+			$sw[] = $system->get_software();
 		}
 
 		$rows = array();

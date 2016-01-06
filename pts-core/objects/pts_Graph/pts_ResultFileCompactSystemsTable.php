@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2011 - 2015, Phoronix Media
-	Copyright (C) 2011 - 2015, Michael Larabel
+	Copyright (C) 2011 - 2016, Phoronix Media
+	Copyright (C) 2011 - 2016, Michael Larabel
 	pts_Table.php: A charting table object for pts_Graph
 
 	This program is free software; you can redistribute it and/or modify
@@ -37,8 +37,8 @@ class pts_ResultFileCompactSystemsTable extends pts_graph_core
 		$sw = array();
 		foreach($result_file->get_systems() as $system)
 		{
-			array_push($hw, $system->get_hardware());
-			array_push($sw, $system->get_software());
+			$hw[] = $system->get_hardware();
+			$sw[] = $system->get_software();
 		}
 		$hw = pts_result_file_analyzer::system_component_string_to_array(array_shift($hw));
 		$sw = pts_result_file_analyzer::system_component_string_to_array(array_shift($sw));
@@ -73,7 +73,7 @@ class pts_ResultFileCompactSystemsTable extends pts_graph_core
 				if(!in_array($x, $dupes))
 				{
 					$intent_count += count($x);
-					array_push($dupes, $x);
+					$dupes[] = $x;
 				}
 			}
 
@@ -113,7 +113,7 @@ class pts_ResultFileCompactSystemsTable extends pts_graph_core
 				{
 					if(isset($s[$key]))
 					{
-						array_push($component, $s[$key]);
+						$component[] = $s[$key];
 					}
 				}
 

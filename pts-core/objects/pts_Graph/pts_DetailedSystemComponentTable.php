@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2012, Phoronix Media
-	Copyright (C) 2012, Michael Larabel
+	Copyright (C) 2012 - 2016, Phoronix Media
+	Copyright (C) 2012 - 2016, Michael Larabel
 	pts_DetailedSystemComponentTable.php: The detailed system component table
 
 	This program is free software; you can redistribute it and/or modify
@@ -146,7 +146,7 @@ class pts_DetailedSystemComponentTable extends pts_SideViewTable
 	}
 	protected function generate_processor_data(&$result_file, $system_identifier)
 	{
-		array_push($this->rows, $system_identifier);
+		$this->rows[] = $system_identifier;
 		$rows_index = count($this->rows) - 1;
 
 		foreach($this->columns as $i => $cpuinfo_item)
@@ -183,7 +183,7 @@ class pts_DetailedSystemComponentTable extends pts_SideViewTable
 	}
 	protected function generate_graphics_data(&$result_file, $system_identifier)
 	{
-		array_push($this->rows, $system_identifier);
+		$this->rows[] = $system_identifier;
 		$rows_index = count($this->rows) - 1;
 
 		foreach($this->columns as $i => $cpuinfo_item)

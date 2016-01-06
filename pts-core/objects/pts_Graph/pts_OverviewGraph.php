@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2015, Phoronix Media
-	Copyright (C) 2010 - 2015, Michael Larabel
+	Copyright (C) 2010 - 2016, Phoronix Media
+	Copyright (C) 2010 - 2016, Michael Larabel
 	pts_OverviewGraph.php: A graping object to create an "overview" / mini graphs of a pts_result_file for pts_Graph
 
 	This program is free software; you can redistribute it and/or modify
@@ -62,8 +62,8 @@ class pts_OverviewGraph extends pts_graph_core
 		{
 			if($result_object->test_profile->get_display_format() == 'BAR_GRAPH')
 			{
-				array_push($result_objects, $result_object);
-				array_push($test_titles, $result_object->test_profile->get_title());
+				$result_objects[] = $result_object;
+				$test_titles[] = $result_object->test_profile->get_title();
 				foreach($result_object->test_result_buffer->buffer_items as &$buffer_item)
 				pts_arrays::unique_push($this->graph_identifiers, $buffer_item->get_result_identifier());
 			}
