@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2014, Phoronix Media
-	Copyright (C) 2010 - 2014, Michael Larabel
+	Copyright (C) 2010 - 2016, Phoronix Media
+	Copyright (C) 2010 - 2016, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -58,20 +58,20 @@ class pts_types
 		{
 			if($object instanceof pts_test_profile)
 			{
-				array_push($test_profiles, $object);
+				$test_profiles[] = $object;
 			}
 			else if($object instanceof pts_test_suite || $object instanceof pts_virtual_test_suite || $object instanceof pts_virtual_test_queue)
 			{
 				foreach($object->get_contained_test_profiles() as $test_profile)
 				{
-					array_push($test_profiles, $test_profile);
+					$test_profiles[] = $test_profile;
 				}
 			}
 			else if($object instanceof pts_result_file)
 			{
 				foreach($object->get_contained_test_profiles() as $test_profile)
 				{
-					array_push($test_profiles, $test_profile);
+					$test_profiles[] = $test_profile;
 				}
 			}
 		}
@@ -86,11 +86,11 @@ class pts_types
 				{
 					if(!in_array($test_profile, $extended_test_profiles))
 					{
-						array_push($extended_test_profiles, $test_profile);
+						$extended_test_profiles[] = $test_profile;
 					}
 				}
 
-				array_push($extended_test_profiles, $test_profiles[$i]);
+				$extended_test_profiles[] = $test_profiles[$i];
 			}
 
 			// We end up doing this swapping around so the extended test profiles always end up before the tests extending them
@@ -114,27 +114,27 @@ class pts_types
 		{
 			if($identifier_item instanceof pts_test_profile || $identifier_item instanceof pts_test_suite || $identifier_item instanceof pts_result_file)
 			{
-				array_push($objects, $identifier_item);
+				$objects[] = $identifier_item;
 			}
 			else if(PTS_IS_CLIENT && $identifier_item instanceof pts_virtual_test_queue)
 			{
 				// Object is a virtual suite
-				array_push($objects, $identifier_item);
+				$objects[] = $identifier_item;
 			}
 			else if(($tp_identifier = pts_test_profile::is_test_profile($identifier_item)))
 			{
 				// Object is a test
-				array_push($objects, new pts_test_profile($tp_identifier));
+				$objects[] = new pts_test_profile($tp_identifier);
 			}
 			else if(pts_test_suite::is_suite($identifier_item))
 			{
 				// Object is a suite
-				array_push($objects, new pts_test_suite($identifier_item));
+				$objects[] = new pts_test_suite($identifier_item);
 			}
 			else if(pts_result_file::is_test_result_file($identifier_item))
 			{
 				// Object is a saved results file
-				array_push($objects, new pts_result_file($identifier_item));
+				$objects[] = new pts_result_file($identifier_item);
 			}
 			else if(pts_openbenchmarking::is_openbenchmarking_result_id($identifier_item))
 			{
@@ -144,23 +144,23 @@ class pts_types
 
 				if($success)
 				{
-					array_push($objects, new pts_result_file($identifier_item));
+					$objects[] = new pts_result_file($identifier_item);
 				}
 			}
 			else if(PTS_IS_CLIENT && pts_virtual_test_suite::is_virtual_suite($identifier_item))
 			{
 				// Object is a virtual suite
-				array_push($objects, new pts_virtual_test_suite($identifier_item));
+				$objects[] = new pts_virtual_test_suite($identifier_item);
 			}
 			else if(pts_suite_nye_XmlReader::is_temporary_suite($identifier_item))
 			{
 				// Object is a suite
-				array_push($objects, new pts_test_suite($identifier_item));
+				$objects[] = new pts_test_suite($identifier_item);
 			}
 			else if(is_array($archive_unknown_objects))
 			{
 				// Unknown / nothing / broken
-				array_push($archive_unknown_objects, $identifier_item);
+				$archive_unknown_objects[] = $identifier_item;
 			}
 		}
 
@@ -195,7 +195,7 @@ class pts_types
 
 				for($j = 0; $j < $enumerations->length; $j++)
 				{
-					array_push($values, $enumerations->item($j)->attributes->getNamedItem('value')->nodeValue);
+					$values[] = $enumerations->item($j)->attributes->getNamedItem('value')->nodeValue;
 				}
 				break;
 			}

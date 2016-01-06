@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2013 - 2015, Phoronix Media
-	Copyright (C) 2013 - 2015, Michael Larabel
+	Copyright (C) 2013 - 2016, Phoronix Media
+	Copyright (C) 2013 - 2016, Michael Larabel
 	pts-web-socket: A simple WebSocket implementation, inspired by designs of https://github.com/varspool/Wrench and http://code.google.com/p/phpwebsocket/
 
 	This program is free software; you can redistribute it and/or modify
@@ -54,7 +54,7 @@ class pts_web_socket
 			socket_listen($this->socket_master, 5); // TODO XXX potentially set the 'backlog' parameter
 		}
 
-		array_push($this->sockets, $this->socket_master);
+		$this->sockets[] = $this->socket_master;
 		$this->callback_on_data_receive = $callback_on_data_receive;
 		$this->callback_on_hand_shake = $callback_on_hand_shake;
 		echo 'WebSocket Server Active: ' . $address . ':' . $port . PHP_EOL;
@@ -294,8 +294,8 @@ class pts_web_socket
 		$user = new pts_web_socket_user();
 		$user->id = uniqid();
 		$user->socket = $socket;
-		array_push($this->users, $user);
-		array_push($this->sockets, $socket);
+		$this->users[] = $user;
+		$this->sockets[] = $socket;
 
 		return $user;
 	}
