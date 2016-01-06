@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2015, Phoronix Media
-	Copyright (C) 2010 - 2015, Michael Larabel
+	Copyright (C) 2010 - 2016, Phoronix Media
+	Copyright (C) 2010 - 2016, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -60,9 +60,9 @@ class pts_result_file_output
 		$sw = array();
 		foreach($result_file->get_systems() as $system)
 		{
-			array_push($columns, $system->get_identifier());
-			array_push($hw, $system->get_hardware());
-			array_push($sw, $system->get_software());
+			$columns[] = $system->get_identifier();
+			$hw[] = $system->get_hardware();
+			$sw[] = $system->get_software();
 		}
 		$rows = array();
 		$table_data = array();
@@ -127,9 +127,9 @@ class pts_result_file_output
 		$system_software = array();
 		foreach($result_file->get_systems() as $system)
 		{
-			array_push($system_identifiers, $system->get_identifier());
-			array_push($system_hardware, $system->get_hardware());
-			array_push($system_software, $system->get_software());
+			$system_identifiers[] = $system->get_identifier());
+			$system_hardware[] = $system->get_hardware());
+			$system_software[] = $system->get_software());
 		}
 
 		for($i = 0; $i < count($system_identifiers); $i++)

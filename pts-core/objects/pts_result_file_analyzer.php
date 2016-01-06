@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2015, Phoronix Media
-	Copyright (C) 2010 - 2015, Michael Larabel
+	Copyright (C) 2010 - 2016, Phoronix Media
+	Copyright (C) 2010 - 2016, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -29,9 +29,9 @@ class pts_result_file_analyzer
 		$sw = array();
 		foreach($result_file->get_systems() as $system)
 		{
-			array_push($identifiers, $system->get_identifier());
-			array_push($hw, $system->get_hardware());
-			array_push($sw, $system->get_software());
+			$identifiers[] = $system->get_identifier();
+			$hw[] = $system->get_hardware();
+			$sw[] = $system->get_software();
 		}
 
 		if(count($identifiers) < 2)
@@ -174,7 +174,7 @@ class pts_result_file_analyzer
 		if(count($first_objects) <= $max_combo_count && count($first_objects) > 0)
 		{
 			$changed_indexes = array_keys($first_objects);
-			array_push($comparison_objects, ($return_all_changed_indexes ? array_map('strval', $first_objects) : implode('/', $first_objects)));
+			$comparison_objects[] = ($return_all_changed_indexes ? array_map('strval', $first_objects) : implode('/', $first_objects));
 
 			if(count($changed_indexes) <= $max_combo_count)
 			{
@@ -211,7 +211,7 @@ class pts_result_file_analyzer
 
 					if($do_push)
 					{
-						array_push($comparison_objects, ($return_all_changed_indexes ? array_map('strval', $this_identifier) : implode('/', $this_identifier)));
+						$comparison_objects[] = ($return_all_changed_indexes ? array_map('strval', $this_identifier) : implode('/', $this_identifier));
 					}
 				}
 			}
@@ -267,7 +267,7 @@ class pts_result_file_analyzer
 
 						if(($r_i = array_search($index, $rows)) === false)
 						{
-							array_push($rows, $index);
+							$rows[] = $index;
 							$r_i = count($rows) - 1;
 						}
 						$table_data[$columns[$col_pos]][$r_i] = self::system_value_to_ir_value($value, $index);

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2015, Phoronix Media
-	Copyright (C) 2008 - 2015, Michael Larabel
+	Copyright (C) 2008 - 2016, Phoronix Media
+	Copyright (C) 2008 - 2016, Michael Larabel
 	pts_test_option: An object used for storing a test option and its possible values
 
 	This program is free software; you can redistribute it and/or modify
@@ -80,7 +80,7 @@ class pts_test_option
 	}
 	public function add_option($name, $value, $message)
 	{
-		array_push($this->options, array($name, $value, $message));
+		$this->options[] = array($name, $value, $message);
 	}
 	public function get_options_array()
 	{
@@ -92,7 +92,7 @@ class pts_test_option
 
 		for($i = 0; $i < $this->option_count(); $i++)
 		{
-			array_push($names, $this->get_option_name($i));
+			$names[] = $this->get_option_name($i);
 		}
 
 		return $names;
@@ -104,8 +104,7 @@ class pts_test_option
 		for($i = 0; $i < $this->option_count(); $i++)
 		{
 			$user_msg = $this->get_option_message($i);
-
-			array_push($names, $this->get_option_name($i) . (!empty($user_msg) ? ' [' . $user_msg . ']' : null));
+			$names[] = $this->get_option_name($i) . (!empty($user_msg) ? ' [' . $user_msg . ']' : null);
 		}
 
 		return $names;
@@ -183,7 +182,7 @@ class pts_test_option
 
 		if($input === '0')
 		{
-			array_push($return_keys, 0);
+			$return_keys[] = 0;
 		}
 		else
 		{
@@ -194,13 +193,13 @@ class pts_test_option
 					// Add all options
 					foreach(array_keys($this->options) as $i)
 					{
-						array_push($return_keys, $i);
+						$return_keys[] = $i;
 					}
 					break;
 				}
 				else if(($c = $this->is_valid_select_choice($input_choice)) !== false)
 				{
-					array_push($return_keys, $c);
+					$return_keys[] = $c;
 				}
 			}
 		}
@@ -211,7 +210,7 @@ class pts_test_option
 		if($use_default_on_empty && count($return_keys) == 0)
 		{
 			// Use the default as no valid options were presented
-			array_push($return_keys, $this->get_option_default());
+			$return_keys[] = $this->get_option_default();
 		}
 
 		return $return_keys;

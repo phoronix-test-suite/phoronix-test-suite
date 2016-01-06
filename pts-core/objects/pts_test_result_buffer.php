@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2015, Phoronix Media
-	Copyright (C) 2009 - 2015, Michael Larabel
+	Copyright (C) 2009 - 2016, Phoronix Media
+	Copyright (C) 2009 - 2016, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -77,7 +77,7 @@ class pts_test_result_buffer
 	{
 		if(!$this->buffer_contained($buffer_item))
 		{
-			array_push($this->buffer_items, $buffer_item);
+			$this->buffer_items[] = $buffer_item;
 			$this->buffer_contains[$buffer_item->get_result_identifier() . $buffer_item->get_result_value()] = 1;
 		}
 	}
@@ -91,7 +91,7 @@ class pts_test_result_buffer
 	}
 	public function add_test_result($identifier, $value, $raw_value = null, $json = null, $min_value = null, $max_value = null)
 	{
-		array_push($this->buffer_items, new pts_test_result_buffer_item($identifier, $value, $raw_value, $json, $min_value, $max_value));
+		$this->buffer_items[] = new pts_test_result_buffer_item($identifier, $value, $raw_value, $json, $min_value, $max_value);
 
 		if(is_array($value))
 		{
@@ -144,7 +144,7 @@ class pts_test_result_buffer
 				{
 					$c = $buffer_item;
 					unset($this->buffer_items[$i]);
-					array_push($this->buffer_items, $c);
+					$this->buffer_items[] = $c;
 					break;
 				}
 			}
@@ -211,8 +211,8 @@ class pts_test_result_buffer
 					$group_keys[$identifier_r[1]] = array();
 				}
 
-				array_push($group_values[$identifier_r[1]], $buffer_item->get_result_value());
-				array_push($group_keys[$identifier_r[1]], $key);
+				$group_values[$identifier_r[1]][] = $buffer_item->get_result_value();
+				$group_keys[$identifier_r[1]][] = $key;
 			}
 
 			foreach($group_values as $group_key => $values)
@@ -274,7 +274,7 @@ class pts_test_result_buffer
 
 		foreach($this->buffer_items as &$buffer_item)
 		{
-			array_push($identifiers, $buffer_item->get_result_identifier());
+			$identifiers[] = $buffer_item->get_result_identifier();
 		}
 
 		return $identifiers;
@@ -315,7 +315,7 @@ class pts_test_result_buffer
 
 		foreach($this->buffer_items as &$buffer_item)
 		{
-			array_push($values, $buffer_item->get_result_value());
+			$values[] = $buffer_item->get_result_value();
 		}
 
 		return $values;

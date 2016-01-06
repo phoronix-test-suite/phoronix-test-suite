@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2012 - 2015, Phoronix Media
-	Copyright (C) 2012 - 2015, Michael Larabel
+	Copyright (C) 2012 - 2016, Phoronix Media
+	Copyright (C) 2012 - 2016, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -84,7 +84,7 @@ class pts_exdep_generic_parser
 
 			if($name)
 			{
-				array_push($vendors, $name);
+				$vendors[] = $name;
 			}
 		}
 
@@ -101,7 +101,7 @@ class pts_exdep_generic_parser
 
 			foreach($aliases as $alias)
 			{
-				array_push($alias_list, $alias);
+				$alias_list[] = $alias;
 			}
 		}
 
@@ -118,7 +118,7 @@ class pts_exdep_generic_parser
 
 			foreach($aliases as $alias)
 			{
-				array_push($alias_list, $alias);
+				$alias_list[] = $alias;
 			}
 		}
 
