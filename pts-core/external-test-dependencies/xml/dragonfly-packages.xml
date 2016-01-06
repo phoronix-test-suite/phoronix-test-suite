@@ -142,5 +142,9 @@
 			<GenericName>git</GenericName>
 			<PackageName>git</PackageName>
 		</Package>
+		<Package>
+			<GenericName>httpd</GenericName>
+			<PackageName>apache</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

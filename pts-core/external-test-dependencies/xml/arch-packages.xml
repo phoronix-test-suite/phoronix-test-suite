@@ -226,5 +226,9 @@
 			<GenericName>attr</GenericName>
 			<PackageName>attr</PackageName>
 		</Package>
+		<Package>
+			<GenericName>httpd</GenericName>
+			<PackageName>apache</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

@@ -248,5 +248,9 @@
 			<GenericName>attr</GenericName>
 			<PackageName>sys-apps/attr</PackageName>
 		</Package>
+		<Package>
+			<GenericName>httpd</GenericName>
+			<PackageName>www-servers/apache</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
