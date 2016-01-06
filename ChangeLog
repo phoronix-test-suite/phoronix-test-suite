@@ -4,6 +4,7 @@ Phoronix Test Suite (Git)
 
 - pts-core: Add system to default list of repositories
 - pts-core: Allow result graph footnotes to be added during test time by writing to ~/pts-footnote
+- pts-core: Optimize array usage along hot paths
 - pts_Graph: Rendering fix for collision of result identifiers
 - phoromatic: Fix in listing tests on schedules page when dealing with cache mismatch
 - deploy: JuJu update from upstream

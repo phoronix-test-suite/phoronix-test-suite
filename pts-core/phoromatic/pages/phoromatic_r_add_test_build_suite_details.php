@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2014 - 2015, Phoronix Media
-	Copyright (C) 2014 - 2015, Michael Larabel
+	Copyright (C) 2014 - 2016, Phoronix Media
+	Copyright (C) 2014 - 2016, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -79,7 +79,7 @@ class phoromatic_r_add_test_build_suite_details implements pts_webui_interface
 					{
 						$v = $o->format_option_value_from_input($o->get_option_value($j));
 						echo '<option value="' . $v . '">' . $o->get_option_name($j) . '</option>';
-						array_push($opts, $o->get_name() . ': ' . $o->get_option_name($j) . '::' . $v);
+						$opts[] = $o->get_name() . ': ' . $o->get_option_name($j) . '::' . $v;
 					}
 					if($j > 1)
 					{

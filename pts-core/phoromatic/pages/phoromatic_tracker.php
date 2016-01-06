@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2014 - 2015, Phoronix Media
-	Copyright (C) 2014 - 2015, Michael Larabel
+	Copyright (C) 2014 - 2016, Phoronix Media
+	Copyright (C) 2014 - 2016, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -72,7 +72,7 @@ class phoromatic_tracker implements pts_webui_interface
 
 				// Add to result file
 				$system_name = phoromatic_server::system_id_to_name($row['SystemID']) . ': ' . $row['Trigger'];
-				array_push($result_files, new pts_result_merge_select($composite_xml, null, $system_name));
+				$result_files[] = new pts_result_merge_select($composite_xml, null, $system_name);
 				if(!isset($show_only_latest_systems[$_SESSION['AccountID'] . $row['SystemID']]))
 				{
 					$show_only_latest_systems[$_SESSION['AccountID'] . $row['SystemID']] = new pts_result_merge_select($composite_xml, null, $system_name);
