@@ -748,6 +748,8 @@ class phoromatic extends pts_module_interface
 			{
 				if($server_response == false)
 					sleep(rand(10, 30));
+				else if(self::$limit_network_communication)
+					sleep(60, 240);
 				else
 					sleep(60);
 			}
