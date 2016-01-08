@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 6.2 Milestone 3
+7 January 2016
 
 - pts-core: Add system to default list of repositories
 - pts-core: Allow result graph footnotes to be added during test time by writing to ~/pts-footnote
