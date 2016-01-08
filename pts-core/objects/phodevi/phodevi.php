@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2016, Phoronix Media
-	Copyright (C) 2009 - 2016, Michael Larabel
+	Copyright (C) 2009 - 2015, Phoronix Media
+	Copyright (C) 2009 - 2015, Michael Larabel
 	phodevi.php: The object for interacting with the PTS device framework
 
 	This program is free software; you can redistribute it and/or modify
@@ -87,7 +87,7 @@ class phodevi extends phodevi_base
 			{
 				foreach(array_keys($sensor) as $sensor_senses)
 				{
-					$available_sensors[] = array($sensor_type, $sensor_senses, self::$sensors[$sensor_type][$sensor_senses]);
+					array_push($available_sensors, array($sensor_type, $sensor_senses, self::$sensors[$sensor_type][$sensor_senses]));
 				}
 			}
 		}
@@ -106,7 +106,7 @@ class phodevi extends phodevi_base
 			{
 				if(self::sensor_supported($sensor))
 				{
-					$supported_sensors[] = $sensor;
+					array_push($supported_sensors, $sensor);
 				}
 			}
 		}
@@ -126,7 +126,7 @@ class phodevi extends phodevi_base
 			{
 				if(!in_array($sensor, $supported_sensors))
 				{
-					$unsupported_sensors[] = $sensor;
+					array_push($unsupported_sensors, $sensor);
 				}
 			}
 		}
@@ -296,7 +296,7 @@ class phodevi extends phodevi_base
 
 				for($i = 1; $i < count($dev_function_r); $i++)
 				{
-					$function_pass[] = $dev_function_r[$i];
+					array_push($function_pass, $dev_function_r[$i]);
 				}
 
 				if(method_exists('phodevi_' . $device, $dev_function))

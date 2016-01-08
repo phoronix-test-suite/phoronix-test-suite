@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2016, Phoronix Media
-	Copyright (C) 2008 - 2016, Michael Larabel
+	Copyright (C) 2008 - 2014, Phoronix Media
+	Copyright (C) 2008 - 2014, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -42,7 +42,7 @@ class phodevi_sensor_monitor
 			{
 				if($monitor_all || in_array(phodevi::sensor_identifier($sensor), $to_monitor) || in_array('all.' . $sensor[0], $to_monitor))
 				{
-					$this->sensors_to_monitor[] = $sensor;
+					array_push($this->sensors_to_monitor, $sensor);
 					file_put_contents($this->sensor_storage_dir . phodevi::sensor_identifier($sensor), null);
 				}
 			}
@@ -66,7 +66,7 @@ class phodevi_sensor_monitor
 			{
 				if(in_array(phodevi::sensor_identifier($sensor), $match) || in_array('all.' . $sensor[0], $match))
 				{
-					$share[] = $sensor;
+					array_push($share, $sensor);
 				}
 			}
 

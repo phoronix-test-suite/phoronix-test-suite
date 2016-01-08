@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2016, Phoronix Media
-	Copyright (C) 2008 - 2016, Michael Larabel
+	Copyright (C) 2008 - 2015, Phoronix Media
+	Copyright (C) 2008 - 2015, Michael Larabel
 	phodevi_disk.php: The PTS Device Interface object for the system disk(s)
 
 	This program is free software; you can redistribute it and/or modify
@@ -49,7 +49,7 @@ class phodevi_disk extends phodevi_device_interface
 
 		if(($disk_scheduler = phodevi::read_property('disk', 'scheduler')) != null)
 		{
-			$notes[] = 'Disk Scheduler: ' . $disk_scheduler;
+			array_push($notes, 'Disk Scheduler: ' . $disk_scheduler);
 		}
 
 		return $notes;
@@ -150,7 +150,7 @@ class phodevi_disk extends phodevi_device_interface
 
 				if($disk != false && strpos($disk, 'DVD') === false && strpos($disk, 'ATAPI') === false)
 				{
-					$disks[] = $disk;
+					array_push($disks, $disk);
 				}
 				$i++;
 			}
@@ -166,7 +166,7 @@ class phodevi_disk extends phodevi_device_interface
 					if(substr($line, 0, 1) == '<' && ($model_end = strpos($line, '>')) !== false && strpos($line, 'DVD') === false && strpos($line, 'ATAPI') === false)
 					{
 						$disk = self::prepend_disk_vendor(substr($line, 1, ($model_end - 1)));
-						$disks[] = $disk;
+						array_push($disks, $disk);
 					}
 				}
 			}
@@ -186,7 +186,7 @@ class phodevi_disk extends phodevi_device_interface
 
 						if($disk != 'blkdev')
 						{
-							$disks[] = $disk;
+							array_push($disks, $disk);
 						}
 					}
 				}
@@ -228,7 +228,7 @@ class phodevi_disk extends phodevi_device_interface
 
 					if($disk_size > 0)
 					{
-						$disks_formatted[] = $disk_model;
+						array_push($disks_formatted, $disk_model);
 					}
 				}
 			}
@@ -249,7 +249,7 @@ class phodevi_disk extends phodevi_device_interface
 					}
 
 					$disk = ($times_found > 1 ? $times_found . ' x '  : null) . $disks_formatted[$i];
-					$disks[] = $disk;
+					array_push($disks, $disk);
 				}
 			}
 		}

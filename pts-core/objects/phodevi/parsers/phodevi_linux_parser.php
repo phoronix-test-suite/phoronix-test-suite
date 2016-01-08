@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2016, Phoronix Media
-	Copyright (C) 2008 - 2016, Michael Larabel
+	Copyright (C) 2008 - 2013, Phoronix Media
+	Copyright (C) 2008 - 2013, Michael Larabel
 	phodevi_linux_parser.php: General parsing functions specific to Linux
 
 	This program is free software; you can redistribute it and/or modify
@@ -179,7 +179,7 @@ class phodevi_linux_parser
 
 						if($dmidecode_r[0] == $object && isset($dmidecode_r[1]) && !in_array($dmidecode_r[1], $ignore))
 						{
-							$value[] = $dmidecode_r[1];
+							array_push($value, $dmidecode_r[1]);
 							$found_in_section = true;
 						}
 					}
@@ -440,7 +440,7 @@ class phodevi_linux_parser
 							break;
 
 						}
-						$attribute_values[] = $value;
+						array_push($attribute_values, $value);
 						$last_found_section_count = $this_section_count;
 					}
 				}
@@ -486,7 +486,7 @@ class phodevi_linux_parser
 			{
 				if(($last_point = strrpos($line, '.')) > 0)
 				{
-					$adapters[] = substr($line, $last_point + 3);
+					array_push($adapters, substr($line, $last_point + 3));
 				}
 			}
 		}
@@ -528,7 +528,7 @@ class phodevi_linux_parser
 
 				if($this_attribute == $attribute_check)
 				{
-					$cpuinfo_matches[] = $this_value;
+					array_push($cpuinfo_matches, $this_value);
 				}
 			}
 
