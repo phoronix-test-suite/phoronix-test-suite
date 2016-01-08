@@ -300,6 +300,10 @@ class phoromatic_server
 				// Change made 4 October
 				self::$db->exec('ALTER TABLE phoromatic_account_settings ADD COLUMN AutoApproveNewSystems INTEGER DEFAULT 0');
 				self::$db->exec('PRAGMA user_version = 34');
+			case 34:
+				// Change made 7 January 2016
+				self::$db->exec('ALTER TABLE phoromatic_account_settings ADD COLUMN LimitNetworkCommunication INTEGER DEFAULT 0');
+				self::$db->exec('PRAGMA user_version = 35');
 		}
 		chmod($db_file, 0600);
 	}

@@ -7,6 +7,7 @@ Phoronix Test Suite (Git)
 - pts-core: Optimize array usage along hot paths
 - pts-core: Add httpd as a possible external dependency
 - pts_Graph: Rendering fix for collision of result identifiers
+- phoromatic: Add LimitNetworkCommunication option
 - phoromatic: Fix in listing tests on schedules page when dealing with cache mismatch
 - deploy: JuJu update from upstream
 

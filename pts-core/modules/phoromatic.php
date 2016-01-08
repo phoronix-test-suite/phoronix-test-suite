@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2015, Phoronix Media
-	Copyright (C) 2009 - 2015, Michael Larabel
+	Copyright (C) 2009 - 2016, Phoronix Media
+	Copyright (C) 2009 - 2016, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -33,6 +33,7 @@ class phoromatic extends pts_module_interface
 	private static $server_ws_port = null;
 	private static $is_running_as_phoromatic_node = false;
 	private static $log_file = null;
+	private static $limit_network_communication = false;
 
 	private static $p_save_identifier = null;
 	private static $p_schedule_id = null;
@@ -297,6 +298,20 @@ class phoromatic extends pts_module_interface
 			pts_client::$pts_logger && pts_client::$pts_logger->log($current_task);
 		$last_msg = $current_task;
 
+		if(self::$limit_network_communication)
+		{
+			static $last_comm_time = 0;
+			if(time() > ($last_comm_time + 1740 + rand(0, 240)))
+			{
+				// It's been at least half hour since last update, so report in state...
+				$last_comm_time = time();
+			}
+			else
+			{
+				return;
+			}
+		}
+
 		return phoromatic::upload_to_remote_server(array(
 				'r' => 'update_system_status',
 				'a' => $current_task,
@@ -526,9 +541,11 @@ class phoromatic extends pts_module_interface
 					}
 				}
 
+				self::$limit_network_communication = isset($json['phoromatic']['settings']['LimitNetworkCommunication']) && pts_strings::string_bool($json['phoromatic']['settings']['LimitNetworkCommunication']);
+
 				if($just_started)
 				{
-					if(PTS_IS_DAEMONIZED_SERVER_PROCESS)
+					if(PTS_IS_DAEMONIZED_SERVER_PROCESS && !self::$limit_network_communication)
 					{
 						$pid = pcntl_fork();
 						if($pid == 0)
