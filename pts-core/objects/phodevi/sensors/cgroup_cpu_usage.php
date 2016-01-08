@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2016, Phoronix Media
-	Copyright (C) 2009 - 2016, Michael Larabel
+	Copyright (C) 2009 - 2015, Phoronix Media
+	Copyright (C) 2009 - 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -104,7 +104,7 @@ class cgroup_cpu_usage extends phodevi_sensor
 
 			for($i = 1; $i < self::proc_stat_column_count; $i++)
 			{
-				$load[] = $stat_break[$i];
+				array_push($load, $stat_break[$i]);
 			}
 		}
 
@@ -126,7 +126,7 @@ class cgroup_cpu_usage extends phodevi_sensor
 				}
 
 				$line_break = preg_split('/\s+/', $line);
-				$load[] = $line_break[self::cgroup_cpuacct_stat_load_column];
+				array_push($load, $line_break[self::cgroup_cpuacct_stat_load_column]);
 			}
 		}
 

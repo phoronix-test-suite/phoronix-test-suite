@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2016, Phoronix Media
-	Copyright (C) 2009 - 2016, Michael Larabel
+	Copyright (C) 2009 - 2010, Phoronix Media
+	Copyright (C) 2009 - 2010, Michael Larabel
 	phodevi_solaris_parser.php: General parsing functions specific to the Windows OS
 
 	This program is free software; you can redistribute it and/or modify
@@ -72,7 +72,7 @@ class phodevi_solaris_parser
 
 					if($line_object == $object && ($this_section == $section || pts_strings::proximity_match($section, $this_section)) && !empty($this_value) && $this_value != 'Unknown')
 					{
-						$values[] = $this_value;
+						array_push($values, $this_value);
 					}
 				}
 			}
