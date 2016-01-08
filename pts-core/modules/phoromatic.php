@@ -542,6 +542,11 @@ class phoromatic extends pts_module_interface
 				}
 
 				self::$limit_network_communication = isset($json['phoromatic']['settings']['LimitNetworkCommunication']) && pts_strings::string_bool($json['phoromatic']['settings']['LimitNetworkCommunication']);
+				if(self::$limit_network_communication)
+				{
+					// Sleep to ensure network communication is somewhat random in case all systems started at same time
+					sleep(0, 20);
+				}
 
 				if($just_started)
 				{
