@@ -310,7 +310,7 @@ class pts_virtual_test_suite
 		{
 			foreach($repo_index['tests'] as $test_identifier => &$test)
 			{
-				if(!in_array(phodevi::operating_system(), $test['supported_platforms']) || empty($test['title']))
+				if((!empty($test['supported_platforms']) && !in_array(phodevi::operating_system(), $test['supported_platforms'])) || empty($test['title']))
 				{
 					// Initial check to not do unsupported tests
 					continue;
