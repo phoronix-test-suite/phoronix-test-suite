@@ -64,6 +64,10 @@ if(strpos($_SERVER['REQUEST_URI'], '?') === false && isset($_SERVER['QUERY_STRIN
 	$_SERVER['REQUEST_URI'] .= '?' . $_SERVER['QUERY_STRING'];
 }
 $URI = substr($_SERVER['REQUEST_URI'], strpos($_SERVER['REQUEST_URI'], '?') + 1);
+if(($uc = strpos($URI, '&')) !== false)
+{
+	$URI = substr($URI, 0, $uc);
+}
 $PATH = explode('/', $URI);
 $REQUESTED = str_replace('.', null, array_shift($PATH));
 
@@ -144,7 +148,11 @@ echo '<option value="' . count($tracker['triggers']) . '">All Results</option>';
 <?php
 
 ini_set('memory_limit', '4G');
-if(isset($_REQUEST['view_results_limit']) && is_numeric($_REQUEST['view_results_limit']) && $_REQUEST['view_results_limit'] > 7)
+if(isset($_REQUEST['view_results_since']) && ($st = strtotime($_REQUEST['view_results_since'])) != false)
+{
+	$cut_duration = ceil((time() - $st) / 86400);
+}
+else if(isset($_REQUEST['view_results_limit']) && is_numeric($_REQUEST['view_results_limit']) && $_REQUEST['view_results_limit'] > 7)
 {
 	$cut_duration = $_REQUEST['view_results_limit'];
 }

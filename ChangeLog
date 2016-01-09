@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Fix for some test profiles not showing up in list-tests sub-command
+- phoromatic: Add view_results_since support to the export results viewer
 
 Phoronix Test Suite 6.2 Milestone 3
 7 January 2016
