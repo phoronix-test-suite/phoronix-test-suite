@@ -31,6 +31,13 @@ class pts_graph_lines extends pts_graph_core
 		{
 			foreach($result_object->test_result_buffer->buffer_items as &$buffer_item)
 			{
+				$r = pts_strings::comma_explode($buffer_item->get_result_raw());
+				$c = count($r);
+				foreach($r as $val)
+				{
+					echo $val;
+				}
+
 				$values = pts_strings::comma_explode($buffer_item->get_result_value());
 				$buffer_item->reset_result_value($values);
 				$buffer_item->reset_raw_value(pts_strings::comma_explode($buffer_item->get_result_raw()));
