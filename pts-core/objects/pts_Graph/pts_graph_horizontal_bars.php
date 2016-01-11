@@ -95,7 +95,7 @@ class pts_graph_horizontal_bars extends pts_graph_core
 				{
 					// See if the result identifier matches something to be color-coded better
 					$result_identifier = strtolower($buffer_item->get_result_identifier()) . ' ';
-					if(strpos($result_identifier, 'geforce') !== false || strpos($result_identifier, 'nvidia' || strpos($result_identifier, 'quadro') !== false)
+					if(strpos($result_identifier, 'geforce') !== false || strpos($result_identifier, 'nvidia') || strpos($result_identifier, 'quadro') !== false)
 					{
 						$paint_color = '#77b900';
 					}
