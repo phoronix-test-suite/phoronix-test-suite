@@ -108,13 +108,13 @@ class pts_render
 				$result_object->test_result_buffer->buffer_values_reverse();
 			}
 		}
-		if(isset($extra_attributes['remove_noisy_results']))
+		/*if(isset($extra_attributes['remove_noisy_results']))
 		{
 			foreach($result_object->test_result_buffer->get_buffer_items() as $i => &$buffer_item)
 			{
 
 			}
-		}
+		}*/
 
 		if($result_file != null)
 		{
