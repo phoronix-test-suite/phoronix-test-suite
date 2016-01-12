@@ -198,7 +198,7 @@ class pts_openbenchmarking
 
 					if($us > 1 && $us < 9 && (!function_exists('ctype_alnum') || ctype_alnum($segments[1])))
 					{
-						if(ctype_alnum($segments[2]))
+						if(!function_exists('ctype_alnum') || ctype_alnum($segments[2]))
 						{
 							$valid = true;
 						}
