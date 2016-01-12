@@ -196,7 +196,7 @@ class pts_openbenchmarking
 				{
 					$us = strlen($segments[1]);
 
-					if($us > 1 && $us < 9 && ctype_alnum($segments[1]))
+					if($us > 1 && $us < 9 && (!is_function('ctype_alnum') || ctype_alnum($segments[1])))
 					{
 						if(ctype_alnum($segments[2]))
 						{
