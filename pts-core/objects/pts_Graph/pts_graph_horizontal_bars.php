@@ -107,6 +107,14 @@ class pts_graph_horizontal_bars extends pts_graph_core
 					{
 						$paint_color = '#0b5997';
 					}
+					else if(strpos($result_identifier, 'bsd') !== false)
+					{
+						$paint_color = '#850000';
+					}
+					else
+					{
+						$paint_color = $this->get_paint_color($identifier);
+					}
 				}
 
 				$value = $buffer_item->get_result_value();
