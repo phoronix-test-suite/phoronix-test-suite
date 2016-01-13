@@ -134,7 +134,14 @@ class start_phoromatic_server implements pts_option_interface
 		$server_launcher .= 'event_server_pid=$!'. PHP_EOL;
 
 		// HTTP Server Setup
-		if(false && pts_client::executable_in_path('nginx') && is_file('/run/php-fpm/php-fpm.pid'))
+		if(getenv('PHOROMATIC_WANTS_APACHE'))
+		{
+			echo PHP_EOL . PHP_EOL . 'To manually configure Apache, setup the following:' . PHP_EOL;
+			echo 'The root web directory: ' . PTS_CORE_PATH . 'phoromatic/public_html/' . PHP_EOL;
+			echo 'Set the HTTP port to: ' . $web_port . PHP_EOL;
+			echo 'Of course, ensure Apache PHP support is available.' . PHP_EOL . PHP_EOL;
+		}
+		else if(false && pts_client::executable_in_path('nginx') && is_file('/run/php-fpm/php-fpm.pid'))
 		{
 			// NGINX
 			$nginx_conf = 'error_log /tmp/error.log;
