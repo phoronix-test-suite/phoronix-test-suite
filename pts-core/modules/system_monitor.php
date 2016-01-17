@@ -227,7 +227,7 @@ class system_monitor extends pts_module_interface
 			if($is_instant === false)
 			{
 				$pid = pts_module::pts_timed_function('pts_monitor_update', self::$sensor_monitoring_frequency, array(array($sensor)));
-				array_push(self::$monitor_pids, $pid);
+				self::$monitor_pids[] = $pid;
 			}
 			else
 			{
@@ -238,7 +238,7 @@ class system_monitor extends pts_module_interface
 		if(!empty($instant_sensors))
 		{
 			$pid = pts_module::pts_timed_function('pts_monitor_update', self::$sensor_monitoring_frequency, array($instant_sensors));
-			array_push(self::$monitor_pids, $pid);
+			self::$monitor_pids[] = $pid;
 		}
 	}
 
