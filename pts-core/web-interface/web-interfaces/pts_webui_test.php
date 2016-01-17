@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2013, Phoronix Media
-	Copyright (C) 2013, Michael Larabel
+	Copyright (C) 2013 - 2016, Phoronix Media
+	Copyright (C) 2013 - 2016, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -89,12 +89,12 @@ class pts_webui_test implements pts_webui_interface
 
 					$option_value .= '</select>';
 				}
-				array_push($identifiers, $o->get_identifier());
+				$identifiers[] = $o->get_identifier();
 
 				echo '<input id="' . $test_prefix . $o->get_identifier() . '_title" type="hidden" value="' . $option_name . '" />';
-				array_push($test_settings, array($option_name, $option_value));
+				$test_settings[] = array($option_name, $option_value);
 			}
-			array_push($test_settings, array('<input type="Submit" value="Add Test To Run Queue" onclick="test_add_to_queue(\'' . (isset($test_prefix) ? $test_prefix : "") . '\', \'' . implode(':', $identifiers) . '\', \'' . self::$test_profile->get_identifier() . '\', \'' . base64_encode(json_encode(self::$test_profile->to_json())) . '\'); return false;" />'));
+			$test_settings[] = array('<input type="Submit" value="Add Test To Run Queue" onclick="test_add_to_queue(\'' . (isset($test_prefix) ? $test_prefix : "") . '\', \'' . implode(':', $identifiers) . '\', \'' . self::$test_profile->get_identifier() . '\', \'' . base64_encode(json_encode(self::$test_profile->to_json())) . '\'); return false;" />');
 			echo pts_webui::r2d_array_to_table($test_settings);
 			echo '</div>';
 
@@ -117,7 +117,7 @@ class pts_webui_test implements pts_webui_interface
 
 		if($project_url != null && isset($project_url['host']))
 		{
-			array_push($tabular_info, array('Project Site', '<a href="' . self::$test_profile->get_project_url() . '" target="_blank">' . $project_url['host'] . '</a>'));
+			$tabular_info[] = array('Project Site', '<a href="' . self::$test_profile->get_project_url() . '" target="_blank">' . $project_url['host'] . '</a>');
 		}
 
 		echo '<h4>Test Profile Information</h4>';
@@ -127,19 +127,19 @@ class pts_webui_test implements pts_webui_interface
 
 		if(self::$test_profile->get_estimated_run_time() > 1)
 		{
-			array_push($tabular_info, array('Estimated Test Run-Time', pts_strings::plural_handler(ceil(self::$test_profile->get_estimated_run_time() / 60), 'Minute')));
+			$tabular_info[] = array('Estimated Test Run-Time', pts_strings::plural_handler(ceil(self::$test_profile->get_estimated_run_time() / 60), 'Minute'));
 		}
 
 		$download_size = self::$test_profile->get_download_size();
 		if(!empty($download_size))
 		{
-			array_push($tabular_info, array('Download Size', $download_size . ' MB'));
+			$tabular_info[] = array('Download Size', $download_size . ' MB');
 		}
 
 		$environment_size = self::$test_profile->get_environment_size();
 		if(!empty($environment_size))
 		{
-			array_push($tabular_info, array('Environment Size', $environment_size . ' MB'));
+			$tabular_info[] = array('Environment Size', $environment_size . ' MB');
 		}
 
 		if(self::$test_profile->test_installation != false)
@@ -152,22 +152,22 @@ class pts_webui_test implements pts_webui_interface
 			$latest_time = self::$test_profile->test_installation->get_latest_run_time();
 			$latest_time = !empty($latest_time) ? pts_strings::format_time($latest_time, 'SECONDS') : 'N/A';
 
-			array_push($tabular_info, array('Last Local Run', $last_run));
+			$tabular_info[] = array('Last Local Run', $last_run);
 
 			if($last_run != 'Never')
 			{
 				if(self::$test_profile->test_installation->get_run_count() > 1)
 				{
-					array_push($tabular_info, array('Average Local Run-Time', $avg_time));
+					$tabular_info[] = array('Average Local Run-Time', $avg_time);
 				}
 
 				if($latest_time != null)
 				{
-					array_push($tabular_info, array('Latest Local Run-Time', $latest_time));
+					$tabular_info[] = array('Latest Local Run-Time', $latest_time);
 				}
 				if(self::$test_profile->test_installation->get_run_count() > 0)
 				{
-					array_push($tabular_info, array('Times Run Locally', self::$test_profile->test_installation->get_run_count()));
+					$tabular_info[] = array('Times Run Locally', self::$test_profile->test_installation->get_run_count());
 				}
 			}
 		}
@@ -192,7 +192,7 @@ class pts_webui_test implements pts_webui_interface
 
 				foreach($files as &$file)
 				{
-					array_push($download_files, $file->get_filename() . ' [' . max(0.1, round($file->get_filesize() / 1048576, 1)) . 'MB]');
+					$download_files[] = $file->get_filename() . ' [' . max(0.1, round($file->get_filesize() / 1048576, 1)) . 'MB]';
 				}
 				pts_webui::r1d_array_to_table($download_files);
 			}

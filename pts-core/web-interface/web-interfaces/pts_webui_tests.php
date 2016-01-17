@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2013, Phoronix Media
-	Copyright (C) 2013, Michael Larabel
+	Copyright (C) 2013 - 2016, Phoronix Media
+	Copyright (C) 2013 - 2016, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -75,7 +75,7 @@ class pts_webui_tests implements pts_webui_interface
 				// Don't show unsupported tests
 				continue;
 			}
-			if($local_only && count(($test_dependencies = $test_profile->get_dependencies())) > 0)
+			if($local_only && count(($test_dependencies = $test_profile->get_external_dependencies())) > 0)
 			{
 				$dependencies_met = true;
 				foreach($test_dependencies as $d)
@@ -97,7 +97,7 @@ class pts_webui_tests implements pts_webui_interface
 				continue;
 			}
 
-			array_push($tests_to_show, $test_profile);
+			$tests_to_show[] = $test_profile;
 		}
 
 		echo '<div style="overflow: hidden;">';

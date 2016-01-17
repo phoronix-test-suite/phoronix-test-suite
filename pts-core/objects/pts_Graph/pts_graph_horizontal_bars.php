@@ -2,8 +2,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2015, Phoronix Media
-	Copyright (C) 2008 - 2015, Michael Larabel
+	Copyright (C) 2008 - 2016, Phoronix Media
+	Copyright (C) 2008 - 2016, Michael Larabel
 	pts_HorizontalBarGraph.php: The horizontal bar graph object that extends pts_Graph.php
 
 	This program is free software; you can redistribute it and/or modify
@@ -67,7 +67,7 @@ class pts_graph_horizontal_bars extends pts_graph_core
 		}
 		else
 		{
-			array_push($r, $a);
+			$r[] = $a;
 			return (count($r) - 1);
 		}
 	}
@@ -94,12 +94,12 @@ class pts_graph_horizontal_bars extends pts_graph_core
 				if($identifier == 0 && !$this->is_multi_way_comparison)
 				{
 					// See if the result identifier matches something to be color-coded better
-					$result_identifier = strtolower($buffer_item->get_result_identifier());
-					if(strpos($result_identifier, 'geforce') !== false || strpos($result_identifier, 'nvidia') !== false)
+					$result_identifier = strtolower($buffer_item->get_result_identifier()) . ' ';
+					if(strpos($result_identifier, 'geforce') !== false || strpos($result_identifier, 'nvidia') || strpos($result_identifier, 'quadro') !== false)
 					{
 						$paint_color = '#77b900';
 					}
-					else if(strpos($result_identifier, 'radeon') !== false || strpos($result_identifier, 'amd ') !== false)
+					else if(strpos($result_identifier, 'radeon') !== false || strpos($result_identifier, 'amd ') !== false || strpos($result_identifier, 'firepro ') !== false)
 					{
 						$paint_color = '#f1052d';
 					}
@@ -107,11 +107,19 @@ class pts_graph_horizontal_bars extends pts_graph_core
 					{
 						$paint_color = '#0b5997';
 					}
+					else if(strpos($result_identifier, 'bsd') !== false)
+					{
+						$paint_color = '#850000';
+					}
+					else
+					{
+						$paint_color = $this->get_paint_color($identifier);
+					}
 				}
 
-				$i_o = $this->calc_offset($group_offsets, $identifier);
-				$i = $this->calc_offset($id_offsets, $buffer_item->get_result_identifier());
 				$value = $buffer_item->get_result_value();
+				$i_o = $this->calc_offset($group_offsets, $identifier);
+				$i = $this->calc_offset($id_offsets, $buffer_item->get_result_identifier() . ' ' . $value);
 				$graph_size = max(0, round(($value / $this->i['graph_max_value']) * $work_area_width));
 				$value_end_right = max($this->i['left_start'] + $graph_size, 1);
 				$px_bound_top = $this->i['top_start'] + ($this->is_multi_way_comparison ? 5 : 0) + ($this->i['identifier_height'] * $i) + ($bar_height * $i_o) + ($separator_height * ($i_o + 1));

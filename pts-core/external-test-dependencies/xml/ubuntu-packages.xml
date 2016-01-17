@@ -303,5 +303,9 @@
 			<GenericName>attr</GenericName>
 			<PackageName>libattr1-dev</PackageName>
 		</Package>
+		<Package>
+			<GenericName>httpd</GenericName>
+			<PackageName>apache2</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

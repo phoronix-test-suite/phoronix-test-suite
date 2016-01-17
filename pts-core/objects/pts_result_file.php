@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2015, Phoronix Media
-	Copyright (C) 2008 - 2015, Michael Larabel
+	Copyright (C) 2008 - 2016, Phoronix Media
+	Copyright (C) 2008 - 2016, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -75,7 +75,7 @@ class pts_result_file
 			foreach($xml->System as $s)
 			{
 				$system = new pts_result_file_system(self::clean_input($s->Identifier->__toString()), self::clean_input($s->Hardware->__toString()), self::clean_input($s->Software->__toString()), json_decode(self::clean_input($s->JSON), true), self::clean_input($s->User->__toString()), self::clean_input($s->Notes->__toString()), self::clean_input($s->TimeStamp->__toString()), self::clean_input($s->ClientVersion->__toString()));
-				array_push($this->systems, $system);
+				$this->systems[] = $system;
 			}
 		}
 
@@ -151,7 +151,7 @@ class pts_result_file
 	{
 		if(!in_array($system, $this->systems))
 		{
-			array_push($this->systems, $system);
+			$this->systems[] = $system;
 		}
 	}
 	public function get_systems()
@@ -164,7 +164,7 @@ class pts_result_file
 		$hw = array();
 		foreach($this->get_systems() as $s)
 		{
-			array_push($hw, $s->get_hardware());
+			$hw[] = $s->get_hardware();
 		}
 		return $hw;
 	}
@@ -174,7 +174,7 @@ class pts_result_file
 		$sw = array();
 		foreach($this->get_systems() as $s)
 		{
-			array_push($sw, $s->get_software());
+			$sw[] = $s->get_software();
 		}
 		return $sw;
 	}
@@ -184,7 +184,7 @@ class pts_result_file
 		$ids = array();
 		foreach($this->get_systems() as $s)
 		{
-			array_push($ids, $s->get_identifier());
+			$ids[] = $s->get_identifier();
 		}
 		return $ids;
 	}
@@ -275,7 +275,7 @@ class pts_result_file
 
 		foreach($this->get_result_objects() as $result_object)
 		{
-			array_push($object_hashes, $result_object->get_comparison_hash());
+			$object_hashes[] = $result_object->get_comparison_hash();
 		}
 
 		return $object_hashes;
@@ -362,7 +362,7 @@ class pts_result_file
 	}
 	public function invert_multi_way_invert()
 	{
-		$this->is_multi_way_inverted = ($this->is_multi_way_inverted == false);
+		$this->is_multi_way_inverted = !$this->is_multi_way_inverted;
 	}
 	public function is_multi_way_inverted()
 	{
@@ -374,7 +374,7 @@ class pts_result_file
 
 		foreach($this->get_result_objects() as $object)
 		{
-			array_push($test_profiles, $object->test_profile);
+			$test_profiles[] = $object->test_profile;
 		}
 
 		return $test_profiles;
@@ -396,7 +396,7 @@ class pts_result_file
 					// Only show results where the variation was greater than or equal to 1%
 					if(abs($result->largest_result_variation(0.01)) >= 0.01)
 					{
-						array_push($objects, $result);
+						$objects[] = $result;
 					}
 				}
 			}
@@ -406,7 +406,7 @@ class pts_result_file
 				{
 					if(isset($this->result_objects[$index]))
 					{
-						array_push($objects, $this->result_objects[$index]);
+						$objects[] = $this->result_objects[$index];
 					}
 				}
 			}
@@ -462,7 +462,7 @@ class pts_result_file
 				{
 					$c = $s;
 					unset($this->systems[$i]);
-					array_push($this->systems, $c);
+					$this->systems[] = $c;
 					break;
 				}
 			}
@@ -495,7 +495,7 @@ class pts_result_file
 		{
 			if(!in_array($s, $this->systems))
 			{
-				array_push($this->systems, $s);
+				$this->systems[] = $s;
 			}
 		}
 
@@ -511,6 +511,11 @@ class pts_result_file
 		{
 			foreach($result_object->test_result_buffer->get_buffer_items() as $bi)
 			{
+				if($bi->get_result_value() === null)
+				{
+					continue;
+				}
+
 				$this->result_objects[$ch]->test_result_buffer->add_buffer_item($bi);
 			}
 		}

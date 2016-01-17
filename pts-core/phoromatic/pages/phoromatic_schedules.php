@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2015, Phoronix Media
-	Copyright (C) 2008 - 2015, Michael Larabel
+	Copyright (C) 2008 - 2016, Phoronix Media
+	Copyright (C) 2008 - 2016, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -294,21 +294,23 @@ class phoromatic_schedules implements pts_webui_interface
 					}
 					foreach(pts_openbenchmarking::available_tests(false, true) as $test)
 					{
-						$cache_checked = false;
-						if($dc_exists)
+						if(phoromatic_server::read_setting('show_local_tests_only'))
 						{
-							if($cache_json && isset($cache_json['phoronix-test-suite']['cached-tests']))
+							$cache_checked = false;
+							if($dc_exists)
 							{
-								$cache_checked = true;
-								if(!in_array($test, $cache_json['phoronix-test-suite']['cached-tests']))
+								if($cache_json && isset($cache_json['phoronix-test-suite']['cached-tests']))
 								{
-									continue;
+									if(in_array($test, $cache_json['phoronix-test-suite']['cached-tests']))
+									{
+										$cache_checked = true;
+									}
 								}
 							}
-						}
-						if(!$cache_checked && phoromatic_server::read_setting('show_local_tests_only') && pts_test_install_request::test_files_in_cache($test, true, true) == false)
-						{
-							continue;
+							if(!$cache_checked && pts_test_install_request::test_files_in_cache($test, true, true) == false)
+							{
+								continue;
+							}
 						}
 
 						$main .= '<option value="' . $test . '">' . $test . '</option>';

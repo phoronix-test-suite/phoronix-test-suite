@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2015, Phoronix Media
-	Copyright (C) 2008 - 2015, Michael Larabel
+	Copyright (C) 2008 - 2016, Phoronix Media
+	Copyright (C) 2008 - 2016, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -128,14 +128,14 @@ class pts_test_suite extends pts_test_suite_parser
 					$test_result->set_used_arguments($option_output[0][$x]);
 					$test_result->set_used_arguments_description($option_output[1][$x]);
 
-					array_push($test_result_objects, $test_result);
+					$test_result_objects[] = $test_result;
 				}
 			}
 			else if($obj instanceof pts_test_suite)
 			{
 				foreach($obj->get_contained_test_result_objects() as $test_result)
 				{
-					array_push($test_result_objects, $test_result);
+					$test_result_objects[] = $test_result;
 				}
 			}
 		}
@@ -203,7 +203,7 @@ class pts_test_suite extends pts_test_suite_parser
 
 			foreach($test_names as $test)
 			{
-				array_push($contained[$object], self::pts_format_tests_to_array($test));
+				$contained[$object][] = self::pts_format_tests_to_array($test);
 			}
 		}
 		else

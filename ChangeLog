@@ -1,5 +1,41 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- pts-core: Fix for some test profiles not showing up in list-tests sub-command
+- phoromatic: Add view_results_since support to the export results viewer
+
+Phoronix Test Suite 6.2 Milestone 3
+7 January 2016
+
+- pts-core: Add system to default list of repositories
+- pts-core: Allow result graph footnotes to be added during test time by writing to ~/pts-footnote
+- pts-core: Optimize array usage along hot paths
+- pts-core: Add httpd as a possible external dependency
+- pts_Graph: Rendering fix for collision of result identifiers
+- phoromatic: Add LimitNetworkCommunication option
+- phoromatic: Fix in listing tests on schedules page when dealing with cache mismatch
+- deploy: JuJu update from upstream
+
+Phoronix Test Suite 6.2 Milestone 2
+2 January 2016
+
+- pts-core: Add FullOutput configuration option for dumping all pre/post/interim information to standard output
+- pts-core: Add MinimalTestTime user configuration option
+- phodevi: Software string detection improvements
+- phodevi: Support for PTS_NPROC environment variable to override reported CPU core count
+- phoromatic: Export viewer tweaks
+
+Phoronix Test Suite 6.2 Milestone 1
+15 December 2015
+
+- pts-core: Begin work on dynamic dependency handler infrastructure
+- pts-core: Add new TestProfile/SystemDependencies field to test profile specification
+- pts-core: Basic implementation of SystemDependencies for dynamically resolving system/external dependencies based on file name
+- phoromatic: Allow public listing of download cache files when navigating in browser to /download-cache.php
+- phodevi: Assume Windows is 64-bit when environment variable check fails
+- phodevi: Support sys.power sensor monitoring fallback on BAT1
+
 Phoronix Test Suite 6.0.1
 20 November 2015
 

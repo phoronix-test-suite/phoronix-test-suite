@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2013, Phoronix Media
-	Copyright (C) 2009 - 2013, Michael Larabel
+	Copyright (C) 2009 - 2016, Phoronix Media
+	Copyright (C) 2009 - 2016, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -64,11 +64,11 @@ class pts_validation
 		foreach(pts_types::operating_systems() as $os)
 		{
 			$os = strtolower($os[0]);
-			array_push($allowed_files, 'support-check_' . $os . '.sh');
-			array_push($allowed_files, 'install_' . $os . '.sh');
-			array_push($allowed_files, 'pre_' . $os . '.sh');
-			array_push($allowed_files, 'post_' . $os . '.sh');
-			array_push($allowed_files, 'interim_' . $os . '.sh');
+			$allowed_files[] = 'support-check_' . $os . '.sh';
+			$allowed_files[] = 'install_' . $os . '.sh';
+			$allowed_files[] = 'pre_' . $os . '.sh';
+			$allowed_files[] = 'post_' . $os . '.sh';
+			$allowed_files[] = 'interim_' . $os . '.sh';
 		}
 
 		return $allowed_files;
@@ -81,7 +81,7 @@ class pts_validation
 
 			if(empty($to_check))
 			{
-				array_push($append_missing_to, $tag_check);
+				$append_missing_to[] = $tag_check;
 			}
 		}
 	}

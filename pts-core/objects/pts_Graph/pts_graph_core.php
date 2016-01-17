@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2015, Phoronix Media
-	Copyright (C) 2008 - 2015, Michael Larabel
+	Copyright (C) 2008 - 2016, Phoronix Media
+	Copyright (C) 2008 - 2016, Michael Larabel
 	pho_graph.php: The core graph object that is used by the different graphing objects.
 
 	This program is free software; you can redistribute it and/or modify
@@ -141,8 +141,14 @@ abstract class pts_graph_core
 		$this->results = array();
 		if($this->is_multi_way_comparison)
 		{
-			foreach($this->test_result->test_result_buffer->buffer_items as &$buffer_item)
+			foreach($this->test_result->test_result_buffer->buffer_items as $i => &$buffer_item)
 			{
+				if($buffer_item->get_result_value() === null)
+				{
+					unset($this->test_result->test_result_buffer->buffer_items[$i]);
+					continue;
+				}
+
 				$identifier = array_map('trim', explode(':', $buffer_item->get_result_identifier()));
 
 				if($this->i['multi_way_comparison_invert_default'])
@@ -172,7 +178,7 @@ abstract class pts_graph_core
 					$this->results[$date] = array();
 				}
 
-				array_push($this->results[$date], $buffer_item);
+				$this->results[$date][] = $buffer_item;
 				pts_arrays::unique_push($this->graph_identifiers, $system);
 			}
 
@@ -183,11 +189,17 @@ abstract class pts_graph_core
 		}
 		else if(isset($this->test_result->test_result_buffer))
 		{
-			$this->results = array($this->test_result->test_result_buffer->buffer_items);
-			foreach($this->test_result->test_result_buffer->buffer_items as &$buffer_item)
+			foreach($this->test_result->test_result_buffer->buffer_items as $i => &$buffer_item)
 			{
-				array_push($this->graph_identifiers, $buffer_item->get_result_identifier());
+				if($buffer_item->get_result_value() === null)
+				{
+					unset($this->test_result->test_result_buffer->buffer_items[$i]);
+					continue;
+				}
+
+				$this->graph_identifiers[] = $buffer_item->get_result_identifier();
 			}
+			$this->results = array($this->test_result->test_result_buffer->buffer_items);
 		}
 	}
 	public function override_i_value($key, $val)
@@ -269,13 +281,13 @@ abstract class pts_graph_core
 		{
 			if(!empty($sub_title))
 			{
-				array_push($this->graph_sub_titles, $sub_title);
+				$this->graph_sub_titles[] = $sub_title;
 			}
 		}
 	}
 	public function addTestNote($note, $hover_title = null, $section = null)
 	{
-		array_push($this->i['notes'], array('note' => $note, 'hover-title' => $hover_title, 'section' => $section));
+		$this->i['notes'][] = array('note' => $note, 'hover-title' => $hover_title, 'section' => $section);
 	}
 
 	//
@@ -886,7 +898,7 @@ abstract class pts_graph_core
 
 				if($note['section'] != null)
 				{
-					array_push($sections, $note['section']);
+					$sections[] = $note['section'];
 				}
 			}
 			$note_height += self::$c['size']['key'];

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2015, Phoronix Media
-	Copyright (C) 2008 - 2015, Michael Larabel
+	Copyright (C) 2008 - 2016, Phoronix Media
+	Copyright (C) 2008 - 2016, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -120,7 +120,7 @@ class pts_test_profile extends pts_test_profile_parser
 			{
 				if(!in_array($extended_test, $extensions))
 				{
-					array_push($extensions, $extended_test);
+					$extensions[] = $extended_test;
 				}
 
 				$extended_test = new pts_test_profile_parser($extended_test);
@@ -136,12 +136,12 @@ class pts_test_profile extends pts_test_profile_parser
 		$dependency_names = array();
 		$exdep_generic_parser = new pts_exdep_generic_parser();
 
-		foreach($this->get_dependencies() as $dependency)
+		foreach($this->get_external_dependencies() as $dependency)
 		{
 			if($exdep_generic_parser->is_package($dependency))
 			{
 				$package_data = $exdep_generic_parser->get_package_data($dependency);
-				array_push($dependency_names, $package_data['title']);
+				$dependency_names[] = $package_data['title'];
 			}
 		}
 
@@ -367,7 +367,20 @@ class pts_test_profile extends pts_test_profile_parser
 	}
 	public function get_file_parser_spec()
 	{
-		return is_file($this->get_resource_dir() . 'results-definition.xml') ? $this->get_resource_dir() . 'results-definition.xml' : false;
+		$spec = is_file($this->get_resource_dir() . 'results-definition.xml') ? $this->get_resource_dir() . 'results-definition.xml' : false;
+
+		if(!$spec)
+		{
+			$extends = $this->get_test_extension();
+
+			if(!empty($extends))
+			{
+				$test_profile = new pts_test_profile($extends);
+				$spec = $test_profile->get_file_parser_spec();
+			}
+		}
+
+		return $spec;
 	}
 	public function extended_test_profiles()
 	{
@@ -377,7 +390,7 @@ class pts_test_profile extends pts_test_profile_parser
 		foreach(array_unique(array_reverse($this->get_test_extensions_recursive())) as $extended_test)
 		{
 			$test_profile = new pts_test_profile($extended_test);
-			array_push($test_profiles, $test_profile);
+			$test_profiles[] = $test_profile;
 		}
 
 		return $test_profiles;

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2013 - 2015, Phoronix Media
-	Copyright (C) 2013 - 2015, Michael Larabel
+	Copyright (C) 2013 - 2016, Phoronix Media
+	Copyright (C) 2013 - 2016, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -313,30 +313,30 @@ function phoromatic_webui_header_logged_in()
 
 		if(phoromatic_account_system_count() > 0)
 		{
-			array_push($sub_systems_menu, 'Dashboard');
-			array_push($sub_systems_menu, 'Maintenance Table');
-			array_push($sub_systems_menu, 'Component Table');
+			$sub_systems_menu[] = 'Dashboard';
+			$sub_systems_menu[] = 'Maintenance Table';
+			$sub_systems_menu[] = 'Component Table';
 		}
 
-		array_push($sub_main_menu, '<a href="?tests">Test Profiles</a>');
+		$sub_main_menu[] = '<a href="?tests">Test Profiles</a>';
 		if(isset($_SESSION['AdminLevel']) && $_SESSION['AdminLevel'] < 4)
 		{
-			array_push($sub_main_menu, 'Users');
+			$sub_main_menu[] = 'Users';
 		}
 
 		array_push($sub_main_menu, 'Settings', '<a href="?account_activity">Account Activity</a>', 'Logout');
-		array_push($sub_testing_menu, '<a href="?schedules">Test Schedules</a>');
+		$sub_testing_menu[] = '<a href="?schedules">Test Schedules</a>';
 
 		if(!PHOROMATIC_USER_IS_VIEWER)
 		{
-		array_push($sub_testing_menu, '<a href="?sched">Create A Schedule</a>', '<a href="?benchmark">Run A Benchmark</a>');
+			array_push($sub_testing_menu, '<a href="?sched">Create A Schedule</a>', '<a href="?benchmark">Run A Benchmark</a>');
 		}
 
 		if(phoromatic_tracker_page_relevant())
 		{
-			array_push($sub_results_menu, 'Tracker');
+			$sub_results_menu[] = 'Tracker';
 		}
-		array_push($sub_results_menu, '<a href="/rss.php?user=' . $_SESSION['UserID'] . '&amp;v=' . sha1($_SESSION['CreatedOn']) . '">Results Feed <img src="images/rss.png" /></a>');
+		$sub_results_menu[] = '<a href="/rss.php?user=' . $_SESSION['UserID'] . '&amp;v=' . sha1($_SESSION['CreatedOn']) . '">Results Feed <img src="images/rss.png" /></a>';
 
 		$pages = array('Main' => $sub_main_menu, 'Systems' => $sub_systems_menu, '<a href="#">Testing</a>' => $sub_testing_menu, 'Results' => $sub_results_menu, '<form action="/?search" method="post" id="search"><input type="search" name="search" id="seach_input" size="16" /> <input type="submit" name="sa" value="Search" /></form>');
 	}
@@ -348,13 +348,13 @@ function phoromatic_webui_header_logged_in()
 			$menu_row = array();
 			foreach($page as $sub_page)
 			{
-				array_push($menu_row, menu_item_to_html($sub_page));
+				$menu_row[] = menu_item_to_html($sub_page);
 			}
 			$html_links[menu_item_to_html($title)] = $menu_row;
 		}
 		else
 		{
-			array_push($html_links, menu_item_to_html($page));
+			$html_links[] = menu_item_to_html($page);
 		}
 	}
 

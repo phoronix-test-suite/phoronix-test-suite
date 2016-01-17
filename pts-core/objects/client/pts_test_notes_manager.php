@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2013, Phoronix Media
-	Copyright (C) 2009 - 2013, Michael Larabel
+	Copyright (C) 2009 - 2016, Phoronix Media
+	Copyright (C) 2009 - 2016, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ class pts_test_notes_manager
 
 		if(!empty($note) && !in_array($note, self::$notes))
 		{
-			array_push(self::$notes, $note);
+			self::$notes[] = $note;
 		}
 	}
 	public static function generate_test_notes(&$test_result_objects)
@@ -155,7 +155,7 @@ class pts_test_notes_manager
 			{
 				if(pts_client::is_process_running($process))
 				{
-					array_push($p, $p_name);
+					$p[] = $p_name;
 				}
 			}
 		}

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2015, Phoronix Media
-	Copyright (C) 2010 - 2015, Michael Larabel
+	Copyright (C) 2010 - 2016, Phoronix Media
+	Copyright (C) 2010 - 2016, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -22,6 +22,17 @@
 
 class pts_external_dependencies
 {
+	public static function packages_that_provide($file)
+	{
+		$pkg_vendor = self::vendor_identifier('package-list');
+		if($file != null && is_file(PTS_EXDEP_PATH . 'dependency-handlers/' . $pkg_vendor . '_dependency_handler.php'))
+		{
+			require_once(PTS_EXDEP_PATH . 'dependency-handlers/' . $pkg_vendor . '_dependency_handler.php');
+			eval("\$provides = {$pkg_vendor}_dependency_handler::what_provides(\$file);");
+			return $provides;
+		}
+		return false;
+	}
 	public static function install_dependencies(&$test_profiles, $no_prompts = false, $skip_tests_with_missing_dependencies = false)
 	{
 		// PTS External Dependencies install on distribution
@@ -38,27 +49,42 @@ class pts_external_dependencies
 		{
 			if(!in_array($test_profile, $tests_to_check) && $test_profile->is_supported())
 			{
-				array_push($tests_to_check, $test_profile);
+				$tests_to_check[] = $test_profile;
 			}
 		}
 
 		// Find all of the POSSIBLE test dependencies
-		$required_test_dependencies = array();
+		$required_external_dependencies = array();
+		$required_system_files = array();
 		foreach($tests_to_check as &$test_profile)
 		{
-			foreach($test_profile->get_dependencies() as $test_dependency)
+			foreach($test_profile->get_external_dependencies() as $test_dependency)
 			{
 				if(empty($test_dependency))
 				{
 					continue;
 				}
 
-				if(isset($required_test_dependencies[$test_dependency]) == false)
+				if(isset($required_external_dependencies[$test_dependency]) == false)
 				{
-					$required_test_dependencies[$test_dependency] = array();
+					$required_external_dependencies[$test_dependency] = array();
 				}
 
-				array_push($required_test_dependencies[$test_dependency], $test_profile);
+				$required_external_dependencies[$test_dependency][] = $test_profile;
+			}
+			foreach($test_profile->get_system_dependencies() as $test_dependency)
+			{
+				if(empty($test_dependency))
+				{
+					continue;
+				}
+
+				if(isset($required_system_files[$test_dependency]) == false)
+				{
+					$required_system_files[$test_dependency] = array();
+				}
+
+				$required_system_files[$test_dependency][] = $test_profile;
 			}
 		}
 
@@ -66,9 +92,9 @@ class pts_external_dependencies
 		{
 			// Remove tests that have external dependencies that aren't satisfied and then return
 			$generic_packages_needed = array();
-			$required_test_dependencies_copy = $required_test_dependencies;
-			$dependencies_to_install = self::check_dependencies_missing_from_system($required_test_dependencies_copy, $generic_packages_needed);
-			self::remove_tests_with_missing_dependencies($test_profiles, $generic_packages_needed, $required_test_dependencies);
+			$required_external_dependencies_copy = $required_external_dependencies;
+			$dependencies_to_install = self::check_dependencies_missing_from_system($required_external_dependencies_copy, $generic_packages_needed);
+			self::remove_tests_with_missing_dependencies($test_profiles, $generic_packages_needed, $required_external_dependencies);
 			return true;
 		}
 
@@ -79,18 +105,22 @@ class pts_external_dependencies
 
 			foreach($dependencies_to_skip as $dependency_name)
 			{
-				if(isset($required_test_dependencies[$dependency_name]))
+				if(isset($required_external_dependencies[$dependency_name]))
 				{
-					unset($required_test_dependencies[$dependency_name]);
+					unset($required_external_dependencies[$dependency_name]);
+				}
+				if(isset($required_system_files[$dependency_name]))
+				{
+					unset($required_system_files[$dependency_name]);
 				}
 			}
 		}
 
 		// Make a copy for use to check at end of process to see if all dependencies were actually found
-		$required_test_dependencies_copy = $required_test_dependencies;
+		$required_external_dependencies_copy = $required_external_dependencies;
 
 		// Find the dependencies that are actually missing from the system
-		$dependencies_to_install = self::check_dependencies_missing_from_system($required_test_dependencies);
+		$dependencies_to_install = self::check_dependencies_missing_from_system($required_external_dependencies);
 
 		// If it's automated and can't install without root, return true if there are no dependencies to do otherwise false
 		if($no_prompts && phodevi::is_root() == false)
@@ -110,6 +140,13 @@ class pts_external_dependencies
 			}
 		}
 
+		$system_dependencies = self::check_for_missing_system_files($required_system_files);
+
+		if(!empty($system_dependencies))
+		{
+			$dependencies_to_install = array_merge($dependencies_to_install, $system_dependencies);
+		}
+
 		// Do the actual dependency install process
 		if(count($dependencies_to_install) > 0)
 		{
@@ -117,18 +154,18 @@ class pts_external_dependencies
 		}
 
 		// There were some dependencies not supported on this OS or are missing from the distro's XML file
-		if(count($required_test_dependencies) > 0 && count($dependencies_to_install) == 0)
+		if(count($required_external_dependencies) > 0 && count($dependencies_to_install) == 0)
 		{
 			$exdep_generic_parser = new pts_exdep_generic_parser();
 			$to_report = array();
 
-			foreach(array_keys($required_test_dependencies) as $dependency)
+			foreach(array_keys($required_external_dependencies) as $dependency)
 			{
 				$dependency_data = $exdep_generic_parser->get_package_data($dependency);
 
 				if($dependency_data['possible_packages'] != null)
 				{
-					array_push($to_report, $dependency_data['title'] . PHP_EOL . 'Possible Package Names: ' . $dependency_data['possible_packages']);
+					$to_report[] = $dependency_data['title'] . PHP_EOL . 'Possible Package Names: ' . $dependency_data['possible_packages'];
 				}
 			}
 
@@ -155,8 +192,8 @@ class pts_external_dependencies
 		if(!$no_prompts && !defined('PHOROMATIC_PROCESS'))
 		{
 			$generic_packages_needed = array();
-			$required_test_dependencies = $required_test_dependencies_copy;
-			$dependencies_to_install = self::check_dependencies_missing_from_system($required_test_dependencies_copy, $generic_packages_needed);
+			$required_external_dependencies = $required_external_dependencies_copy;
+			$dependencies_to_install = self::check_dependencies_missing_from_system($required_external_dependencies_copy, $generic_packages_needed);
 
 			if(count($generic_packages_needed) > 0)
 			{
@@ -178,7 +215,7 @@ class pts_external_dependencies
 						break;
 					case 'SKIP_TESTS_WITH_MISSING_DEPS':
 						// Unset the tests that have dependencies still missing
-						self::remove_tests_with_missing_dependencies($test_profiles, $generic_packages_needed, $required_test_dependencies);
+						self::remove_tests_with_missing_dependencies($test_profiles, $generic_packages_needed, $required_external_dependencies);
 						break;
 					case 'REATTEMPT_DEP_INSTALL':
 						self::install_packages_on_system($dependencies_to_install);
@@ -278,11 +315,11 @@ class pts_external_dependencies
 				{
 					if(!in_array($package_data['os_package'], $needed_os_packages))
 					{
-						array_push($needed_os_packages, $package_data['os_package']);
+						$needed_os_packages[] = $package_data['os_package'];
 					}
 					if($generic_names_of_packages_needed !== false && !in_array($package, $generic_names_of_packages_needed))
 					{
-						array_push($generic_names_of_packages_needed, $package);
+						$generic_names_of_packages_needed[] = $package;
 					}
 				}
 				else
@@ -302,6 +339,54 @@ class pts_external_dependencies
 				if($file_present)
 				{
 					unset($required_test_dependencies[$i]);
+				}
+			}
+		}
+
+		return $needed_os_packages;
+	}
+	private static function check_for_missing_system_files(&$required_system_files)
+	{
+		$kernel_architecture = phodevi::read_property('system', 'kernel-architecture');
+		$needed_os_packages = array();
+
+		foreach(array_keys($required_system_files) as $file)
+		{
+			$present = false;
+			if(is_file($file))
+			{
+				$present = true;
+			}
+			if(strpos($file, '.h') !== false && is_file('/usr/includes/' . $file))
+			{
+				$present = true;
+			}
+			else if(strpos($file, '.so') !== false && is_file('/usr/lib/' . $file))
+			{
+				$present = true;
+			}
+			else
+			{
+				foreach(array('/usr/bin/', '/bin/', '/usr/sbin') as $possible_path)
+				{
+					if(is_file($possible_path . $file))
+					{
+						$present = true;
+						break;
+					}
+				}
+			}
+
+			if(!$present)
+			{
+				$processed_pkgs = self::packages_that_provide($file);
+
+				if(!empty($processed_pkgs))
+				{
+					foreach($processed_pkgs as $pkg)
+					{
+						$needed_os_packages[] = $pkg;
+					}
 				}
 			}
 		}
@@ -356,7 +441,7 @@ class pts_external_dependencies
 						{
 							foreach(explode(':', getenv('LD_LIBRARY_PATH')) as $path)
 							{
-								array_push($possible_paths, $path . '/');
+								$possible_paths[] = $path . '/';
 							}
 						}
 
@@ -377,7 +462,7 @@ class pts_external_dependencies
 						{
 							foreach(explode(':', getenv('PATH')) as $path)
 							{
-								array_push($possible_paths, $path . '/');
+								$possible_paths[] = $path . '/';
 							}
 						}
 
@@ -481,7 +566,7 @@ class pts_external_dependencies
 			if(in_array($package, $names))
 			{
 				$package_data = $generic_dependencies_parser->get_package_data($package);
-				array_push($titles, $package_data['title']);
+				$titles[] = $package_data['title'];
 			}
 		}
 		sort($titles);

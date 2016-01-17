@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2015, Phoronix Media
-	Copyright (C) 2008 - 2015, Michael Larabel
+	Copyright (C) 2008 - 2016, Phoronix Media
+	Copyright (C) 2008 - 2016, Michael Larabel
 	pts-core.php: To boot-strap the Phoronix Test Suite start-up
 
 	This program is free software; you can redistribute it and/or modify
@@ -233,9 +233,9 @@ function pts_version_codenames()
 		);
 }
 
-pts_define('PTS_VERSION', '6.0.1');
-pts_define('PTS_CORE_VERSION', 6010);
-pts_define('PTS_CODENAME', 'HAMMERFEST');
+pts_define('PTS_VERSION', '6.2.0m3');
+pts_define('PTS_CORE_VERSION', 6131);
+pts_define('PTS_CODENAME', 'GAMVIK');
 pts_define('PTS_IS_CLIENT', (defined('PTS_MODE') && strstr(PTS_MODE, 'CLIENT') !== false));
 pts_define('PTS_IS_WEB_CLIENT', (defined('PTS_MODE') && PTS_MODE == 'WEB_CLIENT'));
 pts_define('PTS_IS_DEV_BUILD', (substr(PTS_VERSION, -2, 1) == 'm'));

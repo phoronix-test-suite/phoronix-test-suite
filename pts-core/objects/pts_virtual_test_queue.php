@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2014, Phoronix Media
-	Copyright (C) 2014, Michael Larabel
+	Copyright (C) 2014 - 2016, Phoronix Media
+	Copyright (C) 2014 - 2016, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -30,11 +30,11 @@ class pts_virtual_test_queue
 	}
 	public function add_to_queue($test_identifier, $description, $value)
 	{
-		array_push($this->tests, array(
-				'test' => $test_identifier,
-				'option' => $description,
-				'option_value' => $value
-				));
+		$this->tests[] = array(
+			'test' => $test_identifier,
+			'option' => $description,
+			'option_value' => $value
+			);
 	}
 	public function get_contained_test_profiles()
 	{
@@ -44,7 +44,7 @@ class pts_virtual_test_queue
 			$test_profile = new pts_test_profile($test['test']);
 			if($test_profile->is_supported(false))
 			{
-				array_push($contained, $test_profile);
+				$contained[] = $test_profile;
 			}
 		}
 
@@ -71,7 +71,7 @@ class pts_virtual_test_queue
 				$test_result = new pts_test_result($obj);
 				$test_result->set_used_arguments_description($test['option']);
 				$test_result->set_used_arguments($test['option_value']);
-				array_push($test_result_objects, $test_result);
+				$test_result_objects[] = $test_result;
 			}
 		}
 

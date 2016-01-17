@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2015, Phoronix Media
-	Copyright (C) 2008 - 2015, Michael Larabel
+	Copyright (C) 2008 - 2016, Phoronix Media
+	Copyright (C) 2008 - 2016, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ class pts_tests
 		$install_root_path_length = strlen($install_root_path);
 		foreach(pts_file_io::glob($install_root_path . $repo . '/*/pts-install.xml') as $identifier_path)
 		{
-			array_push($cleaned_tests, substr(dirname($identifier_path), $install_root_path_length));
+			$cleaned_tests[] = substr(dirname($identifier_path), $install_root_path_length);
 		}
 
 		return $cleaned_tests;
@@ -43,7 +43,7 @@ class pts_tests
 		$install_root_path_length = strlen($install_root_path);
 		foreach(pts_file_io::glob($install_root_path . $repo . '/*') as $identifier_path)
 		{
-			array_push($cleaned_tests, substr($identifier_path, $install_root_path_length));
+			$cleaned_tests[] = substr($identifier_path, $install_root_path_length);
 		}
 
 		return $cleaned_tests;
@@ -185,6 +185,15 @@ class pts_tests
 			$test_profiles = array_merge($test_profiles, $test_profile->extended_test_profiles());
 		}
 
+		if(pts_client::executable_in_path('bash'))
+		{
+			$sh = 'bash';
+		}
+		else
+		{
+			$sh = 'sh';
+		}
+
 		foreach($test_profiles as &$this_test_profile)
 		{
 			$test_resources_location = $this_test_profile->get_resource_dir();
@@ -204,7 +213,7 @@ class pts_tests
 				}
 				else
 				{
-					$this_result = pts_client::shell_exec('cd ' .  $test_directory . ' && sh ' . $run_file . ' "' . $pass_argument . '" 2>&1', $extra_vars);
+					$this_result = pts_client::shell_exec('cd ' .  $test_directory . ' && ' . $sh . ' ' . $run_file . ' "' . $pass_argument . '" 2>&1', $extra_vars);
 				}
 
 				if(trim($this_result) != null)
@@ -298,7 +307,7 @@ class pts_tests
 						{
 							if(soundex($identifier) == $arg_soundex)
 							{
-								array_push($similar_tests, array('- ' . $repo . '/' . $identifier, ' [' . ucwords(substr($type, 0, -1)) . ']'));
+								$similar_tests[] = array('- ' . $repo . '/' . $identifier, ' [' . ucwords(substr($type, 0, -1)) . ']');
 							}
 						}
 					}
@@ -309,7 +318,7 @@ class pts_tests
 			{
 				if(soundex($result) == $arg_soundex)
 				{
-					array_push($similar_tests, array('- ' . $result, ' [Test Result]'));
+					$similar_tests[] = array('- ' . $result, ' [Test Result]');
 				}
 			}
 
@@ -377,7 +386,7 @@ class pts_tests
 
 			if(($search == 'ALL' || $search == 'INFO') && (stripos($result_file->get_title(), $query) !== false || stripos($result_file->get_description(), $query) !== false))
 			{
-				array_push($matches, $file);
+				$matches[] = $file;
 				continue;
 			}
 
@@ -388,7 +397,7 @@ class pts_tests
 				{
 					if(stripos($s->get_software(), $query) !== false || stripos($s->get_identifier(), $query) !== false || stripos($s->get_hardware(), $query) !== false)
 					{
-						array_push($matches, $file);
+						$matches[] = $file;
 						$matched = true;
 						break;
 					}
@@ -410,7 +419,7 @@ class pts_tests
 
 					if(stripos($result_identifier, $query) !== false)
 					{
-						array_push($matches, $file);
+						$matches[] = $file;
 						$matched = true;
 						break;
 					}

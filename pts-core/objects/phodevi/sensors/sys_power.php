@@ -198,6 +198,17 @@ class sys_power extends phodevi_sensor
 					$rate = $power_now;
 				}
 			}
+			if($rate == -1 && is_file('/sys/class/power_supply/BAT1/voltage_now') && is_file('/sys/class/power_supply/BAT1/current_now'))
+			{
+				$voltage_now = pts_file_io::file_get_contents('/sys/class/power_supply/BAT1/voltage_now') / 1000;
+				$current_now = pts_file_io::file_get_contents('/sys/class/power_supply/BAT1/current_now') / 1000;
+				$power_now = $voltage_now * $current_now / 1000;
+
+				if($power_now > 1)
+				{
+					$rate = $power_now;
+				}
+			}
 		}
 		else if(phodevi::is_macosx())
 		{

@@ -10,10 +10,10 @@ PHORONIX TEST SUITE PUBLIC TODO LIST:
 - Possibly restore "weighted suites" [http://phorogit.com/index.php?p=phoronix-test-suite.git&a=commitdiff&h=548e5c073cc90d92ac3f382ca4933d5f556e78c6&hb=444441f9be866f51920e0ad8ca3909951b4d90c5]
 - Integrate finish-run command into the run command, auto-detect if the result file was a partial save and then ask if to perform run recovery'
 - Multi-threaded downloading of test files
-- Numerous pts_render improvements [see in-line code comments]
 - Optimus / DRI_PRIME=1 / xrandr --listproviders better GPU detection
 - NVIDIA make use of UsedDedicatedGPUMemory as new GPU sensor
 - Clean up all the WebSocket code and make it fit to spec
+- Incremental result uploads support
 
 ### PTS-GRAPH ###
 
@@ -23,7 +23,7 @@ PHORONIX TEST SUITE PUBLIC TODO LIST:
 
 - Shorten long change-logs on test profile pages - e.g. http://openbenchmarking.org/test/pts/hpcc
 
-### NEW TEST PROFILES ###
+### POSSIBLE NEW TEST PROFILES ###
 
 - Python-libmemcached [http://code.google.com/p/python-libmemcached/]
 - Intel HiBench [https://github.com/intel-hadoop/HiBench]
@@ -59,7 +59,16 @@ PHORONIX TEST SUITE PUBLIC TODO LIST:
 - Cassandra 1.2 stress - http://docs.datastax.com/en/cassandra/1.2/cassandra/tools/toolsCStress_t.html
 - http://gcc.opensuse.org/c++bench-frescobaldi/
 - http://dacapobench.org/
-
+- https://github.com/GoogleCloudPlatform/PerfKitBenchmarker
+- https://gooseberry.blender.org/gooseberry-production-benchmark-file/
+- https://github.com/hhvm/oss-performance
+- https://github.com/gormanm/mmtests
+- https://github.com/pandegroup/fahbench
+- https://github.com/STH-Dev/linux-bench
+- http://anzwix.com/a/FFmpeg/CryptobenchAddSupportForBlowfish
+- https://wiki.mikejung.biz/Benchmarking
+- http://dacapobench.org/
+- https://github.com/soumith/convnet-benchmarks
 
 ### WEB SOCKET / HTML5 USER INTERFACE WORK ###
 

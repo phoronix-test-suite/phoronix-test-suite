@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2014, Phoronix Media
-	Copyright (C) 2008 - 2014, Michael Larabel
+	Copyright (C) 2008 - 2016, Phoronix Media
+	Copyright (C) 2008 - 2016, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -134,13 +134,13 @@ class pts_test_suite_parser
 
 			if($obj instanceof pts_test_profile)
 			{
-				array_push($test_profiles, $obj);
+				$test_profiles[] = $obj;
 			}
 			else if($obj instanceof pts_test_suite)
 			{
 				foreach($obj->get_contained_test_profiles() as $obj)
 				{
-					array_push($test_profiles, $obj);
+					$test_profiles[] = $obj;
 				}
 			}
 		}

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2015, Phoronix Media
-	Copyright (C) 2010 - 2015, Michael Larabel
+	Copyright (C) 2010 - 2016, Phoronix Media
+	Copyright (C) 2010 - 2016, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -56,7 +56,7 @@ class pts_test_result_parser
 			{
 				// sys.time is a special case since we are just timing the test length and thus don't need to fork the thread
 				$start_time = microtime(true);
-				array_push(self::$monitoring_sensors, array(0, $sensor, null, $start_time));
+				self::$monitoring_sensors[] = array(0, $sensor, null, $start_time);
 				continue;
 			}
 
@@ -100,7 +100,7 @@ class pts_test_result_parser
 				if($pid)
 				{
 					// Main process still
-					array_push(self::$monitoring_sensors, array($pid, $sensor, $monitor_report_as[$i], $monitor_file));
+					self::$monitoring_sensors[] = array($pid, $sensor, $monitor_report_as[$i], $monitor_file);
 					continue;
 				}
 				else
@@ -109,7 +109,7 @@ class pts_test_result_parser
 
 					while(is_file(PTS_USER_LOCK)) // TODO: or perhaps it may be okay to just do while(true) since posix_kill() is used when needed
 					{
-						array_push($sensor_values, phodevi::read_sensor($sensor));
+						$sensor_values[] = phodevi::read_sensor($sensor);
 						file_put_contents($monitor_file, implode("\n", $sensor_values));
 						usleep($monitor_frequency[$i]);
 					}
@@ -135,7 +135,8 @@ class pts_test_result_parser
 				// Delta time
 				$result_value = $end_time - $sensor_r[3];
 
-				if($result_value < 3)
+				$minimal_test_time = pts_config::read_user_config('PhoronixTestSuite/Options/TestResultValidation/MinimalTestTime', 3);
+				if($result_value < $minimal_test_time)
 				{
 					// The test ended too fast
 					$result_value = null;
@@ -273,7 +274,7 @@ class pts_test_result_parser
 								if($frametime > 2000)
 								{
 									$frametime = $frametime / 1000;
-									array_push($frame_all_times, $frametime);
+									$frame_all_times[] = $frametime;
 								}
 							}
 						}
@@ -293,7 +294,7 @@ class pts_test_result_parser
 								continue;
 							}
 
-							array_push($frame_all_times, $v);
+							$frame_all_times[] = $v;
 						}
 					}
 					break;
@@ -310,7 +311,7 @@ class pts_test_result_parser
 
 							if(is_numeric($all) && $all > 0)
 							{
-								array_push($frame_all_times, $all);
+								$frame_all_times[] = $all;
 							}
 						}
 						$log_file = strstr($log_file, 'bk:');
@@ -331,7 +332,7 @@ class pts_test_result_parser
 				$extra_result->active = new pts_test_result_buffer_active();
 				$extra_result->set_used_arguments_description('Total Frame Time');
 				$extra_result->active->set_result(implode(',', $frame_all_times));
-				array_push($extra_results, $extra_result);
+				$extra_results[] = $extra_result;
 				//$extra_result->set_used_arguments(phodevi::sensor_name($sensor) . ' ' . $test_result->get_arguments());
 			}
 		}
@@ -600,12 +601,12 @@ class pts_test_result_parser
 
 			if(isset($file_format[$i]) && $file_format[$i] == 'CSV')
 			{
-				array_push($space_out_chars, ',');
+				$space_out_chars[] = ',';
 			}
 
 			if((isset($result_template[$i][($start_result_pos - 1)]) && $result_template[$i][($start_result_pos - 1)] == '/') || (isset($result_template[$i][($start_result_pos + strlen($result_key[$i]))]) && $result_template[$i][($start_result_pos + strlen($result_key[$i]))] == '/'))
 			{
-				array_push($space_out_chars, '/');
+				$space_out_chars[] = '/';
 			}
 
 			$end_result_pos = $start_result_pos + strlen($result_key[$i]);
@@ -700,7 +701,7 @@ class pts_test_result_parser
 							if($frametime > 2000)
 							{
 								$frametime = $frametime / 1000;
-								array_push($frame_time_values, $frametime);
+								$frame_time_values[] = $frametime;
 							}
 						}
 					}
@@ -744,7 +745,7 @@ class pts_test_result_parser
 
 				if($val != 0)
 				{
-					array_push($test_results, $val);
+					$test_results[] = $val;
 				}
 			}
 
@@ -797,7 +798,7 @@ class pts_test_result_parser
 
 						if($result_before_this !== false)
 						{
-							array_push($test_results, $result_r[($result_before_this - 1)]);
+							$test_results[] = $result_r[($result_before_this - 1)];
 						}
 					}
 					else if(!empty($result_after_string[$i]))
@@ -815,14 +816,14 @@ class pts_test_result_parser
 									continue;
 								}
 
-								array_push($test_results, $result_r[$f]);
+								$test_results[] = $result_r[$f];
 								break;
 							}
 						}
 					}
 					else if(isset($result_r[$result_template_r_pos]))
 					{
-						array_push($test_results, $result_r[$result_template_r_pos]);
+						$test_results[] = $result_r[$result_template_r_pos];
 					}
 				}
 				while($is_multi_match && count($test_results) != $result_count && !empty($result_output));

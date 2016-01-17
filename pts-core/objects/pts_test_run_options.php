@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2015, Phoronix Media
-	Copyright (C) 2010 - 2015, Michael Larabel
+	Copyright (C) 2010 - 2016, Phoronix Media
+	Copyright (C) 2010 - 2016, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -68,8 +68,8 @@ class pts_test_run_options
 					$value = pts_user_io::prompt_user_input('Enter Value');
 				}
 
-				array_push($text_args, array($o->format_option_display_from_input($value)));
-				array_push($user_args, array($o->format_option_value_from_input($value)));
+				$text_args[] = array($o->format_option_display_from_input($value));
+				$user_args[] = array($o->format_option_value_from_input($value));
 			}
 			else
 			{
@@ -91,7 +91,7 @@ class pts_test_run_options
 					if(count($option_names) > 1)
 					{
 						//echo PHP_EOL . $o->get_name() . ':' . PHP_EOL;
-						array_push($option_names, 'Test All Options');
+						$option_names[] = 'Test All Options';
 					}
 
 					$bench_choice = pts_user_io::prompt_text_menu($o->get_name(), $option_names, true, true, pts_client::$display->get_tab() . pts_client::$display->get_tab());
@@ -106,12 +106,12 @@ class pts_test_run_options
 
 				foreach($bench_choice as $c)
 				{
-					array_push($option_args, $o->format_option_value_from_select($c));
-					array_push($option_args_description, $o->format_option_display_from_select($c));
+					$option_args[] = $o->format_option_value_from_select($c);
+					$option_args_description[] = $o->format_option_display_from_select($c);
 				}
 
-				array_push($text_args, $option_args_description);
-				array_push($user_args, $option_args);
+				$text_args[] = $option_args_description;
+				$user_args[] = $option_args;
 			}
 		}
 
@@ -140,18 +140,18 @@ class pts_test_run_options
 			{
 				foreach(array(0, 1) as $i)
 				{
-					array_push($option_args, $o->format_option_value_from_select($i));
-					array_push($option_args_description, $o->format_option_display_from_select($i));
+					$option_args[] = $o->format_option_value_from_select($i);
+					$option_args_description[] = $o->format_option_display_from_select($i);
 				}
 			}
 			else
 			{
-				array_push($option_args, $o->format_option_value_from_select($default_entry));
-				array_push($option_args_description, $o->format_option_display_from_select($default_entry));
+				$option_args[] = $o->format_option_value_from_select($default_entry);
+				$option_args_description[] = $o->format_option_display_from_select($default_entry);
 			}
 
-			array_push($all_args_real, $option_args);
-			array_push($all_args_description, $option_args_description);
+			$all_args_real[] = $option_args;
+			$all_args_description[] = $option_args_description;
 		}
 
 		$test_args = array();
@@ -176,12 +176,12 @@ class pts_test_run_options
 
 			for($i = 0; $i < $option_count; $i++)
 			{
-				array_push($option_args, $o->format_option_value_from_select($i));
-				array_push($option_args_description, $o->format_option_display_from_select($i));
+				$option_args[] = $o->format_option_value_from_select($i);
+				$option_args_description[] = $o->format_option_display_from_select($i);
 			}
 
-			array_push($batch_all_args_real, $option_args);
-			array_push($batch_all_args_description, $option_args_description);
+			$batch_all_args_real[] = $option_args;
+			$batch_all_args_description[] = $option_args_description;
 		}
 
 		$test_args = array();
@@ -197,7 +197,7 @@ class pts_test_run_options
 		// In batch mode, find all possible combinations for test options
 		if(count($options) <= $counter)
 		{
-			array_push($return_arr, trim($current_string));
+			$return_arr[] = trim($current_string);
 		}
 		else
 		{
@@ -254,8 +254,8 @@ class pts_test_run_options
 						$this_value = str_replace('$VIDEO_WIDTH', $video_mode[0], $format_value);
 						$this_value = str_replace('$VIDEO_HEIGHT', $video_mode[1], $this_value);
 
-						array_push($option_names, $this_name);
-						array_push($option_values, $this_value);
+						$option_names[] = $this_name;
+						$option_values[] = $this_value;
 					}
 				}
 				break;
@@ -295,7 +295,7 @@ class pts_test_run_options
 				$option_values = array();
 				foreach($all_devices as $partition)
 				{
-					array_push($option_values, $partition);
+					$option_values[] = $partition;
 				}
 
 				if($option_identifier == 'auto-disk-mount-points')
@@ -306,16 +306,16 @@ class pts_test_run_options
 
 					$mounts = is_file('/proc/mounts') ? file_get_contents('/proc/mounts') : null;
 
-					array_push($option_values, '');
-					array_push($option_names, 'Default Test Directory');
+					$option_values[] = '';
+					$option_names[] = 'Default Test Directory';
 
 					foreach($partitions_d as $partition_d)
 					{
 						$mount_point = substr(($a = substr($mounts, strpos($mounts, $partition_d) + strlen($partition_d) + 1)), 0, strpos($a, ' '));
 						if(is_dir($mount_point) && is_writable($mount_point) && !in_array($mount_point, array('/boot', '/boot/efi')))
 						{
-							array_push($option_values, $mount_point);
-							array_push($option_names, $mount_point); // ' [' . $partition_d . ']'
+							$option_values[] = $mount_point;
+							$option_names[] = $mount_point; // ' [' . $partition_d . ']'
 						}
 					}
 				}
@@ -346,7 +346,7 @@ class pts_test_run_options
 				$option_values = array();
 				foreach($all_devices as $disk)
 				{
-					array_push($option_values, $disk);
+					$option_values[] = $disk;
 				}
 				$option_names = $option_values;
 				break;
@@ -361,8 +361,8 @@ class pts_test_run_options
 				{
 					if(is_dir($media_check) && is_writable($media_check)) // add more checks later on
 					{
-						array_push($option_names, $media_check);
-						array_push($option_values, $media_check);
+						$option_names[] = $media_check;
+						$option_values[] = $media_check;
 					}
 				}
 				break;
@@ -382,8 +382,8 @@ class pts_test_run_options
 				{
 					if(is_file($values[$i]))
 					{
-						array_push($option_names, $names[$i]);
-						array_push($option_values, $values[$i]);
+						$option_names[] = $names[$i];
+						$option_values[] = $values[$i];
 					}
 				}
 				break;
@@ -403,8 +403,8 @@ class pts_test_run_options
 				{
 					if(is_dir($values[$i]) && is_writable($removable_media[$i]))
 					{
-						array_push($option_names, $names[$i]);
-						array_push($option_values, $values[$i]);
+						$option_names[] = $names[$i];
+						$option_values[] = $values[$i];
 					}
 				}
 				break;

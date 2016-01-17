@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2015, Phoronix Media
-	Copyright (C) 2010 - 2015, Michael Larabel
+	Copyright (C) 2010 - 2016, Phoronix Media
+	Copyright (C) 2010 - 2016, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -139,11 +139,11 @@ class pts_test_installer
 				}
 
 				pts_tests::update_test_install_xml($test_install_request->test_profile, $test_install_request->install_time_duration, true, $compiler_data, $install_footnote);
-				array_push($test_profiles, $test_install_request->test_profile);
+				$test_profiles[] = $test_install_request->test_profile;
 			}
 			else
 			{
-				array_push($failed_installs, $test_install_request);
+				$failed_installs[] = $test_install_request;
 			}
 
 			pts_file_io::unlink($test_install_request->special_environment_vars['INSTALL_FOOTNOTE']);
@@ -433,7 +433,7 @@ class pts_test_installer
 
 										if($try_again)
 										{
-											array_push($package_urls, $url);
+											$package_urls[] = $url;
 										}
 									}
 								}
@@ -466,13 +466,14 @@ class pts_test_installer
 		// or pass false to $test_install_request to bypass the test checks
 		$compilers = array();
 
-		if($test_install_request === false || in_array('build-utilities', $test_install_request->test_profile->get_dependencies()))
+		$external_dependencies = $test_install_request != false ? $test_install_request->test_profile->get_external_dependencies() : false;
+		if($test_install_request === false || in_array('build-utilities', $external_dependencies))
 		{
 			// Handle C/C++ compilers for this external dependency
 			$compilers['CC'] = array(pts_strings::first_in_string(pts_client::read_env('CC'), ' '), 'gcc', 'clang', 'icc', 'pcc');
 			$compilers['CXX'] = array(pts_strings::first_in_string(pts_client::read_env('CXX'), ' '), 'g++', 'clang++', 'cpp');
 		}
-		if($test_install_request === false || in_array('fortran-compiler', $test_install_request->test_profile->get_dependencies()))
+		if($test_install_request === false || in_array('fortran-compiler', $external_dependencies))
 		{
 			// Handle Fortran for this external dependency
 			$compilers['F9X'] = array(pts_strings::first_in_string(pts_client::read_env('F9X'), ' '), pts_strings::first_in_string(pts_client::read_env('F95'), ' '), 'gfortran', 'f90', 'f95', 'fortran');
@@ -830,7 +831,7 @@ class pts_test_installer
 			$ignore_files = array('pts-install.xml', 'install-failed.log');
 			foreach($test_install_request->get_download_objects() as $download_object)
 			{
-				array_push($ignore_files, $download_object->get_filename());
+				$ignore_files[] = $download_object->get_filename();
 			}
 
 			pts_file_io::delete($test_install_request->test_profile->get_install_dir(), $ignore_files);

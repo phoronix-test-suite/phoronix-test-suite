@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2015, Phoronix Media
-	Copyright (C) 2015, Michael Larabel
+	Copyright (C) 2015 - 2016, Phoronix Media
+	Copyright (C) 2015 - 2016, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -63,7 +63,7 @@ class debug_render_test implements pts_option_interface
 				{
 					// Add to result file
 					$system_name = basename(dirname($composite_xml)) . ': ' . $trigger;
-					array_push($result_files, new pts_result_merge_select($composite_xml, null, $system_name));
+					$result_files[] = new pts_result_merge_select($composite_xml, null, $system_name);
 				}
 			}
 			echo 'STARTING MERGE; ';

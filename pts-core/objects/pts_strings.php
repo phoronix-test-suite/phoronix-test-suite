@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2015, Phoronix Media
-	Copyright (C) 2010 - 2015, Michael Larabel
+	Copyright (C) 2010 - 2016, Phoronix Media
+	Copyright (C) 2010 - 2016, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -182,7 +182,7 @@ class pts_strings
 		if($count > 1)
 		{
 			$temp = array_pop($array);
-			array_push($array, 'and ' . $temp);
+			$array[] = 'and ' . $temp;
 		}
 
 		return implode(($count > 2 ? ', ' : ' ') . ' ', $array) . ($append_to_end != null ? ' ' .  $append_to_end . ($count > 1 ? 's' : null) : null);
@@ -456,7 +456,7 @@ class pts_strings
 		{
 			if($week_string[$day_int] == 1)
 			{
-				array_push($return_array, $day_char);
+				$return_array[] = $day_char;
 			}
 		}
 
@@ -613,7 +613,7 @@ class pts_strings
 						$formatted_part .= strtolower(substr($time_segment[1], 0, 1));
 					}
 
-					array_push($formatted_time, $formatted_part);
+					$formatted_time[] = $formatted_part;
 				}
 			}
 		}

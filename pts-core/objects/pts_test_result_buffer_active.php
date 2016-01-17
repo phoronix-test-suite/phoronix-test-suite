@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2015, Phoronix Media
-	Copyright (C) 2009 - 2015, Michael Larabel
+	Copyright (C) 2009 - 2016, Phoronix Media
+	Copyright (C) 2009 - 2016, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -41,9 +41,9 @@ class pts_test_result_buffer_active
 	}
 	public function add_trial_run_result($result, $min = null, $max = null)
 	{
-		array_push($this->results, $result);
-		array_push($this->min_results, $min);
-		array_push($this->max_results, $max);
+		$this->results[] = $result;
+		$this->min_results[] = $min;
+		$this->max_results[] = $max;
 	}
 	public function get_trial_run_count()
 	{

@@ -134,7 +134,14 @@ class start_phoromatic_server implements pts_option_interface
 		$server_launcher .= 'event_server_pid=$!'. PHP_EOL;
 
 		// HTTP Server Setup
-		if(false && pts_client::executable_in_path('nginx') && is_file('/run/php-fpm/php-fpm.pid'))
+		if(getenv('PHOROMATIC_WANTS_APACHE'))
+		{
+			echo PHP_EOL . PHP_EOL . 'To manually configure Apache, setup the following:' . PHP_EOL;
+			echo 'The root web directory: ' . PTS_CORE_PATH . 'phoromatic/public_html/' . PHP_EOL;
+			echo 'Set the HTTP port to: ' . $web_port . PHP_EOL;
+			echo 'Of course, ensure Apache PHP support is available.' . PHP_EOL . PHP_EOL;
+		}
+		else if(false && pts_client::executable_in_path('nginx') && is_file('/run/php-fpm/php-fpm.pid'))
 		{
 			// NGINX
 			$nginx_conf = 'error_log /tmp/error.log;
@@ -186,6 +193,7 @@ class start_phoromatic_server implements pts_option_interface
 		else if(($mongoose = pts_client::executable_in_path('mongoose')) && ($php_cgi = pts_client::executable_in_path('php-cgi')))
 		{
 			// Mongoose Embedded Web Server
+			echo PHP_EOL . 'Launching with Mongoose web server.' . PHP_EOL;
 			$server_launcher .= $mongoose . ' -p ' . $web_port . ' -r ' . PTS_CORE_PATH . 'phoromatic/public_html/ -I ' . $php_cgi . ' -i index.php > /dev/null 2>> $PTS_PHOROMATIC_LOG_LOCATION &' . PHP_EOL; //2> /dev/null
 
 		}
@@ -197,6 +205,7 @@ class start_phoromatic_server implements pts_option_interface
 		else
 		{
 			// PHP Web Server
+			echo PHP_EOL . 'Launching with PHP built-in web server.' . PHP_EOL;
 			$server_launcher .= getenv('PHP_BIN') . ' -S ' . $server_ip . ':' . $web_port . ' -t ' . PTS_CORE_PATH . 'phoromatic/public_html/ > /dev/null 2>> $PTS_PHOROMATIC_LOG_LOCATION &' . PHP_EOL; //2> /dev/null
 		}
 		$server_launcher .= 'http_server_pid=$!'. PHP_EOL;

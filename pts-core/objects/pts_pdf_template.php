@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2015, Phoronix Media
-	Copyright (C) 2009 - 2015, Michael Larabel
+	Copyright (C) 2009 - 2016, Phoronix Media
+	Copyright (C) 2009 - 2016, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -358,12 +358,12 @@ class pts_pdf_template extends FPDF
 
 	public function CreateBookmark($bookmark, $level = 0)
 	{
-		array_push($this->pdf_bookmarks, array(
+		$this->pdf_bookmarks[] = array(
 			't' => $bookmark,
 			'l' => $level,
 			'y' => (($this->h - $this->getY()) * $this->k),
 			'p' => $this->PageNo()
-			));
+			);
 	}
 	protected function insert_pdf_bookmarks()
 	{

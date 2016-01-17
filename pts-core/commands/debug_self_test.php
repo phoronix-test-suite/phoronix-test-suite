@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2013 - 2015, Phoronix Media
-	Copyright (C) 2013 - 2015, Michael Larabel
+	Copyright (C) 2013 - 2016, Phoronix Media
+	Copyright (C) 2013 - 2016, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -57,7 +57,7 @@ class debug_self_test implements pts_option_interface
 				$c_start = microtime(true);
 				pts_client::execute_command($command, $args);
 				$c_finish = microtime(true);
-				array_push($individual_times[$command], ($c_finish - $c_start));
+				$individual_times[$command][] = ($c_finish - $c_start);
 			}
 		}
 		$finish = microtime(true);

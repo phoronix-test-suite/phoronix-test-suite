@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2015, Phoronix Media
-	Copyright (C) 2009 - 2015, Michael Larabel
+	Copyright (C) 2009 - 2016, Phoronix Media
+	Copyright (C) 2009 - 2016, Michael Larabel
 	pts_ResultFileTable.php: The result file table object
 
 	This program is free software; you can redistribute it and/or modify
@@ -41,7 +41,7 @@ class pts_ResultFileTable extends pts_Table
 			if(isset($result_object[0]))
 			{
 				$this->graph_title = $result_object[0]->test_profile->get_title();
-				array_push($this->graph_sub_titles, $result_object[0]->get_arguments_description());
+				$this->graph_sub_titles[] = $result_object[0]->get_arguments_description();
 			}
 		}
 
@@ -332,32 +332,32 @@ class pts_ResultFileTable extends pts_Table
 
 				if($delta != 0)
 				{
-					array_push($result_table[$identifier], new pts_graph_ir_value($delta . 'x'));
+					$result_table[$identifier][] = new pts_graph_ir_value($delta . 'x');
 					$has_written_diff = true;
 				}
 				if($std_error != 0)
 				{
-					array_push($result_table[$identifier], new pts_graph_ir_value($std_error));
+					$result_table[$identifier][] = new pts_graph_ir_value($std_error);
 					$has_written_error = true;
 				}
 				if($std_percent != 0)
 				{
-					array_push($result_table[$identifier], new pts_graph_ir_value($std_percent . '%'));
+					$result_table[$identifier][] = new pts_graph_ir_value($std_percent . '%');
 					$has_written_std = true;
 				}
 			}
 
 			if($has_written_diff)
 			{
-				array_push($result_tests, new pts_graph_ir_value('Difference'));
+				$result_tests[] = new pts_graph_ir_value('Difference');
 			}
 			if($has_written_error)
 			{
-				array_push($result_tests, new pts_graph_ir_value('Standard Error'));
+				$result_tests[] = new pts_graph_ir_value('Standard Error');
 			}
 			if($has_written_std)
 			{
-				array_push($result_tests, new pts_graph_ir_value('Standard Deviation'));
+				$result_tests[] = new pts_graph_ir_value('Standard Deviation');
 			}
 		}
 
@@ -400,7 +400,7 @@ class pts_ResultFileTable extends pts_Table
 						$system_id = null;
 					}*/
 
-					array_push($result_systems, $show_id);
+					$result_systems[] = $show_id;
 				}
 			}
 		}
@@ -410,7 +410,7 @@ class pts_ResultFileTable extends pts_Table
 
 			foreach(array_keys($result_table) as $id)
 			{
-				array_push($result_systems, $id);
+				$result_systems[] = $id;
 			}
 		}
 

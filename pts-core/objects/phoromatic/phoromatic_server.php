@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2014 - 2015, Phoronix Media
-	Copyright (C) 2014 - 2015, Michael Larabel
+	Copyright (C) 2014 - 2016, Phoronix Media
+	Copyright (C) 2014 - 2016, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -300,6 +300,10 @@ class phoromatic_server
 				// Change made 4 October
 				self::$db->exec('ALTER TABLE phoromatic_account_settings ADD COLUMN AutoApproveNewSystems INTEGER DEFAULT 0');
 				self::$db->exec('PRAGMA user_version = 34');
+			case 34:
+				// Change made 7 January 2016
+				self::$db->exec('ALTER TABLE phoromatic_account_settings ADD COLUMN LimitNetworkCommunication INTEGER DEFAULT 0');
+				self::$db->exec('PRAGMA user_version = 35');
 		}
 		chmod($db_file, 0600);
 	}
@@ -309,7 +313,7 @@ class phoromatic_server
 		$export_path = self::phoromatic_path() . 'result-export/' . $account_id . '/';
 		pts_file_io::mkdir($export_path);
 
-		$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_schedules WHERE AccountID = :account_id AND State = 1 AND (SELECT COUNT(*) FROM phoromatic_schedules_tests WHERE AccountID = :account_id AND ScheduleID = phoromatic_schedules.ScheduleID) > 0 AND (SELECT COUNT(*) FROM phoromatic_results WHERE AccountID = :account_id AND ScheduleID = phoromatic_schedules.ScheduleID) > 14 ORDER BY Title ASC');
+		$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_schedules WHERE AccountID = :account_id AND State = 1 AND (SELECT COUNT(*) FROM phoromatic_schedules_tests WHERE AccountID = :account_id AND ScheduleID = phoromatic_schedules.ScheduleID) > 0 AND (SELECT COUNT(*) FROM phoromatic_results WHERE AccountID = :account_id AND ScheduleID = phoromatic_schedules.ScheduleID) > 4 ORDER BY Title ASC');
 		$stmt->bindValue(':account_id', $account_id);
 		$result = $stmt->execute();
 
@@ -459,7 +463,7 @@ class phoromatic_server
 			if(stripos($row['CurrentTask'], 'shutdown') !== false || stripos($row['CurrentTask'], 'exit') !== false)
 				continue;
 
-			array_push($systems, $row);
+			$systems[] = $row;
 		}
 
 		return $systems;
@@ -560,7 +564,7 @@ class phoromatic_server
 				if(empty($sys))
 					continue;
 
-				array_push($system_ids, $sys);
+				$system_ids[] = $sys;
 			}
 
 			foreach(explode(',', $row['RunTargetGroups']) as $group)
@@ -575,7 +579,7 @@ class phoromatic_server
 
 				while($result && $row = $result->fetchArray())
 				{
-					array_push($system_ids, $row['SystemID']);
+					$system_ids[] = $row['SystemID'];
 				}
 			}
 		}
@@ -614,7 +618,7 @@ class phoromatic_server
 					continue;
 			}
 
-			array_push($schedules, $row);
+			$schedules[] = $row;
 		}
 
 		return $schedules;
@@ -785,7 +789,7 @@ class phoromatic_server
 			foreach(explode(',', $row['ActiveOn']) as $active_day)
 			{
 				list($hour, $minute) = explode('.', $row['RunAt']);
-				array_push($scheduled_times, (($active_day * 1440) + ($hour * 60) + $minute ));
+				$scheduled_times[] = (($active_day * 1440) + ($hour * 60) + $minute );
 			}
 		}
 
@@ -828,7 +832,7 @@ class phoromatic_server
 		{
 			if(phoromatic_server::system_check_if_down($_SESSION['AccountID'], $row['SystemID'], $row['LastCommunication'], $row['CurrentTask']))
 			{
-				array_push($systems, $row['SystemID']);
+				$systems[] = $row['SystemID'];
 			}
 		}
 
@@ -845,7 +849,7 @@ class phoromatic_server
 
 		while($result && $row = $result->fetchArray())
 		{
-			array_push($schedules, $row);
+			$schedules[] = $row;
 		}
 
 		return $schedules;
@@ -860,7 +864,7 @@ class phoromatic_server
 
 		while($result && $row = $result->fetchArray())
 		{
-			array_push($schedules, $row);
+			$schedules[] = $row;
 		}
 
 		return $schedules;
@@ -875,7 +879,7 @@ class phoromatic_server
 
 		while($result && $row = $result->fetchArray())
 		{
-			array_push($tickets, $row);
+			$tickets[] = $row;
 		}
 
 		return $tickets;
@@ -888,7 +892,7 @@ class phoromatic_server
 		$result = $stmt->execute();
 		while($result && $row = $result->fetchArray())
 		{
-			array_push($systems, $row);
+			$systems[] = $row;
 		}
 
 		return $systems;
@@ -901,7 +905,7 @@ class phoromatic_server
 		$result = $stmt->execute();
 		while($result && $row = $result->fetchArray())
 		{
-			array_push($systems, $row);
+			$systems[] = $row;
 		}
 
 		return $systems;
@@ -914,7 +918,7 @@ class phoromatic_server
 		$result = $stmt->execute();
 		while($result && $row = $result->fetchArray())
 		{
-			array_push($systems, $row);
+			$systems[] = $row;
 		}
 
 		return $systems;
@@ -927,7 +931,7 @@ class phoromatic_server
 		$result = $stmt->execute();
 		while($result && $row = $result->fetchArray())
 		{
-			array_push($systems, $row);
+			$systems[] = $row;
 		}
 
 		return $systems;
@@ -971,7 +975,7 @@ class phoromatic_server
 				break;
 			}
 
-			array_push($results, $row);
+			$results[] = $row;
 		}
 
 		return $results;

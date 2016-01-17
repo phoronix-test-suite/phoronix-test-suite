@@ -64,6 +64,10 @@ if(strpos($_SERVER['REQUEST_URI'], '?') === false && isset($_SERVER['QUERY_STRIN
 	$_SERVER['REQUEST_URI'] .= '?' . $_SERVER['QUERY_STRING'];
 }
 $URI = substr($_SERVER['REQUEST_URI'], strpos($_SERVER['REQUEST_URI'], '?') + 1);
+if(($uc = strpos($URI, '&')) !== false)
+{
+	$URI = substr($URI, 0, $uc);
+}
 $PATH = explode('/', $URI);
 $REQUESTED = str_replace('.', null, array_shift($PATH));
 
@@ -129,11 +133,11 @@ foreach(array(14 => 'Two Weeks', 21 => 'Three Weeks', 30 => 'One Month',  60 => 
 		break;
 	}
 
-	echo '<option value="' . $days . '" ' . (isset($_POST['view_results_limit']) && $_POST['view_results_limit'] == $days ? 'selected="selected"' : null) . ' >' . $st . '</option>';
+	echo '<option value="' . $days . '" ' . (isset($_REQUEST['view_results_limit']) && $_REQUEST['view_results_limit'] == $days ? 'selected="selected"' : null) . ' >' . $st . '</option>';
 }
 echo '<option value="' . count($tracker['triggers']) . '">All Results</option>';
 ?>
-</select> Days. <input type="checkbox" name="normalize_results" value="1" <?php echo (isset($_POST['normalize_results']) && $_POST['normalize_results'] == 1 ? 'checked="checked"' : null); ?> /> Normalize Results? <input type="submit" value="Refresh Results">
+</select> Days. <input type="checkbox" name="normalize_results" value="1" <?php echo (isset($_REQUEST['normalize_results']) && $_REQUEST['normalize_results'] == 1 ? 'checked="checked"' : null); ?> /> Normalize Results? <input type="checkbox" name="system_table" value="1" <?php echo (isset($_REQUEST['system_table']) && $_REQUEST['system_table'] == 1 ? 'checked="checked"' : null); ?> /> Show System Information Table? <input type="submit" value="Refresh Results">
 </form>
 </div>
 <blockquote>
@@ -144,9 +148,13 @@ echo '<option value="' . count($tracker['triggers']) . '">All Results</option>';
 <?php
 
 ini_set('memory_limit', '4G');
-if(isset($_POST['view_results_limit']) && is_numeric($_POST['view_results_limit']) && $_POST['view_results_limit'] > 7)
+if(isset($_REQUEST['view_results_since']) && ($st = strtotime($_REQUEST['view_results_since'])) != false)
 {
-	$cut_duration = $_POST['view_results_limit'];
+	$cut_duration = ceil((time() - $st) / 86400);
+}
+else if(isset($_REQUEST['view_results_limit']) && is_numeric($_REQUEST['view_results_limit']) && $_REQUEST['view_results_limit'] > 7)
+{
+	$cut_duration = $_REQUEST['view_results_limit'];
 }
 else
 {
@@ -176,7 +184,7 @@ $result_file = new pts_result_file(null, true);
 $result_file->merge($result_files);
 $extra_attributes = array('reverse_result_buffer' => true, 'force_simple_keys' => true, 'force_line_graph_compact' => true, 'force_tracking_line_graph' => true);
 
-if(isset($_POST['normalize_results']) && $_POST['normalize_results'])
+if(isset($_REQUEST['normalize_results']) && $_REQUEST['normalize_results'])
 {
 	$extra_attributes['normalize_result_buffer'] = true;
 }
@@ -186,7 +194,7 @@ $intent = null;
 //echo '<p style="text-align: center; overflow: auto;" class="result_object">' . pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes) . '</p>';
 
 echo '<div id="pts_results_area">';
-foreach($result_file->get_result_objects((isset($_POST['show_only_changed_results']) ? 'ONLY_CHANGED_RESULTS' : -1), true) as $i => $result_object)
+foreach($result_file->get_result_objects((isset($_REQUEST['show_only_changed_results']) ? 'ONLY_CHANGED_RESULTS' : -1), true) as $i => $result_object)
 {
 	if(stripos($result_object->get_arguments_description(), 'frame time') !== false)
 		continue;
@@ -201,9 +209,11 @@ foreach($result_file->get_result_objects((isset($_POST['show_only_changed_result
 }
 echo '</div>';
 
-//$table = new pts_ResultFileSystemsTable($result_file);
-echo '<p style="text-align: center; overflow: auto;" class="result_object">' . pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes) . '</p>';
-
+if(isset($_REQUEST['system_table']) && $_REQUEST['system_table'])
+{
+	$table = new pts_ResultFileSystemsTable($result_file);
+	echo '<p style="text-align: center; overflow: auto;" class="result_object">' . pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes) . '</p>';
+}
 
 ?>
 

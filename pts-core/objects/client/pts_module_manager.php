@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2014, Phoronix Media
-	Copyright (C) 2009 - 2014, Michael Larabel
+	Copyright (C) 2009 - 2016, Phoronix Media
+	Copyright (C) 2009 - 2016, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -54,7 +54,7 @@ class pts_module_manager
 					}
 					else
 					{
-						array_push($module_env_vars[$var], $module);
+						$module_env_vars[$var][] = $module;
 					}
 				}
 			}
@@ -158,7 +158,7 @@ class pts_module_manager
 
 		pts_module_manager::load_module($module);
 
-		array_push(self::$modules, $module);
+		self::$modules[] = $module;
 
 		if(class_exists($module))
 		{
@@ -171,7 +171,7 @@ class pts_module_manager
 						self::$module_process[$module_method] = array();
 					}
 
-					array_push(self::$module_process[$module_method], $module);
+					self::$module_process[$module_method][] = $module;
 				}
 			}
 		}
@@ -226,7 +226,7 @@ class pts_module_manager
 			{
 				if(in_array($check_module, $all_attached))
 				{
-					array_push($attached, $check_module);
+					$attached[] = $check_module;
 				}
 			}
 		}
@@ -251,7 +251,7 @@ class pts_module_manager
 
 		foreach($modules as $module)
 		{
-			array_push($module_names, basename($module, '.php'));
+			$module_names[] = basename($module, '.php');
 		}
 
 		asort($module_names);
@@ -304,7 +304,7 @@ class pts_module_manager
 	{
 		if(!in_array($var . '=' . $value, self::$var_storage))
 		{
-			array_push(self::$var_storage, $var . '=' . $value);
+			self::$var_storage[] = $var . '=' . $value;
 		}
 	}
 	public static function var_store_string()

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2011, Phoronix Media
-	Copyright (C) 2008 - 2011, Michael Larabel
+	Copyright (C) 2008 - 2016, Phoronix Media
+	Copyright (C) 2008 - 2016, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -75,7 +75,7 @@ class pts_virtual_test_suite
 
 					if($virtual_suite instanceof pts_virtual_test_suite)
 					{
-						array_push($virtual_suites, $virtual_suite);
+						$virtual_suites[] = $virtual_suite;
 					}
 				}
 			}
@@ -310,7 +310,7 @@ class pts_virtual_test_suite
 		{
 			foreach($repo_index['tests'] as $test_identifier => &$test)
 			{
-				if(!in_array(phodevi::operating_system(), $test['supported_platforms']) || empty($test['title']))
+				if((!empty($test['supported_platforms']) && !in_array(phodevi::operating_system(), $test['supported_platforms'])) || empty($test['title']))
 				{
 					// Initial check to not do unsupported tests
 					continue;
@@ -355,7 +355,7 @@ class pts_virtual_test_suite
 				if($test_profile->is_supported(false))
 				{
 					// All checks passed, add to virtual suite
-					array_push($contained, $test_profile);
+					$contained[] = $test_profile;
 					continue;
 				}
 			}

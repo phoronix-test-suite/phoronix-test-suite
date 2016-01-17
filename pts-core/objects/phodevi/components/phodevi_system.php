@@ -912,7 +912,14 @@ class phodevi_system extends phodevi_device_interface
 		if(phodevi::is_windows())
 		{
 			//$kernel_arch = strpos($_SERVER['PROCESSOR_ARCHITECTURE'], 64) !== false || strpos($_SERVER['PROCESSOR_ARCHITEW6432'], 64 != false) ? 'x86_64' : 'i686';
-			$kernel_arch = $_SERVER['PROCESSOR_ARCHITEW6432'] == 'AMD64' ? 'x86_64' : 'i686';
+			if(isset($_SERVER['PROCESSOR_ARCHITEW6432']))
+			{
+				$kernel_arch = $_SERVER['PROCESSOR_ARCHITEW6432'] == 'AMD64' ? 'x86_64' : 'i686';
+			}
+			else
+			{
+				$kernel_arch = 'x86_64';
+			}
 		}
 		else
 		{
@@ -952,9 +959,14 @@ class phodevi_system extends phodevi_device_interface
 		{
 			$os_version = phodevi_linux_parser::read_lsb('Release');
 
-			if($os_version == null && is_readable('/etc/os-release'))
+			if($os_version == null)
 			{
-				$os_release = parse_ini_file('/etc/os-release');
+				if(is_readable('/etc/os-release'))
+					$os_release = parse_ini_file('/etc/os-release');
+				else if(is_readable('/usr/lib/os-release'))
+					$os_release = parse_ini_file('/usr/lib/os-release');
+				else
+					$os_release = null;
 
 				if(isset($os_release['VERSION_ID']) && !empty($os_release['VERSION_ID']))
 				{
@@ -1005,6 +1017,13 @@ class phodevi_system extends phodevi_device_interface
 					$vendor = $os_release['NAME'];
 				}
 			}
+
+			if(($x = stripos($vendor, ' for ')) !== false)
+			{
+				$vendor = substr($vendor, 0, $x);
+			}
+
+			$vendor = str_replace(array(' Software'), null, $vendor);
 		}
 		else if(phodevi::is_hurd())
 		{

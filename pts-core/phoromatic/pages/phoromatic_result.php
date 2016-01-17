@@ -59,7 +59,7 @@ class phoromatic_result implements pts_webui_interface
 						if($cutoff_time !== false && strtotime($test_result_row['UploadTime']) < $cutoff_time)
 							break;
 
-						array_push($upload_ids, $test_result_row['UploadID']);
+						$upload_ids[] = $test_result_row['UploadID'];
 					}
 
 					unset($upload_ids[$i]);
@@ -218,7 +218,7 @@ class phoromatic_result implements pts_webui_interface
 				}
 
 
-				array_push($result_files, new pts_result_merge_select($composite_xml, null, $system_name));
+				$result_files[] = new pts_result_merge_select($composite_xml, null, $system_name);
 			}
 
 			$result_file = new pts_result_file(null, true);

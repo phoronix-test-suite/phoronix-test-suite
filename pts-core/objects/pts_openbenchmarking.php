@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2015, Phoronix Media
-	Copyright (C) 2010 - 2015, Michael Larabel
+	Copyright (C) 2010 - 2016, Phoronix Media
+	Copyright (C) 2010 - 2016, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -196,9 +196,9 @@ class pts_openbenchmarking
 				{
 					$us = strlen($segments[1]);
 
-					if($us > 1 && $us < 9 && ctype_alnum($segments[1]))
+					if($us > 1 && $us < 9 && (!function_exists('ctype_alnum') || ctype_alnum($segments[1])))
 					{
-						if(ctype_alnum($segments[2]))
+						if(!function_exists('ctype_alnum') || ctype_alnum($segments[2]))
 						{
 							$valid = true;
 						}
@@ -361,11 +361,11 @@ class pts_openbenchmarking
 	}
 	public static function linked_repositories()
 	{
-		$repos = array('local', 'pts');
+		$repos = array('local', 'pts', 'system');
 
 		if(PTS_IS_CLIENT && pts_openbenchmarking_client::user_name() != false)
 		{
-			array_push($repos, pts_openbenchmarking_client::user_name());
+			$repos[] = pts_openbenchmarking_client::user_name();
 		}
 
 		return $repos;
@@ -561,7 +561,7 @@ class pts_openbenchmarking
 							}
 						}
 
-						array_push($available_tests, $repo . '/' . $identifier . ($append_versions ? '-' . $version : null));
+						$available_tests[] = $repo . '/' . $identifier . ($append_versions ? '-' . $version : null);
 					}
 				}
 			}
@@ -590,7 +590,7 @@ class pts_openbenchmarking
 							continue;
 						}
 					}
-					array_push($available_suites, $repo . '/' . $identifier);
+					$available_suites[] = $repo . '/' . $identifier;
 				}
 			}
 		}

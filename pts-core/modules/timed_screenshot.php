@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2015, Phoronix Media
-	Copyright (C) 2008 - 2015, Michael Larabel
+	Copyright (C) 2008 - 2016, Phoronix Media
+	Copyright (C) 2008 - 2016, Michael Larabel
 	timed_screenshot.php: A PTS module that takes a screenshot at a pre-defined interval.
 
 	This program is free software; you can redistribute it and/or modify
@@ -95,7 +95,7 @@ class timed_screenshot extends pts_module_interface
 
 			if(is_file($ss_file))
 			{
-				array_push(self::$screenshots, $ss_file);
+				self::$screenshots[] = $ss_file;
 				return $ss_file;
 			}
 		}

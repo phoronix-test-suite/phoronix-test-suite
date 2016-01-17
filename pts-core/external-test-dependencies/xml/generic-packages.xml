@@ -410,5 +410,11 @@
 			<PossibleNames>attr, libattr1-dev</PossibleNames>
 			<FileCheck>attr/xattr.h</FileCheck>
 		</Package>
+		<Package>
+                        <GenericName>httpd</GenericName>
+                        <Title>httpd</Title>
+                        <PossibleNames>httpd, apache2</PossibleNames>
+                        <FileCheck>/usr/sbin/apachectl</FileCheck>
+                </Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

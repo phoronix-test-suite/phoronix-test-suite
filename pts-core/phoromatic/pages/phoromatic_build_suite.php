@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2015, Phoronix Media
-	Copyright (C) 2015, Michael Larabel
+	Copyright (C) 2015 - 2016, Phoronix Media
+	Copyright (C) 2015 - 2016, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -70,16 +70,16 @@ class phoromatic_build_suite implements pts_webui_interface
 							foreach($opts as $opt)
 							{
 								$t = explode('::', $opt);
-								array_push($a, $t[1]);
-								array_push($d, $t[0]);
+								$a[] = $t[1];
+								$d[] = $t[0];
 							}
-							array_push($args, $a);
-							array_push($args_name, $d);
+							$args[] = $a;
+							$args_name[] = $d;
 						}
 						else
 						{
-							array_push($args, array($v));
-							array_push($args_name, array($_POST[$i . '_selected']));
+							$args[] = array($v);
+							$args_name[] = array($_POST[$i . '_selected']);
 						}
 					}
 				}
@@ -91,7 +91,7 @@ class phoromatic_build_suite implements pts_webui_interface
 
 				foreach(array_keys($test_args) as $i)
 				{
-					array_push($tests, array('test' => $test_identifier, 'description' => $test_args_description[$i], 'args' => $test_args[$i]));
+					$tests[] = array('test' => $test_identifier, 'description' => $test_args_description[$i], 'args' => $test_args[$i]);
 				}
 			}
 

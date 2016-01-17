@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2015, Phoronix Media
-	Copyright (C) 2008 - 2015, Michael Larabel
+	Copyright (C) 2008 - 2016, Phoronix Media
+	Copyright (C) 2008 - 2016, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -108,6 +108,13 @@ class pts_render
 				$result_object->test_result_buffer->buffer_values_reverse();
 			}
 		}
+		/*if(isset($extra_attributes['remove_noisy_results']))
+		{
+			foreach($result_object->test_result_buffer->get_buffer_items() as $i => &$buffer_item)
+			{
+
+			}
+		}*/
 
 		if($result_file != null)
 		{
@@ -308,7 +315,7 @@ class pts_render
 				{
 					if(isset($json[$check]) && !empty($json[$check]))
 					{
-						array_push($report, $json[$check]);
+						$report[] = $json[$check];
 					}
 				}
 
@@ -557,7 +564,7 @@ class pts_render
 					$days = $days->get_value();
 				}
 
-				array_push($to_show, pts_math::set_precision(call_user_func($math_call, $system), 2));
+				$to_show[] = pts_math::set_precision(call_user_func($math_call, $system), 2);
 				$result_buffer->add_test_result($system_key, implode(',', $to_show), null);
 			}
 		}
@@ -580,7 +587,7 @@ class pts_render
 
 				foreach($system as &$days)
 				{
-					array_push($to_show, call_user_func($math_call, $days));
+					$to_show[] = call_user_func($math_call, $days);
 				}
 
 				$result_buffer->add_test_result($system_key, implode(',', $to_show), null);

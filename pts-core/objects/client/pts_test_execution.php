@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2015, Phoronix Media
-	Copyright (C) 2008 - 2015, Michael Larabel
+	Copyright (C) 2008 - 2016, Phoronix Media
+	Copyright (C) 2008 - 2016, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -39,6 +39,7 @@ class pts_test_execution
 		$test_identifier = $test_run_request->test_profile->get_identifier();
 		$extra_arguments = $test_run_request->get_arguments();
 		$arguments_description = $test_run_request->get_arguments_description();
+		$full_output = pts_config::read_bool_config('PhoronixTestSuite/Options/General/FullOutput', 'FALSE');
 
 		// Do the actual test running process
 		$test_directory = $test_run_request->test_profile->get_install_dir();
@@ -90,9 +91,22 @@ class pts_test_execution
 		{
 			$pre_output = pts_tests::call_test_script($test_run_request->test_profile, 'pre', 'Running Pre-Test Script', $pts_test_arguments, $extra_runtime_variables, true);
 
-			if($pre_output != null && pts_client::is_debug_mode())
+			if($pre_output != null && (pts_client::is_debug_mode() || $full_output))
 			{
 				pts_client::$display->test_run_instance_output($pre_output);
+			}
+			if(is_file($test_directory . 'pre-test-exit-status'))
+			{
+			  // If the pre script writes its exit status to ~/pre-test-exit-status, if it's non-zero the test run failed
+			  $exit_status = pts_file_io::file_get_contents($test_directory . 'pre-test-exit-status');
+			  unlink($test_directory . 'pre-test-exit-status');
+
+			  if($exit_status != 0)
+			  {
+					self::test_run_instance_error($test_run_manager, $test_run_request, 'The pre run script exited with a non-zero exit status.' . PHP_EOL);
+					self::test_run_error($test_run_manager, $test_run_request, 'This test execution has been abandoned.');
+					return false;
+			  }
 			}
 		}
 
@@ -200,12 +214,12 @@ class pts_test_execution
 			}
 
 
-			if(!isset($test_result[10240]) || pts_client::is_debug_mode())
+			if(!isset($test_result[10240]) || pts_client::is_debug_mode() || $full_output)
 			{
 				pts_client::$display->test_run_instance_output($test_result);
 			}
 
-			if(is_file($test_log_file) && trim($test_result) == null && (filesize($test_log_file) < 10240 || pts_client::is_debug_mode()))
+			if(is_file($test_log_file) && trim($test_result) == null && (filesize($test_log_file) < 10240 || pts_client::is_debug_mode() || $full_output))
 			{
 				$test_log_file_contents = file_get_contents($test_log_file);
 				pts_client::$display->test_run_instance_output($test_log_file_contents);
@@ -337,7 +351,7 @@ class pts_test_execution
 				{
 					$interim_output = pts_tests::call_test_script($test_run_request->test_profile, 'interim', 'Running Interim Test Script', $pts_test_arguments, $extra_runtime_variables, true);
 
-					if($interim_output != null && pts_client::is_debug_mode())
+					if($interim_output != null && (pts_client::is_debug_mode() || $full_output))
 					{
 						pts_client::$display->test_run_instance_output($interim_output);
 					}
@@ -382,9 +396,21 @@ class pts_test_execution
 		{
 			$post_output = pts_tests::call_test_script($test_run_request->test_profile, 'post', 'Running Post-Test Script', $pts_test_arguments, $extra_runtime_variables, true);
 
-			if($post_output != null && pts_client::is_debug_mode())
+			if($post_output != null && (pts_client::is_debug_mode() || $full_output))
 			{
 				pts_client::$display->test_run_instance_output($post_output);
+			}
+			if(is_file($test_directory . 'post-test-exit-status'))
+			{
+			  // If the post script writes its exit status to ~/post-test-exit-status, if it's non-zero the test run failed
+			  $exit_status = pts_file_io::file_get_contents($test_directory . 'post-test-exit-status');
+			  unlink($test_directory . 'post-test-exit-status');
+
+			  if($exit_status != 0)
+			  {
+			    self::test_run_instance_error($test_run_manager, $test_run_request, 'The post run script exited with a non-zero exit status.' . PHP_EOL);
+			    $abort_testing=true;
+			  }
 			}
 		}
 
@@ -447,7 +473,8 @@ class pts_test_execution
 		array('pts-results-proportion', 'set_result_proportion', null),
 		array('pts-results-quantifier', 'set_result_quantifier', null),
 		array('pts-test-version', 'set_version', null),
-		array('pts-test-description', null, 'set_used_arguments_description')
+		array('pts-test-description', null, 'set_used_arguments_description'),
+		array('pts-footnote', null, null),
 		);
 
 		foreach($file_var_checks as &$file_check)
@@ -475,6 +502,10 @@ class pts_test_execution
 						{
 							call_user_func(array($test_run_request, $result_set_function), $file_contents);
 						}
+					}
+					else if($file == 'pts-footnote')
+					{
+						$test_run_request->test_profile->test_installation->set_install_footnote($file_contents);
 					}
 				}
 			}

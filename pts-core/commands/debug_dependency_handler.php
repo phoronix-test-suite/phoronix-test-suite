@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2016, Phoronix Media
-	Copyright (C) 2008 - 2016, Michael Larabel
+	Copyright (C) 2015, Phoronix Media
+	Copyright (C) 2015, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -20,27 +20,23 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class list_installed_tests implements pts_option_interface
+class debug_dependency_handler implements pts_option_interface
 {
-	const doc_section = 'Information';
-	const doc_description = 'This option will list all test profiles that are currently installed on the system.';
+	const doc_section = 'Other';
+	const doc_description = 'This option is used for testing the distribution-specific dependency handler for external dependencies.';
 
 	public static function run($r)
 	{
-		$installed_tests = pts_tests::installed_tests();
-		pts_client::$display->generic_heading(count($installed_tests) . ' Tests Installed');
-
-		if(count($installed_tests) > 0)
+		$exdep_parser = new pts_exdep_generic_parser();
+		foreach($exdep_parser->get_available_packages() as $pkg)
 		{
-			foreach($installed_tests as $identifier)
+			$pkg_data = $exdep_parser->get_package_data($pkg);
+			$files = explode(' ', str_replace(array(' OR ', ', '), ' ', $pkg_data['file_check']));
+			foreach($files as $file)
 			{
-				$test_profile = new pts_test_profile($identifier);
-				$name = $test_profile->get_title();
-
-				if($name != false)
-				{
-					echo sprintf('%-26ls - %-30ls' . PHP_EOL, $identifier, $name);
-				}
+				echo (is_array($file) ? implode(' ', $file) : $file) . ': ';
+				$deps = pts_external_dependencies::packages_that_provide($file);
+				echo (is_array($deps) ? implode(' ', $deps) : null) . PHP_EOL;
 			}
 		}
 	}

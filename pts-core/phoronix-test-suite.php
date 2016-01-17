@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2015, Phoronix Media
-	Copyright (C) 2008 - 2015, Michael Larabel
+	Copyright (C) 2008 - 2016, Phoronix Media
+	Copyright (C) 2008 - 2016, Michael Larabel
 	phoronix-test-suite.php: The main code for initalizing the Phoronix Test Suite
 
 	This program is free software; you can redistribute it and/or modify
@@ -159,7 +159,7 @@ if(QUICK_START == false)
 // Read passed arguments
 for($i = 2; $i < $argc && isset($argv[$i]); $i++)
 {
-	array_push($pass_args, $argv[$i]);
+	$pass_args[] = $argv[$i];
 }
 
 if(QUICK_START == false)
