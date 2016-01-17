@@ -665,13 +665,13 @@ class system_monitor extends pts_module_interface
 		$test_result->test_profile->set_result_proportion('LIB');
 		$test_result->test_profile->set_display_format('LINE_GRAPH');
 		$test_result->test_profile->set_result_scale(phodevi::read_sensor_object_unit($sensor));
-		$test_result->set_used_arguments_description(phodevi::sensor_object_name($sensor) . ' Monitor');
+		$test_result->set_used_arguments_description(phodevi::sensor_object_name($sensor) . ' Monitor (test ' . count($result_file->get_systems()) . ')');
 		$test_result->set_used_arguments(phodevi::sensor_object_name($sensor) . ' ' . $test_result->get_arguments());
 		$test_result->test_result_buffer = $result_buffer;
 
 		if(self::$per_test_try_monitoring && $result_buffer->get_count() > 1)
 		{
-			$test_result->set_used_arguments_description(phodevi::sensor_object_name($sensor) . ' Per Test Try Monitor');
+			$test_result->set_used_arguments_description(phodevi::sensor_object_name($sensor) . ' Per Test Try Monitor (test ' . count($result_file->get_systems()) . ')');
 		}
 
 		$result_file->add_result($test_result);
