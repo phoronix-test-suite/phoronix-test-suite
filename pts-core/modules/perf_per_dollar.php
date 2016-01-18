@@ -67,18 +67,27 @@ class perf_per_dollar extends pts_module_interface
 	}
 	public static function __post_test_run_process(&$result_file)
 	{
-		if(self::$successful_test_run_request && self::$successful_test_run_request->test_profile->get_display_format() == 'BAR_GRAPH' && self::$successful_test_run_request->test_profile->get_result_proportion() == 'HIB')
+		if(self::$successful_test_run_request && self::$successful_test_run_request->test_profile->get_display_format() == 'BAR_GRAPH')
 		{
-			// This copy isn't needed but it's shorter and from port from system_monitor where there can be multiple items tracked
-			$test_result = clone self::$successful_test_run_request;
-			$test_result->test_profile->set_identifier(null);
-			$test_result->set_used_arguments_description('Performance / Cost - ' . $test_result->get_arguments_description());
-			$test_result->set_used_arguments('dollar comparison ' . $test_result->get_arguments());
-			$test_result->test_profile->set_result_scale($test_result->test_profile->get_result_scale() . ' Per Dollar');
-			$test_result->test_result_buffer = new pts_test_result_buffer();
-			$test_result->test_result_buffer->add_test_result(self::$result_identifier, pts_math::set_precision($test_result->active->get_result() / self::$COST_PERF_PER_DOLLAR), null, array('install-footnote' => '$' . self::$COST_PERF_PER_DOLLAR . ' reported cost.'));
-			$result_file->add_result($test_result);
-			self::$perf_per_dollar_collection[] = $test_result->active->get_result();
+			$result = 0;
+			if(self::$successful_test_run_request->test_profile->get_result_proportion() == 'HIB')
+			{
+				$result = self::$result_identifier, pts_math::set_precision($test_result->active->get_result() / self::$COST_PERF_PER_DOLLAR;
+			}
+
+			if($result != 0)
+			{
+				// This copy isn't needed but it's shorter and from port from system_monitor where there can be multiple items tracked
+				$test_result = clone self::$successful_test_run_request;
+				$test_result->test_profile->set_identifier(null);
+				$test_result->set_used_arguments_description('Performance / Cost - ' . $test_result->get_arguments_description());
+				$test_result->set_used_arguments('dollar comparison ' . $test_result->get_arguments());
+				$test_result->test_profile->set_result_scale($test_result->test_profile->get_result_scale() . ' Per Dollar');
+				$test_result->test_result_buffer = new pts_test_result_buffer();
+				$test_result->test_result_buffer->add_test_result($result), null, array('install-footnote' => '$' . self::$COST_PERF_PER_DOLLAR . ' reported cost.'));
+				$result_file->add_result($test_result);
+				self::$perf_per_dollar_collection[] = $test_result->active->get_result();
+			}
 		}
 		self::$successful_test_run_request = null;
 	}

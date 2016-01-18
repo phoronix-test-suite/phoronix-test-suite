@@ -281,7 +281,7 @@
 		</Package>
 		<Package>
 			<GenericName>superlu</GenericName>
-			<PackageName>libsuperlu3-dev</PackageName>
+			<PackageName>libsuperlu-dev</PackageName>
 		</Package>
 		<Package>
 			<GenericName>suitesparse</GenericName>
@@ -289,7 +289,7 @@
 		</Package>
 		<Package>
 			<GenericName>dune</GenericName>
-			<PackageName>libdune-common-dev libdune-istl-dev libdune-grid-dev libdune-localfunctions-dev</PackageName>
+			<PackageName>libdune-common-dev libdune-istl-dev libdune-geometry-dev libdune-grid-dev libdune-localfunctions-dev</PackageName>
 		</Package>
 		<Package>
 			<GenericName>tinyxml</GenericName>
