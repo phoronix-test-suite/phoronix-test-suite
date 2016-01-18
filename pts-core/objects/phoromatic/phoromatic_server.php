@@ -137,6 +137,9 @@ class phoromatic_server
 			return true;
 		}
 
+		// TODO XXX make this a rootadmin option or something
+		// self::$db->exec('PRAGMA synchronous = OFF');
+
 		switch(self::read_database_version())
 		{
 			case 0:
