@@ -57,7 +57,8 @@ class pts_graph_lines extends pts_graph_core
 		$this->i['display_select_identifiers'] = false;
 		$this->i['hide_graph_identifiers'] = !isset($extra_attributes['force_tracking_line_graph']) || !$extra_attributes['force_tracking_line_graph'];
 
-		if($this->is_multi_way_comparison && isset($extra_attributes['force_tracking_line_graph']) && $extra_attributes['force_tracking_line_graph'] && is_array($this->results))
+		// XXX removed on 20 January from here: $this->is_multi_way_comparison &&
+		if(isset($extra_attributes['force_tracking_line_graph']) && $extra_attributes['force_tracking_line_graph'] && is_array($this->results))
 		{
 			// need to do compacting here
 			$this->test_result->test_result_buffer = new pts_test_result_buffer();

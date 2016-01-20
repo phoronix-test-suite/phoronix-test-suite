@@ -140,7 +140,17 @@ foreach(array(14 => 'Two Weeks', 21 => 'Three Weeks', 30 => 'One Month',  60 => 
 }
 echo '<option value="' . count($tracker['triggers']) . '">All Results</option>';
 ?>
-</select> Days.<br /><br /><input type="checkbox" name="normalize_results" value="1" <?php echo (isset($_REQUEST['normalize_results']) && $_REQUEST['normalize_results'] == 1 ? 'checked="checked"' : null); ?> /> Normalize Results? <input type="checkbox" name="system_table" value="1" <?php echo (isset($_REQUEST['system_table']) && $_REQUEST['system_table'] == 1 ? 'checked="checked"' : null); ?> /> Show System Information Table?<br /><br /><input type="submit" value="Refresh Results">
+</select> Days.<br /><br />
+
+<input type="checkbox" name="normalize_results" value="1" <?php echo (isset($_REQUEST['normalize_results']) && $_REQUEST['normalize_results'] == 1 ? 'checked="checked"' : null); ?> /> Normalize Results?
+
+<input type="checkbox" name="clear_unchanged_results" value="1" <?php echo (isset($_REQUEST['clear_unchanged_results']) && $_REQUEST['clear_unchanged_results'] == 1 ? 'checked="checked"' : null); ?> /> Clear Unchanged Results?
+
+<input type="checkbox" name="clear_noisy_results" value="1" <?php echo (isset($_REQUEST['clear_noisy_results']) && $_REQUEST['clear_noisy_results'] == 1 ? 'checked="checked"' : null); ?> /> Clear Noisy Results?
+
+<input type="checkbox" name="system_table" value="1" <?php echo (isset($_REQUEST['system_table']) && $_REQUEST['system_table'] == 1 ? 'checked="checked"' : null); ?> /> Show System Information Table?
+
+<br /><br /><input type="submit" value="Refresh Results">
 </form>
 </div>
 <blockquote>
@@ -191,6 +201,14 @@ if(isset($_REQUEST['normalize_results']) && $_REQUEST['normalize_results'])
 {
 	$extra_attributes['normalize_result_buffer'] = true;
 }
+if(isset($_REQUEST['clear_unchanged_results']) && $_REQUEST['clear_unchanged_results'])
+{
+	$extra_attributes['clear_unchanged_results'] = true;
+}
+if(isset($_REQUEST['clear_noisy_results']) && $_REQUEST['clear_noisy_results'])
+{
+	$extra_attributes['clear_noisy_results'] = true;
+}
 
 $intent = null;
 //$table = new pts_ResultFileTable($result_file, $intent);
@@ -201,11 +219,17 @@ foreach($result_file->get_result_objects((isset($_REQUEST['show_only_changed_res
 {
 	if(stripos($result_object->get_arguments_description(), 'frame time') !== false)
 		continue;
+	$res = pts_render::render_graph_inline_embed($result_object, $result_file, $extra_attributes);
+
+	if($res == false)
+	{
+		continue;
+	}
 
 	echo '<h2><a name="r-' . $i . '"></a>' . $result_object->test_profile->get_title() . '</h2>';
 	//echo '<h3>' . $result_object->get_arguments_description() . '</h3>';
 	echo '<p class="result_object">';
-	echo pts_render::render_graph_inline_embed($result_object, $result_file, $extra_attributes);
+	echo $res;
 	echo '</p>';
 	unset($result_object);
 	flush();

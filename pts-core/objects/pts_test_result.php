@@ -257,6 +257,117 @@ class pts_test_result
 		$this->test_profile->set_result_scale('Relative Performance');
 		return true;
 	}
+	public function remove_unchanged_results($change_threshold = 0.03)
+	{
+		if($this->test_profile->get_display_format() != 'BAR_GRAPH') // BAR_ANALYZE_GRAPH is currently unsupported
+		{
+			return false;
+		}
+
+		$is_multi_way = pts_render::multi_way_identifier_check($this->test_result_buffer->get_identifiers());
+		$keys = array_keys($this->test_result_buffer->buffer_items);
+
+		if($is_multi_way)
+		{
+			$key_sets = array();
+			foreach($keys as $k)
+			{
+				$identifier_r = pts_strings::trim_explode(': ', $this->test_result_buffer->buffer_items[$k]->get_result_identifier());
+				if(!isset($key_sets[$identifier_r[0]]))
+				{
+					$key_sets[$identifier_r[0]] = array();
+				}
+
+				$key_sets[$identifier_r[0]][] = $k;
+			}
+		}
+		else
+		{
+			$key_sets = array($keys);
+		}
+
+		foreach($key_sets as $keys)
+		{
+			$base_value = -1;
+			$remove_set = true;
+			foreach($keys as $k)
+			{
+				if($base_value == -1)
+				{
+					$base_value = $this->test_result_buffer->buffer_items[$k]->get_result_value();
+				}
+				else if(abs($base_value - $this->test_result_buffer->buffer_items[$k]->get_result_value()) > ($base_value * $change_threshold))
+				{
+					$remove_set = false;
+					break;
+				}
+			}
+
+			if($remove_set)
+			{
+				foreach($keys as $k)
+				{
+					unset($this->test_result_buffer->buffer_items[$k]);
+				}
+			}
+		}
+		return true;
+	}
+	public function remove_noisy_results($threshold = 0.6)
+	{
+		if($this->test_profile->get_display_format() != 'BAR_GRAPH') // BAR_ANALYZE_GRAPH is currently unsupported
+		{
+			return false;
+		}
+
+		$is_multi_way = pts_render::multi_way_identifier_check($this->test_result_buffer->get_identifiers());
+		$keys = array_keys($this->test_result_buffer->buffer_items);
+
+		if($is_multi_way)
+		{
+			$key_sets = array();
+			foreach($keys as $k)
+			{
+				$identifier_r = pts_strings::trim_explode(': ', $this->test_result_buffer->buffer_items[$k]->get_result_identifier());
+				if(!isset($key_sets[$identifier_r[0]]))
+				{
+					$key_sets[$identifier_r[0]] = array();
+				}
+
+				$key_sets[$identifier_r[0]][] = $k;
+			}
+		}
+		else
+		{
+			$key_sets = array($keys);
+		}
+
+		foreach($key_sets as $keys)
+		{
+			$jiggy_results = 0;
+			foreach($keys as $k)
+			{
+				$raw = $this->test_result_buffer->buffer_items[$k]->get_result_raw();
+				if(!empty($raw))
+				{
+					$raw = pts_math::standard_error(pts_strings::colon_explode($raw));
+					if($raw > 10)
+					{
+						$jiggy_results++;
+					}
+				}
+			}
+
+			if(($jiggy_results / count($keys)) > $threshold)
+			{
+				foreach($keys as $k)
+				{
+					unset($this->test_result_buffer->buffer_items[$k]);
+				}
+			}
+		}
+		return true;
+	}
 }
 
 ?>

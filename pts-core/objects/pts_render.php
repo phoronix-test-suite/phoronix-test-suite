@@ -25,6 +25,11 @@ class pts_render
 	public static function render_graph(&$result_object, &$result_file = null, $save_as = false, $extra_attributes = null)
 	{
 		$graph = self::render_graph_process($result_object, $result_file, $save_as, $extra_attributes);
+		if($graph == false)
+		{
+			return false;
+		}
+
 		$graph->renderGraph();
 		return $graph->svg_dom->output($save_as);
 	}
@@ -39,6 +44,11 @@ class pts_render
 			$graph = $object;
 		}
 		else
+		{
+			return false;
+		}
+
+		if($graph == false)
 		{
 			return false;
 		}
@@ -78,6 +88,14 @@ class pts_render
 	}
 	public static function render_graph_process(&$result_object, &$result_file = null, $save_as = false, $extra_attributes = null)
 	{
+		if(isset($extra_attributes['clear_unchanged_results']))
+		{
+			$result_object->remove_unchanged_results();
+		}
+		if(isset($extra_attributes['clear_noisy_results']))
+		{
+			$result_object->remove_noisy_results();
+		}
 		if(isset($extra_attributes['sort_result_buffer']))
 		{
 			$result_object->test_result_buffer->sort_buffer_items();
@@ -114,6 +132,11 @@ class pts_render
 		if(isset($extra_attributes['reverse_result_buffer']))
 		{
 			$result_object->test_result_buffer->buffer_values_reverse();
+		}
+
+		if($result_object->test_result_buffer->get_count() == 0)
+		{
+			return false;
 		}
 
 		if($result_file != null)

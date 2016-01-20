@@ -3,6 +3,8 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Fix for some test profiles not showing up in list-tests sub-command
+- pts-core: Add function for optionally removing unchanged results
+- pts-core: Add function for optionally removing noisy results
 - phoromatic: Add view_results_since support to the export results viewer
 
 Phoronix Test Suite 6.2 Milestone 3
