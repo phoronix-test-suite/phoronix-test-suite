@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2013 - 2015, Phoronix Media
-	Copyright (C) 2013 - 2015, Michael Larabel
+	Copyright (C) 2013 - 2016, Phoronix Media
+	Copyright (C) 2013 - 2016, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -88,7 +88,7 @@ $tracker = &$export_index_json['phoromatic'][$REQUESTED];
 $length = count($tracker['triggers']);
 
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <title>Phoronix Test Suite Phoromatic - Benchmark Viewer - <?php echo $title; ?></title>
@@ -96,6 +96,9 @@ $length = count($tracker['triggers']);
 <meta name="keywords" content="Linux benchmarks, open-source benchmarks, benchmark viewer, Phoronix Test Suite, Phoromatic, Phoromatic viewer" />
 <meta name="Description" content="<?php echo $meta_desc; ?>" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link href='https://fonts.googleapis.com/css?family=Quicksand:700' rel='stylesheet' type='text/css'/>
+<link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'/>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
 <div id="top_list">
@@ -137,7 +140,7 @@ foreach(array(14 => 'Two Weeks', 21 => 'Three Weeks', 30 => 'One Month',  60 => 
 }
 echo '<option value="' . count($tracker['triggers']) . '">All Results</option>';
 ?>
-</select> Days. <input type="checkbox" name="normalize_results" value="1" <?php echo (isset($_REQUEST['normalize_results']) && $_REQUEST['normalize_results'] == 1 ? 'checked="checked"' : null); ?> /> Normalize Results? <input type="checkbox" name="system_table" value="1" <?php echo (isset($_REQUEST['system_table']) && $_REQUEST['system_table'] == 1 ? 'checked="checked"' : null); ?> /> Show System Information Table? <input type="submit" value="Refresh Results">
+</select> Days.<br /><br /><input type="checkbox" name="normalize_results" value="1" <?php echo (isset($_REQUEST['normalize_results']) && $_REQUEST['normalize_results'] == 1 ? 'checked="checked"' : null); ?> /> Normalize Results? <input type="checkbox" name="system_table" value="1" <?php echo (isset($_REQUEST['system_table']) && $_REQUEST['system_table'] == 1 ? 'checked="checked"' : null); ?> /> Show System Information Table?<br /><br /><input type="submit" value="Refresh Results">
 </form>
 </div>
 <blockquote>
@@ -217,6 +220,6 @@ if(isset($_REQUEST['system_table']) && $_REQUEST['system_table'])
 
 ?>
 
-<p id="footer"><em><?php echo pts_core::program_title(true); ?></em><br />Phoronix Test Suite, Phoromatic, and OpenBenchmarking.org are copyright &copy; 2004 - 2015 by Phoronix Media.<br />The Phoronix Test Suite / Phoromatic is open-source under the GNU GPL.<br />For more information, visit <a href="http://www.phoronix-test-suite.com/">Phoronix-Test-Suite.com</a> or contact <a href="http://www.phoronix-media.com/">Phoronix Media</a>.</p>
+<p id="footer"><em><?php echo pts_core::program_title(true); ?></em><br />Phoronix Test Suite, Phoromatic, and OpenBenchmarking.org are copyright &copy; 2004 - <?php echo date('Y'); ?> by Phoronix Media.<br />The Phoronix Test Suite / Phoromatic is open-source under the GNU GPL.<br />For more information, visit <a href="http://www.phoronix-test-suite.com/">Phoronix-Test-Suite.com</a> or contact <a href="http://www.phoronix-media.com/">Phoronix Media</a>.</p>
 </body>
 </html>

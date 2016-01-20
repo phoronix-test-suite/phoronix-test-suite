@@ -3,7 +3,7 @@ body
 	text-align: left;
 	padding: 0;
 	margin: 0;
-	font-family: 'DejaVu Sans', museo-sans, sans-serif, 'Open Sans', 'helvetica neue', helvetica;
+	font-family: 'Raleway', 'DejaVu Sans', museo-sans, sans-serif, 'Open Sans', 'helvetica neue', helvetica;
 	font-weight: 300;
 	font-size: 100%;
 	color: #212121;
@@ -30,7 +30,7 @@ div#top_list ul li
 	text-align: center;
 	display: table-cell;
 	list-style-type: none;
-	font-size: 140%;
+	font-size: 120%;
 	font-weight: 500;
 }
 div#top_list ul li#alt a
