@@ -978,6 +978,12 @@ class pts_client
 			}
 
 			$graph = pts_render::render_graph($result_object, $result_file, $save_to, $extra_attributes);
+
+			if($graph == false)
+			{
+				continue;
+			}
+
 			$generated_graphs[] = $graph;
 		}
 

@@ -114,9 +114,10 @@ class phoromatic_tracker implements pts_webui_interface
 			$main .= '<div id="pts_results_area">';
 			foreach($result_file->get_result_objects((isset($_POST['show_only_changed_results']) ? 'ONLY_CHANGED_RESULTS' : -1)) as $i => $result_object)
 			{
+				$res = pts_render::render_graph_inline_embed($result_object, $result_file, $extra_attributes);
 				$main .= '<h2><a name="r-' . $i . '"></a><a name="' . $result_object->get_comparison_hash(true, false) . '"></a>' . $result_object->test_profile->get_title() . '</h2>';
 				$main .= '<p class="result_object">';
-				$main .= pts_render::render_graph_inline_embed($result_object, $result_file, $extra_attributes);
+				$main .= $res;
 				$main .= '</p>';
 			}
 			$main .= '</div>';
