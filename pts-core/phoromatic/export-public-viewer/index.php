@@ -150,7 +150,10 @@ echo '<option value="' . count($tracker['triggers']) . '">All Results</option>';
 
 <input type="checkbox" name="system_table" value="1" <?php echo (isset($_REQUEST['system_table']) && $_REQUEST['system_table'] == 1 ? 'checked="checked"' : null); ?> /> Show System Information Table?
 
+<input type="checkbox" name="regression_detector" value="1" <?php echo (isset($_REQUEST['regression_detector']) && $_REQUEST['regression_detector'] == 1 ? 'checked="checked"' : null); ?> /> Attempt To Results Of Interest?
+
 <br /><br /><input type="submit" value="Refresh Results">
+
 </form>
 </div>
 <blockquote>
@@ -213,6 +216,31 @@ if(isset($_REQUEST['clear_noisy_results']) && $_REQUEST['clear_noisy_results'])
 $intent = null;
 //$table = new pts_ResultFileTable($result_file, $intent);
 //echo '<p style="text-align: center; overflow: auto;" class="result_object">' . pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes) . '</p>';
+
+if(isset($_REQUEST['regression_detector']))
+{
+	$has_flagged_results = false;
+	foreach($result_file->get_result_objects() as $i => $result_object)
+	{
+		if(!$has_flagged_results)
+		{
+			echo '<hr /><h2>Flagged Results</h2>';
+			echo '<p>Displayed are results for each system of each scheduled test where there is a measurable change when comparing the most recent result to the previous result for that system for that test.</p>';
+			$has_flagged_results = true;
+		}
+		$poi = $result_object->points_of_possible_interest();
+
+		if(!empty($poi))
+		{
+			echo '<h4>' . $result_object->test_profile->get_title() . '</h4><p>';
+			foreach($poi as $text)
+			{
+				echo '<a href="#r-' . $i . '">' . $text . '</a><br />';
+			}
+			echo '</p>';
+		}
+	}
+}
 
 echo '<div id="pts_results_area">';
 foreach($result_file->get_result_objects((isset($_REQUEST['show_only_changed_results']) ? 'ONLY_CHANGED_RESULTS' : -1), true) as $i => $result_object)

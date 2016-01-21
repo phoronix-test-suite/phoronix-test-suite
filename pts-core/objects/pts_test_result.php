@@ -368,6 +368,59 @@ class pts_test_result
 		}
 		return true;
 	}
+	public function points_of_possible_interest($threshold_level = 0.1)
+	{
+		$points_of_interest = array();
+		if($this->test_profile->get_display_format() != 'BAR_GRAPH') // BAR_ANALYZE_GRAPH is currently unsupported
+		{
+			return $points_of_interest;
+		}
+
+		$is_multi_way = pts_render::multi_way_identifier_check($this->test_result_buffer->get_identifiers());
+		$keys = array_keys($this->test_result_buffer->buffer_items);
+
+		if($is_multi_way)
+		{
+			$key_sets = array();
+			foreach($keys as $k)
+			{
+				$identifier_r = pts_strings::trim_explode(': ', $this->test_result_buffer->buffer_items[$k]->get_result_identifier());
+				if(!isset($key_sets[$identifier_r[0]]))
+				{
+					$key_sets[$identifier_r[0]] = array();
+				}
+
+				$key_sets[$identifier_r[0]][] = $k;
+			}
+		}
+		else
+		{
+			$key_sets = array($keys);
+		}
+
+		foreach($key_sets as $keys)
+		{
+			$prev_value = -1;
+			$prev_id = -1;
+			foreach($keys as $k)
+			{
+				$this_value = $this->test_result_buffer->buffer_items[$k]->get_result_value();
+				$this_id = $this->test_result_buffer->buffer_items[$k]->get_result_identifier();
+				if($prev_value != -1 && $prev_id != -1)
+				{
+					$d = abs(($prev_value / $this_value) - 1);
+					if($d > $threshold_level)
+					{
+						$points_of_interest[] = $this_id . ' - ' . $prev_id . ': ' . round(($d * 100), 2) . '%';
+					}
+				}
+				$prev_value = $this_value;
+				$prev_id = $this_id;
+			}
+		}
+
+		return $points_of_interest;
+	}
 }
 
 ?>
