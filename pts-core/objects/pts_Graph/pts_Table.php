@@ -172,14 +172,7 @@ class pts_Table extends pts_graph_core
 		$this->svg_dom->add_element('rect', array('x' => 1, 'y' => 1, 'width' => ($this->i['graph_width'] - 1), 'height' => ($this->i['graph_height'] - 1), 'fill' => self::$c['color']['background'], 'stroke' => self::$c['color']['border'], 'stroke-width' => 1));
 
 		// Start drawing
-		if($this->i['left_start'] >= 170 && $top_identifier_height >= 90)
-		{
-			$this->svg_dom->add_element('image', array('http_link' => 'http://www.phoronix-test-suite.com/', 'xlink:href' => 'https://openbenchmarking.org/static/images/pts-160x83.png', 'x' => round($this->i['left_start'] / 2 - 80), 'y' => round(($top_identifier_height / 2 - 41.5) + $this->i['top_heading_height']), 'width' => 160, 'height' => 83));
-		}
-		else
-		{
-			$this->svg_dom->add_element('image', array('http_link' => 'http://www.phoronix-test-suite.com/', 'xlink:href' => 'https://openbenchmarking.org/static/images/pts-80x42.png', 'x' => round($this->i['left_start'] / 2 - 40), 'y' => round($top_identifier_height / 2 - 21 + $this->i['top_heading_height']), 'width' => 80, 'height' => 42));
-		}
+		$this->svg_dom->add_element('path', array('d' => 'm74 22v9m-5-16v16m-5-28v28m-23-2h12.5c2.485281 0 4.5-2.014719 4.5-4.5s-2.014719-4.5-4.5-4.5h-8c-2.485281 0-4.5-2.014719-4.5-4.5s2.014719-4.5 4.5-4.5h12.5m-21 5h-11m11 13h-2c-4.970563 0-9-4.029437-9-9v-20m-24 40v-20c0-4.970563 4.0294373-9 9-9 4.970563 0 9 4.029437 9 9s-4.029437 9-9 9h-9', 'stroke' => '#000000', 'stroke-width' => 4, 'fill' => 'none', 'transform' => 'translate(' . round($this->i['left_start'] / 2 - 40) . ',' . round($top_identifier_height / 2 - 21 + $this->i['top_heading_height']) . ')'));
 
 		// Draw the vertical table lines
 		$v = round((($top_identifier_height + $table_height) / 2) + $this->i['top_heading_height']);
