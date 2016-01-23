@@ -9,7 +9,7 @@
 </xs:annotation>
 <xs:simpleType name="ResultTitleString">
 	<xs:restriction base="xs:string">
-		<xs:minLength value="2" />
+		<xs:minLength value="1" />
 		<xs:maxLength value="126" />
 	</xs:restriction>
 </xs:simpleType>
