@@ -39,78 +39,8 @@ class result_file_to_pdf implements pts_option_interface
 		pts_client::generate_result_file_graphs($r[0], $tdir);
 
 		$result_file = new pts_result_file($r[0]);
-		$pdf = new pts_pdf_template($result_file->get_title(), null);
-
-		$pdf->AddPage();
-		$pdf->Image(PTS_CORE_STATIC_PATH . 'images/pts-308x160.png', 69, 85, 73, 38);
-		$pdf->Ln(120);
-		$pdf->WriteStatementCenter('www.phoronix-test-suite.com');
-		$pdf->Ln(15);
-		$pdf->WriteBigHeaderCenter($result_file->get_title());
-		$pdf->WriteText($result_file->get_description());
-
-
-		$pdf->AddPage();
-		$pdf->Ln(15);
-
-		$pdf->SetSubject($result_file->get_title() . ' Benchmarks');
-		//$pdf->SetKeywords(implode(', ', $identifiers));
-
-		$pdf->WriteHeader('Test Systems:');
-		foreach($result_file->get_systems() as $s)
-		{
-			$pdf->WriteMiniHeader($s->get_identifier());
-			$pdf->WriteText($s->get_hardware());
-			$pdf->WriteText($s->get_software());
-			//$pdf->WriteText($notes_r[$i]);
-		}
-
-		/*
-		if(count($identifiers) > 1 && is_file($tdir . 'result-graphs/overview.jpg'))
-		{
-			$pdf->AddPage();
-			$pdf->Ln(100);
-			$pdf->Image($tdir . 'result-graphs/overview.jpg', 15, 40, 180);
-		}
-		*/
-
-
-		$pdf->AddPage();
-		$placement = 1;
-		$results = $result_file->get_result_objects();
-		for($i = 1; $i <= count($results); $i++)
-		{
-			if(is_file($tdir . 'result-graphs/' . $i . '.png'))
-			{
-				$pdf->Ln(100);
-				$pdf->Image($tdir . 'result-graphs/' . $i . '.png', 50, 40 + (($placement - 1) * 120), 120);
-			}
-
-			if($placement == 2)
-			{
-				$placement = 0;
-
-				if($i != count($results))
-				{
-					$pdf->AddPage();
-				}
-			}
-			$placement++;
-		}
-
-
-		// To save:
-		/*
-		$pdf_file = 'SAVE_TO';
-
-		if(substr($pdf_file, -4) != '.pdf')
-		{
-			$pdf_file .= '.pdf';
-		}
-		*/
 		$pdf_file = pts_core::user_home_directory() . $r[0] . '.pdf';
-		$pdf->Output($pdf_file);
-		pts_file_io::delete($tdir, null, true);
+		$pdf_output = pts_result_file_output::result_file_to_pdf($result_file, $pdf_file);
 		echo PHP_EOL . 'Saved To: ' . $pdf_file . PHP_EOL;
 	}
 	public static function invalid_command($passed_args = null)

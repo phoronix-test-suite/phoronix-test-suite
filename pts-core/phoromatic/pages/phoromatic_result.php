@@ -300,61 +300,11 @@ class phoromatic_result implements pts_webui_interface
 			}
 			else if(isset($_GET['download']) && $_GET['download'] == 'pdf')
 			{
+				// TODO XXX: make use of pts_result_file_output::result_file_to_pdf()
 				ob_start();
-				$_REQUEST['force_format'] = 'PNG'; // Force to PNG renderer
-				$_REQUEST['svg_dom_gd_no_interlacing'] = true; // Otherwise FPDF will fail
-				$tdir = pts_client::create_temporary_directory();
-				pts_client::generate_result_file_graphs($result_file, $tdir, $extra_attributes);
-
-				$pdf = new pts_pdf_template($result_file->get_title(), null);
-
-				$pdf->AddPage();
-				$pdf->Image(PTS_CORE_STATIC_PATH . 'images/pts-308x160.png', 69, 85, 73, 38);
-				$pdf->Ln(120);
-				$pdf->WriteStatementCenter('www.phoronix-test-suite.com');
-				$pdf->Ln(15);
-				$pdf->WriteBigHeaderCenter($result_file->get_title());
-				$pdf->WriteText($result_file->get_description());
-
-				$pdf->AddPage();
-				$pdf->Ln(15);
-
-				$pdf->SetSubject($result_file->get_title() . ' Benchmarks');
-				//$pdf->SetKeywords(implode(', ', $identifiers));
-
-				$pdf->WriteHeader('Test Systems:');
-				foreach($result_file->get_systems() as $s)
-				{
-					$pdf->WriteMiniHeader($s->get_identifier());
-					$pdf->WriteText($s->get_hardware());
-					$pdf->WriteText($s->get_software());
-				}
-
-				$pdf->AddPage();
-				$placement = 1;
-				$results = $result_file->get_result_objects();
-				for($i = 1; $i <= count($results); $i++)
-				{
-					if(is_file($tdir . 'result-graphs/' . $i . '.png'))
-					{
-						$pdf->Ln(100);
-						$pdf->Image($tdir . 'result-graphs/' . $i . '.png', 50, 40 + (($placement - 1) * 120), 120);
-					}
-
-					if($placement == 2)
-					{
-						$placement = 0;
-
-						if($i != count($results))
-						{
-							$pdf->AddPage();
-						}
-					}
-					$placement++;
-				}
 				ob_get_clean();
+				$pdf_output = pts_result_file_output::result_file_to_pdf($result_file, 'phoromatic.pdf', 'I', $extra_attributes);
 				$pdf->Output('phoromatic.pdf', 'I');
-				//pts_file_io::delete($tdir, null, true);
 				return;
 			}
 			else if(isset($_GET['download']) && $_GET['download'] == 'xml')

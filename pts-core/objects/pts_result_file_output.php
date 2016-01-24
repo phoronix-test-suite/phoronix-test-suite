@@ -201,6 +201,60 @@ class pts_result_file_output
 
 		return $result_output;
 	}
+	public static function result_file_to_pdf(&$result_file, $dest, $output_name = 'phoronix-test-suite.pdf', $extra_attributes = null)
+	{
+		$_REQUEST['force_format'] = 'PNG'; // Force to PNG renderer
+		$_REQUEST['svg_dom_gd_no_interlacing'] = true; // Otherwise FPDF will fail
+		$tdir = pts_client::create_temporary_directory();
+		pts_client::generate_result_file_graphs($result_file, $tdir, $extra_attributes);
+
+		$pdf = new pts_pdf_template($result_file->get_title(), null);
+
+		$pdf->AddPage();
+		$pdf->Image(PTS_CORE_STATIC_PATH . 'images/pts-308x160.png', 69, 85, 73, 38);
+		$pdf->Ln(120);
+		$pdf->WriteStatementCenter('www.phoronix-test-suite.com');
+		$pdf->Ln(15);
+		$pdf->WriteBigHeaderCenter($result_file->get_title());
+		$pdf->WriteText($result_file->get_description());
+
+		$pdf->AddPage();
+		$pdf->Ln(15);
+
+		$pdf->SetSubject($result_file->get_title() . ' Benchmarks');
+		//$pdf->SetKeywords(implode(', ', $identifiers));
+
+		$pdf->WriteHeader('Test Systems:');
+		foreach($result_file->get_systems() as $s)
+		{
+			$pdf->WriteMiniHeader($s->get_identifier());
+			$pdf->WriteText($s->get_hardware());
+			$pdf->WriteText($s->get_software());
+		}
+
+		$pdf->AddPage();
+		$placement = 1;
+		$results = $result_file->get_result_objects();
+		for($i = 1; $i <= count($results); $i++)
+		{
+			if(is_file($tdir . 'result-graphs/' . $i . '.png'))
+			{
+				$pdf->Ln(100);
+				$pdf->Image($tdir . 'result-graphs/' . $i . '.png', 50, 40 + (($placement - 1) * 120), 120);
+			}
+			if($placement == 2)
+			{
+				$placement = 0;
+				if($i != count($results))
+				{
+					$pdf->AddPage();
+				}
+			}
+			$placement++;
+		}
+		pts_file_io::delete($tdir, null, true);
+		$pdf->Output($dest);
+	}
 }
 
 ?>
