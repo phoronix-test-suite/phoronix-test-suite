@@ -301,10 +301,7 @@ class phoromatic_result implements pts_webui_interface
 			else if(isset($_GET['download']) && $_GET['download'] == 'pdf')
 			{
 				// TODO XXX: make use of pts_result_file_output::result_file_to_pdf()
-				ob_start();
-				ob_get_clean();
 				$pdf_output = pts_result_file_output::result_file_to_pdf($result_file, 'phoromatic.pdf', 'I', $extra_attributes);
-				$pdf->Output('phoromatic.pdf', 'I');
 				return;
 			}
 			else if(isset($_GET['download']) && $_GET['download'] == 'xml')
