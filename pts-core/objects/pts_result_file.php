@@ -524,9 +524,9 @@ class pts_result_file
 			$this->result_objects[$ch] = $result_object;
 		}
 	}
-	public function get_xml($to = null)
+	public function get_xml($to = null, $force_nice_formatting = false)
 	{
-		$xml_writer = new nye_XmlWriter();
+		$xml_writer = new nye_XmlWriter(null, $force_nice_formatting);
 		$xml_writer->addXmlNode('PhoronixTestSuite/Generated/Title', $this->get_title());
 		$xml_writer->addXmlNode('PhoronixTestSuite/Generated/LastModified', date('Y-m-d H:i:s'));
 		$xml_writer->addXmlNode('PhoronixTestSuite/Generated/TestClient', pts_core::program_title(true));

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2015, Phoronix Media
-	Copyright (C) 2010 - 2015, Michael Larabel
+	Copyright (C) 2010 - 2016, Phoronix Media
+	Copyright (C) 2010 - 2016, Michael Larabel
 	nye_XmlWriter.php: The XML writing object for the Phoronix Test Suite succeeding tandem_XmlWriter
 
 	Additional Notes: A very simple XML writer with a few extras... Does not support attributes on tags, etc.
@@ -31,14 +31,14 @@ class nye_XmlWriter
 	public $dom;
 	protected $times_fallback = 0;
 
-	public function __construct($xsl_binding = null, $nice_formatting = true)
+	public function __construct($xsl_binding = null, $force_nice_formatting = false)
 	{
 		$this->dom = new DOMDocument('1.0');
-		$this->dom->formatOutput = PTS_IS_CLIENT && $nice_formatting;
+		$this->dom->formatOutput = (PTS_IS_CLIENT && !defined('PHOROMATIC_DB_INIT')) || $force_nice_formatting;
 		//$this->dom->preserveWhiteSpace = false;
 		$this->items = array();
 
-		if(PTS_IS_CLIENT)
+		if($this->dom->formatOutput)
 		{
 			$pts_comment = $this->dom->createComment(pts_core::program_title(false));
 			$this->dom->appendChild($pts_comment);

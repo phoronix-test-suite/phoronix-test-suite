@@ -309,6 +309,7 @@ class phoromatic_server
 				self::$db->exec('PRAGMA user_version = 35');
 		}
 		chmod($db_file, 0600);
+		define('PHOROMATIC_DB_INIT', true);
 	}
 	public static function generate_result_export_dump($account_id)
 	{

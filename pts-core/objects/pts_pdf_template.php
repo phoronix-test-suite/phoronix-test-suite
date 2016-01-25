@@ -20,10 +20,12 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+/*
 if(is_file('/usr/share/php/fpdf/fpdf.php'))
 {
 	include_once('/usr/share/php/fpdf/fpdf.php');
 }
+*/
 
 class pts_pdf_template extends FPDF
 {
@@ -342,7 +344,7 @@ class pts_pdf_template extends FPDF
 	}
 	public function _putinfo()
 	{
-		$this->_out('/Producer ' . $this->_textstring('Phoronix Media'));
+		$this->_out('/Producer ' . $this->_textstring('Phoronix Test Suite'));
 		$this->_out('/Subject ' . $this->_textstring('Phoronix-Test-Suite.com'));
 		$this->_out('/Title ' . $this->_textstring($this->title));
 		$this->_out('/Subject ' . $this->_textstring($this->subject));
