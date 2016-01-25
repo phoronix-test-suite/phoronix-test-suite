@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 - pts-core: Fix for some test profiles not showing up in list-tests sub-command
 - pts-core: Add function for optionally removing unchanged results
 - pts-core: Add function for optionally removing noisy results
+- pts-core: Rework PDF generation of test results
 - phoromatic: Add option to result viewer for exposing possible points of interest
 - phoromatic: Add view_results_since support to the export results viewer
 

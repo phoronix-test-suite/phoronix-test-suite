@@ -88,6 +88,7 @@ class pts_render
 	}
 	public static function render_graph_process(&$result_object, &$result_file = null, $save_as = false, $extra_attributes = null)
 	{
+		// TODO XXX: $save_as doesn't appear used anymore
 		if(isset($extra_attributes['clear_unchanged_results']))
 		{
 			$result_object->remove_unchanged_results();

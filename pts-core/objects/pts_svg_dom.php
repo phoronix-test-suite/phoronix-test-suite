@@ -80,6 +80,7 @@ class pts_svg_dom
 
 		switch($output_format)
 		{
+			case 'JPG':
 			case 'JPEG':
 				$output = pts_svg_dom_gd::svg_dom_to_gd($this->dom, 'JPEG');
 				$output_format = 'jpg';
