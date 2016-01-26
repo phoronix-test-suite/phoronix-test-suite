@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 6.2 Milestone 4
+26 January 2016
 
 - pts-core: Fix for some test profiles not showing up in list-tests sub-command
 - pts-core: Add function for optionally removing unchanged results
