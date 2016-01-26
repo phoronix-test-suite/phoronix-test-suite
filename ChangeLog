@@ -8,6 +8,7 @@ Phoronix Test Suite (Git)
 - pts-core: Rework PDF generation of test results
 - phoromatic: Add option to result viewer for exposing possible points of interest
 - phoromatic: Add view_results_since support to the export results viewer
+- pts_Graph: Fix for graphs sometime not rendering correctly on multi-way comparisons
 
 Phoronix Test Suite 6.2 Milestone 3
 7 January 2016
