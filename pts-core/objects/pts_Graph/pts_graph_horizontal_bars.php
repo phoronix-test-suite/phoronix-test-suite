@@ -119,7 +119,12 @@ class pts_graph_horizontal_bars extends pts_graph_core
 
 				$value = $buffer_item->get_result_value();
 				$i_o = $this->calc_offset($group_offsets, $identifier);
-				$i = $this->calc_offset($id_offsets, $buffer_item->get_result_identifier() . ' ' . $value);
+
+				if($this->is_multi_way_comparison)
+					$i = $this->calc_offset($id_offsets, $buffer_item->get_result_identifier());
+				else
+					$i = $this->calc_offset($id_offsets, $buffer_item->get_result_identifier() . ' ' . $value);
+
 				$graph_size = max(0, round(($value / $this->i['graph_max_value']) * $work_area_width));
 				$value_end_right = max($this->i['left_start'] + $graph_size, 1);
 				$px_bound_top = $this->i['top_start'] + ($this->is_multi_way_comparison ? 5 : 0) + ($this->i['identifier_height'] * $i) + ($bar_height * $i_o) + ($separator_height * ($i_o + 1));
