@@ -6,15 +6,15 @@ This framework is designed to be an extensible architecture so that new test pro
 
 Professional support and custom engineering for the Phoronix Test Suite, Phoromatic, and OpenBenchmarking.org is available by contacting <http://www.phoronix-test-suite.com/>.
 
-Full details on the Phoronix Test Suite setup and usage is available from the included HTML/PDF documentation within the phoronix-test-suite package and from the Phoronix Test Suite web-site.
+Full details on the Phoronix Test Suite setup and usage is available from the included HTML/PDF documentation within the phoronix-test-suite package and from the Phoronix Test Suite website.
 
-## INSTALLATION & SETUP:
+## Installation & Setup
 
 The Phoronix Test Suite is supported on Linux, *BSD, Solaris, Mac OS X, and Windows systems. However, the most full-featured and well supported operating system for conducting the tests is Linux with some non-basic functionality not being available under all platforms. The Phoronix Test Suite software/framework is compatible with all major CPU architectures (e.g. i686, x86_64, ARM, PowerPC), but not all of the test profiles/suites are compatible with all architectures.
 
-The Phoronix Test Suite can be installed for system-wide usage or run locally without installation from the extracted tar.gz/zip package. The only hard dependency on the Phoronix Test Suite is having command-line support for PHP (PHP 5.3+) installed. A complete PHP stack (e.g. with web-server) is NOT needed, but merely the PHP command-line support, which is widely available from operating system package managers under the name `php`, `php5-cli`, or `php5`.
+The Phoronix Test Suite can be installed for system-wide usage or run locally without installation from the extracted tar.gz/zip package. The only hard dependency on the Phoronix Test Suite is having command-line support for PHP (PHP 5.3+) installed. A complete PHP stack (e.g. with web-server) is **not** needed, but merely the PHP command-line support, which is widely available from operating system package managers under the name `php`, `php5-cli`, or `php5`.
 
-## USAGE:
+## Usage
 
 The process to download, install/setup, execute, and report the results of a benchmark can be as simple as a command such as `phoronix-test-suite benchmark smallpt` to run a simple CPU test profile. If wishing to simply install a test, it's a matter of running `phoronix-test-suite install <test or suite name>` and to run it's `phoronix-test-suite run <test or suite name>`. There's also a batch mode for non-interactive benchmarking by first running `phoronix-test-suite batch-setup` and then using the `batch-run` sub-command rather than `run`.
 
@@ -22,4 +22,4 @@ Viewing installed system hardware and software is available via `phoronix-test-s
 
 Facilitating a result comparison from OpenBenchmarking.org can be done by running, for example, `phoronix-test-suite benchmark 1204293-BY-PHORONIX357` if wishing to compare the results of the `http://openbenchmarking.org/result/1204293-BY-PHORONIX357` result file.
 
-Additional information is available from the Phoronix Test Suite web-site <http://www.phoronix-test-suite.com/> and the material bundled within the `phoronix-test-suite/documentation/` directory. A man page is also bundled with the phoronix-test-suite software.
+Additional information is available from the Phoronix Test Suite website <http://www.phoronix-test-suite.com/> and the material bundled within the `phoronix-test-suite/documentation/` directory. A man page is also bundled with the phoronix-test-suite software.
