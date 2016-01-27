@@ -46,9 +46,9 @@ Phoromatic, and OpenBenchmarking.org is available by contacting
 
 Full details on the Phoronix Test Suite setup and usage is available from the
 included HTML/PDF documentation within the phoronix-test-suite package and from
-the Phoronix Test Suite web-site.
+the Phoronix Test Suite website.
 
-## INSTALLATION & SETUP:
+## Installation & setup
 
 The Phoronix Test Suite is supported on Linux, *BSD, Solaris, Mac OS X, and
 Windows systems. However, the most full-featured and well supported operating
@@ -61,11 +61,11 @@ architectures.
 The Phoronix Test Suite can be installed for system-wide usage or run locally
 without installation from the extracted tar.gz/zip package. The only hard
 dependency on the Phoronix Test Suite is having command-line support for PHP
-(PHP 5.3+) installed. A complete PHP stack (e.g. with web-server) is NOT needed,
+(PHP 5.3+) installed. A complete PHP stack (e.g. with web server) is **not** needed,
 but merely the PHP command-line support, which is widely available from
 operating system package managers under the name `php`, `php5-cli`, or `php5`.
 
-## USAGE:
+## Usage
 
 The process to download, install/setup, execute, and report the results of a
 benchmark can be as simple as a command such as `phoronix-test-suite benchmark
@@ -84,7 +84,7 @@ running, for example, `phoronix-test-suite benchmark 1204293-BY-PHORONIX357` if
 wishing to compare the results of the
 `http://openbenchmarking.org/result/1204293-BY-PHORONIX357` result file.
 
-Additional information is available from the Phoronix Test Suite web-site
+Additional information is available from the Phoronix Test Suite website
 <http://www.phoronix-test-suite.com/> and the material bundled within the
 `phoronix-test-suite/documentation/` directory. A man page is also bundled with
 the phoronix-test-suite software.
