@@ -24,11 +24,12 @@
 class phodevi extends phodevi_base
 {
 	public static $vfs = false;
-	private static $device_cache = null;
-	private static $smart_cache = null;
+	private static $device_cache = array();
+	private static $smart_cache = array();
 	private static $sensors = null;
 
 	private static $operating_system = null;
+	private static $graphics_detected = false;
 	private static $graphics = array(
 		'mesa' => false,
 		'ati' => false,
@@ -372,6 +373,15 @@ class phodevi extends phodevi_base
 			self::$operating_system = 'Unknown';
 		}
 
+		self::load_sensors();
+	}
+	private static function detect_graphics()
+	{
+		if(self::$graphics_detected == true)
+		{
+			return;
+		}
+
 		// OpenGL / graphics detection
 		$graphics_detection = array('NVIDIA', array('ATI', 'AMD', 'fglrx'), array('Mesa', 'SGI'));
 		$opengl_driver = phodevi::read_property('system', 'opengl-vendor') . ' ' . phodevi::read_property('system', 'opengl-driver') . ' ' . phodevi::read_property('system', 'dri-display-driver');
@@ -394,7 +404,7 @@ class phodevi extends phodevi_base
 			}
 		}
 
-		self::load_sensors();
+		self::$graphics_detected = true;
 	}
 	public static function set_device_cache($cache_array)
 	{
@@ -576,14 +586,17 @@ class phodevi extends phodevi_base
 	}
 	public static function is_mesa_graphics()
 	{
+		self::detect_graphics();
 		return self::$graphics['mesa'];
 	}
 	public static function is_ati_graphics()
 	{
+		self::detect_graphics();
 		return self::$graphics['ati'];
 	}
 	public static function is_nvidia_graphics()
 	{
+		self::detect_graphics();
 		return self::$graphics['nvidia'];
 	}
 	public static function is_root()

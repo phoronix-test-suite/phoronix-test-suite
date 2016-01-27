@@ -28,8 +28,8 @@ class graphics_event_checker extends pts_module_interface
 	const module_description = 'This module checks a number of events prior to and and after running a test to make sure the graphics sub-system was not put in a sour or unintended state by the application. For instance, it makes sure syncing to vBlank is not forced through the driver and that a graphics test has not left the display in an unintended mode.';
 	const module_author = 'Michael Larabel';
 
-	static $start_video_resolution = array(-1, -1);
-	static $driver_forced_vsync = false;
+	private static $start_video_resolution = array(-1, -1);
+	private static $driver_forced_vsync = false;
 
 	// GPU Errors
 	static $error_pointer = 0;
@@ -152,7 +152,7 @@ class graphics_event_checker extends pts_module_interface
 			echo PHP_EOL . 'GPU Errors: ' . $error_count . $error_breakdown . PHP_EOL;
 		}
 
-		if(phodevi::is_nvidia_graphics() && self::$driver_forced_vsync)
+		if(self::$driver_forced_vsync && phodevi::is_nvidia_graphics())
 		{
 			shell_exec('nvidia-settings -a SyncToVBlank=1 2>&1');
 		}
