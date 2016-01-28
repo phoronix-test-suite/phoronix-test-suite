@@ -309,6 +309,38 @@ class pts_test_result_buffer
 
 		return $value;
 	}
+	public function buffer_values_to_percent()
+	{
+		$is_multi_way = pts_render::multi_way_identifier_check($this->get_identifiers());
+		if($is_multi_way)
+		{
+			$group_values = array();
+			foreach($this->buffer_items as &$buffer_item)
+			{
+				$identifier_r = pts_strings::trim_explode(': ', $buffer_item->get_result_identifier());
+				if(!isset($group_values[$identifier_r[1]]))
+				{
+					$group_values[$identifier_r[1]] = 0;
+				}
+				$group_values[$identifier_r[1]] += $buffer_item->get_result_value();
+			}
+			foreach($this->buffer_items as &$buffer_item)
+			{
+				$identifier_r = pts_strings::trim_explode(': ', $buffer_item->get_result_identifier());
+				$percent = pts_math::set_precision(($buffer_item->get_result_value() / $group_values[$identifier_r[1]] * 100), 3);
+				$buffer_item->reset_result_value($percent);
+			}
+		}
+		else
+		{
+			$total_value = array_sum($this->get_values());
+			foreach($this->buffer_items as &$buffer_item)
+			{
+				$percent = pts_math::set_precision(($buffer_item->get_result_value() / $total_value * 100), 3);
+				$buffer_item->reset_result_value($percent);
+			}
+		}
+	}
 	public function get_values()
 	{
 		$values = array();
