@@ -134,7 +134,7 @@ class pts_graph_lines extends pts_graph_core
 		{
 			$max_value *= 1.25; // leave room at top of graph
 			$this->i['graph_max_value'] = round($max_value, $max_value < 10 ? 1 : 0);
-			$this->i['graph_max_value'] = round(ceil($this->i['graph_max_value'] / $this->i['mark_count']), (0 - strlen($maximum) + 2)) * $this->i['mark_count'];
+			$this->i['graph_max_value'] = round(ceil($this->i['graph_max_value'] / $this->i['mark_count']), (0 - strlen($this->i['graph_max_value']) + 2)) * $this->i['mark_count'];
 		}
 	}
 	protected function render_graph_identifiers()
