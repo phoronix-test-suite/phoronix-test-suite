@@ -41,7 +41,7 @@ class phoromatic_maintenance_table implements pts_webui_interface
 
 		$main = '<h1>Systems</h1>';
 		$main .= '<p>Various system interaction vitals for the Phoronix Test Suite systems associated with this account.</p>';
-		$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, Hardware, Software, ClientVersion, LastIP, NetworkMAC, LastCommunication, CurrentTask, CoreVersion, NetworkWakeOnLAN FROM phoromatic_systems WHERE AccountID = :account_id AND State >= 0 ORDER BY LastCommunication DESC');
+		$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, Hardware, Software, ClientVersion, LastIP, NetworkMAC, LastCommunication, CurrentTask, CoreVersion, NetworkWakeOnLAN, BlockPowerOffs FROM phoromatic_systems WHERE AccountID = :account_id AND State >= 0 ORDER BY LastCommunication DESC');
 		$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 		$result = $stmt->execute();
 
@@ -59,7 +59,7 @@ class phoromatic_maintenance_table implements pts_webui_interface
 			$components[$row['SystemID']]['Last IP'] = $row['LastIP'];
 			$components[$row['SystemID']]['Phoronix Test Suite'] = $row['ClientVersion'] . ' [' . $row['CoreVersion'] . ']';
 			$components[$row['SystemID']]['MAC'] = $row['NetworkMAC'];
-			$components[$row['SystemID']]['Wake-On-LAN'] = empty($row['NetworkWakeOnLAN']) ? 'N/A' : $row['NetworkWakeOnLAN'];
+			$components[$row['SystemID']]['Wake-On-LAN'] = (empty($row['NetworkWakeOnLAN']) ? 'N/A' : $row['NetworkWakeOnLAN']) . ' - ' . ($row['BlockPowerOffs'] == 1 ? 'Blocked' : 'Permitted');
 			$components[$row['SystemID']]['Latest Result Upload'] = $latest_result != null ? date('d F', strtotime($latest_result)) : 'N/A';
 			$system_ids[$row['SystemID']] = $row['Title'];
 		}
