@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2015, Phoronix Media
-	Copyright (C) 2015, Michael Larabel
+	Copyright (C) 2015 - 2016, Phoronix Media
+	Copyright (C) 2015 - 2016, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -41,7 +41,7 @@ class phoromatic_maintenance_table implements pts_webui_interface
 
 		$main = '<h1>Systems</h1>';
 		$main .= '<p>Various system interaction vitals for the Phoronix Test Suite systems associated with this account.</p>';
-		$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, Hardware, Software, ClientVersion, LastIP, NetworkMAC, LastCommunication, CurrentTask, CoreVersion FROM phoromatic_systems WHERE AccountID = :account_id AND State >= 0 ORDER BY LastCommunication DESC');
+		$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, Hardware, Software, ClientVersion, LastIP, NetworkMAC, LastCommunication, CurrentTask, CoreVersion, NetworkWakeOnLAN FROM phoromatic_systems WHERE AccountID = :account_id AND State >= 0 ORDER BY LastCommunication DESC');
 		$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 		$result = $stmt->execute();
 
@@ -59,12 +59,13 @@ class phoromatic_maintenance_table implements pts_webui_interface
 			$components[$row['SystemID']]['Last IP'] = $row['LastIP'];
 			$components[$row['SystemID']]['Phoronix Test Suite'] = $row['ClientVersion'] . ' [' . $row['CoreVersion'] . ']';
 			$components[$row['SystemID']]['MAC'] = $row['NetworkMAC'];
+			$components[$row['SystemID']]['Wake-On-LAN'] = empty($row['NetworkWakeOnLAN']) ? 'N/A' : $row['NetworkWakeOnLAN'];
 			$components[$row['SystemID']]['Latest Result Upload'] = $latest_result != null ? date('d F', strtotime($latest_result)) : 'N/A';
 			$system_ids[$row['SystemID']] = $row['Title'];
 		}
 
 		$main .= '<div style="margin: 10px auto; overflow: auto;"><table width="100%">';
-		$component_types = array('Last Communication', 'Current Task', 'Phoronix Test Suite', 'Last IP', 'MAC', 'Latest Result Upload');
+		$component_types = array('Last Communication', 'Current Task', 'Phoronix Test Suite', 'Last IP', 'MAC', 'Wake-On-LAN', 'Latest Result Upload');
 		$main .= '<tr><th>&nbsp;</th>';
 		foreach($component_types as $type)
 		{
