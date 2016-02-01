@@ -312,7 +312,7 @@ class pts_network
 		}
 		else if(!PTS_IS_WEB_CLIENT)
 		{
-			$server_response = pts_network::http_get_contents('http://www.phoronix-test-suite.com/PTS', false, false);
+			$server_response = pts_network::http_get_contents('http://openbenchmarking.org/PTS', false, false);
 
 			if($server_response != 'PTS')
 			{
@@ -331,7 +331,7 @@ class pts_network
 						foreach(array(20, 40) as $time_to_wait)
 						{
 							sleep($time_to_wait);
-							$server_response = pts_network::http_get_contents('http://www.phoronix-test-suite.com/PTS', false, false);
+							$server_response = pts_network::http_get_contents('http://openbenchmarking.org/PTS', false, false);
 							if($server_response != 'PTS' && gethostbyname('google.com') == 'google.com')
 							{
 								trigger_error('No Internet Connectivity After Wait', E_USER_WARNING);
