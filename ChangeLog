@@ -65,7 +65,7 @@ Phoronix Test Suite 6.0 Milestone 6
 
 - pts-core: Windows updates
 - pts-core: Random fixes
-- pts-core / phodevi: Merge the complete system sensors rework: https://github.com/phoronix-test-suite/phoronix-test-suite/pull/92
+- pts-core / phodevi: Merge the complete system sensors rework: https://github.com/phoronix-test-suite/phoronix-test-suite/pull/92 (Jakub Maleszewski)
 - pts-core: pts_openbenchmarking::available_tests() don't show deprecated test profiles by default
 - phodevi: Support reporting /sys/firmware/devicetree/base/model for part of motherboard/SBC string
 - phoromatic: Final styling for hammerfest
