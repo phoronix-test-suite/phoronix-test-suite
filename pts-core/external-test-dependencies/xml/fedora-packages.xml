@@ -252,7 +252,7 @@
 		</Package>
 		<Package>
 			<GenericName>opencl</GenericName>
-			<PackageName>opencl-headers</PackageName>
+			<PackageName>opencl-headers pocl</PackageName>
 		</Package>
 		<Package>
 			<GenericName>attr</GenericName>
@@ -261,6 +261,10 @@
                 <Package>
 			<GenericName>httpd</GenericName>
 			<PackageName>httpd</PackageName>
+		</Package>
+                <Package>
+			<GenericName>golang</GenericName>
+			<PackageName>golang</PackageName>
 		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

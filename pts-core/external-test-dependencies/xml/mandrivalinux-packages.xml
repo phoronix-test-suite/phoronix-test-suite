@@ -235,5 +235,9 @@
 			<GenericName>tinyxml</GenericName>
 			<PackageName>tinyxml-devel</PackageName>
 		</Package>
+                <Package>
+			<GenericName>golang</GenericName>
+			<PackageName>golang</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

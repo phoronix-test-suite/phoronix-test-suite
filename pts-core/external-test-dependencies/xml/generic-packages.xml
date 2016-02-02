@@ -416,5 +416,11 @@
                         <PossibleNames>httpd, apache2</PossibleNames>
                         <FileCheck>/usr/sbin/apachectl</FileCheck>
                 </Package>
+		<Package>
+			<GenericName>golang</GenericName>
+			<Title>Go Language</Title>
+			<PossibleNames>golang, go-doc</PossibleNames>
+			<FileCheck>/usr/bin/go</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

@@ -252,5 +252,9 @@
 			<GenericName>httpd</GenericName>
 			<PackageName>www-servers/apache</PackageName>
 		</Package>
+                <Package>
+			<GenericName>golang</GenericName>
+			<PackageName>dev-lang/go</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

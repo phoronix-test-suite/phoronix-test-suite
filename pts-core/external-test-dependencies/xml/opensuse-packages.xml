@@ -258,5 +258,9 @@
 			<GenericName>httpd</GenericName>
 			<PackageName>apache2</PackageName>
 		</Package>
+                <Package>
+			<GenericName>golang</GenericName>
+			<PackageName>go-doc</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

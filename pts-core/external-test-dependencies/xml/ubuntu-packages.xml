@@ -307,5 +307,9 @@
 			<GenericName>httpd</GenericName>
 			<PackageName>apache2</PackageName>
 		</Package>
+                <Package>
+			<GenericName>golang</GenericName>
+			<PackageName>golang</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

@@ -208,5 +208,9 @@
 			<GenericName>superlu</GenericName>
 			<PackageName>math/superlu</PackageName>
 		</Package>
+                <Package>
+			<GenericName>golang</GenericName>
+			<PackageName>lang/go</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
