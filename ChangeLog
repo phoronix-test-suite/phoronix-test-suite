@@ -4,6 +4,7 @@ Phoronix Test Suite (Git)
 
 - phodevi: Optimization for slightly faster start-up time
 - phoromatic: Add WoL details to the maintenace table page
+- matisk: Restore the MATISK module for testing  (Jakub Maleszewski)
 
 Phoronix Test Suite 6.2 Milestone 4
 26 January 2016
