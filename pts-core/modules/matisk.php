@@ -2,8 +2,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2011, Michael Larabel
-	Copyright (C) 2011, Phoronix Media
+	Copyright (C) 2016, Michael Larabel
+	Copyright (C) 2016, Phoronix Media
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
 class matisk extends pts_module_interface
 {
 	const module_name = 'MATISK';
-	const module_version = '1.1.0';
+	const module_version = '1.1.1';
 	const module_description = 'My Automated Test Infrastructure Setup Kit';
 	const module_author = 'Michael Larabel';
 
@@ -368,10 +368,11 @@ Categories=System;Monitor;');
 			if(pts_strings::string_bool(self::$ini['installation']['install_check']) || $ini['set_context']['pre_install'] != null)
 			{
 				self::process_user_config_external_hook_process('pre_install');
-				$install_flags = pts_c::auto_mode;
+				$force_install = false;
+				$no_prompts = true;
 				if(pts_strings::string_bool(self::$ini['installation']['force_install']))
 				{
-					$install_flags |= pts_c::force_install;
+					$force_install = true;
 				}
 
 				if(self::$ini['installation']['external_download_cache'] != null)
@@ -380,12 +381,14 @@ Categories=System;Monitor;');
 				}
 
 				// Do the actual test installation
-				pts_test_installer::standard_install(self::$ini['workload']['suite'], $install_flags);
+				pts_test_installer::standard_install(self::$ini['workload']['suite'], $force_install, $no_prompts);
 				self::process_user_config_external_hook_process('post_install');
 			}
 
-			$test_flags = pts_c::auto_mode;
-			if(pts_test_run_manager::initial_checks(self::$ini['workload']['suite'], $test_flags) == false)
+			$batch_mode = false;
+			$auto_mode = true;
+			$test_run_manager = new pts_test_run_manager($batch_mode, $auto_mode);
+			if($test_run_manager->initial_checks(self::$ini['workload']['suite']) == false)
 			{
 				return false;
 			}
@@ -393,7 +396,6 @@ Categories=System;Monitor;');
 			if(self::$skip_test_set == false)
 			{
 				self::process_user_config_external_hook_process('pre_run');
-				$test_run_manager = new pts_test_run_manager($test_flags);
 
 				// Load the tests to run
 				if($test_run_manager->load_tests_to_run(self::$ini['workload']['suite']) == false)
