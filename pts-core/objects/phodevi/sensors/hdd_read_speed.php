@@ -60,17 +60,18 @@ class hdd_read_speed extends phodevi_sensor
 	{
 		if(phodevi::is_linux())
 		{
-			$disk_list = scandir('/sys/class/block');
-			$disk_array = preg_grep('/^[shv]d[a-z]$/', $disk_list);
+			$blockdev_dir = '/sys/block/';
+			$glob_regex = '{[shvm]d*,nvme*,mmcblk*}';
+			$disk_array = pts_file_io::glob($blockdev_dir . $glob_regex, GLOB_BRACE);
 
 			$supported = array();
 
 			foreach($disk_array as $check_disk)
 			{
-				$stat_path = '/sys/class/block/' . $check_disk . '/stat';
+				$stat_path = $check_disk . '/stat';
 				if(is_file($stat_path) && pts_file_io::file_get_contents($stat_path) != null)
 				{
-					array_push($supported, $check_disk);
+					array_push($supported, basename($check_disk));
 				}
 			}
 
@@ -97,7 +98,7 @@ class hdd_read_speed extends phodevi_sensor
 			return -1;
 		}
 
-		$stat_path = '/sys/class/block/' . $this->disk_to_monitor . '/stat';
+		$stat_path = '/sys/block/' . $this->disk_to_monitor . '/stat';
 		$speed = phodevi_linux_parser::read_sys_disk_speed($stat_path, 'READ');
 		return $speed;
 	}
