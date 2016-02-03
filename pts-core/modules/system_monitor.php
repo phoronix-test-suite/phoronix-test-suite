@@ -207,7 +207,7 @@ class system_monitor extends pts_module_interface
 			{
 				posix_kill($pid, SIGTERM);
 			}
-			else if(pts_client::executable_in_path('uptime'))
+			else if(pts_client::executable_in_path('kill'))
 			{
 				shell_exec('kill ' . $pid . ' > /dev/null 2>&1');
 			}
