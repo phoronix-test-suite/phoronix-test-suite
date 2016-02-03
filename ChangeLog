@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add golang as possible external dependency
 - phodevi: Optimization for slightly faster start-up time
 - phoromatic: Add WoL details to the maintenace table page
+- phodevi: Sensor clean-up and fixes  (Jakub Maleszewski)
 - matisk: Restore the MATISK module for testing  (Jakub Maleszewski)
 
 Phoronix Test Suite 6.2 Milestone 4
