@@ -48,7 +48,7 @@ class network_usage extends phodevi_sensor
 	{
 		if(phodevi::is_linux())
 		{
-            //TODO write network_usage_linux function
+			//TODO write network_usage_linux function
 //			$iface_list = shell_exec("ls -1 /sys/class/net | grep -v lo");
 //			$iface_array = explode("\n", $iface_list);
 //

@@ -25,7 +25,7 @@ class cpu_power extends phodevi_sensor
 	const SENSOR_TYPE = 'cpu';
 	const SENSOR_SENSES = 'power';
 	const SENSOR_UNIT = 'Watts';
-    
+
 
 	public function read_sensor()
 	{
@@ -33,28 +33,28 @@ class cpu_power extends phodevi_sensor
 		{
 			return $this->cpu_power_linux();
 		}
-		return -1;      // TODO make -1 a named constant
+		return -1;		// TODO make -1 a named constant
 	}
 
 	private function cpu_power_linux()
 	{
 		$cpu_watts = -1;
-        
+
 		// Try hwmon interface for AMD 15h (Bulldozer FX CPUs) where this support was introduced for AMD CPUs and exposed by the fam15h_power hwmon driver
 		// The fam15h_power driver doesn't expose the power consumption on a per-core/per-package basis but only an average
 		$hwmon_watts = phodevi_linux_parser::read_sysfs_node('/sys/class/hwmon/hwmon*/device/power1_input', 'POSITIVE_NUMERIC', array('name' => 'fam15h_power'));
 
 		if($hwmon_watts != -1)
 		{
-		    if($hwmon_watts > 1000000)
-		    {
-		        // convert to Watts
-		        $hwmon_watts = $hwmon_watts / 1000000;
-		    }
+			if($hwmon_watts > 1000000)
+			{
+				// convert to Watts
+				$hwmon_watts = $hwmon_watts / 1000000;
+			}
 
-		    $cpu_watts = pts_math::set_precision($hwmon_watts, 2);
+			$cpu_watts = pts_math::set_precision($hwmon_watts, 2);
 		}
-        
+
 		return $cpu_watts;
 	}
 }

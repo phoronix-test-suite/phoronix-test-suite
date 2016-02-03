@@ -58,17 +58,18 @@ class hdd_temp extends phodevi_sensor
 	{
 		if(phodevi::is_linux())
 		{
-			$disk_list = shell_exec("ls -1 /sys/class/block | grep '^[sh]d[a-z]$'"); // TODO make this native PHP...
-			$disk_array = explode("\n", $disk_list);
+			$blockdev_dir = '/sys/block/';
+			$glob_regex = '{[shvm]d*,nvme*,mmcblk*}';
+			$disk_array = pts_file_io::glob($blockdev_dir . $glob_regex, GLOB_BRACE);
 
 			$supported = array();
 
 			foreach($disk_array as $check_disk)
 			{
-				$stat_path = '/sys/class/block/' . $check_disk . '/stat';
+				$stat_path = $check_disk . '/stat';
 				if(is_file($stat_path) && pts_file_io::file_get_contents($stat_path) != null)
 				{
-					array_push($supported, $check_disk);
+					array_push($supported, basename($check_disk));
 				}
 			}
 

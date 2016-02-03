@@ -92,7 +92,7 @@ class cpu_usage extends phodevi_sensor
 		}
 		else if(phodevi::is_macosx())
 		{
-		    $percent = $this->cpu_usage_macosx();
+			$percent = $this->cpu_usage_macosx();
 		}
 
 		if(!isset($percent) || !is_numeric($percent) || $percent < 0 || $percent > 100)
@@ -111,7 +111,7 @@ class cpu_usage extends phodevi_sensor
 
 		for($i = 0; $i < count($end_load); $i++)
 		{
-		    $end_load[$i] -= $start_load[$i];
+			$end_load[$i] -= $start_load[$i];
 		}
 
 		$percent = (($sum = array_sum($end_load)) == 0 ? 0 : 100 - (($end_load[self::PROC_STAT_IDLE_COL] * 100) / $sum));
