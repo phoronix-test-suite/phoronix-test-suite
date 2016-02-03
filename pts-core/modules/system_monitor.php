@@ -203,7 +203,20 @@ class system_monitor extends pts_module_interface
 
 		foreach(self::$monitor_pids as $pid)
 		{
-			posix_kill($pid, SIGTERM);
+			if(function_exists('posix_kill'))
+			{
+				posix_kill($pid, SIGTERM);
+			}
+			else if(pts_client::executable_in_path('uptime'))
+			{
+				shell_exec('kill ' . $pid . ' > /dev/null 2>&1');
+			}
+			else
+			{
+				// TODO XXX
+				continue;
+			}
+
 			pcntl_waitpid($pid, $status);
 		}
 
