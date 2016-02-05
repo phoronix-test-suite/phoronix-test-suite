@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 6.2 Milestone 5
+5 February 2016
 
 - pts-core: Add golang as possible external dependency
 - phodevi: Optimization for slightly faster start-up time
