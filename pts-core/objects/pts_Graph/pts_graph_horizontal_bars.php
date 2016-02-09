@@ -22,12 +22,18 @@
 
 class pts_graph_horizontal_bars extends pts_graph_core
 {
+	protected $make_identifiers_web_links = false;
 	public function __construct(&$result_object, &$result_file = null, $extra_attributes = null)
 	{
 		parent::__construct($result_object, $result_file, $extra_attributes);
 		$this->i['iveland_view'] = true;
 		$this->i['graph_orientation'] = 'HORIZONTAL';
 		$this->i['identifier_height'] = -1;
+
+		if(isset($extra_attributes['make_identifiers_web_links']) && !empty($extra_attributes['make_identifiers_web_links']))
+		{
+			$this->make_identifiers_web_links = $extra_attributes['make_identifiers_web_links'];
+		}
 	}
 	protected function render_graph_pre_init()
 	{
@@ -55,7 +61,12 @@ class pts_graph_horizontal_bars extends pts_graph_core
 			}
 			else
 			{
-				$this->svg_dom->add_text_element($identifier, array('x' => ($this->i['left_start'] - 5), 'y' => $middle_of_vert, 'text-anchor' => 'end'), $g);
+				$attrs = array('x' => ($this->i['left_start'] - 5), 'y' => $middle_of_vert, 'text-anchor' => 'end');
+				if($this->make_identifiers_web_links)
+				{
+					$attrs['xlink:href'] = $this->make_identifiers_web_links . $identifier;
+				}
+				$this->svg_dom->add_text_element($identifier, $attrs, $g);
 			}
 		}
 	}
