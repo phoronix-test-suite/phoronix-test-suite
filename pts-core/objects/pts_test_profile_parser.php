@@ -68,15 +68,15 @@ class pts_test_profile_parser
 			{
 				$read = PTS_TEST_PROFILE_PATH . $read . '/test-definition.xml';
 			}
-			else if(substr($read, -4) == '.zip' && is_file($read))
-			{
-				$zip = new ZipArchive();
+		}
+		else if(substr($read, -4) == '.zip' && is_file($read))
+		{
+			$zip = new ZipArchive();
 
-				if($zip->open($read) === true)
-				{
-					$read = $zip->getFromName('test-definition.xml');
-					$zip->close();
-				}
+			if($zip->open($read) === true)
+			{
+				$read = $zip->getFromName('test-definition.xml');
+				$zip->close();
 			}
 		}
 
