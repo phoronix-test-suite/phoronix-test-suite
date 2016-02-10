@@ -479,7 +479,7 @@ abstract class pts_graph_core
 					$longest_string = pts_strings::find_longest_string($longest_string);
 
 					$rotated_text = round(self::text_string_width($longest_string, $this->i['identifier_size']) * 0.96);
-					$per_identifier_height = max((14 + (22 * count($this->results))), $rotated_text);
+					$per_identifier_height = max((14 + (14 * count($this->results))), $rotated_text);
 				}
 				else if(count($this->results) > 3)
 				{
@@ -796,7 +796,7 @@ abstract class pts_graph_core
 	}
 	protected function graph_key_height()
 	{
-		if(count($this->results) < 2 && $this->i['show_graph_key'] == false) // TODO likely should be OR
+		if((count($this->results) < 2 || $this->i['show_graph_key'] == false) && !$this->is_multi_way_comparison) // TODO likely should be OR
 		{
 			return 0;
 		}
