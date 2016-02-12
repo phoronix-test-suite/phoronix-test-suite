@@ -217,7 +217,7 @@
 		</Package>
 		<Package>
 			<GenericName>openmpi-development</GenericName>
-			<PackageName>libopenmpi-dev openmpi-bin libmpich2-dev</PackageName>
+			<PackageName>libopenmpi-dev openmpi-bin libmpich-dev</PackageName>
 		</Package>
 		<Package>
 			<GenericName>cmake</GenericName>
