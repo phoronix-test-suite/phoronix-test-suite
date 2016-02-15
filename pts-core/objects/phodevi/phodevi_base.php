@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2012, Phoronix Media
-	Copyright (C) 2009 - 2012, Michael Larabel
+	Copyright (C) 2009 - 2016, Phoronix Media
+	Copyright (C) 2009 - 2016, Michael Larabel
 	phodevi_base.php: The base object for interacting with the Phoronix Device Interface
 
 	This program is free software; you can redistribute it and/or modify
@@ -46,6 +46,7 @@ class phodevi_base
 		'Display Server' => array('system', 'display-server'),
 		'Display Driver' => array('system', 'display-driver-string'),
 		'OpenGL' => array('system', 'opengl-driver'),
+		'Vulkan' => array('system', 'vulkan-driver'),
 		'Compiler' => array('system', 'compiler'),
 		'File-System' => array('system', 'filesystem'),
 		'Screen Resolution' => array('gpu', 'screen-resolution-string'),
