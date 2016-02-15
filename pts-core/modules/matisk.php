@@ -478,7 +478,7 @@ Categories=System;Monitor;');
 
 			if(pts_strings::string_bool(self::$ini['set_context']['log_context_outputs']))
 			{
-				file_put_contents(pts_module::save_dir() . $ini['workload']['save_name'] . '/' . self::$context . '-' . $process . '.txt', $std_output);
+				file_put_contents(pts_module::save_dir() . self::$ini['workload']['save_name'] . '/' . self::$context . '-' . $process . '.txt', $std_output);
 			}
 
 			switch($return_value)

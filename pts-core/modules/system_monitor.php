@@ -52,7 +52,7 @@ class system_monitor extends pts_module_interface
 
 	public static function module_environmental_variables()
 	{
-		return array('MONITOR', 'PERFORMANCE_PER_WATT', 'MONITOR_INTERVAL' );
+		return array('MONITOR', 'PERFORMANCE_PER_WATT', 'MONITOR_INTERVAL', 'MONITOR_PER_RUN' );
 	}
 
 	public static function module_info()
@@ -678,21 +678,34 @@ class system_monitor extends pts_module_interface
 	}
 	private static function write_test_run_results(&$result_buffer, &$result_file, &$sensor)
 	{
-		//TODO result count checks should probably be done before cloning the test_result
+		// TODO result count checks should probably be done before cloning the test_result
 		// Copy the value each time as if you are directly writing the original data, each succeeding time in the loop the used arguments gets borked
 		$test_result = clone self::$individual_test_run_request;
+
+		if (pts_module_manager::is_module_attached("matisk"))
+		{
+			// TODO find some better way than adding a number to distinguish the results between the MATISK runs
+			$arguments_description = phodevi::sensor_object_name($sensor) . ' Monitor (test ' . count($result_file->get_systems()) . ')';
+			$arguments_try_description = phodevi::sensor_object_name($sensor) . ' Per Test Try Monitor (test ' . count($result_file->get_systems()) . ')';
+		}
+		else
+		{
+			$arguments_description = phodevi::sensor_object_name($sensor) . ' Monitor';
+			$arguments_try_description = phodevi::sensor_object_name($sensor) . ' Per Test Try Monitor';
+		}
+
 
 		$test_result->test_profile->set_identifier(null);
 		$test_result->test_profile->set_result_proportion('LIB');
 		$test_result->test_profile->set_display_format('LINE_GRAPH');
 		$test_result->test_profile->set_result_scale(phodevi::read_sensor_object_unit($sensor));
-		$test_result->set_used_arguments_description(phodevi::sensor_object_name($sensor) . ' Monitor');
+		$test_result->set_used_arguments_description($arguments_description);
 		$test_result->set_used_arguments(phodevi::sensor_object_name($sensor) . ' ' . $test_result->get_arguments());
 		$test_result->test_result_buffer = $result_buffer;
 
 		if(self::$per_test_try_monitoring && $result_buffer->get_count() > 1)
 		{
-			$test_result->set_used_arguments_description(phodevi::sensor_object_name($sensor) . ' Per Test Try Monitor');
+			$test_result->set_used_arguments_description($arguments_try_description);
 		}
 
 		$result_file->add_result($test_result);
