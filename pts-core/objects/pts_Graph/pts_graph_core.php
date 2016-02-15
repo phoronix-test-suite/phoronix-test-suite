@@ -381,6 +381,33 @@ abstract class pts_graph_core
 			$this->i['graph_left_end'] = $this->i['graph_width'] - $this->i['left_end_right'];
 		}
 	}
+	protected function identifier_to_branded_color($identifier, $fallback_color = null)
+	{
+		// See if the result identifier matches something to be color-coded better
+		$identifier = strtolower($identifier) . ' ';
+		if(strpos($identifier, 'geforce') !== false || strpos($identifier, 'nvidia') || strpos($identifier, 'quadro') !== false)
+		{
+			$paint_color = '#77b900';
+		}
+		else if(strpos($identifier, 'radeon') !== false || strpos($identifier, 'amd ') !== false || strpos($identifier, 'firepro ') !== false)
+		{
+			$paint_color = '#f1052d';
+		}
+		else if(strpos($identifier, 'intel ') !== false)
+		{
+			$paint_color = '#0b5997';
+		}
+		else if(strpos($identifier, 'bsd') !== false)
+		{
+			$paint_color = '#850000';
+		}
+		else
+		{
+			$paint_color = $fallback_color;
+		}
+
+		return $paint_color;
+	}
 
 	//
 	// Render Functions

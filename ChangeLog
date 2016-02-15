@@ -1,5 +1,11 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite 6.2
+
+- pts_Graph: Fixes
+- pts_Graph: Support for branded colors on more graphs
+- phodevi: plumbing V
+
 Phoronix Test Suite 6.2 Milestone 5
 5 February 2016
 

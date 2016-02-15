@@ -95,7 +95,18 @@ class pts_graph_box_plot extends pts_graph_horizontal_bars
 
 				$value_end_left = $this->i['left_start'] + max(1, round(($whisker_bottom / $this->i['graph_max_value']) * $work_area_width));
 				$value_end_right = $this->i['left_start'] + round(($whisker_top / $this->i['graph_max_value']) * $work_area_width);
-				$box_color = in_array($buffer_item->get_result_identifier(), $this->value_highlights) ? self::$c['color']['highlight'] : $paint_color;
+				// if identifier is 0, not a multi-way comparison or anything special
+				if($identifier == 0 && !$this->is_multi_way_comparison)
+				{
+					// See if the result identifier matches something to be color-coded better
+					$box_color = self::identifier_to_branded_color($buffer_item->get_result_identifier(), $paint_color);
+				}
+				else
+				{
+					$box_color = $paint_color;
+				}
+
+				$box_color = in_array($buffer_item->get_result_identifier(), $this->value_highlights) ? self::$c['color']['highlight'] : $box_color;
 
 				$this->svg_dom->draw_svg_line($value_end_left, $middle_of_bar, $value_end_right, $middle_of_bar, $box_color, 2, array('xlink:title' => $title_tooltip));
 				$this->svg_dom->draw_svg_line($value_end_left, $px_bound_top, $value_end_left, $px_bound_bottom, self::$c['color']['notches'], 2, array('xlink:title' => $title_tooltip));

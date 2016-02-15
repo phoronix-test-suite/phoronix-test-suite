@@ -105,27 +105,7 @@ class pts_graph_horizontal_bars extends pts_graph_core
 				if($identifier == 0 && !$this->is_multi_way_comparison)
 				{
 					// See if the result identifier matches something to be color-coded better
-					$result_identifier = strtolower($buffer_item->get_result_identifier()) . ' ';
-					if(strpos($result_identifier, 'geforce') !== false || strpos($result_identifier, 'nvidia') || strpos($result_identifier, 'quadro') !== false)
-					{
-						$paint_color = '#77b900';
-					}
-					else if(strpos($result_identifier, 'radeon') !== false || strpos($result_identifier, 'amd ') !== false || strpos($result_identifier, 'firepro ') !== false)
-					{
-						$paint_color = '#f1052d';
-					}
-					else if(strpos($result_identifier, 'intel ') !== false)
-					{
-						$paint_color = '#0b5997';
-					}
-					else if(strpos($result_identifier, 'bsd') !== false)
-					{
-						$paint_color = '#850000';
-					}
-					else
-					{
-						$paint_color = $this->get_paint_color($identifier);
-					}
+					$paint_color = self::identifier_to_branded_color($buffer_item->get_result_identifier(), $this->get_paint_color($identifier));
 				}
 
 				$value = $buffer_item->get_result_value();
