@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2015, Phoronix Media
-	Copyright (C) 2008 - 2015, Michael Larabel
+	Copyright (C) 2008 - 2016, Phoronix Media
+	Copyright (C) 2008 - 2016, Michael Larabel
 	phodevi_system.php: The PTS Device Interface object for the system software
 
 	This program is free software; you can redistribute it and/or modify
@@ -1599,6 +1599,18 @@ class phodevi_system extends phodevi_device_interface
 	{
 		// Vulkan driver/version
 		$info = null;
+
+		// A less than ideal fallback for some detection now
+		foreach(pts_file_io::glob('/etc/vulkan/icd.d/*.json') as $icd_json)
+		{
+			$icd_json = json_decode(file_get_contents($icd_json), true);
+
+			if(isset($icd_json['ICD']['api_version']) && !empty($icd_json['ICD']['api_version']))
+			{
+				$info = trim($icd_json['ICD']['api_version']);
+				break;
+			}
+		}
 
 		return $info;
 	}
