@@ -22,7 +22,7 @@
 class matisk extends pts_module_interface
 {
 	const module_name = 'MATISK';
-	const module_version = '1.1.1';
+	const module_version = '1.2.0';
 	const module_description = 'My Automated Test Infrastructure Setup Kit';
 	const module_author = 'Michael Larabel';
 
