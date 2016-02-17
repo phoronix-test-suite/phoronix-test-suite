@@ -1600,15 +1600,27 @@ class phodevi_system extends phodevi_device_interface
 		// Vulkan driver/version
 		$info = null;
 
-		// A less than ideal fallback for some detection now
-		foreach(pts_file_io::glob('/etc/vulkan/icd.d/*.json') as $icd_json)
+		if(isset(phodevi::$vfs->vulkaninfo))
 		{
-			$icd_json = json_decode(file_get_contents($icd_json), true);
-
-			if(isset($icd_json['ICD']['api_version']) && !empty($icd_json['ICD']['api_version']))
+			if(($pos = strpos(phodevi::$vfs->vulkaninfo, 'Vulkan API Version:')) !== false)
 			{
-				$info = trim($icd_json['ICD']['api_version']);
-				break;
+				$info = substr(phodevi::$vfs->vulkaninfo, $pos + 20);
+				$info = trim(substr($info, 0, strpos($info, "\n")));
+			}
+		}
+
+		if($info == null)
+		{
+			// A less than ideal fallback for some detection now
+			foreach(pts_file_io::glob('/etc/vulkan/icd.d/*.json') as $icd_json)
+			{
+				$icd_json = json_decode(file_get_contents($icd_json), true);
+
+				if(isset($icd_json['ICD']['api_version']) && !empty($icd_json['ICD']['api_version']))
+				{
+					$info = trim($icd_json['ICD']['api_version']);
+					break;
+				}
 			}
 		}
 

@@ -39,6 +39,7 @@ class phodevi_vfs
 		'kernel_version' => array('type' => 'F', 'F' => '/proc/version', 'cacheable' => true, 'preserve' => true, 'subsystem' => 'System'),
 		'mounts' => array('type' => 'F', 'F' => '/proc/mounts', 'cacheable' => false, 'preserve' => true, 'subsystem' => 'Disk'),
 		'glxinfo' => array('type' => 'C', 'C' => 'glxinfo', 'cacheable' => true, 'preserve' => true, 'subsystem' => 'GPU'),
+		'vulkaninfo' => array('type' => 'C', 'C' => 'vulkaninfo', 'cacheable' => true, 'preserve' => true, 'subsystem' => 'GPU'),
 		'vdpauinfo' => array('type' => 'C', 'C' => 'vdpauinfo', 'cacheable' => true, 'preserve' => true, 'subsystem' => 'GPU'),
 		'lspci' => array('type' => 'C', 'C' => 'lspci -mmkvvnn', 'cacheable' => true, 'preserve' => true, 'subsystem' => 'System'),
 		'radeon_pm_info' => array('type' => 'F', 'F' => '/sys/kernel/debug/dri/0/radeon_pm_info', 'cacheable' => false, 'preserve' => true, 'subsystem' => 'GPU'),

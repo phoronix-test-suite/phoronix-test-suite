@@ -361,6 +361,7 @@ class pts_client
 					'cpufreq-info',
 					'glxinfo',
 					'clinfo',
+					'vulkaninfo',
 					'uname -a',
 					// 'udisks --dump',
 					'upower --dump',
