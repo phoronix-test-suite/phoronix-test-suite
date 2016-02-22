@@ -84,8 +84,8 @@ class perf_per_dollar extends pts_module_interface
 				$test_result->set_used_arguments('dollar comparison ' . $test_result->get_arguments());
 				$test_result->test_profile->set_result_scale($test_result->test_profile->get_result_scale() . ' Per Dollar');
 				$test_result->test_result_buffer = new pts_test_result_buffer();
-				$test_result->test_result_buffer->add_test_result($result, null, array('install-footnote' => '$' . self::$COST_PERF_PER_DOLLAR . ' reported cost.'));
-				$result_file->add_result(self::$result_identifier, $test_result);
+				$test_result->test_result_buffer->add_test_result(self::$result_identifier, $result, null, array('install-footnote' => '$' . self::$COST_PERF_PER_DOLLAR . ' reported cost.'));
+				$result_file->add_result($test_result);
 				self::$perf_per_dollar_collection[] = $test_result->active->get_result();
 			}
 		}
