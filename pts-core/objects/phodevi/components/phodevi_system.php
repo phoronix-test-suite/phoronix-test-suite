@@ -69,6 +69,9 @@ class phodevi_system extends phodevi_device_interface
 			case 'vulkan-driver':
 				$property = new phodevi_device_property('sw_vulkan_driver', phodevi::std_caching);
 				break;
+			case 'opencl-driver':
+				$property = new phodevi_device_property('sw_opencl_driver', phodevi::std_caching);
+				break;
 			case 'opengl-vendor':
 				$property = new phodevi_device_property('sw_opengl_vendor', phodevi::smart_caching);
 				break;
@@ -1625,6 +1628,23 @@ class phodevi_system extends phodevi_device_interface
 		}
 
 		return $info;
+	}
+	public static function sw_opencl_driver()
+	{
+		// OpenCL driver/version
+		$info = array();
+
+		if(isset(phodevi::$vfs->clinfo))
+		{
+			$sea = phodevi::$vfs->clinfo;
+			while(($pos = strpos($sea, 'Platform Version')) != false)
+			{
+				$sea = substr($sea, $pos + 18);
+				$info[] = trim(substr($sea, 0, strpos($sea, "\n")));
+			}
+		}
+
+		return implode(' + ', $info);
 	}
 	public static function sw_opengl_vendor()
 	{

@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - phodevi: Extra Vulkan information reporting
+- phodevi: Add OpenCL version reporting to system software string
 
 Phoronix Test Suite 6.2-Gamvik
 16 February 2016

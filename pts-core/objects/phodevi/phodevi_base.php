@@ -46,6 +46,7 @@ class phodevi_base
 		'Display Server' => array('system', 'display-server'),
 		'Display Driver' => array('system', 'display-driver-string'),
 		'OpenGL' => array('system', 'opengl-driver'),
+		'OpenCL' => array('system', 'opencl-driver'),
 		'Vulkan' => array('system', 'vulkan-driver'),
 		'Compiler' => array('system', 'compiler'),
 		'File-System' => array('system', 'filesystem'),
