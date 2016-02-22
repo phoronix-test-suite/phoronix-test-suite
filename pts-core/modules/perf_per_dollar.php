@@ -24,7 +24,7 @@
 class perf_per_dollar extends pts_module_interface
 {
 	const module_name = 'Performance Per Dollar/Cost Calculator';
-	const module_version = '0.1.0';
+	const module_version = '0.1.1';
 	const module_description = 'Setting the COST_PERF_PER_DOLLAR= environment variable to whatever value of the system cost/component you are running a comparison on will yield extra graphs that calculate the performance-per-dollar based on the test being run. The COST_PERF_PER_DOLLAR environment variable is applied just to the current test run identifier.';
 	const module_author = 'Michael Larabel';
 
@@ -72,7 +72,7 @@ class perf_per_dollar extends pts_module_interface
 			$result = 0;
 			if(self::$successful_test_run_request->test_profile->get_result_proportion() == 'HIB')
 			{
-				$result = pts_math::set_precision($test_result->active->get_result() / self::$COST_PERF_PER_DOLLAR);
+				$result = pts_math::set_precision(self::$successful_test_run_request->active->get_result() / self::$COST_PERF_PER_DOLLAR);
 			}
 
 			if($result != 0)
