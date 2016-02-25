@@ -51,7 +51,7 @@ class pts_network
 
 		return $contents;
 	}
-	public static function http_upload_via_post($url, $to_post_data)
+	public static function http_upload_via_post($url, $to_post_data, $supports_proxy = true)
 	{
 		if(!pts_network::network_support_available())
 		{
@@ -60,7 +60,14 @@ class pts_network
 
 		$upload_data = http_build_query($to_post_data);
 		$http_parameters = array('http' => array('method' => 'POST', 'content' => $upload_data));
-		$stream_context = pts_network::stream_context_create($http_parameters);
+		if($supports_proxy)
+		{
+			$stream_context = pts_network::stream_context_create($http_parameters);
+		}
+		else
+		{
+			$stream_context = pts_network::stream_context_create($http_parameters, false, -1, -1);
+		}
 		$opened_url = fopen($url, 'rb', false, $stream_context);
 		$response = $opened_url ? stream_get_contents($opened_url) : false;
 		// var_dump($url); var_dump($to_post_data);
@@ -206,7 +213,7 @@ class pts_network
 			$proxy_port = self::$network_proxy['port'];
 		}
 
-		if($proxy_address != false && $proxy_port != false && is_numeric($proxy_port))
+		if($proxy_address != false && $proxy_port != false && is_numeric($proxy_port) && $proxy_port > 1)
 		{
 			$parameters['http']['proxy'] = 'tcp://' . $proxy_address . ':' . $proxy_port;
 			$parameters['http']['request_fulluri'] = true;

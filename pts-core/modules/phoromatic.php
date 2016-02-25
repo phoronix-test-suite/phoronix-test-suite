@@ -287,7 +287,7 @@ class phoromatic extends pts_module_interface
 		$to_post['s'] = phodevi::system_software(true);
 		$to_post['n'] = phodevi::read_property('system', 'hostname');
 		$to_post['msi'] = PTS_MACHINE_SELF_ID;
-		return pts_network::http_upload_via_post('http://' . $server_address . ':' . $server_http_port .  '/phoromatic.php', $to_post);
+		return pts_network::http_upload_via_post('http://' . $server_address . ':' . $server_http_port .  '/phoromatic.php', $to_post, false);
 	}
 	protected static function update_system_status($current_task, $estimated_time_remaining = 0, $percent_complete = 0, $for_schedule = null, $estimate_to_next_comm = 0)
 	{

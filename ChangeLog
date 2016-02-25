@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- phoromatic: Don't use a proxy (if available) when trying to connect from Phoromatic client to server
+
 Phoronix Test Suite 6.2.1
 23 February 2016
 
