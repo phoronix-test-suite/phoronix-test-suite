@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2015, Phoronix Media
-	Copyright (C) 2015, Michael Larabel
+	Copyright (C) 2015 - 2016, Phoronix Media
+	Copyright (C) 2015 - 2016, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@ class stress_run implements pts_option_interface
 	}
 	public static function run($to_run)
 	{
-		pts_test_run_manager::set_batch_mode(array(
+		$test_run_manager = new pts_test_run_manager(array(
 			'UploadResults' => false,
 			'SaveResults' => false,
 			'PromptForTestDescription' => false,
@@ -50,8 +50,6 @@ class stress_run implements pts_option_interface
 			$tests_to_run_concurrently = $j;
 			echo 'PTS_CONCURRENT_TEST_RUNS set; running ' . $tests_to_run_concurrently . ' tests concurrently.' . PHP_EOL;
 		}
-
-		$test_run_manager = new pts_test_run_manager(true);
 
 		/*
 		if(count($to_run) < $tests_to_run_concurrently)
