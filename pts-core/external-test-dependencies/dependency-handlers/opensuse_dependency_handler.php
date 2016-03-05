@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2015, Phoronix Media
-	Copyright (C) 2015, Michael Larabel
+	Copyright (C) 2015 - 2016, Phoronix Media
+	Copyright (C) 2015 - 2016, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -42,20 +42,19 @@ class opensuse_dependency_handler implements pts_dependency_handler
 	{
 		$line = shell_exec('zypper search --provides --match-exact ' . $arg . ' 2>/dev/null');
 
-		
-			if(($x = strpos($line, '-----')) == false)
-			{
-				return null;
-			}
-			$line = substr($line, $x);
-                        $line = substr($line, strpos($line, "\n") + 2);
-                        $line = trim(substr($line, 0, strpos($line, PHP_EOL)));
-                        $parts = explode('|', $line);
+		if(($x = strpos($line, '-----')) == false)
+		{
+			return null;
+		}
+		$line = substr($line, $x);
+		$line = substr($line, strpos($line, "\n") + 2);
+		$line = trim(substr($line, 0, strpos($line, PHP_EOL)));
+		$parts = explode('|', $line);
 
-                        if(isset($parts[1]))
-                        {
-                            return trim($parts[1]);
-                        }
+		if(isset($parts[1]))
+		{
+			return trim($parts[1]);
+		}
 		return null;
 	}
 }

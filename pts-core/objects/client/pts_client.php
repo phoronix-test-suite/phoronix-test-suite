@@ -1474,7 +1474,7 @@ class pts_client
 				}
 				else
 				{
-					$possible_browsers = array('firefox', 'mozilla', 'x-www-browser', 'open', 'xdg-open', 'iceweasel', 'konqueror', 'epiphany', 'google-chrome', 'midori');
+					$possible_browsers = array('firefox', 'mozilla', 'x-www-browser', 'open', 'xdg-open', 'iceweasel', 'konqueror', 'epiphany', 'google-chrome', 'midori', 'epiphany-browser', 'epiphany');
 
 					foreach($possible_browsers as &$b)
 					{

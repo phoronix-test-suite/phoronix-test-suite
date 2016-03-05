@@ -2,6 +2,9 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+- pts-core: Fix for crash in stress-run mode
+- pts-core: Add OpenSUSE dynamic reverse dependency handler
+- pts-core: For the new result viewer, add Epiphany to the web browser list
 - phoromatic: Don't use a proxy (if available) when trying to connect from Phoromatic client to server
 
 Phoronix Test Suite 6.2.1
