@@ -54,7 +54,7 @@
 		</Package>
 		<Package>
 			<GenericName>tiff</GenericName>
-			<PackageName>tiff-dev</PackageName>
+			<PackageName>tiff-devel</PackageName>
 		</Package>
 		<Package>
 			<GenericName>bison</GenericName>
@@ -202,7 +202,7 @@
 		</Package>
 		<Package>
 			<GenericName>glibc-development</GenericName>
-			<PackageName>libc6-dev</PackageName>
+			<PackageName>glibc-devel</PackageName>
 		</Package>
 		<Package>
 			<GenericName>glibc-development</GenericName>
