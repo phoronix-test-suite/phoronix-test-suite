@@ -143,6 +143,18 @@ then
 	echo "The command to likely run for your operating system is: "
 	echo "# pkg_add php php-zip"
 	echo " "
+elif [ -x /usr/sbin/equo ]
+then
+	# Sabayon
+	echo "The command to likely run for your operating system is: "
+	echo "# equo install dev-lang/php"
+	echo " "
+elif [ -x /usr/sbin/xbps-install ]
+then
+	# Void Linux
+	echo "The command to likely run for your operating system is: "
+	echo "# xbps-install -Sy php unzip"
+	echo " "
 fi
 
 exit
