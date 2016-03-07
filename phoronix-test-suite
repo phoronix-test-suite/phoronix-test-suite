@@ -161,6 +161,12 @@ then
 	echo "The command to likely run for your operating system is: "
 	echo "# netpkg php"
 	echo " "
+elif [ -x /usr/sbin/apk ] ||  [ -x /usr/bin/apk ]
+then
+	# Alpine Linux
+	echo "The command to likely run for your operating system is: "
+	echo "# apk add php"
+	echo " "
 fi
 
 exit
