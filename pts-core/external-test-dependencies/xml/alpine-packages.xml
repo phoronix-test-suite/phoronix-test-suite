@@ -38,7 +38,7 @@
 		</Package>
 		<Package>
 			<GenericName>build-utilities</GenericName>
-			<PackageName>gcc make automake autoconf</PackageName>
+			<PackageName>gcc make build-base automake autoconf</PackageName>
 		</Package>
 		<Package>
 			<GenericName>cairo-development</GenericName>
@@ -74,7 +74,7 @@
 		</Package>
 		<Package>
 			<GenericName>fortran-compiler</GenericName>
-			<PackageName>gcc</PackageName>
+			<PackageName>gfortran</PackageName>
 		</Package>
 		<Package>
 			<GenericName>glew</GenericName>
