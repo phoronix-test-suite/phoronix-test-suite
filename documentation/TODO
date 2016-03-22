@@ -16,6 +16,10 @@ PHORONIX TEST SUITE PUBLIC TODO LIST:
 - Incremental result uploads support
 - Check with Phodevi's parsers what other tools support JSON outputs - e.g. http://karelzak.blogspot.com/2015/06/json-output-for-basic-tools.html for cleaner parsing
 
+- Figure out why TestClientVersion in result file XML is missing after adding multiple systems, the previous ones are then blank
+- Restore the ReferenceID support in the results XML
+- Improve titles on tables like in: http://openbenchmarking.org/result/1603172-GA-AMDTONGA973
+
 ### PTS-GRAPH ###
 
 - Rotated text alignment for some PNG graphixs is sometimes off by 90/180 degrees compared to SVG, e.g. http://openbenchmarking.org/s/Compiler
