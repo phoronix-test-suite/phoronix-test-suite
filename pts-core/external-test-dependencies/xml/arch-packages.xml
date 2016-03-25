@@ -36,7 +36,7 @@
 		</Package>
 		<Package>
 			<GenericName>build-utilities</GenericName>
-			<PackageName>gcc</PackageName>
+			<PackageName>gcc make autoconf</PackageName>
 			<FileCheck>g++</FileCheck>
 		</Package>
 		<Package>
