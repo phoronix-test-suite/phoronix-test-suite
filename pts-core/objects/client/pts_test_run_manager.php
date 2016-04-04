@@ -1432,9 +1432,9 @@ class pts_test_run_manager
 				echo '###### STRESS RUN CURRENT STATUS ####' . PHP_EOL;
 				echo 'TESTS CURRENTLY ACTIVE: ' . PHP_EOL;
 				$z = 1;
-				foreach($tests_pids_active as &$test_to_run)
+				foreach($tests_pids_active as $pid => &$test_to_run)
 				{
-					echo '   ' . $z . ': ' . $test_to_run->test_profile->get_identifier() . PHP_EOL;
+					echo '   ' . $z . ': ' . $test_to_run->test_profile->get_identifier() . ' ' . $pid . PHP_EOL;
 					$z++;
 				}
 				echo '######' . PHP_EOL;

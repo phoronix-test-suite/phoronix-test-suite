@@ -77,7 +77,7 @@ class stress_run implements pts_option_interface
 			$total_loop_time = 'infinite';
 			echo 'TOTAL_LOOP_TIME set; running tests in an infinite loop until otherwise triggered' . PHP_EOL;
 		}
-		else if($total_loop_time && is_numeric($total_loop_time) && $total_loop_time > 9)
+		else if($total_loop_time && is_numeric($total_loop_time) && $total_loop_time > 1)
 		{
 			$total_loop_time = $total_loop_time * 60;
 			echo 'TOTAL_LOOP_TIME set; running tests for ' . ($total_loop_time / 60) . ' minutes' . PHP_EOL;
