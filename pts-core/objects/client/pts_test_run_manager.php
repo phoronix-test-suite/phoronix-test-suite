@@ -1521,7 +1521,7 @@ class pts_test_run_manager
 				}
 			}
 
-			sleep(1);
+			sleep(2);
 		}
 
 		foreach($this->get_tests_to_run() as $run_request)
