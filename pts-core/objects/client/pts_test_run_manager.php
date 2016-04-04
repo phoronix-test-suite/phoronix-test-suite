@@ -1420,7 +1420,7 @@ class pts_test_run_manager
 		$possible_tests_to_run = $this->get_tests_to_run();
 		$tests_pids_active = array();
 		$loop_until_time = is_numeric($total_loop_time) && $total_loop_time > 1 ? time() + $total_loop_time : false;
-		$time_report_counter = 0;
+		$time_report_counter = time();
 
 		while(!empty($possible_tests_to_run) || !empty($tests_pids_active))
 		{
@@ -1432,9 +1432,9 @@ class pts_test_run_manager
 				echo '###### STRESS RUN CURRENT STATUS ####' . PHP_EOL;
 				echo 'TESTS CURRENTLY ACTIVE: ' . PHP_EOL;
 				$z = 1;
-				foreach($tests_pids_active as $pid => &$test_to_run)
+				foreach($tests_pids_active as $pid => &$test)
 				{
-					echo '   ' . $z . ': ' . $test_to_run->test_profile->get_identifier() . ' ' . $pid . PHP_EOL;
+					echo '   ' . $z . ': ' . $test->test_profile->get_identifier() . ' ' . $pid . PHP_EOL;
 					$z++;
 				}
 				echo '######' . PHP_EOL;
@@ -1450,6 +1450,7 @@ class pts_test_run_manager
 				{
 					if(pcntl_wifexited($status) || !posix_getsid($pid))
 					{
+						echo 'DEBUG ' . $test->test_profile->get_identifier() . ' posix exit: ' . $pid . PHP_EOL;
 						unset($tests_pids_active[$pid]);
 						continue;
 					}
