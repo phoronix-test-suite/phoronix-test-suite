@@ -1420,11 +1420,26 @@ class pts_test_run_manager
 		$possible_tests_to_run = $this->get_tests_to_run();
 		$tests_pids_active = array();
 		$loop_until_time = is_numeric($total_loop_time) && $total_loop_time > 1 ? time() + $total_loop_time : false;
+		$time_report_counter = 0;
 
 		while(!empty($possible_tests_to_run) || !empty($tests_pids_active))
 		{
 			if($continue_test_flag == false)
 				break;
+
+			if(($time_report_counter + 30) < time() && !empty($tests_pids_active))
+			{
+				echo '###### STRESS RUN CURRENT STATUS ####' . PHP_EOL;
+				echo 'TESTS CURRENTLY ACTIVE: ' . PHP_EOL;
+				$z = 1;
+				foreach($tests_pids_active as &$test_to_run)
+				{
+					echo '   ' . $z . ': ' . $test_to_run->test_profile->get_identifier() . PHP_EOL;
+					$z++;
+				}
+				echo '######' . PHP_EOL;
+				$time_report_counter = time();
+			}
 
 			$test_types_active = array();
 			foreach($tests_pids_active as $pid => &$test)
