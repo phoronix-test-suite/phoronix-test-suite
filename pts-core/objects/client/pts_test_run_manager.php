@@ -1461,6 +1461,7 @@ class pts_test_run_manager
 			}
 
 			$test_types_active = array();
+			$test_identifiers_active = array();
 			foreach(pts_file_io::glob($thread_collection_dir . '*') as $pid_file)
 			{
 				$pid = basename($pid_file);
@@ -1477,6 +1478,10 @@ class pts_test_run_manager
 				{
 					$test_types_active[] = $test->get_test_hardware_type();
 				}
+				if(!in_array($test->get_identifier(), $test_identifiers_active))
+				{
+					$test_identifiers_active[] = $test->get_identifier();
+				}
 
 			}
 
@@ -1486,16 +1491,38 @@ class pts_test_run_manager
 
 				$test_to_run = false;
 				$test_run_index = -1;
-				foreach($possible_tests_to_run as $i => $test)
+
+				if(getenv('DONT_BALANCE_TESTS_FOR_SUBSYSTEMS') == false)
 				{
-					if(!in_array($test->test_profile->get_test_hardware_type(), $test_types_active))
+					// Try to pick a test for a hardware subsystem not yet being explicitly utilized
+					foreach($possible_tests_to_run as $i => $test)
 					{
-						$test_run_index = $i;
-						$test_to_run = $test;
+						if(!in_array($test->test_profile->get_test_hardware_type(), $test_types_active))
+						{
+							$test_run_index = $i;
+							$test_to_run = $test;
+							break;
+						}
 					}
 				}
+
+				if($test_run_index == -1 && getenv('DONT_TRY_TO_ENSURE_TESTS_ARE_UNIQUE') == false)
+				{
+					// Try to pick a test from a test profile not currently active
+					foreach($possible_tests_to_run as $i => $test)
+					{
+						if(!in_array($test->test_profile->get_identifier(), $test_identifiers_active))
+						{
+							$test_run_index = $i;
+							$test_to_run = $test;
+							break;
+						}
+					}
+				}
+
 				if($test_run_index == -1)
 				{
+					// Last resort, just randomly pick a true "random" test
 					$test_run_index = array_rand(array_keys($possible_tests_to_run));
 					$test_to_run = $possible_tests_to_run[$test_run_index];
 				}
@@ -1503,7 +1530,7 @@ class pts_test_run_manager
 				$pid = pcntl_fork();
 				if($pid == -1)
 				{
-					echo 'Forking failure.';
+					echo 'Forking Failure.';
 				}
 				if($pid)
 				{
