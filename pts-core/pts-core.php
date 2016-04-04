@@ -232,9 +232,9 @@ function pts_version_codenames()
 		);
 }
 
-pts_define('PTS_VERSION', '6.2.2');
-pts_define('PTS_CORE_VERSION', 6220);
-pts_define('PTS_CODENAME', 'GAMVIK');
+pts_define('PTS_VERSION', '6.4.0m0');
+pts_define('PTS_CORE_VERSION', 6300);
+pts_define('PTS_CODENAME', 'HASVIK');
 pts_define('PTS_IS_CLIENT', (defined('PTS_MODE') && strstr(PTS_MODE, 'CLIENT') !== false));
 pts_define('PTS_IS_WEB_CLIENT', (defined('PTS_MODE') && PTS_MODE == 'WEB_CLIENT'));
 pts_define('PTS_IS_DEV_BUILD', (substr(PTS_VERSION, -2, 1) == 'm'));
