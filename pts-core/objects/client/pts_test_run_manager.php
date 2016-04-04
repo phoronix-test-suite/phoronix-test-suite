@@ -1422,23 +1422,38 @@ class pts_test_run_manager
 		$loop_until_time = is_numeric($total_loop_time) && $total_loop_time > 1 ? time() + $total_loop_time : false;
 		$time_report_counter = time();
 
-		while(!empty($possible_tests_to_run) || !empty($tests_pids_active))
+		$thread_collection_dir = pts_client::create_temporary_directory('stress-threads');
+
+		while(!empty($possible_tests_to_run))
 		{
 			if($continue_test_flag == false)
 				break;
 
-			if(($time_report_counter + 30) < time() && !empty($tests_pids_active))
+			if(($time_report_counter + 30) < time() && count(pts_file_io::glob($thread_collection_dir . '*')) > 0)
 			{
-				echo '###### STRESS RUN CURRENT STATUS ####' . PHP_EOL;
+				echo PHP_EOL . '###### STRESS RUN CURRENT STATUS ####' . PHP_EOL;
 				if($loop_until_time > time())
 				{
 					echo 'TIME REMAINING: ' . ceil(($loop_until_time - time()) / 60) . ' MINUTES' . PHP_EOL;
 				}
+				else
+				{
+					echo 'WAITING FOR CURRENT TEST RUN QUEUE TO FINISH.' . PHP_EOL;
+				}
+				echo 'NUMBER OF CONCURRENT TESTS PERMITTED: ' . $tests_to_run_concurrently . PHP_EOL;
 				echo 'TESTS CURRENTLY ACTIVE: ' . PHP_EOL;
 				$z = 1;
-				foreach($tests_pids_active as $pid => &$test)
+				foreach(pts_file_io::glob($thread_collection_dir . '*') as $pid_file)
 				{
-					echo '   ' . $z . ': ' . $test->test_profile->get_identifier() . ' ' . $pid . PHP_EOL;
+					$test = pts_file_io::file_get_contents($pid_file);
+					echo '   ' . $z . ': ' . $test . '  [PID: ' . basename($pid_file) . ']' . PHP_EOL;
+					$z++;
+				}
+				echo 'TEST SUBSYSTEMS ACTIVE: ' . PHP_EOL;
+				$z = 1;
+				foreach($test_types_active as &$type)
+				{
+					echo '   ' . $z . ': ' . $type . PHP_EOL;
 					$z++;
 				}
 				echo '######' . PHP_EOL;
@@ -1446,28 +1461,26 @@ class pts_test_run_manager
 			}
 
 			$test_types_active = array();
-			foreach($tests_pids_active as $pid => &$test)
+			foreach(pts_file_io::glob($thread_collection_dir . '*') as $pid_file)
 			{
-				$ret = pcntl_waitpid($pid, $status, WNOHANG | WUNTRACED);
+				$pid = basename($pid_file);
 
-				if($ret)
+				if(!file_exists('/proc/' . $pid))
 				{
-					if(pcntl_wifexited($status) || !posix_getsid($pid))
-					{
-						echo 'DEBUG ' . $test->test_profile->get_identifier() . ' posix exit: ' . $pid . PHP_EOL;
-						unset($tests_pids_active[$pid]);
-						continue;
-					}
+					unlink($pid_file);
+					continue;
 				}
 
-				if(!in_array($test->test_profile->get_test_hardware_type(), $test_types_active))
+				$test = new pts_test_profile(file_get_contents($pid_file));
+
+				if(!in_array($test->get_test_hardware_type(), $test_types_active))
 				{
-					$test_types_active[] = $test->test_profile->get_test_hardware_type();
+					$test_types_active[] = $test->get_test_hardware_type();
 				}
 
 			}
 
-			if(!empty($possible_tests_to_run) && count($tests_pids_active) < $tests_to_run_concurrently && (!$total_loop_time || $loop_until_time > time()))
+			if(!empty($possible_tests_to_run) && count(pts_file_io::glob($thread_collection_dir . '*')) < $tests_to_run_concurrently && (!$total_loop_time || $loop_until_time > time()))
 			{
 				shuffle($possible_tests_to_run);
 
@@ -1492,16 +1505,17 @@ class pts_test_run_manager
 				{
 					echo 'Forking failure.';
 				}
-				else if($pid)
+				if($pid)
 				{
 					// parent
-					$tests_pids_active[$pid] = $test_to_run;
+					file_put_contents($thread_collection_dir . $pid, $test_to_run->test_profile->get_identifier());
 				}
 				else
 				{
 					// child
 					$continue_test_flag = $this->process_test_run_request($test_to_run);
-					return false;
+					pts_file_io::unlink($thread_collection_dir . getmypid());
+					exit;
 				}
 
 				if($total_loop_time == false)
@@ -1517,7 +1531,7 @@ class pts_test_run_manager
 					if($loop_until_time > time())
 					{
 						$time_left = ceil(($loop_until_time - time()) / 60);
-						echo 'Continuing to test for ' . $time_left . ' more minutes' . PHP_EOL;
+					//	echo 'Continuing to test for ' . $time_left . ' more minutes' . PHP_EOL;
 					}
 					else
 					{
@@ -1529,6 +1543,8 @@ class pts_test_run_manager
 
 			sleep(2);
 		}
+
+		pts_file_io::delete($thread_collection_dir, null, true);
 
 		foreach($this->get_tests_to_run() as $run_request)
 		{
