@@ -87,6 +87,7 @@ class stress_run implements pts_option_interface
 			$total_loop_time = false;
 		}
 		//$test_run_manager->pre_execution_process();
+		echo 'Entering stress run.' . PHP_EOL; // XXX debug
 		$test_run_manager->multi_test_stress_run_execute($tests_to_run_concurrently, $total_loop_time);
 	}
 	public static function invalid_command($passed_args = null)

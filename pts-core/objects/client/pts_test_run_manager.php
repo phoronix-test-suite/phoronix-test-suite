@@ -1424,6 +1424,7 @@ class pts_test_run_manager
 
 		$thread_collection_dir = pts_client::create_temporary_directory('stress-threads');
 
+		echo 'Entering looping phase.' . PHP_EOL; // XXX debug
 		while(!empty($possible_tests_to_run))
 		{
 			if($continue_test_flag == false)
