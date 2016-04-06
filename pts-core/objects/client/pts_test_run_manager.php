@@ -1428,9 +1428,10 @@ class pts_test_run_manager
 		echo 'Entering looping phase.' . PHP_EOL; // XXX debug
 		while(!empty($possible_tests_to_run))
 		{
+			echo 'debug: step 0' . PHP_EOL;
 			if($continue_test_flag == false)
 				break;
-
+			echo 'debug: step 1' . PHP_EOL;
 			if(($time_report_counter + 30) < time() && count(pts_file_io::glob($thread_collection_dir . '*')) > 0)
 			{
 				echo PHP_EOL . '###### STRESS RUN CURRENT STATUS ####' . PHP_EOL;
@@ -1461,7 +1462,7 @@ class pts_test_run_manager
 				echo '######' . PHP_EOL;
 				$time_report_counter = time();
 			}
-
+			echo 'debug: step 2' . PHP_EOL;
 			$test_types_active = array();
 			$test_identifiers_active = array();
 			foreach(pts_file_io::glob($thread_collection_dir . '*') as $pid_file)
@@ -1486,7 +1487,7 @@ class pts_test_run_manager
 				}
 
 			}
-
+			echo 'debug: step 3' . PHP_EOL;
 			if(!empty($possible_tests_to_run) && count(pts_file_io::glob($thread_collection_dir . '*')) < $tests_to_run_concurrently && (!$total_loop_time || $loop_until_time > time()))
 			{
 				shuffle($possible_tests_to_run);
@@ -1521,7 +1522,7 @@ class pts_test_run_manager
 						}
 					}
 				}
-
+			echo 'debug: step 4' . PHP_EOL;
 				if($test_run_index == -1)
 				{
 					// Last resort, just randomly pick a true "random" test
@@ -1536,17 +1537,19 @@ class pts_test_run_manager
 				}
 				if($pid)
 				{
+			echo 'debug: parent' . PHP_EOL;
 					// parent
 					file_put_contents($thread_collection_dir . $pid, $test_to_run->test_profile->get_identifier());
 				}
 				else
 				{
 					// child
+			echo 'debug: child' . PHP_EOL;
 					$continue_test_flag = $this->process_test_run_request($test_to_run);
 					pts_file_io::unlink($thread_collection_dir . getmypid());
 					exit;
 				}
-
+			echo 'debug: step 5' . PHP_EOL;
 				if($total_loop_time == false)
 				{
 					unset($possible_tests_to_run[$test_run_index]);
@@ -1569,7 +1572,7 @@ class pts_test_run_manager
 					}
 				}
 			}
-
+			echo 'debug: end loop' . PHP_EOL;
 			sleep(2);
 		}
 
