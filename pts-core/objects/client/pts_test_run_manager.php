@@ -1413,6 +1413,7 @@ class pts_test_run_manager
 	}
 	public function multi_test_stress_run_execute($tests_to_run_concurrently = 3, $total_loop_time = false)
 	{
+		echo 'Entering stress run phase.' . PHP_EOL;
 		$continue_test_flag = true;
 		pts_client::$display->test_run_process_start($this);
 		$this->disable_dynamic_run_count();
