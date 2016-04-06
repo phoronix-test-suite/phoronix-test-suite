@@ -1488,7 +1488,7 @@ class pts_test_run_manager
 
 			}
 			echo 'debug: step 3' . PHP_EOL;
-			var_dump($possible_tests_to_run);
+			echo 'test to run count: ' . count($possible_tests_to_run);
 			var_dump($thread_collection_dir);
 			$tcollection = pts_file_io::glob($thread_collection_dir . '*')
 			var_dump($tcollection);
