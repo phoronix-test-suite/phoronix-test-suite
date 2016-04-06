@@ -1488,6 +1488,11 @@ class pts_test_run_manager
 
 			}
 			echo 'debug: step 3' . PHP_EOL;
+			var_dump($possible_tests_to_run);
+			var_dump($thread_collection_dir);
+			$tcollection = pts_file_io::glob($thread_collection_dir . '*')
+			var_dump($tcollection);
+			var_dump($total_loop_time);
 			if(!empty($possible_tests_to_run) && count(pts_file_io::glob($thread_collection_dir . '*')) < $tests_to_run_concurrently && (!$total_loop_time || $loop_until_time > time()))
 			{
 				shuffle($possible_tests_to_run);
