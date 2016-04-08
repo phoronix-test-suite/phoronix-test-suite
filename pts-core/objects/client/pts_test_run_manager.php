@@ -1452,7 +1452,7 @@ class pts_test_run_manager
 				foreach(pts_file_io::glob($thread_collection_dir . '*') as $pid_file)
 				{
 					$test = pts_file_io::file_get_contents($pid_file);
-					echo '   ' . $z . ': ' . sprintf('%-30ls - [PID: %-8ls]', $test, basename($pid_file)) . PHP_EOL;
+					echo '   ' . $z . ': ' . sprintf('%-30ls - [PID: %-5ls]', $test, basename($pid_file)) . PHP_EOL;
 					$z++;
 				}
 				echo 'TEST SUBSYSTEMS ACTIVE: ' . PHP_EOL;
