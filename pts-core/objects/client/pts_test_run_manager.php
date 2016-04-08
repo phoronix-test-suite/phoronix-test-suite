@@ -1545,6 +1545,7 @@ class pts_test_run_manager
 					// child
 					$continue_test_flag = $this->process_test_run_request($test_to_run);
 					pts_file_io::unlink($thread_collection_dir . getmypid());
+					echo PHP_EOL;
 					exit;
 				}
 				if($total_loop_time == false)
