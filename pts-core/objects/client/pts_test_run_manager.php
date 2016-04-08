@@ -1560,6 +1560,7 @@ class pts_test_run_manager
 					}
 					else
 					{
+						file_put_contents(PTS_USER_PATH . 'halt-testing', 'stress-run is done... This text really is not important, just checking for file presence.');
 						echo 'TOTAL_LOOP_TIME elapsed; quitting....' . PHP_EOL;
 						break;
 					}
