@@ -1436,7 +1436,7 @@ class pts_test_run_manager
 				{
 					echo 'TIME REMAINING: ' . ceil(($loop_until_time - time()) / 60) . ' MINUTES' . PHP_EOL;
 				}
-				else if($loop_until_time == 'infinite')
+				else if($total_loop_time == 'infinite')
 				{
 					echo 'INFINITE TESTING; TESTING UNTIL INTERRUPTED' . PHP_EOL;
 				}
@@ -1488,7 +1488,7 @@ class pts_test_run_manager
 
 			}
 
-			if(!empty($possible_tests_to_run) && count(pts_file_io::glob($thread_collection_dir . '*')) < $tests_to_run_concurrently && (!$total_loop_time || $loop_until_time == 'infinite' || $loop_until_time > time()))
+			if(!empty($possible_tests_to_run) && count(pts_file_io::glob($thread_collection_dir . '*')) < $tests_to_run_concurrently && (!$total_loop_time || $total_loop_time == 'infinite' || $loop_until_time > time()))
 			{
 				shuffle($possible_tests_to_run);
 
