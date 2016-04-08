@@ -1436,7 +1436,7 @@ class pts_test_run_manager
 				echo 'ELAPSED TIME: ' . strtoupper(pts_strings::format_time(time() - $multi_test_stress_start_time)) . PHP_EOL;
 				if($loop_until_time > time())
 				{
-					echo 'TIME REMAINING: ' . strtoupper(pts_strings::format_time($loop_until_time - time()) . PHP_EOL;
+					echo 'TIME REMAINING: ' . strtoupper(pts_strings::format_time($loop_until_time - time())) . PHP_EOL;
 				}
 				else if($total_loop_time == 'infinite')
 				{
