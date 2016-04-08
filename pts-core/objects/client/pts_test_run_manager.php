@@ -1430,13 +1430,13 @@ class pts_test_run_manager
 			if($continue_test_flag == false)
 				break;
 
-			if(($time_report_counter + 30) < time() && count(pts_file_io::glob($thread_collection_dir . '*')) > 0)
+			if(($time_report_counter + 30) <= time() && count(pts_file_io::glob($thread_collection_dir . '*')) > 0)
 			{
-				echo PHP_EOL . '###### STRESS RUN CURRENT STATUS ####' . PHP_EOL;
-				echo 'ELAPSED TIME: ' . strtoupper(pts_strings::format_time(time() - $multi_test_stress_start_time)) . PHP_EOL;
+				echo PHP_EOL . '###### STRESS RUN CURRENT STATUS ' . date('H:i M j') . ' ####' . PHP_EOL;
+				echo 'ELAPSED TIME: ' . pts_strings::format_time(time() - $multi_test_stress_start_time) . PHP_EOL;
 				if($loop_until_time > time())
 				{
-					echo 'TIME REMAINING: ' . strtoupper(pts_strings::format_time($loop_until_time - time())) . PHP_EOL;
+					echo 'TIME REMAINING: ' . pts_strings::format_time($loop_until_time - time()) . PHP_EOL;
 				}
 				else if($total_loop_time == 'infinite')
 				{
@@ -1452,7 +1452,7 @@ class pts_test_run_manager
 				foreach(pts_file_io::glob($thread_collection_dir . '*') as $pid_file)
 				{
 					$test = pts_file_io::file_get_contents($pid_file);
-					echo '   ' . $z . ': ' . $test . '  [PID: ' . basename($pid_file) . ']' . PHP_EOL;
+					echo '   ' . $z . ': ' . sprintf('%-30ls - [PID: %-8ls]', $test, basename($pid_file)) . PHP_EOL;
 					$z++;
 				}
 				echo 'TEST SUBSYSTEMS ACTIVE: ' . PHP_EOL;
@@ -1574,7 +1574,7 @@ class pts_test_run_manager
 
 				// This halt-testing touch will let tests exit early (i.e. between multiple run steps)
 				file_put_contents(PTS_USER_PATH . 'halt-testing', 'stress-run is done... This text really is not important, just checking for file presence.');
-				echo 'TOTAL_LOOP_TIME elapsed; quitting....' . PHP_EOL;
+				echo 'ALLOTTED TEST TIME EXPIRED; NO NEW TESTS WILL EXECUTE' . PHP_EOL;
 				break;
 			}
 			sleep(2);
