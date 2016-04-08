@@ -1421,6 +1421,7 @@ class pts_test_run_manager
 		$tests_pids_active = array();
 		$loop_until_time = is_numeric($total_loop_time) && $total_loop_time > 1 ? time() + $total_loop_time : false;
 		$time_report_counter = time();
+		$multi_test_stress_start_time = time();
 
 		$thread_collection_dir = pts_client::create_temporary_directory('stress-threads');
 
@@ -1432,9 +1433,10 @@ class pts_test_run_manager
 			if(($time_report_counter + 30) < time() && count(pts_file_io::glob($thread_collection_dir . '*')) > 0)
 			{
 				echo PHP_EOL . '###### STRESS RUN CURRENT STATUS ####' . PHP_EOL;
+				echo 'ELAPSED TIME: ' . strtoupper(pts_strings::format_time(time() - $multi_test_stress_start_time)) . PHP_EOL;
 				if($loop_until_time > time())
 				{
-					echo 'TIME REMAINING: ' . ceil(($loop_until_time - time()) / 60) . ' MINUTES' . PHP_EOL;
+					echo 'TIME REMAINING: ' . strtoupper(pts_strings::format_time($loop_until_time - time()) . PHP_EOL;
 				}
 				else if($total_loop_time == 'infinite')
 				{
