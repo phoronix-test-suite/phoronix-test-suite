@@ -1436,6 +1436,10 @@ class pts_test_run_manager
 				{
 					echo 'TIME REMAINING: ' . ceil(($loop_until_time - time()) / 60) . ' MINUTES' . PHP_EOL;
 				}
+				else if($loop_until_time == 'infinite')
+				{
+					echo 'INFINITE TESTING; TESTING UNTIL INTERRUPTED' . PHP_EOL;
+				}
 				else
 				{
 					echo 'WAITING FOR CURRENT TEST RUN QUEUE TO FINISH.' . PHP_EOL;
@@ -1484,7 +1488,7 @@ class pts_test_run_manager
 
 			}
 
-			if(!empty($possible_tests_to_run) && count(pts_file_io::glob($thread_collection_dir . '*')) < $tests_to_run_concurrently && (!$total_loop_time || $loop_until_time > time()))
+			if(!empty($possible_tests_to_run) && count(pts_file_io::glob($thread_collection_dir . '*')) < $tests_to_run_concurrently && (!$total_loop_time || $loop_until_time == 'infinite' || $loop_until_time > time()))
 			{
 				shuffle($possible_tests_to_run);
 
@@ -1558,13 +1562,17 @@ class pts_test_run_manager
 						$time_left = ceil(($loop_until_time - time()) / 60);
 					//	echo 'Continuing to test for ' . $time_left . ' more minutes' . PHP_EOL;
 					}
-					else
-					{
-						file_put_contents(PTS_USER_PATH . 'halt-testing', 'stress-run is done... This text really is not important, just checking for file presence.');
-						echo 'TOTAL_LOOP_TIME elapsed; quitting....' . PHP_EOL;
-						break;
-					}
 				}
+			}
+
+			if(is_numeric($loop_until_time) && $loop_until_time < time())
+			{
+				// Time to Quit
+
+				// This halt-testing touch will let tests exit early (i.e. between multiple run steps)
+				file_put_contents(PTS_USER_PATH . 'halt-testing', 'stress-run is done... This text really is not important, just checking for file presence.');
+				echo 'TOTAL_LOOP_TIME elapsed; quitting....' . PHP_EOL;
+				break;
 			}
 			sleep(2);
 		}
