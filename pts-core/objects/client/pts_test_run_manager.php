@@ -1424,6 +1424,22 @@ class pts_test_run_manager
 		$multi_test_stress_start_time = time();
 
 		$thread_collection_dir = pts_client::create_temporary_directory('stress-threads');
+		$sensors_to_monitor = array();
+		foreach(phodevi::supported_sensors(array('cpu_temp', 'cpu_usage', 'gpu_usage', 'gpu_temp', 'hdd_read_speed', 'hdd_write_speed', 'memory_usage', 'swap_usage', 'sys_temp')) as $sensor)
+		{
+			$supported_devices = call_user_func(array($sensor[2], 'get_supported_devices'));
+
+			if($supported_devices === NULL)
+			{
+				$supported_devices = array(null);
+			}
+
+			foreach($supported_devices as $device)
+			{
+				array_push($sensors_to_monitor, new $sensor[2](0, $device);
+				$report_buffer .= '- ' . phodevi::sensor_object_name($sensor_object) . ': ' . phodevi::read_sensor($sensor_object) . ' ' . phodevi::read_sensor_object_unit($sensor_object) . PHP_EOL;
+			}
+		}
 
 		while(!empty($possible_tests_to_run))
 		{
@@ -1432,56 +1448,45 @@ class pts_test_run_manager
 
 			if(($time_report_counter + 30) <= time() && count(pts_file_io::glob($thread_collection_dir . '*')) > 0)
 			{
-				echo PHP_EOL . '###### STRESS RUN CURRENT STATUS ' . date('H:i M j') . ' ####' . PHP_EOL;
-				echo 'ELAPSED TIME: ' . pts_strings::format_time(time() - $multi_test_stress_start_time) . PHP_EOL;
+				$report_buffer = PHP_EOL . '###### STRESS RUN CURRENT STATUS ' . date('H:i M j') . ' ####' . PHP_EOL;
+				$report_buffer .= 'ELAPSED TIME: ' . pts_strings::format_time(time() - $multi_test_stress_start_time) . PHP_EOL;
 				if($loop_until_time > time())
 				{
-					echo 'TIME REMAINING: ' . pts_strings::format_time($loop_until_time - time()) . PHP_EOL;
+					$report_buffer .= 'TIME REMAINING: ' . pts_strings::format_time($loop_until_time - time()) . PHP_EOL;
 				}
 				else if($total_loop_time == 'infinite')
 				{
-					echo 'INFINITE TESTING; TESTING UNTIL INTERRUPTED' . PHP_EOL;
+					$report_buffer .= 'INFINITE TESTING; TESTING UNTIL INTERRUPTED' . PHP_EOL;
 				}
 				else
 				{
-					echo 'WAITING FOR CURRENT TEST RUN QUEUE TO FINISH.' . PHP_EOL;
+					$report_buffer .= 'WAITING FOR CURRENT TEST RUN QUEUE TO FINISH.' . PHP_EOL;
 				}
-				echo 'NUMBER OF CONCURRENT TESTS PERMITTED: ' . $tests_to_run_concurrently . PHP_EOL;
-				echo 'TESTS CURRENTLY ACTIVE: ' . PHP_EOL;
+				$report_buffer .= 'NUMBER OF CONCURRENT TESTS PERMITTED: ' . $tests_to_run_concurrently . PHP_EOL;
+				$report_buffer .= 'TESTS CURRENTLY ACTIVE: ' . PHP_EOL;
 				$z = 1;
 				foreach(pts_file_io::glob($thread_collection_dir . '*') as $pid_file)
 				{
 					$test = pts_file_io::file_get_contents($pid_file);
-					echo '   ' . $z . ': ' . sprintf('%-30ls [PID: %-5ls]', $test, basename($pid_file)) . PHP_EOL;
+					$report_buffer .= '   ' . $z . ': ' . sprintf('%-30ls [PID: %-5ls]', $test, basename($pid_file)) . PHP_EOL;
 					$z++;
 				}
-				echo 'TEST SUBSYSTEMS ACTIVE: ' . PHP_EOL;
+				$report_buffer .= 'TEST SUBSYSTEMS ACTIVE: ' . PHP_EOL;
 				$z = 1;
 				foreach($test_types_active as &$type)
 				{
-					echo '   ' . $z . ': ' . $type . PHP_EOL;
+					$report_buffer .= '   ' . $z . ': ' . $type . PHP_EOL;
 					$z++;
 				}
 
-				echo 'CURRENT SYSTEM SENSORS: ' . PHP_EOL;
-
-				foreach(phodevi::supported_sensors(array('cpu_temp', 'cpu_usage', 'gpu_usage', 'gpu_temp', 'hdd_read_speed', 'hdd_write_speed', 'memory_usage', 'swap_usage', 'sys_temp')) as $sensor)
+				$report_buffer .= 'CURRENT SYSTEM SENSORS: ' . PHP_EOL;
+				foreach($sensors_to_monitor as &$sensor_object)
 				{
-					$supported_devices = call_user_func(array($sensor[2], 'get_supported_devices'));
-
-					if($supported_devices === NULL)
-					{
-						$supported_devices = array(null);
-					}
-
-					foreach($supported_devices as $device)
-					{
-						$sensor_object = new $sensor[2](0, $device);
-						echo '- ' . phodevi::sensor_object_name($sensor_object) . ': ' . phodevi::read_sensor($sensor_object) . ' ' . phodevi::read_sensor_object_unit($sensor_object) . PHP_EOL;
-					}
+					$report_buffer .= '   - ' . phodevi::sensor_object_name($sensor_object) . ': ' . phodevi::read_sensor($sensor_object) . ' ' . phodevi::read_sensor_object_unit($sensor_object) . PHP_EOL;
 				}
 
-				echo '######' . PHP_EOL;
+				$report_buffer .= '######' . PHP_EOL;
+				echo $report_buffer;
 				$time_report_counter = time();
 			}
 			$test_types_active = array();
@@ -1593,7 +1598,7 @@ class pts_test_run_manager
 
 				// This halt-testing touch will let tests exit early (i.e. between multiple run steps)
 				file_put_contents(PTS_USER_PATH . 'halt-testing', 'stress-run is done... This text really is not important, just checking for file presence.');
-				echo 'ALLOTTED TEST TIME EXPIRED; NO NEW TESTS WILL EXECUTE' . PHP_EOL;
+				echo 'TEST TIME EXPIRED; NO NEW TESTS WILL EXECUTE; CURRENT TESTS WILL FINISH' . PHP_EOL . PHP_EOL;
 				break;
 			}
 			sleep(2);
