@@ -1424,7 +1424,12 @@ class pts_test_run_manager
 		$multi_test_stress_start_time = time();
 
 		$thread_collection_dir = pts_client::create_temporary_directory('stress-threads');
+
+		// SENSOR SETUP WORK
 		$sensors_to_monitor = array();
+		$sensor_interval_frequency = is_numeric($total_loop_time) && $total_loop_time > 1 ? max($total_loop_time / 1000, 3) : 6;
+		$sensor_data_archived = array();
+		$sensor_time_since_last_poll = time();
 		foreach(phodevi::supported_sensors(array('cpu_temp', 'cpu_usage', 'gpu_usage', 'gpu_temp', 'hdd_read_speed', 'hdd_write_speed', 'memory_usage', 'swap_usage', 'sys_temp')) as $sensor)
 		{
 			$supported_devices = call_user_func(array($sensor[2], 'get_supported_devices'));
@@ -1436,9 +1441,12 @@ class pts_test_run_manager
 
 			foreach($supported_devices as $device)
 			{
-				array_push($sensors_to_monitor, new $sensor[2](0, $device));
+				$sensor_object = new $sensor[2](0, $device);
+				array_push($sensors_to_monitor, $sensor_object);
+				$sensor_data_archived[phodevi::sensor_object_name($sensor_object)] = array();
 			}
 		}
+
 
 		while(!empty($possible_tests_to_run))
 		{
@@ -1481,6 +1489,10 @@ class pts_test_run_manager
 				$report_buffer .= 'CURRENT SYSTEM SENSORS: ' . PHP_EOL;
 				foreach($sensors_to_monitor as &$sensor_object)
 				{
+					// Hacky way to avoid reporting individual CPU core usages each time, save it for summaries
+					if(strpos(phodevi::sensor_object_name($sensor_object), 'CPU Usage (CPU') !== false)
+						continue;
+
 					$report_buffer .= '   - ' . phodevi::sensor_object_name($sensor_object) . ': ' . phodevi::read_sensor($sensor_object) . ' ' . phodevi::read_sensor_object_unit($sensor_object) . PHP_EOL;
 				}
 
@@ -1598,9 +1610,31 @@ class pts_test_run_manager
 				// This halt-testing touch will let tests exit early (i.e. between multiple run steps)
 				file_put_contents(PTS_USER_PATH . 'halt-testing', 'stress-run is done... This text really is not important, just checking for file presence.');
 				echo 'TEST TIME EXPIRED; NO NEW TESTS WILL EXECUTE; CURRENT TESTS WILL FINISH' . PHP_EOL . PHP_EOL;
+
+				$report_buffer = PHP_EOL . '###### SENSOR OVERVIEW ####' . PHP_EOL;
+
+				foreach($sensor_data_archived as $sensor_name => &$sensor_data)
+				{
+					$report_buffer .= '   - ' . $sensor_name . ': ' . min($sensor_data) . ' ' . (array_sum($sensor_data) / count($sensor_data)) . ' ' . max($sensor_data) . PHP_EOL;
+				}
+
+				$report_buffer .= '######' . PHP_EOL;
+				echo $report_buffer;
 				break;
 			}
-			sleep(2);
+
+			if($sensor_time_since_last_poll + $sensor_interval_frequency < time())
+			{
+				foreach($sensors_to_monitor as &$sensor_object)
+				{
+					$sensor_data_archived[phodevi::sensor_object_name($sensor_object)][] = phodevi::read_sensor($sensor_object);
+				}
+				$sensor_time_since_last_poll = time();
+			}
+			else
+			{
+				sleep(1);
+			}
 		}
 
 		pts_file_io::delete($thread_collection_dir, null, true);
