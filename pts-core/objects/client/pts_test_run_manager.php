@@ -1452,7 +1452,7 @@ class pts_test_run_manager
 				foreach(pts_file_io::glob($thread_collection_dir . '*') as $pid_file)
 				{
 					$test = pts_file_io::file_get_contents($pid_file);
-					echo '   ' . $z . ': ' . sprintf('%-30ls - [PID: %-5ls]', $test, basename($pid_file)) . PHP_EOL;
+					echo '   ' . $z . ': ' . sprintf('%-30ls [PID: %-5ls]', $test, basename($pid_file)) . PHP_EOL;
 					$z++;
 				}
 				echo 'TEST SUBSYSTEMS ACTIVE: ' . PHP_EOL;
@@ -1462,6 +1462,25 @@ class pts_test_run_manager
 					echo '   ' . $z . ': ' . $type . PHP_EOL;
 					$z++;
 				}
+
+				echo 'SYSTEM SENSORS: ' . PHP_EOL;
+
+				foreach(phodevi::supported_sensors(array('cpu_temp', 'cpu_usage', 'gpu_usage', 'gpu_temp', 'hdd_read_speed', 'hdd_write_speed', 'memory_usage', 'swap_usage', 'sys_temp')) as $sensor)
+				{
+					$supported_devices = call_user_func(array($sensor[2], 'get_supported_devices'));
+
+					if($supported_devices === NULL)
+					{
+						$supported_devices = array(null);
+					}
+
+					foreach($supported_devices as $device)
+					{
+						$sensor_object = new $sensor[2](0, $device);
+						echo '- ' . phodevi::sensor_object_name($sensor_object) . ': ' . phodevi::read_sensor($sensor_object) . ' ' . phodevi::read_sensor_object_unit($sensor_object) . PHP_EOL;
+					}
+				}
+
 				echo '######' . PHP_EOL;
 				$time_report_counter = time();
 			}

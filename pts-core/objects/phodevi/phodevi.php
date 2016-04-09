@@ -76,11 +76,15 @@ class phodevi extends phodevi_base
 			}
 		}
 	}
-	public static function available_sensors()
+	public static function available_sensors($limit_sensors = false)
 	{
 		static $available_sensors = null;
 
-		if($available_sensors == null)
+		if($limit_sensors != false)
+		{
+			return self::select_sensors($limit_sensors);
+		}
+		else if($available_sensors == null)
 		{
 			$available_sensors = array();
 
@@ -95,15 +99,31 @@ class phodevi extends phodevi_base
 
 		return $available_sensors;
 	}
-	public static function supported_sensors()
+	public static function select_sensors($limit_sensors = false)
+	{
+		$selected = array();
+		foreach(self::available_sensors() as $sensor)
+		{
+			if($limit_sensors == false || (is_array($limit_sensors) && in_array($sensor[2], $limit_sensors)))
+			{
+				array_push($selected, $sensor);
+			}
+		}
+
+		return $selected;
+	}
+	public static function supported_sensors($limit_sensors = false)
 	{
 		static $supported_sensors = null;
 
-		if($supported_sensors == null)
+		if($limit_sensors != false)
+		{
+			return self::select_sensors($limit_sensors);
+		}
+		else if($supported_sensors == null)
 		{
 			$supported_sensors = array();
-
-			foreach(self::available_sensors() as $sensor)
+			foreach(self::available_sensors($limit_sensors) as $sensor)
 			{
 				if(self::sensor_supported($sensor))
 				{
