@@ -1436,7 +1436,7 @@ class pts_test_run_manager
 
 			foreach($supported_devices as $device)
 			{
-				array_push($sensors_to_monitor, new $sensor[2](0, $device);
+				array_push($sensors_to_monitor, new $sensor[2](0, $device));
 				$report_buffer .= '- ' . phodevi::sensor_object_name($sensor_object) . ': ' . phodevi::read_sensor($sensor_object) . ' ' . phodevi::read_sensor_object_unit($sensor_object) . PHP_EOL;
 			}
 		}
