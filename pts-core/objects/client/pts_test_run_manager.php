@@ -1463,7 +1463,7 @@ class pts_test_run_manager
 					$z++;
 				}
 
-				echo 'SYSTEM SENSORS: ' . PHP_EOL;
+				echo 'CURRENT SYSTEM SENSORS: ' . PHP_EOL;
 
 				foreach(phodevi::supported_sensors(array('cpu_temp', 'cpu_usage', 'gpu_usage', 'gpu_temp', 'hdd_read_speed', 'hdd_write_speed', 'memory_usage', 'swap_usage', 'sys_temp')) as $sensor)
 				{
