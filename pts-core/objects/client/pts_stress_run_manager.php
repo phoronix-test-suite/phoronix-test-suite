@@ -40,13 +40,43 @@ class pts_stress_run_manager extends pts_test_run_manager
 		$this->multi_test_stress_run = $tests_to_run_concurrently;
 		$possible_tests_to_run = $this->get_tests_to_run();
 		$this->loop_until_time = is_numeric($total_loop_time) && $total_loop_time > 1 ? time() + $total_loop_time : false;
-		$time_report_counter = time();
 		$this->stress_tests_executed = array();
 		$this->multi_test_stress_start_time = time();
 		$this->thread_collection_dir = pts_client::create_temporary_directory('stress-threads');
 		$this->sensors_to_monitor = array();
 		$this->sensor_data_archived = array();
 		$this->sensor_data_archived_units = array();
+
+		// Determine how frequently to print reports / status updates
+		$time_report_counter = time();
+		if($total_loop_time == 'infinite')
+		{
+			$report_counter_frequency = 120;
+		}
+		else if($total_loop_time > (3 * 60 * 60))
+		{
+			// hourly reports
+			$report_counter_frequency = 60 * 60;
+		}
+		else if($total_loop_time > (60 * 60))
+		{
+			// 15 minute reports
+			$report_counter_frequency = 15 * 60;
+		}
+		else if($total_loop_time > (20 * 60))
+		{
+			// 10 minute reports
+			$report_counter_frequency = 10 * 60;
+		}
+		else if($total_loop_time > (10 * 60))
+		{
+			// 5 minute reports
+			$report_counter_frequency = 5 * 60;
+		}
+		else
+		{
+			$report_counter_frequency = 60;
+		}
 
 		// SIGTERM handling
 		if(function_exists('pcntl_signal'))
@@ -91,7 +121,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 			if($continue_test_flag == false)
 				break;
 
-			if(($time_report_counter + 30) <= time() && count(pts_file_io::glob($this->thread_collection_dir . '*')) > 0)
+			if(($time_report_counter + $report_counter_frequency) <= time() && count(pts_file_io::glob($this->thread_collection_dir . '*')) > 0)
 			{
 				// ISSUE STATUS REPORT
 				echo $this->stress_status_report();
@@ -251,11 +281,12 @@ class pts_stress_run_manager extends pts_test_run_manager
 	public function sig_handler($signo)
 	{
 		// Time to Quit
+		// This halt-testing touch will let tests exit early (i.e. between multiple run steps)
+		file_put_contents(PTS_USER_PATH . 'halt-testing', 'stress-run is done... This text really is not important, just checking for file presence.');
+
 		if($this->stress_child_thread == false)
 		{
-			echo $signo . ' SIGNAL RECEIVED; QUITTING...' . PHP_EOL;
-			// This halt-testing touch will let tests exit early (i.e. between multiple run steps)
-			file_put_contents(PTS_USER_PATH . 'halt-testing', 'stress-run is done... This text really is not important, just checking for file presence.');
+			echo 'SIGNAL RECEIVED; QUITTING...' . PHP_EOL;
 			// Final report
 			echo $this->final_stress_report();
 		}
