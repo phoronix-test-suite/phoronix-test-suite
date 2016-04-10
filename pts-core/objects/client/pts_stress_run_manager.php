@@ -346,18 +346,17 @@ class pts_stress_run_manager extends pts_test_run_manager
 		$report_buffer .= date('F j H:i') . PHP_EOL;
 		$report_buffer .= 'ELAPSED TIME: ' . pts_strings::format_time(time() - $this->multi_test_stress_start_time) . PHP_EOL . PHP_EOL;
 
-		$table = array();
 		if(!empty($this->stress_tests_executed))
 		{
-			$report_buffer .= 'TESTS EXECUTED: ' . PHP_EOL;
+			$table = array('TESTS EXECUTED', 'TIMES CALLED');
 			ksort($this->stress_tests_executed);
 
 			foreach($this->stress_tests_executed as $test => $times)
 			{
 				$table[] = array($test . ': ', $times);
 			}
+			$report_buffer .= pts_user_io::display_text_table($table, '   - ', 2) . PHP_EOL . PHP_EOL;
 		}
-		$report_buffer .= pts_user_io::display_text_table($table, '   - ', 2) . PHP_EOL . PHP_EOL;
 
 		$report_buffer .= 'SENSOR DATA: ' . PHP_EOL;
 		$table = array(array('SENSOR', 'MIN', 'AVG', 'MAX'));
