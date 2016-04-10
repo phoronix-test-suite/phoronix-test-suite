@@ -1442,8 +1442,11 @@ class pts_test_run_manager
 			foreach($supported_devices as $device)
 			{
 				$sensor_object = new $sensor[2](0, $device);
-				array_push($sensors_to_monitor, $sensor_object);
-				$sensor_data_archived[phodevi::sensor_object_name($sensor_object)] = array();
+				if(phodevi::read_sensor($sensor_object) != -1)
+				{
+					array_push($sensors_to_monitor, $sensor_object);
+					$sensor_data_archived[phodevi::sensor_object_name($sensor_object)] = array();
+				}
 			}
 		}
 
