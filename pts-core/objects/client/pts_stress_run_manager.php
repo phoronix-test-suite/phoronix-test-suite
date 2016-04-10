@@ -85,31 +85,33 @@ class pts_stress_run_manager extends pts_test_run_manager
 				}
 				$report_buffer .= 'NUMBER OF CONCURRENT TESTS PERMITTED: ' . $tests_to_run_concurrently . PHP_EOL;
 				$report_buffer .= 'TESTS CURRENTLY ACTIVE: ' . PHP_EOL;
-				$z = 1;
+
+				$table = array();
 				foreach(pts_file_io::glob($thread_collection_dir . '*') as $pid_file)
 				{
 					$test = pts_file_io::file_get_contents($pid_file);
-					$report_buffer .= '   ' . $z . ': ' . sprintf('%-30ls [PID: %-5ls]', $test, basename($pid_file)) . PHP_EOL;
-					$z++;
+					$table[] = array($test, '[PID: ' . basename($pid_file) . ']');
 				}
+				$report_buffer .= pts_user_io::display_text_table($table, '   - ');
+
+
 				$report_buffer .= 'TEST SUBSYSTEMS ACTIVE: ' . PHP_EOL;
-				$z = 1;
 				foreach($test_types_active as &$type)
 				{
-					$report_buffer .= '   ' . $z . ': ' . $type . PHP_EOL;
-					$z++;
+					$report_buffer .= '   - ' . $z . ': ' . $type . PHP_EOL;
 				}
 
 				$report_buffer .= 'CURRENT SYSTEM SENSORS: ' . PHP_EOL;
+				$table = array();
 				foreach($sensors_to_monitor as &$sensor_object)
 				{
 					// Hacky way to avoid reporting individual CPU core usages each time, save it for summaries
 					if(strpos(phodevi::sensor_object_name($sensor_object), 'CPU Usage (CPU') !== false)
 						continue;
 
-					$report_buffer .= '   - ' . phodevi::sensor_object_name($sensor_object) . ': ' . phodevi::read_sensor($sensor_object) . ' ' . phodevi::read_sensor_object_unit($sensor_object) . PHP_EOL;
+					$table[] = array(phodevi::sensor_object_name($sensor_object) . ': ', round(phodevi::read_sensor($sensor_object), 2), phodevi::read_sensor_object_unit($sensor_object));
 				}
-
+				$report_buffer .= pts_user_io::display_text_table($table, '   - ');
 				$report_buffer .= '######' . PHP_EOL;
 				echo $report_buffer;
 				$time_report_counter = time();
@@ -227,11 +229,12 @@ class pts_stress_run_manager extends pts_test_run_manager
 
 				$report_buffer = PHP_EOL . '###### SENSOR OVERVIEW ####' . PHP_EOL;
 
+				$table = array('TEST', 'MIN', 'AVG', 'MAX');
 				foreach($sensor_data_archived as $sensor_name => &$sensor_data)
 				{
-					$report_buffer .= '   - ' . $sensor_name . ': ' . min($sensor_data) . ' ' . (array_sum($sensor_data) / count($sensor_data)) . ' ' . max($sensor_data) . PHP_EOL;
+					$table[] = array($sensor_name . ': ', min($sensor_data), (array_sum($sensor_data) / count($sensor_data)), max($sensor_data));
 				}
-
+				$report_buffer .= pts_user_io::display_text_table($table, '   - ');
 				$report_buffer .= '######' . PHP_EOL;
 				echo $report_buffer;
 				break;

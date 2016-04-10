@@ -48,10 +48,10 @@ class pts_user_io
 
 		return $list;
 	}
-	public static function display_text_table(&$table)
+	public static function display_text_table(&$table, $prepend_to_lines = null)
 	{
 		$column_widths = array();
-		$formatted_table = null;
+		$formatted_table = $prepend_to_lines;
 
 		for($r = 0; $r < count($table); $r++)
 		{
@@ -78,7 +78,7 @@ class pts_user_io
 
 			if(($r + 1) != $r_count)
 			{
-				$formatted_table .= PHP_EOL;
+				$formatted_table .= PHP_EOL . $prepend_to_lines;
 			}
 		}
 
