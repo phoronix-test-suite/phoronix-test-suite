@@ -23,6 +23,7 @@
 class pts_stress_run_manager extends pts_test_run_manager
 {
 	private $multi_test_stress_start_time;
+	private $stress_tests_executed;
 
 	public function multi_test_stress_run_execute($tests_to_run_concurrently = 3, $total_loop_time = false)
 	{
@@ -34,6 +35,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 		$tests_pids_active = array();
 		$loop_until_time = is_numeric($total_loop_time) && $total_loop_time > 1 ? time() + $total_loop_time : false;
 		$time_report_counter = time();
+		$this->stress_tests_executed = array();
 		$this->multi_test_stress_start_time = time();
 
 		$thread_collection_dir = pts_client::create_temporary_directory('stress-threads');
@@ -112,7 +114,12 @@ class pts_stress_run_manager extends pts_test_run_manager
 					if(strpos(phodevi::sensor_object_name($sensor_object), 'CPU Usage (CPU') !== false)
 						continue;
 
-					$table[] = array(phodevi::sensor_object_name($sensor_object) . ': ', pts_math::set_precision(phodevi::read_sensor($sensor_object), 2), phodevi::read_sensor_object_unit($sensor_object));
+					$sensor_val = phodevi::read_sensor($sensor_object);
+
+					if($sensor_val > 0)
+					{
+						$table[] = array(phodevi::sensor_object_name($sensor_object) . ': ', pts_math::set_precision($sensor_val, 2), phodevi::read_sensor_object_unit($sensor_object));
+					}
 				}
 				$report_buffer .= pts_user_io::display_text_table($table, '   - ', 2) . PHP_EOL;
 				$report_buffer .= '######' . PHP_EOL;
@@ -194,7 +201,17 @@ class pts_stress_run_manager extends pts_test_run_manager
 				if($pid)
 				{
 					// parent
-					file_put_contents($thread_collection_dir . $pid, $test_to_run->test_profile->get_identifier());
+					$test_identifier = $test_to_run->test_profile->get_identifier();
+					file_put_contents($thread_collection_dir . $pid, $test_identifier);
+
+					if(!isset($this->stress_tests_executed[$test_identifier]))
+					{
+						$this->stress_tests_executed[$test_identifier] = 1;
+					}
+					else
+					{
+						$this->stress_tests_executed[$test_identifier]++;
+					}
 				}
 				else
 				{
@@ -233,10 +250,28 @@ class pts_stress_run_manager extends pts_test_run_manager
 				$report_buffer = PHP_EOL . '###### FINAL REPORT ####' . PHP_EOL;
 				$report_buffer .= 'ELAPSED TIME: ' . pts_strings::format_time(time() - $this->multi_test_stress_start_time) . PHP_EOL . PHP_EOL;
 
-				$table = array(array('TEST', 'MIN', 'AVG', 'MAX'));
+				$table = array();
+				if(!empty($this->stress_tests_executed))
+				{
+					$report_buffer .= 'TESTS EXECUTED: ' . PHP_EOL;
+					ksort($this->stress_tests_executed);
+
+					foreach($this->stress_tests_executed as $test => $times)
+					{
+						$table[] = array($test . ': ', $times);
+					}
+				}
+				$report_buffer .= pts_user_io::display_text_table($table, '   - ', 2) . PHP_EOL;
+
+				$table = array(array('SENSOR', 'MIN', 'AVG', 'MAX'));
 				foreach($sensor_data_archived as $sensor_name => &$sensor_data)
 				{
-					$table[] = array($sensor_name . ': ', pts_math::set_precision(min($sensor_data), 2), pts_math::set_precision(array_sum($sensor_data) / count($sensor_data), 2), pts_math::set_precision(max($sensor_data), 2), $sensor_data_archived_units[$sensor_name]);
+					$max_val = max($sensor_data);
+
+					if($max_val > 0)
+					{
+						$table[] = array($sensor_name . ': ', pts_math::set_precision(min($sensor_data), 2), pts_math::set_precision(array_sum($sensor_data) / count($sensor_data), 2), pts_math::set_precision($max_val, 2), $sensor_data_archived_units[$sensor_name]);
+					}
 				}
 				$report_buffer .= pts_user_io::display_text_table($table, '   - ', 2) . PHP_EOL;
 				$report_buffer .= '######' . PHP_EOL;
