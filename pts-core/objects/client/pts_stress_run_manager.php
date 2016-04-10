@@ -30,6 +30,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 	private $thread_collection_dir;
 	private $sensors_to_monitor;
 	private $stress_subsystems_active;
+	private $stress_child_thread = false;
 
 	public function multi_test_stress_run_execute($tests_to_run_concurrently = 3, $total_loop_time = false)
 	{
@@ -188,6 +189,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 				else
 				{
 					// child
+					$this->stress_child_thread = true;
 					$continue_test_flag = $this->process_test_run_request($test_to_run);
 					pts_file_io::unlink($this->thread_collection_dir . getmypid());
 					echo PHP_EOL;
@@ -252,11 +254,14 @@ class pts_stress_run_manager extends pts_test_run_manager
 	public function sig_handler($signo)
 	{
 		// Time to Quit
-		echo $signo . ' SIGNAL RECEIVED; QUITTING...' . PHP_EOL;
-		// This halt-testing touch will let tests exit early (i.e. between multiple run steps)
-		file_put_contents(PTS_USER_PATH . 'halt-testing', 'stress-run is done... This text really is not important, just checking for file presence.');
-		// Final report
-		echo $this->final_stress_report();
+		if($this->stress_child_thread == false)
+		{
+			echo $signo . ' SIGNAL RECEIVED; QUITTING...' . PHP_EOL;
+			// This halt-testing touch will let tests exit early (i.e. between multiple run steps)
+			file_put_contents(PTS_USER_PATH . 'halt-testing', 'stress-run is done... This text really is not important, just checking for file presence.');
+			// Final report
+			echo $this->final_stress_report();
+		}
 		exit();
 	}
 	protected function stress_status_report()
