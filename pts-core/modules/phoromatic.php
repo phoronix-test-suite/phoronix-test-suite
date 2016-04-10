@@ -644,8 +644,9 @@ class phoromatic extends pts_module_interface
 								// Save results?
 
 								// Run the actual tests
-								if(isset($env_vars['PTS_CONCURRENT_TEST_RUNS']) && $env_vars['PTS_CONCURRENT_TEST_RUNS'] > 1)
+								if(false && isset($env_vars['PTS_CONCURRENT_TEST_RUNS']) && $env_vars['PTS_CONCURRENT_TEST_RUNS'] > 1)
 								{
+									// TODO XXX temporarily disable the stress-run feature from the Phoromatic side. Also need to switch above test_run_manager to stress_run_manager
 									$total_loop_time = isset($env_vars['TOTAL_LOOP_TIME']) ? $env_vars['TOTAL_LOOP_TIME'] : false;
 									pts_client::$pts_logger->log('STRESS / MULTI-TEST EXECUTION STARTED @ ' . date('Y-m-d H:i:s'));
 									pts_client::$pts_logger->log('CONCURRENT RUNS = ' . $env_vars['PTS_CONCURRENT_TEST_RUNS'] . ' TOTAL LOOP TIME = ' . $total_loop_time);

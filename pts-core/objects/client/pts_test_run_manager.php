@@ -23,37 +23,37 @@
 class pts_test_run_manager
 {
 	public $result_file = null;
-	private $is_new_result_file = true;
+	protected $is_new_result_file = true;
 
-	private $tests_to_run = array();
-	private $failed_tests_to_run = array();
-	private $last_test_run_index = 0;
-	private $test_run_pos = 0;
-	private $test_run_count = 0;
+	protected $tests_to_run = array();
+	protected $failed_tests_to_run = array();
+	protected $last_test_run_index = 0;
+	protected $test_run_pos = 0;
+	protected $test_run_count = 0;
 
-	private $file_name = null;
-	private $file_name_title = null;
-	private $results_identifier = null;
-	private $run_description = null;
+	protected $file_name = null;
+	protected $file_name_title = null;
+	protected $results_identifier = null;
+	protected $run_description = null;
 
-	private $force_save_results = false;
-	private $prompt_save_results = true;
-	private $post_run_message = null;
-	private $pre_run_message = null;
-	private $allow_sharing_of_results = true;
-	private $auto_upload_to_openbenchmarking = false;
-	private $is_pcqs = false;
-	private $openbenchmarking_results_data = false;
+	protected $force_save_results = false;
+	protected $prompt_save_results = true;
+	protected $post_run_message = null;
+	protected $pre_run_message = null;
+	protected $allow_sharing_of_results = true;
+	protected $auto_upload_to_openbenchmarking = false;
+	protected $is_pcqs = false;
+	protected $openbenchmarking_results_data = false;
 
-	private $do_dynamic_run_count = false;
-	private $dynamic_run_count_on_length_or_less;
-	private $dynamic_run_count_std_deviation_threshold;
-	private $dynamic_run_count_export_script;
-	private $multi_test_stress_run = false;
+	protected $do_dynamic_run_count = false;
+	protected $dynamic_run_count_on_length_or_less;
+	protected $dynamic_run_count_std_deviation_threshold;
+	protected $dynamic_run_count_export_script;
+	protected $multi_test_stress_run = false;
 
-	private static $test_run_process_active = false;
-	private $batch_mode = false;
-	private $auto_mode = false;
+	protected static $test_run_process_active = false;
+	protected $batch_mode = false;
+	protected $auto_mode = false;
 
 	public function __construct($batch_mode = false, $auto_mode = false)
 	{
@@ -1410,248 +1410,6 @@ class pts_test_run_manager
 	public function is_multi_test_stress_run()
 	{
 		return $this->multi_test_stress_run;
-	}
-	public function multi_test_stress_run_execute($tests_to_run_concurrently = 3, $total_loop_time = false)
-	{
-		$continue_test_flag = true;
-		pts_client::$display->test_run_process_start($this);
-		$this->disable_dynamic_run_count();
-		$this->multi_test_stress_run = $tests_to_run_concurrently;
-		$possible_tests_to_run = $this->get_tests_to_run();
-		$tests_pids_active = array();
-		$loop_until_time = is_numeric($total_loop_time) && $total_loop_time > 1 ? time() + $total_loop_time : false;
-		$time_report_counter = time();
-		$multi_test_stress_start_time = time();
-
-		$thread_collection_dir = pts_client::create_temporary_directory('stress-threads');
-
-		// SENSOR SETUP WORK
-		$sensors_to_monitor = array();
-		$sensor_interval_frequency = is_numeric($total_loop_time) && $total_loop_time > 1 ? max($total_loop_time / 1000, 3) : 6;
-		$sensor_data_archived = array();
-		$sensor_time_since_last_poll = time();
-		foreach(phodevi::supported_sensors(array('cpu_temp', 'cpu_usage', 'gpu_usage', 'gpu_temp', 'hdd_read_speed', 'hdd_write_speed', 'memory_usage', 'swap_usage', 'sys_temp')) as $sensor)
-		{
-			$supported_devices = call_user_func(array($sensor[2], 'get_supported_devices'));
-
-			if($supported_devices === NULL)
-			{
-				$supported_devices = array(null);
-			}
-
-			foreach($supported_devices as $device)
-			{
-				$sensor_object = new $sensor[2](0, $device);
-				if(phodevi::read_sensor($sensor_object) != -1)
-				{
-					array_push($sensors_to_monitor, $sensor_object);
-					$sensor_data_archived[phodevi::sensor_object_name($sensor_object)] = array();
-				}
-			}
-		}
-
-
-		while(!empty($possible_tests_to_run))
-		{
-			if($continue_test_flag == false)
-				break;
-
-			if(($time_report_counter + 30) <= time() && count(pts_file_io::glob($thread_collection_dir . '*')) > 0)
-			{
-				$report_buffer = PHP_EOL . '###### STRESS RUN CURRENT STATUS ' . date('H:i M j') . ' ####' . PHP_EOL;
-				$report_buffer .= 'ELAPSED TIME: ' . pts_strings::format_time(time() - $multi_test_stress_start_time) . PHP_EOL;
-				if($loop_until_time > time())
-				{
-					$report_buffer .= 'TIME REMAINING: ' . pts_strings::format_time($loop_until_time - time()) . PHP_EOL;
-				}
-				else if($total_loop_time == 'infinite')
-				{
-					$report_buffer .= 'INFINITE TESTING; TESTING UNTIL INTERRUPTED' . PHP_EOL;
-				}
-				else
-				{
-					$report_buffer .= 'WAITING FOR CURRENT TEST RUN QUEUE TO FINISH.' . PHP_EOL;
-				}
-				$report_buffer .= 'NUMBER OF CONCURRENT TESTS PERMITTED: ' . $tests_to_run_concurrently . PHP_EOL;
-				$report_buffer .= 'TESTS CURRENTLY ACTIVE: ' . PHP_EOL;
-				$z = 1;
-				foreach(pts_file_io::glob($thread_collection_dir . '*') as $pid_file)
-				{
-					$test = pts_file_io::file_get_contents($pid_file);
-					$report_buffer .= '   ' . $z . ': ' . sprintf('%-30ls [PID: %-5ls]', $test, basename($pid_file)) . PHP_EOL;
-					$z++;
-				}
-				$report_buffer .= 'TEST SUBSYSTEMS ACTIVE: ' . PHP_EOL;
-				$z = 1;
-				foreach($test_types_active as &$type)
-				{
-					$report_buffer .= '   ' . $z . ': ' . $type . PHP_EOL;
-					$z++;
-				}
-
-				$report_buffer .= 'CURRENT SYSTEM SENSORS: ' . PHP_EOL;
-				foreach($sensors_to_monitor as &$sensor_object)
-				{
-					// Hacky way to avoid reporting individual CPU core usages each time, save it for summaries
-					if(strpos(phodevi::sensor_object_name($sensor_object), 'CPU Usage (CPU') !== false)
-						continue;
-
-					$report_buffer .= '   - ' . phodevi::sensor_object_name($sensor_object) . ': ' . phodevi::read_sensor($sensor_object) . ' ' . phodevi::read_sensor_object_unit($sensor_object) . PHP_EOL;
-				}
-
-				$report_buffer .= '######' . PHP_EOL;
-				echo $report_buffer;
-				$time_report_counter = time();
-			}
-			$test_types_active = array();
-			$test_identifiers_active = array();
-			foreach(pts_file_io::glob($thread_collection_dir . '*') as $pid_file)
-			{
-				$pid = basename($pid_file);
-
-				if(!file_exists('/proc/' . $pid))
-				{
-					unlink($pid_file);
-					continue;
-				}
-
-				$test = new pts_test_profile(file_get_contents($pid_file));
-
-				if(!in_array($test->get_test_hardware_type(), $test_types_active))
-				{
-					$test_types_active[] = $test->get_test_hardware_type();
-				}
-				if(!in_array($test->get_identifier(), $test_identifiers_active))
-				{
-					$test_identifiers_active[] = $test->get_identifier();
-				}
-
-			}
-
-			if(!empty($possible_tests_to_run) && count(pts_file_io::glob($thread_collection_dir . '*')) < $tests_to_run_concurrently && (!$total_loop_time || $total_loop_time == 'infinite' || $loop_until_time > time()))
-			{
-				shuffle($possible_tests_to_run);
-
-				$test_to_run = false;
-				$test_run_index = -1;
-
-				if(getenv('DONT_BALANCE_TESTS_FOR_SUBSYSTEMS') == false)
-				{
-					// Try to pick a test for a hardware subsystem not yet being explicitly utilized
-					foreach($possible_tests_to_run as $i => $test)
-					{
-						if(!in_array($test->test_profile->get_test_hardware_type(), $test_types_active))
-						{
-							$test_run_index = $i;
-							$test_to_run = $test;
-							break;
-						}
-					}
-				}
-
-				if($test_run_index == -1 && getenv('DONT_TRY_TO_ENSURE_TESTS_ARE_UNIQUE') == false)
-				{
-					// Try to pick a test from a test profile not currently active
-					foreach($possible_tests_to_run as $i => $test)
-					{
-						if(!in_array($test->test_profile->get_identifier(), $test_identifiers_active))
-						{
-							$test_run_index = $i;
-							$test_to_run = $test;
-							break;
-						}
-					}
-				}
-
-				if($test_run_index == -1)
-				{
-					// Last resort, just randomly pick a true "random" test
-					$test_run_index = array_rand(array_keys($possible_tests_to_run));
-					$test_to_run = $possible_tests_to_run[$test_run_index];
-				}
-
-				$pid = pcntl_fork();
-				if($pid == -1)
-				{
-					echo 'Forking Failure.';
-				}
-				if($pid)
-				{
-					// parent
-					file_put_contents($thread_collection_dir . $pid, $test_to_run->test_profile->get_identifier());
-				}
-				else
-				{
-					// child
-					$continue_test_flag = $this->process_test_run_request($test_to_run);
-					pts_file_io::unlink($thread_collection_dir . getmypid());
-					echo PHP_EOL;
-					exit;
-				}
-				if($total_loop_time == false)
-				{
-					unset($possible_tests_to_run[$test_run_index]);
-				}
-				else if($total_loop_time == 'infinite')
-				{
-						echo 'Continuing to test indefinitely' . PHP_EOL;
-				}
-				else
-				{
-					if($loop_until_time > time())
-					{
-						$time_left = ceil(($loop_until_time - time()) / 60);
-					//	echo 'Continuing to test for ' . $time_left . ' more minutes' . PHP_EOL;
-					}
-				}
-			}
-
-			if(is_numeric($loop_until_time) && $loop_until_time < time())
-			{
-				// Time to Quit
-
-				// This halt-testing touch will let tests exit early (i.e. between multiple run steps)
-				file_put_contents(PTS_USER_PATH . 'halt-testing', 'stress-run is done... This text really is not important, just checking for file presence.');
-				echo 'TEST TIME EXPIRED; NO NEW TESTS WILL EXECUTE; CURRENT TESTS WILL FINISH' . PHP_EOL . PHP_EOL;
-
-				$report_buffer = PHP_EOL . '###### SENSOR OVERVIEW ####' . PHP_EOL;
-
-				foreach($sensor_data_archived as $sensor_name => &$sensor_data)
-				{
-					$report_buffer .= '   - ' . $sensor_name . ': ' . min($sensor_data) . ' ' . (array_sum($sensor_data) / count($sensor_data)) . ' ' . max($sensor_data) . PHP_EOL;
-				}
-
-				$report_buffer .= '######' . PHP_EOL;
-				echo $report_buffer;
-				break;
-			}
-
-			if($sensor_time_since_last_poll + $sensor_interval_frequency < time())
-			{
-				foreach($sensors_to_monitor as &$sensor_object)
-				{
-					$sensor_data_archived[phodevi::sensor_object_name($sensor_object)][] = phodevi::read_sensor($sensor_object);
-				}
-				$sensor_time_since_last_poll = time();
-			}
-			else
-			{
-				sleep(1);
-			}
-		}
-
-		pts_file_io::delete($thread_collection_dir, null, true);
-
-		foreach($this->get_tests_to_run() as $run_request)
-		{
-			// Remove cache shares
-			foreach(pts_file_io::glob($run_request->test_profile->get_install_dir() . 'cache-share-*.pt2so') as $cache_share_file)
-			{
-				unlink($cache_share_file);
-			}
-		}
-
-		return true;
 	}
 	protected function test_prompts_to_result_objects(&$test_profile)
 	{

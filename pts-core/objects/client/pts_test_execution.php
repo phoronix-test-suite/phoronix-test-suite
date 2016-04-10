@@ -414,7 +414,7 @@ class pts_test_execution
 			}
 		}
 
-		if($abort_testing && getenv('BASH_FOR_WINDOWS') == false)
+		if($abort_testing && getenv('BASH_FOR_WINDOWS') == false) // BASH_FOR_WINDOWS is temporary workaround
 		{
 			self::test_run_error($test_run_manager, $test_run_request, 'This test execution has been abandoned.');
 			return false;

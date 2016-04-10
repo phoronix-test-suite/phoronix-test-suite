@@ -33,7 +33,7 @@ class stress_run implements pts_option_interface
 	}
 	public static function run($to_run)
 	{
-		$test_run_manager = new pts_test_run_manager(array(
+		$test_run_manager = new pts_stress_run_manager(array(
 			'UploadResults' => false,
 			'SaveResults' => false,
 			'PromptForTestDescription' => false,
