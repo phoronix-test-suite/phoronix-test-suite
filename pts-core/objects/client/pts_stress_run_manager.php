@@ -29,6 +29,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 	private $loop_until_time;
 	private $thread_collection_dir;
 	private $sensors_to_monitor;
+	private $stress_subsystems_active;
 
 	public function multi_test_stress_run_execute($tests_to_run_concurrently = 3, $total_loop_time = false)
 	{
@@ -82,8 +83,10 @@ class pts_stress_run_manager extends pts_test_run_manager
 				echo $this->stress_status_report();
 				$time_report_counter = time();
 			}
-			$test_types_active = array();
+
+			$this->stress_subsystems_active = array();
 			$test_identifiers_active = array();
+
 			foreach(pts_file_io::glob($this->thread_collection_dir . '*') as $pid_file)
 			{
 				$pid = basename($pid_file);
@@ -96,9 +99,9 @@ class pts_stress_run_manager extends pts_test_run_manager
 
 				$test = new pts_test_profile(file_get_contents($pid_file));
 
-				if(!in_array($test->get_test_hardware_type(), $test_types_active))
+				if(!in_array($test->get_test_hardware_type(), $this->stress_subsystems_active))
 				{
-					$test_types_active[] = $test->get_test_hardware_type();
+					$this->stress_subsystems_active[] = $test->get_test_hardware_type();
 				}
 				if(!in_array($test->get_identifier(), $test_identifiers_active))
 				{
@@ -119,7 +122,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 					// Try to pick a test for a hardware subsystem not yet being explicitly utilized
 					foreach($possible_tests_to_run as $i => $test)
 					{
-						if(!in_array($test->test_profile->get_test_hardware_type(), $test_types_active))
+						if(!in_array($test->test_profile->get_test_hardware_type(), $this->stress_subsystems_active))
 						{
 							$test_run_index = $i;
 							$test_to_run = $test;
@@ -198,7 +201,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 			if(is_numeric($this->loop_until_time) && $this->loop_until_time < time())
 			{
 				// Time to Quit
-				echo 'TEST TIME EXPIRED; NO NEW TESTS WILL EXECUTE; CURRENT TESTS WILL FINISH' . PHP_EOL . PHP_EOL;
+				echo 'TEST TIME EXPIRED; NO NEW TESTS WILL EXECUTE; CURRENT TESTS WILL FINISH' . PHP_EOL;
 				// This halt-testing touch will let tests exit early (i.e. between multiple run steps)
 				file_put_contents(PTS_USER_PATH . 'halt-testing', 'stress-run is done... This text really is not important, just checking for file presence.');
 				// Final report
@@ -261,7 +264,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 		$report_buffer .= pts_user_io::display_text_table($table, '   - ', 2) . PHP_EOL;
 
 		$report_buffer .= 'TEST SUBSYSTEMS ACTIVE: ' . PHP_EOL;
-		foreach($test_types_active as &$type)
+		foreach($this->stress_subsystems_active as &$type)
 		{
 			$report_buffer .= '   - ' . $type . PHP_EOL;
 		}
@@ -304,7 +307,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 		$report_buffer .= pts_user_io::display_text_table($table, '   - ', 2) . PHP_EOL . PHP_EOL;
 
 		$report_buffer .= 'SENSOR DATA: ' . PHP_EOL;
-		$table = array(array(' ', 'MIN', 'AVG', 'MAX'));
+		$table = array(array('SENSOR', 'MIN', 'AVG', 'MAX'));
 		foreach($this->sensor_data_archived as $sensor_name => &$sensor_data)
 		{
 			$max_val = max($sensor_data);
