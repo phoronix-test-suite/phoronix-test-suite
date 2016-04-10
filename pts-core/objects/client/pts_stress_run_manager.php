@@ -22,6 +22,8 @@
 
 class pts_stress_run_manager extends pts_test_run_manager
 {
+	private $multi_test_stress_start_time;
+
 	public function multi_test_stress_run_execute($tests_to_run_concurrently = 3, $total_loop_time = false)
 	{
 		$continue_test_flag = true;
@@ -32,7 +34,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 		$tests_pids_active = array();
 		$loop_until_time = is_numeric($total_loop_time) && $total_loop_time > 1 ? time() + $total_loop_time : false;
 		$time_report_counter = time();
-		$multi_test_stress_start_time = time();
+		$this->multi_test_stress_start_time = time();
 
 		$thread_collection_dir = pts_client::create_temporary_directory('stress-threads');
 
@@ -40,6 +42,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 		$sensors_to_monitor = array();
 		$sensor_interval_frequency = is_numeric($total_loop_time) && $total_loop_time > 1 ? max($total_loop_time / 1000, 3) : 6;
 		$sensor_data_archived = array();
+		$sensor_data_archived_units = array();
 		$sensor_time_since_last_poll = time();
 		foreach(phodevi::supported_sensors(array('cpu_temp', 'cpu_usage', 'gpu_usage', 'gpu_temp', 'hdd_read_speed', 'hdd_write_speed', 'memory_usage', 'swap_usage', 'sys_temp')) as $sensor)
 		{
@@ -57,10 +60,10 @@ class pts_stress_run_manager extends pts_test_run_manager
 				{
 					array_push($sensors_to_monitor, $sensor_object);
 					$sensor_data_archived[phodevi::sensor_object_name($sensor_object)] = array();
+					$sensor_data_archived_units[phodevi::sensor_object_name($sensor_object)] = phodevi::read_sensor_object_unit($sensor_object);
 				}
 			}
 		}
-
 
 		while(!empty($possible_tests_to_run))
 		{
@@ -70,7 +73,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 			if(($time_report_counter + 30) <= time() && count(pts_file_io::glob($thread_collection_dir . '*')) > 0)
 			{
 				$report_buffer = PHP_EOL . '###### STRESS RUN CURRENT STATUS ' . date('H:i M j') . ' ####' . PHP_EOL;
-				$report_buffer .= 'ELAPSED TIME: ' . pts_strings::format_time(time() - $multi_test_stress_start_time) . PHP_EOL;
+				$report_buffer .= 'ELAPSED TIME: ' . pts_strings::format_time(time() - $this->multi_test_stress_start_time) . PHP_EOL;
 				if($loop_until_time > time())
 				{
 					$report_buffer .= 'TIME REMAINING: ' . pts_strings::format_time($loop_until_time - time()) . PHP_EOL;
@@ -227,12 +230,13 @@ class pts_stress_run_manager extends pts_test_run_manager
 				file_put_contents(PTS_USER_PATH . 'halt-testing', 'stress-run is done... This text really is not important, just checking for file presence.');
 				echo 'TEST TIME EXPIRED; NO NEW TESTS WILL EXECUTE; CURRENT TESTS WILL FINISH' . PHP_EOL . PHP_EOL;
 
-				$report_buffer = PHP_EOL . '###### SENSOR OVERVIEW ####' . PHP_EOL;
+				$report_buffer = PHP_EOL . '###### FINAL REPORT ####' . PHP_EOL;
+				$report_buffer .= 'ELAPSED TIME: ' . pts_strings::format_time(time() - $this->multi_test_stress_start_time) . PHP_EOL . PHP_EOL;
 
 				$table = array(array('TEST', 'MIN', 'AVG', 'MAX'));
 				foreach($sensor_data_archived as $sensor_name => &$sensor_data)
 				{
-					$table[] = array($sensor_name . ': ', min($sensor_data), pts_math::set_precision(array_sum($sensor_data) / count($sensor_data), 2), max($sensor_data));
+					$table[] = array($sensor_name . ': ', pts_math::set_precision(min($sensor_data), 2), pts_math::set_precision(array_sum($sensor_data) / count($sensor_data), 2), pts_math::pts_math::set_precision(max($sensor_data), 2), $sensor_data_archived_units[$sensor_name]);
 				}
 				$report_buffer .= pts_user_io::display_text_table($table, '   - ', 2) . PHP_EOL;
 				$report_buffer .= '######' . PHP_EOL;
