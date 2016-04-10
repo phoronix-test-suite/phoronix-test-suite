@@ -59,7 +59,7 @@ class pts_user_io
 			{
 				if(!isset($column_widths[$c]) || isset($table[$r][$c][$column_widths[$c]]))
 				{
-					$column_widths[$c] = strlen($table[$r][$c]) + $extra_width_to_column;
+					$column_widths[$c] = strlen($table[$r][$c]);
 				}
 			}
 		}
@@ -72,7 +72,7 @@ class pts_user_io
 
 				if(($c + 1) != $rc_count)
 				{
-					$formatted_table .= str_repeat(' ', (1 + $column_widths[$c] - strlen($table[$r][$c])));
+					$formatted_table .= str_repeat(' ', (1 + $extra_width_to_column + $column_widths[$c] - strlen($table[$r][$c])));
 				}
 			}
 
