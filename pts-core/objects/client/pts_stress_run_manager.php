@@ -226,15 +226,12 @@ class pts_stress_run_manager extends pts_test_run_manager
 
 			if($sensor_time_since_last_poll + $sensor_interval_frequency < time())
 			{
+				// Time to do a sensor reading
 				foreach($this->sensors_to_monitor as &$sensor_object)
 				{
 					$this->sensor_data_archived[phodevi::sensor_object_name($sensor_object)][] = phodevi::read_sensor($sensor_object);
 				}
 				$sensor_time_since_last_poll = time();
-			}
-			else
-			{
-				sleep(1);
 			}
 		}
 
