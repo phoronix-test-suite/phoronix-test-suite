@@ -109,7 +109,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 					if(strpos(phodevi::sensor_object_name($sensor_object), 'CPU Usage (CPU') !== false)
 						continue;
 
-					$table[] = array(phodevi::sensor_object_name($sensor_object) . ': ', round(phodevi::read_sensor($sensor_object), 2), phodevi::read_sensor_object_unit($sensor_object));
+					$table[] = array(phodevi::sensor_object_name($sensor_object) . ': ', pts_math::set_precision(phodevi::read_sensor($sensor_object), 2), phodevi::read_sensor_object_unit($sensor_object));
 				}
 				$report_buffer .= pts_user_io::display_text_table($table, '   - ', 2) . PHP_EOL;
 				$report_buffer .= '######' . PHP_EOL;
@@ -232,7 +232,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 				$table = array(array('TEST', 'MIN', 'AVG', 'MAX'));
 				foreach($sensor_data_archived as $sensor_name => &$sensor_data)
 				{
-					$table[] = array($sensor_name . ': ', min($sensor_data), pts_math::set_precision((array_sum($sensor_data) / count($sensor_data), 2), max($sensor_data));
+					$table[] = array($sensor_name . ': ', min($sensor_data), pts_math::set_precision(array_sum($sensor_data) / count($sensor_data), 2), max($sensor_data));
 				}
 				$report_buffer .= pts_user_io::display_text_table($table, '   - ', 2) . PHP_EOL;
 				$report_buffer .= '######' . PHP_EOL;
