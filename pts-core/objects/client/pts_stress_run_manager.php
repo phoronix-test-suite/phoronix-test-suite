@@ -47,6 +47,19 @@ class pts_stress_run_manager extends pts_test_run_manager
 		$this->sensor_data_archived = array();
 		$this->sensor_data_archived_units = array();
 
+		// SIGTERM handling
+		if(function_exists('pcntl_signal'))
+		{
+			declare(ticks = 1);
+			pcntl_signal(SIGTERM, array($this, 'sig_handler'));
+			pcntl_signal(SIGHUP, array($this, 'sig_handler'));
+			pcntl_signal(SIGINT, array($this, 'sig_handler'));
+		}
+		else
+		{
+			echo 'PHP PCNTL support is needed if wishing to gracefully interrupt testing with signals.' . PHP_EOL;
+		}
+
 		// SENSOR SETUP WORK
 		$sensor_interval_frequency = is_numeric($total_loop_time) && $total_loop_time > 1 ? max($total_loop_time / 1000, 3) : 6;
 		$sensor_time_since_last_poll = time();
@@ -110,7 +123,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 
 			}
 
-			if(!empty($possible_tests_to_run) && count(pts_file_io::glob($this->thread_collection_dir . '*')) < $tests_to_run_concurrently && (!$total_loop_time || $total_loop_time == 'infinite' || $this->loop_until_time > time()))
+			if(!empty($possible_tests_to_run) && count(pts_file_io::glob($this->thread_collection_dir . '*')) < $this->multi_test_stress_run && (!$total_loop_time || $total_loop_time == 'infinite' || $this->loop_until_time > time()))
 			{
 				shuffle($possible_tests_to_run);
 
@@ -236,6 +249,16 @@ class pts_stress_run_manager extends pts_test_run_manager
 
 		return true;
 	}
+	public function sig_handler($signo)
+	{
+		// Time to Quit
+		echo $signo . ' SIGNAL RECEIVED; QUITTING...' . PHP_EOL;
+		// This halt-testing touch will let tests exit early (i.e. between multiple run steps)
+		file_put_contents(PTS_USER_PATH . 'halt-testing', 'stress-run is done... This text really is not important, just checking for file presence.');
+		// Final report
+		echo $this->final_stress_report();
+		exit();
+	}
 	protected function stress_status_report()
 	{
 		$report_buffer = PHP_EOL . '###### STRESS RUN CURRENT STATUS ' . date('H:i M j') . ' ####' . PHP_EOL;
@@ -252,7 +275,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 		{
 			$report_buffer .= 'WAITING FOR CURRENT TEST RUN QUEUE TO FINISH.' . PHP_EOL;
 		}
-		$report_buffer .= 'NUMBER OF CONCURRENT TESTS PERMITTED: ' . $tests_to_run_concurrently . PHP_EOL . PHP_EOL;
+		$report_buffer .= 'NUMBER OF CONCURRENT TESTS PERMITTED: ' . $this->multi_test_stress_run . PHP_EOL . PHP_EOL;
 		$report_buffer .= 'TESTS CURRENTLY ACTIVE: ' . PHP_EOL;
 
 		$table = array();
