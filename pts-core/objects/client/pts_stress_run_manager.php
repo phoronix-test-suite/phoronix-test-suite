@@ -236,7 +236,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 				$table = array(array('TEST', 'MIN', 'AVG', 'MAX'));
 				foreach($sensor_data_archived as $sensor_name => &$sensor_data)
 				{
-					$table[] = array($sensor_name . ': ', pts_math::set_precision(min($sensor_data), 2), pts_math::set_precision(array_sum($sensor_data) / count($sensor_data), 2), pts_math::pts_math::set_precision(max($sensor_data), 2), $sensor_data_archived_units[$sensor_name]);
+					$table[] = array($sensor_name . ': ', pts_math::set_precision(min($sensor_data), 2), pts_math::set_precision(array_sum($sensor_data) / count($sensor_data), 2), pts_math::set_precision(max($sensor_data), 2), $sensor_data_archived_units[$sensor_name]);
 				}
 				$report_buffer .= pts_user_io::display_text_table($table, '   - ', 2) . PHP_EOL;
 				$report_buffer .= '######' . PHP_EOL;
