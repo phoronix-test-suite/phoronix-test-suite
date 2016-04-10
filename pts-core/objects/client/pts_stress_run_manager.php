@@ -51,27 +51,23 @@ class pts_stress_run_manager extends pts_test_run_manager
 		$time_report_counter = time();
 		if($total_loop_time == 'infinite')
 		{
-			$report_counter_frequency = 120;
+			$report_counter_frequency = 5 * 60;
 		}
 		else if($total_loop_time > (3 * 60 * 60))
 		{
-			// hourly reports
-			$report_counter_frequency = 60 * 60;
+			$report_counter_frequency = 30 * 60;
 		}
 		else if($total_loop_time > (60 * 60))
 		{
-			// 15 minute reports
-			$report_counter_frequency = 15 * 60;
+			$report_counter_frequency = 10 * 60;
 		}
 		else if($total_loop_time > (20 * 60))
 		{
-			// 10 minute reports
-			$report_counter_frequency = 10 * 60;
+			$report_counter_frequency = 5 * 60;
 		}
 		else if($total_loop_time > (10 * 60))
 		{
-			// 5 minute reports
-			$report_counter_frequency = 5 * 60;
+			$report_counter_frequency = 2 * 60;
 		}
 		else
 		{
@@ -347,6 +343,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 	protected function final_stress_report()
 	{
 		$report_buffer = PHP_EOL . '###### FINAL REPORT ####' . PHP_EOL;
+		$report_buffer .= date('F j H:i') . PHP_EOL;
 		$report_buffer .= 'ELAPSED TIME: ' . pts_strings::format_time(time() - $this->multi_test_stress_start_time) . PHP_EOL . PHP_EOL;
 
 		$table = array();
@@ -377,7 +374,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 					$this->sensor_data_archived_units[$sensor_name]);
 			}
 		}
-		$report_buffer .= pts_user_io::display_text_table($table, '   - ', 2) . PHP_EOL;
+		$report_buffer .= pts_user_io::display_text_table($table, '     ', 2) . PHP_EOL;
 		$report_buffer .= '######' . PHP_EOL;
 		return $report_buffer;
 	}
