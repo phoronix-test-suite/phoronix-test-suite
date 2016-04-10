@@ -48,7 +48,7 @@ class pts_user_io
 
 		return $list;
 	}
-	public static function display_text_table(&$table, $prepend_to_lines = null)
+	public static function display_text_table(&$table, $prepend_to_lines = null, $extra_width_to_column = 0)
 	{
 		$column_widths = array();
 		$formatted_table = $prepend_to_lines;
@@ -59,7 +59,7 @@ class pts_user_io
 			{
 				if(!isset($column_widths[$c]) || isset($table[$r][$c][$column_widths[$c]]))
 				{
-					$column_widths[$c] = strlen($table[$r][$c]);
+					$column_widths[$c] = strlen($table[$r][$c]) + $extra_width_to_column;
 				}
 			}
 		}

@@ -92,13 +92,13 @@ class pts_stress_run_manager extends pts_test_run_manager
 					$test = pts_file_io::file_get_contents($pid_file);
 					$table[] = array($test, '[PID: ' . basename($pid_file) . ']');
 				}
-				$report_buffer .= pts_user_io::display_text_table($table, '   - ');
+				$report_buffer .= pts_user_io::display_text_table($table, '   - ', 2) . PHP_EOL;
 
 
 				$report_buffer .= 'TEST SUBSYSTEMS ACTIVE: ' . PHP_EOL;
 				foreach($test_types_active as &$type)
 				{
-					$report_buffer .= '   - ' . $z . ': ' . $type . PHP_EOL;
+					$report_buffer .= '   - ' . $type . PHP_EOL;
 				}
 
 				$report_buffer .= 'CURRENT SYSTEM SENSORS: ' . PHP_EOL;
@@ -111,7 +111,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 
 					$table[] = array(phodevi::sensor_object_name($sensor_object) . ': ', round(phodevi::read_sensor($sensor_object), 2), phodevi::read_sensor_object_unit($sensor_object));
 				}
-				$report_buffer .= pts_user_io::display_text_table($table, '   - ');
+				$report_buffer .= pts_user_io::display_text_table($table, '   - ', 2) . PHP_EOL;
 				$report_buffer .= '######' . PHP_EOL;
 				echo $report_buffer;
 				$time_report_counter = time();
@@ -229,12 +229,12 @@ class pts_stress_run_manager extends pts_test_run_manager
 
 				$report_buffer = PHP_EOL . '###### SENSOR OVERVIEW ####' . PHP_EOL;
 
-				$table = array('TEST', 'MIN', 'AVG', 'MAX');
+				$table = array(array('TEST', 'MIN', 'AVG', 'MAX'));
 				foreach($sensor_data_archived as $sensor_name => &$sensor_data)
 				{
-					$table[] = array($sensor_name . ': ', min($sensor_data), (array_sum($sensor_data) / count($sensor_data)), max($sensor_data));
+					$table[] = array($sensor_name . ': ', min($sensor_data), round(array_sum($sensor_data) / count($sensor_data), 2), max($sensor_data));
 				}
-				$report_buffer .= pts_user_io::display_text_table($table, '   - ');
+				$report_buffer .= pts_user_io::display_text_table($table, '   - ', 2) . PHP_EOL;
 				$report_buffer .= '######' . PHP_EOL;
 				echo $report_buffer;
 				break;
