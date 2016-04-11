@@ -111,6 +111,17 @@ class pts_stress_run_manager extends pts_test_run_manager
 			}
 		}
 
+		$table = array();
+		foreach(phodevi::system_hardware(false) as $component => $value)
+		{
+			$table[] = array($component . ': ', $value);
+		}
+		foreach(phodevi::system_software(false) as $component => $value)
+		{
+			$table[] = array($component . ': ', $value);
+		}
+		echo 'SYSTEM INFORMATION: ' . PHP_EOL . pts_user_io::display_text_table($table, '     ', 1) . PHP_EOL . PHP_EOL;
+
 		// BEGIN THE LOOP
 		while(!empty($possible_tests_to_run))
 		{
@@ -361,7 +372,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 
 		if(!empty($this->stress_tests_executed))
 		{
-			$table = array('TESTS EXECUTED', 'TIMES CALLED');
+			$table = array(array('TESTS EXECUTED', 'TIMES CALLED'));
 			ksort($this->stress_tests_executed);
 
 			foreach($this->stress_tests_executed as $test => $times)
