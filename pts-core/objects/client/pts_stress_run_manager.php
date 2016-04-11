@@ -354,7 +354,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 	protected function final_stress_report()
 	{
 		$report_buffer = PHP_EOL . '###### SUMMARY REPORT ####' . PHP_EOL;
-		$report_buffer .= strtoupper(date('F j H:i e')) . PHP_EOL;
+		$report_buffer .= strtoupper(date('F j H:i T')) . PHP_EOL;
 		$report_buffer .= 'ELAPSED TIME: ' . pts_strings::format_time(time() - $this->multi_test_stress_start_time) . PHP_EOL;
 		$report_buffer .= 'SYSTEM IP: ' . pts_network::get_local_ip() . PHP_EOL . PHP_EOL;
 
