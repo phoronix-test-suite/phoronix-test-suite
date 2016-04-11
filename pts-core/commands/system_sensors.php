@@ -35,7 +35,6 @@ class system_sensors implements pts_option_interface
 			if($supported_devices === NULL)
 			{
 				$supported_devices = array(null);
-				continue;
 			}
 
 			foreach($supported_devices as $device)
