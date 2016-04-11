@@ -342,9 +342,22 @@ class pts_stress_run_manager extends pts_test_run_manager
 	}
 	protected function final_stress_report()
 	{
-		$report_buffer = PHP_EOL . '###### FINAL REPORT ####' . PHP_EOL;
+		$report_buffer = PHP_EOL . '###### SUMMARY REPORT ####' . PHP_EOL;
 		$report_buffer .= date('F j H:i') . PHP_EOL;
-		$report_buffer .= 'ELAPSED TIME: ' . pts_strings::format_time(time() - $this->multi_test_stress_start_time) . PHP_EOL . PHP_EOL;
+		$report_buffer .= 'ELAPSED TIME: ' . pts_strings::format_time(time() - $this->multi_test_stress_start_time) . PHP_EOL;
+		$report_buffer .= 'SYSTEM IP: ' . pts_network::get_local_ip() . PHP_EOL . PHP_EOL;
+
+		$report_buffer .= 'SYSTEM INFORMATION: ' . PHP_EOL;
+		$table = array();
+		foreach(phodevi::system_hardware(false) as $component => $value)
+		{
+			$table[] = array($component . ': ', $value);
+		}
+		foreach(phodevi::system_software(false) as $component => $value)
+		{
+			$table[] = array($component . ': ', $value);
+		}
+		$report_buffer .= pts_user_io::display_text_table($table, '     ', 1) . PHP_EOL . PHP_EOL;
 
 		if(!empty($this->stress_tests_executed))
 		{
