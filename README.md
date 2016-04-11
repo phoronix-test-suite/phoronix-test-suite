@@ -2,7 +2,7 @@
 http://www.phoronix-test-suite.com/
 
 The **Phoronix Test Suite** is the most comprehensive testing and benchmarking
-platform available for Linux, Solaris, Mac OS X, and BSD operating systems. The
+platform available for Linux, Solaris, OS X, and BSD operating systems. The
 Phoronix Test Suite allows for carrying out tests in a fully automated manner
 from test installation to execution and reporting. All tests are meant to be
 easily reproducible, easy-to-use, and support fully automated execution. The
@@ -27,7 +27,7 @@ able to upload their test results, profiles, and suites to OpenBenchmarking.org.
 A test profile is a single test that can be executed by the Phoronix Test Suite
 -- with a series of options possible within every test -- and a test suite is a
 seamless collection of test profiles and/or additional test suites. A test
-profile consists of a set of bash/shell scripts and XML files while a test suite
+profile consists of a set of Bash/shell scripts and XML files while a test suite
 is a single XML file.
 
 [OpenBenchmarking.org](http://www.openbenchmarking.org/) also allows for
@@ -61,7 +61,7 @@ architectures.
 The Phoronix Test Suite can be installed for system-wide usage or run locally
 without installation from the extracted tar.gz/zip package. The only hard
 dependency on the Phoronix Test Suite is having command-line support for PHP
-(PHP 5.3+) installed. A complete PHP stack (e.g. with web-server) is **not**
+(PHP 5.3+) installed. A complete PHP stack (e.g. with web server) is **not**
 needed, but merely the PHP command-line support, which is widely available from
 operating system package managers under the name `php`, `php5-cli`, or `php5`.
 
