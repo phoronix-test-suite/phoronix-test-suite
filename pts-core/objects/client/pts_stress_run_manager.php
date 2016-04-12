@@ -32,6 +32,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 	private $stress_subsystems_active;
 	private $stress_child_thread = false;
 	private $stress_logger;
+	private $stress_log_event_call = false;
 
 	public function multi_test_stress_run_execute($tests_to_run_concurrently = 3, $total_loop_time = false)
 	{
@@ -290,6 +291,13 @@ class pts_stress_run_manager extends pts_test_run_manager
 
 		return true;
 	}
+	public function action_on_stress_log_set($call)
+	{
+		if(is_callable($call))
+		{
+			$this->stress_log_event_call = $call;
+		}
+	}
 	protected function stress_print_and_log($msg)
 	{
 		if($this->stress_logger && $msg != null)
@@ -297,6 +305,11 @@ class pts_stress_run_manager extends pts_test_run_manager
 			echo $msg;
 			$this->stress_logger->log($msg, false);
 		}
+		call_user_func($this->stress_log_event_call, $this->stress_logger->get_log());
+	}
+	public function get_stress_log()
+	{
+		return $this->stress_logger->get_log();
 	}
 	public function sig_handler($signo)
 	{

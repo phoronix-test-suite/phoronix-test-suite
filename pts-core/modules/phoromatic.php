@@ -38,6 +38,7 @@ class phoromatic extends pts_module_interface
 	private static $p_save_identifier = null;
 	private static $p_schedule_id = null;
 	private static $p_trigger_id = null;
+	private static $benchmark_ticket_id = null;
 
 	private static $test_run_manager = null;
 
@@ -599,6 +600,7 @@ class phoromatic extends pts_module_interface
 						self::$p_schedule_id = isset($json['phoromatic']['schedule_id']) ? $json['phoromatic']['schedule_id'] : false;
 						self::$p_trigger_id = self::$p_save_identifier;
 						$benchmark_ticket_id = isset($json['phoromatic']['benchmark_ticket_id']) ? $json['phoromatic']['benchmark_ticket_id'] : null;
+						self::$benchmark_ticket_id = $benchmark_ticket_id;
 						phoromatic::update_system_status('Running Benchmarks For: ' . $phoromatic_save_identifier);
 
 						if(pts_strings::string_bool($json['phoromatic']['settings']['RunInstallCommand']))
@@ -615,15 +617,38 @@ class phoromatic extends pts_module_interface
 							}
 						}
 						$env_vars = isset($json['phoromatic']['environment_variables']) ? pts_strings::parse_value_string_vars($json['phoromatic']['environment_variables']) : array();
+						$is_stress_run = isset($env_vars['PTS_CONCURRENT_TEST_RUNS']) && $env_vars['PTS_CONCURRENT_TEST_RUNS'] > 1;
 
 						// Do the actual running
 						phodevi::clear_cache();
-						self::$test_run_manager = new pts_test_run_manager(array(
+
+						if($is_stress_run)
+						{
+							self::$test_run_manager = new pts_stress_run_manager(array(
+								'UploadResults' => false,
+								'SaveResults' => false,
+								'PromptForTestDescription' => false,
+								'RunAllTestCombinations' => false,
+								'PromptSaveName' => false,
+								'PromptForTestIdentifier' => false,
+								'OpenBrowser' => false
+								), true);
+
+							self::action_on_stress_log_set(array('phoromatic', 'upload_stress_log_sane'));
+							self::$test_run_manager->multi_test_stress_run_execute($env_vars['PTS_CONCURRENT_TEST_RUNS'], $env_vars['TOTAL_LOOP_TIME']);
+							self::upload_stress_log(self::$test_run_manager->get_stress_log());
+							break;
+						}
+						else
+						{
+							self::$test_run_manager = new pts_test_run_manager(array(
 							'UploadResults' => (isset($json['phoromatic']['settings']['UploadResultsToOpenBenchmarking']) && pts_strings::string_bool($json['phoromatic']['settings']['UploadResultsToOpenBenchmarking'])),
 							'SaveResults' => true,
 							'RunAllTestCombinations' => false,
 							'OpenBrowser' => false
 							), true);
+						}
+
 						if(self::$test_run_manager->initial_checks($suite_identifier, 'SHORT'))
 						{
 							// Load the tests to run
@@ -644,26 +669,9 @@ class phoromatic extends pts_module_interface
 								// Save results?
 
 								// Run the actual tests
-								if(false && isset($env_vars['PTS_CONCURRENT_TEST_RUNS']) && $env_vars['PTS_CONCURRENT_TEST_RUNS'] > 1)
-								{
-									// TODO XXX temporarily disable the stress-run feature from the Phoromatic side. Also need to switch above test_run_manager to stress_run_manager
-									$total_loop_time = isset($env_vars['TOTAL_LOOP_TIME']) ? $env_vars['TOTAL_LOOP_TIME'] : false;
-									pts_client::$pts_logger->log('STRESS / MULTI-TEST EXECUTION STARTED @ ' . date('Y-m-d H:i:s'));
-									pts_client::$pts_logger->log('CONCURRENT RUNS = ' . $env_vars['PTS_CONCURRENT_TEST_RUNS'] . ' TOTAL LOOP TIME = ' . $total_loop_time);
-									$r = self::$test_run_manager->multi_test_stress_run_execute($env_vars['PTS_CONCURRENT_TEST_RUNS'], $total_loop_time);
-									if($r == false)
-									{
-										return;
-									}
-
-									pts_client::$pts_logger->log('STRESS / MULTI-TEST EXECUTION ENDED @ ' . date('Y-m-d H:i:s'));
-								}
-								else
-								{
-									self::$test_run_manager->auto_save_results($phoromatic_save_identifier, $phoromatic_results_identifier, (isset($json['phoromatic']['test_description']) ? $json['phoromatic']['test_description'] : 'A Phoromatic run.'));
-									self::$test_run_manager->pre_execution_process();
-									self::$test_run_manager->call_test_runs();
-								}
+								self::$test_run_manager->auto_save_results($phoromatic_save_identifier, $phoromatic_results_identifier, (isset($json['phoromatic']['test_description']) ? $json['phoromatic']['test_description'] : 'A Phoromatic run.'));
+								self::$test_run_manager->pre_execution_process();
+								self::$test_run_manager->call_test_runs();
 
 								phoromatic::update_system_status('Benchmarks Completed For: ' . $phoromatic_save_identifier);
 								self::$test_run_manager->post_execution_process();
@@ -857,6 +865,44 @@ class phoromatic extends pts_module_interface
 		while($res == false && $times_tried < 4);
 
 		return $res;
+	}
+	private static function upload_stress_log($stress_log)
+	{
+		// Upload Logs to Phoromatic
+		if($stress_log == null || self::$benchmark_ticket_id == null)
+		{
+			return;
+		}
+
+		$times_tried = 0;
+		do
+		{
+			if($times_tried > 0)
+			{
+				sleep(rand(5, 20));
+			}
+
+			$res = phoromatic::upload_to_remote_server(array(
+				'r' => 'stress_log_upload',
+				'bid' => self::$benchmark_ticket_id,
+				'l' => $stress_log
+				));
+
+			$times_tried++;
+		}
+		while($res == false && $times_tried < 4);
+
+		return $res;
+	}
+	public static function upload_stress_log_sane($stress_log)
+	{
+		static $last_log_upload = 0;
+
+		if(time() > ($last_log_upload + 60))
+		{
+			self::upload_stress_log($stress_log);
+			$last_log_upload = time();
+		}
 	}
 	public static function recent_phoromatic_server_results()
 	{

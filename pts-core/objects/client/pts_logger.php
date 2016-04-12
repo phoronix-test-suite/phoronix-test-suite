@@ -79,6 +79,10 @@ class pts_logger
 	{
 		return $this->log_file;
 	}
+	public function get_log()
+	{
+		return file_get_contents($this->get_log_file_location());
+	}
 	public static function add_to_log($message)
 	{
 		static $logger = null;
