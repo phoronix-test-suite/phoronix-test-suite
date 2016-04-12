@@ -155,7 +155,7 @@ class phoromatic_benchmark implements pts_webui_interface
 					if(isset($_REQUEST['view_log']) && is_file(phoromatic_server::phoromatic_account_stress_log_path($_SESSION['AccountID'], $PATH[0]) . $_REQUEST['view_log'] . '.log'))
 					{
 						$main .= '<hr /><h1>Stress Log For: ' . phoromatic_server::system_id_to_name($_REQUEST['view_log']) . '</h1>';
-						$main .= '<blockquote>' . file_get_contents(phoromatic_server::phoromatic_account_stress_log_path($_SESSION['AccountID'], $PATH[0]) . $_REQUEST['view_log'] . '.log') . '</blockquote>';
+						$main .= '<blockquote>' . str_replace("\n", '<br />', file_get_contents(phoromatic_server::phoromatic_account_stress_log_path($_SESSION['AccountID'], $PATH[0]) . $_REQUEST['view_log'] . '.log')) . '</blockquote>';
 						$main .= '<p><a href="?benchmark/' . $PATH[0] . '#stress_logs">View Other System Logs</a></p>';
 					}
 					else
@@ -165,7 +165,7 @@ class phoromatic_benchmark implements pts_webui_interface
 						foreach(pts_file_io::glob(phoromatic_server::phoromatic_account_stress_log_path($_SESSION['AccountID'], $PATH[0]) . '*.log') as $log_file)
 						{
 							$sys_id = basename($log_file, '.log');
-							$main .= '<li><a href="?benchmark/' . $PATH[0] . '&view_log=' . $sys_id . '">' . phoromatic_server::system_id_to_name($sys_id) . '</a></li>';
+							$main .= '<li><a href="?benchmark/' . $PATH[0] . '/&view_log=' . $sys_id . '">' . phoromatic_server::system_id_to_name($sys_id) . '</a></li>';
 							$count++;
 						}
 						if($count == 0)
