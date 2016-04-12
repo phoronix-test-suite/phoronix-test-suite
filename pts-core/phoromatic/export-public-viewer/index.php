@@ -122,7 +122,7 @@ foreach($export_index_json['phoromatic'] as &$schedule)
 </ul>
 </div>
 <hr />
-<h1><?php echo $tracker['title'] ?></h1>
+<h1><?php echo $tracker['title']; ?></h1>
 <p id="phoromatic_descriptor"><?php echo $tracker['description'] ?></p>
 <div id="config_option_line">
 <form action="<?php $_SERVER['REQUEST_URI']; ?>" name="update_result_view" method="post">
@@ -151,6 +151,8 @@ echo '<option value="' . count($tracker['triggers']) . '">All Results</option>';
 <input type="checkbox" name="system_table" value="1" <?php echo (isset($_REQUEST['system_table']) && $_REQUEST['system_table'] == 1 ? 'checked="checked"' : null); ?> /> Show System Information Table?
 
 <input type="checkbox" name="regression_detector" value="1" <?php echo (isset($_REQUEST['regression_detector']) && $_REQUEST['regression_detector'] == 1 ? 'checked="checked"' : null); ?> /> Attempt To Results Of Interest?
+
+<input type="checkbox" name="result_overview_table" value="1" <?php echo (isset($_REQUEST['result_overview_table']) && $_REQUEST['result_overview_table'] == 1 ? 'checked="checked"' : null); ?> /> Show Result Overview Table?
 
 <br /><br /><input type="submit" value="Refresh Results">
 
@@ -198,6 +200,7 @@ foreach($triggers as $trigger)
 $attributes = array();
 $result_file = new pts_result_file(null, true);
 $result_file->merge($result_files);
+$result_file->set_title($tracker['title']);
 $extra_attributes = array('reverse_result_buffer' => true, 'force_simple_keys' => true, 'force_line_graph_compact' => true, 'force_tracking_line_graph' => true);
 
 if(isset($_REQUEST['normalize_results']) && $_REQUEST['normalize_results'])
@@ -212,10 +215,6 @@ if(isset($_REQUEST['clear_noisy_results']) && $_REQUEST['clear_noisy_results'])
 {
 	$extra_attributes['clear_noisy_results'] = true;
 }
-
-$intent = null;
-//$table = new pts_ResultFileTable($result_file, $intent);
-//echo '<p style="text-align: center; overflow: auto;" class="result_object">' . pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes) . '</p>';
 
 if(isset($_REQUEST['regression_detector']))
 {
@@ -240,6 +239,13 @@ if(isset($_REQUEST['regression_detector']))
 			echo '</p>';
 		}
 	}
+}
+
+if(isset($_REQUEST['result_overview_table']) || $result_file->get_test_count() < 10)
+{
+	$intent = null;
+	$table = new pts_ResultFileTable($result_file, $intent);
+	echo '<p style="text-align: center; overflow: auto;" class="result_object">' . pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes) . '</p>';
 }
 
 echo '<div id="pts_results_area">';

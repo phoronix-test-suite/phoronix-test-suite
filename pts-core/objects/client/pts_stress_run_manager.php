@@ -31,6 +31,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 	private $sensors_to_monitor;
 	private $stress_subsystems_active;
 	private $stress_child_thread = false;
+	private $stress_logger;
 
 	public function multi_test_stress_run_execute($tests_to_run_concurrently = 3, $total_loop_time = false)
 	{
@@ -46,6 +47,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 		$this->sensors_to_monitor = array();
 		$this->sensor_data_archived = array();
 		$this->sensor_data_archived_units = array();
+		$this->stress_logger = new pts_logger(null, 'phoronix-test-suite-stress.log');
 
 		// Determine how frequently to print reports / status updates
 		$time_report_counter = time();
@@ -84,7 +86,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 		}
 		else
 		{
-			echo 'PHP PCNTL support is needed if wishing to gracefully interrupt testing with signals.' . PHP_EOL;
+			$this->stress_print_and_log('PHP PCNTL support is needed if wishing to gracefully interrupt testing with signals.' . PHP_EOL);
 		}
 
 		// SENSOR SETUP WORK
@@ -120,7 +122,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 		{
 			$table[] = array($component . ': ', $value);
 		}
-		echo 'SYSTEM INFORMATION: ' . PHP_EOL . pts_user_io::display_text_table($table, '     ', 1) . PHP_EOL . PHP_EOL;
+		$this->stress_print_and_log('SYSTEM INFORMATION: ' . PHP_EOL . pts_user_io::display_text_table($table, '     ', 1) . PHP_EOL . PHP_EOL);
 
 		// BEGIN THE LOOP
 		while(!empty($possible_tests_to_run))
@@ -131,7 +133,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 			if(($time_report_counter + $report_counter_frequency) <= time() && count(pts_file_io::glob($this->thread_collection_dir . '*')) > 0)
 			{
 				// ISSUE STATUS REPORT
-				echo $this->stress_status_report();
+				$this->stress_print_and_log($this->stress_status_report());
 				$time_report_counter = time();
 			}
 
@@ -206,7 +208,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 				$pid = pcntl_fork();
 				if($pid == -1)
 				{
-					echo 'Forking Failure.';
+					$this->stress_print_and_log('Forking Failure.');
 				}
 				if($pid)
 				{
@@ -238,7 +240,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 				}
 				else if($total_loop_time == 'infinite')
 				{
-						echo 'Continuing to test indefinitely' . PHP_EOL;
+						$this->stress_print_and_log('Continuing to test indefinitely' . PHP_EOL);
 				}
 				else
 				{
@@ -253,11 +255,11 @@ class pts_stress_run_manager extends pts_test_run_manager
 			if(is_numeric($this->loop_until_time) && $this->loop_until_time < time())
 			{
 				// Time to Quit
-				echo 'TEST TIME EXPIRED; NO NEW TESTS WILL EXECUTE; CURRENT TESTS WILL FINISH' . PHP_EOL;
+				$this->stress_print_and_log('TEST TIME EXPIRED; NO NEW TESTS WILL EXECUTE; CURRENT TESTS WILL FINISH' . PHP_EOL);
 				// This halt-testing touch will let tests exit early (i.e. between multiple run steps)
 				file_put_contents(PTS_USER_PATH . 'halt-testing', 'stress-run is done... This text really is not important, just checking for file presence.');
 				// Final report
-				echo $this->final_stress_report();
+				$this->stress_print_and_log($this->final_stress_report());
 				break;
 			}
 
@@ -285,6 +287,14 @@ class pts_stress_run_manager extends pts_test_run_manager
 
 		return true;
 	}
+	protected function stress_print_and_log($msg)
+	{
+		if($this->stress_logger && $msg != null)
+		{
+			echo $msg;
+			$this->stress_logger->log($msg, false);
+		}
+	}
 	public function sig_handler($signo)
 	{
 		// Time to Quit
@@ -293,9 +303,9 @@ class pts_stress_run_manager extends pts_test_run_manager
 
 		if($this->stress_child_thread == false)
 		{
-			echo 'SIGNAL RECEIVED; QUITTING...' . PHP_EOL;
+			$this->stress_print_and_log('SIGNAL RECEIVED; QUITTING...' . PHP_EOL);
 			// Final report
-			echo $this->final_stress_report();
+			$this->stress_print_and_log($this->final_stress_report());
 		}
 		exit();
 	}

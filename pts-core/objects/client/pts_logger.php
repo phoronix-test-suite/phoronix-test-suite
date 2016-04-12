@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2014 - 2015, Phoronix Media
-	Copyright (C) 2014 - 2015, Michael Larabel
+	Copyright (C) 2014 - 2016, Phoronix Media
+	Copyright (C) 2014 - 2016, Michael Larabel
 	pts_logger.php: A simple log file generator
 
 	This program is free software; you can redistribute it and/or modify
@@ -25,7 +25,7 @@ class pts_logger
 {
 	private $log_file = null;
 
-	public function __construct($log_file = null)
+	public function __construct($log_file = null, $file_name = null)
 	{
 		if($log_file == null)
 		{
@@ -34,7 +34,18 @@ class pts_logger
 			else
 				$log_file = PTS_USER_PATH;
 
-			$log_file .= (defined('PHOROMATIC_SERVER') ? 'phoromatic' : 'phoronix-test-suite') . '.log';
+			if($file_name != null)
+			{
+				$log_file .= $file_name;
+			}
+			else if(defined('PHOROMATIC_SERVER'))
+			{
+				$log_file .= 'phoromatic.log';
+			}
+			else
+			{
+				$log_file .= 'phoronix-test-suite.log';
+			}
 		}
 
 	//	if(file_exists($log_file))
@@ -53,12 +64,12 @@ class pts_logger
 			return;
 		file_put_contents($this->log_file, null);
 	}
-	public function log($message)
+	public function log($message, $date_prefix = true)
 	{
 		if($this->log_file == null)
 			return;
 
-		file_put_contents($this->log_file, '[' . date('D M ' . str_pad(date('j'), 2, ' ', STR_PAD_LEFT) . ' H:i:s Y') . '] ' . $message . PHP_EOL, FILE_APPEND);
+		file_put_contents($this->log_file, ($date_prefix ? '[' . date('D M ' . str_pad(date('j'), 2, ' ', STR_PAD_LEFT) . ' H:i:s Y') . '] ' : null) . $message . PHP_EOL, FILE_APPEND);
 	}
 	public function get_log_file_size()
 	{
