@@ -356,7 +356,8 @@ class pts_stress_run_manager extends pts_test_run_manager
 		$report_buffer = PHP_EOL . '###### SUMMARY REPORT ####' . PHP_EOL;
 		$report_buffer .= strtoupper(date('F j H:i T')) . PHP_EOL;
 		$report_buffer .= 'ELAPSED TIME: ' . pts_strings::format_time(time() - $this->multi_test_stress_start_time) . PHP_EOL;
-		$report_buffer .= 'SYSTEM IP: ' . pts_network::get_local_ip() . PHP_EOL . PHP_EOL;
+		$report_buffer .= 'SYSTEM IP: ' . pts_network::get_local_ip() . PHP_EOL;
+		$report_buffer .= 'HOSTNAME: ' . phodevi::read_property('system', 'hostname') . PHP_EOL . PHP_EOL;
 
 		$report_buffer .= 'SYSTEM INFORMATION: ' . PHP_EOL;
 		$table = array();
