@@ -155,7 +155,32 @@ class phoromatic_benchmark implements pts_webui_interface
 					if(isset($_REQUEST['view_log']) && is_file(phoromatic_server::phoromatic_account_stress_log_path($_SESSION['AccountID'], $PATH[0]) . $_REQUEST['view_log'] . '.log'))
 					{
 						$main .= '<hr /><h1>Stress Log For: ' . phoromatic_server::system_id_to_name($_REQUEST['view_log']) . '</h1>';
-						$main .= '<blockquote>' . str_replace("\n", '<br />', file_get_contents(phoromatic_server::phoromatic_account_stress_log_path($_SESSION['AccountID'], $PATH[0]) . $_REQUEST['view_log'] . '.log')) . '</blockquote>';
+						$log_text = file_get_contents(phoromatic_server::phoromatic_account_stress_log_path($_SESSION['AccountID'], $PATH[0]) . $_REQUEST['view_log'] . '.log');
+
+						$x = 0;
+						while(($x = strpos($log_text, "\n##", $x)) !== false)
+						{
+							$log_text = substr($log_text, 0, $x) . "\n<strong style=\"font-weight: 800;\">" . substr($log_text, $x + 1);
+
+							if(($y = strpos($log_text, "\n", $x + 2)) !== false)
+							{
+								$log_text = substr($log_text, 0, $y) . '</strong>' . substr($log_text, $y);
+							}
+							$x = $y;
+						}
+
+						$x = 0;
+						while(($x = strpos($log_text, "\n[", $x)) !== false)
+						{
+							$log_text = substr($log_text, 0, $x) . "\n<strong style=\"font-weight: 800;\">" . substr($log_text, $x + 1);
+
+							if(($y = strpos($log_text, "]", $x + 2)) !== false)
+							{
+								$log_text = substr($log_text, 0, $y) . '</strong>' . substr($log_text, $y);
+							}
+							$x = $y;
+						}
+						$main .= '<blockquote>' . str_replace("\n", '<br />', $log_text) . '</blockquote>';
 						$main .= '<p><a href="?benchmark/' . $PATH[0] . '#stress_logs">View Other System Logs</a></p>';
 					}
 					else
