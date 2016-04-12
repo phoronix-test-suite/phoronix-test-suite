@@ -155,7 +155,7 @@ class phoromatic_benchmark implements pts_webui_interface
 					if(isset($_REQUEST['view_log']) && is_file(phoromatic_server::phoromatic_account_stress_log_path($_SESSION['AccountID'], $PATH[0]) . $_REQUEST['view_log'] . '.log'))
 					{
 						$main .= '<hr /><h1>Stress Log For: ' . phoromatic_server::system_id_to_name($_REQUEST['view_log']) . '</h1>';
-						$log_text = file_get_contents(phoromatic_server::phoromatic_account_stress_log_path($_SESSION['AccountID'], $PATH[0]) . $_REQUEST['view_log'] . '.log');
+						$log_text = PHP_EOL . file_get_contents(phoromatic_server::phoromatic_account_stress_log_path($_SESSION['AccountID'], $PATH[0]) . $_REQUEST['view_log'] . '.log');
 
 						$x = 0;
 						while(($x = strpos($log_text, "\n##", $x)) !== false)
