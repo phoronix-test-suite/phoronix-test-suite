@@ -48,6 +48,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 		$this->sensor_data_archived = array();
 		$this->sensor_data_archived_units = array();
 		$this->stress_logger = new pts_logger(null, 'phoronix-test-suite-stress.log');
+		$this->stress_logger->log('Log Initialized');
 
 		// Determine how frequently to print reports / status updates
 		$time_report_counter = time();
@@ -229,7 +230,9 @@ class pts_stress_run_manager extends pts_test_run_manager
 				{
 					// child
 					$this->stress_child_thread = true;
+					$this->stress_logger->log('Starting: ' . $test_to_run->test_profile->get_identifier() . ' [' . $test_to_run->get_arguments_description()  . ']');
 					$continue_test_flag = $this->process_test_run_request($test_to_run);
+					$this->stress_logger->log('Ended: ' . $test_to_run->test_profile->get_identifier() . ' [' . $test_to_run->get_arguments_description()  . ']');
 					pts_file_io::unlink($this->thread_collection_dir . getmypid());
 					echo PHP_EOL;
 					exit;
