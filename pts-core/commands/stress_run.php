@@ -79,7 +79,6 @@ class stress_run implements pts_option_interface
 		}
 		else if($total_loop_time && is_numeric($total_loop_time) && $total_loop_time > 1)
 		{
-			$total_loop_time = $total_loop_time * 60;
 			echo 'TOTAL_LOOP_TIME set; running tests for ' . ($total_loop_time / 60) . ' minutes' . PHP_EOL;
 		}
 		else

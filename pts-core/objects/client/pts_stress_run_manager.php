@@ -41,6 +41,10 @@ class pts_stress_run_manager extends pts_test_run_manager
 		$this->disable_dynamic_run_count();
 		$this->multi_test_stress_run = $tests_to_run_concurrently;
 		$possible_tests_to_run = $this->get_tests_to_run();
+		if(is_numeric($total_loop_time))
+		{
+			$total_loop_time = $total_loop_time * 60;
+		}
 		$this->loop_until_time = is_numeric($total_loop_time) && $total_loop_time > 1 ? time() + $total_loop_time : false;
 		$this->stress_tests_executed = array();
 		$this->multi_test_stress_start_time = time();
@@ -289,6 +293,11 @@ class pts_stress_run_manager extends pts_test_run_manager
 			}
 		}
 
+		// Restore default handlers
+		pcntl_signal(SIGTERM, SIG_DFL);
+		pcntl_signal(SIGINT, SIG_DFL);
+		pcntl_signal(SIGHUP, SIG_DFL);
+
 		return true;
 	}
 	public function action_on_stress_log_set($call)
@@ -413,6 +422,9 @@ class pts_stress_run_manager extends pts_test_run_manager
 		$table = array(array('SENSOR', 'MIN', 'AVG', 'MAX'));
 		foreach($this->sensor_data_archived as $sensor_name => &$sensor_data)
 		{
+			if(empty($sensor_data))
+				continue;
+
 			$max_val = max($sensor_data);
 
 			if($max_val > 0)
