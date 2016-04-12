@@ -96,6 +96,10 @@ class phoromatic_server
 	{
 		return self::phoromatic_account_path($account_id) . 'systems/' . ($system_id != null ? $system_id . '/' : null);
 	}
+	public static function phoromatic_account_stress_log_path($account_id, $ticket_id = null)
+	{
+		return self::phoromatic_account_path($account_id) . 'stress-logs/' . ($ticket_id != null ? $ticket_id . '/' : null);
+	}
 	public static function read_setting($setting)
 	{
 		return pts_storage_object::read_from_file(self::$json_storage, $setting);
@@ -755,6 +759,12 @@ class phoromatic_server
 
 			if(!phoromatic_server::check_for_benchmark_ticket_result_match($row['TicketID'], $account_id, $system_id, $row['TicketIssueTime']))
 			{
+				if(strpos($row['EnvironmentVariables'], 'PTS_CONCURRENT_TEST_RUNS') !== false && is_file(phoromatic_server::phoromatic_account_stress_log_path($account_id, $row['TicketID']) . $system_id . '.log'))
+				{
+					// Stress log uploaded
+					continue;
+				}
+
 				return $row;
 			}
 		}

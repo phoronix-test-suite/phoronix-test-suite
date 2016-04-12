@@ -116,6 +116,17 @@ class phoromatic_benchmark implements pts_webui_interface
 				}
 				$main .= '</ol>';
 
+				if(!empty($row['EnvironmentVariables']))
+				{
+					$main .= '<hr /><h1>Environment</h1><ol>';
+
+					foreach(explode(';', $row['EnvironmentVariables']) as $env)
+					{
+						$main .= '<li><strong>' . $env . '</strong></li>';
+					}
+					$main .= '</ol>';
+				}
+
 				$main .= '<hr /><h1>Ticket Payload</h1>';
 				$main .= '<p>This ticket runs the <strong>' . $row['SuiteToRun'] . '</strong> test suite:</p>';
 				$main .= '<div style="max-height: 400px; overflow-y: scroll;">';
@@ -139,28 +150,56 @@ class phoromatic_benchmark implements pts_webui_interface
 
 				$main .= '</div><hr />';
 				$main .= '<div class="pts_phoromatic_info_box_area">';
-				$main .= '<div style="margin: 0 5%;"><ul style="max-height: 100%;"><li><h1>Test Results</h1></li>';
-				$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, ScheduleID, PPRID, UploadTime, TimesViewed FROM phoromatic_results WHERE AccountID = :account_id AND BenchmarkTicketID = :ticket_id ORDER BY UploadTime DESC');
-				$stmt->bindValue(':account_id', $_SESSION['AccountID']);
-				$stmt->bindValue(':ticket_id', $PATH[0]);
-				$test_result_result = $stmt->execute();
-				$results = 0;
-				while($test_result_row = $test_result_result->fetchArray())
+				if(strpos($row['EnvironmentVariables'], 'PTS_CONCURRENT_TEST_RUNS') !== false)
 				{
-					$main .= '<a onclick=""><li id="result_select_' . $test_result_row['PPRID'] . '"><input type="checkbox" id="result_compare_checkbox_' . $test_result_row['PPRID'] . '" onclick="javascript:phoromatic_checkbox_toggle_result_comparison(\'' . $test_result_row['PPRID'] . '\');" onchange="return false;"></input> <span onclick="javascript:phoromatic_window_redirect(\'?result/' . $test_result_row['PPRID'] . '\');">' . $test_result_row['Title'] . '</span><br /><table><tr><td>' . phoromatic_system_id_to_name($test_result_row['SystemID']) . '</td><td>' . phoromatic_user_friendly_timedate($test_result_row['UploadTime']) .  '</td><td>' . $test_result_row['TimesViewed'] . ' Times Viewed</td></table></li></a>';
-					$results++;
+					if(isset($_REQUEST['view_log']) && is_file(phoromatic_server::phoromatic_account_stress_log_path($_SESSION['AccountID'], $PATH[0]) . $_REQUEST['view_log'] . '.log'))
+					{
+						$main .= '<hr /><h1>Stress Log For: ' . phoromatic_server::system_id_to_name($_REQUEST['view_log']) . '</h1>';
+						$main .= '<blockquote>' . file_get_contents(phoromatic_server::phoromatic_account_stress_log_path($_SESSION['AccountID'], $PATH[0]) . $_REQUEST['view_log'] . '.log') . '</blockquote>';
+						$main .= '<p><a href="?benchmark/' . $PATH[0] . '#stress_logs">View Other System Logs</a></p>';
+					}
+					else
+					{
+						$main .= '<a name="stress_logs"></a><hr /><h1>Stress Run Logs</h1><ol>';
+						$count = 0;
+						foreach(pts_file_io::glob(phoromatic_server::phoromatic_account_stress_log_path($_SESSION['AccountID'], $PATH[0]) . '*.log') as $log_file)
+						{
+							$sys_id = basename($log_file, '.log');
+							$main .= '<li><a href="?benchmark/' . $PATH[0] . '&view_log=' . $sys_id . '">' . phoromatic_server::system_id_to_name($sys_id) . '</a></li>';
+							$count++;
+						}
+						if($count == 0)
+						{
+							$main .= '<li><em>No Logs Currently Available</em></li>';
+						}
+						$main .= '</ol>';
+					}
+				}
+				else
+				{
+					$main .= '<div style="margin: 0 5%;"><ul style="max-height: 100%;"><li><h1>Test Results</h1></li>';
+					$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, ScheduleID, PPRID, UploadTime, TimesViewed FROM phoromatic_results WHERE AccountID = :account_id AND BenchmarkTicketID = :ticket_id ORDER BY UploadTime DESC');
+					$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+					$stmt->bindValue(':ticket_id', $PATH[0]);
+					$test_result_result = $stmt->execute();
+					$results = 0;
+					while($test_result_row = $test_result_result->fetchArray())
+					{
+						$main .= '<a onclick=""><li id="result_select_' . $test_result_row['PPRID'] . '"><input type="checkbox" id="result_compare_checkbox_' . $test_result_row['PPRID'] . '" onclick="javascript:phoromatic_checkbox_toggle_result_comparison(\'' . $test_result_row['PPRID'] . '\');" onchange="return false;"></input> <span onclick="javascript:phoromatic_window_redirect(\'?result/' . $test_result_row['PPRID'] . '\');">' . $test_result_row['Title'] . '</span><br /><table><tr><td>' . phoromatic_system_id_to_name($test_result_row['SystemID']) . '</td><td>' . phoromatic_user_friendly_timedate($test_result_row['UploadTime']) .  '</td><td>' . $test_result_row['TimesViewed'] . ' Times Viewed</td></table></li></a>';
+						$results++;
 
+					}
+					if($results == 0)
+					{
+						$main .= '<li class="light" style="text-align: center;">No Results Found</li>';
+					}
+					else if($results > 3)
+					{
+						$main .= '<a onclick=""><li id="global_bottom_totals"><input type="checkbox" id="global_checkbox" onclick="javascript:phoromatic_toggle_checkboxes_on_page(this);" onchange="return false;"></input> <strong>' . $results . ' Results</strong></li></a>';
+					}
+					$main .= '</ul></div>';
+					$main .= '</div>';
 				}
-				if($results == 0)
-				{
-					$main .= '<li class="light" style="text-align: center;">No Results Found</li>';
-				}
-				else if($results > 3)
-				{
-					$main .= '<a onclick=""><li id="global_bottom_totals"><input type="checkbox" id="global_checkbox" onclick="javascript:phoromatic_toggle_checkboxes_on_page(this);" onchange="return false;"></input> <strong>' . $results . ' Results</strong></li></a>';
-				}
-				$main .= '</ul></div>';
-				$main .= '</div>';
 			}
 		}
 		else
@@ -328,7 +367,15 @@ class phoromatic_benchmark implements pts_webui_interface
 				$main .= '</select></p>
 				<p><strong>Force Loop Time:</strong> <select name="TOTAL_LOOP_TIME"><option value="0">Disabled</option>';
 				$s = true;
-				for($i = 60; $i <= (60 * 24 * 90); $i += 60)
+				for($i = 5; $i < 60; $i += 5)
+				{
+					if($i > 15 && $i % 10 != 0)
+					{
+						continue;
+					}
+					$main .= '<option value="' . $i . '">' . pts_strings::format_time($i, 'MINUTES') . '</option>';
+				}
+				for($i = 60; $i <= (30 * 24 * 60); $i += 60)
 				{
 					if($i > 10080)
 					{
@@ -345,16 +392,16 @@ class phoromatic_benchmark implements pts_webui_interface
 
 					$main .= '<option value="' . $i . '">' . pts_strings::format_time($i, 'MINUTES') . '</option>';
 				}
-				$main .= '</select></p>
+				$main .= '</select></p>';
 
-				<h4>System Monitoring</h4>
+		/*		$main .= '<h4>System Monitoring</h4>
 				<p>The Phoronix Test Suite system monitor module allows for select hardware/software sensors to be logged in real-time while running the selected test suite. The supported sensors are then shown within the result file upon the test\'s completion.</p>';
 
 				foreach(phodevi::available_sensors() as $sensor)
 				{
 					$main .= '<input type="checkbox" name="MONITOR" value="' . phodevi::sensor_identifier($sensor) . '" /> ' . phodevi::sensor_name($sensor) . ' &nbsp; ';
 				}
-
+*/
 				$main .= '<hr /><p align="left"><input name="submit" value="' . ($is_new ? 'Run' : 'Edit') . ' Benchmark" type="submit" onclick="return pts_rmm_validate_schedule();" /></p>
 					</form>';
 			}
