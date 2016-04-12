@@ -60,6 +60,14 @@ class pts_core
 			{
 				$userhome = PTS_USER_PATH;
 			}
+			else if(substr(__FILE__, 0, 6) == '/home/')
+			{
+				$home_dir = substr(__FILE__, 0, strpos(__FILE__, '/', 7)) . '/';
+				if(is_dir($home_dir) && is_dir($home_dir . '.phoronix-test-suite'))
+				{
+					$userhome = $home_dir;
+				}
+			}
 			else
 			{
 				if(!is_writable('/'))
