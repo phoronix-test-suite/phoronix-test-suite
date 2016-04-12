@@ -759,7 +759,7 @@ class phoromatic_server
 
 			if(!phoromatic_server::check_for_benchmark_ticket_result_match($row['TicketID'], $account_id, $system_id, $row['TicketIssueTime']))
 			{
-				if(strpos($row['EnvironmentVariables'], 'PTS_CONCURRENT_TEST_RUNS') !== false && is_file(phoromatic_server::phoromatic_account_stress_log_path($account_id, $row['TicketID']) . $system_id . '.log'))
+				if(strpos($row['EnvironmentVariables'], 'PTS_CONCURRENT_TEST_RUNS') !== false && is_file(phoromatic_server::phoromatic_account_stress_log_path($account_id, $row['TicketID']) . $system_id . '.log') && filemtime(phoromatic_server::phoromatic_account_stress_log_path($account_id, $row['TicketID']) . $system_id . '.log') > $row['TicketIssueTime'])
 				{
 					// Stress log uploaded
 					continue;
