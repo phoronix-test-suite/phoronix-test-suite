@@ -634,7 +634,7 @@ class phoromatic extends pts_module_interface
 								'OpenBrowser' => false
 								), true);
 
-							self::action_on_stress_log_set(array('phoromatic', 'upload_stress_log_sane'));
+							self::$test_run_manager->action_on_stress_log_set(array('phoromatic', 'upload_stress_log_sane'));
 							self::$test_run_manager->multi_test_stress_run_execute($env_vars['PTS_CONCURRENT_TEST_RUNS'], $env_vars['TOTAL_LOOP_TIME']);
 							self::upload_stress_log(self::$test_run_manager->get_stress_log());
 							break;
