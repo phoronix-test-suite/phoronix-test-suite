@@ -333,6 +333,7 @@ class phoromatic_server
 		{
 			$id = str_replace(' ', '-', strtolower($row['Title']));
 			$triggers = array();
+			$latest_time = 0;
 			$stmt2 = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_results WHERE AccountID = :account_id AND ScheduleID = :schedule_id ORDER BY UploadTime DESC');
 			$stmt2->bindValue(':account_id', $row['AccountID']);
 			$stmt2->bindValue(':schedule_id', $row['ScheduleID']);
@@ -349,6 +350,7 @@ class phoromatic_server
 					copy($composite_xml, $export_path . $id . '/' . $row2['Trigger'] . '/' . phoromatic_server::system_id_to_name($row2['SystemID'], $row2['AccountID']) . '/composite.xml');
 				}
 				pts_arrays::unique_push($triggers, $row2['Trigger']);
+				$latest_time = max($latest_time, strtotime($row2['UploadTime']));
 			}
 
 			$exported_result_index['phoromatic'][$id] = array(
@@ -356,6 +358,7 @@ class phoromatic_server
 				'id' => $id,
 				'description' => $row['Description'],
 				'triggers' => $triggers,
+				'last_result_time' => $latest_time
 				);
 
 		}
