@@ -87,6 +87,162 @@ else
 $tracker = &$export_index_json['phoromatic'][$REQUESTED];
 $length = count($tracker['triggers']);
 
+//
+// EMAIL NOTIFICATIONS
+//
+
+if(defined('PATH_TO_PHOROMATIC_ML_DB') && PATH_TO_PHOROMATIC_ML_DB != null)
+{
+	function phoromatic_mailing_list_db_init()
+	{
+		$db_file = PATH_TO_PHOROMATIC_ML_DB;
+		$db_flags = SQLITE3_OPEN_READWRITE | SQLITE3_OPEN_CREATE;
+		$db = new SQLite3($db_file, $db_flags);
+		$db->busyTimeout(10000);
+		$result = $db->query('PRAGMA user_version');
+		$result = $result->fetchArray();
+		$user_version = isset($result['user_version']) && is_numeric($result['user_version']) ? $result['user_version'] : 0;
+
+		switch($user_version)
+		{
+			case 0:
+				// Account Database
+				$db->exec('CREATE TABLE phoromatic_notifications_emails (EmailAddress TEXT, TestSchedule TEXT NOT NULL, NotifyOnNewResults INTEGER, NotifyOnRegressions INTEGER, UNIQUE(EmailAddress, TestSchedule) ON CONFLICT IGNORE)');
+				$db->exec('PRAGMA user_version = 1');
+				break;
+		}
+		chmod($db_file, 0600);
+		return $db;
+	}
+	function send_email($to, $subject, $from, $body)
+	{
+		$msg = '<html><body>' . $body . '<br /><br /><br /><a href="' . PHOROMATIC_BASE_URL . '">' . PHOROMATIC_VIEWER_TITLE . '</a>
+		<hr />
+		<p><img src="http://www.phoronix-test-suite.com/web/pts-logo-60.png" /></p>
+		<h6><em>The <a href="http://www.phoronix-test-suite.com/">Phoronix Test Suite</a>, <a href="http://www.phoromatic.com/">Phoromatic</a>, and <a href="http://openbenchmarking.org/">OpenBenchmarking.org</a> are products of <a href="http://www.phoronix-media.com/">Phoronix Media</a>.<br />The Phoronix Test Suite is open-source under terms of the GNU GPL. Commercial support, custom engineering, and other services are available by contacting Phoronix Media.<br />&copy; ' . date('Y') . ' Phoronix Media.</em></h6>
+		</body></html>';
+		$headers = "MIME-Version: 1.0\r\n";
+		$headers .= "Content-type:text/html;charset=UTF-8\r\n";
+		$headers .= "From: Phoromatic - Phoronix Test Suite <no-reply@phoromatic.com>\r\n";
+		$headers .= "Reply-To: " . $from . " <" . $from . ">\r\n";
+
+		mail($to, $subject, $msg, $headers);
+	}
+
+	if(isset($_POST['join_email']) && !empty($_POST['join_email']) && filter_var($_POST['join_email'], FILTER_VALIDATE_EMAIL) && (isset($_POST['notify_new_results']) || isset($_POST['notify_new_regressions'])))
+	{
+		// ENTER EMAIL
+		$db = phoromatic_mailing_list_db_init();
+		$stmt = $db->prepare('INSERT INTO phoromatic_notifications_emails (EmailAddress, TestSchedule, NotifyOnNewResults, NotifyOnRegressions) VALUES (:email, :test_schedule, :notify_results, :notify_regressions)');
+		$stmt->bindValue(':email', strtolower($_POST['join_email']));
+		$stmt->bindValue(':test_schedule', $REQUESTED);
+		$stmt->bindValue(':notify_results', (isset($_POST['notify_new_results']) && $_POST['notify_new_results'] ? time() : 0));
+		$stmt->bindValue(':notify_regressions', (isset($_POST['notify_new_regressions']) && $_POST['notify_new_regressions'] ? time() : 0));
+		$result = $stmt->execute();
+
+		if($result)
+		{
+			send_email($_POST['join_email'], 'Email Join Notification', EMAIL_ADDRESS_SENDER, 'This email is to confirm you will now be receiving email notifications on events from the Phoromatic <em>' . $REQUESTED . '</em> tracker on ' . PHOROMATIC_VIEWER_TITLE . '.');
+		}
+	}
+	else if(isset($_REQUEST['upload_event_completed']))
+	{
+		// Check for those that want new notifications just about new result uploads
+		$db = phoromatic_mailing_list_db_init();
+		foreach($export_index_json['phoromatic'] as $schedule => $data)
+		{
+			$stmt = $db->prepare('SELECT * FROM phoromatic_notifications_emails WHERE TestSchedule LIKE :test_schedule AND NotifyOnNewResults NOT LIKE 0 AND NotifyOnNewResults < :latest_result_time_for_schedule');
+			$stmt->bindValue(':test_schedule', $schedule);
+			$stmt->bindValue(':latest_result_time_for_schedule', $data['last_result_time']);
+			$result = $stmt ? $stmt->execute() : false;
+
+			while($result && ($row = $result->fetchArray()))
+			{
+				send_email($row['EmailAddress'], 'New Results Uploaded For: ' . $data['title'], EMAIL_ADDRESS_SENDER, '<p>This email is to notify you that new test results have been uploaded for the ' . $data['title'] . ' performance tracker on ' . PHOROMATIC_VIEWER_TITLE . '</p><p><strong>View the latest results: <a href="' . PHOROMATIC_BASE_URL . '?' . $schedule . '">' . PHOROMATIC_BASE_URL . '?' . $schedule . '</a></strong></p>');
+
+				$stmt = $db->prepare('UPDATE phoromatic_notifications_emails SET NotifyOnNewResults = :latest_result_time_for_schedule WHERE EmailAddress = :email_address AND TestSchedule LIKE :test_schedule');
+				$stmt->bindValue(':email_address', $row['EmailAddress']);
+				$stmt->bindValue(':test_schedule', $schedule);
+				$stmt->bindValue(':latest_result_time_for_schedule', $data['last_result_time']);
+				$stmt->execute();
+			}
+		}
+
+		// Check for those that want new notifications just about potential regressions
+		$db = phoromatic_mailing_list_db_init();
+		foreach($export_index_json['phoromatic'] as $schedule => $data)
+		{
+			$result_files = array();
+			$triggers = array_splice($data['triggers'], 0, 2);
+
+			foreach($triggers as $trigger)
+			{
+				$results_for_trigger = glob(PATH_TO_EXPORTED_PHOROMATIC_DATA . '/' . $schedule . '/' . $trigger . '/*/composite.xml');
+
+				if($results_for_trigger == false)
+					continue;
+
+				foreach($results_for_trigger as $composite_xml)
+				{
+					// Add to result file
+					$system_name = basename(dirname($composite_xml)) . ': ' . $trigger;
+					array_push($result_files, new pts_result_merge_select($composite_xml, null, $system_name));
+				}
+			}
+
+			$attributes = array();
+			$result_file = new pts_result_file(null, true);
+			$result_file->merge($result_files);
+			//$result_file->set_title();
+			$extra_attributes = array('reverse_result_buffer' => true, 'force_simple_keys' => true, 'force_line_graph_compact' => true, 'force_tracking_line_graph' => true);
+			$has_flagged_results = false;
+			$regression_text = null;
+			$did_hit_a_regression = false;
+			foreach($result_file->get_result_objects() as $i => $result_object)
+			{
+				if(!$has_flagged_results)
+				{
+					$regression_text.= '<hr /><h2>Flagged Results</h2>';
+					$regression_text.= '<p>Displayed are results for each system of each scheduled test where there is a measurable change when comparing the most recent result to the previous result for that system for that test.</p>';
+					$has_flagged_results = true;
+				}
+				$poi = $result_object->points_of_possible_interest();
+
+				if(!empty($poi))
+				{
+					$did_hit_a_regression = true;
+					$regression_text.= '<h4>' . $result_object->test_profile->get_title() . '</h4><p>';
+					foreach($poi as $text)
+					{
+						$regression_text.= '<a href="' . PHOROMATIC_BASE_URL . '?' . $schedule . '#r-' . $i . '">' . $text . '</a><br />';
+					}
+					$regression_text.= '</p>';
+				}
+			}
+
+			if($did_hit_a_regression)
+			{
+				$stmt = $db->prepare('SELECT * FROM phoromatic_notifications_emails WHERE TestSchedule LIKE :test_schedule AND NotifyOnRegressions NOT LIKE 0 AND NotifyOnRegressions < :latest_result_time_for_schedule');
+				$stmt->bindValue(':test_schedule', $schedule);
+				$stmt->bindValue(':latest_result_time_for_schedule', $data['last_result_time']);
+				$result = $stmt ? $stmt->execute() : false;
+
+				while($result && ($row = $result->fetchArray()))
+				{
+					send_email($row['EmailAddress'], 'Potential Regressions For: ' . $data['title'], EMAIL_ADDRESS_SENDER, '<p>This email is to notify you that there is a new potential regression or other change in performance for the ' . $data['title'] . ' performance tracker on ' . PHOROMATIC_VIEWER_TITLE . '</p>' . $regression_text . ' <p><br /><br /><br /><strong>View the latest results: <a href="' . PHOROMATIC_BASE_URL . '?' . $schedule . '">' . PHOROMATIC_BASE_URL . '?' . $schedule . '</a></strong></p>');
+
+					$stmt = $db->prepare('UPDATE phoromatic_notifications_emails SET NotifyOnRegressions = :latest_result_time_for_schedule WHERE EmailAddress = :email_address AND TestSchedule LIKE :test_schedule');
+					$stmt->bindValue(':email_address', $row['EmailAddress']);
+					$stmt->bindValue(':test_schedule', $schedule);
+					$stmt->bindValue(':latest_result_time_for_schedule', $data['last_result_time']);
+					$stmt->execute();
+				}
+			}
+		}
+	}
+
+}
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -123,7 +279,7 @@ foreach($export_index_json['phoromatic'] as &$schedule)
 </div>
 <hr />
 <h1><?php echo $tracker['title']; ?></h1>
-<p id="phoromatic_descriptor"><?php echo $tracker['description'] ?></p>
+<p id="phoromatic_descriptor"><?php echo $tracker['description'] ?><br /><br /><strong>Latest Results As Of:</strong> <em><?php echo date('j F Y H:i', $export_index_json['phoromatic'][$REQUESTED]['last_result_time']); ?></em></p>
 <div id="config_option_line">
 <form action="<?php $_SERVER['REQUEST_URI']; ?>" name="update_result_view" method="post">
 Show Results For The Past <select name="view_results_limit" id="view_results_limit">
@@ -150,7 +306,7 @@ echo '<option value="' . count($tracker['triggers']) . '">All Results</option>';
 
 <input type="checkbox" name="system_table" value="1" <?php echo (isset($_REQUEST['system_table']) && $_REQUEST['system_table'] == 1 ? 'checked="checked"' : null); ?> /> Show System Information Table?
 
-<input type="checkbox" name="regression_detector" value="1" <?php echo (isset($_REQUEST['regression_detector']) && $_REQUEST['regression_detector'] == 1 ? 'checked="checked"' : null); ?> /> Attempt To Results Of Interest?
+<input type="checkbox" name="regression_detector" value="1" <?php echo (isset($_REQUEST['regression_detector']) && $_REQUEST['regression_detector'] == 1 ? 'checked="checked"' : null); ?> /> Attempt To Show Results Of Interest?
 
 <input type="checkbox" name="result_overview_table" value="1" <?php echo (isset($_REQUEST['result_overview_table']) && $_REQUEST['result_overview_table'] == 1 ? 'checked="checked"' : null); ?> /> Show Result Overview Table?
 
@@ -158,6 +314,14 @@ echo '<option value="' . count($tracker['triggers']) . '">All Results</option>';
 
 </form>
 </div>
+<?php if(defined('PATH_TO_PHOROMATIC_ML_DB') && PATH_TO_PHOROMATIC_ML_DB != null) { ?>
+<hr />
+<h2>Email Notifications - <?php echo $tracker['title']; ?></h2>
+<form action="<?php $_SERVER['REQUEST_URI']; ?>" name="update_result_view" method="post">
+<p align="center">Email Address: <input type="text" name="join_email" /></p>
+<p align="center"><input type="checkbox" name="notify_new_results" value="1" /> Notify When New Results Uploaded? <input type="checkbox" name="notify_new_regressions" value="1" /> Notify When Potential Regressions Spotted? </p>
+<p align="center"><input type="submit" value="Add Email Notification"></p>
+<?php } ?>
 <blockquote>
 <?php if(isset($welcome_msg) && !empty($welcome_msg)) { echo '<p>' . str_replace(PHP_EOL, '<br />', $welcome_msg) . '</p><hr />'; } ?>
 <p>This service is powered by the <a href="http://www.phoronix-test-suite.com/">Phoronix Test Suite</a>'s built-in <a href="http://www.phoromatic.com/">Phoromatic</a> test orchestration and centralized performance management software. The tests are hosted by <a href="http://openbenchmarking.org/">OpenBenchmarking.org</a>. The public code is <a href="http://github.com/phoronix-test-suite/phoronix-test-suite/">hosted on GitHub</a>.</p>
