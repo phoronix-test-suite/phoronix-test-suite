@@ -88,7 +88,7 @@ class phoromatic_dashboard implements pts_webui_interface
 			}
 			else if(!empty($row['CurrentProcessTicket']))
 			{
-				echo '<h2 style="color: #FFF;"><a href="/?benchmark/' . $row['CurrentProcessTicket'] . '">' . phoromatic_server::ticket_id_to_name($row['CurrentProcessTicket']) . '</a></h2>';
+				echo '<h2 style="color: #FFF;"><a href="/?benchmark/' . $row['CurrentProcessTicket'] . '/&view_log=' . $row['SystemID'] . '">' . phoromatic_server::ticket_id_to_name($row['CurrentProcessTicket']) . '</a></h2>';
 			}
 			echo '</div>';
 

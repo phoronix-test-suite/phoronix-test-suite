@@ -117,7 +117,7 @@ class phoromatic_main implements pts_webui_interface
 			}
 			else if(!empty($row['CurrentProcessTicket']))
 			{
-				$main .= '   <a href="/?benchmark/' . $row['CurrentProcessTicket'] . '">' . phoromatic_server::ticket_id_to_name($row['CurrentProcessTicket']) . '</a><br />';
+				$main .= '   <a href="/?benchmark/' . $row['CurrentProcessTicket'] . '/&view_log=' . $row['SystemID'] . '">' . phoromatic_server::ticket_id_to_name($row['CurrentProcessTicket']) . '</a><br />';
 			}
 
 			$time_remaining = phoromatic_compute_estimated_time_remaining($row['EstimatedTimeForTask'], $row['LastCommunication']);
