@@ -1062,7 +1062,7 @@ class phoromatic extends pts_module_interface
 
 		if(self::$in_stress_mode)
 		{
-			$msg = 'Stress Testing: ' . self::$in_stress_mode;
+			$msg = 'Stress-Run Testing';
 		}
 		else
 		{

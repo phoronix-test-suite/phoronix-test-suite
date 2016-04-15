@@ -65,7 +65,7 @@ class phoromatic_main implements pts_webui_interface
 		{
 			$main .= '<p>To get started with your new account, the basic steps to get started include:</p>
 				<ol>
-					<li>Connect/sync the Phoronix Test Suite client systems (the systems to be benchmarked) to this account. In the simplest form, you just need to run the following command on the test systems: <strong>phoronix-test-suite phoromatic.connect ' . phoromatic_web_socket_server_addr() . '</strong>. For more information view the instructions on the <a href="?systems">systems page</a>.</li>
+					<li>Connect/sync the Phoronix Test Suite client systems (the systems to be benchmarked) to this account. In the simplest form, you just need to run the following command on the test systems: <strong style="font-weight: 800;">phoronix-test-suite phoromatic.connect ' . phoromatic_web_socket_server_addr() . '</strong>. For more information view the instructions on the <a href="?systems">systems page</a>.</li>
 					<li>Configure your <a href="?settings">account settings</a>.</li>
 					<li><a href="?schedules">Create a test schedule</a>. A schedule is for running test(s) on selected system(s) on a routine, timed basis or whenever a custom trigger is passed to the Phoromatic server. A test schedule could be for running benchmarks on a daily basis, whenever a new Git commit is applied to a code-base, or other events occurred. You can also enrich the potential by adding pre/post-test hooks for ensuring the system is set to a proper state for benchmarking. Alternatively, you can <a href="?benchmark">create a benchmark ticket</a> for one-time testing on one or more systems.</li>
 					<li>View the automatically generated <a href="?results">test results</a>.</li>';
@@ -109,6 +109,15 @@ class phoromatic_main implements pts_webui_interface
 			if(!empty($row['CurrentProcessSchedule']))
 			{
 				$main .= '<a href="?schedules/' . $row['CurrentProcessSchedule'] . '">' . phoromatic_server::schedule_id_to_name($row['CurrentProcessSchedule']) . '</a><br />';
+			}
+
+			if(!empty($row['CurrentProcessSchedule']))
+			{
+				$main .= ' - <a href="/?schedules/' . $row['CurrentProcessSchedule'] . '">' . phoromatic_server::schedule_id_to_name($row['CurrentProcessSchedule']) . '</a><br />';
+			}
+			else if(!empty($row['CurrentProcessTicket']))
+			{
+				$main .= '   <a href="/?benchmark/' . $row['CurrentProcessTicket'] . '">' . phoromatic_server::ticket_id_to_name($row['CurrentProcessTicket']) . '</a><br />';
 			}
 
 			$time_remaining = phoromatic_compute_estimated_time_remaining($row['EstimatedTimeForTask'], $row['LastCommunication']);
