@@ -6,6 +6,7 @@ Phoronix Test Suite 6.4.0 (Git)
 - pts-core: Add Midori to supported browser list
 - pts-core: Add default logging support while running stress-run using phoronix-test-suite-stress.log filename
 - pts-core: Additional fallback for locating if running PTS as a user from their home directory
+- pts-core: Append date to phoronix-test-suite-stress-XXX.log when running stress-run
 - phoromatic: Initial server-side implementation of new stress-run support via Phoromatic Server when going to "Run A Benchmark" and opting for stress mode
 - phoromatic: Initial client-side implementation of new stress-run support
 - phoromatic: Add basic email notification support to the Phoromatic export results viewer

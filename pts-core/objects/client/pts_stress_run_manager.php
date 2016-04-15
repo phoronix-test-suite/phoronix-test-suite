@@ -52,7 +52,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 		$this->sensors_to_monitor = array();
 		$this->sensor_data_archived = array();
 		$this->sensor_data_archived_units = array();
-		$this->stress_logger = new pts_logger(null, 'phoronix-test-suite-stress.log');
+		$this->stress_logger = new pts_logger(null, 'phoronix-test-suite-stress-' . date('ymdHi') . '.log');
 		$this->stress_logger->log('Log Initialized');
 
 		// Determine how frequently to print reports / status updates
