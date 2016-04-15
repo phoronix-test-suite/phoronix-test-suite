@@ -39,6 +39,7 @@ class phoromatic extends pts_module_interface
 	private static $p_schedule_id = null;
 	private static $p_trigger_id = null;
 	private static $benchmark_ticket_id = null;
+	private static $in_stress_mode = false;
 
 	private static $test_run_manager = null;
 
@@ -639,7 +640,9 @@ class phoromatic extends pts_module_interface
 								if(self::$test_run_manager->load_tests_to_run($suite_identifier))
 								{
 									self::$test_run_manager->action_on_stress_log_set(array('phoromatic', 'upload_stress_log_sane'));
+									self::$in_stress_mode = $phoromatic_save_identifier;
 									self::$test_run_manager->multi_test_stress_run_execute($env_vars['PTS_CONCURRENT_TEST_RUNS'], $env_vars['TOTAL_LOOP_TIME']);
+									self::$in_stress_mode = false;
 									self::upload_stress_log(self::$test_run_manager->get_stress_log());
 								}
 							}
@@ -1055,7 +1058,16 @@ class phoromatic extends pts_module_interface
 			return false;
 		}
 
-		phoromatic::update_system_status('Running: ' . $pts_test_result->test_profile->get_identifier() . ($pts_test_result->get_arguments_description() != null ? ' [' . $pts_test_result->get_arguments_description() . ']' : null),
+		if(self::$in_stress_mode)
+		{
+			$msg = 'Stress Testing: ' . self::$in_stress_mode;
+		}
+		else
+		{
+			$msg = 'Running: ' . $pts_test_result->test_profile->get_identifier() . ($pts_test_result->get_arguments_description() != null ? ' [' . $pts_test_result->get_arguments_description() . ']' : null);
+		}
+
+		phoromatic::update_system_status($msg,
 			ceil(self::$test_run_manager->get_estimated_run_time() / 60),
 			self::$test_run_manager->get_percent_complete(),
 			null,
