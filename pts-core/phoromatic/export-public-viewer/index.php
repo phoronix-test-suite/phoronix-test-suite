@@ -279,7 +279,7 @@ foreach($export_index_json['phoromatic'] as &$schedule)
 </div>
 <hr />
 <h1><?php echo $tracker['title']; ?></h1>
-<p id="phoromatic_descriptor"><?php echo $tracker['description'] ?><br /><br /><strong style="font-weight: 800;">Tracker History:</strong> <em><?php echo date('j F Y H:i', $export_index_json['phoromatic'][$REQUESTED]['first_result_time']) . ' - ' . date('j F Y H:i', $export_index_json['phoromatic'][$REQUESTED]['last_result_time']) . ' (' . count($tracker['triggers']) . ' Results)'; ?></em></p>
+<p id="phoromatic_descriptor"><?php echo $tracker['description'] ?><br /><br /><strong style="font-weight: 800;">Tracker History:</strong> <em><?php echo date('j F Y', $export_index_json['phoromatic'][$REQUESTED]['first_result_time']) . ' - ' . date('j F Y H:i', $export_index_json['phoromatic'][$REQUESTED]['last_result_time']); ?></em></p>
 <div id="config_option_line">
 <form action="<?php $_SERVER['REQUEST_URI']; ?>" name="update_result_view" method="post">
 Show Results For The Past <select name="view_results_limit" id="view_results_limit">
