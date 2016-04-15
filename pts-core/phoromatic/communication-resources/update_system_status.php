@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2014, Phoronix Media
-	Copyright (C) 2009 - 2014, Michael Larabel
+	Copyright (C) 2009 - 2016, Phoronix Media
+	Copyright (C) 2009 - 2016, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -38,13 +38,14 @@ if(empty($PERCENT_COMPLETE) || !is_numeric($PERCENT_COMPLETE))
 }
 
 
-$stmt = phoromatic_server::$db->prepare('UPDATE phoromatic_systems SET CurrentTask = :current_task, EstimatedTimeForTask = :time_for_task, TaskPercentComplete = :percent_complete, TaskPercentComplete = :percent_complete, CurrentProcessSchedule = :schedule_id, TimeToNextCommunication = :time_to_next_comm WHERE AccountID = :account_id AND SystemID = :system_id');
+$stmt = phoromatic_server::$db->prepare('UPDATE phoromatic_systems SET CurrentTask = :current_task, EstimatedTimeForTask = :time_for_task, TaskPercentComplete = :percent_complete, TaskPercentComplete = :percent_complete, CurrentProcessSchedule = :schedule_id, CurrentProcessTicket = :ticket_id, TimeToNextCommunication = :time_to_next_comm WHERE AccountID = :account_id AND SystemID = :system_id');
 $stmt->bindValue(':account_id', $ACCOUNT_ID);
 $stmt->bindValue(':system_id', SYSTEM_ID);
 $stmt->bindValue(':current_task', $ACTIVITY);
 $stmt->bindValue(':time_for_task', $ESTIMATED_TIME);
 $stmt->bindValue(':percent_complete', $PERCENT_COMPLETE);
 $stmt->bindValue(':schedule_id', $SCHEDULE_ID);
+$stmt->bindValue(':ticket_id', isset($BENCHMARK_TICKET_ID) && !empty($BENCHMARK_TICKET_ID) ? $BENCHMARK_TICKET_ID : 0);
 $stmt->bindValue(':time_to_next_comm', $OTHER);
 $stmt->execute();
 

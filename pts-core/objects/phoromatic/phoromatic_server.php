@@ -311,6 +311,10 @@ class phoromatic_server
 				// Change made 7 January 2016
 				self::$db->exec('ALTER TABLE phoromatic_account_settings ADD COLUMN LimitNetworkCommunication INTEGER DEFAULT 0');
 				self::$db->exec('PRAGMA user_version = 35');
+			case 35:
+				// Change made 15 April 2016
+				self::$db->exec('ALTER TABLE phoromatic_systems ADD COLUMN CurrentProcessTicket INTEGER DEFAULT 0');
+				self::$db->exec('PRAGMA user_version = 36');
 		}
 		chmod($db_file, 0600);
 		if(!defined('PHOROMATIC_DB_INIT'))

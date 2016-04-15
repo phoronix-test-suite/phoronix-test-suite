@@ -320,6 +320,7 @@ class phoromatic extends pts_module_interface
 				'time' => $estimated_time_remaining,
 				'pc' => $percent_complete,
 				'sched' => (!empty($for_schedule) ? $for_schedule : self::$p_schedule_id),
+				'bid' => (!empty(self::$benchmark_ticket_id) ? self::$benchmark_ticket_id : 0),
 				'o' => $estimate_to_next_comm
 				));
 	}
@@ -704,6 +705,7 @@ class phoromatic extends pts_module_interface
 						}
 						self::$p_schedule_id = null;
 						self::$is_running_as_phoromatic_node = false;
+						self::$benchmark_ticket_id = null;
 						break;
 					case 'reboot':
 						echo PHP_EOL . 'Phoromatic received a remote command to reboot.' . PHP_EOL;
