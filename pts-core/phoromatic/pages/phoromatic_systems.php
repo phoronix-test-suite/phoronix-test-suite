@@ -154,7 +154,16 @@ class phoromatic_systems implements pts_webui_interface
 				}
 
 				$main .= '<hr />';
-				$info_table = array('Status:' => $row['CurrentTask'], 'Last Communication:' => phoromatic_user_friendly_timedate($row['LastCommunication']), 'Estimated Time Left For Task: ' => phoromatic_compute_estimated_time_remaining_string($row['EstimatedTimeForTask'], $row['LastCommunication']), 'State:' => $state, 'Phoronix Test Suite Client:' => $row['ClientVersion'], 'Initial Creation:' => phoromatic_user_friendly_timedate($row['CreatedOn']), 'System ID:' => $row['SystemID'], 'Last IP:' => $row['LastIP'], 'MAC Address:' => $row['NetworkMAC'], 'Wake-On-LAN Information:' => (empty($row['NetworkWakeOnLAN']) ? 'N/A' : $row['NetworkWakeOnLAN']), 'Power-Off Sequence Permitted: ' => ($row['BlockPowerOffs'] == 1 ? 'Blocked' : 'Permitted'));
+				$status_extra = null;
+				if(!empty($row['CurrentProcessSchedule']))
+				{
+					$status_extra = ' - <a href="/?schedules/' . $row['CurrentProcessSchedule'] . '">' . phoromatic_server::schedule_id_to_name($row['CurrentProcessSchedule']) . '</a>';
+				}
+				else if(!empty($row['CurrentProcessTicket']))
+				{
+					$status_extra = ' - <a href="/?benchmark/' . $row['CurrentProcessTicket'] . '">' . phoromatic_server::ticket_id_to_name($row['CurrentProcessTicket']) . '</a>';
+				}
+				$info_table = array('Status:' => $row['CurrentTask'] . $status_extra, 'Last Communication:' => phoromatic_user_friendly_timedate($row['LastCommunication']), 'Estimated Time Left For Task: ' => phoromatic_compute_estimated_time_remaining_string($row['EstimatedTimeForTask'], $row['LastCommunication']), 'State:' => $state, 'Phoronix Test Suite Client:' => $row['ClientVersion'], 'Initial Creation:' => phoromatic_user_friendly_timedate($row['CreatedOn']), 'System ID:' => $row['SystemID'], 'Last IP:' => $row['LastIP'], 'MAC Address:' => $row['NetworkMAC'], 'Wake-On-LAN Information:' => (empty($row['NetworkWakeOnLAN']) ? 'N/A' : $row['NetworkWakeOnLAN']), 'Power-Off Sequence Permitted: ' => ($row['BlockPowerOffs'] == 1 ? 'Blocked' : 'Permitted'));
 				$main .= '<h2>System State</h2>' . pts_webui::r2d_array_to_table($info_table, 'auto');
 
 				if(!PHOROMATIC_USER_IS_VIEWER)

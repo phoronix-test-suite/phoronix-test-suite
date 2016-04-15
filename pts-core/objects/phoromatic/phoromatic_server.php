@@ -448,6 +448,22 @@ class phoromatic_server
 
 		return $schedule_names[$schedule_id];
 	}
+	public static function ticket_id_to_name($ticket_id, $aid = false)
+	{
+		static $ticket_names;
+
+		if(!isset($ticket_names[$ticket_id]) || empty($ticket_names[$ticket_id]))
+		{
+			$stmt = phoromatic_server::$db->prepare('SELECT Title FROM phoromatic_benchmark_tickets WHERE AccountID = :account_id AND TicketID = :ticket_id');
+			$stmt->bindValue(':account_id', ($aid ? $aid : $_SESSION['AccountID']));
+			$stmt->bindValue(':ticket_id', $ticket_id);
+			$result = $stmt->execute();
+			$row = $result ? $result->fetchArray() : false;
+			$ticket_names[$ticket_id] = isset($row['Title']) ? $row['Title'] : false;
+		}
+
+		return $ticket_names[$ticket_id];
+	}
 	public static function account_id_to_group_admin_email($account_id)
 	{
 		$stmt = phoromatic_server::$db->prepare('SELECT Email FROM phoromatic_users WHERE AccountID = :account_id AND AdminLevel = 1 ORDER BY CreatedOn ASC LIMIT 1');
