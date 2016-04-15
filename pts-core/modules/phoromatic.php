@@ -647,6 +647,7 @@ class phoromatic extends pts_module_interface
 									self::upload_stress_log(self::$test_run_manager->get_stress_log());
 								}
 							}
+							self::$benchmark_ticket_id = null;
 							break;
 						}
 						else
