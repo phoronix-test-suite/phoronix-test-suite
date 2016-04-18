@@ -699,9 +699,9 @@ class phoromatic extends pts_module_interface
 								}
 							}
 
-							if(isset($json['phoromatic']['post_install_set_context']))
+							if(isset($json['phoromatic']['post_run_set_context']))
 							{
-								phoromatic::set_user_context($json['phoromatic']['post_install_set_context'], self::$p_trigger_id, self::$p_schedule_id, 'POST_RUN');
+								phoromatic::set_user_context($json['phoromatic']['post_run_set_context'], self::$p_trigger_id, self::$p_schedule_id, 'POST_RUN');
 							}
 						}
 						self::$p_schedule_id = null;
