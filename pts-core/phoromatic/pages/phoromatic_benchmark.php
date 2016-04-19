@@ -127,7 +127,7 @@ class phoromatic_benchmark implements pts_webui_interface
 						$main .= '<li>' . $group . '</li>';
 
 						$stmt = phoromatic_server::$db->prepare('SELECT SystemID FROM phoromatic_systems WHERE AccountID = :account_id AND Groups LIKE :sgroup AND State > 0 ORDER BY Title ASC');
-						$stmt->bindValue(':account_id', $account_id);
+						$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 						$stmt->bindValue(':sgroup', '%#' . $group . '#%');
 						$result = $stmt->execute();
 
