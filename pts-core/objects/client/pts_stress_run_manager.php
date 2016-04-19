@@ -54,6 +54,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 		$this->sensor_data_archived_units = array();
 		$this->stress_logger = new pts_logger(null, 'phoronix-test-suite-stress-' . date('ymdHi') . '.log');
 		$this->stress_logger->log('Log Initialized');
+		putenv('FORCE_TIMES_TO_RUN=1');
 
 		// Determine how frequently to print reports / status updates
 		$time_report_counter = time();
@@ -282,6 +283,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 			}
 		}
 
+		putenv('FORCE_TIMES_TO_RUN');
 		pts_file_io::delete($this->thread_collection_dir, null, true);
 
 		foreach($this->get_tests_to_run() as $run_request)

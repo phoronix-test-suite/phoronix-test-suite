@@ -12,6 +12,8 @@ Phoronix Test Suite 6.4.0 (Git)
 - phoromatic: Add basic email notification support to the Phoromatic export results viewer
 - phoromatic: Say "Stress Testing - XXX" as Phoromatic status messages when in stress-run mode
 - phoromatic: Add links to schedules/tickets from dashboard and system pages for active schedule/ticket on that system at the moment
+- phoromatic: Fix for handling post-run event script
+- phoromatic: Only run tests once each time called upon in stress-run mode
 
 Phoronix Test Suite 6.2.2
 9 March 2016
