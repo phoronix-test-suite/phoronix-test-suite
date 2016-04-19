@@ -108,10 +108,10 @@ class phoromatic_benchmark implements pts_webui_interface
 				$main .= '<h3>' . $row['Description'] . '</h3>';
 				$main .= '<p>This benchmark ticket was created on <strong>' . date('j F Y \a\t H:i', strtotime($row['LastModifiedOn'])) . '</strong> by <strong>' . $row['LastModifiedBy'] . '. The ticket was last issued for testing at ' . date('j F Y \a\t H:i', $row['TicketIssueTime']) . '</strong>.';
 				$main .= '<p> <a href="/?benchmark/' . $PATH[0] . '/&repeat">Repeat Ticket</a> &nbsp; &nbsp; &nbsp; <a href="/?benchmark/' . $PATH[0] . '/&remove">Remove Ticket</a>' . (!isset($_GET['disable']) && $row['State'] > 0 ? ' &nbsp; &nbsp; &nbsp; <a href="/?benchmark/' . $PATH[0] . '/&disable">End Ticket</a>' : null) . '</p>';
-				$main .= '<hr /><h1>System Targets</h1><ol>';
 
 				if(!empty($row['RunTargetSystems']))
 				{
+					$main .= '<hr /><h1>System Targets</h1><ol>';
 					foreach(explode(',', $row['RunTargetSystems']) as $system_id)
 					{
 						$main .= '<li><a href="?systems/' . $system_id . '">' . phoromatic_server::system_id_to_name($system_id) . '</a></li>';
@@ -119,12 +119,13 @@ class phoromatic_benchmark implements pts_webui_interface
 				}
 				if(!empty($row['RunTargetGroups']))
 				{
+					$main .= '<hr /><h1>Group Targets</h1><ol>';
 					foreach(explode(',', $row['RunTargetGroups']) as $group)
 					{
 						if(empty($group))
 							continue;
 
-						$main .= '<li>' . $group . '</li>';
+						$main .= '<li><strong>' . $group . '</strong></li>';
 
 						$stmt = phoromatic_server::$db->prepare('SELECT SystemID FROM phoromatic_systems WHERE AccountID = :account_id AND Groups LIKE :sgroup AND State > 0 ORDER BY Title ASC');
 						$stmt->bindValue(':account_id', $_SESSION['AccountID']);
