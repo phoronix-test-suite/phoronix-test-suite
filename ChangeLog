@@ -15,6 +15,7 @@ Phoronix Test Suite 6.4.0 (Git)
 - phoromatic: Fix for handling post-run event script
 - phoromatic: Only run tests once each time called upon in stress-run mode
 - phoromatic: Show systems in groups on benchmark ticketing page
+- phoromatic: Don't reset fields when building suite and adding additional tests
 
 Phoronix Test Suite 6.2.2
 9 March 2016

@@ -344,7 +344,9 @@ function phoromatic_ajax_append_element(r, d)
 		{
 			if(http[rnow].status == 200 || http[rnow].status == 304)
 			{
-				document.getElementById(d).innerHTML = document.getElementById(d).innerHTML + http[rnow].responseText;
+				var container = document.createElement("div");
+				container.innerHTML = http[rnow].responseText;
+				document.getElementById(d).appendChild(container);
 			}
 		}}
 	http[rnow].send(null);
