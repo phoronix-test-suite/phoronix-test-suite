@@ -14,6 +14,7 @@ Phoronix Test Suite 6.4.0 (Git)
 - phoromatic: Add links to schedules/tickets from dashboard and system pages for active schedule/ticket on that system at the moment
 - phoromatic: Fix for handling post-run event script
 - phoromatic: Only run tests once each time called upon in stress-run mode
+- phoromatic: Show systems in groups on benchmark ticketing page
 
 Phoronix Test Suite 6.2.2
 9 March 2016
