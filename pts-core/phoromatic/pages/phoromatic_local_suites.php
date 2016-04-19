@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2015, Phoronix Media
-	Copyright (C) 2015, Michael Larabel
+	Copyright (C) 2015 - 2016, Phoronix Media
+	Copyright (C) 2015 - 2016, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -50,7 +50,7 @@ class phoromatic_local_suites implements pts_webui_interface
 			$main .= '<a name="' . $id . '"></a><h1>' . $test_suite->get_title() . ' [' . $id . ']</h1>';
 			$main .= '<p><strong>' . $test_suite->get_maintainer() . '</strong></p>';
 			$main .= '<p><em>' . $test_suite->get_description() . '</em></p>';
-			$main .= '<div style="max-height: 200px; overflow-y: scroll;">';
+			$main .= '<div style="max-height: 400px; width: 80%; overflow-y: scroll;">';
 
 			foreach($test_suite->get_contained_test_result_objects() as $tro)
 			{
