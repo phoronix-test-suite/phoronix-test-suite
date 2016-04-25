@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite 6.4.0 (Git)
+Phoronix Test Suite 6.4.0 Milestone 1
+25 April 2016
 
 - pts-core: Many improvements to stress-run functionality
 - pts-core: Add Midori to supported browser list
