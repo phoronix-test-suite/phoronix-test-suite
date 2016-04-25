@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- pts-core: Allow XML formatting from the Phoromatic Server web interface
+
 Phoronix Test Suite 6.4.0 Milestone 1
 25 April 2016
 
