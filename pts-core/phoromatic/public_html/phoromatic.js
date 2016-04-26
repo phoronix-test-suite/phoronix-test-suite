@@ -268,7 +268,11 @@ function phoromatic_schedule_test_details(append_args)
 function phoromatic_build_suite_test_details()
 {
 	var test_target = pts_get_list_item("add_to_suite_select_test");
-	phoromatic_ajax_append_element("r_add_test_build_suite_details/&tp=" + test_target, "test_details");
+	if(test_target)
+	{
+		phoromatic_ajax_append_element("r_add_test_build_suite_details/&tp=" + test_target, "test_details");
+	}
+	document.getElementById("add_to_suite_select_test").selectedIndex = 0;
 }
 function pts_get_list_item(select_id)
 {
