@@ -338,6 +338,9 @@ class pts_stress_run_manager extends pts_test_run_manager
 	}
 	protected function stress_status_report()
 	{
+		return $this->final_stress_report(false);
+		// XXX the below code has been phased out for a unified report called by final_stress_report();
+
 		$report_buffer = PHP_EOL . '###### STRESS RUN CURRENT STATUS ' . date('H:i M j') . ' ####' . PHP_EOL;
 		$report_buffer .= 'ELAPSED TIME: ' . pts_strings::format_time(time() - $this->multi_test_stress_start_time) . PHP_EOL;
 		if($this->loop_until_time > time())
@@ -388,13 +391,71 @@ class pts_stress_run_manager extends pts_test_run_manager
 		$report_buffer .= '######' . PHP_EOL;
 		return $report_buffer;
 	}
-	protected function final_stress_report()
+	protected function final_stress_report($is_final = true)
 	{
-		$report_buffer = PHP_EOL . '###### SUMMARY REPORT ####' . PHP_EOL;
+		if(!$is_final)
+		{
+			$report_buffer = PHP_EOL . '###### STRESS RUN INTERIM REPORT ####' . PHP_EOL;
+		}
+		else
+		{
+			$report_buffer = PHP_EOL . '###### SUMMARY REPORT ####' . PHP_EOL;
+		}
+
 		$report_buffer .= strtoupper(date('F j H:i T')) . PHP_EOL;
+		$report_buffer .= 'START TIME: ' . date('F j H:i T', $this->multi_test_stress_start_time) . PHP_EOL;
 		$report_buffer .= 'ELAPSED TIME: ' . pts_strings::format_time(time() - $this->multi_test_stress_start_time) . PHP_EOL;
+		if($this->loop_until_time > time())
+		{
+			$report_buffer .= 'TIME REMAINING: ' . pts_strings::format_time($this->loop_until_time - time()) . PHP_EOL;
+		}
+		else if($total_loop_time == 'infinite')
+		{
+			$report_buffer .= 'INFINITE TESTING; TESTING UNTIL INTERRUPTED' . PHP_EOL;
+		}
+		else
+		{
+			$report_buffer .= 'WAITING FOR CURRENT TEST RUN QUEUE TO FINISH.' . PHP_EOL;
+		}
 		$report_buffer .= 'SYSTEM IP: ' . pts_network::get_local_ip() . PHP_EOL;
-		$report_buffer .= 'HOSTNAME: ' . phodevi::read_property('system', 'hostname') . PHP_EOL . PHP_EOL;
+		$report_buffer .= 'HOSTNAME: ' . phodevi::read_property('system', 'hostname') . PHP_EOL;
+		$report_buffer .= '# OF CONCURRENT TESTS: ' . $this->multi_test_stress_run . PHP_EOL . PHP_EOL;
+
+		if(!$is_final)
+		{
+			$report_buffer .= 'TESTS CURRENTLY ACTIVE: ' . PHP_EOL;
+
+			$table = array();
+			foreach(pts_file_io::glob($this->thread_collection_dir . '*') as $pid_file)
+			{
+				$test = pts_file_io::file_get_contents($pid_file);
+				$table[] = array($test, '[PID: ' . basename($pid_file) . ']');
+			}
+			$report_buffer .= pts_user_io::display_text_table($table, '   - ', 2) . PHP_EOL;
+		}
+
+		$report_buffer .= PHP_EOL . 'TESTS IN RUN QUEUE: ' . PHP_EOL . PHP_EOL;
+		$tiq = array();
+		foreach($this->get_tests_to_run() as $i => $test)
+		{
+			$bar = strtoupper($test->test_profile->get_title()) . ' [' . $test->test_profile->get_identifier() . ']';
+			if(!isset($tiq[$bar]))
+			{
+				$tiq[$bar] = array();
+			}
+
+			array_push($tiq[$bar], $test->test_arguments_description());
+		}
+		foreach($tiq as $test => $args)
+		{
+			$report_buffer .= $test . PHP_EOL;
+			foreach($args as $arg)
+			{
+				$report_buffer .= '     ' . $arg . PHP_EOL;
+			}
+			$report_buffer .= PHP_EOL;
+		}
+
 
 		$report_buffer .= 'SYSTEM INFORMATION: ' . PHP_EOL;
 		$table = array();

@@ -1063,7 +1063,15 @@ class phoromatic extends pts_module_interface
 
 		if(self::$in_stress_mode)
 		{
+			static $time_in_stress_run = 0;
+
 			$msg = 'Stress-Run Testing';
+			if(($time_in_stress_run + (60 * 60)) > time())
+			{
+				// Don't report this same string so often...
+				return;
+			}
+			$time_in_stress_run = time();
 		}
 		else
 		{
