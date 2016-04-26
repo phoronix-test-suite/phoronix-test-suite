@@ -447,7 +447,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 				$tiq[$bar] = array();
 			}
 
-			array_push($tiq[$bar], $test->test_arguments_description());
+			array_push($tiq[$bar], $test->get_arguments_description());
 		}
 		foreach($tiq as $test => $args)
 		{
