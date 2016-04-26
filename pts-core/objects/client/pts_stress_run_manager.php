@@ -316,7 +316,10 @@ class pts_stress_run_manager extends pts_test_run_manager
 			echo $msg;
 			$this->stress_logger->log($msg, false);
 		}
-		call_user_func($this->stress_log_event_call, $this->stress_logger->get_log());
+		if($this->stress_log_event_call)
+		{
+			call_user_func($this->stress_log_event_call, $this->stress_logger->get_log());
+		}
 	}
 	public function get_stress_log()
 	{
