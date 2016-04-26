@@ -454,7 +454,10 @@ class pts_stress_run_manager extends pts_test_run_manager
 			$report_buffer .= $test . PHP_EOL;
 			foreach($args as $arg)
 			{
-				$report_buffer .= '     ' . $arg . PHP_EOL;
+				if(!empty($arg))
+				{
+					$report_buffer .= '     ' . $arg . PHP_EOL;
+				}
 			}
 			$report_buffer .= PHP_EOL;
 		}
