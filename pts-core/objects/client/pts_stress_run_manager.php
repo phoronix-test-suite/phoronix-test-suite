@@ -412,10 +412,6 @@ class pts_stress_run_manager extends pts_test_run_manager
 		{
 			$report_buffer .= 'TIME REMAINING: ' . pts_strings::format_time($this->loop_until_time - time()) . PHP_EOL;
 		}
-		else if($total_loop_time == 'infinite')
-		{
-			$report_buffer .= 'INFINITE TESTING; TESTING UNTIL INTERRUPTED' . PHP_EOL;
-		}
 		else
 		{
 			$report_buffer .= 'WAITING FOR CURRENT TEST RUN QUEUE TO FINISH.' . PHP_EOL;
