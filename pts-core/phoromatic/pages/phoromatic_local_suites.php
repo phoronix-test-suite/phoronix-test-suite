@@ -40,6 +40,20 @@ class phoromatic_local_suites implements pts_webui_interface
 		$suite_dir = phoromatic_server::phoromatic_account_suite_path($_SESSION['AccountID']);
 		$main = '<h1>Local Suites</h1><p>These are test suites created by you or another account within your group. Suites are an easy collection of test profiles. New suits can be trivially made via the <a href="/?build_suite">build suite</a> page.</p>';
 
+		if(!PHOROMATIC_USER_IS_VIEWER && isset($PATH[0]) && $PATH[0] == 'delete')
+		{
+			$suite_ids = explode(',', $PATH[1]);
+
+			foreach($ids as $id)
+			{
+				if(is_file($suite_dir . $id . '/suite-definition.xml'))
+				{
+					unlink($suite_dir . $id . '/suite-definition.xml');
+				}
+			}
+
+		}
+
 		$suite_count = 0;
 		foreach(pts_file_io::glob($suite_dir . '*/suite-definition.xml') as $xml_path)
 		{
@@ -50,6 +64,10 @@ class phoromatic_local_suites implements pts_webui_interface
 			$main .= '<a name="' . $id . '"></a><h1>' . $test_suite->get_title() . ' [' . $id . ']</h1>';
 			$main .= '<p><strong>' . $test_suite->get_maintainer() . '</strong></p>';
 			$main .= '<p><em>' . $test_suite->get_description() . '</em></p>';
+			if(!PHOROMATIC_USER_IS_VIEWER
+			{
+				$main .= '<p><a href="?local_suites/delete/' . $id . '">Delete Suite</a></p>';
+			}
 			$main .= '<div style="max-height: 400px; width: 80%; overflow-y: scroll;">';
 
 			foreach($test_suite->get_contained_test_result_objects() as $tro)
