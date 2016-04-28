@@ -7,6 +7,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add "redis-server" as a potential external dependency for providing Redis
 - pts-core: Adaptively increase regression threshold level in points_of_possible_interest() when too many results are being flagged
 - phoromatic: Fix selecting the same test itself on the "build suite" page
+- phoromatic: Do hard deletes when deleting results from admin area or results page
 - phoromatic: Allow exporting system test run/build errors to the exported public results viewer
 
 Phoronix Test Suite 6.4.0 Milestone 1

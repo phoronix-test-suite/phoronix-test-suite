@@ -52,9 +52,25 @@ class phoromatic_admin_data implements pts_webui_interface
 
 						foreach($pprids as $pprid)
 						{
+							$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_results WHERE PPRID = :pprid LIMIT 1');
+							$stmt->bindValue(':pprid', $pprid);
+							$result = $stmt->execute();
+							if($result && ($row = $result->fetchArray()))
+							{
+								$composite_xml = phoromatic_server::phoromatic_account_result_path($row['AccountID'], $row['UploadID']) . 'composite.xml';
+								if(is_file($composite_xml))
+								{
+									unlink($composite_xml);
+								}
+							}
+
 							$stmt = phoromatic_server::$db->prepare('DELETE FROM phoromatic_results WHERE PPRID = :pprid');
 							$stmt->bindValue(':pprid', $pprid);
 							$result = $stmt->execute();
+
+							// TODO XXX fix below
+							//$upload_dir = phoromatic_server::phoromatic_account_result_path($_SESSION['AccountID'], $upload_id);
+							//pts_file_io::delete($upload_dir);
 						}
 
 /*						$stmt = phoromatic_server::$db->prepare('DELETE FROM phoromatic_results_results WHERE AccountID = :account_id AND UploadID = :upload_id');
