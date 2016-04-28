@@ -62,6 +62,18 @@ class phoromatic_admin_data implements pts_webui_interface
 								{
 									unlink($composite_xml);
 								}
+
+								pts_file_io::delete(phoromatic_server::phoromatic_account_result_path($row['AccountID'], $row['UploadID']), null, true);
+
+								$stmt = phoromatic_server::$db->prepare('DELETE FROM phoromatic_results_results WHERE AccountID = :account_id AND UploadID = :upload_id');
+								$stmt->bindValue(':account_id', $row['AccountID']);
+								$stmt->bindValue(':upload_id', $row['UploadID']);
+								$result = $stmt->execute();
+
+								$stmt = phoromatic_server::$db->prepare('DELETE FROM phoromatic_results_systems WHERE AccountID = :account_id AND UploadID = :upload_id');
+								$stmt->bindValue(':account_id', $row['AccountID']);
+								$stmt->bindValue(':upload_id', $row['UploadID']);
+								$result = $stmt->execute();
 							}
 
 							$stmt = phoromatic_server::$db->prepare('DELETE FROM phoromatic_results WHERE PPRID = :pprid');

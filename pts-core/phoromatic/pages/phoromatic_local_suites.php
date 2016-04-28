@@ -48,6 +48,7 @@ class phoromatic_local_suites implements pts_webui_interface
 				{
 					$main .= '<p><strong>Deleting:</strong> ' . $id . '</p>';
 					unlink($suite_dir . $id . '/suite-definition.xml');
+					pts_file_io::delete($suite_dir . $id, null, true);
 				}
 			}
 		}
