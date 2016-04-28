@@ -220,23 +220,46 @@ if(defined('PATH_TO_PHOROMATIC_ML_DB') && PATH_TO_PHOROMATIC_ML_DB != null)
 				}
 			}
 
-			if($did_hit_a_regression)
-			{
-				$stmt = $db->prepare('SELECT * FROM phoromatic_notifications_emails WHERE TestSchedule LIKE :test_schedule AND NotifyOnRegressions NOT LIKE 0 AND NotifyOnRegressions < :latest_result_time_for_schedule');
-				$stmt->bindValue(':test_schedule', $schedule);
-				$stmt->bindValue(':latest_result_time_for_schedule', $data['last_result_time']);
-				$result = $stmt ? $stmt->execute() : false;
 
-				while($result && ($row = $result->fetchArray()))
+			$stmt = $db->prepare('SELECT * FROM phoromatic_notifications_emails WHERE TestSchedule LIKE :test_schedule AND NotifyOnRegressions NOT LIKE 0 AND NotifyOnRegressions < :latest_result_time_for_schedule');
+			$stmt->bindValue(':test_schedule', $schedule);
+			$stmt->bindValue(':latest_result_time_for_schedule', $data['last_result_time']);
+			$result = $stmt ? $stmt->execute() : false;
+
+			while($result && ($row = $result->fetchArray()))
+			{
+				// EMAIL OUT REGRESSION
+				if($did_hit_a_regression)
 				{
 					send_email($row['EmailAddress'], 'Potential Regressions For: ' . $data['title'], EMAIL_ADDRESS_SENDER, '<p>This email is to notify you that there is a new potential regression or other change in performance for the ' . $data['title'] . ' performance tracker on ' . PHOROMATIC_VIEWER_TITLE . '</p>' . $regression_text . ' <p><br /><br /><br /><strong>View the latest results: <a href="' . PHOROMATIC_BASE_URL . '?' . $schedule . '">' . PHOROMATIC_BASE_URL . '?' . $schedule . '</a></strong></p>');
-
-					$stmt = $db->prepare('UPDATE phoromatic_notifications_emails SET NotifyOnRegressions = :latest_result_time_for_schedule WHERE EmailAddress = :email_address AND TestSchedule LIKE :test_schedule');
-					$stmt->bindValue(':email_address', $row['EmailAddress']);
-					$stmt->bindValue(':test_schedule', $schedule);
-					$stmt->bindValue(':latest_result_time_for_schedule', $data['last_result_time']);
-					$stmt->execute();
 				}
+
+				// REPORT BUILD / RUNTIME ERRORS
+				$export_errors = file_get_contents(PATH_TO_EXPORTED_PHOROMATIC_DATA . 'export-test-errors.json');
+				$export_errors  = json_decode($export_errors, true);
+
+				if(isset($export_errors['phoromatic'][$schedule]))
+				{
+					$error_report = null;
+					foreach($export_errors['phoromatic'][$schedule] as &$error)
+					{
+						if($error['error_time'] > $row['NotifyOnRegressions'])
+						{
+							$error_report .= '<p><strong style="font-weight: 600;">' . $error['system'] . ' - ' . $error['trigger'] . ' - ' . $error['test'] . ' - ' . $error['test_description'] . ':</strong> ' . $error['error'] . '</p>';
+						}
+					}
+
+					if(!empty($error_report))
+					{
+						send_email($row['EmailAddress'], 'Reported Build/Runtime Errors: ' . $data['title'], EMAIL_ADDRESS_SENDER, '<p>This email is to notify you that there have been some reported test build or test run-time errors reported for the ' . $data['title'] . ' performance tracker on ' . PHOROMATIC_VIEWER_TITLE . '</p>' . $error_report . ' <p><br /><br /><br /><strong>View the latest results: <a href="' . PHOROMATIC_BASE_URL . '?' . $schedule . '">' . PHOROMATIC_BASE_URL . '?' . $schedule . '</a></strong></p>');
+					}
+				}
+				// UPDATE META_DATA
+				$stmt = $db->prepare('UPDATE phoromatic_notifications_emails SET NotifyOnRegressions = :latest_result_time_for_schedule WHERE EmailAddress = :email_address AND TestSchedule LIKE :test_schedule');
+				$stmt->bindValue(':email_address', $row['EmailAddress']);
+				$stmt->bindValue(':test_schedule', $schedule);
+				$stmt->bindValue(':latest_result_time_for_schedule', $data['last_result_time']);
+				$stmt->execute();
 			}
 		}
 	}
@@ -307,6 +330,8 @@ echo '<option value="' . count($tracker['triggers']) . '">All Results</option>';
 <input type="checkbox" name="system_table" value="1" <?php echo (isset($_REQUEST['system_table']) && $_REQUEST['system_table'] == 1 ? 'checked="checked"' : null); ?> /> Show System Information Table?
 
 <input type="checkbox" name="regression_detector" value="1" <?php echo (isset($_REQUEST['regression_detector']) && $_REQUEST['regression_detector'] == 1 ? 'checked="checked"' : null); ?> /> Attempt To Show Results Of Interest?
+
+<input type="checkbox" name="show_errors" value="1" <?php echo (isset($_REQUEST['show_errors']) && $_REQUEST['show_errors'] == 1 ? 'checked="checked"' : null); ?> /> Show Build / Runtime Errors?
 
 <input type="checkbox" name="result_overview_table" value="1" <?php echo (isset($_REQUEST['result_overview_table']) && $_REQUEST['result_overview_table'] == 1 ? 'checked="checked"' : null); ?> /> Show Result Overview Table?
 
@@ -404,7 +429,20 @@ if(isset($_REQUEST['regression_detector']))
 		}
 	}
 }
+if(isset($_REQUEST['show_errors']))
+{
+	$export_errors = file_get_contents(PATH_TO_EXPORTED_PHOROMATIC_DATA . 'export-test-errors.json');
+	$export_errors  = json_decode($export_errors, true);
 
+	if(isset($export_errors['phoromatic'][$REQUESTED]))
+	{
+		echo '<hr /><h2>Build / Runtime Errors</h2>';
+		foreach($export_errors['phoromatic'][$REQUESTED] as &$error)
+		{
+			echo '<p><strong style="font-weight: 600;">' . $error['system'] . ' - ' . $error['trigger'] . ' - ' . $error['test'] . ' - ' . $error['test_description'] . ':</strong> ' . $error['error'] . '</p>';
+		}
+	}
+}
 if(isset($_REQUEST['result_overview_table']) || $result_file->get_test_count() < 10)
 {
 	$intent = null;
