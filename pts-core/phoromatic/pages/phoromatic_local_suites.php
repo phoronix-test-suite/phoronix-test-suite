@@ -42,16 +42,14 @@ class phoromatic_local_suites implements pts_webui_interface
 
 		if(!PHOROMATIC_USER_IS_VIEWER && isset($PATH[0]) && $PATH[0] == 'delete')
 		{
-			$suite_ids = explode(',', $PATH[1]);
-
-			foreach($ids as $id)
+			foreach(explode(',', $PATH[1]) as $id)
 			{
 				if(is_file($suite_dir . $id . '/suite-definition.xml'))
 				{
+					$main .= '<p><strong>Deleting:</strong> ' . $id . '</p>';
 					unlink($suite_dir . $id . '/suite-definition.xml');
 				}
 			}
-
 		}
 
 		$suite_count = 0;
