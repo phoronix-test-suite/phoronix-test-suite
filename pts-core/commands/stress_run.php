@@ -45,10 +45,33 @@ class stress_run implements pts_option_interface
 
 		$tests_to_run_concurrently = 2;
 
+		echo PHP_EOL . 'STRESS-RUN ENVIRONMENT VARIABLES:' . PHP_EOL;
+
 		if(($j = getenv('PTS_CONCURRENT_TEST_RUNS')) && is_numeric($j) && $j > 1)
 		{
 			$tests_to_run_concurrently = $j;
-			echo 'PTS_CONCURRENT_TEST_RUNS set; running ' . $tests_to_run_concurrently . ' tests concurrently.' . PHP_EOL;
+			echo PHP_EOL . 'PTS_CONCURRENT_TEST_RUNS set; running ' . $tests_to_run_concurrently . ' tests concurrently.' . PHP_EOL . PHP_EOL;
+		}
+		else
+		{
+			echo PHP_EOL . 'PTS_CONCURRENT_TEST_RUNS: Set the PTS_CONCURRENT_TEST_RUNS environment variable to specify how many tests should be run concurrently during the stress-run process. If not specified, defaults to 2.' . PHP_EOL . PHP_EOL;
+		}
+
+		// Run the actual tests
+		$total_loop_time = pts_client::read_env('TOTAL_LOOP_TIME');
+		if($total_loop_time == 'infinite')
+		{
+			$total_loop_time = 'infinite';
+			echo PHP_EOL . 'TOTAL_LOOP_TIME set; running tests in an infinite loop until otherwise triggered' . PHP_EOL . PHP_EOL;
+		}
+		else if($total_loop_time && is_numeric($total_loop_time) && $total_loop_time > 1)
+		{
+			echo PHP_EOL . 'TOTAL_LOOP_TIME set; running tests for ' . $total_loop_time . ' minutes' . PHP_EOL . PHP_EOL;
+		}
+		else
+		{
+			echo PHP_EOL . 'TOTAL_LOOP_TIME: Set the TOTAL_LOOP_TIME environment variable if wishing to specify (in minutes) how long to run the stress-run process.' . PHP_EOL . PHP_EOL;
+			$total_loop_time = false;
 		}
 
 		/*
@@ -70,21 +93,6 @@ class stress_run implements pts_option_interface
 			return false;
 		}
 
-		// Run the actual tests
-		$total_loop_time = pts_client::read_env('TOTAL_LOOP_TIME');
-		if($total_loop_time == 'infinite')
-		{
-			$total_loop_time = 'infinite';
-			echo 'TOTAL_LOOP_TIME set; running tests in an infinite loop until otherwise triggered' . PHP_EOL;
-		}
-		else if($total_loop_time && is_numeric($total_loop_time) && $total_loop_time > 1)
-		{
-			echo 'TOTAL_LOOP_TIME set; running tests for ' . $total_loop_time . ' minutes' . PHP_EOL;
-		}
-		else
-		{
-			$total_loop_time = false;
-		}
 		//$test_run_manager->pre_execution_process();
 		$test_run_manager->multi_test_stress_run_execute($tests_to_run_concurrently, $total_loop_time);
 	}
