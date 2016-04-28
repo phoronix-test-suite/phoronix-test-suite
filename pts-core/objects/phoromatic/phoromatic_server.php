@@ -324,6 +324,7 @@ class phoromatic_server
 	}
 	public static function generate_result_export_dump($account_id)
 	{
+		ini_set('memory_limit', '4G');
 		pts_file_io::mkdir(self::phoromatic_path() . 'result-export/');
 		$export_path = self::phoromatic_path() . 'result-export/' . $account_id . '/';
 		pts_file_io::mkdir($export_path);
