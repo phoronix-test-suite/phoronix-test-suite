@@ -211,7 +211,7 @@ if(defined('PATH_TO_PHOROMATIC_ML_DB') && PATH_TO_PHOROMATIC_ML_DB != null)
 				if(!empty($poi))
 				{
 					$did_hit_a_regression = true;
-					$regression_text.= '<h4>' . $result_object->test_profile->get_title() . '</h4><p>';
+					$regression_text.= '<h4>' . $result_object->test_profile->get_title() . '<br /><em>' . $result_object->get_arguments_description() . '</em></h4><p>';
 					foreach($poi as $text)
 					{
 						$regression_text.= '<a href="' . PHOROMATIC_BASE_URL . '?' . $schedule . '#r-' . $i . '">' . $text . '</a><br />';
