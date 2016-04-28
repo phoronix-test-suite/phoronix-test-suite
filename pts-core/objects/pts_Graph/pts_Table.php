@@ -124,7 +124,7 @@ class pts_Table extends pts_graph_core
 		if($this->column_heading_vertical)
 		{
 			$top_identifier_height = round($this->text_string_width($this->longest_column_identifier, $this->i['identifier_size']) * 1.1) + 12;
-			$table_identifier_width = $this->text_string_height($this->longest_column_identifier, $this->i['identifier_size']);
+			$table_identifier_width = $this->text_string_width($this->longest_column_identifier, $this->i['identifier_size']);
 		}
 		else
 		{

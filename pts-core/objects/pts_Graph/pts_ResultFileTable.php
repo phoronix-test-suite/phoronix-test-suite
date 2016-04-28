@@ -56,6 +56,8 @@ class pts_ResultFileTable extends pts_Table
 				$longest_row_title_length = $len;
 			}
 		}
+		$this->column_heading_vertical = false;
+		//$this->longest_column_identifier = max(pts_strings::find_longest_string($this->columns), pts_strings::find_longest_string($result_file->get_system_identifiers()));
 	}
 	public static function result_file_to_result_table(&$result_file, &$system_id_keys = null, &$result_object_index = -1, &$flag_delta_results = false, $extra_attributes = null)
 	{
@@ -109,7 +111,7 @@ class pts_ResultFileTable extends pts_Table
 			}
 			else
 			{
-				$result_tests[$result_counter] = new pts_graph_ir_value($result_object->test_profile->get_title());
+				$result_tests[$result_counter] = new pts_graph_ir_value($result_object->test_profile->get_identifier_base_name() . ': ' . $result_object->get_arguments_description());
 				$result_tests[$result_counter]->set_attribute('title', $result_object->get_arguments_description());
 
 				if($result_object->test_profile->get_identifier() != null)
