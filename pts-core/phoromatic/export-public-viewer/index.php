@@ -391,11 +391,11 @@ if(isset($_REQUEST['regression_detector']))
 			echo '<p>Displayed are results for each system of each scheduled test where there is a measurable change when comparing the most recent result to the previous result for that system for that test.</p>';
 			$has_flagged_results = true;
 		}
-		$poi = $result_object->points_of_possible_interest();
+		$poi = $result_object->points_of_possible_interest(isset($_REQUEST['regression_threshold']) ? $_REQUEST['regression_threshold'] : 0.05);
 
 		if(!empty($poi))
 		{
-			echo '<h4>' . $result_object->test_profile->get_title() . '</h4><p>';
+			echo '<h4>' . $result_object->test_profile->get_title() . '<br />' . $result_object->get_arguments_description() . '</h4><p>';
 			foreach($poi as $text)
 			{
 				echo '<a href="#r-' . $i . '">' . $text . '</a><br />';
