@@ -206,7 +206,7 @@ if(defined('PATH_TO_PHOROMATIC_ML_DB') && PATH_TO_PHOROMATIC_ML_DB != null)
 					$regression_text.= '<p>Displayed are results for each system of each scheduled test where there is a measurable change when comparing the most recent result to the previous result for that system for that test.</p>';
 					$has_flagged_results = true;
 				}
-				$poi = $result_object->points_of_possible_interest();
+				$poi = $result_object->points_of_possible_interest(0.02, true);
 
 				if(!empty($poi))
 				{

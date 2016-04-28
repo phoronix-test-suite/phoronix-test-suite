@@ -368,7 +368,7 @@ class pts_test_result
 		}
 		return true;
 	}
-	public function points_of_possible_interest($threshold_level = 0.1)
+	public function points_of_possible_interest($threshold_level = 0.05, $adaptive = true)
 	{
 		$points_of_interest = array();
 		if($this->test_profile->get_display_format() != 'BAR_GRAPH') // BAR_ANALYZE_GRAPH is currently unsupported
@@ -416,6 +416,15 @@ class pts_test_result
 				}
 				$prev_value = $this_value;
 				$prev_id = $this_id;
+			}
+		}
+
+		if($adaptive && count($points_of_interest) > (count($key_sets) * (count($keys)) / 5))
+		{
+			// If too many results are being flagged, increase the threshold and run again
+			if($threshold_level < 0.5)
+			{
+				return $this->points_of_possible_interest($threshold_level * 2, true);
 			}
 		}
 
