@@ -391,8 +391,8 @@ class phoromatic_server
 		}
 		$exported_result_index = json_encode($exported_result_index, JSON_PRETTY_PRINT);
 		$error_index = json_encode($error_index, JSON_PRETTY_PRINT);
-		file_put_contents($export_path. '/export-index.json', $exported_result_index);
-		file_put_contents($export_path. '/export-test-errors.json', $error_index);
+		file_put_contents($export_path . '/export-index.json', $exported_result_index);
+		file_put_contents($export_path . '/export-test-errors.json', $error_index);
 	}
 	public static function send_email($to, $subject, $from, $body)
 	{
