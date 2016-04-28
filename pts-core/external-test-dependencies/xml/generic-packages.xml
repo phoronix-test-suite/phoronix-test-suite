@@ -422,5 +422,11 @@
 			<PossibleNames>golang, go-doc</PossibleNames>
 			<FileCheck>/usr/bin/go</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>redis-server</GenericName>
+			<Title>Redis</Title>
+			<PossibleNames>redis, redis-server</PossibleNames>
+			<FileCheck>/usr/bin/redis-server</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

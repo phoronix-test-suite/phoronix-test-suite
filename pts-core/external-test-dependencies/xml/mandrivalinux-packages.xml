@@ -239,5 +239,9 @@
 			<GenericName>golang</GenericName>
 			<PackageName>golang</PackageName>
 		</Package>
+                <Package>
+			<GenericName>redis-server</GenericName>
+			<PackageName>redis</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

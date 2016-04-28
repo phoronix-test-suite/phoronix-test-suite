@@ -230,5 +230,9 @@
 			<GenericName>httpd</GenericName>
 			<PackageName>apache</PackageName>
 		</Package>
+                <Package>
+			<GenericName>redis-server</GenericName>
+			<PackageName>redis</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

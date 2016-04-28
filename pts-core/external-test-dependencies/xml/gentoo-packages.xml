@@ -256,5 +256,9 @@
 			<GenericName>golang</GenericName>
 			<PackageName>dev-lang/go</PackageName>
 		</Package>
+                <Package>
+			<GenericName>redis-server</GenericName>
+			<PackageName>dev-db/redis</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
