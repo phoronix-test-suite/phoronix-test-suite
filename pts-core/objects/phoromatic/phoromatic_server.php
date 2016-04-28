@@ -333,6 +333,7 @@ class phoromatic_server
 		$result = $stmt->execute();
 
 		$exported_result_index = array('phoromatic' => array());
+		$error_index = array('phoromatic' => array());
 		while($result && $row = $result->fetchArray())
 		{
 			$id = str_replace(' ', '-', strtolower($row['Title']));
@@ -370,10 +371,28 @@ class phoromatic_server
 				'last_result_time' => $latest_time
 				);
 
+			$stmt2 = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_system_client_errors WHERE AccountID = :account_id AND ScheduleID = :schedule_id ORDER BY UploadTime DESC');
+			$stmt2->bindValue(':account_id', $row['AccountID']);
+			$stmt2->bindValue(':schedule_id', $row['ScheduleID']);
+			$result2 = $stmt2->execute();
+			$error_index['phoromatic'][$id] = array();
+			while($result2 && $row2 = $result2->fetchArray())
+			{
+				$error_index['phoromatic'][$id][] = array(
+					'system' => phoromatic_server::system_id_to_name($row2['SystemID'], $row2['AccountID']),
+					'trigger' => $row2['TriggerID'],
+					'test' => $row2['TestIdentifier'],
+					'test_description' => $row2['TestArguments'],
+					'error' => $row2['ErrorMessage'],
+					'error_time' => strtotime($row2['UploadTime']),
+					);
+			}
+
 		}
 		$exported_result_index = json_encode($exported_result_index, JSON_PRETTY_PRINT);
+		$error_index = json_encode($error_index, JSON_PRETTY_PRINT);
 		file_put_contents($export_path. '/export-index.json', $exported_result_index);
-
+		file_put_contents($export_path. '/export-test-errors.json', $error_index);
 	}
 	public static function send_email($to, $subject, $from, $body)
 	{
