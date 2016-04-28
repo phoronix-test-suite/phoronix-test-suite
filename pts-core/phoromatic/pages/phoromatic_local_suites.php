@@ -64,7 +64,7 @@ class phoromatic_local_suites implements pts_webui_interface
 			$main .= '<a name="' . $id . '"></a><h1>' . $test_suite->get_title() . ' [' . $id . ']</h1>';
 			$main .= '<p><strong>' . $test_suite->get_maintainer() . '</strong></p>';
 			$main .= '<p><em>' . $test_suite->get_description() . '</em></p>';
-			if(!PHOROMATIC_USER_IS_VIEWER
+			if(!PHOROMATIC_USER_IS_VIEWER)
 			{
 				$main .= '<p><a href="?local_suites/delete/' . $id . '">Delete Suite</a></p>';
 			}
