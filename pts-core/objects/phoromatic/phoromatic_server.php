@@ -379,6 +379,10 @@ class phoromatic_server
 			$error_index['phoromatic'][$id] = array();
 			while($result2 && $row2 = $result2->fetchArray())
 			{
+				// Only show last month of errors for now
+				if(strtotime('-1 month') > strtotime($row2['UploadTime']))
+					continue;
+
 				$error_index['phoromatic'][$id][] = array(
 					'system' => phoromatic_server::system_id_to_name($row2['SystemID'], $row2['AccountID']),
 					'trigger' => $row2['TriggerID'],
