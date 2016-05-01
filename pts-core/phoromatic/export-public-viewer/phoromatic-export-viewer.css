@@ -170,3 +170,30 @@ hr
 		max-width: 100%;
 	}
 }
+@media screen and (max-width: 460px)
+{
+	body{
+		margin:auto;
+		font-size: 110%;
+	}
+	rect{
+		margin:auto;
+		max-width:80% !important;
+	}
+	div#pts_results_area, div#pts_results_area svg
+	{
+		max-width: 100%;
+	}
+	div#config_option_line, input, select, textarea, checkbox, button
+	{
+		text-align: left;
+		font-size: 120%;
+		display: block;
+	}
+	div#top_list
+	{
+		display: table;
+		width: 100%;
+		text-transform: uppercase;
+		padding: 0px;
+	}
