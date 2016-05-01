@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 - pts-core: Allow XML formatting from the Phoromatic Server web interface
 - pts-core: Reformat stress-run log messages
 - pts-core: Add "redis-server" as a potential external dependency for providing Redis
+- pts-core: Statically set dynamic_run_count_on_length_or_less to 60
 - pts-core: Adaptively increase regression threshold level in points_of_possible_interest() when too many results are being flagged
 - phoromatic: Fix selecting the same test itself on the "build suite" page
 - phoromatic: Do hard deletes when deleting results from admin area or results page
