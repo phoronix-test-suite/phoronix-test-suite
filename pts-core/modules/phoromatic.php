@@ -465,7 +465,7 @@ class phoromatic extends pts_module_interface
 
 		if(!$server_setup)
 		{
-			if(PTS_IS_DAEMONIZED_SERVER_PROCESS)
+			if(getenv('PTS_NO_REBOOT_ON_NETWORK_FAILURE') == false && PTS_IS_DAEMONIZED_SERVER_PROCESS)
 			{
 				if(pts_client::executable_in_path('reboot'))
 				{
@@ -508,7 +508,7 @@ class phoromatic extends pts_module_interface
 					}
 					else if(PTS_IS_DAEMONIZED_SERVER_PROCESS && $times_failed > 10)
 					{
-						if(pts_client::executable_in_path('reboot'))
+						if(getenv('PTS_NO_REBOOT_ON_NETWORK_FAILURE') == false && pts_client::executable_in_path('reboot'))
 						{
 							shell_exec('reboot');
 							sleep(5);
