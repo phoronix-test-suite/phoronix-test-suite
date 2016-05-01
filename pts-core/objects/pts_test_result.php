@@ -419,7 +419,7 @@ class pts_test_result
 			}
 		}
 
-		if($adaptive && count($points_of_interest) > (count($key_sets) * (count($keys)) / 5))
+		if($adaptive && count($points_of_interest) > (count($key_sets) * (count($keys)) * 0.15))
 		{
 			// If too many results are being flagged, increase the threshold and run again
 			if($threshold_level < 0.5)
