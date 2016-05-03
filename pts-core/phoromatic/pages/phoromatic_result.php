@@ -222,7 +222,6 @@ class phoromatic_result implements pts_webui_interface
 			}
 
 			$result_file = new pts_result_file(null, true);
-			$result_file->set_title('Phoromatic Results');
 			if(!empty($result_files))
 			{
 				$attributes = array('new_result_file_title' => $result_file_title);
@@ -310,7 +309,7 @@ class phoromatic_result implements pts_webui_interface
 				return;
 			}
 
-			$main .= '<h1>' . $result_file->get_title() . '</h1>';
+			$main .= '<h1>' . ($result_file->get_title() ? $result_file->get_title() : 'Phoromatic Results') . '</h1>';
 			$main .= '<p>' . $result_file->get_description() . '</p>';
 			$main .= phoromatic_annotate_entry('RESULT', implode(',', $upload_ids), 'TOP');
 
