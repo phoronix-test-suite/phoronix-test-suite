@@ -632,6 +632,11 @@ class pts_result_file
 				$result_file->rename_run(null, $merge_select->get_rename_identifier());
 			}
 
+			if($this->get_title() == null && $result_file->get_title() != null)
+			{
+				$this->set_title($result_file->get_title());
+			}
+
 			if($this->get_description() == null && $result_file->get_description() != null)
 			{
 				$this->set_description($result_file->get_description());
