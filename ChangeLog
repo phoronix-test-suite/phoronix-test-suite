@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 6.4.0 Milestone 2
+6 May 2016
 
 - pts-core: Allow XML formatting from the Phoromatic Server web interface
 - pts-core: Reformat stress-run log messages
