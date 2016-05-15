@@ -243,7 +243,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 					echo 'Ended: ' . $test_to_run->test_profile->get_identifier() . ' [' . $test_to_run->get_arguments_description()  . ']' . PHP_EOL;
 					pts_file_io::unlink($this->thread_collection_dir . getmypid());
 					echo PHP_EOL;
-					exit;
+					exit(0);
 				}
 				if($total_loop_time == false)
 				{
