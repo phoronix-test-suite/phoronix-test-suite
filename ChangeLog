@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- phodevi: Support for reading AMDGPU OverDrive overclock offset
+
 Phoronix Test Suite 6.4.0 Milestone 2
 6 May 2016
 

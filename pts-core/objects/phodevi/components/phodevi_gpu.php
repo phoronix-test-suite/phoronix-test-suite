@@ -42,6 +42,9 @@ class phodevi_gpu extends phodevi_device_interface
 			case 'memory-capacity':
 				$property = new phodevi_device_property('gpu_memory_size', phodevi::smart_caching);
 				break;
+			case 'oc-offset-string':
+				$property = new phodevi_device_property('gpu_oc_offset_string', phodevi::no_caching);
+				break;
 			case 'aa-level':
 				$property = new phodevi_device_property('gpu_aa_level', phodevi::no_caching);
 				break;
@@ -126,6 +129,22 @@ class phodevi_gpu extends phodevi_device_interface
 		shell_exec('xrandr -s ' . $width . 'x' . $height . ' 2>&1');
 
 		return phodevi::read_property('gpu', 'screen-resolution') == array($width, $height); // Check if video resolution set worked
+	}
+	public static function gpu_oc_offset_string()
+	{
+		$offset = 0;
+
+		if(is_file('/sys/class/drm/card0/device/pp_sclk_od'))
+		{
+			// AMDGPU OverDrive
+			$pp_sclk_od = pts_file_io::file_get_contents('/sys/class/drm/card0/device/pp_sclk_od');
+			if(is_numeric($pp_sclk_od) && $pp_sclk_od > 0)
+			{
+				$offset = 'AMD OverDrive GPU Overclock: ' . $pp_sclk_od . '%';
+			}
+		}
+
+		return $offset;
 	}
 	public static function gpu_aa_level()
 	{

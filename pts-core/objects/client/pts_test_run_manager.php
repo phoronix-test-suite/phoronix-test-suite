@@ -901,6 +901,12 @@ class pts_test_run_manager
 			{
 				$notes['graphics-af'] = $af;
 			}
+
+			$oc_offset = phodevi::read_property('gpu', 'oc-offset-string');
+			if(!empty($oc_offset))
+			{
+				$notes['graphics-oc'] = $oc_offset;
+			}
 		}
 
 		if(phodevi::read_property('system', 'kernel-parameters'))
