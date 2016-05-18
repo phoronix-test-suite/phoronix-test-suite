@@ -149,9 +149,15 @@ class pts_stress_run_manager extends pts_test_run_manager
 			$this->stress_subsystems_active = array();
 			$test_identifiers_active = array();
 
+			while(($waited_pid = pcntl_waitpid(-1, $status, WNOHANG)) > 0)
+			{
+				pts_file_io::unlink($this->thread_collection_dir . $waited_pid);
+			}
+
 			foreach(pts_file_io::glob($this->thread_collection_dir . '*') as $pid_file)
 			{
 				$pid = basename($pid_file);
+				$waited_pid = pcntl_waitpid($pid, $status, WNOHANG);
 
 				if(!file_exists('/proc/' . $pid))
 				{
