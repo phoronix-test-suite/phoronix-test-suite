@@ -34,7 +34,8 @@ class nye_XmlWriter
 	public function __construct($xsl_binding = null, $force_nice_formatting = false)
 	{
 		$this->dom = new DOMDocument('1.0');
-		$this->dom->formatOutput = (PTS_IS_CLIENT && !defined('PHOROMATIC_DB_INIT') && !defined('PAGE_LOAD_START_TIME')) || $force_nice_formatting;
+		//$this->dom->formatOutput = (PTS_IS_CLIENT && !defined('PHOROMATIC_DB_INIT') && !defined('PAGE_LOAD_START_TIME')) || $force_nice_formatting;
+		$this->dom->formatOutput = !defined('OPENBENCHMARKING_BUILD') || $force_nice_formatting;
 		//$this->dom->preserveWhiteSpace = false;
 		$this->items = array();
 
