@@ -105,7 +105,7 @@ class phoromatic_testing implements pts_webui_interface
 				{
 					do
 					{
-						$main .= '<a href="?benchmark/' . $row['TicketID'] . '">' . $row['Title'] . '</a>';
+						$main .= '<a href="?benchmark/' . $row['TicketID'] . '"><li>' . $row['Title'] . '</li></a>';
 					}
 					while($row = $result->fetchArray());
 				}
