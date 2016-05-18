@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 - pts-core: XML formatting fix for non-OpenBenchmarking.org deployments
 - pts-core: Do more to avoid zombie processes in stress-run manager
 - phodevi: Support for reading AMDGPU OverDrive overclock offset
+- phoromatic: Add generalized "Testing" page to Phoromatic Server
 
 Phoronix Test Suite 6.4.0 Milestone 2
 6 May 2016

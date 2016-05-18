@@ -246,7 +246,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 					$this->stress_child_thread = true;
 					echo 'Starting: ' . $test_to_run->test_profile->get_identifier() . ($test_to_run->get_arguments_description() != null ? ' [' . $test_to_run->get_arguments_description()  . ']' : null) . PHP_EOL;
 					$continue_test_flag = $this->process_test_run_request($test_to_run);
-					echo 'Ended: ' . $test_to_run->test_profile->get_identifier() . ' [' . $test_to_run->get_arguments_description()  . ']' . PHP_EOL;
+					echo PHP_EOL . 'Ended: ' . $test_to_run->test_profile->get_identifier() . ' [' . $test_to_run->get_arguments_description()  . ']' . PHP_EOL;
 					pts_file_io::unlink($this->thread_collection_dir . getmypid());
 					echo PHP_EOL;
 					exit(0);
@@ -302,6 +302,9 @@ class pts_stress_run_manager extends pts_test_run_manager
 				unlink($cache_share_file);
 			}
 		}
+
+		// Wait for child processes to complete
+		pcntl_waitpid(-1, $status);
 
 		// Restore default handlers
 		pcntl_signal(SIGTERM, SIG_DFL);
