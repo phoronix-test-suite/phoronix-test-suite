@@ -53,7 +53,6 @@ class phoromatic_testing implements pts_webui_interface
 
 			$main .= '<hr /><h2>Current Schedules</h2>';
 
-
 			$main .= '<div class="pts_phoromatic_info_box_area">
 					<ul>
 						<li><h1>Active Test Schedules</h1></li>';
@@ -85,6 +84,32 @@ class phoromatic_testing implements pts_webui_interface
 					}
 
 
+			$main .= '</ul>
+			</div>';
+
+			$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_benchmark_tickets WHERE AccountID = :account_id AND State >= 0 AND TicketIssueTime > :time_cutoff ORDER BY TicketIssueTime DESC LIMIT 30');
+			$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+			$stmt->bindValue(':time_cutoff', (time() - (60 * 60 * 24 * 14)));
+			$result = $stmt->execute();
+			$right = '<ul><li>Benchmark Tickets</li>';
+
+			if($result)
+			{
+				$main .= '<div class="pts_phoromatic_info_box_area">
+						<ul>
+							<li><h1>Active Benchmark Tickets</h1></li>';
+
+				$row = $result->fetchArray();
+
+				if(!empty($row))
+				{
+					do
+					{
+						$main .= '<a href="?benchmark/' . $row['TicketID'] . '">' . $row['Title'] . '</a>';
+					}
+					while($row = $result->fetchArray());
+				}
+			}
 			$main .= '</ul>
 			</div>';
 
