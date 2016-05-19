@@ -53,8 +53,13 @@ class info implements pts_option_interface
 				echo 'Suite Type: ' . $o->get_suite_type() . PHP_EOL;
 				echo 'Unique Tests: ' . $o->get_unique_test_count() . PHP_EOL;
 				echo 'Suite Description: ' . $o->get_description() . PHP_EOL;
-				echo PHP_EOL;
-				echo $o->pts_format_contained_tests_string();
+				echo PHP_EOL . 'Contained Tests: ' . PHP_EOL;
+				$test_table = array();
+				foreach($o->get_contained_test_result_objects() as $result_obj)
+				{
+					$test_table[] = array($result_obj->test_profile->get_title(), $result_obj->get_arguments_description());
+				}
+				echo pts_user_io::display_text_table($test_table, '    ', 1);
 				echo PHP_EOL;
 			}
 			else if($o instanceof pts_test_profile)
