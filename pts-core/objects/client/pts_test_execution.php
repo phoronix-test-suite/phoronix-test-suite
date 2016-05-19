@@ -86,6 +86,7 @@ class pts_test_execution
 
 		$time_test_start = time();
 		pts_client::$display->test_run_start($test_run_manager, $test_run_request);
+		sleep(1);
 
 		if(!$cache_share_present)
 		{
@@ -179,6 +180,7 @@ class pts_test_execution
 
 			if($restored_from_cache == false)
 			{
+				sleep(1);
 				$test_run_command = 'cd ' . $to_execute . ' && ' . $execute_binary_prepend . './' . $execute_binary . ' ' . $pts_test_arguments . ' 2>&1';
 
 				pts_client::test_profile_debug_message('Test Run Command: ' . $test_run_command);

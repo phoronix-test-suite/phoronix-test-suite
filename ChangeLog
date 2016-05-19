@@ -8,6 +8,7 @@ Phoronix Test Suite (Git)
 - pts-core: Rewritten pts_test_suite internals
 - phodevi: Support for reading AMDGPU OverDrive overclock offset
 - phoromatic: Add generalized "Testing" page to Phoromatic Server
+- watchdog: new PTS module for checking sensor readings to suspend/quit testing if exceeded
 
 Phoronix Test Suite 6.4.0 Milestone 2
 6 May 2016

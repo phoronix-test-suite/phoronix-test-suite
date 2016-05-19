@@ -367,6 +367,10 @@ class pts_test_suite
 
 		return $test_profiles;
 	}
+	public function get_xml($to = null, $force_nice_formatting = false)
+	{
+
+	}
 }
 
 ?>
