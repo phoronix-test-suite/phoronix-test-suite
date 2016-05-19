@@ -336,9 +336,4 @@ class pts_test_suite
 	}
 }
 
-class pts_test_suite_parser extends pts_test_suite
-{
-	// XXX just as a fallback for this function being removed in PTS 6.4
-}
-
 ?>
