@@ -788,43 +788,62 @@ class pts_test_result_parser
 					}
 					pts_client::test_profile_debug_message('Result Line: ' . $result_line);
 
-					$result_r = explode(' ', pts_strings::trim_spaces(str_replace($space_out_chars, ' ', str_replace('=', ' = ', $result_line))));
-					$result_r_pos = array_search($result_key[$i], $result_r);
+					// FALLBACK HELPERS FOR BELOW
+					$did_try_colon_fallback = false;
 
-					if(!empty($result_before_string[$i]))
+					do
 					{
-						// Using ResultBeforeString tag
-						$result_before_this = array_search($result_before_string[$i], $result_r);
+						$try_again = false;
+						$result_r = explode(' ', pts_strings::trim_spaces(str_replace($space_out_chars, ' ', str_replace('=', ' = ', $result_line))));
+						$result_r_pos = array_search($result_key[$i], $result_r);
 
-						if($result_before_this !== false)
+						if(!empty($result_before_string[$i]))
 						{
-							$test_results[] = $result_r[($result_before_this - 1)];
-						}
-					}
-					else if(!empty($result_after_string[$i]))
-					{
-						// Using ResultBeforeString tag
-						$result_after_this = array_search($result_after_string[$i], $result_r);
+							// Using ResultBeforeString tag
+							$result_before_this = array_search($result_before_string[$i], $result_r);
 
-						if($result_after_this !== false)
-						{
-							$result_after_this++;
-							for($f = $result_after_this; $f < count($result_r); $f++)
+							if($result_before_this !== false)
 							{
-								if(in_array($result_r[$f], array(':', ',', '-', '=')))
-								{
-									continue;
-								}
+								$test_results[] = $result_r[($result_before_this - 1)];
+							}
+						}
+						else if(!empty($result_after_string[$i]))
+						{
+							// Using ResultBeforeString tag
+							$result_after_this = array_search($result_after_string[$i], $result_r);
 
-								$test_results[] = $result_r[$f];
-								break;
+							if($result_after_this !== false)
+							{
+								$result_after_this++;
+								for($f = $result_after_this; $f < count($result_r); $f++)
+								{
+									if(in_array($result_r[$f], array(':', ',', '-', '=')))
+									{
+										continue;
+									}
+
+									$test_results[] = $result_r[$f];
+									break;
+								}
+							}
+						}
+						else if(isset($result_r[$result_template_r_pos]))
+						{
+							$test_results[] = $result_r[$result_template_r_pos];
+						}
+						else
+						{
+							// POSSIBLE FALLBACKS TO TRY AGAIN
+
+							if(!$did_try_colon_fallback && strpos($result_line, ':') !== false)
+							{
+								$result_line = str_replace(':', ': ', $result_line);
+								$did_try_colon_fallback = true;
+								$try_again = true;
 							}
 						}
 					}
-					else if(isset($result_r[$result_template_r_pos]))
-					{
-						$test_results[] = $result_r[$result_template_r_pos];
-					}
+					while($try_again);
 				}
 				while($is_multi_match && count($test_results) != $result_count && !empty($result_output));
 			}
