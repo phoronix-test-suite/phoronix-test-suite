@@ -268,8 +268,8 @@ class pts_test_suite
 	public function is_core_version_supported()
 	{
 		// Check if the test suite's version is compatible with pts-core
-		$core_version_min = parent::requires_core_version_min();
-		$core_version_max = parent::requires_core_version_max();
+		$core_version_min = $this->requires_core_version_min();
+		$core_version_max = $this->requires_core_version_max();
 
 		return $core_version_min <= PTS_CORE_VERSION && $core_version_max > PTS_CORE_VERSION;
 	}
