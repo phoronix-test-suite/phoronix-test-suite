@@ -101,17 +101,11 @@ class pts_validation
 	}
 	public static function validate_test_suite(&$test_suite)
 	{
-		if($test_suite->xml_parser->getFileLocation() == null)
-		{
-			echo PHP_EOL . 'ERROR: The file location of the XML test suite source could not be determined.' . PHP_EOL;
-			return false;
-		}
-
 		// Validate the XML against the XSD Schemas
 		libxml_clear_errors();
 
 		// First rewrite the main XML file to ensure it is properly formatted, elements are ordered according to the schema, etc...
-		$valid = $test_suite->xml_parser->validate();
+		$valid = $test_suite->validate();
 
 		if($valid == false)
 		{

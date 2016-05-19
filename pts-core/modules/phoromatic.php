@@ -584,7 +584,7 @@ class phoromatic extends pts_module_interface
 				{
 					case 'install':
 						phoromatic::update_system_status('Installing Tests');
-						pts_suite_nye_XmlReader::set_temporary_suite('pre-seed', $json['phoromatic']['test_suite']);
+						pts_test_suite::set_temporary_suite('pre-seed', $json['phoromatic']['test_suite']);
 						pts_test_installer::standard_install('pre-seed', false, true);
 						break;
 					case 'benchmark':
@@ -595,7 +595,7 @@ class phoromatic extends pts_module_interface
 						$benchmark_timer = time();
 						self::$is_running_as_phoromatic_node = true;
 						$suite_identifier = sha1(time() . rand(2, 1000));
-						pts_suite_nye_XmlReader::set_temporary_suite($suite_identifier, $json['phoromatic']['test_suite']);
+						pts_test_suite::set_temporary_suite($suite_identifier, $json['phoromatic']['test_suite']);
 						self::$p_save_identifier = $json['phoromatic']['trigger_id'];
 						$phoromatic_results_identifier = self::$p_save_identifier;
 						$phoromatic_save_identifier = $json['phoromatic']['save_identifier'];

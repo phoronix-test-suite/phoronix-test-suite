@@ -35,10 +35,12 @@ class pts_test_suite
 	private $post_run_message;
 	protected $test_objects;
 	protected $test_names;
+	protected $raw_xml;
+	static $temp_suite;
+	protected $xml_file_location = false;
 
 	public function __construct($identifier)
 	{
-	/*
 		if(PTS_IS_CLIENT)
 		{
 			$ob_identifier = pts_openbenchmarking::evaluate_string_to_qualifier($identifier, true, 'suite');
@@ -74,106 +76,134 @@ class pts_test_suite
 		}
 
 		$xml_options = LIBXML_COMPACT | LIBXML_PARSEHUGE;
+		$this->raw_xml = $read;
 		if(is_file($read))
 		{
-			$xml = simplexml_load_file($read, 'SimpleXMLElement', $xml_options);
+			$this->xml_file_location = $read;
+			$xml = simplexml_load_file($this->xml_file_location, 'SimpleXMLElement', $xml_options);
 		}
 		else
 		{
-			$this->raw_xml = $read;
+			$xml = $read;
 			if(strpos($read, '<') !== false)
 			{
 				$xml = simplexml_load_string($read, 'SimpleXMLElement', $xml_options);
 			}
 		}
-*/
-		if(PTS_IS_CLIENT)
+
+		if(isset($xml->SuiteInformation))
 		{
-			$ob_identifier = pts_openbenchmarking::evaluate_string_to_qualifier($identifier, true, 'suite');
-
-			if($ob_identifier != false)
-			{
-				$identifier = $ob_identifier;
-			}
+			$this->title = self::clean_input($xml->SuiteInformation->Title);
+			$this->description = self::clean_input($xml->SuiteInformation->Description);
+			$this->maintainer = self::clean_input($xml->SuiteInformation->Maintainer);
+			$this->version = self::clean_input($xml->SuiteInformation->Version);
+			$this->test_type = self::clean_input($xml->SuiteInformation->TestType);
+			$this->run_mode = self::clean_input($xml->SuiteInformation->RunMode);
+			$this->requires_minimum_core_version = self::clean_input($xml->SuiteInformation->RequiresCoreVersionMin);
+			$this->requires_maximum_core_version = self::clean_input($xml->SuiteInformation->RequiresCoreVersionMax);
+			$this->pre_run_message = self::clean_input($xml->SuiteInformation->PreRunMessage);
+			$this->post_run_message = self::clean_input($xml->SuiteInformation->PostRunMessage);
 		}
-
-		$this->identifier = $identifier;
-		$xml_parser = new pts_suite_nye_XmlReader($identifier);
-		$this->title = $xml_parser->getXMLValue('PhoronixTestSuite/SuiteInformation/Title');
-		$this->description = $xml_parser->getXMLValue('PhoronixTestSuite/SuiteInformation/Description');
-		$this->maintainer = $xml_parser->getXMLValue('PhoronixTestSuite/SuiteInformation/Maintainer');
-		$this->version = $xml_parser->getXMLValue('PhoronixTestSuite/SuiteInformation/Version');
-		$this->test_type = $xml_parser->getXMLValue('PhoronixTestSuite/SuiteInformation/TestType');
-		$this->run_mode = $xml_parser->getXMLValue('PhoronixTestSuite/SuiteInformation/RunMode');
-		$this->requires_minimum_core_version = $xml_parser->getXMLValue('PhoronixTestSuite/SuiteInformation/RequiresCoreVersionMin', null);
-		$this->requires_maximum_core_version = $xml_parser->getXMLValue('PhoronixTestSuite/SuiteInformation/RequiresCoreVersionMax', null);
-		$this->pre_run_message = $xml_parser->getXMLValue('PhoronixTestSuite/SuiteInformation/PreRunMessage');
-		$this->post_run_message = $xml_parser->getXMLValue('PhoronixTestSuite/SuiteInformation/PostRunMessage');
 
 		$this->test_objects = array();
-		$test_names = $xml_parser->getXMLArrayValues('PhoronixTestSuite/Execute/Test');
-		$sub_modes = $xml_parser->getXMLArrayValues('PhoronixTestSuite/Execute/Mode');
-		$sub_arguments = $xml_parser->getXMLArrayValues('PhoronixTestSuite/Execute/Arguments');
-		$sub_arguments_description = $xml_parser->getXMLArrayValues('PhoronixTestSuite/Execute/Description');
-		$override_test_options = $xml_parser->getXMLArrayValues('PhoronixTestSuite/Execute/OverrideTestOptions');
-
-		for($i = 0; $i < count($test_names); $i++)
+		$this->test_names = array();
+		if(isset($xml->Execute))
 		{
-			$obj = pts_types::identifier_to_object($test_names[$i]);
-
-			if($obj instanceof pts_test_profile)
+			foreach($xml->Execute as $to_execute)
 			{
-				// Check for test profile values to override
-				$override_options = array();
-				if(!empty($override_test_options[$i]))
-				{
-					foreach(explode(';', $override_test_options[$i]) as $override_string)
-					{
-						$override_segments = pts_strings::trim_explode('=', $override_string);
+				$test_name = self::clean_input($to_execute->Test);
+				$this->test_names[] = $test_name;
+				$obj = pts_types::identifier_to_object($test_name);
 
-						if(count($override_segments) == 2 && !empty($override_segments[0]) && !empty($override_segments[1]))
+				if($obj instanceof pts_test_profile)
+				{
+					// Check for test profile values to override
+					$override_options = array();
+					if(isset($to_execute->OverrideTestOptions) && !empty($to_execute->OverrideTestOptions))
+					{
+						foreach(explode(';', self::clean_input($to_execute->OverrideTestOptions)) as $override_string)
 						{
-							$override_options[$override_segments[0]] = $override_segments[1];
+							$override_segments = pts_strings::trim_explode('=', $override_string);
+
+							if(count($override_segments) == 2 && !empty($override_segments[0]) && !empty($override_segments[1]))
+							{
+								$override_options[$override_segments[0]] = $override_segments[1];
+							}
 						}
 					}
-				}
 
-				switch($sub_modes[$i])
-				{
-					case 'BATCH':
-						$option_output = pts_test_run_options::batch_user_options($obj);
-						break;
-					case 'DEFAULTS':
-						$option_output = pts_test_run_options::default_user_options($obj);
-						break;
-					default:
-						$option_output = array(array($sub_arguments[$i]), array($sub_arguments_description[$i]));
-						break;
-				}
-
-				foreach(array_keys($option_output[0]) as $x)
-				{
-					if($override_options != null)
+					switch((isset($to_execute->Mode) ? self::clean_input($to_execute->Mode) : null))
 					{
-						$test_profile->set_override_values($override_options);
+						case 'BATCH':
+							$option_output = pts_test_run_options::batch_user_options($obj);
+							break;
+						case 'DEFAULTS':
+							$option_output = pts_test_run_options::default_user_options($obj);
+							break;
+						default:
+							$option_output = array(array((isset($to_execute->Arguments) ? self::clean_input($to_execute->Arguments) : null)), array((isset($to_execute->Description) ? self::clean_input($to_execute->Description) : null)));
+							break;
 					}
 
-					$test_result = new pts_test_result($obj);
-					$test_result->set_used_arguments($option_output[0][$x]);
-					$test_result->set_used_arguments_description($option_output[1][$x]);
+					foreach(array_keys($option_output[0]) as $x)
+					{
+						if($override_options != null)
+						{
+							$test_profile->set_override_values($override_options);
+						}
 
-					$this->test_objects[] = $test_result;
+						$test_result = new pts_test_result($obj);
+						$test_result->set_used_arguments($option_output[0][$x]);
+						$test_result->set_used_arguments_description($option_output[1][$x]);
+
+						$this->test_objects[] = $test_result;
+					}
 				}
-			}
-			else if($obj instanceof pts_test_suite)
-			{
-				foreach($obj->get_contained_test_result_objects() as $test_result)
+				else if($obj instanceof pts_test_suite)
 				{
-					$this->test_objects[] = $test_result;
+					foreach($obj->get_contained_test_result_objects() as $test_result)
+					{
+						$this->test_objects[] = $test_result;
+					}
 				}
 			}
 		}
-		$this->test_names = $test_names;
+	}
+	public static function set_temporary_suite($name, $suite_xml)
+	{
+		self::$temp_suite[$name] = $suite_xml;
+	}
+	public static function is_temporary_suite($name)
+	{
+		return isset(self::$temp_suite[$name]);
+	}
+	public function get_file_location()
+	{
+		return $this->xml_file_location;
+	}
+	public function validate()
+	{
+		$dom = new DOMDocument();
+		if(is_file($this->raw_xml))
+		{
+			$dom->load($this->raw_xml);
+		}
+		else
+		{
+			$dom->loadXML($this->raw_xml);
+		}
+		return $dom->schemaValidate(PTS_OPENBENCHMARKING_PATH . 'schemas/test-suite.xsd');
+	}
+	protected static function clean_input($value)
+	{
+		if(is_array($value))
+		{
+			return array_map(array($this, 'clean_input'), $value);
+		}
+		else
+		{
+			return strip_tags($value);
+		}
 	}
 	public static function is_suite($identifier)
 	{

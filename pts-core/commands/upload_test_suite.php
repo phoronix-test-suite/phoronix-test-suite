@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2015, Phoronix Media
-	Copyright (C) 2010 - 2015, Michael Larabel
+	Copyright (C) 2010 - 2016, Phoronix Media
+	Copyright (C) 2010 - 2016, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -39,10 +39,10 @@ class upload_test_suite implements pts_option_interface
 		{
 			pts_client::$display->generic_heading($r[0]);
 
-			if(pts_validation::validate_test_suite($test_suite))
+			if(pts_validation::validate_test_suite($test_suite) && $test_suite->get_file_location() != null)
 			{
 				$zip_file = PTS_OPENBENCHMARKING_SCRATCH_PATH . $test_suite->get_identifier(false) . '-' . $test_suite->get_version() . '.zip';
-				$zip_created = pts_compression::zip_archive_create($zip_file, $test_suite->xml_parser->getFileLocation());
+				$zip_created = pts_compression::zip_archive_create($zip_file, $test_suite->get_file_location());
 
 				if($zip_created == false)
 				{
@@ -52,7 +52,7 @@ class upload_test_suite implements pts_option_interface
 
 				$zip = new ZipArchive();
 				$zip->open($zip_file);
-				$zip->renameName(basename($test_suite->xml_parser->getFileLocation()), 'suite-definition.xml');
+				$zip->renameName(basename($test_suite->get_file_location()), 'suite-definition.xml');
 				$zip->close();
 
 				$commit_description = pts_user_io::prompt_user_input('Enter a test commit description', false);
