@@ -41,6 +41,11 @@ class pts_test_suite
 
 	public function __construct($identifier)
 	{
+		$this->test_objects = array();
+		$this->test_names = array();
+		if($identifier == null)
+			return;
+
 		if(PTS_IS_CLIENT)
 		{
 			$ob_identifier = pts_openbenchmarking::evaluate_string_to_qualifier($identifier, true, 'suite');
@@ -105,8 +110,6 @@ class pts_test_suite
 			$this->post_run_message = self::clean_input($xml->SuiteInformation->PostRunMessage);
 		}
 
-		$this->test_objects = array();
-		$this->test_names = array();
 		if(isset($xml->Execute))
 		{
 			foreach($xml->Execute as $to_execute)
