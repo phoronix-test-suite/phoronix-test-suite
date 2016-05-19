@@ -364,7 +364,7 @@ class pts_graph_lines extends pts_graph_core
 			}
 
 			$plotted_error_bar = false;
-			if($x_y_pair[3] > 0)
+			if($x_y_pair[3] > 0 && $this->i['graph_max_value'] != 0)
 			{
 				$std_error_width = 4;
 				$std_error_rel_size = round(($x_y_pair[3] / $this->i['graph_max_value']) * ($this->i['graph_top_end'] - $this->i['top_start']));
