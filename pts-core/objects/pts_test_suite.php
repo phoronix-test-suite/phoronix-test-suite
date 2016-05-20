@@ -277,6 +277,10 @@ class pts_test_suite
 	{
 		return $this->get_identifier() . ' [v' . $this->get_version() . ']';
 	}
+	public function set_identifier($s)
+	{
+		$this->identifier = $set;
+	}
 	public function get_identifier($bind_version = true)
 	{
 		$identifier = $this->identifier;
@@ -308,6 +312,14 @@ class pts_test_suite
 
 		return $identifier;
 	}
+	public function set_core_version_min($s)
+	{
+		$this->requires_minimum_core_version = $s;
+	}
+	public function set_core_version_max($s)
+	{
+		$this->requires_maximum_core_version = $s;
+	}
 	public function requires_core_version_min()
 	{
 		return $this->requires_minimum_core_version != null ? $this->requires_minimum_core_version : 2950;
@@ -316,33 +328,65 @@ class pts_test_suite
 	{
 		return $this->requires_maximum_core_version != null ? $this->requires_maximum_core_version : 9990;
 	}
+	public function set_description($s)
+	{
+		$this->description = $set;
+	}
 	public function get_description()
 	{
 		return $this->description;
+	}
+	public function set_title($s)
+	{
+		$this->title = $s;
 	}
 	public function get_title()
 	{
 		return $this->title;
 	}
+	public function set_version($s)
+	{
+		$this->version = $s;
+	}
 	public function get_version()
 	{
 		return $this->version;
+	}
+	public function set_maintainer($s)
+	{
+		$this->maintainer = $s;
 	}
 	public function get_maintainer()
 	{
 		return $this->maintainer;
 	}
+	public function set_suite_type($s)
+	{
+		$this->test_type = $s;
+	}
 	public function get_suite_type()
 	{
 		return $this->test_type;
+	}
+	public function set_pre_run_message($s)
+	{
+		$this->pre_run_message = $s;
 	}
 	public function get_pre_run_message()
 	{
 		return $this->pre_run_message;
 	}
+	public function set_post_run_message($s)
+	{
+		$this->post_run_message = $s;
+	}
 	public function get_post_run_message()
 	{
 		return $this->post_run_message;
+	}
+	public function set_run_mode($s)
+	{
+		$this->run_mode = $s;
 	}
 	public function get_run_mode()
 	{
@@ -369,6 +413,31 @@ class pts_test_suite
 	}
 	public function get_xml($to = null, $force_nice_formatting = false)
 	{
+		$xml_writer = new nye_XmlWriter(null, $force_nice_formatting);
+		$this->xml_writer->addXmlNode('PhoronixTestSuite/SuiteInformation/Title', $this->get_title());
+		$this->xml_writer->addXmlNode('PhoronixTestSuite/SuiteInformation/Version', $this->get_version());
+		$this->xml_writer->addXmlNode('PhoronixTestSuite/SuiteInformation/TestType', $this->get_suite_type());
+		$this->xml_writer->addXmlNode('PhoronixTestSuite/SuiteInformation/Description', $this->get_description());
+		$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/SuiteInformation/Maintainer', $this->get_maintainer());
+		$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/SuiteInformation/PreRunMessage', $this->get_pre_run_message());
+		$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/SuiteInformation/PostRunMessage', $this->get_post_run_message());
+		$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/SuiteInformation/RunMode', $this->get_run_mode());
+		$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/SuiteInformation/RequiresCoreVersionMin', $this->requires_minimum_core_version);
+		$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/SuiteInformation/RequiresCoreVersionMax', $this->requires_maximum_core_version);
+
+		foreach($this->test_objects as $i => &$test)
+		{
+			if($test->test_profile->get_title() == null)
+			{
+				continue;
+			}
+
+			$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/Execute/Test', $test->test_profile->get_identifier(false));
+			$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/Execute/Arguments', $test->get_arguments());
+			$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/Execute/Description', $test->get_arguments_description());
+			$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/Execute/Mode', null); // XXX wire this up!
+			$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/Execute/OverrideTestOptions', $test->test_profile->get_override_values(true));
+		}
 
 	}
 }

@@ -53,9 +53,23 @@ class pts_test_profile extends pts_test_profile_parser
 	{
 		return PTS_TEST_PROFILE_PATH . $this->identifier . '/';
 	}
-	public function get_override_values()
+	public function get_override_values($as_string = false)
 	{
-		return $this->overrides;
+		if($as_string)
+		{
+			$o = $this->overrides;
+			foreach($o as $x => &$y)
+			{
+				$y = $x . '=' . $y;
+			}
+
+			return implode(';', $o);
+
+		}
+		else
+		{
+			return $this->overrides;
+		}
 	}
 	public function set_override_values($override_values)
 	{
