@@ -368,6 +368,8 @@ class pts_openbenchmarking
 			$repos[] = pts_openbenchmarking_client::user_name();
 		}
 
+		// XXX add XML option or so for being able to expose more repos
+
 		return $repos;
 	}
 	public static function make_openbenchmarking_request($request, $post = array())
