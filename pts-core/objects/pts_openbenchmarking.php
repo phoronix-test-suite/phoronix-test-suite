@@ -367,8 +367,13 @@ class pts_openbenchmarking
 		{
 			$repos[] = pts_openbenchmarking_client::user_name();
 		}
-
-		// XXX add XML option or so for being able to expose more repos
+		$on_system_indexes = glob(PTS_OPENBENCHMARKING_SCRATCH_PATH . '*.index');
+		foreach($on_system_indexes as $index)
+		{
+			$index = basename($index, '.index');
+			pts_arrays::unique_push($repos, $index);
+			echo $index . PHP_EOL;
+		}
 
 		return $repos;
 	}

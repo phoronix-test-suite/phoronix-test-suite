@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- pts-core: Automatically add used extra OpenBenchmarking.org repositories to the linked list
+
 Phoronix Test Suite 6.4.0 Milestone 3
 26 May 2016
 
