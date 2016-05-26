@@ -372,7 +372,6 @@ class pts_openbenchmarking
 		{
 			$index = basename($index, '.index');
 			pts_arrays::unique_push($repos, $index);
-			echo $index . PHP_EOL;
 		}
 
 		return $repos;
