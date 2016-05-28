@@ -432,7 +432,7 @@
                         <GenericName>perl-digest-md5</GenericName>
                         <Title>Perl interface to the MD5 Algorithm</Title>
                         <PossibleNames>perl-Digest-MD5, perl-Digest-Perl-MD5, libdigest-md5</PossibleNames>
-                        <FileCheck>Digest/MD5.pm</FileCheck>
+                        <FileCheck>Digest/MD5.pm OR /usr/share/doc/perl-Digest-MD5 OR /usr/share/perl5/Digest/</FileCheck>
                 </Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
