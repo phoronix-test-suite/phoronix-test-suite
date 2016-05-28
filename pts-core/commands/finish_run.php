@@ -45,6 +45,12 @@ class finish_run implements pts_option_interface
 
 		foreach($result_file->get_result_objects() as $pos => $result_object)
 		{
+			// Don't load null test profile identifier tests into the run queue
+			if($result_object->test_profile->get_identifier() == null)
+			{
+				continue;
+			}
+
 			$this_result_object_identifiers = $result_object->test_result_buffer->get_identifiers();
 
 			foreach($system_identifiers as $system_identifier)

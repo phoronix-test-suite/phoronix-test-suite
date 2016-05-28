@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Automatically add used extra OpenBenchmarking.org repositories to the linked list
+- pts-core: Don't load empty tests on finish-run command
 - phodevi: More detection improvements for NVMe devices on Linux
 
 Phoronix Test Suite 6.4.0 Milestone 3
