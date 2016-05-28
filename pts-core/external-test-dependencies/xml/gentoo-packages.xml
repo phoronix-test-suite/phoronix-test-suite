@@ -260,5 +260,9 @@
 			<GenericName>redis-server</GenericName>
 			<PackageName>dev-db/redis</PackageName>
 		</Package>
+		<Package>
+                        <GenericName>perl-digest-md5</GenericName>
+                        <PackageName>perl-core/Digest-MD5</PackageName>
+                </Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

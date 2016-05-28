@@ -428,5 +428,11 @@
 			<PossibleNames>redis, redis-server</PossibleNames>
 			<FileCheck>/usr/bin/redis-server</FileCheck>
 		</Package>
+		<Package>
+                        <GenericName>perl-digest-md5</GenericName>
+                        <Title>Perl interface to the MD5 Algorithm</Title>
+                        <PossibleNames>perl-Digest-MD5, perl-Digest-Perl-MD5, libdigest-md5</PossibleNames>
+                        <FileCheck>Digest/MD5.pm</FileCheck>
+                </Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
