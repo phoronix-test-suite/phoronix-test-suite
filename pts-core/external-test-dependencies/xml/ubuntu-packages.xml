@@ -317,7 +317,7 @@
 		</Package>
 		<Package>
                         <GenericName>perl-digest-md5</GenericName>
-                        <PackageName>libdigest-md5</PackageName>
+                        <PackageName>libdigest-md5-file-perl libdigest-perl-md5-perl</PackageName>
                 </Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
