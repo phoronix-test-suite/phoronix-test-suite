@@ -41,7 +41,7 @@ class pts_test_notes_manager
 		$test_types = array();
 		$test_tags = array();
 
-		foreach($test_result_objects as $test_result)
+		foreach($test_result_objects as &$test_result)
 		{
 			pts_arrays::unique_push($test_types, $test_result->test_profile->get_test_hardware_type());
 

@@ -26,6 +26,7 @@ class pts_test_run_manager
 	protected $is_new_result_file = true;
 
 	protected $tests_to_run = array();
+	protected $hashes_of_tests_to_run = array();
 	protected $failed_tests_to_run = array();
 	protected $last_test_run_index = 0;
 	protected $test_run_pos = 0;
@@ -159,9 +160,12 @@ class pts_test_run_manager
 	}
 	protected function add_test_result_object(&$test_result)
 	{
-		if($this->validate_test_to_run($test_result->test_profile))
+		$hash = $test_result->get_comparison_hash(true, false);
+
+		if($this->validate_test_to_run($test_result->test_profile) && !isset($this->hashes_of_tests_to_run[$hash]))
 		{
-			pts_arrays::unique_push($this->tests_to_run, $test_result);
+			$this->hashes_of_tests_to_run[$hash] = $hash;
+			$this->tests_to_run[] = $test_result;
 		}
 	}
 	public function get_tests_to_run()
@@ -172,7 +176,7 @@ class pts_test_run_manager
 	{
 		$identifiers = array();
 
-		foreach($this->tests_to_run as $test_run_request)
+		foreach($this->tests_to_run as &$test_run_request)
 		{
 			$identifiers[] = $test_run_request->test_profile->get_identifier();
 		}
@@ -189,9 +193,9 @@ class pts_test_run_manager
 		}
 
 		$estimated_time = 0;
-		for($i = $index; $i < count($this->tests_to_run); $i++)
+		foreach($this->tests_to_run as &$test_run_request)
 		{
-			$estimated_time += $this->tests_to_run[$i]->test_profile->get_estimated_run_time();
+			$estimated_time += $test_run_request->test_profile->get_estimated_run_time();
 		}
 
 		return $estimated_time;
@@ -814,7 +818,7 @@ class pts_test_run_manager
 		$test_hardware_types = array();
 		$test_internal_tags = array();
 
-		foreach($this->tests_to_run as $test_to_run)
+		foreach($this->tests_to_run as &$test_to_run)
 		{
 			$test_external_dependencies = array_merge($test_external_dependencies, $test_to_run->test_profile->get_external_dependencies());
 			$test_internal_tags = array_merge($test_internal_tags, $test_to_run->test_profile->get_internal_tags());
@@ -1174,7 +1178,7 @@ class pts_test_run_manager
 	public function subsystems_under_test()
 	{
 		$subsystems_to_test = array();
-		foreach($this->tests_to_run as $test_run_request)
+		foreach($this->tests_to_run as &$test_run_request)
 		{
 			pts_arrays::unique_push($subsystems_to_test, $test_run_request->test_profile->get_test_hardware_type());
 		}
