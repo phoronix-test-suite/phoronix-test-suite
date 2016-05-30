@@ -193,7 +193,7 @@ class pts_test_run_manager
 		}
 
 		$estimated_time = 0;
-		foreach($this->tests_to_run as &$test_run_request)
+		foreach(array_slice($this->tests_to_run, $index) as $test_run_request)
 		{
 			$estimated_time += $test_run_request->test_profile->get_estimated_run_time();
 		}
