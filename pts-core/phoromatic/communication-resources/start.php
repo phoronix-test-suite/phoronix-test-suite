@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2015, Phoronix Media
-	Copyright (C) 2009 - 2015, Michael Larabel
+	Copyright (C) 2009 - 2016, Phoronix Media
+	Copyright (C) 2009 - 2016, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -104,8 +104,12 @@ function phoromatic_generate_test_suite(&$test_schedule, &$json, $phoromatic_acc
 		$trigger_id = date('Y-m-d');
 	}
 
-	$suite_writer = new pts_test_suite_writer();
-	$suite_writer->add_suite_information($test_schedule['Title'], '1.0.0', $test_schedule['LastModifiedBy'], 'System', 'An automated Phoromatic test schedule.');
+	$new_suite = new pts_test_suite();
+	$new_suite->set_title($test_schedule['Title']);
+	$new_suite->set_version('1.0.0');
+	$new_suite->set_maintainer($test_schedule['LastModifiedBy']);
+	$new_suite->set_suite_type('System');
+	$new_suite->set_description($test_schedule['Description']);
 
 	$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_schedules_tests WHERE AccountID = :account_id AND ScheduleID = :schedule_id');
 	$stmt->bindValue(':account_id', ACCOUNT_ID);
@@ -115,7 +119,7 @@ function phoromatic_generate_test_suite(&$test_schedule, &$json, $phoromatic_acc
 	$test_count = 0;
 	while($row = $result->fetchArray())
 	{
-		$suite_writer->add_to_suite($row['TestProfile'], $row['TestArguments'], $row['TestDescription']);
+		$new_suite->add_to_suite($row['TestProfile'], $row['TestArguments'], $row['TestDescription']);
 		$test_count++;
 	}
 
@@ -128,7 +132,7 @@ function phoromatic_generate_test_suite(&$test_schedule, &$json, $phoromatic_acc
 	$json['phoromatic']['save_identifier'] = $test_schedule['Title'] . ' - ' . $trigger_id;
 	$json['phoromatic']['trigger_id'] = $trigger_id;
 	$json['phoromatic']['schedule_id'] = $test_schedule['ScheduleID'];
-	$json['phoromatic']['test_suite'] = $suite_writer->get_xml();
+	$json['phoromatic']['test_suite'] = $new_suite->get_xml();
 	$json['phoromatic']['pre_set_sys_env_vars'] = $sys_row['SystemVariables'];
 
 	$contexts = array('SetContextPreInstall' => 'pre_install_set_context', 'SetContextPostInstall' => 'post_install_set_context', 'SetContextPreRun' => 'pre_run_set_context', 'SetContextPostRun' => 'post_run_set_context');
@@ -171,8 +175,12 @@ function phoromatic_generate_benchmark_ticket(&$ticket_row, &$json, $phoromatic_
 }
 function phoromatic_pre_seed_tests_to_install(&$json, $phoromatic_account_settings, &$sys_row)
 {
-	$suite_writer = new pts_test_suite_writer();
-	$suite_writer->add_suite_information('Pre-Seed', '1.0.0', 'Phoromatic', 'System', 'An automated Phoromatic test schedule.');
+	$new_suite = new pts_test_suite();
+	$new_suite->set_title('Pre-Seed');
+	$new_suite->set_version('1.0.0');
+	$new_suite->set_maintainer('Phoromatic');
+	$new_suite->set_suite_type('System');
+	$new_suite->set_description('Pre-seeding commonly used tests to host.');
 
 	$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_schedules_tests WHERE AccountID = :account_id');
 	$stmt->bindValue(':account_id', ACCOUNT_ID);
@@ -181,7 +189,7 @@ function phoromatic_pre_seed_tests_to_install(&$json, $phoromatic_account_settin
 	$test_count = 0;
 	while($row = $result->fetchArray())
 	{
-		$suite_writer->add_to_suite($row['TestProfile'], null, null);
+		$new_suite->add_to_suite($row['TestProfile']);
 		$test_count++;
 	}
 
@@ -191,7 +199,7 @@ function phoromatic_pre_seed_tests_to_install(&$json, $phoromatic_account_settin
 	}
 
 	$json['phoromatic']['task'] = 'install';
-	$json['phoromatic']['test_suite'] = $suite_writer->get_xml();
+	$json['phoromatic']['test_suite'] = $new_suite->get_xml();
 	$json['phoromatic']['settings'] = $phoromatic_account_settings;
 	$json['phoromatic']['pre_set_sys_env_vars'] = $sys_row['SystemVariables'];
 

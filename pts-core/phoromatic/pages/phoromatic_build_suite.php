@@ -100,13 +100,13 @@ class phoromatic_build_suite implements pts_webui_interface
 				echo '<h2>You must add at least one test to the suite.</h2>';
 			}
 
-			$suite_writer = new pts_test_suite_writer();
+			$new_suite = new pts_test_suite();
 			$version_bump = 0;
 
 			do
 			{
 				$suite_version = '1.' . $version_bump . '.0';
-				$suite_id = $suite_writer->clean_save_name_string($_POST['suite_title']) . '-' . $suite_version;
+				$suite_id = $new_suite->clean_save_name_string($_POST['suite_title']) . '-' . $suite_version;
 				$suite_dir = phoromatic_server::phoromatic_account_suite_path($_SESSION['AccountID'], $suite_id);
 				$version_bump++;
 			}
@@ -114,13 +114,18 @@ class phoromatic_build_suite implements pts_webui_interface
 			pts_file_io::mkdir($suite_dir);
 			$save_to = $suite_dir . '/suite-definition.xml';
 
-			$suite_writer->add_suite_information($_POST['suite_title'], $suite_version,  $_SESSION['UserName'], 'System', $_POST['suite_description']);
+			$new_suite->set_title($_POST['suite_title']);
+			$new_suite->set_version('1.0.0'); // $suite_version
+			$new_suite->set_maintainer($_SESSION['UserName']);
+			$new_suite->set_suite_type('System');
+			$new_suite->set_description($_POST['suite_description']);
+
 			foreach($tests as $m)
 			{
-				$suite_writer->add_to_suite($m['test'], $m['args'], $m['description']);
+				$new_suite->add_to_suite($m['test'], $m['args'], $m['description']);
 			}
 
-			$suite_writer->save_xml($save_to);
+			$new_suite->save_xml(null, $save_to);
 			echo '<h2>Saved As ' . $suite_id . '</h2>';
 		}
 		echo phoromatic_webui_header_logged_in();

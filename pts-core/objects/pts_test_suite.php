@@ -172,7 +172,7 @@ class pts_test_suite
 			$this->test_objects[] = $test_result;
 		}
 	}
-	public function add_to_suite($test, $arguments, $arguments_description)
+	public function add_to_suite($test, $arguments = null, $arguments_description = null)
 	{
 		if(!($test instanceof pts_test_profile))
 		{
