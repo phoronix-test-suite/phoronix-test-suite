@@ -41,8 +41,8 @@ class pts_graph_passfail extends pts_graph_core
 		$graph_height = $this->i['graph_top_end'] - $this->i['top_start'] - ($vertical_border * 2) - $heading_height;
 		$line_height = floor($graph_height / $identifier_count);
 
-		$pass_color = $this->get_paint_color('PASS');
 		$fail_color = $this->get_paint_color('FAIL');
+		$pass_color = $this->get_paint_color('PASS');
 
 		$main_width = floor($graph_width * .24);
 		$main_font_size = self::$c['size']['bars'];
