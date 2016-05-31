@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2015, Phoronix Media
-	Copyright (C) 2008 - 2015, Michael Larabel
+	Copyright (C) 2008 - 2016, Phoronix Media
+	Copyright (C) 2008 - 2016, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -37,8 +37,11 @@ class build_suite implements pts_option_interface
 		$possible_suites = pts_openbenchmarking::available_suites();
 		$possible_tests = pts_openbenchmarking::available_tests();
 
-		$suite_writer = new pts_test_suite_writer();
-		$suite_writer->add_suite_information($suite_name, '1.0.0', $suite_maintainer, $suite_test_type, $suite_description);
+		$new_suite = new pts_test_suite();
+		$new_suite->set_title($suite_name);
+		$new_suite->set_version('1.0.0');
+		$new_suite->set_suite_type($suite_test_type);
+		$new_suite->set_description($suite_description);
 
 		foreach($r as $test_object)
 		{
@@ -51,12 +54,12 @@ class build_suite implements pts_option_interface
 				for($i = 0; $i < count($args); $i++)
 				{
 					// Not binding the test profile version to this suite, otherwise change false to true
-					$suite_writer->add_to_suite($test_object->get_identifier(false), $args[$i], $description[$i]);
+					$new_suite->add_to_suite($test_object, $args[$i], $description[$i]);
 				}
 			}
 			else if($test_object instanceof pts_test_suite)
 			{
-				$suite_writer->add_to_suite($test_object->get_identifier(), null, null);
+				$new_suite->add_suite_tests_to_suite($test_object);
 			}
 		}
 
@@ -74,12 +77,13 @@ class build_suite implements pts_option_interface
 
 					for($i = 0; $i < count($args); $i++)
 					{
-						$suite_writer->add_to_suite($test_to_add, $args[$i], $description[$i]);
+						$new_suite->add_to_suite($test_profile, $args[$i], $description[$i]);
 					}
 					break;
 				case 'Add Sub-Suite':
 					$suite_to_add = pts_user_io::prompt_text_menu('Enter test suite', $possible_suites);
-					$suite_writer->add_to_suite($suite_to_add, null, null);
+					$test_suite = new pts_test_suite($suite_to_add);
+					$new_suite->add_suite_tests_to_suite($test_suite);
 					break;
 			}
 			echo PHP_EOL . 'Available Options:' . PHP_EOL;
@@ -87,13 +91,9 @@ class build_suite implements pts_option_interface
 		}
 		while($input_option != 'Save & Exit');
 
-		$suite_identifier = $suite_writer->clean_save_name_string($suite_name);
-		$save_to = PTS_TEST_SUITE_PATH . 'local/' . $suite_identifier . '/suite-definition.xml';
-		mkdir(dirname($save_to));
-
-		if($suite_writer->save_xml($save_to) != false)
+		if($new_suite->save_xml($suite_name) != false)
 		{
-			echo PHP_EOL . PHP_EOL . 'Saved To: ' . $save_to . PHP_EOL . 'To run this suite, type: phoronix-test-suite benchmark ' . $suite_identifier . PHP_EOL . PHP_EOL;
+			echo PHP_EOL . PHP_EOL . 'Saved -- to run this suite, type: phoronix-test-suite benchmark ' . $new_suite->get_identifier() . PHP_EOL . PHP_EOL;
 		}
 	}
 }

@@ -7,6 +7,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add perl-digest-md5 to external dependencies list
 - pts-core: Prevent duplicate tests/setting combinations from entering the same test run manager queue
 - pts-core: Fix for IE not scaling SVGs in the results viewer
+- pts-core: Finish new pts_test_suite API, port build-suite to it
 - phodevi: More detection improvements for NVMe devices on Linux
 
 Phoronix Test Suite 6.4.0 Milestone 3

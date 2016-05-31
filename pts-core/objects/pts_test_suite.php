@@ -39,7 +39,7 @@ class pts_test_suite
 	static $temp_suite;
 	protected $xml_file_location = false;
 
-	public function __construct($identifier)
+	public function __construct($identifier = null)
 	{
 		$this->test_objects = array();
 		$this->test_names = array();
@@ -155,22 +155,34 @@ class pts_test_suite
 							$test_profile->set_override_values($override_options);
 						}
 
-						$test_result = new pts_test_result($obj);
-						$test_result->set_used_arguments($option_output[0][$x]);
-						$test_result->set_used_arguments_description($option_output[1][$x]);
-
-						$this->test_objects[] = $test_result;
+						$this->add_to_suite($obj, $option_output[0][$x], $option_output[1][$x]);
 					}
 				}
 				else if($obj instanceof pts_test_suite)
 				{
-					foreach($obj->get_contained_test_result_objects() as $test_result)
-					{
-						$this->test_objects[] = $test_result;
-					}
+					$this->add_suite_tests_to_suite($obj);
 				}
 			}
 		}
+	}
+	public function add_suite_tests_to_suite($suite)
+	{
+		foreach($suite->get_contained_test_result_objects() as $test_result)
+		{
+			$this->test_objects[] = $test_result;
+		}
+	}
+	public function add_to_suite($test, $arguments, $arguments_description)
+	{
+		if(!($test instanceof pts_test_profile))
+		{
+			$test = new pts_test_profile($test);
+		}
+
+		$test_result = new pts_test_result($test);
+		$test_result->set_used_arguments($arguments);
+		$test_result->set_used_arguments_description($arguments_description);
+		$this->test_objects[] = $test_result;
 	}
 	public static function set_temporary_suite($name, $suite_xml)
 	{
@@ -279,7 +291,7 @@ class pts_test_suite
 	}
 	public function set_identifier($s)
 	{
-		$this->identifier = $set;
+		$this->identifier = $s;
 	}
 	public function get_identifier($bind_version = true)
 	{
@@ -330,7 +342,7 @@ class pts_test_suite
 	}
 	public function set_description($s)
 	{
-		$this->description = $set;
+		$this->description = $s;
 	}
 	public function get_description()
 	{
@@ -414,16 +426,16 @@ class pts_test_suite
 	public function get_xml($to = null, $force_nice_formatting = false)
 	{
 		$xml_writer = new nye_XmlWriter(null, $force_nice_formatting);
-		$this->xml_writer->addXmlNode('PhoronixTestSuite/SuiteInformation/Title', $this->get_title());
-		$this->xml_writer->addXmlNode('PhoronixTestSuite/SuiteInformation/Version', $this->get_version());
-		$this->xml_writer->addXmlNode('PhoronixTestSuite/SuiteInformation/TestType', $this->get_suite_type());
-		$this->xml_writer->addXmlNode('PhoronixTestSuite/SuiteInformation/Description', $this->get_description());
-		$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/SuiteInformation/Maintainer', $this->get_maintainer());
-		$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/SuiteInformation/PreRunMessage', $this->get_pre_run_message());
-		$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/SuiteInformation/PostRunMessage', $this->get_post_run_message());
-		$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/SuiteInformation/RunMode', $this->get_run_mode());
-		$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/SuiteInformation/RequiresCoreVersionMin', $this->requires_minimum_core_version);
-		$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/SuiteInformation/RequiresCoreVersionMax', $this->requires_maximum_core_version);
+		$xml_writer->addXmlNode('PhoronixTestSuite/SuiteInformation/Title', $this->get_title());
+		$xml_writer->addXmlNode('PhoronixTestSuite/SuiteInformation/Version', $this->get_version());
+		$xml_writer->addXmlNode('PhoronixTestSuite/SuiteInformation/TestType', $this->get_suite_type());
+		$xml_writer->addXmlNode('PhoronixTestSuite/SuiteInformation/Description', $this->get_description());
+		$xml_writer->addXmlNodeWNE('PhoronixTestSuite/SuiteInformation/Maintainer', $this->get_maintainer());
+		$xml_writer->addXmlNodeWNE('PhoronixTestSuite/SuiteInformation/PreRunMessage', $this->get_pre_run_message());
+		$xml_writer->addXmlNodeWNE('PhoronixTestSuite/SuiteInformation/PostRunMessage', $this->get_post_run_message());
+		$xml_writer->addXmlNodeWNE('PhoronixTestSuite/SuiteInformation/RunMode', $this->get_run_mode());
+		$xml_writer->addXmlNodeWNE('PhoronixTestSuite/SuiteInformation/RequiresCoreVersionMin', $this->requires_minimum_core_version);
+		$xml_writer->addXmlNodeWNE('PhoronixTestSuite/SuiteInformation/RequiresCoreVersionMax', $this->requires_maximum_core_version);
 
 		foreach($this->test_objects as $i => &$test)
 		{
@@ -432,13 +444,37 @@ class pts_test_suite
 				continue;
 			}
 
-			$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/Execute/Test', $test->test_profile->get_identifier(false));
-			$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/Execute/Arguments', $test->get_arguments());
-			$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/Execute/Description', $test->get_arguments_description());
-			$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/Execute/Mode', null); // XXX wire this up!
-			$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/Execute/OverrideTestOptions', $test->test_profile->get_override_values(true));
+			$xml_writer->addXmlNodeWNE('PhoronixTestSuite/Execute/Test', $test->test_profile->get_identifier(false));
+			$xml_writer->addXmlNodeWNE('PhoronixTestSuite/Execute/Arguments', $test->get_arguments());
+			$xml_writer->addXmlNodeWNE('PhoronixTestSuite/Execute/Description', $test->get_arguments_description());
+			$xml_writer->addXmlNodeWNE('PhoronixTestSuite/Execute/Mode', null); // XXX wire this up!
+			$xml_writer->addXmlNodeWNE('PhoronixTestSuite/Execute/OverrideTestOptions', $test->test_profile->get_override_values(true));
+		}
+		return $xml_writer->getXML();
+	}
+	public function save_xml($suite_identifier = null, $save_to = null)
+	{
+		$xml = $this->get_xml();
+		if($suite_identifier != null)
+		{
+			$this->set_identifier($this->clean_save_name_string($suite_identifier));
+			$save_to = PTS_TEST_SUITE_PATH . 'local/' . $this->get_identifier() . '/suite-definition.xml';
+			pts_file_io::mkdir(dirname($save_to));
 		}
 
+		return file_put_contents($save_to, $xml) != false;
+	}
+	public function clean_save_name_string($input)
+	{
+		$input = strtolower($input);
+		$input = pts_strings::remove_redundant(pts_strings::keep_in_string(str_replace(' ', '-', trim($input)), pts_strings::CHAR_LETTER | pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DASH), '-');
+
+		if(strlen($input) > 126)
+		{
+			$input = substr($input, 0, 126);
+		}
+
+		return $input;
 	}
 }
 
