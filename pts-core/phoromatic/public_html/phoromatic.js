@@ -321,6 +321,14 @@ function pts_ajax_request_object()
 	}
 	return request_;
 }
+function phoromatic_remove_from_suite_list(eid)
+{
+	var dnode = document.getElementById(eid);
+	while(dnode.firstChild)
+	{
+		dnode.removeChild(dnode.firstChild);
+	}
+}
 function phoromatic_ajax_update_element(r, d)
 {
 	var http = new Array();

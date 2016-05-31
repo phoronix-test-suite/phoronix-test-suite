@@ -65,7 +65,7 @@ class phoromatic_local_suites implements pts_webui_interface
 			$main .= '<p><em>' . $test_suite->get_description() . '</em></p>';
 			if(!PHOROMATIC_USER_IS_VIEWER)
 			{
-				$main .= '<p><a href="?local_suites/delete/' . $id . '">Delete Suite</a></p>';
+				$main .= '<p><a href="?build_suite/' . $id . '">Edit Suite</a> - <a href="?local_suites/delete/' . $id . '">Delete Suite</a></p>';
 			}
 			$main .= '<div style="max-height: 400px; width: 80%; overflow-y: scroll;">';
 

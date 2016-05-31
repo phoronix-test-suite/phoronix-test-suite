@@ -103,14 +103,14 @@ class phoromatic_build_suite implements pts_webui_interface
 			$new_suite = new pts_test_suite();
 			$version_bump = 0;
 
-			do
-			{
+		//	do
+		//	{
 				$suite_version = '1.' . $version_bump . '.0';
 				$suite_id = $new_suite->clean_save_name_string($_POST['suite_title']) . '-' . $suite_version;
 				$suite_dir = phoromatic_server::phoromatic_account_suite_path($_SESSION['AccountID'], $suite_id);
-				$version_bump++;
-			}
-			while(is_dir($suite_dir));
+		//		$version_bump++;
+		//	}
+		//	while(is_dir($suite_dir));
 			pts_file_io::mkdir($suite_dir);
 			$save_to = $suite_dir . '/suite-definition.xml';
 
@@ -134,14 +134,32 @@ class phoromatic_build_suite implements pts_webui_interface
 
 		if(!PHOROMATIC_USER_IS_VIEWER)
 		{
+			$suite = null;
+			if(isset($PATH[0]))
+			{
+				$suite = phoromatic_server::phoromatic_account_suite_path($_SESSION['AccountID'], $PATH[0]) . '/suite-definition.xml';
+				if(!is_file($suite))
+				{
+					$suite = null;
+				}
+			}
+			$suite = new pts_test_suite($suite);
+
 			$main .= '<h1>Build Suite</h1><p>A test suite in the realm of the Phoronix Test Suite, OpenBenchmarking.org, and Phoromatic is <strong>a collection of test profiles with predefined settings</strong>. Establishing a test suite makes it easy to run repetitive testing on the same set of test profiles by simply referencing the test suite name.</p>';
 			$main .= '<form action="' . $_SERVER['REQUEST_URI'] . '" name="build_suite" id="build_suite" method="post" onsubmit="return validate_suite();">
 			<h3>Title:</h3>
-			<p><input type="text" name="suite_title" /></p>
+			<p><input type="text" name="suite_title" value="' . $suite->get_title() . '" /></p>
 			<h3>Description:</h3>
-			<p><textarea name="suite_description" id="suite_description" cols="60" rows="2"></textarea></p>
+			<p><textarea name="suite_description" id="suite_description" cols="60" rows="2">' . $suite->get_description() . '</textarea></p>
 			<h3>Tests In Schedule:</h3>
 			<p><div id="test_details"></div></p>
+			<script type="text/javascript">';
+
+			foreach($suite->get_contained_test_result_objects() as $obj)
+			{
+				$main .= 'phoromatic_ajax_append_element("r_add_test_build_suite_details/&tp=' . $obj->test_profile->get_identifier() . '&tpa=' . $obj->get_arguments_description() . '", "test_details");' . PHP_EOL;
+			}
+			$main .= '</script>
 			<h3>Add Another Test</h3>';
 			$main .= '<select name="add_to_suite_select_test" id="add_to_suite_select_test" onchange="phoromatic_build_suite_test_details();"><option value=""></option>';
 			$dc = pts_strings::add_trailing_slash(pts_strings::parse_for_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Installation/CacheDirectory', PTS_DOWNLOAD_CACHE_PATH)));
