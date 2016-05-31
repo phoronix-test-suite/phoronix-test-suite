@@ -40,6 +40,7 @@ class build_suite implements pts_option_interface
 		$new_suite = new pts_test_suite();
 		$new_suite->set_title($suite_name);
 		$new_suite->set_version('1.0.0');
+		$new_suite->set_maintainer($suite_maintainer);
 		$new_suite->set_suite_type($suite_test_type);
 		$new_suite->set_description($suite_description);
 

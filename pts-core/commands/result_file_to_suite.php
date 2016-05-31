@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2015, Phoronix Media
-	Copyright (C) 2008 - 2015, Michael Larabel
+	Copyright (C) 2008 - 2016, Phoronix Media
+	Copyright (C) 2008 - 2016, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -44,25 +44,25 @@ class result_file_to_suite implements pts_option_interface
 		$suite_maintainer = pts_user_io::prompt_user_input('Enter suite maintainer name');
 		$suite_description = pts_user_io::prompt_user_input('Enter suite description');
 
-		$suite_writer = new pts_test_suite_writer();
-		$suite_writer->add_suite_information($suite_name, '1.0.0', $suite_maintainer, $suite_test_type, $suite_description);
+		$new_suite = new pts_test_suite();
+		$new_suite->set_title($suite_name);
+		$new_suite->set_version('1.0.0');
+		$new_suite->set_maintainer($suite_maintainer);
+		$new_suite->set_suite_type($suite_test_type);
+		$new_suite->set_description($suite_description);
 
-		// Read results file
+
 		$result_file = new pts_result_file($result_file);
-
 		foreach($result_file->get_result_objects() as $result_object)
 		{
-			$suite_writer->add_to_suite_from_result_object($result_object);
+			$test = new pts_test_profile($result_object->test_profile->get_identifier());
+			$new_suite->add_to_suite($test, $result_object->get_arguments(), $result_object->get_arguments_description());
 		}
 
 		// Finish it off
-		$suite_identifier = pts_test_run_manager::clean_save_name($suite_name);
-		mkdir(PTS_TEST_SUITE_PATH . 'local/' . $suite_identifier);
-		$save_to = PTS_TEST_SUITE_PATH . 'local/' . $suite_identifier . '/suite-definition.xml';
-
-		if($suite_writer->save_xml($save_to) != false)
+		if($new_suite->save_xml($suite_name) != false)
 		{
-			echo PHP_EOL . PHP_EOL . 'Saved To: ' . $save_to . PHP_EOL . 'To run this suite, type: phoronix-test-suite benchmark ' . $suite_identifier . PHP_EOL . PHP_EOL;
+			echo PHP_EOL . PHP_EOL . 'Saved -- to run this suite, type: phoronix-test-suite benchmark ' . $new_suite->get_identifier() . PHP_EOL . PHP_EOL;
 		}
 	}
 	public static function invalid_command($passed_args = null)
