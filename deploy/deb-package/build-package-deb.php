@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2015, Phoronix Media
-	Copyright (C) 2008 - 2015, Michael Larabel
+	Copyright (C) 2008 - 2016, Phoronix Media
+	Copyright (C) 2008 - 2016, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
 if(!is_executable("phoronix-test-suite") || !is_dir("pts-core/"))
 {
 	echo "\nYou must run this script from the root directory of the phoronix-test-suite/ folder!\n";
-	echo "Example: php5 deploy/deb-package/build-package-deb.php\n";
+	echo "Example: php deploy/deb-package/build-package-deb.php\n";
 	exit(0);
 }
 if(!is_executable('/usr/bin/dpkg'))
@@ -63,7 +63,7 @@ $control_file .= "Section: Utilities\n";
 $control_file .= "Installed-Size: " . shell_exec("cd /tmp/pts-deb-builder/; du -s | cut -f 1");
 $control_file .= "Priority: optional\n";
 $control_file .= "Architecture: all\n";
-$control_file .= "Depends: php5-cli, php5-gd, php5-json\n";
+$control_file .= "Depends: php-cli, php-gd, php-xml, php-json\n";
 $control_file .= "Recommends: build-essential\n";
 $control_file .= "Maintainer: Phoronix Media <trondheim-pts@phoronix-test-suite.com>\n";
 $control_file .= "Description: An Automated, Open-Source Testing Framework\n " . @str_replace("\n", " ", file_get_contents('pts-core/static/short-description.txt')) . "\n";
