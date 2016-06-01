@@ -34,7 +34,11 @@ class debug_render_test implements pts_option_interface
 			pts_network::download_file('http://linuxbenchmarking.com/misc/mega-render-test-310815.tar.bz2', $render_dir . 'mega-render-test.tar.bz2');
 			pts_compression::archive_extract($render_dir . 'mega-render-test.tar.bz2');
 		}
-		define('PATH_TO_EXPORTED_PHOROMATIC_DATA', $render_dir . 'mega-render-test-310815/');
+
+		if(!defined('PATH_TO_EXPORTED_PHOROMATIC_DATA'))
+		{
+			define('PATH_TO_EXPORTED_PHOROMATIC_DATA', $render_dir . 'mega-render-test-310815/');
+		}
 
 		error_reporting(E_ALL);
 		ini_set('memory_limit','2048M');
