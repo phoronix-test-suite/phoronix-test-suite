@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2014, Phoronix Media
-	Copyright (C) 2008 - 2014, Michael Larabel
+	Copyright (C) 2008 - 2016, Phoronix Media
+	Copyright (C) 2008 - 2016, Michael Larabel
 	update_checker.php: This module checks to see if the Phoronix Test Suite -- and its tests and suites -- are up to date.
 
 	This program is free software; you can redistribute it and/or modify
@@ -24,7 +24,7 @@
 class update_checker extends pts_module_interface
 {
 	const module_name = 'Update Checker';
-	const module_version = '0.2.0';
+	const module_version = '0.3.0';
 	const module_description = 'This module checks to see if the Phoronix Test Suite -- and its tests and suites -- are up to date.';
 	const module_author = 'Phoronix Media';
 
@@ -34,14 +34,11 @@ class update_checker extends pts_module_interface
 		if(IS_FIRST_RUN_TODAY && pts_network::internet_support_available())
 		{
 			// Check For pts-core updates
-			$latest_reported_version = pts_network::http_get_contents('http://www.phoronix-test-suite.com/LATEST');
-			$current_e = explode('.', PTS_VERSION);
-			$latest_e = explode('.', $latest_reported_version);
-
-			if($latest_reported_version != PTS_VERSION && $latest_e[0] >= $current_e[0] && ($latest_e[1] > $current_e[1] || ($latest_e[1] == $current_e[1] && $latest_e[2] >= $current_e[2])))
+			$latest_reported_version = pts_network::http_get_contents('http://www.phoronix-test-suite.com/LATEST_CORE');
+			if(is_numeric($latest_reported_version) && $latest_reported_version > PTS_CORE_VERSION)
 			{
 				// New version of PTS is available
-				pts_client::$display->generic_heading('An outdated version of the Phoronix Test Suite is installed.' . PHP_EOL . 'The version in use is v' . PTS_VERSION . ', but the latest is v' . $latest_reported_version . '.' . PHP_EOL . 'Visit http://www.phoronix-test-suite.com/ to update this software.');
+				pts_client::$display->generic_heading(strtoupper('An outdated version of the Phoronix Test Suite is installed.' . PHP_EOL . 'The version in use is ' . PTS_VERSION . ' (' . PTS_CORE_VERSION . '), but the latest is pts-core ' . $latest_reported_version . '.' . PHP_EOL . 'Visit http://www.phoronix-test-suite.com/ to update this software.'));
 			}
 		}
 

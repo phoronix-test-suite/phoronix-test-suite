@@ -56,7 +56,18 @@ class phoromatic_main implements pts_webui_interface
 	public static function render_page_process($PATH)
 	{
 		echo phoromatic_webui_header_logged_in();
-		$main = '<h1>Phoromatic</h1>';
+		$main = null;
+		if(pts_network::internet_support_available())
+		{
+			// Check For pts-core updates
+			$latest_reported_version = pts_network::http_get_contents('http://www.phoronix-test-suite.com/LATEST_CORE');
+			if(is_numeric($latest_reported_version) && $latest_reported_version > PTS_CORE_VERSION)
+			{
+					// New version of PTS is available
+				$main .= '<p style="font-weight: 600; color: #ccc;">An outdated version of the Phoronix Test Suite / Phoromatic is currently installed.' . PHP_EOL . 'The version in use is v' . PTS_VERSION . ' (v' . PTS_CORE_VERSION . '), but the latest is pts-core v' . $latest_reported_version . '. Visit <a href="http://www.phoronix-test-suite.com/">Phoronix-Test-Suite.com</a> to update this software.</strong>';
+			}
+		}
+		$main .= '<h1>Phoromatic</h1>';
 
 		$main .= phoromatic_systems_needing_attention();
 
