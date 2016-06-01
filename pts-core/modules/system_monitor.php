@@ -680,6 +680,9 @@ class system_monitor extends pts_module_interface
 	{
 		// TODO result count checks should probably be done before cloning the test_result
 		// Copy the value each time as if you are directly writing the original data, each succeeding time in the loop the used arguments gets borked
+		if(!is_object(self::$individual_test_run_request))
+			return;
+
 		$test_result = clone self::$individual_test_run_request;
 
 		if (pts_module_manager::is_module_attached("matisk"))
