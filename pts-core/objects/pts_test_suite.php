@@ -423,6 +423,16 @@ class pts_test_suite
 
 		return $test_profiles;
 	}
+	public function sort_contained_tests()
+	{
+		usort($this->test_objects, array($this, 'cmp_result_object_sort_title'));
+	}
+	public function cmp_result_object_sort_title($a, $b)
+	{
+		$a_comp = $a->test_profile->get_title();
+		$b_comp = $b->test_profile->get_title();
+		return strcmp($a_comp, $b_comp);
+	}
 	public function get_xml($to = null, $force_nice_formatting = false)
 	{
 		$xml_writer = new nye_XmlWriter(null, $force_nice_formatting);

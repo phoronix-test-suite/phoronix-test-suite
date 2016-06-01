@@ -68,7 +68,7 @@ class phoromatic_local_suites implements pts_webui_interface
 				$main .= '<p><a href="?build_suite/' . $id . '">Edit Suite</a> - <a href="?local_suites/delete/' . $id . '">Delete Suite</a></p>';
 			}
 			$main .= '<div style="max-height: 400px; width: 80%; overflow-y: scroll;">';
-
+			$test_suite->sort_contained_tests();
 			foreach($test_suite->get_contained_test_result_objects() as $tro)
 			{
 				$main .= '<h3>' . $tro->test_profile->get_title() . ' [' . $tro->test_profile->get_identifier() . ']</h3>';

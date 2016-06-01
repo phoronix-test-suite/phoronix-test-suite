@@ -40,6 +40,7 @@ class phoromatic extends pts_module_interface
 	private static $p_trigger_id = null;
 	private static $benchmark_ticket_id = null;
 	private static $in_stress_mode = false;
+	private static $has_run_server_setup_func = false;
 
 	private static $test_run_manager = null;
 
@@ -332,6 +333,8 @@ class phoromatic extends pts_module_interface
 	}
 	protected static function setup_server_addressing($server_string = null)
 	{
+		self::$has_run_server_setup_func = true;
+
 		if(isset($server_string[0]) && strpos($server_string[0], '/', strpos($server_string[0], ':')) > 6)
 		{
 			pts_client::$pts_logger && pts_client::$pts_logger->log('Attempting to connect to Phoromatic Server: ' . $server_string[0]);
@@ -1041,6 +1044,13 @@ class phoromatic extends pts_module_interface
 	}
 	public static function __pre_test_install($test_identifier)
 	{
+	/*	if(self::$has_run_server_setup_func == false)
+		{
+			self::setup_server_addressing();
+		}
+	*/
+	// XXX finish wiring in the above code to various parts for making auto-reporting from clients
+
 		if(!self::$is_running_as_phoromatic_node)
 		{
 			return false;
