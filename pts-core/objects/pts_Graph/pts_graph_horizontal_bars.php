@@ -170,6 +170,30 @@ class pts_graph_horizontal_bars extends pts_graph_core
 						$note_size = self::$c['size']['key'] - 2;
 						$this->svg_dom->add_text_element($this->d['identifier_notes'][$buffer_item->get_result_identifier()], array('x' => ($this->i['left_start'] + 4), 'y' => ($px_bound_top + self::$c['size']['key']), 'font-size' => $note_size, 'fill' => self::$c['color']['body_text'], 'text-anchor' => 'start'));
 					}
+					else
+					{
+						// XXX this code can potentially replace the above identifier_notes stuff
+						$data = $buffer_item->get_result_json();
+						$note = null;
+						if(isset($data['min-result']) && is_numeric($data['min-result']))
+						{
+							if(isset($data['max-result']) && is_numeric($data['max-result']))
+							{
+								$note = 'MIN: ' . $data['min-result'] . ' / MAX: ' . $data['max-result'];
+							}
+							else
+							{
+								$note = 'MIN: ' . $data['min-result'];
+							}
+						}
+
+						if(!empty($note))
+						{
+							$note_size = self::$c['size']['key'] - 2;
+							$this->svg_dom->add_text_element($note, array('x' => ($this->i['left_start'] + 4), 'y' => ($px_bound_top + self::$c['size']['key']), 'font-size' => $note_size, 'fill' => self::$c['color']['body_text'], 'text-anchor' => 'start'));
+
+						}
+					}
 
 					$this->svg_dom->add_text_element($value, array('x' => ($value_end_right - 5), 'y' => $middle_of_bar, 'text-anchor' => 'end'), $g_values);
 				}
