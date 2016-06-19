@@ -105,7 +105,8 @@ class phoromatic_build_suite implements pts_webui_interface
 
 		//	do
 		//	{
-				$suite_version = '1.' . $version_bump . '.0';
+				//$suite_version = '1.' . $version_bump . '.0';
+				$suite_version = $_POST['suite_version'];
 				$suite_id = $new_suite->clean_save_name_string($_POST['suite_title']) . '-' . $suite_version;
 				$suite_dir = phoromatic_server::phoromatic_account_suite_path($_SESSION['AccountID'], $suite_id);
 		//		$version_bump++;
@@ -115,7 +116,7 @@ class phoromatic_build_suite implements pts_webui_interface
 			$save_to = $suite_dir . '/suite-definition.xml';
 
 			$new_suite->set_title($_POST['suite_title']);
-			$new_suite->set_version('1.0.0'); // $suite_version
+			$new_suite->set_version($suite_version); // $suite_version
 			$new_suite->set_maintainer($_SESSION['UserName']);
 			$new_suite->set_suite_type('System');
 			$new_suite->set_description($_POST['suite_description']);
@@ -149,6 +150,8 @@ class phoromatic_build_suite implements pts_webui_interface
 			$main .= '<form action="' . $_SERVER['REQUEST_URI'] . '" name="build_suite" id="build_suite" method="post" onsubmit="return validate_suite();">
 			<h3>Title:</h3>
 			<p><input type="text" name="suite_title" value="' . $suite->get_title() . '" /></p>
+			<h3>Suite Version:</h3>
+			<p><input type="text" name="suite_version" value="' . ($suite->get_version() == null ? '1.0.0' : $suite->get_version()) . '" /></p>
 			<h3>Description:</h3>
 			<p><textarea name="suite_description" id="suite_description" cols="60" rows="2">' . $suite->get_description() . '</textarea></p>
 			<h3>Tests In Schedule:</h3>

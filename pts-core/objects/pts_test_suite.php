@@ -454,7 +454,7 @@ class pts_test_suite
 				continue;
 			}
 
-			$xml_writer->addXmlNodeWNE('PhoronixTestSuite/Execute/Test', $test->test_profile->get_identifier(false));
+			$xml_writer->addXmlNodeWNE('PhoronixTestSuite/Execute/Test', $test->test_profile->get_identifier());
 			$xml_writer->addXmlNodeWNE('PhoronixTestSuite/Execute/Arguments', $test->get_arguments());
 			$xml_writer->addXmlNodeWNE('PhoronixTestSuite/Execute/Description', $test->get_arguments_description());
 			$xml_writer->addXmlNodeWNE('PhoronixTestSuite/Execute/Mode', null); // XXX wire this up!
