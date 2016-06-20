@@ -260,6 +260,10 @@
 			<GenericName>redis-server</GenericName>
 			<PackageName>dev-db/redis</PackageName>
 		</Package>
+                <Package>
+			<GenericName>opencv</GenericName>
+			<PackageName>media-libs/opencv</PackageName>
+		</Package>
 		<Package>
                         <GenericName>perl-digest-md5</GenericName>
                         <PackageName>perl-core/Digest-MD5</PackageName>

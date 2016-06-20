@@ -315,6 +315,10 @@
 			<GenericName>redis-server</GenericName>
 			<PackageName>redis-server</PackageName>
 		</Package>
+                <Package>
+			<GenericName>opencv</GenericName>
+			<PackageName>libopencv-dev</PackageName>
+		</Package>
 		<Package>
                         <GenericName>perl-digest-md5</GenericName>
                         <PackageName>libdigest-md5-file-perl libdigest-perl-md5-perl</PackageName>

@@ -228,6 +228,10 @@
 			<FileCheck>/usr/include/gmp.h</FileCheck>
 		</Package>
                 <Package>
+			<GenericName>opencv</GenericName>
+			<PackageName>opencv</PackageName>
+		</Package>
+                <Package>
 			<GenericName>redis-server</GenericName>
 			<PackageName>redis</PackageName>
 		</Package>

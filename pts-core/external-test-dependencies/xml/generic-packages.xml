@@ -429,6 +429,12 @@
 			<FileCheck>/usr/bin/redis-server</FileCheck>
 		</Package>
 		<Package>
+			<GenericName>opencv</GenericName>
+			<Title>OpenCV</Title>
+			<PossibleNames>opencv</PossibleNames>
+			<FileCheck>opencv/cv.h OR opencv2/core.hpp</FileCheck>
+		</Package>
+		<Package>
                         <GenericName>perl-digest-md5</GenericName>
                         <Title>Perl interface to the MD5 Algorithm</Title>
                         <PossibleNames>perl-Digest-MD5, perl-Digest-Perl-MD5, libdigest-md5</PossibleNames>
