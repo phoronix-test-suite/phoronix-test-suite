@@ -408,7 +408,7 @@
 			<GenericName>attr</GenericName>
 			<Title>Attr</Title>
 			<PossibleNames>attr, libattr1-dev</PossibleNames>
-			<FileCheck>attr/xattr.h</FileCheck>
+			<FileCheck>attr/xattr.h OR sys/xattr.h</FileCheck>
 		</Package>
 		<Package>
                         <GenericName>httpd</GenericName>
