@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2015, Phoronix Media
-	Copyright (C) 2009 - 2015, Michael Larabel
+	Copyright (C) 2009 - 2016, Phoronix Media
+	Copyright (C) 2009 - 2016, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -39,7 +39,8 @@ class gpu_temp extends phodevi_sensor
 		{
 			$temp_c = phodevi_linux_parser::read_ati_overdrive('Temperature');
 		}
-		else
+
+		if($temp_c == -1 || empty($temp_c))
 		{
 			foreach(array_merge(array('/sys/class/drm/card0/device/temp1_input'), pts_file_io::glob('/sys/class/drm/card0/device/hwmon/hwmon*/temp1_input')) as $temp_input)
 			{

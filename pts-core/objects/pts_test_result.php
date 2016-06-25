@@ -233,11 +233,24 @@ class pts_test_result
 			}
 			if($divide_value == -1)
 			{
-				foreach($keys as $k)
+				if($is_multi_way) // find the largest value to use as divide value
 				{
-					if($this->test_result_buffer->buffer_items[$k]->get_result_value() < $divide_value || $divide_value == -1)
+					foreach($keys as $k)
 					{
-						$divide_value = $this->test_result_buffer->buffer_items[$k]->get_result_value();
+						if($this->test_result_buffer->buffer_items[$k]->get_result_value() > $divide_value)
+						{
+							$divide_value = $this->test_result_buffer->buffer_items[$k]->get_result_value();
+						}
+					}
+				}
+				else // find the lowest value to use as divide value
+				{
+					foreach($keys as $k)
+					{
+						if($this->test_result_buffer->buffer_items[$k]->get_result_value() < $divide_value || $divide_value == -1)
+						{
+							$divide_value = $this->test_result_buffer->buffer_items[$k]->get_result_value();
+						}
 					}
 				}
 			}
