@@ -385,7 +385,7 @@ abstract class pts_graph_core
 	{
 		// See if the result identifier matches something to be color-coded better
 		$identifier = strtolower($identifier) . ' ';
-		if(strpos($identifier, 'geforce') !== false || strpos($identifier, 'nvidia') || strpos($identifier, 'quadro') !== false)
+		if(strpos($identifier, 'geforce') !== false || strpos($identifier, 'nvidia') !== false || strpos($identifier, 'quadro') !== false)
 		{
 			$paint_color = '#77b900';
 		}
@@ -404,6 +404,19 @@ abstract class pts_graph_core
 		else
 		{
 			$paint_color = $fallback_color;
+		}
+
+		if($paint_color != $fallback_color && strpos($identifier, ' - '))
+		{
+			// If there is " - " in string, darken the color... based upon idea when doing AMDGPU vs. Mesa vs. stock NVIDIA comparison for RX 480
+			$new_color = null;
+			foreach(str_split(str_replace('#', null, $paint_color), 2) as $color)
+			{
+				$dec = hexdec($color);
+				$dec = min(max(0, $dec * 0.7), 255);
+				$new_color .= str_pad(dechex($dec), 2, 0, STR_PAD_LEFT);
+			}
+			echo $paint_color = '#' . substr($new_color, 0, 6);
 		}
 
 		return $paint_color;
