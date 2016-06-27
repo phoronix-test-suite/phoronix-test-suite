@@ -416,7 +416,7 @@ abstract class pts_graph_core
 				$dec = min(max(0, $dec * 0.7), 255);
 				$new_color .= str_pad(dechex($dec), 2, 0, STR_PAD_LEFT);
 			}
-			echo $paint_color = '#' . substr($new_color, 0, 6);
+			$paint_color = '#' . substr($new_color, 0, 6);
 		}
 
 		return $paint_color;
