@@ -258,7 +258,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 				}
 				else if($total_loop_time == 'infinite')
 				{
-						$this->stress_print_and_log('Continuing to test indefinitely' . PHP_EOL);
+					//$this->stress_print_and_log('Continuing to test indefinitely' . PHP_EOL);
 				}
 				else
 				{
