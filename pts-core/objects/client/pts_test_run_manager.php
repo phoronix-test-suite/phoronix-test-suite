@@ -51,6 +51,7 @@ class pts_test_run_manager
 	protected $dynamic_run_count_std_deviation_threshold;
 	protected $dynamic_run_count_export_script;
 	protected $multi_test_stress_run = false;
+	protected $allow_test_cache_share = true;
 
 	protected static $test_run_process_active = false;
 	protected $batch_mode = false;
@@ -80,6 +81,10 @@ class pts_test_run_manager
 	public function do_dynamic_run_count()
 	{
 		return $this->do_dynamic_run_count;
+	}
+	public function allow_test_cache_share()
+	{
+		return $this->allow_test_cache_share;
 	}
 	public function disable_dynamic_run_count()
 	{

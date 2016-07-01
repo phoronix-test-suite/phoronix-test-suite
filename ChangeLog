@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Add OpenCV to external dependencies list
+- pts-core: Disable test cache share when run in stress-run mode
 - phoromatic: Allow custom versions to be manually specified on test suite web UI page
 - pts_Graph: Show min/max results on multi-way comparisons
 - pts_Graph: Color string tweaks

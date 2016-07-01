@@ -40,6 +40,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 
 		$continue_test_flag = true;
 		pts_client::$display->test_run_process_start($this);
+		$this->allow_test_cache_share = false;
 		$this->disable_dynamic_run_count();
 		$this->multi_test_stress_run = $tests_to_run_concurrently;
 		$possible_tests_to_run = $this->get_tests_to_run();

@@ -62,7 +62,7 @@ class pts_test_execution
 		$times_to_run = $test_run_request->test_profile->get_times_to_run();
 		$ignore_runs = $test_run_request->test_profile->get_runs_to_ignore();
 		$test_type = $test_run_request->test_profile->get_test_hardware_type();
-		$allow_cache_share = $test_run_request->test_profile->allow_cache_share();
+		$allow_cache_share = $test_run_request->test_profile->allow_cache_share() && $test_run_manager->allow_test_cache_share();
 		$min_length = $test_run_request->test_profile->get_min_length();
 		$max_length = $test_run_request->test_profile->get_max_length();
 
