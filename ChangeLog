@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 6.6.0 Milestone 1
+6 July 2016
 
 - pts-core: Add OpenCV to external dependencies list
 - pts-core: Disable test cache share when run in stress-run mode
