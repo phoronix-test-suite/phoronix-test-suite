@@ -30,7 +30,7 @@ div#pts_phoromatic_top_header
 	-moz-box-shadow: 1px 1px 2px #1F1F1F;
 	-webkit-box-shadow: 1px 1px 2px #1F1F1F;
 	display: table;
-	font-size: 1.5em;
+	font-size: 1.1em;
 	font-family: 'Quicksand', sans-serif !important;
 }
 div#pts_phoromatic_top_header_right
@@ -136,13 +136,14 @@ div#pts_phoromatic_top_header li
 {
 	text-transform: uppercase;
 	list-style-type: none;
-	padding: 0 20px 0 0;
+	padding: 0 40px 0 0;
 	text-align: center;
 	float: left;
 	position: relative;
 	vertical-align: top;
-	min-width: 200px;
+
 }
+
 div#pts_phoromatic_top_header:hover ul li > ul
 {
 	display: block;
@@ -241,6 +242,27 @@ div#pts_phoromatic_main_box_inside
 	box-shadow: 1px 1px 2px #1F1F1F;
 	-moz-box-shadow: 1px 1px 2px #1F1F1F;
 	-webkit-box-shadow: 1px 1px 2px #1F1F1F;
+}
+@media screen and (min-width:1700px){
+	div#pts_phoromatic_top_header li
+	{
+		text-transform: uppercase;
+		list-style-type: none;
+		padding: 0 40px 0 0;
+		text-align: center;
+		float: left;
+		position: relative;
+		vertical-align: top;
+		min-width:200px;
+	}
+
+}
+@media screen and (min-width:1000px){
+
+div#pts_phoromatic_main_box_inside{
+	width:70%;
+	padding: 10px 30px;
+}
 }
 div#pts_phoromatic_main
 {
@@ -427,6 +449,14 @@ div#pts_phoromatic_main_area div.pts_phoromatic_info_box_area ul a:hover li, div
 	text-decoration: none;
 	transition: all 0.4s;
 }
+.r_form_wrapper{
+	list-style-type: none;
+
+}
+.label_input_wrapper{
+		padding: 10px;
+		width:200px;
+}
 input[type=submit]
 {
 	font-weight: 500;
@@ -436,9 +466,10 @@ input, select, textarea, checkbox, button
 	border: solid #1f1f1f 1px;
 	background-color: #E0E0E0;
 	color: #1F1F1F;
-	padding: 2px 4px;
+	padding: 5px 10px;
 	border-radius: 6px;
 	transition: all 0.3s;
+	line-height:1.8;
 }
 textarea
 {
@@ -658,6 +689,11 @@ div#pts_results_area svg
 	{
 		margin: 10px 0;
 	}
+	.img_logo_pg{
+	max-width:200px;
+
+	}
+
 }
 
 @media screen and (max-width: 720px) {
@@ -671,11 +707,15 @@ div#pts_results_area svg
 	{
 		display: table-row;
 	}
+	.img_logo_pg{
+	max-width:200px;
+
+	}
 	div#pts_phoromatic_top_header li
 	{
 		text-align: center;
 		float: none;
-		width: 40%;
+		width: 70%;
 	}
 	div#pts_phoromatic_top_header ul
 	{

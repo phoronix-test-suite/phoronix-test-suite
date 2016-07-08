@@ -170,9 +170,19 @@ class phoromatic_welcome implements pts_webui_interface
 			<hr />
 			<h1>Log-In</h1>
 			<form name="login_form" id="login_form" action="?login" method="post" onsubmit="return phoromatic_login(this);">
-			<p><div style="width: 200px; font-weight: 500; float: left;">User:</div> <input type="text" name="username" /></p>
-			<p><div style="width: 200px; font-weight: 500; float: left;">Password:</div> <input type="password" name="password" /></p>
-			<p><div style="width: 200px; font-weight: 500; float: left;">&nbsp;</div> <input type="submit" value="Submit" /></p>
+			<ul class="r_form_wrapper">
+				<li class="label_input_wrapper">
+					<label for="u_username">Username</label>
+					<input type="text" name="username" id="u_username" required/>
+				</li>
+				<li class="label_input_wrapper">
+					<label for="u_password">Username</label>
+					<input type="password" name="password" id="u_password" required/>
+				</li>
+				<li class="label_input_wrapper">
+					<input type="submit" value="Submit" />
+				</li>
+				</ul>
 			</form>
 			<hr />
 			<h1>Register</h1>';
@@ -189,26 +199,32 @@ class phoromatic_welcome implements pts_webui_interface
 
 					$box .= '<form name="register_form" id="register_form" action="?register" method="post" onsubmit="return phoromatic_initial_registration(this);">
 
-					<div style="clear: both; font-weight: 500;">
-					<div style="float: left; width: 25%;">Username</div>
-					<div style="float: left; width: 25%;">Password</div>
-					<div style="float: left; width: 25%;">Confirm Password</div>
-					<div style="float: left; width: 25%;">Email Address</div>
-					</div>
+					<ul class="r_form_wrapper">
+						<li class="label_input_wrapper">
+							<label for="r_username">Username</label>
+							<input type="hidden" name="seed_accountid" value="' . (isset($_GET['seed_accountid']) ? $_GET['seed_accountid'] : null) . '" />
+							<input type="text" name="register_username" id="r_username" required/>
+						</li>
+						<li class="label_input_wrapper">
+							<label for="r_password">Password</label>
+							<input type="password" name="register_password" id="r_password" required/>
+						</li>
+						<li class="label_input_wrapper">
+							<label for="c_password">Confirm Password</label>
+							<input type="password" name="register_password_confirm" id="c_password" required/>
+						</li>
+						<li class="label_input_wrapper">
+							<label for="r_email">Email Address</label>
+							<input type="email" name="register_email" id="r_email" required/>
+						</li>
+						<li class="label_input_wrapper">
+							<input type="submit" value="Create Account" />
+						</li>
 
-					<div style="clear: both;">
-					<div style="float: left; width: 25%;"><input type="hidden" name="seed_accountid" value="' . (isset($_GET['seed_accountid']) ? $_GET['seed_accountid'] : null) . '" /><input type="text" name="register_username" /> <sup>1</sup></div>
-					<div style="float: left; width: 25%;"><input type="password" name="register_password" /> <sup>2</sup></div>
-					<div style="float: left; width: 25%;"><input type="password" name="register_password_confirm" /></div>
-					<div style="float: left; width: 25%;"><input type="text" name="register_email" /> <sup>3</sup><br /><br /><input type="submit" value="Create Account" /></div>
-					</div>
+					</ul>
 
 					</form>';
 
-					$box .= '<p style="font-size: 11px;"><sup>1</sup> Usernames shall be at least four characters long, not contain any spaces, and only be composed of normal ASCII characters.<br />
-						<sup>2</sup> Passwords shall be at least six characters long.<br />
-						<sup>3</sup> A valid email address is required for notifications, password reset, and other verification purposes.<br />
-						</p>';
 			}
 			$box .= '<hr />
 			<h1>View Public Results</h1>

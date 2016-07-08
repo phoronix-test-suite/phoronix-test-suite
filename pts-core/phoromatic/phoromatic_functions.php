@@ -151,13 +151,14 @@ function phoromatic_compute_estimated_time_remaining($estimated_minutes, $last_c
 }
 function phoromatic_webui_header($left_items, $right = null)
 {
-	$ret = PHP_EOL . '<div id="pts_phoromatic_top_header"><ul>
-	<li><a href="?"><img style="vertical-align: middle;" src="images/phoromatic_logo.png" /></a>';
+	$ret = PHP_EOL . '<div id="pts_phoromatic_top_header">
+	<ul>
+	<li><a href="?"><img style="vertical-align: middle;" class="img_logo_pg" src="images/phoromatic_logo.png" /></a>';
 
 	if(isset($_SESSION['AdminLevel']) &&$_SESSION['AdminLevel'] > 0 && isset($_SESSION['AccountID']) && !empty($_SESSION['AccountID']))
 	{
 		$ret .= '<ul id="pts_phoromatic_info">';
-		$ret .= '<li><a href="#">' . date('H:i T - j F') . '</a></li>';
+		$ret .= '<li><a class="ph_date" href="#">' . date('H:i T - j F') . '</a></li>';
 		$group_name = phoromatic_account_id_to_group_name($_SESSION['AccountID']);
 		if($group_name != null)
 		{
