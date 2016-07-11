@@ -862,6 +862,16 @@ class pts_test_result_parser
 				// Expand validity checking here
 				if($is_numeric_check == true && is_numeric($test_result) == false)
 				{
+					// E.g. if output time as 06:12.32 (as in blender)
+					if(substr_count($test_result, ':') == 1 && substr_count($test_result, '.') == 1 && strpos($test_result, '.') > strpos($test_result, ':'))
+					{
+						$minutes = substr($test_result, 0, strpos($test_result, ':'));
+						$seconds = ' ' . substr($test_result, strpos($test_result, ':') + 1);
+						$test_result = ($minutes * 60) + $seconds;
+					}
+				}
+				if($is_numeric_check == true && is_numeric($test_result) == false)
+				{
 					unset($test_results[$x]);
 					continue;
 				}
