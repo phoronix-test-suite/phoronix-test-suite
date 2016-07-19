@@ -107,7 +107,7 @@ class pts_result_file_output
 			}
 			else
 			{
-				$csv_output .= '"' . $result_object->test_profile->get_identifier() . ' - ' . $result_object->get_arguments_description() . '"';
+				$csv_output .= '"' . $result_object->test_profile->get_identifier() . ' - ' . $result_object->get_arguments() . '"';
 			}
 
 			foreach($columns as $column)
