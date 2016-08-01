@@ -50,11 +50,6 @@ class upload_test_suite implements pts_option_interface
 					return false;
 				}
 
-				$zip = new ZipArchive();
-				$zip->open($zip_file);
-				$zip->renameName(basename($test_suite->get_file_location()), 'suite-definition.xml');
-				$zip->close();
-
 				$commit_description = pts_user_io::prompt_user_input('Enter a test commit description', false);
 
 				echo PHP_EOL;
