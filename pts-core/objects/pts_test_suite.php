@@ -152,7 +152,7 @@ class pts_test_suite
 					{
 						if($override_options != null)
 						{
-							$test_profile->set_override_values($override_options);
+							$obj->set_override_values($override_options);
 						}
 
 						$this->add_to_suite($obj, $option_output[0][$x], $option_output[1][$x]);

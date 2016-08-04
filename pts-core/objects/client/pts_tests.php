@@ -58,6 +58,16 @@ class pts_tests
 
 		return $local_tests;
 	}
+	public static function local_suites()
+	{
+		$local_suites = array();
+		foreach(pts_file_io::glob(PTS_TEST_SUITE_PATH . 'local/*/suite-definition.xml') as $path)
+		{
+			$local_suites[] = 'local/' . basename(dirname($path));
+		}
+
+		return $local_suites;
+	}
 	public static function scan_for_error($log_file, $strip_string)
 	{
 		$error = null;
