@@ -48,6 +48,16 @@ class pts_tests
 
 		return $cleaned_tests;
 	}
+	public static function local_tests()
+	{
+		$local_tests = array();
+		foreach(pts_file_io::glob(PTS_TEST_PROFILE_PATH . 'local/*/test-definition.xml') as $path)
+		{
+			$local_tests[] = 'local/' . basename(dirname($path));
+		}
+
+		return $local_tests;
+	}
 	public static function scan_for_error($log_file, $strip_string)
 	{
 		$error = null;

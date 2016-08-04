@@ -49,9 +49,9 @@ class list_available_tests implements pts_option_interface
 			$test_count++;
 		}
 
-		foreach(pts_file_io::glob(PTS_TEST_PROFILE_PATH . 'local/*/test-definition.xml') as $path)
+		foreach(pts_tests::local_tests() as $identifier)
 		{
-			$test_profile = new pts_test_profile('local/' . basename(dirname($path)));
+			$test_profile = new pts_test_profile($identifier);
 
 			if($test_profile->get_title() != null && $test_profile->is_supported(false))
 			{
