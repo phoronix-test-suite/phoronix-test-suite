@@ -6,6 +6,7 @@ Phoronix Test Suite (Git)
 - pts-core: Fix for upload-test-suite (on OpenBenchmarking.org side too)
 - pts-core: Show local suites in list-suites
 - pts-core: Ensure DragonFlyBSD pkg installation is done automatically
+- pts-core: Restructure bash on windows check
 - phoromatic: Web UI styling improvements
 - phodevi: Show mdstat RAID Details when available
 - pts_Graph: Show extra disk details on system graph
