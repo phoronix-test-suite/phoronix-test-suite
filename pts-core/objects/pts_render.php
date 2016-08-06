@@ -327,6 +327,10 @@ class pts_render
 			if(isset($json['disk-scheduler']) && isset($json['disk-mount-options']))
 			{
 				$system_attributes['Disk'][$identifier] = $json['disk-scheduler'] . ' / ' . $json['disk-mount-options'];
+				if(isset($json['disk-details']) && !empty($json['disk-details']))
+				{
+					$system_attributes['Disk'][$identifier] .= ' / ' . $json['disk-details'];
+				}
 			}
 			if(isset($json['cpu-scaling-governor']))
 			{

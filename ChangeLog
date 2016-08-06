@@ -4,6 +4,8 @@ Phoronix Test Suite (Git)
 
 - deploy: Update Debian packaging script
 - pts-core: Fix for upload-test-suite (on OpenBenchmarking.org side too)
+- pts-core: Show local suites in list-suites
+- pts_Graph: Show extra disk details on system graph
 
 Phoronix Test Suite 6.6.0 Milestone 1
 6 July 2016
