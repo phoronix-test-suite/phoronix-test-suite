@@ -394,6 +394,17 @@ class phodevi_disk extends phodevi_device_interface
 				}
 			}
 		}
+		if($extra_details == null && strpos($device['device'], '/dev/md') !== false && is_file('/proc/mdstat'))
+		{
+			// Show mdstat details
+			$md = strstr(file_get_contents('/proc/mdstat'), basename($device['device']));
+			$md = substr($md, 0, strpos($md, PHP_EOL));
+			if(($x = strpos($md, 'active')) !== false)
+			{
+				$extra_details = trim(substr($md, $x + 7));
+			}
+		}
+
 
 		return $extra_details;
 	}
