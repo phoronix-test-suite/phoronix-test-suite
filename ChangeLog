@@ -5,6 +5,8 @@ Phoronix Test Suite (Git)
 - deploy: Update Debian packaging script
 - pts-core: Fix for upload-test-suite (on OpenBenchmarking.org side too)
 - pts-core: Show local suites in list-suites
+- pts-core: Ensure DragonFlyBSD pkg installation is done automatically
+- phoromatic: Web UI styling improvements
 - phodevi: Show mdstat RAID Details when available
 - pts_Graph: Show extra disk details on system graph
 
