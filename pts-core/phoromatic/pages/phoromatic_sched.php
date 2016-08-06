@@ -154,15 +154,15 @@ class phoromatic_sched implements pts_webui_interface
 		<p>A test schedule is used to facilitate automatically running a set of test(s)/suite(s) on either a routine timed basis or whenever triggered by an external script or process, e.g. Git/VCS commit, manually triggered, etc.</p>';
 
 		$main .= '<form action="' . $_SERVER['REQUEST_URI'] . '" name="add_test" id="add_test" method="post" enctype="multipart/form-data" onsubmit="return validate_schedule();">
-		<h3>Title:</h3>
+		<h3>Title:<span style="color:red;">*</span></h3>
 		<p><input type="text" name="schedule_title" value="' . (!$is_new ? $e_schedule['Title'] : null) . '" /></p>
-		<h3><sup>1</sup> Pre-Install Set Context Script:</h3>
+		<h3>Pre-Install Set Context Script: <span style="font-size:12px;">(optional)</span></h3>
 		<p><input type="file" name="pre_install_set_context" /></p>
-		<h3><sup>1</sup> Post-Install Set Context Script:</h3>
+		<h3>Post-Install Set Context Script: <span style="font-size:12px;">(optional)</span></h3>
 		<p><input type="file" name="post_install_set_context" /></p>
-		<h3><sup>1</sup> Pre-Run Set Context Script:</h3>
+		<h3>Pre-Run Set Context Script: <span style="font-size:12px;">(optional)</span></h3>
 		<p><input type="file" name="pre_run_set_context" /></p>
-		<h3><sup>1</sup>Post-Run Set Context Script:</h3>
+		<h3>Post-Run Set Context Script: <span style="font-size:12px;">(optional)</span></h3>
 		<p><input type="file" name="post_run_set_context" /></p>
 		<h3>System Targets:</h3>
 		<p>';
@@ -205,7 +205,7 @@ class phoromatic_sched implements pts_webui_interface
 		}
 
 		$main .= '</p>
-		<h3>Description:</h3>
+		<h3>Description:<span style="color:red;">*</span></h3>
 		<p><textarea name="schedule_description" id="schedule_description" cols="50" rows="3">' . (!$is_new ? $e_schedule['Description'] : null) . '</textarea></p>
 		<table class="pts_phoromatic_schedule_type">
 <tr>
@@ -252,7 +252,7 @@ class phoromatic_sched implements pts_webui_interface
 </tr>
 </table>
 
-			<p><sup>1</sup> <em>Indicates optional field.</em></p>
+		
 			<p align="right"><input name="submit" value="' . ($is_new ? 'Create' : 'Edit') . ' Schedule" type="submit" onclick="return pts_rmm_validate_schedule();" /></p>
 			</form>';
 			echo phoromatic_webui_main($main);

@@ -697,6 +697,22 @@ div#pts_results_area svg
 }
 
 @media screen and (max-width: 720px) {
+	div#pts_phoromatic_top_header ul li > ul
+	{
+		display: none;
+	}
+	div#pts_phoromatic_top_header ul li:nth-child(even)
+	{
+		background-color: #fff;
+		color:#666;
+	}
+
+
+	div#pts_phoromatic_top_header:active ul li > ul
+	{
+		display: block;
+
+	}
 	div#pts_results_area svg
 	{
 		min-width: 300px;
