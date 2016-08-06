@@ -92,7 +92,7 @@ class graphics_event_checker extends pts_module_interface
 		// vblank_mode=0 has long been set within pts-core, but put it here too just since there's these other checks here
 		putenv('vblank_mode=0');
 	}
-	public static function __post_test_run(&$test_result)
+	public static function __post_test_run($test_result)
 	{
 		if($test_result->test_profile->get_test_hardware_type() != 'Graphics')
 		{
