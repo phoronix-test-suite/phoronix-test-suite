@@ -128,7 +128,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	public function test_install_start($identifier)
 	{
 		$this->test_install_pos++;
-		echo $this->tab . $identifier . ':' . PHP_EOL;
+		echo $this->tab . pts_client::cli_colored_text($identifier, 'cyan') . ':' . PHP_EOL;
 		echo $this->tab . $this->tab . 'Test Installation ' . $this->test_install_pos . ' of ' . $this->test_install_count . PHP_EOL;
 	}
 	public function test_install_downloads($test_install_request)
@@ -220,7 +220,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 
 		$terminal_width = pts_client::terminal_width() > 1 ? pts_client::terminal_width() : $terminal_width;
 		$text_width = $terminal_width - (strlen($this->tab) * 3);
-		echo PHP_EOL . $this->tab . $this->tab . wordwrap('[NOTICE] ' . $message, $text_width, PHP_EOL . $this->tab . $this->tab) . PHP_EOL;
+		echo PHP_EOL . $this->tab . $this->tab . pts_client::cli_colored_text(wordwrap('[NOTICE] ' . $message, $text_width, PHP_EOL . $this->tab . $this->tab), 'gray') . PHP_EOL;
 	}
 	public function test_install_progress_start($process)
 	{
@@ -415,7 +415,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 				$end_print .= $this->tab . $this->tab . $result . PHP_EOL;
 			}
 
-			$end_print .= PHP_EOL . $this->tab . pts_strings::result_quantifier_to_string($test_result->test_profile->get_result_quantifier()) . ': ' . $test_result->active->get_result() . ' ' . $test_result->test_profile->get_result_scale();
+			$end_print .= PHP_EOL . $this->tab . pts_client::cli_colored_text(pts_strings::result_quantifier_to_string($test_result->test_profile->get_result_quantifier()) . ': ' . $test_result->active->get_result() . ' ' . $test_result->test_profile->get_result_scale(), 'green');
 
 			if($test_result->active->get_min_result())
 			{
