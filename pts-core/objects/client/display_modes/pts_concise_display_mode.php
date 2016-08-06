@@ -415,7 +415,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 				$end_print .= $this->tab . $this->tab . $result . PHP_EOL;
 			}
 
-			$end_print .= PHP_EOL . $this->tab . pts_client::cli_colored_text(pts_strings::result_quantifier_to_string($test_result->test_profile->get_result_quantifier()) . ': ' . $test_result->active->get_result() . ' ' . $test_result->test_profile->get_result_scale(), 'green');
+			$end_print .= PHP_EOL . $this->tab . pts_strings::result_quantifier_to_string($test_result->test_profile->get_result_quantifier()) . ': ' . pts_client::cli_colored_text($test_result->active->get_result() . ' ' . $test_result->test_profile->get_result_scale(), 'green');
 
 			if($test_result->active->get_min_result())
 			{
