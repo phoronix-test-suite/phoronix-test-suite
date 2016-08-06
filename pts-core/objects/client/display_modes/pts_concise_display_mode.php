@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2015, Phoronix Media
-	Copyright (C) 2009 - 2015, Michael Larabel
+	Copyright (C) 2009 - 2016, Phoronix Media
+	Copyright (C) 2009 - 2016, Michael Larabel
 	pts_concise_display_mode.php: The batch / concise display mode
 
 	This program is free software; you can redistribute it and/or modify
@@ -275,7 +275,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	}
 	public function test_install_error($error_string)
 	{
-		echo $this->tab . $this->tab . $this->tab . $error_string . PHP_EOL;
+		echo $this->tab . $this->tab . $this->tab . pts_client::cli_colored_text($error_string, 'red') . PHP_EOL;
 	}
 	public function test_install_prompt($prompt_string)
 	{
@@ -294,14 +294,14 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	}
 	public function test_run_start(&$test_run_manager, &$test_result)
 	{
-		echo PHP_EOL . PHP_EOL . $test_result->test_profile->get_title() . ($test_result->test_profile->get_app_version() != null ? ' ' . $test_result->test_profile->get_app_version() : null) . ':' . PHP_EOL . $this->tab . $test_result->test_profile->get_identifier();
+		$test_title_string = $test_result->test_profile->get_title() . ($test_result->test_profile->get_app_version() != null ? ' ' . $test_result->test_profile->get_app_version() : null) . ':' . PHP_EOL . $this->tab . $test_result->test_profile->get_identifier();
 
 		if(($test_description = $test_result->get_arguments_description()) != false)
 		{
-			echo ' [' . pts_client::swap_variables($test_description, array('pts_client', 'environmental_variables')) . ']';
+			$test_title_string .= ' [' . pts_client::swap_variables($test_description, array('pts_client', 'environmental_variables')) . ']';
 		}
 
-		echo PHP_EOL;
+		echo PHP_EOL . PHP_EOL . pts_client::cli_colored_text($test_title_string, 'cyan') . PHP_EOL;
 		echo $this->tab . 'Test ' . $test_run_manager->get_test_run_position() . ' of ' . $test_run_manager->get_test_run_count_reported() . PHP_EOL;
 
 		$this->trial_run_count_current = 0;
@@ -347,7 +347,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	}
 	public function test_run_instance_error($error_string)
 	{
-		echo PHP_EOL . $this->tab . $this->tab . $error_string;
+		echo PHP_EOL . $this->tab . $this->tab . pts_client::cli_colored_text($error_string, 'red');
 	}
 	public function test_run_instance_output(&$to_output)
 	{
@@ -438,7 +438,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	}
 	public function test_run_error($error_string)
 	{
-		echo $this->tab . $this->tab . $error_string . PHP_EOL;
+		echo $this->tab . $this->tab . pts_client::cli_colored_text($error_string, 'red') . PHP_EOL;
 	}
 	public function generic_prompt($prompt_string)
 	{
@@ -460,7 +460,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 			foreach(pts_strings::trim_explode(PHP_EOL, $string) as $line_count => $line_string)
 			{
 				// ($line_count > 0 ? $this->tab : null) . 
-				echo $line_string . PHP_EOL;
+				echo pts_client::cli_colored_text($line_string, 'green') . PHP_EOL;
 			}
 
 			if($ending_line_break)
@@ -484,30 +484,30 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	}
 	public function triggered_system_error($level, $message, $file, $line)
 	{
-		echo PHP_EOL . '[' . $level . '] ';
+		$error_msg = PHP_EOL . '[' . $level . '] ';
 		if(strpos($message, PHP_EOL) === false)
 		{
-			echo $message . ' ';
+			$error_msg .= $message . ' ';
 		}
 		else
 		{
 			foreach(pts_strings::trim_explode(PHP_EOL, $message) as $line_count => $line_string)
 			{
 				// ($line_count > 0 ? $this->tab : null)
-				echo $line_string . PHP_EOL . str_repeat(' ', strlen($level) + 3);
+				$error_msg .= $line_string . PHP_EOL . str_repeat(' ', strlen($level) + 3);
 			}
 		}
 
 		if($file != null)
 		{
-			echo 'in ' . basename($file, '.php');
+			$error_msg .= 'in ' . basename($file, '.php');
 		}
 		if($line != 0)
 		{
-			echo  ':' . $line;
+			$error_msg .= ':' . $line;
 		}
 
-		echo PHP_EOL;
+		echo pts_client::cli_colored_text($error_msg, 'red') . PHP_EOL;
 	}
 	public function get_tab()
 	{

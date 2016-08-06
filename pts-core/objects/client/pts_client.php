@@ -278,6 +278,33 @@ class pts_client
 
 		return $runtime_variables;
 	}
+	public static function supports_colored_text_output()
+	{
+		return function_exists('posix_isatty') && posix_isatty(STDOUT);
+	}
+	public static function cli_colored_text($str, $color)
+	{
+		if(!self::supports_colored_text_output())
+		{
+			return $str;
+		}
+
+		$colors = array(
+			'black' => '0;30',
+			'gray' => '1;30',
+			'blue' => '0;34',
+			'green' => '0;32',
+			'red' => '0;31',
+			'cyan' => '0;36',
+			);
+
+		if(!isset($colors[$color]))
+		{
+			return $str;
+		}
+
+		return "\033[" . $colors[$color] . 'm' . $str . "\033[0m";
+	}
 	public static function save_test_result($save_to = null, $save_results = null, $render_graphs = true, $result_identifier = null)
 	{
 		// Saves PTS result file
