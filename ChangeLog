@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 6.6.0 Milestone 2
+7 August 2016
 
 - deploy: Update Debian packaging script
 - pts-core: Fix for upload-test-suite (on OpenBenchmarking.org side too)
