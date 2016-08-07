@@ -280,7 +280,7 @@ class pts_client
 	}
 	public static function supports_colored_text_output()
 	{
-		return function_exists('posix_isatty') && posix_isatty(STDOUT);
+		return (function_exists('posix_isatty') && posix_isatty(STDOUT)) || (PTS_IS_CLIENT && getenv('LS_COLORS'));
 	}
 	public static function cli_colored_text($str, $color)
 	{
