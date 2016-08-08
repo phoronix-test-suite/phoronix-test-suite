@@ -1064,7 +1064,7 @@ class phoromatic extends pts_module_interface
 			$last_update_time = time();
 		}
 	}
-	public static function __pre_test_run(&$pts_test_result)
+	public static function __pre_test_run($pts_test_result)
 	{
 		if(!self::$is_running_as_phoromatic_node)
 		{
