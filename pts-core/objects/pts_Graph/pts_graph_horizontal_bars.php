@@ -142,7 +142,7 @@ class pts_graph_horizontal_bars extends pts_graph_core
 					}
 				}
 
-				$this->svg_dom->add_element('rect', array('x' => $bar_x, 'y' => $px_bound_top + 0.5, 'height' => $bar_height, 'width' => $graph_size, 'fill' => (in_array($buffer_item->get_result_identifier(), $this->value_highlights) ? self::$c['color']['highlight'] : $paint_color), 'xlink:title' => $title_tooltip), $g_bars);
+				$this->svg_dom->add_element('rect', array('x' => $bar_x, 'y' => $px_bound_top + 0.5, 'height' => $bar_height, 'width' => $graph_size, 'fill' => (in_array($buffer_item->get_result_identifier(), $this->value_highlights) ? $this->darken_color($paint_color) : $paint_color), 'xlink:title' => $title_tooltip), $g_bars);
 
 				if($std_error != -1 && $value != null)
 				{

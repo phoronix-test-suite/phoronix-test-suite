@@ -409,14 +409,7 @@ abstract class pts_graph_core
 		if($paint_color != $fallback_color && strpos($identifier, ' - '))
 		{
 			// If there is " - " in string, darken the color... based upon idea when doing AMDGPU vs. Mesa vs. stock NVIDIA comparison for RX 480
-			$new_color = null;
-			foreach(str_split(str_replace('#', null, $paint_color), 2) as $color)
-			{
-				$dec = hexdec($color);
-				$dec = min(max(0, $dec * 0.7), 255);
-				$new_color .= str_pad(dechex($dec), 2, 0, STR_PAD_LEFT);
-			}
-			$paint_color = '#' . substr($new_color, 0, 6);
+			$paint_color = $this->darken_color($paint_color);
 		}
 
 		return $paint_color;
@@ -425,7 +418,17 @@ abstract class pts_graph_core
 	//
 	// Render Functions
 	//
-
+	public function darken_color(&$paint_color)
+	{
+		$new_color = null;
+		foreach(str_split(str_replace('#', null, $paint_color), 2) as $color)
+		{
+			$dec = hexdec($color);
+			$dec = min(max(0, $dec * 0.7), 255);
+			$new_color .= str_pad(dechex($dec), 2, 0, STR_PAD_LEFT);
+		}
+		return '#' . substr($new_color, 0, 6);
+	}
 	public function renderGraph()
 	{
 		$this->render_graph_start();

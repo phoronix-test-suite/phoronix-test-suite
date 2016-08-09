@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- pts_Graph: When highlighting graph values, darken the color rather than use static color
+
 Phoronix Test Suite 6.6.0 Milestone 2
 7 August 2016
 

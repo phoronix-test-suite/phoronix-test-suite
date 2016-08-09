@@ -106,7 +106,7 @@ class pts_graph_box_plot extends pts_graph_horizontal_bars
 					$box_color = $paint_color;
 				}
 
-				$box_color = in_array($buffer_item->get_result_identifier(), $this->value_highlights) ? self::$c['color']['highlight'] : $box_color;
+				$box_color = in_array($buffer_item->get_result_identifier(), $this->value_highlights) ? $this->darken_color($box_color) : $box_color;
 
 				$this->svg_dom->draw_svg_line($value_end_left, $middle_of_bar, $value_end_right, $middle_of_bar, $box_color, 2, array('xlink:title' => $title_tooltip));
 				$this->svg_dom->draw_svg_line($value_end_left, $px_bound_top, $value_end_left, $px_bound_bottom, self::$c['color']['notches'], 2, array('xlink:title' => $title_tooltip));
