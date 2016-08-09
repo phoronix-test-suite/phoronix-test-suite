@@ -92,7 +92,11 @@ class pts_svg_dom_gd
 				'/usr/local/lib/X11/fonts/bitstream-vera/Vera.ttf',
 				'/usr/share/fonts/aajohan-comfortaa/Comfortaa-Regular.ttf',
 				'/Library/Fonts/Courier New.ttf',
-				'/Library/Fonts/Trebuchet MS.ttf'
+				'/Library/Fonts/Trebuchet MS.ttf',
+				'/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf',
+				'/usr/share/fonts/truetype/ttf-bitstream-vera/Vera.ttf',
+				'/usr/share/fonts/truetype/freefont/FreeSans.ttf',
+				'/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf',
 				);
 
 				foreach($possible_fonts as $font_file)
