@@ -47,7 +47,7 @@
 		</Package>
 		<Package>
 			<GenericName>libpng-development</GenericName>
-			<PackageName>libpng12-dev</PackageName>
+			<PackageName>libpng-dev</PackageName>
 		</Package>
 		<Package>
 			<GenericName>openssl-development</GenericName>
