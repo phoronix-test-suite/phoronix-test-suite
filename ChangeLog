@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+- html_results_export: New module exposed via EXPORT_RESULTS_HTML_EMAIL_TO and EXPORT_RESULTS_HTML_FILE_TO env vars for exporting HTML results
 - pts_Graph: When highlighting graph values, darken the color rather than use static color
 
 Phoronix Test Suite 6.6.0 Milestone 2

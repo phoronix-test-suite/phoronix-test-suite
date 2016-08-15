@@ -401,6 +401,10 @@ abstract class pts_graph_core
 		{
 			$paint_color = '#850000';
 		}
+		else if(strpos($identifier, 'windows ') !== false)
+		{
+			$paint_color = '#0078d7';
+		}
 		else
 		{
 			$paint_color = $fallback_color;
