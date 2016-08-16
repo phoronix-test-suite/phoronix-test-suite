@@ -428,10 +428,10 @@ class system_monitor extends pts_module_interface
 
 		if(count(self::$to_monitor) == 0)
 		{
-			throw new Exception('nothing to monitor');
+			throw new Exception('No Supported Sensors Selected To Monitor');
+			sleep(2);
 		}
 	}
-
 	private static function create_sensor_instances(&$sensor, &$sensor_parameters, $create_all)
 	{
 		if($create_all)
