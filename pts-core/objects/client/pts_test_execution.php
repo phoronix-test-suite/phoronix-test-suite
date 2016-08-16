@@ -572,7 +572,7 @@ class pts_test_execution
 
 		// Remove lock
 		pts_client::release_lock($lock_file);
-		return $active_result_buffer;
+		return true;
 	}
 }
 

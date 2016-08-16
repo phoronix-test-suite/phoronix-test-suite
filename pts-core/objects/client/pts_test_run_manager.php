@@ -630,7 +630,7 @@ class pts_test_run_manager
 			return;
 		}
 
-		$active_result_buffer = pts_test_execution::run_test($this, $test_run_request);
+		pts_test_execution::run_test($this, $test_run_request);
 
 		if(pts_file_io::unlink(PTS_USER_PATH . 'halt-testing'))
 		{
@@ -667,7 +667,7 @@ class pts_test_run_manager
 				if(!empty($test_identifier))
 				{
 					$test_run_request->test_result_buffer = new pts_test_result_buffer();
-					$test_run_request->test_result_buffer->add_test_result($this->results_identifier, $test_run_request->active->get_result(), $active_result_buffer->get_values_as_string(), self::process_json_report_attributes($test_run_request), $test_run_request->active->get_min_result(), $test_run_request->active->get_max_result());
+					$test_run_request->test_result_buffer->add_test_result($this->results_identifier, $test_run_request->active->get_result(), $test_run_request->active->get_values_as_string(), self::process_json_report_attributes($test_run_request), $test_run_request->active->get_min_result(), $test_run_request->active->get_max_result());
 					$this->result_file->add_result($test_run_request);
 
 					if($test_run_request->secondary_linked_results != null && is_array($test_run_request->secondary_linked_results))
