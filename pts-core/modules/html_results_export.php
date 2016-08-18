@@ -89,8 +89,27 @@ class html_results_export extends pts_module_interface
 
 		if(!empty($emails))
 		{
+			$pdf_contents = pts_result_file_output::result_file_to_pdf($test_run_manager->result_file, 'pts-test-results.pdf', 'S');
+			$pdf_contents = chunk_split(base64_encode($pdf_contents));
+
 			foreach($emails as $email)
 			{
+
+				$boundary = md5(uniqid(time()));
+				$headers = "MIME-Version: 1.0\r\n";
+				$headers .= "Content-Type: multipart/mixed; boundary=\"" . $boundary . "\"\r\n\r\n";
+				$headers .= "PDF results attached.\r\n";
+				$headers .= "--" . $boundary . "\r\n";
+				$headers .= "Content-Type: text/html; charset=utf-8\r\n";
+				$headers .= "Content-Transfer-Encoding: 7bit\r\n\r\n";
+				$headers .= $html_contents . "\r\n\r\n";
+				$headers .= "--" . $boundary . "\r\n";
+				$headers .= "Content-Type: application/pdf; name=\"pts-test-results.pdf\"\r\n";
+				$headers .= "Content-Transfer-Encoding: base64\r\n";
+				$headers .= "Content-Disposition: attachment; filename=\"pts-test-results.pdf\"\r\n\r\n";
+				$headers .= $pdf_contents . "\r\n\r\n";
+				$headers .= "--" . $boundary . "--";
+
 				$headers = "MIME-Version: 1.0\r\n";
 				$headers .= "Content-type:text/html;charset=UTF-8\r\n";
 				$headers .= "From: Phoromatic - Phoronix Test Suite <no-reply@phoromatic.com>\r\n";
