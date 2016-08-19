@@ -96,9 +96,10 @@ class html_results_export extends pts_module_interface
 			{
 
 				$boundary = md5(uniqid(time()));
-				$headers = "MIME-Version: 1.0\r\n";
+				$headers = "From: Phoromatic - Phoronix Test Suite <no-reply@phoromatic.com>\r\n";
+				$headers .= "MIME-Version: 1.0\r\n";
 				$headers .= "Content-Type: multipart/mixed; boundary=\"" . $boundary . "\"\r\n\r\n";
-				$headers .= "PDF results attached.\r\n";
+				$headers .= "This is a multi-part message in MIME format.\r\n";
 				$headers .= "--" . $boundary . "\r\n";
 				$headers .= "Content-Type: text/html; charset=utf-8\r\n";
 				$headers .= "Content-Transfer-Encoding: 7bit\r\n\r\n";
@@ -110,10 +111,7 @@ class html_results_export extends pts_module_interface
 				$headers .= $pdf_contents . "\r\n\r\n";
 				$headers .= "--" . $boundary . "--";
 
-				$headers = "MIME-Version: 1.0\r\n";
-				$headers .= "Content-type:text/html;charset=UTF-8\r\n";
-				$headers .= "From: Phoromatic - Phoronix Test Suite <no-reply@phoromatic.com>\r\n";
-				mail($email, 'Phoronix Test Suite Result File: ' . $test_run_manager->result_file->get_title(), $html_contents, $headers);
+				mail($email, 'Phoronix Test Suite Result File: ' . $test_run_manager->result_file->get_title(), 'Phoronix Test Suite Test Results', $headers);
 				echo 'HTML Results Emailed To: ' . $email . PHP_EOL;
 			}
 		}
