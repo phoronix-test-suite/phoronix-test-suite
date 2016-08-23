@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Add OpenMandriva/urpmi PHP dependency helper to launcher
+- pts-core: After running tests, if no browser/display is available, offer to show results via CLI graph/text rendering
 - html_results_export: New module exposed via EXPORT_RESULTS_HTML_EMAIL_TO and EXPORT_RESULTS_HTML_FILE_TO env vars for exporting HTML results
 - pts_Graph: When highlighting graph values, darken the color rather than use static color
 

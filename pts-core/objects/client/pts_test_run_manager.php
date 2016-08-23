@@ -964,7 +964,18 @@ class pts_test_run_manager
 				}
 				else
 				{
-					pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . '/index.html', null, true, false);
+					if((pts_client::read_env('DISPLAY') == false && pts_client::read_env('WAYLAND_DISPLAY') == false) && !defined('PHOROMATIC_PROCESS'))
+					{
+						$txt_results = pts_user_io::prompt_bool_input('Do you want to view the text results of the testing', false);
+						if($txt_results)
+						{
+							echo pts_result_file_output::result_file_to_text($this->result_file, pts_client::terminal_width());
+						}
+					}
+					else
+					{
+						pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . '/index.html', null, true, false);
+					}
 				}
 			}
 
