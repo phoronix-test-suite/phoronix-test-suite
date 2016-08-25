@@ -33,7 +33,7 @@ class pts_render
 		$graph->renderGraph();
 		return $graph->svg_dom->output($save_as);
 	}
-	public static function render_graph_inline_embed(&$object, &$result_file = null, $extra_attributes = null, $nested = true)
+	public static function render_graph_inline_embed(&$object, &$result_file = null, $extra_attributes = null, $nested = true, $output_format = 'SVG')
 	{
 		if($object instanceof pts_test_result)
 		{
@@ -54,7 +54,6 @@ class pts_render
 		}
 
 		$graph->renderGraph();
-		$output_format = 'SVG';
 		$graph = $graph->svg_dom->output(null, $output_format);
 
 		switch($output_format)
@@ -69,6 +68,8 @@ class pts_render
 				{
 					header('Content-Type: image/' . strtolower($output_format));
 				}
+				break;
+			case 'HTML':
 				break;
 			default:
 			case 'SVG':

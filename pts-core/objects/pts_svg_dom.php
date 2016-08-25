@@ -55,9 +55,8 @@ class pts_svg_dom
 		// XXX: Alias for output. With PTS 3.8 this is just here for API compatibility with OpenBenchmarking.org.
 		$this->output($save_as, $format);
 	}
-	public function output($save_as = null, &$format = null)
+	public function output($save_as = null, $output_format = 'SVG')
 	{
-		$output_format = 'SVG';
 		if(isset($_SERVER['HTTP_USER_AGENT']) || isset($_REQUEST['force_format']))
 		{
 			static $browser_renderer = null;
@@ -88,6 +87,11 @@ class pts_svg_dom
 			case 'PNG':
 				$output = pts_svg_dom_gd::svg_dom_to_gd($this->dom, 'PNG');
 				$output_format = 'png';
+				break;
+			case 'HTML':
+				$html = new pts_svg_dom_html($this->dom);
+				$output = $html->get_html();
+				$output_format = 'html';
 				break;
 			case 'SVG':
 			default:

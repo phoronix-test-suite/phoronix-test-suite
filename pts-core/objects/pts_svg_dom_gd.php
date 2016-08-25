@@ -344,6 +344,9 @@ class pts_svg_dom_gd
 				}
 				imagecopyresampled($gd, $img, $a['x'], $a['y'], 0, 0, $a['width'], $a['height'], imagesx($img), imagesy($img));
 				break;
+			case 'path':
+				// TODO XXX
+				break;
 			default:
 				if(PTS_IS_CLIENT)
 				{

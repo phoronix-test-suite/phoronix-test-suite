@@ -40,17 +40,17 @@ class html_results_export extends pts_module_interface
 
 		// Systems
 		$table = new pts_ResultFileSystemsTable($result_file);
-		$html .= '<p style="text-align: center; overflow: auto;">' . pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes) . '</p>';
+		$html .= '<p style="text-align: center; overflow: auto;">' . pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes, true, 'HTML') . '</p>';
 
 		// Result Overview
 		$intent = null;
 		$table = new pts_ResultFileTable($result_file, $intent);
-		$html .= '<p style="text-align: center; overflow: auto;">' . pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes) . '</p>';
+		$html .= '<p style="text-align: center; overflow: auto;">' . pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes, true, 'HTML') . '</p>';
 
 		// The Results
 		foreach($result_file->get_result_objects() as $result_object)
 		{
-			$res = pts_render::render_graph_inline_embed($result_object, $result_file, $extra_attributes);
+			$res = pts_render::render_graph_inline_embed($result_object, $result_file, $extra_attributes, true, 'HTML');
 
 			if($res == false)
 			{
@@ -89,13 +89,13 @@ class html_results_export extends pts_module_interface
 
 		if(!empty($emails))
 		{
-			$pdf_contents = pts_result_file_output::result_file_to_pdf($test_run_manager->result_file, 'pts-test-results.pdf', 'S');
-			$pdf_contents = chunk_split(base64_encode($pdf_contents));
+			//$pdf_contents = pts_result_file_output::result_file_to_pdf($test_run_manager->result_file, 'pts-test-results.pdf', 'S');
+			//$pdf_contents = chunk_split(base64_encode($pdf_contents));
 
 			foreach($emails as $email)
 			{
 
-				$boundary = md5(uniqid(time()));
+				/*$boundary = md5(uniqid(time()));
 				$headers = "From: Phoronix Test Suite <no-reply@phoromatic.com>\r\n";
 				$headers .= "MIME-Version: 1.0\r\n";
 				$headers .= "Content-Type: multipart/mixed; boundary=\"" . $boundary . "\"\r\n\r\n";
@@ -112,6 +112,11 @@ class html_results_export extends pts_module_interface
 				$message .= "--" . $boundary . "--";
 
 				mail($email, 'Phoronix Test Suite Result File: ' . $test_run_manager->result_file->get_title(), $message, $headers);
+				echo 'HTML Results Emailed To: ' . $email . PHP_EOL; */
+				$headers = "MIME-Version: 1.0\r\n";
+				$headers .= "Content-type:text/html;charset=UTF-8\r\n";
+				$headers .= "From: Phoromatic - Phoronix Test Suite <no-reply@phoromatic.com>\r\n";
+				mail($email, 'Phoronix Test Suite Result File: ' . $test_run_manager->result_file->get_title(), $html_contents, $headers);
 				echo 'HTML Results Emailed To: ' . $email . PHP_EOL;
 			}
 		}
