@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- pts_Graph: On multi-way comparisons, always condense line graphs to modified box plots
+
 Phoronix Test Suite 6.6.0 Milestone 3
 26 August 2016
 

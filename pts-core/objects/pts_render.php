@@ -156,8 +156,10 @@ class pts_render
 				$result_object->test_result_buffer->auto_shorten_buffer_identifiers($redundant_word_cache[$result_file->get_title()]);
 			}
 
+			$result_identifiers = $result_object->test_result_buffer->get_identifiers();
+
 			// COMPACT PROCESS
-			if(!isset($extra_attributes['compact_to_scalar']) && $result_object->test_profile->get_display_format() == 'LINE_GRAPH' && $result_file->get_system_count() > 7)
+			if(!isset($extra_attributes['compact_to_scalar']) && $result_object->test_profile->get_display_format() == 'LINE_GRAPH' && ($result_file->get_system_count() > 7 || $result_file->is_multi_way_comparison($result_identifiers, $extra_attributes)))
 			{
 				// If there's too many lines being plotted on line graph, likely to look messy, so convert to scalar automatically
 				$extra_attributes['compact_to_scalar'] = true;
@@ -165,8 +167,7 @@ class pts_render
 
 			// XXX: removed || $result_file->is_results_tracker() from below and should be added
 			// Removing the command fixes cases like: 1210053-BY-MYRESULTS43
-			$result_identifiers = $result_object->test_result_buffer->get_identifiers();
-			if($result_file->is_multi_way_comparison($result_identifiers, $extra_attributes) || isset($extra_attributes['compact_to_scalar']) || isset($extra_attributes['compact_scatter']))
+			if(isset($extra_attributes['compact_to_scalar']) || isset($extra_attributes['compact_scatter']) || $result_file->is_multi_way_comparison($result_identifiers, $extra_attributes))
 			{
 				if((isset($extra_attributes['compact_to_scalar']) || (false && $result_file->is_multi_way_comparison($result_identifiers, $extra_attributes))) && in_array($result_object->test_profile->get_display_format(), array('LINE_GRAPH', 'FILLED_LINE_GRAPH')))
 				{
