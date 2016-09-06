@@ -541,7 +541,7 @@ class pts_render
 
 			foreach($words as $i => $word)
 			{
-				if(isset($common_segments[$i]) && $word != $common_segments[$i] && isset($word[2]) && (!is_function('ctype_alnum') || !ctype_alnum(substr($word, -1))))
+				if(isset($common_segments[$i]) && $word != $common_segments[$i] && isset($word[2]) && (!function_exists('ctype_alnum') || !ctype_alnum(substr($word, -1))))
 				{
 					// IS COMMON WORD
 				}
