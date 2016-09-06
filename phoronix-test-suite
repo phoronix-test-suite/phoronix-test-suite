@@ -138,7 +138,7 @@ elif [ -x /usr/local/sbin/pkg ] || [ -x /usr/sbin/pkg ]
 then
 	# DragonFlyBSD and others
 	echo "The command to likely run for your operating system is: "
-	echo "# pkg install php5 php5-dom php5-zip php5-json php5-simplexml"
+	echo "# pkg install php70 php70-dom php70-zip php70-json php70-simplexml"
 	echo " "
 elif [ -x /usr/local/swupd ]
 then
