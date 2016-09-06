@@ -1,6 +1,6 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 6.6.0-Loppa
 
 - pts_Graph: On multi-way comparisons, always condense line graphs to modified box plots
 
