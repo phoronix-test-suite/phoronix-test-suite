@@ -4,6 +4,7 @@
 	<ExternalDependencies>
 		<Information>
 			<Name>DragonFlyBSD</Name>
+			<PackageManager>pkg</PackageManager>
 		</Information>
 		<Package>
 			<GenericName>common-dependencies</GenericName>
