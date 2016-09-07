@@ -1,5 +1,10 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- pts-core: Various BSD improvements
+- pts-core: Detection for qupzilla browser when no alternative exists
+
 Phoronix Test Suite 6.6.0-Loppa
 
 - pts_Graph: On multi-way comparisons, always condense line graphs to modified box plots
