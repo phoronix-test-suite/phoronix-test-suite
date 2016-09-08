@@ -487,7 +487,7 @@ class pts_client
 				break;
 		}
 	}
-	public static function program_requirement_checks($only_show_required = false)
+	public static function program_requirement_checks($only_show_required = false, $always_report = false)
 	{
 		$extension_checks = pts_needed_extensions();
 
@@ -495,14 +495,21 @@ class pts_client
 		$printed_optional_header = false;
 		foreach($extension_checks as $extension)
 		{
-			if($extension[1] == false)
+			if($extension[1] == false || $always_report)
 			{
+				if($always_report)
+				{
+					$printed_required_header = true;
+					$printed_optional_header = true;
+					echo ($extension[1] == false ? 'MISSING' : 'PRESENT') . ' - ';
+				}
+
 				if($extension[0] == 1)
 				{
 					// Oops, this extension is required
 					if($printed_required_header == false)
 					{
-						echo PHP_EOL . 'The following PHP extensions are REQUIRED by the Phoronix Test Suite:' . PHP_EOL . PHP_EOL;
+						echo PHP_EOL . 'The following PHP extensions are REQUIRED:' . PHP_EOL . PHP_EOL;
 						$printed_required_header = true;
 					}
 				}
@@ -521,7 +528,7 @@ class pts_client
 					}
 				}
 
-				echo sprintf('%-8ls %-30ls' . PHP_EOL, $extension[2], $extension[3]);
+				echo sprintf('%-9ls %-30ls' . PHP_EOL, $extension[2], $extension[3]);
 			}
 		}
 
@@ -529,7 +536,7 @@ class pts_client
 		{
 			echo PHP_EOL;
 
-			if($printed_required_header)
+			if($printed_required_header && !$always_report)
 			{
 				exit;
 			}

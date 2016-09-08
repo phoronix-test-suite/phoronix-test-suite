@@ -182,19 +182,19 @@ function pts_needed_extensions()
 	return array(
 		// Required? - The Check If In Place - Name - Description
 		// Required extesnions denoted by 1 at [0]
-		array(1, extension_loaded('dom'), 'DOM', 'The PHP Document Object Model (DOM) is required for XML operations.'),
-		array(1, extension_loaded('zip') || extension_loaded('zlib'), 'ZIP', 'PHP Zip support is required for file compression and decompression.'),
-		array(1, function_exists('json_decode'), 'JSON', 'PHP JSON support is required for OpenBenchmarking.org communication.'),
-		array(1, function_exists('simplexml_load_string'), 'SimpleXML', 'PHP SimpleXML is required for the Phoronix Test Suite'),
+		array(1, extension_loaded('dom'), 'DOM', 'The Document Object Model is required for XML operations.'),
+		array(1, extension_loaded('zip') || extension_loaded('zlib'), 'ZIP', 'ZIP support is required for file compression.'),
+		array(1, function_exists('json_decode'), 'JSON', 'JSON support is required for OpenBenchmarking.org.'),
+		array(1, function_exists('simplexml_load_string'), 'SimpleXML', 'SimpleXML is required for XML operations.'),
 		// Optional but recommended extensions
-		array(0, extension_loaded('openssl'), 'OpenSSL', 'PHP OpenSSL support is recommended to support HTTPS traffic.'),
-		array(0, extension_loaded('gd'), 'GD', 'The PHP GD library is recommended for improved graph rendering.'),
-		array(0, extension_loaded('zlib'), 'Zlib', 'The PHP Zlib extension can be used for greater file compression.'),
-		array(0, extension_loaded('sqlite3'), 'SQLite3', 'The PHP SQLite3 extension is required when running a Phoromatic server.'),
-		array(0, function_exists('pcntl_fork'), 'PCNTL', 'PHP PCNTL is highly recommended as it is required by some tests.'),
-		array(0, function_exists('posix_getpwuid'), 'POSIX', 'PHP POSIX support is highly recommended.'),
-		array(0, function_exists('curl_init'), 'CURL', 'PHP CURL is recommended for an enhanced download experience.'),
-		array(0, function_exists('socket_create_listen'), 'Sockets', 'PHP Sockets is needed when running the Phoromatic Server.'),
+		array(0, extension_loaded('openssl'), 'OpenSSL', 'OpenSSL support is recommended to support HTTPS traffic.'),
+		array(0, extension_loaded('gd'), 'GD', 'The GD library is recommended for improved graph rendering.'),
+		array(0, extension_loaded('zlib'), 'Zlib', 'The Zlib extension can be used for greater file compression.'),
+		array(0, extension_loaded('sqlite3'), 'SQLite3', 'SQLite3 is required when running a Phoromatic server.'),
+		array(0, function_exists('pcntl_fork'), 'PCNTL', 'PCNTL is highly recommended as it is required by some tests.'),
+		array(0, function_exists('posix_getpwuid'), 'POSIX', 'POSIX support is highly recommended.'),
+		array(0, function_exists('curl_init'), 'CURL', 'CURL is recommended for an enhanced download experience.'),
+		array(0, function_exists('socket_create_listen'), 'Sockets', 'Sockets is needed when running the Phoromatic Server.'),
 		);
 }
 function pts_version_codenames()
@@ -241,7 +241,7 @@ function pts_version_codenames()
 }
 
 pts_define('PTS_VERSION', '6.6.0');
-pts_define('PTS_CORE_VERSION', 6600);
+pts_define('PTS_CORE_VERSION', 6601);
 pts_define('PTS_CODENAME', 'LOPPA');
 pts_define('PTS_IS_CLIENT', (defined('PTS_MODE') && strstr(PTS_MODE, 'CLIENT') !== false));
 pts_define('PTS_IS_WEB_CLIENT', (defined('PTS_MODE') && PTS_MODE == 'WEB_CLIENT'));
