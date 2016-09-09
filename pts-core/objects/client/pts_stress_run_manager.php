@@ -168,10 +168,16 @@ class pts_stress_run_manager extends pts_test_run_manager
 
 				$test = new pts_test_profile(file_get_contents($pid_file));
 
-				if(!in_array($test->get_test_hardware_type(), $this->stress_subsystems_active))
+				// Count the number of tests per stress subsystems active
+				if(!isset($this->stress_subsystems_active[$test->get_test_hardware_type()]))
 				{
-					$this->stress_subsystems_active[] = $test->get_test_hardware_type();
+					$this->stress_subsystems_active[$test->get_test_hardware_type()] = 1;
 				}
+				else
+				{
+					$this->stress_subsystems_active[$test->get_test_hardware_type()] += 1;
+				}
+
 				if(!in_array($test->get_identifier(), $test_identifiers_active))
 				{
 					$test_identifiers_active[] = $test->get_identifier();
@@ -191,7 +197,14 @@ class pts_stress_run_manager extends pts_test_run_manager
 					// Try to pick a test for a hardware subsystem not yet being explicitly utilized
 					foreach($possible_tests_to_run as $i => $test)
 					{
-						if(!in_array($test->test_profile->get_test_hardware_type(), $this->stress_subsystems_active))
+						$subsystem_limit_check = getenv('LIMIT_STRESS_' . strtoupper($test->test_profile->get_test_hardware_type()) . '_TESTS_COUNT');
+						if(isset($this->stress_subsystems_active[$test->test_profile->get_test_hardware_type()]) &&$subsystem_limit_check && $subsystem_limit_check <= $this->stress_subsystems_active[$test->test_profile->get_test_hardware_type()])
+						{
+							// e.g. LIMIT_STRESS_GRAPHICS_TESTS_COUNT=2, don't want more than that number per subsystem concurrently
+							continue;
+						}
+
+						if(!isset($this->stress_subsystems_active[$test->test_profile->get_test_hardware_type()]))
 						{
 							$test_run_index = $i;
 							$test_to_run = $test;
@@ -382,7 +395,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 		$report_buffer .= pts_user_io::display_text_table($table, '   - ', 2) . PHP_EOL;
 
 		$report_buffer .= 'TEST SUBSYSTEMS ACTIVE: ' . PHP_EOL;
-		foreach($this->stress_subsystems_active as &$type)
+		foreach($this->stress_subsystems_active as $type => $count)
 		{
 			$report_buffer .= '   - ' . $type . PHP_EOL;
 		}
