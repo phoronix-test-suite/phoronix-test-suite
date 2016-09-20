@@ -197,14 +197,16 @@ class pts_stress_run_manager extends pts_test_run_manager
 					// Try to pick a test for a hardware subsystem not yet being explicitly utilized
 					foreach($possible_tests_to_run as $i => $test)
 					{
-						$subsystem_limit_check = getenv('LIMIT_STRESS_' . strtoupper($test->test_profile->get_test_hardware_type()) . '_TESTS_COUNT');
-						if(isset($this->stress_subsystems_active[$test->test_profile->get_test_hardware_type()]) &&$subsystem_limit_check && $subsystem_limit_check <= $this->stress_subsystems_active[$test->test_profile->get_test_hardware_type()])
+						$hw_subsystem_type = $test->test_profile->get_test_hardware_type();
+						$subsystem_limit_check = getenv('LIMIT_STRESS_' . strtoupper($hw_subsystem_type) . '_TESTS_COUNT');
+						if(isset($this->stress_subsystems_active[$hw_subsystem_type]) && $subsystem_limit_check && $subsystem_limit_check <= $this->stress_subsystems_active[$hw_subsystem_type])
 						{
 							// e.g. LIMIT_STRESS_GRAPHICS_TESTS_COUNT=2, don't want more than that number per subsystem concurrently
+							echo PHP_EOL . 'Skipping due to limit-stress test count check: ' . $test->test_profile->get_identifier() . PHP_EOL;
 							continue;
 						}
 
-						if(!isset($this->stress_subsystems_active[$test->test_profile->get_test_hardware_type()]))
+						if(!isset($this->stress_subsystems_active[$hw_subsystem_type]))
 						{
 							$test_run_index = $i;
 							$test_to_run = $test;
