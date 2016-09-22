@@ -335,7 +335,6 @@ class pts_stress_run_manager extends pts_test_run_manager
 		if(isset($this->stress_subsystems_active[$hw_subsystem_type]) && $subsystem_limit_check && $subsystem_limit_check <= $this->stress_subsystems_active[$hw_subsystem_type])
 		{
 			// e.g. LIMIT_STRESS_GRAPHICS_TESTS_COUNT=2, don't want more than that number per subsystem concurrently
-			echo PHP_EOL . 'Skipping due to limit-stress test count check: ' . $test->test_profile->get_identifier() . PHP_EOL;
 			return true;
 		}
 
