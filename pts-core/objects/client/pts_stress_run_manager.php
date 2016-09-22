@@ -195,18 +195,11 @@ class pts_stress_run_manager extends pts_test_run_manager
 				if(getenv('DONT_BALANCE_TESTS_FOR_SUBSYSTEMS') == false)
 				{
 					// Try to pick a test for a hardware subsystem not yet being explicitly utilized
-					foreach($possible_tests_to_run as $i => $test)
+					foreach($possible_tests_to_run as $i => &$test)
 					{
 						$hw_subsystem_type = $test->test_profile->get_test_hardware_type();
-						$subsystem_limit_check = getenv('LIMIT_STRESS_' . strtoupper($hw_subsystem_type) . '_TESTS_COUNT');
-						if(isset($this->stress_subsystems_active[$hw_subsystem_type]) && $subsystem_limit_check && $subsystem_limit_check <= $this->stress_subsystems_active[$hw_subsystem_type])
-						{
-							// e.g. LIMIT_STRESS_GRAPHICS_TESTS_COUNT=2, don't want more than that number per subsystem concurrently
-							echo PHP_EOL . 'Skipping due to limit-stress test count check: ' . $test->test_profile->get_identifier() . PHP_EOL;
-							continue;
-						}
 
-						if(!isset($this->stress_subsystems_active[$hw_subsystem_type]))
+						if(!isset($this->stress_subsystems_active[$hw_subsystem_type]) && !$this->skip_test_check($test))
 						{
 							$test_run_index = $i;
 							$test_to_run = $test;
@@ -220,7 +213,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 					// Try to pick a test from a test profile not currently active
 					foreach($possible_tests_to_run as $i => $test)
 					{
-						if(!in_array($test->test_profile->get_identifier(), $test_identifiers_active))
+						if(!in_array($test->test_profile->get_identifier(), $test_identifiers_active) && !$this->skip_test_check($test))
 						{
 							$test_run_index = $i;
 							$test_to_run = $test;
@@ -234,6 +227,11 @@ class pts_stress_run_manager extends pts_test_run_manager
 					// Last resort, just randomly pick a true "random" test
 					$test_run_index = array_rand(array_keys($possible_tests_to_run));
 					$test_to_run = $possible_tests_to_run[$test_run_index];
+
+					if($this->skip_test_check($test_to_run))
+					{
+						continue;
+					}
 				}
 
 				$pid = pcntl_fork();
@@ -328,6 +326,20 @@ class pts_stress_run_manager extends pts_test_run_manager
 		pcntl_signal(SIGHUP, SIG_DFL);
 
 		return true;
+	}
+	protected function skip_test_check(&$test)
+	{
+		$hw_subsystem_type = $test->test_profile->get_test_hardware_type();
+		$subsystem_limit_check = getenv('LIMIT_STRESS_' . strtoupper($hw_subsystem_type) . '_TESTS_COUNT');
+
+		if(isset($this->stress_subsystems_active[$hw_subsystem_type]) && $subsystem_limit_check && $subsystem_limit_check <= $this->stress_subsystems_active[$hw_subsystem_type])
+		{
+			// e.g. LIMIT_STRESS_GRAPHICS_TESTS_COUNT=2, don't want more than that number per subsystem concurrently
+			echo PHP_EOL . 'Skipping due to limit-stress test count check: ' . $test->test_profile->get_identifier() . PHP_EOL;
+			return true;
+		}
+
+		return false;
 	}
 	public function action_on_stress_log_set($call)
 	{
