@@ -195,7 +195,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 				if(getenv('DONT_BALANCE_TESTS_FOR_SUBSYSTEMS') == false)
 				{
 					// Try to pick a test for a hardware subsystem not yet being explicitly utilized
-					foreach($possible_tests_to_run as $i => &$test)
+					foreach($possible_tests_to_run as $i => $test)
 					{
 						$hw_subsystem_type = $test->test_profile->get_test_hardware_type();
 
