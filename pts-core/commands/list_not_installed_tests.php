@@ -20,11 +20,15 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class list_uninstalled_tests implements pts_option_interface
+class list_not_installed_tests implements pts_option_interface
 {
 	const doc_section = 'Information';
 	const doc_description = 'This option will list all test profiles that are supported and available but presently NOT installed on the system.';
 
+	public static function command_aliases()
+	{
+		return array('list_uninstalled_tests');
+	}
 	public static function run($r)
 	{
 		pts_client::$display->generic_heading('Available Tests Not Installed');
