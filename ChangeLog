@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Various BSD improvements
+- pts-core: Add list-uninstalled-tests command
 - pts-core: Detection for qupzilla browser when no alternative exists
 - pts-core: Add "phoronix-test-suite php-conf" sub-command to dump more useful PHP information for debugging
 
