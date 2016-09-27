@@ -88,8 +88,10 @@ class phodevi_memory extends phodevi_device_interface
 		{
 			$mem_size = phodevi_linux_parser::read_dmidecode('memory', 'Memory Device', 'Size', false, array('Not Installed', 'No Module Installed', 'Undefined'));
 			$mem_speed = phodevi_linux_parser::read_dmidecode('memory', 'Memory Device', 'Configured Clock Speed', true, array('Unknown', 'Undefined'));
+
 			if($mem_speed == false)
 			{
+				// "Speed" only reports stock frequency where "Configured Clock Speed" should report the over/underclocked memory
 				$mem_speed = phodevi_linux_parser::read_dmidecode('memory', 'Memory Device', 'Speed', true, array('Unknown', 'Undefined'));
 			}
 			$mem_type = phodevi_linux_parser::read_dmidecode('memory', 'Memory Device', 'Type', true, array('Unknown', 'Other', 'Flash', 'Undefined'));
