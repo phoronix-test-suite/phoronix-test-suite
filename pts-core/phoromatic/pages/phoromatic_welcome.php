@@ -176,7 +176,7 @@ class phoromatic_welcome implements pts_webui_interface
 					<input type="text" name="username" id="u_username" required/>
 				</li>
 				<li class="label_input_wrapper">
-					<label for="u_password">Username</label>
+					<label for="u_password">Password</label>
 					<input type="password" name="password" id="u_password" required/>
 				</li>
 				<li class="label_input_wrapper">
