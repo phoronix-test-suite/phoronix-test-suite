@@ -440,5 +440,17 @@
                         <PossibleNames>perl-Digest-MD5, perl-Digest-Perl-MD5, libdigest-md5</PossibleNames>
                         <FileCheck>Digest/MD5.pm OR /usr/share/doc/perl-Digest-MD5 OR /usr/share/perl5/Digest/</FileCheck>
                 </Package>
+		<Package>
+			<GenericName>python-scipy</GenericName>
+			<Title>Python Scipy</Title>
+			<PossibleNames>python-scipy</PossibleNames>
+			<FileCheck>/usr/lib/python2.7/dist-packages/scipy</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>python-sklearn</GenericName>
+			<Title>Python Sklearn</Title>
+			<PossibleNames>python-sklearn</PossibleNames>
+			<FileCheck>/usr/lib/python2.7/dist-packages/scikit_learn-0.17.egg-info</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

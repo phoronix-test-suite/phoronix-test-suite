@@ -274,5 +274,13 @@
                         <GenericName>perl-digest-md5</GenericName>
                         <PackageName>perl-Digest-Perl-MD5</PackageName>
                 </Package>
+		<Package>
+			<GenericName>python-scipy</GenericName>
+			<PackageName>python-scipy</PackageName>
+		</Package>
+		<Package>
+			<GenericName>python-sklearn</GenericName>
+			<PackageName>scikit-learn</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

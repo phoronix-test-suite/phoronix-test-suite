@@ -323,5 +323,15 @@
                         <GenericName>perl-digest-md5</GenericName>
                         <PackageName>libdigest-md5-file-perl libdigest-perl-md5-perl</PackageName>
                 </Package>
+		<Package>
+			<GenericName>python-scipy</GenericName>
+			<PackageName>python-scipy</PackageName>
+			<FileCheck>/usr/lib/python2.7/dist-packages/scipy</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>python-sklearn</GenericName>
+			<PackageName>python-sklearn</PackageName>
+			<FileCheck>/usr/lib/python2.7/dist-packages/scikit_learn-0.17.egg-info</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
