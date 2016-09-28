@@ -331,7 +331,7 @@
 		<Package>
 			<GenericName>python-sklearn</GenericName>
 			<PackageName>python-sklearn</PackageName>
-			<FileCheck>/usr/lib/python2.7/dist-packages/scikit_learn-0.17.egg-info</FileCheck>
+			<FileCheck>/usr/lib/python2.7/dist-packages/sklearn/</FileCheck>
 		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
