@@ -366,7 +366,7 @@ class pts_client
 
 				foreach($system_log_files as $file)
 				{
-					if(is_file($file) && is_readable($file))
+					if(is_file($file) && is_readable($file) && filesize($file) < 1000000)
 					{
 						// copy() can't be used in this case since it will result in a blank file for /proc/ file-system
 						$file_contents = file_get_contents($file);
@@ -411,6 +411,13 @@ class pts_client
 					if(($command_bin = pts_client::executable_in_path($command[0])))
 					{
 						$cmd_output = shell_exec('cd ' . dirname($command_bin) . ' && ./' . $command_string . ' 2>&1');
+
+						if(strlen($cmd_output) > 900000)
+						{
+							// Don't preserve really large logs, likely filled with lots of junk
+							$cmd_output = null;
+							continue;
+						}
 
 						// Try to filter out any serial numbers, etc.
 						phodevi_vfs::cleanse_file($cmd_output, $command[0]);
