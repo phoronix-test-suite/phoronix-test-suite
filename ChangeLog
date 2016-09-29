@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 6.6.1
+29 September 2016
 
 - pts-core: Various BSD improvements
 - pts-core: Add list-not-installed-tests command (alias: list-uninstalled-tests)
@@ -10,6 +11,7 @@ Phoronix Test Suite (Git)
 - phodevi: Support for reporting memory frequency when overclocked if reported via "Configured Clock Speed" in dmidecode for RAM
 
 Phoronix Test Suite 6.6.0-Loppa
+6 September 2016
 
 - pts_Graph: On multi-way comparisons, always condense line graphs to modified box plots
 
