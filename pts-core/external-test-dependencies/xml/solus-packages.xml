@@ -5,8 +5,17 @@
 		<Information>
 			<Name>Solus</Name>
 			<Aliases>Solus Linux</Aliases>
-			<PackageManager>pisi</PackageManager>
+			<PackageManager>eopkg</PackageManager>
 		</Information>
+		<Package>
+			<GenericName>common-dependencies</GenericName>
+			<PackageName>mesalib-demos unzip</PackageName>
+			<FileCheck>glxinfo, unzip</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>32bit-compatibility</GenericName>
+			<PackageName>glibc-32bit libstdc++-32bit libx11-32bit libxext-32bit libxrandr-32bit libxinerama-32bit libxdamage-32bit-devel mesalib-32bit-devel sdl1-sound-32bit libjpeg-turbo-32bit systemd-32bit</PackageName>
+		</Package>
 		<Package>
 			<GenericName>gtk-development</GenericName>
 			<PackageName>libgtk-2-devel</PackageName>
@@ -17,15 +26,11 @@
 		</Package>
 		<Package>
 			<GenericName>sdl-development</GenericName>
-			<PackageName>sdl1-devel sdl1-image-devel sdl1-ttf-devel sdl1-gfx-devel sdl1-image-devel</PackageName>
+			<PackageName>sdl1-devel sdl1-image-devel sdl2-ttf-devel sdl-gfx-devel sdl1-image-devel sdl1-net-devel sdl1-mixer-devel</PackageName>
 		</Package>
 		<Package>
 			<GenericName>glut</GenericName>
 			<PackageName>freeglut-devel</PackageName>
-		</Package>
-		<Package>
-			<GenericName>csh</GenericName>
-			<PackageName>zsh</PackageName>
 		</Package>
 		<Package>
 			<GenericName>libpng-development</GenericName>
@@ -37,7 +42,7 @@
 		</Package>
 		<Package>
 			<GenericName>build-utilities</GenericName>
-			<PackageName>gcc g++ libgomp autoconf automake m4 glibc-devel binutils make</PackageName>
+			<PackageName>gcc g++ libgomp autoconf automake m4 glibc-devel binutils make kernel-libc-devel</PackageName>
 		</Package>
 		<Package>
 			<GenericName>tiff</GenericName>
@@ -54,6 +59,10 @@
 		<Package>
 			<GenericName>imlib2-development</GenericName>
 			<PackageName>imlib2-devel</PackageName>
+		</Package>
+		<Package>
+			<GenericName>java</GenericName>
+			<PackageName>openjdk-8</PackageName>
 		</Package>
 		<Package>
 			<GenericName>portaudio-development</GenericName>
@@ -76,12 +85,17 @@
 			<PackageName>scons</PackageName>
 		</Package>
 		<Package>
+			<GenericName>smartmontools</GenericName>
+			<PackageName>smartmontools</PackageName>
+			<FileCheck>/usr/sbin/smartctl</FileCheck>
+		</Package>
+		<Package>
 			<GenericName>zlib-development</GenericName>
 			<PackageName>zlib-devel</PackageName>
 		</Package>
 		<Package>
 			<GenericName>jpeg-development</GenericName>
-			<PackageName>openjpeg-devel</PackageName>
+			<PackageName>libjpeg-turbo-devel</PackageName>
 		</Package>
 		<Package>
 			<GenericName>libaio-development</GenericName>
@@ -96,8 +110,8 @@
 			<PackageName>perl perl-module-build</PackageName>
 		</Package>
 		<Package>
-			<GenericName>libstdcpp5</GenericName>
-			<PackageName>libstdc++</PackageName>
+			<GenericName>xorg-video</GenericName>
+			<PackageName>libxv-devel libxvmc-devel libvdpau-devel</PackageName>
 		</Package>
 		<Package>
 			<GenericName>openal-development</GenericName>
@@ -108,8 +122,16 @@
 			<PackageName>libvorbis-devel</PackageName>
 		</Package>
 		<Package>
+			<GenericName>jam</GenericName>
+			<PackageName>ftjam</PackageName>
+		</Package>
+		<Package>
 			<GenericName>p7zip</GenericName>
 			<PackageName>p7zip</PackageName>
+		</Package>
+		<Package>
+			<GenericName>qt4-development</GenericName>
+			<PackageName>qt4-devel</PackageName>
 		</Package>
 		<Package>
 			<GenericName>autoconf</GenericName>
@@ -129,11 +151,16 @@
 		</Package>
 		<Package>
 			<GenericName>curl</GenericName>
-			<PackageName>curl-devel curl</PackageName>
+			<PackageName>curl-devel</PackageName>
 		</Package>
 		<Package>
 			<GenericName>fftw3-development</GenericName>
 			<PackageName>fftw-devel</PackageName>
+		</Package>
+		<Package>
+			<GenericName>blas-development</GenericName>
+			<PackageName>openblas-devel</PackageName>
+			<FileCheck>openblas_config.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>lapack-development</GenericName>
@@ -156,8 +183,21 @@
 			<PackageName>tcl</PackageName>
 		</Package>
 		<Package>
+			<GenericName>glibc-development</GenericName>
+			<PackageName>glibc-devel</PackageName>
+		</Package>
+		<Package>
 			<GenericName>python</GenericName>
 			<PackageName>python</PackageName>
+		</Package>
+		<Package>
+			<GenericName>boost-thread-development</GenericName>
+			<PackageName>libboost-devel</PackageName>
+		</Package>
+		<Package>
+			<GenericName>python-numpy</GenericName>
+			<PackageName>numpy</PackageName>
+			<FileCheck>/usr/lib/python2.7/site-packages/numpy</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>yasm</GenericName>
@@ -173,19 +213,42 @@
 		</Package>
 		<Package>
 			<GenericName>git</GenericName>
-			<PackageName>git-core</PackageName>
+			<PackageName>git</PackageName>
+		</Package>
+		<Package>
+			<GenericName>suitesparse</GenericName>
+			<PackageName>suitesparse-devel</PackageName>
+		</Package>
+		<Package>
+			<GenericName>tinyxml</GenericName>
+			<PackageName>tinyxml-devel</PackageName>
 		</Package>
 		<Package>
 			<GenericName>opencl</GenericName>
 			<PackageName>ocl-icd-devel</PackageName>
+			<FileCheck>ocl_icd.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>attr</GenericName>
 			<PackageName>attr-devel</PackageName>
 		</Package>
-                <Package>
+		<Package>
 			<GenericName>golang</GenericName>
-			<PackageName>golang golang-binary</PackageName>
+			<PackageName>golang</PackageName>
+		</Package>
+		<Package>
+			<GenericName>opencv</GenericName>
+			<PackageName>opencv-devel</PackageName>
+		</Package>
+		<Package>
+			<GenericName>perl-digest-md5</GenericName>
+			<PackageName>perl</PackageName>
+			<FileCheck>/usr/lib/perl5/5.22.1/x86_64-linux/Digest/MD5.pm</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>python-scipy</GenericName>
+			<PackageName>scipy</PackageName>
+			<FileCheck>/usr/lib/python2.7/site-packages/scipy</FileCheck>
 		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
