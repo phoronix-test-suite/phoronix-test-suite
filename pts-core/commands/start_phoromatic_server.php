@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2014 - 2015, Phoronix Media
-	Copyright (C) 2014 - 2015, Michael Larabel
+	Copyright (C) 2014 - 2016, Phoronix Media
+	Copyright (C) 2014 - 2016, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -47,7 +47,15 @@ class start_phoromatic_server implements pts_option_interface
 
 		$server_launcher = '#!/bin/sh' . PHP_EOL;
 		$web_port = 0;
-		$remote_access = pts_config::read_user_config('PhoronixTestSuite/Options/Server/RemoteAccessPort', 'RANDOM');
+		$remote_access_override = getenv('PHOROMATIC_HTTP_PORT');
+		if($remote_access_override && is_numeric($remote_access_override) && $remote_access_override > 1)
+		{
+			$remote_access = $remote_access_override;
+		}
+		else
+		{
+			$remote_access = pts_config::read_user_config('PhoronixTestSuite/Options/Server/RemoteAccessPort', 'RANDOM');
+		}
 
 		$fp = false;
 		$errno = null;
