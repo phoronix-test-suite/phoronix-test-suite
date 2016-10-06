@@ -1615,7 +1615,7 @@ class phodevi_system extends phodevi_device_interface
 		if($info == null)
 		{
 			// A less than ideal fallback for some detection now
-			foreach(pts_file_io::glob('/etc/vulkan/icd.d/*.json') as $icd_json)
+			foreach(array_merge(pts_file_io::glob('/etc/vulkan/icd.d/*.json'), pts_file_io::glob('/usr/share/vulkan/icd.d/*.json')) as $icd_json)
 			{
 				$icd_json = json_decode(file_get_contents($icd_json), true);
 
