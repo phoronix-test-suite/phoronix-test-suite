@@ -280,6 +280,10 @@ class pts_network
 	{
 		if(($proxy_address = pts_config::read_user_config('PhoronixTestSuite/Options/Networking/ProxyAddress', false)) && ($proxy_port = pts_config::read_user_config('PhoronixTestSuite/Options/Networking/ProxyPort', false)))
 		{
+			// Don't need http:// in address and some people mistakenly do it
+			// e.g. https://www.phoronix.com/forums/forum/phoronix/phoronix-test-suite/905211-problem-network-support-is-needed-to-obtain-package
+			$proxy_address = str_replace(array('http://', 'https://'), '', $proxy_address);
+
 			self::$network_proxy['proxy'] = $proxy_address . ':' . $proxy_port;
 			self::$network_proxy['address'] = $proxy_address;
 			self::$network_proxy['port'] = $proxy_port;

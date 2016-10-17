@@ -4,6 +4,7 @@ Phoronix Test Suite (Git)
 
 - pts-core: Add PHOROMATIC_HTTP_PORT environment variable for overriding Phoromatic Server HTTP port on starting it
 - pts-core: Don't preserve really large system logs (~1MB or greater per file)
+- pts-core: Strip http/https from proxy address if needed
 - pts-core: Update Solus external dependency handling
 - phodevi: Also look for Vulkan ICDs at /usr/share/vulkan/icd.d/*.json
 

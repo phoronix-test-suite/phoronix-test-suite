@@ -154,6 +154,7 @@ if($PTS_MACHINE_SELF_ID != null)
 	$result = $result->fetchArray();
 }
 
+
 if(!isset($result) || empty($result))
 {
 	// If system was reloaded and MachineSelfID no longer matches but there is existing IP or MAC address claim against it
