@@ -62,19 +62,9 @@ class pts_openbenchmarking
 	{
 		$gsid_valid = false;
 
-		if(strlen($gsid) == 9)
+		if(strlen($gsid) == 9 && pts_strings::is_upper(substr($gsid, 0, 6)) && pts_strings::is_digit(substr($gsid, 6, 3)))
 		{
-			if(function_exists('ctype_digit'))
-			{
-				if(ctype_upper(substr($gsid, 0, 6)) && ctype_digit(substr($gsid, 6, 3)))
-				{
-					$gsid_valid = true;
-				}
-			}
-			else if(substr($gsid, 0, 6) == strtoupper(substr($gsid, 0, 6)) && is_numeric(substr($gsid, 6, 3)))
-			{
-				$gsid_valid = true;
-			}
+			$gsid_valid = true;
 		}
 
 		return $gsid_valid;
@@ -196,9 +186,9 @@ class pts_openbenchmarking
 				{
 					$us = strlen($segments[1]);
 
-					if($us > 1 && $us < 9 && (!function_exists('ctype_alnum') || ctype_alnum($segments[1])))
+					if($us > 1 && $us < 9 && pts_strings::is_alnum($segments[1]))
 					{
-						if(!function_exists('ctype_alnum') || ctype_alnum($segments[2]))
+						if(pts_strings::is_alnum($segments[2]))
 						{
 							$valid = true;
 						}
@@ -215,7 +205,7 @@ class pts_openbenchmarking
 
 		if(strlen($id) == 4)
 		{
-			if(ctype_alpha($id))
+			if(pts_strings::is_alpha($id))
 			{
 				$valid = true;
 			}

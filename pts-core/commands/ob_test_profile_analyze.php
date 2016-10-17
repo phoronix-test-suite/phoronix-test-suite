@@ -363,7 +363,7 @@ var_dump($server_response);
 				{
 					$gl_usage[$line]++;
 				}
-				else if(ctype_alnum($line))
+				else if(pts_strings::is_alnum($line))
 				{
 					$gl_usage[$line] = 1;
 				}

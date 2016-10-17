@@ -20,8 +20,6 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-// TODO XXX: some of these functions may be better optimized using the ctype functions: http://us.php.net/manual/en/ref.ctype.php
-
 class pts_strings
 {
 	const CHAR_LETTER = 2;
@@ -47,6 +45,22 @@ class pts_strings
 	{
 		// Only numeric or decimal, and at least a decimal (not int)
 		return pts_strings::string_only_contains($string, (pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DECIMAL)) && pts_strings::string_contains($string, pts_strings::CHAR_DECIMAL);
+	}
+	public static function is_alnum($string)
+	{
+		return function_exists('ctype_alnum') ? ctype_alnum($string) : pts_strings::string_only_contains($string, (pts_strings::CHAR_NUMERIC | pts_strings::CHAR_LETTER));
+	}
+	public static function is_alpha($string)
+	{
+		return function_exists('ctype_alpha') ? ctype_alpha($string) : pts_strings::string_only_contains($string, pts_strings::CHAR_LETTER);
+	}
+	public static function is_digit($string)
+	{
+		return function_exists('ctype_digit') ? ctype_digit($string) : is_numeric($string);
+	}
+	public static function is_upper($string)
+	{
+		return function_exists('ctype_upper') ? ctype_upper($string) : ($string == strtoupper($string));
 	}
 	public static function trim_search_query($value)
 	{
