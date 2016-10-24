@@ -254,7 +254,16 @@ class pts_graph_lines extends pts_graph_core
 				$precise_stat_array = array();
 				foreach($stat_array as $stat_value)
 				{
-					$precise_stat_array[] = pts_math::set_precision($stat_value, $precision);
+					if(is_string($stat_value))
+					{
+						// TODO investigate this case...
+						// sometimes $stat_value is string of comma separated values
+						$precise_stat_array[] = $stat_value;
+					}
+					else
+					{
+						$precise_stat_array[] = pts_math::set_precision($stat_value, $precision);
+					}
 				}
 
 				$attributes['x'] = $x_stat_loc;
