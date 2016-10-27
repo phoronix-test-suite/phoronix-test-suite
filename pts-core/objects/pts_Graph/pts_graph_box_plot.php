@@ -33,6 +33,7 @@ class pts_graph_box_plot extends pts_graph_horizontal_bars
 		$group_offsets = array();
 		$id_offsets = array();
 		$g_bars = $this->svg_dom->make_g(array('stroke' => self::$c['color']['body_light'], 'stroke-width' => 1));
+
 		foreach($this->results as $identifier => &$group)
 		{
 			$paint_color = $this->get_paint_color($identifier);
@@ -40,6 +41,7 @@ class pts_graph_box_plot extends pts_graph_horizontal_bars
 			{
 				$values = $buffer_item->get_result_value();
 				$values = explode(',', $values);
+
 				if(empty($values) || count($values) < 2)
 				{
 					$values = $buffer_item->get_result_raw();

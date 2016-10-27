@@ -205,7 +205,7 @@ class pts_render
 					} */
 				}
 
-				if($result_file->is_results_tracker())
+				if($result_file->is_results_tracker() && !isset($extra_attributes['compact_to_scalar']))
 				{
 					$extra_attributes['force_tracking_line_graph'] = 1;
 				}
@@ -257,9 +257,8 @@ class pts_render
 		{
 			$result_object->test_profile->set_display_format($extra_attributes['graph_render_type']);
 		}
-		$display_format = $result_object->test_profile->get_display_format();
 
-		switch($display_format)
+		switch($result_object->test_profile->get_display_format())
 		{
 			case 'LINE_GRAPH':
 				$graph = new pts_graph_lines($result_object, $result_file, $extra_attributes);

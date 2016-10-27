@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- pts-core: Fix malforming graphs when feeding many line graph results that are in a tracking-like manner that should be compacted to box plot
+
 Phoronix Test Suite 6.8.0 Milestone 1
 27 October 2016
 
