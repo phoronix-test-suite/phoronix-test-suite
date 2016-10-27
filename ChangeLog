@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 6.8.0 Milestone 1
+27 October 2016
 
 - pts-core: Add PHOROMATIC_HTTP_PORT environment variable for overriding Phoromatic Server HTTP port on starting it
 - pts-core: Don't preserve really large system logs (~1MB or greater per file)
