@@ -135,6 +135,10 @@ class pts_result_file
 	{
 		return is_file(PTS_SAVE_RESULTS_PATH . $identifier . '/composite.xml');
 	}
+	public function default_result_folder_path()
+	{
+		return PTS_SAVE_RESULTS_PATH . $this->save_identifier . '/';
+	}
 	public function get_identifier()
 	{
 		return $this->save_identifier;

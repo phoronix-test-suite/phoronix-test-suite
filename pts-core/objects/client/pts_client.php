@@ -928,11 +928,12 @@ class pts_client
 		{
 			if(pts_file_io::mkdir($save_to_dir . '/result-graphs') == false)
 			{
-				// Directory must exist, so remove any old graph files first
+				// Don't delete old files now, in case any modules (e.g. FlameGrapher) output something in there ahead of time
+				/*// Directory must exist, so remove any old graph files first
 				foreach(pts_file_io::glob($save_to_dir . '/result-graphs/*') as $old_file)
 				{
 					unlink($old_file);
-				}
+				}*/
 			}
 		}
 

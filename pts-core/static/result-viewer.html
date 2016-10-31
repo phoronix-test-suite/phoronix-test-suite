@@ -286,6 +286,11 @@ div#pts_footer_logo a:hover
 				{
 					document.write('<div class="pts_benchmark_img_area"><object type="image/svg+xml" height="auto" width="auto" data="result-graphs/' + (i + 1) + '.svg"></object></div>');
 				}
+
+				for(var x = 1; x < 3; x++)
+				{
+					document.write('<div class="pts_benchmark_img_area"><object type="image/svg+xml" height="auto" width="auto" data="result-graphs/' + (i + 1) + '_extra' + x + '.svg"></object></div>');
+				}
 			}
 			else
 			{
@@ -293,6 +298,11 @@ div#pts_footer_logo a:hover
 				{
 					document.write('<div class="pts_benchmark_bar"><h1>' + results[i] + '</h1><h3>' + descriptions[i] + '</h3></div>');
 					document.write('<div class="pts_benchmark_img_area"><object type="image/svg+xml" height="auto" width="auto" data="result-graphs/' + (i + 1) + '.svg"></object></div>');
+
+					for(var x = 1; x < 3; x++)
+					{
+						document.write('<div class="pts_benchmark_img_area"><object type="image/svg+xml" height="auto" width="auto" data="result-graphs/' + (i + 1) + '_extra' + x + '.svg"></object></div>');
+					}
 				}
 			}
 
