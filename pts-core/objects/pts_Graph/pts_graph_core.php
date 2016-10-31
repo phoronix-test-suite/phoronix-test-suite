@@ -95,6 +95,7 @@ abstract class pts_graph_core
 		if(isset($extra_attributes['force_tracking_line_graph']))
 		{
 			// Phoromatic result tracker
+			// TODO: investigate this check as it could cause problems... bad assumption to make
 			$this->is_multi_way_comparison = true;
 		}
 		else if(isset($result_object->test_result_buffer))
