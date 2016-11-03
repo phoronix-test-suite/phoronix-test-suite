@@ -448,6 +448,15 @@ class phoromatic_systems implements pts_webui_interface
 					$stmt1->execute();
 				}
 			}
+			else if(!PHOROMATIC_USER_IS_VIEWER && isset($_POST['remove_inactive_systems']) && is_numeric($_POST['remove_inactive_systems']) && $_POST['remove_inactive_systems'] > 1)
+			{
+				// $_POST['remove_inactive_systems'] is number of days system is without activity before removing
+				$stmt = phoromatic_server::$db->prepare('UPDATE phoromatic_systems SET State = :state WHERE AccountID = :account_id AND (julianday() - julianday(LastCommunication)) > :inactive_days_before_removal');
+				$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+				$stmt->bindValue(':state', -1]);
+				$stmt->bindValue(':inactive_days_before_removal', $_POST['remove_inactive_systems']);
+				$stmt->execute();
+			}
 
 			$main = '<h1>Test Systems</h1>';
 			if(!PHOROMATIC_USER_IS_VIEWER)
@@ -629,6 +638,10 @@ class phoromatic_systems implements pts_webui_interface
 						$main .= '<option value="' . $group . '">' . $group . '</option>';
 					}
 					$main .= '</select> <input name="submit" value="Remove Group" type="submit" /></form></p>';
+
+					$main .= '<hr /><h2>Retire Inactive Systems</h2><p>This option will soft-delete systems that have not communicated with this Phoromatic Server in more than one week (7 days).</p>';
+
+					$main .= '<p><form action="' . $_SERVER['REQUEST_URI'] . '" name="remove_inactive" method="post"><input type="hidden" name="remove_inactive_systems" value="7" /><input name="submit" value="Remove Inactive Systems" type="submit" /></form></p>';
 				}
 			}
 		}
