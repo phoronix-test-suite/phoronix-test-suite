@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2015, Phoronix Media
-	Copyright (C) 2009 - 2015, Michael Larabel
+	Copyright (C) 2009 - 2016, Phoronix Media
+	Copyright (C) 2009 - 2016, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -33,6 +33,12 @@ class result_file_to_pdf implements pts_option_interface
 	}
 	public static function run($r)
 	{
+		if(!function_exists('getimagesizefromstring'))
+		{
+			echo 'PHP GD support is required for this command.' . PHP_EOL . PHP_EOL;
+			return false;
+		}
+
 		$_REQUEST['force_format'] = 'PNG'; // Force to PNG renderer
 		$_REQUEST['svg_dom_gd_no_interlacing'] = true; // Otherwise FPDF will fail
 		$tdir = pts_client::create_temporary_directory();

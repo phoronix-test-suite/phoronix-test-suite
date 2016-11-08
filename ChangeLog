@@ -4,6 +4,7 @@ Phoronix Test Suite (Git)
 
 - pts-core: Add new remove_inactive_systems option on systems page
 - pts-core: Fix malforming graphs when feeding many line graph results that are in a tracking-like manner that should be compacted to box plot
+- pts-core: Add PHP GD check as first thing when attempting to use result-file-to-pdf
 - flamegrapher: Experimental new module to generate Linux perf / FlameGraph graphs for each test being executed when active
 - results_custom_export: Example module for dumping PTS test results in custom formats
 
