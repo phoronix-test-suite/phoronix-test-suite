@@ -7,6 +7,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add PHP GD check as first thing when attempting to use result-file-to-pdf
 - flamegrapher: Experimental new module to generate Linux perf / FlameGraph graphs for each test being executed when active
 - results_custom_export: Example module for dumping PTS test results in custom formats
+- pts_Graph: Add Intel color highlighting for "Celeron" too
 
 Phoronix Test Suite 6.8.0 Milestone 1
 27 October 2016

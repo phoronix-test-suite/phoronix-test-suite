@@ -394,7 +394,7 @@ abstract class pts_graph_core
 		{
 			$paint_color = '#f1052d';
 		}
-		else if(strpos($identifier, 'intel ') !== false || strpos($identifier, 'xeon ') !== false || strpos($identifier, 'core i') !== false)
+		else if(strpos($identifier, 'intel ') !== false || strpos($identifier, 'xeon ') !== false || strpos($identifier, 'core i') !== false || strpos($identifier, 'celeron') !== false)
 		{
 			$paint_color = '#0b5997';
 		}
