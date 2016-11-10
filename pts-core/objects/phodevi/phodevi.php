@@ -58,6 +58,13 @@ class phodevi extends phodevi_base
 	}
 	public static function load_sensors()
 	{
+		if(!defined('PHP_VERSION_ID') || PHP_VERSION_ID < 50300)
+		{
+			// Phodevi sensors don't work prior to PHP 5.3
+			self::$sensors = array();
+			return false;
+		}
+
 		foreach(glob(dirname(__FILE__) . '/sensors/*') as $sensor_obj_file)
 		{
 			$sensor_obj_name = basename($sensor_obj_file, '.php');
@@ -101,6 +108,12 @@ class phodevi extends phodevi_base
 	}
 	public static function select_sensors($limit_sensors = false)
 	{
+		if(!defined('PHP_VERSION_ID') || PHP_VERSION_ID < 50300)
+		{
+			// Phodevi sensors don't work prior to PHP 5.3
+			return array();
+		}
+
 		$selected = array();
 		foreach(self::available_sensors() as $sensor)
 		{

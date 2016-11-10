@@ -22,7 +22,6 @@
 
 abstract class phodevi_sensor
 {
-
 	const SENSOR_TYPE = '';			//eg. cpu
 	const SENSOR_SENSES = '';		//eg. power-usage
 	const SENSOR_UNIT = '';			//eg. miliwatts
