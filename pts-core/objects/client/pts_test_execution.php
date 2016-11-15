@@ -370,7 +370,7 @@ class pts_test_execution
 					// TODO XXX: clean this up with log files to preserve when needed, let multiple log files exist for extra_data, etc
 					pts_test_result_parser::generate_extra_data($test_run_request, $test_log_file);
 				}
-
+				pts_module_manager::module_process('__test_log_output', $test_log_file);
 				if($backup_test_log_dir)
 				{
 					copy($test_log_file, $backup_test_log_dir . basename($test_log_file));

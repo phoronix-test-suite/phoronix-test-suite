@@ -461,6 +461,8 @@ class pts_client
 					}
 					file_put_contents($system_log_dir . 'environment-variables', $variable_dump);
 				}
+
+				pts_module_manager::module_process('__post_test_run_system_logs', $system_log_dir);
 			}
 		}
 

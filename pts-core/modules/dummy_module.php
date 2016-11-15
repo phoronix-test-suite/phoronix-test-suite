@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2011, Phoronix Media
-	Copyright (C) 2008 - 2011, Michael Larabel
+	Copyright (C) 2008 - 2016, Phoronix Media
+	Copyright (C) 2008 - 2016, Michael Larabel
 	dummy_module.php: A simple 'dummy' module to demonstrate the PTS functions
 
 	This program is free software; you can redistribute it and/or modify
@@ -119,6 +119,14 @@ class dummy_module extends pts_module_interface
 	public static function __post_run_process()
 	{
 		echo PHP_EOL . 'We\'re all done with the testing for now.' . PHP_EOL . 'Called: __post_run_process()' . PHP_EOL;
+	}
+	public static function __test_log_output()
+	{
+		echo PHP_EOL . 'Log file available.' . PHP_EOL . 'Called: __test_log_output()' . PHP_EOL;
+	}
+	public static function __post_test_run_system_logs()
+	{
+		echo PHP_EOL . 'System logs available.' . PHP_EOL . 'Called: __post_test_run_system_logs()' . PHP_EOL;
 	}
 }
 
