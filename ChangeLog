@@ -7,6 +7,7 @@ Phoronix Test Suite (Git)
 - pts-core: Add PHP GD check as first thing when attempting to use result-file-to-pdf
 - pts-core: Add new module hooks for __test_log_output() and __post_test_run_system_logs()
 - phodevi: Don't load Phodevi sensors prior to PHP 5.3 due to compatibility issues
+- log_exporter: Allow easily exporting test run and system logs via COPY_TEST_RUN_LOGS_TO and COPY_SYSTEM_LOGS_TO env vars
 - flamegrapher: Experimental new module to generate Linux perf / FlameGraph graphs for each test being executed when active
 - results_custom_export: Example module for dumping PTS test results in custom formats
 - pts_Graph: Add Intel color highlighting for "Celeron" too
