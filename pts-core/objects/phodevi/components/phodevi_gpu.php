@@ -1292,11 +1292,21 @@ class phodevi_gpu extends phodevi_device_interface
 
 		if(empty($info) || strpos($info, 'Mesa ') !== false || strpos($info, 'Gallium ') !== false)
 		{
+			if(($x = strpos($info, ' on ')) !== false)
+			{
+				// to remove section like "Gallium 0.4 on AMD POLARIS"
+				$info = substr($info, $x + 4);
+			}
+			if(($x = strpos($info, ' (')) !== false)
+			{
+				$info = substr($info, 0, $x);
+			}
+
 			if(phodevi::is_windows() == false)
 			{
 				$info_pci = phodevi_linux_parser::read_pci('VGA compatible controller', false);
 
-				if(!empty($info_pci))
+				if(!empty($info_pci) && strpos($info_pci, 'Device ') == false)
 				{
 					$info = $info_pci;
 
@@ -1461,13 +1471,13 @@ class phodevi_gpu extends phodevi_device_interface
 			$info = $vendor . ' ' . $info;
 		}
 
-		if($video_ram > 64 && strpos($info, $video_ram) == false) // assume more than 64MB of vRAM
+		$clean_phrases = array('OpenGL Engine');
+		$info = str_replace($clean_phrases, null, $info);
+
+		if(!empty($info) && $video_ram > 64 && strpos($info, $video_ram) == false) // assume more than 64MB of vRAM
 		{
 			$info .= ' ' . $video_ram . 'MB';
 		}
-	
-		$clean_phrases = array('OpenGL Engine');
-		$info = str_replace($clean_phrases, null, $info);
 
 		return $info;
 	}
