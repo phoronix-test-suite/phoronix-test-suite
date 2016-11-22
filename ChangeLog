@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts-core: Ubuntu external dependency script fix
+- phodevi: Improved video RAM detection via GLX_MESA_query_renderer
 
 Phoronix Test Suite 6.8.0 Milestone 2
 15 November 2016

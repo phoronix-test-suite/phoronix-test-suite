@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2013, Phoronix Media
-	Copyright (C) 2008 - 2013, Michael Larabel
+	Copyright (C) 2008 - 2016, Phoronix Media
+	Copyright (C) 2008 - 2016, Michael Larabel
 	phodevi_parser.php: General parsing functions used by different parts of Phodevi that are supported by more than one OS
 
 	This program is free software; you can redistribute it and/or modify
@@ -274,6 +274,24 @@ class phodevi_parser
 			{
 				$info = substr($glxinfo, $pos + 19);
 				$info = substr($info, 0, strpos($info, PHP_EOL . PHP_EOL));
+				$info = trim($info);
+			}
+		}
+
+		return $info;
+	}
+	public static function glxinfo_read_line($head)
+	{
+		$info = false;
+		if(isset(phodevi::$vfs->glxinfo))
+		{
+			$glxinfo = phodevi::$vfs->glxinfo;
+
+			$to_find = $head . ':';
+			if(($pos = strpos($glxinfo, $to_find)) !== false)
+			{
+				$info = substr($glxinfo, $pos + strlen($to_find));
+				$info = substr($info, 0, strpos($info, PHP_EOL));
 				$info = trim($info);
 			}
 		}

@@ -706,6 +706,16 @@ class phodevi_gpu extends phodevi_device_interface
 				$video_ram *= 1024;
 			}
 		}
+		else
+		{
+			// Try reading video memoty from GLX_MESA_query_renderer output in glxinfo
+			$glxinfo_video_mem = str_replace('MB', null, phodevi_parser::glxinfo_read_line('Video memory'));
+
+			if(is_numeric($glxinfo_video_mem) && $glxinfo_video_mem > 1)
+			{
+				$video_ram = $glxinfo_video_mem;
+			}
+		}
 
 		if($video_ram == -1 && isset(phodevi::$vfs->xorg_log))
 		{
