@@ -33,7 +33,7 @@ class log_exporter extends pts_module_interface
 	}
 	public static function __test_log_output($log_file_path)
 	{
-		if(empty(getenv('COPY_TEST_RUN_LOGS_TO')))
+		if(getenv('COPY_TEST_RUN_LOGS_TO') == null)
 		{
 			return;
 		}
@@ -47,7 +47,7 @@ class log_exporter extends pts_module_interface
 	}
 	public static function __post_test_run_system_logs($log_file_path)
 	{
-		if(empty(getenv('COPY_SYSTEM_LOGS_TO')))
+		if(getenv('COPY_SYSTEM_LOGS_TO') == null)
 		{
 			return;
 		}
