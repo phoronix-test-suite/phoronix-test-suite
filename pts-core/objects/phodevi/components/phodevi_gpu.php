@@ -713,7 +713,8 @@ class phodevi_gpu extends phodevi_device_interface
 
 			if(is_numeric($glxinfo_video_mem) && $glxinfo_video_mem > 1)
 			{
-				$video_ram = $glxinfo_video_mem;
+				// Do some rounding as at least AMDGPU/RadeonSI reports less than real amount
+				$video_ram = $glxinfo_video_mem % 128 === 0 ? $glxinfo_video_mem : round(($glxinfo_video_mem + 128 / 2) / 128) * 128;
 			}
 		}
 
