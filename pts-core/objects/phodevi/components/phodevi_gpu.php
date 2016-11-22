@@ -1306,7 +1306,7 @@ class phodevi_gpu extends phodevi_device_interface
 			{
 				$info_pci = phodevi_linux_parser::read_pci('VGA compatible controller', false);
 
-				if(!empty($info_pci) && strpos($info_pci, 'Device ') == false)
+				if(!empty($info_pci) && strpos($info_pci, 'Device ') === false)
 				{
 					$info = $info_pci;
 
