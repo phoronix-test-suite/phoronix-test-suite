@@ -1288,7 +1288,7 @@ class phodevi_gpu extends phodevi_device_interface
 		{
 			$info = phodevi_windows_parser::read_cpuz('Display Adapters', 'Name');
 		}
-	
+
 		if(empty($info) || strpos($info, 'Mesa ') !== false || strpos($info, 'Gallium ') !== false)
 		{
 			if(phodevi::is_windows() == false)

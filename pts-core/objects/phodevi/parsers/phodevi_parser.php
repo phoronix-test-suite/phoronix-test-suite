@@ -102,7 +102,7 @@ class phodevi_parser
 			$info = false;
 		}
 
-		return $info;
+		return str_replace('Mesa DRI ', null, $info);
 	}
 	public static function read_hddtemp($disk = null)
 	{
