@@ -1,5 +1,7 @@
 #!/bin/sh
-if [ `whoami` != "root" ] && [ ! -z "$DISPLAY" ]; then
+if [ `whoami` = "root" ] && [ ! -w /usr/bin/sudo ]; then
+	apt-get -y --ignore-missing install $*
+elif [ `whoami` != "root" ] && [ ! -z "$DISPLAY" ]; then
 	if [ -x /usr/bin/gksudo ]; then
 		ROOT="/usr/bin/gksudo"
 	elif [ -x /usr/bin/kdesudo ]; then
