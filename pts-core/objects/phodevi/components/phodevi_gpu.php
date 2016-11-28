@@ -718,6 +718,8 @@ class phodevi_gpu extends phodevi_device_interface
 			}
 		}
 
+		// Disabling 27 Nov 2016 as seems to cause problems with AMDGPU-0PRO but falls back gracefully outside of this xorg-log parsing for correct amount
+		/*
 		if($video_ram == -1 && isset(phodevi::$vfs->xorg_log))
 		{
 			// Attempt Video RAM detection using X log
@@ -741,6 +743,8 @@ class phodevi_gpu extends phodevi_device_interface
 				}
 			}
 		}
+		*/
+
 		if($video_ram == -1 && isset(phodevi::$vfs->dmesg))
 		{
 			// Fallback to try to find vRAM from dmesg
