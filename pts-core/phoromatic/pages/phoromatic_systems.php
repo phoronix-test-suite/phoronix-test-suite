@@ -364,7 +364,7 @@ class phoromatic_systems implements pts_webui_interface
 					}
 					while($row = $result->fetchArray());
 					$main .= '	</ul></div>';
-					$main .= '<p><a href="?systems/' . $PATH[0] . '&clear_system_warnings">Clear System Warnings/Errors</a></p>';
+					$main .= '<p align="center"><a href="?systems/' . $PATH[0] . '/&clear_system_warnings">Clear System Warnings/Errors</a></p>';
 				}
 			}
 		}
