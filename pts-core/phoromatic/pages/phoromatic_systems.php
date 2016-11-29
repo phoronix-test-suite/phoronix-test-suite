@@ -59,6 +59,13 @@ class phoromatic_systems implements pts_webui_interface
 			$stmt->bindValue(':maintenance_mode', $_POST['maintenance_mode']);
 			$stmt->execute();
 		}
+		if(!PHOROMATIC_USER_IS_VIEWER && !empty($PATH[0]) && isset($_GET['clear_system_warnings']))
+		{
+			$stmt = phoromatic_server::$db->prepare('DELETE FROM phoromatic_system_client_errors WHERE AccountID = :account_id AND SystemID = :system_id');
+			$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+			$stmt->bindValue(':system_id', $PATH[0]);
+			$stmt->execute();
+		}
 		if(!PHOROMATIC_USER_IS_VIEWER && !empty($PATH[0]) && isset($_POST['tick_thread_reboot']))
 		{
 			$stmt = phoromatic_server::$db->prepare('UPDATE phoromatic_systems SET TickThreadEvent = :event WHERE AccountID = :account_id AND SystemID = :system_id');
@@ -357,6 +364,7 @@ class phoromatic_systems implements pts_webui_interface
 					}
 					while($row = $result->fetchArray());
 					$main .= '	</ul></div>';
+					$main .= '<p><a href="?systems/' . $PATH[0] . '&clear_system_warnings">Clear System Warnings/Errors</a></p>';
 				}
 			}
 		}
