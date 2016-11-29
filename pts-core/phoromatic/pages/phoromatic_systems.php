@@ -461,7 +461,7 @@ class phoromatic_systems implements pts_webui_interface
 				// $_POST['remove_inactive_systems'] is number of days system is without activity before removing
 				$stmt = phoromatic_server::$db->prepare('UPDATE phoromatic_systems SET State = :state WHERE AccountID = :account_id AND (julianday() - julianday(LastCommunication)) > :inactive_days_before_removal');
 				$stmt->bindValue(':account_id', $_SESSION['AccountID']);
-				$stmt->bindValue(':state', -1]);
+				$stmt->bindValue(':state', -1);
 				$stmt->bindValue(':inactive_days_before_removal', $_POST['remove_inactive_systems']);
 				$stmt->execute();
 			}
