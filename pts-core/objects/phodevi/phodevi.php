@@ -624,8 +624,9 @@ class phodevi extends phodevi_base
 	}
 	public static function is_ati_graphics()
 	{
+		// Detection for fglrx / old AMD blob driver, newer AMDGPU-PRO / AMDGPU should go to is_mesa_graphics
 		self::detect_graphics();
-		return self::$graphics['ati'];
+		return self::$graphics['ati'] && pts_client::executable_in_path('amdcccle');;
 	}
 	public static function is_nvidia_graphics()
 	{
