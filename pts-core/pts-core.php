@@ -199,6 +199,7 @@ function pts_needed_extensions()
 }
 function pts_version_codenames()
 {
+	// Lots of inspiration for codenames from Norwegian municipalities
 	return array(
 		// Sør-Trøndelag - Norway
 		'1.0' => 'Trondheim',
@@ -237,6 +238,12 @@ function pts_version_codenames()
 		'6.4' => 'Hasvik',
 		'6.6' => 'Loppa',
 		'6.8' => 'Tana',
+		// Hedmark - Norway
+		'7.0' => 'Ringsaker',
+		'7.2' => 'Trysil',
+		'7.4' => 'Tynset',
+		'7.6' => 'Alvdal',
+		'7.8' => 'Folldal',
 		);
 }
 
