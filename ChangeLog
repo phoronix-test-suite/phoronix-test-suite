@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 6.8.0-Tana
+6 December 2016
 
 - phoromatic: allow clearing warnings/errors of a system from the systems page
 - phodevi: Rearrange ATI/AMD graphics checks
