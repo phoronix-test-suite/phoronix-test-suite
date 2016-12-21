@@ -71,6 +71,7 @@ abstract class pts_graph_core
 		$this->i['top_end_bottom'] = 22;
 		$this->i['mark_count'] = 6; // Number of marks to make on vertical axis
 		$this->i['multi_way_comparison_invert_default'] = true;
+		$this->i['support_color_branding'] = true;
 		$this->i['notes'] = array();
 
 		// Reset of setup besides config
@@ -128,6 +129,10 @@ abstract class pts_graph_core
 		if(isset($extra_attributes['multi_way_comparison_invert_default']))
 		{
 			$this->i['multi_way_comparison_invert_default'] = $extra_attributes['multi_way_comparison_invert_default'];
+		}
+		if(isset($extra_attributes['no_color_branding']))
+		{
+			$this->i['support_color_branding'] = false;
 		}
 
 		$this->test_result = &$result_object;
@@ -384,6 +389,11 @@ abstract class pts_graph_core
 	}
 	protected function identifier_to_branded_color($identifier, $fallback_color = null)
 	{
+		if($this->i['support_color_branding'] == false)
+		{
+			return $fallback_color;
+		}
+
 		// See if the result identifier matches something to be color-coded better
 		$identifier = strtolower($identifier) . ' ';
 		if(strpos($identifier, 'geforce') !== false || strpos($identifier, 'nvidia') !== false || strpos($identifier, 'quadro') !== false)

@@ -3,6 +3,8 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 - pts_Graph: Add "Ryzen" product string to AMD's coloring
+- pts_Graoh: Add option to disable color branding
+- pts-core: More external dependency coverage for BSDs
 
 Phoronix Test Suite 6.8.0-Tana
 6 December 2016

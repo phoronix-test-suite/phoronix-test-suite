@@ -147,5 +147,13 @@
 			<GenericName>httpd</GenericName>
 			<PackageName>apache</PackageName>
 		</Package>
+		<Package>
+			<GenericName>python-sklearn</GenericName>
+			<PackageName>py27-scikit-learn</PackageName>
+		</Package>
+		<Package>
+			<GenericName>python-scipy</GenericName>
+			<PackageName>py27-scipy</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
