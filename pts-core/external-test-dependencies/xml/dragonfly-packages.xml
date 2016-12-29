@@ -109,7 +109,7 @@
 		</Package>
 		<Package>
 			<GenericName>python</GenericName>
-			<PackageName>python3</PackageName>
+			<PackageName>python3 python</PackageName>
 		</Package>
 		<Package>
 			<GenericName>yasm</GenericName>
