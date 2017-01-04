@@ -181,7 +181,7 @@ function pts_needed_extensions()
 {
 	return array(
 		// Required? - The Check If In Place - Name - Description
-		// Required extesnions denoted by 1 at [0]
+		// Required extensions denoted by 1 at [0]
 		array(1, extension_loaded('dom'), 'DOM', 'The Document Object Model is required for XML operations.'),
 		array(1, extension_loaded('zip') || extension_loaded('zlib'), 'ZIP', 'ZIP support is required for file compression.'),
 		array(1, function_exists('json_decode'), 'JSON', 'JSON support is required for OpenBenchmarking.org.'),
