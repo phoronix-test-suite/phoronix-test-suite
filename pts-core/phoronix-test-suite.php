@@ -142,6 +142,14 @@ pts_define('PTS_USER_LOCK', function_exists('posix_getpid') ? PTS_USER_PATH . 'r
 
 if(QUICK_START == false)
 {
+	// Cleanup old / expired runlocks XXX expire if this can eventually be removed
+	foreach(pts_file_io::glob(PTS_USER_PATH . 'run-lock-*') as $possible_run_lock)
+	{
+		if(!pts_client::is_locked($possible_run_lock))
+		{
+			pts_file_io::unlink($possible_run_lock);
+		}
+	}
 	if(pts_client::create_lock(PTS_USER_LOCK) == false)
 	{
 		//trigger_error('It appears that the Phoronix Test Suite is already running.' . PHP_EOL . 'For proper results, only run one instance at a time.', E_USER_WARNING);

@@ -42,6 +42,31 @@ class pts_client
 		chmod($lock_file, 0644);
 		return self::$lock_pointers[$lock_file] != false && flock(self::$lock_pointers[$lock_file], LOCK_EX | LOCK_NB);
 	}
+	public static function is_locked($lock_file)
+	{
+		$fp = fopen($lock_file, 'w');
+		$is_locked = $fp && !flock($fp, LOCK_EX | LOCK_NB);
+		$fp && fclose($fp);
+
+		return $is_locked;
+	}
+	public static function release_lock($lock_file)
+	{
+		// Remove lock
+		if(isset(self::$lock_pointers[$lock_file]) == false)
+		{
+			pts_file_io::unlink($lock_file);
+			return false;
+		}
+
+		if(is_resource(self::$lock_pointers[$lock_file]))
+		{
+			fclose(self::$lock_pointers[$lock_file]);
+		}
+
+		pts_file_io::unlink($lock_file);
+		unset(self::$lock_pointers[$lock_file]);
+	}
 	public static function init()
 	{
 		pts_core::init();
@@ -1108,22 +1133,6 @@ class pts_client
 	public static function do_anonymous_usage_reporting()
 	{
 		return pts_config::read_bool_config('PhoronixTestSuite/Options/OpenBenchmarking/AnonymousUsageReporting', 0);
-	}
-	public static function release_lock($lock_file)
-	{
-		// Remove lock
-		if(isset(self::$lock_pointers[$lock_file]) == false)
-		{
-			return false;
-		}
-
-		if(is_resource(self::$lock_pointers[$lock_file]))
-		{
-			fclose(self::$lock_pointers[$lock_file]);
-		}
-
-		pts_file_io::unlink($lock_file);
-		unset(self::$lock_pointers[$lock_file]);
 	}
 	public static function check_command_for_function($option, $check_function)
 	{

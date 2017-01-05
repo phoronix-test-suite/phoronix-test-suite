@@ -107,7 +107,7 @@ class pts_test_result_parser
 				{
 					$sensor_values = array();
 
-					while(is_file(PTS_USER_LOCK)) // TODO: or perhaps it may be okay to just do while(true) since posix_kill() is used when needed
+					while(is_file($monitor_file)) // when test ends, it will remove file in case the posix_kill doesn't happen
 					{
 						$sensor_values[] = phodevi::read_sensor($sensor);
 						file_put_contents($monitor_file, implode("\n", $sensor_values));
