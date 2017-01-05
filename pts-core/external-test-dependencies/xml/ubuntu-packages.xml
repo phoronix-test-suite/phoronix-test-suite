@@ -9,8 +9,8 @@
 		</Information>
 		<Package>
 			<GenericName>common-dependencies</GenericName>
-			<PackageName>mesa-utils unzip</PackageName>
-			<FileCheck>glxinfo, unzip</FileCheck>
+			<PackageName>mesa-utils unzip apt-file</PackageName>
+			<FileCheck>glxinfo, unzip, apt-file</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>32bit-compatibility</GenericName>
