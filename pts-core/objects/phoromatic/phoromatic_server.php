@@ -142,7 +142,8 @@ class phoromatic_server
 		}
 
 		// TODO XXX make this a rootadmin option or something
-		// self::$db->exec('PRAGMA synchronous = OFF');
+		self::$db->exec('PRAGMA journal_mode = WAL');
+		self::$db->exec('PRAGMA synchronous = NORMAL');
 
 		switch(self::read_database_version())
 		{
