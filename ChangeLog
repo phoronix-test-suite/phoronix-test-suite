@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 - pts-core: More external dependency coverage for BSDs
 - pts-core: Cleanup PTS_USER_LOCK / run-lock handling
 - pts_Graph: Add "Ryzen" product string to AMD's coloring
+- pts_Graph: Add "Pentium" product string to Intel's coloring
 - pts_Graoh: Add option to disable color branding
 - phoromatic: Set by default for SQLite database WAL journal mode / NORMAL synchronous
 
