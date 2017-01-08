@@ -389,7 +389,7 @@ abstract class pts_graph_core
 	}
 	protected function identifier_to_branded_color($identifier, $fallback_color = null)
 	{
-		if($this->i['support_color_branding'] == false)
+		if($this->i['support_color_branding'] == false || !isset($identifier[6]))
 		{
 			return $fallback_color;
 		}
@@ -400,7 +400,7 @@ abstract class pts_graph_core
 		{
 			$paint_color = '#77b900';
 		}
-		else if(strpos($identifier, 'radeon') !== false || strpos($identifier, 'amd ') !== false || strpos($identifier, 'opteron ') !== false || strpos($identifier, 'fx-') !== false || strpos($identifier, 'firepro ') !== false || strpos($identifier, 'ryzen ') !== false)
+		else if(strpos($identifier, 'radeon') !== false || strpos($identifier, 'amd ') !== false || strpos($identifier, 'a10-') !== false || strpos($identifier, 'opteron ') !== false || strpos($identifier, 'fx-') !== false || strpos($identifier, 'firepro ') !== false || strpos($identifier, 'ryzen ') !== false)
 		{
 			$paint_color = '#f1052d';
 		}
