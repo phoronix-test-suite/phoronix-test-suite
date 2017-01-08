@@ -242,6 +242,7 @@ class phoromatic extends pts_module_interface
 				}
 			}
 
+			// Randomize the thread work a little bit to ensure not hitting the systems at the same time
 			sleep(rand(60, 90));
 		}
 	}
@@ -304,7 +305,7 @@ class phoromatic extends pts_module_interface
 		if(self::$limit_network_communication)
 		{
 			static $last_comm_time = 0;
-			if(time() > ($last_comm_time + 1740 + rand(0, 360)))
+			if(time() > ($last_comm_time + 800 + rand(0, 180)))
 			{
 				// It's been at least half hour since last update, so report in state...
 				$last_comm_time = time();
