@@ -8,6 +8,7 @@ Phoronix Test Suite (Git)
 - pts_Graph: Add "Pentium" product string to Intel's coloring
 - pts_Graoh: Add option to disable color branding
 - phoromatic: Set by default for SQLite database WAL journal mode / NORMAL synchronous
+- phoromatic: Report status updates more often
 
 Phoronix Test Suite 6.8.0-Tana
 6 December 2016
