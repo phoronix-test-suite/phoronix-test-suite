@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+- pts-core: Add estimate-run-time sub-command for estimating test/suite/result-file run length
 - pts-core: More external dependency coverage for BSDs
 - pts-core: Cleanup PTS_USER_LOCK / run-lock handling
 - pts_Graph: Add "Ryzen" product string to AMD's coloring
