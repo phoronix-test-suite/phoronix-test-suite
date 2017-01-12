@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 7.0.0 Milestone 1
+12 January 2017
 
 - pts-core: Add estimate-run-time sub-command for estimating test/suite/result-file run length
 - pts-core: More external dependency coverage for BSDs

@@ -52,10 +52,10 @@ class estimate_run_time implements pts_option_interface
 				$test_count++;
 			}
 		}
-		if($test_count > 1)
+		if($test_count > 1 && $total_time > 0)
 		{
 			echo pts_user_io::display_text_table($tests);
-			echo PHP_EOL . PHP_EOL . 'TOTAL TIME: ' . pts_strings::format_time($total_time) . PHP_EOL . PHP_EOL;
+			echo PHP_EOL . PHP_EOL . 'TOTAL TIME ESTIMATE: ' . pts_strings::format_time($total_time) . PHP_EOL . PHP_EOL;
 		}
 	}
 }
