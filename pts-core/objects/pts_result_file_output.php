@@ -91,7 +91,7 @@ class pts_result_file_output
 		}
 
 		$csv_output .= PHP_EOL;
-		$csv_output .= ' ';
+		$csv_output .= ' ' . $delimiter;
 
 		foreach($columns as $column)
 		{
@@ -109,6 +109,8 @@ class pts_result_file_output
 			{
 				$csv_output .= '"' . $result_object->test_profile->get_identifier() . ' - ' . $result_object->get_arguments() . '"';
 			}
+
+			$csv_output .= $delimiter . $result_object->test_profile->get_result_proportion();
 
 			foreach($columns as $column)
 			{

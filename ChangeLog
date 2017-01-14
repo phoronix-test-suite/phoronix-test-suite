@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test SUite (Git)
+
+- pts-core: Indicate HIB/LIB result proportion when dumping results as CSV
+
 Phoronix Test Suite 7.0.0 Milestone 1
 12 January 2017
 
