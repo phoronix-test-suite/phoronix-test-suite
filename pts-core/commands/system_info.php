@@ -28,7 +28,7 @@ class system_info implements pts_option_interface
 	public static function run($r)
 	{
 		pts_client::$display->generic_heading('System Information');
-		echo PHP_EOL . phodevi::system_centralized_view() . PHP_EOL . PHP_EOL;
+		echo phodevi::system_centralized_view();
 	}
 }
 

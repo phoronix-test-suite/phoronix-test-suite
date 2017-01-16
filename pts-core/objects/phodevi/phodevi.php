@@ -302,6 +302,7 @@ class phodevi extends phodevi_base
 				'File-System' => phodevi::read_property('system', 'filesystem'),
 				'Mount Options' => phodevi::read_property('disk', 'mount-options-string'),
 				'Disk Scheduler' => phodevi::read_property('disk', 'scheduler'),
+				'Disk Details' => phodevi::read_property('disk', 'extra-disk-details'),
 				),
 			'Operating System' => phodevi::read_property('system', 'operating-system'),
 				array(
