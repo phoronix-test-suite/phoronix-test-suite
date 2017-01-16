@@ -209,7 +209,7 @@
 		</Package>
 		<Package>
 			<GenericName>lapack-development</GenericName>
-			<PackageName>liblapack-dev</PackageName>
+			<PackageName>liblapack-dev liblapacke-dev</PackageName>
 		</Package>
 		<Package>
 			<GenericName>atlas-development</GenericName>
