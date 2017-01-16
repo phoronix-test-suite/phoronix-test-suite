@@ -251,6 +251,10 @@
 			<PackageName>tinyxml-devel</PackageName>
 		</Package>
 		<Package>
+			<GenericName>opencl</GenericName>
+			<PackageName>opencl-headers</PackageName>
+		</Package>
+		<Package>
 			<GenericName>attr</GenericName>
 			<PackageName>attr</PackageName>
 		</Package>
