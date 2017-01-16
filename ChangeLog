@@ -4,6 +4,7 @@ Phoronix Test SUite (Git)
 
 - pts-core: Indicate HIB/LIB result proportion when dumping results as CSV
 - pts-core: Introduce new view of system software/hardware details on test run and system-info command
+- pts-core: Drop detailed-system-info sub-command now that system-info is more verbose
 - phodevi: Fix for hanging Windows client when requesting disk mount options
 - phodevi: Don't rely upon X.Org DDX driver logic for determining GPU frequency since it's not portable to Wayland or with -modesetting DDX
 
