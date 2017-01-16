@@ -176,7 +176,7 @@
 		</Package>
 		<Package>
 			<GenericName>lapack-development</GenericName>
-			<PackageName>lapack-devel</PackageName>
+			<PackageName>lapack-devel lapacke-devel</PackageName>
 		</Package>
 		<Package>
 			<GenericName>cmake</GenericName>
@@ -249,6 +249,10 @@
 		<Package>
 			<GenericName>tinyxml</GenericName>
 			<PackageName>tinyxml-devel</PackageName>
+		</Package>
+		<Package>
+			<GenericName>opencl</GenericName>
+			<PackageName>opencl-headers</PackageName>
 		</Package>
 		<Package>
 			<GenericName>attr</GenericName>
