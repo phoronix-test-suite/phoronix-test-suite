@@ -60,6 +60,12 @@ class phodevi_disk extends phodevi_device_interface
 	public static function proc_mount_options($mount_point = null, $mounts = null)
 	{
 		$mount_options = false;
+		if(phodevi::is_windows())
+		{
+			// TODO support Windows if relevant?
+			// Currently this function hangs Windows client
+			return $mount_options;
+		}
 
 		if($mount_point == null && PTS_IS_CLIENT)
 		{

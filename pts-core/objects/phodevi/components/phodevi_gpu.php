@@ -858,6 +858,7 @@ class phodevi_gpu extends phodevi_device_interface
 		}
 		else if(phodevi::is_linux()) // More liberally attempt open-source freq detection than phodevi::is_mesa_graphics()
 		{
+			// TODO XXX come up with better solution since when using xf86-video-modesetting, these checks will be irrelevant
 			$display_driver = phodevi::read_property('system', 'display-driver');
 			switch($display_driver)
 			{
