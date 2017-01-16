@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2016, Phoronix Media
-	Copyright (C) 2008 - 2016, Michael Larabel
+	Copyright (C) 2008 - 2017, Phoronix Media
+	Copyright (C) 2008 - 2017, Michael Larabel
 	phodevi_disk.php: The PTS Device Interface object for the system disk(s)
 
 	This program is free software; you can redistribute it and/or modify
@@ -35,6 +35,9 @@ class phodevi_disk extends phodevi_device_interface
 				break;
 			case 'mount-options':
 				$property = new phodevi_device_property('proc_mount_options', phodevi::no_caching);
+				break;
+			case 'mount-options-string':
+				$property = new phodevi_device_property('proc_mount_options_string', phodevi::no_caching);
 				break;
 			case 'extra-disk-details':
 				$property = new phodevi_device_property('extra_disk_details', phodevi::no_caching);
@@ -104,6 +107,17 @@ class phodevi_disk extends phodevi_device_interface
 		}
 
 		return $mount_options;
+	}
+	public static function proc_mount_options_string($mount_point = null, $mounts = null)
+	{
+		$mo = phodevi::read_property('disk', 'mount-options');
+
+		if(isset($mo['mount-options']))
+		{
+			return $mo['mount-options'];
+		}
+
+		return null;
 	}
 	public static function is_genuine($disk)
 	{

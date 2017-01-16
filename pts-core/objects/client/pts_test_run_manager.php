@@ -1285,8 +1285,7 @@ class pts_test_run_manager
 		if(!$this->auto_mode)
 		{
 			pts_client::$display->generic_heading('System Information');
-			echo 'Hardware:' . PHP_EOL . phodevi::system_hardware(true) . PHP_EOL . PHP_EOL;
-			echo 'Software:' . PHP_EOL . phodevi::system_software(true) . PHP_EOL . PHP_EOL;
+			echo phodevi::system_centralized_view() . PHP_EOL;
 		}
 
 		if(($this->prompt_save_results || $this->force_save_results) && count($this->tests_to_run) > 0) // or check for DO_NOT_SAVE_RESULTS == false

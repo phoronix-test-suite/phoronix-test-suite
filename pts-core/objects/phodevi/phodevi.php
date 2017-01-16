@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2016, Phoronix Media
-	Copyright (C) 2009 - 2016, Michael Larabel
+	Copyright (C) 2009 - 2017, Phoronix Media
+	Copyright (C) 2009 - 2017, Michael Larabel
 	phodevi.php: The object for interacting with the PTS device framework
 
 	This program is free software; you can redistribute it and/or modify
@@ -271,6 +271,74 @@ class phodevi extends phodevi_base
 	public static function system_software($return_as_string = true)
 	{
 		return self::system_information_parse(self::available_software_components(), $return_as_string);
+	}
+	public static function system_centralized_view($return_as_string = true)
+	{
+		$sys = array(
+			'Processor' => phodevi::read_name('cpu'),
+				array(
+				'Core Count' => phodevi_cpu::cpuinfo_core_count(),
+				'Thread Count' => phodevi_cpu::cpuinfo_thread_count(),
+				'Scaling Driver/Governor'=> phodevi::read_property('cpu', 'scaling-governor'),
+				),
+			'Graphics' => phodevi::read_name('gpu'),
+				array(
+				'OpenGL' => phodevi::read_property('system', 'opengl-driver'),
+				'Vulkan' => phodevi::read_property('system', 'vulkan-driver'),
+				'OpenCL' => phodevi::read_property('system', 'opencl-driver'),
+				'Display Driver' => phodevi::read_property('system', 'display-driver-string'),
+				'Screen Resolution' => phodevi::read_property('gpu', 'screen-resolution-string'),
+				'Monitor' => phodevi::read_name('monitor'),
+				),
+			'Motherboard' => phodevi::read_name('motherboard'),
+				array(
+				'Memory' => phodevi::read_name('memory'),
+				'Chipset' => phodevi::read_name('chipset'),
+				'Audio' => phodevi::read_name('audoo'),
+				'Network' => phodevi::read_name('network'),
+				),
+			'Disk' => phodevi::read_name('disk'),
+				array(
+				'File-System' => phodevi::read_property('system', 'filesystem'),
+				'Mount Options' => phodevi::read_property('disk', 'mount-options-string'),
+				'Disk Scheduler' => phodevi::read_property('disk', 'scheduler'),
+				),
+			'Operating System' => phodevi::read_property('system', 'operating-system'),
+				array(
+				'Kernel' => phodevi::read_property('system', 'kernel-string'),
+				'Desktop' => phodevi::read_property('system', 'desktop-environment'),
+				'Display Server' => phodevi::read_property('system', 'display-server'),
+				'Compiler' => phodevi::read_property('system', 'compiler'),
+				'System Layer' => phodevi::read_property('system', 'system-layer'),
+				)
+			);
+
+		if($return_as_string)
+		{
+			$sys_string = null;
+			foreach($sys as $key => $in)
+			{
+				$space_in = 2;
+				if(is_array($in))
+				{
+					foreach($in as $key => $value)
+					{
+						if(!empty($value))
+						{
+							$sys_string .= '      ' . $key . ': ' . $value . PHP_EOL;
+						}
+					}
+				}
+				else if(!empty($in))
+				{
+					$sys_string .= '  ' . strtoupper($key) . ': ' . $in . PHP_EOL;
+				}
+
+			}
+			return $sys_string;
+		}
+
+		return $sys;
 	}
 	public static function system_id_string()
 	{
