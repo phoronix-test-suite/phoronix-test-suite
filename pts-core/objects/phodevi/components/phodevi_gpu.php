@@ -858,278 +858,227 @@ class phodevi_gpu extends phodevi_device_interface
 		}
 		else if(phodevi::is_linux()) // More liberally attempt open-source freq detection than phodevi::is_mesa_graphics()
 		{
-			// TODO XXX come up with better solution since when using xf86-video-modesetting, these checks will be irrelevant
-			$display_driver = phodevi::read_property('system', 'display-driver');
-			switch($display_driver)
+			if(is_file('/sys/class/drm/card0/device/performance_level'))
 			{
-				case '':
-				case 'nouveau':
-					if(is_file('/sys/class/drm/card0/device/performance_level'))
+				// NOUVEAU
+				/*
+					EXAMPLE OUTPUTS:
+					memory 1000MHz core 500MHz voltage 1300mV fanspeed 100%
+					3: memory 333MHz core 500MHz shader 1250MHz fanspeed 100%
+					c: memory 333MHz core 500MHz shader 1250MHz
+				*/
+
+				$performance_level = pts_file_io::file_get_contents('/sys/class/drm/card0/device/performance_level');
+				$performance_level = explode(' ', $performance_level);
+
+				$core_string = array_search('core', $performance_level);
+				if($core_string !== false && isset($performance_level[($core_string + 1)]))
+				{
+					$core_string = str_ireplace('MHz', null, $performance_level[($core_string + 1)]);
+					if(is_numeric($core_string))
 					{
-						/*
-							EXAMPLE OUTPUTS:
-							memory 1000MHz core 500MHz voltage 1300mV fanspeed 100%
-							3: memory 333MHz core 500MHz shader 1250MHz fanspeed 100%
-							c: memory 333MHz core 500MHz shader 1250MHz
-						*/
+						$core_freq = $core_string;
+					}
+				}
+				$mem_string = array_search('memory', $performance_level);
+				if($mem_string !== false && isset($performance_level[($mem_string + 1)]))
+				{
+					$mem_string = str_ireplace('MHz', null, $performance_level[($mem_string + 1)]);
+					if(is_numeric($mem_string))
+					{
+						$mem_freq = $mem_string;
+					}
+				}
+			}
+			else if(is_file('/sys/class/drm/card0/device/pstate'))
+			{
+				// Nouveau
+				// pstate is present with Linux 3.13 as the new performance states on Fermi/Kepler
+				$performance_state = pts_file_io::file_get_contents('/sys/class/drm/card0/device/pstate');
+				$performance_level = substr($performance_state, 0, strpos($performance_state, ' *'));
+				if($performance_level == null)
+				{
+					// Method for Linux 3.17+
+					$performance_level = substr($performance_state, strpos($performance_state, 'AC: ') + 4);
+					if(($t = strpos($performance_level, PHP_EOL)))
+					{
+						$performance_level = substr($performance_level, 0, $t);
+					}
+				}
+				else
+				{
+					// Method for Linux ~3.13 through Linux 3.16
+					$performance_level = substr($performance_level, strrpos($performance_level, ': ') + 2);
+				}
 
-						$performance_level = pts_file_io::file_get_contents('/sys/class/drm/card0/device/performance_level');
-						$performance_level = explode(' ', $performance_level);
+				$performance_level = explode(' ', $performance_level);
+				$core_string = array_search('core', $performance_level);
+				if($core_string !== false && isset($performance_level[($core_string + 1)]))
+				{
+					$core_string = str_ireplace('MHz', null, $performance_level[($core_string + 1)]);
+					if(strpos($core_string, '-') !== false)
+					{
+						// to work around a range of values, e.g.
+						// 0a: core 405-1032 MHz memory 1620 MHz AC DC *
+						$core_string = max(explode('-', $core_string));
+					}
+					if(is_numeric($core_string))
+					{
+						$core_freq = $core_string;
+					}
+				}
+				$mem_string = array_search('memory', $performance_level);
+				if($mem_string !== false && isset($performance_level[($mem_string + 1)]))
+				{
+					$mem_string = str_ireplace('MHz', null, $performance_level[($mem_string + 1)]);
+					if(strpos($mem_string, '-') !== false)
+					{
+						// to work around a range of values, e.g.
+						// 0a: core 405-1032 MHz memory 1620 MHz AC DC *
+						$mem_string = max(explode('-', $mem_string));
+					}
+					if(is_numeric($mem_string))
+					{
+						$mem_freq = $mem_string;
+					}
+				}
 
-						$core_string = array_search('core', $performance_level);
-						if($core_string !== false && isset($performance_level[($core_string + 1)]))
+			}
+
+			//
+			// RADEON / AMDGPU Logic
+			//
+
+			if(isset(phodevi::$vfs->radeon_pm_info))
+			{
+				// radeon_pm_info should be present with Linux 2.6.34+ but was changed with Linux 3.11 Radeon DPM
+				if(stripos(phodevi::$vfs->radeon_pm_info, 'default'))
+				{
+					foreach(pts_strings::trim_explode("\n", phodevi::$vfs->radeon_pm_info) as $pm_line)
+					{
+						if($pm_line == null)
 						{
-							$core_string = str_ireplace('MHz', null, $performance_level[($core_string + 1)]);
-							if(is_numeric($core_string))
-							{
-								$core_freq = $core_string;
-							}
+							continue;
 						}
+						list($descriptor, $value) = pts_strings::colon_explode($pm_line);
 
-						$mem_string = array_search('memory', $performance_level);
-						if($mem_string !== false && isset($performance_level[($mem_string + 1)]))
+						switch($descriptor)
 						{
-							$mem_string = str_ireplace('MHz', null, $performance_level[($mem_string + 1)]);
-							if(is_numeric($mem_string))
-							{
-								$mem_freq = $mem_string;
-							}
+							case 'default engine clock':
+								$core_freq = pts_arrays::first_element(explode(' ', $value)) / 1000;
+								break;
+							case 'default memory clock':
+								$mem_freq = pts_arrays::first_element(explode(' ', $value)) / 1000;
+								break;
 						}
 					}
-					else if(is_file('/sys/class/drm/card0/device/pstate'))
+				}
+				if($core_freq == 0 && ($x = stripos(phodevi::$vfs->radeon_pm_info, 'sclk: ')) != false)
+				{
+					$x = substr(phodevi::$vfs->radeon_pm_info, $x + strlen('sclk: '));
+					$x = substr($x, 0, strpos($x, ' '));
+					if(is_numeric($x) && $x > 100)
 					{
-						// pstate is present with Linux 3.13 as the new performance states on Fermi/Kepler
-						$performance_state = pts_file_io::file_get_contents('/sys/class/drm/card0/device/pstate');
-						$performance_level = substr($performance_state, 0, strpos($performance_state, ' *'));
-						if($performance_level == null)
+						if($x > 10000)
 						{
-							// Method for Linux 3.17+
-							$performance_level = substr($performance_state, strpos($performance_state, 'AC: ') + 4);
-
-							if(($t = strpos($performance_level, PHP_EOL)))
-							{
-								$performance_level = substr($performance_level, 0, $t);
-							}
+							$x = $x / 100;
 						}
-						else
-						{
-							// Method for Linux ~3.13 through Linux 3.16
-							$performance_level = substr($performance_level, strrpos($performance_level, ': ') + 2);
-						}
-
-						$performance_level = explode(' ', $performance_level);
-
-						$core_string = array_search('core', $performance_level);
-						if($core_string !== false && isset($performance_level[($core_string + 1)]))
-						{
-							$core_string = str_ireplace('MHz', null, $performance_level[($core_string + 1)]);
-
-							if(strpos($core_string, '-') !== false)
-							{
-								// to work around a range of values, e.g.
-								// 0a: core 405-1032 MHz memory 1620 MHz AC DC *
-								$core_string = max(explode('-', $core_string));
-							}
-
-							if(is_numeric($core_string))
-							{
-								$core_freq = $core_string;
-							}
-						}
-
-						$mem_string = array_search('memory', $performance_level);
-						if($mem_string !== false && isset($performance_level[($mem_string + 1)]))
-						{
-							$mem_string = str_ireplace('MHz', null, $performance_level[($mem_string + 1)]);
-
-							if(strpos($mem_string, '-') !== false)
-							{
-								// to work around a range of values, e.g.
-								// 0a: core 405-1032 MHz memory 1620 MHz AC DC *
-								$mem_string = max(explode('-', $mem_string));
-							}
-
-							if(is_numeric($mem_string))
-							{
-								$mem_freq = $mem_string;
-							}
-						}
-
+						$core_freq = $x;
 					}
-					if($display_driver != null)
+					if(($x = stripos(phodevi::$vfs->radeon_pm_info, 'mclk: ')) != false)
 					{
-						break;
-					}
-				case 'radeon':
-					if(isset(phodevi::$vfs->radeon_pm_info))
-					{
-						// radeon_pm_info should be present with Linux 2.6.34+ but was changed with Linux 3.11 Radeon DPM
-						if(stripos(phodevi::$vfs->radeon_pm_info, 'default'))
+						$x = substr(phodevi::$vfs->radeon_pm_info, $x + strlen('mclk: '));
+						$x = substr($x, 0, strpos($x, ' '));
+						if(is_numeric($x) && $x > 100)
 						{
-							foreach(pts_strings::trim_explode("\n", phodevi::$vfs->radeon_pm_info) as $pm_line)
+							if($x > 10000)
 							{
-								if($pm_line == null)
-								{
-									continue;
-								}
-
-								list($descriptor, $value) = pts_strings::colon_explode($pm_line);
-
-								switch($descriptor)
-								{
-									case 'default engine clock':
-										$core_freq = pts_arrays::first_element(explode(' ', $value)) / 1000;
-										break;
-									case 'default memory clock':
-										$mem_freq = pts_arrays::first_element(explode(' ', $value)) / 1000;
-										break;
-								}
+								$x = $x / 100;
 							}
-						}
-						if($core_freq == 0 && ($x = stripos(phodevi::$vfs->radeon_pm_info, 'sclk: ')) != false)
-						{
-							$x = substr(phodevi::$vfs->radeon_pm_info, $x + strlen('sclk: '));
-							$x = substr($x, 0, strpos($x, ' '));
-							if(is_numeric($x) && $x > 100)
-							{
-								if($x > 10000)
-								{
-									$x = $x / 100;
-								}
-								$core_freq = $x;
-							}
-
-							if(($x = stripos(phodevi::$vfs->radeon_pm_info, 'mclk: ')) != false)
-							{
-								$x = substr(phodevi::$vfs->radeon_pm_info, $x + strlen('mclk: '));
-								$x = substr($x, 0, strpos($x, ' '));
-								if(is_numeric($x) && $x > 100)
-								{
-									if($x > 10000)
-									{
-										$x = $x / 100;
-									}
-									$mem_freq = $x;
-								}
-							}
+							$mem_freq = $x;
 						}
 					}
+				}
+			}
+			if($core_freq == null && isset(phodevi::$vfs->dmesg) && strrpos(phodevi::$vfs->dmesg, ' sclk:'))
+			{
+				// Attempt to read the LAST power level reported to dmesg, this is the current way for Radeon DPM on Linux 3.11+
+				$dmesg_parse = phodevi::$vfs->dmesg;
+				if(($x = strrpos($dmesg_parse, ' sclk:')))
+				{
+					$dmesg_parse = substr($dmesg_parse, $x);
+					$dmesg_parse = explode(' ', substr($dmesg_parse, 0, strpos($dmesg_parse, PHP_EOL)));
 
-					if($core_freq == null)
+					$sclk = array_search('sclk:', $dmesg_parse);
+					if($sclk !== false && isset($dmesg_parse[($sclk + 1)]) && is_numeric($dmesg_parse[($sclk + 1)]))
 					{
-						// Attempt to read the LAST power level reported to dmesg, this is the current way for Radeon DPM on Linux 3.11+
-						$dmesg_parse = isset(phodevi::$vfs->dmesg) ? phodevi::$vfs->dmesg : null;
-						if(($x = strrpos($dmesg_parse, ' sclk:')))
+						$sclk = $dmesg_parse[($sclk + 1)];
+						if($sclk > 10000)
 						{
-							$dmesg_parse = substr($dmesg_parse, $x);
-							$dmesg_parse = explode(' ', substr($dmesg_parse, 0, strpos($dmesg_parse, PHP_EOL)));
-
-							$sclk = array_search('sclk:', $dmesg_parse);
-							if($sclk !== false && isset($dmesg_parse[($sclk + 1)]) && is_numeric($dmesg_parse[($sclk + 1)]))
-							{
-								$sclk = $dmesg_parse[($sclk + 1)];
-								if($sclk > 10000)
-								{
-									$sclk = $sclk / 100;
-								}
-
-								$core_freq = $sclk;
-							}
-							$mclk = array_search('mclk:', $dmesg_parse);
-							if($mclk !== false && isset($dmesg_parse[($mclk + 1)]) && is_numeric($dmesg_parse[($mclk + 1)]))
-							{
-								$mclk = $dmesg_parse[($mclk + 1)];
-								if($mclk > 10000)
-								{
-									$mclk = $mclk / 100;
-								}
-
-								$mem_freq = $mclk;
-							}
+							$sclk = $sclk / 100;
 						}
+						$core_freq = $sclk;
 					}
-
-					if($core_freq == null)
+					$mclk = array_search('mclk:', $dmesg_parse);
+					if($mclk !== false && isset($dmesg_parse[($mclk + 1)]) && is_numeric($dmesg_parse[($mclk + 1)]))
 					{
-						// Old ugly way of handling the clock information
-						$log_parse = isset(phodevi::$vfs->xorg_log) ? phodevi::$vfs->xorg_log : null;
-						if(($engine_clock = strpos($log_parse, 'Default Engine Clock: ')))
+						$mclk = $dmesg_parse[($mclk + 1)];
+						if($mclk > 10000)
 						{
-							$core_freq = substr($log_parse, $engine_clock + 22);
-							$core_freq = substr($core_freq, 0, strpos($core_freq, "\n"));
-							$core_freq = is_numeric($core_freq) ? $core_freq / 1000 : 0;
-
-							if($core_freq && ($mem_clock = strpos($log_parse, 'Default Memory Clock: ')))
-							{
-								$mem_freq = substr($log_parse, $mem_clock + 22);
-								$mem_freq = substr($mem_freq, 0, strpos($mem_freq, "\n"));
-								$mem_freq = is_numeric($mem_freq) ? $mem_freq / 1000 : 0;
-							}
-							else
-							{
-								$core_freq = 0;
-							}
+							$mclk = $mclk / 100;
 						}
+						$mem_freq = $mclk;
 					}
-					if($display_driver != null)
+				}
+			}
+
+			//
+			// INTEL
+			//
+
+			// try to read the maximum dynamic frequency
+			if($core_freq == 0 && is_file('/sys/class/drm/card0/gt_max_freq_mhz'))
+			{
+				$gt_max_freq_mhz = pts_file_io::file_get_contents('/sys/class/drm/card0/gt_max_freq_mhz');
+				if(is_numeric($gt_max_freq_mhz) && $gt_max_freq_mhz > 100)
+				{
+					// Tested on Linux 3.11. Assume the max frequency on any competent GPU is beyond 100MHz
+					$core_freq = $gt_max_freq_mhz;
+				}
+			}
+			if($core_freq == 0 && is_file('/sys/kernel/debug/dri/0/i915_max_freq'))
+			{
+				$i915_max_freq = pts_file_io::file_get_contents('/sys/kernel/debug/dri/0/i915_max_freq');
+				$freq_mhz = substr($i915_max_freq, strpos($i915_max_freq, ': ') + 2);
+				if(is_numeric($freq_mhz))
+				{
+					$core_freq = $freq_mhz;
+				}
+			}
+			// Fallback to base frequency
+			if($core_freq == 0 && isset(phodevi::$vfs->i915_cur_delayinfo))
+			{
+				$i915_cur_delayinfo = phodevi::$vfs->i915_cur_delayinfo;
+				$freq = strpos($i915_cur_delayinfo, 'Max overclocked frequency: ');
+
+				if($freq === false)
+				{
+					$freq = strpos($i915_cur_delayinfo, 'Max non-overclocked (RP0) frequency: ');
+				}
+				if($freq === false)
+				{
+					$freq = strpos($i915_cur_delayinfo, 'Nominal (RP1) frequency: ');
+				}
+
+				if($freq !== false)
+				{
+					$freq_mhz = substr($i915_cur_delayinfo, strpos($i915_cur_delayinfo, ': ', $freq) + 2);
+					$freq_mhz = trim(substr($freq_mhz, 0, strpos($freq_mhz, 'MHz')));
+					if(is_numeric($freq_mhz))
 					{
-						break;
+						$core_freq = $freq_mhz;
 					}
-				case 'intel':
-					// try to read the maximum dynamic frequency
-					if(is_file('/sys/class/drm/card0/gt_max_freq_mhz'))
-					{
-						$gt_max_freq_mhz = pts_file_io::file_get_contents('/sys/class/drm/card0/gt_max_freq_mhz');
-
-						if(is_numeric($gt_max_freq_mhz) && $gt_max_freq_mhz > 100)
-						{
-							// Tested on Linux 3.11. Assume the max frequency on any competent GPU is beyond 100MHz
-							$core_freq = $gt_max_freq_mhz;
-						}
-					}
-
-					if($core_freq == 0 && is_file('/sys/kernel/debug/dri/0/i915_max_freq'))
-					{
-						$i915_max_freq = pts_file_io::file_get_contents('/sys/kernel/debug/dri/0/i915_max_freq');
-						$freq_mhz = substr($i915_max_freq, strpos($i915_max_freq, ': ') + 2);
-
-						if(is_numeric($freq_mhz))
-						{
-							$core_freq = $freq_mhz;
-						}
-					}
-
-					// Fallback to base frequency
-					if($core_freq == 0 && isset(phodevi::$vfs->i915_cur_delayinfo))
-					{
-						$i915_cur_delayinfo = phodevi::$vfs->i915_cur_delayinfo;
-						$freq = strpos($i915_cur_delayinfo, 'Max overclocked frequency: ');
-
-						if($freq === false)
-						{
-							$freq = strpos($i915_cur_delayinfo, 'Max non-overclocked (RP0) frequency: ');
-						}
-
-						if($freq === false)
-						{
-							$freq = strpos($i915_cur_delayinfo, 'Nominal (RP1) frequency: ');
-						}
-
-						if($freq !== false)
-						{
-							$freq_mhz = substr($i915_cur_delayinfo, strpos($i915_cur_delayinfo, ': ', $freq) + 2);
-							$freq_mhz = trim(substr($freq_mhz, 0, strpos($freq_mhz, 'MHz')));
-
-							if(is_numeric($freq_mhz))
-							{
-								$core_freq = $freq_mhz;
-							}
-						}
-					}
-					if($display_driver != null)
-					{
-						break;
-					}
+				}
 			}
 		}
 
