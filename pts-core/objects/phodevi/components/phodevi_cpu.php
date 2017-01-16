@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2016, Phoronix Media
-	Copyright (C) 2008 - 2016, Michael Larabel
+	Copyright (C) 2008 - 2017, Phoronix Media
+	Copyright (C) 2008 - 2017, Michael Larabel
 	phodevi_cpu.php: The PTS Device Interface object for the CPU / processor
 
 	This program is free software; you can redistribute it and/or modify
@@ -583,6 +583,16 @@ class phodevi_cpu extends phodevi_device_interface
 		else
 		{
 			$cache_size = null;
+		}
+
+		return $cache_size;
+	}
+	public static function cpuinfo_cache_size_string()
+	{
+		$cache_size = self::cpuinfo_cache_size();
+		if($cache_size > 1)
+		{
+			$cache_size .= ' KB';
 		}
 
 		return $cache_size;

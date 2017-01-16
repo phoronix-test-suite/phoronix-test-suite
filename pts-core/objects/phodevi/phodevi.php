@@ -279,6 +279,9 @@ class phodevi extends phodevi_base
 				array(
 				'Core Count' => phodevi_cpu::cpuinfo_core_count(),
 				'Thread Count' => phodevi_cpu::cpuinfo_thread_count(),
+				'Extensions' => phodevi_cpu::instruction_set_extensions(),
+			//	'Virtualization' => (phodevi_cpu::virtualization_technology() ? phodevi_cpu::virtualization_technology() : ''),
+				'Cache Size' => phodevi_cpu::cpuinfo_cache_size_string(),
 				'Scaling Driver'=> phodevi::read_property('cpu', 'scaling-governor'),
 				),
 			'Graphics' => phodevi::read_name('gpu'),
