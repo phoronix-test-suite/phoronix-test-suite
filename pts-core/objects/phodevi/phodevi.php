@@ -279,7 +279,7 @@ class phodevi extends phodevi_base
 				array(
 				'Core Count' => phodevi_cpu::cpuinfo_core_count(),
 				'Thread Count' => phodevi_cpu::cpuinfo_thread_count(),
-				'Scaling Driver/Governor'=> phodevi::read_property('cpu', 'scaling-governor'),
+				'Scaling Driver'=> phodevi::read_property('cpu', 'scaling-governor'),
 				),
 			'Graphics' => phodevi::read_name('gpu'),
 				array(
@@ -287,8 +287,8 @@ class phodevi extends phodevi_base
 				'Vulkan' => phodevi::read_property('system', 'vulkan-driver'),
 				'OpenCL' => phodevi::read_property('system', 'opencl-driver'),
 				'Display Driver' => phodevi::read_property('system', 'display-driver-string'),
-				'Screen Resolution' => phodevi::read_property('gpu', 'screen-resolution-string'),
 				'Monitor' => phodevi::read_name('monitor'),
+				'Screen' => phodevi::read_property('gpu', 'screen-resolution-string'),
 				),
 			'Motherboard' => phodevi::read_name('motherboard'),
 				array(
@@ -316,24 +316,35 @@ class phodevi extends phodevi_base
 		if($return_as_string)
 		{
 			$sys_string = null;
+			$tabled = array();
 			foreach($sys as $key => $in)
 			{
 				$space_in = 2;
 				if(is_array($in))
 				{
+					$tabled = array();
 					foreach($in as $key => $value)
 					{
 						if(!empty($value))
 						{
-							$sys_string .= '      ' . $key . ': ' . $value . PHP_EOL;
+							$tabled[] = array($key . ':', $value);
+							//$sys_string .= '      ' . strtoupper($key) . ':' . $value . PHP_EOL;
 						}
 					}
 				}
 				else if(!empty($in))
 				{
-					$sys_string .= '  ' . strtoupper($key) . ': ' . $in . PHP_EOL;
+					if(!empty($tabled))
+					{
+						$sys_string .= pts_user_io::display_text_table($tabled, '    ', 0, 17) . PHP_EOL;
+					}
+					$sys_string .= PHP_EOL . '  ' . strtoupper($key) . ': ' . $in . PHP_EOL;
 				}
 
+			}
+			if(!empty($tabled))
+			{
+				$sys_string .= pts_user_io::display_text_table($tabled, '    ', 0, 17) . PHP_EOL;
 			}
 			return $sys_string;
 		}

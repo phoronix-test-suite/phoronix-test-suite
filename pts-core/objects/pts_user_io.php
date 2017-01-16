@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2016, Phoronix Media
-	Copyright (C) 2008 - 2016, Michael Larabel
+	Copyright (C) 2008 - 2017, Phoronix Media
+	Copyright (C) 2008 - 2017, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -48,7 +48,7 @@ class pts_user_io
 
 		return $list;
 	}
-	public static function display_text_table(&$table, $prepend_to_lines = null, $extra_width_to_column = 0)
+	public static function display_text_table(&$table, $prepend_to_lines = null, $extra_width_to_column = 0, $min_width = 0)
 	{
 		$column_widths = array();
 		$formatted_table = $prepend_to_lines;
@@ -72,7 +72,7 @@ class pts_user_io
 
 				if(($c + 1) != $rc_count)
 				{
-					$formatted_table .= str_repeat(' ', (1 + $extra_width_to_column + $column_widths[$c] - strlen($table[$r][$c])));
+					$formatted_table .= str_repeat(' ', (max($min_width, 1 + $extra_width_to_column + $column_widths[$c]) - strlen($table[$r][$c])));
 				}
 			}
 
