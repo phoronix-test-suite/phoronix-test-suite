@@ -176,7 +176,7 @@
 		</Package>
 		<Package>
 			<GenericName>lapack-development</GenericName>
-			<PackageName>lapack-devel</PackageName>
+			<PackageName>lapack-devel lapacke-devel</PackageName>
 		</Package>
 		<Package>
 			<GenericName>cmake</GenericName>
