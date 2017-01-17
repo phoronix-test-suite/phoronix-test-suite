@@ -274,11 +274,14 @@ class phodevi extends phodevi_base
 	}
 	public static function system_centralized_view($return_as_string = true)
 	{
+		$core_count = phodevi_cpu::cpuinfo_core_count();
+		$thread_count = phodevi_cpu::cpuinfo_thread_count()
+
 		$sys = array(
 			'Processor' => phodevi::read_name('cpu'),
 				array(
-				'Core Count' => phodevi_cpu::cpuinfo_core_count(),
-				'Thread Count' => phodevi_cpu::cpuinfo_thread_count(),
+				'Core Count' => $core_count,
+				'Thread Count' => $core_count == $thread_count ? '' : $thread_count, // don't show thread count if it's same as core count
 				'Extensions' => phodevi_cpu::instruction_set_extensions(),
 			//	'Virtualization' => (phodevi_cpu::virtualization_technology() ? phodevi_cpu::virtualization_technology() : ''),
 				'Cache Size' => phodevi_cpu::cpuinfo_cache_size_string(),
