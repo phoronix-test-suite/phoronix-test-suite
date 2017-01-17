@@ -275,7 +275,7 @@ class phodevi extends phodevi_base
 	public static function system_centralized_view($return_as_string = true)
 	{
 		$core_count = phodevi_cpu::cpuinfo_core_count();
-		$thread_count = phodevi_cpu::cpuinfo_thread_count()
+		$thread_count = phodevi_cpu::cpuinfo_thread_count();
 
 		$sys = array(
 			'Processor' => phodevi::read_name('cpu'),
