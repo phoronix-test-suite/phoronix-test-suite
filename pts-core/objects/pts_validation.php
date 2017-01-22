@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2016, Phoronix Media
-	Copyright (C) 2009 - 2016, Michael Larabel
+	Copyright (C) 2009 - 2017, Phoronix Media
+	Copyright (C) 2009 - 2017, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -172,8 +172,9 @@ class pts_validation
 			$writer->rebuild_download_file($test_profile);
 			$writer->save_xml($download_xml_file);
 
-			$downloads_parser = new pts_test_downloads_nye_XmlReader($download_xml_file);
-			$valid = $downloads_parser->validate();
+			$dom = new DOMDocument();
+			$dom->load($download_xml_file);
+			$valid = $dom->schemaValidate(PTS_OPENBENCHMARKING_PATH . 'schemas/test-profile-downloads.xsd');
 
 			if($valid == false)
 			{

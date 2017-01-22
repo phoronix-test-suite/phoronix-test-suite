@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2016, Phoronix Media
-	Copyright (C) 2010 - 2016, Michael Larabel
+	Copyright (C) 2010 - 2017, Phoronix Media
+	Copyright (C) 2010 - 2017, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -69,40 +69,46 @@ class pts_test_install_request
 
 		if($download_xml_file != null)
 		{
-			$xml_parser = new pts_test_downloads_nye_XmlReader($download_xml_file);
-			$package_url = $xml_parser->getXMLArrayValues('PhoronixTestSuite/Downloads/Package/URL');
-			$package_md5 = $xml_parser->getXMLArrayValues('PhoronixTestSuite/Downloads/Package/MD5');
-			$package_sha256 = $xml_parser->getXMLArrayValues('PhoronixTestSuite/Downloads/Package/SHA256');
-			$package_filename = $xml_parser->getXMLArrayValues('PhoronixTestSuite/Downloads/Package/FileName');
-			$package_filesize = $xml_parser->getXMLArrayValues('PhoronixTestSuite/Downloads/Package/FileSize');
-			$package_platform = $xml_parser->getXMLArrayValues('PhoronixTestSuite/Downloads/Package/PlatformSpecific');
-			$package_architecture = $xml_parser->getXMLArrayValues('PhoronixTestSuite/Downloads/Package/ArchitectureSpecific');
+			$xml_options = LIBXML_COMPACT | LIBXML_PARSEHUGE;
+			$xml = simplexml_load_file($download_xml_file, 'SimpleXMLElement', $xml_options);
 
-			foreach(array_keys($package_url) as $i)
+			if($xml->Downloads && $xml->Downloads->Package)
 			{
-				if(!empty($package_platform[$i]) && $do_file_checks)
+				foreach($xml->Downloads->Package as $pkg)
 				{
-					$platforms = pts_strings::comma_explode($package_platform[$i]);
-
-					if(!in_array(phodevi::operating_system(), $platforms) && !(phodevi::is_bsd() && in_array('Linux', $platforms) && (pts_client::executable_in_path('kldstat') && strpos(shell_exec('kldstat -n linux 2>&1'), 'linux.ko') != false)))
+					// Check for platform compatibility
+					$pkg_platforms = isset($pkg->PlatformSpecific) ? $pkg->PlatformSpecific->__toString() : null;
+					if(!empty($pkg_platforms) && $do_file_checks)
 					{
-						// This download does not match the operating system
-						continue;
+						$platforms = pts_strings::comma_explode($pkg_platforms);
+						if(!in_array(phodevi::operating_system(), $platforms) && !(phodevi::is_bsd() && in_array('Linux', $platforms) && (pts_client::executable_in_path('kldstat') && strpos(shell_exec('kldstat -n linux 2>&1'), 'linux.ko') != false)))
+						{
+							// This download does not match the operating system
+							continue;
+						}
 					}
-				}
 
-				if(!empty($package_architecture[$i]) && $do_file_checks)
-				{
-					$architectures = pts_strings::comma_explode($package_architecture[$i]);
-
-					if(phodevi::cpu_arch_compatible($architectures) == false)
+					// Check for architecture compatibility
+					$pkg_architecture = isset($pkg->ArchitectureSpecific) ? $pkg->ArchitectureSpecific->__toString() : null;
+					if(!empty($pkg_architecture) && $do_file_checks)
 					{
-						// This download does not match the CPU architecture
-						continue;
-					}
-				}
+						$architectures = pts_strings::comma_explode($pkg_architecture);
 
-				$this->test_files[] = new pts_test_file_download($package_url[$i], $package_filename[$i], $package_filesize[$i], $package_md5[$i], $package_sha256[$i], $package_platform[$i], $package_architecture[$i]);
+						if(phodevi::cpu_arch_compatible($architectures) == false)
+						{
+							// This download does not match the CPU architecture
+							continue;
+						}
+					}
+
+					$pkg_url = isset($pkg->URL) ? $pkg->URL->__toString() : null;
+					$pkg_md5 = isset($pkg->MD5) ? $pkg->MD5->__toString() : null;
+					$pkg_sha256 = isset($pkg->SHA256) ? $pkg->SHA256->__toString() : null;
+					$pkg_filename = isset($pkg->FileName) ? $pkg->FileName->__toString() : null;
+					$pkg_filesize = isset($pkg->FileSize) ? $pkg->FileSize->__toString() : null;
+					$pkg_architecture = isset($pkg->ArchitectureSpecific) ? $pkg->ArchitectureSpecific->__toString() : null;
+					$this->test_files[] = new pts_test_file_download($pkg_url, $pkg_filename, $pkg_filesize, $pkg_md5, $pkg_sha256, $pkg_platforms, $pkg_architecture);
+				}
 			}
 		}
 	}
