@@ -229,8 +229,9 @@ class pts_validation
 			$writer = self::rebuild_result_parser_file($parser_file);
 			$writer->saveXMLFile($parser_file);
 
-			$parser = new pts_parse_results_nye_XmlReader($parser_file);
-			$valid = $parser->validate();
+			$dom = new DOMDocument();
+			$dom->load($parser_file);
+			$valid = $dom->schemaValidate(PTS_OPENBENCHMARKING_PATH . 'schemas/results-parser.xsd');
 
 			if($valid == false)
 			{
@@ -261,7 +262,7 @@ class pts_validation
 	public static function rebuild_result_parser_file($xml_file)
 	{
 		$xml_writer = new nye_XmlWriter();
-		$xml_parser = new pts_parse_results_nye_XmlReader($xml_file);
+		$xml_parser = new nye_XmlReader($xml_file);
 		$result_template = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ResultsParser/OutputTemplate');
 		$result_match_test_arguments = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ResultsParser/MatchToTestArguments');
 		$result_key = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ResultsParser/ResultKey');

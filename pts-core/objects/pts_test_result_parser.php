@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2016, Phoronix Media
-	Copyright (C) 2010 - 2016, Michael Larabel
+	Copyright (C) 2010 - 2017, Phoronix Media
+	Copyright (C) 2010 - 2017, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@ class pts_test_result_parser
 
 		self::$monitoring_sensors = array();
 		$test_directory = $test_profile->get_install_dir();
-		$results_parser_xml = new pts_parse_results_nye_XmlReader($parse_xml_file);
+		$results_parser_xml = new nye_XmlReader($parse_xml_file);
 		$monitor_sensor = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/SystemMonitor/Sensor');
 		$monitor_frequency = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/SystemMonitor/PollingFrequency');
 		$monitor_report_as = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/SystemMonitor/Report');
@@ -249,7 +249,7 @@ class pts_test_result_parser
 			return;
 		}
 
-		$results_parser_xml = new pts_parse_results_nye_XmlReader($parse_xml_file);
+		$results_parser_xml = new nye_XmlReader($parse_xml_file);
 		$extra_data_identifiers = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/ExtraData/Identifier');
 		$extra_results = array();
 
@@ -474,7 +474,7 @@ class pts_test_result_parser
 	}
 	protected static function parse_iqc_result(&$test_profile, $parse_xml_file, $log_file, $pts_test_arguments, $extra_arguments)
 	{
-		$results_parser_xml = new pts_parse_results_nye_XmlReader($parse_xml_file);
+		$results_parser_xml = new nye_XmlReader($parse_xml_file);
 		$result_match_test_arguments = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/ImageParser/MatchToTestArguments');
 		$result_iqc_source_file = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/ImageParser/SourceImage');
 		$result_iqc_image_x = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/ImageParser/ImageX');
@@ -538,7 +538,7 @@ class pts_test_result_parser
 	protected static function parse_result_process(&$test_run_request, $parse_xml_file, $log_file, $pts_test_arguments, $extra_arguments, $is_numeric_check = true, $prefix = null)
 	{
 		$test_identifier = $test_run_request->test_profile->get_identifier();
-		$results_parser_xml = new pts_parse_results_nye_XmlReader($parse_xml_file);
+		$results_parser_xml = new nye_XmlReader($parse_xml_file);
 		$result_match_test_arguments = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/ResultsParser/MatchToTestArguments');
 		$result_scale = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/ResultsParser/ResultScale');
 		$result_proportion = $results_parser_xml->getXMLArrayValues('PhoronixTestSuite/ResultsParser/ResultProportion');
