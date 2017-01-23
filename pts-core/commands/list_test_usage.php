@@ -32,7 +32,8 @@ class list_test_usage implements pts_option_interface
 
 		if(count($installed_tests) > 0)
 		{
-			echo sprintf('%-28ls %-13ls %-11ls %-13ls %-10ls', 'TEST', 'INSTALL DATE', 'LAST RUN', 'AVG RUN-TIME', 'TIMES RUN') . PHP_EOL;
+			echo sprintf('%-32ls %-12ls %-11ls %-8ls %-6ls', 'TEST', 'INSTALL', 'LAST RUN', 'AVERAGE', 'TIMES') . PHP_EOL;
+			echo sprintf('%-32ls %-12ls %-11ls %-8ls %-6ls', '', 'DATE', 'DATE', 'RUNTIME', 'RUN') . PHP_EOL;
 			foreach($installed_tests as $identifier)
 			{
 				$test_profile = new pts_test_profile($identifier);
@@ -45,7 +46,7 @@ class list_test_usage implements pts_option_interface
 					$last_run = $test_profile->test_installation->get_last_run_date();
 					$last_run = $last_run == '0000-00-00' ? 'NEVER' : $last_run;
 
-					echo sprintf('%-28ls %-13ls %-11ls %-13ls %-10ls', $identifier, $test_profile->test_installation->get_install_date(), $last_run, $avg_time, $test_profile->test_installation->get_run_count()) . PHP_EOL;
+					echo sprintf('%-32ls %-12ls %-11ls %-8ls %-6ls', $identifier, $test_profile->test_installation->get_install_date(), $last_run, $avg_time, $test_profile->test_installation->get_run_count()) . PHP_EOL;
 				}
 			}
 		}
