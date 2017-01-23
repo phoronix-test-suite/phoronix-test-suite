@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2016, Phoronix Media
-	Copyright (C) 2008 - 2016, Michael Larabel
+	Copyright (C) 2008 - 2017, Phoronix Media
+	Copyright (C) 2008 - 2017, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -89,7 +89,7 @@ class pts_render
 	}
 	public static function render_graph_process(&$result_object, &$result_file = null, $save_as = false, $extra_attributes = null)
 	{
-		// TODO XXX: $save_as doesn't appear used anymore
+		// NOTICE: $save_as doesn't appear used anymore
 		if(isset($extra_attributes['clear_unchanged_results']))
 		{
 			$result_object->remove_unchanged_results();
@@ -176,33 +176,6 @@ class pts_render
 					{
 						$result_object->test_profile->set_display_format('HORIZONTAL_BOX_PLOT');
 					}
-				/*	else // XXX commented out during PTS 6.0 development, TODO decide if to delete
-					{
-						// Turn a multi-way line graph into an averaged bar graph
-						$buffer_items = $result_object->test_result_buffer->get_buffer_items();
-						$result_object->test_result_buffer = new pts_test_result_buffer();
-
-						foreach($buffer_items as $buffer_item)
-						{
-							$values = pts_strings::comma_explode($buffer_item->get_result_value());
-							$avg_value = pts_math::set_precision(array_sum($values) / count($values), 2);
-							$j = null;
-							if(count($values) > 2)
-							{
-								$j['min-result'] = min($values);
-								$j['max-result'] = max($values);
-
-								if($j['min-result'] == $j['max-result'])
-								{
-									$json = null;
-								}
-							}
-
-							$result_object->test_result_buffer->add_test_result($buffer_item->get_result_identifier(), $avg_value, null, $j, $j['min-result'], $j['max-result']);
-						}
-
-						$result_object->test_profile->set_display_format('BAR_GRAPH');
-					} */
 				}
 
 				if($result_file->is_results_tracker() && !isset($extra_attributes['compact_to_scalar']))
@@ -496,23 +469,24 @@ class pts_render
 
 		foreach($json as $identifier => &$data)
 		{
-			// TODO XXX: Ultimately merge this data into the SE +/- line...
+			$graph_identifier_note = null;
 			if(isset($data['min-result']))
 			{
-				if(isset($data['max-result']))
-				{
-					$graph->addGraphIdentifierNote($identifier, 'MIN: ' . $data['min-result'] . ' / MAX: ' . $data['max-result']);
-				}
-				else
-				{
-					$graph->addGraphIdentifierNote($identifier, 'MIN: ' . $data['min-result']);
-				}
+				$graph_identifier_note .= ($graph_identifier_note == null ? '' : ' / ') . 'MIN: ' . $data['min-result'];
+			}
+			if(isset($data['max-result']))
+			{
+				$graph_identifier_note .= ($graph_identifier_note == null ? '' : ' / ') . 'MAX: ' . $data['min-result'];
+			}
+
+			if($graph_identifier_note)
+			{
+				$graph->addGraphIdentifierNote($identifier, $graph_identifier_note);
 			}
 
 			if(isset($data['install-footnote']) && $data['install-footnote'] != null)
 			{
 				$graph->addTestNote($identifier . ': ' . $data['install-footnote']);
-				//$graph->addGraphIdentifierNote($identifier, $data['install-footnote']);
 			}
 		}
 	}
@@ -604,7 +578,7 @@ class pts_render
 			{
 				if($days_keys == null)
 				{
-					// TODO: Rather messy and inappropriate way of getting the days keys
+					// Rather messy and inappropriate way of getting the days keys
 					$days_keys = array_keys($system);
 					break;
 				}
@@ -672,11 +646,6 @@ class pts_render
 			$prev_system = $identifier_r[0];
 			$systems[$identifier_r[0]] = !isset($systems[$identifier_r[0]]) ? 1 : $systems[$identifier_r[0]] + 1;
 			$targets[$identifier_r[1]] = !isset($targets[$identifier_r[1]]) ? 1 : $targets[$identifier_r[1]] + 1;
-		}
-
-		if(false && $is_ordered == false && $is_multi_way)
-		{
-			// TODO: get the reordering code to work
 		}
 
 		$is_multi_way_inverted = $is_multi_way && count($targets) > count($systems);

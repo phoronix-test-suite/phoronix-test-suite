@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2016, Phoronix Media
-	Copyright (C) 2008 - 2016, Michael Larabel
+	Copyright (C) 2008 - 2017, Phoronix Media
+	Copyright (C) 2008 - 2017, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -193,7 +193,6 @@ class pts_tests
 			$extra_vars = array_merge($extra_vars, $extra_vars_append);
 		}
 
-		// TODO: call_test_script could be better cleaned up to fit more closely with new pts_test_profile functions
 		$result = null;
 		$test_directory = $test_profile->get_install_dir();
 		pts_file_io::mkdir($test_directory, 0777, true);
@@ -250,7 +249,6 @@ class pts_tests
 		// Refresh/generate an install XML for pts-install.xml
 		if($test_profile->test_installation == false)
 		{
-			// XXX: Hackish way to avoid problems until this function is better written for clean installations, etc
 			$test_profile->test_installation = new pts_installed_test($test_profile);
 		}
 		$xml_writer = new nye_XmlWriter('file://' . PTS_USER_PATH . 'xsl/' . 'pts-test-installation-viewer.xsl');
