@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2012, Phoronix Media
-	Copyright (C) 2008 - 2012, Michael Larabel
+	Copyright (C) 2008 - 2017, Phoronix Media
+	Copyright (C) 2008 - 2017, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@ class list_test_usage implements pts_option_interface
 
 		if(count($installed_tests) > 0)
 		{
-			echo sprintf('%-18ls   %-8ls %-13ls %-11ls %-13ls %-10ls', 'TEST', 'VERSION', 'INSTALL DATE', 'LAST RUN', 'AVG RUN-TIME', 'TIMES RUN') . PHP_EOL;
+			echo sprintf('%-28ls %-13ls %-11ls %-13ls %-10ls', 'TEST', 'INSTALL DATE', 'LAST RUN', 'AVG RUN-TIME', 'TIMES RUN') . PHP_EOL;
 			foreach($installed_tests as $identifier)
 			{
 				$test_profile = new pts_test_profile($identifier);
@@ -45,7 +45,7 @@ class list_test_usage implements pts_option_interface
 					$last_run = $test_profile->test_installation->get_last_run_date();
 					$last_run = $last_run == '0000-00-00' ? 'NEVER' : $last_run;
 
-					echo sprintf('%-18ls - %-8ls %-13ls %-11ls %-13ls %-10ls', $identifier, $test_profile->test_installation->get_installed_version(), $test_profile->test_installation->get_install_date(), $last_run, $avg_time, $test_profile->test_installation->get_run_count()) . PHP_EOL;
+					echo sprintf('%-28ls %-13ls %-11ls %-13ls %-10ls', $identifier, $test_profile->test_installation->get_install_date(), $last_run, $avg_time, $test_profile->test_installation->get_run_count()) . PHP_EOL;
 				}
 			}
 		}

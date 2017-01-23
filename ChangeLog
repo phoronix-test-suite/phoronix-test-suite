@@ -7,6 +7,8 @@ Phoronix Test Suite (Git)
 - pts-core: Drop detailed-system-info sub-command now that system-info is more verbose
 - pts-core: Eliminate pts_test_downloads_nye_XmlReader
 - pts-core: Eliminate pts_parse_results_nye_XmlReader abstraction
+- pts-core: A lot of cleanups / reworking of XML parsing in various components
+- pts-core: Cleanup phoronix-test-suite list-test-usage
 - phodevi: Fix for hanging Windows client when requesting disk mount options
 - phodevi: Don't rely upon X.Org DDX driver logic for determining GPU frequency since it's not portable to Wayland or with -modesetting DDX
 
