@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2012 - 2016, Phoronix Media
-	Copyright (C) 2012 - 2016, Michael Larabel
+	Copyright (C) 2012 - 2017, Phoronix Media
+	Copyright (C) 2012 - 2017, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -30,15 +30,19 @@ class pts_exdep_generic_parser
 
 		if(PTS_IS_CLIENT)
 		{
-			$xml_parser = new nye_XmlReader(PTS_EXDEP_PATH . 'xml/generic-packages.xml');
-			$generic_package_name = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ExternalDependencies/Package/GenericName');
-			$title = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ExternalDependencies/Package/Title');
-			$generic_file_check = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ExternalDependencies/Package/FileCheck');
-			$possible_packages = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ExternalDependencies/Package/PossibleNames');
+			$xml_options = LIBXML_COMPACT | LIBXML_PARSEHUGE;
+			$xml = simplexml_load_file(PTS_EXDEP_PATH . 'xml/generic-packages.xml', 'SimpleXMLElement', $xml_options);
 
-			foreach(array_keys($generic_package_name) as $i)
+			if(isset($xml->ExternalDependencies) && isset($xml->ExternalDependencies->Package))
 			{
-				$this->struct['external-dependencies']['generic-packages'][$generic_package_name[$i]] = $this->get_package_format($title[$i], $generic_file_check[$i], $possible_packages[$i]);
+				foreach($xml->ExternalDependencies->Package as $pkg)
+				{
+					$generic_name = isset($pkg->GenericName) ? $pkg->GenericName->__toString() : null;
+					$title = isset($pkg->Title) ? $pkg->Title->__toString() : null;
+					$file_check = isset($pkg->FileCheck) ? $pkg->FileCheck->__toString() : null;
+					$possible_packages = isset($pkg->PossibleNames) ? $pkg->PossibleNames->__toString() : null;
+					$this->struct['external-dependencies']['generic-packages'][$generic_name] = $this->get_package_format($title, $file_check, $possible_packages);
+				}
 			}
 		}
 	}
