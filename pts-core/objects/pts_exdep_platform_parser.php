@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2012 - 2016, Phoronix Media
-	Copyright (C) 2012 - 2016, Michael Larabel
+	Copyright (C) 2012 - 2017, Phoronix Media
+	Copyright (C) 2012 - 2017, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -31,34 +31,37 @@ class pts_exdep_platform_parser
 		if(PTS_IS_CLIENT)
 		{
 			$xml = PTS_EXDEP_PATH . 'xml/' . $identifier . '-packages.xml';
-			$xml_parser = new nye_XmlReader($xml);
+			$xml_options = LIBXML_COMPACT | LIBXML_PARSEHUGE;
+			$xml = simplexml_load_file($xml, 'SimpleXMLElement', $xml_options);
 
-			$this->struct['external-dependencies']['name'] = $xml_parser->getXMLValue('PhoronixTestSuite/ExternalDependencies/Information/Name');
-			$this->struct['external-dependencies']['package_manager'] = $xml_parser->getXMLValue('PhoronixTestSuite/ExternalDependencies/Information/PackageManager');
-			$generic_package = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ExternalDependencies/Package/GenericName');
-			$distro_package = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ExternalDependencies/Package/PackageName');
-			$file_check = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ExternalDependencies/Package/FileCheck');
-			$arch_specific = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ExternalDependencies/Package/ArchitectureSpecific');
-			$os_version_specific = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ExternalDependencies/Package/VersionSpecific');
-			$os_version = phodevi::read_property('system', 'os-version');
+			$this->struct['external-dependencies']['name'] = $xml->ExternalDependencies->Information->Name->__toString();
+			$this->struct['external-dependencies']['package_manager'] = $xml->ExternalDependencies->Information->PackageManager->__toString();
 
-			foreach(array_keys($generic_package) as $i)
+			if(isset($xml->ExternalDependencies) && isset($xml->ExternalDependencies->Package))
 			{
-				if(empty($generic_package[$i]))
+				foreach($xml->ExternalDependencies->Package as $pkg)
 				{
-					continue;
-				}
-				$os_version_compliant = empty($os_version_specific[$i]) || in_array($os_version, pts_strings::comma_explode($os_version_specific[$i]));
-				if($os_version_compliant == false)
-				{
-					continue;
-				}
+					$generic_package = isset($pkg->GenericName) ? $pkg->GenericName->__toString() : null;
+					if(empty($generic_package))
+					{
+						continue;
+					}
 
-				$this->struct['external-dependencies']['packages'][$generic_package[$i]] = $this->get_package_format($distro_package[$i], $file_check[$i], $arch_specific[$i]);
+					$os_version_specific = isset($pkg->VersionSpecific) ? $pkg->VersionSpecific->__toString() : null;
+					$os_version_compliant = empty($os_version_specific) || in_array(phodevi::read_property('system', 'os-version'), pts_strings::comma_explode($os_version_specific));
+					if($os_version_compliant == false)
+					{
+						continue;
+					}
+
+					$distro_package = isset($pkg->PackageName) ? $pkg->PackageName->__toString() : null;
+					$file_check = isset($pkg->FileCheck) ? $pkg->FileCheck->__toString() : null;
+					$arch_specific = isset($pkg->ArchitectureSpecific) ? $pkg->ArchitectureSpecific->__toString() : null;
+					$this->struct['external-dependencies']['packages'][$generic_package] = $this->get_package_format($distro_package, $file_check, $arch_specific);
+				}
 			}
 
-			$aliases = $xml_parser->getXMLValue('PhoronixTestSuite/ExternalDependencies/Information/Aliases');
-
+			$aliases = $xml->ExternalDependencies->Information->Aliases->__toString();
 			if($aliases != null)
 			{
 				$aliases = pts_strings::trim_explode(',', $aliases);
