@@ -52,6 +52,9 @@ class phodevi_cpu extends phodevi_device_interface
 			case 'scaling-governor':
 				$property = new phodevi_device_property('cpu_scaling_governor', phodevi::std_caching);
 				break;
+			case 'microcode-version':
+				$property = new phodevi_device_property('cpu_microcode_version', phodevi::smart_caching);
+				break;
 		}
 
 		return $property;
@@ -173,6 +176,21 @@ class phodevi_cpu extends phodevi_device_interface
 		*/
 
 		return strpos($cpu, ' ') !== false && strpos($cpu, ' ') != strrpos($cpu, ' ') && pts_strings::has_in_istring($cpu, array('Intel', 'VIA', 'AMD', 'ARM', 'SPARC', 'Transmeta')) && stripos($cpu, 'unknown') === false;
+	}
+	public static function cpu_microcode_version()
+	{
+		$ucode_version = null;
+
+		if(is_readable('/sys/devices/system/cpu/cpu0/microcode/version'))
+		{
+			$ucode_version = pts_file_io::file_get_contents('/sys/devices/system/cpu/cpu0/microcode/version');
+		}
+		if(empty($ucode_version) && isset(phodevi::$vfs->cpuinfo))
+		{
+			$ucode_version = self::read_cpuinfo_line('microcode');
+		}
+
+		return $ucode_version;
 	}
 	public static function cpu_default_frequency($cpu_core = 0)
 	{

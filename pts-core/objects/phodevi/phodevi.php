@@ -285,6 +285,7 @@ class phodevi extends phodevi_base
 				'Extensions' => phodevi_cpu::instruction_set_extensions(),
 			//	'Virtualization' => (phodevi_cpu::virtualization_technology() ? phodevi_cpu::virtualization_technology() : ''),
 				'Cache Size' => phodevi_cpu::cpuinfo_cache_size_string(),
+				'Microcode'=> phodevi::read_property('cpu', 'microcode-version'),
 				'Scaling Driver'=> phodevi::read_property('cpu', 'scaling-governor'),
 				),
 			'Graphics' => phodevi::read_name('gpu'),
