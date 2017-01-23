@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2016, Phoronix Media
-	Copyright (C) 2008 - 2016, Michael Larabel
+	Copyright (C) 2008 - 2017, Phoronix Media
+	Copyright (C) 2008 - 2017, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -22,18 +22,19 @@
 
 class pts_installed_test
 {
-	private $xml_parser;
+	private $xml;
 	private $footnote_override = null;
 
 	public function __construct(&$test_profile)
 	{
 		$install_path = $test_profile->get_install_dir();
 		$read_xml = is_file($install_path . 'pts-install.xml') ? $install_path . 'pts-install.xml' : null;
-		$this->xml_parser = new nye_XmlReader($read_xml);
+		$xml_options = LIBXML_COMPACT | LIBXML_PARSEHUGE;
+		$this->xml = simplexml_load_file($read_xml, 'SimpleXMLElement', $xml_options);
 	}
 	public function get_install_date_time()
 	{
-		return $this->xml_parser->getXMLValue('PhoronixTestSuite/TestInstallation/History/InstallTime');
+		return isset($this->xml->TestInstallation->History->InstallTime) ? $this->xml->TestInstallation->History->InstallTime->__toString() : null;
 	}
 	public function get_install_date()
 	{
@@ -41,7 +42,7 @@ class pts_installed_test
 	}
 	public function get_last_run_date_time()
 	{
-		return $this->xml_parser->getXMLValue('PhoronixTestSuite/TestInstallation/History/LastRunTime');
+		return isset($this->xml->TestInstallation->History->LastRunTime) ? $this->xml->TestInstallation->History->LastRunTime->__toString() : null;
 	}
 	public function get_last_run_date()
 	{
@@ -49,31 +50,31 @@ class pts_installed_test
 	}
 	public function get_installed_version()
 	{
-		return $this->xml_parser->getXMLValue('PhoronixTestSuite/TestInstallation/Environment/Version');
+		return isset($this->xml->TestInstallation->Environment->Version) ? $this->xml->TestInstallation->Environment->Version->__toString() : null;
 	}
 	public function get_average_run_time()
 	{
-		return $this->xml_parser->getXMLValue('PhoronixTestSuite/TestInstallation/History/AverageRunTime');
+		return isset($this->xml->TestInstallation->History->AverageRunTime) ? $this->xml->TestInstallation->History->AverageRunTime->__toString() : null;
 	}
 	public function get_latest_run_time()
 	{
-		return $this->xml_parser->getXMLValue('PhoronixTestSuite/TestInstallation/History/LatestRunTime');
+		return isset($this->xml->TestInstallation->History->LatestRunTime) ? $this->xml->TestInstallation->History->LatestRunTime->__toString() : null;
 	}
 	public function get_latest_install_time()
 	{
-		return $this->xml_parser->getXMLValue('PhoronixTestSuite/TestInstallation/History/InstallTimeLength');
+		return isset($this->xml->TestInstallation->History->InstallTimeLength) ? $this->xml->TestInstallation->History->InstallTimeLength->__toString() : null;
 	}
 	public function get_run_count()
 	{
-		return ($times_run = $this->xml_parser->getXMLValue('PhoronixTestSuite/TestInstallation/History/TimesRun')) != false ? $times_run : 0;
+		return isset($this->xml->TestInstallation->History->TimesRun) ? $this->xml->TestInstallation->History->TimesRun->__toString() : 0;
 	}
 	public function get_compiler_data()
 	{
-		return json_decode($this->xml_parser->getXMLValue('PhoronixTestSuite/TestInstallation/Environment/CompilerData'), true);
+		return json_decode($this->xml->TestInstallation->Environment->CompilerData->__toString(), true);
 	}
 	public function get_install_footnote()
 	{
-		return !empty($this->footnote_override) ? $this->footnote_override : $this->xml_parser->getXMLValue('PhoronixTestSuite/TestInstallation/Environment/InstallFootnote');
+		return !empty($this->footnote_override) ? $this->footnote_override : $$this->xml->TestInstallation->Environment->InstallFootnote->__toString();
 	}
 	public function set_install_footnote($f = null)
 	{
@@ -81,11 +82,11 @@ class pts_installed_test
 	}
 	public function get_installed_checksum()
 	{
-		return $this->xml_parser->getXMLValue('PhoronixTestSuite/TestInstallation/Environment/CheckSum');
+		return isset($this->xml->TestInstallation->Environment->CheckSum) ? $this->xml->TestInstallation->Environment->CheckSum->__toString() : null;
 	}
 	public function get_installed_system_identifier()
 	{
-		return $this->xml_parser->getXMLValue('PhoronixTestSuite/TestInstallation/Environment/SystemIdentifier');
+		return isset($this->xml->TestInstallation->Environment->SystemIdentifier) ? $this->xml->TestInstallation->Environment->SystemIdentifier->__toString() : null;
 	}
 }
 
