@@ -55,6 +55,9 @@ class phodevi_cpu extends phodevi_device_interface
 			case 'microcode-version':
 				$property = new phodevi_device_property('cpu_microcode_version', phodevi::smart_caching);
 				break;
+			case 'cache-size':
+				$property = new phodevi_device_property('cpu_cache_size', phodevi::smart_caching);
+				break;
 		}
 
 		return $property;
@@ -146,6 +149,26 @@ class phodevi_cpu extends phodevi_device_interface
 		}
 
 		return (is_numeric($node_count) && $node_count > 0 ? $node_count : 1);
+	}
+	public static function cpu_cache_size()
+	{
+		$cache_size = 0; // in KB
+
+		if(phodevi::is_linux())
+		{
+			$cache_size = self::cpuinfo_cache_size();
+		}
+		else if(phodevi::is_macosx())
+		{
+			$cache_size = phodevi_osx_parser::read_osx_system_profiler('SPHardwareDataType', 'L3Cache');
+
+			if(strpos($cache_size, ' MB'))
+			{
+				$cache_size = substr($cache_size, 0, strpos($cache_size, ' ')) * 1024;
+			}
+		}
+
+		return $cache_size;
 	}
 	public static function cpu_default_frequency_mhz()
 	{
