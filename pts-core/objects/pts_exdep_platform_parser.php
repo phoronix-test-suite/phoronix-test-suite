@@ -34,8 +34,8 @@ class pts_exdep_platform_parser
 			$xml_options = LIBXML_COMPACT | LIBXML_PARSEHUGE;
 			$xml = simplexml_load_file($xml, 'SimpleXMLElement', $xml_options);
 
-			$this->struct['external-dependencies']['name'] = $xml->ExternalDependencies->Information->Name->__toString();
-			$this->struct['external-dependencies']['package_manager'] = $xml->ExternalDependencies->Information->PackageManager->__toString();
+			$this->struct['external-dependencies']['name'] = isset($xml->ExternalDependencies->Information->Name) ? $xml->ExternalDependencies->Information->Name->__toString() : null;
+			$this->struct['external-dependencies']['package_manager'] = isset($xml->ExternalDependencies->Information->PackageManager) ? $xml->ExternalDependencies->Information->PackageManager->__toString() : null;
 
 			if(isset($xml->ExternalDependencies) && isset($xml->ExternalDependencies->Package))
 			{
@@ -61,7 +61,7 @@ class pts_exdep_platform_parser
 				}
 			}
 
-			$aliases = $xml->ExternalDependencies->Information->Aliases->__toString();
+			$aliases = isset($xml->ExternalDependencies->Information->Aliases) ? $xml->ExternalDependencies->Information->Aliases->__toString() : null;
 			if($aliases != null)
 			{
 				$aliases = pts_strings::trim_explode(',', $aliases);
