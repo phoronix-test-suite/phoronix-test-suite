@@ -58,6 +58,9 @@ class phodevi_cpu extends phodevi_device_interface
 			case 'cache-size':
 				$property = new phodevi_device_property('cpu_cache_size', phodevi::smart_caching);
 				break;
+			case 'cache-size-string':
+				$property = new phodevi_device_property('cpu_cache_size_string', phodevi::smart_caching);
+				break;
 		}
 
 		return $property;
@@ -628,9 +631,9 @@ class phodevi_cpu extends phodevi_device_interface
 
 		return $cache_size;
 	}
-	public static function cpuinfo_cache_size_string()
+	public static function cpu_cache_size_string()
 	{
-		$cache_size = self::cpuinfo_cache_size();
+		$cache_size = phodevi::read_property('cpu', 'cache-size');
 		if($cache_size > 1)
 		{
 			$cache_size .= ' KB';

@@ -284,7 +284,7 @@ class phodevi extends phodevi_base
 				'Thread Count' => $core_count == $thread_count ? '' : $thread_count, // don't show thread count if it's same as core count
 				'Extensions' => phodevi_cpu::instruction_set_extensions(),
 			//	'Virtualization' => (phodevi_cpu::virtualization_technology() ? phodevi_cpu::virtualization_technology() : ''),
-				'Cache Size' => phodevi::read_property('cpu', 'cache-size'),
+				'Cache Size' => phodevi::read_property('cpu', 'cache-size-string'),
 				'Microcode'=> phodevi::read_property('cpu', 'microcode-version'),
 				'Scaling Driver'=> phodevi::read_property('cpu', 'scaling-governor'),
 				),
