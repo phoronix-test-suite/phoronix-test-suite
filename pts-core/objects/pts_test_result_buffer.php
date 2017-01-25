@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2016, Phoronix Media
-	Copyright (C) 2009 - 2016, Michael Larabel
+	Copyright (C) 2009 - 2017, Phoronix Media
+	Copyright (C) 2009 - 2017, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -295,19 +295,37 @@ class pts_test_result_buffer
 
 		return $identifier;
 	}
-	public function get_max_value()
+	public function get_max_value($return_identifier = false)
 	{
 		$value = 0;
+		$max_id = null;
 
 		foreach($this->buffer_items as &$buffer_item)
 		{
 			if($buffer_item->get_result_value() > $value)
 			{
 				$value = $buffer_item->get_result_value();
+				$max_id = $buffer_item->get_result_identifier();
 			}
 		}
 
-		return $value;
+		return $return_identifier ? $max_id : $value;
+	}
+	public function get_min_value($return_identifier = false)
+	{
+		$value = 0;
+		$max_id = null;
+
+		foreach($this->buffer_items as &$buffer_item)
+		{
+			if($buffer_item->get_result_value() < $value || $value == 0)
+			{
+				$value = $buffer_item->get_result_value();
+				$max_id = $buffer_item->get_result_identifier();
+			}
+		}
+
+		return $return_identifier ? $max_id : $value;
 	}
 	public function buffer_values_to_percent()
 	{

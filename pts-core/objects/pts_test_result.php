@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2016, Phoronix Media
-	Copyright (C) 2008 - 2016, Michael Larabel
+	Copyright (C) 2008 - 2017, Phoronix Media
+	Copyright (C) 2008 - 2017, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -171,6 +171,38 @@ class pts_test_result
 		}
 
 		return $largest_variation;
+	}
+	public function get_result_first()
+	{
+		// a.k.a. the result winner
+		$winner = null;
+
+		if($this->test_profile->get_result_proportion() == 'LIB')
+		{
+			$winner = $this->test_result_buffer->get_min_value(true);
+		}
+		else if($this->test_profile->get_result_proportion() == 'HIB')
+		{
+			$winner = $this->test_result_buffer->get_max_value(true);
+		}
+
+		return $winner;
+	}
+	public function get_result_last()
+	{
+		// a.k.a. the result loser
+		$winner = null;
+
+		if($this->test_profile->get_result_proportion() == 'HIB')
+		{
+			$winner = $this->test_result_buffer->get_min_value(true);
+		}
+		else if($this->test_profile->get_result_proportion() == 'LIB')
+		{
+			$winner = $this->test_result_buffer->get_max_value(true);
+		}
+
+		return $winner;
 	}
 	public function normalize_buffer_values($normalize_against = false)
 	{

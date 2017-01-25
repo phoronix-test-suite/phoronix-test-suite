@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+- pts-core: Add winners-and-losers sub-command for providing some first/last place finish stats
+
 Phoronix Test Suite 7.0.0 Milestone 2
 23 January 2017
 
