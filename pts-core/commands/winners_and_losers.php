@@ -49,6 +49,11 @@ class winners_and_losers implements pts_option_interface
 
 		foreach($result_file->get_result_objects() as $result)
 		{
+			if($result->test_result_buffer->get_count() < 2)
+			{
+				continue;
+			}
+
 			$winner = $result->get_result_first();
 			$loser = $result->get_result_last();
 
