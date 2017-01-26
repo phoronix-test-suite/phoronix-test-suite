@@ -70,7 +70,7 @@ class pts_installed_test
 	}
 	public function get_compiler_data()
 	{
-		return json_decode($this->xml->TestInstallation->Environment->CompilerData->__toString(), true);
+		return isset($this->xml->TestInstallation->Environment->CompilerData) ? json_decode($this->xml->TestInstallation->Environment->CompilerData->__toString(), true) : null;
 	}
 	public function get_install_footnote()
 	{
