@@ -74,7 +74,7 @@ class pts_installed_test
 	}
 	public function get_install_footnote()
 	{
-		return !empty($this->footnote_override) ? $this->footnote_override : $this->xml->TestInstallation->Environment->InstallFootnote->__toString();
+		return !empty($this->footnote_override) ? $this->footnote_override : (isset($this->xml->TestInstallation->Environment->InstallFootnote) ? $this->xml->TestInstallation->Environment->InstallFootnote->__toString() : null);
 	}
 	public function set_install_footnote($f = null)
 	{
