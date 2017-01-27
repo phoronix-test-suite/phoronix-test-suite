@@ -692,6 +692,11 @@ class pts_test_result_parser
 
 				if(is_file($log_file))
 				{
+					if(filesize($log_file) > 52428800)
+					{
+						pts_client::test_profile_debug_message('File Too Big To Parse: ' . $log_file);
+					}
+
 					$output = file_get_contents($log_file);
 				}
 				else
