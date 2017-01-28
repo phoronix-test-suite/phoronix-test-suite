@@ -46,6 +46,7 @@ class winners_and_losers implements pts_option_interface
 		echo 'RESULT COUNT: ' . $result_file->get_test_count() . PHP_EOL . PHP_EOL;
 		$winners = array();
 		$losers = array();
+		$tests_counted = 0;
 
 		foreach($result_file->get_result_objects() as $result)
 		{
@@ -54,6 +55,7 @@ class winners_and_losers implements pts_option_interface
 				continue;
 			}
 
+			$tests_counted++;
 			$winner = $result->get_result_first();
 			$loser = $result->get_result_last();
 
@@ -80,15 +82,19 @@ class winners_and_losers implements pts_option_interface
 		arsort($losers);
 
 		echo 'WINS:' . PHP_EOL;
+		$table = array();
 		foreach($winners as $identifier => $count)
 		{
-			echo $identifier . ': ' . $count . PHP_EOL;
+			$table[] = array($identifier . ': ', $count, ' [' . pts_math::set_precision($count / $tests_counted * 100, 1) . '%]');
 		}
+		echo pts_user_io::display_text_table($table) . PHP_EOL;
 		echo PHP_EOL . 'LOSSES: ' . PHP_EOL;
+		$table = array();
 		foreach($losers as $identifier => $count)
 		{
-			echo $identifier . ': ' . $count . PHP_EOL;
+			$table[] = array($identifier . ': ', $count, ' [' . pts_math::set_precision($count / $tests_counted * 100, 1) . '%]');
 		}
+		echo pts_user_io::display_text_table($table) . PHP_EOL;
 		echo PHP_EOL;
 	}
 	public static function invalid_command($passed_args = null)
