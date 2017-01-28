@@ -71,7 +71,7 @@
 			<GenericName>xorg-development</GenericName>
 			<Title>X.Org Development Files and Libraries</Title>
 			<PossibleNames>xserver-xorg-development, xorg-devel</PossibleNames>
-			<FileCheck>xorg/xf86.h</FileCheck>
+			<FileCheck>xorg/xf86.h OR X11/Xlib.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>cairo-development</GenericName>
@@ -269,7 +269,7 @@
 			<GenericName>blas-development</GenericName>
 			<Title>Basic Linear Algebra Sub-Routine Library</Title>
 			<PossibleNames>libblas-dev, libblas-devel, blas-devel, blas</PossibleNames>
-			<FileCheck>libblas.so</FileCheck>
+			<FileCheck>libblas.so OR openblas_config.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>lapack-development</GenericName>
@@ -287,7 +287,7 @@
 			<GenericName>openmpi-development</GenericName>
 			<Title>OpenMPI</Title>
 			<PossibleNames>libopenmpi-dev, openmpi-bin</PossibleNames>
-			<FileCheck>openmpi/lib/libmpi.so, mpirun.openmpi</FileCheck>
+			<FileCheck>openmpi/lib/libmpi.so OR mpirun OR mpirun.openmpi</FileCheck>
 		</Package>
 
 		<Package>
