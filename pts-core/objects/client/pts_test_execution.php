@@ -556,43 +556,190 @@ class pts_test_execution
 		// Result Calculation
 		$test_run_request->set_used_arguments_description($arguments_description);
 		$test_run_request->set_used_arguments($extra_arguments);
-		pts_test_result_parser::calculate_end_result($test_run_request, $test_run_request->active); // Process results
-		pts_client::$display->test_run_end($test_run_request);
+		$test_successful = self::calculate_end_result_post_processing($test_run_manager, $test_run_request); // Process results
 
-		// Finalize
+		// End Finalize
+		pts_module_manager::module_process('__post_test_run', $test_run_request);
+		$report_elapsed_time = $cache_share_present == false && $test_run_request->active->get_result() != 0;
+		pts_tests::update_test_install_xml($test_run_request->test_profile, ($report_elapsed_time ? $time_test_elapsed : 0));
+		pts_storage_object::add_in_file(PTS_CORE_STORAGE, 'total_testing_time', ($time_test_elapsed / 60));
+
+		if($report_elapsed_time && pts_client::do_anonymous_usage_reporting() && $time_test_elapsed >= 60)
+		{
+			// If anonymous usage reporting enabled, report test run-time to OpenBenchmarking.org
+			pts_openbenchmarking_client::upload_usage_data('test_complete', array($test_run_request, $time_test_elapsed));
+		}
+
+		// Remove lock
+		pts_client::release_lock($lock_file);
+		return $test_successful;
+	}
+	protected static function calculate_end_result_post_processing(&$test_run_manager, &$test_result)
+	{
+		$trial_results = $test_result->active->results;
+
+		if(count($trial_results) == 0)
+		{
+			$test_result->active->set_result(0);
+			return false;
+		}
+
+		$END_RESULT = 0;
+
+		switch($test_result->test_profile->get_display_format())
+		{
+			case 'NO_RESULT':
+				// Nothing to do, there are no results
+				break;
+			case 'LINE_GRAPH':
+			case 'FILLED_LINE_GRAPH':
+			case 'TEST_COUNT_PASS':
+				// Just take the first result
+				$END_RESULT = $trial_results[0];
+				break;
+			case 'IMAGE_COMPARISON':
+				// Capture the image
+				$iqc_image_png = $trial_results[0];
+
+				if(is_file($iqc_image_png))
+				{
+					$img_file_64 = base64_encode(file_get_contents($iqc_image_png, FILE_BINARY));
+					$END_RESULT = $img_file_64;
+					unlink($iqc_image_png);
+				}
+				break;
+			case 'PASS_FAIL':
+			case 'MULTI_PASS_FAIL':
+				// Calculate pass/fail type
+				$END_RESULT = -1;
+
+				if(count($trial_results) == 1)
+				{
+					$END_RESULT = $trial_results[0];
+				}
+				else
+				{
+					foreach($trial_results as $result)
+					{
+						if($result == 'FALSE' || $result == '0' || $result == 'FAIL' || $result == 'FAILED')
+						{
+							if($END_RESULT == -1 || $END_RESULT == 'PASS')
+							{
+								$END_RESULT = 'FAIL';
+							}
+						}
+						else
+						{
+							if($END_RESULT == -1)
+							{
+								$END_RESULT = 'PASS';
+							}
+						}
+					}
+				}
+				break;
+			case 'BAR_GRAPH':
+			default:
+				// Result is of a normal numerical type
+				switch($test_result->test_profile->get_result_quantifier())
+				{
+					case 'MAX':
+						$END_RESULT = max($trial_results);
+						break;
+					case 'MIN':
+						$END_RESULT = min($trial_results);
+						break;
+					case 'AVG':
+					default:
+						// assume AVG (average)
+						$is_float = false;
+						$TOTAL_RESULT = 0;
+						$TOTAL_COUNT = 0;
+
+						foreach($trial_results as $result)
+						{
+							$result = trim($result);
+
+							if(is_numeric($result))
+							{
+								$TOTAL_RESULT += $result;
+								$TOTAL_COUNT++;
+
+								if(!$is_float && strpos($result, '.') !== false)
+								{
+									$is_float = true;
+								}
+							}
+						}
+
+						$END_RESULT = pts_math::set_precision($TOTAL_RESULT / ($TOTAL_COUNT > 0 ? $TOTAL_COUNT : 1), $test_result->get_result_precision());
+
+						if(!$is_float)
+						{
+							$END_RESULT = round($END_RESULT);
+						}
+
+						if(count($min = $test_result->active->min_results) > 0)
+						{
+							$min = round(min($min), 2);
+
+							if($min < $END_RESULT && is_numeric($min) && $min != 0)
+							{
+								$test_result->active->set_min_result($min);
+							}
+						}
+						if(count($max = $test_result->active->max_results) > 0)
+						{
+							$max = round(max($max), 2);
+
+							if($max > $END_RESULT && is_numeric($max) && $max != 0)
+							{
+								$test_result->active->set_max_result($max);
+							}
+						}
+						break;
+				}
+				break;
+		}
+
+		$test_result->active->set_result($END_RESULT);
+
+		pts_client::$display->test_run_end($test_result);
+
+		// Finalize / result post-processing to generate save
 		$test_successful = false;
-		if($test_run_request->test_profile->get_display_format() == 'NO_RESULT')
+		if($test_result->test_profile->get_display_format() == 'NO_RESULT')
 		{
 			$test_successful = true;
 		}
-		else if($test_run_request instanceof pts_test_result && $test_run_request->active)
+		else if($test_result instanceof pts_test_result && $test_result->active)
 		{
-			$end_result = $test_run_request->active->get_result();
+			$end_result = $test_result->active->get_result();
 
 			// removed count($result) > 0 in the move to pts_test_result
-			if(count($test_run_request) > 0 && ((is_numeric($end_result) && $end_result > 0) || (!is_numeric($end_result) && isset($end_result[3]))))
+			if(count($test_result) > 0 && ((is_numeric($end_result) && $end_result > 0) || (!is_numeric($end_result) && isset($end_result[3]))))
 			{
-				pts_module_manager::module_process('__post_test_run_success', $test_run_request);
+				pts_module_manager::module_process('__post_test_run_success', $test_result);
 				$test_successful = true;
 
 				if($test_run_manager->get_results_identifier() != null)
 				{
-					$test_run_request->test_result_buffer = new pts_test_result_buffer();
-					$test_run_request->test_result_buffer->add_test_result($test_run_manager->get_results_identifier(), $test_run_request->active->get_result(), $test_run_request->active->get_values_as_string(), pts_test_run_manager::process_json_report_attributes($test_run_request), $test_run_request->active->get_min_result(), $test_run_request->active->get_max_result());
-					$test_run_manager->result_file->add_result($test_run_request);
+					$test_result->test_result_buffer = new pts_test_result_buffer();
+					$test_result->test_result_buffer->add_test_result($test_run_manager->get_results_identifier(), $test_result->active->get_result(), $test_result->active->get_values_as_string(), pts_test_run_manager::process_json_report_attributes($test_result), $test_result->active->get_min_result(), $test_result->active->get_max_result());
+					$test_run_manager->result_file->add_result($test_result);
 
-					if($test_run_request->secondary_linked_results != null && is_array($test_run_request->secondary_linked_results))
+					if($test_result->secondary_linked_results != null && is_array($test_result->secondary_linked_results))
 					{
-						foreach($test_run_request->secondary_linked_results as &$run_request_minor)
+						foreach($test_result->secondary_linked_results as &$run_request_minor)
 						{
-							if(strpos($run_request_minor->get_arguments_description(), $test_run_request->get_arguments_description()) === false)
+							if(strpos($run_request_minor->get_arguments_description(), $test_result->get_arguments_description()) === false)
 							{
-								$run_request_minor->set_used_arguments_description($test_run_request->get_arguments_description() . ' - ' . $run_request_minor->get_arguments_description());
-								$run_request_minor->set_used_arguments($test_run_request->get_arguments() . ' - ' . $run_request_minor->get_arguments_description());
+								$run_request_minor->set_used_arguments_description($test_result->get_arguments_description() . ' - ' . $run_request_minor->get_arguments_description());
+								$run_request_minor->set_used_arguments($test_result->get_arguments() . ' - ' . $run_request_minor->get_arguments_description());
 							}
 
 							$run_request_minor->test_result_buffer = new pts_test_result_buffer();
-							$run_request_minor->test_result_buffer->add_test_result($test_run_manager->get_results_identifier(), $run_request_minor->active->get_result(), $run_request_minor->active->get_values_as_string(), pts_test_run_manager::process_json_report_attributes($test_run_request),$run_request_minor->active->get_min_result(), $run_request_minor->active->get_max_result());
+							$run_request_minor->test_result_buffer->add_test_result($test_run_manager->get_results_identifier(), $run_request_minor->active->get_result(), $run_request_minor->active->get_values_as_string(), pts_test_run_manager::process_json_report_attributes($test_result),$run_request_minor->active->get_min_result(), $run_request_minor->active->get_max_result());
 							$test_run_manager->result_file->add_result($run_request_minor);
 						}
 					}
@@ -620,21 +767,7 @@ class pts_test_execution
 
 			pts_file_io::unlink(PTS_SAVE_RESULTS_PATH . $test_run_manager->get_file_name() . '/test-logs/active/');
 		}
-		// End Finalize
 
-		pts_module_manager::module_process('__post_test_run', $test_run_request);
-		$report_elapsed_time = $cache_share_present == false && $test_run_request->active->get_result() != 0;
-		pts_tests::update_test_install_xml($test_run_request->test_profile, ($report_elapsed_time ? $time_test_elapsed : 0));
-		pts_storage_object::add_in_file(PTS_CORE_STORAGE, 'total_testing_time', ($time_test_elapsed / 60));
-
-		if($report_elapsed_time && pts_client::do_anonymous_usage_reporting() && $time_test_elapsed >= 60)
-		{
-			// If anonymous usage reporting enabled, report test run-time to OpenBenchmarking.org
-			pts_openbenchmarking_client::upload_usage_data('test_complete', array($test_run_request, $time_test_elapsed));
-		}
-
-		// Remove lock
-		pts_client::release_lock($lock_file);
 		return $test_successful;
 	}
 }
