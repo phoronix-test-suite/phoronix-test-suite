@@ -234,16 +234,8 @@ class pts_test_result_parser
 			case 'BAR_GRAPH':
 			default:
 				$test_run_request->active->active_result = self::parse_numeric_result($test_run_request, $test_log_file, $pts_test_arguments, $extra_arguments);
-
-				if($test_run_request->test_profile->get_display_format() == 'BAR_GRAPH' && !is_numeric($test_run_request->active->active_result))
-				{
-					$test_run_request->active->active_result = false;
-				}
-				else
-				{
-					$test_run_request->active->active_min_result = self::parse_numeric_result($test_run_request, $test_log_file, $pts_test_arguments, $extra_arguments, 'MIN');
-					$test_run_request->active->active_max_result = self::parse_numeric_result($test_run_request, $test_log_file, $pts_test_arguments, $extra_arguments, 'MAX');
-				}
+				$test_run_request->active->active_min_result = self::parse_numeric_result($test_run_request, $test_log_file, $pts_test_arguments, $extra_arguments, 'MIN');
+				$test_run_request->active->active_max_result = self::parse_numeric_result($test_run_request, $test_log_file, $pts_test_arguments, $extra_arguments, 'MAX');
 				break;
 		}
 	}
@@ -795,6 +787,12 @@ class pts_test_result_parser
 						if($is_numeric_check)
 							$test_result = array_sum($test_results) / count($test_results);
 						break;
+				}
+
+				if($is_numeric_check && !is_numeric($test_result))
+				{
+					// Final check to ensure valid data
+					$test_result = false;
 				}
 
 				if($test_result != false)
