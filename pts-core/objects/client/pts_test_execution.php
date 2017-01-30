@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2016, Phoronix Media
-	Copyright (C) 2008 - 2016, Michael Larabel
+	Copyright (C) 2008 - 2017, Phoronix Media
+	Copyright (C) 2008 - 2017, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -550,14 +550,78 @@ class pts_test_execution
 		}
 		*/
 
+		// Ending Tasks
+		pts_client::$display->display_interrupt_message($test_run_request->test_profile->get_post_run_message());
+
 		// Result Calculation
 		$test_run_request->set_used_arguments_description($arguments_description);
 		$test_run_request->set_used_arguments($extra_arguments);
 		pts_test_result_parser::calculate_end_result($test_run_request, $test_run_request->active); // Process results
-
 		pts_client::$display->test_run_end($test_run_request);
 
-		pts_client::$display->display_interrupt_message($test_run_request->test_profile->get_post_run_message());
+		// Finalize
+		$test_successful = false;
+		if($test_run_request->test_profile->get_display_format() == 'NO_RESULT')
+		{
+			$test_successful = true;
+		}
+		else if($test_run_request instanceof pts_test_result && $test_run_request->active)
+		{
+			$end_result = $test_run_request->active->get_result();
+
+			// removed count($result) > 0 in the move to pts_test_result
+			if(count($test_run_request) > 0 && ((is_numeric($end_result) && $end_result > 0) || (!is_numeric($end_result) && isset($end_result[3]))))
+			{
+				pts_module_manager::module_process('__post_test_run_success', $test_run_request);
+				$test_successful = true;
+
+				if($test_run_manager->get_results_identifier() != null)
+				{
+					$test_run_request->test_result_buffer = new pts_test_result_buffer();
+					$test_run_request->test_result_buffer->add_test_result($test_run_manager->get_results_identifier(), $test_run_request->active->get_result(), $test_run_request->active->get_values_as_string(), pts_test_run_manager::process_json_report_attributes($test_run_request), $test_run_request->active->get_min_result(), $test_run_request->active->get_max_result());
+					$test_run_manager->result_file->add_result($test_run_request);
+
+					if($test_run_request->secondary_linked_results != null && is_array($test_run_request->secondary_linked_results))
+					{
+						foreach($test_run_request->secondary_linked_results as &$run_request_minor)
+						{
+							if(strpos($run_request_minor->get_arguments_description(), $test_run_request->get_arguments_description()) === false)
+							{
+								$run_request_minor->set_used_arguments_description($test_run_request->get_arguments_description() . ' - ' . $run_request_minor->get_arguments_description());
+								$run_request_minor->set_used_arguments($test_run_request->get_arguments() . ' - ' . $run_request_minor->get_arguments_description());
+							}
+
+							$run_request_minor->test_result_buffer = new pts_test_result_buffer();
+							$run_request_minor->test_result_buffer->add_test_result($test_run_manager->get_results_identifier(), $run_request_minor->active->get_result(), $run_request_minor->active->get_values_as_string(), pts_test_run_manager::process_json_report_attributes($test_run_request),$run_request_minor->active->get_min_result(), $run_request_minor->active->get_max_result());
+							$test_run_manager->result_file->add_result($run_request_minor);
+						}
+					}
+
+					if($test_run_manager->get_results_identifier() != null && $test_run_manager->get_file_name() != null && pts_config::read_bool_config('PhoronixTestSuite/Options/Testing/SaveTestLogs', 'FALSE'))
+					{
+						static $xml_write_pos = 1;
+						pts_file_io::mkdir(PTS_SAVE_RESULTS_PATH . $test_run_manager->get_file_name() . '/test-logs/' . $xml_write_pos . '/');
+
+						if(is_dir(PTS_SAVE_RESULTS_PATH . $test_run_manager->get_file_name() . '/test-logs/active/' . $test_run_manager->get_results_identifier()))
+						{
+							$test_log_write_dir = PTS_SAVE_RESULTS_PATH . $test_run_manager->get_file_name() . '/test-logs/' . $xml_write_pos . '/' . $test_run_manager->get_results_identifier() . '/';
+
+							if(is_dir($test_log_write_dir))
+							{
+								pts_file_io::delete($test_log_write_dir, null, true);
+							}
+
+							rename(PTS_SAVE_RESULTS_PATH . $test_run_manager->get_file_name() . '/test-logs/active/' . $test_run_manager->get_results_identifier() . '/', $test_log_write_dir);
+						}
+						$xml_write_pos++;
+					}
+				}
+			}
+
+			pts_file_io::unlink(PTS_SAVE_RESULTS_PATH . $test_run_manager->get_file_name() . '/test-logs/active/');
+		}
+		// End Finalize
+
 		pts_module_manager::module_process('__post_test_run', $test_run_request);
 		$report_elapsed_time = $cache_share_present == false && $test_run_request->active->get_result() != 0;
 		pts_tests::update_test_install_xml($test_run_request->test_profile, ($report_elapsed_time ? $time_test_elapsed : 0));
@@ -571,7 +635,7 @@ class pts_test_execution
 
 		// Remove lock
 		pts_client::release_lock($lock_file);
-		return true;
+		return $test_successful;
 	}
 }
 
