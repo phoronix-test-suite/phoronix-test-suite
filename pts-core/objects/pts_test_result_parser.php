@@ -218,18 +218,6 @@ class pts_test_result_parser
 			case 'PASS_FAIL':
 			case 'MULTI_PASS_FAIL':
 				$test_run_request->active->active_result = self::parse_result_process($test_run_request, $test_log_file, $pts_test_arguments, $extra_arguments);
-				if(str_replace(array('PASS', 'FAIL', ','), null, $test_run_request->active->active_result) == null)
-				{
-					// properly formatted multi-pass fail
-				}
-				else if($test_run_request->active->active_result == 'TRUE' || $test_run_request->active->active_result == 'PASS' || $test_run_request->active->active_result == 'PASSED')
-				{
-					$test_run_request->active->active_result = 'PASS';
-				}
-				else
-				{
-					$test_run_request->active->active_result = 'FAIL';
-				}
 				break;
 			case 'BAR_GRAPH':
 			default:
@@ -783,7 +771,24 @@ class pts_test_result_parser
 						break;
 				}
 
-				if($is_numeric_check && !is_numeric($test_result))
+				if($is_pass_fail_test)
+				{
+					if(str_replace(array('PASS', 'FAIL', ','), null, $test_result) == null)
+					{
+						// already a properly formatted multi-pass fail
+					}
+					else if($test_result == 'TRUE' || $test_result == 'PASSED')
+					{
+						// pass
+						$test_result = 'PASS';
+					}
+					else
+					{
+						// fail
+						$test_result = 'FAIL';
+					}
+				}
+				else if($is_numeric_check && !is_numeric($test_result))
 				{
 					// Final check to ensure valid data
 					$test_result = false;
