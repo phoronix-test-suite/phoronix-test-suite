@@ -217,7 +217,7 @@ class pts_test_result_parser
 				break;
 			case 'PASS_FAIL':
 			case 'MULTI_PASS_FAIL':
-				$test_run_request->active->active_result = self::parse_generic_result($test_run_request, $test_log_file, $pts_test_arguments, $extra_arguments);
+				$test_run_request->active->active_result = self::parse_result_process($test_run_request, $test_log_file, $pts_test_arguments, $extra_arguments);
 				if(str_replace(array('PASS', 'FAIL', ','), null, $test_run_request->active->active_result) == null)
 				{
 					// properly formatted multi-pass fail
@@ -233,9 +233,9 @@ class pts_test_result_parser
 				break;
 			case 'BAR_GRAPH':
 			default:
-				$test_run_request->active->active_result = self::parse_numeric_result($test_run_request, $test_log_file, $pts_test_arguments, $extra_arguments);
-				$test_run_request->active->active_min_result = self::parse_numeric_result($test_run_request, $test_log_file, $pts_test_arguments, $extra_arguments, 'MIN');
-				$test_run_request->active->active_max_result = self::parse_numeric_result($test_run_request, $test_log_file, $pts_test_arguments, $extra_arguments, 'MAX');
+				$test_run_request->active->active_result = self::parse_result_process($test_run_request, $test_log_file, $pts_test_arguments, $extra_arguments);
+				$test_run_request->active->active_min_result = self::parse_result_process($test_run_request, $test_log_file, $pts_test_arguments, $extra_arguments, 'MIN');
+				$test_run_request->active->active_max_result = self::parse_result_process($test_run_request, $test_log_file, $pts_test_arguments, $extra_arguments, 'MAX');
 				break;
 		}
 	}
@@ -405,16 +405,10 @@ class pts_test_result_parser
 
 		return $test_result;
 	}
-	protected static function parse_numeric_result(&$test_run_request, $log_file, $pts_test_arguments, $extra_arguments, $prefix = null)
+	protected static function parse_result_process(&$test_run_request, $log_file, $pts_test_arguments, $extra_arguments, $prefix = null)
 	{
-		return self::parse_result_process($test_run_request, $log_file, $pts_test_arguments, $extra_arguments, true, $prefix);
-	}
-	protected static function parse_generic_result(&$test_run_request, $log_file, $pts_test_arguments, $extra_arguments, $prefix = null)
-	{
-		return self::parse_result_process($test_run_request, $log_file, $pts_test_arguments, $extra_arguments, false, $prefix);
-	}
-	protected static function parse_result_process(&$test_run_request, $log_file, $pts_test_arguments, $extra_arguments, $is_numeric_check = true, $prefix = null)
-	{
+		$is_pass_fail_test = in_array($test_run_request->test_profile->get_display_format(), array('PASS_FAIL', 'MULTI_PASS_FAIL'));
+		$is_numeric_check = !$is_pass_fail_test;
 		$xml = self::setup_parse_xml_file($test_run_request->test_profile);
 		$test_result = false;
 
