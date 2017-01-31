@@ -492,48 +492,6 @@ class pts_test_result_parser
 					}
 				}
 
-				$search_key = null;
-				$line_before_key = null;
-
-				if(isset($line_hint) && $line_hint != null && strpos($template_line, $line_hint) !== false)
-				{
-					$search_key = $line_hint;
-				}
-				else if(isset($line_before_hint) && $line_before_hint != null && strpos($template, $line_hint) !== false)
-				{
-					$search_key = null; // doesn't really matter what this value is
-				}
-				else if(isset($line_after_hint) && $line_after_hint != null && strpos($template, $line_hint) !== false)
-				{
-					$search_key = null; // doesn't really matter what this value is
-				}
-				else
-				{
-					foreach($template_r as $line_part)
-					{
-						if(strpos($line_part, ':') !== false && strlen($line_part) > 1)
-						{
-							// add some sort of && strrpos($template, $line_part)  to make sure there isn't two of the same $search_key
-							$search_key = $line_part;
-							break;
-						}
-					}
-
-					if($search_key == null && isset($key))
-					{
-						// Just try searching for the first part of the string
-						/*
-						for($i = 0; $i < $template_r_pos; $i++)
-						{
-							$search_key .= $template_r . ' ';
-						}
-						*/
-
-						// This way if there are ) or other characters stripped, the below method will work where the above one will not
-						$search_key = substr($template_line, 0, strpos($template_line, $key));
-					}
-				}
-
 				if(is_file($log_file))
 				{
 					if(filesize($log_file) > 52428800)
@@ -550,170 +508,114 @@ class pts_test_result_parser
 				}
 
 				$test_results = array();
-				$already_processed = false;
-				$frame_time_values = null;
 
-				if($template == 'libframetime-output')
+				// Check if frame time parsing info
+				if(self::check_for_frame_time_parsing($test_results, $template, $output, $prefix))
 				{
-					$already_processed = true;
-					$frame_time_values = array();
-					$line_values = explode(PHP_EOL, $output);
-					if(!empty($line_values) && isset($line_values[3]))
-					{
-						foreach($line_values as &$v)
-						{
-							if(substr($v, -3) == ' us' && substr($v, 0, 10) == 'Frametime ')
-							{
-								$frametime = substr($v, 10);
-								$frametime = substr($frametime, 0, -3);
-								if($frametime > 2000)
-								{
-									$frametime = $frametime / 1000;
-									$frame_time_values[] = $frametime;
-								}
-							}
-						}
-						$frame_time_values = pts_math::remove_outliers($frame_time_values);
-					}
+					// Was frame time info, nothing else to do for parsing, $test_results already filled then
 				}
-				else if($template == 'csv-dump-frame-latencies')
+				else
 				{
-					$already_processed = true;
-					$frame_time_values = explode(',', $output);
-				}
-
-				if(!empty($frame_time_values) && isset($frame_time_values[3]))
-				{
-					// Get rid of the first value
-					array_shift($frame_time_values);
-
-					foreach($frame_time_values as $f => &$v)
+					// Conventional searching for matching section for finding result
+					$search_key = self::determine_search_key($line_hint, $line_before_hint, $line_after_hint, $template_line, $template, $template_r, $key); // SEARCH KEY
+					if($search_key != null || $line_before_hint != null || $line_after_hint != null || $template_r[0] == $key)
 					{
-						if(!is_numeric($v) || $v == 0)
-						{
-							unset($frame_time_values[$f]);
-							continue;
-						}
-						$v = 1000 / $v;
-					}
-
-					switch($prefix)
-					{
-						case 'MIN_':
-							$val = min($frame_time_values);
-							break;
-						case 'MAX_':
-							$val = max($frame_time_values);
-							break;
-						case 'AVG_':
-							default:
-							$val = array_sum($frame_time_values) / count($frame_time_values);
-							break;
-					}
-
-					if($val != 0)
-					{
-						$test_results[] = $val;
-					}
-				}
-
-				if(($search_key != null || (isset($line_before_hint) && $line_before_hint != null) || (isset($line_after_hint) && $line_after_hint) != null || (isset($key) && $template_r[0] == $key)) && $already_processed == false)
-				{
-					$is_multi_match = !empty($multi_match) && $multi_match != 'NONE';
-
-					do
-					{
-						$count = count($test_results);
-
-						if($line_before_hint != null)
-						{
-							pts_client::test_profile_debug_message('Result Parsing Line Before Hint: ' . $line_before_hint);
-							$line = substr($output, strpos($output, "\n", strrpos($output, $line_before_hint)));
-							$line = substr($line, 0, strpos($line, "\n", 1));
-							$output = substr($output, 0, strrpos($output, "\n", strrpos($output, $line_before_hint))) . "\n";
-						}
-						else if($line_after_hint != null)
-						{
-							pts_client::test_profile_debug_message('Result Parsing Line After Hint: ' . $line_after_hint);
-							$line = substr($output, 0, strrpos($output, "\n", strrpos($output, $line_before_hint)));
-							$line = substr($line, strrpos($line, "\n", 1) + 1);
-							$output = null;
-						}
-						else if($search_key != null)
-						{
-							$search_key = trim($search_key);
-							pts_client::test_profile_debug_message('Result Parsing Search Key: ' . $search_key);
-							$line = substr($output, 0, strpos($output, "\n", strrpos($output, $search_key)));
-							$start_of_line = strrpos($line, "\n");
-							$output = substr($line, 0, $start_of_line) . "\n";
-							$line = substr($line, $start_of_line + 1);
-						}
-						else
-						{
-							// Condition $template_r[0] == $key, include entire file since there is nothing to search
-							pts_client::test_profile_debug_message('No Result Parsing Hint, Including Entire Result Output');
-							$line = trim($output);
-						}
-						pts_client::test_profile_debug_message('Result Line: ' . $line);
-
-						// FALLBACK HELPERS FOR BELOW
-						$did_try_colon_fallback = false;
+						$is_multi_match = !empty($multi_match) && $multi_match != 'NONE';
 
 						do
 						{
-							$try_again = false;
-							$r = explode(' ', pts_strings::trim_spaces(str_replace($space_out_chars, ' ', str_replace('=', ' = ', $line))));
-							$r_pos = array_search($key, $r);
+							$count = count($test_results);
 
-							if(!empty($before_string))
+							if($line_before_hint != null)
 							{
-								// Using ResultBeforeString tag
-								$before_this = array_search($before_string, $r);
-
-								if($before_this !== false)
-								{
-									$test_results[] = $r[($before_this - 1)];
-								}
+								pts_client::test_profile_debug_message('Result Parsing Line Before Hint: ' . $line_before_hint);
+								$line = substr($output, strpos($output, "\n", strrpos($output, $line_before_hint)));
+								$line = substr($line, 0, strpos($line, "\n", 1));
+								$output = substr($output, 0, strrpos($output, "\n", strrpos($output, $line_before_hint))) . "\n";
 							}
-							else if(!empty($after_string))
+							else if($line_after_hint != null)
 							{
-								// Using ResultBeforeString tag
-								$after_this = array_search($after_string, $r);
-
-								if($after_this !== false)
-								{
-									$after_this++;
-									for($f = $after_this; $f < count($r); $f++)
-									{
-										if(in_array($r[$f], array(':', ',', '-', '=')))
-										{
-											continue;
-										}
-
-										$test_results[] = $r[$f];
-										break;
-									}
-								}
+								pts_client::test_profile_debug_message('Result Parsing Line After Hint: ' . $line_after_hint);
+								$line = substr($output, 0, strrpos($output, "\n", strrpos($output, $line_before_hint)));
+								$line = substr($line, strrpos($line, "\n", 1) + 1);
+								$output = null;
 							}
-							else if(isset($r[$template_r_pos]))
+							else if($search_key != null)
 							{
-								$test_results[] = $r[$template_r_pos];
+								$search_key = trim($search_key);
+								pts_client::test_profile_debug_message('Result Parsing Search Key: ' . $search_key);
+								$line = substr($output, 0, strpos($output, "\n", strrpos($output, $search_key)));
+								$start_of_line = strrpos($line, "\n");
+								$output = substr($line, 0, $start_of_line) . "\n";
+								$line = substr($line, $start_of_line + 1);
 							}
 							else
 							{
-								// POSSIBLE FALLBACKS TO TRY AGAIN
+								// Condition $template_r[0] == $key, include entire file since there is nothing to search
+								pts_client::test_profile_debug_message('No Result Parsing Hint, Including Entire Result Output');
+								$line = trim($output);
+							}
+							pts_client::test_profile_debug_message('Result Line: ' . $line);
 
-								if(!$did_try_colon_fallback && strpos($line, ':') !== false)
+							// FALLBACK HELPERS FOR BELOW
+							$did_try_colon_fallback = false;
+
+							do
+							{
+								$try_again = false;
+								$r = explode(' ', pts_strings::trim_spaces(str_replace($space_out_chars, ' ', str_replace('=', ' = ', $line))));
+								$r_pos = array_search($key, $r);
+
+								if(!empty($before_string))
 								{
-									$line = str_replace(':', ': ', $line);
-									$did_try_colon_fallback = true;
-									$try_again = true;
+									// Using ResultBeforeString tag
+									$before_this = array_search($before_string, $r);
+
+									if($before_this !== false)
+									{
+										$test_results[] = $r[($before_this - 1)];
+									}
+								}
+								else if(!empty($after_string))
+								{
+									// Using ResultBeforeString tag
+									$after_this = array_search($after_string, $r);
+
+									if($after_this !== false)
+									{
+										$after_this++;
+										for($f = $after_this; $f < count($r); $f++)
+										{
+											if(in_array($r[$f], array(':', ',', '-', '=')))
+											{
+												continue;
+											}
+
+											$test_results[] = $r[$f];
+											break;
+										}
+									}
+								}
+								else if(isset($r[$template_r_pos]))
+								{
+									$test_results[] = $r[$template_r_pos];
+								}
+								else
+								{
+									// POSSIBLE FALLBACKS TO TRY AGAIN
+
+									if(!$did_try_colon_fallback && strpos($line, ':') !== false)
+									{
+										$line = str_replace(':', ': ', $line);
+										$did_try_colon_fallback = true;
+										$try_again = true;
+									}
 								}
 							}
+							while($try_again);
 						}
-						while($try_again);
+						while($is_multi_match && count($test_results) != $count && !empty($output));
 					}
-					while($is_multi_match && count($test_results) != $count && !empty($output));
 				}
 
 				foreach($test_results as $x => &$test_result)
@@ -814,6 +716,120 @@ class pts_test_result_parser
 			}
 		}
 		return $test_result;
+	}
+	protected static function determine_search_key($line_hint, $line_before_hint, $line_after_hint, $template_line, $template, $template_r, $key)
+	{
+		// Determine the search key to use
+		$search_key = null;
+		if(isset($line_hint) && $line_hint != null && strpos($template_line, $line_hint) !== false)
+		{
+			$search_key = $line_hint;
+		}
+		else if($line_before_hint != null && strpos($template, $line_hint) !== false)
+		{
+			$search_key = null; // doesn't really matter what this value is
+		}
+		else if($line_after_hint != null && strpos($template, $line_hint) !== false)
+		{
+			$search_key = null; // doesn't really matter what this value is
+		}
+		else
+		{
+			foreach($template_r as $line_part)
+			{
+				if(strpos($line_part, ':') !== false && strlen($line_part) > 1)
+				{
+					// add some sort of && strrpos($template, $line_part)  to make sure there isn't two of the same $search_key
+					$search_key = $line_part;
+					break;
+				}
+			}
+
+			if($search_key == null && $search_key != null)
+			{
+				// Just try searching for the first part of the string
+				/*
+				for($i = 0; $i < $template_r_pos; $i++)
+				{
+					$search_key .= $template_r . ' ';
+				}
+				*/
+
+				// This way if there are ) or other characters stripped, the below method will work where the above one will not
+				$search_key = substr($template_line, 0, strpos($template_line, $key));
+			}
+		}
+
+		return $search_key;
+	}
+	protected static function check_for_frame_time_parsing(&$test_results, $template, $output, $prefix)
+	{
+		$frame_time_values = null;
+		$returns = false;
+
+		if($template == 'libframetime-output')
+		{
+			$returns = true;
+			$frame_time_values = array();
+			$line_values = explode(PHP_EOL, $output);
+			if(!empty($line_values) && isset($line_values[3]))
+			{
+				foreach($line_values as &$v)
+				{
+					if(substr($v, -3) == ' us' && substr($v, 0, 10) == 'Frametime ')
+					{
+						$frametime = substr($v, 10);
+						$frametime = substr($frametime, 0, -3);
+						if($frametime > 2000)
+						{
+							$frametime = $frametime / 1000;
+							$frame_time_values[] = $frametime;
+						}
+					}
+				}
+				$frame_time_values = pts_math::remove_outliers($frame_time_values);
+			}
+		}
+		else if($template == 'csv-dump-frame-latencies')
+		{
+			$returns = true;
+			$frame_time_values = explode(',', $output);
+		}
+
+		if(!empty($frame_time_values) && isset($frame_time_values[3]))
+		{
+			// Get rid of the first value as likely outlier
+			array_shift($frame_time_values);
+			foreach($frame_time_values as $f => &$v)
+			{
+				if(!is_numeric($v) || $v == 0)
+				{
+					unset($frame_time_values[$f]);
+					continue;
+				}
+				$v = 1000 / $v;
+			}
+			switch($prefix)
+			{
+				case 'MIN_':
+					$val = min($frame_time_values);
+					break;
+				case 'MAX_':
+					$val = max($frame_time_values);
+					break;
+				case 'AVG_':
+					default:
+					$val = array_sum($frame_time_values) / count($frame_time_values);
+					break;
+			}
+
+			if($val != 0)
+			{
+				$test_results[] = $val;
+			}
+		}
+
+		return $returns;
 	}
 }
 
