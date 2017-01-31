@@ -206,7 +206,6 @@ class pts_test_result_parser
 			return null;
 		}
 
-		$test_identifier = $test_run_request->test_profile->get_identifier();
 		$extra_arguments = $test_run_request->get_arguments();
 		$pts_test_arguments = trim($test_run_request->test_profile->get_default_arguments() . ' ' . str_replace($test_run_request->test_profile->get_default_arguments(), '', $extra_arguments) . ' ' . $test_run_request->test_profile->get_default_post_arguments());
 
@@ -400,7 +399,6 @@ class pts_test_result_parser
 		$xml = self::setup_parse_xml_file($test_run_request->test_profile);
 		$test_result = false;
 
-		$test_identifier = $test_run_request->test_profile->get_identifier();
 		if($prefix != null && substr($prefix, -1) != '_')
 		{
 			$prefix .= '_';
@@ -410,314 +408,315 @@ class pts_test_result_parser
 		{
 			foreach($xml->ResultsParser as $entry)
 			{
-				$match_test_arguments = isset($entry->MatchToTestArguments) ? $entry->MatchToTestArguments->__toString() : null;
-				$template = isset($entry->OutputTemplate) ? $entry->OutputTemplate->__toString() : null;
-				$multi_match = isset($entry->MultiMatch) ? $entry->MultiMatch->__toString() : null;
-
-				if(!empty($match_test_arguments) && strpos($pts_test_arguments, $match_test_arguments) === false)
-				{
-					// This is not the ResultsParser XML section to use as the MatchToTestArguments does not match the PTS test arguments
-					continue;
-				}
-
-				switch((isset($entry->ResultKey) ? $entry->ResultKey->__toString() : null))
-				{
-					case 'PTS_TEST_ARGUMENTS':
-						$key_for_result = '#_' . $prefix . str_replace(' ', '', $pts_test_arguments) . '_#';
-						break;
-					case 'PTS_USER_SET_ARGUMENTS':
-						$key_for_result = '#_' . $prefix . str_replace(' ', '', $extra_arguments) . '_#';
-						break;
-					default:
-						$key_for_result = '#_' . $prefix . 'RESULT_#';
-						break;
-				}
-
-				// The actual parsing here
-				$start_result_pos = strrpos($template, $key_for_result);
-
-				if($prefix != null && $start_result_pos === false && $template != 'csv-dump-frame-latencies' && $template != 'libframetime-output')
-				{
-					// XXX: technically the $prefix check shouldn't be needed, verify whether safe to have this check be unconditional on start_result_pos failing...
-					return false;
-				}
-
-				$space_out_chars = array('(', ')', "\t");
-
-				$file_format = isset($entry->FileFormat) ? $entry->FileFormat->__toString() : null;
-				if(isset($file_format) && $file_format == 'CSV')
-				{
-					$space_out_chars[] = ',';
-				}
-
-				if((isset($template[($start_result_pos - 1)]) && $template[($start_result_pos - 1)] == '/') || (isset($template[($start_result_pos + strlen($key_for_result))]) && $template[($start_result_pos + strlen($key_for_result))] == '/'))
-				{
-					$space_out_chars[] = '/';
-				}
-
-				$end_result_pos = $start_result_pos + strlen($key_for_result);
-				$end_result_line_pos = strpos($template, "\n", $end_result_pos);
-				$template_line = substr($template, 0, ($end_result_line_pos === false ? strlen($template) : $end_result_line_pos));
-				$template_line = substr($template_line, strrpos($template_line, "\n"));
-				$template_r = explode(' ', pts_strings::trim_spaces(str_replace($space_out_chars, ' ', str_replace('=', ' = ', $template_line))));
-				$template_r_pos = array_search($key_for_result, $template_r);
-
-				if($template_r_pos === false)
-				{
-					// Look for an element that partially matches, if like a '.' or '/sec' or some other pre/post-fix is present
-					foreach($template_r as $x => $r_check)
-					{
-						if(isset($key_for_result[$x]) && strpos($r_check, $key_for_result[$x]) !== false)
-						{
-							$template_r_pos = $x;
-							break;
-						}
-					}
-				}
-
-				if(is_file($log_file))
-				{
-					if(filesize($log_file) > 52428800)
-					{
-						pts_client::test_profile_debug_message('File Too Big To Parse: ' . $log_file);
-					}
-
-					$output = file_get_contents($log_file);
-				}
-				else
-				{
-					// Nothing to parse
-					return false;
-				}
-
-				$test_results = array();
-
-				// Check if frame time parsing info
-				if(self::check_for_frame_time_parsing($test_results, $template, $output, $prefix))
-				{
-					// Was frame time info, nothing else to do for parsing, $test_results already filled then
-				}
-				else
-				{
-					// Conventional searching for matching section for finding result
-					$line_before_hint = isset($entry->LineBeforeHint) ? $entry->LineBeforeHint->__toString() : null;
-					$line_after_hint = isset($entry->LineAfterHint) ? $entry->LineAfterHint->__toString() : null;
-					$line_hint = isset($entry->LineHint) ? $entry->LineHint->__toString() : null;
-					$search_key = self::determine_search_key($line_hint, $line_before_hint, $line_after_hint, $template_line, $template, $template_r, $key_for_result); // SEARCH KEY
-					if($search_key != null || $line_before_hint != null || $line_after_hint != null || $template_r[0] == $key_for_result)
-					{
-						$is_multi_match = !empty($multi_match) && $multi_match != 'NONE';
-						$before_string = isset($entry->ResultBeforeString) ? $entry->ResultBeforeString->__toString() : null;
-						$after_string = isset($entry->ResultAfterString) ? $entry->ResultAfterString->__toString() : null;
-
-						do
-						{
-							$count = count($test_results);
-
-							if($line_before_hint != null)
-							{
-								pts_client::test_profile_debug_message('Result Parsing Line Before Hint: ' . $line_before_hint);
-								$line = substr($output, strpos($output, "\n", strrpos($output, $line_before_hint)));
-								$line = substr($line, 0, strpos($line, "\n", 1));
-								$output = substr($output, 0, strrpos($output, "\n", strrpos($output, $line_before_hint))) . "\n";
-							}
-							else if($line_after_hint != null)
-							{
-								pts_client::test_profile_debug_message('Result Parsing Line After Hint: ' . $line_after_hint);
-								$line = substr($output, 0, strrpos($output, "\n", strrpos($output, $line_before_hint)));
-								$line = substr($line, strrpos($line, "\n", 1) + 1);
-								$output = null;
-							}
-							else if($search_key != null)
-							{
-								$search_key = trim($search_key);
-								pts_client::test_profile_debug_message('Result Parsing Search Key: ' . $search_key);
-								$line = substr($output, 0, strpos($output, "\n", strrpos($output, $search_key)));
-								$start_of_line = strrpos($line, "\n");
-								$output = substr($line, 0, $start_of_line) . "\n";
-								$line = substr($line, $start_of_line + 1);
-							}
-							else
-							{
-								// Condition $template_r[0] == $key, include entire file since there is nothing to search
-								pts_client::test_profile_debug_message('No Result Parsing Hint, Including Entire Result Output');
-								$line = trim($output);
-							}
-							pts_client::test_profile_debug_message('Result Line: ' . $line);
-
-							// FALLBACK HELPERS FOR BELOW
-							$did_try_colon_fallback = false;
-
-							do
-							{
-								$try_again = false;
-								$r = explode(' ', pts_strings::trim_spaces(str_replace($space_out_chars, ' ', str_replace('=', ' = ', $line))));
-								$r_pos = array_search($key_for_result, $r);
-
-								if(!empty($before_string))
-								{
-									// Using ResultBeforeString tag
-									$before_this = array_search($before_string, $r);
-
-									if($before_this !== false)
-									{
-										$test_results[] = $r[($before_this - 1)];
-									}
-								}
-								else if(!empty($after_string))
-								{
-									// Using ResultBeforeString tag
-									$after_this = array_search($after_string, $r);
-
-									if($after_this !== false)
-									{
-										$after_this++;
-										for($f = $after_this; $f < count($r); $f++)
-										{
-											if(in_array($r[$f], array(':', ',', '-', '=')))
-											{
-												continue;
-											}
-
-											$test_results[] = $r[$f];
-											break;
-										}
-									}
-								}
-								else if(isset($r[$template_r_pos]))
-								{
-									$test_results[] = $r[$template_r_pos];
-								}
-								else
-								{
-									// POSSIBLE FALLBACKS TO TRY AGAIN
-
-									if(!$did_try_colon_fallback && strpos($line, ':') !== false)
-									{
-										$line = str_replace(':', ': ', $line);
-										$did_try_colon_fallback = true;
-										$try_again = true;
-									}
-								}
-							}
-							while($try_again);
-						}
-						while($is_multi_match && count($test_results) != $count && !empty($output));
-					}
-				}
-
-				if(empty($test_results))
-				{
-					continue;
-				}
-
-				$strip_from_result = isset($entry->StripFromResult) ? $entry->StripFromResult->__toString() : null;
-				$multiply_by = isset($entry->MultiplyResultBy) ? $entry->MultiplyResultBy->__toString() : null;
-				$strip_result_postfix = isset($entry->StripResultPostfix) ? $entry->StripResultPostfix->__toString() : null;
-				$divide_by = isset($entry->DivideResultBy) ? $entry->DivideResultBy->__toString() : null;
-
-				foreach($test_results as $x => &$test_result)
-				{
-					if($strip_from_result != null)
-					{
-						$test_result = str_replace($strip_from_result, null, $test_result);
-					}
-
-					if($strip_result_postfix != null && substr($test_result, 0 - strlen($strip_result_postfix)) == $strip_result_postfix)
-					{
-						$test_result = substr($test_result, 0, 0 - strlen($strip_result_postfix));
-					}
-
-					// Expand validity checking here
-					if($is_numeric_check == true && is_numeric($test_result) == false)
-					{
-						// E.g. if output time as 06:12.32 (as in blender)
-						if(substr_count($test_result, ':') == 1 && substr_count($test_result, '.') == 1 && strpos($test_result, '.') > strpos($test_result, ':'))
-						{
-							$minutes = substr($test_result, 0, strpos($test_result, ':'));
-							$seconds = ' ' . substr($test_result, strpos($test_result, ':') + 1);
-							$test_result = ($minutes * 60) + $seconds;
-						}
-					}
-					if($is_numeric_check == true && is_numeric($test_result) == false)
-					{
-						unset($test_results[$x]);
-						continue;
-					}
-
-					if($divide_by != null && is_numeric($divide_by) && $divide_by != 0)
-					{
-						$test_result = $test_result / $divide_by;
-					}
-					if($multiply_by != null && is_numeric($multiply_by) && $multiply_by != 0)
-					{
-						$test_result = $test_result * $multiply_by;
-					}
-				}
-
-				if(empty($test_results))
-				{
-					continue;
-				}
-
-				switch($multi_match)
-				{
-					case 'REPORT_ALL':
-						$test_result = implode(',', $test_results);
-						break;
-					case 'AVERAGE':
-					default:
-						if($is_numeric_check)
-							$test_result = array_sum($test_results) / count($test_results);
-						break;
-				}
-
-				if($is_pass_fail_test)
-				{
-					if(str_replace(array('PASS', 'FAIL', ','), null, $test_result) == null)
-					{
-						// already a properly formatted multi-pass fail
-					}
-					else if($test_result == 'TRUE' || $test_result == 'PASSED')
-					{
-						// pass
-						$test_result = 'PASS';
-					}
-					else
-					{
-						// fail
-						$test_result = 'FAIL';
-					}
-				}
-				else if($is_numeric_check && !is_numeric($test_result))
-				{
-					// Final check to ensure valid data
-					$test_result = false;
-				}
-
+				$test_result = self::parse_result_process_entry($test_run_request, $log_file, $pts_test_arguments, $extra_arguments, $prefix, $entry, $is_pass_fail_test, $is_numeric_check);
 				if($test_result != false)
 				{
-					$precision = isset($entry->ResultPrecision) ? $entry->ResultPrecision->__toString() : null;
-					$scale = isset($entry->ResultScale) ? $entry->ResultScale->__toString() : null;
-					$proportion = isset($entry->ResultProportion) ? $entry->ResultProportion->__toString() : null;
-
-					if($scale != null)
-					{
-						$test_run_request->test_profile->set_result_scale($scale);
-					}
-					if($proportion != null)
-					{
-						$test_run_request->test_profile->set_result_proportion($proportion);
-					}
-					if($precision != null)
-					{
-						$test_run_request->set_result_precision($precision);
-					}
-
+					// Result found
 					break;
 				}
 			}
 		}
+		return $test_result;
+	}
+	protected static function parse_result_process_entry(&$test_run_request, $log_file, $pts_test_arguments, $extra_arguments, $prefix, &$entry, $is_pass_fail_test, $is_numeric_check)
+	{
+		$test_result = false;
+		$match_test_arguments = isset($entry->MatchToTestArguments) ? $entry->MatchToTestArguments->__toString() : null;
+		$template = isset($entry->OutputTemplate) ? $entry->OutputTemplate->__toString() : null;
+		$multi_match = isset($entry->MultiMatch) ? $entry->MultiMatch->__toString() : null;
+
+		if(!empty($match_test_arguments) && strpos($pts_test_arguments, $match_test_arguments) === false)
+		{
+			// This is not the ResultsParser XML section to use as the MatchToTestArguments does not match the PTS test arguments
+			return false;
+		}
+
+		switch((isset($entry->ResultKey) ? $entry->ResultKey->__toString() : null))
+		{
+			case 'PTS_TEST_ARGUMENTS':
+				$key_for_result = '#_' . $prefix . str_replace(' ', '', $pts_test_arguments) . '_#';
+				break;
+			case 'PTS_USER_SET_ARGUMENTS':
+				$key_for_result = '#_' . $prefix . str_replace(' ', '', $extra_arguments) . '_#';
+				break;
+			default:
+				$key_for_result = '#_' . $prefix . 'RESULT_#';
+				break;
+		}
+
+		// The actual parsing here
+		$start_result_pos = strrpos($template, $key_for_result);
+
+		if($prefix != null && $start_result_pos === false && $template != 'csv-dump-frame-latencies' && $template != 'libframetime-output')
+		{
+			// XXX: technically the $prefix check shouldn't be needed, verify whether safe to have this check be unconditional on start_result_pos failing...
+			return false;
+		}
+
+		$space_out_chars = array('(', ')', "\t");
+		$file_format = isset($entry->FileFormat) ? $entry->FileFormat->__toString() : null;
+		if(isset($file_format) && $file_format == 'CSV')
+		{
+			$space_out_chars[] = ',';
+		}
+
+		if((isset($template[($start_result_pos - 1)]) && $template[($start_result_pos - 1)] == '/') || (isset($template[($start_result_pos + strlen($key_for_result))]) && $template[($start_result_pos + strlen($key_for_result))] == '/'))
+		{
+			$space_out_chars[] = '/';
+		}
+
+		$end_result_pos = $start_result_pos + strlen($key_for_result);
+		$end_result_line_pos = strpos($template, "\n", $end_result_pos);
+		$template_line = substr($template, 0, ($end_result_line_pos === false ? strlen($template) : $end_result_line_pos));
+		$template_line = substr($template_line, strrpos($template_line, "\n"));
+		$template_r = explode(' ', pts_strings::trim_spaces(str_replace($space_out_chars, ' ', str_replace('=', ' = ', $template_line))));
+		$template_r_pos = array_search($key_for_result, $template_r);
+
+		if($template_r_pos === false)
+		{
+			// Look for an element that partially matches, if like a '.' or '/sec' or some other pre/post-fix is present
+			foreach($template_r as $x => $r_check)
+			{
+				if(isset($key_for_result[$x]) && strpos($r_check, $key_for_result[$x]) !== false)
+				{
+					$template_r_pos = $x;
+					break;
+				}
+			}
+		}
+		if(is_file($log_file))
+		{
+			if(filesize($log_file) > 52428800)
+			{
+				pts_client::test_profile_debug_message('File Too Big To Parse: ' . $log_file);
+			}
+			$output = file_get_contents($log_file);
+		}
+		else
+		{
+			// Nothing to parse
+			return false;
+		}
+
+		$test_results = array();
+		// Check if frame time parsing info
+		if(self::check_for_frame_time_parsing($test_results, $template, $output, $prefix))
+		{
+			// Was frame time info, nothing else to do for parsing, $test_results already filled then
+		}
+		else
+		{
+			// Conventional searching for matching section for finding result
+			$line_before_hint = isset($entry->LineBeforeHint) ? $entry->LineBeforeHint->__toString() : null;
+			$line_after_hint = isset($entry->LineAfterHint) ? $entry->LineAfterHint->__toString() : null;
+			$line_hint = isset($entry->LineHint) ? $entry->LineHint->__toString() : null;
+			$search_key = self::determine_search_key($line_hint, $line_before_hint, $line_after_hint, $template_line, $template, $template_r, $key_for_result); // SEARCH KEY
+			if($search_key != null || $line_before_hint != null || $line_after_hint != null || $template_r[0] == $key_for_result)
+			{
+				$is_multi_match = !empty($multi_match) && $multi_match != 'NONE';
+				$before_string = isset($entry->ResultBeforeString) ? $entry->ResultBeforeString->__toString() : null;
+				$after_string = isset($entry->ResultAfterString) ? $entry->ResultAfterString->__toString() : null;
+
+				do
+				{
+					$count = count($test_results);
+
+					if($line_before_hint != null)
+					{
+						pts_client::test_profile_debug_message('Result Parsing Line Before Hint: ' . $line_before_hint);
+						$line = substr($output, strpos($output, "\n", strrpos($output, $line_before_hint)));
+						$line = substr($line, 0, strpos($line, "\n", 1));
+						$output = substr($output, 0, strrpos($output, "\n", strrpos($output, $line_before_hint))) . "\n";
+					}
+					else if($line_after_hint != null)
+					{
+						pts_client::test_profile_debug_message('Result Parsing Line After Hint: ' . $line_after_hint);
+						$line = substr($output, 0, strrpos($output, "\n", strrpos($output, $line_before_hint)));
+						$line = substr($line, strrpos($line, "\n", 1) + 1);
+						$output = null;
+					}
+					else if($search_key != null)
+					{
+						$search_key = trim($search_key);
+						pts_client::test_profile_debug_message('Result Parsing Search Key: ' . $search_key);
+						$line = substr($output, 0, strpos($output, "\n", strrpos($output, $search_key)));
+						$start_of_line = strrpos($line, "\n");
+						$output = substr($line, 0, $start_of_line) . "\n";
+						$line = substr($line, $start_of_line + 1);
+					}
+					else
+					{
+						// Condition $template_r[0] == $key, include entire file since there is nothing to search
+						pts_client::test_profile_debug_message('No Result Parsing Hint, Including Entire Result Output');
+						$line = trim($output);
+					}
+					pts_client::test_profile_debug_message('Result Line: ' . $line);
+
+					// FALLBACK HELPERS FOR BELOW
+					$did_try_colon_fallback = false;
+
+					do
+					{
+						$try_again = false;
+						$r = explode(' ', pts_strings::trim_spaces(str_replace($space_out_chars, ' ', str_replace('=', ' = ', $line))));
+						$r_pos = array_search($key_for_result, $r);
+
+						if(!empty($before_string))
+						{
+							// Using ResultBeforeString tag
+							$before_this = array_search($before_string, $r);
+							if($before_this !== false)
+							{
+								$test_results[] = $r[($before_this - 1)];
+							}
+						}
+						else if(!empty($after_string))
+						{
+							// Using ResultBeforeString tag
+							$after_this = array_search($after_string, $r);
+
+							if($after_this !== false)
+							{
+								$after_this++;
+								for($f = $after_this; $f < count($r); $f++)
+								{
+									if(in_array($r[$f], array(':', ',', '-', '=')))
+									{
+										continue;
+									}
+									$test_results[] = $r[$f];
+									break;
+								}
+							}
+						}
+						else if(isset($r[$template_r_pos]))
+						{
+							$test_results[] = $r[$template_r_pos];
+						}
+						else
+						{
+							// POSSIBLE FALLBACKS TO TRY AGAIN
+							if(!$did_try_colon_fallback && strpos($line, ':') !== false)
+							{
+								$line = str_replace(':', ': ', $line);
+								$did_try_colon_fallback = true;
+								$try_again = true;
+							}
+						}
+					}
+					while($try_again);
+				}
+				while($is_multi_match && count($test_results) != $count && !empty($output));
+			}
+		}
+
+		if(empty($test_results))
+		{
+			return false;
+		}
+
+		$strip_from_result = isset($entry->StripFromResult) ? $entry->StripFromResult->__toString() : null;
+		$multiply_by = isset($entry->MultiplyResultBy) ? $entry->MultiplyResultBy->__toString() : null;
+		$strip_result_postfix = isset($entry->StripResultPostfix) ? $entry->StripResultPostfix->__toString() : null;
+		$divide_by = isset($entry->DivideResultBy) ? $entry->DivideResultBy->__toString() : null;
+
+		foreach($test_results as $x => &$test_result)
+		{
+			if($strip_from_result != null)
+			{
+				$test_result = str_replace($strip_from_result, null, $test_result);
+			}
+			if($strip_result_postfix != null && substr($test_result, 0 - strlen($strip_result_postfix)) == $strip_result_postfix)
+			{
+				$test_result = substr($test_result, 0, 0 - strlen($strip_result_postfix));
+			}
+
+			// Expand validity checking here
+			if($is_numeric_check == true && is_numeric($test_result) == false)
+			{
+				// E.g. if output time as 06:12.32 (as in blender)
+				if(substr_count($test_result, ':') == 1 && substr_count($test_result, '.') == 1 && strpos($test_result, '.') > strpos($test_result, ':'))
+				{
+					$minutes = substr($test_result, 0, strpos($test_result, ':'));
+					$seconds = ' ' . substr($test_result, strpos($test_result, ':') + 1);
+					$test_result = ($minutes * 60) + $seconds;
+				}
+			}
+			if($is_numeric_check == true && is_numeric($test_result) == false)
+			{
+				unset($test_results[$x]);
+				continue;
+			}
+			if($divide_by != null && is_numeric($divide_by) && $divide_by != 0)
+			{
+				$test_result = $test_result / $divide_by;
+			}
+			if($multiply_by != null && is_numeric($multiply_by) && $multiply_by != 0)
+			{
+				$test_result = $test_result * $multiply_by;
+			}
+		}
+
+		if(empty($test_results))
+		{
+			return false;
+		}
+
+		switch($multi_match)
+		{
+			case 'REPORT_ALL':
+				$test_result = implode(',', $test_results);
+				break;
+			case 'AVERAGE':
+				default:
+				if($is_numeric_check)
+					$test_result = array_sum($test_results) / count($test_results);
+				break;
+		}
+
+		if($is_pass_fail_test)
+		{
+			if(str_replace(array('PASS', 'FAIL', ','), null, $test_result) == null)
+			{
+				// already a properly formatted multi-pass fail
+			}
+			else if($test_result == 'TRUE' || $test_result == 'PASSED')
+			{
+				// pass
+				$test_result = 'PASS';
+			}
+			else
+			{
+				// fail
+				$test_result = 'FAIL';
+			}
+		}
+		else if($is_numeric_check && !is_numeric($test_result))
+		{
+			// Final check to ensure valid data
+			$test_result = false;
+		}
+
+		if($test_result != false)
+		{
+			$precision = isset($entry->ResultPrecision) ? $entry->ResultPrecision->__toString() : null;
+			$scale = isset($entry->ResultScale) ? $entry->ResultScale->__toString() : null;
+			$proportion = isset($entry->ResultProportion) ? $entry->ResultProportion->__toString() : null;
+
+			if($scale != null)
+			{
+				$test_run_request->test_profile->set_result_scale($scale);
+			}
+			if($proportion != null)
+			{
+				$test_run_request->test_profile->set_result_proportion($proportion);
+			}
+			if($precision != null)
+			{
+				$test_run_request->set_result_precision($precision);
+			}
+		}
+
 		return $test_result;
 	}
 	protected static function determine_search_key($line_hint, $line_before_hint, $line_after_hint, $template_line, $template, $template_r, $key)
