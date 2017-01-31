@@ -2,119 +2,120 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
-- pts-core: Add winners-and-losers sub-command for providing some first/last place finish stats
-- pts-core: Don't pass files greater than ~50MB to the result parser as likely too big to parse and invalid data like lots of warnings/errors from test
+pts-core: Add winners-and-losers sub-command for providing some first/last place finish stats
+pts-core: Don't pass files greater than ~50MB to the result parser as likely too big to parse and invalid data like lots of warnings/errors from test
+pts-core: Restructured test result parser
 
 Phoronix Test Suite 7.0.0 Milestone 2
 23 January 2017
 
-- pts-core: Indicate HIB/LIB result proportion when dumping results as CSV
-- pts-core: Introduce new view of system software/hardware details on test run and system-info command
-- pts-core: Drop detailed-system-info sub-command now that system-info is more verbose
-- pts-core: Eliminate pts_test_downloads_nye_XmlReader
-- pts-core: Eliminate pts_parse_results_nye_XmlReader abstraction
-- pts-core: A lot of cleanups / reworking of XML parsing in various components
-- pts-core: Cleanup phoronix-test-suite list-test-usage
-- phodevi: Fix for hanging Windows client when requesting disk mount options
-- phodevi: Don't rely upon X.Org DDX driver logic for determining GPU frequency since it's not portable to Wayland or with -modesetting DDX
-- phodevi: Add microcode version reporting on Linux
+pts-core: Indicate HIB/LIB result proportion when dumping results as CSV
+pts-core: Introduce new view of system software/hardware details on test run and system-info command
+pts-core: Drop detailed-system-info sub-command now that system-info is more verbose
+pts-core: Eliminate pts_test_downloads_nye_XmlReader
+pts-core: Eliminate pts_parse_results_nye_XmlReader abstraction
+pts-core: A lot of cleanups / reworking of XML parsing in various components
+pts-core: Cleanup phoronix-test-suite list-test-usage
+phodevi: Fix for hanging Windows client when requesting disk mount options
+phodevi: Don't rely upon X.Org DDX driver logic for determining GPU frequency since it's not portable to Wayland or with -modesetting DDX
+phodevi: Add microcode version reporting on Linux
 
 Phoronix Test Suite 7.0.0 Milestone 1
 12 January 2017
 
-- pts-core: Add estimate-run-time sub-command for estimating test/suite/result-file run length
-- pts-core: More external dependency coverage for BSDs
-- pts-core: Cleanup PTS_USER_LOCK / run-lock handling
-- pts_Graph: Add "Ryzen" product string to AMD's coloring
-- pts_Graph: Add "Pentium" product string to Intel's coloring
-- pts_Graph: Add option to disable color branding
-- phoromatic: Set by default for SQLite database WAL journal mode / NORMAL synchronous
-- phoromatic: Report status updates more often
+pts-core: Add estimate-run-time sub-command for estimating test/suite/result-file run length
+pts-core: More external dependency coverage for BSDs
+pts-core: Cleanup PTS_USER_LOCK / run-lock handling
+pts_Graph: Add "Ryzen" product string to AMD's coloring
+pts_Graph: Add "Pentium" product string to Intel's coloring
+pts_Graph: Add option to disable color branding
+phoromatic: Set by default for SQLite database WAL journal mode / NORMAL synchronous
+phoromatic: Report status updates more often
 
 Phoronix Test Suite 6.8.0-Tana
 6 December 2016
 
-- phoromatic: allow clearing warnings/errors of a system from the systems page
-- phodevi: Rearrange ATI/AMD graphics checks
+phoromatic: allow clearing warnings/errors of a system from the systems page
+phodevi: Rearrange ATI/AMD graphics checks
 
 Phoronix Test Suite 6.8.0 Milestone 3
 28 November 2016
 
-- pts-core: Ubuntu external dependency script fix
-- phodevi: Improved video RAM detection via GLX_MESA_query_renderer
-- phodevi: GPU detection improvements
-- phodevi: vRAM detection change to help AMDGPU-PRO
-- phodevi: Other product/model string improvements
+pts-core: Ubuntu external dependency script fix
+phodevi: Improved video RAM detection via GLX_MESA_query_renderer
+phodevi: GPU detection improvements
+phodevi: vRAM detection change to help AMDGPU-PRO
+phodevi: Other product/model string improvements
 
 Phoronix Test Suite 6.8.0 Milestone 2
 15 November 2016
 
-- pts-core: Add new remove_inactive_systems option on systems page
-- pts-core: Fix malforming graphs when feeding many line graph results that are in a tracking-like manner that should be compacted to box plot
-- pts-core: Add PHP GD check as first thing when attempting to use result-file-to-pdf
-- pts-core: Add new module hooks for __test_log_output() and __post_test_run_system_logs()
-- phodevi: Don't load Phodevi sensors prior to PHP 5.3 due to compatibility issues
-- log_exporter: Allow easily exporting test run and system logs via COPY_TEST_RUN_LOGS_TO and COPY_SYSTEM_LOGS_TO env vars
-- flamegrapher: Experimental new module to generate Linux perf / FlameGraph graphs for each test being executed when active
-- results_custom_export: Example module for dumping PTS test results in custom formats
-- pts_Graph: Add Intel color highlighting for "Celeron" too
+pts-core: Add new remove_inactive_systems option on systems page
+pts-core: Fix malforming graphs when feeding many line graph results that are in a tracking-like manner that should be compacted to box plot
+pts-core: Add PHP GD check as first thing when attempting to use result-file-to-pdf
+pts-core: Add new module hooks for __test_log_output() and __post_test_run_system_logs()
+phodevi: Don't load Phodevi sensors prior to PHP 5.3 due to compatibility issues
+log_exporter: Allow easily exporting test run and system logs via COPY_TEST_RUN_LOGS_TO and COPY_SYSTEM_LOGS_TO env vars
+flamegrapher: Experimental new module to generate Linux perf / FlameGraph graphs for each test being executed when active
+results_custom_export: Example module for dumping PTS test results in custom formats
+pts_Graph: Add Intel color highlighting for "Celeron" too
 
 Phoronix Test Suite 6.8.0 Milestone 1
 27 October 2016
 
-- pts-core: Add PHOROMATIC_HTTP_PORT environment variable for overriding Phoromatic Server HTTP port on starting it
-- pts-core: Don't preserve really large system logs (~1MB or greater per file)
-- pts-core: Strip http/https from proxy address if needed
-- pts-core: Update Solus external dependency handling
-- pts-core: Proper handling for when PHP ctype functions are not present
-- phodevi: Also look for Vulkan ICDs at /usr/share/vulkan/icd.d/*.json
+pts-core: Add PHOROMATIC_HTTP_PORT environment variable for overriding Phoromatic Server HTTP port on starting it
+pts-core: Don't preserve really large system logs (~1MB or greater per file)
+pts-core: Strip http/https from proxy address if needed
+pts-core: Update Solus external dependency handling
+pts-core: Proper handling for when PHP ctype functions are not present
+phodevi: Also look for Vulkan ICDs at /usr/share/vulkan/icd.d/*.json
 
 Phoronix Test Suite 6.6.1
 29 September 2016
 
-- pts-core: Various BSD improvements
-- pts-core: Add list-not-installed-tests command (alias: list-uninstalled-tests)
-- pts-core: Detection for qupzilla browser when no alternative exists
-- pts-core: Add "phoronix-test-suite php-conf" sub-command to dump more useful PHP information for debugging
-- pts-core: Add python-scipy and python-sklearn external dependencies
-- phodevi: Support for reporting memory frequency when overclocked if reported via "Configured Clock Speed" in dmidecode for RAM
+pts-core: Various BSD improvements
+pts-core: Add list-not-installed-tests command (alias: list-uninstalled-tests)
+pts-core: Detection for qupzilla browser when no alternative exists
+pts-core: Add "phoronix-test-suite php-conf" sub-command to dump more useful PHP information for debugging
+pts-core: Add python-scipy and python-sklearn external dependencies
+phodevi: Support for reporting memory frequency when overclocked if reported via "Configured Clock Speed" in dmidecode for RAM
 
 Phoronix Test Suite 6.6.0-Loppa
 6 September 2016
 
-- pts_Graph: On multi-way comparisons, always condense line graphs to modified box plots
+pts_Graph: On multi-way comparisons, always condense line graphs to modified box plots
 
 Phoronix Test Suite 6.6.0 Milestone 3
 26 August 2016
 
-- pts-core: Add OpenMandriva/urpmi PHP dependency helper to launcher
-- pts-core: After running tests, if no browser/display is available, offer to show results via CLI graph/text rendering
-- pts-core: Add a SVG DOM HTML back-end for lowering common SVG into pure HTML for cases like email clients where no SVG is supported
-- html_results_export: New module exposed via EXPORT_RESULTS_HTML_EMAIL_TO and EXPORT_RESULTS_HTML_FILE_TO env vars for exporting HTML results
-- pts_Graph: When highlighting graph values, darken the color rather than use static color
+pts-core: Add OpenMandriva/urpmi PHP dependency helper to launcher
+pts-core: After running tests, if no browser/display is available, offer to show results via CLI graph/text rendering
+pts-core: Add a SVG DOM HTML back-end for lowering common SVG into pure HTML for cases like email clients where no SVG is supported
+html_results_export: New module exposed via EXPORT_RESULTS_HTML_EMAIL_TO and EXPORT_RESULTS_HTML_FILE_TO env vars for exporting HTML results
+pts_Graph: When highlighting graph values, darken the color rather than use static color
 
 Phoronix Test Suite 6.6.0 Milestone 2
 7 August 2016
 
-- deploy: Update Debian packaging script
-- pts-core: Fix for upload-test-suite (on OpenBenchmarking.org side too)
-- pts-core: Show local suites in list-suites
-- pts-core: Ensure DragonFlyBSD pkg installation is done automatically
-- pts-core: Restructure bash on windows check
-- pts-core: Initial work on CLI terminal colored text output
-- phoromatic: Web UI styling improvements
-- phodevi: Show mdstat RAID Details when available
-- pts_Graph: Show extra disk details on system graph
+deploy: Update Debian packaging script
+pts-core: Fix for upload-test-suite (on OpenBenchmarking.org side too)
+pts-core: Show local suites in list-suites
+pts-core: Ensure DragonFlyBSD pkg installation is done automatically
+pts-core: Restructure bash on windows check
+pts-core: Initial work on CLI terminal colored text output
+phoromatic: Web UI styling improvements
+phodevi: Show mdstat RAID Details when available
+pts_Graph: Show extra disk details on system graph
 
 Phoronix Test Suite 6.6.0 Milestone 1
 6 July 2016
 
-- pts-core: Add OpenCV to external dependencies list
-- pts-core: Disable test cache share when run in stress-run mode
-- phoromatic: Allow custom versions to be manually specified on test suite web UI page
-- pts_Graph: Show min/max results on multi-way comparisons
-- pts_Graph: Color string tweaks
-- phodevi: Fix to allow GPU temperature sensor to work with AMDGPU-PRO driver stack
+pts-core: Add OpenCV to external dependencies list
+pts-core: Disable test cache share when run in stress-run mode
+phoromatic: Allow custom versions to be manually specified on test suite web UI page
+pts_Graph: Show min/max results on multi-way comparisons
+pts_Graph: Color string tweaks
+phodevi: Fix to allow GPU temperature sensor to work with AMDGPU-PRO driver stack
 
 Phoronix Test Suite 6.4.0-Hasvik
 2 June 2016
@@ -124,1715 +125,1163 @@ Phoronix Test Suite 6.4.0-Hasvik
 Phoronix Test Suite 6.4.0 Milestone 4
 31 May 2016
 
-- pts-core: Automatically add used extra OpenBenchmarking.org repositories to the linked list
-- pts-core: Don't load empty tests on finish-run command
-- pts-core: Add perl-digest-md5 to external dependencies list
-- pts-core: Prevent duplicate tests/setting combinations from entering the same test run manager queue
-- pts-core: Fix for IE not scaling SVGs in the results viewer
-- pts-core: Finish new pts_test_suite API, port build-suite to it
-- phoromatic: Support editing and deleting tests in local suites from the Phoromatic Server UI
-- phodevi: More detection improvements for NVMe devices on Linux
+pts-core: Automatically add used extra OpenBenchmarking.org repositories to the linked list
+pts-core: Don't load empty tests on finish-run command
+pts-core: Add perl-digest-md5 to external dependencies list
+pts-core: Prevent duplicate tests/setting combinations from entering the same test run manager queue
+pts-core: Fix for IE not scaling SVGs in the results viewer
+pts-core: Finish new pts_test_suite API, port build-suite to it
+phoromatic: Support editing and deleting tests in local suites from the Phoromatic Server UI
+phodevi: More detection improvements for NVMe devices on Linux
 
 Phoronix Test Suite 6.4.0 Milestone 3
 26 May 2016
 
-- pts-core: XML formatting fix for non-OpenBenchmarking.org deployments
-- pts-core: Do more to avoid zombie processes in stress-run manager
-- pts-core: More robustness of the results parser with spaces (or lack of) near colons
-- pts-core: Rewritten pts_test_suite internals
-- phodevi: Support for reading AMDGPU OverDrive overclock offset
-- phoromatic: Add generalized "Testing" page to Phoromatic Server
-- watchdog: new PTS module for checking sensor readings to suspend/quit testing if exceeded
+pts-core: XML formatting fix for non-OpenBenchmarking.org deployments
+pts-core: Do more to avoid zombie processes in stress-run manager
+pts-core: More robustness of the results parser with spaces (or lack of) near colons
+pts-core: Rewritten pts_test_suite internals
+phodevi: Support for reading AMDGPU OverDrive overclock offset
+phoromatic: Add generalized "Testing" page to Phoromatic Server
+watchdog: new PTS module for checking sensor readings to suspend/quit testing if exceeded
 
 Phoronix Test Suite 6.4.0 Milestone 2
 6 May 2016
 
-- pts-core: Allow XML formatting from the Phoromatic Server web interface
-- pts-core: Reformat stress-run log messages
-- pts-core: Add "redis-server" as a potential external dependency for providing Redis
-- pts-core: Statically set dynamic_run_count_on_length_or_less to 60
-- pts-core: Adaptively increase regression threshold level in points_of_possible_interest() when too many results are being flagged
-- phoromatic: Fix selecting the same test itself on the "build suite" page
-- phoromatic: Do hard deletes when deleting results from admin area or results page
-- phoromatic: Add basic support for deleting "local suites" from Phoromatic web UI
-- phoromatic: Allow exporting system test run/build errors to the exported public results viewer
-- phoromatic: Add PTS_NO_REBOOT_ON_NETWORK_FAILURE environment variable for clients where if network failure occurs, Phoromatic clients will not reboot
-- phodevi: Add ambient.temp sensor for reporting ambient temperature, currently supports temperv14 USB sensors
+pts-core: Allow XML formatting from the Phoromatic Server web interface
+pts-core: Reformat stress-run log messages
+pts-core: Add "redis-server" as a potential external dependency for providing Redis
+pts-core: Statically set dynamic_run_count_on_length_or_less to 60
+pts-core: Adaptively increase regression threshold level in points_of_possible_interest() when too many results are being flagged
+phoromatic: Fix selecting the same test itself on the "build suite" page
+phoromatic: Do hard deletes when deleting results from admin area or results page
+phoromatic: Add basic support for deleting "local suites" from Phoromatic web UI
+phoromatic: Allow exporting system test run/build errors to the exported public results viewer
+phoromatic: Add PTS_NO_REBOOT_ON_NETWORK_FAILURE environment variable for clients where if network failure occurs, Phoromatic clients will not reboot
+phodevi: Add ambient.temp sensor for reporting ambient temperature, currently supports temperv14 USB sensors
 
 Phoronix Test Suite 6.4.0 Milestone 1
 25 April 2016
 
-- pts-core: Many improvements to stress-run functionality
-- pts-core: Add Midori to supported browser list
-- pts-core: Add default logging support while running stress-run using phoronix-test-suite-stress.log filename
-- pts-core: Additional fallback for locating if running PTS as a user from their home directory
-- pts-core: Append date to phoronix-test-suite-stress-XXX.log when running stress-run
-- phoromatic: Initial server-side implementation of new stress-run support via Phoromatic Server when going to "Run A Benchmark" and opting for stress mode
-- phoromatic: Initial client-side implementation of new stress-run support
-- phoromatic: Add basic email notification support to the Phoromatic export results viewer
-- phoromatic: Say "Stress Testing - XXX" as Phoromatic status messages when in stress-run mode
-- phoromatic: Add links to schedules/tickets from dashboard and system pages for active schedule/ticket on that system at the moment
-- phoromatic: Fix for handling post-run event script
-- phoromatic: Only run tests once each time called upon in stress-run mode
-- phoromatic: Show systems in groups on benchmark ticketing page
-- phoromatic: Don't reset fields when building suite and adding additional tests
+pts-core: Many improvements to stress-run functionality
+pts-core: Add Midori to supported browser list
+pts-core: Add default logging support while running stress-run using phoronix-test-suite-stress.log filename
+pts-core: Additional fallback for locating if running PTS as a user from their home directory
+pts-core: Append date to phoronix-test-suite-stress-XXX.log when running stress-run
+phoromatic: Initial server-side implementation of new stress-run support via Phoromatic Server when going to "Run A Benchmark" and opting for stress mode
+phoromatic: Initial client-side implementation of new stress-run support
+phoromatic: Add basic email notification support to the Phoromatic export results viewer
+phoromatic: Say "Stress Testing - XXX" as Phoromatic status messages when in stress-run mode
+phoromatic: Add links to schedules/tickets from dashboard and system pages for active schedule/ticket on that system at the moment
+phoromatic: Fix for handling post-run event script
+phoromatic: Only run tests once each time called upon in stress-run mode
+phoromatic: Show systems in groups on benchmark ticketing page
+phoromatic: Don't reset fields when building suite and adding additional tests
 
 Phoronix Test Suite 6.2.2
 9 March 2016
 
-- pts-core: Fix for crash in stress-run mode
-- pts-core: Add OpenSUSE dynamic reverse dependency handler
-- pts-core: For the new result viewer, add Epiphany to the web browser list
-- pts-core: Void Linux external dependency support
-- pts-core: Alpine Linux (APK) external dependency support
-- phoromatic: Don't use a proxy (if available) when trying to connect from Phoromatic client to server
+pts-core: Fix for crash in stress-run mode
+pts-core: Add OpenSUSE dynamic reverse dependency handler
+pts-core: For the new result viewer, add Epiphany to the web browser list
+pts-core: Void Linux external dependency support
+pts-core: Alpine Linux (APK) external dependency support
+phoromatic: Don't use a proxy (if available) when trying to connect from Phoromatic client to server
 
 Phoronix Test Suite 6.2.1
 23 February 2016
 
-- phodevi: Extra Vulkan information reporting
-- phodevi: Add OpenCL version reporting to system software string
-- perf_per_dollar: Fix for uninitialized test_result object
+phodevi: Extra Vulkan information reporting
+phodevi: Add OpenCL version reporting to system software string
+perf_per_dollar: Fix for uninitialized test_result object
 
 Phoronix Test Suite 6.2-Gamvik
 16 February 2016
 
-- pts_Graph: Fixes
-- pts_Graph: Support for branded colors on more graphs
-- phodevi: plumbing Vulkan
-- matisk: Fixes
+pts_Graph: Fixes
+pts_Graph: Support for branded colors on more graphs
+phodevi: plumbing Vulkan
+matisk: Fixes
 
 Phoronix Test Suite 6.2 Milestone 5
 5 February 2016
 
-- pts-core: Add golang as possible external dependency
-- phodevi: Optimization for slightly faster start-up time
-- phoromatic: Add WoL details to the maintenace table page
-- phodevi: Sensor clean-up and fixes  (Jakub Maleszewski)
-- matisk: Restore the MATISK module for testing  (Jakub Maleszewski)
+pts-core: Add golang as possible external dependency
+phodevi: Optimization for slightly faster start-up time
+phoromatic: Add WoL details to the maintenace table page
+phodevi: Sensor clean-up and fixes  (Jakub Maleszewski)
+matisk: Restore the MATISK module for testing  (Jakub Maleszewski)
 
 Phoronix Test Suite 6.2 Milestone 4
 26 January 2016
 
-- pts-core: Fix for some test profiles not showing up in list-tests sub-command
-- pts-core: Add function for optionally removing unchanged results
-- pts-core: Add function for optionally removing noisy results
-- pts-core: Rework PDF generation of test results
-- phoromatic: Add option to result viewer for exposing possible points of interest
-- phoromatic: Add view_results_since support to the export results viewer
-- pts_Graph: Fix for graphs sometime not rendering correctly on multi-way comparisons
+pts-core: Fix for some test profiles not showing up in list-tests sub-command
+pts-core: Add function for optionally removing unchanged results
+pts-core: Add function for optionally removing noisy results
+pts-core: Rework PDF generation of test results
+phoromatic: Add option to result viewer for exposing possible points of interest
+phoromatic: Add view_results_since support to the export results viewer
+pts_Graph: Fix for graphs sometime not rendering correctly on multi-way comparisons
 
 Phoronix Test Suite 6.2 Milestone 3
 7 January 2016
 
-- pts-core: Add system to default list of repositories
-- pts-core: Allow result graph footnotes to be added during test time by writing to ~/pts-footnote
-- pts-core: Optimize array usage along hot paths
-- pts-core: Add httpd as a possible external dependency
-- pts_Graph: Rendering fix for collision of result identifiers
-- phoromatic: Add LimitNetworkCommunication option
-- phoromatic: Fix in listing tests on schedules page when dealing with cache mismatch
-- deploy: JuJu update from upstream
+pts-core: Add system to default list of repositories
+pts-core: Allow result graph footnotes to be added during test time by writing to ~/pts-footnote
+pts-core: Optimize array usage along hot paths
+pts-core: Add httpd as a possible external dependency
+pts_Graph: Rendering fix for collision of result identifiers
+phoromatic: Add LimitNetworkCommunication option
+phoromatic: Fix in listing tests on schedules page when dealing with cache mismatch
+deploy: JuJu update from upstream
 
 Phoronix Test Suite 6.2 Milestone 2
 2 January 2016
 
-- pts-core: Add FullOutput configuration option for dumping all pre/post/interim information to standard output
-- pts-core: Add MinimalTestTime user configuration option
-- phodevi: Software string detection improvements
-- phodevi: Support for PTS_NPROC environment variable to override reported CPU core count
-- phoromatic: Export viewer tweaks
+pts-core: Add FullOutput configuration option for dumping all pre/post/interim information to standard output
+pts-core: Add MinimalTestTime user configuration option
+phodevi: Software string detection improvements
+phodevi: Support for PTS_NPROC environment variable to override reported CPU core count
+phoromatic: Export viewer tweaks
 
 Phoronix Test Suite 6.2 Milestone 1
 15 December 2015
 
-- pts-core: Begin work on dynamic dependency handler infrastructure
-- pts-core: Add new TestProfile/SystemDependencies field to test profile specification
-- pts-core: Basic implementation of SystemDependencies for dynamically resolving system/external dependencies based on file name
-- phoromatic: Allow public listing of download cache files when navigating in browser to /download-cache.php
-- phodevi: Assume Windows is 64-bit when environment variable check fails
-- phodevi: Support sys.power sensor monitoring fallback on BAT1
+pts-core: Begin work on dynamic dependency handler infrastructure
+pts-core: Add new TestProfile/SystemDependencies field to test profile specification
+pts-core: Basic implementation of SystemDependencies for dynamically resolving system/external dependencies based on file name
+phoromatic: Allow public listing of download cache files when navigating in browser to /download-cache.php
+phodevi: Assume Windows is 64-bit when environment variable check fails
+phodevi: Support sys.power sensor monitoring fallback on BAT1
 
 Phoronix Test Suite 6.0.1
 20 November 2015
 
-- phodevi: Fix potential errors in sensors
+phodevi: Fix potential errors in sensors
 
 Phoronix Test Suite 6.0-Hammerfest
 16 November 2015
 
-- pts-core: Stop logging lsusb as on some systems calling the command will hang
-- pts-core: Move common dependencies later in the external dependency handling process
-- pts_Graph: Fix multi-way comparison line graphs from color collision
-- phodevi: NVIDIA Jetson TX1 GPU thermal monitoring support and likely will work for some other boards too
+pts-core: Stop logging lsusb as on some systems calling the command will hang
+pts-core: Move common dependencies later in the external dependency handling process
+pts_Graph: Fix multi-way comparison line graphs from color collision
+phodevi: NVIDIA Jetson TX1 GPU thermal monitoring support and likely will work for some other boards too
 
 Phoronix Test Suite 6.0 Milestone 6
 12 November 2015
 
-- pts-core: Windows updates
-- pts-core: Random fixes
-- pts-core / phodevi: Merge the complete system sensors rework: https://github.com/phoronix-test-suite/phoronix-test-suite/pull/92 (Jakub Maleszewski)
-- pts-core: pts_openbenchmarking::available_tests() don't show deprecated test profiles by default
-- phodevi: Support reporting /sys/firmware/devicetree/base/model for part of motherboard/SBC string
-- phoromatic: Final styling for hammerfest
+pts-core: Windows updates
+pts-core: Random fixes
+pts-core / phodevi: Merge the complete system sensors rework: https://github.com/phoronix-test-suite/phoronix-test-suite/pull/92 (Jakub Maleszewski)
+pts-core: pts_openbenchmarking::available_tests() don't show deprecated test profiles by default
+phodevi: Support reporting /sys/firmware/devicetree/base/model for part of motherboard/SBC string
+phoromatic: Final styling for hammerfest
 
 Phoronix Test Suite 6.0 Milestone 5
 4 November 2015
 
-- pts-core: Rewrite of the local results viewer, now use HTML+JS rather than XSL
-- pts-core: Fix finish-run command functionality
-- pts-core: Fix results getting compacted into single result comparison object when using a local test without version post-fix
-- pts-core: Fix CSV result output when there are missing results
-- pts-core: Properly handle spaces in shell_exec() export
-- pts-core: Other small fixes
-- phodevi: Support for finding the Xorg.0.log in ~/.local/share/xorg/ with Debian now using that for non-root X Server
-- phoromatic: Tweaks
-- documentation: Update HTML template style
+pts-core: Rewrite of the local results viewer, now use HTML+JS rather than XSL
+pts-core: Fix finish-run command functionality
+pts-core: Fix results getting compacted into single result comparison object when using a local test without version post-fix
+pts-core: Fix CSV result output when there are missing results
+pts-core: Properly handle spaces in shell_exec() export
+pts-core: Other small fixes
+phodevi: Support for finding the Xorg.0.log in ~/.local/share/xorg/ with Debian now using that for non-root X Server
+phoromatic: Tweaks
+documentation: Update HTML template style
 
 Phoronix Test Suite 6.0 Milestone 4
 25 October 2015
 
-- phoromatic: Start of reworking the web interface
-- phoromatic: Initial responsive design, mobile friendly
-- phoromatic: Support for exporting results as XML via the viewer
-- linux_perf: Add new module to provide perf output reporting on a per-test-run basis when LINUX_PERF=1 environment variable is set
-- pts_Graph: Tweaks
+phoromatic: Start of reworking the web interface
+phoromatic: Initial responsive design, mobile friendly
+phoromatic: Support for exporting results as XML via the viewer
+linux_perf: Add new module to provide perf output reporting on a per-test-run basis when LINUX_PERF=1 environment variable is set
+pts_Graph: Tweaks
 
 Phoronix Test Suite 6.0 Milestone 3
 9 October 2015
 
-- pts_Graph: Continued SVG optimization work
-- pts-core: Fix "auto-disks" test option to not show partitions
-- pts-core: Various fixes
-- pts-core: Finish work on auto-authenticating clients / settings page option to automatically approve newly added systems by default
-- pts-core: Add extra warning about RequiresRoot=TRUE tests
-- pts-core: Detect NVMe drives when looking for block devices for disk testing
-- pts-core: Add "smartmontools" as new PTS External Dependency
-- pts-core: Rewrite the DragonFlyBSD external dependency handling to now use dports pkg rather than pkgsrc
-- pts-core: Add NO_HTTPS environment variable option for systems that have trouble with HTTPS
+pts_Graph: Continued SVG optimization work
+pts-core: Fix "auto-disks" test option to not show partitions
+pts-core: Various fixes
+pts-core: Finish work on auto-authenticating clients / settings page option to automatically approve newly added systems by default
+pts-core: Add extra warning about RequiresRoot=TRUE tests
+pts-core: Detect NVMe drives when looking for block devices for disk testing
+pts-core: Add "smartmontools" as new PTS External Dependency
+pts-core: Rewrite the DragonFlyBSD external dependency handling to now use dports pkg rather than pkgsrc
+pts-core: Add NO_HTTPS environment variable option for systems that have trouble with HTTPS
 
 Phoronix Test Suite 6.0 Milestone 2
 24 September 2015
 
-- pts-core: Just mention PHP 5.3 as the new base requirement. Code still should largely work with PHP 5.2, but don't advertise it
-- pts-core: Add FileFormat optional tag to result parser with CSV support
-- pts-core: Add debug-render-test for helping to optimize the graph/result rendering process
-- pts-core: Rendering optimizations when handling lots of result files / graphs / result identifiers
-- pts-core: Rework and optimize the pts_result_file
-- pts-core: Implement new, faster result merger
-- pts-core: Allow the test_run_manager to run directly with a result_file
-- pts-core: Do test execution with proc_open(), allow modules to tap the process
-- pts-core: Add support for emitting SVG files with g tag to save space
-- pts-core: Fix breakage of pass/fail type tests in result parser
-- pts-core: Drop unused PIE_CHART type
-- phodevi: AMDGPU Linux detection improvements
-- phoromatic: Add "Tests" page
-- pts_Graph: Don't embed the PNG logo directly into the SVG file, but rely on HTTPS link
-- pts_Graph: Support coloring based on brand
-- pts_Graph: Implement new internal graph rendering interfaces, other major rewrites
+pts-core: Just mention PHP 5.3 as the new base requirement. Code still should largely work with PHP 5.2, but don't advertise it
+pts-core: Add FileFormat optional tag to result parser with CSV support
+pts-core: Add debug-render-test for helping to optimize the graph/result rendering process
+pts-core: Rendering optimizations when handling lots of result files / graphs / result identifiers
+pts-core: Rework and optimize the pts_result_file
+pts-core: Implement new, faster result merger
+pts-core: Allow the test_run_manager to run directly with a result_file
+pts-core: Do test execution with proc_open(), allow modules to tap the process
+pts-core: Add support for emitting SVG files with g tag to save space
+pts-core: Fix breakage of pass/fail type tests in result parser
+pts-core: Drop unused PIE_CHART type
+phodevi: AMDGPU Linux detection improvements
+phoromatic: Add "Tests" page
+pts_Graph: Don't embed the PNG logo directly into the SVG file, but rely on HTTPS link
+pts_Graph: Support coloring based on brand
+pts_Graph: Implement new internal graph rendering interfaces, other major rewrites
 
 Phoronix Test Suite 6.0 Milestone 1
 26 August 2015
 
-- pts-core: Show estimated date/time next to estimated duration left on tests
-- pts-core: Support /usr/lib/os-release for stateless systems
-- pts-core: Allow listing multiple items via the info sub-command
-- pts-core: Add new test profile parsing back-end
-- pts-core: Unconditionally always ensure __GL_SYNC_TO_VBLANK=0
-- pts-core: Fixes for test profile validation following recent restructuring
-- pts-core: WebSocket fixes
-- pts-core: Fix bash completion
-- phoromatic: Improvements when server addressing setup fails
-- pts_Graph: Support reporting a min result on graphs when there is no max value to be reported
-- toggle_screensaver: GNOME 3 update
-- perf_per_dollar: Add performance-per-dollar calculator module based on environment variable input
-- system_monitor: Support reporting a meta/overall performance-per-Watt result at end of result file when activated
-- phodevi: Add BcacheFS superblock
+pts-core: Show estimated date/time next to estimated duration left on tests
+pts-core: Support /usr/lib/os-release for stateless systems
+pts-core: Allow listing multiple items via the info sub-command
+pts-core: Add new test profile parsing back-end
+pts-core: Unconditionally always ensure __GL_SYNC_TO_VBLANK=0
+pts-core: Fixes for test profile validation following recent restructuring
+pts-core: WebSocket fixes
+pts-core: Fix bash completion
+phoromatic: Improvements when server addressing setup fails
+pts_Graph: Support reporting a min result on graphs when there is no max value to be reported
+toggle_screensaver: GNOME 3 update
+perf_per_dollar: Add performance-per-dollar calculator module based on environment variable input
+system_monitor: Support reporting a meta/overall performance-per-Watt result at end of result file when activated
+phodevi: Add BcacheFS superblock
 
 Phoronix Test Suite 5.8.1
 23 June 2015
 
-- pts-core: Misc warning fixes
-- pts-core: Fix result file validation against XML schema
-- pts-core: Never show /boot/efi as possible benchmark writable mount point
-- pts-core: Don't report which errors on launcher
-- phoromatic: Add button to schedules page to allow skipping current trigger
-- phoromatic: Pass extra attributes during PDF generation to allow for PDF sorting, etc
-- phoromatic: Allow basic sub-targeting as part of test schedule trigger URLs
-- phoromatic: Enhancements to the main page
-- phoromatic: Result tracker detection improvements
-- phoromatic: Sort systems on main page
+pts-core: Misc warning fixes
+pts-core: Fix result file validation against XML schema
+pts-core: Never show /boot/efi as possible benchmark writable mount point
+pts-core: Don't report which errors on launcher
+phoromatic: Add button to schedules page to allow skipping current trigger
+phoromatic: Pass extra attributes during PDF generation to allow for PDF sorting, etc
+phoromatic: Allow basic sub-targeting as part of test schedule trigger URLs
+phoromatic: Enhancements to the main page
+phoromatic: Result tracker detection improvements
+phoromatic: Sort systems on main page
 
 Phoronix Test Suite 5.8-Belev
 5 June 2015
 
-- pts-core: Don't needlessly write out config file each time if nothing relevant has changed
-- pts-core: Automatically re-install tests if compiler flag environment variables change
-- pts-core: Add attr as an external dependency
-- pts-core: Fix for reading multiple dependency names
-- phoromatic: Reboot system if comm fails 10+ times on client
-- phoromatic: Add global checkbox to key pages
-- phoromatic: Track core version of clients in database
-- phoromatic: Refresh OB repository lists prior to benchmarks
-- phoromatic: Additional validation on result uploads
-- phodevi: Some basic hardware reporting improvements that help the MIPS Creator CI20
+pts-core: Don't needlessly write out config file each time if nothing relevant has changed
+pts-core: Automatically re-install tests if compiler flag environment variables change
+pts-core: Add attr as an external dependency
+pts-core: Fix for reading multiple dependency names
+phoromatic: Reboot system if comm fails 10+ times on client
+phoromatic: Add global checkbox to key pages
+phoromatic: Track core version of clients in database
+phoromatic: Refresh OB repository lists prior to benchmarks
+phoromatic: Additional validation on result uploads
+phodevi: Some basic hardware reporting improvements that help the MIPS Creator CI20
 
 Phoronix Test Suite 5.8 Milestone 5
 28 May 2015
 
-- pts-core: Major performance improvements when merging many result files
-- pts-core: Faster result file parsing
-- pts-core: Stress-run improvements
-- phoromatic: Improved tracker page
-- phoromatic: Updated maintenance page
-- phoromatic: Log tick sensors into sensors-pool
-- phoromatic: Show prominent sensors via the dashboard
-- phoromatic: Add graphs to systems page
-- phoromatic: Scale SVG result graphs to better page size
-- phoromatic: Add phoromatic.export-results-for-account-schedules option
-- phoromatic: Add the Phoromatic Export Viewer
+pts-core: Major performance improvements when merging many result files
+pts-core: Faster result file parsing
+pts-core: Stress-run improvements
+phoromatic: Improved tracker page
+phoromatic: Updated maintenance page
+phoromatic: Log tick sensors into sensors-pool
+phoromatic: Show prominent sensors via the dashboard
+phoromatic: Add graphs to systems page
+phoromatic: Scale SVG result graphs to better page size
+phoromatic: Add phoromatic.export-results-for-account-schedules option
+phoromatic: Add the Phoromatic Export Viewer
 
 Phoronix Test Suite 5.8 Milestone 4
 20 May 2015
 
-- pts-core: Support for using DNF directly when available on Fedora
-- phodevi: Report kernel's build date when detected it's running on a daily/devel/RC kernel
-- phodevi: Fix for Radeon GPU voltage reporting
-- phodevi: Improved open-source GPU frequency detection when X Server not active
-- phoromatic: Various fixes
-- phoromatic: Add support for specifying custom client update script via account settings page to keep clients PTS updated
-- phoromatic: Change interface of reporting sensor values
+pts-core: Support for using DNF directly when available on Fedora
+phodevi: Report kernel's build date when detected it's running on a daily/devel/RC kernel
+phodevi: Fix for Radeon GPU voltage reporting
+phodevi: Improved open-source GPU frequency detection when X Server not active
+phoromatic: Various fixes
+phoromatic: Add support for specifying custom client update script via account settings page to keep clients PTS updated
+phoromatic: Change interface of reporting sensor values
 
 Phoronix Test Suite 5.8 Milestone 3
 12 May 2015
 
-- pts-core: Separate out WebSocket server back-ends
-- phoromatic: Honor show_local_tests_only option via the build suite page
-- phoromatic: Fix jumping on page on checkbox selection when scrolling
-- phoromatic: Don't print network connectivity messages
-- phoromatic: Set Phoromatic System Variables set by server on Phoromatic clients as env vars
-- phoromatic: Lots of early Web Sockets work
-- phoromatic: Initial support for the Mongoose Embedded Web Server, used by default if php-cgi and mongoose binaries are found in PATH
-- phoromatic: Support for tick thread
-- phoromatic: Support for reporting system sensors and client log to systems page
-- phoromatic: Add support for real-time halt testing and rebooting from the Phoromatic Web UI
+pts-core: Separate out WebSocket server back-ends
+phoromatic: Honor show_local_tests_only option via the build suite page
+phoromatic: Fix jumping on page on checkbox selection when scrolling
+phoromatic: Don't print network connectivity messages
+phoromatic: Set Phoromatic System Variables set by server on Phoromatic clients as env vars
+phoromatic: Lots of early Web Sockets work
+phoromatic: Initial support for the Mongoose Embedded Web Server, used by default if php-cgi and mongoose binaries are found in PATH
+phoromatic: Support for tick thread
+phoromatic: Support for reporting system sensors and client log to systems page
+phoromatic: Add support for real-time halt testing and rebooting from the Phoromatic Web UI
 
 Phoronix Test Suite 5.8 Milestone 2
 21 April 2015
 
-- pts-core: Fix potential crash in list-installed-suites sub-command
-- pts-core: Enforce CCACHE_DISABLE=1 during install/runtime testing
-- pts-core: Finish removal of hhvm-server support since it's long been discontinued upstream
-- pts-core: Add pts-core/hooks/startup
-- phodevi: Reporting of Btrfs RAID levels to system component table when running disk tests
-- phoromatic: Workaround for instr() usage in SQLite that caused issues with older distributions
-- phoromatic: Add LetPublicViewResults option and new public results listing page
-- phoromatic: Update results selection on rootadmin data page
-- phoromatic: Start work on nginx server configuration (not yet working)
-- phoromatic: Add "System Targets" info to benchmark ticket page & "View All Past Tickets"
+pts-core: Fix potential crash in list-installed-suites sub-command
+pts-core: Enforce CCACHE_DISABLE=1 during install/runtime testing
+pts-core: Finish removal of hhvm-server support since it's long been discontinued upstream
+pts-core: Add pts-core/hooks/startup
+phodevi: Reporting of Btrfs RAID levels to system component table when running disk tests
+phoromatic: Workaround for instr() usage in SQLite that caused issues with older distributions
+phoromatic: Add LetPublicViewResults option and new public results listing page
+phoromatic: Update results selection on rootadmin data page
+phoromatic: Start work on nginx server configuration (not yet working)
+phoromatic: Add "System Targets" info to benchmark ticket page & "View All Past Tickets"
 
 Phoronix Test Suite 5.8 Milestone 1
 2 April 2015
 
-- pts-core: Start moving possible deployment scripts into deploy/ directory
-- pts-core: Move phoromatic-client and phoromatic-server Upstart job files to deploy/
-- pts-core: Move phoromatic-client and phoromatic-server systemd service files to deploy/
-- pts-core: Add very basic result-file-to-json sub-command
-- pts-core: Drop AnonymousHardwareReporting / AnonymousSoftwareReporting as no longer used on OpenBenchmarking.org
-- Pull in JuJu scripts from https://github.com/juju-solutions/pts to deploy/juju
-- phodevi: More allowance for clients to recover Internet connection / server communication failure
-- phoromatic: Clean-up main page schedule for schedules with no associated systems
-- phoromatic: Show matching ticket results in the compare results column on results page
-- phoromatic: Allow results page to be limited to particular hash or ticket matches
-- phoromatic: Allow results page search box to also search system's hardware/software components
-- phoromatic: Fix for removing a system from all groups on the "system group editing" systems page
-- phoromatic: Allow per-system overriding of whether automatic power-offs of system are permitted
-- phoromatic: Get rid of block-poweroff file check in client module now that it can be done per-system from server-side
-- phoromatic: Allow WoL power-ups for honoring benchmark tickets
-- phoromatic: Unify more code from start.php into phoromatic_server
-- phoromatic: Always unset the GRUB recordfail when applicable
-- phoromatic: Add "System Maintenance Table"
-- phoromatic: Add "PowerOnSystemDaily" setting option to ensure regardless of schedule that systems will at least power-up/communicate daily if enabled
-- phoromatic: New checkbox handling on results page to manage comparisons and multi-delete results
-- phoromatic: Start work on new main page
+pts-core: Start moving possible deployment scripts into deploy/ directory
+pts-core: Move phoromatic-client and phoromatic-server Upstart job files to deploy/
+pts-core: Move phoromatic-client and phoromatic-server systemd service files to deploy/
+pts-core: Add very basic result-file-to-json sub-command
+pts-core: Drop AnonymousHardwareReporting / AnonymousSoftwareReporting as no longer used on OpenBenchmarking.org
+Pull in JuJu scripts from https://github.com/juju-solutions/pts to deploy/juju
+phodevi: More allowance for clients to recover Internet connection / server communication failure
+phoromatic: Clean-up main page schedule for schedules with no associated systems
+phoromatic: Show matching ticket results in the compare results column on results page
+phoromatic: Allow results page to be limited to particular hash or ticket matches
+phoromatic: Allow results page search box to also search system's hardware/software components
+phoromatic: Fix for removing a system from all groups on the "system group editing" systems page
+phoromatic: Allow per-system overriding of whether automatic power-offs of system are permitted
+phoromatic: Get rid of block-poweroff file check in client module now that it can be done per-system from server-side
+phoromatic: Allow WoL power-ups for honoring benchmark tickets
+phoromatic: Unify more code from start.php into phoromatic_server
+phoromatic: Always unset the GRUB recordfail when applicable
+phoromatic: Add "System Maintenance Table"
+phoromatic: Add "PowerOnSystemDaily" setting option to ensure regardless of schedule that systems will at least power-up/communicate daily if enabled
+phoromatic: New checkbox handling on results page to manage comparisons and multi-delete results
+phoromatic: Start work on new main page
 
 Phoronix Test Suite 5.6.0-Dedilovo
 24 March 2015
 
-- pts-core: Drop bilde_renderer since it's been deprecated for a while
-- pts-core: Yield /dev/mapper/* points in auto-disk-mount-points
-- pts-core: Detect Internet presence for enterprise-setup
-- pts-core: cli_set_process_title() still emits error on OS X so block its usage
-- pts-core: Fix potential warning in detailed-system-info sub-command
-- phodevi: HFS+ file-system fallback detection on OS X
-- phodevi: Workaround Hyper Threading detection on OS X
-- phoromatic: Add universal search functionality from web interface
-- phoromatic: Improve formatting of annotations
-- phoromatic: Mark system state as unknown when communication fails and hits the event server check
-- phoromatic: Don't attempt to open DB in read-only mode if phoromatic.db not yet made
+pts-core: Drop bilde_renderer since it's been deprecated for a while
+pts-core: Yield /dev/mapper/* points in auto-disk-mount-points
+pts-core: Detect Internet presence for enterprise-setup
+pts-core: cli_set_process_title() still emits error on OS X so block its usage
+pts-core: Fix potential warning in detailed-system-info sub-command
+phodevi: HFS+ file-system fallback detection on OS X
+phodevi: Workaround Hyper Threading detection on OS X
+phoromatic: Add universal search functionality from web interface
+phoromatic: Improve formatting of annotations
+phoromatic: Mark system state as unknown when communication fails and hits the event server check
+phoromatic: Don't attempt to open DB in read-only mode if phoromatic.db not yet made
 
 Phoronix Test Suite 5.6 Milestone 5
 11 March 2015
 
-- pts-core: Ignore test run locking in stress/multi-run mode
-- pts-core: Allow 128 character result identifier strings
-- pts-core: Switch the dump-documentation sub-command to generating the README in md format
-- phoromatic: Change the custom From email sender to Reply-To
-- phoromatic: Finish hooking-up multi-test/stress-run functionality via the benchmark page
-- phoromatic: Send emails from rootadmin or group admin's email address where applicable rather than no-reply@
-- phoromatic: Scroll bar on local suites page condensing
-- phoromatic: Add "End Ticket" option to benchmark page
-- phoromatic: Allow stress tests up to 90 days
-- phoromatic: Allow stress runs up to 24 concurrent tests
-- phoromatic: Add basic support for annotating/commenting on result files and individual graphs
-- phoromatic: Add support for the user to delete annotations
+pts-core: Ignore test run locking in stress/multi-run mode
+pts-core: Allow 128 character result identifier strings
+pts-core: Switch the dump-documentation sub-command to generating the README in md format
+phoromatic: Change the custom From email sender to Reply-To
+phoromatic: Finish hooking-up multi-test/stress-run functionality via the benchmark page
+phoromatic: Send emails from rootadmin or group admin's email address where applicable rather than no-reply@
+phoromatic: Scroll bar on local suites page condensing
+phoromatic: Add "End Ticket" option to benchmark page
+phoromatic: Allow stress tests up to 90 days
+phoromatic: Allow stress runs up to 24 concurrent tests
+phoromatic: Add basic support for annotating/commenting on result files and individual graphs
+phoromatic: Add support for the user to delete annotations
 
 Phoronix Test Suite 5.6 Milestone 4
 25 February 2015
 
-- pts-core: Improvements to phoronix-test-suite make-download-cache
-- phoromatic: Add "admin data" page to let the rootadmin permanently delete schedules/results/systems
-- phoromatic: Allow for system identifier variable in benchmark tickets of .SYSTEM
-- phoromatic: Allow for system identifier variable in benchmark tickets of .GROUP
-- phoromatic: Allow tickets to be removed from the individual benchmark page
-- phoromatic: Allow creating new group accounts from the rootadmin page
-- phoromatic: Add support for repeating tickets
-- phoromatic: Add basic support for system variables
+pts-core: Improvements to phoronix-test-suite make-download-cache
+phoromatic: Add "admin data" page to let the rootadmin permanently delete schedules/results/systems
+phoromatic: Allow for system identifier variable in benchmark tickets of .SYSTEM
+phoromatic: Allow for system identifier variable in benchmark tickets of .GROUP
+phoromatic: Allow tickets to be removed from the individual benchmark page
+phoromatic: Allow creating new group accounts from the rootadmin page
+phoromatic: Add support for repeating tickets
+phoromatic: Add basic support for system variables
 
 Phoronix Test Suite 5.6 Milestone 3
 15 February 2015
 
-- phoromatic: Allow triggers to be deleted
-- phoromatic: Rely on caching for determining pre-existing cached test profiles from the web UI
-- phoromatic: Add result RSS support
-- phoromatic: Add new option to results page
-- phoromatic: Enforce new PTS sign-on whenever the PTS core version changes due to potential interface changes
-- phoromatic: Working build suite page
-- phoromatic: Add support for local suites page
-- phoromatic: Add benchmark page
-- phoromatic: Add support for viewing issued benchmark tickets
-- phoromatic: Add option to force rebuild of results databases
-- phoromatic: Prepend system ID to result string when running multiple tests without variables
-- phoromatic: Add "Test All Options" opton to build suite page
+phoromatic: Allow triggers to be deleted
+phoromatic: Rely on caching for determining pre-existing cached test profiles from the web UI
+phoromatic: Add result RSS support
+phoromatic: Add new option to results page
+phoromatic: Enforce new PTS sign-on whenever the PTS core version changes due to potential interface changes
+phoromatic: Working build suite page
+phoromatic: Add support for local suites page
+phoromatic: Add benchmark page
+phoromatic: Add support for viewing issued benchmark tickets
+phoromatic: Add option to force rebuild of results databases
+phoromatic: Prepend system ID to result string when running multiple tests without variables
+phoromatic: Add "Test All Options" opton to build suite page
 
 Phoronix Test Suite 5.6 Milestone 2
 4 February 2015
 
-- pts-core: Various fixes
-- pts-core: Deb/RPM build packaging improvements.
-- pts-core: Add Markdown Readme file
-- pts-core: Add hidden ?seed_accountid= option to the welcome / account creation page for custom 6 character ID
-- pts-core: Fix for session save path on Fedora when running as normal user
-- pts-core: Import copy of FPDF locally for PDF rendering
-- phoromatic: Add a public view of test results by going to result page entry -> Result Export -> Public Viewer
-- phoromatic: Add basic "Upload To OpenBenchmarking.org" link from test result page
-- phoromatic: Allow users to reset their own password by navigating to the settings page
-- phoromatic: Add "group name" concept to Phoromatic group of accounts
-- phoromatic: Improved formatting of the public-viewer page
-- phoromatic: Allow downloading results as PDF
-- phoromatic: Allow disabling new account registration by setting custom string via rootadmin's config page
-- phoromatic: Allow setting a main page message string to show users once logging into their account, via rootadmin's config page
-- phoromatic: Don't show idling systems on the dashboard
-- phoromatic: Add IP ping test to system claim page
-- phoromatic: Introduce PPRID structure as universal unique identifier for results between accounts
-- phoromatic: Allow optional result sharing between groups / unique accounts (controlled via settings)
-- phoromatic: Add "force result sharing" option to rootadmin to override per-account settings
-- phoromatic: New result compare functionality
-- phoromatic: Support for limiting results to a certain time period
-- phoromatic: Add comparable results listing on individual result pages
-- phoromatic: Register module-discovered Phoromatic Servers with pts-core
-- phoromatic: Add "Only Advertise Cached Tests" option to rootadmin
-- phoromatic: Download latest OpenBenchmarking.org test suites/profiles in background thread from the event server
-- phoromatic: Add option to pre-seed test installs to systems when otherwise idling
-- phoromatic: Support for exporting result files to download as CSV or TXT
-- phoromatic: Add phoromatic.list-results sub-command for clients to view recent results
-- phoromatic: Add phoromatic.clone sub-command for clients to clone viewable test results
+pts-core: Various fixes
+pts-core: Deb/RPM build packaging improvements.
+pts-core: Add Markdown Readme file
+pts-core: Add hidden ?seed_accountid= option to the welcome / account creation page for custom 6 character ID
+pts-core: Fix for session save path on Fedora when running as normal user
+pts-core: Import copy of FPDF locally for PDF rendering
+phoromatic: Add a public view of test results by going to result page entry -> Result Export -> Public Viewer
+phoromatic: Add basic "Upload To OpenBenchmarking.org" link from test result page
+phoromatic: Allow users to reset their own password by navigating to the settings page
+phoromatic: Add "group name" concept to Phoromatic group of accounts
+phoromatic: Improved formatting of the public-viewer page
+phoromatic: Allow downloading results as PDF
+phoromatic: Allow disabling new account registration by setting custom string via rootadmin's config page
+phoromatic: Allow setting a main page message string to show users once logging into their account, via rootadmin's config page
+phoromatic: Don't show idling systems on the dashboard
+phoromatic: Add IP ping test to system claim page
+phoromatic: Introduce PPRID structure as universal unique identifier for results between accounts
+phoromatic: Allow optional result sharing between groups / unique accounts (controlled via settings)
+phoromatic: Add "force result sharing" option to rootadmin to override per-account settings
+phoromatic: New result compare functionality
+phoromatic: Support for limiting results to a certain time period
+phoromatic: Add comparable results listing on individual result pages
+phoromatic: Register module-discovered Phoromatic Servers with pts-core
+phoromatic: Add "Only Advertise Cached Tests" option to rootadmin
+phoromatic: Download latest OpenBenchmarking.org test suites/profiles in background thread from the event server
+phoromatic: Add option to pre-seed test installs to systems when otherwise idling
+phoromatic: Support for exporting result files to download as CSV or TXT
+phoromatic: Add phoromatic.list-results sub-command for clients to view recent results
+phoromatic: Add phoromatic.clone sub-command for clients to clone viewable test results
 
 Phoronix Test Suite 5.6 Milestone 1
 13 January 2015
 
-- pts-core: Add "short" display mode
-- pts-core: Add stress-run command to allow for concurrent stress testing / burn-in / torture testing
-- pts-core: Add TOTAL_LOOP_TIME support to stress-run
-- pts-core: Add TOTAL_LOOP_TIME=infinite support to stress-run for testing in an infinite loop
-- pts-core: Add support for libframetime output result parsing
-- phoromatic: Initial commit of basic tracker page
-- phoromatic: Better recovery of existing Phoromatic accounts on reloaded systems where the machine self ID changed
-- timed_screenshot: Fix for crash when PHP GD missing
+pts-core: Add "short" display mode
+pts-core: Add stress-run command to allow for concurrent stress testing / burn-in / torture testing
+pts-core: Add TOTAL_LOOP_TIME support to stress-run
+pts-core: Add TOTAL_LOOP_TIME=infinite support to stress-run for testing in an infinite loop
+pts-core: Add support for libframetime output result parsing
+phoromatic: Initial commit of basic tracker page
+phoromatic: Better recovery of existing Phoromatic accounts on reloaded systems where the machine self ID changed
+timed_screenshot: Fix for crash when PHP GD missing
 
 Phoronix Test Suite 5.4.1-Lipki
 23 December 2014
 
-- pts-core: Update AppData and systemd service files
-- pts-core: Add csv-dump-frame-latencies support to result parser
-- phoromatic: Improve formatting of result strings when merging random result files together
-- phoromatic: Add enterprise-setup sub-command
-- phoromatic: Attempt to detect and report IP address next to requested MAC address claim on the system claim page
+pts-core: Update AppData and systemd service files
+pts-core: Add csv-dump-frame-latencies support to result parser
+phoromatic: Improve formatting of result strings when merging random result files together
+phoromatic: Add enterprise-setup sub-command
+phoromatic: Attempt to detect and report IP address next to requested MAC address claim on the system claim page
 
 Phoronix Test Suite 5.4.0-Lipki
 9 December 2014
 
-- phoromatic: Main page update
-- phoromatic: Various updates
+phoromatic: Main page update
+phoromatic: Various updates
 
 Phoronix Test Suite 5.4 Milestone 7
 1 December 2014
 
-- pts-core: Improve MAC address acquisition on systems with multiple NICs
-- phoromatic: Add add_new_users_to_account option for adding new users automatically to existing account
-- phoromatic: Allow changing the admin level for users by the main administrator from the Users page
-- phoromatic: Report systems MAC address from the systems page
-- phoromatic: Report network's Wake-On-LAN information to Phoromatic Server
-- phoromatic: Add notification option to email to users when systems appear hung for more than an hour
-- phoromatic: Add option to power off systems when no more scheduled tests are scheduled for the day
-- phoromatic: Add option to network wake on lan (WoL) systems when needed for testing
-- phoromatic: Allow logging of Phoromatic set user context execution
-- phoromatic: Add support for viewing system logs from the result page link on right hand side
-- phoromatic: Support for disabling accounts via rootadmin
-- phoromatic: Track elapsed time during the testing process, report to Phoromatic Server
-- phoromatic: Allow Phoromatic Servers to be specified via a simple text file at PTS_USER_PATH/phoromatic-servers
-- phoromatic: Add "configure Phoromatic client via SSH" to Phoromatic Server
-- phoromatic: Allow IP/MAC based system claiming from Phoromatic Server UI
-- phoromatic: Allow blocking poweroffs by touching modules-data/phoromatic/block-poweroff
-- phoromatic: Prominently show "systems needing attention" from the server UI
-- phoromatic: More email reporting of hung systems / systems not running tests when they should
-- phoromatic: Add custom Wake-On-LAN packet generator if etherwake isn't found on server
-- phoromatic: Show schedules/group on system page
-- phoromatic: Hook in estimated time remaining for task
-- phoromatic: Report percent complete of task to server
-- phoromatic: Add system component table
-- phoromatic: Add new reporting features to server
-- phoromatic: Add system dashboard
-- phoromatic: Add legacy init.d script support
-- phoromatic: Rework idle support and add maintenance mode support to client
-- phoromatic: Implement maintenance mode on server side
+pts-core: Improve MAC address acquisition on systems with multiple NICs
+phoromatic: Add add_new_users_to_account option for adding new users automatically to existing account
+phoromatic: Allow changing the admin level for users by the main administrator from the Users page
+phoromatic: Report systems MAC address from the systems page
+phoromatic: Report network's Wake-On-LAN information to Phoromatic Server
+phoromatic: Add notification option to email to users when systems appear hung for more than an hour
+phoromatic: Add option to power off systems when no more scheduled tests are scheduled for the day
+phoromatic: Add option to network wake on lan (WoL) systems when needed for testing
+phoromatic: Allow logging of Phoromatic set user context execution
+phoromatic: Add support for viewing system logs from the result page link on right hand side
+phoromatic: Support for disabling accounts via rootadmin
+phoromatic: Track elapsed time during the testing process, report to Phoromatic Server
+phoromatic: Allow Phoromatic Servers to be specified via a simple text file at PTS_USER_PATH/phoromatic-servers
+phoromatic: Add "configure Phoromatic client via SSH" to Phoromatic Server
+phoromatic: Allow IP/MAC based system claiming from Phoromatic Server UI
+phoromatic: Allow blocking poweroffs by touching modules-data/phoromatic/block-poweroff
+phoromatic: Prominently show "systems needing attention" from the server UI
+phoromatic: More email reporting of hung systems / systems not running tests when they should
+phoromatic: Add custom Wake-On-LAN packet generator if etherwake isn't found on server
+phoromatic: Show schedules/group on system page
+phoromatic: Hook in estimated time remaining for task
+phoromatic: Report percent complete of task to server
+phoromatic: Add system component table
+phoromatic: Add new reporting features to server
+phoromatic: Add system dashboard
+phoromatic: Add legacy init.d script support
+phoromatic: Rework idle support and add maintenance mode support to client
+phoromatic: Implement maintenance mode on server side
 
 Phoronix Test Suite 5.4 Milestone 6
 19 November 2014
 
-- pts-core: Fix result merging when PTS test identifier is null, use title string instead as identifier
-- pts-core: Check for PHP Sockets support
-- pts-core: Enhanced make-download-cache
-- pts-core: Enhance PHP_BIN detection
-- pts-core: Use system's zip library if PHP ZIP is not available
-- phoromatic: Upstart phoromatic-server job is working (tested on Scientific Linux 6.6)
-- phoromatic: Add "Run Test Schedule Now" button to test schedule page to allow for easy one-time/manual testing
-- phoromatic: Add some basic statistics to the rootadmin page
-- phoromatic: Allow the PhoromaticStorage location to be modified from the webUI when logging in as rootadmin
-- phoromatic: Allow the download cache location to be modified from the webUI when logging in as rootadmin
-- phoromatic: Allow the network proxy details to be modified from the webUI when logging in as rootadmin
-- phoromatic: Allow the HTTP / WebSocket ports to be modified from the webUI when logging in as rootadmin
-- phoromatic: Increase memory_limit on download cache downloads
-- phoromatic: Expose all possible video modes as test options
-- phoromatic: Show recent triggers on a test schedule's page
-- phoromatic: Add "Upload results to OpenBenchmarking.org" option to settings page
-- phoromatic: Fix for deactivating options on settings page
-- phoromatic: Remember last successful Phoromatic Server connection
-- phoromatic: Add reboot and shutdown commands to Phoromatic module
+pts-core: Fix result merging when PTS test identifier is null, use title string instead as identifier
+pts-core: Check for PHP Sockets support
+pts-core: Enhanced make-download-cache
+pts-core: Enhance PHP_BIN detection
+pts-core: Use system's zip library if PHP ZIP is not available
+phoromatic: Upstart phoromatic-server job is working (tested on Scientific Linux 6.6)
+phoromatic: Add "Run Test Schedule Now" button to test schedule page to allow for easy one-time/manual testing
+phoromatic: Add some basic statistics to the rootadmin page
+phoromatic: Allow the PhoromaticStorage location to be modified from the webUI when logging in as rootadmin
+phoromatic: Allow the download cache location to be modified from the webUI when logging in as rootadmin
+phoromatic: Allow the network proxy details to be modified from the webUI when logging in as rootadmin
+phoromatic: Allow the HTTP / WebSocket ports to be modified from the webUI when logging in as rootadmin
+phoromatic: Increase memory_limit on download cache downloads
+phoromatic: Expose all possible video modes as test options
+phoromatic: Show recent triggers on a test schedule's page
+phoromatic: Add "Upload results to OpenBenchmarking.org" option to settings page
+phoromatic: Fix for deactivating options on settings page
+phoromatic: Remember last successful Phoromatic Server connection
+phoromatic: Add reboot and shutdown commands to Phoromatic module
 
 Phoronix Test Suite 5.4 Milestone 5
 10 November 2014
 
-- pts-core: Improvements when running as a systemd service / daemon
-- pts-core: Prefer firefox over Epiphany browser
-- phoromatic: Implement email notifications on result uploads
-- phoromatic: Implement email notifications on system generated errors/warnings
-- phoromatic: Implement email notifications on new systems added
-- phoromatic: Allow easily comparing a result file to other results for that given schedule ID
-- phoromatic: Improve formatting of lists
-- phoromatic: Add times viewed to results
-- phoromatic: Add "show only results with variation" to result viewing page
-- phoromatic: Add result flagging to the main page
-- phoromatic: Allow other/unscheduled test results to be uploaded to the Phoromatic Server using the phoromatic.upload-result sub-command
-- phoromatic: Show file/path locations when starting the Phoromatic Server
-- phoromatic: Use a randomly chosen available port by default when starting the Phoromatic Server if no ports are defined
-- phoromatic: Add basic root administrator support to the Phoronix web interface
-- pts_Graph: Shrink size of sub-title text strings when they're too long
+pts-core: Improvements when running as a systemd service / daemon
+pts-core: Prefer firefox over Epiphany browser
+phoromatic: Implement email notifications on result uploads
+phoromatic: Implement email notifications on system generated errors/warnings
+phoromatic: Implement email notifications on new systems added
+phoromatic: Allow easily comparing a result file to other results for that given schedule ID
+phoromatic: Improve formatting of lists
+phoromatic: Add times viewed to results
+phoromatic: Add "show only results with variation" to result viewing page
+phoromatic: Add result flagging to the main page
+phoromatic: Allow other/unscheduled test results to be uploaded to the Phoromatic Server using the phoromatic.upload-result sub-command
+phoromatic: Show file/path locations when starting the Phoromatic Server
+phoromatic: Use a randomly chosen available port by default when starting the Phoromatic Server if no ports are defined
+phoromatic: Add basic root administrator support to the Phoronix web interface
+pts_Graph: Shrink size of sub-title text strings when they're too long
 
 Phoronix Test Suite 5.4 Milestone 4
 5 November 2014
 
-- pts-core: Add 3840 x 2160 (4K UHD) to more of the mode-setting fall-back modes
-- pts-core: Start working on support for using standard Linux file-system hierarchy when running as root as a service
-- pts-core: Add PhoromaticStorage option to Phoronix Test Suite user configuration XML file
-- phoromatic: Reporting of overall result counts for given test schedules
-- phoromatic: Report benchmarking / test run errors to server
-- phoromatic: Show system errors/warnings from the Phoromatic web UI
-- phoromatic: Don't attempt to re-run test schedules on clients if they previously reported errors/warnings for that schedule / trigger ID combination
-- phoromatic: Usernames need to be at least four characters long
-- phoromatic: Add a schedule overview to the schedules page
-- phoromatic: Add today's scheduled events to the side bar
-- phoromatic: Improve result identifier / title reporting for results
-- phoromatic: Implement "Power User" account level
-- phoromatic: Add normalize results option to the phoromatic result page
-- phoromatic: Support for jumping to test results page for XXX past days of test from schedule page
-- phodevi: IBM POWER hardware detection improvements
+pts-core: Add 3840 x 2160 (4K UHD) to more of the mode-setting fall-back modes
+pts-core: Start working on support for using standard Linux file-system hierarchy when running as root as a service
+pts-core: Add PhoromaticStorage option to Phoronix Test Suite user configuration XML file
+phoromatic: Reporting of overall result counts for given test schedules
+phoromatic: Report benchmarking / test run errors to server
+phoromatic: Show system errors/warnings from the Phoromatic web UI
+phoromatic: Don't attempt to re-run test schedules on clients if they previously reported errors/warnings for that schedule / trigger ID combination
+phoromatic: Usernames need to be at least four characters long
+phoromatic: Add a schedule overview to the schedules page
+phoromatic: Add today's scheduled events to the side bar
+phoromatic: Improve result identifier / title reporting for results
+phoromatic: Implement "Power User" account level
+phoromatic: Add normalize results option to the phoromatic result page
+phoromatic: Support for jumping to test results page for XXX past days of test from schedule page
+phodevi: IBM POWER hardware detection improvements
 
 Phoronix Test Suite 5.4 Milestone 3
 20 October 2014
 
-- pts-core: Introduce basic system logging capabilities for services
-- pts-core: Try downloading files from remote download caches up to two times in event of failure / checksum issues
-- phoromatic: Start a basic logger of Phoromatic Server events
-- phoromatic: Add new create schedule interface
-- phoromatic: Properly hook in system ID / group validation for test schedules
-- phoromatic: Support for editing schedules from the web UI
-- phoromatic: Support for activating/deactivating "deleting" test schedules from the web UI
-- phoromatic: Support for reporting the network MAC address (for later WoL purposes)
-- phoromatic: Update the CSS style
-- phoromatic: Add support for the main administrator to create multiple users associated with the same account
-- phoromatic: Add support for "viewer accounts" where they can view data but not alter/write data
-- phoromatic: Fix for adding systems to groups
-- phoromatic: Support for mass editing of systems in groups via the systems page
-- phoromatic: Support for removing system groups
-- phoromatic: Introduce activity stream and logging of user events / display from "activity events" page
-- phoromatic: Support for merging result files from the results page by clicking on each of them once
-- phoromatic: Support for deleting results from the web UI's results page
+pts-core: Introduce basic system logging capabilities for services
+pts-core: Try downloading files from remote download caches up to two times in event of failure / checksum issues
+phoromatic: Start a basic logger of Phoromatic Server events
+phoromatic: Add new create schedule interface
+phoromatic: Properly hook in system ID / group validation for test schedules
+phoromatic: Support for editing schedules from the web UI
+phoromatic: Support for activating/deactivating "deleting" test schedules from the web UI
+phoromatic: Support for reporting the network MAC address (for later WoL purposes)
+phoromatic: Update the CSS style
+phoromatic: Add support for the main administrator to create multiple users associated with the same account
+phoromatic: Add support for "viewer accounts" where they can view data but not alter/write data
+phoromatic: Fix for adding systems to groups
+phoromatic: Support for mass editing of systems in groups via the systems page
+phoromatic: Support for removing system groups
+phoromatic: Introduce activity stream and logging of user events / display from "activity events" page
+phoromatic: Support for merging result files from the results page by clicking on each of them once
+phoromatic: Support for deleting results from the web UI's results page
 
 Phoronix Test Suite 5.4 Milestone 2
 5 October 2014
 
-- pts-core: Add "ResultAfterString" to test result parser XML schema
-- pts-core: Other result file parsing improvements/fixes
-- pts-core: Rename debug-run mode to debug-benchmark, add extra features
-- pts-core: Separate out NoNetworkCommunication user option into NoInternetCommunication/NoNetworkCommunication user config options for those still wanting LAN/intranet support
-- pts-core: Add support to PTS clients for automatically finding Phoromatic Servers using Avahi zero-conf network discovery
-- pts-core: Improvements to make-download-cache
-- pts-core: Improved detection of file downloads that fail and serve HTML 404/not found responses
-- pts-core: Convert to a JSON-based representation instead of XML for the pts-download-cache file
-- pts-core: Various file hash checking improvements during test installation
-- pts-core: Allow Phoronix Test Suite clients to automatically discover Phoromatic download-cache archives
-- pts-core: Rewrite most of the RPM package generator
-- pts-core: Support /usr/share/phoronix-test-suite/download-cache as another download cache by default
-- pts-core: Client support for being able to obtain OpenBenchmarking.org index/test/suite data from local Phoromatic Servers
-- pts-core: Improved dump-core-storage output
-- pts-core: Introduce machine_self_id as UUIDv5 compliant self-generated unique identifier for each PTS client
-- pts-core: Allow result file titles up to 126 characters in length
-- pts-core: Add start of basic Phoromatic Server systemd service file
-- pts-core: Add start of basic Phoromatic Server Upstart conf file
-- pts-core: Introduce make-openbenchmarking-cache sub-command for trying to cache all test/suite meta-data from OpenBenchmarking.org
-- pts-core: Allow PhoromaticServers user-config.xml to specify static Phoromatic Server IP:port information
-- pts-core: Initial Upstart and systemd configurations for the Phoromatic clients
-- phoromatic: Begin allowing results to be stored locally, not dependent on OpenBenchmarking.org storage
-- phoromatic: Advertise Phoromatic Server using Avahi zero-conf networking service when avahi-publish available and AdvertiseServiceZeroConf user config option is TRUE
-- phoromatic: Automatically setup download-cache over Phoromatic HTTP with the system's local download-cache archive
-- phoromatic: Allow sharing OpenBenchmarking.org index/test/suite cache data from server with local Phoromatic clients
-- phoromatic: Support pts-core's machine_self_id for system identification as an alternative to OpenBenchmarking.org GSID
-- phoromatic: Add phoromatic.explore sub-command for showing discovered Phoromatic servers and their server/debugging information
-- phoromatic: Add a cache settings page to the web interface
-- phodevi: Allow GPU frequency detection for DRM/KMS drivers when no X Server DDX is detected
-- phodevi: Allow multiple providers for one VFS entry in case of failure in prior commands/files
-- phodevi: Allow reading X Server log from the systemd journalctl
-- phodevi: Restructure when /etc/os-release is parsed for obtaining OS name/version information
-- system_monitor: Allow user-set time interval period between sensor measurements using MONITOR_INTERVAL environment variable
+pts-core: Add "ResultAfterString" to test result parser XML schema
+pts-core: Other result file parsing improvements/fixes
+pts-core: Rename debug-run mode to debug-benchmark, add extra features
+pts-core: Separate out NoNetworkCommunication user option into NoInternetCommunication/NoNetworkCommunication user config options for those still wanting LAN/intranet support
+pts-core: Add support to PTS clients for automatically finding Phoromatic Servers using Avahi zero-conf network discovery
+pts-core: Improvements to make-download-cache
+pts-core: Improved detection of file downloads that fail and serve HTML 404/not found responses
+pts-core: Convert to a JSON-based representation instead of XML for the pts-download-cache file
+pts-core: Various file hash checking improvements during test installation
+pts-core: Allow Phoronix Test Suite clients to automatically discover Phoromatic download-cache archives
+pts-core: Rewrite most of the RPM package generator
+pts-core: Support /usr/share/phoronix-test-suite/download-cache as another download cache by default
+pts-core: Client support for being able to obtain OpenBenchmarking.org index/test/suite data from local Phoromatic Servers
+pts-core: Improved dump-core-storage output
+pts-core: Introduce machine_self_id as UUIDv5 compliant self-generated unique identifier for each PTS client
+pts-core: Allow result file titles up to 126 characters in length
+pts-core: Add start of basic Phoromatic Server systemd service file
+pts-core: Add start of basic Phoromatic Server Upstart conf file
+pts-core: Introduce make-openbenchmarking-cache sub-command for trying to cache all test/suite meta-data from OpenBenchmarking.org
+pts-core: Allow PhoromaticServers user-config.xml to specify static Phoromatic Server IP:port information
+pts-core: Initial Upstart and systemd configurations for the Phoromatic clients
+phoromatic: Begin allowing results to be stored locally, not dependent on OpenBenchmarking.org storage
+phoromatic: Advertise Phoromatic Server using Avahi zero-conf networking service when avahi-publish available and AdvertiseServiceZeroConf user config option is TRUE
+phoromatic: Automatically setup download-cache over Phoromatic HTTP with the system's local download-cache archive
+phoromatic: Allow sharing OpenBenchmarking.org index/test/suite cache data from server with local Phoromatic clients
+phoromatic: Support pts-core's machine_self_id for system identification as an alternative to OpenBenchmarking.org GSID
+phoromatic: Add phoromatic.explore sub-command for showing discovered Phoromatic servers and their server/debugging information
+phoromatic: Add a cache settings page to the web interface
+phodevi: Allow GPU frequency detection for DRM/KMS drivers when no X Server DDX is detected
+phodevi: Allow multiple providers for one VFS entry in case of failure in prior commands/files
+phodevi: Allow reading X Server log from the systemd journalctl
+phodevi: Restructure when /etc/os-release is parsed for obtaining OS name/version information
+system_monitor: Allow user-set time interval period between sensor measurements using MONITOR_INTERVAL environment variable
 
 Phoronix Test Suite 5.4 Milestone 1
 5 September 2014
 
-- pts-core: Sanitize pts_result_file user strings
-- pts-core: Don't set memory_limit with HHVM
-- pts-core: Drop phoromatic_legacy support (old Phoromatic.com version)
-- system_monitor: Correct perf-per-Watt calculation for LIB results
-- phodevi: Support Nouveau's pstate formatting changes to read core/mem MHz on newer kernels
-- phodevi: Support for reading monitor EDID over sysfs, decoding descriptors, and obtaining monitor name (should improve monitor name reporting for Intel Linux systems)
-- phodevi: Improved SoC detection
-- pts_LineGraph: Alignment fix for keys
+pts-core: Sanitize pts_result_file user strings
+pts-core: Don't set memory_limit with HHVM
+pts-core: Drop phoromatic_legacy support (old Phoromatic.com version)
+system_monitor: Correct perf-per-Watt calculation for LIB results
+phodevi: Support Nouveau's pstate formatting changes to read core/mem MHz on newer kernels
+phodevi: Support for reading monitor EDID over sysfs, decoding descriptors, and obtaining monitor name (should improve monitor name reporting for Intel Linux systems)
+phodevi: Improved SoC detection
+pts_LineGraph: Alignment fix for keys
 
 Phoronix Test Suite 5.2.1-Khanino
 11 July 2014
 
-- pts-core: Add VDPAU as a dependency to the xorg-video external dependency on more platforms
-- pts-core: Don't check OpenBenchmarking.org credentials when the network is down
-- pts-core: Rework result-file-to-text sub-command, show text-based graph results
-- phodevi: Improve NVIDIA binary driver GPU utilization detection
-- phodevi: Add DDE / Deepin Desktop Environment detection
-- pts_Graph: Few minor graph alignment corrections
+pts-core: Add VDPAU as a dependency to the xorg-video external dependency on more platforms
+pts-core: Don't check OpenBenchmarking.org credentials when the network is down
+pts-core: Rework result-file-to-text sub-command, show text-based graph results
+phodevi: Improve NVIDIA binary driver GPU utilization detection
+phodevi: Add DDE / Deepin Desktop Environment detection
+pts_Graph: Few minor graph alignment corrections
 
 Phoronix Test Suite 5.2.0-Khanino
 5 June 2014
 
-- pts-core: Support for GZ compressing result file XML data before uploading to OpenBenchmarking.org
-- pts_Graph: Further graphing improvements
+pts-core: Support for GZ compressing result file XML data before uploading to OpenBenchmarking.org
+pts_Graph: Further graphing improvements
 
 Phoronix Test Suite 5.2 Milestone 4
 29 May 2014
 
-- pts-core: Always report the CPU scaling governor to the system table
-- pts-core: Add auto-sort-result-file option
-- phoromatic: Improve the systems' page
-- phoromatic: Allow up to three connection failures before quitting
-- pts_Graph: Improved, cleaner, and more accurate rendering of the pts_OverViewGraph
-- pts_Graph: Make the horizontal box chart graph in good shape
-- pts_Graph: Revert earlier render_graph_value_ticks() change by mufasa72 as it produced inaccurate tick values
-- pts_Graph: use the horizontal box plot when rendering frame times for large number of results
-- pts_Graph: Various other graphing improvements
+pts-core: Always report the CPU scaling governor to the system table
+pts-core: Add auto-sort-result-file option
+phoromatic: Improve the systems' page
+phoromatic: Allow up to three connection failures before quitting
+pts_Graph: Improved, cleaner, and more accurate rendering of the pts_OverViewGraph
+pts_Graph: Make the horizontal box chart graph in good shape
+pts_Graph: Revert earlier render_graph_value_ticks() change by mufasa72 as it produced inaccurate tick values
+pts_Graph: use the horizontal box plot when rendering frame times for large number of results
+pts_Graph: Various other graphing improvements
 
 Phoronix Test Suite 5.2 Milestone 3
 22 May 2014
 
-- pts-core: Be more strict in handling DynamicRunCount option
-- phoromatic: Cleaning up more of the Phoromatic UI
-- phoromatic: Support for updating the system status
-- system_monitor: Allow extra idling time at begin and end of testing process
-- pts_Graph: Improve formatting of line graph keys
-- phodevi: Detection support for KDE Frameworks 5 / Plasma Next desktop
+pts-core: Be more strict in handling DynamicRunCount option
+phoromatic: Cleaning up more of the Phoromatic UI
+phoromatic: Support for updating the system status
+system_monitor: Allow extra idling time at begin and end of testing process
+pts_Graph: Improve formatting of line graph keys
+phodevi: Detection support for KDE Frameworks 5 / Plasma Next desktop
 
 Phoronix Test Suite 5.2 Milestone 2
 18 May 2014
 
-- pts-core: Add RUN_TESTS_IN_RANDOM_ORDER environment variable to cause tests to run in a random order
-- pts-core: Add sdl2-development to PTS External Dependencies
-- pts-core: Fix regression from 5.2m1 that broke some areas of the GUI / web interface
-- pts_Graph: Render min/avg/max stats at top of line graphs (thanks to mufasa72)
+pts-core: Add RUN_TESTS_IN_RANDOM_ORDER environment variable to cause tests to run in a random order
+pts-core: Add sdl2-development to PTS External Dependencies
+pts-core: Fix regression from 5.2m1 that broke some areas of the GUI / web interface
+pts_Graph: Render min/avg/max stats at top of line graphs (thanks to mufasa72)
 
 Phoronix Test Suite 5.2 Milestone 1
 8 May 2014
 
-- pts-core: Fix for not writing null test result file titles
-- pts-core: Fix & improvements to PRESET_OPTIONS environment variable
-- pts-core: Rename old/legacy phoromatic module to phoromaric_legacy
-- pts-core: Allow a range of test run options to be inputted (e.g. 2-5) to complement just a single test option or delimited by commas
-- pts-core: Fix for NOT saving test results when in batch-run mode and configured against saving
-- pts-core: Allow TEST_RESULTS_IDENTIFIER environment variable to be used when running tests unconditionally
-- phodevi: Improvement for detecting optimal NVIDIA Linux GPU core frequency on modern GPUs
-- phodevi: Add GPU usage reporting support to open-source AMD Radeon driver via RadeonTOP
+pts-core: Fix for not writing null test result file titles
+pts-core: Fix & improvements to PRESET_OPTIONS environment variable
+pts-core: Rename old/legacy phoromatic module to phoromaric_legacy
+pts-core: Allow a range of test run options to be inputted (e.g. 2-5) to complement just a single test option or delimited by commas
+pts-core: Fix for NOT saving test results when in batch-run mode and configured against saving
+pts-core: Allow TEST_RESULTS_IDENTIFIER environment variable to be used when running tests unconditionally
+phodevi: Improvement for detecting optimal NVIDIA Linux GPU core frequency on modern GPUs
+phodevi: Add GPU usage reporting support to open-source AMD Radeon driver via RadeonTOP
 
 Phoronix Test Suite 5.0.1-Plavsk
 2 April 2014
 
-- pts-core: Add "libudev1:i386" to "32bit-compatibility" external dependency for Ubuntu Linux
-- pts-core: Add invalid command helper to force-install sub-command
-- pts-core: Add "pcre" external dependency
-- pts-core: Add pushover_net module as a way of sending iOS/Android push notifications of results using Pushover.net
-- pts-core: Ensure the result file description properly updates when adding to result files with new data
-- pts-core: Add edit-result-file command that allows for editing a result file's title and description
-- pts-core: Workaround HTTPS OpenBenchmarking.org proxy issue
-- pts-core: Improved handling when the system's php.ini is using a restricted open_basedir setting
-- pts-core: Arch Linux support improvements
-- pts-core: When PTS client fails to find ZIP support, emit a PTS error
-- pts-core: Ship an AppData file (phoronix-test-suite.appdata.xml)
-- toggle_screensaver: Disable on OS X since there is no support for automatically disabling the OS X screensaver and causes collision with MacPorts
-- phodevi: Add extra checks to ensure NVIDIA blob doesn't get reported as Nouveau DDX due to kernel changes
+pts-core: Add "libudev1:i386" to "32bit-compatibility" external dependency for Ubuntu Linux
+pts-core: Add invalid command helper to force-install sub-command
+pts-core: Add "pcre" external dependency
+pts-core: Add pushover_net module as a way of sending iOS/Android push notifications of results using Pushover.net
+pts-core: Ensure the result file description properly updates when adding to result files with new data
+pts-core: Add edit-result-file command that allows for editing a result file's title and description
+pts-core: Workaround HTTPS OpenBenchmarking.org proxy issue
+pts-core: Improved handling when the system's php.ini is using a restricted open_basedir setting
+pts-core: Arch Linux support improvements
+pts-core: When PTS client fails to find ZIP support, emit a PTS error
+pts-core: Ship an AppData file (phoronix-test-suite.appdata.xml)
+toggle_screensaver: Disable on OS X since there is no support for automatically disabling the OS X screensaver and causes collision with MacPorts
+phodevi: Add extra checks to ensure NVIDIA blob doesn't get reported as Nouveau DDX due to kernel changes
 
 Phoronix Test Suite 5.0-Plavsk
 12 March 2014
 
-- pts-core: Improvements to run-random-tests
-- pts-core: Support for running the HTML5 UI on Microsoft Windows
-- pts-core: Rename RemoteAccessAllowed user configuration option to RemoteAccessPort
-- phodevi: Improve MATE detection
-- phodevi: Improve desktop environment recognition with $DESKTOP_SESSION
-- phodevi: Ensure GCC's minor version number is reported
+pts-core: Improvements to run-random-tests
+pts-core: Support for running the HTML5 UI on Microsoft Windows
+pts-core: Rename RemoteAccessAllowed user configuration option to RemoteAccessPort
+phodevi: Improve MATE detection
+phodevi: Improve desktop environment recognition with $DESKTOP_SESSION
+phodevi: Ensure GCC's minor version number is reported
 
 Phoronix Test Suite 5.0 Milestone 3
 3 March 2014
 
-- pts-core: Windows 8.1 support improvements
-- pts-core: Add SKIP_TESTING_SUBSYSTEMS environment variable, partially based on former ONLY_TEST_TYPES
-- pts-core: Add a run-random-tests command to run random tests/workloads on the system
-- phodevi: Improve NVIDIA DDX version detection
-- phodevi: Improve audio detection
-- phodevi: Add extra fallback for trying to read Radeon DRM core and memory frequencies on recent kernels
+pts-core: Windows 8.1 support improvements
+pts-core: Add SKIP_TESTING_SUBSYSTEMS environment variable, partially based on former ONLY_TEST_TYPES
+pts-core: Add a run-random-tests command to run random tests/workloads on the system
+phodevi: Improve NVIDIA DDX version detection
+phodevi: Improve audio detection
+phodevi: Add extra fallback for trying to read Radeon DRM core and memory frequencies on recent kernels
 
 Phoronix Test Suite 5.0 Milestone 2
 17 February 2014
 
-- pts-core: Add rename-result-file option
-- pts-core: WebSocket bug-fixes
-- pts-core: Other bug-fixes
-- pts-core: Disable the compiler-mask by default on FreeBSD/PC-BSD due to potential test installation issues on 10.0-RELEASE
-- pts-core: Split webui command into gui and start-remote-gui-server (local HTML5 GUI support) commands (remote + local HTML5 GUI support)
+pts-core: Add rename-result-file option
+pts-core: WebSocket bug-fixes
+pts-core: Other bug-fixes
+pts-core: Disable the compiler-mask by default on FreeBSD/PC-BSD due to potential test installation issues on 10.0-RELEASE
+pts-core: Split webui command into gui and start-remote-gui-server (local HTML5 GUI support) commands (remote + local HTML5 GUI support)
 
 Phoronix Test Suite 5.0 Milestone 1
 6 February 2014
 
-- pts-core: Add web-server-launcher support
-- pts-core: Support starting HHVM as a web server
-- pts-core: Startup speed optimizations
-- pts-core: Cleaned up code error reporting/handling
-- pts-core: Add server remote access and password options to user-config.xml user configuration options
-- pts-core: Adjust handling of PTS OpenBenchmarking.org downloading of test profile order and hash handling
-- pts-core: Reduce unnecessary communication with OpenBenchmarking.org network server
-- pts-core: Support system identifier strings up to 64 characters
-- pts-core: Add LIMIT_ELAPSED_TEST_TIME to limit the amount of time (in minutes) for a given Phoronix Test Suite process to complete its testing
-- pts-core: Allow null descriptor strings
-- pts-core: Fix regex for version string
-- pts-core: Random fixes
-- phodevi: Various improvements
-- phodevi: Improved disk scheduler fallback reporting
-- documentation: Update to point out new Git location at github.com/phoronix-test-suite/ over Phorogit
-- nye_Xml: Fix for writing zeros in XML tags when using the "when not empty" function
+pts-core: Add web-server-launcher support
+pts-core: Support starting HHVM as a web server
+pts-core: Startup speed optimizations
+pts-core: Cleaned up code error reporting/handling
+pts-core: Add server remote access and password options to user-config.xml user configuration options
+pts-core: Adjust handling of PTS OpenBenchmarking.org downloading of test profile order and hash handling
+pts-core: Reduce unnecessary communication with OpenBenchmarking.org network server
+pts-core: Support system identifier strings up to 64 characters
+pts-core: Add LIMIT_ELAPSED_TEST_TIME to limit the amount of time (in minutes) for a given Phoronix Test Suite process to complete its testing
+pts-core: Allow null descriptor strings
+pts-core: Fix regex for version string
+pts-core: Random fixes
+phodevi: Various improvements
+phodevi: Improved disk scheduler fallback reporting
+documentation: Update to point out new Git location at github.com/phoronix-test-suite/ over Phorogit
+nye_Xml: Fix for writing zeros in XML tags when using the "when not empty" function
 
 Phoronix Test Suite 4.8.6-Sokndal
 10 December 2013
 
-- pts-core: Print out pre/interim/post test script outputs when running in debug-run mode
-- pts-core: DragonFlyBSD 3.6.0 support improvements
-- pts-core: Support using DragonFlyBSD dports package management system for external dependencies
-- pts-core: NO_FILE_HASH_CHECKS environment variable also doesn't enforce MD5/SHA256 checks on make-download-cache sub-command
-- pts-core: Pass test arguments to pre/interim/post test profile scripts; ESET / Michal Zatloukal patch
-- pts-core: Don't do dynamic test run counts when using system_monitor module
-- pts-core: Support reading the full terminal width using stty as tput cols doesn't seem to report anything but 80 with shell_exec()
-- pts-core: Add "tiff" external dependency for providing libtiff and header files
-- pts-core: Don't offer to save test results when using debug-run mode
-- phodevi: Support reading monitor vendor/model numbers when using the binary NVIDIA Linux driver, including recent versions
-- phodevi: Improve multi-monitor resolution reporting when sharing an X.Org Server
-- phodevi: Remove more useless compiler path argument reports
-- toggle_screensaver: Auto unload module when no display server found
+pts-core: Print out pre/interim/post test script outputs when running in debug-run mode
+pts-core: DragonFlyBSD 3.6.0 support improvements
+pts-core: Support using DragonFlyBSD dports package management system for external dependencies
+pts-core: NO_FILE_HASH_CHECKS environment variable also doesn't enforce MD5/SHA256 checks on make-download-cache sub-command
+pts-core: Pass test arguments to pre/interim/post test profile scripts; ESET / Michal Zatloukal patch
+pts-core: Don't do dynamic test run counts when using system_monitor module
+pts-core: Support reading the full terminal width using stty as tput cols doesn't seem to report anything but 80 with shell_exec()
+pts-core: Add "tiff" external dependency for providing libtiff and header files
+pts-core: Don't offer to save test results when using debug-run mode
+phodevi: Support reading monitor vendor/model numbers when using the binary NVIDIA Linux driver, including recent versions
+phodevi: Improve multi-monitor resolution reporting when sharing an X.Org Server
+phodevi: Remove more useless compiler path argument reports
+toggle_screensaver: Auto unload module when no display server found
 
 Phoronix Test Suite 4.8.5-Sokndal
 22 November 2013
 
-- pts-core: Improve formatting of interrupt messages with the (default) concise display mode
-- pts-core: Don't remove test install files on installation failures
-- pts-core: Allow download-test-files command to use OpenBenchmarking.org IDs
-- pts-core: Don't dynamically increase the test run count when dealing with cache shares
-- pts-core: Fix for not opening the web-browser in batch mode
-- pts-core: Add zypper SUSE help support when not finding PHP
-- phodevi: Add support for Nouveau PSTATE parsing on Linux 3.13+
-- phodevi: Recognize 'HIS' (Hightech Information System) graphics cards
-- phodevi: Recognize 'ZOTAC' graphics cards
-- phodevi: Fix redundant monitor model reporting detection on Catalyst
-- phodevi: Add support for NVIDIA-Settings GPUUtilization in gpu.usage sensor
+pts-core: Improve formatting of interrupt messages with the (default) concise display mode
+pts-core: Don't remove test install files on installation failures
+pts-core: Allow download-test-files command to use OpenBenchmarking.org IDs
+pts-core: Don't dynamically increase the test run count when dealing with cache shares
+pts-core: Fix for not opening the web-browser in batch mode
+pts-core: Add zypper SUSE help support when not finding PHP
+phodevi: Add support for Nouveau PSTATE parsing on Linux 3.13+
+phodevi: Recognize 'HIS' (Hightech Information System) graphics cards
+phodevi: Recognize 'ZOTAC' graphics cards
+phodevi: Fix redundant monitor model reporting detection on Catalyst
+phodevi: Add support for NVIDIA-Settings GPUUtilization in gpu.usage sensor
 
 Phoronix Test Suite 4.8.4-Sokndal
 7 November 2013
 
-- pts-core: Allow web browsers and graphics tests to work on $WAYLAND_DISPLAY when $DISPLAY is not set
-- pts-core: Fix for libstdc++ on Gentoo external dependency
-- pts-core: Add a ResultScale XML tag option for the results-parser to provide custom ResultScale values depending upon selected parser option
-- pts-core: Add a ResultProportion XML tag option for the results-parser to provide custom result proportion values depending upon selected parser option
-- pts-core: Add ResultPrecision XML tag to results-parser for setting math precision of decimal points on result (default remains 2)
-- pts-core: Add support for writing to $INSTALL_FOOTNOTE during test installations to report custom footnote on generated graphs
-- pts-core: Add SuiteSparse, TinyXML, DUNE external dependencies
-- pts-core: Add opencl header external dependencies for more platforms
-- pts-core: Refresh OpenBenchmarking.org repository index data file once upon hitting missing test profile
-- pts_Graph: Improve precision of increments for graph results with sub-1 values
-- phodevi: Protect against "undefined" memory strings from DMI data
-- phodevi: Add Wayland Weston version detection
-- phodevi: Detect gnome-shell-wayland
-- phodevi: Add support for CPU node-count property for number of physical CPU nodes
+pts-core: Allow web browsers and graphics tests to work on $WAYLAND_DISPLAY when $DISPLAY is not set
+pts-core: Fix for libstdc++ on Gentoo external dependency
+pts-core: Add a ResultScale XML tag option for the results-parser to provide custom ResultScale values depending upon selected parser option
+pts-core: Add a ResultProportion XML tag option for the results-parser to provide custom result proportion values depending upon selected parser option
+pts-core: Add ResultPrecision XML tag to results-parser for setting math precision of decimal points on result (default remains 2)
+pts-core: Add support for writing to $INSTALL_FOOTNOTE during test installations to report custom footnote on generated graphs
+pts-core: Add SuiteSparse, TinyXML, DUNE external dependencies
+pts-core: Add opencl header external dependencies for more platforms
+pts-core: Refresh OpenBenchmarking.org repository index data file once upon hitting missing test profile
+pts_Graph: Improve precision of increments for graph results with sub-1 values
+phodevi: Protect against "undefined" memory strings from DMI data
+phodevi: Add Wayland Weston version detection
+phodevi: Detect gnome-shell-wayland
+phodevi: Add support for CPU node-count property for number of physical CPU nodes
 
 Phoronix Test Suite 4.8.3-Sokndal
 2 October 2013
 
-- pts-core: Fix openmpi on Gentoo external dependency
-- pts-core: Detect graphics comparison when GPU changes with audio string
-- pts-core: Don't use HTTPS on proxies when connecting to OpenBenchmarking.org
-- pts-core: Add VersionSpecific capability to external dependencies handling for package(s) that may only be in certain OS versions
-- pts-core: Ensure xscreensaver is deactivated
-- pts-core: Support toggling GNOME3 screensaver on GNOME 3.8+ where org.gnome.desktop.screensaver idle-activation-enabled -> org.gnome.desktop.session idle-delay
-- phodevi: Fix for parsing long PCI string values
-- phodevi: Improve Intel GPU model detection with recent xf86-video-intel DDX
+pts-core: Fix openmpi on Gentoo external dependency
+pts-core: Detect graphics comparison when GPU changes with audio string
+pts-core: Don't use HTTPS on proxies when connecting to OpenBenchmarking.org
+pts-core: Add VersionSpecific capability to external dependencies handling for package(s) that may only be in certain OS versions
+pts-core: Ensure xscreensaver is deactivated
+pts-core: Support toggling GNOME3 screensaver on GNOME 3.8+ where org.gnome.desktop.screensaver idle-activation-enabled -> org.gnome.desktop.session idle-delay
+phodevi: Fix for parsing long PCI string values
+phodevi: Improve Intel GPU model detection with recent xf86-video-intel DDX
 
 Phoronix Test Suite 4.8.2-Sokndal
 30 August 2013
 
-- pts-core: Fix for reporting environment variables to system notes on system graph table
-- pts-core: Fix OpenBenchmarking.org class issue for select code paths
+pts-core: Fix for reporting environment variables to system notes on system graph table
+pts-core: Fix OpenBenchmarking.org class issue for select code paths
 
 Phoronix Test Suite 4.8.1-Sokndal
 14 August 2013
 
-- pts-core: Fix OpenBenchmarking.org log-ins
+pts-core: Fix OpenBenchmarking.org log-ins
 
 Phoronix Test Suite 4.8.0-Sokndal
 13 August 2013
 
-- pts-core: When PHP is missing, for apt-get/yum distributions report the likely command needed to run
-- pts-core: Don't prompt to install missing/failed tests when using the 'benchmark' command
-- phodevi: Support for reading the Radeon DRM driver's current core/memory frequencies when DPM is enabled (Linux 3.11+)
-- phodevi: Support for reading the top Radeon DRM driver core/memory frequency via dmesg when DPM is enabled (Linux 3.11+)
-- phodevi: Support for reading the Radeon DRM driver's current GPU (vddc) voltage when DPM is enabled (Linux 3.11+)
-- phoromatic: Updated module against latest upstream Phoromatic.com Server
+pts-core: When PHP is missing, for apt-get/yum distributions report the likely command needed to run
+pts-core: Don't prompt to install missing/failed tests when using the 'benchmark' command
+phodevi: Support for reading the Radeon DRM driver's current core/memory frequencies when DPM is enabled (Linux 3.11+)
+phodevi: Support for reading the top Radeon DRM driver core/memory frequency via dmesg when DPM is enabled (Linux 3.11+)
+phodevi: Support for reading the Radeon DRM driver's current GPU (vddc) voltage when DPM is enabled (Linux 3.11+)
+phoromatic: Updated module against latest upstream Phoromatic.com Server
 
 Phoronix Test Suite 4.8 Milestone 5
 6 August 2013
 
-- pts-core: Add php5-json as a dependency now on Debian packages since Ubuntu split it up and no longer in php5-cli
-- pts-core: Add support for reporting set kernel module parameters to notes on the system table graph
-- pts-core: Add support for reporting of important environment variables to notes on the system table graph
-- pts-core: Changes needed for modern Phoromatic
-- pts_Graph: Add new automated color chooser for line graph color selection
-- pts_Graph: Slight rework to code handling the remove of common words from result identifiers
-- phodevi: Add support for Intel DRM driver's gt_max_freq_mhz for obtaining maximum GPU frequency on modern kernels
-- phodevi: Add support for Intel DRM driver's gt_cur_freq_mhz for obtaining current GPU frequency on modern kernels
-- phodevi: Only prepend AIB vendor to NVIDIA and AMD GPU strings
-- phodevi: Add system.kernel-parameters property for reading kernel command line parameters
-- phodevi: Add support for checking the __GL_FSAA_MODE environment variable
-- phodevi: Add support for checking the __GL_LOG_MAX_ANISO environment variable
-- phodevi: Add 0xc36400 super block for CephFS
-- phodevi: Add unity-system-compositor version detection
+pts-core: Add php5-json as a dependency now on Debian packages since Ubuntu split it up and no longer in php5-cli
+pts-core: Add support for reporting set kernel module parameters to notes on the system table graph
+pts-core: Add support for reporting of important environment variables to notes on the system table graph
+pts-core: Changes needed for modern Phoromatic
+pts_Graph: Add new automated color chooser for line graph color selection
+pts_Graph: Slight rework to code handling the remove of common words from result identifiers
+phodevi: Add support for Intel DRM driver's gt_max_freq_mhz for obtaining maximum GPU frequency on modern kernels
+phodevi: Add support for Intel DRM driver's gt_cur_freq_mhz for obtaining current GPU frequency on modern kernels
+phodevi: Only prepend AIB vendor to NVIDIA and AMD GPU strings
+phodevi: Add system.kernel-parameters property for reading kernel command line parameters
+phodevi: Add support for checking the __GL_FSAA_MODE environment variable
+phodevi: Add support for checking the __GL_LOG_MAX_ANISO environment variable
+phodevi: Add 0xc36400 super block for CephFS
+phodevi: Add unity-system-compositor version detection
 
 Phoronix Test Suite 4.8 Milestone 4
 24 July 2013
 
-- pts-core: Add initial support for test profile's downloads.xml to have a SHA256 hash for files
-- pts-core: Rename NO_MD5_CHECKS environment variable to NO_FILE_HASH_CHECKS
-- pts-core: Add PTS5 codenames from Tulskaya oblast / Tula Oblast Russian region
-- pts-core: Support fixes for Facebook HipHop Virtual Machine for PHP HHVM 2.1.0
-- pts-core: Fix text corruption bug with auto shortening of identifiers on multi-way comparisons
-- pts_Graph: Fix auto shortening when the first identifier is only one word
-- phodevi: Support ECS and eVGA graphics card AIB vendor detection
+pts-core: Add initial support for test profile's downloads.xml to have a SHA256 hash for files
+pts-core: Rename NO_MD5_CHECKS environment variable to NO_FILE_HASH_CHECKS
+pts-core: Add PTS5 codenames from Tulskaya oblast / Tula Oblast Russian region
+pts-core: Support fixes for Facebook HipHop Virtual Machine for PHP HHVM 2.1.0
+pts-core: Fix text corruption bug with auto shortening of identifiers on multi-way comparisons
+pts_Graph: Fix auto shortening when the first identifier is only one word
+phodevi: Support ECS and eVGA graphics card AIB vendor detection
 
 Phoronix Test Suite 4.8 Milestone 3
 19 July 2013
 
-- pts-core: Add few more cases of error detection on failed test install
-- pts-core: Round download size totals in the concise display mode for large files
-- pts-core: Add missing PreInstallMessage and PostInstallMessage to the OpenBenchmarking.org test profile schema and writer
-- pts-core: Allow test results to have "secondary_linked_results"
-- pts-core: Add initial support for frame latency / jitter secondary result graphs
-- pts_Graph: Assume any version of Google Chrome/Chromium can render SVG
-- pts_Graph: Only prepend 'v' to version string on graphs if first character is numeric
-- toggle-screensaver: Support doing "xscreensaver-command -exit" when needed
-- phodevi: Add more stock fallback display modes
-- phodevi: Ensure MB/GB are reported on OS X memory strings
-- phodevi: Workaround Linux 3.10 kernel reporting bogus frequencies for scaling_max_freq on some Intel CPUs
-- phodevi: Support prepending the graphics card / AIB vendor on GPU strings
+pts-core: Add few more cases of error detection on failed test install
+pts-core: Round download size totals in the concise display mode for large files
+pts-core: Add missing PreInstallMessage and PostInstallMessage to the OpenBenchmarking.org test profile schema and writer
+pts-core: Allow test results to have "secondary_linked_results"
+pts-core: Add initial support for frame latency / jitter secondary result graphs
+pts_Graph: Assume any version of Google Chrome/Chromium can render SVG
+pts_Graph: Only prepend 'v' to version string on graphs if first character is numeric
+toggle-screensaver: Support doing "xscreensaver-command -exit" when needed
+phodevi: Add more stock fallback display modes
+phodevi: Ensure MB/GB are reported on OS X memory strings
+phodevi: Workaround Linux 3.10 kernel reporting bogus frequencies for scaling_max_freq on some Intel CPUs
+phodevi: Support prepending the graphics card / AIB vendor on GPU strings
 
 Phoronix Test Suite 4.8 Milestone 2
 6 July 2013
 
-- pts-core: Expand Mandriva Linux external dependency support to distributions having urpmi
-- pts-core: Add Apple OS X font paths for use by the GD graph renderer
-- pts-core: Add "/usr/lib64/" to the automated external dependency verification path
-- pts-core: Allow passing multiple test identifiers to remove with remove-from-result-file command
-- pts-core: Give a warning when the results viewer opens in the KDE Konqueror web-browser
-- phodevi: Break operating system string at "("
-- phodevi: Don't return "n/a" from LSB release strings
-- phodevi: IceWM window manager detection
-- phodevi: Add gpu.temp safety check to prevent against AMD Catalyst OverDrive sending garbage
-- phodevi: Fix for XRandR resolution query on XMir
-- phodevi: Support using systemd-detect-virt as fallback for detecting Linux virtualization method
+pts-core: Expand Mandriva Linux external dependency support to distributions having urpmi
+pts-core: Add Apple OS X font paths for use by the GD graph renderer
+pts-core: Add "/usr/lib64/" to the automated external dependency verification path
+pts-core: Allow passing multiple test identifiers to remove with remove-from-result-file command
+pts-core: Give a warning when the results viewer opens in the KDE Konqueror web-browser
+phodevi: Break operating system string at "("
+phodevi: Don't return "n/a" from LSB release strings
+phodevi: IceWM window manager detection
+phodevi: Add gpu.temp safety check to prevent against AMD Catalyst OverDrive sending garbage
+phodevi: Fix for XRandR resolution query on XMir
+phodevi: Support using systemd-detect-virt as fallback for detecting Linux virtualization method
 
 Phoronix Test Suite 4.8 Milestone 1
 20 June 2013
 
-- pts-core: Don't show null error strings on failed test installations
-- pts-core: Allow test profiles to pass min/max data results through JSON to graphs using MIN_ and MAX_ prefixes
-- pts-core: Support displaying min/max data from the concise (default) display mode text output
-- phodevi: MHz -> GHz fix for the cpu.freq sensor on Apple OS X
-- phodevi: Add fallback support for using ioreg for calculating sys.power power draw on Apple OS X
-- phodevi: Support reporting multiple monitor models from Xorg.0.log
+pts-core: Don't show null error strings on failed test installations
+pts-core: Allow test profiles to pass min/max data results through JSON to graphs using MIN_ and MAX_ prefixes
+pts-core: Support displaying min/max data from the concise (default) display mode text output
+phodevi: MHz -> GHz fix for the cpu.freq sensor on Apple OS X
+phodevi: Add fallback support for using ioreg for calculating sys.power power draw on Apple OS X
+phodevi: Support reporting multiple monitor models from Xorg.0.log
 
 Phoronix Test Suite 4.6.1-Utsira
 6 June 2013
 
-- pts-core: Add ONLY_TEST_TYPES environment variable for skipping test profiles that don't belong to a certain hardware type
-- pts-core: Ensure extract-from-result-file opens the proper HTML web-browser
-- pts-core: Ensure copy-run-in-result-file opens the proper HTML web-browser
-- pts-core: Ensure reorder-result-file opens the proper HTML web-browser
-- pts-core: Ensure rename-identifier-in-result-file opens the proper HTML web-browser
-- pts-core: Ensure remove-from-result-file opens the proper HTML web-browser
-- pts-core: Reworked handling of browser launching in batch mode
-- pts-core: Launch the web browser to display results when using internal-run mode
-- phodevi: Add Haswell BMI2 detection
-- phodevi: Support vm_stat with the memory.usage sensor, works on OS X
-- phodevi: Add new network.usage sensor for Apple OS X contributed by ESET
+pts-core: Add ONLY_TEST_TYPES environment variable for skipping test profiles that don't belong to a certain hardware type
+pts-core: Ensure extract-from-result-file opens the proper HTML web-browser
+pts-core: Ensure copy-run-in-result-file opens the proper HTML web-browser
+pts-core: Ensure reorder-result-file opens the proper HTML web-browser
+pts-core: Ensure rename-identifier-in-result-file opens the proper HTML web-browser
+pts-core: Ensure remove-from-result-file opens the proper HTML web-browser
+pts-core: Reworked handling of browser launching in batch mode
+pts-core: Launch the web browser to display results when using internal-run mode
+phodevi: Add Haswell BMI2 detection
+phodevi: Support vm_stat with the memory.usage sensor, works on OS X
+phodevi: Add new network.usage sensor for Apple OS X contributed by ESET
 
 Phoronix Test Suite 4.6.0-Utsira
 21 May 2013
 
-- phodevi: Report CPU scaling driver along side the CPU scaling governor
+phodevi: Report CPU scaling driver along side the CPU scaling governor
 
 Phoronix Test Suite 4.6 Milestone 2
 16 May 2013
 
-- pts-core: Support compiler masking on short binaries
-- pts-core: More advanced detection of compiler flags within the compiler masking process
-- pts-core: DragonFlyBSD external dependency packaging updates
-- pts-core: Various fixes
-- phodevi: Fix for cpu.freq sensor reading on Apple OS X
+pts-core: Support compiler masking on short binaries
+pts-core: More advanced detection of compiler flags within the compiler masking process
+pts-core: DragonFlyBSD external dependency packaging updates
+pts-core: Various fixes
+phodevi: Fix for cpu.freq sensor reading on Apple OS X
 
 Phoronix Test Suite 4.6 Milestone 1
 11 April 2013
 
-- pts-core: Official support for Facebook's HipHop HHVM PHP
-- pts-core: Introduce new pts_define interface
-- pts-core: Add debug-self-test option for running a self-hosting PHP/PTS performance test
-- pts-core: Support PHP 5.4's cli_set_process_title() function
-- pts-core: For now don't use PHP CURL on HipHop HHVM due to issues
-- pts-core: Ubuntu 13.04's sudo seems to have problems with the external dependency handling
-- pts-core: Add internal-run command for running benchmarks in semi-automated manner and without uploading data to OpenBenchmarking.org
-- phodevi: Fix for memory reporting on OS X
-- phodevi: Improved LLVM Clang compiler version detection with modern Apple Xcode
-- phodevi: Improved Intel Linux GPU overclocking frequency detection
-- phodevi: Fix for detecting new (319.xx) NVIDIA Linux driver X.Org driver
+pts-core: Official support for Facebook's HipHop HHVM PHP
+pts-core: Introduce new pts_define interface
+pts-core: Add debug-self-test option for running a self-hosting PHP/PTS performance test
+pts-core: Support PHP 5.4's cli_set_process_title() function
+pts-core: For now don't use PHP CURL on HipHop HHVM due to issues
+pts-core: Ubuntu 13.04's sudo seems to have problems with the external dependency handling
+pts-core: Add internal-run command for running benchmarks in semi-automated manner and without uploading data to OpenBenchmarking.org
+phodevi: Fix for memory reporting on OS X
+phodevi: Improved LLVM Clang compiler version detection with modern Apple Xcode
+phodevi: Improved Intel Linux GPU overclocking frequency detection
+phodevi: Fix for detecting new (319.xx) NVIDIA Linux driver X.Org driver
 
 Phoronix Test Suite 4.4.1-Forsand
 14 March 2013
 
-- pts-core: Add the arm-linux-gnueabihf library directory for PTS External Dependency checks
-- pts-core: Add SKIP_ALL_TEST_SUPPORT_CHECKS environment variable
-- pts-core: Fix screen resolution listening when the resolution fails to be detected through Phodevi
-- pts-core: Update openSUSE external dependencies
-- pts-core: Strip "project" from reported strings
-- phodevi: Add support for detecting the Razor-qt desktop environment
-- phodevi: No longer report the Catalyst marketing version number since the DDX is no longer reporting it reliably
-- phodevi: Detect if the X.Org Server DDX module was unloaded
-- phodevi: Reorder DDX driver fallback detection
-- phodevi: Cleanse eCryptfs sig and cipher from showing in mounts file
-- phodevi: Improve Linux memory RAM type detection
+pts-core: Add the arm-linux-gnueabihf library directory for PTS External Dependency checks
+pts-core: Add SKIP_ALL_TEST_SUPPORT_CHECKS environment variable
+pts-core: Fix screen resolution listening when the resolution fails to be detected through Phodevi
+pts-core: Update openSUSE external dependencies
+pts-core: Strip "project" from reported strings
+phodevi: Add support for detecting the Razor-qt desktop environment
+phodevi: No longer report the Catalyst marketing version number since the DDX is no longer reporting it reliably
+phodevi: Detect if the X.Org Server DDX module was unloaded
+phodevi: Reorder DDX driver fallback detection
+phodevi: Cleanse eCryptfs sig and cipher from showing in mounts file
+phodevi: Improve Linux memory RAM type detection
 
 Phoronix Test Suite 4.4.0-Forsand
 26 February 2013
 
-- pts-core: Improvement for detecting installed libraries for external dependency handling
-- pts-core: Address redundant dash handling within the result file save name
-- phodevi: Support for detecting SurfaceFlinger (Google Android)
-- phodevi: Ensure non-ASCII characters are removed from Phodevi properties
-- phodevi: Support for reading the OpenGL Core Profile information via glxinfo
+pts-core: Improvement for detecting installed libraries for external dependency handling
+pts-core: Address redundant dash handling within the result file save name
+phodevi: Support for detecting SurfaceFlinger (Google Android)
+phodevi: Ensure non-ASCII characters are removed from Phodevi properties
+phodevi: Support for reading the OpenGL Core Profile information via glxinfo
 
 Phoronix Test Suite 4.4 Milestone 3
 14 February 2013
 
-- pts-core: Incorporate xx.yy (of xx.yy.zz) test profile version string into test result comparison_hash
-- pts-core: Return contained tests hash for result files as a raw SHA1
-- pts-core: Improving passing of compiler flags/options to be reported on test result graphs
-- pts-core: Support specifying just relative include files, shared libraries, and command names for file check in PTS External Dependencies
-- pts-core: Faster PTS External Dependencies resolution and file checking
-- pts-core: Support for falling back right away to the generic file check lists for packages if not supplied by OS-specific list
-- pts-core: Add MacPorts PTS External Dependencies support for handling some package dependencies on Apple Mac OS X
-- pts-core: Allow 3D tests to run when LLVMpipe OpenGL is present regardless of the display driver loaded for the graphics card
-- phodevi: Add file-system magic blocks for eCryptfs, AuFS, LustreFS, and Panasas PanFS
-- phodevi: Add AVX2 (Advanced Vector Extensions 2) CPU instruction set detection
-- phodevi: Support for detecting the new F2FS file-system
+pts-core: Incorporate xx.yy (of xx.yy.zz) test profile version string into test result comparison_hash
+pts-core: Return contained tests hash for result files as a raw SHA1
+pts-core: Improving passing of compiler flags/options to be reported on test result graphs
+pts-core: Support specifying just relative include files, shared libraries, and command names for file check in PTS External Dependencies
+pts-core: Faster PTS External Dependencies resolution and file checking
+pts-core: Support for falling back right away to the generic file check lists for packages if not supplied by OS-specific list
+pts-core: Add MacPorts PTS External Dependencies support for handling some package dependencies on Apple Mac OS X
+pts-core: Allow 3D tests to run when LLVMpipe OpenGL is present regardless of the display driver loaded for the graphics card
+phodevi: Add file-system magic blocks for eCryptfs, AuFS, LustreFS, and Panasas PanFS
+phodevi: Add AVX2 (Advanced Vector Extensions 2) CPU instruction set detection
+phodevi: Support for detecting the new F2FS file-system
 
 Phoronix Test Suite 4.4 Milestone 2
 30 January 2013
 
-- pts-core: Improvement for detecting errors from failed test installations
-- pts-core: Allow "Deprecated" flag for ProfileStatus in the XML test profile schema
-- pts-core: Support for scanning test run log files automatically to look for errors when tests fail to execute
-- pts-core: Remove duplicate "libtool" PTS External Dependency
-- pts-core: Complete rewrite of the FreeBSD external dependency handling to use ports collection
-- pts-core: Enable BSD support for checking exit codes on test installation and test execution
-- pts-core: Various BSD support improvements
-- pts-core: Begin on DragonFlyBSD pkgsrc-based external dependency solution
-- phodevi: Fix to improve Xfce version detection when Gtk-Warnings are thrown before the version string
-- phodevi: Add Enlightenment desktop environment detection support
-- phodevi: Add Consort Desktop Environment (GNOME Fork) detection support
+pts-core: Improvement for detecting errors from failed test installations
+pts-core: Allow "Deprecated" flag for ProfileStatus in the XML test profile schema
+pts-core: Support for scanning test run log files automatically to look for errors when tests fail to execute
+pts-core: Remove duplicate "libtool" PTS External Dependency
+pts-core: Complete rewrite of the FreeBSD external dependency handling to use ports collection
+pts-core: Enable BSD support for checking exit codes on test installation and test execution
+pts-core: Various BSD support improvements
+pts-core: Begin on DragonFlyBSD pkgsrc-based external dependency solution
+phodevi: Fix to improve Xfce version detection when Gtk-Warnings are thrown before the version string
+phodevi: Add Enlightenment desktop environment detection support
+phodevi: Add Consort Desktop Environment (GNOME Fork) detection support
 
 Phoronix Test Suite 4.4 Milestone 1
 23 January 2013
 
-- pts-core: Introduce 'common-dependencies' concept to PTS External Dependencies
-- pts-core: Fix reporting of some already installed dependencies
-- pts-core: Support for listing 'local/' tests from the list-supported-tests command
-- pts-core: Support for test profiles providing a 'support-check.sh' file
-- pts-core: Support for reporting the Graphics AA/AF values to the system notes table
-- pts-core: Add a public version of the TODO list
-- pts-core: Don't attempt copying install.log to install-failed.log on empty files
-- pts-core: Add fallback to allow matching an operating system to an external dependencies package list based upon the detected package manager
-- pts-core: When anonymous usage reporting is enabled, report test installation failures to OpenBenchmarking.org for analyzing problem
-- pts-core: Support for detecting common errors within test profile install failures and reporting the relevant information to the user
-- pts-core: When installing many tests and there are install failures, conveniently show the errors at the end
-- pts-core: When installing multiple tests, report any unknown test profiles/suites
-- pts-core: Faster loading of list-available-tests command by not forcing all test profile data be downloaded
-- pts-core: Progressively download OpenBenchmarking.org in list-available-suites command to display information faster
-- phodevi: Improve Nouveau video RAM memory capacity detection on newer Linux kernels
-- phodevi: Warning fix for Radeon GPU frequency detection
-- phodevi: Drop "special_settings_string" support
-- phodevi: Support for checking if the Gallium3D anti-aliasing level was overrode using GALLIUM_MSAA environment variable
+pts-core: Introduce 'common-dependencies' concept to PTS External Dependencies
+pts-core: Fix reporting of some already installed dependencies
+pts-core: Support for listing 'local/' tests from the list-supported-tests command
+pts-core: Support for test profiles providing a 'support-check.sh' file
+pts-core: Support for reporting the Graphics AA/AF values to the system notes table
+pts-core: Add a public version of the TODO list
+pts-core: Don't attempt copying install.log to install-failed.log on empty files
+pts-core: Add fallback to allow matching an operating system to an external dependencies package list based upon the detected package manager
+pts-core: When anonymous usage reporting is enabled, report test installation failures to OpenBenchmarking.org for analyzing problem
+pts-core: Support for detecting common errors within test profile install failures and reporting the relevant information to the user
+pts-core: When installing many tests and there are install failures, conveniently show the errors at the end
+pts-core: When installing multiple tests, report any unknown test profiles/suites
+pts-core: Faster loading of list-available-tests command by not forcing all test profile data be downloaded
+pts-core: Progressively download OpenBenchmarking.org in list-available-suites command to display information faster
+phodevi: Improve Nouveau video RAM memory capacity detection on newer Linux kernels
+phodevi: Warning fix for Radeon GPU frequency detection
+phodevi: Drop "special_settings_string" support
+phodevi: Support for checking if the Gallium3D anti-aliasing level was overrode using GALLIUM_MSAA environment variable
 
 Phoronix Test Suite 4.2.0-Randaberg
 20 December 2012
 
-- pts-core: Fix SVG render detection on Firefox/Gecko 17.0
-- pts-core: Fix for breaking quoted args with internal spaces (reported by _rubio_)
-- pts-core: Add glibc-static to build-utilities external dependency on Fedora
-- pts-core: Fix for using the SKIP_TESTS environment variable causing a fatal error
-- pts-core: Phoronix Test Suite 4.4 is codenamed Forsand
-- phodevi: Improved detection of power consumption from batteries in certain Linux configurations
+pts-core: Fix SVG render detection on Firefox/Gecko 17.0
+pts-core: Fix for breaking quoted args with internal spaces (reported by _rubio_)
+pts-core: Add glibc-static to build-utilities external dependency on Fedora
+pts-core: Fix for using the SKIP_TESTS environment variable causing a fatal error
+pts-core: Phoronix Test Suite 4.4 is codenamed Forsand
+phodevi: Improved detection of power consumption from batteries in certain Linux configurations
 
 Phoronix Test Suite 4.2 Milestone 3
 22 November 2012
 
-- pts-core: Don't report null times for estimated run-time
-- phodevi: Support for determining the build configuration on LLVM 3.2 where llvm-ld is llvm-link
-- phodevi: Hard fall-back support for detecting the xf86-video-modesetting driver usage
-- toggle_screensaver: Disable blanking of the terminal screen when running tests
+pts-core: Don't report null times for estimated run-time
+phodevi: Support for determining the build configuration on LLVM 3.2 where llvm-ld is llvm-link
+phodevi: Hard fall-back support for detecting the xf86-video-modesetting driver usage
+toggle_screensaver: Disable blanking of the terminal screen when running tests
 
 Phoronix Test Suite 4.2 Milestone 2
 22 October 2012
 
-- pts-core: Add list-recommended-tests option for providing subsystem test recommendations based upon OpenBenchmarking.org popularity/usage
-- pts-core: Add auto-compare option for automatically determining relevant OpenBenchmarking.org result comparisons based upon software/hardware
-- pts-core: Allow passing test profile names to auto-compare to seed it with the test(s) you wish to use for comparison
-- pts-core: OpenBenchmarking.org now supports system log payload sizes up to 2MB
-- pts-core: Object-ify PTS external dependency handling
-- phodevi: Split some functions into new phodevi_base class
+pts-core: Add list-recommended-tests option for providing subsystem test recommendations based upon OpenBenchmarking.org popularity/usage
+pts-core: Add auto-compare option for automatically determining relevant OpenBenchmarking.org result comparisons based upon software/hardware
+pts-core: Allow passing test profile names to auto-compare to seed it with the test(s) you wish to use for comparison
+pts-core: OpenBenchmarking.org now supports system log payload sizes up to 2MB
+pts-core: Object-ify PTS external dependency handling
+phodevi: Split some functions into new phodevi_base class
 
 Phoronix Test Suite 4.2 Milestone 1
 8 October 2012
 
-- pts-core: Support download caches at /media/*/*/download-cache/
-- pts-core: Support OPENGL_DRIVER as a run-time variable
-- pts-core: For external dependency handling, treat Linaro as Ubuntu
-- pts-core: Check for null distribution-specific external dependency package names
-- pts-core: Formatting improvements to result-file-to-text output
-- pts-core: Add openssl-development as a new test external dependency
-- pts-core: Don't warn on out-of-date test profiles when being run in batch mode
-- phodevi: Support for reading the VirtualBox version of Beta/RC versions
-- phodevi: Better support detection for Exynos ARM cores
-- phodevi: Initial support for reading node power over IPMI
-- phodevi: Initial support for reading core temperature over IPMI
-- phodevi: On Linux attempt to determine the install RAM's vendor and product part number
-- toggle_screensaver: Support for module suspending the Xfce4 desktop screensaver using xfconf-query
-- pts_Graph: Fix for vertical/rotated text in SVG -> GD translation
+pts-core: Support download caches at /media/*/*/download-cache/
+pts-core: Support OPENGL_DRIVER as a run-time variable
+pts-core: For external dependency handling, treat Linaro as Ubuntu
+pts-core: Check for null distribution-specific external dependency package names
+pts-core: Formatting improvements to result-file-to-text output
+pts-core: Add openssl-development as a new test external dependency
+pts-core: Don't warn on out-of-date test profiles when being run in batch mode
+phodevi: Support for reading the VirtualBox version of Beta/RC versions
+phodevi: Better support detection for Exynos ARM cores
+phodevi: Initial support for reading node power over IPMI
+phodevi: Initial support for reading core temperature over IPMI
+phodevi: On Linux attempt to determine the install RAM's vendor and product part number
+toggle_screensaver: Support for module suspending the Xfce4 desktop screensaver using xfconf-query
+pts_Graph: Fix for vertical/rotated text in SVG -> GD translation
 
 Phoronix Test Suite 4.0.1
 21 August 2012
 
-- pts-core: Allow shortened test profile versions inputted by user to be expanded to matching latest version in stream
-- pts-core: Allow shortened test suite versions inputted by user to be expanded to matching latest version in stream
-- pts-core: Add list-unsupported-tests option for debugging purposes
-- pts-core: Add subversion as a PTS External Dependency
-- pts-core: Add git as a PTS External Dependency
-- pts-core: Add superlu as a PTS External Dependency
-- pts-core: Add libtool as a PTS External Dependency
-- pts-core: Hash within the result file all of the contained tests
-- pts-core: Support for anonymous usage reporting of test installation times to OpenBenchmarking.org
-- phodevi: Fix memory RAM DIMM count detection in select configurations
-- phodevi: Intel GPU string reporting improvement
-- phodevi: Support for detecting multiple GPUs on Apple OS X
-- phodevi: Support for detecting Gallium3D XA
-- phodevi: Support for llvm-link on LLVM 3.2svn
+pts-core: Allow shortened test profile versions inputted by user to be expanded to matching latest version in stream
+pts-core: Allow shortened test suite versions inputted by user to be expanded to matching latest version in stream
+pts-core: Add list-unsupported-tests option for debugging purposes
+pts-core: Add subversion as a PTS External Dependency
+pts-core: Add git as a PTS External Dependency
+pts-core: Add superlu as a PTS External Dependency
+pts-core: Add libtool as a PTS External Dependency
+pts-core: Hash within the result file all of the contained tests
+pts-core: Support for anonymous usage reporting of test installation times to OpenBenchmarking.org
+phodevi: Fix memory RAM DIMM count detection in select configurations
+phodevi: Intel GPU string reporting improvement
+phodevi: Support for detecting multiple GPUs on Apple OS X
+phodevi: Support for detecting Gallium3D XA
+phodevi: Support for llvm-link on LLVM 3.2svn
 
 Phoronix Test Suite 4.0.0-Suldal
 23 July 2012
 
-- pts-core: Initial implementation of the PTS4 Local Results Viewer
-- pts-core: Initial command of ob-test-profile-analyze
-- pts-core: Fix for installing Ubuntu external dependencies in a headless mode
-- pts-core: Disable webui since it won't be ready until PTS 4.2
-- pts-core: External dependencies fix for SUSE Linux Enterprise Server 11
-- phodevi: Additional fall-back support when GPU driver doesn't expose all standard mode-setting modes
-- phodevi: Support for detecting and reading the version of the Cinnamon Desktop Environment
-- timed_screenshot: Overhaul of the timed screenshot PTS module
-- timed_screenshot: Compress PNG images
+pts-core: Initial implementation of the PTS4 Local Results Viewer
+pts-core: Initial command of ob-test-profile-analyze
+pts-core: Fix for installing Ubuntu external dependencies in a headless mode
+pts-core: Disable webui since it won't be ready until PTS 4.2
+pts-core: External dependencies fix for SUSE Linux Enterprise Server 11
+phodevi: Additional fall-back support when GPU driver doesn't expose all standard mode-setting modes
+phodevi: Support for detecting and reading the version of the Cinnamon Desktop Environment
+timed_screenshot: Overhaul of the timed screenshot PTS module
+timed_screenshot: Compress PNG images
 
 Phoronix Test Suite 4.0 Milestone 4
 29 June 2012
 
-- pts-core: Support download caches at /run/media/*/*/download-cache/
-- pts-core: Set SKIP_TEST_SUPPORT_CHECKS=1 environment variable for debugging purposes to run tests on unsupported platforms
-- pts_Graph: Only render as much room for pts_OverViewGraph as there are for what will be rendered (bar graph values)
-- phodevi: Ensure DVD drives don't get reported on BSD operating systems when requesting disk drives
-- phodevi: Improve graphics processor detection on Solaris 11 11/11 for non-NVIDIA GPUs
-- system_monitor: Add support for handling i915_energy monitor reading in microJoules for each test run
-- system_monitor: Place timer support for individual test runs within the module
+pts-core: Support download caches at /run/media/*/*/download-cache/
+pts-core: Set SKIP_TEST_SUPPORT_CHECKS=1 environment variable for debugging purposes to run tests on unsupported platforms
+pts_Graph: Only render as much room for pts_OverViewGraph as there are for what will be rendered (bar graph values)
+phodevi: Ensure DVD drives don't get reported on BSD operating systems when requesting disk drives
+phodevi: Improve graphics processor detection on Solaris 11 11/11 for non-NVIDIA GPUs
+system_monitor: Add support for handling i915_energy monitor reading in microJoules for each test run
+system_monitor: Place timer support for individual test runs within the module
 
 Phoronix Test Suite 4.0 Milestone 3
 22 May 2012
 
-- pts-core: Reformat user configuration input on test run
-- pts-core: Improve no-network support handling
-- pts-core: Streamline detailed-system-info collection
-- pts-core: Invalid command improvements
-- pts-core: Various alterations
-- pts-core: Make greater use of trigger_error
-- pts-core: Generate more relevant default result identifier strings based on subsystems under test on empty input
-- phodevi: Support to attempt to detect the file-system underneath ecryptfs
-- pts-core: Debian control script update
+pts-core: Reformat user configuration input on test run
+pts-core: Improve no-network support handling
+pts-core: Streamline detailed-system-info collection
+pts-core: Invalid command improvements
+pts-core: Various alterations
+pts-core: Make greater use of trigger_error
+pts-core: Generate more relevant default result identifier strings based on subsystems under test on empty input
+phodevi: Support to attempt to detect the file-system underneath ecryptfs
+pts-core: Debian control script update
 
 Phoronix Test Suite 4.0 Milestone 2
 29 April 2012
 
-- pts-core: Better recognize some open-source vs. closed-source graphics card/driver combination comparisons
-- pts-core: Fix potential crash in list-test-usage command
-- pts-core: Support for detecting FSGSBASE and RDRAND on Intel Ivy Bridge
-- pts-core: When detecting a CPU comparison, report the detailed CPU system table information
-- pts-core: When detecting a GPU/OpenGL comparison, report the detailed GPU system table information
-- pts-core: Fix PRESET_OPTIONS failing when specifying an option value rather than its index
-- pts-core: Archive vdpauinfo when available
-- phodevi: Detection support for Intel IOC (Intel Offline Compiler) OpenCL SDK
-- phodevi: Support for detecting GLAMOR (Intel OpenGL-accelerated X.Org Driver) acceleration
-- pts_Graph: Fix rounding issue on pts tables that are very wide
-- pts_Graph: Add SideViewTable
-- documentation: Add a basic text README to the root phoronix-test-suite directory
+pts-core: Better recognize some open-source vs. closed-source graphics card/driver combination comparisons
+pts-core: Fix potential crash in list-test-usage command
+pts-core: Support for detecting FSGSBASE and RDRAND on Intel Ivy Bridge
+pts-core: When detecting a CPU comparison, report the detailed CPU system table information
+pts-core: When detecting a GPU/OpenGL comparison, report the detailed GPU system table information
+pts-core: Fix PRESET_OPTIONS failing when specifying an option value rather than its index
+pts-core: Archive vdpauinfo when available
+phodevi: Detection support for Intel IOC (Intel Offline Compiler) OpenCL SDK
+phodevi: Support for detecting GLAMOR (Intel OpenGL-accelerated X.Org Driver) acceleration
+pts_Graph: Fix rounding issue on pts tables that are very wide
+pts_Graph: Add SideViewTable
+documentation: Add a basic text README to the root phoronix-test-suite directory
 
 Phoronix Test Suite 4.0 Milestone 1
 12 April 2012
 
-- pts-core: Add AutoSortRunQueue option that by default automatically sorts the test execution queue to run similar tests together
-- pts-core: Expose more verbose information within detailed-system-info command
-- pts-core: Remove recover-run command since with new PTS4 changes the finish-run command will provide the same functionality
-- pts-core: Track the CPU scaling governor configuration between test runs
-- pts-core: Report 2D acceleration information to system table report on graphics test runs
-- pts-core: Support for showing test notes on multi-way comparisons
-- pts-core: Fix compatibility with the new pts_Graph renderer back-end for result-file-to-pdf option
-- pts-core: Add p7zip as a possible external dependency
-- pts-core: When running OpenCL tests, report the number of available compute cores
-- pts_Graph: Begin work on PHP 5.4 "webui" option (currently far from incomplete/experimental)
-- pts_Graph: Tweak spacing on pts_Table
-- pts_Graph: Re-factor most text vertical offsets to not use dominant-baseline since Opera still doesn't support this SVG attribute properly
-- pts_Graph: Begin unifying the Phoronix Test Suite and OpenBenchmarking.org theme
-- pts_Graph: Fix for emitted GD poly-lines being always black
-- pts_Graph: Begin work on block diagram graph (currently incomplete/experimental)
-- phodevi: Remove support for the deprecated HAL Linux fall-backs
-- phodevi: LLVM compiler reporting build configuration enhancements
-- phodevi: Support for reporting multiple mmcblk* disk devices
-- phodevi: Report /sys/hypervisor/type as a system layer
-- phodevi: Fix LXDE version detection
-- phodevi: Support for reporting the Openbox version
-- phodevi: Read Nouveau clock current frequencies rather than maximum frequencies (performance_level)
-- phodevi: Initial implementation of the Phodevi VFS (Virtual File-System; Still A Work In Progress)
-- graphics_event_checker: Override NVIDIA SyncToVBlank so it's always disabled
-- system_monitor: Allow performance per Watt to be automatically calculated if PERFORMANCE_PER_WATT is set
-
-Phoronix Test Suite 3.8.0-Bygland
-19 March 2012
-
-- pts-core: Support longer titles on result files (64 characters expanded on OpenBenchmarking.org)
-- pts-core: Wine/Windows fixes for items reported by Stefan Dösinger
-- pts-core: Minor improvement for analyzing compiler option string differences
-- pts-core: Fix for result file analyzing sometimes not returning hardware changes
-- pts-core: Better handling for detecting Wine trackers / other trackers using a mix of short SHA1s
-- phodevi: Support for determining and appending release dates on GCC snapshots/pre-releases
-
-Phoronix Test Suite 3.8 Milestone 3
-13 March 2012
-
-- pts-core: Introduce a look-aside download cache that automatically checks other existing test installations for needed files
-- pts-core: Support a last-minute look-aside copy if a previous test in the install queue downloaded the same file
-- pts-core: Attempt to detect when any test ends prematurely with an invalid result
-- pts-core: Begin reporting test installation compiler attributes from test profiles to the JSON in new result file XML schema
-- pts-core: Remove timestamps from captured log files
-- pts-core: Support system JSON for each identifier in the result file XML schema
-- pts-core: Fix save name issue when dealing with dashes mixed with spaces in save name
-- pts-core: Pass compiler options to graphs for reporting
-- pts-core: Report compiler configuration (GCC's "Configured with") to test system table when it changes between runs in a result file
-- pts-core: Report disk scheduler / mount options to test system table when disk tests are contained in result file
-- pts_Graph: Add support for reporting test notes to graphs
-- pts_Graph: Restore links within tables for the new pts_Graph table SVG DOM IR
-- pts_Graph: Fix for key not appearing on overview graph
-- pts_Graph: Embed PTS and OpenBenchmarking.org logos locally within SVG
-- pts_Graph: Support for representing web links on images within the new SVG DOM IR
-- pts_Graph: Support for word-wrapping test notes with long lines
-- phodevi: Fix for Linux memory module count decoding in niche cases on multi-socket systems
-- phodevi: Support for detecting all file-system mount options on test install path
-- phodevi: Initial work towards Minix 3.2.0 operating system support
-- graphics_event_checker: Rewrite of the graphics event checker and enable by default on new installs
-
-Phoronix Test Suite 3.8 Milestone 2
-20 February 2012
-
-- pts-core: Allow up to 1MB of system log files to be attached and uploaded to OpenBenchmarking.org
-- pts-core: Fix test profile / test suite identifier base name parsing on version handling
-- pts-core: Add cairo-development as an external dependency for Cairo drawing library development
-- pts-core: Initial support for compiler masking / compiler option intercepting on test installation
-- pts-core: Support symlinked ~/.drirc to test install directories
-- pts-core: Support for Mac OS X 10.8 "Mountain Lion" Developer Preview 1
-- phodevi: Better recognition of Samsung disk drives
-- phodevi: NVIDIA CUDA (nvcc) detection and report it to system information compiler area
-- phodevi: Detection support for Microsoft Hyper-V virtualization server
-- phodevi: Detection support for Parallels Virtualization
-- phodevi: Better VMware DDX driver detection when using vmwgfx
-- phodevi: Support for detecting VirtualBox version using vboxguest kernel module information
-- phodevi: Support for detecting Portland Group (PGI) Workstation compilers
-- phodevi: Improved detection of Hitachi disk drives
-- phodevi: Support for Mac OS X 10.8 "Mountain Lion" Developer Preview 1
-- pts_Graph: Rendering corrections of SVG DOM IR
-
-Phoronix Test Suite 3.8 Milestone 1
-17 January 2012
-
-- pts-core: When time-zone is not set in PHP, attempt to query it from the host system
-- pts-core: Fix for handling user variable swaps on the result identifier
-- pts-core: Major enhancements to MATISK testing module
-- pts-core: Fix for some hardware/software comparisons being turned into line graphs
-- pts-core: Dump some common / important environmental variables to system log area
-- pts-core: Migrate to a JSON-based graph configuration file at ~/.phoronix-test-suite/graph-config.json
-- pts_Graph: New version of pts_Graph that uses SVG DOM IR directly
-- pts-core: Allow pts_svg_dom to be converted to JPEG/PNG using new library as bilde_renderer replacement
-- phodevi: Add some fall-back graphics detection support of Texas Instruments OMAP / Samsung EXYNOS
-- phodevi: Fall-back graphics detection support for the ARM Mali
-- phodevi: NVIDIA TEGRA hardware detection improvements (as tested on a TEGRA-2 CompuLab TrimSlice)
-- phodevi: Further fall-back support for further detecting EXT3/EXT4 file-system from user-space
-- phodevi: Improve Arch Linux OS detection on at least ARM platforms
-- phodevi: Screen resolution fall-back of reading frame-buffer virtual size
-- phodevi: Improved Intel chipset detection parsing from Xorg.0.log when /sys/kernel/debug/ isn't readable
-- installer: Installer update
-
-Phoronix Test Suite 3.6.1-Arendal
-23 December 2011
-
-- pts-core: Various minor fixes
-- pts-core: Support launching the PTS Results Viewer in IceWeasel
-- phodevi: Support new Intel GPU name deciphering
-- phodevi: BSD support for reading motherboard information from kenv
-- phodevi: Support for fbdev X.Org DDX driver detection on fall-back after vesa driver
-- phodevi: OLPC Sugar Desktop Environment detection
-- phodevi: OLPC Fedora external dependencies support
-
-Phoronix Test Suite 3.6.0-Arendal
-13 December 2011
-
-- pts-core: Add "Possible Suggestions" to the invalid command output on install/run/benchmark commands based upon soundex
-- pts-core: Add SKIP_EXTERNAL_DEPENDENCIES support as more versatile option to NO_EXTERNAL_DEPENDENCIES
-- pts-core: Support for detecting PHP at /usr/pkg/libexec/cgi-bin/php
-- pts-core: Support for ClearOS Core Server
-- pts-core: Minor enhancements to DragonflyBSD 2.10 support
-- pts-core: Fix for error crash on virtual suite execution when selecting all tests to run
-- phodevi: CPU, disk, network detection improvements for FreeBSD/PC-BSD
-- phodevi: Minor support enhancements to OpenBSD 5.0 amd64
-
-Phoronix Test Suite 3.6 Milestone 4
-8 December 2011
-
-- pts-core: Clean-up some of the test run output in the concise display mode
-- pts-core: When uploading a test profile to OpenBenchmarking.org, refresh the repository indexes afterwards
-- pts-core: When uploading a test suite to OpenBenchmarking.org, refresh the repository indexes afterwards
-- pts-core: Issue a notice when running an out-of-date version of a test profile
-- pts-core: When cloning results from OpenBenchmarking.org, also fetch the system logs from OpenBenchmarking.org
-- pts-core: Add openbenchmarking-changes command for seeing recently changed test profiles from OpenBenchmarking.org
-- phodevi: Fix for latest Catalyst Linux driver reporting odd OpenGL version (GL_VERSION) string
-- phodevi: Improve Debian non-Linux OS (kFreeBSD/Hurd) detection
-- phodevi: Allow lspci information to be used on Debian GNU/kFreeBSD
-- phodevi: Fallback for trying to read the Radeon DRM video memory from dmesg
-- phodevi: Further fallbacks for DRM video RAM size detection
-- phodevi: Add initial GPU voltage sensor
-- phodevi: Ensure no available modes are repeated
-- pts_Graph: If all result lines are flat (i.e. no change), just convert it to a bar graph
-
-Phoronix Test Suite 3.6 Milestone 3
-1 December 2011
-
-- pts-core: On large result files, auto-remove redundant words present in all identifiers
-- pts-core: When a command fails, allow helpful user information to be provided on a per-command basis
-- pts-core: More efficient trimming of redundant spaces
-- pts-core: Fix for identifiers being passed to graphs being corrupted when passing them multiple times
-- phodevi: Fix Mesa OpenGL detection on Solaris 11 when the NVIDIA binary blob is installed but using Mesa
-- phodevi: Don't report 'blkdev' on Solaris 11 as a disk drive
-- phodevi: Change GPU caching to allow overclocked speeds to show without rebooting
-- phodevi: Better support xf86-video-ati DDX driver detection in X Server fall-back mode
-- system_monitor: Fix for running same test multiple times when system_moitor module is loaded
-- pts_Graph: Improve key rendering
-
-Phoronix Test Suite 3.6 Milestone 2
-7 November 2011
-
-- pts-core: When the PHP version in use changes, re-run the recommended/required PHP checks
-- pts-core: Improve short SHA1 detection for results tracker
-- pts-core: Report notice when no OpenBenchmarking.org repository index is present and fails to fetch
-- pts-core: Improve Internet connectivity detection check
-- pts-core: When reporting a command error, report the most appropriate command name string
-- pts-core: Begin work on custom error handler for generated errors in code itself
-- pts-core: Add initial support for internal pts-core warning/notice/error handler
-- pts-core: Initialize the network support earlier in the client initialization process
-- pts-core: When running a test and saving results, show recently saved test results
-- phodevi: When QEMU virtualization is detected, try to report QEMU version to system layer
-- phodevi: Support for reporting the XOP, FMA3, and FMA4 instruction sets
-- phodevi: Begin merging is_genuine() support from Openbenchmarking.org into respective Phodevi components
-- phodevi: Improve Catalyst OpenGL driver detection with soon-to-be-released versions
-- phodevi: Improve GNOME version detection when using GNOME3 fall-back mode
-- pts_Graph: Allow normalized numbers to appear in the result file table
-- pts_Graph: When too many lines are being plotted, auto-convert to scalar
-- bilde_renderer: Improve automated color selection/shifting
-
-Phoronix Test Suite 3.6 Milestone 1
-20 October 2011
-
-- pts-core: Code clean-ups
-- pts-core: Allow results to be rendered in reverse order
-- pts-core: Add detailed-system-info command for reporting more system attributes
-- pts-core: Fix regression of NO_EXTERNAL_DEPENDENCIES and NO_PHODEVI_CACHE not working
-- pts-core: Add dump-openbenchmarking-indexes option for debugging
-- pts-core: Fix for extract-from-result-file not correctly formatting the new saved results name
-- phodevi: No longer report if CPU power savings (CnQ, EIST, etc) is active since it's now widespread across all desktop hardware
-- phodevi: Improve detection of low RAM capacities (1GB)
-- phodevi: Add support for detecting greater CPU features
-- phodevi: Improve system memory detection on Solaris/Illumos operating systems
-- phodevi: Improve disk device detection on Solaris/Illumos operating systems
-- phodevi: Ensure no words in motherboard identifier string are repeated
-- phodevi: Don't print lspci errors
-- phodevi: Few string reporting tweaks found from AMD Bulldozer FX system
-- phodevi: Virtualization detection support for Xen DomU guests
-- phodevi: Detect VirtualBox version from guest VM
-- phodevi: Expose a cpu.power sensor that provides monitoring of CPU power consumption (new feature to AMD 15h Bulldozer CPUs)
-- phodevi: Convert CPU model strings like 'Intel Core i7 M 620' to 'Intel Core i7 620M' to better reflect Intel product marketing names
-- phodevi: Basic ICC detection
-- phodevi: Improvements to LLVM/Clang version detection and code revision reporting
-- pts_Graph: Allow disconnected lines of results on line graphs
-- pts_Graph: Plot entire lines of data on line graphs when there are no identifiers
-- pts_Graph: Fix for the averages on line graphs not appearing
-- toggle_screensaver: Support for toggling the GNOME3 AC display settings
-
-Phoronix Test Suite 3.4.0-Lillesand
-8 September 2011
-
-- pts-core: Download the SHA1 package hash for test profiles/suites when fetching the test itself rather than using repo index
-- pts-core: Don't produce an error when open_basedir is in use by the PHP binary running the Phoronix Test Suite
-- pts-core: Fix compacting of large multi-way comparisons for compacted systems table view
-- system_monitor: Don't log negative values
-- pts_Graph: Fix key length detection for the heat-map bar graph
-
-Phoronix Test Suite 3.4 Milestone 3
-31 August 2011
-
-- pts-core: Support pts_compression library using the old ZIP API when ZipArchive is not present
-- pts-core: Support calling external unzip command if ZIP / ZipArchive API calls fail
-- pts-core: Add upload-test-profile command to upload user test profiles to their OpenBenchmarking.org account
-- pts-core: Add upload-test-suite command to upload user test suites to their OpenBenchmarking.org account
-- pts-core: When running a newer version of the Phoronix Test Suite then last time, update the OpenBenchmarking index cache
-- pts-core: Add openbenchmarking-repositories command to list basic information about linked OpenBenchmarking.org repos
-- pts-core: Support for reading the estimated run-time of test profiles from OpenBenchmarking.org repo indexes
-- pts-core: Support more of the non-SVG graph types within the PTS Results Viewer
-- pts-core: Report hardware/software information before running any test
-- phodevi: Improve CPU core detection; fixes detection for some ARM devices like HP TouchPad
-- phodevi: Improve disk storage detection for mobile devices
-- phodevi: Use thermal_zone0 as system temperature if it's not claimed by anything else
-- phodevi: Improve memory capacity detection
-- toggle-screensaver: Support toggling the GNOME 3.x screensaver using GSettings
-- bilde_renderer: Improve detection of web browsers that support SVG and those that need to fall back to PNG
-- bilde_renderer: Rewrite the fake ->draw_dashed_line() function to be more efficient and accurate
-- bilde_renderer: Improve the PNG back-end to render more closely to SVG back-end
-- pts_Graph: Add new system table to use on featured comparisons
-- pts_Graph: Introduce new horizontal box plot graph for line graphs where there's too many lines
-
-Phoronix Test Suite 3.4 Milestone 2
-15 August 2011
-
-- pts-core: Result parser fix that caused the parser to properly detect the results in some scenarios
-- pts-core: Dynamically build all static lists into a new PT2SO temp file
-- pts-core: Various code cleaning
-- phodevi: Various code cleaning
-- phodevi: Support finding Linux PCI audio devices
-- phodevi: Report network adapters to system hardware area
-- phodevi: Report virtualization platform to system layer field
-- phodevi: Improved file-system detection for niche file-systems
-- documentation: Take greater advantage of the information that can now be automatically pulled from pts-core
-
-Phoronix Test Suite 3.4 Milestone 1
-19 July 2011
-
-- pts-core: Various code clean-ups
-- pts-core: Add numeric check to the results parser on bar graphs
-- pts-core: Report valid module user commands when querying a module via module-info
-- pts-core: Fix SKIP_TESTS handling
-- pts_Graph: Various tweaks
-- pts_Graph: Introduce radar / spider overview graph
-- matisk: Commit initial module
-- documentation: Report valid module user commands to the HTML / PDF documentation
-- phodevi: Initial support for GNU Hurd operating system (tested on latest Debian GNU Hurd Wheezy snapshot)
-
-Phoronix Test Suite 3.2.1-Grimstad
-29 June 2011
-
-- pts-core: Fix regression in evaluating browser opening
-- pts-core: Fix browser launching on Microsoft Windows platforms
-- phodevi: USB Watts Up Power Meter support
-- system_monitor: Report sensors to be logged prior to test execution
-
-Phoronix Test Suite 3.2-Grimstad
-15 June 2011
-
-- pts-core: Moscow fixes
-- pts-core: Relax the requirements for appended short SHA1 identifiers in determining trackers (request by Wine/CodeWeavers)
-- pts-core: Add warning messages when test profile/suite data is empty due to no OpenBenchmarking.org communication
-- phodevi: PathCC / PathScale Compiler Suite detection
-- phodevi: For audio adapter try to find motherboard audio adapter or sound card rather than GPU integrated audio
-- phoromatic: Restore compatibility with current (old) Phoromatic.com implementation
-
-Phoronix Test Suite 3.2 Milestone 4
-1 June 2011
-
-- pts-core: Don't confuse changed hardware as being part of a results tracker
-- pts-core: Interactive mode improvements for Moscow
-- pts-core: Allow unordered multi-way comparisons
-- pts-core: Detect short SHA1 hashes at the end of the identifier string as being part of a results tracker
-- pts-core: Rework pts_bypass class into pts_flags
-- pts-core: Rename SKIP_EXTERNAL_DEPENDENCIES_CHECK to NO_EXTERNAL_DEPENDENCIES
-- pts-core: Add AlwaysUploadResultsToOpenBenchmarking option to user-config.xml
-- pts-core: Restore support for just passing the test profile base name to SKIP_TESTS environmental variable
-- pts-core: Report average value of line graphs to terminal for concise display mode
-- phodevi: Intel GMCH thermal monitoring sensor
-- phodevi: Support monitoring the GPU power consumption on Intel hardware using the gpu.power sensor
-- phodevi: Support determing Intel GPU load via number of commands processed per second
-- phodevi: Support for unity-2d desktop version detection (normal Unity has already been supported)
-- phodevi: Support for gnome-shell desktop version detection
-- documentation: Move out the auto-generated PDF documentation (it will be on web server) and just leave in the HTML documentation in tree at the request of Debian packager
-
-Phoronix Test Suite 3.2 Milestone 3
-18 May 2011
-
-- pts-core: Rework test install path handling
-- pts-core: Finish eliminating XML-based definitions
-- pts-core: Increase PHP compatibility
-- pts-core: Facebook HipHop should now fully work with the PTS client
-- pts-core: Support real-time monitoring the Nouveau GPU frequency via the gpu.freq call as exposed by system_monitor module
-- pts-core: Begin improving the auto-generated result file descriptions
-- phodevi: Internal clean-ups
-- phodevi: Recognition support for GPFS file-system
-- phodevi: Intel SNB frequency reporting
-- documentation: Begin auto-generation of HTML documentation in a single file that's the same content as the PDF user guide
-
-Phoronix Test Suite 3.2 Milestone 2
-28 April 2011
-
-- pts-core: Interactive mode improvements
-- pts-core: Add TEST_RESULTS_DESCRIPTION environmental variable support
-- pts-core: Add RemoveTestInstallOnCompletion to user-config.xml options
-- bilde_renderer: Fix for assigning the same color from a color name-space cache multiple times
-- phodevi: Add support for optionally reading motherboard/system serial number for Moscow
-- phodevi: Use PHODEVI_SMART_CACHE on display server/driver
-
-Phoronix Test Suite 3.2 Milestone 1
-20 April 2011
-
-- pts-core: Add support for EXTERNAL_PHODEVI_CACHE to load an external Phodevi cache (e.g. within Wine)
-- pts-core: Add support for reporting Wine version to the software system layer
-- pts-core: Fix for PhoroScript interpreter not running some test profiles under Wine
-- pts-core: OpenSUSE external dependencies updates
-- pts-core: Drop support for importing module-settings from pre-PTS-2.6 installations
-- pts-core: Support OS/distro-specific user-config XML templates
-- pts-core: Add IndexCacheTTL OpenBenchmarking.org option for controlling how many days before refreshing index caches
-- pts-core: Fix for using TEST_RESULTS_NAME environmental variable
-- pts-core: Consider Git SHA1 hash tags as being part of a tracker, just not dates
-- pts-core: Fix Debian package generation
-- pts-core: A text-driven interactive mode
-- pts-core: Support caching OpenBenchmarking.org files in /var/cache/phoronix-test-suite/openbenchmarking.org/
-- pts-core: Add download-test-files command back to the Phoronix Test Suite
-- pts-core: Fix install-dependencies command when not being run as root
-- pts-core: When network connection not available / disabled, only list test/suites where OpenBenchmarking.org cache exists
-- phodevi: Don't confuse GCC with LLVM when sym-linking one to the other
-- phodevi: Better detection of Nouveau GPU thermal sensors
-- phodevi: Support monitoring the CPU temperature from the k10temp hwmon module
-- phodevi: Fix system_profiler parsing on Mac OS X 10.7 Lion ("Of" references changed to "of" in Lion)
-
-Phoronix Test Suite 3.0.1
-15 March 2011
-
-- pts-core: Restore make-download-cache option and port to PTS3 architecture
-- pts-core: Avoid PHP warning when cache share restoration fails
-- pts-core: Ensure all rows in system tables are condensed where possible
-- pts-core: Don't break dates into multi-way comparisons
-- pts-core: Fix for specifying absolute repository/[suite|test] such as for local tests
-- pts_Graph: Support multiple identifier lines (delimited by ' - ') on multi-way comparisons with horizontal bar graph
-- phodevi: Ensure Apple is reported as the manufacturer on Mac computers
-
-Phoronix Test Suite 3.0-Iveland
-26 February 2011
-
-- pts-core: When creating a lock, verify the directory is writable
-- pts-core: When running a result file, don't overwrite the description
-- pts-core: External dependencies support for Scientific Linux
-- pts-core: Fix for handling PRESET_OPTIONS
-- documentation: Final update
-
-Phoronix Test Suite 3.0 Release Candidate 2
-23 February 2011
-
-- pts-core: Drop dead code of the integrated external results hook since it's still in the result_notifier module with Iveland
-- pts-core: Various small fixes and tweaks
-- result_notifier: Last minute improvements
-
-Phoronix Test Suite 3.0 Release Candidate 1
-14 February 2011
-
-- pts-core: Read support for OpenBenchmarking.org user account client settings
-- pts-core: Really fix build-suite this time for writing correct suite-definition.xml files
-- pts-core: Support printing OpenBenchmarking.org error messages when result cloning fails
-- pts-core: Don't require space after colon on multi-way comparisons
-- pts-core: Use new code path for requesting and updating GSID from OpenBenchmarking.org
-- pts-core: Rename openbenchmarking-setup command to openbenchmarking-login
-- pts-core: Fix show-results command not actually showing the results in the PTS Results Viewer
-- pts-core: Check for required PHP functions/extensions earlier on in start-up process
-- pts-core: Allow the Phoronix Test Suite to run within Wine
-- pts-core: Fix normalizing result values when the result proportion is LIB
-- pts-core: Be more liberal in evaluating multi-way tracking to accomodate extra characters
-- pts-core: More efficient merging of test result objects in result file
-- pts-core: Minor performance optimizations along graph rendering paths
-- system_monitor: Fix API breakage in system monitor module
-- system_monitor: Better handling of used arguments collection
-- result_notifier: Add Intel result_notifier module
-- pts_Graph: Begin work on scatter plot graphing support with optional trend/linear regression line
-- pts_Graph: Add pts_HeatMapBarGraph type
-- pts_Graph: Increase width on tables when the title header is longer than the width of the table columns
-- bilde_renderer: Begin work on supporting gradients for the SVG renderer
-- bilde_renderer: Initial shading, color gradient support
-- bilde_renderer: Initial HSL color support
-- phodevi: Support for detecting Ubuntu's Unity desktop
-- phodevi: Fallback to reading BIOS information when Intel development motherboards don't report any motherboard information
-
-Phoronix Test Suite 3.0 Beta 4
-2 February 2011
-
-- pts-core: Only prompt to upload system logs if there are logs available
-- pts-core: Revert to older pts_strings::trim_spaces as the new method causes bad issues in some magical conditions
-- pts-core: Fix build-suite writing invalid suite definitions
-- pts-core: Fix ~/.phoronix-test-suite/download-cache/ not being recognized as a download cache
-
-Phoronix Test Suite 3.0 Beta 3
-27 January 2011
-
-- pts-core: Support for uploading system logs with test results to OpenBenchmarking.org
-- pts-core: Add user-config.xml option for always attaching system logs to test results on uploading to OpenBenchmarking.org
-- pts-core: Prompt user whether to attach system logs when uploading results to OpenBenchmarking.org
-- pts-core: When anonymous hardware reporting is enabled, additionally report select information from the PCI bus
-- pts-core: When anonymous hardware reporting is enabled, additionally report select information from the USB bus
-- phodevi: File-system detection support for KQ Infotech's ZFS on Linux
-- phodevi: Open64 compiler detection support
-- phodevi: TCC / Tiny C Compiler detection support
-- phodevi: PCC / Portable C Compiler detection support
-
-Phoronix Test Suite 3.0 Beta 2
-19 January 2011
-
-- pts-core: Upgrade the .openbenchmarking file support, allows multiple tests/results to be compared
-- pts-core: Rewrite result file CSV output
-- pts-core: Add openbenchmarking-refresh command
-- pts-core: Don't keep increasing the run count when the test is failing more than half the time
-- pts-core: Fix identifier case issue from OpenBenchmarking.org
-- pts-core: Allow the result buffer to be normalized relative to the other contained results
-- pts-core: Don't use OpenSSL HTTPS on non-Linux systems since it's breaking at least under OpenIndiana
-- pts-core: Support @ sign in test result identifiers
-- pts-core: Support for logging into OpenBenchmarking.org accounts via openbenchmarking-setup
-- pts-core: Changes to the user-config.xml specification
-- pts-core: OpenSUSE external dependencies update against openSUSE 11.4
-- phodevi: Don't report disks that are removable
-- nye_Xml: Support for reading the test-definition.xml directly from an OpenBenchmarking.org test profile ZIP package
-- bilde_renderer: Support stuffing grouped array point pairs to draw_polygon() rather than linearly listing them
-- pts_Graph: Add pts_FilledLineGraph object for providing a filled line graph with combined values
-
-Phoronix Test Suite 3.0 Beta 1
-10 January 2011
-
-- pts-core: Fixes for using the local test profile/suite repository
-- pts-core: More minor performance optimizations along common OpenBenchmarking.org code paths
-- pts-core: External dependencies support for Amazon Linux AMI on EC2 Cloud Service
-- pts-core: Fix crashes when using build-suite and result-file-to-suite commands
-- pts-core: Fix for list-installed-tests command not listing any installed tests
-- pts_Graph: Underlying fixes for OpenBenchmarking.org
-- pts_Graph: Properly align background dashed lines
-- pts_Graph: Fix divide by zero error on rare cases of inserting zeros to maintain ordering index
-- phodevi: Improve NVIDIA GPU model detection when missing glxinfo
-- phodevi: Append Gallium3D version number to OpenGL string
-- phodevi: Ensure more accurate GPU name reporting than codenames when using Gallum3D drivers
-- phodevi: More robust motherboard detection on different sysfs nodes
-- phodevi: BSD hardware detection improvements (tested on DragonflyBSD 2.9-DEVELOPMENT)
-- phodevi: Detection support for other file-systems via their super blocks (OpenAFS, CIFS, SSHFS, etc)
-- phodevi: Support for reading NVIDIA core/memory clock speeds from the Nouveau driver when using latest DRM with performance levels
-- phodevi: Support for GPU core thermal monitoring when using the recent Nouveau DRM driver
-- phodevi: Support for reading VRAM capacity with TTM drivers when the kernel sysfs debug interface is enabled
-
-Phoronix Test Suite 3.0 Alpha 5
-27 December 2010
-
-- pts-core: OpenBenchmarking.org result upload fixes under select conditions
-- pts-core: Add support for cloning/grabbing test results from OpenBenchmarking.org
-- pts-core: Fix uninitialized pts_result_file_writer on using finish-run command
-- pts-core: Change more Phoronix Global references to OpenBenchmarking.org
-- pts-core: OpenBenchmarking.org launcher support by passing the .openbenchmarking file as the argument
-- pts-core: OpenBenchmarking.org MIME support
-- pts-core: Support specifying multple OpenBenchmarking.org IDs to the clone-result command and the results will then be merged
-- pts-core: Improve error output when a command doesn't have the necessary arguments rather than using pre-defined user error strings
-- pts-core: Don't force loading uninstalled tests from a virtual suite into the pts_test_run_manager
-- phodevi: Support appending the Catalyst driver version when the fglrx display driver is loaded
-- pts_Graph: With result tables, highlight not only the best values, but the worst values too
-- pts_Graph: Support headers/titles on pts_Table objects
-- pts_Graph: Support hot-switching between graphs and tables
-- bilde_renderer: Blacklist unsupported SVG browsers rather than whitelist supported ones, should be saner this way
-- bilde_renderer: Interactive API clean-up
-
-Phoronix Test Suite 3.0 Alpha 4
-14 December 2010
-
-- pts-core: Drop support for reference-comparison as its superseded by OpenBenchmarking.org implementation
-- pts-core: TEST PROFILE XML SPEC CHANGE: EstimatedLength -> EstimatedTimePerRun
-- pts-core: Further work on OpenBenchmarking.org-supported validate-test-profile command
-- pts-core: Support new test identifier syntax from OpenBenchmarking.org
-- pts-core: Support for uploading test results to OpenBenchmarking.org
-- pts-core: Add a local repository for test profiles and test suites that aren't on OpenBenchmarking.org
-- pts-core: Restore support for virtual suites using a new design that is supportive of OpenBenchmarking.org architecture
-- pts-core: Add list-available-virtual-suites command
-- pts-core: Begin revamping the Phoronix Test Suite documentation, add PDF documentation
-- pts-core: Improve validation of tests to run in queue, do so earlier in process
-- pts-core: Auto-generate the man page from the new documentation system
-- pts-core: Auto-generate the help command from the new documentation system
-- phodevi: Improved hardware/software string reporting
-- phodevi: More concise GPU string reporting
-- pts: Move test profiles out of the phoronix-test-suite client and into the OpenBenchmarking.org cloud
-- pts: Move test suites out of the phoronix-test-suite client and into the OpenBenchmarking.org cloud
-
-Phoronix Test Suite 3.0 Alpha 3
-2 December 2010
-
-- pts-core: Fix test suites failing to run where it'd get caught in an infinite loop
-- pts-core: Fix for suite support on Iveland
-- pts-core: Add ReferenceID tag to result-file specification
-- pts-core: Support for remote download caches on test installation without relying upon pts-install.xml index
-- pts-core: Add SaveTestLogs to user-config.xml for now toggling whether to save the test logs
-- pts-core: Add an XML Schema XSD covering the result-file
-- pts-core: Add an XML Schema XSD covering the test-suite
-- pts-core: Add an XML Schema XSD covering the test-profile-downloads
-- pts-core: Add an XML Schema XSD covering the results-parser
-- pts-core: Add an XML Schema XSD covering the test-profile
-- pts-core: On client program startup, report any missing PHP extensions that are required or recommended
-- pts-core: TEST PROFILE XML SPEC CHANGE: TestInformation/Version -> TestInformation/AppVersion
-- pts-core: TEST PROFILE/SUITE XML SPEC CHANGE: Split RequiresCoreVersion tag into RequiresCoreVersionMin and RequiresCoreVersionMax
-- pts-core: Add InternalTags to XML test profile schema
-- pts-core: Drop support for ~/pts-test-note as the capabilities are now found within InternalTags using a cleaner method
-- pts-core: Better the support for Illumos OpenIndiana b147
-- pts-core: Support still saving test results when using the system_monitor module even when all tests being run are of NO_RESULT type
-- phodevi: Few Mac OS X support improvements
-- phodevi: Support NVIDIA GPU core usage monitoring via nvidia-smi
-- phoromatic: HTTPS connection support, install the Phoromatic.com SSL certificate
-- pts: Update apache test profile against upstream Apache 2.2.17
-- pts: Update build-apache test profile against upstream Apache 2.2.17
-- pts: Update build-mplayer test profile against upstream MPlayer 1.0rc3
-- pts: Update compress-7zip test profile against upstream p7zip 9.13
-- pts: Update ffmpeg test profile against upstream FFmpeg 0.6.1
-- pts: Update graphics-magick test profile against GraphicsMagick 1.3.12
-- pts: Update pgbench test profile against PostgreSQL 9.0.1
-- pts: Update sqlite test profile against SQLite 3.7.3
-- pts: Update x264 test profile against upstream x264 2010-11-22
-- pts: Update ramspeed test profile against RAMspeed SMP (RAMSMP) 3.5.0
-- pts: Add the CLOMP OpenMP LLNL benchmark
-- pts: First pass at validating all test profiles
-- pts: Verify each upstream test profile's compatibility on Solaris, BSD, and MacOSX
-
-Phoronix Test Suite 3.0 Alpha 2
-18 November 2010
-
-- pts-core: THE RESULT FILE XML SCHEMA HAS CHANGED. PTS-CORE SHOULD AUTOMATICALLY BE BACKWARDS-COMPATIBLE IN READING OLD XML FILES, BUT IF YOU EXTERNALLY ACCESS THIS XML DATA IT WILL NEED TO BE UPDATED.
-- pts-core: Add the OpenBenchmarking.org HTTPS certificate
-- pts-core: Replace tandem_XmlReader with nye_XmlReader as a new PTS DOM-based XML parser
-- pts-core: Replace tandem_XmlWriter with nye_XmlWriter as a new PTS DOM-based XML parser
-- pts-core: Fix external dependency installation on Debian proper
-- pts-core: Make the systems table actually render nicely
-- pts-core: Support for OpenIndiana b147
-- bilde_renderer: Begin work on a new DOM-based back-end renderer that will eventually form the new rendering interface; currently it's producing suitable SVG
-- pts: Add initial support for the Angstrom (OpenEmbedded) Linux distribution with external dependencies
-- pts_Graph: Add SVGZ renderer back-end that Gzip compresses the SVG renderer output
-- pts_Graph: Various improvements
-
-Phoronix Test Suite 3.0 Alpha 1
-9 November 2010
-
-- pts-core: Split part of pts_test_profile into pts_test_profile_parser as the lighter-weight profile parsing parent for use where applicable
-- pts-core: Drop option support for required_function_sets as everything is now modularized to objects
-- pts-core: Rename AllowGlobalUploads tag in the test profile specification to AllowResultsSharing
-- pts-core: Drop P_RESULTS_SUITE_TYPE, P_RESULTS_SUITE_NAME, P_RESULTS_SUITE_VERSION from the results specification
-- pts-core: Fix external dependency installation on OpenSUSE when using Zypper
-- pts-core: Eliminate "base-test-[profiles,resources]" but for PTS3 they need to all be integrated to a single location
-- pts-core: No longer support test profile scripts as PHP files but require them to be SH files
-- pts-core: Rename parse-results.xml to results-definition.xml
-- pts-core: More aggressive checks in determining whether to dynamically increase the run count for statistical accuracy
-- pts-core: Allow the sys.time monitor command to work on PHP installations where PCNTL is not supported or available
-- pts-core: When installing test dependencies, double check the depdendencies were installed otherwise prompt the user what to do
-- pts-core: Temporarily drop the GTK2 GUI until it's been rewritten to be compliant with the PTS3 architecture
-- pts-core: Drop PTS assignments as everything is now worked into object properties or otherwise factored out
-- pts-core: THE FILE STRUCTURE OF ALL TEST PROFILES HAS NOW CHANGED
-- pts-core: Drop make-download-cache command since it will end up not being needed with PTS3
-- pts-core: Add external hooks to the PTS3 user-config.xml for PreTestProcess, InterimTestProcess, and PostTestProcess
-- pts_Graph: Introduce Iveland horizontal bar graphs
-- pts_Graph: Default to using the SVG bilde_renderer back-end when no other renderer is specified, affects new setups
-- install-sh: Installer updates
-- pts: Restructure test profiles
-- pts: Add nginx test profile as a new NGINX web-server benchmark similar to the apache test profile
+pts-core: Add AutoSortRunQueue option that by default automatically sorts the test execution queue to run similar tests together
+pts-core: Expose more verbose information within detailed-system-info command
+pts-core: Remove recover-run command since with new PTS4 changes the finish-run command will provide the same functionality
+pts-core: Track the CPU scaling governor configuration between test runs
+pts-core: Report 2D acceleration information to system table report on graphics test runs
+pts-core: Support for showing test notes on multi-way comparisons
+pts-core: Fix compatibility with the new pts_Graph renderer back-end for result-file-to-pdf option
+pts-core: Add p7zip as a possible external dependency
+pts-core: When running OpenCL tests, report the number of available compute cores
+pts_Graph: Begin work on PHP 5.4 "webui" option (currently far from incomplete/experimental)
+pts_Graph: Tweak spacing on pts_Table
+pts_Graph: Re-factor most text vertical offsets to not use dominant-baseline since Opera still doesn't support this SVG attribute properly
+pts_Graph: Begin unifying the Phoronix Test Suite and OpenBenchmarking.org theme
+pts_Graph: Fix for emitted GD poly-lines being always black
+pts_Graph: Begin work on block diagram graph (currently incomplete/experimental)
+phodevi: Remove support for the deprecated HAL Linux fall-backs
+phodevi: LLVM compiler reporting build configuration enhancements
+phodevi: Support for reporting multiple mmcblk* disk devices
+phodevi: Report /sys/hypervisor/type as a system layer
+phodevi: Fix LXDE version detection
+phodevi: Support for reporting the Openbox version
+phodevi: Read Nouveau clock current frequencies rather than maximum frequencies (performance_level)
+phodevi: Initial implementation of the Phodevi VFS (Virtual File-System; Still A Work In Progress)
+graphics_event_checker: Override NVIDIA SyncToVBlank so it's always disabled
+system_monitor: Allow performance per Watt to be automatically calculated if PERFORMANCE_PER_WATT is set
 
 ###
 
