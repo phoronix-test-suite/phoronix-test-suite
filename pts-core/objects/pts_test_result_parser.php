@@ -216,13 +216,9 @@ class pts_test_result_parser
 				break;
 			case 'PASS_FAIL':
 			case 'MULTI_PASS_FAIL':
-				$test_run_request->active->active_result = self::parse_result_process($test_run_request, $test_log_file, $pts_test_arguments, $extra_arguments);
-				break;
 			case 'BAR_GRAPH':
 			default:
-				$test_run_request->active->active_result = self::parse_result_process($test_run_request, $test_log_file, $pts_test_arguments, $extra_arguments);
-				$test_run_request->active->active_min_result = self::parse_result_process($test_run_request, $test_log_file, $pts_test_arguments, $extra_arguments, 'MIN');
-				$test_run_request->active->active_max_result = self::parse_result_process($test_run_request, $test_log_file, $pts_test_arguments, $extra_arguments, 'MAX');
+				self::parse_result_process($test_run_request, $test_log_file, $pts_test_arguments, $extra_arguments);
 				break;
 		}
 	}
@@ -412,6 +408,14 @@ class pts_test_result_parser
 				if($test_result != false)
 				{
 					// Result found
+					$test_run_request->active->active_result = $test_result;
+					if($is_numeric_check)
+					{
+						// Check if this test reports a min result value
+						$test_run_request->active->active_min_result = self::parse_result_process_entry($test_run_request, $log_file, $pts_test_arguments, $extra_arguments, 'MIN', $entry, $is_pass_fail_test, $is_numeric_check);
+						// Check if this test reports a max result value
+						$test_run_request->active->active_max_result = self::parse_result_process_entry($test_run_request, $log_file, $pts_test_arguments, $extra_arguments, 'MAX', $entry, $is_pass_fail_test, $is_numeric_check);
+					}
 					break;
 				}
 			}
