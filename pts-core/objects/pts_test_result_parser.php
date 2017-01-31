@@ -414,9 +414,9 @@ class pts_test_result_parser
 					if($is_numeric_check)
 					{
 						// Check if this test reports a min result value
-						$test_run_request->active->active_min_result = self::parse_result_process_entry($test_run_request, $log_file, $pts_test_arguments, $extra_arguments, 'MIN', $entry, $is_pass_fail_test, $is_numeric_check);
+						$test_run_request->active->active_min_result = self::parse_result_process_entry($test_run_request, $log_file, $pts_test_arguments, $extra_arguments, 'MIN_', $entry, $is_pass_fail_test, $is_numeric_check);
 						// Check if this test reports a max result value
-						$test_run_request->active->active_max_result = self::parse_result_process_entry($test_run_request, $log_file, $pts_test_arguments, $extra_arguments, 'MAX', $entry, $is_pass_fail_test, $is_numeric_check);
+						$test_run_request->active->active_max_result = self::parse_result_process_entry($test_run_request, $log_file, $pts_test_arguments, $extra_arguments, 'MAX_', $entry, $is_pass_fail_test, $is_numeric_check);
 					}
 					break;
 				}
@@ -434,6 +434,7 @@ class pts_test_result_parser
 		if(!empty($match_test_arguments) && strpos($pts_test_arguments, $match_test_arguments) === false)
 		{
 			// This is not the ResultsParser XML section to use as the MatchToTestArguments does not match the PTS test arguments
+			pts_client::test_profile_debug_message('Failed Initial Check');
 			return false;
 		}
 
@@ -502,7 +503,7 @@ class pts_test_result_parser
 		}
 		else
 		{
-			// Nothing to parse
+			pts_client::test_profile_debug_message('No Log File Found To Parse');
 			return false;
 		}
 
@@ -621,6 +622,7 @@ class pts_test_result_parser
 
 		if(empty($test_results))
 		{
+			pts_client::test_profile_debug_message('No Test Results');
 			return false;
 		}
 
@@ -668,6 +670,7 @@ class pts_test_result_parser
 
 		if(empty($test_results))
 		{
+			pts_client::test_profile_debug_message('No Test Results #2');
 			return false;
 		}
 
