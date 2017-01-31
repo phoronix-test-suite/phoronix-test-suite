@@ -212,7 +212,7 @@ class pts_test_result_parser
 		switch($test_run_request->test_profile->get_display_format())
 		{
 			case 'IMAGE_COMPARISON':
-				$test_run_request->active->active_result = self::parse_iqc_result($test_run_request->test_profile, $test_log_file, $pts_test_arguments, $extra_arguments);
+				self::parse_iqc_result($test_run_request, $test_log_file, $pts_test_arguments, $extra_arguments);
 				break;
 			case 'PASS_FAIL':
 			case 'MULTI_PASS_FAIL':
@@ -325,9 +325,9 @@ class pts_test_result_parser
 			$test_result->secondary_linked_results = $extra_results;
 		}
 	}
-	protected static function parse_iqc_result(&$test_profile, $log_file, $pts_test_arguments, $extra_arguments)
+	protected static function parse_iqc_result(&$test_run_request, $log_file, $pts_test_arguments, $extra_arguments)
 	{
-		$xml = self::setup_parse_xml_file($test_profile);
+		$xml = self::setup_parse_xml_file($test_run_request->test_profile);
 
 		if($xml === false)
 		{
@@ -340,7 +340,7 @@ class pts_test_result_parser
 			return false;
 		}
 
-		$test_result = false;
+		$returns = false;
 
 		if($xml->ImageParser)
 		{
@@ -354,9 +354,9 @@ class pts_test_result_parser
 				}
 
 				$iqc_source_file = isset($entry->SourceImage) ? $entry->SourceImage->__toString() : null;
-				if(is_file($test_profile->get_install_dir() . $iqc_source_file))
+				if(is_file($test_run_request->test_profile->get_install_dir() . $iqc_source_file))
 				{
-					$iqc_source_file = $test_profile->get_install_dir() . $iqc_source_file;
+					$iqc_source_file = $test_run_request->test_profile->get_install_dir() . $iqc_source_file;
 				}
 				else
 				{
@@ -376,17 +376,19 @@ class pts_test_result_parser
 				$iqc_image_height = isset($entry->ImageHeight) ? $entry->ImageHeight->__toString() : null;
 				$img_sliced = imagecreatetruecolor($iqc_image_width, $iqc_image_height);
 				imagecopyresampled($img_sliced, $img, 0, 0, $iqc_image_x, $iqc_image_y, $iqc_image_width, $iqc_image_height, $iqc_image_width, $iqc_image_height);
-				$test_result = $test_profile->get_install_dir() . 'iqc.png';
+				$test_result = $test_run_request->test_profile->get_install_dir() . 'iqc.png';
 				imagepng($img_sliced, $test_result);
 
 				if($test_result != false)
 				{
+					$test_run_request->active->active_result = $test_result;
+					$returns = true;
 					break;
 				}
 			}
 		}
 
-		return $test_result;
+		return $returns;
 	}
 	protected static function parse_result_process(&$test_run_request, $log_file, $pts_test_arguments, $extra_arguments, $prefix = null)
 	{
@@ -447,6 +449,7 @@ class pts_test_result_parser
 				$key_for_result = '#_' . $prefix . 'RESULT_#';
 				break;
 		}
+		pts_client::test_profile_debug_message('Result Key: ' . $key_for_result);
 
 		// The actual parsing here
 		$start_result_pos = strrpos($template, $key_for_result);
@@ -454,6 +457,7 @@ class pts_test_result_parser
 		if($prefix != null && $start_result_pos === false && $template != 'csv-dump-frame-latencies' && $template != 'libframetime-output')
 		{
 			// XXX: technically the $prefix check shouldn't be needed, verify whether safe to have this check be unconditional on start_result_pos failing...
+			pts_client::test_profile_debug_message('Failed Initial Check');
 			return false;
 		}
 
@@ -515,6 +519,7 @@ class pts_test_result_parser
 			$line_after_hint = isset($entry->LineAfterHint) ? $entry->LineAfterHint->__toString() : null;
 			$line_hint = isset($entry->LineHint) ? $entry->LineHint->__toString() : null;
 			$search_key = self::determine_search_key($line_hint, $line_before_hint, $line_after_hint, $template_line, $template, $template_r, $key_for_result); // SEARCH KEY
+			pts_client::test_profile_debug_message('Search Key: ' . $search_key);
 			if($search_key != null || $line_before_hint != null || $line_after_hint != null || $template_r[0] == $key_for_result)
 			{
 				$is_multi_match = !empty($multi_match) && $multi_match != 'NONE';
