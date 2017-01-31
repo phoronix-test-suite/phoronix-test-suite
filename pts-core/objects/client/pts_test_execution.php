@@ -282,11 +282,6 @@ class pts_test_execution
 							}
 						}
 					}
-					else
-					{
-						// TODO integrate active_result into active buffer
-						$test_run_request->active->add_trial_run_result($test_run_request->active->active_result, $test_run_request->active->active_min_result, $test_run_request->active->active_max_result);
-					}
 				}
 				else if($test_run_request->test_profile->get_display_format() != 'NO_RESULT')
 				{

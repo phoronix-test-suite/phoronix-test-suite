@@ -418,6 +418,7 @@ class pts_test_result_parser
 						// Check if this test reports a max result value
 						$test_run_request->active->active_max_result = self::parse_result_process_entry($test_run_request, $log_file, $pts_test_arguments, $extra_arguments, 'MAX_', $entry, $is_pass_fail_test, $is_numeric_check);
 					}
+					$test_run_request->active->add_trial_run_result($test_run_request->active->active_result, $test_run_request->active->active_min_result, $test_run_request->active->active_max_result);
 					break;
 				}
 			}
@@ -729,6 +730,7 @@ class pts_test_result_parser
 			}
 		}
 
+		pts_client::test_profile_debug_message('Test Result Parser Returning: ' . $test_result);
 		return $test_result;
 	}
 	protected static function determine_search_key($line_hint, $line_before_hint, $line_after_hint, $template_line, $template, $template_r, $key)
