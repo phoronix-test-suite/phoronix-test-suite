@@ -64,6 +64,7 @@ class pts_test_execution
 		$allow_cache_share = $test_run_request->test_profile->allow_cache_share() && $test_run_manager->allow_test_cache_share();
 		$min_length = $test_run_request->test_profile->get_min_length();
 		$max_length = $test_run_request->test_profile->get_max_length();
+		$is_monitoring = false;
 
 		if($test_run_request->test_profile->get_environment_testing_size() > 1 && ceil(disk_free_space($test_directory) / 1048576) < $test_run_request->test_profile->get_environment_testing_size())
 		{
@@ -184,7 +185,7 @@ class pts_test_execution
 
 				pts_client::test_profile_debug_message('Test Run Command: ' . $test_run_command);
 
-				$is_monitoring = pts_test_result_parser::system_monitor_task_check($test_run_request->test_profile);
+				$is_monitoring = pts_test_result_parser::system_monitor_task_check($test_run_request);
 				$test_run_time_start = time();
 
 				if(phodevi::is_windows() || pts_client::read_env('USE_PHOROSCRIPT_INTERPRETER') != false)
@@ -211,7 +212,7 @@ class pts_test_execution
 				}
 
 				$test_run_time = time() - $test_run_time_start;
-				$monitor_result = $is_monitoring ? pts_test_result_parser::system_monitor_task_post_test($test_run_request->test_profile) : 0;
+				$is_monitoring = pts_test_result_parser::system_monitor_task_post_test($test_run_request);
 			}
 
 
@@ -254,11 +255,8 @@ class pts_test_execution
 
 			if(!in_array(($i + 1), $ignore_runs) && $exit_status_pass)
 			{
-				if(isset($monitor_result) && $monitor_result != 0)
-				{
-					$test_run_request->active->active_result = $monitor_result;
-				}
-				else
+				// if it was monitoring, active result should already be set
+				if(!$is_monitoring)
 				{
 					pts_test_result_parser::parse_result($test_run_request, $test_extra_runtime_variables['LOG_FILE']);
 				}

@@ -37,9 +37,9 @@ class pts_test_result_parser
 		$xml_options = LIBXML_COMPACT | LIBXML_PARSEHUGE;
 		return simplexml_load_file($parse_xml_file, 'SimpleXMLElement', $xml_options);
 	}
-	public static function system_monitor_task_check(&$test_profile)
+	public static function system_monitor_task_check(&$test_run_request)
 	{
-		$xml = self::setup_parse_xml_file($test_profile);
+		$xml = self::setup_parse_xml_file($test_run_request->test_profile);
 
 		if($xml === false)
 		{
@@ -47,7 +47,7 @@ class pts_test_result_parser
 		}
 
 		self::$monitoring_sensors = array();
-		$test_directory = $test_profile->get_install_dir();
+		$test_directory = $test_run_request->test_profile->get_install_dir();
 
 		if($xml->SystemMonitor)
 		{
@@ -130,9 +130,9 @@ class pts_test_result_parser
 
 		return count(self::$monitoring_sensors) > 0;
 	}
-	public static function system_monitor_task_post_test(&$test_profile)
+	public static function system_monitor_task_post_test(&$test_run_request)
 	{
-		$test_directory = $test_profile->get_install_dir();
+		$test_directory = $test_run_request->test_profile->get_install_dir();
 
 		foreach(self::$monitoring_sensors as $sensor_r)
 		{
@@ -190,10 +190,15 @@ class pts_test_result_parser
 				}
 			}
 
-			if($result_value != null)
+			if($result_value != null && $result_value > 0)
 			{
-				// For now it's only possible to return one result per test
-				return $result_value;
+				// For now it's only possible to return one result per test XXX actually with PTS7 this can be changed....
+				$test_run_request->active->active_result = $result_value;
+				// TODO XXX for some sensors may make sense for min/max values?
+				//$test_run_request->active->active_min_result =
+				//$test_run_request->active->active_max_result =
+				$test_run_request->active->add_trial_run_result($test_run_request->active->active_result);
+				return true;
 			}
 		}
 
