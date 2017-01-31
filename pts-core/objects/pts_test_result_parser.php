@@ -411,22 +411,8 @@ class pts_test_result_parser
 			foreach($xml->ResultsParser as $entry)
 			{
 				$match_test_arguments = isset($entry->MatchToTestArguments) ? $entry->MatchToTestArguments->__toString() : null;
-				$scale = isset($entry->ResultScale) ? $entry->ResultScale->__toString() : null;
-				$proportion = isset($entry->ResultProportion) ? $entry->ResultProportion->__toString() : null;
-				$precision = isset($entry->ResultPrecision) ? $entry->ResultPrecision->__toString() : null;
 				$template = isset($entry->OutputTemplate) ? $entry->OutputTemplate->__toString() : null;
-				$key = isset($entry->ResultKey) ? $entry->ResultKey->__toString() : null;
-				$line_hint = isset($entry->LineHint) ? $entry->LineHint->__toString() : null;
-				$line_before_hint = isset($entry->LineBeforeHint) ? $entry->LineBeforeHint->__toString() : null;
-				$line_after_hint = isset($entry->LineAfterHint) ? $entry->LineAfterHint->__toString() : null;
-				$before_string = isset($entry->ResultBeforeString) ? $entry->ResultBeforeString->__toString() : null;
-				$after_string = isset($entry->ResultAfterString) ? $entry->ResultAfterString->__toString() : null;
-				$divide_by = isset($entry->DivideResultBy) ? $entry->DivideResultBy->__toString() : null;
-				$multiply_by = isset($entry->MultiplyResultBy) ? $entry->MultiplyResultBy->__toString() : null;
-				$strip_from_result = isset($entry->StripFromResult) ? $entry->StripFromResult->__toString() : null;
-				$strip_result_postfix = isset($entry->StripResultPostfix) ? $entry->StripResultPostfix->__toString() : null;
 				$multi_match = isset($entry->MultiMatch) ? $entry->MultiMatch->__toString() : null;
-				$file_format = isset($entry->FileFormat) ? $entry->FileFormat->__toString() : null;
 
 				if(!empty($match_test_arguments) && strpos($pts_test_arguments, $match_test_arguments) === false)
 				{
@@ -434,25 +420,21 @@ class pts_test_result_parser
 					continue;
 				}
 
-				if($key == null)
+				switch((isset($entry->ResultKey) ? $entry->ResultKey->__toString() : null))
 				{
-					$key = '#_' . $prefix . 'RESULT_#';
-				}
-				else
-				{
-					switch($key)
-					{
-						case 'PTS_TEST_ARGUMENTS':
-							$key = '#_' . $prefix . str_replace(' ', '', $pts_test_arguments) . '_#';
-							break;
-						case 'PTS_USER_SET_ARGUMENTS':
-							$key = '#_' . $prefix . str_replace(' ', '', $extra_arguments) . '_#';
-							break;
-					}
+					case 'PTS_TEST_ARGUMENTS':
+						$key_for_result = '#_' . $prefix . str_replace(' ', '', $pts_test_arguments) . '_#';
+						break;
+					case 'PTS_USER_SET_ARGUMENTS':
+						$key_for_result = '#_' . $prefix . str_replace(' ', '', $extra_arguments) . '_#';
+						break;
+					default:
+						$key_for_result = '#_' . $prefix . 'RESULT_#';
+						break;
 				}
 
 				// The actual parsing here
-				$start_result_pos = strrpos($template, $key);
+				$start_result_pos = strrpos($template, $key_for_result);
 
 				if($prefix != null && $start_result_pos === false && $template != 'csv-dump-frame-latencies' && $template != 'libframetime-output')
 				{
@@ -462,29 +444,30 @@ class pts_test_result_parser
 
 				$space_out_chars = array('(', ')', "\t");
 
+				$file_format = isset($entry->FileFormat) ? $entry->FileFormat->__toString() : null;
 				if(isset($file_format) && $file_format == 'CSV')
 				{
 					$space_out_chars[] = ',';
 				}
 
-				if((isset($template[($start_result_pos - 1)]) && $template[($start_result_pos - 1)] == '/') || (isset($template[($start_result_pos + strlen($key))]) && $template[($start_result_pos + strlen($key))] == '/'))
+				if((isset($template[($start_result_pos - 1)]) && $template[($start_result_pos - 1)] == '/') || (isset($template[($start_result_pos + strlen($key_for_result))]) && $template[($start_result_pos + strlen($key_for_result))] == '/'))
 				{
 					$space_out_chars[] = '/';
 				}
 
-				$end_result_pos = $start_result_pos + strlen($key);
+				$end_result_pos = $start_result_pos + strlen($key_for_result);
 				$end_result_line_pos = strpos($template, "\n", $end_result_pos);
 				$template_line = substr($template, 0, ($end_result_line_pos === false ? strlen($template) : $end_result_line_pos));
 				$template_line = substr($template_line, strrpos($template_line, "\n"));
 				$template_r = explode(' ', pts_strings::trim_spaces(str_replace($space_out_chars, ' ', str_replace('=', ' = ', $template_line))));
-				$template_r_pos = array_search($key, $template_r);
+				$template_r_pos = array_search($key_for_result, $template_r);
 
 				if($template_r_pos === false)
 				{
 					// Look for an element that partially matches, if like a '.' or '/sec' or some other pre/post-fix is present
 					foreach($template_r as $x => $r_check)
 					{
-						if(isset($key[$x]) && strpos($r_check, $key[$x]) !== false)
+						if(isset($key_for_result[$x]) && strpos($r_check, $key_for_result[$x]) !== false)
 						{
 							$template_r_pos = $x;
 							break;
@@ -517,10 +500,15 @@ class pts_test_result_parser
 				else
 				{
 					// Conventional searching for matching section for finding result
-					$search_key = self::determine_search_key($line_hint, $line_before_hint, $line_after_hint, $template_line, $template, $template_r, $key); // SEARCH KEY
-					if($search_key != null || $line_before_hint != null || $line_after_hint != null || $template_r[0] == $key)
+					$line_before_hint = isset($entry->LineBeforeHint) ? $entry->LineBeforeHint->__toString() : null;
+					$line_after_hint = isset($entry->LineAfterHint) ? $entry->LineAfterHint->__toString() : null;
+					$line_hint = isset($entry->LineHint) ? $entry->LineHint->__toString() : null;
+					$search_key = self::determine_search_key($line_hint, $line_before_hint, $line_after_hint, $template_line, $template, $template_r, $key_for_result); // SEARCH KEY
+					if($search_key != null || $line_before_hint != null || $line_after_hint != null || $template_r[0] == $key_for_result)
 					{
 						$is_multi_match = !empty($multi_match) && $multi_match != 'NONE';
+						$before_string = isset($entry->ResultBeforeString) ? $entry->ResultBeforeString->__toString() : null;
+						$after_string = isset($entry->ResultAfterString) ? $entry->ResultAfterString->__toString() : null;
 
 						do
 						{
@@ -564,7 +552,7 @@ class pts_test_result_parser
 							{
 								$try_again = false;
 								$r = explode(' ', pts_strings::trim_spaces(str_replace($space_out_chars, ' ', str_replace('=', ' = ', $line))));
-								$r_pos = array_search($key, $r);
+								$r_pos = array_search($key_for_result, $r);
 
 								if(!empty($before_string))
 								{
@@ -618,12 +606,23 @@ class pts_test_result_parser
 					}
 				}
 
+				if(empty($test_results))
+				{
+					continue;
+				}
+
+				$strip_from_result = isset($entry->StripFromResult) ? $entry->StripFromResult->__toString() : null;
+				$multiply_by = isset($entry->MultiplyResultBy) ? $entry->MultiplyResultBy->__toString() : null;
+				$strip_result_postfix = isset($entry->StripResultPostfix) ? $entry->StripResultPostfix->__toString() : null;
+				$divide_by = isset($entry->DivideResultBy) ? $entry->DivideResultBy->__toString() : null;
+
 				foreach($test_results as $x => &$test_result)
 				{
 					if($strip_from_result != null)
 					{
 						$test_result = str_replace($strip_from_result, null, $test_result);
 					}
+
 					if($strip_result_postfix != null && substr($test_result, 0 - strlen($strip_result_postfix)) == $strip_result_postfix)
 					{
 						$test_result = substr($test_result, 0, 0 - strlen($strip_result_postfix));
@@ -698,6 +697,10 @@ class pts_test_result_parser
 
 				if($test_result != false)
 				{
+					$precision = isset($entry->ResultPrecision) ? $entry->ResultPrecision->__toString() : null;
+					$scale = isset($entry->ResultScale) ? $entry->ResultScale->__toString() : null;
+					$proportion = isset($entry->ResultProportion) ? $entry->ResultProportion->__toString() : null;
+
 					if($scale != null)
 					{
 						$test_run_request->test_profile->set_result_scale($scale);
