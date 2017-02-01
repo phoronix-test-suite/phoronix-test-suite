@@ -701,33 +701,6 @@ class pts_render
 				}
 			}
 		}
-		else if(($p = strpos($user_agent, 'Opera/')) !== false)
-		{
-			// Opera
-			$ver = substr($user_agent, ($p + 6));
-			$ver = substr($ver, 0, strpos($ver, ' '));
-
-			// 9.27, 9.64 displays most everything okay
-			if($ver < 9.27)
-			{
-				$selected_renderer = 'PNG';
-			}
-
-			// text-alignment is still fucked as of 11.50/12.0
-			// With PTS4 and the bilde_svg_dom calls not using dominant-baseline, Opera support seems to be fine
-			// $selected_renderer = 'PNG';
-		}
-		else if(($p = strpos($user_agent, 'Epiphany/')) !== false)
-		{
-			// Older versions of Epiphany. Newer versions should report their Gecko or WebKit appropriately
-			$ver = substr($user_agent, ($p + 9));
-			$ver = substr($ver, 0, 4);
-
-			if($ver < 2.22)
-			{
-				$selected_renderer = 'PNG';
-			}
-		}
 		else if(($p = strpos($user_agent, 'KHTML/')) !== false)
 		{
 			// KDE Konqueror as of 4.7 is still broken for SVG

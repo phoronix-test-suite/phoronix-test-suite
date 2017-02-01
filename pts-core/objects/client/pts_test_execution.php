@@ -256,7 +256,7 @@ class pts_test_execution
 			if(!in_array(($i + 1), $ignore_runs) && $exit_status_pass)
 			{
 				// if it was monitoring, active result should already be set
-				if(!$is_monitoring)
+				if(!$is_monitoring) // XXX once single-run-multiple-outputs is supported, this check can be disabled to allow combination of results
 				{
 					pts_test_result_parser::parse_result($test_run_request, $test_extra_runtime_variables['LOG_FILE']);
 				}
@@ -525,23 +525,6 @@ class pts_test_execution
 		{
 			pts_test_notes_manager::add_note($note);
 		}
-
-		// As of PTS 4.4, this is removed and superceded effectively by reporting the notes to table
-		// Any special information (such as forced AA/AF levels for graphics) to add to the description string of the result?
-		/*
-		if(($special_string = phodevi::read_special_settings_string($test_type)) != null)
-		{
-			if(strpos($arguments_description, $special_string) === false)
-			{
-				if($arguments_description != null)
-				{
-					$arguments_description .= ' | ';
-				}
-
-				$arguments_description .= $special_string;
-			}
-		}
-		*/
 
 		// Ending Tasks
 		pts_client::$display->display_interrupt_message($test_run_request->test_profile->get_post_run_message());
