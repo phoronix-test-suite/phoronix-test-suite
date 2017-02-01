@@ -359,11 +359,11 @@ class pts_test_run_manager
 			$hashes = array();
 			foreach($this->result_file->get_result_objects() as $result)
 			{
-				$hashes[] = $result->get_comparison_hash(false, false);
+				$hashes[] = $result->get_comparison_hash(true, false);
 			}
 			foreach($this->tests_to_run as &$run_request)
 			{
-				if($run_request instanceof pts_test_result && in_array($run_request->get_comparison_hash(false, false), $hashes))
+				if($run_request instanceof pts_test_result && in_array($run_request->get_comparison_hash(true, false), $hashes))
 				{
 					$no_repeated_tests = false;
 					break;

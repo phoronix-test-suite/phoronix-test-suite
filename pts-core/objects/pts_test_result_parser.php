@@ -720,6 +720,7 @@ class pts_test_result_parser
 			$precision = isset($entry->ResultPrecision) ? $entry->ResultPrecision->__toString() : null;
 			$scale = isset($entry->ResultScale) ? $entry->ResultScale->__toString() : null;
 			$proportion = isset($entry->ResultProportion) ? $entry->ResultProportion->__toString() : null;
+			$append_to_args_desc = isset($entry->AppendToArgumentsDescription) ? $entry->AppendToArgumentsDescription->__toString() : null;
 
 			if($scale != null)
 			{
@@ -732,6 +733,10 @@ class pts_test_result_parser
 			if($precision != null)
 			{
 				$test_run_request->set_result_precision($precision);
+			}
+			if($append_to_args_desc != null)
+			{
+				$test_run_request->append_to_arguments_description($append_to_args_desc);
 			}
 		}
 

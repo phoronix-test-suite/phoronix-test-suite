@@ -60,6 +60,10 @@ class pts_test_result
 	{
 		$this->used_arguments_description = $arguments_description;
 	}
+	public function append_to_arguments_description($arguments_description)
+	{
+		$this->used_arguments_description .= ' ' . $arguments_description;
+	}
 	public function set_result_precision($precision = 2)
 	{
 		$this->result_precision = $precision;
@@ -95,7 +99,7 @@ class pts_test_result
 				// this removal is done since the zz segment should be maintainable between comparisons
 				$tp = substr($tp, 0, $x);
 			}
-			return pts_test_profile::generate_comparison_hash($tp, $this->get_arguments(), $this->get_arguments_description(), $this->test_profile->get_app_version(), $raw_output);
+			return pts_test_profile::generate_comparison_hash($tp, $this->get_arguments(), $this->get_arguments_description(), $this->test_profile->get_app_version(), $this->test_profile->get_result_scale(), $raw_output);
 		}
 		else
 		{
