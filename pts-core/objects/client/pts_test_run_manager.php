@@ -108,7 +108,7 @@ class pts_test_run_manager
 		{
 			static $last_run_count = 128; // just a number that should always cause the first check below to be true
 			static $run_std_devs;
-			$times_already_ran = $active_result_buffer->get_trial_run_count();
+			$times_already_ran = count($active_result_buffer->results);
 
 			if($times_already_ran <= $last_run_count)
 			{

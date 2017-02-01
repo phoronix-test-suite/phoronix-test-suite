@@ -193,11 +193,9 @@ class pts_test_result_parser
 			if($result_value != null && $result_value > 0)
 			{
 				// For now it's only possible to return one result per test XXX actually with PTS7 this can be changed....
-				$test_run_request->active->active_result = $result_value;
 				// TODO XXX for some sensors may make sense for min/max values?
-				//$test_run_request->active->active_min_result =
-				//$test_run_request->active->active_max_result =
-				$test_run_request->active->add_trial_run_result($test_run_request->active->active_result);
+				pts_client::test_profile_debug_message('Test Result Montioring Process Returning: ' . $result_value);
+				$test_run_request->active->add_trial_run_result($result_value);
 				return true;
 			}
 		}
@@ -206,9 +204,10 @@ class pts_test_result_parser
 	}
 	public static function parse_result(&$test_run_request, $test_log_file)
 	{
+		$produced_result = false;
 		if($test_run_request->test_profile->get_file_parser_spec() == false)
 		{
-			return null;
+			return $produced_result;
 		}
 
 		$extra_arguments = $test_run_request->get_arguments();
@@ -217,15 +216,16 @@ class pts_test_result_parser
 		switch($test_run_request->test_profile->get_display_format())
 		{
 			case 'IMAGE_COMPARISON':
-				self::parse_iqc_result($test_run_request, $test_log_file, $pts_test_arguments, $extra_arguments);
+				$produced_result = self::parse_iqc_result($test_run_request, $test_log_file, $pts_test_arguments, $extra_arguments);
 				break;
 			case 'PASS_FAIL':
 			case 'MULTI_PASS_FAIL':
 			case 'BAR_GRAPH':
 			default:
-				self::parse_result_process($test_run_request, $test_log_file, $pts_test_arguments, $extra_arguments);
+				$produced_result = self::parse_result_process($test_run_request, $test_log_file, $pts_test_arguments, $extra_arguments);
 				break;
 		}
+		return $produced_result;
 	}
 	public static function generate_extra_data(&$test_result, &$test_log_file = null)
 	{
@@ -386,7 +386,7 @@ class pts_test_result_parser
 
 				if($test_result != false)
 				{
-					$test_run_request->active->active_result = $test_result;
+					$test_run_request->active->add_trial_run_result($test_result);
 					$returns = true;
 					break;
 				}
@@ -397,10 +397,10 @@ class pts_test_result_parser
 	}
 	protected static function parse_result_process(&$test_run_request, $log_file, $pts_test_arguments, $extra_arguments, $prefix = null)
 	{
+		$produced_result = false;
 		$is_pass_fail_test = in_array($test_run_request->test_profile->get_display_format(), array('PASS_FAIL', 'MULTI_PASS_FAIL'));
 		$is_numeric_check = !$is_pass_fail_test;
 		$xml = self::setup_parse_xml_file($test_run_request->test_profile);
-		$test_result = false;
 
 		if($prefix != null && substr($prefix, -1) != '_')
 		{
@@ -415,20 +415,20 @@ class pts_test_result_parser
 				if($test_result != false)
 				{
 					// Result found
-					$test_run_request->active->active_result = $test_result;
 					if($is_numeric_check)
 					{
 						// Check if this test reports a min result value
-						$test_run_request->active->active_min_result = self::parse_result_process_entry($test_run_request, $log_file, $pts_test_arguments, $extra_arguments, 'MIN_', $entry, $is_pass_fail_test, $is_numeric_check);
+						$min_result = self::parse_result_process_entry($test_run_request, $log_file, $pts_test_arguments, $extra_arguments, 'MIN_', $entry, $is_pass_fail_test, $is_numeric_check);
 						// Check if this test reports a max result value
-						$test_run_request->active->active_max_result = self::parse_result_process_entry($test_run_request, $log_file, $pts_test_arguments, $extra_arguments, 'MAX_', $entry, $is_pass_fail_test, $is_numeric_check);
+						$max_result = self::parse_result_process_entry($test_run_request, $log_file, $pts_test_arguments, $extra_arguments, 'MAX_', $entry, $is_pass_fail_test, $is_numeric_check);
 					}
-					$test_run_request->active->add_trial_run_result($test_run_request->active->active_result, $test_run_request->active->active_min_result, $test_run_request->active->active_max_result);
+					$test_run_request->active->add_trial_run_result($test_result, $min_result, $max_result);
+					$produced_result = true;
 					break;
 				}
 			}
 		}
-		return $test_result;
+		return $produced_result;
 	}
 	protected static function parse_result_process_entry(&$test_run_request, $log_file, $pts_test_arguments, $extra_arguments, $prefix, &$entry, $is_pass_fail_test, $is_numeric_check)
 	{

@@ -25,10 +25,7 @@ class pts_test_result_buffer_active
 	public $results;
 	public $min_results;
 	public $max_results;
-	public $active = null;
-	public $active_result = null;
-	public $active_min_result = null;
-	public $active_max_result = null;
+	//public $active = null;
 	private $result = 0;
 	private $result_min = 0;
 	private $result_max = 0;
@@ -44,10 +41,6 @@ class pts_test_result_buffer_active
 		$this->results[] = $result;
 		$this->min_results[] = $min;
 		$this->max_results[] = $max;
-	}
-	public function get_trial_run_count()
-	{
-		return count($this->results);
 	}
 	public function get_values_as_string()
 	{

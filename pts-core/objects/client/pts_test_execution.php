@@ -145,11 +145,17 @@ class pts_test_execution
 			$backup_test_log_dir = false;
 		}
 
-		for($i = 0, $abort_testing = false, $time_test_start_actual = time(), $defined_times_to_run = $times_to_run; $i < $times_to_run && $i < 256 && !$abort_testing; $i++)
+		//
+		// THE MAIN TESTING LOOP
+		//
+
+		for($i = 0, $times_result_produced = 0, $abort_testing = false, $time_test_start_actual = time(), $defined_times_to_run = $times_to_run; $i < $times_to_run && $i < 256 && !$abort_testing; $i++)
 		{
 			pts_client::$display->test_run_instance_header($test_run_request);
 			$test_log_file = $test_directory . basename($test_identifier) . '-' . $runtime_identifier . '-' . ($i + 1) . '.log';
 			$is_expected_last_run = ($i == ($times_to_run - 1));
+			$produced_monitoring_result = false;
+			$has_result = false;
 
 			$test_extra_runtime_variables = array_merge($extra_runtime_variables, array(
 			'LOG_FILE' => $test_log_file,
@@ -164,7 +170,7 @@ class pts_test_execution
 
 				if($cache_share)
 				{
-					$test_result = $cache_share->read_object('test_results_output_' . $i);
+					$test_result_std_output = $cache_share->read_object('test_results_output_' . $i);
 					$test_extra_runtime_variables['LOG_FILE'] = $cache_share->read_object('log_file_location_' . $i);
 
 					if($test_extra_runtime_variables['LOG_FILE'] != null)
@@ -192,11 +198,11 @@ class pts_test_execution
 				{
 					$phoroscript = new pts_phoroscript_interpreter($to_execute . '/' . $execute_binary, $test_extra_runtime_variables, $to_execute);
 					$phoroscript->execute_script($pts_test_arguments);
-					$test_result = null;
+					$test_result_std_output = null;
 				}
 				else
 				{
-					//$test_result = pts_client::shell_exec($test_run_command, $test_extra_runtime_variables);
+					//$test_result_std_output = pts_client::shell_exec($test_run_command, $test_extra_runtime_variables);
 					$descriptorspec = array(0 => array('pipe', 'r'), 1 => array('pipe', 'w'), 2 => array('pipe', 'w'));
 					$test_process = proc_open('exec ' . $execute_binary_prepend . './' . $execute_binary . ' ' . $pts_test_arguments . ' 2>&1', $descriptorspec, $pipes, $to_execute, array_merge($_ENV, pts_client::environmental_variables(), $test_extra_runtime_variables));
 
@@ -204,7 +210,7 @@ class pts_test_execution
 					{
 						//echo proc_get_status($test_process)['pid'];
 						pts_module_manager::module_process('__test_running', $test_process);
-						$test_result = stream_get_contents($pipes[1]);
+						$test_result_std_output = stream_get_contents($pipes[1]);
 						fclose($pipes[1]);
 						fclose($pipes[2]);
 						$return_value = proc_close($test_process);
@@ -212,22 +218,22 @@ class pts_test_execution
 				}
 
 				$test_run_time = time() - $test_run_time_start;
-				$is_monitoring = pts_test_result_parser::system_monitor_task_post_test($test_run_request);
+				$produced_monitoring_result = $is_monitoring ? pts_test_result_parser::system_monitor_task_post_test($test_run_request) : false;
 			}
 
 
-			if(!isset($test_result[10240]) || pts_client::is_debug_mode() || $full_output)
+			if(!isset($test_result_std_output[10240]) || pts_client::is_debug_mode() || $full_output)
 			{
-				pts_client::$display->test_run_instance_output($test_result);
+				pts_client::$display->test_run_instance_output($test_result_std_output);
 			}
 
-			if(is_file($test_log_file) && trim($test_result) == null && (filesize($test_log_file) < 10240 || pts_client::is_debug_mode() || $full_output))
+			if(is_file($test_log_file) && trim($test_result_std_output) == null && (filesize($test_log_file) < 10240 || pts_client::is_debug_mode() || $full_output))
 			{
 				$test_log_file_contents = file_get_contents($test_log_file);
 				pts_client::$display->test_run_instance_output($test_log_file_contents);
 				unset($test_log_file_contents);
 			}
-			$test_run_request->test_result_standard_output = $test_result;
+			$test_run_request->test_result_standard_output = $test_result_std_output;
 
 			$exit_status_pass = true;
 			if(is_file($test_directory . 'test-exit-status'))
@@ -256,16 +262,17 @@ class pts_test_execution
 			if(!in_array(($i + 1), $ignore_runs) && $exit_status_pass)
 			{
 				// if it was monitoring, active result should already be set
-				if(!$is_monitoring) // XXX once single-run-multiple-outputs is supported, this check can be disabled to allow combination of results
+				if(!$produced_monitoring_result) // XXX once single-run-multiple-outputs is supported, this check can be disabled to allow combination of results
 				{
-					pts_test_result_parser::parse_result($test_run_request, $test_extra_runtime_variables['LOG_FILE']);
+					$has_result = pts_test_result_parser::parse_result($test_run_request, $test_extra_runtime_variables['LOG_FILE']);
 				}
 
-				pts_client::test_profile_debug_message('Test Result Value: ' . $test_run_request->active->active_result);
+				$has_result = $has_result || $produced_monitoring_result;
 
-				if(!empty($test_run_request->active->active_result))
+				if($has_result)
 				{
-					if($test_run_time < 2 && intval($test_run_request->active->active_result) == $test_run_request->active->active_result && $test_run_request->test_profile->get_estimated_run_time() > 60 && !$restored_from_cache)
+					$times_result_produced++;
+					if($test_run_time < 2 && $test_run_request->test_profile->get_estimated_run_time() > 60 && !$restored_from_cache)
 					{
 						// If the test ended in less than two seconds, outputted some int, and normally the test takes much longer, then it's likely some invalid run
 						self::test_run_instance_error($test_run_manager, $test_run_request, 'The test run ended prematurely.');
@@ -298,24 +305,24 @@ class pts_test_execution
 
 				if($allow_cache_share && !is_file($cache_share_pt2so))
 				{
-					$cache_share->add_object('test_results_output_' . $i, $test_run_request->active->active_result);
+					$cache_share->add_object('test_results_output_' . $i, $test_result_std_output);
 					$cache_share->add_object('log_file_location_' . $i, $test_extra_runtime_variables['LOG_FILE']);
 					$cache_share->add_object('log_file_' . $i, (is_file($test_log_file) ? file_get_contents($test_log_file) : null));
 				}
 			}
 
-			if($is_expected_last_run && $test_run_request->active->get_trial_run_count() > floor(($i - 2) / 2) && !$cache_share_present && $test_run_manager->do_dynamic_run_count())
+			if($is_expected_last_run && $times_result_produced > floor(($i - 2) / 2) && !$cache_share_present && $test_run_manager->do_dynamic_run_count())
 			{
 				// The later check above ensures if the test is failing often the run count won't uselessly be increasing
 				// Should we increase the run count?
 				$increase_run_count = false;
 
-				if($defined_times_to_run == ($i + 1) && $test_run_request->active->get_trial_run_count() > 0 && $test_run_request->active->get_trial_run_count() < $defined_times_to_run && $i < 64)
+				if($defined_times_to_run == ($i + 1) && $times_result_produced > 0 && $times_result_produced < $defined_times_to_run && $i < 64)
 				{
 					// At least one run passed, but at least one run failed to produce a result. Increase count to try to get more successful runs
-					$increase_run_count = $defined_times_to_run - $test_run_request->active->get_trial_run_count();
+					$increase_run_count = $defined_times_to_run - $times_result_produced;
 				}
-				else if($test_run_request->active->get_trial_run_count() >= 2)
+				else if($times_result_produced >= 2)
 				{
 					// Dynamically increase run count if needed for statistical significance or other reasons
 					$increase_run_count = $test_run_manager->increase_run_count_check($test_run_request->active, $defined_times_to_run, $test_run_time);
@@ -536,7 +543,7 @@ class pts_test_execution
 
 		// End Finalize
 		pts_module_manager::module_process('__post_test_run', $test_run_request);
-		$report_elapsed_time = $cache_share_present == false && $test_run_request->active->get_result() != 0;
+		$report_elapsed_time = $cache_share_present == false && $times_result_produced > 0;
 		pts_tests::update_test_install_xml($test_run_request->test_profile, ($report_elapsed_time ? $time_test_elapsed : 0));
 		pts_storage_object::add_in_file(PTS_CORE_STORAGE, 'total_testing_time', ($time_test_elapsed / 60));
 
