@@ -344,6 +344,12 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	{
 		$this->trial_run_count_current++;
 		echo PHP_EOL . $this->tab . $this->tab . 'Started Run ' . $this->trial_run_count_current . ' @ ' . date('H:i:s');
+
+		if($this->expected_trial_run_count > 1 && $this->trial_run_count_current > $this->expected_trial_run_count)
+		{
+			// add a mark since the results are in overtime, deviation likely too high and run count increased
+			echo ' *';
+		}
 	}
 	public function test_run_instance_error($error_string)
 	{
@@ -360,15 +366,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	}
 	public function test_run_instance_complete(&$result)
 	{
-		if($this->expected_trial_run_count > 1 && $this->trial_run_count_current >= $this->expected_trial_run_count)
-		{
-			$values = $result->active->results;
-
-			if(count($values) > 1)
-			{
-				echo ($this->trial_run_count_current < 10 ? ' ' : null) . ' [Std. Dev: ' . pts_math::set_precision(pts_math::percent_standard_deviation($values), 2) . '%]';
-			}
-		}
+		return; // if anything to append to string of "Started Run"
 	}
 	public function test_run_end(&$test_result)
 	{
@@ -408,11 +406,12 @@ class pts_concise_display_mode implements pts_display_mode_interface
 		}
 		else
 		{
-			$end_print = PHP_EOL . $this->tab . 'Test Results:' . PHP_EOL;
-
+			$end_print = PHP_EOL . $this->tab . 'Test Results' . ($test_result->get_arguments_description() ? ' - ' . $test_result->get_arguments_description() : null) . ':' . PHP_EOL;
+			$result_count = 0;
 			foreach($test_result->active->results as $result)
 			{
 				$end_print .= $this->tab . $this->tab . $result . PHP_EOL;
+				$result_count++;
 			}
 
 			$end_print .= PHP_EOL . $this->tab . pts_strings::result_quantifier_to_string($test_result->test_profile->get_result_quantifier()) . ': ' . pts_client::cli_colored_text($test_result->active->get_result() . ' ' . $test_result->test_profile->get_result_scale(), 'green');
@@ -424,6 +423,10 @@ class pts_concise_display_mode implements pts_display_mode_interface
 			if($test_result->active->get_max_result())
 			{
 				$end_print .= PHP_EOL . $this->tab . 'Maximum: ' . $test_result->active->get_max_result();
+			}
+			if($result_count > 2)
+			{
+				$end_print .= PHP_EOL . $this->tab . 'Deviation: ' . pts_math::set_precision(pts_math::percent_standard_deviation($test_result->active->results), 2) . '%';
 			}
 
 			if($test_result->active->get_result() == 0)
@@ -515,4 +518,4 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	}
 }
 
-?>
+?>$

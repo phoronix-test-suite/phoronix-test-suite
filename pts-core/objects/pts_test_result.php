@@ -63,7 +63,10 @@ class pts_test_result
 	}
 	public function append_to_arguments_description($arguments_description)
 	{
-		$this->used_arguments_description .= ' ' . $arguments_description;
+		if(strpos(' ' . $this->used_arguments_description . ' ', ' ' . $arguments_description . ' ') === false)
+		{
+			$this->used_arguments_description .= ($this->used_arguments_description != null ? ' ' : null) . $arguments_description;
+		}
 	}
 	public function set_result_precision($precision = 2)
 	{

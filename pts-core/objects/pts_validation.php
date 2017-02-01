@@ -280,7 +280,7 @@ class pts_validation
 		$result_scale = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ResultsParser/ResultScale');
 		$result_proportion = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ResultsParser/ResultProportion');
 		$result_precision = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ResultsParser/ResultPrecision');
-		$result_append_to_args_desc = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ResultsParser/AppendToArgumentsDescription');
+		$result_args_desc = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ResultsParser/ArgumentsDescription');
 
 		foreach(array_keys($result_template) as $i)
 		{
@@ -300,7 +300,7 @@ class pts_validation
 			$xml_writer->addXmlNodeWNE('PhoronixTestSuite/ResultsParser/ResultScale', $result_scale[$i]);
 			$xml_writer->addXmlNodeWNE('PhoronixTestSuite/ResultsParser/ResultProportion', $result_proportion[$i]);
 			$xml_writer->addXmlNodeWNE('PhoronixTestSuite/ResultsParser/ResultPrecision', $result_precision[$i]);
-			$xml_writer->addXmlNodeWNE('PhoronixTestSuite/ResultsParser/AppendToArgumentsDescription', $result_append_to_args_desc[$i]);
+			$xml_writer->addXmlNodeWNE('PhoronixTestSuite/ResultsParser/ArgumentsDescription', $result_args_desc[$i]);
 			$xml_writer->addXmlNodeWNE('PhoronixTestSuite/ResultsParser/FileFormat', $file_format[$i]);
 		}
 

@@ -93,13 +93,14 @@ class pts_test_result_parser
 				if(count($sensor) != 2 || !in_array($sensor, self::$supported_sensors))
 				{
 					// Not a sensor or it's not supported
+					pts_client::test_profile_debug_message('No supported sensor found');
 					continue;
 				}
 
 				if(!is_numeric($polling_freq) || $polling_freq < 0.5)
 				{
-					// No polling frequency supplied
-					continue;
+					pts_client::test_profile_debug_message('No polling frequency defined, defaulting to 2 seconds');
+					$polling_freq = 2;
 				}
 
 				$polling_freq *= 1000000; // Convert from seconds to micro-seconds
@@ -107,6 +108,7 @@ class pts_test_result_parser
 				if(!in_array($report_as, array('ALL', 'MAX', 'MIN', 'AVG')))
 				{
 					// Not a valid reporting type
+					pts_client::test_profile_debug_message('No valid Report entry found.');
 					continue;
 				}
 
@@ -149,6 +151,7 @@ class pts_test_result_parser
 	public static function system_monitor_task_post_test(&$test_run_request)
 	{
 		$test_directory = $test_run_request->test_profile->get_install_dir();
+		$did_post_result = false;
 
 		foreach(self::$monitoring_sensors as $sensor_r)
 		{
@@ -173,7 +176,7 @@ class pts_test_result_parser
 				if(function_exists('posix_kill') == false)
 				{
 					pts_client::$display->test_run_error('The PHP POSIX extension is required for this test.');
-					return false;
+					return $did_post_result;
 				}
 
 				posix_kill($sensor_r[0], SIGTERM);
@@ -212,11 +215,11 @@ class pts_test_result_parser
 				// TODO XXX for some sensors may make sense for min/max values?
 				pts_client::test_profile_debug_message('Test Result Montioring Process Returning: ' . $result_value);
 				self::gen_result_active_handle($test_run_request)->add_trial_run_result($result_value);
-				return true;
+				$did_post_result = true;
 			}
 		}
 
-		return false;
+		return $did_post_result;
 	}
 	public static function parse_result(&$test_run_request, $test_log_file)
 	{
@@ -404,7 +407,6 @@ class pts_test_result_parser
 				{
 					self::gen_result_active_handle($test_run_request)->add_trial_run_result($test_result);
 					$returns = true;
-					break;
 				}
 			}
 		}
@@ -427,20 +429,20 @@ class pts_test_result_parser
 		{
 			foreach($xml->ResultsParser as $entry)
 			{
-				$test_result = self::parse_result_process_entry($test_run_request, $log_file, $pts_test_arguments, $extra_arguments, $prefix, $entry, $is_pass_fail_test, $is_numeric_check);
+				$tr = clone $test_run_request;
+				$test_result = self::parse_result_process_entry($tr, $log_file, $pts_test_arguments, $extra_arguments, $prefix, $entry, $is_pass_fail_test, $is_numeric_check);
 				if($test_result != false)
 				{
 					// Result found
 					if($is_numeric_check)
 					{
 						// Check if this test reports a min result value
-						$min_result = self::parse_result_process_entry($test_run_request, $log_file, $pts_test_arguments, $extra_arguments, 'MIN_', $entry, $is_pass_fail_test, $is_numeric_check);
+						$min_result = self::parse_result_process_entry($tr, $log_file, $pts_test_arguments, $extra_arguments, 'MIN_', $entry, $is_pass_fail_test, $is_numeric_check);
 						// Check if this test reports a max result value
-						$max_result = self::parse_result_process_entry($test_run_request, $log_file, $pts_test_arguments, $extra_arguments, 'MAX_', $entry, $is_pass_fail_test, $is_numeric_check);
+						$max_result = self::parse_result_process_entry($tr, $log_file, $pts_test_arguments, $extra_arguments, 'MAX_', $entry, $is_pass_fail_test, $is_numeric_check);
 					}
-					self::gen_result_active_handle($test_run_request)->add_trial_run_result($test_result, $min_result, $max_result);
+					self::gen_result_active_handle($test_run_request, $tr)->add_trial_run_result($test_result, $min_result, $max_result);
 					$produced_result = true;
-					break;
 				}
 			}
 		}
@@ -736,7 +738,7 @@ class pts_test_result_parser
 			$precision = isset($entry->ResultPrecision) ? $entry->ResultPrecision->__toString() : null;
 			$scale = isset($entry->ResultScale) ? $entry->ResultScale->__toString() : null;
 			$proportion = isset($entry->ResultProportion) ? $entry->ResultProportion->__toString() : null;
-			$append_to_args_desc = isset($entry->AppendToArgumentsDescription) ? $entry->AppendToArgumentsDescription->__toString() : null;
+			$set_args_desc = isset($entry->ArgumentsDescription) ? $entry->ArgumentsDescription->__toString() : null;
 
 			if($scale != null)
 			{
@@ -750,9 +752,9 @@ class pts_test_result_parser
 			{
 				$test_run_request->set_result_precision($precision);
 			}
-			if($append_to_args_desc != null)
+			if($set_args_desc != null)
 			{
-				$test_run_request->append_to_arguments_description($append_to_args_desc);
+				$test_run_request->set_used_arguments_description($set_args_desc);
 			}
 		}
 

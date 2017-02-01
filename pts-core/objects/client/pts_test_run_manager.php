@@ -630,7 +630,7 @@ class pts_test_run_manager
 			return;
 		}
 
-		if(is_object($test_run_request->test_result_buffer) && in_array($this->get_results_identifier(), $test_run_request->test_result_buffer->get_identifiers()))
+		if($this->result_file instanceof pts_result_file && $this->result_file->has_matching_test_and_run_identifier($test_run_request, $this->get_results_identifier()))
 		{
 			// There already is a match for this test in this particular result buffer
 			return true;

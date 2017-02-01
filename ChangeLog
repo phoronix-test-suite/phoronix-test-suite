@@ -6,8 +6,9 @@ pts-core: Add winners-and-losers sub-command for providing some first/last place
 pts-core: Don't pass files greater than ~50MB to the result parser as likely too big to parse and invalid data like lots of warnings/errors from test
 pts-core: Restructured test result parser
 pts-core: Dropping of some deprecated checks
-pts-core: Add AppendToArgumentsDescription to the results-parser schema for appending a string to the used arguments description string on test execution
+pts-core: Add ArgumentsDescription to the results-parser schema for appending a string to the used arguments description string on test execution
 pts-core: Add the result-scale to the test profile comparison_hash (NOTE: any external data stores making use of the comparison_hash should thus rebuild their hash indexes)
+pts-core: Allow one test run to generate multiple result outputs (graphs, etc) from multiple result-definition entries
 
 Phoronix Test Suite 7.0.0 Milestone 2
 23 January 2017
