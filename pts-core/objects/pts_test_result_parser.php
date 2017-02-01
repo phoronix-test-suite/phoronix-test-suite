@@ -37,6 +37,22 @@ class pts_test_result_parser
 		$xml_options = LIBXML_COMPACT | LIBXML_PARSEHUGE;
 		return simplexml_load_file($parse_xml_file, 'SimpleXMLElement', $xml_options);
 	}
+	protected static function gen_result_active_handle(&$root_result, $test_result = null)
+	{
+		if($test_result == null)
+		{
+			$test_result = clone $root_result;
+		}
+
+		$tr_hash = $test_result->get_comparison_hash(true, false);
+		if(!isset($root_result->generated_result_buffers[$tr_hash]))
+		{
+			$test_result->active = new pts_test_result_buffer_active();
+			$root_result->generated_result_buffers[$tr_hash] = $test_result;
+		}
+
+		return $root_result->generated_result_buffers[$tr_hash]->active;
+	}
 	public static function system_monitor_task_check(&$test_run_request)
 	{
 		$xml = self::setup_parse_xml_file($test_run_request->test_profile);
@@ -195,7 +211,7 @@ class pts_test_result_parser
 				// For now it's only possible to return one result per test XXX actually with PTS7 this can be changed....
 				// TODO XXX for some sensors may make sense for min/max values?
 				pts_client::test_profile_debug_message('Test Result Montioring Process Returning: ' . $result_value);
-				$test_run_request->active->add_trial_run_result($result_value);
+				self::gen_result_active_handle($test_run_request)->add_trial_run_result($result_value);
 				return true;
 			}
 		}
@@ -386,7 +402,7 @@ class pts_test_result_parser
 
 				if($test_result != false)
 				{
-					$test_run_request->active->add_trial_run_result($test_result);
+					self::gen_result_active_handle($test_run_request)->add_trial_run_result($test_result);
 					$returns = true;
 					break;
 				}
@@ -422,7 +438,7 @@ class pts_test_result_parser
 						// Check if this test reports a max result value
 						$max_result = self::parse_result_process_entry($test_run_request, $log_file, $pts_test_arguments, $extra_arguments, 'MAX_', $entry, $is_pass_fail_test, $is_numeric_check);
 					}
-					$test_run_request->active->add_trial_run_result($test_result, $min_result, $max_result);
+					self::gen_result_active_handle($test_run_request)->add_trial_run_result($test_result, $min_result, $max_result);
 					$produced_result = true;
 					break;
 				}

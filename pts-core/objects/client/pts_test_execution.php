@@ -57,6 +57,7 @@ class pts_test_execution
 		}
 
 		$test_run_request->active = new pts_test_result_buffer_active();
+		$test_run_request->generated_result_buffers = array();
 		$execute_binary = $test_run_request->test_profile->get_test_executable();
 		$times_to_run = $test_run_request->test_profile->get_times_to_run();
 		$ignore_runs = $test_run_request->test_profile->get_runs_to_ignore();
@@ -325,7 +326,9 @@ class pts_test_execution
 				else if($times_result_produced >= 2)
 				{
 					// Dynamically increase run count if needed for statistical significance or other reasons
-					$increase_run_count = $test_run_manager->increase_run_count_check($test_run_request->active, $defined_times_to_run, $test_run_time);
+					$first_tr = array_slice($test_run_request->generated_result_buffers, 0, 1);
+					$first_tr = array_shift($first_tr);
+					$increase_run_count = $test_run_manager->increase_run_count_check($first_tr->active, $defined_times_to_run, $test_run_time); // XXX maybe check all generated buffers to see if to extend?
 
 					if($increase_run_count === -1)
 					{
@@ -469,6 +472,7 @@ class pts_test_execution
 			$arguments_description = $test_run_request->test_profile->get_test_subtitle();
 		}
 
+		// TODO XXX hook up this below section to using it on a loop of the generated result graphs rather than just the main result
 		$file_var_checks = array(
 		array('pts-results-scale', 'set_result_scale', null),
 		array('pts-results-proportion', 'set_result_proportion', null),
@@ -557,199 +561,193 @@ class pts_test_execution
 		pts_client::release_lock($lock_file);
 		return $test_successful;
 	}
-	protected static function calculate_end_result_post_processing(&$test_run_manager, &$test_result)
+	protected static function calculate_end_result_post_processing(&$test_run_manager, &$root_tr)
 	{
-		$trial_results = $test_result->active->results;
+		$test_successful = false;
 
-		if(count($trial_results) == 0)
+		foreach($root_tr->generated_result_buffers as &$test_result)
 		{
-			$test_result->active->set_result(0);
-			return false;
-		}
+			$trial_results = $test_result->active->results;
+			$END_RESULT = 0;
 
-		$END_RESULT = 0;
-
-		switch($test_result->test_profile->get_display_format())
-		{
-			case 'NO_RESULT':
-				// Nothing to do, there are no results
-				break;
-			case 'LINE_GRAPH':
-			case 'FILLED_LINE_GRAPH':
-			case 'TEST_COUNT_PASS':
-				// Just take the first result
-				$END_RESULT = $trial_results[0];
-				break;
-			case 'IMAGE_COMPARISON':
-				// Capture the image
-				$iqc_image_png = $trial_results[0];
-
-				if(is_file($iqc_image_png))
-				{
-					$img_file_64 = base64_encode(file_get_contents($iqc_image_png, FILE_BINARY));
-					$END_RESULT = $img_file_64;
-					unlink($iqc_image_png);
-				}
-				break;
-			case 'PASS_FAIL':
-			case 'MULTI_PASS_FAIL':
-				// Calculate pass/fail type
-				$END_RESULT = -1;
-
-				if(count($trial_results) == 1)
-				{
+			switch($test_result->test_profile->get_display_format())
+			{
+				case 'NO_RESULT':
+					// Nothing to do, there are no results
+					break;
+				case 'LINE_GRAPH':
+				case 'FILLED_LINE_GRAPH':
+				case 'TEST_COUNT_PASS':
+					// Just take the first result
 					$END_RESULT = $trial_results[0];
-				}
-				else
-				{
-					foreach($trial_results as $result)
-					{
-						if($result == 'FALSE' || $result == '0' || $result == 'FAIL' || $result == 'FAILED')
-						{
-							if($END_RESULT == -1 || $END_RESULT == 'PASS')
-							{
-								$END_RESULT = 'FAIL';
-							}
-						}
-						else
-						{
-							if($END_RESULT == -1)
-							{
-								$END_RESULT = 'PASS';
-							}
-						}
-					}
-				}
-				break;
-			case 'BAR_GRAPH':
-			default:
-				// Result is of a normal numerical type
-				switch($test_result->test_profile->get_result_quantifier())
-				{
-					case 'MAX':
-						$END_RESULT = max($trial_results);
-						break;
-					case 'MIN':
-						$END_RESULT = min($trial_results);
-						break;
-					case 'AVG':
-					default:
-						// assume AVG (average)
-						$is_float = false;
-						$TOTAL_RESULT = 0;
-						$TOTAL_COUNT = 0;
+					break;
+				case 'IMAGE_COMPARISON':
+					// Capture the image
+					$iqc_image_png = $trial_results[0];
 
+					if(is_file($iqc_image_png))
+					{
+						$img_file_64 = base64_encode(file_get_contents($iqc_image_png, FILE_BINARY));
+						$END_RESULT = $img_file_64;
+						unlink($iqc_image_png);
+					}
+					break;
+				case 'PASS_FAIL':
+				case 'MULTI_PASS_FAIL':
+					// Calculate pass/fail type
+					$END_RESULT = -1;
+
+					if(count($trial_results) == 1)
+					{
+						$END_RESULT = $trial_results[0];
+					}
+					else
+					{
 						foreach($trial_results as $result)
 						{
-							$result = trim($result);
-
-							if(is_numeric($result))
+							if($result == 'FALSE' || $result == '0' || $result == 'FAIL' || $result == 'FAILED')
 							{
-								$TOTAL_RESULT += $result;
-								$TOTAL_COUNT++;
-
-								if(!$is_float && strpos($result, '.') !== false)
+								if($END_RESULT == -1 || $END_RESULT == 'PASS')
 								{
-									$is_float = true;
+									$END_RESULT = 'FAIL';
+								}
+							}
+							else
+							{
+								if($END_RESULT == -1)
+								{
+									$END_RESULT = 'PASS';
 								}
 							}
 						}
-
-						$END_RESULT = pts_math::set_precision($TOTAL_RESULT / ($TOTAL_COUNT > 0 ? $TOTAL_COUNT : 1), $test_result->get_result_precision());
-
-						if(!$is_float)
-						{
-							$END_RESULT = round($END_RESULT);
-						}
-
-						if(count($min = $test_result->active->min_results) > 0)
-						{
-							$min = round(min($min), 2);
-
-							if($min < $END_RESULT && is_numeric($min) && $min != 0)
-							{
-								$test_result->active->set_min_result($min);
-							}
-						}
-						if(count($max = $test_result->active->max_results) > 0)
-						{
-							$max = round(max($max), 2);
-
-							if($max > $END_RESULT && is_numeric($max) && $max != 0)
-							{
-								$test_result->active->set_max_result($max);
-							}
-						}
-						break;
-				}
-				break;
-		}
-
-		$test_result->active->set_result($END_RESULT);
-
-		pts_client::$display->test_run_end($test_result);
-
-		// Finalize / result post-processing to generate save
-		$test_successful = false;
-		if($test_result->test_profile->get_display_format() == 'NO_RESULT')
-		{
-			$test_successful = true;
-		}
-		else if($test_result instanceof pts_test_result && $test_result->active)
-		{
-			$end_result = $test_result->active->get_result();
-
-			// removed count($result) > 0 in the move to pts_test_result
-			if(count($test_result) > 0 && ((is_numeric($end_result) && $end_result > 0) || (!is_numeric($end_result) && isset($end_result[3]))))
-			{
-				pts_module_manager::module_process('__post_test_run_success', $test_result);
-				$test_successful = true;
-
-				if($test_run_manager->get_results_identifier() != null)
-				{
-					$test_result->test_result_buffer = new pts_test_result_buffer();
-					$test_result->test_result_buffer->add_test_result($test_run_manager->get_results_identifier(), $test_result->active->get_result(), $test_result->active->get_values_as_string(), pts_test_run_manager::process_json_report_attributes($test_result), $test_result->active->get_min_result(), $test_result->active->get_max_result());
-					$test_run_manager->result_file->add_result($test_result);
-
-					if($test_result->secondary_linked_results != null && is_array($test_result->secondary_linked_results))
-					{
-						foreach($test_result->secondary_linked_results as &$run_request_minor)
-						{
-							if(strpos($run_request_minor->get_arguments_description(), $test_result->get_arguments_description()) === false)
-							{
-								$run_request_minor->set_used_arguments_description($test_result->get_arguments_description() . ' - ' . $run_request_minor->get_arguments_description());
-								$run_request_minor->set_used_arguments($test_result->get_arguments() . ' - ' . $run_request_minor->get_arguments_description());
-							}
-
-							$run_request_minor->test_result_buffer = new pts_test_result_buffer();
-							$run_request_minor->test_result_buffer->add_test_result($test_run_manager->get_results_identifier(), $run_request_minor->active->get_result(), $run_request_minor->active->get_values_as_string(), pts_test_run_manager::process_json_report_attributes($test_result),$run_request_minor->active->get_min_result(), $run_request_minor->active->get_max_result());
-							$test_run_manager->result_file->add_result($run_request_minor);
-						}
 					}
-
-					if($test_run_manager->get_results_identifier() != null && $test_run_manager->get_file_name() != null && pts_config::read_bool_config('PhoronixTestSuite/Options/Testing/SaveTestLogs', 'FALSE'))
+					break;
+				case 'BAR_GRAPH':
+				default:
+					// Result is of a normal numerical type
+					switch($test_result->test_profile->get_result_quantifier())
 					{
-						static $xml_write_pos = 1;
-						pts_file_io::mkdir(PTS_SAVE_RESULTS_PATH . $test_run_manager->get_file_name() . '/test-logs/' . $xml_write_pos . '/');
+						case 'MAX':
+							$END_RESULT = max($trial_results);
+							break;
+						case 'MIN':
+							$END_RESULT = min($trial_results);
+							break;
+						case 'AVG':
+						default:
+							// assume AVG (average)
+							$is_float = false;
+							$TOTAL_RESULT = 0;
+							$TOTAL_COUNT = 0;
 
-						if(is_dir(PTS_SAVE_RESULTS_PATH . $test_run_manager->get_file_name() . '/test-logs/active/' . $test_run_manager->get_results_identifier()))
-						{
-							$test_log_write_dir = PTS_SAVE_RESULTS_PATH . $test_run_manager->get_file_name() . '/test-logs/' . $xml_write_pos . '/' . $test_run_manager->get_results_identifier() . '/';
-
-							if(is_dir($test_log_write_dir))
+							foreach($trial_results as $result)
 							{
-								pts_file_io::delete($test_log_write_dir, null, true);
+								$result = trim($result);
+
+								if(is_numeric($result))
+								{
+									$TOTAL_RESULT += $result;
+									$TOTAL_COUNT++;
+
+									if(!$is_float && strpos($result, '.') !== false)
+									{
+										$is_float = true;
+									}
+								}
 							}
 
-							rename(PTS_SAVE_RESULTS_PATH . $test_run_manager->get_file_name() . '/test-logs/active/' . $test_run_manager->get_results_identifier() . '/', $test_log_write_dir);
+							$END_RESULT = pts_math::set_precision($TOTAL_RESULT / ($TOTAL_COUNT > 0 ? $TOTAL_COUNT : 1), $test_result->get_result_precision());
+
+							if(!$is_float)
+							{
+								$END_RESULT = round($END_RESULT);
+							}
+
+							if(count($min = $test_result->active->min_results) > 0)
+							{
+								$min = round(min($min), 2);
+
+								if($min < $END_RESULT && is_numeric($min) && $min != 0)
+								{
+									$test_result->active->set_min_result($min);
+								}
+							}
+							if(count($max = $test_result->active->max_results) > 0)
+							{
+								$max = round(max($max), 2);
+
+								if($max > $END_RESULT && is_numeric($max) && $max != 0)
+								{
+									$test_result->active->set_max_result($max);
+								}
+							}
+							break;
+					}
+					break;
+			}
+
+			$test_result->active->set_result($END_RESULT);
+
+			pts_client::$display->test_run_end($test_result);
+
+			// Finalize / result post-processing to generate save
+			if($test_result->test_profile->get_display_format() == 'NO_RESULT')
+			{
+				$test_successful = true;
+			}
+			else if($test_result instanceof pts_test_result && $test_result->active)
+			{
+				$end_result = $test_result->active->get_result();
+
+				// removed count($result) > 0 in the move to pts_test_result
+				if(count($test_result) > 0 && ((is_numeric($end_result) && $end_result > 0) || (!is_numeric($end_result) && isset($end_result[3]))))
+				{
+					pts_module_manager::module_process('__post_test_run_success', $test_result);
+					$test_successful = true;
+
+					if($test_run_manager->get_results_identifier() != null)
+					{
+						$test_result->test_result_buffer = new pts_test_result_buffer();
+						$test_result->test_result_buffer->add_test_result($test_run_manager->get_results_identifier(), $test_result->active->get_result(), $test_result->active->get_values_as_string(), pts_test_run_manager::process_json_report_attributes($test_result), $test_result->active->get_min_result(), $test_result->active->get_max_result());
+						$test_run_manager->result_file->add_result($test_result);
+
+						if($test_result->secondary_linked_results != null && is_array($test_result->secondary_linked_results))
+						{
+							foreach($test_result->secondary_linked_results as &$run_request_minor)
+							{
+								if(strpos($run_request_minor->get_arguments_description(), $test_result->get_arguments_description()) === false)
+								{
+									$run_request_minor->set_used_arguments_description($test_result->get_arguments_description() . ' - ' . $run_request_minor->get_arguments_description());
+									$run_request_minor->set_used_arguments($test_result->get_arguments() . ' - ' . $run_request_minor->get_arguments_description());
+								}
+
+								$run_request_minor->test_result_buffer = new pts_test_result_buffer();
+								$run_request_minor->test_result_buffer->add_test_result($test_run_manager->get_results_identifier(), $run_request_minor->active->get_result(), $run_request_minor->active->get_values_as_string(), pts_test_run_manager::process_json_report_attributes($test_result),$run_request_minor->active->get_min_result(), $run_request_minor->active->get_max_result());
+								$test_run_manager->result_file->add_result($run_request_minor);
+							}
 						}
-						$xml_write_pos++;
 					}
 				}
 			}
-
-			pts_file_io::unlink(PTS_SAVE_RESULTS_PATH . $test_run_manager->get_file_name() . '/test-logs/active/');
 		}
+
+		if($test_run_manager->get_results_identifier() != null && $test_run_manager->get_file_name() != null && pts_config::read_bool_config('PhoronixTestSuite/Options/Testing/SaveTestLogs', 'FALSE'))
+		{
+			static $xml_write_pos = 1;
+			pts_file_io::mkdir(PTS_SAVE_RESULTS_PATH . $test_run_manager->get_file_name() . '/test-logs/' . $xml_write_pos . '/');
+
+			if(is_dir(PTS_SAVE_RESULTS_PATH . $test_run_manager->get_file_name() . '/test-logs/active/' . $test_run_manager->get_results_identifier()))
+			{
+				$test_log_write_dir = PTS_SAVE_RESULTS_PATH . $test_run_manager->get_file_name() . '/test-logs/' . $xml_write_pos . '/' . $test_run_manager->get_results_identifier() . '/';
+				if(is_dir($test_log_write_dir))
+				{
+					pts_file_io::delete($test_log_write_dir, null, true);
+				}
+				rename(PTS_SAVE_RESULTS_PATH . $test_run_manager->get_file_name() . '/test-logs/active/' . $test_run_manager->get_results_identifier() . '/', $test_log_write_dir);
+			}
+			$xml_write_pos++;
+		}
+		pts_file_io::unlink(PTS_SAVE_RESULTS_PATH . $test_run_manager->get_file_name() . '/test-logs/active/');
 
 		return $test_successful;
 	}

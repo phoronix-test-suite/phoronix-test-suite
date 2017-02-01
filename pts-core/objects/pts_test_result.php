@@ -32,6 +32,7 @@ class pts_test_result
 	public $test_result_buffer;
 
 	public $active = null;
+	public $generated_result_buffers = null;
 	public $secondary_linked_results = null;
 
 	// Added to make it easy to have PTS modules run a custom binary prior to running a program for the test

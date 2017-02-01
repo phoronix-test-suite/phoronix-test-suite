@@ -630,6 +630,12 @@ class pts_test_run_manager
 			return;
 		}
 
+		if(is_object($test_run_request->test_result_buffer) && in_array($this->get_results_identifier(), $test_run_request->test_result_buffer->get_identifiers()))
+		{
+			// There already is a match for this test in this particular result buffer
+			return true;
+		}
+
 		$test_successful = pts_test_execution::run_test($this, $test_run_request);
 
 		if(pts_file_io::unlink(PTS_USER_PATH . 'halt-testing'))
