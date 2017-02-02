@@ -392,21 +392,21 @@ class pts_concise_display_mode implements pts_display_mode_interface
 		else if(in_array($test_result->test_profile->get_display_format(), array('FILLED_LINE_GRAPH', 'LINE_GRAPH')))
 		{
 			$values = explode(',', $test_result->active->get_result());
-			$end_print = null;
+			$end_print = PHP_EOL . $this->tab . 'Test Results' . ($test_result->get_arguments_description() ? ' - ' . $test_result->get_arguments_description() : null) . ':' . PHP_EOL;
 
 			if(count($values) > 1)
 			{
 				$avg = pts_math::set_precision(array_sum($values) / count($values), 2);
 				$min = pts_math::set_precision(min($values), 2);
 				$max = pts_math::set_precision(max($values), 2);
-				$end_print .= $this->tab . $this->tab . 'Average: ' . $avg . ' (' . $test_result->test_profile->get_result_scale() . ')' . PHP_EOL;
-				$end_print .= $this->tab . $this->tab . 'Minimum: ' . $min . ' (' . $test_result->test_profile->get_result_scale() . ')' . PHP_EOL;
-				$end_print .= $this->tab . $this->tab . 'Maximum: ' . $max . ' (' . $test_result->test_profile->get_result_scale() . ')' . PHP_EOL;
+				$end_print .= $this->tab . 'Average: ' . $avg . ' ' . $test_result->test_profile->get_result_scale() . PHP_EOL;
+				$end_print .= $this->tab . 'Minimum: ' . $min . ' ' . $test_result->test_profile->get_result_scale() . PHP_EOL;
+				$end_print .= $this->tab . 'Maximum: ' . $max . ' ' . $test_result->test_profile->get_result_scale() . PHP_EOL;
 			}
 		}
 		else
 		{
-			$end_print = PHP_EOL . $this->tab . 'Test Results' . ($test_result->get_arguments_description() ? ' - ' . $test_result->get_arguments_description() : null) . ':' . PHP_EOL;
+			$end_print = PHP_EOL . $this->tab . ($test_result->get_arguments_description() ? ' - ' . $test_result->get_arguments_description() : 'Test Results') . ':' . PHP_EOL;
 			$result_count = 0;
 			foreach($test_result->active->results as $result)
 			{

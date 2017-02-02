@@ -255,7 +255,6 @@ class pts_test_result_parser
 			return false;
 		}
 
-		$extra_results = array();
 		if($xml->ExtraData)
 		{
 			foreach($xml->ExtraData as $entry)
@@ -336,17 +335,13 @@ class pts_test_result_parser
 					$tp->set_identifier(null);
 					$extra_result = new pts_test_result($tp);
 					$extra_result->active = new pts_test_result_buffer_active();
-					$extra_result->set_used_arguments_description('Total Frame Time');
+					$extra_result->set_used_arguments_description($test_result->get_arguments_description() . ' - Total Frame Time');
+					$extra_result->set_used_arguments($test_result->get_arguments() . ' - ' . $extra_result->get_arguments_description()); // this formatting is weird but to preserve pre-PTS7 comparsions of extra results
 					$extra_result->active->set_result(implode(',', $frame_all_times));
-					$extra_results[] = $extra_result;
+					self::gen_result_active_handle($test_result, $extra_result)->add_trial_run_result(implode(',', $frame_all_times));
 					//$extra_result->set_used_arguments(phodevi::sensor_name($sensor) . ' ' . $test_result->get_arguments());
 				}
 			}
-		}
-
-		if(!empty($extra_results))
-		{
-			$test_result->secondary_linked_results = $extra_results;
 		}
 	}
 	protected static function parse_iqc_result(&$test_run_request, $log_file, $pts_test_arguments, $extra_arguments)
