@@ -710,22 +710,6 @@ class pts_test_execution
 						$test_result->test_result_buffer = new pts_test_result_buffer();
 						$test_result->test_result_buffer->add_test_result($test_run_manager->get_results_identifier(), $test_result->active->get_result(), $test_result->active->get_values_as_string(), pts_test_run_manager::process_json_report_attributes($test_result), $test_result->active->get_min_result(), $test_result->active->get_max_result());
 						$test_run_manager->result_file->add_result($test_result);
-
-						if($test_result->secondary_linked_results != null && is_array($test_result->secondary_linked_results))
-						{
-							foreach($test_result->secondary_linked_results as &$run_request_minor)
-							{
-								if(strpos($run_request_minor->get_arguments_description(), $test_result->get_arguments_description()) === false)
-								{
-									$run_request_minor->set_used_arguments_description($test_result->get_arguments_description() . ' - ' . $run_request_minor->get_arguments_description());
-									$run_request_minor->set_used_arguments($test_result->get_arguments() . ' - ' . $run_request_minor->get_arguments_description());
-								}
-
-								$run_request_minor->test_result_buffer = new pts_test_result_buffer();
-								$run_request_minor->test_result_buffer->add_test_result($test_run_manager->get_results_identifier(), $run_request_minor->active->get_result(), $run_request_minor->active->get_values_as_string(), pts_test_run_manager::process_json_report_attributes($test_result),$run_request_minor->active->get_min_result(), $run_request_minor->active->get_max_result());
-								$test_run_manager->result_file->add_result($run_request_minor);
-							}
-						}
 					}
 				}
 			}
