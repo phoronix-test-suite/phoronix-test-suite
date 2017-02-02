@@ -38,7 +38,6 @@ class pts_test_execution
 	{
 		$test_identifier = $test_run_request->test_profile->get_identifier();
 		$extra_arguments = $test_run_request->get_arguments();
-		$arguments_description = $test_run_request->get_arguments_description();
 		$full_output = pts_config::read_bool_config('PhoronixTestSuite/Options/General/FullOutput', 'FALSE');
 
 		// Do the actual test running process
@@ -82,7 +81,6 @@ class pts_test_execution
 		// Start
 		$cache_share_pt2so = $test_directory . 'cache-share-' . PTS_INIT_TIME . '.pt2so';
 		$cache_share_present = $allow_cache_share && is_file($cache_share_pt2so);
-		$test_run_request->set_used_arguments_description($arguments_description);
 		pts_module_manager::module_process('__pre_test_run', $test_run_request);
 
 		$time_test_start = time();
@@ -465,70 +463,75 @@ class pts_test_execution
 			}
 		}
 
-		// Fill in missing test details
-
-		if(empty($arguments_description))
+		// Fill in any missing test details
+		foreach($test_run_request->generated_result_buffers as &$sub_tr)
 		{
-			$arguments_description = $test_run_request->test_profile->get_test_subtitle();
-		}
+			$arguments_description = $sub_tr->get_arguments_description();
 
-		// TODO XXX hook up this below section to using it on a loop of the generated result graphs rather than just the main result
-		$file_var_checks = array(
-		array('pts-results-scale', 'set_result_scale', null),
-		array('pts-results-proportion', 'set_result_proportion', null),
-		array('pts-results-quantifier', 'set_result_quantifier', null),
-		array('pts-test-version', 'set_version', null),
-		array('pts-test-description', null, 'set_used_arguments_description'),
-		array('pts-footnote', null, null),
-		);
-
-		foreach($file_var_checks as &$file_check)
-		{
-			list($file, $set_function, $result_set_function) = $file_check;
-
-			if(is_file($test_directory . $file))
+			if(empty($arguments_description))
 			{
-				$file_contents = pts_file_io::file_get_contents($test_directory . $file);
-				unlink($test_directory . $file);
+				$arguments_description = $sub_tr->test_profile->get_test_subtitle();
+			}
 
-				if(!empty($file_contents))
+			$file_var_checks = array(
+			array('pts-results-scale', 'set_result_scale', null),
+			array('pts-results-proportion', 'set_result_proportion', null),
+			array('pts-results-quantifier', 'set_result_quantifier', null),
+			array('pts-test-version', 'set_version', null),
+			array('pts-test-description', null, 'set_used_arguments_description'),
+			array('pts-footnote', null, null),
+			);
+
+			foreach($file_var_checks as &$file_check)
+			{
+				list($file, $set_function, $result_set_function) = $file_check;
+
+				if(is_file($test_directory . $file))
 				{
-					if($set_function != null)
+					$file_contents = pts_file_io::file_get_contents($test_directory . $file);
+					unlink($test_directory . $file);
+
+					if(!empty($file_contents))
 					{
-						call_user_func(array($test_run_request->test_profile, $set_function), $file_contents);
-					}
-					else if($result_set_function != null)
-					{
-						if($result_set_function == 'set_used_arguments_description')
+						if($set_function != null)
 						{
-							$arguments_description = $file_contents;
+							call_user_func(array($sub_tr->test_profile, $set_function), $file_contents);
 						}
-						else
+						else if($result_set_function != null)
 						{
-							call_user_func(array($test_run_request, $result_set_function), $file_contents);
+							if($result_set_function == 'set_used_arguments_description')
+							{
+								$arguments_description = $file_contents;
+							}
+							else
+							{
+								call_user_func(array($sub_tr, $result_set_function), $file_contents);
+							}
 						}
-					}
-					else if($file == 'pts-footnote')
-					{
-						$test_run_request->test_profile->test_installation->set_install_footnote($file_contents);
+						else if($file == 'pts-footnote')
+						{
+							$sub_tr->test_profile->test_installation->set_install_footnote($file_contents);
+						}
 					}
 				}
 			}
-		}
 
-		if(empty($arguments_description))
-		{
-			$arguments_description = 'Phoronix Test Suite v' . PTS_VERSION;
-		}
-
-		foreach(pts_client::environmental_variables() as $key => $value)
-		{
-			$arguments_description = str_replace('$' . $key, $value, $arguments_description);
-
-			if(!in_array($key, array('VIDEO_MEMORY', 'NUM_CPU_CORES', 'NUM_CPU_JOBS')))
+			if(empty($arguments_description))
 			{
-				$extra_arguments = str_replace('$' . $key, $value, $extra_arguments);
+				$arguments_description = 'Phoronix Test Suite v' . PTS_VERSION;
 			}
+
+			foreach(pts_client::environmental_variables() as $key => $value)
+			{
+				$arguments_description = str_replace('$' . $key, $value, $arguments_description);
+
+				if(!in_array($key, array('VIDEO_MEMORY', 'NUM_CPU_CORES', 'NUM_CPU_JOBS')))
+				{
+					$extra_arguments = str_replace('$' . $key, $value, $extra_arguments);
+				}
+			}
+			$sub_tr->set_used_arguments_description($arguments_description);
+			$sub_tr->set_used_arguments($extra_arguments);
 		}
 
 		// Any device notes to add to PTS test notes area?
@@ -537,12 +540,10 @@ class pts_test_execution
 			pts_test_notes_manager::add_note($note);
 		}
 
+		// Result Calculation
+
 		// Ending Tasks
 		pts_client::$display->display_interrupt_message($test_run_request->test_profile->get_post_run_message());
-
-		// Result Calculation
-		$test_run_request->set_used_arguments_description($arguments_description);
-		$test_run_request->set_used_arguments($extra_arguments);
 		$test_successful = self::calculate_end_result_post_processing($test_run_manager, $test_run_request); // Process results
 
 		// End Finalize
