@@ -87,7 +87,7 @@ class pts_test_execution
 		pts_client::$display->test_run_start($test_run_manager, $test_run_request);
 		sleep(1);
 
-		if(!$cache_share_present)
+		if(!$cache_share_present && !$test_run_manager->DEBUG_no_test_execution_just_result_parse)
 		{
 			$pre_output = pts_tests::call_test_script($test_run_request->test_profile, 'pre', 'Running Pre-Test Script', $pts_test_arguments, $extra_runtime_variables, true);
 
@@ -118,7 +118,7 @@ class pts_test_execution
 			$execute_binary_prepend = $test_run_request->exec_binary_prepend;
 		}
 
-		if(!$cache_share_present && $test_run_request->test_profile->is_root_required())
+		if(!$cache_share_present && !$test_run_manager->DEBUG_no_test_execution_just_result_parse && $test_run_request->test_profile->is_root_required())
 		{
 			if(phodevi::is_root() == false)
 			{
@@ -150,7 +150,26 @@ class pts_test_execution
 
 		for($i = 0, $times_result_produced = 0, $abort_testing = false, $time_test_start_actual = time(), $defined_times_to_run = $times_to_run; $i < $times_to_run && $i < 256 && !$abort_testing; $i++)
 		{
-			$test_log_file = $test_directory . basename($test_identifier) . '-' . $runtime_identifier . '-' . ($i + 1) . '.log';
+			if($test_run_manager->DEBUG_no_test_execution_just_result_parse)
+			{
+				$find_log_file = pts_file_io::glob($test_directory . basename($test_identifier) . '-*.log');
+				if(!empty($find_log_file))
+				{
+					if(!isset($find_log_file[0]) || empty($find_log_file[0]))
+					{
+						pts_client::test_profile_debug_message('No existing log file found for this test profile. Generate one by using the run/benchmark or debug-run commands.');
+						return false;
+					}
+
+					$test_log_file = $find_log_file[0];
+					pts_client::test_profile_debug_message('Log File: ' . $test_log_file);
+				}
+			}
+			else
+			{
+				$test_log_file = $test_directory . basename($test_identifier) . '-' . $runtime_identifier . '-' . ($i + 1) . '.log';
+			}
+
 			$is_expected_last_run = ($i == ($times_to_run - 1));
 			$produced_monitoring_result = false;
 			$has_result = false;
@@ -182,7 +201,7 @@ class pts_test_execution
 				unset($cache_share);
 			}
 
-			if($restored_from_cache == false)
+			if(!$test_run_manager->DEBUG_no_test_execution_just_result_parse && $restored_from_cache == false)
 			{
 				pts_client::$display->test_run_instance_header($test_run_request);
 				sleep(1);
@@ -225,6 +244,7 @@ class pts_test_execution
 				{
 					pts_client::$display->test_run_message('Utilizing Data From Shared Data');
 				}
+				$test_run_time = 0;
 			}
 
 
@@ -278,7 +298,7 @@ class pts_test_execution
 				if($has_result)
 				{
 					$times_result_produced++;
-					if($test_run_time < 2 && $test_run_request->test_profile->get_estimated_run_time() > 60 && !$restored_from_cache)
+					if($test_run_time < 2 && $test_run_request->test_profile->get_estimated_run_time() > 60 && !$restored_from_cache && !$test_run_manager->DEBUG_no_test_execution_just_result_parse)
 					{
 						// If the test ended in less than two seconds, outputted some int, and normally the test takes much longer, then it's likely some invalid run
 						self::test_run_instance_error($test_run_manager, $test_run_request, 'The test run ended prematurely.');
@@ -317,7 +337,7 @@ class pts_test_execution
 				}
 			}
 
-			if($is_expected_last_run && $times_result_produced > floor(($i - 2) / 2) && !$cache_share_present && $test_run_manager->do_dynamic_run_count())
+			if($is_expected_last_run && $times_result_produced > floor(($i - 2) / 2) && !$cache_share_present && !$test_run_manager->DEBUG_no_test_execution_just_result_parse && $test_run_manager->do_dynamic_run_count())
 			{
 				// The later check above ensures if the test is failing often the run count won't uselessly be increasing
 				// Should we increase the run count?
@@ -356,7 +376,7 @@ class pts_test_execution
 
 			if($times_to_run > 1 && $i < ($times_to_run - 1))
 			{
-				if($cache_share_present == false)
+				if($cache_share_present == false && !$test_run_manager->DEBUG_no_test_execution_just_result_parse)
 				{
 					$interim_output = pts_tests::call_test_script($test_run_request->test_profile, 'interim', 'Running Interim Test Script', $pts_test_arguments, $extra_runtime_variables, true);
 
@@ -401,7 +421,7 @@ class pts_test_execution
 
 		$time_test_end_actual = time();
 
-		if($cache_share_present == false)
+		if($cache_share_present == false && !$test_run_manager->DEBUG_no_test_execution_just_result_parse)
 		{
 			$post_output = pts_tests::call_test_script($test_run_request->test_profile, 'post', 'Running Post-Test Script', $pts_test_arguments, $extra_runtime_variables, true);
 

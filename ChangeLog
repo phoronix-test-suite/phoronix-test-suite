@@ -10,6 +10,7 @@ pts-core: Add ArgumentsDescription to the results-parser schema for appending a 
 pts-core: Add the result-scale to the test profile comparison_hash (NOTE: any external data stores making use of the comparison_hash should thus rebuild their hash indexes)
 pts-core: Allow one test run to generate multiple result outputs (graphs, etc) from multiple result-definition entries
 pts-core: Drop secondary_linked_results handling now that all tests can create multiple result outputs natively, use that code path
+pts-core: Add debug-result-parser sub-command as a way to debug test profile result-parser defintions, just scan for old test log files and don't actually execute test
 
 Phoronix Test Suite 7.0.0 Milestone 2
 23 January 2017

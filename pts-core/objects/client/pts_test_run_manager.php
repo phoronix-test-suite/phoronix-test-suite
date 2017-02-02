@@ -56,6 +56,7 @@ class pts_test_run_manager
 	protected static $test_run_process_active = false;
 	protected $batch_mode = false;
 	protected $auto_mode = false;
+	public $DEBUG_no_test_execution_just_result_parse = false;
 
 	public function __construct($batch_mode = false, $auto_mode = false)
 	{

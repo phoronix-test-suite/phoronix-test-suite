@@ -453,7 +453,7 @@ class pts_test_result_parser
 		if(!empty($match_test_arguments) && strpos($pts_test_arguments, $match_test_arguments) === false)
 		{
 			// This is not the ResultsParser XML section to use as the MatchToTestArguments does not match the PTS test arguments
-			pts_client::test_profile_debug_message('Failed Initial Check');
+			pts_client::test_profile_debug_message('Failed Initial Check For Matching: ' . $pts_test_arguments . ' not in ' . $match_test_arguments);
 			return false;
 		}
 
@@ -477,7 +477,7 @@ class pts_test_result_parser
 		if($prefix != null && $start_result_pos === false && $template != 'csv-dump-frame-latencies' && $template != 'libframetime-output')
 		{
 			// XXX: technically the $prefix check shouldn't be needed, verify whether safe to have this check be unconditional on start_result_pos failing...
-			pts_client::test_profile_debug_message('Failed Initial Check');
+			pts_client::test_profile_debug_message('Failed Additional Check');
 			return false;
 		}
 
@@ -497,6 +497,7 @@ class pts_test_result_parser
 		$end_result_line_pos = strpos($template, "\n", $end_result_pos);
 		$template_line = substr($template, 0, ($end_result_line_pos === false ? strlen($template) : $end_result_line_pos));
 		$template_line = substr($template_line, strrpos($template_line, "\n"));
+		pts_client::test_profile_debug_message('Template Line: ' . $template_line);
 		$template_r = explode(' ', pts_strings::trim_spaces(str_replace($space_out_chars, ' ', str_replace('=', ' = ', $template_line))));
 		$template_r_pos = array_search($key_for_result, $template_r);
 
@@ -784,7 +785,7 @@ class pts_test_result_parser
 				}
 			}
 
-			if($search_key == null && $search_key != null)
+			if($search_key == null && $key != null)
 			{
 				// Just try searching for the first part of the string
 				/*
