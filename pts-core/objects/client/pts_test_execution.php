@@ -223,7 +223,7 @@ class pts_test_execution
 			{
 				if($i == 1) // to only display once
 				{
-					pts_client::$display->test_run_message('Capturing Data From Shared Log Data');
+					pts_client::$display->test_run_message('Utilizing Data From Shared Data');
 				}
 			}
 
