@@ -150,7 +150,6 @@ class pts_test_execution
 
 		for($i = 0, $times_result_produced = 0, $abort_testing = false, $time_test_start_actual = time(), $defined_times_to_run = $times_to_run; $i < $times_to_run && $i < 256 && !$abort_testing; $i++)
 		{
-			pts_client::$display->test_run_instance_header($test_run_request);
 			$test_log_file = $test_directory . basename($test_identifier) . '-' . $runtime_identifier . '-' . ($i + 1) . '.log';
 			$is_expected_last_run = ($i == ($times_to_run - 1));
 			$produced_monitoring_result = false;
@@ -185,6 +184,7 @@ class pts_test_execution
 
 			if($restored_from_cache == false)
 			{
+				pts_client::$display->test_run_instance_header($test_run_request);
 				sleep(1);
 				$test_run_command = 'cd ' . $to_execute . ' && ' . $execute_binary_prepend . './' . $execute_binary . ' ' . $pts_test_arguments . ' 2>&1';
 
@@ -218,6 +218,13 @@ class pts_test_execution
 
 				$test_run_time = time() - $test_run_time_start;
 				$produced_monitoring_result = $is_monitoring ? pts_test_result_parser::system_monitor_task_post_test($test_run_request) : false;
+			}
+			else
+			{
+				if($i == 1) // to only display once
+				{
+					pts_client::$display->test_run_message('Capturing Data From Shared Log Data');
+				}
 			}
 
 
