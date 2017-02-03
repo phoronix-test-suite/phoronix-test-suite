@@ -130,6 +130,7 @@ class pts_openbenchmarking
 			$composite_xml = $json_response['openbenchmarking']['result']['composite_xml'];
 
 			$result_file = new pts_result_file($composite_xml);
+			$result_file->set_reference_id($id);
 			//$id = strtolower($id);
 			$valid = $return_xml ? $result_file->get_xml() : pts_client::save_test_result($id . '/composite.xml', $result_file->get_xml(), true);
 

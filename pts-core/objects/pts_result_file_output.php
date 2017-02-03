@@ -197,7 +197,8 @@ class pts_result_file_output
 
 					if(is_numeric($val))
 					{
-						$result_output .= str_repeat(' ', $longest_result - strlen($val))  . '|';
+						$repeat_length = $longest_result - strlen($val);
+						$result_output .= ($repeat_length >= 0 ? str_repeat(' ', $repeat_length) : null)  . '|';
 						$current_line_length = strlen(substr($result_output, strrpos($result_output, PHP_EOL) + 1)) + 1;
 						$result_output .= str_repeat('=', round(($val / $max_value) * ($terminal_width - $current_line_length)));
 
