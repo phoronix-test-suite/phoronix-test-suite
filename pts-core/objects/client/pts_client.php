@@ -307,20 +307,21 @@ class pts_client
 	{
 		return (function_exists('posix_isatty') && posix_isatty(STDOUT)) || (PTS_IS_CLIENT && getenv('LS_COLORS'));
 	}
-	public static function cli_colored_text($str, $color)
+	public static function cli_colored_text($str, $color, $bold = false)
 	{
-		if(!self::supports_colored_text_output())
+		if(!self::supports_colored_text_output() || empty($color))
 		{
 			return $str;
 		}
 
+		$attribute = ($bold ? '1' : '0');
 		$colors = array(
-			'black' => '0;30',
-			'gray' => '1;30',
-			'blue' => '0;34',
-			'green' => '0;32',
-			'red' => '0;31',
-			'cyan' => '0;36',
+			'black' => $attribute . ';30',
+			'gray' => '1;30', // gray not bold doesn't look good in all consoles
+			'blue' => $attribute . ';34',
+			'green' => $attribute . ';32',
+			'red' => $attribute . ';31',
+			'cyan' => $attribute . ';36',
 			);
 
 		if(!isset($colors[$color]))

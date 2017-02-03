@@ -70,6 +70,34 @@ class pts_test_result_buffer_active
 	{
 		return $this->result_max;
 	}
+	public function get_max_value()
+	{
+		$value = 0;
+
+		foreach($this->results as $result)
+		{
+			if($result > $value)
+			{
+				$value = $result;
+			}
+		}
+
+		return $value;
+	}
+	public function get_min_value()
+	{
+		$value = 0;
+
+		foreach($this->results as $result)
+		{
+			if($result < $value || $value == 0)
+			{
+				$value = $result;
+			}
+		}
+
+		return $value;
+	}
 }
 
 ?>

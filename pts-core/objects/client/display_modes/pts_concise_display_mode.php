@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2016, Phoronix Media
-	Copyright (C) 2009 - 2016, Michael Larabel
+	Copyright (C) 2009 - 2017, Phoronix Media
+	Copyright (C) 2009 - 2017, Michael Larabel
 	pts_concise_display_mode.php: The batch / concise display mode
 
 	This program is free software; you can redistribute it and/or modify
@@ -128,7 +128,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	public function test_install_start($identifier)
 	{
 		$this->test_install_pos++;
-		echo $this->tab . pts_client::cli_colored_text($identifier, 'cyan') . ':' . PHP_EOL;
+		echo $this->tab . pts_client::cli_colored_text($identifier, 'cyan', true) . ':' . PHP_EOL;
 		echo $this->tab . $this->tab . 'Test Installation ' . $this->test_install_pos . ' of ' . $this->test_install_count . PHP_EOL;
 	}
 	public function test_install_downloads($test_install_request)
@@ -220,7 +220,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 
 		$terminal_width = pts_client::terminal_width() > 1 ? pts_client::terminal_width() : $terminal_width;
 		$text_width = $terminal_width - (strlen($this->tab) * 3);
-		echo PHP_EOL . $this->tab . $this->tab . pts_client::cli_colored_text(wordwrap('[NOTICE] ' . $message, $text_width, PHP_EOL . $this->tab . $this->tab), 'gray') . PHP_EOL;
+		echo PHP_EOL . $this->tab . $this->tab . pts_client::cli_colored_text(wordwrap('[NOTICE] ' . $message, $text_width, PHP_EOL . $this->tab . $this->tab), 'gray', true) . PHP_EOL;
 	}
 	public function test_install_progress_start($process)
 	{
@@ -275,7 +275,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	}
 	public function test_install_error($error_string)
 	{
-		echo $this->tab . $this->tab . $this->tab . pts_client::cli_colored_text($error_string, 'red') . PHP_EOL;
+		echo $this->tab . $this->tab . $this->tab . pts_client::cli_colored_text($error_string, 'red', true) . PHP_EOL;
 	}
 	public function test_install_prompt($prompt_string)
 	{
@@ -301,7 +301,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 			$test_title_string .= ' [' . pts_client::swap_variables($test_description, array('pts_client', 'environmental_variables')) . ']';
 		}
 
-		echo PHP_EOL . PHP_EOL . pts_client::cli_colored_text($test_title_string, 'cyan') . PHP_EOL;
+		echo PHP_EOL . PHP_EOL . pts_client::cli_colored_text($test_title_string, 'cyan', true) . PHP_EOL;
 		echo $this->tab . 'Test ' . $test_run_manager->get_test_run_position() . ' of ' . $test_run_manager->get_test_run_count_reported() . PHP_EOL;
 
 		$this->trial_run_count_current = 0;
@@ -324,11 +324,11 @@ class pts_concise_display_mode implements pts_display_mode_interface
 			if((time() % 86400) + $remaining_length > 86400)
 			{
 				// If test run is past current calendar date
-				$est_end_time = date(' (H:i T M j)', time() + $remaining_length);
+				$est_end_time = date(' [H:i T M j]', time() + $remaining_length);
 			}
 			else
 			{
-				$est_end_time = date(' (H:i T)', time() + $remaining_length);
+				$est_end_time = date(' [H:i T]', time() + $remaining_length);
 			}
 
 			array_push($display_table, array($this->tab . 'Estimated Time To Completion:', pts_strings::format_time($remaining_length, 'SECONDS', true, 60) . $est_end_time));
@@ -353,7 +353,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	}
 	public function test_run_instance_error($error_string)
 	{
-		echo PHP_EOL . $this->tab . $this->tab . pts_client::cli_colored_text($error_string, 'red');
+		echo PHP_EOL . $this->tab . $this->tab . pts_client::cli_colored_text($error_string, 'red', true);
 	}
 	public function test_run_instance_output(&$to_output)
 	{
@@ -394,27 +394,61 @@ class pts_concise_display_mode implements pts_display_mode_interface
 			$values = explode(',', $test_result->active->get_result());
 			$end_print = PHP_EOL . $this->tab . ($test_result->get_arguments_description() ? $test_result->get_arguments_description() : 'Test Results') . ':' . PHP_EOL;
 
+			if($test_result->test_profile->get_result_proportion() == 'LIB')
+			{
+				$minimum_color = 'green';
+				$maximum_color = 'red';
+			}
+			else if($test_result->test_profile->get_result_proportion() == 'HIB')
+			{
+				$minimum_color = 'red';
+				$maximum_color = 'green';
+			}
+
 			if(count($values) > 1)
 			{
 				$avg = pts_math::set_precision(array_sum($values) / count($values), 2);
 				$min = pts_math::set_precision(min($values), 2);
 				$max = pts_math::set_precision(max($values), 2);
-				$end_print .= $this->tab . 'Average: ' . $avg . ' ' . $test_result->test_profile->get_result_scale() . PHP_EOL;
-				$end_print .= $this->tab . 'Minimum: ' . $min . ' ' . $test_result->test_profile->get_result_scale() . PHP_EOL;
-				$end_print .= $this->tab . 'Maximum: ' . $max . ' ' . $test_result->test_profile->get_result_scale() . PHP_EOL;
+				$end_print .= $this->tab . 'Average: ' . $avg . ' ' . pts_client::cli_colored_text($test_result->test_profile->get_result_scale(), 'gray', true) . PHP_EOL;
+				$end_print .= $this->tab . 'Minimum: ' . $min . ' ' . pts_client::cli_colored_text($test_result->test_profile->get_result_scale(), $minimum_color, true) . PHP_EOL;
+				$end_print .= $this->tab . 'Maximum: ' . $max . ' ' . pts_client::cli_colored_text($test_result->test_profile->get_result_scale(), $maximum_color, true) . PHP_EOL;
 			}
 		}
 		else
 		{
 			$end_print = PHP_EOL . $this->tab . ($test_result->get_arguments_description() ? $test_result->get_arguments_description() : 'Test Results') . ':' . PHP_EOL;
 			$result_count = 0;
+			if($test_result->test_profile->get_result_proportion() == 'LIB')
+			{
+				$best_result = $test_result->active->get_min_value();
+				$worst_result = $test_result->active->get_max_value();
+			}
+			else if($test_result->test_profile->get_result_proportion() == 'HIB')
+			{
+				$best_result = $test_result->active->get_max_value();
+				$worst_result = $test_result->active->get_min_value();
+			}
 			foreach($test_result->active->results as $result)
 			{
-				$end_print .= $this->tab . $this->tab . $result . PHP_EOL;
+				if($result == $best_result)
+				{
+					$text_color = 'green';
+				}
+				else if($result == $worst_result)
+				{
+					$text_color = 'red';
+				}
+				else
+				{
+					$text_color = null;
+				}
+
+				$end_print .= $this->tab . $this->tab . pts_client::cli_colored_text($result, $text_color, true) . PHP_EOL;
 				$result_count++;
 			}
 
-			$end_print .= PHP_EOL . $this->tab . pts_strings::result_quantifier_to_string($test_result->test_profile->get_result_quantifier()) . ': ' . pts_client::cli_colored_text($test_result->active->get_result() . ' ' . $test_result->test_profile->get_result_scale(), 'green');
+			$end_print .= PHP_EOL . $this->tab . pts_strings::result_quantifier_to_string($test_result->test_profile->get_result_quantifier()) . ': ' . pts_client::cli_colored_text($test_result->active->get_result() . ' ' . $test_result->test_profile->get_result_scale(), 'blue', true);
 
 			if($test_result->active->get_min_result())
 			{
@@ -441,7 +475,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	}
 	public function test_run_error($error_string)
 	{
-		echo $this->tab . $this->tab . pts_client::cli_colored_text($error_string, 'red') . PHP_EOL;
+		echo $this->tab . $this->tab . pts_client::cli_colored_text($error_string, 'red', true) . PHP_EOL;
 	}
 	public function generic_prompt($prompt_string)
 	{
@@ -463,7 +497,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 			foreach(pts_strings::trim_explode(PHP_EOL, $string) as $line_count => $line_string)
 			{
 				// ($line_count > 0 ? $this->tab : null) . 
-				echo pts_client::cli_colored_text($line_string, 'green') . PHP_EOL;
+				echo pts_client::cli_colored_text($line_string, 'green', true) . PHP_EOL;
 			}
 
 			if($ending_line_break)
@@ -510,7 +544,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 			$error_msg .= ':' . $line;
 		}
 
-		echo pts_client::cli_colored_text($error_msg, 'red') . PHP_EOL;
+		echo pts_client::cli_colored_text($error_msg, 'red', true) . PHP_EOL;
 	}
 	public function get_tab()
 	{

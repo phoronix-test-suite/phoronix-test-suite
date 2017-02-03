@@ -346,7 +346,7 @@ class phodevi extends phodevi_base
 					{
 						$sys_string .= pts_user_io::display_text_table($tabled, '    ', 0, 17) . PHP_EOL;
 					}
-					$sys_string .= PHP_EOL . '  ' . pts_client::cli_colored_text(strtoupper($key), 'gray') . ': ' . pts_client::cli_colored_text($in, 'green') . PHP_EOL;
+					$sys_string .= PHP_EOL . '  ' . pts_client::cli_colored_text(strtoupper($key), 'gray', true) . ': ' . pts_client::cli_colored_text($in, 'green', true) . PHP_EOL;
 				}
 
 			}
