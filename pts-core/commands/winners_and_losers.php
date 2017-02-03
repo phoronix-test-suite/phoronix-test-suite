@@ -42,8 +42,8 @@ class winners_and_losers implements pts_option_interface
 			return false;
 		}
 
-		echo $result_file->get_title() . PHP_EOL;
-		echo 'RESULT COUNT: ' . $result_file->get_test_count() . PHP_EOL . PHP_EOL;
+		echo  pts_client::cli_colored_text($result_file->get_title(), 'gray', true) . PHP_EOL;
+		echo  pts_client::cli_colored_text('RESULT COUNT: ', 'cyan', true) . $result_file->get_test_count() . PHP_EOL . PHP_EOL;
 		$winners = array();
 		$losers = array();
 		$tests_counted = 0;
@@ -81,14 +81,14 @@ class winners_and_losers implements pts_option_interface
 		arsort($winners);
 		arsort($losers);
 
-		echo 'WINS:' . PHP_EOL;
+		echo  pts_client::cli_colored_text('WINS:', 'green', true) . PHP_EOL;
 		$table = array();
 		foreach($winners as $identifier => $count)
 		{
 			$table[] = array($identifier . ': ', $count, ' [' . pts_math::set_precision($count / $tests_counted * 100, 1) . '%]');
 		}
 		echo pts_user_io::display_text_table($table) . PHP_EOL;
-		echo PHP_EOL . 'LOSSES: ' . PHP_EOL;
+		echo PHP_EOL .  pts_client::cli_colored_text('LOSSES: ', 'red', true) . PHP_EOL;
 		$table = array();
 		foreach($losers as $identifier => $count)
 		{

@@ -410,7 +410,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 				$avg = pts_math::set_precision(array_sum($values) / count($values), 2);
 				$min = pts_math::set_precision(min($values), 2);
 				$max = pts_math::set_precision(max($values), 2);
-				$end_print .= $this->tab . 'Average: ' . $avg . ' ' . pts_client::cli_colored_text($test_result->test_profile->get_result_scale(), 'gray', true) . PHP_EOL;
+				$end_print .= $this->tab . 'Average: ' . $avg . ' ' . pts_client::cli_colored_text($test_result->test_profile->get_result_scale(), 'blue', true) . PHP_EOL;
 				$end_print .= $this->tab . 'Minimum: ' . $min . ' ' . pts_client::cli_colored_text($test_result->test_profile->get_result_scale(), $minimum_color, true) . PHP_EOL;
 				$end_print .= $this->tab . 'Maximum: ' . $max . ' ' . pts_client::cli_colored_text($test_result->test_profile->get_result_scale(), $maximum_color, true) . PHP_EOL;
 			}
