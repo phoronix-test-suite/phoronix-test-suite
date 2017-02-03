@@ -552,4 +552,4 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	}
 }
 
-?>$
+?>
