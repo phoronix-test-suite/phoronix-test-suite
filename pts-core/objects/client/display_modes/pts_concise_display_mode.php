@@ -431,17 +431,18 @@ class pts_concise_display_mode implements pts_display_mode_interface
 			}
 			foreach($test_result->active->results as $result)
 			{
-				if($result == $best_result)
+				$text_color = null;
+
+				if(count($test_result->active->results) > 1)
 				{
-					$text_color = 'green';
-				}
-				else if($result == $worst_result)
-				{
-					$text_color = 'red';
-				}
-				else
-				{
-					$text_color = null;
+					if($result == $best_result)
+					{
+						$text_color = 'green';
+					}
+					else if($result == $worst_result)
+					{
+						$text_color = 'red';
+					}
 				}
 
 				$end_print .= $this->tab . $this->tab . pts_client::cli_colored_text($result, $text_color, true) . PHP_EOL;

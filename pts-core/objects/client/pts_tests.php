@@ -376,7 +376,7 @@ class pts_tests
 				$days = floor(($current_time - $m_time) / 86400);
 				$recent_result = sprintf('%-' . $res_length . 'ls [%-ls]', $recent_result, ($days == 0 ? 'Today' : pts_strings::days_ago_format_string($days) . ' old'));
 			}
-			echo PHP_EOL . 'Recently Saved Test Results:' . PHP_EOL;
+			echo PHP_EOL . pts_client::cli_just_bold('Recently Saved Test Results:') . PHP_EOL;
 			echo pts_user_io::display_text_list($recent_results) . PHP_EOL;
 			return true;
 		}
