@@ -331,6 +331,15 @@ class pts_client
 
 		return "\033[" . $colors[$color] . 'm' . $str . "\033[0m";
 	}
+	public static function cli_just_bold($str)
+	{
+		if(!self::supports_colored_text_output())
+		{
+			return $str;
+		}
+
+		return "\033[1m$str\033[0m";
+	}
 	public static function save_test_result($save_to = null, $save_results = null, $render_graphs = true, $result_identifier = null)
 	{
 		// Saves PTS result file

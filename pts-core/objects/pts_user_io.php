@@ -30,7 +30,7 @@ class pts_user_io
 	{
 		do
 		{
-			echo PHP_EOL . $question . ': ';
+			echo PHP_EOL . pts_client::cli_just_bold($question . ': ');
 			$answer = pts_user_io::read_user_input();
 		}
 		while(!$allow_null && empty($answer));
@@ -102,7 +102,7 @@ class pts_user_io
 
 		do
 		{
-			pts_client::$display->generic_prompt($question);
+			pts_client::$display->generic_prompt(pts_client::cli_just_bold($question));
 			$input = strtolower(pts_user_io::read_user_input());
 		}
 		while($input != 'y' && $input != 'n' && $input != '');

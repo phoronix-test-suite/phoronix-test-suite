@@ -335,7 +335,7 @@ class phodevi extends phodevi_base
 					{
 						if(!empty($value))
 						{
-							$tabled[] = array($key . ':', $value);
+							$tabled[] = array(pts_client::cli_just_bold($key) . ':' . str_repeat(' ', (16 - strlen($key))), $value);
 							//$sys_string .= '      ' . strtoupper($key) . ':' . $value . PHP_EOL;
 						}
 					}

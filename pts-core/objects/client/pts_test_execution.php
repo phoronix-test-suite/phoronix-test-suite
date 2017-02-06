@@ -242,7 +242,7 @@ class pts_test_execution
 			{
 				if($i == 1) // to only display once
 				{
-					pts_client::$display->test_run_message('Utilizing Data From Shared Data');
+					pts_client::$display->test_run_message('Utilizing Data From Shared Cache');
 				}
 				$test_run_time = 0;
 			}
