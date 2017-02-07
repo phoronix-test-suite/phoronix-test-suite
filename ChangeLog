@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 7.0.0 Milestone 3
+7 February 2017
 
 pts-core: Add winners-and-losers sub-command for providing some first/last place finish stats
 pts-core: Don't pass files greater than ~50MB to the result parser as likely too big to parse and invalid data like lots of warnings/errors from test

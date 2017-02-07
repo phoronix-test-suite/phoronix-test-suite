@@ -1,4 +1,4 @@
-.TH phoronix-test-suite 1  "www.phoronix-test-suite.com" "7.0.0m2"
+.TH phoronix-test-suite 1  "www.phoronix-test-suite.com" "7.0.0m3"
 .SH NAME
 phoronix-test-suite \- The Phoronix Test Suite is an extensible open-source platform for performing testing and performance evaluation.
 .SH SYNOPSIS
@@ -166,6 +166,9 @@ This option is intended for use by test profile writers and is identical to the 
 .B debug-install [Test | Suite | OpenBenchmarking.org ID | Test Result]  ...
 This option is intended for use by test profile writers and is identical to the install option but will yield more information during the run process that can be used to debug issues with a test profile installer or to verify the test profile is functioning correctly.
 .TP
+.B debug-result-parser [Test | Suite | OpenBenchmarking.org ID | Test Result]  ...
+This option is intended for use by test profile writers and is used for debugging a result parser. No test execution is done, but there must already be PTS-generated .log files present within the test's installation directory.
+.TP
 .B debug-test-download-links [Test | Suite | OpenBenchmarking.org ID | Test Result]
 This option will check all download links within the specified test profile(s) to ensure there are no broken URLs.
 .TP
@@ -232,6 +235,9 @@ This option will read a saved test results file and output the system hardware a
 .TP
 .B show-result [Test Result]
 Open up the test results in the Phoronix Test Suite Result Viewer or on OpenBenchmarking.org.
+.TP
+.B winners-and-losers [Test Result]
+This option is used if you wish to analyze a result file to see which runs produced the most wins/losses of those result identifiers in the saved file.
 .TP
 .SH RESULT ANALYTICS
 .B analyze-all-runs [Test Result]
