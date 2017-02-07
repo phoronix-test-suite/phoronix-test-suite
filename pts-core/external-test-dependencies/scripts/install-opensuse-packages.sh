@@ -5,7 +5,7 @@
 echo "Please enter your root password below:" 1>&2
 
 if [ -x /usr/bin/zypper ]; then
-	su root -c "zypper install -l -y --force-resolution $*"
+	su root -c "zypper install -l -y -i --force-resolution $*"
 else
 	su root -c "yast -i $*"
 fi

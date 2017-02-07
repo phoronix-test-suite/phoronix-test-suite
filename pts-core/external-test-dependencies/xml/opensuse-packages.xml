@@ -204,7 +204,7 @@
 		</Package>
 		<Package>
 			<GenericName>atlas-development</GenericName>
-			<PackageName>atlas-devel</PackageName>
+			<PackageName>blas-devel</PackageName>
 		</Package>
 		<Package>
 			<GenericName>openmpi-development</GenericName>
@@ -284,7 +284,7 @@
 		</Package>
 		<Package>
 			<GenericName>python-sklearn</GenericName>
-			<PackageName>scikit-learn</PackageName>
+			<PackageName>python-scikit-learn</PackageName>
 		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
