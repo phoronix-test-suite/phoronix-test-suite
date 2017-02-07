@@ -41,22 +41,18 @@ class pts_short_display_mode extends pts_concise_display_mode
 	protected function print_test_identifier_prefix($test)
 	{
 		$ti = $test->test_profile->get_identifier();
-		return $ti . str_repeat(' ', ($this->longest_test_identifier_length - strlen($ti))) . ': ';
+		return pts_client::cli_just_bold($ti) . str_repeat(' ', ($this->longest_test_identifier_length - strlen($ti))) . ': ';
 	}
 	public function test_run_start(&$test_run_manager, &$test_result)
 	{
 		echo $this->print_test_identifier_prefix($test_result);
 
+		$after_print = pts_client::cli_colored_text('Test Started', 'green', true);
 		if(($test_description = $test_result->get_arguments_description()) != false)
 		{
-			echo pts_client::swap_variables($test_description, array('pts_client', 'environmental_variables'));
+			$after_print .= ' - ' . pts_client::swap_variables($test_description, array('pts_client', 'environmental_variables'));
 		}
-		else
-		{
-			echo 'Test Starting';
-		}
-
-		echo PHP_EOL;
+		echo $after_print .= PHP_EOL;
 
 		$this->trial_run_count_current = 0;
 		$this->expected_trial_run_count = $test_result->test_profile->get_times_to_run();
@@ -113,10 +109,11 @@ class pts_short_display_mode extends pts_concise_display_mode
 		}
 		else
 		{
-			$end_print = pts_strings::result_quantifier_to_string($test_result->test_profile->get_result_quantifier()) . ': ' . $test_result->active->get_result() . ' ' . $test_result->test_profile->get_result_scale();
+			$end_print = pts_client::cli_just_bold(pts_strings::result_quantifier_to_string($test_result->test_profile->get_result_quantifier()) . ': ') . $test_result->active->get_result() . ' ' . $test_result->test_profile->get_result_scale();
 		}
 
-		echo $this->print_test_identifier_prefix($test_result) . $end_print;
+		echo $this->print_test_identifier_prefix($test_result) . $end_print . PHP_EOL;
+		echo $this->print_test_identifier_prefix($test_result) . pts_client::cli_colored_text('Test Ended', 'red', true) . PHP_EOL;
 	}
 }
 

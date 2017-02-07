@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2014 - 2016, Phoronix Media
-	Copyright (C) 2014 - 2016, Michael Larabel
+	Copyright (C) 2014 - 2017, Phoronix Media
+	Copyright (C) 2014 - 2017, Michael Larabel
 	pts_logger.php: A simple log file generator
 
 	This program is free software; you can redistribute it and/or modify
@@ -78,6 +78,13 @@ class pts_logger
 	public function get_log_file_location()
 	{
 		return $this->log_file;
+	}
+	public function get_clean_log()
+	{
+		$log = $this->get_log();
+		$log = pts_user_io::strip_ansi_escape_sequences($log);
+
+		return $log;
 	}
 	public function get_log()
 	{

@@ -26,6 +26,17 @@ class pts_user_io
 	{
 		return trim(fgets(STDIN));
 	}
+	public static function strip_ansi_escape_sequences($output)
+	{
+		if(function_exists('preg_replace'))
+		{
+			$output = preg_replace('/\x1b(\[|\(|\))[;?0-9]*[0-9A-Za-z]/', null, $output);
+			$output = preg_replace('/\x1b(\[|\(|\))[;?0-9]*[0-9A-Za-z]/', null, $output);
+			$output = preg_replace('/[\x03|\x1a]/', null, $output);
+		}
+
+		return $output;
+	}
 	public static function prompt_user_input($question, $allow_null = false)
 	{
 		do

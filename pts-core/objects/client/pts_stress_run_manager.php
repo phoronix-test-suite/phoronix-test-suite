@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2015 - 2016, Phoronix Media
-	Copyright (C) 2015 - 2016, Michael Larabel
+	Copyright (C) 2015 - 2017, Phoronix Media
+	Copyright (C) 2015 - 2017, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -132,7 +132,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 		{
 			$table[] = array($component . ': ', $value);
 		}
-		$this->stress_print_and_log('SYSTEM INFORMATION: ' . PHP_EOL . pts_user_io::display_text_table($table, '     ', 1) . PHP_EOL . PHP_EOL);
+		$this->stress_print_and_log('SYSTEM INFORMATION: ' . PHP_EOL . phodevi::system_centralized_view() . PHP_EOL . PHP_EOL);
 
 		// BEGIN THE LOOP
 		while(!empty($possible_tests_to_run))
@@ -258,11 +258,11 @@ class pts_stress_run_manager extends pts_test_run_manager
 				{
 					// child
 					$this->stress_child_thread = true;
-					echo 'Starting: ' . $test_to_run->test_profile->get_identifier() . ($test_to_run->get_arguments_description() != null ? ' [' . $test_to_run->get_arguments_description()  . ']' : null) . PHP_EOL;
+					//echo PHP_EOL . pts_client::cli_colored_text('Starting: ', 'green', true) . $test_to_run->test_profile->get_identifier() . ($test_to_run->get_arguments_description() != null ? ' [' . $test_to_run->get_arguments_description()  . ']' : null) . PHP_EOL;
 					$continue_test_flag = $this->process_test_run_request($test_to_run);
-					echo PHP_EOL . 'Ended: ' . $test_to_run->test_profile->get_identifier() . ($test_to_run->get_arguments_description() != null ? ' [' . $test_to_run->get_arguments_description()  . ']' : null) . PHP_EOL;
+					//echo PHP_EOL . pts_client::cli_colored_text('Ended: ', 'red', true) . $test_to_run->test_profile->get_identifier() . ($test_to_run->get_arguments_description() != null ? ' [' . $test_to_run->get_arguments_description()  . ']' : null) . PHP_EOL;
 					pts_file_io::unlink($this->thread_collection_dir . getmypid());
-					echo PHP_EOL;
+					//echo PHP_EOL;
 					exit(0);
 				}
 				if($total_loop_time == false)
@@ -356,12 +356,12 @@ class pts_stress_run_manager extends pts_test_run_manager
 		}
 		if($this->stress_log_event_call)
 		{
-			call_user_func($this->stress_log_event_call, $this->stress_logger->get_log());
+			call_user_func($this->stress_log_event_call, $this->stress_logger->get_clean_log());
 		}
 	}
 	public function get_stress_log()
 	{
-		return $this->stress_logger->get_log();
+		return $this->stress_logger->get_clean_log();
 	}
 	public function sig_handler($signo)
 	{
@@ -380,57 +380,6 @@ class pts_stress_run_manager extends pts_test_run_manager
 	protected function stress_status_report()
 	{
 		return $this->final_stress_report(false);
-		// XXX the below code has been phased out for a unified report called by final_stress_report();
-
-		$report_buffer = PHP_EOL . '###### STRESS RUN CURRENT STATUS ' . date('H:i M j') . ' ####' . PHP_EOL;
-		$report_buffer .= 'ELAPSED TIME: ' . pts_strings::format_time(time() - $this->multi_test_stress_start_time) . PHP_EOL;
-		if($this->loop_until_time > time())
-		{
-			$report_buffer .= 'TIME REMAINING: ' . pts_strings::format_time($this->loop_until_time - time()) . PHP_EOL;
-		}
-		else if($total_loop_time == 'infinite')
-		{
-			$report_buffer .= 'INFINITE TESTING; TESTING UNTIL INTERRUPTED' . PHP_EOL;
-		}
-		else
-		{
-			$report_buffer .= 'WAITING FOR CURRENT TEST RUN QUEUE TO FINISH.' . PHP_EOL;
-		}
-		$report_buffer .= 'NUMBER OF CONCURRENT TESTS PERMITTED: ' . $this->multi_test_stress_run . PHP_EOL . PHP_EOL;
-		$report_buffer .= 'TESTS CURRENTLY ACTIVE: ' . PHP_EOL;
-
-		$table = array();
-		foreach(pts_file_io::glob($this->thread_collection_dir . '*') as $pid_file)
-		{
-			$test = pts_file_io::file_get_contents($pid_file);
-			$table[] = array($test, '[PID: ' . basename($pid_file) . ']');
-		}
-		$report_buffer .= pts_user_io::display_text_table($table, '   - ', 2) . PHP_EOL;
-
-		$report_buffer .= 'TEST SUBSYSTEMS ACTIVE: ' . PHP_EOL;
-		foreach($this->stress_subsystems_active as $type => $count)
-		{
-			$report_buffer .= '   - ' . $type . PHP_EOL;
-		}
-
-		$report_buffer .= 'CURRENT SYSTEM SENSORS: ' . PHP_EOL;
-		$table = array();
-		foreach($this->sensors_to_monitor as &$sensor_object)
-		{
-			// Hacky way to avoid reporting individual CPU core usages each time, save it for summaries
-			if(strpos(phodevi::sensor_object_name($sensor_object), 'CPU Usage (CPU') !== false)
-				continue;
-
-			$sensor_val = phodevi::read_sensor($sensor_object);
-
-			if($sensor_val > 0)
-			{
-				$table[] = array(phodevi::sensor_object_name($sensor_object) . ': ', pts_math::set_precision($sensor_val, 2), phodevi::read_sensor_object_unit($sensor_object));
-			}
-		}
-		$report_buffer .= pts_user_io::display_text_table($table, '   - ', 2) . PHP_EOL;
-		$report_buffer .= '######' . PHP_EOL;
-		return $report_buffer;
 	}
 	protected function final_stress_report($is_final = true)
 	{
@@ -444,19 +393,19 @@ class pts_stress_run_manager extends pts_test_run_manager
 		}
 
 		$report_buffer .= strtoupper(date('F j H:i T')) . PHP_EOL;
-		$report_buffer .= 'START TIME: ' . date('F j H:i T', $this->multi_test_stress_start_time) . PHP_EOL;
-		$report_buffer .= 'ELAPSED TIME: ' . pts_strings::format_time(time() - $this->multi_test_stress_start_time) . PHP_EOL;
+		$report_buffer .= pts_client::cli_just_bold('START TIME: ') . date('F j H:i T', $this->multi_test_stress_start_time) . PHP_EOL;
+		$report_buffer .= pts_client::cli_just_bold('ELAPSED TIME: ') . pts_strings::format_time(time() - $this->multi_test_stress_start_time) . PHP_EOL;
 		if($this->loop_until_time > time())
 		{
-			$report_buffer .= 'TIME REMAINING: ' . pts_strings::format_time($this->loop_until_time - time()) . PHP_EOL;
+			$report_buffer .= pts_client::cli_just_bold('TIME REMAINING: ') . pts_strings::format_time($this->loop_until_time - time()) . PHP_EOL;
 		}
 		else
 		{
 			$report_buffer .= 'WAITING FOR CURRENT TEST RUN QUEUE TO FINISH.' . PHP_EOL;
 		}
-		$report_buffer .= 'SYSTEM IP: ' . pts_network::get_local_ip() . PHP_EOL;
-		$report_buffer .= 'HOSTNAME: ' . phodevi::read_property('system', 'hostname') . PHP_EOL;
-		$report_buffer .= '# OF CONCURRENT TESTS: ' . $this->multi_test_stress_run . PHP_EOL . PHP_EOL;
+		$report_buffer .= pts_client::cli_just_bold('SYSTEM IP: ') . pts_network::get_local_ip() . PHP_EOL;
+		$report_buffer .= pts_client::cli_just_bold('HOSTNAME: ') . phodevi::read_property('system', 'hostname') . PHP_EOL;
+		$report_buffer .= pts_client::cli_just_bold('# OF CONCURRENT TESTS: ') . $this->multi_test_stress_run . PHP_EOL . PHP_EOL;
 
 		if(!$is_final)
 		{
@@ -471,11 +420,11 @@ class pts_stress_run_manager extends pts_test_run_manager
 			$report_buffer .= pts_user_io::display_text_table($table, '   - ', 2) . PHP_EOL;
 		}
 
-		$report_buffer .= PHP_EOL . 'TESTS IN RUN QUEUE: ' . PHP_EOL . PHP_EOL;
+		$report_buffer .= PHP_EOL . pts_client::cli_just_bold('TESTS IN RUN QUEUE: ') . PHP_EOL . PHP_EOL;
 		$tiq = array();
 		foreach($this->get_tests_to_run() as $i => $test)
 		{
-			$bar = strtoupper($test->test_profile->get_title()) . ' [' . $test->test_profile->get_identifier() . ']';
+			$bar = pts_client::cli_colored_text(strtoupper($test->test_profile->get_title()) . ' [' . $test->test_profile->get_identifier() . ']', 'blue', true);
 			if(!isset($tiq[$bar]))
 			{
 				$tiq[$bar] = array();
@@ -485,44 +434,42 @@ class pts_stress_run_manager extends pts_test_run_manager
 		}
 		foreach($tiq as $test => $args)
 		{
-			$report_buffer .= $test . PHP_EOL;
+			$report_buffer .= $test;
 			foreach($args as $arg)
 			{
 				if(!empty($arg))
 				{
-					$report_buffer .= '     ' . $arg . PHP_EOL;
+					$report_buffer .= PHP_EOL . '     ' . $arg;
 				}
 			}
 			$report_buffer .= PHP_EOL;
 		}
-
-
-		$report_buffer .= 'SYSTEM INFORMATION: ' . PHP_EOL;
+		$report_buffer .= PHP_EOL . pts_client::cli_just_bold('SYSTEM INFORMATION: ') . PHP_EOL;
 		$table = array();
 		foreach(phodevi::system_hardware(false) as $component => $value)
 		{
-			$table[] = array($component . ': ', $value);
+			$table[] = array(pts_client::cli_just_bold($component . ': '), $value);
 		}
 		foreach(phodevi::system_software(false) as $component => $value)
 		{
-			$table[] = array($component . ': ', $value);
+			$table[] = array(pts_client::cli_just_bold($component . ': '), $value);
 		}
 		$report_buffer .= pts_user_io::display_text_table($table, '     ', 1) . PHP_EOL . PHP_EOL;
 
 		if(!empty($this->stress_tests_executed))
 		{
-			$table = array(array('TESTS EXECUTED', 'TIMES CALLED'));
+			$table = array(array(pts_client::cli_just_bold('TESTS EXECUTED'), pts_client::cli_just_bold('TIMES CALLED')));
 			ksort($this->stress_tests_executed);
 
 			foreach($this->stress_tests_executed as $test => $times)
 			{
-				$table[] = array($test . ': ', $times);
+				$table[] = array(pts_client::cli_just_bold($test) . ': ', $times);
 			}
-			$report_buffer .= pts_user_io::display_text_table($table, '   - ', 2) . PHP_EOL . PHP_EOL;
+			$report_buffer .= pts_user_io::display_text_table($table, '     ', 2) . PHP_EOL . PHP_EOL;
 		}
 
-		$report_buffer .= 'SENSOR DATA: ' . PHP_EOL;
-		$table = array(array('SENSOR', 'MIN', 'AVG', 'MAX'));
+		$report_buffer .= pts_client::cli_just_bold('SENSOR DATA: ') . PHP_EOL;
+		$table = array(array(pts_client::cli_just_bold('SENSOR'), pts_client::cli_just_bold('MIN'), pts_client::cli_just_bold('AVG'), pts_client::cli_just_bold('MAX')));
 		foreach($this->sensor_data_archived as $sensor_name => &$sensor_data)
 		{
 			if(empty($sensor_data))
@@ -532,7 +479,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 
 			if($max_val > 0)
 			{
-				$table[] = array($sensor_name . ': ',
+				$table[] = array(pts_client::cli_just_bold($sensor_name . ': '),
 					pts_math::set_precision(min($sensor_data), 2),
 					pts_math::set_precision(array_sum($sensor_data) / count($sensor_data), 2),
 					pts_math::set_precision($max_val, 2),
