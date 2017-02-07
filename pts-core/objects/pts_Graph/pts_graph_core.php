@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2016, Phoronix Media
-	Copyright (C) 2008 - 2016, Michael Larabel
+	Copyright (C) 2008 - 2017, Phoronix Media
+	Copyright (C) 2008 - 2017, Michael Larabel
 	pho_graph.php: The core graph object that is used by the different graphing objects.
 
 	This program is free software; you can redistribute it and/or modify
@@ -650,7 +650,7 @@ abstract class pts_graph_core
 				}
 			}
 
-			$this->svg_dom->add_text_element($this->graph_title, array('x' => 6, 'y' => (self::$c['size']['headers'] + 2), 'font-size' => self::$c['size']['headers'], 'fill' => self::$c['color']['background'], 'text-anchor' => 'start', 'xlink:show' => 'new', 'xlink:href' => $href));
+			$this->svg_dom->add_text_element($this->graph_title, array('x' => 6, 'y' => (self::$c['size']['headers'] + 2), 'font-size' => self::$c['size']['headers'], 'fill' => self::$c['color']['background'], 'text-anchor' => 'start', 'xlink:show' => 'new', 'xlink:href' => $href, 'font-weight' => 'bold'));
 
 			foreach($this->graph_sub_titles as $i => $sub_title)
 			{
@@ -661,7 +661,7 @@ abstract class pts_graph_core
 					while(self::text_string_width($sub_title, $sub_title_size) > ($this->i['graph_left_end'] - 20))
 						$sub_title_size -= 0.5;
 				}
-				$this->svg_dom->add_text_element($sub_title, array('x' => 6, 'y' => $vertical_offset, 'font-size' => $sub_title_size, 'fill' => self::$c['color']['background'], 'text-anchor' => 'start'));
+				$this->svg_dom->add_text_element($sub_title, array('x' => 6, 'y' => $vertical_offset, 'font-size' => $sub_title_size, 'font-weight' => 'bold', 'fill' => self::$c['color']['background'], 'text-anchor' => 'start'));
 			}
 
 			// SVG version of PTS thanks to https://gist.github.com/xorgy/65c6d0e87757dbb56a75
@@ -721,7 +721,7 @@ abstract class pts_graph_core
 
 			if(!empty(self::$c['text']['watermark']))
 			{
-				$this->svg_dom->add_text_element(self::$c['text']['watermark'], array('x' => $left_end, 'y' => ($top_start - 5), 'font-size' => 7, 'fill' => self::$c['color']['text'], 'text-anchor' => 'end', 'xlink:show' => 'new', 'xlink:href' => self::$c['text']['watermark_url']));
+				$this->svg_dom->add_text_element(self::$c['text']['watermark'], array('x' => $left_end, 'y' => ($top_start - 5), 'font-size' => 8, 'fill' => self::$c['color']['text'], 'text-anchor' => 'end', 'xlink:show' => 'new', 'xlink:href' => self::$c['text']['watermark_url']));
 			}
 		}
 		else
@@ -782,7 +782,7 @@ abstract class pts_graph_core
 				}
 			}
 
-			$this->svg_dom->add_text_element($str, array('x' => ($left_start + $offset), 'y' => ($top_start - 5), 'font-size' => 7, 'fill' => self::$c['color']['text'], 'text-anchor' => 'start'));
+			$this->svg_dom->add_text_element($str, array('x' => ($left_start + $offset), 'y' => ($top_start - 5), 'font-size' => 8, 'fill' => self::$c['color']['text'], 'text-anchor' => 'start'));
 		}
 	}
 	protected function render_graph_value_ticks($left_start, $top_start, $left_end, $top_end, $show_numbers = true)
