@@ -2,7 +2,8 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
-- pts-core: External dependency XML updates
+pts-core: External dependency XML updates
+phodevi: Continued tweaking on the new system information view
 
 Phoronix Test Suite 7.0.0 Milestone 3
 7 February 2017
