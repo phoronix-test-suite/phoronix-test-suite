@@ -1590,9 +1590,16 @@ class phodevi_system extends phodevi_device_interface
 
 			if($renderer && ($s = strpos($renderer, 'Gallium')) !== false)
 			{
-				$renderer = substr($renderer, $s);
-				$renderer = substr($renderer, 0, strpos($renderer, ' ', strpos($renderer, '.')));
-				$info .= ' ' . $renderer . '';
+				$gallium = substr($renderer, $s);
+				$gallium = substr($gallium, 0, strpos($gallium, ' ', strpos($gallium, '.')));
+				$info .= ' ' . $gallium . '';
+			}
+
+			if($renderer && ($s = strpos($renderer, 'LLVM ')) !== false)
+			{
+				$llvm = substr($renderer, $s);
+				$llvm = substr($llvm, 0, strpos($llvm, ')'));
+				$info .= ' (' . $llvm . ')';
 			}
 		}
 
