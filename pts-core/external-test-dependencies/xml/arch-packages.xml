@@ -7,6 +7,11 @@
 			<PackageManager>pacman</PackageManager>
 		</Information>
 		<Package>
+			<GenericName>common-dependencies</GenericName>
+			<PackageName>mesa-demos</PackageName>
+			<FileCheck>glxinfo</FileCheck>
+		</Package>
+		<Package>
 			<GenericName>gtk-development</GenericName>
 			<PackageName>gtk2</PackageName>
 		</Package>
