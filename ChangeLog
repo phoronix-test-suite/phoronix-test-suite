@@ -6,6 +6,7 @@ pts-core: stress-run styling improvements
 pts-core: External dependency XML updates
 phodevi: Continued tweaking on the new system information view
 pts_Graph: Continued tweaking of graph UI
+pts_Graph: Allow more compact multi-way comparison graphs
 
 Phoronix Test Suite 7.0.0 Milestone 3
 7 February 2017

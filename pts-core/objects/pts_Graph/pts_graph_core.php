@@ -535,9 +535,8 @@ abstract class pts_graph_core
 				{
 					$longest_string = explode(' - ', $longest_identifier);
 					$longest_string = pts_strings::find_longest_string($longest_string);
-
 					$rotated_text = round(self::text_string_width($longest_string, $this->i['identifier_size']) * 0.96);
-					$per_identifier_height = max((14 + (14 * count($this->results))), $rotated_text);
+					$per_identifier_height = max(22, ceil($rotated_text / count($this->results)));
 				}
 				else if(count($this->results) > 3)
 				{
