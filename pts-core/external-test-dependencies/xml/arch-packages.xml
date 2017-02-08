@@ -73,7 +73,7 @@
 		</Package>
 		<Package>
 			<GenericName>fortran-compiler</GenericName>
-			<PackageName>gcc-fortran-multilib</PackageName>
+			<PackageName>gcc-fortran</PackageName>
 		</Package>
 		<Package>
 			<GenericName>glew</GenericName>

@@ -149,9 +149,9 @@ class pts_user_io
 			foreach(array_keys($options_r) as $i => $key)
 			{
 				$key_index[($i + 1)] = $key;
-				echo $line_prefix . ($i + 1) . ': ' . str_repeat(' ', strlen($option_count) - strlen(($i + 1))) . $options_r[$key] . PHP_EOL;
+				echo $line_prefix . pts_client::cli_just_bold(($i + 1) . ': ') . str_repeat(' ', strlen($option_count) - strlen(($i + 1))) . $options_r[$key] . PHP_EOL;
 			}
-			echo $line_prefix . $user_string . ': ';
+			echo $line_prefix . pts_client::cli_just_bold($user_string . ': ');
 			$select_choice = pts_user_io::read_user_input();
 
 			foreach(($allow_multi_select ? pts_strings::comma_explode($select_choice) : array($select_choice)) as $choice)
