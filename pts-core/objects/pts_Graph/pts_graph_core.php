@@ -837,7 +837,7 @@ abstract class pts_graph_core
 
 					if($this->i['show_background_lines'])
 					{
-						$this->svg_dom->add_element('line', array('x1' => ($px_from_left_end + 6), 'y1' => ($px_from_top + 1.5), 'x2' => ($this->i['graph_left_end']), 'y2' => ($px_from_top + 1.5)), $g_background_lines);
+						$this->svg_dom->add_element('line', array('x1' => ($px_from_left_end + 6), 'y1' => ($px_from_top + 1), 'x2' => ($this->i['graph_left_end']), 'y2' => ($px_from_top + 1)), $g_background_lines);
 					}
 
 					$this->svg_dom->add_element('line', array('x1' => ($left_start), 'y1' => ($px_from_top + 1), 'x2' => ($left_end), 'y2' => ($px_from_top + 1)), $g_lines);
