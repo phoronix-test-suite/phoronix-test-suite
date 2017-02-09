@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2012, Phoronix Media
-	Copyright (C) 2009 - 2012, Michael Larabel
+	Copyright (C) 2009 - 2017, Phoronix Media
+	Copyright (C) 2009 - 2017, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -52,7 +52,7 @@ class pts_argument_check
 		}
 		else if($this->get_function_check() == array('pts_types', 'identifier_to_object'))
 		{
-			$type = 'Test | Suite | OpenBenchmarking.org ID | Test Result';
+			$type = 'Test | Suite | OpenBenchmarking ID | Test Result';
 		}
 		else if($this->get_function_check() == array('pts_types', 'is_test_or_suite'))
 		{
