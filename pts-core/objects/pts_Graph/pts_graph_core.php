@@ -792,6 +792,7 @@ abstract class pts_graph_core
 	protected function render_graph_value_ticks($left_start, $top_start, $left_end, $top_end, $show_numbers = true)
 	{
 		$increment = round($this->i['graph_max_value'] / $this->i['mark_count'], $this->i['graph_max_value'] < 10 ? 4 : 2);
+		$top_end = round($top_end);
 
 		if($this->i['graph_orientation'] == 'HORIZONTAL')
 		{
