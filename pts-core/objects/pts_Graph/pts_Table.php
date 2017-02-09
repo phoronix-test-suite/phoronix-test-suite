@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2016, Phoronix Media
-	Copyright (C) 2009 - 2016, Michael Larabel
+	Copyright (C) 2009 - 2017, Phoronix Media
+	Copyright (C) 2009 - 2017, Michael Larabel
 	pts_Table.php: A charting table object for pts_Graph
 
 	This program is free software; you can redistribute it and/or modify
@@ -208,7 +208,7 @@ class pts_Table extends pts_graph_core
 
 		// Write the rows
 		$row = 1;
-		$g = $this->svg_dom->make_g(array('font-size' => $this->i['identifier_size'], 'font-weight' => 'bold', 'text-anchor' => 'end', 'fill' => self::$c['color']['text']));
+		$g = $this->svg_dom->make_g(array('font-size' => $this->i['identifier_size'], 'font-weight' => 'bold', 'fill' => self::$c['color']['text'], 'text-anchor' => 'end'));
 		foreach($this->rows as $i => $row_string)
 		{
 			if(($row_string instanceof pts_graph_ir_value) == false)
@@ -217,7 +217,7 @@ class pts_Table extends pts_graph_core
 			}
 
 			$v = round($top_identifier_height + $this->i['top_heading_height'] + ($row * $table_line_height) - 4);
-			$r = array('x' => ($this->i['left_start'] - 2), 'y' => $v, 'fill' => self::$c['color']['text'], 'xlink:href' => $row_string->get_attribute('href'));
+			$r = array('x' => ($this->i['left_start'] - 2), 'y' => $v, 'xlink:href' => $row_string->get_attribute('href'));
 			if($row_string->get_attribute('alert'))
 			{
 				$r['fill'] =  self::$c['color']['alert'];
@@ -296,15 +296,15 @@ class pts_Table extends pts_graph_core
 			}
 			else
 			{
-				$x = $this->i['left_start'] + ($i * $table_item_width) + ($table_item_width / 2);
-				$y = $this->i['top_heading_height'] + ($top_identifier_height / 2);
+				$x = round($this->i['left_start'] + ($i * $table_item_width) + ($table_item_width / 2));
+				$y = round($this->i['top_heading_height'] + ($top_identifier_height / 2));
 				$this->svg_dom->add_text_element($col_string, array('x' => $x, 'y' => $y), $g);
 			}
 		}
 
 		// Write the columns
-		$g_background = $this->svg_dom->make_g(array());
-		$g = $this->svg_dom->make_g(array('text-anchor' => 'middle', 'font-size' => $this->i['identifier_size']));
+		$g_background = $this->svg_dom->make_g(array('fill' => self::$c['color']['body']));
+		$g = $this->svg_dom->make_g(array('text-anchor' => 'middle', 'font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['text']));
 		foreach($this->table_data as $index => &$table_values)
 		{
 			if(!is_array($table_values))
@@ -334,7 +334,7 @@ class pts_Table extends pts_graph_core
 			{
 				$row = $i - 1; // if using $row, the alignment may be off sometimes
 				$hover = array();
-				$text_color = self::$c['color']['text'];
+				$text_color = null;
 				$bold = false;
 
 				if($result_table_value == null)
@@ -391,12 +391,23 @@ class pts_Table extends pts_graph_core
 						$background_paint = $i % 2 == 0 ? self::$c['color']['body_light'] : self::$c['color']['body'];
 					}
 
-					$y = round($this->i['top_heading_height'] + $top_identifier_height + (($row + 1) * $table_line_height));
-					$this->svg_dom->add_element('rect', array('x' => $left_bounds, 'y' => $y + 1, 'width' => ($right_bounds - $left_bounds), 'height' => $table_line_height, 'fill' => $background_paint), $g_background);
+					$gbr = array('x' => $left_bounds, 'y' => round($this->i['top_heading_height'] + $top_identifier_height + (($row + 1) * $table_line_height)) + 1, 'width' => ($right_bounds - $left_bounds), 'height' => $table_line_height);
+
+					if(self::$c['color']['body'] != $background_paint)
+					{
+						$gbr['fill'] = $background_paint;
+					}
+
+					$this->svg_dom->add_element('rect', $gbr, $g_background);
 				}
 
-				$x = $left_bounds + (($right_bounds - $left_bounds) / 2);
-				$this->svg_dom->add_text_element($result_table_value, array('x' => $x, 'y' => round($this->i['top_heading_height'] + $top_identifier_height + (($row + 2) * $table_line_height) - 3), 'fill' => $text_color, 'xlink:title' => implode('; ', $hover), 'xlink:href' => $result_table_value->get_attribute('href')), $g);
+				$x = round($left_bounds + (($right_bounds - $left_bounds) / 2));
+				$gbr = array('x' => $x, 'y' => round($this->i['top_heading_height'] + $top_identifier_height + (($row + 2) * $table_line_height) - 3), 'xlink:title' => implode('; ', $hover), 'xlink:href' => $result_table_value->get_attribute('href'));
+				if($text_color != null)
+				{
+					$gbr['fill'] = $text_color;
+				}
+				$this->svg_dom->add_text_element($result_table_value, $gbr, $g);
 				//$row++;
 			}
 		}
@@ -418,18 +429,17 @@ class pts_Table extends pts_graph_core
 		{
 			$estimated_height = 0;
 			$previous_section = null;
-			$g = $this->svg_dom->make_g(array('fill' => self::$c['color']['background'], 'text-anchor' => 'start'));
 			foreach($this->i['notes'] as $i => $note_r)
 			{
 				if($note_r['section'] != null && $note_r['section'] !== $previous_section)
 				{
 					$estimated_height += 2;
-					$this->svg_dom->add_textarea_element($note_r['section'] . ' Details', array('x' => 6, 'y' => ($table_proper_height + $table_line_height + $estimated_height), 'xlink:title' => $note_r['hover-title'], 'style' => 'font-weight: bold', 'fill' => self::$c['color']['background'], 'font-size' => (self::$c['size']['key'] - 1)), $estimated_height, $g);
+					$this->svg_dom->add_textarea_element($note_r['section'] . ' Details', array('x' => 6, 'y' => ($table_proper_height + $table_line_height + $estimated_height), 'xlink:title' => $note_r['hover-title'], 'style' => 'font-weight: bold', 'text-anchor' => 'start', 'fill' => self::$c['color']['background'], 'font-size' => (self::$c['size']['key'] - 1)), $estimated_height);
 					$estimated_height += 2;
 					$previous_section = $note_r['section'];
 				}
 
-				$this->svg_dom->add_textarea_element('- ' . $note_r['note'], array('x' => 6, 'y' => ($table_proper_height + $table_line_height + $estimated_height), 'xlink:title' => $note_r['hover-title'], 'fill' => self::$c['color']['background'], 'font-size' => (self::$c['size']['key'] - 1)), $estimated_height, $g);
+				$this->svg_dom->add_textarea_element('- ' . $note_r['note'], array('x' => 6, 'y' => ($table_proper_height + $table_line_height + $estimated_height), 'xlink:title' => $note_r['hover-title'], 'text-anchor' => 'start', 'fill' => self::$c['color']['background'], 'font-size' => (self::$c['size']['key'] - 1)), $estimated_height);
 			}
 		}
 

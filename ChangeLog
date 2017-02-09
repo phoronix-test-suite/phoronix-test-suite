@@ -8,6 +8,7 @@ phodevi: Continued tweaking on the new system information view
 phodevi: Append LLVM version to OpenGL driver string where relevant
 pts_Graph: Continued tweaking of graph UI
 pts_Graph: Allow more compact multi-way comparison graphs
+pts_Graph: Various SVG size/efficiency optimizations
 
 Phoronix Test Suite 7.0.0 Milestone 3
 7 February 2017
