@@ -720,8 +720,8 @@ abstract class pts_graph_core
 		if($this->i['graph_orientation'] == 'HORIZONTAL' || $this->i['iveland_view'])
 		{
 			$g = $this->svg_dom->make_g(array('stroke' => self::$c['color']['notches'], 'stroke-width' => 1));
-			$this->svg_dom->add_element('line', array('x1' => ($left_start + 0.5), 'y1' => $top_start, 'x2' => ($left_start + 0.5), 'y2' => ($top_end + 1)), $g);
-			$this->svg_dom->add_element('line', array('x1' => $left_start, 'y1' => ($top_end + 0.5), 'x2' => ($left_end + 1), 'y2' => ($top_end + 0.5)), $g);
+			$this->svg_dom->add_element('line', array('x1' => $left_start, 'y1' => $top_start, 'x2' => $left_start, 'y2' => ($top_end + 1)), $g);
+			$this->svg_dom->add_element('line', array('x1' => $left_start, 'y1' => $top_end, 'x2' => ($left_end + 1), 'y2' => 0.5), $g);
 
 			if(!empty(self::$c['text']['watermark']))
 			{
@@ -833,7 +833,7 @@ abstract class pts_graph_core
 
 				if($i != 0)
 				{
-					$show_numbers && $this->svg_dom->add_text_element($display_value, array('x' => ($px_from_left_start - 4), 'y' => round($px_from_top + (self::$c['size']['tick_mark'] / 2)) + 0.5), $g_text);
+					$show_numbers && $this->svg_dom->add_text_element($display_value, array('x' => ($px_from_left_start - 4), 'y' => round($px_from_top + (self::$c['size']['tick_mark'] / 2))), $g_text);
 
 					if($this->i['show_background_lines'])
 					{
@@ -930,9 +930,9 @@ abstract class pts_graph_core
 			$arrow_length_half = $arrow_length / 2;
 
 			$arrow_points = array(
-				$tip_x1 + 0.5 . ',' . $tip_y1,
-				$tail_x1 + 0.5 . ',' . ($tail_y1 + $arrow_length_half),
-				$tail_x1 + 0.5. ',' . ($tail_y1 - $arrow_length_half)
+				$tip_x1 . ',' . $tip_y1,
+				$tail_x1 . ',' . ($tail_y1 + $arrow_length_half),
+				$tail_x1 . ',' . ($tail_y1 - $arrow_length_half)
 				);
 		}
 
