@@ -47,13 +47,13 @@ class info implements pts_option_interface
 			if($o instanceof pts_test_suite)
 			{
 				pts_client::$display->generic_heading($o->get_title());
-				echo 'Run Identifier: ' . $o->get_identifier() . PHP_EOL;
-				echo 'Suite Version: ' . $o->get_version() . PHP_EOL;
-				echo 'Maintainer: ' . $o->get_maintainer() . PHP_EOL;
-				echo 'Suite Type: ' . $o->get_suite_type() . PHP_EOL;
-				echo 'Unique Tests: ' . $o->get_unique_test_count() . PHP_EOL;
-				echo 'Suite Description: ' . $o->get_description() . PHP_EOL;
-				echo PHP_EOL . 'Contained Tests: ' . PHP_EOL;
+				echo pts_client::cli_just_bold('Run Identifier: ') . $o->get_identifier() . PHP_EOL;
+				echo pts_client::cli_just_bold('Suite Version: ') . $o->get_version() . PHP_EOL;
+				echo pts_client::cli_just_bold('Maintainer: ') . $o->get_maintainer() . PHP_EOL;
+				echo pts_client::cli_just_bold('Suite Type: ') . $o->get_suite_type() . PHP_EOL;
+				echo pts_client::cli_just_bold('Unique Tests: ') . $o->get_unique_test_count() . PHP_EOL;
+				echo pts_client::cli_just_bold('Suite Description: ') . $o->get_description() . PHP_EOL;
+				echo PHP_EOL . pts_client::cli_just_bold('Contained Tests: ') . PHP_EOL;
 				$test_table = array();
 				foreach($o->get_contained_test_result_objects() as $result_obj)
 				{
@@ -72,32 +72,32 @@ class info implements pts_option_interface
 				}
 
 				pts_client::$display->generic_heading($test_title);
-				echo 'Run Identifier: ' . $o->get_identifier() . PHP_EOL;
-				echo 'Profile Version: ' . $o->get_test_profile_version() . PHP_EOL;
-				echo 'Maintainer: ' . $o->get_maintainer() . PHP_EOL;
-				echo 'Test Type: ' . $o->get_test_hardware_type() . PHP_EOL;
-				echo 'Software Type: ' . $o->get_test_software_type() . PHP_EOL;
-				echo 'License Type: ' . $o->get_license() . PHP_EOL;
-				echo 'Test Status: ' . $o->get_status() . PHP_EOL;
-				echo 'Project Web-Site: ' . $o->get_project_url() . PHP_EOL;
+				echo pts_client::cli_just_bold('Run Identifier: ') . $o->get_identifier() . PHP_EOL;
+				echo pts_client::cli_just_bold('Profile Version: ') . $o->get_test_profile_version() . PHP_EOL;
+				echo pts_client::cli_just_bold('Maintainer: ') . $o->get_maintainer() . PHP_EOL;
+				echo pts_client::cli_just_bold('Test Type: ') . $o->get_test_hardware_type() . PHP_EOL;
+				echo pts_client::cli_just_bold('Software Type: ') . $o->get_test_software_type() . PHP_EOL;
+				echo pts_client::cli_just_bold('License Type: ') . $o->get_license() . PHP_EOL;
+				echo pts_client::cli_just_bold('Test Status: ') . $o->get_status() . PHP_EOL;
+				echo pts_client::cli_just_bold('Project Web-Site: ') . $o->get_project_url() . PHP_EOL;
 				if($o->get_estimated_run_time() > 1)
 				{
-					echo 'Estimated Run-Time: ' . $o->get_estimated_run_time() . ' Seconds' . PHP_EOL;
+					echo pts_client::cli_just_bold('Estimated Run-Time: ') . $o->get_estimated_run_time() . ' Seconds' . PHP_EOL;
 				}
 
 				$download_size = $o->get_download_size();
 				if(!empty($download_size))
 				{
-					echo 'Download Size: ' . $download_size . ' MB' . PHP_EOL;
+					echo pts_client::cli_just_bold('Download Size: ') . $download_size . ' MB' . PHP_EOL;
 				}
 
 				$environment_size = $o->get_environment_size();
 				if(!empty($environment_size))
 				{
-					echo 'Environment Size: ' . $environment_size . ' MB' . PHP_EOL;
+					echo pts_client::cli_just_bold('Environment Size: ') . $environment_size . ' MB' . PHP_EOL;
 				}
 
-				echo PHP_EOL . 'Description: ' . $o->get_description() . PHP_EOL;
+				echo PHP_EOL . pts_client::cli_just_bold('Description: ') . $o->get_description() . PHP_EOL;
 
 				if($o->test_installation != false)
 				{
@@ -109,37 +109,37 @@ class info implements pts_option_interface
 					$latest_time = $o->test_installation->get_latest_run_time();
 					$latest_time = !empty($latest_time) ? pts_strings::format_time($latest_time, 'SECONDS') : 'N/A';
 
-					echo PHP_EOL . 'Test Installed: Yes' . PHP_EOL;
-					echo 'Last Run: ' . $last_run . PHP_EOL;
+					echo PHP_EOL . pts_client::cli_just_bold('Test Installed: ') . 'Yes' . PHP_EOL;
+					echo pts_client::cli_just_bold('Last Run: ') . $last_run . PHP_EOL;
 
 					if($last_run != 'Never')
 					{
 						if($o->test_installation->get_run_count() > 1)
 						{
-							echo 'Average Run-Time: ' . $avg_time . PHP_EOL;
+							echo pts_client::cli_just_bold('Average Run-Time: ') . $avg_time . PHP_EOL;
 						}
 
-						echo 'Latest Run-Time: ' . $latest_time . PHP_EOL;
-						echo 'Times Run: ' . $o->test_installation->get_run_count() . PHP_EOL;
+						echo pts_client::cli_just_bold('Latest Run-Time: ') . $latest_time . PHP_EOL;
+						echo pts_client::cli_just_bold('Times Run: ') . $o->test_installation->get_run_count() . PHP_EOL;
 					}
 				}
 				else
 				{
-					echo PHP_EOL . 'Test Installed: No' . PHP_EOL;
+					echo PHP_EOL . pts_client::cli_just_bold('Test Installed: ') . 'No' . PHP_EOL;
 				}
 
 				$dependencies = $o->get_external_dependencies();
 				if(!empty($dependencies) && !empty($dependencies[0]))
 				{
-					echo PHP_EOL . 'Software Dependencies:' . PHP_EOL;
+					echo PHP_EOL . pts_client::cli_just_bold('Software Dependencies:') . PHP_EOL;
 					echo pts_user_io::display_text_list($o->get_dependency_names());
 				}
 				echo PHP_EOL;
 			}
 			else if($o instanceof pts_result_file)
 			{
-				echo 'Title: ' . $o->get_title() . PHP_EOL . 'Identifier: ' . $o->get_identifier() . PHP_EOL;
-				echo PHP_EOL . 'Test Result Identifiers:' . PHP_EOL;
+				echo pts_client::cli_just_bold('Title: ') . $o->get_title() . PHP_EOL . pts_client::cli_just_bold('Identifier: ') . $o->get_identifier() . PHP_EOL;
+				echo PHP_EOL . pts_client::cli_just_bold('Test Result Identifiers:') . PHP_EOL;
 				echo pts_user_io::display_text_list($o->get_system_identifiers());
 
 				$test_titles = array();
@@ -153,7 +153,7 @@ class info implements pts_option_interface
 
 				if(count($test_titles) > 0)
 				{
-					echo PHP_EOL . 'Contained Tests:' . PHP_EOL;
+					echo PHP_EOL . pts_client::cli_just_bold('Contained Tests:') . PHP_EOL;
 					echo pts_user_io::display_text_list(array_unique($test_titles));
 				}
 				echo PHP_EOL;
@@ -161,7 +161,7 @@ class info implements pts_option_interface
 			else if($o instanceof pts_virtual_test_suite)
 			{
 				pts_client::$display->generic_heading($o->get_title());
-				echo 'Virtual Suite Description: ' . $o->get_description() . PHP_EOL . PHP_EOL;
+				echo pts_client::cli_just_bold('Virtual Suite Description: ') . $o->get_description() . PHP_EOL . PHP_EOL;
 
 				foreach($o->get_contained_test_profiles() as $test_profile)
 				{
