@@ -43,8 +43,10 @@ class pts_graph_horizontal_bars extends pts_graph_core
 	protected function render_graph_identifiers()
 	{
 		$px_from_top_end = $this->i['graph_top_end'] + 5;
-
-		$this->svg_dom->draw_svg_line($this->i['left_start'], $this->i['top_start'] + $this->i['identifier_height'], $this->i['left_start'], $this->i['graph_top_end'] - ($this->i['graph_height'] % $this->i['identifier_height']), self::$c['color']['notches'], 11, array('stroke-dasharray' => 1 . ',' . ($this->i['identifier_height'] - 1)));
+		if(count($this->graph_identifiers) > 1)
+		{
+			$this->svg_dom->draw_svg_line($this->i['left_start'], $this->i['top_start'] + $this->i['identifier_height'], $this->i['left_start'], $this->i['graph_top_end'] - ($this->i['graph_height'] % $this->i['identifier_height']), self::$c['color']['notches'], 11, array('stroke-dasharray' => 1 . ',' . ($this->i['identifier_height'] - 1)));
+		}
 		$middle_of_vert = round($this->i['top_start'] + ($this->is_multi_way_comparison ? 5 : 0) - ($this->i['identifier_height'] * 0.5) - 2);
 
 		$g = $this->svg_dom->make_g(array('font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['headers'], 'font-weight' => 'bold'));
@@ -97,7 +99,6 @@ class pts_graph_horizontal_bars extends pts_graph_core
 		$g_values = $this->svg_dom->make_g(array('font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['body_text'], 'font-weight' => 'bold', 'text-anchor' => 'end'));
 		$g_note = null;
 		$g_identifier_note = null;
-		$bar_x = $this->i['left_start'];
 
 		foreach($this->results as $identifier => &$group)
 		{
@@ -145,7 +146,7 @@ class pts_graph_horizontal_bars extends pts_graph_core
 					}
 				}
 
-				$this->svg_dom->add_element('rect', array('x' => $bar_x, 'y' => $px_bound_top, 'height' => $bar_height, 'width' => $graph_size, 'fill' => (in_array($buffer_item->get_result_identifier(), $this->value_highlights) ? $this->darken_color($paint_color) : $paint_color), 'xlink:title' => $title_tooltip), $g_bars);
+				$this->svg_dom->add_element('rect', array('x' => $this->i['left_start'], 'y' => $px_bound_top, 'height' => $bar_height, 'width' => $graph_size, 'fill' => (in_array($buffer_item->get_result_identifier(), $this->value_highlights) ? $this->darken_color($paint_color) : $paint_color), 'xlink:title' => $title_tooltip), $g_bars);
 
 				if($std_error != -1 && $value != null)
 				{
