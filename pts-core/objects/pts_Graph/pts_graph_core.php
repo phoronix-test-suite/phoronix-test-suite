@@ -540,7 +540,8 @@ abstract class pts_graph_core
 					if(ceil($rotated_text * 1.25) >= floor($per_identifier_height * count($this->results)))
 					{
 						// this is to avoid having a rotated text bar overrun other results
-						$per_identifier_height = ceil($rotated_text / count($this->results) * 1.1);
+						// XXX the 50 number might be too hacky
+						$per_identifier_height = max(54, ceil($rotated_text / count($this->results) * 1.1));
 					}
 				}
 				else if(count($this->results) > 3)

@@ -289,6 +289,10 @@ class pts_test_result_parser
 					case 'csv-dump-frame-latencies':
 						// Civ Beyond Earth
 						$csv_values = explode(',', pts_file_io::file_get_contents($test_log_file));
+						if(!isset($csv_values[10]))
+						{
+							$csv_values = explode(PHP_EOL, pts_file_io::file_get_contents($test_log_file));
+						}
 						if(!empty($csv_values) && isset($csv_values[3]))
 						{
 							foreach($csv_values as $i => &$v)

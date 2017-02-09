@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2016, Phoronix Media
-	Copyright (C) 2008 - 2016, Michael Larabel
+	Copyright (C) 2008 - 2017, Phoronix Media
+	Copyright (C) 2008 - 2017, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -32,7 +32,11 @@ class pts_graph_box_plot extends pts_graph_horizontal_bars
 
 		$group_offsets = array();
 		$id_offsets = array();
+		$g_lines = $this->svg_dom->make_g(array('stroke' => self::$c['color']['notches'], 'stroke-width' => 2));
 		$g_bars = $this->svg_dom->make_g(array('stroke' => self::$c['color']['body_light'], 'stroke-width' => 1));
+		$g_overtop = $this->svg_dom->make_g(array('stroke' => self::$c['color']['body_light'], 'stroke-width' => 1));
+		$g_text = $this->svg_dom->make_g(array('font-size' => ($this->i['identifier_size'] - 2), 'fill' => self::$c['color']['text'], 'text-anchor' => 'end'));
+		$g_circles = $this->svg_dom->make_g(array('fill' => self::$c['color']['notches']));
 
 		foreach($this->results as $identifier => &$group)
 		{
@@ -93,7 +97,8 @@ class pts_graph_box_plot extends pts_graph_horizontal_bars
 				$max_value = round(max($unique_values), 2);
 
 				$stat_value = 'Min: ' . $min_value . ' / Avg: ' . $avg_value . ' / Max: ' . $max_value;
-				$title_tooltip = $buffer_item->get_result_identifier() . ': ' . $stat_value;
+				$title_tooltip = $stat_value;
+				//$title_tooltip = $buffer_item->get_result_identifier() . ': ' . $stat_value;
 
 				$value_end_left = $this->i['left_start'] + max(1, round(($whisker_bottom / $this->i['graph_max_value']) * $work_area_width));
 				$value_end_right = $this->i['left_start'] + round(($whisker_top / $this->i['graph_max_value']) * $work_area_width);
@@ -110,24 +115,24 @@ class pts_graph_box_plot extends pts_graph_horizontal_bars
 
 				$box_color = in_array($buffer_item->get_result_identifier(), $this->value_highlights) ? $this->darken_color($box_color) : $box_color;
 
-				$this->svg_dom->draw_svg_line($value_end_left, $middle_of_bar, $value_end_right, $middle_of_bar, $box_color, 2, array('xlink:title' => $title_tooltip));
-				$this->svg_dom->draw_svg_line($value_end_left, $px_bound_top, $value_end_left, $px_bound_bottom, self::$c['color']['notches'], 2, array('xlink:title' => $title_tooltip));
-				$this->svg_dom->draw_svg_line($value_end_right, $px_bound_top, $value_end_right, $px_bound_bottom, self::$c['color']['notches'], 2, array('xlink:title' => $title_tooltip));
+				$this->svg_dom->add_element('line', array('x1' => $value_end_left, 'y1' => $middle_of_bar, 'x2' => $value_end_right, 'y2' => $middle_of_bar), $g_lines);
+				$this->svg_dom->add_element('line', array('x1' => $value_end_left, 'y1' => $px_bound_top, 'x2' => $value_end_left, 'y2' => $px_bound_bottom), $g_lines);
+				$this->svg_dom->add_element('line', array('x1' => $value_end_right, 'y1' => $px_bound_top, 'x2' => $value_end_right, 'y2' => $px_bound_bottom), $g_lines);
 
 				$box_left = $this->i['left_start'] + round((pts_math::find_percentile($values, 0.25) / $this->i['graph_max_value']) * $work_area_width);
 				$box_middle = $this->i['left_start'] + round(($median / $this->i['graph_max_value']) * $work_area_width);
 				$box_right = $this->i['left_start'] + round((pts_math::find_percentile($values, 0.75) / $this->i['graph_max_value']) * $work_area_width);
 
 				$this->svg_dom->add_element('rect', array('x' => $box_left, 'y' => $px_bound_top, 'width' => ($box_right - $box_left), 'height' => $bar_height, 'fill' => $box_color, 'xlink:title' => $title_tooltip), $g_bars);
-				$this->svg_dom->draw_svg_line($box_middle, $px_bound_top, $box_middle, $px_bound_bottom, self::$c['color']['notches'], 2, array('xlink:title' => $title_tooltip));
+				$this->svg_dom->add_element('line', array('x1' => $box_middle, 'y1' => $px_bound_top, 'x2' => $box_middle, 'y2' => $px_bound_bottom), $g_overtop);
 
-				$this->svg_dom->add_text_element($stat_value, array('x' => ($this->i['left_start'] - 5), 'y' => ceil($px_bound_top + ($bar_height * 0.8) + 6), 'font-size' => ($this->i['identifier_size'] - 2), 'fill' => self::$c['color']['text'], 'text-anchor' => 'end'));
+				$this->svg_dom->add_text_element($stat_value, array('x' => ($this->i['left_start'] - 5), 'y' => ceil($px_bound_top + ($bar_height * 0.8) + 6)), $g_text);
 
 				foreach($unique_values as &$val)
 				{
 					if(($val < $whisker_bottom || $val > $whisker_top) && $val > 0.1)
 					{
-						$this->svg_dom->draw_svg_circle($this->i['left_start'] + round(($val / $this->i['graph_max_value']) * $work_area_width), $middle_of_bar, 1, self::$c['color']['notches']);
+						$this->svg_dom->add_element('circle', array('cx' => $this->i['left_start'] + round(($val / $this->i['graph_max_value']) * $work_area_width), 'cy' => $middle_of_bar, 'r' => 1), $g_circles);
 					}
 				}
 			}
