@@ -47,7 +47,7 @@ class pts_graph_horizontal_bars extends pts_graph_core
 		$this->svg_dom->draw_svg_line($this->i['left_start'] + 0.5, $this->i['top_start'] + $this->i['identifier_height'], $this->i['left_start'] + 0.5, $this->i['graph_top_end'] - ($this->i['graph_height'] % $this->i['identifier_height']), self::$c['color']['notches'], 11, array('stroke-dasharray' => 1 . ',' . ($this->i['identifier_height'] - 1)));
 		$middle_of_vert = $this->i['top_start'] + ($this->is_multi_way_comparison ? 5 : 0) - ($this->i['identifier_height'] * 0.5) - 2;
 
-		$g = $this->svg_dom->make_g(array('font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['headers']));
+		$g = $this->svg_dom->make_g(array('font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['headers'], 'font-weight' => 'bold'));
 		foreach($this->graph_identifiers as $identifier)
 		{
 			$middle_of_vert += $this->i['identifier_height'];
@@ -94,8 +94,11 @@ class pts_graph_horizontal_bars extends pts_graph_core
 		$id_offsets = array();
 		$g_bars = $this->svg_dom->make_g(array('stroke' => self::$c['color']['body_light'], 'stroke-width' => 1));
 		$g_se = $this->svg_dom->make_g(array('font-size' => ($this->i['identifier_size'] - 2), 'fill' => self::$c['color']['text'], 'text-anchor' => 'end'));
-		$g_values = $this->svg_dom->make_g(array('font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['body_text']));
+		$g_values = $this->svg_dom->make_g(array('font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['body_text'], 'font-weight' => 'bold', 'text-anchor' => 'end'));
+		$g_note = null;
+		$g_identifier_note = null;
 		$bar_x = $this->i['left_start'] + 0.5;
+
 		foreach($this->results as $identifier => &$group)
 		{
 			$paint_color = $this->get_paint_color($identifier);
@@ -167,12 +170,15 @@ class pts_graph_horizontal_bars extends pts_graph_core
 				{
 					if(isset($this->d['identifier_notes'][$buffer_item->get_result_identifier()]) && $this->i['compact_result_view'] == false && !$this->is_multi_way_comparison)
 					{
-						$note_size = self::$c['size']['key'] - 2;
-						$this->svg_dom->add_text_element($this->d['identifier_notes'][$buffer_item->get_result_identifier()], array('x' => ($this->i['left_start'] + 4), 'y' => ($px_bound_top + self::$c['size']['key']), 'font-size' => $note_size, 'fill' => self::$c['color']['body_text'], 'text-anchor' => 'start'));
+						if($g_identifier_note == null)
+						{
+							$g_identifier_note = $this->svg_dom->make_g(array('font-size' => (self::$c['size']['key'] - 2), 'fill' => self::$c['color']['body_text'], 'text-anchor' => 'start'));
+						}
+						$this->svg_dom->add_text_element($this->d['identifier_notes'][$buffer_item->get_result_identifier()], array('x' => ($this->i['left_start'] + 4), 'y' => ($px_bound_top + self::$c['size']['key'])), $g_identifier_note);
 					}
 					else
 					{
-						// XXX this code can potentially replace the above identifier_notes stuff
+						// TODO XXX this code can potentially replace the above identifier_notes stuff
 						$data = $buffer_item->get_result_json();
 						$note = null;
 						if(isset($data['min-result']) && is_numeric($data['min-result']))
@@ -189,13 +195,15 @@ class pts_graph_horizontal_bars extends pts_graph_core
 
 						if(!empty($note))
 						{
-							$note_size = self::$c['size']['key'] - 2;
-							$this->svg_dom->add_text_element($note, array('x' => ($this->i['left_start'] + 4), 'y' => ($px_bound_top + self::$c['size']['key']), 'font-size' => $note_size, 'fill' => self::$c['color']['body_text'], 'text-anchor' => 'start'));
-
+							if($g_note == null)
+							{
+								$g_note = $this->svg_dom->make_g(array('font-size' => (self::$c['size']['key'] - 2), 'fill' => self::$c['color']['body_text'], 'text-anchor' => 'start', 'font-weight' => 'bold'));
+							}
+							$this->svg_dom->add_text_element($note, array('x' => ($this->i['left_start'] + 4), 'y' => ($px_bound_top + self::$c['size']['key'])), $g_note);
 						}
 					}
 
-					$this->svg_dom->add_text_element($value, array('x' => ($value_end_right - 5), 'y' => $middle_of_bar, 'text-anchor' => 'end'), $g_values);
+					$this->svg_dom->add_text_element($value, array('x' => ($value_end_right - 5), 'y' => $middle_of_bar), $g_values);
 				}
 				else if($value > 0)
 				{

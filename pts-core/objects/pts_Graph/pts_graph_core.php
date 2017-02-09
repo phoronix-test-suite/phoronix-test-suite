@@ -540,7 +540,7 @@ abstract class pts_graph_core
 					if(ceil($rotated_text * 1.25) >= floor($per_identifier_height * count($this->results)))
 					{
 						// this is to avoid having a rotated text bar overrun other results
-						$per_identifier_height = $rotated_text;
+						$per_identifier_height = ceil($rotated_text / count($this->results) * 1.1);
 					}
 				}
 				else if(count($this->results) > 3)
@@ -865,7 +865,7 @@ abstract class pts_graph_core
 
 		$this->i['key_line_height'] = 16;
 		$ak = array_keys($this->results);
-		$this->i['key_item_width'] = 16 + self::text_string_width(pts_strings::find_longest_string($ak), self::$c['size']['key']);
+		$this->i['key_item_width'] = 20 + self::text_string_width(pts_strings::find_longest_string($ak), self::$c['size']['key']);
 		$this->i['keys_per_line'] = max(1, floor(($this->i['graph_left_end'] - $this->i['left_start']) / $this->i['key_item_width']));
 
 		return ceil(count($this->results) / $this->i['keys_per_line']) * $this->i['key_line_height'];
@@ -881,7 +881,7 @@ abstract class pts_graph_core
 
 		$i = 0;
 		$g_rect = $this->svg_dom->make_g(array('stroke' => self::$c['color']['notches'], 'stroke-width' => 1));
-		$g_text = $this->svg_dom->make_g(array('font-size' => self::$c['size']['key'], 'text-anchor' => 'start'));
+		$g_text = $this->svg_dom->make_g(array('font-size' => self::$c['size']['key'], 'text-anchor' => 'start', 'font-weight' => 'bold'));
 
 		if(!is_array($this->results))
 		{
