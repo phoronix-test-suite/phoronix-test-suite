@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2016, Phoronix Media
-	Copyright (C) 2009 - 2016, Michael Larabel
+	Copyright (C) 2009 - 2017, Phoronix Media
+	Copyright (C) 2009 - 2017, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -27,7 +27,8 @@ class system_sensors implements pts_option_interface
 
 	public static function run($r)
 	{
-		pts_client::$display->generic_heading('Supported Sensors');
+		pts_client::$display->generic_heading('Supported Sensors For This System');
+		$tabled = array();
 		foreach(phodevi::supported_sensors() as $sensor)
 		{
 			$supported_devices = call_user_func(array($sensor[2], 'get_supported_devices'));
@@ -39,29 +40,25 @@ class system_sensors implements pts_option_interface
 
 			foreach($supported_devices as $device)
 			{
-				self::print_sensor($sensor, $device);
+				if($sensor[0] === 'cgroup')
+				{
+				//	echo '- ' . phodevi::sensor_name($sensor) . PHP_EOL;
+				}
+				else
+				{
+					$sensor_object = new $sensor[2](0, $device);
+					$tabled[] = array(pts_client::cli_just_bold(phodevi::sensor_object_name($sensor_object) . ': '), phodevi::read_sensor($sensor_object), pts_client::cli_colored_text(phodevi::read_sensor_object_unit($sensor_object), 'gray'));
+				}
 			}
 		}
+		echo pts_user_io::display_text_table($tabled) . PHP_EOL;
 
-		pts_client::$display->generic_heading('Unsupported Sensors');
+		pts_client::$display->generic_heading('Unsupported Sensors For This System');
 		foreach(phodevi::unsupported_sensors() as $sensor)
 		{
 			echo '- ' . phodevi::sensor_name($sensor) . PHP_EOL;
 		}
 		echo PHP_EOL;
-	}
-
-	private static function print_sensor($sensor, $device)
-	{
-		if($sensor[0] === 'cgroup')
-		{
-			echo '- ' . phodevi::sensor_name($sensor) . PHP_EOL;
-		}
-		else
-		{
-			$sensor_object = new $sensor[2](0, $device);
-			echo '- ' . phodevi::sensor_object_name($sensor_object) . ': ' . phodevi::read_sensor($sensor_object) . ' ' . phodevi::read_sensor_object_unit($sensor_object) . PHP_EOL;	
-		}
 	}
 }
 
