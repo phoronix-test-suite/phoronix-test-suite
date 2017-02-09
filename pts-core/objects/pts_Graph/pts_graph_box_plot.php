@@ -34,9 +34,9 @@ class pts_graph_box_plot extends pts_graph_horizontal_bars
 		$id_offsets = array();
 		$g_lines = $this->svg_dom->make_g(array('stroke' => self::$c['color']['notches'], 'stroke-width' => 2));
 		$g_bars = $this->svg_dom->make_g(array('stroke' => self::$c['color']['body_light'], 'stroke-width' => 1));
-		$g_overtop = $this->svg_dom->make_g(array('stroke' => self::$c['color']['body_light'], 'stroke-width' => 1));
+		$g_overtop = $this->svg_dom->make_g(array('stroke' => self::$c['color']['headers'], 'stroke-width' => 1));
 		$g_text = $this->svg_dom->make_g(array('font-size' => ($this->i['identifier_size'] - 2), 'fill' => self::$c['color']['text'], 'text-anchor' => 'end'));
-		$g_circles = $this->svg_dom->make_g(array('fill' => self::$c['color']['notches']));
+		$g_circles = $this->svg_dom->make_g(array('fill' => self::$c['color']['headers']));
 
 		foreach($this->results as $identifier => &$group)
 		{
