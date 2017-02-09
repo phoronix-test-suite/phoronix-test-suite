@@ -721,7 +721,7 @@ abstract class pts_graph_core
 		{
 			$g = $this->svg_dom->make_g(array('stroke' => self::$c['color']['notches'], 'stroke-width' => 1));
 			$this->svg_dom->add_element('line', array('x1' => $left_start, 'y1' => $top_start, 'x2' => $left_start, 'y2' => ($top_end + 1)), $g);
-			$this->svg_dom->add_element('line', array('x1' => $left_start, 'y1' => $top_end, 'x2' => ($left_end + 1), 'y2' => 0.5), $g);
+			$this->svg_dom->add_element('line', array('x1' => $left_start, 'y1' => $top_end, 'x2' => ($left_end + 1), 'y2' => $top_end), $g);
 
 			if(!empty(self::$c['text']['watermark']))
 			{
