@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2015 - 2016, Phoronix Media
-	Copyright (C) 2015 - 2016, Michael Larabel
+	Copyright (C) 2015 - 2017, Phoronix Media
+	Copyright (C) 2015 - 2017, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -101,6 +101,19 @@ class debug_render_test implements pts_option_interface
 			$dump_size += strlen($html_dump);
 			file_put_contents(PATH_TO_EXPORTED_PHOROMATIC_DATA . $REQUESTED . '.html', $html_dump . '</body></html>');
 		}
+
+		if(getenv('DEBUG_RENDER_TEST_LOCAL_TOO') != false)
+		{
+			echo PHP_EOL . 'LOCAL RENDER TEST TIME' . PHP_EOL;
+			$extra_graph_attributes = null;
+			foreach(pts_client::saved_test_results() as $saved_result)
+			{
+				$save_to_dir = pts_client::setup_test_result_directory($saved_result);
+				$generated_graphs = pts_client::generate_result_file_graphs($saved_result, $save_to_dir, $extra_graph_attributes);
+				echo $saved_result . ': ' . count($generated_graphs) . PHP_EOL;
+			}
+		}
+
 		echo PHP_EOL . 'RENDER TEST TOOK: ' . (time() - $start) . PHP_EOL . PHP_EOL;
 		echo PHP_EOL . 'PEAK MEMORY USAGE: ' . round(memory_get_peak_usage(true) / 1048576, 3) . ' MB';
 		echo PHP_EOL . 'PEAK MEMORY USAGE (emalloc): ' . round(memory_get_peak_usage() / 1048576, 3) . ' MB';
