@@ -92,7 +92,7 @@ if [ "X$PHP_BIN" = "X" ]
 then
 	cat <<'EOT'
 
-PHP 5.3 or newer must be installed for the Phoronix Test Suite
+PHP 5.3 or newer or PHP 7 must be installed for the Phoronix Test Suite
 The PHP command-line package is commonly called php-cli, php5-cli, or php.
 For more information visit: http://www.phoronix-test-suite.com/
 
