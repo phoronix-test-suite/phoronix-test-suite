@@ -227,13 +227,14 @@ class pts_test_result
 			foreach($keys as $k)
 			{
 				$identifier_r = pts_strings::trim_explode(': ', $this->test_result_buffer->buffer_items[$k]->get_result_identifier());
+				$position = 1;
 
-				if(!isset($key_sets[$identifier_r[0]]))
+				if(!isset($key_sets[$identifier_r[$position]]))
 				{
-					$key_sets[$identifier_r[0]] = array();
+					$key_sets[$identifier_r[$position]] = array();
 				}
 
-				$key_sets[$identifier_r[0]][] = $k;
+				$key_sets[$identifier_r[$position]][] = $k;
 			}
 		}
 		else
