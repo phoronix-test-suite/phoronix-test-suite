@@ -574,8 +574,6 @@ abstract class pts_graph_core
 				}
 
 				$num_identifiers = $this->test_result->test_result_buffer->get_count() + ($this->is_multi_way_comparison ? 2 : 0);
-
-echo $num_identifiers;
 				$this->i['graph_top_end'] = $this->i['top_start'] + ($num_identifiers * $per_identifier_height);
 				// $this->i['top_end_bottom']
 				$this->i['graph_height'] = $this->i['graph_top_end'] + 25 + $bottom_heading;
