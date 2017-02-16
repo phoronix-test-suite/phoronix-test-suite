@@ -537,6 +537,7 @@ abstract class pts_graph_core
 					$longest_string = pts_strings::find_longest_string($longest_string);
 					$rotated_text = round(self::text_string_width($longest_string, $this->i['identifier_size']) * 0.96);
 					$per_identifier_height = 26; // default
+
 					if(ceil($rotated_text * 1.25) >= floor($per_identifier_height * count($this->results)))
 					{
 						// this is to avoid having a rotated text bar overrun other results
@@ -572,8 +573,9 @@ abstract class pts_graph_core
 					}
 				}
 
+				$num_identifiers = $this->test_result->test_result_buffer->get_count() + ($this->is_multi_way_comparison ? 2 : 0);
 
-				$num_identifiers = $this->test_result->test_result_buffer->get_count();
+echo $num_identifiers;
 				$this->i['graph_top_end'] = $this->i['top_start'] + ($num_identifiers * $per_identifier_height);
 				// $this->i['top_end_bottom']
 				$this->i['graph_height'] = $this->i['graph_top_end'] + 25 + $bottom_heading;
