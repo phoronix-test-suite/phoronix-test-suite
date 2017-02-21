@@ -326,6 +326,22 @@ class pts_test_result_parser
 							$log_file = strstr($log_file, 'bk:');
 						}
 						break;
+					case 'cpu-frames-space-delimited':
+						// HITMAN on Linux uses at least this method
+						$log_file = pts_file_io::file_get_contents($test_log_file);
+						$frame_all_times = array();
+						if(($x = strpos($log_file, '---- CPU FRAMES ----')) !== false)
+						{
+							$log_file = trim(str_replace(PHP_EOL, ' ', substr($log_file, $x + strlen('---- CPU FRAMES ----'))));
+							foreach(explode(' ', $log_file) as $inp)
+							{
+								if(is_numeric($inp) && $inp > 0)
+								{
+									$frame_all_times[] = $inp;
+								}
+							}
+						}
+						break;
 				}
 
 				if(isset($frame_all_times[60]))
