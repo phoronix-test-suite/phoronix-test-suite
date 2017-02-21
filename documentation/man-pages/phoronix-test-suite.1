@@ -1,4 +1,4 @@
-.TH phoronix-test-suite 1  "www.phoronix-test-suite.com" "7.0.0m3"
+.TH phoronix-test-suite 1  "www.phoronix-test-suite.com" "7.0.0m4"
 .SH NAME
 phoronix-test-suite \- The Phoronix Test Suite is an extensible open-source platform for performing testing and performance evaluation.
 .SH SYNOPSIS
@@ -10,10 +10,10 @@ The **Phoronix Test Suite** is the most comprehensive testing and benchmarking p
 .SH OPTIONS
 .TP
 .SH TEST INSTALLATION
-.B install [Test | Suite | OpenBenchmarking.org ID | Test Result]  ...
+.B install [Test | Suite | OpenBenchmarking ID | Test Result]  ...
 This option will install the selected test(s) inside the testing environment directory. The install process from downloading of the test files to the installation is fully automated. The install option needs to be supplied with the test name or suite as an argument. Optionally, a OpenBenchmarking.org ID or the name of a saved results file can be supplied as well and the test(s) to install will automatically be extracted from that information. If the test is already installed and was run by the latest version of the installation process, no action will be taken. Multiple arguments can be supplied to install additional tests at the same time.
 .TP
-.B install-dependencies [Test | Suite | OpenBenchmarking.org ID | Test Result]  ...
+.B install-dependencies [Test | Suite | OpenBenchmarking ID | Test Result]  ...
 This option will install the external dependencies needed by the selected test(s) using the distribution's package management system. For example, some tests depend upon GCC for compiling code. If GCC is not detected on the system, the Phoronix Test Suite will attempt to install GCC using the distribution's package management system. If you are running this command as a local user, you may be prompted for the root password while the process is running. For unsupported distributions, the dependency names will be displayed along with common names for the package. The install-dependencies option needs to be supplied with the test name or suite as an argument. When using the install option, the external dependencies are automatically checked.
 .TP
 .B make-download-cache
@@ -26,13 +26,13 @@ This option will permanently remove a installed test by the Phoronix Test Suite.
 .B auto-compare
 This option will autonomously determine the most relevant test(s) to run for any selected sub-system(s). The tests to run are determined via OpenBenchmarking.org integration with the global results pool. Related test results from OpenBenchmarking.org are also merged to provide a straight-forward and effective means of carrying out a system comparison. If wishing to find comparable results for any particular test profile(s), simply pass the test profile names as additional arguments to this command.
 .TP
-.B benchmark [Test | Suite | OpenBenchmarking.org ID | Test Result]  ...
+.B benchmark [Test | Suite | OpenBenchmarking ID | Test Result]  ...
 This option will install the selected test(s) (if needed) and will proceed to run the test(s). This option is equivalent to running phoronix-test-suite with the install option followed by the run option. Multiple arguments can be supplied to run additional tests at the same time and save the results into one file.
 .TP
 .B finish-run [Test Result]
 This option can be used if a test run had not properly finished running all tests within a saved results file. Using this option when specifying a saved results file where all tests had not completed will attempt to finish testing on the remaining tests where there are missing results.
 .TP
-.B run [Test | Suite | OpenBenchmarking.org ID | Test Result]  ...
+.B run [Test | Suite | OpenBenchmarking ID | Test Result]  ...
 This option will run the selected test(s).
 .TP
 .B run-random-tests
@@ -41,29 +41,29 @@ This option will query OpenBenchmarking.org to run random benchmarks and result 
 .B run-tests-in-suite
 This option can be used if you wish to run all of the tests found in a supplied suite, but you wish to re-configure each of the test options rather than using the defaults supplied by the suite.
 .TP
-.B stress-run [Test | Suite | OpenBenchmarking.org ID | Test Result]  ...
+.B stress-run [Test | Suite | OpenBenchmarking ID | Test Result]  ...
 This option will run the passed tests/suites in the multi-process stress-testing mode. The stress-run mode will not produce a result file but is rather intended for running multiple test profiles concurrently to stress / burn-in the system. The number of tests to run concurrently can be toggled via the PTS_CONCURRENT_TEST_RUNS environment variable and by default is set to a value of 2.
 .TP
 .SH BATCH TESTING
-.B batch-benchmark [Test | Suite | OpenBenchmarking.org ID | Test Result]  ...
+.B batch-benchmark [Test | Suite | OpenBenchmarking ID | Test Result]  ...
 This option and its arguments are equivalent to the benchmark option, but the process will be run in the Phoronix Test Suite batch mode.
 .TP
-.B batch-install [Test | Suite | OpenBenchmarking.org ID | Test Result]  ...
+.B batch-install [Test | Suite | OpenBenchmarking ID | Test Result]  ...
 If you wish to run the install process in the Phoronix Test Suite batch mode but do not wish to run any tests at this time. Running the install process in the batch mode will use the default values and not prompt the user of any possible options, to ensure the process is fully automated.
 .TP
-.B batch-run [Test | Suite | OpenBenchmarking.org ID | Test Result]  ...
+.B batch-run [Test | Suite | OpenBenchmarking ID | Test Result]  ...
 This option and its arguments are equivalent to the run option, but the process will be run in the Phoronix Test Suite batch mode.
 .TP
 .B batch-setup
 This option is used to configure the batch mode options for the Phoronix Test Suite, which is subsequently written to the user configuration file. Among the options are whether to automatically upload the test results to OpenBenchmarking.org and prompting for the saved file name.
 .TP
-.B default-benchmark [Test | Suite | OpenBenchmarking.org ID | Test Result]  ...
+.B default-benchmark [Test | Suite | OpenBenchmarking ID | Test Result]  ...
 This option will install the selected test(s) (if needed) and will proceed to run the test(s) in the defaults mode. This option is equivalent to running phoronix-test-suite with the install option followed by the default-run option.
 .TP
-.B default-run [Test | Suite | OpenBenchmarking.org ID | Test Result]  ...
+.B default-run [Test | Suite | OpenBenchmarking ID | Test Result]  ...
 This option will run the selected test(s). The name of the test or suite must be supplied or the OpenBenchmarking.org ID or saved local file name. Multiple arguments can be supplied to run additional tests at the same time and save the results in a suite-like fashion. Unlike the normal run option, the default-run will not prompt the user to select from the available test options but will instead use the default options as automatically set by pts-core or the test profile. Use batch-run to automatically test all of the available options.
 .TP
-.B internal-run [Test | Suite | OpenBenchmarking.org ID | Test Result]  ...
+.B internal-run [Test | Suite | OpenBenchmarking ID | Test Result]  ...
 This option and its arguments pre-set the Phoronix Test Suite batch run mode with sane values for carrying out benchmarks in a semi-automated manner and without uploading any of the result data to the public OpenBenchmarking.org.
 .TP
 .SH OPENBENCHMARKING.ORG
@@ -117,10 +117,10 @@ Display the installed system hardware and software information as detected by th
 Display the installed system hardware and software sensors in real-time as detected by the Phoronix Test Suite Phodevi Library.
 .TP
 .SH INFORMATION
-.B estimate-run-time [Test | Suite | OpenBenchmarking.org ID | Test Result]
+.B estimate-run-time [Test | Suite | OpenBenchmarking ID | Test Result]
 This option will provide estimates for test run-time / length.
 .TP
-.B info [Test | Suite | OpenBenchmarking.org ID | Test Result]
+.B info [Test | Suite | OpenBenchmarking ID | Test Result]
 This option will show details about the supplied test, suite, virtual suite, or result file.
 .TP
 .B list-available-suites
@@ -160,22 +160,22 @@ This option will list various details about installed tests and their usage.
 This option will list all available test profiles that are available from the enabled OpenBenchmarking.org repositories but are NOT SUPPORTED on the given hardware/software platform. This is mainly a debugging option for those looking for test profiles to potentially port to new platforms, etc.
 .TP
 .SH ASSET CREATION
-.B debug-benchmark [Test | Suite | OpenBenchmarking.org ID | Test Result]  ...
+.B debug-benchmark [Test | Suite | OpenBenchmarking ID | Test Result]  ...
 This option is intended for use by test profile writers and is identical to the <em>run</em> option but will yield more information during the run process that can be used to debug issues with a test profile or to verify the test profile is functioning correctly.
 .TP
-.B debug-install [Test | Suite | OpenBenchmarking.org ID | Test Result]  ...
+.B debug-install [Test | Suite | OpenBenchmarking ID | Test Result]  ...
 This option is intended for use by test profile writers and is identical to the install option but will yield more information during the run process that can be used to debug issues with a test profile installer or to verify the test profile is functioning correctly.
 .TP
-.B debug-result-parser [Test | Suite | OpenBenchmarking.org ID | Test Result]  ...
+.B debug-result-parser [Test | Suite | OpenBenchmarking ID | Test Result]  ...
 This option is intended for use by test profile writers and is used for debugging a result parser. No test execution is done, but there must already be PTS-generated .log files present within the test's installation directory.
 .TP
-.B debug-test-download-links [Test | Suite | OpenBenchmarking.org ID | Test Result]
+.B debug-test-download-links [Test | Suite | OpenBenchmarking ID | Test Result]
 This option will check all download links within the specified test profile(s) to ensure there are no broken URLs.
 .TP
-.B download-test-files [Test | Suite | OpenBenchmarking.org ID | Test Result]  ...
+.B download-test-files [Test | Suite | OpenBenchmarking ID | Test Result]  ...
 This will download the selected test file(s) to the Phoronix Test Suite download cache but will not install the tests.
 .TP
-.B force-install [Test | Suite | OpenBenchmarking.org ID | Test Result]  ...
+.B force-install [Test | Suite | OpenBenchmarking ID | Test Result]  ...
 This option will force the installation (or re-installation) of a test or suite. The arguments and process is similar to the install option but even if the test is installed, the entire installation process will automatically be executed. This option is generally used when debugging a test installation problem.
 .TP
 .B result-file-to-suite [Test Result]
