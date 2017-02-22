@@ -190,6 +190,7 @@ function pts_needed_extensions()
 		array(0, extension_loaded('openssl'), 'OpenSSL', 'OpenSSL support is recommended to support HTTPS traffic.'),
 		array(0, extension_loaded('gd'), 'GD', 'The GD library is recommended for improved graph rendering.'),
 		array(0, extension_loaded('zlib'), 'Zlib', 'The Zlib extension can be used for greater file compression.'),
+		array(0, function_exists('bzcompress'), 'Bzip2', 'The bzcompress/bzip2 support can be used for greater file compression.'),
 		array(0, extension_loaded('sqlite3'), 'SQLite3', 'SQLite3 is required when running a Phoromatic server.'),
 		array(0, function_exists('pcntl_fork'), 'PCNTL', 'PCNTL is highly recommended as it is required by some tests.'),
 		array(0, function_exists('posix_getpwuid'), 'POSIX', 'POSIX support is highly recommended.'),

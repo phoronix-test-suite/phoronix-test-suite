@@ -134,7 +134,17 @@ class pts_openbenchmarking_client
 		$composite_xml_type = 'composite_xml';
 
 		// Compress the result file XML if it's big
-		if(isset($composite_xml[50000]) && function_exists('gzdeflate'))
+		if(isset($composite_xml[40000]) && function_exists('bzcompress'))
+		{
+			$composite_xml_bz = bzcompress($composite_xml);
+
+			if($composite_xml_bz != false)
+			{
+				$composite_xml = $composite_xml_bz;
+				$composite_xml_type = 'composite_xml_bz';
+			}
+		}
+		else if(isset($composite_xml[40000]) && function_exists('gzdeflate'))
 		{
 			$composite_xml_gz = gzdeflate($composite_xml);
 

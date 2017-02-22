@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+pts-core: Allow bzip2 compression of result file uploads to OpenBenchmarking.org
+
 Phoronix Test Suite 7.0.0 Milestone 4
 16 February 2017
 
