@@ -83,7 +83,7 @@ class pts_test_execution
 		$cache_share_present = $allow_cache_share && is_file($cache_share_pt2so);
 		pts_module_manager::module_process('__pre_test_run', $test_run_request);
 
-		$time_test_start = time();
+		$time_test_start = microtime(true);
 		pts_client::$display->test_run_start($test_run_manager, $test_run_request);
 		sleep(1);
 
@@ -148,7 +148,7 @@ class pts_test_execution
 		// THE MAIN TESTING LOOP
 		//
 
-		for($i = 0, $times_result_produced = 0, $abort_testing = false, $time_test_start_actual = time(), $defined_times_to_run = $times_to_run; $i < $times_to_run && $i < 256 && !$abort_testing; $i++)
+		for($i = 0, $times_result_produced = 0, $abort_testing = false, $time_test_start_actual = microtime(true), $defined_times_to_run = $times_to_run; $i < $times_to_run && $i < 256 && !$abort_testing; $i++)
 		{
 			if($test_run_manager->DEBUG_no_test_execution_just_result_parse)
 			{
@@ -210,7 +210,7 @@ class pts_test_execution
 				pts_client::test_profile_debug_message('Test Run Command: ' . $test_run_command);
 
 				$is_monitoring = pts_test_result_parser::system_monitor_task_check($test_run_request);
-				$test_run_time_start = time();
+				$test_run_time_start = microtime(true);
 
 				if(phodevi::is_windows() || pts_client::read_env('USE_PHOROSCRIPT_INTERPRETER') != false)
 				{
@@ -235,7 +235,8 @@ class pts_test_execution
 					}
 				}
 
-				$test_run_time = time() - $test_run_time_start;
+				$test_run_time = microtime(true) - $test_run_time_start;
+				$test_run_request->test_run_times[] = $test_run_time;
 				$produced_monitoring_result = $is_monitoring ? pts_test_result_parser::system_monitor_task_post_test($test_run_request) : false;
 			}
 			else
@@ -419,7 +420,7 @@ class pts_test_execution
 			pts_client::$display->test_run_instance_complete($test_run_request);
 		}
 
-		$time_test_end_actual = time();
+		$time_test_end_actual = microtime(true);
 
 		if($cache_share_present == false && !$test_run_manager->DEBUG_no_test_execution_just_result_parse)
 		{
@@ -450,7 +451,7 @@ class pts_test_execution
 		}
 
 		// End
-		$time_test_end = time();
+		$time_test_end = microtime(true);
 		$time_test_elapsed = $time_test_end - $time_test_start;
 		$time_test_elapsed_actual = $time_test_end_actual - $time_test_start_actual;
 

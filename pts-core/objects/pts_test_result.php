@@ -33,6 +33,7 @@ class pts_test_result
 
 	public $active = null;
 	public $generated_result_buffers = null;
+	public $test_run_times = null;
 
 	// Added to make it easy to have PTS modules run a custom binary prior to running a program for the test
 	public $exec_binary_prepend = null;
@@ -42,6 +43,7 @@ class pts_test_result
 	{
 		$this->test_profile = clone $test_profile;
 		$this->result = 0;
+		$this->test_run_times = array();
 	}
 	public function __clone()
 	{
