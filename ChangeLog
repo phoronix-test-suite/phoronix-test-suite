@@ -4,6 +4,7 @@ Phoronix Test Suite (Git)
 
 pts-core: Allow bzip2 compression of result file uploads to OpenBenchmarking.org
 pts-core: Only preserve the original raw result string if it differs from the final result
+report_test_run_times: new module to report test run times as result graphs
 
 Phoronix Test Suite 7.0.0 Milestone 4
 16 February 2017
