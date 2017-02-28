@@ -671,13 +671,16 @@ class pts_test_run_manager
 		// XXX : add to attributes JSON here
 		$json_report_attributes = null;
 
-		if(($t = $test_run_request->test_profile->test_installation->get_compiler_data()))
+		if(is_object($test_run_request->test_profile->test_installation))
 		{
-			$json_report_attributes['compiler-options'] = $t;
-		}
-		if(($t = $test_run_request->test_profile->test_installation->get_install_footnote()))
-		{
-			$json_report_attributes['install-footnote'] = $t;
+			if(($t = $test_run_request->test_profile->test_installation->get_compiler_data()))
+			{
+				$json_report_attributes['compiler-options'] = $t;
+			}
+			if(($t = $test_run_request->test_profile->test_installation->get_install_footnote()))
+			{
+				$json_report_attributes['install-footnote'] = $t;
+			}
 		}
 		if(($t = $test_run_request->active->get_min_result()) != 0)
 		{

@@ -61,7 +61,7 @@
 				<xs:sequence>
 					<xs:element name="Identifier" type="SystemIdentifier" />
 					<xs:element name="Value" type="xs:string" />
-					<xs:element name="RawString" type="xs:string" />
+					<xs:element name="RawString" type="xs:string" minOccurs="0" maxOccurs="1" />
 					<xs:element name="JSON" type="xs:string" minOccurs="0" maxOccurs="1" />
 				</xs:sequence>
 				</xs:complexType>
