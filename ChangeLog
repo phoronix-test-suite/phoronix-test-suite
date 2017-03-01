@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 7.0.0 Milestone 5
+28 February 2017
 
 pts-core: Allow bzip2 compression of result file uploads to OpenBenchmarking.org
 pts-core: Only preserve the original raw result string if it differs from the final result
