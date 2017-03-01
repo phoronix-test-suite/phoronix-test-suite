@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Copyright (C) 2008 - 2014, Michael Larabel -->
+<!-- Copyright (C) 2008 - 2017, Michael Larabel -->
 <application>
  <id type="desktop">phoronix-test-suite.desktop</id>
  <licence>CC0</licence>
@@ -15,4 +15,5 @@
  </screenshots>
  <url type="homepage">http://www.phoronix-test-suite.com/</url>
  <updatecontact>michael_at_phoronix.com</updatecontact>
+ <translation></translation>
 </application>
