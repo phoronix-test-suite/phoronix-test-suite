@@ -257,7 +257,7 @@ class pts_result_file_output
 			$pdf->Ln(100);
 			$pdf->ImageJPGInline($output, 50, 40 + (($placement - 1) * 120), 120);
 
-			if($placement == 2)
+			if($placement == 2 || $result_object->test_result_buffer->get_count() > 12)
 			{
 				$placement = 0;
 				if($i != count($results))

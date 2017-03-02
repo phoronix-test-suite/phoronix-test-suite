@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 pts-core: Make the AppStream meta data happy
+pts-core: Improve formatting of PDF generation on large result files
 
 Phoronix Test Suite 7.0.0 Milestone 5
 28 February 2017
