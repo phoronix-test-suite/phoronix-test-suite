@@ -248,8 +248,8 @@ function pts_version_codenames()
 		);
 }
 
-pts_define('PTS_VERSION', '7.0.0m5');
-pts_define('PTS_CORE_VERSION', 6950);
+pts_define('PTS_VERSION', '7.0.0');
+pts_define('PTS_CORE_VERSION', 6990);
 pts_define('PTS_CODENAME', 'RINGSAKER');
 pts_define('PTS_IS_CLIENT', (defined('PTS_MODE') && strstr(PTS_MODE, 'CLIENT') !== false));
 pts_define('PTS_IS_WEB_CLIENT', (defined('PTS_MODE') && PTS_MODE == 'WEB_CLIENT'));
