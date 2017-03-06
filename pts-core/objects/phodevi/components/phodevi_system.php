@@ -566,9 +566,9 @@ class phodevi_system extends phodevi_device_interface
 				// GCC
 				// If it's a link, ensure that it's not linking to llvm/clang or something
 				$version = trim(shell_exec('gcc -dumpversion 2>&1'));
+				$v = shell_exec('gcc -v 2>&1');
 				if(pts_strings::is_version($version))
 				{
-					$v = shell_exec('gcc -v 2>&1');
 
 					if(($t = strrpos($v, $version . ' ')) !== false)
 					{
@@ -602,6 +602,15 @@ class phodevi_system extends phodevi_device_interface
 					}
 
 					$compilers['gcc'] = 'GCC ' . $version;
+				}
+				else if(($t = strpos($v, ' version ')) !== false)
+				{
+					$v = substr($v, ($t + strlen(' version ')));
+					if(($t = strpos($v, ' (')) !== false)
+					{
+						$v = substr($v, 0, $t);
+						$compilers['gcc'] = 'GCC ' . $v;
+					}
 				}
 			}
 		}
