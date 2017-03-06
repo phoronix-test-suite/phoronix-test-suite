@@ -1,9 +1,11 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 7.0.0-Ringsaker
+6 March 2017
 
 pts-core: Make the AppStream meta data happy
 pts-core: Improve formatting of PDF generation on large result files
+phodevi: Expand GCC version detection when -dumpversion isn't supported (e.g. gcc-snapshot of gcc 7.0.1)
 
 Phoronix Test Suite 7.0.0 Milestone 5
 28 February 2017
