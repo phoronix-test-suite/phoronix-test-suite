@@ -127,6 +127,7 @@ class pts_network
 		curl_setopt($cr, CURLOPT_CAPATH, PTS_CORE_STATIC_PATH . 'certificates/');
 		curl_setopt($cr, CURLOPT_BUFFERSIZE, 64000);
 		curl_setopt($cr, CURLOPT_USERAGENT, pts_core::codename(true));
+		curl_setopt($cr, CURLOPT_SSL_VERIFYPEER, true);
 
 		if($download_port_number)
 		{
@@ -141,13 +142,11 @@ class pts_network
 
 		if(strpos($download, 'https://openbenchmarking.org/') !== false)
 		{
-			curl_setopt($cr, CURLOPT_SSL_VERIFYPEER, true);
 			curl_setopt($cr, CURLOPT_SSL_VERIFYHOST, 2);
 			curl_setopt($cr, CURLOPT_CAINFO, PTS_CORE_STATIC_PATH . 'certificates/openbenchmarking-server.pem');
 		}
 		else if(strpos($download, 'https://www.phoromatic.com/') !== false)
 		{
-			curl_setopt($cr, CURLOPT_SSL_VERIFYPEER, true);
 			curl_setopt($cr, CURLOPT_SSL_VERIFYHOST, 2);
 			curl_setopt($cr, CURLOPT_CAINFO, PTS_CORE_STATIC_PATH . 'certificates/phoromatic-com.pem');
 		}
