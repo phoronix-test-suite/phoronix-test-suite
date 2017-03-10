@@ -302,7 +302,7 @@ class pts_test_execution
 					if($test_run_time < 2 && $test_run_request->test_profile->get_estimated_run_time() > 60 && !$restored_from_cache && !$test_run_manager->DEBUG_no_test_execution_just_result_parse)
 					{
 						// If the test ended in less than two seconds, outputted some int, and normally the test takes much longer, then it's likely some invalid run
-						self::test_run_instance_error($test_run_manager, $test_run_request, 'The test run ended prematurely.');
+						self::test_run_instance_error($test_run_manager, $test_run_request, 'The test run ended quickly.');
 						if($is_expected_last_run && is_file($test_log_file))
 						{
 							$scan_log = pts_file_io::file_get_contents($test_log_file);

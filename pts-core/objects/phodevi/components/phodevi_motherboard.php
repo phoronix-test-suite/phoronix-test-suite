@@ -447,6 +447,10 @@ class phodevi_motherboard extends phodevi_device_interface
 			{
 				$info = pts_file_io::file_get_contents('/sys/bus/soc/devices/soc0/machine');
 			}
+			if(empty($info) && is_readable('/sys/firmware/devicetree/base/model'))
+			{
+				$info = pts_file_io::file_get_contents('/sys/firmware/devicetree/base/model');
+			}
 			if(empty($info))
 			{
 				// Works on the MIPS Creator CI20
