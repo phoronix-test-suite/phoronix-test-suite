@@ -103,7 +103,7 @@ class pts_test_execution
 
 			  if($exit_status != 0)
 			  {
-					self::test_run_instance_error($test_run_manager, $test_run_request, 'The pre run script exited with a non-zero exit status.' . PHP_EOL);
+					self::test_run_instance_error($test_run_manager, $test_run_request, 'The pre run script quit with a non-zero exit status.' . PHP_EOL);
 					self::test_run_error($test_run_manager, $test_run_request, 'This test execution has been abandoned.');
 					return false;
 			  }
@@ -271,7 +271,7 @@ class pts_test_execution
 
 				if($exit_status != 0)
 				{
-					self::test_run_instance_error($test_run_manager, $test_run_request, 'The test exited with a non-zero exit status.');
+					self::test_run_instance_error($test_run_manager, $test_run_request, 'The test quit with a non-zero exit status.');
 					if($is_expected_last_run && is_file($test_log_file))
 					{
 						$scan_log = pts_file_io::file_get_contents($test_log_file);
@@ -438,7 +438,7 @@ class pts_test_execution
 
 				if($exit_status != 0)
 				{
-					self::test_run_instance_error($test_run_manager, $test_run_request, 'The post run script exited with a non-zero exit status.' . PHP_EOL);
+					self::test_run_instance_error($test_run_manager, $test_run_request, 'The post run script quit with a non-zero exit status.' . PHP_EOL);
 					$abort_testing = true;
 				}
 			}
