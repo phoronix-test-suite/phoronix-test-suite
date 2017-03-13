@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2015, Phoronix Media
-	Copyright (C) 2009 - 2015, Michael Larabel
+	Copyright (C) 2009 - 2017, Phoronix Media
+	Copyright (C) 2009 - 2017, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -49,6 +49,14 @@ class gpu_power extends phodevi_sensor
 
 					$gpu_power = $power;
 				}
+			}
+		}
+		else if(is_readable('/sys/bus/i2c/drivers/ina3221x/0-0040/iio:device0/in_power0_input'))
+		{
+			$in_power0_input = pts_file_io::file_get_contents('/sys/bus/i2c/drivers/ina3221x/0-0040/iio:device0/in_power0_input');
+			if(is_numeric($in_power0_input) && $in_power0_input > 1)
+			{
+				$gpu_power = $in_power0_input;
 			}
 		}
 

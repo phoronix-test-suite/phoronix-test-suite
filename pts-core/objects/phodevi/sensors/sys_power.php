@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2015, Phoronix Media
-	Copyright (C) 2009 - 2015, Michael Larabel
+	Copyright (C) 2009 - 2017, Phoronix Media
+	Copyright (C) 2009 - 2017, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -27,6 +27,7 @@ class sys_power extends phodevi_sensor
 
 	private static $battery_sys = false;
 	private static $battery_cur = false;
+	private static $tegra_power = false;
 	private static $wattsup_meter = false;
 	private static $ipmitool = false;
 
@@ -34,7 +35,7 @@ class sys_power extends phodevi_sensor
 	{
 		$unit = null;
 
-		if(self::$battery_sys)
+		if(self::$battery_sys || self::$tegra_power)
 		{
 			$unit = 'Milliwatts';
 		}
@@ -75,6 +76,15 @@ class sys_power extends phodevi_sensor
 				return true;
 			}
 		}
+		if(is_readable('/sys/bus/i2c/drivers/ina3221x/0-0041/iio:device1/in_power0_input'))
+		{
+			$in_power0_input = pts_file_io::file_get_contents('/sys/bus/i2c/drivers/ina3221x/0-0041/iio:device1/in_power0_input');
+			if($in_power0_input > 1000)
+			{
+				self::$tegra_power = true;
+				return true;
+			}
+		}
 
 		if(pts_client::executable_in_path('ipmitool'))
 		{
@@ -100,6 +110,13 @@ class sys_power extends phodevi_sensor
 		else if(self::$wattsup_meter)
 		{
 			return self::watts_up_power_meter();
+		}
+		else if(self::$tegra_power)
+		{
+			if(is_readable('/sys/bus/i2c/drivers/ina3221x/0-0041/iio:device1/in_power0_input'))
+			{
+				return pts_file_io::file_get_contents('/sys/bus/i2c/drivers/ina3221x/0-0041/iio:device1/in_power0_input');
+			}
 		}
 		else if(self::$ipmitool)
 		{
