@@ -22,9 +22,9 @@
 
 class report_test_run_times extends pts_module_interface
 {
-	const module_name = 'Report Test Run Time Graphs';
-	const module_version = '1.0.0';
-	const module_description = 'Setting the RUN_TIMES_ARE_A_BENCHMARK=1 environment variable will automatically create additional graphs for each test run plotting the run-time needed for each test being executed.';
+	const module_name = 'Report Test Time Graphs';
+	const module_version = '1.1.0';
+	const module_description = 'Setting the RUN_TIMES_ARE_A_BENCHMARK=1 environment variable will automatically create additional graphs for each test run plotting the run-time needed for each test being executed. Setting the INSTALL_TIMES_ARE_A_BENCHMARK=1 environment variable will automatically create additional graphs for each test run plotting the time required for the test installation.';
 	const module_author = 'Michael Larabel';
 
 	private static $successful_test_run_request = null;
@@ -32,7 +32,7 @@ class report_test_run_times extends pts_module_interface
 
 	public static function module_environmental_variables()
 	{
-		return array('RUN_TIMES_ARE_A_BENCHMARK');
+		return array('RUN_TIMES_ARE_A_BENCHMARK', 'INSTALL_TIMES_ARE_A_BENCHMARK');
 	}
 	public static function module_info()
 	{
@@ -40,11 +40,20 @@ class report_test_run_times extends pts_module_interface
 	}
 	public static function __run_manager_setup(&$test_run_manager)
 	{
+		$is_being_used = false;
+
 		if(getenv('RUN_TIMES_ARE_A_BENCHMARK') != false)
 		{
 			echo PHP_EOL . 'The Phoronix Test Suite will generate graphs of test run-times.' . PHP_EOL;
+			$is_being_used = true;
 		}
-		else
+		if(getenv('INSTALL_TIMES_ARE_A_BENCHMARK') != false)
+		{
+			echo PHP_EOL . 'The Phoronix Test Suite will generate graphs of test install times.' . PHP_EOL;
+			$is_being_used = true;
+		}
+
+		if(!$is_being_used)
 		{
 			return pts_module::MODULE_UNLOAD; // This module doesn't have anything else to do
 		}
@@ -61,7 +70,7 @@ class report_test_run_times extends pts_module_interface
 	}
 	public static function __post_test_run_process(&$result_file)
 	{
-		if(self::$successful_test_run_request && !empty(self::$successful_test_run_request->test_run_times))
+		if(getenv('RUN_TIMES_ARE_A_BENCHMARK') && self::$successful_test_run_request && !empty(self::$successful_test_run_request->test_run_times))
 		{
 			$result = round(array_sum(self::$successful_test_run_request->test_run_times) / count(self::$successful_test_run_request->test_run_times), 2);
 			if($result > 0)
@@ -75,6 +84,24 @@ class report_test_run_times extends pts_module_interface
 				$test_result->test_profile->set_result_proportion('LIB');
 				$test_result->test_result_buffer = new pts_test_result_buffer();
 				$test_result->test_result_buffer->add_test_result(self::$result_identifier, $result, implode(':', self::$successful_test_run_request->test_run_times));
+				$result_file->add_result($test_result);
+			}
+		}
+		if(getenv('INSTALL_TIMES_ARE_A_BENCHMARK') && self::$successful_test_run_request && isset($test_result->test_profile->test_installation) && $test_result->test_profile->test_installation)
+		{
+			$install_time = $test_result->test_profile->test_installation->get_latest_install_time();
+
+			if($install_time > 0)
+			{
+				// This copy isn't needed but it's shorter and from port from system_monitor where there can be multiple items tracked
+				$test_result = clone self::$successful_test_run_request;
+				$test_result->test_profile->set_identifier(null);
+				$test_result->set_used_arguments_description('Test Install Time');
+				$test_result->set_used_arguments('test install time ');
+				$test_result->test_profile->set_result_scale('Seconds');
+				$test_result->test_profile->set_result_proportion('LIB');
+				$test_result->test_result_buffer = new pts_test_result_buffer();
+				$test_result->test_result_buffer->add_test_result(self::$result_identifier, $install_time);
 				$result_file->add_result($test_result);
 			}
 		}
