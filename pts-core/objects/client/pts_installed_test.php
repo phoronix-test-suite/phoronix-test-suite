@@ -24,11 +24,12 @@ class pts_installed_test
 {
 	private $xml;
 	private $footnote_override = null;
+	private $install_path = null;
 
 	public function __construct(&$test_profile)
 	{
-		$install_path = $test_profile->get_install_dir();
-		$read_xml = is_file($install_path . 'pts-install.xml') ? $install_path . 'pts-install.xml' : null;
+		$this->install_path = $test_profile->get_install_dir();
+		$read_xml = is_file($this->install_path . 'pts-install.xml') ? $this->install_path . 'pts-install.xml' : null;
 		$xml_options = LIBXML_COMPACT | LIBXML_PARSEHUGE;
 		$this->xml = simplexml_load_file($read_xml, 'SimpleXMLElement', $xml_options);
 	}
@@ -87,6 +88,22 @@ class pts_installed_test
 	public function get_installed_system_identifier()
 	{
 		return isset($this->xml->TestInstallation->Environment->SystemIdentifier) ? $this->xml->TestInstallation->Environment->SystemIdentifier->__toString() : null;
+	}
+	public function get_install_size()
+	{
+		$install_size = 0;
+
+		if(pts_client::executable_in_path('du'))
+		{
+			$du = trim(shell_exec('du -sk ' . $this->install_path . ' 2>&1'));
+			$du = substr($du, 0, strpos($du, "\t"));
+			if(is_numeric($du) && $du > 1)
+			{
+				$install_size = $du;
+			}
+		}
+
+		return $install_size;
 	}
 }
 

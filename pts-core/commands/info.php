@@ -108,9 +108,16 @@ class info implements pts_option_interface
 					$avg_time = !empty($avg_time) ? pts_strings::format_time($avg_time, 'SECONDS') : 'N/A';
 					$latest_time = $o->test_installation->get_latest_run_time();
 					$latest_time = !empty($latest_time) ? pts_strings::format_time($latest_time, 'SECONDS') : 'N/A';
+					$install_time = ceil($o->test_installation->get_latest_install_time());
+					$install_time = !empty($latest_time) ? pts_strings::format_time($latest_time, 'SECONDS') : 'N/A';
 
 					echo PHP_EOL . pts_client::cli_just_bold('Test Installed: ') . 'Yes' . PHP_EOL;
 					echo pts_client::cli_just_bold('Last Run: ') . $last_run . PHP_EOL;
+					echo pts_client::cli_just_bold('Install Time: ') . $install_time . PHP_EOL;
+					if($o->test_installation->get_install_size() > 0)
+					{
+						echo pts_client::cli_just_bold('Install Size: ') . $o->test_installation->get_install_size() . ' Bytes' . PHP_EOL;
+					}
 
 					if($last_run != 'Never')
 					{

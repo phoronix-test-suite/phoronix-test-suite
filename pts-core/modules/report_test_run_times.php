@@ -24,7 +24,7 @@ class report_test_run_times extends pts_module_interface
 {
 	const module_name = 'Report Test Time Graphs';
 	const module_version = '1.1.0';
-	const module_description = 'Setting the RUN_TIMES_ARE_A_BENCHMARK=1 environment variable will automatically create additional graphs for each test run plotting the run-time needed for each test being executed. Setting the INSTALL_TIMES_ARE_A_BENCHMARK=1 environment variable will automatically create additional graphs for each test run plotting the time required for the test installation.';
+	const module_description = 'Setting the RUN_TIMES_ARE_A_BENCHMARK=1 environment variable will automatically create additional graphs for each test run plotting the run-time needed for each test being executed. Setting the INSTALL_TIMES_ARE_A_BENCHMARK=1 environment variable will automatically create additional graphs for each test run plotting the time required for the test installation. Setting the INSTALL_SIZES_ARE_A_BENCHMARK=1 environment variable will automatically create additional graphs for each test run plotting the size of the installed test directory.';
 	const module_author = 'Michael Larabel';
 
 	private static $successful_test_run_request = null;
@@ -32,7 +32,7 @@ class report_test_run_times extends pts_module_interface
 
 	public static function module_environmental_variables()
 	{
-		return array('RUN_TIMES_ARE_A_BENCHMARK', 'INSTALL_TIMES_ARE_A_BENCHMARK');
+		return array('RUN_TIMES_ARE_A_BENCHMARK', 'INSTALL_TIMES_ARE_A_BENCHMARK', 'INSTALL_SIZES_ARE_A_BENCHMARK');
 	}
 	public static function module_info()
 	{
@@ -50,6 +50,11 @@ class report_test_run_times extends pts_module_interface
 		if(getenv('INSTALL_TIMES_ARE_A_BENCHMARK') != false)
 		{
 			echo PHP_EOL . 'The Phoronix Test Suite will generate graphs of test install times.' . PHP_EOL;
+			$is_being_used = true;
+		}
+		if(getenv('INSTALL_SIZES_ARE_A_BENCHMARK') != false)
+		{
+			echo PHP_EOL . 'The Phoronix Test Suite will generate graphs of test installation directory sizes.' . PHP_EOL;
 			$is_being_used = true;
 		}
 
@@ -87,9 +92,9 @@ class report_test_run_times extends pts_module_interface
 				$result_file->add_result($test_result);
 			}
 		}
-		if(getenv('INSTALL_TIMES_ARE_A_BENCHMARK') && self::$successful_test_run_request && isset($test_result->test_profile->test_installation) && $test_result->test_profile->test_installation)
+		if(getenv('INSTALL_TIMES_ARE_A_BENCHMARK') && self::$successful_test_run_request && isset(self::$successful_test_run_request->test_profile->test_installation) && self::$successful_test_run_request->test_profile->test_installation)
 		{
-			$install_time = $test_result->test_profile->test_installation->get_latest_install_time();
+			$install_time = round(self::$successful_test_run_request->test_profile->test_installation->get_latest_install_time(), 3);
 
 			if($install_time > 0)
 			{
@@ -102,6 +107,24 @@ class report_test_run_times extends pts_module_interface
 				$test_result->test_profile->set_result_proportion('LIB');
 				$test_result->test_result_buffer = new pts_test_result_buffer();
 				$test_result->test_result_buffer->add_test_result(self::$result_identifier, $install_time);
+				$result_file->add_result($test_result);
+			}
+		}
+		if(getenv('INSTALL_SIZES_ARE_A_BENCHMARK') && self::$successful_test_run_request && isset(self::$successful_test_run_request->test_profile->test_installation) && self::$successful_test_run_request->test_profile->test_installation)
+		{
+			$install_size = self::$successful_test_run_request->test_profile->test_installation->get_install_size();
+
+			if($install_size > 0)
+			{
+				// This copy isn't needed but it's shorter and from port from system_monitor where there can be multiple items tracked
+				$test_result = clone self::$successful_test_run_request;
+				$test_result->test_profile->set_identifier(null);
+				$test_result->set_used_arguments_description('Test Install Size');
+				$test_result->set_used_arguments('test install size ');
+				$test_result->test_profile->set_result_scale('Bytes');
+				$test_result->test_profile->set_result_proportion('LIB');
+				$test_result->test_result_buffer = new pts_test_result_buffer();
+				$test_result->test_result_buffer->add_test_result(self::$result_identifier, $install_size);
 				$result_file->add_result($test_result);
 			}
 		}

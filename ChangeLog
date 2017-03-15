@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 phodevi: Improved detection for Quill AArch64 board and possibly other boards
 phodevi: Various sensor detection improvements for the Jetson TX2
 report_test_run_times: Add INSTALL_TIMES_ARE_A_BENCHMARK=1 option for generating install time graphs
+report_test_run_times: Add INSTALL_SIZES_ARE_A_BENCHMARK=1 option for generating install size graphs
 
 Phoronix Test Suite 7.0.0-Ringsaker
 6 March 2017
