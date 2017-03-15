@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 phodevi: Improved detection for Quill AArch64 board and possibly other boards
+phodevi: Various sensor detection improvements for the Jetson TX2
 
 Phoronix Test Suite 7.0.0-Ringsaker
 6 March 2017

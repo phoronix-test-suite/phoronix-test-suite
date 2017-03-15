@@ -803,8 +803,6 @@ class pts_client
 	}
 	public static function user_agreement_check($command)
 	{
-		return true;
-
 		$pso = pts_storage_object::recover_from_file(PTS_CORE_STORAGE);
 
 		if($pso == false)
