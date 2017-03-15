@@ -1390,6 +1390,15 @@ class phodevi_gpu extends phodevi_device_interface
 			}
 		}
 
+		if(empty($info) && isset(phodevi::$vfs->xorg_log))
+		{
+			// ARM Mali DDX driver detection fallback
+			if(strpos(phodevi::$vfs->xorg_log, 'MALI(') !== false)
+			{
+				$info = 'ARM Mali';
+			}
+		}
+
 		if(($bracket_open = strpos($info, '[')) !== false)
 		{
 			// Report only the information inside the brackets if it's more relevant...
