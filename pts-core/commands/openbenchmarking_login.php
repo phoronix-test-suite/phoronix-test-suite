@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2015, Phoronix Media
-	Copyright (C) 2008 - 2015, Michael Larabel
+	Copyright (C) 2008 - 2017, Phoronix Media
+	Copyright (C) 2008 - 2017, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -32,10 +32,8 @@ class openbenchmarking_login implements pts_option_interface
 	public static function run($r)
 	{
 		echo PHP_EOL . 'If you have not already registered for your free OpenBenchmarking.org account, you can do so at http://openbenchmarking.org/' . PHP_EOL . PHP_EOL . 'Once you have registered your account and clicked the link within the verification email, enter your log-in information below.' . PHP_EOL . PHP_EOL;
-		echo 'User-Name: ';
-		$username = pts_user_io::read_user_input();
-		echo 'Password: ';
-		$password = pts_user_io::read_user_input();
+		$username = pts_user_io::prompt_user_input('OpenBenchmarking.org User-Name');
+		$password = pts_user_io::prompt_user_input('OpenBenchmarking.org Password', false, true);
 
 		$login_payload = array(
 			's_u' => $username,
