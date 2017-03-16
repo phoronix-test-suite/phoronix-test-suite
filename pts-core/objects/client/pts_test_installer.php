@@ -81,16 +81,16 @@ class pts_test_installer
 			{
 				if($test_profile->is_supported(false) == false)
 				{
-					pts_client::$display->generic_sub_heading('Not Supported: ' . $test_profile->get_identifier());
+					pts_client::$display->generic_sub_heading(pts_client::cli_just_bold('Not Supported: ') . $test_profile->get_identifier());
 				}
 				else if($test_install_manager->add_test_profile($test_profile) != false)
 				{
-					pts_client::$display->generic_sub_heading('To Install: ' . $test_profile->get_identifier());
+					pts_client::$display->generic_sub_heading(pts_client::cli_just_bold('To Install: ') . $test_profile->get_identifier());
 				}
 			}
 			else
 			{
-				pts_client::$display->generic_sub_heading('Installed: ' . $test_profile->get_identifier());
+				pts_client::$display->generic_sub_heading(pts_client::cli_just_bold('Installed: ') . $test_profile->get_identifier());
 			}
 		}
 
@@ -98,7 +98,7 @@ class pts_test_installer
 		{
 			foreach($unknown_tests as $unkown)
 			{
-				pts_client::$display->generic_sub_heading('Unknown: ' . $unkown);
+				pts_client::$display->generic_sub_heading(pts_client::cli_just_bold('Unknown: ') . $unkown);
 			}
 		}
 
