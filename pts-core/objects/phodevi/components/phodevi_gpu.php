@@ -1442,6 +1442,12 @@ class phodevi_gpu extends phodevi_device_interface
 			$info .= ' ' . $video_ram . 'MB';
 		}
 
+		if(empty($info) && is_readable('/sys/class/graphics/fb0/name'))
+		{
+			// Last possible fallback...
+			$info = pts_file_io::file_get_contents('/sys/class/graphics/fb0/name');
+		}
+
 		return $info;
 	}
 }
