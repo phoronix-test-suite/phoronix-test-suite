@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+pts-core: Support for network proxies with username/password requirement
 phodevi: Improved detection for Quill AArch64 board and possibly other boards
 phodevi: Various sensor detection improvements for the Jetson TX2
 phodevi: Add fallback detection for ARM Mali

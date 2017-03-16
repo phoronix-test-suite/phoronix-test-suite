@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2016, Phoronix Media
-	Copyright (C) 2010 - 2016, Michael Larabel
+	Copyright (C) 2010 - 2017, Phoronix Media
+	Copyright (C) 2010 - 2017, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -36,6 +36,26 @@ class pts_strings
 	const CHAR_SEMICOLON = 4096;
 	const CHAR_EQUAL = 8192;
 
+	public static function str_to_hex($string)
+	{
+		$hex = '';
+		for($i = 0; $i < strlen($string); $i++)
+		{
+			$ord = ord($string[$i]);
+			$hexCode = dechex($ord);
+			$hex .= substr('0' . $hexCode, -2);
+		}
+		return strToUpper($hex);
+	}
+	public static function hex_to_str($hex)
+	{
+		$string='';
+		for($i = 0; $i < strlen($hex) - 1; $i += 2)
+		{
+			$string .= chr(hexdec($hex[$i] . $hex[($i + 1)]));
+		}
+		return $string;
+	}
 	public static function is_url($string)
 	{
 		$components = parse_url($string);

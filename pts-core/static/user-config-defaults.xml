@@ -61,6 +61,8 @@
 			<Timeout>20</Timeout>
 			<ProxyAddress></ProxyAddress>
 			<ProxyPort></ProxyPort>
+			<ProxyUser></ProxyUser>
+			<ProxyPassword></ProxyPassword>
 		</Networking>
 		<Server>
 			<RemoteAccessPort>RANDOM</RemoteAccessPort>

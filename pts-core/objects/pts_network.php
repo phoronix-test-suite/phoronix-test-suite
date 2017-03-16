@@ -39,14 +39,14 @@ class pts_network
 	{
 		return self::$disable_network_support == false;
 	}
-	public static function http_get_contents($url, $override_proxy = false, $override_proxy_port = false, $http_timeout = -1)
+	public static function http_get_contents($url, $override_proxy = false, $override_proxy_port = false, $override_proxy_user = false, $override_proxy_pw = false, $http_timeout = -1)
 	{
 		if(!pts_network::network_support_available())
 		{
 			return false;
 		}
 
-		$stream_context = pts_network::stream_context_create(null, $override_proxy, $override_proxy_port, $http_timeout);
+		$stream_context = pts_network::stream_context_create(null, $override_proxy, $override_proxy_port, $override_proxy_user, $override_proxy_pw, $http_timeout);
 		$contents = pts_file_io::file_get_contents($url, 0, $stream_context);
 
 		return $contents;
@@ -161,6 +161,10 @@ class pts_network
 		if(self::$network_proxy)
 		{
 			curl_setopt($cr, CURLOPT_PROXY, self::$network_proxy['proxy']);
+			if(!empty(self::$network_proxy['user']))
+			{
+				curl_setopt($ch, CURLOPT_USERPWD, self::$network_proxy['user'] . ':' . self::$network_proxy['password']);
+			}
 		}
 
 		curl_exec($cr);
@@ -199,7 +203,7 @@ class pts_network
 
 		return false;
 	}
-	public static function stream_context_create($parameters = null, $proxy_address = false, $proxy_port = false, $http_timeout = -1)
+	public static function stream_context_create($parameters = null, $proxy_address = false, $proxy_port = false, $proxy_user = false, $proxy_password = false, $http_timeout = -1)
 	{
 		if(!is_array($parameters))
 		{
@@ -210,6 +214,8 @@ class pts_network
 		{
 			$proxy_address = self::$network_proxy['address'];
 			$proxy_port = self::$network_proxy['port'];
+			$proxy_user = self::$network_proxy['user'];
+			$proxy_password = self::$network_proxy['password'];
 		}
 
 		if($proxy_address != false && $proxy_port != false && is_numeric($proxy_port) && $proxy_port > 1)
@@ -228,7 +234,16 @@ class pts_network
 		}
 
 		$parameters['http']['user_agent'] = pts_core::codename(true);
-		$parameters['http']['header'] = "Content-Type: application/x-www-form-urlencoded\r\n";
+
+		if($proxy_user != false && !empty($proxy_user))
+		{
+			$password = pts_strings::hex_to_str($proxy_password);
+			$parameters['http']['header'] = 'Proxy-Authorization: Basic ' . base64_encode($proxy_user . ':' . $password);
+		}
+		else
+		{
+			$parameters['http']['header'] = "Content-Type: application/x-www-form-urlencoded\r\n";
+		}
 
 		$stream_context = stream_context_create($parameters);
 
@@ -286,12 +301,16 @@ class pts_network
 			self::$network_proxy['proxy'] = $proxy_address . ':' . $proxy_port;
 			self::$network_proxy['address'] = $proxy_address;
 			self::$network_proxy['port'] = $proxy_port;
+			self::$network_proxy['user'] = pts_config::read_user_config('PhoronixTestSuite/Options/Networking/ProxyUser', false);
+			self::$network_proxy['password'] = pts_config::read_user_config('PhoronixTestSuite/Options/Networking/ProxyPassword', false);
 		}
 		else if(($env_proxy = getenv('http_proxy')) != false && count($env_proxy = pts_strings::colon_explode($env_proxy)) == 2)
 		{
 			self::$network_proxy['proxy'] = $env_proxy[0] . ':' . $env_proxy[1];
 			self::$network_proxy['address'] = $env_proxy[0];
 			self::$network_proxy['port'] = $env_proxy[1];
+			self::$network_proxy['user'] = false; // TODO is there any env vars usually storing proxy user/pw?
+			self::$network_proxy['password'] = false;
 		}
 
 		self::$network_timeout = pts_config::read_user_config('PhoronixTestSuite/Options/Networking/Timeout', 20);

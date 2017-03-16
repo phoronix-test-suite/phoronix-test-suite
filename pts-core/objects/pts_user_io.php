@@ -37,12 +37,20 @@ class pts_user_io
 
 		return $output;
 	}
-	public static function prompt_user_input($question, $allow_null = false)
+	public static function prompt_user_input($question, $allow_null = false, $password = false)
 	{
 		do
 		{
 			echo PHP_EOL . pts_client::cli_just_bold($question . ': ');
+			if($password && pts_client::executable_in_path('stty'))
+			{
+				system('stty -echo');
+			}
 			$answer = pts_user_io::read_user_input();
+			if($password && pts_client::executable_in_path('stty'))
+			{
+				system('stty echo');
+			}
 		}
 		while(!$allow_null && empty($answer));
 
