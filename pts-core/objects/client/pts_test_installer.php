@@ -69,6 +69,7 @@ class pts_test_installer
 
 		// Setup the install manager and add the tests
 		$test_install_manager = new pts_test_install_manager();
+		$install_table = array();
 
 		foreach($test_profiles as &$test_profile)
 		{
@@ -81,16 +82,16 @@ class pts_test_installer
 			{
 				if($test_profile->is_supported(false) == false)
 				{
-					pts_client::$display->generic_sub_heading(pts_client::cli_just_bold('Not Supported: ') . $test_profile->get_identifier());
+					$install_table[] = array('Not Supported:', $test_profile->get_identifier());
 				}
 				else if($test_install_manager->add_test_profile($test_profile) != false)
 				{
-					pts_client::$display->generic_sub_heading(pts_client::cli_just_bold('To Install: ') . $test_profile->get_identifier());
+					$install_table[] = array('To Install:', $test_profile->get_identifier());
 				}
 			}
 			else
 			{
-				pts_client::$display->generic_sub_heading(pts_client::cli_just_bold('Installed: ') . $test_profile->get_identifier());
+					$install_table[] = array('Installed:', $test_profile->get_identifier());
 			}
 		}
 
@@ -98,8 +99,13 @@ class pts_test_installer
 		{
 			foreach($unknown_tests as $unkown)
 			{
-				pts_client::$display->generic_sub_heading(pts_client::cli_just_bold('Unknown: ') . $unkown);
+				$install_table[] = array('Unknown:', $unknown);
 			}
+		}
+
+		foreach($install_table as $line)
+		{
+			pts_client::$display->generic_sub_heading(pts_client::cli_just_bold($line[0]) . (str_repeat(' ', (15 - strlen($line[0])))) . $line[1]);
 		}
 
 		if($test_install_manager->tests_to_install_count() == 0)
