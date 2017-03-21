@@ -97,7 +97,7 @@ class pts_test_installer
 
 		if($unknown_tests)
 		{
-			foreach($unknown_tests as $unkown)
+			foreach($unknown_tests as $unknown)
 			{
 				$install_table[] = array('Unknown:', $unknown);
 			}
