@@ -124,10 +124,10 @@ class pts_network
 		curl_setopt($cr, CURLOPT_HEADER, false);
 		curl_setopt($cr, CURLOPT_FOLLOWLOCATION, true);
 		curl_setopt($cr, CURLOPT_CONNECTTIMEOUT, self::$network_timeout);
-		curl_setopt($cr, CURLOPT_CAPATH, PTS_CORE_STATIC_PATH . 'certificates/');
 		curl_setopt($cr, CURLOPT_BUFFERSIZE, 64000);
 		curl_setopt($cr, CURLOPT_USERAGENT, pts_core::codename(true));
-		curl_setopt($cr, CURLOPT_SSL_VERIFYPEER, true);
+		curl_setopt($cr, CURLOPT_CAPATH, PTS_CORE_STATIC_PATH . 'certificates/');
+		curl_setopt($cr, CURLOPT_SSL_VERIFYPEER, false);
 
 		if($download_port_number)
 		{

@@ -1451,6 +1451,10 @@ class phodevi_gpu extends phodevi_device_interface
 			// Last possible fallback...
 			$info = str_replace(' FB', '', pts_file_io::file_get_contents('/sys/class/graphics/fb0/name'));
 		}
+		/*if(empty($info))
+		{
+			$info = 'Unknown';
+		}*/
 
 		return $info;
 	}
