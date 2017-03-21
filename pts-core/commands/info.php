@@ -47,20 +47,19 @@ class info implements pts_option_interface
 			if($o instanceof pts_test_suite)
 			{
 				pts_client::$display->generic_heading($o->get_title());
-				echo pts_client::cli_just_bold('Run Identifier: ') . $o->get_identifier() . PHP_EOL;
-				echo pts_client::cli_just_bold('Suite Version: ') . $o->get_version() . PHP_EOL;
-				echo pts_client::cli_just_bold('Maintainer: ') . $o->get_maintainer() . PHP_EOL;
-				echo pts_client::cli_just_bold('Suite Type: ') . $o->get_suite_type() . PHP_EOL;
-				echo pts_client::cli_just_bold('Unique Tests: ') . $o->get_unique_test_count() . PHP_EOL;
-				echo pts_client::cli_just_bold('Suite Description: ') . $o->get_description() . PHP_EOL;
-				echo PHP_EOL . pts_client::cli_just_bold('Contained Tests: ') . PHP_EOL;
-				$test_table = array();
+				echo pts_client::cli_just_bold('Suite Description: ') . ' ' . $o->get_description() . PHP_EOL . PHP_EOL;
+				$table = array();
+				$table[] = array(pts_client::cli_just_bold('Run Identifier:    '), $o->get_identifier());
+				$table[] = array(pts_client::cli_just_bold('Suite Version: '), $o->get_version());
+				$table[] = array(pts_client::cli_just_bold('Maintainer: '), $o->get_maintainer());
+				$table[] = array(pts_client::cli_just_bold('Suite Type: '), $o->get_suite_type());
+				$table[] = array(pts_client::cli_just_bold('Unique Tests: '), $o->get_unique_test_count());
+				$table[] = array(pts_client::cli_just_bold('Contained Tests: '));
 				foreach($o->get_contained_test_result_objects() as $result_obj)
 				{
-					$test_table[] = array($result_obj->test_profile->get_title(), $result_obj->get_arguments_description());
+					$table[] = array(pts_client::cli_just_bold(null), $result_obj->test_profile->get_title() . ' ', $result_obj->get_arguments_description());
 				}
-				echo pts_user_io::display_text_table($test_table, '    ', 1);
-				echo PHP_EOL;
+				echo pts_user_io::display_text_table($table) . PHP_EOL;
 			}
 			else if($o instanceof pts_test_profile)
 			{
@@ -72,32 +71,36 @@ class info implements pts_option_interface
 				}
 
 				pts_client::$display->generic_heading($test_title);
-				echo pts_client::cli_just_bold('Run Identifier: ') . $o->get_identifier() . PHP_EOL;
-				echo pts_client::cli_just_bold('Profile Version: ') . $o->get_test_profile_version() . PHP_EOL;
-				echo pts_client::cli_just_bold('Maintainer: ') . $o->get_maintainer() . PHP_EOL;
-				echo pts_client::cli_just_bold('Test Type: ') . $o->get_test_hardware_type() . PHP_EOL;
-				echo pts_client::cli_just_bold('Software Type: ') . $o->get_test_software_type() . PHP_EOL;
-				echo pts_client::cli_just_bold('License Type: ') . $o->get_license() . PHP_EOL;
-				echo pts_client::cli_just_bold('Test Status: ') . $o->get_status() . PHP_EOL;
-				echo pts_client::cli_just_bold('Project Web-Site: ') . $o->get_project_url() . PHP_EOL;
+				$table = array();
+				$table[] = array(pts_client::cli_just_bold('Run Identifier: '), $o->get_identifier());
+				$table[] = array(pts_client::cli_just_bold('Profile Version: '), $o->get_test_profile_version());
+				$table[] = array(pts_client::cli_just_bold('Maintainer: '), $o->get_maintainer());
+				$table[] = array(pts_client::cli_just_bold('Test Type: '), $o->get_test_hardware_type());
+				$table[] = array(pts_client::cli_just_bold('Software Type: '), $o->get_test_software_type());
+				$table[] = array(pts_client::cli_just_bold('License Type: '), $o->get_license());
+				$table[] = array(pts_client::cli_just_bold('Test Status: '), $o->get_status());
+				$table[] = array(pts_client::cli_just_bold('Project Web-Site: '), $o->get_project_url());
+
 				if($o->get_estimated_run_time() > 1)
 				{
-					echo pts_client::cli_just_bold('Estimated Run-Time: ') . $o->get_estimated_run_time() . ' Seconds' . PHP_EOL;
+					$table[] = array(pts_client::cli_just_bold('Estimated Run-Time: '), $o->get_estimated_run_time() . ' Seconds');
 				}
 
 				$download_size = $o->get_download_size();
 				if(!empty($download_size))
 				{
-					echo pts_client::cli_just_bold('Download Size: ') . $download_size . ' MB' . PHP_EOL;
+					$table[] = array(pts_client::cli_just_bold('Download Size: '), $download_size . ' MB');
 				}
 
 				$environment_size = $o->get_environment_size();
 				if(!empty($environment_size))
 				{
-					echo pts_client::cli_just_bold('Environment Size: ') . $environment_size . ' MB' . PHP_EOL;
+					$table[] = array(pts_client::cli_just_bold('Environment Size: '), $environment_size . ' MB');
 				}
 
-				echo PHP_EOL . pts_client::cli_just_bold('Description: ') . $o->get_description() . PHP_EOL;
+				echo pts_user_io::display_text_table($table);
+
+				echo PHP_EOL . PHP_EOL . pts_client::cli_just_bold('Description: ') . $o->get_description() . PHP_EOL. PHP_EOL;
 
 				if($o->test_installation != false)
 				{
@@ -111,24 +114,26 @@ class info implements pts_option_interface
 					$install_time = ceil($o->test_installation->get_latest_install_time());
 					$install_time = !empty($latest_time) ? pts_strings::format_time($latest_time, 'SECONDS') : 'N/A';
 
-					echo PHP_EOL . pts_client::cli_just_bold('Test Installed: ') . 'Yes' . PHP_EOL;
-					echo pts_client::cli_just_bold('Last Run: ') . $last_run . PHP_EOL;
-					echo pts_client::cli_just_bold('Install Time: ') . $install_time . PHP_EOL;
+					$table = array();
+					$table[] = array(pts_client::cli_just_bold('Test Installed: '), 'Yes');
+					$table[] = array(pts_client::cli_just_bold('Last Run: '), $last_run);
+					$table[] = array(pts_client::cli_just_bold('Install Time: '), $install_time);
 					if($o->test_installation->get_install_size() > 0)
 					{
-						echo pts_client::cli_just_bold('Install Size: ') . $o->test_installation->get_install_size() . ' Bytes' . PHP_EOL;
+						$table[] = array(pts_client::cli_just_bold('Install Size: '), $o->test_installation->get_install_size() . ' Bytes');
 					}
 
 					if($last_run != 'Never')
 					{
 						if($o->test_installation->get_run_count() > 1)
 						{
-							echo pts_client::cli_just_bold('Average Run-Time: ') . $avg_time . PHP_EOL;
+							$table[] = array(pts_client::cli_just_bold('Average Run-Time: '), $avg_time);
 						}
 
-						echo pts_client::cli_just_bold('Latest Run-Time: ') . $latest_time . PHP_EOL;
-						echo pts_client::cli_just_bold('Times Run: ') . $o->test_installation->get_run_count() . PHP_EOL;
+						$table[] = array(pts_client::cli_just_bold('Latest Run-Time: '), $latest_time);
+						$table[] = array(pts_client::cli_just_bold('Times Run: '), $o->test_installation->get_run_count());
 					}
+					echo pts_user_io::display_text_table($table) . PHP_EOL;
 				}
 				else
 				{
