@@ -312,7 +312,7 @@ class pts_test_run_options
 					foreach($partitions_d as $partition_d)
 					{
 						$mount_point = substr(($a = substr($mounts, strpos($mounts, $partition_d) + strlen($partition_d) + 1)), 0, strpos($a, ' '));
-						if(is_dir($mount_point) && is_writable($mount_point) && !in_array($mount_point, array('/boot', '/boot/efi')))
+						if(is_dir($mount_point) && is_writable($mount_point) && !in_array($mount_point, array('/boot', '/boot/efi')) && !in_array($mount_point, $option_values))
 						{
 							$option_values[] = $mount_point;
 							$option_names[] = $mount_point; // ' [' . $partition_d . ']'
