@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 7.0.1
+28 March 2017
 
 pts-core: Support for network proxies with username/password requirement
 pts-core: Improve formatting of text in 'info' sub-command
