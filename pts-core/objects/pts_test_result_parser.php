@@ -570,6 +570,7 @@ class pts_test_result_parser
 				do
 				{
 					$count = count($test_results);
+					$possible_lines = array();
 
 					if($line_before_hint != null)
 					{
@@ -589,10 +590,15 @@ class pts_test_result_parser
 					{
 						$search_key = trim($search_key);
 						pts_client::test_profile_debug_message('Result Parsing Search Key: ' . $search_key);
-						$line = substr($output, 0, strpos($output, "\n", strrpos($output, $search_key)));
-						$start_of_line = strrpos($line, "\n");
-						$output = substr($line, 0, $start_of_line) . "\n";
-						$line = substr($line, $start_of_line + 1);
+
+						while(($line_x = strrpos($output, $search_key)) !== false)
+						{
+							$line = substr($output, 0, strpos($output, "\n", $line_x));
+							$start_of_line = strrpos($line, "\n");
+							$output = substr($line, 0, $start_of_line) . "\n";
+							$possible_lines[] = substr($line, $start_of_line + 1);
+						}
+						$line = !empty($possible_lines) ? array_shift($possible_lines) : null;
 					}
 					else
 					{
@@ -615,7 +621,7 @@ class pts_test_result_parser
 						{
 							// Using ResultBeforeString tag
 							$before_this = array_search($before_string, $r);
-							if($before_this !== false)
+							if($before_this !== false && (!$is_numeric_check || is_numeric($r[($before_this - 1)])))
 							{
 								$test_results[] = $r[($before_this - 1)];
 							}
@@ -634,14 +640,18 @@ class pts_test_result_parser
 									{
 										continue;
 									}
-									$test_results[] = $r[$f];
+									if(!$is_numeric_check || is_numeric($r[$f]))
+										$test_results[] = $r[$f];
 									break;
 								}
 							}
 						}
 						else if(isset($r[$template_r_pos]))
 						{
-							$test_results[] = $r[$template_r_pos];
+							if(!$is_numeric_check || is_numeric($r[$template_r_pos]))
+							{
+								$test_results[] = $r[$template_r_pos];
+							}
 						}
 						else
 						{
@@ -652,6 +662,12 @@ class pts_test_result_parser
 								$did_try_colon_fallback = true;
 								$try_again = true;
 							}
+						}
+						if($try_again == false && empty($test_results) && !empty($possible_lines))
+						{
+							$line = array_shift($possible_lines);
+							pts_client::test_profile_debug_message('Trying Backup Result Line: ' . $line);
+							$try_again = true;
 						}
 					}
 					while($try_again);
