@@ -476,7 +476,7 @@ class pts_render
 			}
 			if(isset($data['max-result']))
 			{
-				$graph_identifier_note .= ($graph_identifier_note == null ? '' : ' / ') . 'MAX: ' . $data['min-result'];
+				$graph_identifier_note .= ($graph_identifier_note == null ? '' : ' / ') . 'MAX: ' . $data['max-result'];
 			}
 
 			if($graph_identifier_note)
