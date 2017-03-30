@@ -771,6 +771,7 @@ class pts_test_result_parser
 			$scale = isset($entry->ResultScale) ? $entry->ResultScale->__toString() : null;
 			$proportion = isset($entry->ResultProportion) ? $entry->ResultProportion->__toString() : null;
 			$set_args_desc = isset($entry->ArgumentsDescription) ? $entry->ArgumentsDescription->__toString() : null;
+			$append_args_desc = isset($entry->AppendToArgumentsDescription) ? $entry->AppendToArgumentsDescription->__toString() : null;
 
 			if($scale != null)
 			{
@@ -787,6 +788,10 @@ class pts_test_result_parser
 			if($set_args_desc != null)
 			{
 				$test_run_request->set_used_arguments_description($set_args_desc);
+			}
+			if($append_args_desc != null)
+			{
+				$test_run_request->append_to_arguments_description(' - ' . $append_args_desc);
 			}
 		}
 
