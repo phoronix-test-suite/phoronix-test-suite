@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2016, Phoronix Media
-	Copyright (C) 2008 - 2016, Michael Larabel
+	Copyright (C) 2008 - 2017, Phoronix Media
+	Copyright (C) 2008 - 2017, Michael Larabel
 	system_monitor.php: System sensor monitoring module for PTS
 
 	This program is free software; you can redistribute it and/or modify
@@ -110,11 +110,6 @@ class system_monitor extends pts_module_interface
 
 	public static function __pre_test_run($test_run_request)
 	{
-		if(self::$individual_monitoring == false)
-		{
-			return;
-		}
-
 		self::$individual_test_run_request = clone $test_run_request;
 
 		// Just to pad in some idling into the run process
@@ -161,11 +156,6 @@ class system_monitor extends pts_module_interface
 	}
 	public static function __post_test_run_process(&$result_file)
 	{
-		if(self::$individual_monitoring == false)
-		{
-			return;
-		}
-
 		// The self::$test_run_timer to contain how long each individual test run lasted, should anything else past this point want to use the info...
 		self::$test_run_timer = time() - self::$test_run_timer;
 
@@ -177,9 +167,12 @@ class system_monitor extends pts_module_interface
 			self::process_perf_per_watt($result_file);
 		}
 
-		foreach(self::$to_monitor as $sensor)
+		if(self::$individual_monitoring != false)
 		{
-			self::process_test_run_results($sensor, $result_file);
+			foreach(self::$to_monitor as $sensor)
+			{
+				self::process_test_run_results($sensor, $result_file);
+			}
 		}
 
 		self::$test_run_tries_offsets = array();
@@ -393,7 +386,6 @@ class system_monitor extends pts_module_interface
 			}
 
 			self::$perf_per_watt_collection = array();
-			self::$individual_monitoring = true;
 			echo PHP_EOL . 'To Provide Performance-Per-Watt Outputs.' . PHP_EOL;
 		}
 	}
@@ -672,7 +664,6 @@ class system_monitor extends pts_module_interface
 		}
 
 		self::write_test_run_results($result_buffer, $result_file, $sensor);
-
 		self::$individual_test_run_offsets[phodevi::sensor_object_identifier($sensor)] = array();
 		self::$test_run_tries_offsets[phodevi::sensor_object_identifier($sensor)] = array();
 	}
@@ -685,7 +676,7 @@ class system_monitor extends pts_module_interface
 
 		$test_result = clone self::$individual_test_run_request;
 
-		if (pts_module_manager::is_module_attached("matisk"))
+		if(pts_module_manager::is_module_attached('matisk'))
 		{
 			// TODO find some better way than adding a number to distinguish the results between the MATISK runs
 			$arguments_description = phodevi::sensor_object_name($sensor) . ' Monitor (test ' . count($result_file->get_systems()) . ')';
