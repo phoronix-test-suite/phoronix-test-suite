@@ -52,6 +52,7 @@
 		<Package>
 			<GenericName>build-utilities</GenericName>
 			<PackageName>gcc gcc-c++ make autoconf automake glibc-static patch</PackageName>
+			<FileCheck>gcc, c++</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>xorg-development</GenericName>
