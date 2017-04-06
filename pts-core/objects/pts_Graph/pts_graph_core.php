@@ -542,7 +542,7 @@ abstract class pts_graph_core
 					{
 						// this is to avoid having a rotated text bar overrun other results
 						// XXX the 50 number might be too hacky
-						$per_identifier_height = max(54, ceil($rotated_text / count($this->results) * 1.1));
+						$per_identifier_height = max(30, ceil($rotated_text / count($this->results) * 1.1));
 					}
 				}
 				else if(count($this->results) > 3)
