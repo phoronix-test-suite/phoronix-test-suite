@@ -182,6 +182,12 @@ then
 	echo "The command to likely run for your operating system is: "
 	echo "# urpmi php-cli"
 	echo " "
+elif [ -x /usr/bin/eopkg ]
+then
+	# Solus Linux
+	echo "The command to likely run for your operating system is: "
+	echo "# eopkg install php"
+	echo " "
 fi
 
 exit
