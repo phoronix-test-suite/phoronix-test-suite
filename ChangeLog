@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 pts-core: Result parser improvements
 pts-core: Add AppendToArgumentsDescription option to result parser capabilities
 system_monitor: Fix for when individual monitoring is disabled
+phodevi: Fix for listing dual 4K displays and other select multi-monitor configurations
 
 Phoronix Test Suite 7.0.1
 28 March 2017

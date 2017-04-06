@@ -506,7 +506,6 @@ class phodevi_gpu extends phodevi_device_interface
 		$current_resolution = phodevi::read_property('gpu', 'screen-resolution');
 		$current_pixel_count = $current_resolution[0] * $current_resolution[1];
 		$available_modes = array();
-		$supported_ratios = array(1.60, 1.25, 1.33, 1.70, 1.71, 1.78);
 		$ignore_modes = array(
 			array(640, 400),
 			array(720, 480), array(832, 624),
@@ -606,11 +605,6 @@ class phodevi_gpu extends phodevi_device_interface
 			else if($current_pixel_count > 614400 && ($mode[0] * $mode[1]) < 480000 && stripos(phodevi::read_name('gpu'), 'llvmpipe') === false)
 			{
 				// For displays larger than 1024 x 600, drop modes below 800 x 600 unless llvmpipe is being used
-				unset($available_modes[$mode_index]);
-			}
-			else if($current_pixel_count > 480000 && !in_array($this_ratio, $supported_ratios))
-			{
-				// For displays larger than 800 x 600, ensure reading from a supported ratio
 				unset($available_modes[$mode_index]);
 			}
 			else if(in_array($mode, $ignore_modes))
