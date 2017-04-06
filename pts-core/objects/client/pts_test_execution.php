@@ -593,6 +593,7 @@ class pts_test_execution
 	protected static function calculate_end_result_post_processing(&$test_run_manager, &$root_tr)
 	{
 		$test_successful = false;
+		$generated_result_count = 0;
 
 		foreach($root_tr->generated_result_buffers as &$test_result)
 		{
@@ -736,9 +737,17 @@ class pts_test_execution
 
 					if($test_run_manager->get_results_identifier() != null)
 					{
+						if($generated_result_count >= 1)
+						{
+							// No reason to have more than one identifier
+							// TODO XXX may want to rethink this behavior, we'll see...
+							$test_result->test_profile->set_identifier('');
+						}
+
 						$test_result->test_result_buffer = new pts_test_result_buffer();
 						$test_result->test_result_buffer->add_test_result($test_run_manager->get_results_identifier(), $test_result->active->get_result(), $test_result->active->get_values_as_string(), pts_test_run_manager::process_json_report_attributes($test_result), $test_result->active->get_min_result(), $test_result->active->get_max_result());
 						$test_run_manager->result_file->add_result($test_result);
+						$generated_result_count++;
 					}
 				}
 			}
