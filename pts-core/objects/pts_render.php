@@ -441,6 +441,7 @@ class pts_render
 						break;
 					}
 
+					$intersect = array();
 					if($key == 'compiler-options')
 					{
 						$intersect = count($unique_compiler_data) == 1 ? reset($unique_compiler_data) : call_user_func_array('array_intersect', $unique_compiler_data);
