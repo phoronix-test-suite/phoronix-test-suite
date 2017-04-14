@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 7.2.0 Milestone 1
+14 April 2017
 
 pts-core: Result parser improvements
 pts-core: Add AppendToArgumentsDescription option to result parser capabilities
