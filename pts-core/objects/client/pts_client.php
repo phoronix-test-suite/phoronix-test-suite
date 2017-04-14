@@ -33,8 +33,13 @@ class pts_client
 
 	public static function create_lock($lock_file)
 	{
-		if(isset(self::$lock_pointers[$lock_file]) || is_writable(dirname($lock_file)) == false || disk_free_space(dirname($lock_file)) < 1024)
+		if(isset(self::$lock_pointers[$lock_file]) || is_writable(dirname($lock_file)) == false)
 		{
+			return false;
+		}
+		else if(disk_free_space(dirname($lock_file)) < 1024)
+		{
+			echo PHP_EOL . 'Lock creation failed due to lack of disk space.' . PHP_EOL;
 			return false;
 		}
 
