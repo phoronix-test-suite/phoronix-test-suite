@@ -18,7 +18,7 @@ The Phoronix Test Suite can be installed for system-wide usage or run locally wi
 
 The process to download, install/setup, execute, and report the results of a benchmark can be as simple as a command such as `phoronix-test-suite benchmark smallpt` to run a simple CPU test profile. If wishing to simply install a test, it's a matter of running `phoronix-test-suite install <test or suite name>` and to run it's `phoronix-test-suite run <test or suite name>`. There's also a batch mode for non-interactive benchmarking by first running `phoronix-test-suite batch-setup` and then using the `batch-run` sub-command rather than `run`.
 
-Viewing installed system hardware and software is available via `phoronix-test-suite system-info` or `phoronix-test-suite detailed-system-info` for greater verbosity.
+Viewing installed system hardware and software is available via `phoronix-test-suite system-info`.
 
 Facilitating a result comparison from OpenBenchmarking.org can be done by running, for example, `phoronix-test-suite benchmark 1204293-BY-PHORONIX357` if wishing to compare the results of the `http://openbenchmarking.org/result/1204293-BY-PHORONIX357` result file.
 

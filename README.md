@@ -76,8 +76,7 @@ mode for non-interactive benchmarking by first running `phoronix-test-suite
 batch-setup` and then using the `batch-run` sub-command rather than `run`.
 
 Viewing installed system hardware and software is available via
-`phoronix-test-suite system-info` or `phoronix-test-suite detailed-system-info`
-for greater verbosity.
+`phoronix-test-suite system-info`.
 
 Facilitating a result comparison from OpenBenchmarking.org can be done by
 running, for example, `phoronix-test-suite benchmark 1204293-BY-PHORONIX357` if
