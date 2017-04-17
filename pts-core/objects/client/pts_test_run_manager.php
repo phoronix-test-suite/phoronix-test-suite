@@ -636,6 +636,17 @@ class pts_test_run_manager
 			// There already is a match for this test in this particular result buffer
 			return true;
 		}
+		$skip_tests_with_args = ($e = pts_client::read_env('SKIP_TESTS_HAVING_ARGS')) ? pts_strings::comma_explode($e) : false;
+		if($skip_tests_with_args)
+		{
+			foreach($skip_tests_with_args as $skip_test_if_arg_matches)
+			{
+				if(stripos($test_run_request->get_arguments_description(), $skip_test_if_arg_matches) !== false)
+				{
+					return true;
+				}
+			}
+		}
 
 		$test_successful = pts_test_execution::run_test($this, $test_run_request);
 

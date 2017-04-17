@@ -295,6 +295,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 <p>For setting any test option(s) from an environment variable rather than being prompted for the options when running a test. Example: <em>PRESET_OPTIONS="stream.run-type=Add" ./phoronix-test-suite benchmark stream</em>. Multiple options can be passed to this environment variable when delimited by a semicolon.</p>
 <p><strong>SKIP_TESTS</strong></p>
 <p>If there are any test(s) to exempt from the testing process, specify them in this variable. Multiple tests can be waived by delimiting each test identifier by a comma. A test hardware type (i.e. Graphics) can also be supplied for skipping a range of tests.</p>
+<p><strong>SKIP_TESTS_HAVING_ARGS</strong></p>
+<p>If any of the test(s) have an argument matching any strings contained in this environment variable, the test execution will be skipped. Multiple strings can be set when delimiting by a comma.</p>
 <p><strong>RUN_TESTS_IN_RANDOM_ORDER</strong></p>
 <p>Setting this environment variable will cause the tests to be run in a random order.</p>
 <p><strong>SKIP_TESTING_SUBSYSTEMS</strong></p>
