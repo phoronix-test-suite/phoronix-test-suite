@@ -652,6 +652,20 @@ class pts_test_result_parser
 							{
 								$test_results[] = $r[$template_r_pos];
 							}
+							else if($is_numeric_check && strpos($r[$template_r_pos], ':') !== false && strpos($r[$template_r_pos], '.') !== false && is_numeric(str_replace(array(':', '.'), null, $r[$template_r_pos])) && stripos($line, 'time') !== false)
+							{
+								// Convert e.g. 03:03.17 to seconds, relevant for at least pts/blender
+								$seconds = 0;
+								$formatted_time = $r[$template_r_pos];
+								if(($c = strpos($formatted_time, ':')) !== false && strrpos($formatted_time, ':') == $c && is_numeric(substr($formatted_time, 0, $c)))
+								{
+									$seconds = (substr($formatted_time, 0, $c) * 60) + substr($formatted_time, ($c + 1));
+								}
+								if(!empty($seconds))
+								{
+									$test_results[] = $seconds;
+								}
+							}
 						}
 						else
 						{
