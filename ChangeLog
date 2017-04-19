@@ -3,6 +3,8 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 pts-core: Add SKIP_TESTS_HAVING_ARGS environment variable
+pts-core: Parser improvements
+perf_per_dollar: Allow custom units, report on LIB graphs too
 
 Phoronix Test Suite 7.2.0 Milestone 1
 14 April 2017

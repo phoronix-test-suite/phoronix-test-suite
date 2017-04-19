@@ -121,7 +121,7 @@ class perf_per_dollar extends pts_module_interface
 			$test_result->set_used_arguments_description('Performance Per Dollar');
 			$test_result->set_used_arguments('Per-Per-Dollar');
 			$test_result->test_result_buffer = new pts_test_result_buffer();
-			$test_result->test_result_buffer->add_test_result(self::$result_identifier, pts_math::set_precision($avg_perf_dollar), null, array('install-footnote' => '$' . self::$COST_PERF_PER_DOLLAR . ' reported cost. Average result: ' . pts_math::set_precision($avg) . '.'));
+			$test_result->test_result_buffer->add_test_result(self::$result_identifier, pts_math::set_precision($avg_perf_dollar), null, array('install-footnote' => '$' . self::$COST_PERF_PER_DOLLAR . ' reported value. Average result: ' . pts_math::set_precision($avg) . '.'));
 			$test_run_manager->result_file->add_result($test_result);
 		}
 	}
