@@ -286,7 +286,7 @@ if(PTS_IS_CLIENT || defined('PTS_AUTO_LOAD_OBJECTS'))
 		}
 		closedir($dh);
 	}
-	function __autoload($to_load)
+	function pts_auto_load_class($to_load)
 	{
 		static $obj_files = null;
 
@@ -301,6 +301,7 @@ if(PTS_IS_CLIENT || defined('PTS_AUTO_LOAD_OBJECTS'))
 			unset($obj_files[$to_load]);
 		}
 	}
+	spl_autoload_register('pts_auto_load_class');
 }
 if(PTS_IS_CLIENT && ini_get('date.timezone') == null)
 {
