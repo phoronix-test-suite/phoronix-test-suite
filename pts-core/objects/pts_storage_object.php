@@ -81,7 +81,7 @@ class pts_storage_object
 	{
 		return $this->creation_time;
 	}
-	public function force_recover_from_file($read_from_file)
+	public static function force_recover_from_file($read_from_file)
 	{
 		$restore_obj = false;
 
