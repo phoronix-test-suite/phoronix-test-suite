@@ -615,6 +615,18 @@ class phodevi_system extends phodevi_device_interface
 			}
 		}
 
+		if(pts_client::executable_in_path('pgcc'))
+		{
+			// NVIDIA PGI Compiler
+			$compilers['pgcc'] = 'PGI Compiler';
+			$v = trim(shell_exec('pgcc --version 2>&1'));
+			$v = substr($v, strpos($v, 'pgcc ') + 5);
+			$v = substr($v, 0, strpos($v, ' '));
+			if(pts_strings::is_version(str_replace('-', null, $v)))
+			{
+				$compilers['pgcc'] .= ' ' . $v;
+			}
+		}
 		if(pts_client::executable_in_path('opencc'))
 		{
 			// Open64

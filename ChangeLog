@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 pts-core: Add SKIP_TESTS_HAVING_ARGS environment variable
 pts-core: Parser improvements
 perf_per_dollar: Allow custom units, report on LIB graphs too
+phodevi: Add PGI compiler detection
 
 Phoronix Test Suite 7.2.0 Milestone 1
 14 April 2017
