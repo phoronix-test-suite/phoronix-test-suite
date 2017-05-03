@@ -79,12 +79,12 @@ class perf_per_dollar extends pts_module_interface
 			if(self::$successful_test_run_request->test_profile->get_result_proportion() == 'HIB')
 			{
 				$result = pts_math::set_precision(self::$successful_test_run_request->active->get_result() / self::$COST_PERF_PER_DOLLAR);
-				$scale = $test_result->test_profile->get_result_scale() . ' Per ' . self::$COST_PERF_PER_UNIT;
+				$scale = self::$successful_test_run_request->test_profile->get_result_scale() . ' Per ' . self::$COST_PERF_PER_UNIT;
 			}
 			else if(self::$successful_test_run_request->test_profile->get_result_proportion() == 'LIB')
 			{
 				$result = pts_math::set_precision(self::$successful_test_run_request->active->get_result() * self::$COST_PERF_PER_DOLLAR);
-				$scale = $test_result->test_profile->get_result_scale() . ' x ' . self::$COST_PERF_PER_UNIT;
+				$scale = self::$successful_test_run_request->test_profile->get_result_scale() . ' x ' . self::$COST_PERF_PER_UNIT;
 			}
 
 			if($result != 0)
