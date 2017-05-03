@@ -621,9 +621,11 @@ class pts_test_result_parser
 						{
 							// Using ResultBeforeString tag
 							$before_this = array_search($before_string, $r);
-							if($before_this !== false && (!$is_numeric_check || is_numeric($r[($before_this - 1)])))
+							$possible_res = $r[($before_this - 1)];
+							self::strip_result_cleaner($possible_res, $entry);
+							if($before_this !== false && (!$is_numeric_check || is_numeric($possible_res)))
 							{
-								$test_results[] = $r[($before_this - 1)];
+								$test_results[] = $possible_res;
 							}
 						}
 						else if(!empty($after_string))
@@ -640,14 +642,18 @@ class pts_test_result_parser
 									{
 										continue;
 									}
+									self::strip_result_cleaner($r[$f], $entry);
 									if(!$is_numeric_check || is_numeric($r[$f]))
+									{
 										$test_results[] = $r[$f];
+									}
 									break;
 								}
 							}
 						}
 						else if(isset($r[$template_r_pos]))
 						{
+							self::strip_result_cleaner($r[$template_r_pos], $entry);
 							if(!$is_numeric_check || is_numeric($r[$template_r_pos]))
 							{
 								$test_results[] = $r[$template_r_pos];
@@ -696,21 +702,12 @@ class pts_test_result_parser
 			return false;
 		}
 
-		$strip_from_result = isset($entry->StripFromResult) ? $entry->StripFromResult->__toString() : null;
 		$multiply_by = isset($entry->MultiplyResultBy) ? $entry->MultiplyResultBy->__toString() : null;
-		$strip_result_postfix = isset($entry->StripResultPostfix) ? $entry->StripResultPostfix->__toString() : null;
 		$divide_by = isset($entry->DivideResultBy) ? $entry->DivideResultBy->__toString() : null;
 
 		foreach($test_results as $x => &$test_result)
 		{
-			if($strip_from_result != null)
-			{
-				$test_result = str_replace($strip_from_result, null, $test_result);
-			}
-			if($strip_result_postfix != null && substr($test_result, 0 - strlen($strip_result_postfix)) == $strip_result_postfix)
-			{
-				$test_result = substr($test_result, 0, 0 - strlen($strip_result_postfix));
-			}
+			self::strip_result_cleaner($test_result, $entry);
 
 			// Expand validity checking here
 			if($is_numeric_check == true && is_numeric($test_result) == false)
@@ -811,6 +808,20 @@ class pts_test_result_parser
 
 		pts_client::test_profile_debug_message('Test Result Parser Returning: ' . $test_result);
 		return $test_result;
+	}
+	protected static function strip_result_cleaner(&$test_result, &$entry)
+	{
+		$strip_from_result = isset($entry->StripFromResult) ? $entry->StripFromResult->__toString() : null;
+		$strip_result_postfix = isset($entry->StripResultPostfix) ? $entry->StripResultPostfix->__toString() : null;
+
+		if($strip_from_result != null)
+		{
+			$test_result = str_replace($strip_from_result, null, $test_result);
+		}
+		if($strip_result_postfix != null && substr($test_result, 0 - strlen($strip_result_postfix)) == $strip_result_postfix)
+		{
+			$test_result = substr($test_result, 0, 0 - strlen($strip_result_postfix));
+		}
 	}
 	protected static function determine_search_key($line_hint, $line_before_hint, $line_after_hint, $template_line, $template, $template_r, $key)
 	{
