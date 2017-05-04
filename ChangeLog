@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 7.2.0 Milestone 2
+4 May 2017
 
 pts-core: Add SKIP_TESTS_HAVING_ARGS environment variable
 pts-core: Parser improvements
