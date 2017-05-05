@@ -377,6 +377,10 @@ class phodevi_disk extends phodevi_device_interface
 				$scheduler = '/sys/block/' . $device . '/queue/scheduler';
 			}
 		}
+		else if(is_readable('/sys/block/nvme0n1/queue/scheduler'))
+		{
+			$scheduler = '/sys/block/nvme0n1/queue/scheduler';
+		}
 		else if(is_readable('/sys/block/sda/queue/scheduler'))
 		{
 			$scheduler = '/sys/block/sda/queue/scheduler';
