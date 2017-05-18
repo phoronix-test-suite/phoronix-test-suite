@@ -557,7 +557,7 @@ class phoromatic extends pts_module_interface
 
 				if($just_started)
 				{
-					if(PTS_IS_DAEMONIZED_SERVER_PROCESS && !self::$limit_network_communication)
+					if(PTS_IS_DAEMONIZED_SERVER_PROCESS && !self::$limit_network_communication && function_exists('pcntl_fork'))
 					{
 						$pid = pcntl_fork();
 						if($pid == 0)
