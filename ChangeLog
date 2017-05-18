@@ -3,6 +3,8 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 phodevi: Fallback for being able to read I/O scheduler on NVMe device on Linux
+phodevi: Monitor *DEBUG* environment variables
+pts_Graph: Key alignment spacing fix
 
 Phoronix Test Suite 7.2.0 Milestone 2
 4 May 2017
