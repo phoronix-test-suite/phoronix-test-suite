@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+pts-core: Add dump-file-info helper
 phodevi: Fallback for being able to read I/O scheduler on NVMe device on Linux
 phodevi: Monitor *DEBUG* environment variables
 pts_Graph: Key alignment spacing fix
