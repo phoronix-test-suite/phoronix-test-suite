@@ -109,7 +109,7 @@ class pts_graph_horizontal_bars extends pts_graph_core
 				if($identifier == 0 && !$this->is_multi_way_comparison)
 				{
 					// See if the result identifier matches something to be color-coded better
-					$paint_color = self::identifier_to_branded_color($buffer_item->get_result_identifier(), $this->get_paint_color($identifier));
+					$paint_color = self::identifier_to_branded_color($buffer_item->get_result_identifier(), $this->get_paint_color($buffer_item->get_result_identifier()));
 				}
 
 				$value = $buffer_item->get_result_value();
