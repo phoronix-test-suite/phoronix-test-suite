@@ -176,6 +176,13 @@ abstract class pts_graph_core
 						continue;
 						break;
 				}
+				if(in_array($system, $this->graph_identifiers))
+				{
+					// Don't allow duplicate identifiers
+					unset($this->test_result->test_result_buffer->buffer_items[$i]);
+					continue;
+
+				}
 
 				$buffer_item->reset_result_identifier($system);
 
@@ -201,6 +208,13 @@ abstract class pts_graph_core
 				{
 					unset($this->test_result->test_result_buffer->buffer_items[$i]);
 					continue;
+				}
+				if(in_array($buffer_item->get_result_identifier(), $this->graph_identifiers))
+				{
+					// Don't allow duplicate identifiers
+					unset($this->test_result->test_result_buffer->buffer_items[$i]);
+					continue;
+
 				}
 
 				$this->graph_identifiers[] = $buffer_item->get_result_identifier();
@@ -494,10 +508,10 @@ abstract class pts_graph_core
 				}
 				else
 				{
-					$longest_identifier_width = ceil(self::text_string_width($longest_identifier, $this->i['identifier_size']) * 1.065) + 10;
+					$longest_identifier_width = ceil(self::text_string_width($longest_identifier, $this->i['identifier_size']) * 1.09) + 12;
 				}
 
-				$longest_identifier_max = ($this->i['graph_width'] * 0.5) + 0.01;
+				$longest_identifier_max = ceil(($this->i['graph_width'] * 0.55) + 0.01);
 
 				$this->i['left_start'] = min($longest_identifier_max, max($longest_identifier_width, 70));
 				$this->i['left_end_right'] = 15;
