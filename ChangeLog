@@ -2,11 +2,13 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+pts-core: Result parser fixes for some advanced corner cases
 pts-core: Add dump-file-info helper
 phodevi: Fallback for being able to read I/O scheduler on NVMe device on Linux
 phodevi: Monitor *DEBUG* environment variables
 pts_Graph: Key alignment spacing fix
 pts_Graph: Don't allow duplicate identifiers
+pts_Graph: Various other alignment tweaks
 phoromatic: Handling for non-PCNTL support in Phoromatic client
 
 Phoronix Test Suite 7.2.0 Milestone 2

@@ -100,7 +100,7 @@ class pts_graph_lines extends pts_graph_core
 
 			if($this->i['identifier_size'] <= $this->i['min_identifier_size'])
 			{
-				list($text_width, $text_height) = pts_svg_dom::estimate_text_dimensions($longest_string, $this->i['min_identifier_size'] + 0.5);
+				list($text_width, $text_height) = pts_svg_dom::estimate_text_dimensions($longest_string, $this->i['min_identifier_size'] + 1);
 				$this->i['bottom_offset'] += $text_width;
 				$this->update_graph_dimensions($this->i['graph_width'], $this->i['graph_height'] + $text_width);
 
@@ -416,7 +416,7 @@ class pts_graph_lines extends pts_graph_core
 		}
 
 		$this->i['key_line_height'] = 16;
-		$this->i['key_longest_string_width'] = self::text_string_width($this->test_result->test_result_buffer->get_longest_identifier(), self::$c['size']['key']);
+		$this->i['key_longest_string_width'] = self::text_string_width($this->test_result->test_result_buffer->get_longest_identifier(), self::$c['size']['key']) + 6;
 
 		$item_width_spacing = 32;
 		$this->i['key_item_width'] = $this->i['key_longest_string_width'] + $this->get_stat_word_width() * 3 + $item_width_spacing;
