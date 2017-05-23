@@ -112,12 +112,15 @@ class pts_ResultFileTable extends pts_Table
 			}
 			else
 			{
-				$result_tests[$result_counter] = new pts_graph_ir_value($result_object->test_profile->get_identifier_base_name() . ': ' . $result_object->get_arguments_description());
-				$result_tests[$result_counter]->set_attribute('title', $result_object->get_arguments_description());
-
 				if($result_object->test_profile->get_identifier() != null)
 				{
+					$result_tests[$result_counter] = new pts_graph_ir_value($result_object->test_profile->get_identifier_base_name() . ': ' . $result_object->get_arguments_description());
+					$result_tests[$result_counter]->set_attribute('title', $result_object->get_arguments_description());
 					$result_tests[$result_counter]->set_attribute('href', 'http://openbenchmarking.org/test/' . $result_object->test_profile->get_identifier());
+				}
+				else($result_object->test_profile->get_title() != null)
+				{
+					$result_tests[$result_counter] = new pts_graph_ir_value($result_object->test_profile->get_title() . ': ' . $result_object->get_arguments_description());
 				}
 			}
 

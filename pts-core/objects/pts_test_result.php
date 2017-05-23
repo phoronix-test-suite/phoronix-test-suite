@@ -72,7 +72,7 @@ class pts_test_result
 
 				// Remove the old prefix to avoid when re-running tests that it could see multiple things appended from older version
 				// Encountered when introducing the append to test arguments for Mad Max test profile
-				if(($x = strpos($this->used_arguments_description, $prefix_being_added)) !== false)
+				if(($x = strpos($this->used_arguments_description, ' ' . $prefix_being_added)) !== false)
 				{
 					$this->used_arguments_description = substr($this->used_arguments_description, 0, $x);
 				}
