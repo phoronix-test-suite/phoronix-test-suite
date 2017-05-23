@@ -559,7 +559,7 @@ class pts_test_result_parser
 			$line_before_hint = isset($entry->LineBeforeHint) ? $entry->LineBeforeHint->__toString() : null;
 			$line_after_hint = isset($entry->LineAfterHint) ? $entry->LineAfterHint->__toString() : null;
 			$line_hint = isset($entry->LineHint) ? $entry->LineHint->__toString() : null;
-			$search_key = self::determine_search_key($line_hint, $line_before_hint, $line_after_hint, $template_line, $template, $template_r, $key_for_result); // SEARCH KEY
+			$search_key = self::determine_search_key($output, $line_hint, $line_before_hint, $line_after_hint, $template_line, $template, $template_r, $key_for_result); // SEARCH KEY
 			pts_client::test_profile_debug_message('Search Key: ' . $search_key);
 			if($search_key != null || $line_before_hint != null || $line_after_hint != null || $template_r[0] == $key_for_result)
 			{
@@ -823,7 +823,7 @@ class pts_test_result_parser
 			$test_result = substr($test_result, 0, 0 - strlen($strip_result_postfix));
 		}
 	}
-	protected static function determine_search_key($line_hint, $line_before_hint, $line_after_hint, $template_line, $template, $template_r, $key)
+	protected static function determine_search_key(&$output, $line_hint, $line_before_hint, $line_after_hint, $template_line, $template, $template_r, $key)
 	{
 		// Determine the search key to use
 		$search_key = null;
@@ -841,13 +841,22 @@ class pts_test_result_parser
 		}
 		else
 		{
-			foreach($template_r as $line_part)
+			$first_portion_of_line = substr($template_line, 0, strpos($template_line, $key));
+			if(strpos($output, $first_portion_of_line) !== false)
 			{
-				if(strpos($line_part, ':') !== false && strlen($line_part) > 1)
+				$search_key = $first_portion_of_line;
+			}
+
+			if($search_key == null)
+			{
+				foreach($template_r as $line_part)
 				{
-					// add some sort of && strrpos($template, $line_part)  to make sure there isn't two of the same $search_key
-					$search_key = $line_part;
-					break;
+					if(strpos($line_part, ':') !== false && strlen($line_part) > 1)
+					{
+						// add some sort of && strrpos($template, $line_part)  to make sure there isn't two of the same $search_key
+						$search_key = $line_part;
+						break;
+					}
 				}
 			}
 
