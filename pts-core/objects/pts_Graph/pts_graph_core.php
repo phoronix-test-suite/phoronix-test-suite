@@ -120,7 +120,23 @@ abstract class pts_graph_core
 		}
 		else if(PTS_IS_CLIENT && pts_client::read_env('GRAPH_HIGHLIGHT') != false)
 		{
-			$this->value_highlights = pts_strings::comma_explode(pts_client::read_env('GRAPH_HIGHLIGHT'));
+            // We support GRAPH_HIGHLIGHT as a series of
+			// ID, ID=colorId or ID=color values, e.g.
+			// GRAPH_HIGHLIGHT="will_be_different,group1a=1,group1b=1,blue=#0000ff"
+			foreach(explode(',', pts_client::read_env('GRAPH_HIGHLIGHT')) as $id) {
+                $split = explode("=", $id);
+                if (count($split) == 2) {
+                	$color = $split[1];
+                	print "color=$color, is_int=" . is_numeric($color) . "\n";
+                	if (is_numeric($color)) {
+						$color = self::$c['color']['paint'][$color];
+					}
+                    $this->value_highlights[$split[0]] = $color;
+                } else {
+					$this->value_highlights[$id] = NULL;
+				}
+			}
+			print_r($this->value_highlights);
 		}
 		if(isset($extra_attributes['force_simple_keys']))
 		{
@@ -457,6 +473,17 @@ abstract class pts_graph_core
 			$new_color .= str_pad(dechex($dec), 2, 0, STR_PAD_LEFT);
 		}
 		return '#' . substr($new_color, 0, 6);
+	}
+	// Adjust the color based on the identifier and the content of value_highlights
+	public function adjust_color($identifier, &$paint_color)
+	{
+		if (array_key_exists($identifier, $this->value_highlights)) {
+			$color = $this->value_highlights[$identifier];
+			if (!isset($color))
+				$color = $this->darken_color($paint_color);
+			return $color;
+		}
+		return $paint_color;
 	}
 	public function renderGraph()
 	{
