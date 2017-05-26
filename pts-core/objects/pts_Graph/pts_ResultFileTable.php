@@ -128,7 +128,7 @@ class pts_ResultFileTable extends pts_Table
 			{
 				if($result_object->test_profile->get_display_format() == 'BAR_GRAPH')
 				{
-					$result_tests[$result_counter]->set_attribute('alert', true);
+					//$result_tests[$result_counter]->set_attribute('alert', true);
 					foreach($result_object->test_result_buffer->get_buffer_items() as $index => $buffer_item)
 					{
 						$identifier = $buffer_item->get_result_identifier();
