@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 7.2.0 Milestone 3
+26 May 2017
 
 pts-core: Result parser fixes for some advanced corner cases
 pts-core: Add dump-file-info helper
