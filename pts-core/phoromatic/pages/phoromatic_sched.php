@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2014 - 2015, Phoronix Media
-	Copyright (C) 2014 - 2015, Michael Larabel
+	Copyright (C) 2014 - 2017, Phoronix Media
+	Copyright (C) 2014 - 2017, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -71,6 +71,8 @@ class phoromatic_sched implements pts_webui_interface
 			if(!is_array($run_target_groups)) $run_target_groups = array();
 			$run_target_systems = implode(',', $run_target_systems);
 			$run_target_groups = implode(',', $run_target_groups);
+			$run_priority = phoromatic_get_posted_var('run_priority');
+			$run_priority = is_numeric($run_priority) && $run_priority >= 0 ? $run_priority : 100;
 
 			$schedule_hour = phoromatic_get_posted_var('schedule_hour');
 			$schedule_minute = phoromatic_get_posted_var('schedule_minute');
@@ -123,7 +125,7 @@ class phoromatic_sched implements pts_webui_interface
 			}
 
 			// Add schedule
-			$stmt = phoromatic_server::$db->prepare('INSERT OR REPLACE INTO phoromatic_schedules (AccountID, ScheduleID, Title, Description, State, ActiveOn, RunAt, SetContextPreInstall, SetContextPostInstall, SetContextPreRun, SetContextPostRun, LastModifiedBy, LastModifiedOn, PublicKey, RunTargetGroups, RunTargetSystems) VALUES (:account_id, :schedule_id, :title, :description, :state, :active_on, :run_at, :context_pre_install, :context_post_install, :context_pre_run, :context_post_run, :modified_by, :modified_on, :public_key, :run_target_groups, :run_target_systems)');
+			$stmt = phoromatic_server::$db->prepare('INSERT OR REPLACE INTO phoromatic_schedules (AccountID, ScheduleID, Title, Description, State, ActiveOn, RunAt, SetContextPreInstall, SetContextPostInstall, SetContextPreRun, SetContextPostRun, LastModifiedBy, LastModifiedOn, PublicKey, RunTargetGroups, RunTargetSystems, RunPriority) VALUES (:account_id, :schedule_id, :title, :description, :state, :active_on, :run_at, :context_pre_install, :context_post_install, :context_pre_run, :context_post_run, :modified_by, :modified_on, :public_key, :run_target_groups, :run_target_systems, :run_priority)');
 			$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 			$stmt->bindValue(':schedule_id', $schedule_id);
 			$stmt->bindValue(':title', $title);
@@ -140,6 +142,7 @@ class phoromatic_sched implements pts_webui_interface
 			$stmt->bindValue(':public_key', $public_key);
 			$stmt->bindValue(':run_target_groups', $run_target_groups);
 			$stmt->bindValue(':run_target_systems', $run_target_systems);
+			$stmt->bindValue(':run_priority', $run_priority);
 			$result = $stmt->execute();
 			phoromatic_add_activity_stream_event('schedule', $schedule_id, ($is_new ? 'added' : 'modified'));
 
@@ -207,7 +210,15 @@ class phoromatic_sched implements pts_webui_interface
 		$main .= '</p>
 		<h3>Description:<span style="color:red;">*</span></h3>
 		<p><textarea name="schedule_description" id="schedule_description" cols="50" rows="3">' . (!$is_new ? $e_schedule['Description'] : null) . '</textarea></p>
-		<table class="pts_phoromatic_schedule_type">
+		<h3>Run Priority:</h3>
+		<p>The run priority is used for determining which tests to execute first should there be multiple test schedules set to run on a given system at the same time. Additionally, test schedules of low-priority will not attempt to power-on a system if needed for running the test, thus delaying it\'s execution until the next time the system is otherwise online.</p>
+		<p><select name="run_priority" id="run_priority">';
+		$prios = array(1 => 'Low Priority', 100 => 'Default Priority', 200 => 'High Priority');
+		foreach($prios as $lvl => $lvl_str)
+		{
+			$main .= '<option value="' . $lvl . '"' . (((!$is_new && $e_schedule['RunPriority'] == $lvl) || $lvl == 100) ? 'selected="selected" ' : null) . '>' . $lvl_str . '</option>';
+		}
+		$main .='</select></p><table class="pts_phoromatic_schedule_type">
 <tr>
   <td><h3>Time-Based Testing</h3><em>Time-based testing allows tests to automatically commence at a given time on a defined cycle each day/week. This option is primarly aimed for those wishing to run a set of benchmarks every morning or night or at another defined period.</em></td>
   <td><h3>Run Time:</h3>

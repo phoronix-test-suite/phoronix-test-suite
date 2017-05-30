@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 pts-core: If a OB upload fails with system logs, try again without system logs
+phoromatic: Introduce support for setting a run-priority on test schedules
 
 Phoronix Test Suite 7.2.0 Milestone 3
 26 May 2017
