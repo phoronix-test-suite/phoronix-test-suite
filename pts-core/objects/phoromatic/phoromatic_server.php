@@ -316,6 +316,10 @@ class phoromatic_server
 				// Change made 15 April 2016
 				self::$db->exec('ALTER TABLE phoromatic_systems ADD COLUMN CurrentProcessTicket INTEGER DEFAULT 0');
 				self::$db->exec('PRAGMA user_version = 36');
+			case 36:
+				// Change made 30 May 2017 for introducing run priority
+				self::$db->exec('ALTER TABLE phoromatic_schedules ADD COLUMN RunPriority INTEGER DEFAULT 100');
+				self::$db->exec('PRAGMA user_version = 37');
 		}
 		chmod($db_file, 0600);
 		if(!defined('PHOROMATIC_DB_INIT'))
@@ -686,7 +690,7 @@ class phoromatic_server
 
 		return $schedules;
 	}
-	public static function system_has_outstanding_jobs($account_id, $system_id, $time_offset = 0)
+	public static function system_has_outstanding_jobs($account_id, $system_id, $time_offset = 0, $include_low_priority_work = true)
 	{
 		$stmt = phoromatic_server::$db->prepare('SELECT Groups FROM phoromatic_systems WHERE AccountID = :account_id AND SystemID = :system_id LIMIT 1');
 		$stmt->bindValue(':account_id', $account_id);
@@ -696,7 +700,7 @@ class phoromatic_server
 
 
 		// See if there's an open schedule to run for system
-		$schedule_row = self::system_check_for_open_schedule_run($account_id, $system_id, $time_offset, $sys_row);
+		$schedule_row = self::system_check_for_open_schedule_run($account_id, $system_id, $time_offset, $sys_row, $include_low_priority_work);
 		if($schedule_row != false)
 		{
 			return $schedule_row;
@@ -711,9 +715,18 @@ class phoromatic_server
 
 		return false;
 	}
-	public static function system_check_for_open_schedule_run($account_id, $system_id, $time_offset = 0, &$sys_row)
+	public static function system_check_for_open_schedule_run($account_id, $system_id, $time_offset = 0, &$sys_row, $include_low_priority_work = true)
 	{
-		$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_schedules WHERE AccountID = :account_id AND State = 1 AND (SELECT COUNT(*) FROM phoromatic_schedules_tests WHERE AccountID = :account_id AND ScheduleID = phoromatic_schedules.ScheduleID) > 0');
+		if($include_low_priority_work)
+		{
+			$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_schedules WHERE AccountID = :account_id AND State = 1 AND (SELECT COUNT(*) FROM phoromatic_schedules_tests WHERE AccountID = :account_id AND ScheduleID = phoromatic_schedules.ScheduleID) > 0');
+		}
+		else
+		{
+			// Only include higher priority work
+			$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_schedules WHERE AccountID = :account_id AND State = 1 AND RunPriority >= 100 AND (SELECT COUNT(*) FROM phoromatic_schedules_tests WHERE AccountID = :account_id AND ScheduleID = phoromatic_schedules.ScheduleID) > 0');
+		}
+
 		$stmt->bindValue(':account_id', $account_id);
 		$result = $stmt->execute();
 		$day_of_week_int = date('N') - 1;
