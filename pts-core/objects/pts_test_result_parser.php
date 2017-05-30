@@ -592,7 +592,7 @@ class pts_test_result_parser
 						{
 							$search_key = trim($search_key);
 						}
-						pts_client::test_profile_debug_message('Result Parsing Search Key: ' . $search_key);
+						pts_client::test_profile_debug_message('Result Parsing Search Key: "' . $search_key . '"');
 
 						while(($line_x = strrpos($output, $search_key)) !== false)
 						{
@@ -601,6 +601,7 @@ class pts_test_result_parser
 							$output = substr($line, 0, $start_of_line) . "\n";
 							$possible_lines[] = substr($line, $start_of_line + 1);
 						}
+
 						$line = !empty($possible_lines) ? array_shift($possible_lines) : null;
 					}
 					else
@@ -691,6 +692,11 @@ class pts_test_result_parser
 							$line = array_shift($possible_lines);
 							pts_client::test_profile_debug_message('Trying Backup Result Line: ' . $line);
 							$try_again = true;
+						}
+						else if(!empty($test_results) && $is_multi_match && !empty($possible_lines) && $search_key != null)
+						{
+							// Rebuild output if it was disassembled in search key code above
+							$output = implode(PHP_EOL, array_reverse($possible_lines)) . PHP_EOL;
 						}
 					}
 					while($try_again);
