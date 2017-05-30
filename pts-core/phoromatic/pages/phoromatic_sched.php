@@ -216,7 +216,7 @@ class phoromatic_sched implements pts_webui_interface
 		$prios = array(1 => 'Low Priority', 100 => 'Default Priority', 200 => 'High Priority');
 		foreach($prios as $lvl => $lvl_str)
 		{
-			$main .= '<option value="' . $lvl . '"' . (((!$is_new && $e_schedule['RunPriority'] == $lvl) || $lvl == 100) ? 'selected="selected" ' : null) . '>' . $lvl_str . '</option>';
+			$main .= '<option value="' . $lvl . '"' . (((!$is_new && ($e_schedule['RunPriority'] == $lvl)) || $lvl == 100) ? 'selected="selected" ' : null) . '>' . $lvl_str . '</option>';
 		}
 		$main .='</select></p><table class="pts_phoromatic_schedule_type">
 <tr>
