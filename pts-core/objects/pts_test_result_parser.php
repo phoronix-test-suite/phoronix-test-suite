@@ -588,7 +588,10 @@ class pts_test_result_parser
 					}
 					else if($search_key != null)
 					{
-						$search_key = trim($search_key);
+						if(trim($search_key) != null)
+						{
+							$search_key = trim($search_key);
+						}
 						pts_client::test_profile_debug_message('Result Parsing Search Key: ' . $search_key);
 
 						while(($line_x = strrpos($output, $search_key)) !== false)
