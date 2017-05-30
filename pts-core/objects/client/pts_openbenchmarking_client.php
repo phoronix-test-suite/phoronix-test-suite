@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2016, Phoronix Media
-	Copyright (C) 2010 - 2016, Michael Larabel
+	Copyright (C) 2010 - 2017, Phoronix Media
+	Copyright (C) 2010 - 2017, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -428,6 +428,18 @@ class pts_openbenchmarking_client
 		}
 
 		return is_file($index_file) ? json_decode(file_get_contents($index_file), true) : false;
+	}
+	public static function fetch_repository_changelog_full($repo_name)
+	{
+		// Fetch the complete OpenBenchmarking.org change-log for this user/repository
+		$server_index = pts_openbenchmarking::make_openbenchmarking_request('repo_changes', array('repo' => $repo_name, 'full' => 'full'));
+
+		if(($j = json_decode($server_index, true)) != false)
+		{
+			return $j;
+		}
+
+		return false;
 	}
 	public static function user_name()
 	{

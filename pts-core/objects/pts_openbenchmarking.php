@@ -421,9 +421,13 @@ class pts_openbenchmarking
 
 		return $index_file;
 	}
-	public static function download_test_profile($qualified_identifier)
+	public static function download_test_profile($qualified_identifier, $download_location = null)
 	{
-		if(is_file(PTS_TEST_PROFILE_PATH . $qualified_identifier . '/test-definition.xml'))
+		if(empty($download_location))
+		{
+			$download_location = PTS_TEST_PROFILE_PATH;
+		}
+		if(is_file($download_location . $qualified_identifier . '/test-definition.xml'))
 		{
 			return true;
 		}
@@ -479,12 +483,12 @@ class pts_openbenchmarking
 			}
 		}
 
-		if(!is_file(PTS_TEST_PROFILE_PATH . $qualified_identifier . '/test-definition.xml') && is_file($file))
+		if(!is_file($download_location . $qualified_identifier . '/test-definition.xml') && is_file($file))
 		{
 			// extract it
-			pts_file_io::mkdir(PTS_TEST_PROFILE_PATH . dirname($qualified_identifier));
-			pts_file_io::mkdir(PTS_TEST_PROFILE_PATH . $qualified_identifier);
-			pts_compression::zip_archive_extract($file, PTS_TEST_PROFILE_PATH . $qualified_identifier);
+			pts_file_io::mkdir($download_location . dirname($qualified_identifier));
+			pts_file_io::mkdir($download_location . $qualified_identifier);
+			pts_compression::zip_archive_extract($file, $download_location . $qualified_identifier);
 
 			if(is_file(PTS_TEST_PROFILE_PATH . $qualified_identifier . '/test-definition.xml'))
 			{
@@ -493,6 +497,7 @@ class pts_openbenchmarking
 			else
 			{
 				unlink($file);
+				//trigger_error('Test definition not found for ' . $qualified_identifier . '.' . PHP_EOL, E_USER_ERROR);
 				return false;
 			}
 		}
