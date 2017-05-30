@@ -29,7 +29,11 @@ class dump_tests_to_git implements pts_option_interface
 	{
 		pts_client::$display->generic_heading('OpenBenchmarking.org Tests To Git');
 		$path_to_git = getenv('TEST_PROFILES_GIT_PATH') . '/';
-
+		if(!pts_client::executable_in_path('git'))
+		{
+			echo PHP_EOL . 'git was not found on the system.' . PHP_EOL . PHP_EOL;
+			return false;
+		}
 		if(empty($path_to_git) || !is_dir($path_to_git) || !is_writable($path_to_git))
 		{
 			echo PHP_EOL . 'TEST_PROFILES_GIT_PATH must be set or the set directory is not writable/present.' . PHP_EOL . PHP_EOL;
