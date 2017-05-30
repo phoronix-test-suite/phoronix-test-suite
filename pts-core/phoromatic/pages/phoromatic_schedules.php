@@ -159,7 +159,23 @@ class phoromatic_schedules implements pts_webui_interface
 
 				$main .= '<h1>' . $row['Title'] . '</h1>';
 				$main .= '<h3>' . $row['Description'] . '</h3>';
-				$main .= '<p>This schedule was last modified on <strong>' . date('j F Y \a\t H:i', strtotime($row['LastModifiedOn'])) . '</strong> by <strong>' . $row['LastModifiedBy'] . '</strong>.';
+				switch($row['RunPriority'])
+				{
+					case 1:
+						$prio = 'Low Priority';
+						break;
+					case 100:
+						$prio = 'Default Priority';
+						break;
+					case 200:
+						$prio = 'High Priority';
+						break;
+					default:
+						$prio = $row['RunPriority'] . ' Priority';
+						break;
+				}
+
+				$main .= '<p>Priority: ' . $prio . '</p><p>This schedule was last modified on <strong>' . date('j F Y \a\t H:i', strtotime($row['LastModifiedOn'])) . '</strong> by <strong>' . $row['LastModifiedBy'] . '</strong>.';
 
 				if(!PHOROMATIC_USER_IS_VIEWER)
 				{
