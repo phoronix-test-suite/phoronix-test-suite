@@ -1349,43 +1349,18 @@ class pts_test_run_manager
 		{
 			if($this->validate_test_to_run($result_object->test_profile))
 			{
+
+				// Check to ensure that nothing extra may have somehow wound up in the execution argument string of a saved result file...
+				if(pts_strings::has_in_string($result_object->get_arguments(), array(';', '&&', '|')))
+				{
+					echo PHP_EOL . 'Exception loading a result object.' . PHP_EOL;
+					continue;
+				}
 				$test_result = new pts_test_result($result_object->test_profile);
 				$test_result->set_used_arguments($result_object->get_arguments());
 				$test_result->set_used_arguments_description($result_object->get_arguments_description());
 				$this->add_test_result_object($test_result);
 			}
-		}
-
-		// Is there something to run?
-		return $this->get_test_count() > 0;
-	}
-	public function load_test_run_requests_to_run($save_name, $result_identifier, &$result_file, &$test_run_requests)
-	{
-		// Determine what to run
-		$this->auto_save_results($save_name, $result_identifier);
-		$this->run_description = $result_file->get_description();
-
-		if(count($test_run_requests) == 0)
-		{
-			return false;
-		}
-
-		foreach($test_run_requests as &$test_run_request)
-		{
-			if($this->validate_test_to_run($test_run_request->test_profile) == false)
-			{
-				continue;
-			}
-
-			if($test_run_request->test_profile->get_override_values() != null)
-			{
-				$test_run_request->test_profile->set_override_values($test_run_request->test_profile->get_override_values());
-			}
-
-			$test_result = new pts_test_result($test_run_request->test_profile);
-			$test_result->set_used_arguments($test_run_request->get_arguments());
-			$test_result->set_used_arguments_description($test_run_request->get_arguments_description());
-			$this->add_test_result_object($test_result);
 		}
 
 		// Is there something to run?
@@ -1489,6 +1464,12 @@ class pts_test_run_manager
 				foreach($result_objects as &$result_object)
 				{
 					if($result_object->test_profile->get_identifier() == null)
+					{
+						continue;
+					}
+
+					// Check to ensure that nothing extra may have somehow wound up in the execution argument string of a saved result file...
+					if(pts_strings::has_in_string($result_object->get_arguments(), array(';', '&&', '|')))
 					{
 						continue;
 					}
