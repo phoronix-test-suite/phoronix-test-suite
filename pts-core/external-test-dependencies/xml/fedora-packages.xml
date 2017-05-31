@@ -34,6 +34,10 @@
 			<PackageName>freeglut-devel</PackageName>
 		</Package>
 		<Package>
+			<GenericName>vulkan-development</GenericName>
+			<PackageName>vulkan-devel</PackageName>
+		</Package>
+		<Package>
 			<GenericName>openssl-development</GenericName>
 			<PackageName>openssl-devel</PackageName>
 		</Package>

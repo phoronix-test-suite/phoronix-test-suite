@@ -28,6 +28,10 @@
 			<PackageName>freeglut</PackageName>
 		</Package>
 		<Package>
+			<GenericName>vulkan-development</GenericName>
+			<PackageName>vulkan-icd-loader</PackageName>
+		</Package>
+		<Package>
 			<GenericName>pcre</GenericName>
 			<PackageName>pcre</PackageName>
 		</Package>

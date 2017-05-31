@@ -6,6 +6,7 @@ pts-core: If a OB upload fails with system logs, try again without system logs
 pts-core: Add basic dump-tests-to-git sub-command
 pts-core: Result parser fixes/improvements
 pts-core: Additional safety checks around loading test result arguments from a result file
+pts-core: Add "vulkan-development" external dependency
 phoromatic: Introduce support for setting a run-priority on test schedules
 
 Phoronix Test Suite 7.2.0 Milestone 3

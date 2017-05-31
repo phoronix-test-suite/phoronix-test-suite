@@ -191,6 +191,10 @@
 			<PackageName>libbz2-devel</PackageName>
 		</Package>
 		<Package>
+			<GenericName>vulkan-development</GenericName>
+			<PackageName>vulkan</PackageName>
+		</Package>
+		<Package>
 			<GenericName>tcl</GenericName>
 			<PackageName>tcl</PackageName>
 		</Package>

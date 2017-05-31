@@ -38,6 +38,12 @@
 			<FileCheck>libglut.so.3, GL/glut.h</FileCheck>
 		</Package>
 		<Package>
+			<GenericName>vulkan-development</GenericName>
+			<Title>Vulkan Development</Title>
+			<PossibleNames>libvulkan-dev, vulkan-devel</PossibleNames>
+			<FileCheck>vulkan/vulkan.h, libvulkan.so.1</FileCheck>
+		</Package>
+		<Package>
 			<GenericName>csh</GenericName>
 			<Title>CSH</Title>
 			<PossibleNames>csh, tcsh</PossibleNames>

@@ -23,6 +23,10 @@
 			<PackageName>virtual/glut</PackageName>
 		</Package>
 		<Package>
+			<GenericName>vulkan-development</GenericName>
+			<PackageName>media-libs/vulkan-loder</PackageName>
+		</Package>
+		<Package>
 			<GenericName>openssl-development</GenericName>
 			<PackageName>dev-libs/openssl</PackageName>
 		</Package>
