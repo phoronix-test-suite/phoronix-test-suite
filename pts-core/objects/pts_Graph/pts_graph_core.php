@@ -120,7 +120,28 @@ abstract class pts_graph_core
 		}
 		else if(PTS_IS_CLIENT && pts_client::read_env('GRAPH_HIGHLIGHT') != false)
 		{
-			$this->value_highlights = pts_strings::comma_explode(pts_client::read_env('GRAPH_HIGHLIGHT'));
+			//$this->value_highlights = pts_strings::comma_explode(pts_client::read_env('GRAPH_HIGHLIGHT'));
+			// We support GRAPH_HIGHLIGHT as a series of
+			// ID, ID=colorId or ID=color values, e.g.
+			// GRAPH_HIGHLIGHT="will_be_different,group1a=1,group1b=1,blue=#0000ff"
+			foreach(pts_strings::comma_explode(pts_client::read_env('GRAPH_HIGHLIGHT')) as $id)
+			{
+				$split = explode('=', $id);
+				if(count($split) == 2)
+				{
+					$this->value_highlights[$split[0]] = null;
+					$color = $split[1];
+					if(is_numeric($color)) // TODO clean this up with a better color check
+					{
+						$color = self::$c['color']['paint'][$color];
+						$this->value_highlights[$split[0]] = $color;
+					}
+				}
+				else
+				{
+					$this->value_highlights[$id] = null;
+				}
+			}
 		}
 		if(isset($extra_attributes['force_simple_keys']))
 		{
@@ -947,6 +968,16 @@ abstract class pts_graph_core
 		}
 
 		$this->svg_dom->add_element('polygon', array('points' => implode(' ', $arrow_points), 'fill' => $background_color, 'stroke' => $border_color, 'stroke-width' => $border_width));
+	}
+	protected function adjust_color($identifier, $paint_color)
+	{
+		// Adjust the color based on the identifier and the content of value_highlights
+		if(array_key_exists($identifier, $this->value_highlights))
+		{
+			$color = $this->value_highlights[$identifier];
+			$paint_color = empty($color) ? $this->darken_color($paint_color) : $color;
+		}
+		return $paint_color;
 	}
 	protected static function text_string_width($string, $size)
 	{

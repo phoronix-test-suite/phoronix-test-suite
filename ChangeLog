@@ -9,6 +9,7 @@ pts-core: Result parser fixes/improvements
 pts-core: Additional safety checks around loading test result arguments from a result file
 pts-core: Add "vulkan-development" external dependency
 pts_Graph: Few tweaks/clean-ups
+pts_Graph: Allow optionally specifying custom colors via the GRAPH_HIGHLIGHT environment variable
 phoromatic: Introduce support for setting a run-priority on test schedules
 
 Phoronix Test Suite 7.2.0 Milestone 3
