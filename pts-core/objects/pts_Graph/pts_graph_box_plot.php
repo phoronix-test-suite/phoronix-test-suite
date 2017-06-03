@@ -113,7 +113,7 @@ class pts_graph_box_plot extends pts_graph_horizontal_bars
 					$box_color = $paint_color;
 				}
 
-				$box_color = in_array($buffer_item->get_result_identifier(), $this->value_highlights) ? $this->darken_color($box_color) : $box_color;
+				$box_color = $this->adjust_color($buffer_item->get_result_identifier(), $box_color);
 
 				$this->svg_dom->add_element('line', array('x1' => $value_end_left, 'y1' => $middle_of_bar, 'x2' => $value_end_right, 'y2' => $middle_of_bar), $g_lines);
 				$this->svg_dom->add_element('line', array('x1' => $value_end_left, 'y1' => $px_bound_top, 'x2' => $value_end_left, 'y2' => $px_bound_bottom), $g_lines);
