@@ -197,13 +197,13 @@ abstract class pts_graph_core
 						continue;
 						break;
 				}
-				if(in_array($system, $this->graph_identifiers))
+				/*if(in_array($buffer_item->get_result_identifier(), $this->graph_identifiers))
 				{
 					// Don't allow duplicate identifiers
 					unset($this->test_result->test_result_buffer->buffer_items[$i]);
 					continue;
 
-				}
+				}*/
 
 				$buffer_item->reset_result_identifier($system);
 

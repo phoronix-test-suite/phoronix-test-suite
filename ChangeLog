@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+pts_Graph: Fix multi-way comparison detection
+
 Phoronix Test Suite 7.2.0 Milestone 4
 3 June 2017
 
