@@ -575,15 +575,10 @@ abstract class pts_graph_core
 					{
 						$per_identifier_height = 36;
 					}
-					else if($id_count <= 38)
-					{
-						$this->i['compact_result_view'] = true;
-						$per_identifier_height = 30;
-					}
 					else
 					{
 						$this->i['compact_result_view'] = true;
-						$per_identifier_height = 26;
+						$per_identifier_height = 28;
 					}
 				}
 

@@ -599,9 +599,13 @@ class pts_openbenchmarking
 
 		return $available_suites;
 	}
-	public static function download_test_suite($qualified_identifier)
+	public static function download_test_suite($qualified_identifier, $download_location = null)
 	{
-		if(is_file(PTS_TEST_SUITE_PATH . $qualified_identifier . '/suite-definition.xml'))
+		if(empty($download_location))
+		{
+			$download_location = PTS_TEST_SUITE_PATH;
+		}
+		if(is_file($download_location . $qualified_identifier . '/suite-definition.xml'))
 		{
 			return true;
 		}
@@ -650,14 +654,14 @@ class pts_openbenchmarking
 			}
 		}
 
-		if(!is_file(PTS_TEST_SUITE_PATH . $qualified_identifier . '/suite-definition.xml') && is_file($file) && ($hash_check == null || (is_file($file) && sha1_file($file) == $hash_check)))
+		if(!is_file($download_location . $qualified_identifier . '/suite-definition.xml') && is_file($file) && ($hash_check == null || (is_file($file) && sha1_file($file) == $hash_check)))
 		{
 			// extract it
-			pts_file_io::mkdir(PTS_TEST_SUITE_PATH . dirname($qualified_identifier));
-			pts_file_io::mkdir(PTS_TEST_SUITE_PATH . $qualified_identifier);
-			pts_compression::zip_archive_extract($file, PTS_TEST_SUITE_PATH . $qualified_identifier);
+			pts_file_io::mkdir($download_location . dirname($qualified_identifier));
+			pts_file_io::mkdir($download_location . $qualified_identifier);
+			pts_compression::zip_archive_extract($file, $download_location . $qualified_identifier);
 
-			if(is_file(PTS_TEST_SUITE_PATH . $qualified_identifier . '/suite-definition.xml'))
+			if(is_file($download_location . $qualified_identifier . '/suite-definition.xml'))
 			{
 				return true;
 			}

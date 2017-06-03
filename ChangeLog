@@ -4,6 +4,7 @@ Phoronix Test Suite (Git)
 
 pts-core: If a OB upload fails with system logs, try again without system logs
 pts-core: Add basic dump-tests-to-git sub-command
+pts-core: Add basic dump-suites-to-git sub-command
 pts-core: Result parser fixes/improvements
 pts-core: Additional safety checks around loading test result arguments from a result file
 pts-core: Add "vulkan-development" external dependency
