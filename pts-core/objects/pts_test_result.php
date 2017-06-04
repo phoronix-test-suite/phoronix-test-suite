@@ -272,13 +272,7 @@ class pts_test_result
 			{
 				foreach($keys as $k)
 				{
-					if($is_multi_way && strpos($this->test_result_buffer->buffer_items[$k]->get_result_identifier(), ': ' . $normalize_against) !== false)
-					{
-						// This allows it to just normalize against part of the string
-						$divide_value = $this->test_result_buffer->buffer_items[$k]->get_result_value();
-						break;
-					}
-					else if(strpos($this->test_result_buffer->buffer_items[$k]->get_result_identifier(), $normalize_against) !== false)
+					if(strpos($this->test_result_buffer->buffer_items[$k]->get_result_identifier(), $normalize_against) !== false)
 					{
 						$divide_value = $this->test_result_buffer->buffer_items[$k]->get_result_value();
 						break;
