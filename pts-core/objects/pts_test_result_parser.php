@@ -517,11 +517,6 @@ class pts_test_result_parser
 		$end_result_line_pos = strpos($template, "\n", $end_result_pos);
 		$template_line = substr($template, 0, ($end_result_line_pos === false ? strlen($template) : $end_result_line_pos));
 		$template_line = substr($template_line, strrpos($template_line, "\n"));
-		$chars_to_space = isset($entry->TurnCharsToSpace) ? $entry->TurnCharsToSpace->__toString() : null;
-		if(!empty($chars_to_space))
-		{
-			$template_line = str_replace($chars_to_space, ' ', $template_line);
-		}
 		pts_client::test_profile_debug_message('Template Line: ' . $template_line);
 		$template_r = explode(' ', pts_strings::trim_spaces(str_replace($space_out_chars, ' ', str_replace('=', ' = ', $template_line))));
 		$template_r_pos = array_search($key_for_result, $template_r);
@@ -564,6 +559,7 @@ class pts_test_result_parser
 			$line_before_hint = isset($entry->LineBeforeHint) ? $entry->LineBeforeHint->__toString() : null;
 			$line_after_hint = isset($entry->LineAfterHint) ? $entry->LineAfterHint->__toString() : null;
 			$line_hint = isset($entry->LineHint) ? $entry->LineHint->__toString() : null;
+			$chars_to_space = isset($entry->TurnCharsToSpace) ? $entry->TurnCharsToSpace->__toString() : null;
 			$search_key = self::determine_search_key($output, $line_hint, $line_before_hint, $line_after_hint, $template_line, $template, $template_r, $key_for_result); // SEARCH KEY
 			pts_client::test_profile_debug_message('Search Key: ' . $search_key);
 			if($search_key != null || $line_before_hint != null || $line_after_hint != null || $template_r[0] == $key_for_result)
@@ -614,6 +610,10 @@ class pts_test_result_parser
 						// Condition $template_r[0] == $key, include entire file since there is nothing to search
 						pts_client::test_profile_debug_message('No Result Parsing Hint, Including Entire Result Output');
 						$line = trim($output);
+					}
+					if(!empty($chars_to_space))
+					{
+						$line = str_replace($chars_to_space, ' ', $line);
 					}
 					pts_client::test_profile_debug_message('Result Line: ' . $line);
 
