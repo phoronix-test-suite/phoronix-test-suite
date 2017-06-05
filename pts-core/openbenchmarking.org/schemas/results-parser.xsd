@@ -33,6 +33,7 @@
 			<xs:element name="ArgumentsDescription" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="AppendToArgumentsDescription" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="FileFormat" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="TurnCharsToSpace" type="xs:string" minOccurs="0" maxOccurs="1" />
 		</xs:sequence>
 		</xs:complexType>
 		</xs:element>

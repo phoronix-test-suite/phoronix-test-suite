@@ -517,6 +517,11 @@ class pts_test_result_parser
 		$end_result_line_pos = strpos($template, "\n", $end_result_pos);
 		$template_line = substr($template, 0, ($end_result_line_pos === false ? strlen($template) : $end_result_line_pos));
 		$template_line = substr($template_line, strrpos($template_line, "\n"));
+		$chars_to_space = isset($entry->TurnCharsToSpace) ? $entry->TurnCharsToSpace->__toString() : null;
+		if(!empty($chars_to_space))
+		{
+			$template_line = str_replace($chars_to_space, ' ', $template_line);
+		}
 		pts_client::test_profile_debug_message('Template Line: ' . $template_line);
 		$template_r = explode(' ', pts_strings::trim_spaces(str_replace($space_out_chars, ' ', str_replace('=', ' = ', $template_line))));
 		$template_r_pos = array_search($key_for_result, $template_r);
