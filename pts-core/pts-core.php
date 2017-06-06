@@ -109,7 +109,7 @@ function pts_define_directories()
 {
 	// User's home directory for storing results, module files, test installations, etc.
 	pts_define('PTS_CORE_PATH', PTS_PATH . 'pts-core/');
-	pts_define('PTS_IS_DAEMONIZED_SERVER_PROCESS', PTS_IS_CLIENT && is_dir('/var/lib/') && is_writable('/') ? true : false);
+	pts_define('PTS_IS_DAEMONIZED_SERVER_PROCESS', PTS_IS_CLIENT && is_writable('/var/lib/') && is_writable('/etc') ? true : false);
 
 	if(PTS_IS_DAEMONIZED_SERVER_PROCESS)
 	{

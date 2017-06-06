@@ -114,6 +114,8 @@ class phoromatic_results implements pts_webui_interface
 					'6 months' => '6 Months',
 					'1 year' => 'Year',
 					'2 year' => 'Two Years',
+					'3 year' => 'Three Years',
+					'5 year' => 'Five Years',
 					);
 
 				foreach($results_for_length as $val => $str)
