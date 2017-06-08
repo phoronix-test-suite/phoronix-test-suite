@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 7.2.0-Trysil
+8 June 2017
 
 pts-core: Add TurnCharsToSpace support to result parser
 pts_Graph: Fix multi-way comparison detection
