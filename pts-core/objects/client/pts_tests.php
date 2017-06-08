@@ -232,7 +232,7 @@ class pts_tests
 				}
 				else
 				{
-					$this_result = pts_client::shell_exec('cd ' .  $test_directory . ' && ' . $sh . ' ' . $run_file . ' "' . $pass_argument . '" 2>&1', $extra_vars);
+					$this_result = pts_client::shell_exec('cd ' .  $test_directory . ' && ' . $sh . ' ' . $run_file . ' ' . $pass_argument . ' 2>&1', $extra_vars);
 				}
 
 				if(trim($this_result) != null)
