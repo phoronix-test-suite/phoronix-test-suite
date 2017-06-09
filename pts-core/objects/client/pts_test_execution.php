@@ -343,8 +343,9 @@ class pts_test_execution
 				// The later check above ensures if the test is failing often the run count won't uselessly be increasing
 				// Should we increase the run count?
 				$increase_run_count = false;
+				$runs_ignored_count = count($ignore_runs);
 
-				if($defined_times_to_run == ($i + 1) && $times_result_produced > 0 && $times_result_produced < $defined_times_to_run && $i < 64)
+				if($defined_times_to_run == ($i + 1) && $times_result_produced > 0 && ($times_result_produced + $runs_ignored_count) < $defined_times_to_run && $i < 64)
 				{
 					// At least one run passed, but at least one run failed to produce a result. Increase count to try to get more successful runs
 					$increase_run_count = $defined_times_to_run - $times_result_produced;
