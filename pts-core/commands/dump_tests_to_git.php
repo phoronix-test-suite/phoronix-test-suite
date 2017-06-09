@@ -68,8 +68,9 @@ class dump_tests_to_git implements pts_option_interface
 					if(is_dir($path_to_git . $test))
 					{
 						$test_profile = new pts_test_profile($test);
-						echo 'git commit -m "' . $test . ': ' . $dd['commit_description'] . '" --author="' . $test_profile->get_maintainer() . ' <no-reply@openbenchmarking.org>" --date="' . date(DATE_RFC2822, $dd['last_updated']) . '" ' . $test . PHP_EOL;
-						shell_exec('cd ' . $path_to_git . ' && git add ' . $test . ' && git commit -m "' . $test . ': ' . $dd['commit_description'] . '" --author="' . $test_profile->get_maintainer() . ' <no-reply@openbenchmarking.org>" --date="' . date(DATE_RFC2822, $dd['last_updated']) . '" ' . $test);
+						$maintainer = $test_profile->get_maintainer() != null ? $test_profile->get_maintainer() : 'Phoronix Test Suite';
+						echo 'git commit -m "' . $test . ': ' . $dd['commit_description'] . '" --author="' . $maintainer . ' <no-reply@openbenchmarking.org>" --date="' . date(DATE_RFC2822, $dd['last_updated']) . '" ' . $test . PHP_EOL;
+						shell_exec('cd ' . $path_to_git . ' && git add ' . $test . ' && git commit -m "' . $test . ': ' . $dd['commit_description'] . '" --author="' . $maintainer . ' <no-reply@openbenchmarking.org>" --date="' . date(DATE_RFC2822, $dd['last_updated']) . '" ' . $test);
 					}
 				}
 			}
