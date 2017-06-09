@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2016, Phoronix Media
-	Copyright (C) 2008 - 2016, Michael Larabel
+	Copyright (C) 2008 - 2017, Phoronix Media
+	Copyright (C) 2008 - 2017, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -46,7 +46,10 @@ class pts_test_profile extends pts_test_profile_parser
 	}
 	public static function is_test_profile($identifier)
 	{
-		$identifier = pts_openbenchmarking::evaluate_string_to_qualifier($identifier, true, 'test');
+		if(!is_file(PTS_TEST_PROFILE_PATH . $identifier . '/test-definition.xml'))
+		{
+			$identifier = pts_openbenchmarking::evaluate_string_to_qualifier($identifier, true, 'test');
+		}
 		return $identifier != false && is_file(PTS_TEST_PROFILE_PATH . $identifier . '/test-definition.xml') ? $identifier : false;
 	}
 	public function get_resource_dir()
