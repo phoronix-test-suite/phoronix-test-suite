@@ -742,7 +742,7 @@ class pts_test_installer
 
 				pts_client::$display->display_interrupt_message($pre_install_message);
 				$install_time_length_start = microtime(true);
-				$install_log = pts_tests::call_test_script($test_install_request->test_profile, 'install', null, $test_install_directory, $test_install_request->special_environment_vars, false);
+				$install_log = pts_tests::call_test_script($test_install_request->test_profile, 'install', null, '"' . $test_install_directory . '"', $test_install_request->special_environment_vars, false);
 				$test_install_request->install_time_duration = microtime(true) - $install_time_length_start;
 				pts_client::$display->display_interrupt_message($post_install_message);
 
@@ -815,7 +815,7 @@ class pts_test_installer
 			}
 
 			// Additional validation checks?
-			$custom_validated_output = pts_tests::call_test_script($test_install_request->test_profile, 'validate-install', PHP_EOL . 'Validating Installation...' . PHP_EOL, $test_install_directory, null, false);
+			$custom_validated_output = pts_tests::call_test_script($test_install_request->test_profile, 'validate-install', PHP_EOL . 'Validating Installation...' . PHP_EOL, '"' . $test_install_directory . '"', null, false);
 			if(!empty($custom_validated_output) && !pts_strings::string_bool($custom_validated_output))
 			{
 				$installed = false;

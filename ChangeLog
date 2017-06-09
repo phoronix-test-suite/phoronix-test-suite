@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+pts-core: Don't pass arguments in quotes to pre/interim/post test scripts
+
 Phoronix Test Suite 7.2.0-Trysil
 8 June 2017
 
