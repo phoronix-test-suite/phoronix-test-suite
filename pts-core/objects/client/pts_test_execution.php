@@ -348,7 +348,7 @@ class pts_test_execution
 				if($defined_times_to_run == ($i + 1) && $times_result_produced > 0 && ($times_result_produced + $runs_ignored_count) < $defined_times_to_run && $i < 64)
 				{
 					// At least one run passed, but at least one run failed to produce a result. Increase count to try to get more successful runs
-					$increase_run_count = $defined_times_to_run - $times_result_produced;
+					$increase_run_count = $defined_times_to_run - $times_result_produced + $runs_ignored_count;
 				}
 				else if($times_result_produced >= 2)
 				{
