@@ -630,7 +630,7 @@ class pts_test_result_parser
 						{
 							// Using ResultBeforeString tag
 							$before_this = array_search($before_string, $r);
-							if($before_this && isset($r[($before_this - 1)))
+							if($before_this && isset($r[($before_this - 1)]))
 							{
 								$possible_res = $r[($before_this - 1)];
 								self::strip_result_cleaner($possible_res, $entry);
