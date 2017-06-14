@@ -630,11 +630,14 @@ class pts_test_result_parser
 						{
 							// Using ResultBeforeString tag
 							$before_this = array_search($before_string, $r);
-							$possible_res = $r[($before_this - 1)];
-							self::strip_result_cleaner($possible_res, $entry);
-							if($before_this !== false && (!$is_numeric_check || is_numeric($possible_res)))
+							if($before_this && isset($r[($before_this - 1)))
 							{
-								$test_results[] = $possible_res;
+								$possible_res = $r[($before_this - 1)];
+								self::strip_result_cleaner($possible_res, $entry);
+								if($before_this !== false && (!$is_numeric_check || is_numeric($possible_res)))
+								{
+									$test_results[] = $possible_res;
+								}
 							}
 						}
 						else if(!empty($after_string))
