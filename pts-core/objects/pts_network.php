@@ -131,7 +131,7 @@ class pts_network
 
 		if($download_port_number)
 		{
-			curl_setopt($ch, CURLOPT_PORT, $port);
+			curl_setopt($cr, CURLOPT_PORT, $port);
 		}
 
 		if(stripos($download, 'sourceforge') === false)
@@ -163,7 +163,7 @@ class pts_network
 			curl_setopt($cr, CURLOPT_PROXY, self::$network_proxy['proxy']);
 			if(!empty(self::$network_proxy['user']))
 			{
-				curl_setopt($ch, CURLOPT_USERPWD, self::$network_proxy['user'] . ':' . self::$network_proxy['password']);
+				curl_setopt($cr, CURLOPT_USERPWD, self::$network_proxy['user'] . ':' . self::$network_proxy['password']);
 			}
 		}
 
