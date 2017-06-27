@@ -6,6 +6,7 @@ pts-core: Don't pass arguments in quotes to pre/interim/post test scripts
 pts-core: Minor optimization to is_test_profile() and more easily allow explicit paths to be used, overriding what's in OB cache
 pts-core: Minor optimization to is_suite() and more easily allow explicit paths to be used, overriding what's in OB cache
 pts-core: Fix warning in pts_test_result_parser
+phodevi: AVX-512 reporting
 
 Phoronix Test Suite 7.2.0-Trysil
 8 June 2017
