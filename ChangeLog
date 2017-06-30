@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 7.2.1-Trysil
+30 June 2017
 
 pts-core: Don't pass arguments in quotes to pre/interim/post test scripts
 pts-core: Minor optimization to is_test_profile() and more easily allow explicit paths to be used, overriding what's in OB cache
