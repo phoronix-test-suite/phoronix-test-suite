@@ -545,11 +545,6 @@ class pts_test_execution
 				}
 			}
 
-			if(empty($arguments_description))
-			{
-				$arguments_description = 'Phoronix Test Suite v' . PTS_VERSION;
-			}
-
 			foreach(pts_client::environmental_variables() as $key => $value)
 			{
 				$arguments_description = str_replace('$' . $key, $value, $arguments_description);
