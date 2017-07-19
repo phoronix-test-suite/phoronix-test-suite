@@ -68,16 +68,30 @@ class perf_tips extends pts_module_interface
 			return pts_module::MODULE_UNLOAD; // This module doesn't have anything else to do
 		}
 	}
+	public static function user_commands()
+	{
+		return array('show' => 'show_perf_tips');
+	}
 	public static function __pre_run_process(&$test_run_manager)
 	{
 		$test_hardware_types = array();
-		$perf_tips = array();
 		foreach($test_run_manager->get_tests_to_run() as $test_run_request)
 		{
 			pts_arrays::unique_push($test_hardware_types, $test_run_request->test_profile->get_test_hardware_type());
 		}
+		self::show_perf_tips($test_hardware_types, $test_run_manager->is_interactive_mode());
+	}
+	public static function show_perf_tips($test_hardware_types = false, $interactive_mode = false)
+	{
+		$perf_tips = array();
+		$show_all = false;
+		if($test_hardware_types == false || !is_array($test_hardware_types))
+		{
+			$show_all = true;
+			$test_hardware_types = array();
+		}
 
-		if(in_array('Disk', $test_hardware_types))
+		if($show_all || in_array('Disk', $test_hardware_types))
 		{
 			// BELOW ARE CHECKS TO MAKE IF WANTING TO SHOW FOR 'DISK' TESTS
 			$disk_scheduler = phodevi::read_property('disk', 'scheduler');
@@ -96,7 +110,7 @@ class perf_tips extends pts_module_interface
 				$perf_tips[] = new pts_perf_tip_msg('The BFQ I/O scheduler was detected and is being used in low-latency mode. In low-latency mode, BFQ sacrifices throughput when needed to guarantee either maximum responsiveness or low latency to isochronous I/O (the I/O of, e.g., video and audio players).', 'echo 0 > ' . $low_latency_file);
 			}
 		}
-		if(true || in_array('System', $test_hardware_types) || in_array('Processor', $test_hardware_types))
+		if($show_all || in_array('System', $test_hardware_types) || in_array('Processor', $test_hardware_types))
 		{
 			// BELOW ARE CHECKS TO MAKE IF WANTING TO SHOW FOR 'Processor' OR 'System' TESTS
 			$cpu_scaling_governor = phodevi::read_property('cpu', 'scaling-governor');
@@ -124,7 +138,7 @@ class perf_tips extends pts_module_interface
 				echo PHP_EOL;
 			}
 
-			if($test_run_manager->is_interactive_mode())
+			if($interactive_mode)
 			{
 				pts_client::$display->display_interrupt_message('To stop showing performance tips, run: phoronix-test-suite unload-module perf_tips', null, 'gray');
 				pts_client::$display->display_interrupt_message('Continuing in 5 seconds or press CTRL-C to stop the testing process.', null, 'green');
