@@ -15,7 +15,7 @@
 			<FullOutput>FALSE</FullOutput>
 		</General>
 		<Modules>
-			<LoadModules>perf_tip_prompter,toggle_screensaver, update_checker, graphics_event_checker</LoadModules>
+			<LoadModules>perf_tip_prompter, toggle_screensaver, update_checker, graphics_event_checker</LoadModules>
 		</Modules>
 		<Installation>
 			<RemoveDownloadFiles>FALSE</RemoveDownloadFiles>

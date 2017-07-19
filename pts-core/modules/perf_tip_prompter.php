@@ -42,34 +42,43 @@ class perf_tip_prompter extends pts_module_interface
 			return pts_module::MODULE_UNLOAD; // This module doesn't have anything else to do
 		}
 	}
-	public static function __pre_test_run(&$test_run_request)
+	public static function __pre_run_process(&$test_run_manager)
 	{
-		$hardware = $test_run_request->test_profile->get_test_hardware_type();
-		$disk_scheduler = phodevi::read_property('disk', 'scheduler');
-
-		if($hardware == 'Disk' && ($disk_scheduler == 'BFQ' || $disk_scheduler == 'BFQ-MQ' || $disk_scheduler == 'BFQ-SQ'))
+		$test_hardware_types = array();
+		foreach($test_run_manager->get_tests_to_run() as $test_run_request)
 		{
-			$mount_options = phodevi::read_property('disk', 'mount-options');
-			$partition = basename($mount_options['device']);
-			$device = pts_strings::keep_in_string($partition, pts_strings::CHAR_LETTER);
-			$low_latency_file = '/sys/block/' . $device . '/queue/iosched/low_latency';
-			$low_latency = shell_exec('cat ' . $low_latency_file);
+			pts_arrays::unique_push($test_hardware_types, $test_run_request->test_profile->get_test_hardware_type());
+		}
 
-			if ($low_latency == 0)
-				return;
+		if(in_array('Disk', $test_hardware_types))
+		{
+			// BELOW ARE CHECKS TO MAKE IF WANTING TO SHOW FOR 'DISK' TESTS
+			$disk_scheduler = phodevi::read_property('disk', 'scheduler');
 
-			echo PHP_EOL . "\t\t\t\tWARNING" . PHP_EOL;
-			echo PHP_EOL . 'This is not a disk benchmark to measure responsiveness or latency for' . PHP_EOL;
-			echo 'soft real-time applications, but BFQ is being used in low-latency mode!' . PHP_EOL;
-			echo PHP_EOL . 'In low-latency mode, BFQ sacrifices throughput when needed to guarantee' . PHP_EOL;
-			echo 'either maximum responsiveness or low latency to isochronous I/O (the I/O' . PHP_EOL;
-			echo 'of, e.g., video and audio players).' . PHP_EOL;
-			echo PHP_EOL . 'For this benchmark, please execute' . PHP_EOL;
-			echo 'echo 0 > ' . $low_latency_file . PHP_EOL;
-			echo '(after every switch to BFQ), or set SUPPRESS_PERF_TIPS to suppress this' . PHP_EOL;
-			echo 'WARNING.' . PHP_EOL;
-			echo PHP_EOL . 'Press any key to continue or CTRL-C to stop the test.';
-			pts_user_io::read_user_input();
+			if($disk_scheduler == 'BFQ' || $disk_scheduler == 'BFQ-MQ' || $disk_scheduler == 'BFQ-SQ')
+			{
+				$mount_options = phodevi::read_property('disk', 'mount-options');
+				$partition = basename($mount_options['device']);
+				$device = pts_strings::keep_in_string($partition, pts_strings::CHAR_LETTER);
+				$low_latency_file = '/sys/block/' . $device . '/queue/iosched/low_latency';
+				$low_latency = pts_file_io::file_get_contents($low_latency_file);
+
+				if($low_latency == 0)
+					return;
+
+				echo PHP_EOL . "\t\t\t\tWARNING" . PHP_EOL;
+				echo PHP_EOL . 'This is not a disk benchmark to measure responsiveness or latency for' . PHP_EOL;
+				echo 'soft real-time applications, but BFQ is being used in low-latency mode!' . PHP_EOL;
+				echo PHP_EOL . 'In low-latency mode, BFQ sacrifices throughput when needed to guarantee' . PHP_EOL;
+				echo 'either maximum responsiveness or low latency to isochronous I/O (the I/O' . PHP_EOL;
+				echo 'of, e.g., video and audio players).' . PHP_EOL;
+				echo PHP_EOL . 'For this benchmark, please execute' . PHP_EOL;
+				echo 'echo 0 > ' . $low_latency_file . PHP_EOL;
+				echo '(after every switch to BFQ), or set SUPPRESS_PERF_TIPS to suppress this' . PHP_EOL;
+				echo 'WARNING.' . PHP_EOL;
+				echo PHP_EOL . 'Press any key to continue or CTRL-C to stop the test.';
+				pts_user_io::read_user_input();
+			}
 		}
 	}
 
