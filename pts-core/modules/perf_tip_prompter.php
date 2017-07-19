@@ -46,9 +46,9 @@ class pts_perf_tip_msg
 
 class perf_tip_prompter extends pts_module_interface
 {
-	const module_name = 'Performance Tip Prompter';
+	const module_name = 'Performance Tip Prompts';
 	const module_version = '0.1.0';
-	const module_description = 'This module alerts the user if the system configuration may not be the right one for achieving the best performance with the target benchmark(s). This initial version of the module actually cares only about the BFQ I/O scheduler: it gives a warning if BFQ is being used with an incorrect configuration in a disk benchmark, and suggests the right configuration to use. For the moment it only works for existing, throughput-based tests. It will need to be extended for responsiveness and soft real-time-latency tests.';
+	const module_description = 'This module alerts the user if the system configuration may not be the right one for achieving the best performance with the target benchmark(s). This initial version of the module actually cares only about the BFQ I/O scheduler and powersave governor checks.';
 	const module_author = 'Paolo Valente <paolo.valente@linaro.org>';
 
 	public static function module_info()
@@ -62,7 +62,7 @@ class perf_tip_prompter extends pts_module_interface
 	public static function __run_manager_setup()
 	{
 		// Verify SUPPRESS_PERF_TIPS is not set and is Linux
-		if(getenv('SUPPRESS_PERF_TIPS') == 1 || !phodevi::is_linux())
+		if(getenv('SUPPRESS_PERF_TIPS') == 1)
 		{
 			return pts_module::MODULE_UNLOAD; // This module doesn't have anything else to do
 		}
