@@ -72,7 +72,7 @@ class perf_tips extends pts_module_interface
 	{
 		return array('show' => 'show_perf_tips');
 	}
-	public static function __pre_run_process(&$test_run_manager)
+	public static function __pre_run_process($test_run_manager)
 	{
 		$test_hardware_types = array();
 		foreach($test_run_manager->get_tests_to_run() as $test_run_request)
