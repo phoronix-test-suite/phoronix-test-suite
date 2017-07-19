@@ -75,6 +75,10 @@ class pts_test_run_manager
 
 		pts_module_manager::module_process('__run_manager_setup', $this);
 	}
+	public function is_interactive_mode()
+	{
+		return $this->auto_mode == false && $this->batch_mode == false;
+	}
 	public function is_pcqs()
 	{
 		return $this->is_pcqs;
