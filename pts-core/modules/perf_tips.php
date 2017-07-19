@@ -45,7 +45,7 @@ class pts_perf_tip_msg
 	}
 }
 
-class perf_tip_prompter extends pts_module_interface
+class perf_tips extends pts_module_interface
 {
 	const module_name = 'Performance Tip Prompts';
 	const module_version = '0.1.0';
@@ -96,7 +96,7 @@ class perf_tip_prompter extends pts_module_interface
 				$perf_tips[] = new pts_perf_tip_msg('The BFQ I/O scheduler was detected and is being used in low-latency mode. In low-latency mode, BFQ sacrifices throughput when needed to guarantee either maximum responsiveness or low latency to isochronous I/O (the I/O of, e.g., video and audio players).', 'echo 0 > ' . $low_latency_file);
 			}
 		}
-		if(in_array('System', $test_hardware_types) || in_array('Processor', $test_hardware_types))
+		if(true || in_array('System', $test_hardware_types) || in_array('Processor', $test_hardware_types))
 		{
 			// BELOW ARE CHECKS TO MAKE IF WANTING TO SHOW FOR 'Processor' OR 'System' TESTS
 			$cpu_scaling_governor = phodevi::read_property('cpu', 'scaling-governor');
@@ -126,6 +126,7 @@ class perf_tip_prompter extends pts_module_interface
 
 			if($test_run_manager->is_interactive_mode())
 			{
+				pts_client::$display->display_interrupt_message('To stop showing performance tips, run: phoronix-test-suite unload-module perf_tips', null, 'gray');
 				pts_client::$display->display_interrupt_message('Continuing in 5 seconds or press CTRL-C to stop the testing process.', null, 'green');
 				sleep(5);
 			}
