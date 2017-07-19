@@ -81,7 +81,7 @@ class perf_tip_prompter extends pts_module_interface
 			// BELOW ARE CHECKS TO MAKE IF WANTING TO SHOW FOR 'DISK' TESTS
 			$disk_scheduler = phodevi::read_property('disk', 'scheduler');
 
-			if(true || $disk_scheduler == 'BFQ' || $disk_scheduler == 'BFQ-MQ' || $disk_scheduler == 'BFQ-SQ')
+			if($disk_scheduler == 'BFQ' || $disk_scheduler == 'BFQ-MQ' || $disk_scheduler == 'BFQ-SQ')
 			{
 				$mount_options = phodevi::read_property('disk', 'mount-options');
 				$partition = basename($mount_options['device']);
@@ -89,8 +89,8 @@ class perf_tip_prompter extends pts_module_interface
 				$low_latency_file = '/sys/block/' . $device . '/queue/iosched/low_latency';
 				$low_latency = pts_file_io::file_get_contents($low_latency_file);
 
-				//if($low_latency == 0)
-				//	return;
+				if($low_latency == 0)
+					return;
 
 				$perf_tips[] = new pts_perf_tip_msg('The BFQ I/O scheduler was detected and is being used in low-latency mode. In low-latency mode, BFQ sacrifices throughput when needed to guarantee either maximum responsiveness or low latency to isochronous I/O (the I/O of, e.g., video and audio players).', 'echo 0 > ' . $low_latency_file);
 			}
