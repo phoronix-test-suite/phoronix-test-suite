@@ -20,35 +20,42 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class unload_module implements pts_option_interface
+class auto_load_module implements pts_option_interface
 {
 	const doc_section = 'Modules';
-	const doc_description = 'This option can be used for easily removing a module from the LoadModules list in the Phoronix Test Suite user configuration file. That list controls what modules are automatically loaded on start-up of the Phoronix Test Suite.';
+	const doc_description = 'This option can be used for easily adding a module to the LoadModules list in the Phoronix Test Suite user configuration file. That list controls what PTS modules are automatically loaded on start-up of the Phoronix Test Suite.';
 
 	public static function run($r)
 	{
 		$loaded_modules = pts_strings::comma_explode(pts_config::read_user_config('PhoronixTestSuite/Options/Modules/LoadModules', null));
+		$available_modules = pts_module_manager::list_available_modules();
 		echo PHP_EOL . 'Currently Loaded Modules: ' . PHP_EOL;
 		echo pts_user_io::display_text_list($loaded_modules);
+		echo PHP_EOL . 'Available Modules: ' . PHP_EOL;
+		echo pts_user_io::display_text_list($available_modules);
 
 
-		if(count($r) == 0 || !in_array($r[0], $loaded_modules))
+		if(count($r) == 0)
 		{
-			echo PHP_EOL . 'You must specify a valid module from the list to unload.' . PHP_EOL;
-			echo 'Example: phoronix-test-suite unload-module update_checker' . PHP_EOL;
+			echo PHP_EOL . 'You must specify a valid module from the list to load.' . PHP_EOL;
+			echo 'Example: phoronix-test-suite auto-load-module update_checker' . PHP_EOL;
 			return false;
 		}
 
-		foreach($r as $module_to_unload)
+		foreach($r as $module_to_load)
 		{
-			if(($x = array_search($module_to_unload, $loaded_modules)) !== false)
+			if(!in_array($module_to_load, $available_modules))
 			{
-				echo PHP_EOL . 'Unloading Module: ' . $module_to_unload . PHP_EOL;
-				unset($loaded_modules[$x]);
+				echo PHP_EOL . 'Module Not Available: ' . $module_to_load . PHP_EOL;
+			}
+			else if(in_array($module_to_load, $loaded_modules))
+			{
+				echo PHP_EOL . 'Module Already Loaded: ' . $module_to_load . PHP_EOL;
 			}
 			else
 			{
-				echo PHP_EOL . 'UNKNOWN: ' . $module_to_unload . PHP_EOL;
+				echo PHP_EOL . 'Module To Load: ' . $module_to_load . PHP_EOL;
+				array_push($loaded_modules, $module_to_load);
 			}
 		}
 

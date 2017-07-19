@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2016, Phoronix Media
-	Copyright (C) 2009 - 2016, Michael Larabel
+	Copyright (C) 2009 - 2017, Phoronix Media
+	Copyright (C) 2009 - 2017, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -35,6 +35,17 @@ class pts_module_manager
 	{
 		// Load the actual file needed that contains the module
 		return (is_file(PTS_MODULE_PATH . $module . '.php') && include_once(PTS_MODULE_PATH . $module . '.php')) || (is_file(PTS_MODULE_LOCAL_PATH . $module . '.php') && include_once(PTS_MODULE_LOCAL_PATH . $module . '.php'));
+	}
+	public static function list_available_modules()
+	{
+		$modules = array();
+
+		foreach(array_merge(pts_file_io::glob(PTS_MODULE_PATH . '*.php'), pts_file_io::glob(PTS_MODULE_LOCAL_PATH . '*.php')) as $module)
+		{
+			$modules[] = basename($module, '.php');
+		}
+
+		return $modules;
 	}
 	public static function modules_environmental_variables()
 	{
