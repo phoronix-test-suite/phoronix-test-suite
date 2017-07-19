@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 pts-core: Don't show PTS version when there is no sub-title, just leave it empty
+pts-core: Add phoronix-test-suite unload-module sub-command
 phodevi: Clear up extra potential fluff in the GPU model string
 
 Phoronix Test Suite 7.2.1-Trysil

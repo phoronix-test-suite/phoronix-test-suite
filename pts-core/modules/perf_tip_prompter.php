@@ -4,6 +4,7 @@
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
 	Copyright (C) 2017, Paolo Valente <paolo.valente@linaro.org>
+	Copyright (C) 2017, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
