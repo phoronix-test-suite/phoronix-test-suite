@@ -859,7 +859,7 @@ class pts_test_result_parser
 		else
 		{
 			$first_portion_of_line = substr($template_line, 0, strpos($template_line, $key));
-			if(strpos($output, $first_portion_of_line) !== false)
+			if($first_portion_of_line != null && strpos($output, $first_portion_of_line) !== false)
 			{
 				$search_key = $first_portion_of_line;
 			}
