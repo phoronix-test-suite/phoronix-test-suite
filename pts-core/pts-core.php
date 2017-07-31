@@ -248,9 +248,9 @@ function pts_version_codenames()
 		);
 }
 
-pts_define('PTS_VERSION', '7.2.1');
-pts_define('PTS_CORE_VERSION', 7210);
-pts_define('PTS_CODENAME', 'TRYSIL');
+pts_define('PTS_VERSION', '7.4.0m1');
+pts_define('PTS_CORE_VERSION', 7310);
+pts_define('PTS_CODENAME', 'TYNSET');
 pts_define('PTS_IS_CLIENT', (defined('PTS_MODE') && strstr(PTS_MODE, 'CLIENT') !== false));
 pts_define('PTS_IS_WEB_CLIENT', (defined('PTS_MODE') && PTS_MODE == 'WEB_CLIENT'));
 pts_define('PTS_IS_DEV_BUILD', (substr(PTS_VERSION, -2, 1) == 'm'));

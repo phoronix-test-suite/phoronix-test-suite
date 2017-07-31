@@ -1,4 +1,4 @@
-.TH phoronix-test-suite 1  "www.phoronix-test-suite.com" "7.2.1"
+.TH phoronix-test-suite 1  "www.phoronix-test-suite.com" "7.4.0m1"
 .SH NAME
 phoronix-test-suite \- The Phoronix Test Suite is an extensible open-source platform for performing testing and performance evaluation.
 .SH SYNOPSIS
@@ -274,17 +274,10 @@ This option can be used for setting an XML value in the Phoronix Test Suite user
 .B version
 This option will display the Phoronix Test Suite client version.
 .TP
-.SH WEB / GUI SUPPORT
-.B gui
-Launch the Phoronix Test Suite HTML5 web user-interface in the local GUI mode (no remote web support) and attempt to auto-launch the web-browser. THIS FEATURE IS CURRENTLY EXPERIMENTAL AND NO LONGER ACTIVE DEVELOPMENT. See Phoronix Test Suite Phoromatic as an alternative web UI approach.
-.TP
-.B start-remote-gui-server
-Start the GUI web server and WebSocket server processes for remote (or local) access via the web-browser. The settings can be configured via the Phoronix Test Suite's XML configuration file.
-.TP
-.B start-ws-server
-Manually start a WebSocket server for communication by remote Phoronix Test Suite GUIs, the Phoronix Test Suite Multi-System Commander, and other functionality. This function checks the PTS_WEBSOCKET_PORT and PTS_WEBSOCKET_SERVER environment variables for configuration.
-.TP
 .SH MODULES
+.B auto-load-module
+This option can be used for easily adding a module to the LoadModules list in the Phoronix Test Suite user configuration file. That list controls what PTS modules are automatically loaded on start-up of the Phoronix Test Suite.
+.TP
 .B list-modules
 This option will list all of the available Phoronix Test Suite modules on this system.
 .TP
@@ -296,6 +289,19 @@ This option will allow you to configure all available end-user options for a Pho
 .TP
 .B test-module [Phoronix Test Suite Module]
 This option can be used for debugging a Phoronix Test Suite module.
+.TP
+.B unload-module
+This option can be used for easily removing a module from the LoadModules list in the Phoronix Test Suite user configuration file. That list controls what modules are automatically loaded on start-up of the Phoronix Test Suite.
+.TP
+.SH WEB / GUI SUPPORT
+.B gui
+Launch the Phoronix Test Suite HTML5 web user-interface in the local GUI mode (no remote web support) and attempt to auto-launch the web-browser. THIS FEATURE IS CURRENTLY EXPERIMENTAL AND NO LONGER ACTIVE DEVELOPMENT. See Phoronix Test Suite Phoromatic as an alternative web UI approach.
+.TP
+.B start-remote-gui-server
+Start the GUI web server and WebSocket server processes for remote (or local) access via the web-browser. The settings can be configured via the Phoronix Test Suite's XML configuration file.
+.TP
+.B start-ws-server
+Manually start a WebSocket server for communication by remote Phoronix Test Suite GUIs, the Phoronix Test Suite Multi-System Commander, and other functionality. This function checks the PTS_WEBSOCKET_PORT and PTS_WEBSOCKET_SERVER environment variables for configuration.
 .TP
 .SH PHOROMATIC
 .B n

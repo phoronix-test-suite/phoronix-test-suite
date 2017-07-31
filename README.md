@@ -1,4 +1,4 @@
-# Phoronix Test Suite 7.2.1
+# Phoronix Test Suite 7.4.0m1
 http://www.phoronix-test-suite.com/
 
 The **Phoronix Test Suite** is the most comprehensive testing and benchmarking
