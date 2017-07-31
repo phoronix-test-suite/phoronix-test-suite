@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2015 - 2016, Phoronix Media
-	Copyright (C) 2015 - 2016, Michael Larabel
+	Copyright (C) 2015 - 2017, Phoronix Media
+	Copyright (C) 2015 - 2017, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -56,6 +56,10 @@ class pts_short_display_mode extends pts_concise_display_mode
 
 		$this->trial_run_count_current = 0;
 		$this->expected_trial_run_count = $test_result->test_profile->get_times_to_run();
+	}
+	public function test_run_success_inline(&$test_result)
+	{
+		// empty
 	}
 	public function test_run_instance_error($error_string)
 	{

@@ -749,9 +749,7 @@ class pts_test_execution
 						$results_comparison = $test_run_manager->result_file->get_result($added_comparison_hash);
 						if($results_comparison && $results_comparison->test_result_buffer->get_count() > 1)
 						{
-							$results_comparison->sort_results_by_performance();
-							echo pts_result_file_output::test_result_to_text($results_comparison, pts_client::terminal_width(), true, $test_run_manager->get_results_identifier());
-							echo PHP_EOL;
+							pts_client::$display->test_run_success_inline($results_comparison);
 						}
 					}
 				}

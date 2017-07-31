@@ -221,7 +221,7 @@ class pts_result_file_output
 
 				if($color_output && $highlight_result == $buffer_item->get_result_identifier() && PTS_IS_CLIENT)
 				{
-					$result_line .= pts_client::cli_just_bold($result_line);
+					$result_line = pts_client::cli_just_bold($result_line);
 				}
 
 				$result_output .= PHP_EOL . $result_line;
