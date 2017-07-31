@@ -1,6 +1,0 @@
-name: pts
-maintainer: Adam Israel <adam.israel@canonical.com>
-summary: The Phoronix Test Suite
-description: |
-  Installs phoronix-test-suite and provides simple interface to enable
-  individual stress tests and runs them via upstart job

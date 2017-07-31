@@ -1,9 +1,0 @@
-#!/bin/bash
-
-set -e
-
-# We're just sourcing the central benchmark, typically people will just put
-# their benchmarks in one file.
-. actions/benchmark
-
-run_benchmark pts/ramspeed pts/stream
