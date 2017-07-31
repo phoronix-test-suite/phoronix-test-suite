@@ -406,6 +406,10 @@ class pts_result_file
 	{
 		$this->result_objects = $result_objects;
 	}
+	public function get_result($ch)
+	{
+		return isset($this->result_objects[$ch]) ? $this->result_objects[$ch] : false;
+	}
 	public function get_result_objects($select_indexes = -1, $read_only_objects = false)
 	{
 		if($select_indexes != -1 && $select_indexes !== null)
@@ -546,6 +550,8 @@ class pts_result_file
 		{
 			$this->result_objects[$ch] = $result_object;
 		}
+
+		return $ch;
 	}
 	public function get_xml($to = null, $force_nice_formatting = false)
 	{

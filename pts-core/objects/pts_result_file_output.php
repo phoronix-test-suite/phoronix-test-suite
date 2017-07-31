@@ -147,68 +147,86 @@ class pts_result_file_output
 			$result_output .= "\t" . $system_hardware[$i] . PHP_EOL . PHP_EOL . "\t" . $system_software[$i] . PHP_EOL . PHP_EOL;
 		}
 
-		$longest_identifier_length = strlen(pts_strings::find_longest_string($system_identifiers)) + 2;
-
 		foreach($result_file->get_result_objects() as $result_object)
 		{
 			$result_output .= trim($result_object->test_profile->get_title() . ' ' . $result_object->test_profile->get_app_version() . PHP_EOL . $result_object->get_arguments_description());
-
-			if($result_object->test_profile->get_result_scale() != null)
-			{
-				$result_output .= PHP_EOL . '  ' .  $result_object->test_profile->get_result_scale();
-			}
-
-			foreach($result_object->test_result_buffer as &$buffers)
-			{
-				$max_value = 0;
-				$min_value = pts_arrays::first_element($buffers)->get_result_value();
-				foreach($buffers as &$buffer_item)
-				{
-					if($buffer_item->get_result_value() > $max_value)
-					{
-						$max_value = $buffer_item->get_result_value();
-					}
-					else if($buffer_item->get_result_value() < $min_value)
-					{
-						$min_value = $buffer_item->get_result_value();
-					}
-				}
-
-				$longest_result = strlen($max_value) + 1;
-				foreach($buffers as &$buffer_item)
-				{
-					$val = $buffer_item->get_result_value();
-
-					if(stripos($val, ',') !== false)
-					{
-						$vals = explode(',', $val);
-						$val = 'MIN: ' . min($vals) . ' / AVG: ' . round(array_sum($vals) / count($vals), 2) . ' / MAX: ' . max($vals);
-					}
-
-					$result_output .= PHP_EOL . '    ' . $buffer_item->get_result_identifier() . ' ';
-
-					$result_length_offset = $longest_identifier_length - strlen($buffer_item->get_result_identifier());
-					if($result_length_offset > 0)
-					{
-						$result_output .= str_repeat('.', $result_length_offset) . ' ';
-					}
-					$result_output .= $val;
-
-
-					if(is_numeric($val))
-					{
-						$repeat_length = $longest_result - strlen($val);
-						$result_output .= ($repeat_length >= 0 ? str_repeat(' ', $repeat_length) : null)  . '|';
-						$current_line_length = strlen(substr($result_output, strrpos($result_output, PHP_EOL) + 1)) + 1;
-						$result_output .= str_repeat('=', round(($val / $max_value) * ($terminal_width - $current_line_length)));
-
-					}
-				}
-			}
-
+			$result_output .= self::test_result_to_text($result_object, $terminal_width);
 			$result_output .= PHP_EOL . PHP_EOL;
 		}
 
+		return $result_output;
+	}
+	public static function test_result_to_text(&$result_object, $terminal_width = 80, $color_output = false, $highlight_result = null)
+	{
+		$result_output = null;
+
+		if($result_object->test_profile->get_result_scale() != null)
+		{
+			$result_output .= PHP_EOL . '    ' . $result_object->test_profile->get_result_scale();
+			if($result_object->test_profile->get_result_proportion() == 'LIB')
+			{
+				$result_output .= ' < Lower Is Better';
+			}
+			else if($result_object->test_profile->get_result_proportion() == 'HIB')
+			{
+				$result_output .= ' > Higher Is Better';
+			}
+		}
+
+		$identifiers = $result_object->test_result_buffer->get_identifiers();
+		$longest_identifier_length = strlen(pts_strings::find_longest_string($identifiers)) + 2;
+
+		foreach($result_object->test_result_buffer as &$buffers)
+		{
+			$max_value = 0;
+			$min_value = pts_arrays::first_element($buffers)->get_result_value();
+			foreach($buffers as &$buffer_item)
+			{
+				if($buffer_item->get_result_value() > $max_value)
+				{
+					$max_value = $buffer_item->get_result_value();
+				}
+				else if($buffer_item->get_result_value() < $min_value)
+				{
+					$min_value = $buffer_item->get_result_value();
+				}
+			}
+
+			$longest_result = strlen($max_value) + 1;
+			foreach($buffers as &$buffer_item)
+			{
+				$val = $buffer_item->get_result_value();
+
+				if(stripos($val, ',') !== false)
+				{
+					$vals = explode(',', $val);
+					$val = 'MIN: ' . min($vals) . ' / AVG: ' . round(array_sum($vals) / count($vals), 2) . ' / MAX: ' . max($vals);
+				}
+
+				$result_line = '    ' . $buffer_item->get_result_identifier() . ' ';
+				$result_length_offset = $longest_identifier_length - strlen($buffer_item->get_result_identifier());
+				if($result_length_offset > 0)
+				{
+					$result_line .= str_repeat('.', $result_length_offset) . ' ';
+				}
+				$result_line .= $val;
+
+				if(is_numeric($val))
+				{
+					$repeat_length = $longest_result - strlen($val);
+					$result_line .= ($repeat_length >= 0 ? str_repeat(' ', $repeat_length) : null)  . '|';
+					$current_line_length = strlen($result_line);
+					$result_line .= str_repeat('=', round(($val / $max_value) * ($terminal_width - $current_line_length)));
+				}
+
+				if($color_output && $highlight_result == $buffer_item->get_result_identifier() && PTS_IS_CLIENT)
+				{
+					$result_line .= pts_client::cli_just_bold($result_line);
+				}
+
+				$result_output .= PHP_EOL . $result_line;
+			}
+		}
 		return $result_output;
 	}
 	public static function result_file_to_pdf(&$result_file, $dest, $output_name, $extra_attributes = null)

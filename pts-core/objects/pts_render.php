@@ -117,12 +117,7 @@ class pts_render
 		}
 		if(isset($extra_attributes['sort_result_buffer_values']))
 		{
-			$result_object->test_result_buffer->buffer_values_sort();
-
-			if($result_object->test_profile->get_result_proportion() == 'HIB')
-			{
-				$result_object->test_result_buffer->buffer_values_reverse();
-			}
+			$result_object->sort_results_by_performance();
 		}
 		/*if(isset($extra_attributes['remove_noisy_results']))
 		{

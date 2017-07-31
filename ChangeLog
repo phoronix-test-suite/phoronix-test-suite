@@ -5,6 +5,9 @@ Phoronix Test Suite (Git)
 pts-core: Don't show PTS version when there is no sub-title, just leave it empty
 pts-core: Add phoronix-test-suite unload-module sub-command
 pts-core: Add phoronix-test-suite auto-load-module sub-command
+pts-core: Drop juju scripts as appears unmaintained, happy to re-add if maintained
+pts-core: Allow showing existing results from a result file in-progress on test runs
+pts_Graph: Color tweaking
 phodevi: Clear up extra potential fluff in the GPU model string
 
 Phoronix Test Suite 7.2.1-Trysil

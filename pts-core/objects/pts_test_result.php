@@ -318,6 +318,15 @@ class pts_test_result
 		$this->test_profile->set_result_scale('Relative Performance');
 		return true;
 	}
+	public function sort_results_by_performance()
+	{
+		$this->test_result_buffer->buffer_values_sort();
+
+		if($this->test_profile->get_result_proportion() == 'HIB')
+		{
+			$this->test_result_buffer->buffer_values_reverse();
+		}
+	}
 	public function remove_unchanged_results($change_threshold = 0.03)
 	{
 		if($this->test_profile->get_display_format() != 'BAR_GRAPH') // BAR_ANALYZE_GRAPH is currently unsupported

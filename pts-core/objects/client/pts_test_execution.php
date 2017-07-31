@@ -742,8 +742,17 @@ class pts_test_execution
 
 						$test_result->test_result_buffer = new pts_test_result_buffer();
 						$test_result->test_result_buffer->add_test_result($test_run_manager->get_results_identifier(), $test_result->active->get_result(), $test_result->active->get_values_as_string(), pts_test_run_manager::process_json_report_attributes($test_result), $test_result->active->get_min_result(), $test_result->active->get_max_result());
-						$test_run_manager->result_file->add_result($test_result);
+						$added_comparison_hash = $test_run_manager->result_file->add_result($test_result);
 						$generated_result_count++;
+
+						// The merged data, get back the merged test_result object
+						$results_comparison = $test_run_manager->result_file->get_result($added_comparison_hash);
+						if($results_comparison && $results_comparison->test_result_buffer->get_count() > 1)
+						{
+							$results_comparison->sort_results_by_performance();
+							echo pts_result_file_output::test_result_to_text($results_comparison, pts_client::terminal_width(), true, $test_run_manager->get_results_identifier());
+							echo PHP_EOL;
+						}
 					}
 				}
 			}
