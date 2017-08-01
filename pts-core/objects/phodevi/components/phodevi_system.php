@@ -344,6 +344,7 @@ class phodevi_system extends phodevi_device_interface
 							'0xaad7aaea' => 'PanFS', // Panasas FS
 							'0xf2f52010' => 'F2FS',
 							'0xc36400' => 'CephFS',
+							'0x53464846' => 'WSLFS',
 							'0xca451a4e' => 'BcacheFS'
 							);
 
