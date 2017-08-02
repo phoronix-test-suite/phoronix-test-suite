@@ -48,7 +48,6 @@ class pts_test_result
 	public function __clone()
 	{
 		$this->test_profile = clone $this->test_profile;
-		$this->test_result_buffer = clone $this->test_result_buffer;
 
 		if(!empty($this->test_result_buffer) && is_object($this->test_result_buffer))
 		{
