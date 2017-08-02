@@ -476,8 +476,9 @@ class pts_concise_display_mode implements pts_display_mode_interface
 
 		echo $end_print;
 	}
-	public function test_run_success_inline($test_result)
+	public function test_run_success_inline($test_result_orig)
 	{
+		$test_result = clone $test_result_orig;
 		$test_result->sort_results_by_performance();
 		$test_result->test_result_buffer->buffer_values_reverse();
 		echo pts_result_file_output::test_result_to_text($test_result, pts_client::terminal_width(), true, $this->current_saved_test_identifier);
