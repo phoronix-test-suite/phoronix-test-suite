@@ -165,7 +165,7 @@ class pts_basic_display_mode implements pts_display_mode_interface
 
 		echo self::string_header($end_print, '#');
 	}
-	public function test_run_success_inline(&$test_result)
+	public function test_run_success_inline($test_result)
 	{
 		// empty
 	}

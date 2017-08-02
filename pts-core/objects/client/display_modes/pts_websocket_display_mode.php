@@ -75,7 +75,7 @@ class pts_websocket_display_mode implements pts_display_mode_interface
 
 		return $mb;
 	}
-	public function test_run_success_inline(&$test_result)
+	public function test_run_success_inline($test_result)
 	{
 		// empty
 	}

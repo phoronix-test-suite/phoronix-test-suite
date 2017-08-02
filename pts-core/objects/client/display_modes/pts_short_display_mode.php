@@ -57,7 +57,7 @@ class pts_short_display_mode extends pts_concise_display_mode
 		$this->trial_run_count_current = 0;
 		$this->expected_trial_run_count = $test_result->test_profile->get_times_to_run();
 	}
-	public function test_run_success_inline(&$test_result)
+	public function test_run_success_inline($test_result)
 	{
 		// empty
 	}
