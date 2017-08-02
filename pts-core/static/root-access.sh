@@ -6,7 +6,7 @@ if [ `whoami` != "root" ]; then
 	elif [ -x /usr/bin/kdesu ] && [ ! -z "$DISPLAY" ]; then
 		ROOT="/usr/bin/kdesu"
 	elif [ -x /usr/bin/sudo ]; then
-		ROOT="/usr/bin/sudo"
+		ROOT="/usr/bin/sudo -E"
 	fi
 else
 	ROOT=""
