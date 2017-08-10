@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 phodevi: WSLFS (Windows Subsystem for Linux) file-system detection
+phodevi: Add monitor detection based on parsing EDID supplied by `xrandr --prop` (works well for newer NVIDIA setups)
 
 Phoronix Test Suite 7.4.0 Milestone 1
 31 July 2017

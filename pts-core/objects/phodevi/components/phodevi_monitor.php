@@ -129,35 +129,7 @@ class phodevi_monitor extends phodevi_device_interface
 				}
 
 				$edid = bin2hex($edid_file);
-
-				$x = 0;
-				while($x = strpos($edid, '00fc', $x))
-				{
-					// 00fc indicates start of EDID monitor descriptor block
-					$encoded = substr($edid, $x + 4, 36);
-					$edid_monitor_name_block = null;
-					for($i = 0; $i < strlen($encoded); $i += 2)
-					{
-						$hex = substr($encoded, $i, 2);
-
-						if($hex == 15 || $hex == '0a')
-						{
-							break;
-						}
-
-						$ch = chr(hexdec($hex));
-						$edid_monitor_name_block .= $ch;
-					}
-					$edid_monitor_name_block = trim($edid_monitor_name_block);
-
-					if(pts_strings::string_only_contains($edid_monitor_name_block, (pts_strings::CHAR_LETTER | pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DECIMAL | pts_strings::CHAR_SPACE | pts_strings::CHAR_DASH)))
-					{
-						$monitor = $edid_monitor_name_block;
-						break;
-					}
-
-					$x++;
-				}
+				$monitor = self::edid_monitor_parse($edid);
 
 				if($monitor != null)
 				{
@@ -165,8 +137,52 @@ class phodevi_monitor extends phodevi_device_interface
 				}
 			}
 		}
+		if($monitor == null && pts_client::executable_in_path('xrandr'))
+		{
+			$xrandr_props = shell_exec('xrandr --prop 2>1');
+			if(($x = strpos($xrandr_props, 'EDID:')) !== false)
+			{
+				$xrandr_props = substr($xrandr_props, $x + 5);
+				$xrandr_props = substr($xrandr_props, 0, strpos($xrandr_props, ':'));
+				$xrandr_props = substr($xrandr_props, 0, strrpos($xrandr_props, PHP_EOL));
+				$xrandr_props = str_replace(array(' ', "\t", PHP_EOL), '', $xrandr_props);
+				$monitor = self::edid_monitor_parse($xrandr_props);
+			}
+		}
 
 		return empty($monitor) ? false : $monitor;
+	}
+	protected static function edid_monitor_parse($edid)
+	{
+		$x = 0;
+		$monitor = null;
+		while($x = strpos($edid, '00fc', $x))
+		{
+			// 00fc indicates start of EDID monitor descriptor block
+			$encoded = substr($edid, $x + 4, 36);
+			$edid_monitor_name_block = null;
+			for($i = 0; $i < strlen($encoded); $i += 2)
+			{
+				$hex = substr($encoded, $i, 2);
+
+				if($hex == 15 || $hex == '0a')
+				{
+					break;
+				}
+
+				$ch = chr(hexdec($hex));
+				$edid_monitor_name_block .= $ch;
+			}
+			$edid_monitor_name_block = trim($edid_monitor_name_block);
+
+			if(pts_strings::string_only_contains($edid_monitor_name_block, (pts_strings::CHAR_LETTER | pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DECIMAL | pts_strings::CHAR_SPACE | pts_strings::CHAR_DASH)))
+			{
+				$monitor = $edid_monitor_name_block;
+				break;
+			}
+			$x++;
+		}
+		return $monitor;
 	}
 	public static function monitor_count()
 	{
