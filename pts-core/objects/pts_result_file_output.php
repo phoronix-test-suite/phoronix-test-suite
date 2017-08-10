@@ -278,10 +278,7 @@ class pts_result_file_output
 			if($placement == 2 || $result_object->test_result_buffer->get_count() > 12)
 			{
 				$placement = 0;
-				if($i != count($results))
-				{
-					$pdf->AddPage();
-				}
+				$pdf->AddPage();
 			}
 			$placement++;
 			$i++;
