@@ -112,59 +112,81 @@ class pts_types
 
 		foreach(pts_arrays::to_array($identifiers) as $identifier_item)
 		{
-			if($identifier_item instanceof pts_test_profile || $identifier_item instanceof pts_test_suite || $identifier_item instanceof pts_result_file)
+			if(!self::eval_identifier_to_obj_array($objects, $identifier_item))
 			{
-				$objects[] = $identifier_item;
-			}
-			else if(PTS_IS_CLIENT && $identifier_item instanceof pts_virtual_test_queue)
-			{
-				// Object is a virtual suite
-				$objects[] = $identifier_item;
-			}
-			else if(($tp_identifier = pts_test_profile::is_test_profile($identifier_item)))
-			{
-				// Object is a test
-				$objects[] = new pts_test_profile($tp_identifier);
-			}
-			else if(pts_test_suite::is_suite($identifier_item))
-			{
-				// Object is a suite
-				$objects[] = new pts_test_suite($identifier_item);
-			}
-			else if(pts_result_file::is_test_result_file($identifier_item))
-			{
-				// Object is a saved results file
-				$objects[] = new pts_result_file($identifier_item);
-			}
-			else if(pts_openbenchmarking::is_openbenchmarking_result_id($identifier_item))
-			{
-				// Object is an OpenBenchmarking.org result
-				// Clone it locally so it's just handled like a pts_result_file
-				$success = pts_openbenchmarking::clone_openbenchmarking_result($identifier_item);
-
-				if($success)
+				if(PTS_IS_CLIENT && !defined('CACHE_CHECK_FORCED'))
 				{
-					$objects[] = new pts_result_file($identifier_item);
+					define('CACHE_CHECK_FORCED', true);
+					pts_openbenchmarking::refresh_repository_lists(null, true);
+					if(self::eval_identifier_to_obj_array($objects, $identifier_item))
+					{
+						continue;
+					}
 				}
-			}
-			else if(PTS_IS_CLIENT && pts_virtual_test_suite::is_virtual_suite($identifier_item))
-			{
-				// Object is a virtual suite
-				$objects[] = new pts_virtual_test_suite($identifier_item);
-			}
-			else if(pts_test_suite::is_temporary_suite($identifier_item))
-			{
-				// Object is a temporary test suite
-				$objects[] = new pts_test_suite($identifier_item);
-			}
-			else if(is_array($archive_unknown_objects))
-			{
-				// Unknown / nothing / broken
-				$archive_unknown_objects[] = $identifier_item;
+
+				if(is_array($archive_unknown_objects))
+				{
+					// Unknown / nothing / broken
+					$archive_unknown_objects[] = $identifier_item;
+				}
 			}
 		}
 
 		return $objects;
+	}
+	protected static function eval_identifier_to_obj_array(&$objects, &$identifier_item)
+	{
+		if($identifier_item instanceof pts_test_profile || $identifier_item instanceof pts_test_suite || $identifier_item instanceof pts_result_file)
+		{
+			$objects[] = $identifier_item;
+		}
+		else if(PTS_IS_CLIENT && $identifier_item instanceof pts_virtual_test_queue)
+		{
+			// Object is a virtual suite
+			$objects[] = $identifier_item;
+		}
+		else if(($tp_identifier = pts_test_profile::is_test_profile($identifier_item)))
+		{
+			// Object is a test
+			$objects[] = new pts_test_profile($tp_identifier);
+		}
+		else if(pts_test_suite::is_suite($identifier_item))
+		{
+			// Object is a suite
+			$objects[] = new pts_test_suite($identifier_item);
+		}
+		else if(pts_result_file::is_test_result_file($identifier_item))
+		{
+			// Object is a saved results file
+			$objects[] = new pts_result_file($identifier_item);
+		}
+		else if(pts_openbenchmarking::is_openbenchmarking_result_id($identifier_item))
+		{
+			// Object is an OpenBenchmarking.org result
+			// Clone it locally so it's just handled like a pts_result_file
+			$success = pts_openbenchmarking::clone_openbenchmarking_result($identifier_item);
+
+			if($success)
+			{
+				$objects[] = new pts_result_file($identifier_item);
+			}
+		}
+		else if(PTS_IS_CLIENT && pts_virtual_test_suite::is_virtual_suite($identifier_item))
+		{
+			// Object is a virtual suite
+			$objects[] = new pts_virtual_test_suite($identifier_item);
+		}
+		else if(pts_test_suite::is_temporary_suite($identifier_item))
+		{
+			// Object is a temporary test suite
+			$objects[] = new pts_test_suite($identifier_item);
+		}
+		else
+		{
+			return false;
+		}
+
+		return true;
 	}
 	public static function identifier_to_object($identifier)
 	{
