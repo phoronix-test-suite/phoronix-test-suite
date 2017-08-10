@@ -486,7 +486,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	}
 	public function test_run_error($error_string)
 	{
-		echo $this->tab . $this->tab . pts_client::cli_colored_text($error_string, 'red', true) . PHP_EOL;
+		echo PHP_EOL . $this->tab . $this->tab . pts_client::cli_colored_text($error_string, 'red', true) . PHP_EOL;
 	}
 	public function generic_prompt($prompt_string)
 	{
