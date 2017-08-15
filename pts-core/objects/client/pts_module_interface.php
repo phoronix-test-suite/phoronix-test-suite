@@ -171,6 +171,11 @@ class pts_module_interface
 		// Passed is a copy of the pts_test_result when the run was successful
 		return;
 	}
+	public static function __test_run_success_inline_result($obj = null)
+	{
+		// Passed is a copy of the successful pts_test_result after showing other inline metrics
+		return;
+	}
 	public static function __post_test_run_process($obj = null)
 	{
 		// Passed is a copy of the pts_result_file

@@ -219,9 +219,12 @@ class pts_result_file_output
 					$result_line .= str_repeat('=', round(($val / $max_value) * ($terminal_width - $current_line_length)));
 				}
 
-				if($color_output && $highlight_result == $buffer_item->get_result_identifier() && PTS_IS_CLIENT)
+				if($color_output && PTS_IS_CLIENT)
 				{
-					$result_line = pts_client::cli_just_bold($result_line);
+					if($highlight_result == $buffer_item->get_result_identifier())
+						$result_line = pts_client::cli_just_bold($result_line);
+					else if(is_array($highlight_result) && in_array($buffer_item->get_result_identifier(), $highlight_result))
+						$result_line = pts_client::cli_just_bold($result_line);
 				}
 
 				$result_output .= PHP_EOL . $result_line;
