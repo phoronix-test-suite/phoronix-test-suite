@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 7.4.0 Milestone 2
+15 August 2017
 
 pts-core: Resolve possibility of first graph missing when exporting results as PDF
 phodevi: WSLFS (Windows Subsystem for Linux) file-system detection
