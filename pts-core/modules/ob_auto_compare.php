@@ -26,6 +26,8 @@ class ob_auto_compare extends pts_module_interface
 	const module_description = 'This module prints comparable OpenBenchmarking.org results in the command-line for reference purposes as tests are being run. OpenBenchmarking.org is automatically queried for results to show based on the test comparison hash and the system type (mobile, desktop, server, cloud, workstation, etc). No other system information or result data is transmitted..';
 	const module_author = 'Michael Larabel';
 
+	private static $response_time = 0;
+
 	public static function user_commands()
 	{
 		return array('debug' => 'debug_result_file');
@@ -64,12 +66,16 @@ class ob_auto_compare extends pts_module_interface
 	}
 	protected static function request_compare_from_ob($comparison_hash, $system_type)
 	{
-		if(!pts_network::internet_support_available())
+		if(!pts_network::internet_support_available() || self::$response_time > 12)
 		{
+			// If no network or OB requests are being slow...
 			return false;
 		}
 
+		$ob_request_time = time();
 		$json_response = pts_openbenchmarking::make_openbenchmarking_request('auto_compare_via_hash', array('comparison_hash' => $comparison_hash, 'system_type' => $system_type));
+		self::$response_time = time() - $ob_request_time;
+
 
 		$json_response = json_decode($json_response, true);
 
