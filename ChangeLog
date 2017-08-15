@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+ob_auto_compare: New module for seamless OpenBenchmarking.org result references
+
 Phoronix Test Suite 7.4.0 Milestone 2
 15 August 2017
 
