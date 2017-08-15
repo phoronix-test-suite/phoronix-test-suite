@@ -89,11 +89,11 @@
 		</Package>
 		<Package>
 			<GenericName>java</GenericName>
-			<PackageName>openjdk-6-jre</PackageName>
+			<PackageName>openjdk-8-jre</PackageName>
 		</Package>
 		<Package>
 			<GenericName>portaudio-development</GenericName>
-			<PackageName>libportaudio-dev</PackageName>
+			<PackageName>portaudio19-dev</PackageName>
 		</Package>
 		<Package>
 			<GenericName>fortran-compiler</GenericName>
