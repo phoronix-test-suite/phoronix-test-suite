@@ -259,7 +259,9 @@ class pts_client
 			'OS_ARCH' => phodevi::read_property('system', 'kernel-architecture'),
 			'OS_TYPE' => phodevi::operating_system(),
 			'THIS_RUN_TIME' => PTS_INIT_TIME,
-			'DEBUG_REAL_HOME' => pts_core::user_home_directory()
+			'DEBUG_REAL_HOME' => pts_core::user_home_directory(),
+			'SYSTEM_TYPE_ID' => phodevi_base::determine_system_type(phodevi::system_hardware(), phodevi::system_software()),
+			'SYSTEM_TYPE' => phodevi_base::system_type_to_string(phodevi_base::determine_system_type(phodevi::system_hardware(), phodevi::system_software()))
 			);
 
 			if(!pts_client::executable_in_path('cc') && pts_client::executable_in_path('gcc') && getenv('CC') == false)

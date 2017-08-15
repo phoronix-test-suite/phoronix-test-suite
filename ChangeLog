@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 pts-core: Resolve possibility of first graph missing when exporting results as PDF
 phodevi: WSLFS (Windows Subsystem for Linux) file-system detection
 phodevi: Add monitor detection based on parsing EDID supplied by `xrandr --prop` (works well for newer NVIDIA setups)
+phodevi: Initial "system type" support
 
 Phoronix Test Suite 7.4.0 Milestone 1
 31 July 2017

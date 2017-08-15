@@ -54,6 +54,67 @@ class phodevi_base
 		'System Layer' => array('system', 'system-layer')
 		);
 	}
+	public static function determine_system_type($hw, $sw)
+	{
+		// Assume desktop by default as fallback
+		$type = 'D';
+
+		// E = Embedded
+		if(pts_strings::has_element_in_string($hw, array('ARMv', 'Cortex', 'Qualcomm', 'Exynos')) || stripos($sw, 'mips64') !== false)
+		{
+			$type = 'E';
+		}
+		else if(pts_strings::has_element_in_string($hw, array('Mobile ', 'M @', 'M 2')))
+		{
+			$type = 'M';
+		}
+		else if(strpos($hw, '-U') !== false && stripos($hw, 'wireless'))
+		{
+			// Perhaps too easy of a check?
+			$type = 'M';
+		}
+		else if(strpos($sw, 'System Layer') !== false || stripos($sw, 'amazon') !== false || stripos($sw, 'xen') !== false || stripos($sw, 'qemu') !== false)
+		{
+			$type = 'V';
+		}
+		else if(pts_strings::has_element_in_string($hw, array('Quadro ', 'Tesla ', 'FirePro', 'Radeon Pro')) || (pts_strings::has_element_in_string($hw, array('Xeon', 'Opteron', 'Epyc')) && strpos($sw, 'Desktop') && strpos($sw, 'OpenGL')))
+		{
+			$type = 'W';
+		}
+		else if(pts_strings::has_element_in_string($hw, array('Xeon', 'Opteron', 'Epyc', 'POWER ')) || pts_strings::has_element_in_string($hw, array('Tyan', 'Supermicro')))
+		{
+			$type = 'S';
+		}
+
+		return $type;
+	}
+	public static function system_type_to_string($system_type)
+	{
+		switch($system_type)
+		{
+			case 'E':
+				$t = 'Embedded';
+				break;
+			case 'M':
+				$t = 'Mobile';
+				break;
+			case 'V':
+				$t = 'Virtual';
+				break;
+			case 'S':
+				$t = 'Server';
+				break;
+			case 'W':
+				$t = 'Workstation';
+				break;
+			case 'D':
+			default:
+				$t = 'Desktop';
+				break;
+		}
+
+		return $t;
+	}
 }
 
 ?>

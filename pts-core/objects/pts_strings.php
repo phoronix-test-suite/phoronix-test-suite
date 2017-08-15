@@ -439,6 +439,18 @@ class pts_strings
 
 		return $str;
 	}
+	public static function has_element_in_string($haystack, $array_to_check)
+	{
+		foreach($array_to_check as $ch)
+		{
+			if(stripos($haystack, $ch) !== false)
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
 	public static function remove_line_timestamps($log)
 	{
 		// Try to strip out timestamps from lines like Xorg.0.log and dmesg, e.g.:
