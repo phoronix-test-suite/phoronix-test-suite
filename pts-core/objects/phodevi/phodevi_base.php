@@ -59,12 +59,11 @@ class phodevi_base
 		// Assume desktop by default as fallback
 		$type = 'D';
 
-		// E = Embedded
-		if(pts_strings::has_element_in_string($hw, array('ARMv', 'Cortex', 'Qualcomm', 'Exynos')) || stripos($sw, 'mips64') !== false)
+		if(pts_strings::has_element_in_string($hw, array('ARMv', 'Cortex', 'Qualcomm', 'Exynos', 'jetson')) || stripos($sw, 'mips64') !== false)
 		{
 			$type = 'E';
 		}
-		else if(pts_strings::has_element_in_string($hw, array('Mobile ', 'M @', 'M 2')))
+		else if(pts_strings::has_element_in_string($hw, array('Mobile ', 'M @', 'U @', 'M 2', 'macbook', 'thinkpad', 'color lcd')))
 		{
 			$type = 'M';
 		}
@@ -77,11 +76,11 @@ class phodevi_base
 		{
 			$type = 'V';
 		}
-		else if(pts_strings::has_element_in_string($hw, array('Quadro ', 'Tesla ', 'FirePro', 'Radeon Pro')) || (pts_strings::has_element_in_string($hw, array('Xeon', 'Opteron', 'Epyc')) && strpos($sw, 'Desktop') && strpos($sw, 'OpenGL')))
+		else if(pts_strings::has_element_in_string($hw, array('Quadro ', 'Tesla ', 'FirePro', 'Radeon Pro')) || (pts_strings::has_element_in_string($hw, array(' Xeon', 'Opteron', 'Epyc')) && strpos($sw, 'Desktop') && strpos($sw, 'OpenGL')))
 		{
 			$type = 'W';
 		}
-		else if(pts_strings::has_element_in_string($hw, array('Xeon', 'Opteron', 'Epyc', 'POWER ')) || pts_strings::has_element_in_string($hw, array('Tyan', 'Supermicro')))
+		else if(pts_strings::has_element_in_string($hw, array(' Xeon', 'Opteron', 'Epyc', 'POWER ')) || pts_strings::has_element_in_string($hw, array('Tyan', 'Supermicro')))
 		{
 			$type = 'S';
 		}
