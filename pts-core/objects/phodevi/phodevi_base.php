@@ -59,7 +59,7 @@ class phodevi_base
 		// Assume desktop by default as fallback
 		$type = 'D';
 
-		if(pts_strings::has_element_in_string($hw, array('ARMv', 'Cortex', 'Qualcomm', 'Exynos', 'jetson')) || stripos($sw, 'mips64') !== false)
+		if(pts_strings::has_element_in_string($hw, array('ARMv', 'Cortex', 'Exynos', 'jetson')) || stripos($sw, 'mips64') !== false)
 		{
 			$type = 'E';
 		}
