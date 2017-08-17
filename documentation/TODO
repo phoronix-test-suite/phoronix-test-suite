@@ -30,7 +30,6 @@ PHORONIX TEST SUITE PUBLIC TODO LIST:
 
 ### POSSIBLE NEW TEST PROFILES ###
 
-- Intel HiBench [https://github.com/intel-hadoop/HiBench]
 - Hadoop Benchmarks / TeraSort
 - LATT Latency Tests [git://git.kernel.dk/latt.git]
 - QMC Beaver [http://qmcbeaver.sourceforge.net/]
@@ -49,31 +48,17 @@ PHORONIX TEST SUITE PUBLIC TODO LIST:
 - http://sourceforge.net/projects/ffsb/
 - http://www.ratgpu.com/
 - http://panthema.net/2013/pmbw/
-- http://www.thedarkmod.com/
-- http://code.google.com/p/lz4/
 - http://parsec.cs.princeton.edu/parsec3-doc.htm
 - http://www.capsl.udel.edu/splash/Download.html
-- https://github.com/facebook/linkbench
-- https://github.com/vasi/pixz
 - stephentu/silo
-- http://nondot.org/sabre/LLVMNotes/#benchmarks
 - https://code.google.com/p/smhasher/wiki/SMHasher
 - http://benchmarksgame.alioth.debian.org/u32/performance.php?test=fasta / http://benchmarksgame.alioth.debian.org/u32/program.php?test=nbody&lang=gcc&id=1#sourcecode
 - https://openfoamwiki.net/index.php/Benchmarks_standard_v1
 - Cassandra 1.2 stress - http://docs.datastax.com/en/cassandra/1.2/cassandra/tools/toolsCStress_t.html
 - http://gcc.opensuse.org/c++bench-frescobaldi/
-- https://github.com/GoogleCloudPlatform/PerfKitBenchmarker
 - https://gooseberry.blender.org/gooseberry-production-benchmark-file/
-- https://github.com/hhvm/oss-performance
 - https://github.com/gormanm/mmtests
-- https://github.com/pandegroup/fahbench
-- https://github.com/STH-Dev/linux-bench
-- http://anzwix.com/a/FFmpeg/CryptobenchAddSupportForBlowfish
-- https://wiki.mikejung.biz/Benchmarking
-- http://dacapobench.org/
 - https://github.com/soumith/convnet-benchmarks
-- https://github.com/cavazos-lab/FinanceBench
-- https://svail.github.io/DeepBench/
 
 ### WEB SOCKET / HTML5 USER INTERFACE WORK ###
 
