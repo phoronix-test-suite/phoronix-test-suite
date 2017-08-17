@@ -154,7 +154,7 @@ class phodevi_linux_parser
 		// Read Linux dmidecode
 		$value = array();
 
-		if(is_readable('/dev/mem') && pts_client::executable_in_path('dmidecode'))
+		if((phodevi::is_root() || is_readable('/dev/mem')) && pts_client::executable_in_path('dmidecode'))
 		{
 			$ignore = pts_arrays::to_array($ignore);
 
