@@ -182,7 +182,8 @@ class phodevi_memory extends phodevi_device_interface
 			}
 			else
 			{
-				if(($mem_count * $mem_size[0]) != phodevi::read_property('memory', 'capacity') && phodevi::read_property('memory', 'capacity') % $mem_size[0] == 0)
+				$t = str_replace(array(' MB', ' GB'), null, $mem_size[0]);
+				if(($mem_count * $t) != phodevi::read_property('memory', 'capacity') && phodevi::read_property('memory', 'capacity') % $t == 0)
 				{
 					// This makes sure the correct number of RAM modules is reported...
 					// On at least Linux with dmidecode on an AMD Opteron multi-socket setup it's only showing the data for one socket
