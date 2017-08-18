@@ -1640,7 +1640,7 @@ class phodevi_system extends phodevi_device_interface
 				$info = trim(substr($info, 0, strpos($info, "\n")));
 			}
 		}
-
+		/*
 		if($info == null)
 		{
 			// A less than ideal fallback for some detection now
@@ -1655,6 +1655,7 @@ class phodevi_system extends phodevi_device_interface
 				}
 			}
 		}
+		*/
 
 		return $info;
 	}
