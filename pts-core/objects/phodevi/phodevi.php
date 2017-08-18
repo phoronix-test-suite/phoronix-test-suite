@@ -278,7 +278,7 @@ class phodevi extends phodevi_base
 		$thread_count = phodevi_cpu::cpuinfo_thread_count();
 
 		$sys = array(
-			'Processor' => phodevi::read_name('cpu'),
+			'Processor' => phodevi::read_property('cpu', 'model-and-speed'),
 				array(
 				'Core Count' => $core_count,
 				'Thread Count' => $core_count == $thread_count ? '' : $thread_count, // don't show thread count if it's same as core count

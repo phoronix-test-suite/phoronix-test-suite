@@ -37,6 +37,9 @@ class phodevi_cpu extends phodevi_device_interface
 			case 'model':
 				$property = new phodevi_device_property('cpu_model', phodevi::smart_caching);
 				break;
+			case 'model-and-speed':
+				$property = new phodevi_device_property('cpu_model_and_speed', phodevi::smart_caching);
+				break;
 			case 'mhz-default-frequency':
 				$property = new phodevi_device_property('cpu_default_frequency_mhz', phodevi::smart_caching);
 				break;
@@ -79,6 +82,19 @@ class phodevi_cpu extends phodevi_device_interface
 		$core_count = phodevi::read_property('cpu', 'core-count');
 
 		return $model . ' (' . pts_strings::plural_handler($core_count, 'Core') . ')';
+	}
+	public static function cpu_model_and_speed()
+	{
+		$model = phodevi::read_property('cpu', 'model');
+
+		// Append the processor frequency to string
+		if(($freq = phodevi::read_property('cpu', 'default-frequency')) > 0)
+		{
+			$model = str_replace($freq . 'GHz', null, $model); // we'll replace it if it's already in the string
+			$model .= ' @ ' . $freq . 'GHz';
+		}
+
+		return $model;
 	}
 	public static function cpu_core_count()
 	{
