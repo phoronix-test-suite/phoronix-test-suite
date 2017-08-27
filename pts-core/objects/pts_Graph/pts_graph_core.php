@@ -972,7 +972,7 @@ abstract class pts_graph_core
 	protected function adjust_color($identifier, $paint_color)
 	{
 		// Adjust the color based on the identifier and the content of value_highlights
-		if(array_key_exists($identifier, $this->value_highlights))
+		if(array_key_exists($identifier, $this->value_highlights) || in_array($identifier, $this->value_highlights))
 		{
 			$color = $this->value_highlights[$identifier];
 			$paint_color = empty($color) ? $this->darken_color($paint_color) : $color;
