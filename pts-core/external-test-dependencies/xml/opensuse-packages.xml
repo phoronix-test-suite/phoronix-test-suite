@@ -286,9 +286,5 @@
 			<GenericName>python-scipy</GenericName>
 			<PackageName>python-scipy</PackageName>
 		</Package>
-		<Package>
-			<GenericName>python-sklearn</GenericName>
-			<PackageName>python-scikit-learn</PackageName>
-		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
