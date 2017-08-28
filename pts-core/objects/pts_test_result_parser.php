@@ -148,7 +148,7 @@ class pts_test_result_parser
 
 		return count(self::$monitoring_sensors) > 0;
 	}
-	public static function system_monitor_task_post_test(&$test_run_request)
+	public static function system_monitor_task_post_test(&$test_run_request, $exit_status_pass = true)
 	{
 		$test_directory = $test_run_request->test_profile->get_install_dir();
 		$did_post_result = false;
@@ -209,7 +209,7 @@ class pts_test_result_parser
 				}
 			}
 
-			if($result_value != null && $result_value > 0)
+			if($result_value != null && $result_value > 0 && $exit_status_pass)
 			{
 				// For now it's only possible to return one result per test XXX actually with PTS7 this can be changed....
 				// TODO XXX for some sensors may make sense for min/max values?

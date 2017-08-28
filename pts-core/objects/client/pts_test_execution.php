@@ -237,7 +237,22 @@ class pts_test_execution
 
 				$test_run_time = microtime(true) - $test_run_time_start;
 				$test_run_request->test_run_times[] = $test_run_time;
-				$produced_monitoring_result = $is_monitoring ? pts_test_result_parser::system_monitor_task_post_test($test_run_request) : false;
+
+				$exit_status_pass = true;
+				if(is_file($test_directory . 'test-exit-status'))
+				{
+					// If the test script writes its exit status to ~/test-exit-status, if it's non-zero the test run failed
+					$exit_status = pts_file_io::file_get_contents($test_directory . 'test-exit-status');
+					unlink($test_directory . 'test-exit-status');
+
+					if($exit_status != 0)
+					{
+						//self::test_run_instance_error($test_run_manager, $test_run_request, 'The test quit with a non-zero exit status.');
+						$exit_status_pass = false;
+					}
+				}
+
+				$produced_monitoring_result = $is_monitoring ? pts_test_result_parser::system_monitor_task_post_test($test_run_request, $exit_status_pass) : false;
 			}
 			else
 			{
@@ -246,6 +261,7 @@ class pts_test_execution
 					pts_client::$display->test_run_message('Utilizing Data From Shared Cache');
 				}
 				$test_run_time = 0;
+				$exit_status_pass = true;
 			}
 
 
@@ -262,27 +278,19 @@ class pts_test_execution
 			}
 			$test_run_request->test_result_standard_output = $test_result_std_output;
 
-			$exit_status_pass = true;
-			if(is_file($test_directory . 'test-exit-status'))
+			if($exit_status_pass == false)
 			{
 				// If the test script writes its exit status to ~/test-exit-status, if it's non-zero the test run failed
-				$exit_status = pts_file_io::file_get_contents($test_directory . 'test-exit-status');
-				unlink($test_directory . 'test-exit-status');
-
-				if($exit_status != 0)
+				self::test_run_instance_error($test_run_manager, $test_run_request, 'The test quit with a non-zero exit status.');
+				if($is_expected_last_run && is_file($test_log_file))
 				{
-					self::test_run_instance_error($test_run_manager, $test_run_request, 'The test quit with a non-zero exit status.');
-					if($is_expected_last_run && is_file($test_log_file))
-					{
-						$scan_log = pts_file_io::file_get_contents($test_log_file);
-						$test_run_error = pts_tests::scan_for_error($scan_log, $test_run_request->test_profile->get_test_executable_dir());
+					$scan_log = pts_file_io::file_get_contents($test_log_file);
+					$test_run_error = pts_tests::scan_for_error($scan_log, $test_run_request->test_profile->get_test_executable_dir());
 
-						if($test_run_error)
-						{
-							self::test_run_instance_error($test_run_manager, $test_run_request, 'E: ' . $test_run_error);
-						}
+					if($test_run_error)
+					{
+						self::test_run_instance_error($test_run_manager, $test_run_request, 'E: ' . $test_run_error);
 					}
-					$exit_status_pass = false;
 				}
 			}
 
