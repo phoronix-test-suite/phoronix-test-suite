@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2015, Phoronix Media
-	Copyright (C) 2010 - 2015, Michael Larabel
+	Copyright (C) 2010 - 2017, Phoronix Media
+	Copyright (C) 2010 - 2017, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -40,6 +40,7 @@ class dump_documentation implements pts_option_interface
 
 		// Write the test options HTML
 		$dom = new DOMDocument();
+		$dom->formatOutput = true;
 		$html = $dom->createElement('html');
 		$dom->appendChild($html);
 		$head = $dom->createElement('head');

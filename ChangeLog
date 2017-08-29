@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 7.4.0 Milestone 3
+28 August
 
 pts-core: Reworked test exit status handling
 ob_auto_compare: New module for seamless OpenBenchmarking.org result references
