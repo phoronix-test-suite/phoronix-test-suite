@@ -614,6 +614,7 @@ class system_monitor extends pts_module_interface
 				}
 				else if($test_result->test_profile->get_result_proportion() == 'LIB')
 				{
+					return; // with below code not rendering nicely
 					$test_result->test_profile->set_result_proportion('HIB');
 					$test_result->test_profile->set_result_scale('Performance Per Watt');
 					$test_result->test_result_buffer->add_test_result(self::$result_identifier, pts_math::set_precision((1 / $test_result->active->get_result()) / $watt_average));
