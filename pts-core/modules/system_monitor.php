@@ -210,7 +210,10 @@ class system_monitor extends pts_module_interface
 				continue;
 			}
 
-			pcntl_waitpid($pid, $status);
+			if(function_exists('pcntl_waitpid'))
+			{
+				pcntl_waitpid($pid, $status);
+			}
 		}
 
 		self::$monitor_pids = array();
