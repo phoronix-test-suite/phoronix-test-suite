@@ -1337,6 +1337,11 @@ class phodevi_system extends phodevi_device_interface
 			$desktop_environment = 'IceWM';
 			$desktop_version = null;
 		}
+		else if(pts_client::is_process_running('budgie-panel') || $desktop_session == 'budgie-desktop')
+		{
+			// Budgie
+			$desktop_environment = 'Budgie';
+		}
 
 		if(!empty($desktop_environment))
 		{
