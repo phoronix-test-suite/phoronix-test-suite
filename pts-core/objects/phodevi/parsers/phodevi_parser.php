@@ -58,7 +58,7 @@ class phodevi_parser
 			{
 				$info = substr($info, $pos);
 				$info = substr($info, 0, strpos($info, PHP_EOL));
-				$info = trim(substr($info, strrpos($info, '|')));
+				$info = trim(substr($info, strrpos($info, 'OK') + 2));
 				$info = substr($info, 0, strpos($info, ' '));
 
 				if(is_numeric($info) && $info >= 0)
