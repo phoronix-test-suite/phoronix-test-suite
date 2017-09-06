@@ -319,13 +319,13 @@ class pts_test_run_options
 						}
 					}
 					
-					//ZFS only
+					// ZFS only
 					$mounts_arr = explode("\n", $mounts);
 					
-					foreach ($mounts_arr as $mount)
+					foreach($mounts_arr as $mount)
 					{
-						$mount_arr = explode(" ", $mount);
-						if ($mount_arr[2]=='zfs')
+						$mount_arr = explode(' ', $mount);
+						if(isset($mount_arr[2]) && $mount_arr[2] == 'zfs')
 						{
 							$option_values[] = $mount_arr[1];
 							$option_names[] = $mount_arr[1];
