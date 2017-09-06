@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2016, Phoronix Media
-	Copyright (C) 2008 - 2016, Michael Larabel
+	Copyright (C) 2008 - 2017, Phoronix Media
+	Copyright (C) 2008 - 2017, Michael Larabel
 	phodevi_parser.php: General parsing functions used by different parts of Phodevi that are supported by more than one OS
 
 	This program is free software; you can redistribute it and/or modify
@@ -45,6 +45,30 @@ class phodevi_parser
 		}
 
 		return $nv_info;
+	}
+	public static function read_ipmi_sensor($name)
+	{
+		$ipmi_info = -1;
+
+		if(pts_client::executable_in_path('ipmiutil'))
+		{
+			$info = shell_exec('ipmiutil sensor 2> /dev/null');
+
+			if(($pos = strpos($info, $name)) !== false)
+			{
+				$info = substr($info, $pos);
+				$info = substr($info, 0, PHP_EOL);
+				$info = trim(substr($info, strrpos($info, '|')));
+				$info = substr($info, 0, ' ');
+
+				if(is_numeric($info) && $info >= 0)
+				{
+					$ipmi_info = $info;
+				}
+			}
+		}
+
+		return $ipmi_info;
 	}
 	public static function read_xdpy_monitor_info()
 	{

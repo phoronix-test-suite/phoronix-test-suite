@@ -4,6 +4,7 @@ Phoronix Test Suite (Git)
 
 pts-core: Ensure XAUTHORITY gets passed if relevant to test execution
 phodevi: Add basic Budgie desktop reporting
+phodevi: IPMI fan speed reporting
 
 Phoronix Test Suite 7.4.0 Milestone 3
 28 August

@@ -52,6 +52,11 @@ class sys_fanspeed extends phodevi_sensor
 			$raw_fan = phodevi_linux_parser::read_sysfs_node('/sys/class/hwmon/hwmon*/fan4_input', 'POSITIVE_NUMERIC');
 		}
 
+		if($raw_fan == -1)
+		{
+			$raw_fan = phodevi_parser::read_ipmi_sensor('SYS_FAN_1');
+		}
+
 		if($raw_fan != -1)
 		{
 			$fan_speed = $raw_fan;
