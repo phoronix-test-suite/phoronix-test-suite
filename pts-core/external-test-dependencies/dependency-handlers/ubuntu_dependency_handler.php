@@ -72,13 +72,23 @@ class ubuntu_dependency_handler implements pts_dependency_handler
 	{
 		$apt_output = shell_exec('apt-file -N search --regex "' . $arg . '$" 2>/dev/null');
 
+		if(strpos($apt_output, 'Pattern options:') !== false)
+		{
+			$apt_output = shell_exec('apt-file --regexp search "' . $arg . '$" 2>/dev/null');
+		}
+
 		foreach(explode(PHP_EOL, $apt_output) as $line)
 		{
 			if(($x = strpos($line, ': ')) == false)
 			{
 				continue;
 			}
-			return trim(substr($line, 0, $x));
+			$proposed = trim(substr($line, 0, $x));
+			if(strpos($proposed, '[') !== false || strpos($proposed, ']') !== false)
+			{
+				continue;
+			}
+			return $proposed;
 		}
 
 		return null;
