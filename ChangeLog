@@ -3,6 +3,8 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 pts-core: Ensure XAUTHORITY gets passed if relevant to test execution
+pts-core: Fixed dynamic dependency handling on Ubuntu 17.10 / apt-file with newer versions
+pts-core: Fix warning about passing variables by ref to PTS modules
 phodevi: Add basic Budgie desktop reporting
 phodevi: IPMI fan speed reporting
 

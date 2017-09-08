@@ -82,7 +82,7 @@ class pts_module_manager
 
 		if(method_exists($module, $process))
 		{
-			$module_val = call_user_func(array($module, $process), $object_pass);
+			$module_val = call_user_func_array(array($module, $process), array(&$object_pass));
 		}
 		else
 		{
