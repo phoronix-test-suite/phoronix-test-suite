@@ -76,11 +76,11 @@ class phodevi_base
 		{
 			$type = 'V';
 		}
-		else if(pts_strings::has_element_in_string($hw, array('Quadro ', 'Tesla ', 'FirePro', 'Radeon Pro')) || (pts_strings::has_element_in_string($hw, array(' Xeon', 'Opteron', 'Epyc')) && strpos($sw, 'Desktop') && strpos($sw, 'OpenGL')))
+		else if(pts_strings::has_element_in_string($hw, array('Quadro ', 'Tesla ', 'FirePro', 'Radeon Pro')) || (pts_strings::has_element_in_string($hw, array(' Xeon', 'Opteron', 'EPYC')) && strpos($sw, 'Desktop') && strpos($sw, 'OpenGL')))
 		{
 			$type = 'W';
 		}
-		else if(pts_strings::has_element_in_string($hw, array(' Xeon', 'Opteron', 'Epyc', 'POWER ')) || pts_strings::has_element_in_string($hw, array('Tyan', 'Supermicro')))
+		else if(pts_strings::has_element_in_string($hw, array(' Xeon', 'Opteron', 'EPYC', 'POWER ')) || pts_strings::has_element_in_string($hw, array('Tyan', 'Supermicro')))
 		{
 			$type = 'S';
 		}

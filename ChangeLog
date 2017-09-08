@@ -8,6 +8,7 @@ pts-core: Fixed dynamic dependency handling on Ubuntu 17.10 / apt-file with newe
 pts-core: Fix warning about passing variables by ref to PTS modules
 phodevi: Add basic Budgie desktop reporting
 phodevi: IPMI fan speed reporting
+phodevi: EPYC detection
 toggle_screensaver: improved GNOME screensaver handling
 toggle_screensaver: work better under Wayland / non-X environments where display server might not be detected
 
