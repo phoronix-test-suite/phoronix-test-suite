@@ -203,9 +203,10 @@ class pts_test_execution
 
 			if(!$test_run_manager->DEBUG_no_test_execution_just_result_parse && $restored_from_cache == false)
 			{
+				$test_prepend = getenv('TEST_EXEC_PREPEND') != null ? getenv('TEST_EXEC_PREPEND') . ' ': null;
 				pts_client::$display->test_run_instance_header($test_run_request);
 				sleep(1);
-				$test_run_command = 'cd ' . $to_execute . ' && ' . $execute_binary_prepend . './' . $execute_binary . ' ' . $pts_test_arguments . ' 2>&1';
+				$test_run_command = 'cd ' . $to_execute . ' && ' . $test_prepend . $execute_binary_prepend . './' . $execute_binary . ' ' . $pts_test_arguments . ' 2>&1';
 
 				pts_client::test_profile_debug_message('Test Run Command: ' . $test_run_command);
 
@@ -227,7 +228,7 @@ class pts_test_execution
 					{
 						$test_extra_runtime_variables['XAUTHORITY'] = getenv('XAUTHORITY');
 					}
-					$test_process = proc_open('exec ' . $execute_binary_prepend . './' . $execute_binary . ' ' . $pts_test_arguments . ' 2>&1', $descriptorspec, $pipes, $to_execute, array_merge($_ENV, pts_client::environmental_variables(), $test_extra_runtime_variables));
+					$test_process = proc_open($test_prepend . 'exec ' . $execute_binary_prepend . './' . $execute_binary . ' ' . $pts_test_arguments . ' 2>&1', $descriptorspec, $pipes, $to_execute, array_merge($_ENV, pts_client::environmental_variables(), $test_extra_runtime_variables));
 
 					if(is_resource($test_process))
 					{

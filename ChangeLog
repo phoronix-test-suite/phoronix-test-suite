@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+pts-core: Add TEST_EXEC_PREPEND support
 pts-core: Ensure XAUTHORITY gets passed if relevant to test execution
 pts-core: Fixed dynamic dependency handling on Ubuntu 17.10 / apt-file with newer versions
 pts-core: Fix warning about passing variables by ref to PTS modules
@@ -11,7 +12,7 @@ toggle_screensaver: improved GNOME screensaver handling
 toggle_screensaver: work better under Wayland / non-X environments where display server might not be detected
 
 Phoronix Test Suite 7.4.0 Milestone 3
-28 August
+28 August 2017
 
 pts-core: Reworked test exit status handling
 ob_auto_compare: New module for seamless OpenBenchmarking.org result references
