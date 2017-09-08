@@ -47,7 +47,7 @@ class toggle_screensaver extends pts_module_interface
 	public static function __startup()
 	{
 		$halt_screensaver = pts_module::read_variable('HALT_SCREENSAVER');
-		if((!empty($halt_screensaver) && !pts_strings::string_bool($halt_screensaver)) || phodevi::read_property('system', 'display-server') == null)
+		if((!empty($halt_screensaver) && !pts_strings::string_bool($halt_screensaver)) || (phodevi::read_property('system', 'display-server') == null && getenv('XDG_CURRENT_DESKTOP') == false))
 		{
 			return pts_module::MODULE_UNLOAD;
 		}
@@ -77,7 +77,7 @@ class toggle_screensaver extends pts_module_interface
 
 			$sleep_display_ac = trim(shell_exec(self::$gnome_gconftool . ' -g /apps/gnome-power-manager/timeout/sleep_display_ac 2>&1'));
 
-			if($sleep_display_ac != 0)
+			if(is_numeric($sleep_display_ac) && $sleep_display_ac != 0)
 			{
 				// Don't sleep the display when on AC power
 				shell_exec(self::$gnome_gconftool . ' --type int --set /apps/gnome-power-manager/timeout/sleep_display_ac 0 2>&1');
