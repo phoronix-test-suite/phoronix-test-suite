@@ -147,6 +147,8 @@ class pts_external_dependencies
 			$dependencies_to_install = array_merge($dependencies_to_install, $system_dependencies);
 		}
 
+		$dependencies_to_install = array_unique($dependencies_to_install);
+
 		// Do the actual dependency install process
 		if(count($dependencies_to_install) > 0)
 		{
