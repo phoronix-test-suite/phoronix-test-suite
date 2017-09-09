@@ -293,7 +293,7 @@
 			<GenericName>openmpi-development</GenericName>
 			<Title>OpenMPI</Title>
 			<PossibleNames>libopenmpi-dev, openmpi-bin</PossibleNames>
-			<FileCheck>openmpi/lib/libmpi.so OR mpirun OR mpirun.openmpi</FileCheck>
+			<FileCheck>openmpi/lib/libmpi.so OR mpirun OR mpirun.openmpi OR /usr/lib64/mpi</FileCheck>
 		</Package>
 
 		<Package>
