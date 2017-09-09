@@ -32,6 +32,10 @@
 			<PackageName>autoconf</PackageName>
 		</Package>
 		<Package>
+			<GenericName>nasm</GenericName>
+			<PackageName>nasm</PackageName>
+		</Package>
+		<Package>
 			<GenericName>pcre</GenericName>
 			<PackageName>pcre</PackageName>
 		</Package>

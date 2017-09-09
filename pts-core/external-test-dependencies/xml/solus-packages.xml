@@ -41,6 +41,10 @@
 			<PackageName>openssl-devel</PackageName>
 		</Package>
 		<Package>
+			<GenericName>nasm</GenericName>
+			<PackageName>nasm</PackageName>
+		</Package>
+		<Package>
 			<GenericName>build-utilities</GenericName>
 			<PackageName>-c system.devel</PackageName>
 		</Package>

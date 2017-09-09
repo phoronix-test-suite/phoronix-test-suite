@@ -37,6 +37,10 @@
 			<PackageName>libpng</PackageName>
 		</Package>
 		<Package>
+			<GenericName>nasm</GenericName>
+			<PackageName>nasm</PackageName>
+		</Package>
+		<Package>
 			<GenericName>openssl-development</GenericName>
 			<PackageName>openssl</PackageName>
 		</Package>

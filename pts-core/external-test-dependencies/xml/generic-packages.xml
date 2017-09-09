@@ -357,6 +357,12 @@
 			<FileCheck>yasm</FileCheck>
 		</Package>
 		<Package>
+			<GenericName>nasm</GenericName>
+			<Title>Nasm Assembler</Title>
+			<PossibleNames>nasm</PossibleNames>
+			<FileCheck>nasm</FileCheck>
+		</Package>
+		<Package>
 			<GenericName>lib3ds</GenericName>
 			<Title>AutoDesk 3DS File Support</Title>
 			<PossibleNames>lib3ds libs3ds-devel</PossibleNames>

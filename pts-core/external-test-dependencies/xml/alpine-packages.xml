@@ -173,6 +173,10 @@
 			<PackageName>yasm</PackageName>
 		</Package>
 		<Package>
+			<GenericName>nasm</GenericName>
+			<PackageName>nasm</PackageName>
+		</Package>
+		<Package>
 			<GenericName>gmp-library</GenericName>
 			<PackageName>gmp</PackageName>
 		</Package>

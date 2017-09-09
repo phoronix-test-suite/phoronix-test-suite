@@ -33,6 +33,10 @@
 			<PackageName>tcsh</PackageName>
 		</Package>
 		<Package>
+			<GenericName>nasm</GenericName>
+			<PackageName>nasm</PackageName>
+		</Package>
+		<Package>
 			<GenericName>libpng-development</GenericName>
 			<PackageName>libpng-devel</PackageName>
 		</Package>

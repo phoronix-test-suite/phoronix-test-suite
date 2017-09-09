@@ -71,6 +71,10 @@
 			<PackageName>virtual/jre</PackageName>
 		</Package>
 		<Package>
+			<GenericName>nasm</GenericName>
+			<PackageName>dev-lang/nasm</PackageName>
+		</Package>
+		<Package>
 			<GenericName>portaudio-development</GenericName>
 			<PackageName>media-libs/portaudio</PackageName>
 		</Package>

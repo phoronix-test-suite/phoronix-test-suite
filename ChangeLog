@@ -6,6 +6,7 @@ pts-core: Add TEST_EXEC_PREPEND support
 pts-core: Ensure XAUTHORITY gets passed if relevant to test execution
 pts-core: Fixed dynamic dependency handling on Ubuntu 17.10 / apt-file with newer versions
 pts-core: Fix warning about passing variables by ref to PTS modules
+pts-core: Add nasm external dependency entries
 phodevi: Add basic Budgie desktop reporting
 phodevi: IPMI fan speed reporting
 phodevi: EPYC detection

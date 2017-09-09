@@ -37,6 +37,10 @@
 			<PackageName>tcsh</PackageName>
 		</Package>
 		<Package>
+			<GenericName>nasm</GenericName>
+			<PackageName>nasm</PackageName>
+		</Package>
+		<Package>
 			<GenericName>pcre</GenericName>
 			<PackageName>pcre-devel</PackageName>
 		</Package>

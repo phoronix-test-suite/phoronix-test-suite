@@ -43,6 +43,10 @@
 			<PackageName>libimlib2-dev</PackageName>
 		</Package>
 		<Package>
+			<GenericName>nasm</GenericName>
+			<PackageName>nasm</PackageName>
+		</Package>
+		<Package>
 			<GenericName>java</GenericName>
 			<PackageName>openjdk-6-jdk</PackageName>
 		</Package>
