@@ -78,7 +78,7 @@
 		</Package>
 		<Package>
 			<GenericName>java</GenericName>
-			<PackageName>openjdk6</PackageName>
+			<PackageName>jdk8-openjdk</PackageName>
 		</Package>
 		<Package>
 			<GenericName>portaudio-development</GenericName>
