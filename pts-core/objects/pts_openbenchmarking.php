@@ -230,6 +230,32 @@ class pts_openbenchmarking
 
 		return $host;
 	}
+	public static function report_repository_index_updates($repo, $old_index, $new_index)
+	{
+		if(isset($new_index['tests']) && isset($old_index['tests']) && $new_index['tests'] != $old_index['tests'])
+		{
+			$new_test_count = count($new_index['tests']);
+			echo pts_client::cli_colored_text('Updated OpenBenchmarking.org Repository Index', 'green', true) . PHP_EOL;
+			echo pts_client::cli_colored_text($repo . ': ' . count($new_index['tests']) . ' Distinct Tests, ' . count($new_index['suites']) . ' Suites', 'green', true) . PHP_EOL;
+			$table = array();
+			foreach(array_keys($new_index['tests']) as $test)
+			{
+				if(!isset($old_index['tests'][$test]))
+				{
+					$table[] = array(pts_client::cli_just_bold('New Test Available: '), $repo . '/' . $test, pts_client::cli_colored_text('v' . array_shift($new_index['tests'][$test]['versions']), 'gray'));
+				}
+				else if($new_index['tests'][$test]['versions'] != $old_index['tests'][$test]['versions'])
+				{
+					$version_diff = array_diff($new_index['tests'][$test]['versions'], $old_index['tests'][$test]['versions']);
+					if(!empty($version_diff))
+					{
+						$table[] = array(pts_client::cli_just_bold('Updated Test Available: '), $repo . '/' . $test, pts_client::cli_colored_text('v' . array_shift($version_diff), 'gray'));
+					}
+				}
+			}
+			echo pts_user_io::display_text_table($table) . PHP_EOL;
+		}
+	}
 	public static function refresh_repository_lists($repos = null, $force_refresh = false)
 	{
 		if($repos == null)
@@ -293,6 +319,9 @@ class pts_openbenchmarking
 					// The index is new enough
 					continue;
 				}
+
+				$old_index = $repo_index;
+
 				if(pts_network::internet_support_available())
 				{
 					$server_index = pts_openbenchmarking::make_openbenchmarking_request('repo_index', array('repo' => $repo_name));
@@ -328,6 +357,10 @@ class pts_openbenchmarking
 			if($server_index != null && json_decode($server_index) != false)
 			{
 				file_put_contents($index_file, $server_index);
+				if(PTS_IS_CLIENT && isset($old_index))
+				{
+					pts_openbenchmarking::report_repository_index_updates($repo_name, $old_index, json_decode($server_index, true));
+				}
 			}
 			else if(PTS_IS_CLIENT && is_file('/var/cache/phoronix-test-suite/openbenchmarking.org/' . $repo_name . '.index'))
 			{

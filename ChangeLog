@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+pts-core: Report on updated OpenBenchmarking.org index update when new/updated tests are introduced
 pts-core: Add TEST_EXEC_PREPEND support
 pts-core: Ensure XAUTHORITY gets passed if relevant to test execution
 pts-core: Fixed dynamic dependency handling on Ubuntu 17.10 / apt-file with newer versions
