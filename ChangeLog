@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 7.4.0 Milestone 4
+11 September 2017
 
 pts-core: Report on updated OpenBenchmarking.org index update when new/updated tests are introduced
 pts-core: Add TEST_EXEC_PREPEND support
