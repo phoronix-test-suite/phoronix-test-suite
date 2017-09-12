@@ -22,7 +22,7 @@
 
 class network_setup implements pts_option_interface
 {
-	const doc_section = 'Other';
+	const doc_section = 'User Configuration';
 	const doc_description = 'This option allows the user to configure how the Phoronix Test Suite connects to OpenBenchmarking.org and other web-services. Connecting through an HTTP proxy can be configured through this option.';
 
 	public static function run($r)

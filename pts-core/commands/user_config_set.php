@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2011, Phoronix Media
-	Copyright (C) 2009 - 2011, Michael Larabel
+	Copyright (C) 2009 - 2017, Phoronix Media
+	Copyright (C) 2009 - 2017, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
 
 class user_config_set implements pts_option_interface
 {
-	const doc_section = 'Other';
+	const doc_section = 'User Configuration';
 	const doc_description = 'This option can be used for setting an XML value in the Phoronix Test Suite user configuration file.';
 
 	public static function run($r)

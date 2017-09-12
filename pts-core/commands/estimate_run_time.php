@@ -22,7 +22,7 @@
 
 class estimate_run_time implements pts_option_interface
 {
-	const doc_section = 'Information';
+	const doc_section = 'Testing';
 	const doc_description = 'This option will provide estimates for test run-time / length.';
 
 	public static function argument_checks()
