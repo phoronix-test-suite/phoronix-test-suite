@@ -22,4 +22,4 @@ Viewing installed system hardware and software is available via `phoronix-test-s
 
 Facilitating a result comparison from OpenBenchmarking.org can be done by running, for example, `phoronix-test-suite benchmark 1204293-BY-PHORONIX357` if wishing to compare the results of the `http://openbenchmarking.org/result/1204293-BY-PHORONIX357` result file.
 
-Additional information is available from the Phoronix Test Suite website <http://www.phoronix-test-suite.com/> and the material bundled within the `phoronix-test-suite/documentation/` directory. A man page is also bundled with the phoronix-test-suite software.
+Additional information is available from the Phoronix Test Suite website <http://www.phoronix-test-suite.com/> and the material bundled within the `phoronix-test-suite/documentation/` directory or via <http://www.phoronix-test-suite.com/documentation/>. A man page is also bundled with the phoronix-test-suite software.
