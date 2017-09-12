@@ -113,15 +113,22 @@ class pts_graph_lines extends pts_graph_core
 		}
 
 		$max_value = 0;
+		$min_value = -1;
 		foreach($this->test_result->test_result_buffer->buffer_items as &$buffer_item)
 		{
 			if(!is_array($buffer_item->get_result_value()))
 			{
 				$max_value = max($max_value,  $buffer_item->get_result_value());
+				if($min_value == -1)
+					$min_value = $max_value;
+				$min_value = min($min_value,  $buffer_item->get_result_value());
 			}
 			else
 			{
 				$max_value = max($max_value,  max($buffer_item->get_result_value()));
+				if($min_value == -1)
+					$min_value = $max_value;
+				$min_value = min($min_value,  min($buffer_item->get_result_value()));
 			}
 		}
 
@@ -132,9 +139,16 @@ class pts_graph_lines extends pts_graph_core
 		}
 		else
 		{
-			$max_value *= 1.25; // leave room at top of graph
+			$max_value *= 1.05; // leave room at top of graph
 			$this->i['graph_max_value'] = round($max_value, $max_value < 10 ? 1 : 0);
 			$this->i['graph_max_value'] = round(ceil($this->i['graph_max_value'] / $this->i['mark_count']), (0 - strlen($this->i['graph_max_value']) + 2)) * $this->i['mark_count'];
+
+			if($min_value > 20)
+			{
+				// Adjust bottom of graph to make it fit nicer on display
+				$this->i['graph_min_value'] = floor($min_value * 0.95);
+				$this->i['graph_max_value'] += $this->i['graph_min_value'] % $this->i['mark_count'];
+			}
 		}
 	}
 	protected function render_graph_identifiers()
@@ -317,7 +331,7 @@ class pts_graph_lines extends pts_graph_core
 				$std_error = isset($raw_array[$i]) ? pts_math::standard_error(pts_strings::colon_explode($raw_array[$i])) : 0;
 				$data_string = $identifier . ': ' . $value;
 
-				$value_plot_top = $this->i['graph_top_end'] + 1 - ($this->i['graph_max_value'] == 0 ? 0 : round(($value / $this->i['graph_max_value']) * ($this->i['graph_top_end'] - $this->i['top_start'])));
+				$value_plot_top = $this->i['graph_top_end'] + 1 - ($this->i['graph_max_value'] == 0 ? 0 : round((($value - $this->i['graph_min_value']) / ($this->i['graph_max_value'] - $this->i['graph_min_value'])) * ($this->i['graph_top_end'] - $this->i['top_start'])));
 				$px_from_left = round($this->i['left_start'] + ($this->i['identifier_width'] * ($i + (count($this->graph_identifiers) > 1 ? 1 : 0))));
 
 				if($px_from_left > $this->i['graph_left_end'])

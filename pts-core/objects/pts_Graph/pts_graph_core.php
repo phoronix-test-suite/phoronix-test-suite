@@ -59,6 +59,7 @@ abstract class pts_graph_core
 		$this->i['iveland_view'] = false;
 		$this->i['graph_max_value_multiplier'] = 1.285;
 		$this->i['graph_max_value'] = 0;
+		$this->i['graph_min_value'] = 0;
 		$this->i['bottom_offset'] = 0;
 		$this->i['hide_y_title'] = false;
 		$this->i['compact_result_view'] = false;
@@ -822,12 +823,12 @@ abstract class pts_graph_core
 	}
 	protected function render_graph_value_ticks($left_start, $top_start, $left_end, $top_end, $show_numbers = true)
 	{
-		$increment = round($this->i['graph_max_value'] / $this->i['mark_count'], $this->i['graph_max_value'] < 10 ? 4 : 2);
+		$increment = round(($this->i['graph_max_value'] - $this->i['graph_min_value']) / $this->i['mark_count'], $this->i['graph_max_value'] < 10 ? 4 : 2);
 
 		if($this->i['graph_orientation'] == 'HORIZONTAL')
 		{
 			$tick_width = round(($left_end - $left_start) / $this->i['mark_count']);
-			$display_value = 0;
+			$display_value = $this->i['graph_min_value'];
 
 			$g = $this->svg_dom->make_g(array('font-size' => self::$c['size']['tick_mark'], 'fill' => self::$c['color']['text'], 'text-anchor' => 'middle'));
 			$g_lines = $this->svg_dom->make_g(array('stroke' => self::$c['color']['body'], 'stroke-width' => 1));
@@ -835,7 +836,7 @@ abstract class pts_graph_core
 			{
 				$px_from_left = $left_start + ($tick_width * $i);
 
-				if($i != 0)
+				if($i != 0 && $display_value != 0)
 				{
 					$show_numbers && $this->svg_dom->add_text_element($display_value, array('x' => $px_from_left + 2, 'y' => ($top_end + 5 + self::$c['size']['tick_mark'])), $g);
 					$this->svg_dom->add_element('line', array('x1' => ($px_from_left + 2), 'y1' => ($top_start), 'x2' => ($px_from_left + 2), 'y2' => ($top_end - 5), 'stroke-dasharray' => '5,5'), $g_lines);
@@ -852,7 +853,7 @@ abstract class pts_graph_core
 			$px_from_left_start = $left_start - 5;
 			$px_from_left_end = $left_start + 5;
 
-			$display_value = 0;
+			$display_value = $this->i['graph_min_value'];
 
 			$g_lines = $this->svg_dom->make_g(array('stroke' => self::$c['color']['notches'], 'stroke-width' => 1, 'stroke-dasharray' => '5,5'));
 			$g_lines_2 = $this->svg_dom->make_g(array('stroke' => self::$c['color']['notches'], 'stroke-width' => 1));
@@ -862,17 +863,19 @@ abstract class pts_graph_core
 			{
 				$px_from_top = round($top_end - ($tick_width * $i));
 
-				if($i != 0)
+				if($display_value != 0)
 				{
 					$show_numbers && $this->svg_dom->add_text_element($display_value, array('x' => ($px_from_left_start - 4), 'y' => round($px_from_top + (self::$c['size']['tick_mark'] / 2))), $g_text);
 
-					if($this->i['show_background_lines'])
+					if($i != 0 && $this->i['show_background_lines'])
 					{
 						$this->svg_dom->add_element('line', array('x1' => ($px_from_left_end + 6), 'y1' => ($px_from_top + 1), 'x2' => ($this->i['graph_left_end']), 'y2' => ($px_from_top + 1)), $g_background_lines);
 					}
-
+					if($i != 0)
+					{
 					$this->svg_dom->add_element('line', array('x1' => ($left_start), 'y1' => ($px_from_top + 1), 'x2' => ($left_end), 'y2' => ($px_from_top + 1)), $g_lines);
 					$this->svg_dom->add_element('line', array('x1' => ($left_start - 4), 'y1' => ($px_from_top + 1), 'x2' => ($left_start + 4), 'y2' => ($px_from_top + 1)), $g_lines_2);
+					}
 				}
 
 				$display_value += $increment;
