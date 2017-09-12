@@ -112,7 +112,7 @@ class info implements pts_option_interface
 					$latest_time = $o->test_installation->get_latest_run_time();
 					$latest_time = !empty($latest_time) ? pts_strings::format_time($latest_time, 'SECONDS') : 'N/A';
 					$install_time = ceil($o->test_installation->get_latest_install_time());
-					$install_time = !empty($latest_time) ? pts_strings::format_time($latest_time, 'SECONDS') : 'N/A';
+					$install_time = !empty($install_time) ? pts_strings::format_time($install_time, 'SECONDS') : 'N/A';
 
 					$table = array();
 					$table[] = array(pts_client::cli_just_bold('Test Installed: '), 'Yes');
