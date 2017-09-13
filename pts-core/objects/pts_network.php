@@ -427,6 +427,14 @@ class pts_network
 				}
 			}
 		}
+		else if(pts_client::executable_in_path('hostname'))
+		{
+			$hostname_i = trim(shell_exec('hostname -I 2>&1'));
+			if(strpos($hostname_i, ' ') === false)
+			{
+				$local_ip = $hostname_i;
+			}
+		}
 
 		return $local_ip;
 	}
