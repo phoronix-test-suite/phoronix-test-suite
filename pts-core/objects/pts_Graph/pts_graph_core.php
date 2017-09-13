@@ -873,8 +873,8 @@ abstract class pts_graph_core
 					}
 					if($i != 0)
 					{
-					$this->svg_dom->add_element('line', array('x1' => ($left_start), 'y1' => ($px_from_top + 1), 'x2' => ($left_end), 'y2' => ($px_from_top + 1)), $g_lines);
-					$this->svg_dom->add_element('line', array('x1' => ($left_start - 4), 'y1' => ($px_from_top + 1), 'x2' => ($left_start + 4), 'y2' => ($px_from_top + 1)), $g_lines_2);
+						$this->svg_dom->add_element('line', array('x1' => ($left_start), 'y1' => ($px_from_top + 1), 'x2' => ($left_end), 'y2' => ($px_from_top + 1)), $g_lines);
+						$this->svg_dom->add_element('line', array('x1' => ($left_start - 4), 'y1' => ($px_from_top + 1), 'x2' => ($left_start + 4), 'y2' => ($px_from_top + 1)), $g_lines_2);
 					}
 				}
 

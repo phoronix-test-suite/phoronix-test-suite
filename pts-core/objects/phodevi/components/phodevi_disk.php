@@ -163,10 +163,21 @@ class phodevi_disk extends phodevi_device_interface
 		else if(phodevi::is_bsd())
 		{
 			$i = 0;
-
 			do
 			{
 				$disk = phodevi_bsd_parser::read_sysctl('dev.ad.' . $i . '.%desc');
+
+				if($disk != false && strpos($disk, 'DVD') === false && strpos($disk, 'ATAPI') === false)
+				{
+					array_push($disks, $disk);
+				}
+				$i++;
+			}
+			while(($disk != false || $i < 9) && $i < 128);
+			$i = 0;
+			do
+			{
+				$disk = phodevi_bsd_parser::read_sysctl('dev.nvme.' . $i . '.%desc');
 
 				if($disk != false && strpos($disk, 'DVD') === false && strpos($disk, 'ATAPI') === false)
 				{
