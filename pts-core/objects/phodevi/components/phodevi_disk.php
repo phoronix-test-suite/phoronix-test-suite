@@ -241,13 +241,15 @@ class phodevi_disk extends phodevi_device_interface
 				{
 					$disk_size = pts_file_io::file_get_contents($sdx . '/size');
 					$disk_model = pts_file_io::file_get_contents($sdx .  (is_file($sdx . '/device/model') ? '/device/model' : '/device/name'));
-					$disk_removable = pts_file_io::file_get_contents($sdx . '/removable');
 
+					/*
+					$disk_removable = pts_file_io::file_get_contents($sdx . '/removable');
 					if($disk_removable == '1')
 					{
 						// Don't count removable disks
 						continue;
 					}
+					*/
 
 					$disk_size = round($disk_size * 512 / 1000000000) . 'GB';
 					$disk_model = self::prepend_disk_vendor($disk_model);
