@@ -4,6 +4,7 @@ Phoronix Test Suite (Git)
 
 pts-core: Improve command documentation categories/organization
 pts-core: Fix install time reporting from the info sub-command when passing a test profile
+pts-core: Add network-info sub-command
 phodevi: NVMe disk reporting on BSDs
 pts_Graph: Allow line graphs to have adjustable floor/bottom to better present data on graph
 

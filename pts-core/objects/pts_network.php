@@ -31,6 +31,10 @@ class pts_network
 	{
 		return self::$network_proxy == false;
 	}
+	public static function get_network_proxy()
+	{
+		return self::$network_proxy;
+	}
 	public static function internet_support_available()
 	{
 		return self::network_support_available() && self::$disable_internet_support == false;

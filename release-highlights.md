@@ -3,7 +3,7 @@
 Phoronix Test Suite 7.4
 ======
 #### Release Date: TBD | Codename: Tynset
-* `phoronix-test-suite unload-module` and `phoronix-test-suite auto-load-module` sub-0commands
+* `phoronix-test-suite unload-module` and `phoronix-test-suite auto-load-module` and `phoronix-test-suite network-info` sub-commands
 * Inline showing of test results when benchmarking against an existing result file from the CLI
 * New `perf_tips` module for reporting various performance tips to users
 * New `ob_auto_compare` module to provide inline seamless OpenBenchmarking.org result references to tests currently running from CLI
