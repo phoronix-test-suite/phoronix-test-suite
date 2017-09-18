@@ -122,6 +122,12 @@
 			<FileCheck>java OR jvm OR /usr/lib64/jvm</FileCheck>
 		</Package>
 		<Package>
+			<GenericName>maven</GenericName>
+			<Title>Apache Maven</Title>
+			<PossibleNames>maven</PossibleNames>
+			<FileCheck>maven</FileCheck>
+		</Package>
+		<Package>
 			<GenericName>portaudio-development</GenericName>
 			<Title>PortAudio Development Files</Title>
 			<PossibleNames>libportaudio-dev, portaudio-devel</PossibleNames>

@@ -69,6 +69,10 @@
 			<PackageName>java-common</PackageName>
 		</Package>
 		<Package>
+			<GenericName>maven</GenericName>
+			<PackageName>maven</PackageName>
+		</Package>
+		<Package>
 			<GenericName>portaudio-development</GenericName>
 			<PackageName>portaudio</PackageName>
 		</Package>

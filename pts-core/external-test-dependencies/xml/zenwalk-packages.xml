@@ -65,6 +65,10 @@
 			<FileCheck>/usr/bin/java</FileCheck>
 		</Package>
 		<Package>
+			<GenericName>maven</GenericName>
+			<PackageName>maven</PackageName>
+		</Package>
+		<Package>
 			<GenericName>portaudio-development</GenericName>
 			<PackageName>portaudio</PackageName>
 			<FileCheck>/usr/include/portaudio.h</FileCheck>

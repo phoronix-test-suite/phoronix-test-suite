@@ -77,6 +77,10 @@
 			<PackageName>openjdk</PackageName>
 		</Package>
 		<Package>
+			<GenericName>maven</GenericName>
+			<PackageName>maven</PackageName>
+		</Package>
+		<Package>
 			<GenericName>portaudio-development</GenericName>
 			<PackageName>portaudio-devel</PackageName>
 		</Package>

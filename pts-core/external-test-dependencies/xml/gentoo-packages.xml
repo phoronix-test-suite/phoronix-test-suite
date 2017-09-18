@@ -71,6 +71,14 @@
 			<PackageName>virtual/jdk</PackageName>
 		</Package>
 		<Package>
+			<GenericName>maven</GenericName>
+			<PackageName>dev-lang/maven-bin</PackageName>
+		</Package>
+		<Package>
+			<GenericName>maven</GenericName>
+			<PackageName>maven</PackageName>
+		</Package>
+		<Package>
 			<GenericName>nasm</GenericName>
 			<PackageName>dev-lang/nasm</PackageName>
 		</Package>

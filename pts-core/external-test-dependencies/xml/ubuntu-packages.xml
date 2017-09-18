@@ -92,6 +92,10 @@
 			<PackageName>openjdk-8-jdk</PackageName>
 		</Package>
 		<Package>
+			<GenericName>maven</GenericName>
+			<PackageName>maven</PackageName>
+		</Package>
+		<Package>
 			<GenericName>portaudio-development</GenericName>
 			<PackageName>libportaudio-dev</PackageName>
 		</Package>
