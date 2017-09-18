@@ -125,7 +125,7 @@
 			<GenericName>maven</GenericName>
 			<Title>Apache Maven</Title>
 			<PossibleNames>maven</PossibleNames>
-			<FileCheck>maven</FileCheck>
+			<FileCheck>maven OR mvn</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>portaudio-development</GenericName>
