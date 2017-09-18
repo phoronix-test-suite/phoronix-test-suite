@@ -56,7 +56,7 @@
 		</Package>
 		<Package>
 			<GenericName>java</GenericName>
-			<PackageName>java/openjdk7</PackageName>
+			<PackageName>java/openjdk8</PackageName>
 		</Package>
 		<Package>
 			<GenericName>pcre</GenericName>

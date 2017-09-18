@@ -89,7 +89,7 @@
 		</Package>
 		<Package>
 			<GenericName>java</GenericName>
-			<PackageName>openjdk-8-jre</PackageName>
+			<PackageName>openjdk-8-jdk</PackageName>
 		</Package>
 		<Package>
 			<GenericName>portaudio-development</GenericName>

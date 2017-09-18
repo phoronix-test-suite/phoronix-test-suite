@@ -79,7 +79,7 @@
 		</Package>
 		<Package>
 			<GenericName>java</GenericName>
-			<PackageName>java-1_6_0-openjdk</PackageName>
+			<PackageName>java-1_8_0-openjdk</PackageName>
 			<FileCheck>/usr/lib/jvm/ OR /usr/lib64/jvm/</FileCheck>
 		</Package>
 		<Package>

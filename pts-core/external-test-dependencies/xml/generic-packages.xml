@@ -118,7 +118,7 @@
 		<Package>
 			<GenericName>java</GenericName>
 			<Title>Java Runtime Environment</Title>
-			<PossibleNames>java-openjdk, icedtea, java, sun-java</PossibleNames>
+			<PossibleNames>java-openjdk, java, sun-java</PossibleNames>
 			<FileCheck>java OR jvm OR /usr/lib64/jvm</FileCheck>
 		</Package>
 		<Package>

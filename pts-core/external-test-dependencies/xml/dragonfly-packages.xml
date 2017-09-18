@@ -20,6 +20,10 @@
 			<PackageName>SDL2</PackageName>
 		</Package>
 		<Package>
+			<GenericName>java</GenericName>
+			<PackageName>java/openjdk8</PackageName>
+		</Package>
+		<Package>
 			<GenericName>libpng-development</GenericName>
 			<PackageName>png</PackageName>
 		</Package>

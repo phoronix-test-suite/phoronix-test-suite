@@ -70,7 +70,7 @@
 		</Package>
 		<Package>
 			<GenericName>java</GenericName>
-			<PackageName>java-1.6.0-sun</PackageName>
+			<PackageName>java-1.8.0-sun</PackageName>
 			<FileCheck>/usr/bin/java</FileCheck>
 		</Package>
 		<Package>

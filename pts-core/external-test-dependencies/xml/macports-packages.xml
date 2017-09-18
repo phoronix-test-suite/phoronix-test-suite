@@ -66,7 +66,7 @@
 		</Package>
 		<Package>
 			<GenericName>java</GenericName>
-			<PackageName>openjdk6</PackageName>
+			<PackageName>openjdk8</PackageName>
 		</Package>
 		<Package>
 			<GenericName>portaudio-development</GenericName>

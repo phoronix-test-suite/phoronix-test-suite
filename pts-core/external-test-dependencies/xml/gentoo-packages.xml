@@ -68,7 +68,7 @@
 		</Package>
 		<Package>
 			<GenericName>java</GenericName>
-			<PackageName>virtual/jre</PackageName>
+			<PackageName>virtual/jdk</PackageName>
 		</Package>
 		<Package>
 			<GenericName>nasm</GenericName>
