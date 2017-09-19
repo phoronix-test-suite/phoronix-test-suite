@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2013, Phoronix Media
-	Copyright (C) 2008 - 2013, Michael Larabel
+	Copyright (C) 2008 - 2017, Phoronix Media
+	Copyright (C) 2008 - 2017, Michael Larabel
 	phodevi_linux_parser.php: General parsing functions specific to Linux
 
 	This program is free software; you can redistribute it and/or modify
@@ -23,23 +23,27 @@
 
 class phodevi_linux_parser
 {
-	public static function read_ipmitool_sensor($sensor)
+	public static function read_ipmitool_sensor($sensors)
 	{
 		$value = false;
 		$ipmitool = shell_exec('ipmitool sdr list 2>&1');
 
-		$hit = stripos($ipmitool, $sensor);
-
-		if($hit !== false)
+		foreach(pts_arrays::to_array($sensors) as $sensor)
 		{
-			$trimmed = substr($ipmitool, ($hit + strlen($sensor)));
-			$trimmed = substr($trimmed, 0, strpos($trimmed, PHP_EOL));
-			$trimmed = explode('|', $trimmed);
+			$hit = stripos($ipmitool, $sensor);
 
-			if(count($trimmed) == 3)
+			if($hit !== false)
 			{
-				$value = explode(' ', trim($trimmed[1]));
-				$value = $value[0];
+				$trimmed = substr($ipmitool, ($hit + strlen($sensor)));
+				$trimmed = substr($trimmed, 0, strpos($trimmed, PHP_EOL));
+				$trimmed = explode('|', $trimmed);
+
+				if(count($trimmed) == 3)
+				{
+					$value = explode(' ', trim($trimmed[1]));
+					$value = $value[0];
+					break;
+				}
 			}
 		}
 

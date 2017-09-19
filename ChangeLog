@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+phodevi: Add memory.temp sensor
 phodevi: Fixed k10temp CPU temperature reporting
 
 Phoronix Test Suite 7.4.0-Tynset
