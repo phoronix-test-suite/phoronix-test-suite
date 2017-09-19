@@ -1,4 +1,4 @@
-# Phoronix Test Suite 7.4.0m4
+# Phoronix Test Suite 7.4.0
 http://www.phoronix-test-suite.com/
 
 The **Phoronix Test Suite** is the most comprehensive testing and benchmarking
@@ -85,6 +85,7 @@ wishing to compare the results of the
 
 Additional information is available from the Phoronix Test Suite website
 <http://www.phoronix-test-suite.com/> and the material bundled within the
-`phoronix-test-suite/documentation/` directory. A man page is also bundled with
-the phoronix-test-suite software.
+`phoronix-test-suite/documentation/` directory or via
+<http://www.phoronix-test-suite.com/documentation/>. A man page is also bundled
+with the phoronix-test-suite software.
 

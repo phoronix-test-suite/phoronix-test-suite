@@ -1,4 +1,4 @@
-.TH phoronix-test-suite 1  "www.phoronix-test-suite.com" "7.4.0m4"
+.TH phoronix-test-suite 1  "www.phoronix-test-suite.com" "7.4.0"
 .SH NAME
 phoronix-test-suite \- The Phoronix Test Suite is an extensible open-source platform for performing testing and performance evaluation.
 .SH SYNOPSIS
@@ -10,6 +10,9 @@ The **Phoronix Test Suite** is the most comprehensive testing and benchmarking p
 .SH OPTIONS
 .TP
 .SH TEST INSTALLATION
+.B force-install [Test | Suite | OpenBenchmarking ID | Test Result]  ...
+This option will force the installation (or re-installation) of a test or suite. The arguments and process is similar to the install option but even if the test is installed, the entire installation process will automatically be executed. This option is generally used when debugging a test installation problem.
+.TP
 .B install [Test | Suite | OpenBenchmarking ID | Test Result]  ...
 This option will install the selected test(s) inside the testing environment directory. The install process from downloading of the test files to the installation is fully automated. The install option needs to be supplied with the test name or suite as an argument. Optionally, a OpenBenchmarking.org ID or the name of a saved results file can be supplied as well and the test(s) to install will automatically be extracted from that information. If the test is already installed and was run by the latest version of the installation process, no action will be taken. Multiple arguments can be supplied to install additional tests at the same time.
 .TP
@@ -28,6 +31,9 @@ This option will autonomously determine the most relevant test(s) to run for any
 .TP
 .B benchmark [Test | Suite | OpenBenchmarking ID | Test Result]  ...
 This option will install the selected test(s) (if needed) and will proceed to run the test(s). This option is equivalent to running phoronix-test-suite with the install option followed by the run option. Multiple arguments can be supplied to run additional tests at the same time and save the results into one file.
+.TP
+.B estimate-run-time [Test | Suite | OpenBenchmarking ID | Test Result]
+This option will provide estimates for test run-time / length.
 .TP
 .B finish-run [Test Result]
 This option can be used if a test run had not properly finished running all tests within a saved results file. Using this option when specifying a saved results file where all tests had not completed will attempt to finish testing on the remaining tests where there are missing results.
@@ -117,9 +123,6 @@ Display the installed system hardware and software information as detected by th
 Display the installed system hardware and software sensors in real-time as detected by the Phoronix Test Suite Phodevi Library.
 .TP
 .SH INFORMATION
-.B estimate-run-time [Test | Suite | OpenBenchmarking ID | Test Result]
-This option will provide estimates for test run-time / length.
-.TP
 .B info [Test | Suite | OpenBenchmarking ID | Test Result]
 This option will show details about the supplied test, suite, virtual suite, or result file.
 .TP
@@ -160,6 +163,9 @@ This option will list various details about installed tests and their usage.
 This option will list all available test profiles that are available from the enabled OpenBenchmarking.org repositories but are NOT SUPPORTED on the given hardware/software platform. This is mainly a debugging option for those looking for test profiles to potentially port to new platforms, etc.
 .TP
 .SH ASSET CREATION
+.B build-suite
+This option will guide the user through the process of generating their own test suite, which they can then run. Optionally, passed as arguments can be the test(s) or suite(s) to add to the suite to be created, instead of being prompted through the process.
+.TP
 .B debug-benchmark [Test | Suite | OpenBenchmarking ID | Test Result]  ...
 This option is intended for use by test profile writers and is identical to the <em>run</em> option but will yield more information during the run process that can be used to debug issues with a test profile or to verify the test profile is functioning correctly.
 .TP
@@ -175,9 +181,6 @@ This option will check all download links within the specified test profile(s) t
 .B download-test-files [Test | Suite | OpenBenchmarking ID | Test Result]  ...
 This will download the selected test file(s) to the Phoronix Test Suite download cache but will not install the tests.
 .TP
-.B force-install [Test | Suite | OpenBenchmarking ID | Test Result]  ...
-This option will force the installation (or re-installation) of a test or suite. The arguments and process is similar to the install option but even if the test is installed, the entire installation process will automatically be executed. This option is generally used when debugging a test installation problem.
-.TP
 .B result-file-to-suite [Test Result]
 This option will guide the user through the process of generating their own test suite, which they can then run, that is based upon an existing test results file.
 .TP
@@ -191,6 +194,9 @@ This option can be used for validating a Phoronix Test Suite test profile as bei
 This option can be used for validating a Phoronix Test Suite test suite as being compliant against the OpenBenchmarking.org specification.
 .TP
 .SH RESULT MANAGEMENT
+.B analyze-all-runs [Test Result]
+This option will generate a candlestick graph showing the distribution of results from all trial runs. The candlestick graph is similar to the Japanese candlestick charts used by the financial industry, except instead of representing stock data it is numerical result data from all trial runs.\n\nThe tip of the upper-wick represents the highest value of the test runs with the tip of the lower-wick representing the lowest value of all test runs. The upper-edge of the candle body represents the first or last run value and the lower-edge represents the first or last run value. Lastly, if the last run value is less than the first run value, the candle body is the same color as the graph background, otherwise the last run value is greater.
+.TP
 .B auto-sort-result-file [Test Result]
 This option is used if you wish to automatically attempt to sort the results by their result identifier string.
 .TP
@@ -239,14 +245,7 @@ Open up the test results in the Phoronix Test Suite Result Viewer or on OpenBenc
 .B winners-and-losers [Test Result]
 This option is used if you wish to analyze a result file to see which runs produced the most wins/losses of those result identifiers in the saved file.
 .TP
-.SH RESULT ANALYTICS
-.B analyze-all-runs [Test Result]
-This option will generate a candlestick graph showing the distribution of results from all trial runs. The candlestick graph is similar to the Japanese candlestick charts used by the financial industry, except instead of representing stock data it is numerical result data from all trial runs.\n\nThe tip of the upper-wick represents the highest value of the test runs with the tip of the lower-wick representing the lowest value of all test runs. The upper-edge of the candle body represents the first or last run value and the lower-edge represents the first or last run value. Lastly, if the last run value is less than the first run value, the candle body is the same color as the graph background, otherwise the last run value is greater.
-.TP
 .SH OTHER
-.B build-suite
-This option will guide the user through the process of generating their own test suite, which they can then run. Optionally, passed as arguments can be the test(s) or suite(s) to add to the suite to be created, instead of being prompted through the process.
-.TP
 .B debug-dependency-handler
 This option is used for testing the distribution-specific dependency handler for external dependencies.
 .TP
@@ -256,20 +255,8 @@ This option is used during the development of the Phoronix Test Suite software f
 .B debug-self-test
 This option is used during the development of the Phoronix Test Suite software for testing of internal interfaces, commands, and other common code-paths. The produced numbers should only be comparable for the same version of the Phoronix Test Suite, on the same hardware/software system, conducted on the same day of testing. This isn't intended as any scientific benchmark but simply to stress common PHP code-paths and looking for hot areas to optimize, etc.
 .TP
-.B enterprise-setup
-This option can be run by enterprise users immediately after package installation or as part of an in-house setup script. Running this command will ensure the phoronix-test-suite program is never interrupted on new runs to accept user agreement changes and defaults the anonymous usage reporting to being disabled and other conservative defaults.
-.TP
 .B help
 This option will display the list of available Phoronix Test Suite commands.
-.TP
-.B network-setup
-This option allows the user to configure how the Phoronix Test Suite connects to OpenBenchmarking.org and other web-services. Connecting through an HTTP proxy can be configured through this option.
-.TP
-.B user-config-reset
-This option can be used for resetting the Phoronix Test Suite user configuration file to its default state.
-.TP
-.B user-config-set
-This option can be used for setting an XML value in the Phoronix Test Suite user configuration file.
 .TP
 .B version
 This option will display the Phoronix Test Suite client version.
@@ -292,6 +279,22 @@ This option can be used for debugging a Phoronix Test Suite module.
 .TP
 .B unload-module
 This option can be used for easily removing a module from the LoadModules list in the Phoronix Test Suite user configuration file. That list controls what modules are automatically loaded on start-up of the Phoronix Test Suite.
+.TP
+.SH USER CONFIGURATION
+.B enterprise-setup
+This option can be run by enterprise users immediately after package installation or as part of an in-house setup script. Running this command will ensure the phoronix-test-suite program is never interrupted on new runs to accept user agreement changes and defaults the anonymous usage reporting to being disabled and other conservative defaults.
+.TP
+.B network-info
+This option will print information detected by the Phoronix Test Suite around the system's network configuration.
+.TP
+.B network-setup
+This option allows the user to configure how the Phoronix Test Suite connects to OpenBenchmarking.org and other web-services. Connecting through an HTTP proxy can be configured through this option.
+.TP
+.B user-config-reset
+This option can be used for resetting the Phoronix Test Suite user configuration file to its default state.
+.TP
+.B user-config-set
+This option can be used for setting an XML value in the Phoronix Test Suite user configuration file.
 .TP
 .SH WEB / GUI SUPPORT
 .B gui

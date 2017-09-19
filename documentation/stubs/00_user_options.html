@@ -6,6 +6,9 @@
 <body>
 <p>The following options are currently supported by the Phoronix Test Suite client. A list of available options can also be found by running <em>phoronix-test-suite help.</em><hr></p>
 <h1>Test Installation</h1>
+<h3>force-install<em>  [Test | Suite | OpenBenchmarking ID | Test Result]  ...</em>
+</h3>
+<p>This option will force the installation (or re-installation) of a test or suite. The arguments and process is similar to the install option but even if the test is installed, the entire installation process will automatically be executed. This option is generally used when debugging a test installation problem.</p>
 <h3>install<em>  [Test | Suite | OpenBenchmarking ID | Test Result]  ...</em>
 </h3>
 <p>This option will install the selected test(s) inside the testing environment directory. The install process from downloading of the test files to the installation is fully automated. The install option needs to be supplied with the test name or suite as an argument. Optionally, a OpenBenchmarking.org ID or the name of a saved results file can be supplied as well and the test(s) to install will automatically be extracted from that information. If the test is already installed and was run by the latest version of the installation process, no action will be taken. Multiple arguments can be supplied to install additional tests at the same time.</p>
@@ -25,6 +28,9 @@
 <h3>benchmark<em>  [Test | Suite | OpenBenchmarking ID | Test Result]  ...</em>
 </h3>
 <p>This option will install the selected test(s) (if needed) and will proceed to run the test(s). This option is equivalent to running phoronix-test-suite with the install option followed by the run option. Multiple arguments can be supplied to run additional tests at the same time and save the results into one file.</p>
+<h3>estimate-run-time<em>  [Test | Suite | OpenBenchmarking ID | Test Result]</em>
+</h3>
+<p>This option will provide estimates for test run-time / length.</p>
 <h3>finish-run<em>  [Test Result]</em>
 </h3>
 <p>This option can be used if a test run had not properly finished running all tests within a saved results file. Using this option when specifying a saved results file where all tests had not completed will attempt to finish testing on the remaining tests where there are missing results.</p>
@@ -113,9 +119,6 @@
 </h3>
 <p>Display the installed system hardware and software sensors in real-time as detected by the Phoronix Test Suite Phodevi Library.</p>
 <h1>Information</h1>
-<h3>estimate-run-time<em>  [Test | Suite | OpenBenchmarking ID | Test Result]</em>
-</h3>
-<p>This option will provide estimates for test run-time / length.</p>
 <h3>info<em>  [Test | Suite | OpenBenchmarking ID | Test Result]</em>
 </h3>
 <p>This option will show details about the supplied test, suite, virtual suite, or result file.</p>
@@ -156,6 +159,9 @@
 </h3>
 <p>This option will list all available test profiles that are available from the enabled OpenBenchmarking.org repositories but are NOT SUPPORTED on the given hardware/software platform. This is mainly a debugging option for those looking for test profiles to potentially port to new platforms, etc.</p>
 <h1>Asset Creation</h1>
+<h3>build-suite<em>  </em>
+</h3>
+<p>This option will guide the user through the process of generating their own test suite, which they can then run. Optionally, passed as arguments can be the test(s) or suite(s) to add to the suite to be created, instead of being prompted through the process.</p>
 <h3>debug-benchmark<em>  [Test | Suite | OpenBenchmarking ID | Test Result]  ...</em>
 </h3>
 <p>This option is intended for use by test profile writers and is identical to the &lt;em&gt;run&lt;/em&gt; option but will yield more information during the run process that can be used to debug issues with a test profile or to verify the test profile is functioning correctly.</p>
@@ -171,9 +177,6 @@
 <h3>download-test-files<em>  [Test | Suite | OpenBenchmarking ID | Test Result]  ...</em>
 </h3>
 <p>This will download the selected test file(s) to the Phoronix Test Suite download cache but will not install the tests.</p>
-<h3>force-install<em>  [Test | Suite | OpenBenchmarking ID | Test Result]  ...</em>
-</h3>
-<p>This option will force the installation (or re-installation) of a test or suite. The arguments and process is similar to the install option but even if the test is installed, the entire installation process will automatically be executed. This option is generally used when debugging a test installation problem.</p>
 <h3>result-file-to-suite<em>  [Test Result]</em>
 </h3>
 <p>This option will guide the user through the process of generating their own test suite, which they can then run, that is based upon an existing test results file.</p>
@@ -187,6 +190,9 @@
 </h3>
 <p>This option can be used for validating a Phoronix Test Suite test suite as being compliant against the OpenBenchmarking.org specification.</p>
 <h1>Result Management</h1>
+<h3>analyze-all-runs<em>  [Test Result]</em>
+</h3>
+<p>This option will generate a candlestick graph showing the distribution of results from all trial runs. The candlestick graph is similar to the Japanese candlestick charts used by the financial industry, except instead of representing stock data it is numerical result data from all trial runs.\n\nThe tip of the upper-wick represents the highest value of the test runs with the tip of the lower-wick representing the lowest value of all test runs. The upper-edge of the candle body represents the first or last run value and the lower-edge represents the first or last run value. Lastly, if the last run value is less than the first run value, the candle body is the same color as the graph background, otherwise the last run value is greater.</p>
 <h3>auto-sort-result-file<em>  [Test Result]</em>
 </h3>
 <p>This option is used if you wish to automatically attempt to sort the results by their result identifier string.</p>
@@ -235,14 +241,7 @@
 <h3>winners-and-losers<em>  [Test Result]</em>
 </h3>
 <p>This option is used if you wish to analyze a result file to see which runs produced the most wins/losses of those result identifiers in the saved file.</p>
-<h1>Result Analytics</h1>
-<h3>analyze-all-runs<em>  [Test Result]</em>
-</h3>
-<p>This option will generate a candlestick graph showing the distribution of results from all trial runs. The candlestick graph is similar to the Japanese candlestick charts used by the financial industry, except instead of representing stock data it is numerical result data from all trial runs.\n\nThe tip of the upper-wick represents the highest value of the test runs with the tip of the lower-wick representing the lowest value of all test runs. The upper-edge of the candle body represents the first or last run value and the lower-edge represents the first or last run value. Lastly, if the last run value is less than the first run value, the candle body is the same color as the graph background, otherwise the last run value is greater.</p>
 <h1>Other</h1>
-<h3>build-suite<em>  </em>
-</h3>
-<p>This option will guide the user through the process of generating their own test suite, which they can then run. Optionally, passed as arguments can be the test(s) or suite(s) to add to the suite to be created, instead of being prompted through the process.</p>
 <h3>debug-dependency-handler<em>  </em>
 </h3>
 <p>This option is used for testing the distribution-specific dependency handler for external dependencies.</p>
@@ -252,21 +251,9 @@
 <h3>debug-self-test<em>  </em>
 </h3>
 <p>This option is used during the development of the Phoronix Test Suite software for testing of internal interfaces, commands, and other common code-paths. The produced numbers should only be comparable for the same version of the Phoronix Test Suite, on the same hardware/software system, conducted on the same day of testing. This isn't intended as any scientific benchmark but simply to stress common PHP code-paths and looking for hot areas to optimize, etc.</p>
-<h3>enterprise-setup<em>  </em>
-</h3>
-<p>This option can be run by enterprise users immediately after package installation or as part of an in-house setup script. Running this command will ensure the phoronix-test-suite program is never interrupted on new runs to accept user agreement changes and defaults the anonymous usage reporting to being disabled and other conservative defaults.</p>
 <h3>help<em>  </em>
 </h3>
 <p>This option will display the list of available Phoronix Test Suite commands.</p>
-<h3>network-setup<em>  </em>
-</h3>
-<p>This option allows the user to configure how the Phoronix Test Suite connects to OpenBenchmarking.org and other web-services. Connecting through an HTTP proxy can be configured through this option.</p>
-<h3>user-config-reset<em>  </em>
-</h3>
-<p>This option can be used for resetting the Phoronix Test Suite user configuration file to its default state.</p>
-<h3>user-config-set<em>  </em>
-</h3>
-<p>This option can be used for setting an XML value in the Phoronix Test Suite user configuration file.</p>
 <h3>version<em>  </em>
 </h3>
 <p>This option will display the Phoronix Test Suite client version.</p>
@@ -289,6 +276,22 @@
 <h3>unload-module<em>  </em>
 </h3>
 <p>This option can be used for easily removing a module from the LoadModules list in the Phoronix Test Suite user configuration file. That list controls what modules are automatically loaded on start-up of the Phoronix Test Suite.</p>
+<h1>User Configuration</h1>
+<h3>enterprise-setup<em>  </em>
+</h3>
+<p>This option can be run by enterprise users immediately after package installation or as part of an in-house setup script. Running this command will ensure the phoronix-test-suite program is never interrupted on new runs to accept user agreement changes and defaults the anonymous usage reporting to being disabled and other conservative defaults.</p>
+<h3>network-info<em>  </em>
+</h3>
+<p>This option will print information detected by the Phoronix Test Suite around the system's network configuration.</p>
+<h3>network-setup<em>  </em>
+</h3>
+<p>This option allows the user to configure how the Phoronix Test Suite connects to OpenBenchmarking.org and other web-services. Connecting through an HTTP proxy can be configured through this option.</p>
+<h3>user-config-reset<em>  </em>
+</h3>
+<p>This option can be used for resetting the Phoronix Test Suite user configuration file to its default state.</p>
+<h3>user-config-set<em>  </em>
+</h3>
+<p>This option can be used for setting an XML value in the Phoronix Test Suite user configuration file.</p>
 <h1>Web / GUI Support</h1>
 <h3>gui<em>  </em>
 </h3>

@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 7.4.0-Tynset
+19 September 2017
 
 pts-core: Improve command documentation categories/organization
 pts-core: Fix install time reporting from the info sub-command when passing a test profile

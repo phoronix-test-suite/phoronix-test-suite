@@ -2,7 +2,7 @@
 
 Phoronix Test Suite 7.4
 ======
-#### Release Date: TBD | Codename: Tynset
+#### Release Date: 19 September 2017 | Codename: Tynset
 * `phoronix-test-suite unload-module` and `phoronix-test-suite auto-load-module` and `phoronix-test-suite network-info` sub-commands
 * Inline showing of test results when benchmarking against an existing result file from the CLI
 * New `perf_tips` module for reporting various performance tips to users
