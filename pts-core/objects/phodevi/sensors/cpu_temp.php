@@ -89,7 +89,7 @@ class cpu_temp extends phodevi_sensor
 
 		if($raw_temp == -1)
 		{
-			$raw_temp = phodevi_linux_parser::read_sysfs_node('/sys/class/hwmon/hwmon*/device/temp1_input', 'POSITIVE_NUMERIC', array('name' => 'k10temp'));
+			$raw_temp = phodevi_linux_parser::read_sysfs_node('/sys/class/hwmon/hwmon*/temp1_input', 'POSITIVE_NUMERIC', array('name' => 'k10temp'));
 		}
 
 		if($raw_temp == -1)
