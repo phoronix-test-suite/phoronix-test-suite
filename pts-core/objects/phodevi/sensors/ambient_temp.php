@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2016, Phoronix Media
-	Copyright (C) 2016, Michael Larabel
+	Copyright (C) 2016 - 2017, Phoronix Media
+	Copyright (C) 2016 - 2017, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -28,7 +28,6 @@ class ambient_temp extends phodevi_sensor
 
 	public function read_sensor()
 	{
-		$sys_temp = -1;
 		if(pts_client::executable_in_path('temperv14'))
 		{
 			$temperv14 = trim(shell_exec('temperv14 -c 2>&1'));
@@ -36,6 +35,15 @@ class ambient_temp extends phodevi_sensor
 			if(!empty($temperv14) && is_numeric($temperv14))
 			{
 				return $temperv14;
+			}
+		}
+		if(pts_client::executable_in_path('ipmitool'))
+		{
+			$ipmi = phodevi_linux_parser::read_ipmitool_sensor(array('SYS_Air_Inlet', 'MB_Air_Inlet'));
+
+			if($ipmi > 0 && is_numeric($ipmi))
+			{
+				return $ipmi;
 			}
 		}
 	}
