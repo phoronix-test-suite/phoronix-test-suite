@@ -178,6 +178,9 @@ class pts_result_file_output
 
 		foreach($result_object->test_result_buffer as &$buffers)
 		{
+			if(empty($buffers))
+				continue;
+
 			$max_value = 0;
 			$min_value = pts_arrays::first_element($buffers)->get_result_value();
 			foreach($buffers as &$buffer_item)

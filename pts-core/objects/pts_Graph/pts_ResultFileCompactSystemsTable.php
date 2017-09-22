@@ -98,7 +98,7 @@ class pts_ResultFileCompactSystemsTable extends pts_graph_core
 		$this->svg_dom->add_text_element($this->graph_title, array('x' => ($this->i['graph_width'] / 2), 'y' => (2 + self::$c['size']['headers']), 'font-size' => self::$c['size']['headers'], 'fill' => self::$c['color']['background'], 'text-anchor' => 'middle', 'font-weight' => 'bold'));
 
 		$this->svg_dom->add_text_element(self::$c['text']['watermark'], array('x' => 4, 'y' => ($this->i['top_heading_height'] - 3), 'font-size' => 8, 'fill' => self::$c['color']['background'], 'text-anchor' => 'start', 'xlink:show' => 'new', 'xlink:href' => self::$c['text']['watermark_url'], 'font-weight' => 'bold'));
-		$this->svg_dom->add_text_element($this->i['graph_version'], array('x' => ($this->i['graph_width'] - 4), 'y' => ($this->i['top_heading_height'] - 3), 'font-size' => 8, 'fill' => self::$c['color']['background'], 'text-anchor' => 'end', 'xlink:show' => 'new', 'xlink:href' => 'http://www.phoronix-test-suite.com/', 'font-weight' => 'bold'));
+		$this->svg_dom->add_text_element($this->i['graph_version'], array('x' => ($this->i['graph_width'] - 4), 'y' => ($this->i['top_heading_height'] - 3), 'font-size' => 8, 'fill' => self::$c['color']['background'], 'text-anchor' => 'end', 'xlink:show' => 'new', 'xlink:href' => 'https://www.phoronix-test-suite.com/', 'font-weight' => 'bold'));
 
 		// Body
 		$offset = $this->i['top_heading_height'];
@@ -163,15 +163,15 @@ class pts_ResultFileCompactSystemsTable extends pts_graph_core
 
 		// Footer
 		$this->svg_dom->add_element('rect', array('x' => 1, 'y' => ($this->i['graph_height'] - $bottom_footer), 'width' => ($this->i['graph_width'] - 2), 'height' => $bottom_footer, 'fill' => self::$c['color']['main_headers']));
-		//$this->svg_dom->add_element('image', array('http_link' => 'http://www.phoronix-test-suite.com/', 'xlink:href' => pts_svg_dom::embed_png_image(PTS_CORE_STATIC_PATH . 'images/pts-80x42-white.png'), 'x' => 10, 'y' => ($this->i['graph_height'] - 46), 'width' => 80, 'height' => 42));
+		//$this->svg_dom->add_element('image', array('http_link' => 'https://www.phoronix-test-suite.com/', 'xlink:href' => pts_svg_dom::embed_png_image(PTS_CORE_STATIC_PATH . 'images/pts-80x42-white.png'), 'x' => 10, 'y' => ($this->i['graph_height'] - 46), 'width' => 80, 'height' => 42));
 
 		if(defined('OPENBENCHMARKING_IDS'))
 		{
 			$back_width = $this->i['graph_width'] - 4;
 			$g_ob = $this->svg_dom->make_g(array('text-anchor' => 'end', 'fill' => self::$c['color']['background'], 'font-size' => 8));
-			$this->svg_dom->add_text_element(OPENBENCHMARKING_TITLE, array('x' => $back_width, 'y' => ($this->i['graph_height'] - $bottom_footer + 12), 'font-weight' => 'bold', 'xlink:show' => 'new', 'xlink:href' => 'http://openbenchmarking.org/result/' . OPENBENCHMARKING_IDS), $g_ob);
-			$this->svg_dom->add_text_element('System Logs', array('x' => $back_width, 'y' => ($this->i['graph_height'] - 20), 'xlink:show' => 'new', 'xlink:href' => 'http://openbenchmarking.org/system/' . OPENBENCHMARKING_IDS), $g_ob);
-			$this->svg_dom->add_text_element('OPC Classification', array('x' => $back_width, 'y' => ($this->i['graph_height'] - 6), 'xlink:show' => 'new', 'xlink:href' => 'http://openbenchmarking.org/opc/' . OPENBENCHMARKING_IDS), $g_ob);
+			$this->svg_dom->add_text_element(OPENBENCHMARKING_TITLE, array('x' => $back_width, 'y' => ($this->i['graph_height'] - $bottom_footer + 12), 'font-weight' => 'bold', 'xlink:show' => 'new', 'xlink:href' => 'https://openbenchmarking.org/result/' . OPENBENCHMARKING_IDS), $g_ob);
+			$this->svg_dom->add_text_element('System Logs', array('x' => $back_width, 'y' => ($this->i['graph_height'] - 20), 'xlink:show' => 'new', 'xlink:href' => 'https://openbenchmarking.org/system/' . OPENBENCHMARKING_IDS), $g_ob);
+			$this->svg_dom->add_text_element('OPC Classification', array('x' => $back_width, 'y' => ($this->i['graph_height'] - 6), 'xlink:show' => 'new', 'xlink:href' => 'https://openbenchmarking.org/opc/' . OPENBENCHMARKING_IDS), $g_ob);
 		}
 
 		if(!empty($this->i['notes']))

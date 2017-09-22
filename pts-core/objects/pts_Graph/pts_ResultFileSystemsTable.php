@@ -48,7 +48,7 @@ class pts_ResultFileSystemsTable extends pts_Table
 			foreach($columns as &$column)
 			{
 				$column = new pts_graph_ir_value($column);
-				$column->set_attribute('href', 'http://openbenchmarking.org/system/' . OPENBENCHMARKING_IDS . '/' . $column);
+				$column->set_attribute('href', 'https://openbenchmarking.org/system/' . OPENBENCHMARKING_IDS . '/' . $column);
 			}
 		}
 

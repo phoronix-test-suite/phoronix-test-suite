@@ -285,12 +285,12 @@ abstract class pts_graph_core
 		if(defined('OPENBENCHMARKING_BUILD'))
 		{
 			$config['text']['watermark'] = 'OpenBenchmarking.org';
-			$config['text']['watermark_url'] = 'http://www.openbenchmarking.org/';
+			$config['text']['watermark_url'] = 'https://www.openbenchmarking.org/';
 		}
 		else
 		{
 			$config['text']['watermark'] = 'PHORONIX-TEST-SUITE.COM';
-			$config['text']['watermark_url'] = 'http://www.phoronix-test-suite.com/';
+			$config['text']['watermark_url'] = 'https://www.phoronix-test-suite.com/';
 		}
 
 		$config['size']['headers'] = 17;
@@ -669,7 +669,7 @@ abstract class pts_graph_core
 
 		if($this->test_identifier != null)
 		{
-			$href = 'http://openbenchmarking.org/test/' . $this->test_identifier;
+			$href = 'https://openbenchmarking.org/test/' . $this->test_identifier;
 		}
 
 		// Default to NORMAL
@@ -714,7 +714,7 @@ abstract class pts_graph_core
 
 			if($with_version)
 			{
-				$this->svg_dom->add_text_element($this->i['graph_version'], array('x' => $this->i['graph_left_end'] , 'y' => ($this->i['top_start'] - 3), 'font-size' => 7, 'fill' => self::$c['color']['body_light'], 'text-anchor' => 'end', 'xlink:show' => 'new', 'xlink:href' => 'http://www.phoronix-test-suite.com/'));
+				$this->svg_dom->add_text_element($this->i['graph_version'], array('x' => $this->i['graph_left_end'] , 'y' => ($this->i['top_start'] - 3), 'font-size' => 7, 'fill' => self::$c['color']['body_light'], 'text-anchor' => 'end', 'xlink:show' => 'new', 'xlink:href' => 'https://www.phoronix-test-suite.com/'));
 			}
 		}
 	}
@@ -724,7 +724,7 @@ abstract class pts_graph_core
 		{
 			$bottom_heading_start = $this->i['graph_top_end'] + $this->i['bottom_offset'] + 22;
 			$this->svg_dom->add_element('rect', array('x' => 0, 'y' => $bottom_heading_start, 'width' => $this->i['graph_width'], 'height' => ($this->i['graph_height'] - $bottom_heading_start), 'fill' => self::$c['color']['main_headers']));
-			$this->svg_dom->add_text_element($this->i['graph_version'], array('x' => $this->i['graph_left_end'], 'y' => ($bottom_heading_start + self::$c['size']['key'] + 3), 'font-size' => self::$c['size']['key'], 'fill' => self::$c['color']['background'], 'text-anchor' => 'end', 'xlink:show' => 'new', 'xlink:href' => 'http://www.phoronix-test-suite.com/'));
+			$this->svg_dom->add_text_element($this->i['graph_version'], array('x' => $this->i['graph_left_end'], 'y' => ($bottom_heading_start + self::$c['size']['key'] + 3), 'font-size' => self::$c['size']['key'], 'fill' => self::$c['color']['background'], 'text-anchor' => 'end', 'xlink:show' => 'new', 'xlink:href' => 'https://www.phoronix-test-suite.com/'));
 
 			if(isset($this->d['link_alternate_view']) && $this->d['link_alternate_view'])
 			{
