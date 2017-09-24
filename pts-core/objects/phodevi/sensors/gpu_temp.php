@@ -119,6 +119,10 @@ class gpu_temp extends phodevi_sensor
 		{
 			// Try ACPI thermal
 			$temp_c = phodevi_linux_parser::read_sysfs_node('/sys/class/thermal/thermal_zone*/temp', 'POSITIVE_NUMERIC', array('type' => 'gpu_thermal'));
+			if(is_numeric($temp_c) && $temp_c > 1000)
+			{
+				$temp_c /= 1000;
+			}
 		}
 
 		if($temp_c > 1000 || $temp_c < 9)
