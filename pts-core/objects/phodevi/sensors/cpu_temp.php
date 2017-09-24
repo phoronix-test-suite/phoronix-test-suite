@@ -95,7 +95,7 @@ class cpu_temp extends phodevi_sensor
 		if($raw_temp == -1)
 		{
 			// Try ACPI thermal
-			$raw_temp = phodevi_linux_parser::read_sysfs_node('/sys/class/thermal/thermal_zone*/temp', 'POSITIVE_NUMERIC', array('type' => 'cpu_thermal'), 2);
+			$raw_temp = phodevi_linux_parser::read_sysfs_node('/sys/class/thermal/thermal_zone*/temp', 'POSITIVE_NUMERIC', array('type' => 'cpu_thermal'));
 		}
 
 		if($raw_temp != -1)
