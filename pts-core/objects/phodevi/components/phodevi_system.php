@@ -182,7 +182,7 @@ class phodevi_system extends phodevi_device_interface
 
 		if(phodevi::is_macosx())
 		{
-			$fs = phodevi_osx_parser::read_osx_system_profiler('SPSerialATADataType', 'FileSystem');
+			$fs = phodevi_osx_parser::read_osx_system_profiler('SPSerialATADataType', 'FileSystem', false, array('MS-DOS FAT32'));
 
 			if($fs == null && pts_client::executable_in_path('mount'))
 			{

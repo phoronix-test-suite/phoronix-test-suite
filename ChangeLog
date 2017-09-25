@@ -6,6 +6,7 @@ phodevi: Add memory.temp sensor
 phodevi: Fixed k10temp CPU temperature reporting
 phodevi: Add IPMI ambient temperature support
 phodevi: Some CPU/GPU temperature reporting improvements
+phodevi: Ignore reporting 'MS-DOS FAT32' EFI file-system on macOS
 
 Phoronix Test Suite 7.4.0-Tynset
 19 September 2017
