@@ -188,7 +188,7 @@ class phodevi_memory extends phodevi_device_interface
 					// This makes sure the correct number of RAM modules is reported...
 					// On at least Linux with dmidecode on an AMD Opteron multi-socket setup it's only showing the data for one socket
 
-					if($mem_size[0] < 1024)
+					if(is_numeric($mem_size[0]) && $mem_size[0] < 1024)
 					{
 						$mem_size[0] *= 1024;
 					}
