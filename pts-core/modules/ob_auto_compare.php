@@ -114,7 +114,7 @@ class ob_auto_compare extends pts_module_interface
 				$ro->test_result_buffer->buffer_values_reverse();
 				echo PHP_EOL.pts_client::cli_just_bold('    OpenBenchmarking.org Dynamic Comparison: ');
 				echo pts_result_file_output::test_result_to_text($ro, pts_client::terminal_width(), true, $result_object->test_result_buffer->get_identifiers());
-				echo PHP_EOL . pts_client::cli_just_bold('    Result Reference:') . ' https://openbenchmarking.org/result/' . $auto_comparison_result_file->get_reference_id() . PHP_EOL;
+				echo PHP_EOL . pts_client::cli_just_bold('    Result Perspective:') . ' https://openbenchmarking.org/result/' . $auto_comparison_result_file->get_reference_id() . PHP_EOL;
 			}
 		}
 	}
