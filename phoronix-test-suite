@@ -188,6 +188,12 @@ then
 	echo "The command to likely run for your operating system is: "
 	echo "# eopkg install php"
 	echo " "
+elif [ -x /usr/sbin/mport ]
+then
+	# MidnightBSD
+	echo "The command to likely run for your operating system is: "
+	echo "# mport install php70 php70-dom php70-zip php70-json php70-simplexml"
+	echo " "
 fi
 
 exit
