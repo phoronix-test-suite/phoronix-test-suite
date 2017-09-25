@@ -441,6 +441,22 @@ class phodevi_disk extends phodevi_device_interface
 				$extra_details = trim(substr($md, $x + 7));
 			}
 		}
+		if($extra_details == null && strpos($device['device'], 'bcache') !== false)
+		{
+			// Show Bcache details
+			$d = basename($device['device']);
+			if(is_file('/sys/block/' . $d . '/bcache/cache_mode'))
+			{
+				$cache_mode = file_get_contents('/sys/block/' . $d . '/bcache/cache_mode');
+				if(($x = strpos($cache_mode, '[')) !== false)
+				{
+					$cache_mode = substr($cache_mode, $x + 1);
+					$cache_mode = substr($cache_mode, 0, strpos($cache_mode, ']'));
+
+					$extra_details = trim('Bcache ' . $cache_mode);
+				}
+			}
+		}
 
 
 		return $extra_details;
