@@ -195,6 +195,10 @@ class phodevi_system extends phodevi_device_interface
 				{
 					$fs = 'HFS+';
 				}
+				else if(stripos($mount, ' on / (apfs') !== false)
+				{
+					$fs = 'APFS';
+				}
 			}
 		}
 		else if(phodevi::is_bsd())
