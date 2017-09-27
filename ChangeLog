@@ -10,6 +10,7 @@ phodevi: Some CPU/GPU temperature reporting improvements
 phodevi: Ignore reporting 'MS-DOS FAT32' EFI file-system on macOS
 phodevi: Add Bcache reporting support
 phodevi: Add APFS Apple File-System detection on macOS
+phodevi: Tweaks for macOS High Sierra
 
 Phoronix Test Suite 7.4.0-Tynset
 19 September 2017
