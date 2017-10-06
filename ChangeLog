@@ -11,6 +11,7 @@ phodevi: Ignore reporting 'MS-DOS FAT32' EFI file-system on macOS
 phodevi: Add Bcache reporting support
 phodevi: Add APFS Apple File-System detection on macOS
 phodevi: Tweaks for macOS High Sierra
+perf_per_dollar: Add "phoronix-test-suite perf_per_dollar.add <result file>" to allow perf-per-dollar graphs to be added after the fact
 
 Phoronix Test Suite 7.4.0-Tynset
 19 September 2017

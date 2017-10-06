@@ -56,6 +56,17 @@ class pts_user_io
 
 		return $answer;
 	}
+	public static function prompt_numeric_input($question, $allow_null = false)
+	{
+		do
+		{
+			echo PHP_EOL . pts_client::cli_just_bold($question . ': ');
+			$answer = pts_user_io::read_user_input();
+		}
+		while((!$allow_null && empty($answer)) || !is_numeric($answer));
+
+		return $answer;
+	}
 	public static function display_text_list($list_items, $line_start = '- ')
 	{
 		$list = null;

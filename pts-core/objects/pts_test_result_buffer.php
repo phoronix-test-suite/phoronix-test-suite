@@ -327,6 +327,18 @@ class pts_test_result_buffer
 
 		return $return_identifier ? $max_id : $value;
 	}
+	public function get_value_from_identifier($result_identifier)
+	{
+		foreach($this->buffer_items as &$buffer_item)
+		{
+			if($buffer_item->get_result_identifier() == $result_identifier)
+			{
+				return $buffer_item->get_result_value();
+			}
+		}
+
+		return false;
+	}
 	public function buffer_values_to_percent()
 	{
 		$is_multi_way = pts_render::multi_way_identifier_check($this->get_identifiers());

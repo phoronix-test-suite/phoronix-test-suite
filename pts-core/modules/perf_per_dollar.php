@@ -24,7 +24,7 @@
 class perf_per_dollar extends pts_module_interface
 {
 	const module_name = 'Performance Per Dollar/Cost Calculator';
-	const module_version = '0.2.0';
+	const module_version = '0.3.0';
 	const module_description = 'Setting the COST_PERF_PER_DOLLAR= environment variable to whatever value of the system cost/component you are running a comparison on will yield extra graphs that calculate the performance-per-dollar based on the test being run. The COST_PERF_PER_DOLLAR environment variable is applied just to the current test run identifier. Set the COST_PERF_PER_UNIT= environment variable if wishing to use a metric besides dollar/cost.';
 	const module_author = 'Michael Larabel';
 
@@ -41,6 +41,50 @@ class perf_per_dollar extends pts_module_interface
 	public static function module_info()
 	{
 		return null;
+	}
+	public static function user_commands()
+	{
+		return array('add' => 'add_to_result_file');
+	}
+	public static function add_to_result_file($r)
+	{
+		if(empty($r) || !pts_types::is_result_file($r[0]))
+		{
+			echo 'No result file supplied.';
+			return;
+		}
+		$result_file = new pts_result_file($r[0]);
+		$result_file_identifiers = $result_file->get_system_identifiers();
+		self::$result_identifier = pts_user_io::prompt_text_menu('Select the test run to use', $result_file_identifiers);
+		self::$COST_PERF_PER_DOLLAR = pts_user_io::prompt_numeric_input('Enter the performance-per value');
+		foreach($result_file->get_result_objects() as $result_object)
+		{
+			$result = $result_object->test_result_buffer->get_value_from_identifier(self::$result_identifier);
+			if($result_object->test_profile->get_display_format() == 'BAR_GRAPH' && is_numeric($result) && $result > 0)
+			{
+				if($result_object->test_profile->get_result_proportion() == 'HIB')
+				{
+					$result = pts_math::set_precision($result / self::$COST_PERF_PER_DOLLAR);
+					$scale = $result_object->test_profile->get_result_scale() . ' Per ' . self::$COST_PERF_PER_UNIT;
+				}
+				else if($result_object->test_profile->get_result_proportion() == 'LIB')
+				{
+					$result = pts_math::set_precision($result * self::$COST_PERF_PER_DOLLAR);
+					$scale = $result_object->test_profile->get_result_scale() . ' x ' . self::$COST_PERF_PER_UNIT;
+				}
+				else
+				{
+					break;
+				}
+
+				if($result != 0)
+				{
+					self::add_perf_per_graph($result_file, $result_object, $result, $scale);
+				}
+			}
+		}
+		pts_client::save_test_result($result_file->get_file_location(), $result_file->get_xml());
+		pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . $r[0] . '/index.html');
 	}
 	public static function __run_manager_setup(&$test_run_manager)
 	{
@@ -89,19 +133,26 @@ class perf_per_dollar extends pts_module_interface
 
 			if($result != 0)
 			{
-				// This copy isn't needed but it's shorter and from port from system_monitor where there can be multiple items tracked
-				$test_result = clone self::$successful_test_run_request;
-				$test_result->test_profile->set_identifier(null);
-				$test_result->set_used_arguments_description('Performance / Cost - ' . $test_result->get_arguments_description());
-				$test_result->set_used_arguments('dollar comparison ' . $test_result->get_arguments());
-				$test_result->test_profile->set_result_scale($scale);
-				$test_result->test_result_buffer = new pts_test_result_buffer();
-				$test_result->test_result_buffer->add_test_result(self::$result_identifier, $result, null, array('install-footnote' => '$' . self::$COST_PERF_PER_DOLLAR . ' reported cost.'));
-				$result_file->add_result($test_result);
-				self::$perf_per_dollar_collection[] = $test_result->active->get_result();
+				self::add_perf_per_graph($result_file, self::$successful_test_run_request, $result, $scale);
+				self::$perf_per_dollar_collection[] = self::$successful_test_run_request->active->get_result();
 			}
 		}
 		self::$successful_test_run_request = null;
+	}
+	protected static function add_perf_per_graph(&$result_file, $test_result, $result, $scale)
+	{
+		if(empty($result))
+			return false;
+
+		// This copy isn't needed but it's shorter and from port from system_monitor where there can be multiple items tracked
+		$test_result = clone $test_result;
+		$test_result->test_profile->set_identifier(null);
+		$test_result->set_used_arguments_description('Performance / Cost - ' . $test_result->get_arguments_description());
+		$test_result->set_used_arguments('dollar comparison ' . $test_result->get_arguments());
+		$test_result->test_profile->set_result_scale($scale);
+		$test_result->test_result_buffer = new pts_test_result_buffer();
+		$test_result->test_result_buffer->add_test_result(self::$result_identifier, $result, null, array('install-footnote' => '$' . self::$COST_PERF_PER_DOLLAR . ' reported cost.'));
+		$result_file->add_result($test_result);
 	}
 	public static function __event_results_process(&$test_run_manager)
 	{
