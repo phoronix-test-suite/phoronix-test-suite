@@ -742,6 +742,12 @@ class phoromatic extends pts_module_interface
 
 						echo PHP_EOL . 'Phoromatic received a remote command to shutdown.' . PHP_EOL;
 						phoromatic::update_system_status('Attempting System Shutdown');
+						if(pts_client::executable_in_path('systemctl'))
+						{
+							// Try systemd's poweroff method first
+							shell_exec('systemctl poweroff');
+							sleep(5);
+						}
 						if(pts_client::executable_in_path('poweroff'))
 						{
 							shell_exec('poweroff');
