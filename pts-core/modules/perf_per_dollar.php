@@ -60,7 +60,7 @@ class perf_per_dollar extends pts_module_interface
 		foreach($result_file->get_result_objects() as $result_object)
 		{
 			$result = $result_object->test_result_buffer->get_value_from_identifier(self::$result_identifier);
-			if($result_object->test_profile->get_display_format() == 'BAR_GRAPH' && is_numeric($result) && $result > 0)
+			if($result_object->test_profile->get_identifier() != null && $result_object->test_profile->get_display_format() == 'BAR_GRAPH' && is_numeric($result) && $result > 0)
 			{
 				if($result_object->test_profile->get_result_proportion() == 'HIB')
 				{

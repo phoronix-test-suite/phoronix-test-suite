@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 pts-core: Add external dependency handling for MidnightBSD / mport
+pts-core: Improved handling of IP/MAC detection to try to figure out the default interface
 phodevi: Add memory.temp sensor
 phodevi: Fixed k10temp CPU temperature reporting
 phodevi: Add IPMI ambient temperature support
