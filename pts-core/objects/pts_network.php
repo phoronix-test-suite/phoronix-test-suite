@@ -391,13 +391,39 @@ class pts_network
 			echo PHP_EOL . 'The file_uploads option in your PHP configuration must be enabled for network support.' . PHP_EOL . PHP_EOL;
 		}
 	}
+	public static function get_active_network_interface()
+	{
+		$dev = '';
+
+		// try and get the device with the default route
+		if ($ip = pts_client::executable_in_path('ip')) {
+			$out = shell_exec("$ip route 2>&1");
+			$start = strpos($out,' dev ')+5;
+			$dev = substr($out, $start, strpos($out,' ', $start) - $start);
+		}
+
+		// we grab the last field of the `netstat -nr` output, betting on *bsd not expiring it's default route
+		if(empty($dev) && $netstat = pts_client::executable_in_path('netstat')) {
+			$out = shell_exec("$netstat -rn 2>&1");
+			$lines = explode("\n", $out);
+			foreach ($lines as $line) {
+				$start = substr($line,0,7);
+				if ($start == '0.0.0.0' || $start === 'default') {
+					$dev = trim(substr(trim($line),strrpos($line,' ')));
+					return $dev;
+				}
+			}
+		}
+		return $dev;
+	}
 	public static function get_local_ip()
 	{
 		$local_ip = false;
+		$interface = self::get_active_network_interface();
 
 		if(($ifconfig = pts_client::executable_in_path('ifconfig')))
 		{
-			$ifconfig = shell_exec($ifconfig . ' 2>&1');
+			$ifconfig = shell_exec($ifconfig . " $interface 2>&1");
 			$offset = 0;
 			while(($ipv4_pos = strpos($ifconfig, 'inet addr:', $offset)) !== false)
 			{
@@ -442,16 +468,26 @@ class pts_network
 	{
 		$mac = false;
 
-		foreach(pts_file_io::glob('/sys/class/net/*/operstate') as $net_device_state)
+		if ($interface = self::get_active_network_interface())
 		{
-			if(pts_file_io::file_get_contents($net_device_state) == 'up')
+			$addr =  "/sys/class/net/$interface/address";
+			if(is_file($addr))
 			{
-				$addr = dirname($net_device_state) . '/address';
+				$mac = pts_file_io::file_get_contents($addr);
+			}
+		}
 
-				if(is_file($addr))
+		if (empty($mac)) {
+			foreach(pts_file_io::glob('/sys/class/net/*/operstate') as $net_device_state)
+			{
+				if(pts_file_io::file_get_contents($net_device_state) == 'up')
 				{
-					$mac = pts_file_io::file_get_contents($addr);
-					break;
+					$addr = dirname($net_device_state) . '/address';
+					if(is_file($addr))
+					{
+						$mac = pts_file_io::file_get_contents($addr);
+						break;
+					}
 				}
 			}
 		}
