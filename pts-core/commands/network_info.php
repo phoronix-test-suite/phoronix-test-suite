@@ -29,6 +29,7 @@ class network_info implements pts_option_interface
 	{
 		$table = array();
 		$table[] = array('Local IP:', pts_network::get_local_ip());
+		$table[] = array('Interface:', pts_network::get_active_network_interface());
 		$table[] = array('Network MAC: ', pts_network::get_network_mac());
 		$table[] = array('Wake On LAN: ', implode(' ', pts_network::get_network_wol()));
 
