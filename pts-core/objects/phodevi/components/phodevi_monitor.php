@@ -139,7 +139,7 @@ class phodevi_monitor extends phodevi_device_interface
 		}
 		if($monitor == null && pts_client::executable_in_path('xrandr'))
 		{
-			$xrandr_props = shell_exec('xrandr --prop 2>1');
+			$xrandr_props = shell_exec('xrandr --prop 2>&1');
 			if(($x = strpos($xrandr_props, 'EDID:')) !== false)
 			{
 				$xrandr_props = substr($xrandr_props, $x + 5);

@@ -3,7 +3,7 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2015, Phoronix Media
+	Copyright (C) 2008 - 2017, Phoronix Media
 	Copyright (C) 2008, Andrew Schofield
 
 	This program is free software; you can redistribute it and/or modify
@@ -91,7 +91,7 @@ file_put_contents(getenv('HOME') ."/.rpmmacros", "%_topdir /tmp/pts-rpm-builder"
 shell_exec("rpmbuild -ba --verbose /tmp/pts-rpm-builder/SPECS/pts.spec");
 shell_exec("cp /tmp/pts-rpm-builder/RPMS/noarch/phoronix-test-suite-" . $rpm_v . "-1.noarch.rpm ./");
 shell_exec("rm -f " . getenv('HOME') . "/.rpmmacros");
-shell_exec("mv -f /tmp/pts-rpm-builder/.rpmmacros " . getenv('HOME') . ' 2>1');
+shell_exec("mv -f /tmp/pts-rpm-builder/.rpmmacros " . getenv('HOME') . ' 2>&1');
 shell_exec("rm -rf /tmp/pts-rpm-builder");
 
 ?>

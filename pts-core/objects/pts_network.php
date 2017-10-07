@@ -520,24 +520,52 @@ class pts_network
 		if($wol_support === null)
 		{
 			$wol_support = array();
-			if(is_dir('/sys/class/net') && pts_client::executable_in_path('ethtool'))
+			if(is_dir('/sys/class/net'))
 			{
-				foreach(pts_file_io::glob('/sys/class/net/*') as $net_device)
+				if(pts_client::executable_in_path('ethtool'))
 				{
-					if(is_readable($net_device . '/operstate') && trim(file_get_contents($net_device . '/operstate')) != 'up')
+					foreach(pts_file_io::glob('/sys/class/net/*') as $net_device)
 					{
-						continue;
-					}
+						if(!is_readable($net_device . '/operstate') || trim(file_get_contents($net_device . '/operstate')) != 'up')
+						{
+							continue;
+						}
 
-					$net_name = basename($net_device);
-					$ethtool_output = shell_exec('ethtool ' . $net_name . ' 2>&1');
-					if(($x = stripos($ethtool_output, 'Supports Wake-on: ')) !== false)
+						$net_name = basename($net_device);
+						$ethtool_output = shell_exec('ethtool ' . $net_name . ' 2>&1');
+						if(($x = stripos($ethtool_output, 'Supports Wake-on: ')) !== false)
+						{
+							$ethtool_output = substr($ethtool_output, $x + strlen('Supports Wake-on: '));
+							$ethtool_output = trim(substr($ethtool_output, 0, strpos($ethtool_output, PHP_EOL)));
+							$wol_support[$net_name] = $net_name . ': ' . $ethtool_output;
+						}
+
+					}
+				}
+				if(empty($wol_support) && pts_client::executable_in_path('nmcli'))
+				{
+					foreach(pts_file_io::glob('/sys/class/net/*') as $net_device)
 					{
-						$ethtool_output = substr($ethtool_output, $x + strlen('Supports Wake-on: '));
-						$ethtool_output = trim(substr($ethtool_output, 0, strpos($ethtool_output, PHP_EOL)));
-						$wol_support[$net_name] = $net_name . ': ' . $ethtool_output;
-					}
+						if(!is_readable($net_device . '/operstate') || trim(file_get_contents($net_device . '/operstate')) != 'up')
+						{
+							continue;
+						}
 
+						$net_name = basename($net_device);
+						$ethtool_output = shell_exec('nmcli c show ' . $net_name . ' 2>&1');
+						if(($x = stripos($ethtool_output, '.wake-on-lan:')) !== false)
+						{
+							$ethtool_output = substr($ethtool_output, $x + strlen('.wake-on-lan:'));
+							$ethtool_output = trim(substr($ethtool_output, 0, strpos($ethtool_output, PHP_EOL)));
+
+							if(strpos($ethtool_output, '1') || strpos($ethtool_output, 'default'))
+							{
+								shell_exec('nmcli connection modify ' . $net_name . ' 802-3-ethernet.wake-on-lan magic 2>&1'); // TODO this really needed?
+								$wol_support[$net_name] = $net_name . ': g';
+							}
+						}
+
+					}
 				}
 			}
 		}
