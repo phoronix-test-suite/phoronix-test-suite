@@ -49,6 +49,12 @@ class phodevi_cpu extends phodevi_device_interface
 			case 'core-count':
 				$property = new phodevi_device_property('cpu_core_count', phodevi::std_caching);
 				break;
+			case 'physical-core-count':
+				$property = new phodevi_device_property('cpu_physical_core_count', phodevi::std_caching);
+				break;
+			case 'thread-count':
+				$property = new phodevi_device_property('cpu_thread_count', phodevi::std_caching);
+				break;
 			case 'node-count':
 				$property = new phodevi_device_property('cpu_node_count', phodevi::smart_caching);
 				break;
@@ -79,9 +85,18 @@ class phodevi_cpu extends phodevi_device_interface
 			$model .= ' @ ' . $freq . 'GHz';
 		}
 
-		$core_count = phodevi::read_property('cpu', 'core-count');
+		$core_count = phodevi::read_property('cpu', 'physical-core-count');
+		$thread_count = phodevi::read_property('cpu', 'thread-count');
+		if($core_count > 0 && $thread_count > $core_count)
+		{
+			$count_msg = pts_strings::plural_handler($core_count, 'Core') . ' / ' . $thread_count . ' Threads';
+		}
+		else
+		{
+			$count_msg = pts_strings::plural_handler($core_count, 'Core');
+		}
 
-		return $model . ' (' . pts_strings::plural_handler($core_count, 'Core') . ')';
+		return $model . ' (' . $count_msg . ')';
 	}
 	public static function cpu_model_and_speed()
 	{
@@ -155,6 +170,14 @@ class phodevi_cpu extends phodevi_device_interface
 		}
 
 		return (is_numeric($info) && $info > 0 ? $info : 1);
+	}
+	public static function cpu_physical_core_count()
+	{
+		return phodevi::is_linux() ? phodevi_cpu::cpuinfo_core_count() : phodevi::read_property('cpu', 'core-count');
+	}
+	public static function cpu_thread_count()
+	{
+		return phodevi::is_linux() ? phodevi_cpu::cpuinfo_thread_count() : phodevi::read_property('cpu', 'core-count');
 	}
 	public static function cpu_node_count()
 	{

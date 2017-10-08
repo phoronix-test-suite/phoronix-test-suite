@@ -274,8 +274,8 @@ class phodevi extends phodevi_base
 	}
 	public static function system_centralized_view($return_as_string = true)
 	{
-		$core_count = phodevi::is_linux() ? phodevi_cpu::cpuinfo_core_count() : phodevi::read_property('cpu', 'core-count');
-		$thread_count = phodevi_cpu::cpuinfo_thread_count();
+		$core_count = phodevi::read_property('cpu', 'physical-core-count');
+		$thread_count = phodevi::read_property('cpu', 'thread-count');
 
 		$sys = array(
 			'Processor' => phodevi::read_property('cpu', 'model-and-speed'),
