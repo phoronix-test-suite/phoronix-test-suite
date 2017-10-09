@@ -281,7 +281,7 @@ class phodevi extends phodevi_base
 			'Processor' => phodevi::read_property('cpu', 'model-and-speed'),
 				array(
 				'Core Count' => $core_count,
-				'Thread Count' => $core_count == $thread_count ? '' : $thread_count, // don't show thread count if it's same as core count
+				'Thread Count' => !empety($core_count) && $core_count == $thread_count ? '' : $thread_count, // don't show thread count if it's same as core count
 				'Extensions' => phodevi_cpu::instruction_set_extensions(),
 			//	'Virtualization' => (phodevi_cpu::virtualization_technology() ? phodevi_cpu::virtualization_technology() : ''),
 				'Cache Size' => phodevi::read_property('cpu', 'cache-size-string'),
