@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 7.6.0 Milestone 1
+10 October 2017
 
 pts-core: Add external dependency handling for MidnightBSD / mport
 pts-core: Improved handling of IP/MAC detection to try to figure out the default interface
