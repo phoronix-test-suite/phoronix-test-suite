@@ -19,6 +19,10 @@
 			<GenericName>sdl2-development</GenericName>
 			<PackageName>SDL2</PackageName>
 		</Package>
+                <Package>
+			<GenericName>golang</GenericName>
+			<PackageName>go</PackageName>
+		</Package>
 		<Package>
 			<GenericName>java</GenericName>
 			<PackageName>java/openjdk8</PackageName>

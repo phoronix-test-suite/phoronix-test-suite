@@ -176,8 +176,8 @@
 		</Package>
 		<Package>
 			<GenericName>common-dependencies</GenericName>
-			<PackageName>unzip</PackageName>
-			<FileCheck>unzip</FileCheck>
+			<PackageName>unzip mesa-demos</PackageName>
+			<FileCheck>unzip, glxinfo</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>boost-development</GenericName>
