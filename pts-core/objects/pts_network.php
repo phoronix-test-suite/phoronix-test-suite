@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2016, Phoronix Media
-	Copyright (C) 2008 - 2016, Michael Larabel
+	Copyright (C) 2008 - 2017, Phoronix Media
+	Copyright (C) 2008 - 2017, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -501,6 +501,11 @@ class pts_network
 				$hw_addr = substr($ifconfig, $hwaddr_pos);
 				$hw_addr = substr($hw_addr, (strpos($hw_addr, ' ') + 1));
 				$hw_addr = substr($hw_addr, 0, strpos($hw_addr, ' '));
+				if(($x = strpos($hw_addr, PHP_EOL)) != false)
+				{
+					$hw_addr = substr($hw_addr, 0, $x);
+				}
+
 				$mac = $hw_addr;
 
 				if($mac != null)
