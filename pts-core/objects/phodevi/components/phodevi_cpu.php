@@ -173,7 +173,24 @@ class phodevi_cpu extends phodevi_device_interface
 	}
 	public static function cpu_physical_core_count()
 	{
-		return phodevi::is_linux() ? phodevi_cpu::cpuinfo_core_count() : phodevi::read_property('cpu', 'core-count');
+		$physical_cores = null;
+
+		if(phodevi::is_linux())
+		{
+			$physical_cores = phodevi_cpu::cpuinfo_core_count();
+		}
+		else if(phodevi::is_bsd())
+		{
+			// hw.cpu_topology_core_ids works at least on DragonFly BSD
+			$physical_cores = intval(phodevi_bsd_parser::read_sysctl(array('hw.cpu_topology_core_ids')));
+		}
+
+		if(empty($physical_cores) || !is_numeric($physical_cores))
+		{
+			$physical_cores = phodevi::read_property('cpu', 'core-count');
+		}
+
+		return $physical_cores;
 	}
 	public static function cpu_thread_count()
 	{
