@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2016, Phoronix Media
-	Copyright (C) 2008 - 2016, Michael Larabel
+	Copyright (C) 2008 - 2017, Phoronix Media
+	Copyright (C) 2008 - 2017, Michael Larabel
 	phodevi_motherboard.php: The PTS Device Interface object for the motherboard
 
 	This program is free software; you can redistribute it and/or modify
@@ -376,6 +376,10 @@ class phodevi_motherboard extends phodevi_device_interface
 			else if(($acpi = phodevi_bsd_parser::read_sysctl('dev.acpi.0.%desc')) != false)
 			{
 				$info = trim($acpi);
+			}
+			else if(($product = phodevi_bsd_parser::read_kenv('smbios.planar.product')))
+			{
+				$info = trim(phodevi_bsd_parser::read_kenv('smbios.planar.maker') . ' ' . $product)
 			}
 		}
 		else if(phodevi::is_linux())

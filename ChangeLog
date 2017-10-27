@@ -1,5 +1,10 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+pts-core: Add LEDE external dependency handling support
+phodevi: Motherboard detection support on BSD using smbios.planar.product
+
 Phoronix Test Suite 7.6.0 Milestone 1
 10 October 2017
 
