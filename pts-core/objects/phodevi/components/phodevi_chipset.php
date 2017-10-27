@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2016, Phoronix Media
-	Copyright (C) 2008 - 2016, Michael Larabel
+	Copyright (C) 2008 - 2017, Phoronix Media
+	Copyright (C) 2008 - 2017, Michael Larabel
 	phodevi_chipset.php: The PTS Device Interface object for the system chipset
 
 	This program is free software; you can redistribute it and/or modify
@@ -81,6 +81,10 @@ class phodevi_chipset extends phodevi_device_interface
 			$info = phodevi_solaris_parser::read_hal_property($vendor_possible_udis, 'info.vendor');
 
 			// TODO: Northbridge and Southbridge Detection For Solaris
+		}
+		else if(phodevi::is_bsd())
+		{
+			$info = phodevi_bsd_parser::read_pciconf_by_class('display');
 		}
 		else if(phodevi::is_linux() || phodevi::is_hurd())
 		{
