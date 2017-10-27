@@ -365,7 +365,7 @@ class phodevi_motherboard extends phodevi_device_interface
 			$product = phodevi_bsd_parser::read_kenv('smbios.system.product');
 			$version = phodevi_bsd_parser::read_kenv('smbios.system.version'); // for at least Lenovo ThinkPads this is where it displays ThinkPad model
 
-			if($vendor != null && ($product != null || $version != null) && str_replace(array('"', ' '), null, $vendor) != null)
+			if($vendor != null && ($product != null || $version != null) && pts_strings::has_alpha($vendor))
 			{
 				$info = $vendor . ' ' . $product . ' ' . $version;
 			}

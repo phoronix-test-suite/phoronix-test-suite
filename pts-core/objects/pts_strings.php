@@ -56,6 +56,10 @@ class pts_strings
 		}
 		return $string;
 	}
+	public static function has_alpha($string)
+	{
+		return pts_strings::string_contains($string, pts_strings::CHAR_LETTER);
+	}
 	public static function is_url($string)
 	{
 		$components = parse_url($string);
