@@ -77,6 +77,9 @@ then
 elif which php5 >/dev/null 2>&1 ;
 then
 	export PHP_BIN="php5"
+elif which php-cli >/dev/null 2>&1 ;
+then
+	export PHP_BIN="php-cli"
 elif [ -x /usr/bin/hhvm ]
 then
 	export PHP_BIN="/usr/bin/hhvm"
@@ -193,6 +196,13 @@ then
 	# MidnightBSD
 	echo "The command to likely run for your operating system is: "
 	echo "# mport install php70 php70-dom php70-zip php70-json php70-simplexml"
+	echo " "
+fi
+elif [ -x /bin/opkg ]
+then
+	# Linux Embedded Development Environment
+	echo "The command to likely run for your operating system is: "
+	echo "# opkg install php7-cli php7-mod-dom php7-mod-zip php7-mod-json php7-mod-simplexml"
 	echo " "
 fi
 
