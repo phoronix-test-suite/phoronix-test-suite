@@ -84,7 +84,7 @@ class phodevi_chipset extends phodevi_device_interface
 		}
 		else if(phodevi::is_bsd())
 		{
-			$info = phodevi_bsd_parser::read_pciconf_by_class('display');
+			$info = phodevi_bsd_parser::read_pciconf_by_class('bridge');
 		}
 		else if(phodevi::is_linux() || phodevi::is_hurd())
 		{
