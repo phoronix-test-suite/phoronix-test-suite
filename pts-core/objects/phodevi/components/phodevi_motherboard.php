@@ -373,7 +373,7 @@ class phodevi_motherboard extends phodevi_device_interface
 			{
 				$info = trim($vendor . ' ' . $version);
 			}
-			else if(($acpi = phodevi_bsd_parser::read_sysctl('dev.acpi.0.%desc')) != false)
+			else if(($acpi = phodevi_bsd_parser::read_sysctl('dev.acpi.0.%desc')) != false && strpos($acpi, ' ') != null)
 			{
 				$info = trim($acpi);
 			}
