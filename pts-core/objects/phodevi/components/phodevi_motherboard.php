@@ -379,7 +379,7 @@ class phodevi_motherboard extends phodevi_device_interface
 			}
 			else if(($product = phodevi_bsd_parser::read_kenv('smbios.planar.product')))
 			{
-				$info = trim(phodevi_bsd_parser::read_kenv('smbios.planar.maker') . ' ' . $product)
+				$info = trim(phodevi_bsd_parser::read_kenv('smbios.planar.maker') . ' ' . $product);
 			}
 		}
 		else if(phodevi::is_linux())
