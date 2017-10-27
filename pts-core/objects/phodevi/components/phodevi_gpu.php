@@ -1232,6 +1232,11 @@ class phodevi_gpu extends phodevi_device_interface
 					$info = substr($xorg_log, strrpos($xorg_log, 'Found ') + 6);
 				}
 			}
+
+			if($info == null)
+			{
+				$info = phodevi_bsd_parser::read_pciconf_by_class('display');
+			}
 		}
 		else if(phodevi::is_windows())
 		{

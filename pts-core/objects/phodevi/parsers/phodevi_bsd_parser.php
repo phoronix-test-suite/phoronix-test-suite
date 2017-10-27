@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2013, Phoronix Media
-	Copyright (C) 2009 - 2013, Michael Larabel
+	Copyright (C) 2009 - 2017, Phoronix Media
+	Copyright (C) 2009 - 2017, Michael Larabel
 	phodevi_bsd_parser.php: General parsing functions specific to BSD
 
 	This program is free software; you can redistribute it and/or modify
@@ -44,6 +44,27 @@ class phodevi_bsd_parser
 		}
 
 		return $info;
+	}
+	public static function read_pciconf_by_class($class)
+	{
+		$entry = null;
+
+		if(pts_client::executable_in_path('pciconf'))
+		{
+			$pciconf = pts_strings::trim_spaces(shell_exec('pciconf -lv 2> /dev/null'));
+			if(($x = strpos($pciconf, 'class = ' . $class)) !== false)
+			{
+				$pciconf = substr($pciconf, 0, $x);
+				$vendor = substr($pciconf, strrpos($pciconf, 'vendor =') + 8);
+				$vendor = substr($vendor, 0, strpos($vendor, PHP_EOL));
+				$vendor = trim(str_replace(array('\''), null, $vendor));
+				$device = substr($pciconf, strrpos($pciconf, 'device =') + 8);
+				$device = substr($device, 0, strpos($device, PHP_EOL));
+				$device = trim(str_replace(array('\'', '"'), null, $device));
+				$entry = trim($vendor . ' ' . $device);
+			}
+		}
+		return $entry;
 	}
 	public static function read_kenv($v)
 	{
