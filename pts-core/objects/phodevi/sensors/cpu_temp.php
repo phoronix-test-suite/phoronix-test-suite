@@ -57,6 +57,7 @@ class cpu_temp extends phodevi_sensor
 			{
 				$cpu_temp = substr($cpu_temp, 0, $end);
 			}
+			$cpu_temp = trim($cpu_temp);
 
 			if(is_numeric($cpu_temp))
 			{
