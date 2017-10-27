@@ -340,7 +340,7 @@ class phodevi extends phodevi_base
 						}
 					}
 				}
-				else if(!empty($in))
+				else if(true || !empty($in)) // TODO this check not needed anymore?
 				{
 					if(!empty($tabled))
 					{
