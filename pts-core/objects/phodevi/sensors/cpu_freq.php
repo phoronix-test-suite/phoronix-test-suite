@@ -133,7 +133,7 @@ class cpu_freq extends phodevi_sensor
 		//TODO test on BSD and implement per-core monitoring
 		$freq = phodevi_bsd_parser::read_sysctl('dev.cpu.0.freq');
 		if(is_numeric($freq) && $freq != '')
-			return $freq
+			return $freq;
 	}
 	private function cpu_freq_macosx()
 	{
