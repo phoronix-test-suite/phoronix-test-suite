@@ -1,0 +1,6 @@
+#!/bin/sh
+# PROVIDE: phoromatic-client
+# REQUIRE: LOGIN
+
+/usr/bin/phoronix-test-suite phoromatic.connect
+
