@@ -489,7 +489,7 @@ class phodevi_gpu extends phodevi_device_interface
 			{
 				if(($x = strpos(phodevi::$vfs->dmesg, 'VT(efifb): resolution ')) !== false)
 				{
-					$info = substr(phodevi::$vfs->dmesg, $x + 23);
+					$info = substr(phodevi::$vfs->dmesg, $x + 22);
 					$info = trim(substr($info, 0, strpos($info, PHP_EOL)));
 					$res = explode('x', $info);
 					if(count($res) == 2 && is_numeric($res[0]) && is_numeric($res[1]))
