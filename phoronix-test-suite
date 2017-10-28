@@ -197,7 +197,6 @@ then
 	echo "The command to likely run for your operating system is: "
 	echo "# mport install php70 php70-dom php70-zip php70-json php70-simplexml"
 	echo " "
-fi
 elif [ -x /bin/opkg ]
 then
 	# Linux Embedded Development Environment
