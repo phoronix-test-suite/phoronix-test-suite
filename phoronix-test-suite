@@ -50,7 +50,7 @@ then
 elif [ -x /usr/bin/php5 ] || [ -x /usr/local/bin/php5 ] || [ -x /usr/pkg/bin/php5 ]
 then
 	export PHP_BIN="php5"
-elif [ -x /usr/bin/php ] || [ -x /usr/local/bin/php ] || [ -x /usr/pkg/bin/php ]
+elif [ -x /usr/bin/php ] || [ -x /usr/pkg/bin/php ]
 then
 	export PHP_BIN="php"
 elif [ -x /usr/php7/bin/php ]
@@ -62,6 +62,9 @@ then
 elif [ -x /usr/php/bin/php ]
 then
 	export PHP_BIN="/usr/php/bin/php"
+elif [ -x /usr/local/bin/php ]
+then
+	export PHP_BIN="/usr/local/bin/php"
 elif [ -x /opt/bin/php ]
 then
 	export PHP_BIN="/opt/bin/php"
