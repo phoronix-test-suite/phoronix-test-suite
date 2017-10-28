@@ -484,6 +484,20 @@ class phodevi_gpu extends phodevi_device_interface
 					$resolution = $virtual_size;
 				}
 			}
+
+			if($resolution == false && phodevi::is_bsd())
+			{
+				if(($x = strpos(phodevi::$vfs->dmesg, 'VT(efifb): resolution ')) !== false)
+				{
+					$info = substr(phodevi::$vfs->dmesg, $x + 23);
+					$info = trim(substr($info, 0, strpos($info, PHP_EOL)));
+					$res = explode('x', $info);
+					if(count($res) == 2 && is_numeric($res[0]) && is_numeric($res[1]))
+					{
+						$resolution = $res;
+					}
+				}
+			}
 		}
 
 		return $resolution == false ? array(-1, -1) : $resolution;
