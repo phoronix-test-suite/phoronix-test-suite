@@ -613,7 +613,7 @@ class phodevi extends phodevi_base
 
 			if(($mins_end_pos = strpos($uptime_output, ' mins')) !== false)
 			{
-				$mins_output = substr($uptime_output, 0, $day_end_pos);
+				$mins_output = substr($uptime_output, 0, $mins_end_pos);
 				$mins_output = substr($mins_output, strrpos($mins_output, ' ') + 1);
 
 				if(is_numeric($mins_output))

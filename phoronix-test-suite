@@ -65,6 +65,15 @@ then
 elif [ -x /usr/local/bin/php ]
 then
 	export PHP_BIN="/usr/local/bin/php"
+elif [ -x /usr/local/bin/php-7.0 ]
+then
+	export PHP_BIN="/usr/local/bin/php-7.0"
+elif [ -x /usr/local/bin/php-7.1 ]
+then
+	export PHP_BIN="/usr/local/bin/php-7.1"
+elif [ -x /usr/local/bin/php-7.2 ]
+then
+	export PHP_BIN="/usr/local/bin/php-7.2"
 elif [ -x /opt/bin/php ]
 then
 	export PHP_BIN="/opt/bin/php"
