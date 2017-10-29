@@ -515,6 +515,35 @@ class pts_network
 				$offset = $hwaddr_pos + 1;
 			}
 		}
+		if(empty($mac) && ($netstat = pts_client::executable_in_path('netstat')))
+		{
+			$netstat = shell_exec($netstat . ' -in 2>&1');
+			foreach(explode(PHP_EOL, $netstat) as $line)
+			{
+				$line = explode(' ', $line);
+				foreach($line as $i => $r)
+				{
+					if($r == null)
+						unset($line[$i]);
+				}
+				$line = array_values($line);
+
+				$address = explode(':', $line[3]);
+
+				if(count($address) == 6 && $address[0] != '00' && $address[5] != '00')
+				{
+					foreach($address as $seg)
+					{
+						if(strlen($seg) != 2)
+						{
+							continue;
+						}
+					}
+
+					$mac = $line[3];
+				}
+			}
+		}
 
 		return $mac;
 	}

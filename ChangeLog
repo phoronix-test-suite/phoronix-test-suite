@@ -4,6 +4,7 @@ Phoronix Test Suite (Git)
 
 pts-core: Add LEDE external dependency handling support
 pts-core: Drop ports-based external dependency handling for FreeBSD and instead encourage pkg
+pts-core: Network MAC address detection on OpenBSD
 phoronix-test-suite: Check for php-cli as binary option
 phodevi: Motherboard detection support on BSD using smbios.planar.product
 phodevi: hw.cpu_topology_core_ids support for physical core count on BSD
