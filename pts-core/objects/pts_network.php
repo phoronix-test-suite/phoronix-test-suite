@@ -528,6 +528,11 @@ class pts_network
 				}
 				$line = array_values($line);
 
+				if(!isset($line[3]))
+				{
+					continue;
+				}
+
 				$address = explode(':', $line[3]);
 
 				if(count($address) == 6 && $address[0] != '00' && $address[5] != '00')
