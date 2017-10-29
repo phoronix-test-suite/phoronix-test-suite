@@ -58,9 +58,17 @@ class phodevi_bsd_parser
 				$vendor = substr($pciconf, strrpos($pciconf, 'vendor =') + 8);
 				$vendor = substr($vendor, 0, strpos($vendor, PHP_EOL));
 				$vendor = trim(str_replace(array('\''), null, $vendor));
-				$device = substr($pciconf, strrpos($pciconf, 'device =') + 8);
-				$device = substr($device, 0, strpos($device, PHP_EOL));
-				$device = trim(str_replace(array('\'', '"'), null, $device));
+				if(($x = strrpos($pciconf, 'device =')) !== false)
+				{
+					$device = substr($pciconf, $x + 8);
+					$device = substr($device, 0, strpos($device, PHP_EOL));
+					$device = trim(str_replace(array('\'', '"'), null, $device));
+				}
+				else
+				{
+					$device = null;
+				}
+
 				$entry = trim($vendor . ' ' . $device);
 			}
 		}

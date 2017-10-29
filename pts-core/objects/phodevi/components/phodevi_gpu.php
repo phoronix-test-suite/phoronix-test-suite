@@ -1250,6 +1250,12 @@ class phodevi_gpu extends phodevi_device_interface
 			if($info == null)
 			{
 				$info = phodevi_bsd_parser::read_pciconf_by_class('display');
+
+
+				if(strlen($info) > 60)
+				{
+					$info = null;
+				}
 			}
 		}
 		else if(phodevi::is_windows())
