@@ -517,6 +517,7 @@ class pts_network
 		}
 		if(empty($mac) && ($netstat = pts_client::executable_in_path('netstat')))
 		{
+			// Needed on at least OpenBSD as their `ifconfig` does not expose the MAC address
 			$netstat = shell_exec($netstat . ' -in 2>&1');
 			foreach(explode(PHP_EOL, $netstat) as $line)
 			{
