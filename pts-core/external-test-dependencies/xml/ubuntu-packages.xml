@@ -255,8 +255,12 @@
 			<ArchitectureSpecific>x86_64</ArchitectureSpecific>
 		</Package>
 		<Package>
-			<GenericName>python</GenericName>
+			<GenericName>python2</GenericName>
 			<PackageName>python</PackageName>
+		</Package>
+		<Package>
+			<GenericName>python3</GenericName>
+			<PackageName>python3</PackageName>
 		</Package>
 		<Package>
 			<GenericName>python-boost-development</GenericName>
@@ -267,9 +271,14 @@
 			<PackageName>libboost-thread-dev</PackageName>
 		</Package>
 		<Package>
-			<GenericName>python-numpy</GenericName>
+			<GenericName>python2-numpy</GenericName>
 			<PackageName>python-numpy</PackageName>
-			<FileCheck>/usr/share/pyshared/numpy/version.py</FileCheck>
+			<FileCheck>/usr/share/doc/python-numpy/copyright</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>python3-numpy</GenericName>
+			<PackageName>python3-numpy</PackageName>
+			<FileCheck>/usr/share/doc/python3-numpy/copyright</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>yasm</GenericName>

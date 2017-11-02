@@ -333,10 +333,16 @@
 			<FileCheck>gnu/stubs-32.h OR gnu-versions.h, libc.a</FileCheck>
 		</Package>
 		<Package>
-			<GenericName>python</GenericName>
-			<Title>Python</Title>
-			<PossibleNames>python</PossibleNames>
-			<FileCheck>python</FileCheck>
+			<GenericName>python2</GenericName>
+			<Title>Python 2</Title>
+			<PossibleNames>python, python2</PossibleNames>
+			<FileCheck>python2</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>python3</GenericName>
+			<Title>Python 3</Title>
+			<PossibleNames>python, python3</PossibleNames>
+			<FileCheck>python3</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>python-boost-development</GenericName>
@@ -351,9 +357,15 @@
 			<FileCheck>boost/thread.hpp</FileCheck>
 		</Package>
 		<Package>
-			<GenericName>python-numpy</GenericName>
-			<Title>Python Numpy</Title>
-			<PossibleNames>python-numpy</PossibleNames>
+			<GenericName>python2-numpy</GenericName>
+			<Title>Python 2 Numpy</Title>
+			<PossibleNames>python-numpy, python2-numpy</PossibleNames>
+			<FileCheck>/usr/shared/pyshared/numpy/version.py</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>python3-numpy</GenericName>
+			<Title>Python 3 Numpy</Title>
+			<PossibleNames>python-numpy, python3-numpy</PossibleNames>
 			<FileCheck>/usr/shared/pyshared/numpy/version.py</FileCheck>
 		</Package>
 		<Package>
