@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 7.6.0 Milestone 2
+2 November 2017
 
 pts-core: Add LEDE external dependency handling support
 pts-core: Drop ports-based external dependency handling for FreeBSD and instead encourage pkg
