@@ -186,7 +186,7 @@ class phodevi_cpu extends phodevi_device_interface
 		}
 		else if(phodevi::is_macosx())
 		{
-			$info = intval(phodevi_bsd_parser::read_sysctl(array('hw.physicalcpu')));
+			$physical_cores = intval(phodevi_bsd_parser::read_sysctl(array('hw.physicalcpu')));
 		}
 
 		if(empty($physical_cores) || !is_numeric($physical_cores))
