@@ -553,7 +553,7 @@ class pts_test_installer
 
 				// Write the main mask for the compiler
 				file_put_contents($main_compiler,
-					'#!/bin/bash' . PHP_EOL . 'COMPILER_OPTIONS="$@"' . PHP_EOL . $env_var_check . PHP_EOL . 'echo $COMPILER_OPTIONS >> ' . $mask_dir . $compiler_type . '-options-' . $compiler_name . PHP_EOL . $compiler_path . ' "$@"' . PHP_EOL);
+					'#!/usr/bin/env bash' . PHP_EOL . 'COMPILER_OPTIONS="$@"' . PHP_EOL . $env_var_check . PHP_EOL . 'echo $COMPILER_OPTIONS >> ' . $mask_dir . $compiler_type . '-options-' . $compiler_name . PHP_EOL . $compiler_path . ' "$@"' . PHP_EOL);
 
 				// Make executable
 				chmod($main_compiler, 0755);
