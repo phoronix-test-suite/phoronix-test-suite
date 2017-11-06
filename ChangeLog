@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+pts-core: make script shebang more portable
 phodevi: physical CPU core detection count on macOS
 
 Phoronix Test Suite 7.6.0 Milestone 2

@@ -551,9 +551,26 @@ class pts_test_installer
 				}
 				*/
 
+				if(is_executable('/bin/bash'))
+				{
+					$shebang = '/bin/bash';
+				}
+				else if(is_executable('/usr/bin/env'))
+				{
+					$shebang = '/usr/bin/env bash';
+				}
+				else if(($sh = pts_client::executable_in_path('bash')) || ($sh = pts_client::executable_in_path('bash')))
+				{
+					$shebang = $sh;
+				}
+				else
+				{
+					return false;
+				}
+
 				// Write the main mask for the compiler
 				file_put_contents($main_compiler,
-					'#!/bin/bash' . PHP_EOL . 'COMPILER_OPTIONS="$@"' . PHP_EOL . $env_var_check . PHP_EOL . 'echo $COMPILER_OPTIONS >> ' . $mask_dir . $compiler_type . '-options-' . $compiler_name . PHP_EOL . $compiler_path . ' "$@"' . PHP_EOL);
+					'#!' . $shebang . PHP_EOL . 'COMPILER_OPTIONS="$@"' . PHP_EOL . $env_var_check . PHP_EOL . 'echo $COMPILER_OPTIONS >> ' . $mask_dir . $compiler_type . '-options-' . $compiler_name . PHP_EOL . $compiler_path . ' "$@"' . PHP_EOL);
 
 				// Make executable
 				chmod($main_compiler, 0755);
