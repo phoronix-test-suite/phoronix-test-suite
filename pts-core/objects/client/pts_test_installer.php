@@ -559,7 +559,7 @@ class pts_test_installer
 				{
 					$shebang = '/usr/bin/env bash';
 				}
-				else if(($sh = pts_client::executable_in_path('bash')) || ($sh = pts_client::executable_in_path('bash')))
+				else if(($sh = pts_client::executable_in_path('bash')) || ($sh = pts_client::executable_in_path('sh')))
 				{
 					$shebang = $sh;
 				}
