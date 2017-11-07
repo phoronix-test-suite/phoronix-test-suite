@@ -24,13 +24,34 @@ class gpu_power extends phodevi_sensor
 {
 	const SENSOR_TYPE = 'gpu';
 	const SENSOR_SENSES = 'power';
-	const SENSOR_UNIT = 'Milliwatts';
+	private static $unit = 'Milliwatts';
 
+	public static function get_unit()
+	{
+		return self::$unit;
+	}
 	public function read_sensor()
 	{
 		$gpu_power = -1;
 
-		if(is_readable('/sys/kernel/debug/dri/0/i915_emon_status'))
+		if(phodevi::is_nvidia_graphics() && ($nvidia_smi = pts_client::executable_in_path('nvidia-smi')))
+		{
+			$smi_output = shell_exec($nvidia_smi . ' -q -d POWER 2>&1');
+			$power = strpos($smi_output, 'Power Draw');
+			if($power !== false)
+			{
+				$power = substr($smi_output, strpos($smi_output, ':', $power) + 1);
+				$power = trim(substr($power, 0, strpos($power, 'W')));
+
+				if(is_numeric($power) && $power > 0)
+				{
+					self::$unit = 'Watts';
+					$gpu_power = $power;
+				}
+			}
+
+		}
+		else if(is_readable('/sys/kernel/debug/dri/0/i915_emon_status'))
 		{
 			$i915_emon_status = file_get_contents('/sys/kernel/debug/dri/0/i915_emon_status');
 			$power = strpos($i915_emon_status, 'Total power: ');
