@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2013, Phoronix Media
-	Copyright (C) 2008 - 2013, Michael Larabel
+	Copyright (C) 2008 - 2017, Phoronix Media
+	Copyright (C) 2008 - 2017, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -38,7 +38,20 @@ class refresh_graphs implements pts_option_interface
 	public static function run($r)
 	{
 		$identifier = $r[0];
-		pts_client::regenerate_graphs($identifier, 'The ' . $identifier . ' result file graphs have been refreshed.');
+		pts_client::regenerate_graphs($identifier);
+		$graphs = pts_file_io::glob( PTS_SAVE_RESULTS_PATH . $identifier . '/result-graphs/*');
+		$graph_bytes = 0;
+		foreach($graphs as $graph)
+		{
+			$graph_bytes += filesize($graph);
+		}
+
+		$t = array();
+		$t[] = array(pts_client::cli_just_bold('Result Graphs: '), count($graphs));
+		$t[] = array(pts_client::cli_just_bold('Graph Size: '), $graph_bytes . ' Bytes');
+		echo pts_user_io::display_text_table($t) . PHP_EOL;
+		echo PHP_EOL . 'The ' . $identifier . ' result file graphs have been refreshed.' . PHP_EOL;
+		pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . $identifier . '/index.html');
 	}
 	public static function invalid_command($passed_args = null)
 	{
