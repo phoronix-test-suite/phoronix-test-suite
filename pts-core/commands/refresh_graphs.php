@@ -37,21 +37,23 @@ class refresh_graphs implements pts_option_interface
 	}
 	public static function run($r)
 	{
-		$identifier = $r[0];
-		pts_client::regenerate_graphs($identifier);
-		$graphs = pts_file_io::glob( PTS_SAVE_RESULTS_PATH . $identifier . '/result-graphs/*');
-		$graph_bytes = 0;
-		foreach($graphs as $graph)
+		foreach($r as $identifier)
 		{
-			$graph_bytes += filesize($graph);
-		}
+			pts_client::regenerate_graphs($identifier);
+			$graphs = pts_file_io::glob( PTS_SAVE_RESULTS_PATH . $identifier . '/result-graphs/*');
+			$graph_bytes = 0;
+			foreach($graphs as $graph)
+			{
+				$graph_bytes += filesize($graph);
+			}
 
-		$t = array();
-		$t[] = array(pts_client::cli_just_bold('Result Graphs: '), count($graphs));
-		$t[] = array(pts_client::cli_just_bold('Graph Size: '), $graph_bytes . ' Bytes');
-		echo pts_user_io::display_text_table($t) . PHP_EOL;
-		echo PHP_EOL . 'The ' . $identifier . ' result file graphs have been refreshed.' . PHP_EOL;
-		pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . $identifier . '/index.html');
+			$t = array();
+			$t[] = array(pts_client::cli_just_bold('Result Graphs: '), count($graphs));
+			$t[] = array(pts_client::cli_just_bold('Graph Size: '), $graph_bytes . ' Bytes');
+			echo pts_user_io::display_text_table($t) . PHP_EOL;
+			echo PHP_EOL . 'The ' . $identifier . ' result file graphs have been refreshed.' . PHP_EOL;
+			pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . $identifier . '/index.html');
+		}
 	}
 	public static function invalid_command($passed_args = null)
 	{

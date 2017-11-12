@@ -387,7 +387,7 @@ class pts_test_run_manager
 		{
 			if(count($current_identifiers) > 0)
 			{
-				echo PHP_EOL . 'Current Test Identifiers:' . PHP_EOL;
+				echo PHP_EOL . pts_client::cli_just_bold('Current Test Identifiers:') . PHP_EOL;
 				echo pts_user_io::display_text_list($current_identifiers);
 				echo PHP_EOL;
 			}
@@ -402,7 +402,7 @@ class pts_test_run_manager
 				}
 				else
 				{
-					pts_client::$display->generic_prompt('Enter a unique name to describe this test run / configuration: ');
+					pts_client::$display->generic_prompt(pts_client::cli_just_bold('Enter a unique name to describe this test run / configuration: '));
 					$results_identifier = self::clean_results_identifier(pts_user_io::read_user_input());
 				}
 				$times_tried++;
@@ -1304,7 +1304,7 @@ class pts_test_run_manager
 					{
 						//echo PHP_EOL . 'Current Title: ' . $this->file_name_title . PHP_EOL;
 						pts_client::$display->generic_heading('If desired, enter a new description below to better describe this result set / system configuration under test.' . PHP_EOL . 'Press ENTER to proceed without changes.');
-						echo 'Current Description: ' . $this->run_description . PHP_EOL . PHP_EOL . 'New Description: ';
+						echo pts_client::cli_just_bold('Current Description: ') . $this->run_description . PHP_EOL . PHP_EOL . pts_client::cli_just_bold('New Description: ');
 						$new_test_description = pts_user_io::read_user_input();
 
 						if(!empty($new_test_description))

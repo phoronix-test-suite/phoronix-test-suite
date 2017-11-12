@@ -27,17 +27,17 @@ class debug_render_test implements pts_option_interface
 
 	public static function run($r)
 	{
-		$render_dir = pts_client::temporary_directory() . '/pts-render-test-310815/';
-		if(!is_file($render_dir . 'mega-render-test.tar.bz2'))
+		$render_dir = pts_client::temporary_directory() . '/pts-render-test-20171112/';
+		if(!is_file($render_dir . 'mega-render-test-20171112.tar.xz'))
 		{
 			pts_file_io::mkdir($render_dir);
-			pts_network::download_file('http://linuxbenchmarking.com/misc/mega-render-test-310815.tar.bz2', $render_dir . 'mega-render-test.tar.bz2');
-			pts_compression::archive_extract($render_dir . 'mega-render-test.tar.bz2');
+			pts_network::download_file('http://linuxbenchmarking.com/misc/mega-render-test-20171112.tar.xz', $render_dir . 'mega-render-test-20171112.tar.xz');
 		}
+		pts_compression::archive_extract($render_dir . 'mega-render-test-20171112.tar.xz');
 
 		if(!defined('PATH_TO_EXPORTED_PHOROMATIC_DATA'))
 		{
-			define('PATH_TO_EXPORTED_PHOROMATIC_DATA', $render_dir . 'mega-render-test-310815/');
+			define('PATH_TO_EXPORTED_PHOROMATIC_DATA', $render_dir . 'mega-render-test-20171112/');
 		}
 
 		error_reporting(E_ALL);
