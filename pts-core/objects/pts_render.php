@@ -167,10 +167,7 @@ class pts_render
 				if((isset($extra_attributes['compact_to_scalar']) || (false && $result_file->is_multi_way_comparison($result_identifiers, $extra_attributes))) && in_array($result_object->test_profile->get_display_format(), array('LINE_GRAPH', 'FILLED_LINE_GRAPH')))
 				{
 					// Convert multi-way line graph into horizontal box plot
-					if(true) // XXX is there any cases where we don't want horizontal box plot but prefer averaged bar graph?
-					{
-						$result_object->test_profile->set_display_format('HORIZONTAL_BOX_PLOT');
-					}
+					$result_object->test_profile->set_display_format('HORIZONTAL_BOX_PLOT');
 				}
 
 				if($result_file->is_results_tracker() && !isset($extra_attributes['compact_to_scalar']))
@@ -188,18 +185,27 @@ class pts_render
 					}
 				}
 			}
-			else if(in_array($result_object->test_profile->get_display_format(), array('LINE_GRAPH')))
+
+			if(in_array($result_object->test_profile->get_display_format(), array('LINE_GRAPH')))
 			{
 					// Check to see for line graphs if every result is an array of the same result (i.e. a flat line for every result).
 					// If all the results are just flat lines, you might as well convert it to a bar graph
 					$buffer_items = $result_object->test_result_buffer->get_buffer_items();
 					$all_values_are_flat = false;
+					$big_data_set = 0;
 					$flat_values = array();
 
 					foreach($buffer_items as $i => $buffer_item)
 					{
-						$unique_in_buffer = array_unique(explode(',', $buffer_item->get_result_value()));
+						$values_in_buffer = explode(',', $buffer_item->get_result_value());
+						$unique_in_buffer = array_unique($values_in_buffer);
 						$all_values_are_flat = count($unique_in_buffer) == 1;
+
+						if(isset($values_in_buffer[1200]))
+						{
+							// if more than 1200 points to plot, likely will be messy so condense it
+							$big_data_set++;
+						}
 
 						if($all_values_are_flat == false)
 						{
@@ -217,6 +223,10 @@ class pts_render
 						}
 
 						$result_object->test_profile->set_display_format('BAR_GRAPH');
+					}
+					else if($big_data_set > 0)
+					{
+						$result_object->test_profile->set_display_format('HORIZONTAL_BOX_PLOT');
 					}
 			}
 		}
