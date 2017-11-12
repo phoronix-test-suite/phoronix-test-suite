@@ -26,7 +26,7 @@ class dump_tests_to_git implements pts_option_interface
 	const doc_description = 'This option will create a Git repository of OpenBenchmarking.org test profiles.';
 
 	public static function run($r)
-	{ echo 1111;
+	{
 		pts_client::$display->generic_heading('OpenBenchmarking.org Tests To Git');
 		$path_to_git = getenv('TEST_PROFILES_GIT_PATH') . '/';
 		if(!pts_client::executable_in_path('git'))

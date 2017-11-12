@@ -106,7 +106,7 @@ class pts_SideViewTable extends pts_graph_core
 			$column_widths[$i] = ceil($this->text_string_width($column, $this->i['identifier_size']) * 1.02) + 14;
 		}
 
-		$table_width = $this->longest_row_identifier + array_sum($column_widths);
+		$table_width = $this->text_string_width($this->longest_row_identifier, $this->i['identifier_size']) + array_sum($column_widths);
 		$table_height = array_sum($row_heights);
 
 		$table_proper_height = $this->i['top_heading_height'] + $table_height + $top_identifier_height;
