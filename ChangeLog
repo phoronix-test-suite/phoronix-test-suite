@@ -4,6 +4,7 @@ Phoronix Test Suite (Git)
 
 pts-core: make script shebang more portable
 phodevi: physical CPU core detection count on macOS
+phodevi: GPU power consumption sensor support via nvidia-smi
 
 Phoronix Test Suite 7.6.0 Milestone 2
 2 November 2017
