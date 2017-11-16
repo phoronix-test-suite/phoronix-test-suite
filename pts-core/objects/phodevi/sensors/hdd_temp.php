@@ -91,14 +91,14 @@ class hdd_temp extends phodevi_sensor
 	}
 	private function hdd_temp_linux()
 	{
-		$temp = false;
+		$temp = -1;
 
 		$disk_path = '/dev/' . $this->disk_to_monitor;
 		$temp = phodevi_parser::read_hddtemp($disk_path);
 
-		if($temp == false && strpos($this->disk_to_monitor, 'nvme') !== false && ($nvme_cli = pts_client::executable_in_path('nvme')))
+		if($temp == -1 && strpos($this->disk_to_monitor, 'nvme') !== false && ($nvme_cli = pts_client::executable_in_path('nvme')))
 		{
-			$nvme_cli = shell_exec($nvme_cli . ' smart-log ' . $this->disk_to_monitor);
+			$nvme_cli = shell_exec($nvme_cli . ' smart-log ' . str_replace(array('n1', null, $this->disk_to_monitor));
 			if(($x = strpos($nvme_cli, 'temperature')) !== false)
 			{
 				$nvme_cli = substr($nvme_cli, $x);
