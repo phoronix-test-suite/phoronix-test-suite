@@ -10,6 +10,7 @@ pts-core: Update Fedora's Python packages
 pts_Graph: Turn line graphs to horizontal box plots if too much data to graph in space
 phodevi: physical CPU core detection count on macOS
 phodevi: GPU power consumption sensor support via nvidia-smi
+phodevi: NVMe drive temperature reporting on Linux
 
 Phoronix Test Suite 7.6.0 Milestone 2
 2 November 2017
