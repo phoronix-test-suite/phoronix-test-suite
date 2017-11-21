@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 7.6.0 Milestone 3
+21 November 2017
 
 pts-core: Provide some basic graph size/count reporting on refresh-graphs sub-command
 pts-core: make script shebang more portable
