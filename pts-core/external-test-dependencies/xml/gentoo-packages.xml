@@ -209,7 +209,7 @@
 		</Package>
 		<Package>
 			<GenericName>atlas-development</GenericName>
-			<PackageName>sci-libs/lapack-atlas</PackageName>
+			<PackageName>sci-libs/atlas</PackageName>
 		</Package>
 		<Package>
 			<GenericName>openmpi-development</GenericName>
