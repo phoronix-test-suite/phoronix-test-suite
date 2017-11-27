@@ -258,7 +258,7 @@
 		</Package>
 		<Package>
 			<GenericName>opencl</GenericName>
-			<PackageName>dev-util/opencl-headers</PackageName>
+			<PackageName>virtual/opencl</PackageName>
 		</Package>
 		<Package>
 			<GenericName>attr</GenericName>
