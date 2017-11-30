@@ -4,6 +4,7 @@ Phoronix Test Suite (Git)
 
 pts-core: Gentoo external dependency handling updates
 pts-core: Better external dependency handling when running on EC2 instances
+phodevi: Add new gpu.memory-usage sensor initially supported on NVIDIA
 
 Phoronix Test Suite 7.6.0 Milestone 3
 21 November 2017
