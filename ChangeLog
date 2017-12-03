@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 7.6.0 Milestone 4
+3 December 2017
 
 pts-core: Gentoo external dependency handling updates
 pts-core: Better external dependency handling when running on EC2 instances
