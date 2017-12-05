@@ -740,7 +740,7 @@ class pts_test_execution
 				$end_result = $test_result->active->get_result();
 
 				// removed count($result) > 0 in the move to pts_test_result
-				if(count($test_result) > 0 && ((is_numeric($end_result) && $end_result > 0) || (!is_numeric($end_result) && isset($end_result[3]))))
+				if(((is_numeric($end_result) && $end_result > 0) || (!is_numeric($end_result) && isset($end_result[3]))))
 				{
 					pts_module_manager::module_process('__post_test_run_success', $test_result);
 					$test_successful = true;
