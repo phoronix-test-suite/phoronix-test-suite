@@ -180,7 +180,7 @@
 		</Package>
 		<Package>
 			<GenericName>curl</GenericName>
-			<PackageName>libcurl curl</PackageName>
+			<PackageName>libcurl curl libcurl-devel curl-devel</PackageName>
 		</Package>
 		<Package>
 			<GenericName>smartmontools</GenericName>
