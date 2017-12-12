@@ -256,7 +256,7 @@
 		</Package>
 		<Package>
 			<GenericName>python</GenericName>
-			<PackageName>python</PackageName>
+			<PackageName>python python3-pip</PackageName>
 		</Package>
 		<Package>
 			<GenericName>python-boost-development</GenericName>
