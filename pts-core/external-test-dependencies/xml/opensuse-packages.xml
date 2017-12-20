@@ -232,7 +232,7 @@
 		</Package>
 		<Package>
 			<GenericName>gmp-library</GenericName>
-			<PackageName>libgmp3</PackageName>
+			<PackageName>gmp-devel</PackageName>
 		</Package>
 		<Package>
 			<GenericName>subversion</GenericName>
@@ -288,7 +288,7 @@
                 </Package>
 		<Package>
 			<GenericName>python-scipy</GenericName>
-			<PackageName>python-scipy</PackageName>
+			<PackageName>python2-scipy python3-scipy</PackageName>
 		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
