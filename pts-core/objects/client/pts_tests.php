@@ -224,6 +224,11 @@ class pts_tests
 					pts_client::$display->test_run_message($print_string);
 				}
 
+				// Script's working directory should be the test directory
+				$original_directory = getcwd();
+				chdir($test_directory);
+
+				// Execute script
 				if(phodevi::is_windows() || pts_client::read_env('USE_PHOROSCRIPT_INTERPRETER') != false)
 				{
 					$phoroscript = new pts_phoroscript_interpreter($run_file, $extra_vars, $test_directory);
@@ -232,8 +237,11 @@ class pts_tests
 				}
 				else
 				{
-					$this_result = pts_client::shell_exec('cd ' .  $test_directory . ' && ' . $sh . ' ' . $run_file . ' ' . $pass_argument . ' 2>&1', $extra_vars);
+					$this_result = pts_client::shell_exec($sh . ' ' . $run_file . ' ' . $pass_argument . ' 2>&1', $extra_vars);
 				}
+
+				// Restore working directory
+				chdir($original_directory);
 
 				if(trim($this_result) != null)
 				{
