@@ -261,6 +261,10 @@
 			<PackageName>virtual/opencl</PackageName>
 		</Package>
 		<Package>
+			<GenericName>meson</GenericName>
+			<PackageName>dev-util/meson</PackageName>
+		</Package>
+		<Package>
 			<GenericName>attr</GenericName>
 			<PackageName>sys-apps/attr</PackageName>
 		</Package>

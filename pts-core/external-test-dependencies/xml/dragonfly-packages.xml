@@ -152,6 +152,10 @@
 			<PackageName>curl</PackageName>
 		</Package>
 		<Package>
+			<GenericName>meson</GenericName>
+			<PackageName>meson</PackageName>
+		</Package>
+		<Package>
 			<GenericName>openmpi-development</GenericName>
 			<PackageName>openmpi</PackageName>
 		</Package>

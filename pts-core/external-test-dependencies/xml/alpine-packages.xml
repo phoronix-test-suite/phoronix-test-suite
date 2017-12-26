@@ -85,6 +85,10 @@
 			<PackageName>glew</PackageName>
 		</Package>
 		<Package>
+			<GenericName>meson</GenericName>
+			<PackageName>meson</PackageName>
+		</Package>
+		<Package>
 			<GenericName>bc</GenericName>
 			<PackageName>bc</PackageName>
 		</Package>

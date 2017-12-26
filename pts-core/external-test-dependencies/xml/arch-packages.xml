@@ -196,6 +196,10 @@
 			<PackageName>tcl</PackageName>
 		</Package>
 		<Package>
+			<GenericName>meson</GenericName>
+			<PackageName>meson</PackageName>
+		</Package>
+		<Package>
 			<GenericName>python</GenericName>
 			<PackageName>python</PackageName>
 		</Package>

@@ -89,6 +89,10 @@
 			<PackageName>bc</PackageName>
 		</Package>
 		<Package>
+			<GenericName>meson</GenericName>
+			<PackageName>meson</PackageName>
+		</Package>
+		<Package>
 			<GenericName>scons</GenericName>
 			<PackageName>scons</PackageName>
 		</Package>

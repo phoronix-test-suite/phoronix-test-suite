@@ -175,6 +175,10 @@
 			<PackageName>popt-devel</PackageName>
 		</Package>
 		<Package>
+			<GenericName>meson</GenericName>
+			<PackageName>meson</PackageName>
+		</Package>
+		<Package>
 			<GenericName>numa-development</GenericName>
 			<PackageName>numactl-devel</PackageName>
 		</Package>

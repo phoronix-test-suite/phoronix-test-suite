@@ -315,6 +315,10 @@
 			<GenericName>httpd</GenericName>
 			<PackageName>apache2</PackageName>
 		</Package>
+		<Package>
+			<GenericName>meson</GenericName>
+			<PackageName>meson</PackageName>
+		</Package>
                 <Package>
 			<GenericName>golang</GenericName>
 			<PackageName>golang</PackageName>

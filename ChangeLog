@@ -1,5 +1,10 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+pts-core: Add meson to external dependencies
+pts-core: Other external dependency updates
+
 Phoronix Test Suite 7.6.0-Alvdal
 7 December 2017
 

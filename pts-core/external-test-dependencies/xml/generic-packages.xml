@@ -128,6 +128,12 @@
 			<FileCheck>maven OR mvn</FileCheck>
 		</Package>
 		<Package>
+			<GenericName>meson</GenericName>
+			<Title>Meson Build System</Title>
+			<PossibleNames>meson</PossibleNames>
+			<FileCheck>meson</FileCheck>
+		</Package>
+		<Package>
 			<GenericName>portaudio-development</GenericName>
 			<Title>PortAudio Development Files</Title>
 			<PossibleNames>libportaudio-dev, portaudio-devel</PossibleNames>
