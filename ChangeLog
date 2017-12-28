@@ -4,6 +4,7 @@ Phoronix Test Suite (Git)
 
 pts-core: Add meson to external dependencies
 pts-core: Other external dependency updates
+phodevi: Add some missing handling around /dev/vd* disks
 
 Phoronix Test Suite 7.6.0-Alvdal
 7 December 2017
