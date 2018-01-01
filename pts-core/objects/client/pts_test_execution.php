@@ -228,7 +228,7 @@ class pts_test_execution
 					{
 						$test_extra_runtime_variables['XAUTHORITY'] = getenv('XAUTHORITY');
 					}
-					$test_process = proc_open($test_prepend . 'exec ' . $execute_binary_prepend . './' . $execute_binary . ' ' . $pts_test_arguments . ' 2>&1', $descriptorspec, $pipes, $to_execute, array_merge($_ENV, pts_client::environmental_variables(), $test_extra_runtime_variables));
+					$test_process = proc_open($test_prepend . 'exec ' . $execute_binary_prepend . './' . $execute_binary . ' ' . $pts_test_arguments . ' 2>&1', $descriptorspec, $pipes, $to_execute, array_merge($_SERVER, pts_client::environmental_variables(), $test_extra_runtime_variables));
 
 					if(is_resource($test_process))
 					{
