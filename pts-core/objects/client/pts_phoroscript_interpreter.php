@@ -177,11 +177,19 @@ class pts_phoroscript_interpreter
 				$line = substr($line, 0, $script_pointer);
 			}
 
+			if (!empty($line) && $line[0] == "#")
+			{
+				// Skip line with comment
+				continue;
+			}
+
 			$line_r = $line != null ? pts_strings::trim_explode(' ', $line) : null;
 
 			switch((isset($line_r[0]) ? $line_r[0] : null))
 			{
 				case '':
+				case null:
+					// IGNORE
 					break;
 				case 'mv':
 					// TODO: implement folder support better
@@ -320,11 +328,6 @@ class pts_phoroscript_interpreter
 					{
 						echo $echo_contents;
 					}
-					break;
-				case '#!/bin/sh':
-				case '#':
-				case null:
-					// IGNORE
 					break;
 				case 'case':
 					//echo "\nUNHANDLED EVENT\n";
