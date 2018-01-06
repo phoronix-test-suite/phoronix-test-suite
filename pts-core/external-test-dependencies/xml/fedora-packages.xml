@@ -224,7 +224,7 @@
 		</Package>
 		<Package>
 			<GenericName>python</GenericName>
-			<PackageName>python python34 python34-pip</PackageName>
+			<PackageName>python python3 python3-pip</PackageName>
 		</Package>
 		<Package>
 			<GenericName>atlas-development</GenericName>
