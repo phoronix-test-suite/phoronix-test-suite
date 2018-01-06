@@ -1353,7 +1353,7 @@ class pts_client
 	}
 	public static function is_process_running($process)
 	{
-		if(phodevi::is_linux())
+		if(phodevi::is_linux() && pts_client::executable_in_path('ps'))
 		{
 			// Checks if process is running on the system
 			$running = shell_exec('ps -C ' . strtolower($process) . ' 2>&1');
