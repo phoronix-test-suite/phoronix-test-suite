@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2017, Phoronix Media
-	Copyright (C) 2008 - 2017, Michael Larabel
+	Copyright (C) 2008 - 2018, Phoronix Media
+	Copyright (C) 2008 - 2018, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -226,7 +226,13 @@ class pts_test_execution
 
 					$host_env = $_SERVER;
 					unset($host_env['argv']);
-					$test_process = proc_open($test_prepend . 'exec ' . $execute_binary_prepend . './' . $execute_binary . ' ' . $pts_test_arguments . ' 2>&1', $descriptorspec, $pipes, $to_execute, array_merge($host_env, pts_client::environmental_variables(), $test_extra_runtime_variables));
+
+					$to_exec = 'exec';
+					if(pts_client::executable_in_path(trim($test_prepend)))
+					{
+						$to_exec = '';
+					}
+					$test_process = proc_open($test_prepend . $to_exec . ' ' . $execute_binary_prepend . './' . $execute_binary . ' ' . $pts_test_arguments . ' 2>&1', $descriptorspec, $pipes, $to_execute, array_merge($host_env, pts_client::environmental_variables(), $test_extra_runtime_variables));
 
 					if(is_resource($test_process))
 					{

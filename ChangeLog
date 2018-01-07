@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 pts-core: Add meson to external dependencies
 pts-core: Other external dependency updates
 pts-core: Various minor improvements when running on Docker/containerized
+pts-core: Phoroscript interpreter improvements for Windows
 phodevi: Add some missing handling around /dev/vd* disks
 
 Phoronix Test Suite 7.6.0-Alvdal
