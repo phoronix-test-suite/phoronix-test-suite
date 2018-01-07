@@ -340,15 +340,17 @@ class pts_phoroscript_interpreter
 					}
 
 					$this->parse_variables_in_string($line, $pass_arguments);
-					$cd_dir = $this->var_current_directory;
 
-					if(phodevi::is_windows() && strpos($cd_dir, ':\\') === 1)
-					{
-						$cd_dir = str_replace('/', '\\', $cd_dir);
-						$cd_dir = str_replace('\\\\', '\\', $cd_dir);
-					}
+					// Set the requested current working dir while executing the command
+					$original_directory = getcwd();
+					chdir($this->var_current_directory);
 
-					exec("cd " . $cd_dir . " && " . $line . " 2>&1", $exec_output, $prev_exit_status);
+					// Execute command
+					exec($line . " 2>&1", $exec_output, $prev_exit_status);
+
+					// Restore original working directory
+					chdir($original_directory);
+
 					break;
 			}
 		}
