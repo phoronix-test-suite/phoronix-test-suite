@@ -177,6 +177,12 @@ class pts_phoroscript_interpreter
 				$line = substr($line, 0, $script_pointer);
 			}
 
+			if(isset($line[0]) && $line[0] == '#')
+			{
+				// Skip # comment lines
+				continue;
+			}
+
 			$line_r = $line != null ? pts_strings::trim_explode(' ', $line) : null;
 
 			switch((isset($line_r[0]) ? $line_r[0] : null))
@@ -321,8 +327,6 @@ class pts_phoroscript_interpreter
 						echo $echo_contents;
 					}
 					break;
-				case '#!/bin/sh':
-				case '#':
 				case null:
 					// IGNORE
 					break;
