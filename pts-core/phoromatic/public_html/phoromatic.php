@@ -182,7 +182,7 @@ if(empty($result))
 		$matching_system = phoromatic_server::$db->querySingle('SELECT AccountID FROM phoromatic_systems WHERE SystemID = \'' . $system_id . '\'');
 	}
 	while(!empty($matching_system));
-	$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_systems (AccountID, SystemID, Hardware, Software, ClientVersion, GSID, CurrentTask, CreatedOn, LastCommunication, LastIP, LocalIP, Title, State, MachineSelfID, CoreVersion) VALUES (:account_id, :system_id, :client_hardware, :client_software, :client_version, :gsid, :current_task, :current_time, :current_time, :access_ip, :local_ip, :title, :preset_state, :machine_self_id, :core_version)');
+	$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_systems (AccountID, SystemID, Hardware, Software, ClientVersion, GSID, CurrentTask, CreatedOn, LastCommunication, LastIP, LocalIP, Title, State, MachineSelfID, CoreVersion, NetworkMAC) VALUES (:account_id, :system_id, :client_hardware, :client_software, :client_version, :gsid, :current_task, :current_time, :current_time, :access_ip, :local_ip, :title, :preset_state, :machine_self_id, :core_version, :network_mac)');
 	$stmt->bindValue(':account_id', ACCOUNT_ID);
 	$stmt->bindValue(':system_id', $system_id);
 	$stmt->bindValue(':client_hardware', $CLIENT_HARDWARE);
@@ -195,6 +195,7 @@ if(empty($result))
 	$stmt->bindValue(':current_time', phoromatic_server::current_time());
 	$stmt->bindValue(':machine_self_id', $PTS_MACHINE_SELF_ID);
 	$stmt->bindValue(':core_version', $CLIENT_CORE_VERSION);
+	$stmt->bindValue(':network_mac', $NETWORK_CLIENT_MAC);
 
 	if($phoromatic_account_settings['AutoApproveNewSystems'])
 	{
