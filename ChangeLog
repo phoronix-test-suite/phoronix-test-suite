@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 7.8.0 Milestone 1
+8 January 2018
 
 pts-core: Add meson to external dependencies
 pts-core: Other external dependency updates
