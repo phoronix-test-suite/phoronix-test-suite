@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2017, Phoronix Media
-	Copyright (C) 2009 - 2017, Michael Larabel
+	Copyright (C) 2009 - 2018, Phoronix Media
+	Copyright (C) 2009 - 2018, Michael Larabel
 	phodevi.php: The object for interacting with the PTS device framework
 
 	This program is free software; you can redistribute it and/or modify
@@ -299,11 +299,13 @@ class phodevi extends phodevi_base
 				),
 			'Motherboard' => phodevi::read_name('motherboard'),
 				array(
-				'Memory' => phodevi::read_name('memory'),
+				'BIOS Version' => phodevi::read_property('motherboard', 'bios-version'),
 				'Chipset' => phodevi::read_name('chipset'),
 				'Audio' => phodevi::read_name('audoo'),
 				'Network' => phodevi::read_name('network'),
 				),
+			'Memory' => phodevi::read_name('memory'),
+				array(),
 			'Disk' => phodevi::read_name('disk'),
 				array(
 				'File-System' => phodevi::read_property('system', 'filesystem'),

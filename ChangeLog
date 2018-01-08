@@ -8,6 +8,7 @@ pts-core: Various minor improvements when running on Docker/containerized
 pts-core: Phoroscript interpreter improvements for Windows
 pts-core: Allow PTS_WEBSOCKET_PORT environment variable to be used to override WebSocket port when launching Phoromatic Server
 phodevi: Add some missing handling around /dev/vd* disks
+phodevi: Add BIOS version reporting property
 
 Phoronix Test Suite 7.6.0-Alvdal
 7 December 2017

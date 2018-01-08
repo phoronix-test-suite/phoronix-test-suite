@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2017, Phoronix Media
-	Copyright (C) 2008 - 2017, Michael Larabel
+	Copyright (C) 2008 - 2018, Phoronix Media
+	Copyright (C) 2008 - 2018, Michael Larabel
 	phodevi_motherboard.php: The PTS Device Interface object for the motherboard
 
 	This program is free software; you can redistribute it and/or modify
@@ -38,6 +38,9 @@ class phodevi_motherboard extends phodevi_device_interface
 				break;
 			case 'pci-devices':
 				$property = new phodevi_device_property('pci_devices', phodevi::smart_caching);
+				break;
+			case 'bios-version':
+				$property = new phodevi_device_property('bios_version', phodevi::smart_caching);
 				break;
 			case 'usb-devices':
 				$property = new phodevi_device_property('usb_devices', phodevi::std_caching);
@@ -339,6 +342,20 @@ class phodevi_motherboard extends phodevi_device_interface
 		}
 
 		return $serial;
+	}
+	public static function bios_version()
+	{
+		$bios_version = null;
+		if(phodevi::is_bsd())
+		{
+			$bios_version = phodevi_bsd_parser::read_kenv('smbios.system.version');
+		}
+		else if(phodevi::is_linux())
+		{
+			$bios_version = phodevi_linux_parser::read_sys_dmi('bios_version');
+		}
+
+		return trim($bios_version);
 	}
 	public static function motherboard_string()
 	{
