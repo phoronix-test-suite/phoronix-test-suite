@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2014 - 2015, Phoronix Media
-	Copyright (C) 2014 - 2015, Michael Larabel
+	Copyright (C) 2014 - 2018, Phoronix Media
+	Copyright (C) 2014 - 2018, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -42,6 +42,8 @@ class make_openbenchmarking_cache implements pts_option_interface
 			return false;
 		}
 
+		echo PHP_EOL . 'CACHE LOCATION: ' . PTS_OPENBENCHMARKING_SCRATCH_PATH . PHP_EOL;
+
 		$terminal_width = pts_client::terminal_width();
 
 		// Cache test profiles
@@ -70,6 +72,11 @@ class make_openbenchmarking_cache implements pts_option_interface
 					$total_cache_count++;
 					$total_cache_size += $file_size;
 				}
+				else
+				{
+					echo 'Failed Downloading: ' .  $qualified_identifier . '.zip';
+				}
+				echo PHP_EOL;
 			}
 			echo PHP_EOL;
 		}
