@@ -90,7 +90,7 @@ else if(isset($_GET['test']))
 		}
 	}
 
-	if(($tp_identifier = pts_test_profile::is_test_profile($_GET['repo'] . '/' . $_GET['test'])))
+	if(($tp_identifier = pts_test_profile::is_test_profile($repo . '/' . $test)))
 	{
 		// Object is a test
 		$test_profile = new pts_test_profile($tp_identifier);

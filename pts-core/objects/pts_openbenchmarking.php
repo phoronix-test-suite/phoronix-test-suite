@@ -542,6 +542,7 @@ class pts_openbenchmarking
 	}
 	public static function remote_test_profile_check($identifier)
 	{
+
 		if(PTS_IS_CLIENT == false)
 		{
 			return false;
@@ -563,8 +564,8 @@ class pts_openbenchmarking
 					{
 						// extract it
 						pts_file_io::mkdir($download_location . dirname($is_test));
-						pts_file_io::mkdir($download_location . $qualified_identifier);
-						pts_compression::zip_archive_extract($zip_file, $download_location . $qualified_identifier);
+						pts_file_io::mkdir($download_location . $is_test);
+						pts_compression::zip_archive_extract($zip_file, $download_location . $is_test);
 
 						if(is_file(PTS_TEST_PROFILE_PATH . $is_test . '/test-definition.xml'))
 						{
