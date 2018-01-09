@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2016, Phoronix Media
-	Copyright (C) 2009 - 2016, Michael Larabel
+	Copyright (C) 2009 - 2018, Phoronix Media
+	Copyright (C) 2009 - 2018, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -84,7 +84,8 @@ class phoromatic extends pts_module_interface
 		phoromatic_server::prepare_database();
 		$root_admin_pw = phoromatic_server::read_setting('root_admin_pw');
 
-		if($root_admin_pw != null)
+		// DISABLED THE INITIAL CHECKING CODE SINCE REALLY WAS SILLY SINCE IF THEY ALREADY HAVE TERMINAL ACCESS, THEY CAN ACCESS FILE ANYWAY....
+		if(false && $root_admin_pw != null)
 		{
 			do
 			{
