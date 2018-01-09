@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+phodevi: Strip invalid chars from BIOS version parsing
+
 Phoronix Test Suite 7.8.0 Milestone 1
 8 January 2018
 

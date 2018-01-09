@@ -82,6 +82,13 @@ class phoromatic_systems implements pts_webui_interface
 			$stmt->bindValue(':event', time() . ':halt-testing');
 			$stmt->execute();
 		}
+		if(!PHOROMATIC_USER_IS_VIEWER && !empty($PATH[0]) && isset($_GET['really_delete_system']))
+		{
+			$stmt = phoromatic_server::$db->prepare('DELETE FROM phoromatic_systems WHERE AccountID = :account_id AND SystemID = :system_id LIMIT 1');
+			$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+			$stmt->bindValue(':system_id', $PATH[0]);
+			$stmt->execute();
+		}
 		if(!PHOROMATIC_USER_IS_VIEWER && !empty($PATH[0]) && isset($_POST['system_var_names'])&& isset($_POST['system_var_values']))
 		{
 			$vars = array();

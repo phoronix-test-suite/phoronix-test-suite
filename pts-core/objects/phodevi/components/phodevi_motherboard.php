@@ -355,7 +355,7 @@ class phodevi_motherboard extends phodevi_device_interface
 			$bios_version = phodevi_linux_parser::read_sys_dmi('bios_version');
 		}
 
-		return trim($bios_version);
+		return trim(str_replace(array('(', ')'), '', $bios_version));
 	}
 	public static function motherboard_string()
 	{
