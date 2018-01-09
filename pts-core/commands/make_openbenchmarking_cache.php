@@ -60,7 +60,7 @@ class make_openbenchmarking_cache implements pts_option_interface
 				echo $qualified_identifier;
 				$success = pts_openbenchmarking::download_test_profile($repo . '/' . $test . '-' . $version, null, true);
 
-				if($success && is_file(PTS_OPENBENCHMARKING_SCRATCH_PATH . $qualified_identifier . '.zip'))
+				if(is_file(PTS_OPENBENCHMARKING_SCRATCH_PATH . $qualified_identifier . '.zip'))
 				{
 					$file_size = round(filesize(PTS_OPENBENCHMARKING_SCRATCH_PATH . $qualified_identifier . '.zip') / 1024, 2);
 					$info = $file_size . 'KB - ' . sha1_file(PTS_OPENBENCHMARKING_SCRATCH_PATH . $qualified_identifier . '.zip');
@@ -76,7 +76,6 @@ class make_openbenchmarking_cache implements pts_option_interface
 				{
 					echo 'Failed Downloading: ' .  $qualified_identifier . '.zip';
 				}
-				echo PHP_EOL;
 			}
 			echo PHP_EOL;
 		}
