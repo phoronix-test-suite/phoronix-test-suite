@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2017, Phoronix Media
-	Copyright (C) 2008 - 2017, Michael Larabel
+	Copyright (C) 2008 - 2018, Phoronix Media
+	Copyright (C) 2008 - 2018, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -54,6 +54,18 @@ class pts_network
 		$contents = pts_file_io::file_get_contents($url, 0, $stream_context);
 
 		return $contents;
+	}
+	public static function can_reach_phoronix_test_suite_com()
+	{
+		return pts_network::http_get_contents('http://www.phoronix-test-suite.com/PTS') == 'PTS';
+	}
+	public static function can_reach_openbenchmarking_org()
+	{
+		return pts_network::http_get_contents('http://openbenchmarking.org/PTS') == 'PTS';
+	}
+	public static function can_reach_phoronix_net()
+	{
+		return pts_network::http_get_contents('http://phoronix.net/PTS') == 'PTS';
 	}
 	public static function http_upload_via_post($url, $to_post_data, $supports_proxy = true)
 	{
