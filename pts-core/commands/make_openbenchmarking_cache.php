@@ -58,7 +58,7 @@ class make_openbenchmarking_cache implements pts_option_interface
 			{
 				$qualified_identifier = $repo . '/' . $test . '-' . $version;
 				echo $qualified_identifier;
-				$success = pts_openbenchmarking::download_test_profile($repo . '/' . $test . '-' . $version);
+				$success = pts_openbenchmarking::download_test_profile($repo . '/' . $test . '-' . $version, null, true);
 
 				if($success && is_file(PTS_OPENBENCHMARKING_SCRATCH_PATH . $qualified_identifier . '.zip'))
 				{

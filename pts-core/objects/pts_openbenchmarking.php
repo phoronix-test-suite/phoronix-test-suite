@@ -454,13 +454,13 @@ class pts_openbenchmarking
 
 		return $index_file;
 	}
-	public static function download_test_profile($qualified_identifier, $download_location = null)
+	public static function download_test_profile($qualified_identifier, $download_location = null, $cache_check = false)
 	{
 		if(empty($download_location))
 		{
 			$download_location = PTS_TEST_PROFILE_PATH;
 		}
-		if(is_file($download_location . $qualified_identifier . '/test-definition.xml'))
+		if(is_file($download_location . $qualified_identifier . '/test-definition.xml') && !$cache_check)
 		{
 			return true;
 		}
