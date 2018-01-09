@@ -756,6 +756,7 @@ class pts_client
 	}
 	public static function available_phoromatic_servers()
 	{
+		// TODO XXX add like a ~2 minute temporary cache for this to avoid continuously requerying?
 		$phoromatic_servers = array();
 		$possible_servers = pts_network::find_zeroconf_phoromatic_servers(true);
 

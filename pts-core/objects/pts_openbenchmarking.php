@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2017, Phoronix Media
-	Copyright (C) 2010 - 2017, Michael Larabel
+	Copyright (C) 2010 - 2018, Phoronix Media
+	Copyright (C) 2010 - 2018, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -506,7 +506,10 @@ class pts_openbenchmarking
 					$test_profile = $b64;
 				}
 
-				file_put_contents($file, $test_profile);
+				if(!empty($test_profile))
+				{
+					file_put_contents($file, $test_profile);
+				}
 			}
 
 			if(PTS_IS_CLIENT && !is_file($file))
@@ -535,6 +538,43 @@ class pts_openbenchmarking
 			}
 		}
 
+		return false;
+	}
+	public static function remote_test_profile_check($identifier)
+	{
+		if(PTS_IS_CLIENT == false)
+		{
+			return false;
+		}
+		$is_test = self::phoromatic_server_ob_cache_request('is_test', null, $identifier);
+		if(!empty($is_test) && strpos($is_test, ' ') === false && strpos($is_test, '..') === false && strpos($is_test, '/') !== false)
+		{
+			if($test_profile = self::phoromatic_server_ob_cache_request('test', substr($is_test, 0, strpos($is_test, '/')), substr($is_test, strpos($is_test, '/') + 1)))
+			{
+				$test_zip = base64_decode($test_profile);
+				if(!empty($test_zip))
+				{
+					$zip_file = tempnam(sys_get_temp_dir(), 'phoromatic-zip');
+					file_put_contents($zip_file, $test_zip);
+
+					// Extract the temp zip
+					$download_location = PTS_TEST_PROFILE_PATH;
+					if(!is_file($download_location . $is_test . '/test-definition.xml') && is_file($zip_file))
+					{
+						// extract it
+						pts_file_io::mkdir($download_location . dirname($is_test));
+						pts_file_io::mkdir($download_location . $qualified_identifier);
+						pts_compression::zip_archive_extract($zip_file, $download_location . $qualified_identifier);
+
+						if(is_file(PTS_TEST_PROFILE_PATH . $is_test . '/test-definition.xml'))
+						{
+							return true;
+						}
+					}
+					unlink($zip_file);
+				}
+			}
+		}
 		return false;
 	}
 	public static function phoromatic_server_ob_cache_request($type_request, $repo = null, $test = null)
@@ -677,7 +717,10 @@ class pts_openbenchmarking
 					$test_suite = $b64;
 				}
 
-				file_put_contents($file, $test_suite);
+				if(!empty($test_suite))
+				{
+					file_put_contents($file, $test_suite);
+				}
 			}
 
 			if(PTS_IS_CLIENT && !is_file($file))
