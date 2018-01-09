@@ -632,13 +632,13 @@ class pts_openbenchmarking
 
 		return $available_suites;
 	}
-	public static function download_test_suite($qualified_identifier, $download_location = null)
+	public static function download_test_suite($qualified_identifier, $download_location = null, $cache_check = false)
 	{
 		if(empty($download_location))
 		{
 			$download_location = PTS_TEST_SUITE_PATH;
 		}
-		if(is_file($download_location . $qualified_identifier . '/suite-definition.xml'))
+		if(is_file($download_location . $qualified_identifier . '/suite-definition.xml') && !$cache_check)
 		{
 			return true;
 		}
