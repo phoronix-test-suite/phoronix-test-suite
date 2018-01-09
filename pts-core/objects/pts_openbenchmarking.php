@@ -542,7 +542,7 @@ class pts_openbenchmarking
 	}
 	public static function remote_test_profile_check($identifier)
 	{
-
+		// See if the test (e.g. a local/ test) is available for download from Phoromatic Servers that is not part of an Openbenchmarking.org repo index
 		if(PTS_IS_CLIENT == false)
 		{
 			return false;

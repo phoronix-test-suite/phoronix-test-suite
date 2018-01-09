@@ -756,55 +756,62 @@ class pts_client
 	}
 	public static function available_phoromatic_servers()
 	{
-		// TODO XXX add like a ~2 minute temporary cache for this to avoid continuously requerying?
-		$phoromatic_servers = array();
-		$possible_servers = pts_network::find_zeroconf_phoromatic_servers(true);
+		static $last_phoromatic_scan = 0;
+		static $phoromatic_servers = false;
 
-		foreach(self::$phoromatic_servers as $server)
+		// Cache the Phoromatic Server information for 2 minutes since could be expensive to compute
+		if($phoromatic_servers === false || $last_phoromatic_scan < (time() - 120))
 		{
-			$possible_servers[] = array($server['ip'], $server['http_port']);
-		}
+			$last_phoromatic_scan = time();
+			$phoromatic_servers = array();
+			$possible_servers = pts_network::find_zeroconf_phoromatic_servers(true);
 
-		$user_config_phoromatic_servers = pts_config::read_user_config('PhoronixTestSuite/Options/General/PhoromaticServers', '');
-		foreach(explode(',', $user_config_phoromatic_servers) as $static_server)
-		{
-			$static_server = explode(':', $static_server);
-			if(count($static_server) == 2)
+			foreach(self::$phoromatic_servers as $server)
 			{
-				$possible_servers[] = array($static_server[0], $static_server[1]);
+				$possible_servers[] = array($server['ip'], $server['http_port']);
 			}
-		}
 
-		if(is_file(PTS_USER_PATH . 'phoromatic-servers'))
-		{
-			$phoromatic_servers_file = pts_file_io::file_get_contents(PTS_USER_PATH . 'phoromatic-servers');
-			foreach(explode(PHP_EOL, $phoromatic_servers_file) as $ps_file_line)
+			$user_config_phoromatic_servers = pts_config::read_user_config('PhoronixTestSuite/Options/General/PhoromaticServers', '');
+			foreach(explode(',', $user_config_phoromatic_servers) as $static_server)
 			{
-				$ps_file_line = explode(':', trim($ps_file_line));
-				if(count($ps_file_line) == 2 && ip2long($ps_file_line[0]) !== false && is_numeric($ps_file_line) && $ps_file_line > 100)
+				$static_server = explode(':', $static_server);
+				if(count($static_server) == 2)
 				{
-					$possible_servers[] = array($ps_file_line[0], $ps_file_line[1]);
+					$possible_servers[] = array($static_server[0], $static_server[1]);
 				}
 			}
-		}
 
-		foreach($possible_servers as $possible_server)
-		{
-			// possible_server[0] is the Phoromatic Server IP
-			// possible_server[1] is the Phoromatic Server HTTP PORT
-
-			if(in_array($possible_server[0], array_keys($phoromatic_servers)))
+			if(is_file(PTS_USER_PATH . 'phoromatic-servers'))
 			{
-				continue;
+				$phoromatic_servers_file = pts_file_io::file_get_contents(PTS_USER_PATH . 'phoromatic-servers');
+				foreach(explode(PHP_EOL, $phoromatic_servers_file) as $ps_file_line)
+				{
+					$ps_file_line = explode(':', trim($ps_file_line));
+					if(count($ps_file_line) == 2 && ip2long($ps_file_line[0]) !== false && is_numeric($ps_file_line) && $ps_file_line > 100)
+					{
+						$possible_servers[] = array($ps_file_line[0], $ps_file_line[1]);
+					}
+				}
 			}
 
-			$server_response = pts_network::http_get_contents('http://' . $possible_server[0] . ':' . $possible_server[1] . '/server.php', false, false, 3);
-			if(stripos($server_response, 'Phoromatic') !== false)
+			foreach($possible_servers as $possible_server)
 			{
-				trigger_error('Phoromatic Server Auto-Detected At: ' . $possible_server[0] . ':' . $possible_server[1], E_USER_NOTICE);
-				$phoromatic_servers[$possible_server[0]] = array('ip' => $possible_server[0], 'http_port' => $possible_server[1]);
-			}
+				// possible_server[0] is the Phoromatic Server IP
+				// possible_server[1] is the Phoromatic Server HTTP PORT
 
+				if(in_array($possible_server[0], array_keys($phoromatic_servers)))
+				{
+					continue;
+				}
+
+				$server_response = pts_network::http_get_contents('http://' . $possible_server[0] . ':' . $possible_server[1] . '/server.php', false, false, 3);
+				if(stripos($server_response, 'Phoromatic') !== false)
+				{
+					trigger_error('Phoromatic Server Auto-Detected At: ' . $possible_server[0] . ':' . $possible_server[1], E_USER_NOTICE);
+					$phoromatic_servers[$possible_server[0]] = array('ip' => $possible_server[0], 'http_port' => $possible_server[1]);
+				}
+
+			}
 		}
 
 		return $phoromatic_servers;
