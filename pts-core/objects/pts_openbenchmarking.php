@@ -692,6 +692,10 @@ class pts_openbenchmarking
 			$hash_json = json_decode($hash_json, true);
 			$hash_check = isset($hash_json['openbenchmarking']['suite']['hash']) ? $hash_json['openbenchmarking']['suite']['hash'] : null;  // should also check for ['openbenchmarking']['suite']['error'] problems
 		}
+		else
+		{
+			$hash_check = null;
+		}
 
 		if(!is_file($file))
 		{
