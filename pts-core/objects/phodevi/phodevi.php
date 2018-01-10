@@ -445,6 +445,47 @@ class phodevi extends phodevi_base
 
 		return $value;
 	}
+	public static function read_all_properties()
+	{
+		$all_properties = array();
+		$components = array();
+		foreach(glob(__DIR__ . '/components/phodevi_*.php') as $file)
+		{
+			$components[] = substr(basename($file, '.php'), 8);
+		}
+
+		foreach($components as $device)
+		{
+			$properties = call_user_func(array('phodevi_' . $device, 'properties'));
+			$all_properties[$device] = array();
+			foreach($properties as $id => $property)
+			{
+				$dev_function_r = pts_arrays::to_array($property->get_device_function());
+				$dev_function = $dev_function_r[0];
+				$function_pass = array();
+
+				for($i = 1; $i < count($dev_function_r); $i++)
+				{
+					array_push($function_pass, $dev_function_r[$i]);
+				}
+				if(method_exists('phodevi_' . $device, $dev_function))
+				{
+					$value = call_user_func_array(array('phodevi_' . $device, $dev_function), $function_pass);
+					if(!is_array($value) && $value != null)
+					{
+						$value = pts_strings::strip_string($value);
+						if(function_exists('preg_replace'))
+						{
+							$value = preg_replace('/[^(\x20-\x7F)]*/','', $value);
+						}
+					}
+					$all_properties[$device][$id] = $value;
+				}
+			}
+		}
+
+		return $all_properties;
+	}
 	public static function set_property($device, $set_property, $pass_args = array())
 	{
 		$return_value = false;
