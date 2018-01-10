@@ -496,6 +496,12 @@ class phodevi_motherboard extends phodevi_device_interface
 		// ensure words aren't repeated (e.g. VMware VMware Virtual and MSI MSI X58M (MS-7593))
 		$info = implode(' ', array_unique(explode(' ', $info)));
 
+		$bios = phodevi::read_property('motherboard', 'bios-version');
+		if(!empty($bios) && strpos($info, $bios) === false)
+		{
+			$info .= '(BIOS: ' . $bios . ')';
+		}
+
 		return $info;
 	}
 }

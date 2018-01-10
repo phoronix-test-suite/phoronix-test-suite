@@ -290,6 +290,7 @@ class phodevi extends phodevi_base
 				),
 			'Graphics' => phodevi::read_name('gpu'),
 				array(
+				'Frequency' => phodevi::read_property('gpu', 'frequency'),
 				'OpenGL' => phodevi::read_property('system', 'opengl-driver'),
 				'Vulkan' => phodevi::read_property('system', 'vulkan-driver'),
 				'OpenCL' => phodevi::read_property('system', 'opencl-driver'),
@@ -327,7 +328,7 @@ class phodevi extends phodevi_base
 		{
 			$sys_string = null;
 			$tabled = array();
-			foreach($sys as $key => $in)
+			foreach($sys as $key => &$in)
 			{
 				$space_in = 2;
 				if(is_array($in))
@@ -344,6 +345,11 @@ class phodevi extends phodevi_base
 				}
 				else if(true || !empty($in)) // TODO this check not needed anymore?
 				{
+				if(($x = strpos($in, ' (')))
+				{
+					$in = substr($in, 0, $x);
+				}
+
 					if(!empty($tabled))
 					{
 						$sys_string .= pts_user_io::display_text_table($tabled, '    ', 0, 17) . PHP_EOL;

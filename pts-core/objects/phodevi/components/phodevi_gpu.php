@@ -811,7 +811,8 @@ class phodevi_gpu extends phodevi_device_interface
 		}
 		else
 		{
-			return phodevi::read_property('gpu', 'model') . ' ' . phodevi::read_property('gpu', 'frequency');
+			$freq_string = phodevi::read_property('gpu', 'frequency');
+			return phodevi::read_property('gpu', 'model') . ($freq_string != null ? ' (' . $freq_string . ')' : null);
 		}
 	}
 	public static function gpu_frequency_string()
@@ -831,7 +832,7 @@ class phodevi_gpu extends phodevi_device_interface
 			$freq_string .= 'MHz';
 		}
 
-		return ($freq_string != null ? ' (' . $freq_string . ')' : null);
+		return $freq_string;
 	}
 	public static function gpu_stock_frequency()
 	{
