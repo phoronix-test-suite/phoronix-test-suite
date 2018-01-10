@@ -514,6 +514,11 @@ class phodevi_system extends phodevi_device_interface
 				$security[] = 'SELinux';
 			}
 		}
+		if(strpos(phodevi::$vfs->dmesg, 'page tables isolation: enabled') !== false)
+		{
+			// Kernel Page Table Isolation
+			$security[] = 'KPTI';
+		}
 
 		return !empty($security) ? implode(', ',  $security) : null;
 	}
